@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1423" "Tuesday" "16" "June" "2015" "05:44:50" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150616094450.27DCF13A80E@smtpvmsrv1.mitre.org>" "45" "[oss-security] Re: CVE ID Request: Buffer overflow in ArduinoJson when parsing crafted JSON strings" nil nil nil "6" "2015061609:44:50" "[oss-security] Re: CVE ID Request: Buffer overflow in ArduinoJson when parsing crafted JSON strings" (number mark "U       cve-assign@m Jun 16   45/1423  " thread-indent "\"[oss-security] Re: CVE ID Request: Buffer overflow in ArduinoJson when parsing crafted JSON strings\"\n") "<F0AF15DC-5C68-4A2F-A920-BC5750912A97@me.com>" ("<F0AF15DC-5C68-4A2F-A920-BC5750912A97@me.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["467" "Monday" "6" "November" "2017" "07:32:46" "-0500" "Michael Orlitzky" "michael@orlitzky.com" "<a7e0e324-5126-4410-724e-af5576432d67@orlitzky.com>" "13" "Re: [oss-security] Fw: Security risk of vim swap files" "^Date:" nil nil "11" "2017110612:32:46" "[oss-security] Fw: Security risk of vim swap files" (number mark "        michael@orli Nov  6   13/467   " thread-indent "\"Re: [oss-security] Fw: Security risk of vim swap files\"\n") "<20171106070849.GB9438@256bit.org>" ("<20171102212916.GC23769@256bit.org>" "<20171103163936.cevlb7ghcwkln6x2@jwilk.net>" "<20171105171704.GA9438@256bit.org>" "<20171105181431.a7zstp2v4bytdlvg@jwilk.net>" "<20171106070849.GB9438@256bit.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 17539 invoked by uid 550); 16 Jun 2015 09:45:10 -0000
+Received: (qmail 1580 invoked by uid 550); 6 Nov 2017 12:33:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,58 +11,42 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17490 invoked from network); 16 Jun 2015 09:45:03 -0000
-In-Reply-To: <F0AF15DC-5C68-4A2F-A920-BC5750912A97@me.com>
-Message-Id: <20150616094450.27DCF13A80E@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Tue, 16 Jun 2015 05:44:50 -0400 (EDT)
-From: cve-assign@mitre.org
+Received: (qmail 1550 invoked from network); 6 Nov 2017 12:33:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=orlitzky.com; s=mail2;
+	t=1509971573; bh=GmLqbnWZH3B7WRraPtW+yhU+0VlZCUGTIALbxexwzD8=;
+	h=Subject:To:References:From:Date:In-Reply-To;
+	b=nGeBT4RAmiEii/JESbVoGWTwDoif1QNejpbRRBlff1aYRrEUrNGBa/9cz0nqbeOgq
+	 aeYq4a4vc/D5vGyorjlQdGYiKj8KEZH+ximJgVmRLUfkIKxRYZph8IFt2puW+pQll7
+	 gQoGJtLGlpwQ0BM7rTvcNb7t0OCjRTLOL6xYiB2s=
+References: <20171102212916.GC23769@256bit.org>
+ <20171103163936.cevlb7ghcwkln6x2@jwilk.net>
+ <20171105171704.GA9438@256bit.org>
+ <20171105181431.a7zstp2v4bytdlvg@jwilk.net>
+ <20171106070849.GB9438@256bit.org>
+Message-ID: <a7e0e324-5126-4410-724e-af5576432d67@orlitzky.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
+MIME-Version: 1.0
+In-Reply-To: <20171106070849.GB9438@256bit.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+Date: Mon, 6 Nov 2017 07:32:46 -0500
+From: Michael Orlitzky <michael@orlitzky.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE ID Request: Buffer overflow in ArduinoJson when parsing crafted JSON strings
-To: gcanalesb@me.com
+Subject: Re: [oss-security] Fw: Security risk of vim swap files
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 11/06/2017 02:08 AM, Christian Brabandt wrote:
+> 
+> On So, 05 Nov 2017, Jakub Wilk wrote:
+> 
+>> Couldn't vim create swapfiles with mode 0600 and be done with it?
+> 
+> Because then users of the group could not recover the file anymore, 
+> although they are able to read the original file.
+> 
 
-> https://github.com/bblanchon/ArduinoJson/commit/5e7b9ec688d79e7b16ec7064e1d37e8481a31e72
-> 
-> https://github.com/bblanchon/ArduinoJson/blob/master/CHANGELOG.md
-> 
-> https://github.com/bblanchon/ArduinoJson/pull/81
-
-> v4.5
-> 
-> Fixed buffer overflow when input contains a backslash followed by a terminator (issue #81)
-> Upgrading is recommended since previous versions contain a potential security risk.
-
-> the pointer will move one more step to
-> 
-> "\\[\]!"
-> 
-> the unescapeChar function will once again move the pointer to:
-> 
-> "\\\[!]"
-> 
-> And, finally, at the beginning of the next cycle
-> 
-> "\\\![]"
-
-Use CVE-2015-4590 for this issue involving improper handling of quoting at the
-end of a string.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJVf++wAAoJEKllVAevmvms0gkH/2cT6uzjei/W8O9l9QpTgO5y
-i592tD/BqfbNkjW9koCm6gV+ptV9fk+QeNWibsnInJZx/9kylIote6C5rpYh9xwL
-OOkwsoZt19S4BG+4wWI4VzP4KjzJ5VlG2U2RU1ymPnd9edQmI+2NeEkF0KuJz9qs
-u3fJgM6G0HGBX/yY0By5Lvp+9I0ypch/e9PyGh2JlgiIXHJPvr2AeOX3e7vD7pKM
-2vXZlTv3UThnPmedwjuRHiO0v/w6jHER5nxT/iJpa1mE08xzyejUJajJF1yz1Xjj
-YcBgfB6VSeTBkM+NYF22GPh248pDIPz2sEvq2OPHkrNJZz1S4kbTK2mjdOSPTTM=
-=OYDd
------END PGP SIGNATURE-----
+It also breaks (default) ACLs, but maybe if we do that in enough
+important applications, the next generation of ACLs won't try to use the
+group bits as a permissions mask.
