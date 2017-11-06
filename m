@@ -1,29 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/21/2
-Message-ID: <alpine.LFD.2.20.1708211648460.15179@wniryva>
-Date: Mon, 21 Aug 2017 16:50:48 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Kieron Shorrock <kshorrock@...oaltonetworks.com>
-Subject: CVE-2017-12809 Qemu: ide: flushing of empty CDROM drives leads to NULL dereference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/06/10
+Message-ID: <848ccf01-0a05-76ea-470d-aa59579d447b@redhat.com>
+Date: Mon, 6 Nov 2017 19:42:25 +0100
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com, Jonas 'Sortie' Termansen <sortie@...si.org>
+Subject: Re: Race condition between UDP bind(2) and connect(2) delivers wrong datagrams
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+On 11/06/2017 04:31 PM, Jonas 'Sortie' Termansen wrote:
+> Hi oss-security,
+> 
+> When you connect(2) a UDP socket to an address, any subsequent recv(2) must
+> only receieve datagrams from that address. However, if the UDP socket is
+> first given a local address with bind(2), there is a race condition before
+> the connect(2) where datagrams received from any address is added to the
+> socket's receieve queue. Unfortunately, all of Darwin, DragonFly, FreeBSD,
+> GNU/Hurd, Haiku, Linux, Minix, NetBSD, OpenBSD, and OpenIndiana don't purge
+> the receieve queue of datagrams with the wrong source on connect(2).
+> Instead, they deliver datagrams already in the recieve queue even if they
+> have the wrong source. I've failed to find any operating system that handles
+> this case correctly.
 
-Quick emulator built with the IDE disk and CD/DVD-ROM Emulator support is 
-vulnerable to a null pointer dereference issue. It could occur while flushing 
-an empty CDROM device drive.
+The alternative is that these systems are handling the situation correctly.
 
-A privileged user inside guest could use this flaw to crash the Qemu process 
-resulting in DoS.
+> Even though it can be difficult to exploit this bug, it is a validation bug
+> in the kernels. POSIX 2008 (2016 edition) says[1]:
+> 
+>      "For SOCK_DGRAM sockets, the peer address identifies where all datagrams
+>       are sent on subsequent send() functions, and limits the remote sender
+>       for subsequent recv() functions."
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2017-08/msg01850.html
+Whatever the exact wording used is, the intent of POSIX is to describe 
+the BSD sockets API behavior.  If the API does something else, that's a 
+POSIX bug.
 
-'CVE-2017-12809' assigned via -> https://cveform.mitre.org/
+> Software can work around this bug by using recvfrom(2) or recvmsg(2) and
+> verifying the sender's address.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+It's often possible to simply drain all pending datagrams after the 
+connect call because the application knows that all packets received at 
+this points must be garbage and not intended for it to process.
+
+> I've not been able to think of / find any other software that bind(2) a UDP
+> socket to an address and then use connect(2) to fix a particular peer, but
+> I don't have time to do a thorough search. Please let me know if you can
+> think of any.
+
+OpenJDK had a similar issue because it supported socket disconnect.
+
+Thanks,
+Florian
