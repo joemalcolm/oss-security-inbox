@@ -1,4 +1,9 @@
-Received: (qmail 7271 invoked by uid 550); 2 May 2026 18:58:18 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3041" "Monday" "6" "November" "2017" "21:00:50" "+0100" "Solar Designer" "solar@openwall.com" "<20171106200050.GA19402@openwall.com>" "82" "Re: [oss-security] Security risk of vim swap files" "^Date:" nil nil "11" "2017110620:00:50" "[oss-security] Security risk of vim swap files" (number mark "        solar@openwa Nov  6   82/3041  " thread-indent "\"Re: [oss-security] Security risk of vim swap files\"\n") "<20171106061544.apbxborivf4lye7m@matica.foolinux.mooo.com>" ("<20171031132352.2df6d2ad@pc1>" "<20171031175407.jcniviupwyab6qcl@sentinelchicken.org>" "<20171101023330.GK30551@takahe.colorado.edu>" "<20171101144927.srk7stiwoia4qt57@sentinelchicken.org>" "<CAH8yC8=KKh8SPtDUUSAL_GuDHT7eYBrmHvVjzeQ5n4ocFh4m5Q@mail.gmail.com>" "<20171101180222.5j6wqmmqakwvu72q@jwilk.net>" "<20171101181209.GB22752@openwall.com>" "<20171106061544.apbxborivf4lye7m@matica.foolinux.mooo.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 11957 invoked by uid 550); 6 Nov 2017 20:01:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,89 +11,99 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 11411 invoked from network); 6 Nov 2017 20:00:58 -0000
+Message-ID: <20171106200050.GA19402@openwall.com>
+References: <20171031132352.2df6d2ad@pc1> <20171031175407.jcniviupwyab6qcl@sentinelchicken.org> <20171101023330.GK30551@takahe.colorado.edu> <20171101144927.srk7stiwoia4qt57@sentinelchicken.org> <CAH8yC8=KKh8SPtDUUSAL_GuDHT7eYBrmHvVjzeQ5n4ocFh4m5Q@mail.gmail.com> <20171101180222.5j6wqmmqakwvu72q@jwilk.net> <20171101181209.GB22752@openwall.com> <20171106061544.apbxborivf4lye7m@matica.foolinux.mooo.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20171106061544.apbxborivf4lye7m@matica.foolinux.mooo.com>
+User-Agent: Mutt/1.4.2.3i
+Date: Mon, 6 Nov 2017 21:00:50 +0100
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 23564 invoked from network); 2 May 2026 18:55:08 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=risingedge.co.za; s=xneelo; h=Content-Transfer-Encoding:MIME-Version:
-	References:In-Reply-To:Message-Id:Date:Subject:To:From:reply-to:sender:cc:bcc
-	:content-type; bh=tDaRvZiGd8kidkeiLzJqzdRPxVHqpxpn8z03MNJ80hE=; b=DaKp87URHA4
-	3XNhMmT19RXAG9+L2ncNtwn5LGz8+qccoYkQi3atUD6z9hn/uFrZqM4t8VEZCrU+D1iBv2t8kmi2t
-	n85M8adL/QEy9/cIeppF2tC1yG2bqmkPiVp8UDIP1YRdolPfW3SoqXAkf+JVdgqpReiMH5mCLlhG5
-	JeoD1hutxEl1+O2q+Z3/OHRH1m1YtOZfiAwF9jjuWkDtQp+bzGY8KoHi+VkD9WQ8IGMEEweK4La+A
-	aDMdfy3a8fsBenNYIBWLxpEp2xLpb1+kfLpxZNGQkQ2VvqBwgBRu2xdsqbmkCUBAKg9Hy/J/4Cqac
-	JdKRZWqCW5Qv2FyXFlLaizw==;
-From: Justin Swartz <justin.swartz@risingedge.co.za>
+Subject: Re: [oss-security] Security risk of vim swap files
 To: oss-security@lists.openwall.com
-Date: Sat,  2 May 2026 20:56:08 +0200
-Message-Id: <20260502185608.24115-1-justin.swartz@risingedge.co.za>
-In-Reply-To: <56cd1494d297ad327a8c2a4cc77308559fbee7f8.camel@thirddimension.net>
-References: <afJorKIje4O6dXbH@netmeister.org> <d6111caa-db61-498a-92cb-ea7a0aa0a5e2@ehuk.net> <87se8dgicq.fsf@gentoo.org> <afL-QhLfEKqHZqka@eldamar.lan> <2026043026-treat-devotion-23d7@gregkh> <CAPmip_zqswCZ6PfnW_DPEoSuY6Jewfw1eyeP_azYH4JFgRipNA@mail.gmail.com> <12a8c210-2f79-4fa2-a9c6-bbd203325f42@oracle.com> <315f9a67337d8e930cfb95a4b644946bf2f69687.camel@thirddimension.net> <20260501165221.27420-1-justin.swartz@risingedge.co.za> <56cd1494d297ad327a8c2a4cc77308559fbee7f8.camel@thirddimension.net>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Authenticated-Sender: justin.swartz@risingedge.co.za
-X-Virus-Scanned: Clear
-X-Originating-IP: 188.40.1.173
-X-SpamExperts-Domain: risingedge.co.za
-X-SpamExperts-Username: 
-Authentication-Results: host-h.net; auth=pass (login) smtp.auth=@risingedge.co.za
-X-SpamExperts-Outgoing-Class: ham
-X-SpamExperts-Outgoing-Evidence: Combined (0.08)
-X-Recommended-Action: accept
-X-Filter-ID: 9kzQTOBWQUFZTohSKvQbgI7ZDo5ubYELi59AwcWUnuVf8kqL7ZU4xrEUExQhvzsNcqvuGvU6G7Gj
- XLGbKeeQeyu2SmbhJN1U9FKs8X3+Nt0Io1idSgCc/506nnISAkPANvJkKIxakGlbxi+ggiqZlxxH
- xN7wu8yGEPLNcyeaFThLvla4vwyLkYvNkUmDgOHOBMmyNbDn7R5kilAhwr3KtFb3AgNUGvQRnUF+
- Lycvfx+SVUSshQka8VpEeqGYZUq9x6uBPuq+Gm7dtLrcVMrJoohSnw9YyoGHx/ukuag1WKBLWDaO
- GAC1PCRtpOZuVuRfKVFCXTS2zVmMeFsPQMyMp5ya4EnB7foI3WDAWEIqQR42kI22V3+6/8VpCe4k
- l4rBro7NG5FMnAx+YiDY2J/czJYIiHqfCgG4wrA3w4/kQTaLfhXaMgiD0j3v6Ie9X8yyJClZqIWe
- ElTlhke8IyK52DdtyTpRDuDZactSZQHS5CIA4kv6jpHeL4itl5GdKHos6cTrAfIBtLJVe62uoyOA
- UhmSvC6qJad8oDRDO7zv2HyvHObXCPPKSd2xpqdSbP9LdDgGQETciExfV//6y6W7Dk3621qUIfzc
- FXeghALwUxUR37FaFlv3F2PbvabG99OCbPN7v9MApiZJ0jIuv2upMAEiRQv+PVjjwa+Z5RFCOMQ+
- rkssTV42UJ+1K8svYHitXuUtdBRw0CzMOyehQ6vQGMEw1nKRbOfg7Yg50ULhGptZzPImFuDj9wtn
- CHpNAoiDqeFMEyid5arI9OX88Mez1seXwD4BM2jQz1LojaPvzWFG78u4Z9swKs6X6s50biZUTMJ7
- bHbjQcSj2k6ROS/HeG5K61yXY75ytT3/xJ9H/2sPTCNmVz3wSPPM6ODIG3M8tIY8RXNFwCHTivEv
- QLPd1P4bw2RxeVx5WfYBV5Z0ipKtF1VPccloD2rUVRwpPdcTfqb5R4VemuUI6bcEARsm0MIEL6H2
- 5DNnVReRKfCEH3VMuaKkhDGeWUGKiyBKYF6y5eh+QfFP7pcU8NRnbcMqdtqW+IuA05DGXjIjSPSU
- iMlahI4i4TNLKKi5WRMONPLcJy48BaQZ9dlwiO6d4xuBNw==
-X-Report-Abuse-To: spam@antispamquarantine.host-h.net
-X-Complaints-To: abuse@antispammaster.host-h.net
-Subject: [oss-security] Re: Re: CVE-2026-31431: CopyFail: linux local privilege scalation
 
-On Fri, May 1, 2026 at 20:25:17 -0400, Reid Sutherland wrote:
-> Why is userspace allowed to load modules in any capacity?
+On Sun, Nov 05, 2017 at 10:15:44PM -0800, Ian Zimmerman wrote:
+> On 2017-11-01 19:12, Solar Designer wrote:
+> 
+> > On Wed, Nov 01, 2017 at 07:02:22PM +0100, Jakub Wilk wrote:
+> 
+> > > Unfortunately, glibc's implementation of tmpfile(3), which is the
+> > > most fool-proof interface for dealing with temporary files that the
+> > > C library offers, doesn't honour TMPDIR. :(
+> > 
+> > We've been carrying a patch for this for ages:
+> 
+> Do you know why this has not been changed upstream?
 
-It's potentially useful for autoloading driver modules when PnP
-devices are connected, which could be considered deadweight if
-they were loaded, or baked into the kernel itself, when the
-respective devices aren't present.
+I did not, but to try and answer your question I just found this:
 
+https://cygwin.com/ml/libc-alpha/1999-04/msg00075.html
 
-> Why do we need kernel modules for math?
+| Re: Why doesn't tmpfile() honor $TMPDIR?
+| 
+|     To: Joel Klecker <espy@debian.org>
+|     Subject: Re: Why doesn't tmpfile() honor $TMPDIR?
+|     From: Ulrich Drepper <drepper@cygnus.com>
+|     Date: 29 Apr 1999 12:24:15 -0700
+|     Cc: libc-alpha@cygnus.com
+| 
+| Joel Klecker <espy@debian.org> writes:
+| 
+| > In stdio-common/tmpfile{,64}.c, __path_search is called with the 
+| > fifth argument set to 0, which causes tmpfile(), and tmpfile64() to 
+| > use P_tmpdir.
+| > 
+| > Is there a particular reason why tmpfile() and tmpfile64() should not 
+| > be changed to call __path_search with the fifth argument set to 1, so 
+| > that the functions do honor $TMPDIR?
+| 
+| Yes:
+| 
+| - compatibility with other systems and earlier versions
+| 
+| - newly introduced security risks
+| 
+| > I am asking because there is a long-standing bug 
+| > (http://www.debian.org/Bugs/db/12/12240.html) in the Debian Bug 
+| > Tracking System regarding this.
+| 
+| This is no bug in glibc.
 
-To interact with cryptographic acceleration hardware, if present or
-desired, and to provide support for kernel subsystems that rely on
-encryption, like IPSec or WireGuard.
+In that Debian bug, we see this comment:
 
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=12240#45
 
-> I'm assuming any thoroughly qualified platform engineer compiles
-> the host kernel without module support.  At least, that needs to
-> make a comeback, bring back applying grsec patches and make
-> menuconfig..
+| From: Topi Miettinen <Topi.Miettinen@medialab.sonera.net>
+| To: 12240@bugs.debian.org
+| Cc: Ian Jackson <ian@chiark.greenend.org.uk>
+| Subject: Re: Bug#12240: patch
+| Date: Tue, 07 Jul 1998 23:20:08 +0300
+| 
+| There are two parts in the patch, one for tmpfile() use and other for
+| tmpnam().
+| 
+| Regarding tmpfile(), I checked K&R, Stevens, Donald Lewine's "POSIX
+| Programmer's Guide", and Solaris manual page and they all agree with glibc
+| documentation in that nothing is guaranteed. Fixing this in glibc is
+| trivial, by changing fifth argument of __stdio_gen_tempname call from 0 to
+| 1 in stdio-common/tmpfile.c. This will cause security problems with setuid
+| programs using tmpfile(), though.
 
-I'm thoroughly unqualified, so take my opinion with a bag of salt:
+Apparently, the security risks and problems mentioned are that people
+were concerned this change would result in SUID programs (and/or their
+children - e.g., a command run via sudo) honoring TMPDIR in their
+tmpfile(3) calls - however, that is not in any way specific to
+tmpfile(3), and it should be addressed for all such places in glibc
+similarly.  I don't know what state glibc was in with regard to
+honoring, ignoring, or unsetting TMPDIR in SUID programs in 1998-1999.
+Maybe those concerns were valid at the time, but if so it means glibc
+had other instances of the issue.
 
-If you have a use case that allows you to avoid loadable kernel
-modules indefinitely in a completely monolithic kernel then, by
-all means, roll your kernel as such and you'll be slightly safer
-than those who don't.
+> Do you know of any programs that break with this change?
 
-Kernel configuration minification doesn't seem to be spoken of
-much anymore except by those who have fairly resource constrained
-embedded systems that run Linux on some application processor.
+No.
 
-If you're prepared to go that far, why not roll your own distro?
-
-LFS is a potentially good starting point, but you can get by with
-even less. For example: Linux, musl, busybox, just the applications
-(and mandatory dependencies) you need, and some init scripts to tie
-it all together.
+Alexander
