@@ -1,39 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/06/2
-Message-ID: <CAH8yC8mSj_StFpa8P3kAVAd+cUrQXqcOpLibd9cX2rON1LMzSw@mail.gmail.com>
-Date: Mon, 5 Jun 2017 21:32:11 -0400
-From: Jeffrey Walton <noloader@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Crypto++ and invalid read in decompressor class
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/07/11
+Message-ID: <1510086603.29942.2.camel@pnnl.gov>
+Date: Tue, 7 Nov 2017 20:30:05 +0000
+From: "Maier, Kurt H" <kurt.maier@...l.gov>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver
 Content-Type: text/plain; charset=utf-8
 
-Hi Everyone,
+On Tue, 2017-11-07 at 21:22 +0100, Greg KH wrote:
+> 
+> I hate to ask, but why are you getting CVEs for bugs fixed over a
+> year
+> ago, and are already in all stable kernel releases a year ago?  Why
+> does
+> it matter?
+> 
+> Unless you happen to have a product that doesn't ever do kernel
+> updates
+> from the stable trees, and well, then you know what you are doing and
+> don't need CVEs assigned either, right?  :)
+> 
 
-Crypto++'s (https://www.cryptopp.com/) is a free and open source
-library of cryptographic schemes originally written by Wei Dai. Smart
-fuzzing revealed Crypto++'s Zinflate class, used by classes like
-Gunzip and Inflator, could perform an out-of-bounds read when
-decompressing data.
+Kernel maintainers' policy is clear, and nobody is asking for that to
+change, but please don't sandbag the process of keeping track of
+vulnerabilities.  The fraction of "products" (regardless of vendor)
+that run linux and never get updates approaches unity.  Being able to
+precisely catalog which linux releases suffer from which
+vulnerabilities is useful to many.
 
-The out-of-bounds read occurs on a table with 30 elements. The table
-is static and its storage is allocated in initialized memory. The
-attacker can craft a ZIP file that allows a read of the last two
-non-existent elements. We believe an attacker can only read 0-bytes
-due to the storage allocation. We were not able to escalate it to a
-write. We believe its a low risk finding.
-
-We were not able to induce failures in other classes using the
-techniques. Other classes include those that are related, like
-compressors; and those which are unrelated, like public and private
-keys.
-
-The issue is being tracked by the library at
-https://github.com/weidai11/cryptopp/issues/414. The Gentoo folks
-assigned CVE-2017-9434 to track the issue.
-
-The fix is available in Master. It is also available for several
-versions of the library at
-https://github.com/weidai11/cryptopp/issues/414#issuecomment-300671740
-.
-
-Jeff
+khm
