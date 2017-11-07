@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1958" "Tuesday" "6" "September" "2016" "20:53:20" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160907005320.3015233E005@smtpvbsrv1.mitre.org>" "47" "[oss-security] Re: CVE request: Qemu: scsi: pvscsi: OOB read and infinite loop while setting descriptor rings" nil nil nil "9" "2016090700:53:20" "[oss-security] Re: CVE request: Qemu: scsi: pvscsi: OOB read and infinite loop while setting descriptor rings" (number mark "U       cve-assign@m Sep  6   47/1958  " thread-indent "\"[oss-security] Re: CVE request: Qemu: scsi: pvscsi: OOB read and infinite loop while setting descriptor rings\"\n") "<alpine.LFD.2.20.1609061630270.20681@wniryva>" ("<alpine.LFD.2.20.1609061630270.20681@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1007" "Tuesday" "7" "November" "2017" "21:22:37" "+0100" "Greg KH" "greg@kroah.com" "<20171107202237.GA10679@kroah.com>" "28" "Re: [oss-security] CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver" nil nil nil "11" "2017110720:22:37" "[oss-security] CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver" (number mark "U       greg@kroah.c Nov  7   28/1007  " thread-indent "\"Re: [oss-security] CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver\"\n") "<1539240847.28577626.1510085696543.JavaMail.zimbra@redhat.com>" ("<906136424.28576814.1510085319128.JavaMail.zimbra@redhat.com>" "<1539240847.28577626.1510085696543.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21755 invoked by uid 550); 7 Sep 2016 00:53:33 -0000
+Received: (qmail 23877 invoked by uid 550); 7 Nov 2017 20:22:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,59 +12,57 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21732 invoked from network); 7 Sep 2016 00:53:32 -0000
-From: cve-assign@mitre.org
-To: ppandit@redhat.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, liqiang6-s@360.cn, vv474172261@gmail.com
-In-Reply-To: <alpine.LFD.2.20.1609061630270.20681@wniryva>
-Message-Id: <20160907005320.3015233E005@smtpvbsrv1.mitre.org>
-Date: Tue,  6 Sep 2016 20:53:20 -0400 (EDT)
-Subject: [oss-security] Re: CVE request: Qemu: scsi: pvscsi: OOB read and infinite loop while setting descriptor rings
+Received: (qmail 23847 invoked from network); 7 Nov 2017 20:22:35 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm1; bh=zGUIzYbLojBLVodowxoDuj8Ab08Mk
+	fEZWYQnNECzMPU=; b=Dk/NmEDSHCBqTzMTlBB0ZCo5UWoI147oFigBPzmBX7lRv
+	JlvMGPQiPYIhlo1GY2NVlfMqBFP9jfjWzlrfuO+wvoE5KQSwYplv6OUnEMEr2VYO
+	+kXC2titEvawI8g16iFhQELlyXOSSdPDjK0+bYsqCz3NxuvL/rZgGc75OZ3DXzEM
+	hR6B+AwA6vs0nCZCVIFDKF74rJIsK3//64FXYw+2SsWkOyFYlHOI7u+qlniNIGaD
+	cc2cf8ChfGaVOOAsOvrY3C8azndJNXuDgoscfpOzsnjN7VTEW5ImKq2+CJXClhAT
+	8yRdL1bvW0gXmUmwRJ1OPvkrUSQf+BbgVEy/RLTdg==
+X-ME-Sender: <xms:ABYCWjnWQ5tGlZTy9ERoIpnqRPHr12jQbT1xgXqQgJh3wbqlPEBULQ>
+Date: Tue, 7 Nov 2017 21:22:37 +0100
+From: Greg KH <greg@kroah.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20171107202237.GA10679@kroah.com>
+References: <906136424.28576814.1510085319128.JavaMail.zimbra@redhat.com>
+ <1539240847.28577626.1510085696543.JavaMail.zimbra@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1539240847.28577626.1510085696543.JavaMail.zimbra@redhat.com>
+User-Agent: Mutt/1.9.1 (2017-09-22)
+Subject: Re: [oss-security] CVE-2017-15102: Linux kernel: usb: NULL-deref due
+ to a race condition in [legousbtower] driver
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> Quick Emulator(Qemu) built with the VMWARE PVSCSI paravirtual SCSI bus
-> emulation support is vulnerable to an OOB access and/or infinite loop issue.
-> It could occur while processing SCSI commands 'PVSCSI_CMD_SETUP_RINGS'.
+On Tue, Nov 07, 2017 at 03:14:56PM -0500, Vladis Dronov wrote:
+> Heololo,
 > 
-> A privileged user inside guest could use this flaw to crash the Qemu process
-> resulting in DoS.
+> A race condition exists in Linux kernel since year 2003 through version 4.9-rc1
+> in [legousbtower] driver which allows a null pointer dereference caused by
+> not removing a device file interface on an error when the probe function is called.
+> This can cause a write-what-where condition by remapping dev->interrupt_out_buffer
+> in tower_write(), leading to privilege escalation.
 > 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg00050.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1373462
+> References:
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=1505905
+> 
+> An upstream patch:
+> 
+> https://github.com/torvalds/linux/commit/2fae9e5a7babada041e2e161699ade2447a01989
 
->> Vmware Paravirtual SCSI emulation uses command descriptors to
->> process SCSI commands. These descriptors come with their ring
->> buffers. A guest could set the page count for these rings to
->> an arbitrary value, leading to infinite loop or OOB access.
->> Add check to avoid it.
+I hate to ask, but why are you getting CVEs for bugs fixed over a year
+ago, and are already in all stable kernel releases a year ago?  Why does
+it matter?
 
-Use CVE-2016-7155.
+Unless you happen to have a product that doesn't ever do kernel updates
+from the stable trees, and well, then you know what you are doing and
+don't need CVEs assigned either, right?  :)
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/scsi/vmw_pvscsi.c but
-that may be an expected place for a later update.
+thanks,
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXz2K3AAoJEHb/MwWLVhi2gXcP/iZr4mBbZqMJU/QngSo6pixg
-17eBrvWqWoFxB+h1Fh+etk5EXS8LB6L8vPz0BpyGjhixdF0z9N8rMKEu14nVZmY3
-R3IejY1e25gDuOZnX7pyR/4qTTE+ebYFg6DEU+vPiQslBrhMNj0ZB5VzF9uZD1kD
-6bnJkQIUJ51ZcnxQsu0V/Zk9Q+cJX2ctKQLa4GHubaKI0wKRRS0PB64XCxKGxPca
-r0oKV5CbSLU+0rXvG54GfzXwNFrVlQIssuYYMPMpGgMhIJRi/uq9g0hKvVC9BgX3
-HEwRbkDtp0I3pNlQsbJMO5JkTb78DQWfW+bZMgFAjFtFhbitVKwpOrEu/Afx/VID
-PrHITep4kYsALpJ3enfgJ1XpkpY9lKz3Y498ZRnfwQhMmGldiTO3mAAPDsrtOsLi
-Bn1A/Y86wWK1qnDjr6bsrxTu7x2dSV+W1As0ILfH+RA9FwjKI8mGUDk55u9b2g1o
-Nc4ow2jMj+YFvCS1p0auYKKGMI66weX3NFsPmw0HmeNRLcspr7p7Y/0VwgHeAUwf
-C5YSdNx2uhTlH4d6bxP0RlO2IeyBIkHCmsb69kNd10N7uaMmEsT9+xZHKB/z9QV9
-QaDqBu6mwyulj0UKycyafSmbk2p9BDHWYpCXGP3UpiSUkcxi/7v9YZYKSN4jQR0P
-geRSHxzwQBMdDP3RVrgX
-=Dx9R
------END PGP SIGNATURE-----
+greg k-h
