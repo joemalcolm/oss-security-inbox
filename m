@@ -1,72 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/20/6
-Message-ID: <15560.2817862643-sendEmail@localhost>
-Date: Mon, 20 Mar 2017 10:29:20 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: libpcre: heap-based bufffer overflow in regexflip8_or_16 (pcretest.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/07/8
+Message-ID: <20171107202237.GA10679@kroah.com>
+Date: Tue, 7 Nov 2017 21:22:37 +0100
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver
 Content-Type: text/plain; charset=utf-8
 
-Description:
-libpcre is a perl-compatible regular expression library.
+On Tue, Nov 07, 2017 at 03:14:56PM -0500, Vladis Dronov wrote:
+> Heololo,
+> 
+> A race condition exists in Linux kernel since year 2003 through version 4.9-rc1
+> in [legousbtower] driver which allows a null pointer dereference caused by
+> not removing a device file interface on an error when the probe function is called.
+> This can cause a write-what-where condition by remapping dev->interrupt_out_buffer
+> in tower_write(), leading to privilege escalation.
+> 
+> References:
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=1505905
+> 
+> An upstream patch:
+> 
+> https://github.com/torvalds/linux/commit/2fae9e5a7babada041e2e161699ade2447a01989
 
-A fuzz on libpcre1 through the pcretest utility revealed an heap overflow in the utility itself. Will follow a feedback from upstream.
+I hate to ask, but why are you getting CVEs for bugs fixed over a year
+ago, and are already in all stable kernel releases a year ago?  Why does
+it matter?
 
-I am not going to do anything about this one. (a) It is concerned with a feature of pcretest that has been dropped from pcre2test, and (b) the input contains binary zeros, which are not supported in 
-pcretest input. This is documented for pcre2test but not, I see for pcretest. I have added a paragraph to the documentation.
+Unless you happen to have a product that doesn't ever do kernel updates
+from the stable trees, and well, then you know what you are doing and
+don't need CVEs assigned either, right?  :)
 
-However, it does not cost much for me inform the community that this bug exists.
-In any case, if you have a web application that calls directly the pcretest utility to parse untrusted data, then you are affected.
-Also, it is important share the details because some distros/packagers may want to patch this issue instead of follow the upstream’s way.
+thanks,
 
-The complete ASan output:
-
-# pcretest -16 -d $FILE
-==30352==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x60b00000b000 at pc 0x00000053cef0 bp 0x7ffd02dccb90 sp 0x7ffd02dccb88
-READ of size 2 at 0x60b00000b000 thread T0
-    #0 0x53ceef in regexflip8_or_16 /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcretest.c:2552:24
-    #1 0x53ceef in regexflip /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcretest.c:2792
-    #2 0x53ceef in main /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcretest.c:4425
-    #3 0x7fb6693d678f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #4 0x41b438 in _init (/usr/bin/pcretest+0x41b438)
-
-0x60b00000b000 is located 0 bytes to the right of 112-byte region [0x60b00000af90,0x60b00000b000)
-allocated by thread T0 here:
-    #0 0x4d41f8 in malloc /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64
-    #1 0x53e883 in new_malloc /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcretest.c:2372:15
-    #2 0x7fb66a9473a1 in pcre16_compile2 /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcre_compile.c:9393:19
-    #3 0x5335d9 in main /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcretest.c:4034:5
-    #4 0x7fb6693d678f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-
-SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcretest.c:2552:24 in regexflip8_or_16
-
-Affected version:
-8.40
-
-Commit fix:
-N/A
-
-Fixed version:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00196-pcre-heapoverflow-regexflip8_or_16
-
-Timeline:
-2017-02-22: bug discovered and reported to upstream
-2017-03-20: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/03/20/libpcre-heap-based-bufffer-overflow-in-regexflip8_or_16-pcretest-c
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
+greg k-h
