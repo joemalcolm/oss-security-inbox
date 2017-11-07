@@ -1,65 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/02/5
-Message-ID: <2ac0c9bbb12f40eda8a5a359d865e4a0@imshyb01.MITRE.ORG>
-Date: Thu, 2 Feb 2017 00:55:01 -0500
-From: <cve-assign@...re.org>
-To: <max@...canary.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE requests: code injection in rubygem espeak-ruby and code injection in rubygem festivaltts4r
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/07/3
+Message-ID: <bf387118-b094-17b1-a023-39af87742479@oracle.com>
+Date: Tue, 7 Nov 2017 14:20:26 +0000
+From: John Haxby <john.haxby@...cle.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Race condition between UDP bind(2) and connect(2) delivers wrong datagrams
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> Two similar vulnerabilities in ruby text-to-speech libraries.
-
-> [] 1) espeak-ruby
+On 06/11/17 18:42, Florian Weimer wrote:
+>> Even though it can be difficult to exploit this bug, it is a
+>> validation bug
+>> in the kernels. POSIX 2008 (2016 edition) says[1]:
+>>
+>>   "For SOCK_DGRAM sockets, the peer address identifies where all datagrams
+>>    are sent on subsequent send() functions, and limits the remote sender
+>>    for subsequent recv() functions."
 > 
-> Rubygem espeak-ruby passes user modifiable strings directly to a shell
-> command.
-> 
-> An attacker can execute malicious commands by modifying the strings that
-> are passed as arguments to the speak, save, bytes and bytes_wav methods in
-> the lib/espeak/speech.rb.
-> 
-> https://github.com/dejan/espeak-ruby/issues/7
+> Whatever the exact wording used is, the intent of POSIX is to describe
+> the BSD sockets API behavior.  If the API does something else, that's a
+> POSIX bug.
 
-Use CVE-2016-10193.
+It does say "subsequent" and says nothing about datagrams that might be
+received by the kernel before the connect(2).
 
+The Linux man page also has this to say:
 
-> [] 2) festivaltts4r
-> 
-> Rubygem festivaltts4r passes user modifiable strings directly to a shell
-> command.
-> 
-> An attacker can execute malicious commands by modifying the strings that
-> are passed as arguments to the to_speech and and to_mp3 methods in
-> lib/festivaltts4r/festival4r.rb.
-> 
-> https://github.com/spejman/festivaltts4r/issues/1
+>   Generally, connection-based protocol sockets may successfully connect()
+>   only once; connectionless protocol sockets may use  connect()  multiple
+>   times to change their association.  Connectionless sockets may dissolve
+>   the association by connecting to an address with the  sa_family  member
+>   of sockaddr set to AF_UNSPEC (supported on Linux since kernel 2.2).
 
-Use CVE-2016-10194.
+I know that that's not Posix, but it underlines the interesting question
+of what happens to packets that have already been received that have the
+"wrong" source address?
 
+You might hope that the kernel will just flush any datagrams that the
+application has picked up.  What happens, though, if the program is
+working its way through datagrams that it has received or is receiving
+from the kernel?   That's a rhetorical question -- it should, of course,
+discard packets it is (no longer) interested in.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+While there's plenty of scope for programs to get this wrong, I don't
+think the kernel is under any obligation to attempt to flush anything
+either from a standards point of view or from a real-world
+implementation point of view.
 
-iQIcBAEBCAAGBQJYksb0AAoJEHb/MwWLVhi2mkEQALLyH6VlcdSpoQJaTgu9Rb3m
-7E5nG6xJpQOgaSGnG7app8LBgGkXDxpO8O02tqHpjvriq+WrstxgepvohYEh71z7
-AgahTWdBRThSx8hRFxQE0ixj0RuIa0895ic82H0c7uD6RESGkfDJf+YgYis4wvoF
-APYmog4LJ8AbqN0khPh7ug0w/jpqV/RQAtddcC5PXqbgcl7K+RjFpSWHL4R9feS/
-aq3tBEJ7grXfJ+juUE1OvuXDRLO9RJbWMHeVHHghvwL37gUJ13sUtjlvPBTztYeJ
-h9VQ7WH67TSYI+OqsA09U0SzG9lagVerffgPXU3Fe62DeV3JQouto0KqraUpDmZa
-+Ucz3orTsJ/QKRIlxJimC3/RDwWz/WhJv0SdjdbqPaCehXCiGWs5QbakVYa+R1H6
-+UNmHA5FlxB/zCiAltgviL+OdaxNUCT1dhSuXW7JnFmrujQ4PdknYy0UVV+KWwxp
-OdRXJVkbLDj53FxXi1MIq1P3qQDr74U60+eJHE0hbg7UYGqED5DQ5zrgpZEv97kd
-ldr8XnS3zgxOqsNMGxvGKUIKjLxEGqqHRPWzYJFtk946WC49upbkmsezGRx7F0Hr
-KxYXqnjLm28oBCI4q8jA8KtgapnxnbMjw1SWQvOOQnltmbwRbEEAVa53B6dCoCGT
-03ZXu+SVo5UqQbGCBmcM
-=np+3
------END PGP SIGNATURE-----
+jch
