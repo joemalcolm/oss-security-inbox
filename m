@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1362" "Wednesday" "25" "January" "2017" "03:48:17" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<e79b63144d4c451291ba0a0c5776be8f@imshyb01.MITRE.ORG>" "34" "[oss-security] Re: CVE Request: libXpm < 3.5.12 heap overflow" nil nil nil "1" "2017012508:48:17" "[oss-security] Re: CVE Request: libXpm < 3.5.12 heap overflow" (number mark "U       cve-assign@m Jan 25   34/1362  " thread-indent "\"[oss-security] Re: CVE Request: libXpm < 3.5.12 heap overflow\"\n") "<20170122132251.GA11536@pepper.home.stoeckmann.org>" ("<20170122132251.GA11536@pepper.home.stoeckmann.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["804" "Tuesday" "7" "November" "2017" "20:30:05" "+0000" "Maier, Kurt H" "kurt.maier@pnnl.gov" "<1510086603.29942.2.camel@pnnl.gov>" "22" "Re: [oss-security] CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver" "^Date:" nil nil "11" "2017110720:30:05" "[oss-security] CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver" (number mark "U       kurt.maier@p Nov  7   22/804   " thread-indent "\"Re: [oss-security] CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver\"\n") "<20171107202237.GA10679@kroah.com>" ("<906136424.28576814.1510085319128.JavaMail.zimbra@redhat.com>" "<1539240847.28577626.1510085696543.JavaMail.zimbra@redhat.com>" "<20171107202237.GA10679@kroah.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 14047 invoked by uid 550); 25 Jan 2017 08:48:29 -0000
+Received: (qmail 11293 invoked by uid 550); 7 Nov 2017 21:14:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,49 +11,50 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14021 invoked from network); 25 Jan 2017 08:48:29 -0000
-From: <cve-assign@mitre.org>
-To: <tobias@stoeckmann.org>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <20170122132251.GA11536@pepper.home.stoeckmann.org>
-Message-ID: <e79b63144d4c451291ba0a0c5776be8f@imshyb01.MITRE.ORG>
-Date: Wed, 25 Jan 2017 03:48:17 -0500
+Received: (qmail 16261 invoked from network); 7 Nov 2017 20:30:17 -0000
+Thread-Topic: [oss-security] CVE-2017-15102: Linux kernel: usb: NULL-deref
+ due to a race condition in [legousbtower] driver
+Thread-Index: cuUjS/h9kZMSbIbCPC09nV7keM+VYNxp+nmAgAACE4A=
+Message-ID: <1510086603.29942.2.camel@pnnl.gov>
+References: <906136424.28576814.1510085319128.JavaMail.zimbra@redhat.com>
+	 <1539240847.28577626.1510085696543.JavaMail.zimbra@redhat.com>
+	 <20171107202237.GA10679@kroah.com>
+In-Reply-To: <20171107202237.GA10679@kroah.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-originating-ip: [130.20.128.10]
+Content-Type: text/plain; charset="iso-8859-1"
+Content-ID: <D0774C4113625F4BB8D1E7A8BDF51EA7@pnnl.gov>
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: CVE Request: libXpm < 3.5.12 heap overflow
+Date: Tue, 7 Nov 2017 20:30:05 +0000
+From: "Maier, Kurt H" <kurt.maier@pnnl.gov>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE-2017-15102: Linux kernel: usb: NULL-deref
+ due to a race condition in [legousbtower] driver
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Tue, 2017-11-07 at 21:22 +0100, Greg KH wrote:
+>=20
+> I hate to ask, but why are you getting CVEs for bugs fixed over a
+> year
+> ago, and are already in all stable kernel releases a year ago?=A0=A0Why
+> does
+> it matter?
+>=20
+> Unless you happen to have a product that doesn't ever do kernel
+> updates
+> from the stable trees, and well, then you know what you are doing and
+> don't need CVEs assigned either, right?=A0=A0:)
+>=20
 
-> https://cgit.freedesktop.org/xorg/lib/libXpm/commit/?id=d1167418f0fd02a27f617ec5afd6db053afbe185
-> 
-> through maliciously crafted XPM files.
-> 
-> The affected code is prone to two 32 bit integer overflows while parsing
-> extensions: the amount of extensions and their concatenated length.
+Kernel maintainers' policy is clear, and nobody is asking for that to
+change, but please don't sandbag the process of keeping track of
+vulnerabilities.  The fraction of "products" (regardless of vendor)
+that run linux and never get updates approaches unity.  Being able to
+precisely catalog which linux releases suffer from which
+vulnerabilities is useful to many.
 
-Use CVE-2016-10164.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYiGPYAAoJEHb/MwWLVhi2nUQP/0LQAMNgcfikDFbTd0j6xWyF
-O1qAdm8ok5jnJaV4VR5ivn68LxV98eL3uBI6dKzxNrSf7wl/Xj8YdxtdYr5KgF6W
-38IfyWLLNwt2GHhqAkHFUE4CUoZQMoAmffdpexZuJ5FuD7q4IGX3raV8/nhFg4bG
-zuUPuJD+7FMXYzFBy/t6yk+1VwqQVhCY4RxzX5J/Np2XYGHi2yOhtfSCoZ5OWAKV
-1GFYbxAUqYZn1HvqrCbVFGi0PEejpORm4Z+R8plxnImgQAwEXImscxuc3L1nxGZB
-SOMNfRmSKQ2VGhsk0LEfJvwk8ZdwWv18iHNGyMCDw1rnIu1KzVVAMyF6/IwtkOk4
-VHIWP9SkUs1w20xznzSdGF1CQN5sSfRGkxwqwavCbK4h/2iFpsN/VEmbHbdkGmc6
-y/dhmGf6WPJezXbPafcLOY5o9BZayzSgSN5+lpJvaGrW+CYKZUU2IsnNJ1P5txs1
-c9OvaGKHXfnC57aLPEybSrkTlJDQghqTLTVFGUR7wIrOhVPrpM1MtXVHXbonPUtp
-J7qc6h3TpEbCWa/KhmvvDbrlzhO4cnOptIx57z2b6UxLRjVhNP26X+YRtH/NxzPh
-TRBmJ7MwdU32Ngpr1LiPhBsyZ5ECO4M/G2JUmStOVpuaXHmKQTYU6do4MD/UlgVz
-GKnveQt+Y4sDCrQa6sDX
-=T2kK
------END PGP SIGNATURE-----
+khm=
