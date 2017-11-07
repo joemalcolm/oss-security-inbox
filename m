@@ -1,119 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/10/2
-Message-ID: <20171010030437.GA4002@TC.local>
-Date: Mon, 9 Oct 2017 20:04:37 -0700
-From: Aaron Patterson <tenderlove@...y-lang.org>
-To: security@...e.de, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
-Subject: [CVE-2017-0903] Unsafe Object Deserialization Vulnerability in RubyGems
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/07/4
+Message-ID: <20171107165127.GA1693@weckbecker.name>
+Date: Tue, 7 Nov 2017 17:51:27 +0100
+From: Matthias Weckbecker <matthias@...kbecker.name>
+To: oss-security@...ts.openwall.com
+Subject: Net::Ping::External command injections
 Content-Type: text/plain; charset=utf-8
 
-# Unsafe Object Deserialization Vulnerability in RubyGems
+Hi,
 
-There is a possible unsafe object desrialization vulnerability in RubyGems.
-It is possible for YAML deserialization of gem specifications to bypass class
-white lists.  Specially crafted serialized objects can possibly be used to
-escalate to remote code execution. This vulnerability has been assigned the
-CVE identifier CVE-2017-0903.
+Net::Ping::External [0] is prone to command injection vulnerabilities.
 
-Versions Affected:  >= 2.0.0.
-Not affected:       < 2.0.0
-Fixed Versions:     2.6.14
+The issues are roughly 10 (!) years old [1], but the code is still being
+shipped these days (e.g. in ubuntu artful and debian stretch [2]).
 
-Impact
-------
-When packaging a Gem, RubyGems will store information about the gem (the
-"specification") inside the Gem package, and formatted as YAML.  When reading
-Gem information, RubyGems will parse that YAML.  Without safeguards, YAML can
-be used to instantiate objects in a target system.  If an attacker knows about
-the target system, they can use these instantiated objects as a way to
-escalate to an RCE via other means like `Marshal.load`.
+I had contacted the author of the code a few days ago, but obviously did
+not get any reaction.
 
-Normally, a remote code execution flaw isn't a problem in RubyGems because
-RubyGems is designed to execute arbitrary code any time a Gem is installed.
-However, services that process Gems like RubyGems.org can be impacted by this.
-In other words, when used as a client, RubyGems is not impacted.  Applications
-that process Gems on the server are impacted.
+A patch is available here:
 
-Releases
---------
-The FIXED releases are available at the normal locations.
+  http://matthias.sdfeu.org/devel/net-ping-external-cmd-injection.patch
 
-Workarounds
------------
-For users that can't patch or upgrade, the following monkey patch will
-mitigate this risk:
+Maybe time to just patch it downstream? Or drop this pkg. altogether?
 
-```
-module Gem
-  class Specification
-    WHITELISTED_CLASSES = %w(
-      Symbol
-      Time
-      Date
-      Gem::Dependency
-      Gem::Platform
-      Gem::Requirement
-      Gem::Specification
-      Gem::Version
-      Gem::Version::Requirement
-    )
+Thanks,
+Matthias
 
-    WHITELISTED_SYMBOLS = %w(
-      development
-      runtime
-    )
-
-    def self.from_yaml(input)
-      input = normalize_yaml_input input
-      spec = Psych.safe_load(input, WHITELISTED_CLASSES, WHITELISTED_SYMBOLS, true)
-
-      fail Gem::EndOfYAMLException if spec && spec.class == FalseClass
-
-      unless Gem::Specification === spec
-        fail Gem::Exception, "YAML data doesn't evaluate to gem specification"
-      end
-
-      spec.specification_version ||= NONEXISTENT_SPECIFICATION_VERSION
-      spec.reset_nil_attributes_to_default
-
-      spec
-    end
-  end
-
-  class Package
-    def read_checksums gem
-      Gem.load_yaml
-
-      @checksums = gem.seek 'checksums.yaml.gz' do |entry|
-        Zlib::GzipReader.wrap entry do |gz_io|
-          Psych.safe_load(gz_io.read, Gem::Specification::WHITELISTED_CLASSES, Gem::Specification::WHITELISTED_SYMBOLS, true)
-        end
-      end
-    end
-  end
-end
-
-Patches
--------
-To aid users who aren't able to upgrade immediately we have provided patches for
-the two supported release series. They are in git-am format and consist of a
-single changeset.
-
-* 2-6-whitelist-bypass.patch - Patch for 2.6 series
-
-Please note that only the 2.6.x series is supported at present. Users
-of earlier unsupported releases are advised to upgrade as soon as possible as we
-cannot guarantee the continued availability of security fixes for unsupported
-releases.
-
-Credits
--------
-Thanks to Max Justicz ( https://mastodon.mit.edu/@maxj ) for reporting this!
-
--- 
-Aaron Patterson
-http://tenderlovemaking.com/
-
-View attachment "2-6-whitelist-bypass.patch" of type "text/plain" (4675 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+--
+[0] https://metacpan.org/pod/Net::Ping::External
+[1] https://rt.cpan.org/Public/Dist/Display.html?Name=Net-Ping-External
+    (id #33230)
+[2] https://packages.debian.org/stable/perl/libnet-ping-external-perl \
+    https://launchpad.net/ubuntu/+source/libnet-ping-external-perl
