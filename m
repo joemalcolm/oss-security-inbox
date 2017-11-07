@@ -1,25 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/12/7
-Message-Id: <4DB80547-81B4-4091-BEDD-ADFF17ADAE6B@gmail.com>
-Date: Fri, 12 May 2017 13:48:16 -0500
-From: Brandon Perry <bperry.volatile@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/07/2
+Message-ID: <f9ddbfc2-0d8b-039b-9a49-b4fd05b1784b@c7f.de>
+Date: Tue, 7 Nov 2017 07:20:02 +0100
+From: Matthias Luft <uchimata@....de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Multiple crashes in OpenEXR
+Subject: Re: Security risk of vim swap files
 Content-Type: text/plain; charset=utf-8
 
 
-> On May 12, 2017, at 1:45 PM, Henri Salo <henri@...v.fi> wrote:
+
+On 31.10.2017 15:46, Simon Waters (Surevine) wrote:
 > 
-> On Fri, May 12, 2017 at 12:09:30PM -0500, Brandon Perry wrote:
->> As of this writing, <snip>. No CVEs have been requested.
 > 
-> Why not?
-
-I’m lazy. I might this weekend.
-
+>> On 31 Oct 2017, at 12:23, Hanno Böck <hanno@...eck.de> wrote:
+>>
+>> I was wondering how to best avoid this on my own servers and I first
+>> thought about saving the swap files to tmp ( with "set directory”).
 > 
-> --
-> Henri Salo
+> The specific website issue, the web server config can exclude dot files.
+> 
+> Apache ships with
+> 
+> <Files ~ "^\.ht">
+>     Order allow,deny
+>     Deny from all
+> </Files>
+> 
+> The obvious generalisations of this work. Although some sources also recommend blocking in “Location” to prevent requests with “*/.*stuff”  which are parsed by templating libraries or other directives.
+> 
+> To rub salt in most distros ship Apache with
+> 
+> IndexIgnore .??* *~ *# RCS CVS *,v *,t
+> 
+> Which means that if you use the Apache directory indexing approach these files will be hidden but not blocked.
+> 
+> I now realise the Alexa top 1 million will now be searched for remaining uses of RCS and CVS ;)
+> 
+> In a previous role the roll out scripts cleaned this sort of junk and told you if any new files had been added to the web application, this approach has much to recommend it if you have the time to perfect your applications, and your roll out procedures.
+> 
 
+Another approach would be to actually whitelist the file types/patterns
+that are delivered by your web servers. We have seen various file types
+during testing since a long time that should not have been web served
+and compiled a list [1] of those:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+.dot files in general. In particular:
+ .ht*
+ .DS_Store
+ .git*
+ .svn*
+.pkcs12 .pfx .p12, .pem, .key, .der, .crt
+*.log
+*.swp
+*.bp/*.bak
+/^~/ or /~$/
+*.dmp/*.core
+thumbs.db/*.db
+*.raw
+*.sqlite
+*.conf/*.ini
+*.txt/*.csv
+
+However, I also fully agree with the comments later in the thread that
+this issue should mainly be addressed by strict operating standards for
+production systems as well as deployment procedures.
+
+Best,
+Matthias
+
+[1] https://insinuator.net/2016/09/files-your-webserver-shouldnt-deliver/
