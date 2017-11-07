@@ -1,49 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/06/5
-Message-ID: <2ECE9D9EEF1F524185270138AE23265955B0C1F8@S0MSMAIL112.arc.local>
-Date: Mon, 6 Nov 2017 09:44:32 +0000
-From: Fiedler Roman <Roman.Fiedler@....ac.at>
-To: "'oss-security@...ts.openwall.com'" <oss-security@...ts.openwall.com>
-Subject: AW: Re: Security risk of server side text editing in general and vim.tiny specifically
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/07/5
+Message-ID: <Pine.LNX.4.64.1711071219160.10376@e-smith.charliebrady.org>
+Date: Tue, 7 Nov 2017 12:22:07 -0500 (EST)
+From: Charlie Brady <charlieb-oss-security@...ge.apana.org.au>
+To: oss-security@...ts.openwall.com
+Subject: Re: Net::Ping::External command injections
 Content-Type: text/plain; charset=utf-8
 
-Hello Jan,
 
-> From: Ian Zimmerman [mailto:itz@...y.loosely.org]
->
-> On 2017-11-03 11:07, Fiedler Roman wrote:
->
-> > Due to the recent discussion on vim swap file use, I expected also
-> > attraction of of evil-minded to the topic of text editing security and
-> > thus an increase in attack probability on server side text editing in
-> > general. Therefore I wanted to review our software qualification
-> > criteria for text editing on servers, where vim/vim.tiny is used and
-> > probably update the SOPs and guidelines.
->
-> How much of this (and the parallel thread of course) applies to nvi?
+Is the primary fault in Net::Ping::External, or in whatever software takes 
+untrusted input and uses it to construct args used in 
+Net::Ping::External->ping()?
 
-Sorry about the parallel threads, Outlook removes the relevant mail headers 
-without asking under some circumstances.
+On Tue, 7 Nov 2017, Matthias Weckbecker wrote:
 
-Nvi avoids the chmod/chown trickery, at least for Ubuntu Xenial. So all those 
-bugs do not apply.
-
-As written in another post, using /var/tmp in that way is really a bad idea. 
-In my opinion it is a pity, that the vim recover redesign did not cleanly 
-separate locking and recovery. In my opinion, a good solution would be to 
-create a [].lock file where the file resides, thus also working across network 
-shares, ... Recovery files should go only to user directories, where tmp dir 
-cleanup is not an issue. When same user attempts recovery, his personal 
-recovery copy is found anyway. If another user finds the lock, he has to 
-decide his actions anyway, e.g. a) make the change without knowing the "lost" 
-changes from another user, because it is urgent or b) find out, who the other 
-use is, search his change files (if root and allowed), ....
-
-With a lock file, nothing can leak. If "recovery of other user's changes" is a 
-common procedure in some companies, a special setting could cause the lock 
-file not to be empty but to contain the last editing user name, login time so 
-that it is easier to contact that user.
-
-LG Roman
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (4814 bytes)
+> Hi,
+> 
+> Net::Ping::External [0] is prone to command injection vulnerabilities.
+> 
+> The issues are roughly 10 (!) years old [1], but the code is still being
+> shipped these days (e.g. in ubuntu artful and debian stretch [2]).
+> 
+> I had contacted the author of the code a few days ago, but obviously did
+> not get any reaction.
+> 
+> A patch is available here:
+> 
+>   http://matthias.sdfeu.org/devel/net-ping-external-cmd-injection.patch
+> 
+> Maybe time to just patch it downstream? Or drop this pkg. altogether?
+> 
+> Thanks,
+> Matthias
+> 
+> --
+> [0] https://metacpan.org/pod/Net::Ping::External
+> [1] https://rt.cpan.org/Public/Dist/Display.html?Name=Net-Ping-External
+>     (id #33230)
+> [2] https://packages.debian.org/stable/perl/libnet-ping-external-perl \
+>     https://launchpad.net/ubuntu/+source/libnet-ping-external-perl
+> 
