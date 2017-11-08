@@ -1,68 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/23/2
-Message-ID: <20170623071216.ddio6ve4f54yy2hf@perpetual.pseudorandom.co.uk>
-Date: Fri, 23 Jun 2017 08:12:39 +0100
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/08/10
+Message-ID: <aff42e56-9413-1081-8589-3de127931a2e@orlitzky.com>
+Date: Wed, 8 Nov 2017 14:49:00 -0500
+From: Michael Orlitzky <michael@...itzky.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-9780: Flatpak: privilege escalation via setuid/world-writable file permissions
+Subject: Re: [CVE-2017-14604] .desktop vulnerability again
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 23 Jun 2017 at 07:37:54 +0200, Florian Weimer wrote:
-> On 06/22/2017 11:01 PM, Simon McVittie wrote:
-> > * If you are using Flatpak to install apps from a third-party vendor,
-> >   then there is already a trust relationship: the app is sandboxed, but
-> >   the third-party vendor chooses what parameters are used for the sandbox.
+On 10/05/2017 04:37 PM, Yves-Alexis Perez wrote:
+> Hi list,
 > 
-> Doesn't this qualify as a vulnerability in its own right?  Flatpak
-> advertises countermeasures against malicious applications
+> I'm currently in the process of uploading a nautilus package fixing CVE-2017-
+> 14604 which is again a vulnerability in the handling of desktop file. As I
+> don't think it's been discussed here, it might be a good idea to do a wrap-up, 
+> and maybe start a discussion if people are interested and have good ideas.
+...
 
-Hmm, yes, that mitigation is overstated. The extent of the trust
-relationship depends whether you consider the arbiter of app permissions
-to be the user of Flatpak (who has the opportunity to check and deny
-requested permissions, but will frequently not take that opportunity)
-or the repository maintainer (the app author sets the permissions that
-will be used in the absence of further user action, and the repository
-maintainer chooses what apps they are willing to publish).
+> Scanning through the various bugs, not everyone agree on how to fix this:
+> 
+> - Nautilus doesn't use the executable bit anymore but store a trusted
+> attribute in a gio/gvfs metadata, which is stored on the filesystem in
+> XDG_DATA_DIR/.gvfs-metada (usually ~/.local/share/gvfs-metadata) which I guess
+> should not be reachable from a tarball unless the extraction process has a
+> directory traversal vulnerability
 
-The flatpak(1) low-level CLI tool is non-interactive (CLI, not TUI), so
-it can't prompt for acceptance/rejection of permissions, but they can
-be viewed between installation and run with "flatpak info", and taken
-away (or indeed added) with "flatpak override". I believe the intention
-is that interactive GUIs for Flatpak (like GNOME Software) will query
-requested permissions in advance[1], more like the way Android does it.
+Using the executable bit was wrong (in my opinion) for one main reason:
+the .desktop files aren't actually executable. By marking them +x, you
+screw up programs (like bash) that care about the executable bit. There
+is now also the issue that you've reported, where the executable bit is
+preserved by tar -- we have to assume that the GUI will do something
+stupid like hide the file extension.
 
-CVE-2017-9780 applies after merely installing a Flatpak app, even if
-the user intends to remove permissions before running it, so it breaks
-that model.
+The last time I thought about this, I came up with something that sounds
+spiritually similar to what Nautilus has done. Using Thunar as my file
+manager -- suppose I download a file called /home/mjo/malware.desktop
+that contains (from your bug report),
 
-> Flatpak's sandboxing technology prevents exploits and hinders malicious
-> applications.
+  [Desktop Entry]
+  Name=CV.pdf
+  Exec=sh -c 'touch ./MALWARE_WAS_HERE'
+  Terminal=false
+  Icon=x-office-document
+  Type=Application
+  Categories=Office
 
-I think "prevents exploits" is stronger than is justified (I didn't
-write that text). If nothing else, most current Linux desktops use X11,
-which has very little privilege separation; and in practice GUI Flatpak
-apps all ask for access to the X11 socket, because otherwise their GUIs
-would not work on non-Wayland systems.
+I don't want to rely on the executable bit, and I don't want to use any
+gvfs magic. Instead, when I click on malware.desktop, Thunar should
+check for the existence of
 
-The sandbox certainly *hinders* malicious applications - in particular
-some aspects of the sandbox, such as NO_NEW_PRIVS, cannot be turned off
-by configuration - but it is not enough to render malicious code
-harmless to run.
+  /home/mjo/.local/share/Thunar/home/mjo/malware.desktop           (1)
 
-I would recommend talking to Flatpak's maintainer directly if you have
-comments on this - I am not going to be adding useful value by acting
-as a man-in-the-middle.
+and then handle two cases,
 
-    S
+  i) if the file does exist, and if it's executable, execute it.
 
-[1] Where possible, user consent for actions outside the sandbox is
-    obtained at the time of use by "portals": for instance opening
-    a file outside the sandbox is mediated by an ordinary File->Open
-    dialog running outside the sandbox, and only the user-selected
-    file is made available inside the sandbox. However, not all
-    permissions are feasible to use this way; in particular, the
-    framework needs to know when the app is run whether to set up
-    an isolated network namespace or allow sharing the host's
-    network namespace. In the above, and when I wrote "parameters
-    for the sandbox" in the advisory, I mean the permissions that
-    can't be prompted for on-use.
+  ii) otherwise, prompt me for whether or not I want to run the thing
+
+      ii.a) if I say "no", then do nothing
+
+      ii.b) if I say yes, then create the file at (1) containing
+
+              #!/bin/sh
+              sh -c 'touch ./MALWARE_WAS_HERE'
+
+            and mark it executable before running it.
+
+That way, the only thing that gets +x is *actually* executable. The
+"metadata" is still associated with the file path, but needs no magic
+beyond the ability to execute a shell script.
+
+This idea is probably full of holes, but nobody who's qualified to fix
+this clicks on pictures to run programs =P
+
+Obvious caveats:
+
+  1) The file manager would have to substitute "%f" and friends into the
+     shell script and get the quoting right.
+
+  2) The path in (1) doesn't change when the file's contents do; a real
+     implementation would want to include a hash or something, like
+
+       /home/mjo/.local/share/Thunar/home/mjo/malware.desktop/<sha512>
+
+     The Nautilus implementation might be vulnerable to swapping the
+     contents of the file.. the gvfs metadata is supposedly path-based,
+     but I know nothing about it.
+
+  3) This will prompt every user the first time he runs a system
+     executable that has a .desktop entry. That should be easy to
+     solve, though, by using a system location such as
+     /var/lib/Thunar/<path>/<sha512> and by having the file manager look
+     there first. Distros would simply install the shell script and mark
+     it executable.
