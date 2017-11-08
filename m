@@ -1,51 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/11/2
-Message-ID: <CANO=Ty3C4kfhp=A6zQksNzmNRgUBpUk4M__mhkcez=_RA8_Dew@mail.gmail.com>
-Date: Tue, 10 Jan 2017 19:29:40 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: docker-user@...glegroups.com, docker-dev@...glegroups.com,  fulldisclosure@...lists.org, vuln@...unia.com, bugtraq@...urityfocus.com
-Subject: Re: Docker 1.12.6 - Security Advisory
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/08/3
+Message-ID: <dfb21a5f-dc61-a3d4-93ff-333a902623f9@apache.org>
+Date: Wed, 8 Nov 2017 15:51:54 +0900
+From: Akira Ajisaka <aajisaka@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: [SECURITY] CVE-2017-3166: Apache Hadoop Privilege escalation vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Can you post a link to a patch for this issue, or to a bug entry with
-additional details, or the download site at a minimum? Thanks!
+CVE-2017-3166: Apache Hadoop Privilege escalation vulnerability
 
-On Tue, Jan 10, 2017 at 6:58 PM, Nathan McCauley <nathan.mccauley@...ker.com
-> wrote:
+Severity: Important
 
-> Docker Engine version 1.12.6 has been released to address a vulnerability
-> and is immediately available for all supported platforms. Users are advised
-> to upgrade existing installations of the Docker Engine and use 1.12.6 for
-> new installations.
->
-> Please send any questions to security@...ker.com.
->
->
-> ==============================================================
-> [CVE-2016-9962] Insecure opening of file-descriptor allows privilege
-> escalation
->
-> ==============================================================
->
-> RunC allowed additional container processes via `runc exec` to be ptraced
-> by the pid 1 of the container.  This allows the main processes of the
-> container, if running as root, to gain access to file-descriptors of these
-> new processes during the initialization and can lead to container escapes
-> or modification of runC state before the process is fully placed inside the
-> container
->
->
-> Credit for this discovery goes to Aleksa Sarai from SUSE and Tõnis Tiigi
-> from Docker.
->
+Vendor: The Apache Software Foundation
 
+Versions Affected:
+Hadoop 2.6.1+, 2.7.x before 2.7.4, 3.0.0-alpha before 3.0.0-alpha4
 
+Description:
+In a cluster where the YARN user has been granted access to all HDFS
+encryption keys, if a file in an encryption zone with access permissions
+that make it world readable is localized via YARN's localization mechanism,
+e.g. via the MapReduce distributed cache, that file will be stored
+in a world-readable location and shared freely with any application
+that requests to localize that file, no matter who the application owner
+is or whether that user should be allowed to access files from the
+target encryption zone.
 
--- 
+Mitigation:
+Users on 2.6.1+ and 2.7.x before 2.7.4 should upgrade to 2.7.4 or later
+Users on 3.0.0-alpha before 3.0.0-alpha4 should upgrade to 3.0.0-alpha4 or later
 
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
+Impact:
+Users may gain access to files that should be protected by HDFS
+transparent encryption if those files have world readable access
+permissions and are localized through YARN's localization mechanism
+in a cluster where YARN has been granted access to all HDFS encryption keys.
 
+Credit:
+This issue was discovered by Luke Herbert.
