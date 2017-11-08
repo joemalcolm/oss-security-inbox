@@ -1,319 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/30/2
-Message-ID: <1F2D4DA31CA62740BFF46830A0E6A4F712D4C54A@EXMBX-TJ002.tencent.com>
-Date: Wed, 30 Aug 2017 07:33:28 +0000
-From: winsonliu(刘科) <winsonliu@...cent.com>
-To: Vladis Dronov <vdronov@...hat.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Alan Coopersmith <alan.coopersmith@...cle.com>
-CC: cve-assign <cve-assign@...re.org>
-Subject: RE: CVE Request: Multiple security issues in OpenJPEG
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/08/7
+Message-ID: <56029e38-0e38-181c-2f61-f92b4bfd6826@redhat.com>
+Date: Wed, 8 Nov 2017 10:34:35 -0600
+From: Eric Blake <eblake@...hat.com>
+To: oss-security@...ts.openwall.com, Jonas 'Sortie' Termansen <sortie@...si.org>, Florian Weimer <fweimer@...hat.com>, John Haxby <john.haxby@...cle.com>
+Subject: Re: Race condition between UDP bind(2) and connect(2) delivers wrong datagrams
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On 11/08/2017 10:16 AM, Jonas 'Sortie' Termansen wrote:
+>> Whatever the exact wording used is, the intent of POSIX is to describe
+>> the BSD sockets API behavior.  If the API does something else, that's a
+>> POSIX bug.
+> 
+> Absolutely, if the standard mdanated one behavior, and if all the
+> implementations did something else and documented that they did so, it would
+> be a bug in the standard that should be fixed.
+> 
+> This issue is not that case because Darwin[1], DragonFly[2], FreeBSD[3],
+> GNU/Hurd (though by importing Linux man pages), Linux[4], NetBSD[5], and
+> OpenBSD[6] all document behavior compatible with POSIX[7].
 
-CVE-2016-10504 ~ 10507 have been assigned to these issues.
+It doesn't matter what the implementations document (if their
+documentation is copying from POSIX), but what they actually DO.
 
-Regards,
-Ke
+> I see two internally consistent ways we could resolve this problem:
+> 
+> 1) Implement the behavior described by POSIX by having connect(2) on an UDP
+>    socket filter the receive queue, and possibly updating the connect(2)
+>    documentation of every OS to be a little less ambiguous and say the same
+>    as POSIX. Software that relied on bind+connect not having a race
+>    condition will be secured by the kernel fix.
+> 
+> 2) Declare the existing behavior desirable, add a caveats section to every
+>    connect(2) manual page describing this pitfall and the need to empty the
+>    receive queue after connect(2). File a POSIX bug and have the mandated
+>    behavior changed in the next POSIX Technical Corrigendum or next major
+>    update. We audit software on every operating system for this flaw and
+>    ensure they properly empty the receive queue.
 
-> [Suggested description]
-> Heap-based buffer overflow vulnerability in the opj_mqc_byteout 
-> function in mqc.c in OpenJPEG before 2.2.0 allows remote attackers to 
-> cause a denial of service (application crash) via a crafted bmp file.
-> 
-> ------------------------------------------
-> 
-> [Vulnerability Type]
-> Buffer Overflow
-> 
-> ------------------------------------------
-> 
-> [Vendor of Product]
-> OpenJPEG
-> 
-> ------------------------------------------
-> 
-> [Affected Product Code Base]
-> OpenJPEG - before 2.2.0
-> 
-> ------------------------------------------
-> 
-> [Affected Component]
-> executable file: opj_compress, function: opj_mqc_byteout, file: mqc.c
-> 
-> ------------------------------------------
-> 
-> [Attack Type]
-> Remote
-> 
-> ------------------------------------------
-> 
-> [Impact Denial of Service]
-> true
-> 
-> ------------------------------------------
-> 
-> [Attack Vectors]
-> via a crafted bmp file
-> 
-> ------------------------------------------
-> 
-> [Reference]
-> https://github.com/uclouvain/openjpeg/issues/835
-> https://github.com/uclouvain/openjpeg/commit/397f62c0a838e15d667ef50e2
-> 7d5d011d2c79c04
-> 
-> ------------------------------------------
-> 
-> [Has vendor confirmed or acknowledged the vulnerability?] true
-> 
-> ------------------------------------------
-> 
-> [Discoverer]
-> Ke Liu of Tencent's Xuanwu LAB
+At this point, I think you have argued pretty effectively that the
+current POSIX wording does NOT describe existing practice, and therefore
+that POSIX has a bug.  It may be desirable to have implementations
+follow the POSIX wording, but I think you are better off FIRST raising
+this issue with the Austin Group
+(http://austingroupbugs.net/main_page.php) to get an opinion on what the
+POSIX folks think.  Even if the POSIX folks declare that the current
+wording is intentional and that all existing implementations need to be
+fixed, it is better to involve them up front.
 
-Use CVE-2016-10504.
+> 
+> My preference is 1) because I believe the receive queue filtering behavior
+> to be more useful. It also automatically closes the race condition in any
+> software that use bind+connect and doesn't empty the receive queue.
+
+That may be your preference, but I think you should pursue the course of
+filing a POSIX bug about the mismatch between documentation and existing
+practice (ie, what you proposed for course 2), whether or not you get
+any traction in implementing course 1 on a subset of the systems.
+
+-- 
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.           +1-919-301-3266
+Virtualization:  qemu.org | libvirt.org
 
 
-> [Suggested description]
-> NULL pointer dereference vulnerabilities in the imagetopnm function in 
-> convert.c, sycc444_to_rgb function in color.c, color_esycc_to_rgb 
-> function in color.c, and sycc422_to_rgb function in color.c in 
-> OpenJPEG before 2.2.0 allow remote attackers to cause a denial of 
-> service (application crash) via crafted j2k files.
-> 
-> ------------------------------------------
-> 
-> [VulnerabilityType Other]
-> Null pointer dereference
-> 
-> ------------------------------------------
-> 
-> [Vendor of Product]
-> OpenJPEG
-> 
-> ------------------------------------------
-> 
-> [Affected Product Code Base]
-> OpenJPEG - before 2.2.0
-> 
-> ------------------------------------------
-> 
-> [Affected Component]
-> executable file: opj_decompress, function: imagetopnm, sycc444_to_rgb, 
-> color_esycc_to_rgb, sycc422_to_rgb, file: color.c, convert.c
-> 
-> ------------------------------------------
-> 
-> [Attack Type]
-> Remote
-> 
-> ------------------------------------------
-> 
-> [Impact Denial of Service]
-> true
-> 
-> ------------------------------------------
-> 
-> [Attack Vectors]
-> via crafted j2k files
-> 
-> ------------------------------------------
-> 
-> [Reference]
-> https://github.com/uclouvain/openjpeg/issues/776
-> https://github.com/uclouvain/openjpeg/issues/784
-> https://github.com/uclouvain/openjpeg/issues/785
-> https://github.com/uclouvain/openjpeg/issues/792
-> 
-> ------------------------------------------
-> 
-> [Has vendor confirmed or acknowledged the vulnerability?] true
-> 
-> ------------------------------------------
-> 
-> [Discoverer]
-> Ke Liu of Tencent's Xuanwu LAB
 
-Use CVE-2016-10505.
-
-
-> [Suggested description]
-> Division-by-zero vulnerabilities in the functions opj_pi_next_cprl, 
-> opj_pi_next_pcrl, and opj_pi_next_rpcl in pi.c in OpenJPEG before
-> 2.2.0 allow remote attackers to cause a denial of service (application 
-> crash) via crafted j2k files.
-> 
-> ------------------------------------------
-> 
-> [VulnerabilityType Other]
-> division-by-zero
-> 
-> ------------------------------------------
-> 
-> [Vendor of Product]
-> OpenJPEG
-> 
-> ------------------------------------------
-> 
-> [Affected Product Code Base]
-> OpenJPEG - before 2.2.0
-> 
-> ------------------------------------------
-> 
-> [Affected Component]
-> executable file: opj_decompress, function: opj_pi_next_cprl, 
-> opj_pi_next_pcrl, opj_pi_next_rpcl, file: pi.c
-> 
-> ------------------------------------------
-> 
-> [Attack Type]
-> Remote
-> 
-> ------------------------------------------
-> 
-> [Impact Denial of Service]
-> true
-> 
-> ------------------------------------------
-> 
-> [Attack Vectors]
-> via crafted j2k files
-> 
-> ------------------------------------------
-> 
-> [Reference]
-> https://github.com/uclouvain/openjpeg/issues/731
-> https://github.com/uclouvain/openjpeg/issues/732
-> https://github.com/uclouvain/openjpeg/issues/777
-> https://github.com/uclouvain/openjpeg/issues/778
-> https://github.com/uclouvain/openjpeg/issues/779
-> https://github.com/uclouvain/openjpeg/issues/780
-> https://github.com/uclouvain/openjpeg/commit/d27ccf01c68a31ad62b33d2dc
-> 1ba2bb1eeaafe7b
-> 
-> ------------------------------------------
-> 
-> [Has vendor confirmed or acknowledged the vulnerability?] true
-> 
-> ------------------------------------------
-> 
-> [Discoverer]
-> Ke Liu of Tencent's Xuanwu LAB
-
-Use CVE-2016-10506.
-
-
-> [Suggested description]
-> Integer overflow vulnerability in the bmp24toimage function in 
-> convertbmp.c in OpenJPEG before 2.2.0 allows remote attackers to cause 
-> a denial of service (heap-based buffer over-read and application crash) via a crafted bmp file.
-> 
-> ------------------------------------------
-> 
-> [Vulnerability Type]
-> Integer Overflow
-> 
-> ------------------------------------------
-> 
-> [Vendor of Product]
-> OpenJPEG
-> 
-> ------------------------------------------
-> 
-> [Affected Product Code Base]
-> OpenJPEG - before 2.2.0
-> 
-> ------------------------------------------
-> 
-> [Affected Component]
-> executable file: opj_compress, function: bmp24toimage, file: 
-> convertbmp.c
-> 
-> ------------------------------------------
-> 
-> [Attack Type]
-> Remote
-> 
-> ------------------------------------------
-> 
-> [Impact Denial of Service]
-> true
-> 
-> ------------------------------------------
-> 
-> [Attack Vectors]
-> via a crafted bmp file
-> 
-> ------------------------------------------
-> 
-> [Reference]
-> https://github.com/uclouvain/openjpeg/issues/833
-> https://github.com/uclouvain/openjpeg/commit/da940424816e11d624362ce08
-> 0bc026adffa26e8
-> 
-> ------------------------------------------
-> 
-> [Has vendor confirmed or acknowledged the vulnerability?] true
-> 
-> ------------------------------------------
-> 
-> [Discoverer]
-> Ke Liu of Tencent's Xuanwu LAB
-
-Use CVE-2016-10507.
-
------Original Message-----
-From: winsonliu
-Sent: 2017年8月30日 10:48
-To: 'Vladis Dronov' <vdronov@...hat.com>; 'oss-security@...ts.openwall.com' <oss-security@...ts.openwall.com>; 'Alan Coopersmith' <alan.coopersmith@...cle.com>
-Cc: 'cve-assign' <cve-assign@...re.org>
-Subject: RE: [oss-security] CVE Request: Multiple security issues in OpenJPEG
-
-Hello,
-
-I've already submitted these issues to https://cveform.mitre.org/ . As expected, four CVE numbers will be assigned since some of them have the same root cause.
-
-Regards,
-Ke
-
------Original Message-----
-From: winsonliu
-Sent: 2017年8月25日 20:16
-To: 'Vladis Dronov' <vdronov@...hat.com>; 'oss-security@...ts.openwall.com' <oss-security@...ts.openwall.com>; 'Alan Coopersmith' <alan.coopersmith@...cle.com>
-Cc: 'cve-assign' <cve-assign@...re.org>
-Subject: RE: [oss-security] CVE Request: Multiple security issues in OpenJPEG
-
-Hello,
-
-I'll submit them to cveform next week. And I'll update this thread when more information is available.
-
-Regards,
-Ke
-
------Original Message-----
-From: winsonliu 
-Sent: 2017年8月24日 9:26
-To: 'Vladis Dronov' <vdronov@...hat.com>; oss-security@...ts.openwall.com; 'Alan Coopersmith' <alan.coopersmith@...cle.com>
-Cc: cve-assign <cve-assign@...re.org>
-Subject: RE: [oss-security] CVE Request: Multiple security issues in OpenJPEG
-
-I'm afraid no CVEs were assigned. At least I did not submit these issues to https://cveform.mitre.org/ 
-
-Regards,
-Ke
-
------Original Message-----
-From: Vladis Dronov [mailto:vdronov@...hat.com] 
-Sent: 2017年8月23日 19:53
-To: oss-security@...ts.openwall.com
-Cc: winsonliu <winsonliu@...cent.com>; cve-assign <cve-assign@...re.org>
-Subject: Re: [oss-security] CVE Request: Multiple security issues inOpenJPEG(Internet mail)
-
-> Most of these seem to be fixed now in OpenJPEG's recent 2.2.0 release.
-> Did CVE id's ever get assigned for them?
-
-If no one reported them and requested CVE-ids via https://cveform.mitre.org/ then I suppose not, no CVE-ids were assigned.
-
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
-
+Download attachment "signature.asc" of type "application/pgp-signature" (620 bytes)
