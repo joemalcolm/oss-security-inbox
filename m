@@ -1,72 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/19/1
-Message-ID: <20170119073444.GA14027@sin.redhat.com>
-Date: Thu, 19 Jan 2017 18:04:45 +1030
-From: Doran Moppert <dmoppert@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/08/4
+Message-Id: <6877F1AC-352C-49C9-BA3D-1D3944CC03F0@beckweb.net>
+Date: Wed, 8 Nov 2017 11:56:57 +0100
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Cc: seb@...ian.org, cve-assign@...re.org
-Subject: Re: Re: CVE request: python-pysaml2 XML external entity attack
+Subject: Multiple vulnerabilities in Jenkins
 Content-Type: text/plain; charset=utf-8
 
-I think this CVE needs some clarification.
+Jenkins is an open source automation server which enables developers around 
+the world to reliably build, test, and deploy their software. The following 
+releases contain fixes for security vulnerabilities:
 
-On Jan 10 2017, cve-assign@...re.org wrote:
-> > python-pysaml2 does
-> > not sanitize SAML XML requests or responses:
-> > 
-> >   https://github.com/rohe/pysaml2/issues/366
-> >   https://github.com/rohe/pysaml2/pull/379
-> >   https://bugs.debian.org/850716
-> >   https://github.com/rohe/pysaml2/commit/6e09a25d9b4b7aa7a506853210a9a14100b8bc9b
+* Jenkins (weekly) 2.89
+* Jenkins (LTS) 2.73.3
 
-issues/376 identifies an XML External Entity flaw (CWE-611), but the
-"related commit" 6e09a25d and pull request 379 addresses only Billion
-Laughs vulnerabilities (CWE-776).
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2017-11-08/
 
-While the patch's commit message seems to be incorrect in mentioning
-XXE, it does not claim to fix issues/379, which is (correctly) still
-open.
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-Thus the below description of CVE-2016-10127 is inconsistent - the
-vulnerability addressed by 6e09a25 is CWE-776, which is excluded from
-the CVE's coverage by the third list item.
+If you find security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
 
-> Use CVE-2016-10127 for the vulnerability addressed by "Fix XXE in XML
-> parsing" in 6e09a25d9b4b7aa7a506853210a9a14100b8bc9b.
-> 
-> The scope of this CVE does not include the various other issues that
-> may be found in the above references:
-> 
->  - it does not include any aspect of
->    https://bugzilla.gnome.org/show_bug.cgi?id=772726
-> 
->  - it does not include any vulnerabilities in the XML Security Library
->    (xmlsec), such as ones that are now, or previously were, listed at
->    https://github.com/lsh123/xmlsec/issues
-> 
->  - it does not include any CWE-776 (Entity Expansion) issues that may
->    have been fixed as a side effect of
->    6e09a25d9b4b7aa7a506853210a9a14100b8bc9b (possibly there are new
->    test cases in 6e09a25d9b4b7aa7a506853210a9a14100b8bc9b for CWE-776)
+---
 
-This can be seen also by noticing that the patch substitues
-"defusedxml.ElementTree" for "xml.etree.ElementTree" (and its native
-code equivalent cElementTree), and consulting the table and note #1 at:
+SECURITY-499
+Jenkins stores metadata related to "people", which encompasses actual user 
+accounts, as well as users appearing in SCM, in directories corresponding 
+to the user ID on disk. These directories used the user ID for their name 
+without additional escaping. This potentially resulted in a number of 
+problems, such as the following:
+1. User names consisting of a single forward slash would have their user 
+record stored in the parent directory; deleting this user deleted all user 
+records.
+2. User names containing character sequences such as .. could be used to 
+clobber other configuration files in Jenkins.
+3. User names could consist of reserved names such as COM (on Windows).
 
-https://docs.python.org/2/library/xml.html#xml-vulnerabilities
+SECURITY-641
+Autocompletion suggestions for text fields were not escaped, resulting in a 
+persisted cross-site scripting vulnerability if the source for the 
+suggestions allowed specifying text that includes HTML metacharacters like 
+less-than and greater-than characters.
 
-which points out that "etree" is vulnerable to CWE-776 but not to
-CWE-611.
-
-The CWE-611 vulnerability in libxml2 (CVE-2016-9318) is still exposed in
-pysaml2, via its use of lxml and xmlsec.
-
-The exposure via lxml may be mitigable by disabling entity resolution
-altogether (resolve_entities=False), but xmlsec seems to lack any such
-switch.
-
--- 
-Doran Moppert
-Red Hat Product Security
-
-Content of type "application/pgp-signature" skipped
