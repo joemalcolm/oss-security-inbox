@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["559" "Saturday" "17" "April" "2021" "07:41:15" "-0700" "Tavis Ormandy" "taviso@gmail.com" nil "16" "[oss-security] Re: xscreensaver package caps gets raw socket" nil nil nil "4" nil nil (number mark "U       taviso@gmail Apr 17   16/559   " thread-indent "\"[oss-security] Re: xscreensaver package caps gets raw socket\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Re: xscreensaver package caps gets raw socket" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["677" "Wednesday" "8" "November" "2017" "20:46:52" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20171108194652.fqk5alj7dhq67mqo@eldamar.local>" "18" "[oss-security] Back in Time: CVE-2017-16667: shell injection in notify-send" nil nil nil "11" "2017110819:46:52" "[oss-security] Back in Time: CVE-2017-16667: shell injection in notify-send" (number mark "U       carnil@debia Nov  8   18/677   " thread-indent "\"[oss-security] Back in Time: CVE-2017-16667: shell injection in notify-send\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3324 invoked by uid 550); 17 Apr 2021 17:38:32 -0000
+Received: (qmail 9931 invoked by uid 550); 8 Nov 2017 19:47:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,60 +12,60 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15473 invoked from network); 17 Apr 2021 14:41:28 -0000
+Received: (qmail 9902 invoked from network); 8 Nov 2017 19:47:05 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=epMP+lrNgJpmOmrxBItGhCOIosBvJUecEuG0uCeMv7Y=;
-        b=vElEhiZFRoNxYONWeyGjz2qVQoXPDRLVcjlzgdzOUGpkWSiuRyiMbkWl+OQkeoNiyA
-         ZTWFPVeUc7DIxaxCY0shUgKN8KsqChz2E7qIwJVi3U3cq0Wmh2o6Qm/Pp9HOPOORgemy
-         /w+j4oI/uOAeQ9AHVFygZOHWadAiTRum4kxCgcs+OnYPWrkmmjvx3EWsk4J3pgmWZ8Tr
-         bgGAgKXtTCJW7fyTOFm1BaMvmzRPxFhyPrjRVg7epKsGhQgBVb+qzZASxdHalTi6KuK5
-         cK4wxIcw2g4fOqTb3iWpB1GfUA2QdBrlf35/HoIM1f0zwWH3zNAa/MwwITgk9rhuV0NA
-         2a8g==
+        h=sender:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=Z64CdG94MJ9IS9Y62eJQ+qyZJ0ZUvllbQW3fQf/96aM=;
+        b=cMAE4vSlXT7u2u6GTb436tnCIkw5nWM1t9eLLX6mKKK4eMgs4IM6W4g1OjqenurMQs
+         6MK+i4MsNB2TArtAJgiyZKY1b3htCkcyJaC1CsCs2J9B7TdN1PFT1i3Naml5iC7IYIEM
+         aFNYqxQFfPHsNnvBFlP2AY32AYnvPu5jZeJCqRVEy07sGnZVxHRAdrfzjxuGeU6PP75S
+         SyjcTHzOz7KE5vc5Aw/27PXdD+jgz1tETr6sKLJegP77hY737+btXSPnKg6u74/KWF73
+         MOa3Hksp43gWFAsNVihoGlIVcROJEsv0mldRimMMyvplfvkJ0fV8ESWv1zi7aejoQtH1
+         XJ3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=epMP+lrNgJpmOmrxBItGhCOIosBvJUecEuG0uCeMv7Y=;
-        b=W2q/NNAzABqpeQOfsbBBm/BQx3ppRxGPtT0OTHH26CVAlEalUf0J0tC1ybP341sOL7
-         RkNiMcJO1P64K7EBVgagoAxlCaIrxatpbIdU0Onle98o+SpZWoawTPjwaSBdaNl61bOY
-         4qFkk6XvdT+GPf1Vm4YKivuVcjTNSCdKCDWfrs5lP+6mxGY4C7epr5dcfSdwPkC4ucgs
-         JBV5Hmhu6MwerNIa1tZNh1VtPu5yZXPYpsvN1D3xignlkjGWSkxz8MOHycASwXy4Vpay
-         HxHZWgCbS2wW6hqvFs7wmvZF3ztIC27Ywvn6nM25+F3BgvP0TfCtlfCSFNuBbT/HmxmV
-         oQQA==
-X-Gm-Message-State: AOAM532G5rsL4rPPVRS9okQzWNvKDOOdiBiQoRBIGeIef7uTpRYuRTNG
-	R4YHenVC2ShgRHHxD3l7jI8EQ7WO1W8OM2t5
-X-Google-Smtp-Source: ABdhPJxYwfIn0JW1NRvcXmzzOKSu96hrt8sSKH96CdjIhZkBoA8Qy0+cUrckq49O2Pe+O0bpria9sQ==
-X-Received: by 2002:a17:902:f2c1:b029:eb:7b66:9c0a with SMTP id h1-20020a170902f2c1b02900eb7b669c0amr12949841plc.50.1618670475941;
-        Sat, 17 Apr 2021 07:41:15 -0700 (PDT)
-Date: Sat, 17 Apr 2021 07:41:15 -0700
-From: Tavis Ormandy <taviso@gmail.com>
-To: oss-security@lists.openwall.com
-Cc: security@debian.org
-Message-ID: <20210417144115.GA3514@thinkstation>
-References: <20210417143105.GB3276@thinkstation>
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :mime-version:content-disposition:user-agent;
+        bh=Z64CdG94MJ9IS9Y62eJQ+qyZJ0ZUvllbQW3fQf/96aM=;
+        b=n8ou0SvjWmSpEx7N5q6D5+m+z0ig/+xkoYDRVrizp0Sm+metatqvbN8T7fuLn17JSg
+         vPpj7Zv78JxkW+zRslc/uEcKLb3XuDMlmmn80ai4iskdt1cL40d07Fj37ea7LpCJr5se
+         yaiaA2xppv/DqeSrjqIn33IrY7rl1LGhDSTv1dbVcnIBPANLP2bStG3bWZDT0Oj2py1C
+         iZJmNQUg8EPlhXh6576cDKHiJo5S63SDmUptJoyD9uM6/Rh/zHB9TsobTbx7k9PFXQRd
+         Za13lzAjwumo/uu/ttykEsrj3FBhXDZyPer5LKLld21trN4YRMd8HDhDYkGXVA6Y+jcr
+         Lh5Q==
+X-Gm-Message-State: AJaThX60hUH1t+15cU021+LPSginwkmCSe3ZYYHrBAA7+UGdJ1pqo8Fh
+	IgXaetRntqQlKes3s+pVJfyxOw==
+X-Google-Smtp-Source: ABhQp+RiPyQfbPaCX2Vu4AQHW+jocd+LHXwycqUaD82XaC/huCSA0GpQjY2VhqksWFEe/Af5mrL1pg==
+X-Received: by 10.28.209.200 with SMTP id i191mr1204727wmg.156.1510170413995;
+        Wed, 08 Nov 2017 11:46:53 -0800 (PST)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Wed, 8 Nov 2017 20:46:52 +0100
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: OSS Security Mailinglist <oss-security@lists.openwall.com>
+Message-ID: <20171108194652.fqk5alj7dhq67mqo@eldamar.local>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210417143105.GB3276@thinkstation>
-User-Agent: Mutt/1.13.2 (2019-12-18)
-Subject: [oss-security] Re: xscreensaver package caps gets raw socket
+User-Agent: NeoMutt/20170609 (1.8.3)
+Subject: [oss-security] Back in Time: CVE-2017-16667: shell injection in notify-send
 
-On Sat, Apr 17, 2021 at 07:31:05AM -0700, Tavis Ormandy wrote:
-> - The code could use ping sockets instead, but they're still rarely
->   enabled by default, and users have to set the ping_group_range sysctl.
->   I personally think it's time to enable them by default, but that's a
->   different discussion :-)
-> 
+Hi
 
-Oh, I also pitched using popen("/bin/ping" ..), but I think nobody is
-really convinced that will work, but I kinda like it :)
+MITRE has assinged CVE-2017-16667 for the following isue in Back in
+Time, "a simple backup tool for Linux". backintime is prone to a shell
+injection vulnerability via notify-sent.
 
-Tavis.
+Back in Time did improper escaping/quoting of file paths used as
+arguments to the 'notify-send' command, leading to some parts of file
+paths being executed as shell commands.
 
--- 
- _o)            $ lynx lock.cmpxchg8b.com
- /\\  _o)  _o)  $ finger taviso@sdf.org
-_\_V _( ) _( )  @taviso
+An attacker could take advantage of this flaw by crafting an
+unreadable file with a specific name to run arbitrary shell commands.
+
+Upstream report: https://github.com/bit-team/backintime/issues/834
+Fixed by: https://github.com/bit-team/backintime/commit/cef81d0da93ff601252607df3db1a48f7f6f01b3
+
+Regards,
+Salvatore
