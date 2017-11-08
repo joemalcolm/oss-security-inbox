@@ -1,4 +1,9 @@
-Received: (qmail 19883 invoked by uid 550); 8 Apr 2025 12:16:09 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1748" "Wednesday" "8" "November" "2017" "13:05:38" "+0100" "Solar Designer" "solar@openwall.com" "<20171108120538.GA31417@openwall.com>" "33" "Re: [oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem" "^Cc:" nil nil "11" "2017110812:05:38" "[oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem" (number mark "        solar@openwa Nov  8   33/1748  " thread-indent "\"Re: [oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem\"\n") "<CA+fCnZfP83sn2biq-=5x23Kfgzv_0YFKKDNpntrH89TwLRCEjw@mail.gmail.com>" ("<CA+fCnZfP83sn2biq-=5x23Kfgzv_0YFKKDNpntrH89TwLRCEjw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 17721 invoked by uid 550); 8 Nov 2017 12:08:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,49 +11,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 11835 invoked from network); 8 Nov 2017 12:05:50 -0000
+Message-ID: <20171108120538.GA31417@openwall.com>
+References: <CA+fCnZfP83sn2biq-=5x23Kfgzv_0YFKKDNpntrH89TwLRCEjw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CA+fCnZfP83sn2biq-=5x23Kfgzv_0YFKKDNpntrH89TwLRCEjw@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Cc: Andrey Konovalov <andreyknvl@gmail.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Kostya Serebryany <kcc@google.com>
+Date: Wed, 8 Nov 2017 13:05:38 +0100
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 26425 invoked from network); 8 Apr 2025 10:45:48 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: PJ Fanning <fanningpj@apache.org>
+Subject: Re: [oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem
 To: oss-security@lists.openwall.com
-Message-ID: <a66da195-debb-1ec5-24f0-317db499c450@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 08 Apr 2025 10:44:37 +0000
-MIME-Version: 1.0
-Subject: [oss-security] CVE-2025-31672: Apache POI: parsing OOXML based files (xlsx, docx,
- etc.), poi-ooxml could read unexpected data if underlying zip has
- duplicate zip entry names 
 
-Severity: moderate
+On Mon, Nov 06, 2017 at 02:45:01PM +0100, Andrey Konovalov wrote:
+> Below are the details for 14 vulnerabilities found with syzkaller in
+> the Linux kernel USB subsystem. All of them can be triggered with a
+> crafted malicious USB device in case an attacker has physical access
+> to the machine.
 
-Affected versions:
+Perhaps not only in that case, but also in case an attacker has remote
+access to a USB device (perhaps most commonly via remote access to the
+machine, with privileges to access the USB device) sufficient to replace
+that device's firmware (thereby crafting a malicious device).
 
-- Apache POI before 5.4.0
+For example, many USB-connected FPGA boards, Bitcoin miners ("ASICs"),
+etc. may reasonably be made available to a non-root user (such as via
+udev rules), and they commonly permit microcontroller firmware update to
+be performed via USB as well.  John the Ripper bleeding-jumbo currently
+loads firmware into MCUs on ZTEX 1.15y boards at startup (if the
+firmware in EEPROM is different), and we recommend running it as
+non-root with udev rules setup to grant access to non-root users in
+group "ztex" (this setup is described in doc/README-ZTEX).
 
-Description:
+Many mainstream devices (mice, etc.) probably permit firmware update via
+USB as well.  Hopefully, it's uncommon to have them directly accessible
+by non-root.
 
-Improper Input Validation vulnerability in Apache POI. The issue affects th=
-e parsing of OOXML format files like xlsx, docx and pptx. These file format=
-s are basically zip files and it is possible for malicious users to add zip=
- entries with duplicate names (including the path) in the zip. In this case=
-, products reading the affected file could read different data because 1 of=
- the zip entries with the duplicate name is selected over another but diffe=
-rent products may choose a different zip entry.
-This issue affects Apache POI poi-ooxml before 5.4.0. poi-ooxml 5.4.0 has a=
- check that throws an exception if zip entries with duplicate file names ar=
-e found in the input file.
-Users are recommended to upgrade to version poi-ooxml 5.4.0, which fixes th=
-e issue. Please read  https://poi.apache.org/security.html  for recommendat=
-ions about how to use the POI libraries securely.
+And no, I don't think these vulnerabilities should be a reason to run
+programs as root instead of granting access to non-root.  Rather, this
+is a reminder that by granting access we expose more of the kernel's
+attack surface (and particularly fragile parts of it), so access should
+be granted to sufficiently trusted (pseudo-)user accounts only.  Such
+direct access is often also sufficient to backdoor or brick the devices,
+which should be a concern anyway.
 
-This issue is being tracked as bug-69620=20
-
-References:
-
-https://bz.apache.org/bugzilla/show_bug.cgi?id=3D69620
-https://poi.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2025-31672
-https://issues.apache.org/jira/browse/bug-69620
-
+Alexander
