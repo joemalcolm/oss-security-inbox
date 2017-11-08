@@ -1,35 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/17/6
-Message-ID: <alpine.LFD.2.20.1705171622060.32210@wniryva>
-Date: Wed, 17 May 2017 16:27:01 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Leo Gaspard <leo@...pard.io>
-Subject: CVE-2017-7493 Qemu: 9pfs: guest privilege escalation in virtfs mapped-file mode
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/08/5
+Message-ID: <20171108120538.GA31417@openwall.com>
+Date: Wed, 8 Nov 2017 13:05:38 +0100
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: Andrey Konovalov <andreyknvl@...il.com>, Dmitry Vyukov <dvyukov@...gle.com>, Kostya Serebryany <kcc@...gle.com>
+Subject: Re: Linux kernel: multiple vulnerabilities in the USB subsystem
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+On Mon, Nov 06, 2017 at 02:45:01PM +0100, Andrey Konovalov wrote:
+> Below are the details for 14 vulnerabilities found with syzkaller in
+> the Linux kernel USB subsystem. All of them can be triggered with a
+> crafted malicious USB device in case an attacker has physical access
+> to the machine.
 
-Quick Emulator(Qemu) built with the VirtFS, host directory sharing via Plan 9 
-File System(9pfs) support, is vulnerable to an improper access control issue. 
-It could occur while accessing virtfs metadata files in mapped-file security 
-mode.
+Perhaps not only in that case, but also in case an attacker has remote
+access to a USB device (perhaps most commonly via remote access to the
+machine, with privileges to access the USB device) sufficient to replace
+that device's firmware (thereby crafting a malicious device).
 
-A guest user could use this flaw to escalate their privileges inside guest.
+For example, many USB-connected FPGA boards, Bitcoin miners ("ASICs"),
+etc. may reasonably be made available to a non-root user (such as via
+udev rules), and they commonly permit microcontroller firmware update to
+be performed via USB as well.  John the Ripper bleeding-jumbo currently
+loads firmware into MCUs on ZTEX 1.15y boards at startup (if the
+firmware in EEPROM is different), and we recommend running it as
+non-root with udev rules setup to grant access to non-root users in
+group "ztex" (this setup is described in doc/README-ZTEX).
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2017-05/msg03663.html
+Many mainstream devices (mice, etc.) probably permit firmware update via
+USB as well.  Hopefully, it's uncommon to have them directly accessible
+by non-root.
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1451709
+And no, I don't think these vulnerabilities should be a reason to run
+programs as root instead of granting access to non-root.  Rather, this
+is a reminder that by granting access we expose more of the kernel's
+attack surface (and particularly fragile parts of it), so access should
+be granted to sufficiently trusted (pseudo-)user accounts only.  Such
+direct access is often also sufficient to backdoor or brick the devices,
+which should be a concern anyway.
 
-'CVE-2017-7493' has been assigned to this issue by Red Hat Inc.
-
-It was reported by Leo Gaspard.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Alexander
