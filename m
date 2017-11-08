@@ -1,4 +1,9 @@
-Received: (qmail 1391 invoked by uid 550); 17 Nov 2025 13:19:06 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["990" "Wednesday" "8" "November" "2017" "13:13:20" "-0600" "Bob Friesenhahn" "bfriesen@simple.dallas.tx.us" "<alpine.GSO.2.20.1711081305160.6849@scrappy.simplesystems.org>" "23" "Re: [oss-security] Race condition between UDP bind(2) and connect(2) delivers wrong datagrams" nil nil nil "11" "2017110819:13:20" "[oss-security] Race condition between UDP bind(2) and connect(2) delivers wrong datagrams" (number mark "U       bfriesen@sim Nov  8   23/990   " thread-indent "\"Re: [oss-security] Race condition between UDP bind(2) and connect(2) delivers wrong datagrams\"\n") "<56029e38-0e38-181c-2f61-f92b4bfd6826@redhat.com>" ("<4e069c7c-85a2-f3ce-6ce2-8a9b4bf86a41@maxsi.org>" "<848ccf01-0a05-76ea-470d-aa59579d447b@redhat.com>" "<2f823095-af60-b5d7-b828-d92981e05973@maxsi.org>" "<56029e38-0e38-181c-2f61-f92b4bfd6826@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 3236 invoked by uid 550); 8 Nov 2017 19:13:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,46 +12,42 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 13348 invoked from network); 17 Nov 2025 13:14:50 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=schafweide.org;
-	s=2007; t=1763385280;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=y2NxGQx9kgAY2STvGqAZ+MUB+3jBEOsNF8QmDOMAxBY=;
-	b=ZNFvqkoI6BNSZN31MX0VWhqIWuVCHcAsjFEJZHlTRvOrDK4Aa+8OPFVS7ivmthh81V8phi
-	9TyXkCP9sSgbl5APQw4Q5nzC+DI0eVIBdGz/NcHhuL8S43e3TpUhFx1jSsT3q3AJGP0ItS
-	hvxPHLZHfPyJEAO0d3jSQdnTYnYW5yI=
-Message-ID: <38e5d24d-80a9-4f56-9d6d-153cba1ef040@schafweide.org>
-Date: Mon, 17 Nov 2025 14:14:40 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+Received: (qmail 3208 invoked from network); 8 Nov 2017 19:13:33 -0000
+Date: Wed, 8 Nov 2017 13:13:20 -0600 (CST)
+From: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
+X-X-Sender: bfriesen@scrappy.simplesystems.org
 To: oss-security@lists.openwall.com
-References: <70e25a3d-7652-44da-8e4d-4e0a2e3a7a63@schafweide.org>
- <a6aa04d0-eb96-4d87-b7d4-b37838b05ce0@oracle.com>
-Content-Language: de-DE, en-US
-From: Bjoern Franke <bjo@schafweide.org>
-In-Reply-To: <a6aa04d0-eb96-4d87-b7d4-b37838b05ce0@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] CVE-2025-40300 / VMScape
+cc: "Jonas 'Sortie' Termansen" <sortie@maxsi.org>
+In-Reply-To: <56029e38-0e38-181c-2f61-f92b4bfd6826@redhat.com>
+Message-ID: <alpine.GSO.2.20.1711081305160.6849@scrappy.simplesystems.org>
+References: <4e069c7c-85a2-f3ce-6ce2-8a9b4bf86a41@maxsi.org> <848ccf01-0a05-76ea-470d-aa59579d447b@redhat.com> <2f823095-af60-b5d7-b828-d92981e05973@maxsi.org> <56029e38-0e38-181c-2f61-f92b4bfd6826@redhat.com>
+User-Agent: Alpine 2.20 (GSO 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (smtp.simplesystems.org [65.66.246.90]); Wed, 08 Nov 2017 13:13:21 -0600 (CST)
+Subject: Re: [oss-security] Race condition between UDP bind(2) and connect(2)
+ delivers wrong datagrams
 
-Hi Alan,
+On Wed, 8 Nov 2017, Eric Blake wrote:
+>>
+>> This issue is not that case because Darwin[1], DragonFly[2], FreeBSD[3],
+>> GNU/Hurd (though by importing Linux man pages), Linux[4], NetBSD[5], and
+>> OpenBSD[6] all document behavior compatible with POSIX[7].
+>
+> It doesn't matter what the implementations document (if their
+> documentation is copying from POSIX), but what they actually DO.
 
+For the purpose of this list (about security) it seems to me that the 
+current behavior makes use of the recv(2) (or read(2)) system calls 
+inherently insecure since there is no way to verify that a received 
+message is from the expected source address.  The only work-around is 
+to intentionally discard messages until no more messages are 
+available, but this may discard valid messages.
 
-> 
-> The CPU vendors have their own methods for alerting OS & Hypervisor makers of
-> CPU-level security issues in advance of publication, that don't flow through
-> the distros lists or this list, so fixes for those often happen without any
-> notice here.
-> 
-> For other CVEs, it really depends on whether the project includes this list
-> in their notification process, or some volunteer notices them and forwards
-> the information to the list.  Many still slip through the cracks.
+This makes most common uses of recv(2) insecure.
 
-Thanks for your explanation!
-
-Regards
-Bjoern
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
