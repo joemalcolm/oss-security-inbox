@@ -1,4 +1,9 @@
-Received: (qmail 17612 invoked by uid 550); 10 Apr 2023 08:27:31 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1244" "Wednesday" "8" "November" "2017" "15:51:54" "+0900" "Akira Ajisaka" "aajisaka@apache.org" "<dfb21a5f-dc61-a3d4-93ff-333a902623f9@apache.org>" "31" "[oss-security] [SECURITY] CVE-2017-3166: Apache Hadoop Privilege escalation vulnerability" nil nil nil "11" "2017110806:51:54" "[oss-security] [SECURITY] CVE-2017-3166: Apache Hadoop Privilege escalation vulnerability" (number mark "U       aajisaka@apa Nov  8   31/1244  " thread-indent "\"[oss-security] [SECURITY] CVE-2017-3166: Apache Hadoop Privilege escalation vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 6001 invoked by uid 550); 8 Nov 2017 10:41:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,36 +12,48 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17579 invoked from network); 10 Apr 2023 06:15:08 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Heping Wang <peacewong@apache.org>
+Received: (qmail 9378 invoked from network); 8 Nov 2017 06:52:09 -0000
 To: oss-security@lists.openwall.com
-Message-ID: <ae225238-7f93-60b4-89f7-b48bfe6bcdd8@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 10 Apr 2023 06:14:52 +0000
+From: Akira Ajisaka <aajisaka@apache.org>
+Message-ID: <dfb21a5f-dc61-a3d4-93ff-333a902623f9@apache.org>
+Date: Wed, 8 Nov 2017 15:51:54 +0900
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:52.0)
+ Gecko/20100101 Thunderbird/52.4.0
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2023-29215: Apache Linkis JDBC EngineCon  has a
- deserialization command execution 
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] [SECURITY] CVE-2017-3166: Apache Hadoop Privilege escalation
+ vulnerability
 
-Severity: important
+CVE-2017-3166: Apache Hadoop Privilege escalation vulnerability
+
+Severity: Important
+
+Vendor: The Apache Software Foundation
+
+Versions Affected:
+Hadoop 2.6.1+, 2.7.x before 2.7.4, 3.0.0-alpha before 3.0.0-alpha4
 
 Description:
+In a cluster where the YARN user has been granted access to all HDFS
+encryption keys, if a file in an encryption zone with access permissions
+that make it world readable is localized via YARN's localization mechanism,
+e.g. via the MapReduce distributed cache, that file will be stored
+in a world-readable location and shared freely with any application
+that requests to localize that file, no matter who the application owner
+is or whether that user should be allowed to access files from the
+target encryption zone.
 
-In Apache Linkis <=3D1.3.1, due to the lack of effective filtering
-of parameters, an attacker configuring malicious Mysql JDBC parameters in J=
-DBC EengineConn Module will trigger a
-deserialization vulnerability and eventually lead to remote code execution.=
- Therefore, the parameters in the Mysql JDBC URL should be blacklisted. Ver=
-sions of Apache Linkis <=3D 1.3.0 will be affected.
-We recommend users upgrade the version of Linkis to version 1.3.2.
+Mitigation:
+Users on 2.6.1+ and 2.7.x before 2.7.4 should upgrade to 2.7.4 or later
+Users on 3.0.0-alpha before 3.0.0-alpha4 should upgrade to 3.0.0-alpha4 or later
+
+Impact:
+Users may gain access to files that should be protected by HDFS
+transparent encryption if those files have world readable access
+permissions and are localized through YARN's localization mechanism
+in a cluster where YARN has been granted access to all HDFS encryption keys.
 
 Credit:
-
-sw0rd1ight (reporter)
-
-References:
-
-https://linkis.apache.org
-https://www.cve.org/CVERecord?id=3DCVE-2023-29215
-
+This issue was discovered by Luke Herbert.
