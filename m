@@ -1,94 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/21/3
-Message-ID: <352058745dfd4118bd6d669968fb21cd@imshyb01.MITRE.ORG>
-Date: Fri, 20 Jan 2017 22:24:00 -0500
-From: <cve-assign@...re.org>
-To: <spender@...ecurity.net>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE REQUEST: linux kernel: process with pgid zero able to crash kernel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/08/1
+Message-ID: <20171108091517.GA18656@kroah.com>
+Date: Wed, 8 Nov 2017 10:15:17 +0100
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Tue, Nov 07, 2017 at 08:30:05PM +0000, Maier, Kurt H wrote:
+> On Tue, 2017-11-07 at 21:22 +0100, Greg KH wrote:
+> > 
+> > I hate to ask, but why are you getting CVEs for bugs fixed over a
+> > year
+> > ago, and are already in all stable kernel releases a year ago?  Why
+> > does
+> > it matter?
+> > 
+> > Unless you happen to have a product that doesn't ever do kernel
+> > updates
+> > from the stable trees, and well, then you know what you are doing and
+> > don't need CVEs assigned either, right?  :)
+> > 
+> 
+> Kernel maintainers' policy is clear, and nobody is asking for that to
+> change, but please don't sandbag the process of keeping track of
+> vulnerabilities.  The fraction of "products" (regardless of vendor)
+> that run linux and never get updates approaches unity.  Being able to
+> precisely catalog which linux releases suffer from which
+> vulnerabilities is useful to many.
 
-> [] how about a CVE for a recent kernel, for a vulnerability
-> not fixed in any stable kernel yet, and introduced for a pointless mitigation
-> no less:
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=c4e490cf148e85ead0d1b1c2caaba833f1d5b29f
-> This affects upstream >= 4.8 when CONFIG_SLAB_FREELIST_RANDOM is enabled
+Well, I'm working on fixing the "devices do not get updates" issue
+through other means, so don't just give up on that one just yet :)
 
-Use CVE-2017-5546.
+As for the "keep track of vulnerabilities", is that what is really
+happening here?  Why pick a random bug fix from over a year ago for a
+CVE vs. the 100 other bugfixes in the past few weeks/months?
 
+I'm really curious as to what triggered this specific CVE request that
+somehow misses the hundreds/thousands of other fixes that land in newer
+kernel releases?
 
-> since VMAP_STACK was introduced haphazardly in 4.9 without doing any 
-> static analysis beyond a simple grep or smatch it seems, there are probably a 
-> dozen or so DoSes when CONFIG_DEBUG_SG or CONFIG_DEBUG_VIRTUAL is 
-> enabled, or potential silent or not so silent memory corruption when 
-> it's not, as a scatterlist crossing a virtual page boundary will then 
-> end up accessing a totally unrelated adjacent physical page if a stack 
-> address was passed into the scatterlist, and these vulnerabilities will 
-> continue to pop up until something comprehensive is done to prevent 
-> them. Emese's written an IPA GCC plugin to find all the ones you've missed,
-> so we know there still are many that haven't been fixed.
+thanks,
 
-> [] https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=6d104af38b570d37aa32a5803b04c354f8ed513d 
-
-Use CVE-2017-5547.
-
-
-> [] https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=a45f795c65b479b4ba107b6ccde29b896d51ee98
-
-Use CVE-2016-10153.
-
-
-> [] https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=06deeec77a5a689cc94b21a8a91a76e42176685d
-
-Use CVE-2016-10154.
-
-
-> [] 0day alert, not fixed in 4.9 yet:
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=05a974efa4bdf6e2a150e3f27dc6fcf0a9ad5655
-
-Use CVE-2017-5548.
-
-
-> [] Not to mention the bugs introduced via fixes for VMAP_STACK:
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=146cc8a17a3b4996f6805ee5c080e7101277c410
-
-Use CVE-2017-5549.
-
-
-> [] Or how about a CVE for this huge heap infoleak (and while I'm at it, congrats to
-> Al for not covering it up for once, maybe he's learning!):
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=b9dc6f65bc5e232d1c05fe34b5daadc7e8bbf1fb
-
-Use CVE-2017-5550.
-
-
-> [] Or this (sgid bit not cleared on tmpfs):
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=497de07d89c1410d76a15bec2bb41f24a2a89f31
-
-Use CVE-2017-5551.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIbBAEBCAAGBQJYgtMDAAoJEHb/MwWLVhi22oYP+IqRCDGdu0kTOWAwWBBmU1sg
-wgrB5sfjm3in2XxfWv5KDVzkNu2lCL5h58Ft3yR+gINPj/Ujpxawqpybcxy5Djnd
-EtwdKoasIjnd4UMda93KUphRFBsXsmtjyFD6ON2obYuQAVvOs+OZi+eJddtUKrZO
-jqpWTTydmNLkZzuPD0KCSrweFOiOe8oqFk2MfrnSED3X0jPSxIf7eZSn3BI0xot8
-GRVfUmi2gMok5/Stt+KGqR8VEw+1bu2wCZcd5JYNTWfH94S89DtpttF91ZXbjy/n
-kvFLfMNN7EtJFo7GttT6DALefc/JOitr7mx+f062Avbx9N+Rcg7FPMoiVeY+CZfV
-022xI9IFCW0hxAnPCUBFHyTqPwLX2w2oNajEB4ZCpYETNAoo2tjBCiKwU5wzboR+
-Ciqo0DMNmPONDiHh2OrwFRV1TgfiegWK+209KaWkNfTar5vQwCQvyYJgls7gs+US
-+E4/J7CX/0gWQqFlpVCQ4zBovap0sJGigpmD0wI2jgvTJADrQcjU09I+AkhP2Was
-ztQ0JwOBL5F5SaMx6bQw/BKKzenikzAdQ6nanlOmywwLNUaRVp8V9rPMbAub9h7F
-r7rfcqJwyvirUTlxmesn+zt0pyT0WK6qSwy+K1X9l/C5DcZtPl2iJ/HiuB7dWTFh
-tcLtUrLLY/vly/hTAbM=
-=y6Ka
------END PGP SIGNATURE-----
+greg k-h
