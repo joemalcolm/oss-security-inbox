@@ -1,31 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/18/10
-Message-ID: <alpine.LFD.2.20.1701182308090.22270@wniryva>
-Date: Wed, 18 Jan 2017 23:10:19 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: NCSC Security <security@...c.gov.uk>
-Subject: CVE request Kernel: kvm: use-after-free issue while creating devices
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/08/9
+Message-ID: <20171108194652.fqk5alj7dhq67mqo@eldamar.local>
+Date: Wed, 8 Nov 2017 20:46:52 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: Back in Time: CVE-2017-16667: shell injection in notify-send
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Hi
 
-Linux kernel built with the Kernel-based Virtual Machine(CONFIG_KVM) support 
-is vulnerable to a use-after-free flaw. It could occur while creating devices, 
-via ioctl('/dev/kvm', ...) calls.
+MITRE has assinged CVE-2017-16667 for the following isue in Back in
+Time, "a simple backup tool for Linux". backintime is prone to a shell
+injection vulnerability via notify-sent.
 
-A user/process could use this flaw to crash the host kernel resulting in DoS 
-or potentially escalate their privileges on a system.
+Back in Time did improper escaping/quoting of file paths used as
+arguments to the 'notify-send' command, leading to some parts of file
+paths being executed as shell commands.
 
-Upstream patch:
----------------
-   -> https://git.kernel.org/linus/a0f1d21c1ccb1da66629627a74059dd7f5ac9c61
+An attacker could take advantage of this flaw by crafting an
+unreadable file with a specific name to run arbitrary shell commands.
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1414506
+Upstream report: https://github.com/bit-team/backintime/issues/834
+Fixed by: https://github.com/bit-team/backintime/commit/cef81d0da93ff601252607df3db1a48f7f6f01b3
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Regards,
+Salvatore
