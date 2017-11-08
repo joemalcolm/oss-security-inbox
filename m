@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1769" "Tuesday" "25" "September" "2018" "20:24:42" "+0300" "Ariel Zelivansky" "ariel.zelivans@gmail.com" "<CAE-_4r3t0=fss0PSo9cSOVW3s4mXbJMnz5-WpY4MJifFFeDwgg@mail.gmail.com>" "56" "Re: [oss-security] CVE-2018-8023: A remote attacker can exploit a vulnerability in the JWT implementation to gain unauthenticated access to Mesos Executor HTTP API." "^Cc:" nil nil "9" "2018092517:24:42" "[oss-security] CVE-2018-8023: A remote attacker can exploit a vulnerability in the JWT implementation to gain unauthenticated access to Mesos Executor HTTP API." (number mark "U       ariel.zeliva Sep 25   56/1769  " thread-indent "\"Re: [oss-security] CVE-2018-8023: A remote attacker can exploit a vulnerability in the JWT implementation to gain unauthenticated access to Mesos Executor HTTP API.\"\n") "<CAGqxZSVqxSd27nWYFgicNVVMD8z=WXGZohsyX5xJ-Hh8p1643g@mail.gmail.com>" ("<CAPNiXbEAF=Se=QxAumYgog+4ZCoVpoPCUsfONszrNDqkNmzYaw@mail.gmail.com>" "<CAE-_4r2P-=PaJC7SFVawyKi3Y+X8raPnmddjmXC36pS6DLfEjw@mail.gmail.com>" "<CAGqxZSVqxSd27nWYFgicNVVMD8z=WXGZohsyX5xJ-Hh8p1643g@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1401" "Wednesday" "8" "November" "2017" "10:15:17" "+0100" "Greg KH" "greg@kroah.com" "<20171108091517.GA18656@kroah.com>" "36" "Re: [oss-security] CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver" nil nil nil "11" "2017110809:15:17" "[oss-security] CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver" (number mark "U       greg@kroah.c Nov  8   36/1401  " thread-indent "\"Re: [oss-security] CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver\"\n") "<1510086603.29942.2.camel@pnnl.gov>" ("<906136424.28576814.1510085319128.JavaMail.zimbra@redhat.com>" "<1539240847.28577626.1510085696543.JavaMail.zimbra@redhat.com>" "<20171107202237.GA10679@kroah.com>" "<1510086603.29942.2.camel@pnnl.gov>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 10011 invoked by uid 550); 25 Sep 2018 17:24:55 -0000
+Received: (qmail 5823 invoked by uid 550); 8 Nov 2017 09:15:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,102 +11,70 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9990 invoked from network); 25 Sep 2018 17:24:54 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=RAiMQdjfwVUMxNX2/FLZnCid/RzELhyVOjwuQKncCg8=;
-        b=sQvB6GpY76vMe7f4Rtla/Ivpt7BW4BSzIHPjWaeza5u/KPwDXexRxPIyeVbrNV0Gfc
-         2j3R24LAUcJwHOwwlzwmNNqxxHoKZ9i2nyqepkeGWxrT8juqukDwNHvkyF8NOcxaUBGt
-         LrNStKeZVp0YPMH0hQSkIp9SvluaCkXtoiMqId0B9/uZsa7TdQGppzfsBbF6bvt34rcl
-         ay8a4CDz3wRzvQg6k4Mh0LZLBu/3w2EawjtbmO5TC1OpFwOU4lVXVmmXOQiSFIuiPamx
-         0BJCV4uJaYWaRvYbpRDj2P3OUJYaF7FVmhlsLoGlXhbFIBOLLQESieBPCirBOcdsZfeV
-         YyNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=RAiMQdjfwVUMxNX2/FLZnCid/RzELhyVOjwuQKncCg8=;
-        b=VwDGj8V+l6067Q/7bYksPNnSrHqRtQ1DThcsZO/+uzwInFfjDSELIdWhitm3SRb69J
-         ZbKwi8MpSxJ5IR55t1bN2cF+QtCx3U7ec4tAehByP9br6Cy5zgsi3eU5mY84z1Q3dpIb
-         ZDKoBLPrJMwYmxRh/qr96aawkBevSYP3FheOf+d5aTDXHaAoOLIf4m47KVXwlJbaevhC
-         9hgmHnwJldlenNdcg+QNC0hTsuu9w6MBsbI5fHoqf7vn8JRMwSscU/9Ox1LM1PzbCARR
-         w0A7I/4IbxZoN9DcPphgF41MTkmvzc42UfLwbeuKgfXfLTvkeKAqxiTnyEnWPTWDSJ5I
-         hNMw==
-X-Gm-Message-State: ABuFfoh0QwTqjrDraIDCPVHKu1u/65vNtc4ESu8hWnZl79VaqUbGafID
-	AH5SgTzEBoekDZttMn00Ff2Df6xaf1NHinGVvFk=
-X-Google-Smtp-Source: ACcGV62avXKLlFle6mwN4nsAHDrl9qeBmie2KnM8U7mzALjlgF9kDBz6QnJ19EcB83RuLyMTIUqOH4ZeoNaPowhndc8=
-X-Received: by 2002:a50:e185:: with SMTP id k5-v6mr3025252edl.195.1537896283224;
- Tue, 25 Sep 2018 10:24:43 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <CAGqxZSVqxSd27nWYFgicNVVMD8z=WXGZohsyX5xJ-Hh8p1643g@mail.gmail.com>
-References: <CAPNiXbEAF=Se=QxAumYgog+4ZCoVpoPCUsfONszrNDqkNmzYaw@mail.gmail.com>
- <CAE-_4r2P-=PaJC7SFVawyKi3Y+X8raPnmddjmXC36pS6DLfEjw@mail.gmail.com> <CAGqxZSVqxSd27nWYFgicNVVMD8z=WXGZohsyX5xJ-Hh8p1643g@mail.gmail.com>
-Message-ID: <CAE-_4r3t0=fss0PSo9cSOVW3s4mXbJMnz5-WpY4MJifFFeDwgg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Cc: oss-security@lists.openwall.com, Alex R <alexr@apache.org>
-Date: Tue, 25 Sep 2018 20:24:42 +0300
-From: Ariel Zelivansky <ariel.zelivans@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2018-8023: A remote attacker can exploit a
- vulnerability in the JWT implementation to gain unauthenticated access to
- Mesos Executor HTTP API.
-To: Terry Chia <terrycwk1994@gmail.com>
+Received: (qmail 5784 invoked from network); 8 Nov 2017 09:15:17 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=v9W5o2
+	biWHL5KFVppa9x86Ks1yrWumeasEgFnoOrsDU=; b=Bkw94EKIqobuQDhU+x9gGS
+	jlhevyPtVUAmYTD2T0fDLIkbItmbwhe7x169TpnmYBPPRP0JJyGc2W8kaROImuyl
+	AOmd9DnHcqRt2fYBvqRxAi0mLpg+otfvoqrc/Mco54neElITLqqRxRIcGbNpbTSK
+	VjcZLSAKfUHBR5bpX5LgiRCa9+7FzLUx1y6G7AAawQZLizXy48Xo97Q4+OGO0ObP
+	AJM21nd+uR+PfSb6adbdPgOjFd4r1704wnMZ+7SD6jusVCCcYKigNQX5q0XPmBEr
+	WN+WodtW0WGAAHtngoeSx1xHoNTKCq2JaKxTsS6hym+6rKHY/93tsUsxKPbgfztg
+	==
+X-ME-Sender: <xms:GcsCWpsXZ-Iub-wdT1ict7Y1euiBeZm7YSDiOMBb058oaAG95U0-JQ>
+Date: Wed, 8 Nov 2017 10:15:17 +0100
+From: Greg KH <greg@kroah.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20171108091517.GA18656@kroah.com>
+References: <906136424.28576814.1510085319128.JavaMail.zimbra@redhat.com>
+ <1539240847.28577626.1510085696543.JavaMail.zimbra@redhat.com>
+ <20171107202237.GA10679@kroah.com>
+ <1510086603.29942.2.camel@pnnl.gov>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1510086603.29942.2.camel@pnnl.gov>
+User-Agent: Mutt/1.9.1 (2017-09-22)
+Subject: Re: [oss-security] CVE-2017-15102: Linux kernel: usb: NULL-deref due
+ to a race condition in [legousbtower] driver
 
-Thanks for following up with this
+On Tue, Nov 07, 2017 at 08:30:05PM +0000, Maier, Kurt H wrote:
+> On Tue, 2017-11-07 at 21:22 +0100, Greg KH wrote:
+> > 
+> > I hate to ask, but why are you getting CVEs for bugs fixed over a
+> > year
+> > ago, and are already in all stable kernel releases a year ago?  Why
+> > does
+> > it matter?
+> > 
+> > Unless you happen to have a product that doesn't ever do kernel
+> > updates
+> > from the stable trees, and well, then you know what you are doing and
+> > don't need CVEs assigned either, right?  :)
+> > 
+> 
+> Kernel maintainers' policy is clear, and nobody is asking for that to
+> change, but please don't sandbag the process of keeping track of
+> vulnerabilities.  The fraction of "products" (regardless of vendor)
+> that run linux and never get updates approaches unity.  Being able to
+> precisely catalog which linux releases suffer from which
+> vulnerabilities is useful to many.
 
-On Mon, Sep 24, 2018 at 4:36 AM, Terry Chia <terrycwk1994@gmail.com> wrote:
-> Hi Ariel,
->
-> I believe the following commit contains the fix:
-> https://github.com/apache/mesos/commit/2c282f19755ea7518caf6f43e729524b1c6bdb23
->
-> Cheers,
-> Terry
->
->
-> On Sun, Sep 23, 2018 at 12:46 AM Ariel Zelivansky <ariel.zelivans@gmail.com>
-> wrote:
->>
->> Hi,
->>
->> I couldn't find the fix for this in the mesos repository and it is not
->> documented in the CHANGELOG, could someone direct me to the fixing
->> commit/patch?
->>
->> Thanks
->> Ariel
->>
->> On Fri, Sep 21, 2018 at 1:50 PM, Alex R <alexr@apache.org> wrote:
->> >
->> > Severity: Important
->> >
->> > Vendor:
->> > The Apache Software Foundation
->> >
->> > Versions Affected:
->> > Apache Mesos 1.4.0 to 1.6.0
->> > The unsupported Apache Mesos pre-1.4.0 releases may be also affected.
->> >
->> > Description:
->> > Apache Mesos can be configured to require authentication to call the
->> > Executor HTTP API using JSON Web Token (JWT). The comparison of the
->> > generated HMAC value against the provided signature in the JWT
->> > implementation used is vulnerable to a timing attack because instead
->> > of a constant-time string comparison routine a standard `==` operator
->> > has been used. A malicious actor can therefore abuse the timing
->> > difference of when the JWT validation function returns to reveal the
->> > correct HMAC value.
->> >
->> > Mitigation:
->> > pre-1.4.x users should upgrade to at least 1.4.2
->> > 1.4.x users should upgrade to 1.4.2
->> > 1.5.x users should upgrade to 1.5.2
->> > 1.6.0 users should upgrade to 1.6.1
->> > 1.7.0-dev users should obtain Mesos 1.7.0
->> >
->> > Credit:
->> > This issue was discovered by Terry Chia (Ayrx).
->> >
->> > Alex on behalf of Mesos PMC
+Well, I'm working on fixing the "devices do not get updates" issue
+through other means, so don't just give up on that one just yet :)
+
+As for the "keep track of vulnerabilities", is that what is really
+happening here?  Why pick a random bug fix from over a year ago for a
+CVE vs. the 100 other bugfixes in the past few weeks/months?
+
+I'm really curious as to what triggered this specific CVE request that
+somehow misses the hundreds/thousands of other fixes that land in newer
+kernel releases?
+
+thanks,
+
+greg k-h
