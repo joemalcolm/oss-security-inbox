@@ -1,129 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/06/5
-Message-ID: <alpine.LRH.2.02.1706061556390.27351@argo.troja.mff.cuni.cz>
-Date: Tue, 6 Jun 2017 23:56:42 +0200 (CEST)
-From: Pavel Kankovsky <peak@...o.troja.mff.cuni.cz>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/09/3
+Message-ID: <20171109152412.qmh4gw62lcrd5a4h@jwilk.net>
+Date: Thu, 9 Nov 2017 16:24:12 +0100
+From: Jakub Wilk <jwilk@...lk.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2017-9148 FreeRADIUS TLS resumption authentication bypass (erratum)
+Subject: Re: nvi denial of service
 Content-Type: text/plain; charset=utf-8
 
-Due to various unfortunate circumstances, mostly related to my own
-sloppiness and stupidity, several "alternative facts" made their way
-into the advisory published on May 29:
+Instead of applying more and more duct tape on nvi's broken design, you 
+should stop abusing /var/tmp and store swapfiles in user's home 
+directory instead; and drop the virecorver script completely.
 
-1. Reports of EOL versions being vulnerable were greatly exaggerated.
-Only versions 2.1.1 through 2.1.7 are actually vulnerable. Other versions
-allow TLS resumption and skip inner authentication but they change their
-mind and refuse access at the last moment. (I accept full responsibility
-for this fiasco and as an act of penance I have reexamined and retested
-every single FreeRADIUS release since 2.0.0.)
+* coypu@....org, 2017-11-09, 02:32:
+> /*
+>+ * Since vi creates recovery files only accessible by the user, files
+>+ * accessible by group or others are probably malicious so avoid them.
+>+ * This is simpler than checking for getuid() == st.st_uid and we want
+>+ * to preserve the functionality that root can recover anything which
+>+ * means that root should know better and be careful.
+>+ */
+>+static int
+>+checkok(int fd)
+>+{
+>+	struct stat sb;
+>+
+>+	return fstat(fd, &sb) != -1 && S_ISREG(sb.st_mode) &&
+>+	    (sb.st_mode & (S_IRWXG|S_IRWXO)) == 0;
 
-2. The attribution of the discovery to Stefan Winter was wrong. Further
-inquiry into this matter has revealed the vulnerability was reported
-"back in February" but the true identity of a person who reported it
-remains unknown. (Stefan reported a different problem with session
-resumption in early March and those two issues might have become
-conflated but that is purely my speculation.)
+Clever, but racy. Between the open() and fstat() calls, the owner could 
+change permissions to make this test pass.
 
-Enclosed below is the corrected advisory. The timeline has been extended
-to cover the complete history of the vulnerability.
+>-		if ((fp = fopen(dp->d_name, "r+")) == NULL)
+>+		if ((fp = fopen(dp->d_name, "r+efl")) == NULL)
 
------
+These are non-standard modifiers:
+"e" opens the file with O_CLOEXEC;
+"l" opens the file with O_NOFOLLOW;
+"f" opens only regular files.
 
+("e" is available in glibc; the others are not.)
 
-Vendor: The FreeRADIUS Project
+AFAICS, implementation of the "f" modifier in NetBSD is not atomic: it 
+opens the file, then closes it if it's not a regular file.
 
-Product: FreeRADIUS server
+>-		if ((fd = open(recpath, O_RDWR, 0)) == -1)
+>+		if ((fd = open(recpath, O_RDWR|O_NONBLOCK|O_NOFOLLOW|O_CLOEXEC,
 
+I believe that even with O_NONBLOCK, opening a non-regular file can have 
+side effects.
 
-Affected Versions:
+>+for i in $RECDIR/vi.*; do
+>+
+>+	case "$i" in
+>+	$RECDIR/vi.\*) continue;;
+>+	esac
 
-2.x (EOL): 2.1.1 through 2.1.7.
+(Not related to security, but this check for non-expanded wildcard is 
+not needed, because the code skips non-existent files later anyway.)
 
-3.0.x (stable): All versions before 3.0.14.
+>+for i in $RECDIR/recover.*; do
+>+
+>+	case "$i" in
+>+	$RECDIR/recover.\*) continue;;
+>+	esac
 
-3.1.x and 4.0.x (development): All versions before 2017-02-04.
+(Ditto.)
 
+>+	# Delete any recovery files that are zero length, corrupted,
+>+	# or that have no corresponding backup file.  Else send mail
+>+	# to the user.
+>+	recfile=$(awk '/^X-vi-recover-path:/{print $2}' < "$i")
 
-Description:
+It's still happy to read any file as root. (So it's trivial for a local 
+user to make the script hang forever.)
 
-The implementation of TTLS and PEAP in FreeRADIUS skips inner
-authentication when it handles a resumed TLS connection. This is
-a feature but there is a critical catch: the server must never allow
-resumption of a TLS session until its initial connection gets to the point
-where inner authentication has been finished successfully.
+>+	if [ -n "$recfile" ] && [ -s "$recfile" ]; then
+>+		$SENDMAIL -t < "$i"
 
-Unfortunately, affected versions of FreeRADIUS fail to reliably prevent
-resumption of unauthenticated sessions unless the TLS session cache is
-disabled completely and allow an attacker (e.g. a malicious supplicant) to
-elicit EAP Success without sending any valid credentials.
-
-
-Mitigation:
-
-(a) Disable TLS session caching. Set enabled = no in the cache subsection of
-eap module settings (raddb/mods-enabled/eap in the standard v3.0.x-style
-layout).
-
-(b) Upgrade to version 3.0.14.
-
-
-Credits:
-
-It is not known who was the first to discover this vulnerability.
-
-Luboš Pavlíček of the University of Economics, Prague independently
-rediscovered it in April 2017.
-
-
-Timeline:
-
-2008-09-05 Version 2.1.0 released. It was the first version supporting
-TTLS session resumption/PEAP fast reauthentication.
-
-2008-09-24 Vulnerability introduced (commit c6786c12).
-
-2008-09-25 Version 2.1.1 released.
-
-2009-09-14 Version 2.1.7 released.
-
-2009-09-24 Vulnerability fixed (commit 776cf690).
-
-2009-12-30 Version 2.1.8 released.
-
-2011-05-11 Vulnerability reintroduced in v3.0.x branch (commit a3f08dcb).
-
-2013-10-07 Version 3.0.0 released.
-
-early February 2017: Vulnerability discovered (or rediscovered?) and
-reported by an unknown person.
-
-2017-02-03: The first (and mostly ineffective) attempt to fix the
-vulnerability in v3.0.x branch (commits 5aabc3b1 and 6b909d0c).
-
-2017-02-04 Vulnerability fixed in v3.1.x and v4.0.x branches (commits
-813a93a7 and c703ad96, respectively).
-
-2017-03-06 Version 3.0.13 released without any explicit indication that it
-was supposed to fix a serious vulnerability (but it was probably better
-that way because the vulnerability was not really fixed).
-
-2017-04-24 Vulnerability rediscovered by Luboš Pavlíček.
-
-2017-04-25 PoC exploit developed and used to confirm 3.0.13 is still
-vulnerable. Vulnerability reported... again.
-
-2017-05-08 The second (and hopefully final) attempt to fix the
-vulnerability in v3.0.x (commits af030bd4 and 8f53382c).
-
-2017-05-26 Version 3.0.14 released.
-
-
-References:
-
-[1] <http://freeradius.org/security.html>
-[2] <http://freeradius.org/press/index.html#3.0.14>
-
+It's still happy to send email arbitrary emails (including non-local 
+recipients) as root.
 
 -- 
-Pavel Kankovsky aka Peak                      "Que sçay-je?"
+Jakub Wilk
