@@ -1,105 +1,119 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/18/3
-Message-ID: <301376.256483735-sendEmail@localhost>
-Date: Fri, 18 Aug 2017 13:54:06 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: graphicsmagick: use-after-free in ReadWMFImage (wmf.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/09/4
+Message-ID: <20171109165659.5zkyuspqdciorhsh@perpetual.pseudorandom.co.uk>
+Date: Thu, 9 Nov 2017 16:56:59 +0000
+From: Simon McVittie <smcv@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: [CVE-2017-14604] .desktop vulnerability again
 Content-Type: text/plain; charset=utf-8
 
-Description:
-graphicsmagick is a collection of tools and libraries for many image formats.
+On Thu, 09 Nov 2017 at 07:12:21 -0500, Robert Watson wrote:
+> Why would a PDF, which is a specially formatted data file, be made executable?
 
-The complete ASan output of the issue:
+Because it isn't really a PDF, but actually a Desktop Entry with a
+confusing name (e.g. an arbitrarily named .desktop file with
+Name=Bank_Statement.pdf), which an attacker is trying to induce you to
+double-click on in the expectation that it will load in a PDF viewer,
+so that your file manager will instead carry out the expected action for
+launching a Desktop Entry (executing the program/arguments named in the
+Exec field, which could be malicious).
 
-# gm convert -negate -clip $FILE out
-==24889==ERROR: AddressSanitizer: heap-use-after-free on address 0x60c0000005c0 at pc 0x7fca38d0da52 bp 0x7ffc6119c090 sp 0x7ffc6119c088
-READ of size 8 at 0x60c0000005c0 thread T0
-    #0 0x7fca38d0da51 in ReadWMFImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/wmf.c:2720:5
-    #1 0x7fca3e7e7e88 in ReadImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1607:13
-    #2 0x7fca3e67af18 in ConvertImageCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:4348:22
-    #3 0x7fca3e6b70c5 in MagickCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8869:17
-    #4 0x7fca3e76285b in GMCommandSingle /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17396:10
-    #5 0x7fca3e75f991 in GMCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17449:16
-    #6 0x7fca3cfca680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #7 0x419cd8 in _init (/usr/bin/gm+0x419cd8)
+This works because the Name field[0] of a .desktop file is conventionally
+shown instead of its actual filename by graphical file managers, similar
+to how Windows hides the .lnk extension of shortcuts (.lnk files), and
+for essentially the same reason - if it was displayed, then these files
+couldn't be used to create a shortcut whose displayed name is entirely
+under the user's control. .desktop files are basically the open source
+answer to Windows .lnk shortcuts, with the same uses. Before anyone says
+"but we have symbolic links so we don't need those", .lnk shortcuts are
+not the same as symbolic links - they contain metadata like the icon and
+command-line arguments, not just the name of the target - so to satisfy
+the same use cases, an equivalent was needed, and .desktop files were it.
 
-0x60c0000005c0 is located 64 bytes inside of 120-byte region [0x60c000000580,0x60c0000005f8)
-freed by thread T0 here:
-    #0 0x4cf4d0 in __interceptor_cfree /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_malloc_linux.cc:55
-    #1 0x7fca38ac70cd in wmf_lite_destroy /var/tmp/portage/media-libs/libwmf-0.2.8.4-r6/work/libwmf-0.2.8.4/src/api.c:336
+Regardless of whether we personally think it's a good idea for file
+managers to have this special case for displaying Desktop Entry files,
+it's a use case that people want (or at least one that they wanted in
+the past), it was implemented a long time ago, and breaking it now would
+be a compatibility break.
 
-previously allocated by thread T0 here:
-    #0 0x4cf688 in malloc /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_malloc_linux.cc:66
-    #1 0x7fca38ac72f7 in wmf_malloc /var/tmp/portage/media-libs/libwmf-0.2.8.4-r6/work/libwmf-0.2.8.4/src/api.c:482
+When that attack was discovered, authors of file managers and similar
+software mitigated it by (ab)using the u+x bit as a way to prevent the
+attack for files downloaded from web pages. The idea was that a web
+browser saving Bank_Statement.pdf.desktop from some malicious web page
+won't make it executable, so setting it to be executable can be used as an
+act of trust that can only be done by the user. However, extracting files
+from archives (zip/tar/etc. files) often does preserve the u+x bit,
+making that approach ineffective.
 
-SUMMARY: AddressSanitizer: heap-use-after-free /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/wmf.c:2720:5 in ReadWMFImage
-Shadow bytes around the buggy address:
-  0x0c187fff8060: fa fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
-  0x0c187fff8070: 00 00 00 00 00 00 00 00 fa fa fa fa fa fa fa fa
-  0x0c187fff8080: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-  0x0c187fff8090: fa fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
-  0x0c187fff80a0: 00 00 00 00 00 00 00 00 fa fa fa fa fa fa fa fa
-=>0x0c187fff80b0: fd fd fd fd fd fd fd fd[fd]fd fd fd fd fd fd fa
-  0x0c187fff80c0: fa fa fa fa fa fa fa fa fd fd fd fd fd fd fd fd
-  0x0c187fff80d0: fd fd fd fd fd fd fd fd fa fa fa fa fa fa fa fa
-  0x0c187fff80e0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-  0x0c187fff80f0: fa fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
-  0x0c187fff8100: 00 00 00 00 00 00 00 fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==24889==ABORTING
+I wonder how Windows mitigates the equivalent attack in which a
+malicious .lnk file is extracted from an archive?
 
-Affected version:
-1.3.26
+> I fear there may be one or more misunderstandings at play here of how
+> Unix/Linux works.
 
-Fixed version:
-N/A
+I think you're misunderstanding how .desktop files are (intended to be)
+used.
 
-Commit fix:
-http://hg.code.sf.net/p/graphicsmagick/code/rev/be898b7c97bd
+Their intended use is to be launched by an application that understands
+the Desktop Entry specification (e.g. Nautilus, the GNOME file manager)
+in response to some user action (e.g. when a Nautilus user double-clicks
+on a .desktop file). Again, the rule of thumb is "these are exactly
+like Windows .lnk". You can't "run" a .lnk file in Windows cmd.exe[1],
+and neither can you run a .desktop file in a Unix shell - that is not
+what they're for.
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+The use of the u+x bit was just a hack to mitigate an earlier
+vulnerability without needing to invent new filesystem metadata -
+most of the time[2] nobody actually passes these files to execve().
 
-CVE:
-CVE-2017-12936
+> (2)  Is .desktop file executable when made executable?
+> 
+> [root@...3:/] /usr/share/applications/minimal.desktop
+> /usr/share/applications/minimal.desktop: line 1: [Desktop: command not found
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00302-graphicsmagick-UAF-ReadWMFImage
+Consider what your shell and kernel are doing here. minimal.desktop isn't
+an ELF executable, and it doesn't start with the #! that declares a script
+interpreter, so your kernel refuses to execute the file. For historical
+reasons, most (all?) shells fall back on treating minimal.desktop as a
+Bourne/POSIX shell script. This works remarkably poorly, for the simple
+reason that it is not a shell script. You would get similarly undefined
+behaviour if you chmod'd a HTML file +x and tried to execute that.
 
-Timeline:
-2017-07-14: bug discovered and reported to upstream
-2017-07-26: upstream released a fix
-2017-08-05: blog post about the issue
-2017-08-18: CVE assigned
+But that doesn't matter, because the attacker is not trying to get the
+user to type the .desktop file's name into their shell - if an attacker
+can induce the user to type arbitrary commands into their shell then the
+defender has already lost. Instead, the attacker is trying to get the user
+to carry out an apparently-benign, apparently-safe action (double-clicking
+on something that appears to be a PDF file in their shell), and make it
+execute attacker-controlled code instead of doing what the user expects.
 
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
+> (5)  The text following "Exec=" in a .desktop file is "exec'd". That
+> is, it replaces whatever program is processing the .desktop file. Then
+> the OUTPUT of the exec'd command is executed. That's not what I
+> expected.
 
-Permalink:
-https://blogs.gentoo.org/ago/2017/08/05/graphicsmagick-use-after-free-in-readwmfimage-wmf-c/
+You are taking a "program" written in one "language" (a Desktop Entry) and
+causing it to be run by an interpreter for an entirely different language
+(Bourne/POSIX shell script), so of course the behaviour is undefined. You
+can't draw any conclusions from this about what happens when a Desktop
+Entry is activated as-intended, by a file manager or similar, any more
+than you could draw conclusions about the behaviour of C code or HTML
+by chmod'ing a file containing that +x and having your POSIX shell try
+to interpret it.
 
---
-Agostino Sarubbo
-Gentoo Linux Developer
+Regards,
+    smcv
 
+[0] strictly speaking it's a little more complicated than that, and
+    several fields are considered, to provide for localization and
+    graphical environments' differing requirements for displaying
+    "branded" names like Nautilus vs. "unbranded" names like Files
 
+[1] as far as I know
+
+[2] "well actually" it is possible to put something like #!/usr/bin/env
+    xdg-open in the first line of a .desktop file, in which case executing
+    it will launch it, by passing it as a parameter to the xdg-open
+    utility; but that's an afterthought, and the intended use is about
+    graphical environments launching menu entries and other
+    vaguely-Windows-like shortcuts
