@@ -1,47 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/03/6
-Message-ID: <7b91f9d5-153b-d265-3bb0-ecc11437c469@oracle.com>
-Date: Mon, 3 Jul 2017 14:51:27 +0100
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/09/1
+Message-ID: <20171109023255.GA12183@SDF.ORG>
+Date: Thu, 9 Nov 2017 02:32:55 +0000
+From: coypu@....org
 To: oss-security@...ts.openwall.com
-Subject: Re: accepting new members to (linux-)distros lists
+Cc: maya@...bsd.org
+Subject: nvi denial of service
 Content-Type: text/plain; charset=utf-8
 
-Solar,
+hello,
 
-I think (linux-)distros is working quite well but part of that is
-regularly looking at the processes etc to refine them.
+there is an exploitable flaw in virecover in nvi (as used by netbsd and
+possibly others).
 
-On 02/07/17 23:44, Solar Designer wrote:
-> Now, I understand that many of the distros are probably entering stuff
-> into their bug trackers anyway.  Often on shared or/and centrally
-> managed systems.  I hope most only do so for bugs that are actually
-> relevant to them, or at least that are likely to be relevant.
+the gist of it:
+sudo touch /myrootownedfile
+touch /var/tmp/vi.recover/vi. myrootownedfile
+sudo service virecover restart # may happen naturally
 
-In our case we do put relevant issues into our bug tracking behemoth...
+now /myrootownedfile is deleted by the choice of an unprivileged user.
 
-> 
-> Maybe we should make this limitation part of list policy ("do not enter
-> the newly arriving issues into bug trackers unless and until you're
-> reasonably confident the issues are relevant to you")?  Or forbid use of
-> bug trackers for the embargoed issues arriving through the distros list
-> altogether, but I'm quite sure many of the existing distros list members
-> won't accept that. :-(
+for your convenience, attached is the patch used in netbsd and commit
+messages.
 
-... and I agree that only tracking issues that are relevant is highly
-desirable.  Sometimes, of course, it only becomes apparent that it's not
-relevant after some work has been done.
+(Found by Maya Rashish, fix by Christos Zoulas and Robert Elz).
 
-What I would say though is that embargoed issues that go on a bug
-tracker should be not be visible to anyone that doesn't have an actual
-need to know.  If an internal bug tracker is generally open to anyone
-internal then for the purposes of embargo it might as well be public.
-
-It _should_ be self-evident that "need to know" includes making sure
-entries in internal bug trackers need to be similarly restricted but I
-do wonder if it's worth calling that out explicitly?
-
-jch
-
-
-PS For contributing back I have given myself a "must try harder" mark.
+View attachment "nvi.diff" of type "text/plain" (9170 bytes)
