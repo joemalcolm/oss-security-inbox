@@ -1,45 +1,101 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/07/14
-Message-id: <A1AB11FC-E9D5-421B-BB66-C90AC49C3401@apple.com>
-Date: Mon, 07 Aug 2017 13:22:46 -0400
-From: Jesse Hertz <jesse_hertz@...le.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/09/2
+Message-ID: <CAOfWR+ELnVxixsJ3HCLCQWC_wXwQxqNMvpmW=F+P8Nmt_iz1Lw@mail.gmail.com>
+Date: Thu, 9 Nov 2017 07:12:21 -0500
+From: Robert Watson <robertcwatson1@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Cve issue discussion
+Subject: Re: [CVE-2017-14604] .desktop vulnerability again
 Content-Type: text/plain; charset=utf-8
 
-fwiw, double check and make sure the issue occurs in libpng without ASAN. Sometimes ASAN can cause "heisenbugs" which only happen if ASAN is used.
+On Thu, Oct 5, 2017 at 4:37 PM, Yves-Alexis Perez <corsac@...ian.org> wrote:
+> Last time we had a vulnerability related to the handling of .desktop file, it
+> was handled by refusing to run it unless it has the executable bit.
+> Unfortunately, this permission bit is maintained when storing inside a
+> tarball, for example, so if an attacker wraps an executable .desktop file
+> posing (for example) as a PDF inside a tarball, a victim could extract the
+> file and double click on the PDF and the system will happily execute the
+> command inside the Exec= field of the .desktop file.
 
-> On Aug 7, 2017, at 9:57 AM, Glenn Randers-Pehrson <glennrp@...il.com> wrote:
-> 
-> OK I'll request a CVE for this libpng issue.
-> 
-> Glenn
-> 
-> On Mon, Aug 7, 2017 at 9:05 AM, John Haxby <john.haxby@...cle.com> wrote:
->> On 07/08/17 13:47, Glenn Randers-Pehrson wrote:
->>> It's not causing a crash, just a delay.  You'll safely get either an OOM
->>> message or an EOF message.and no memory leak.
->>> 
->> 
->> That's scant comfort when your browser is the one hit by the OOM killer
->> and then again when you restart it.  And also while you're wondering
->> what's going on because your laptop is basically completely
->> non-responsive ...
->> 
->> So yes, it's a remote DoS and definitely worth a CVE.  We have had other
->> similar CVEs in the past with image handling libraries not being
->> sufficiently paranoid.
->> 
->> jch
->> 
->>> Glenn
->>> 
->>> On Mon, Aug 7, 2017 at 8:37 AM, Marcus Meissner <meissner@...e.de> wrote:
->>>> Hi,
->>>> 
->>>> if it could crash the image reader I would consider it "remote denial of service"
->>>> classed and CVE worthy.
->> 
+Why then can't I find any PDF files on my system with an executable bit set?
 
+Wouldn't it be common for PDFs to be executable in order for this
+exploit to work?
 
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+Why would a PDF, which is a specially formatted data file, be made executable?
+
+I fear there may be one or more misunderstandings at play here of how
+Unix/Linux works.
+
+Some Experiments...
+
+(0)  The Setup
+
+[root@...3:/] ls -l /usr/share/applications/minimal.desktop
+-rw-r--r-- 1 root root 28 2017-11-09 05:02
+/usr/share/applications/minimal.desktop
+
+[root@...3:/] cat /usr/share/applications/minimal.desktop
+[Desktop Entry]
+Exec=cat $0
+
+(1)  Is .desktop file executed when all is normal?
+
+[root@...3:/] /usr/share/applications/minimal.desktop
+bash: /usr/share/applications/minimal.desktop: Permission denied
+
+[root@...3:/] bash -c /usr/share/applications/minimal.desktop
+bash: /usr/share/applications/minimal.desktop: Permission denied
+
+(2)  Is .desktop file executable when made executable?
+
+[root@...3:/] chmod 744 /usr/share/applications/minimal.desktop
+
+[root@...3:/] ls -l /usr/share/applications/minimal.desktop
+-rwxr--r-- 1 root root 28 2017-11-09 05:02
+/usr/share/applications/minimal.desktop
+
+[root@...3:/] /usr/share/applications/minimal.desktop
+/usr/share/applications/minimal.desktop: line 1: [Desktop: command not found
+/usr/share/applications/minimal.desktop: line 1: [Desktop: command not found
+    (endless loop. Ctrl-C to abort)
+
+[root@...3:/] bash -c '/usr/share/applications/minimal.desktop'
+/usr/share/applications/minimal.desktop: line 1: [Desktop: command not found
+/usr/share/applications/minimal.desktop: line 1: [Desktop: command not found
+    (endless loop. Ctrl-C to abort)
+
+(3) Is .desktop file executable by another user?
+
+[root@...3:/] grep 'chromium' /etc/passwd
+chromium:x:1005:1005:Software - chromium:/home/Chromium27:/bin/bash
+
+[root@...3:/] su chromium -c '/usr/share/applications/minimal.desktop'
+bash: /usr/share/applications/minimal.desktop: Permission denied
+
+[root@...3:/] su - chromium -c '/usr/share/applications/minimal.desktop'
+-bash: /usr/share/applications/minimal.desktop: Permission denied
+
+CONCLUSIONS
+
+(1)  File (and directory) ownership and permissions control what can
+be executed. Not whether the command appears in a file or script
+somewhere.
+
+(2)  Appropriate settings of the standard ownership and permissions in
+/etc/passwd and on the .desktop file seem to be working to prevent
+unauthorized execution.
+
+(3)  If an unexpected user IS able to execute the command, then the
+system is misconfigured (a VERY common situation).
+
+(4)  If misconfigured (incorrect ownership/permissions somewhere),
+thinking a user shouldn't be able to do something because there is no
+explicit path to doing it is a misunderstanding of how Unix/Linux
+works.
+
+(5)  The text following "Exec=" in a .desktop file is "exec'd". That
+is, it replaces whatever program is processing the .desktop file. Then
+the OUTPUT of the exec'd command is executed. That's not what I
+expected. I expected the 'cat' command to display the contents of the
+desktop file... not try to execute it recursively. Is that a bug or
+just my misunderstanding of something?
