@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1299" "Friday" "4" "December" "2015" "23:37:18" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151205043718.CAC3172E153@smtpvbsrv1.mitre.org>" "31" "[oss-security] Re: CVE request - redmine: Issues API may disclose changeset messages that are not visible" nil nil nil "12" "2015120504:37:18" "[oss-security] Re: CVE request - redmine: Issues API may disclose changeset messages that are not visible" (number mark "U       cve-assign@m Dec  4   31/1299  " thread-indent "\"[oss-security] Re: CVE request - redmine: Issues API may disclose changeset messages that are not visible\"\n") "<5660BA90.3080205@vorlons.info>" ("<5660BA90.3080205@vorlons.info>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3013" "Thursday" "9" "November" "2017" "12:09:03" "-0500" "David A. Wheeler" "dwheeler@dwheeler.com" "<E1eCqK7-00047g-Kl@rmmprod07.runbox>" "64" "Re: [oss-security] CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver" nil nil nil "11" "2017110917:09:03" "[oss-security] CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver" (number mark "U       dwheeler@dwh Nov  9   64/3013  " thread-indent "\"Re: [oss-security] CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver\"\n") "<20171108091517.GA18656@kroah.com>" ("<20171108091517.GA18656@kroah.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 29895 invoked by uid 550); 5 Dec 2015 04:37:31 -0000
+Received: (qmail 32678 invoked by uid 550); 9 Nov 2017 17:36:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,43 +12,81 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29874 invoked from network); 5 Dec 2015 04:37:30 -0000
-From: cve-assign@mitre.org
-To: matthias@vorlons.info
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <5660BA90.3080205@vorlons.info>
-Message-Id: <20151205043718.CAC3172E153@smtpvbsrv1.mitre.org>
-Date: Fri,  4 Dec 2015 23:37:18 -0500 (EST)
-Subject: [oss-security] Re: CVE request - redmine: Issues API may disclose changeset messages that are not visible
+Received: (qmail 22131 invoked from network); 9 Nov 2017 17:09:15 -0000
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+From: "David A. Wheeler" <dwheeler@dwheeler.com>
+To: "oss-security" <oss-security@lists.openwall.com>
+Date: Thu, 09 Nov 2017 12:09:03 -0500 (EST)
+X-Mailer: RMM6
+In-Reply-To: <20171108091517.GA18656@kroah.com>
+Message-Id: <E1eCqK7-00047g-Kl@rmmprod07.runbox>
+Subject: Re: [oss-security] CVE-2017-15102: Linux kernel: usb: NULL-deref
+ due to a race condition in [legousbtower] driver
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+> > On Tue, 2017-11-07 at 21:22 +0100, Greg KH wrote:
+> > > I hate to ask, but why are you getting CVEs for bugs fixed over a
+> > > year ago, and are already in all stable kernel releases a year ago?=
+=C2=A0=C2=A0Why
+> > > does it matter?...
 
-> http://www.redmine.org/projects/redmine/wiki/Changelog
-> https://www.redmine.org/issues/21136
-> http://www.redmine.org/projects/redmine/repository/revisions/14794/diff/trunk/app/views/issues/show.api.rsb?utf8=%E2%9C%93&type=sbs
+> On Tue, Nov 07, 2017 at 08:30:05PM +0000, Maier, Kurt H wrote:
+> > Kernel maintainers' policy is clear, and nobody is asking for that to
+> > change, but please don't sandbag the process of keeping track of
+> > vulnerabilities.  The fraction of "products" (regardless of vendor)
+> > that run linux and never get updates approaches unity.  Being able to
+> > precisely catalog which linux releases suffer from which
+> > vulnerabilities is useful to many.
 
-Use CVE-2015-8473.
+On Wed, 8 Nov 2017 10:15:17 +0100, Greg KH <greg@kroah.com> wrote:
+> Well, I'm working on fixing the "devices do not get updates" issue
+> through other means, so don't just give up on that one just yet :)
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+I applaud your work!  I think getting CVE assignments may help, as I explai=
+n below.
 
-iQIcBAEBCAAGBQJWYmmsAAoJEL54rhJi8gl5fswP/i2j555i4sEqYzN6EAu/a5CC
-kvLcHmlmDJNnjQrXrlhxt5ZHzC757BmlSxiOL6KQJFBPWAm6YOH3+RsKcxcBYgiT
-dhDdqkmFDKMv28xmidC8PDaI+ZqdSTI8e1sGOj2nk4m9Z/faXWTJWUWsSeVBW4s+
-elkdbbmLO6AVrmkxiXqooeEK0xOCE6bUYadC35Jm693LBeDTDmT87z+Pf/n3uV50
-+RHQKqJZt+ZGgv6eUo1AJtfc38Jx9cq/AmFclCa+4Os4a9U3l2nXfODzAKUHwxyj
-OPG8v1YjDJW+OPzYQeCqZ2/YHHCIxJZIX+/uWdkWOZbXz5HPzrp2HZ/VkDBgSRQY
-puAt+30WkoCBdKkxBRWDElbiQuEYlvrnZ+Rh5js1jM+j7jkGC7IgHIRH9F36WzBm
-OmXNsKunXkrIdNyC+X7/9z9e8d5ias20R3gFFCe0rV0WyHOYMx0rQWz9o0HH2ATn
-Pajx8Ld0i3dGp5yC4ddEwrfQ4c/s90K13GAO3zh4IPU/iXkR9sL7a+cqXTdkItaq
-CJ7wfzI5eRXtCvnb+Sn0KZRyYK4VCK179gZ01OEdjPCdXgqUBPeScXN1f6iISbrB
-eVVItZLp1VfULcBhO08F0RMfflpzPz4cLfik6xqNXxttfQmVOwcIXpSK+NbJod1r
-j0YDlc5j1oq6jqQFU2G/
-=gPVa
------END PGP SIGNATURE-----
+> As for the "keep track of vulnerabilities", is that what is really
+> happening here?  Why pick a random bug fix from over a year ago for a
+> CVE vs. the 100 other bugfixes in the past few weeks/months?
+>=20
+> I'm really curious as to what triggered this specific CVE request that
+> somehow misses the hundreds/thousands of other fixes that land in newer
+> kernel releases?
+
+Manufacturers & recipients often won't update unless there's a *reason* to =
+update.
+Documenting a number of *specific* CVEs in older kernel versions
+provides clear documented reasons that an update needs to occur,
+instead of a vague "you should upgrade" claim.
+
+Perhaps most importantly, once a vulnerability has a CVE id,
+some laws and regulations can come into play. Manufacturers
+will (correctly) argue that no one can track all the mailing lists, but if a
+vulnerability has a CVE id, it's generally agreed that the
+vulnerability is a publicly known vulnerability.
+In the US, there has been recent proposed legislation that requires
+that "Internet of Things" devices sold to the federal government cannot have
+"known security vulnerabilities" ("Internet of Things Cybersecurity Improve=
+ment
+Act of 2017" proposed by Senators Mark Warner (R-Va.) and Cory Gardner (D-C=
+olo.)).
+I suspect many other countries have or will pass similiar laws,
+or will interpret their existing laws this way.
+It's easy to argue that known security vulnerabilities are known flaws
+that should be remediated by the manufacturer (at no cost to the consumer).
+
+I agree that many vulnerabilities don't have CVE ids.
+You don't need to identify *all* vulnerabilities in old kernels... just eno=
+ugh to make
+it easier to update the kernel than try to back-patch everything.
+If manufacturers have to fix the CVEs to sell products, or to avoid massive=
+ returns,
+that creates an *economic* reason for manufacturers to
+begin responsibly maintain their products.
+
+There's no guarantee that this sequence of events will happen, but it's wor=
+th trying.
+
+--- David A. Wheeler
