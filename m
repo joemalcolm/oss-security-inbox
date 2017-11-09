@@ -1,115 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/13/4
-Message-ID: <CA++9HO8J91=AAqH6cUkYOi=AWpw=FXD7sajp2mQkdD66AO3WBw@mail.gmail.com>
-Date: Wed, 13 Sep 2017 21:08:31 +0000
-From: Armis Security <security@...is.com>
-To: oss-security@...ts.openwall.com
-Subject: Linux BlueBorne vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/09/5
+Message-Id: <E1eCqK7-00047g-Kl@rmmprod07.runbox>
+Date: Thu, 09 Nov 2017 12:09:03 -0500 (EST)
+From: "David A. Wheeler" <dwheeler@...eeler.com>
+To: "oss-security" <oss-security@...ts.openwall.com>
+Subject: Re: CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+> > On Tue, 2017-11-07 at 21:22 +0100, Greg KH wrote:
+> > > I hate to ask, but why are you getting CVEs for bugs fixed over a
+> > > year ago, and are already in all stable kernel releases a year ago?  Why
+> > > does it matter?...
 
-We are writing to inform you of two security vulnerabilities we have found
-in the Bluetooth stack in Linux (BlueZ).
+> On Tue, Nov 07, 2017 at 08:30:05PM +0000, Maier, Kurt H wrote:
+> > Kernel maintainers' policy is clear, and nobody is asking for that to
+> > change, but please don't sandbag the process of keeping track of
+> > vulnerabilities.  The fraction of "products" (regardless of vendor)
+> > that run linux and never get updates approaches unity.  Being able to
+> > precisely catalog which linux releases suffer from which
+> > vulnerabilities is useful to many.
 
-These vulnerabilities have been made public yesterday (Sept. 12, 2017), and
-are part of 8 vulnerabilities we have disclosed to various vendors (as a
-group they are called "BlueBorne").
+On Wed, 8 Nov 2017 10:15:17 +0100, Greg KH <greg@...ah.com> wrote:
+> Well, I'm working on fixing the "devices do not get updates" issue
+> through other means, so don't just give up on that one just yet :)
 
-Both Linux-related vulnerabilities where disclosed to
-distros@...openwall.org.
-The kernel-related vulnerability (CVE-2017-1000251) was also disclosed to
-security@...nel.org
-Both disclosures began on Sept. 5, 2017, and patches were made available
-yesterday and today.
-I will link to these patches bellow.
+I applaud your work!  I think getting CVE assignments may help, as I explain below.
 
-1) CVE-2017-1000250
-This vulnerability lies in the bluetoothd process, in the processing of
-incoming requests in the SDP server. It is an information disclosure
-vulnerability in the function service_search_attr_req (src/sdpd-request.c)
-that handles incoming sdp search attribute requests. It can be triggered
-without any user interaction in the victim’s machine and without any prior
-authentication (pairing), as it is part of stack’s Service discovery
-protocol (SDP) server that is meant to be accessed prior to authentication.
-This vulnerability can lead to a very large information disclosure from the
-heap of the bluetoothd process, that can potentially hold critical
-information including Bluetooth encryption keys, or other valuable data.
+> As for the "keep track of vulnerabilities", is that what is really
+> happening here?  Why pick a random bug fix from over a year ago for a
+> CVE vs. the 100 other bugfixes in the past few weeks/months?
+> 
+> I'm really curious as to what triggered this specific CVE request that
+> somehow misses the hundreds/thousands of other fixes that land in newer
+> kernel releases?
 
-Here are the specifics of this vulnerability:
-In the SDP server search attribute request handler
-(service_search_attr_req, under src/sdpd-request.c), this flow exists:
-...
-} else {
-/* continuation State exists -> get from cache */
-sdp_buf_t *pCache = sdp_get_cached_rsp(cstate);
-if (pCache) {
-uint16_t sent = MIN(max, pCache->data_size -
+Manufacturers & recipients often won't update unless there's a *reason* to update.
+Documenting a number of *specific* CVEs in older kernel versions
+provides clear documented reasons that an update needs to occur,
+instead of a vague "you should upgrade" claim.
 
- cstate->cStateValue.maxBytesSent);
-pResponse = pCache->data;
-memcpy(buf->data,
-                             pResponse + cstate->cStateValue.maxBytesSent,
-                             sent);
-buf->data_size += sent;
-cstate->cStateValue.maxBytesSent += sent;
-if (cstate->cStateValue.maxBytesSent == pCache->data_size)
-cstate_size = sdp_set_cstate_pdu(buf, NULL);
-else
-cstate_size = sdp_set_cstate_pdu(buf, cstate);
-} else {
-status = SDP_INVALID_CSTATE;
-SDPDBG("Non-null continuation state, but null cache buffer");
-}
-}
-...
+Perhaps most importantly, once a vulnerability has a CVE id,
+some laws and regulations can come into play. Manufacturers
+will (correctly) argue that no one can track all the mailing lists, but if a
+vulnerability has a CVE id, it's generally agreed that the
+vulnerability is a publicly known vulnerability.
+In the US, there has been recent proposed legislation that requires
+that "Internet of Things" devices sold to the federal government cannot have
+"known security vulnerabilities" ("Internet of Things Cybersecurity Improvement
+Act of 2017" proposed by Senators Mark Warner (R-Va.) and Cory Gardner (D-Colo.)).
+I suspect many other countries have or will pass similiar laws,
+or will interpret their existing laws this way.
+It's easy to argue that known security vulnerabilities are known flaws
+that should be remediated by the manufacturer (at no cost to the consumer).
 
-When a long response is returned to a specific search attribute request, a
-continuation state is returned to allow reception of additional fragments,
-via additional requests that contain the last continuation state sent.
-However, the incoming “cstate” that requests additional fragments isn’t
-validated properly, and thus an out-of-bounds read of the response buffer
-(pResponse) can be achieved, leading to information disclosure of the heap.
+I agree that many vulnerabilities don't have CVE ids.
+You don't need to identify *all* vulnerabilities in old kernels... just enough to make
+it easier to update the kernel than try to back-patch everything.
+If manufacturers have to fix the CVEs to sell products, or to avoid massive returns,
+that creates an *economic* reason for manufacturers to
+begin responsibly maintain their products.
 
-A patch for this vulnerability was pushed today to BlueZ upstream:
-https://git.kernel.org/pub/scm/bluetooth/bluez.git/commit/?id=9e009647b14e810e06626dde7f1bb9ea3c375d09
+There's no guarantee that this sequence of events will happen, but it's worth trying.
 
-2) CVE-2017-1000251
-
-This vulnerability is an RCE vulnerability in the Kernel's implementation
-of Bluetooth's L2CAP (net/bluetooth/l2cap_core.c):
-
-In l2cap_config_rsp this flow exists:
-...
-     case L2CAP_CONF_PENDING:
-         set_bit(CONF_REM_CONF_PEND, &chan->conf_state);
-         if (test_bit(CONF_LOC_CONF_PEND, &chan->conf_state)) {
-             char buf[64];
-             len = l2cap_parse_conf_rsp(chan, rsp->data, len,
-                            buf, &result);
-...
-The function l2cap_parse_conf_rsp parses the configuration elements in the
-configuration response (rsp->data), and copies them (after validating them)
-to the output buffer (buf). The function does not receive a maximum length
-of the output buffer, and this buffer is allocated on the stack of
-l2cap_config_rsp. So sending a configuration response which contains a
-large number of configuration elements (they can also be the same type of
-element repeated multiple times) - would cause a stack overflow of the
-output buffer (buf). Reaching this case (L2CAP_CONF_PENDING) is achievable
-by sending a configuration request with an EFS element, and setting the
-stype field to L2CAP_SERV_NOTRAFIC, prior to the crafted configuration
-response that would trigger the stack overflow.
-
-A patch for this vulnerability was pushed yesterday to upstream Linux
-Kernel:
-
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=e860d2c904d1a9f38a24eb44c9f34b8f915a6ea3
-
-
-
-If you need any additional information on these issues we would be happy to
-help.
-
-Thank you,
-Armis Labs
-
+--- David A. Wheeler
