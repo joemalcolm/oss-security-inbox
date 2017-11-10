@@ -1,39 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/29
-Message-ID: <20170705222806.u44tcrhruczgpkb7@perpetual.pseudorandom.co.uk>
-Date: Wed, 5 Jul 2017 23:28:06 +0100
-From: Simon McVittie <smcv@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: systemd fails to parse user that should run service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/10/2
+Message-ID: <iXtB5CpTryJAQZDKw3BO6URrMMnVSEovxuKwMlUoB5UiDo9R-YmfNUIQJO_iSpdNOqIm8wPxDWPvQtYG6xUY2z412ER8onCt2IAudAIAUks=@itk.swiss>
+Date: Fri, 10 Nov 2017 14:29:15 -0500
+From: Stiepan <stie@....swiss>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 06 Jul 2017 at 00:02:58 +0200, Kristian Fiskerstrand wrote:
-> On 07/05/2017 11:58 PM, Simon McVittie wrote:
-> > systemd does have a (public, and publically-archived) mailing list, which
-> > has a current thread on the subject of this issue.
-> > 
-> > In particular the mail in that thread from Felipe Sateler, and some of
-> > the discussion on the upstream bug, touches on reasons why neither
-> > "if anything is not as expected, reject the whole unit" nor the current
-> > behaviour is right. I suspect the resolution is likely to be something
-> > in between.
-> 
-> It would be useful with a reference to the thread in question so this
-> can be further looked into.
+> -------- Original Message --------
+> Subject: Re: [oss-security] CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver
+> Local Time: November 9, 2017 5:09 PM
+> UTC Time: November 9, 2017 5:09 PM
+> From: dwheeler@...eeler.com
+> To: oss-security <oss-security@...ts.openwall.com>
+>
+>>> On Tue, 2017-11-07 at 21:22 +0100, Greg KH wrote:
+>>>
+>>>> I hate to ask, but why are you getting CVEs for bugs fixed over a
+>>>> year ago, and are already in all stable kernel releases a year ago?  Why
+>>>> does it matter?...
+>>>>
+>>>> On Tue, Nov 07, 2017 at 08:30:05PM +0000, Maier, Kurt H wrote:
+>>
+>>> Kernel maintainers' policy is clear, and nobody is asking for that to
+>>> change, but please don't sandbag the process of keeping track of
+>>> vulnerabilities. The fraction of "products" (regardless of vendor)
+>>> that run linux and never get updates approaches unity. Being able to
+>>> precisely catalog which linux releases suffer from which
+>>> vulnerabilities is useful to many.
+>>>
+>>> On Wed, 8 Nov 2017 10:15:17 +0100, Greg KH greg@...ah.com wrote:
+>>> Well, I'm working on fixing the "devices do not get updates" issue
+>>> through other means, so don't just give up on that one just yet :)
+>>>
+>>> I applaud your work! I think getting CVE assignments may help, as I explain below.
+>>>
+>>> As for the "keep track of vulnerabilities", is that what is really
+>>> happening here? Why pick a random bug fix from over a year ago for a
+>>> CVE vs. the 100 other bugfixes in the past few weeks/months?
+>>
+>> I'm really curious as to what triggered this specific CVE request that
+>> somehow misses the hundreds/thousands of other fixes that land in newer
+>> kernel releases?
+>>
+>> Manufacturers & recipients often won't update unless there's a reason to update.
+>> Documenting a number of specific CVEs in older kernel versions
+>> provides clear documented reasons that an update needs to occur,
+>> instead of a vague "you should upgrade" claim.
+>>
+>> Perhaps most importantly, once a vulnerability has a CVE id,
+>> some laws and regulations can come into play. Manufacturers
+>> will (correctly) argue that no one can track all the mailing lists, but if a
+>> vulnerability has a CVE id, it's generally agreed that the
+>> vulnerability is a publicly known vulnerability.
+>> In the US, there has been recent proposed legislation that requires
+>> that "Internet of Things" devices sold to the federal government cannot have
+>> "known security vulnerabilities" ("Internet of Things Cybersecurity Improvement
+>> Act of 2017" proposed by Senators Mark Warner (R-Va.) and Cory Gardner (D-Colo.)).
+>> I suspect many other countries have or will pass similiar laws,
+>> or will interpret their existing laws this way.
+>> It's easy to argue that known security vulnerabilities are known flaws
+>> that should be remediated by the manufacturer (at no cost to the consumer).
+>>
+>> I agree that many vulnerabilities don't have CVE ids.
+>> You don't need to identify all vulnerabilities in old kernels... just enough to make
+>> it easier to update the kernel than try to back-patch everything.
+>> If manufacturers have to fix the CVEs to sell products, or to avoid massive returns,
+>> that creates an economic reason for manufacturers to
+>> begin responsibly maintain their products.
+>>
+>> There's no guarantee that this sequence of events will happen, but it's worth trying.
+>>
+>> --- David A. Wheeler
 
-The systemd mailing list is indexed by major search engines. I
-deliberately didn't provide a link, in the hope that a small barrier to
-entry will lead to fewer responses reiterating what has already been said,
-and a correspondingly greater chance of a response not getting lost in
-the noise from someone who has read the context and will propose a
-patch that achieves the desired result without breaking intended
-functionality (in particular "graceful degradation" when units released
-in upstream projects are interpreted by an older systemd, so that
-upstreams can opt-in to new security hardening flags without making their
-software inoperable in currently-deployed systemd versions).
+I would like to add that starting in May, 2018, companies will have the huge incentive of the European GDPR, with fines going up to 4% annual turnover of the company or group in case of a breach involving EU citizen's data. Here in Switzerland we will have a "light" version with fines capped to 250k CHF. But we're only about 8M (although, including many people and companies in a position to hire lawyers). This makes some incentives already. Now back to the specific question of CVE IDs, it's a tough one, knowing that not everyone might agree on that "single root of trust"... But I would say here, something is way better than nothing!
 
-Of course, if I was an exemplary open source developer I would have been
-spending my free time on writing that patch instead of getting drawn into
-conversations on oss-security, so perhaps this is partially my fault now.
+About the "fraction nearing unity", Linux-specific problem: this is why we are evaluating all possible open-source kernels for a secure "CEuniX"*, in collaboration with two EU-based organizations and a Canadian dev. First results should be published before the May 2018 deadline, giving people an early direction to follow in their journey to compliance. Actually this is a turning point - where law exceeds tech - instead of the reverse, which usually happens. Or perhaps better said, the rule of law will soon apply to the digital world, "fully". (Europe is far from being the only one, as was hinted by David; this is an international trend, where cultural differences will come into play and can have a crucial role in shaping how those laws are made and implemented in the real world, ultimately affecting our lives.)
 
-    S
+Stiepan A. Kovac
+
+*please e-mail me for details about the project, which is an H2020 candidate, meaning it is likely to get funding from the European Commission
