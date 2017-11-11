@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1296" "Saturday" "2" "July" "2016" "02:15:24" "+0100" "Robbie Gemmell" "robbie@apache.org" "<CAFitrpQuqhcLM2ZV9PKfqieHRD+uz+h4Ljd5DSbhiq-Dhvf8LA@mail.gmail.com>" "30" "[oss-security] [SECURITY] CVE-2016-4974: Apache Qpid: deserialization of untrusted input while using JMS ObjectMessage" nil nil nil "7" "2016070201:15:24" "[oss-security] [SECURITY] CVE-2016-4974: Apache Qpid: deserialization of untrusted input while using JMS ObjectMessage" (number mark "U       robbie@apach Jul  2   30/1296  " thread-indent "\"[oss-security] [SECURITY] CVE-2016-4974: Apache Qpid: deserialization of untrusted input while using JMS ObjectMessage\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1233" "Saturday" "11" "November" "2017" "14:49:19" "-0500" "Stuart Gathman" "stuart@gathman.org" "<b4297572-e986-5133-2f84-a2cda2839d29@gathman.org>" "20" "Re: [oss-security] CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver" nil nil nil "11" "2017111119:49:19" "[oss-security] CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver" (number mark "U       stuart@gathm Nov 11   20/1233  " thread-indent "\"Re: [oss-security] CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver\"\n") "<E1eCqK7-00047g-Kl@rmmprod07.runbox>" ("<E1eCqK7-00047g-Kl@rmmprod07.runbox>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3706 invoked by uid 550); 2 Jul 2016 08:32:20 -0000
+Received: (qmail 4075 invoked by uid 550); 11 Nov 2017 19:51:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,49 +12,51 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9861 invoked from network); 2 Jul 2016 01:15:39 -0000
-X-Gm-Message-State: ALyK8tL963nEsAA63Hf8ZgphPUWgQlhdmg5mfTSqJqyyCdtLNlj0yU8FN94LthzN3S19N9OfVgfLYxfU5sFkqQ==
-X-Received: by 10.36.43.88 with SMTP id h85mr890600ita.89.1467422125181; Fri,
- 01 Jul 2016 18:15:25 -0700 (PDT)
+Received: (qmail 3327 invoked from network); 11 Nov 2017 19:49:33 -0000
+Authentication-Results: mail.gathman.org; auth=pass (CRAM-MD5 sslbits=None) smtp.auth=stuart
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gathman.org; 
+ i=@gathman.org; q=dns/txt; s=default; t=1510429759; 
+ h=subject : to : references : from : message-id : date : 
+ mime-version : in-reply-to : content-type : 
+ content-transfer-encoding : subject : from : date; 
+ bh=qx2ETkAyrF52pWOcipN6o+N9WQbt9ShYqvdqnmS5vJs=; 
+ b=R5O0XYaoQGYkYhq1UqkLcv73ZQvkIOELcKsZvqUFZCXrC1sQJ1+wgcDr
+ S+JsviRsbfBMF3ugg3iaWCuGlbvKTIDGLpfbRzi3DDEDChKq2FLU6924Zl
+ lAyHv4dzo5O5ma2bE0f/owEDZwWEkc0osTJizN+OX2EmMsJo4w0Lkmf34=
+To: oss-security@lists.openwall.com
+References: <E1eCqK7-00047g-Kl@rmmprod07.runbox>
+From: Stuart Gathman <stuart@gathman.org>
+Organization: Gathman Systems
+Jabber-Id:  stuart@gathman.org
+Message-ID: <b4297572-e986-5133-2f84-a2cda2839d29@gathman.org>
+Date: Sat, 11 Nov 2017 14:49:19 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
 MIME-Version: 1.0
-From: Robbie Gemmell <robbie@apache.org>
-Date: Sat, 2 Jul 2016 02:15:24 +0100
-X-Gmail-Original-Message-ID: <CAFitrpQuqhcLM2ZV9PKfqieHRD+uz+h4Ljd5DSbhiq-Dhvf8LA@mail.gmail.com>
-Message-ID: <CAFitrpQuqhcLM2ZV9PKfqieHRD+uz+h4Ljd5DSbhiq-Dhvf8LA@mail.gmail.com>
-To: "dev@qpid.apache.org" <dev@qpid.apache.org>, "users@qpid.apache.org" <users@qpid.apache.org>, announce@apache.org, 
-	"security@apache.org" <security@apache.org>, oss-security@lists.openwall.com, 
-	bugtraq@securityfocus.com
-Content-Type: text/plain; charset=UTF-8
-Subject: [oss-security] [SECURITY] CVE-2016-4974: Apache Qpid: deserialization of untrusted
- input while using JMS ObjectMessage
+In-Reply-To: <E1eCqK7-00047g-Kl@rmmprod07.runbox>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+Subject: Re: [oss-security] CVE-2017-15102: Linux kernel: usb: NULL-deref due
+ to a race condition in [legousbtower] driver
 
-[CVE-2016-4974] Apache Qpid: deserialization of untrusted input while
-using JMS ObjectMessage
+On 11/09/2017 12:09 PM, David A. Wheeler wrote:
+> In the US, there has been recent proposed legislation that requires
+> that "Internet of Things" devices sold to the federal government cannot have
+> "known security vulnerabilities" ("Internet of Things Cybersecurity Improvement
+> Act of 2017" proposed by Senators Mark Warner (R-Va.) and Cory Gardner (D-Colo.)).
+> I suspect many other countries have or will pass similiar laws,
+> or will interpret their existing laws this way.
+> It's easy to argue that known security vulnerabilities are known flaws
+> that should be remediated by the manufacturer (at no cost to the consumer).
+>
+> I agree that many vulnerabilities don't have CVE ids.
+> You don't need to identify *all* vulnerabilities in old kernels... just enough to make
+> it easier to update the kernel than try to back-patch everything.
+> If manufacturers have to fix the CVEs to sell products, or to avoid massive returns,
+> that creates an *economic* reason for manufacturers to
+> begin responsibly maintain their products.
+This will create an economic reason to use closed source software - as
+there would then be far fewer  "known security vulnerabilities".
 
-Severity: Moderate
-
-Vendor: The Apache Software Foundation
-
-Versions Affected:
-Qpid AMQP 0-x JMS client 6.0.3 and earlier
-Qpid JMS (AMQP 1.0) client 0.9.0 and earlier
-
-Description:
-When applications call getObject() on a consumed JMS ObjectMessage they are
-subject to the behaviour of any object deserialization during the process
-of constructing the body to return. Unless the application has taken outside
-steps to limit the deserialization process, they can't protect against
-input that might try to make undesired use of classes available on the
-application classpath that might be vulnerable to exploitation.
-
-Mitigation:
-Users using ObjectMessage can upgrade to Qpid AMQP 0-x JMS client
-6.0.4 or Qpid JMS (AMQP 1.0) client 0.10.0 or later, and use the new
-configuration options to whitelist trusted content permitted for
-deserialization. When so configured, attempts to deserialize input
-containing other content will be prevented. Alternatively, users of older
-client releases may utilise other means such as agent-based approach to help
-govern content permitted for deserialization in their application.
-
-Credit:
-This issue was discovered by Matthias Kaiser of Code White (www.code-white.com)
+"As long as we keep it secret, we don't have to fix it...."
