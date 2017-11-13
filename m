@@ -1,50 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/02/2
-Message-ID: <53d3fa6071944c4cabf555a4d5741b38@imshyb01.MITRE.ORG>
-Date: Thu, 2 Feb 2017 00:49:41 -0500
-From: <cve-assign@...re.org>
-To: <chunibalon@...il.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: Out-of-Bound read and write issues in put1bitbwtile()(tiff-4.0.7/libtiff/tif-getimage.c:1352) and putgreytile()(tiff-4.0.7/libtiff/tif-getimage.c:1288)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/13/2
+Message-ID: <640892254.31427608.1510585620318.JavaMail.zimbra@redhat.com>
+Date: Mon, 13 Nov 2017 10:07:00 -0500 (EST)
+From: Vladis Dronov <vdronov@...hat.com>
+To: oss-security@...ts.openwall.com, Greg KH <greg@...ah.com>
+Subject: Re: CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello, Greg, all,
 
-> they are in netpbm(10.47.63)
+My fault here was indeed not stating that a Red Hat's product is
+vulnerable (thus, a CVE was assigned), but stating that only Linux
+kernel is vulnerable (while indeed it was fixed a long ago). Please,
+accept my apologies.
 
-> http://bugzilla.maptools.org/show_bug.cgi?id=2654
-> http://bugzilla.maptools.org/show_bug.cgi?id=2655
+> I hate to ask, but why are you getting CVEs for bugs fixed over a year
+> ago, and are already in all stable kernel releases a year ago?  Why does
+> it matter?
 
-> netpbm calls TIFFRGBAImageGet with width and
-> height parameters switched because it looks at the TIFF orientation tag and
-> thinks that TIFFRGBAImageGet will do a transposition
-> 
-> assumption is violated here when switching width and height as the width passed
-> to TIFFRGBAImageGet becomes 32800 which is greater than the original width of
-> 32
+I'm afraid, you won't like the answer, but in a short word, the Red Hat
+is a CNA (CVE Numbering Authority) for Red Hat's products and the Linux
+kernel and we've decided to assign this CVE.
 
-Use CVE-2017-5849 for both 2654 and 2655.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYksbdAAoJEHb/MwWLVhi2mgoP/j2QykW5WoefH+BF9ah0jCGD
-KoDC6fM9Xcz5dH0pr3bYSDC6X8nwUJKmRCRZSNJ1Y4ATP4JmqoG7kLcZNxF1q1YK
-l9cWoqdn14JpiLH125y5IcQTbMjsIU4ED2OnfJ65u3vuRizyDmmsrcWHExcFGjS5
-+EJmZK1CLsStTZTNBlxc3m2/aObxSTYR5eFvgza1Regk2q+GmIZWQd3VRQBuMDAm
-nK32FOWt4Ace9djcxrqkWz4+bdz70JoQZaBBloe/DFkqwE3/TBBbWMf+bn584vLr
-nP7gxrjfI9M/B2/Ac7WBT8POw//bo25C0X0LJlSnLjVmIiTcXjGnlMe87thNHJkQ
-Lxsg5OnZOhZZvQgpz61567eDX5h9xv7U51ebS59qFpD4yp63znV9tA8DtiZ9WKxn
-5e28tfxAABzDWclUJEx6/kobNKytgyTvvPbIrKo75b9FvoYE9lXDLW0eR6fk745Q
-0GyP4wptvbPga5aNZpCOBbq9IwXm2yNCGbUvSLNMm+ZPPo80Fs1sBdX26bvTqV0k
-FRC0jbp/bcGdC7vSWja3XS9YJSHAZdhlNXFF1sxf+H1Ia5SiYMFWNTyYYER34DZN
-EW4RxC0I+pEBsvV6fbznEKo2Abn8AqiyIxJ5orKsie5KOg73vHCx3KMWLPP2HOaW
-RZ1j4Wy9tBaf0S+AMiFc
-=wfq9
------END PGP SIGNATURE-----
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
