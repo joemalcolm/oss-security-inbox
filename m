@@ -1,82 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/23/6
-Message-ID: <e36752e0-c1d1-220f-76ae-5abbd047cd65@canonical.com>
-Date: Sat, 23 Sep 2017 11:14:28 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Why send bugs embargoed to distros?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/13/11
+Message-ID: <2475dbcb-fca3-a4b1-0be1-fb3fb68f9378@gentoo.org>
+Date: Mon, 13 Nov 2017 20:52:47 +0100
+From: Kristian Fiskerstrand <k_f@...too.org>
+To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
+Subject: Re: (linux-)distros list use statistics
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-On 2017-09-23 07:44 AM, Hanno Böck wrote:
-> Hi,
-> 
-> A few days have passed since the optionsbleed disclosure. Some
-> interesting things have surfaced, e.g. the fact that it was apparently
-> discovered already in 2014, but nobody noticed it was a security bug.
-> 
-> 
-> But I'd like to discuss something else:
-> I had informed the distros mailing list one week earlier about the
-> upcoming disclosure with a bug description and links to the already
-> available patch.
-> My understanding is that the purpose of the distros list is that
-> updates can be prepared so after a disclosure the time between "vuln is
-> known" and "patch is available" is short.
-> However from all I can see this largely didn't happen.
-> 
-> Debian+Ubuntu took more than a day after disclosure to fix. According
-> to the Debian bug tracker the bug got only opened after the public
-> disclosure[2]. I see no sign that any work on a fix began before the
-> disclosure.
-
-Having access to the embargoed information allowed us (Ubuntu) to evaluate the
-impact of the issue, look at the fix, and start locally testing the fix to
-determine if there were any issues. It also allows us to properly assign
-resources to working on the update.
-
-It would have probably taken us more than a day to publish this update if we
-didn't have access to the information in advance.
-
-> 
-> If I can trust Red Hat's CVE tracker [3] there still are no fixed
-> packages available. Also I haven't found any info about updated
-> opensuse packages.
-> 
-> The only distro I'm aware of that prepared packages and pushed them
-> right after disclosure is Gentoo.
-
-For issues that aren't critical, we tend to wait until the upstream project
-commits the fix before we release updates, to make sure a last-minute adjustment
-or additional fix didn't get added.
-
-> 
-> All of this makes me wonder if the distros list serves its purpose.
-> 
-> I'd be curious to hear:
-> 
-> a) if any people felt that pre-disclosure of optionsbleed was helpful
-> to them and in which way (after all - even if it only helps minor
-> distros and major distros ignore it it may still be a good thing).
-
-Yes, I believe the pre-disclosure was helpful to us. Thanks for doing it.
-
-> 
-> b) if people think that they'd usually prepare a fixed package, however
-> they didn't consider optionsbleed important enough. (Naturally I
-> probably have a bias seeing my findings as more important as other
-> people, but I could live with that.)
-> 
-> c) other things?
+On 11/13/2017 08:38 PM, Kristian Fiskerstrand wrote:
+>> Thank you, Kristian!
+>>
+>> This lists two very long embargo periods for two Linux kernel issues: 96
+>> days for CVE-2017-7533 and 28 days for CVE-2017-1000255.  While this is
+>> useful info, it does not reflect (linux-)distros' lists performance as
+>> it includes embargo periods from prior to disclosure to those lists.
+>> Also, we can't reliably know of such prior embargo periods, so our data
+>> would be inconsistent, which is especially bad for calculating averages.
+> It is calculated from first report on distros list, that said, for
+> CVE-2017-1000255 there was some missing data for first publication (it
+> is public through
+> https://access.redhat.com/security/cve/CVE-2017-1000255 and
+> http://www.securityfocus.com/bid/101264 since 9th), so the publication
+> time is 5.97 days (although not for oss-security posting).
 > 
 
-Thanks,
+Tracked down the -7533 issue as well, it was a fat-finger in the data.
+The wiki page is updated with correct info. But the new table is:
 
-Marc.
+Date	All
+Number of reports	24
+Average embargo time (first public)	5.84
+Average embargo time (oss-security)	6.95
 
+2017-06	2017-07	2017-08	2017-09	2017-10
+1	3	6	9	5
+10.84	4.69	6.39	5.83	4.90
+14.16	5.03	6.39	5.84	9.31
 
 -- 
-Marc Deslauriers
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
+Kristian Fiskerstrand
+OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
+fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
+
+Download attachment "distros-stats.png" of type "image/png" (30426 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
