@@ -1,25 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/30/17
-Message-ID: <CA+DvKQ+TfTcK79YgeMZorvpG38HP8zAeB=gioL6xUVDPyn7Ghg@mail.gmail.com>
-Date: Tue, 30 May 2017 11:20:05 -0400
-From: Daniel Micay <danielmicay@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: stack buffer overflow with controlled payload in get_options() function
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/13/7
+Message-ID: <5b4758f0-5e66-0851-5e25-6d3b946e05bc@gentoo.org>
+Date: Mon, 13 Nov 2017 20:13:05 +0100
+From: Kristian Fiskerstrand <k_f@...too.org>
+To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
+Subject: Re: (linux-)distros list use statistics
 Content-Type: text/plain; charset=utf-8
 
-That's not what secure/verified boot means to everyone else, and
-there's nothing in mainline with those properties. To everyone else,
-it's not an arbitrary bureaucratic/marketing feature. It's
-verification of the whole base OS... i.e. Android, Android Things
-(Brillo), ChromeOS, iOS and sane embedded Linux systems. Likely
-Windows on mobile devices too, and I really doubt that Microsoft
-doesn't plan on verifying the userspace OS if they don't already.
+On 11/13/2017 04:10 PM, Solar Designer wrote:
+> Hi,
+> 
+> I think it's time for Gentoo and/or Amazon to share with all of us
+> the statistics they should have collected so far as per:
+> 
+> http://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+>
+>  "13. Keep track of per-report and per-issue handling and disclosure 
+> timelines (at least times of notification of the private list and of 
+> actual public disclosure), at regular intervals produce and share 
+> statistics (most notably, the average embargo duration) as well as
+> the raw data (except on issues that are still under embargo) by
+> posting to oss-security - primary: Gentoo, backup: Amazon"
+> 
+> Please do.
 
-Anyway, good luck with meaningless Red Hat security theatre. These
-"vulnerabilities" are just reinforcing the view that security people
-are foolish. There isn't disagreement that it's a meaningless feature
-with this level of incompleteness and yet a CVE is assigned for it?
-Okay then...
+Hi,
 
-Sorry for thinking that this should be about something more than
-padding CVs and marketing materials.
+As far as I'm aware I haven't gotten access to edit the wiki page for
+publishing it. But the stats Gentoo has recorded are as follows (graph
+attached);
+
+Date                                    All
+Number of reports                       24
+Average embargo time (first public)     10.44
+Average embargo time (oss-security)     10.63
+
+This is based on the following monthly data:
+2017-06	2017-07	2017-08	2017-09	2017-10
+1	3	6	9	5
+10.84	34.16	6.39	5.83	9.30
+14.16	34.50	6.39	5.84	9.31
+
+The wikified stats based on the generated DocuWiki output is available
+in very basic style at the testing instance:
+
+https://wiki.sumptuouscapital.com/doku.php?id=distros_stats
+
+but this deserves a more fitting home (e.g the width isn't a problem on
+the wider template) :)
+
+-- 
+Kristian Fiskerstrand
+OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
+fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
+
+Download attachment "distros-stats.png" of type "image/png" (31425 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
