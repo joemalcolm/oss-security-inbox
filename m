@@ -1,26 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/31/14
-Message-ID: <20171031181842.m3dltnyokqvf6csd@sentinelchicken.org>
-Date: Tue, 31 Oct 2017 11:18:43 -0700
-From: Tim <tim-security@...tinelchicken.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Fw: Security risk of vim swap files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/13/10
+Message-ID: <766b0dc0-d9c8-be88-18b9-c0044b7b6635@gentoo.org>
+Date: Mon, 13 Nov 2017 20:42:49 +0100
+From: Kristian Fiskerstrand <k_f@...too.org>
+To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
+Subject: Re: (linux-)distros list use statistics
 Content-Type: text/plain; charset=utf-8
 
-> > Sure, you can argue that maybe some systems should ignore these files,
-> > block access, etc, but it is pretty absurd to expect every other piece
-> > of software in the universe to work around very unsafe defaults of text
-> > editors.  
+On 11/13/2017 08:38 PM, Kristian Fiskerstrand wrote:
+> On 11/13/2017 08:33 PM, Solar Designer wrote:
+>> On Mon, Nov 13, 2017 at 08:13:05PM +0100, Kristian Fiskerstrand wrote:
+>>> As far as I'm aware I haven't gotten access to edit the wiki page for
+>>> publishing it.
+>> Please feel free to create a page like:
+>>
+>> http://oss-security.openwall.org/wiki/mailing-lists/distros/stats
+>>
+>> You don't need any special access for that.
+> Ah, will look into that soon then.
 > 
-> It's also fairly absurd to insist that people can run whatever program
-> they want, wherever they want, on a production web server, without being
-> familiar enough with the program to understand the risks.
-> 
-> Anyone who edits files in the deployment path with an insufficient
-> education is going to have problems, and not having noswapfile set is
-> the least of them.
 
-I don't disagree.  But this isn't just about exposures via web
-servers.
+Page created:
+http://oss-security.openwall.org/wiki/mailing-lists/distros/stats
 
-tim
+-- 
+Kristian Fiskerstrand
+OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
+fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
