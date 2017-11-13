@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1920" "Saturday" "5" "November" "2016" "11:59:56" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<3355e013913e410fb611ac9aa61e8d5f@imshyb02.MITRE.ORG>" "47" "[oss-security] Re: CVE request: linux kernel - local DoS with cgroup offline code" nil nil nil "11" "2016110515:59:56" "[oss-security] Re: CVE request: linux kernel - local DoS with cgroup offline code" (number mark "U       cve-assign@m Nov  5   47/1920  " thread-indent "\"[oss-security] Re: CVE request: linux kernel - local DoS with cgroup offline code\"\n") "<1679169912.3935010.1478283449963.JavaMail.zimbra@redhat.com>" ("<1679169912.3935010.1478283449963.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3392" "Monday" "13" "November" "2017" "20:38:59" "+0100" "Kristian Fiskerstrand" "k_f@gentoo.org" "<750bd9c8-a236-4149-ddfb-b8cc026b2935@gentoo.org>" "88" "Re: [oss-security] (linux-)distros list use statistics" "^Date:" nil nil "11" "2017111319:38:59" "[oss-security] (linux-)distros list use statistics" (number mark "        k_f@gentoo.o Nov 13   88/3392  " thread-indent "\"Re: [oss-security] (linux-)distros list use statistics\"\n") "<20171113193304.GA27179@openwall.com>" ("<20171113151047.GA23493@openwall.com>" "<5b4758f0-5e66-0851-5e25-6d3b946e05bc@gentoo.org>" "<20171113193304.GA27179@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5362 invoked by uid 550); 5 Nov 2016 16:00:09 -0000
+Received: (qmail 7835 invoked by uid 550); 13 Nov 2017 19:40:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,62 +11,109 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5341 invoked from network); 5 Nov 2016 16:00:08 -0000
-From: <cve-assign@mitre.org>
-To: <caiqian@redhat.com>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <1679169912.3935010.1478283449963.JavaMail.zimbra@redhat.com>
-Message-ID: <3355e013913e410fb611ac9aa61e8d5f@imshyb02.MITRE.ORG>
-Date: Sat, 5 Nov 2016 11:59:56 -0400
+Received: (qmail 7782 invoked from network); 13 Nov 2017 19:40:32 -0000
+References: <20171113151047.GA23493@openwall.com>
+ <5b4758f0-5e66-0851-5e25-6d3b946e05bc@gentoo.org>
+ <20171113193304.GA27179@openwall.com>
+Message-ID: <750bd9c8-a236-4149-ddfb-b8cc026b2935@gentoo.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: CVE request: linux kernel - local DoS with cgroup offline code
+In-Reply-To: <20171113193304.GA27179@openwall.com>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="oLqF6CLRMDOwi8faGpaA6k7lrV3qD0H0F"
+Date: Mon, 13 Nov 2017 20:38:59 +0100
+From: Kristian Fiskerstrand <k_f@gentoo.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] (linux-)distros list use statistics
+To: oss-security@lists.openwall.com, Solar Designer <solar@openwall.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--oLqF6CLRMDOwi8faGpaA6k7lrV3qD0H0F
+Content-Type: multipart/mixed; boundary="9nhtLVbs3BjJAl1Rlh0NnBn8rpPURwGc4";
+ protected-headers="v1"
+From: Kristian Fiskerstrand <k_f@gentoo.org>
+Reply-To: k_f@gentoo.org
+To: oss-security@lists.openwall.com, Solar Designer <solar@openwall.com>
+Message-ID: <750bd9c8-a236-4149-ddfb-b8cc026b2935@gentoo.org>
+Subject: Re: [oss-security] (linux-)distros list use statistics
+References: <20171113151047.GA23493@openwall.com>
+ <5b4758f0-5e66-0851-5e25-6d3b946e05bc@gentoo.org>
+ <20171113193304.GA27179@openwall.com>
+In-Reply-To: <20171113193304.GA27179@openwall.com>
 
-> A malicious user who can run an arbitrary image with a non-privileged user
-> in a Container-as-a-service cloud environment could use the exploit to
-> deadlock the container nodes to deny the service for other users.
+--9nhtLVbs3BjJAl1Rlh0NnBn8rpPURwGc4
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
 
-> container> $ trinity -D --disable-fds=memfd --disable-fds=timerfd \
->              --disable-fds=pipes --disable-fds=testfile \
->              --disable-fds=sockets --disable-fds=perf \
->              --disable-fds=epoll --disable-fds=eventfd \
->              --disable-fds=drm
+On 11/13/2017 08:33 PM, Solar Designer wrote:
+> On Mon, Nov 13, 2017 at 08:13:05PM +0100, Kristian Fiskerstrand wrote:
+>> As far as I'm aware I haven't gotten access to edit the wiki page for
+>> publishing it.
+>=20
+> Please feel free to create a page like:
+>=20
+> http://oss-security.openwall.org/wiki/mailing-lists/distros/stats
+>=20
+> You don't need any special access for that.
 
-> # systemctl status docker
-> <hang...>
+Ah, will look into that soon then.
 
-> task kworker/45:4:146035 blocked for more than 120 seconds.
+>=20
+>> The wikified stats based on the generated DocuWiki output is available
+>> in very basic style at the testing instance:
+>>
+>> https://wiki.sumptuouscapital.com/doku.php?id=3Ddistros_stats
+>=20
+> Thank you, Kristian!
+>=20
+> This lists two very long embargo periods for two Linux kernel issues: 96
+> days for CVE-2017-7533 and 28 days for CVE-2017-1000255.  While this is
+> useful info, it does not reflect (linux-)distros' lists performance as
+> it includes embargo periods from prior to disclosure to those lists.
+> Also, we can't reliably know of such prior embargo periods, so our data
+> would be inconsistent, which is especially bad for calculating averages.
 
-> "cgroup is trying to offline a cpuset css, which
-> takes place under cgroup_mutex. The offlining ends up trying to drain
-> active usages of a sysctl table which apparently is not happening." There is
-> no fix at this time as far as I can tell.
+It is calculated from first report on distros list, that said, for
+CVE-2017-1000255 there was some missing data for first publication (it
+is public through
+https://access.redhat.com/security/cve/CVE-2017-1000255 and
+http://www.securityfocus.com/bid/101264 since 9th), so the publication
+time is 5.97 days (although not for oss-security posting).
 
-Use CVE-2016-9191.
+>=20
+> I think for our statistics collection, we should primarily use embargo
+> periods since disclosure to (linux-)distros' lists, and secondarily
+> since the possibly earlier embargo start dates when known (like you did
+> now).  Can you add such data?
+>=20
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+That should be the data already used.
+
+--=20
+Kristian Fiskerstrand
+OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
+fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
+
+
+--9nhtLVbs3BjJAl1Rlh0NnBn8rpPURwGc4--
+
+--oLqF6CLRMDOwi8faGpaA6k7lrV3qD0H0F
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYHgGZAAoJEHb/MwWLVhi2lQsP/1q0DTwdkQ5NOL3xfeD48Lye
-JiAOHPKs+X9iAfnpB/3rNiq6RvBPLXr12LPfKGcxiBasPf5mAq4sa1xzNhcXGerD
-678Ch0m+sMKjTfLLTusSeu2WFDKG07Fs7yoiQs4juIfbjJ178nh7RJDz/V7lao0+
-pBv1SUYrIgrZ5dRNNzUp380eOdVNmi5fWPiHvXxIR6PwXZsCu5GZNjowMAIOFgBB
-XedYPtBhG+lbbrvQm9kyj/IoSsw8cKfyhCcDy+T5JE4UcOYWrYpixmgwNZTUXn0l
-BUM8uMWeI2DgMEFDjzjdVL4KY3ktkcXUTbBh7EGYg5zpDiMm3oNbqsS1kv+m+/BQ
-/BHikPAkC+x2W35fzWp/lIJZojBUkkeDCNHU+tc+lVBVVZpo+zEq6puv61GwSTEE
-G2GgnHEeA33XW3AixqFpe2rGY9PIKw92kSIRfAH1aPg1i77Y34m1uqrpJ+HifuK/
-qxowp64tKzwiDgzJqZmTdEYX22EVWqhb1DbukY1cgVM9BkEuI0+ZwrVeAmvy7k/7
-Scp2LmwwN2AdLRagOhzKUSwORKeg6xd5gHDm5F9rhI/GhX/+soNMXKcYKBbq0jDh
-+jBAl2oGnhELCnf026nVtrqmqMLS9SquwBXmtHTjdUV88co2NqstBR+oAlAeKrnd
-W1Lyt8V0wHy00wNFmEJs
-=jJL2
+iQEzBAEBCgAdFiEEtOrRIMf4mkrqRycHJQt6/tY3nYUFAloJ9NQACgkQJQt6/tY3
+nYWnjQf/bPDWWIOoWVu5Kz8QLauUvO6dnpC86/etU5dr7IxLDIJbJaIO4ZMa8Tbp
+XvIdlFE06tdLIkTQeeOZAHegmaA4Ogr+Eh4HfILHKYELcd9J96jVIiw357usRC1+
+JRceckfvvnmMLNssrLalgzqbsOkSmVtgG64A1FSDE7s638uFikjD0jF1BbE728pJ
+KY0fNcaYf95hrXgWxtfVF8OWsAENxoF55P7wZOTdy5C/5LBmsZX4/45OVCK1roVX
+tVerIYvz1Zfbv+XQwvrBgJZWIGIK91yqSLiv4KLf8hstNBxgNGNZSUakIMs6UZ/P
+uoAEBooWsAHI5986P8g8Wm7OqhgU0g==
+=iOXc
 -----END PGP SIGNATURE-----
+
+--oLqF6CLRMDOwi8faGpaA6k7lrV3qD0H0F--
