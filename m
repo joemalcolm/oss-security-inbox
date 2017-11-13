@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["520" "Friday" "9" "December" "2016" "10:01:08" "-0500" "Christopher Shannon" "christopher.l.shannon@gmail.com" "<CACHnxzxPZ8t9HN0uC=BqM-0of1CYdZ+OJYOvOWs=bfnjQgCffw@mail.gmail.com>" "17" "[oss-security] [ANNOUNCE] CVE-2016-6810: ActiveMQ Web Console - Cross-Site Scripting" nil nil nil "12" "2016120915:01:08" "[oss-security] [ANNOUNCE] CVE-2016-6810: ActiveMQ Web Console - Cross-Site Scripting" (number mark "U       christopher. Dec  9   17/520   " thread-indent "\"[oss-security] [ANNOUNCE] CVE-2016-6810: ActiveMQ Web Console - Cross-Site Scripting\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1207" "Monday" "13" "November" "2017" "16:15:24" "+0100" "Greg KH" "greg@kroah.com" "<20171113151524.GA16983@kroah.com>" "31" "Re: [oss-security] CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver" nil nil nil "11" "2017111315:15:24" "[oss-security] CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver" (number mark "U       greg@kroah.c Nov 13   31/1207  " thread-indent "\"Re: [oss-security] CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver\"\n") "<640892254.31427608.1510585620318.JavaMail.zimbra@redhat.com>" ("<906136424.28576814.1510085319128.JavaMail.zimbra@redhat.com>" "<1539240847.28577626.1510085696543.JavaMail.zimbra@redhat.com>" "<20171107202237.GA10679@kroah.com>" "<640892254.31427608.1510585620318.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15520 invoked by uid 550); 9 Dec 2016 15:19:36 -0000
+Received: (qmail 1549 invoked by uid 550); 13 Nov 2017 15:15:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,53 +12,63 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 8090 invoked from network); 9 Dec 2016 15:01:50 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=EcWmjPDf8LY3QmbG223kx5x1fefdQA1nPKcAD2xP0BI=;
-        b=NtVuSA+/14BykaeSHDZhSKveriy6i8q4jLZVpMA0xlBV6lXwKqjYrPeTFaX2EKdvj8
-         B0Czn3kj4l79T+68+w5Bu/bxiM6kFqRkr/DqVjCyPba1KFRVPlkBxSER5seFNUwLP2vc
-         IaUtX7xTdwVZkQJJ85GhnILepIYfOLEPGmhmkq81r1DH4YWRx8dLHyIr9800YUov4sH9
-         ktCfK1QHg/OCNKcBWm4/NgbXAQBYKAV2IiZUIQZWxSRC7b8hrX6BBnbfPNl+lgxRnYzR
-         +AJsx9S41wubwFC4dDsfVAi0TaRsYbeti8H1buRo87ZZ7CMv2G2cky2BkVx895pDdNMa
-         valw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=EcWmjPDf8LY3QmbG223kx5x1fefdQA1nPKcAD2xP0BI=;
-        b=jfHJ7C5hSBuaUaHPkNJiAW1mIOgiO9sC+xST7OO9Z4GJ39JXC0mn7TEtyqu9cHqYfA
-         oqUCHv2+wjLrG7ErjyFDo7JEv8FjoNN64pW/bgU5BqsA1L8ZH4Nk9zmLvifmQIyAOypO
-         +v1rmQcAd3o51vkiawnVVdp1iUdMU9n3CSbpYzPvc2q+wN76lnR6Ct3J4noDGr9xuiXw
-         9htMcbp7vFfaBjz4NIBuDod0rVxae49kXYnpH0vtsbI6CKdfhjiQQx3oX2sTg1KkCEG9
-         hJHjNvI1AL1ect2TjXclNnCWNX3JW12hMdHUFVE7KSanxSBXlT86ZYzcUYCT3zUllVu9
-         k3RQ==
-X-Gm-Message-State: AKaTC007eCXfHObBXr97zU2Wh3fcMq7t0wHqWPH5Ayf5gBh2UKWjPwl0m8doPF8g/Ld33RGhGtl+jDHdqDi7qA==
-X-Received: by 10.13.247.65 with SMTP id h62mr75815223ywf.56.1481295699380;
- Fri, 09 Dec 2016 07:01:39 -0800 (PST)
+Received: (qmail 1488 invoked from network); 13 Nov 2017 15:15:28 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm1; bh=eS74B5FyKgLUU5TSWPdAfCszOMtr5
+	kHHdbltoz7Q9Eo=; b=CSnVwi8tjJVvQJaMLgSMLDdOb7qt6eIdE7AtGkQh4i1AX
+	5cE/wYIshIEhDNNzV5561qYNSWBb5jfP934PVM+HprhlfUnhkEBzYiufxRmUcB7v
+	0bDZwELlPd+18alJWKxE8Gf17LMhfdANAcevLAg1Suq0v+JUIhZSQ+TN1ahHJkxK
+	BDQhBFuZ7X6KZsZiTPluYKxNGZDt7NLIl+FPGkc84n+qXec3aMwMWHb+JODBue+B
+	334E/NtWQI8q++g/+eNkegNGALRuLX35DZOVaeRtr4bxv7wPVNNUi+wd/IKOKTXq
+	sNPKU3S6X0QKbuRCw8BG4CNgnUs0FNaLsFgkBIynw==
+X-ME-Sender: <xms:BLcJWoy0poG2EyL7QCrOgAn1X54KxzGVZq2dQdxgLgJI9Fjpww_uaw>
+Date: Mon, 13 Nov 2017 16:15:24 +0100
+From: Greg KH <greg@kroah.com>
+To: Vladis Dronov <vdronov@redhat.com>
+Cc: oss-security@lists.openwall.com
+Message-ID: <20171113151524.GA16983@kroah.com>
+References: <906136424.28576814.1510085319128.JavaMail.zimbra@redhat.com>
+ <1539240847.28577626.1510085696543.JavaMail.zimbra@redhat.com>
+ <20171107202237.GA10679@kroah.com>
+ <640892254.31427608.1510585620318.JavaMail.zimbra@redhat.com>
 MIME-Version: 1.0
-From: Christopher Shannon <christopher.l.shannon@gmail.com>
-Date: Fri, 9 Dec 2016 10:01:08 -0500
-Message-ID: <CACHnxzxPZ8t9HN0uC=BqM-0of1CYdZ+OJYOvOWs=bfnjQgCffw@mail.gmail.com>
-To: dev@activemq.apache.org, users@activemq.apache.org, 
-	oss-security@lists.openwall.com, bugtraq@securityfocus.com
-Content-Type: multipart/alternative; boundary=94eb2c06ae32f82bab05433b0747
-Subject: [oss-security] [ANNOUNCE] CVE-2016-6810: ActiveMQ Web Console - Cross-Site Scripting
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <640892254.31427608.1510585620318.JavaMail.zimbra@redhat.com>
+User-Agent: Mutt/1.9.1 (2017-09-22)
+Subject: Re: [oss-security] CVE-2017-15102: Linux kernel: usb: NULL-deref due
+ to a race condition in [legousbtower] driver
 
---94eb2c06ae32f82bab05433b0747
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Mon, Nov 13, 2017 at 10:07:00AM -0500, Vladis Dronov wrote:
+> Hello, Greg, all,
+> 
+> My fault here was indeed not stating that a Red Hat's product is
+> vulnerable (thus, a CVE was assigned), but stating that only Linux
+> kernel is vulnerable (while indeed it was fixed a long ago). Please,
+> accept my apologies.
 
-The following security vulnerability was reported against Apache
-ActiveMQ 5.14.1 and older versions.
+Ok, not a problem, thanks for the apology.
 
-Please check the following document and see if you=E2=80=99re affected by t=
-he issue.
+> > I hate to ask, but why are you getting CVEs for bugs fixed over a year
+> > ago, and are already in all stable kernel releases a year ago?  Why does
+> > it matter?
+> 
+> I'm afraid, you won't like the answer, but in a short word, the Red Hat
+> is a CNA (CVE Numbering Authority) for Red Hat's products and the Linux
+> kernel and we've decided to assign this CVE.
 
-http://activemq.apache.org/security-advisories.data/CVE-2016-6810-announcem=
-ent.txt
+So the answer is just "we've decided to", right?
 
-Apache ActiveMQ 5.14.2 has been released with appropriate fixes and is
-available for upgrade.
+If so, that's fine, you are allowed to do so being a CNA, but what is
+keeping you from doing the same for the thousands of other bugs that
+have been fixed since this one that is in a specific Red Hat product?
 
---94eb2c06ae32f82bab05433b0747--
+It's the arbitrarily nature here that I am curious about, it feels like
+it should be "all or nothing", for CVEs to mean much here.  Right now it
+seems like it is just, "all that we care to track"?  :)
+
+thanks,
+
+greg k-h
