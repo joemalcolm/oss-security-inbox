@@ -1,42 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/28/4
-Message-ID: <17034856.l0NmUXmGEd@wanheda>
-Date: Wed, 28 Jun 2017 14:03:16 +0200
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: lame: multiple vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/13/9
+Message-ID: <750bd9c8-a236-4149-ddfb-b8cc026b2935@gentoo.org>
+Date: Mon, 13 Nov 2017 20:38:59 +0100
+From: Kristian Fiskerstrand <k_f@...too.org>
+To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
+Subject: Re: (linux-)distros list use statistics
 Content-Type: text/plain; charset=utf-8
 
-Hello all.
+On 11/13/2017 08:33 PM, Solar Designer wrote:
+> On Mon, Nov 13, 2017 at 08:13:05PM +0100, Kristian Fiskerstrand wrote:
+>> As far as I'm aware I haven't gotten access to edit the wiki page for
+>> publishing it.
+> 
+> Please feel free to create a page like:
+> 
+> http://oss-security.openwall.org/wiki/mailing-lists/distros/stats
+> 
+> You don't need any special access for that.
 
-I discovered some crashes (which will follow one-by-one) in lame.
+Ah, will look into that soon then.
 
-Lame was fuzzed in the past by someone else so I take the opportunity 
-during the CVE request to insert also some past bugs.
+> 
+>> The wikified stats based on the generated DocuWiki output is available
+>> in very basic style at the testing instance:
+>>
+>> https://wiki.sumptuouscapital.com/doku.php?id=distros_stats
+> 
+> Thank you, Kristian!
+> 
+> This lists two very long embargo periods for two Linux kernel issues: 96
+> days for CVE-2017-7533 and 28 days for CVE-2017-1000255.  While this is
+> useful info, it does not reflect (linux-)distros' lists performance as
+> it includes embargo periods from prior to disclosure to those lists.
+> Also, we can't reliably know of such prior embargo periods, so our data
+> would be inconsistent, which is especially bad for calculating averages.
 
-1) Invalid read - CVE-2015-9099
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=775959
+It is calculated from first report on distros list, that said, for
+CVE-2017-1000255 there was some missing data for first publication (it
+is public through
+https://access.redhat.com/security/cve/CVE-2017-1000255 and
+http://www.securityfocus.com/bid/101264 since 9th), so the publication
+time is 5.97 days (although not for oss-security posting).
 
-2) Null pointer dereference - CVE-2015-9100
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=777160
+> 
+> I think for our statistics collection, we should primarily use embargo
+> periods since disclosure to (linux-)distros' lists, and secondarily
+> since the possibly earlier embargo start dates when known (like you did
+> now).  Can you add such data?
+> 
 
-3) Invalid read - CVE-2015-9100
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=777161
-
-However, mitre decided that the bug N°3, CVE-2015-9100, can share the 
-same CVE ID of https://blogs.gentoo.org/ago/2017/06/17/lame-heap-based-buffer-overflow-in-fill_buffer_resample-util-c/
-
-At this point, I'd like to mention that mitre won't assign anymore CVE IDs 
-for issues related to the Undefined Behavior Sanitizer, unless there are 
-informations about the exploitability.
-http://common-vulnerabilities-and-exposures-cve-board.1128451.n5.nabble.com/Current-standards-criteria-for-Undefined-Behavior-td730.html#a768
-
-The CVE IDs assigned in the past for the undefined behavior issues remain 
-valid. I will share anyway my findings about the undefined behavior issues. 
-They include, for completeness, some bugs that regard the frontend. You 
-can ignore them.
+That should be the data already used.
 
 -- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Kristian Fiskerstrand
+OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
+fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
 
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
