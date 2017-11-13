@@ -1,55 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/22/2
-Message-ID: <20170122132251.GA11536@pepper.home.stoeckmann.org>
-Date: Sun, 22 Jan 2017 14:22:51 +0100
-From: Tobias Stoeckmann <tobias@...eckmann.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/13/12
+Message-ID: <20171113212211.GA27512@openwall.com>
+Date: Mon, 13 Nov 2017 22:22:11 +0100
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: libXpm < 3.5.12 heap overflow
+Subject: Re: (linux-)distros list use statistics
 Content-Type: text/plain; charset=utf-8
 
-SUMMARY
-=======
-An out of boundary write has been found in libXpm < 3.5.12 which can be
-exploited by an attacker through maliciously crafted XPM files.
+On Mon, Nov 13, 2017 at 08:38:59PM +0100, Kristian Fiskerstrand wrote:
+> On 11/13/2017 08:33 PM, Solar Designer wrote:
+> > This lists two very long embargo periods for two Linux kernel issues: 96
+> > days for CVE-2017-7533 and 28 days for CVE-2017-1000255.  While this is
+> > useful info, it does not reflect (linux-)distros' lists performance as
+> > it includes embargo periods from prior to disclosure to those lists.
+> > Also, we can't reliably know of such prior embargo periods, so our data
+> > would be inconsistent, which is especially bad for calculating averages.
+> 
+> It is calculated from first report on distros list,
 
-PREREQUISITE
-============
-For this vulnerability to step in, a program must explicitly request
-to also parse XPM extensions while reading files. The motif toolkit and
-xdm are two among some programs that set the flag (XpmReturnExtensions).
-It can only be exploited on 64 bit systems.
+Oh, I must have guessed wrong.  I thought the long embargo periods were
+correct and assumed that was because of inclusion of pre-distros time,
+but according to what you're saying these are just two errors.
 
-DETAILS
-=======
-The affected code is prone to two 32 bit integer overflows while parsing
-extensions: the amount of extensions and their concatenated length. The
-fact that two such overflows exist makes it possible to have full
-control of the memory management. The attacker can choose:
+> that said, for
+> CVE-2017-1000255 there was some missing data for first publication (it
+> is public through
+> https://access.redhat.com/security/cve/CVE-2017-1000255 and
+> http://www.securityfocus.com/bid/101264 since 9th), so the publication
+> time is 5.97 days (although not for oss-security posting).
 
-- how much heap space is allocated
-- how many bytes will overflow
-- the content of the bytes that overflow
+Your statistics appear to suggest that it was public on oss-security
+exactly 22 days later, but actually it was public on oss-security at
+most a day later with:
 
-Due to the integrated gzip compression in XPM files, the file can be
-as small as 4 MB to trigger this issue, and doesn't need to be larger
-than 8 MB for a fully arbitrary attack.
+http://www.openwall.com/lists/oss-security/2017/10/10/3
 
-PROOF OF CONCEPT
-================
-I have attached two files: poc.c is a vulnerable program that uses
-libXpm to parse an XPM file, including its extensions. The second file
-is a maliciously crafted XPM file, which is gzip-compressed thrice to
-reduce its size to be friendlier for e-mail transmissions. You have to
-gunzip it twice, which increases its size back to 4 MB. If used with a
-vulnerable version, the program will trigger a segmentation fault.
+I guess you'll correct this.
 
-SOLUTION
-========
-It is recommend to update to the released libXpm version 3.5.12.
+If you ever notice an embargo period exceeding 14 days, please
+investigate and either correct whatever error you might have or sound
+the alarm.  This shouldn't be happening.  Thanks!
 
-The commit that fixes the issue can be found here:
-https://cgit.freedesktop.org/xorg/lib/libXpm/commit/?id=d1167418f0fd02a27f617ec5afd6db053afbe185
+On Mon, Nov 13, 2017 at 08:42:49PM +0100, Kristian Fiskerstrand wrote:
+> Page created:
+> http://oss-security.openwall.org/wiki/mailing-lists/distros/stats
 
-View attachment "poc.c" of type "text/plain" (586 bytes)
+Thank you!  This currently shows some fields as empty, including but
+not only for CVE-2017-1000255, where I think you could add the missing
+info easily.  Please do.
 
-Download attachment "poc.xpm.gz.gz.gz" of type "application/x-gunzip" (1058 bytes)
+Meanwhile, I've added a link from:
+
+http://oss-security.openwall.org/wiki/mailing-lists/distros#list-usage-statistics
+
+Alexander
