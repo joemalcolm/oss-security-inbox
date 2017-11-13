@@ -1,21 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/31/1
-Message-ID: <5ba8733a-44fc-fe49-1f17-3dde40ad0e60@oracle.com>
-Date: Mon, 31 Jul 2017 16:03:57 +0100
-From: John Haxby <john.haxby@...cle.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: net/irda/af_irda.c: irda_getsockopt() stack infoleak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/13/5
+Message-ID: <20171113151524.GA16983@kroah.com>
+Date: Mon, 13 Nov 2017 16:15:24 +0100
+From: Greg KH <greg@...ah.com>
+To: Vladis Dronov <vdronov@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver
 Content-Type: text/plain; charset=utf-8
 
-On 30/07/17 05:47, sohu0106 wrote:
-> net/irda/af_irda.c
+On Mon, Nov 13, 2017 at 10:07:00AM -0500, Vladis Dronov wrote:
+> Hello, Greg, all,
 > 
-> Sometimes irda_getsockopt() doesn't initialize all members of list field of irda_device_list struct.  This structure is then copied to
-> userland.  It leads to leaking of contents of kernel stack memory.  We have to initialize them to zero , or it will allows local users to obtain potentially sensitive information from kernel stack memory by reading a copy of this structure
-> 
-> https://github.com/torvalds/linux/pull/440
-> 
+> My fault here was indeed not stating that a Red Hat's product is
+> vulnerable (thus, a CVE was assigned), but stating that only Linux
+> kernel is vulnerable (while indeed it was fixed a long ago). Please,
+> accept my apologies.
 
-Have you requested a CVE for this?
+Ok, not a problem, thanks for the apology.
 
-jch
+> > I hate to ask, but why are you getting CVEs for bugs fixed over a year
+> > ago, and are already in all stable kernel releases a year ago?  Why does
+> > it matter?
+> 
+> I'm afraid, you won't like the answer, but in a short word, the Red Hat
+> is a CNA (CVE Numbering Authority) for Red Hat's products and the Linux
+> kernel and we've decided to assign this CVE.
+
+So the answer is just "we've decided to", right?
+
+If so, that's fine, you are allowed to do so being a CNA, but what is
+keeping you from doing the same for the thousands of other bugs that
+have been fixed since this one that is in a specific Red Hat product?
+
+It's the arbitrarily nature here that I am curious about, it feels like
+it should be "all or nothing", for CVEs to mean much here.  Right now it
+seems like it is just, "all that we care to track"?  :)
+
+thanks,
+
+greg k-h
