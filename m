@@ -1,56 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/09/5
-Message-ID: <CY4PR12MB1141518BEAB7E0FAD34D0457DA210@CY4PR12MB1141.namprd12.prod.outlook.com>
-Date: Thu, 9 Mar 2017 17:36:39 +0000
-From: Seth Art <sart@...nskycorp.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE Request: Joomla! FLEXIcontent - Incorrect Authorization (Authorization Bypass)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/13/8
+Message-ID: <20171113193304.GA27179@openwall.com>
+Date: Mon, 13 Nov 2017 20:33:04 +0100
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: (linux-)distros list use statistics
 Content-Type: text/plain; charset=utf-8
 
------------
-Vendor:
------------
-FLEXIcontent (http://www.flexicontent.org) is an advanced content management system developed to greatly enhance the native content management of Joomla!
+On Mon, Nov 13, 2017 at 08:13:05PM +0100, Kristian Fiskerstrand wrote:
+> As far as I'm aware I haven't gotten access to edit the wiki page for
+> publishing it.
 
------------------------------------------
-Affected Products/Versions:
------------------------------------------
-flexicontent-cck-3.0.13
-flexicontent-cck-3.1.0-rc
-Note: Previous versions may be affected
+Please feel free to create a page like:
 
------------------
-Description:
------------------
-Title: Joomla! FLEXIcontent - Incorrect Authorization (Authorization Bypass)
-CWE-863: Incorrect Authorization (https://cwe.mitre.org/data/definitions/863.html)
-Detailed write-up: http://www.openskycorp.com/resource-center/blog/joomla-flexicontent-incorrect-authorization/
-Researcher: Seth Art
+http://oss-security.openwall.org/wiki/mailing-lists/distros/stats
 
-CWE-863 Description: "The software performs an authorization check when an actor attempts to access a resource or perform an action, but it does not correctly perform the check. This allows attackers to bypass intended access restrictions."
+You don't need any special access for that.
 
-The FLEXIcontent plugin uses a query string parameter, task, which specifies the action to perform on a FLEXIcontent article.  If an unauthenticated actor provides any value other than edit or a blank value to the task parameter, the actor is able to view the restricted FLEXIcontent article, regardless of the assigned permissions.  Articles are sequentially numbered, which would allow an actor exploiting this vulnerability to gain read-only access to all FLEXIcontent articles by iterating through article identifiers.
+> The wikified stats based on the generated DocuWiki output is available
+> in very basic style at the testing instance:
+> 
+> https://wiki.sumptuouscapital.com/doku.php?id=distros_stats
 
----------------
-POC:
----------------
-http://host/index.php/content_page/#/#?task=abcd
-http://host/index.php/content_page/2/6?task=foo
-http://host/index.php/content_page/2/7?task=foo
-http://host/index.php?option=com_flexicontent&view=item&id=#&task=abcd (if Search Engine Friendly URLs are disabled)
+Thank you, Kristian!
 
--------------
-Solution:
--------------
-Upgrade to flexicontent-cck-3.1.1 or greater
+This lists two very long embargo periods for two Linux kernel issues: 96
+days for CVE-2017-7533 and 28 days for CVE-2017-1000255.  While this is
+useful info, it does not reflect (linux-)distros' lists performance as
+it includes embargo periods from prior to disclosure to those lists.
+Also, we can't reliably know of such prior embargo periods, so our data
+would be inconsistent, which is especially bad for calculating averages.
 
------------------------------
-Disclosure Timeline:
------------------------------
-2016-09-28: Notified FLEXIcontent author of vulnerability.
-2016-09-28: FLEXIcontent author acknowledges vulnerability and confirms it will be fixed.
-2016-10-31: FLEXIcontent v3.1.1 is released and silently fixes vulnerability.
-2016-11-30: Researcher tests v3.1.1 and determines vulnerability has been fixed.
-2016-01-31: Researcher asks the author to mention the security issue in release notes (no response).
-2017-03-06: Public disclosure
+I think for our statistics collection, we should primarily use embargo
+periods since disclosure to (linux-)distros' lists, and secondarily
+since the possibly earlier embargo start dates when known (like you did
+now).  Can you add such data?
 
+Alexander
