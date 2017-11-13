@@ -1,99 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/01/8
-Message-ID: <94352367.aY5R7YHe3W@wanheda>
-Date: Wed, 01 Nov 2017 16:29:32 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/13/4
+Message-ID: <20171113151047.GA23493@openwall.com>
+Date: Mon, 13 Nov 2017 16:10:47 +0100
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: 旺仔 <16362505@...com>, cve-assign <cve-assign@...re.org>
-Subject: Re: CVE-2017-16231: PCRE 8.41 match() stack overflow; CVE-2017-16232: LibTIFF 4.0.8 memory leaks
+Subject: (linux-)distros list use statistics
 Content-Type: text/plain; charset=utf-8
 
-On mercoledì 1 novembre 2017 03:26:56 CET 旺仔 wrote:
-> > [Suggested description]
-> > In PCRE 8.41,
-> > after compiling, a pcretest load test PoC produces a crash overflow
-> > in the function match() in pcre_exec.c because of a self-recursive call.
-> >
-> >
-> >
-> > ------------------------------------------
-> >
-> >
-> >
-> > [Vulnerability Type]
-> > Buffer Overflow
-> >
-> >
-> >
-> > ------------------------------------------
-> >
-> >
-> >
-> > [Vendor of Product]
-> > Perl Compatible Regular Expressions
-> >
-> >
-> >
-> > ------------------------------------------
-> >
-> >
-> >
-> > [Affected Product Code Base]
-> > PCRE - 8.41
-> >
-> >
-> >
-> > ------------------------------------------
-> >
-> >
-> >
-> > [Affected Component]
-> > file:pcre_exec.c
-> > function match() line 983 and line 2061
-> >
-> >
-> >
-> > ------------------------------------------
-> >
-> >
-> >
-> > [Attack Type]
-> > Local
-> >
-> >
-> >
-> > ------------------------------------------
-> >
-> >
-> >
-> > [Impact Denial of Service]
-> > true
-> >
-> >
-> >
-> > ------------------------------------------
-> >
-> >
-> >
-> > [Attack Vectors]
-> > A crash file
-> >
-> >
-> >
-> > ------------------------------------------
-> >
-> >
-> >
-> > [Discoverer]
-> > ZHANG JIAWANG from cncert
-> 
-> 
-> Use CVE-2017-16231.
+Hi,
 
-I guess that this bug is similar or the same described here:
-https://bugs.exim.org/show_bug.cgi?id=2047
+I think it's time for Gentoo and/or Amazon to share with all of us the
+statistics they should have collected so far as per:
 
-Based on the upstream comment I'd suggest to reject the CVE.
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+http://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+
+"13. Keep track of per-report and per-issue handling and disclosure
+timelines (at least times of notification of the private list and of
+actual public disclosure), at regular intervals produce and share
+statistics (most notably, the average embargo duration) as well as the
+raw data (except on issues that are still under embargo) by posting to
+oss-security - primary: Gentoo, backup: Amazon"
+
+Please do.
+
+Thanks,
+
+Alexander
