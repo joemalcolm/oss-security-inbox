@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1547" "Tuesday" "25" "February" "2020" "14:05:33" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" nil "46" nil "^Cc:" nil nil "2" nil nil (number mark "        carnil@debia Feb 25   46/1547  " thread-indent "\"Re: [oss-security] GNU screen \"out of bounds access when setting w_xtermosc after OSC 49\"\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] GNU screen \"out of bounds access when setting w_xtermosc after OSC 49\"" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2294" "Monday" "13" "November" "2017" "20:42:49" "+0100" "Kristian Fiskerstrand" "k_f@gentoo.org" "<766b0dc0-d9c8-be88-18b9-c0044b7b6635@gentoo.org>" "61" "Re: [oss-security] (linux-)distros list use statistics" "^Date:" nil nil "11" "2017111319:42:49" "[oss-security] (linux-)distros list use statistics" (number mark "        k_f@gentoo.o Nov 13   61/2294  " thread-indent "\"Re: [oss-security] (linux-)distros list use statistics\"\n") "<750bd9c8-a236-4149-ddfb-b8cc026b2935@gentoo.org>" ("<20171113151047.GA23493@openwall.com>" "<5b4758f0-5e66-0851-5e25-6d3b946e05bc@gentoo.org>" "<20171113193304.GA27179@openwall.com>" "<750bd9c8-a236-4149-ddfb-b8cc026b2935@gentoo.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 16013 invoked by uid 550); 25 Feb 2020 13:05:47 -0000
+Received: (qmail 22358 invoked by uid 550); 13 Nov 2017 19:44:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,93 +11,83 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15992 invoked from network); 25 Feb 2020 13:05:47 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=i4qZjoGZro++kTA0/mSZIuN4qoae7w2uYRzZe0ruxBQ=;
-        b=LpULzC1IGH8IrpuDSrIR0vH8OywI8WD9FpFtF9t3fqjbImeXVx3Vi5pvnfx5F4/FzA
-         bznwjRoJBV9q76H7rgmrsjP38GOxtgUQidxD/erJTCMbr7tgZJukEcAIx2HJjgbXXC8v
-         tZt5UGO8QCMVwDC0S/EwSNfFE7d5D/JqsVY25zad/rGFJ9X9nRdx9m1A9DspvnS82ZAD
-         tv9AW41EdqtfDh8NVfz+wd4ndsWJLHrlizRbtU7HzX13SuXKVGJWVfhQQoHvtqbA/Sdv
-         ndXh/uqPDqmqPPyBM75KHQrDCd4Ad3gIRtMV91GWLs0lQzX5jdpkjNMrwaknxnM4GdS/
-         f/Fg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=i4qZjoGZro++kTA0/mSZIuN4qoae7w2uYRzZe0ruxBQ=;
-        b=NQOHR0GC7HJtGZaIPe2Gs1T7fCJhn6xocO8UytjhXHlmBFwlVfaVg/bTgYjxWZogwg
-         F7gIAaOmXswgOTybkCTJwegJl0h34fIoRe7PX0ZDTd5bd8VkvsETLpUzRGiRhAnnPP5B
-         fqfnzvL2dDKUonuAqLLZhXMODai5VsIIzcBvPT2HKbAax6OxpPAF47BLZZmsEWQx2EDP
-         zLGgaQJqr9B6wA/Q99Xcvjak7I2ZaLLuz3qtjUBdeTEC1tWU549qEzyt9MWrtw1gWGOA
-         AdW096j5VThcCJOk5gm1N9R1cF/Rygd29oRr+4MKizxktNW7vsscx+TGAyMc1wCsNaWr
-         gJLQ==
-X-Gm-Message-State: APjAAAUwWZa3+o79hXKTqyQLyfWulIb7AHxLAbi49cRImtb2SKRvhpEQ
-	n8KeBO/1TIfseCFyAiPsPOVU6p4IbnE=
-X-Google-Smtp-Source: APXvYqyxzkw3vrgPYpWF904m5U63iT6562gGIXEg0ZNIrmwd0A+51Y9pPGYxk2u1HLrQYtNcIkB72w==
-X-Received: by 2002:adf:ca07:: with SMTP id o7mr71469905wrh.49.1582635935517;
-        Tue, 25 Feb 2020 05:05:35 -0800 (PST)
-Message-ID: <20200225130532.GA4071@lorien.valinor.li>
-References: <20200206140418.GA26959@openwall.com>
+Received: (qmail 22316 invoked from network); 13 Nov 2017 19:44:22 -0000
+References: <20171113151047.GA23493@openwall.com>
+ <5b4758f0-5e66-0851-5e25-6d3b946e05bc@gentoo.org>
+ <20171113193304.GA27179@openwall.com>
+ <750bd9c8-a236-4149-ddfb-b8cc026b2935@gentoo.org>
+Message-ID: <766b0dc0-d9c8-be88-18b9-c0044b7b6635@gentoo.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200206140418.GA26959@openwall.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Cc: Amadeusz Slawinski <amade@asmblr.net>
-Date: Tue, 25 Feb 2020 14:05:33 +0100
-From: Salvatore Bonaccorso <carnil@debian.org>
+In-Reply-To: <750bd9c8-a236-4149-ddfb-b8cc026b2935@gentoo.org>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="71hGNJlQXeHFXEB22FMggq7QMsLv6Wb6E"
+Date: Mon, 13 Nov 2017 20:42:49 +0100
+From: Kristian Fiskerstrand <k_f@gentoo.org>
 Reply-To: oss-security@lists.openwall.com
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Subject: Re: [oss-security] GNU screen "out of bounds access when setting
- w_xtermosc after OSC 49"
-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] (linux-)distros list use statistics
+To: oss-security@lists.openwall.com, Solar Designer <solar@openwall.com>
 
-Hi
+--71hGNJlQXeHFXEB22FMggq7QMsLv6Wb6E
+Content-Type: multipart/mixed; boundary="67n7XqSm5mClBpFcOvl3dl5gTWA9wvNLW";
+ protected-headers="v1"
+From: Kristian Fiskerstrand <k_f@gentoo.org>
+Reply-To: oss-security@lists.openwall.com
+To: oss-security@lists.openwall.com, Solar Designer <solar@openwall.com>
+Message-ID: <766b0dc0-d9c8-be88-18b9-c0044b7b6635@gentoo.org>
+Subject: Re: [oss-security] (linux-)distros list use statistics
+References: <20171113151047.GA23493@openwall.com>
+ <5b4758f0-5e66-0851-5e25-6d3b946e05bc@gentoo.org>
+ <20171113193304.GA27179@openwall.com>
+ <750bd9c8-a236-4149-ddfb-b8cc026b2935@gentoo.org>
+In-Reply-To: <750bd9c8-a236-4149-ddfb-b8cc026b2935@gentoo.org>
 
-On Thu, Feb 06, 2020 at 03:04:18PM +0100, Solar Designer wrote:
-> Hi,
-> 
-> GNU screen 4.8.0 was released yesterday with a documented security fix
-> in it:
-> 
-> https://lists.gnu.org/archive/html/screen-devel/2020-02/msg00007.html
-> 
-> ---
-> From: 	Amadeusz Slawinski
-> Subject: 	[screen-devel] GNU Screen v.4.8.0
-> Date: 	Wed, 5 Feb 2020 21:45:35 +0100
-> 
-> Hello everyone,
->  
-> I'm announcing availability of GNU Screen v.4.8.0
-> 
-> Screen is a full-screen window manager that multiplexes a physical
-> terminal between several processes, typically interactive shells. 
-> 
-> This release
->   * Improves startup time by only polling for already open files to
->     close
->   * Fixes:
->        - Fix for segfault if termcap doesn't have Km entry
->        - Make screen exit code be 0 when checking --version
->        - Fix potential memory corruption when using OSC 49
-> 
-> As last fix, fixes potential memory overwrite of quite big size (~768
-> bytes), and even though I'm not sure about potential exploitability of
-> that issue, I highly recommend everyone to upgrade as soon as possible.
-> This issue is present at least since v.4.2.0 (haven't checked earlier).
-> Thanks to pippin who brought this to my attention.
+--67n7XqSm5mClBpFcOvl3dl5gTWA9wvNLW
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
 
-Regarding the affected versions,
-https://bugzilla.redhat.com/show_bug.cgi?id=1801405#c6 points out that
-the issue is caused by the upsteram commit
-https://git.savannah.gnu.org/cgit/screen.git/commit/?h=screen-v4&id=c5db181b6e017cfccb8d7842ce140e59294d9f62
-which would be only in v4.7.0.
+On 11/13/2017 08:38 PM, Kristian Fiskerstrand wrote:
+> On 11/13/2017 08:33 PM, Solar Designer wrote:
+>> On Mon, Nov 13, 2017 at 08:13:05PM +0100, Kristian Fiskerstrand wrote:
+>>> As far as I'm aware I haven't gotten access to edit the wiki page for
+>>> publishing it.
+>> Please feel free to create a page like:
+>>
+>> http://oss-security.openwall.org/wiki/mailing-lists/distros/stats
+>>
+>> You don't need any special access for that.
+> Ah, will look into that soon then.
+>=20
 
-Is this correct?
+Page created:
+http://oss-security.openwall.org/wiki/mailing-lists/distros/stats
 
-Regards,
-Salvatore
+--=20
+Kristian Fiskerstrand
+OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
+fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
+
+
+--67n7XqSm5mClBpFcOvl3dl5gTWA9wvNLW--
+
+--71hGNJlQXeHFXEB22FMggq7QMsLv6Wb6E
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEtOrRIMf4mkrqRycHJQt6/tY3nYUFAloJ9bkACgkQJQt6/tY3
+nYUaAwgAsQ/k1yx0NQlN98MBDKAhSW99FPCvXIknZX0DzQ7+tt2gItwDQhLzowJa
+WNxAyf3KnQWpRQW76XIjVelSn3+hG2tWMiCn/CwcENRa4c4i61atc2Uz7ot636Jx
+ZLIXGPmPRZ2pErkVfLM//DiBhlfROydufBmrfchzWo4Dn2N45K3dDXlngeKs02mZ
+UAmO3dHqPV/OB0c8ocxMKhmrz1vZwEVGGdNEGn2etsvF8FPU88mUijLxIg6iCHX6
+412QVbQkNrktFuRcOe680oc30LZgyNbkgU8V+8dsUOSKG2/Yb8kq6QtDWOF14WND
+G+vnYcLocutbVKZ2k2bKy1D8m1yxjg==
+=ADdF
+-----END PGP SIGNATURE-----
+
+--71hGNJlQXeHFXEB22FMggq7QMsLv6Wb6E--
