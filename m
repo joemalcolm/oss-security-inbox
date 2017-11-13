@@ -1,52 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/4
-Message-ID: <CAEsznC6vAOzM9wmtcZwiLX1-k3uevMEEuxkksXCUMR8=hsq+Kg@mail.gmail.com>
-Date: Wed, 5 Jul 2017 14:37:00 +0300
-From: Lior Kaplan <kaplanlior@...il.com>
-To: cve-assign@...re.org
-Cc: "security@....net" <security@....net>, oss-security@...ts.openwall.com
-Subject: CVE IDs needed for PHP vulnerabilites (affects 5.6.30 and 7.0.20)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/13/6
+Message-ID: <CA+aC4kvjfSt0ijv_tUNRNNLzSh9-qhuC1X_tpzPVT0hU2iskRw@mail.gmail.com>
+Date: Mon, 13 Nov 2017 07:46:28 -0800
+From: Anthony Liguori <anthony@...emonkey.ws>
+To: oss-security@...ts.openwall.com
+Subject: Re: (linux-)distros list use statistics
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Mon, Nov 13, 2017 at 7:10 AM, Solar Designer <solar@...nwall.com> wrote:
+> Hi,
+>
+> I think it's time for Gentoo and/or Amazon to share with all of us the
+> statistics they should have collected so far as per:
+>
+> http://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+>
+> "13. Keep track of per-report and per-issue handling and disclosure
+> timelines (at least times of notification of the private list and of
+> actual public disclosure), at regular intervals produce and share
+> statistics (most notably, the average embargo duration) as well as the
+> raw data (except on issues that are still under embargo) by posting to
+> oss-security - primary: Gentoo, backup: Amazon"
+>
+> Please do.
 
-The following issues have been reported and fixed in PHP. At the moment
-they are part of PHP 7.0.21 release. The fixes are also included in the 5.6
-branch and will be part of 5.6.31 when it will be released.
+Ack.
 
-#73807 Performance problem with processing post request over 2000000 chars
-https://bugs.php.net/bug.php?id=73807
-http://git.php.net/?p=php-src.git;a=commitdiff;h=0f8cf3b8497dc45c010c44ed9e96518e11e19fc3
+Regards,
 
-#74145 wddx parsing empty boolean tag leads to SIGSEGV
-https://bugs.php.net/bug.php?id=74145
-http://git.php.net/?p=php-src.git;a=commitdiff;h=2aae60461c2ff7b7fbcdd194c789ac841d0747d7
-http://git.php.net/?p=php-src.git;a=commitdiff;h=f269cdcd4f76accbecd03884f327cffb9a7f1ca9
+Anthony Liguori
 
-#74651 negative-size-param (-1) in memcpy in zif_openssl_seal()
-https://bugs.php.net/bug.php?id=74651
-http://git.php.net/?p=php-src.git;a=commitdiff;h=89637c6b41b510c20d262c17483f582f115c66d6
-
-#74819 wddx_deserialize() heap out-of-bound read via php_parse_date()
-https://bugs.php.net/bug.php?id=74819
-PHP 5.6 -
-http://git.php.net/?p=php-src.git;a=commitdiff;h=2aae60461c2ff7b7fbcdd194c789ac841d0747d7
-PHP 7.0  -
-http://git.php.net/?p=php-src.git;a=commitdiff;h=6b18d956de38ecd8913c3d82ce96eb0368a1f9e5
-
-Also, requests from past releases:
-
-PHP 5.6.28 + 7.0.13
-#73192 parse_url return wrong hostname
-https://bugs.php.net/bug.php?id=73192
-http://git.php.net/?p=php-src.git;a=commitdiff;h=b061fa909de77085d3822a89ab901b934d0362c4
-
-5.6.30 + 7.0.15
-#73773 Seg fault when loading hostile phar
-https://bugs.php.net/bug.php?id=73773
-http://git.php.net/?p=php-src.git;a=commitdiff;h=e5246580a85f031e1a3b8064edbaa55c1643a451
-
-Thanks,
-Lior Kaplan
-PHP security team
-
+> Thanks,
+>
+> Alexander
