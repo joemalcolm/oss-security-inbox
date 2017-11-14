@@ -1,98 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/07/7
-Message-ID: <CAPcyv4h6sA6Sx4wmY_XH0VoTNeVYu0Szd4hdmAdfsNZzwX-H-w@mail.gmail.com>
-Date: Tue, 7 Mar 2017 13:06:55 -0800
-From: Dan Williams <dan.j.williams@...el.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/14/5
+Message-Id: <1510676630.u75ilcjvpm.tristanC@fedora>
+Date: Tue, 14 Nov 2017 16:28:50 +0000
+From: Tristan Cacqueray <tdecacqu@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Security issue in Linux kernel (v4.5+) persistent memory enabling
+Subject: [OSSA-2017-005] Nova Filter Scheduler bypass through rebuild action (CVE-2017-16239)
 Content-Type: text/plain; charset=utf-8
 
-The patch below fixes a high severity, but limited exposure, security
-issue in the direct-I/O support for DAX mappings. High severity in
-that any file that can be read can be written, limited exposure in
-that it requires uncommon platform resources (persistent memory),
-usage of the still flagged "experimental" DAX support in XFS/EXT4, and
-non-default configuration to enable direct-I/O for DAX mappings
-(details below).
+==================================================================
+OSSA-2017-005: Nova Filter Scheduler bypass through rebuild action
+==================================================================
 
-It has been posted publicly on the Linux kernel development mailing list here:
+:Date: November 14, 2017
+:CVE: CVE-2017-16239
 
-https://lkml.org/lkml/2017/2/25/108
 
----
-mm: fix gup_pte_range() vs DAX mappings
+Affects
+~~~~~~~
+- Nova: <=14.0.9, >=15.0.0 <=15.0.7, >=16.0.0 <=16.0.2
 
-gup_pte_range() fails to check pte_allows_gup() before translating a DAX
-pte entry, pte_devmap(), to a page. This allows writes to read-only
-mappings, and bypasses the DAX cacheline dirty tracking due to missed
-'mkwrite' faults. The gup_huge_pmd() path and the gup_huge_pud() path
-correctly check pte_allows_gup() before checking for _devmap() entries.
 
-Cc: <stable@...r.kernel.org>
-Cc: Dave Hansen <dave.hansen@...ux.intel.com>
-Reported-by: Xiong Zhou <xzhou@...hat.com>
-Reported-by: Ross Zwisler <ross.zwisler@...ux.intel.com>
-Fixes: 3565fce3a659 ("mm, x86: get_user_pages() for dax mappings")
-Signed-off-by: Ross Zwisler <ross.zwisler@...ux.intel.com>
-Signed-off-by: Dan Williams <dan.j.williams@...el.com>
----
- arch/x86/mm/gup.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+Description
+~~~~~~~~~~~
+George Shuklin from servers.com reported a vulnerability in Nova. By
+rebuilding an instance, an authenticated user may be able to
+circumvent the Filter Scheduler bypassing imposed filters (for
+example, the ImagePropertiesFilter or the IsolatedHostsFilter). All
+setups using Nova Filter Scheduler are affected.
 
-diff --git a/arch/x86/mm/gup.c b/arch/x86/mm/gup.c
-index 99c7805a9693..9d32ee608807 100644
---- a/arch/x86/mm/gup.c
-+++ b/arch/x86/mm/gup.c
-@@ -120,6 +120,11 @@ static noinline int gup_pte_range(pmd_t pmd,
-unsigned long addr,
-  return 0;
-  }
 
-+ if (!pte_allows_gup(pte_val(pte), write)) {
-+ pte_unmap(ptep);
-+ return 0;
-+ }
-+
-  if (pte_devmap(pte)) {
-  pgmap = get_dev_pagemap(pte_pfn(pte), pgmap);
-  if (unlikely(!pgmap)) {
-@@ -127,8 +132,7 @@ static noinline int gup_pte_range(pmd_t pmd,
-unsigned long addr,
-  pte_unmap(ptep);
-  return 0;
-  }
-- } else if (!pte_allows_gup(pte_val(pte), write) ||
--   pte_special(pte)) {
-+ } else if (pte_special(pte)) {
-  pte_unmap(ptep);
-  return 0;
-  }
--- 
-2.7.4
+Patches
+~~~~~~~
+- https://review.openstack.org/519684 (Newton)
+- https://review.openstack.org/519681 (Ocata)
+- https://review.openstack.org/519672 (Pike)
+- https://review.openstack.org/519662 (Queens)
 
----
 
-The vulnerability was introduced in kernel v4.5. It requires the
-following configuration options to be enabled
+Credits
+~~~~~~~
+- George Shuklin from Servers.com (CVE-2017-16239)
 
-CONFIG_ZONE_DEVICE
-CONFIG_FS_DAX
-CONFIG_BLK_DEV_PMEM
 
-The above three options plus defining persistent memory with the
-memmap=ss!nn kernel command line parameter creates a pmem block device
-that will expose the failing condition if an xfs or ext4 filesytem is
-mounted on it with the "-o dax" mount option.
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/1664931
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-16239
 
-CONFIG_ACPI_NFIT
-CONFIG_NVDIMM_PFN
+--
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
 
-The memmap=ss!nn method of defining persistent memory is primarily
-used for testing. Starting with ACPI 6, platform firmware publishes an
-NFIT (NVDIMM Firmware Interface Table) to describe persistent memory
-resources. Persistent memory described by an NFIT does not support
-direct-I/O by default and the CONFIG_NVDIMM_PFN mechanism must be used
-to enable direct-I/O. The "ndctl" utility is used to reconfigure an
-NFIT-defined pmem device with direct-I/O support [1]
 
-[1]: https://lists.01.org/pipermail/linux-nvdimm/2017-February/008808.html
+Content of type "application/pgp-signature" skipped
