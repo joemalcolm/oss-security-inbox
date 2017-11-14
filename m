@@ -1,25 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/19/6
-Message-ID: <7dbe76e8-99b8-4f8b-fa8d-2ec4708a85a1@redhat.com>
-Date: Mon, 19 Jun 2017 11:26:35 -0600
-From: Jeff Law <law@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Qualys Security Advisor -- The Stack Clash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/14/3
+Message-ID: <CAB8XdGBgipTU4-ajO0j8Khi67kziTcTqwCQbCcpRicGLd81dNA@mail.gmail.com>
+Date: Tue, 14 Nov 2017 13:32:50 +0000
+From: Colm O hEigeartaigh <coheigea@...che.org>
+To: "users@....apache.org" <users@....apache.org>, "dev@....apache.org" <dev@....apache.org>,  Apache Security Response Team <security@...che.org>, announce@...che.org, oss-security@...ts.openwall.com
+Cc: "Wang, Kevin X. (NSB - CN/Hangzhou)" <kevin.x.wang@...ia-sbell.com>
+Subject: New security advisory CVE-2017-12624 released for Apache CXF
 Content-Type: text/plain; charset=utf-8
 
+A new security advisory has been released for Apache CXF, that is fixed in
+the recent 3.2.1 and 3.1.14 releases:
 
-I would consider those two GCC BZs (68065, 66479) a separate an distinct
-issue.
+CVE-2017-12624: Apache CXF web services that process attachments are
+vulnerable to Denial of Service (DoS) attacks
 
-It is far more important to address design issues around the existing
--fstack-check first.  I think we've got a pretty good handle on how to
-address those problems and discussions with the upstream GCC community
-have already started.
+The full text of the advisory is available here:
 
-In an ideal world we'll get to a place where the new -fstack-check does
-not change program semantics, never misses probes and is efficient
-enough to just turn on and forget everywhere.  The existing
--fstack-check fails all three of those criteria.
+http://cxf.apache.org/security-advisories.data/CVE-2017-12624.txt.asc
 
-Jeff
+Colm.
+
+
+-- 
+Colm O hEigeartaigh
+
+Talend Community Coder
+http://coders.talend.com
 
