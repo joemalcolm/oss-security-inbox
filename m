@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1839" "Monday" "26" "June" "2017" "16:59:57" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<a7c4a449-27df-1595-5ba5-4c5cd7ba93e0@redhat.com>" "47" "Re: [oss-security] Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit meth" "^Date:" nil nil "6" "2017062622:59:57" "[oss-security] Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit meth" (number mark "        kseifried@re Jun 26   47/1839  " thread-indent "\"Re: [oss-security] Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit meth\"\n") "<5951818E.21842.8B6A4375@pageexec.freemail.hu>" ("<20170624005003.GB27479@grsecurity.net>" "<CALogXGW++8_OVkE_hyREa_fYjK1eDkinZQfBDVYVJ=vA0Nw-dg@mail.gmail.com>" "<CANO=Ty1f8yEyvBy_ZR9xU3MxSjjxKUk5q1S_VRsmJAHy7z2KhQ@mail.gmail.com>" "<5951818E.21842.8B6A4375@pageexec.freemail.hu>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2266" "Tuesday" "14" "November" "2017" "12:26:19" "-0500" "Joan Touzet" "wohali@apache.org" "<1120747843.657.1510680375946.JavaMail.Joan@RITA>" "62" "[oss-security] Apache CouchDB CVE-2017-12635 and CVE-2017-12636" nil nil nil "11" "2017111417:26:19" "[oss-security] Apache CouchDB CVE-2017-12635 and CVE-2017-12636" (number mark "U       wohali@apach Nov 14   62/2266  " thread-indent "\"[oss-security] Apache CouchDB CVE-2017-12635 and CVE-2017-12636\"\n") "<1110478094.654.1510680196477.JavaMail.Joan@RITA>" ("<1110478094.654.1510680196477.JavaMail.Joan@RITA>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11574 invoked by uid 550); 26 Jun 2017 23:00:11 -0000
+Received: (qmail 30359 invoked by uid 550); 14 Nov 2017 17:42:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,86 +11,83 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11553 invoked from network); 26 Jun 2017 23:00:10 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:references:from:message-id
-         :date:user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=pN7DbytJEir5PKHmfYyTc1XdsVy/3P7iKbrZBDdqSS4=;
-        b=t1yZY+FFY+qxflWhQaExHBo6GBWyceaoqTgWjrTA0mYDf02D4RPMEULXKqv/nOSK9l
-         WKdlJ6BsJudU+kIzPtXiMp3owtQUtiEZyZ6+TIGdLpNPkGoKEUAI+/ECr4SzbNJ8PdjX
-         I/TbsaawYjznkmYCSH/2C11cp/z76HJgLlCdINfWTp8JHys6ie2d8Tg/8KXe5+uxnmDZ
-         c6oc5X5Ra0XQlxWLdWxgSTYB7MgzOGsTGTZZr6lrmfYP9vv1RGLPfsLGxEf4Gj2zeayO
-         non8CNxiAGTYoBDmTRiL73LEBaJN0FcGRNK/OESgF27GGHTKxtQBHsTJxbzBC9+NClyw
-         OYWg==
-X-Gm-Message-State: AKS2vOwCqpoiQnGbhKXTV715quxfPYNDOZoH7fzJ30piyNdfm0peUs6D
-	OxMqrr1VGRyQTFrGxpO5Sg==
-X-Received: by 10.107.16.214 with SMTP id 83mr3785206ioq.88.1498517998775;
-        Mon, 26 Jun 2017 15:59:58 -0700 (PDT)
-References: <20170624005003.GB27479@grsecurity.net>
- <CALogXGW++8_OVkE_hyREa_fYjK1eDkinZQfBDVYVJ=vA0Nw-dg@mail.gmail.com>
- <CANO=Ty1f8yEyvBy_ZR9xU3MxSjjxKUk5q1S_VRsmJAHy7z2KhQ@mail.gmail.com>
- <5951818E.21842.8B6A4375@pageexec.freemail.hu>
-Message-ID: <a7c4a449-27df-1595-5ba5-4c5cd7ba93e0@redhat.com>
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:52.0)
- Gecko/20100101 Thunderbird/52.1.1
+Reply-To: oss-security@lists.openwall.com
+Received: (qmail 12045 invoked from network); 14 Nov 2017 17:26:35 -0000
+X-Virus-Scanned: amavisd-new at smtp.justsomehost.net
+Date: Tue, 14 Nov 2017 12:26:19 -0500 (EST)
+From: Joan Touzet <wohali@apache.org>
+To: oss-security@lists.openwall.com
+Cc: Security CouchDB <security@couchdb.apache.org>
+Message-ID: <1120747843.657.1510680375946.JavaMail.Joan@RITA>
+In-Reply-To: <1110478094.654.1510680196477.JavaMail.Joan@RITA>
 MIME-Version: 1.0
-In-Reply-To: <5951818E.21842.8B6A4375@pageexec.freemail.hu>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Content-Language: en-GB
-Date: Mon, 26 Jun 2017 16:59:57 -0600
-From: Kurt Seifried <kseifried@redhat.com>
-Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: More CONFIG_VMAP_STACK vulnerabilities,
- refcount_t UAF, and an ignored Secure Boot bypass / rootkit meth
-To: pageexec@freemail.hu, oss-security <oss-security@lists.openwall.com>
+X-Originating-IP: [204.11.51.157]
+X-Mailer: Zimbra 8.6.0_GA_1194 (Zimbra Desktop/7.3.0_13060_Windows)
+Thread-Topic: Apache CouchDB CVE-2017-12635 and CVE-2017-12636
+Thread-Index: qHfVie9X1AClxb2/YVbg4D/27ZffUw==
+Subject: [oss-security] Apache CouchDB CVE-2017-12635 and CVE-2017-12636
 
+Forwarding from https://lists.apache.org/thread.html/6c405bf3f8358e6314076b=
+e9f48c89a2e0ddf00539906291ebdf0c67@%3Cdev.couchdb.apache.org%3E on Jan Lehn=
+ardt's behalf.
 
+-----
 
-On 2017-06-26 3:50 PM, PaX Team wrote:
-> On 26 Jun 2017 at 13:47, Kurt Seifried wrote:
->
->> I think we can agree as a community of professionals that insults and na=
-me
->> calling are unnecessary and also not very effective.
-> I completely agree with you but then I can't explain why you chose to ins=
-ult
-> our projects last week and still have not remedied it (both the CVE and y=
-our
-> insulting tweet are still up). I find it curious how you can preach about
-> professionalism after being the very instigator of the recent splat (heck,
-> instead of answering, you called it a conspiracy theory when I asked you =
-in
-> private why you issued the CVE to begin with which then forced us to take
-> the issue public).
-So as per the private email thread we had previously I'm not going to be
-interacting with you beyond what is strictly neccesary for CVE and other
-professional purposes.
+Dear CouchDB Community,
 
-One the CVE REJECT side, CVE-2017-1000377 looks legitimate, although I'm
-inclined to agree with Qualys and REJECT it so that you stop emailing. I
-did contact MITRE, I haven't had time to reply to them yet (they are
-also wondering why the CVE needs REJECT'ing), as such I think it may be
-best to recuse myself from this specific CVE and let you handle this
-with MITRE. I have also previously told you how to go about doing this.
+Last week, we announced the release of CouchDB versions 2.1.1 &
+1.7.0/1.7.1 and marked them as CRITICAL security updates.
 
-I will say that CVE identifiers doesn't just cover full code execution
-flaws, but also covers situations where for example a security property
-is claimed but is not as effective as we thought (e.g. the stackguard
-page size in this case). Many CVE's are not fully exploitable on their
-own but are part of an exploit chain.
+Today we are releasing detailed information about the security issues.
 
+We expect all users to have updated already.
 
->
-> cheers,
->  PaX Team
->
+# Overview
 
---=20
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
+## CVE-2017-12635
 
+Due to differences in CouchDB=E2=80=99s Erlang-based JSON parser and JavaSc=
+ript-based
+JSON parser, it is possible to submit _users documents with duplicate keys =
+for
+`roles` used for access control within the database, including the special =
+case
+`_admin` role, that denotes administrative users. In combination with
+`CVE-2017-12636` (Remote Code Execution), this can be used to give non-admin
+users access to arbitrary shell commands on the server as the database syst=
+em
+user.
+
+The JSON parser differences result in behaviour that if two `roles` keys
+are available in the JSON, the second one will be used for authorising the
+document write, but the first `roles` key is used for subsequent
+authorization for the newly created user. By design, users can not assign
+themselves roles. The vulnerability allows non-admin users to give
+themselves admin privileges.
+
+We addressed this issue by updating the way CouchDB parses JSON in
+Erlang, mimicking the JavaScript behaviour of picking the last key, if
+duplicates exist.
+
+This issue was discovered by `Max Justicz` (https://mastodon.mit.edu/@maxj)
+
+See also: Max=E2=80=99s own blog post about the issue and the motivation be=
+hind
+his research: https://justi.cz/security/2017/11/14/couchdb-rce-npm.html
+
+## CVE-2017-12636
+
+CouchDB administrative users can configure the database server via HTTP(S).=
+ Some
+of the configuration options include paths for operating system-level binar=
+ies
+that are subsequently launched by CouchDB. This allows a CouchDB admin user=
+ to
+execute arbitrary shell commands as the CouchDB user, including downloading
+and executing scripts from the public internet.
+
+This issue was discovered by `Joan Touzet` (http://www.atypical.net) of the
+CouchDB Security team during the investigation of `CVE-2017-12635`.
 
