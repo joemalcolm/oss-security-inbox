@@ -1,144 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/25/10
-Message-ID: <2979113.NTRsFXjtRy@blackgate>
-Date: Wed, 25 Jan 2017 10:16:01 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/14/6
+Message-ID: <1120747843.657.1510680375946.JavaMail.Joan@RITA>
+Date: Tue, 14 Nov 2017 12:26:19 -0500 (EST)
+From: Joan Touzet <wohali@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: jasper: heap-based buffer overflow in jpc_dec_decodepkt (jpc_t2dec.c)
+Cc: Security CouchDB <security@...chdb.apache.org>
+Subject: Apache CouchDB CVE-2017-12635 and CVE-2017-12636
 Content-Type: text/plain; charset=utf-8
 
-Description:
-jasper is an open-source initiative to provide a free software-based reference 
-implementation of the codec specified in the JPEG-2000 Part-1 standard.
+Forwarding from https://lists.apache.org/thread.html/6c405bf3f8358e6314076be9f48c89a2e0ddf00539906291ebdf0c67@%3Cdev.couchdb.apache.org%3E on Jan Lehnardt's behalf.
 
-Another round of fuzzing shows that a crafted image causes a read overflow.
+-----
 
-The complete ASan output:
+Dear CouchDB Community,
 
-# imginfo -f $FILE
-warning: ignoring unknown marker segment (0xff70)
-type = 0xff70 (UNKNOWN); len = 35;00 01 43 72 65 61 74 6f 74 3a 30 4a 61 73 50 
-65 72 00 01 00 00 73 69 6f 6e 20 31 2e 39 30 30 2e 39 warning: trailing 
-garbage in marker segment (3 bytes)
-warning: trailing garbage in marker segment (8 bytes)
-warning: trailing garbage in marker segment (6 bytes)
-=================================================================
-==30315==ERROR: AddressSanitizer: heap-buffer-overflow on address 
-0x61a00001f808 at pc 0x7fb7b2667e54 bp 0x7ffd0a9ab890 sp 0x7ffd0a9ab888
-READ of size 8 at 0x61a00001f808 thread T0
-    #0 0x7fb7b2667e53 in jpc_dec_decodepkt /tmp/portage/media-
-libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jpc/jpc_t2dec.c:245:14
-    #1 0x7fb7b2667e53 in jpc_dec_decodepkts /tmp/portage/media-
-libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jpc/jpc_t2dec.c:454
-    #2 0x7fb7b25ccd37 in jpc_dec_process_sod /tmp/portage/media-
-libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jpc/jpc_dec.c:628:6
-    #3 0x7fb7b25d6853 in jpc_dec_decode /tmp/portage/media-
-libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jpc/jpc_dec.c:425:10
-    #4 0x7fb7b25d6853 in jpc_decode /tmp/portage/media-
-libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jpc/jpc_dec.c:262
-    #5 0x7fb7b25a6231 in jp2_decode /tmp/portage/media-
-libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jp2/jp2_dec.c:218:21
-    #6 0x7fb7b2568214 in jas_image_decode /tmp/portage/media-
-libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/base/jas_image.c:444:16
-    #7 0x50a3be in main /tmp/portage/media-
-libs/jasper-2.0.10/work/jasper-2.0.10/src/appl/imginfo.c:238:16
-    #8 0x7fb7b164878f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-
-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #9 0x419cd8 in _start (/usr/bin/imginfo+0x419cd8)
+Last week, we announced the release of CouchDB versions 2.1.1 &
+1.7.0/1.7.1 and marked them as CRITICAL security updates.
 
-0x61a00001f808 is located 48 bytes to the right of 1368-byte region 
-[0x61a00001f280,0x61a00001f7d8)
-allocated by thread T0 here:
-    #0 0x4d2a98 in malloc /tmp/portage/sys-
-devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-
-rt/lib/asan/asan_malloc_linux.cc:64
-    #1 0x7fb7b2575160 in jas_malloc /tmp/portage/media-
-libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/base/jas_malloc.c:242:11
-    #2 0x7fb7b2575160 in jas_alloc2 /tmp/portage/media-
-libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/base/jas_malloc.c:275
-    #3 0x7fb7b25ca2bf in jpc_dec_tileinit /tmp/portage/media-
-libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jpc/jpc_dec.c:841:24
-    #4 0x7fb7b25ca2bf in jpc_dec_process_sod /tmp/portage/media-
-libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jpc/jpc_dec.c:594
-    #5 0x7fb7b25d6853 in jpc_dec_decode /tmp/portage/media-
-libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jpc/jpc_dec.c:425:10
-    #6 0x7fb7b25d6853 in jpc_decode /tmp/portage/media-
-libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jpc/jpc_dec.c:262
-    #7 0x7fb7b25a6231 in jp2_decode /tmp/portage/media-
-libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jp2/jp2_dec.c:218:21
-    #8 0x7fb7b2568214 in jas_image_decode /tmp/portage/media-
-libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/base/jas_image.c:444:16
-    #9 0x50a3be in main /tmp/portage/media-
-libs/jasper-2.0.10/work/jasper-2.0.10/src/appl/imginfo.c:238:16
-    #10 0x7fb7b164878f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-
-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+Today we are releasing detailed information about the security issues.
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/media-
-libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jpc/jpc_t2dec.c:245:14 in 
-jpc_dec_decodepkt
-Shadow bytes around the buggy address:
-  0x0c347fffbeb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c347fffbec0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c347fffbed0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c347fffbee0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c347fffbef0: 00 00 00 00 00 00 00 00 00 00 00 fa fa fa fa fa
-=>0x0c347fffbf00: fa[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c347fffbf10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c347fffbf20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c347fffbf30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c347fffbf40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c347fffbf50: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==30315==ABORTING
+We expect all users to have updated already.
 
-Affected version:
-2.0.10
+# Overview
 
-Fixed version:
-N/A
+## CVE-2017-12635
 
-Commit fix:
-N/A
+Due to differences in CouchDB’s Erlang-based JSON parser and JavaScript-based
+JSON parser, it is possible to submit _users documents with duplicate keys for
+`roles` used for access control within the database, including the special case
+`_admin` role, that denotes administrative users. In combination with
+`CVE-2017-12636` (Remote Code Execution), this can be used to give non-admin
+users access to arbitrary shell commands on the server as the database system
+user.
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+The JSON parser differences result in behaviour that if two `roles` keys
+are available in the JSON, the second one will be used for authorising the
+document write, but the first `roles` key is used for subsequent
+authorization for the newly created user. By design, users can not assign
+themselves roles. The vulnerability allows non-admin users to give
+themselves admin privileges.
 
-CVE:
-N/A
+We addressed this issue by updating the way CouchDB parses JSON in
+Erlang, mimicking the JavaScript behaviour of picking the last key, if
+duplicates exist.
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00126-jasper-heapoverflow-jpc_dec_decodepkt
+This issue was discovered by `Max Justicz` (https://mastodon.mit.edu/@maxj)
 
-Timeline:
-2017-01-25: bug discovered and reported upstream
-2017-01-25: blog post about the issue
+See also: Max’s own blog post about the issue and the motivation behind
+his research: https://justi.cz/security/2017/11/14/couchdb-rce-npm.html
 
-Note:
-This bug was found with American Fuzzy Lop.
+## CVE-2017-12636
 
-Permalink:
-https://blogs.gentoo.org/ago/2017/01/25/jasper-heap-based-buffer-overflow-in-jpc_dec_decodepkt-jpc_t2dec-c
+CouchDB administrative users can configure the database server via HTTP(S). Some
+of the configuration options include paths for operating system-level binaries
+that are subsequently launched by CouchDB. This allows a CouchDB admin user to
+execute arbitrary shell commands as the CouchDB user, including downloading
+and executing scripts from the public internet.
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+This issue was discovered by `Joan Touzet` (http://www.atypical.net) of the
+CouchDB Security team during the investigation of `CVE-2017-12635`.
+
