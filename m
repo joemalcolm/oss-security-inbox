@@ -1,19 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/14/5
-Message-ID: <20170214131508.GA10489@tunkki>
-Date: Tue, 14 Feb 2017 15:15:08 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: Reachable BUG_ON from userspace in sctp_wait_for_sndbuf()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/14/1
+Message-Id: <E1eEPJ5-0006vL-TF@rmmprod07.runbox>
+Date: Mon, 13 Nov 2017 19:42:27 -0500 (EST)
+From: "David A. Wheeler" <dwheeler@...eeler.com>
+To: "oss-security" <oss-security@...ts.openwall.com>
+CC: "Vladis Dronov" <vdronov@...hat.com>, "oss-security" <oss-security@...ts.openwall.com>
+Subject: Re: CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Feb 14, 2017 at 08:02:19AM -0500, Vladis Dronov wrote:
-> I'm not sure if now I should be posting this on os-sec@ after requesting
-> a CVE-ID via MITRE's web-form. Anyway.
+On Mon, 13 Nov 2017 16:15:24 +0100, Greg KH <greg@...ah.com> wrote:
+> It's the arbitrarily nature here that I am curious about, it feels like
+> it should be "all or nothing", for CVEs to mean much here.  Right now it
+> seems like it is just, "all that we care to track"?  :)
 
-Yes you should since there is no automated way that CVE requests are posted to
-any list and I haven't seen MITRE posting the requests nor the assigments here.
-A bit problematic situation.
+"All" would be awesome, though unlikely.  But even if that's the eventual goal,
+"good starts" are still good starts.
 
--- 
-Henri Salo
+I think a very reasonable (and more practical) alternative is
+"enough CVEs to convince you to upgrade your kernel (or whatever) instead".
+In particular, if there are several CVEs assigned where the only
+reasonable mitigation is "you must upgrade your kernel", then
+you don't really *need* to assign more CVEs for purposes of telling
+people what they should do to mitigate their risks.  If those CVEs apply
+to them, then they know they should upgrade & what the urgency is.
+
+It'd be *nice* to "have all vulnerabilities assigned CVEs", because that'd
+enable better statistical analysis of CVEs.  In particular, developers would then have
+a better sense about the types of vulnerabilities that are really out there, in a specific
+product or in products in general.  It'd be especially useful for seeing
+what mitigations work, and what doesn't.  But I don't see that as a likely event
+in the near term.  In any case, it is certainly not necessary
+for the main reason most people look at CVEs, where they simply need
+to answer the question, "What is the urgency to upgrade this component?".
+
+There are definitely problems in using CVEs to answer that question,
+because everyone *knows* the CVEs are incomplete & the assignment response time is
+less than ideal.  And I *absolutely* agree that the current delays in upgrading
+kernels are a serious problem - Greg, I wish you EVERY piece of luck you
+can manage as you work on that!!
+
+However, today,
+"always upgrade the kernel when it costs $billions and we know the new version
+has vulnerabilities too and it's not clear how important it is to upgrade anyway"
+is not a compelling argument to most people.  If you want people to upgrade
+*today* with any urgency, you need to give them a good reason, because
+currently the upgrade process is often painful.
+
+CVEs, while imperfect, give people a *reason* to go through the painful process
+of upgrading.  If we can make software upgrades much easier in the future,
+then the reasons don't need to be as compelling, but that's not the case today.
+
+Thanks!
+
+--- David A. Wheeler
