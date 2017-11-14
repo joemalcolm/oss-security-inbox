@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2456" "Thursday" "28" "September" "2017" "17:37:21" "-0400" "Brad Spengler" "spender@grsecurity.net" "<20170928213721.GA5119@grsecurity.net>" "57" "Re: [oss-security] Linux kernel CVEs not mentioned on oss-security" "^Date:" nil nil "9" "2017092821:37:21" "[oss-security] Linux kernel CVEs not mentioned on oss-security" (number mark "        spender@grse Sep 28   57/2456  " thread-indent "\"Re: [oss-security] Linux kernel CVEs not mentioned on oss-security\"\n") "<20170928143420.GB6123@kroah.com>" ("<EB502BBD-AA97-4FC5-A0E7-D148B0E33FF7@lanl.gov>" "<1978278.8CZP0B31Sj@wanheda>" "<20170926073214.GA8108@kroah.com>" "<4188502.8b3PN4uBSd@wanheda>" "<20170926150446.GA11530@kroah.com>" "<CAADPF4OszZShcGb+x79UZQzBT3XONwNH6E970MVwrUdXyJDmiw@mail.gmail.com>" "<20170927125149.GA2500@openwall.com>" "<20170927130424.GA19695@kroah.com>" "<20170928073533.mlntvkfnzl6sann7@eldamar.local>" "<20170928143420.GB6123@kroah.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6294" "Tuesday" "14" "November" "2017" "17:43:51" "+0000" "Eddie Chapman" "eddie@ehuk.net" "<4c4e1ee3-81c8-f2c0-d483-dd9a4bc58006@ehuk.net>" "120" "Re: [oss-security] CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver" nil nil nil "11" "2017111417:43:51" "[oss-security] CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver" (number mark "U       eddie@ehuk.n Nov 14  120/6294  " thread-indent "\"Re: [oss-security] CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver\"\n") "<20171114123228.GA18751@grsecurity.net>" ("<20171113151524.GA16983@kroah.com>" "<E1eEPJ5-0006vL-TF@rmmprod07.runbox>" "<20171114073720.GA27647@kroah.com>" "<20171114123228.GA18751@grsecurity.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7283 invoked by uid 550); 28 Sep 2017 21:43:05 -0000
+Received: (qmail 26230 invoked by uid 550); 14 Nov 2017 17:58:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,84 +11,150 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1385 invoked from network); 28 Sep 2017 21:37:34 -0000
-Message-ID: <20170928213721.GA5119@grsecurity.net>
-References: <EB502BBD-AA97-4FC5-A0E7-D148B0E33FF7@lanl.gov>
- <1978278.8CZP0B31Sj@wanheda>
- <20170926073214.GA8108@kroah.com>
- <4188502.8b3PN4uBSd@wanheda>
- <20170926150446.GA11530@kroah.com>
- <CAADPF4OszZShcGb+x79UZQzBT3XONwNH6E970MVwrUdXyJDmiw@mail.gmail.com>
- <20170927125149.GA2500@openwall.com>
- <20170927130424.GA19695@kroah.com>
- <20170928073533.mlntvkfnzl6sann7@eldamar.local>
- <20170928143420.GB6123@kroah.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ibTvN161/egqYuK8"
-Content-Disposition: inline
-In-Reply-To: <20170928143420.GB6123@kroah.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Date: Thu, 28 Sep 2017 17:37:21 -0400
-From: Brad Spengler <spender@grsecurity.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Linux kernel CVEs not mentioned on oss-security
-To: oss-security@lists.openwall.com
+Received: (qmail 11443 invoked from network); 14 Nov 2017 17:44:03 -0000
+DKIM-Filter: OpenDKIM Filter v2.10.3 schatzi.steelbluetech.co.uk 64B0F10CFD5
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ehuk.net; s=default;
+	t=1510681431; bh=utGHR9EEnmv9hp/gDxCWleujc399c5wVezTAlVzHpEk=;
+	h=Subject:To:Cc:References:From:Reply-To:Date:In-Reply-To:From;
+	b=u0OcaALQ1Hth0ZNcuQxDCG4utcZloP/+/qzBwabITUe4Tz3C2FxGtS9IHCzYGNsRq
+	 fkHnRmga4KKDm21UY3mLkSnPJTAZBIdYhJhm6u6n0DTONFQDoCUJbHF0MsItDRN1K4
+	 Qclh25NKwbvfQv3Ofh8x0g40y7lgQeRbq2eHOlIs=
+To: oss-security@lists.openwall.com, Brad Spengler <spender@grsecurity.net>
+Cc: Vladis Dronov <vdronov@redhat.com>
+References: <20171113151524.GA16983@kroah.com>
+ <E1eEPJ5-0006vL-TF@rmmprod07.runbox> <20171114073720.GA27647@kroah.com>
+ <20171114123228.GA18751@grsecurity.net>
+From: Eddie Chapman <eddie@ehuk.net>
+Message-ID: <4c4e1ee3-81c8-f2c0-d483-dd9a4bc58006@ehuk.net>
+Date: Tue, 14 Nov 2017 17:43:51 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
+MIME-Version: 1.0
+In-Reply-To: <20171114123228.GA18751@grsecurity.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] CVE-2017-15102: Linux kernel: usb: NULL-deref due
+ to a race condition in [legousbtower] driver
 
---ibTvN161/egqYuK8
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 14/11/17 12:32, Brad Spengler wrote:
+> Hi Greg,
+> 
+> We're all aware of your objection, you bring it up every time
+> anyone mentions Linux kernel security on this list.  However,
+> please remember that all the people contributing on this list are
+> taking on the responsiblity you and the majority of other upstream
+> developers have abdicated.
 
-> > CVE-2017-0605:
-> > --------------
-> > https://security-tracker.debian.org/tracker/CVE-2017-0605
-> > upstream: (4.12-rc1) [e09e28671cda63e6308b31798b997639120e2a21]
-> >=20
-> > is e.g. includedin 3.16.44 (a1141b19b23a0605d46f3fab63fd2d76207096c4),
-> > 3.2.89 (e39e64193a8a611d11d4c62579a7246c1af70d1c) but not in 4.9.
-> >=20
-> > (afaics not Cc'ed to stable).
->=20
-> Ouch, thanks for letting me know, that's not good, we don't want to get
-> the trees out of sync for obvious reasons.
+Does Linus, Greg, Al, etc, etc, etc owe anyone anything? Yes, they're 
+time is paid by companies and/or the Linux Foundation, but do those orgs 
+have a responsibility to anyone? They're working incredibly hard on 
+probably one of the most difficult project management feats anyone could 
+attempt, which anyone can take the end results of, and use without 
+monetary cost. Linus has the right to treat security in whatever way he 
+wishes to, according to his own personal philosophy, ultimately it is 
+his project and he answers to no-one other than himself.
 
-The above CVE shouldn't exist; the patch doesn't fix any vulnerability
-as the upstream commit message itself notes, and didn't need to be
-backported to any of the kernels it was backported to.  Not only that, the
-above advisory marked it as a remote vulnerability with critical severity.
-It looks like Debian and Ubuntu released updated kernels, while Red Hat and
-SuSE marked it as WONTFIX and unaffected, respectively.  I am not sure why
-neither simply rejected the CVE.
+You say everyone on this list is taking on this "responsibility". So 
+what? Some are making a living or business out of that. Maybe it is 
+right that the "community" sifts through all the bug fixes and 
+identifies issues that have a security impact. Kernel development is 
+hard enough, someone committing a fix has already done a lot of work. Do 
+they have an obligation to do the extra thinking and documenting in the 
+commit log in order to identify how someone might maliciously take 
+advantage of a flaw? It seems we have a whole industry of people who are 
+good at that, so why shouldn't that industry take on that task? Would 
+you, Brad, be in business with your product if the kernel people handled 
+security perfectly? I have nothing against grsecurity and your efforts, 
+I see no harm in companies making a business out of kernel security.
 
-The MSM fix not only is wrong (truncates too early) but seemed to involve a
-naive strcpy -> strlcpy conversion and assumed it was somehow fixing some
-exploitable vulnerability (perhaps the cause of the CVE).  All methods of
-setting task->comm ensure nul termination since forever.  If nul termination
-wasn't guaranteed, there would be much bigger problems all over the tree.
+> Vladis' original mail made it clear the bug was
+> already fixed with the included upstream fix link, so your
+> follow-up was unnecessary.
 
--Brad
+I don't see a problem on this list with too many people making 
+unnecessary, frivolous contributions. If you feel your rant was worthy 
+of being posted, then I'd say Greg's comments, which were polite and 
+without a hint of vitriol, were also worthy of contribution. I think you 
+should leave it up to the moderator who does a good job of supervising 
+this list, rather than suggesting that anyone's comments are unnecessary.
 
---ibTvN161/egqYuK8
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+> If you truly believe there is no uniqueness to security bugs, I
+> would advise you to shut down security@kernel.org.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Regardless of what anyone at the top of the kernel project may have said 
+in the past, I think the reality shows that kernel people on the whole 
+take security relatively seriously. After all, nearly everyone involved 
+is a user as well as a developer, and I don't think any of them would 
+seriously claim to not have any concerns about their own boxen getting 
+compromised. Yes, there is room for improvement, and reaction to 
+individual security issues can be debated, but it is unfair to 
+characterise the kernel community as not caring at all about security. 
+Personally I see a lot of examples of kernel people genuinely making 
+efforts to make the kernel more secure, and very few (by comparison), 
+isolated cases of issues being dismissed, or security impact being 
+downplayed. I'm sure examples can be dragged up from the past involving 
+prominent people.  But I've seen plenty of evidence of a genuine desire 
+(even on the part of Linus himself, in what he writes in commit logs) to 
+make the kernel more secure, not less.
 
-iQIcBAEBCgAGBQJZzWuKAAoJEETRwPglJf5J/KIP/RosYPVl/qJG9Kc8wYb0/kv+
-+/NrsyasoUDYtnMh2G0CeS5SRImRaEYcDD/b6Ab5wY5/ZUuYRIeLHeD7pAMrnhAF
-fK6TGcS3fqeWVhfqAWy8D5oCe62r2gYzmll6ghPEJO54P04p8eD5ZYpfdyKmaB0l
-gB/PrV3WopoqXoLqTNWC21C0C6AS8FifZtkpTWOdxo+xNKMpi0+WTiuApcheG13N
-VD2Ajk9apx9x6qkEIhJ6rMFAvMVzgMpGYGHbfEv2OSc0AVuRJnvZ6ol/Z8bXp1BO
-cIrqdsxvfcZKT9Cmdce7nupDa18i7IHmKOFOdAI/WTHfEGhUH3es/Zb+EcpIsOKx
-FA/bmVjBqk5QTq+0RdBSHiZ9qyqDpUXnvbAb9eEbl4FLIQirEh/0vt6MOX4SFpgR
-LvWBBFBLVD8Bjydsu4b4MrKmEgesJ74H41AVNG1GJh9fAZWECmlGWsPnZ7S0PxSb
-c5DRhRkrr+F7dgrOs+5tlEqgXZ6bq8a+9g8nAj1jANaR2MP2ST8HW0c+sQkaf9N0
-fmAJMWaev7WL+y1BwnmLjvtSqiq7p2vC/zPwpsHipR2FK7TEXbOK1UT+kIyF6mfj
-9Xxif2/r2/dSB/dQwZ4hR7xe/a2XU1CX35t3nlna5va7FtHGEwJYCbjIY9d6V8SD
-sKExWHpRg/T2L71kdjsa
-=vvFV
------END PGP SIGNATURE-----
+>  I would also
+> ask that you come up with a better solution to the problem than
+> demanding people run the latest version of Linux. According to my
+> current records someone taking that advice would be exposed to a
+> bug that can brick systems that seems nowhere close to resolution,
+> and one that makes it impossible to run KVM guests on AMD (which went
+> unfixed for 3 months, and the current fix isn't cc'd for stable --
+> makes me wonder how much testing -rc really gets).
 
---ibTvN161/egqYuK8--
+Regardless of what anyone might *say*, the reality is that there is no 
+reason for anyone to feel compelled to run the very latest kernel in 
+order to stay secure. The list of kernels receiving regular backported 
+fixes is frankly more than is really needed. Greg himself goes above and 
+beyond in this regard and works incredibly hard in maintaining, at the 
+time of writing, 3.18 (unofficially), 4.4, 4.9, and 4.13, usually with 2 
+or 3 releases a month each. All branches have well defined projected EOL 
+dates. If that is not enough, there are other people actively 
+maintaining 3.2, 3.10 (though just became EOL), 3.16 and 4.1! And that 
+is just the vanilla kernels, when you factor in distro kernels with 
+their own kernel teams backporting security fixes, the choice of secure 
+kernels to run is incredible, we've never had it so good.
+
+> You might want to focus your time on getting your own house in
+> order instead of constantly pestering the people on this list -- we
+> work in the trenches and aren't swayed by nonsense arguments that
+> have no viable solution attached.
+
+I think the kernel community can hardly be characterised as needing to 
+put its "house in order", that is a gross exaggeration. It's not perfect 
+and improvemets are needed. I welcome the efforts Greg is making to 
+improve things, and his efforts to participate here, and I certainly 
+don't think Brad speaks for everyone, at least not for me.
+
+Eddie
+
+> 
+> Thanks,
+> -Brad
+> 
+> On Tue, Nov 14, 2017 at 08:37:20AM +0100, Greg KH wrote:
+>> On Mon, Nov 13, 2017 at 07:42:27PM -0500, David A. Wheeler wrote:
+>>> On Mon, 13 Nov 2017 16:15:24 +0100, Greg KH <greg@kroah.com> wrote:
+>>>> It's the arbitrarily nature here that I am curious about, it feels like
+>>>> it should be "all or nothing", for CVEs to mean much here.  Right now it
+>>>> seems like it is just, "all that we care to track"?  :)
+>>>
+>>> "All" would be awesome, though unlikely.  But even if that's the eventual goal,
+>>> "good starts" are still good starts.
+>>
+>> But really, this isn't even a "good start", it's identifying a bug fixed
+>> over a year ago for a kernel that only one company seems to care about
+>> because they are _not_ following the recommended upstream stable kernel
+>> patches because they "know better" :)
+>>
+>> That's my objection here.
+>>
+>> thanks,
+>>
+>> greg k-h
