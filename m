@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1446" "Monday" "4" "May" "2015" "12:55:11" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150504165511.4E92A6C005F@smtpvmsrv1.mitre.org>" "39" "[oss-security] Re: CVE request for vulnerability in OpenStack Keystone" nil nil nil "5" "2015050416:55:11" "[oss-security] Re: CVE request for vulnerability in OpenStack Keystone" (number mark "        cve-assign@m May  4   39/1446  " thread-indent "\"[oss-security] Re: CVE request for vulnerability in OpenStack Keystone\"\n") "<5547989E.5020802@enovance.com>" ("<5547989E.5020802@enovance.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["540" "Tuesday" "14" "November" "2017" "13:32:50" "+0000" "Colm O hEigeartaigh" "coheigea@apache.org" "<CAB8XdGBgipTU4-ajO0j8Khi67kziTcTqwCQbCcpRicGLd81dNA@mail.gmail.com>" "23" "[oss-security] New security advisory CVE-2017-12624 released for Apache CXF" "^Cc:" nil nil "11" "2017111413:32:50" "[oss-security] New security advisory CVE-2017-12624 released for Apache CXF" (number mark "U       coheigea@apa Nov 14   23/540   " thread-indent "\"[oss-security] New security advisory CVE-2017-12624 released for Apache CXF\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28145 invoked by uid 550); 4 May 2015 16:55:24 -0000
+Received: (qmail 1484 invoked by uid 550); 14 Nov 2017 14:34:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,52 +11,44 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28123 invoked from network); 4 May 2015 16:55:23 -0000
-In-Reply-To: <5547989E.5020802@enovance.com>
-Message-Id: <20150504165511.4E92A6C005F@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Mon,  4 May 2015 12:55:11 -0400 (EDT)
-From: cve-assign@mitre.org
+Received: (qmail 20415 invoked from network); 14 Nov 2017 13:33:06 -0000
+X-Gm-Message-State: AJaThX75b0EJhXVuJPpXeRzrjiqr3kLbTOr1Hn/iX9jcvL1mm5+8ouNM
+	2Eq6VPP0oP0i8xGU40YohmWgbNTx6hkV37XeM+E=
+X-Google-Smtp-Source: AGs4zMa9FX3HLHf+0HXP876r0nVHc98zZSHOgJNG7l26E48jCZQAIf08dilBkKEshLMkAyxZKQp91wQrOC48EeZXKtQ=
+X-Received: by 10.84.232.8 with SMTP id h8mr11843437plk.274.1510666370519;
+ Tue, 14 Nov 2017 05:32:50 -0800 (PST)
+MIME-Version: 1.0
+X-Gmail-Original-Message-ID: <CAB8XdGBgipTU4-ajO0j8Khi67kziTcTqwCQbCcpRicGLd81dNA@mail.gmail.com>
+Message-ID: <CAB8XdGBgipTU4-ajO0j8Khi67kziTcTqwCQbCcpRicGLd81dNA@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="94eb2c19f868639812055df16c54"
+Cc: "Wang, Kevin X. (NSB - CN/Hangzhou)" <kevin.x.wang@nokia-sbell.com>
+Date: Tue, 14 Nov 2017 13:32:50 +0000
+From: Colm O hEigeartaigh <coheigea@apache.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request for vulnerability in OpenStack Keystone
-To: tristan.cacqueray@enovance.com
+Subject: [oss-security] New security advisory CVE-2017-12624 released for Apache CXF
+To: "users@cxf.apache.org" <users@cxf.apache.org>, "dev@cxf.apache.org" <dev@cxf.apache.org>, 
+	Apache Security Response Team <security@apache.org>, announce@apache.org, oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+--94eb2c19f868639812055df16c54
+Content-Type: text/plain; charset="UTF-8"
 
-> Title: Potential Keystone cache backend password leak in log
-> Affects: versions through 2014.1.4, and 2014.2 versions through 2014.2.3
+A new security advisory has been released for Apache CXF, that is fixed in
+the recent 3.2.1 and 3.1.14 releases:
 
-> The
-> backend_argument configuration option content is being logged, and it
-> may contain sensitive information for specific backends (like a password
-> for MongoDB). An attacker with read access to Keystone logs may
-> therefore obtain sensitive data
+CVE-2017-12624: Apache CXF web services that process attachments are
+vulnerable to Denial of Service (DoS) attacks
 
-> https://launchpad.net/bugs/1443598
+The full text of the advisory is available here:
 
-> there are other backends provided by dogpile that support
-> authentication through "arguments" (which keystone exposes as
-> "backend_arguments"):
+http://cxf.apache.org/security-advisories.data/CVE-2017-12624.txt.asc
 
-> In addition, custom cache backend implementations could also utilize
-> backend_arguments. All of those would be affected as well.
+Colm.
 
-Use CVE-2015-3646.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+-- 
+Colm O hEigeartaigh
 
-iQEcBAEBAgAGBQJVR6IJAAoJEKllVAevmvms/qkH/3xbAcGsfGXCxlscmRmfInDR
-3LoP1RjtJrn3NSYhUTBj8dNXT5qnD0W7uf2WtUh5l1nRQ4O1qWJvMGizNTHZVtfi
-dkONWWk33bYg8nNwmlrS1Famy4i7i7yCFRbcpOTaYXad668dzSp0xLq4gcrTlR2A
-uXySvJ/ohW8fSzbAtD6yh03JEB6iZ5yV1aYYJHiLc+DIq7ptymOEQ4DRbUqb8EAT
-WL12gOTrL/cAPZsX/s5REnEJ10gYwif7Bpl3lRKELLK4tCPw2mIcZHfih+0HJCw3
-ntqJg1T8KEYUkgrWnoiQOig1lPQBq2UeFdPB+eYvpPShJHLjqtwEum1XDlkR1fI=
-=/tHl
------END PGP SIGNATURE-----
+Talend Community Coder
+http://coders.talend.com
+
+--94eb2c19f868639812055df16c54--
