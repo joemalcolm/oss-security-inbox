@@ -1,68 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/18
-Message-ID: <2211995.q60Yp6Jerj@blackgate>
-Date: Thu, 09 Feb 2017 14:49:10 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: zziplib: NULL pointer dereference in main (unzzipcat.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/14/8
+Message-ID: <1510683715.18312.1.camel@pnnl.gov>
+Date: Tue, 14 Nov 2017 18:21:56 +0000
+From: "Maier, Kurt H" <kurt.maier@...l.gov>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver
 Content-Type: text/plain; charset=utf-8
 
-Description:
-zziplib is an intentionally lightweight library that offers the ability to 
-easily extract data from files archived in a single zip file.
+On Tue, 2017-11-14 at 08:37 +0100, Greg KH wrote:
+> 
+> But really, this isn't even a "good start", it's identifying a bug
+> fixed over a year ago for a kernel that only one company seems to
+> care about because they are _not_ following the recommended upstream
+> stable kernel patches because they "know better" :)
 
-A fuzz on it discovered an a NULL pointer access.
+First you objected to a specific bug, then it turned into "do
+everything or give up," now we're back to a specific bug, and each
+iteration is more unrealistic "just run whatever we release immediately
+across all devices" advice.
 
-The complete ASan output:
+Please, this is not productive.
 
-# unzzipcat $FILE
-==22686==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000008 (pc 
-0x7f6de98b259a bp 0x7ffddc25a080 sp 0x7ffddc259f98 T0)
-==22686==The signal is caused by a READ memory access.
-==22686==Hint: address points to the zero page.
-    #0 0x7f6de98b2599 in strlen /var/tmp/portage/sys-libs/glibc-2.22-
-r4/work/glibc-2.22/string/../sysdeps/x86_64/strlen.S:76
-    #1 0x7f6de989b7ab in _IO_puts /var/tmp/portage/sys-libs/glibc-2.22-
-r4/work/glibc-2.22/libio/ioputs.c:36
-    #2 0x509d73 in main /tmp/portage/dev-libs/zziplib-0.13.62-
-r1/work/zziplib-0.13.62/bins/unzzipcat.c:94:6
-    #3 0x7f6de985161f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #4 0x419848 in _init (/usr/bin/unzzipcat+0x419848)
+And without rancor, jibes like the "know better" line are basically
+just trash-talking people who actually run systems for a living and the
+organizations that provide support and development for those systems. 
+You're welcome to hold them in contempt but your weird persistence in
+ensuring that contempt is explicitly expressed in every message you
+post to the list is distracting at best, obnoxious as a baseline, and
+toxic as a rule.  Consider taking it for granted that you're possessed
+of wisdom unattained by the masses; we've all received this message by
+now.
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/sys-libs/glibc-2.22-
-r4/work/glibc-2.22/string/../sysdeps/x86_64/strlen.S:76 in strlen
-==22686==ABORTING
+> That's my objection here.
 
-Affected version:
-0.13.62
+Your objections are not accompanied by any advice that can be followed
+by the vast majority of people responsible for linux systems.  The rest
+of us are just trying to do our jobs, and the CVE process is an
+important tool.  Please stop trying to make the kernel immune to CVE
+reporting without any actual path forward for those of us who need this
+tool. 
 
-Fixed version:
-N/A
+I want to stress that I don't see a need for kernel maintainers to
+change their approach in this regard and I have no problem with the
+policies as they stand.  But I am profoundly confused as to why you
+feel the need to post to oss-sec essentially telling people to pack it
+in and go home.  It's not going to happen unless and until we have an
+even more reliable and comprehensive method of tracking vulnerabilities
+in packaged kernels, regardless of the blessed nature of the
+immacualate LTS.
 
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00158-zziplib-nullptr-main
-
-Timeline:
-2017-01-17: bug discovered and poked upstream
-2017-02-09: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/02/09/zziplib-null-pointer-dereference-in-main-unzzipcat-c
-
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Thanks for your time,
+khm
