@@ -1,78 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/17/6
-Message-ID: <CAOhT-pPfT4NTz1op0aQ=2KOf071zu8DsC2ae05t-LLSH37-mWg@mail.gmail.com>
-Date: Sun, 17 Dec 2017 12:02:21 -0500
-From: Brian Fox <brianf@...atype.com>
-To: Stefano Brivio <sbrivio@...hat.com>
-Cc: Raphael Geissert <atomo64@...il.com>, oss-security@...ts.openwall.com,  Security <security@...atype.com>
-Subject: Re: Sonatype Nexus Repository Manager 2.x weak password encryption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/14/4
+Message-ID: <20171114123228.GA18751@grsecurity.net>
+Date: Tue, 14 Nov 2017 07:32:28 -0500
+From: Brad Spengler <spender@...ecurity.net>
+To: oss-security@...ts.openwall.com
+Cc: Vladis Dronov <vdronov@...hat.com>
+Subject: Re: CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver
 Content-Type: text/plain; charset=utf-8
 
-Stefano, Thanks for the notification. Let us do an investigation and then
-we'll follow up with next steps.
+Hi Greg,
 
-On Sun, Dec 17, 2017 at 9:17 AM, Stefano Brivio <sbrivio@...hat.com> wrote:
+We're all aware of your objection, you bring it up every time 
+anyone mentions Linux kernel security on this list.  However, 
+please remember that all the people contributing on this list are 
+taking on the responsiblity you and the majority of other upstream 
+developers have abdicated.
 
-> On Sun, 17 Dec 2017 13:53:47 +0100
-> Raphael Geissert <atomo64@...il.com> wrote:
->
-> > Hi,
-> >
-> > The Nexus Repository Manager in at least version 2.14.5 [0] (latest of
-> > the 2.x series), stores the LDAP bind password in an on-disk file
-> > using PBE (bouncy castle's implementation of PBEWithSHAAnd128BitRC4).
-> >
-> > This is all great except for:
-> > - it using only 23 iterations[1]
-> > - it using a hard-coded and weak password[2]
-> >
-> > Therefore offering as much protection as a rot13 would.
-> >
-> > Given that the same PasswordHelper containing the weak password is
-> > present elsewhere in the code, it is very likely that this weak crypto
-> > issue affects other passwords stored by Nexus:
-> >
-> > - components/nexus-core/src/main/java/org/sonatype/nexus/
-> configuration/PasswordHelper.java[3]
-> > - components/nexus-security/src/main/java/org/sonatype/
-> security/configuration/source/PasswordHelper.java[4]
-> >
-> > It appears that this code is no longer used by the 3.x series.
-> >
-> > FWIW, the on-file password is:
-> >
-> > base64(SALT_SIZE || SALT || PBE_OUTPUT )
-> >
-> > SALT_SIZE always being 8 (hard-coded).
-> >
-> > N.b. I'll be filing a CVE request in a moment.
-> > N.b. I have not contacted sonatype. I couldn't find an email address.
->
-> The page at https://www.sonatype.com/contactus says:
->
->         1. Send urgent or sensitive reports to security@...atype.com.
->         2. Use our public key to keep your message safe.
->         3. Provide us with a secure way to respond.
->         4. We’ll get back to you as soon as we can. Usually within 24
-> hours.
->
-> > [0] https://help.sonatype.com/display/NXRM2/2017+Release+Notes
-> > [1] https://github.com/sonatype/nexus-public/blob/nexus-2.x/
-> components/nexus-ldap-common/src/main/java/org/sonatype/
-> security/ldap/upgrade/cipher/DefaultPlexusCipher.java#L64
-> > [2] https://github.com/sonatype/nexus-public/blob/nexus-2.x/
-> components/nexus-ldap-common/src/main/java/org/sonatype/
-> security/ldap/realms/persist/DefaultPasswordHelper.java
-> > [3] https://github.com/sonatype/nexus-public/blob/nexus-2.x/
-> components/nexus-core/src/main/java/org/sonatype/nexus/
-> configuration/PasswordHelper.java
-> > [4] https://github.com/sonatype/nexus-public/blob/nexus-2.x/
-> components/nexus-security/src/main/java/org/sonatype/
-> security/configuration/source/PasswordHelper.java
-> >
-> > Cheers,
->
-> --
-> Stefano
->
+We get it, every time there's some bug mentioned on here that 
+you've already fixed, you want the entire world to know.  Only you 
+apparently don't want the world to know about the bug at any time 
+before then. Vladis' original mail made it clear the bug was 
+already fixed with the included upstream fix link, so your 
+follow-up was unnecessary.  As I've already demonstrated many 
+times, there are plenty of vulnerabilities you haven't fixed.  The 
+reason for that is largely due to the lack of coordinated 
+recognition of security flaws which comes from the very top of 
+leadership.  Another is probably that there are just so many flaws, 
+and it's simply an accepted externality of the Linux development 
+process.
 
+If you truly believe there is no uniqueness to security bugs, I 
+would advise you to shut down security@...nel.org.  I would also 
+ask that you come up with a better solution to the problem than 
+demanding people run the latest version of Linux. According to my 
+current records someone taking that advice would be exposed to a 
+bug that can brick systems that seems nowhere close to resolution, 
+and one that makes it impossible to run KVM guests on AMD (which went
+unfixed for 3 months, and the current fix isn't cc'd for stable --
+makes me wonder how much testing -rc really gets).
+
+You might want to focus your time on getting your own house in 
+order instead of constantly pestering the people on this list -- we 
+work in the trenches and aren't swayed by nonsense arguments that 
+have no viable solution attached.
+
+Thanks,
+-Brad
+
+On Tue, Nov 14, 2017 at 08:37:20AM +0100, Greg KH wrote:
+> On Mon, Nov 13, 2017 at 07:42:27PM -0500, David A. Wheeler wrote:
+> > On Mon, 13 Nov 2017 16:15:24 +0100, Greg KH <greg@...ah.com> wrote:
+> > > It's the arbitrarily nature here that I am curious about, it feels like
+> > > it should be "all or nothing", for CVEs to mean much here.  Right now it
+> > > seems like it is just, "all that we care to track"?  :)
+> > 
+> > "All" would be awesome, though unlikely.  But even if that's the eventual goal,
+> > "good starts" are still good starts.
+> 
+> But really, this isn't even a "good start", it's identifying a bug fixed
+> over a year ago for a kernel that only one company seems to care about
+> because they are _not_ following the recommended upstream stable kernel
+> patches because they "know better" :)
+> 
+> That's my objection here.
+> 
+> thanks,
+> 
+> greg k-h
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
