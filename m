@@ -1,33 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/12/16
-Message-ID: <nycvar.YSQ.7.76.1710122325300.10613@wniryva>
-Date: Thu, 12 Oct 2017 23:32:59 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: niuguoxiang <niuguoxiang@...wei.com>
-Subject: CVE-2017-15289 Qemu: cirrus: OOB access issue in mode4and5 write functions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/15/1
+Message-ID: <1436048890.32127631.1510746947605.JavaMail.zimbra@redhat.com>
+Date: Wed, 15 Nov 2017 06:55:47 -0500 (EST)
+From: Vladis Dronov <vdronov@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2017-15115: Linux kernel: sctp: use-after-free in sctp_cmp_addr_exact()
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Heololo,
 
-Quick emulator(Qemu) built with the Cirrus CLGD 54xx VGA Emulator support is 
-vulnerable to an out-of-bounds write access issues. It could occur while 
-writing to VGA memory via mode4and5 write functions.
+It was found that in Linux kernel when peeling off an association to the socket
+in another network namespace, all transports in this association are not to be
+rehashed and keep use the old key in hashtable. A kernel would miss removing
+transports from hashtable when closing the socket and all transports are being
+freed. Later on a use-after-free could be caused when looking up an association
+and dereferencing the transports.
 
-A privileged user inside guest could use this flaw to crash the Qemu process 
-resulting in DoS.
+This is a very old issue and it was fixed in Linux kernel v4.14-rc6, and may still
+be not fixed in other distributions.
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2017-10/msg02557.html
+References:
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1501290
+https://bugzilla.redhat.com/show_bug.cgi?id=1513345
 
-This issue was reported by Guoxiang Niu.
+https://patchwork.ozlabs.org/patch/827077/
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+An upstream patch:
+
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=df80cd9b28b9ebaa284a41df611dbf3a2d05ca74
+
+PS: I do not see that this fix has got into any stable tree, so posting about this
+bug instead of the 100 other bugfixes in the past few weeks/months.
+
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+
