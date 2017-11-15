@@ -1,4 +1,9 @@
-Received: (qmail 20006 invoked by uid 550); 6 Nov 2024 15:45:38 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["487" "Wednesday" "15" "November" "2017" "21:37:35" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20171115203735.svsrk7hu2z7rtxaa@eldamar.local>" "13" "Re: [oss-security] collectd: CVE-2017-16820: snmp-plugin: double free of request PDU" nil nil nil "11" "2017111520:37:35" "[oss-security] collectd: CVE-2017-16820: snmp-plugin: double free of request PDU" (number mark "U       carnil@debia Nov 15   13/487   " thread-indent "\"Re: [oss-security] collectd: CVE-2017-16820: snmp-plugin: double free of request PDU\"\n") "<20171115203040.ygcpeaxl4lsgrkmo@eldamar.local>" ("<20171115203040.ygcpeaxl4lsgrkmo@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 30004 invoked by uid 550); 15 Nov 2017 20:37:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,86 +12,58 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 19987 invoked from network); 6 Nov 2024 15:45:38 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=dwheeler.com; s=selector1; h=Message-Id:In-Reply-To:To:References:Date:
-	Subject:Mime-Version:Content-Transfer-Encoding:Content-Type:From;
-	bh=nRcBBVupHqObimNX76vsDyoLgmiiRWqflA7IIIAk5+Q=; b=GW4fY04qUyiR5blYuabx5ArJCX
-	TCs9Yqpmuf4xFcH3i/Pyhczz9PXqYNlUND+QUUP3b1uM/JkxfwL1KD2CP4DC+Y2AAxKnkR+kjQ7au
-	LUawocJc34Z8j4gNiJlHPWBc9MeZNSzKDDvmYV/ofzOx2EBNeEq6Qf+lIjtuC2CfJQBOpHDDSjtzG
-	to/IBTF5L5GfhDr05MDCVbVezzXAl+bVEygr2bXLHz8lKUY0JKVN6pk5W0TnO0/ZOq7tdzg5llkLE
-	MHkoE0Z8HsMs92Dg4Ol4S6BIJFu247MTGWbOW9XPsG9ZHWTN+mPAyKrWBsdk4ctb5igrfcUy0CxWh
-	izkrwCxA==;
-From: "David A. Wheeler" <dwheeler@dwheeler.com>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.700.6.1.1\))
-Date: Wed, 6 Nov 2024 10:44:55 -0500
-References: <20241106041215.GA4432@openwall.com>
+Received: (qmail 29986 invoked from network); 15 Nov 2017 20:37:49 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=y0XAxGRQEdCbdFIP54uzeNY9euk9hoTZLBmWPUBxmQ8=;
+        b=YiOpl7WkK3NO96hkZA35KBU2Lj0FwhNCkgqPUPAPU/44+QfOhI8PApgS5SXU7ZgJ9q
+         k04OxmtpAxeyTCWzZrRdsAvbtMsnGo7AT2BHgt2kIifZbfSz11HIpYW8erPRBBDUDE2O
+         9Kx44UBzb/PmMoWWy0Qc//7q2Rn6qBmlzrLSv9tjcBdFn6XDCDRbFv8ZP7thi7dhCF3T
+         yfMif/JlzEFdfbA5edfj3q+U7g5Z5bK6lE1KCcjySPdkARyQs5KMrEU2uWKrr+CvJR8g
+         UIbD98QUjBRR0TOSZtlVm8kkwgOh87bUyZfEWu/9WIko8Z/DcNR9+UAowrVFRnTaBUed
+         UuiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=y0XAxGRQEdCbdFIP54uzeNY9euk9hoTZLBmWPUBxmQ8=;
+        b=ZrXcyXYVs4EaD+P2KbUQfYN6kEiwpROCWoOFzXaEBCznaAFZVcBGbtyxp0W2D3AAoM
+         tT4thuDKM8KxOIciPdu0hfNvHZlPL8eU2EiYu/pX8egJaJ/bloB1HZjAT5d+vUDT7/JV
+         DrWfI7bbw3k7+x44Cz/1ppH/g6Jpd5LajAh/xbGondsVoS6DAFu+weXYUXHcjFl0WHoN
+         b3XihrlKgX6YZQ8orXyZI86vFS9Q17l5mjJ25xAhQ3vHqyJMzsp+mUeh4UgsEJE74kBd
+         2g+YUpnV8rBRjwgAKEu6BP3Fcl8gSOCVUpLoNavx7IVa0dOVSWZr9AI381DHf1bcbSxx
+         y6ZQ==
+X-Gm-Message-State: AJaThX5MIq68Gx428Pe6KrJOnqlDCgQ25n3w90Wodb1HEtu7aHEoVUcm
+	iW4kXWXMIj/wfwOfV65A5ojw8Q==
+X-Google-Smtp-Source: AGs4zMa1UEV42xxx6Kj7yIVSJ3kcUEvSnOq2+I1IQXvWxfZJxc575LTT4sKOzBjh5luqYygEDa0fEg==
+X-Received: by 10.223.148.102 with SMTP id 93mr13013391wrq.32.1510778257487;
+        Wed, 15 Nov 2017 12:37:37 -0800 (PST)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Wed, 15 Nov 2017 21:37:35 +0100
+From: Salvatore Bonaccorso <carnil@debian.org>
 To: oss-security@lists.openwall.com
-In-Reply-To: <20241106041215.GA4432@openwall.com>
-Message-Id: <F60236E0-F65A-4441-9E62-64EE55016B2C@dwheeler.com>
-X-Mailer: Apple Mail (2.3731.700.6.1.1)
-Subject: Re: [oss-security] shell wildcard expansion (un)safety
+Message-ID: <20171115203735.svsrk7hu2z7rtxaa@eldamar.local>
+References: <20171115203040.ygcpeaxl4lsgrkmo@eldamar.local>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20171115203040.ygcpeaxl4lsgrkmo@eldamar.local>
+User-Agent: NeoMutt/20170609 (1.8.3)
+Subject: Re: [oss-security] collectd: CVE-2017-16820: snmp-plugin: double
+ free of request PDU
 
+On Wed, Nov 15, 2017 at 09:30:40PM +0100, Salvatore Bonaccorso wrote:
+> Hi
+> 
+> Collectd's snmp-plugin is prone to a double free vulneability. This
+> issue was made aware to the Debian security team, but turned out to be
+> public already in. MITRE has assigned CVE-2017-16820 for it. The snmp
+> plugin contains a double-free vulnerability in the
+> snmp_sess_synch_response() function. Commit message:
 
+Should have read csnmp_read_table, not snmp_sess_synch_response.
 
-> On Nov 5, 2024, at 11:12 PM, Solar Designer <solar@openwall.com> wrote:
->=20
-> Alexander Hu, CC'ed here, sent a message titled "shell expansion bug" to
-> the distros list and a few other distro security contacts and shell
-> maintainers.  The message described known and correct behavior (not a
-> bug), even if unexpected by some and risky. ...
-
-> Since this issue and other related ones were known for decades,
-> getopt(3) and getopt_long(3), which are used by many programs, will stop
-> processing options upon seeing a plain "--" argument.
-
-However, many programs do *not* use getopt or getopt_long to process argume=
-nts.
-Many programs support "--", but "not* all do,so using "--" as the sole coun=
-termeasure
-requires careful review of every command's documentation.
-
-I urge always using "./" to prefix wildcards if the first character is a wi=
-ldcard,
-e.g., "./*.pdf", because this ALWAYS works.
-
-> ... over the years we gained things like ...
->=20
-> find . -mindepth 1 -maxdepth 1 -type f -print0 | xargs -0 grep text --
-
-The "-print0" and "-0" options have been widely implemented, but
-POSIX 2024 finally formally adds them. So I urge using them where they
-make sense, as they counter embedded linefeed characters in filenames.
-
-> Can the shells do anything to mitigate this?  I think not without
-> breaking compatibility.  The only not-too-unreasonable change I can
-> think of is wildcard expansion prefixing filenames with "./", maybe only
-> those that start with "-" and maybe not when used with builtin "echo".
-
-I think something like this is a good idea, hopefully it'd be an option tha=
-t could eventually
-be standardized. I think "./" should be prefixed if the first character is =
-a wildcard,
-so that the resulting filenames will be consistent.
-
-A simpler approach would be to simply forbid creating filenames that
-include control characters or begin with "-". If you're doing that, also co=
-nsider
-an option requiring UTF-8 for new filenames. The current
-situation makes it unnecessarily hard to write secure programs.
-I wouldn't call supporting such filenames a "security vulnerability" exactl=
-y,
-but they make developing secure software harder, and nothing *requires*
-that we (as an industry) support them. POSIX never guaranteed such
-filenames were allowed, and even has an error code for bad filenames.
-
-Long ago I wrong a really long essay about POSIX filename issues.
-Some people here may find it interesting:
-https://dwheeler.com/essays/fixing-unix-linux-filenames.html
-
---- David A. Wheeler
-
+Regards,
+Salvatore
