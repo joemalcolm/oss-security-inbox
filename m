@@ -1,29 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/09/5
-Message-ID: <tencent_A0FE1C07287ACEC3E61C0508DD6FC7185107@qq.com>
-Date: Mon, 9 Oct 2017 15:58:30 +0800
-From: "NOIRFATE" <noirfate@....qq.com>
-To: "oss-security" <oss-security@...ts.openwall.com>
-Subject: ImageMagick : CVE-2017-14989 : heap use-after-free in RenderFreetype
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/15/2
+Message-ID: <201650652.439065.1510734891717@mail.yahoo.com>
+Date: Wed, 15 Nov 2017 08:34:51 +0000 (UTC)
+From: Andrea Cosentino <ancosen1985@...oo.com>
+To: Dev <dev@...el.apache.org>, Users <users@...el.apache.org>,  Man Yue Mo <mmo@...mle.com>,  "security@...che.org" <security@...che.org>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: [SECURITY] New security advisory CVE-2017-12634 released for Apache Camel
 Content-Type: text/plain; charset=utf-8
 
-Description:
-The RenderFreetype function in MagickCore/annotate.c in ImageMagick allows attackers to cause a denial of service via a crafted font file.
+A new security advisory has been released for Apache Camel, that is fixed in
+the recent 2.19.4 and 2.20.1 releases:
 
-Affected version:
-ImageMagick 7.0.7-3 (maybe previous versions are affected as well)
+ CVE-2017-12634: Apache Camel's Castor unmarshalling operation is vulnerableto Remote Code Execution attacks
 
-Fixed version:
-ImageMagick 7.0.7-7
+The full text of the advisory is the following:
 
-Commit fix:
-https://github.com/ImageMagick/ImageMagick/commit/97740ccc177ee264e79091fa573d994eb6b05628
+CVE-2017-12634: Apache Camel's Castor unmarshalling operation is vulnerable to Remote Code Execution attacks 
 
-Details:
-https://github.com/ImageMagick/ImageMagick/issues/781
+Severity: MEDIUM
 
-Credit:
-This bug was discovered by Yihan Lian of GearTeam at Qihoo360
+Vendor: The Apache Software Foundation
 
-CVE:
-CVE-2017-14989
+Versions Affected: Camel 2.19.0 to 2.19.3 and Camel 2.20.0. The unsupported Camel 2.x (2.18 and earlier) versions may be also affected.
+
+Description: Apache Camel's camel-castor component is vulnerable to Java objectde-serialisation vulnerability. De-serializing untrusted data can lead to security flaws.
+
+Mitigation: 2.19.x users should upgrade to 2.19.4, 2.20.0 users should upgrade to 2.20.1. 
+
+The JIRA ticket: https://issues.apache.org/jira/browse/CAMEL-11929 refers to the various commits that resovoled the issue, and have more details.
+
+Credit: This issue was discovered by Man Yue Mo <mmo at semmle dot com> from Semmle/lgtm.com.On behalf of the Apache Camel PMC
+
+On behalf of the Apache Camel PMC
+
+--
+Andrea Cosentino 
+----------------------------------
+Apache Camel PMC Member
+Apache Karaf Committer
+Apache Servicemix PMC Member
+Email: ancosen1985@...oo.com
+Twitter: @oscerd2
+Github: oscerd
