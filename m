@@ -1,44 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/25/7
-Message-ID: <e79b63144d4c451291ba0a0c5776be8f@imshyb01.MITRE.ORG>
-Date: Wed, 25 Jan 2017 03:48:17 -0500
-From: <cve-assign@...re.org>
-To: <tobias@...eckmann.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: libXpm < 3.5.12 heap overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/15/3
+Message-ID: <1259095909.451943.1510735105798@mail.yahoo.com>
+Date: Wed, 15 Nov 2017 08:38:25 +0000 (UTC)
+From: Andrea Cosentino <ancosen1985@...oo.com>
+To: Dev <dev@...el.apache.org>, Users <users@...el.apache.org>,  Security <security@...che.org>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>,  Moritz Bechler <bechler@...o3.eu>
+Subject: [SECURITY] New security advisory CVE-2017-12633 released for Apache Camel
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+A new security advisory has been released for Apache Camel, that is fixed in
+the recent 2.19.4 and 2.20.1 releases:
 
-> https://cgit.freedesktop.org/xorg/lib/libXpm/commit/?id=d1167418f0fd02a27f617ec5afd6db053afbe185
-> 
-> through maliciously crafted XPM files.
-> 
-> The affected code is prone to two 32 bit integer overflows while parsing
-> extensions: the amount of extensions and their concatenated length.
+CVE-2017-12633: Apache Camel's Hessian unmarshalling operation is vulnerable to Remote Code Execution attacks
 
-Use CVE-2016-10164.
+The full text of the advisory is the following:
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+CVE-2017-12633: Apache Camel's Hessian unmarshalling operation is vulnerable to Remote Code Execution attacks
 
-iQIcBAEBCAAGBQJYiGPYAAoJEHb/MwWLVhi2nUQP/0LQAMNgcfikDFbTd0j6xWyF
-O1qAdm8ok5jnJaV4VR5ivn68LxV98eL3uBI6dKzxNrSf7wl/Xj8YdxtdYr5KgF6W
-38IfyWLLNwt2GHhqAkHFUE4CUoZQMoAmffdpexZuJ5FuD7q4IGX3raV8/nhFg4bG
-zuUPuJD+7FMXYzFBy/t6yk+1VwqQVhCY4RxzX5J/Np2XYGHi2yOhtfSCoZ5OWAKV
-1GFYbxAUqYZn1HvqrCbVFGi0PEejpORm4Z+R8plxnImgQAwEXImscxuc3L1nxGZB
-SOMNfRmSKQ2VGhsk0LEfJvwk8ZdwWv18iHNGyMCDw1rnIu1KzVVAMyF6/IwtkOk4
-VHIWP9SkUs1w20xznzSdGF1CQN5sSfRGkxwqwavCbK4h/2iFpsN/VEmbHbdkGmc6
-y/dhmGf6WPJezXbPafcLOY5o9BZayzSgSN5+lpJvaGrW+CYKZUU2IsnNJ1P5txs1
-c9OvaGKHXfnC57aLPEybSrkTlJDQghqTLTVFGUR7wIrOhVPrpM1MtXVHXbonPUtp
-J7qc6h3TpEbCWa/KhmvvDbrlzhO4cnOptIx57z2b6UxLRjVhNP26X+YRtH/NxzPh
-TRBmJ7MwdU32Ngpr1LiPhBsyZ5ECO4M/G2JUmStOVpuaXHmKQTYU6do4MD/UlgVz
-GKnveQt+Y4sDCrQa6sDX
-=T2kK
------END PGP SIGNATURE-----
+Severity: MEDIUM
+
+Vendor: The Apache Software Foundation
+
+Versions Affected: Camel 2.19.0 to 2.19.3 and Camel 2.20.0
+The unsupported Camel 2.x (2.18 and earlier) versions may be also affected.
+
+Description: Apache Camel's camel-hessian component is vulnerable to Java object
+de-serialisation vulnerability. De-serializing untrusted data can lead to security flaws.
+
+Mitigation: 2.19.x users should upgrade to 2.19.4, 2.20.0 users should upgrade to 2.20.1. 
+
+The JIRA ticket: https://issues.apache.org/jira/browse/CAMEL-11923
+refers to the various commits that resovoled the issue, and have more details.
+
+Credit: This issue was discovered by Moritz Bechler from AgNO3 GmbH & Co.
+
+On behalf of the Apache Camel PMC
+
+--
+Andrea Cosentino 
+----------------------------------
+Apache Camel PMC Member
+Apache Karaf Committer
+Apache Servicemix PMC Member
+Email: ancosen1985@...oo.com
+Twitter: @oscerd2
+Github: oscerd
