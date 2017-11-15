@@ -1,19 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/28/4
-Message-ID: <94274cdb-f6de-cb48-da2f-7696df89ff74@securify.nl>
-Date: Sat, 28 Jan 2017 16:15:04 +0100
-From: Summer of Pwnage <lists@...urify.nl>
-To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities affecting two WordPress Plugins (XSS, CSRF & SQLi)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/15/5
+Message-ID: <20171115203040.ygcpeaxl4lsgrkmo@eldamar.local>
+Date: Wed, 15 Nov 2017 21:30:40 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: collectd: CVE-2017-16820: snmp-plugin: double free of request PDU
 Content-Type: text/plain; charset=utf-8
 
-Please see attached advisories for more information. These issues were 
-found during Summer of Pwnage (https://sumofpwn.nl), a Dutch community 
-project. Its goal is to contribute to the security of popular, widely 
-used OSS projects in a fun and educational way.
+Hi
 
-View attachment "cross_site_request_forgery_vulnerability_in_formbuilder_wordpress_plugin_allows_plugin_permissions_modification.txt" of type "text/plain" (4719 bytes)
+Collectd's snmp-plugin is prone to a double free vulneability. This
+issue was made aware to the Debian security team, but turned out to be
+public already in. MITRE has assigned CVE-2017-16820 for it. The snmp
+plugin contains a double-free vulnerability in the
+snmp_sess_synch_response() function. Commit message:
 
-View attachment "multiple_blind_sql_injection_vulnerabilities_in_formbuilder_wordpress_plugin.txt" of type "text/plain" (4050 bytes)
+>  snmp plugin: Fix double free of request PDU
+>
+> snmp_sess_synch_response() always frees request PDU, in both case of request
+> error and success. If error condition occurs inside of `while (status == 0)`
+> loop, double free of `req` happens.
 
-View attachment "persistent_cross_site_scripting_vulnerability_in_user_access_manager_wordpress_plugin.txt" of type "text/plain" (4854 bytes)
+Upstream issue:
+https://github.com/collectd/collectd/issues/2291
+
+Fix:
+https://github.com/collectd/collectd/commit/d16c24542b2f96a194d43a73c2e5778822b9cb47
+(might need the followup commits to clean up)
+
+Regards,
+Salvatore
