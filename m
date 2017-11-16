@@ -1,93 +1,120 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/12/3
-Message-ID: <CAAeHK+wyDjXzJ==B6NtmAiin9n2haTrkB_sge0pQS0BM=hGUFQ@mail.gmail.com>
-Date: Sun, 12 Feb 2017 19:46:49 +0100
-From: Andrey Konovalov <andreyknvl@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/16/1
+Message-ID: <7688fc24-4af1-2922-2158-0095c244f9c9@orlitzky.com>
+Date: Wed, 15 Nov 2017 20:45:49 -0500
+From: Michael Orlitzky <michael@...itzky.com>
 To: oss-security@...ts.openwall.com
-Subject: Fwd: [scr293903] Linux kernel - upstream
+Subject: CVE-2017-16834: pnp4nagios root privilege escalation via insecure permissions
 Content-Type: text/plain; charset=utf-8
 
----------- Forwarded message ----------
-From:  <cve-request@...re.org>
-Date: Sun, Feb 12, 2017 at 7:45 PM
-Subject: Re: [scr293903] Linux kernel - upstream
-To: andreyknvl@...gle.com
-Cc: cve-request@...re.org
+Product: pnp4nagios <https://github.com/lingej/pnp4nagios>
+Versions-affected: 0.6.26 and earlier (all modern versions)
+Author: Michael Orlitzky
+Bug-report: https://github.com/lingej/pnp4nagios/issues/140
+
+== Summary ==
+
+The pnp4nagios build system installs two sets of files with insecure
+permissions. After installation, the executables and the configuration
+files are all owned by the same unprivileged user and group
+(typically, "nagios") that the npcd daemon runs as. In one attack, the
+unprivileged user simply replaces the npcd executable with one that
+does his bidding. A slightly more complicated attack can be mounted by
+the unprivileged user by configuring a malicious action and then
+altering npcd.cfg to execute that action as root.
 
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+== Details ==
 
-The CVE ID is below. Please clarify whether you want this added to the
-public CVE List immediately. You have provided
-https://patchwork.ozlabs.org/patch/724136/ as a public reference that
-appears to disclose this as a vulnerability, at least if the attacker
-can run a local application to make arbitrary system calls. The public
-reference does not directly suggest a remote attack: that detail could
-be omitted from the public CVE List.
+The pnp4nagios build system allows you to specify a runtime user and
+group (default: "nagios") via the two ./configure parameters
+"--with-nagios-user" and "--with-nagios-group":
 
+  AC_ARG_WITH(
+    nagios_user,
+    AC_HELP_STRING([--with-nagios-user=<user>],
+                   [sets user name to run nagios]),
+    nagios_user=$withval,
+    nagios_user=nagios)
 
-> [Additional Information]
-> It's possible to cause a denial of server by sending bad IP options on a socket.
-> Potentially this can be triggered remotely.
->
-> ------------------------------------------
->
-> [VulnerabilityType Other]
-> Denial of service
->
-> ------------------------------------------
->
-> [Vendor of Product]
-> Linux kernel
->
-> ------------------------------------------
->
-> [Affected Product Code Base]
-> Linux kernel - upstream
->
-> ------------------------------------------
->
-> [Attack Type]
-> Remote
->
-> ------------------------------------------
->
-> [Impact Denial of Service]
-> true
->
-> ------------------------------------------
->
-> [Reference]
-> https://patchwork.ozlabs.org/patch/724136/
->
-> ------------------------------------------
->
-> [Has vendor confirmed or acknowledged the vulnerability?]
-> true
+  AC_ARG_WITH(
+    nagios_group,
+    AC_HELP_STRING([--with-nagios-group=<grp>],
+                   [sets group name to run nagios]),
+    nagios_grp=$withval,
+    nagios_grp=nagios)
 
-Use CVE-2017-5970.
+  AC_SUBST(nagios_user)
+  AC_SUBST(nagios_grp)
+
+The npcd daemon runs as that user and group by default, because the
+upstream configuration file incorporates those flag values into the
+user and group settings in sample-config/pnp/npcd.cfg-sample.in:
+
+  # Privilege Options
+  user = @nagios_user@
+  group = @nagios_grp@
+
+The build system then installs most of the files for the package with
+their owners/groups set to the user and group specified, through the
+pervasive use of the following INSTALL_OPTS in configure.ac:
+
+  INSTALL_OPTS="-o $nagios_user -g $nagios_grp"
+  AC_SUBST(INSTALL_OPTS)
+
+This creates vulnerabilities because the npcd daemon is intended to be
+run as root.
 
 
-- --
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+== Exploitation ==
 
-iQIcBAEBCAAGBQJYoK07AAoJEHb/MwWLVhi28REP/id92tkREqUYayj/GcZUN67r
-swVR6fvnO0vP7lfVR4iPg5tKRCfM9FkIBU2+OHEXFGzvsXA/jHaabADqqkWOHfGA
-QcXx4dz1HJEwGr+ALRVW6YDl7clWIKW9u6zP2Md6EKYPxl5IeeJHvQwCCFGhW4CW
-zTdxYnPaSVs8PixpYpF5ZpiVzGL2KM13Ccwbsj7Jkjzz4YzNjWXz5Si3DsDkrD9v
-NwGN1DG9q8p+Nab29di55oRSMsx9NqAXzbIKzH93aoykO5gU7PsvwszsAg98NsAY
-mcwj/3s+HaZkH6i2Q8UyRfqvZ6JWNr3FGGhfZX+pEnYZ28RF93Ven8+8MrlrSEkm
-B/tx0gf7Y3RPvb686ppDpkPK0x5JeOEsMhRHRSF5GKm24Ltev0c+vyEts2KJeAoq
-f+8PiFz3T2DIrs3356/sa7ovsQl2+X10vQj/Ai0G4CFC1J+3e9cdqkYPvOR5PlVB
-PMArIFpd2FLD/Rt9SmbtWlA6Crtcx/2Ijz29T1BlHIWSxmni1nz1bgnzg3+XhFwL
-fnoCy/Wl1b/9Er6+VmY0jzlr66IOAr+5GycnjSfKqQFBEAejuH/vuGQVXP4w3F4q
-6Uc1uDVE1onZPIuRgzhEUienWlRnoOOwD1Bdwa1BLEKf0sx+6zr+2gvsvr1dAI27
-P8bNrk2iD7/BEvo/GY5O
-=Esbo
------END PGP SIGNATURE-----
+The default ownership is exploitable in at least two ways:
+
+  * The runtime user owns the daemon executable, typically located at
+    /usr/bin/npcd. That executable is run as root, and drops privileges
+    to the runtime user itself. This invites a simple attack where the
+    runtime user replaces the daemon executable with his own code.
+
+  * The daemon configuration file npcd.cfg is also owned by the
+    unprivileged runtime user, but npcd.cfg is where the runtime user
+    and group are specified. The unprivileged runtime user can schedule
+    a malicious action (specified in the configuration files he owns)
+    and then put user=root in npcd.cfg. The next time the daemon is
+    started, it will run as root and execute the malicious action.
+
+
+== Mitigation ==
+
+For new installations, trial and error has shown that the
+aforementioned INSTALL_OPTS are unnecessary. Users can unset that
+variable when installing pnp4nagios,
+
+  $ make INSTALL_OPTS="" install
+
+to avoid setting the insecure permissions in the first place.
+Afterwards, there are four directories that need to be made writable
+by the runtime user,
+
+  * The directory specified by the --with-perfdata-dir configure flag.
+  * The directory specified by the --with-perfdata-spool-dir flag.
+  * The directory containing the file for the --with-perfdata-logfile
+    configure flag.
+  * The STATS_DIR defined in process_perfdata.cfg.
+
+Note that the above can be made writable through group permissions
+rather than directory ownership.
+
+In addition, upgraders will need to reset all pre-existing ownership
+and group information to safe values. Unfortunately, executing the
+following command recursively would risk breaking existing Nagios
+installations; so instead, users must be responsible for running it
+only on those $paths installed by pnp4nagios:
+
+  $ nagios_user=nagios
+  $ nagios_group=nagios
+  $ chown --no-dereference --from="${nagios_user}" root $path
+  $ chown --no-dereference --from=":${nagios_group}" :0 $path
+
+Repeat for every $path installed by pnp4nagios, and keep in mind that
+afterwards, the four directories mentioned earlier will need to be made
+writable by the runtime user.
