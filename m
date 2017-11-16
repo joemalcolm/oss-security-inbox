@@ -1,50 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/18/8
-Message-ID: <27e8b0704a65446bb5165cc0785caa69@imshyb01.MITRE.ORG>
-Date: Wed, 18 Jan 2017 11:36:50 -0500
-From: <cve-assign@...re.org>
-To: <ppandit@...hat.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <liqiang6-s@....cn>
-Subject: Re: CVE request Qemu: audio: memory leakage in es1370 device
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/16/2
+Message-Id: <5561A290-C77D-4593-B8C7-ECC323C9E3BB@beckweb.net>
+Date: Thu, 16 Nov 2017 16:23:55 +0100
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Reflected Cross-Site Scripting Vulnerability in Jenkins Delivery Pipeline Plugin
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Jenkins is an open source automation server which enables developers around 
+the world to reliably build, test, and deploy their software. The following 
+plugin releases contain fixes for security vulnerabilities:
 
-> [] Quick Emulator(Qemu) built with the ES1370 audio device emulation support is
-> vulnerable to a memory leakage issue. It could occur while doing a device
-> unplug operation; Doing so repeatedly would result in leaking host memory,
-> affecting other services on the host.
-> 
-> A privileged user inside guest could use this flaw to cause a DoS and/or
-> potentially crash the Qemu process on the host.
-> 
-> https://lists.nongnu.org/archive/html/qemu-devel/2017-01/msg01742.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1414209
-> http://git.qemu.org/?p=qemu.git;a=commit;h=069eb7b2b8fc47c7cb52e5a4af23ea98d939e3da
+* Delivery Pipeline Plugin 1.0.8
 
-Use CVE-2017-5526 for this (i.e., a memory consumption issue, not an
-information disclosure issue).
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2017-11-16/
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-iQIcBAEBCAAGBQJYf5h4AAoJEHb/MwWLVhi2em4P/1KkgoHvZ6YoAHAjNTBDT4A3
-3dnuGXztJxMWal2PD92HA7CLCFxalqtIn6Xjs3I6a6FIcYjQ3SZpByTLb/8qOBPa
-waoDJJ3LLgErTZnUyQhUbNrS/zNNZkYAYjx2W6/OfgukaEQviZ3RsVYG58EUPqmi
-HZli1xdiqKnB7D/8Wa26XjVx2bxJK4npGK51zx8SDDqEmk99BGaJjYJhEJbBSMbl
-6L5u0Epw94I+JGpFo+qoCWJZ2n8Zhn22yNCMS1fsiqWkjhHF0EPlR/h/nZrfh/Yt
-CUnyQN6LBJXB/L9xQ09tnSNYpTb1AoyB5DtPZxz+uytP8TpboeexhbLA1Qv5MLH7
-q2zBJwyl7HIeNqWtgnQ7PQdVCrVSRjDgWwkvAEM6QbtxD3eIIXF9REKApsHdl5om
-kd90UocZmLNDZEiTZ8ATaDJnrotPyi0F+4YNEyA30F4j2eiZpVv4ndoGFOQ7UF9Y
-64InaVmTmHNosBCDw1FTysuNeVPKXaZ8hc7XlL0zWAYaga/1Skr8DpTFwOVF1r6d
-NjsV/8QQETHUslEm6T/Xo9TXPytchlonkc4+ZGd4eodjrEYxYnOCS7XbLG2z3+Xf
-LpBv1rKtt7ybp1GdVb/DaiVZO1oEMCDfJbza6z8gDXqB6+f53vnNb8x9UulmlpT0
-GQ6KSrEdRU6cR9koa1zT
-=vGTC
------END PGP SIGNATURE-----
+If you find security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-640
+Delivery Pipeline Plugin used the unescaped content of the query parameter 
+`fullscreen` in its JavaScript, resulting in a cross-site scripting 
+vulnerability through specially crafted URLs.
+
