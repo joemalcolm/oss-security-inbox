@@ -1,79 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/07/2
-Message-ID: <CAL8hw9EG0ktd-WybU-HhRHEsRho96pdhhiDwvCFYdXJAUrUdmg@mail.gmail.com>
-Date: Sat, 7 Jan 2017 05:54:01 -0600
-From: Nathan Van Gheem <nathan.van.gheem@...ne.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/17/5
+Message-ID: <20171117211922.ljzilxin2rkvpqnf@jwilk.net>
+Date: Fri, 17 Nov 2017 22:19:22 +0100
+From: Jakub Wilk <jwilk@...lk.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Plone Multiple Vulnerabilities
+Subject: Re: phusion passenger CVE-2017-1000384
 Content-Type: text/plain; charset=utf-8
 
-Dear oss-security List,
+* John Lightsey <jd@...nel.net>, 2017-11-17, 14:58:
+>https://github.com/phusion/passenger/commit/4043718264095cde6623c2cbe8c644541036d7bf
 
-Please provide CVEs for the following 6 issues:
+This adds:
 
-1) Filesystem information leak
-A vulnerability that allows remote attackers to obtain information on files
-on the server
-Credit: Sebastian Perez
-Impact: By using relative paths and guessing locations on a server Plone is
-installed on, an attacker can read data from a target server that the
-process running plone has permission to read. The attacker needs
-administrator privileges on the Plone site to perform this attack.
-Reference:
-https://plone.org/security/hotfix/20160830/filesystem-information-leak
+   #ifdef false
+   ...
+   #endif
 
-2) Non-Persistent XSS in Plone forms
-z3c.form will currently accept data from GET requests when the form is
-supposed to be POST. This allows a user to inject a potential XSS attack
-into a form. With certain widgets in Plone admin forms, the input is
-expected to be safe and can cause a reflexive XSS attack. Additionally,
-there is potential for an attack that will trick a user into saving a
-persistent XSS.
-Credit: Sebastian Perez
-Reference:
-https://plone.org/security/hotfix/20160830/non-persistent-xss-in-plone-forms
+But false _is_ a defined macro in this file, so this doesn't disable the 
+code inside. I guess they meant to write:
 
+   #if false
+   ...
+   #endif
 
-3) Open Redirection
-In multiple places, Plone blindly uses the referer header to redirect a
-user to the next page after a particular action. An attacker could utilize
-this to draw a user into a redirection attack.
-Credit: Sebastian Perez
-Reference:
-https://plone.org/security/hotfix/20160830/open-redirection-in-plone
-
-
-4) Non-Persistent XSS
-Plone's URL checking infrastructure includes a method for checking if URLs
-valid and located in the Plone site. By passing javascript into this
-specially crafted url, XSS can be achieved.
-Credit: Sebastian Perez
-Reference:
-https://plone.org/security/hotfix/20160830/non-persistent-xss-in-plone-1
-
-
-5) Non-Persistent XSS on user form
-Plone has unescaped user input in a page template that is open to XSS
-Credit: Sebastian Perez
-Reference:
-https://plone.org/security/hotfix/20160830/non-persistent-xss-in-plone
-
-
-6) Non-Persistent XSS in Zope2
-In multiple places, Zope2's ZMI pages do not properly escape user input
-Credit: Sebastian Perez
-Reference:
-https://plone.org/security/hotfix/20160830/non-persistent-xss-in-zope2
-
-
-
-Versions Affected:
-4.3.11 and any earlier 4.x version, 5.0.6 and any earlier 5.x version
-
-Code fixes:
-https://pypi.python.org/pypi/Products.PloneHotfix20160830
-
-Recommended action:
-Install the https://pypi.python.org/pypi/Products.PloneHotfix20160830
-package.
-
+-- 
+Jakub Wilk
