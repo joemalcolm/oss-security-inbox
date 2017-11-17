@@ -1,65 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/23/16
-Message-ID: <CAA4i3gZUAwBc_ieNHF5qJOiQWBmmqxuqwQLthWj1aa8BkDRWkw@mail.gmail.com>
-Date: Tue, 23 May 2017 18:46:45 +0000
-From: Roee Hay <roeehay@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/17/4
+Message-ID: <ffe4aba0-426e-89c0-4760-1d4b315a88a1@cpanel.net>
+Date: Fri, 17 Nov 2017 14:58:43 -0600
+From: John Lightsey <jd@...nel.net>
 To: oss-security@...ts.openwall.com
-Subject: Linux lp.c Out-of-Bounds Write via Kernel Command-line (CVE-2017-1000363)
+Subject: Re: phusion passenger CVE-2017-1000384
 Content-Type: text/plain; charset=utf-8
 
-Details
-=======
-Due to a missing bounds check in the lp driver, and the fact that
-parport_ptr integer is static, a kernel command-line adversary (can happen
-due to bootloader vulnerabilities in Secure Boot environments, e.g. Nexus
-6's CVE-2016-10277) can overflow the parport_nr array in the following
-code, by appending many (>LP_NO) lp=none arguments to the command line.
-CONFIG_PRINTER=y is required.
+On 11/17/17 2:15 PM, Kurt Seifried wrote:
+> Assigned CVE-2017-1000384 to
+> https://github.com/phusion/passenger/commit/a63f1e9cd8148dfaac08b00d74ef2b59bc2c9dd4
+> 
+> https://bugs.gentoo.org/634452
+> 
+> Please note: you have to have Phusion Passenger in a dir not owned by root,
+> and then run it as root (hint: that's never a good idea with anything).
+> 
 
-static int parport_nr[LP_NO] = { [0 ... LP_NO-1] = LP_PARPORT_UNSPEC };
-static char *parport[LP_NO];
-[...]
-#ifndef MODULE
-static int __init lp_setup (char *str)
-{
-static int parport_ptr;
-[...]
-} else if (!strncmp(str, "parport", 7)) {
-    int n = simple_strtoul(str+7, NULL, 10);
-    if (parport_ptr < LP_NO)
-        parport_nr[parport_ptr++] = n;
-    else
-        printk(KERN_INFO "lp: too many ports, %s ignored.\n",
-               str);
-} else if (!strcmp(str, "auto")) {
-    parport_nr[0] = LP_PARPORT_AUTO;
-} else if (!strcmp(str, "none")) {
-    parport_nr[parport_ptr++] = LP_PARPORT_NONE;
-[...]
-#endif
-[...]
-__setup("lp=", lp_setup);
+The commit for the arbitrary file read vulnerability mentioned in the
+Gentoo bug report is actually this one:
+
+https://github.com/phusion/passenger/commit/4043718264095cde6623c2cbe8c644541036d7bf
+
+I'm not sure if the other commit was fixing an actual flaw or just
+intended as hardening.
+
+Passenger switches IDs to the user that's supposed to run the passenger
+application. The problem we reported was that some of the application
+data was read and stored before the ID switching took place.
 
 
-Vulnerable:
-=======
-Linux 4.x (4.12-rc1 and below)
-Linux 3.x
-Linux 2.6.x
-Linux 2.4.x
-Linux 2.2.x
-
-Patch:
-======
-https://github.com/torvalds/linux/commit/3e21f4af170bebf47c187c1ff8bf155583c9f3b1
-
-
-Timeline:
-=========
-23-May-17: Public disclosure.
-22-May-17: Patch available (Linux mainline 4.12-rc2).
-17-May-17: CVE-2017-1000363 assigned by Kurt Seifried, Red Hat Product
-Security.
-16-May-17: Patch available (Linux Char/Misc drivers development tree).
-16-May-17: Reported.
-
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (3982 bytes)
