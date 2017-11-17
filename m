@@ -1,24 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/30/26
-Message-ID: <CAAeHK+z89nmTPciwy5YyagE+0wRpssediCDDPU0RCutTb_+JKg@mail.gmail.com>
-Date: Tue, 30 May 2017 21:12:52 +0200
-From: Andrey Konovalov <andreyknvl@...gle.com>
-To: oss-security@...ts.openwall.com
-Cc: Dmitry Vyukov <dvyukov@...gle.com>, Kostya Serebryany <kcc@...gle.com>
-Subject: Linux kernel: CVE-2017-9074: out-of-bounds read in ip6_fragment
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/17/1
+Message-ID: <nycvar.YSQ.7.76.1711171112070.7823@wniryva>
+Date: Fri, 17 Nov 2017 11:14:21 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Cyrille Chatras <cyrille.chatras@...nge.com>
+Subject: CVE-2017-16845 Qemu: ps2: information leakage via post_load routine
 Content-Type: text/plain; charset=utf-8
 
-The following CVE was assigned for an out-of-bounds read in IPv6 socket buffers.
+   Hello,
 
-The bug was found with syzkaller.
+Quick Emulator(Qemu) built with the PS/2 keyboard and mouse emulation support 
+along with the migration feature enabled is vulnerable to an information 
+leakage flaw. It could occur while loading a migrated snapshot on the 
+destination host in PS2 post_load routine.
 
-* CVE-2017-9074
+A privileged user could use this flaw to leak destination host memory bytes.
 
-The IPv6 fragmentation implementation in the Linux kernel through
-4.11.1 does not consider that the nexthdr field may be associated with
-an invalid option, which allows local users to cause a denial of
-service (out-of-bounds read and BUG) or possibly have unspecified
-other impact via crafted socket and send system calls.
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2017-11/msg02982.html
 
-CVE: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-9074
-Fix: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=2423496af35d94a87156b063ea5cedffc10a70a1
+This issue was reported by Cyrille Chatras of Orange.com.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
