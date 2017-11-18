@@ -1,34 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/03/19
-Message-ID: <20171103204159.rnszmrzvcwkxkaak@jwilk.net>
-Date: Fri, 3 Nov 2017 21:41:59 +0100
-From: Jakub Wilk <jwilk@...lk.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/18/4
+Message-Id: <3DAE0CC3-13ED-4C99-8A76-CCE95011D24F@beckweb.net>
+Date: Sat, 18 Nov 2017 08:26:47 +0100
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: nvi crash recovery
+Subject: Re: Multiple vulnerabilities in Jenkins
 Content-Type: text/plain; charset=utf-8
 
-* Hanno Böck <hanno@...eck.de>, 2017-11-03, 21:26:
->nvi saves recovery files to /var/tmp/vi.recover and creates them with 
->600 permissions.
->So all the problems discussed don't really apply here.
->However the dir itself gets created by the first user using nvi.
 
-Sounds like a recipe for disaster.
+> On 8. Nov 2017, at 11:56, Daniel Beck <ml@...kweb.net> wrote:
+> 
+> SECURITY-499
+> Jenkins stores metadata related to "people", which encompasses actual user 
+> accounts, as well as users appearing in SCM, in directories corresponding 
+> to the user ID on disk. These directories used the user ID for their name 
+> without additional escaping. This potentially resulted in a number of 
+> problems, such as the following:
+> 1. User names consisting of a single forward slash would have their user 
+> record stored in the parent directory; deleting this user deleted all user 
+> records.
+> 2. User names containing character sequences such as .. could be used to 
+> clobber other configuration files in Jenkins.
+> 3. User names could consist of reserved names such as COM (on Windows).
 
-In Debian, installation scripts try to ensure that /var/tmp/vi.recover 
-is root-owned:
 
-   if [[ -L /var/tmp/vi.recover || \
-	  -e /var/tmp/vi.recover && ! -d /var/tmp/vi.recover ]]; then
-     echo "Cannot create recovery directory /var/tmp/vi.recover" 1>&2
-     exit 1
-   fi
-   [ -d /var/tmp/vi.recover ] || mkdir -p /var/tmp/vi.recover
-   chown root:root /var/tmp/vi.recover
-   chmod 1777 /var/tmp/vi.recover
+CVE-2017-1000391
 
-This is racy and can be exploited to chmod arbitrary files:
-https://bugs.debian.org/771375
 
--- 
-Jakub Wilk
+> SECURITY-641
+> Autocompletion suggestions for text fields were not escaped, resulting in a 
+> persisted cross-site scripting vulnerability if the source for the 
+> suggestions allowed specifying text that includes HTML metacharacters like 
+> less-than and greater-than characters.
+
+
+CVE-2017-1000392
+
