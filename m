@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["388" "Tuesday" "26" "June" "2018" "12:54:42" "-0400" "Vladis Dronov" "vdronov@redhat.com" "<195286405.46114672.1530032082079.JavaMail.zimbra@redhat.com>" "13" "Re: [oss-security] CVE-2018-1000204: Linux kernel 3.18 to 4.16 infoleak due to incorrect handling of SG_IO ioctl" nil nil nil "6" "2018062616:54:42" "[oss-security] CVE-2018-1000204: Linux kernel 3.18 to 4.16 infoleak due to incorrect handling of SG_IO ioctl" (number mark "U       vdronov@redh Jun 26   13/388   " thread-indent "\"Re: [oss-security] CVE-2018-1000204: Linux kernel 3.18 to 4.16 infoleak due to incorrect handling of SG_IO ioctl\"\n") "<CAG_fn=UCp-bw7312gxmSP8d1ioYr1YBmOuSiSsJKCvJakzHS4A@mail.gmail.com>" ("<CAG_fn=VEy8E4C4gTC2wZ-FSma5Lh5c5mtxTmhfdFKN_TSjvggQ@mail.gmail.com>" "<460649570.45004048.1529674363441.JavaMail.zimbra@redhat.com>" "<CAG_fn=UCp-bw7312gxmSP8d1ioYr1YBmOuSiSsJKCvJakzHS4A@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1148" "Saturday" "18" "November" "2017" "08:26:47" "+0100" "Daniel Beck" "ml@beckweb.net" "<3DAE0CC3-13ED-4C99-8A76-CCE95011D24F@beckweb.net>" "37" "Re: [oss-security] Multiple vulnerabilities in Jenkins" nil nil nil "11" "2017111807:26:47" "[oss-security] Multiple vulnerabilities in Jenkins" (number mark "U       ml@beckweb.n Nov 18   37/1148  " thread-indent "\"Re: [oss-security] Multiple vulnerabilities in Jenkins\"\n") "<6877F1AC-352C-49C9-BA3D-1D3944CC03F0@beckweb.net>" ("<6877F1AC-352C-49C9-BA3D-1D3944CC03F0@beckweb.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3486 invoked by uid 550); 26 Jun 2018 16:54:54 -0000
+Received: (qmail 11277 invoked by uid 550); 18 Nov 2017 07:27:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,35 +12,55 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3463 invoked from network); 26 Jun 2018 16:54:53 -0000
-Date: Tue, 26 Jun 2018 12:54:42 -0400 (EDT)
-From: Vladis Dronov <vdronov@redhat.com>
-To: Alexander Potapenko <glider@google.com>
-Cc: oss-security@lists.openwall.com
-Message-ID: <195286405.46114672.1530032082079.JavaMail.zimbra@redhat.com>
-In-Reply-To: <CAG_fn=UCp-bw7312gxmSP8d1ioYr1YBmOuSiSsJKCvJakzHS4A@mail.gmail.com>
-References: <CAG_fn=VEy8E4C4gTC2wZ-FSma5Lh5c5mtxTmhfdFKN_TSjvggQ@mail.gmail.com> <460649570.45004048.1529674363441.JavaMail.zimbra@redhat.com> <CAG_fn=UCp-bw7312gxmSP8d1ioYr1YBmOuSiSsJKCvJakzHS4A@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.40.4.120, 10.4.195.15]
-Thread-Topic: CVE-2018-1000204: Linux kernel 3.18 to 4.16 infoleak due to incorrect handling of SG_IO ioctl
-Thread-Index: xtmGi/ajz6vu2L4Q4+zamWOcwD+C+Q==
-X-Scanned-By: MIMEDefang 2.84 on 10.5.11.24
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.26]); Tue, 26 Jun 2018 16:54:42 +0000 (UTC)
-Subject: Re: [oss-security] CVE-2018-1000204: Linux kernel 3.18 to 4.16
- infoleak due to incorrect handling of SG_IO ioctl
+Received: (qmail 10220 invoked from network); 18 Nov 2017 07:26:59 -0000
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
+Date: Sat, 18 Nov 2017 08:26:47 +0100
+References: <6877F1AC-352C-49C9-BA3D-1D3944CC03F0@beckweb.net>
+To: oss-security@lists.openwall.com
+In-Reply-To: <6877F1AC-352C-49C9-BA3D-1D3944CC03F0@beckweb.net>
+Message-Id: <3DAE0CC3-13ED-4C99-8A76-CCE95011D24F@beckweb.net>
+X-Mailer: Apple Mail (2.3273)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1510990019;12bfb592;
+X-HE-SMSGID: 1eFxWZ-0001YG-Pa
+Subject: Re: [oss-security] Multiple vulnerabilities in Jenkins
 
-Hello, Alexander,
 
-> > I may not got smth correctly, but for now I do not see CVE-2018-1000204
-> > as a security flaw and I believe a reject request to MITRE should be
-> > issued.
-> How do I proceed with this?
+> On 8. Nov 2017, at 11:56, Daniel Beck <ml@beckweb.net> wrote:
+>=20
+> SECURITY-499
+> Jenkins stores metadata related to "people", which encompasses actual use=
+r=20
+> accounts, as well as users appearing in SCM, in directories corresponding=
+=20
+> to the user ID on disk. These directories used the user ID for their name=
+=20
+> without additional escaping. This potentially resulted in a number of=20
+> problems, such as the following:
+> 1. User names consisting of a single forward slash would have their user=
+=20
+> record stored in the parent directory; deleting this user deleted all use=
+r=20
+> records.
+> 2. User names containing character sequences such as .. could be used to=
+=20
+> clobber other configuration files in Jenkins.
+> 3. User names could consist of reserved names such as COM (on Windows).
 
-I believe it is: https://cveform.mitre.org/ -> Request an update to an existing
-CVE Entry -> Rejection
 
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+CVE-2017-1000391
+
+
+> SECURITY-641
+> Autocompletion suggestions for text fields were not escaped, resulting in=
+ a=20
+> persisted cross-site scripting vulnerability if the source for the=20
+> suggestions allowed specifying text that includes HTML metacharacters lik=
+e=20
+> less-than and greater-than characters.
+
+
+CVE-2017-1000392
 
