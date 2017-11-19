@@ -1,18 +1,111 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/30/2
-Message-ID: <40339054.1134.15d91d384bc.Coremail.sohu0106@126.com>
-Date: Sun, 30 Jul 2017 12:49:04 +0800 (CST)
-From: sohu0106 <sohu0106@....com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/19/1
+Message-ID: <06ff7936-bd2b-81d5-7dfd-8f048ddc6056@orlitzky.com>
+Date: Sun, 19 Nov 2017 15:55:59 -0500
+From: Michael Orlitzky <michael@...itzky.com>
 To: oss-security@...ts.openwall.com
-Subject: Linux kernel: driver/video/fbdev/aty/atyfb_base.c: atyfb_ioctl() stack infoleak
+Subject: CVE-2017-16882: Icinga core root privilege escalation via insecure permissions
 Content-Type: text/plain; charset=utf-8
 
-driver/video/fbdev/aty/atyfb_base.c
+Product: Icinga core <https://github.com/Icinga/icinga-core>
+Vendor: NETWAYS GmbH <https://www.netways.de/>
+Versions-affected: 1.14.0 and earlier (all 1.x versions)
+Author: Michael Orlitzky
+Bug-report: https://github.com/Icinga/icinga-core/issues/1601
 
 
-In atyfb_ioctl() structure atyclk is copied to userland with padding bytes after
-"vclk_post_div" field unitialized.  It leads to leaking of
-contents of kernel stack memory.  We have to initialize them to zero. or it will allows local users to obtain potentially sensitive information from kernel stack memory by reading a copy of this structure
+== Summary ==
+
+Icinga installs two sets of files with insecure permissions: after
+installation, the executables and the configuration files are all
+owned by the same unprivileged user and group (typically, "icinga")
+that the daemon runs as. In one attack, the unprivileged user simply
+replaces the icinga executable with one that does his bidding. A
+slightly more complicated attack can be mounted by the unprivileged
+user by scheduling a malicious service check and then altering
+icinga.cfg to execute that check as root.
+
+The ido2db daemon and its sample configuration file have the same
+issue.
 
 
-https://github.com/torvalds/linux/pull/441
+== Details ==
+
+The Icinga build system allows you to specify a runtime user and group
+(default: icinga) via the two ./configure parameters
+"--with-icinga-user" and "--with-icinga-group":
+
+  AC_ARG_WITH(
+    icinga_user,
+    AC_HELP_STRING([--with-icinga-user=<user>],
+                   [sets user name to run icinga]),
+    icinga_user=$withval,
+    icinga_user=icinga)
+
+  AC_ARG_WITH(
+    icinga_group,
+    AC_HELP_STRING([--with-icinga-group=<grp>],
+                   [sets group name to run icinga]),
+    icinga_grp=$withval,
+    icinga_grp=icinga)
+
+  AC_SUBST(icinga_user)
+  AC_SUBST(icinga_grp)
+
+The daemon runs as that user and group by default, because the
+upstream configuration file icinga.cfg incorporates those flag values
+into the icinga_user and icinga_group settings in
+sample-config/icinga.cfg.in:
+
+  # ICINGA USER
+  # This determines the effective user that Icinga should run as.
+  # You can either supply a username or a UID.
+  icinga_user=@...nga_user@
+
+  # ICINGA GROUP
+  # This determines the effective group that Icinga should run as.
+  # You can either supply a group name or a GID.
+  icinga_group=@...nga_grp@
+
+The build system then installs most of the files for the package with
+their owners/groups set to the user and group specified, through the
+pervasive use of the following INSTALL_OPTS in configure.ac:
+
+  INSTALL_OPTS="-o $icinga_user -g $icinga_grp"
+  AC_SUBST(INSTALL_OPTS)
+
+This creates vulnerabilities because the Icinga daemons are intended to
+be run as root.
+
+
+== Exploitation ==
+
+The default ownership is exploitable in at least two ways:
+
+ 1. The Icinga runtime user owns the daemon executable, typically
+    located at /usr/bin/icinga. That executable is run as root, and
+    drops privileges to the runtime user itself. This invites a simple
+    attack where the runtime user replaces the daemon executable with
+    his own code. The ido2db daemon has the same problem.
+
+    In addition, the system executables icingastats and log2ido are
+    installed to root's $PATH and
+    could conceivably be run as root. They thus pose a similar risk.
+
+  2. The main configuration file icinga.cfg is also owned by the
+     unprivileged runtime user, but icinga.cfg is where the runtime user
+     and group are specified. The unprivileged runtime user can schedule
+     a malicious service check (specified in the configuration files he
+     owns) and then put icinga_user=root in icinga.cfg. The next time
+     the daemon is restarted, it will run as root and execute the
+     command set by the unprivileged user.
+
+     The configuration file ido2db.cfg-sample is vulnerable in the same
+     manner if it is renamed to ido2db.cfg without adjusting its
+     ownership.
+
+== Mitigation ==
+
+Most users should reset all ownership and group information to safe
+values, "root:root", except where write access is needed (for example,
+Icinga needs runtime write access to its $localstatedir).
