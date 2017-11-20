@@ -1,51 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/10/16
-Message-ID: <CAKoP-y-E0zLaR5xAPVNa8GjRSTk2RziKsxfQQWWj0tj6sYHb9g@mail.gmail.com>
-Date: Fri, 10 Feb 2017 16:14:41 -0600
-From: Josh Bressers <josh@...ss.net>
-To: Marc-Alexandre Montpas <marc@...uri.net>
-Cc: Kurt Seifried <kurt@...fried.org>, oss-security@...ts.openwall.com, dadinolfi@...re.org,  ccoffin@...re.org
-Subject: Re: Asking for a CVE id for the WordPress Privilege Escalation vulnerability (4.7/4.7.1)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/20/1
+Message-ID: <20171120224205.GA14494@openwall.com>
+Date: Mon, 20 Nov 2017 23:42:05 +0100
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: distros list archive
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Feb 10, 2017 at 2:18 PM, Marc-Alexandre Montpas <marc@...uri.net>
-wrote:
+On Sat, Jun 24, 2017 at 06:39:50PM +0200, Solar Designer wrote:
+> I've just set up these archives of the private lists up until June 19:
+> 
+> http://www.openwall.com/lists/linux-distros/
+> http://www.openwall.com/lists/distros/
+> 
+> I did not decrypt the actual messages, but the statistics and the
+> message headers should provide some visibility into how much and roughly
+> what was discussed and when.
 
-> Hi there,
->
-> Per Josh's request, I'm sending the details here.
->
-> There was a Privilege Escalation vulnerability in WordPress version 4.7
-> and 4.7.1, which allowed attackers to edit any posts on a vulnerable site.
->
-> The issue was caused by an inconsistent use of numeric IDs which made it
-> possible for an attacker to make use of PHP's type juggling features to
-> bypass the privilege check mechanisms put in place.
->
-> More information here:  https://blog.sucuri.net/2017/02/content-injection-
-> vulnerability-wordpress-rest-api.html
->
->
->
->
-I know this is sort of out of the blue, but it strikes me as very
-important, so I'm going to deal with this request right now.
+I've just updated these with message headers until November 19 (although
+there was nothing posted after November 9, until further still-embargoed
+messages appeared today).
 
-I'm helping Kurt with some DWF tasks and this CVE request showed up. I
-can't find a reference to a previous request for this issue, it's also very
-high profile and I'm told being exploited in the wild. I'm not seeing a
-previous request for the latest wordpress issue. I don't want an assignment
-request to wait until after the weekend.
+> The messages appearing on distros should be strictly a subset of those
+> appearing on linux-distros, as per the description of the lists here:
+> 
+> http://oss-security.openwall.org/wiki/mailing-lists/distros
+> 
+> As you may notice, the Subject lines sometimes contain [vs] and other
+> times [vs-plain].  This reflects whether the messages traveled to the
+> list exploder in encrypted or plaintext form, respectively.  They
+> traveled to the list members in re-encrypted form either way.  The
+> [vs-plain] case commonly occurs on messages CC'ed to other parties, for
+> which the sender might not have had the keys.  MUAs generally don't
+> allow a message to be encrypted to a subset of the addressees and sent
+> in plaintext to others.
+> 
+> Enjoy.
 
-It's #4 on the wordpress site:
-https://wordpress.org/news/2017/01/wordpress-4-7-2-security-release/
-
-I saw 1-3 had CVE IDs requested on January 27th.
-
-Let's use CVE-2017-1001000 for #4
-
-Thanks.
-
--- 
-    JB
-
+Alexander
