@@ -1,72 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/24/3
-Message-ID: <CADSkJJWpn3Z6VermSdq9f2ckxQ59BUXDZ4y=_A0gSQKv7YZ+zg@mail.gmail.com>
-Date: Mon, 24 Apr 2017 10:06:52 -0400
-From: Russ Cox <rsc@...ch.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/21/1
+Message-ID: <20171121151146.GA10328@weckbecker.name>
+Date: Tue, 21 Nov 2017 16:11:46 +0100
+From: Matthias Weckbecker <matthias@...kbecker.name>
 To: oss-security@...ts.openwall.com
-Subject: remote DoS via CPU exhaustion in anon FTP server glob expansion
+Subject: Re: Fw: Security risk of vim swap files
 Content-Type: text/plain; charset=utf-8
 
-Essentially all Unix shells and many popular programming languages use
-an exponential-time algorithm to decide whether a glob pattern matches
-a particular file name. For example, on my Linux system, matching
-a*a*a*a*a*a*a*a*b unsuccessfully against a file name consisting of 100
-a's takes half an hour using Java 8 and 15 minutes using BSD libc's
-glob(3) function.
+Hi,
 
-If an attacker can control the pattern used against even moderately
-sized file names (40 characters would be fine), a single failed
-pattern match against a single file name can easily consume
-hours of CPU.
+On Tue, Oct 31, 2017 at 01:23:52PM +0100, Hanno Boeck wrote:
+> I just sent this to the vim dev list, but I guess it's interesting for
+> oss-security, too.
+> [...]
+> 
+> I wanted to point out an issue here with vim swap files that make them
+> a security problem.
 
-This can happen in anonymous FTP servers, creating a possible remote
-DoS attack.
+this is not limited to swap files.
 
-Affected:
-- tnftpd, a fork of the NetBSD ftpd, as shipped with macOS 10.12.4 and earlier
-- Pure-FTPd 1.0.36
+> 
+> On web servers this can be a severe security risk. One can e.g. scan
+> for web hosts that have swap files of PHP configuration files and thus
+> expose settings like database passwords. (e.g. wget
+> http://example.com/.wp-config.php.swp )
+>
+> In a scan of the alexa top 1 million I found ~750 instances of such
+> files. I tried to inform affected people as best as I could. I also
+> discovered such scans in my own web server logs, so I assume black hats
+> are already aware of this and it's actively exploitet.
+>
 
-Possibly affected:
-- standard ftpd on BSD-based systems
+One might want to consider adding e.g. .un~ files to the scanning too.
+Unless 'undodir' is configured in ~/.vimrc, those files end up in the
+same directory if 'undofile' is set.
 
-Not affected:
-- netkit ftpd 0.17, if run on Linux
-- ProFTPD 1.3.5
-- vsftpd 3.0.2
-
-On the language side, C on BSD and macOS systems, Java, Perl, and Tcl
-implement glob pattern-matching with an exponential-time algorithm.
-Code passing untrusted glob patterns to those implementations would
-also be affected. Because BSD libc is affected, I expect that most of
-the standard *BSD ftpd implementations are affected as well, but I have
-not tested them.
-
-C on Linux systems (using GNU glibc), Go, Ruby, and Rust implement
-glob pattern-matching with a linear-time algorithm. Code passing
-untrusted glob patterns to those implementations should be unaffected.
-
-This problem is not CVE-2001-1501, nor CVE-2010-2632, nor
-CVE-2015-5917, all of which are about patterns matching many files.
-In this case, the pattern matches no files.
-
-The closest previous report is CVE-2005-0256 (CPU problems caused by
-repeated adjacent stars), which is a special case of the underlying
-general problem here.
-
-Due to the widespread but limited ("only" CPU exhaustion) nature of
-the problem, I have not attempted any embargoed prenotification.
-I will forward this note directly to product-security@...le.com and
-bugs@...eftpd.org. I filled out the "DWF Open Source Request Form v2"
-for a CVE number for the generic problem, and I will reply here when
-I receive the number.
-
-In addition to fixing the matching algorithms, I would suggest that
-all FTP implementations impose CPU time limits on individual FTP
-sessions to guard against future problems and consider removing glob
-support entirely. I would also suggest that affected sites consider
-not running anonymous FTP servers.
-
-More details at https://research.swtch.com/glob.
-
-Russ Cox
-rsc@...ch.com
+Matthias
