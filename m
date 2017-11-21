@@ -1,27 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/17/5
-Message-ID: <20171117211922.ljzilxin2rkvpqnf@jwilk.net>
-Date: Fri, 17 Nov 2017 22:19:22 +0100
-From: Jakub Wilk <jwilk@...lk.net>
-To: oss-security@...ts.openwall.com
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/21/2
+Message-ID: <20171121231112.68e6c0a6@redhat.com>
+Date: Tue, 21 Nov 2017 23:11:12 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: John Lightsey <jd@...nel.net>
+Cc: oss-security@...ts.openwall.com
 Subject: Re: phusion passenger CVE-2017-1000384
 Content-Type: text/plain; charset=utf-8
 
-* John Lightsey <jd@...nel.net>, 2017-11-17, 14:58:
->https://github.com/phusion/passenger/commit/4043718264095cde6623c2cbe8c644541036d7bf
+On Fri, 17 Nov 2017 14:58:43 -0600 John Lightsey wrote:
 
-This adds:
+> > https://bugs.gentoo.org/634452
+> 
+> The commit for the arbitrary file read vulnerability mentioned in the
+> Gentoo bug report is actually this one:
+> 
+> https://github.com/phusion/passenger/commit/4043718264095cde6623c2cbe8c644541036d7bf
 
-   #ifdef false
-   ...
-   #endif
-
-But false _is_ a defined macro in this file, so this doesn't disable the 
-code inside. I guess they meant to write:
-
-   #if false
-   ...
-   #endif
+Is passenger-status the only way to obtain the content of the target
+file?  If so, this problem is mitigated in versions prior to 5.0.10
+where root privileges were required to get the status information.
 
 -- 
-Jakub Wilk
+Tomas Hoger / Red Hat Product Security
