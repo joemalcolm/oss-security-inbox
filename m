@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["339" "Sunday" "28" "February" "2016" "15:38:00" "-0300" "Gustavo Grieco" "gustavo.grieco@gmail.com" "<CACn5sdSZwhbpDr9_QLe=ZRMT54+Ee-iN6qcOFdPbYHKn0iLJOA@mail.gmail.com>" "13" "[oss-security] tidy-html5: read out-of-bounds in TextEndsWithNewline" nil nil nil "2" "2016022818:38:00" "[oss-security] tidy-html5: read out-of-bounds in TextEndsWithNewline" (number mark "U       gustavo.grie Feb 28   13/339   " thread-indent "\"[oss-security] tidy-html5: read out-of-bounds in TextEndsWithNewline\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1349" "Wednesday" "22" "November" "2017" "09:13:39" "+0100" "Peter Bex" "peter@more-magic.net" "<20171122081339.eacdjs5pewelvhod@scully.more-magic.net>" "39" "Re: [oss-security] Go programming language invalid modular exponentiation result (Exp() in math/big pkg)" nil nil nil "11" "2017112208:13:39" "[oss-security] Go programming language invalid modular exponentiation result (Exp() in math/big pkg)" (number mark "U       peter@more-m Nov 22   39/1349  " thread-indent "\"Re: [oss-security] Go programming language invalid modular exponentiation result (Exp() in math/big pkg)\"\n") "<CAO5O-ELaS6a9jPqxZeuEYX3nhT1k2X8hWkz2D6=1G+mBW14BPw@mail.gmail.com>" ("<CAO5O-ELaS6a9jPqxZeuEYX3nhT1k2X8hWkz2D6=1G+mBW14BPw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 27952 invoked by uid 550); 28 Feb 2016 18:38:16 -0000
+Received: (qmail 31919 invoked by uid 550); 22 Nov 2017 08:13:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,48 +12,68 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27908 invoked from network); 28 Feb 2016 18:38:12 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to;
-        bh=jk0sip6lLhvKsgLYY5dSA/4wT1c7SdFFdIo5S+fOpfU=;
-        b=gzDu+IckM/K+erTIgvZkhLGWPKCYmjU7ezaIO6d8BEIC8JTnNy3W9Yvm3zGkDmj2Qz
-         EF3xUhAc9xFmftecuVGYNwqnVUaeH5quIoILCk1DKQB5+0SgMFRLl2VdHCGTGP0xSkTR
-         tW/bVPXEA1P53Qzt89eg6H/11nFYOpog7sTjwHD5mxEPP/L52SWCvQj7Tpnr5OJMLe/A
-         I2aJhoUsUfE+PMmZUNp8uSR81I00oOXyFZXv/wJ20lSl4exstUmopiV6luTGyDD4WXHR
-         3/W9wK61sLnvQmvC0V5Ut70kJ6z7AjRViIcV9k+NWVJx9+mJD7UydyfXxRNIm7npR4A8
-         dkXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
-        bh=jk0sip6lLhvKsgLYY5dSA/4wT1c7SdFFdIo5S+fOpfU=;
-        b=UbY5W/yXQ+Pw8v6jx1A0V0/EdV6aUShE4QUv1BZBhtTdo8VqKL5tQOx+CXVZ9bcu2o
-         el1BPMPvk6ghADEIKrnOa53uuAkZfv/LsJim4uLmlq8xGNOISmj3K4Re+qIKzzazvdvb
-         a+ED62PhrqxtptGJ0U254N3z0NjzJQDn7VRQ5+QSYSFkufWHje/Wp7rA4IAqxbF+Tw7+
-         AQIHRhs2UdJp6bmDN46iRdthcr4iCOh2R9RmYqAj9boLzIHbcDIsAvS7QRf4COrlAuq/
-         /VuLTHKo28y5Tpc88N0s2dVbGMxKvV0w5MkN4AEau8UwGr5R4+heGbrJ4/77xcUS2F1S
-         oang==
-X-Gm-Message-State: AD7BkJLl9+EBeHY0OwajAOS5AjDx+sVL6vNeUH8l8P3jq81oK+bvYjkf4Oo6R9qDQFNpmU9kcQreoFHDaeAtig==
-MIME-Version: 1.0
-X-Received: by 10.25.161.131 with SMTP id k125mr4113684lfe.83.1456684680879;
- Sun, 28 Feb 2016 10:38:00 -0800 (PST)
-Date: Sun, 28 Feb 2016 15:38:00 -0300
-Message-ID: <CACn5sdSZwhbpDr9_QLe=ZRMT54+Ee-iN6qcOFdPbYHKn0iLJOA@mail.gmail.com>
-From: Gustavo Grieco <gustavo.grieco@gmail.com>
+Received: (qmail 31901 invoked from network); 22 Nov 2017 08:13:51 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=more-magic.net; s=dkim-2016-12; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:To:From:Date:Sender:Reply-To:Cc:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	 bh=o3I+LgMB610jVkMYvdskklewrbaNEDBL26KX1W8xv7I=; b=ka2OqGzim1pbiBp5Sm86TfNyu
+	XblZTWgx5LbWSkJPTZ+kFH+rJqn7GLXtHF1kGlYQv7PTfWL3HFpArsaWnS2geDNA1L5TIIosPQMDl
+	Q/f4Bes+1/UPFAJIxmWFwWmUKWH1YG2kE1DsQ+FYAvpT0OkAOdCKEBZt311XlgtlSFtSE=;
+Date: Wed, 22 Nov 2017 09:13:39 +0100
+From: Peter Bex <peter@more-magic.net>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=001a1140711cf4259a052cd8d490
-Subject: [oss-security] tidy-html5: read out-of-bounds in TextEndsWithNewline
+Message-ID: <20171122081339.eacdjs5pewelvhod@scully.more-magic.net>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <CAO5O-ELaS6a9jPqxZeuEYX3nhT1k2X8hWkz2D6=1G+mBW14BPw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="rlmcq3gpyacocqlm"
+Content-Disposition: inline
+In-Reply-To: <CAO5O-ELaS6a9jPqxZeuEYX3nhT1k2X8hWkz2D6=1G+mBW14BPw@mail.gmail.com>
+X-PGP-Key: http://www.more-magic.net/peter-bex.asc
+User-Agent: NeoMutt/20170113 (1.7.2)
+Subject: Re: [oss-security] Go programming language invalid modular
+ exponentiation result (Exp() in math/big pkg)
 
---001a1140711cf4259a052cd8d490
-Content-Type: text/plain; charset=UTF-8
+--rlmcq3gpyacocqlm
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-A read-out-of-bounds was discovered in tidy-html5 (git revision 03a643f)
-using afl. Technical details are available here:
+On Wed, Nov 22, 2017 at 12:30:08AM +0100, Guido Vranken wrote:
+> Dear list,
+>=20
+> I've written a bignum fuzzer that compares the results of mathematical
+> operations (addtion, subtraction, multiplication, ...) across multiple
+> bignum libraries.
 
-https://github.com/htacg/tidy-html5/issues/379
-<https://github.com/htacg/tidy-html5/issues/341>
+Hi there,
 
-Regards,
-Gus
+Is this fuzzer freely available?  I'd love to try it out on the bignum
+support I added to the CHICKEN Scheme implementation for its upcoming
+new major release (probably somewhere mid-2018).  Being able to release
+it with a bit higher confidence in its correctness would be nice, as this
+is almost all brand new code.
 
---001a1140711cf4259a052cd8d490--
+Cheers,
+Peter Bex (CHICKEN core maintainer)
+
+--rlmcq3gpyacocqlm
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCAAdFiEE6bh5EUSYP1EE+1UTER25+ctFibAFAloVMbAACgkQER25+ctF
+ibAQXwf/YnJauUEr6kV9NQVDPRzi2IF2BslwOD6Wl74lV5DrCdMNJYaUBiRq5Jlh
+bE00t2AZ6GBEbu2YqH8wxDhyZ/dflR+fv7HTumYEq74QT5i6OlsNsMKAWQhBtSov
+styMUm/tER0DIz7UyYC3VSr5kGHe5xPdwExjBdiSTTu+A5Ie+knZBerJ9YKYHtn+
+VuPtzeLPmRLWOlS5XY6yGLSXW4pahhPQHMFCkFoXhVfPSlC3EzKHfQlA2R3xPLAp
+GqkHTx3W6Rv+u52LjHj4kfHG9cFaKw1soHLN8ZjFIK/6T2Sav9H8/c6n+EsLu0x+
+TriHlPeWYLPTMMdk7Z0dHMEOFHS4bA==
+=o3jO
+-----END PGP SIGNATURE-----
+
+--rlmcq3gpyacocqlm--
