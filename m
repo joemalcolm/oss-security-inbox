@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1880" "Wednesday" "17" "May" "2017" "09:40:57" "-0700" "Ian Zimmerman" "itz@primate.net" "<20170517162923.3855.16F61A97@matica.foolinux.mooo.com>" "59" "[oss-security] rxvt-unicode \"insecure\" setting [Was: terminal emulators' processing of escape sequences]" "^Date:" nil nil "5" "2017051716:40:57" "[oss-security] rxvt-unicode \"insecure\" setting [Was: terminal emulators' processing of escape sequences]" (number mark "        itz@primate. May 17   59/1880  " thread-indent "\"[oss-security] rxvt-unicode \"insecure\" setting [Was: terminal emulators' processing of escape sequences]\"\n") "<CAHmME9p-tvS=nc5J9REB6kRurCHXLUSR6r+hxcFzPHwWFuVDGw@mail.gmail.com>" ("<20170501164428.GA12322@openwall.com>" "<CALx_OUDauCKOg20Lp5wumy_JUiu7Cj3=-d-HJSci+nROrK8BRw@mail.gmail.com>" "<CAP145pgb85EujmBuvCnFq-W9RRmK8NxsoJ3327JSy03gcU-F6w@mail.gmail.com>" "<20170516220345.GA10874@openwall.com>" "<CAHmME9p-tvS=nc5J9REB6kRurCHXLUSR6r+hxcFzPHwWFuVDGw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["13963" "Wednesday" "22" "November" "2017" "23:17:06" "+0100" "Solar Designer" "solar@openwall.com" "<20171122221706.GA26704@openwall.com>" "434" "[oss-security] Re: Security risk of server side text editing ..." "^Cc:" nil nil "11" "2017112222:17:06" "[oss-security] Re: Security risk of server side text editing ..." (number mark "        solar@openwa Nov 22  434/13963 " thread-indent "\"[oss-security] Re: Security risk of server side text editing ...\"\n") "<201711171035.vAHAZFC3003212@masaka.moolenaar.net>" ("<201711171035.vAHAZFC3003212@masaka.moolenaar.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 28417 invoked by uid 550); 17 May 2017 16:44:18 -0000
+Received: (qmail 19458 invoked by uid 550); 22 Nov 2017 22:18:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,83 +11,452 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 25981 invoked from network); 17 May 2017 16:41:10 -0000
-X-Authentication-Warning: acedia.primate.net: itz set sender to itz@primate.net using -f
-Message-ID: <20170517162923.3855.16F61A97@matica.foolinux.mooo.com>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <20170501164428.GA12322@openwall.com>
- <CALx_OUDauCKOg20Lp5wumy_JUiu7Cj3=-d-HJSci+nROrK8BRw@mail.gmail.com>
- <CAP145pgb85EujmBuvCnFq-W9RRmK8NxsoJ3327JSy03gcU-F6w@mail.gmail.com>
- <20170516220345.GA10874@openwall.com>
- <CAHmME9p-tvS=nc5J9REB6kRurCHXLUSR6r+hxcFzPHwWFuVDGw@mail.gmail.com>
-MIME-Version: 1.0
+Received: (qmail 18158 invoked from network); 22 Nov 2017 22:17:32 -0000
+Message-ID: <20171122221706.GA26704@openwall.com>
+References: <201711171035.vAHAZFC3003212@masaka.moolenaar.net>
+Mime-Version: 1.0
+Content-Type: multipart/mixed; boundary="tThc/1wpZn/ma/RB"
+Content-Disposition: inline
+In-Reply-To: <201711171035.vAHAZFC3003212@masaka.moolenaar.net>
+User-Agent: Mutt/1.4.2.3i
+Cc: oss-security@lists.openwall.com
+Date: Wed, 22 Nov 2017 23:17:06 +0100
+From: Solar Designer <solar@openwall.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: Security risk of server side text editing ...
+To: Bram Moolenaar <Bram@moolenaar.net>
+
+--tThc/1wpZn/ma/RB
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAHmME9p-tvS=nc5J9REB6kRurCHXLUSR6r+hxcFzPHwWFuVDGw@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Date: Wed, 17 May 2017 09:40:57 -0700
-From: Ian Zimmerman <itz@primate.net>
-Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] rxvt-unicode "insecure" setting [Was: terminal emulators' processing
- of escape sequences]
-To: oss-security@lists.openwall.com
 
-This is a bit tangential to this particular thread, but clearly
-security-related.
+On Fri, Nov 17, 2017 at 11:35:15AM +0100, Bram Moolenaar wrote:
+> Please check out patch 8.0.1300.
 
-Quoting "man urxvt", section "RESOURCES":
+Thanks.  Personally, I don't have much to add.  This continues to do
+what I find are weird and wrong things, so any implementation issues are
+secondary to that.  I suppose you have some rationale for preserving the
+old behavior of propagating the edited file's permissions onto related
+temporary files, but I'm unaware of good reasons for that.
 
- insecure: boolean
+If it's about users' collaboration, then I don't see a good reason for
+other users in the group, even if they could access the original file
+via group permissions, to also have access to recovery and backup files.
 
-  Enables "insecure" mode. Rxvt-unicode offers some escape sequences
-  that echo arbitrary strings like the icon name or the locale. This
-  could be abused if somebody gets 8-bit-clean access to your display,
-  whether through a mail client displaying mail bodies unfiltered or
-  through write(1) or any other means. Therefore, these sequences are
-  disabled by default. (Note that many other terminals, including xterm,
-  have these sequences enabled by default, which doesn't make it safer,
-  though).
+As to the patch itself, aside from it propagating the possibly unsafe
+permissions on purpose (I mean unsafe such as in Hanno's original
+example, but also applying to backup files), it's also risky in
+temporarily setting umask to 0.  On some systems, this could mean libc
+or the kernel creating files with unsafe permissions if anything goes
+very wrong during this time - e.g., a coredump.  Checking st_ino is OK
+as a hardening measure, but might not always be sufficient: inode number
+reuse is possible if the original file could have been deleted.
+I suppose st_dev is not checked because of the use of O_NOFOLLOW, but I
+guess Vim can be built on systems without working O_NOFOLLOW as well?
 
-  You can enable them by setting this boolean resource or specifying
-  -insecure as an option. At the moment, this enables display-answer,
-  locale, findfont, icon label and window title requests.
+In case anyone wants to review the patch for real, I've attached it to
+this message, and here it is on GitHub (for expanding of the context):
 
-My ~/.Xresources file, trimmed.  I am sure it is getting read, because
-of the cutchars, colors and geometry settings:
+https://github.com/vim/vim/commit/cd142e3369db8888163a511dbe9907bcd138829c
 
- Rxvt.background: seashell
- Rxvt.color10: green4
- Rxvt.color11: orange2
- Rxvt.color14: cyan4
- Rxvt.color2: green3
- Rxvt.color3: orange
- Rxvt.color6: cyan3
- Rxvt.cutchars: '"!' &()*,;<=>?@[]^{|} #$%+-./:
- Rxvt.foreground: Gray40
- Rxvt.geometry: 103x36
- Rxvt.saveLines: 200
- Rxvt.visualBell: on
- URxvt.font: x:-misc-fixed-medium-r-semicondensed--13-*-*-*-*-*-iso10646-1
- URxvt.perl-ext-common:
- URxvt.insecure: false
+Alexander
 
-Finally, a chunk of my ~/.bashrc:
+--tThc/1wpZn/ma/RB
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="8.0.1300"
 
- # If this is an xterm set the title to something informative
- case "$TERM" in
-         xterm*|rxvt*)
-             PROMPT_COMMAND="echo -ne \"\E]0; $$ ${LOGNAME}@${HOSTNAME}:\${PWD} \a\""
-             ;;
-         *)
-             ;;
- esac
+To: vim_dev@googlegroups.com
+Subject: Patch 8.0.1300
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+------------
 
-And ... it works!
+Patch 8.0.1300
+Problem:    File permissions may end up wrong when writing.
+Solution:   Use fchmod() instead of chmod() when possible.  Don't truncate
+            until we know we can change the file.
+Files:      src/os_unix.c, src/proto/os_unix.pro, src/configure.ac,
+            src/auto/configure, src/config.h.in, src/fileio.c
 
-Why?
+
+*** ../vim-8.0.1299/src/os_unix.c	2017-10-28 21:08:38.991456926 +0200
+--- src/os_unix.c	2017-11-16 13:30:14.851441009 +0100
+***************
+*** 2725,2733 ****
+  }
+  
+  /*
+!  * set file permission for 'name' to 'perm'
+!  *
+!  * return FAIL for failure, OK otherwise
+   */
+      int
+  mch_setperm(char_u *name, long perm)
+--- 2725,2732 ----
+  }
+  
+  /*
+!  * Set file permission for "name" to "perm".
+!  * Return FAIL for failure, OK otherwise.
+   */
+      int
+  mch_setperm(char_u *name, long perm)
+***************
+*** 2741,2746 ****
+--- 2740,2757 ----
+  		    (mode_t)perm) == 0 ? OK : FAIL);
+  }
+  
++ #if defined(HAVE_FCHMOD) || defined(PROTO)
++ /*
++  * Set file permission for open file "fd" to "perm".
++  * Return FAIL for failure, OK otherwise.
++  */
++     int
++ mch_fsetperm(int fd, long perm)
++ {
++     return (fchmod(fd, (mode_t)perm) == 0 ? OK : FAIL);
++ }
++ #endif
++ 
+  #if defined(HAVE_ACL) || defined(PROTO)
+  # ifdef HAVE_SYS_ACL_H
+  #  include <sys/acl.h>
+*** ../vim-8.0.1299/src/proto/os_unix.pro	2017-08-26 22:02:45.865432901 +0200
+--- src/proto/os_unix.pro	2017-11-16 13:43:23.867783668 +0100
+***************
+*** 36,41 ****
+--- 36,42 ----
+  void fname_case(char_u *name, int len);
+  long mch_getperm(char_u *name);
+  int mch_setperm(char_u *name, long perm);
++ int mch_fsetperm(int fd, long perm);
+  void mch_copy_sec(char_u *from_file, char_u *to_file);
+  vim_acl_T mch_get_acl(char_u *fname);
+  void mch_set_acl(char_u *fname, vim_acl_T aclent);
+*** ../vim-8.0.1299/src/configure.ac	2017-11-12 19:21:06.557379725 +0100
+--- src/configure.ac	2017-11-16 15:14:50.361494745 +0100
+***************
+*** 3655,3667 ****
+  
+  dnl Check for functions in one big call, to reduce the size of configure.
+  dnl Can only be used for functions that do not require any include.
+! AC_CHECK_FUNCS(fchdir fchown fsync getcwd getpseudotty \
+  	getpwent getpwnam getpwuid getrlimit gettimeofday getwd lstat \
+  	memset mkdtemp nanosleep opendir putenv qsort readlink select setenv \
+  	getpgid setpgid setsid sigaltstack sigstack sigset sigsetjmp sigaction \
+  	sigprocmask sigvec strcasecmp strerror strftime stricmp strncasecmp \
+  	strnicmp strpbrk strtol tgetent towlower towupper iswupper \
+! 	usleep utime utimes mblen)
+  AC_FUNC_FSEEKO
+  
+  dnl define _LARGE_FILES, _FILE_OFFSET_BITS and _LARGEFILE_SOURCE when
+--- 3655,3667 ----
+  
+  dnl Check for functions in one big call, to reduce the size of configure.
+  dnl Can only be used for functions that do not require any include.
+! AC_CHECK_FUNCS(fchdir fchown fchmod fsync getcwd getpseudotty \
+  	getpwent getpwnam getpwuid getrlimit gettimeofday getwd lstat \
+  	memset mkdtemp nanosleep opendir putenv qsort readlink select setenv \
+  	getpgid setpgid setsid sigaltstack sigstack sigset sigsetjmp sigaction \
+  	sigprocmask sigvec strcasecmp strerror strftime stricmp strncasecmp \
+  	strnicmp strpbrk strtol tgetent towlower towupper iswupper \
+! 	usleep utime utimes mblen ftruncate)
+  AC_FUNC_FSEEKO
+  
+  dnl define _LARGE_FILES, _FILE_OFFSET_BITS and _LARGEFILE_SOURCE when
+*** ../vim-8.0.1299/src/auto/configure	2017-11-12 19:21:06.561379665 +0100
+--- src/auto/configure	2017-11-16 15:15:22.876991652 +0100
+***************
+*** 12090,12102 ****
+  
+  fi
+  
+! for ac_func in fchdir fchown fsync getcwd getpseudotty \
+  	getpwent getpwnam getpwuid getrlimit gettimeofday getwd lstat \
+  	memset mkdtemp nanosleep opendir putenv qsort readlink select setenv \
+  	getpgid setpgid setsid sigaltstack sigstack sigset sigsetjmp sigaction \
+  	sigprocmask sigvec strcasecmp strerror strftime stricmp strncasecmp \
+  	strnicmp strpbrk strtol tgetent towlower towupper iswupper \
+! 	usleep utime utimes mblen
+  do :
+    as_ac_var=`$as_echo "ac_cv_func_$ac_func" | $as_tr_sh`
+  ac_fn_c_check_func "$LINENO" "$ac_func" "$as_ac_var"
+--- 12090,12102 ----
+  
+  fi
+  
+! for ac_func in fchdir fchown fchmod fsync getcwd getpseudotty \
+  	getpwent getpwnam getpwuid getrlimit gettimeofday getwd lstat \
+  	memset mkdtemp nanosleep opendir putenv qsort readlink select setenv \
+  	getpgid setpgid setsid sigaltstack sigstack sigset sigsetjmp sigaction \
+  	sigprocmask sigvec strcasecmp strerror strftime stricmp strncasecmp \
+  	strnicmp strpbrk strtol tgetent towlower towupper iswupper \
+! 	usleep utime utimes mblen ftruncate
+  do :
+    as_ac_var=`$as_echo "ac_cv_func_$ac_func" | $as_tr_sh`
+  ac_fn_c_check_func "$LINENO" "$ac_func" "$as_ac_var"
+*** ../vim-8.0.1299/src/config.h.in	2017-11-12 19:21:06.557379725 +0100
+--- src/config.h.in	2017-11-16 15:15:12.729148551 +0100
+***************
+*** 156,164 ****
+  /* Define if you the function: */
+  #undef HAVE_FCHDIR
+  #undef HAVE_FCHOWN
+  #undef HAVE_FSEEKO
+  #undef HAVE_FSYNC
+! #undef HAVE_FLOAT_FUNCS
+  #undef HAVE_GETCWD
+  #undef HAVE_GETPGID
+  #undef HAVE_GETPSEUDOTTY
+--- 156,166 ----
+  /* Define if you the function: */
+  #undef HAVE_FCHDIR
+  #undef HAVE_FCHOWN
++ #undef HAVE_FCHMOD
++ #undef HAVE_FLOAT_FUNCS
+  #undef HAVE_FSEEKO
+  #undef HAVE_FSYNC
+! #undef HAVE_FTRUNCATE
+  #undef HAVE_GETCWD
+  #undef HAVE_GETPGID
+  #undef HAVE_GETPSEUDOTTY
+*** ../vim-8.0.1299/src/fileio.c	2017-11-10 21:53:01.550219652 +0100
+--- src/fileio.c	2017-11-16 16:40:45.790008905 +0100
+***************
+*** 3863,3868 ****
+--- 3863,3869 ----
+  	    char_u	*rootname;
+  #if defined(UNIX)
+  	    int		did_set_shortname;
++ 	    mode_t	umask_save;
+  #endif
+  
+  	    copybuf = alloc(BUFSIZE + 1);
+***************
+*** 3994,4003 ****
+  		    /* remove old backup, if present */
+  		    mch_remove(backup);
+  		    /* Open with O_EXCL to avoid the file being created while
+! 		     * we were sleeping (symlink hacker attack?) */
+  		    bfd = mch_open((char *)backup,
+  				O_WRONLY|O_CREAT|O_EXTRA|O_EXCL|O_NOFOLLOW,
+  								 perm & 0777);
+  		    if (bfd < 0)
+  		    {
+  			vim_free(backup);
+--- 3995,4011 ----
+  		    /* remove old backup, if present */
+  		    mch_remove(backup);
+  		    /* Open with O_EXCL to avoid the file being created while
+! 		     * we were sleeping (symlink hacker attack?). Reset umask
+! 		     * if possible to avoid mch_setperm() below. */
+! #ifdef UNIX
+! 		    umask_save = umask(0);
+! #endif
+  		    bfd = mch_open((char *)backup,
+  				O_WRONLY|O_CREAT|O_EXTRA|O_EXCL|O_NOFOLLOW,
+  								 perm & 0777);
++ #ifdef UNIX
++ 		    (void)umask(umask_save);
++ #endif
+  		    if (bfd < 0)
+  		    {
+  			vim_free(backup);
+***************
+*** 4005,4015 ****
+  		    }
+  		    else
+  		    {
+! 			/* set file protection same as original file, but
+! 			 * strip s-bit */
+  			(void)mch_setperm(backup, perm & 0777);
+! 
+! #ifdef UNIX
+  			/*
+  			 * Try to set the group of the backup same as the
+  			 * original file. If this fails, set the protection
+--- 4013,4024 ----
+  		    }
+  		    else
+  		    {
+! 			/* Set file protection same as original file, but
+! 			 * strip s-bit.  Only needed if umask() wasn't used
+! 			 * above. */
+! #ifndef UNIX
+  			(void)mch_setperm(backup, perm & 0777);
+! #else
+  			/*
+  			 * Try to set the group of the backup same as the
+  			 * original file. If this fails, set the protection
+***************
+*** 4377,4382 ****
+--- 4386,4396 ----
+  	}
+  	else
+  	{
++ #ifdef HAVE_FTRUNCATE
++ # define TRUNC_ON_OPEN 0
++ #else
++ # define TRUNC_ON_OPEN O_TRUNC
++ #endif
+  	    /*
+  	     * Open the file "wfname" for writing.
+  	     * We may try to open the file twice: If we can't write to the file
+***************
+*** 4389,4395 ****
+  	     */
+  	    while ((fd = mch_open((char *)wfname, O_WRONLY | O_EXTRA | (append
+  				? (forceit ? (O_APPEND | O_CREAT) : O_APPEND)
+! 				: (O_CREAT | O_TRUNC))
+  				, perm < 0 ? 0666 : (perm & 0777))) < 0)
+  	    {
+  		/*
+--- 4403,4409 ----
+  	     */
+  	    while ((fd = mch_open((char *)wfname, O_WRONLY | O_EXTRA | (append
+  				? (forceit ? (O_APPEND | O_CREAT) : O_APPEND)
+! 				: (O_CREAT | TRUNC_ON_OPEN))
+  				, perm < 0 ? 0666 : (perm & 0777))) < 0)
+  	    {
+  		/*
+***************
+*** 4482,4487 ****
+--- 4496,4525 ----
+  	    }
+  	    write_info.bw_fd = fd;
+  
++ #if defined(UNIX)
++ 	    {
++ 		stat_T	st;
++ 
++ 		/* Double check we are writing the intended file before making
++ 		 * any changes. */
++ 		if (overwriting
++ 			&& (!dobackup || backup_copy)
++ 			&& fname == wfname
++ 			&& perm >= 0
++ 			&& mch_fstat(fd, &st) == 0
++ 			&& st.st_ino != st_old.st_ino)
++ 		{
++ 		    close(fd);
++ 		    errmsg = (char_u *)_("E949: File changed while writing");
++ 		    goto fail;
++ 		}
++ 	    }
++ #endif
++ #ifdef HAVE_FTRUNCATE
++ 	    if (!append)
++ 		ftruncate(fd, (off_t)0);
++ #endif
++ 
+  #if defined(WIN3264)
+  	    if (backup != NULL && overwriting && !append)
+  	    {
+***************
+*** 4752,4766 ****
+  # ifdef HAVE_FCHOWN
+  	    stat_T	st;
+  
+! 	    /* don't change the owner when it's already OK, some systems remove
+! 	     * permission or ACL stuff */
+  	    if (mch_stat((char *)wfname, &st) < 0
+  		    || st.st_uid != st_old.st_uid
+  		    || st.st_gid != st_old.st_gid)
+  	    {
+! 		ignored = fchown(fd, st_old.st_uid, st_old.st_gid);
+! 		if (perm >= 0)	/* set permission again, may have changed */
+! 		    (void)mch_setperm(wfname, perm);
+  	    }
+  # endif
+  	    buf_setino(buf);
+--- 4790,4806 ----
+  # ifdef HAVE_FCHOWN
+  	    stat_T	st;
+  
+! 	    /* Don't change the owner when it's already OK, some systems remove
+! 	     * permission or ACL stuff. */
+  	    if (mch_stat((char *)wfname, &st) < 0
+  		    || st.st_uid != st_old.st_uid
+  		    || st.st_gid != st_old.st_gid)
+  	    {
+! 		/* changing owner might not be possible */
+! 		ignored = fchown(fd, st_old.st_uid, -1);
+! 		/* if changing group fails clear the group permissions */
+! 		if (fchown(fd, -1, st_old.st_gid) == -1 && perm > 0)
+! 		    perm &= ~070;
+  	    }
+  # endif
+  	    buf_setino(buf);
+***************
+*** 4770,4787 ****
+  	    buf_setino(buf);
+  #endif
+  
+  	if (close(fd) != 0)
+  	{
+  	    errmsg = (char_u *)_("E512: Close failed");
+  	    end = 0;
+  	}
+  
+! #ifdef UNIX
+! 	if (made_writable)
+! 	    perm &= ~0200;	/* reset 'w' bit for security reasons */
+! #endif
+! 	if (perm >= 0)		/* set perm. of new file same as old file */
+  	    (void)mch_setperm(wfname, perm);
+  #ifdef HAVE_ACL
+  	/*
+  	 * Probably need to set the ACL before changing the user (can't set the
+--- 4810,4835 ----
+  	    buf_setino(buf);
+  #endif
+  
++ #ifdef UNIX
++ 	if (made_writable)
++ 	    perm &= ~0200;	/* reset 'w' bit for security reasons */
++ #endif
++ #ifdef HAVE_FCHMOD
++ 	/* set permission of new file same as old file */
++ 	if (perm >= 0)
++ 	    (void)mch_fsetperm(fd, perm);
++ #endif
+  	if (close(fd) != 0)
+  	{
+  	    errmsg = (char_u *)_("E512: Close failed");
+  	    end = 0;
+  	}
+  
+! #ifndef HAVE_FCHMOD
+! 	/* set permission of new file same as old file */
+! 	if (perm >= 0)
+  	    (void)mch_setperm(wfname, perm);
++ #endif
+  #ifdef HAVE_ACL
+  	/*
+  	 * Probably need to set the ACL before changing the user (can't set the
+*** ../vim-8.0.1299/src/version.c	2017-11-16 13:07:59.886081407 +0100
+--- src/version.c	2017-11-16 16:56:02.064073913 +0100
+***************
+*** 768,769 ****
+--- 768,771 ----
+  {   /* Add new patch number below this line */
++ /**/
++     1300,
+  /**/
 
 -- 
-Please *no* private Cc: on mailing lists and newsgroups
-Personal signed mail: please _encrypt_ and sign
-Don't clear-text sign:
-http://primate.net/~itz/blog/the-problem-with-gpg-signatures.html
+For society, it's probably a good thing that engineers value function over
+appearance.  For example, you wouldn't want engineers to build nuclear power
+plants that only _look_ like they would keep all the radiation inside.
+				(Scott Adams - The Dilbert principle)
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\  an exciting new programming language -- http://www.Zimbu.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///
+
+--tThc/1wpZn/ma/RB--
