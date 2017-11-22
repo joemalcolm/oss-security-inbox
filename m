@@ -1,63 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/27/10
-Message-ID: <CANO=Ty1Py6iabbmct=ic55=sNRaRdUxDnucZjftb=B==56NzCw@mail.gmail.com>
-Date: Tue, 27 Jun 2017 16:13:37 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: CoreOS membership to linux-distros
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/22/1
+Message-ID: <20171122035243.edl3dqbnpyaa337h@matica.foolinux.mooo.com>
+Date: Tue, 21 Nov 2017 19:52:43 -0800
+From: Ian Zimmerman <itz@...y.loosely.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2017-16845 Qemu: ps2: information leakage via post_load routine
 Content-Type: text/plain; charset=utf-8
 
-My main question would be what expertise do you have in helping with
-security issues, e.g. kernel/glibc/other engineering talent? Or do you
-simply need this as a consumer of such data (e.g. so you can get containers
-ready to respin for embargoed issues, and to be clear, I'm not opposed to
-this type of consumption if it's in the public interest, you won't break
-embargoes, etc.).
+On 2017-11-17 11:14, P J P wrote:
 
-On Tue, Jun 27, 2017 at 2:59 PM, Euan Kemp <euan.kemp@...eos.com> wrote:
+> Upstream patch:
+> ---------------
+>   -> https://lists.gnu.org/archive/html/qemu-devel/2017-11/msg02982.html
 
-> Hello.
->
-> We, the Container Linux team at CoreOS[0], would like to request
-> membership to the linux-distros list.
->
-> We've requested membership once before[1], but at the time new members
-> weren't being added iirc.
->
-> Based on Solar's comments in the Stack Clash thread, this seems like a
-> good time to renew this discussion.
->
->
-> To preempt some possible questions:
->
-> Q: What’s Container Linux?
-> Container Linux (formerly called CoreOS) is a linux distribution for
-> servers which automatically updates by default; it’s generally available
-> and has a fairly large install base.
->
-> Q: Can you handle embargoed builds?
-> We have the infrastructure and experience to make embargoed
-> builds/releases. These have been exercised by e.g. docker CVEs in the past.
->
-> Q: Do you have an advisory page?
-> We don't have a more comprehensive advisory page than our release notes
-> (which list CVEs fixed in each version) and in some cases blog posts.
-> We intend to have an advisory page at some indeterminate point in the
-> future.
->
->
-> - Euan
->
-> [0]: https://coreos.com/why/
-> [1]: http://seclists.org/oss-sec/2016/q4/205
->
->
->
+Hi, what can I do with these QEMU reports?  I can try to apply the
+patch, but I have no idea if it will work, because I don't know which
+branch or revision it is based on.
 
+By my unscientific counting, there are only 2 other userspace projects
+which earn CVEs as frequently as QEMU: openjpeg and graphicsmagick.  In
+both these cases, starting with the message posted here and following
+the references, I can quickly locate the actual VC commit (in git and
+mercurial, respectively) and thus have a sound basis for deciding what
+to do: patch, wait for an updated distro package, or fork the distro
+package.
+
+Is there a reason why that cannot be done with QEMU?
 
 -- 
-
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+Please don't Cc: me privately on mailing lists and Usenet,
+if you also post the followup to the list or newsgroup.
+To reply privately _only_ on Usenet, fetch the TXT record for the domain.
