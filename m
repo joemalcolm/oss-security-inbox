@@ -1,79 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/21/4
-Message-ID: <3362705.8pMVodbJo5@storm.m.i2n>
-Date: Thu, 21 Sep 2017 16:50:07 +0200
-From: Thomas Jarosch <thomas.jarosch@...ra2net.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: code execution in Horde_Image 2.0.0 to 2.5.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/22/8
+Message-ID: <20171122221706.GA26704@openwall.com>
+Date: Wed, 22 Nov 2017 23:17:06 +0100
+From: Solar Designer <solar@...nwall.com>
+To: Bram Moolenaar <Bram@...lenaar.net>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Security risk of server side text editing ...
 Content-Type: text/plain; charset=utf-8
 
-Hello oss security,
+On Fri, Nov 17, 2017 at 11:35:15AM +0100, Bram Moolenaar wrote:
+> Please check out patch 8.0.1300.
 
-Intra2net AG found a code execution vulnerability in the "Horde_Image" library 
-of the Horde framework (https://www.horde.org/). The "_raw()" function of the 
-ImageMagick "im" backend passes the "$index" parameter unsanitized to the 
-shell. This parameter is f.e. exposed by the getImageAtIndex($index) function.
+Thanks.  Personally, I don't have much to add.  This continues to do
+what I find are weird and wrong things, so any implementation issues are
+secondary to that.  I suppose you have some rationale for preserving the
+old behavior of propagating the edited file's permissions onto related
+temporary files, but I'm unaware of good reasons for that.
 
-No core horde application exposes the $index parameter directly
-to the net, so a "remote" code execution might be given for third party 
-applications only. Read: The risk is low for normal horde users.
+If it's about users' collaboration, then I don't see a good reason for
+other users in the group, even if they could access the original file
+via group permissions, to also have access to recovery and backup files.
 
-Affected versions are 2.0.0 to 2.5.1.
-A fixed version 2.5.2 has been released.
+As to the patch itself, aside from it propagating the possibly unsafe
+permissions on purpose (I mean unsafe such as in Hanno's original
+example, but also applying to backup files), it's also risky in
+temporarily setting umask to 0.  On some systems, this could mean libc
+or the kernel creating files with unsafe permissions if anything goes
+very wrong during this time - e.g., a coredump.  Checking st_ino is OK
+as a hardening measure, but might not always be sufficient: inode number
+reuse is possible if the original file could have been deleted.
+I suppose st_dev is not checked because of the use of O_NOFOLLOW, but I
+guess Vim can be built on systems without working O_NOFOLLOW as well?
 
-Upstream fix:
-https://github.com/horde/horde/commit/eb3afd14c22c77ae0d29e2848f5ac726ef6e7c5b
+In case anyone wants to review the patch for real, I've attached it to
+this message, and here it is on GitHub (for expanding of the context):
 
-Official release announcement:
-https://marc.info/?l=horde-announce&m=150600299528079&w=2
------------------------------------
-Hello,
+https://github.com/vim/vim/commit/cd142e3369db8888163a511dbe9907bcd138829c
 
-a Remote Code Execution vulnerability has been found in the  
-Horde_Image library when using the "Im" backend that utilizes  
-ImageMagick's "convert" utility. It's not exploitable through any  
-Horde application, because the code path to the vulnerability is not  
-used by any Horde code. Custom applications using the Horde_Image  
-library might be affected though. This vulnerability affects all  
-versions of Horde_Image from 2.0.0 to 2.5.1.
+Alexander
 
-A fixed version of the Horde_Image (version 2.5.2) library has already  
-been released and everybody is advised to upgrade to Horde_Image 2.5.2  
-as soon as possible.
-
-Thanks to long-time contributor and supporter Thomas Jarosch  
-<thomas.jarosch@...ra2net.com> for discovering and reporting these  
-vulnerabilities.
-
---
-Jan Schneider
-The Horde Project
-https://www.horde.org/
------------------------------------
-
-
-Timeline:
-2017-09-15: Found the issue during manual code review
-            after the recent CVE-2017-9773 issue.
-
-2017-09-15: Sent patch to security@...de.org
-
-2017-09-16: Checked horde code base if any horde core
-            application exposes the vulnerable API.
-
-2017-09-19: Wrote to security@...de.org again
-            that the security risk for core horde apps is low,
-            no embargo via linux-distros@ needed.
-
-2017-09-19: Fix is committed to git.
-
-2017-09-21: Release of fixed version 2.5.2 by the Horde project.
-
-
-Thanks to Jan Schneider of the Horde project
-for the timely release of the fixed version.
-
-
-Best regards,
-Thomas Jarosch / Intra2net AG
-
+View attachment "8.0.1300" of type "text/plain" (12152 bytes)
