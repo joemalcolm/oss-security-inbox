@@ -1,55 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/22/2
-Message-ID: <577272.5132733-sendEmail@localhost>
-Date: Fri, 22 Sep 2017 06:57:48 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: graphicsmagick: assertion failure in pixel_cache.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/22/9
+Message-Id: <63829CA0-BA0A-433E-8DAC-EE1D232F4639@redhat.com>
+Date: Wed, 22 Nov 2017 15:27:11 -0700
+From: Kurt Seifried <kseifrie@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Bram Moolenaar <Bram@...lenaar.net>
+Subject: Re: Re: Security risk of server side text editing ...
 Content-Type: text/plain; charset=utf-8
 
-Description:
-graphicsmagick is a collection of tools and libraries for many image formats.
-
-The complete output of the issue:
-
-# gm convert $FILE null
-gm: magick/pixel_cache.c:1089: const PixelPacket AcquireImagePixels(const Image , const long, const long, const unsigned long, const unsigned long, ExceptionInfo ): Assertion `image != (Image ) NULL' 
-failed.
-
-Affected version:
-1.3.25, 1.3.26 and maybe past releases
-
-Fixed version:
-N/A
-
-Commit fix:
-http://hg.code.sf.net/p/graphicsmagick/code/rev/358608a46f0a
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-14649
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00366-graphicsmagick_assertionfailure_pixel_cache_c
-
-Timeline:
-2017-08-12: bug discovered and reported to upstream privately
-2017-08-16: bug reported to the public upstream bugtracker
-2017-08-29: upstream released a fix
-2017-09-19: blog post about the issue
-2017-09-21: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/09/19/graphicsmagick-assertion-failure-in-pixel_cache-c
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
+Can you post a summary of the issues, it sounds like more than one CVE will be needed, thanks.
 
 
+-Kurt
+
+
+
+
+
+> On Nov 22, 2017, at 15:17, Solar Designer <solar@...nwall.com> wrote:
+> 
+>> On Fri, Nov 17, 2017 at 11:35:15AM +0100, Bram Moolenaar wrote:
+>> Please check out patch 8.0.1300.
+> 
+> Thanks.  Personally, I don't have much to add.  This continues to do
+> what I find are weird and wrong things, so any implementation issues are
+> secondary to that.  I suppose you have some rationale for preserving the
+> old behavior of propagating the edited file's permissions onto related
+> temporary files, but I'm unaware of good reasons for that.
+> 
+> If it's about users' collaboration, then I don't see a good reason for
+> other users in the group, even if they could access the original file
+> via group permissions, to also have access to recovery and backup files.
+> 
+> As to the patch itself, aside from it propagating the possibly unsafe
+> permissions on purpose (I mean unsafe such as in Hanno's original
+> example, but also applying to backup files), it's also risky in
+> temporarily setting umask to 0.  On some systems, this could mean libc
+> or the kernel creating files with unsafe permissions if anything goes
+> very wrong during this time - e.g., a coredump.  Checking st_ino is OK
+> as a hardening measure, but might not always be sufficient: inode number
+> reuse is possible if the original file could have been deleted.
+> I suppose st_dev is not checked because of the use of O_NOFOLLOW, but I
+> guess Vim can be built on systems without working O_NOFOLLOW as well?
+> 
+> In case anyone wants to review the patch for real, I've attached it to
+> this message, and here it is on GitHub (for expanding of the context):
+> 
+> https://github.com/vim/vim/commit/cd142e3369db8888163a511dbe9907bcd138829c
+> 
+> Alexander
+> <8.0.1300>
