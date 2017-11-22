@@ -1,20 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/01/17
-Message-ID: <1493661615.2460.29.camel@corsac.net>
-Date: Mon, 01 May 2017 20:00:15 +0200
-From: Yves-Alexis Perez <corsac@...sac.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/22/4
+Message-ID: <CAO5O-EKCmEgPqbtQnrJGuPf6_zXy-Kfo+ONvb6ohmPnfn25GRg@mail.gmail.com>
+Date: Wed, 22 Nov 2017 17:42:53 +0100
+From: Guido Vranken <guidovranken@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: terminal emulators' processing of escape sequences
+Subject: Re: Go programming language invalid modular exponentiation result (Exp() in math/big pkg)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 2017-05-01 at 19:25 +0200, Yves-Alexis Perez wrote:
-> I wasn't able to make the process crash (it seems stuck at some point but the
-> window is somehow resized and I don't have access to the content so it' not
-> clear why).
+Peter,
 
-Slight update, actually the perl process terminates successfully too on xfce4-
-terminal here.
+It is available: https://github.com/guidovranken/bignum-fuzzer
 
-Regards,
--- 
-Yves-Alexis
+It has a modular set-up, meaning individual bignum libraries can
+easily be added, removed, enabled or disabled.
+I'll write some documentation soon, but you can probably figure out
+the module layout from looking at the existing ones.
+Compiling your code must result in a static archive that can be linked
+to the other objects. If that really is not possible, you must come up
+with some sort of inter-process communication.
+Feel free to create a PR for your own module and I'll add it.
+
+Thanks
+
+Guido
+
+On Wed, Nov 22, 2017 at 9:13 AM, Peter Bex <peter@...e-magic.net> wrote:
+> On Wed, Nov 22, 2017 at 12:30:08AM +0100, Guido Vranken wrote:
+>> Dear list,
+>>
+>> I've written a bignum fuzzer that compares the results of mathematical
+>> operations (addtion, subtraction, multiplication, ...) across multiple
+>> bignum libraries.
+>
+> Hi there,
+>
+> Is this fuzzer freely available?  I'd love to try it out on the bignum
+> support I added to the CHICKEN Scheme implementation for its upcoming
+> new major release (probably somewhere mid-2018).  Being able to release
+> it with a bit higher confidence in its correctness would be nice, as this
+> is almost all brand new code.
+>
+> Cheers,
+> Peter Bex (CHICKEN core maintainer)
