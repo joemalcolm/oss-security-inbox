@@ -1,29 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/20/2
-Message-ID: <20170820214905.478b89da@pc1>
-Date: Sun, 20 Aug 2017 21:49:05 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/22/3
+Message-ID: <20171122081339.eacdjs5pewelvhod@scully.more-magic.net>
+Date: Wed, 22 Nov 2017 09:13:39 +0100
+From: Peter Bex <peter@...e-magic.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVS and ssh command injection (see CVE-2017-1000117, etc.)
+Subject: Re: Go programming language invalid modular exponentiation result (Exp() in math/big pkg)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Wed, Nov 22, 2017 at 12:30:08AM +0100, Guido Vranken wrote:
+> Dear list,
+> 
+> I've written a bignum fuzzer that compares the results of mathematical
+> operations (addtion, subtraction, multiplication, ...) across multiple
+> bignum libraries.
 
-There's now an inofficial patch:
-https://www.mirbsd.org/cvs.cgi/src/gnu/usr.bin/cvs/src/rsh-client.c.diff?r1=1.6;r2=1.7
+Hi there,
 
-Developed by Thorsten Glaser for MirBSD and Debian:
-https://www.mirbsd.org/permalinks/wlog-10_e20170811-tg.htm
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=871810
+Is this fuzzer freely available?  I'd love to try it out on the bignum
+support I added to the CHICKEN Scheme implementation for its upcoming
+new major release (probably somewhere mid-2018).  Being able to release
+it with a bit higher confidence in its correctness would be nice, as this
+is almost all brand new code.
 
-Debian Security Advisory:
-https://www.debian.org/security/2017/dsa-3940
+Cheers,
+Peter Bex (CHICKEN core maintainer)
 
--- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
-
-Content of type "application/pgp-signature" skipped
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
