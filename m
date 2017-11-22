@@ -1,49 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/08/2
-Message-ID: <b52ce65719d94835a1628207ab996ffa@imshyb02.MITRE.ORG>
-Date: Tue, 7 Feb 2017 20:14:20 -0500
-From: <cve-assign@...re.org>
-To: <ppandit@...hat.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <liqiang6-s@....cn>
-Subject: Re: CVE request Qemu: virtio: integer overflow in handling virtio-crypto requests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/22/2
+Message-ID: <nycvar.YSQ.7.76.1711221200110.4822@wniryva>
+Date: Wed, 22 Nov 2017 12:13:23 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: Re: Re: CVE-2017-16845 Qemu: ps2: information leakage via post_load routine
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+  Hello Ian,
 
-> Quick Emulator(Qemu) built with the Virtio Crypto device emulation support is
-> vulnerable to an integer overflow issue. It could occur while handling data
-> encryption/decryption requests in 'virtio_crypto_handle_sym_req'.
-> 
-> A privileged user inside guest could use this flaw to crash the Qemu process
-> resulting in DoS or potentially execute arbitrary code on the host with
-> privileges of the Qemu process.
-> 
-> https://lists.nongnu.org/archive/html/qemu-devel/2017-01/msg01368.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1420092
-> http://git.qemu-project.org/?p=qemu.git;a=commit;h=a08aaff811fb194950f79711d2afe5a892ae03a4
++-- On Tue, 21 Nov 2017, Ian Zimmerman wrote --+
+| >   -> https://lists.gnu.org/archive/html/qemu-devel/2017-11/msg02982.html
+| 
+| Hi, what can I do with these QEMU reports?  I can try to apply the
+| patch, but I have no idea if it will work, because I don't know which
+| branch or revision it is based on.
 
-Use CVE-2017-5931.
+  Patch is sent against upstream Qemu git repository(below) and is merged 
+after due review on the -devel list.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+  -> https://git.qemu.org/?p=qemu.git;a=summary
 
-iQIcBAEBCAAGBQJYmm+0AAoJEHb/MwWLVhi2B4sP+wfNcAISLT1m/fgfqNIvDW7u
-FTDw5NMDO0QRah+v5DxJdGtJrUiBZdyRGNH84JxUhBkdv4BreRZIsoGJyKvkc6D4
-5jUBxdSfpvd901pJ39A9YdA13lvCGOvkekCzAmwqW97l7gY0WL0E2t8kkRk/6Gu1
-HPHAVtsU8oFC/Pn7tsVrqorzJjY+D/7pDpL67VoTuiXwwafoSWwPq1YWBgEmNh2z
-ojPI8m43NPmWBeo3vCNOGsLLmgLqDCdg0Hct44PQcMDBWD0RXtWSrVQhiPuIeSgp
-TO3T4NMh+pr7ZIs8THe7t3cOise7RiSmGd31MmzIhEttqxgEawU9UuTieXWStH4Y
-SpUv2G22PP2vMFc+iNFthPaQIz1QMSenNyT2IlKEM0ObSKSNYio/TyHRO1U/ddOb
-9mF/D/+uooJxc7+bwghbwUn56RAAUhp0FVBLxklLbwTXpA5wrK7ttugOc/4uOru2
-IWH79Z0vWIKuGjGbwa0J1mRvugM0Nv04GGoxtIgKMmSvK2UIvdYa8Icd4teBiniL
-DNi9AsooOQDhrY5d1KHAPGIXFQlZnsaafGXiEi2vACewcVUEy8syqGIFZ6ImU/ZF
-6iG5UfBo91tRng1KgtRwkUu7x5E27/+vYxYo+1ezh1XTBYUZpV8/cqjB7xCQuy6p
-BHYeFVTsdOsmy6zt3L+2
-=ukgp
------END PGP SIGNATURE-----
+| By my unscientific counting, there are only 2 other userspace projects which 
+| earn CVEs as frequently as QEMU: openjpeg and graphicsmagick.  In both these 
+| cases, starting with the message posted here and following the references, I 
+| can quickly locate the actual VC commit (in git and mercurial, respectively) 
+| and thus have a sound basis for deciding what to do: patch, wait for an 
+| updated distro package, or fork the distro package.
+| 
+| Is there a reason why that cannot be done with QEMU?
+
+Reviewed patches soon show-up in the above master repository. In this case, it 
+so happened that an earlier version v1 of the patch was more acceptable
+
+  -> https://lists.gnu.org/archive/html/qemu-devel/2017-11/msg02946.html
+
+It should make it upstream soon, I'll update here accordingly.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
