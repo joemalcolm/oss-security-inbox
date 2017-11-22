@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3690" "Wednesday" "3" "June" "2015" "20:25:37" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20150603202537.44409561@pc1>" "88" "Re: [oss-security] Re: Stack out of bounds read access in uudecode / sharutils" nil nil nil "6" "2015060318:25:37" "[oss-security] Re: Stack out of bounds read access in uudecode / sharutils" (number mark "        hanno@hboeck Jun  3   88/3690  " thread-indent "\"Re: [oss-security] Re: Stack out of bounds read access in uudecode / sharutils\"\n") "<20150603023502.B967F72E055@smtpvbsrv1.mitre.org>" ("<20150603010028.2c166570@pc1>" "<20150603023502.B967F72E055@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["777" "Wednesday" "22" "November" "2017" "12:10:02" "-0500" "Chad Dougherty" "dougherty477@comcast.net" "<8007904f-d86d-783f-35c9-b53aeb025e32@comcast.net>" "21" "Re: [oss-security] Go programming language invalid modular exponentiation result (Exp() in math/big pkg)" nil nil nil "11" "2017112217:10:02" "[oss-security] Go programming language invalid modular exponentiation result (Exp() in math/big pkg)" (number mark "U       dougherty477 Nov 22   21/777   " thread-indent "\"Re: [oss-security] Go programming language invalid modular exponentiation result (Exp() in math/big pkg)\"\n") "<CALx_OUCSLH1n0JaBT4XAysVpEQMLF-vGUBtn4dmJ3ED8cZigEg@mail.gmail.com>" ("<CAO5O-ELaS6a9jPqxZeuEYX3nhT1k2X8hWkz2D6=1G+mBW14BPw@mail.gmail.com>" "<20171122081339.eacdjs5pewelvhod@scully.more-magic.net>" "<CALx_OUCSLH1n0JaBT4XAysVpEQMLF-vGUBtn4dmJ3ED8cZigEg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9300 invoked by uid 550); 3 Jun 2015 18:25:03 -0000
+Received: (qmail 7636 invoked by uid 550); 22 Nov 2017 17:12:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,107 +11,56 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9282 invoked from network); 3 Jun 2015 18:25:02 -0000
-Message-ID: <20150603202537.44409561@pc1>
-In-Reply-To: <20150603023502.B967F72E055@smtpvbsrv1.mitre.org>
-References: <20150603010028.2c166570@pc1>
-	<20150603023502.B967F72E055@smtpvbsrv1.mitre.org>
-X-Mailer: Claws Mail 3.11.1 (GTK+ 2.24.28; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-4257-1433355891-0001-2"
-Cc: oss-security@lists.openwall.com
-Date: Wed, 3 Jun 2015 20:25:37 +0200
-From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: Stack out of bounds read access in uudecode
- / sharutils
-To: cve-assign@mitre.org
-
---=_zucker.schokokeks.org-4257-1433355891-0001-2
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-Hi CVE-team,
-
-On Tue,  2 Jun 2015 22:35:02 -0400 (EDT)
-cve-assign@mitre.org wrote:
-
-> What are the realistic scenarios in which this has a security impact?
->=20
-> For example, can any of these occur on actual systems?
->=20
-> 1. The attacker e-mails a uuencoded file to their own mailbox on a
-> web-based mail service. This service has a feature in which decoded
-> data is presented to the recipient. (The server operates on the data
-> with the uudecode program, not with any other implementation of the
-> uudecode algorithm. The attacker gains read access to unintended parts
-> of the server's memory.)
->=20
-> 2. A web site allows users to do HTTP uploads of data in uuencoded
-> format, and supports requests for decoded versions of the data. Same
-> parenthesized description as above.
->=20
-> 3. The attacker composes a news article with crafted uuencoded data
-> and posts it to the alt.sources Usenet newsgroup. The attacker is
-> subscribed to this newsgroup in their own account on a web-based
-> Usenet news reading service. Same parenthesized description as above.
-
-To answer these questions to the best of my knowledge: I don't know.
-
-This is a question I think I can answer in a very general fashion. I
-find and report these out of bounds vulns very often. I can
-confirm that in your described scenarios an attacker could trigger an
-out of bounds read. If that can in anyway be used to exfiltrate data or
-other attacks: I don't know. In this case it's probably unlikely,
-because as you can see the oob read is just one byte.
-
-Analyzing the impact of these kinds of vulns would require digging and
-understanding the code in detail by someone skilled in memory
-corruption exploitation (that means: not me).
-
-What I can say is that many very similar issues I reported in the past
-got CVEs (lately e.g. in wireshark and curl). And there'll probably be
-a lot more in the near future. I started trying to write up reports for
-all issues of these kinds I reported once they got fixed.
-
-If you prefere not to be bothered about out of bounds issues with
-unknown impact any more I am fine with that and will stop cc-ing. Also
-- if the people on oss-security feel that my reports on these
-minor issues are too frequently please tell me and I'll stop sending
-them. But in the past I had the impression it's apprechiated and solar
-designer wants as much info as possible in the oss-security archives
-in case external sources vanish.
-
-
-cu,
---=20
-Hanno B=C3=B6ck
-http://hboeck.de/
-
-mail/jabber: hanno@hboeck.de
-GPG: BBB51E42
-
---=_zucker.schokokeks.org-4257-1433355891-0001-2
-Content-Type: application/pgp-signature
+Received: (qmail 6050 invoked from network); 22 Nov 2017 17:10:14 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+	s=q20161114; t=1511370602;
+	bh=5T0/eBEp/tlGFHzOsD3HA3n4Aww9+mq3GcKOQtdoZiQ=;
+	h=Received:Received:Subject:To:From:Message-ID:Date:MIME-Version:
+	 Content-Type;
+	b=EK13hvZjdqSPou+doeW8YDtdZEmkfZtbePwyZ+enAAuycb91g0JGvwP4GGOlTzrxF
+	 vy4pcXlecM4h0l9XswzB0mhmaQqMblZklYoKoI3JC5nmrNtKy7QdJY4yyiMXk2Xkwx
+	 j9pa0yvtpBH4O8h7L3sczqn3A8g7x/7uB7ecTg8EJ+Q9q3U6t+4tD+pB/c/uSQQ2WE
+	 SYdtrvXZfiTQtt7sVHQQtSMgdwuXISoYtTLLfRxuxknXrAQcLZ8ulF7TuL0oToSuFS
+	 6ZiGENDucaygbNuzGu8npTB/8Wgyg7AtBE1RrPb5rWII0Wg3iRVurJc/MkwIbjXfVg
+	 sG/z6wLHMOH4g==
+To: oss-security@lists.openwall.com
+References: <CAO5O-ELaS6a9jPqxZeuEYX3nhT1k2X8hWkz2D6=1G+mBW14BPw@mail.gmail.com>
+ <20171122081339.eacdjs5pewelvhod@scully.more-magic.net>
+ <CALx_OUCSLH1n0JaBT4XAysVpEQMLF-vGUBtn4dmJ3ED8cZigEg@mail.gmail.com>
+From: Chad Dougherty <dougherty477@comcast.net>
+Message-ID: <8007904f-d86d-783f-35c9-b53aeb025e32@comcast.net>
+Date: Wed, 22 Nov 2017 12:10:02 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
+MIME-Version: 1.0
+In-Reply-To: <CALx_OUCSLH1n0JaBT4XAysVpEQMLF-vGUBtn4dmJ3ED8cZigEg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-Content-Description: OpenPGP digital signature
+X-CMAE-Envelope: MS4wfJaASrBRGv/8AKd5AuO3WbP4TvpNfO6bUnTCIDzTpSaUA5+XxDcZoby9edCbYviQudq5IRvQuqzbnydS+cSlyL7hK1JUH+OoFC1y9BF0GMVQsME75OGD
+ HvSwQi2DGHXCXIeAg+7TvB3d7I4Tlv8GuxIlVog4uHmZ/IR7sZ8itafUgB9twtD3YrDy7+fbeiLW2HHavJQvX5NvxiU8aQzLCB8=
+Subject: Re: [oss-security] Go programming language invalid modular
+ exponentiation result (Exp() in math/big pkg)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+On 2017-11-22 11:34, Michal Zalewski wrote:
+>> Is this fuzzer freely available?  I'd love to try it out on the bignum
+>> support I added to the CHICKEN Scheme implementation for its upcoming
+>> new major release (probably somewhere mid-2018).  Being able to release
+>> it with a bit higher confidence in its correctness would be nice, as this
+>> is almost all brand new code.
+> 
+> Not the same tool, but Hanno released a bignum fuzzer that found quite
+> a few issues back in the day:
+> 
+> https://github.com/hannob/bignum-fuzz/
+> 
 
-iQIcBAEBCgAGBQJVb0ahAAoJEKWIAHK7tR5C49QP/1Lg9t8usrEXRIbvKMtzX3bY
-htlIT4ANyv1UySsU670JN+Pl231WSTege3dCfttM8xFVAXdaOnjuUBvg7Mv4Mavm
-WvLVoal0sjN/lAnDeIlxQ1dL2XzfkvVMQ0dT99v7m/FAA6ByPwoZh6DkF/O/XB3H
-RAUkwv2PdWcPx6E7KD/863VsItt/7SkCrHmVjBXxpeNJhoA1OxOOW/jWDL12nsmf
-2RYNRReCXE69AFV0Yhule7Zxj4dGkC1BPUljWai24SwSHvikQqq13TY6D+mhP979
-L5+VeFyfYDD+3V2c8S9hTV7LhoCo5hJRdoDWObN2QPeJk6xX0rAdYFm5Q2IjMgXK
-OD7BLI3GL+2fRirD8oLt2WdP5JEpxLeCCD0ZsGLWvertrkPsusEHoy1br8aj90A/
-6aUKqw6TQbf3kH/S/SwuHPv+4WE+SnwPBRmk4ChyL9X6kl5+Wrfh3xd6kagF1Enh
-0YaiivpWXIfYkjZu6Pm6CiBA1TXy4z+EFsVacRaYzhHnX/RGfR1gIqz15gLbfmXy
-SFdafWAaD6R4703w1zsiLJHwrd+RR+gnLDgCC2BrRz4e0cbnx4m8shxQ4Qs4rnOJ
-1CpVbSLwk1z6JCw1fjcY2DpkO9CQs6MRyqY6Mz/NsXy1zBxotb2WHNSVinYxOI6B
-4Xom7/T8IEhAOhcd7R3m
-=FCbv
------END PGP SIGNATURE-----
+One more reference that might help you, perhaps indirectly, is 
+Ralf-Philipp Weinmann's talk from BlackHat USA 2015, "Assessing and 
+Exploiting BigNum Vulnerabilities":
 
---=_zucker.schokokeks.org-4257-1433355891-0001-2--
+<https://comsecuris.com/slides/slides-bignum-bhus2015.pdf>
+
+-- 
+     -Chad
