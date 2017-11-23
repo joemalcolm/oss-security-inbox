@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2183" "Saturday" "20" "October" "2018" "02:47:01" "+0100" "Ken Moffat" "zarniwhoop@ntlworld.com" "<20181020014701.GB3366@milliways.localdomain>" "52" "[oss-security] Attempting to patch ghostscript-9.25" "^Date:" nil nil "10" "2018102001:47:01" "[oss-security] Attempting to patch ghostscript-9.25" (number mark "        zarniwhoop@n Oct 20   52/2183  " thread-indent "\"[oss-security] Attempting to patch ghostscript-9.25\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1639" "Thursday" "23" "November" "2017" "10:53:13" "+0100" "Raphael Hertzog" "hertzog@debian.org" "<20171123095313.ecfh63vqfwwmbzjp@home.ouaza.com>" "48" "Re: [oss-security] exiv2: multiple memory safety issues" nil nil nil "11" "2017112309:53:13" "[oss-security] exiv2: multiple memory safety issues" (number mark "U       hertzog@debi Nov 23   48/1639  " thread-indent "\"Re: [oss-security] exiv2: multiple memory safety issues\"\n") "<20170630103434.7d6093c9@pc1>" ("<20170630103434.7d6093c9@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3913 invoked by uid 550); 20 Oct 2018 11:02:07 -0000
+Received: (qmail 3405 invoked by uid 550); 23 Nov 2017 10:17:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,69 +11,69 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19637 invoked from network); 20 Oct 2018 01:47:12 -0000
-Message-ID: <20181020014701.GB3366@milliways.localdomain>
+Reply-To: oss-security@lists.openwall.com
+Received: (qmail 20394 invoked from network); 23 Nov 2017 09:53:26 -0000
+Date: Thu, 23 Nov 2017 10:53:13 +0100
+From: Raphael Hertzog <hertzog@debian.org>
+To: Hanno =?utf-8?B?QsO2Y2s=?= <hanno@hboeck.de>
+Cc: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Message-ID: <20171123095313.ecfh63vqfwwmbzjp@home.ouaza.com>
+References: <20170630103434.7d6093c9@pc1>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-X-Clacks-Overhead: GNU Terry Pratchett
 Content-Transfer-Encoding: 8bit
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Date: Sat, 20 Oct 2018 02:47:01 +0100
-From: Ken Moffat <zarniwhoop@ntlworld.com>
-Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Attempting to patch ghostscript-9.25
-To: oss-security@lists.openwall.com
+In-Reply-To: <20170630103434.7d6093c9@pc1>
+User-Agent: NeoMutt/20170609 (1.8.3)
+X-Virus-Scanned: clamav-milter 0.99.2 at mail
+X-Virus-Status: Clean
+Subject: Re: [oss-security] exiv2: multiple memory safety issues
 
-Hi,
+Hello Hanno,
 
-I hope people can read this - I know that google marks my mails as
-spam (so no point Cc'ing Tavis) and also that Suse discard my mails.
-Probably many other places also do that.  Anyway:
+On Fri, 30 Jun 2017, Hanno Böck wrote:
+> I have not reported thoses issues upstream. When I previously tried to
+> report bugs in exiv2 found via fuzzing the upstream author made it
+> clear to me that he has little interest in fixing those issues and
+> doesn't consider his software suitable to parse defect files (which
+> basically means it's unsuitable for untrusted input). The discussion
+> can be read here [1]. (the page is sometimes not available, searching
+> for it in the google cache usually works though)
+> 
+> exiv2 is to my knowledge used by the major Linux Desktops GNOME and
+> KDE. I'll also inform their security teams. I leave it up to Linux
+> distros how to handle this, but it certainly is problematic that a
+> crucial parser used by major desktop applications is not interested in
+> fixing potential security issues.
+> 
+> [1] http://dev.exiv2.org/issues/1248
 
-When the first set of vulnerabilities in 9.25 came out there was a
-nice 'mostly harmless' example, and I patched BLFS for that (needed
-one extra commit beyond the two Tavis specified, so that I could
-make sense of where to apply part of it).
+FWIW, Robin Mills is moving away from exiv2, it is being handed over to
+new developers and they have been rather responsive to the various
+security issues that have been reported in the last months.
 
-For the later vulnerabilities, working out what to apply has been
-much harder.  Either everyone else thinks that other mitigations
-against untrusted ps files will suffice, or else it's on everybody's
-ToDo lists.
+Search for CVE in https://github.com/Exiv2/exiv2/issues
 
-So, here is a first attempt to fix all this month's vulnerabilities.
-For the latest exploit(s) I do not have an example, so I don't know
-whether or not this works.  But it prevents the earlier
-vulnerability, and usage of real ps (and eps - I only have the gs
-examples, and only gs seems able to use them) seems to work
-correctly.  Unlike my first attempt to fix this, which turned out
-to fail to display any ps, eps files.
+So please file bugs on github, thank you.
 
-The patch is a bit big, so I've uploaded it to
-http://www.linuxfromscratch.org/~ken/provisional/ as
-ghostscript-9.25-security_fixes-2.patch
+I just add the CVE assigned through the Distributed Weakness Filing
+Project.
 
-'provisional' until I find out if it protects adequately.  If there
-turn out ot be problems, I suppose I'll need to renumber later
-versions.
+> Heap overflow (write) in tiff parser
 
-Built in BLFS using the same instructions as for the earlier -1
-patch [ http://www.linuxfromscratch.org/blfs/view/svn/pst/gs.html ]
-but that doesn't mean it will work for everyone else's ways of
-building.  Note tht I _do_ build the shared library.
+CVE-2017-1000127
+	
+> Heap out of bounds read in jp2 / JPEG2000 parser
 
-The patch lists which upstream commits I pulled in.  I was mostly
-concentrating on changes to gs_init which would maybe help me apply
-the needed patches.  As I've noted in the patch's introduction,
-several commits had negative offsets (I guess hunks of code were
-removed in some of the unrelated commits that I ignored).
+CVE-2017-1000128
 
-Comments welcome.
+> Stack out of bounds read in webp parser
 
-One final thought - apart from 9.25, upstream seem to have an
-approximately 6-monthly release schedule, so probably the only thing
-likely to speed up 9.26 is everybody patching ;)
+CVE-2017-1000126
 
-ĸen
+Cheers,
 -- 
-                        Is it about a bicycle ?
+Raphaël Hertzog ◈ Debian Developer
+
+Support Debian LTS: https://www.freexian.com/services/debian-lts.html
+Learn to master Debian: https://debian-handbook.info/get/
