@@ -1,37 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/29/5
-Message-ID: <20170929151218.0cfb25c2@pc1>
-Date: Fri, 29 Sep 2017 15:12:18 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: The Internet Bug Bounty: Data Processing (hackerone.com)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/23/4
+Message-ID: <301dd43f-a9b8-0e08-d7f6-de7c1ceb2a31@redhat.com>
+Date: Thu, 23 Nov 2017 21:05:31 +0000
+From: Luke Hinds <lhinds@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: OpenDayLight: Password change doesn't result in Karaf clearing cache, allowing old password to still be used (CVE-2017-1000406)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 28 Sep 2017 23:13:22 -0700
-Reed Loden <reed@...dloden.com> wrote:
+This email is a notification of a vulnerability discovered in
+OpenDayLights AAA module. The current status of the vulnerability is
+open / public, so no embargo is currently active.
 
-> Separately, we're happy to announce that libav (
-> https://git.libav.org/?p=libav.git;a=summary) was added to the scope
-> earlier today.
+opendaylight-advisory: Password change doesn't result in Karaf clearing
+cache, allowing old password to still be used)
 
-I'm surprised by this. When I saw the ibb-data bounty I immediately
-wondered whether ffmpeg should be in there.
+cve: CVE-2017-1000406
 
-Is there a reason libav is in and ffmpeg is not? Were there concerns by
-the ffmpeg devs? (I'm not taking a side in the libav/ffmpeg wars, but
-my impression is that many distros who had used libav for some time
-have switched back and ffmpeg is clearly the more widely used of the
-forks.)
+Vaibhav Hemant Dixit from Arizona State University reported a
+vulnerability in OpenDayLight AAA, whereby should a user update a
+password, the login is still successful with both OLD and NEW passwords.
 
-Given that imagemagick+graphicsmagick are already in there I assume
-there's no general problem for IBB to support competing forks.
+This is a result of how claimCache is flushed in AAA IDM when using the
+Karaf CLI.
 
-At the very least I'd recommend that you make sure all ibb-reports for
-libav get tested against ffmpeg.
+The issue is not present when using the AAA IDM REST API, as the
+handlers already invoke the clearing of the IdmLightProxy claimCache
+upon user update.
+
+A flush can be made by performing a reboot of Karaf or by applying the
+patches referenced in this advisory, as the patches enable the Karaf CLI
+to call IdmLightProxy claimCache and perform a flush every time a user
+changes a password.
+
+branch: master, nitrogen, carbon
+review: https://git.opendaylight.org/gerrit/#/q/topic:AAA-151
+jira: https://jira.opendaylight.org/browse/AAA-151
+
+release-notes:
+The fixes will be be available in the coming Nitrogen-SR1 and Carbon-SR3
+releases.
 
 -- 
-Hanno Böck
-https://hboeck.de/
+Luke Hinds
+OpenDaylight Security Team
 
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
