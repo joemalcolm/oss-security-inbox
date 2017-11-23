@@ -1,31 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/29/1
-Message-ID: <alpine.LFD.2.20.1706291419220.1726@wniryva>
-Date: Thu, 29 Jun 2017 14:21:14 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE-2017-10664 Qemu: qemu-nbd: server breaks with SIGPIPE upon client abort
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/23/1
+Message-ID: <20171123085405.GA25517@eldamar>
+Date: Thu, 23 Nov 2017 09:54:05 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: xrdp: CVE-2017-16927: Buffer-overflow in scp_v0s_accept function in session manager
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Hi
 
-Quick Emulator(Qemu) built with the Network Block Device(NBD) Server support 
-is vulnerable to a crash via SIGPIPE signal. It could occur if a client aborts 
-connection due to any failure during negotiation.
+MITRE has assigned CVE-2017-16927 for a buffer-overflow flaw in the
+scp_v0s_accept function in xrdp's session manager (in default
+configurations running as root and listening on the loopback address,
+so potentially triggerable by any local user):
 
-A remote user/process could use this flaw to crash the qemu-nbd server 
-resulting in DoS.
+https://groups.google.com/forum/#!topic/xrdp-devel/PmVfMuy_xBA
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2017-06/msg02693.html
+Quoting the reference:
+> The code in question is sesman/libscp/libscp_v0.c, around lines 228
+> and 240: a 16-bit unsigned int is read from the input stream to
+> represent the string length (for username and password input), and
+> used without validation to index/copy from the input stream into a
+> 257-byte buffer.
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1466190
+There is a proposed patch/pull request:
 
+https://github.com/neutrinolabs/xrdp/pull/958
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Regards,
+Salvatore
