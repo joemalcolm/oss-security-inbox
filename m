@@ -1,55 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/22/7
-Message-ID: <20170522185720.GA13059@suse.de>
-Date: Mon, 22 May 2017 20:57:21 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/24/3
+Message-ID: <20171124092920.GD4755@suse.de>
+Date: Fri, 24 Nov 2017 10:29:20 +0100
 From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: How to request a CVE for open source projects
+Subject: Re: New Linux kernel XFRM privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Fri, Nov 24, 2017 at 10:08:23AM +0100, Greg KH wrote:
+> On Fri, Nov 24, 2017 at 09:48:00AM +0100, Marcus Meissner wrote:
+> > Hi,
+> > 
+> > posted to bugtraq:
+> > 
+> > http://seclists.org/fulldisclosure/2017/Nov/40
+> > https://blogs.securiteam.com/index.php/archives/3535
+> > https://github.com/torvalds/linux/commit/1137b5e2529a8f5ca8ee709288ecba3e68044df2
+> > 
+> > affects 2.6.28 up to 4.14 I would say.
+> 
+> Looks like this was fixed in 4.14-rc7, so 4.14 should be ok.
 
-You can request CVEs for opensource projects via the Mitre webform.
-
-For e.g. the Linux Kernel I just used "Linux" as vendor, for Xen "Xen" and similar.
-
-(and in general:)
-Please everyone do the distributors a favour and link to GIT commits with fixes for
-the requested CVE or at least explicit single reproducers, as we have increasing trouble
-of associating CVEs with the correct place in code.
+CVE-2017-16939 was assigned by Mitre.
 
 Ciao, Marcus
-On Mon, May 22, 2017 at 01:05:34PM -0500, Michael Catanzaro wrote:
-> Hi,
-> 
-> I'm aware that the CVE form [1] can now be used to request CVEs. However, it
-> does not seem to be designed for requesting CVEs in open source products.
-> The field "Vendor of the product(s)" says "Please ensure vendors are on the
-> products and sources list," indicating the intent of MITRE to restrict usage
-> of the form to specific products. This list [2] says "For open source
-> software products not listed below, request a CVE ID through the Distributed
-> Weakness Filing Project CNA." So, clearly we are supposed to request a CVE
-> through the DWF project. (Or perhaps via Red Hat, since it seems like it's
-> willing to allocate CVEs for miscellaneous Linux-related issues.)
-> 
-> Anyway, I attempted to request a CVE using the DWF project's request form
-> [3] several months ago, but have not yet received any response [4]. So I am
-> hesitant to request further CVEs from the DWF project, for fear that I won't
-> receive a response and will wind up needing to make a duplicate CVE request
-> somewhere else.
-> 
-> How are other people getting open source CVEs right now? Has anybody else
-> had luck getting a CVE via DWF? Should I be trying to do this through Red
-> Hat instead? Or just by filling out MITRE's CVE form even though we're not
-> really supposed to be using it?
-> 
-> Michael
-> 
-> [1] https://cveform.mitre.org/
-> [2] http://cve.mitre.org/cve/request_id.html#cna_coverage
-> [3] http://iwantacve.org/
-> [4] https://bugzilla.gnome.org/show_bug.cgi?id=752738#c15
-> 
-
--- 
-Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@...e.de>
