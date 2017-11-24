@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1532" "Wednesday" "2" "November" "2016" "16:58:53" "-0700" "Cedric Staub" "css@css.bio" "<1478131133.3496639.775671145.5782B090@webmail.messagingengine.com>" "51" "[oss-security] CVE request: multiple issues in go-jose package" nil nil nil "11" "2016110223:58:53" "[oss-security] CVE request: multiple issues in go-jose package" (number mark "U       css@css.bio  Nov  2   51/1532  " thread-indent "\"[oss-security] CVE request: multiple issues in go-jose package\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["526" "Friday" "24" "November" "2017" "10:29:20" "+0100" "Marcus Meissner" "meissner@suse.de" "<20171124092920.GD4755@suse.de>" "17" "Re: [oss-security] New Linux kernel XFRM privilege escalation" nil nil nil "11" "2017112409:29:20" "[oss-security] New Linux kernel XFRM privilege escalation" (number mark "U       meissner@sus Nov 24   17/526   " thread-indent "\"Re: [oss-security] New Linux kernel XFRM privilege escalation\"\n") "<20171124090823.GA6922@kroah.com>" ("<20171124084800.GB4755@suse.de>" "<20171124090823.GA6922@kroah.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30377 invoked by uid 550); 3 Nov 2016 00:04:18 -0000
+Received: (qmail 13999 invoked by uid 550); 24 Nov 2017 09:29:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,81 +12,38 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28233 invoked from network); 2 Nov 2016 23:59:05 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=css.bio; h=
-	x-me-sender:message-id:from:to:mime-version
-	:content-transfer-encoding:content-type:date:subject; s=mesmtp;
-	 bh=RPSmN6Y44EQfnCUSo/krFyXd2bk=; b=ikzzP8oCAjDR2w2/PfTo0yh3dRFC
-	L2LR3hS8ulWRwe+466aHx5gqesl+lk1FgbtfpraXkUqB8rEGJ8dJxong4ooslZ/z
-	j8yFpzxdSECn+mnPln8/OgQ6JsGTOQ9mCVsqC751f7nSbgBmeKMOg/w43C4RacrJ
-	seCqNXMp+QKeDpk=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=x-me-sender:message-id:from:to
-	:mime-version:content-transfer-encoding:content-type:date
-	:subject; s=smtpout; bh=RPSmN6Y44EQfnCUSo/krFyXd2bk=; b=MmtQUaQI
-	zmy43Yz8BxHFaAA3LLBsIUKMEHHpIJixT/qqGG76Am4kePinQ6XEiDJX+jDdcpbM
-	0Lz2PYFhxJBGYJKdKobrLOhcbTcxpEmi0u98D9kO4S3fuXJ27Pmem8VRJMzM4yEL
-	7usHzqhi81JsXyfLTXYo/B5ZBOheeO0thtc=
-X-ME-Sender: <xms:vX0aWH4k6WitEO299dH3BOX-FL9CgbscmkTIWq8JttU-f_MQS7ERCA>
-Message-Id: <1478131133.3496639.775671145.5782B090@webmail.messagingengine.com>
-From: Cedric Staub <css@css.bio>
+Received: (qmail 13975 invoked from network); 24 Nov 2017 09:29:31 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Date: Fri, 24 Nov 2017 10:29:20 +0100
+From: Marcus Meissner <meissner@suse.de>
 To: oss-security@lists.openwall.com
+Message-ID: <20171124092920.GD4755@suse.de>
+References: <20171124084800.GB4755@suse.de>
+ <20171124090823.GA6922@kroah.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Type: multipart/alternative; boundary="_----------=_147813113334966391";
- charset="utf-8"
-X-Mailer: MessagingEngine.com Webmail Interface - ajax-037c6db9
-Date: Wed, 02 Nov 2016 16:58:53 -0700
-Subject: [oss-security] CVE request: multiple issues in go-jose package
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20171124090823.GA6922@kroah.com>
+Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
+ =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
+ =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Subject: Re: [oss-security] New Linux kernel XFRM privilege escalation
 
---_----------=_147813113334966391
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain
+On Fri, Nov 24, 2017 at 10:08:23AM +0100, Greg KH wrote:
+> On Fri, Nov 24, 2017 at 09:48:00AM +0100, Marcus Meissner wrote:
+> > Hi,
+> > 
+> > posted to bugtraq:
+> > 
+> > http://seclists.org/fulldisclosure/2017/Nov/40
+> > https://blogs.securiteam.com/index.php/archives/3535
+> > https://github.com/torvalds/linux/commit/1137b5e2529a8f5ca8ee709288ecba3e68044df2
+> > 
+> > affects 2.6.28 up to 4.14 I would say.
+> 
+> Looks like this was fixed in 4.14-rc7, so 4.14 should be ok.
 
-Hello,
+CVE-2017-16939 was assigned by Mitre.
 
-I'd like to request CVE numbers for three issues in go-jose
-(https://github.com/square/go-jose):
-
-
-1. Invalid curve attack for ECDH-ES algorithm
-
-When deriving a shared key using ECDH-ES for an encrypted message, go-
-jose neglected to check that the received public key on a message is on
-the same curve as the static private key of the receiver, thus making it
-vulnerable to an invalid curve attack.
-
-Upstream patch:
-https://github.com/square/go-jose/commit/c7581939a3656bb65e89d64da0a52364a33d2507
-
-
-2. Exploiting multiple signatures
-
-The go-jose library supports messages with multiple signatures. However,
-when validating a signed message the API did not indicate which
-signature was valid, which could potentially lead to confusion. For
-example, users of the library might mistakenly read protected header
-values from an attached signature that was different from the one
-originally validated.
-
-Upstream patch:
-https://github.com/square/go-jose/commit/2c5656adca9909843c4ff50acf1d2cf8f32da7e6
-
-
-3. CBC-HMAC integer overflow on 32-bit architectures
-
-An integer overflow could lead to authentication bypass for CBC-HMAC
-encrypted ciphertexts on 32-bit architectures.
-
-Upstream patch:
-https://github.com/square/go-jose/commit/789a4c4bd4c118f7564954f441b29c153ccd6a96
-
-
-All of the above issues were reported by Quan Nguyen from Google's
-Information Security Engineering Team.
- 
-Thanks,
-Cedric
-
---_----------=_147813113334966391--
-
+Ciao, Marcus
