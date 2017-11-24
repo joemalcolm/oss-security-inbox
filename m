@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1862" "Thursday" "4" "June" "2015" "02:12:54" "-0500" "Eric W. Biederman" "ebiederm@xmission.com" "<874mmo54ll.fsf@x220.int.ebiederm.org>" "44" "Re: [oss-security] Re: CVE request Linux kernel: ns: user namespaces panic" nil nil nil "6" "2015060407:12:54" "[oss-security] Re: CVE request Linux kernel: ns: user namespaces panic" (number mark "        ebiederm@xmi Jun  4   44/1862  " thread-indent "\"Re: [oss-security] Re: CVE request Linux kernel: ns: user namespaces panic\"\n") "<alpine.LFD.2.11.1506041216340.16237@wniryva>" ("<20150603175834.4FC0D6C004F@smtpvmsrv1.mitre.org>" "<alpine.LFD.2.11.1506041216340.16237@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["411" "Friday" "24" "November" "2017" "10:08:23" "+0100" "Greg KH" "greg@kroah.com" "<20171124090823.GA6922@kroah.com>" "16" "Re: [oss-security] New Linux kernel XFRM privilege escalation" nil nil nil "11" "2017112409:08:23" "[oss-security] New Linux kernel XFRM privilege escalation" (number mark "U       greg@kroah.c Nov 24   16/411   " thread-indent "\"Re: [oss-security] New Linux kernel XFRM privilege escalation\"\n") "<20171124084800.GB4755@suse.de>" ("<20171124084800.GB4755@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24472 invoked by uid 550); 4 Jun 2015 07:18:30 -0000
+Received: (qmail 24207 invoked by uid 550); 24 Nov 2017 09:08:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,79 +11,44 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24454 invoked from network); 4 Jun 2015 07:18:29 -0000
-References: <20150603175834.4FC0D6C004F@smtpvmsrv1.mitre.org>
-	<alpine.LFD.2.11.1506041216340.16237@wniryva>
-In-Reply-To: <alpine.LFD.2.11.1506041216340.16237@wniryva> (P. J. P.'s message
-	of "Thu, 4 Jun 2015 12:20:11 +0530 (IST)")
-Message-ID: <874mmo54ll.fsf@x220.int.ebiederm.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-XM-AID: U2FsdGVkX18rigp9YNVYolv/y4FUtQJ5NrxJ/HlurxE=
-X-SA-Exim-Connect-IP: 67.3.205.90
-X-SA-Exim-Mail-From: ebiederm@xmission.com
-X-Spam-DCC: XMission; sa07 1397; Body=1 Fuz1=1 Fuz2=1 
-X-Spam-Combo: *;P J P <ppandit@redhat.com>
-X-Spam-Relay-Country: 
-X-Spam-Timing: total 412 ms - load_scoreonly_sql: 0.04 (0.0%),
-	signal_user_changed: 4.0 (1.0%), b_tie_ro: 3.0 (0.7%), parse: 3.3 (0.8%),
-	extract_message_metadata: 15 (3.6%), get_uri_detail_list: 1.68 (0.4%),
-	tests_pri_-1000: 6 (1.5%), tests_pri_-950: 1.46 (0.4%), tests_pri_-900: 1.21
-	(0.3%), tests_pri_-400: 23 (5.5%), check_bayes: 21 (5.2%), b_tokenize: 6
-	(1.4%), b_tok_get_all: 8 (1.9%), b_comp_prob: 2.4 (0.6%), b_tok_touch_all:
-	2.8 (0.7%), b_finish: 0.87 (0.2%), tests_pri_0: 344 (83.5%), tests_pri_500: 7
-	(1.8%), rewrite_mail: 0.00 (0.0%)
-X-SA-Exim-Version: 4.2.1 (built Wed, 24 Sep 2014 11:00:52 -0600)
-X-SA-Exim-Scanned: Yes (on in01.mta.xmission.com)
-Cc: oss security list <oss-security@lists.openwall.com>,  cve-assign@mitre.org
-Date: Thu, 04 Jun 2015 02:12:54 -0500
-From: ebiederm@xmission.com (Eric W. Biederman)
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: CVE request Linux kernel: ns: user namespaces panic
-To: P J P <ppandit@redhat.com>
+Received: (qmail 24186 invoked from network); 24 Nov 2017 09:08:28 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm1; bh=HLShEbdIvLk3/NgzXMWD1YdRCZ0E2
+	eTKzXpYLAkYlYg=; b=NqCc3GkN9QMvsKye4HVWnE/sgl6UKUZracUxsNS6/bfGU
+	ZItXq43wtsEBF4MfEIMpFpI/p1u9YQikVGlXZEbRanK+xsy2NCj49j11XM+XT8gz
+	4Eeu8Q5OjjtXgjBzpu5+PQhs37GU+/jknCQxYd8JLLQwnJFWHf3piIUDmYhC5JdF
+	O9GAwrs0V8pvc/cBW1GLd2P7WHNl6aD4DP6J48EIygh1AcJiYG1yTdhdvqyeWV1p
+	lFjKYuGiEcDyTy82ETNVQfmEY4Wt4n+ptQvoXST3d2M3T0pjzneuSWdChU/8q9+r
+	+pJW5F1xUjS7HLvixWrA6xoDEnnaIx+pCQ9bSzmtA==
+X-ME-Sender: <xms:geEXWvbTqU1uR6O8ls3R5mA8sbjpsxPZ3laSvRzAfcyfrCnDfVr_dw>
+Date: Fri, 24 Nov 2017 10:08:23 +0100
+From: Greg KH <greg@kroah.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20171124090823.GA6922@kroah.com>
+References: <20171124084800.GB4755@suse.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20171124084800.GB4755@suse.de>
+User-Agent: Mutt/1.9.1 (2017-09-22)
+Subject: Re: [oss-security] New Linux kernel XFRM privilege escalation
 
-P J P <ppandit@redhat.com> writes:
+On Fri, Nov 24, 2017 at 09:48:00AM +0100, Marcus Meissner wrote:
+> Hi,
+> 
+> posted to bugtraq:
+> 
+> http://seclists.org/fulldisclosure/2017/Nov/40
+> https://blogs.securiteam.com/index.php/archives/3535
+> https://github.com/torvalds/linux/commit/1137b5e2529a8f5ca8ee709288ecba3e68044df2
+> 
+> affects 2.6.28 up to 4.14 I would say.
 
-> +-- On Wed, 3 Jun 2015, cve-assign@mitre.org wrote --+
-> | We feel that this is best covered by two CVE IDs. The 
-> | cd4a40174b71acd021877341684d8bb1dc8ea4ae issue seems to be about lack of 
-> | state identification (i.e., the state is whether the path is mounted or 
-> | unmounted),
->
->   Not sure if it'd have security implications which an end user could use or 
-> trigger. CC'ing upstream author Eric for any clarificaitons.
+Looks like this was fixed in 4.14-rc7, so 4.14 should be ok.
 
-The core issue is that a unprivileged user could call umount(MNT_DETACH)
-and in the right circumstances gain access to every file on essentially
-any filesystem in the mount namespace.
+thanks,
 
-So in a kernel with user namespaces enabled and you are running a
-sandbox like docker that has a real root user inside.  That root user
-could with a little work remove every ro bind mount on top of proc.
-Such as /proc/sys/.
-
-Allowing a user that simply has uid 0 and no caps access to do all kinds
-of interesting things.
-
-The bug fix modifies umount(MNT_DETACH) to keeps mounts covered
-even after the actual umount.  That changes makes it unsafe for
-copy_tree to run on an unmounted mount tree because one of it's
-assumptions is violated.  Which assumption I do not remember at this
-late hour.  But I think it was something bad enough to cause a crash.
-I can not recall all of the details when reading through the code
-at this late hour.
-
-Previously copy_tree on an unmounted tree would just return a single
-struct mount as all of the connections would have been cleanly removed.
-
-So I believe cd4a40174b71acd021877341684d8bb1dc8ea4ae prevents a
-difficult to trigger crash if you have
-e0c9c0afd2fc958ffa34b697972721d81df8a56f applied.
-
-e0c9c0afd2fc958ffa34b697972721d81df8a56f mnt: Update detach_mounts to leave mounts connected
-is the real bug fix that fixes a fairly scary issue.
-
-I hope that helps.
-
-Eric
+greg k-h
