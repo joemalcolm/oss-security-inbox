@@ -1,45 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/23/1
-Message-ID: <CAOtQxbTJrDdJGp569WtczHGGAV+Nxas6XsNMw7Rw20koE=MXaQ@mail.gmail.com>
-Date: Wed, 22 Mar 2017 15:19:11 -0700
-From: Dave Null <noid23@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/24/2
+Message-ID: <20171124090823.GA6922@kroah.com>
+Date: Fri, 24 Nov 2017 10:08:23 +0100
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: information about pwn2own Kernel problem
+Subject: Re: New Linux kernel XFRM privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-I was wondering this myself. I'm not sure if ZDI does any variant
-investigation when they pick up a bug. Really hoping this doesn't jump from
-a distro related problem to a Linux problem.
+On Fri, Nov 24, 2017 at 09:48:00AM +0100, Marcus Meissner wrote:
+> Hi,
+> 
+> posted to bugtraq:
+> 
+> http://seclists.org/fulldisclosure/2017/Nov/40
+> https://blogs.securiteam.com/index.php/archives/3535
+> https://github.com/torvalds/linux/commit/1137b5e2529a8f5ca8ee709288ecba3e68044df2
+> 
+> affects 2.6.28 up to 4.14 I would say.
 
--noid
+Looks like this was fixed in 4.14-rc7, so 4.14 should be ok.
 
-Crypto: https://keybase.io/noid
-None are more hopelessly enslaved than those who falsely believe they are
-free - Goethe
---
+thanks,
 
-On Wed, Mar 22, 2017 at 1:54 PM, Luedtke, Nicholas (HPE Linux Security) <
-nicholas.luedtke@....com> wrote:
-
->
-> On 3/22/2017 2:21 PM, Tyler Hicks wrote:
-> > ZDI disclosed the information to the Ubuntu Security team a little less
-> > than 48 hours ago.
-> >
-> > The Ubuntu Kernel team has triaged the issue and came up with a
-> > potential fix. That fix is undergoing internal review and I'll be
-> > disseminating it via the usual channels once that is complete.
-> >
-> > Tyler
-> Is this an Ubuntu specific issue? Or does it affect the upstream kernels
-> as well?
->
->
-> --
-> Nicholas Luedtke
-> HPE Linux Security, Hewlett-Packard Enterprise
->
->
->
->
-
+greg k-h
