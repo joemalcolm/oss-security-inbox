@@ -1,70 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/01/16
-Message-ID: <5047388.q5AdsWxC1J@blackgate>
-Date: Wed, 01 Feb 2017 16:13:57 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/25/3
+Message-ID: <20171125235030.GA24195@breadbox.private.spodhuis.org>
+Date: Sat, 25 Nov 2017 18:50:31 -0500
+From: Phil Pennock <oss-security-phil@...dhuis.org>
 To: oss-security@...ts.openwall.com
-Subject: podofo: NULL pointer dereference in PdfInfo::GuessFormat (pdfinfo.cpp)
+Subject: Re: RCE in Exim reported
 Content-Type: text/plain; charset=utf-8
 
-Description:
-podofo is a C++ library to work with the PDF file format.
+On 2017-11-24 at 22:59 -0500, Phil Pennock wrote:
+> In Post-Thanksgiving mail-catchup, I see that the Exim Project was
+> gifted with a couple of surprises in our public bugtracker on Thursday
+> morning.  Complete with proof-of-concept small Python script.
+> 
+> I've requested CVEs, don't have them yet.
 
-A fuzz on it discovered a NULL pointer access. The upstream project denies me 
-to open a new ticket. So, I’m unable to communicate with them.
+bugs.exim.org/2199 :
+  Use-after-free remote-code-execution
+  CVE-2017-16943
 
-The complete ASan output:
+bugs.exim.org/2201 :
+  stack-exhaustion remote DoS
+  CVE-2017-16944
 
-# podofopdfinfo $FILE
-==24654==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 
-0x0000005149a7 bp 0x7ffe59e91e70 sp 0x7ffe59e91d80 T0)
-==24654==The signal is caused by a READ memory access.
-==24654==Hint: address points to the zero page.
-    #0 0x5149a6 in PdfInfo::GuessFormat() /tmp/portage/app-
-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofopdfinfo/pdfinfo.cpp:210:19
-    #1 0x512351 in PdfInfo::OutputDocumentInfo(std::ostream&) 
-/tmp/portage/app-
-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofopdfinfo/pdfinfo.cpp:40:35
-    #2 0x522132 in main /tmp/portage/app-
-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofopdfinfo/podofopdfinfo.cpp:117:18
-    #3 0x7fcaaf4b861f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #4 0x41e8f8 in _start (/usr/bin/podofopdfinfo+0x41e8f8)
+Fix for the former has been confirmed by the reporter and is in git.
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /tmp/portage/app-
-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofopdfinfo/pdfinfo.cpp:210:19 in 
-PdfInfo::GuessFormat()
-==24654==ABORTING
+The `exim-4_89+fixes` branch used by various OS packagers for major
+bug-fixes on top of the 4.89 release has the UAF fix backported.  Work
+on the DoS is under way.
 
-Affected version:
-0.9.4
+  https://git.exim.org/exim.git/shortlog/refs/heads/exim-4_89+fixes
 
-Fixed version:
-N/A
+Jeremy has created a `4.next` branch with work for 4.91, which includes
+re-working the API for the allocator which allowed the use-after-free to
+creep in.
 
-Commit fix:
-N/A
+-Phil
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00133-podofo-nullptr-pdfinfo-cpp
-
-Timeline:
-2017-01-05: bug discovered
-2017-02-01: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/02/01/podofo-null-pointer-dereference-in-pdfinfoguessformat-pdfinfo-cpp
-
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Download attachment "signature.asc" of type "application/pgp-signature" (997 bytes)
