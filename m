@@ -1,103 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/07/1
-Message-ID: <952229.668011086-sendEmail@localhost>
-Date: Sun, 7 May 2017 10:10:17 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: libpcre: heap-based buffer overflow write in pcre2test.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/25/2
+Message-ID: <20171125035912.GA20323@breadbox.private.spodhuis.org>
+Date: Fri, 24 Nov 2017 22:59:12 -0500
+From: Phil Pennock <oss-security-phil@...dhuis.org>
+To: oss-security@...ts.openwall.com
+Subject: RCE in Exim reported
 Content-Type: text/plain; charset=utf-8
 
-Description:
-libpcre is a perl-compatible regular expression library.
+In Post-Thanksgiving mail-catchup, I see that the Exim Project was
+gifted with a couple of surprises in our public bugtracker on Thursday
+morning.  Complete with proof-of-concept small Python script.
 
-A fuzz on pcre2 via pcre2test revealed an overflow in that command-line utility.
+I've requested CVEs, don't have them yet.
 
-# pcre2test -d -i -32 $FILE
-==30932==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x61100000a000 at pc 0x7f2d8c3aea0f bp 0x7ffeea6b6e20 sp 0x7ffeea6b6e18   
-WRITE of size 4 at 0x61100000a000 thread T0  
-    #0 0x7f2d8c3aea0e in pcre2_get_error_message_32 /tmp/portage/dev-libs/libpcre2-10.23/work/pcre2-10.23/src/pcre2_error.c:318:13
-    #1 0x53b7c5 in process_pattern /tmp/portage/dev-libs/libpcre2-10.23/work/pcre2-10.23/src/pcre2test.c:5169:3    
-    #2 0x513846 in main /tmp/portage/dev-libs/libpcre2-10.23/work/pcre2-10.23/src/pcre2test.c:7839:10    
-    #3 0x7f2d8b37478f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289   
-    #4 0x41d5b8 in _init (/usr/bin/pcre2test+0x41d5b8) 
+My mail to our announce list:
+  https://lists.exim.org/lurker/message/20171125.034842.d1d75cac.en.html
 
-0x61100000a000 is located 0 bytes to the right of 256-byte region [0x611000009f00,0x61100000a000)   
-allocated by thread T0 here:  
-    #0 0x4d6378 in malloc /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64    
-    #1 0x54c522 in to32 /tmp/portage/dev-libs/libpcre2-10.23/work/pcre2-10.23/src/pcre2test.c:2911:27    
-    #2 0x53962e in process_pattern /tmp/portage/dev-libs/libpcre2-10.23/work/pcre2-10.23/src/pcre2test.c:4998:43   
-    #3 0x513846 in main /tmp/portage/dev-libs/libpcre2-10.23/work/pcre2-10.23/src/pcre2test.c:7839:10    
-    #4 0x7f2d8b37478f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289   
+Remote code execution in the first vulnerability, getting execution as
+the Exim run-time user.
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/dev-libs/libpcre2-10.23/work/pcre2-10.23/src/pcre2_error.c:318:13 in 
-pcre2_get_error_message_32    
-Shadow bytes around the buggy address:  
-  0x0c227fff93b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff93c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff93d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff93e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c227fff93f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0c227fff9400:[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff9410: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff9420: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff9430: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff9440: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff9450: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==30932==ABORTING
+A complete mitigation is to disable advertising the CHUNKING extension,
+in which case an attempt to use the BDAT verb should result in:
 
-Affected version:
-10.23
+  503 BDAT command used when CHUNKING not advertised
 
-Fixed version:
-N/A
+The instructions I wrote in the mail to our announce-list, were:
 
-Commit fix:
-https://vcs.pcre.org/pcre2/code/trunk/src/pcre2test.c?r1=692&r2=697
+} With immediate effect, please apply this workaround: if you are running
+} Exim 4.88 or newer (4.89 is current, 4.90 is upcoming) then in the main
+} section of your Exim configuration, set:
+}
+}   chunking_advertise_hosts =
+}
+} That's an empty value, nothing on the right of the equals. This
+} disables advertising the ESMTP CHUNKING extension, making the BDAT verb
+} unavailable and avoids letting an attacker apply the logic.
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+Chunking support was introduced with Exim 4.88; the current release is
+4.89, 4.90 is in RC series now, it looks like a 2-line fix (written by
+Jeremy Harris) is probably right for the first issue.
 
-CVE:
-CVE-2017-8786
+Public bugtracker links:
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00220-pcre2-heapoverflow-pcre2_get_error_message_32
+  https://bugs.exim.org/show_bug.cgi?id=2199
+  https://bugs.exim.org/show_bug.cgi?id=2201
 
-Timeline:
-2017-03-17: bug discovered and reported to upstream
-2017-03-21: upstream released a patch
-2017-04-29: blog post about the issue
-2017-05-05: CVE assigned
+-Phil
 
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/04/29/libpcre-heap-based-buffer-overflow-write-in-pcre2test-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
+Download attachment "signature.asc" of type "application/pgp-signature" (997 bytes)
