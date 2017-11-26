@@ -1,4 +1,9 @@
-Received: (qmail 8088 invoked by uid 550); 3 Apr 2024 17:19:36 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1622" "Sunday" "26" "November" "2017" "23:16:23" "+0100" "Heiko Schlittermann" "hs@schlittermann.de" "<20171126221623.szugrgtkizvdez3a@jumper.schlittermann.de>" "48" "Re: [oss-security] RCE in Exim reported" nil nil nil "11" "2017112622:16:23" "[oss-security] RCE in Exim reported" (number mark "U       hs@schlitter Nov 26   48/1622  " thread-indent "\"Re: [oss-security] RCE in Exim reported\"\n") "<20171126203749.GA6487@jasmine.lan>" ("<20171125035912.GA20323@breadbox.private.spodhuis.org>" "<20171125235030.GA24195@breadbox.private.spodhuis.org>" "<20171126203749.GA6487@jasmine.lan>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 15952 invoked by uid 550); 26 Nov 2017 22:19:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,49 +12,83 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5828 invoked from network); 3 Apr 2024 17:18:34 -0000
-Date: Wed, 3 Apr 2024 19:18:28 +0200
-From: Solar Designer <solar@openwall.com>
-To: Maysara Alhindi <maysara.alhindi@bristol.ac.uk>
-Cc: oss-security@lists.openwall.com
-Message-ID: <20240403171828.GA10610@openwall.com>
-References: <HE1PR06MB4137DB91DDCDC96DD46B3F10AE3D2@HE1PR06MB4137.eurprd06.prod.outlook.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Received: (qmail 15424 invoked from network); 26 Nov 2017 22:16:34 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=schlittermann.de; s=dd201504; h=In-Reply-To:Content-Type:MIME-Version:
+	Message-ID:Subject:To:From:Date:Cc:Content-Description:Content-ID:
+	Content-Transfer-Encoding:References::Resent-Cc:Resent-To;
+	bh=34cIZ8VvseI5nOBK0BT1bHRjORaasDj/I6dEqqqc7ig=; b=dEFSvC8j0xTAumJSn/QE1znbsh
+	rQsOI3NiUgYjsI+JL8Dh1W9FN4LfG/vldd4Td6iFEkZaE9gEmynLsRiHR577ndTFUEnWT04xQeDmO
+	Ukjh8cJkiqD82Ma+TZ0Gn/250NB8uYEfC7UVEb5EJGQmWEdc5NGSmVaDbQX37T5Bqids=;
+Date: Sun, 26 Nov 2017 23:16:23 +0100
+From: Heiko Schlittermann <hs@schlittermann.de>
+To: oss-security@lists.openwall.com
+Message-ID: <20171126221623.szugrgtkizvdez3a@jumper.schlittermann.de>
+References: <20171125035912.GA20323@breadbox.private.spodhuis.org>
+ <20171125235030.GA24195@breadbox.private.spodhuis.org>
+ <20171126203749.GA6487@jasmine.lan>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="3a77otfs5aubpq2o"
 Content-Disposition: inline
-In-Reply-To: <HE1PR06MB4137DB91DDCDC96DD46B3F10AE3D2@HE1PR06MB4137.eurprd06.prod.outlook.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Looking for developers who know how to use Seccomp for a paid study
+In-Reply-To: <20171126203749.GA6487@jasmine.lan>
+Organization: schlittermann -- internet & unix support
+X-Face: =y#&-VlCH8uT|8#-#JE_^c<:+qPbYxFD`}8`m)xjyA$93tpwm-vKsa(V,0?906(2VIVNQbU
+ QzD%zhE+~-AA?\v-v.HY6]ebO4_$vY`l|||Q!EZT5*Xx/>Fj{8E_a.;;#<4S$>&T%n5()2Yt=R5FSC
+ y:Na&@T{Rf`kPq^'ffPFA%`mP~>%-LU$d*]]{-%>j={&MsMND.">]H)&#AoSI~(U8Jk;v*;,Pf+l85
+ X?H&`
+X-Telegram: @HeikoSchlittermann
+X-Phone: +49.172.7909055
+X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
+X-GPG-Key-ID: F69376CE
+User-Agent: NeoMutt/20170113 (1.7.2)
+Subject: Re: [oss-security] RCE in Exim reported
 
-Hello Maysara,
+--3a77otfs5aubpq2o
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Apr 03, 2024 at 02:24:20AM +0000, Maysara Alhindi wrote:
-> I am looking for C developers who have experience with Seccomp for a 1.5-hour study
+Leo Famulari <leo@famulari.name> (So 26 Nov 2017 21:37:49 CET):
+> >=20
+> >   https://git.exim.org/exim.git/shortlog/refs/heads/exim-4_89+fixes
+>=20
+> FYI, clicking on the commits from this page just gives the error
+> message:
+>=20
+> 400 - Invalid hash parameter
+>=20
+> But the commit in question can be viewed here:
+>=20
+> https://git.exim.org/exim.git/commit/4090d62a4b25782129cc1643596dc2f6e8f6=
+3bde
 
-Your message was borderline off-topic for the oss-security list, where
-we have explicit guidelines against posting conference CFPs and survey
-questionnaires.  A common pattern with those was that someone external
-(not normally participating on oss-security) tried to post them and then
-did not intend to post anything actually helpful - which could be e.g.
-relevant excerpts from the conference papers such as those disclosing
-new security issues in specific Open Source projects.  Now such
-attempted postings became rare, perhaps in part due to the published
-guidelines and past rejects.
+This entrypoint works:
 
-Invites to other kinds of studies are not explicitly discouraged, and
-yours sounds like it can potentially benefit Seccomp usability, so (as a
-list moderator) I let it through.
+  https://git.exim.org/exim.git/shortlog/refs/heads/exim-4_89%2bfixes
 
-Now it's on you to also bring the results of this study to oss-security
-and in a way most beneficial to the community.  This may be e.g. a list
-of identified issues, how/where they were reported upstream, how you (or
-your team) contributed to addressing them, how they (or any of them)
-were actually addressed, and what remains to be done.
+    Best regards from Dresden/Germany
+    Viele Gr=C3=BC=C3=9Fe aus Dresden
+    Heiko Schlittermann
+--=20
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+ ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
 
-I am posting this reply publicly to let list members know where we
-currently draw the line and that relevant excerpts from conference
-proceedings/slides and relevant study results are desirable to post.
+--3a77otfs5aubpq2o
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Thanks,
+-----BEGIN PGP SIGNATURE-----
 
-Alexander
+iQEzBAABCgAdFiEE0L/WueylaUpvFJ3Or0zGdqa2wUIFAlobPSoACgkQr0zGdqa2
+wUJv7gf+JaljQYjOwhhLbMOmm6WjJpujO5tAQf0RlDoC0aDJJ+6KzhlP9MBjZNby
+sc951KZbfEGCOL6OrnfjeDksY/22x+Rjfr6b8KrFYC3gV0gf/BJ8aazmHYiwrJWA
+VFINNAXPaxEObsNaKou8GTrduA215Po2lveJN6U8rQfioi29eK6i47S0Cg1hfhQN
+3x0/nhXwv7toDvLgXFjFhQRi3P1/9y7q0mvH46F7XRIPSlvHZ5UxtC8xLutpFkBF
+tQf0VTDzmSPaaonJGyV2VfT+tpCJu+bM5BEK0WxyCOqIj+dWhLgsrxJ1IhbELaVR
+jqxGIyqTNke5uXArfHQecFrp+mkKXg==
+=6G8E
+-----END PGP SIGNATURE-----
+
+--3a77otfs5aubpq2o--
