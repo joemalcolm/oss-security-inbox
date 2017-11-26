@@ -1,15 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/01/7
-Message-ID: <1682595.j4QYMsr6oW@wanheda>
-Date: Fri, 01 Sep 2017 15:24:48 +0200
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/26/1
+Message-ID: <20171126203749.GA6487@jasmine.lan>
+Date: Sun, 26 Nov 2017 15:37:49 -0500
+From: Leo Famulari <leo@...ulari.name>
 To: oss-security@...ts.openwall.com
-Subject: Re: graphicsmagick: use-after-free in CloseBlob (blob.c) (INCOMPLETE FIX FOR CVE-2017-11403)
+Subject: Re: RCE in Exim reported
 Content-Type: text/plain; charset=utf-8
 
-This is CVE-2017-14103
+On Sat, Nov 25, 2017 at 06:50:31PM -0500, Phil Pennock wrote:
+> bugs.exim.org/2199 :
+>   Use-after-free remote-code-execution
+>   CVE-2017-16943
+> 
+> bugs.exim.org/2201 :
+>   stack-exhaustion remote DoS
+>   CVE-2017-16944
+> 
+> Fix for the former has been confirmed by the reporter and is in git.
+> 
+> The `exim-4_89+fixes` branch used by various OS packagers for major
+> bug-fixes on top of the 4.89 release has the UAF fix backported.  Work
+> on the DoS is under way.
+> 
+>   https://git.exim.org/exim.git/shortlog/refs/heads/exim-4_89+fixes
 
+FYI, clicking on the commits from this page just gives the error
+message:
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+400 - Invalid hash parameter
+
+But the commit in question can be viewed here:
+
+https://git.exim.org/exim.git/commit/4090d62a4b25782129cc1643596dc2f6e8f63bde
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
