@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1667" "Saturday" "2" "March" "2019" "18:18:44" "+0100" "Philippe Mouawad" "pmouawad@apache.org" "<CAH9fUpaUQaFbgY1Zh4OvKSL4wdvGAmVt+n4fegibDoAxK5XARw@mail.gmail.com>" "50" "[oss-security] [SECURITY] CVE-2019-0187: Apache JMeter Missing client auth for RMI connection when distributed test is used" nil nil nil "3" "2019030217:18:44" "[oss-security] [SECURITY] CVE-2019-0187: Apache JMeter Missing client auth for RMI connection when distributed test is used" (number mark "U       pmouawad@apa Mar  2   50/1667  " thread-indent "\"[oss-security] [SECURITY] CVE-2019-0187: Apache JMeter Missing client auth for RMI connection when distributed test is used\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["749" "Monday" "27" "November" "2017" "21:01:48" "+0000" "Simon McVittie" "smcv@debian.org" "<20171127210148.GA27739@perpetual.pseudorandom.co.uk>" "17" "Re: [oss-security] Re: Security risk of server side text editing ..." "^Date:" nil nil "11" "2017112721:01:48" "[oss-security] Re: Security risk of server side text editing ..." (number mark "        smcv@debian. Nov 27   17/749   " thread-indent "\"Re: [oss-security] Re: Security risk of server side text editing ...\"\n") "<540058ee-2c54-161a-1530-ff1b05673d25@Z5T1.com>" ("<201711171035.vAHAZFC3003212@masaka.moolenaar.net>" "<20171122221706.GA26704@openwall.com>" "<63829CA0-BA0A-433E-8DAC-EE1D232F4639@redhat.com>" "<540058ee-2c54-161a-1530-ff1b05673d25@Z5T1.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7776 invoked by uid 550); 2 Mar 2019 22:44:18 -0000
+Received: (qmail 6080 invoked by uid 550); 27 Nov 2017 21:02:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,71 +11,37 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20000 invoked from network); 2 Mar 2019 17:19:11 -0000
-X-Gm-Message-State: APjAAAUw5MKY6Dwx4AJbuv4g6dKkkKI03tjOWHhPhcxb1EUn7yGUJmPT
-	d6b0xEOgOPPqfjH5j/yuB318CjNyxVLq8w9jvOs=
-X-Google-Smtp-Source: APXvYqz04xIcBSbxDHvILQJh1/k92Ac6kwjbIaf8GcvQ7lLXgkPpabHJ2APEIlCoFvATpI9RaHaMtrxbYRcEnrCh+/8=
-X-Received: by 2002:a17:906:35d8:: with SMTP id p24mr7238937ejb.112.1551547136180;
- Sat, 02 Mar 2019 09:18:56 -0800 (PST)
+Received: (qmail 6062 invoked from network); 27 Nov 2017 21:02:08 -0000
+Message-ID: <20171127210148.GA27739@perpetual.pseudorandom.co.uk>
+References: <201711171035.vAHAZFC3003212@masaka.moolenaar.net>
+ <20171122221706.GA26704@openwall.com>
+ <63829CA0-BA0A-433E-8DAC-EE1D232F4639@redhat.com>
+ <540058ee-2c54-161a-1530-ff1b05673d25@Z5T1.com>
 MIME-Version: 1.0
-From: Philippe Mouawad <pmouawad@apache.org>
-Date: Sat, 2 Mar 2019 18:18:44 +0100
-X-Gmail-Original-Message-ID: <CAH9fUpaUQaFbgY1Zh4OvKSL4wdvGAmVt+n4fegibDoAxK5XARw@mail.gmail.com>
-Message-ID: <CAH9fUpaUQaFbgY1Zh4OvKSL4wdvGAmVt+n4fegibDoAxK5XARw@mail.gmail.com>
-To: ApacheJMeter dev list <dev@jmeter.apache.org>, JMeter Users List <user@jmeter.apache.org>, announce@apache.org, 
-	asf-security <security@apache.org>, oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000e7875305831fb747"
-Subject: [oss-security] [SECURITY] CVE-2019-0187: Apache JMeter Missing client auth for RMI
- connection when distributed test is used
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <540058ee-2c54-161a-1530-ff1b05673d25@Z5T1.com>
+User-Agent: Mutt/1.9.1 (2017-09-22)
+Date: Mon, 27 Nov 2017 21:01:48 +0000
+From: Simon McVittie <smcv@debian.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: Security risk of server side text editing ...
+To: oss-security@lists.openwall.com
 
---000000000000e7875305831fb747
-Content-Type: text/plain; charset="UTF-8"
+On Mon, 27 Nov 2017 at 14:10:54 -0500, Scott Court wrote:
+> 3. Vim.tiny race condition (Doesn't have a CVE ID as far as I know)
+> 
+> I'm not quite sure who discovered this vulnerability (I don't use or follow
+> vim.tiny)
 
-This is a security notification for Apache JMeter:
+It's just a particular binary build of vim. The vim Debian source package
+builds vim several times with different options: vim.tiny is the
+smallest, with no GUI and no Perl/Python/Ruby/Lua bindings.
+Fedora /bin/vi is a similar small vim build.
 
-CVE-2019-0187
-Severity: Important
-Vendor: The Apache Software Foundation
-Affected Versions : JMeter 4.0, 5.0
+I would be quite surprised if there are any vulnerabilities in vim.tiny
+that aren't also present in the larger builds like vim.gtk3.
+In particular, swap file handling and its interaction with setuid are
+almost certainly the same in all builds of the same vim source code.
 
-Description [0]:
-
-Unauthenticated RCE is possible when JMeter is used in distributed mode (-r
-or -R command line options).
-Attacker can establish a RMI connection to a jmeter-server using
-RemoteJMeterEngine and proceed with an attack using untrusted data
-deserialization.
-This only affect tests running in Distributed mode.
-Note that versions before 4.0 are not able to encrypt traffic between the
-nodes, nor authenticate the participating nodes so even for those versions,
-upgrade to JMeter 5.1 is
-also advised.
-
-Mitigation:
-  * Users must use last minor version of Java 8 to Java 11
-  * Users must upgrade to last JMeter 5.1 version and use the default /
-enabled authenticated SSL RMI connection.
-
-Besides, we remind users that in distributed mode, JMeter makes an
-Architectural assumption
-that it is operating on a 'safe' network. i.e. everyone with access to the
-network is considered trusted.
-
-This typically means a dedicated VPN or similar is being used.
-
-Example:
-  * Start JMeter server using either jmeter-server or jmeter -s
-  * Using another keystore file, if you're able to connect to first server
-instance and you don't get "SSLHandshakeException: Received fatal alert:
-bad_certificate", you are vulnerable
-
-Credit:
-This issue was reported responsibly to the Apache Security Team by Brenden
-Meeder.
-
-- The Apache JMeter Team
-
-[0] https://bz.apache.org/bugzilla/show_bug.cgi?id=62743
-
---000000000000e7875305831fb747--
+    smcv
