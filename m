@@ -1,37 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/03/11
-Message-ID: <CANO=Ty16YH2oUFMG2W=S8tc08id5ehNAZyssNcocNJ5pXgqF1g@mail.gmail.com>
-Date: Tue, 3 Oct 2017 11:37:07 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Qualys Security Advisory - Linux PIE/stack corruption (CVE-2017-1000253)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/27/5
+Message-ID: <20171127210148.GA27739@perpetual.pseudorandom.co.uk>
+Date: Mon, 27 Nov 2017 21:01:48 +0000
+From: Simon McVittie <smcv@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: Security risk of server side text editing ...
 Content-Type: text/plain; charset=utf-8
 
-Because I messed up the git pull request to submit it.
+On Mon, 27 Nov 2017 at 14:10:54 -0500, Scott Court wrote:
+> 3. Vim.tiny race condition (Doesn't have a CVE ID as far as I know)
+> 
+> I'm not quite sure who discovered this vulnerability (I don't use or follow
+> vim.tiny)
 
-On Tue, Oct 3, 2017 at 11:05 AM, Jan Schaumann <jschauma@...meister.org>
-wrote:
+It's just a particular binary build of vim. The vim Debian source package
+builds vim several times with different options: vim.tiny is the
+smallest, with no GUI and no Perl/Python/Ruby/Lua bindings.
+Fedora /bin/vi is a similar small vim build.
 
-> Qualys Security Advisory <qsa@...lys.com> wrote:
-> >
-> > Qualys Security Advisory
-> >
-> > Linux PIE/stack corruption (CVE-2017-1000253)
->
-> How come this CVE does not yet show up on cve.mitre.org?
->
-> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-1000253
->
-> It's been a week since the publication.
->
-> -Jan
->
+I would be quite surprised if there are any vulnerabilities in vim.tiny
+that aren't also present in the larger builds like vim.gtk3.
+In particular, swap file handling and its interaction with setuid are
+almost certainly the same in all builds of the same vim source code.
 
-
-
--- 
-
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+    smcv
