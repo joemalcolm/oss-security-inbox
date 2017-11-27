@@ -1,72 +1,130 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/05/3
-Message-ID: <39621748.Sj05Oj4PW6@nova.m.i2n>
-Date: Tue, 05 Sep 2017 18:24:24 +0200
-From: Thomas Jarosch <thomas.jarosch@...ra2net.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2017-1000249: file: stack based buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/27/2
+Message-ID: <540058ee-2c54-161a-1530-ff1b05673d25@Z5T1.com>
+Date: Mon, 27 Nov 2017 14:10:54 -0500
+From: Scott Court <z5t1@...1.com>
+To: Kurt Seifried <kseifrie@...hat.com>
+Cc: oss-security@...ts.openwall.com, Bram@...lenaar.net
+Subject: Re: Re: Security risk of server side text editing ...
 Content-Type: text/plain; charset=utf-8
 
-Hello oss security,
+Hi Kurt,
 
-file(1) versions 5.29, 5.30 and 5.31 contain a stack based
-buffer overflow when parsing a specially crafted input file.
-
-The issue lets an attacker overwrite a fixed 20 bytes stack buffer
-with a specially crafted .notes section in an ELF binary file.
-
-There are systems like amavisd-new that automatically run file(1)
-on every email attachment. To prevent an automated exploit by email,
-another layer of protection like -fstack-protector is needed.
-
-Upstream fix:
-https://github.com/file/file/commit/35c94dc6acc418f1ad7f6241a6680e5327495793
-
-The issue was introduced with this code change in October 2016:
-https://github.com/file/file/commit/9611f31313a93aa036389c5f3b15eea53510d4d1
-
-file-5.32 has been released including the fix:
-ftp://ftp.astron.com/pub/file/file-5.32.tar.gz
-ftp://ftp.astron.com/pub/file/file-5.32.tar.gz.asc
-
-[An official release announcement on the file mailinglist
-will follow once a temporary outage of the mailinglist is solved]
+Here's the summary you asked for. As far as I've been able to tell,
+there are three vulnerabilities being discussed here:
 
 
-The cppcheck tool helped to discover the issue:
-----
-[readelf.c:514]: (warning) Logical disjunction always evaluates to true:
-descsz >= 4 || descsz <= 20.
-----
+    1. CVE-2017-1000382
+
+This vulnerability was discovered by Hanno Böck. When editing a text
+file in Vim, a .swp file is created in the same directory (if you edit
+"foo", the swap file will be ".foo.swp"). Hanno pointed out that this
+could create a security vulnerability on PHP enabled webservers as follows:
+
+If a user goes to edit a .php file in the public_html directory (say
+"foo.php"), a swap file will be created in the public_html directory
+called ".foo.php.swp". This then exposes the contents of the PHP script
+foo.php to the world. All someone has to do is go to
+"http://example.com/.foo.php.swp" and he can view the .swp file which
+contains the contents of the original foo.php file.
+
+Hanno pointed out that this causes a problem with Wordpress sites if the
+site administrator edits the wp-config.php file in Vim: he exposes all
+of the database credentials. This is made worse if Vim crashes while he
+is editing it as then the .wp-config.php.swp file sticks around. He
+claims he has found 750 websites that are vulnerable to this.
 
 
-Credits:
-The issue has been found by Thomas Jarosch of Intra2net AG.
-Code fix and new release provided by Christos Zoulas.
+    2. Vim .swp file group (Doesn't have a CVE ID)
+
+This vulnerability was discovered by me. When Vim creates a .swp file,
+the .swp file is created with the owner and group set to the editor and
+editor's primary group respectively. The .swp file is the set to the
+same permissions as the original file (i.e. chmod 640). This creates a
+security vulnerability when the editor's primary group is not the same
+as the original file's group.
+
+For example, say the root user's primary group is "users", which every
+user is a member of. If root goes to edit /etc/shadow, the
+/etc/.shadow.swp file is created with permissions 640 and user:group set
+to root:users. The original /etc/shadow file had user:group set to
+root:shadow though; this now exposes the /etc/shadow file (which mind
+you contains hashes of every user's password) to every user on the system.
+
+Originally, I thought this was an extension of CVE-2017-1000382 so I
+didn't bother trying to get a CVE ID for it; however, upon looking at it
+for a second time, it seems that this is indeed a different
+vulnerability. It is possible to patch this vulnerability without
+patching CVE-2017-1000382.
 
 
-Fixed packages from distributions should start to be available soon.
+    3. Vim.tiny race condition (Doesn't have a CVE ID as far as I know)
+
+I'm not quite sure who discovered this vulnerability (I don't use or
+follow vim.tiny); however, it has been discussed on here so I will
+include my limited knowledge of it for completeness sake. This is a race
+condition in which a world writable SUID binary is temporarily created.
+This could (or course) theoretically allow an arbitrary user to write to
+that binary and execute arbitrary code as root; however, there is debate
+as to whether or not doing this is actually feasible.
+
+---
+
+I believe these are the three big ones; however, I may have missed
+something. There has been a lot of discussion about this family of
+vulnerabilities lately. There are definitely at least these three
+though. I'm sure if I've missed anything everyone else on this mailing
+list will be more than happy to let me know.
+
+Sincerely,
+
+Scott Court
 
 
-Timeline (key entries):
-2017-08-26: Notified the maintainer Christos Zoulas
-2017-08-27: Christos pushed a fix to CVS / git
-            with innocent looking commit message
+On 11/22/2017 05:27 PM, Kurt Seifried wrote:
+> Can you post a summary of the issues, it sounds like more than one CVE will be needed, thanks.
+>
+>
+> -Kurt
+>
+>
+>
+>
+>
+>> On Nov 22, 2017, at 15:17, Solar Designer <solar@...nwall.com> wrote:
+>>
+>>> On Fri, Nov 17, 2017 at 11:35:15AM +0100, Bram Moolenaar wrote:
+>>> Please check out patch 8.0.1300.
+>> Thanks.  Personally, I don't have much to add.  This continues to do
+>> what I find are weird and wrong things, so any implementation issues are
+>> secondary to that.  I suppose you have some rationale for preserving the
+>> old behavior of propagating the edited file's permissions onto related
+>> temporary files, but I'm unaware of good reasons for that.
+>>
+>> If it's about users' collaboration, then I don't see a good reason for
+>> other users in the group, even if they could access the original file
+>> via group permissions, to also have access to recovery and backup files.
+>>
+>> As to the patch itself, aside from it propagating the possibly unsafe
+>> permissions on purpose (I mean unsafe such as in Hanno's original
+>> example, but also applying to backup files), it's also risky in
+>> temporarily setting umask to 0.  On some systems, this could mean libc
+>> or the kernel creating files with unsafe permissions if anything goes
+>> very wrong during this time - e.g., a coredump.  Checking st_ino is OK
+>> as a hardening measure, but might not always be sufficient: inode number
+>> reuse is possible if the original file could have been deleted.
+>> I suppose st_dev is not checked because of the use of O_NOFOLLOW, but I
+>> guess Vim can be built on systems without working O_NOFOLLOW as well?
+>>
+>> In case anyone wants to review the patch for real, I've attached it to
+>> this message, and here it is on GitHub (for expanding of the context):
+>>
+>> https://github.com/vim/vim/commit/cd142e3369db8888163a511dbe9907bcd138829c
+>>
+>> Alexander
+>> <8.0.1300>
 
-2017-08-28: Notified Redhat security team to coordinate release
-            and request CVE ID. Redhat responds it's better to directly
-            contact the distros list instead through them.
 
-2017-09-01: Notified distros mailinglist, asking for CVE ID
-            and requesting embargo until 2017-09-08
-2017-09-01: CVE-2017-1000249 ID is assigned
+Content of type "text/html" skipped
 
-2017-09-04: After discussion that the issue is semi-public already,
-            moved embargo date to 2017-09-05
-2017-09-05: Public release
-
-
-Best regards,
-Thomas Jarosch / Intra2net AG
-
-Download attachment "signature.asc" of type "application/pgp-signature" (182 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
