@@ -1,41 +1,225 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/30/8
-Message-ID: <CAFEMS4vr8tXkkmRj+y6g0p3y3r9SqDL8Gf9+ouhbKjPAsbJ04w@mail.gmail.com>
-Date: Thu, 30 Nov 2017 17:15:43 +0000
-From: Keith Wall <kwall@...che.org>
-To: "users@...d.apache.org" <users@...d.apache.org>, "dev@...d.apache.org" <dev@...d.apache.org>, security@...che.org,  oss-security@...ts.openwall.com, announce@...che.org
-Subject: [SECURITY] [CVE-2017-15701] Apache Qpid Broker-J Denial of Service Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/27/1
+Message-ID: <126e9802-e0aa-77b4-f87d-1fa469b8d79b@powerdns.com>
+Date: Mon, 27 Nov 2017 17:32:29 +0100
+From: Remi Gacogne <remi.gacogne@...erdns.com>
+To: oss-security@...ts.openwall.com
+Subject: PowerDNS Security Advisories 2017-03, 2017-04, 2017-05, 2017-06 and 2017-07
 Content-Type: text/plain; charset=utf-8
 
-CVE-2017-15701: Apache Qpid Broker-J denial of service vulnerability
+Hello everybody,
 
-Severity: Important
+We just released PowerDNS Authoritative 4.0.5 and Recursor 4.0.7, fixing
+security issues that have recently been reported to us:
 
-Vendor: The Apache Software Foundation
+- 2017-03: Insufficient validation of DNSSEC signatures
+(CVE-2017-15090, Recursor >= 4.0.0)
+- 2017-04: Missing check on API operations (CVE-2017-15091, Authoritative)
+- 2017-05: Cross-Site Scripting in the web interface (CVE-2017-15092,
+Recursor >= 4.0.0)
+- 2017-06: Configuration file injection in the API (CVE-2017-15093,
+Recursor)
+- 2017-07: Memory leak in DNSSEC parsing (CVE-2017-15094, Recursor >=
+4.0.0)
 
-Versions Affected: 6.1.0, 6.1.1, 6.1.2, 6.1.3, and 6.1.4
+The full security advisories can be found below, and also at:
 
-Description:
+-
+https://doc.powerdns.com/authoritative/security-advisories/powerdns-advisory-2017-04.html
+-
+https://doc.powerdns.com/recursor/security-advisories/powerdns-advisory-2017-03.html
+-
+https://doc.powerdns.com/recursor/security-advisories/powerdns-advisory-2017-05.html
+-
+https://doc.powerdns.com/recursor/security-advisories/powerdns-advisory-2017-06.html
+-
+https://doc.powerdns.com/recursor/security-advisories/powerdns-advisory-2017-07.html
 
-The broker does not properly enforce a maximum frame size in AMQP 1.0
-frames.  A remote unauthenticated attacker could exploit this to cause
-the broker to exhaust all available memory and eventually terminate.
-Older AMQP protocols are not affected.
+All of the issues require a specific configuration that is not enabled
+by default: 2017-03 and 2017-07 issues only exist if DNSSEC validation
+is enabled, 2017-04 requires authenticated access to the Authoritative
+server API, 2017-05 only exists if the webserver is enabled and 2017-06
+if the API is enabled and allowed to alter the configuration.
 
-Resolution:
+We also provide minimal patches for the 3.4.11 and 3.7.4 releases:
 
-Users who have AMQP 1.0 support enabled (default) should upgrade their
-Qpid Broker-J to version 6.1.5 or later.
+- https://downloads.powerdns.com/patches/2017-03/
+- https://downloads.powerdns.com/patches/2017-04/
+- https://downloads.powerdns.com/patches/2017-05/
+- https://downloads.powerdns.com/patches/2017-06/
+- https://downloads.powerdns.com/patches/2017-07/
 
-Mitigation:
+We urge all users of these versions to migrate to the 4.X release trains.
 
-If upgrading the broker is not possible, users can choose to disable
-AMQP 1.0 by either setting the system property
-"qpid.plugin.disabled:protocolenginecreator.AMQP_1_0" to "true",
-excluding "AMQP_1_0" from the supported protocol list on all AMQP
-ports, or by removing the AMQP 1.0 related jar files from the Java
-classpath.
+Please feel free to contact me directly if you have any question.
 
-References:
+Best regards,
 
-https://issues.apache.org/jira/browse/QPID-7947
+PowerDNS Security Advisory 2017-03: Insufficient validation of DNSSEC
+=====================================================================
+signatures
+==========
+
+-  CVE: CVE-2017-15090
+-  Date: November 27th 2017
+-  Credit: Kees Monshouwer
+-  Affects: PowerDNS Recursor from 4.0.0 and up to and including 4.0.6
+-  Not affected: PowerDNS Recursor < 4.0.0, 4.0.7
+-  Severity: Medium
+-  Impact: Records manipulation
+-  Exploit: This problem can be triggered by an attacker in position of
+   man-in-the-middle
+-  Risk of system compromise: No
+-  Solution: Upgrade to a non-affected version
+
+An issue has been found in the DNSSEC validation component of PowerDNS
+Recursor, where the signatures might have been accepted as valid even if
+the signed data was not in bailiwick of the DNSKEY used to sign it. This
+allows an attacker in position of man-in-the-middle to alter the content
+of records by issuing a valid signature for the crafted records. This
+issue has been assigned CVE-2017-15090.
+
+PowerDNS Recursor from 4.0.0 up to and including 4.0.6 are affected.
+
+For those unable to upgrade to a new version, a minimal patch is
+available: https://downloads.powerdns.com/patches/2017-03
+
+We would like to thank Kees Monshouwer for finding and subsequently
+reporting this issue.
+
+PowerDNS Security Advisory 2017-04: Missing check on API operations
+===================================================================
+
+-  CVE: CVE-2017-15091
+-  Date: November 27th 2017
+-  Credit: everyman
+-  Affects: PowerDNS Authoritative up to and including 4.0.4, 3.4.11
+-  Not affected: PowerDNS Authoritative 4.0.5
+-  Severity: Low
+-  Impact:  Denial of service
+-  Exploit: This problem can be triggered by an attacker with valid
+   API credentials
+-  Risk of system compromise: No
+-  Solution: Upgrade to a non-affected version
+
+An issue has been found in the API component of PowerDNS Authoritative,
+where some operations that have an impact on the state of the server
+are still allowed even though the API has been configured as read-only
+via the `api-readonly` keyword.
+This missing check allows an attacker with valid API credentials could
+flush the cache, trigger a zone transfer or send a NOTIFY. This issue
+has been assigned CVE-2017-15091.
+
+PowerDNS Authoritative up to and including 4.0.4 and 3.4.11 are affected.
+
+For those unable to upgrade to a new version, a minimal patch is
+available: https://downloads.powerdns.com/patches/2017-04
+
+We would like to thank everyman for finding and subsequently reporting
+this issue.
+
+PowerDNS Security Advisory 2017-05: Cross-Site Scripting in the web
+===================================================================
+interface
+=========
+
+-  CVE: CVE-2017-15092
+-  Date: November 27th 2017
+-  Credit: Nixu, Chris Navarrete of Fortinet's Fortiguard Labs
+-  Affects: PowerDNS Recursor from 4.0.0 up to and including 4.0.6
+-  Not affected: PowerDNS Recursor 4.0.7, 3.7.x
+-  Severity: Medium
+-  Impact: Alteration and denial of service of the web interface
+-  Exploit: This problem can be triggered by an attacker sending DNS queries
+   to the server
+-  Risk of system compromise: No
+-  Solution: Upgrade to a non-affected version
+
+An issue has been found in the web interface of PowerDNS Recursor, where
+the qname of DNS queries was displayed without any escaping, allowing a
+remote attacker to inject HTML and Javascript code into the web
+interface, altering the content. This issue has been assigned
+CVE-2017-15092.
+
+PowerDNS Recursor from 4.0.0 up to and including 4.0.6 are affected.
+
+For those unable to upgrade to a new version, a minimal patch is
+available: https://downloads.powerdns.com/patches/2017-05
+
+We would like to thank Nixu and Chris Navarrete of Fortinet's Fortiguard
+Labs for independently finding and reporting this issue.
+
+PowerDNS Security Advisory 2017-06: Configuration file injection in the
+======================================================================= API
+===
+
+-  CVE: CVE-2017-15093
+-  Date: November 27th 2017
+-  Credit: Nixu
+-  Affects: PowerDNS Recursor up to and including 4.0.6, 3.7.4
+-  Not affected: PowerDNS Recursor 4.0.7
+-  Severity: Medium
+-  Impact: Alteration of configuration by an API user
+-  Exploit: This problem can be triggered by an attacker with valid API
+   credentials
+-  Risk of system compromise: No
+-  Solution: Upgrade to a non-affected version
+-  Workaround: Disable the ability to alter the configuration via the
+API by setting `api-config-dir` to an empty value (default), or set the
+API read-only via the `api-readonly` setting.
+
+An issue has been found in the API of PowerDNS Recursor during a source
+code audit by Nixu. When `api-config-dir` is set to a non-empty value,
+which is not the case by default, the API allows an authorized user to
+update the Recursor's ACL by adding and removing netmasks, and to
+configure forward zones. It was discovered that the new netmask and IP
+addresses of forwarded zones were not sufficiently validated, allowing
+an authenticated user to inject new configuration directives into the
+Recursor's configuration. This issue has been assigned CVE-2017-15093.
+
+PowerDNS Recursor up to and including 4.0.6 and 3.7.4 are affected.
+
+For those unable to upgrade to a new version, a minimal patch is
+available: https://downloads.powerdns.com/patches/2017-06
+
+We would like to thank Nixu for finding and subsequently reporting this
+issue.
+
+PowerDNS Security Advisory 2017-07: Memory leak in DNSSEC parsing
+=================================================================
+
+-  CVE: CVE-2017-15094
+-  Date: November 27th 2017
+-  Credit: Nixu
+-  Affects: PowerDNS Recursor from 4.0.0 up to and including 4.0.6
+-  Not affected: PowerDNS Recursor 4.0.7
+-  Severity: Medium
+-  Impact:  Denial of service
+-  Exploit: This problem can be triggered by an authoritative server
+   sending crafted ECDSA DNSSEC keys to the Recursor.
+-  Risk of system compromise: No
+-  Solution: Upgrade to a non-affected version
+-  Workaround: Disable DNSSEC validation by setting the `dnssec`
+parameter to `off` or `process-no-validate` (default).
+
+An issue has been found in the DNSSEC parsing code of PowerDNS Recursor
+during a code audit by Nixu, leading to a memory leak when parsing
+specially crafted DNSSEC ECDSA keys. These keys are only parsed when
+validation is enabled by setting `dnssec` to a value other than `off` or
+`process-no-validate` (default).
+This issue has been assigned CVE-2017-15094.
+
+PowerDNS Recursor from 4.0.0 up to and including 4.0.6 are affected.
+
+For those unable to upgrade to a new version, a minimal patch is
+available: https://downloads.powerdns.com/patches/2017-07
+
+We would like to thank Nixu for finding and subsequently reporting
+this issue.
+
+-- 
+Remi and the PowerDNS team
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
