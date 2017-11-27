@@ -1,30 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/25/7
-Message-ID: <20170925180654.GA15007@jasmine.lan>
-Date: Mon, 25 Sep 2017 14:06:54 -0400
-From: Leo Famulari <leo@...ulari.name>
-To: oss-security@...ts.openwall.com
-Subject: Re: Why send bugs embargoed to distros?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/27/3
+Message-ID: <20171127201920.GZ21404@suse.de>
+Date: Mon, 27 Nov 2017 21:19:20 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: Information Leak in mincore() in the Linux Kernel CVE-2017-16994
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Sep 25, 2017 at 02:52:13PM +0100, Cliff Perry wrote:
-> On 23/09/17 12:44, Hanno Böck wrote:
-> > b) if people think that they'd usually prepare a fixed package, however
-> > they didn't consider optionsbleed important enough. (Naturally I
-> > probably have a bias seeing my findings as more important as other
-> > people, but I could live with that.)
+Hi,
 
-Guix is not on the distros lists, but sometimes upstream projects
-contact us privately with pre-release embargoed bug fixes. We will test
-and prepare the updated packages during the embargo period whether or
-not we thing the bugs warrant an embargo.
+Mitre has allocated CVE-2017-16994 for this bug found by Google P0 team member jannh.
 
-> Hi Hanno,
-> The detail of your report was good quality and I'm sure appreciated by
-> everyone who needed to review it. I know that for Red Hat the
-> pre-disclosure was useful.
+The walk_hugetlb_range function in mm/pagewalk.c in the Linux kernel before 4.14.2 mishandles holes in hugetlb ranges, which allows local users to obtain sensitive information from uninitialized kernel memory via crafted use of the mincore() system call.
 
-Agreed, your reports are very useful to us, whether we read them in the
-pre-release period, or after they have been disclosed publicly.
+References:
+http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2017-16994
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=373c4557d2aa362702c4c2d41288fb1e54990b7c 
+https://bugs.chromium.org/p/project-zero/issues/detail?id=1431
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Ciao, Marcus
