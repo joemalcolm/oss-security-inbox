@@ -1,44 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/01/11
-Message-ID: <55840.351476462-sendEmail@localhost>
-Date: Mon, 1 May 2017 11:52:20 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: telegram-desktop: insecure permission of $HOME/.TelegramDesktop directory
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/28/10
+Message-ID: <20171128214359.q4b7cmlxd4ayz7ct@jumper.schlittermann.de>
+Date: Tue, 28 Nov 2017 22:43:59 +0100
+From: Heiko Schlittermann <hs@...littermann.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2017-16943 CVE-2017-16944 (Was:RCE in Exim reported)
 Content-Type: text/plain; charset=utf-8
 
-Description:
-Telegram-desktop is the official desktop client for Telegram.
+Phil Pennock <oss-security-phil@...dhuis.org> (Sa 25 Nov 2017 04:59:12 CET):
+> In Post-Thanksgiving mail-catchup, I see that the Exim Project was
+> gifted with a couple of surprises in our public bugtracker on Thursday
+> morning.  Complete with proof-of-concept small Python script.
+> 
+> I've requested CVEs, don't have them yet.
+> 
+> My mail to our announce list:
+>   https://lists.exim.org/lurker/message/20171125.034842.d1d75cac.en.html
+…
+> Public bugtracker links:
+> 
+>   https://bugs.exim.org/show_bug.cgi?id=2199
+>   https://bugs.exim.org/show_bug.cgi?id=2201
 
-During the navigation of my filesystem I found the .TelegramDesktop with 755 permission:
+Both issues are fixed now.
 
-drwxr-xr-x  4 ago  ago      4096 nov 23 14:30 .TelegramDesktop
+    CVE-2017-16943  (RCE)       Exim Bug 2199
+        master:             4e6ae6235c68de243b1c2419027472d7659aa2b4
+        exim-4_89+fixes:    4090d62a4b25782129cc1643596dc2f6e8f63bde
+    Fix done by Jeremy Harrys
+        
 
-Affected version:
-At least from 0.10.19 to 1.0.29
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2016-10351
-
-Timeline:
-2016-11-23: bug discovered and reported to upstream
-2017-05-01: blog post about the issue
-2017-05-01: CVE assigned
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/05/01/telegram-desktop-insecure-permission-of-home-telegramdesktop-directory/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
+    CVE-2017-16944  (DoS)       Exim Bug 2201
+        master:             178ecb70987f024f0e775d87c2f8b2cf587dd542
+        exim-4_89+fixes:    4804c62909a62a3ac12ec4777ebd48c541028965
+    Fix done by me.
 
 
+    Best regards from Dresden/Germany
+    Viele Grüße aus Dresden
+    Heiko Schlittermann
+-- 
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+ ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
