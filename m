@@ -1,32 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/05/8
-Message-ID: <1486328074.8813.2.camel@gmail.com>
-Date: Sun, 05 Feb 2017 21:54:34 +0100
-From: Ailin Nemui <ailin.nemui@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/28/5
+Message-ID: <20171128143030.GB24000@takahe.colorado.edu>
+Date: Tue, 28 Nov 2017 07:30:30 -0700
+From: Leonid Isaev <leonid.isaev@...a.colorado.edu>
 To: oss-security@...ts.openwall.com
-Subject: Irssi 1.0.0 minor remote memory leak
+Subject: Re: Re: Security risk of server side text editing ...
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Tue, Nov 28, 2017 at 02:19:59PM +0100, Bram Moolenaar wrote:
+> There are many other reasons why one
+> should not edit files under public_html directly, but have a separate
+> work space and only copy those files to public_html that belong there
+> (ideally with a script to run tests).
 
-Joseph Bisch has detected a remote memory leak in some cases where a
-hostile server would send certain incomplete SASL replies. According to
-his calculations, the server would need to send 13 times the amount of
-memory it wants to leak. The issue is a missing free of the base64
-data. Please advise whether that issue needs a CVE?  
+But be aware of cp -b...
 
-Patch: https://github.com/irssi/irssi/commit/19c51789967a2f63da033e60f6
-ef08848b9cd144
-
-Furthermore, Hanno Böck found the issue of a missing NULL sentinel when
-initialising Perl, which crashes under ASan. Since this happens only on
-boot and is not exposed to the net, we have no reason to believe that
-there is any issue here. Also, that bug has been around since the
-inception of Perl scripting module.
-
-Patch: https://github.com/irssi/irssi/pull/619/commits/677fb1f55ca52d0e
-43c93f7d8361d333ff5bffd6
-
-In any case, those issues have been addressed in Irssi 1.0.1
-
-Thanks for your attention,
+Sincerely,
+-- 
+Leonid Isaev
