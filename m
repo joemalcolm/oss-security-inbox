@@ -1,68 +1,112 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/08/7
-Message-ID: <56029e38-0e38-181c-2f61-f92b4bfd6826@redhat.com>
-Date: Wed, 8 Nov 2017 10:34:35 -0600
-From: Eric Blake <eblake@...hat.com>
-To: oss-security@...ts.openwall.com, Jonas 'Sortie' Termansen <sortie@...si.org>, Florian Weimer <fweimer@...hat.com>, John Haxby <john.haxby@...cle.com>
-Subject: Re: Race condition between UDP bind(2) and connect(2) delivers wrong datagrams
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/28/4
+Message-Id: <201711281319.vASDJxWP010037@masaka.moolenaar.net>
+Date: Tue, 28 Nov 2017 14:19:59 +0100
+From: Bram Moolenaar <Bram@...lenaar.net>
+To: Scott Court <z5t1@...1.com>
+Cc: oss-security@...ts.openwall.com, Bram@...lenaar.net
+Subject: Re: Re: Security risk of server side text editing ...
 Content-Type: text/plain; charset=utf-8
 
-On 11/08/2017 10:16 AM, Jonas 'Sortie' Termansen wrote:
->> Whatever the exact wording used is, the intent of POSIX is to describe
->> the BSD sockets API behavior.  If the API does something else, that's a
->> POSIX bug.
-> 
-> Absolutely, if the standard mdanated one behavior, and if all the
-> implementations did something else and documented that they did so, it would
-> be a bug in the standard that should be fixed.
-> 
-> This issue is not that case because Darwin[1], DragonFly[2], FreeBSD[3],
-> GNU/Hurd (though by importing Linux man pages), Linux[4], NetBSD[5], and
-> OpenBSD[6] all document behavior compatible with POSIX[7].
 
-It doesn't matter what the implementations document (if their
-documentation is copying from POSIX), but what they actually DO.
+> Here's the summary you asked for. As far as I've been able to tell,
+> there are three vulnerabilities being discussed here:
 
-> I see two internally consistent ways we could resolve this problem:
+Thanks.  I'll give my comments.
+
+>     1. CVE-2017-1000382
 > 
-> 1) Implement the behavior described by POSIX by having connect(2) on an UDP
->    socket filter the receive queue, and possibly updating the connect(2)
->    documentation of every OS to be a little less ambiguous and say the same
->    as POSIX. Software that relied on bind+connect not having a race
->    condition will be secured by the kernel fix.
+> This vulnerability was discovered by Hanno Böck. When editing a text
+> file in Vim, a .swp file is created in the same directory (if you edit
+> "foo", the swap file will be ".foo.swp"). Hanno pointed out that this
+> could create a security vulnerability on PHP enabled webservers as follows:
 > 
-> 2) Declare the existing behavior desirable, add a caveats section to every
->    connect(2) manual page describing this pitfall and the need to empty the
->    receive queue after connect(2). File a POSIX bug and have the mandated
->    behavior changed in the next POSIX Technical Corrigendum or next major
->    update. We audit software on every operating system for this flaw and
->    ensure they properly empty the receive queue.
-
-At this point, I think you have argued pretty effectively that the
-current POSIX wording does NOT describe existing practice, and therefore
-that POSIX has a bug.  It may be desirable to have implementations
-follow the POSIX wording, but I think you are better off FIRST raising
-this issue with the Austin Group
-(http://austingroupbugs.net/main_page.php) to get an opinion on what the
-POSIX folks think.  Even if the POSIX folks declare that the current
-wording is intentional and that all existing implementations need to be
-fixed, it is better to involve them up front.
-
+> If a user goes to edit a .php file in the public_html directory (say
+> "foo.php"), a swap file will be created in the public_html directory
+> called ".foo.php.swp". This then exposes the contents of the PHP script
+> foo.php to the world. All someone has to do is go to
+> "http://example.com/.foo.php.swp" and he can view the .swp file which
+> contains the contents of the original foo.php file.
 > 
-> My preference is 1) because I believe the receive queue filtering behavior
-> to be more useful. It also automatically closes the race condition in any
-> software that use bind+connect and doesn't empty the receive queue.
+> Hanno pointed out that this causes a problem with Wordpress sites if the
+> site administrator edits the wp-config.php file in Vim: he exposes all
+> of the database credentials. This is made worse if Vim crashes while he
+> is editing it as then the .wp-config.php.swp file sticks around. He
+> claims he has found 750 websites that are vulnerable to this.
 
-That may be your preference, but I think you should pursue the course of
-filing a POSIX bug about the mismatch between documentation and existing
-practice (ie, what you proposed for course 2), whether or not you get
-any traction in implementing course 1 on a subset of the systems.
+This is a problem with the configuration of the web server.  It should
+not publish files it doesn't know about.  The problem also happens for
+any other file manipulation, e.g. "cp file.php file.php.orig" if you
+want to make some temporary changes.  A .orig and .rej file may also
+appear when applying a patch.  There are many other reasons why one
+should not edit files under public_html directly, but have a separate
+work space and only copy those files to public_html that belong there
+(ideally with a script to run tests).
+
+This is defenitely not a problem specific to Vim and it's not going to
+change.
+
+ 
+>     2. Vim .swp file group (Doesn't have a CVE ID)
+> 
+> This vulnerability was discovered by me. When Vim creates a .swp file,
+> the .swp file is created with the owner and group set to the editor and
+> editor's primary group respectively. The .swp file is the set to the
+> same permissions as the original file (i.e. chmod 640). This creates a
+> security vulnerability when the editor's primary group is not the same
+> as the original file's group.
+> 
+> For example, say the root user's primary group is "users", which every
+> user is a member of. If root goes to edit /etc/shadow, the
+> /etc/.shadow.swp file is created with permissions 640 and user:group set
+> to root:users. The original /etc/shadow file had user:group set to
+> root:shadow though; this now exposes the /etc/shadow file (which mind
+> you contains hashes of every user's password) to every user on the system.
+> 
+> Originally, I thought this was an extension of CVE-2017-1000382 so I
+> didn't bother trying to get a CVE ID for it; however, upon looking at it
+> for a second time, it seems that this is indeed a different
+> vulnerability. It is possible to patch this vulnerability without
+> patching CVE-2017-1000382.
+
+This is a problem with the default group.  If every file that root
+creates is readable by not trusted users, this will happen all the time,
+for any file the root copies or creates.
+
+Anyway, we don't want to give the swap file wider permissions than the
+original file, so this was changed in patch 8.0.1263.
+
+>     3. Vim.tiny race condition (Doesn't have a CVE ID as far as I know)
+> 
+> I'm not quite sure who discovered this vulnerability (I don't use or
+> follow vim.tiny); however, it has been discussed on here so I will
+> include my limited knowledge of it for completeness sake. This is a race
+> condition in which a world writable SUID binary is temporarily created.
+> This could (or course) theoretically allow an arbitrary user to write to
+> that binary and execute arbitrary code as root; however, there is debate
+> as to whether or not doing this is actually feasible.
+
+I don't think this is feasible.  There was an example of a symlink
+attack with several steps that are tricky but possible, with the result
+of root creating a world writable config file.  Could also be used to
+truncate an existing file.  This was fixed in patch 8.0.1300.
+
+> I believe these are the three big ones; however, I may have missed
+> something. There has been a lot of discussion about this family of
+> vulnerabilities lately. There are definitely at least these three
+> though. I'm sure if I've missed anything everyone else on this mailing
+> list will be more than happy to let me know.
+
+There was also a race condition in creating the viminfo file, which was
+taken care of in 8.0.1345.
+
+In my opinion all of these are small issues, because they are difficult
+to exploit and require login access to the system in the first place.
 
 -- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.           +1-919-301-3266
-Virtualization:  qemu.org | libvirt.org
+Don't believe everything you hear or anything you say.
 
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (620 bytes)
+ /// Bram Moolenaar -- Bram@...lenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\  an exciting new programming language -- http://www.Zimbu.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///
