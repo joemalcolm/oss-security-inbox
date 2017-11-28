@@ -1,4 +1,9 @@
-Received: (qmail 29958 invoked by uid 550); 13 Oct 2023 09:55:26 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["7804" "Tuesday" "28" "November" "2017" "14:19:58" "+0100" "Bram Moolenaar" "Bram@moolenaar.net" "<201711281319.vASDJwca010001@masaka.moolenaar.net>" "147" "Re: [oss-security] Security risk of server side text editing ..." "^Cc:" nil nil "11" "2017112813:19:58" "[oss-security] Security risk of server side text editing ..." (number mark "        Bram@moolena Nov 28  147/7804  " thread-indent "\"Re: [oss-security] Security risk of server side text editing ...\"\n") "<20171127202612.GA18592@openwall.com>" ("<20171127202612.GA18592@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 19462 invoked by uid 550); 28 Nov 2017 13:48:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,146 +11,163 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 29899 invoked from network); 28 Nov 2017 13:20:18 -0000
+Message-Id: <201711281319.vASDJwca010001@masaka.moolenaar.net>
+In-Reply-To: <20171127202612.GA18592@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: oss-security@lists.openwall.com
+Date: Tue, 28 Nov 2017 14:19:58 +0100
+From: Bram Moolenaar <Bram@moolenaar.net>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3276 invoked from network); 13 Oct 2023 02:40:07 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=spodhuis.org; s=d202305; h=OpenPGP:Content-Type:MIME-Version:Message-ID:
-	Subject:Cc:To:From:Date:From:Reply-To:Subject:Date:To:Cc:
-	Content-Transfer-Encoding:Content-ID:Content-Description:In-Reply-To:
-	References:OpenPGP:Organization:Auto-Submitted;
-	bh=9dNH1rLRykmSt3rHvfE0pOkxkIdoQY+DNGVOQYIXYuQ=; t=1697164807; x=1698374407; 
-	b=YpDjWflDnfP+XGTO/VVVYYofCNtECULnuRXOuQv4Vz1Xpn6c4LD4L9nZ7Snne3VeIaD1nTLD4y4
-	8UmdgQZwPTGiIGZwhCmA4bYtqwB7eNwonyBamupaSm6RgY/wrQyhhF5l+Enbx0jp7p+Vi9S8eno4E
-	LagyCAlrYCcq9RlVUszUri2qCWzVEFq+EeMKTGv6AE6kanFIUXuEzyIRzMr9vV38wQm5pS+6blwpq
-	amN96ruLI5w0F70EhtyiuFOoTrbtrGhq1ZIbP7lEy7OB8Nuj96iKemG/d63RzOKp9sUV7+BR5CLTG
-	iGOYIW3f+xzoFk4RM4SgDFg5F6Kax+YSw7rg==;
-DKIM-Signature: v=1; a=ed25519-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=spodhuis.org; s=d202305e2; h=OpenPGP:Content-Type:MIME-Version:Message-ID:
-	Subject:Cc:To:From:Date:From:Reply-To:Subject:Date:To:Cc:
-	Content-Transfer-Encoding:Content-ID:Content-Description:In-Reply-To:
-	References:OpenPGP:Organization:Auto-Submitted;
-	bh=9dNH1rLRykmSt3rHvfE0pOkxkIdoQY+DNGVOQYIXYuQ=; t=1697164807; x=1698374407; 
-	b=xyspFW+FvxfeoCpIkD248dMb4HYwUSt+zGKyWXZ0Cvr+XiWucLDnLOU8lqfUWSzmD/yNvOXF0ff
-	1IGPlP6XiBw==;
-Date: Thu, 12 Oct 2023 22:39:53 -0400
-From: Phil Pennock <oss-security-phil@spodhuis.org>
-To: oss-security@lists.openwall.com
-Cc: pdp@nats.io
-Message-ID: <ZSit-X8iB2gx54hq@fullerene.field.pennock-tech.net>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="HGYRpQb1i7UB2DSe"
-Content-Disposition: inline
-OpenPGP: url=https://www.security.spodhuis.org/PGP/keys/keys-2013rsa-2020cv25519.asc
-Subject: [oss-security] NATS: 2023-01: Adding accounts for just the system account adds auth
- bypass
-
---HGYRpQb1i7UB2DSe
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-[ CVE has been requested, still waiting for assignment, so we're just
-  inventing our own in-house numbering for advisories; we'll make sure
-  this one continues to work after the CVE is issued ]
-
-NATS-advisory-ID: 2023-01
-CVE: pending
-Date: 2023-10-12
-Fixed in: 2.9.23, 2.10.2
-
-Background:
-
-NATS.io is a high performance open source pub-sub distributed communication
-technology, built for the cloud, on-premise, IoT, and edge computing.
-
-NATS users exist within accounts, and once using accounts, the old
-authorization block is not applicable.
+Subject: Re: [oss-security] Security risk of server side text editing ...
+To: Solar Designer <solar@openwall.com>
 
 
-Problem Description:
+Solar Designer wrote:
 
-Without any authorization rules in the nats-server, users can connect
-without authentication.
+> On Mon, Nov 27, 2017 at 02:10:54PM -0500, Scott Court wrote:
+> > Here's the summary you asked for. As far as I've been able to tell,
+> > there are three vulnerabilities being discussed here:
+> 
+> Thank you for trying to do the right thing, but I'm concerned that with
+> the "multiple vulnerabilities in Vim" approach we can identify lots of
+> them and "fix" lots of them yet not achieve a sensible goal - in fact,
+> we already started down that path.
+> 
+> >     1. CVE-2017-1000382
+> 
+> Kurt assigned this one to:
+> 
+> "Please use CVE-2017-1000382 for VIM version 8.0.1187 (and other versions
+> most likely) ignores umask when creating a swap file
+> (\"[ORIGINAL_FILENAME].swp\") resulting in files that may be world readable
+> or otherwise accessible in ways not intended by the user running the vi
+> binary."
 
-Before nats-server 2.2.0, all authentication and authorization rules for
-a nats-server lived in an "authorization" block, defining users.  With
-nats-server 2.2.0 all users live inside accounts.  When using the
-authorization block, whose syntax predates this, those users will be
-placed into the implicit global account, "$G".  Users inside accounts go
-into the newer "accounts" block.
+I still haven't found any reason why umask would apply to intermediate
+or temporary files.  It is intended to be used for newly created files.
+Setting the access of the swap file equal to the edited file is the
+right thing to do.
 
-If an "accounts" block is defined, in simple deployment scenarios this
-is often used only to enable client access to the system account.  When
-the only account added is the system account "$SYS", the nats-server
-would create an implicit user in "$G" and set it as the `no_auth_user`
-account, enabling the same "without authentication" logic as without
-any rules.
+> While ignoring of umask might be the CVE-worthy issue here, in practice
+> most of the files Hanno found were probably from systems that had most
+> distros' default non-root user umask of 022 or 002 anyway.
+> 
+> So fixing this CVE as worded does little to address Hanno's findings.
+> 
+> > This vulnerability was discovered by Hanno Bock. When editing a text
+> > file in Vim, a .swp file is created in the same directory (if you edit
+> > "foo", the swap file will be ".foo.swp"). Hanno pointed out that this
+> > could create a security vulnerability on PHP enabled webservers as follows:
+> > 
+> > If a user goes to edit a .php file in the public_html directory (say
+> > "foo.php"), a swap file will be created in the public_html directory
+> > called ".foo.php.swp". This then exposes the contents of the PHP script
+> > foo.php to the world. All someone has to do is go to
+> > "http://example.com/.foo.php.swp" and he can view the .swp file which
+> > contains the contents of the original foo.php file.
+> > 
+> > Hanno pointed out that this causes a problem with Wordpress sites if the
+> > site administrator edits the wp-config.php file in Vim: he exposes all
+> > of the database credentials. This is made worse if Vim crashes while he
+> > is editing it as then the .wp-config.php.swp file sticks around. He
+> > claims he has found 750 websites that are vulnerable to this.
+> 
+> This is a good summary of the actual issue that we should address, but
+> the CVE is only partially related to it.  Fixing the CVE (as described)
+> means honoring the umask, but it would do little to reduce the number of
+> vulnerable sites Hanno would find.  Improving Vim to always use 0600
+> might or might not be considered a fix for the CVE (maybe 0600 & ~umask
+> would be, even if anything stricter than 0600 breaks the functionality),
+> but it would do much more to address Hanno's findings (only leaving out
+> the special case of the web server running as the same (pseudo-)user who
+> edits the files, which I expect is less common than editing with umask
+> 022 or 002).
+> 
+> So let's focus on what actually matters rather than on what fits a CVE.
+> 
+> >     2. Vim .swp file group (Doesn't have a CVE ID)
+> > 
+> > This vulnerability was discovered by me. When Vim creates a .swp file,
+> > the .swp file is created with the owner and group set to the editor and
+> > editor's primary group respectively. The .swp file is the set to the
+> > same permissions as the original file (i.e. chmod 640). This creates a
+> > security vulnerability when the editor's primary group is not the same
+> > as the original file's group.
+> > 
+> > For example, say the root user's primary group is "users", which every
+> > user is a member of. If root goes to edit /etc/shadow, the
+> > /etc/.shadow.swp file is created with permissions 640 and user:group set
+> > to root:users. The original /etc/shadow file had user:group set to
+> > root:shadow though; this now exposes the /etc/shadow file (which mind
+> > you contains hashes of every user's password) to every user on the system.
+> > 
+> > Originally, I thought this was an extension of CVE-2017-1000382 so I
+> > didn't bother trying to get a CVE ID for it; however, upon looking at it
+> > for a second time, it seems that this is indeed a different
+> > vulnerability. It is possible to patch this vulnerability without
+> > patching CVE-2017-1000382.
+> 
+> I agree this is a separate issue from ignoring the umask, and is
+> probably a CVE-worthy vulnerability as well (if the first CVE is in fact
+> limited to the umask), but for practical purposes there's just one thing
+> to change in response to both issues: make those files 0600.
+> 
+> >     3. Vim.tiny race condition (Doesn't have a CVE ID as far as I know)
+> > 
+> > I'm not quite sure who discovered this vulnerability (I don't use or
+> > follow vim.tiny); however, it has been discussed on here so I will
+> > include my limited knowledge of it for completeness sake. This is a race
+> > condition in which a world writable SUID binary is temporarily created.
+> > This could (or course) theoretically allow an arbitrary user to write to
+> > that binary and execute arbitrary code as root; however, there is debate
+> > as to whether or not doing this is actually feasible.
+> 
+> This not a vulnerability in Vim, and is not CVE-worthy.  Most programs,
+> text editors included, are unsafe to use on pathnames in untrusted
+> directories, period.  We might want to harden Vim to make it less unsafe
+> when misused like that, but calling that a vulnerability and those
+> changes a fix would encourage the misuses and further misunderstandings.
+> 
+> If I understand correctly, the specific example posted by Roman relied
+> on a file being replaced with a symlink, so this falls in the above
+> category - misuse of Vim in an untrusted directory.
 
-This preserved the ability to connect simply, and then add one
-authenticated login for system access.
+I have fixed this anyway, patch 8.0.1300.
 
-But with an "authorization" block, this is wrong.  Users exist in the
-global account, with login rules.  And in simple testing, they might
-still connect fine without administrators seeing that authentication has
-been disabled.
+> OTOH, as an exception, Vim can and should be made safe when editing a
+> file with an untrusted owner if that file (the specific hard link to it
+> corresponding to the pathname being edited) is located in a trusted
+> directory (including all of its parent directories) - e.g., /var/run/foo
+> where only foo itself is under a potential attacker's control.  If Vim
+> would sometimes copy the SUID/SGID bits from such file to another
+> (temporary) file that does not yet have the user and group ownership
+> also already copied to it (which would have already been racy as well),
+> then that's a concern and is something that should be fixed - again, by
+> simply setting those files' permissions to 0600 (no need for any fancy
+> logic).  I don't know, and am not too interested, whether such an issue
+> currently exists (I think it does not, as I saw code masking the
+> permissions to 0777), nor whether it's CVE-worthy (it might be if it
+> exists).  I care more about the trivial proper change we should make in
+> response to all of these non-misuse issues at once, without needing to
+> enumerate and categorize them.
+> 
+> If upstream approaches this differently, distros should throw the fancy
+> logic out and hard-code 0600.
+> 
+> > I believe these are the three big ones
+> 
+> Thanks, but I think enumerating and categorizing them is a distraction,
+> except to the extent necessary for us to get on the same page and make
+> the trivial change. ;-)
 
-The blind-spot on our part came from encouraging and documenting a
-switch to using only "accounts", instead of "authorization".
+-- 
+I started out with nothing, and I still have most of it.
+                                -- Michael Davis -- "Tonight Show"
 
-In the fixed versions, using an "authorization" block will inhibit the
-implicit creation of a "$G" user and setting it as the `no_auth_user`
-target.  In unfixed versions, just creating a second account, with no
-users, will also inhibit this behavior.
-
-
-Affected versions:
-
-NATS Server:
- * 2.2.0 up to and including 2.9.22 and 2.10.1
- * Fixed with nats-io/nats-server: 2.10.2 and backported to 2.9.23
-
-
-Workarounds:
-
-In the "accounts" block, define a second non-system account, leave
-it empty.
-
-    accounts {
-        SYS: {
-            users: [
-                { user: sysuser, password: makemeasandwich }
-            ]
-        }
-        DUMMY: {}  # for security, before 2.10.2
-    }
-    system_account: SYS
-
-
-Solution:
-
-Any one of these:
-
- 1. Upgrade the NATS server to at least 2.10.2 (or 2.9.23)
- 2. Or define a dummy account
- 3. Or complete the migration of authorization entries to be inside
-    a named account in the "accounts" block
-
-
-Credits:
-
-Problem reported by Alex Herrington.
-Addressed publicly in a GitHub Discussion prior to this advisory.
-
-
---HGYRpQb1i7UB2DSe
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQSpb2i1s4FmGYGL+VvhPiXtYNF+awUCZSit+AAKCRDhPiXtYNF+
-a+d1AQDd4nefEeskNWJKpiUhFXfljZq7VCxq5nXm4zw0UXkpfQEA/jntyZfv1gtu
-CMXMd0cr0k4jRW+gdgVo0/yXJziK0Qw=
-=KG0O
------END PGP SIGNATURE-----
-
---HGYRpQb1i7UB2DSe--
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\  an exciting new programming language -- http://www.Zimbu.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///
