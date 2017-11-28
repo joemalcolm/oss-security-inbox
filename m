@@ -1,23 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/31/6
-Message-ID: <Kbor4aA--3-0@keemail.me>
-Date: Tue, 31 Jan 2017 15:09:58 +0100 (CET)
-From: <nikola.sc@...mail.me>
-To: <oss-security@...ts.openwall.com>
-Subject: CVE request: multiples vulnerabilities in libplist
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/28/8
+Message-ID: <nycvar.YSQ.7.76.1711282322150.6216@wniryva>
+Date: Tue, 28 Nov 2017 23:26:43 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Eric Blake <eblake@...hat.com>
+Subject: CVE-2017-15118 Qemu: stack buffer overflow in NBD server triggered via long export name
 Content-Type: text/plain; charset=utf-8
 
-Fixed in libplist, a library to handle Apple Property List format in binary or XML. Debian and Ubuntu are using vulnerable versions.https://github.com/libimobiledevice/libplist
-Public issues:heap-buffer-overflow in parse_dict_node
-https://github.com/libimobiledevice/libplist/issues/89
-memory allocation errorhttps://github.com/libimobiledevice/libplist/issues/88
+   Hello,
 
-heap-buffer-overflow CVE-2017-5545 used in
-https://github.com/libimobiledevice/libplist/issues/87
+A stack based buffer overflow vulnerability was found in NBD server 
+implementation in Qemu allowing client to request an export name of size up to 
+4096 bytes, which in fact should be limited to 256 bytes, allowing to cause 
+out-of-bounds stack write in Qemu process.
 
-issue in plist_free_data plist.c:185
-https://github.com/libimobiledevice/libplist/issues/86
+If NBD server requires TLS, the attacker cannot trigger the buffer overflow 
+without first successfully negotiating TLS.
 
-Regards, Nikola
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2017-11/msg05045.html
+
+Reference:
+----------
+   ->https://bugzilla.redhat.com/show_bug.cgi?id=1516922
+
+Thank you.
 --
-Nikola s.c
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
