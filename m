@@ -1,4 +1,9 @@
-Received: (qmail 21852 invoked by uid 550); 17 Oct 2023 11:58:20 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["16642" "Tuesday" "28" "November" "2017" "12:00:20" "+0000" "Xen.org security team" "security@xen.org" "<E1eJeYm-0000Mn-Mq@xenbits.xenproject.org>" "345" "[oss-security] Xen Security Advisory 246 - x86: infinite loop due to missing PoD error checking" nil nil nil "11" "2017112812:00:20" "[oss-security] Xen Security Advisory 246 - x86: infinite loop due to missing PoD error checking" (number mark "U       security@xen Nov 28  345/16642 " thread-indent "\"[oss-security] Xen Security Advisory 246 - x86: infinite loop due to missing PoD error checking\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 10101 invoked by uid 550); 28 Nov 2017 12:00:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,205 +12,362 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9714 invoked from network); 17 Oct 2023 00:17:50 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1697501858; x=1698106658; darn=lists.openwall.com;
-        h=content-disposition:mime-version:subject:to:from:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=HJJ2D6NF42uaq59/poLvf9jTMn/5cSL8V5Qostnkt+s=;
-        b=lQ2LqjKzox7sZQhXrj2+8tr6yKK6zefbiG0XFurw787qw00TafpI/AITPxMGgRFESv
-         WtLF6z/c3APGSzmVxKveBz68fl6JL5+exVKo4HCsy1EGEre/EgfpHsxu9eEm7Wi/Gatm
-         TPwEtDztLfeIvOL2ENJp+qm60fb+k5SgvGGVISp7KhuKfDcDlIXsL29e82uUNKMiOD3I
-         YLcuCBueSB1DVRnpS2qYRUT4ydKztYA1W8it5T2SeTGy9dkBNuFLEdZYPgDEaJN6n0D7
-         Q7m5mEFRjch6R3f0YUZWQ2d1kvcO6WANckN+3pPWIvfxtQM4igshee+0jNQOvhRuajzJ
-         fYvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697501858; x=1698106658;
-        h=content-disposition:mime-version:subject:to:from:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=HJJ2D6NF42uaq59/poLvf9jTMn/5cSL8V5Qostnkt+s=;
-        b=WxaTlMA8k7k1XLaxjWwYo25InaGv2ceUhhZygxynC7COjE6Nig5eyjIiwdYq4ChIxp
-         xUjgWThVN8154op38SEtWP46Fl7JE77wXI/YM/DQVUJyCgfBitcgjifxLVLyOIxHXCRK
-         gbfEjP7cacf3nOBwt2UdhxzzPjMxbAU73UMhE68Tfrt2vs+3amgnKzHdRYFI3/BXnAlj
-         xkUjAhK7xtmcvd1qXmNMSsQtA+KqX179sHMidIf1Q3QRoGKdVDaGTuMVvGthZa9957HD
-         TlQyEwqZEDGG1Hh7VxTShWbZifvmguLnAsck17iKLpi0xHCREEJpKT2rw0WrlT7aHz2J
-         P98g==
-X-Gm-Message-State: AOJu0YzB75kR4Qp9WOaC3IBpLmJRsfO+y/CIEObHwfcNIpogDiBXBzzv
-	PMrJZ3tggijoszShu2X27ttM02Kx0oI=
-X-Google-Smtp-Source: AGHT+IHAhhuxzagbPGjWNWCH80w2CRqEe91JFj2AKcTD7vuFTBIN8b8BV8RtCxCnqbl/3Q4AKgkNOg==
-X-Received: by 2002:a17:907:1ca4:b0:9bd:a029:1a10 with SMTP id nb36-20020a1709071ca400b009bda0291a10mr321571ejc.32.1697501858105;
-        Mon, 16 Oct 2023 17:17:38 -0700 (PDT)
-Message-ID: <e5dc2cc159fa7e7f287e10482366011e.f0e92af0@rotted.prefixed>
-Date: Tue, 17 Oct 2023 03:17:36 +0300
-From: turistu <turistu@gmail.com>
-To: oss-security@lists.openwall.com
+Received: (qmail 10056 invoked from network); 28 Nov 2017 12:00:45 -0000
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+X-Mailer: MIME-tools 5.505 (Entity 5.505)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1eJeYm-0000Mn-Mq@xenbits.xenproject.org>
+Date: Tue, 28 Nov 2017 12:00:20 +0000
+Subject: [oss-security] Xen Security Advisory 246 - x86: infinite loop due to missing PoD
+ error checking
+
+--=separator
+Content-Type: text/plain; charset="utf-8"
 Content-Disposition: inline
-Subject: [oss-security] with firefox on X11, any page can pastejack you anytime
+Content-Transfer-Encoding: 7bit
 
-Note to the moderator: I have already submitted this to the firefox people
-three weeks ago, and according to them, this is not a real security issue,
-or at least not worse than those pesky scripts which you cannot kill without
-killing firefox itself; if you think the same, just ignore this without
-replying.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I would however appreciate if you let this through and so give it some
-visibility so that the other 2 or 3 people who may be affected by this
-could learn about it.
+                    Xen Security Advisory XSA-246
+                              version 2
 
-Thank you very much.
+         x86: infinite loop due to missing PoD error checking
 
-====
+UPDATES IN VERSION 2
+====================
 
-In firefox running on X11, any script from any page can freely write to the
-primary selection, and that can be easily exploited to run arbitrary code
-on the user's machine.
+Public release.
 
-No user interaction is necessary -- any page able to run javascript can do it,
-including e.g. a page from a background tab of a minimized window, an iframe
-inside such a window, an error page, a sandboxed iframe, a page that has
-reloaded itself via `meta http-equiv=refresh`, etc.
+ISSUE DESCRIPTION
+=================
 
-This applies to all the versions of mozilla/firefox and their derivatives
-(seamonkey, etc) that I was able to test, including the latest nightly.
+Failure to recognize errors being returned from low level functions in
+Populate on Demand (PoD) code may result in higher level code entering
+an infinite loop.
 
-### Example
+IMPACT
+======
 
-The simplest example, which works in the default configurations of systems
-like OpenBSD or Alpine Linux (= any Unix/Linux system where Wayland is not
-the default and the default *shell* does not implement bracketed-paste),
-would go like this:
+A malicious HVM guest can cause one pcpu to permanently hang.  This
+normally cascades into the whole system freezing, resulting in a a
+host Denial of Service (DoS).
 
-Load the following snippet in firefox:
+VULNERABLE SYSTEMS
+==================
 
-	<pre id=pre style=font-size:0></pre>
-	intentionally left blank
-	<script>
-	function writeXPrimary(s){
-		pre.textContent = s; getSelection().selectAllChildren(pre);
-	}
-	setInterval(function(){
-		writeXPrimary('touch ~/LOL-' + Date.now() / 1000 +'\r')
-	}, 500)
-	</script>
+Xen versions from 3.4.x onwards are affected.
 
-Then pretend to forget about it, and go about your work. Sooner or later,
-when trying to paste something in the terminal with shift-Insert or middle
-click, you will end up running the command `writeXPrimary()` has injected
-just between your copy and paste.
+Only x86 systems are vulnerable.  ARM is not vulnerable.
 
-live example of that snippet: https://turistu.github.io/firefox/pastejack.html
+x86 PV VMs cannot leverage the vulnerability.
 
-### Short technical explanation
+Only systems with 2MiB or 1GiB HAP pages enabled are vulnerable.
 
-Browsers like firefox have the concepts of "secure context" (e.g. `https://`)
-and "transient user activation"; the javascript from the page gets some
-temporary powers as soon as you have interacted *even so little* with the
-page, like clicked, touched, etc.
+The vulnerability is largely restricted to HVM guests which have been
+constructed in Populate-on-Demand mode (i.e. with memory < maxmem):
 
-For instance, writing with `Clipboard.writeText()` to the windows-style
-Ctrl-C Ctrl-V *clipboard* selection is only possible from secure contexts
-and only in the short while after the user has clicked a button, etc on the page.
-As this bug demonstrates, those prerequisites are not needed for writing to the
-*primary* selection, which on X11 is much more used and much more valuable.
+x86 HVM domains without PoD (i.e. started with memory == maxmem, or
+without mentioning "maxmem" in the guest config file) also cannot
+leverage the vulnerability, in recent enough Xen versions:
+  4.8.x and later: all versions safe if PoD not configured
+  4.7.x: 4.7.1 and later safe if PoD not configured
+  4.6.x: 4.6.4 and later safe if PoD not configured
+  4.5.x: 4.5.4 and later safe if PoD not configured
+  4.4.x and earlier: all versions vulnerable even if PoD not configured
 
-### Workaround
+The commit required to prevent this vulnerability when PoD
+not configured is 2a99aa99fc84a45f505f84802af56b006d14c52e
+  xen/physmap: Do not permit a guest to populate PoD pages for itself
+and the corresponding backports.
 
-Without patching firefox, the only workaround I can think about is
-disabling the `Clipboard.selectAllChildren()` function from an addon's
-content script, e.g. like this:
+MITIGATION
+==========
 
-	let block = function(){ throw Error('blocked') };
-	exportFunction(block, Selection.prototype, { defineAs: 'selectAllChildren' });
+Running only PV guests will avoid this issue.
 
-Complete extension here at https://github.com/turistu/odds-n-ends/raw/main/firefox/no-sel.xpi.
+Running HVM guests only in non-PoD mode (maxmem == memory) will also
+avoid this issue.  NOTE: In older releases of Xen, an HVM guest can
+create PoD entries itself; so this mitigation will not be effective.
 
-I tried to submit it to addons.mozilla.org but they didn't accept it. If
-you're running firefox-esr, the development edition or nightly, you can just
-`set xpinstall.signatures.required` to true in `about:config` and install
-it with `firefox no-sel.xpi`.
+Specifying "hap_1gb=0 hap_2mb=0" on the hypervisor command line will
+avoid the vulnerability.
 
-### Firefox Patch
-```
-diff -r 9b362770f30b layout/generic/nsFrameSelection.cpp
---- a/layout/generic/nsFrameSelection.cpp	Fri Oct 06 12:03:17 2023 +0000
-+++ b/layout/generic/nsFrameSelection.cpp	Sun Oct 08 11:04:41 2023 +0300
-@@ -3345,6 +3345,10 @@
-     return;  // Don't care if we are still dragging.
-   }
- 
-+  if (aReason & nsISelectionListener::JS_REASON) {
-+    return;
-+  }
-+
-   if (!aDocument || aSelection.IsCollapsed()) {
- #ifdef DEBUG_CLIPBOARD
-     fprintf(stderr, "CLIPBOARD: no selection/collapsed selection\n");
-```
+Alternatively, running all x86 HVM guests in shadow mode will also
+avoid this vulnerability.  (For example, by specifying "hap=0" in the
+xl domain configuration file.)
 
-The idea of this patch was to *always* prevent javascript from indirectly
-messing with the primary selection via the Selection API. However, it turned
-out that the `JS_REASON` flag was not reliable; if javascript calls some
-function like `addRange()` or `selectAllChildren()` while the user has started
-dragging but hasn't released the mouse button yet, that code will be called
-*without* that flag but with the text set by javascript, not the text
-selected by the user. However, I think that this patch is still enough
-to fill the glaring hole opened by `selectAllChildren()`.
+CREDITS
+=======
 
-### About the example and bracketed-paste
+This issue was discovered by Julien Grall of Linaro.
 
-The bracketed paste feature of bash/readline and zsh means that you
-cannot just append a CR or LF to the payload and be done, it's the
-user who has to press ENTER for it to run.
+RESOLUTION
+==========
 
-However, workarounds exist.  For instance, some terminals like mlterm
-don't filter out the pasted data, and you can terminate the pasting
-mode early by inserting a `\e[201~` in the payload.
+Applying the appropriate attached patch resolves this issue.
 
-For bash, you can take advantage of some quirks in the readline library
-to turn off the highlighting and make the payload invisible to the user.
-E.g.:
+xsa246.patch           xen-unstable
+xsa246-4.9.patch       Xen 4.9.x, Xen 4.8.x
+xsa246-4.7.patch       Xen 4.7.x, Xen 4.6.x, Xen 4.5.x
 
-	let payload = 'touch ~/LOL-' + Date.now() / 1000;
-	writeXPrimary('\n' + payload + '\n'.repeat(100) + ' '.repeat(30)
-		+ '\n'.repeat(100))
+$ sha256sum xsa246*
+df08a3be419f2384b495dc52c3e6ebef1eb67d8b562afe85fb6fe6a723334472  xsa246.patch
+b41550688e88a2a7a22349a07168f3a3ddf6fad8b3389fa27de44ae6731b6a8b  xsa246-4.7.patch
+ea591542774c22db65dcb340120cebf58e759670b5a9fbde42ee93ed594650c8  xsa246-4.9.patch
+$
 
-which will confuse the user with the same screen as when some stray background job
-had written something to the terminal:
+DEPLOYMENT DURING EMBARGO
+=========================
 
-	user@host:~$ : previous unrelated command
-	user@host:~$	<-- paste here
-	#   <-- cursor here, most users will just hit Enter to get a new prompt
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators, with ONE exception:
 
-live example of that snippet:	https://turistu.github.io/firefox/bash-pastejack.html
+Removing the ability to boot in populate-on-demand mode is NOT
+permitted during the embargo on public cloud systems.  This is because
+doing so might alert attackers to the nature of the vulnerability.
+Deployment of this mitigation is permitted only AFTER the embargo
+ends.
 
-Just to be clear, I don't think that either mlterm, bash, nor the shells that
-don't do have that bracketed-paste feature are at fault here in any way
-(and I personally always turn off that misfeature as it badly interferes
-with my workflow): It's firefox which should get all the blame for letting
-random javascript evade its pretended "sandbox" in this way.
+Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
 
-### About Wayland
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
 
-For firefox running in Wayland, `writeXPrimary()` will only succeed
-when the firefox window (the main window, not necessarily the tab the code
-runs in) has the focus. Otherwise the selection will be cleared. At first I
-assumed that this is something specific to the Wayland protocol, but that
-turned out to be utterly false; it's just some quirk, bug or "feature"
-specific to either firefox itself or GTK.
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
 
-But I think that's still bad enough, even if the page should take care to
-only set the selection when the main window has gained focus.
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-And of course, all this doesn't affect the situation where you're copying
-and pasting in another firefox tab with a different context, origin, etc;
-and all the other situations where you don't appreciate having random
-javascript you don't even know about messing with your copy & paste.
+iQEcBAEBCAAGBQJaHU9JAAoJEIP+FMlX6CvZLOIH/0O6O8GN1JERJhYFrnjgY/EP
+igKyYL7yMRDqjfRt3AtJQFfJXsQMhAywFpMProH5ZQZQyTssZGShM24tx/Y0Uknu
+6RUl0nO7boxie6718uUk5PUdde24H/SCHr2aU/liqktzsycC4Rs5vEvgSxVxX39h
+ZLiIFN4LiZR0d9EChx6N/jB4WO7cNL1FgrTOG+xlYW5QiW7bPF6yB5NE4dmKObjK
+ZWqMvSmRbg1A+QrcoZM0Oa2VyQ2vUaz4ekDR/gJJ4YPZjACpguBmyRaVg0Vz/yJp
+LHuGO8f+31OjYpTkCAEwoAa9FmmN0VlPd6cWIbCQkC9tTNWUMaPC+izA6wx5e8M=
+=+X0p
+-----END PGP SIGNATURE-----
 
-===
+--=separator
+Content-Type: application/octet-stream; name="xsa246.patch"
+Content-Disposition: attachment; filename="xsa246.patch"
+Content-Transfer-Encoding: base64
 
-This is a slightly edited version of
-https://github.com/turistu/odds-n-ends/blob/main/firefox/pastejack.md.
+RnJvbTogSnVsaWVuIEdyYWxsIDxqdWxpZW4uZ3JhbGxAbGluYXJvLm9yZz4K
+U3ViamVjdDogeDg2L3BvZDogcHJldmVudCBpbmZpbml0ZSBsb29wIHdoZW4g
+c2hhdHRlcmluZyBsYXJnZSBwYWdlcwoKV2hlbiBwb3B1bGF0aW5nIHBhZ2Vz
+LCB0aGUgUG9EIG1heSBuZWVkIHRvIHNwbGl0IGxhcmdlIG9uZXMgdXNpbmcK
+cDJtX3NldF9lbnRyeSBhbmQgcmVxdWVzdCB0aGUgY2FsbGVyIHRvIHJldHJ5
+IChzZWUgZXB0X2dldF9lbnRyeSBmb3IKaW5zdGFuY2UpLgoKcDJtX3NldF9l
+bnRyeSBtYXkgZmFpbCB0byBzaGF0dGVyIGlmIGl0IGlzIG5vdCBwb3NzaWJs
+ZSB0byBhbGxvY2F0ZQptZW1vcnkgZm9yIHRoZSBuZXcgcGFnZSB0YWJsZS4g
+SG93ZXZlciwgdGhlIGVycm9yIGlzIG5vdCBwcm9wYWdhdGVkCnJlc3VsdGlu
+ZyB0byB0aGUgY2FsbGVycyB0byByZXRyeSBpbmZpbml0ZWx5IHRoZSBQb0Qu
+CgpQcmV2ZW50IHRoZSBpbmZpbml0ZSBsb29wIGJ5IHJldHVybiBmYWxzZSB3
+aGVuIGl0IGlzIG5vdCBwb3NzaWJsZSB0bwpzaGF0dGVyIHRoZSBsYXJnZSBt
+YXBwaW5nLgoKVGhpcyBpcyBYU0EtMjQ2LgoKU2lnbmVkLW9mZi1ieTogSnVs
+aWVuIEdyYWxsIDxqdWxpZW4uZ3JhbGxAbGluYXJvLm9yZz4KU2lnbmVkLW9m
+Zi1ieTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpSZXZpZXdl
+ZC1ieTogR2VvcmdlIER1bmxhcCA8Z2VvcmdlLmR1bmxhcEBjaXRyaXguY29t
+PgoKLS0tIGEveGVuL2FyY2gveDg2L21tL3AybS1wb2QuYworKysgYi94ZW4v
+YXJjaC94ODYvbW0vcDJtLXBvZC5jCkBAIC0xMTEzLDkgKzExMTMsOCBAQCBw
+Mm1fcG9kX2RlbWFuZF9wb3B1bGF0ZShzdHJ1Y3QgcDJtX2RvbWFpCiAgICAg
+ICAgICAqIE5PVEU6IEluIGEgZmluZS1ncmFpbmVkIHAybSBsb2NraW5nIHNj
+ZW5hcmlvIHRoaXMgb3BlcmF0aW9uCiAgICAgICAgICAqIG1heSBuZWVkIHRv
+IHByb21vdGUgaXRzIGxvY2tpbmcgZnJvbSBnZm4tPjFnIHN1cGVycGFnZQog
+ICAgICAgICAgKi8KLSAgICAgICAgcDJtX3NldF9lbnRyeShwMm0sIGdmbl9h
+bGlnbmVkLCBJTlZBTElEX01GTiwgUEFHRV9PUkRFUl8yTSwKLSAgICAgICAg
+ICAgICAgICAgICAgICBwMm1fcG9wdWxhdGVfb25fZGVtYW5kLCBwMm0tPmRl
+ZmF1bHRfYWNjZXNzKTsKLSAgICAgICAgcmV0dXJuIHRydWU7CisgICAgICAg
+IHJldHVybiAhcDJtX3NldF9lbnRyeShwMm0sIGdmbl9hbGlnbmVkLCBJTlZB
+TElEX01GTiwgUEFHRV9PUkRFUl8yTSwKKyAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgIHAybV9wb3B1bGF0ZV9vbl9kZW1hbmQsIHAybS0+ZGVmYXVs
+dF9hY2Nlc3MpOwogICAgIH0KIAogICAgIC8qIE9ubHkgcmVjbGFpbSBpZiB3
+ZSdyZSBpbiBhY3R1YWwgbmVlZCBvZiBtb3JlIGNhY2hlLiAqLwpAQCAtMTE0
+Nyw4ICsxMTQ2LDEyIEBAIHAybV9wb2RfZGVtYW5kX3BvcHVsYXRlKHN0cnVj
+dCBwMm1fZG9tYWkKIAogICAgIEJVR19PTigobWZuX3gobWZuKSAmICgoMVVM
+IDw8IG9yZGVyKSAtIDEpKSAhPSAwKTsKIAotICAgIHAybV9zZXRfZW50cnko
+cDJtLCBnZm5fYWxpZ25lZCwgbWZuLCBvcmRlciwgcDJtX3JhbV9ydywKLSAg
+ICAgICAgICAgICAgICAgIHAybS0+ZGVmYXVsdF9hY2Nlc3MpOworICAgIGlm
+ICggcDJtX3NldF9lbnRyeShwMm0sIGdmbl9hbGlnbmVkLCBtZm4sIG9yZGVy
+LCBwMm1fcmFtX3J3LAorICAgICAgICAgICAgICAgICAgICAgICBwMm0tPmRl
+ZmF1bHRfYWNjZXNzKSApCisgICAgeworICAgICAgICBwMm1fcG9kX2NhY2hl
+X2FkZChwMm0sIHAsIG9yZGVyKTsKKyAgICAgICAgZ290byBvdXRfZmFpbDsK
+KyAgICB9CiAKICAgICBmb3IoIGkgPSAwOyBpIDwgKDFVTCA8PCBvcmRlcik7
+IGkrKyApCiAgICAgewpAQCAtMTE5MywxNCArMTE5NiwxNyBAQCByZW1hcF9h
+bmRfcmV0cnk6CiAgICAgQlVHX09OKG9yZGVyICE9IFBBR0VfT1JERVJfMk0p
+OwogICAgIHBvZF91bmxvY2socDJtKTsKIAotICAgIC8qIFJlbWFwIHRoaXMg
+Mi1tZWcgcmVnaW9uIGluIHNpbmdsZXRvbiBjaHVua3MgKi8KICAgICAvKgor
+ICAgICAqIFJlbWFwIHRoaXMgMi1tZWcgcmVnaW9uIGluIHNpbmdsZXRvbiBj
+aHVua3MuIFNlZSB0aGUgY29tbWVudCBvbiB0aGUKKyAgICAgKiAxRyBwYWdl
+IHNwbGl0dGluZyBwYXRoIGFib3ZlIGZvciB3aHkgYSBzaW5nbGUgY2FsbCBz
+dWZmaWNlcy4KKyAgICAgKgogICAgICAqIE5PVEU6IEluIGEgcDJtIGZpbmUt
+Z3JhaW5lZCBsb2NrIHNjZW5hcmlvIHRoaXMgbWlnaHQKICAgICAgKiBuZWVk
+IHByb21vdGluZyB0aGUgZ2ZuIGxvY2sgZnJvbSBnZm4tPjJNIHN1cGVycGFn
+ZS4KICAgICAgKi8KLSAgICBmb3IgKCBpID0gMDsgaSA8ICgxVUwgPDwgb3Jk
+ZXIpOyBpKysgKQotICAgICAgICBwMm1fc2V0X2VudHJ5KHAybSwgZ2ZuX2Fk
+ZChnZm5fYWxpZ25lZCwgaSksIElOVkFMSURfTUZOLCBQQUdFX09SREVSXzRL
+LAotICAgICAgICAgICAgICAgICAgICAgIHAybV9wb3B1bGF0ZV9vbl9kZW1h
+bmQsIHAybS0+ZGVmYXVsdF9hY2Nlc3MpOworICAgIGlmICggcDJtX3NldF9l
+bnRyeShwMm0sIGdmbl9hbGlnbmVkLCBJTlZBTElEX01GTiwgUEFHRV9PUkRF
+Ul80SywKKyAgICAgICAgICAgICAgICAgICAgICAgcDJtX3BvcHVsYXRlX29u
+X2RlbWFuZCwgcDJtLT5kZWZhdWx0X2FjY2VzcykgKQorICAgICAgICByZXR1
+cm4gZmFsc2U7CisKICAgICBpZiAoIHRiX2luaXRfZG9uZSApCiAgICAgewog
+ICAgICAgICBzdHJ1Y3Qgewo=
 
-I will correct any errors or omissions and also add more info there.
+--=separator
+Content-Type: application/octet-stream; name="xsa246-4.7.patch"
+Content-Disposition: attachment; filename="xsa246-4.7.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogSnVsaWVuIEdyYWxsIDxqdWxpZW4uZ3JhbGxAbGluYXJvLm9yZz4K
+U3ViamVjdDogeDg2L3BvZDogcHJldmVudCBpbmZpbml0ZSBsb29wIHdoZW4g
+c2hhdHRlcmluZyBsYXJnZSBwYWdlcwoKV2hlbiBwb3B1bGF0aW5nIHBhZ2Vz
+LCB0aGUgUG9EIG1heSBuZWVkIHRvIHNwbGl0IGxhcmdlIG9uZXMgdXNpbmcK
+cDJtX3NldF9lbnRyeSBhbmQgcmVxdWVzdCB0aGUgY2FsbGVyIHRvIHJldHJ5
+IChzZWUgZXB0X2dldF9lbnRyeSBmb3IKaW5zdGFuY2UpLgoKcDJtX3NldF9l
+bnRyeSBtYXkgZmFpbCB0byBzaGF0dGVyIGlmIGl0IGlzIG5vdCBwb3NzaWJs
+ZSB0byBhbGxvY2F0ZQptZW1vcnkgZm9yIHRoZSBuZXcgcGFnZSB0YWJsZS4g
+SG93ZXZlciwgdGhlIGVycm9yIGlzIG5vdCBwcm9wYWdhdGVkCnJlc3VsdGlu
+ZyB0byB0aGUgY2FsbGVycyB0byByZXRyeSBpbmZpbml0ZWx5IHRoZSBQb0Qu
+CgpQcmV2ZW50IHRoZSBpbmZpbml0ZSBsb29wIGJ5IHJldHVybiBmYWxzZSB3
+aGVuIGl0IGlzIG5vdCBwb3NzaWJsZSB0bwpzaGF0dGVyIHRoZSBsYXJnZSBt
+YXBwaW5nLgoKVGhpcyBpcyBYU0EtMjQ2LgoKU2lnbmVkLW9mZi1ieTogSnVs
+aWVuIEdyYWxsIDxqdWxpZW4uZ3JhbGxAbGluYXJvLm9yZz4KU2lnbmVkLW9m
+Zi1ieTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpSZXZpZXdl
+ZC1ieTogR2VvcmdlIER1bmxhcCA8Z2VvcmdlLmR1bmxhcEBjaXRyaXguY29t
+PgoKLS0tIGEveGVuL2FyY2gveDg2L21tL3AybS1wb2QuYworKysgYi94ZW4v
+YXJjaC94ODYvbW0vcDJtLXBvZC5jCkBAIC0xMDczLDkgKzEwNzMsOCBAQCBw
+Mm1fcG9kX2RlbWFuZF9wb3B1bGF0ZShzdHJ1Y3QgcDJtX2RvbWFpCiAgICAg
+ICAgICAqIE5PVEU6IEluIGEgZmluZS1ncmFpbmVkIHAybSBsb2NraW5nIHNj
+ZW5hcmlvIHRoaXMgb3BlcmF0aW9uCiAgICAgICAgICAqIG1heSBuZWVkIHRv
+IHByb21vdGUgaXRzIGxvY2tpbmcgZnJvbSBnZm4tPjFnIHN1cGVycGFnZQog
+ICAgICAgICAgKi8KLSAgICAgICAgcDJtX3NldF9lbnRyeShwMm0sIGdmbl9h
+bGlnbmVkLCBfbWZuKElOVkFMSURfTUZOKSwgUEFHRV9PUkRFUl8yTSwKLSAg
+ICAgICAgICAgICAgICAgICAgICBwMm1fcG9wdWxhdGVfb25fZGVtYW5kLCBw
+Mm0tPmRlZmF1bHRfYWNjZXNzKTsKLSAgICAgICAgcmV0dXJuIDA7CisgICAg
+ICAgIHJldHVybiBwMm1fc2V0X2VudHJ5KHAybSwgZ2ZuX2FsaWduZWQsIF9t
+Zm4oSU5WQUxJRF9NRk4pLCBQQUdFX09SREVSXzJNLAorICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICBwMm1fcG9wdWxhdGVfb25fZGVtYW5kLCBwMm0t
+PmRlZmF1bHRfYWNjZXNzKTsKICAgICB9CiAKICAgICAvKiBPbmx5IHJlY2xh
+aW0gaWYgd2UncmUgaW4gYWN0dWFsIG5lZWQgb2YgbW9yZSBjYWNoZS4gKi8K
+QEAgLTExMDYsOCArMTEwNSwxMiBAQCBwMm1fcG9kX2RlbWFuZF9wb3B1bGF0
+ZShzdHJ1Y3QgcDJtX2RvbWFpCiAKICAgICBnZm5fYWxpZ25lZCA9IChnZm4g
+Pj4gb3JkZXIpIDw8IG9yZGVyOwogCi0gICAgcDJtX3NldF9lbnRyeShwMm0s
+IGdmbl9hbGlnbmVkLCBtZm4sIG9yZGVyLCBwMm1fcmFtX3J3LAotICAgICAg
+ICAgICAgICAgICAgcDJtLT5kZWZhdWx0X2FjY2Vzcyk7CisgICAgaWYgKCBw
+Mm1fc2V0X2VudHJ5KHAybSwgZ2ZuX2FsaWduZWQsIG1mbiwgb3JkZXIsIHAy
+bV9yYW1fcncsCisgICAgICAgICAgICAgICAgICAgICAgIHAybS0+ZGVmYXVs
+dF9hY2Nlc3MpICkKKyAgICB7CisgICAgICAgIHAybV9wb2RfY2FjaGVfYWRk
+KHAybSwgcCwgb3JkZXIpOworICAgICAgICBnb3RvIG91dF9mYWlsOworICAg
+IH0KIAogICAgIGZvciggaSA9IDA7IGkgPCAoMVVMIDw8IG9yZGVyKTsgaSsr
+ICkKICAgICB7CkBAIC0xMTUyLDEzICsxMTU1LDE4IEBAIHJlbWFwX2FuZF9y
+ZXRyeToKICAgICBCVUdfT04ob3JkZXIgIT0gUEFHRV9PUkRFUl8yTSk7CiAg
+ICAgcG9kX3VubG9jayhwMm0pOwogCi0gICAgLyogUmVtYXAgdGhpcyAyLW1l
+ZyByZWdpb24gaW4gc2luZ2xldG9uIGNodW5rcyAqLwotICAgIC8qIE5PVEU6
+IEluIGEgcDJtIGZpbmUtZ3JhaW5lZCBsb2NrIHNjZW5hcmlvIHRoaXMgbWln
+aHQKLSAgICAgKiBuZWVkIHByb21vdGluZyB0aGUgZ2ZuIGxvY2sgZnJvbSBn
+Zm4tPjJNIHN1cGVycGFnZSAqLworICAgIC8qCisgICAgICogUmVtYXAgdGhp
+cyAyLW1lZyByZWdpb24gaW4gc2luZ2xldG9uIGNodW5rcy4gU2VlIHRoZSBj
+b21tZW50IG9uIHRoZQorICAgICAqIDFHIHBhZ2Ugc3BsaXR0aW5nIHBhdGgg
+YWJvdmUgZm9yIHdoeSBhIHNpbmdsZSBjYWxsIHN1ZmZpY2VzLgorICAgICAq
+CisgICAgICogTk9URTogSW4gYSBwMm0gZmluZS1ncmFpbmVkIGxvY2sgc2Nl
+bmFyaW8gdGhpcyBtaWdodAorICAgICAqIG5lZWQgcHJvbW90aW5nIHRoZSBn
+Zm4gbG9jayBmcm9tIGdmbi0+Mk0gc3VwZXJwYWdlLgorICAgICAqLwogICAg
+IGdmbl9hbGlnbmVkID0gKGdmbj4+b3JkZXIpPDxvcmRlcjsKLSAgICBmb3Io
+aT0wOyBpPCgxPDxvcmRlcik7IGkrKykKLSAgICAgICAgcDJtX3NldF9lbnRy
+eShwMm0sIGdmbl9hbGlnbmVkICsgaSwgX21mbihJTlZBTElEX01GTiksIFBB
+R0VfT1JERVJfNEssCi0gICAgICAgICAgICAgICAgICAgICAgcDJtX3BvcHVs
+YXRlX29uX2RlbWFuZCwgcDJtLT5kZWZhdWx0X2FjY2Vzcyk7CisgICAgaWYg
+KCBwMm1fc2V0X2VudHJ5KHAybSwgZ2ZuX2FsaWduZWQsIF9tZm4oSU5WQUxJ
+RF9NRk4pLCBQQUdFX09SREVSXzRLLAorICAgICAgICAgICAgICAgICAgICAg
+ICBwMm1fcG9wdWxhdGVfb25fZGVtYW5kLCBwMm0tPmRlZmF1bHRfYWNjZXNz
+KSApCisgICAgICAgIHJldHVybiAtMTsKKwogICAgIGlmICggdGJfaW5pdF9k
+b25lICkKICAgICB7CiAgICAgICAgIHN0cnVjdCB7Cg==
+
+--=separator
+Content-Type: application/octet-stream; name="xsa246-4.9.patch"
+Content-Disposition: attachment; filename="xsa246-4.9.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogSnVsaWVuIEdyYWxsIDxqdWxpZW4uZ3JhbGxAbGluYXJvLm9yZz4K
+U3ViamVjdDogeDg2L3BvZDogcHJldmVudCBpbmZpbml0ZSBsb29wIHdoZW4g
+c2hhdHRlcmluZyBsYXJnZSBwYWdlcwoKV2hlbiBwb3B1bGF0aW5nIHBhZ2Vz
+LCB0aGUgUG9EIG1heSBuZWVkIHRvIHNwbGl0IGxhcmdlIG9uZXMgdXNpbmcK
+cDJtX3NldF9lbnRyeSBhbmQgcmVxdWVzdCB0aGUgY2FsbGVyIHRvIHJldHJ5
+IChzZWUgZXB0X2dldF9lbnRyeSBmb3IKaW5zdGFuY2UpLgoKcDJtX3NldF9l
+bnRyeSBtYXkgZmFpbCB0byBzaGF0dGVyIGlmIGl0IGlzIG5vdCBwb3NzaWJs
+ZSB0byBhbGxvY2F0ZQptZW1vcnkgZm9yIHRoZSBuZXcgcGFnZSB0YWJsZS4g
+SG93ZXZlciwgdGhlIGVycm9yIGlzIG5vdCBwcm9wYWdhdGVkCnJlc3VsdGlu
+ZyB0byB0aGUgY2FsbGVycyB0byByZXRyeSBpbmZpbml0ZWx5IHRoZSBQb0Qu
+CgpQcmV2ZW50IHRoZSBpbmZpbml0ZSBsb29wIGJ5IHJldHVybiBmYWxzZSB3
+aGVuIGl0IGlzIG5vdCBwb3NzaWJsZSB0bwpzaGF0dGVyIHRoZSBsYXJnZSBt
+YXBwaW5nLgoKVGhpcyBpcyBYU0EtMjQ2LgoKU2lnbmVkLW9mZi1ieTogSnVs
+aWVuIEdyYWxsIDxqdWxpZW4uZ3JhbGxAbGluYXJvLm9yZz4KU2lnbmVkLW9m
+Zi1ieTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpSZXZpZXdl
+ZC1ieTogR2VvcmdlIER1bmxhcCA8Z2VvcmdlLmR1bmxhcEBjaXRyaXguY29t
+PgoKLS0tIGEveGVuL2FyY2gveDg2L21tL3AybS1wb2QuYworKysgYi94ZW4v
+YXJjaC94ODYvbW0vcDJtLXBvZC5jCkBAIC0xMDcxLDkgKzEwNzEsOCBAQCBw
+Mm1fcG9kX2RlbWFuZF9wb3B1bGF0ZShzdHJ1Y3QgcDJtX2RvbWFpCiAgICAg
+ICAgICAqIE5PVEU6IEluIGEgZmluZS1ncmFpbmVkIHAybSBsb2NraW5nIHNj
+ZW5hcmlvIHRoaXMgb3BlcmF0aW9uCiAgICAgICAgICAqIG1heSBuZWVkIHRv
+IHByb21vdGUgaXRzIGxvY2tpbmcgZnJvbSBnZm4tPjFnIHN1cGVycGFnZQog
+ICAgICAgICAgKi8KLSAgICAgICAgcDJtX3NldF9lbnRyeShwMm0sIGdmbl9h
+bGlnbmVkLCBJTlZBTElEX01GTiwgUEFHRV9PUkRFUl8yTSwKLSAgICAgICAg
+ICAgICAgICAgICAgICBwMm1fcG9wdWxhdGVfb25fZGVtYW5kLCBwMm0tPmRl
+ZmF1bHRfYWNjZXNzKTsKLSAgICAgICAgcmV0dXJuIDA7CisgICAgICAgIHJl
+dHVybiBwMm1fc2V0X2VudHJ5KHAybSwgZ2ZuX2FsaWduZWQsIElOVkFMSURf
+TUZOLCBQQUdFX09SREVSXzJNLAorICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICBwMm1fcG9wdWxhdGVfb25fZGVtYW5kLCBwMm0tPmRlZmF1bHRfYWNj
+ZXNzKTsKICAgICB9CiAKICAgICAvKiBPbmx5IHJlY2xhaW0gaWYgd2UncmUg
+aW4gYWN0dWFsIG5lZWQgb2YgbW9yZSBjYWNoZS4gKi8KQEAgLTExMDQsOCAr
+MTEwMywxMiBAQCBwMm1fcG9kX2RlbWFuZF9wb3B1bGF0ZShzdHJ1Y3QgcDJt
+X2RvbWFpCiAKICAgICBnZm5fYWxpZ25lZCA9IChnZm4gPj4gb3JkZXIpIDw8
+IG9yZGVyOwogCi0gICAgcDJtX3NldF9lbnRyeShwMm0sIGdmbl9hbGlnbmVk
+LCBtZm4sIG9yZGVyLCBwMm1fcmFtX3J3LAotICAgICAgICAgICAgICAgICAg
+cDJtLT5kZWZhdWx0X2FjY2Vzcyk7CisgICAgaWYgKCBwMm1fc2V0X2VudHJ5
+KHAybSwgZ2ZuX2FsaWduZWQsIG1mbiwgb3JkZXIsIHAybV9yYW1fcncsCisg
+ICAgICAgICAgICAgICAgICAgICAgIHAybS0+ZGVmYXVsdF9hY2Nlc3MpICkK
+KyAgICB7CisgICAgICAgIHAybV9wb2RfY2FjaGVfYWRkKHAybSwgcCwgb3Jk
+ZXIpOworICAgICAgICBnb3RvIG91dF9mYWlsOworICAgIH0KIAogICAgIGZv
+ciggaSA9IDA7IGkgPCAoMVVMIDw8IG9yZGVyKTsgaSsrICkKICAgICB7CkBA
+IC0xMTUwLDEzICsxMTUzLDE4IEBAIHJlbWFwX2FuZF9yZXRyeToKICAgICBC
+VUdfT04ob3JkZXIgIT0gUEFHRV9PUkRFUl8yTSk7CiAgICAgcG9kX3VubG9j
+ayhwMm0pOwogCi0gICAgLyogUmVtYXAgdGhpcyAyLW1lZyByZWdpb24gaW4g
+c2luZ2xldG9uIGNodW5rcyAqLwotICAgIC8qIE5PVEU6IEluIGEgcDJtIGZp
+bmUtZ3JhaW5lZCBsb2NrIHNjZW5hcmlvIHRoaXMgbWlnaHQKLSAgICAgKiBu
+ZWVkIHByb21vdGluZyB0aGUgZ2ZuIGxvY2sgZnJvbSBnZm4tPjJNIHN1cGVy
+cGFnZSAqLworICAgIC8qCisgICAgICogUmVtYXAgdGhpcyAyLW1lZyByZWdp
+b24gaW4gc2luZ2xldG9uIGNodW5rcy4gU2VlIHRoZSBjb21tZW50IG9uIHRo
+ZQorICAgICAqIDFHIHBhZ2Ugc3BsaXR0aW5nIHBhdGggYWJvdmUgZm9yIHdo
+eSBhIHNpbmdsZSBjYWxsIHN1ZmZpY2VzLgorICAgICAqCisgICAgICogTk9U
+RTogSW4gYSBwMm0gZmluZS1ncmFpbmVkIGxvY2sgc2NlbmFyaW8gdGhpcyBt
+aWdodAorICAgICAqIG5lZWQgcHJvbW90aW5nIHRoZSBnZm4gbG9jayBmcm9t
+IGdmbi0+Mk0gc3VwZXJwYWdlLgorICAgICAqLwogICAgIGdmbl9hbGlnbmVk
+ID0gKGdmbj4+b3JkZXIpPDxvcmRlcjsKLSAgICBmb3IoaT0wOyBpPCgxPDxv
+cmRlcik7IGkrKykKLSAgICAgICAgcDJtX3NldF9lbnRyeShwMm0sIGdmbl9h
+bGlnbmVkICsgaSwgSU5WQUxJRF9NRk4sIFBBR0VfT1JERVJfNEssCi0gICAg
+ICAgICAgICAgICAgICAgICAgcDJtX3BvcHVsYXRlX29uX2RlbWFuZCwgcDJt
+LT5kZWZhdWx0X2FjY2Vzcyk7CisgICAgaWYgKCBwMm1fc2V0X2VudHJ5KHAy
+bSwgZ2ZuX2FsaWduZWQsIElOVkFMSURfTUZOLCBQQUdFX09SREVSXzRLLAor
+ICAgICAgICAgICAgICAgICAgICAgICBwMm1fcG9wdWxhdGVfb25fZGVtYW5k
+LCBwMm0tPmRlZmF1bHRfYWNjZXNzKSApCisgICAgICAgIHJldHVybiAtMTsK
+KwogICAgIGlmICggdGJfaW5pdF9kb25lICkKICAgICB7CiAgICAgICAgIHN0
+cnVjdCB7Cg==
+
+--=separator--
