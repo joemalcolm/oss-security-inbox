@@ -1,70 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/19/3
-Message-ID: <CAOOKt5258X689V+=_XtyOJ_n9jiYrLQTcPtsEgGTdb=sWY_2mg@mail.gmail.com>
-Date: Thu, 19 Oct 2017 15:38:34 +0530
-From: Shalin Shekhar Mangar <shalin@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/28/7
+Message-ID: <20171128145524.GI6762@timmy.laas.fr>
+Date: Tue, 28 Nov 2017 15:55:24 +0100
+From: Matthieu Herrb <matthieu.herrb@...s.fr>
 To: oss-security@...ts.openwall.com
-Subject: [ANNOUNCE] [SECURITY] CVE-2017-12629: Several critical vulnerabilities discovered in Apache Solr (XXE & RCE)
+Subject: CVE-2017-16611 libXfont Open files with O_NOFOLLOW
 Content-Type: text/plain; charset=utf-8
 
-CVE-2017-12629: Several critical vulnerabilities discovered in Apache
-Solr (XXE & RCE)
+Hi,
 
-Severity: Critical
+X.Org has just release libXfont 1.5.4 and libXfont2 2.0.3 which
+contain the following security fix:
 
-Vendor:
-The Apache Software Foundation
+Author:     Michal Srb <msrb@...e.com>
+AuthorDate: Thu Oct 26 09:48:13 2017 +0200
+Commit:     Matthieu Herrb <matthieu@...rb.eu>
+CommitDate: Sat Nov 25 11:46:50 2017 +0100
 
-Versions Affected:
-Solr 5.5.0 to 5.5.4
-Solr 6.0.0 to 6.6.1
-Solr 7.0.0 to 7.0.1
+    Open files with O_NOFOLLOW. (CVE-2017-16611)
 
-Description:
-The details of this vulnerability were reported on public mailing
-lists. See https://s.apache.org/FJDl
+    A non-privileged X client can instruct X server running under root
+    to open any file by creating own directory with "fonts.dir",
+    "fonts.alias" or any font file being a symbolic link to any other
+    file in the system. X server will then open it. This can be issue
+    with special files such as /dev/watchdog.
 
-The first vulnerability relates to XML external entity expansion in
-the XML Query Parser which is available, by default, for any query
-request with parameters deftype=xmlparser. This can be exploited to
-upload malicious data to the /upload request handler. It can also be
-used as Blind XXE using ftp wrapper in order to read arbitrary local
-files from the solr server.
-
-The second vulnerability relates to remote code execution using the
-RunExecutableListener available on all affected versions of Solr.
-
-At the time of the above report, this was a 0-day vulnerability with a
-working exploit affecting the versions of Solr mentioned in the
-previous section. However, mitigation steps were announced to protect
-Solr users the same day. See
-https://lucene.apache.org/solr/news.html#12-october-2017-please-secure-your-apache-solr-servers-since-a-zero-day-exploit-has-been-reported-on-a-public-mailing-list
-
-Mitigation:
-Users are advised to upgrade to either Solr 6.6.2 or Solr 7.1.0
-releases both of which address the two vulnerabilities. Once upgrade is
-complete, no other steps are required.
-
-If users are unable to upgrade to Solr 6.6.2 or Solr 7.1.0 then they
-are advised to restart their Solr instances with the system parameter
-`-Ddisable.configEdit=true`. This will disallow any changes to be made
-to your configurations via the Config API. This is a key factor in
-this vulnerability, since it allows GET requests to add the
-RunExecutableListener to your config. Users are also advised to re-map
-the XML Query Parser to another parser to mitigate the XXE
-vulnerability. For example, adding the following to the solrconfig.xml
-file re-maps the xmlparser to the edismax parser:
-<queryParser name="xmlparser" class="solr.ExtendedDismaxQParserPlugin"/>
-
-Credit:
-Michael Stepankin (JPMorgan Chase)
-Olga Barinova (Gotham Digital Science)
-
-References:
-https://issues.apache.org/jira/browse/SOLR-11482
-https://issues.apache.org/jira/browse/SOLR-11477
-https://wiki.apache.org/solr/SolrSecurity
-
+https://marc.info/?l=freedesktop-xorg-announce&m=151188049718337&w=2
+https://marc.info/?l=freedesktop-xorg-announce&m=151188044218304&w=2
 -- 
-Regards,
-Shalin Shekhar Mangar.
+Matthieu Herrb
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
