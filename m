@@ -1,46 +1,100 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/26/2
-Message-ID: <CALCETrWGp4wARvxNopt7ZFUfDMssAw9oS8fuwROv76EdQe_OQA@mail.gmail.com>
-Date: Sun, 25 Jun 2017 20:49:43 -0700
-From: Andy Lutomirski <luto@...nel.org>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: Can someone explain all the CONFIG_VMAP_STACK CVEs lately?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/29/4
+Message-ID: <alpine.DEB.2.20.1711280940090.30591@tvnag.unkk.fr>
+Date: Wed, 29 Nov 2017 10:34:27 +0100 (CET)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: SSL out of buffer access
 Content-Type: text/plain; charset=utf-8
 
-As the author of the CONFIG_VMAP_STACK patches, I'm a bit confused
-here.  There have been quite a few bugs in which some code passes a
-stack buffer to either sg_set_buf(), etc. or to the usb core.  The
-former seem to all be crypto users.
+SSL out of buffer access
+========================
 
-As I understand it, the supposed vulnerability is that, if you can
-force the buffer to span a page boundary, the kernel or device will
-instead hit the physical page following the the first page of the
-buffer, which is likely to be the wrong page.  This causes corruption
-and maybe code execution.
+Project curl Security Advisory, November 29th 2017 -
+[Permalink](https://curl.haxx.se/docs/adv_2017-af0a.html)
 
-Naively, this failure mode occurs because __pa (or virt_to_phys() or
-virt_to_page() or whatever interface gets used) will return the PA of
-the *beginning* of the buffer, but the next virtual page may not be
-the next physical page.  But this makes no sense -- __pa and friends
-don't have that effect when called on addresses in vmap space.
+VULNERABILITY
+-------------
 
-So I tried to refresh my memory of what actually happened.  (I looked
-into this when I wrote CONFIG_VMAP_STACK.)  __pa() and friends return
-garbage when called on a vmap address.  (I think it's likely to be a
-totally bogus PA that won't even correspond to a real physical page of
-memory.)  The tricky but is that it's *invertable* garbage.  When
-these buffers are passed to synchronous crypto APIs, the crypto core
-calls sg_virt(), which inverts the transformation and returns a valid
-virtual address of the page.  But this is the original VA and points
-to the vmap space where the buffer is genuinely contiguous.
+libcurl contains an out boundary access flaw in SSL related code.
 
-IOW, for most synchronous crypto, using sg_set_buf() on a stack
-address is utterly bogus, but it works correctly.  Ick.
+When allocating memory for a connection (the internal struct called
+`connectdata`), a certain amount of memory is allocated at the end of the
+struct to be used for SSL related structs. Those structs are used by the
+particular SSL library libcurl is built to use. The application can also tell
+libcurl which specific SSL library to use if it was built to support more than
+one.
 
-I haven't checked what USB does, but I suspect it's a wildly
-out-of-bounds DMA transfer that's more likely to result in a
-straight-up abort than easily exploitable corruption.
+The math used to calculate the extra memory amount necessary for the SSL
+library was wrong on 32 bit systems, which made the allocated memory too small
+by 4 bytes. The last struct member of the last object within the memory area
+could then be outside of what was allocated. Accessing that member could lead
+to a crash or other undefined behaviors depending on what memory that is
+present there and how the particular SSL library decides to act on that memory
+content.
 
-So could someone all these CVEs, please?
+Specifically the vulnerability is present if libcurl was built so that
+`sizeof(long long *) < sizeof(long long)` which as far as we are aware only
+happens in 32-bit builds.
 
---Andy
+We are not aware of any exploit of this flaw.
+
+INFO
+----
+
+This bug was introduced in commit
+[70f1db321a](https://github.com/curl/curl/commit/70f1db321a), July 2017.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2017-8818 to this issue.
+
+AFFECTED VERSIONS
+-----------------
+
+This is only an issue on systems with 32 bit pointers. (Technically, on
+systems where `sizeof(long long *) < sizeof(long long)`.)
+
+- Affected versions: libcurl 7.56.0 to and including 7.56.1
+- Not affected versions: libcurl < 7.56.0 and >= 7.57.0
+
+curl is used by many applications, but not always advertised as such.
+
+THE SOLUTION
+------------
+
+In libcurl version 7.57.0, the allocation size is corrected.
+
+A [patch for CVE-2017-8818](https://curl.haxx.se/CVE-2017-8818.patch) is
+available.
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl to version 7.57.0
+
+  B - Apply the patch to your version and rebuild
+
+TIME LINE
+---------
+
+It was reported to the curl project on November 18, 2017.  We contacted
+distros@...nwall on November 24.
+
+curl 7.57.0 was released on November 29 2017, coordinated with the publication
+of this advisory.
+
+(The [original report](https://github.com/curl/curl/issues/2093) was made in public)
+
+CREDITS
+-------
+
+Reported by John Schoenick. Patch by Ray Satiro.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
