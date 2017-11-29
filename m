@@ -1,21 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/27/3
-Message-ID: <20171127201920.GZ21404@suse.de>
-Date: Mon, 27 Nov 2017 21:19:20 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: Information Leak in mincore() in the Linux Kernel CVE-2017-16994
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/29/3
+Message-ID: <alpine.DEB.2.20.1711280939500.30591@tvnag.unkk.fr>
+Date: Wed, 29 Nov 2017 10:34:22 +0100 (CET)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: FTP wildcard out of bounds read
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+FTP wildcard out of bounds read
+===============================
 
-Mitre has allocated CVE-2017-16994 for this bug found by Google P0 team member jannh.
+Project curl Security Advisory, November 29th 2017 -
+[Permalink](https://curl.haxx.se/docs/adv_2017-ae72.html)
 
-The walk_hugetlb_range function in mm/pagewalk.c in the Linux kernel before 4.14.2 mishandles holes in hugetlb ranges, which allows local users to obtain sensitive information from uninitialized kernel memory via crafted use of the mincore() system call.
+VULNERABILITY
+-------------
 
-References:
-http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2017-16994
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=373c4557d2aa362702c4c2d41288fb1e54990b7c 
-https://bugs.chromium.org/p/project-zero/issues/detail?id=1431
+libcurl contains a read out of bounds flaw in the FTP wildcard function.
 
-Ciao, Marcus
+libcurl's FTP wildcard matching feature, which is enabled with the
+`CURLOPT_WILDCARDMATCH` option can use a built-in wildcard function or a user
+provided one. The built-in wildcard function has a flaw that makes it not
+detect the end of the pattern string if it ends with an open bracket (`[`) but
+instead it will continue reading the heap beyond the end of the URL buffer
+that holds the wildcard.
+
+For applications that use HTTP(S) URLs, allow libcurl to handle redirects and
+have FTP wildcards enabled, this flaw can be triggered by malicious servers
+that can redirect clients to a URL using such a wildcard pattern.
+
+We are not aware of any exploit of this flaw.
+
+INFO
+----
+
+This bug was introduced in commit
+[0825cd80a62c](https://github.com/curl/curl/commit/0825cd80a62c), May 2010.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2017-8817 to this issue.
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: libcurl 7.21.0 to and including 7.56.1
+- Not affected versions: libcurl < 7.21.0 and >= 7.57.0
+
+curl is used by many applications, but not always advertised as such.
+
+THE SOLUTION
+------------
+
+In libcurl version 7.57.0, there's a better check for the end of the
+string. Additionally, the wildcard feature is turned off if the URL passed to
+libcurl is not using FTP(S), so a redirect to an FTP URL cannot trigger
+wildcard functionality.
+
+A [patch for CVE-2017-8817](https://curl.haxx.se/CVE-2017-8817.patch) is
+available.
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl to version 7.57.0
+
+  B - Apply the patch to your version and rebuild
+
+  C - Do not use `CURLOPT_WILDCARDMATCH` without carfully verifying the
+      patterns used.
+
+TIME LINE
+---------
+
+It was reported to the curl project on November 10, 2017.  We contacted
+distros@...nwall on November 21.
+
+curl 7.57.10 was released on November 29 2017, coordinated with the
+publication of this advisory.
+
+CREDITS
+-------
+
+Reported by OSS-Fuzz. Researched by Max Dymond. Patch by Daniel Stenberg.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
