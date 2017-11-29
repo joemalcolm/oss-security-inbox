@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["758" "Wednesday" "18" "January" "2017" "08:59:21" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1701180857430.10484@wniryva>" "24" "[oss-security] CVE request Qemu: audio: memory leakage in es1370 device" nil nil nil "1" "2017011803:29:21" "[oss-security] CVE request Qemu: audio: memory leakage in es1370 device" (number mark "U       ppandit@redh Jan 18   24/758   " thread-indent "\"[oss-security] CVE request Qemu: audio: memory leakage in es1370 device\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["645" "Tuesday" "28" "November" "2017" "20:46:58" "-0800" "Ian Zimmerman" "itz@very.loosely.org" "<20171129044658.mkrtl3nhjuhxw6k7@matica.foolinux.mooo.com>" "15" "[oss-security] Re: Security risk of server side text editing ..." "^Date:" nil nil "11" "2017112904:46:58" "[oss-security] Re: Security risk of server side text editing ..." (number mark "        itz@very.loo Nov 28   15/645   " thread-indent "\"[oss-security] Re: Security risk of server side text editing ...\"\n") "<d84e199d-8f99-531f-74a3-5b5b29176c44@orlitzky.com>" ("<201711281319.vASDJxWP010037@masaka.moolenaar.net>" "<d84e199d-8f99-531f-74a3-5b5b29176c44@orlitzky.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 14247 invoked by uid 550); 18 Jan 2017 03:29:41 -0000
+Received: (qmail 22281 invoked by uid 550); 29 Nov 2017 11:26:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,41 +11,35 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14224 invoked from network); 18 Jan 2017 03:29:40 -0000
-Date: Wed, 18 Jan 2017 08:59:21 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@javelin
-To: oss security list <oss-security@lists.openwall.com>
-cc: Li Qiang <liqiang6-s@360.cn>
-Message-ID: <alpine.LFD.2.20.1701180857430.10484@wniryva>
+Received: (qmail 21959 invoked from network); 29 Nov 2017 04:47:17 -0000
+Message-ID: <20171129044658.mkrtl3nhjuhxw6k7@matica.foolinux.mooo.com>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <201711281319.vASDJxWP010037@masaka.moolenaar.net>
+ <d84e199d-8f99-531f-74a3-5b5b29176c44@orlitzky.com>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.28]); Wed, 18 Jan 2017 03:29:30 +0000 (UTC)
-Subject: [oss-security] CVE request Qemu: audio: memory leakage in es1370 device
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <d84e199d-8f99-531f-74a3-5b5b29176c44@orlitzky.com>
+X-Loosely-Listed: yes
+User-Agent: NeoMutt/20170707-dirty (1.8.3)
+Date: Tue, 28 Nov 2017 20:46:58 -0800
+From: Ian Zimmerman <itz@very.loosely.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: Security risk of server side text editing ...
+To: oss-security@lists.openwall.com
 
-   Hello,
+On 2017-11-28 21:05, Michael Orlitzky wrote:
 
-Quick Emulator(Qemu) built with the ES1370 audio device emulation support is 
-vulnerable to a memory leakage issue. It could occur while doing a device 
-unplug operation; Doing so repeatedly would result in leaking host memory, 
-affecting other services on the host.
+> Editing a file in-place should not create *another* file in the
+> current directory with a different name/suffix. I realize that's
+> subjective, but a lot of (even long time) users will tell you that no
+> way in hell did they expect that to happen.
 
-A privileged user inside guest could use this flaw to cause a DoS and/or 
-potentially crash the Qemu process on the host.
+Maybe, but I think editors have done this from time immemorial.  Compare
+for instance the comments on the limits of locking on p. 456 of Stevens
+& Rago.
 
-Upstream patch:
----------------
-  -> https://lists.nongnu.org/archive/html/qemu-devel/2017-01/msg01742.html
-
-Reference:
-----------
-  -> https://bugzilla.redhat.com/show_bug.cgi?id=1414209
-
-This issue was reported by Mr Lo Qiang of 360.cn Inc.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+-- 
+Please don't Cc: me privately on mailing lists and Usenet,
+if you also post the followup to the list or newsgroup.
+To reply privately _only_ on Usenet, fetch the TXT record for the domain.
