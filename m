@@ -1,4 +1,9 @@
-Received: (qmail 23923 invoked by uid 550); 22 May 2022 19:47:55 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["879" "Tuesday" "28" "November" "2017" "21:05:28" "-0500" "Michael Orlitzky" "michael@orlitzky.com" "<d84e199d-8f99-531f-74a3-5b5b29176c44@orlitzky.com>" "17" "Re: [oss-security] Re: Security risk of server side text editing ..." "^Date:" nil nil "11" "2017112902:05:28" "[oss-security] Re: Security risk of server side text editing ..." (number mark "        michael@orli Nov 28   17/879   " thread-indent "\"Re: [oss-security] Re: Security risk of server side text editing ...\"\n") "<201711281319.vASDJxWP010037@masaka.moolenaar.net>" ("<201711281319.vASDJxWP010037@masaka.moolenaar.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 25626 invoked by uid 550); 29 Nov 2017 02:06:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,48 +11,42 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 24427 invoked from network); 29 Nov 2017 02:06:01 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=orlitzky.com; s=mail2;
+	t=1511921149; bh=/Hh1Mn6N03e4fBLE29RmDZhEQcIOCF04IwioADELImA=;
+	h=Subject:To:References:From:Date:In-Reply-To;
+	b=WPNpXMWeoa0yrigqcUQ36+gIqobEiY7DO8sT+zktARWSIWT0coSColOppc64xKE7N
+	 CIoi0GCU4brYIFsxQS+yS701S/hKtOLzFFmZlmgyzRBp78nVwAKfU3DgyG8d6jzuxm
+	 a/Nelw3GbMmb4S4/GtEa00Y2DR4JIaXxuLoFZss0=
+References: <201711281319.vASDJxWP010037@masaka.moolenaar.net>
+Message-ID: <d84e199d-8f99-531f-74a3-5b5b29176c44@orlitzky.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
+MIME-Version: 1.0
+In-Reply-To: <201711281319.vASDJxWP010037@masaka.moolenaar.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+Date: Tue, 28 Nov 2017 21:05:28 -0500
+From: Michael Orlitzky <michael@orlitzky.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23763 invoked from network); 22 May 2022 19:47:25 -0000
-Date: Sun, 22 May 2022 21:46:45 +0200
-From: Solar Designer <solar@openwall.com>
+Subject: Re: [oss-security] Re: Security risk of server side text editing ...
 To: oss-security@lists.openwall.com
-Message-ID: <20220522194644.GB21330@openwall.com>
-References: <20220515162740.GA20526@openwall.com> <YoKiGWAX4E/mbGWB@kroah.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YoKiGWAX4E/mbGWB@kroah.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] linux-distros list policy and Linux kernel
 
-On Mon, May 16, 2022 at 09:12:25PM +0200, Greg KH wrote:
-> Taking this a bit further, why is the kernel "special" for something
-> like this?  Why wouldn't this also apply to any other project with a
-> reasonable number of developers where you want additional review and
-> acceptance of changes before the world is notified that an issue was
-> fixed?  That allows issues to be fixed, and to be in place on users
-> systems before the issue is made public.
+On 11/28/2017 08:19 AM, Bram Moolenaar wrote:
 > 
-> I would imagine that projects like Kubernetes, or Jenkins, or Docker or
-> Mozilla or Chrome or other large systems would also fall into this
-> category.  Heck, smaller projects too, the size shouldn't matter, what
-> matters is that users have the ability to upgrade before security issues
-> are told to the world, ensuring that user's systems are safe.
+> This is a problem with the configuration of the web server.  It should
+> not publish files it doesn't know about.  The problem also happens for
+> any other file manipulation, e.g. "cp file.php file.php.orig" if you
+> want to make some temporary changes.  A .orig and .rej file may also
+> appear when applying a patch.
 
-For issues commonly brought to (linux-)distros, we currently only
-encounter this sort of conflicting preferences with the Linux kernel
-community.  I guess some other projects also release silent fixes that
-are only later documented to have known security relevance.  Maybe our
-policy plays a role in non-reporting of such issues to distros, or maybe
-not.  For example, we generally do not receive reports of
-vulnerabilities in Firefox and Chrome/ium to the distros list, but I
-don't recall anyone ever expressing any unhappiness about that - neither
-those projects nor the distros.  So it's kind of fine?
+The main difference in my mind is that when you "cp" a file, you expect
+it to create a new file. Likewise with patch it tells you that the
+rejects were saved in a new file.
 
-> it's your list, not mine, if
-> you are tired of running it, I totally understand.
-
-A bit tired, yes, but that's in part because of us fighting each other's
-windmills.
-
-Alexander
+Editing a file in-place should not create *another* file in the current
+directory with a different name/suffix. I realize that's subjective, but
+a lot of (even long time) users will tell you that no way in hell did
+they expect that to happen. (What's the argument against using a
+subdirectory of $HOME to store these temporary files?)
