@@ -1,31 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/01/10
-Message-ID: <CAH8yC8=KKh8SPtDUUSAL_GuDHT7eYBrmHvVjzeQ5n4ocFh4m5Q@mail.gmail.com>
-Date: Wed, 1 Nov 2017 11:31:57 -0400
-From: Jeffrey Walton <noloader@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/29/5
+Message-ID: <20171129044658.mkrtl3nhjuhxw6k7@matica.foolinux.mooo.com>
+Date: Tue, 28 Nov 2017 20:46:58 -0800
+From: Ian Zimmerman <itz@...y.loosely.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Fw: Security risk of vim swap files
+Subject: Re: Security risk of server side text editing ...
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Nov 1, 2017 at 10:49 AM, Tim <tim-security@...tinelchicken.org> wrote:
->> > Also, it almost never makes sense to put things in /tmp, for several
->> > reasons pointed out by others.  Making ~/.vim/... the default location
->> > clearly is the best solution.
->>
->> And all those reasons make no sense. /tmp has a sticky bit precisely so that
->> people could put stuff there, as opposed to /run.
->
-> We've been spending decades fixing filesystem races that arise from
-> cases where people use temporary files in world-writable directories.
-> You have to get a half dozen things exactly correct in order to use
-> /tmp.  Why take the risk?  Doesn't every normal (human) user account
-> have a home directory that is already protected?
+On 2017-11-28 21:05, Michael Orlitzky wrote:
 
-Some installs don't allow users to write to /tmp. For example, some
-machines on GCC's compile farm do not allow it. I seem to recall the
-error was a RO mount. Also see https://gcc.gnu.org/wiki/CompileFarm.
+> Editing a file in-place should not create *another* file in the
+> current directory with a different name/suffix. I realize that's
+> subjective, but a lot of (even long time) users will tell you that no
+> way in hell did they expect that to happen.
 
-Code and scripts certainly need to check TMPDIR and then have a
-fallback strategy if it is missing.
+Maybe, but I think editors have done this from time immemorial.  Compare
+for instance the comments on the limits of locking on p. 456 of Stevens
+& Rago.
 
-Jeff
+-- 
+Please don't Cc: me privately on mailing lists and Usenet,
+if you also post the followup to the list or newsgroup.
+To reply privately _only_ on Usenet, fetch the TXT record for the domain.
