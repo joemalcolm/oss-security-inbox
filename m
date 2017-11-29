@@ -1,111 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/30/4
-Message-ID: <obk3lm$s92$1@blaine.gmane.org>
-Date: Fri, 31 Mar 2017 01:17:16 +0200
-From: Damien Regad <dregad@...tisbt.org>
-To: oss-security@...ts.openwall.com
-Subject: Advisory: XSS issues in MantisBT (CVE-2017-6973, CVE-2017-7241, CVE-2017-7309)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/29/2
+Message-ID: <alpine.DEB.2.20.1711280938440.30591@tvnag.unkk.fr>
+Date: Wed, 29 Nov 2017 10:34:17 +0100 (CET)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: NTLM buffer overflow via integer overflow
 Content-Type: text/plain; charset=utf-8
 
-Please take note of the following 3 cross-site scripting issues in MantisBT
+NTLM buffer overflow via integer overflow
+=========================================
 
-Best regards
-Damien Regad
-MantisBT developer
+Project curl Security Advisory, November 29th 2017 -
+[Permalink](https://curl.haxx.se/docs/adv_2017-11e7.html)
 
+VULNERABILITY
+-------------
 
-1. CVE-2017-6973: XSS in adm_config_report.php
+libcurl contains a buffer overrun flaw in the NTLM authentication code.
 
-A cross-site scripting (XSS) vulnerability in the MantisBT
-Configuration Report page (adm_config_report.php) allows remote
-attackers to inject arbitrary code through a crafted 'action'
-parameter.
+The internal function `Curl_ntlm_core_mk_ntlmv2_hash` sums up the lengths of
+the user name + password (= SUM) and multiplies the sum by two (= SIZE) to
+figure out how large storage to allocate from the heap.
 
-Affected versions: 1.3.0-rc.2 through 2.2.1
-Fixed in versions: 1.3.8, 2.1.2, 2.2.2 (released 2017-03-22), 2.3.0 (not
-yet released*)
+The SUM value is subsequently used to iterate over the input and generate
+output into the storage buffer. On systems with a 32 bit `size_t`, the math to
+calculate SIZE triggers an integer overflow when the combined lengths of the
+user name and password is larger than 2GB (2^31 bytes). This integer overflow
+usually causes a very small buffer to actually get allocated instead of the
+intended very huge one, making the use of that buffer end up in a buffer
+overrun.
 
-Patch:
-- 1.3:
-http://github.com/mantisbt/mantisbt/commit/034cd07b47af37366fc7b726cb4a4f971d3d3fb9
-- 2.x:
-http://github.com/mantisbt/mantisbt/commit/da74c5aa02bcf21cfaab1180f892c22415e5fea6
+We are not aware of any exploit of this flaw.
 
-Credits:
-- Reported by Yelin and Zhangdongsheng from VenusTech
-http://www.venustech.com.cn/
-- Fixed by Damien Regad (MantisBT Developer)
+INFO
+----
 
-References:
-- MantisBT issue tracker https://mantisbt.org/bugs/view.php?id=22537
+This bug was introduced in commit
+[be285cde3f5](https://github.com/curl/curl/commit/be285cde3f5), April 2006.
 
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2017-8816 to this issue.
 
+AFFECTED VERSIONS
+-----------------
 
-2. CVE-2017-7309: XSS in adm_config_report.php
+This is only an issue on 32 bit systems. It also requires the user and
+password fields to use more than 2GB of memory combined, which in itself
+should be rare.
 
-A cross-site scripting (XSS) vulnerability in the MantisBT
-Configuration Report page (adm_config_report.php) allows remote
-attackers to inject arbitrary code (if CSP settings permit it) through
-a crafted 'config_option' parameter.
+- Affected versions: libcurl 7.15.4 to and including 7.56.1
+- Not affected versions: libcurl < 7.15.4 and >= 7.57.0
 
-This is related to CVE-2017-6973 (see above) introduced by the same
-change, affects same component, and same root cause of not escaping
-parameter before output.
+curl is used by many applications, but not always advertised as such.
 
-Affected versions: 1.3.0-rc.2 through 2.2.2
-Fixed in versions: 1.3.9, 2.1.3, 2.2.3, 2.3.0 (not yet released*)
+THE SOLUTION
+------------
 
-Patch:
-- 1.3:
-http://github.com/mantisbt/mantisbt/commit/c9e5b1d0404503022605459552faeaf610bf15ae
-- 2.x:
-http://github.com/mantisbt/mantisbt/commit/e881dd79df422033bbea88914fc0a717fae40358
+In libcurl version 7.57.0, the integer overflow is avoided.
 
-Credits:
-- Reported by Yelin and Zhangdongsheng from VenusTech
-http://www.venustech.com.cn/
-- Fixed by Damien Regad (MantisBT Developer)
+A [patch for CVE-2017-8816](https://curl.haxx.se/CVE-2017-8816.patch) is
+available.
 
-References:
-- MantisBT issue tracker http://www.mantisbt.org/bugs/view.php?id=22579
+RECOMMENDATIONS
+---------------
 
+We suggest you take one of the following actions immediately, in order of
+preference:
 
-3. CVE-2017-7241: XSS in move_attachments_page.php
+  A - Upgrade curl to version 7.57.0
 
-A cross-site scripting (XSS) vulnerability in the MantisBT Move
-Attachements page (move_attachments_page.php, part of admin tools)
-allows remote attackers to inject arbitrary code through a crafted
-'type' parameter, if Content Security Protection (CSP) settings allows
-it.
+  B - Apply the patch to your version and rebuild
 
-Note that this vulnerability is not exploitable if the admin tools
-directory is removed, as recommended in the Admin Guide [1]. A
-reminder to do so is also displayed on the login page.
+  C - Put length restrictions on the user name and passwords you can pass to
+      libcurl
 
-Affected versions: 1.2.16 and later
-Fixed in versions: 1.3.9, 2.1.3, 2.2.3, 2.3.0 (not yet released*)
-Note that 1.2 branch is no longer supported, so no patch is provided for
-that; please upgrade to a later version.
+TIME LINE
+---------
 
-Patch:
-- 1.3:
-http://github.com/mantisbt/mantisbt/commit/d31841c806a3c8379fcf6c9d9559451270b0f1cb
-- 2.x:
-http://github.com/mantisbt/mantisbt/commit/ecef0e9b523a460709e8feedfce72f05bb30b992
+It was reported to the curl project on November 6, 2017.  We contacted
+distros@...nwall on November 21.
 
+curl 7.57.10 was released on November 29 2017, coordinated with the
+publication of this advisory.
 
-Credits:
-- Reported by Yelin and Zhangdongsheng from VenusTech
-http://www.venustech.com.cn/
-- Fixed by Damien Regad (MantisBT Developer)
+CREDITS
+-------
 
-References:
-- MantisBT issue tracker http://www.mantisbt.org/bugs/view.php?id=22568
-- [1]
-http://mantisbt.org/docs/master/en-US/Admin_Guide/html-desktop/#admin.install.postcommon
+Reported by Alex Nichols. Patch by Daniel Stenberg.
 
+Thanks a lot!
 
-* Releases 1.3.9, 2.1.3, 2.2.3 and 2.3.0 are scheduled for release on
-coming week-end
+-- 
 
-
+  / daniel.haxx.se
