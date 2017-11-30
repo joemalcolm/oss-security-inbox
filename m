@@ -1,85 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/13/11
-Message-ID: <d93729b8-0e0e-5d8c-8bf9-5de01ab62979@gentoo.org>
-Date: Fri, 13 Jan 2017 16:02:22 +0100
-From: Thomas Deutschmann <whissi@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Nginx (Debian-based + Gentoo distros) - Root Privilege Escalation [CVE-2016-1247 UPDATE]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/30/8
+Message-ID: <CAFEMS4vr8tXkkmRj+y6g0p3y3r9SqDL8Gf9+ouhbKjPAsbJ04w@mail.gmail.com>
+Date: Thu, 30 Nov 2017 17:15:43 +0000
+From: Keith Wall <kwall@...che.org>
+To: "users@...d.apache.org" <users@...d.apache.org>, "dev@...d.apache.org" <dev@...d.apache.org>, security@...che.org,  oss-security@...ts.openwall.com, announce@...che.org
+Subject: [SECURITY] [CVE-2017-15701] Apache Qpid Broker-J Denial of Service Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+CVE-2017-15701: Apache Qpid Broker-J denial of service vulnerability
 
-Carlos Alberto Lopez Perez wrote:
->> --------[ /etc/logrotate.d/nginx ]--------
->>
->> /var/log/nginx/*.log {
->> 	daily
->> 	missingok
->> 	rotate 52
->> 	compress
->> 	delaycompress
->> 	notifempty
->> 	create 0640 www-data adm
->> 	sharedscripts
->> 	prerotate
->> 		if [ -d /etc/logrotate.d/httpd-prerotate ]; then \
->> 			run-parts /etc/logrotate.d/httpd-prerotate; \
->> 		fi \
->> 	endscript
->> 	postrotate
->> 		invoke-rc.d nginx rotate >/dev/null 2>&1
->> 	endscript
->> }
->>
->> ------------------------------------------
-> 
-> This looks to me like an issue on the logrotate side rather than on the nginx one..
-> 
-> If I have:
-> 
-> /var/log/nginx/error.log -> /etc/ld.so.preload
-> 
-> Why does logrotate "create 0640 www-data adm" over /var/log/nginx/error.log
-> removes and creates /etc/ld.so.preload ??? That is shocking!
-> 
-> It should do that on /var/log/nginx/error.log, by removing that symlink
-> and creating a new empty standard file on /var/log/nginx/error.log !!
-> 
-> Dont you agree??
+Severity: Important
 
-No, please read the advisory again.
+Vendor: The Apache Software Foundation
 
-Please notice that logrotate doesn't do some magic. The config tells
-logrotate to do that (logrotate itself BTW ignores symlinked files since
-v3.8.2 [1]).
+Versions Affected: 6.1.0, 6.1.1, 6.1.2, 6.1.3, and 6.1.4
 
-It is important to understand that logrotate is only used in that
-example to trigger nginx behavior. And attacker could also just wait for
-the system administrator to do similar actions with nginx (just a
-question of time).
+Description:
 
-So the real "problem" is that the nginx master process runs as root and
-will change ACLs of existing files which allows an user to escalate
-privileges if that user can create files nginx will touch.
+The broker does not properly enforce a maximum frame size in AMQP 1.0
+frames.  A remote unauthenticated attacker could exploit this to cause
+the broker to exhaust all available memory and eventually terminate.
+Older AMQP protocols are not affected.
 
-See https://trac.nginx.org/nginx/ticket/376 for more details.
+Resolution:
 
-Now, given that multiple maintainers created the same problem, one could
-argue that such a change in permissions is unexpected. Nevertheless it
-is documented, so I don't blame upstream.
+Users who have AMQP 1.0 support enabled (default) should upgrade their
+Qpid Broker-J to version 6.1.5 or later.
 
+Mitigation:
 
-See also:
-=========
-[1]
-https://github.com/logrotate/logrotate/commit/9f19aba75079a61a913eb06748cf9aa83802c24c
+If upgrading the broker is not possible, users can choose to disable
+AMQP 1.0 by either setting the system property
+"qpid.plugin.disabled:protocolenginecreator.AMQP_1_0" to "true",
+excluding "AMQP_1_0" from the supported protocol list on all AMQP
+ports, or by removing the AMQP 1.0 related jar files from the Java
+classpath.
 
+References:
 
--- 
-Regards,
-Thomas Deutschmann
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (952 bytes)
+https://issues.apache.org/jira/browse/QPID-7947
