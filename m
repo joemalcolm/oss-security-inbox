@@ -1,41 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/04/4
-Message-ID: <9beb0ba7-c754-3c50-81d5-91d7539c7b45@cloudlinux.com>
-Date: Tue, 4 Jul 2017 16:24:40 +0300
-From: Leonid Kanter <lkanter@...udlinux.com>
-To: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
-Subject: Re: linux-distros list membership application - CloudLinux
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/30/9
+Message-ID: <CAFEMS4vaXWPFXqDk-PnhURiFRLTkOx=mL6RmxzAMC59-gxNi9w@mail.gmail.com>
+Date: Thu, 30 Nov 2017 17:15:47 +0000
+From: Keith W <keith.wall@...il.com>
+To: "users@...d.apache.org" <users@...d.apache.org>, "dev@...d.apache.org" <dev@...d.apache.org>, security@...che.org,  oss-security@...ts.openwall.com, announce@...che.org
+Subject: [SECURITY] [CVE-2017-15702] Apache Qpid Broker-J Authentication Vulnerability on HTTP Ports
 Content-Type: text/plain; charset=utf-8
 
-Hi Aleksander,
+CVE-2017-15702: Apache Qpid Broker-J authentication vulnerability on HTTP ports
 
-Yes, I vouch for my colleagues Igor Seletskiy and Konstantin Olshanov.
-Konstantin's key is already available on
-https://cryptup.org/pub/kolshanov@cloudlinux.com
+Severity: Important
 
-On 07/04/2017 03:37 PM, Solar Designer wrote:
-> On Tue, Jul 04, 2017 at 02:10:24AM +0300, Dmitry V. Levin wrote:
->> On Sun, Jul 02, 2017 at 05:29:25PM +0300, Igor Seletskiy wrote:
->> [...]
->>> 9. Have someone already on the private list, or at least someone else
->>> who has been active on oss-security for years but is not affiliated with
->>> your distro nor your organization, vouch for at least one of the people
->>> requesting membership on behalf of your distro (then that one
->>> vouched-for person will be able to vouch for others on your team, in
->>> case you'd like multiple people subscribed)
->>> Dmitry V. Levin <ldv@...linux.org>, Chief Architect, ALT Linux can vouch
->>> for Leonid Kanter.
->> I acknowledge this.  I have no doubts that Leonid can handle
->> embargoed information according to the list's policy.
-> Thank you, Dmitry!
->
-> Leonid, am I correct to assume that you vouch for the rest of CloudLinux
-> team joining linux-distros - namely, Igor Seletskiy (now) and Konstantin
-> Olshanov (once I have his public key)?  Please confirm.  Thanks!
->
-> Alexander
+Vendor: The Apache Software Foundation
 
+Versions Affected: Versions 0.18 through 0.32
 
+Description:
 
+If the broker is configured with different authentication providers on
+different ports one of which is an HTTP port, then the broker can be
+tricked by a remote unauthenticated attacker connecting to the HTTP
+port into using an authentication provider that was configured on a
+different port.  The attacker still needs valid credentials with the
+authentication provider on the spoofed port.  This becomes an issue
+when the spoofed port has weaker authentication protection (e.g.,
+anonymous access, default accounts) and is normally protected by
+firewall rules or similar which can be circumvented by this
+vulnerability.  AMQP ports are not affected.  Versions 6.0.0 and newer
+are not affected.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Resolution:
+
+Users of affected versions who have more than one port and different
+authentication providers configured on them should upgrade to a
+later unaffected version.
+
+Mitigation:
+
+If upgrading the broker is not possible then users should ensure all
+their authentication providers offer an equal amount of protection.
+In particular, authentication providers with default accounts and
+those with anonymous access should be removed if other providers in
+use require credentials.
+
+References:
+
+https://issues.apache.org/jira/browse/QPID-8039
