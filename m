@@ -1,4 +1,9 @@
-Received: (qmail 15799 invoked by uid 550); 23 Sep 2022 06:28:11 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["736" "Thursday" "30" "November" "2017" "11:05:45" "+0000" "Colm O hEigeartaigh" "coheigea@apache.org" "<CAB8XdGAT0V8OCsKqN3FM7LkxuwznFh9r6ato8SWy5HGVwp+mTQ@mail.gmail.com>" "27" "[oss-security] Apache CXF Fediz 1.4.3 and 1.3.3 released with a new security advisory CVE-2017-12631" nil nil nil "11" "2017113011:05:45" "[oss-security] Apache CXF Fediz 1.4.3 and 1.3.3 released with a new security advisory CVE-2017-12631" (number mark "U       coheigea@apa Nov 30   27/736   " thread-indent "\"[oss-security] Apache CXF Fediz 1.4.3 and 1.3.3 released with a new security advisory CVE-2017-12631\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 11534 invoked by uid 550); 30 Nov 2017 11:45:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,214 +12,48 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26527 invoked from network); 23 Sep 2022 05:02:15 -0000
-Message-ID: <c5c0fa6c-f24e-b23f-01c2-5efd648d4f02@treenet.co.nz>
-Date: Fri, 23 Sep 2022 17:00:16 +1200
+Received: (qmail 17927 invoked from network); 30 Nov 2017 11:05:59 -0000
+X-Gm-Message-State: AJaThX7id6tajG6yRZixPoChsaWeeersbOlMTJuXCoNoDCbuCDXZ/vKL
+	yiuS8MI6RBwTplhSuCNA7W/I6LxbnBRwHWk0BVQ=
+X-Google-Smtp-Source: AGs4zMYuIC7XUsJmUxM4dNdnelHzxxZl8lxNFJZZF3oehEd9arWoSbgRyRg447JROXxKQ7lmz6exNkNenm94bUZKjdk=
+X-Received: by 10.101.83.13 with SMTP id m13mr1999295pgq.151.1512039946033;
+ Thu, 30 Nov 2017 03:05:46 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-Content-Language: en-US
-References: <97571a44-c83f-a64f-9e4d-71e4472e073a@treenet.co.nz>
-To: oss-security@lists.openwall.com
-From: Amos Jeffries <squid3@treenet.co.nz>
-In-Reply-To: <97571a44-c83f-a64f-9e4d-71e4472e073a@treenet.co.nz>
-X-Forwarded-Message-Id: <97571a44-c83f-a64f-9e4d-71e4472e073a@treenet.co.nz>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------vrePW4oQPnfCbPRYaoDhXvA5"
-Subject: [oss-security] Fwd: [ADVISORY] SQUID-2022:1 Exposure of Sensitive Information in
- Cache Manager
+From: Colm O hEigeartaigh <coheigea@apache.org>
+Date: Thu, 30 Nov 2017 11:05:45 +0000
+X-Gmail-Original-Message-ID: <CAB8XdGAT0V8OCsKqN3FM7LkxuwznFh9r6ato8SWy5HGVwp+mTQ@mail.gmail.com>
+Message-ID: <CAB8XdGAT0V8OCsKqN3FM7LkxuwznFh9r6ato8SWy5HGVwp+mTQ@mail.gmail.com>
+To: "users@cxf.apache.org" <users@cxf.apache.org>, "dev@cxf.apache.org" <dev@cxf.apache.org>, announce@apache.org, 
+	oss-security@lists.openwall.com
+Cc: Apache Security Response Team <security@apache.org>
+Content-Type: multipart/alternative; boundary="089e08266224dea435055f313bd5"
+Subject: [oss-security] Apache CXF Fediz 1.4.3 and 1.3.3 released with a new security
+ advisory CVE-2017-12631
 
---------------vrePW4oQPnfCbPRYaoDhXvA5
-Content-Type: multipart/mixed; boundary="------------ZxCdKLOa2xZ706munNPNEiVK";
- protected-headers="v1"
-From: Amos Jeffries <squid3@treenet.co.nz>
-To: oss-security@lists.openwall.com
-Message-ID: <c5c0fa6c-f24e-b23f-01c2-5efd648d4f02@treenet.co.nz>
-Subject: Fwd: [ADVISORY] SQUID-2022:1 Exposure of Sensitive Information in
- Cache Manager
-References: <97571a44-c83f-a64f-9e4d-71e4472e073a@treenet.co.nz>
-In-Reply-To: <97571a44-c83f-a64f-9e4d-71e4472e073a@treenet.co.nz>
+--089e08266224dea435055f313bd5
+Content-Type: text/plain; charset="UTF-8"
 
---------------ZxCdKLOa2xZ706munNPNEiVK
-Content-Type: multipart/mixed; boundary="------------HAc20CS4PwUD6kw3hWY0f0US"
+Apache CXF Fediz is a subproject of CXF. Fediz helps you to secure your web
+applications and delegates security enforcement to the underlying
+application server.
 
---------------HAc20CS4PwUD6kw3hWY0f0US
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+Apache CXF Fediz 1.4.3 and 1.3.3 are released along with a new security
+advisory that is fixed in these releases:
 
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX18NCg0KICAgICBTcXVpZCBQcm94eSBDYWNo
-ZSBTZWN1cml0eSBVcGRhdGUgQWR2aXNvcnkgU1FVSUQtMjAyMjoxDQpfX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX18NCg0KQWR2aXNvcnkgSUQ6ICAgICAgIHwgU1FV
-SUQtMjAyMjoxDQpEYXRlOiAgICAgICAgICAgICAgfCBTZXB0ZW1iZXIgMjMs
-IDIwMjINClN1bW1hcnk6ICAgICAgICAgICB8IEV4cG9zdXJlIG9mIFNlbnNp
-dGl2ZSBJbmZvcm1hdGlvbg0KICAgICAgICAgICAgICAgICAgICB8IGluIENh
-Y2hlIE1hbmFnZXINCkFmZmVjdGVkIHZlcnNpb25zOiB8IFNxdWlkIDQuMTUg
-LT4gNC4xNw0KICAgICAgICAgICAgICAgICAgICB8IFNxdWlkIDUuMC42IC0+
-IDUuNg0KRml4ZWQgaW4gdmVyc2lvbjogIHwgU3F1aWQgNS43DQpfX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX18NCg0KPGh0dHA6Ly9jdmUubWl0cmUub3JnL2NnaS1i
-aW4vY3ZlbmFtZS5jZ2k/bmFtZT1DVkUtMjAyMi00MTMxNz4NCl9fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fXw0KDQpQcm9ibGVtIERlc2NyaXB0aW9uOg0KDQogIER1
-ZSB0byBpbmNvbnNpc3RlbnQgaGFuZGxpbmcgb2YgaW50ZXJuYWwgVVJJcyBT
-cXVpZCBpcw0KICB2dWxuZXJhYmxlIHRvIEV4cG9zdXJlIG9mIFNlbnNpdGl2
-ZSBJbmZvcm1hdGlvbiBhYm91dCBjbGllbnRzDQogIHVzaW5nIHRoZSBwcm94
-eS4NCg0KX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fDQoNClNldmVyaXR5Og0KDQog
-IFRoaXMgcHJvYmxlbSBhbGxvd3MgYSB0cnVzdGVkIGNsaWVudCB0byBkaXJl
-Y3RseSBhY2Nlc3MgY2FjaGUNCiAgbWFuYWdlciBpbmZvcm1hdGlvbiBieXBh
-c3NpbmcgdGhlIG1hbmFnZXIgQUNMIHByb3RlY3Rpb24uDQoNCiAgVGhlIGF2
-YWlsYWJsZSBjYWNoZSBtYW5hZ2VyIGluZm9ybWF0aW9uIGNvbnRhaW5zIHJl
-Y29yZHMgb2YNCiAgaW50ZXJuYWwgbmV0d29yayBzdHJ1Y3R1cmUsIGNsaWVu
-dCBjcmVkZW50aWFscywgY2xpZW50IGlkZW50aXR5DQogIGFuZCBjbGllbnQg
-dHJhZmZpYyBiZWhhdmlvdXIuDQoNCkNWU1MgU2NvcmUgb2YgNi40DQo8aHR0
-cHM6Ly9udmQubmlzdC5nb3YvdnVsbi1tZXRyaWNzL2N2c3MvdjMtY2FsY3Vs
-YXRvcj92ZWN0b3I9QVY6Ti9BQzpML1BSOkwvVUk6Ti9TOlUvQzpIL0k6Ti9B
-Ok4vRTpGL1JMOlgvUkM6Qy9DUjpNL0lSOlgvQVI6WC9NQVY6WC9NQUM6TC9N
-UFI6TC9NVUk6WC9NUzpYL01DOkgvTUk6WC9NQTpYJnZlcnNpb249My4xPg0K
-DQpfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX18NCg0KVXBkYXRlZCBQYWNrYWdlczoN
-Cg0KVGhpcyBidWcgaXMgZml4ZWQgYnkgU3F1aWQgdmVyc2lvbiA1LjcuDQoN
-CiAgSW4gYWRkaXRpb24sIHBhdGNoZXMgYWRkcmVzc2luZyB0aGlzIHByb2Js
-ZW0gZm9yIHRoZSBzdGFibGUNCiAgcmVsZWFzZXMgY2FuIGJlIGZvdW5kIGlu
-IG91ciBwYXRjaCBhcmNoaXZlczoNCg0KU3F1aWQgNDoNCiAgPGh0dHA6Ly93
-d3cuc3F1aWQtY2FjaGUub3JnL1ZlcnNpb25zL3Y0L2NoYW5nZXNldHMvU1FV
-SUQtMjAyMl8xLnBhdGNoPg0KDQpTcXVpZCA1Og0KICA8aHR0cDovL3d3dy5z
-cXVpZC1jYWNoZS5vcmcvVmVyc2lvbnMvdjUvY2hhbmdlc2V0cy9TUVVJRC0y
-MDIyXzEucGF0Y2g+DQoNCiAgSWYgeW91IGFyZSB1c2luZyBhIHByZXBhY2th
-Z2VkIHZlcnNpb24gb2YgU3F1aWQgdGhlbiBwbGVhc2UgcmVmZXINCiAgdG8g
-dGhlIHBhY2thZ2UgdmVuZG9yIGZvciBhdmFpbGFiaWxpdHkgaW5mb3JtYXRp
-b24gb24gdXBkYXRlZA0KICBwYWNrYWdlcy4NCg0KX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fDQoNCkRldGVybWluaW5nIGlmIHlvdXIgdmVyc2lvbiBpcyB2dWxu
-ZXJhYmxlOg0KDQogIFNxdWlkIG9sZGVyIHRoYW4gNC45IGFyZSBub3QgdnVs
-bmVyYWJsZS4NCg0KICBBbGwgU3F1aWQtNC45IHVwIHRvIGFuZCBpbmNsdWRp
-bmcgNC4xNCBoYXZlIG5vdCBiZWVuIHRlc3RlZCwgYnV0DQogIHNob3VsZCBi
-ZSBhc3N1bWVkIHRvIGJlIHZ1bG5lcmFibGUuDQoNCiAgQWxsIFNxdWlkLTQu
-MTUgdXAgdG8gYW5kIGluY2x1ZGluZyA0LjE3IGFyZSB2dWxuZXJhYmxlLg0K
-DQogIEFsbCBTcXVpZC01LjAuNiB1cCB0byBhbmQgaW5jbHVkaW5nIDUuNiBh
-cmUgdnVsbmVyYWJsZS4NCg0KX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fDQoNCldv
-cmthcm91bmQ6DQoNCiAgIEFkZCB0aGUgZm9sbG93aW5nIHRvIHNxdWlkLmNv
-bmY6DQoNCiAgICAgYWNsIG1hbmFnZXIgdXJsX3JlZ2V4ICtpIF5bXjpdKzov
-L1teL10rL3NxdWlkLWludGVybmFsLW1nci8NCg0KX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fDQoNCkNvbnRhY3QgZGV0YWlscyBmb3IgdGhlIFNxdWlkIHByb2pl
-Y3Q6DQoNCiAgRm9yIGluc3RhbGxhdGlvbiAvIHVwZ3JhZGUgc3VwcG9ydCBv
-biBiaW5hcnkgcGFja2FnZWQgdmVyc2lvbnMNCiAgb2YgU3F1aWQ6IFlvdXIg
-Zmlyc3QgcG9pbnQgb2YgY29udGFjdCBzaG91bGQgYmUgeW91ciBiaW5hcnkN
-CiAgcGFja2FnZSB2ZW5kb3IuDQoNCiAgSWYgeW91IGluc3RhbGwgYW5kIGJ1
-aWxkIFNxdWlkIGZyb20gdGhlIG9yaWdpbmFsIFNxdWlkIHNvdXJjZXMNCiAg
-dGhlbiB0aGUgPHNxdWlkLXVzZXJzQGxpc3RzLnNxdWlkLWNhY2hlLm9yZz4g
-bWFpbGluZyBsaXN0IGlzIHlvdXINCiAgcHJpbWFyeSBzdXBwb3J0IHBvaW50
-LiBGb3Igc3Vic2NyaXB0aW9uIGRldGFpbHMgc2VlDQogIDxodHRwOi8vd3d3
-LnNxdWlkLWNhY2hlLm9yZy9TdXBwb3J0L21haWxpbmctbGlzdHMuaHRtbD4u
-DQoNCiAgRm9yIHJlcG9ydGluZyBvZiBub24tc2VjdXJpdHkgYnVncyBpbiB0
-aGUgbGF0ZXN0IFNUQUJMRSByZWxlYXNlDQogIHRoZSBzcXVpZCBidWd6aWxs
-YSBkYXRhYmFzZSBzaG91bGQgYmUgdXNlZA0KICA8aHR0cDovL2J1Z3Muc3F1
-aWQtY2FjaGUub3JnLz4uDQoNCiAgRm9yIHJlcG9ydGluZyBvZiBzZWN1cml0
-eSBzZW5zaXRpdmUgYnVncyBzZW5kIGFuIGVtYWlsIHRvIHRoZQ0KICA8c3F1
-aWQtYnVnc0BsaXN0cy5zcXVpZC1jYWNoZS5vcmc+IG1haWxpbmcgbGlzdC4g
-SXQncyBhIGNsb3NlZA0KICBsaXN0ICh0aG91Z2ggYW55b25lIGNhbiBwb3N0
-KSBhbmQgc2VjdXJpdHkgcmVsYXRlZCBidWcgcmVwb3J0cw0KICBhcmUgdHJl
-YXRlZCBpbiBjb25maWRlbmNlIHVudGlsIHRoZSBpbXBhY3QgaGFzIGJlZW4g
-ZXN0YWJsaXNoZWQuDQoNCl9fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXw0KDQpDcmVk
-aXRzOg0KDQogIFRoaXMgdnVsbmVyYWJpbGl0eSB3YXMgZGlzY292ZXJlZCBi
-eSBNaWtoYWlsIEV2ZG9raW1vdg0KICAoYWthIGtvbmF0YSkuDQoNCiAgSW5p
-dGlhbCBmaXggYnkgQW1vcyBKZWZmcmllcyBvZiBUcmVlaG91c2UgTmV0d29y
-a3MgTHRkLg0KDQpfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18NCg0KUmV2aXNpb24g
-aGlzdG9yeToNCg0KICAyMDIyLTA0LTE3IDE4OjMwOjUyIFVUQyBJbml0aWFs
-IFJlcG9ydA0KICAyMDIyLTA4LTA4IDExOjAxOjQ3IFVUQyBJbml0aWFsIEZp
-eCByZWxlYXNlZA0KICAyMDIyLTA5LTIzIDA1OjAwOjAwIFVUQyBBZHZpc29y
-eSBSZWxlYXNlZA0KX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fDQpFTkQNCg==
+CVE-2017-12631: CSRF vulnerabilities in the Apache CXF Fediz Spring plugins.
 
---------------HAc20CS4PwUD6kw3hWY0f0US
-Content-Type: application/pgp-keys; name="OpenPGP_0x00D863679420BDD3.asc"
-Content-Disposition: attachment; filename="OpenPGP_0x00D863679420BDD3.asc"
-Content-Description: OpenPGP public key
-Content-Transfer-Encoding: quoted-printable
+http://cxf.apache.org/security-advisories.data/CVE-2017-12631.txt.asc
 
------BEGIN PGP PUBLIC KEY BLOCK-----=0A=
-=0A=
-xsFNBFiOEzoBEADuuawHiMOqHBjL5Mk6IfPCgJmY3oqJDmykzve+vDh7jArtFnOG=0A=
-067ftaMLligGh3y6LOLh3r1kIZ254CPHuKFYssA1p9mXL9YJnZ1qHrQVhqZwDq7d=0A=
-H/UtBQ2IM1QukoTo1VRTB3ppiPHKTSa2zZ/kgBs0d+1MOi8DY2SmIDYVhUJI55qS=0A=
-qpxlcs6MyG4KxlEPD35J3nL4hIzLzuzIbZoUO6M+dLvnqiFu2+mm6o75nxYmq+JC=0A=
-PwN5biETkSvndqr56t/W0ajlU1MpFXfOYJ8PfutrIBUPsRJUqWQjGg6uXp4torC1=0A=
-q2XasfSKVIQ+8duw7MCrkAfRv5BtDtpesAAsScvYTwUaDYVioiNNK1uJQZlrpYY4=0A=
-I0EbHI4GHKq7Q4VmotcQ2BhigqRIdh7kD3corddhlLTvTs0G5Pjk/T2ZoMFZI03g=0A=
-+ieuo1l8VhCGdlqSQd8d1Np9WWwS9899QSgucwEeG+OK2f1IxxD12HiCgNoSh9id=0A=
-9vTYLTZK+HM1FEu+iwTxfQ9F/kDN49IaPhfvjJTs86Ov4FBTtaNUN2pF0qXpQr3A=0A=
-RisxZt7t7MVls+570sNnaijYYkLZdZj+49QArJxallltX3sbc9AK5JxkT8XivRCe=0A=
-LTKOngZEzIZCBeZuyI8cCemhU0csl89ZcORbMsgFS28FyWH4+X6lA+R5HQARAQAB=0A=
-zSJBbW9zIEplZmZyaWVzIDxhbW9zQHRyZWVuZXQuY28ubno+wsGOBBMBCAA4FiEE=0A=
-AimzwkzOwlQSfJUyANhjZ5QgvdMFAliOEzoCGwMFCwkIBwIGFQgJCgsCBBYCAwEC=0A=
-HgECF4AACgkQANhjZ5QgvdOKkhAAseag7QTzRF20TDwc6QQpfYdUyuuMqyEV3AwA=0A=
-TtJxF2Y+aF/hEHXU9XBCM8EMyiJR816haC+86Wci0cXYj7pmR80psR9C6JoaNos8=0A=
-9CrgsmMx9tZR5yJXrdTCnQajbZf3ozs7IDk41g4NvWg5GtHM3MYriL0LUBXLT+YS=0A=
-Z9Qq2DmRZRatCjk6tiMYeHG/GtH6GZs3YExRO9Am16C1gTJRao9mJtCBDR+0NrRB=0A=
-2E7tKN8EZySAsZkDzbL+hL/LpdWkEZvlBsSxJebAN0x64w3FSztHGfZwLfLsxdva=0A=
-6CfYs8kalHoTxRoRhpIKmTtGFJI4v9cR0+Ua5trMPgHG2QIOgXOKtOTgdYF5ksA9=0A=
-8ZF+OdsuW7yCe9POqc4bnDbOXByxVuNMPwVSESk/GJwnxRB2vW4nywQKREJ2H6He=0A=
-DO+KVhLE9nH5AlspXpEgPpzYVeplhcKKi6H56bI0anIHvao7vEEXNP2pwRWSoMKE=0A=
-wGWGG7QvmemQ0YbsUqJSK563SwNe5cVUg/Cqb08m7D9ybAm+hwgtvzU7OGsLyIHu=0A=
-yVxnGkB5A1GV1lizUmsFauBxyw8Yx6GmwfmsiwEVYV/lidg+ubnsxqN7Kuvg9gYR=0A=
-vv+Yg1wl1QFRgeOFjbU8hj/AaNAP9SppHcA5joBekakQx18Y6LIKKvdoepDg3mFX=0A=
-rOouo8jOwU0EWI4TOgEQAMmEISQmHDde0q2YfyeA8MKejHlt5vCldKYwtaN5ii07=0A=
-7vJaNrQk9Q8Iym6ro0plAdtLDTzyQCATWUctF6B0VowB4/LqF40U4g+uNAj7fzC/=0A=
-mVvSIG42diN0pJYkcfd9ghVcF7H5CeYe2zL3TlqilqQA6Xmt6i7NmYUMO939jw7V=0A=
-ZszMHlqvDTUzcimKrTVB7oS3+r5v1GGT3q+utrxka3WoQ3IHnidsylbTfF+dlRsv=0A=
-tKWxtg8kmTgu/oj1CmUE0DQh67kXsiC3nhjdUh+eZfDGmLuOGgVAWU/WNCS3oaVx=0A=
-VXW3rX/nUc+URkiOCuxyPjBy+A8Z+I8OXpIaC6FQY9sCFVo7yK4UxsK+eM93mWGI=0A=
-c5cGBL99vr+7YgZ3TBjYrazLO5Z8wyw765G1U3dPZB+egRMEY5CO64eb78f7vbRl=0A=
-8/INZWdkJxcotR4weGnvOxxDHyncS3BTSu6iiqmXSz0ZDpaOdCMNDHE6Kmt1qw2N=0A=
-buGUHohqg2K8+1mWnXwevS0afydoG7EX0AuE1YEfkODsek8ceFj4U2c1jlOQbuO0=0A=
-1pHa6Z9VYn5NOwXETlIytjDyBt15R7Tt1BQQg7wU482a5SSlwXYyzOx42a2CLvZM=0A=
-2tXnbIY4VZDu+V1ywXNMGOs8Am1LJzi74eEv2NTbvdFMmsGAkWNWn6KS77eR+pe5=0A=
-ABEBAAHCwXYEGAEIACAWIQQCKbPCTM7CVBJ8lTIA2GNnlCC90wUCWI4TOgIbDAAK=0A=
-CRAA2GNnlCC90zeSD/9qEpJAtuEAXyCCymUEpzN6XgSWdcYra+NolIGCRzWd3Snx=0A=
-tBi+zWwhLFxm8AEhfqSMRh95T4XWKHScIsZZuG9xiap5whJ5xLJC/NlZidQqiPSJ=0A=
-Log2+Yqt+PBVPrMpaG7Cmq64Y4ttvFwLZ8Wn23irJzr9JiWvsjprImsCZbuG/I1J=0A=
-WHUIn70oknzsTgpTPWDCfnCiGhCK7vgXak9QgBKhrzgADK3o6uCjmNllUdci9gFz=0A=
-USy4/x9x73xrbzXS8/pO23fnbBwPa7VV9IRtOb8HJJk8Y79A1ZnkVANBo1KmE+Yc=0A=
-w92IMcz2ev4VFw+pbqZ/swHqa3y3L5cT7Keqgc67wiahSZRc5zM0jJWxN//lpgcd=0A=
-nDRI1OSLCrMMI69yc2QMzUZu87BtEJzm0DBy2pIKEni9dSCwwMITUsU21Ny3RmaV=0A=
-7fmXYAyp9pcaQQWGOb2CIvU7k60eLWgfNTo5SGI56WYC+ndod7vPU+swJVbKrQKq=0A=
-fwO5JbdY9YPbo++Z6kfrnbkmm3wkJ4W8dOcrkLYbmOk7sColcQhVbmGy74Ggzl75=0A=
-R22Q7+Uhjj9iq0Kv3CGQ3rKVdXOfAo5OekdaMDx9t9HoirGiokcyCPTy7wAyvQ75=0A=
-lbrygxCme05XBfLZHrMp+SdM8ONsdgIe7U0bI85zYegceSagzCtBdB8HQ10TFg=3D=3D=0A=
-=3DT9Ck=0A=
------END PGP PUBLIC KEY BLOCK-----=0A=
+Users who are using the Spring security plugins of Apache CXF Fediz should
+upgrade immediately to the latest releases.
 
---------------HAc20CS4PwUD6kw3hWY0f0US--
+Colm.
 
---------------ZxCdKLOa2xZ706munNPNEiVK--
 
---------------vrePW4oQPnfCbPRYaoDhXvA5
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
+-- 
+Colm O hEigeartaigh
 
------BEGIN PGP SIGNATURE-----
+Talend Community Coder
+http://coders.talend.com
 
-wsF5BAABCAAjFiEEAimzwkzOwlQSfJUyANhjZ5QgvdMFAmMtPWAFAwAAAAAACgkQANhjZ5QgvdOn
-HQ//RR5UypqEMoxbPcuR3dEkBrHa84DM1tyCCdnLreIvNr7th6/GvQ0dFOw/mnGKvJV1Qns886ps
-WNW+Y10PSO9C3VTrysXryPAKghdWovt0N7/m6dWwv5Y0c0A8Th+kVwvkE/Eu9tOFn6f0xkze66ie
-Ndg57K/WzBSkj/gBG+TSkBLSoUspN8Avske3YVwT+cFrykvjzPNbwK7mRPJTL6edu2qGoPlmMAEW
-kWRUDcOrcU0aNRiwmoOLfX6FNvrHrr3+asDxx0cPpwMBeTGbVU/30DWL/eiQAHxkRVg1yx+Jr990
-3jraM72b27RAgHYh85rEWxT/eRepBn6ZARtivMPfH8T1xCIh7lr6gIgHlXa0CFBvTBXXUbUkFfLg
-bzImkX9SjOc60kG7VVx+naVf4OCO6KZzm7/376Y++aGkZqGi6Okdq2aMo1y0enjaJml8xxJtQrgo
-PW1OgNIKWDvSDytJiAz1c2ehkR2ObdjW/CYtHRhoh8qF8CBsPaRWonyQm6luVrGYxrkDH2iKruYx
-cCIudzDQ9qMCF1NM8lbhJxpxLVWywnTWkfp16HEsIeDQc2R0eJ3hj4abQz6uAMp3EC3Aapg7FWjp
-3MrCcXj/8I6pA+9jD/0T6bovtRBf4ADzgbCtB1i1lfWEJ9cDoeNgHlUDKrEhZdoIejI9C40wZq0s
-nIE=
-=hwac
------END PGP SIGNATURE-----
-
---------------vrePW4oQPnfCbPRYaoDhXvA5--
+--089e08266224dea435055f313bd5--
