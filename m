@@ -1,68 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/07/7
-Message-ID: <752768.651672767-sendEmail@localhost>
-Date: Wed, 7 Jun 2017 12:55:26 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: ytnef: memory allocation failure in TNEFFillMapi (ytnef.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/30/1
+Message-ID: <CANatu-ZvJwPtHyYKMzpPT7ovMOR=VNYo4kCHnTEtNGpuj3ELHA@mail.gmail.com>
+Date: Thu, 30 Nov 2017 02:32:37 +0200
+From: Bindecy <contact@...decy.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2017-1000405: Linux kernel - "Dirty COW" variant on transparent huge pages
 Content-Type: text/plain; charset=utf-8
 
-Description:
-ytnef is Yeraze’s TNEF Stream Reader – for winmail.dat files.
+Hello,
 
-The complete ASan output of the issue:
+This is a brief overview of the vulnerability, more details are available
+in the post referenced in the GitHub link.
 
-# ytnefprint $FILE
-==11998==AddressSanitizer CHECK failed: /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/sanitizer_common/sanitizer_common.cc:120 "((0 && "unable to mmap")) != (0)" (0x0, 0x0)
-    #0 0x4d95cf in __asan::AsanCheckFailed(char const*, int, char const*, unsigned long long, unsigned long long) /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_rtl.cc:69
-    #1 0x4f4335 in __sanitizer::CheckFailed(char const*, int, char const*, unsigned long long, unsigned long long) /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/sanitizer_common/sanitizer_termination.cc:79
-    #2 0x4e3962 in __sanitizer::ReportMmapFailureAndDie(unsigned long, char const*, char const*, int, bool) /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/sanitizer_common/sanitizer_common.cc:120
-    #3 0x4ed265 in __sanitizer::MmapOrDie(unsigned long, char const*, bool) /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/sanitizer_common/sanitizer_posix.cc:132
-    #4 0x424c6a in __sanitizer::LargeMmapAllocator::Allocate(__sanitizer::AllocatorStats*, unsigned long, unsigned long) /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/../sanitizer_common/sanitizer_allocator_secondary.h:41
-    #5 0x424c6a in __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64, __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64 >, __sanitizer::LargeMmapAllocator >::Allocate(__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64 >*, unsigned long, unsigned long, bool, bool) /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/../sanitizer_common/sanitizer_allocator_combined.h:70
-    #6 0x424c6a in __asan::Allocator::Allocate(unsigned long, unsigned long, __sanitizer::BufferedStackTrace*, __asan::AllocType, bool) /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_allocator.cc:407
-    #7 0x41f1fb in __asan::Allocator::Calloc(unsigned long, unsigned long, __sanitizer::BufferedStackTrace*) /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_allocator.cc:605
-    #8 0x41f1fb in __asan::asan_calloc(unsigned long, unsigned long, __sanitizer::BufferedStackTrace*) /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_allocator.cc:786
-    #9 0x4cf7ba in calloc /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_malloc_linux.cc:75
-    #10 0x7fe45c3e4e53 in TNEFFillMapi /tmp/ytnef-1.9.2/lib/ytnef.c:424:19
-    #11 0x7fe45c3e1384 in TNEFMapiProperties /tmp/ytnef-1.9.2/lib/ytnef.c:396:7
-    #12 0x7fe45c3f6b47 in TNEFParse /tmp/ytnef-1.9.2/lib/ytnef.c:1184:15
-    #13 0x7fe45c3f59d3 in TNEFParseFile /tmp/ytnef-1.9.2/lib/ytnef.c:1042:10
-    #14 0x508814 in main /tmp/ytnef-1.9.2/ytnefprint/main.c:80:9
-    #15 0x7fe45b50b78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #16 0x419c38 in _start (/usr/bin/ytnefprint+0x419c38)
 
-Affected version:
-1.9.2
+==== Summary ====
 
-Fixed version:
-N/A
+In the "Dirty COW" vulnerability patch (CVE-2016-5195),
+can_follow_write_pmd() was changed to take into account the new FOLL_COW
+flag (8310d48b125d "mm/huge_memory.c: respect FOLL_FORCE/FOLL_COW for thp").
 
-Commit fix:
-N/A
+We noticed a problematic use of pmd_mkdirty() in the touch_pmd() function.
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+touch_pmd() can be reached by get_user_pages(). In such case, the pmd will
+become dirty. This scenario breaks the new can_follow_write_pmd()'s logic -
+pmd can become dirty without going through a COW cycle - which makes
+writing on read-only transparent huge pages possible.
 
-CVE:
-CVE-2017-9473
+This bug is not as severe as the original "Dirty cow" because an ext4 file
+(or any other regular file) cannot be mapped using THP. Nevertheless, it
+does allow us to overwrite read-only huge pages. For example, the zero huge
+page and sealed shmem files can be overwritten (since their mapping can be
+populated using THP). Note that after the first write page-fault to the
+zero page, it will be replaced with a new fresh (and zeroed) thp.
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00246-ytnef-memallocfailures
+Using this primitive, we successfully crashed several processes. A likely
+consequence of overwriting the huge zero page is having improper initial
+values inside large BSS sections. Common vulnerable pattern would be using
+the zero value as an indicator that a global variable hasn't been
+initialized yet.
 
-Timeline:
-2017-03-27: bug discovered and reported to upstream
-2017-05-24: blog post about the issue
-2017-06-07: CVE assigned
+Potentially, privileged processes using the mentioned pattern are
+exploitable.
 
-Note:
-This bug was found with American Fuzzy Lop.
 
-Permalink:
-https://blogs.gentoo.org/ago/2017/05/24/ytnef-memory-allocation-failure-in-tneffillmapi-ytnef-c/
+===== POC =====
 
---
-Agostino Sarubbo
-Gentoo Linux Developer
+The POC overwrites the zero-page of the system.
 
+POC source on GitHub: https://github.com/bindecy/HugeDirtyCowPOC
+
+
+===== Affected Versions =====
+
+The POC was tested on Ubuntu 17.04 with kernel 4.10 and Fedora 27 with
+kernel 4.13. Every kernel version with THP support and the Dirty COW patch
+should be vulnerable (2.6.38 - 4.14).
+
+RHEL claimed by the vendor as not affected.
+
+Fixed on Nov 27, 2017:
+https://github.com/torvalds/linux/commit/a8f97366452ed491d13cf1e44241bc0b5740b1f0
+
+
+===== Timeline =====
+
+22.11.17 — Initial report to security@...nel.org and
+linux-distros@...openwall.org
+
+22.11.17 — CVE-2017–1000405 was assigned
+
+27.11.17 — Patch was committed to mainline kernel
+
+29.11.17 — Public announcement
+
+
+===== Credit =====
+
+Eylon Ben Yaakov and Daniel Shapiro from Bindecy
 
