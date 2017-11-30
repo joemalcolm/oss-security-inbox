@@ -1,28 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/23/3
-Message-ID: <87ine0u5ns.fsf@curie.anarc.at>
-Date: Thu, 23 Nov 2017 15:00:23 -0500
-From: Antoine Beaupré <anarcat@...ngeseeds.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: exiv2: multiple memory safety issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/30/5
+Message-Id: <E1eKNVJ-0008CT-2J@xenbits.xenproject.org>
+Date: Thu, 30 Nov 2017 11:59:45 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 245 (CVE-2017-17046) - ARM: Some memory not scrubbed at boot
 Content-Type: text/plain; charset=utf-8
 
-On 2017-11-23 10:53:13, Raphael Hertzog wrote:
-> So please file bugs on github, thank you.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I read this thread thinking this was still from June, so I thought I
-would just go ahead and report this upstream already:
+            Xen Security Advisory CVE-2017-17046 / XSA-245
+                              version 2
 
-https://github.com/Exiv2/exiv2/issues/174
+                 ARM: Some memory not scrubbed at boot
 
-I should also mention that I haven't been able to reproduce with
-valgrind, in Debian Wheezy, which uses exiv 0.23. I wasn't able to
-compile exiv2 with ASAN there either, so that could be why I can't
-reproduce.
+UPDATES IN VERSION 2
+====================
 
-A.
+CVE assigned.
 
--- 
-Le pouvoir n'est pas à conquérir, il est à détruire
-                        - Jean-François Brient, de la servitude moderne
+NOTE REGARDING LACK OF EMBARGO
+==============================
 
+This bug was discussed publicly before it was realised that it was a
+security vulnerability.
+
+ISSUE DESCRIPTION
+=================
+
+Data can remain readable in DRAM across soft and even hard reboots.
+To ensure that sensitive data is not leaked from one domain to another
+after a reboot, Xen must "scrub" all memory on boot (write it with
+zeroes).
+
+Unfortunately, it was discovered that when memory was in disjoint blocks,
+or when the first block didn't begin at physical address 0, arithmetic
+errors meant that some memory was not scrubbed.
+
+IMPACT
+======
+
+Sensitive information from one domain before a reboot might be visible
+to another domain after a reboot.
+
+VULNERABLE SYSTEMS
+==================
+
+Only ARM systems are vulnerable.
+
+All versions of Xen since 4.5 are vulnerable.
+
+Only hardware with disjoint blocks, or physical addresses not starting at 0
+are vulnerable; this includes the majority of ARM systems.
+
+MITIGATION
+==========
+
+None.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patches resolves this issue.
+
+xsa245/*.patch         All versions of Xen
+
+$ sha256sum xsa245* xsa245*/*
+121829263b85fcb5eac8e38fb44e77d3aab1dd7ae6ef665bf84bb49e5e161d24  xsa245.meta
+526f9e1b127fbb316762ce8e8f4563bc9de0c55a1db581456a3017d570d35bdd  xsa245/0001-xen-page_alloc-Cover-memory-unreserved-after-boot-in.patch
+7164010112fcccd9cd88e72ace2eeabdb364dd6f4d05c434686267d18067f420  xsa245/0002-xen-arm-Correctly-report-the-memory-region-in-the-du.patch
+$
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJaH/KMAAoJEIP+FMlX6CvZMfgH/j86RZD7z55Lt7ITlLWZwucP
+uTDw8gjJRtB/8mgrJq97Q37rWBHvvfITUYHW7wxA+LJQAje2X7y+3kV4EWpF0hFI
+BMU3QfeyTCgYbmTb0NOaULGzhDtN/QKjFq48fccnRYfg7MisIEy5dVqDWnbUQfIn
+STP/w63rpjx2mpZVSBuWC+yA0mjcaCyezR6xJoN1rQjVe/FrnzoJwCYBmpR3JY9+
+AIeRvLLpK/vbREZZxOpBioL9KQxH+zahIwQJkS56Jbt8uC1Fq0UFe809Xt+8I4d+
+yOJiflkHKgFBW1KUL1Pirq+koad1p66Ciz9c8j88Wop0fhDTQdn10mbteizOM64=
+=PRKQ
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa245.meta" of type "application/octet-stream" (2549 bytes)
+
+Download attachment "xsa245/0001-xen-page_alloc-Cover-memory-unreserved-after-boot-in.patch" of type "application/octet-stream" (1650 bytes)
+
+Download attachment "xsa245/0002-xen-arm-Correctly-report-the-memory-region-in-the-du.patch" of type "application/octet-stream" (2600 bytes)
