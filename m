@@ -1,46 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/11/1
-Message-ID: <7001b5d5-ff27-8d91-a284-2c37f35e9bf6@dovecot.fi>
-Date: Tue, 11 Apr 2017 10:57:03 +0300
-From: Aki Tuomi <aki.tuomi@...ecot.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/30/3
+Message-Id: <EC646F2B-8F97-4B77-AE45-9462445D1B6F@gmail.com>
+Date: Thu, 30 Nov 2017 19:41:03 +0900
+From: 백정운 <jeongun.baek@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2017-2669: Dovecot DoS when passdb dict was used for authentication
+Subject: libtiff: Heap-based buffer overflow bug in pal2rgb(pal2rgb.c)
 Content-Type: text/plain; charset=utf-8
 
-CVSS: 6.5 (CVSS:3.0/AV:N/AC:H/PR:N/UI:R/S:U/C:N/I:N/A:H)
-Vulnerable versions: 2.2.26 - 2.2.28
-Fixed version(s): 2.2.29
+Hi all,
 
-Broken by a3783f8a3c9cd816b51e77a922f82301512fcf22
-Fixed by 000030feb7a30f193197f1aab8a7b04a26b42735
+A heap-based buffer overflow flaw was found in pal2rgb. A malicious user can manipulate the heap memory of a process using COLORMAP, Image Width, and Image Length value of a TIFF document.
 
-Dovecot supports "dict" passdb and
-userdb: https://wiki2.dovecot.org/AuthDatabase/Dict
-When these were used for user authentication, the username sent by the
-IMAP/POP3 client was sent through var_expand() to perform %variable
-expansion. Sending specially crafted %variable fields could result in
-excessive memory usage causing the process to crash (and restart), or
-excessive CPU usage causing all authentications to hang.
+http://bugzilla.maptools.org/show_bug.cgi?id=2750 <http://bugzilla.maptools.org/show_bug.cgi?id=2750>
 
-Excessive memory usage could be done with e.g. %09999999999u as the
-username. Because by default Dovecot limits the auth process's VSZ and
-exits on any memory allocation failure, the auth process typically dies
-afterwards and is immediately restarted. This may result in some user
-authentications getting temporary internal failures.
+The ASAN debug information is below:
+/tools/pal2rgb poc.tiff /dev/null
 
-Excessive CPU usage could be done with %{pkcs5;rounds=100000000:user}
-variable introduced in v2.2.27.
+TIFFFetchNormalTag: Warning, IO error during reading of "XResolution"; tag
+ignored.
+TIFFFetchNormalTag: Warning, IO error during reading of "YResolution"; tag
+ignored.
+sample.tiff: JPEG compression support is not configured.
+TIFFSetField: /dev/null: Unknown pseudo-tag 65537.
+TIFFSetField: /dev/null: Unknown pseudo-tag 65538.
+sample.tiff: JPEG compression support is not configured.
+=================================================================
+==29649==ERROR: AddressSanitizer: heap-buffer-overflow on address
+0x611000009fe1 at pc 0x0000004f3109 bp 0x7fff697434d0 sp 0x7fff697434c8
+WRITE of size 1 at 0x611000009fe1 thread T0
+    #0 0x4f3108  (/home/vagrant/targets/asan/tt/tools/pal2rgb+0x4f3108)
+    #1 0x7f678dc0cf44  (/lib/x86_64-linux-gnu/libc.so.6+0x21f44)
+    #2 0x419ba5  (/home/vagrant/targets/asan/tt/tools/pal2rgb+0x419ba5)
 
-Please use this
-https://github.com/dovecot/core/commit/000030feb7a30f193197f1aab8a7b04a26b42735.patch
-to fix this issue, it should be applicable to older versions too.
-Please let us know if you need assistance in patching.
+0x611000009fe1 is located 0 bytes to the right of 225-byte region
+[0x611000009f00,0x611000009fe1)
+allocated by thread T0 here:
+    #0 0x4c3f08  (/home/vagrant/targets/asan/tt/tools/pal2rgb+0x4c3f08)
+    #1 0x4f2748  (/home/vagrant/targets/asan/tt/tools/pal2rgb+0x4f2748)
+    #2 0x7f678dc0cf44  (/lib/x86_64-linux-gnu/libc.so.6+0x21f44)
 
----
-Aki Tuomi
-Dovecot oy
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+SUMMARY: AddressSanitizer: heap-buffer-overflow
+(/home/vagrant/targets/asan/tt/tools/pal2rgb+0x4f3108)
+Shadow bytes around the buggy address:
+  0x0c227fff93a0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff93b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff93c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff93d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff93e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c227fff93f0: 00 00 00 00 00 00 00 00 00 00 00 00[01]fa fa fa
+  0x0c227fff9400: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff9410: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff9420: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff9430: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff9440: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==29649==ABORTING
+Affected version:
+4.0.9
