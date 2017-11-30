@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1460" "Tuesday" "2" "August" "2016" "17:14:37" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160802211437.0BF366CC689@smtpvmsrv1.mitre.org>" "38" "[oss-security] Re: CVE Request ImageMagick buffer overflow" nil nil nil "8" "2016080221:14:37" "[oss-security] Re: CVE Request ImageMagick buffer overflow" (number mark "U       cve-assign@m Aug  2   38/1460  " thread-indent "\"[oss-security] Re: CVE Request ImageMagick buffer overflow\"\n") "<CAJvHH_QoBJyo_qyOdgE-G=pMhZCfD0pt2f3WHhGjnw9KZMC5qA@mail.gmail.com>" ("<CAJvHH_QoBJyo_qyOdgE-G=pMhZCfD0pt2f3WHhGjnw9KZMC5qA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1441" "Thursday" "30" "November" "2017" "17:15:47" "+0000" "Keith W" "keith.wall@gmail.com" "<CAFEMS4vaXWPFXqDk-PnhURiFRLTkOx=mL6RmxzAMC59-gxNi9w@mail.gmail.com>" "39" "[oss-security] [SECURITY] [CVE-2017-15702] Apache Qpid Broker-J Authentication Vulnerability on HTTP Ports" nil nil nil "11" "2017113017:15:47" "[oss-security] [SECURITY] [CVE-2017-15702] Apache Qpid Broker-J Authentication Vulnerability on HTTP Ports" (number mark "U       keith.wall@g Nov 30   39/1441  " thread-indent "\"[oss-security] [SECURITY] [CVE-2017-15702] Apache Qpid Broker-J Authentication Vulnerability on HTTP Ports\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15448 invoked by uid 550); 2 Aug 2016 21:14:49 -0000
+Received: (qmail 28243 invoked by uid 550); 30 Nov 2017 17:17:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,50 +12,79 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15427 invoked from network); 2 Aug 2016 21:14:48 -0000
-From: cve-assign@mitre.org
-To: i.elsayed92@gmail.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <CAJvHH_QoBJyo_qyOdgE-G=pMhZCfD0pt2f3WHhGjnw9KZMC5qA@mail.gmail.com>
-Message-Id: <20160802211437.0BF366CC689@smtpvmsrv1.mitre.org>
-Date: Tue,  2 Aug 2016 17:14:37 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request ImageMagick buffer overflow
+Received: (qmail 26405 invoked from network); 30 Nov 2017 17:15:59 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=GF6HZDvg4jF9WGiP5b5WhnRHQFcyAczQbdrhqIxnhI4=;
+        b=vCOwsimiZBy4GE3VN1e1Ox4mYv863T2vNYzvHaVYg6ocHllX2cncuIWQO7ciuuk5G2
+         icwdUUv7MvlotjxzO7v1D0J+a5YnakDuDvbtmhW0mcw8WQ9v/tS+pd7rEkGe+z56scMb
+         W2vulnYV1lnbAcJsCzcnGDfKgvPZL5I5+Ob07PdG2kRA5CSwwG5F+mzUwGlD4l8UL75n
+         2Mzuu0e/qhtFoC07r4n2ygctxc38Z2WnHuKxfo3KDOkXi0G7q3pNyRNYWHKobkyh2tqe
+         LhQscNYowPX+Co7vqh1M29pTqfJheIjd1DqRDJ9DSdxeaxgib59m5f5V1xOUKuNsfxNS
+         p6JA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=GF6HZDvg4jF9WGiP5b5WhnRHQFcyAczQbdrhqIxnhI4=;
+        b=m2mWrIr5nnT/CDPdA52xyslWDNV7yHwy1xpQl/0+wUYj3ybZDmQnHszhDbvWzRuzjZ
+         hhOqbtQ8zTfOP3NOf6+JFdc+jL06SU26qJ3rnbG5Pd8Cb88SNv0zZqHRx8TNN72MlA0V
+         +41lF3rTCzxnAYDg9SvziBSjKSwYQlHDnLzAtgXzkTJo9uEpxZ0h3JbaymVkuGQskC8/
+         DJst4wp/oqUSoS3q6kEKdh9WRjq4oV6DzYUzNwrOIDC0NKY9UCNuT5kYQENp0kwm5lDV
+         v8JmDdOg4suGevjp3b9gVZ2wLiKwZL75b2nTZS0a8RZTQym+wEUFNzloMuXB3u+7HW1B
+         6t+Q==
+X-Gm-Message-State: AJaThX4+i6gxA9G7dkXqQzJjzSgujoJ2oQyUJuYTY6X2+fs5y8JUjmOC
+	yloYBf1rru/yQQSG+tBGfOU5t4G3gCkvEiX29qU=
+X-Google-Smtp-Source: AGs4zMbnZdmXbK6CcEGelgphdwWSm7lksii9NJTvjEYstmuAvZjUvyH93cUyOBkxpvgxJZS1jMR4hUYFo9cwPi2S2p4=
+X-Received: by 10.223.166.103 with SMTP id k94mr2595905wrc.22.1512062148152;
+ Thu, 30 Nov 2017 09:15:48 -0800 (PST)
+MIME-Version: 1.0
+From: Keith W <keith.wall@gmail.com>
+Date: Thu, 30 Nov 2017 17:15:47 +0000
+Message-ID: <CAFEMS4vaXWPFXqDk-PnhURiFRLTkOx=mL6RmxzAMC59-gxNi9w@mail.gmail.com>
+To: "users@qpid.apache.org" <users@qpid.apache.org>, "dev@qpid.apache.org" <dev@qpid.apache.org>, security@apache.org, 
+	oss-security@lists.openwall.com, announce@apache.org
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] [SECURITY] [CVE-2017-15702] Apache Qpid Broker-J Authentication
+ Vulnerability on HTTP Ports
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+CVE-2017-15702: Apache Qpid Broker-J authentication vulnerability on HTTP ports
 
-> I would like to request a CVE for a buffer overflow that was found in
-> ImageMagick. You can find the fix in the following commit:
-> https://github.com/ImageMagick/ImageMagick/commit/76401e172ea3a55182be2b8e2aca4d07270f6da6
+Severity: Important
 
->> 2016-07-01 7.0.2-7
->> 
->> Evaluate lazy pixel cache morphology to prevent buffer overflow (bug report
->> from Ibrahim M. El-Sayed).
->> 
->> MagickCore/enhance.c
+Vendor: The Apache Software Foundation
 
-Use CVE-2016-6520.
+Versions Affected: Versions 0.18 through 0.32
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Description:
 
-iQIcBAEBCAAGBQJXoQy/AAoJEHb/MwWLVhi26RoP/A3Phfv7ZYopbu2nA2iNS/qB
-vY9vU+qLHin7ZO5w/ZRRSuB2mPXa7pMlQLV5qaRrYFg/C76wicJefeCY3eX2Y/jD
-BOf672Ih7UGk8Tgm4wmluZ2axD+EPAOt+qDInccS0SG93yIXAJGb3QHG13aEQjLp
-+FFTENAEINPW0KtcE2FAE4BruYpR6kwswDtaeNFA4YJWEqRnhPtOBidR0V1rPSrI
-4sUVzkeb1RCipCJ8uyltUe+s3O9utoZSTMrV+RSXfoXueaERU37Fo5YJY586CmvS
-gTRklzyfIRiWNK5UH9bIjIiAESUbCbbcURXoGX3w0EXihlZBjwpA/fzLhao4UYk+
-aeDmhW74vKIljg1ySYH9GbcWYqOYFqma20F8FB0Zfar5cYvTXCgCqYOgFqLZCWcC
-bC4Ex/owNHNxG4vZygaQU2/yNrmFjASveNC0CsTBSGknO9yFgnQfi7psFFdEFCL9
-Xy2syOKKaDZTRN0YQlC52/MU0Hoh15MgZHbDVzTbIwDwOx4it74HQbzsYv1/wJ0G
-RRomamCqEvNp90TJDav/1yRJDsWfHfGXLqLiwqfJVdzuLKYCOmGLP8K3059Q4rw1
-xT/Yor8pdcmniVLz+KyZrHl6xNvOFVRN0GCphAU/mLtmJr/EaYdevyz9WyeFvQA5
-DNWeQmPGew1VJofR0Slz
-=3+w9
------END PGP SIGNATURE-----
+If the broker is configured with different authentication providers on
+different ports one of which is an HTTP port, then the broker can be
+tricked by a remote unauthenticated attacker connecting to the HTTP
+port into using an authentication provider that was configured on a
+different port.  The attacker still needs valid credentials with the
+authentication provider on the spoofed port.  This becomes an issue
+when the spoofed port has weaker authentication protection (e.g.,
+anonymous access, default accounts) and is normally protected by
+firewall rules or similar which can be circumvented by this
+vulnerability.  AMQP ports are not affected.  Versions 6.0.0 and newer
+are not affected.
+
+Resolution:
+
+Users of affected versions who have more than one port and different
+authentication providers configured on them should upgrade to a
+later unaffected version.
+
+Mitigation:
+
+If upgrading the broker is not possible then users should ensure all
+their authentication providers offer an equal amount of protection.
+In particular, authentication providers with default accounts and
+those with anonymous access should be removed if other providers in
+use require credentials.
+
+References:
+
+https://issues.apache.org/jira/browse/QPID-8039
