@@ -1,106 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/07/5
-Message-ID: <20170807123756.GA27766@suse.de>
-Date: Mon, 7 Aug 2017 14:37:56 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Cve issue discussion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/30/4
+Message-ID: <CAB8XdGAT0V8OCsKqN3FM7LkxuwznFh9r6ato8SWy5HGVwp+mTQ@mail.gmail.com>
+Date: Thu, 30 Nov 2017 11:05:45 +0000
+From: Colm O hEigeartaigh <coheigea@...che.org>
+To: "users@....apache.org" <users@....apache.org>, "dev@....apache.org" <dev@....apache.org>, announce@...che.org,  oss-security@...ts.openwall.com
+Cc: Apache Security Response Team <security@...che.org>
+Subject: Apache CXF Fediz 1.4.3 and 1.3.3 released with a new security advisory CVE-2017-12631
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Apache CXF Fediz is a subproject of CXF. Fediz helps you to secure your web
+applications and delegates security enforcement to the underlying
+application server.
 
-if it could crash the image reader I would consider it "remote denial of service"
-classed and CVE worthy. 
+Apache CXF Fediz 1.4.3 and 1.3.3 are released along with a new security
+advisory that is fixed in these releases:
 
-Ciao, Marcus
-On Mon, Aug 07, 2017 at 08:15:14AM -0400, Glenn Randers-Pehrson wrote:
-> Do memory-exhaustion bugs get a CVE?  Suppose an application is fooled
-> into requesting 2Gb of memory but then never uses it other than
-> attempting to read it, immediately hitting EOF, and cleaning up.
-> 
-> I'm addressing such a bug in libpng right now, in which the user
-> is sent a PNG file containing a tEXt chunk that claims to have a 2GB
-> length (but none of the 2GB data is included in the PNG).  On my
-> platform libpng deals with that almost instantaneously, but I think
-> some platforms (ASAN builds?) would actually allocate the memory
-> before proceeding to read the data.
-> 
-> Glenn
-> 
-> 
-> On Mon, Aug 7, 2017 at 5:47 AM, ne xo <nexo123@...look.kr> wrote:
-> > Hello,
-> >
-> > thank you for the reply!
-> >
-> > I chose the report at random.
-> >
-> > I'm sorry if I was offended to mention the report.
-> >
-> > Thanks.
-> > <http://aka.ms/weboutlook>
-> > ________________________________
-> > 보낸 사람: Agostino Sarubbo <ago@...too.org>
-> > 보낸 날짜: 2017년 8월 7일 월요일 오후 4:42:05
-> > 받는 사람: oss-security@...ts.openwall.com
-> > 제목: Re: [oss-security] Cve issue discussion
-> >
-> > On Monday 07 August 2017 01:03:53 ne xo wrote:
-> >> Hello,
-> >>
-> >>
-> >> I am curious about issuing CVEs.
-> >>
-> >> I can see that a "NULL pointer dereference" or a bug where the exploit has
-> >> not been verified also get a CVE.
-> >
-> >>
-> >> heap-overflows may or may not be exploitable.
-> >>
-> >>
-> >> It takes a lot of time to analyze the exploit and create the exploit code.
-> >>
-> >>
-> >> Is it right to be assigned a CVE only if it is exploitable?
-> >>
-> >>
-> >> Or do you think all bugs need to get a CVE?
-> >>
-> >>
-> >> Thanks.
-> >>
-> >> ---
-> >>
-> >> ref
-> >>
-> >> ---
-> >>
-> >> [1]http://www.openwall.com/lists/oss-security/2017/04/10/17 - NULL pointer
-> >> dereference
-> >> [2]http://www.openwall.com/lists/oss-security/2017/04/10/15 -
-> >> memory allocation failure
-> >
-> > Hi.
-> >
-> > Since you mentioned some issues reported by me, let me answer directly.
-> > For the first, it is an undefined behavior, so actually you don't see the
-> > crash.
-> > Nowadays, the undefined behavior issues do not get anymore a CVE.
-> >
-> >
-> > For the second, ASAN reports that the program want to use more that 64GB of
-> > ram to execute the process so ASAN hangs the process. In this case is up to
-> > the maintainer check whether there is a problem in the code or not, or it is
-> > expected. The better double-check would be verify what happens without ASAN.
-> >
-> > I'd like also to mention that MITRE assigns CVE after they analyze the
-> > reported issue, so if an issue does not deserve a CVE, MITRE probably won't
-> > assign accompanied by an explanation.
-> >
-> > --
-> > Agostino Sarubbo
-> > Gentoo Linux Developer
-> 
+CVE-2017-12631: CSRF vulnerabilities in the Apache CXF Fediz Spring plugins.
+
+http://cxf.apache.org/security-advisories.data/CVE-2017-12631.txt.asc
+
+Users who are using the Spring security plugins of Apache CXF Fediz should
+upgrade immediately to the latest releases.
+
+Colm.
+
 
 -- 
-Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@...e.de>
+Colm O hEigeartaigh
+
+Talend Community Coder
+http://coders.talend.com
+
