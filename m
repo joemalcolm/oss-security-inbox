@@ -1,95 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/31/13
-Message-ID: <20170131155609.GB30714@suse.de>
-Date: Tue, 31 Jan 2017 16:56:09 +0100
-From: Sebastian Krahmer <krahmer@...e.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/30/2
+Message-ID: <CAE-_4r3Lc-nZGBw+78jRxtSCXRTsXmeA107mpes81kTp4m8nhw@mail.gmail.com>
+Date: Thu, 30 Nov 2017 11:35:16 +0200
+From: Ariel Zelivansky <ariel.zelivans@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: OpenSSH: CVE-2015-6565 (pty issue in 6.8-6.9) can lead to local privesc on Linux
+Subject: Re: CVE-2017-1000405: Linux kernel - "Dirty COW" variant on transparent huge pages
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Great discovery and writeup. I looked into the latest kernel release
+(v4.15-rc1) from 3 days ago and it doesn't seem to include the
+committed patch. Am I missing anything?
 
-
-On Thu, Jan 26, 2017 at 06:35:12PM +0100, Noryungi wrote:
-> Does not work on centos 7.1 (unpatched) running stock openssh.
-> 
-> TTY capture works, /tmp/sh is created but user is unprivileged.
-
-I can confirm that the exploit is working on a vanilla 4.1.6 kernel
-with openssh 6.8. I was a bit puzzled because wrong modes on ttys by itself
-should no longer be exploitable on Linux.
-
-Here are my 2ct:
-
-1) Exploit evades the controlling-tty entry-check inside kernels tiocsti()
-   that was introduced to cope with hijacking of tty's based on wrong
-   modes. Obviously that 'hardening' failed here. Why?
-2) Because of glibc's openpty() as called by openssh opens
-   the slave device with O_NOCTTY (it has to do so). This leaves
-   tiocsti() with pants down, since there is no "controlling owner"
-   for this tty yet and the attacker is free to catch on it.
-3) The wrong mode (0622) is set, and later openssh calls ioctl(TIOCSCTTY)
-   to claim it as the controlling tty for the shell.
-   -> The race happens in between them and its just a few syscalls
-
-So the race that needs to be won is actually against the kernels
-tiocsti() check, as the wrong mode stays much longer. If the race is
-lost, its likely that the open still succeeds, but the injection of
-commands is no longer possible. That might explain why the bug was
-flagged as "local DoS".
-
-If the race fails, the exploit loop could be tightened to close any fd's in the child,
-so the open() automatically gets it as controlling tty and the race
-is easier to win.
-
-Kudos to the exploit dev who has PoC||GTFO'ed us.
-
-Sebastian
-
-
-
-> 
-> On Jan 26, 2017 5:52 PM, <up201407890@...nos.dcc.fc.up.pt> wrote:
-> 
-> > Hi list,
-> >
-> > I know I'm late to the party, but I was bored, so I decided to write an
-> > exploit for CVE-2015-6565 which affects OpenSSH 6.8-6.9
-> > It is mostly considered to be a "DoS", even though Jann Horn publicly told
-> > how it could be exploited for local privilege escalation, but I guess its
-> > either PoC||GTFO for users to update.
-> >
-> > From https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-6565
-> >
-> > "sshd in OpenSSH 6.8 and 6.9 uses world-writable permissions for TTY
-> > devices, which allows local users to cause a denial of service (terminal
-> > disruption) or possibly have unspecified other impact by writing to a
-> > device, as demonstrated by writing an escape sequence."
-> >
-> > I think the description should be updated.
-> >
-> > $ gcc not_an_sshnuke.c -o not_an_sshnuke
-> > $ ./not_an_sshnuke /dev/pts/3
-> > [*] Waiting for slave device /dev/pts/3
-> > [+] Got PTY slave /dev/pts/3
-> > [+] Making PTY slave the controlling terminal
-> > [+] SUID shell at /tmp/sh
-> > $ /tmp/sh --norc --noprofile -p
-> > # id
-> > euid=0(root) groups=0(root)
-> >
-> > Thanks,
-> > Federico Bento.
-> >
-> >
-> >
-> > ----------------------------------------------------------------
-> > This message was sent using IMP, the Internet Messaging Program.
-> >
-
--- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.com - SuSE Security Team
-
+On Thu, Nov 30, 2017 at 2:32 AM, Bindecy <contact@...decy.com> wrote:
+> Hello,
+>
+> This is a brief overview of the vulnerability, more details are available
+> in the post referenced in the GitHub link.
+>
+>
+> ==== Summary ====
+>
+> In the "Dirty COW" vulnerability patch (CVE-2016-5195),
+> can_follow_write_pmd() was changed to take into account the new FOLL_COW
+> flag (8310d48b125d "mm/huge_memory.c: respect FOLL_FORCE/FOLL_COW for thp").
+>
+> We noticed a problematic use of pmd_mkdirty() in the touch_pmd() function.
+>
+> touch_pmd() can be reached by get_user_pages(). In such case, the pmd will
+> become dirty. This scenario breaks the new can_follow_write_pmd()'s logic -
+> pmd can become dirty without going through a COW cycle - which makes
+> writing on read-only transparent huge pages possible.
+>
+> This bug is not as severe as the original "Dirty cow" because an ext4 file
+> (or any other regular file) cannot be mapped using THP. Nevertheless, it
+> does allow us to overwrite read-only huge pages. For example, the zero huge
+> page and sealed shmem files can be overwritten (since their mapping can be
+> populated using THP). Note that after the first write page-fault to the
+> zero page, it will be replaced with a new fresh (and zeroed) thp.
+>
+> Using this primitive, we successfully crashed several processes. A likely
+> consequence of overwriting the huge zero page is having improper initial
+> values inside large BSS sections. Common vulnerable pattern would be using
+> the zero value as an indicator that a global variable hasn't been
+> initialized yet.
+>
+> Potentially, privileged processes using the mentioned pattern are
+> exploitable.
+>
+>
+> ===== POC =====
+>
+> The POC overwrites the zero-page of the system.
+>
+> POC source on GitHub: https://github.com/bindecy/HugeDirtyCowPOC
+>
+>
+> ===== Affected Versions =====
+>
+> The POC was tested on Ubuntu 17.04 with kernel 4.10 and Fedora 27 with
+> kernel 4.13. Every kernel version with THP support and the Dirty COW patch
+> should be vulnerable (2.6.38 - 4.14).
+>
+> RHEL claimed by the vendor as not affected.
+>
+> Fixed on Nov 27, 2017:
+> https://github.com/torvalds/linux/commit/a8f97366452ed491d13cf1e44241bc0b5740b1f0
+>
+>
+> ===== Timeline =====
+>
+> 22.11.17 — Initial report to security@...nel.org and
+> linux-distros@...openwall.org
+>
+> 22.11.17 — CVE-2017–1000405 was assigned
+>
+> 27.11.17 — Patch was committed to mainline kernel
+>
+> 29.11.17 — Public announcement
+>
+>
+> ===== Credit =====
+>
+> Eylon Ben Yaakov and Daniel Shapiro from Bindecy
