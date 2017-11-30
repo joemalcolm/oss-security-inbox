@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1632" "Tuesday" "22" "March" "2016" "19:00:04" "-0400" "Daniel Micay" "danielmicay@gmail.com" "<1458687604.4129.2.camel@gmail.com>" "40" "Re: [oss-security] CVE-2015-1805 Linux kernel: pipe: iovec overrun leading to memory corruption" "^Date:" nil nil "3" "2016032223:00:04" "[oss-security] CVE-2015-1805 Linux kernel: pipe: iovec overrun leading to memory corruption" (number mark "        danielmicay@ Mar 22   40/1632  " thread-indent "\"Re: [oss-security] CVE-2015-1805 Linux kernel: pipe: iovec overrun leading to memory corruption\"\n") "<20160322205839.GA30835@openwall.com>" ("<20150606113057.GA23470@openwall.com>" "<20150609112639.GA20540@openwall.com>" "<20160322205839.GA30835@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["979" "Thursday" "30" "November" "2017" "17:15:43" "+0000" "Keith Wall" "kwall@apache.org" "<CAFEMS4vr8tXkkmRj+y6g0p3y3r9SqDL8Gf9+ouhbKjPAsbJ04w@mail.gmail.com>" "32" "[oss-security] [SECURITY] [CVE-2017-15701] Apache Qpid Broker-J Denial of Service Vulnerability" nil nil nil "11" "2017113017:15:43" "[oss-security] [SECURITY] [CVE-2017-15701] Apache Qpid Broker-J Denial of Service Vulnerability" (number mark "U       kwall@apache Nov 30   32/979   " thread-indent "\"[oss-security] [SECURITY] [CVE-2017-15701] Apache Qpid Broker-J Denial of Service Vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5649 invoked by uid 550); 22 Mar 2016 23:00:23 -0000
+Received: (qmail 27792 invoked by uid 550); 30 Nov 2017 17:17:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,83 +11,52 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5625 invoked from network); 22 Mar 2016 23:00:23 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:subject:from:to:date:in-reply-to:references:mime-version;
-        bh=lEMN6DqYNKNX699Vk6LWPPOZPl8D+w/7Sm/Mz88WEyk=;
-        b=DQCcCwtj4+nkUBpYI75QkzjTbn5qOFV0cwUsmt+EDPzhe08XQH2SEJQ7BAnAjGJo2B
-         ZY6AcEZgvPiXQXoCh89HTJXd1ohshpv9fHxuArWI9C3Xifh+Ki4PJ1RspBicO6ORyFup
-         2k2KGTZkoSz/gFXYDJXFAw6O1dyty4Cim4gw9d+pzdM7Kjphs2fFArXPReXr7KZeGudw
-         k0MhacseOfDxeqys3An2HLOXbtSvt8/A1NS0Bn5Nu8b3j1P8KnH5f/h3WMf+th0qd+PJ
-         waqtHNnyfmTb8JT3fDhKzxMduWWds93Z8tVxvYCG98uwDgXW3m+8gt8SdZeiNwUMOEVO
-         zstQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
-         :references:mime-version;
-        bh=lEMN6DqYNKNX699Vk6LWPPOZPl8D+w/7Sm/Mz88WEyk=;
-        b=lg/nwoSw1qU7sRTuuc+tPAU9MyWoZC+Twx7TJpLKRC/z4Ou5AtuDdVQdewl4RXePKo
-         dKY/ZywZQUXeWtQ6BEYMik4/eM1Fy/MNYxSbhhKDh8R0oXcbaJfvN46umMdWcusH6Nw0
-         BWcUtI8OLJHufJurMJ7qYfMBosPci7QSBI6HrO+LjyJOE+aWWGO9bB2UzxvKIpbqVnXf
-         anPakNW22jBQwSoiqcffDpmDHn1lP9tTY37jUNjoOULS0ToDSlLDdhlp7NirkQgEgvtG
-         Ha11F8E4sED0L6UEaRkG+puy9Xc1ux7dZAydVmWiJRnKV1UDqT8kyenlGjp2deo8sZNa
-         BfGg==
-X-Gm-Message-State: AD7BkJL8iVk1hs2N1WkUJPNswwFH66YP79Uc5Yxwsw+FUNJeNfcqxPt6/+posiAaAo9GeQ==
-X-Received: by 10.140.20.197 with SMTP id 63mr49913250qgj.18.1458687611500;
-        Tue, 22 Mar 2016 16:00:11 -0700 (PDT)
-Message-ID: <1458687604.4129.2.camel@gmail.com>
-In-Reply-To: <20160322205839.GA30835@openwall.com>
-References: <20150606113057.GA23470@openwall.com>
-	 <20150609112639.GA20540@openwall.com> <20160322205839.GA30835@openwall.com>
-Content-Type: multipart/signed; micalg="pgp-sha256";
-	protocol="application/pgp-signature"; boundary="=-QqM5dum27q6CZVrcyABQ"
-X-Mailer: Evolution 3.18.5.2 
-Mime-Version: 1.0
-Date: Tue, 22 Mar 2016 19:00:04 -0400
-From: Daniel Micay <danielmicay@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2015-1805 Linux kernel: pipe: iovec overrun
- leading to memory corruption
-To: oss-security@lists.openwall.com
-
---=-QqM5dum27q6CZVrcyABQ
+Received: (qmail 26381 invoked from network); 30 Nov 2017 17:15:59 -0000
+X-Gm-Message-State: AJaThX5E4fc3TeSICjI9+wXKoB/S1NMQbfAXjzvusV/SgvCC93L7Vx1f
+	pzlryCyBxA/vuzGKwP5rS9gUSMzte1wc0JHhnU4=
+X-Google-Smtp-Source: AGs4zMYqpyY0HXC2oz7qW6cQt3M765jUDhWOXalnS0j5g8jZa0+icsg9T76VNgDDEiPb2ecH67eRGveNjYv2ZtOG3xg=
+X-Received: by 10.223.180.69 with SMTP id v5mr2491610wrd.193.1512062144582;
+ Thu, 30 Nov 2017 09:15:44 -0800 (PST)
+MIME-Version: 1.0
+From: Keith Wall <kwall@apache.org>
+Date: Thu, 30 Nov 2017 17:15:43 +0000
+X-Gmail-Original-Message-ID: <CAFEMS4vr8tXkkmRj+y6g0p3y3r9SqDL8Gf9+ouhbKjPAsbJ04w@mail.gmail.com>
+Message-ID: <CAFEMS4vr8tXkkmRj+y6g0p3y3r9SqDL8Gf9+ouhbKjPAsbJ04w@mail.gmail.com>
+To: "users@qpid.apache.org" <users@qpid.apache.org>, "dev@qpid.apache.org" <dev@qpid.apache.org>, security@apache.org, 
+	oss-security@lists.openwall.com, announce@apache.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] [SECURITY] [CVE-2017-15701] Apache Qpid Broker-J Denial of Service Vulnerability
 
-> Apparently, this vulnerability is being used to root older Android
-> devices, and as a result it has just been fixed for older Android:
+CVE-2017-15701: Apache Qpid Broker-J denial of service vulnerability
 
-Most new Android devices are also vulnerable to it. The Nexus 6, 9, 5X
-and 6P use 3.10, while older devices like the Nexus 5 use 3.4. There
-isn't a Nexus device with 3.18, only the Pixel C and very few third
-party devices.
+Severity: Important
 
-Google's kernels aren't based on the upstream stable branches and they
-missed this fix. They've surely missed a lot more too.=
+Vendor: The Apache Software Foundation
 
---=-QqM5dum27q6CZVrcyABQ
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
+Versions Affected: 6.1.0, 6.1.1, 6.1.2, 6.1.3, and 6.1.4
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+Description:
 
-iQIcBAABCAAGBQJW8c50AAoJEPnnEuWa9fIqkLAP/it6aRGsaH718VWGtovGITKt
-uw4mYmTpbDjDOg3zryk50LCpxnYHpgVDL1oTIWc/3syz0zw/amsIwPPtVI2MFpoq
-ROPMY7+7nVIY+7fzYd8kLDEbKj+XQ3Sm0x0irby7rmP8cUD50JIhWEmaoSu5pP8C
-5WLCdXFj1CobuBXal5oD04erBTscdM1+wudxlkjODk6JLchAWYsPs8J0ol8rJ5JQ
-K/x8x4TBF0vF6KUndZTuXBS2V4ERxHBJxZdP3usXSRtNdMByLjzgvU3FlivGhegS
-cphUp5JM1QpFAQnUaMY6Xm5AYFmG/ugTV0XENz/xo1tm8DWRfXBHb61KNB0KF8lr
-wGQ8KdDrf86GKzU9p38UhPTNoCo5Io6X1LUkN8uZEFbaBRHzC2RMYXK7CqW1VHoy
-96UeVxBD7MK6df1a+ptjWEk0dOAibyMiAQIFOmSbAccVGw59/tgTqAxsPjW+LvAn
-2AVHcddFSSbEW5zSHW+oidDNGZMqVz5//ywvtnfJcCtCFmCxgEj5r0ftg52BuXZu
-/Cj1A08W115tOUvR/zSCk0D7O3nCotDiyFrshMsQyqkc6o6HfizOjYbMOOVpSkeg
-/Fxc12BRYEBNBY65n+PJKSNhbJb/Ha4OcOuMMPBu+H2ZPS8Rf0+PDfq7xzlACLfg
-/exnw+zGPKRS/NjsxuPb
-=UOwn
------END PGP SIGNATURE-----
+The broker does not properly enforce a maximum frame size in AMQP 1.0
+frames.  A remote unauthenticated attacker could exploit this to cause
+the broker to exhaust all available memory and eventually terminate.
+Older AMQP protocols are not affected.
 
---=-QqM5dum27q6CZVrcyABQ--
+Resolution:
 
+Users who have AMQP 1.0 support enabled (default) should upgrade their
+Qpid Broker-J to version 6.1.5 or later.
+
+Mitigation:
+
+If upgrading the broker is not possible, users can choose to disable
+AMQP 1.0 by either setting the system property
+"qpid.plugin.disabled:protocolenginecreator.AMQP_1_0" to "true",
+excluding "AMQP_1_0" from the supported protocol list on all AMQP
+ports, or by removing the AMQP 1.0 related jar files from the Java
+classpath.
+
+References:
+
+https://issues.apache.org/jira/browse/QPID-7947
