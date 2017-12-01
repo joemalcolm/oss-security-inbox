@@ -1,31 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/04/3
-Message-ID: <20170604120010.GA4034@inutil.org>
-Date: Sun, 4 Jun 2017 14:00:11 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Information on recent sqlite3 issues?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/01/1
+Message-ID: <CAMopvkMSV-qpfw9nEY7GNvdVN4PeZxH_kbfJTxZ78fd=cA7Bhg@mail.gmail.com>
+Date: Fri, 1 Dec 2017 09:06:55 +0100
+From: Lukasz Lenart <lukaszlenart@...che.org>
+To: Struts Users Mailing List <user@...uts.apache.org>
+Cc: "announcements@...uts.apache.org" <announcements@...uts.apache.org>,  Struts Developers List <dev@...uts.apache.org>, announce@...che.org,  "security@...uts.apache.org" <security@...uts.apache.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com, David Dillard <David.Dillard@...itas.com>,  Chenhuijun <chenhuijun@...wei.com>
+Subject: [ANN] Apache Struts 2.5.14.1 GA with Security Fixes Release
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jun 01, 2017 at 03:42:13PM +0200, Moritz Muehlenhoff wrote:
-> On Thu, Jun 01, 2017 at 07:14:46AM -0600, Kurt Seifried wrote:
-> > I will bring this up at the next cve board meeting (2 weeks from now).
-> 
-> Thanks! That also goes beyond sqlite, BTW. There's also a number of
-> CVE IDs issued by Apple for libxml/libxslt which are in the same 
-> position.
-> 
-> libxml:
-> CVE-2016-4619 CVE-2016-4616 CVE-2016-4615 CVE-2016-4614 CVE-2015-7116
-> CVE-2015-7115
-> 
-> libxslt:
-> CVE-2017-2477 CVE-2016-4612 CVE-2016-4610 CVE-2016-4609 CVE-2016-4608
-> CVE-2016-4607
+The Apache Struts group is pleased to announce that Struts 2.5.14.1 is
+available as a “General Availability” release. The GA designation is
+our highest quality grade.
 
-And also for libarchive, BTW:
-CVE-2017-2390
-CVE-2016-4736
+Apache Struts 2 is an elegant, extensible framework for creating
+enterprise-ready Java web applications. The framework is designed to
+streamline the full development cycle, from building, to deploying, to
+maintaining applications over time.
 
-Cheers,
-        Moritz
+This release contains fixes for the following potential security
+vulnerabilities:
+- S2-054 A crafted JSON request can be used to perform a DoS attack
+when using the Struts REST plugin
+  https://cwiki.apache.org/confluence/display/WW/S2-054
+- S2-055 Vulnerability in the Jackson JSON library
+  https://cwiki.apache.org/confluence/display/WW/S2-055
+
+Please read the Version Notes to find more details about performed bug
+fixes and improvements.
+https://cwiki.apache.org/confluence/display/WW/Version+Notes+2.5.14.1
+
+All developers are strongly advised to perform this action.
+
+The 2.5.x series of the Apache Struts framework has a minimum
+requirement of the following specification versions: Servlet API 2.4,
+JSP API 2.0, and Java 7.
+
+Should any issues arise with your use of any version of the Struts
+framework, please post your comments to the user list, and, if
+appropriate, file a tracking ticket.
+
+You can download this version from our download page.
+http://struts.apache.org/download.cgi#struts-ga
+
+
+Kind regards
+-- 
+Łukasz
++ 48 606 323 122 http://www.lenart.org.pl/
