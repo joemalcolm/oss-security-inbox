@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["11635" "Thursday" "11" "August" "2016" "10:52:10" "-0700" "Aaron Patterson" "tenderlove@ruby-lang.org" "<20160811175209.GA39068@TC.local>" "334" "[oss-security] [CVE-2016-6316] Possible XSS Vulnerability in Action View" nil nil nil "8" "2016081117:52:10" "[oss-security] [CVE-2016-6316] Possible XSS Vulnerability in Action View" (number mark "U       tenderlove@r Aug 11  334/11635 " thread-indent "\"[oss-security] [CVE-2016-6316] Possible XSS Vulnerability in Action View\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3076" "Friday" "1" "December" "2017" "09:57:19" "-0500" "Scott Court" "z5t1@z5t1.com" "<73d526b8-5895-0f1b-e15b-ad683f3f2574@Z5T1.com>" "70" "Re: [oss-security] Re: Security risk of server side text editing ..." "^Cc:" nil nil "12" "2017120114:57:19" "[oss-security] Re: Security risk of server side text editing ..." (number mark "        z5t1@z5t1.co Dec  1   70/3076  " thread-indent "\"Re: [oss-security] Re: Security risk of server side text editing ...\"\n") "<201711281319.vASDJxWP010037@masaka.moolenaar.net>" ("<201711281319.vASDJxWP010037@masaka.moolenaar.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 17611 invoked by uid 550); 11 Aug 2016 17:52:26 -0000
+Received: (qmail 3091 invoked by uid 550); 1 Dec 2017 15:01:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,377 +11,119 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17593 invoked from network); 11 Aug 2016 17:52:25 -0000
+Received: (qmail 32335 invoked from network); 1 Dec 2017 14:57:14 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=tenderlovemaking-com.20150623.gappssmtp.com; s=20150623;
-        h=sender:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=lU85mspv+Yrxnhk369ohpEzgFQMDmVs68jadd7u5cCM=;
-        b=P7aCVxhH4WFl4PbFV5K03n5ZCwM51AHQc2P29Bp7NWL5l5mHWixpjDWeITRDLg+4oc
-         492BHbEZtC7Wb95q++IKWKeWzLrHjudoxRM6GYmKnG2br2acZKLT+0O2wXWA/rXlHGg6
-         orGsRUE2PYm+bJkfj9ayxdcokSRDSDFpU4LSNrcK/uUAsNWpoGy75K0oGNYOTifQFAtd
-         LFHNrJhUgARQjIV+kqEtuACKLud7Xx+WzuKCCFjAlj8Mny/1MZP84xVelFAnz3KwK46H
-         eWTGMvSxCtYmZOBJxyj1R+Jk1i/EiItbAEI9V6ozQIzVqtozKsmlE8Y67VnP5xb0MvvP
-         Ttdg==
+        d=z5t1-com.20150623.gappssmtp.com; s=20150623;
+        h=from:subject:to:cc:references:message-id:date:user-agent
+         :mime-version:in-reply-to;
+        bh=+EO7drX3bldwSH5KnNIIR+SP/LBrRvCUHMiAzL93yUI=;
+        b=wnAbGK+gBaKqJ326egee9cWMXb5pDnqyIr/ja8nQ7TZiXgCjgiEVzGQT9qpRaQvLTE
+         yKg4i9pO6E5KfJ/RwFNQ7LhCDsoD0VVMYkEiBeI0VLj96XQ9/T+f2M3gQIjQLh2321Do
+         4BzFjQ8sPl1afpwd+82+LvwkZD3G8fgaVkHvyFCA0V01thjaFaF71NYUE7lnJtbVEwim
+         p+7dd9vAZddfbYBz8vm5yVczT2lLeWluDiqS5DoLyY2iW2G/6OJycdo9DcTQtgOk+xs8
+         KnWAaDYN52JtagI9cNwNF/GK3RN9z9vdyITksxRygtG4Jw6S70IUArnTaA30LrHOCsWM
+         MvQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:date:from:to:subject:message-id
-         :mime-version:content-disposition:user-agent;
-        bh=lU85mspv+Yrxnhk369ohpEzgFQMDmVs68jadd7u5cCM=;
-        b=cb1ksDR1v9NmVfZmk9Q5AHm4k2wFnuTPm6ny4UihWYgsIYvTespEFhwHhMEpvgaedI
-         0G+yBL7paeaPPVsWkn62E4iGm8szL/hy34Z6pKHiKAlKgD7EhLFO2mHeyLInTw24fYBT
-         Aex/rYkoYs7DboWxOeXep1EBAN763m5qIcqkqg8I4Uk5+Y8HXKIfuvLsc6ROsBJLrFEY
-         DsiHA8nFdk4JB/D2AKY4kPr6ZIOjFs5JZE5WFUJ4iCh8BTOoJZ/6nGMGZ7PktdmOPTnq
-         HM/6C3IEbcdOflhu14IA3WOHoOTUbGFXbwf+rXQ4lwIaS7V+2xhdgw7M4y+jJqoaSJTi
-         3HvA==
-X-Gm-Message-State: AEkoouvt5jl88GOconUtaOKT61vdmwyc08ZSJzcERpnvYstozjQX8LqsfljLaBV/XYtsZA==
-X-Received: by 10.98.92.65 with SMTP id q62mr19383535pfb.70.1470937933384;
-        Thu, 11 Aug 2016 10:52:13 -0700 (PDT)
-Sender: Aaron Patterson <aaron@tenderlovemaking.com>
-Date: Thu, 11 Aug 2016 10:52:10 -0700
-From: Aaron Patterson <tenderlove@ruby-lang.org>
-To: security@suse.de, rubyonrails-security@googlegroups.com,
-	oss-security@lists.openwall.com, ruby-security-ann@googlegroups.com
-Message-ID: <20160811175209.GA39068@TC.local>
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:subject:to:cc:references:message-id:date
+         :user-agent:mime-version:in-reply-to;
+        bh=+EO7drX3bldwSH5KnNIIR+SP/LBrRvCUHMiAzL93yUI=;
+        b=CHfdtiHrTQ0RxviJSgVfEqUG/K6QP0QQpisUDAsRehyxYNiTp2jkM65lym4yjr6hbG
+         HOrSXI6QO6r5s8fltGqyZ5JpiY8WzDsE/CvB+AWy+EKa5ewWKKcq9eHVy5Isr4q9S/mT
+         SefFtZmy0wEaAv+5owvWNo1GZ75iPFQHNn6q+FscCFsZPFD2zRwg7zcQme0G33aU1XdQ
+         FEhEl6r0F3Wq3ztmcnsKKJUNv6uVxY/6rhjlB+4j9kpRmOMZBlMGIKkw+UeLjNvcMKH9
+         Yz/CoIPZhJnv+S2sMvJc0u7wL9TkAXZ4/gmPBRZGP5rCN7HgsK+2Ym7Iws4XhvN8nnDc
+         HaCQ==
+X-Gm-Message-State: AKGB3mK7WPKyRg4bCGwLGPUsNvD9pHV1fs85+wJH+sUvjrzxUSM8TVgn
+	/enCsiald5OnIywVDhL9RiZBHg==
+X-Google-Smtp-Source: AGs4zMa2CEISymo9iPmRWmIn8c28wG/xvkZPQvV3Nb0Pl6+XMI/76e9c2AdISjDDbN1JT8gUTSb1yQ==
+X-Received: by 10.237.60.46 with SMTP id t43mr8903610qte.294.1512140223261;
+        Fri, 01 Dec 2017 06:57:03 -0800 (PST)
+X-Google-Original-From: Scott Court <Z5T1@Z5T1.com>
+References: <201711281319.vASDJxWP010037@masaka.moolenaar.net>
+Message-ID: <73d526b8-5895-0f1b-e15b-ad683f3f2574@Z5T1.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="DBIVS5p969aUjpLe"
-Content-Disposition: inline
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Subject: [oss-security] [CVE-2016-6316] Possible XSS Vulnerability in Action View
+In-Reply-To: <201711281319.vASDJxWP010037@masaka.moolenaar.net>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="sT5BHr2kS8tigqT1t3tBfWn2uoWTOAahq"
+Cc: Kurt Seifried <kseifrie@redhat.com>, oss-security@lists.openwall.com,
+ vim_dev@googlegroups.com
+Date: Fri, 1 Dec 2017 09:57:19 -0500
+From: Scott Court <z5t1@z5t1.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: Security risk of server side text editing ...
+To: Bram Moolenaar <Bram@moolenaar.net>
 
---DBIVS5p969aUjpLe
-Content-Type: multipart/mixed; boundary="uAKRQypu60I7Lcqm"
-Content-Disposition: inline
+--sT5BHr2kS8tigqT1t3tBfWn2uoWTOAahq
+Content-Type: multipart/mixed; boundary="OC0BRiFEJ0ePsvHKVvsCX4o7IL2cxs33b";
+ protected-headers="v1"
+From: Scott Court <Z5T1@Z5T1.com>
+To: Bram Moolenaar <Bram@moolenaar.net>
+Cc: Kurt Seifried <kseifrie@redhat.com>, oss-security@lists.openwall.com,
+ vim_dev@googlegroups.com
+Message-ID: <73d526b8-5895-0f1b-e15b-ad683f3f2574@Z5T1.com>
+Subject: Re: [oss-security] Re: Security risk of server side text editing ...
+References: <201711281319.vASDJxWP010037@masaka.moolenaar.net>
+In-Reply-To: <201711281319.vASDJxWP010037@masaka.moolenaar.net>
 
-
---uAKRQypu60I7Lcqm
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--OC0BRiFEJ0ePsvHKVvsCX4o7IL2cxs33b
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
 
-# Possible XSS Vulnerability in Action View
-
-There is a possible XSS vulnerability in Action View.  Text declared as "HT=
-ML
-safe" will not have quotes escaped when used as attribute values in tag
-helpers.  This vulnerability has been assigned the CVE identifier
-CVE-2016-6316.
-
-Versions Affected:  >=3D 3.0.0.
-Not affected:       < 3.0.0
-Fixed Versions:     5.0.0.1, 4.2.7.1, 3.2.22.3
-
-Impact
-------
-Text declared as "HTML safe" when passed as an attribute value to a tag hel=
-per
-will not have quotes escaped which can lead to an XSS attack.  Impacted code
-looks something like this:
-
-```
-content_tag(:div, "hi", title: user_input.html_safe)
-```
-
-Some helpers like the `sanitize` helper will automatically mark strings as
-"HTML safe", so impacted code could also look something like this:
-
-```
-content_tag(:div, "hi", title: sanitize(user_input))
-```
-
-All users running an affected release should either upgrade or use one of t=
-he
-workarounds immediately.
-
-Releases
---------
-The FIXED releases are available at the normal locations.
-
-Workarounds
------------
-You can work around this issue by either *not* marking arbitrary user input=
- as
-safe, or by manually escaping quotes like this:
-
-```
-def escape_quotes(value)
-  value.gsub(/"/, '&quot;'.freeze)
-end
-
-content_tag(:div, "hi", title: escape_quotes(sanitize(user_input)))
-```
-
-Patches
--------
-To aid users who aren't able to upgrade immediately we have provided patche=
-s for
-the two supported release series. They are in git-am format and consist of a
-single changeset.
-
-* 3-2-attribute-xss.patch - Patch for 3.2 series
-* 4-2-attribute-xss.patch - Patch for 4.2 series
-* 5-0-attribute-xss.patch - Patch for 5.0 series
-
-Please note that only the 5.0.x and 4.2.x series are supported at present. =
-Users
-of earlier unsupported releases are advised to upgrade as soon as possible =
-as we
-cannot guarantee the continued availability of security fixes for unsupport=
-ed
-releases.
-
-Credits
--------
-
-Thanks to Andrew Carpenter of Critical Juncture for reporting this issue and
-sending a patch to fix it!
-
---=20
-Aaron Patterson
-http://tenderlovemaking.com/
-
---uAKRQypu60I7Lcqm
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename="3-2-attribute-xss.patch"
-Content-Transfer-Encoding: quoted-printable
-
-=46rom cbdb7d367c4f15ecb85c308a0d78f61d629a74c1 Mon Sep 17 00:00:00 2001
-From: Andrew Carpenter <andrew@criticaljuncture.org>
-Date: Thu, 28 Jul 2016 16:12:21 -0700
-Subject: [PATCH] ensure tag/content_tag escapes " in attribute vals
-
-Many helpers mark content as HTML-safe without escaping double quotes -- in=
-cluding `sanitize`. Regardless of whether or not the attribute values are H=
-TML-escaped, we want to be sure they don't include double quotes, as that c=
-an cause XSS issues. For example: `content_tag(:div, "foo", title: sanitize=
-('" onmouseover=3D"alert(1);//'))`
-
-CVE-2016-6316
----
- actionpack/lib/action_view/helpers/tag_helper.rb | 15 +++++++++++----
- actionpack/test/template/tag_helper_test.rb      | 10 ++++++++++
- 2 files changed, 21 insertions(+), 4 deletions(-)
-
-diff --git a/actionpack/lib/action_view/helpers/tag_helper.rb b/actionpack/=
-lib/action_view/helpers/tag_helper.rb
-index 7f58a27..34741b8 100644
---- a/actionpack/lib/action_view/helpers/tag_helper.rb
-+++ b/actionpack/lib/action_view/helpers/tag_helper.rb
-@@ -141,20 +141,27 @@ module ActionView
-                   unless v.is_a?(String) || v.is_a?(Symbol) || v.is_a?(Big=
-Decimal)
-                     v =3D v.to_json
-                   end
--                  v =3D ERB::Util.html_escape(v) if escape
--                  attrs << %(data-#{k.to_s.dasherize}=3D"#{v}")
-+                  attrs << tag_option("data-#{k.to_s.dasherize}", v, escap=
-e)
-                 end
-               elsif BOOLEAN_ATTRIBUTES.include?(key)
-                 attrs << %(#{key}=3D"#{key}") if value
-               elsif !value.nil?
-                 final_value =3D value.is_a?(Array) ? value.join(" ") : val=
-ue
--                final_value =3D ERB::Util.html_escape(final_value) if esca=
-pe
--                attrs << %(#{key}=3D"#{final_value}")
-+                attrs << tag_option(key, value, escape)
-               end
-             end
-             " #{attrs.sort * ' '}".html_safe unless attrs.empty?
-           end
-         end
-+
-+        def tag_option(key, value, escape)
-+          if value.is_a?(Array)
-+            value =3D escape ? safe_join(value, " ") : value.join(" ")
-+          else
-+            value =3D escape ? ERB::Util.html_escape(value) : value
-+          end
-+          %(#{key}=3D"#{value.gsub(/"/, '&quot;'.freeze)}")
-+        end
-     end
-   end
- end
-diff --git a/actionpack/test/template/tag_helper_test.rb b/actionpack/test/=
-template/tag_helper_test.rb
-index e362955..9c3d636 100644
---- a/actionpack/test/template/tag_helper_test.rb
-+++ b/actionpack/test/template/tag_helper_test.rb
-@@ -101,6 +101,16 @@ class TagHelperTest < ActionView::TestCase
-     end
-   end
-=20
-+  def test_tag_does_not_honor_html_safe_double_quotes_as_attributes
-+    assert_dom_equal '<p title=3D"&quot;">content</p>',
-+      content_tag('p', "content", title: '"'.html_safe)
-+  end
-+
-+  def test_data_tag_does_not_honor_html_safe_double_quotes_as_attributes
-+    assert_dom_equal '<p data-title=3D"&quot;">content</p>',
-+      content_tag('p', "content", data: { title: '"'.html_safe })
-+  end
-+
-   def test_skip_invalid_escaped_attributes
-     ['&1;', '&#1dfa3;', '& #123;'].each do |escaped|
-       assert_equal %(<a href=3D"#{escaped.gsub(/&/, '&amp;')}" />), tag('a=
-', :href =3D> escaped)
---=20
-2.8.1
+This has been assigned CVE-2017-17087
+>>     2. Vim .swp file group (Doesn't have a CVE ID)
+>>
+>> This vulnerability was discovered by me. When Vim creates a .swp file,
+>> the .swp file is created with the owner and group set to the editor and
+>> editor's primary group respectively. The .swp file is the set to the
+>> same permissions as the original file (i.e. chmod 640). This creates a
+>> security vulnerability when the editor's primary group is not the same
+>> as the original file's group.
+>>
+>> For example, say the root user's primary group is "users", which every
+>> user is a member of. If root goes to edit /etc/shadow, the
+>> /etc/.shadow.swp file is created with permissions 640 and user:group set
+>> to root:users. The original /etc/shadow file had user:group set to
+>> root:shadow though; this now exposes the /etc/shadow file (which mind
+>> you contains hashes of every user's password) to every user on the syste=
+m.
+>>
+>> Originally, I thought this was an extension of CVE-2017-1000382 so I
+>> didn't bother trying to get a CVE ID for it; however, upon looking at it
+>> for a second time, it seems that this is indeed a different
+>> vulnerability. It is possible to patch this vulnerability without
+>> patching CVE-2017-1000382.
+>
 
 
---uAKRQypu60I7Lcqm
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename="4-2-attribute-xss.patch"
-Content-Transfer-Encoding: quoted-printable
 
-=46rom e4abbc8636e1300d14b1fd7e3f05e4e25bc8289e Mon Sep 17 00:00:00 2001
-From: Andrew Carpenter <andrew@criticaljuncture.org>
-Date: Thu, 28 Jul 2016 16:12:21 -0700
-Subject: [PATCH 1/2] ensure tag/content_tag escapes " in attribute vals
+--OC0BRiFEJ0ePsvHKVvsCX4o7IL2cxs33b--
 
-Many helpers mark content as HTML-safe without escaping double quotes -- in=
-cluding `sanitize`. Regardless of whether or not the attribute values are H=
-TML-escaped, we want to be sure they don't include double quotes, as that c=
-an cause XSS issues. For example: `content_tag(:div, "foo", title: sanitize=
-('" onmouseover=3D"alert(1);//'))`
-
-CVE-2016-6316
----
- actionview/lib/action_view/helpers/tag_helper.rb |  2 +-
- actionview/test/template/tag_helper_test.rb      | 10 ++++++++++
- 2 files changed, 11 insertions(+), 1 deletion(-)
-
-diff --git a/actionview/lib/action_view/helpers/tag_helper.rb b/actionview/=
-lib/action_view/helpers/tag_helper.rb
-index b203857..f09595d 100644
---- a/actionview/lib/action_view/helpers/tag_helper.rb
-+++ b/actionview/lib/action_view/helpers/tag_helper.rb
-@@ -181,7 +181,7 @@ module ActionView
-           else
-             value =3D escape ? ERB::Util.unwrapped_html_escape(value) : va=
-lue
-           end
--          %(#{key}=3D"#{value}")
-+          %(#{key}=3D"#{value.gsub(/"/, '&quot;'.freeze)}")
-         end
-     end
-   end
-diff --git a/actionview/test/template/tag_helper_test.rb b/actionview/test/=
-template/tag_helper_test.rb
-index ce89d57..8332dd0 100644
---- a/actionview/test/template/tag_helper_test.rb
-+++ b/actionview/test/template/tag_helper_test.rb
-@@ -140,6 +140,16 @@ class TagHelperTest < ActionView::TestCase
-     assert_equal '<p class=3D"song> play&gt;" />', str
-   end
-=20
-+  def test_tag_does_not_honor_html_safe_double_quotes_as_attributes
-+    assert_dom_equal '<p title=3D"&quot;">content</p>',
-+      content_tag('p', "content", title: '"'.html_safe)
-+  end
-+
-+  def test_data_tag_does_not_honor_html_safe_double_quotes_as_attributes
-+    assert_dom_equal '<p data-title=3D"&quot;">content</p>',
-+      content_tag('p', "content", data: { title: '"'.html_safe })
-+  end
-+
-   def test_skip_invalid_escaped_attributes
-     ['&1;', '&#1dfa3;', '& #123;'].each do |escaped|
-       assert_equal %(<a href=3D"#{escaped.gsub(/&/, '&amp;')}" />), tag('a=
-', :href =3D> escaped)
---=20
-2.8.1
-
-
---uAKRQypu60I7Lcqm
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename="5-0-attribute-xss.patch"
-Content-Transfer-Encoding: quoted-printable
-
-=46rom 0a3487c7a06a60569817266ffdd39ef0409839d4 Mon Sep 17 00:00:00 2001
-From: Andrew Carpenter <andrew@criticaljuncture.org>
-Date: Thu, 28 Jul 2016 16:12:21 -0700
-Subject: [PATCH] ensure tag/content_tag escapes " in attribute vals
-
-Many helpers mark content as HTML-safe without escaping double quotes -- in=
-cluding `sanitize`. Regardless of whether or not the attribute values are H=
-TML-escaped, we want to be sure they don't include double quotes, as that c=
-an cause XSS issues. For example: `content_tag(:div, "foo", title: sanitize=
-('" onmouseover=3D"alert(1);//'))`
-
-CVE-2016-6316
----
- actionview/lib/action_view/helpers/tag_helper.rb |  2 +-
- actionview/test/template/tag_helper_test.rb      | 12 +++++++++++-
- 2 files changed, 12 insertions(+), 2 deletions(-)
-
-diff --git a/actionview/lib/action_view/helpers/tag_helper.rb b/actionview/=
-lib/action_view/helpers/tag_helper.rb
-index 42e7358..ac26c29 100644
---- a/actionview/lib/action_view/helpers/tag_helper.rb
-+++ b/actionview/lib/action_view/helpers/tag_helper.rb
-@@ -189,7 +189,7 @@ def tag_option(key, value, escape)
-           else
-             value =3D escape ? ERB::Util.unwrapped_html_escape(value) : va=
-lue
-           end
--          %(#{key}=3D"#{value}")
-+          %(#{key}=3D"#{value.gsub(/"/, '&quot;'.freeze)}")
-         end
-     end
-   end
-diff --git a/actionview/test/template/tag_helper_test.rb b/actionview/test/=
-template/tag_helper_test.rb
-index f3956a3..fe5ec03 100644
---- a/actionview/test/template/tag_helper_test.rb
-+++ b/actionview/test/template/tag_helper_test.rb
-@@ -150,6 +150,16 @@ def test_tag_honors_html_safe_with_escaped_array_class
-     assert_equal '<p class=3D"song> play&gt;" />', str
-   end
-=20
-+  def test_tag_does_not_honor_html_safe_double_quotes_as_attributes
-+    assert_dom_equal '<p title=3D"&quot;">content</p>',
-+      content_tag('p', "content", title: '"'.html_safe)
-+  end
-+
-+  def test_data_tag_does_not_honor_html_safe_double_quotes_as_attributes
-+    assert_dom_equal '<p data-title=3D"&quot;">content</p>',
-+      content_tag('p', "content", data: { title: '"'.html_safe })
-+  end
-+
-   def test_skip_invalid_escaped_attributes
-     ['&1;', '&#1dfa3;', '& #123;'].each do |escaped|
-       assert_equal %(<a href=3D"#{escaped.gsub(/&/, '&amp;')}" />), tag('a=
-', :href =3D> escaped)
-@@ -177,6 +187,6 @@ def test_aria_attributes
-   def test_link_to_data_nil_equal
-     div_type1 =3D content_tag(:div, 'test', { 'data-tooltip' =3D> nil })
-     div_type2 =3D content_tag(:div, 'test', { data: {tooltip: nil} })
--    assert_dom_equal div_type1, div_type2=20
-+    assert_dom_equal div_type1, div_type2
-   end
- end
---=20
-2.8.1
-
-
---uAKRQypu60I7Lcqm--
-
---DBIVS5p969aUjpLe
-Content-Type: application/pgp-signature
+--sT5BHr2kS8tigqT1t3tBfWn2uoWTOAahq
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-iQEcBAEBAgAGBQJXrLtJAAoJEJUxcLy0/6/G64gH/3j3AybU6Yh3zG5ptvlYoYXt
-YHMs6TZXPIRwRih9g9pHiM5dltP4wbbFHvh0r8Yo8QnaqMxFwaIzkONZ+KA7fxVi
-CJK4Dp7it6HykjtA6/uBfo6meLkJkV8xBAvaQtSMhl0NKN+6CASfg1RNThIBXjlj
-tuAUKxoS6g5H0UwN87jF65ZQP9050HWC1qzQvxjzqSbxRchpMAH83MBXGRGhBwPV
-6KMpX+yzYiZHhnvA2IxE+ZTJdZvb+yNwGXILpSmPpV+V2yYpoHWCOrAM8Fez7tls
-qpbLJ6s1D90gLtmox5wjCMzvxucoS0oSxAdFVMumRlN368l4ZFp48G61NqQ70vg=
-=jbz2
+iQIcBAEBCAAGBQJaIW3SAAoJEI1dl2DAZNZc8IIP/iUWdPfbK6i+sVrYVZFDuFsC
+TZkOo60hsdIULDkoPeagbUc1WAFmb1PLveoATaxLvTA/Cm01aZKVAvHdaMKLWcRA
+dmAYKdA5Z4OTNkgkdBsTObMAtHT4vZoFOxqs8xvnG1zSG6whxxjDr1f5mP1OStWG
+9WLJXwykqKyXoXz/6JCLU9PTpMxAKmJ6Wm3dgs22IZmvCP5JTnmFyxI/SXl6KTkJ
+oeIoNV+1CP44QBgdn5VhZSewXvmh8LDYIiltiZ7gqUpEU/3bwmrxNlPrBYrXDEIc
+VV1mgDd7qnK2QrFIoMJ0RRuFC1xpmpNGrXes64A4Z5WjuTRfqOmuVOz5fm/Jx2YO
+OsVz4Tvl6ajYpVyf7CS4nMZhg/VDxXxm+fDd91GEH67C5j55Xm6vDZ6KWnDeqCZ3
+ZlAe2rOiUjQXY49DPvg1K//SjZbMGIgOMP3lH/gdM0x7+IlYRu5+dzIfg4pKOl5F
+Na8SsDcMIjdpDPSYnghovCLpvsA6Fh8IUyIqnUPw35JeD5z18aSkxJ6kbQFl7Obd
+0Ch4N2hBMLD/Eguvdy6Me06aTCnUmEiTRHEhpM1XBzgBfqA/WDErdgtQ1li+2B+H
+iGAAe1Vbq1+fPWK3qKPpMYJgho9Hs55oNhEA1gRAvf/VNGBcGofgeGtIOMklIr8v
+SB7ZNn94oss/zlZ/x4PT
+=PEH5
 -----END PGP SIGNATURE-----
 
---DBIVS5p969aUjpLe--
+--sT5BHr2kS8tigqT1t3tBfWn2uoWTOAahq--
