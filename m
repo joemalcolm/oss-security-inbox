@@ -1,60 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/07/6
-Message-ID: <CAGDGa53bNmj6RL5k3As_bKh+mc2tkEi+B4GhfDzJEUZbGQYOEA@mail.gmail.com>
-Date: Fri, 7 Apr 2017 19:49:58 -0300
-From: Oliveira Lima <oliveiralimajr@...il.com>
-To: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Request CVE ID for information disclosure present in ForgeRock OpenIDM 4.0.0 and 4.5.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/01/2
+Message-ID: <73d526b8-5895-0f1b-e15b-ad683f3f2574@Z5T1.com>
+Date: Fri, 1 Dec 2017 09:57:19 -0500
+From: Scott Court <z5t1@...1.com>
+To: Bram Moolenaar <Bram@...lenaar.net>
+Cc: Kurt Seifried <kseifrie@...hat.com>, oss-security@...ts.openwall.com, vim_dev@...glegroups.com
+Subject: Re: Re: Security risk of server side text editing ...
 Content-Type: text/plain; charset=utf-8
 
-Request CVE ID for information disclosure present in ForgeRock OpenIDM
-4.0.0 and 4.5.0
+This has been assigned CVE-2017-17087
+>>     2. Vim .swp file group (Doesn't have a CVE ID)
+>>
+>> This vulnerability was discovered by me. When Vim creates a .swp file,
+>> the .swp file is created with the owner and group set to the editor and
+>> editor's primary group respectively. The .swp file is the set to the
+>> same permissions as the original file (i.e. chmod 640). This creates a
+>> security vulnerability when the editor's primary group is not the same
+>> as the original file's group.
+>>
+>> For example, say the root user's primary group is "users", which every
+>> user is a member of. If root goes to edit /etc/shadow, the
+>> /etc/.shadow.swp file is created with permissions 640 and user:group set
+>> to root:users. The original /etc/shadow file had user:group set to
+>> root:shadow though; this now exposes the /etc/shadow file (which mind
+>> you contains hashes of every user's password) to every user on the system.
+>>
+>> Originally, I thought this was an extension of CVE-2017-1000382 so I
+>> didn't bother trying to get a CVE ID for it; however, upon looking at it
+>> for a second time, it seems that this is indeed a different
+>> vulnerability. It is possible to patch this vulnerability without
+>> patching CVE-2017-1000382.
+>
 
-Description
-***********************
-
-The OpenIDM info endpoint may leak sensitive information under certain
-circumstances.
-Looking closely I noticed that amid the requests for access to solution idm
-several requests on behalf of a user: "anonymous", editing these requests I
-got a return code 200, containing information from the internal server,
-such as addresses Ips, thus characterizing an information disclosure
-vulnerability.
 
 
-Proof of Concept URL
-***************************
 
-*http://www.rootlabs.com.br/information-disclosure-forgerock-openidm-4-0-0-and-4-5-0/
-<http://www.rootlabs.com.br/information-disclosure-forgerock-openidm-4-0-0-and-4-5-0/>*
-
-Report Timeline
-************************
-10-Jan-2017- Reported
-11-Jan-2017- Vendor Response
-28 -March-2017- Vendor Fixed
-07-April-2017- Public disclosed
-
-Vendo Reference
-*****************
-*https://backstage.forgerock.com/knowledge/kb/article/a92936505
-<https://backstage.forgerock.com/knowledge/kb/article/a92936505>*
-<https://br.wordpress.org/plugins/simple-photo-gallery/changelog/>
-References
-*****************
-
-<https://br.wordpress.org/plugins/simple-photo-gallery/changelog/>
-https://www.owasp.org/index.php/Information_Leak_(information_disclosure)
-<http://www.rootlabs.com.br/xss-simple-photo-gallery/>
-*https://backstage.forgerock.com/knowledge/kb/article/a92936505
-<https://backstage.forgerock.com/knowledge/kb/article/a92936505>*
-
-*http://www.rootlabs.com.br/information-disclosure-forgerock-openidm-4-0-0-and-4-5-0/
-<http://www.rootlabs.com.br/information-disclosure-forgerock-openidm-4-0-0-and-4-5-0/>*
-
--- 
-Oliveira Lima Jr
-roothc.com.br
-Linkedin <http://br.linkedin.com/pub/oliveira-lima-junior/2b/48/285/>
-@oliveiralimajr <https://twitter.com/oliveiralimajr>
-
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
