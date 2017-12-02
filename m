@@ -1,4 +1,9 @@
-Received: (qmail 5855 invoked by uid 550); 29 Dec 2022 09:50:40 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["398" "Saturday" "2" "December" "2017" "08:28:38" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20171202072838.GA9031@eldamar.local>" "15" "Re: [oss-security] libtiff: Heap-based buffer overflow bug in pal2rgb(pal2rgb.c)" nil nil nil "12" "2017120207:28:38" "[oss-security] libtiff: Heap-based buffer overflow bug in pal2rgb(pal2rgb.c)" (number mark "U       carnil@debia Dec  2   15/398   " thread-indent "\"Re: [oss-security] libtiff: Heap-based buffer overflow bug in pal2rgb(pal2rgb.c)\"\n") "<EC646F2B-8F97-4B77-AE45-9462445D1B6F@gmail.com>" ("<EC646F2B-8F97-4B77-AE45-9462445D1B6F@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 4075 invoked by uid 550); 2 Dec 2017 07:28:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,68 +12,63 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5834 invoked from network); 29 Dec 2022 09:50:40 -0000
+Received: (qmail 4057 invoked from network); 2 Dec 2017 07:28:54 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=6tSCkq+l40cOoO02PEYgzjWeeRXVQNjaHl23GfMqjps=;
-        b=j8Uk50xqQU04QsZXhlXiEWWD670IGmk3ZJZjNly9Km020BR7M+UnXVwLaJessT9jfW
-         0Cbf8PpCZsguO+0VyrrpEoHnbY52pX8dEhH9vmqYoXPeJgTRmw/IagOwjBZRT3PmLdBA
-         39ZSPxX7WKvOdM/9XGzycN1Uhkh0ZVACi5IjnsaoEQMCkO58zmp7/MPH5BNmuv81eZ3D
-         KzVMb52AGke+zdUIndC+nExVw74/72rsvIjWLXBNc7b3hSxmm7aYE3w5X5FqFeW93LIM
-         LHbLSAJejRfcws33Mi1VS7384wj+2nN7/smQJhV5yvJTwrj0eMqdt+APZXYCIv5IT1zi
-         3h3g==
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=/x2nnE+XG95K1tYk+bHWcbRl9utBnXOUbr9TGJBDVck=;
+        b=d/bbR23LA2/5BHJKlcwt8//yhqnI9IqPUJdOJk2WttDlONJBXTFjm9OxI/ssqAxzve
+         xTJxoRwkk/KQ1vnJ7AtS/hIQDls8NFRElBpTsDz8DBQSWdH7J1JtOH8DMDsnGJ8cFs4h
+         hghVi5b3zGu8Am7mH/cg4UEXOgUQ/5SQzRRinWiADAtKCZEFSUMLnAZloZyOZXyPqVWy
+         QfCKkf3/8FIq90/qJDjixUah6UpOmNzdD2ZSGxJatawfzq+fingbYgAohjMlfrQPhj8W
+         PAcwl7UI2VZLGMgYb5FWRmxoGYVH/TkbNSTXjoilEOqGkKkIzLxCMtDZca4oIwjDzzcM
+         b/cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=6tSCkq+l40cOoO02PEYgzjWeeRXVQNjaHl23GfMqjps=;
-        b=D3Lew2nAl0nyzU7fbXcaAbYd3DWUODKFfZrgz7pUY6N5QBmXIydfj9wcwhVP1ir2nT
-         vOMKUk++xGCPGiFRGCoITnDb6dNe5VOKT91qf85luJO8LY32VWWPN4Y8RXIzorkrRbrt
-         k0fCgVASz5n3USq1GDfISU2aemQwb83j+mvjr7mIqgofo3vdQErwlToX9v9/USrcP73R
-         rPzVbl1JTGOjD1y7ZnogkR2gjJuYlZmXx103yNNEW4maCZtJhEPuBKm92fRd/NB7vSy+
-         UjzwA/f/JM1inBZCTmJlISgOPeEmG7kSnKVc50rAG0mNB5DVYrZXTcHWhCXQVterYvfD
-         x59g==
-X-Gm-Message-State: AFqh2kpMIzQYmFT9J4SZU2STDYOoOdOq6EoBL8kUwLToj3z3wzE5RciX
-	JGYyJtoqvGE6QLbX9BFXp0E=
-X-Google-Smtp-Source: AMrXdXsOsohoW2WFVo1jaQOJI3a7R/tKL1xYHCnOK7kL8XvugW15YwTy/iKdQsxv4ucDv7DoeKznvg==
-X-Received: by 2002:adf:fd89:0:b0:24f:5890:6168 with SMTP id d9-20020adffd89000000b0024f58906168mr17681030wrr.10.1672307428410;
-        Thu, 29 Dec 2022 01:50:28 -0800 (PST)
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :references:mime-version:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=/x2nnE+XG95K1tYk+bHWcbRl9utBnXOUbr9TGJBDVck=;
+        b=KW/Vy/0+bkOVJOfzNQD/OHtcbvGhjNvv9BZMNF97XhWATk3eP9rs+lF+AmoeSTCdGF
+         +5/FgGw+rjp5rCjhqeB7A0yryXe5KdhqHHf5n2+OW9Kw45htcuBy7QpwDInaIPPOjiRb
+         M+eai1g3bAXBKgzkY+4qonhzKgCQgXMeEEuIL8TezHpA4zs9Gu4Ar6Ir83POrmSg4gIJ
+         XMGvX03uEPHy8waaLxK6cLeFOc2xL+zuBTtp5AbLY0MEh6rSGMNrlUb+vNYeC3SVtrdw
+         TlYHp9njyemK570r6byVhCa1tlQ3sct/Xen+DfVlOx6CN2sY3VPUEhLPpxrfY13uj4gK
+         RHTA==
+X-Gm-Message-State: AJaThX4NU9pul2Li6ZOBoQDTbmX//1/Oa9cpKiL5VvZEl1qbshj+EiFM
+	1nCWzp76t9JZeEXBYwRt5Ps6Jg==
+X-Google-Smtp-Source: AGs4zMb57FAkG3i5u52QVGqfTbGokYQgD2tRAykHj2ICPxuuitfMmtGEC/K5vOzHptjZiWAmlMPBBg==
+X-Received: by 10.223.190.2 with SMTP id n2mr2959546wrh.44.1512199722626;
+        Fri, 01 Dec 2017 23:28:42 -0800 (PST)
 Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Thu, 29 Dec 2022 10:50:26 +0100
+Date: Sat, 2 Dec 2017 08:28:38 +0100
 From: Salvatore Bonaccorso <carnil@debian.org>
 To: oss-security@lists.openwall.com
-Cc: jorton@apache.org
-Message-ID: <Y61i4ojYhvXXx7Ap@eldamar.lan>
-References: <d1b6acf9-0f59-1954-ccad-2243ca03d138@apache.org>
- <YwjuUy0a6FFdHPVB@gentoo.org>
+Message-ID: <20171202072838.GA9031@eldamar.local>
+References: <EC646F2B-8F97-4B77-AE45-9462445D1B6F@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <YwjuUy0a6FFdHPVB@gentoo.org>
-Subject: Re: [oss-security] CVE-2022-22728: libapreq2: libapreq2 multipart
- form parse memory corruption
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <EC646F2B-8F97-4B77-AE45-9462445D1B6F@gmail.com>
+User-Agent: Mutt/1.9.1 (2017-09-22)
+Subject: Re: [oss-security] libtiff: Heap-based buffer overflow bug in
+ pal2rgb(pal2rgb.c)
 
-Hi,
+hi,
 
-On Fri, Aug 26, 2022 at 11:01:23AM -0500, John Helmert III wrote:
-> On Thu, Aug 25, 2022 at 02:09:16PM +0000, Joe Orton wrote:
-> > Severity: important
-> > 
-> > Description:
-> > 
-> > A flaw in libapreq2 versions 2.16 and earlier could cause a buffer
-> > overflow while processing multipart form uploads.  A remote
-> > attacker could send a request causing a process crash which could
-> > lead to a denial of service attack.
-> > 
+On Thu, Nov 30, 2017 at 07:41:03PM +0900, 백정운 wrote:
+> Hi all,
 > 
-> Is there a fixed version or patch or upstream issue?
+> A heap-based buffer overflow flaw was found in pal2rgb. A malicious
+> user can manipulate the heap memory of a process using COLORMAP,
+> Image Width, and Image Length value of a TIFF document.
+> 
+> http://bugzilla.maptools.org/show_bug.cgi?id=2750
 
-Any pointers or information to this?
+MITRE has assigned CVE-2017-17095 for this issue.
 
 Regards,
 Salvatore
