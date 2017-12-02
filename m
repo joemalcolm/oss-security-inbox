@@ -1,31 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/01/19
-Message-ID: <CALx_OUDauCKOg20Lp5wumy_JUiu7Cj3=-d-HJSci+nROrK8BRw@mail.gmail.com>
-Date: Mon, 1 May 2017 14:13:16 -0700
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: terminal emulators' processing of escape sequences
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/02/1
+Message-ID: <20171202072838.GA9031@eldamar.local>
+Date: Sat, 2 Dec 2017 08:28:38 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: libtiff: Heap-based buffer overflow bug in pal2rgb(pal2rgb.c)
 Content-Type: text/plain; charset=utf-8
 
-> Besides (mis)features, there may also be implementation bugs.
+hi,
 
-It is perhaps worth noting that guided fuzzing has been used in this
-space with good results, too. For example, AFL was credited on at
-least the following in rxvt, tmux, screen, and mosh:
+On Thu, Nov 30, 2017 at 07:41:03PM +0900, 백정운 wrote:
+> Hi all,
+> 
+> A heap-based buffer overflow flaw was found in pal2rgb. A malicious
+> user can manipulate the heap memory of a process using COLORMAP,
+> Image Width, and Image Length value of a TIFF document.
+> 
+> http://bugzilla.maptools.org/show_bug.cgi?id=2750
 
-http://lists.schmorp.de/pipermail/rxvt-unicode/2015q3/002155.html
-http://lists.schmorp.de/pipermail/rxvt-unicode/2015q3/002164.html
-https://savannah.gnu.org/bugs/?45715
-https://savannah.gnu.org/bugs/?45713
-https://savannah.gnu.org/bugs/?45714https://github.com/tmux/tmux/issues/92
-https://github.com/tmux/tmux/commit/3219e0314e3d1d39a57db330faa5693ce0264244
-https://github.com/mobile-shell/mosh/issues/667
+MITRE has assigned CVE-2017-17095 for this issue.
 
-Especially if what's highlighted in this thread can be found with a
-simple script, I'm betting there's far more beneath the surface.
-Guided fuzzers have the advantage of being able to discover features
-that may be undocumented or hard to spot, so a more comprehensive dive
-into all the terminal emulators in use today would probably be quite
-fruitful.
-
-/mz
+Regards,
+Salvatore
