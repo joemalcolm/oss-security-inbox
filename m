@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["256" "Tuesday" "30" "May" "2017" "15:47:02" "+0200" "Florian Weimer" "fweimer@redhat.com" "<ab7a4164-1faf-67c2-deb7-f74998ae1dd6@redhat.com>" "8" "Re: [oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function" "^Cc:" nil nil "5" "2017053013:47:02" "[oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function" (number mark "        fweimer@redh May 30    8/256   " thread-indent "\"Re: [oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function\"\n") "<1496150738.941.5.camel@gmail.com>" ("<EBDB967B-92F8-47B9-AC79-CBF338A835F2@gmail.com>" "<20170530114138.jpcppn4j67niqhyb@perpetual.pseudorandom.co.uk>" "<1496145073.1459.1.camel@gmail.com>" "<3f12105e-11d8-abe6-762b-c5b762cf6b31@redhat.com>" "<1496149333.941.1.camel@gmail.com>" "<099ea9a5-1f74-b837-bcae-aaba2c109a02@redhat.com>" "<1496150738.941.5.camel@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["918" "Monday" "4" "December" "2017" "08:32:55" "+0530" "Himanshu Mehta" "mehta.himanshu21@gmail.com" "<CAAYZd=nAiDbUuRuxz1tbeE6pnx7Tow7uedDxYJNDMgh2UE2c2g@mail.gmail.com>" "35" "[oss-security] ZKTime Web Software 2.0.1.12280 CVE-2017-17057 Cross Site Scripting" nil nil nil "12" "2017120403:02:55" "[oss-security] ZKTime Web Software 2.0.1.12280 CVE-2017-17057 Cross Site Scripting" (number mark "U       mehta.himans Dec  4   35/918   " thread-indent "\"[oss-security] ZKTime Web Software 2.0.1.12280 CVE-2017-17057 Cross Site Scripting\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28193 invoked by uid 550); 30 May 2017 13:47:17 -0000
+Received: (qmail 3610 invoked by uid 550); 4 Dec 2017 05:44:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,41 +11,73 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28172 invoked from network); 30 May 2017 13:47:16 -0000
-DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com BEB60804E0
-Authentication-Results: ext-mx03.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
-Authentication-Results: ext-mx03.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=fweimer@redhat.com
-DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com BEB60804E0
-References: <EBDB967B-92F8-47B9-AC79-CBF338A835F2@gmail.com>
- <20170530114138.jpcppn4j67niqhyb@perpetual.pseudorandom.co.uk>
- <1496145073.1459.1.camel@gmail.com>
- <3f12105e-11d8-abe6-762b-c5b762cf6b31@redhat.com>
- <1496149333.941.1.camel@gmail.com>
- <099ea9a5-1f74-b837-bcae-aaba2c109a02@redhat.com>
- <1496150738.941.5.camel@gmail.com>
-Message-ID: <ab7a4164-1faf-67c2-deb7-f74998ae1dd6@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.0
-MIME-Version: 1.0
-In-Reply-To: <1496150738.941.5.camel@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.15
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.27]); Tue, 30 May 2017 13:47:04 +0000 (UTC)
-Cc: Roee Hay <roeehay@gmail.com>
-Date: Tue, 30 May 2017 15:47:02 +0200
-From: Florian Weimer <fweimer@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Linux kernel: stack buffer overflow with
- controlled payload in get_options() function
-To: Daniel Micay <danielmicay@gmail.com>, oss-security@lists.openwall.com
+Received: (qmail 3185 invoked from network); 4 Dec 2017 03:03:27 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=rKoKWsy2nataqEmNTc4wFUqBFdHpTelt1x0J6gtdHOQ=;
+        b=QymwjjFdKKHPyOwcRshlFjSIP9gM/pkvHGy5Wsvq1uqGNI+T5unbvQa89C68Ji72AO
+         u2Yrr4MK22h66sg/7S5eoEKmIAe6dznSPHm0BcYOaAfrUAhFJlkC0d0A5gHWZ3d2161q
+         PE+PIffl4QpEbGO7xplYxtxRZiQPHSunaEx53iq1xFY1i8XzZ7G+9oO0/VHtNacpB26d
+         lb269FXCtNJBkvh/kP1HhMDJGOkhoxc+FRbWzAP0U6ozFvs5nRcLzxX0StVC1W0TT1sQ
+         DIjDcRVXGesRzoOtrDp4ErWFBikEUVXNJNgvjzevAwYBzTUPM3GNoQK2rJPWMYMeRoJP
+         iqJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=rKoKWsy2nataqEmNTc4wFUqBFdHpTelt1x0J6gtdHOQ=;
+        b=KYA4BkbW0cbaxua29sxNf68PziVrEO+KPnl8UgTW+v2WMXI9plWnFGvZIrqwzC7BO+
+         cc+g5mVIGDCDXcNLRESEfjuJM/Kjvjo7H+LSbENiApaC0hepPlCsHhUizjine8GLOZgS
+         btfzTrWUjsWsyA4ItDwFHwaG1mXys8AbV3RF2aABBgOPUkDIzH5QPH5bZh727VuMAUJa
+         mq2bCnwosLoHAW8GWGqof4CuBV1U/8FR3olCLElvjL6Lj2Vs/C5gRZ/+HDItEN2UsBwV
+         zMuBJQOMQVePXEHuJpjNy8Odj/R11GqRcmb/ZcMts1LUWJzMHF1EG/ndRV2bbW8uYqD0
+         Xqzw==
+X-Gm-Message-State: AJaThX4/zMg06y3W5m442geDxYaBge91hYGAm3B1aZuQ25nXCIUTqwtD
+	4SKQCv3IbntzCKWoghKma6q8q7oBrOwuJQtv9WcYCLK8
+X-Google-Smtp-Source: AGs4zMaOUcQnl7XjQE+DphDZW7Av/c+2BivvybDGdRkNXDpUDou3sLbLLU1aULdcFMUEFklfggp6iSfeIlJs6xqSji0=
+X-Received: by 10.107.132.150 with SMTP id o22mr24259536ioi.106.1512356595520;
+ Sun, 03 Dec 2017 19:03:15 -0800 (PST)
+MIME-Version: 1.0
+From: Himanshu Mehta <mehta.himanshu21@gmail.com>
+Date: Mon, 4 Dec 2017 08:32:55 +0530
+Message-ID: <CAAYZd=nAiDbUuRuxz1tbeE6pnx7Tow7uedDxYJNDMgh2UE2c2g@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="001a113f2888a65915055f7af5e8"
+Subject: [oss-security] ZKTime Web Software 2.0.1.12280 CVE-2017-17057 Cross Site Scripting
 
-On 05/30/2017 03:25 PM, Daniel Micay wrote:
-> Secure boot means verifying boot chain from a root of trust in hardware.
+--001a113f2888a65915055f7af5e8
+Content-Type: text/plain; charset="UTF-8"
 
-My comments were specifically about UEFI Secure Boot, which apparently
-behaves quite differently from what you expect.
+*1. Introduction*
 
-Thanks,
-Florian
+Vendor:                ZKTeco
+Affected Product:      ZKTime Web - 2.0.1.12280
+Fixed in:
+Vendor Website:        https://www.zkteco.com/product/ZKTime_Web_2.0_435.html
+Vulnerability Type:    Reflected XSS
+Remote Exploitable:    Yes
+CVE:                   CVE-2017-17057
+*2. Overview*
+
+There is a reflected XSS vulnerability in ZKTime Web. The
+vulnerability exists due to insufficient filtration of user-supplied data.
+A remote attacker can execute arbitrary HTML and script code in browser in
+context of the vulnerable application.
+
+*3. Affected Modules*
+
+Go to
+Personnel -> Personnel -> Advanced Query ->
+
+Select Search Field as 'Department' and in 'Range' field mention
+'<script>alert('XSS')</script>
+
+*4. Payload*
+<script>alert('XSS')</script>
+
+
+*5. Credit*
+Himanshu Mehta (@LionHeartRoxx)
+
+--001a113f2888a65915055f7af5e8--
