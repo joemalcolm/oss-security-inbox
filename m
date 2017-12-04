@@ -1,67 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/10/15
-Message-ID: <312509.123326407-sendEmail@localhost>
-Date: Mon, 10 Apr 2017 07:43:59 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: elfutils: memory allocation failure in xcalloc (xmalloc.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/04/2
+Message-ID: <nycvar.YSQ.7.76.1712041645550.20983@wniryva>
+Date: Mon, 4 Dec 2017 16:47:06 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE-2017-1000407 Kernel: KVM: DoS via write flood to I/O port 0x80
 Content-Type: text/plain; charset=utf-8
 
-Description:
-elfutils is a set of libraries/utilities to handle ELF objects (drop in replacement for libelf).
+   Hello,
 
-A fuzz on eu-elflint showed a memory allocation failure.
+Linux kernel built with the KVM virtualization(CONFIG_KVM) support for the 
+Intel processor family(CONFIG_KVM_INTEL), is vulnerable to a DoS issue. It 
+could occur if a guest was to flood the I/O port 0x80 with write requests.
 
-The interesting ASan output:
+A guest user could use this flaw to crash the host kernel resulting in DoS.
 
-# eu-elflint -d $FILE
-==5053==AddressSanitizer CHECK failed: /tmp/portage/sys-devel/gcc-6.3.0/work/gcc-6.3.0/libsanitizer/sanitizer_common/sanitizer_common.cc:180 "((0 && "unable to mmap")) != (0)" (0x0, 0x0)
-    #0 0x7faa2335941d  (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0xcb41d)
-    #1 0x7faa2335f063 in __sanitizer::CheckFailed(char const*, int, char const*, unsigned long long, unsigned long long) (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0xd1063)
-    #2 0x7faa2335f24d  (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0xd124d)
-    #3 0x7faa23368c52  (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0xdac52)
-    #4 0x7faa232ba0b9  (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0x2c0b9)
-    #5 0x7faa232b249b  (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0x2449b)
-    #6 0x7faa2335040a in calloc (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0xc240a)
-    #7 0x431b8d in xcalloc /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/lib/xmalloc.c:64
-    #8 0x41f0bb in check_sections /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:3680
-    #9 0x42961f in process_elf_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:4697
-    #10 0x42961f in process_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:242
-    #11 0x402d33 in main /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:175
-    #12 0x7faa21c6378f in __libc_start_main (/lib64/libc.so.6+0x2078f)
-    #13 0x403498 in _start (/usr/bin/eu-elflint+0x403498)
-Affected version:
-0.168
-
-Fixed version:
-0.169 (not released atm)
-
-Commit fix:
-https://sourceware.org/ml/elfutils-devel/2017-q1/msg00133.html
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-7613
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00236-elfutils-memallocfailure
-
-Timeline:
-2017-03-27: bug discovered and reported to upstream
-2017-04-04: blog post about the issue
-2017-04-09: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/04/03/elfutils-memory-allocation-failure-in-xcalloc-xmalloc-c/
+Upstream patch
+--------------
+   -> https://www.spinics.net/lists/kvm/msg159809.html
 
 
+Thank you.
 --
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
