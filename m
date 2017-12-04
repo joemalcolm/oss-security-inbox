@@ -1,25 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/11/3
-Message-ID: <20170811114033.grl36vle44nygwta@eldamar.local>
-Date: Fri, 11 Aug 2017 13:40:33 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/04/1
+Message-ID: <CAAYZd=nAiDbUuRuxz1tbeE6pnx7Tow7uedDxYJNDMgh2UE2c2g@mail.gmail.com>
+Date: Mon, 4 Dec 2017 08:32:55 +0530
+From: Himanshu Mehta <mehta.himanshu21@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVS and ssh command injection (see CVE-2017-1000117, etc.)
+Subject: ZKTime Web Software 2.0.1.12280 CVE-2017-17057 Cross Site Scripting
 Content-Type: text/plain; charset=utf-8
 
-hi
+*1. Introduction*
 
-On Fri, Aug 11, 2017 at 10:10:18AM +0200, Andreas Stieger wrote:
-> On 08/11/2017 01:32 AM, Hank Leininger wrote:
-> > SSH command injection via -o... impacts CVS 1.12.x as well
-> > [...]
-> > I don't know if these were discussed on a private list prior to publication, and whether that discussion included CVS.
-> 
-> cvs did not come up in the private discussions that I am aware of,
-> thanks for pointing it out.
+Vendor:                ZKTeco
+Affected Product:      ZKTime Web - 2.0.1.12280
+Fixed in:
+Vendor Website:        https://www.zkteco.com/product/ZKTime_Web_2.0_435.html
+Vulnerability Type:    Reflected XSS
+Remote Exploitable:    Yes
+CVE:                   CVE-2017-17057
+*2. Overview*
 
-FWIW, I have requested a CVE via the MITRE webform. Will followup here
-once/if it gets assigned.
+There is a reflected XSS vulnerability in ZKTime Web. The
+vulnerability exists due to insufficient filtration of user-supplied data.
+A remote attacker can execute arbitrary HTML and script code in browser in
+context of the vulnerable application.
 
-Regards,
-Salvatore
+*3. Affected Modules*
+
+Go to
+Personnel -> Personnel -> Advanced Query ->
+
+Select Search Field as 'Department' and in 'Range' field mention
+'<script>alert('XSS')</script>
+
+*4. Payload*
+<script>alert('XSS')</script>
+
+
+*5. Credit*
+Himanshu Mehta (@LionHeartRoxx)
+
