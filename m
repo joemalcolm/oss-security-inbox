@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3021" "Wednesday" "7" "October" "2020" "19:18:56" "+0000" "Jeremy Stanley" "fungi@yuggoth.org" "<20201007191856.2v7cpinvpzsmzuiw@yuggoth.org>" "75" "Re: [oss-security] Debian FEATURE: /home/loser is with permissions 755, default umask 0022" "^Date:" nil nil "10" "2020100719:18:56" "[oss-security] Debian FEATURE: /home/loser is with permissions 755, default umask 0022" (number mark "        fungi@yuggot Oct  7   75/3021  " thread-indent "\"Re: [oss-security] Debian FEATURE: /home/loser is with permissions 755, default umask 0022\"\n") "<CAGUWgD_U_oDLPbhAGa=tAaUf3OFM9Ac9j19nwyY-tf7KkQipag@mail.gmail.com>" ("<CAGUWgD_U_oDLPbhAGa=tAaUf3OFM9Ac9j19nwyY-tf7KkQipag@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Debian FEATURE: /home/loser is with permissions 755, default umask 0022" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1712" "Tuesday" "5" "December" "2017" "11:09:33" "+0100" "Daniel Beck" "ml@beckweb.net" "<CE3AFC1B-46F2-4482-809D-2D8822A219FB@beckweb.net>" "44" "[oss-security] Jenkins stored cross-site scripting vulnerability" nil nil nil "12" "2017120510:09:33" "[oss-security] Jenkins stored cross-site scripting vulnerability" (number mark "U       ml@beckweb.n Dec  5   44/1712  " thread-indent "\"[oss-security] Jenkins stored cross-site scripting vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13784 invoked by uid 550); 7 Oct 2020 19:19:11 -0000
+Received: (qmail 16115 invoked by uid 550); 5 Dec 2017 10:09:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,98 +11,61 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13766 invoked from network); 7 Oct 2020 19:19:11 -0000
-Message-ID: <20201007191856.2v7cpinvpzsmzuiw@yuggoth.org>
-References: <CAGUWgD_U_oDLPbhAGa=tAaUf3OFM9Ac9j19nwyY-tf7KkQipag@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="qqbadlhohscv77sj"
-Content-Disposition: inline
-In-Reply-To: <CAGUWgD_U_oDLPbhAGa=tAaUf3OFM9Ac9j19nwyY-tf7KkQipag@mail.gmail.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-SA-Exim-Connect-IP: 2001:4802:7801:102:be76:4eff:fe20:63e0
-X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
-X-SA-Exim-Mail-From: fungi@yuggoth.org
-X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
-Date: Wed, 7 Oct 2020 19:18:56 +0000
-From: Jeremy Stanley <fungi@yuggoth.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Debian FEATURE: /home/loser is with permissions
- 755, default umask 0022
-To: oss-security@lists.openwall.com
-
---qqbadlhohscv77sj
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Received: (qmail 16091 invoked from network); 5 Dec 2017 10:09:45 -0000
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
+Message-Id: <CE3AFC1B-46F2-4482-809D-2D8822A219FB@beckweb.net>
+Date: Tue, 5 Dec 2017 11:09:33 +0100
+To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3273)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1512468585;116c0366;
+X-HE-SMSGID: 1eMAAP-0002J1-MA
+Subject: [oss-security] Jenkins stored cross-site scripting vulnerability
 
-On 2020-10-07 21:00:35 +0300 (+0300), Georgi Guninski wrote:
-> https://lists.debian.org/debian-security/2020/10/msg00000.html
->=20
-> =3D=3D=3D
-> /home/loser is with permissions 755, default umask 0022
->=20
-> on multiuser machines this sucks much.
->=20
-> on a multiuser debian mirror we found a lot of data,
-> including the wordpress password of the admin.
-> =3D=3D=3D
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-It's tradition that on multi-user systems, users would want to share
-data with one another and also serve content from their home
-directories in Web sites. Further, it's not at all uncommon for
-sysadmins to not understand or consider the system defaults when
-making deployment decisions and failing to secure sensitive files.
+The Jenkins project released a security advisory today. A description of the
+vulnerability is below. More details, severity, and attribution can be found
+here:
+https://jenkins.io/security/advisory/2017-12-05/
 
-As a long-time Debian user myself, I agree that this default is
-showing its age, and can represent a risk for operators who overlook
-it.
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-> Then in the thread someone with @debian.org email explains
-> to me it is a feature, not a bug.
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
 
-Nowhere in that response do they call it a feature, and it's
-disingenuous of you to imply that they did. It's a default, which is
-almost always going to be a balance between two (or more) competing
-needs. Also, I encourage you to take a guess at how many people
-there are "with @debian.org email" (hint, it's not a small number).
+---
 
-A more informative response would probably have been to point you to
-https://wiki.debian.org/Debate/umask which provides pointers to
-where and how this would need to be solved in the long run.
+SECURITY-624
+Jenkins administrators can configure tools, such as JDK, Maven, or Ant,
+that will be available in job configurations for use by build scripts. Some
+tool names are not properly escaped on job configuration forms, resulting
+in a stored cross-site scripting vulnerability.
 
-> In a addition, they suggest to tell them the mirror, lol.
+Tools confirmed to be affected are:
+- JDK (provided by Jenkins core)
+- Ant (provided by Ant plugin)
 
-Yes, do you fault them for wanting to remove a likely compromised
-server from the network of volunteer-run package mirrors?
+Others may also be affected by this.
 
-> Are debian detached from reality?
+This vulnerability can only be exploited by Jenkins administrators, as
+they=E2=80=99re the only ones able to define tools. In the vast majority of=
+ Jenkins
+configurations, administrators are able to run any code and install any
+plugin. Therefore this vulnerability only really affects installations that
+don=E2=80=99t grant administrators the Run Scripts, Configure Update Sites,=
+ and
+Install Plugins permissions.
 
-Your brusque and insulting attitude (saying their choices suck,
-calling them detached from reality, laughing at their explanations)
-is likely to trigger glib responses and cause people to be less
-inclined to pay attention to what you have to say.
---=20
-Jeremy Stanley
+The Jenkins project has prepared a plugin preventing the configuration of
+unsafe tool names at https://github.com/jenkinsci-cert/security624 as a
+workaround. If you=E2=80=99re affected by this issue, we recommend installi=
+ng this
+plugin.
 
---qqbadlhohscv77sj
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEl65Jb8At7J/DU7LnSPmWEUNJWCkFAl9+FJoACgkQSPmWEUNJ
-WCnLVRAAgSayvdImwV62UU0JrDK1LRUfRhWsnrR+KyoZ7R9PjVsGMeWxqSi5dGed
-Q0MlbjKqh8o6IhpjP9SItkUHzemBh622vvlMTS45oGjwuCO+fX4LbPjeTJMpyVXB
-UCDy9vIVPlkyONiW9Lg8iHKi273ggfLrTMh43q7GE86gWXV/V4E6csBkytBX14IU
-vtZja2EC/a7dwv9qbJRK1CmVs1T4M2T+CcPrl3JWhGLShW4bQqOkMaNW95ObCVfp
-/Za4xwnh1SqxO9b/BoN0ALecuGBH9xOxeIdaOAzLb1SHRyNKtxz9jIyiGISYlH8D
-c8rY1XdKVMh7lwtq1kCfNSCWLvsNs9rLqHNjkyuSon+n5JhZfkOZOaSbzYL2BM54
-WlIOrDJE7wVrOSU66El82VlTdoTSr+3HLg7SXvRRcrtBCjliS6kCFQhzV1pAan09
-uhTePlR4JZD+zyI2hKKhTRKa/CrXtYx0XY3NijU2Ys9TifD0/J1JwHGryDNgYA3A
-uEEsVCkj/RCvD5USwfzamvRH3v199Gc3tbFNKyR5n7tJjdDXNk7kcIV7SO1bCXSM
-Ta1z9EAMwNrJDoDuB4SewjKkUbDD62lFdBgtMshSWRTAoGMLMGk7SVf09Ff4AMNN
-p/4CtMTLGodLDrv7w5lFlQPt0JFfocdXPKM+nZgJ+GUWfATEsgg=
-=hath
------END PGP SIGNATURE-----
-
---qqbadlhohscv77sj--
