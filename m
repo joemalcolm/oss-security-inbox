@@ -1,86 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/15/1
-Message-ID: <20170115023720.GA21220@openwall.com>
-Date: Sun, 15 Jan 2017 03:37:20 +0100
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/05/4
+Message-Id: <1512485234.nayti5pl04.tristanC@fedora>
+Date: Tue, 05 Dec 2017 14:53:30 +0000
+From: Tristan Cacqueray <tdecacqu@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros subscription
+Subject: [OSSA 2017-005.1] Nova Filter Scheduler bypass through rebuild action (CVE-2017-16239) ERRATA
 Content-Type: text/plain; charset=utf-8
 
-Hi Michal,
+====================================================================
+OSSA-2017-005.1: Nova Filter Scheduler bypass through rebuild action
+====================================================================
 
-On Fri, Jan 13, 2017 at 10:36:11AM +0100, Michal Hrusecky wrote:
-> I would like to request subscription to linux-distros mailing list. I'm one of
-> the maintainers of Turris OS - OpenWRT fork used on Turris and Turris Omnia
-> routers[1].
-> 
-> Not sure what has to be part of application, on wiki[2] I found only that I
-> should request it here.
+:Date: November 14, 2017
+:CVE: CVE-2017-16239
 
-Right.  This basically tells us there's interest, and from whom and for
-what reasons.  That's useful, so thanks for posting your request.
 
-However, in practice the list membership has been frozen since the last
-distro addition in April 2014, so for almost 3 years now.  Since then,
-there were only removals and changes in who's subscribed for the
-previously accepted distros.
+Affects
+~~~~~~~
+- Nova: <=14.0.10, >=15.0.0 <=15.0.8, >=16.0.0 <=16.0.3
 
-Perhaps we'll be forced to re-open this can of worms, or shut down these
-lists for good.  Simply keeping them frozen is unfair to new distros
-requesting membership now.  Simply accepting all who request membership
-based on mostly objective criteria yet without introducing distro's
-userbase size as a criterion is, in my opinion, going to make things
-worse overall (in terms of balance of benefit to users vs. risk of
-leaks).  Yet we might, as long as the benefit-risk is still deemed to be
-positive (even if less than now).  Just to be fair.
 
-Here's a thread from 2015 with some half-baked thoughts on the issues:
+Description
+~~~~~~~~~~~
+George Shuklin from servers.com reported a vulnerability in Nova. By
+rebuilding an instance, an authenticated user may be able to
+circumvent the Filter Scheduler bypassing imposed filters (for
+example, the ImagePropertiesFilter or the IsolatedHostsFilter). All
+setups using Nova Filter Scheduler are affected.
 
-http://www.openwall.com/lists/oss-security/2015/03/20/5
 
-Here are some recent requests:
+Errata
+~~~~~~
+The former fix introduced regressions in the rebuild functionality.
+Rebuild may fail depending on configured scheduler filters and
+environment, for example, when the compute host is running at capacity
+or when the host is disabled. This update provides an additional set
+of fixes for these regressions.
 
-http://www.openwall.com/lists/oss-security/2016/10/21/2
-http://www.openwall.com/lists/oss-security/2016/10/25/2
 
-What's common about the timing of these: they were triggered by
-vulnerabilities that attracted a lot of media attention.  This may be
-primarily about publicity and checklists ("our competitors are on that
-list, we should be too") and only secondarily about security.  I do
-value the persistence of some distros/people reminding me about their
-requests, though - suggesting their interest is more likely genuine.
-And your request isn't nearly that "badly" timed. ;-)
+Patches
+~~~~~~~
+- https://review.openstack.org/519684 (Newton)
+- https://review.openstack.org/523434 (errata) (Newton)
+- https://review.openstack.org/519681 (Ocata)
+- https://review.openstack.org/523427 (errata) (Ocata)
+- https://review.openstack.org/519672 (Pike)
+- https://review.openstack.org/523212 (errata) (Pike)
+- https://review.openstack.org/519662 (Queens)
+- https://review.openstack.org/521186 (errata) (Queens)
 
-> Probably you will need some proof that I'm who I claim to be. You can see bunch
-> of commits on our gitlab[3] (signed by the same key I'm using to sign this
-> mail) and you can reach me and some of my colleagues on security@...ris.cz
-> e-mail alias that is also listed as security contact on our web[4].
-> 
-> We have infrastructure in place to work on embargoed issues without disclosing
-> them to public. Not sure whether there are any other requirements to meet. If
-> so, please let me know.
-> 
-> [1] https://omnia.turris.cz/en/
-> [2] http://oss-security.openwall.org/wiki/mailing-lists/distros
-> [3] https://gitlab.labs.nic.cz/turris/openwrt/commits/test
-> [4] https://www.turris.cz/en/contacts
 
-What would have been some recent issue likely handled via the distros
-list (this is often stated in the follow-up postings on oss-security,
-albeit not always) where the advance notification would have helped your
-project release a fix substantially sooner?
+Credits
+~~~~~~~
+- George Shuklin from Servers.com (CVE-2017-16239)
 
-I notice you fixed OpenSSL CVE-2016-7056 promptly:
 
-https://gitlab.labs.nic.cz/turris/openwrt/commit/9aa88e76e70250dd219e8e228162bde045ade4f9
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/1664931
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-16239
 
-However, that issue wasn't on the distros list.
 
-I also notice you've been on oss-security for half a year.  That's good.
-However, I wasn't able to find any record of your past participation in
-this specific community.  You might want to get more involved first.
+OSSA History
+~~~~~~~~~~~~
+- 2017-12-05 - Errata 1
+- 2017-11-14 - Original Version
 
-And if/when we do re-open the list for additional distros, you'll be
-able to re-request membership.
+--
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
 
-Alexander
+Content of type "application/pgp-signature" skipped
