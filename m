@@ -1,50 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/23/9
-Message-ID: <20170923192315.GA17252@suse.de>
-Date: Sat, 23 Sep 2017 21:23:15 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/05/1
+Message-ID: <CAP8jf_A2x6qceLjfJa6fHyDLQU4n9cdVm-Wc_V4awKy_zBQ66g@mail.gmail.com>
+Date: Tue, 5 Dec 2017 00:11:41 +0000
+From: Mohamed Ghannam <simo.ghannam@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Why send bugs embargoed to distros?
+Subject: CVE-2017-8824 linux: use-after-free in DCCP code
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Sep 23, 2017 at 01:44:18PM +0200, Hanno Böck wrote:
-> Hi,
-> 
-> A few days have passed since the optionsbleed disclosure. Some
-> interesting things have surfaced, e.g. the fact that it was apparently
-> discovered already in 2014, but nobody noticed it was a security bug.
-> 
-> 
-> But I'd like to discuss something else:
-> I had informed the distros mailing list one week earlier about the
-> upcoming disclosure with a bug description and links to the already
-> available patch.
-> My understanding is that the purpose of the distros list is that
-> updates can be prepared so after a disclosure the time between "vuln is
-> known" and "patch is available" is short.
-> However from all I can see this largely didn't happen.
-> 
-> Debian+Ubuntu took more than a day after disclosure to fix. According
-> to the Debian bug tracker the bug got only opened after the public
-> disclosure[2]. I see no sign that any work on a fix began before the
-> disclosure.
-> 
-> If I can trust Red Hat's CVE tracker [3] there still are no fixed
-> packages available. Also I haven't found any info about updated
+Hi,
 
-https://www.suse.com/security/cve/CVE-2017-9798/
 
-We have released openSUSE Leap and SUSE Linux Enterprise 12 SP2/SP3 updates.
+This is an announcement for CVE-2017-8824 which is a use-after-free
+vulnerability
 
-Where did you look and not find this?
+I found in Linux DCCP socket. It can be used to gain kernel code execution
+from unprivileged processes.
 
-SUSE has rated the issue as moderate severity (bordering on important),
-as exploitability seems difficult and not targetable.
 
-So we were not targeting a "same as CRD day release" as with other more
-severe issues, but have now released updates in the next days after the CRD.
 
-In general predisclosure is useful for us, same as for the others for 
-evaluation and preparation of critical security issues.
+You’ll find in attachment the proof of concept code and the kernel panic
+log.
 
-Ciao, Marcus
+
+
+#######   BUG DETAILS  ############
+
+
+
+When a socket sock object is in DCCP_LISTEN  state and connect() system
+call is being called with AF_UNSPEC,
+
+the dccp_disconnect() puts sock state into DCCP_CLOSED, and forgets to free
+dccps_hc_rx_ccid/dccps_hc_tx_ccid and assigns NULL to them,
+
+then when we call connect() again with AF_INET6 sockaddr family, the sock
+object gets cloned via dccp_create_openreq_child() and returns a new sock
+object,
+
+which holds references of dccps_hc_rx_ccid and dccps_hc_tx_ccid of the old
+sock object, and this leads to both the old and new sock objects can use
+the same memory.
+
+
+
+#######   LINKS  ############
+
+
+
+http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2017-8824
+
+http://lists.openwall.net/netdev/2017/12/04/224
+
+
+
+#######   CREDITS  ############
+
+
+
+Mohamed Ghannam
+
+Content of type "text/html" skipped
+
+Download attachment "kasan_report.log" of type "application/octet-stream" (8589 bytes)
+
+View attachment "poc.c" of type "text/x-csrc" (2459 bytes)
+
+Download attachment "rip.log" of type "application/octet-stream" (2861 bytes)
