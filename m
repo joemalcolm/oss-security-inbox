@@ -1,36 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/07/8
-Message-ID: <20171207211559.fhrmtg7wul36znzp@scully.more-magic.net>
-Date: Thu, 7 Dec 2017 22:15:59 +0100
-From: Peter Bex <peter@...e-magic.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/05/3
+Message-Id: <CE3AFC1B-46F2-4482-809D-2D8822A219FB@beckweb.net>
+Date: Tue, 5 Dec 2017 11:09:33 +0100
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Recommendations GnuPG-2 replacement
+Subject: Jenkins stored cross-site scripting vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Dec 07, 2017 at 10:01:34PM +0100, Solar Designer wrote:
-> On Thu, Dec 07, 2017 at 03:15:06PM +0000, Jeremy Stanley wrote:
-> > Sounds like my use case is likely not your use case, so perhaps you
-> > should look at the signify utility OpenBSD developed for this
-> > purpose instead? It's included in Debian since Stretch under the
-> > package name "signify-openbsd" and seems to work well; I've used it
-> > semi-regularly as I tend to do a lot of cross-platform things in a
-> > mixed Debian/OpenBSD environment.
-> 
-> There's also asignify:
-> 
-> https://github.com/vstakhov/asignify
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-As for free GPG-compatible alternatives, I happened to remember that
-years ago, NetBSD was working on their own BSD-licensed PGP
-implementation as a GSoC project, but it never really went anywhere.
-Looks like that finally exists now:
-http://netbsd.gw.com/cgi-bin/man-cgi?netpgp++NetBSD-current
+The Jenkins project released a security advisory today. A description of the
+vulnerability is below. More details, severity, and attribution can be found
+here:
+https://jenkins.io/security/advisory/2017-12-05/
 
-I don't know if it's any good or if it can be easily ported to Linux
-but it could be worth investigating if you really want to avoid GPG,
-and it should probably be a lot simpler.
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-Cheers,
-Peter
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+---
+
+SECURITY-624
+Jenkins administrators can configure tools, such as JDK, Maven, or Ant,
+that will be available in job configurations for use by build scripts. Some
+tool names are not properly escaped on job configuration forms, resulting
+in a stored cross-site scripting vulnerability.
+
+Tools confirmed to be affected are:
+- JDK (provided by Jenkins core)
+- Ant (provided by Ant plugin)
+
+Others may also be affected by this.
+
+This vulnerability can only be exploited by Jenkins administrators, as
+they’re the only ones able to define tools. In the vast majority of Jenkins
+configurations, administrators are able to run any code and install any
+plugin. Therefore this vulnerability only really affects installations that
+don’t grant administrators the Run Scripts, Configure Update Sites, and
+Install Plugins permissions.
+
+The Jenkins project has prepared a plugin preventing the configuration of
+unsafe tool names at https://github.com/jenkinsci-cert/security624 as a
+workaround. If you’re affected by this issue, we recommend installing this
+plugin.
+
