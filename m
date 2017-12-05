@@ -1,108 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/20/6
-Message-Id: <E1dNHpI-00065J-5W@xenbits.xenproject.org>
-Date: Tue, 20 Jun 2017 12:00:08 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 221 - NULL pointer deref in event channel poll
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/05/5
+Message-ID: <20171205165034.GU28203@yuggoth.org>
+Date: Tue, 5 Dec 2017 16:50:34 +0000
+From: Jeremy Stanley <fungi@...goth.org>
+To: oss-security@...ts.openwall.com
+Subject: [OSSA-2017-006] Nova FilterScheduler doubles resource allocations during rebuild with new image (CVE-2017-17051)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+==============================================================================================
+OSSA-2017-006: Nova FilterScheduler doubles resource allocations during rebuild with new image
+==============================================================================================
 
-                    Xen Security Advisory XSA-221
-                              version 2
+:Date: December 05, 2017
+:CVE: CVE-2017-17051
 
-               NULL pointer deref in event channel poll
 
-UPDATES IN VERSION 2
-====================
+Affects
+~~~~~~~
+- Nova: ==16.0.3
 
-Public release.
 
-ISSUE DESCRIPTION
-=================
+Description
+~~~~~~~~~~~
+Matt Riedemann from Huawei reported a vulnerability in OpenStack
+Nova's default FilterScheduler. By repeatedly rebuilding an instance
+with new images, an authenticated user may consume untracked resources
+on a hypervisor host leading to a denial of service. This regression
+was introduced with the fix for OSSA-2017-005 (CVE-2017-16239),
+however, only Nova stable/pike or later deployments with that fix
+applied and relying on the default FilterScheduler are affected.
 
-When polling event channels, in general arbitrary port numbers can be
-specified.  Specifically, there is no requirement that a polled event
-channel ports has ever been created.  When the code was generalised
-from an earlier implementation, introducing some intermediate
-pointers, a check should have been made that these intermediate
-pointers are non-NULL.  However, that check was omitted.
 
-IMPACT
-======
+Patches
+~~~~~~~
+- https://review.openstack.org/523214 (Pike)
+- https://review.openstack.org/521662 (Queens)
 
-A malicious or buggy guest may cause the hypervisor to access
-addresses it doesn't control, usually leading to a host crash (Denial
-of Service).  Information leaks cannot be excluded.
 
-VULNERABLE SYSTEMS
-==================
+Credits
+~~~~~~~
+- Matt Riedemann from Huawei (CVE-2017-17051)
 
-Xen versions 4.4 and newer are vulnerable.  Xen versions 4.3 and
-earlier are not affected.
 
-Both x86 and ARM systems are vulnerable.
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/1732976
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-17051
 
-While all guest kinds can cause a Denial of Service, only x86 PV guests
-may be able to leverage the possible information leaks.
+-- 
+Jeremy Stanley
+OpenStack Vulnerability Management Team
 
-MITIGATION
-==========
-
-There is no known mitigation.
-
-CREDITS
-=======
-
-This issue was discovered by Ankur Arora of Oracle.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa221.patch           Xen 4.4.x and later, including xen-unstable
-
-$ sha256sum xsa221*
-2425396a713466808b0f75f91337be4dd20a4dee7733972b04489773c6e97655  xsa221.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJZSQ3TAAoJEIP+FMlX6CvZw20H/jCUm+eX4rPUCQ6CL+Ya/dXH
-th34nPKQnq60gm3469sDQQMNbuvfgBItAAAjO87NC6P2BSyYPMny5SvqSsmkWow1
-8OkAWq5ZZ3L7ksPhkP6aco+ks1a99SxJX4YfjwOFq9ct6/zfrcW1ThEqs9j87JeP
-6RGPYgXc0mP9IOk27JnUVgiej7/v4a8v5FcWrG3bHpw2vp9tY3hdvkfc6wJiuplx
-kkqIVkqTpCNu7QYGv3de1RpDeI5mN8TGY+6ahs9eZFEFmRGWiAahhZRnwGVNE7Tl
-QcHzaphlzp/etub8sHgZPH90xLaeILJ+9oz29b/SLUVqahRxzTD1bLUElEu2su0=
-=xR3U
------END PGP SIGNATURE-----
-
-Download attachment "xsa221.patch" of type "application/octet-stream" (7411 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
