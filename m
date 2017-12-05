@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1943" "Wednesday" "31" "August" "2016" "08:23:56" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160831122356.6E0566C4866@smtpvmsrv1.mitre.org>" "51" "[oss-security] Re: CVE request: Kernel Oops when issuing fcntl on an AUFS directory" "^Cc:" nil nil "8" "2016083112:23:56" "[oss-security] Re: CVE request: Kernel Oops when issuing fcntl on an AUFS directory" (number mark "U       cve-assign@m Aug 31   51/1943  " thread-indent "\"[oss-security] Re: CVE request: Kernel Oops when issuing fcntl on an AUFS directory\"\n") "<1472603664.25374.41.camel@decadent.org.uk>" ("<1472603664.25374.41.camel@decadent.org.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2746" "Tuesday" "5" "December" "2017" "14:53:30" "+0000" "Tristan Cacqueray" "tdecacqu@redhat.com" "<1512485234.nayti5pl04.tristanC@fedora>" "87" "[oss-security] [OSSA 2017-005.1] Nova Filter Scheduler bypass through rebuild action (CVE-2017-16239) ERRATA" nil nil nil "12" "2017120514:53:30" "[oss-security] [OSSA 2017-005.1] Nova Filter Scheduler bypass through rebuild action (CVE-2017-16239) ERRATA" (number mark "U       tdecacqu@red Dec  5   87/2746  " thread-indent "\"[oss-security] [OSSA 2017-005.1] Nova Filter Scheduler bypass through rebuild action (CVE-2017-16239) ERRATA\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 23753 invoked by uid 550); 31 Aug 2016 12:24:09 -0000
+Received: (qmail 22142 invoked by uid 550); 5 Dec 2017 14:53:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,64 +11,117 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 23730 invoked from network); 31 Aug 2016 12:24:08 -0000
-In-Reply-To: <1472603664.25374.41.camel@decadent.org.uk>
-Message-Id: <20160831122356.6E0566C4866@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, debian@wodny.org
-Date: Wed, 31 Aug 2016 08:23:56 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request: Kernel Oops when issuing fcntl on an AUFS directory
-To: ben@decadent.org.uk
+Received: (qmail 22121 invoked from network); 5 Dec 2017 14:53:24 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:subject:to:message-id:mime-version;
+        bh=cuY2RupZ2HBT9SAFqCML/80tnl+uREQVEQazIFtdN9c=;
+        b=rMs5CjCO860q9GgSenavqc+HHD1Zj/VRARlXWbTmcnzLo+mgJmS2OsO/yTBFn5/Ng3
+         G8bY1dVTda/+nEjAQPJkOLF/r3l9ZpL12yk8LOqS+Zpdn+piuvgiGgUAK/I3swTRmIow
+         N2sl/A5sJb7OPZ93zh6xirOB76Ot0curOfqdcKCLtXk1Nmak2fIReBo63GhidCLlVt5X
+         2KWOKeuOllqWoeTNiivQfsi5/HajILWJYRZ0+16W6ztEjaI5WLt0o1zihsmcm8YMjHc6
+         BsMDko811kWueTBh5pPHG1szjr/M/VkAxNXKlqptdTSoBQ8ZSty7ixVIvQMgXWTR+ayt
+         ty2A==
+X-Gm-Message-State: AKGB3mKYMNv8p/RaBB+jaH10YDsadh8RbPbuhbK1jUPDnvY00cwQjAZT
+	ZRGBsXDXZClEankxXqt9PaA4bpe3ll8=
+X-Google-Smtp-Source: AGs4zMa/sg6W3iCJbTumQJCHzsuCGHRW5d6tslFAYAwH9E0yXM+dlQT59SrZVM8FetP74PMABhQovQ==
+X-Received: by 10.84.131.41 with SMTP id 38mr4221331pld.149.1512485591682;
+        Tue, 05 Dec 2017 06:53:11 -0800 (PST)
+Date: Tue, 05 Dec 2017 14:53:30 +0000
+From: Tristan Cacqueray <tdecacqu@redhat.com>
+To: oss-security@lists.openwall.com
+Message-Id: <1512485234.nayti5pl04.tristanC@fedora>
+MIME-Version: 1.0
+Content-Type: multipart/signed; protocol="application/pgp-signature";
+	micalg=pgp-sha256; boundary="=-SZ3KmPG8+TPD+lIp3Xhw"
+Subject: [oss-security] [OSSA 2017-005.1] Nova Filter Scheduler bypass through rebuild action
+ (CVE-2017-16239) ERRATA
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--=-SZ3KmPG8+TPD+lIp3Xhw
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
 
-> a bug in Debian's kernel
-> packages that allows a denial of service (crash) by local users with
-> access to an aufs filesystem.  The bug is in a Debian-specific patch,
-> not the upstream kernel or aufs code.
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+OSSA-2017-005.1: Nova Filter Scheduler bypass through rebuild action
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
->> the wheezy kernel upgrade from 3.2.78-1 to 3.2.81-1 added the SETFL
->> fcntl support code (#627782) which unfortunately results in a kernel
->> Oops when the fcntl is called on a directory. This breaks e.g. copying
->> files from an AUFS filesystem on a remote machine using scp.
+:Date: November 14, 2017
+:CVE: CVE-2017-16239
 
->>        fcntl (fd, F_SETFL, O_RDONLY);
 
->> Call the program on regular a file (nothing happens) and then on a
->> directory (Oops).
+Affects
+~~~~~~~
+- Nova: <=3D14.0.10, >=3D15.0.0 <=3D15.0.8, >=3D16.0.0 <=3D16.0.3
 
->> The Oops happens in fs/fcntl.c
 
->> The aufs_file_fop structure sets the value of the .setfl member to
->> aufs_setfl (f_op.c). aufs_dir_fop (dir.c) on the other hand does not.
+Description
+~~~~~~~~~~~
+George Shuklin from servers.com reported a vulnerability in Nova. By
+rebuilding an instance, an authenticated user may be able to
+circumvent the Filter Scheduler bypassing imposed filters (for
+example, the ImagePropertiesFilter or the IsolatedHostsFilter). All
+setups using Nova Filter Scheduler are affected.
 
->>   aufs 3.2.x+setfl-debian
 
->>   kernel NULL pointer dereference
+Errata
+~~~~~~
+The former fix introduced regressions in the rebuild functionality.
+Rebuild may fail depending on configured scheduler filters and
+environment, for example, when the compute host is running at capacity
+or when the host is disabled. This update provides an additional set
+of fixes for these regressions.
 
-Use CVE-2016-7118.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+Patches
+~~~~~~~
+- https://review.openstack.org/519684 (Newton)
+- https://review.openstack.org/523434 (errata) (Newton)
+- https://review.openstack.org/519681 (Ocata)
+- https://review.openstack.org/523427 (errata) (Ocata)
+- https://review.openstack.org/519672 (Pike)
+- https://review.openstack.org/523212 (errata) (Pike)
+- https://review.openstack.org/519662 (Queens)
+- https://review.openstack.org/521186 (errata) (Queens)
+
+
+Credits
+~~~~~~~
+- George Shuklin from Servers.com (CVE-2017-16239)
+
+
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/1664931
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2017-16239
+
+
+OSSA History
+~~~~~~~~~~~~
+- 2017-12-05 - Errata 1
+- 2017-11-14 - Original Version
+
+--
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
+
+--=-SZ3KmPG8+TPD+lIp3Xhw
+Content-Type: application/pgp-signature
+
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXxsvbAAoJEHb/MwWLVhi2LWoP/3ZaPz0Ig/FPWdBi+JyGP7/K
-YlCUjfpCrWaIBQwczMqZX+7E+aTym5dQ3tvRYdoOiDZhhcGCxLa7YCNLHZdVDIkC
-OJOrBOoDyL1OjhcNvFD6uahCAfqVAilvFgR7HNkbiwPnvFIkUd3LZXtvpfCla4l8
-8/PABvTGSnZWesZdG573mduIZQ0wO/RGcp1ng+tbyZjXUUWqJe03v70C19s0aMVh
-xXZLk3WuCUUnEfdWsRK2W5Shj4zCqIBhzbzWQcBcFLL65hxdoLGLLsCkx3EM0VkO
-8f07NoP24dKfLy1uH4HhRcVKIc4E22knCGOnWIX4aiHvbLHtBAnoNHhG9rgRg221
-DomDaYqjyOXgFUIK2DxB1qJbTPvKuyhWQZ+MrI0c72NJ8nSgexoEdk/6pKagpnq7
-gSu1MN+r7Q/IBf722Xqi82y9BBV+NlWH967dlqnH3EoxiHK5M6Y7koCdx+9HYrvs
-Ib1f60ztjAwglxljqjhGVG02wJhwOqvfH2wJb78HKPJ9A3F24Y5bDyxzmB1J2Pjm
-fT5vYyOXGUIoY4U8062yaqPI6OJedhKgJvYfnFqJCxa88RpB8sPXZlMcsm+2ajSv
-kA7X7fS7eNj/gPAXgUEkjJaK8r6sDB5MzhRZ1OvJevbRpHR7GYczfAfgFeqJNSEx
-IleDjdlHzS7T25oRRIFQ
-=4pvR
+iQEzBAABCAAdFiEE6xA96LXmnmMcb/F5IrmgXJJcxdgFAlomsuoACgkQIrmgXJJc
+xdjdngf+NfI2lTWGVcm8bD9VATbueZ5zl9FGvzepPT3hqU19d5pwQa0GVu600vTG
+/bayvLzizlYvLVYHsb+rZ2mucWS28nZ/uZru07oUAXt+3hzk1QYF0iV0b9zpSQRJ
+cGOscvAXtOT7WPaGvZsvN8CmLryqG2UKmVCXL4kFGqQI4q39WZ02UcF7MCGLDX5n
+KWA1etYJRSscMJkShjs/y5auFnzo49KWjzuyC6NRuKq2LvmNXLxAP+YIV5Wkf4PW
+ZQPeQmQpvn6AU44uFCYmccZ9q9nWGizbb88lI5yIy06apd5Nr9lMjrPvyuFz+5jt
+IGjjHSZQ2BF6Pjhw+YhVGblVOCFhcA==
+=okGD
 -----END PGP SIGNATURE-----
+
+--=-SZ3KmPG8+TPD+lIp3Xhw--
