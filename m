@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["996" "Tuesday" "13" "October" "2015" "01:53:36" "+0000" "Yusaku Sako" "yusaku@hortonworks.com" "<FBCDBCD4-3B6C-4D1A-BF45-870A6EBFDFA3@hortonworks.com>" "20" "[oss-security] [CVE-2015-5210] Unvalidated Redirects and Forwards using targetURI parameter can enable phishing exploits" nil nil nil "10" "2015101301:53:36" "[oss-security] [CVE-2015-5210] Unvalidated Redirects and Forwards using targetURI parameter can enable phishing exploits" (number mark "U       yusaku@horto Oct 13   20/996   " thread-indent "\"[oss-security] [CVE-2015-5210] Unvalidated Redirects and Forwards using targetURI parameter can enable phishing exploits\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["608" "Tuesday" "5" "December" "2017" "12:54:12" "+0530" "P J P" "ppandit@redhat.com" "<nycvar.YSQ.7.76.1712051252001.29623@wniryva>" "21" "[oss-security] CVE-2017-17381 Qemu: virtio: divide by zero exception while updating rings" nil nil nil "12" "2017120507:24:12" "[oss-security] CVE-2017-17381 Qemu: virtio: divide by zero exception while updating rings" (number mark "U       ppandit@redh Dec  5   21/608   " thread-indent "\"[oss-security] CVE-2017-17381 Qemu: virtio: divide by zero exception while updating rings\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32473 invoked by uid 550); 13 Oct 2015 05:35:28 -0000
+Received: (qmail 5200 invoked by uid 550); 5 Dec 2017 07:24:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,51 +12,38 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11784 invoked from network); 13 Oct 2015 01:53:49 -0000
+Received: (qmail 5182 invoked from network); 5 Dec 2017 07:24:29 -0000
+Date: Tue, 5 Dec 2017 12:54:12 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss security list <oss-security@lists.openwall.com>
+cc: zhangboxian <zhangboxian@huawei.com>
+Message-ID: <nycvar.YSQ.7.76.1712051252001.29623@wniryva>
 MIME-Version: 1.0
-x-echoworx-msg-id: dc5dedea-c552-4d32-826b-4649d91fa607
-x-echoworx-emg-received: Mon, 12 Oct 2015 18:53:37.914 -0700
-x-echoworx-action: delivered
-From: Yusaku Sako <yusaku@hortonworks.com>
-To: Robert Levas <rlevas@hortonworks.com>, "user@ambari.apache.org"
-	<user@ambari.apache.org>, "dev@ambari.apache.org" <dev@ambari.apache.org>,
-	"security@apache.org" <security@apache.org>,
-	"oss-security@lists.openwall.com" <oss-security@lists.openwall.com>,
-	"bugtraq@securityfocus.com" <bugtraq@securityfocus.com>
-Thread-Topic: [CVE-2015-5210] Unvalidated Redirects and Forwards using
- targetURI parameter can enable phishing exploits
-Thread-Index: AQHRBVn50N/KIk5j1US2ZRA5vHz1Sg==
-Date: Tue, 13 Oct 2015 01:53:36 +0000
-Message-ID: <FBCDBCD4-3B6C-4D1A-BF45-870A6EBFDFA3@hortonworks.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [192.175.27.12]
-x-source-routing-agent: Processed
-Content-Type: multipart/alternative;
-	boundary="_000_FBCDBCD43B6C4D1ABF45870A6EBFDFA3hortonworkscom_"
-Subject: [oss-security] [CVE-2015-5210] Unvalidated Redirects and Forwards using targetURI
- parameter can enable phishing exploits
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.25]); Tue, 05 Dec 2017 07:24:18 +0000 (UTC)
+Subject: [oss-security] CVE-2017-17381 Qemu: virtio: divide by zero exception while updating
+ rings
 
---_000_FBCDBCD43B6C4D1ABF45870A6EBFDFA3hortonworkscom_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+   Hello,
 
-Q1ZFLTIwMTUtNTIxMDogVW52YWxpZGF0ZWQgUmVkaXJlY3RzIGFuZCBGb3J3
-YXJkcyB1c2luZyB0YXJnZXRVUkkgcGFyYW1ldGVyIGNhbiBlbmFibGUgcGhp
-c2hpbmcgZXhwbG9pdHMNCg0KU2V2ZXJpdHk6IEltcG9ydGFudA0KDQpWZW5k
-b3I6IFRoZSBBcGFjaGUgU29mdHdhcmUgRm91bmRhdGlvbg0KDQpWZXJzaW9u
-cyBBZmZlY3RlZDogMS43LjAgdG8gMi4xLjENCg0KVmVyc2lvbnMgRml4ZWQ6
-IDIuMS4yDQoNCkRlc2NyaXB0aW9uOiBBIHJlZGlyZWN0IHRvIGFuIHVudHJ1
-c3RlZCBzZXJ2ZXIgaXMgcG9zc2libGUgdmlhIHVudmFsaWRhdGVkIGlucHV0
-IHRoYXQgc3BlY2lmaWVzIGEgcmVkaXJlY3QgVVJMIHVwb24gc3VjY2Vzc2Z1
-bCBsb2dpbi4NCg0KTWl0aWdhdGlvbjogQW1iYXJpIHVzZXJzIHNob3VsZCB1
-cGdyYWRlIHRvIHZlcnNpb24gMi4xLjIgb3IgYWJvdmUuIFZlcnNpb24gMi4x
-LjIgb253YXJkcyByZWRpcmVjdCBsb2NhdGlvbnMgbXVzdCBiZSByZWxhdGl2
-ZSBVUkxzLg0KDQpSZWZlcmVuY2VzOiBodHRwczovL2N3aWtpLmFwYWNoZS5v
-cmcvY29uZmx1ZW5jZS9kaXNwbGF5L0FNQkFSSS9BbWJhcmkrVnVsbmVyYWJp
-bGl0aWVzDQo=
+Virtio Vring implementation in Quick Emulator(QEMU) is vulnerable to an 
+arithmetic exception issue. It could occur if a guest was to unset vring 
+alignment while updating Virtio rings.
 
---_000_FBCDBCD43B6C4D1ABF45870A6EBFDFA3hortonworkscom_--
+A guest user/process could use this flaw to crash Qemu process resulting in 
+DoS.
+
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2017-12/msg00166.html
+
+This issue was reported by Huawei Alpha Labs.
+
+'CVE-2017-17381' assigned via -> https://cveform.mitre.org/
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
