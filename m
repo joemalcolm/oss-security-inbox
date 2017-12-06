@@ -1,27 +1,128 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/23/2
-Message-ID: <CAKG8Do71TReFYRvbj9isxStB6SOmn1dvrmq=50JwbbyYV_HosQ@mail.gmail.com>
-Date: Thu, 23 Mar 2017 15:57:01 +0100
-From: Cedric Buissart <cbuissar@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: pcs: CVE-2017-2661 Improper node name field validation when creating clusters leads to XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/06/1
+Message-Id: <E1eMXQU-0001T7-NM@xenbits.xenproject.org>
+Date: Wed, 06 Dec 2017 10:59:42 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 238 (CVE-2017-15591) - DMOP map/unmap missing argument checks
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The CVE-2017-2661 has been assigned to the following issue:
+            Xen Security Advisory CVE-2017-15591 / XSA-238
+                              version 3
 
-Reflected cross-site scripting vulnerability was found in pcs due to
-improper validation of Node name field when creating new cluster or adding
-existing cluster.
+                DMOP map/unmap missing argument checks
 
-Upstream fix :
-* web UI: fixed XSS vulnerability
-https://github.com/ClusterLabs/pcs/commit/1874a769b5720ae5430f10c6cedd234430bc703f
+UPDATES IN VERSION 3
+====================
 
-Red Hat would like to thank Microsoft for reporting the vulnerability.
+CVE assigned.
 
--- 
-Cedric Buissart,
-Product Security
+ISSUE DESCRIPTION
+=================
 
+DMOPs (which were a subgroup of HVMOPs in older releases) allow guests
+to control and drive other guests.  The I/O request server page mapping
+interface uses range sets to represent I/O resources the emulation of
+which is provided by a given I/O request server.  The internals of the
+range set implementation require that ranges have a starting value no
+lower than the ending one.  Checks for this fact were missing.
+
+IMPACT
+======
+
+Malicious or buggy stub domain kernels or tool stacks otherwise living
+outside of Domain0 can mount a denial of service attack which, if
+successful, can affect the whole system.
+
+Only domains controlling HVM guests can exploit this vulnerability.
+(This includes domains providing hardware emulation services to HVM
+guests.)
+
+VULNERABLE SYSTEMS
+==================
+
+Xen versions 4.5 and later are vulnerable.  Xen versions 4.4 and
+earlier are not vulnerable.
+
+Only x86 systems are affected.  ARM systems are not affected.
+
+This vulnerability is only applicable to Xen systems using stub domains
+or other forms of disaggregation of control domains for HVM guests.
+
+MITIGATION
+==========
+
+Running only PV guests will avoid this issue.
+
+(The security of a Xen system using stub domains is still better than
+with a qemu-dm running as an unrestricted dom0 process.  Therefore
+users with these configurations should not switch to an unrestricted
+dom0 qemu-dm.)
+
+CREDITS
+=======
+
+This issue was discovered by Vitaly Kuznetsov of RedHat.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa238.patch           xen-unstable, Xen 4.9.x, Xen 4.8.x, Xen 4.7.x
+xsa238-4.6.patch       Xen 4.6.x
+xsa238-4.5.patch       Xen 4.5.x
+
+$ sha256sum xsa238*
+93cc1da4a0ab27f857f2ad39c38f112ef101a01bc5d386807d27371f83526831  xsa238.meta
+85d3f9713bef1bc86c682857dbd7388a1d1f20089363ddfc4cb9ecbd88eaffec  xsa238.patch
+034e91c234f6831dbaa1aaf29f4f90de2e822f99301424f7f3527f9da883ff68  xsa238-4.5.patch
+29255a81729b24866e594426167de5fbef70de21ef62a95ba95de191d2a7fd54  xsa238-4.6.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJaJ82OAAoJEIP+FMlX6CvZcU0IAMkUqTbbTWIWAruO03YSxFvn
+bqmfyzgyUVHUMLzhjrukaqVxZYcxV5FbY/IMWEZY/oET9wHv8iBsMay+cVlsv45i
+GMHZaxGBM9P1xU6AS4GP/oRMb9LA4fU7rjCKcK54zaDV+mdW/2rA+Ac0IVbmn3tF
+gcnkfbHk3cF8x91rD4+2ZC7ihE6CIX70PQxdXNbgR8RpoxGdE1q9IPF8ik3gLyO/
+OtoDfqrbau+YllhTBI3XxmU+MJgpRf+VRnOgFpYjzp10dfVBM459Lmdzfa6gXhxz
+ysm+Js8Y4jpVEIGY3qXAV8/V2ZSL8nNmFiNFPOJZcNu4wkAFZKUlyWBbFlJcvvk=
+=keh/
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa238.meta" of type "application/octet-stream" (1867 bytes)
+
+Download attachment "xsa238.patch" of type "application/octet-stream" (1545 bytes)
+
+Download attachment "xsa238-4.5.patch" of type "application/octet-stream" (1435 bytes)
+
+Download attachment "xsa238-4.6.patch" of type "application/octet-stream" (1435 bytes)
