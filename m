@@ -1,21 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/21/2
-Message-ID: <14558692.afnJ5aRU9J@wanheda>
-Date: Wed, 21 Jun 2017 12:46:28 +0200
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/06/2
+Message-Id: <8AE227B9-E337-45DC-9D8A-C4DB2452FB87@beckweb.net>
+Date: Wed, 6 Dec 2017 14:37:19 +0100
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Qualys Security Advisory - The Stack Clash
+Subject: Jenkins EC2 Plugin 1.37 and earlier arbitrary shell command execution
 Content-Type: text/plain; charset=utf-8
 
-On Monday 19 June 2017 08:28:43 Qualys Security Advisory wrote:
-> III. Solutions
-> - Recompile all userland code (ld.so, libraries, binaries) with GCC's
->   "-fstack-check" option, which prevents the stack-pointer from moving
->   into another memory region without accessing the stack guard-page (it
->   writes one word to every 4KB page allocated on the stack).
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software. The following
+plugin releases contain fixes for security vulnerabilities:
 
-For the record, Gentoo Hardened enables by default -fstack-check=specific
+* EC2 Plugin 1.38
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Users of these plugins should upgrade them to the indicated versions.
+
+Descriptions of the vulnerabilities are below. Some more details, 
+severity, and attribution can be found here:
+https://jenkins.io/security/advisory/2017-12-06/
+
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-643
+Users with permission to create or configure agents in Jenkins could
+configure an EC2 agent to run arbitrary shell commands on the master node
+whenever the agent was supposed to be launched.
+
+Configuration of these agents now requires the 'Run Scripts' permission
+typically only granted to administrators.
+
