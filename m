@@ -1,63 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/21/2
-Message-Id: <60EF1721-9E02-481D-9A2D-204F87D75282@beckweb.net>
-Date: Tue, 21 Mar 2017 02:19:41 +0100
-From: Daniel Beck <ml@...kweb.net>
-To: oss-security@...ts.openwall.com
-Subject: Jenkins plugins -- multiple vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/06/3
+Message-ID: <CA++9HO98n_G9zpBh2=wyj_T1osWECrah_vJWz3=TLf=hMS_5aA@mail.gmail.com>
+Date: Wed, 06 Dec 2017 16:23:13 +0000
+From: Armis Security <security@...is.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Info Leak in the Linux Kernel via Bluetooth
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around 
-the world to reliably build, test, and deploy their software. The following 
-plugin releases published today contain fixes for security vulnerabilities:
+Hello,
 
-- Active Directory 2.3
-- DistFork Plugin 1.6.0
-- Email Extension (email-ext) 2.57.1
-- Mailer Plugin 1.20
-- SSH Slaves 1.15
+We are writing to disclose an information leak vulnerability in the
+Bluetooth stack of the Linux Kernel (BlueZ).
+This vulnerability has been disclosed to the Kernel's security team (
+security@...nel.org), and a patch for it is in stages of review.
+This patch is also attached here.
 
-Users of these plugins should upgrade them to the indicated versions.
+This vulnerability lies in the processing of incoming L2CAP commands -
+ConfigRequest, and ConfigResponse messages.
+This info leak is a result of uninitialized stack variables that may be
+returned to an attacker in their uninitialized state.
+By manipulating the code flows that precede the handling of these
+configuration messages, an attacker can also gain some control over which
+data will be held in the uninitialized stack variables.
+This can allow him to bypass KASLR, and stack canaries protection - as both
+pointers and stack canaries may be leaked in this manner.
 
-Additionally, one plugin was removed from distribution as there are no plans 
-to fix its vulnerability, and there are adequate alternatives:
+Combining this vulnerability (for example) with the previously disclosed
+RCE vulnerability in L2CAP configuration parsing (CVE-2017-1000251) may
+allow an attacker to exploit the RCE against kernels which were built with
+the above mitigations.
 
-- Pipeline: Classpath Step
+These are the specifics of this vulnerability:
+In the function l2cap_parse_conf_rsp and in the function
+l2cap_parse_conf_req the following variable is declared without
+initialization:
 
-Summary and description of the vulnerabilities are below. Some more details, 
-severity, and attribution can be found here:
-https://jenkins.io/security/advisory/2017-03-20/
+struct l2cap_conf_efs efs;
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+In addition, when parsing input configuration parameters in both of these
+functions, the switch case for handling EFS elements may skip the memcpy
+call that will write to the efs variable:
 
-If you find security vulnerabilities in Jenkins, please report them as 
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
+...
+case L2CAP_CONF_EFS:
+if (olen == sizeof(efs))
+memcpy(&efs, (void *)val, olen);
+...
 
----
+The olen in the above if is attacker controlled, and regardless of that if,
+in both of these functions the efs variable would eventually be added to
+the outgoing configuration request that is being built:
 
-SECURITY-161 / CVE-2017-2648
-SSH Slaves Plugin did not verify host keys of hosts it connected to.
+l2cap_add_conf_opt(&ptr, L2CAP_CONF_EFS, sizeof(efs), (unsigned long) &efs);
 
-SECURITY-251 / CVE-2017-2649
-Active Directory Plugin did not verify TLS certificate of AD server.
+So by sending a configuration request, or response, that contains an
+L2CAP_CONF_EFS element, but with an element length that is not sizeof(efs)
+- the memcpy to the uninitialized efs variable can be avoided,
+and the uninitialized variable would be returned to the attacker (16 bytes).
 
-SECURITY-336 / CVE-2017-2650
-Pipeline: Classpath Step plugin allows Script Security sandbox bypass for 
-users with SCM commit access, as well as users with e.g. Job/Configure 
-permission in Jenkins.
+A simple patch for avoiding this info leak is attached.
 
-SECURITY-372 / CVE-2017-2651 (Mailer)
-SECURITY-372 / CVE-2017-2654 (Email Extension)
-Emails could be sent to addresses not associated with actual users of Jenkins 
-by Mailer Plugin and Email Extension Plugin if they were configured to send 
-notifications to a dynamically created list of users based on SCM changes. In 
-rare cases this even resulted in emails sent to people who were not involved 
-in whatever project was being built.
+Ben Seri,
+Armis
 
-SECURITY-386 / CVE-2017-2652
-There were no permission checks performed in the Distributed Fork plugin 
-beyond the basic check for Overall/Read permission, allowing anyone with that 
-permission to run arbitrary shell commands on all connected nodes.
+Content of type "text/html" skipped
 
+Download attachment "l2cap_core.c.patch" of type "application/octet-stream" (1398 bytes)
