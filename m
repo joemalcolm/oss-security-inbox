@@ -1,64 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/04/2
-Message-ID: <3275935.MH2SCY44WS@arcadia>
-Date: Sat, 04 Feb 2017 13:19:37 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/06/4
+Message-ID: <1512580864.3139.2.camel@redhat.com>
+Date: Wed, 06 Dec 2017 18:21:04 +0100
+From: Adam Maris <amaris@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: pax-utils: dumpelf: out of bounds read in dump_notes (dumpelf.c)
+Subject: Re: Info Leak in the Linux Kernel via Bluetooth
 Content-Type: text/plain; charset=utf-8
 
-Description:
-pax-utils is a set of tools that check files for security relevant properties.
+On Wed, 2017-12-06 at 16:23 +0000, Armis Security wrote:
+> Hello,
+> 
+> We are writing to disclose an information leak vulnerability in the
+> Bluetooth stack of the Linux Kernel (BlueZ).
+> This vulnerability has been disclosed to the Kernel's security team (
+> security@...nel.org), and a patch for it is in stages of review.
+> This patch is also attached here.
+> 
+> This vulnerability lies in the processing of incoming L2CAP commands
+> - ConfigRequest, and ConfigResponse messages.
+> This info leak is a result of uninitialized stack variables that may
+> be returned to an attacker in their uninitialized state.
+> By manipulating the code flows that precede the handling of these
+> configuration messages, an attacker can also gain some control over
+> which data will be held in the uninitialized stack variables.
+> This can allow him to bypass KASLR, and stack canaries protection -
+> as both pointers and stack canaries may be leaked in this manner.
+> 
+> Combining this vulnerability (for example) with the previously
+> disclosed RCE vulnerability in L2CAP configuration parsing (CVE-2017-
+> 1000251) may allow an attacker to exploit the RCE against kernels
+> which were built with the above mitigations.
+> 
+> These are the specifics of this vulnerability:
+> In the function l2cap_parse_conf_rsp and in the function
+> l2cap_parse_conf_req the following variable is declared without
+> initialization:
+> 
+> struct l2cap_conf_efs efs;
+> 
+> In addition, when parsing input configuration parameters in both of
+> these functions, the switch case for handling EFS elements may skip
+> the memcpy call that will write to the efs variable:
+> 
+> ...
+> 		case L2CAP_CONF_EFS:
+> 			if (olen == sizeof(efs))
+> 				memcpy(&efs, (void *)val, olen);
+> ...
+> 
+> The olen in the above if is attacker controlled, and regardless of
+> that if, in both of these functions the efs variable would eventually
+> be added to the outgoing configuration request that is being built:
+> 
+> l2cap_add_conf_opt(&ptr, L2CAP_CONF_EFS, sizeof(efs), (unsigned long)
+> &efs);
+> 
+> So by sending a configuration request, or response, that contains an
+> L2CAP_CONF_EFS element, but with an element length that is not
+> sizeof(efs) - the memcpy to the uninitialized efs variable can be
+> avoided,
+> and the uninitialized variable would be returned to the attacker (16
+> bytes).
+> 
 
-A fuzz on dumpelf an out of bounds read. It was reported to vapier which fixed 
-the issue immediately.
-Unfortunately I can’t get a symbolized ASan stacktrace, so I will show only 
-the useful part of both asan and gdb.
-This is not CVE-worthy because of the “READ of size 1” in a command-line tool. 
-I’m sharing it because some distro/packagers may want to have the patch 
-aboard.
+For reference, this issue was assigned CVE-2017-1000410.
 
-# dumpelf $FILE
-unknown-crash on address 0x7fc30f701000 at pc 0x000000520111 bp 0x7ffdc3db8eb0 
-sp 0x7ffdc3db8ea8
-READ of size 1 at 0x7fc30f701000 thread T0
-
-(gdb)
-#0  dump_notes (B=B@...ry=64, memory=memory@...ry=0x7ffff7ff428c, 
-memory_end=0x7ffff7ff42ac, elf=0x60d8e0, elf=0x60d8e0) at dumpelf.c:245
-#1  0x0000000000405636 in dump_phdr (elf=elf@...ry=0x60d8e0, 
-phdr_void=phdr_void@...ry=0x7ffff7ff4158, phdr_cnt=phdr_cnt@...ry=5) at 
-dumpelf.c:324
-#2  0x0000000000401dd9 in dumpelf (file_cnt=0, filename=) at dumpelf.c:91
-#3  parseargs (argv=0x7fffffffe1a8, argc=2) at dumpelf.c:557
-#4  main (argc=2, argv=0x7fffffffe1a8) at dumpelf.c:566
-
-Affected version:
-1.2.2
-
-Fixed version:
-N/A
-
-Commit fix:
-https://github.com/gentoo/pax-utils/commit/10a9643d90a1ba6058a66066803fac6cf43f6917
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00142-pax-utils-dumpelf-oob1
-
-Timeline:
-2017-01-30: bug discovered and reported to upstream
-2017-02-01: upstream released a patch
-2017-02-04: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/02/04/pax-utils-dumpelf-out-of-bounds-read-in-dump_notes-dumpelf-c
+Regards,
 
 -- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Adam Mariš, Red Hat Product Security
+1CCD 3446 0529 81E3 86AF  2D4C 4869 76E7 BEF0 6BC2 
