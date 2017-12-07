@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["618" "Monday" "13" "February" "2017" "10:30:10" "+0000" "=?UTF-8?B?U8OpYmFzdGllbg==?= Delafond" "seb@debian.org" "<20170213112557.381@usenet.piggo.com>" "18" "[oss-security] Re: CVE request: XXE in Openpyxl" nil nil nil "2" "2017021310:30:10" "[oss-security] Re: CVE request: XXE in Openpyxl" (number mark "U       seb@debian.o Feb 13   18/618   " thread-indent "\"[oss-security] Re: CVE request: XXE in Openpyxl\"\n") "<20170207235746.GA13577@sin.redhat.com>" ("<20170207104854.331@usenet.piggo.com>" "<20170207235746.GA13577@sin.redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["451" "Thursday" "7" "December" "2017" "12:17:18" "+0100" "Greg KH" "greg@kroah.com" "<20171207111718.GA1230@kroah.com>" "17" "[oss-security] Re: signed integer overflow in common_timer_get on linux 4.15.0-rc1" nil nil nil "12" "2017120711:17:18" "[oss-security] Re: signed integer overflow in common_timer_get on linux 4.15.0-rc1" (number mark "U       greg@kroah.c Dec  7   17/451   " thread-indent "\"[oss-security] Re: signed integer overflow in common_timer_get on linux 4.15.0-rc1\"\n") "<CANBt6Y257EXeL_dnxB0xXQmP+o7sS5FS3BJwPR5PsE3Wu1nKvg@mail.gmail.com>" ("<CANBt6Y257EXeL_dnxB0xXQmP+o7sS5FS3BJwPR5PsE3Wu1nKvg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1574 invoked by uid 550); 13 Feb 2017 14:03:03 -0000
+Received: (qmail 13983 invoked by uid 550); 7 Dec 2017 11:17:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,33 +12,47 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24147 invoked from network); 13 Feb 2017 10:30:36 -0000
-X-Injected-Via-Gmane: http://gmane.org/
-To: oss-security@lists.openwall.com
-From: =?UTF-8?Q?S=C3=A9bastien?= Delafond <seb@debian.org>
-Date: Mon, 13 Feb 2017 10:30:10 +0000 (UTC)
-Message-ID: <20170213112557.381@usenet.piggo.com>
-References: <20170207104854.331@usenet.piggo.com>
- <20170207235746.GA13577@sin.redhat.com>
-X-Complaints-To: usenet@blaine.gmane.org
-User-Agent: slrn/1.0.2 (Linux)
-Subject: [oss-security] Re: CVE request: XXE in Openpyxl
+Received: (qmail 13965 invoked from network); 7 Dec 2017 11:17:21 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm1; bh=EDZFDppkXsla4J2JOvCSpUohacJKw
+	l+TcdWdC7QkTvI=; b=FgcKmV+1AhrIPc0qLXYxjzsdpwmLC7sKmM6/gNfX070S5
+	0dt5rvfMvEVrYy/Q4LV89rXMA0LSRzyQsRXkQZk2zwaDpg9OmqZBodPW7sQWTI1K
+	SvHEzVw7BsO4OD6S6XTgN9FanfavB9JvO5NJrxgrUexpI9S80GoRfphuzWmw9nB6
+	KvSgeK/crQU5H958sfwlyctSnSslAw0/rd/w5AX86ggaNENH98V3fDWVVnuamuNg
+	wqpipJPxAX+kVwcJO8n9MBLEbv2VmtrzXONNoe2ibND0bDmbnP/qkn+JQQc/E5Fu
+	88L8oFx3agCaae6SpL3iI4GGmR49gRJv2QUI4HNuA==
+X-ME-Sender: <xms:NiMpWqGvQ8Z5CQ66RxCWlLUTlAYtcA04t6nKefWHHrqdqLSmCwCq-Q>
+Date: Thu, 7 Dec 2017 12:17:18 +0100
+From: Greg KH <greg@kroah.com>
+To: at zhou <zhouat2017@gmail.com>
+Cc: security@kernel.org, secalert@redhat.com, security@suse.com,
+	tglx@linutronix.de, oss-security@lists.openwall.com,
+	linux-distros@vs.openwall.org
+Message-ID: <20171207111718.GA1230@kroah.com>
+References: <CANBt6Y257EXeL_dnxB0xXQmP+o7sS5FS3BJwPR5PsE3Wu1nKvg@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CANBt6Y257EXeL_dnxB0xXQmP+o7sS5FS3BJwPR5PsE3Wu1nKvg@mail.gmail.com>
+User-Agent: Mutt/1.9.1 (2017-09-22)
+Subject: [oss-security] Re: signed integer overflow in common_timer_get on linux 4.15.0-rc1
 
-On 2017-02-07, Doran Moppert <dmoppert@redhat.com> wrote:
-> This is yet another instance of CVE-2016-9318.  As already observed
-> on the Debian tracker, disabling entity resolution altogether is
-> probably going to make openpyxl fail on well-formed Excel documents
-> using standard entities such as &lt;.
+On Thu, Dec 07, 2017 at 06:01:43PM +0800, at zhou wrote:
+> Hi all,
+> 
+> credit   to   L5@360vulcan team
+> 
+> I fuzzed the linux kernel and find signed integer overflow on linux
+> 4.15.0-rc1+.
+> the crash log can see below, the .config and the poc file ,please see the
+> attachments.
 
-Hi Doran,
+Odd, doesn't seem to affect a 4.9 or 4.15-rc2 kernel here on my
+machines, is there something specific in the .config that might be
+triggering this?
 
-we do not see this issue being technically the same thing as
-CVE-2016-9318. openpyxl shouldn't need to resolve *external* XML
-entities, and the initial reporter of the Debian bug tested that the
-upstream patch doesn't break reglar entities like "&lt"; and
-"&gt;". What do you think ?
+thanks,
 
-Cheers,
-
---Seb
-
+greg k-h
