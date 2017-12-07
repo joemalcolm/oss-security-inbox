@@ -1,33 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/23/2
-Message-ID: <e8f1b5ae-9fa7-f985-4448-1305174fadea@cendio.se>
-Date: Mon, 23 Jan 2017 09:34:39 +0100
-From: Pierre Ossman <ossman@...dio.se>
-To: Alan Coopersmith <alan.coopersmith@...cle.com>, tigervnc-devel@...glegroups.com
-Cc: oss-security@...ts.openwall.com
-Subject: Re: [tigervnc-devel] Re: [tigervnc-announce] TigerVNC 1.7.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/07/5
+Message-ID: <20171207111718.GA1230@kroah.com>
+Date: Thu, 7 Dec 2017 12:17:18 +0100
+From: Greg KH <greg@...ah.com>
+To: at zhou <zhouat2017@...il.com>
+Cc: security@...nel.org, secalert@...hat.com, security@...e.com, tglx@...utronix.de, oss-security@...ts.openwall.com, linux-distros@...openwall.org
+Subject: Re: signed integer overflow in common_timer_get on linux 4.15.0-rc1
 Content-Type: text/plain; charset=utf-8
 
-On 22/01/17 07:25, Alan Coopersmith wrote:
-> Is there a CVE assigned to this issue that we should use when passing this
-> fix through to our packages/distros?  I don't see one mentioned in the
-> commit
-> or pull requests:
->
-> https://github.com/TigerVNC/tigervnc/commit/18c020124ff1b2441f714da2017f63dba50720ba
->
-> https://github.com/TigerVNC/tigervnc/pull/399
->
+On Thu, Dec 07, 2017 at 06:01:43PM +0800, at zhou wrote:
+> Hi all,
+> 
+> credit   to   L5@...vulcan team
+> 
+> I fuzzed the linux kernel and find signed integer overflow on linux
+> 4.15.0-rc1+.
+> the crash log can see below, the .config and the poc file ,please see the
+> attachments.
 
-Not to my knowledge, no.
+Odd, doesn't seem to affect a 4.9 or 4.15-rc2 kernel here on my
+machines, is there something specific in the .config that might be
+triggering this?
 
-Regards
--- 
-Pierre Ossman           Software Development
-Cendio AB               https://cendio.com
-Teknikringen 8          https://twitter.com/ThinLinc
-583 30 Linköping        https://facebook.com/ThinLinc
-Phone: +46-13-214600    https://plus.google.com/+CendioThinLinc
+thanks,
 
-A: Because it messes up the order in which people normally read text.
-Q: Why is top-posting such a bad thing?
+greg k-h
