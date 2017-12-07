@@ -1,38 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/20/3
-Message-ID: <20170520175436.GA30962@jasmine>
-Date: Sat, 20 May 2017 13:54:36 -0400
-From: Leo Famulari <leo@...ulari.name>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/07/9
+Message-ID: <3f23b122-8f97-417b-e1ca-4f859bee3196@gmail.com>
+Date: Thu, 7 Dec 2017 14:37:20 -0800
+From: Blibbet <blibbet@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: ImageMagick: CVE-2017-9098: use of uninitialized memory in RLE decoder
+Subject: Re: Recommendations GnuPG-2 replacement
 Content-Type: text/plain; charset=utf-8
 
-On Sat, May 20, 2017 at 08:26:36AM -0700, Ian Zimmerman wrote:
-> On 2017-05-20 09:26, Salvatore Bonaccorso wrote:
-> 
-> > Chris Evans discovered that ImageMagick uses unitialized memory in the
-> > RLE decoder, allowing an attacker to leak sensitive information from
-> > process memory space. There is missing initialization in the
-> > ReadRLEImage function.
-> > 
-> > Original article at:
-> > 
-> > https://scarybeastsecurity.blogspot.com/2017/05/bleed-continues-18-byte-file-14k-bounty.html
-> 
-> It was good to see the discussion of how GraphicsMagick was affected, or
-> not.  I would love to see that in all *Magick weakness reports.
+On 12/07/2017 01:15 PM, Peter Bex wrote:
+> ible alternatives, I happened to remember that
+> years ago, NetBSD was working on their own BSD-licensed PGP
+> implementation as a GSoC project, but it never really went anywhere.
+> Looks like that finally exists
 
-Chris Evans' report (copied in the email you replied to) says this:
+http://www.netpgp.com/
+https://blog.netbsd.org/tnf/entry/netpgp
+https://en.wikipedia.org/wiki/Netpgp
 
-GraphicsMagick vs. ImageMagick, again. Well, well, look at this :)
-GraphicsMagick fixed this issue in March 2016, for the v1.3.24 release, tucked
-away in a changeset titled "Fix SourceForge bug #371 "out-of-bounds read in
-coders/rle.c:633:39" (see the second memset()). This is another case where tons
-of vulnerabilities are being found and fixed in both GraphicsMagick and
-ImageMagick with little co-ordination. This seems like a waste of effort and a
-risk of 0-day (or is it 1-day?) exposure. It goes both ways: the RLE memory
-corruption I referenced in my previous blog post was only fixed in
-GraphicsMagick in March 2016, having been previously fixed in ImageMagick in
-Dec 2014.
+NetPGP has been working since around a decade. It's main dependency is
+libOpenSSL. It is stable, not active. It has MANY fewer features than GPG.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+(I'm in the process of porting it to UEFI, as there is a stable
+libOpenSSL package there now, and easier to port to UEFI than GPG...)
