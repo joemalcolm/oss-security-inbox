@@ -1,4 +1,9 @@
-Received: (qmail 15805 invoked by uid 550); 30 Dec 2023 16:10:30 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["369" "Thursday" "7" "December" "2017" "16:53:44" "+0800" "feer james" "pnigos70@gmail.com" "<CAKSZ2QtFnvxxRAKSBiCB60T7LX641-+hVeeUddPmAYH426Zxdw@mail.gmail.com>" "18" "[oss-security] CVE Request -- Arbitrary command execution in mercurial repo with a git submodule" nil nil nil "12" "2017120708:53:44" "[oss-security] CVE Request -- Arbitrary command execution in mercurial repo with a git submodule" (number mark "U       pnigos70@gma Dec  7   18/369   " thread-indent "\"[oss-security] CVE Request -- Arbitrary command execution in mercurial repo with a git submodule\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 4075 invoked by uid 550); 7 Dec 2017 10:19:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,82 +12,56 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15784 invoked from network); 30 Dec 2023 16:10:29 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1703952683; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=oZdnHrsnZng5/M7dRMqmONfTy7jhTr2nAxl7BUA7KEs=;
-	b=OBXpQX+GGBNUFry8JWNfHX/H69XADV19b+mJs95BueZ+U1DHAhRl02B56SUCSTaRJ+CcnW
-	x+V5fcUtWSUDld2RJME7hCF+krH7J8kuMt36S6VXzn1xYO8RJMIgFdGsVXo++bn+zvIt3h
-	9i2AJGFpZfgIFO3XjhKk2asPwmfX9t0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1703952683;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=oZdnHrsnZng5/M7dRMqmONfTy7jhTr2nAxl7BUA7KEs=;
-	b=foA8Mwl3zAYM9wxzkTo/YgYO+TdJ1iDQcNkZPbFwqKiinRC0ellr0XTZ9QoxfCYg7794Be
-	cCwg2lkmSsjzQtBg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1703952683; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=oZdnHrsnZng5/M7dRMqmONfTy7jhTr2nAxl7BUA7KEs=;
-	b=OBXpQX+GGBNUFry8JWNfHX/H69XADV19b+mJs95BueZ+U1DHAhRl02B56SUCSTaRJ+CcnW
-	x+V5fcUtWSUDld2RJME7hCF+krH7J8kuMt36S6VXzn1xYO8RJMIgFdGsVXo++bn+zvIt3h
-	9i2AJGFpZfgIFO3XjhKk2asPwmfX9t0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1703952683;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=oZdnHrsnZng5/M7dRMqmONfTy7jhTr2nAxl7BUA7KEs=;
-	b=foA8Mwl3zAYM9wxzkTo/YgYO+TdJ1iDQcNkZPbFwqKiinRC0ellr0XTZ9QoxfCYg7794Be
-	cCwg2lkmSsjzQtBg==
-Date: Sat, 30 Dec 2023 17:11:22 +0100
-From: Marcus Meissner <meissner@suse.de>
-To: oss-security@lists.openwall.com
-Cc: Claus Assmann <ml+oss@esmtp.org>
-Message-ID: <20231230161120.GE24652@suse.de>
-References: <20231221143630.GD14101@suse.de>
- <20231221144656.GA40693@veps.esmtp.org>
- <20231222104647.GH14101@suse.de>
- <croalohbjdjf2cb6e5ol2l7rsdoxd6mr4mw55lyzzf7ljkkx5a@czm7be4dpjj4>
- <20231224093335.GM14101@suse.de>
- <20231226191528.GA6930@veps.esmtp.org>
- <f3008fbc-4dbc-49ae-ba0a-1badbad2466f@oracle.com>
+Received: (qmail 16283 invoked from network); 7 Dec 2017 08:53:56 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=HUxR+DHE/m//MuL20mGF02kyWt4rU2z9AqlUGJRa59I=;
+        b=pyIabJa+emkIrYWGsYDCIJIQ3kieKuaWOU+eXgixhw829RgqbVX6P7/WzGqBnQiAoJ
+         futv5Yw48BFRr9bXI91rKB9aHKF5aAA9RKtghzS0FslqH19AEeUhoZeQCmKnEGx9k62I
+         mA+afeNeej3luZ2WutguHHJPR6K/q1q73MYaIWsqWq4JGcmQe4wMbKUa4K9ulSyNt/10
+         Y0qjzsdvwAFiAdBzOoj7HNqCF3HL96XrfDk02yzzUsFGIzvKTNipfVTHsSt3kz1RBB89
+         TGgqUut7C4vqDrvyC+WLAlkxiFNQdI+VVJBwPFkk00V+Pu5zS5w6qRohCsD+lxiiE/X6
+         F9Mw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=HUxR+DHE/m//MuL20mGF02kyWt4rU2z9AqlUGJRa59I=;
+        b=bVbhK9lRJ+4kkbHrPs72jFSuycGz0fHY1pylED3Z+NXDvwHIhtr6nPbMFqUCoZJ0oM
+         NtzVditKy3/MhGMpS54i8Ma2D5nL73B80oEP9HYowz0NtL2plWoCM6WzLfG+V9wftdCY
+         /qWl4YguAjuUyO2y52yQ8b1LKFiZ7Nopp3qxJSEx6b8U7MoWDHxEqI1ECUQnZRTNQIn5
+         +tjjAxrgmK1A8thkk+G7pCTrfY87RDZdugk9ouDRvoGEJMTiTHVZPdzKrlzpxVOw5Zpf
+         xyvd2RtykTqKcb/s7C87Z61KUrZyGejX0/ilZVoAcS98ERg9ZnHupRDbVM7y3JF8Q6e0
+         y5eQ==
+X-Gm-Message-State: AJaThX6m9ofi6HzcDrRnNZboBhct5fOwK1VlRzLKSZ2DdMg2ZdSaq1UZ
+	INxzFtlE8mE4q3eba7dY2kHY4dCpQEx+jWzGvK4=
+X-Google-Smtp-Source: AGs4zMYIi8M2QBJYjmFjS8JKNWGcodAMYPfM2TTeAgSN5E+6gouI8wNSK+9klprn/BQilMe3wt/cJHk72UdBLFyO7VY=
+X-Received: by 10.202.117.13 with SMTP id q13mr20622782oic.52.1512636824881;
+ Thu, 07 Dec 2017 00:53:44 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f3008fbc-4dbc-49ae-ba0a-1badbad2466f@oracle.com>
-Organization: SUSE Software Solutions =?iso-8859-1?Q?Ger?=
- =?iso-8859-1?Q?many_GmbH=2C_Frankenstra=DFe_146=2C_90461_Nuernberg=2C_Ger?=
- =?iso-8859-1?Q?many=2C_GF=3A_Ivo_Totev=2C_Andrew_Myers=2C_Andrew_McDonald?=
- =?iso-8859-1?Q?=2C_Martje_Boudien_Moerman=2C_HRB_36809=2C_AG_N=FCrnberg?=
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Authentication-Results: smtp-out1.suse.de;
-	none
-Subject: Re: [oss-security] Re: New SMTP smuggling attack
+From: feer james <pnigos70@gmail.com>
+Date: Thu, 7 Dec 2017 16:53:44 +0800
+Message-ID: <CAKSZ2QtFnvxxRAKSBiCB60T7LX641-+hVeeUddPmAYH426Zxdw@mail.gmail.com>
+To: cve-assign@mitre.org, oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="001a1134fb3e9f1052055fbc34f5"
+Subject: [oss-security] CVE Request -- Arbitrary command execution in mercurial repo with a
+ git submodule
 
-On Fri, Dec 29, 2023 at 12:50:55PM -0800, Alan Coopersmith wrote:
-> On 12/26/23 11:15, Claus Assmann wrote:
-> > On Sun, Dec 24, 2023, Marcus Meissner wrote:
-> > 
-> > > - CVE-2023-51765 sendmail
-> > 
-> > Can you update the text for this (or point me to the proper way/persons
-> > to do this)?
-> 
-> https://www.cve.org/CVERecord?id=CVE-2023-51765 shows:
->   Assigner: MITRE Corporation
-> 
-> so you can submit updates/corrections via the web form at:
->   https://cveform.mitre.org/
+--001a1134fb3e9f1052055fbc34f5
+Content-Type: text/plain; charset="UTF-8"
 
-Yes please use this form, or if you do not want one of us can do it.
+Hello mitre,
 
-I did not request the sendmail and exim CVEs, also the postfix CVE seems
-not my proposed description, so I guess someone else requested them.
+I'd like to request a cve id for this vulnerability.
 
-Ciao, Marcus
+*Vulnerability Details:*
+https://bz.mercurial-scm.org/show_bug.cgi?id=5730
+
+*Offical fix release:*
+https://www.mercurial-scm.org/wiki/WhatsNew#Mercurial_4.4.1_.282017-11-07.29
+
+
+Terry,
+Thanks!
+
+--001a1134fb3e9f1052055fbc34f5--
