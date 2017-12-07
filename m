@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1856" "Thursday" "8" "October" "2015" "14:29:30" "+0200" "Matthijs Kooijman" "matthijs@stdin.nl" "<20151008122930.GS8704@login.tika.stderr.nl>" "50" "[oss-security] CVE request - perl library UI::Dialog 1.09 - shell escaping vulnerability" nil nil nil "10" "2015100812:29:30" "[oss-security] CVE request - perl library UI::Dialog 1.09 - shell escaping vulnerability" (number mark "U       matthijs@std Oct  8   50/1856  " thread-indent "\"[oss-security] CVE request - perl library UI::Dialog 1.09 - shell escaping vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2891" "Thursday" "7" "December" "2017" "15:15:06" "+0000" "Jeremy Stanley" "fungi@yuggoth.org" "<20171207151506.GB13067@yuggoth.org>" "64" "Re: [oss-security] Recommendations GnuPG-2 replacement" "^Date:" nil nil "12" "2017120715:15:06" "[oss-security] Recommendations GnuPG-2 replacement" (number mark "        fungi@yuggot Dec  7   64/2891  " thread-indent "\"Re: [oss-security] Recommendations GnuPG-2 replacement\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 11542 invoked by uid 550); 8 Oct 2015 13:12:16 -0000
+Received: (qmail 16064 invoked by uid 550); 7 Dec 2017 15:15:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,75 +11,84 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19939 invoked from network); 8 Oct 2015 12:29:45 -0000
-Message-ID: <20151008122930.GS8704@login.tika.stderr.nl>
-Mail-Followup-To: Matthijs Kooijman <matthijs@stdin.nl>,
-	oss-security@lists.openwall.com, alejandro@debian.org,
-	kevin@krinke.ca
+Received: (qmail 16046 invoked from network); 7 Dec 2017 15:15:19 -0000
+Message-ID: <20171207151506.GB13067@yuggoth.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="kd7cwL6IYJrQFfWn"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="jho1yZJdad60DJr+"
 Content-Disposition: inline
-X-PGP-Fingerprint: E7D0 C6A7 5BEE 6D84 D638  F60A 3798 AF15 A156 5658
-X-PGP-Key: http://www.stderr.nl/static/files/gpg_pubkey.asc
-X-PGP-Note: Previous key 8A2FAFBC replaced on 2014-09-07
 User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Preliminary-Spam-Score: -2.9 (--)
-Cc: alejandro@debian.org, kevin@krinke.ca
-Date: Thu, 8 Oct 2015 14:29:30 +0200
-From: Matthijs Kooijman <matthijs@stdin.nl>
+X-SA-Exim-Connect-IP: 2001:4802:7801:102:be76:4eff:fe20:63e0
+X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
+X-SA-Exim-Mail-From: fungi@yuggoth.org
+X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
+Date: Thu, 7 Dec 2017 15:15:06 +0000
+From: Jeremy Stanley <fungi@yuggoth.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request - perl library UI::Dialog 1.09 - shell escaping
- vulnerability
+Subject: Re: [oss-security] Recommendations GnuPG-2 replacement
 To: oss-security@lists.openwall.com
 
---kd7cwL6IYJrQFfWn
+--jho1yZJdad60DJr+
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Hi folks,
+On 2017-12-07 06:32:11 +0000 (+0000), halfdog wrote:
+[...]
+> For all steps regarding system startup, I switched to LUKS only,
+> using detached headers for special features. For release signing,
+> mail sign/encrypt, a good light-weight solution is still needed.
+[...]
 
-can you please assign a CVE for the UI::Dialog perl library? I
-(re)discovered a flaw that allows arbitrary command execution when the
-library is given untrusted strings to show in a menu prompt.
+I continue to use gpg2 in a release signing context, but strip
+symmetrical encryption from the private signing subkey with a custom
+keyring due to it being used by a headless/automated CI system which
+runs on virtual machines that get deleted as soon as the signature
+is generated thus leaving keys in memory isn't a concern there (and
+the master private key _is_ encrypted but only ever used to create
+signing subkeys and never goes anywhere near the CI system).
 
-The flaw was initially reported in 2008 at
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=496448 but it seems
-this never reached upstream. I recently reported the bug upstream
-https://rt.cpan.org/Public/Bug/Display.html?id=107364, see that report
-for some additional details.
+Sounds like my use case is likely not your use case, so perhaps you
+should look at the signify utility OpenBSD developed for this
+purpose instead? It's included in Debian since Stretch under the
+package name "signify-openbsd" and seems to work well; I've used it
+semi-regularly as I tend to do a lot of cross-platform things in a
+mixed Debian/OpenBSD environment.
 
-Upstream has indicated to be working on a fix (see upstream bug), but no
-patches are available yet.
+For E-mail I'll confess I still use mutt's (well, neomutt's at
+least) GnuPG integration, which has been working okay for me with
+gpg2 on Debian. I haven't seen a lot of good OpenPGP implementations
+besides GnuPG with at least equal levels of PGP/MIME integration
+there. The obvious alternative is switching to S/MIME but you've
+likely already considered that and the never-ending TTP vs WoT
+debate, not to mention Debian as a community is fairly invested in
+OpenPGP keys as a means of identifying and authenticating its
+developers/maintainers.
+--=20
+Jeremy Stanley
 
-Impact seems limited, I'm not aware of any well-known programs that use
-this library and are vulnerable (only two Debian packages depend on it,
-both use a UI::Dialog backend that is unaffected).
-
-Thanks,
-
-Matthijs
-
---kd7cwL6IYJrQFfWn
+--jho1yZJdad60DJr+
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: Digital signature
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v2
 
-iQIcBAEBCAAGBQJWFmGqAAoJEDeYrxWhVlZYpBAQAIGNt/67mafPV/p7jefKhOs4
-APIEOEIzmqFcdhj/yboaHCoxPEw8FNuDQ3uZf31jRu4Ps+t2szuHtC64fmOYAlnT
-P1KA109Qh6cZhk5+nDsRab0ior02zVUkcxbsVfXy+9v4W8ORMMpAhkylWe36wQQ9
-NoV6W0GGvfBJrWkDglUnxEOjIbcY3m1BK6VT0grxkGiuPqzHeIUTHRpgBSvlXOoe
-UoYmPTgl9J+/fUkuv4MuHxQcQ3DbTu7yuLwSS0rBmgmDqDPiUt10XceHN/Rw3JiT
-7m97Sf1xVGhN33dVuV7oy+qGb4clSdYZAFzpwObZzyJ4W5V0CxFQyqppKNyGH+nm
-QhdX29/psLA0eTYIOls6R/W1GtEpDGoVKr1aQc74hdMWeBSpox7bDERmxHkJW4ET
-JofAW6cb1Vv0T5jEoL4qNgE8k5LRxOKxyLez9JQndCom9OI+Nfg9u6+3dkMNWRvg
-vEtHTg6ihN8Dst+ZHbrnVh9pKVCDdEP2EiSniziCANiokx3k44QPbi70ilJFlyRy
-Wedw85tqZ/JAPP6SmQj3K4lIml3+2FFo1kSrXZ7+vnRuY4A/AXW1rfjFPxwiPhv2
-VGeCe+uZajyfkXJO6/c2vUni8c+eQaNRheJFPGz1EzbHkv29rDG8dtP0inUD2Ftf
-IAtUuibnOErDsNE1pjMG
-=ehJt
+iQJ8BAEBCgBmBQJaKVr6XxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25zLm9w
+ZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXQ5N0FFNDk2RkMwMkRFQzlGQzM1M0IyRTc0
+OEY5OTYxMTQzNDk1ODI5AAoJEEj5lhFDSVgpOLEQAIA3wBoQ2/EoTAwPFQ/IHJYZ
+pFkHssrtZf24HKlfxX4GTmoJYQBjIhkc9waxyQZz98e62t3WhWsgYAe5ZT/1R31c
+FB99eFm0qm7dQMhuz0D7LDLRDAJQzy+R6NKznJ+lKZXLSEfBPgJYSjSC1OgCBsC5
+YGQ2z5jGuoSgPp3goHWn+2hwMQgabdbtv01BAKgOJkaQPEGA3py5N5yez2X/RHlP
+1mXRkhlO6H+peRUpTvXdrfLZy3o1c7N+O1XD3bRX+Ci90PDGjp1Az8H5uwtIPyiw
+358nslQmzoqrJy4sy/yenab+sj+ZbmK057UkTI5YIEzXoptg6Nd4l+HnFYOv3Vye
+1XbhyLJqHoxUHU+PFJucGo2CgTvNrYTwfJmN6lJ/uEqQ22ArF+is29OwdzhG7xz8
+biWaKLguXwYPZt5ZYaV/EoSuv+WlokfaJf06Nlh71v4nklWh4Veyd0Q0gR5y2Rj3
+7g/kIQ7uKm7R+CI/vvHOJCnMD/MYez4FnJYu0hfxhkacjgL6zFKRquBkPvMUzz5J
+HyNpDlzihVZYinHQ4rZAWLPAXtb0X36SheP86rBMxxZesjqnzn4aySMbRSP18GvX
+hrdp6I0X0dPaTnc6DipgGyuGir855fendk2ncdpHxsvykCwhC+fiX6B3fs2Gf2/G
+wZS8sI3wLOSNKQQiQ/rU
+=O50F
 -----END PGP SIGNATURE-----
 
---kd7cwL6IYJrQFfWn--
+--jho1yZJdad60DJr+--
