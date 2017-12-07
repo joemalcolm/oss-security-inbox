@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["373" "Friday" "20" "March" "2015" "15:50:26" "+0000" "Stuart Henderson" "stu@spacehopper.org" "<20150320155026.GF3718@symphytum.spacehopper.org>" "9" "Re: [oss-security] membership request to the closed linux-distros security mailing list" nil nil nil "3" "2015032015:50:26" "[oss-security] membership request to the closed linux-distros security mailing list" (number mark "        stu@spacehop Mar 20    9/373   " thread-indent "\"Re: [oss-security] membership request to the closed linux-distros security mailing list\"\n") "<CA+aC4kt54Z-17hjZ6JOLONFBeqRyFFUAn4+O7TL8fUrqrSeQ8g@mail.gmail.com>" ("<550C19ED.9030901@enea.com>" "<20150320145413.GA10416@openwall.com>" "<CA+aC4kt54Z-17hjZ6JOLONFBeqRyFFUAn4+O7TL8fUrqrSeQ8g@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4861" "Thursday" "7" "December" "2017" "06:32:11" "+0000" "halfdog" "me@halfdog.net" "<fake-VM-id.f9f8a5d0fb4e55357c5853f87c264422@talos.iv>" "101" "[oss-security] Recommendations GnuPG-2 replacement" "^Date:" nil nil "12" "2017120706:32:11" "[oss-security] Recommendations GnuPG-2 replacement" (number mark "        me@halfdog.n Dec  7  101/4861  " thread-indent "\"[oss-security] Recommendations GnuPG-2 replacement\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9756 invoked by uid 550); 20 Mar 2015 15:50:39 -0000
+Received: (qmail 5325 invoked by uid 550); 7 Dec 2017 06:32:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,41 +11,114 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9735 invoked from network); 20 Mar 2015 15:50:38 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=spacehopper.org;
-	 h=user-agent:in-reply-to:content-disposition:content-type
-	:content-type:mime-version:references:message-id:subject:subject
-	:from:from:date:date:received:received; s=spacehop2; t=
-	1426866626; bh=V9b2DqosAkrPLmI7leUcrcuVphND7vW/+/56GWsgWVs=; b=Q
-	CwdG72WsSv77l2b/OuMVbC/V1RRcdqPHrC85CEK1q5VCRpOXmtdRpHvREKLOQk5h
-	3nhqo6sh2095yoaAbnqQXhWfWLrCABjEGr/EFlSlPoPGv8dYKYeZKFDbaPO9oBi3
-	ZEYnPL6zxoEuCYrcf5E94mWyvwaPaFb7u4dzhQ1aahLJn+HM3tLLqq6aHBD/sCa+
-	84vlxrycpvOJ/5xm4UF4hKn3w749O7HYsfTldl1cbZxtxLTZJUjt7+dZJ2S+70zR
-	NagTmWP/MPIXsNK988fcYu/dcNiSPFWDbmnChNOZv0AkjGAMVCbMjaOniHRX7vFf
-	HG6qnLC11GXviOL1m9QPQ==
-X-Virus-Scanned: amavisd-new at spacehopper.org
-Message-ID: <20150320155026.GF3718@symphytum.spacehopper.org>
-References: <550C19ED.9030901@enea.com>
- <20150320145413.GA10416@openwall.com>
- <CA+aC4kt54Z-17hjZ6JOLONFBeqRyFFUAn4+O7TL8fUrqrSeQ8g@mail.gmail.com>
+Received: (qmail 5288 invoked from network); 7 Dec 2017 06:32:50 -0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CA+aC4kt54Z-17hjZ6JOLONFBeqRyFFUAn4+O7TL8fUrqrSeQ8g@mail.gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Date: Fri, 20 Mar 2015 15:50:26 +0000
-From: Stuart Henderson <stu@spacehopper.org>
+Content-Type: text/plain; charset="us-ascii"
+Date: Thu, 07 Dec 2017 06:32:11 +0000
+From: halfdog <me@halfdog.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] membership request to the closed linux-distros
- security mailing list
+Subject: [oss-security] Recommendations GnuPG-2 replacement
 To: oss-security@lists.openwall.com
+Message-ID: <20171207063211.3FQeObposdv-pQSF9oHsUG6f31uWEFTILn3bSOqzGNs@z>
 
-On 2015/03/20 08:16, Anthony Liguori wrote:
-> 
-> I think the alternative is to formalize what already appears to be the
-> existing practice: disclose distros@ on the existence of a
-> vulnerability but require direct contact for the details of the
-> vulnerability if the submitter/upstream thinks the impact is high.
+Hello list,
 
-Are private lists even needed if this policy is taken?
+Are there recommendations for open-source light-weight replacements
+of GnuPG2 suitable for use on Debian? I would like discontinue
+using GnuPG project, as the GnuPG design regarding security seems
+to be moving in a direction, that does not match my personal security
+needs any more.
+
+The two main events causing me considering the change were related
+to the Debian Jessie to Stretch switch - thus giving a small
+impression on the current needs:
+
+Event 1:
+
+While gpg1 was a light-weight tool, just doing what said, the
+new gpg2 cannot really work without gpg-agent, pinentry frontend.
+Both are very nice for desktop usecases. As I also used it during
+machine setup for generating material related to disk encryption,
+the agent first did not want to start -- the primitive /dev/ttyX
+via openvt was not the environment gpg tools were expecting
+for password input, thus failing. gpg2 by default will not ask
+the passphrase any more on the terminal, it was started from,
+but tries to work out using various information, where passphrase
+input should be delegated to.
+
+After getting gpg and agent running, I noticed, that not reliably
+stopping the gpg-agent on initrd would introduce a private key
+data leak via /proc from early boot process to running system
+when stopping fails. This is also more annoying as it is not possible
+to instruct gpg, that a single private key should NOT be cached,
+and you have to configure gpg-agent beforehand, something not
+quite funny and little error prone on limited functionality systems
+like on an initrd systems.
+
+Thus the Debian switch from gpg1 to gpg2 just introduced efforts
+fiddling with functionality I do not need and cannot disable,
+provides a keymanagement that cannot be configured easily to
+protect against the threats it should mitigate (theft of key material)
+and creating additional attack surface without any recognizable
+benefit.
+
+Event 2:
+
+After getting everything working, which was little anoying as
+building of initrds, testing via QEmu is not very user friendly
+regarding debugging for less experienced users - but at least not
+GnuPG's fault at any reason - I noticed, that the password protection
+of the key was significantly lower than expected. Getting back
+to the developers, we found out, that the specification of the
+"--s2k-count" parameter, which specifies the number of rounds
+of key deriviation function to unlock the private key, has changed
+from gpgv1 to gpgv2, so that it is ignored in gpg2 but does not
+cause any warning or error. Thus previous audited procedures continue
+to work but do not produce the same results any more. Of course,
+I could have compared documentation of all parameters of (at least
+security-related) programs after Jessie to Stretch upgrade, but
+I assumed, that security critical parameters would not change
+their meaning without any noticable effect - so just my fault.
+
+Still, this would just be a minor mishap, but what reduced my
+trust in GPG, was the comment of a developer: it was assumed,
+that they know better, where there software will be run without
+specifying that "where" in the documentation. Also his replies
+matched that picture, e.g. "(gpg-agent will) ... calibrate the
+S2K count to match the current machine", assuming that this is
+good reason to change "--s2k-count" meaning and ignore the parameter.
+I had the impression, that it did not come to mind, that someone
+might have used such a parameter for a reason, e.g. because speed
+calibration might not be the best idea, while the system is taking
+in data at the maximum speed the ethernet adapter, disk controller
+can do during system setup.
+
+Another bonmot on the mathematical complexity of private key
+unlocking: "For user experience 100ms is a good value; your
+suggested 1000ms is an annoying long delay which would most user
+only increase the cache time." But the discussion was not on
+user defaults. If I deem it a good idea to requirea longer KDF
+computation time for material with higher sensitivity, e.g. to
+to unlock data storage once at startup, and therefore tell the
+software to perform that computation, it should accept that
+decision. Thus someone not understanding or accepting the
+existance of such choices in alternative usecase might not be
+the right person to develop the software, I want to use.
+
+
+Result:
+
+For all steps regarding system startup, I switched to LUKS only,
+using detached headers for special features. For release signing,
+mail sign/encrypt, a good light-weight solution is still needed.
+
+hd
+
+PS: I do not know, how much the gpg-agent calibration under
+increased system load reduced the KDF complexity, as I failed
+to extract the KDF rounds value from the gpg data structures,
+but the value seems to be at least below 70ms due to total time
+measurements for gpg-agent (math, interprocess communication,
+filesystem) to unlock a key on an idle system.
+
 
