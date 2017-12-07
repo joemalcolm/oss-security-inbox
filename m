@@ -1,23 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/07/10
-Message-ID: <613154429.39760878.1502113969550.JavaMail.zimbra@redhat.com>
-Date: Mon, 7 Aug 2017 09:52:49 -0400 (EDT)
-From: Vladis Dronov <vdronov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/07/10
+Message-ID: <20171207225332.GA9059@openwall.com>
+Date: Thu, 7 Dec 2017 23:53:32 +0100
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: [CVE-2017-7533] kernel: inotify: a race between inotify_handle_event() and sys_rename()
+Subject: Re: Recommendations GnuPG-2 replacement
 Content-Type: text/plain; charset=utf-8
 
-Hello, John,
+On Thu, Dec 07, 2017 at 10:01:34PM +0100, Solar Designer wrote:
+> On Thu, Dec 07, 2017 at 06:32:11AM +0000, halfdog wrote:
+> > Thus the Debian switch from gpg1 to gpg2 just introduced efforts
+> > fiddling with functionality I do not need and cannot disable,
+> > provides a keymanagement that cannot be configured easily to
+> > protect against the threats it should mitigate (theft of key material)
+> > and creating additional attack surface without any recognizable
+> > benefit.
+> 
+> I think the benefit is being on a version upstream intends to maintain
+> to a greater extent and for a longer time.  For example, when yet
+> another side-channel leak was reported against GnuPG 1 & 2 recently,
+> upstream officially patched it for GnuPG 2 only and said that GnuPG 1
+> probably contains many other side-channel leaks anyway:
+> 
+> http://openwall.com/lists/oss-security/2017/07/06/8
 
-> > https://access.redhat.com/security/vulnerabilities/3112931
->
-> I suspect there's nothing in this that's not repeated elsewhere, but
-> that page says "Access Denied".
+Turns out upstream shortly released GnuPG 1.4.22 fixing this.  It's good
+news, which I had missed.
 
-Indeed, this article is not published yet and we are (I am) working on it, it should be ready soon.
-I've included the link to the article in the announce for the reference of future readers. You are
-correct, the article mostly duplicates the announce and the only additional information is related
-to the Red Hat's products, like advisories with the fix.
+Noteworthy changes in version 1.4.22 (2017-07-19)
+-------------------------------------------------
 
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+ * Mitigate a flush+reload side-channel attack on RSA secret keys
+   dubbed "Sliding right into disaster".  For details see
+   <https://eprint.iacr.org/2017/627>.  [CVE-2017-7526]
+
+ * Fix some minor bugs.
+
+> Are you saying "--s2k-count" option to "gpg2" is ignored, and moreover
+> that this is documented?  gnupg-2.1.23/doc/gpg.texi says (formatted):
+> 
+> `--s2k-count `n''
+>      Specify how many times the passphrase mangling is repeated.  This
+>      value may range between 1024 and 65011712 inclusive.  The default
+>      is inquired from gpg-agent.  Note that not all values in the
+>      1024-65011712 range are legal and if an illegal value is selected,
+>      GnuPG will round up to the nearest legal value.  This option is
+>      only meaningful if `--s2k-mode' is 3.
+
+I should have looked at GnuPG 2.2.3, but its description of the above
+option is the same, and it describes the corresponding option to
+gpg-agent as follows:
+
+'--s2k-count N'
+     Specify the iteration count used to protect the passphrase.  This
+     option can be used to override the auto-calibration done by
+     default.  The auto-calibration computes a count which requires
+     100ms to mangle a given passphrase.
+
+     To view the actually used iteration count and the milliseconds
+     required for an S2K operation use:
+
+          gpg-connect-agent 'GETINFO s2k_count' /bye
+          gpg-connect-agent 'GETINFO s2k_time' /bye
+
+     To view the auto-calibrated count use:
+
+          gpg-connect-agent 'GETINFO s2k_count_cal' /bye
+
+Looks sane to me, and this might also answer your question:
+
+> > PS: I do not know, how much the gpg-agent calibration under
+> > increased system load reduced the KDF complexity, as I failed
+> > to extract the KDF rounds value from the gpg data structures,
+> > but the value seems to be at least below 70ms due to total time
+> > measurements for gpg-agent (math, interprocess communication,
+> > filesystem) to unlock a key on an idle system.
+
+Alexander
