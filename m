@@ -1,104 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/29/3
-Message-ID: <07546f89-f5f8-7ff0-a370-138cc43393ca@gentoo.org>
-Date: Thu, 29 Jun 2017 11:43:13 +0200
-From: Thomas Deutschmann <whissi@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: sthttpd remote heap buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/07/3
+Message-ID: <CANBt6Y0=kqkJZGhhxCtBwwpgY3YQW+U-DxbpOg1GJRb3ZdFf4w@mail.gmail.com>
+Date: Thu, 7 Dec 2017 17:57:32 +0800
+From: at zhou <zhouat2017@...il.com>
+To: security@...nel.org, secalert@...hat.com, security@...e.com,  linux-kernel@...r.kernel.org, tglx@...utronix.de,  oss-security@...ts.openwall.com, linux-distros@...openwall.org
+Subject: signed integer overflow in common_timer_get on linux 4.15.0-rc1
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi all,
 
-I requested a CVE from MITRE and got CVE-2017-10671 for this
-vulnerability:
+credit   to   L5@...vulcan team
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
-> 
->> [Vulnerability Type]
->> Heap-based Buffer Overflow in the de_dotdot function in libhttpd.c in sthttpd before 2.27.1
->> allows remote attackers to cause a denial of service (daemon crash) or possibly have unspecified other impact via a crafted filename.
->> 
->> ------------------------------------------
->> 
->> [Vulnerability Type]
->> Buffer Overflow
->> 
->> ------------------------------------------
->> 
->> [Affected Product Code Base]
->> sthttpd - <2.27.1
->> 
->> ------------------------------------------
->> 
->> [Affected Component]
->> de_dotdot function
->> 
->> ------------------------------------------
->> 
->> [Attack Type]
->> Remote
->> 
->> ------------------------------------------
->> 
->> [CVE Impact Other]
->> I have no information about the impact. Would be nice if you could check on your own.
->> 
->> ------------------------------------------
->> 
->> [Attack Vectors]
->> A remote attacker could trigger the flaw in sthttpd's request parsing code via a specially crafted request.
->> 
->> ------------------------------------------
->> 
->> [Reference]
->> http://www.openwall.com/lists/oss-security/2017/06/15/9
->> https://github.com/blueness/sthttpd/releases/tag/v2.27.1
->> https://github.com/blueness/sthttpd/commit/c0dc63a49d8605649f1d8e4a96c9b468b0bff660
->> 
->> ------------------------------------------
->> 
->> [Has vendor confirmed or acknowledged the vulnerability?]
->> true
->> 
->> ------------------------------------------
->> 
->> [Discoverer]
->> Alexandre Rebert from ForAllSecure
-> 
-> Use CVE-2017-10671.
-> 
-> 
-> - -- 
-> CVE Assignment Team
-> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-> [ A PGP key is available for encrypted communications at
->   http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1
-> 
-> iQIcBAEBCAAGBQJZVGIGAAoJEHb/MwWLVhi2PPAP/RRQ9jGYVCEvLryJtICH/vvj
-> ZjS17vckkYVbSOMoTNQR9WihtsQCzkQZ+LL2Qnio45+NORCGn6nLMAi24SotXlrs
-> HI16p2h3+fZ3H/JCgT46fUDUHetq30Fy6NhwSKxCwtYEKiNvw4yT0QIPK9bmzf/p
-> nTKHDQCMqYp82tFBgReZPRivQcd/+Zbi6CWsS0oNzIsADjZZx1RdaHBJoOZIFcKv
-> bBopi0KDIPNgn3VsZwANz0Ex/ju3TfJVb8A9jpNyKlYaKwsou/TAw1g2l90KZxzW
-> Som1pG8s/I+MynJhHDNpJm59S6nFWAzZh++lySiEWIepiEsWhEzBpJBBkSAp3wum
-> TPhQNJ9BJdiS54rNqKMTGx7WxEvEcklsGQG87bfmUdyNRHYl/lElRYPNelciTnyU
-> 38B7E1FwcF793Z5JJfwge1ayo7ShaCaUGx082nU9XVuSFfpG0vrcelOhFAZ0cxyW
-> 9+DbSW/01FWWL35pEN0LJ5m5GeOpNa+hjn9VS/qbOiHk9n/PszbL00lS+Q+LKqTj
-> J3rOoTkM69d1stlcO8/ehwyr/xo6n6u8v8BmV6So1VWgefk/cI98aoOQvEIDpwQt
-> iALKi/+UinhQhG0vCtkKHXsFYXIOv7zk03EfKT37Bh13DuBBJDgIt9nMesVxpsRE
-> SmLuxFujGHPobnwbNGqJ
-> =CKLn
-> -----END PGP SIGNATURE-----
+I fuzzed the linux kernel and find signed integer overflow on linux
+4.15.0-rc1+.
+the crash log can see below, the .config and the poc file ,please see the
+attachments.
+
+(1) test environment
+branch 4.15.0-rc1
+git log --oneline
+43570f0 Merge branch 'linus' of git://
+git.kernel.org/pub/scm/linux/kernel/git/herbert/crypto-2.6
+
+(2)steps to reproduce
+0. use the config file to compile linux kernel 4.15.0-rc1+
+1. gcc poc_timer_gettime.c -o poc_timer_gettime
+2. ./poc_timer_gettime
+3. crash can reproduce then.
 
 
--- 
-Regards,
-Thomas Deutschmann / Gentoo Security Team
-C4DD 695F A713 8F24 2AA1  5638 5849 7EE5 1D5D 74A5
+[ 2647.574621] UBSAN: Undefined behaviour in
+/home/l5/KERNEL/kernel/time/posix-timers.c:699:20
+[ 2647.578402] signed integer overflow:
+[ 2647.580095] 2041919421 + 2044944045 cannot be represented in type 'int'
+[ 2647.583508] CPU: 0 PID: 2763 Comm: OF_timer_gettim Not tainted
+4.15.0-rc1+ #1
+[ 2647.587105] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
+Ubuntu-1.8.2-1ubuntu1 04/01/2014
+[ 2647.591523] Call Trace:
+[ 2647.592627]  dump_stack+0x104/0x1c0
+[ 2647.594427]  ? _atomic_dec_and_lock+0x2c0/0x2c0
+[ 2647.596747]  ubsan_epilogue+0xe/0x81
+[ 2647.598226]  handle_overflow+0x1f1/0x25f
+[ 2647.600570]  ? __ubsan_handle_negate_overflow+0x198/0x198
+[ 2647.603496]  ? ktime_get+0x2c0/0x2c0
+[ 2647.605333]  ? lock_release+0xca0/0xca0
+[ 2647.607408]  ? lock_release+0xca0/0xca0
+[ 2647.609217]  ? calibrate_delay+0x16e4/0x1cda
+[ 2647.611266]  common_timer_get+0x633/0x7d0
+[ 2647.613150]  ? posix_get_coarse_res+0x60/0x60
+[ 2647.615184]  ? do_timer_gettime+0x180/0x180
+[ 2647.617399]  ? posix_get_coarse_res+0x60/0x60
+[ 2647.619631]  do_timer_gettime+0xe4/0x180
+[ 2647.621438]  ? __lock_timer+0x6d0/0x6d0
+[ 2647.623134]  ? SyS_timer_getoverrun+0x100/0x100
+[ 2647.624774]  SyS_timer_gettime+0x6c/0xd0
+[ 2647.626665]  ? compat_SyS_timer_create+0x100/0x100
+[ 2647.628828]  ? trace_hardirqs_on_caller+0x3d0/0x690
+[ 2647.631318]  ? entry_SYSCALL_64_fastpath+0x1f/0x96
+[ 2647.633534]  entry_SYSCALL_64_fastpath+0x1f/0x96
+[ 2647.635766] RIP: 0033:0x7f0624690b79
+[ 2647.637456] RSP: 002b:00007ffd25121f58 EFLAGS: 00000217 ORIG_RAX:
+00000000000000e0
+[ 2647.641579] RAX: ffffffffffffffda RBX: 0000000000000000 RCX:
+00007f0624690b79
+[ 2647.645100] RDX: 00007f0624690b79 RSI: 0000000020000fe0 RDI:
+0000000000000000
+[ 2647.648448] RBP: 00007ffd25121f70 R08: 0000000000000000 R09:
+0000000000000000
+[ 2647.651741] R10: 0000000000000000 R11: 0000000000000217 R12:
+0000000000400450
+[ 2647.655101] R13: 00007ffd25122070 R14: 0000000000000000 R15:
+0000000000000000
+[ 2647.658058]
+================================================================================
 
+Content of type "text/html" skipped
 
+Download attachment "config" of type "application/octet-stream" (119337 bytes)
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (952 bytes)
+View attachment "poc_timer_gettime.c" of type "text/x-csrc" (1451 bytes)
