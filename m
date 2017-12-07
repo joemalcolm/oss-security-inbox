@@ -1,24 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/05/5
-Message-ID: <20171105171704.GA9438@256bit.org>
-Date: Sun, 5 Nov 2017 18:17:04 +0100
-From: Christian Brabandt <cb@...bit.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/07/8
+Message-ID: <20171207211559.fhrmtg7wul36znzp@scully.more-magic.net>
+Date: Thu, 7 Dec 2017 22:15:59 +0100
+From: Peter Bex <peter@...e-magic.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Fw: Security risk of vim swap files
+Subject: Re: Recommendations GnuPG-2 replacement
 Content-Type: text/plain; charset=utf-8
 
+On Thu, Dec 07, 2017 at 10:01:34PM +0100, Solar Designer wrote:
+> On Thu, Dec 07, 2017 at 03:15:06PM +0000, Jeremy Stanley wrote:
+> > Sounds like my use case is likely not your use case, so perhaps you
+> > should look at the signify utility OpenBSD developed for this
+> > purpose instead? It's included in Debian since Stretch under the
+> > package name "signify-openbsd" and seems to work well; I've used it
+> > semi-regularly as I tend to do a lot of cross-platform things in a
+> > mixed Debian/OpenBSD environment.
+> 
+> There's also asignify:
+> 
+> https://github.com/vstakhov/asignify
 
-On Fr, 03 Nov 2017, Jakub Wilk wrote:
+As for free GPG-compatible alternatives, I happened to remember that
+years ago, NetBSD was working on their own BSD-licensed PGP
+implementation as a GSoC project, but it never really went anywhere.
+Looks like that finally exists now:
+http://netbsd.gw.com/cgi-bin/man-cgi?netpgp++NetBSD-current
 
-> In general, what vim does (copying mode bits) in not enough to ensure that
-> the swapfile is readable only by the users who had access to the original
-> file. It would have to copy also group ownership and ACLs.
+I don't know if it's any good or if it can be easily ported to Linux
+but it could be worth investigating if you really want to avoid GPG,
+and it should probably be a lot simpler.
 
-I think patch https://github.com/vim/vim/releases/tag/v8.0.1263 fixes 
-the group ownership problem.
+Cheers,
+Peter
 
-Christian
--- 
-Advokaten, die Bratenwender der Gesetze, die so lange die Gesetze
-wenden und anwenden, bis ein Braten für sie abfällt.
-		-- Heinrich Heine
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
