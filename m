@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["13946" "Thursday" "1" "December" "2016" "17:23:43" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<54839894.ARmt1DTBun@arcadia>" "331" "[oss-security] graphicsmagick: memory allocation failure in MagickRealloc (memory.c)" "^Cc:" nil nil "12" "2016120116:23:43" "[oss-security] graphicsmagick: memory allocation failure in MagickRealloc (memory.c)" (number mark "        ago@gentoo.o Dec  1  331/13946 " thread-indent "\"[oss-security] graphicsmagick: memory allocation failure in MagickRealloc (memory.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5009" "Thursday" "7" "December" "2017" "22:01:34" "+0100" "Solar Designer" "solar@openwall.com" "<20171207210134.GA7079@openwall.com>" "108" "Re: [oss-security] Recommendations GnuPG-2 replacement" "^Date:" nil nil "12" "2017120721:01:34" "[oss-security] Recommendations GnuPG-2 replacement" (number mark "        solar@openwa Dec  7  108/5009  " thread-indent "\"Re: [oss-security] Recommendations GnuPG-2 replacement\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 11817 invoked by uid 550); 1 Dec 2016 16:22:42 -0000
+Received: (qmail 21610 invoked by uid 550); 7 Dec 2017 21:02:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,347 +11,123 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11788 invoked from network); 1 Dec 2016 16:22:37 -0000
-Message-ID: <54839894.ARmt1DTBun@arcadia>
-User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.24; x86_64; ; )
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
-Cc: cve-assign@mitre.org
-Date: Thu, 01 Dec 2016 17:23:43 +0100
-From: Agostino Sarubbo <ago@gentoo.org>
+Received: (qmail 20379 invoked from network); 7 Dec 2017 21:01:44 -0000
+Message-ID: <20171207210134.GA7079@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+Date: Thu, 7 Dec 2017 22:01:34 +0100
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] graphicsmagick: memory allocation failure in MagickRealloc (memory.c)
+Subject: Re: [oss-security] Recommendations GnuPG-2 replacement
 To: oss-security@lists.openwall.com
 
-If suitable for a CVE please assign one. Thanks.
+On Thu, Dec 07, 2017 at 06:32:11AM +0000, halfdog wrote:
+> After getting gpg and agent running, I noticed, that not reliably
+> stopping the gpg-agent on initrd would introduce a private key
+> data leak via /proc from early boot process to running system
+> when stopping fails.
 
-Description:
-Graphicsmagick is an Image Processing System.
+Can you elaborate on this, please?
 
-This is an old memory failure, discovered time ago. The maintainer, Mr. Bob=
-=20
-Friesenhahn was able to reproduce the issue; I=E2=80=99m quoting his feedba=
-ck about:
+> Thus the Debian switch from gpg1 to gpg2 just introduced efforts
+> fiddling with functionality I do not need and cannot disable,
+> provides a keymanagement that cannot be configured easily to
+> protect against the threats it should mitigate (theft of key material)
+> and creating additional attack surface without any recognizable
+> benefit.
 
-The problem is that the embedded JPEG data claims to have dimensions=20
-59395=C3=9756833 and
-this is only learned after we are in the JPEG reader.
+I think the benefit is being on a version upstream intends to maintain
+to a greater extent and for a longer time.  For example, when yet
+another side-channel leak was reported against GnuPG 1 & 2 recently,
+upstream officially patched it for GnuPG 2 only and said that GnuPG 1
+probably contains many other side-channel leaks anyway:
 
-But for some reasons (maybe not easy to fix) it is still not fixed.
+http://openwall.com/lists/oss-security/2017/07/06/8
 
-The complete ASan output:
+Of course, it's best to use GnuPG in an environment where side-channels
+within the same host would not matter anyway.
 
-# gm identify $FILE
-=3D=3D12404=3D=3DERROR: AddressSanitizer failed to allocate 0xfb8065000 (67=
-511930880)=20
-bytes of LargeMmapAllocator (error code: 12)
-=3D=3D12404=3D=3DProcess memory map follows:
-	0x000000400000-0x000000522000	/usr/bin/gm
-	0x000000722000-0x000000723000	/usr/bin/gm
-	0x000000723000-0x000000726000	/usr/bin/gm
-	0x000000726000-0x0000013a9000=09
-	0x00007fff7000-0x00008fff7000=09
-	0x00008fff7000-0x02008fff7000=09
-	0x02008fff7000-0x10007fff8000=09
-	0x600000000000-0x602000000000=09
-	0x602000000000-0x602000010000=09
-	0x602000010000-0x603000000000=09
-	0x603000000000-0x603000010000=09
-	0x603000010000-0x604000000000=09
-	0x604000000000-0x604000010000=09
-	0x604000010000-0x606000000000=09
-	0x606000000000-0x606000010000=09
-	0x606000010000-0x607000000000=09
-	0x607000000000-0x607000010000=09
-	0x607000010000-0x608000000000=09
-	0x608000000000-0x608000010000=09
-	0x608000010000-0x60a000000000=09
-	0x60a000000000-0x60a000010000=09
-	0x60a000010000-0x60b000000000=09
-	0x60b000000000-0x60b000010000=09
-	0x60b000010000-0x60c000000000=09
-	0x60c000000000-0x60c000010000=09
-	0x60c000010000-0x60d000000000=09
-	0x60d000000000-0x60d000010000=09
-	0x60d000010000-0x60e000000000=09
-	0x60e000000000-0x60e000010000=09
-	0x60e000010000-0x60f000000000=09
-	0x60f000000000-0x60f000010000=09
-	0x60f000010000-0x610000000000=09
-	0x610000000000-0x610000010000=09
-	0x610000010000-0x611000000000=09
-	0x611000000000-0x611000010000=09
-	0x611000010000-0x612000000000=09
-	0x612000000000-0x612000010000=09
-	0x612000010000-0x614000000000=09
-	0x614000000000-0x614000020000=09
-	0x614000020000-0x616000000000=09
-	0x616000000000-0x616000020000=09
-	0x616000020000-0x618000000000=09
-	0x618000000000-0x618000020000=09
-	0x618000020000-0x619000000000=09
-	0x619000000000-0x619000020000=09
-	0x619000020000-0x61a000000000=09
-	0x61a000000000-0x61a000020000=09
-	0x61a000020000-0x61b000000000=09
-	0x61b000000000-0x61b000020000=09
-	0x61b000020000-0x61c000000000=09
-	0x61c000000000-0x61c000020000=09
-	0x61c000020000-0x61d000000000=09
-	0x61d000000000-0x61d000020000=09
-	0x61d000020000-0x61e000000000=09
-	0x61e000000000-0x61e000020000=09
-	0x61e000020000-0x621000000000=09
-	0x621000000000-0x621000020000=09
-	0x621000020000-0x623000000000=09
-	0x623000000000-0x623000020000=09
-	0x623000020000-0x624000000000=09
-	0x624000000000-0x624000020000=09
-	0x624000020000-0x625000000000=09
-	0x625000000000-0x625000030000=09
-	0x625000030000-0x628000000000=09
-	0x628000000000-0x628000010000=09
-	0x628000010000-0x62a000000000=09
-	0x62a000000000-0x62a000010000=09
-	0x62a000010000-0x630000000000=09
-	0x630000000000-0x630000020000=09
-	0x630000020000-0x640000000000=09
-	0x640000000000-0x640000003000=09
-	0x7fcc55fbe000-0x7fcc56027000	/usr/lib64/libjpeg.so.62.2.0
-	0x7fcc56027000-0x7fcc56226000	/usr/lib64/libjpeg.so.62.2.0
-	0x7fcc56226000-0x7fcc56227000	/usr/lib64/libjpeg.so.62.2.0
-	0x7fcc56227000-0x7fcc56228000	/usr/lib64/libjpeg.so.62.2.0
-	0x7fcc56228000-0x7fcc56254000	/usr/lib64/GraphicsMagick-1.3.24/modules-
-Q32/coders/jpeg.so
-	0x7fcc56254000-0x7fcc56453000	/usr/lib64/GraphicsMagick-1.3.24/modules-
-Q32/coders/jpeg.so
-	0x7fcc56453000-0x7fcc56454000	/usr/lib64/GraphicsMagick-1.3.24/modules-
-Q32/coders/jpeg.so
-	0x7fcc56454000-0x7fcc56457000	/usr/lib64/GraphicsMagick-1.3.24/modules-
-Q32/coders/jpeg.so
-	0x7fcc56457000-0x7fcc5645b000=09
-	0x7fcc5645b000-0x7fcc5648c000	/usr/lib64/libpng16.so.16.21.0
-	0x7fcc5648c000-0x7fcc5668b000	/usr/lib64/libpng16.so.16.21.0
-	0x7fcc5668b000-0x7fcc5668c000	/usr/lib64/libpng16.so.16.21.0
-	0x7fcc5668c000-0x7fcc5668d000	/usr/lib64/libpng16.so.16.21.0
-	0x7fcc5668d000-0x7fcc5671d000	/usr/lib64/GraphicsMagick-1.3.24/modules-
-Q32/coders/png.so
-	0x7fcc5671d000-0x7fcc5691d000	/usr/lib64/GraphicsMagick-1.3.24/modules-
-Q32/coders/png.so
-	0x7fcc5691d000-0x7fcc5691f000	/usr/lib64/GraphicsMagick-1.3.24/modules-
-Q32/coders/png.so
-	0x7fcc5691f000-0x7fcc56927000	/usr/lib64/GraphicsMagick-1.3.24/modules-
-Q32/coders/png.so
-	0x7fcc56927000-0x7fcc56932000=09
-	0x7fcc56932000-0x7fcc5cfa4000	/usr/lib64/locale/locale-archive
-	0x7fcc5cfa4000-0x7fcc5fdff000=09
-	0x7fcc5fdff000-0x7fcc5fe08000	/usr/lib64/libltdl.so.7.3.1
-	0x7fcc5fe08000-0x7fcc60007000	/usr/lib64/libltdl.so.7.3.1
-	0x7fcc60007000-0x7fcc60008000	/usr/lib64/libltdl.so.7.3.1
-	0x7fcc60008000-0x7fcc60009000	/usr/lib64/libltdl.so.7.3.1
-	0x7fcc60009000-0x7fcc6001e000	/lib64/libz.so.1.2.8
-	0x7fcc6001e000-0x7fcc6021d000	/lib64/libz.so.1.2.8
-	0x7fcc6021d000-0x7fcc6021e000	/lib64/libz.so.1.2.8
-	0x7fcc6021e000-0x7fcc6021f000	/lib64/libz.so.1.2.8
-	0x7fcc6021f000-0x7fcc6022e000	/lib64/libbz2.so.1.0.6
-	0x7fcc6022e000-0x7fcc6042d000	/lib64/libbz2.so.1.0.6
-	0x7fcc6042d000-0x7fcc6042e000	/lib64/libbz2.so.1.0.6
-	0x7fcc6042e000-0x7fcc6042f000	/lib64/libbz2.so.1.0.6
-	0x7fcc6042f000-0x7fcc604d6000	/usr/lib64/libfreetype.so.6.12.3
-	0x7fcc604d6000-0x7fcc606d6000	/usr/lib64/libfreetype.so.6.12.3
-	0x7fcc606d6000-0x7fcc606dc000	/usr/lib64/libfreetype.so.6.12.3
-	0x7fcc606dc000-0x7fcc606dd000	/usr/lib64/libfreetype.so.6.12.3
-	0x7fcc606dd000-0x7fcc60730000	/usr/lib64/liblcms2.so.2.0.6
-	0x7fcc60730000-0x7fcc60930000	/usr/lib64/liblcms2.so.2.0.6
-	0x7fcc60930000-0x7fcc60931000	/usr/lib64/liblcms2.so.2.0.6
-	0x7fcc60931000-0x7fcc60936000	/usr/lib64/liblcms2.so.2.0.6
-	0x7fcc60936000-0x7fcc60ac9000	/lib64/libc-2.22.so
-	0x7fcc60ac9000-0x7fcc60cc9000	/lib64/libc-2.22.so
-	0x7fcc60cc9000-0x7fcc60ccd000	/lib64/libc-2.22.so
-	0x7fcc60ccd000-0x7fcc60ccf000	/lib64/libc-2.22.so
-	0x7fcc60ccf000-0x7fcc60cd3000=09
-	0x7fcc60cd3000-0x7fcc60ce9000	/usr/lib64/gcc/x86_64-pc-linux-
-gnu/4.9.3/libgcc_s.so.1
-	0x7fcc60ce9000-0x7fcc60ee8000	/usr/lib64/gcc/x86_64-pc-linux-
-gnu/4.9.3/libgcc_s.so.1
-	0x7fcc60ee8000-0x7fcc60ee9000	/usr/lib64/gcc/x86_64-pc-linux-
-gnu/4.9.3/libgcc_s.so.1
-	0x7fcc60ee9000-0x7fcc60eea000	/usr/lib64/gcc/x86_64-pc-linux-
-gnu/4.9.3/libgcc_s.so.1
-	0x7fcc60eea000-0x7fcc60ef0000	/lib64/librt-2.22.so
-	0x7fcc60ef0000-0x7fcc610f0000	/lib64/librt-2.22.so
-	0x7fcc610f0000-0x7fcc610f1000	/lib64/librt-2.22.so
-	0x7fcc610f1000-0x7fcc610f2000	/lib64/librt-2.22.so
-	0x7fcc610f2000-0x7fcc61109000	/lib64/libpthread-2.22.so
-	0x7fcc61109000-0x7fcc61308000	/lib64/libpthread-2.22.so
-	0x7fcc61308000-0x7fcc61309000	/lib64/libpthread-2.22.so
-	0x7fcc61309000-0x7fcc6130a000	/lib64/libpthread-2.22.so
-	0x7fcc6130a000-0x7fcc6130e000=09
-	0x7fcc6130e000-0x7fcc6140b000	/lib64/libm-2.22.so
-	0x7fcc6140b000-0x7fcc6160a000	/lib64/libm-2.22.so
-	0x7fcc6160a000-0x7fcc6160b000	/lib64/libm-2.22.so
-	0x7fcc6160b000-0x7fcc6160c000	/lib64/libm-2.22.so
-	0x7fcc6160c000-0x7fcc6160e000	/lib64/libdl-2.22.so
-	0x7fcc6160e000-0x7fcc6180e000	/lib64/libdl-2.22.so
-	0x7fcc6180e000-0x7fcc6180f000	/lib64/libdl-2.22.so
-	0x7fcc6180f000-0x7fcc61810000	/lib64/libdl-2.22.so
-	0x7fcc61810000-0x7fcc61e6e000	/usr/lib64/libGraphicsMagick.so.3.15.0
-	0x7fcc61e6e000-0x7fcc6206e000	/usr/lib64/libGraphicsMagick.so.3.15.0
-	0x7fcc6206e000-0x7fcc6209f000	/usr/lib64/libGraphicsMagick.so.3.15.0
-	0x7fcc6209f000-0x7fcc62125000	/usr/lib64/libGraphicsMagick.so.3.15.0
-	0x7fcc62125000-0x7fcc621a0000=09
-	0x7fcc621a0000-0x7fcc621c2000	/lib64/ld-2.22.so
-	0x7fcc6228e000-0x7fcc62317000=09
-	0x7fcc6231b000-0x7fcc62322000=09
-	0x7fcc62322000-0x7fcc62329000	/usr/lib64/gconv/gconv-modules.cache
-	0x7fcc62329000-0x7fcc6234c000	/usr/share/locale/it/LC_MESSAGES/libc.mo
-	0x7fcc6234c000-0x7fcc623b6000=09
-	0x7fcc623b6000-0x7fcc623c1000=09
-	0x7fcc623c1000-0x7fcc623c2000	/lib64/ld-2.22.so
-	0x7fcc623c2000-0x7fcc623c3000	/lib64/ld-2.22.so
-	0x7fcc623c3000-0x7fcc623c4000=09
-	0x7ffcfee34000-0x7ffcfee55000	[stack]
-	0x7ffcfef4c000-0x7ffcfef4e000	[vvar]
-	0x7ffcfef4e000-0x7ffcfef50000	[vdso]
-	0xffffffffff600000-0xffffffffff601000	[vsyscall]
-=3D=3D12404=3D=3DEnd of process memory map.
-=3D=3D12404=3D=3DAddressSanitizer CHECK failed: /var/tmp/portage/sys-devel/=
-llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/sanitizer_common/sanitizer_common.cc:183 "((0 && "unable to mmap")) =
-!=3D=20
-(0)" (0x0, 0x0)
-    #0 0x4c9b3d in AsanCheckFailed /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_rtl.cc:67
-    #1 0x4d0673 in __sanitizer::CheckFailed(char const*, int, char const*,=
-=20
-unsigned long long, unsigned long long) /var/tmp/portage/sys-devel/llvm-3.8=
-.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/sanitizer_common/sanitizer_common.cc:159
-    #2 0x4d0861 in __sanitizer::ReportMmapFailureAndDie(unsigned long, char=
-=20
-const*, char const*, int, bool) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/sanitizer_common/sanitizer_common.cc:183
-    #3 0x4d989a in __sanitizer::MmapOrDie(unsigned long, char const*, bool)=
-=20
-/var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/sanitizer_common/sanitizer_posix.cc:122
-    #4 0x421c2f in=20
-__sanitizer::LargeMmapAllocator::Allocate(__sanitizer::AllocatorStats*,=20
-unsigned long, unsigned long) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:1033
-    #5 0x421c2f in=20
-__sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<1055531162=
-66496ul,=20
-4398046511104ul, 0ul, __sanitizer::SizeClassMap,=20
-__asan::AsanMapUnmapCallback>,=20
-__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64=
-<105553116266496ul,=20
-4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallba=
-ck>=20
->, __sanitizer::LargeMmapAllocator=20
->::Allocate(__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClas=
-sAllocator64<105553116266496ul,=20
-4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallba=
-ck>=20
->*, unsigned long, unsigned long, bool, bool) /var/tmp/portage/sys-
-devel/llvm-3.8.1-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:1302
-    #6 0x421c2f in __asan::Allocator::Allocate(unsigned long, unsigned long=
-,=20
-__sanitizer::BufferedStackTrace*, __asan::AllocType, bool)=20
-/var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:368
-    #7 0x421c2f in __asan::asan_malloc(unsigned long,=20
-__sanitizer::BufferedStackTrace*) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:718
-    #8 0x4c0201 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:53
-    #9 0x7fcc61c6a3f2 in MagickRealloc /tmp/portage/media-
-gfx/graphicsmagick-1.3.24/work/GraphicsMagick-1.3.24/magick/memory.c:471:18
-    #10 0x7fcc61cbb2b0 in OpenCache /tmp/portage/media-
-gfx/graphicsmagick-1.3.24/work/GraphicsMagick-1.3.24/magick/pixel_cache.c:3=
-155:7
-    #11 0x7fcc61cb98fd in ModifyCache /tmp/portage/media-
-gfx/graphicsmagick-1.3.24/work/GraphicsMagick-1.3.24/magick/pixel_cache.c:2=
-955:18
-    #12 0x7fcc61cbee4c in SetCacheNexus /tmp/portage/media-
-gfx/graphicsmagick-1.3.24/work/GraphicsMagick-1.3.24/magick/pixel_cache.c:3=
-878:7
-    #13 0x7fcc61cbf5e1 in SetCacheViewPixels /tmp/portage/media-
-gfx/graphicsmagick-1.3.24/work/GraphicsMagick-1.3.24/magick/pixel_cache.c:3=
-957:10
-    #14 0x7fcc61cbf5e1 in SetImagePixels /tmp/portage/media-
-gfx/graphicsmagick-1.3.24/work/GraphicsMagick-1.3.24/magick/pixel_cache.c:4=
-023
-    #15 0x7fcc56235483 in ReadJPEGImage /tmp/portage/media-
-gfx/graphicsmagick-1.3.24/work/GraphicsMagick-1.3.24/coders/jpeg.c:1344:9
-    #16 0x7fcc61ad3a8a in ReadImage /tmp/portage/media-
-gfx/graphicsmagick-1.3.24/work/GraphicsMagick-1.3.24/magick/constitute.c:16=
-07:13
-    #17 0x7fcc566ed13e in ReadOneJNGImage /tmp/portage/media-
-gfx/graphicsmagick-1.3.24/work/GraphicsMagick-1.3.24/coders/png.c:3308:17
-    #18 0x7fcc566d6f72 in ReadJNGImage /tmp/portage/media-
-gfx/graphicsmagick-1.3.24/work/GraphicsMagick-1.3.24/coders/png.c:3516:9
-    #19 0x7fcc61ad3a8a in ReadImage /tmp/portage/media-
-gfx/graphicsmagick-1.3.24/work/GraphicsMagick-1.3.24/magick/constitute.c:16=
-07:13
-    #20 0x7fcc61ad1a4b in PingImage /tmp/portage/media-
-gfx/graphicsmagick-1.3.24/work/GraphicsMagick-1.3.24/magick/constitute.c:13=
-70:9
-    #21 0x7fcc61a23240 in IdentifyImageCommand /tmp/portage/media-
-gfx/graphicsmagick-1.3.24/work/GraphicsMagick-1.3.24/magick/command.c:8372:=
-17
-    #22 0x7fcc61a27786 in MagickCommand /tmp/portage/media-
-gfx/graphicsmagick-1.3.24/work/GraphicsMagick-1.3.24/magick/command.c:8862:=
-17
-    #23 0x7fcc61a81740 in GMCommandSingle /tmp/portage/media-
-gfx/graphicsmagick-1.3.24/work/GraphicsMagick-1.3.24/magick/command.c:17370=
-:10
-    #24 0x7fcc61a7fce3 in GMCommand /tmp/portage/media-
-gfx/graphicsmagick-1.3.24/work/GraphicsMagick-1.3.24/magick/command.c:17423=
-:16
-    #25 0x7fcc6095661f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #26 0x418cd8 in _init (/usr/bin/gm+0x418cd8)
+Personally, I intend to stay with GnuPG 1 for now.
 
-/usr/bin/gm identify: abort due to signal 6 (SIGABRT) "Abort"...
+> "--s2k-count" parameter, which specifies the number of rounds
+> of key deriviation function to unlock the private key,
 
-Affected version:
-1.3.25
+Fun fact: it never actually specified the number of rounds (including
+not in RFC 4880), but rather the number of bytes passed through SHA-1:
 
-Fixed version:
-N/A
+http://www.openwall.com/lists/john-dev/2015/04/12/7
 
-Commit fix:
-N/A
+As I wrote there:
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+"I think GnuPG documentation is wrong, and should be revised.  Both
+texinfo and man.  Would you care to report this to GnuPG, perhaps along
+with a documentation patch?"
 
-CVE:
-N/A
+but I think we never reported it to GnuPG.  So please feel free.  Also,
+I think the man page is generated from the texinfo source, so would not
+need to be revised separately.
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00096-graphicsmagick-memalloc-M=
-agickRealloc
+> has changed
+> from gpgv1 to gpgv2, so that it is ignored in gpg2 but does not
+> cause any warning or error. Thus previous audited procedures continue
+> to work but do not produce the same results any more. Of course,
+> I could have compared documentation of all parameters of (at least
+> security-related) programs after Jessie to Stretch upgrade, but
+> I assumed, that security critical parameters would not change
+> their meaning without any noticable effect - so just my fault.
 
-Timeline:
-2016-10-19: bug discovered and reported privately to upstream
-2016-12-01: blog post about the issue
+Are you saying "--s2k-count" option to "gpg2" is ignored, and moreover
+that this is documented?  gnupg-2.1.23/doc/gpg.texi says (formatted):
 
-Note:
-This bug was found with American Fuzzy Lop.
+`--s2k-count `n''
+     Specify how many times the passphrase mangling is repeated.  This
+     value may range between 1024 and 65011712 inclusive.  The default
+     is inquired from gpg-agent.  Note that not all values in the
+     1024-65011712 range are legal and if an illegal value is selected,
+     GnuPG will round up to the nearest legal value.  This option is
+     only meaningful if `--s2k-mode' is 3.
 
-Permalink:
-https://blogs.gentoo.org/ago/2016/12/01/graphicsmagick-memory-allocation-fa=
-ilure-in-magickrealloc-memory-c
+This doesn't say the option is ignored - only that "the default is
+inquired from gpg-agent."  Is the option in fact ignored?  That would be
+a bug in either code or documentation.
 
---=20
-Agostino Sarubbo
-Gentoo Linux Developer
+> Still, this would just be a minor mishap, but what reduced my
+> trust in GPG, was the comment of a developer: it was assumed,
+> that they know better, where there software will be run without
+> specifying that "where" in the documentation. Also his replies
+> matched that picture, e.g. "(gpg-agent will) ... calibrate the
+> S2K count to match the current machine", assuming that this is
+> good reason to change "--s2k-count" meaning and ignore the parameter.
+
+I see no problem with gpg-agent providing a calibrated default, if that
+default can be overridden.  If it can't be, and especially if that's in
+conflict with the documentation, that's problematic.
+
+> PS: I do not know, how much the gpg-agent calibration under
+> increased system load reduced the KDF complexity, as I failed
+> to extract the KDF rounds value from the gpg data structures,
+> but the value seems to be at least below 70ms due to total time
+> measurements for gpg-agent (math, interprocess communication,
+> filesystem) to unlock a key on an idle system.
+
+You may process the private key file with gpg2john, then try to crack it
+with john.  This will output the actual value, as well as show you the
+speed at which passphrases can be tested against that key on your system
+and with that version of JtR.  To use a GPU, add "--format=gpg-opencl".
+Please use latest bleeding-jumbo off GitHub for all of this.
+
+On Thu, Dec 07, 2017 at 03:15:06PM +0000, Jeremy Stanley wrote:
+> Sounds like my use case is likely not your use case, so perhaps you
+> should look at the signify utility OpenBSD developed for this
+> purpose instead? It's included in Debian since Stretch under the
+> package name "signify-openbsd" and seems to work well; I've used it
+> semi-regularly as I tend to do a lot of cross-platform things in a
+> mixed Debian/OpenBSD environment.
+
+There's also asignify:
+
+https://github.com/vstakhov/asignify
+
+Alexander
