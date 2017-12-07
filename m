@@ -1,95 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/27/1
-Message-ID: <43bc647b-fc56-779c-bf11-99374e557e2a@ficora.fi>
-Date: Fri, 27 Oct 2017 11:21:35 +0300
-From: NCSC-FI Vulnerability Co-ordination <vulncoord@...ora.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/08/1
+Message-ID: <780d4f26-0803-6ef8-3a21-bcf8ea480a29@ruhr-uni-bochum.de>
+Date: Fri, 8 Dec 2017 00:51:50 +0100
+From: Marcus Brinkmann <marcus.brinkmann@...r-uni-bochum.de>
 To: oss-security@...ts.openwall.com
-Cc: vulncoord@...ora.fi
-Subject: Two vulnerabilities patched in GNU Wget: CVE-2017-13089, CVE-2017-13090
+Subject: Re: Recommendations GnuPG-2 replacement
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Hi,
 
-CVE-2017-13089:
+I started neopg.io two months ago to provide a modern replacement for
+GnuPG.  It will go back to a single-binary architecture like gpg1 was,
+but move forward on just about every other issue:
 
-The http.c:skip_short_body() function is called in some circumstances,
-such as when processing redirects. When the response is sent chunked,
-the chunk parser uses strtol() to read each chunk's length, but
-doesn't check that the chunk length is a non-negative number. The
-code then tries to skip the chunk in pieces of 512 bytes by using the
-MIN() macro, but ends up passing the negative chunk length to
-connect.c:fd_read(). As fd_read() takes an int argument, the high
-32 bits of the chunk length are discarded, leaving fd_read() with
-a completely attacker controlled length argument.
+* Written in C++
+* based on the Botan crypto library instead of libgcrypt
+* typical library + CLI (with subcommands) architecture
+* better testing (CI, static analysis)
 
-Patch attached, original at:
+In the beginning, things will be somewhat unstable as I am cleaning up
+and restructuring the internals completely, but I try to keep every
+commit a somewhat running version (currently keyserver lookup is broken
+because I am not registering the root certificate of the keyserver CA -
+yes, openpgp keyservers have their own self-signed root CA).
 
-http://git.savannah.gnu.org/cgit/wget.git/commit/?id=d892291fb8ace4c3b73
-4ea5125770989c215df3f
+You can follow the progress on neopg.io and the resources linked from
+there.  I am keen on documenting the changes and the reasons for them as
+I go along.  I am open to suggestions, just open an issue on GitHub.
 
-CVE-2017-13090:
-
-The retr.c:fd_read_body() function is called when processing OK
-responses. When the response is sent chunked, the chunk parser uses
-strtol() to read each chunk's length, but doesn't check that the chunk
-length is a non-negative number. The code then tries to read the chunk
-in pieces of 8192 bytes by using the MIN() macro, but ends up passing
-the negative chunk length to retr.c:fd_read(). As fd_read() takes an
-int argument, the high 32 bits of the chunk length are discarded,
-leaving fd_read() with a completely attacker controlled length
-argument. The attacker can corrupt malloc metadata after the allocated
-buffer.
-
-Patch attached, original at:
-
-http://git.savannah.gnu.org/cgit/wget.git/commit/?id=ba6b44f6745b14dce41
-4761a8e4b35d31b176bba
-
-Reported by:
-
-Antti Levomäki, Christian Jalio, Joonas Pihlaja from Forcepoint
-
-Advisory:
-
-https://www.viestintavirasto.fi/en/2017/haavoittuvuus-2017-037
-
-Also attached are JSON versions of the vulnerability details (in the
-CVE 4.0 schema as formatted by Vulnogram, https://vulnogram.github.io/).
-
-Regards,
-
-- -Jussi / NCSC-FI
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
-
-iQIcBAEBCgAGBQJZ8uxpAAoJEABVfkgMlGK84+wP/0ADB7REF0a85RU3ScvhuwCB
-nyDzyoGy0bEFkN+Hia4sIZzSL6ea+EcngUw28A6tMuQGpgYqqKnrxybp39Pou/IU
-c1Bl/7Lci4PQRfc/XuhFE6NlqZlG9W7G4Yiijgv2sQNiaHzkIDxaUuahqQOI7AhQ
-WGdtBdFIYdBs9DogZuW+cURZ+3F1paPymQozGDQtdZClTL41+YhKbNki47tBzX+7
-GWndw3vt75ZGPsBDWFu1m4RUslmEG1+EU7cWYLTqo8+eTirnC9Lo2VS3fkJimdH1
-rJDjRCQ1xCiWNwJ4+wpzh2gm0CPlY5MU/1dr6mdGGRIcwqGcSfmEBMaOHTQGVt9b
-q2RDY3Otmh/98/3oeKlhyC2e7gyRO1D9i/SGgsCX2Xnfh6AnLg5I6P0xvSGtj/aK
-5V5/7q5+xu7OFEOwvgEAN77eYGYFIND6fBMqJFn8kxvac1uNd7ppixuCqsC0rxWE
-t1L73B/vFvuOL9G6tq62o8haT578vQj8HQ8/x39PtHzr2giDv4uC4bKCZx6CCKGl
-ZNfpTEucZrQDJq/8rtm047o5DGlOjTn+rflRhh2BdNDw6nnek605Ctney80YqFuF
-xYkQYSF9XkWcr/xTX1qD7vsMYhYlOqCui/3ej+S01yOVcRbTUSLVsF3jWm4QJlKa
-duMI7yGV2dxh4xjfSOoZ
-=fq73
------END PGP SIGNATURE-----
-
-Download attachment "CVE-2017-13089.json" of type "application/json" (2866 bytes)
-
-Download attachment "CVE-2017-13090.json" of type "application/json" (2900 bytes)
-
-View attachment "CVE-2017-13089.patch" of type "text/x-patch" (1085 bytes)
-
-View attachment "CVE-2017-13090.patch" of type "text/x-patch" (1159 bytes)
-
-Download attachment "CVE-2017-13089.json.sig" of type "application/pgp-signature" (543 bytes)
-
-Download attachment "CVE-2017-13090.json.sig" of type "application/pgp-signature" (543 bytes)
-
-Download attachment "CVE-2017-13089.patch.sig" of type "application/pgp-signature" (543 bytes)
-
-Download attachment "CVE-2017-13090.patch.sig" of type "application/pgp-signature" (543 bytes)
+Thanks,
+Marcus
