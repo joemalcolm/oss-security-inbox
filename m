@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2157" "Friday" "6" "May" "2016" "17:07:01" "+0200" "Gustavo Grieco" "gustavo.grieco@gmail.com" "<CACn5sdS+8Hc+VOm3zX7k2dE2UYj6kuCH4ZmZqtc-WbXca=n9vQ@mail.gmail.com>" "51" "[oss-security] CVE request: an invalid pointer read in mini-xml 2.7" nil nil nil "5" "2016050615:07:01" "[oss-security] CVE request: an invalid pointer read in mini-xml 2.7" (number mark "U       gustavo.grie May  6   51/2157  " thread-indent "\"[oss-security] CVE request: an invalid pointer read in mini-xml 2.7\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["780" "Friday" "8" "December" "2017" "12:09:50" "+0300" "Dan Carpenter" "dan.carpenter@oracle.com" "<20171208090949.j6zlcrgv6djmwq4l@mwanda>" "24" "[oss-security] Re: signed integer overflow in common_timer_get on linux 4.15.0-rc1" nil nil nil "12" "2017120809:09:50" "[oss-security] Re: signed integer overflow in common_timer_get on linux 4.15.0-rc1" (number mark "U       dan.carpente Dec  8   24/780   " thread-indent "\"[oss-security] Re: signed integer overflow in common_timer_get on linux 4.15.0-rc1\"\n") "<20171207111718.GA1230@kroah.com>" ("<CANBt6Y257EXeL_dnxB0xXQmP+o7sS5FS3BJwPR5PsE3Wu1nKvg@mail.gmail.com>" "<20171207111718.GA1230@kroah.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 22033 invoked by uid 550); 6 May 2016 15:07:13 -0000
+Received: (qmail 25670 invoked by uid 550); 8 Dec 2017 09:19:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,86 +12,58 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22010 invoked from network); 6 May 2016 15:07:13 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to;
-        bh=4jgT5pvs5xcJdhuXdbfnNEeLYDgysu/G89kIxO+5YqE=;
-        b=OEbRtLlESUcBZpsgjKjU6OhYW/wW2swdV2SBzryg+K1txGRahHUG9rl/uRw+qlpbwK
-         r2oEBd7o5AZ+c2b1i0isWghEqB1j/pLwUh5oWATru2UddUs2kUMV7OD9t3QVnU0BbvVQ
-         3J4xioLyL3qM24WWicmZBmIjCnPXaj4THSq8qHLWQuQkA8OQTeo0LJJ0q46sMzQy+YaT
-         kD6ieYK4mJbsPTYC2QtXYEk+k1uHWBnB4FC2GcbeMd9HuqHjGNdgApsaP1Y66u1yfnFE
-         mhP2yhv2YgR6VYaoVmyITRB5kYZyB/RJSveHlhqbXjUsnHX6uzKQzax2kQYdCuspoA0E
-         bsXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
-        bh=4jgT5pvs5xcJdhuXdbfnNEeLYDgysu/G89kIxO+5YqE=;
-        b=IXtdNAUBuE1AaKpP1En8mzckXJ632JcXJEFMH+G0t4KFRZppOdqISiBsatxowS0kn6
-         4KxR6RImZXstnEkg5WYusH0AJbksG0W7IwZ9JdO89FFpzmIM1UWSj9YkpAUhiuSMDYre
-         vMW3n/r4uDphWmEGAxeaQvyBbn40sLwhvUPajiRvWaRdqlxgSmTO5G9Ql6m3+5qbfN17
-         LJxxyJdvzKJYb/DB5OVqhxVcqZBWn5/ogUjpWafcEskmX3at2yQfmUJrtuQRlMmjX55E
-         KhuSUSZNdT6TKxKA4GnCsXC6vM1VtgionvfnBko9M5ruTlkiOCpR+G5vPWWeYMvTpQ3/
-         /vUw==
-X-Gm-Message-State: AOPr4FWp1XV7KTk8hX5nk3TM81YLqJ3VuhI6qXbPNWBPipGJ8SE1GNvdaPefWbWRJgY3FStkIp/0IzYwOLPKFA==
+Received: (qmail 21617 invoked from network); 8 Dec 2017 09:10:42 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
+ : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=corp-2017-10-26;
+ bh=cooYcvbSctFEVHqSzfb+tYOHhZs4JiPxb2Yn3cJGGgo=;
+ b=UnmrvIY/IQ1IFxGNIZgSEsJEjtEkCBiN6jC6N9JuzV+wxFEuba90b4XsXB73fQEFd53o
+ SwpVwRxZPSlkYBuG5zqD7PD8N9LdHru7XpHAmcTiBVc+bcd1NQAVNyj2MCZQywi5m6SE
+ sJCADpshhX27iya352d1RCp3V1JYZyScF1V0ahus/iXkMp/r0JnbspEPfrT5s9+8yyu3
+ Xe3EBSXtHJGyYO9tzryCTZHtzDWjW5MJ5uUEyntkZZos4VilxQkels1PTxCzlmQlPkWo
+ /WZ5Ph1zgRXXxaQAIVoAdGlZsNjSKWvYib2WLaXbutgM8dZsAwnxpCA3Gy1vZ8OiIbFY BQ== 
+Date: Fri, 8 Dec 2017 12:09:50 +0300
+From: Dan Carpenter <dan.carpenter@oracle.com>
+To: Greg KH <greg@kroah.com>
+Cc: at zhou <zhouat2017@gmail.com>, security@kernel.org, secalert@redhat.com,
+        security@suse.com, tglx@linutronix.de, oss-security@lists.openwall.com,
+        linux-distros@vs.openwall.org
+Message-ID: <20171208090949.j6zlcrgv6djmwq4l@mwanda>
+References: <CANBt6Y257EXeL_dnxB0xXQmP+o7sS5FS3BJwPR5PsE3Wu1nKvg@mail.gmail.com>
+ <20171207111718.GA1230@kroah.com>
 MIME-Version: 1.0
-X-Received: by 10.112.160.163 with SMTP id xl3mr10104542lbb.19.1462547221842;
- Fri, 06 May 2016 08:07:01 -0700 (PDT)
-Date: Fri, 6 May 2016 17:07:01 +0200
-Message-ID: <CACn5sdS+8Hc+VOm3zX7k2dE2UYj6kuCH4ZmZqtc-WbXca=n9vQ@mail.gmail.com>
-From: Gustavo Grieco <gustavo.grieco@gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=001a11c34262a0169b05322dcfb2
-Subject: [oss-security] CVE request: an invalid pointer read in mini-xml 2.7
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20171207111718.GA1230@kroah.com>
+User-Agent: NeoMutt/20170609 (1.8.3)
+X-Proofpoint-Virus-Version: vendor=nai engine=5900 definitions=8738 signatures=668644
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 malwarescore=0
+ phishscore=0 bulkscore=0 spamscore=0 mlxscore=0 mlxlogscore=587
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.0.1-1711220000 definitions=main-1712080133
+Subject: [oss-security] Re: signed integer overflow in common_timer_get on linux 4.15.0-rc1
 
---001a11c34262a0169b05322dcfb2
-Content-Type: text/plain; charset=UTF-8
+On Thu, Dec 07, 2017 at 12:17:18PM +0100, Greg KH wrote:
+> On Thu, Dec 07, 2017 at 06:01:43PM +0800, at zhou wrote:
+> > Hi all,
+> > 
+> > credit   to   L5@360vulcan team
+> > 
+> > I fuzzed the linux kernel and find signed integer overflow on linux
+> > 4.15.0-rc1+.
+> > the crash log can see below, the .config and the poc file ,please see the
+> > attachments.
+> 
+> Odd, doesn't seem to affect a 4.9 or 4.15-rc2 kernel here on my
+> machines, is there something specific in the .config that might be
+> triggering this?
+> 
 
-Hi,
+Greg, you're running with UBSAN?
 
-An invalid pointer read located in a vsnprintf call in mini-xml 2.7 (
-https://www.msweet.org/projects.php?Z3) was found:
+I've always wondered how UBSAN was going to work because there are *so*
+many harmless integer overflows in the kernel.  That's my main challenge
+with trying to use static analysis for integer overflows.
 
-$ gdb --args ./testmxml jezrijgasv.xml.-5377691366552468283
-...
-Program received signal SIGSEGV, Segmentation fault.
-0x00007ffff48b3a03 in _IO_vfprintf_internal (s=s@entry=0x7fffffff9970,
-format=<optimized out>,
-    format@entry=0x40d900 "<%s> cannot be a second root node after <%s>",
-ap=ap@entry=0x7fffffff9b10) at vfprintf.c:1661
-1661    vfprintf.c: No such file or directory.
-(gdb) bt
-#0  0x00007ffff48b3a03 in _IO_vfprintf_internal (s=s@entry=0x7fffffff9970,
-format=<optimized out>,
-    format@entry=0x40d900 "<%s> cannot be a second root node after <%s>",
-ap=ap@entry=0x7fffffff9b10) at vfprintf.c:1661
-#1  0x00007ffff4971235 in ___vsnprintf_chk (s=s@entry=0x7fffffff9b50 "<b>
-cannot be a second root node after <\002", maxlen=<optimized out>,
-    maxlen@entry=1024, flags=flags@entry=1, slen=slen@entry=1024,
-format=format@entry=0x40d900 "<%s> cannot be a second root node after
-<%s>",
-    args=args@entry=0x7fffffff9b10) at vsnprintf_chk.c:63
-#2  0x000000000040a3c0 in vsnprintf (__ap=0x7fffffff9b10, __fmt=0x40d900
-"<%s> cannot be a second root node after <%s>", __n=1024,
-    __s=0x7fffffff9b50 "<b> cannot be a second root node after <\002") at
-/usr/include/x86_64-linux-gnu/bits/stdio2.h:77
-#3  mxml_error (format=0x40d900 "<%s> cannot be a second root node after
-<%s>") at mxml-private.c:86
-#4  0x0000000000405a74 in mxml_load_data (top=top@entry=0x0,
-p=p@entry=0x60360000fd80,
-cb=cb@entry=0x402863 <type_cb>,
-    getc_cb=getc_cb@entry=0x404c78 <mxml_file_getc>, sax_cb=sax_cb@entry=0x0,
-sax_data=sax_data@entry=0x0) at mxml-file.c:1662
-#5  0x00000000004079d0 in mxmlLoadFile (top=top@entry=0x0,
-fp=fp@entry=0x60360000fd80,
-cb=cb@entry=0x402863 <type_cb>) at mxml-file.c:199
-#6  0x0000000000402166 in main (argc=<optimized out>, argv=0x7fffffffe4f8)
-at testmxml.c:473
-
-Fortunately, this issue is fixed in mini-xml 2.9. A reproducer is available
-upon request. Please assign a CVE if necesary.
-
-Regards,
-Gustavo.
-
---001a11c34262a0169b05322dcfb2--
+regards,
+dan carpenter
