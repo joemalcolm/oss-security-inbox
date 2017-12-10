@@ -1,44 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/10/4
-Message-ID: <1454353123.19019329.1507651438402.JavaMail.zimbra@redhat.com>
-Date: Tue, 10 Oct 2017 12:03:58 -0400 (EDT)
-From: Vladis Dronov <vdronov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/10/5
+Message-ID: <20171210163330.GA13246@eldamar.local>
+Date: Sun, 10 Dec 2017 17:33:30 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2017-12190: Linux kernel: block: memory leak when merging small consecutive buffers in SCSI IO vectors
+Cc: cve-assign@...re.org
+Subject: Re: CVE Request -- Arbitrary command execution in mercurial repo with a git submodule
 Content-Type: text/plain; charset=utf-8
 
-Heololo,
+Hi
 
-Vitaly Mayatskikh has found that bio_map_user_iov() and bio_unmap_user() in
-'block/bio.c' do unbalanced pages refcounting if IO vector has small consecutive
-buffers belonging to the same page. bio_add_pc_page() merges them into one, but
-the page reference is never dropped, causing memory leak.
+On Thu, Dec 07, 2017 at 04:53:44PM +0800, feer james wrote:
+> Hello mitre,
+> 
+> I'd like to request a cve id for this vulnerability.
+> 
+> *Vulnerability Details:*
+> https://bz.mercurial-scm.org/show_bug.cgi?id=5730
+> 
+> *Offical fix release:*
+> https://www.mercurial-scm.org/wiki/WhatsNew#Mercurial_4.4.1_.282017-11-07.29
 
-Regarding security affect, the flaw is somewhat useless for an attacker on
-a local system as it requires SCSI disk to be present, root privileges or RAWIO
-caps, but this can be quickly turned into a meaningful attack if a SCSI disk is
-passed through to a virtual machine. An attacker can issue absolutely legit SCSI
-read/write commands to a disk in his VM, that will make VM's memory pages used
-for IO to be extra refcounted. Then attacker can power down a VM and the memory
-will be definitely lost. Few exploit runs with power cycles in between, and
-the whole host can get OOM.
+FTR, this issue was later on assigned CVE-2017-17458.
 
-References:
+@Terry, CVEs cannot be requested anymore via mailing oss-security,
+rather filling the request via https://cveform.mitre.org/ for future
+requests.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1495089
-
-A reproducer:
-
-https://www.mail-archive.com/linux-kernel@vger.kernel.org/msg1495887.html
-
-A proposed patch:
-
-https://www.mail-archive.com/linux-kernel@vger.kernel.org/msg1495884.html
-
-The patch for this flaw is not in the Linux kernel upstream at the moment of
-this writing (Oct 10 2017) and is being discussed, see an ongoing discussion:
-
-https://marc.info/?t=150605752800001&r=1&w=2
-
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+Regards,
+Salvatore
