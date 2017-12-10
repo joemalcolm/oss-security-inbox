@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["786" "Thursday" "19" "May" "2016" "16:46:52" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1605191644530.11606@wniryva>" "26" "[oss-security] CVE-2016-4441 Qemu: scsi: esp: OOB write while writing to 's-cmdbuf' in get_cmd" nil nil nil "5" "2016051911:16:52" "[oss-security] CVE-2016-4441 Qemu: scsi: esp: OOB write while writing to 's-cmdbuf' in get_cmd" (number mark "U       ppandit@redh May 19   26/786   " thread-indent "\"[oss-security] CVE-2016-4441 Qemu: scsi: esp: OOB write while writing to 's-cmdbuf' in get_cmd\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6158" "Sunday" "10" "December" "2017" "14:16:24" "+0100" "Marcus Brinkmann" "marcus.brinkmann@ruhr-uni-bochum.de" "<e990a29d-04a4-bf5b-d743-087867d56256@ruhr-uni-bochum.de>" "122" "Re: [oss-security] Re: Recommendations GnuPG-2 replacement" nil nil nil "12" "2017121013:16:24" "[oss-security] Re: Recommendations GnuPG-2 replacement" (number mark "U       marcus.brink Dec 10  122/6158  " thread-indent "\"Re: [oss-security] Re: Recommendations GnuPG-2 replacement\"\n") "<20171210041530.GA81842@tower.spodhuis.org>" ("<780d4f26-0803-6ef8-3a21-bcf8ea480a29@ruhr-uni-bochum.de>" "<20171210041530.GA81842@tower.spodhuis.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 18310 invoked by uid 550); 19 May 2016 11:17:13 -0000
+Received: (qmail 19871 invoked by uid 550); 10 Dec 2017 13:20:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,43 +12,154 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18286 invoked from network); 19 May 2016 11:17:12 -0000
-Date: Thu, 19 May 2016 16:46:52 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@javelin
-To: oss security list <oss-security@lists.openwall.com>
-cc: Li Qiang <liqiang6-s@360.cn>
-Message-ID: <alpine.LFD.2.20.1605191644530.11606@wniryva>
+Received: (qmail 18027 invoked from network); 10 Dec 2017 13:16:37 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ruhr-uni-bochum.de;
+	s=mail-2017; t=1512911785;
+	bh=rraMyN1TjH84nJT/cZuW3kn/OBMU9/aLN4fI4/jVtj4=;
+	h=Subject:To:References:From:Date:In-Reply-To:From;
+	b=VOruwZUyG4V2I6g1p9lrcblPLeFZpciHvVq8D1HBSkwbwXbXexShV91gTo9EHNFFN
+	 HiXWjVbWX9CgRtz+aAI84BDcSkXsY7j/nQdd67zLswgl8eOp9TdDDvWGCMFmQl7m/t
+	 mp1gRY7QioE9ecZ7kf9GjErcjWvKQdSZc0ZP1Qwg=
+X-Envelope-Sender: <marcus.brinkmann@ruhr-uni-bochum.de>
+X-RUB-Notes: Internal origin=134.147.42.227
+X-Virus-Status: Clean
+X-Virus-Scanned: clamav-milter 0.99.2 at mx2.mail.ruhr-uni-bochum.de
+To: oss-security@lists.openwall.com
+References: <780d4f26-0803-6ef8-3a21-bcf8ea480a29@ruhr-uni-bochum.de>
+ <20171210041530.GA81842@tower.spodhuis.org>
+From: Marcus Brinkmann <marcus.brinkmann@ruhr-uni-bochum.de>
+Message-ID: <e990a29d-04a4-bf5b-d743-087867d56256@ruhr-uni-bochum.de>
+Date: Sun, 10 Dec 2017 14:16:24 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.38]); Thu, 19 May 2016 11:17:01 +0000 (UTC)
-Subject: [oss-security] CVE-2016-4441 Qemu: scsi: esp: OOB write while writing to 's-cmdbuf'
- in get_cmd
+In-Reply-To: <20171210041530.GA81842@tower.spodhuis.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Virus-Scanned: clamav-milter 0.99.2 at mail1.mail.ruhr-uni-bochum.de
+X-Virus-Status: Clean
+Subject: Re: [oss-security] Re: Recommendations GnuPG-2 replacement
 
-   Hello,
+Hi Phil,
 
-Quick Emulator(Qemu) built with the ESP/NCR53C9x controller emulation support
-is vulnerable to an OOB write access issue. The controller uses 16-byte FIFO
-buffer for command and data transfer. The OOB write occurs while writing to
-this command buffer in routine get_cmd().
+thank you for your work on the keyservers, and thank you for the
+explanations of the reasons behind it, and your thoughts on the matter.
+They are very valuable to me, as I too am learning a lot about the
+history and implementation details on the way.
 
-A privileged user inside guest could use this flaw to crash the Qemu process
-resulting in DoS.
+I didn't want to complain that the openpgp keyservers have their own
+self-signed root CA - it was just one of those things that I didn't
+expect and only found out by digging through the code.  I do have some
+concerns about it, but I also recognize the history and the effort of
+the community to provide a decentralized solution to a very difficult
+problem.
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-05/msg03274.html
+As for your larger point that the WoT and the keyserver network is
+dysfunctional, I agree.  Key distribution is the major obstacle in
+OpenPGP adoption.  I am probably not smart enough to solve this problem,
+but I think I am smart enough to make the code base easy enough to work
+with so other people can have a go at it.
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1337505
+One short term goal is to support keybase.io, which provides some
+publicly verifiable information.  But not everybody wants to have a
+social media profile.  I am tracking this here:
+https://github.com/das-labor/neopg/issues/20
 
-This issue was discovered by Li Qiang of 360.cn Inc.
+Another idea I am contemplating is running my own little keyserver that
+does only email verification.  It's like registering for a website, but
+without a website.  People are familiar with the concept, it gives at
+least the assurance that somebody (me) verified the email address, and
+it allows revocation.  It also gives some privacy (if we can keep bots
+away), though surely not against state actors.  I am aware that this is
+a dramatically less ambitious than what people have come to expect from
+the OpenPGP community, but smarter people than me have failed before, so
+I am willing to compromise.  The placeholder ticket is here:
+https://github.com/das-labor/neopg/issues/19
 
-'CVE-2016-4441' has been assigned by Red Hat Inc.
+You may be happy to learn that I removed support for photo-id in
+NeoPG.[1]  I also removed 121 command line options so far (of close to
+400), and some other stuff.  For example, NeoPG will not reveal the
+timestamp and filename of an encrypted file to the recipient, and there
+is no option to set a comment in the armor output (NeoPG will also not
+reveal its own version number).  These are little things, but I believe
+they will add up.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Thanks!
+Marcus Brinkmann
+
+[1]
+https://github.com/das-labor/neopg/commit/7c711ef6d8a8957f73dcf50dc2717334ab46ead7
+
+On 12/10/2017 05:15 AM, Phil Pennock wrote:
+> On 2017-12-08 at 00:51 +0100, Marcus Brinkmann wrote:
+>> because I am not registering the root certificate of the keyserver CA -
+>> yes, openpgp keyservers have their own self-signed root CA).
+> 
+> Look at the security and threat models and if you have a suggestion for
+> something better, please make it.
+> 
+> (So that you know I'm not a random crank: I wrote the operational guide
+> for the SKS keyservers and have done a lot of work on the community side
+> towards improving interop and helping move things forward.  I'm at least
+> a semi-informed crank.)
+> 
+> The keyservers are run by various people with no formal affiliation, as
+> a public good by each person choosing to cooperate.  There is no shared
+> organization, no formal responsibility.  There are "pool" hostnames,
+> which are maintained by spidering the peering mesh on the "list of
+> peers" info page, and working under a common hostname.
+> <https://sks-keyservers.net/overview-of-pools.php> has more information.
+> 
+> So for hkps, we need "several" different people to all have certificates
+> for the _same_ hostname.
+> 
+> This is all directly opposite to the security model of the TTP PKIX.  If
+> we could get certificates from a browser-store CA, I'd tell you to stop
+> trusting that CA because their processes are clearly broken.
+> 
+> Thus Kristian runs a tiny CA and issues certs to those people who've
+> been part of the community and ask to set things up, having demonstrated
+> a working keyserver setup.
+> 
+> What does TLS buy you?  Protection against evesdropping.  But you don't
+> know who you're talking to in the first place, so that's not really that
+> much.  Protection against tampering, but the same applies.
+> 
+> It's worth repeating: if the Acronym Agencies of various countries aren't
+> sponsoring arms-length keyservers where they get all the traffic logs
+> for some percentage of keyserver traffic, then they're incompetent.  If
+> they provide a useful public service and folks choose to use it, then
+> they get the normal operator logs, because they're the operators.  All
+> legal.
+> 
+> You don't know who is running the keyservers.  You don't know what's
+> happening to the logs.  You don't know that the keyservers are
+> trustworthy.  They are, at most, a useful swamp for collecting the data
+> from so that clients can do WoT calculations without caring about
+> fishing in a contaminated swamp, as the WoT _if done right_ takes care
+> of filtering out the sludge.
+> 
+> If you care about privacy in who you talk with, get the keys from some
+> other path, or run a keyserver, and use hkps with a certificate under
+> your control.
+> 
+> For myself, I need to look into building modern OCaml because FreeBSD
+> are still shipping a version with known integer overflow vulnerabilities
+> and so my SKS install is shut down.  It's somewhere on my long todo
+> list.  My server has hkps for the public pool, and a Let's Encrypt cert
+> under its own hostname.  It meets my needs, when I'm running it.  But
+> the viability of the public keyservers is well past any reasonable
+> expectation of their lifespan.  We've had the EFF sponsoring spamming
+> tools; we've had keyservers in Europe shut down because of privacy
+> demands because an append-only mesh-fill datastore can't remove keys and
+> people send out their email address and name paired into a key and then
+> get upset because it's out there; we're one
+> illicit-material-in-photo-uid incident away from global shutdown.
+> 
+> Don't rely on the public keyservers and please don't complain if their
+> security model, such as it is, requires a custom CA to be able to
+> operate with what minimal veneer of security TLS might provide.
+> 
+> -Phil, speaking only for myself
+> 
