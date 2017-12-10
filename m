@@ -1,97 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/29/1
-Message-ID: <1989072863.8759727.1490785835327.JavaMail.zimbra@redhat.com>
-Date: Wed, 29 Mar 2017 07:10:35 -0400 (EDT)
-From: Vladis Dronov <vdronov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/10/7
+Message-ID: <20171210213153.GA8106@tower.spodhuis.org>
+Date: Sun, 10 Dec 2017 16:31:53 -0500
+From: Phil Pennock <oss-security-phil@...dhuis.org>
 To: oss-security@...ts.openwall.com
-Cc: liqiang6-s@....cn
-Subject: CVE-2017-7294: kernel: drm/vmwgfx: limit mip levels in vmw_surface_define_ioctl()
+Subject: Re: Re: Recommendations GnuPG-2 replacement
 Content-Type: text/plain; charset=utf-8
 
-hello,
+On 2017-12-10 at 14:16 +0100, Marcus Brinkmann wrote:
+> Another idea I am contemplating is running my own little keyserver that
+> does only email verification.  It's like registering for a website, but
+> without a website.  People are familiar with the concept, it gives at
+> least the assurance that somebody (me) verified the email address, and
+> it allows revocation.
 
-CVE-2017-7294 was assigned for another flaw in [vmwgfx] driver.
+Prior art to consider and inform your decisions:
 
-> Below is the CVE ID for this new vulnerability (we understand that it
-> is completely different from CVE-2017-7261, even though the affected
-> function is the same).
->
-> [Suggested description]
-> In was found that in the Linux kernel in vmw_surface_define_ioctl()
-> function in 'drivers/gpu/drm/vmwgfx/vmwgfx_surface.c' file, a
-> 'req->mip_levels[i]' are user-controlled values which are not checked
-> for the upper limit and are used to calculate 'num_sizes' parameter.
-> Both the 'num_sizes' and the array are 'uint32_t' so it is possible to
-> make 'num_sizes' overflow. Later 'mip_levels[i]' are used as the loop
-> count. This can lead an oob-write and/or kernel lockup or crash. Due
-> to the nature of the flaw, privilege escalation cannot be fully ruled
-> out.
-> 
-> ------------------------------------------
-> 
-> [Additional Information]
-> Due to the nature of the flaw, privilege escalation cannot be fully ruled out, although we believe it is unlikely.
-> 
-> ------------------------------------------
-> 
-> [VulnerabilityType Other]
-> CWE-20
-> 
-> ------------------------------------------
-> 
-> [Vendor of Product]
-> kernel.org: Linux kernel
-> 
-> ------------------------------------------
-> 
-> [Affected Product Code Base]
-> Linux kernel - all upto 4.11-rc3
-> 
-> ------------------------------------------
-> 
-> [Affected Component]
-> vmw_surface_define_ioctl() function, drivers/gpu/drm/vmwgfx/vmwgfx_surface.c file
-> 
-> ------------------------------------------
-> 
-> [Attack Type]
-> Local
-> 
-> ------------------------------------------
-> 
-> [Impact Denial of Service]
-> true
-> 
-> ------------------------------------------
-> 
-> [Impact Escalation of Privileges]
-> true
-> 
-> ------------------------------------------
-> 
-> [Attack Vectors]
-> to exploit vulnerability a local user have to run a binary which makes certain ioctl() call
-> 
-> ------------------------------------------
-> 
-> [Reference]
-> https://lists.freedesktop.org/archives/dri-devel/2017-March/137094.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1436798
-> 
-> ------------------------------------------
-> 
-> [Has vendor confirmed or acknowledged the vulnerability?]
-> true
-> 
-> ------------------------------------------
-> 
-> [Discoverer]
-> Li Qiang of the Gear Team, Qihoo 360 Inc
->
-> Use CVE-2017-7294.
->
-> CVE Assignment Team
-> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+ * 0x9710B89BCA57AD7C -- PGP Global Directory Verification Key
+   + Now part of Symantec; upload key, do verification steps via email,
+     get signature
+ * 0x2BAE3CF6DAFFB000 -- ct magazine -- pgpCA@...heise.de
+   + Some years back a German technical magazine apparently made a big
+     push to get people using OpenPGP and had their own verification
+     service
+ * WKS in the current (>= 2.1.15) GnuPG releases, built with optional
+   ./configure flag, <https://wiki.gnupg.org/WKS>
+   + Software to be run by the mail-provider for a given domain, to act
+     as a trusted introducer and move away from the public keyservers.
+     Like finger:// but without shell access to set .pubkey|.plan files.
+     Requires a fair bit of setup, if nothing ships with support
+     out-of-the-box.  Is one of the auto-key-locate options for GnuPG,
+     under name `wkd`.  KMail has built-in support
 
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+Good luck!
+-Phil
