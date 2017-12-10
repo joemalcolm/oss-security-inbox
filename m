@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6237" "Wednesday" "6" "September" "2017" "19:02:56" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<576662.508395629-sendEmail@localhost>" "108" "[oss-security] libarchive: heap-based buffer overflow in xml_data (archive_read_support_format_xar.c)" nil nil nil "9" "2017090619:02:56" "[oss-security] libarchive: heap-based buffer overflow in xml_data (archive_read_support_format_xar.c)" (number mark "U       ago@gentoo.o Sep  6  108/6237  " thread-indent "\"[oss-security] libarchive: heap-based buffer overflow in xml_data (archive_read_support_format_xar.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1328" "Sunday" "10" "December" "2017" "16:31:53" "-0500" "Phil Pennock" "oss-security-phil@spodhuis.org" "<20171210213153.GA8106@tower.spodhuis.org>" "27" "Re: [oss-security] Re: Recommendations GnuPG-2 replacement" nil nil nil "12" "2017121021:31:53" "[oss-security] Re: Recommendations GnuPG-2 replacement" (number mark "U       oss-security Dec 10   27/1328  " thread-indent "\"Re: [oss-security] Re: Recommendations GnuPG-2 replacement\"\n") "<e990a29d-04a4-bf5b-d743-087867d56256@ruhr-uni-bochum.de>" ("<780d4f26-0803-6ef8-3a21-bcf8ea480a29@ruhr-uni-bochum.de>" "<20171210041530.GA81842@tower.spodhuis.org>" "<e990a29d-04a4-bf5b-d743-087867d56256@ruhr-uni-bochum.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 16108 invoked by uid 550); 6 Sep 2017 19:03:17 -0000
+Received: (qmail 25891 invoked by uid 550); 10 Dec 2017 23:56:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,120 +12,55 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16032 invoked from network); 6 Sep 2017 19:03:16 -0000
-Message-ID: <576662.508395629-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Wed, 6 Sep 2017 19:02:56 +0000
+Received: (qmail 1581 invoked from network); 10 Dec 2017 21:32:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=spodhuis.org; s=d201711; h=In-Reply-To:Content-Type:MIME-Version:References
+	:Message-ID:Subject:To:From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding
+	:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=ZUFcRo6Z4lJ1rWo+N/csGGTR91tXE0E+5LDePVa1P2I=; b=YCohzyX5FfFgF3aeXFLcapyRwW
+	1R304+1SNhFGDop0g3dqd180hVeYu19ooqjJRgzJgQSm/JMTAI1Gm0wKyDV6NONTmPH5KWszXyyaD
+	jYjD/BsbIP6LZzzQAIYrcJWuDZYX+2o2whIsH0lUI2pI+aA/Ykij5cbfFWYMcaXZOcRA8zKjC55eE
+	FDEJkLEN2kpJ4EgExGLHCH+60w7C;
+Date: Sun, 10 Dec 2017 16:31:53 -0500
+From: Phil Pennock <oss-security-phil@spodhuis.org>
+To: oss-security@lists.openwall.com
+Message-ID: <20171210213153.GA8106@tower.spodhuis.org>
+References: <780d4f26-0803-6ef8-3a21-bcf8ea480a29@ruhr-uni-bochum.de>
+ <20171210041530.GA81842@tower.spodhuis.org>
+ <e990a29d-04a4-bf5b-d743-087867d56256@ruhr-uni-bochum.de>
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-451994.986579852"
-Subject: [oss-security] libarchive: heap-based buffer overflow in xml_data (archive_read_support_format_xar.c)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e990a29d-04a4-bf5b-d743-087867d56256@ruhr-uni-bochum.de>
+OpenPGP: url=https://www.security.spodhuis.org/PGP/keys/0x4D1E900E14C1CC04.asc
+Subject: Re: [oss-security] Re: Recommendations GnuPG-2 replacement
 
-------MIME delimiter for sendEmail-451994.986579852
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+On 2017-12-10 at 14:16 +0100, Marcus Brinkmann wrote:
+> Another idea I am contemplating is running my own little keyserver that
+> does only email verification.  It's like registering for a website, but
+> without a website.  People are familiar with the concept, it gives at
+> least the assurance that somebody (me) verified the email address, and
+> it allows revocation.
 
-Description:
-libarchive is a multi-format archive and compression library.
+Prior art to consider and inform your decisions:
 
-The complete ASan output of the issue:
+ * 0x9710B89BCA57AD7C -- PGP Global Directory Verification Key
+   + Now part of Symantec; upload key, do verification steps via email,
+     get signature
+ * 0x2BAE3CF6DAFFB000 -- ct magazine -- pgpCA@ct.heise.de
+   + Some years back a German technical magazine apparently made a big
+     push to get people using OpenPGP and had their own verification
+     service
+ * WKS in the current (>= 2.1.15) GnuPG releases, built with optional
+   ./configure flag, <https://wiki.gnupg.org/WKS>
+   + Software to be run by the mail-provider for a given domain, to act
+     as a trusted introducer and move away from the public keyservers.
+     Like finger:// but without shell access to set .pubkey|.plan files.
+     Requires a fair bit of setup, if nothing ships with support
+     out-of-the-box.  Is one of the auto-key-locate options for GnuPG,
+     under name `wkd`.  KMail has built-in support
 
-# bsdtar -t -f $FILE
-==13144==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x631000038800 at pc 0x7fb1c808f650 bp 0x7ffdd1b40990 sp 0x7ffdd1b40988            
-READ of size 1 at 0x631000038800 thread T0                                                                                                           
-    #0 0x7fb1c808f64f in xml_data /var/tmp/portage/app-arch/libarchive-3.3.2/work/libarchive-3.3.2/libarchive/archive_read_support_format_xar.c      
-    #1 0x7fb1c808f64f in expat_data_cb /var/tmp/portage/app-arch/libarchive-3.3.2/work/libarchive-3.3.2/libarchive/archive_read_support_format_xar.c:3230                                                                                                                                                 
-    #2 0x7fb1c697c3b6 in _init /var/tmp/portage/dev-libs/expat-2.2.1/work/expat-2.2.1/lib/xmlparse.c:2960                                            
-    #3 0x7fb1c697cb9b in _init /var/tmp/portage/dev-libs/expat-2.2.1/work/expat-2.2.1/lib/xmlparse.c:2418                                            
-    #4 0x7fb1c697e988 in _init /var/tmp/portage/dev-libs/expat-2.2.1/work/expat-2.2.1/lib/xmlparse.c:4366                                            
-    #5 0x7fb1c697f137 in _init /var/tmp/portage/dev-libs/expat-2.2.1/work/expat-2.2.1/lib/xmlparse.c:4089                                            
-    #6 0x7fb1c6980fc7 in XML_ParseBuffer /var/tmp/portage/dev-libs/expat-2.2.1/work/expat-2.2.1/lib/xmlparse.c:1915                                  
-    #7 0x7fb1c807d62a in expat_read_toc /var/tmp/portage/app-arch/libarchive-3.3.2/work/libarchive-3.3.2/libarchive/archive_read_support_format_xar.c:3273:8                                                                                                                                              
-    #8 0x7fb1c807d62a in read_toc /var/tmp/portage/app-arch/libarchive-3.3.2/work/libarchive-3.3.2/libarchive/archive_read_support_format_xar.c:584  
-    #9 0x7fb1c807d62a in xar_read_header /var/tmp/portage/app-arch/libarchive-3.3.2/work/libarchive-3.3.2/libarchive/archive_read_support_format_xar.c:677                                                                                                                                                
-    #10 0x7fb1c7f728ed in _archive_read_next_header2 /var/tmp/portage/app-arch/libarchive-3.3.2/work/libarchive-3.3.2/libarchive/archive_read.c:648:7
-    #11 0x7fb1c7f72590 in _archive_read_next_header /var/tmp/portage/app-arch/libarchive-3.3.2/work/libarchive-3.3.2/libarchive/archive_read.c:686:8 
-    #12 0x51483f in read_archive /var/tmp/portage/app-arch/libarchive-3.3.2/work/libarchive-3.3.2/tar/read.c:260:7
-    #13 0x513d89 in tar_mode_t /var/tmp/portage/app-arch/libarchive-3.3.2/work/libarchive-3.3.2/tar/read.c:94:2
-    #14 0x50eaae in main /var/tmp/portage/app-arch/libarchive-3.3.2/work/libarchive-3.3.2/tar/bsdtar.c:858:3
-    #15 0x7fb1c6ffe680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #16 0x41c628 in _init (/usr/bin/bsdtar+0x41c628)
-
-0x631000038800 is located 0 bytes to the right of 65536-byte region [0x631000028800,0x631000038800)
-allocated by thread T0 here:
-    #0 0x4d1fd8 in malloc /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_malloc_linux.cc:66
-    #1 0x7fb1c69811f5 in XML_GetBuffer /var/tmp/portage/dev-libs/expat-2.2.1/work/expat-2.2.1/lib/xmlparse.c:2004
-
-SUMMARY: AddressSanitizer: heap-buffer-overflow /var/tmp/portage/app-arch/libarchive-3.3.2/work/libarchive-3.3.2/libarchive/archive_read_support_format_xar.c in xml_data
-Shadow bytes around the buggy address:
-  0x0c627ffff0b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c627ffff0c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c627ffff0d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c627ffff0e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c627ffff0f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0c627ffff100:[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c627ffff110: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c627ffff120: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c627ffff130: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c627ffff140: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c627ffff150: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==13144==ABORTING
-
-Affected version:
-3.3.2
-
-Fixed version:
-N/A
-
-Commit fix:
-https://github.com/libarchive/libarchive/commit/fa7438a0ff4033e4741c807394a9af6207940d71
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-14166
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00316-libarchive-heapoverflow-archive_read_support_format_xar
-
-Timeline:
-2017-08-15: bug discovered and reported to upstream
-2017-09-05: upstream released a patch
-2017-09-06: blog post about the issue
-2017-09-06: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/09/06/libarchive-heap-based-buffer-overflow-in-xml_data-archive_read_support_format_xar-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
-------MIME delimiter for sendEmail-451994.986579852--
-
+Good luck!
+-Phil
