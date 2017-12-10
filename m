@@ -1,92 +1,281 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/21/20
-Message-ID: <20170621214006.GB28151@localhost.localdomain>
-Date: Wed, 21 Jun 2017 14:40:06 -0700
-From: Qualys Security Advisory <qsa@...lys.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/10/6
+Message-ID: <alpine.GSO.2.20.1712101126280.22571@freddy.simplesystems.org>
+Date: Sun, 10 Dec 2017 11:32:31 -0600 (CST)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
 To: oss-security@...ts.openwall.com
-Subject: Re: Qualys Security Advisory - The Stack Clash
+Subject: GraphicsMagick 1.3.27 is available
 Content-Type: text/plain; charset=utf-8
 
-Hi Solar, all,
+[ This release announcement is forwarded to the oss-security list due 
+the many security issues found in 1.3.26 and fixed by 1.3.27.  Much 
+thanks to the security researchers and OS package maintainers who 
+notified us about problems and sometimes provided useful analysis and 
+patches.]
 
-Thank you very much for this constructive feedback.  For the sake of
-transparency and an improved disclosure process in the future, we will
-do the same now, and also address some of the concerns that have been
-expressed since Monday.
+GraphicsMagick 1.3.27 (the 61st release, and the 28th in this cycle) is now 
+available.  This release is API and ABI compatible with previous 1.3.X releases 
+so it is possible to update without re-compiling dependent programs.
 
-But first, we would like to thank everyone who was involved in this
-disclosure, for their hard work and patience, and especially Solar for
-creating and administering the mailing-lists that made it possible (and
-for accepting, although reluctantly, the embargo extension).
+There have been a large number of security issues and other stability bugs 
+fixed in this release.  There has been intense fuzzing activity and code 
+inspections by a number of people, resulting in many issues identified and 
+fixed.
 
-On Mon, Jun 19, 2017 at 10:39:33PM +0200, Solar Designer wrote:
-> The stated argument for extending the embargo duration beyond list
-> policy's maximum was that fixes presumably wouldn't be ready.
+It is recommended to update to this release immediately.
 
-This was not the only reason why we eventually decided to extend the
-embargo;  here is what we wrote in an e-mail to distros@, on May 28:
+The SHA1 checksums for the release files are as follows:
 
-"""
-The discussions that
-took place here on distros eventually forced us to extend the embargo
-from the original CRD (May 30) to June 19:
+ed18c3db2ad786453ebe495222b24acdb8374a6d  GraphicsMagick-1.3.27-1.src.rpm
+ec9f366a22053ddeb14373bc3abdbe5843626c62  GraphicsMagick-1.3.27-Q16-win32-dll.exe
+79cfc2774e4c259e7953a08c2148eb8aa5297b78  GraphicsMagick-1.3.27-Q16-win64-dll.exe
+91cf1930279a033d65f11ce54fea05cde0d75d3b  GraphicsMagick-1.3.27-Q8-win32-dll.exe
+20dbbaebbc6df485d02e5fd687dfbe72fe30ec37  GraphicsMagick-1.3.27-Q8-win64-dll.exe
+4c3676e3dcf36d3bc3538729316bb3dbdccff28f  GraphicsMagick-1.3.27-windows-source.7z
+cb8fc4751c159c52913af7f0f9b572486c2efd4b  GraphicsMagick-1.3.27.tar.bz2
+ca58a6004012a17e8fee587125b5bb3e314e8b3d  GraphicsMagick-1.3.27.tar.gz
+863d359c7ee2a4f074e1f543ad97c4d2c01d64bb  GraphicsMagick-1.3.27.tar.lz
+f334cfc6f03e6d4dfea8d9fe0643820649d20f7a  GraphicsMagick-1.3.27.tar.xz
 
-- there are serious problems with the two solutions that we proposed
-  ("Increase the size of the stack guard-page" and "Recompile all
-  userland code with GCC's -fstack-check option");
+The news for this release follows:
 
-- please see Red Hat's analysis, attached;
+Special Issues:
 
-- when we asked here if distros would be ready by May 30, only three
-  answered (two "yes", one "no"), and hoping for the best ("the ones who
-  did not answer will surely be ready") was not an option, and "let's
-  publish anyway on May 30, distros should have been ready" was not an
-  option either (the end users would be the ones suffering from such a
-  debacle).
-"""
+* None
 
-The first problem was that 1MB is not enough on all architectures;  the
-second problem was that -fstack-check does not always "touch" all pages;
-and Red Hat's analysis was an extensive report about the fixes needed in
-the kernel, the glibc, and gcc.
+Security Fixes:
 
-All of this, plus the third reason mentioned above, and our own
-assessment of the situation, helped us make our decision to extend the
-embargo.
+* CMYK: Fix heap overwrites in raw CMYK writer.  Fix heap overwrites
+   in raw CMYK reader (noticed when doing montage).
 
-> I understand
-> it's rare for companies to do quality security research, and I didn't
-> want my action to have hampered the stream of quality security research
-> we're seeing from Qualys lately.
+* GIF: Assure that global colormap is initialized.
 
-Thank you very much.  However, we must admit that this coordinated
-release has been one of the most stressful and painful experiences we
-ever had:  we were torn between those who wanted to publish early and
-those who wanted to publish later, and in the middle of all this
-coordination we were trying to complete our research (we had not
-successfully exploited 64-bit Linux yet when we first contacted
-distros@).
+* DescribeImage(): Fix possible heap write overflow when describing
+   visual image directory. Fix possible heap read overflow while
+   accessing heap data, and possible information disclosure while
+   describing the IPTC profile.
 
-Such a responsible disclosure could have been, and should have been,
-easier and simpler, even with so many vendors involved.  How could such
-a situation be handled better next time?  We are open to suggestions.
+* DICOM: Fix huge memory allocation based on bogus length value (DOS
+   opportunity).
 
-Finally, we would like to address a concern that has been voiced by
-Chris Evans (who has also quoted Solar's mail, thus answering here):
+* DrawDashPolygon(): Fix heap out of bounds read in render code.
 
-"""
-There's also the question of whether "customers" get access to details
-before patches are available
-"""
+* GRAY: Fix heap overwrites in raw GRAY reader (noticed when doing
+   montage).
 
-Absolutely not:  we have not shared a single detail of these
-vulnerabilities with anyone outside of Qualys before the Coordinated
-Release Date;  and even within Qualys, we have kept this
-compartmentalized until the very end.
+* JNG: Fix heap overruns.  Fix assertions.
 
-Thank you very much!
+* JNG: Prevent a crash due to zero-length color_image while reading a
+   JNG image. (CVE-2017-11102).  Reject JNG files with unreasonable
+   dimensions given the file size (avoid DOS).
 
-With best regards,
+* JNX: Fix DOS due to excessive memory allocations with corrupt file.
+
+* JPEG: Do not allocate backing image pixels until a scanline has been
+   successfully read.  Avoids DOS opportunity with suitably
+   manufactured file.
+
+* MAP: Fix null pointer dereference or segmentation violation.
+
+* MAT: Fix heap write overflow.
+
+* MNG: Reject over-large (65k by 65k) image.  Fix heap overwrites.
+
+* PAM: Fix heap buffer overflow in PAM writer for 1 bit/sample + alpha.
+
+* PICT: Fix excessive memory allocation due to malformed image file.
+
+* PNG: Fix heap buffer overflow in PNG writer when promoting from
+   indexed PNG to RGBA.
+
+* PNM: Fix DOS due to excessive memory allocations with corrupt file.
+
+* RGB: Fix heap overwrite in raw RGB writer. Fix heap overwrites in
+   raw RGB reader (noticed when doing montage).
+
+* RLE: Fix DOS opportunities due to false claims in image header.  Fix
+   heap out of bounds read.
+
+* SFW: Avoid possible heap write overflow.
+
+* SUN: Fix heap read overflow.  Fix DOS due to excessive memory
+   allocations with corrupt file.
+
+* SVG: Fix heap write overflow.
+
+* TIFF: Use heuristics to avoid DOS (excessive memory use) due to
+   false claims by input file.  It is possible that this may reject
+   some valid files.  Fix possible small heap overwrite beyond the
+   allocated scanline buffer due to the NumberOfObjectsInArray() macro
+   rounding up rather than down.
+
+* UIL: Fix heap overwrite in writer.
+
+* WPG: Fix DOS issues (memory, disk space, CPU time) due to
+   insufficient validations.  Fix heap overwrites.
+
+* XBM: Fix DOS issue where code remains stuck in loop and does not
+   return.
+
+* XV 332 (PNM): Fix null pointer dereference due to malformed file.
+
+* TracePSClippingPath()/TraceSVGClippingPath(): Fix heap out of bounds
+   read.
+
+* Validate path entries in the MAGICK_CODER_MODULE_PATH and
+   MAGICK_FILTER_MODULE_PATH environment variables and convert all
+   paths to real paths if possible. This avoids possible use of
+   relative paths to load modules (a possible security issue), or the
+   possibility of adding a directory which was in the path, but
+   missing, and may improve efficiency by removing non-existent paths.
+
+Bug fixes:
+
+* AVS: Memory leaks eliminated.
+
+* CINEON: Fix possible use of NULL pointer.
+
+* CMYK: Memory leaks eliminated.
+
+* CUT: Memory leaks eliminated.  Fix possible use of NULL pointer.
+
+* DCM: Fix possible use of NULL pointer.
+
+* DrawImage(): Avoid "negative" strncpy().  This seems to be benign
+   with glibc but perhaps not with other implementations.
+
+* DPX: Memory leaks eliminated.
+
+* EMF: Fix possible use of NULL pointer.
+
+* FindMagickModule(): Fix possible use of NULL pointer.
+
+* FITS: Fix memory leak.
+
+* GIF: Fix memory leak.
+
+* HDF: Memory leaks eliminated.
+
+* HISTOGRAM: Fix memory leak.
+
+* JNG: Memory leaks eliminated. Memory use after free and double-free
+   issues eliminated.  Error reporting fixes.
+
+* Magick::Options::strokeDashArray(): Fix possible use of NULL pointer.
+
+* MagickXFileBrowserWidget(): Fix possible use of NULL pointer.
+
+* MAT: Memory leaks eliminated.
+
+* MagickMapCloneMap(): Fix possible assertion failure.
+
+* MNG: Memory use after free issues eliminated.  Fix possible use of
+   NULL pointer.  Fix memory leaks.
+
+* MontageImageCommand(): Fix memory leaks.
+
+* MPC: Fix memory leak in writer.
+
+* MPEG: Fix memory leaks in writer.
+
+* MTV: Memory leaks eliminated.
+
+* NTRegistryKeyLookup(): Fix possible use of NULL pointer.
+
+* NTGetTypeList(): Fix possible use of NULL pointer.
+
+* PCD: Memory leaks eliminated.
+
+* PCL: Fix null pointer dereference in PCL writer.
+
+* PCX: Memory leaks eliminated.
+
+* PALM: Fix possible use of NULL pointer. Fix memory leak.
+
+* PICT: Memory leaks eliminated.
+
+* PNG: Fix small (one-off) heap read overflow.
+
+* PNM: Fix memory leaks.
+
+* PS: Fix use of null pointer in error path.
+
+* PWP: Fix possible use of null pointer.
+
+* ReplaceImageColormap(): Throw an exception rather than assertion if
+   the input image is not colormapped.
+
+* RGB: Fix memory leak.
+
+* SegmentImage(): Fix possible use of NULL pointer.
+
+* SetImageProfile(): Fix possible assertion failure.
+
+* SGI: Check for EOF while reading SGI file header.
+
+* SUN: Fix memory leak.
+
+* TIFF: Fix possible use of NULL pointer.  Fix memory leaks in writer.
+
+* TIM: Fix memory leak.
+
+* TOPOL: Fix possible use of NULL pointer.  Fix memory leaks.
+
+* VIFF: Fix memory leak.
+
+* WEBP: Detect partial write to output file.
+
+* WPG: Fix possible use of null pointer. Fix excessive use of disk
+   resources due to insufficient validations.
+
+* WriteImage(): Restore use of GetBlobStatus() to test if an I/O error
+   was encountered while writing output file. This assures that I/O
+   failure in writers which do not themselves verify writes is assured
+   to be reported.
+
+* WMF: Memory use after free issues eliminated.
+
+* YUV: Fix memory leaks.
+
+
+New Features:
+
+* PNG: Implemented eXIf chunk support.
+
+* WEBP: Add support for EXIF and ICC metadata provided that at least
+   libwebp 0.5.0 is used.
+
+* Magick++ Image autoOrient(): New Image method to auto-orient an
+   image so it looks right-side up by default.
+
+Feature improvements:
+
+* None
+
+Windows Delegate Updates/Additions:
+
+* Libtiff is updated to libtiff 4.0.9.
+
+Build Changes:
+
+* JPEG/PNG: The SETJMP_IS_THREAD_SAFE definition is used to determine
+   if setjmp/longjmp are thread safe.  If these interfaces are thread
+   safe, then concurrent reads/writes are possible.  This definition is
+   false for Solaris but true for Linux.  JPEG and PNG will be fully
+   concurrent if this definition is enabled.
+
+Behavior Changes:
+
+* PALM: PALM writer is disabled.
+
+* ThrowLoggedException(): Capture the first exception at
+   ErrorException level or greater, or only capture exception if it is
+   more severe than an already reported exception.
+
+* DestroyJNG(): This internal function is now declared static and is
+   removed from shared library or DLL namespace.
 
 -- 
-the Qualys Security Advisory team
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
