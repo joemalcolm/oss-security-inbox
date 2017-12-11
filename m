@@ -1,63 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/11/4
-Message-ID: <33a37df8-c4db-0e1c-862a-2ee2d42afb17@redhat.com>
-Date: Mon, 10 Jul 2017 20:21:03 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/11/1
+Message-ID: <d664369b-77c6-b0e3-7d40-5d8ef912ee3d@powerdns.com>
+Date: Mon, 11 Dec 2017 13:34:31 +0100
+From: Remi Gacogne <remi.gacogne@...erdns.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: mpg123: global buffer overflow in III_i_stereo (layer3.c)
+Subject: PowerDNS Security Advisory 2017-08
 Content-Type: text/plain; charset=utf-8
 
-On 2017-07-10 7:28 PM, Seth Arnold wrote:
-> On Mon, Jul 10, 2017 at 11:42:53AM +0200, Dr. Thomas Orgis wrote:
->> Is this really worth a CVE, though? So far I was only able to see a
->> crash triggered by the AddressSanitizer. Never from a normal build. So
-> It is common to assign CVEs for issues discovered via fuzzers and
-> sanitizers even if the consequences aren't visible without them: perhaps
-> the consequences aren't visible to users only by accident.
-To expand on this: some fuzzing results are largely "who cares", e.g. a
-locally executed file converter for office files that crashes, no code
-execution largely devolves to "well don't open that file again", but a
-web browser/email client, or libraries they depend upon that cause a
-crash, yeah, that's a problem (I really hate waiting for all my tabs to
-reload, and hopefully I didn't lose any data/progress).
-> Some people only accept a vulnerability report if there's an exploit that
-> goes along with it but developing even a proof of concept is difficult
-> and error-prone. Lack of an exploit doesn't prove that an issue can safely
-> be ignored. (There's always someone more dedicated to writing an exploit.)
+Hello everybody,
 
-The beauty is that CVE is now a claims based system, obviously the
-stronger the claim (e.g. working exploit code, or a professional
-reputation helps) the better the case for a CVE, and conversely there is
-also a DISPUTE process, again the stronger the claim, the closer you'll
-get to REJECT =). Of course proving a negative can be tricky. On the
-flip side we do have historical data (e.g. Null pointer deref in Linux
-kernel, that's usually a CVE!).
->
-> Assigning a CVE number makes downstream consumers aware of the issue and
-> each can prioritize a fix as they see fit based on their own threat models.
-It also simply creates an entry in the taxonomy so we can discuss it.
-The result of that can be "we need to fix this" or "we need to stop
-using this" (e.g. some pieces of software have over 1000 CVE's and are
-well known to be vectors for infection in web drive by attacks). It lets
-us move away from qualitative data to quantitative data (facts yo!) or
-any numbr of other responses ("the risk is acceptable").
->> every build of mpg123 in the wild, except for extremely hardened
->> distros that build everything with GCC's sanitizers enabled for daily
->> use, is not affected. Are people running binaries in production with
->> the sanitizers on?
-> I believe the general consensus is that only the UBSAN sanitizer is safe
-> for 'daily use'; the others aren't themselves security hardened and in
-> fact have lead to exploits. This thread has more discussion:
-> http://www.openwall.com/lists/oss-security/2016/02/18/1
->
-> Thanks
+We just released PowerDNS Recursor 4.0.8, fixing a security issue
+(CVE-2017-15120) affecting PowerDNS Recursor from 4.0.0 up to and
+including 4.0.7. PowerDNS Recursor 3.7.4 and 4.1.0 are not affected. The
+full security advisory can be found below and at
+https://doc.powerdns.com/authoritative/security-advisories/powerdns-advisory-2017-08.html
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
+The issue is a parsing error while handling authoritative answers
+containing a CNAME of a different class than IN, leading to a recursor
+crash via a NULL-pointer dereference. We don't believe this crash to be
+exploitable, but it results in an unauthenticated remote denial of
+service which can be mitigated by running the recursor inside a
+supervisor like supervisord or systemd so it can be automatically restarted.
+
+We also provide a minimal patch for the 4.0.7 release at
+https://downloads.powerdns.com/patches/2017-08/
+
+Please feel free to contact me directly if you have any question.
+
+Best regards,
 
 
+Remi and the PowerDNS team
+
+PowerDNS Security Advisory 2017-08: Crafted CNAME answer can cause a
+=====================================================================
+denial of service
+=================
+
+-  CVE: CVE-2017-15120
+-  Date: December 11th 2017
+-  Credit: Toshifumi Sakaguchi
+-  Affects: PowerDNS Recursor from 4.0.0 up to and including 4.0.7
+-  Not affected: PowerDNS Recursor 3.7.4, 4.0.8, 4.1.0
+-  Severity: High
+-  Impact:  Denial of service
+-  Exploit: This problem can be triggered by an authoritative server
+   sending a crafted CNAME answer with a class other than IN to the
+Recursor.
+-  Risk of system compromise: No
+-  Solution: Upgrade to a non-affected version
+-  Workaround: run the process inside a supervisor like supervisord or
+systemd
+
+An issue has been found in the parsing of authoritative answers in
+PowerDNS Recursor, leading to a NULL pointer dereference when parsing a
+specially crafted answer containing a CNAME of a different class than IN.
+This issue has been assigned CVE-2017-15120.
+
+When the PowerDNS Recursor is run inside a supervisor like supervisord
+or systemd, it will be automatically restarted, limiting the impact to
+somewhat degraded service.
+
+PowerDNS Recursor from 4.0.0 up to and including 4.0.7 are affected.
+
+For those unable to upgrade to a new version, a minimal patch is
+`available <https://downloads.powerdns.com/patches/2017-08>`__
+
+We would like to thank Toshifumi Sakaguchi for finding and subsequently
+reporting this issue.
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (843 bytes)
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
