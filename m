@@ -1,53 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/21/18
-Message-ID: <743a5703-e206-9304-cb30-71c76cde9bef@igalia.com>
-Date: Wed, 21 Jun 2017 20:18:39 +0200
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: "webkit-gtk@...ts.webkit.org" <webkit-gtk@...ts.webkit.org>
-Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: WebKitGTK+ Security Advisory WSA-2017-0005
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/11/2
+Message-ID: <eea09ad4-34aa-5702-774a-9c6ad22e61a7@powerdns.com>
+Date: Mon, 11 Dec 2017 14:05:03 +0100
+From: Remi Gacogne <remi.gacogne@...erdns.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: PowerDNS Security Advisory 2017-08
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK+ Security Advisory                               WSA-2017-0005
-------------------------------------------------------------------------
+On 12/11/2017 01:34 PM, Remi Gacogne wrote:
+> We just released PowerDNS Recursor 4.0.8, fixing a security issue
+> (CVE-2017-15120) affecting PowerDNS Recursor from 4.0.0 up to and
+> including 4.0.7. PowerDNS Recursor 3.7.4 and 4.1.0 are not affected. The
+> full security advisory can be found below and at
+> https://doc.powerdns.com/authoritative/security-advisories/powerdns-advisory-2017-08.html
 
-Date reported      : June 21, 2017
-Advisory ID        : WSA-2017-0005
-Advisory URL       : https://webkitgtk.org/security/WSA-2017-0005.html
-CVE identifiers    : CVE-2017-2538, CVE-2017-2424.
+The correct link is:
 
-Several vulnerabilities were discovered in WebKitGTK+.
+https://doc.powerdns.com/recursor/security-advisories/powerdns-advisory-2017-08.html
 
-CVE-2017-2538
-    Versions affected: WebKitGTK+ before 2.16.4.
-    Credit to Richard Zhu (fluorescence) working with Trend Micro's Zero
-    Day Initiative.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+Sorry!
 
-CVE-2017-2424
-    Versions affected: WebKitGTK+ before 2.16.0.
-    Credit to Paul Thomson (using the GLFuzz tool) of the Multicore
-    Programming Group, Imperial College London.
-    Impact: Processing maliciously crafted web content may result in the
-    disclosure of process memory. Description: An information disclosure
-    issue existed in the processing of OpenGL shaders. This issue was
-    addressed through improved memory management.
-
-
-We recommend updating to the last stable version of WebKitGTK+. It is
-the best way of ensuring that you are running a safe version of
-WebKitGTK+. Please check our website for information about the last
-stable releases.
-
-Further information about WebKitGTK+ Security Advisories can be found
-at: https://webkitgtk.org/security.html
-
-The WebKitGTK+ team,
-June 21, 2017
+-- 
+Remi Gacogne
+PowerDNS.COM BV - https://www.powerdns.com/
 
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (898 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
