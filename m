@@ -1,4 +1,9 @@
-Received: (qmail 1211 invoked by uid 550); 13 Oct 2023 15:21:41 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1172" "Monday" "11" "December" "2017" "15:27:43" "+0100" "Daniel Beck" "ml@beckweb.net" "<FBE17D96-D1AD-4F74-9D28-C82B19772071@beckweb.net>" "31" "[oss-security] Jenkins Script Security Plugin 1.36 and earlier arbitrary file read vulnerability" nil nil nil "12" "2017121114:27:43" "[oss-security] Jenkins Script Security Plugin 1.36 and earlier arbitrary file read vulnerability" (number mark "U       ml@beckweb.n Dec 11   31/1172  " thread-indent "\"[oss-security] Jenkins Script Security Plugin 1.36 and earlier arbitrary file read vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 32368 invoked by uid 550); 11 Dec 2017 14:27:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,40 +12,48 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26313 invoked from network); 13 Oct 2023 15:14:45 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Ephraim Anierobi <ephraimanierobi@apache.org>
+Received: (qmail 32334 invoked from network); 11 Dec 2017 14:27:55 -0000
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
+Message-Id: <FBE17D96-D1AD-4F74-9D28-C82B19772071@beckweb.net>
+Date: Mon, 11 Dec 2017 15:27:43 +0100
 To: oss-security@lists.openwall.com
-Message-ID: <7e000a79-32ea-51e3-2d6a-5d00d30e57d4@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 13 Oct 2023 15:14:32 +0000
-MIME-Version: 1.0
-Subject: [oss-security] CVE-2023-42663: Apache Airflow: Bypass permission verification to
- view task instances of other dags 
+X-Mailer: Apple Mail (2.3273)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1513002475;e6d3f141;
+X-HE-SMSGID: 1eOP3Y-0004BA-70
+Subject: [oss-security] Jenkins Script Security Plugin 1.36 and earlier arbitrary file read
+ vulnerability
 
-Severity: low
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software. The following
+plugin releases contain fixes for security vulnerabilities:
 
-Affected versions:
+* Script Security Plugin 1.37
 
-- Apache Airflow before 2.7.2
+Users of these plugins should upgrade them to the indicated versions.
 
-Description:
+Descriptions of the vulnerabilities are below. Some more details, 
+severity, and attribution can be found here:
+https://jenkins.io/security/advisory/2017-12-11/
 
-Apache Airflow, versions before 2.7.2, has a vulnerability that allows an a=
-uthorized user who has access to read specific DAGs only, to read informati=
-on about task instances in other DAGs.
-Users of Apache Airflow are advised to upgrade to version 2.7.2 or newer to=
- mitigate the risk associated with this vulnerability.
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-Credit:
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
 
-balis0ng (finder)
-Ephraim Anierobi (remediation developer)
+---
 
-References:
+SECURITY-663
+Users with the ability to configure sandboxed Groovy scripts are able to
+use a type coercion feature in Groovy to create new `File` objects from
+strings. This allowed reading arbitrary files on the Jenkins master file
+system.
 
-https://github.com/apache/airflow/pull/34315
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2023-42663
+Such a type coercion is now subject to sandbox protection and considered
+to be a call to the `new File(String)` constructor for the purpose of
+in-process script approval.
 
