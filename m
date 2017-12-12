@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["276" "Monday" "20" "June" "2016" "19:04:16" "+0200" "Daniel Beck" "ml@beckweb.net" "<4D58EA81-17C1-4CBE-8B7A-B24D510320BC@beckweb.net>" "11" "Re: [oss-security] Jenkins plugins -- multiple fixes" nil nil nil "6" "2016062017:04:16" "[oss-security] Jenkins plugins -- multiple fixes" (number mark "U       ml@beckweb.n Jun 20   11/276   " thread-indent "\"Re: [oss-security] Jenkins plugins -- multiple fixes\"\n") "<B8DA6832-45AA-4600-990A-EF50B18EDFCD@beckweb.net>" ("<B8DA6832-45AA-4600-990A-EF50B18EDFCD@beckweb.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["502" "Tuesday" "12" "December" "2017" "08:13:02" "+0100" "Lukasz Lenart" "lukaszlenart@apache.org" "<CAMopvkMb_CDw9UNZMUec8UApNZ8Xmr2M-wTCXPuhB9fCTr2Eqg@mail.gmail.com>" "16" "[oss-security] [ANN] [APACHE STRUTS] Security Bulletin S2-055: impact increased to High (related to CVE-2017-7525 - JSON Jackson library)" nil nil nil "12" "2017121207:13:02" "[oss-security] [ANN] [APACHE STRUTS] Security Bulletin S2-055: impact increased to High (related to CVE-2017-7525 - JSON Jackson library)" (number mark "U       lukaszlenart Dec 12   16/502   " thread-indent "\"[oss-security] [ANN] [APACHE STRUTS] Security Bulletin S2-055: impact increased to High (related to CVE-2017-7525 - JSON Jackson library)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 29897 invoked by uid 550); 20 Jun 2016 17:04:29 -0000
+Received: (qmail 24560 invoked by uid 550); 12 Dec 2017 10:55:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,28 +12,38 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29879 invoked from network); 20 Jun 2016 17:04:28 -0000
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-From: Daniel Beck <ml@beckweb.net>
-In-Reply-To: <B8DA6832-45AA-4600-990A-EF50B18EDFCD@beckweb.net>
-Date: Mon, 20 Jun 2016 19:04:16 +0200
+Received: (qmail 3556 invoked from network); 12 Dec 2017 07:13:42 -0000
+X-Gm-Message-State: AKGB3mJdBdIYBI2Sx8yhj0iumLYRkrVgmb5C1uSJaH1pw989gbYTGutB
+	ebRbaOXoE7XalskpbeugS1l0CXtZ4qvMEymL1vI=
+X-Google-Smtp-Source: ACJfBovO6KVT19btfK13dQHHsYVCMLSMG+rgC6nTI7TobWUg8QgiBiUzM9wQZDhf5Hrd+wIXwhYOScRwEJ0Bzqb+wKA=
+X-Received: by 10.25.202.14 with SMTP id a14mr1197551lfg.83.1513062803584;
+ Mon, 11 Dec 2017 23:13:23 -0800 (PST)
+MIME-Version: 1.0
+From: Lukasz Lenart <lukaszlenart@apache.org>
+Date: Tue, 12 Dec 2017 08:13:02 +0100
+X-Gmail-Original-Message-ID: <CAMopvkMb_CDw9UNZMUec8UApNZ8Xmr2M-wTCXPuhB9fCTr2Eqg@mail.gmail.com>
+Message-ID: <CAMopvkMb_CDw9UNZMUec8UApNZ8Xmr2M-wTCXPuhB9fCTr2Eqg@mail.gmail.com>
+To: Struts Users Mailing List <user@struts.apache.org>
+Cc: announce@apache.org, announcements@struts.apache.org, 
+	oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <4D58EA81-17C1-4CBE-8B7A-B24D510320BC@beckweb.net>
-References: <B8DA6832-45AA-4600-990A-EF50B18EDFCD@beckweb.net>
-To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3124)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1466442268;ce12467c;
-Subject: Re: [oss-security] Jenkins plugins -- multiple fixes
+Subject: [oss-security] [ANN] [APACHE STRUTS] Security Bulletin S2-055: impact increased to
+ High (related to CVE-2017-7525 - JSON Jackson library)
+
+Hi,
+
+After further clarification we increased impact of a vulnerability
+reported to us and described as S2-055 to High. The vulnerability
+exists in a JSON Jackson library and it's registered under
+CVE-2017-7525. Please read the bulletin [1] and apply possible
+solutions. This vulnerability impacts anyone using the vulnerable
+Jackson JSON library (not only Struts users).
+
+[1] https://cwiki.apache.org/confluence/display/WW/S2-055
 
 
-> On 20.06.2016, at 19:00, Daniel Beck <ml@beckweb.net> wrote:
->=20
-> https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+20=
-16-05-11
-
-Copy & paste is fun. Correct URL:
-https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2016=
--06-20
-
-
+Regards
+--=20
+=C5=81ukasz
++ 48 606 323 122 http://www.lenart.org.pl/
