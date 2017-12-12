@@ -1,54 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/21/25
-Message-ID: <8e3931f4-b5b1-817d-eaed-0b88eac70f05@redhat.com>
-Date: Wed, 21 Jun 2017 16:48:14 -0600
-From: Jeff Law <law@...hat.com>
-To: oss-security@...ts.openwall.com, PaX Team <pageexec@...email.hu>, Agostino Sarubbo <ago@...too.org>
-Subject: Re: Qualys Security Advisory - The Stack Clash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/12/1
+Message-ID: <CAMopvkMb_CDw9UNZMUec8UApNZ8Xmr2M-wTCXPuhB9fCTr2Eqg@mail.gmail.com>
+Date: Tue, 12 Dec 2017 08:13:02 +0100
+From: Lukasz Lenart <lukaszlenart@...che.org>
+To: Struts Users Mailing List <user@...uts.apache.org>
+Cc: announce@...che.org, announcements@...uts.apache.org,  oss-security@...ts.openwall.com
+Subject: [ANN] [APACHE STRUTS] Security Bulletin S2-055: impact increased to High (related to CVE-2017-7525 - JSON Jackson library)
 Content-Type: text/plain; charset=utf-8
 
-On 06/21/2017 03:29 PM, PaX Team wrote:
-> On 21 Jun 2017 at 10:22, Jeff Law wrote:
-> 
->> On 06/21/2017 04:46 AM, Agostino Sarubbo wrote:
->>> On Monday 19 June 2017 08:28:43 Qualys Security Advisory wrote:
->>>> III. Solutions
->>>> - Recompile all userland code (ld.so, libraries, binaries) with GCC's
->>>>   "-fstack-check" option, which prevents the stack-pointer from moving
->>>>   into another memory region without accessing the stack guard-page (it
->>>>   writes one word to every 4KB page allocated on the stack).
->>>
->>> For the record, Gentoo Hardened enables by default -fstack-check=specific
->> And if you were to look at the generated code, you'll see that it
->> happily skips 2-3 pages of probes in prologues as well as within alloca
->> spaces.  It's a false sense of security.
-> 
-> Gentoo Hardened uses the grsecurity kernel which enforces a 64kB heap-stack
-> gap by default (it's also user adjustable). are you saying that the gcc
-> probes are not sufficient to prevent jumping over that range?
-With a 64k guard, you should be OK and protected.  -fstack-check will
-consistently skip 8218 bytes on x86 (8192 on most architectures).  Even
-if you combined the skipped space from the prologue and the skipped
-space in the dynamic area, you're only at just over 16k -- and it's not
-clear the two skipped areas could be combined like that anyway.
+Hi,
+
+After further clarification we increased impact of a vulnerability
+reported to us and described as S2-055 to High. The vulnerability
+exists in a JSON Jackson library and it's registered under
+CVE-2017-7525. Please read the bulletin [1] and apply possible
+solutions. This vulnerability impacts anyone using the vulnerable
+Jackson JSON library (not only Struts users).
+
+[1] https://cwiki.apache.org/confluence/display/WW/S2-055
 
 
-Given the larger guard you should be in good shape.  Sorry to have
-sounded alarmist without having full information about your
-configuration, particularly WRT the expanded guard page.
-
-
---
-
-There's one theoretical approach I'm aware of that one could use the
-skip the guard in your situation.  I'm not aware of any code in practice
-that would have the right properties to trigger *and* triggering would
-require a particular optimization that neither LLVM nor GCC perform to
-the best my knowledge (nor are they likely to as the optimization would
-not likely improve any hot path performance).
-
-We'll be making that theoretical attack significantly harder to exploit
-as part of the upstream GCC work around a new -fstack-check implementation.
-
-
-Jeff
+Regards
+-- 
+Łukasz
++ 48 606 323 122 http://www.lenart.org.pl/
