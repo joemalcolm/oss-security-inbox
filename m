@@ -1,56 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/21/3
-Message-ID: <1c828b01-0878-015c-8510-e3f2bfc411ff@redhat.com>
-Date: Fri, 21 Jul 2017 10:50:26 +0100
-From: Luke Hinds <lhinds@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: [OSSN-0078] Ceph credentials included in logs using older versions of libvirt/qemu
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/12/6
+Message-ID: <20171212161834.3818cdd2@pc1>
+Date: Tue, 12 Dec 2017 16:18:34 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: ROBOT attack (WolfSSL, Bouncy Castle, Erlang)
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-Ceph credentials included in logs using older versions of libvirt/qemu
-----------------------------------------------------------------------
+I published details about the ROBOT attack today, it's a couple of
+minor variations of the old Bleichenbacher attack.
+(Return Of Bleichenbacher's Oracle Threat)
 
-### Summary ###
-Older versions of libvirt included network storage authentication
-information on the qemu command line. If libvirt raises an exception
-which logs the qemu command line it used, for example an error starting
-a domain, this authentication information will available in the logs.
+https://robotattack.org/
 
-### Affected Services / Software ###
-Versions 2.5 and earlier of QEMU and libvirt versions of 2.1 or earlier.
+It is mostly about proprietary appliances, but also affects three FOSS
+TLS stacks.
 
-The issue has been resolved in all QEMU versions 2.6 and above and
-libvirt 2.2 and above.
+The attack is based on the fact that an attacker can distinguish valid
+and invalid RSA PKCS #1 v1.5 paddings based on different server
+responses.
 
-No patches or specific releases of Nova or Ceph are required, the
-issue is completely resolved in QEMU and libvirt.
+Erlang (CVE-2017-1000385):
+http://erlang.org/pipermail/erlang-questions/2017-November/094257.html
+http://erlang.org/pipermail/erlang-questions/2017-November/094256.html
+http://erlang.org/pipermail/erlang-questions/2017-November/094255.html
 
-### Discussion ###
-If a deployment is using ceph, a libvirt error starting a domain would
-log the cephx secret key and the monitor addresses on the qemu command
-line.
+WolfSSL (CVE-2017-13099):
+https://github.com/wolfSSL/wolfssl/pull/1229
+(only a pull req for now, no new release yet)
 
-A local attacker could then use this flaw to gain access of the cephx
-secret key and perform certain privileged operations within the cluster.
+Bouncy Castle (CVE-2017-13098):
+https://github.com/bcgit/bc-java/commit/a00b684465b38d722ca9a3543b8af8568e6bad5c
+1.59 beta 9 contains the fix:
+https://downloads.bouncycastle.org/betas/
 
-An existing CVE is already present for this issue.
+-- 
+Hanno Böck
+https://hboeck.de/
 
-### Recommended Actions ###
-The issue has been resolved upstream. Users running qemu version 2.6 or
-later, and libvirt version 2.2 or later, are not vulnerable.
-
-No change is required in Nova or Ceph to resolve this issue.
-
-### Contacts / References ###
-Author: Luke Hinds, Red Hat
-https://access.redhat.com/security/cve/CVE-2015-5160
-This OSSN : https://wiki.openstack.org/wiki/OSSN/OSSN-0079
-Original LaunchPad Bug : https://bugs.launchpad.net/ossn/+bug/1686743
-OpenStack Security Project : https://launchpad.net/~openstack-ossg
-
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (513 bytes)
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
