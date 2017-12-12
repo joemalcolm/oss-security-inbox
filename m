@@ -1,61 +1,133 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/20/7
-Message-ID: <620190.49757825-sendEmail@localhost>
-Date: Mon, 20 Mar 2017 10:31:24 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: libpcre: invalid memory read in _pcre32_xclass (pcre_xclass.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/12/3
+Message-Id: <E1eOjEJ-0002EY-VH@xenbits.xenproject.org>
+Date: Tue, 12 Dec 2017 12:00:11 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 250 - improper x86 shadow mode refcount error handling
 Content-Type: text/plain; charset=utf-8
 
-Description:
-libpcre is a perl-compatible regular expression library.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-A fuzz on libpcre1 through the pcretest utility revealed an invalid memory read. Upstream says that this bug is fixed by one of the previous commit. However I’m providing as usual the stacktrace and the 
-reproducer, so if you are not running the latest upstream release, like happen on debian/rhel based distros, you may want to check better the status of this bug.
+                    Xen Security Advisory XSA-250
+                              version 2
 
-The complete ASan output:
+           improper x86 shadow mode refcount error handling
 
-# pcretest -32 -d $FILE
-==27914==ERROR: AddressSanitizer: SEGV on unknown address 0x7f3f580efe04 (pc 0x7f3f577b8048 bp 0x7ffcb035b390 sp 0x7ffcb035b320 T0)
-==27914==The signal is caused by a READ memory access.
-    #0 0x7f3f577b8047 in _pcre32_xclass /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcre_xclass.c:135:30
-    #1 0x7f3f576137ca in match /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcre_exec.c:3203:16
-    #2 0x7f3f575e7226 in pcre32_exec /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcre_exec.c:6936:8
-    #3 0x527d6c in main /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcretest.c:5218:9
-    #4 0x7f3f565b478f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #5 0x41b438 in _init (/usr/bin/pcretest+0x41b438)
+UPDATES IN VERSION 2
+====================
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcre_xclass.c:135:30 in _pcre32_xclass
-==27914==ABORTING
+Public release.
 
-Affected version:
-8.40
+Provide metadata file.
 
-Fixed version:
-8.41 (not released atm)
+ISSUE DESCRIPTION
+=================
 
-Commit fix:
-N/A
+Pages being used to run x86 guests in shadow mode are reference counted
+to track their uses.  When another reference cannot be acquired, the
+corresponding page table entry must not be inserted.  Due to incorrect
+error handling, this constraint could be violated.
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+IMPACT
+======
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00206-pcre-invalidread-_pcre32_xclass
+A malicious or buggy guest may cause a hypervisor crash, resulting in
+a Denial of Service (DoS) affecting the entire host, or cause hypervisor
+memory corruption.  We cannot rule out a guest being able to escalate
+its privilege.
 
-Timeline:
-2017-02-24: bug discovered and reported to upstream
-2017-03-20: blog post about the issue
+VULNERABLE SYSTEMS
+==================
 
-Note:
-This bug was found with American Fuzzy Lop.
+All Xen versions are affected.
 
-Permalink:
-https://blogs.gentoo.org/ago/2017/03/20/libpcre-invalid-memory-read-in-_pcre32_xclass-pcre_xclass-c
+x86 systems are vulnerable.  ARM systems are not vulnerable.
 
---
-Agostino Sarubbo
-Gentoo Linux Developer
+Only guests run in shadow mode can exploit the vulnerability.
 
+PV guests typically only run in shadow mode during live migration, as
+well as for features like VM snapshot.
 
+Note that save / restore does *not* use shadow mode, and so does not
+expose this vulnerability.  Some downstreams also  include a "non-live
+migration" feature, which also does not use shadow mode (and thus does
+not expose this vulnerability).
+
+HVM guests run in shadow mode on hardware without HAP support, or when
+HAP is disabled (globally or in the VM configuration file).  Live
+migration does not affect an HVM guest's use of shadow mode.
+
+MITIGATION
+==========
+
+For HVM guest explicitly configured to use shadow paging (e.g. via the
+`hap=0' xl domain configuration file parameter), changing to HAP (e.g.
+by setting `hap=1') will avoid exposing the vulnerability to those
+guests.  HAP is the default (in upstream Xen), where the hardware
+supports it; so this mitigation is only applicable if HAP has been
+disabled by configuration.
+
+For PV guests, avoiding their live migration avoids the vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Jan Beulich of SUSE.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa250.patch           xen-unstable, Xen 4.9.x ... 4.6.x
+xsa250-4.5.patch       Xen 4.5.x
+
+$ sha256sum xsa250*
+c15c1c3e64cfb7ab2e2c48970214aa8c3881deb7e11c498526554bb74535b601  xsa250.meta
+adf4d8242dbddb4ec52fe1effc1f8b233d33d8d6a59c1bb677dcc6e2ed2bf711  xsa250.patch
+d123a58308db606185c4e48dcf4a114ac29bb988ffc0eeb04ded213ec474e0f2  xsa250-4.5.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAlovuNkMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZx+4H/2ADwtz7LzqBd7aZ9BnODa3L+KM/hO05tG0t+feh
+eunJSfxAY3jRep4NxWUgK8zerAusw3zZi9lRzmhdLMHYtmslJPDWy5ul0N09E6Y5
+KH2Ky8zkFb2puzHZs2oMKywW25aRI6Bs7VdFK44KxWPRrLAFTNup6xOCVNWJ4VWw
+YhNTu4g/+mUUa+KLRPL/s6sKjIw07/sbh/koHWSwlAksxmlUfdHaFuLbsvspPRe0
+vq8Q8zN/n9Att6i8RrjeWLAb36mYXhKYIzkZhmJXNlwQx9dkhuLdlRaJ4zb7uERb
+wDYYlT9wib8CB5tsKxX+ozLQ0mr43DAFfsLJpzi7TudYplE=
+=+/I2
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa250.meta" of type "application/octet-stream" (2276 bytes)
+
+Download attachment "xsa250.patch" of type "application/octet-stream" (2277 bytes)
+
+Download attachment "xsa250-4.5.patch" of type "application/octet-stream" (2304 bytes)
