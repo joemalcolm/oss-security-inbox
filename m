@@ -1,39 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/14/10
-Message-ID: <4196795.4HvRXNqvRy@wanheda>
-Date: Thu, 14 Sep 2017 09:51:36 +0200
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/15/3
+Message-ID: <5878-1513236538.042311@SkZ3.Z1q1.vQCb>
+Date: Thu, 14 Dec 2017 07:28:58 +0000
+From: halfdog <me@...fdog.net>
 To: oss-security@...ts.openwall.com
-Cc: Simon McVittie <smcv@...ian.org>
-Subject: Re: mp3gain: NULL pointer dereference in sync_buffer (mpglibDBL/interface.c)
+Subject: Re: Recommendations GnuPG-2 replacement
 Content-Type: text/plain; charset=utf-8
 
-On giovedì 14 settembre 2017 09:24:45 CEST Simon McVittie wrote:
-> On Thu, 14 Sep 2017 at 07:00:25 +0000, Agostino Sarubbo wrote:
-> > The fuzz was done via the aacgain command-line tool which uses mp3gain
-> > which bundles an old-modified version of mpg123 called mpglibDBL.
-> 
-> I wouldn't recommend putting effort into fuzzing mp3gain. mpglibDBL
-> is known to have security vulnerabilities anyway:
-> https://security-tracker.debian.org/tracker/source-package/mp3gain
-> (I wonder whether you've rediscovered those, or found new vulnerabilities?)
-> 
-> It probably also suffers from most other historical vulnerabilities
-> that are listed for mpg123. We removed it from Debian in 2014,
-> with a recommendation to use the rgain Python package instead:
-> https://tracker.debian.org/pkg/rgain
-> 
-> rgain uses libmad or ffmpeg via GStreamer for decoding, so it isn't
-> exactly bug-free either; but those libraries are actively maintained,
-> and when they have vulnerabilities, they'd need to be fixed anyway for
-> the benefit of other packages.
-> 
-> Regards,
->     smcv
-I didn't investigate to the mpg123 bugs, I searched for mp3gain into the CVE 
-database.
-Anwyay I agree with you that is time to drop the packages.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Jeremy Stanley writes:
+> On 2017-12-07 06:32:11 +0000 (+0000), halfdog wrote:
+> [...]
+> > For all steps regarding system startup, I switched to LUKS only,
+> > using detached headers for special features. For release signing,
+> > mail sign/encrypt, a good light-weight solution is still needed.
+> [...]
+> 
+> I continue to use gpg2 in a release signing context, but strip
+> symmetrical encryption from the private signing subkey with a custom
+> keyring due to it being used by a headless/automated CI system which
+> runs on virtual machines that get deleted as soon as the signature
+> is generated thus leaving keys in memory isn't a concern there (and
+> the master private key _is_ encrypted but only ever used to create
+> signing subkeys and never goes anywhere near the CI system).
+
+That's an interesting setup. For special signing purposes, where
+I do not want to transfer the key, nor give the gpg-agent unrestricted
+remote access to the key material via forwarding, I use the dirty
+workaround from [0]. But you specific solution sounds much more
+advanced.
+ 
+> ...
+> For E-mail I'll confess I still use mutt's (well, neomutt's at
+> least) GnuPG integration, which has been working okay for me with
+> gpg2 on Debian. I haven't seen a lot of good OpenPGP implementations
+> besides GnuPG with at least equal levels of PGP/MIME integration
+> there. The obvious alternative is switching to S/MIME but you've
+> likely already considered that and the never-ending TTP vs WoT
+> debate, not to mention Debian as a community is fairly invested in
+> OpenPGP keys as a means of identifying and authenticating its
+> developers/maintainers.
+
+Yes, the TTP/WoT is another topic. The mailing usecase is similar,
+only for signing - if I care to do so - I use [0] together with
+some tools from the "nmh" (new mail handler) community.
+
+hd
+
+[0] http://www.halfdog.net/Projects/CryptoTools/RemoteGnupg/
+-----BEGIN PGP SIGNATURE-----
+
+iF0EAREKAB0WIQQVaq6YuR8BFP6IK9jEWZOG/u2r7gUCWjInmQAKCRDEWZOG/u2r
+7ktSAJ9FU9OX22RS4QquHxLQBvV3lDkBNwCeIhfdypPjz83Q8LjWjqT3Ao7DPts=
+=37pc
+-----END PGP SIGNATURE-----
+
+
