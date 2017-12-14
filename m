@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1752" "Friday" "9" "December" "2016" "00:13:41" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<4c5b757cd61e46109f711186e2474d6d@imshyb02.MITRE.ORG>" "41" "[oss-security] Re: CVE request Qemu: display: cirrus_vga: a divide by zero in cirrus_do_copy" nil nil nil "12" "2016120905:13:41" "[oss-security] Re: CVE request Qemu: display: cirrus_vga: a divide by zero in cirrus_do_copy" (number mark "U       cve-assign@m Dec  9   41/1752  " thread-indent "\"[oss-security] Re: CVE request Qemu: display: cirrus_vga: a divide by zero in cirrus_do_copy\"\n") "<alpine.LFD.2.20.1612081258430.26257@wniryva>" ("<alpine.LFD.2.20.1612081258430.26257@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2130" "Thursday" "14" "December" "2017" "07:28:58" "+0000" "halfdog" "me@halfdog.net" "<5878-1513236538.042311@SkZ3.Z1q1.vQCb>" "51" "Re: [oss-security] Recommendations GnuPG-2 replacement" "^Date:" nil nil "12" "2017121407:28:58" "[oss-security] Recommendations GnuPG-2 replacement" (number mark "        me@halfdog.n Dec 14   51/2130  " thread-indent "\"Re: [oss-security] Recommendations GnuPG-2 replacement\"\n") "<20171207151506.GB13067@yuggoth.org>" ("<20171207151506.GB13067@yuggoth.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 18165 invoked by uid 550); 9 Dec 2016 05:13:54 -0000
+Received: (qmail 16036 invoked by uid 550); 15 Dec 2017 19:06:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,57 +11,68 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18139 invoked from network); 9 Dec 2016 05:13:53 -0000
-From: <cve-assign@mitre.org>
-To: <ppandit@redhat.com>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>,
-	<liq3ea@gmail.com>, <psirt@huawei.com>
-In-Reply-To: <alpine.LFD.2.20.1612081258430.26257@wniryva>
-Message-ID: <4c5b757cd61e46109f711186e2474d6d@imshyb02.MITRE.ORG>
-Date: Fri, 9 Dec 2016 00:13:41 -0500
+Received: (qmail 16015 invoked from network); 15 Dec 2017 19:06:09 -0000
+In-reply-to: <20171207151506.GB13067@yuggoth.org>
+References: <20171207151506.GB13067@yuggoth.org>
+Comments: In-reply-to Jeremy Stanley <fungi@yuggoth.org>
+   message dated "Thu, 07 Dec 2017 15:15:06 +0000."
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: CVE request Qemu: display: cirrus_vga: a divide by zero in cirrus_do_copy
+Content-Type: text/plain; charset="us-ascii"
+Message-ID: <5878-1513236538.042311@SkZ3.Z1q1.vQCb>
+Date: Thu, 14 Dec 2017 07:28:58 +0000
+From: halfdog <me@halfdog.net>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Recommendations GnuPG-2 replacement
+To: oss-security@lists.openwall.com
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA512
 
-> Quick emulator(Qemu) built with the Cirrus CLGD 54xx VGA Emulator support is
-> vulnerable to a divide by zero issue. It could occur while copying VGA data
-> when cirrus graphics mode was set to be VGA.
+Jeremy Stanley writes:
+> On 2017-12-07 06:32:11 +0000 (+0000), halfdog wrote:
+> [...]
+> > For all steps regarding system startup, I switched to LUKS only,
+> > using detached headers for special features. For release signing,
+> > mail sign/encrypt, a good light-weight solution is still needed.
+> [...]
 > 
-> A privileged user inside guest could use this flaw to crash the Qemu process
-> instance on the host, resulting in DoS.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-12/msg00442.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1334398
-> http://git.qemu.org/?p=qemu.git;a=commit;h=4299b90e9ba9ce5ca9024572804ba751aa1a7e70
+> I continue to use gpg2 in a release signing context, but strip
+> symmetrical encryption from the private signing subkey with a custom
+> keyring due to it being used by a headless/automated CI system which
+> runs on virtual machines that get deleted as soon as the signature
+> is generated thus leaving keys in memory isn't a concern there (and
+> the master private key _is_ encrypted but only ever used to create
+> signing subkeys and never goes anywhere near the CI system).
 
-Use CVE-2016-9921 for the "'cirrus_get_bpp' returns zero(0), which
-could lead to a divide by zero" issue.
+That's an interesting setup. For special signing purposes, where
+I do not want to transfer the key, nor give the gpg-agent unrestricted
+remote access to the key material via forwarding, I use the dirty
+workaround from [0]. But you specific solution sounds much more
+advanced.
+ 
+> ...
+> For E-mail I'll confess I still use mutt's (well, neomutt's at
+> least) GnuPG integration, which has been working okay for me with
+> gpg2 on Debian. I haven't seen a lot of good OpenPGP implementations
+> besides GnuPG with at least equal levels of PGP/MIME integration
+> there. The obvious alternative is switching to S/MIME but you've
+> likely already considered that and the never-ending TTP vs WoT
+> debate, not to mention Debian as a community is fairly invested in
+> OpenPGP keys as a means of identifying and authenticating its
+> developers/maintainers.
 
-Use CVE-2016-9922 for the "blit pitch values" issue.
+Yes, the TTP/WoT is another topic. The mailing usecase is similar,
+only for signing - if I care to do so - I use [0] together with
+some tools from the "nmh" (new mail handler) community.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+hd
+
+[0] http://www.halfdog.net/Projects/CryptoTools/RemoteGnupg/
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYSjxDAAoJEHb/MwWLVhi2KvEP+wd+MdU2D7RZ4WVw/3M+G17C
-1D/KdgtB4D8i+Dx5AkCwFBFY85bZxMPCGe4gGxno/3MyzhxIik6AZ0jPOw2yOeI6
-jCp2S1gwowMs7jFexlG4nEQy3b+rBbjbGEvL0TSDyIKhvFdi8g+izv5u//49NvRi
-U1zNoHOzscgSlswSt+M8kYnKUDsfznisqjrCXc0F5cqksB9fcCf7bXWGjh5iAe4b
-vl0uO+5zQgCafAduS/+EQtDJheW9ussbAoLlJvVAfRQo9Ue7l3iZhyT1ty5gf4AO
-UH4kFYCuYMrQecbfYbKszS2ZZ4pF5hPXF9iXH+758n5ICyhk4h4q5dxwRtrEe7vC
-rT9lww4agFnrV9++TiUtB8UyldibNgxidEAsWxnkHS8mHPOB3ClPlHgr0FOekEkp
-hounmHanE8K/e66J79DESxX2GaFmLi1AbkF4x8ZeYF3I3dyjfEsNFEbPePwYp/1d
-OBjjebavjtJef22GzQsaqWw9OXnkaqRYCKmH8PatX4msjzLCeBJ4jOKXTSExzFxs
-KJiWx/5lXOb86VlrjVbTA/kJNxIjNHl3b1hBGz6rTrfkHeRs+W9OHgMBRNL4GHxP
-04DmwoQrRIG6fuvhTEjHU87vzf527BoqlAn/EgSzIQWKzkfIqUGiiWypvwVIftfQ
-r3ilsSTK4Ga5P42dkDYZ
-=Q5bc
+iF0EAREKAB0WIQQVaq6YuR8BFP6IK9jEWZOG/u2r7gUCWjInmQAKCRDEWZOG/u2r
+7ktSAJ9FU9OX22RS4QquHxLQBvV3lDkBNwCeIhfdypPjz83Q8LjWjqT3Ao7DPts=
+=37pc
 -----END PGP SIGNATURE-----
+
+
