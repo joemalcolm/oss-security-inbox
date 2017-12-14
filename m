@@ -1,4 +1,9 @@
-Received: (qmail 1236 invoked by uid 550); 4 Sep 2024 17:30:24 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6184" "Thursday" "14" "December" "2017" "06:18:23" "+0000" "halfdog" "me@halfdog.net" "<1513231666@halfdog.net>" "133" "Re: [oss-security] Recommendations GnuPG-2 replacement" "^cc:" nil nil "12" "2017121406:18:23" "[oss-security] Recommendations GnuPG-2 replacement" (number mark "        me@halfdog.n Dec 14  133/6184  " thread-indent "\"Re: [oss-security] Recommendations GnuPG-2 replacement\"\n") "<0ac49cb5-f257-f6c2-d104-7110ecf463d2@stachelkaktus.net>" ("<0ac49cb5-f257-f6c2-d104-7110ecf463d2@stachelkaktus.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 18072 invoked by uid 550); 15 Dec 2017 19:06:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,220 +11,151 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23625 invoked from network); 4 Sep 2024 15:52:19 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725465130; x=1726069930; darn=lists.openwall.com;
-        h=autocrypt:subject:from:to:content-language:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=cLWkljGmQ5T5BIuOUUuae26dhFw+rIsi6EDeFibc64c=;
-        b=VhL1O3xxDSDHPfzBWPBDErSY4zzrO3CyGrW0dmHJ8j+4yw7lHZgg+nj0E7RwgYXPau
-         rDeJwzmTWck9eK3lzE83BMhmu53CHFAN9DWFX1Ckq3FcQMjllUCf9TNTH6O6mPHR39e6
-         UZFAB9ff0RG9hQyUMXPtucJvYUPaR2a+mEqhy7XJJduzUWD2rNYRVfSGdLxMzKz3xxGZ
-         wVNLolfDkGuVcNlnLn/lVPSWNikE8mg5ojpAW5uAzOE+68DgL0VCOVvzJKY9OFITUqa8
-         p++owYRD8f7vsqKTMfJMhH0pFaoUSYrHZYhdEk0L06dzcNeuCziY89Qmk64SNHcZfSYB
-         F4LA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725465130; x=1726069930;
-        h=autocrypt:subject:from:to:content-language:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cLWkljGmQ5T5BIuOUUuae26dhFw+rIsi6EDeFibc64c=;
-        b=wGafbTu/YlDNmdbmodZIlXU7G5sVRhkuakhxdfa3ttFp4qGs+6v49FbIOwlL5987sO
-         ptv4S3Fvp9NwQ37iMcue6vwh6nVR8O2oQ/dinotZR+eLGs2KgMyEASMVUpI35K5qJb2T
-         woKdfmHJ/ItmeIol7GqIifdrJvtSmMiEZPFNsw0jP3+YnRMtVrYYH8PJzF7PJrSwd7U2
-         WAHlVVxeCOYlRGrh8Zsdt3PgceCBfZu3Gkfm9wa0Ql7pHz0pBI9Rcqm+gsdZqZXd9fxv
-         G0/bPSfuq4sVLePHkwfrj/zgcebhDJDmS92SzLa8M5qsJL44wbe7evBW+mCVsb5y8piU
-         a6GA==
-X-Gm-Message-State: AOJu0YzUP226Vplw+TNJn+UWmtjGYZCWH8dAh5THd6jdI/c0i8EZ+5TG
-	Ezw1ykSQAtXdMImArN2iWpXLKyROKJo8YtG+2WIdwp+SmsJ6zigQoPaLhQ==
-X-Google-Smtp-Source: AGHT+IFKreO5v1T0Jn5IGauj22XIsltHKPeI/vAvA5dmlj04Z2XRzMvk8gF4jXPx67+Xyn+FSv/B4Q==
-X-Received: by 2002:a05:620a:179e:b0:79f:f22:1e15 with SMTP id af79cd13be357-7a8131630ecmr1147605085a.7.1725465129092;
-        Wed, 04 Sep 2024 08:52:09 -0700 (PDT)
-Message-ID: <002f0d92-d247-bbec-cb7b-4709a5f5b195@gmail.com>
-Date: Wed, 4 Sep 2024 11:52:07 -0400
+Received: (qmail 17995 invoked from network); 15 Dec 2017 19:06:21 -0000
+In-reply-to: <0ac49cb5-f257-f6c2-d104-7110ecf463d2@stachelkaktus.net>
+References: <0ac49cb5-f257-f6c2-d104-7110ecf463d2@stachelkaktus.net>
+Comments: In-reply-to oss-security@stachelkaktus.net
+   message dated "Thu, 07 Dec 2017 10:16:44 +0100."
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Firefox/102.0 Thunderbird/102.10.0
-Content-Language: en-US
-To: oss-security@lists.openwall.com
-From: Brian Rosmaita <rosmaita.fossdev@gmail.com>
-Autocrypt: addr=rosmaita.fossdev@gmail.com; keydata=
- xjMEY01PKxYJKwYBBAHaRw8BAQdAOa0HRLMXltP2O0ib20YOTSGK8inPjlX/VmCXILiqVhbN
- K0JyaWFuIFJvc21haXRhIDxyb3NtYWl0YS5mb3NzZGV2QGdtYWlsLmNvbT7CmQQTFgoAQQIb
- AwULCQgHAgIiAgYVCgkICwIEFgIDAQIeBwIXgBYhBFtHo/3WbKuySXhmU+g0xidi2IVsBQJm
- MopuBQkGp6JDAAoJEOg0xidi2IVsR7QBANnfDjqZgUyZ29nFhnDTXAc/VTH5aJAbPB8Y79UN
- TZOMAQC1iHgitzwRcwYq+dshM81IMk+YRviPxSYwx6EhI1jfBc44BGNNTysSCisGAQQBl1UB
- BQEBB0CrqLr6OGnCrupbdrDZJNyXhLDE9vTMTybNd675csuAOgMBCAfCfgQYFgoAJgIbDBYh
- BFtHo/3WbKuySXhmU+g0xidi2IVsBQJmMoqnBQkGp6J8AAoJEOg0xidi2IVsjLoA/3QExwr4
- BSetYDSb1XLaIu1Uu0D0TVZn3XFJVpfK8QmJAP4mb+r6P1X4l6RA5djJUn4Y006iTptiCyJG
- 82zlf/nJBg==
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------tERuAQMyDFzif3r8JclKrwMo"
-Subject: [oss-security] [OSSA-2024-003] OpenStack Ironic: Unvalidated image data passed to
- qemu-img (CVE-2024-44082)
+Content-Type: text/plain; charset="us-ascii"
+Message-ID: <1513231666@halfdog.net>
+cc: oss-security@lists.openwall.com
+Date: Thu, 14 Dec 2017 06:18:23 +0000
+From: halfdog <me@halfdog.net>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Recommendations GnuPG-2 replacement
+To: oss-security@stachelkaktus.net
 
---------------tERuAQMyDFzif3r8JclKrwMo
-Content-Type: multipart/mixed; boundary="------------Ay67RQn09SdUWZRnoUEWmboS";
- protected-headers="v1"
-From: Brian Rosmaita <rosmaita.fossdev@gmail.com>
-To: oss-security@lists.openwall.com
-Message-ID: <002f0d92-d247-bbec-cb7b-4709a5f5b195@gmail.com>
-Subject: [OSSA-2024-003] OpenStack Ironic: Unvalidated image data passed to
- qemu-img (CVE-2024-44082)
+Hi,
 
---------------Ay67RQn09SdUWZRnoUEWmboS
-Content-Type: multipart/mixed; boundary="------------rCUaUdJ6ixS0E8t3ECDImoKR"
+> Hello,
+ 
+> for the gpg scenario on initrd I use:
+> echo $PASSWORD |/bin/gpg -d --passphrase-fd 0 --lock-never
+> --no-auto-check-trustdb --no-tty -q --no-keyring --batch --yes
+> --no-permission-warning /etc/a_key.gpg
 
---------------rCUaUdJ6ixS0E8t3ECDImoKR
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+Yes, that is quite similar to my use, only the "echo" is missing -
+but taking into account your knowledge about KDFs, I guess you
+have it just in here for demonstration purposes, knowing the security
+implications.
 
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0N
-Ck9TU0EtMjAyNC0wMDM6IFVudmFsaWRhdGVkIGltYWdlIGRhdGEgcGFzc2VkIHRvIHFlbXUtaW1n
-DQo9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PQ0KDQo6RGF0ZTogU2VwdGVtYmVyIDA0LCAyMDI0DQo6Q1ZFOiBDVkUtMjAyNC00NDA4Mg0KDQoN
-CkFmZmVjdHMNCn5+fn5+fn4NCi0gSXJvbmljOiA8MjEuNC4zLCA+PTIyLjAuMCA8MjMuMC4yLCA+
-PTIzLjEuMCA8MjQuMS4yLCA+PTI1LjAuMCA8MjYuMC4xDQotIElyb25pYy1weXRob24tYWdlbnQ6
-IDw5LjQuMiwgPj05LjUuMCA8OS43LjEsID49OS44LjAgPDkuMTEuMSwgPj05LjEyLjANCjw5LjEz
-LjENCg0KDQpEZXNjcmlwdGlvbg0Kfn5+fn5+fn5+fn4NCkRhbiBTbWl0aCBhbmQgSnVsaWEgS3Jl
-Z2VyIG9mIFJlZCBIYXQgYW5kIEpheSBGYXVsa25lciBvZiBHLVJlc2VhcmNoDQpub3RpY2VkIGEg
-dnVsbmVyYWJpbGl0eSBpbiBpbWFnZSBwcm9jZXNzaW5nIGZvciBJcm9uaWMsIGluIHdoaWNoIGEN
-CnNwZWNpYWxseSBjcmFmdGVkIGltYWdlIGNvdWxkIGJlIHVzZWQgYnkgYW4gYXV0aGVudGljYXRl
-ZCB1c2VyIHRvDQpleHBsb2l0IHVuZGVzaXJlZCBiZWhhdmlvcnMgaW4gcWVtdS1pbWcsIGluY2x1
-ZGluZyBwb3NzaWJsZSB1bmF1dGhvcml6ZWQNCmFjY2VzcyB0byBwb3RlbnRpYWxseSBzZW5zaXRp
-dmUgZGF0YS4NCg0KTWl0aWdhdGlvbg0KLS0tLS0tLS0tLQ0KVGhlIGF0dGFjaGVkIHBhdGNoZXMg
-Y29udGFpbiBjb2RlIGFsbG93aW5nIElyb25pYyBhbmQgdGhlDQpJcm9uaWMtUHl0aG9uLUFnZW50
-IChJUEEpIHRvIHByZS1zY3JlZW4gaW1hZ2VzIGJlZm9yZSBwYXNzaW5nIHRoZW0gdG8NCnFlbXUt
-aW1nLiAgWW91IHNob3VsZCBwYXRjaCBib3RoIG9mIHRoZW0gYmVjYXVzZSBpbiBzb21lIHBvcHVs
-YXINCmRlcGxveW1lbnQgY29uZmlndXJhdGlvbnMsIGl0IGlzIHBvc3NpYmxlIGZvciBpbWFnZXMg
-dG8gYnlwYXNzIHRoZQ0KSXJvbmljIGNvbmR1Y3RvciBmb3IgbW9yZSBlZmZpY2llbnQgaW1hZ2Ug
-ZG93bmxvYWRzLg0KDQpJbiBzaXR1YXRpb25zIHdoZXJlIGl0IGlzIG5vdCBwb3NzaWJsZSB0byBw
-YXRjaCBJUEEsIHRoZXJlIGlzIGEgbmV3DQpjb25maWd1cmF0aW9uIG9wdGlvbiwgYGBbY29uZHVj
-dG9yXWNvbmR1Y3Rvcl9hbHdheXNfdmFsaWRhdGVzX2ltYWdlc2BgLg0KV2hlbiB0aGlzIG9wdGlv
-biBpcyBUcnVlLCBhbGwgaW1hZ2UgZG93bmxvYWRzIGFyZSBmb3JjZWQgdG8gb2NjdXINCnRocm91
-Z2ggdGhlIElyb25pYyBjb25kdWN0b3IsIHdoZXJlIHRoZXkgYXJlIHZhbGlkYXRlZC4gIEhvd2V2
-ZXIsIHRoaXMNCm1heSBpbmN1ciBhIHNpZ25pZmljYW50IHBlcmZvcm1hbmNlIGhpdDsgaGVuY2Ug
-b3VyIHJlY29tbWVuZGF0aW9uIHRvDQpwYXRjaCBib3RoIElyb25pYyBhbmQgSVBBLg0KDQpQYXRj
-aGVzIGFyZSBhdmFpbGFibGUgZm9yIGJvdGggSXJvbmljIGFuZCBJUEEgZm9yIGFsbCBtYWludGFp
-bmVkDQpicmFuY2hlcywgbmFtZWx5LCB0aGUgRGFsbWF0aWFuIGRldmVsb3BtZW50IGJyYW5jaCAo
-Y3VycmVudCBtYXN0ZXIpDQp0aHJvdWdoIEFudGVsb3BlLiBGb3IgdGhlc2UgYnJhbmNoZXMsDQpg
-YGNvbmR1Y3Rvcl9hbHdheXNfdmFsaWRhdGVzX2ltYWdlc2BgIGRlZmF1bHRzIHRvIEZhbHNlLg0K
-DQpGb3IgdGhlIHVubWFpbnRhaW5lZCBicmFuY2hlcyAoWmVkIHRocm91Z2ggVmljdG9yaWEpLCBw
-YXRjaGVzIGFyZSBub3QNCmF2YWlsYWJsZSBmb3IgSVBBIGR1ZSB0byBhIHNpZ25pZmljYW50IHJp
-c2sgb2YgcmVncmVzc2lvbnMuICBGb3IgdGhlc2UNCmJyYW5jaGVzLCB0aGUgSXJvbmljIHBhdGNo
-ZXMgc2V0IGBgY29uZHVjdG9yX2Fsd2F5c192YWxpZGF0ZXNfaW1hZ2VzYGANCnRvIFRydWUsIGFz
-IHRoaXMgaXMgdGhlIG9ubHkgc2FmZSB3YXkgdG8gcnVuIElyb25pYyB3aXRoIGFuIHVuLXBhdGNo
-ZWQNCklQQS4NCg0KQ2FjaGVkIGltYWdlcw0KLS0tLS0tLS0tLS0tLQ0KSW1hZ2VzIGluIHRoZSBJ
-cm9uaWMgaW1hZ2UgY2FjaGUgc2hvdWxkIGJlIHB1cmdlZC4gIFRvIHB1cmdlIHRoZSBjYWNoZSwN
-CnN0b3AgdGhlIElyb25pYyBjb25kdWN0b3IgYW5kIHJlbW92ZSB0aGUgZmlsZXMgaW4gdGhlDQpg
-YFtweGVdL2luc3RhbmNlX21hc3Rlcl9wYXRoYGAgZGlyZWN0b3J5IG9uIHRoYXQgY29uZHVjdG9y
-IG5vZGUuDQoNClN1cHBvcnRlZCBpbWFnZSBmb3JtYXRzDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LQ0KQSBuZXcgY29uZmlndXJhdGlvbiBvcHRpb24sIGBgW2NvbmR1Y3Rvcl1wZXJtaXR0ZWRfaW1h
-Z2VfZm9ybWF0c2BgDQpjb250cm9scyB3aGF0IGltYWdlIGZvcm1hdHMgd2lsbCBiZSBhY2NlcHRl
-ZCBieSBJcm9uaWMuICBCeSBkZWZhdWx0LCB0aGUNCmFsbG93ZWQgZm9ybWF0cyBhcmUgJ3Jhdycg
-YW5kICdxY293MicsIHdoaWNoIGFyZSB0aGUgb25seSBmb3JtYXRzIHRoYXQNCklyb25pYyBpcyB0
-ZXN0ZWQgd2l0aC4gIEluIHByZXZpb3VzIHJlbGVhc2VzLCBpdCB3YXMgcG9zc2libGUgdG8gdXNl
-DQppbWFnZXMgb2Ygb3RoZXIsIHVuc3VwcG9ydGVkIGZvcm1hdHMgd2l0aCBJcm9uaWMsIGJ1dCB0
-aGlzIGlzIG5vdw0KYmxvY2tlZCBieSBkZWZhdWx0IGR1ZSB0byBzZWN1cml0eSBpc3N1ZXMgYXJp
-c2luZyBmcm9tIHRoZSBpbWFnZQ0KY29udmVyc2lvbiBwcm9jZXNzLiAgSXQgaXMgcG9zc2libGUs
-IHRob3VnaCBub3QgcmVjb21tZW5kZWQsIHRvIGV4cGFuZA0KdGhlIGxpc3Qgb2YgcGVybWl0dGVk
-IGZvcm1hdHMuICBBbHRlcm5hdGl2ZWx5LCB1c2VycyByZXF1aXJpbmcgdGhlIHVzZQ0Kb2YgYW4g
-aW1hZ2UgaW4gYW4gdW5zdXBwb3J0ZWQgZm9ybWF0IGNhbiBjb252ZXJ0IHRoZSBpbWFnZSBvZmZs
-aW5lIGludG8NCmEgc3VwcG9ydGVkIGZvcm1hdCBiZWZvcmUgdXBsb2FkaW5nIHRoZSBpbWFnZSB0
-byBHbGFuY2Ugb3Igb3RoZXJ3aXNlDQptYWtpbmcgdGhlIGltYWdlIGF2YWlsYWJsZSB0byBJcm9u
-aWMuICBDb25zdWx0IHRoZSBJcm9uaWMgZG9jdW1lbnRhdGlvbg0KZm9yIGRldGFpbHMuDQoNCldh
-cm5pbmcNCi0tLS0tLS0NCkFzIGlzIHdlbGwtZG9jdW1lbnRlZCwgdGhlIE9wZW5TdGFjayBJcm9u
-aWMgcHJvamVjdCBkb2VzIG5vdCBzdXBwb3J0IHRoZQ0KdXNlIG9mIGlyb25pYy1saWIgZm9yIG5v
-bi1Jcm9uaWMgdXNlIGNhc2VzLiAgSW4gaXRzIG5vcm1hbCBzdXBwb3J0ZWQNCmNvbnRleHQsIGly
-b25pYy1saWIgYXNzdW1lcyB0aGF0IGltYWdlcyBoYXZlIGJlZW4gcHJlLXNjcmVlbmVkIGJlZm9y
-ZQ0KaXJvbmljLWxpYiBjb21lcyBpbiBjb250YWN0IHdpdGggdGhlbS4gIFRodXMsIHVuc3VwcG9y
-dGVkIHVzZSBvZg0KaXJvbmljLWxpYiBsZWF2ZXMgeW91IHZ1bG5lcmFibGUgdG8gdGhlIGV4cGxv
-aXQgb3V0bGluZWQgaW4gdGhpcyBPU1NBLg0KDQpUaGUgSXJvbmljIHByb2plY3QgaW50ZW5kcyBl
-dmVudHVhbGx5IHRvIGV4cGxpY2l0bHkgcmVtb3ZlIHRoZQ0KdnVsbmVyYWJsZSBtZXRob2RzIGlu
-IGlyb25pYy1saWIsIGJ1dCByZW1pbmRzIHRoZSByZWFkZXIgdGhhdA0KaW5kZXBlbmRlbnQgdXNl
-IG9mIGlyb25pYy1saWIgaXMgbm90IHN1cHBvcnRlZC4NCg0KQnVnZml4IGJyYW5jaGVzDQotLS0t
-LS0tLS0tLS0tLS0NClBhdGNoZXMgYXJlIGF2YWlsYWJsZSBmb3IgbWFpbnRhaW5lZCBidWdmaXgg
-YnJhbmNoZXMuICBUaGVzZSBwYXRjaGVzDQp3aWxsIGJlIG1lcmdlZCB0byB0aGUgbWFpbnRhaW5l
-ZCBicmFuY2hlcywgYnV0IG5vIG5ldyByZWxlYXNlcyB3aWxsIGJlDQp0cmlnZ2VyZWQgZnJvbSB0
-aG9zZSBicmFuY2hlcy4NCg0KDQoNCg0KUGF0Y2hlcw0Kfn5+fn5+fg0KLSBodHRwczovL3Jldmll
-dy5vcGVuZGV2Lm9yZy85Mjc5NzIgKDIwMjMuMS9hbnRlbG9wZShpcm9uaWMpKQ0KLSBodHRwczov
-L3Jldmlldy5vcGVuZGV2Lm9yZy85Mjc5NzkgKDIwMjMuMS9hbnRlbG9wZShpcm9uaWMtcHl0aG9u
-LWFnZW50KSkNCi0gaHR0cHM6Ly9yZXZpZXcub3BlbmRldi5vcmcvOTI3OTcwICgyMDIzLjIvYm9i
-Y2F0KGlyb25pYykpDQotIGh0dHBzOi8vcmV2aWV3Lm9wZW5kZXYub3JnLzkyNzk3OCAoMjAyMy4y
-L2JvYmNhdChpcm9uaWMtcHl0aG9uLWFnZW50KSkNCi0gaHR0cHM6Ly9yZXZpZXcub3BlbmRldi5v
-cmcvOTI3OTY4ICgyMDI0LjEvY2FyYWNhbChpcm9uaWMpKQ0KLSBodHRwczovL3Jldmlldy5vcGVu
-ZGV2Lm9yZy85Mjc5NzYgKDIwMjQuMS9jYXJhY2FsKGlyb25pYy1weXRob24tYWdlbnQpKQ0KLSBo
-dHRwczovL3Jldmlldy5vcGVuZGV2Lm9yZy85Mjc5NjUgKDIwMjQuMi9kYWxtYXRpYW4oaXJvbmlj
-KSkNCi0gaHR0cHM6Ly9yZXZpZXcub3BlbmRldi5vcmcvOTI3OTc0ICgyMDI0LjIvZGFsbWF0aWFu
-KGlyb25pYy1weXRob24tYWdlbnQpKQ0KLSBodHRwczovL3Jldmlldy5vcGVuZGV2Lm9yZy85Mjc5
-NjkgKEJ1Z2ZpeC8yNC4wIChpcm9uaWMpKQ0KLSBodHRwczovL3Jldmlldy5vcGVuZGV2Lm9yZy85
-Mjc5NjcgKEJ1Z2ZpeC8yNS4wIChpcm9uaWMpKQ0KLSBodHRwczovL3Jldmlldy5vcGVuZGV2Lm9y
-Zy85Mjc5NjYgKEJ1Z2ZpeC8yNi4wIChpcm9uaWMpKQ0KLSBodHRwczovL3Jldmlldy5vcGVuZGV2
-Lm9yZy85Mjc5ODMgKEJ1Z2ZpeC85LjEyIChpcm9uaWMtcHl0aG9uLWFnZW50KSkNCi0gaHR0cHM6
-Ly9yZXZpZXcub3BlbmRldi5vcmcvOTI3OTgxIChCdWdmaXgvOS4xMyAoaXJvbmljLXB5dGhvbi1h
-Z2VudCkpDQotIGh0dHBzOi8vcmV2aWV3Lm9wZW5kZXYub3JnLzkyNzk4NCAoQnVnZml4LzkuOSAo
-aXJvbmljLXB5dGhvbi1hZ2VudCkpDQotIGh0dHBzOi8vcmV2aWV3Lm9wZW5kZXYub3JnLzkyNzk4
-MiAoVW5tYWludGFpbmVkL3ZpY3RvcmlhKGlyb25pYykpDQotIGh0dHBzOi8vcmV2aWV3Lm9wZW5k
-ZXYub3JnLzkyNzk4MCAoVW5tYWludGFpbmVkL3dhbGxhYnkoaXJvbmljKSkNCi0gaHR0cHM6Ly9y
-ZXZpZXcub3BlbmRldi5vcmcvOTI3OTc3IChVbm1haW50YWluZWQveGVuYShpcm9uaWMpKQ0KLSBo
-dHRwczovL3Jldmlldy5vcGVuZGV2Lm9yZy85Mjc5NzUgKFVubWFpbnRhaW5lZC95b2dhKGlyb25p
-YykpDQotIGh0dHBzOi8vcmV2aWV3Lm9wZW5kZXYub3JnLzkyNzk3MyAoVW5tYWludGFpbmVkL3pl
-ZChpcm9uaWMpKQ0KDQoNCkNyZWRpdHMNCn5+fn5+fn4NCi0gRGFuIFNtaXRoIGZyb20gUmVkIEhh
-dCAoQ1ZFLTIwMjQtNDQwODIpDQotIEpheSBGYXVsa25lciBmcm9tIEctUmVzZWFyY2ggKENWRS0y
-MDI0LTQ0MDgyKQ0KLSBKdWxpYSBLcmVnZXIgZnJvbSBSZWQgSGF0IChDVkUtMjAyNC00NDA4MikN
-Cg0KDQpSZWZlcmVuY2VzDQp+fn5+fn5+fn5+DQotIGh0dHBzOi8vbGF1bmNocGFkLm5ldC9idWdz
-LzIwNzE3NDANCi0gaHR0cDovL2N2ZS5taXRyZS5vcmcvY2dpLWJpbi9jdmVuYW1lLmNnaT9uYW1l
-PUNWRS0yMDI0LTQ0MDgyDQoNCg0KTm90ZXMNCn5+fn5+DQotIEZvciBtb3JlIGluZm9ybWF0aW9u
-IGFib3V0IHRoZSB1bmFkdmlzYWJpbGl0eSBvZiBjYWxsaW5nICdxZW11LWltZw0KICAgaW5mbycg
-b24gdW50cnVzdGVkIGltYWdlcywgc2VlIENWRS0yMDI0LTA0NDY3Lg0KLSBUaGUgaXJvbmljIHVu
-bWFpbnRhaW5lZC8qIGJyYW5jaGVzIHdpbGwgcmVjZWl2ZSBubyBwb2ludCByZWxlYXNlcywgYnV0
-DQogICBwYXRjaGVzIGZvciB0aGVtIGFyZSBwcm92aWRlZCBhcyBhIGNvdXJ0ZXN5Lg0KLSBUaGUg
-aXJvbmljLXB5dGhvbi1hZ2VudCB1bm1haW50YWluZWQvKiBicmFuY2hlcyB3aWxsIHJlY2VpdmUg
-bm8gcG9pbnQNCiAgIHJlbGVhc2VzLCBub3IgYXJlIHBhdGNoZXMgZm9yIHRoZW0gYXZhaWxhYmxl
-Lg0KLSBUaGUgaXJvbmljIGFuZCBpcm9uaWMtcHl0aG9uLWFnZW50IGJ1Z2ZpeC8qIGJyYW5jaGVz
-IHdpbGwgcmVjZWl2ZSBubw0KICAgcG9pbnQgcmVsZWFzZXMsIGJ1dCBwYXRjaGVzIGZvciB0aGVt
-IGFyZSBwcm92aWRlZCBhcyBhIGNvdXJ0ZXN5Lg0KDQotLQ0KQnJpYW4gUm9zbWFpdGENCk9wZW5T
-dGFjayBWdWxuZXJhYmlsaXR5IE1hbmFnZW1lbnQgVGVhbQ0KaHR0cHM6Ly9zZWN1cml0eS5vcGVu
-c3RhY2sub3JnL3ZtdC5odG1sDQoNCg==
+> To fix the "--s2k-count" problem I've added argon2 before using the pipe
+> for gpg.
+>
+> Its not great but it works for me.
 
---------------rCUaUdJ6ixS0E8t3ECDImoKR
-Content-Type: application/pgp-keys; name="OpenPGP_0xE834C62762D8856C.asc"
-Content-Disposition: attachment; filename="OpenPGP_0xE834C62762D8856C.asc"
-Content-Description: OpenPGP public key
-Content-Transfer-Encoding: quoted-printable
+Thanks for the hint. "argon2" seems to be what, what I'm looking
+for. This solves the issues also in a more "UNIX-like" way, as
+it can be combined with any, where high-cost KDFs are wanted.
 
------BEGIN PGP PUBLIC KEY BLOCK-----=0A=
-=0A=
-xjMEY01PKxYJKwYBBAHaRw8BAQdAOa0HRLMXltP2O0ib20YOTSGK8inPjlX/VmCX=0A=
-ILiqVhbNK0JyaWFuIFJvc21haXRhIDxyb3NtYWl0YS5mb3NzZGV2QGdtYWlsLmNv=0A=
-bT7CmQQTFgoAQQIbAwULCQgHAgIiAgYVCgkICwIEFgIDAQIeBwIXgBYhBFtHo/3W=0A=
-bKuySXhmU+g0xidi2IVsBQJmMopuBQkGp6JDAAoJEOg0xidi2IVsR7QBANnfDjqZ=0A=
-gUyZ29nFhnDTXAc/VTH5aJAbPB8Y79UNTZOMAQC1iHgitzwRcwYq+dshM81IMk+Y=0A=
-RviPxSYwx6EhI1jfBc44BGNNTysSCisGAQQBl1UBBQEBB0CrqLr6OGnCrupbdrDZ=0A=
-JNyXhLDE9vTMTybNd675csuAOgMBCAfCfgQYFgoAJgIbDBYhBFtHo/3WbKuySXhm=0A=
-U+g0xidi2IVsBQJmMoqnBQkGp6J8AAoJEOg0xidi2IVsjLoA/3QExwr4BSetYDSb=0A=
-1XLaIu1Uu0D0TVZn3XFJVpfK8QmJAP4mb+r6P1X4l6RA5djJUn4Y006iTptiCyJG=0A=
-82zlf/nJBg=3D=3D=0A=
-=3D071n=0A=
------END PGP PUBLIC KEY BLOCK-----=0A=
+hd
 
---------------rCUaUdJ6ixS0E8t3ECDImoKR--
+PS: sorry about the delayed reply: when in bad mood I just do
+not manage to open my mailbox for weeks or month.
 
---------------Ay67RQn09SdUWZRnoUEWmboS--
+> On 12/07/2017 07:32 AM, halfdog wrote:
+> > Hello list,
+> > 
+> > Are there recommendations for open-source light-weight replacements
+> > of GnuPG2 suitable for use on Debian? I would like discontinue
+> > using GnuPG project, as the GnuPG design regarding security seems
+> > to be moving in a direction, that does not match my personal security
+> > needs any more.
+> > 
+> > The two main events causing me considering the change were related
+> > to the Debian Jessie to Stretch switch - thus giving a small
+> > impression on the current needs:
+> > 
+> > Event 1:
+> > 
+> > While gpg1 was a light-weight tool, just doing what said, the
+> > new gpg2 cannot really work without gpg-agent, pinentry frontend.
+> > Both are very nice for desktop usecases. As I also used it during
+> > machine setup for generating material related to disk encryption,
+> > the agent first did not want to start -- the primitive /dev/ttyX
+> > via openvt was not the environment gpg tools were expecting
+> > for password input, thus failing. gpg2 by default will not ask
+> > the passphrase any more on the terminal, it was started from,
+> > but tries to work out using various information, where passphrase
+> > input should be delegated to.
+> > 
+> > After getting gpg and agent running, I noticed, that not reliably
+> > stopping the gpg-agent on initrd would introduce a private key
+> > data leak via /proc from early boot process to running system
+> > when stopping fails. This is also more annoying as it is not possible
+> > to instruct gpg, that a single private key should NOT be cached,
+> > and you have to configure gpg-agent beforehand, something not
+> > quite funny and little error prone on limited functionality systems
+> > like on an initrd systems.
+> > 
+> > Thus the Debian switch from gpg1 to gpg2 just introduced efforts
+> > fiddling with functionality I do not need and cannot disable,
+> > provides a keymanagement that cannot be configured easily to
+> > protect against the threats it should mitigate (theft of key material)
+> > and creating additional attack surface without any recognizable
+> > benefit.
+> > 
+> > Event 2:
+> > 
+> > After getting everything working, which was little anoying as
+> > building of initrds, testing via QEmu is not very user friendly
+> > regarding debugging for less experienced users - but at least not
+> > GnuPG's fault at any reason - I noticed, that the password protection
+> > of the key was significantly lower than expected. Getting back
+> > to the developers, we found out, that the specification of the
+> > "--s2k-count" parameter, which specifies the number of rounds
+> > of key deriviation function to unlock the private key, has changed
+> > from gpgv1 to gpgv2, so that it is ignored in gpg2 but does not
+> > cause any warning or error. Thus previous audited procedures continue
+> > to work but do not produce the same results any more. Of course,
+> > I could have compared documentation of all parameters of (at least
+> > security-related) programs after Jessie to Stretch upgrade, but
+> > I assumed, that security critical parameters would not change
+> > their meaning without any noticable effect - so just my fault.
+> > 
+> > Still, this would just be a minor mishap, but what reduced my
+> > trust in GPG, was the comment of a developer: it was assumed,
+> > that they know better, where there software will be run without
+> > specifying that "where" in the documentation. Also his replies
+> > matched that picture, e.g. "(gpg-agent will) ... calibrate the
+> > S2K count to match the current machine", assuming that this is
+> > good reason to change "--s2k-count" meaning and ignore the parameter.
+> > I had the impression, that it did not come to mind, that someone
+> > might have used such a parameter for a reason, e.g. because speed
+> > calibration might not be the best idea, while the system is taking
+> > in data at the maximum speed the ethernet adapter, disk controller
+> > can do during system setup.
+> > 
+> > Another bonmot on the mathematical complexity of private key
+> > unlocking: "For user experience 100ms is a good value; your
+> > suggested 1000ms is an annoying long delay which would most user
+> > only increase the cache time." But the discussion was not on
+> > user defaults. If I deem it a good idea to requirea longer KDF
+> > computation time for material with higher sensitivity, e.g. to
+> > to unlock data storage once at startup, and therefore tell the
+> > software to perform that computation, it should accept that
+> > decision. Thus someone not understanding or accepting the
+> > existance of such choices in alternative usecase might not be
+> > the right person to develop the software, I want to use.
+> > 
+> > 
+> > Result:
+> > 
+> > For all steps regarding system startup, I switched to LUKS only,
+> > using detached headers for special features. For release signing,
+> > mail sign/encrypt, a good light-weight solution is still needed.
+> > 
+> > hd
+> > 
+> > PS: I do not know, how much the gpg-agent calibration under
+> > increased system load reduced the KDF complexity, as I failed
+> > to extract the KDF rounds value from the gpg data structures,
+> > but the value seems to be at least below 70ms due to total time
+> > measurements for gpg-agent (math, interprocess communication,
+> > filesystem) to unlock a key on an idle system.
+> > 
+> > 
+> 
 
---------------tERuAQMyDFzif3r8JclKrwMo
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
 
------BEGIN PGP SIGNATURE-----
-
-wnsEABYIACMWIQRbR6P91myrskl4ZlPoNMYnYtiFbAUCZtiCJwUDAAAAAAAKCRDoNMYnYtiFbAGQ
-AQCDQmCJKKR4Q7JrBJ6o1Kv4l7WMSCMVXoMz2xbM5yAAcgEAyYWTYpewodiROXsc4pBqfKa4IKfz
-zxwOELmcqNox8ww=
-=gf72
------END PGP SIGNATURE-----
-
---------------tERuAQMyDFzif3r8JclKrwMo--
