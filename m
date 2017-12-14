@@ -1,35 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/02/5
-Message-ID: <739C33C0-C0EC-46AF-B1EA-1D1BBEC1E654@synopsys.com>
-Date: Tue, 2 May 2017 12:58:22 +0000
-From: Ari Kauppi <Ari.Kauppi@...opsys.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2017-7645 Linux kernel: nfsd: remote DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/14/1
+Message-Id: <61F736A2-A375-45DD-9137-12B53BF9A228@beckweb.net>
+Date: Thu, 14 Dec 2017 04:10:26 +0100
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Multiple vulnerabilities in Jenkins
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software. The following
+releases contain fixes for security vulnerabilities:
 
-Linux kernel NFSv3 and NFSv2 servers are vulnerable to a remote DoS attack.
+* Jenkins (weekly) 2.95
+* Jenkins (LTS) 2.89.2
 
-A specifically crafted request can overflow the request/response page
-array. A few distinct attack vectors exist which all lead to system hang/crash
-and have possibly other unspecified impact.
+Descriptions of the vulnerabilities are below. Some more details, 
+severity, and attribution can be found here:
+https://jenkins.io/security/advisory/2017-12-14/
 
-The attack vectors require at least read access to a NFS mount on the target host.
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-The issue has been verified to be reproducible on multiple baselines. At least
-2.6.32, 3.2, 4.4, 4.8 and 4.10 baselines (and distributions derived from those)
-have been confirmed to be vulnerable. Fixed in 4.11 release.
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
 
-CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:C/C:N/I:N/A:H (7.7 / High)
+---
 
-Upstream patch:
-https://git.kernel.org/linus/e6838a29ecb484c97e4efef9429643b9851fba6e
+SECURITY-667
+A race condition during Jenkins startup could result in the wrong order of
+execution of commands during initialization.
 
-This issue was found by Tuomas Haanpää and Matti Kamunen from Synopsys Ltd
-with Synopsys Defensics fuzzer.
+On Jenkins 2.81 and newer, including LTS 2.89.1, this could in rare cases
+(we estimate less than 20% of new instances) result in failure to
+initialize the setup wizard on the first startup. This resulted in multiple
+security-related settings not being set to their usual strict default.
+Affected instances need to be configured to restrict access.
 
-Thanks,
+Additionally, there's a very short window of time after startup during
+which Jenkins may no longer show the "Please wait while Jenkins is getting
+ready to work" message, but Cross-Site Request Forgery (CSRF) protection
+may not yet be effective. As of publication of this advisory, we've been
+unable to confirm this can actually be exploited, but generally recommend
+that users upgrade their instances.
 
---
-Ari Kauppi / Synopsys Ltd.
