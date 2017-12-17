@@ -1,73 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/17/14
-Message-Id: <A312BA48-B89C-422A-A75C-0C0C2502A9CF@gmail.com>
-Date: Wed, 17 May 2017 16:21:42 -0500
-From: Brandon Perry <bperry.volatile@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: fulldisclosure@...lists.org
-Subject: Re: Dolibarr ERP & CRM - Multiple Issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/17/6
+Message-ID: <CAOhT-pPfT4NTz1op0aQ=2KOf071zu8DsC2ae05t-LLSH37-mWg@mail.gmail.com>
+Date: Sun, 17 Dec 2017 12:02:21 -0500
+From: Brian Fox <brianf@...atype.com>
+To: Stefano Brivio <sbrivio@...hat.com>
+Cc: Raphael Geissert <atomo64@...il.com>, oss-security@...ts.openwall.com,  Security <security@...atype.com>
+Subject: Re: Sonatype Nexus Repository Manager 2.x weak password encryption
 Content-Type: text/plain; charset=utf-8
 
+Stefano, Thanks for the notification. Let us do an investigation and then
+we'll follow up with next steps.
 
-> On May 17, 2017, at 3:08 PM, Stefan Pietsch <stefan.pietsch@...mole.com> wrote:
-> 
-> On 10.05.2017 10:28, FOXMOLE Advisories wrote:
->> === FOXMOLE - Security Advisory 2017-02-23 ===
->> 
->> Dolibarr ERP & CRM  - Multiple Issues
->> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->> 
->> Affected Versions
->> =================
->> Dolibarr 4.0.4
->> 
->> Issue Overview
->> ==============
->> Vulnerability Type: SQL Injection, Cross Site Scripting,
->>                    Weak Hash Algorithm without Salt, Weak Password Change Method
->> Technical Risk: critical
->> Likelihood of Exploitation: medium
->> Vendor: Dolibarr
->> Vendor URL: https://www.dolibarr.org/
->> Credits: FOXMOLE employees Tim Herres and Stefan Pietsch
->> Advisory URL: https://www.foxmole.com/advisories/foxmole-2017-02-23.txt
->> Advisory Status: Public
->> OVE-ID: OVE-20170223-0001
->> CVE Number: CVE-2017-7886, CVE-2017-7887, CVE-2017-7888
->> CVE URL: https://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2017-7886
->>         https://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2017-7887
->>         https://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2017-7888
->> CWE-ID: CWE-79, CWE-89, CWE-327, CWE-620, CWE-759
->> CVSS 2.0: 10.0 (AV:N/AC:L/Au:N/C:C/I:C/A:C)
-> 
-> --- snip ---
-> 
-> Here is a small update to our security advisory.
-> 
-> An additional CVE ID got assigned for the password change finding:
-> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-8879 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-8879>
-> 
-> 
-> Meanwhile the Dolibarr developers fixed more possible SQL injection bugs
-> in this git commit:
-> https://github.com/Dolibarr/dolibarr/commit/fa290c34fad108ec7c0751c0372ae9c4b4f63b06 <https://github.com/Dolibarr/dolibarr/commit/fa290c34fad108ec7c0751c0372ae9c4b4f63b06>
-> 
-> They still didn't release a fixed version of the Dolibarr software.
-> 
-> 
-> 
-> For CVE-2017-7886 I don't agree with the CVSS v2 scoring from the NIST.
-> They rated "Confidentiality Impact" as partial while I think it is
-> complete as we have full access to all tables.
-> 
+On Sun, Dec 17, 2017 at 9:17 AM, Stefano Brivio <sbrivio@...hat.com> wrote:
 
-But you don’t have access to the underlying system, such as configuration files with plaintext passwords or similar. Only in a poorly configured MySQL instance would you be able to read files in the first place. I agree that the Confidentiality Impact is partial.
+> On Sun, 17 Dec 2017 13:53:47 +0100
+> Raphael Geissert <atomo64@...il.com> wrote:
+>
+> > Hi,
+> >
+> > The Nexus Repository Manager in at least version 2.14.5 [0] (latest of
+> > the 2.x series), stores the LDAP bind password in an on-disk file
+> > using PBE (bouncy castle's implementation of PBEWithSHAAnd128BitRC4).
+> >
+> > This is all great except for:
+> > - it using only 23 iterations[1]
+> > - it using a hard-coded and weak password[2]
+> >
+> > Therefore offering as much protection as a rot13 would.
+> >
+> > Given that the same PasswordHelper containing the weak password is
+> > present elsewhere in the code, it is very likely that this weak crypto
+> > issue affects other passwords stored by Nexus:
+> >
+> > - components/nexus-core/src/main/java/org/sonatype/nexus/
+> configuration/PasswordHelper.java[3]
+> > - components/nexus-security/src/main/java/org/sonatype/
+> security/configuration/source/PasswordHelper.java[4]
+> >
+> > It appears that this code is no longer used by the 3.x series.
+> >
+> > FWIW, the on-file password is:
+> >
+> > base64(SALT_SIZE || SALT || PBE_OUTPUT )
+> >
+> > SALT_SIZE always being 8 (hard-coded).
+> >
+> > N.b. I'll be filing a CVE request in a moment.
+> > N.b. I have not contacted sonatype. I couldn't find an email address.
+>
+> The page at https://www.sonatype.com/contactus says:
+>
+>         1. Send urgent or sensitive reports to security@...atype.com.
+>         2. Use our public key to keep your message safe.
+>         3. Provide us with a secure way to respond.
+>         4. We’ll get back to you as soon as we can. Usually within 24
+> hours.
+>
+> > [0] https://help.sonatype.com/display/NXRM2/2017+Release+Notes
+> > [1] https://github.com/sonatype/nexus-public/blob/nexus-2.x/
+> components/nexus-ldap-common/src/main/java/org/sonatype/
+> security/ldap/upgrade/cipher/DefaultPlexusCipher.java#L64
+> > [2] https://github.com/sonatype/nexus-public/blob/nexus-2.x/
+> components/nexus-ldap-common/src/main/java/org/sonatype/
+> security/ldap/realms/persist/DefaultPasswordHelper.java
+> > [3] https://github.com/sonatype/nexus-public/blob/nexus-2.x/
+> components/nexus-core/src/main/java/org/sonatype/nexus/
+> configuration/PasswordHelper.java
+> > [4] https://github.com/sonatype/nexus-public/blob/nexus-2.x/
+> components/nexus-security/src/main/java/org/sonatype/
+> security/configuration/source/PasswordHelper.java
+> >
+> > Cheers,
+>
+> --
+> Stefano
+>
 
-> 
-> Regards,
-> Stefan
-
-
-Content of type "text/html" skipped
-
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
