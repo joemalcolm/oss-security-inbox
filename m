@@ -1,37 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/17/9
-Message-ID: <2971422.7a4hKthq7I@blackgate>
-Date: Tue, 17 Jan 2017 11:33:28 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: jasper: invalid memory write in dec_clnpass (jpc_t1dec.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/17/8
+Message-ID: <HC5ynGJA36gdoiOYgWz1gvO-7EDEu83jSHFtGYnoZ1aulUEUmUQg5IVffiIP5PZ0elT3B0RxyNT2VaGnVednEmbMuF2lqbxk3AsspNkH6lw=@macinnes.ie>
+Date: Sun, 17 Dec 2017 15:20:58 -0500
+From: Kiall Mac Innes <kiall@...innes.ie>
+To: atomo64@...il.com, oss-security@...ts.openwall.com
+Subject: Re: Portus, missing LDAP server authentication
 Content-Type: text/plain; charset=utf-8
 
-On Monday 16 January 2017 19:08:48 cve-assign@...re.org wrote:
-> > []
-> > https://blogs.gentoo.org/ago/2017/01/16/jasper-invalid-memory-write-in-de
-> > c_clnpass-jpc_t1dec-c
-> > 
-> > AddressSanitizer: SEGV on unknown address
-> > The signal is caused by a WRITE memory access.
-> > 
-> > dec_clnpass ... jasper-1.900.27/src/libjasper/jpc/jpc_t1dec.c:869:4
-> 
-> Use CVE-2017-5503.
-> 
-> 
-> --
-> CVE Assignment Team
-> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-> [ A PGP key is available for encrypted communications at
->   http://cve.mitre.org/cve/request_id.html ]
+FYI - I've forwarded this to some of the Portus developers.
 
-The previous mail clearly state:
-> Timeline:
-> 2016-11-20: bug discovered and reported to upstream
+-------- Original Message --------
+On 17 Dec 2017, 14:36, Raphael Geissert wrote:
 
-Why a CVE-2017-* ?
-
---
-Agostino
-
+> Hi, Portus 2.2 and older provides LDAP integration for authenticating the users. However, in spite of it providing advice on configuring it to "to setup LDAP over SSL/TLS"[1], the implementation does not verify the server's identity at all. I'm writing about it here mainly because there appears to be some intention of TLS support. Users might expect it to actually provide some kind of security. Interestingly enough, the documentation and the config file comments say 'the recommended [method] is "starttls".'[2] I don't know where they got that from. CC'ing SUSE's security team. I have not yet reported it to the portus team directly, nor requested a CVE id (though I'm tempted to request one, to err on the side of safety). [1]http://port.us.org/docs/Configuring-Portus.html [2]https://github.com/SUSE/Portus/blob/master/config/config.yml#L49 Cheers, -- Raphael Geissert
