@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3666" "Friday" "20" "October" "2017" "14:40:50" "+0100" "Ben Tasker" "ben@bentasker.co.uk" "<CABMkiz6X3N8X7nq8eCnNGVUEx8jzd7hNLk3W_8OdW0Pg+UvSYQ@mail.gmail.com>" "109" "Re: [oss-security] CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync" "^Date:" nil nil "10" "2017102013:40:50" "[oss-security] CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync" (number mark "        ben@bentaske Oct 20  109/3666  " thread-indent "\"Re: [oss-security] CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync\"\n") "<CAOfWR+H_UbXfxh=oECSqUEcLmAh+RZciH61q0E5LqskWSOYWKA@mail.gmail.com>" ("<20171017162507.e7lx6fbnleugoxxa@waldi.eu.org>" "<CAOfWR+EHYftu3Hqbu0qGvk_kk3au-Gkj_WEH95syC3n-QuNnxg@mail.gmail.com>" "<CABMkiz5UkRvC7FRFQ_9nAfG=+gqGXTb-67faWu=s4n=mXghZtA@mail.gmail.com>" "<CAOfWR+GW8oR8+uSKeETF3+mzhhzH5-GiRuJr2sGOnhodefHRaQ@mail.gmail.com>" "<20171019194428.GK20315@hunt>" "<CAOfWR+H_UbXfxh=oECSqUEcLmAh+RZciH61q0E5LqskWSOYWKA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6342" "Sunday" "17" "December" "2017" "09:06:08" "+0000" "halfdog" "me@halfdog.net" "<2172-1513501568.968862@pLoG.Le7g.f3CQ>" "129" "Re: [oss-security] Recommendations GnuPG-2 replacement" "^Date:" nil nil "12" "2017121709:06:08" "[oss-security] Recommendations GnuPG-2 replacement" (number mark "        me@halfdog.n Dec 17  129/6342  " thread-indent "\"Re: [oss-security] Recommendations GnuPG-2 replacement\"\n") "<20171207210134.GA7079@openwall.com>" ("<20171207210134.GA7079@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9581 invoked by uid 550); 20 Oct 2017 18:34:24 -0000
+Received: (qmail 30094 invoked by uid 550); 17 Dec 2017 09:07:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,152 +11,146 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 22155 invoked from network); 20 Oct 2017 13:41:02 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bentasker.co.uk; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=KB8IcfU4kY+JrLfxH/qV9ED2BTfwaMmm+EawKm5sUkM=;
-        b=fnSlFNNd4c7sK1x3+KvutMwNc+dEBvOhNU+6PugSda+bPxvoaE8asQwNWomxxTlc5s
-         AlUdQEfgVsJqJiPACBcs0iRVAwmIUzPCZ+Kr9CbEuveGJNjEZ4rqYk0DILZOT4NH7JoP
-         7rGkbWD0cePzL0jZ1aoHzAKJj9kYm3J6U1eP4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=KB8IcfU4kY+JrLfxH/qV9ED2BTfwaMmm+EawKm5sUkM=;
-        b=I/iezsO6YAogevXFVU0JJb3W1oACy47NnIzQE6M+keimy7+aDiu6zQZbMpd7/c7WO1
-         VjI3WOXapBV3jriqpSlKJUyp6Lj6xtLzrbkL5XrUsW/vdl+RnecSVb9VgC0WIs+PTcaN
-         cKeywRBoLjNo6pJu3fIkpRzFmkHRFoG/N14qvMw7RqBnx/x6JX1wmmEkgybRohaGpjJV
-         V7+lQHntv+opTfpeF14ayzCW/mUQY6DLst4IQSuwGIohH6VmNryY8XdJu0E0Hf4mLnaD
-         xGsQBrBC0/PDn0bq6oKS+vAVJmmx6NPlxMqoe7T14FAxxcf48CCpYeW18BFhAfGDBoJ0
-         gfsA==
-X-Gm-Message-State: AMCzsaVGetevAVPPntjaqvXpAzyRWdfNufkIoyQ+jxnhFEbuqDxLB4XA
-	bwcKHGiWDsezmp9p+/i2jwiVPXqCM0p0MWWHSyi8XQ==
-X-Google-Smtp-Source: ABhQp+Qv+wFXXuQVaPLPJSGuU2mwGPR/CP2ASaYwiCksgfznGl7kiCq0n4k+7EEM3DRoSlY00FjBPX95aL37hqGanyY=
-X-Received: by 10.55.204.77 with SMTP id r74mr7230150qki.25.1508506850710;
- Fri, 20 Oct 2017 06:40:50 -0700 (PDT)
+Received: (qmail 30076 invoked from network); 17 Dec 2017 09:07:12 -0000
+In-reply-to: <20171207210134.GA7079@openwall.com>
+References: <20171207210134.GA7079@openwall.com>
+Comments: In-reply-to Solar Designer <solar@openwall.com>
+   message dated "Thu, 07 Dec 2017 22:01:34 +0100."
 MIME-Version: 1.0
-X-Originating-IP: [46.17.166.68]
-In-Reply-To: <CAOfWR+H_UbXfxh=oECSqUEcLmAh+RZciH61q0E5LqskWSOYWKA@mail.gmail.com>
-References: <20171017162507.e7lx6fbnleugoxxa@waldi.eu.org> <CAOfWR+EHYftu3Hqbu0qGvk_kk3au-Gkj_WEH95syC3n-QuNnxg@mail.gmail.com>
- <CABMkiz5UkRvC7FRFQ_9nAfG=+gqGXTb-67faWu=s4n=mXghZtA@mail.gmail.com>
- <CAOfWR+GW8oR8+uSKeETF3+mzhhzH5-GiRuJr2sGOnhodefHRaQ@mail.gmail.com>
- <20171019194428.GK20315@hunt> <CAOfWR+H_UbXfxh=oECSqUEcLmAh+RZciH61q0E5LqskWSOYWKA@mail.gmail.com>
-Message-ID: <CABMkiz6X3N8X7nq8eCnNGVUEx8jzd7hNLk3W_8OdW0Pg+UvSYQ@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="001a114998f2fa7a2b055bfa9e7d"
-Date: Fri, 20 Oct 2017 14:40:50 +0100
-From: Ben Tasker <ben@bentasker.co.uk>
+Content-Type: text/plain; charset="us-ascii"
+Message-ID: <2172-1513501568.968862@pLoG.Le7g.f3CQ>
+Date: Sun, 17 Dec 2017 09:06:08 +0000
+From: halfdog <me@halfdog.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2017-8805: Unsafe symlinks not filtered in
- Debian mirror script ftpsync
+Subject: Re: [oss-security] Recommendations GnuPG-2 replacement
 To: oss-security@lists.openwall.com
 
---001a114998f2fa7a2b055bfa9e7d
-Content-Type: text/plain; charset="UTF-8"
+Solar Designer writes:
+> On Thu, Dec 07, 2017 at 06:32:11AM +0000, halfdog wrote:
+> > After getting gpg and agent running, I noticed, that not reliably
+> > stopping the gpg-agent on initrd would introduce a private key
+> > data leak via /proc from early boot process to running system
+> > when stopping fails.
+> 
+> Can you elaborate on this, please?
 
-On Thu, Oct 19, 2017 at 9:32 PM, Robert Watson <robertcwatson1@gmail.com>
-wrote:
+As the agent process stays alive and initrd PID namespace is the
+same as final init-process PID namespace, the agent will stay
+via /proc and traceable by root using PTRACE.
 
-> Scripts depend on the underlying functionality of the various utilities
-> like rsync that they call. I'm having trouble understanding how a script
-> could ever be deserving of a CVE. Maybe I'm wrong. I wish to be educated.
+> > Thus the Debian switch from gpg1 to gpg2 just introduced efforts
+> > fiddling with functionality I do not need and cannot disable,
+> > provides a keymanagement that cannot be configured easily to
+> > protect against the threats it should mitigate (theft of key material)
+> > and creating additional attack surface without any recognizable
+> > benefit.
+> 
+> I think the benefit is being on a version upstream intends to maintain
+> to a greater extent and for a longer time.  For example, when yet
+> another side-channel leak was reported against GnuPG 1 & 2 recently,
+> upstream officially patched it for GnuPG 2 only and said that GnuPG 1
+> probably contains many other side-channel leaks anyway: ...
 >
+> Personally, I intend to stay with GnuPG 1 for now.
 
-Whether you think it applies to the current example is obviously a
-different debate, but the simple principle is that the script is (arguably)
-using the underlying tool unsafely. The tool (rsync in this case) provides
-an argument to prevent the "risky" behaviour, but the calling script isn't
-using it, potentially opening a vector for misuse.
+As Debian marked the packages with "gnupg1 - GNU privacy guard -
+a PGP implementation (deprecated "classic" version)" I wanted to
+anticipate the changes now, giving me more time to evaluate the
+changes and to find alternatives when needed. Apart from that,
+I am also inclined to switching, when statements from open-source
+community seem to indicate, that the burden to maintain both
+versions in a LTS scheme might be too much to carry. They should
+have their hands free for doing good work on the latest version,
+leaving the LTS procedures to payed service providers, I do not
+use privately.
+ 
+> ...
+> > has changed
+> > from gpgv1 to gpgv2, so that it is ignored in gpg2 but does not
+> > cause any warning or error. Thus previous audited procedures continue
+> > to work but do not produce the same results any more. Of course,
+> > I could have compared documentation of all parameters of (at least
+> > security-related) programs after Jessie to Stretch upgrade, but
+> > I assumed, that security critical parameters would not change
+> > their meaning without any noticable effect - so just my fault.
+> 
+> Are you saying "--s2k-count" option to "gpg2" is ignored, and moreover
+> that this is documented?  gnupg-2.1.23/doc/gpg.texi says (formatted):
+> 
+> `--s2k-count `n''
+>      Specify how many times the passphrase mangling is repeated.  This
+>      value may range between 1024 and 65011712 inclusive.  The default
+>      is inquired from gpg-agent.  Note that not all values in the
+>      1024-65011712 range are legal and if an illegal value is selected,
+>      GnuPG will round up to the nearest legal value.  This option is
+>      only meaningful if `--s2k-mode' is 3.
 
-So if there should be a CVE, it shouldn't be against rsync (as it provides
-the means to avoid, and in other cases you may even find the calling script
-is overriding the "safe" behaviour) but against the calling script.
+Here is the gpgv2 documentation:
 
-To give a fairly limited example, both of these scripts rely on the same
-functionality, but one is riskier (albeit not from a security perspective)
-- in neither case is the tool at risk
+"     --s2k-count n
+              Specify how many times the passphrases  mangling  for  symmetric
+              encryption  is  repeated.  This value may range between 1024 and
+              65011712 inclusive.  The default  is  inquired  from  gpg-agent.
+              Note  that  not  all values in the 1024-65011712 range are legal
+              and if an illegal value is selected, GnuPG will round up to  the
+              nearest  legal  value.  This option is only meaningful if --s2k-
+              mode is set to the default of 3."
 
-fname=$1
-rm -rf "/$1"
+You noticed the additional "symmetric" word? According to GPG
+developer that means, that with gpgv2 this setting is only applied
+with symmetric schemes, e.g. the "--symmetric" mode of GPG. For
+assymetric mode the parameter is just ignored.
 
-...
+> This doesn't say the option is ignored - only that "the default is
+> inquired from gpg-agent."  Is the option in fact ignored?  That would be
+> a bug in either code or documentation.
+> 
+> > Still, this would just be a minor mishap, but what reduced my
+> > trust in GPG, was the comment of a developer: it was assumed,
+> > that they know better, where there software will be run without
+> > specifying that "where" in the documentation. Also his replies
+> > matched that picture, e.g. "(gpg-agent will) ... calibrate the
+> > S2K count to match the current machine", assuming that this is
+> > good reason to change "--s2k-count" meaning and ignore the parameter.
+> 
+> I see no problem with gpg-agent providing a calibrated default, if that
+> default can be overridden.  If it can't be, and especially if that's in
+> conflict with the documentation, that's problematic.
 
-fname=$1
-rm -rf --no-preserve-root "/$1"
+It is not in conflict with documentation, as the "symmetric" word
+was added but therefore the parameter's meaning changed quite
+radically, considering that gpg is a tool used for assymetric
+encryption mainly.
+ 
+> > PS: I do not know, how much the gpg-agent calibration under
+> > increased system load reduced the KDF complexity, as I failed
+> > to extract the KDF rounds value from the gpg data structures,
+> > but the value seems to be at least below 70ms due to total time
+> > measurements for gpg-agent (math, interprocess communication,
+> > filesystem) to unlock a key on an idle system.
+> 
+> You may process the private key file with gpg2john, then try to crack it
+> with john.  This will output the actual value, as well as show you the
+> speed at which passphrases can be tested against that key on your system
+> and with that version of JtR.  To use a GPU, add "--format=gpg-opencl".
+> Please use latest bleeding-jumbo off GitHub for all of this.
 
+Done that, but still fighting how to use "gpg2john" with the new
+gpgv2 "private-keys-v1.d" key format. Exporting the private keys
+using gpgv2 does not help as that requires the passphrase already,
+thus removing the gpgv2-encryption, we want to test.
 
-Obviously it's quite easy for there to be more severe connotations to other
-scripts (for example, think about some of the things you might pass
-adduser) which may well be worthy of a CVE by nature of them effectively
-misusing a tool.
+Just FYI: your releases on Openwall are still signed with the old
+openwall-key, according to http://www.openwall.com/signatures/ the
+key is "Old Openwall offline signing key (no longer used)". Apart
+from that, gnupgv2 cannot read it any more anyway. (gpg man page
+"You only need  to  use  GnuPG  1.x  if  your  platform
+doesn't  support  GnuPG 2.x, or you need support for some features that
+GnuPG 2.x has deprecated, e.g.,  decrypting  data  created  with  PGP-2
+keys."
 
-Back on topic, I can see potential for abuse, though I'm also not convinced
-whether it's CVE worthy.
+> ....
 
-
-
->
-> We are overwhelmed with more vulnerabilities than can be fixed quickly
-> already.
->
-> Are "just to be safer" type things really a wise use of our resources?
->
->
-The problem there is setting the threshold. It's not unheard of for a "just
-in case" fix to later have proved to have mitigated a more severe (and at
-the time, unknown) issue. But gain, whether it needs a CVE is something
-else.
-
-
-
-
-> Does a proliferation of a large number of low-caliber problems make
-> monitoring these lists more trouble than it's worth? Does it cause
-> high-impact problems to be lost amongst low-impact ones?
-
-
-> On Thu, Oct 19, 2017, 15:46 Seth Arnold <seth.arnold@canonical.com> wrote:
->
-> > On Wed, Oct 18, 2017 at 04:55:07PM -0400, Robert Watson wrote:
-> > > Removing the ability for rsync to copy symlinks pointing to targets
-> > outside
-> > > the mirror tree would greatly cripple it. I need to understand how the
-> > > danger is worth the loss of this functionality.
-> >
-> > Note that the fix isn't modifying rsync, the fix is modifying the ftpsync
-> > script that calls rsync:
-> >
-> > +    RSYNC_OPTIONS=${RSYNC_OPTIONS:-"-prltvHSB8192 --safe-links
-> --timeout
-> > 3600 --stats --no-human-readable"}
-> >
-> >
-> > https://anonscm.debian.org/cgit/mirror/archvsync.git/commit/?id=
-> d1ca2ab2210990b6dfb664cd6776a41b71c48016
-> >
-> > Of course for people who run this mirroring tool as a specific user
-> > account and set file permissions appropriately this is more or less a
-> > no-op. But this is a useful hardening for people who run the ftpsync
-> > command as a user with too many privileges. (I wouldn't have bothered
-> > filing for a CVE for this change; I see it as a simple hardening change.)
-> >
-> > This option shouldn't cripple ftpsync as a well-run repository is highly
-> > unlikely to have symlinks pointing out of the tree. A repository with
-> > symlinks pointing out of the tree is already not a suitable rsync source.
-> >
-> > Thanks
-> >
-> --
->
-> Robert "DocSalvager" Watson
-> ... trust in truth keeps hope alive
-> www.DocSalvage.info
->
+hd
 
 
-
--- 
-Ben Tasker
-https://www.bentasker.co.uk
-
---001a114998f2fa7a2b055bfa9e7d--
