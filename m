@@ -1,108 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/26/8
-Message-ID: <690695.219530852-sendEmail@localhost>
-Date: Sun, 26 Feb 2017 11:52:23 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: audiofile: heap-based buffer overflow in IMA::decodeBlockWAVE (IMA.cpp)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/17/3
+Message-ID: <CAA7hUgE_9Q_sta09JaBZNezm=7O5hvaJ1DVUARxdV+MMyvGGng@mail.gmail.com>
+Date: Sun, 17 Dec 2017 13:53:47 +0100
+From: Raphael Geissert <atomo64@...il.com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Sonatype Nexus Repository Manager 2.x weak password encryption
 Content-Type: text/plain; charset=utf-8
 
-Description:
-audiofile is a C-based library for reading and writing audio files in many common formats.
+Hi,
 
-A fuzz on it discovered an heap overflow.
+The Nexus Repository Manager in at least version 2.14.5 [0] (latest of
+the 2.x series), stores the LDAP bind password in an on-disk file
+using PBE (bouncy castle's implementation of PBEWithSHAAnd128BitRC4).
 
-The complete ASan output:
+This is all great except for:
+- it using only 23 iterations[1]
+- it using a hard-coded and weak password[2]
 
-# sfconvert @@ out.mp3 format aiff
-==2486==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x62f0000286e8 at pc 0x7fc5db36626e bp 0x7ffcecb1cbf0 sp 0x7ffcecb1cbe8                                                                                                                                       
-WRITE of size 2 at 0x62f0000286e8 thread T0                                                                                                                                                                                                                                    
-    #0 0x7fc5db36626d in IMA::decodeBlockWAVE(unsigned char const*, short*) /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/IMA.cpp:188:13                                                                                                
-    #1 0x7fc5db365671 in IMA::decodeBlock(unsigned char const*, short*) /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/IMA.cpp:110:10                                                                                                    
-    #2 0x7fc5db361ac9 in BlockCodec::runPull() /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/BlockCodec.cpp:55:3                                                                                                                        
-    #3 0x7fc5db39ac20 in RebufferModule::runPull() /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/RebufferModule.cpp:122:3                                                                                                               
-    #4 0x7fc5db34b05a in afReadFrames /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/data.cpp:222:14                                                                                                                                             
-    #5 0x50bbeb in copyaudiodata /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:340:29                                                                                                                                                 
-    #6 0x50b050 in main /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:248:17                                                                                                                                                          
-    #7 0x7fc5da42078f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289                                                                                                                                                     
-    #8 0x419f48 in _init (/usr/bin/sfconvert+0x419f48)                                                                                                                                                                                                                         
-                                                                                                                                                                                                                                                                               
-0x62f0000286e8 is located 0 bytes to the right of 49896-byte region [0x62f00001c400,0x62f0000286e8)                                                                                                                                                                            
-allocated by thread T0 here:                                                                                                                                                                                                                                                   
-    #0 0x4d2d08 in malloc /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64                                                                                                                                       
-    #1 0x7fc5da0b9687 in operator new(unsigned long) (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libstdc++.so.6+0xb2687)                                                                                                                                                           
-    #2 0x7fc5db34f43c in afGetFrameCount /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/format.cpp:205:41                                                                                                                                        
-    #3 0x50bb5c in copyaudiodata /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:329:29                                                                                                                                                 
-    #4 0x50b050 in main /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:248:17                                                                                                                                                          
-    #5 0x7fc5da42078f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289                                                                                                                                                     
-                                                                                                                                                                                                                                                                               
-SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/IMA.cpp:188:13 in IMA::decodeBlockWAVE(unsigned 
-char const*, short*)                                                                      
-Shadow bytes around the buggy address:                                                                                                                                                                                                                                         
-  0x0c5e7fffd080: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00                                                                                                                                                                                                              
-  0x0c5e7fffd090: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c5e7fffd0a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c5e7fffd0b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c5e7fffd0c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0c5e7fffd0d0: 00 00 00 00 00 00 00 00 00 00 00 00 00[fa]fa fa
-  0x0c5e7fffd0e0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c5e7fffd0f0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c5e7fffd100: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c5e7fffd110: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c5e7fffd120: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==2486==ABORTING
+Therefore offering as much protection as a rot13 would.
 
-Affected version:
-0.3.6
+Given that the same PasswordHelper containing the weak password is
+present elsewhere in the code, it is very likely that this weak crypto
+issue affects other passwords stored by Nexus:
 
-Fixed version:
-N/A
+- components/nexus-core/src/main/java/org/sonatype/nexus/configuration/PasswordHelper.java[3]
+- components/nexus-security/src/main/java/org/sonatype/security/configuration/source/PasswordHelper.java[4]
 
-Commit fix:
-N/A
+It appears that this code is no longer used by the 3.x series.
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+FWIW, the on-file password is:
 
-CVE:
-N/A
+base64(SALT_SIZE || SALT || PBE_OUTPUT )
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00185-audiofile-heapoverflow-IMA-decodeBlockWAVE
+SALT_SIZE always being 8 (hard-coded).
 
-Timeline:
-2017-02-20: bug discovered and reported to upstream
-2017-02-20: blog post about the issue
+N.b. I'll be filing a CVE request in a moment.
+N.b. I have not contacted sonatype. I couldn't find an email address.
 
-Note:
-This bug was found with American Fuzzy Lop.
+[0] https://help.sonatype.com/display/NXRM2/2017+Release+Notes
+[1] https://github.com/sonatype/nexus-public/blob/nexus-2.x/components/nexus-ldap-common/src/main/java/org/sonatype/security/ldap/upgrade/cipher/DefaultPlexusCipher.java#L64
+[2] https://github.com/sonatype/nexus-public/blob/nexus-2.x/components/nexus-ldap-common/src/main/java/org/sonatype/security/ldap/realms/persist/DefaultPasswordHelper.java
+[3] https://github.com/sonatype/nexus-public/blob/nexus-2.x/components/nexus-core/src/main/java/org/sonatype/nexus/configuration/PasswordHelper.java
+[4] https://github.com/sonatype/nexus-public/blob/nexus-2.x/components/nexus-security/src/main/java/org/sonatype/security/configuration/source/PasswordHelper.java
 
-Permalink:
-https://blogs.gentoo.org/ago/2017/02/20/audiofile-heap-based-buffer-overflow-in-imadecodeblockwave-ima-cpp
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
+Cheers,
+-- 
+Raphael Geissert
