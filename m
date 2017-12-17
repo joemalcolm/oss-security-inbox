@@ -1,190 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/24/1
-Message-ID: <20170724101204.GA22772@f195.suse.de>
-Date: Mon, 24 Jul 2017 12:12:04 +0200
-From: Matthias Gerstner <mgerstner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: tcmu-runner: multiple vulnerabilities in tcmu-runner daemon allowing local DoS, information leak and a memory leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/17/9
+Message-ID: <CAA7hUgFJbi9KUCyq732rjf8tbwkTv5Csy5aEbJ3FUxV8wyZT3A@mail.gmail.com>
+Date: Sun, 17 Dec 2017 21:26:09 +0100
+From: Raphael Geissert <atomo64@...il.com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Cc: security@...lab.com
+Subject: Gitlab, LDAP integration vulnerable to MITM attack
 Content-Type: text/plain; charset=utf-8
 
-A security audit of tcmu-runner's D-Bus service implementation showed a
-number of security issues.
+Hi,
 
-I've requested CVEs for these issues, request is still pending. I will
-update once I've got them.
+This is just a heads up that I requested a CVE id for issue #30420[1]:
+gitlab
+between 9.4 and before 9.4.2 does not verify the identity of the LDAP
+server.
 
-It seems upstream will remove the D-Bus interface completely from the
-tcmu-runner daemon in the future.
+This has been assigned CVE-2017-17716.
 
-Package: https://github.com/open-iscsi/tcmu-runner
+[1]https://gitlab.com/gitlab-org/gitlab-ce/issues/30420
+(needless to say, this wasn't reported by me)
 
-------------------------------------------------------------------------
-glfs handler allows local DoS via crafted CheckConfig strings
-------------------------------------------------------------------------
-
-Description:
-
-A local non-root user with access to the D-Bus system bus can call the
-CheckConfig method implemented in the tcmu-runner daemon via
-handler_glfs.so and cause various kinds of segmentation faults,
-depending on the string passed to the method.
-
-For example the "hosts" variable in glfs_check_config() is not zero
-initialized, but always freed on error, causing invalid free and/or
-invalid memory accesses.
-
-References:
-
-- The check_config callback implementation was recently removed upstream
-  in this commit:
-
-  https://github.com/open-iscsi/tcmu-runner/commit/61bd03e600d2abf309173e9186f4d465bb1b7157
-
-- SUSE bugzilla: https://bugzilla.suse.com/show_bug.cgi?id=1049485
-
-Reproducer:
-
-# start the tcmu-runner service as root
-systemctl restart tcmu-runner.service
-# run this dbus command as a regular user
-dbus-send --system --print-reply --dest=org.kernel.TCMUService1 /org/kernel/TCMUService1/glfs org.kernel.TCMUService1.CheckConfig string:something
-# -> tcmu-runner daemon will have crashed with segmentation fault
-
-------------------------------------------------------------------------
-UnregisterHandler dbus method in tcmu-runner daemon for non-existing
-handler causes DoS
-------------------------------------------------------------------------
-
-Description:
-
-A local non-root user with access to the D-Bus system bus can call the
-UnregisterHandler method implemented in the tcmu-runner daemon with the
-name of an unknown tcmu runner handler as parameter and cause a NULL
-pointer dereference.
-
-References:
-
-- upstream fix: https://github.com/open-iscsi/tcmu-runner/commit/e2d953050766ac538615a811c64b34358614edce
-- SUSE bugzilla: https://bugzilla.suse.com/show_bug.cgi?id=1049488
-
-Reproducer:
-
-# start the tcmu-runner service as root
-systemctl restart tcmu-runner.service
-# run this dbus command as a regular user
-dbus-send --system --print-reply --dest=org.kernel.TCMUService1 /org/kernel/TCMUService1/HandlerManager1 org.kernel.TCMUService1.HandlerManager1.UnregisterHandler string:fake_handler
-# -> tcmu-runner daemon will have crashed with segmentation fault
-
-
-
-------------------------------------------------------------------------
-UnregisterHandler D-Bus method in tcmu-runner daemon for internal
-handler causes DoS
-------------------------------------------------------------------------
-
-Description:
-
-A local non-root user with access to the D-Bus system bus can call the
-UnregisterHandler method implemented in the tcmu-runner daemon with the
-name of a handler loaded internally in tcmu-runner via dlopen() and
-cause a NULL pointer dereference resulting in DoS.
-
-References:
-
-- upstream fix: https://github.com/open-iscsi/tcmu-runner/commit/bb80e9c7a798f035768260ebdadffb6eb0786178
-- SUSE bugzilla: https://bugzilla.suse.com/show_bug.cgi?id=1049489
-
-Reproducer:
-
-# start the tcmu-runner service as root
-systemctl restart tcmu-runner.service
-# run this dbus command as a regular user, it will attempt to unregister the
-# locally loaded qcow handler
-dbus-send --system --print-reply --dest=org.kernel.TCMUService1 /org/kernel/TCMUService1/HandlerManager1 org.kernel.TCMUService1.HandlerManager1.UnregisterHandler string:qcow
-# -> tcmu-runner daemon will have crashed with segmentation fault
-
-
-------------------------------------------------------------------------
-Memory leaks can be triggered in tcmu-runner daemon by calling D-Bus
-method for (Un)RegisterHandler
-------------------------------------------------------------------------
-
-Description:
-
-A local non-root user with access to the D-Bus system bus can call the
-RegisterHandler or UnregisterHandler methods implemented in the
-tcmu-runner daemon to trigger memory leaks. Done so repeatedly would
-cause a root daemon to hog memory, possibly resulting in DoS for the
-daemon itself or other system components that fail to acquire memory as
-a result.
-
-References:
-
-- upstream fix: https://github.com/open-iscsi/tcmu-runner/commit/7a78eda52d973d3edc06fea84ad874678d6055f0
-- SUSE bugzilla: https://bugzilla.suse.com/show_bug.cgi?id=1049490
-
-Reproducer:
-
-# *stop* the tcmu-runner service as root
-systemctl restart tcmu-runner.service
-# run the tcmu-runner service as root in valgrind
-valgrind --max-stackframe=2097208 --leak-check=full /usr/bin/tcmu-runner
-# run this dbus command multiple times as a regular user (this will trigger
-# the leak in RegisterHandler)
-dbus-send --system --print-reply --dest=org.kernel.TCMUService1 /org/kernel/TCMUService1/HandlerManager1 org.kernel.TCMUService1.HandlerManager1.RegisterHandler string:0memory string:stuff
-# ctrl-c the valgrind process and you'll see an amount of "definitely lost"
-# bytes. when doing the same without the dbus-send calls this sould be zero
-# "definitely lost" bytes
-
-
-
-------------------------------------------------------------------------
-qcow handler opens up an information leak via the CheckConfig D-Bus
-method
-------------------------------------------------------------------------
-
-Description:
-
-A local non-root user with access to the D-Bus system bus can call the
-CheckConfig method implemented in the tcmu-runner daemon via
-handler_qcow.so and exploit an information leak by passing in arbitrary
-filenames to check.
-
-This allows a local user to check for the existence of root owned files,
-which might enable more serious security issues in combination with
-other security flaws in a system.
-
-References:
-
-- upstream fix:
-
-  This one is difficult to fix, upstream asked me to remove all
-  check_config callbacks instead:
-
-  https://github.com/open-iscsi/tcmu-runner/commit/8cf8208775022301adaa59c240bb7f93742d1329
-
-- SUSE bugzilla: https://bugzilla.suse.com/show_bug.cgi?id=1049491
-
-Reproducer:
-
-# start the tcmu-runner service as root
-systemctl restart tcmu-runner.service
-# run this dbus command as a regular user
-dbus-send --system --print-reply --dest=org.kernel.TCMUService1 /org/kernel/TCMUService1/qcow org.kernel.TCMUService1.CheckConfig string://root/.bash_history
-# this will return True if /root/.bash_history exists, False otherwise
-
-Regards
-
-Matthias
-
+Cheers,
 -- 
-Matthias Gerstner <matthias.gerstner@...e.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Telefon: +49 911 740 53 290
+Raphael Geissert
 
-SUSE Linux GmbH 
-GF: Felix Imendörffer, Jane Smithard, Graham Norton
-HRB 21284 (AG Nuernberg)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
