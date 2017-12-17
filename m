@@ -1,72 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/30/21
-Message-ID: <1496160560.6997.1.camel@gmail.com>
-Date: Tue, 30 May 2017 12:09:20 -0400
-From: Daniel Micay <danielmicay@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: "Designer, Solar" <solar@...nwall.com>
-Subject: Re: Linux kernel: stack buffer overflow with controlled payload in get_options() function
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/17/4
+Message-ID: <CAA7hUgGYLFEX==FHob2823M0UEoWXG=h+LtJfGLLSdajOYoHrQ@mail.gmail.com>
+Date: Sun, 17 Dec 2017 14:36:42 +0100
+From: Raphael Geissert <atomo64@...il.com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Cc: security@...e.de
+Subject: Portus, missing LDAP server authentication
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 2017-05-30 at 09:36 -0600, Kurt Seifried wrote:
-> On Tue, May 30, 2017 at 9:20 AM, Daniel Micay <danielmicay@...il.com>
-> wrote:
-> 
-> > That's not what secure/verified boot means to everyone else, and
-> > there's nothing in mainline with those properties. To everyone else,
-> > it's not an arbitrary bureaucratic/marketing feature. It's
-> > verification of the whole base OS... i.e. Android, Android Things
-> > (Brillo), ChromeOS, iOS and sane embedded Linux systems. Likely
-> > Windows on mobile devices too, and I really doubt that Microsoft
-> > doesn't plan on verifying the userspace OS if they don't already.
-> > 
-> 
-> Red Hat is only associated with this in so far as I happen to work for
-> Red
-> Hat and I typically do the CVE assignments on the distros@ list (where
-> this
-> issue was initially reported).
+Hi,
 
-Linux isn't impacted in a security-relevant way by these bugs. You're
-claiming that some downstream code is implemented in a way that impacts
-security, but you can't explain how it compromises a meaningful security
-boundary.
+Portus 2.2 and older provides LDAP integration for authenticating the
+users. However, in spite of it providing advice on configuring it to
+"to setup LDAP over SSL/TLS"[1], the implementation does not verify
+the server's identity at all.
 
-> > Anyway, good luck with meaningless Red Hat security theatre. These
-> > "vulnerabilities" are just reinforcing the view that security people
-> > are foolish. There isn't disagreement that it's a meaningless
-> > feature
-> > with this level of incompleteness and yet a CVE is assigned for it?
-> > Okay then...
-> > 
-> 
-> I suggest you take this issue up with MITRE/CVE Board (disclaimer: I'm
-> also
-> on the CVE Board), they control CVE and the definitions of what is CVE
-> worthy, and in this case it largely falls under the
-> "advertised/implied
-> security feature doesn't work as such". This is unlikely to change as
-> it's
-> well established and has been used for over a decade.
+I'm writing about it here mainly because there appears to be some
+intention of TLS support. Users might expect it to actually provide
+some kind of security.
 
-Nothing in Linux claims to work the way you're talking about. You've
-only brought up an incomplete implementation of verified boot based on a
-fork of the Linux kernel. It should be filed against that fork, but it
-really doesn't make any sense to have a CVE for a non-security feature
-being broken.
+Interestingly enough, the documentation and the config file comments
+say  'the recommended [method] is "starttls".'[2] I don't know where
+they got that from.
 
-> > Sorry for thinking that this should be about something more than
-> > padding CVs and marketing materials.
-> > 
-> 
-> I suggest then you take this up with the original researcher if you're
-> worried about people padding their CVs. This discussion isn't
-> productive/helpful and I suggest you take it off list.
+CC'ing SUSE's security team.
 
-I'm not just concerned about people padding their CVs, I'm concerned
-about vendors marketing incomplete snake oil as an implementation of
-security features that actually have a meaning and then turning it into
-nonsense like this.
+I have not yet reported it to the portus team directly, nor requested
+a CVE id (though I'm tempted to request one, to err on the side of
+safety).
 
-I suggest taking discussions about non-security bugs off list. It's not
-on topic here.
+
+[1]http://port.us.org/docs/Configuring-Portus.html
+[2]https://github.com/SUSE/Portus/blob/master/config/config.yml#L49
+
+Cheers,
+-- 
+Raphael Geissert
