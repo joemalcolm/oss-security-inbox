@@ -1,14 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/29/12
-Message-ID: <15088047.6W8cpZ90dd@arcadia>
-Date: Sat, 29 Apr 2017 15:48:48 +0200
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: libming: listmp3: global-buffer-overflow in printMP3Headers (listmp3.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/17/5
+Message-ID: <20171217151745.53c23a7b@elisabeth>
+Date: Sun, 17 Dec 2017 15:17:45 +0100
+From: Stefano Brivio <sbrivio@...hat.com>
+To: Raphael Geissert <atomo64@...il.com>
+Cc: oss-security@...ts.openwall.com, security@...atype.com
+Subject: Re: Sonatype Nexus Repository Manager 2.x weak password encryption
 Content-Type: text/plain; charset=utf-8
 
-This is fixed in the 0.4.8 release.
+On Sun, 17 Dec 2017 13:53:47 +0100
+Raphael Geissert <atomo64@...il.com> wrote:
+
+> Hi,
+> 
+> The Nexus Repository Manager in at least version 2.14.5 [0] (latest of
+> the 2.x series), stores the LDAP bind password in an on-disk file
+> using PBE (bouncy castle's implementation of PBEWithSHAAnd128BitRC4).
+> 
+> This is all great except for:
+> - it using only 23 iterations[1]
+> - it using a hard-coded and weak password[2]
+> 
+> Therefore offering as much protection as a rot13 would.
+> 
+> Given that the same PasswordHelper containing the weak password is
+> present elsewhere in the code, it is very likely that this weak crypto
+> issue affects other passwords stored by Nexus:
+> 
+> - components/nexus-core/src/main/java/org/sonatype/nexus/configuration/PasswordHelper.java[3]
+> - components/nexus-security/src/main/java/org/sonatype/security/configuration/source/PasswordHelper.java[4]
+> 
+> It appears that this code is no longer used by the 3.x series.
+> 
+> FWIW, the on-file password is:
+> 
+> base64(SALT_SIZE || SALT || PBE_OUTPUT )
+> 
+> SALT_SIZE always being 8 (hard-coded).
+> 
+> N.b. I'll be filing a CVE request in a moment.
+> N.b. I have not contacted sonatype. I couldn't find an email address.
+
+The page at https://www.sonatype.com/contactus says:
+
+	1. Send urgent or sensitive reports to security@...atype.com.
+	2. Use our public key to keep your message safe.
+	3. Provide us with a secure way to respond.
+	4. We’ll get back to you as soon as we can. Usually within 24 hours.
+
+> [0] https://help.sonatype.com/display/NXRM2/2017+Release+Notes
+> [1] https://github.com/sonatype/nexus-public/blob/nexus-2.x/components/nexus-ldap-common/src/main/java/org/sonatype/security/ldap/upgrade/cipher/DefaultPlexusCipher.java#L64
+> [2] https://github.com/sonatype/nexus-public/blob/nexus-2.x/components/nexus-ldap-common/src/main/java/org/sonatype/security/ldap/realms/persist/DefaultPasswordHelper.java
+> [3] https://github.com/sonatype/nexus-public/blob/nexus-2.x/components/nexus-core/src/main/java/org/sonatype/nexus/configuration/PasswordHelper.java
+> [4] https://github.com/sonatype/nexus-public/blob/nexus-2.x/components/nexus-security/src/main/java/org/sonatype/security/configuration/source/PasswordHelper.java
+> 
+> Cheers,
 
 -- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Stefano
