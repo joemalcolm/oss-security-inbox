@@ -1,4 +1,9 @@
-Received: (qmail 1817 invoked by uid 550); 13 Oct 2023 12:13:25 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1815" "Sunday" "17" "December" "2017" "13:53:47" "+0100" "Raphael Geissert" "atomo64@gmail.com" "<CAA7hUgE_9Q_sta09JaBZNezm=7O5hvaJ1DVUARxdV+MMyvGGng@mail.gmail.com>" "39" "[oss-security] Sonatype Nexus Repository Manager 2.x weak password encryption" nil nil nil "12" "2017121712:53:47" "[oss-security] Sonatype Nexus Repository Manager 2.x weak password encryption" (number mark "U       atomo64@gmai Dec 17   39/1815  " thread-indent "\"[oss-security] Sonatype Nexus Repository Manager 2.x weak password encryption\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 23738 invoked by uid 550); 17 Dec 2017 12:54:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,274 +12,76 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7488 invoked from network); 13 Oct 2023 10:50:26 -0000
+Received: (qmail 23701 invoked from network); 17 Dec 2017 12:54:20 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1697194214; x=1697799014; darn=lists.openwall.com;
-        h=in-reply-to:subject:to:from:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=EEFhPTz93u5gZ8/Sebukn3wE0xwj1l4Z2qNIvfjWhn4=;
-        b=R9WDVHATHuPF3GK4QeqCbS9tQ6DFDtuFv8FEihnlRtfAeGhXzqkKcw6UOXMeCCIC8/
-         3NbljkfOKCQn7vD3liQhU8UCUWtyLYacVgdCqRahVE247GxxVMS6sKDK9yLoiSV8B2Te
-         6wP6qEU2VrV42YcrZzc7ZgJwLHLWYIJGd3WyZIjTOVViqDe0u5CwRNukmcW0HaIxab73
-         ctzpf0H+SYPnq+PmD7sH1NiO6kjFgQy8AqmdGIWGFhkrr7nJYBymQbBsadDuTqIyGBhg
-         uUxNNVzRFwiwFvPV6fnD8jEbHcSTYV8jEy/ICRf/jeNph2rGTKNhWqjlUSABrZAHQmOM
-         k/Ug==
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=W4FuUmeD+rScEmprsvVrvhUy1iySax/cYOy8UBG4D6A=;
+        b=YCzkvaHDEHXJTHqjsTtpDOPE6bfGlGXZ0NuiUng325GNA4cDT9HylhxDbL/cT8T/KZ
+         t2oyXGwOvnE+2KqBCxZM516Bts33nESDvOgNzYF0CRMKbBlYQalB28bM8VCQrUtV+GrF
+         8jqRRSaQ8h4w86R3bh0yTOMYQveqc8GKXWpTYh4ImNvx6jAqnSBpeffZMvSL9EJvNtaS
+         s7WV+0OgLboWrQXWnpG7Bb3+c0AIYFPu5OP5BaFF7HXcEcvWUl/Yb4mDlu0///gHjLf3
+         qgQO5QqppSYU6K90M/qGB8vaYKXps59jdFePLsdGoVt5CjqLEqgFLWgrWAJmU+KnwzKw
+         cL8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697194214; x=1697799014;
-        h=in-reply-to:subject:to:from:date:message-id:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=EEFhPTz93u5gZ8/Sebukn3wE0xwj1l4Z2qNIvfjWhn4=;
-        b=PUGIyy2I4iZQYD+crUjK18a+/M1Y+xW3zvUWodrmjI0fPOQbi/HhA4KGpGDOvVPubt
-         nvIWbD3lcD9/fMZv6Yob6NjfGce4gHnYqKVnQdr3BuG1ClHXnrJ4VMvqjalxYd8ZSF0S
-         MksHduKaOC6IDdyfZpHo1v+UjUVixPaq6Qcs+d3ajhGGQG5wiaB6Wv91riDTluNwvL5V
-         wkhojXoXBtr68bWiab3W/qmn/6gM0RBtliF0lwPpOw2oZU/+trzHkg3qL743XHrMr0/i
-         ApcJl95UGxOgLiDUANdApCwA1pQdsG6B2FurO7ottVXm1h6734ItyV23sjqZ0EZ5bk7i
-         j8aA==
-X-Gm-Message-State: AOJu0Yx7qdMK9owmgKxOss3mBldh77DPk6qq/psvs1QTPJCKpUsY6JkX
-	DQ9l+dl8wzfNur5Ibh29AZ6VZF5XpZke9T9y
-X-Google-Smtp-Source: AGHT+IFBlDKpStAvsA6OZyV0OfPmAwbQYjn3udk4H/9OsPLL4GLVC04YH7Z8xOPGbwzUcFiWEn1XOA==
-X-Received: by 2002:a05:622a:156:b0:413:5dbd:a926 with SMTP id v22-20020a05622a015600b004135dbda926mr35426355qtw.2.1697194213932;
-        Fri, 13 Oct 2023 03:50:13 -0700 (PDT)
-Message-ID: <652920e5.c80a0220.3bcf7.2251@mx.google.com>
-Date: Fri, 13 Oct 2023 03:50:13 -0700 (PDT)
-From: Neal Gompa <ngompa13@gmail.com>
-To: oss-security@lists.openwall.com
-In-Reply-To: <20231011135927.GA31034@openwall.com>
-Subject: Re: [oss-security] linux-distros list membership application - CIQ
- Rocky Linux Security Team
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=W4FuUmeD+rScEmprsvVrvhUy1iySax/cYOy8UBG4D6A=;
+        b=ewKtDtaC2+fPBcsvXUDixSLObuelwlB1oqmUNfhq9a+1hk5uP90Vdk7obM63Sb/QB/
+         9GIcm1b8quEYDpvpUyBBWpZkJ319nJKI5aVEQRT2YEyTjZanCdHp2CEwxtoPHbqF7LJj
+         AonOju+cSmrMuAGg+j+fXlTRm/WpEH3rnzK3My083pXU9ahlw8/IyNKOnWJx+UlKpU3s
+         eaCCT9uEOFkP9b8wyN8/7r3+j6R37WPCYkXOjW7PXh2tslQTqPma8REe13qq6sEQZnB9
+         yOf1iqelbeMVChFz0GA/ptx/YlJO34wXAJBNkX2DlLASjrN/BHUxxTBkcNgTlA4Xvhoo
+         nEOw==
+X-Gm-Message-State: AKGB3mLrG49oUYw5uxEFJF+FN6SV2kBcaMC2i++51QfssaJHGEPERYdX
+	8UMicngT9GBH0Xuzmp/2D1SgdQRcAHvH5Qic0nB26FzU
+X-Google-Smtp-Source: ACJfBotOXHvK3L/MuWTZtygeJvHvWe1iFgTNkLSj9W4qs1MpsiL3aCsnexDHJTN11yPt/+ix8blTg3HCxwZ65RWv1PM=
+X-Received: by 10.36.93.5 with SMTP id w5mr16004808ita.124.1513515248350; Sun,
+ 17 Dec 2017 04:54:08 -0800 (PST)
+MIME-Version: 1.0
+From: Raphael Geissert <atomo64@gmail.com>
+Date: Sun, 17 Dec 2017 13:53:47 +0100
+Message-ID: <CAA7hUgE_9Q_sta09JaBZNezm=7O5hvaJ1DVUARxdV+MMyvGGng@mail.gmail.com>
+To: Open Source Security <oss-security@lists.openwall.com>
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] Sonatype Nexus Repository Manager 2.x weak password encryption
 
+Hi,
 
-On Wed, Oct 11, 2023 at 10:00 AM Solar Designer <solar@openwall.com> wrote:
->
-> Hi,
->
-> I'd appreciate others in here (especially "someone already on the
-> private list, or at least someone else who has been active on
-> oss-security for years but is not affiliated") helping review the
-> application below.  Normally, I'd just accept an application like this
-> based on it fitting the criteria (per my review) and lack of objections,
-> however for my own application it would be best to hear from others.
->
-> Meanwhile, the Security SIG has started functioning and has been
-> announced on its own:
->
-> https://rockylinux.org/pl/news/security-sig-update/
-> https://sig-security.rocky.page
->
+The Nexus Repository Manager in at least version 2.14.5 [0] (latest of
+the 2.x series), stores the LDAP bind password in an on-disk file
+using PBE (bouncy castle's implementation of PBEWithSHAAnd128BitRC4).
 
-While I have not been subscribed to this mailing list for long, I have
-"lurked" for a while as part of doing work in Fedora, Mageia, and
-openSUSE.
+This is all great except for:
+- it using only 23 iterations[1]
+- it using a hard-coded and weak password[2]
 
-Feel free to take my opinion with as much salt as you'd like, but I do
-not believe that Rocky Linux qualifies for it. My rationale is given
-inline below.
+Therefore offering as much protection as a rot13 would.
 
->
-> On Sun, Oct 01, 2023 at 03:02:23PM +0200, Solar Designer wrote:
-> > Hi,
-> >
-> > Rocky Linux is a prominent Enterprise Linux distribution in the spirit
-> > of original goals of the CentOS project, founded by Gregory Kurtzer, who
-> > had also co-founded CentOS and is founder and CEO of the primary
-> > corporate sponsor of the Rocky Linux project, CIQ:
-> >
-> > https://rockylinux.org
-> > https://ciq.com
-> >
-> > Besides heavily sponsoring Rocky Linux (yet without being its owner),
-> > CIQ also has its own Open Source and commercial offerings:
-> >
-> > "Our software stack consists of Rocky Linux the CentOS replacement,
-> > Apptainer the container solution of choice for HPC, Warewulf a
-> > provisioning and cluster management solution, and Fuzzball our
-> > next-generation performance computing platform that is multi-cloud,
-> > multi-site, multi-cluster, and multi-node."
-> >
-> > Most relevant here, CIQ maintains LTS branches of Rocky Linux point
-> > releases (such as of 8.6 when current is 8.8), providing security
-> > updates to those of its customers who wish to otherwise stay at a given
-> > point release.
-> >
-> > Further, the Rocky Linux project isn't limited to being a resurrection
-> > of CentOS (its packages being bug-for-bug compatible with RHEL), but
-> > also has a number of Special Interest Groups (SIGs) offering additional
-> > package repositories:
-> >
-> > https://wiki.rockylinux.org/special_interest_groups/
-> >
-> > I have recently joined this effort and we're now getting the Security
-> > SIG going.  This means an optional repository of extra packages for
-> > Enterprise Linux distros adding security features and even overriding
-> > some packages with hardened alternatives.  We already have a few
-> > packages of both kinds, and many more are planned.  If anyone else wants
-> > to join this effort - in any capacity including development,
-> > maintenance, testing, documentation, or something else - let me know!
-> >
-> > This application is for CIQ Rocky Linux Security Team, which means CIQ
-> > employees, (sub)contractors, and/or Rocky Linux project contributors
-> > trusted and tasked with producing security updates for Rocky Linux,
-> > CIQ's LTS branches of Rocky Linux, and possibly CIQ's other offerings
-> > building upon Rocky Linux.
-> >
-> > I address the 9 membership criteria below:
-> >
-> > > Be an actively maintained Unix-like operating system distro with substantial use of Open Source components
-> >
-> > Rocky Linux has been actively maintained since its release in 2021, and
-> > is an Open Source project.  Many of CIQ's additional offerings are also
-> > Open Source projects on their own.
-> >
-> > > Have a userbase not limited to your own organization
-> >
-> > Rocky Linux has been publicly available since its release in 2021, and
-> > per EPEL repository access statistics has gained a userbase on par with
-> > other major EL distributions:
-> >
-> > https://ciq.com/blog/tracking-rocky-linux-growth-using-fedoras-epel-project/
-> > https://brentk.io/thoughts/analysis/epel-distribution-statistics.html
-> > https://rocky-stats.tiuxo.com
-> >
-> > Further, CIQ has its customer base for Rocky Linux support, including
-> > for the LTS branches.
-> >
-> > > Have a publicly verifiable track record, dating back at least 1 year and continuing to present day, of fixing security issues (including some that had been handled on (linux-)distros, meaning that membership would have been relevant to you) and releasing the fixes within 10 days (and preferably much less than that) of the issues being made public (if it takes you ages to fix an issue, your users wouldn't substantially benefit from the additional time, often around 7 days and sometimes up to 14 days, that list membership could give you)
-> >
-> > The publicly verifiable track record currently consists of timely
-> > rebuild and re-release of RHEL security update packages and security
-> > advisories, as published here:
-> >
-> > https://errata.rockylinux.org
-> >
-> > Not currently verifiable publicly, but Gregory further tells me:
-> >
-> > "We've been doing LTS privately to our customers for over a year now.
-> > This means we maintain security fixes for customers who need long term
-> > support for point releases."
-> >
+Given that the same PasswordHelper containing the weak password is
+present elsewhere in the code, it is very likely that this weak crypto
+issue affects other passwords stored by Nexus:
 
-From my point of view, this does not count. Rocky's public track record
-of rebuilding RHEL updates and shipping them in a timely fashion does
-not indicate that Rocky/CIQ can respond effectively when you have a craft
-updates from scratch. Furthermore, there are public posts and articles
-indicating that Rocky Linux/CIQ has trouble with shipping updates in a
-timely fashion at all.
+- components/nexus-core/src/main/java/org/sonatype/nexus/configuration/PasswordHelper.java[3]
+- components/nexus-security/src/main/java/org/sonatype/security/configuration/source/PasswordHelper.java[4]
 
-Examples on updates:
-https://forums.rockylinux.org/t/some-errata-missing-in-comparison-with-rhel-and-almalinux/3843
-https://forums.rockylinux.org/t/rocky-linux-9-errata-missing-late-8-errata/6890
-https://forums.rockylinux.org/t/errata-rockylinux-org-not-updated-since-sep-02-2022/7676
+It appears that this code is no longer used by the 3.x series.
 
-Example on releases: https://www.theregister.com/2022/07/18/rocky_linux_9/
+FWIW, the on-file password is:
 
-> > > Not be (only) downstream or a rebuild of another distro (or else we need convincing additional justification of how the list membership would enable you to release fixes sooner, presumably not relying on the upstream distro having released their fixes first?)
-> >
-> > Besides being a "downstream or a rebuild of another distro", CIQ has its
-> > LTS branches and Rocky Linux has its additional and replacement packages
-> > via the SIGs.  Security maintenance for these should be provided by CIQ
-> > and Rocky Linux.
-> >
+base64(SALT_SIZE || SALT || PBE_OUTPUT )
 
-Special interest groups cannot count because they are intended to be
-public community projects. Unless you're saying that all Rocky Linux
-SIGs are shadows of CIQ work that can be held back for public consumption,
-that is effectively out of scope for consideration.
+SALT_SIZE always being 8 (hard-coded).
 
-Otherwise, Fedora and CentOS SIGs would be eligible for linux-distros@
-(and my understanding is that they are not).
+N.b. I'll be filing a CVE request in a moment.
+N.b. I have not contacted sonatype. I couldn't find an email address.
 
-I will also note that CIQ/RESF/Rocky have made public statements about
-maintaining the pure-rebuild nature of the distribution, which I
-believe summarily disqualifies it.
+[0] https://help.sonatype.com/display/NXRM2/2017+Release+Notes
+[1] https://github.com/sonatype/nexus-public/blob/nexus-2.x/components/nexus-ldap-common/src/main/java/org/sonatype/security/ldap/upgrade/cipher/DefaultPlexusCipher.java#L64
+[2] https://github.com/sonatype/nexus-public/blob/nexus-2.x/components/nexus-ldap-common/src/main/java/org/sonatype/security/ldap/realms/persist/DefaultPasswordHelper.java
+[3] https://github.com/sonatype/nexus-public/blob/nexus-2.x/components/nexus-core/src/main/java/org/sonatype/nexus/configuration/PasswordHelper.java
+[4] https://github.com/sonatype/nexus-public/blob/nexus-2.x/components/nexus-security/src/main/java/org/sonatype/security/configuration/source/PasswordHelper.java
 
-https://ciq.com/blog/rhel-changes-what-it-means-for-ciq/
-https://rockylinux.org/news/2023-06-22-press-release/
-https://rockylinux.org/news/brave-new-world-path-forward/
-https://rockylinux.org/news/keeping-open-source-open/
-
-> > Some security issues in upstream packages may be mitigated or fixed by
-> > pushing "security override" packages via CIQ's customer-facing repos and
-> > the Security SIG repos, without waiting on upstream distro's fixes and
-> > for issues or point releases where no upstream fixes are expected.
-> >
-> > Related previously accepted membership application (precedent) is
-> > CloudLinux's, which is now perhaps best known for AlmaLinux, another
-> > prominent EL distribution:
-> >
-> > http://www.openwall.com/lists/oss-security/2017/07/02/2
-> >
-
-CloudLinux's membership was based on the fact that they replaced and
-maintained a very large chunk of the distribution for their own
-purpose. They used a RHEL compatible userland, but most of the server
-software stacks and the kernel were replaced with their own builds.
-They wanted access for the maintenance of that stuff, which is very
-reasonable.
-
-Rocky/CIQ has not demonstrated a similar need from my point of view.
-
-> > Also, CentOS was once a member.
-> >
-
-CentOS was a very strange project in that it operated in a very closed
-fashion and it was difficult for volunteers to join the effort. I do
-not pretend to know if the current rules existed when CentOS was a
-member, but I would not accept them today on the basis that it's
-effectively a RHEL build.
-
-Fedora is not a member because there is no mechanism in the project to
-hide anything from the community. For this reason, I have not
-considered joining as a representative of CentOS Hyperscale, Mageia,
-or Fedora (all distributions that I do participate in security
-response for).
-
-> > > Be a participant and preferably an active contributor in relevant public communities (most notably, if you're not watching for issues being made public on oss-security, which are a superset of those that had been handled on (linux-)distros, then there's no valid reason for you to be on (linux-)distros)
-> >
-> > I have been a participant on oss-security since its inception, and have
-> > made relevant contributions.  Others with CIQ and Rocky Linux are also
-> > involved in various communities, and we'll ensure that the team to be
-> > subscribed to linux-distros isn't blind to publicly disclosed issues.
-> >
-> > > Accept the list policy
-> >
-> > CIQ Rocky Linux Security Team accepts the linux-distros list policy.
-> >
-> > > Be able and willing to contribute back, preferably in specific ways announced in advance (so that you're responsible for a specific area and so that we know what to expect from which member), and demonstrate actual contributions once you've been a member for a while
-> >
-> > I've been contributing to oss-security and linux-distros since their
-> > inception.  We'll also look for additional ways CIQ and/or Rocky Linux
-> > can contribute, depending on expertise, interests, other related duties,
-> > and availability of specific people we may add.
-> >
-> > > Be able and willing to handle PGP-encrypted e-mail
-> >
-> > Of course.  I am already subscribed with my PGP key.
-> >
-> > My current subscription is as list admin and it also was for Openwall.
-> > Openwall no longer qualifies for linux-distros membership as a distro
-> > since we've effectively EOL'ed the Openwall GNU/*/Linux distro (we still
-> > do maintain many other projects, but not a full distro).  However, I
-> > and/or someone else from Openwall would have needed to stay subscribed
-> > as list admin anyway.
-> >
-> > With my new Rocky Linux role, my subscription's purpose will once again
-> > double as list admin and for the distro.
-> >
-> > > Have someone already on the private list, or at least someone else who has been active on oss-security for years but is not affiliated with your distro nor your organization, vouch for at least one of the people requesting membership on behalf of your distro (then that one vouched-for person will be able to vouch for others on your team, in case you'd like multiple people subscribed)
-> >
-> > I suppose someone in here can vouch for me.  Please do - ideally, if you
-> > also have something else to say on this application in the same message,
-> > not to spam list members with messages solely to meet this formality.
-> >
-> > I may then get additional CIQ and/or Rocky Linux people subscribed,
-> > effectively vouching for them, after making sure they understand and
-> > accept the list policy.
-> >
-
-While I certainly recognize you and value your contributions
-over the years, I do not feel that you alone is sufficient for
-Rocky/CIQ to be accepted onto linux-distros@.
-
-
---
-真実はいつも一つ！/ Always, there's only one truth!
+Cheers,
+-- 
+Raphael Geissert
