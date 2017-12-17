@@ -1,44 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/22/4
-Message-ID: <CAO5O-EKCmEgPqbtQnrJGuPf6_zXy-Kfo+ONvb6ohmPnfn25GRg@mail.gmail.com>
-Date: Wed, 22 Nov 2017 17:42:53 +0100
-From: Guido Vranken <guidovranken@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Go programming language invalid modular exponentiation result (Exp() in math/big pkg)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/17/7
+Message-ID: <CAA7hUgFm+YU3XT7xaOEohZTqn-e16N_LQUtfkggMkXdbuezi+w@mail.gmail.com>
+Date: Sun, 17 Dec 2017 21:03:38 +0100
+From: Raphael Geissert <atomo64@...il.com>
+To: Stefano Brivio <sbrivio@...hat.com>
+Cc: Open Source Security <oss-security@...ts.openwall.com>, security@...atype.com
+Subject: Re: Sonatype Nexus Repository Manager 2.x weak password encryption
 Content-Type: text/plain; charset=utf-8
 
-Peter,
+Hi,
 
-It is available: https://github.com/guidovranken/bignum-fuzzer
-
-It has a modular set-up, meaning individual bignum libraries can
-easily be added, removed, enabled or disabled.
-I'll write some documentation soon, but you can probably figure out
-the module layout from looking at the existing ones.
-Compiling your code must result in a static archive that can be linked
-to the other objects. If that really is not possible, you must come up
-with some sort of inter-process communication.
-Feel free to create a PR for your own module and I'll add it.
-
-Thanks
-
-Guido
-
-On Wed, Nov 22, 2017 at 9:13 AM, Peter Bex <peter@...e-magic.net> wrote:
-> On Wed, Nov 22, 2017 at 12:30:08AM +0100, Guido Vranken wrote:
->> Dear list,
->>
->> I've written a bignum fuzzer that compares the results of mathematical
->> operations (addtion, subtraction, multiplication, ...) across multiple
->> bignum libraries.
+On Sunday, 17 December 2017 15:17:45 CET Stefano Brivio wrote:
+> On Sun, 17 Dec 2017 13:53:47 +0100
 >
-> Hi there,
+> Raphael Geissert <atomo64@...il.com> wrote:
+> > Hi,
+> >
+> > The Nexus Repository Manager in at least version 2.14.5 [0] (latest of
+> > the 2.x series), stores the LDAP bind password in an on-disk file
+> > using PBE (bouncy castle's implementation of PBEWithSHAAnd128BitRC4).
+> >
+> > This is all great except for:
+> > - it using only 23 iterations[1]
+> > - it using a hard-coded and weak password[2]
+> >
+> > Therefore offering as much protection as a rot13 would.
+> >
+> > Given that the same PasswordHelper containing the weak password is
+> > present elsewhere in the code, it is very likely that this weak crypto
+> > issue affects other passwords stored by Nexus:
+> >
+> > -
+> >
+components/nexus-core/src/main/java/org/sonatype/nexus/configuration/Pass
+> > wordHelper.java[3] -
+> >
+components/nexus-security/src/main/java/org/sonatype/security/configurati
+> > on/source/PasswordHelper.java[4]
+> >
+> > It appears that this code is no longer used by the 3.x series.
+> >
+> > FWIW, the on-file password is:
+> >
+> > base64(SALT_SIZE || SALT || PBE_OUTPUT )
+> >
+> > SALT_SIZE always being 8 (hard-coded).
+> >
+> > N.b. I'll be filing a CVE request in a moment.
+
+This is now CVE-2017-17717.
+
+> > N.b. I have not contacted sonatype. I couldn't find an email address.
 >
-> Is this fuzzer freely available?  I'd love to try it out on the bignum
-> support I added to the CHICKEN Scheme implementation for its upcoming
-> new major release (probably somewhere mid-2018).  Being able to release
-> it with a bit higher confidence in its correctness would be nice, as this
-> is almost all brand new code.
+> The page at https://www.sonatype.com/contactus says:
 >
-> Cheers,
-> Peter Bex (CHICKEN core maintainer)
+> 1. Send urgent or sensitive reports to security@...atype.com.
+> 2. Use our public key to keep your message safe.
+> 3. Provide us with a secure way to respond.
+> 4. We’ll get back to you as soon as we can. Usually within 24 hours.
+
+Oh, I somehow missed it. Thanks for the pointer and for copying it to
+sonatype.
+
+Cheers,
+-- 
+Raphael Geissert
+
