@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1524" "Sunday" "18" "September" "2016" "10:41:38" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160918144138.A17646C571B@smtpvmsrv1.mitre.org>" "38" "[oss-security] Re: CVE Request: GnuTLS: OCSP validation issue (GNUTLS-SA-2016-3)" nil nil nil "9" "2016091814:41:38" "[oss-security] Re: CVE Request: GnuTLS: OCSP validation issue (GNUTLS-SA-2016-3)" (number mark "U       cve-assign@m Sep 18   38/1524  " thread-indent "\"[oss-security] Re: CVE Request: GnuTLS: OCSP validation issue (GNUTLS-SA-2016-3)\"\n") "<20160918123124.poc7x5skdijl2j3m@eldamar.local>" ("<20160918123124.poc7x5skdijl2j3m@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["463" "Monday" "18" "December" "2017" "15:45:25" "+0000" "Antonio Sanso" "asanso@adobe.com" "<B2EABFD5-AB0F-45B2-893A-FC86F95A59F0@adobe.com>" "19" "[oss-security] CVE-2017-15700 - Apache Sling Authentication Service vulnerability" nil nil nil "12" "2017121815:45:25" "[oss-security] CVE-2017-15700 - Apache Sling Authentication Service vulnerability" (number mark "U       asanso@adobe Dec 18   19/463   " thread-indent "\"[oss-security] CVE-2017-15700 - Apache Sling Authentication Service vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 20003 invoked by uid 550); 18 Sep 2016 14:41:51 -0000
+Received: (qmail 22259 invoked by uid 550); 18 Dec 2017 16:57:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,50 +12,75 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19979 invoked from network); 18 Sep 2016 14:41:50 -0000
-From: cve-assign@mitre.org
-To: carnil@debian.org
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <20160918123124.poc7x5skdijl2j3m@eldamar.local>
-Message-Id: <20160918144138.A17646C571B@smtpvmsrv1.mitre.org>
-Date: Sun, 18 Sep 2016 10:41:38 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request: GnuTLS: OCSP validation issue (GNUTLS-SA-2016-3)
+Received: (qmail 7276 invoked from network); 18 Dec 2017 15:45:39 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=adobe.com;
+ s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
+ bh=bCA3LXNWPjoJnRUZjoJg+2UEuDNqdP3LeH0TkERWvRE=;
+ b=CmH4MzZEZ1Pevme7BigutO+jXsxJ1vYj+mBemga0BZg5JWFQit11+MJ1gx2h56SahD5qLY9qYri56uBjceCS5ofn23PXDq2o+nWTzWTnbutfLqQbdwf+2LEf9k0MnCxyLBy9e2NP2eTIUc2t+Xr4oP8JocQqODiISbEz9NWvJcc=
+From: Antonio Sanso <asanso@adobe.com>
+To: dev <dev@sling.apache.org>, users <users@sling.apache.org>,
+	"security@sling.apache.org" <security@sling.apache.org>,
+	"oss-security@lists.openwall.com" <oss-security@lists.openwall.com>,
+	"bugtraq@securityfocus.com" <bugtraq@securityfocus.com>,
+	=?iso-8859-1?Q?Fran=E7ois_Lajeunesse-Robert?=
+	<francois.lajeunesse.robert@gmail.com>
+Thread-Topic: CVE-2017-15700 - Apache Sling Authentication Service
+ vulnerability
+Thread-Index: AQHTeBc4JcFG6KQ6FUKO7r6Bv5Vk9A==
+Date: Mon, 18 Dec 2017 15:45:25 +0000
+Message-ID: <B2EABFD5-AB0F-45B2-893A-FC86F95A59F0@adobe.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=asanso@adobe.com; 
+x-originating-ip: [192.147.117.11]
+x-ms-publictraffictype: Email
+x-microsoft-exchange-diagnostics: 1;BLUPR0201MB1585;20:ldz6CIvUjK7HPp/i3/fdXcVghiFGUmpCNc2vRXZ04KMyjw+9yJEz3h6vEXstpfyLtAaiTTDbSQRpuCoNNzV00nySXmqXghjv1AU46q0X+OsxWMPMtA9/gcqu45Fjp/ItqL/7KhlnQhE2OQl54ZOJ315CA3PCO5luYKpacU5Fn4c=
+x-ms-exchange-antispam-srfa-diagnostics: SSOS;
+x-ms-office365-filtering-correlation-id: 3694f7bf-9814-40d9-1eed-08d5462e5b32
+x-ms-office365-filtering-ht: Tenant
+x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(5600026)(4604075)(4534020)(4602075)(4627115)(201703031133081)(201702281549075)(48565401081)(2017052603307);SRVR:BLUPR0201MB1585;
+x-ms-traffictypediagnostic: BLUPR0201MB1585:
+x-microsoft-antispam-prvs: <BLUPR0201MB15859AEFD2E97B2A9550ABABD90E0@BLUPR0201MB1585.namprd02.prod.outlook.com>
+x-exchange-antispam-report-test: UriScan:;
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(61425038)(6040450)(2401047)(5005006)(8121501046)(10201501046)(3231023)(3002001)(93006095)(93001095)(6055026)(61426038)(61427038)(6041248)(20161123555025)(201703131423075)(201702281528075)(201703061421075)(201703061406153)(20161123560025)(20161123562025)(20161123564025)(20161123558100)(6072148)(201708071742011);SRVR:BLUPR0201MB1585;BCL:0;PCL:0;RULEID:(100000803101)(100110400095);SRVR:BLUPR0201MB1585;
+x-forefront-prvs: 0525BB0ADF
+x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(376002)(366004)(396003)(39860400002)(346002)(189003)(50944005)(199004)(3660700001)(3846002)(14454004)(3280700002)(5660300001)(39060400002)(305945005)(6506007)(7736002)(25786009)(6116002)(106356001)(102836003)(478600001)(105586002)(99286004)(59450400001)(68736007)(316002)(33656002)(2906002)(66066001)(230783001)(2900100001)(81156014)(36756003)(77096006)(10090500001)(6486002)(2501003)(8936002)(8676002)(86362001)(6512007)(110136005)(81166006)(43066004)(82746002)(83716003)(53936002)(2201001)(6436002)(97736004);DIR:OUT;SFP:1101;SCL:1;SRVR:BLUPR0201MB1585;H:BLUPR0201MB1585.namprd02.prod.outlook.com;FPR:;SPF:None;PTR:InfoNoRecords;MX:1;A:1;LANG:en;
+received-spf: None (protection.outlook.com: adobe.com does not designate
+ permitted sender hosts)
+spamdiagnosticoutput: 1:99
+spamdiagnosticmetadata: NSPM
+Content-Type: text/plain; charset="iso-8859-1"
+Content-ID: <35DD644D5EFE4A4E8AE124085EF6AEED@namprd02.prod.outlook.com>
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-OriginatorOrg: adobe.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3694f7bf-9814-40d9-1eed-08d5462e5b32
+X-MS-Exchange-CrossTenant-originalarrivaltime: 18 Dec 2017 15:45:25.3369
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: fa7b1b5a-7b34-4387-94ae-d2c178decee1
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BLUPR0201MB1585
+Subject: [oss-security] CVE-2017-15700 - Apache Sling Authentication Service vulnerability
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Severity: High
 
-> can falsely report a
-> certificate as valid under certain circumstances
+Vendor: The Apache Software Foundation
 
->> if the serial from the revoked certificate is a
->> prefix of the other one, and the additional bytes happen to be equal
->> on the system doing the verification.
- 
-> https://lists.gnupg.org/pipermail/gnutls-devel/2016-September/008146.html
-> https://gitlab.com/gnutls/gnutls/commit/964632f37dfdfb914ebc5e49db4fa29af35b1de9
-> https://bugzilla.redhat.com/show_bug.cgi?id=1374266
+Versions Affected:
+Apache Sling Authentication Service 1.4.0
 
-Use CVE-2016-7444.
+Description:
+A flaw in the org.apache.sling.auth.core.AuthUtil#isRedirectValid method al=
+lows an attacker, through the Sling login form, to trick a victim to send o=
+ver their credentials.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Mitigation:
+Users should upgrade to version 1.4.2 or later of the Apache Sling Authenti=
+cation Service module
 
-iQIcBAEBCAAGBQJX3qaBAAoJEHb/MwWLVhi2ZIQQALqBsgvjmj3aKEwKaFKSvNcM
-vOm5UKhOpdwYX7syoPi9J/IfGcvs2Z8K1GPnOxvyyuFBcBzbypgW+UnEvv8kT7ze
-5ckPgFSjfaco1cYcBhKq5hlQoTLayhH3YP8XDzWlfE3KijEJAQuA6+wcHL2ddg3d
-29nAuKgIkd27SZMEDDcv+x8b3Ibnds/LWUWFleAEPBBiyTrSgeLiWmgLToHSiOND
-wyfmiNg9SouaBm3icAnd95AHYQmMztrd5xEvuAWK3ZsMFgJtrPjK1kTk13madyfN
-TgwwQ2PM99EmRgaXHqvrXeRcohRQtV2ptgMqQS9a31fk7uJb8HITNgESoM4z2FRF
-dLpLzDAMm9X1IKXRDDHqOPobFgwe/ZyG3MEl8994N1Y3N2QYrXm84SmiWTYtDlcD
-HX2NFievDARKQBzHvJhQwDw98rdFb9P7CLvz4dolVix07xZzy505exktxpAH0yTs
-2LXkpB1FQb99ZJzPPZ967S1bY0fpANQzCFLBQlZ8B5g2bmUwo52c+C+JsHay/+3i
-dnFPSxTJVXRStPHs1II7NufIGjBlitfIHIRlpTtzCsFTy7ppgI5PEfpA/tnCFkXR
-bhrtIOGqqGyj2ySa4nmYhA95MRLO7XoNIXYT5byRpXI6I6pIEIRkNxeYIChSydEY
-m1uV5gCz/FIWXRCl6Dzi
-=1u4M
------END PGP SIGNATURE-----
+Credit:
+Fran=E7ois Lajeunesse-Robert
+=20=
