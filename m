@@ -1,48 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/21/23
-Message-ID: <87efud2ewm.fsf@example.com>
-Date: Wed, 21 Jun 2017 22:45:45 +0100
-From: nospam@...so.re
-To: oss-security@...ts.openwall.com
-Subject: Re: Qualys Security Advisory - The Stack Clash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/18/2
+Message-ID: <CAC1ju523-hOdd3tO1xkqZyxyvPVwM+CFETec2c14wrVa6K6hVg@mail.gmail.com>
+Date: Mon, 18 Dec 2017 12:35:21 +0200
+From: Arina Ielchiieva <arina@...che.org>
+To: user <user@...ll.apache.org>, dev@...ll.apache.org,  Sanjog <sanjogpandasp@...il.com>, security <security@...che.org>,  oss-security@...ts.openwall.com
+Subject: [SECURITY] CVE-2017-12630 Apache Drill XSS vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Qualys Security Advisory <qsa@...lys.com>
-writes:
+*CVE-2017-12630 Apache Drill XSS vulnerability*
 
-> Hi Solar, all,
->
-> On Tue, Jun 20, 2017 at 03:22:04PM +0200, Solar Designer wrote:
->> Qualys, I suggest that, like you did with the Sudo exploit, you publish
->> your Stack Clash exploits in here as soon as third-party exploits of
->> comparable functionality appear, or next Tuesday, whichever is earlier.
->
-> We have discussed this internally, and we will first publish the Stack
-> Clash exploits and proofs-of-concepts that we sent to the distros@ and
-> linux-distros@ lists, plus our Linux ld.so exploit for amd64, and our
-> Solaris rsh exploit.
->
-> We will do so next Tuesday, but we will publish our Linux exploits and
-> proofs-of-concept if and only if Fedora updates are ready by then, our
-> NetBSD proof-of-concept if and only if NetBSD patches are ready by then,
-> and our FreeBSD proofs-of-concept if and only if FreeBSD patches are
-> ready by then.
->
-> If someone happens to know of another major distribution that has not
-> published patches and updates yet, please let us all know by replying
-> here to oss-security. Thank you very much!
->
-> With best regards,
+*Severity*: Important
 
-(posting from gmane... I hope it's OK)
+*Vendor:* The Apache Software Foundation
 
-Hello,
+*Versions Affected:*
+Apache Drill 1.11.0 and earlier
 
-not sure it counts as a major distribution (probably not), but NixOS
-(https://nixos.org) is gaining traction and, as far as I understand,
-they are working on patches but they don't seem to be ready yet.
+*Description*
+In Apache Drill 1.11.0 and earlier when submitting form from Query page
+users are able to pass arbitrary script or HTML which will take effect on
+Profile page afterwards.
 
-Many thanks to everybody for your work,
+Example:
+After submitting special script that returns cookie information from Query
+page, malicious user may obtain this information from Profile page
+afterwards.
 
--- S.
+*Mitigation:*
+Users of the affected versions should upgrade to Apache Drill to 1.12.0 and
+later.
+
+*Credit:*
+Sanjog Panda
+
+Kind regards
+Arina
 
