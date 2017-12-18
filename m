@@ -1,52 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/24/4
-Message-ID: <alpine.GSO.2.20.1702240821470.9710@freddy.simplesystems.org>
-Date: Fri, 24 Feb 2017 08:23:21 -0600 (CST)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/18/8
+Message-ID: <20171218220414.GA10960@takahe.colorado.edu>
+Date: Mon, 18 Dec 2017 15:04:14 -0700
+From: Leonid Isaev <leonid.isaev@...a.colorado.edu>
 To: oss-security@...ts.openwall.com
-Subject: Re: GraphicsMagick heap out of bounds write issue
+Subject: Re: Recommendations GnuPG-2 replacement
 Content-Type: text/plain; charset=utf-8
 
-I would like to ammend this report in that the situation is a read 
-beyond an allocated heap buffer rather than a write beyond the end of 
-an allocated heap buffer as was originally reported.  The application 
-may crash but should not be otherwise compromised.
+On Mon, Dec 18, 2017 at 08:21:56PM +0000, halfdog wrote:
+> The point in starting this thread was, that GnuPG does NOT conveniently
+> cover usecases for headless or scripting operation. Thus it seems
+> that the time has come to look for replacement, as GnuPG is moving
+> more in the "desktop" direction, as also your comments indicate.
 
-Bob
+You are talking about policies here, not technical issues. Gnupg is perfectly
+scriptable, see pacman-key(1) tool in Arch Linux. Moreover, gpg-agent is easily
+usable on a headless machine. At least, I mostly use it this way when checking
+email... You will lose nothing if you just pkill(1) gpg-agent though. So I
+don't understand why you claim that gpg is moving towards desktop.
 
-On Thu, 23 Feb 2017, Bob Friesenhahn wrote:
+> That's really a strange argument. You fear PTRACING for key extraction
+> of a short-lived, per-key instance of gpg1 process and solve that
+> by putting all the key material into a single long-lived gpg-agent
+> process, not even providing convenient commands to flush the keys
+> from there?
 
-> GraphicsMagick versions up to 1.3.25 encounter a write beyond an allocated 
-> heap buffer when reading CMYKA TIFF files which claim to offer fewer samples 
-> per pixel than required.
->
-> This is the tiffinfo description of the problematic TIFF file:
->
-> TIFF Directory at offset 0x808 (2056)
->  Image Width: 34 Image Length: 48
->  Bits/Sample: 8
->  Sample Format: unsigned integer
->  Compression Scheme: None
->  Photometric Interpretation: separated
->  Extra Samples: 1<unassoc-alpha>
->  Orientation: row 0 top, col 0 lhs
->  Samples/Pixel: 2
->  Rows/Strip: 32
->  Planar Configuration: single image plane
->
-> The fix for this is Mercurial changeset 14998:6156b4c2992d which may be 
-> viewed at SourceForge via this link:
->
-> https://sourceforge.net/p/graphicsmagick/code/ci/6156b4c2992d855ece6079653b3b93c3229fc4b8/
->
-> A minimal patch to correct the problem is attached.
->
-> This issue was reported to us on February 15, 2017 by Valon Chu.
->
-> Bob
->
+pkill -hup gpg-agent. Please read the manpages.
 
+Cheers,
 -- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+Leonid Isaev
