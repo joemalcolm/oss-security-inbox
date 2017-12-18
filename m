@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["487" "Saturday" "22" "December" "2018" "10:28:14" "-0500" "Tim Allison" "tallison@apache.org" "<CAC1dCwWhYmbkxAvFKgGSFd_ffp5EeCimB2gBXTo+9-F7v6TSNQ@mail.gmail.com>" "20" "[oss-security] [CVE-2018-17197] Apache Tika Denial of Service -- Infinite Loop in Tika's SQLite3Parser" nil nil nil "12" "2018122215:28:14" "[oss-security] [CVE-2018-17197] Apache Tika Denial of Service -- Infinite Loop in Tika's SQLite3Parser" (number mark "U       tallison@apa Dec 22   20/487   " thread-indent "\"[oss-security] [CVE-2018-17197] Apache Tika Denial of Service -- Infinite Loop in Tika's SQLite3Parser\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1084" "Monday" "18" "December" "2017" "07:28:32" "+0100" "Marcus Meissner" "meissner@suse.de" "<20171218062832.GB9249@suse.de>" "35" "Re: [oss-security] Portus, missing LDAP server authentication" nil nil nil "12" "2017121806:28:32" "[oss-security] Portus, missing LDAP server authentication" (number mark "U       meissner@sus Dec 18   35/1084  " thread-indent "\"Re: [oss-security] Portus, missing LDAP server authentication\"\n") "<CAA7hUgGYLFEX==FHob2823M0UEoWXG=h+LtJfGLLSdajOYoHrQ@mail.gmail.com>" ("<CAA7hUgGYLFEX==FHob2823M0UEoWXG=h+LtJfGLLSdajOYoHrQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21754 invoked by uid 550); 22 Dec 2018 15:28:39 -0000
+Received: (qmail 29853 invoked by uid 550); 18 Dec 2017 06:28:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,40 +12,56 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21736 invoked from network); 22 Dec 2018 15:28:39 -0000
-X-Gm-Message-State: AA+aEWb+7FDQ9fBlc03mS8H4VpSw/MdhaRxYkaVQQIl77dBHkc89v/U0
-	UMACyMAnfaL9veCMQAfe+GU9GwgBYjnRwjaWhaE=
-X-Google-Smtp-Source: AFSGD/ViRmaZovuR78U2bwTbD3OryInI3Kvrzyo/ROJiNTU+9dzyh/5uqW+EdrDDo5ACS8WTFtoOAan8fkvky340/e4=
-X-Received: by 2002:a81:63d4:: with SMTP id x203mr6562471ywb.82.1545492504743;
- Sat, 22 Dec 2018 07:28:24 -0800 (PST)
+Received: (qmail 29826 invoked from network); 18 Dec 2017 06:28:53 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Date: Mon, 18 Dec 2017 07:28:32 +0100
+From: Marcus Meissner <meissner@suse.de>
+To: oss-security@lists.openwall.com
+Cc: security@suse.de
+Message-ID: <20171218062832.GB9249@suse.de>
+References: <CAA7hUgGYLFEX==FHob2823M0UEoWXG=h+LtJfGLLSdajOYoHrQ@mail.gmail.com>
 MIME-Version: 1.0
-From: Tim Allison <tallison@apache.org>
-Date: Sat, 22 Dec 2018 10:28:14 -0500
-X-Gmail-Original-Message-ID: <CAC1dCwWhYmbkxAvFKgGSFd_ffp5EeCimB2gBXTo+9-F7v6TSNQ@mail.gmail.com>
-Message-ID: <CAC1dCwWhYmbkxAvFKgGSFd_ffp5EeCimB2gBXTo+9-F7v6TSNQ@mail.gmail.com>
-To: announce@apache.org, dev@tika.apache.org, user@tika.apache.org, 
-	Apache Security Team <security@apache.org>, oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] [CVE-2018-17197] Apache Tika Denial of Service -- Infinite Loop in
- Tika's SQLite3Parser
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAA7hUgGYLFEX==FHob2823M0UEoWXG=h+LtJfGLLSdajOYoHrQ@mail.gmail.com>
+Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
+ =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
+ =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Subject: Re: [oss-security] Portus, missing LDAP server authentication
 
-[CVE-2018-17197] Apache Tika Denial of Service -- Infinite Loop in
-Tika's SQLite3Parser
+Hi,
 
-Severity: Medium
+On Sun, Dec 17, 2017 at 02:36:42PM +0100, Raphael Geissert wrote:
+> Hi,
+> 
+> Portus 2.2 and older provides LDAP integration for authenticating the
+> users. However, in spite of it providing advice on configuring it to
+> "to setup LDAP over SSL/TLS"[1], the implementation does not verify
+> the server's identity at all.
+> 
+> I'm writing about it here mainly because there appears to be some
+> intention of TLS support. Users might expect it to actually provide
+> some kind of security.
+> 
+> Interestingly enough, the documentation and the config file comments
+> say  'the recommended [method] is "starttls".'[2] I don't know where
+> they got that from.
+> 
+> CC'ing SUSE's security team.
+> 
+> I have not yet reported it to the portus team directly, nor requested
+> a CVE id (though I'm tempted to request one, to err on the side of
+> safety).
+> 
+> 
+> [1]http://port.us.org/docs/Configuring-Portus.html
+> [2]https://github.com/SUSE/Portus/blob/master/config/config.yml#L49
+> 
+> Cheers,
 
-Vendor: The Apache Software Foundation
+I have opened
+https://bugzilla.suse.com/show_bug.cgi?id=1073232
+for this issue.
 
-Versions Affected: Apache Tika 1.8 to 1.19.1
-
-Description:
-A carefully crafted or corrupt sqlite file can cause an infinite loop
-in Apache Tika's SQLite3Parser in versions 1.8-1.19.1 of Apache Tika.
-
-
-Mitigation:
-Apache Tika users should upgrade to 1.20 or later.
-
-
-Credit:
-This issue was discovered by Tim Allison on the Apache Tika Team.
+Ciao, Marcus
