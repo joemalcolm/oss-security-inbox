@@ -1,29 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/14/3
-Message-ID: <20170414192740.28134.332C76E5@matica.foolinux.mooo.com>
-Date: Fri, 14 Apr 2017 12:29:16 -0700
-From: Ian Zimmerman <itz@...mate.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/18/1
+Message-ID: <20171218062832.GB9249@suse.de>
+Date: Mon, 18 Dec 2017 07:28:32 +0100
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: libsamplerate: global buffer overflow in calc_output_single (src_sinc.c)
+Cc: security@...e.de
+Subject: Re: Portus, missing LDAP server authentication
 Content-Type: text/plain; charset=utf-8
 
-On 2017-04-12 09:12, Agostino Sarubbo wrote:
+Hi,
 
-> Affected version:
-> 1.0.8
+On Sun, Dec 17, 2017 at 02:36:42PM +0100, Raphael Geissert wrote:
+> Hi,
 > 
-> Fixed version:
-> 1.0.9
+> Portus 2.2 and older provides LDAP integration for authenticating the
+> users. However, in spite of it providing advice on configuring it to
+> "to setup LDAP over SSL/TLS"[1], the implementation does not verify
+> the server's identity at all.
+> 
+> I'm writing about it here mainly because there appears to be some
+> intention of TLS support. Users might expect it to actually provide
+> some kind of security.
+> 
+> Interestingly enough, the documentation and the config file comments
+> say  'the recommended [method] is "starttls".'[2] I don't know where
+> they got that from.
+> 
+> CC'ing SUSE's security team.
+> 
+> I have not yet reported it to the portus team directly, nor requested
+> a CVE id (though I'm tempted to request one, to err on the side of
+> safety).
+> 
+> 
+> [1]http://port.us.org/docs/Configuring-Portus.html
+> [2]https://github.com/SUSE/Portus/blob/master/config/config.yml#L49
+> 
+> Cheers,
 
-[...]
+I have opened
+https://bugzilla.suse.com/show_bug.cgi?id=1073232
+for this issue.
 
-> CVE:
-> CVE-2017-7697
-
-Should this be 0.1.8 and 0.1.9 instead?
-
--- 
-Please *no* private Cc: on mailing lists and newsgroups
-Personal signed mail: please _encrypt_ and sign
-Don't clear-text sign:
-http://primate.net/~itz/blog/the-problem-with-gpg-signatures.html
+Ciao, Marcus
