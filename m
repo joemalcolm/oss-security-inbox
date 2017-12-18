@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2307" "Tuesday" "5" "January" "2016" "13:07:57" "+0100" "Andreas Stieger" "astieger@suse.de" "<568BB21D.1060200@suse.de>" "57" "Re: [oss-security] Re: CVE Request: cacti: SQL injection vulnerability in graphs_new.php" nil nil nil "1" "2016010512:07:57" "[oss-security] Re: CVE Request: cacti: SQL injection vulnerability in graphs_new.php" (number mark "U       astieger@sus Jan  5   57/2307  " thread-indent "\"Re: [oss-security] Re: CVE Request: cacti: SQL injection vulnerability in graphs_new.php\"\n") "<20160105111246.GA4592@eldamar.local>" ("<20160104235855.D96FB52E01B@smtpvbsrv1.mitre.org>" "<568B8AD7.3000905@suse.com>" "<20160105111246.GA4592@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4990" "Monday" "18" "December" "2017" "20:21:56" "+0000" "halfdog" "me@halfdog.net" "<814-1513628516.856754@MaI1.D5wz.7Roo>" "105" "Re: [oss-security] Recommendations GnuPG-2 replacement" "^Date:" nil nil "12" "2017121820:21:56" "[oss-security] Recommendations GnuPG-2 replacement" (number mark "        me@halfdog.n Dec 18  105/4990  " thread-indent "\"Re: [oss-security] Recommendations GnuPG-2 replacement\"\n") "<87tvwoowng.fsf@fifthhorseman.net>" ("<20171207210134.GA7079@openwall.com>" "<2172-1513501568.968862@pLoG.Le7g.f3CQ>" "<87tvwoowng.fsf@fifthhorseman.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 27749 invoked by uid 550); 5 Jan 2016 12:08:16 -0000
+Received: (qmail 1989 invoked by uid 550); 18 Dec 2017 20:22:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,80 +11,122 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27731 invoked from network); 5 Jan 2016 12:08:16 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-To: oss-security@lists.openwall.com
-References: <20160104235855.D96FB52E01B@smtpvbsrv1.mitre.org>
- <568B8AD7.3000905@suse.com> <20160105111246.GA4592@eldamar.local>
-From: Andreas Stieger <astieger@suse.de>
-Organization: SUSE Linux GmbH
-Message-ID: <568BB21D.1060200@suse.de>
-Date: Tue, 5 Jan 2016 13:07:57 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.4.0
+Received: (qmail 1970 invoked from network); 18 Dec 2017 20:22:26 -0000
+In-reply-to: <87tvwoowng.fsf@fifthhorseman.net>
+References: <20171207210134.GA7079@openwall.com> <2172-1513501568.968862@pLoG.Le7g.f3CQ> <87tvwoowng.fsf@fifthhorseman.net>
+Comments: In-reply-to Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+   message dated "Mon, 18 Dec 2017 10:58:43 -0500."
 MIME-Version: 1.0
-In-Reply-To: <20160105111246.GA4592@eldamar.local>
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="hrDgwXka9GLrHSgp2J6mp6lk6QTNPldgO"
-Subject: Re: [oss-security] Re: CVE Request: cacti: SQL injection
- vulnerability in graphs_new.php
+Content-Type: text/plain; charset="us-ascii"
+Message-ID: <814-1513628516.856754@MaI1.D5wz.7Roo>
+Date: Mon, 18 Dec 2017 20:21:56 +0000
+From: halfdog <me@halfdog.net>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Recommendations GnuPG-2 replacement
+To: oss-security@lists.openwall.com
 
---hrDgwXka9GLrHSgp2J6mp6lk6QTNPldgO
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: quoted-printable
+Daniel Kahn Gillmor writes:
+> On Sun 2017-12-17 09:06:08 +0000, halfdog wrote:
+> > Solar Designer writes:
+> >> On Thu, Dec 07, 2017 at 06:32:11AM +0000, halfdog wrote:
+> >> > After getting gpg and agent running, I noticed, that not reliably
+> >> > stopping the gpg-agent on initrd would introduce a private key
+> >> > data leak via /proc from early boot process to running system
+> >> > when stopping fails.
+> >>=20
+> >> Can you elaborate on this, please?
+> >
+> > As the agent process stays alive and initrd PID namespace is the
+> > same as final init-process PID namespace, the agent will stay
+> > via /proc and traceable by root using PTRACE.
+> 
+> I think what you're saying is basically that the key (or its passphrase)
+> remains in RAM while the agent is running.
+> 
+> This is also true for things like ssh-agent.
+> 
+> Keeping the key in RAM enables convenient, simple reuse -- this is a
+> security benefit, because it means it is possible to do things like read
+> a series of encrypted e-mails without entering your password for each
+> message.  Without this, reading encrypted mail is an extreme nuisance
+> (esp. at the rate at which some people send and receive mail), and it
+> encourages people to just revert to cleartext mail in the first place.
 
-Hello,
+The features you describe are a clear must for desktop/enduser
+usecases, that require frequent access to the key. It is clear
+to me, that those features are required, no discussion to this
+point.
 
-On 01/05/2016 12:12 PM, Salvatore Bonaccorso wrote:
-> On Tue, Jan 05, 2016 at 10:20:23AM +0100, Andreas Stieger wrote:
->> On 01/05/2016 12:58 AM, cve-assign@mitre.org wrote:
->>>> Another SQL injection vulnerability via graphs_new.php in cacti was
->>>> found, reported to the bug http://bugs.cacti.net/view.php?id=3D2652
->>> http://bugs.cacti.net/view.php?id=3D2652 is CVE-2015-8604.
->> Check against a possible duplicate assignment with CVE-2015-8377?
->>
->> http://seclists.org/fulldisclosure/2015/Dec/att-57/cacti_sqli%281%29.txt
->>
->> https://bugzilla.redhat.com/show_bug.cgi?id=3D1291222
->> http://web.nvd.nist.gov/view/vuln/detail?vulnId=3DCVE-2015-8377
->> http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2015-8377
-> Theree are two different vulnerabilities here, see second comment in
-> http://bugs.cacti.net/view.php?id=3D2652 which describe both, the
-> CVE-2015-8377 and the new assigned one (CVE-2015-8604).
+The point in starting this thread was, that GnuPG does NOT conveniently
+cover usecases for headless or scripting operation. Thus it seems
+that the time has come to look for replacement, as GnuPG is moving
+more in the "desktop" direction, as also your comments indicate.
 
-Thanks for the clarification,
-Andreas
+> >> Personally, I intend to stay with GnuPG 1 for now.
+> >
+> > As Debian marked the packages with "gnupg1 - GNU privacy guard -
+> > a PGP implementation (deprecated "classic" version)" I wanted to
+> > anticipate the changes now, giving me more time to evaluate the
+> > changes and to find alternatives when needed.
+> 
+> Hi!  I'm the person who marked gpg1 "deprecated" in debian.  i consider
+> it deprecated for several reasons, including:
+> 
+>  * upstream is not devoting much time to it ...
+> 
+>  * gpg1 does not support any of the newer cryptographic primitives,
+>    ... You will not be able to verify elliptic-curve signatures, nor ...
+> 
+>  * gpg1's network interaction is entirely one-shot, ...
+> 
+>  * gpg1 always holds private key material in-process. it can be PTRACE'd
+>    by the user themselves (not just as root) for full recovery of the
+>    secret key.  gpg2 never sees the private key material, since it
+>    delegates that task to the agent.  This process separation means it's
+>    possible to create gpg-agent backend processes that run in isolated
+>    namespaces, that hook into hardware, that store keys in the kernel,
+>    etc.  While these steps haven't been taken yet, they will only be
+>    possible with gpg2, since gpg1 expects to handle the private keys
+>    directly.
 
---=20
-Andreas Stieger <astieger@suse.de>
-Project Manager Security
-SUSE Linux GmbH, GF: Felix Imend=F6rffer, Jane Smithard, Graham Norton,
-HRB 21284 (AG N=FCrnberg)
+That's really a strange argument. You fear PTRACING for key extraction
+of a short-lived, per-key instance of gpg1 process and solve that
+by putting all the key material into a single long-lived gpg-agent
+process, not even providing convenient commands to flush the keys
+from there? Hence not even PTRACING is needed, you can just access
+the socket to make the process give you the keys (directly or
+by requesting decrypts/signatures - I did not check on that).
+
+Even with namespaces, PTRACE is still allowed unless you are running
+the agent as SUID-binary, causing other risks again. In my opinion,
+for server operation both schemes would not improve security the
+same way as on desktops: if the automated tasks is implemented to
+be run as root, PTRACE and namespaces do not help in any way.
+If run as distinct user, there are only two usecases:
+
+* The service just does encryption/signature verification: here
+  the unavoidable agent just provides additional attack surface,
+  e.g. by replacing verification keys in the agent only, thus
+  everything looks nice on disk but your signature verification
+  is broken.
+
+* The service does signing/decryption: the key is passwordless
+  (or password is within user-readable configuration) or HW-token.
+  In both cases, the initial security of the key material before
+  being transfered to gpg-agent only depends on file system level
+  access restrictions. Gaining access to UID or PTRACE is already
+  equivalent to full key material compromise. So also here the
+  agent only adds attack surface and that's it.
+
+To reduce the attack surface, a "gpg --one-shot" argument could
+be added, which will terminate the agent immediately after use,
+maybe not even exposing it via sockets visible to other processes
+but only connected to its "parent" gpg process via pipes.
+
+>  * gpg1 retains and provides backward compatibility for known-broken
+>    formats, like PGP-2, and will likely never effectively drop them...
+> ...
+
+hd
 
 
-
---hrDgwXka9GLrHSgp2J6mp6lk6QTNPldgO
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIcBAEBCgAGBQJWi7IdAAoJECzWqVXhWUVGWLkP/RAvGiJy0GOGnhxpMRuL0QHS
-uHaC3UCmSEtyheWoaNviGsejh6/kI3IZHAeV2ZwKLSfst/BaHozySQVAjY8G+n4X
-Xtu9v+khBokBRoWv0emb9hS3bkGOQtpeTBsVVYAJNWUMQo9PtiNgpdmrCu2AZEA/
-3YJDSwKpLIEUc+3QRXBwdbNMJoIiFyndav+OMpt0wP3X09eoCCUhbvm76MX2ik4f
-T/nkVz0x7SUpdmRmKgFrk1JCSj1AflVf7pG93NPAss+UsLR453KNMc+O5jXbZ4NN
-Y4+qt7RBfkxeTsyQGOmu3CEUH/fq07WNiM2qw/t5G9wpKfL4ybs48RrxzKxtV8eP
-9TiWf+4AuYA27F/GxTI/a5bS17LH4iIbv5CM8hfDYvyockPryMadMvPMZ7cUhqHW
-rd9kYG6/0JTPqNshzAarK+wu0izckNj9sdWksVJjGnBcectfWVqbRt0mWBqoW1FU
-WAgLjdhRLPU9g+a1gWEby6cOe7gh6dWFh3QF6qNN4CjdbmCDQTxSJquQoOrrPi0g
-6hRQPGhRzrHHEovsr+qBl7kGroAqk6cReF41Zxnzn6k/SRrBUOU2lu3XZSPCkAWZ
-xZo3b/3XWTehY5NLpdDOWZJVSemZ9A5ZKUxcdmINK1YDtBS0TSDKhzCRmobIERx9
-1wCZXonFLNg7prPI6Ee4
-=Dawv
------END PGP SIGNATURE-----
-
---hrDgwXka9GLrHSgp2J6mp6lk6QTNPldgO--
