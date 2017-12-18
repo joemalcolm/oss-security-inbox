@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2454" "Thursday" "9" "March" "2017" "17:36:39" "+0000" "Seth Art" "sart@openskycorp.com" "<CY4PR12MB1141518BEAB7E0FAD34D0457DA210@CY4PR12MB1141.namprd12.prod.outlook.com>" "65" "[oss-security] CVE Request: Joomla! FLEXIcontent - Incorrect Authorization (Authorization Bypass)" nil nil nil "3" "2017030917:36:39" "[oss-security] CVE Request: Joomla! FLEXIcontent - Incorrect Authorization (Authorization Bypass)" (number mark "U       sart@opensky Mar  9   65/2454  " thread-indent "\"[oss-security] CVE Request: Joomla! FLEXIcontent - Incorrect Authorization (Authorization Bypass)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6532" "Monday" "18" "December" "2017" "16:21:36" "-0500" "Daniel Kahn Gillmor" "dkg@fifthhorseman.net" "<871sjrpw9r.fsf@fifthhorseman.net>" "137" "Re: [oss-security] Recommendations GnuPG-2 replacement" "^Date:" nil nil "12" "2017121821:21:36" "[oss-security] Recommendations GnuPG-2 replacement" (number mark "        dkg@fifthhor Dec 18  137/6532  " thread-indent "\"Re: [oss-security] Recommendations GnuPG-2 replacement\"\n") "<814-1513628516.856754@MaI1.D5wz.7Roo>" ("<20171207210134.GA7079@openwall.com>" "<2172-1513501568.968862@pLoG.Le7g.f3CQ>" "<87tvwoowng.fsf@fifthhorseman.net>" "<814-1513628516.856754@MaI1.D5wz.7Roo>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 29849 invoked by uid 550); 9 Mar 2017 18:09:42 -0000
+Received: (qmail 11500 invoked by uid 550); 18 Dec 2017 21:22:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,111 +11,153 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7279 invoked from network); 9 Mar 2017 17:36:54 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=openskycorp.com;
- s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=1SGYL6py/Y6hZ5SrNv+ccyTYiZBZK0qoZJutVQq0Bq4=;
- b=AOST0lkMlJy1YFFq+Ax+t6McnPjKmF7oBuuzWXiWEflSuhwXWRSF6PpnkAo5aT5saQo9N9wL/IXk0frneYpu7cMu6yXJCsYFlkPdoVhmhvVz22z+zRX4LRGT2XGFuDaf+6B5+asYbXdukEXbMOauJwPXdPgfGTtRUHzMh6Q3ccU=
-From: Seth Art <sart@openskycorp.com>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: CVE Request: Joomla! FLEXIcontent - Incorrect Authorization
- (Authorization Bypass)
-Thread-Index: AdKY+iXNd4NkZuWQQPGLBcAW5LnXOQ==
-Date: Thu, 9 Mar 2017 17:36:39 +0000
-Message-ID: <CY4PR12MB1141518BEAB7E0FAD34D0457DA210@CY4PR12MB1141.namprd12.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: lists.openwall.com; dkim=none (message not signed)
- header.d=none;lists.openwall.com; dmarc=none action=none
- header.from=openskycorp.com;
-x-originating-ip: [50.207.151.130]
-x-ms-office365-filtering-correlation-id: 89b08b98-430a-4d4e-d2cd-08d46712d827
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(22001);SRVR:CY4PR12MB1144;
-x-microsoft-exchange-diagnostics: 1;CY4PR12MB1144;7:R9NCKs2+seknk1DiH7G1qdKoAr1bcg3bxAfgINNWr4o5cnp6zq0midPwfm8bNQAT/Z4QWeQjDdvdpt+mrNnYWL8hqsQ6sttO6QP4yF1sRwt9iIn0zWdZ6IL+bT3F9PZC9fs4n6I40ASa6vPRqtpsUeb7sdayIuPa/YY1a65ZBlhWeBe9S6EWNq08dICh4huV4/Pv0ciLqeR9zgoarrPdRm+BbHo4+owLhxkliBKmV5E9IXuwcg35v5YiwkeCqK2PMCYqUIpsSqph9rzgdbZtx0EFhY8yj84GfWSnjyFIDbqiuT/+M9zhr3hCLh+wMPfURrAHAXiMX1iVgCEOqXmuPA==
-x-microsoft-antispam-prvs: <CY4PR12MB114490F32B9762D9376B5634DA210@CY4PR12MB1144.namprd12.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:(192374486261705);
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(6040375)(601004)(2401047)(8121501046)(5005006)(10201501046)(3002001)(6041248)(20161123555025)(20161123562025)(20161123558025)(20161123560025)(20161123564025)(6072148);SRVR:CY4PR12MB1144;BCL:0;PCL:0;RULEID:;SRVR:CY4PR12MB1144;
-x-forefront-prvs: 0241D5F98C
-x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(6009001)(39410400002)(39450400003)(39840400002)(113484002)(377424004)(50944005)(38730400002)(110136004)(25786008)(5640700003)(99286003)(16799955002)(966004)(33656002)(55016002)(8676002)(6306002)(54356999)(6916009)(8936002)(2900100001)(6436002)(2906002)(77096006)(81166006)(6506006)(305945005)(2501003)(7736002)(50986999)(66066001)(7696004)(5660300001)(74316002)(3660700001)(122556002)(102836003)(53936002)(9686003)(4001150100001)(86362001)(3846002)(189998001)(2351001)(3280700002)(6116002);DIR:OUT;SFP:1101;SCL:1;SRVR:CY4PR12MB1144;H:CY4PR12MB1141.namprd12.prod.outlook.com;FPR:;SPF:None;MLV:sfv;LANG:en;
-spamdiagnosticoutput: 1:99
-spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+Received: (qmail 11479 invoked from network); 18 Dec 2017 21:22:07 -0000
+In-Reply-To: <814-1513628516.856754@MaI1.D5wz.7Roo>
+References: <20171207210134.GA7079@openwall.com> <2172-1513501568.968862@pLoG.Le7g.f3CQ> <87tvwoowng.fsf@fifthhorseman.net> <814-1513628516.856754@MaI1.D5wz.7Roo>
+Message-ID: <871sjrpw9r.fsf@fifthhorseman.net>
 MIME-Version: 1.0
-X-OriginatorOrg: openskycorp.com
-X-MS-Exchange-CrossTenant-originalarrivaltime: 09 Mar 2017 17:36:39.7551
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: cca69193-48b7-4854-87bb-968ac6251799
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY4PR12MB1144
-Subject: [oss-security] CVE Request: Joomla! FLEXIcontent - Incorrect Authorization
- (Authorization Bypass)
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha512; protocol="application/pgp-signature"
+Date: Mon, 18 Dec 2017 16:21:36 -0500
+From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Recommendations GnuPG-2 replacement
+To: halfdog <me@halfdog.net>, oss-security@lists.openwall.com
 
------------
-Vendor:
------------
-FLEXIcontent (http://www.flexicontent.org) is an advanced content managemen=
-t system developed to greatly enhance the native content management of Joom=
-la!
+--=-=-=
+Content-Type: text/plain
 
------------------------------------------
-Affected Products/Versions:
------------------------------------------
-flexicontent-cck-3.0.13
-flexicontent-cck-3.1.0-rc
-Note: Previous versions may be affected
+On Mon 2017-12-18 20:21:56 +0000, halfdog wrote:
+> The features you describe are a clear must for desktop/enduser
+> usecases, that require frequent access to the key. It is clear
+> to me, that those features are required, no discussion to this
+> point.
+>
+> The point in starting this thread was, that GnuPG does NOT conveniently
+> cover usecases for headless or scripting operation. Thus it seems
+> that the time has come to look for replacement, as GnuPG is moving
+> more in the "desktop" direction, as also your comments indicate.
 
------------------
-Description:
------------------
-Title: Joomla! FLEXIcontent - Incorrect Authorization (Authorization Bypass)
-CWE-863: Incorrect Authorization (https://cwe.mitre.org/data/definitions/86=
-3.html)
-Detailed write-up: http://www.openskycorp.com/resource-center/blog/joomla-f=
-lexicontent-incorrect-authorization/
-Researcher: Seth Art
+I find that gpg works fine in a headless operation, but it does so
+mainly without a password.  If your headless operation has access to the
+secret key and the password, that's basically equivalent, afaict, so
+it's not clear to me what benefit password protection gives you.  If you
+don't want to deal with pinentry, how do you propose protecting the
+secret key material?
 
-CWE-863 Description: "The software performs an authorization check when an =
-actor attempts to access a resource or perform an action, but it does not c=
-orrectly perform the check. This allows attackers to bypass intended access=
- restrictions."
+I'm not asking this to be contrary -- i'm trying to understand your
+threat model.  Why do you need a passphrase for your secret key that you
+use in headless/scripting operation?  and what security benefit do you
+expect to gain from it?
 
-The FLEXIcontent plugin uses a query string parameter, task, which specifie=
-s the action to perform on a FLEXIcontent article.  If an unauthenticated a=
-ctor provides any value other than edit or a blank value to the task parame=
-ter, the actor is able to view the restricted FLEXIcontent article, regardl=
-ess of the assigned permissions.  Articles are sequentially numbered, which=
- would allow an actor exploiting this vulnerability to gain read-only acces=
-s to all FLEXIcontent articles by iterating through article identifiers.
+> That's really a strange argument. You fear PTRACING for key extraction
+> of a short-lived, per-key instance of gpg1 process and solve that
+> by putting all the key material into a single long-lived gpg-agent
+> process, not even providing convenient commands to flush the keys
+> from there? Hence not even PTRACING is needed, you can just access
+> the socket to make the process give you the keys (directly or
+> by requesting decrypts/signatures - I did not check on that).
 
----------------
-POC:
----------------
-http://host/index.php/content_page/#/#?task=3Dabcd
-http://host/index.php/content_page/2/6?task=3Dfoo
-http://host/index.php/content_page/2/7?task=3Dfoo
-http://host/index.php?option=3Dcom_flexicontent&view=3Ditem&id=3D#&task=3Da=
-bcd (if Search Engine Friendly URLs are disabled)
+You should look into gpg-agent's restricted socket.  i believe it's
+intended to provide very similar constraints to what you're looking
+for.
 
--------------
-Solution:
--------------
-Upgrade to flexicontent-cck-3.1.1 or greater
+> Even with namespaces, PTRACE is still allowed unless you are running
+> the agent as SUID-binary, causing other risks again.
 
------------------------------
-Disclosure Timeline:
------------------------------
-2016-09-28: Notified FLEXIcontent author of vulnerability.
-2016-09-28: FLEXIcontent author acknowledges vulnerability and confirms it =
-will be fixed.
-2016-10-31: FLEXIcontent v3.1.1 is released and silently fixes vulnerabilit=
-y.
-2016-11-30: Researcher tests v3.1.1 and determines vulnerability has been f=
-ixed.
-2016-01-31: Researcher asks the author to mention the security issue in rel=
-ease notes (no response).
-2017-03-06: Public disclosure
+fwiw, gpg-agent upstream provides no ptrace protection, but in debian we
+have a minor defense-in-depth patch applied:
 
+    https://anonscm.debian.org/git/pkg-gnupg/gnupg2.git/tree/debian/patches/block-ptrace-on-secret-daemons/Avoid-simple-memory-dumps-via-ptrace.patch
+
+I welcome any suggested improvements on these changes, even if upstream
+isn't willing to apply them directly.
+
+> In my opinion, for server operation both schemes would not improve
+> security the same way as on desktops: if the automated tasks is
+> implemented to be run as root, PTRACE and namespaces do not help in
+> any way.
+
+sure, but maybe we can acknowledge that automated tasks running as root
+are already in a pretty dangerous position?  I'm not aware of any of the
+solutions offered in this thread as a "replacement for GnuPG-2" other
+than hardware tokens themselves that provide any real resistence to an
+automated task running as root on the machine in question.
+
+> If run as distinct user, there are only two usecases:
+>
+> * The service just does encryption/signature verification: here
+>   the unavoidable agent just provides additional attack surface,
+>   e.g. by replacing verification keys in the agent only, thus
+>   everything looks nice on disk but your signature verification
+>   is broken.
+
+eh?  the agent does not handle verification keys (i.e. public keys) --
+it only handles private keys.  if the service in question only does
+public key operation, then the agent is irrelevant.
+
+> * The service does signing/decryption: the key is passwordless
+>   (or password is within user-readable configuration) or HW-token.
+>   In both cases, the initial security of the key material before
+>   being transfered to gpg-agent only depends on file system level
+>   access restrictions. Gaining access to UID or PTRACE is already
+>   equivalent to full key material compromise. So also here the
+>   agent only adds attack surface and that's it.
+
+I agree with you that the safest case would be to isolate the secret key
+material in a different UID and filesystem namespace.  If the agent is
+running as a dedicated user account, and accessed by a different user
+account talking specifically to its restricted socket, then access to
+UID is not a given, and PTRACE isn't possible.
+
+This kind of privilege isolation is (i think) what you're looking for,
+and it is *only* possible with the agent (or some similar architecture).
+While this is not a common deployment of gpg-agent today, and it might
+have bugs in it for current deployment, it seems you're arguing *for*
+using an agent, rather than against it.
+
+If you try this particular use case, i'd be happy to help you iron out
+any bugs to make sure it's safe to use this way.
+
+> To reduce the attack surface, a "gpg --one-shot" argument could
+> be added, which will terminate the agent immediately after use,
+> maybe not even exposing it via sockets visible to other processes
+> but only connected to its "parent" gpg process via pipes.
+
+this approach would lose the benefit of long-running processes that you
+can get from things like dirmngr, and it would fail in the event that
+your agent was acting across a privilege boundary (you'd have to launch
+a constrained agent somehow).  wouldn't it be better to improve on the
+user-isolated processes instead?
+
+that said, i do agree that having an anonymous socketpair()-connected
+agent that lives and dies with the parent process would be a nice option
+-- but each option incurs a support burden, and i am not sure that the
+burden is worth the tradeoff when it is compared with the other
+isolate-and-constrain-the-agent proposals, so i'm more likely to work on
+the latter myself.
+
+All the best,
+
+                  --dkg
+
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEOCdgUepHf6PklTkyFJitxsGSMjcFAlo4MWEACgkQFJitxsGS
+Mjf+ZRAAuyEISOcVNDSiOvAD82f8qNotpssZqHvsDDsgpWURH6uZN+aSCKvQS/id
+U3QEdPxSd5YEbuPBMNF1HH/0SQDmkZuO4hFXMb/pLi3tNm3r8cibWazrHchpIoZy
+R/uEpvywtsAFAcTBn51xx4s6WXElsm9g0q8P+bJrzVwpuDYJcR1A3BHg4p+nljGl
+1CjU/Q65dxXuo3kIoXsmqKe43w6eF2qPqL1NuQjGpuNgH0UjSb82jSleMK3V+oNR
+e+mVpJTAFbysncUC6JmqLAXxejC/4NyhYGtUphg5y5APlfQHhp+UY/11wPiHbsuc
+/8VJB9OrGJ+JtxFtQRgLTiSUVaDsZz0MeZz+p30RzrgHIymi4i1dk4YW3DNbFIwJ
+nUChF9xWWMMImdm9ePP0OMTij23DRjj8MwuA4eMxwB6V+JpgIwQPY09n1I1j8Keh
+wDj3PXeCao9FGX/481a/NAkE5TnuS9dovnsAbv/QRmy+Yna/w8GByi8fETPrNUht
+Ckvn38FgItPtnPaCI+0RiJ5gURVCNt4yA/ZtMIJ71vPhbvhJEEYlvb2aR79LuWz5
+lFxzz31aVbZDeFEi2kE51NYj0V/JNR43qCpJ2rHv9tE3JIwCXy48IiG44TpAqFYI
+xFZrEej7jnHcWue/uFlkwEcIlbtOQyYoQPE2ucbi++Vl8wU2jug=
+=4DvY
+-----END PGP SIGNATURE-----
+--=-=-=--
