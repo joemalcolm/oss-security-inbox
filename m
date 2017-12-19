@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5564" "Saturday" "18" "July" "2015" "03:46:24" "+1200" "Amos Jeffries" "squid3@treenet.co.nz" "<55A92350.5080002@treenet.co.nz>" "150" "Re: [oss-security] Re: Squid HTTP proxy CVE request" nil nil nil "7" "2015071715:46:24" "[oss-security] Re: Squid HTTP proxy CVE request" (number mark "        squid3@treen Jul 18  150/5564  " thread-indent "\"Re: [oss-security] Re: Squid HTTP proxy CVE request\"\n") "<20150717140948.49FE46C0802@smtpvmsrv1.mitre.org>" ("<20150717140948.49FE46C0802@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1539" "Tuesday" "19" "December" "2017" "17:11:19" "+0100" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20171219171119.3f4c7ae5@pc1>" "48" "[oss-security] GIMP parser bugs (FLIMP and more)" "^Date:" nil nil "12" "2017121916:11:19" "[oss-security] GIMP parser bugs (FLIMP and more)" (number mark "        hanno@hboeck Dec 19   48/1539  " thread-indent "\"[oss-security] GIMP parser bugs (FLIMP and more)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 28055 invoked by uid 550); 17 Jul 2015 15:47:09 -0000
+Received: (qmail 5148 invoked by uid 550); 19 Dec 2017 16:11:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,168 +11,63 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28030 invoked from network); 17 Jul 2015 15:47:08 -0000
-Message-ID: <55A92350.5080002@treenet.co.nz>
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+Received: (qmail 4090 invoked from network); 19 Dec 2017 16:11:32 -0000
+Message-ID: <20171219171119.3f4c7ae5@pc1>
+X-Mailer: Claws Mail 3.16.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-References: <20150717140948.49FE46C0802@smtpvmsrv1.mitre.org>
-In-Reply-To: <20150717140948.49FE46C0802@smtpvmsrv1.mitre.org>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-CC: cve-assign@mitre.org
-Date: Sat, 18 Jul 2015 03:46:24 +1200
-From: Amos Jeffries <squid3@treenet.co.nz>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 19 Dec 2017 17:11:19 +0100
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: Squid HTTP proxy CVE request
+Subject: [oss-security] GIMP parser bugs (FLIMP and more)
 To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 18/07/2015 2:09 a.m., cve-assign@mitre.org wrote:
->> Due to incorrect handling of peer responses in a hierarchy of 2 or
->> more proxies remote clients (or scripts run on a client) are able to
->> gain unrestricted access through a gateway proxy to its backend proxy
-.
->
-> Use CVE-2015-5400.
->
+See also
+https://flimp.fuzzing-project.org/
 
-Thank you!
+Background: In 2014, back when I started the fuzzing project, I
+reported two bugs in GIMP in their more obscure parsers. Recently I was
+contacted by Tobias St=C3=B6ckmann who wrote a working exploit (on freebsd =
+<-
+no aslr, thus easier) for one of those bugs in the FLIC parser. He also
+submitted a patch.
 
->
->> This months release of Squid HTTP proxy, version 3.5.6, contains fixe
-s
->> for two security issues.
->
->> Squid up to and including 3.5.5 are apparently vulnerable to DoS
->> attack from malicious clients using repeated TLS renegotiation
->> messages.
->
-> We have a few questions about this.
->
-> First, we probably don't understand your build process. The only
-> mentions of the substring "renegotiate" in squid-3.5.6.tar.bz2 are:
->
->     - TLS: Disable client-initiated renegotiation
->
->   #if defined(TLSEXT_TYPE_renegotiate)
->               TLSEXT_TYPE_renegotiate,
->   #endif
->
->   #if defined(SSL3_FLAGS_NO_RENEGOTIATE_CIPHERS)
->   static void
->   ssl_info_cb(const SSL *ssl, int where, int ret)
->   [ ... ]
->   #endif
->
->   configureSslContext
->   ...
->   #if defined(SSL3_FLAGS_NO_RENEGOTIATE_CIPHERS)
->       SSL_CTX_set_info_callback(sslContext, ssl_info_cb);
->   #endif
->
->   sslCreateClientContext
->   ...
->   #if defined(SSL3_FLAGS_NO_RENEGOTIATE_CIPHERS)
->       SSL_CTX_set_info_callback(sslContext, ssl_info_cb);
->   #endif
->
-> The only mention of the substring "renegotiate" in squid-3.5.5.tar.bz2
-> is:
->
->   #if defined(TLSEXT_TYPE_renegotiate)
->               TLSEXT_TYPE_renegotiate,
->   #endif
->
-> http://wiki.squid-cache.org/SquidFaq/CompilingSquid doesn't seem to
-> mention the change.
->
-> How do these 3.5.6 changes disable anything, or serve as one of two
-> "fixes for two security issues"? Are you just providing a (not widely
-> documented) build option so that a repackager or end user could define
-> SSL3_FLAGS_NO_RENEGOTIATE_CIPHERS if desired?
+The bugs were ignored all the time, patches as well.
 
-The relevant code is all the parts wrapped in:
-  #if defined(SSL3_FLAGS_NO_RENEGOTIATE_CIPHERS)
-  ...
-  #endif
+I reported a couple of more bugs and also contacted the GNOME security
+team. Some have patches, others not, ony one got handled. It seems
+overall the file format importers are unmaintained.
+I also tried to submit a fuzzing guide to the gimp wiki, which failed,
+because the people who are supposed to hand out user accounts don't
+answer. (gimp is not fuzzing friendly.)
 
-When the OpenSSL library provides that flag definition, we set it on all
-client TLS connections at the end of the initial TLS handshake. Using
-the callback mechanism library provides to signal handshake completion.
+The bugs:
 
-The result is that the library then blocks renegotiation attempts by the
-client at any later time in the TLS connections existence.
+Heap overflow in FLI import (the one where we have an exploit):
+https://bugzilla.gnome.org/show_bug.cgi?id=3D739133
 
-This seem to be relevant to OpenSSL 0.9.8l up to somewhere around 1.0.2.
-After 1.0.2 the library apparently always refuses to perform that type
-of renegotiation and the flag was removed.
+OOB read in TGA (with patch)
+https://bugzilla.gnome.org/show_bug.cgi?id=3D739134
 
-It's only mentioned in the release announcement at present.
+OOB read in XCF (patch, the only one that got merged and fixed)
+https://bugzilla.gnome.org/show_bug.cgi?id=3D790783
 
->
-> In that situation, we don't believe there should be a CVE ID for the
-> official Squid distribution, because the change is about adding
-> functionality in the form of a new, non-default option. If a
-> repackager decided to build with SSL3_FLAGS_NO_RENEGOTIATE_CIPHERS and
-> then announce their 3.5.6 renegotiation change as a required security
-> update for their customers, then the repackager could have a CVE ID.
->
-> Second, we don't know what you mean by "CVE-2009-3555 ... was clearly
-> assigned for server-initiated renegotiation." This statement is,
-> however, not critical to CVE assignment, so we won't try to start a
-> discussion of that. The principal reason that CVE-2009-3555 can't be
-> correct is that CVE-2009-3555 isn't about resource-consumption DoS.
->
->> CVE-2011-1473 which is for the library itself and disputed
->
-> Right, in a case where there should be a CVE ID, we feel that the
-> vulnerable product would be specific server-side code, not a
-> general-purpose library.
->
-> To conclude, if the position of the Squid developers is that
-> client-initiated renegotiation must be denied (e.g., because it can
-> lead to resource-consumption DoS, and there aren't any supported Squid
-> use cases where you feel it's important to let a client renegotiate),
-> and you have changed your code to take this position by default, then
-> you can have a CVE ID. Otherwise, we think not.
->
+OOB read in GBR (no patch, looks like string/utf8 issue)
+https://bugzilla.gnome.org/show_bug.cgi?id=3D790784
 
-Our position matches all of the above except;
+Heap overflow in PSP (no patch, doesn't look straightforward to fix)
+https://bugzilla.gnome.org/show_bug.cgi?id=3D790849
 
- - the "must" in "must be denied". "should" would be closer. It has been
-a public issue for a long time and to our knowledge no actual DoS has
-occured.
-
- - other products had issues with client certificate authentication.
-None so far for us. If that is complained about we will likely re-enable
-it for that specific use case. Intention at this time is to keep the
-default as disabled.
-
-I'm half-hearted about CVE assignment. Since its all academic for
-installations building against up-to-date OpenSSL versions, and user
-requests to fix were based on QualSys test audits rather than real
-network problems.
+OOB read in PSP (no patch)
+https://bugzilla.gnome.org/show_bug.cgi?id=3D790853
 
 
-Thank you for the feedback.
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
 
-Amos
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (MingW32)
-
-iQIcBAEBAgAGBQJVqSNPAAoJEGvSOzfXE+nLqQUQAIoj3JUexKgm4ZrFo+MCduQh
-GTDoys1tuizIwCm8BxOq3uGEzvxlukHOqtOkGbwPbZ/tMjXQP0Q3GDCt69t7n/IS
-UbAQRslOQFflIKsfVMb4newfl3y4MqovPtvT8S23DyJIp8zlOZchfKLGJIET6G8c
-TwN9kEsVe+HpoF8YJ/Q6+9AiYp7pjzS0mQ54KlEEljk/a3kIzQWKnMNGE3COLMYW
-KHfnpxyMPyvWmWM0CbGlq0YGDU2juBCxz3GGpgr0xPqzenz8AgQt+7g1XhjhmemN
-1SE3ZDNQqHfl0keNWrbGWv/BFnKfaLbYOU+cKkVQtD1S4+lAtYrh6houbB9BmfKg
-+agkLqiUVgB0nK8yFCPV0pf5tb1zj7fDZcQVHq7LSH7IxXxlw87vvHS8GSVMU4Td
-F950VDnkZaKt7eX0bR0I8jirtWOaha+jpUcu0mdHkHCt7jCPUcjm518DrdalTDgp
-N2Tk4L52qaUfmcuNyoaqsqtdliW2AEkbD2swC2gHWzqOZ3FdA8Z4p/2LAtQh225B
-02XrZv7v/AJyGgp7u0WwD9k1At/6VezyVwQ2NcA9qLZxYrFbR7CyBa7LLMalfbH1
-argRNAjh08dmDVfTiuhXl7S6L/WvxlH7vu9b2ugUsou1HOyUUaXWgJXghwkc5Z6Z
-xE0oIlExv277bfCDDNYQ
-=91Ji
------END PGP SIGNATURE-----
+mail/jabber: hanno@hboeck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
