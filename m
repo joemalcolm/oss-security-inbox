@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2047" "Tuesday" "20" "October" "2015" "00:27:44" "-0500" "Brad Knowles" "brad@shub-internet.org" "<76804C86-B1DC-44C1-9CD8-65A9A3915EB7@shub-internet.org>" "57" "Re: [oss-security] Prime example of a can of worms" nil nil nil "10" "2015102005:27:44" "[oss-security] Prime example of a can of worms" (number mark "        brad@shub-in Oct 20   57/2047  " thread-indent "\"Re: [oss-security] Prime example of a can of worms\"\n") "<CANO=Ty2ffi_iLEzRzX4rBi-7xLg8p8BmbfxZZVPZdh1ORmPFsw@mail.gmail.com>" ("<CANO=Ty18_pMLco8RdabsEbhs9sLahRhT_U93PGhDVwhcRaqzpQ@mail.gmail.com>" "<CAFRnB2Wrz=zexGonV5fHosVqfiOhNvA6Ya2YsCYyDkt7UE_0mw@mail.gmail.com>" "<20151019193411.GA15710@hunt>" "<87eggqmta9.fsf@alice.fifthhorseman.net>" "<CANO=Ty2ffi_iLEzRzX4rBi-7xLg8p8BmbfxZZVPZdh1ORmPFsw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4168" "Tuesday" "19" "December" "2017" "19:58:26" "+0100" "Carlos Alberto Lopez Perez" "clopez@igalia.com" "<30a766a5-00c8-f5b8-0773-fa9846f250be@igalia.com>" "101" "[oss-security] WebKitGTK+ Security Advisory WSA-2017-0010" nil nil nil "12" "2017121918:58:26" "[oss-security] WebKitGTK+ Security Advisory WSA-2017-0010" (number mark "U       clopez@igali Dec 19  101/4168  " thread-indent "\"[oss-security] WebKitGTK+ Security Advisory WSA-2017-0010\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 29907 invoked by uid 550); 20 Oct 2015 09:38:06 -0000
+Received: (qmail 7459 invoked by uid 550); 19 Dec 2017 18:58:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,97 +11,129 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19871 invoked from network); 20 Oct 2015 05:28:10 -0000
-X-ASG-Debug-ID: 1445318876-061c414fdffead0001-Ebmqpw
-X-Barracuda-Envelope-From: brad@shub-internet.org
-X-Barracuda-RBL-Trusted-Forwarder: 216.194.196.20
-X-Barracuda-RBL-Trusted-Forwarder: 216.194.248.141
-X-Virus-Scanned: amavisd-new at mail-sterling.his.com
-Content-Type: multipart/signed; boundary="Apple-Mail=_9725292B-4940-4C51-8966-3D1694D80D54"; protocol="application/pgp-signature"; micalg=pgp-sha256
-X-Barracuda-RBL-IP: 172.16.1.6
-Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2104\))
-X-Pgp-Agent: GPGMail 2.5.2
-X-ASG-Orig-Subj: Re: [oss-security] Prime example of a can of worms
-In-Reply-To: <CANO=Ty2ffi_iLEzRzX4rBi-7xLg8p8BmbfxZZVPZdh1ORmPFsw@mail.gmail.com>
-X-Mao-Original-Outgoing-Id: 467011663.968165-3a68d810b6922112787cf028356de7f0
-Message-Id: <76804C86-B1DC-44C1-9CD8-65A9A3915EB7@shub-internet.org>
-References: <CANO=Ty18_pMLco8RdabsEbhs9sLahRhT_U93PGhDVwhcRaqzpQ@mail.gmail.com> <CAFRnB2Wrz=zexGonV5fHosVqfiOhNvA6Ya2YsCYyDkt7UE_0mw@mail.gmail.com> <20151019193411.GA15710@hunt> <87eggqmta9.fsf@alice.fifthhorseman.net> <CANO=Ty2ffi_iLEzRzX4rBi-7xLg8p8BmbfxZZVPZdh1ORmPFsw@mail.gmail.com>
-X-Mailer: Apple Mail (2.2104)
-X-Barracuda-Connect: smtp-nf-202.his.com[216.194.196.20]
-X-Barracuda-Start-Time: 1445318876
-X-Barracuda-URL: https://spam.his.com:443/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at his.com
-X-Barracuda-BRTS-Status: 1
-X-Barracuda-Spam-Score: 0.01
-X-Barracuda-Spam-Status: No, SCORE=0.01 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=7.0 tests=BSF_SC0_MISMATCH_TO, BSF_SC2_SA022a
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.23649
-	Rule breakdown below
-	 pts rule name              description
-	---- ---------------------- --------------------------------------------------
-	0.00 BSF_SC0_MISMATCH_TO    Envelope rcpt doesn't match header
-	0.01 BSF_SC2_SA022a         Custom Rule SA022a
-Cc: Brad Knowles <brad@shub-internet.org>,
- Seth Arnold <seth.arnold@canonical.com>
-Date: Tue, 20 Oct 2015 00:27:44 -0500
-From: Brad Knowles <brad@shub-internet.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Prime example of a can of worms
-To: oss-security@lists.openwall.com
+Received: (qmail 7422 invoked from network); 19 Dec 2017 18:58:40 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com; s=20170329;
+	h=Content-Type:MIME-Version:Date:Message-ID:Subject:From:Cc:To; bh=rP/vHk+GmTwRIBndA6vuco49D4N82iYDzt163TVaJrQ=;
+	b=DJY/IdfP0VoDpxuwo2VJyEa0MY5AscS78JfiF+9JNhvcclJdWMAB4JPKFcDGVlx7VlEQA2QGx2PYpzcbfp8Fzrs9m1nrDSOZRdS/4AbxWwQkYjmgs3n25yh8OkEVL7PNYLle7CUKF0U1+IIS9ir538XOU26oxGKl1Wh/d7urXXQn/HbfgTW8hZe0/IcWuEc0lc5okTvcarCL6PY3jUlY5a3qk7Y3myWoCux6/yGWM99unWEdEarmWMD8aITG9ihPpSTt75yyx/mf+pFTAyn5eXehSLBf+WEntcrp4uT8+Mo8rPOzKbeHmv3C3uu0EdNE94281Xka1YYXjiJo/Qwjyg==;
+To: webkit-gtk@lists.webkit.org
+Cc: security@webkit.org, distributor-list@gnome.org,
+ oss-security@lists.openwall.com, bugtraq@securityfocus.com
+From: Carlos Alberto Lopez Perez <clopez@igalia.com>
+Openpgp: id=B5D2B50BC48EC7F1EE90D9AB965089CE6B95F882;
+ url=http://key.neutrino.es
+Organization: Igalia S.L.
+Mail-Followup-To: webkit-gtk@lists.webkit.org, security@webkit.org,
+ distributor-list@gnome.org, oss-security@lists.openwall.com,
+ bugtraq@securityfocus.com
+Message-ID: <30a766a5-00c8-f5b8-0773-fa9846f250be@igalia.com>
+Date: Tue, 19 Dec 2017 19:58:26 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="a3t5FDSB9U4KwfFA9sDmbDpmwPx9UldQE"
+Subject: [oss-security] WebKitGTK+ Security Advisory WSA-2017-0010
 
---Apple-Mail=_9725292B-4940-4C51-8966-3D1694D80D54
+--a3t5FDSB9U4KwfFA9sDmbDpmwPx9UldQE
+Content-Type: multipart/mixed; boundary="Af1wSDtWSFOKuVHEgAsRnlsbsBeRmQXVK";
+ protected-headers="v1"
+From: Carlos Alberto Lopez Perez <clopez@igalia.com>
+To: webkit-gtk@lists.webkit.org
+Cc: security@webkit.org, distributor-list@gnome.org,
+ oss-security@lists.openwall.com, bugtraq@securityfocus.com
+Message-ID: <30a766a5-00c8-f5b8-0773-fa9846f250be@igalia.com>
+Subject: WebKitGTK+ Security Advisory WSA-2017-0010
+
+--Af1wSDtWSFOKuVHEgAsRnlsbsBeRmQXVK
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
 
-On Oct 19, 2015, at 11:16 PM, Kurt Seifried <kseifried@redhat.com> wrote:
+------------------------------------------------------------------------
+WebKitGTK+ Security Advisory                               WSA-2017-0010
+------------------------------------------------------------------------
 
-> #!/bin/bash
-> for i in `seq 1 100`;
-> do
->    openssl dhparam 2048 -text >> $i
-> done
->=20
-> will generate 100 2048 bit primes. If you can ideally simply commit the
-> files to the following github repo:
->=20
-> https://github.com/RedHatProductSecurity/Diffie-Hellman-Primes/
+Date reported      : December 19, 2017
+Advisory ID        : WSA-2017-0010
+Advisory URL       : https://webkitgtk.org/security/WSA-2017-0010.html
+CVE identifiers    : CVE-2017-7156, CVE-2017-7157, CVE-2017-13856,
+                     CVE-2017-13866, CVE-2017-13870.
 
-PR filed to update code to generate 4096-bit primes as well.
+Several vulnerabilities were discovered in WebKitGTK+.
 
-I=E2=80=99m wondering if we might be able to take advantage of a larger-sca=
-le effort in this area, by using something akin to the @Home methods, but m=
-aybe generating large numbers of primes using a custom public AMI and some =
-CloudFormation scripts?
+CVE-2017-7156
+    Versions affected: WebKitGTK+ before 2.18.4.
+    Credit to an anonymous researcher.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
 
---
-Brad Knowles <brad@shub-internet.org>
-LinkedIn Profile: <http://tinyurl.com/y8kpxu>
+CVE-2017-7157
+    Versions affected: WebKitGTK+ before 2.18.1.
+    Credit to an anonymous researcher.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2017-13856
+    Versions affected: WebKitGTK+ before 2.18.4.
+    Credit to Jeonghoon Shin.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2017-13866
+    Versions affected: WebKitGTK+ before 2.18.4.
+    Credit to an anonymous researcher.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2017-13870
+    Versions affected: WebKitGTK+ before 2.18.4.
+    Credit to an anonymous researcher.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
 
 
---Apple-Mail=_9725292B-4940-4C51-8966-3D1694D80D54
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename=signature.asc
-Content-Type: application/pgp-signature;
-	name=signature.asc
-Content-Description: Message signed with OpenPGP using GPGMail
+We recommend updating to the last stable version of WebKitGTK+. It is
+the best way of ensuring that you are running a safe version of
+WebKitGTK+. Please check our website for information about the last
+stable releases.
+
+Further information about WebKitGTK+ Security Advisories can be found
+at: https://webkitgtk.org/security.html
+
+The WebKitGTK+ team,
+December 19, 2017
+
+
+--Af1wSDtWSFOKuVHEgAsRnlsbsBeRmQXVK--
+
+--a3t5FDSB9U4KwfFA9sDmbDpmwPx9UldQE
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG/MacGPG2 v2.0.28
+Comment: You can fetch my GnuPG key from http://key.neutrino.es
 
-iQIcBAEBCAAGBQJWJdDQAAoJEKOyg2+mWTCTO8AP/RuzUxUH133pqp8/vFfjDHWr
-CjcRSeS31tBC91wnRZoeIMkDABQusxv+70YO5+3+W3OqTePhABh2Cu5buey+k6zQ
-IOoRsRyil4/d8EYn+BBUAqrCNwvB4SnlFBPedMaozUpkQCF/6Z1PxwUJGxxoh0ir
-+ybqrwLVq5ktBglJ7Po3Swho2vkMC+/UNnjTBP5qM9jBobSbXxdw+z2/43LjaFbR
-TsmVd8sx1tP5MsupBv5DPc638nz5uriRrkNlVbD7Cd9vAxXNmdrSYo/bMTm23iLL
-nKDfgUfc9gaIgxNiNqP0EVK8ZqboYUmXZcUf0pSUylM/kk/9eW8z4wtTEJYqsPGG
-DM7a80dqpfPag538qmGNHxXr2NC1XChopYCII5LiLjScd7qvOXoN5NMFL44cweEe
-EwF69RNeqScri8UN+/NSXlAvqURjoTdMTxxrk20CXBoTV7I97GsOPorR4UUyr6xq
-Ie+sTw+t2hgW869Qb74t+n696V4tYmdZimr0WGjlQzdc19AwkBZwqVzUXUH7p1yg
-WiYY9Bjw/RZDBKGtv4sXOFI7D+8ptSTvcP4239I4fdyesei4WxtW25Wfe/44X6EM
-1k3IAO4rP5SSNyntQedjQEyqIf2W5hjgemtOleNPIiAqPNp915Ssyu1Uqj0yDgCK
-Ouobo6z5YktlGBP6TLDl
-=Xx67
+iQIzBAEBCgAdFiEEtdK1C8SOx/HukNmrllCJzmuV+IIFAlo5YVMACgkQllCJzmuV
++ILwAQ/+NhatNwCYyICCcY0lXIefsC9VJCiwM1i3nu6Qe343SQ+LNk7USDsWmN3r
+QL8/9dTTvLYH+Vbxmlu+SI9dBUCWrWlS98PoNqH31XNrBac3Jm8V4dtmFiJ1LkJa
+69KqoowxndPPVRTWhh60C2EN6DbEVa1Lo1qwyrYLCSCmzM8TUlHmzgc91t5EJeZ6
+Ev+TxUwngYUvMjDSajC9DOtvuaG14+KA2Zxdoy5lzR8lNF/sz9wCshbk3Zj0dP+e
+WrQAwAu0V4wGLY947b7NpAnJSAEx3ZxFrg8uhgDfiaZpT+4YGXh21ISfLOc2yYhB
+Mm78ELvEPotdhD9uWCkAjA/YeutrEMnC+HUFGy2sg2cOexiDiqfUgTGDHrPmLg0z
+F38gXTNoDHdNAbY89XZzZI3DGwR7cF4AZRH5OlkumWmC2S+zVuKEwzfQ94CkgTSO
+0aoy60mqJGTEbiijNP/ZrL0Ryh7Z40Fa9sAle9KackD7fKjlblBma8Jv8C1xpZka
+bhta4ScTA1ot4cjZdExv/AJiFOzOrgIdJ+FnLmykU/ytHhi5ranV6gBJZi7xlbVw
+CI9LUjuu3MfIQbrqll7me6oV9/ZA4WtqAWeCyslejuD4k+OyevyVMFsBehh0VfL9
+i/Y4VoArR+NxxSe2PnEyRPQx1VSXMD++n6u6XNUCX2zRYQiI97I=
+=NV0u
 -----END PGP SIGNATURE-----
 
---Apple-Mail=_9725292B-4940-4C51-8966-3D1694D80D54--
+--a3t5FDSB9U4KwfFA9sDmbDpmwPx9UldQE--
