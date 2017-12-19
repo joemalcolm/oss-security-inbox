@@ -1,71 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/02/5
-Message-ID: <CAKG8Do7hHuzE3=LZv59pv50F5r_1auxPtq+6e0+LbO9tMH_V=w@mail.gmail.com>
-Date: Mon, 2 Jan 2017 17:43:13 +0100
-From: Cedric Buissart <cbuissar@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/19/1
+Message-ID: <1453-1513642461.788845@V4Go.Zsn0.ZlLm>
+Date: Tue, 19 Dec 2017 00:14:21 +0000
+From: halfdog <me@...fdog.net>
 To: oss-security@...ts.openwall.com
-Subject: freeIPA CVEs CVE-2016-9575 (insufficient permission check) & CVE-2016-7030 (DoS)
+Subject: Re: Recommendations GnuPG-2 replacement
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Leonid Isaev writes:
+> On Mon, Dec 18, 2017 at 08:21:56PM +0000, halfdog wrote:
+>> The point in starting this thread was, that GnuPG does NOT
+>> conveniently cover usecases for headless or scripting operation.
+>> Thus it seems that the time has come to look for replacement,
+>> as GnuPG is moving more in the "desktop" direction, as also
+>> your comments indicate.
+>
+> You are talking about policies here, not technical issues.
+> Gnupg is perfectly scriptable, see pacman-key(1) tool in Arch
+> Linux. Moreover, gpg-agent is easily usable on a headless machine.
+> At least, I mostly use it this way when checking email...
 
-This is to disclose the following 2 freeIPA CVEs.
+So maybe SSH cares for you to have sane pty with all the features
+needed to make gnupg run smoothly? Perhaps you may want to respond,
+that it is not gnupg at fault, if e.g. an embedded boot image
+does not use openvt and /dev/tty[1-6] during early boot in correct
+ways, thus causing problems. But the way gnupg reacts in that
+situation (not working and not giving meaningful error messages
+either) does not really help the user and gave me the impression,
+that those usecases are out of scope - and hence also of scope
+for testing.
 
-1) CVE-2016-9575: Insufficient permission check in certprofile-mod
+You may want to read [0] to see how another user on "gnupg-users"
+describes in more detail the "user experience" when trying
+to get TTYs, pinentry, gpg-agent ... up and running. The post
+quite reflects also my user experience, the difference is just
+that he writes lengthy mails to get things running, I write them
+to see if there are alternatives.
 
-Due to a missing permission check, certprofile-mod can be used by an
-authenticated but unprivileged user to modify certificate profile
-configuration. This could allow the issuance of certificates with
-fraudulent
-subject naming information (allowing the holder of the private key to
-impersonate another entity), or inappropriate key usage or extended key
-usage
-information (use of certificate for unauthorised purposes e.g. code
-signing).
+> You will lose nothing if you just pkill(1) gpg-agent though. So
+> I don't understand why you claim that gpg is moving towards
+> desktop.
 
-Upstream patch :
-https://git.fedorahosted.org/cgit/freeipa.git/commit/?id=fec4c32ff15
+Well, on a server running multiple concurring tasks, I feel somehow
+uncomfortable killing a process just by UID and process name.
+How to make sure, that not a parallel task is still using the
+agent?
 
-Note: on older freeipa versions (4.3 & 4.2), path to affected file differs
+Signals are just fine for control: when a parent knows exactly
+its children and signals them. For processes starting automagically
+I just do not want to care about how their daemonizing works
+and if there might be races during that procedure, how to craft
+pkill regex to reduce the risk of killing the wrong agent under
+some circumstances, ...
 
-Impact: moderate
-CVSS3 scoring : 6.3 - AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L
-Reported by: Liam Campbell (Red Hat)
-Affected versions: all versions supporting certificate profiles are
-affected:
-4.2 and above.
+>> That's really a strange argument. You fear PTRACING for key
+>> extraction of a short-lived, per-key instance of gpg1 process
+>> and solve that by putting all the key material into a single
+>> long-lived gpg-agent process, not even providing convenient
+>> commands to flush the keys from there?
+>
+> pkill -hup gpg-agent. Please read the manpages.
 
+Please give realistic answers. And if you try, you may notice,
+that things are not just as simple as "send a signal to any process
+with a given name". Your backup system vendor and your colleagues
+will love you, when killing the sign/encryption process that way,
+yielding spurious errors from time to time. Could be quite some
+beer to spend when they completed their root cause analysis.
 
-2) CVE-2016-7030 : DoS attack against kerberized services by abusing
-password
-policy
+Maybe your pkill would not cause those side effects, but I just
+do not want to care about them. I am quite sure, that they are
+ignorable on desktop environments or for e-mail reading, in a
+production environment they might just be a risk and an annoyance.
+Hence my argument about desktop and server.
 
-FreeIPA contains MIT KDC as its main component + FreeIPA is using custom
-database driver for the KDC. As a side-effect of implementation, FreeIPA is
-enforcing password policies for all principals, including services which do
-not use "password" but keytab with randomly-generated/strong key.
+hd
 
-Default password policy locks an account after 5 unsuccessful
-authentication
-attempts for 10 minutes. An attacker can use this to simply lock-out any
-principal, including system services.
+[0] https://lists.gnupg.org/pipermail/gnupg-users/2017-December/059600.html
 
-Upstream patch :
-https://git.fedorahosted.org/cgit/freeipa.git/commit/?id=6f1d92746
-
-Additional dependency :
-https://git.fedorahosted.org/cgit/freeipa.git/commit/?id=73f33569c
-
-Impact: moderate
-CVSS3 scoring : 7.5 - AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H
-Affected versions: all
-
-Reported by: Petr Spacek (Red Hat)
-
-Best Regards,
-
-
--- 
-Cedric Buissart,
-Product Security
 
