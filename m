@@ -1,40 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/13/2
-Message-ID: <234ac7fe83fb46f8b571574565bd4e36@imshyb02.MITRE.ORG>
-Date: Thu, 12 Jan 2017 21:47:13 -0500
-From: <cve-assign@...re.org>
-To: <ailin.nemui@...il.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: Irssi out of bounds read in format string
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/19/4
+Message-ID: <nycvar.YSQ.7.76.1712191700510.32077@wniryva>
+Date: Tue, 19 Dec 2017 17:03:36 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Daniel Berrange <berrange@...hat.com>
+Subject: CVE-2017-15124 Qemu: memory exhaustion through framebuffer update request message in VNC server
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+   Hello,
 
-> - Printing the value %[ leads to oob read
-> https://blog.fuzzing-project.org/55-Fuzzing-Irssi-with-Perl-Scripts.html
+VNC server implementation in Quick Emulator(QEMU) was found to be vulnerable 
+to an unbounded memory allocation issue, as it did not throttle the 
+framebuffer updates sent to its client. If the client did not consume these 
+updates, VNC server allocates growing memory to hold onto this data.
 
-Use CVE-2017-5356.
+A malicious VNC client could use this flaw to cause DoS on the remote server 
+host.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Upstream fix(es):
+-----------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2017-12/msg03715.html
+   -> https://lists.gnu.org/archive/html/qemu-devel/2017-12/msg03713.html
+   -> https://lists.gnu.org/archive/html/qemu-devel/2017-12/msg03711.html
 
-iQIcBAEBCAAGBQJYeD88AAoJEHb/MwWLVhi2li0P/2G3s2BZ1aKfD6AE6RL9S1nz
-DGFt6rX1OpYLBLsq0+C/6a4w8WN1Rih6LmlADwzDb6E93TY8eyfaF2jCPg5VUL1I
-ZMLsAFL7WkrfJKiMItoYPDr6eKzXH1SCsuukaNFmuVCpxJS+cWuaQJKI0/Y+wrEo
-zFRLTLWkx02EvicjwgdJ5+oWtp9PEpgjiAFD5fYkMG/PHWUyQIt1CYo4vTh3uvY3
-m/z1ur0Eh35WSPFpxHMbUmMIi1fzVohcJTGvbXmR+EWwfRmudENrVPSFdUgCZAmh
-0uQa+5it6eYPaorz67Hv9zUtEcNUzcibk/cepfNpY/rWWqJb7M2Wtg88J0YBysSS
-C39Dnd6v06/2RkyZGWga8N9TF5UIty2Oljhyjrmfkw9p/ko7DJoS+F8SmDR32qtO
-fB1YrhVXoXvZRj108vdtipl46w2xWL5+yP8fHTqZjRnEMRUrI308MrfjWW4UGyMi
-ebLCN0uWtTXMC0TQCbXIhVNnDFhQlBRTpcxlWtuc6GDjvVCCBIWjFVB8jHUUIVBO
-B+L+CQtcVoFmxz1470iodzHVjWIR7lagJp6KxaaSKQcMU+5Q2djHLw6nVuxsHC6y
-o1t8u8SHXiLQSqyGImTuy/Ntvj4+yXABy5jzT2Y7XlS7dXhoSG9hu7PPsxGxIA6w
-qNa+XrGe0DuQj87/bXYO
-=ARuT
------END PGP SIGNATURE-----
+Thread:
+-------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2017-12/msg03705.html
+
+'CVE-2017-15124' is assigned to this issue by Red Hat Inc.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
