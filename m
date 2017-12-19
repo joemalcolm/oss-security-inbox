@@ -1,91 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/21/1
-Message-ID: <bf63ff44-fb2b-bc2b-9cad-ba818bb57162@orlitzky.com>
-Date: Wed, 20 Sep 2017 20:39:24 -0400
-From: Michael Orlitzky <michael@...itzky.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE-2017-14609 Kannel privilege escalation via PID file manipulation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/19/3
+Message-ID: <20171219014854.GA17687@takahe.colorado.edu>
+Date: Mon, 18 Dec 2017 18:48:54 -0700
+From: Leonid Isaev <leonid.isaev@...a.colorado.edu>
+To: oss-security@...ts.openwall.com
+Subject: Re: Recommendations GnuPG-2 replacement
 Content-Type: text/plain; charset=utf-8
 
-Product: Kannel (open source WAP and SMS gateway)
-Versions-affected: all
-Bug-report: https://redmine.kannel.org/issues/771
-Author: Michael Orlitzky
+On Tue, Dec 19, 2017 at 12:14:21AM +0000, halfdog wrote:
+> So maybe SSH cares for you to have sane pty with all the features
+> needed to make gnupg run smoothly? Perhaps you may want to respond,
+> that it is not gnupg at fault, if e.g. an embedded boot image
+> does not use openvt and /dev/tty[1-6] during early boot in correct
+> ways, thus causing problems. But the way gnupg reacts in that
+> situation (not working and not giving meaningful error messages
+> either) does not really help the user and gave me the impression,
+> that those usecases are out of scope - and hence also of scope
+> for testing.
 
+Hmm, I don't know about ssh, but you are supposed to export GPG_TTY in .bashrc.
 
-(This hasn't been fixed upstream but I don't expect a response, so I'd
-rather not make people wait for the workaround.)
+> You may want to read [0] to see how another user on "gnupg-users"
+> describes in more detail the "user experience" when trying
+> to get TTYs, pinentry, gpg-agent ... up and running. The post
+> quite reflects also my user experience, the difference is just
+> that he writes lengthy mails to get things running, I write them
+> to see if there are alternatives.
 
+I read that mail, and the guy doesn't make too much sense to me... Also, he
+never showed any gpg-agent.conf file, or any debug output of gpg-agent. He only
+claims is that it used to work on an Ubuntu system. So, how am I supposed to
+help him? I never used anything Debian-related. 
 
-== Summary ==
+Another issue, is that doing that sudo magic may not play well with
+systemd-logind. Latest gnupg ships gpg-agent which is socket-activated by
+systemd --user (FTR, I don't support this choice).
 
-The Kannel daemons create their PID files after dropping privileges to
-a non-root user. That may be exploited (through init scripts or other
-management tools) by the unprivileged user to kill root processes,
-since when a daemon is stopped, root usually sends a SIGTERM to the
-contents of its PID file (which are under the control of the runtime
-user).
+OTOH, this email is written in mutt running inside an ssh session, and the
+passwd for the smtp server is stored in a symmetrically gpg-encrypted file...
 
+> Well, on a server running multiple concurring tasks, I feel somehow
+> uncomfortable killing a process just by UID and process name.
+> How to make sure, that not a parallel task is still using the
+> agent?
 
-== Details ==
+What user runs gpg-agent?
 
-The purpose of the PID file is to hold the PID of the running daemon,
-so that later it can be stopped, restarted, or otherwise signaled
-(many daemons reload their configurations in response to a SIGHUP).
-To fulfil that purpose, the contents of the PID file need to be
-trustworthy. If the PID file is writable by a non-root user, then he
-can replace its contents with the PID of a root process. Afterwards,
-any attempt to signal the PID contained in the PID file will instead
-signal a root process chosen by the non-root user.
+> Signals are just fine for control: when a parent knows exactly
+> its children and signals them. For processes starting automagically
+> I just do not want to care about how their daemonizing works
+> and if there might be races during that procedure, how to craft
+> pkill regex to reduce the risk of killing the wrong agent under
+> some circumstances, ...
 
-This is commonly exploitable through init scripts that are run as root
-and which blindly trust the contents of their PID files. Kannel itself
-ships a few such a init scripts as debian/*.init.
+The HUP signal is a standard means of making daemons reload their configs and
+flush caches. gpg-agent is not unique here. For example, logrotate does the
+same with syslog.
 
+> Please give realistic answers. And if you try, you may notice,
+> that things are not just as simple as "send a signal to any process
+> with a given name". Your backup system vendor and your colleagues
+> will love you, when killing the sign/encryption process that way,
+> yielding spurious errors from time to time. Could be quite some
+> beer to spend when they completed their root cause analysis.
 
-== Exploitation ==
+For encrypting you don't need agent at all. For example, on my systems, root
+ssh key is set randomly on each boot and stored in an encrypted form. The
+encryption is performed with my packager key as a --recipient. All from a
+systemd service. Works since 2013 on Arch Linux testing.
 
-There is only a risk of exploitation when some other user relies on
-the data in the PID file.
+For signing, I don't know what you mean because I don't understand how you
+unlock secret key in a non-interactive manner...
 
-An example scenario involving an init script would be,
+> Maybe your pkill would not cause those side effects, but I just
+> do not want to care about them. I am quite sure, that they are
+> ignorable on desktop environments or for e-mail reading, in a
+> production environment they might just be a risk and an annoyance.
+> Hence my argument about desktop and server.
 
-1. I run "/etc/init.d/bearerbox start" to start the daemon.
+Please, don't spread this corporate nonsense about production environments etc
+because it is just a politically correct excuse for ignorance of IT ppl.
 
-2. bearerbox drops to the "kannel" user.
-
-3. bearerbox writes its PID file, now owned by the "kannel" user.
-
-4. Someone compromises the daemon.
-
-5. The attacker is generally limited in what he can do because the
-   daemon doesn't run as root. However, he can write "1" into the
-   PID file, and he does.
-
-6. I run "/etc/init.d/bearerbox stop" to stop the daemon while I
-   investigate.
-
-7. The machine reboots, because I killed PID 1 (this is normally
-   restricted to root).
-
-
-== Workaround ==
-
-The Kannel daemons can be run in the foreground (by omitting
-the --daemonize, --pid-file, and --user flags) under a modern init
-system like systemd or OpenRC. Those init systems create the PID file as
-root, and it can be relocated to a root-owned directory like /run to
-avoid the vulnerability.
-
-A SysV-style init script can mitigate the risk by verifying the PID
-data. You can get the user of the process whose PID you find with
-
-  ps -p <pid> -o user=
-
-and you can get the name of the command with
-
-  ps -p <pid> -o comm=
-
-Init script authors should check the output of those two command against
-the expected values before sending a signal to a running process. That
-will eliminate the most serious risks.
+Cheers,
+-- 
+Leonid Isaev
