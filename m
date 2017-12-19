@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6450" "Wednesday" "20" "January" "2016" "12:08:47" "+0000" "Xen.org security team" "security@xen.org" "<E1aLrZ9-0003RR-Dg@xenbits.xen.org>" "171" "[oss-security] Xen Security Advisory 168 (CVE-2016-1571) - VMX: intercept issue with INVLPG on non-canonical address" nil nil nil "1" "2016012012:08:47" "[oss-security] Xen Security Advisory 168 (CVE-2016-1571) - VMX: intercept issue with INVLPG on non-canonical address" (number mark "U       security@xen Jan 20  171/6450  " thread-indent "\"[oss-security] Xen Security Advisory 168 (CVE-2016-1571) - VMX: intercept issue with INVLPG on non-canonical address\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["523" "Tuesday" "19" "December" "2017" "14:15:43" "+0530" "P J P" "ppandit@redhat.com" "<nycvar.YSQ.7.76.1712191414120.29121@wniryva>" "18" "[oss-security] CVE-2017-17741 kernel: kvm: stack-based out-of-bounds read via vmcall instruction" nil nil nil "12" "2017121908:45:43" "[oss-security] CVE-2017-17741 kernel: kvm: stack-based out-of-bounds read via vmcall instruction" (number mark "U       ppandit@redh Dec 19   18/523   " thread-indent "\"[oss-security] CVE-2017-17741 kernel: kvm: stack-based out-of-bounds read via vmcall instruction\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17677 invoked by uid 550); 20 Jan 2016 12:09:06 -0000
+Received: (qmail 30261 invoked by uid 550); 19 Dec 2017 08:46:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,189 +11,35 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17536 invoked from network); 20 Jan 2016 12:09:05 -0000
-Message-Id: <E1aLrZ9-0003RR-Dg@xenbits.xen.org>
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
-MIME-Version: 1.0
-X-Mailer: MIME-tools 5.428 (Entity 5.428)
-CC: Xen.org security team <security@xen.org>
-Date: Wed, 20 Jan 2016 12:08:47 +0000
-From: Xen.org security team <security@xen.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Xen Security Advisory 168 (CVE-2016-1571) - VMX: intercept issue
- with INVLPG on non-canonical address
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
+Received: (qmail 30243 invoked from network); 19 Dec 2017 08:45:59 -0000
+Date: Tue, 19 Dec 2017 14:15:43 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss security list <oss-security@lists.openwall.com>
+Message-ID: <nycvar.YSQ.7.76.1712191414120.29121@wniryva>
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.29]); Tue, 19 Dec 2017 08:45:48 +0000 (UTC)
+Subject: [oss-security] CVE-2017-17741 kernel: kvm: stack-based out-of-bounds read via vmcall
+ instruction
 
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+   Hello,
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Linux kernel built with the KVM virtualization(CONFIG_KVM) support is 
+vulnerable to an out-of-bounds read access issue. It could occur when 
+emulating vmcall instruction invoked by a guest.
 
-            Xen Security Advisory CVE-2016-1571 / XSA-168
-                              version 3
+A guest user/process could use this flaw to disclose kernel memory bytes.
 
-       VMX: intercept issue with INVLPG on non-canonical address
+Upstream patch:
+---------------
+   -> https://www.spinics.net/lists/kvm/msg160796.html
 
-UPDATES IN VERSION 3
-====================
+CVE assigned via https://cveform.mitre.org/
 
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-While INVLPG does not cause a General Protection Fault when used on a
-non-canonical address, INVVPID in its "individual address" variant,
-which is used to back the intercepted INVLPG in certain cases, fails in
-such cases. Failure of INVVPID results in a hypervisor bug check.
-
-IMPACT
-======
-
-A malicious guest can crash the host, leading to a Denial of Service.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen versions from 3.3 onwards are affected.
-
-Only systems using Intel or Cyrix CPUs are affected. ARM and AMD
-systems are unaffected.
-
-Only HVM guests using shadow mode paging can expose this
-vulnerability.  PV guests, and HVM guests using Hardware Assisted
-Paging (also known as EPT on affected hardware), are unaffected.
-
-Note that while unsupported, guests with enabled nested virtualization
-are vulnerable even when using EPT.
-
-CHECKING FOR VULNERABLE CONFIGURATION
-=====================================
-
-To discover whether your HVM guests are using HAP, or shadow page
-tables: request debug key `q' (from the Xen console, or with
-`xl debug-keys q').  This will print (to the console, and visible in
-`xl dmesg'), debug information for every domain, containing something
-like this:
-
-  (XEN) General information for domain 2:
-  (XEN)     refcnt=1 dying=2 pause_count=2
-  (XEN)     nr_pages=2 xenheap_pages=0 shared_pages=0 paged_pages=0 dirty_cpus={} max_pages=262400
-  (XEN)     handle=ef58ef1a-784d-4e59-8079-42bdee87f219 vm_assist=00000000
-  (XEN)     paging assistance: hap refcounts translate external
-                               ^^^
-The presence of `hap' here indicates that the host is not
-vulnerable to this domain.  For an HVM domain the presence of `shadow'
-indicates that the domain can exploit the vulnerability.
-
-Note that `General information' will also be printed for PV domains.
-For most PV domains there will be no `paging assistance' reported.
-But PV guests currently being migrated will report
-  (XEN)     paging assistance: shadow log_dirty
-
-Overall: a domain can exploit the vulnerability if this debug output
-contains a `paging assistance' line which reports `translate' and
-which does not report `hap'.
-
-MITIGATION
-==========
-
-Running only PV guests will avoid this vulnerability.
-
-Running HVM guests on only AMD hardware will also avoid this
-vulnerability.
-
-Running HVM guests with Hardware Assisted Paging (HAP) enabled will
-also avoid this vulnerability.  This is the default mode on hardware
-supporting HAP, but can be overridden by hypervisor command line
-option and guest configuration setting.  Such overrides ("hap=0" in
-either case, with variants like "no-hap" being possible in the
-hypervisor command line case) would need to be removed to avoid this
-vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Jan Beulich of SUSE.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa168.patch      xen-unstable, Xen 4.6.x, Xen 4.5.x, Xen 4.4.x, Xen 4.3.x
-
-$ sha256sum xsa168*
-c95198a66485d6e538d113ce2b84630d77c15f597113c38fadd6bf1e24e4c8ec  xsa168.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJWn3dEAAoJEIP+FMlX6CvZLaAH/A1FzwQebCOF0MCEMcM9V/zK
-At3L0XG5oBiVZVpbXAfYULeKaLtTGLBXqhBJjzej0FypCvEYX6BLBITLsw7kMqoW
-JSYHNHlg4pLH2Wnf6i3fVC7EIHx5XNuDa8Zeyt73wEFJhVpp43PcMwMzBolTUBmP
-+f5WDkLYflYXv+0XiHfbBLA2fl+K+A5OdDhKgjPZJouGvdfiZxX7EChR0asmmD1i
-AbSZYTLGhdlSU+fvw+w2XUYSeINS1FEhsZxMbWMVuz7jmPBmOn6u8NLrBdZatYoE
-Z2Fly81pWD7KDwusVscoLBdmBmI1Wr3u975j5EkQLbsCTsqo5ayP3BpfsieijIg=
-=UJX5
------END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa168.patch"
-Content-Disposition: attachment; filename="xsa168.patch"
-Content-Transfer-Encoding: base64
-
-eDg2L1ZNWDogcHJldmVudCBJTlZWUElEIGZhaWx1cmUgZHVlIHRvIG5vbi1j
-YW5vbmljYWwgZ3Vlc3QgYWRkcmVzcwoKV2hpbGUgSU5WTFBHIChhbmQgb24g
-U1ZNIElOVkxQR0EpIGRvbid0IGZhdWx0IG9uIG5vbi1jYW5vbmljYWwKYWRk
-cmVzc2VzLCBJTlZWUElEIGZhaWxzIChpbiB0aGUgImluZGl2aWR1YWwgYWRk
-cmVzcyIgY2FzZSkgd2hlbiBwYXNzZWQKc3VjaCBhbiBhZGRyZXNzLgoKU2lu
-Y2Ugc3VjaCBpbnRlcmNlcHRlZCBJTlZMUEcgYXJlIGVmZmVjdGl2ZWx5IG5v
-LW9wcyBhbnl3YXksIGRvbid0IGZpeAp0aGlzIGluIHZteF9pbnZscGdfaW50
-ZXJjZXB0KCksIGJ1dCBpbnN0ZWFkIGhhdmUgcGFnaW5nX2ludmxwZygpIG5l
-dmVyCnJldHVybiB0cnVlIGluIHN1Y2ggYSBjYXNlLgoKVGhpcyBpcyBYU0Et
-MTY4LgoKU2lnbmVkLW9mZi1ieTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1
-c2UuY29tPgpSZXZpZXdlZC1ieTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNv
-b3BlcjNAY2l0cml4LmNvbT4KQWNrZWQtYnk6IElhbiBDYW1wYmVsbCA8aWFu
-LmNhbXBiZWxsQGNpdHJpeC5jb20+CgotLS0gYS94ZW4vaW5jbHVkZS9hc20t
-eDg2L3BhZ2luZy5oCisrKyBiL3hlbi9pbmNsdWRlL2FzbS14ODYvcGFnaW5n
-LmgKQEAgLTI0NSw3ICsyNDUsNyBAQCBwYWdpbmdfZmF1bHQodW5zaWduZWQg
-bG9uZyB2YSwgc3RydWN0IGNwCiAgKiBvciAwIGlmIGl0J3Mgc2FmZSBub3Qg
-dG8gZG8gc28uICovCiBzdGF0aWMgaW5saW5lIGludCBwYWdpbmdfaW52bHBn
-KHN0cnVjdCB2Y3B1ICp2LCB1bnNpZ25lZCBsb25nIHZhKQogewotICAgIHJl
-dHVybiBwYWdpbmdfZ2V0X2hvc3Rtb2RlKHYpLT5pbnZscGcodiwgdmEpOwor
-ICAgIHJldHVybiBpc19jYW5vbmljYWxfYWRkcmVzcyh2YSkgJiYgcGFnaW5n
-X2dldF9ob3N0bW9kZSh2KS0+aW52bHBnKHYsIHZhKTsKIH0KIAogLyogVHJh
-bnNsYXRlIGEgZ3Vlc3QgdmlydHVhbCBhZGRyZXNzIHRvIHRoZSBmcmFtZSBu
-dW1iZXIgdGhhdCB0aGUK
-
---=separator--
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
