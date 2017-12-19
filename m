@@ -1,23 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/08/6
-Message-ID: <20170608192013.GG12004@suse.de>
-Date: Thu, 8 Jun 2017 21:20:13 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/19/5
+Message-ID: <20171219171119.3f4c7ae5@pc1>
+Date: Tue, 19 Dec 2017 17:11:19 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Is not memory allocation failure a bug?
+Subject: GIMP parser bugs (FLIMP and more)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jun 08, 2017 at 02:35:18PM -0400, Qhdwns123 wrote:
-> HI
-> 
-> I found a memory allocation failure and reported it to the developer.
-> 
-> But in the process of communicating, they are not bugs.
-> 
-> Do you have experience similar to me?
-> 
-> If you have experience, how did you cope?
+Hi,
 
-That really depends on context. Do you have a piece of code that you think is buggy?
+See also
+https://flimp.fuzzing-project.org/
 
-Ciao, Marcus
+Background: In 2014, back when I started the fuzzing project, I
+reported two bugs in GIMP in their more obscure parsers. Recently I was
+contacted by Tobias Stöckmann who wrote a working exploit (on freebsd <-
+no aslr, thus easier) for one of those bugs in the FLIC parser. He also
+submitted a patch.
+
+The bugs were ignored all the time, patches as well.
+
+I reported a couple of more bugs and also contacted the GNOME security
+team. Some have patches, others not, ony one got handled. It seems
+overall the file format importers are unmaintained.
+I also tried to submit a fuzzing guide to the gimp wiki, which failed,
+because the people who are supposed to hand out user accounts don't
+answer. (gimp is not fuzzing friendly.)
+
+The bugs:
+
+Heap overflow in FLI import (the one where we have an exploit):
+https://bugzilla.gnome.org/show_bug.cgi?id=739133
+
+OOB read in TGA (with patch)
+https://bugzilla.gnome.org/show_bug.cgi?id=739134
+
+OOB read in XCF (patch, the only one that got merged and fixed)
+https://bugzilla.gnome.org/show_bug.cgi?id=790783
+
+OOB read in GBR (no patch, looks like string/utf8 issue)
+https://bugzilla.gnome.org/show_bug.cgi?id=790784
+
+Heap overflow in PSP (no patch, doesn't look straightforward to fix)
+https://bugzilla.gnome.org/show_bug.cgi?id=790849
+
+OOB read in PSP (no patch)
+https://bugzilla.gnome.org/show_bug.cgi?id=790853
+
+
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
