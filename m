@@ -1,119 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/01/5
-Message-ID: <2034231.emHkJOHN5z@arcadia>
-Date: Sun, 01 Jan 2017 16:50:28 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: libtiff: invalid memory READ in t2p_writeproc (tiff2pdf.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/19/6
+Message-ID: <30a766a5-00c8-f5b8-0773-fa9846f250be@igalia.com>
+Date: Tue, 19 Dec 2017 19:58:26 +0100
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: webkit-gtk@...ts.webkit.org
+Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: WebKitGTK+ Security Advisory WSA-2017-0010
 Content-Type: text/plain; charset=utf-8
 
-Description:
-Libtiff is a software that provides support for the Tag Image File Format 
-(TIFF), a widely used format for storing image data.
+------------------------------------------------------------------------
+WebKitGTK+ Security Advisory                               WSA-2017-0010
+------------------------------------------------------------------------
 
-A crafted tiff file revealed an invalid memory read.
+Date reported      : December 19, 2017
+Advisory ID        : WSA-2017-0010
+Advisory URL       : https://webkitgtk.org/security/WSA-2017-0010.html
+CVE identifiers    : CVE-2017-7156, CVE-2017-7157, CVE-2017-13856,
+                     CVE-2017-13866, CVE-2017-13870.
 
-The complete ASan output:
+Several vulnerabilities were discovered in WebKitGTK+.
 
-# tiff2pdf $FILE -o foo
-TIFFReadDirectoryCheckOrder: Warning, Invalid TIFF directory; tags are not 
-sorted in ascending order.
-111.crashes: Warning, Nonstandard tile length 3, convert file.
-TIFFFetchNormalTag: Warning, Incorrect count for "XResolution"; tag ignored.
-TIFFFetchNormalTag: Warning, ASCII value for tag "Software" contains null byte 
-in value; value incorrectly truncated during reading due to implementation 
-limitations.
-TIFFAdvanceDirectory: Error fetching directory count.
-TIFFReadDirectoryCheckOrder: Warning, Invalid TIFF directory; tags are not 
-sorted in ascending order.
-111.crashes: Warning, Nonstandard tile length 3, convert file.
-TIFFFetchNormalTag: Warning, Incorrect count for "XResolution"; tag ignored.
-TIFFFetchNormalTag: Warning, ASCII value for tag "Software" contains null byte 
-in value; value incorrectly truncated during reading due to implementation 
-limitations.
-TIFFReadDirectoryCheckOrder: Warning, Invalid TIFF directory; tags are not 
-sorted in ascending order.
-111.crashes: Warning, Nonstandard tile length 3, convert file.
-TIFFFetchNormalTag: Warning, Incorrect count for "XResolution"; tag ignored.
-TIFFFetchNormalTag: Warning, ASCII value for tag "Software" contains null byte 
-in value; value incorrectly truncated during reading due to implementation 
-limitations.
-TIFFReadDirectoryCheckOrder: Warning, Invalid TIFF directory; tags are not 
-sorted in ascending order.
-111.crashes: Warning, Nonstandard tile length 3, convert file.
-TIFFFetchNormalTag: Warning, Incorrect count for "XResolution"; tag ignored.
-TIFFFetchNormalTag: Warning, ASCII value for tag "Software" contains null byte 
-in value; value incorrectly truncated during reading due to implementation 
-limitations.
-tiff2pdf: Warning, RGB image 111.crashes has 4 samples per pixel, assuming 
-RGBA.
-TIFFReadRawTile: Read error at row 4294967295, col 4294967295, tile 0; got 0 
-bytes, expected 23297.
-TIFFReadRawTile: Read error at row 4294967295, col 4294967295, tile 1; got 0 
-bytes, expected 513.
-TIFFReadRawTile: Read error at row 4294967295, col 4294967295, tile 2; got 512 
-bytes, expected 65285.
-TIFFReadRawTile: Read error at row 4294967295, col 4294967295, tile 3; got 512 
-bytes, expected 1535.
-ASAN:DEADLYSIGNAL
-=================================================================
-==19864==ERROR: AddressSanitizer: SEGV on unknown address 0x61b000020000 (pc 
-0x7fc86d4a320b bp 0x000000000efc sp 0x7fff06650bf8 T0)
-==19864==The signal is caused by a READ memory access.
-    #0 0x7fc86d4a320a  /var/tmp/portage/sys-libs/glibc-2.22-
-r4/work/glibc-2.22/string/../sysdeps/x86_64/memcpy.S:270
-    #1 0x7fc86d491f79 in _IO_file_xsputn /var/tmp/portage/sys-libs/glibc-2.22-
-r4/work/glibc-2.22/libio/fileops.c:1319
-    #2 0x7fc86d487828 in fwrite /var/tmp/portage/sys-libs/glibc-2.22-
-r4/work/glibc-2.22/libio/iofwrite.c:43
-    #3 0x50cdff in t2p_writeproc /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiff2pdf.c:405:21
-    #4 0x52baea in t2pWriteFile /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiff2pdf.c:379:10
-    #5 0x52baea in t2p_readwrite_pdf_image_tile /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiff2pdf.c:2924
-    #6 0x50f1dc in t2p_write_pdf /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiff2pdf.c:5526:16
-    #7 0x50bfee in main /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiff2pdf.c:808:2
-    #8 0x7fc86d43e61f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #9 0x41a298 in _init (/usr/bin/tiff2pdf+0x41a298)
+CVE-2017-7156
+    Versions affected: WebKitGTK+ before 2.18.4.
+    Credit to an anonymous researcher.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/sys-libs/glibc-2.22-
-r4/work/glibc-2.22/string/../sysdeps/x86_64/memcpy.S:270 
-==19864==ABORTING
+CVE-2017-7157
+    Versions affected: WebKitGTK+ before 2.18.1.
+    Credit to an anonymous researcher.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
 
-Affected version:
-4.0.7
+CVE-2017-13856
+    Versions affected: WebKitGTK+ before 2.18.4.
+    Credit to Jeonghoon Shin.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
 
-Fixed version:
-N/A
+CVE-2017-13866
+    Versions affected: WebKitGTK+ before 2.18.4.
+    Credit to an anonymous researcher.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
 
-Commit fix:
-https://github.com/vadz/libtiff/commit/891b1b908eb92a0e91e9012a8d32ade7088b5a3f
+CVE-2017-13870
+    Versions affected: WebKitGTK+ before 2.18.4.
+    Credit to an anonymous researcher.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
 
-CVE:
-N/A
+We recommend updating to the last stable version of WebKitGTK+. It is
+the best way of ensuring that you are running a safe version of
+WebKitGTK+. Please check our website for information about the last
+stable releases.
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00111-libtiff-invalidread-t2p_writeproc
+Further information about WebKitGTK+ Security Advisories can be found
+at: https://webkitgtk.org/security.html
 
-Timeline:
-2016-12-20: bug discovered and reported to upstream
-2016-12-20: upstream released a patch
-2017-01-01: blog post about the issue
+The WebKitGTK+ team,
+December 19, 2017
 
-Note:
-This bug was found with American Fuzzy Lop.
 
-Permalink:
-https://blogs.gentoo.org/ago/2017/01/01/libtiff-invalid-memory-read-in-t2p_writeproc-tiff2pdf-c
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Download attachment "signature.asc" of type "application/pgp-signature" (898 bytes)
