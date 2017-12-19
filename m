@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["446" "Thursday" "24" "August" "2017" "01:49:17" "+0200" "Daniel Beck" "ml@beckweb.net" "<7363538D-EADE-4A90-8C22-9ECE268983DA@beckweb.net>" "13" "Re: [oss-security] Jenkins plugins -- multiple vulnerabilities" "^Date:" nil nil "8" "2017082323:49:17" "[oss-security] Jenkins plugins -- multiple vulnerabilities" (number mark "U       ml@beckweb.n Aug 24   13/446   " thread-indent "\"Re: [oss-security] Jenkins plugins -- multiple vulnerabilities\"\n") "<FE8FFD3A-9929-44E7-A11A-70652352F7F0@beckweb.net>" ("<FE8FFD3A-9929-44E7-A11A-70652352F7F0@beckweb.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3311" "Tuesday" "19" "December" "2017" "00:14:21" "+0000" "halfdog" "me@halfdog.net" "<1453-1513642461.788845@V4Go.Zsn0.ZlLm>" "72" "Re: [oss-security] Recommendations GnuPG-2 replacement" "^Date:" nil nil "12" "2017121900:14:21" "[oss-security] Recommendations GnuPG-2 replacement" (number mark "        me@halfdog.n Dec 19   72/3311  " thread-indent "\"Re: [oss-security] Recommendations GnuPG-2 replacement\"\n") "<20171218220414.GA10960@takahe.colorado.edu>" ("<20171207210134.GA7079@openwall.com>" "<2172-1513501568.968862@pLoG.Le7g.f3CQ>" "<87tvwoowng.fsf@fifthhorseman.net>" "<814-1513628516.856754@MaI1.D5wz.7Roo>" "<20171218220414.GA10960@takahe.colorado.edu>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 28591 invoked by uid 550); 23 Aug 2017 23:49:30 -0000
+Received: (qmail 21992 invoked by uid 550); 19 Dec 2017 00:14:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,32 +11,89 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28570 invoked from network); 23 Aug 2017 23:49:29 -0000
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
-References: <FE8FFD3A-9929-44E7-A11A-70652352F7F0@beckweb.net>
-In-Reply-To: <FE8FFD3A-9929-44E7-A11A-70652352F7F0@beckweb.net>
-Message-Id: <7363538D-EADE-4A90-8C22-9ECE268983DA@beckweb.net>
-X-Mailer: Apple Mail (2.3273)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1503532169;31c567ee;
-X-HE-SMSGID: 1dkfOg-0003Ve-7p
-Date: Thu, 24 Aug 2017 01:49:17 +0200
-From: Daniel Beck <ml@beckweb.net>
+Received: (qmail 21968 invoked from network); 19 Dec 2017 00:14:50 -0000
+In-reply-to: <20171218220414.GA10960@takahe.colorado.edu>
+References: <20171207210134.GA7079@openwall.com> <2172-1513501568.968862@pLoG.Le7g.f3CQ> <87tvwoowng.fsf@fifthhorseman.net> <814-1513628516.856754@MaI1.D5wz.7Roo> <20171218220414.GA10960@takahe.colorado.edu>
+Comments: In-reply-to Leonid Isaev <leonid.isaev@jila.colorado.edu>
+   message dated "Mon, 18 Dec 2017 15:04:14 -0700."
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Message-ID: <1453-1513642461.788845@V4Go.Zsn0.ZlLm>
+Date: Tue, 19 Dec 2017 00:14:21 +0000
+From: halfdog <me@halfdog.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Jenkins plugins -- multiple vulnerabilities
+Subject: Re: [oss-security] Recommendations GnuPG-2 replacement
 To: oss-security@lists.openwall.com
 
+Leonid Isaev writes:
+> On Mon, Dec 18, 2017 at 08:21:56PM +0000, halfdog wrote:
+>> The point in starting this thread was, that GnuPG does NOT
+>> conveniently cover usecases for headless or scripting operation.
+>> Thus it seems that the time has come to look for replacement,
+>> as GnuPG is moving more in the "desktop" direction, as also
+>> your comments indicate.
+>
+> You are talking about policies here, not technical issues.
+> Gnupg is perfectly scriptable, see pacman-key(1) tool in Arch
+> Linux. Moreover, gpg-agent is easily usable on a headless machine.
+> At least, I mostly use it this way when checking email...
 
-> On 11. Jul 2017, at 13:52, Daniel Beck <ml@beckweb.net> wrote:
->=20
-> JENKINS-21436
-> The SSH Plugin stores credentials which allow jobs to access remote serve=
-rs=20
-> via the SSH protocol. User passwords and passphrases for encrypted SSH ke=
-ys=20
-> are stored in plaintext in a configuration file. SSH Plugin now integrate=
-s=20
-> with the Credentials Plugin and existing credentials are migrated.
+So maybe SSH cares for you to have sane pty with all the features
+needed to make gnupg run smoothly? Perhaps you may want to respond,
+that it is not gnupg at fault, if e.g. an embedded boot image
+does not use openvt and /dev/tty[1-6] during early boot in correct
+ways, thus causing problems. But the way gnupg reacts in that
+situation (not working and not giving meaningful error messages
+either) does not really help the user and gave me the impression,
+that those usecases are out of scope - and hence also of scope
+for testing.
 
-This has been assigned CVE-2017-1000245=
+You may want to read [0] to see how another user on "gnupg-users"
+describes in more detail the "user experience" when trying
+to get TTYs, pinentry, gpg-agent ... up and running. The post
+quite reflects also my user experience, the difference is just
+that he writes lengthy mails to get things running, I write them
+to see if there are alternatives.
+
+> You will lose nothing if you just pkill(1) gpg-agent though. So
+> I don't understand why you claim that gpg is moving towards
+> desktop.
+
+Well, on a server running multiple concurring tasks, I feel somehow
+uncomfortable killing a process just by UID and process name.
+How to make sure, that not a parallel task is still using the
+agent?
+
+Signals are just fine for control: when a parent knows exactly
+its children and signals them. For processes starting automagically
+I just do not want to care about how their daemonizing works
+and if there might be races during that procedure, how to craft
+pkill regex to reduce the risk of killing the wrong agent under
+some circumstances, ...
+
+>> That's really a strange argument. You fear PTRACING for key
+>> extraction of a short-lived, per-key instance of gpg1 process
+>> and solve that by putting all the key material into a single
+>> long-lived gpg-agent process, not even providing convenient
+>> commands to flush the keys from there?
+>
+> pkill -hup gpg-agent. Please read the manpages.
+
+Please give realistic answers. And if you try, you may notice,
+that things are not just as simple as "send a signal to any process
+with a given name". Your backup system vendor and your colleagues
+will love you, when killing the sign/encryption process that way,
+yielding spurious errors from time to time. Could be quite some
+beer to spend when they completed their root cause analysis.
+
+Maybe your pkill would not cause those side effects, but I just
+do not want to care about them. I am quite sure, that they are
+ignorable on desktop environments or for e-mail reading, in a
+production environment they might just be a risk and an annoyance.
+Hence my argument about desktop and server.
+
+hd
+
+[0] https://lists.gnupg.org/pipermail/gnupg-users/2017-December/059600.html
+
+
