@@ -1,36 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/10/7
-Message-ID: <20171210213153.GA8106@tower.spodhuis.org>
-Date: Sun, 10 Dec 2017 16:31:53 -0500
-From: Phil Pennock <oss-security-phil@...dhuis.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: Recommendations GnuPG-2 replacement
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/21/1
+Message-ID: <NZZ7VKP4WW_5a3ae0d5ea16f_173b53fbfb8ecb988831843_sprut@zendesk.com>
+Date: Wed, 20 Dec 2017 22:14:46 +0000
+From: "Kwang (GitLab Support)" <security@...lab.com>
+Cc: Open Source Security <oss-security@...ts.openwall.com>
+Subject: [GitLab, Inc.] Update: Gitlab, LDAP integration vulnerable to MITM attack
 Content-Type: text/plain; charset=utf-8
 
-On 2017-12-10 at 14:16 +0100, Marcus Brinkmann wrote:
-> Another idea I am contemplating is running my own little keyserver that
-> does only email verification.  It's like registering for a website, but
-> without a website.  People are familiar with the concept, it gives at
-> least the assurance that somebody (me) verified the email address, and
-> it allows revocation.
+##- Please type your reply above this line -##
 
-Prior art to consider and inform your decisions:
+You are registered as a CC on this support request (86379). Reply to this email to add a comment to the request.
 
- * 0x9710B89BCA57AD7C -- PGP Global Directory Verification Key
-   + Now part of Symantec; upload key, do verification steps via email,
-     get signature
- * 0x2BAE3CF6DAFFB000 -- ct magazine -- pgpCA@...heise.de
-   + Some years back a German technical magazine apparently made a big
-     push to get people using OpenPGP and had their own verification
-     service
- * WKS in the current (>= 2.1.15) GnuPG releases, built with optional
-   ./configure flag, <https://wiki.gnupg.org/WKS>
-   + Software to be run by the mail-provider for a given domain, to act
-     as a trusted introducer and move away from the public keyservers.
-     Like finger:// but without shell access to set .pubkey|.plan files.
-     Requires a fair bit of setup, if nothing ships with support
-     out-of-the-box.  Is one of the auto-key-locate options for GnuPG,
-     under name `wkd`.  KMail has built-in support
+----------------------------------------------
 
-Good luck!
--Phil
+Kwang, Dec 20, 17:14 EST
+
+Hi Raphael,
+
+Thank you for the heads-up. We will note that on the public issue tracker page.
+
+Regards,
+GitLab Security Team
+
+----------------------------------------------
+
+Raphael Geissert, Dec 17, 15:26 EST
+
+Hi,
+
+This is just a heads up that I requested a CVE id for issue #30420[1]: gitlab
+between 9.4 and before 9.4.2 does not verify the identity of the LDAP server.
+
+This has been assigned CVE-2017-17716.
+
+[1]https://gitlab.com/gitlab-org/gitlab-ce/issues/30420
+(needless to say, this wasn't reported by me)
+
+Cheers,
+--
+Raphael Geissert
+
+
+
+--------------------------------
+This email is a service from GitLab, Inc..
+
+
+
+
+
+
+
+
+
+[NZZ7VK-P4WW]
