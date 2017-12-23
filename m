@@ -1,100 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/29/4
-Message-ID: <alpine.DEB.2.20.1711280940090.30591@tvnag.unkk.fr>
-Date: Wed, 29 Nov 2017 10:34:27 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: SSL out of buffer access
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/23/2
+Message-ID: <20171223081028.GA17654@lorien.valinor.li>
+Date: Sat, 23 Dec 2017 09:10:28 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux >=4.9: eBPF memory corruption bugs
 Content-Type: text/plain; charset=utf-8
 
-SSL out of buffer access
-========================
+Hi
 
-Project curl Security Advisory, November 29th 2017 -
-[Permalink](https://curl.haxx.se/docs/adv_2017-af0a.html)
+MITRE has assigned 6 more CVEs for:
 
-VULNERABILITY
--------------
+CVE-2017-17857 [bpf: fix missing error return in check_stack_boundary()]
+Fixed by: https://git.kernel.org/linus/ea25f914dc164c8d56b36147ecc86bc65f83c469
 
-libcurl contains an out boundary access flaw in SSL related code.
+CVE-2017-17856 [bpf: force strict alignment checks for stack pointers]
+Fixed by: https://git.kernel.org/linus/a5ec6ae161d72f01411169a938fa5f8baea16e8f
 
-When allocating memory for a connection (the internal struct called
-`connectdata`), a certain amount of memory is allocated at the end of the
-struct to be used for SSL related structs. Those structs are used by the
-particular SSL library libcurl is built to use. The application can also tell
-libcurl which specific SSL library to use if it was built to support more than
-one.
+CVE-2017-17855 [bpf: don't prune branches when a scalar is replaced with a pointer]
+Fixed by: https://git.kernel.org/linus/179d1c5602997fef5a940c6ddcf31212cbfebd14
 
-The math used to calculate the extra memory amount necessary for the SSL
-library was wrong on 32 bit systems, which made the allocated memory too small
-by 4 bytes. The last struct member of the last object within the memory area
-could then be outside of what was allocated. Accessing that member could lead
-to a crash or other undefined behaviors depending on what memory that is
-present there and how the particular SSL library decides to act on that memory
-content.
+CVE-2017-17854 [bpf: fix integer overflows]
+Fixed by: https://git.kernel.org/linus/bb7f0f989ca7de1153bd128a40a71709e339fa03
 
-Specifically the vulnerability is present if libcurl was built so that
-`sizeof(long long *) < sizeof(long long)` which as far as we are aware only
-happens in 32-bit builds.
+CVE-2017-17853 [bpf/verifier: fix bounds calculation on BPF_RSH]
+Fixed by: https://git.kernel.org/linus/4374f256ce8182019353c0c639bb8d0695b4c941
 
-We are not aware of any exploit of this flaw.
+CVE-2017-17852 [bpf: fix 32-bit ALU op verification]
+Fixed by: https://git.kernel.org/linus/468f6eafa6c44cb2c5d8aad35e12f06c240a812a
 
-INFO
-----
-
-This bug was introduced in commit
-[70f1db321a](https://github.com/curl/curl/commit/70f1db321a), July 2017.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2017-8818 to this issue.
-
-AFFECTED VERSIONS
------------------
-
-This is only an issue on systems with 32 bit pointers. (Technically, on
-systems where `sizeof(long long *) < sizeof(long long)`.)
-
-- Affected versions: libcurl 7.56.0 to and including 7.56.1
-- Not affected versions: libcurl < 7.56.0 and >= 7.57.0
-
-curl is used by many applications, but not always advertised as such.
-
-THE SOLUTION
-------------
-
-In libcurl version 7.57.0, the allocation size is corrected.
-
-A [patch for CVE-2017-8818](https://curl.haxx.se/CVE-2017-8818.patch) is
-available.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl to version 7.57.0
-
-  B - Apply the patch to your version and rebuild
-
-TIME LINE
----------
-
-It was reported to the curl project on November 18, 2017.  We contacted
-distros@...nwall on November 24.
-
-curl 7.57.0 was released on November 29 2017, coordinated with the publication
-of this advisory.
-
-(The [original report](https://github.com/curl/curl/issues/2093) was made in public)
-
-CREDITS
--------
-
-Reported by John Schoenick. Patch by Ray Satiro.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
+Regards,
+Salvatore
