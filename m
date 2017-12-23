@@ -1,41 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/23/4
-Message-ID: <CAE-_4r1MsrEuyF9cYcJe4bg4PrpD-YYptCq2ycZKYF9fT__Jpg@mail.gmail.com>
-Date: Thu, 23 Feb 2017 10:26:35 +0200
-From: Ariel Zelivansky <ariel.zelivans@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/23/1
+Message-ID: <20171223033916.GA10696@lonestar>
+Date: Sat, 23 Dec 2017 09:09:16 +0530
+From: Dhiru Kholia <dhiru.kholia@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request - Multiple vulnerabilities in gdk-pixbuf
+Subject: Re: Recommendations GnuPG-2 replacement
 Content-Type: text/plain; charset=utf-8
 
-Leo, thanks for the reference.
-
-I have requested a CVE via the web form and haven't heard from MITRE so
-far. Do they usually take time in responding?
-Or am I supposed to contact some other CNA?
-
-On Tue, Feb 21, 2017 at 10:42 PM, Leo Famulari <leo@...ulari.name> wrote:
-
-> On Tue, Feb 21, 2017 at 05:20:11PM +0200, Ariel Zelivanski wrote:
-> > Hello,
+On Fri, Dec 22, 2017 at 08:52:52PM +0100, Solar Designer wrote:
+> On Sun, Dec 17, 2017 at 09:06:08AM +0000, halfdog wrote:
+>
+> > > You may process the private key file with gpg2john, then try to crack it
+> > > with john.  This will output the actual value, as well as show you the
+> > > speed at which passphrases can be tested against that key on your system
+> > > and with that version of JtR.  To use a GPU, add "--format=gpg-opencl".
+> > > Please use latest bleeding-jumbo off GitHub for all of this.
 > >
-> > I just reported several vulnerabilities in gdk-pixbuf. I am adding the
-> > relevant details but you can also refer to the bug reports in the links.
-> If
-> > suitable please assign CVEs.
+> > Done that, but still fighting how to use "gpg2john" with the new
+> > gpgv2 "private-keys-v1.d" key format. Exporting the private keys
+> > using gpgv2 does not help as that requires the passphrase already,
+> > thus removing the gpgv2-encryption, we want to test.
 >
-> As announced previously [0], MITRE is no longer assigning CVEs based on
-> messages to this list. Will you request the CVE IDs via the new web
-> form? [1]
->
-> [0]
-> http://seclists.org/oss-sec/2017/q1/351
->
-> [1]
-> https://cveform.mitre.org/
->
+> I tried asking a JtR jumbo contributor to look into this, but
+> unfortunately I got no response yet, and I had no time to look into it
+> myself.  This is something we ought to have an answer to, but I
+> currently don't.
 
+Please see https://github.com/magnumripper/JohnTheRipper/issues/847 (Add
+support for the new GPG 2.1 "format") regarding this topic.
 
+To summarize,
 
--- 
-*Ariel Zelivansky *— 0503990401
+* Currently, gpg2john does not understand the "private-keys-v1.d" key
+  format.
 
+* We have a very rough cracking implementation for "private-keys-v1.d"
+  key format at the moment. See "filter.c" on that GitHub issue.
+
+I can start working on a proper native cracking implementation (with GPU
+support likely), if there is interest in this stuff.
+
+--
+Dhiru
