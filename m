@@ -1,33 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/18/13
-Message-ID: <52301d2a-72db-417a-91cf-f2d37cf1a44e@chbi.eu>
-Date: Wed, 18 Oct 2017 18:58:48 +0200
-From: chbi@...i.eu
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/24/1
+Message-ID: <20171224082315.GA28282@eldamar.local>
+Date: Sun, 24 Dec 2017 09:23:15 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Stored XSS vulnerability in ILIAS <= 5.2.8 and <= 5.1.20
+Subject: Re: Linux >=4.9: eBPF memory corruption bugs
 Content-Type: text/plain; charset=utf-8
 
+Hi
 
-> A stored XSS vulnerability in the media object component allows an
-> authenticated user to inject JavaScript to gain administrator privileges.
-> 
-> 
-> Fix:
-> https://github.com/ILIAS-eLearning/ILIAS/commit/b2a4660afec1e87d41c83c8e381f549bc6dfc70f
-> 
+Debian issued an update yesterday, an while preparing the fixes three
+more CVEs were requested which are related:
 
-CVE-2017-15538 has been assigned.
+https://lists.debian.org/debian-security-announce/2017/msg00336.html
 
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-15538
+specifically:
 
+CVE-2017-17862
 
--- 
-chbi
-https://chbi.eu
+    Alexei Starovoitov discovered that the Extended BPF verifier
+    ignored unreachable code, even though it would still be processed
+    by JIT compilers.  This could possibly be used by local users for
+    denial of service.  It also increases the severity of bugs in
+    determining unreachable code.
 
-GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
-     https://chbi.eu/chbi.asc
+https://www.spinics.net/lists/stable/msg206984.html
+Upstream: https://git.kernel.org/linus/c131187db2d3fa2f8bf32fdf4e9a4ef805168467
 
+CVE-2017-17863
 
+    Jann Horn discovered that the Extended BPF verifier did not
+    correctly model pointer arithmetic on the stack frame pointer.
+    A local user can use this for privilege escalation.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+https://www.spinics.net/lists/stable/msg206985.html
+
+This 'fixes' 7bca0a9702edfc8d0e7e46f984ca422ffdbe0498 (introduced in
+4.9.28) which was 332270fdc8b6fba07d059a9ad44df9e1a2ad4529 (4.12-rc1) in
+mainline. Quoting the message from Jann: This is a fix specifically for
+the v4.9 stable tree because the mainline code looks very different at
+this point."
+
+CVE-2017-17864
+
+    Jann Horn discovered that the Extended BPF verifier could fail to
+    detect pointer leaks from conditional code.  A local user could
+    use this to obtain sensitive information in order to exploit
+    other vulnerabilities.
+
+Only reference so far:
+
+https://anonscm.debian.org/cgit/kernel/linux.git/tree/debian/patches/bugfix/all/bpf-verifier-fix-states_equal-comparison-of-pointer-and-unknown.patch?h=stretch-security
+
+Quoting the commit/patch description:
+
+> This was fixed differently upstream, but the code around here was
+> largely rewritten in 4.14 by commit f1174f77b50c "bpf/verifier: rework
+> value tracking".  The bug can be detected by the bpf/verifier sub-test
+> "pointer/scalar confusion in state equality check (way 1)".
+
+and further he stated:
+
+https://anonscm.debian.org/cgit/kernel/linux.git/commit/?h=stretch-security&id=ad775f6ff7eebb93eedc2f592bc974260e7757b0
+
+The upstream fix is definitely post-4.14, probably "bpf: don't prune
+branches when a scalar is replaced with a pointer", but no bisect was
+done to confirm, so this question is still open.
+
+Regards,
+Salvatore
