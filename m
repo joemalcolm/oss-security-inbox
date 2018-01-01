@@ -1,57 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/02/2
-Message-ID: <CACmwppyNt6+YffPyGZer-4ztW9RxxYKZ-y8RRiZLfvP04PGaXQ@mail.gmail.com>
-Date: Sun, 2 Dec 2018 15:50:22 +0800
-From: Wei Wu <ww9210@...il.com>
-To: Dhiraj Mishra <mishra.dhiraj95@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/01/1
+Message-ID: <397dc1a9-c8dc-7f26-d305-73db32044fd9@apache.org>
+Date: Mon, 1 Jan 2018 11:35:46 +0100
+From: Andrea Pescetti <pescetti@...che.org>
 Cc: oss-security@...ts.openwall.com
-Subject: Re: fwd: [vs-plain] Kernel heap overflow in bpf leading to LPE (exploit provided)
+Subject: Apache OpenOffice 4.1.4 - fixes CVE-2017-3157 CVE-2017-9806 CVE-2017-12607 CVE-2017-12608
 Content-Type: text/plain; charset=utf-8
 
-hi,
+(I'm not subscribed to the list, so please CC me when replying, thanks)
 
-there is none because it did not affect any release version.
+Apache OpenOffice 4.1.5 was released on 30 Dec 2017.
 
-wei
+- No security vulnerabilities fixed in this release; listed here just to 
+avoid confusion.
 
-On Sun, Dec 2, 2018 at 15:01 Dhiraj Mishra <mishra.dhiraj95@...il.com>
-wrote:
+Apache OpenOffice 4.1.4 was released on 19 Oct 2017.
 
-> Hey,
->
-> Just wanted to know is there any CVE assigned to this issue?
->
->
->
-> Thanks
->
-> On Sat, Nov 24, 2018 at 2:39 PM Yves-Alexis Perez <corsac@...ian.org>
-> wrote:
->
->> On Fri, 2018-11-23 at 21:45 +0100, Yves-Alexis Perez wrote:
->> > On Fri, 2018-11-23 at 19:09 +0100, Greg KH wrote:
->> > > As was discussed further on one of the threads on this topic, it looks
->> > > like this is a 4.20-rc issue only, and that 4.19 does not have this
->> > > issue.  So it might not be relevant to any distro at all, but I
->> suggest
->> > > that people test themselves to be sure.
->> >
->> > Hi Greg, thanks for the precision.
->>
->> And considering no released kernel is vulnerable, here is the proof of
->> concept
->> code provided initially.
->>
->> Regards,
->> --
->> Yves-Alexis
->>
->
->
-> --
-> Regards
->
-> *Dhiraj Mishra.*GPG ID :  51720F56   |  Finger Print : 1F6A FC7B 05AA
-> CF29 8C1C  ED65 3233 4D18 5172 0F56
->
+- This release contained 4 security fixes that had not been reported to 
+this list at release time; they are listed below.
 
+
+## 1. CVE-2017-3157: Arbitrary file disclosure in Calc and Writer
+
+By exploiting the way OpenOffice renders embedded objects, an attacker 
+could craft a document that allows reading in a file from the user's 
+filesystem. Information could be retrieved by the attacker by, e.g., 
+using hidden sections to store the information, tricking the user into 
+saving the document and convincing the user to send the document back to 
+the attacker.
+
+The vulnerability is mitigated by the need for the attacker to know the 
+precise file path in the target system, and the need to trick the user 
+into saving the document and sending it back.
+
+Thanks to Ben Hayak for reporting this issue.
+
+
+## 2. CVE-2017-9806: Out-of-Bounds Write in Writer's WW8Fonts Constructor
+
+A vulnerability in the OpenOffice Writer DOC file parser, and 
+specifically in the WW8Fonts Constructor, allows attackers to craft 
+malicious documents that cause denial of service (memory corruption and 
+application crash) potentially resulting in arbitrary code execution.
+
+Thanks to Marcin 'Icewall' Noga of Cisco Talos for discovering this issue.
+
+
+## 3. CVE-2017-12607: Out-of-Bounds Write in Impress' PPT Filter
+
+A vulnerability in OpenOffice's PPT file parser, and specifically in 
+PPTStyleSheet, allows attackers to craft malicious documents that cause 
+denial of service (memory corruption and application crash) potentially 
+resulting in arbitrary code execution.
+
+Thanks to Marcin 'Icewall' Noga of Cisco Talos for discovering this issue.
+
+
+## 4. CVE-2017-12608: Out-of-Bounds Write in Writer's ImportOldFormatStyles
+
+A vulnerability in OpenOffice Writer DOC file parser, and specifically 
+in ImportOldFormatStyles, allows attackers to craft malicious documents 
+that cause denial of service (memory corruption and application crash) 
+potentially resulting in arbitrary code execution.
+
+Thanks to Marcin 'Icewall' Noga of Cisco Talos for discovering this issue.
+
+
+See https://www.openoffice.org/security/bulletin.html for more information.
+
+Posted by Andrea Pescetti on behalf of the Apache OpenOffice Security Team
