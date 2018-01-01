@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2336" "Wednesday" "7" "October" "2020" "10:32:05" "+0000" "=?utf-8?B?Y2F2ZW1hbiDYsdis2YQg2KfZhNmD2YfZgQ==?=" "toraboracaveman@protonmail.com" "<1GaG2-aqK--4nCAdHTeFIx-6-pQJJNysDvCH9qNTD-4VgG4VDIx0IjXoSQZn14MTl-S7Hw3nxjfqSPwewhsZ1znP-AyHZi2vW1pkWoL0KOw=@protonmail.com>" "75" "[oss-security] Re: [CVE-2019-14899] Inferring and hijacking VPN-tunneled TCP connections." nil nil nil "10" "2020100710:32:05" "[oss-security] Re: [CVE-2019-14899] Inferring and hijacking VPN-tunneled TCP connections." (number mark "U       toraboracave Oct  7   75/2336  " thread-indent "\"[oss-security] Re: [CVE-2019-14899] Inferring and hijacking VPN-tunneled TCP connections.\"\n") "<6bfd4935c64c76dcdaa1b7be0c7f4c47ea6104ff.camel@breakpointingbad.com>" nil nil nil nil nil nil nil nil "[oss-security] Re: [CVE-2019-14899] Inferring and hijacking VPN-tunneled TCP connections." nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2480" "Monday" "1" "January" "2018" "11:35:46" "+0100" "Andrea Pescetti" "pescetti@apache.org" "<397dc1a9-c8dc-7f26-d305-73db32044fd9@apache.org>" "62" "[oss-security] Apache OpenOffice 4.1.4 - fixes CVE-2017-3157 CVE-2017-9806 CVE-2017-12607 CVE-2017-12608" "^Cc:" nil nil "1" "2018010110:35:46" "[oss-security] Apache OpenOffice 4.1.4 - fixes CVE-2017-3157 CVE-2017-9806 CVE-2017-12607 CVE-2017-12608" (number mark "        pescetti@apa Jan  1   62/2480  " thread-indent "\"[oss-security] Apache OpenOffice 4.1.4 - fixes CVE-2017-3157 CVE-2017-9806 CVE-2017-12607 CVE-2017-12608\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 24190 invoked by uid 550); 7 Oct 2020 11:37:22 -0000
+Received: (qmail 8062 invoked by uid 550); 1 Jan 2018 14:07:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,97 +11,80 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23952 invoked from network); 7 Oct 2020 10:32:26 -0000
-Date: Wed, 07 Oct 2020 10:32:05 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail; t=1602066734;
-	bh=PEWFQh+2h2an54s1tJ5RHg+Om2Bam78FlU0iixuUQUg=;
-	h=Date:To:From:Reply-To:Subject:From;
-	b=kS6SA7e/umhCfcONZOxURnRicufx9OxNTFRsX30R5QWV1z8lZbofsMKUh4ah+BNuj
-	 vVa1AItjLMPYwffqj7NhfAoORl3V3L6CO86eiKSW5xBJPFrWyEz9z+g8vhr7cQC1/6
-	 qOqYCX7XSMrRmwue4YJ2S+42scft5MWmjwLc0Wkw=
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-From: =?utf-8?B?Y2F2ZW1hbiDYsdis2YQg2KfZhNmD2YfZgQ==?= <toraboracaveman@protonmail.com>
-Message-ID: <1GaG2-aqK--4nCAdHTeFIx-6-pQJJNysDvCH9qNTD-4VgG4VDIx0IjXoSQZn14MTl-S7Hw3nxjfqSPwewhsZ1znP-AyHZi2vW1pkWoL0KOw=@protonmail.com>
-In-Reply-To: <6bfd4935c64c76dcdaa1b7be0c7f4c47ea6104ff.camel@breakpointingbad.com>
+Received: (qmail 27998 invoked from network); 1 Jan 2018 10:36:08 -0000
+Message-ID: <397dc1a9-c8dc-7f26-d305-73db32044fd9@apache.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] Re: [CVE-2019-14899] Inferring and hijacking VPN-tunneled TCP connections.
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+Cc: oss-security@lists.openwall.com
+Date: Mon, 1 Jan 2018 11:35:46 +0100
+From: Andrea Pescetti <pescetti@apache.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Apache OpenOffice 4.1.4 - fixes CVE-2017-3157 CVE-2017-9806
+ CVE-2017-12607 CVE-2017-12608
 
-hi.  following this:
+(I'm not subscribed to the list, so please CC me when replying, thanks)
 
-    https://seclists.org/oss-sec/2019/q4/122
+Apache OpenOffice 4.1.5 was released on 30 Dec 2017.
 
-i think using rp filtering won't be a neat
-solution as it is technically incorrect in my
-view.  my reason is as follows:
+- No security vulnerabilities fixed in this release; listed here just to 
+avoid confusion.
 
-    - rp filtering assumes that my path to reach
-      others is also the path that others would
-      use to reach me.
+Apache OpenOffice 4.1.4 was released on 19 Oct 2017.
 
-that assumption is either false, or
-unsubstantiated.  hence, either way, there is no
-reason to assume that it is true (occam's razor).
+- This release contained 4 security fixes that had not been reported to 
+this list at release time; they are listed below.
 
-even if it is usually true, there is no reason why
-this is always true, and there are cases where
-this can be false.
 
-in fact, cases exist where this is not true.  e.g.
-a linux box in a LAN with 2 gateways can itself
-choose a different default gateway than the one
-the network uses to send it packets.
+## 1. CVE-2017-3157: Arbitrary file disclosure in Calc and Writer
 
-therefore i think using rp filtering is a dirty
-hack that is going to create another problem.
+By exploiting the way OpenOffice renders embedded objects, an attacker 
+could craft a document that allows reading in a file from the user's 
+filesystem. Information could be retrieved by the attacker by, e.g., 
+using hidden sections to store the information, tricking the user into 
+saving the document and convincing the user to send the document back to 
+the attacker.
 
-in my view, the real problem is that while vpns
-are offering a kind of partitioning over the wire,
-such partitioning is lost when it comes to
-in-kernel connection states.
+The vulnerability is mitigated by the need for the attacker to know the 
+precise file path in the target system, and the need to trick the user 
+into saving the document and sending it back.
 
-therefore, i suggest the real fix is to export
-vpn's partitioning into the connection states
-table by using some in-kernel tags, as follows:
+Thanks to Ben Hayak for reporting this issue.
 
-    - packets entering a linux box from any
-      interface, will inherit such specified tags
-      from the connection.
 
-    - the connection states table will have an
-      extra "tag" column that will store such
-      tag.
+## 2. CVE-2017-9806: Out-of-Bounds Write in Writer's WW8Fonts Constructor
 
-    - connection states are invisible from each
-      other if they do not have the same tag.
+A vulnerability in the OpenOffice Writer DOC file parser, and 
+specifically in the WW8Fonts Constructor, allows attackers to craft 
+malicious documents that cause denial of service (memory corruption and 
+application crash) potentially resulting in arbitrary code execution.
 
-    - for backwards compatibility, all interfaces
-      will use "default" tag.  so, by default,
-      everything feels normal.
+Thanks to Marcin 'Icewall' Noga of Cisco Talos for discovering this issue.
 
-    - for wireguard, it may use the added API to
-      set a different tag for its packets, such as
-      "wireguard".  the user could also manually
-      set other tags by `wg set states-tag newtag`
-      if they want to have different states
-      partitions across different wireguard
-      tunnels.
 
-this way, in the same way that the vpn paritions
-packets on the wire, connection states with
-different tags will remain invisible from each
-other.
+## 3. CVE-2017-12607: Out-of-Bounds Write in Impress' PPT Filter
 
-in a sense similar to how VLAN IDs create the
-effect of separate physical switches using the
-same physical switch.  not an accurate analogy,
-but i thought it may help.  VLANs also communicate
-their IDs over trunk links (so the analogy is not
-too bad i guess).
+A vulnerability in OpenOffice's PPT file parser, and specifically in 
+PPTStyleSheet, allows attackers to craft malicious documents that cause 
+denial of service (memory corruption and application crash) potentially 
+resulting in arbitrary code execution.
 
-regards,
-cm
+Thanks to Marcin 'Icewall' Noga of Cisco Talos for discovering this issue.
 
+
+## 4. CVE-2017-12608: Out-of-Bounds Write in Writer's ImportOldFormatStyles
+
+A vulnerability in OpenOffice Writer DOC file parser, and specifically 
+in ImportOldFormatStyles, allows attackers to craft malicious documents 
+that cause denial of service (memory corruption and application crash) 
+potentially resulting in arbitrary code execution.
+
+Thanks to Marcin 'Icewall' Noga of Cisco Talos for discovering this issue.
+
+
+See https://www.openoffice.org/security/bulletin.html for more information.
+
+Posted by Andrea Pescetti on behalf of the Apache OpenOffice Security Team
