@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1427" "Monday" "2" "September" "2019" "16:15:02" "+0200" "Heiko Schlittermann" "hs@nodmarc.schlittermann.de" nil "40" nil "^Date:" nil nil "9" nil nil (number mark "        hs@nodmarc.s Sep  2   40/1427  " thread-indent "\"[oss-security] MITRE response time\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] MITRE response time" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6519" "Wednesday" "3" "January" "2018" "22:34:42" "+0000" "Xen.org security team" "security@xen.org" "<E1eWrcQ-0000Bf-HN@xenbits.xenproject.org>" "166" "[oss-security] Xen Security Advisory 254 (CVE-2017-5753,CVE-2017-5715,CVE-2017-5754) - Information leak via side effects of speculative execution" nil nil nil "1" "2018010322:34:42" "[oss-security] Xen Security Advisory 254 (CVE-2017-5753,CVE-2017-5715,CVE-2017-5754) - Information leak via side effects of speculative execution" (number mark "U       security@xen Jan  3  166/6519  " thread-indent "\"[oss-security] Xen Security Advisory 254 (CVE-2017-5753,CVE-2017-5715,CVE-2017-5754) - Information leak via side effects of speculative execution\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 12083 invoked by uid 550); 2 Sep 2019 14:15:21 -0000
+Received: (qmail 30094 invoked by uid 550); 3 Jan 2018 22:35:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,73 +11,184 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 12050 invoked from network); 2 Sep 2019 14:15:21 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=schlittermann.de; s=dd201504; h=Content-Type:MIME-Version:Message-ID:
-	Subject:To:From:Date:Cc:Content-Description:Content-ID:
-	Content-Transfer-Encoding:In-Reply-To:References:Resent-Cc:Resent-To;
-	bh=Idh3Ln8GSacz0tGzkwE1vwmoq06j7yk+Hbb6kjaiBmA=; b=oIMz/UMAptGZ6IP014zDSrlsoF
-	A97A2rL1fCNhztf8zABHuiaK6ImPCGi1Uh8ccEPtLgKtpDpeZgZrugDASaaitwMlMqBu7KDFPJwSX
-	sOEXipOvbL1HhodKG4HtXWHNdQbgIxW9e3BMWoE/haq/JqiHgaBjJhIm5N53QRgpO5Wo=;
-Message-ID: <20190902141502.GH3837@jumper.schlittermann.de>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Y1L3PTX8QE8cb2T+"
-Content-Disposition: inline
-Organization: schlittermann -- internet & unix support
-X-Face: =y#&-VlCH8uT|8#-#JE_^c<:+qPbYxFD`}8`m)xjyA$93tpwm-vKsa(V,0?906(2VIVNQbU
- QzD%zhE+~-AA?\v-v.HY6]ebO4_$vY`l|||Q!EZT5*Xx/>Fj{8E_a.;;#<4S$>&T%n5()2Yt=R5FSC
- y:Na&@T{Rf`kPq^'ffPFA%`mP~>%-LU$d*]]{-%>j={&MsMND.">]H)&#AoSI~(U8Jk;v*;,Pf+l85
- X?H&`
-X-Telegram: @HeikoSchlittermann
-X-Threema: T5RPWMSS
-X-Phone: +49.172.7909055
-X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
-X-GPG-Key-ID: F69376CE
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Date: Mon, 2 Sep 2019 16:15:02 +0200
-From: Heiko Schlittermann <hs@nodmarc.schlittermann.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] MITRE response time
-To: oss-security <oss-security@lists.openwall.com>
+Received: (qmail 30054 invoked from network); 3 Jan 2018 22:35:01 -0000
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
+MIME-Version: 1.0
+X-Mailer: MIME-tools 5.505 (Entity 5.505)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1eWrcQ-0000Bf-HN@xenbits.xenproject.org>
+Date: Wed, 03 Jan 2018 22:34:42 +0000
+Subject: [oss-security] Xen Security Advisory 254 (CVE-2017-5753,CVE-2017-5715,CVE-2017-5754)
+ - Information leak via side effects of speculative execution
 
---Y1L3PTX8QE8cb2T+
-Content-Type: text/plain; charset=utf-8
+--=separator
+Content-Type: text/plain; charset="utf-8"
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7bit
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-what is your experience with MITRE's response time to an CVE request?
+ Xen Security Advisory CVE-2017-5753,CVE-2017-5715,CVE-2017-5754 / XSA-254
+                              version 2
 
-Last thursday I requested a CVE on behalf of a project I'm involved in
-(and which is not covered by any of the CNAs listed on
-https://cve.mitre.org/cve/request_id.html.
+        Information leak via side effects of speculative execution
 
-Where do you request CVEs for projects not listed there?
+UPDATES IN VERSION 2
+====================
 
-    Best regards from Dresden/Germany
-    Viele Gr=C3=BC=C3=9Fe aus Dresden
-    Heiko Schlittermann
---
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
- ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
+Added CVEs.
 
---Y1L3PTX8QE8cb2T+
-Content-Type: application/pgp-signature; name="signature.asc"
+ISSUE DESCRIPTION
+=================
 
+Processors give the illusion of a sequence of instructions executed
+one-by-one.  However, in order to most efficiently use cpu resources,
+modern superscalar processors actually begin executing many
+instructions in parallel.  In cases where instructions depend on the
+result of previous instructions or checks which have not yet
+completed, execution happens based on guesses about what the outcome
+will be.  If the guess is correct, execution has been sped up.  If the
+guess is incorrect, partially-executed instructions are cancelled and
+architectural state changes (to registers, memory, and so on)
+reverted; but the whole process is no slower than if no guess had been
+made at all.  This is sometimes called "speculative execution".
+
+Unfortunately, although architectural state is rolled back, there are
+other side effects, such as changes to TLB or cache state, which are
+not rolled back.  These side effects can subsequently be detected by
+an attacker to determine information about what happened during the
+speculative execution phase.  If an attacker can cause speculative
+execution to access sensitive memory areas, they may be able to infer
+what that sensitive memory contained.
+
+Furthermore, these guesses can often be 'poisoned', such that attacker
+can cause logic to reliably 'guess' the way the attacker chooses.
+This advisory discusses three ways to cause speculative execution to
+access sensitive memory areas (named here according to the
+discoverer's naming scheme):
+
+SP1, "Bounds-check bypass": Poison the branch predictor, such that
+operating system or hypervisor code is speculatively executed past
+boundary and security checks.  This would allow an attacker to, for
+instance, cause speculative code in the normal hypercall / emulation
+path to execute with wild array indexes.
+
+SP2, "Branch Target Injection": Poison the branch predictor.
+Well-abstracted code often involves calling function pointers via
+indirect branches; reading these function pointers may involve a
+(slow) memory access, so the CPU attempts to guess where indirect
+branches will lead.  Poisoning this enables an attacker to
+speculatively branch to any code that exists in the hypervisor.
+
+SP3, "Rogue Data Load": On some processors, certain pagetable
+permission checks only happen when the instruction is retired;
+effectively meaning that speculative execution is not subject to
+pagetable permission checks.  On such processors, an attacker can
+speculatively execute arbitrary code in userspace with, effectively,
+the highest privilege level.
+
+More information is available here:
+  https://meltdownattack.com/
+  https://spectreattack.com/
+
+Additional Xen-specific background:
+
+64-bit Xen hypervisors on systems with less than 5TiB of RAM map all
+of physical RAM, so code speculatively executed in a hypervisor
+context can read all of system RAM.
+
+When running PV guests, the guest and the hypervisor share the address
+space; guest kernels run in a lower privilege level, and Xen runs in
+the highest privilege level.  (HVM and PVH guests run in a separate
+address space to the hypervisor.)  However, only 64-bit PV guests can
+generate addresses large enough to point to hypervisor memory.
+
+IMPACT
+======
+
+Xen guests may be able to infer the contents of arbitrary host memory,
+including memory assigned to other guests.
+
+An attacker's choice of code to speculatively execute (and thus the
+ease of extracting useful information) goes up with the numbers.  For
+SP1, or SP2 on systems where SMEP (supervisor mode execute protection)
+is enabled: an attacker is limited to windows of code after bound
+checks of user-supplied indexes.  For SP2 without SMEP, or SP3, an
+attacker can write arbitrary code to speculatively execute.
+
+NOTE ON TIMING
+==============
+
+This vulnerability was originally scheduled to be made public on 9
+January.  It was accelerated at the request of the discloser due to
+one of the issues being made public.
+
+VULNERABLE SYSTEMS
+==================
+
+Systems running all versions of Xen are affected.
+
+For SP1 and SP2, both Intel and AMD are vulnerable.
+
+For SP3, only Intel processors are vulnerable. Furthermore, only
+64-bit PV guests can exploit SP3 against Xen.  PVH and 32-bit PV
+guests cannot exploit SP3.
+
+We believe that ARM is affected, but unfortunately due to the
+accelerated schedule, we haven't been able to get concrete input from
+ARM.  We are asking ARM and will publish more information when it is
+available.
+
+MITIGATION
+==========
+
+There is no mitigation for SP1 and SP2.
+
+SP3 can be mitigated by running guests in HVM or PVH mode.
+
+For guests with legacy PV kernels which cannot be run in HVM mode, we
+have developed a "shim" hypervisor that allows PV guests to run in PVH
+mode.  Unfortunately, due to the accelerated schedule, this is not yet
+ready to release.  We expect to have it ready for 4.10, as well as PVH
+backports to 4.9 and 4.8, available over the next few days.
+
+RESOLUTION
+==========
+
+There is no available resolution for SP1 or SP3.
+
+We are working on patches which mitigate SP2 but these are not
+currently available.  Given that the vulnerabilities are now public,
+these will be developed and published in public, initially via
+xen-devel.
+
+When we have useful information we will send an update.
+
+NOTE ON LACK OF EMBARGO
+=======================
+
+The timetable and process were set by the discloser.
+
+After the intensive initial response period for these vulnerabilities
+is over, we will prepare and publish a full timeline, as we have done
+in a handful of other cases of significant public interest where we
+saw opportunities for process improvement.
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-iQEzBAABCgAdFiEE0L/WueylaUpvFJ3Or0zGdqa2wUIFAl1tI+UACgkQr0zGdqa2
-wUL2awgAyEWTu8V7+IMFLyPLiHt7QwPS30KXLl1ZwnY+kzaP3aHIik1FExouCK36
-klPOsndMChKaRxtcK+lVrbvxIprGkCZ/y3KWh4ujj/NeDmPmoZaFLPeh5AYfQMxd
-5w5pQucbw4UAs7R+ABGZ/8D/bwAqISRejp+TyRgYebzXu42I0JY4DsJh8pDrUyG+
-+wY1t39pp2HsS3E5J4Ib7leC/3KyODbjQa8TbfmSbqiGSPMUMPwiywJwQAvgIVH9
-5aKmP0FYEJU58cUzO5xafOrq7/6267iS6iQ/inT7wPGoICuDNAvHBPKQSfXSVOEu
-eezPJc/N/+xzmuBbb2mJwXoCCiyNSg==
-=URaW
+iQEcBAEBCAAGBQJaTVp4AAoJEIP+FMlX6CvZTcwH/2DpfLGwINA0C3V0zy6WcJAu
+zxj7oqjorODWMIZbyR+gdSJHX82PKEJVgAdH/wtzb/GSdFJ+D3Q+zwZQSq1hxCZr
+g9Otd+u6PyACsrQRK8mIoahYKUgPjTQdK2mzkKTO8SF9dQB5MSFht1vLdjXXGaWn
+ifMfzNXgr3UCs5fOhQga/f2UdkbLal/qi0H2mxPyXCgalb6MGpMWEgMcmoAlFqnM
+7aRmgYWrGaPKRHw4wwePWty+KEoryzPdF1vtURw8k/wdEDjzWYGZbhyBcHTd1BG7
+or/J7mIsfs8SO7vua/6+msTfHnsmyWgZPweM4dzcO1AUEHDN0dYz6TOqaFwJuew=
+=pwaX
 -----END PGP SIGNATURE-----
 
---Y1L3PTX8QE8cb2T+--
+--=separator--
