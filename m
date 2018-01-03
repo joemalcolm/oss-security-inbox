@@ -1,65 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/07/1
-Message-ID: <CADDhp-LME6id-2V0UhF2OaVFZkna2exQfkARkORrNVgJ4-Pu0A@mail.gmail.com>
-Date: Fri, 7 Sep 2018 09:54:02 +1000
-From: Jeremy Choi <jechoi@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/03/1
+Message-ID: <beb3e734-8070-f32f-58df-97f85a5ac91f@gmail.com>
+Date: Wed, 3 Jan 2018 11:37:45 -0200
+From: Rafael Weingärtner <rafael@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: perl Crypt::JWT vulnerability
+Subject: [CVE-2013-4317] Apache CloudStack information disclosure vulnerability
 Content-Type: text/plain; charset=utf-8
 
-A vulnerability that might be able to cause bypass authentication was
-discovered by myself in Perl Crypt::JWT package prior to 0.023(fix -
-https://github.com/DCIT/perl-Crypt-JWT/commit/b98a59b42ded9f9e51b2560410106207c2152d6c
-).
-## Details
+The Apache CloudStack’s security team turns public the CVE-2013-4317.
 
-(JWT.pm)
-606 # key
-607 my $key = defined $args{keypass} ? [$args{key}, $args{keypass}] :
-$args{key};
-608 my $kid = exists $header->{kid} ? $header->{kid} :
-$unprotected_header->{kid};
-609 if (!defined $key && defined $kid && $args{kid_keys}) {
-610 my $k = _kid_lookup($kid, $args{kid_keys}, $alg);
-611 $key = $k if defined $k;
-612 }
-613 # if no key given, try to use 'jwk' value from header
-614 $key = $header->{jwk} if !$key && $header->{jwk};
+*Severity*: High
+*Vendor*: The Apache Software Foundation
+*Versions Affected*: Apache CloudStack 4.1.0, 4.1.1
 
-The vulnerability comes from line 614. If no 'kid' is given, 'jwk' will be
-used instead. Where 'RS256' is set as alg, it's okay as _prepare_rsa_key()
-will be failed. However, if 'HS256' is set, the key from the 'jwk' header
-is used for decoding.
+*Description*: When calling the CloudStack API call listProjectAccounts 
+as a regular, non-administrative user, the user is able to see 
+information for accounts other than their own.
+*Mitigation*: Upgrade to Apache CloudStack 4.2
 
-...
+*Credit*: This issue was identified by Ahmad Emneina of Citrix.
 
-537 elsif ($alg =~ /^HS(256|384|512)$/) { # HMAC integrity
-538 $key = _prepare_oct_key($key);
-539 return 1 if $sig eq hmac("SHA$1", $key, $data);
-540 }
+P.S. This issue has been fixed a long time ago. However, the 
+announcement has been forgotten. We apologize for that.
 
-...
+-- 
+Rafael Weingärtner
 
-65 sub _prepare_oct_key {
-66 my ($key) = @_;
-67 croak "JWT: undefined oct key" unless defined $key;
-68 if (ref $key eq 'HASH' && $key->{k} && $key->{kty} && $key->{kty} eq
-'oct') {
-69 return decode_b64u($key->{k});
-70 }
-71 elsif (!ref $key) {
-72 return $key;
-73 }
-
-Since the jwk key is a string, it reaches line 72 and then 539 above.
-
-If a project uses Crypt::JWT for its authentication without additional
-mitigation, it may allow attackers to bypass authentication by providing a
-token by crafting with hmac() with 'HS(256|384|512)'
-
-I'm requesting a CVE ID through DWF.
-
-Thanks
---
-Jeremy Choi / Red Hat Product Security
 
