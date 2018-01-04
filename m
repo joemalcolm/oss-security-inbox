@@ -1,101 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/16/2
-Message-ID: <alpine.DEB.2.20.1805140831040.16381@tvnag.unkk.fr>
-Date: Wed, 16 May 2018 08:26:01 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY AVISORY] curl: RTSP bad headers buffer over-read
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/04/2
+Message-ID: <CAFqjAi0Zjfy1h1VZa3s-OKm2=oZPkD2jULV6Rpm_k=uBXCnwMg@mail.gmail.com>
+Date: Thu, 4 Jan 2018 14:19:59 +0300
+From: Taher Alkhateeb <slidingfilaments@...il.com>
+To: OFBIZ Development Mailing List <dev@...iz.apache.org>, user@...iz.apache.org, announce@...che.org,  oss-security@...ts.openwall.com, Niels Heinen <heinenn@...gle.com>
+Subject: "[SECURITY] CVE-2017-15714 Apache OFBiz BIRT code vulnerability"
 Content-Type: text/plain; charset=utf-8
 
-RTSP bad headers buffer over-read
-=================================
+Severity:
+Important
 
-Project curl Security Advisory, May 16th 2018 -
-[Permalink](https://curl.haxx.se/docs/adv_2018-b138.html)
+Vendor:
+The Apache Software Foundation
 
-VULNERABILITY
--------------
+Versions Affected:
+OFBiz 16.11.01 to 16.11.03
 
-curl can be tricked into reading data beyond the end of a heap based buffer
-used to store downloaded content.
+Description:
+The BIRT plugin in Apache OFBiz does not escape user input property passed.
+This allows for code injection by passing that code through the URL. For
+example by appending this code "__format=%27;alert(%27xss%27)" to the URL
+an alert window would execute.
 
-When servers send RTSP responses back to curl, the data starts out with a set
-of headers. curl parses that data to separate it into a number of headers to
-deal with those appropriately and to find the end of the headers that signal
-the start of the "body" part.
+Mitigation:
+Upgrade to 16.11.04
 
-The function that splits up the response into headers is called
-`Curl_http_readwrite_headers()` and in situations where it can't find a single
-header in the buffer, it might end up leaving a pointer pointing into the
-buffer instead of to the start of the buffer which then later on may lead to
-an out of buffer read when code assumes that pointer points to a full buffer
-size worth of memory to use.
+Credit:
+Niels Heinen
 
-This could potentially lead to information leakage but most likely a
-crash/denial of service for applications if a server triggers this flaw.
+References:
+http://ofbiz.apache.org/download.html#vulnerabilities
 
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-This bug was originally introduced in May 2003 in [this
-commit](https://github.com/curl/curl/commit/b2ef79ef3d47b37) but it didn't
-become a problem until we added RTSP in January 2010 in [this
-commit](https://github.com/curl/curl/commit/bc4582b68a673d3).
-
-We have only proven this to trigger with RTSP traffic even though this is code
-shared with HTTP. We believe this is not a problem for HTTP transfers.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2018-1000301 to this issue.
-
-CWE-126: Buffer Over-read
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.20.0 to and including curl 7.59.0
-- Not affected versions: curl < 7.20.0 and curl >= 7.60.0
-
-libcurl is used by many applications, but not always advertised as such.
-
-THE SOLUTION
-------------
-
-In curl version 7.60.0, curl makes sure to restore the pointer back to where
-its supposed to point.
-
-A [patch for CVE-2018-1000301](https://curl.haxx.se/CVE-2018-1000301.patch) is
-available.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl to version 7.60.0
-
-  B - Apply the patch to your version and rebuild
-
-TIME LINE
----------
-
-It was reported to the curl project on March 24, 2018
-
-We contacted distros@...nwall on May 7, 2018.
-
-curl 7.60.0 was released on May 16 2018, coordinated with the publication of
-this advisory.
-
-CREDITS
--------
-
-Detected by OSS-fuzz. Assisted by Max Dymond. Patch by Daniel Stenberg.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
+This is a security announcement on behalf of the Apache OFBiz security
+team. All affected users are advised to upgrade OFBiz as per the below
+mitigation strategy. Apology for the repetition to some mailing lists
+because I'm resending to _all_ relevant emails.
