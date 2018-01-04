@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6804" "Thursday" "21" "June" "2018" "14:50:49" "+0200" "Solar Designer" "solar@openwall.com" "<20180621125049.GA14978@openwall.com>" "238" "Re: [oss-security] Intel hyper-threading security issues" "^Date:" nil nil "6" "2018062112:50:49" "[oss-security] Intel hyper-threading security issues" (number mark "        solar@openwa Jun 21  238/6804  " thread-indent "\"Re: [oss-security] Intel hyper-threading security issues\"\n") "<718d05e5-3057-7c32-da9a-70bc5a82e3f5@tao.at>" ("<CAOp4FwSEi=_bNCMoiK66r4Y2QQToJgZyBjUX74s0omQ+whCS-w@mail.gmail.com>" "<20180621045642.fy67joeaxu2n4j56@sivokote.iziade.m$>" "<20180621093754.GY53290@symphytum.spacehopper.org>" "<CABob6iqkc7x7awz-aMAb-yOHWKdWgnQF0rkPYdporiUmGCkc5Q@mail.gmail.com>" "<CABob6iqHuN+tVuxf9ibUh6Xx=j4AChRNygMXzR0nHcr1ogUtmA@mail.gmail.com>" "<718d05e5-3057-7c32-da9a-70bc5a82e3f5@tao.at>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3967" "Thursday" "4" "January" "2018" "11:57:45" "-0500" "Michael Orlitzky" "michael@orlitzky.com" "<ec8d70cd-bf3a-b920-4505-d95a441ad2d7@orlitzky.com>" "97" "[oss-security] CVE-2017-18018: GNU chown and chgrp (coreutils) privilege escalation via recursive dereferences" "^Date:" nil nil "1" "2018010416:57:45" "[oss-security] CVE-2017-18018: GNU chown and chgrp (coreutils) privilege escalation via recursive dereferences" (number mark "        michael@orli Jan  4   97/3967  " thread-indent "\"[oss-security] CVE-2017-18018: GNU chown and chgrp (coreutils) privilege escalation via recursive dereferences\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 30207 invoked by uid 550); 21 Jun 2018 12:52:24 -0000
+Received: (qmail 28607 invoked by uid 550); 4 Jan 2018 16:58:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,255 +11,121 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24333 invoked from network); 21 Jun 2018 12:51:00 -0000
-Message-ID: <20180621125049.GA14978@openwall.com>
-References: <CAOp4FwSEi=_bNCMoiK66r4Y2QQToJgZyBjUX74s0omQ+whCS-w@mail.gmail.com> <20180621045642.fy67joeaxu2n4j56@sivokote.iziade.m$> <20180621093754.GY53290@symphytum.spacehopper.org> <CABob6iqkc7x7awz-aMAb-yOHWKdWgnQF0rkPYdporiUmGCkc5Q@mail.gmail.com> <CABob6iqHuN+tVuxf9ibUh6Xx=j4AChRNygMXzR0nHcr1ogUtmA@mail.gmail.com> <718d05e5-3057-7c32-da9a-70bc5a82e3f5@tao.at>
-Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="X1bOJ3K7DJ5YkBrT"
-Content-Disposition: inline
-In-Reply-To: <718d05e5-3057-7c32-da9a-70bc5a82e3f5@tao.at>
-User-Agent: Mutt/1.4.2.3i
-Date: Thu, 21 Jun 2018 14:50:49 +0200
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 28579 invoked from network); 4 Jan 2018 16:58:09 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=orlitzky.com; s=mail2;
+	t=1515085077; bh=FMtmDcHFgTIhUsB/D6WBEqJIK8+bGuHN5sfYdNIbj0Y=;
+	h=To:From:Subject:Date;
+	b=QX96AdiI+ZCZ0Az3/7v1964BbDFsonfSiiIZHQx1gqjMZlxoy1f/B0oTw87XqtpLo
+	 6SM/ewhPFORRK40f9DJwO/QsrLuAIJSQ4sBHanU/QPU1MCUY0WclmPcOymK8tJfGRV
+	 irrVUoTEewBEiB3ZxAixi/DMsXhXKl8eLYzpUNZo=
+Message-ID: <ec8d70cd-bf3a-b920-4505-d95a441ad2d7@orlitzky.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+Date: Thu, 4 Jan 2018 11:57:45 -0500
+From: Michael Orlitzky <michael@orlitzky.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Intel hyper-threading security issues
+Subject: [oss-security] CVE-2017-18018: GNU chown and chgrp (coreutils) privilege escalation
+ via recursive dereferences
 To: oss-security@lists.openwall.com
 
---X1bOJ3K7DJ5YkBrT
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Product: GNU chown and chgrp (coreutils)
+Versions-affected: 8.29 and earlier (all)
+Author: Michael Orlitzky
+Bug-report:
+http://lists.gnu.org/archive/html/coreutils/2017-12/msg00045.html
 
-On Thu, Jun 21, 2018 at 01:54:16PM +0200, Sven Schwedas wrote:
-> On 2018-06-21 12:28, Lukas Odzioba wrote:
-> > Or use cpu hotplug mechanism, which should be way more convenient:
-> > https://www.kernel.org/doc/html/v4.17/core-api/cpu_hotplug.html
-> 
-> Hotplug doesn't seem differentiate between HT threads and physical
-> cores,
 
-This isn't exactly the question to ask: first vs. second thread in a
-core aren't any different, neither of them is "the physical core" unless
-you choose not to use the other.
+== Summary ==
 
-And you can obtain the needed information from /proc/cpuinfo or
-/sys/devices/system/cpu/cpu*/topology/* to choose which logical CPUs you
-disable (so that you leave only one per physical core).
+The chown program in GNU coreutils is vulnerable to a race condition
+when using the POSIX "-R -L" options to follow symlinks recursively.
+In the presence of symlinks, the recursive directory traversal is not
+guaranteed to be performed depth-first. As a result, the "new owner" may
+be able to introduce a symlink at a point in the traversal that has yet
+to be reached. When it is reached, chown will be performed on the target
+of that symlink -- a situation that is often exploitable to gain root
+privileges.
 
-On a related note, attached is a generic Linux /proc/cpuinfo parser I
-wrote a couple of years ago for SMT-aware thread affinity settings in a
-userspace program.  This can be used e.g. by a program not wanting to
-run trusted vs. untrusted threads on the same physical core, or on the
-same physical CPU chip if there's more than one.  It can also be used
-for performance optimization.  Please feel free to reuse.
+The chgrp program is implemented with chown and is vulnerable in the
+same way when used on group-writable paths.
 
-> will setting maxcpus=2 on a 2 cores+HT machine reliably disable
-> HT, or can it disable one core and keep HT active on the other?
 
-The latter.  It's not reliable, except maybe on a specific machine with
-a specific kernel version.
+== Details ==
 
-Alexander
+When calling GNU chown recursively, there is an "obvious" race
+condition that is handled correctly:
 
---X1bOJ3K7DJ5YkBrT
-Content-Type: text/x-c; charset=us-ascii
-Content-Disposition: attachment; filename="cpuinfo.h"
+  mjo $ sudo mkdir -p foo/bar
+  mjo $ sudo chown --verbose --recursive mjo foo
+  changed ownership of 'foo/bar' from root to mjo
+  changed ownership of 'foo' from root to mjo
 
-/*
- * Copyright 2016 Alexander Peslyak
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted.
- *
- * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE.
- */
+If the order was switched (that is, if the traversal was not
+depth-first), then there would be a period of time where mjo (as the
+owner of "foo") could do bad things to "foo/bar" before chown was
+called on it. But so far so good: the order above is safe, and chown
+does not follow symlinks by default with "--recursive" or "-R".
 
-#include <stdint.h>
+The bad news: if, in addition, you pass the POSIX "-L" flag to chown,
+then the new owner of "foo" can exploit the situation. The main idea
+is to use a symlink that points up, to reorder the traversal, and then
+to exploit the aforementioned race condition. If you're lucky, the
+race can be won with a naive loop in a second shell. The unlucky (or
+merely impatient) reader might want to add some sleep() calls after
+the printf() statements in src/chown-core.c.
 
-#define CPUINFO_LOGICAL_MAX 1024
-#define CPUINFO_CHIP_MAX 16
-#define CPUINFO_CORE_MAX 256
+=== Terminal 1 (root) ===
 
-typedef struct {
-	struct {
-		uint32_t chip, core, seq;
-	} log2phy[CPUINFO_LOGICAL_MAX];
-	uint32_t phy2log[CPUINFO_CHIP_MAX][CPUINFO_CORE_MAX];
-	uint32_t logical, physical;
-} cpuinfo_t;
+  root # mkdir -p /var/www/chown-test && cd /var/www
+  root # mkdir chown-test/foo
+  root # mkdir chown-test/bar
+  root # ln -s ../bar chown-test/foo/quux
+  root # touch chown-test/bar/baz
 
-extern cpuinfo_t cpuinfo;
+=== Terminal 2 (mjo) ===
 
-extern int cpuinfo_init(void);
+  mjo $ cd /var/www/chown-test/bar
+  mjo $ while true; do ln -s -f /etc/passwd ./baz; done;
 
---X1bOJ3K7DJ5YkBrT
-Content-Type: text/x-c; charset=us-ascii
-Content-Disposition: attachment; filename="cpuinfo.c"
+=== Terminal 1 (root) ===
 
-/*
- * Copyright 2016 Alexander Peslyak
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted.
- *
- * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE.
- */
+  root # chown --verbose --recursive -L mjo chown-test
+  changed ownership of 'chown-test/foo/quux/baz' from root to mjo
+  changed ownership of 'chown-test/foo/quux' from root to mjo
+  changed ownership of 'chown-test/foo' from root to mjo
+  changed ownership of 'chown-test/bar/baz' from root to mjo
+  ownership of 'chown-test/bar' retained as mjo
+  changed ownership of 'chown-test' from root to mjo
 
-#include <inttypes.h>
-#include <stdio.h>
-#include <string.h>
-#include <errno.h>
+The verbose output shows that happens. The depth-first traversal
+follows the symlink and changes ownership of "foo/quux" (which points
+to "bar") before it changes ownership of "bar/baz". Between the two
+operations, mjo should be able to replace "bar/baz" with a symlink to
+a path of his choosing. Indeed, the attack has worked, because mjo now
+owns /etc/passwd:
 
-#include "cpuinfo.h"
+  root # ls -l /etc/passwd
+  -rw-r--r-- 1 mjo root 1.5K 2017-12-17 18:34 /etc/passwd
 
-cpuinfo_t cpuinfo;
+Note that the "--dereference" flag implies the same problem. Along
+with "--recursive", the "--dereference" flag forces you to set either
+"-H" or "-L", and in that context, choosing "-H" won't prevent the
+link itself from being dereferenced.
 
-#define PROC_LINE_MAX 1024
+The chgrp program is vulnerable in exactly the same way, but to a
+lesser extent. With chown, the new owner can always replace files in
+the directories that he now owns; with chgrp, those directories need
+to be group-writable. But beware that any member of the new group can
+try to exploit the situation. The same considerations apply when chown
+is used to change groups instead of (or in addition to) ownership.
 
-int cpuinfo_init(void)
-{
-	const char *filename = "/proc/cpuinfo";
-	FILE *f = fopen(filename, "r");
-	if (!f) {
-		fprintf(stderr, "fopen: %s: %s\n", filename, strerror(errno));
-		return -1;
-	}
 
-	const char *errmsg = NULL;
-	int retval = -1;
-	uint64_t linenum = 0;
-	char line[PROC_LINE_MAX];
-	char name[PROC_LINE_MAX];
-	uint32_t value;
+== Mitigation ==
 
-	memset(&cpuinfo, -1, sizeof(cpuinfo));
-	int32_t i = -1;
-
-	while (fgets(line, sizeof(line), f)) {
-		linenum++;
-		char *p = line + strlen(line);
-		if (p > line)
-			p--;
-		if (p >= line + sizeof(line) - 2) {
-			errmsg = "line too long";
-			goto out;
-		} else if (*p != '\n') {
-			errmsg = "no linefeed";
-			goto out;
-		}
-
-		sscanf(line, "%[^\t]\t: %" SCNu32 "\n", name, &value);
-
-		if (!strcmp(name, "processor")) {
-			if (value != ++i) {
-				errmsg = "unexpected logical processor number";
-				goto out;
-			}
-			if (i >= CPUINFO_LOGICAL_MAX) {
-				errmsg = "too many logical processors";
-				goto out;
-			}
-		}
-		if (!strcmp(name, "physical id")) {
-			if (i == -1) {
-				errmsg = "physical id without processor";
-				goto out;
-			}
-			if (value >= CPUINFO_CHIP_MAX) {
-				errmsg = "physical id too large";
-				goto out;
-			}
-			if (cpuinfo.log2phy[i].chip != (uint32_t)-1) {
-				errmsg = "duplicate physical id for processor";
-				goto out;
-			}
-			cpuinfo.log2phy[i].chip = value;
-		}
-		if (!strcmp(name, "core id")) {
-			if (i == -1) {
-				errmsg = "core id without processor";
-				goto out;
-			}
-			if (value >= CPUINFO_CORE_MAX) {
-				errmsg = "core id too large";
-				goto out;
-			}
-			if (cpuinfo.log2phy[i].core != (uint32_t)-1) {
-				errmsg = "duplicate core id for processor";
-				goto out;
-			}
-			cpuinfo.log2phy[i].core = value;
-		}
-	}
-
-	if (i == -1) {
-		errmsg = "no logical processors found";
-		goto out;
-	}
-
-	cpuinfo.logical = ++i;
-
-	uint32_t j;
-	for (i = j = 0; i < cpuinfo.logical; i++) {
-		if (cpuinfo.log2phy[i].chip == (uint32_t)-1) {
-			errmsg = "no physical id for a logical processor";
-			goto out;
-		}
-		if (cpuinfo.log2phy[i].core == (uint32_t)-1) {
-			errmsg = "no core id for a logical processor";
-			goto out;
-		}
-		uint32_t *p2l = &cpuinfo.phy2log
-		    [cpuinfo.log2phy[i].chip][cpuinfo.log2phy[i].core];
-		if (*p2l == (uint32_t)-1) {
-			*p2l = i;
-			cpuinfo.log2phy[i].seq = j++;
-		} else {
-			cpuinfo.log2phy[i].seq = cpuinfo.log2phy[*p2l].seq;
-		}
-	}
-
-	cpuinfo.physical = j;
-
-	if (ferror(f))
-		perror("fgets");
-	else
-		retval = 0;
-
-out:
-	if (errmsg)
-		fprintf(stderr, "Error: %s line %" PRIu64 ": %s\n",
-		    filename, linenum, errmsg);
-	if (fclose(f))
-		perror("fclose");
-
-	if (!retval) {
-		printf("Found %" PRIu32 " logical processors across %" PRIu32
-		    " physical cores\n", cpuinfo.logical, cpuinfo.physical);
-	}
-
-	return retval;
-}
-
---X1bOJ3K7DJ5YkBrT--
+The two flags "-R" and "-L" are specified by POSIX, so their behavior
+can't be changed much. Avoid using chown or chgrp recursively. And if
+you do, don't also use "-L".
