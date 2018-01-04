@@ -1,31 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/16/2
-Message-ID: <87woycifgl.fsf@v45346.1blu.de>
-Date: Fri, 16 Mar 2018 09:37:14 +0100
-From: Stefan Bodewig <bodewig@...che.org>
-To: Commons Developers List <dev@...mons.apache.org>, user@...mons.apache.org, announce@...che.org
-CC: security@...mons.apache.org, oss-security@...ts.openwall.com
-Subject: [CVE-2018-1324] Apache Commons Compress denial of service vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/04/1
+Message-Id: <E1eX5AX-0003nj-R9@xenbits.xenproject.org>
+Date: Thu, 04 Jan 2018 13:02:49 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 253 - x86: memory leak with MSR emulation
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-1324: Apache Commons Compress denial of service vulnerability
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Severity: Low
+                    Xen Security Advisory XSA-253
+                              version 2
 
-Vendor:
-The Apache Software Foundation
+                  x86: memory leak with MSR emulation
 
-Versions Affected:
-Apache Commons Compress 1.11 to 1.15
+UPDATES IN VERSION 2
+====================
 
-Description:
-A specially crafted ZIP archive can be used to cause an infinite loop
-inside of Compress' extra field parser used by the ZipFile and
-ZipArchiveInputStream classes.  This can be used to mount a denial of
-service attack against services that use Compress' zip package.
+Public release.
 
-Mitigation:
-Commons Compress users should upgrade to 1.16 or later
+ISSUE DESCRIPTION
+=================
 
-Credit:
-This issue was discovered by Luis Filipe Nassif.
+In Xen 4.10, new infrastructure was introduced as part of an overhaul to
+how MSR emulation happens for guests.  Unfortunately, one tracking
+structure isn't freed when a vcpu is destroyed.
+
+IMPACT
+======
+
+A memory allocation of 8 bytes is leaked each time a vcpu is destroyed.
+
+A malicious guest may, by frequently rebooting over extended periods of
+time, run the system out of memory, resulting in a Denial of Service
+(DoS).
+
+VULNERABLE SYSTEMS
+==================
+
+Xen versions 4.10 and later are affected.  Xen 4.9 and earlier are not
+affected.
+
+Only x86 systems are affected.  ARM systems are not.
+
+All guest kinds can exploit this vulnerability.
+
+MITIGATION
+==========
+
+Limiting the frequency with which a guest is able to reboot, will
+limit the memory leak.
+
+Rebooting each host (after migrating its guests) periodically will
+reclaim the leaked space.
+
+CREDITS
+=======
+
+This issue was discovered by Andrew Cooper of Citrix.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa253.patch           Xen 4.10, xen-unstable
+
+$ sha256sum xsa253*
+bba1abb5e4368421de29385e37f8477bf3534d3ba3ff7e2aae9c9d3da53f1393  xsa253.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJaTiXyAAoJEIP+FMlX6CvZ/CIH/3LEbyAmWUSs4C2Rt0EENDLO
+JnnAGXWIy3DsffGiG9zOhfYiItn2iD+J+EcO+WC5lGPBSkX1KiXdsWVla/dJuy0F
+frx5pdqJNSHFihK/6fGU0WnSBFz6o2gkn2hOnzWfpxNLiJMrHCI6GEOcdMx6xtOQ
+9QZAa7rCN1aRx0Lx1LjuvaqPwy4rJ294zLnwarMoN10KZ3oRVbQ8mf4kN+/X+hlK
+9MxUj99WYZWcJhcRLGiQALPdRQeabh72/ZTFsfIAwPxaEgT6YhwFrFDG526iNcM0
+MkruO8HeD+byrQrni/qgB5EAIyPsFuBfvzddHzPA+9sSrf4QDjQWPFihQ3ti+xg=
+=sQVC
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa253.patch" of type "application/octet-stream" (739 bytes)
