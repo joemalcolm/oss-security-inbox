@@ -1,124 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/01/4
-Message-Id: <E1erO3G-0007Aw-0E@xenbits.xenproject.org>
-Date: Thu, 01 Mar 2018 13:15:14 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 252 (CVE-2018-7540) - DoS via non-preemptable L3/L4 pagetable freeing
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/05/3
+Message-ID: <10684fe8-5aca-3ce0-c109-1c7cd1d952be@cardoe.com>
+Date: Fri, 5 Jan 2018 11:22:25 -0600
+From: Doug Goldstein <cardoe@...doe.com>
+To: "Xen.org security team" <security@....org>, xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+Cc: "Xen.org security team" <security-team-members@....org>
+Subject: Re: [Xen-devel] Xen Security Advisory 254 - Information leak via side effects of speculative execution
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+I'm just adding some comments below on some updates that might be
+helpful to add to help clarify things for interested parties. These
+comments are driven purely based on the questions that I've had to field
+from others.
 
-            Xen Security Advisory CVE-2018-7540 / XSA-252
-                              version 3
+- Since this advisory talks about 3 CVEs and then breaks the issue into
+3 items SP1, SP2 and SP3 it would be helpful to directly map them to
+their CVEs.
+- There has been some confusion around mitigation and resolution where
+people misunderstand the terms and therefore there might be some value
+in providing some updates to provide some more clarity.
 
-             DoS via non-preemptable L3/L4 pagetable freeing
+> 
+> SP1, "Bounds-check bypass": Poison the branch predictor, such that
+> operating system or hypervisor code is speculatively executed past
+> boundary and security checks.  This would allow an attacker to, for
+> instance, cause speculative code in the normal hypercall / emulation
+> path to execute with wild array indexes.
 
-UPDATES IN VERSION 3
-====================
+please add CVE-2017-5753
 
-CVE assigned.
+> 
+> SP2, "Branch Target Injection": Poison the branch predictor.
+> Well-abstracted code often involves calling function pointers via
+> indirect branches; reading these function pointers may involve a
+> (slow) memory access, so the CPU attempts to guess where indirect
+> branches will lead.  Poisoning this enables an attacker to
+> speculatively branch to any code that exists in the hypervisor.
 
-ISSUE DESCRIPTION
-=================
+please add CVE-2017-5715
 
-Guests have the ability to request removal of memory from themselves.
-This operation is intended to be requested for normal read/write pages,
-but is also permitted to be used on other types of pages.  So far this
-in particular included pages pinned to their current type, with the
-necessary unpinning happening implicitly.  The unpinning of higher level
-page tables can, however, take a significant amount of time, and hence
-is generally expected to be carried out with intermediate preemption
-checks.  Such checks were missing from the code path involved here.
 
-IMPACT
-======
+> 
+> SP3, "Rogue Data Load": On some processors, certain pagetable
+> permission checks only happen when the instruction is retired;
+> effectively meaning that speculative execution is not subject to
+> pagetable permission checks.  On such processors, an attacker can
+> speculatively execute arbitrary code in userspace with, effectively,
+> the highest privilege level.
 
-A malicious guest administrator can cause a Denial of Service (DoS).
-Specifically, prevent use of a physical CPU for a significant period of
-time.
+please add CVE-2017-5754 and/or reference this is meltdown.
 
-VULNERABLE SYSTEMS
-==================
+> 
+> MITIGATION
+> ==========
+> 
+> There is no mitigation for SP1 and SP2.
+> 
+> SP3 can be mitigated by running guests in HVM or PVH mode.
+> 
+> For guests with legacy PV kernels which cannot be run in HVM mode, we
+> have developed a "shim" hypervisor that allows PV guests to run in PVH
+> mode.  Unfortunately, due to the accelerated schedule, this is not yet
+> ready to release.  We expect to have it ready for 4.10, as well as PVH
+> backports to 4.9 and 4.8, available over the next few days.
+> 
+> RESOLUTION
+> ==========
+> 
+> There is no available resolution for SP1 or SP3.
 
-All Xen versions are vulnerable.
+I believe there has been some confusion among some people about the
+terms here. There are some people that understand "mitigation" as "what
+can I do now to avoid this" and "resolution" as "what updates can I
+apply". As a result they are misunderstanding here what the net result
+is. Some clarifications could be that the PVH shim is the resolution for
+the SP3 issue. However its not a fix for PV itself but instead changes
+the very nature of how PV guests are started up.
 
-Only x86 systems are affected.  ARM systems are not affected.
 
-Only PV guests can leverage this vulnerability.  HVM guests cannot
-leverage this vulnerability.
+-- 
+Doug Goldstein
 
-MITIGATION
-==========
 
-Running only HVM guests will avoid this issue.
 
-CREDITS
-=======
-
-This issue was discovered by Jann Horn of Google Project Zero.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa252.patch           xen-unstable, Xen 4.10.0
-xsa252-4.9.patch       Xen 4.9.x, Xen 4.8.x
-xsa252-4.7.patch       Xen 4.7.x
-xsa252-4.6.patch       Xen 4.6.x, Xen 4.5.x
-
-$ sha256sum xsa252*
-5bf651378b92520969cde49d11500bcaeffab15590d21c16736be408a85ab3fa  xsa252.meta
-53174dfd05eb274431dc756c9c3a39b355d485d6c9d12a8797b350bab343d22e  xsa252.patch
-b7ba005fa62ace07f4880cc79824968c24ead3182245e4ed3a6e22cf8d2d7c05  xsa252-4.6.patch
-14f37eb6b7a9fb19b258ca3c0e2da71dbc4240e6273137d5eb4003b122101aa6  xsa252-4.7.patch
-cb679f2145e76b1c754c4377b397d201007f50438ee18e451c4b0da3f510a293  xsa252-4.9.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJal/zQAAoJEIP+FMlX6CvZKAAH+gKqf6lQicFUpzEGqbVbXTg9
-DYm8S6nKvn5/tgcquznswDZ2EpEMN4j8NaII4it2UQSZo7jOn7FOxiewdhAHcIAf
-vW2MHz9tkE+DXPOod4tDwhjonzLo1n0uqVuoUylq8atIrX2KxcSDJAbRp78lmUoY
-rxklw0uOlpno4hAJ4BaNY+fvjDyPBksApstJ6CZ/BUhaJeebYHbkCo92CTUvcThg
-xdA/M+w62plLCpwdnAJY5YV8NP32I5FNTe0sPnpszfk+gyDTLBMDHXdr+yegGayt
-ZvcH5c/NEeqeeF+MSd6ibnVfboQilDoPCnf9iL5ISOHtajkR2TK2vToi2hWQsi4=
-=Bn7r
------END PGP SIGNATURE-----
-
-Download attachment "xsa252.meta" of type "application/octet-stream" (2339 bytes)
-
-Download attachment "xsa252.patch" of type "application/octet-stream" (955 bytes)
-
-Download attachment "xsa252-4.6.patch" of type "application/octet-stream" (868 bytes)
-
-Download attachment "xsa252-4.7.patch" of type "application/octet-stream" (920 bytes)
-
-Download attachment "xsa252-4.9.patch" of type "application/octet-stream" (926 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (982 bytes)
