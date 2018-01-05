@@ -1,149 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/10/4
-Message-ID: <e0927f84-ff6c-8581-56b3-e2c0debb12b0@electrum.org>
-Date: Wed, 10 Jan 2018 18:49:27 +0100
-From: Thomas Voegtlin <thomasv@...ctrum.org>
-To: oss-security@...ts.openwall.com
-Subject: JSONRPC vulnerability in Electrum 2.6 to 3.0.4
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/05/5
+Message-ID: <CAHmME9or=myCkR3_iNfZ__k0tcYpPK5_FBpSqdR43p9p5qYEgA@mail.gmail.com>
+Date: Fri, 5 Jan 2018 21:28:11 +0100
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE-2017-18021: predictably random password generation in third-party pass-compatible software, "QtPass"
 Content-Type: text/plain; charset=utf-8
 
-A vulnerability has been found in Electrum, and patched in version
-3.0.5. Please update your software if you are running an earlier version.
+Hi folks,
 
-The following is a copy of the summary and guidelines we posted on our
-website: https://github.com/spesmilo/electrum-docs/blob/master/cve.rst
+"QtPass" is a separate project entirely from pass. It shares no code
+with "pass", the project I maintain. But, "QtPass" does endeavor to be
+compatible with pass. However, it is in fact a completely separate
+project. Best practice is probably not to stray too far from my nest
+to these third-party GUIs, given bugs like this one, CVE-2017-18021, a
+way of trivially predicting all passwords ever generated with
+"QtPass".
 
-A CVE number for the issue has been requested 2 days ago, and has not
-been attributed yet.
+Bug report is here: https://github.com/IJHack/QtPass/issues/338
+Fix landed in v1.2.1: https://github.com/IJHack/QtPass/releases/tag/v1.2.1
 
+All passwords generated with "QtPass"'s built-in password generator
+are possibly predictable and enumerable by hackers. The generator used
+libc's random(), seeded with srand(msecs), where msecs is not the
+msecs since 1970 (not that that'd be secure anyway), but rather the
+msecs since the last second. This means there are only 1000 different
+sequences of generated passwords. Disaster.
 
+If you're using this software, now would be a good time to change all
+your passwords and regenerate them using a secure utility such as pass
+(what this mailing list is about), or update to the latest version of
+this third party "QtPass" software and regenerate from there. All
+distributions should update and remove vulnerable versions from their
+package trees.
 
-JSONRPC vulnerability in Electrum 2.6 to 3.0.4
-==============================================
+The fix I proposed to the "QtPass" developers involves using Qt 5.10's
+built-in CSPRNG wrapper, or /dev/urandom for older Qt versions.
 
-On January 6th, a vulnerability was disclosed in the Electrum wallet
-software, that allows malicious websites to execute wallet commands
-through JSONRPC executed in a web browser. The bug affects versions
-2.6 to 3.0.4 of Electrum, on all platforms. It also affects clones of
-Electrum such as Electron Cash.
-
-
-Can funds be stolen?
---------------------
-
-Wallets that are not password protected are at risk of theft, if they
-are opened with a version of Electrum older than 3.0.5 while a web
-browser is active.
-
-In addition, the vulnerability allows an attacker to modify user
-settings, the list of contacts in a wallet, and the "payto" and
-"amount" fields of the user interface while Electrum is running.
-
-Although there is no known occurrence of Bitcoin theft occurring
-because of this vulnerability, the risk increases substantially now
-that the vulnerability has been made public.
-
-
-Can wallet data be leaked?
---------------------------
-
-Yes, an attacker can obtain private data, such as: Bitcoin addresses,
-transaction labels, address labels, wallet contacts and master public
-keys.
-
-
-Can a password-protected wallet be bruteforced?
------------------------------------------------
-
-Not realistically. The vulnerability does not allow an attacker to
-access encrypted seed or private keys, which would be needed in order
-to perform an efficient brute force attack. Without the encrypted
-seed, an attacker must try passwords using the JSONRPC interface,
-while the user is visiting a malicious page. This is several orders of
-magnitude slower than an attack with the encrypted seed, and
-restricted in time. Even a weak password will protect against that.
-
-
-What should users do?
----------------------
-
-All users should upgrade their Electrum software, and stop using old
-versions.
-
-Users who did not protect their wallet with a password should create a
-new wallet, and move their funds to that wallet. Even if it never
-received any funds, a wallet without password should not be used
-anymore, because its seed might have been compromised.
-
-In addition, users should review their settings, and delete all
-contacts from their contacts list, because the Bitcoin addresses of
-their contacts might have been modified.
-
-
-How to upgrade Electrum
------------------------
-
-Stop running any version of Electrum older than 3.0.5, and install
-Electrum the most recent version. On desktop, make sure you download
-Electrum from https://electrum.org and no other website. On Android,
-the most recent version is available in Google Play.
-
-If Electrum 3.0.5 (or any later version) cannot be installed or does
-not work on your computer, stop using Electrum on that computer, and
-access your funds from a device that can run Electrum 3.0.5. If you
-really need to use an older version of Electrum, for example in order
-to access wallet seed, make sure that your computer is offline, and
-that no web browser is running on the computer at the same time.
-
-
-Should all users move their funds to a new address?
----------------------------------------------------
-
-We do not recommend moving funds from password protected wallets. For
-wallets that were not password protected, moving funds is an extreme
-precaution, that might not be necessary; indeed, if a wallet was
-compromised, it is very likely that the attacker would have stolen the
-funds immediately.
-
-
-When was the issue reported and fixed?
---------------------------------------
-
-The absence of password protection in the JSONRPC interface was
-reported on November 25th, 2017 by user jsmad:
-https://github.com/spesmilo/electrum/issues/3374
-
-jsmad's report was about the Electrum daemon, a piece of software that
-runs on web servers and is used by merchants in order to receive
-Bitcoin payments. In that context, connections to the daemon from the
-outside world must be explicitly authorized, by setting 'rpchost' and
-'rpcport' in the Electrum configuration.
-
-On January 6th, 2018, Tavis Ormandy demonstrated that the JSONRPC
-interface could be exploited against the Electrum GUI, and that the
-attack could be carried out by a web browser running locally, visiting
-a webpage with specially crafted JavaScript.
-
-We released a new version (3.0.4) in the hours following Tavis' post,
-with a patch written by mithrandi (Debian packager), that addressed
-the attack demonstrated by Tavis. In addition, the Github issue
-remained open, because mithrandi's patch was not adding password
-protection to the JSONRPC interface.
-
-Shortly after the 3.0.4 release we started to work on adding proper
-password protection to the JSONRPC interface of the daemon, and that
-part was ready on Sunday, January 7th. We also learned on Sunday
-afternoon that the first patch was not effective against another,
-similar attack, using POST. This is why we did not delay the 3.0.5
-release, which includes password protection, and completely disables
-JSONRPC in the GUI.
-
-
-
-
-
-
--- 
-Electrum Technologies GmbH / Waldemarstr 37a / 10999 Berlin / Germany
-Sitz, Registergericht: Berlin, Amtsgericht Charlottenburg, HRB 164636
-Geschäftsführer: Thomas Voegtlin
+Regards,
+Jason
