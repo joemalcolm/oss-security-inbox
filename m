@@ -1,47 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/23/11
-Message-ID: <20180823113605.GA3397@localhost.localdomain>
-Date: Thu, 23 Aug 2018 04:36:05 -0700
-From: Qualys Security Advisory <qsa@...lys.com>
-To: oss-security@...ts.openwall.com
-Cc: Dariusz Tytko <dariusz.tytko@...uritum.pl>
-Subject: Re: OpenSSH Username Enumeration
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/05/2
+Message-ID: <CAB8XdGA7292ec89FB144X1vFd_gFSDYezZrKU52oSd_0f2h4aw@mail.gmail.com>
+Date: Fri, 5 Jan 2018 15:48:34 +0000
+From: Colm O hEigeartaigh <coheigea@...che.org>
+To: dev <dev@...try.apache.org>
+Cc: security@...try.apache.org, announce@...che.org,  oss-security@...ts.openwall.com
+Subject: [ANNOUNCE] Apache Sentry 1.7.1 released
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Apache Sentry is a system to enforce fine grained role based authorization
+to data and metadata stored on a Hadoop cluster.
 
-On Thu, Aug 23, 2018 at 09:50:08AM +0200, Dariusz Tytko wrote:
-> We have published our writeup
-> https://sekurak.pl/openssh-users-enumeration-cve-2018-15473/
+The Apache Sentry team is happy to announce the release of version 1.7.1.
+This release contains a fix for the following security advisory:
 
-Great job, and thank you very much for reporting this to the OpenSSH
-team in the first place!
+CVE-2015-3254: Apache Sentry vulnerabilities due to use of vulnerable
+version of Apache Thrift
 
-Here is our (rough) timeline:
+The full advisory text is available here:
 
-- On July 31,
-  https://github.com/openbsd/src/commit/779974d35b4859c07bc3cb8a12c74b43b0a7d1e0
-  is committed publicly, but does not explain the reasons for this
-  change, and does not flag it as a security fix.
+https://cwiki.apache.org/confluence/download/attachments/65864610/CVE-2015-3254.txt.asc
 
-- We read this commit about two weeks later, and realize its security
-  implications; we do not know whether distros@...openwall.org have been
-  contacted about this or not.
+The release bits are available at:
 
-- We therefore send our findings to openssh@...nssh.com and
-  distros@...openwall.org, on August 15.
+http://sentry.apache.org/general/downloads.html
 
-- About 20 minutes later (!), Solar Designer confirms that we should
-  post this to oss-security@...ts.openwall.com right away (as per
-  https://oss-security.openwall.org/wiki/mailing-lists/distros): indeed,
-  the issue is already public (if we spotted this commit, then others
-  did, too).
-
-- About one hour later, we post our findings to oss-security.
-
-Again, we thank Dariusz Tytko for reporting this issue,
-distros@...openwall.org for their quick response, and the OpenSSH team
-for all their hard and inspiring work. With best regards,
+Regards,
+Sentry team
 
 -- 
-the Qualys Security Advisory team
+Colm O hEigeartaigh
+
+Talend Community Coder
+http://coders.talend.com
+
