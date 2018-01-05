@@ -1,24 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/15/3
-Message-ID: <f89f6551-b72e-5a20-6013-8adf5acd752a@apache.org>
-Date: Thu, 15 Mar 2018 14:52:52 -0400
-From: Dave Brondsema <brondsem@...che.org>
-To: dev@...ura.apache.org, users@...ura.apache.org, announce@...che.org, oss-security@...ts.openwall.com, Apache Security Team <security@...che.org>
-Subject: [SECURITY] CVE-2018-1319 Apache Allura HTTP response splitting
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/05/1
+Message-ID: <1410041057.3565448.1515156752734.JavaMail.zimbra@redhat.com>
+Date: Fri, 5 Jan 2018 07:52:32 -0500 (EST)
+From: Vladis Dronov <vdronov@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2017-15129: Linux kernel: net: double-free and memory corruption in get_net_ns_by_id()
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-1319 Apache Allura HTTP response splitting
+Heololo,
 
-Severity: Important
-Versions Affected: All
+A use-after-free vulnerability was found in a network namespaces code affecting the Linux
+kernel since  v4.0-rc1 through v4.15-rc5. The function get_net_ns_by_id() does not check
+for the net::count value after it has found a peer network in netns_ids idr which could
+lead to double free and memory corruption. This vulnerability could allow an unprivileged
+local user to induce kernel memory corruption on the system, leading to a crash. Due to
+the nature of the flaw, privilege escalation cannot be fully ruled out, although we believe
+it is unlikely.
 
-Description:
-Attackers may craft URLs that cause HTTP response splitting.  If a victim goes
-to a maliciously crafted URL, unwanted results may occur including XSS or
-service denial for the victim's browsing session.
+References:
 
-Mitigation:
-Users of Allura should upgrade to Allura 1.8.1 immediately.
+https://marc.info/?l=linux-netdev&m=151370451121029&w=2
 
-Credit:
-This issue was discovered by Everardo Padilla Saca
+https://marc.info/?t=151370468900001&r=1&w=2 (a whole thread)
+
+https://bugzilla.redhat.com/show_bug.cgi?id=1531174
+
+An upstream patch:
+
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=21b5944350052d2583e82dd59b19a9ba94a007f0
+
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+
