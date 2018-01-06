@@ -1,66 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/23/2
-Message-ID: <22f17f0e-a1e9-54d3-39ed-0f9984042985@nic.cz>
-Date: Mon, 23 Apr 2018 14:30:02 +0200
-From: Petr Špaček <petr.spacek@....cz>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/06/2
+Message-ID: <1515248018.2869.2.camel@gmail.com>
+Date: Sat, 06 Jan 2018 15:13:38 +0100
+From: Ailin Nemui <ailin.nemui@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2018-1110: Knot Resolver <= 2.2.0 Improper Input Validation
+Subject: Irssi 1.0.6: CVE-2018-5206, CVE-2018-5205, CVE-2018-5208, CVE-2018-5207
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+IRSSI-SA-2018-01 Irssi Security Advisory [1]
+============================================
+CVE-2018-5206, CVE-2018-5205, CVE-2018-5208, CVE-2018-5207
 
-Knot Resolver software version <= 2.2.0 suffers from Improper Input
-Validation bugs which allow remote attacker to crash the resolver by
-sending specially crafted packets.
+Description
+-----------
 
-Fixes
-=====
-Knot Resolver 2.3.0 fixes all known security bugs and is available from
-https://www.knot-resolver.cz/download/
+Multiple vulnerabilities have been located in Irssi.
 
-Backports
-=========
-To fix the bugs we had to do major changes to some data structures so
-backport it most likely not feasible. We are discontinuing support for
-*all* versions older than 2.3.0 and discourage attempts to backport
-fixes because these will most likely introduce additional bugs.
+(a) When the channel topic is set without specifying a sender, Irssi
+    may dereference NULL pointer. Found by Joseph Bisch. (CWE-476)
 
-CVE request data
-================
-Fixed version:
-Knot Resolver 2.3.0
+    CVE-2018-5206 was assigned to this issue.
 
-Vulnerability type:
-CWE-20: Improper Input Validation
+(b) When using incomplete escape codes, Irssi may access data beyond
+    the end of the string. (CWE-126) Found by Joseph Bisch.
 
-Affected component:
-resolver
+    CVE-2018-5205 was assigned to this issue.
 
-Impact of exploitation:
-Program crashes.
+(c) A calculation error in the completion code could cause a heap
+    buffer overflow when completing certain strings. (CWE-126) Found
+    by Joseph Bisch.
 
-Description of vulnerability:
-Improper input validation bugs in DNS resolver component of Knot
-Resolver (up to and including version 2.2.0) allow remote attacker who
-can create malformed packets to cause denial of service.
+    CVE-2018-5208 was assigned to this issue.
 
-Attack Vector (AV): Network
-Attack Complexity (AC): Low
-Privileges Required (PR): None
-User Interaction (UI): None
-Scope (S): Unchanged
-Confidentiality (C): None
-Integrity (I): Low
-Availability (A): High
+(d) When using an incomplete variable argument, Irssi may access data
+    beyond the end of the string. (CWE-126) Found by Joseph Bisch.
 
-Technical Details:
-CWE-20
-CWE-476
-CWE-626
+    CVE-2018-5207 was assigned to this issue.
 
-Acknowledgment:
-CZ.NIC would like to thank Toshifumi Sakaguchi and Vicky Shrestha for
-their responsible reporting of security vulnerabilities.
 
--- 
-Petr Špaček  @  CZ.NIC
+Impact
+------
+
+May affect the stability of Irssi.
+
+
+Affected versions
+-----------------
+
+(a,b,c,d) All Irssi versions that we observed.
+
+
+Fixed in
+--------
+
+Irssi 1.0.6
+
+
+Recommended action
+------------------
+
+Upgrade to Irssi 1.0.6. Irssi 1.0.6 is a maintenance release in the
+1.0 series, without any new features.
+
+After installing the updated packages, one can issue the /upgrade
+command to load the new binary. TLS connections will require
+/reconnect.
+
+
+Mitigating facts
+----------------
+
+(a) requires a broken ircd or control over the ircd
+
+(b,d) requires user to install malicious or broken files or enter
+      affected commands
+
+
+Patch
+-----
+https://github.com/irssi/irssi/releases/download/1.0.6/irssi-1.0.5_1.0.
+6.diff
+
+
+References
+----------
+
+[1] https://irssi.org/security/irssi_sa_2018_01.txt
