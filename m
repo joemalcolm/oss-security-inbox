@@ -1,67 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/26/1
-Message-ID: <20180726090936.76ac1839@computer>
-Date: Thu, 26 Jul 2018 09:09:36 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Fw: New cabextract 1.7 and libmspack 0.7 release
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/06/3
+Message-Id: <E1eXqLJ-0008JW-6M@xenbits.xenproject.org>
+Date: Sat, 06 Jan 2018 15:25:05 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 253 (CVE-2018-5244) - x86: memory leak with MSR emulation
 Content-Type: text/plain; charset=utf-8
 
-Several memory safety bugs fixed, see below.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Begin forwarded message:
+            Xen Security Advisory CVE-2018-5244 / XSA-253
+                              version 3
 
-Date: Thu, 26 Jul 2018 00:46:18 +0100
-From: Stuart Caie
-Subject: New cabextract 1.7 and libmspack 0.7 release
+                  x86: memory leak with MSR emulation
 
+UPDATES IN VERSION 3
+====================
 
-Hello all,
+CVE assigned.
 
-cabextract 1.7 has been released.
+ISSUE DESCRIPTION
+=================
 
-It fixes a few bugs, an introduces a new "--encoding" option, which is 
-made available if the iconv() function and/or libiconv library are 
-available on your system. It also now tries calling setlocale() (if 
-present) with several possible locales that have a UTF-8 ctype, to
-allow towlower() (if present) to lowercase non-ASCII characters.
+In Xen 4.10, new infrastructure was introduced as part of an overhaul to
+how MSR emulation happens for guests.  Unfortunately, one tracking
+structure isn't freed when a vcpu is destroyed.
 
-cabextract can be downloaded from https://www.cabextract.org.uk/
+IMPACT
+======
 
-SHA256 sums:
+A memory allocation of 8 bytes is leaked each time a vcpu is destroyed.
 
-06d3cdded6519fccff1532f64ab54ce6cc3c7be51bcc6fff0f91092179a9bb26 
-cabextract-1.7-1.i386.rpm
-11570d7e5ba0f46f458b88d76d2f0bdcad3a1266055ea5c8229830be2023e16e 
-cabextract-1.7-1.src.rpm
-297203c826c004801ea1b17414f568e7bdf56c3ae9bbaca4d8514e8a56e506bd 
-cabextract-1.7.tar.gz
+A malicious guest may, by frequently rebooting over extended periods of
+time, run the system out of memory, resulting in a Denial of Service
+(DoS).
 
-libmspack 0.7alpha has also been released. It fixes several bugs:
+VULNERABLE SYSTEMS
+==================
 
-* bad KWAJ file header extensions could cause a one or two byte
-  overwrite
-* The character U+0100 in a CHM filename could cause a one-byte overread
-* libmspack now rejects blank CHM filenames.
-* Fixed off-by-one error in CHM PMGI/PMGL chunk number validity checks, 
-which could cause a crash by dereferencing uninitialised data beyond
-  the end of the fast_find() chunk cache.
+Xen versions 4.10 and later are affected.  Xen 4.9 and earlier are not
+affected.
 
-libmspack can be downloaded from
-https://www.cabextract.org.uk/libmspack/
+Only x86 systems are affected.  ARM systems are not.
 
-SHA256 sum:
+All guest kinds can exploit this vulnerability.
 
-36e0516cdb60617871d396fb85464f440b4ab76942ce6bdd0438ca8d70f32772 
-libmspack-0.7alpha.tar.gz
+MITIGATION
+==========
 
-Regards
-Stuart
+Limiting the frequency with which a guest is able to reboot, will
+limit the memory leak.
 
+Rebooting each host (after migrating its guests) periodically will
+reclaim the leaked space.
 
--- 
-Hanno Böck
-https://hboeck.de/
+CREDITS
+=======
 
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+This issue was discovered by Andrew Cooper of Citrix.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa253.patch           Xen 4.10, xen-unstable
+
+$ sha256sum xsa253*
+bba1abb5e4368421de29385e37f8477bf3534d3ba3ff7e2aae9c9d3da53f1393  xsa253.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJaUOoXAAoJEIP+FMlX6CvZchUIAKlvxu5o9IcIyULARW0s2YEA
+6ueK3tyaH2vlWH1IG9KORletdAGALJrfEODt8SBJb+0rKDZKGHSKNB7a911QRebK
+njXdSpdb1WCdHmStI82csLKvdMGbrFq/6wWFJRt1eFtzr7Qt3rwKXtHv/OI4Kr1T
+sZ+K6M2KCavkJ+yPSF/f9GTBuD6iiu2E7RI5HzbjdV+k9E7tJkURH2/BPAfhhhyo
+zsColbPQAxm96RCHIEPaOI5qZXVcfL+5VNbUh5+6vOtUiZdpnOMHmSwDF0AZc1hO
+0YQ93/8blRm7N914rn8gu0zY+nQHcgC2klWzHOcCFirzTI0aHXfQQJsX9Oe6g3w=
+=CX95
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa253.patch" of type "application/octet-stream" (739 bytes)
