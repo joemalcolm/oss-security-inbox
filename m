@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["870" "Wednesday" "15" "April" "2020" "22:59:22" "-0500" "Josh Fischer" "josh@joshfischer.io" "<CAFkuAo1KHC_=9a5CepfMVooTOzfqFg0MODus-PR5QzyzBxOp=g@mail.gmail.com>" "36" "[oss-security] CVE-2020-1964: Apache Heron (incubating) information disclosure vulnerability" nil nil nil "4" "2020041603:59:22" "[oss-security] CVE-2020-1964: Apache Heron (incubating) information disclosure vulnerability" (number mark "U       josh@joshfis Apr 15   36/870   " thread-indent "\"[oss-security] CVE-2020-1964: Apache Heron (incubating) information disclosure vulnerability\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-1964: Apache Heron (incubating) information disclosure vulnerability" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4200" "Saturday" "6" "January" "2018" "15:25:05" "+0000" "Xen.org security team" "security@xen.org" "<E1eXqLJ-0008JW-6M@xenbits.xenproject.org>" "128" "[oss-security] Xen Security Advisory 253 (CVE-2018-5244) - x86: memory leak with MSR emulation" nil nil nil "1" "2018010615:25:05" "[oss-security] Xen Security Advisory 253 (CVE-2018-5244) - x86: memory leak with MSR emulation" (number mark "U       security@xen Jan  6  128/4200  " thread-indent "\"[oss-security] Xen Security Advisory 253 (CVE-2018-5244) - x86: memory leak with MSR emulation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26580 invoked by uid 550); 16 Apr 2020 06:27:15 -0000
+Received: (qmail 11690 invoked by uid 550); 6 Jan 2018 15:25:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,73 +12,145 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30535 invoked from network); 16 Apr 2020 03:59:45 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=joshfischer-io.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=hSDurY4eQ8vxsn0F7uZm4kAUVG397eibDz4yMAbblMg=;
-        b=PGpOjaCpIGMLPPAmOO2s1islIFabGS4Lqtbp0d5bHk3+oRiyrfdddt2LmGjrAG38Pg
-         3tJ9i/PZSe4uerxNbTKmhvWD/02bELpGPUHWwiXiVrdlcAHNWrZ0uBTa3ttzrRFbCr09
-         ktYtkmSzZPBoIbUACjY/yN/hAimjHmL38Jj3hU2uLzFLebmu8UAYq59AVIrya2XZ2hMN
-         8dSFIdq+iJaHZ9i98x3pr1Xzt8BLLj1+cBePXWnLep31Fz9UBLnB/PCja1Pjo6M6Pqlq
-         FhA0+mtD9v22r02zClBD5Ng3p0a1JLxv9lzwNptt+25nMHQmjlhCNEIBZ+3x0k+eUMF3
-         DjlQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=hSDurY4eQ8vxsn0F7uZm4kAUVG397eibDz4yMAbblMg=;
-        b=Lyq0sa3I5gdoT985HXpKfiMaF33OYGVg9hXlhL3fdL9g0s/3OdxBhHw7iRg1M/HDoS
-         NOMFDjqFNwBhOFnj9YopnVu45QmfCZ/3yln/2Uv0nT+Rmu70Zn903X9WbcFMyf+8S/SG
-         McRe1Q0N7GI+Kz4OpFG7TmQG63OpAegVJp4mt4GcIOZMp78raBrrxCgB+Vg7Md5qNCgu
-         ITpAqskS/FtezCqz9R/cLFBqt0ccj5Z9yfSZ78t8b+F2cD9GPpLHNuhFPfy9YMQrXswH
-         OMBN7/XtvMTdlAmMutAyc+7tYSmGtBuvqa0jmS0JZGujkz4UVSO4dqiJZ69ie0eDS00y
-         4ZVg==
-X-Gm-Message-State: AGi0PuYYWHvyX7BbWaiiI/GlUpnw9sER4SuDtOFc9K1fYCVsLcLOWwzp
-	mkDquBOfQVlknu7aj4zA8v5kL3UDdFfqSmkw7dqnQgbuHOSVfg==
-X-Google-Smtp-Source: APiQypKkv22SrQuhuHIsxPuJLfDW5l6d+0yDtNxmFdn+LXtX15c1jWOK2o3zg4N+TbboBLq5qsSZ5b9ZiNm9hLkTokI=
-X-Received: by 2002:a19:760a:: with SMTP id c10mr4860380lff.126.1587009573562;
- Wed, 15 Apr 2020 20:59:33 -0700 (PDT)
+Received: (qmail 11654 invoked from network); 6 Jan 2018 15:25:24 -0000
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
 MIME-Version: 1.0
-From: Josh Fischer <josh@joshfischer.io>
-Date: Wed, 15 Apr 2020 22:59:22 -0500
-Message-ID: <CAFkuAo1KHC_=9a5CepfMVooTOzfqFg0MODus-PR5QzyzBxOp=g@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000e3408305a360750f"
-Subject: [oss-security] CVE-2020-1964: Apache Heron (incubating) information disclosure vulnerability
+X-Mailer: MIME-tools 5.505 (Entity 5.505)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1eXqLJ-0008JW-6M@xenbits.xenproject.org>
+Date: Sat, 06 Jan 2018 15:25:05 +0000
+Subject: [oss-security] Xen Security Advisory 253 (CVE-2018-5244) - x86: memory leak with
+ MSR emulation
 
---000000000000e3408305a360750f
-Content-Type: text/plain; charset="UTF-8"
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
-CVE-2020-1964: Apache Heron (incubating) information disclosure
-vulnerability
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Severity: Important
+            Xen Security Advisory CVE-2018-5244 / XSA-253
+                              version 3
 
-Vendor:
-The Apache Software Foundation
+                  x86: memory leak with MSR emulation
 
-Versions Affected:
-0.20.2-incubating
-0.20.1-incubating
-v-0.20.0-incubating
+UPDATES IN VERSION 3
+====================
 
-Description:
-In versions 0.20.2-incubating and before in Apache Heron does not
-configure its YAML parser to prevent the instantiation of arbitrary
-types, resulting in remote code execution vulnerabilities (CWE-502:
-Deserialization of Untrusted Data).
+CVE assigned.
 
-Mitigation:
-0.20.2-incubating and previous users should build from the current HEAD of
-master.
-A vote has been started for a new release 0.20.3-incubating which will
-include the fix.
+ISSUE DESCRIPTION
+=================
 
-Credit:
-This vulnerability was discovered by Frederic Vleminckx
+In Xen 4.10, new infrastructure was introduced as part of an overhaul to
+how MSR emulation happens for guests.  Unfortunately, one tracking
+structure isn't freed when a vcpu is destroyed.
 
-Regards,
+IMPACT
+======
 
-The Apache Heron (Incubating) Team
+A memory allocation of 8 bytes is leaked each time a vcpu is destroyed.
 
---000000000000e3408305a360750f--
+A malicious guest may, by frequently rebooting over extended periods of
+time, run the system out of memory, resulting in a Denial of Service
+(DoS).
+
+VULNERABLE SYSTEMS
+==================
+
+Xen versions 4.10 and later are affected.  Xen 4.9 and earlier are not
+affected.
+
+Only x86 systems are affected.  ARM systems are not.
+
+All guest kinds can exploit this vulnerability.
+
+MITIGATION
+==========
+
+Limiting the frequency with which a guest is able to reboot, will
+limit the memory leak.
+
+Rebooting each host (after migrating its guests) periodically will
+reclaim the leaked space.
+
+CREDITS
+=======
+
+This issue was discovered by Andrew Cooper of Citrix.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa253.patch           Xen 4.10, xen-unstable
+
+$ sha256sum xsa253*
+bba1abb5e4368421de29385e37f8477bf3534d3ba3ff7e2aae9c9d3da53f1393  xsa253.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJaUOoXAAoJEIP+FMlX6CvZchUIAKlvxu5o9IcIyULARW0s2YEA
+6ueK3tyaH2vlWH1IG9KORletdAGALJrfEODt8SBJb+0rKDZKGHSKNB7a911QRebK
+njXdSpdb1WCdHmStI82csLKvdMGbrFq/6wWFJRt1eFtzr7Qt3rwKXtHv/OI4Kr1T
+sZ+K6M2KCavkJ+yPSF/f9GTBuD6iiu2E7RI5HzbjdV+k9E7tJkURH2/BPAfhhhyo
+zsColbPQAxm96RCHIEPaOI5qZXVcfL+5VNbUh5+6vOtUiZdpnOMHmSwDF0AZc1hO
+0YQ93/8blRm7N914rn8gu0zY+nQHcgC2klWzHOcCFirzTI0aHXfQQJsX9Oe6g3w=
+=CX95
+-----END PGP SIGNATURE-----
+
+--=separator
+Content-Type: application/octet-stream; name="xsa253.patch"
+Content-Disposition: attachment; filename="xsa253.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNv
+bT4KU3ViamVjdDogeDg2L21zcjogRnJlZSBtc3JfdmNwdV9wb2xpY3kgZHVy
+aW5nIHZjcHUgZGVzdHJ1Y3Rpb24KCmMvcyA0MTg3Zjc5ZGM3ICJ4ODYvbXNy
+OiBpbnRyb2R1Y2Ugc3RydWN0IG1zcl92Y3B1X3BvbGljeSIgaW50cm9kdWNl
+ZCBhCnBlci12Y3B1IG1lbW9yeSBhbGxvY2F0aW9uLCBidXQgZmFpbGVkIHRv
+IGZyZWUgaXQgaW4gdGhlIGNsZWFuIHZjcHUKZGVzdHJ1Y3Rpb24gY2FzZS4K
+ClRoaXMgaXMgWFNBLTI1MwoKU2lnbmVkLW9mZi1ieTogQW5kcmV3IENvb3Bl
+ciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNvbT4KUmV2aWV3ZWQtYnk6IEph
+biBCZXVsaWNoIDxqYmV1bGljaEBzdXNlLmNvbT4KCmRpZmYgLS1naXQgYS94
+ZW4vYXJjaC94ODYvZG9tYWluLmMgYi94ZW4vYXJjaC94ODYvZG9tYWluLmMK
+aW5kZXggYjE3NDY4Yy4uMGFlNzE1ZCAxMDA2NDQKLS0tIGEveGVuL2FyY2gv
+eDg2L2RvbWFpbi5jCisrKyBiL3hlbi9hcmNoL3g4Ni9kb21haW4uYwpAQCAt
+MzgyLDYgKzM4Miw5IEBAIHZvaWQgdmNwdV9kZXN0cm95KHN0cnVjdCB2Y3B1
+ICp2KQogCiAgICAgdmNwdV9kZXN0cm95X2ZwdSh2KTsKIAorICAgIHhmcmVl
+KHYtPmFyY2gubXNyKTsKKyAgICB2LT5hcmNoLm1zciA9IE5VTEw7CisKICAg
+ICBpZiAoICFpc19pZGxlX2RvbWFpbih2LT5kb21haW4pICkKICAgICAgICAg
+dnBtdV9kZXN0cm95KHYpOwogCg==
+
+--=separator--
