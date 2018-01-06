@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1259" "Monday" "22" "July" "2019" "07:12:21" "-0700" "Ian Zimmerman" "itz@very.loosely.org" "<20190722141221.uf5ae5l4qkucmksl@matica.foolinux.mooo.com>" "26" "[oss-security] Re: CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead" nil nil nil "7" "2019072214:12:21" "[oss-security] Re: CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead" (number mark "U       itz@very.loo Jul 22   26/1259  " thread-indent "\"[oss-security] Re: CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead\"\n") "<20190722115009.GA4117@openwall.com>" ("<20190722100013.GJ1168@jumper.schlittermann.de>" "<20190722112146.z4ey7777h5zci2zl@local>" "<20190722112953.GT67124@symphytum.spacehopper.org>" "<20190722115009.GA4117@openwall.com>") nil nil nil nil nil nil nil "[oss-security] Re: CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["13904" "Saturday" "6" "January" "2018" "16:15:58" "+0000" "Xen.org security team" "security@xen.org" "<E1eXr8Y-0004iB-7j@xenbits.xenproject.org>" "294" "[oss-security] Xen Security Advisory 250 (CVE-2017-17564) - improper x86 shadow mode refcount error handling" nil nil nil "1" "2018010616:15:58" "[oss-security] Xen Security Advisory 250 (CVE-2017-17564) - improper x86 shadow mode refcount error handling" (number mark "U       security@xen Jan  6  294/13904 " thread-indent "\"[oss-security] Xen Security Advisory 250 (CVE-2017-17564) - improper x86 shadow mode refcount error handling\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11384 invoked by uid 550); 22 Jul 2019 14:12:42 -0000
+Received: (qmail 7930 invoked by uid 550); 6 Jan 2018 16:16:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,46 +12,311 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11304 invoked from network); 22 Jul 2019 14:12:41 -0000
-Date: Mon, 22 Jul 2019 07:12:21 -0700
-From: Ian Zimmerman <itz@very.loosely.org>
-To: oss-security@lists.openwall.com
-Message-ID: <20190722141221.uf5ae5l4qkucmksl@matica.foolinux.mooo.com>
-References: <20190722100013.GJ1168@jumper.schlittermann.de>
- <20190722112146.z4ey7777h5zci2zl@local>
- <20190722112953.GT67124@symphytum.spacehopper.org>
- <20190722115009.GA4117@openwall.com>
+Received: (qmail 7466 invoked from network); 6 Jan 2018 16:16:18 -0000
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+X-Mailer: MIME-tools 5.505 (Entity 5.505)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1eXr8Y-0004iB-7j@xenbits.xenproject.org>
+Date: Sat, 06 Jan 2018 16:15:58 +0000
+Subject: [oss-security] Xen Security Advisory 250 (CVE-2017-17564) - improper x86 shadow
+ mode refcount error handling
+
+--=separator
+Content-Type: text/plain; charset="utf-8"
 Content-Disposition: inline
-In-Reply-To: <20190722115009.GA4117@openwall.com>
-User-Agent: NeoMutt/20180716
-X-Loosely-ASN: 7922
-Subject: [oss-security] Re: CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead
+Content-Transfer-Encoding: 7bit
 
-On 2019-07-22 13:50, Solar Designer wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> Exactly.  It's just an unusual disclosure process that involves giving
-> the users a heads-up a few days before public disclosure of the actual
-> vulnerabilities and fixes.  So far, this process is practiced by
-> OpenSSL and Exim (any others?)
-> 
-> Unfortunately, this keeps confusing people, which is why this time
-> Heiko's message starts with "Note: EMBARGO is still in effect".
-> Judging by Mikhail's reply, this wasn't good enough to avoid
-> confusion, and I don't know what would be - maybe a paragraph of text
-> acknowledging that the disclosure process is unusual?  Somehow I
-> didn't notice such confusion in response to OpenSSL's
-> pre-announcements (not here, but on their own announce list), so maybe
-> Exim should try to reuse OpenSSL's wording.  Here's an example:
-> 
-> https://mta.openssl.org/pipermail/openssl-announce/2019-February/000145.html
+            Xen Security Advisory CVE-2017-17564 / XSA-250
+                              version 3
 
-FWIW, I really appreciate this way (Exim's and OpenSSL's) and I wish it
-was the norm, rather than the exception.
+           improper x86 shadow mode refcount error handling
 
--- 
-Please don't Cc: me privately on mailing lists and Usenet,
-if you also post the followup to the list or newsgroup.
-To reply privately _only_ on Usenet and on broken lists
-which rewrite From, fetch the TXT record for no-use.mooo.com.
+UPDATES IN VERSION 3
+====================
+
+CVE assigned.
+
+ISSUE DESCRIPTION
+=================
+
+Pages being used to run x86 guests in shadow mode are reference counted
+to track their uses.  When another reference cannot be acquired, the
+corresponding page table entry must not be inserted.  Due to incorrect
+error handling, this constraint could be violated.
+
+IMPACT
+======
+
+A malicious or buggy guest may cause a hypervisor crash, resulting in
+a Denial of Service (DoS) affecting the entire host, or cause hypervisor
+memory corruption.  We cannot rule out a guest being able to escalate
+its privilege.
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen versions are affected.
+
+x86 systems are vulnerable.  ARM systems are not vulnerable.
+
+Only guests run in shadow mode can exploit the vulnerability.
+
+PV guests typically only run in shadow mode during live migration, as
+well as for features like VM snapshot.
+
+Note that save / restore does *not* use shadow mode, and so does not
+expose this vulnerability.  Some downstreams also  include a "non-live
+migration" feature, which also does not use shadow mode (and thus does
+not expose this vulnerability).
+
+HVM guests run in shadow mode on hardware without HAP support, or when
+HAP is disabled (globally or in the VM configuration file).  Live
+migration does not affect an HVM guest's use of shadow mode.
+
+MITIGATION
+==========
+
+For HVM guest explicitly configured to use shadow paging (e.g. via the
+`hap=0' xl domain configuration file parameter), changing to HAP (e.g.
+by setting `hap=1') will avoid exposing the vulnerability to those
+guests.  HAP is the default (in upstream Xen), where the hardware
+supports it; so this mitigation is only applicable if HAP has been
+disabled by configuration.
+
+For PV guests, avoiding their live migration avoids the vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Jan Beulich of SUSE.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa250.patch           xen-unstable, Xen 4.9.x ... 4.6.x
+xsa250-4.5.patch       Xen 4.5.x
+
+$ sha256sum xsa250*
+c15c1c3e64cfb7ab2e2c48970214aa8c3881deb7e11c498526554bb74535b601  xsa250.meta
+adf4d8242dbddb4ec52fe1effc1f8b233d33d8d6a59c1bb677dcc6e2ed2bf711  xsa250.patch
+d123a58308db606185c4e48dcf4a114ac29bb988ffc0eeb04ded213ec474e0f2  xsa250-4.5.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJaUPXdAAoJEIP+FMlX6CvZeoMH/iS1gZ8zBPWnBCSPm4pUt9ZJ
+cAJ9vX9E3wDZm0hEQRHOFvTlpqEY3w5TkkBZbErB8m1VD/Om45fZiHvvZRKPtCvK
+Jks8OVH2Mx2466WladCK4x3km86N2o2547u03dZzZIDUCvn19S8acI1wV8r4TOrv
+Op4VeDH+cxJ2EAmmrGWkCJc4lQxvJTqzsz+paZ+/dyOdaZGIKJJOhX6s7ZmkjhZz
+HHr05i+U72kzttUIYqVO4CIp3hoPsOyAcHsd004XGGH6LmWUA7bG1+Fcm+7b2ajD
+JX/l4xVstD8GWijRnyvOVo/ozRAGb+Nfve+xtVzbyozqVol5PTcP6Jwxerby8PA=
+=tkcf
+-----END PGP SIGNATURE-----
+
+--=separator
+Content-Type: application/octet-stream; name="xsa250.meta"
+Content-Disposition: attachment; filename="xsa250.meta"
+Content-Transfer-Encoding: base64
+
+ewogICJYU0EiOiAyNTAsCiAgIlN1cHBvcnRlZFZlcnNpb25zIjogWwogICAg
+Im1hc3RlciIsCiAgICAiNC4xMCIsCiAgICAiNC45IiwKICAgICI0LjgiLAog
+ICAgIjQuNyIsCiAgICAiNC42IiwKICAgICI0LjUiCiAgXSwKICAiVHJlZXMi
+OiBbCiAgICAieGVuIgogIF0sCiAgIlJlY2lwZXMiOiB7CiAgICAiNC4xMCI6
+IHsKICAgICAgIlhlblZlcnNpb24iOiAiNC4xMCIsCiAgICAgICJSZWNpcGVz
+IjogewogICAgICAgICJ4ZW4iOiB7CiAgICAgICAgICAiU3RhYmxlUmVmIjog
+IjM0NWJiOWNkNjM0NDIxZjUwYjczMmQ0ZjljODlhNjQ5YTdhMWQwZGIiLAog
+ICAgICAgICAgIlByZXJlcXMiOiBbCiAgICAgICAgICAgIDI0OCwKICAgICAg
+ICAgICAgMjQ5CiAgICAgICAgICBdLAogICAgICAgICAgIlBhdGNoZXMiOiBb
+CiAgICAgICAgICAgICJ4c2EyNTAucGF0Y2giCiAgICAgICAgICBdCiAgICAg
+ICAgfQogICAgICB9CiAgICB9LAogICAgIjQuNSI6IHsKICAgICAgIlhlblZl
+cnNpb24iOiAiNC41IiwKICAgICAgIlJlY2lwZXMiOiB7CiAgICAgICAgInhl
+biI6IHsKICAgICAgICAgICJTdGFibGVSZWYiOiAiNDFmNmRkMDVkMTBmZDFi
+NDI4MWMxNzIyZTJkOGYyOWUzNzhhYmU5YSIsCiAgICAgICAgICAiUHJlcmVx
+cyI6IFsKICAgICAgICAgICAgMjQ4LAogICAgICAgICAgICAyNDkKICAgICAg
+ICAgIF0sCiAgICAgICAgICAiUGF0Y2hlcyI6IFsKICAgICAgICAgICAgInhz
+YTI1MC00LjUucGF0Y2giCiAgICAgICAgICBdCiAgICAgICAgfQogICAgICB9
+CiAgICB9LAogICAgIjQuNiI6IHsKICAgICAgIlhlblZlcnNpb24iOiAiNC42
+IiwKICAgICAgIlJlY2lwZXMiOiB7CiAgICAgICAgInhlbiI6IHsKICAgICAg
+ICAgICJTdGFibGVSZWYiOiAiOWIwYzJhMjIzMTMyYTA3ZjA2ZjBiZThlODVk
+YTM5MGRlZmU5OThmNSIsCiAgICAgICAgICAiUHJlcmVxcyI6IFsKICAgICAg
+ICAgICAgMjQ4LAogICAgICAgICAgICAyNDkKICAgICAgICAgIF0sCiAgICAg
+ICAgICAiUGF0Y2hlcyI6IFsKICAgICAgICAgICAgInhzYTI1MC5wYXRjaCIK
+ICAgICAgICAgIF0KICAgICAgICB9CiAgICAgIH0KICAgIH0sCiAgICAiNC43
+IjogewogICAgICAiWGVuVmVyc2lvbiI6ICI0LjciLAogICAgICAiUmVjaXBl
+cyI6IHsKICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0YWJsZVJlZiI6
+ICJiY2M5ZTI0NWFhZmJkYWU0NGM3NjEwNTNjODk4YmVkYjM1ODJjYzRkIiwK
+ICAgICAgICAgICJQcmVyZXFzIjogWwogICAgICAgICAgICAyNDgsCiAgICAg
+ICAgICAgIDI0OQogICAgICAgICAgXSwKICAgICAgICAgICJQYXRjaGVzIjog
+WwogICAgICAgICAgICAieHNhMjUwLnBhdGNoIgogICAgICAgICAgXQogICAg
+ICAgIH0KICAgICAgfQogICAgfSwKICAgICI0LjgiOiB7CiAgICAgICJYZW5W
+ZXJzaW9uIjogIjQuOCIsCiAgICAgICJSZWNpcGVzIjogewogICAgICAgICJ4
+ZW4iOiB7CiAgICAgICAgICAiU3RhYmxlUmVmIjogIjliYTY3ODNlNDdkYjcx
+Mzc5YzUxMjAwMzliODc4ZjYwNWJkZjMxZjMiLAogICAgICAgICAgIlByZXJl
+cXMiOiBbCiAgICAgICAgICAgIDI0OCwKICAgICAgICAgICAgMjQ5CiAgICAg
+ICAgICBdLAogICAgICAgICAgIlBhdGNoZXMiOiBbCiAgICAgICAgICAgICJ4
+c2EyNTAucGF0Y2giCiAgICAgICAgICBdCiAgICAgICAgfQogICAgICB9CiAg
+ICB9LAogICAgIjQuOSI6IHsKICAgICAgIlhlblZlcnNpb24iOiAiNC45IiwK
+ICAgICAgIlJlY2lwZXMiOiB7CiAgICAgICAgInhlbiI6IHsKICAgICAgICAg
+ICJTdGFibGVSZWYiOiAiYWUzNGFiOGM1ZDJlOTc3ZjZkODA4MWMyY2U0NDk0
+ODc1MjMyZjU2MyIsCiAgICAgICAgICAiUHJlcmVxcyI6IFsKICAgICAgICAg
+ICAgMjQ4LAogICAgICAgICAgICAyNDkKICAgICAgICAgIF0sCiAgICAgICAg
+ICAiUGF0Y2hlcyI6IFsKICAgICAgICAgICAgInhzYTI1MC5wYXRjaCIKICAg
+ICAgICAgIF0KICAgICAgICB9CiAgICAgIH0KICAgIH0sCiAgICAibWFzdGVy
+IjogewogICAgICAiWGVuVmVyc2lvbiI6ICI0LjEwIiwKICAgICAgIlJlY2lw
+ZXMiOiB7CiAgICAgICAgInhlbiI6IHsKICAgICAgICAgICJTdGFibGVSZWYi
+OiAiMzQ1YmI5Y2Q2MzQ0MjFmNTBiNzMyZDRmOWM4OWE2NDlhN2ExZDBkYiIs
+CiAgICAgICAgICAiUHJlcmVxcyI6IFsKICAgICAgICAgICAgMjQ4LAogICAg
+ICAgICAgICAyNDkKICAgICAgICAgIF0sCiAgICAgICAgICAiUGF0Y2hlcyI6
+IFsKICAgICAgICAgICAgInhzYTI1MC5wYXRjaCIKICAgICAgICAgIF0KICAg
+ICAgICB9CiAgICAgIH0KICAgIH0KICB9Cn0=
+
+--=separator
+Content-Type: application/octet-stream; name="xsa250.patch"
+Content-Disposition: attachment; filename="xsa250.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0
+OiB4ODYvc2hhZG93OiBmaXggcmVmLWNvdW50aW5nIGVycm9yIGhhbmRsaW5n
+CgpUaGUgb2xkLUxpbnV4IGhhbmRsaW5nIGluIHNoYWRvd19zZXRfbDRlKCkg
+bWlzdGFrZW5seSBPUmVkIHRvZ2V0aGVyIHRoZQpyZXN1bHRzIG9mIHNoX2dl
+dF9yZWYoKSBhbmQgc2hfcGluKCkuIEFzIHRoZSBsYXR0ZXIgZmFpbGluZyBp
+cyBub3QgYQpjb3JyZWN0bmVzcyBwcm9ibGVtLCBzaW1wbHkgaWdub3JlIGl0
+cyByZXR1cm4gdmFsdWUuCgpJbiBzaF9zZXRfdG9wbGV2ZWxfc2hhZG93KCkg
+YSBmYWlsaW5nIHNoX2dldF9yZWYoKSBtdXN0IG5vdCBiZQphY2NvbXBhbmll
+ZCBieSBpbnN0YWxsaW5nIHRoZSBlbnRyeSwgZGVzcGl0ZSB0aGUgZG9tYWlu
+IGJlaW5nIGNyYXNoZWQuCgpUaGlzIGlzIFhTQS0yNTAuCgpTaWduZWQtb2Zm
+LWJ5OiBKYW4gQmV1bGljaCA8amJldWxpY2hAc3VzZS5jb20+ClJldmlld2Vk
+LWJ5OiBUaW0gRGVlZ2FuIDx0aW1AeGVuLm9yZz4KCi0tLSBhL3hlbi9hcmNo
+L3g4Ni9tbS9zaGFkb3cvbXVsdGkuYworKysgYi94ZW4vYXJjaC94ODYvbW0v
+c2hhZG93L211bHRpLmMKQEAgLTkyMyw3ICs5MjMsNyBAQCBzdGF0aWMgaW50
+IHNoYWRvd19zZXRfbDRlKHN0cnVjdCBkb21haW4KICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgc2hhZG93X2w0ZV90IG5ld19zbDRlLAogICAgICAgICAg
+ICAgICAgICAgICAgICAgICBtZm5fdCBzbDRtZm4pCiB7Ci0gICAgaW50IGZs
+YWdzID0gMCwgb2s7CisgICAgaW50IGZsYWdzID0gMDsKICAgICBzaGFkb3df
+bDRlX3Qgb2xkX3NsNGU7CiAgICAgcGFkZHJfdCBwYWRkcjsKICAgICBBU1NF
+UlQoc2w0ZSAhPSBOVUxMKTsKQEAgLTkzOCwxNSArOTM4LDE2IEBAIHN0YXRp
+YyBpbnQgc2hhZG93X3NldF9sNGUoc3RydWN0IGRvbWFpbgogICAgIHsKICAg
+ICAgICAgLyogQWJvdXQgdG8gaW5zdGFsbCBhIG5ldyByZWZlcmVuY2UgKi8K
+ICAgICAgICAgbWZuX3Qgc2wzbWZuID0gc2hhZG93X2w0ZV9nZXRfbWZuKG5l
+d19zbDRlKTsKLSAgICAgICAgb2sgPSBzaF9nZXRfcmVmKGQsIHNsM21mbiwg
+cGFkZHIpOwotICAgICAgICAvKiBBcmUgd2UgcGlubmluZyBsMyBzaGFkb3dz
+IHRvIGhhbmRsZSB3aWVyZCBsaW51eCBiZWhhdmlvdXI/ICovCi0gICAgICAg
+IGlmICggc2hfdHlwZV9pc19waW5uYWJsZShkLCBTSF90eXBlX2wzXzY0X3No
+YWRvdykgKQotICAgICAgICAgICAgb2sgfD0gc2hfcGluKGQsIHNsM21mbik7
+Ci0gICAgICAgIGlmICggIW9rICkKKworICAgICAgICBpZiAoICFzaF9nZXRf
+cmVmKGQsIHNsM21mbiwgcGFkZHIpICkKICAgICAgICAgewogICAgICAgICAg
+ICAgZG9tYWluX2NyYXNoKGQpOwogICAgICAgICAgICAgcmV0dXJuIFNIQURP
+V19TRVRfRVJST1I7CiAgICAgICAgIH0KKworICAgICAgICAvKiBBcmUgd2Ug
+cGlubmluZyBsMyBzaGFkb3dzIHRvIGhhbmRsZSB3ZWlyZCBMaW51eCBiZWhh
+dmlvdXI/ICovCisgICAgICAgIGlmICggc2hfdHlwZV9pc19waW5uYWJsZShk
+LCBTSF90eXBlX2wzXzY0X3NoYWRvdykgKQorICAgICAgICAgICAgc2hfcGlu
+KGQsIHNsM21mbik7CiAgICAgfQogCiAgICAgLyogV3JpdGUgdGhlIG5ldyBl
+bnRyeSAqLwpAQCAtMzk2NSwxNCArMzk2NiwxNSBAQCBzaF9zZXRfdG9wbGV2
+ZWxfc2hhZG93KHN0cnVjdCB2Y3B1ICp2LAogCiAgICAgLyogVGFrZSBhIHJl
+ZiB0byB0aGlzIHBhZ2U6IGl0IHdpbGwgYmUgcmVsZWFzZWQgaW4gc2hfZGV0
+YWNoX29sZF90YWJsZXMoKQogICAgICAqIG9yIHRoZSBuZXh0IGNhbGwgdG8g
+c2V0X3RvcGxldmVsX3NoYWRvdygpICovCi0gICAgaWYgKCAhc2hfZ2V0X3Jl
+ZihkLCBzbWZuLCAwKSApCisgICAgaWYgKCBzaF9nZXRfcmVmKGQsIHNtZm4s
+IDApICkKKyAgICAgICAgbmV3X2VudHJ5ID0gcGFnZXRhYmxlX2Zyb21fbWZu
+KHNtZm4pOworICAgIGVsc2UKICAgICB7CiAgICAgICAgIFNIQURPV19FUlJP
+UigiY2FuJ3QgaW5zdGFsbCAlI2x4IGFzIHRvcGxldmVsIHNoYWRvd1xuIiwg
+bWZuX3goc21mbikpOwogICAgICAgICBkb21haW5fY3Jhc2goZCk7CisgICAg
+ICAgIG5ld19lbnRyeSA9IHBhZ2V0YWJsZV9udWxsKCk7CiAgICAgfQogCi0g
+ICAgbmV3X2VudHJ5ID0gcGFnZXRhYmxlX2Zyb21fbWZuKHNtZm4pOwotCiAg
+aW5zdGFsbF9uZXdfZW50cnk6CiAgICAgLyogRG9uZS4gIEluc3RhbGwgaXQg
+Ki8KICAgICBTSEFET1dfUFJJTlRLKCIldS8ldSBbJXVdIGdtZm4gJSMiUFJJ
+X21mbiIgc21mbiAlIyJQUklfbWZuIlxuIiwK
+
+--=separator
+Content-Type: application/octet-stream; name="xsa250-4.5.patch"
+Content-Disposition: attachment; filename="xsa250-4.5.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0
+OiB4ODYvc2hhZG93OiBmaXggcmVmLWNvdW50aW5nIGVycm9yIGhhbmRsaW5n
+CgpUaGUgb2xkLUxpbnV4IGhhbmRsaW5nIGluIHNoYWRvd19zZXRfbDRlKCkg
+bWlzdGFrZW5seSBPUmVkIHRvZ2V0aGVyIHRoZQpyZXN1bHRzIG9mIHNoX2dl
+dF9yZWYoKSBhbmQgc2hfcGluKCkuIEFzIHRoZSBsYXR0ZXIgZmFpbGluZyBp
+cyBub3QgYQpjb3JyZWN0bmVzcyBwcm9ibGVtLCBzaW1wbHkgaWdub3JlIGl0
+cyByZXR1cm4gdmFsdWUuCgpJbiBzaF9zZXRfdG9wbGV2ZWxfc2hhZG93KCkg
+YSBmYWlsaW5nIHNoX2dldF9yZWYoKSBtdXN0IG5vdCBiZQphY2NvbXBhbmll
+ZCBieSBpbnN0YWxsaW5nIHRoZSBlbnRyeSwgZGVzcGl0ZSB0aGUgZG9tYWlu
+IGJlaW5nIGNyYXNoZWQuCgpUaGlzIGlzIFhTQS0yNTAuCgpTaWduZWQtb2Zm
+LWJ5OiBKYW4gQmV1bGljaCA8amJldWxpY2hAc3VzZS5jb20+ClJldmlld2Vk
+LWJ5OiBUaW0gRGVlZ2FuIDx0aW1AeGVuLm9yZz4KCi0tLSBhL3hlbi9hcmNo
+L3g4Ni9tbS9zaGFkb3cvbXVsdGkuYworKysgYi94ZW4vYXJjaC94ODYvbW0v
+c2hhZG93L211bHRpLmMKQEAgLTg5Niw3ICs4OTYsNyBAQCBzdGF0aWMgaW50
+IHNoYWRvd19zZXRfbDRlKHN0cnVjdCB2Y3B1ICp2CiAgICAgICAgICAgICAg
+ICAgICAgICAgICAgIHNoYWRvd19sNGVfdCBuZXdfc2w0ZSwgCiAgICAgICAg
+ICAgICAgICAgICAgICAgICAgIG1mbl90IHNsNG1mbikKIHsKLSAgICBpbnQg
+ZmxhZ3MgPSAwLCBvazsKKyAgICBpbnQgZmxhZ3MgPSAwOwogICAgIHNoYWRv
+d19sNGVfdCBvbGRfc2w0ZTsKICAgICBwYWRkcl90IHBhZGRyOwogICAgIEFT
+U0VSVChzbDRlICE9IE5VTEwpOwpAQCAtOTExLDE1ICs5MTEsMTYgQEAgc3Rh
+dGljIGludCBzaGFkb3dfc2V0X2w0ZShzdHJ1Y3QgdmNwdSAqdgogICAgIHsK
+ICAgICAgICAgLyogQWJvdXQgdG8gaW5zdGFsbCBhIG5ldyByZWZlcmVuY2Ug
+Ki8gICAgICAgIAogICAgICAgICBtZm5fdCBzbDNtZm4gPSBzaGFkb3dfbDRl
+X2dldF9tZm4obmV3X3NsNGUpOwotICAgICAgICBvayA9IHNoX2dldF9yZWYo
+diwgc2wzbWZuLCBwYWRkcik7Ci0gICAgICAgIC8qIEFyZSB3ZSBwaW5uaW5n
+IGwzIHNoYWRvd3MgdG8gaGFuZGxlIHdpZXJkIGxpbnV4IGJlaGF2aW91cj8g
+Ki8KLSAgICAgICAgaWYgKCBzaF90eXBlX2lzX3Bpbm5hYmxlKHYsIFNIX3R5
+cGVfbDNfNjRfc2hhZG93KSApCi0gICAgICAgICAgICBvayB8PSBzaF9waW4o
+diwgc2wzbWZuKTsKLSAgICAgICAgaWYgKCAhb2sgKQorCisgICAgICAgIGlm
+ICggIXNoX2dldF9yZWYodiwgc2wzbWZuLCBwYWRkcikgKQogICAgICAgICB7
+CiAgICAgICAgICAgICBkb21haW5fY3Jhc2godi0+ZG9tYWluKTsKICAgICAg
+ICAgICAgIHJldHVybiBTSEFET1dfU0VUX0VSUk9SOwogICAgICAgICB9CisK
+KyAgICAgICAgLyogQXJlIHdlIHBpbm5pbmcgbDMgc2hhZG93cyB0byBoYW5k
+bGUgd2VpcmQgTGludXggYmVoYXZpb3VyPyAqLworICAgICAgICBpZiAoIHNo
+X3R5cGVfaXNfcGlubmFibGUodiwgU0hfdHlwZV9sM182NF9zaGFkb3cpICkK
+KyAgICAgICAgICAgIHNoX3Bpbih2LCBzbDNtZm4pOwogICAgIH0KIAogICAg
+IC8qIFdyaXRlIHRoZSBuZXcgZW50cnkgKi8KQEAgLTM4ODEsMTQgKzM4ODIs
+MTUgQEAgc2hfc2V0X3RvcGxldmVsX3NoYWRvdyhzdHJ1Y3QgdmNwdSAqdiwK
+IAogICAgIC8qIFRha2UgYSByZWYgdG8gdGhpcyBwYWdlOiBpdCB3aWxsIGJl
+IHJlbGVhc2VkIGluIHNoX2RldGFjaF9vbGRfdGFibGVzKCkKICAgICAgKiBv
+ciB0aGUgbmV4dCBjYWxsIHRvIHNldF90b3BsZXZlbF9zaGFkb3coKSAqLwot
+ICAgIGlmICggIXNoX2dldF9yZWYodiwgc21mbiwgMCkgKQorICAgIGlmICgg
+c2hfZ2V0X3JlZih2LCBzbWZuLCAwKSApCisgICAgICAgIG5ld19lbnRyeSA9
+IHBhZ2V0YWJsZV9mcm9tX21mbihzbWZuKTsKKyAgICBlbHNlCiAgICAgewog
+ICAgICAgICBTSEFET1dfRVJST1IoImNhbid0IGluc3RhbGwgJSNseCBhcyB0
+b3BsZXZlbCBzaGFkb3dcbiIsIG1mbl94KHNtZm4pKTsKICAgICAgICAgZG9t
+YWluX2NyYXNoKHYtPmRvbWFpbik7CisgICAgICAgIG5ld19lbnRyeSA9IHBh
+Z2V0YWJsZV9udWxsKCk7CiAgICAgfQogCi0gICAgbmV3X2VudHJ5ID0gcGFn
+ZXRhYmxlX2Zyb21fbWZuKHNtZm4pOwotCiAgaW5zdGFsbF9uZXdfZW50cnk6
+CiAgICAgLyogRG9uZS4gIEluc3RhbGwgaXQgKi8KICAgICBTSEFET1dfUFJJ
+TlRLKCIldS8ldSBbJXVdIGdtZm4gJSMiUFJJX21mbiIgc21mbiAlIyJQUklf
+bWZuIlxuIiwK
+
+--=separator--
