@@ -1,39 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/16/3
-Message-ID: <e7d7bccd3a2ed7776390f89a003fcd0d17bb9d7f.camel@debian.org>
-Date: Wed, 16 May 2018 11:39:14 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: oss-security@...ts.openwall.com, Christian Brabandt <cb@...bit.org>
-Subject: Re: PGP/MIME and S/MIME mail clients vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/06/1
+Message-ID: <20180106103333.598967ca@pc1>
+Date: Sat, 6 Jan 2018 10:33:33 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: John Lightsey <jd@...nel.net>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Path traversal flaws in awstats 7.6 and earlier.
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-On Tue, 2018-05-15 at 20:39 +0200, Florian Weimer wrote:
-> * Christian Brabandt:
-> 
-> > Looks like details have just been published:
-> > https://efail.de/
-> 
-> I don't see any discussion of cid: URLs.  Are vendors planning to fix
-> vectors related to those as well?
+On Wed, 27 Dec 2017 09:21:41 -0600
+John Lightsey <jd@...nel.net> wrote:
 
-Hi Florian,
+> The cPanel Security Team discovered two path traversal flaws in
+> awstats that could be leveraged for unauthenticated remote code
+> execution.
 
-I might have missed something, but I'm not sure what you're referring to here?
+On
+https://awstats.sourceforge.io/#DOWNLOAD
+the latest version is still 7.6
+On the github repo you linked the latest version is 7.5.
 
-Regards,
-- -- 
-Yves-Alexis
------BEGIN PGP SIGNATURE-----
+Are you in contact with the developers? It's not exactly ideal that
+there's a publicly known remote code execution and there is no new
+release containing the fix.
 
-iQEzBAEBCAAdFiEE8vi34Qgfo83x35gF3rYcyPpXRFsFAlr7/EIACgkQ3rYcyPpX
-RFvDSgf/b1WKcQCdUA3NfbXbltR79jJruH+ycKtMEvFCRNKP2hu8UNDswrUQBs+4
-DBmeXF6FTuCbum8fd7hjUvHQ0CjDpTqvdcixRwL93dtnxbJ4cMUTgCoVwyyx5co/
-sXCWeb96cz8zQucAD/ftSIaAEab4CwgAITYvRT4VFUeLywyW1iTEiarPAyd/8UQI
-iFQY23fgQ76kDWoq0e9X2aVGySt8R4JnT4QbrAY+X8wDwuEvNXPlx9vKM+OyiDH9
-lU0AoyPNSY4pTBRn+fAuDOSUuWI++iI2txWtb86qu4K0s1gNWVKvB/de8vKRlHvd
-r4mVqFVlt/a/0pvS9lA/6Y75v1b75A==
-=LCzc
------END PGP SIGNATURE-----
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
