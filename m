@@ -1,26 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/14/7
-Message-ID: <20180814155718.3gcvbcs7am4xrpy5@suse.de>
-Date: Tue, 14 Aug 2018 17:57:18 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE-2018-14722: btrfsmaintenance: Code execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/06/8
+Message-ID: <62b1e14f-807a-f193-6a18-34b68232f34d@cpanel.net>
+Date: Sat, 6 Jan 2018 12:25:09 -0600
+From: John Lightsey <jd@...nel.net>
+To: oss-security@...ts.openwall.com, Hanno Böck <hanno@...eck.de>
+Subject: Re: Path traversal flaws in awstats 7.6 and earlier.
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 1/6/18 3:33 AM, Hanno Böck wrote:
+> On Wed, 27 Dec 2017 09:21:41 -0600
+> John Lightsey <jd@...nel.net> wrote:
+> 
+>> The cPanel Security Team discovered two path traversal flaws in
+>> awstats that could be leveraged for unauthenticated remote code
+>> execution.
+> 
+> On
+> https://awstats.sourceforge.io/#DOWNLOAD
+> the latest version is still 7.6
+> On the github repo you linked the latest version is 7.5.
+> 
+> Are you in contact with the developers? It's not exactly ideal that
+> there's a publicly known remote code execution and there is no new
+> release containing the fix.
+> 
 
-SUSE employee Fabian Vogt has found a shell code injection issue in the "btrfsmaintenance" tools.
+I'd agree with you there. Whenever we report security issues to upstream
+developers, we have no control over the process they use to resolve the
+issue.
 
-https://bugzilla.suse.com/show_bug.cgi?id=1102721
+In this case, the upstream author committed a partial fix to a public
+repo soon after we reported the problem. In my view, whenever an
+upstream author does this, you just consider the issue to be public
+whether or not official releases or announcements have been made.
 
-Mounting btrfs images with a label including shell injection characters could cause
-the cron jobs (running as root) to execute the include shellcode.
+I'll pass your feedback along to the upstream author though.
 
-Our proposed fix attached to this email.
 
-bad image can be created with:
-	mkfs.btrfs --label "`/evil/command`' /dev/sdx
-
-Ciao, Marcus
-
-View attachment "btrfsmaintenance-CVE-2018-14722.patch" of type "text/x-patch" (3121 bytes)
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (3982 bytes)
