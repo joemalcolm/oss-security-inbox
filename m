@@ -1,31 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/13/4
-Message-ID: <CACHnxzwtXFy7YPD1w2w+NT1yRuXP2f6S5WExFqZCz=yHGRuVww@mail.gmail.com>
-Date: Tue, 13 Feb 2018 07:06:47 -0500
-From: Christopher Shannon <christopher.l.shannon@...il.com>
-To: dev@...ivemq.apache.org, users@...ivemq.apache.org,  The Apache Security Team <security@...che.org>, jianan huang <sevcks@...il.com>, oss-security@...ts.openwall.com
-Subject: [ANNOUNCE] CVE-2017-15709 - Information Leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/07/1
+Message-ID: <bc734975-d19a-6198-7a8f-6762924342b0@e2security.de>
+Date: Sun, 7 Jan 2018 04:32:32 +0100
+From: Stefan Pietsch <s.pietsch@...ecurity.de>
+To: oss-security@...ts.openwall.com, Hanno Böck <hanno@...eck.de>, John Lightsey <jd@...nel.net>
+Subject: Re: Path traversal flaws in awstats 7.6 and earlier.
 Content-Type: text/plain; charset=utf-8
 
-CVE-2017-15709 - Information Leak
+On 06.01.2018 10:33, Hanno Böck wrote:
 
-Severity: Low
+>> The cPanel Security Team discovered two path traversal flaws in
+>> awstats that could be leveraged for unauthenticated remote code
+>> execution.
+> 
+> On
+> https://awstats.sourceforge.io/#DOWNLOAD
+> the latest version is still 7.6
+> On the github repo you linked the latest version is 7.5.
 
-Vendor:
-The Apache Software Foundation
+The awstats GitHub page has version 7.6:
+https://github.com/eldy/awstats/tags
 
-Versions Affected:
-Apache ActiveMQ 5.14.0 - 5.15.2
+> Are you in contact with the developers? It's not exactly ideal that
+> there's a publicly known remote code execution and there is no new
+> release containing the fix.
 
-Description:
+By not releasing a new version of awstats it gets unnecessarily
+difficult to track the fix in distributions.
 
-When using the OpenWire protocol it was found that certain system
-details (such as the OS and kernel version) are exposed as plain text.
+The author has proven that he is not able to handle security issues well
+when I contacted him last year.
+(https://github.com/Dolibarr/dolibarr/issues/6504)
 
-Mitigation:
+On the project's security page there is no update so far:
+http://www.awstats.org/awstats_security_news.php
 
-Use a TLS enabled transport or upgrade to Apache ActiveMQ 5.15.3.
 
-Credit:
-This issue was discovered by QingTeng cloud Security of Minded
-Security Researcher jianan.huang
+Regards,
+Stefan
