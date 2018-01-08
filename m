@@ -1,92 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/31/2
-Message-Id: <E1fkRfI-0004FB-Ek@xenbits.xenproject.org>
-Date: Tue, 31 Jul 2018 10:14:04 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 274 v2 (CVE-2018-14678) - Linux: Uninitialized state in x86 PV failsafe callback path
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/08/1
+Message-ID: <CAEWfVJmF52fMY8wYZ-35ic7=T1dnmSArDZuC3oydUJBqSugsGA@mail.gmail.com>
+Date: Mon, 8 Jan 2018 15:04:28 +0100
+From: Bertrand Delacretaz <bdelacretaz@...che.org>
+To: dev <dev@...ng.apache.org>
+Cc: users <users@...ng.apache.org>,  "security@...ng.apache.org" <security@...ng.apache.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
+Subject: CVE-2012-3353: Apache Sling Content Loading Vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Severity: Important
 
-            Xen Security Advisory CVE-2018-14678 / XSA-274
-                              version 2
+Vendor: The Apache Software Foundation
 
-      Linux: Uninitialized state in x86 PV failsafe callback path
+Versions Affected: Sling  JCR ContentLoader 2.1.4
 
-UPDATES IN VERSION 2
-====================
+Description:
+The Apache Sling JCR ContentLoader 2.1.4 XmlReader
+used in the Sling JCR content loader module makes it
+possible to import arbitrary files in the content repository,
+including local files, causing potential information leaks.
 
-CVE assigned.  Fix the title to refer to the failsafe callback path.
-
-ISSUE DESCRIPTION
-=================
-
-Linux has a `failsafe` callback, invoked by Xen under certain
-conditions.  Normally in this failsafe callback, error_entry is paired
-with error_exit; and error_entry uses %ebx to communicate to
-error_exit whether to use the user or kernel return path.
-
-Unfortunately, on 64-bit PV Xen on x86, error_exit is called without
-error_entry being called first, leaving %ebx with an invalid value.
-
-IMPACT
-======
-
-A rogue user-space program could crash a guest kernel.  Privilege
-escalation cannot be ruled out.
-
-VULNERABLE SYSTEMS
-==================
-
-Only 64-bit x86 PV Linux systems are vulnerable.
-
-All versions of Linux are vulnerable.
-
-MITIGATION
-==========
-
-Switching to HVM or PVH guests will mitigate this issue.
-
-CREDITS
-=======
-
-This issue was discovered by M. Vefa Bicakci, and recognized as a
-security issue by Andy Lutorminski.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-NB this patch has not been accepted into Linux upstream yet.  An
-updated advisory will be sent if the fix upstreamed looks
-significantly different.
-
-xsa274-linux-4.17.patch           Linux 4.17
-
-$ sha256sum xsa274*
-0c30cb13d1d573f446c8cb8d4824ffad8ef9149a7589a19ef9bcc83c07bddcf5  xsa274-linux-4.17.patch
-$
-
-NOTE ON THE LACK OF EMBARGO
-===========================
-
-The patch for this issue was published on linux-kernel without being
-first reported to the XenProject Security Team.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJbYDYRAAoJEIP+FMlX6CvZo1gH/3+9TpyHsjwGIqIrK8wndAQ6
-bth9m0e/Zq4alZflWRsQlJ64toE23dlZmFF9juHLPNEV/4jPm4CA1oRVLQQkJ3am
-6kh4SQMNU5kDa/3S7sCnpYnM+IRg3JO9oDjKfz9PiDImKApzbE/NnGbQLP766BUD
-dCNKLdJlX+i3mRnKeqehFZKSPY43zOMU19hgfuKGEXwRCqlbLraL1+X5xGN11J51
-iXHOJxK9fRBhi2d8jiCKAISqw0OMcROfrCgOFdabxYpw2/H49bjyADd0s9QV5piG
-In1b7S4AFEZfEzEQ0wlXs4wvhqmBZGdMyXxAL7BP4hTGXAJovLrfsL/nX/DXprQ=
-=H+Zn
------END PGP SIGNATURE-----
-
-Download attachment "xsa274-linux-4.17.patch" of type "application/octet-stream" (4131 bytes)
+Mitigation:
+Users should upgrade to version 2.1.6 of the JCR ContentLoader
