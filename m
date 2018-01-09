@@ -1,34 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/27/9
-Message-ID: <CAFRnB2VHcobRNJHiz_eKmf6qnrRvmvicjat21QXjwYWFY7wYZw@mail.gmail.com>
-Date: Wed, 27 Jun 2018 07:58:05 -0400
-From: Alex Gaynor <alex.gaynor@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE for PyYAML RCE-factory API
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/09/2
+Message-ID: <CANO=Ty070FkdfSVcz35pYXsa+BBbgoN7zWheAO-XudbD34n1Kw@mail.gmail.com>
+Date: Tue, 9 Jan 2018 08:37:08 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Own on install. How grave it is?
 Content-Type: text/plain; charset=utf-8
 
-Thanks -- this issue was assigned CVE-2017-18342.
+Many OS installs/etc take a password during install, either manually
+(e.g. prompting you at the command line), or the OS is installed using
+tools that allow a password to be set (e.g. Red Hat kickstarter,
+Satellite, CloudForms).
 
-Alex
+In general if an OS install does NOT give you any way to set a
+password during install and forces you to install the product, boot it
+and then login with blank credentials and set a password you end up
+with a CVE since a network based attacker can easily win that race, a
+good example being FreeNAS CVE-2014-5334. If the installer can prompt
+for a password or take a password through other means (e.g.
+kickstarter) than there's a safe option so no CVE is needed typically.
 
-On Tue, Jun 26, 2018 at 11:32 PM Seth Arnold <seth.arnold@...onical.com>
-wrote:
+On Tue, Jan 9, 2018 at 6:42 AM, Georgi Guninski <guninski@...inski.com> wrote:
+> [don't know if this is ontopic. Not on the list so CC me].
+>
+> This is well known, haven't seen it discussed.
+>
+> In short doing clean install (factory defaults) has a window of
+> opportunity when the device is vulnerable to a known network attack.
+>
+> It used to be common sense to reinstall after compromise (probably
+> doesn't apply to the windows world where the antivirus takes care).
+>
+> All versions of windoze are affected by the SMB bug to my knowledge.
+> Debian jessie (old stable) is vulnerable to malicious mirror attack.
+>
+> More of interest to me are devices where the installation media is
+> fixed and can't be changed.
+>
+> This includes smartphones and wireless routers.
+>
+> Some smartphones might be vulnerable to wifi RCE (found by google?).
+> Some wireless routers might be vulnerable to wifi RCE or
+> default admin password attack over wifi.
+>
+> Internet of Things will make things worse (some NAS devices are
+> affected).
+>
+> Shielding the device might not be solution since updates must be
+> applied.
+>
+> Are the above concerns real?
+>
+> Have this been studied systematically?
+>
+>
 
-> On Tue, Jun 26, 2018 at 09:18:39PM -0400, Alex Gaynor wrote:
-> > Because of the degree to which this API presented a footgun, I would like
-> > to request a CVE for it.
->
-> This makes sense to me. You can make CVE requests on:
->
-> https://cveform.mitre.org/
->
-> Thanks
->
 
 
 -- 
-"I disapprove of what you say, but I will defend to the death your right to
-say it." -- Evelyn Beatrice Hall (summarizing Voltaire)
-"The people's good is the highest law." -- Cicero
-GPG Key fingerprint: D1B3 ADC0 E023 8CA6
 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
