@@ -1,37 +1,171 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/23/3
-Message-ID: <CA+fCnZfA=_nZfUQzS+r6ZbOqPFTLSzAEbh8EHHnvNsoDH+C87w@mail.gmail.com>
-Date: Wed, 23 May 2018 16:49:58 +0200
-From: Andrey Konovalov <andreyknvl@...il.com>
-To: oss-security@...ts.openwall.com, vdronov@...hat.com
-Subject: Re: CVE-2018-1130: Linux kernel: dccp: a null pointer dereference in net/dccp/output.c:dccp_write_xmit
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/10/1
+Message-ID: <000101d389a5$76acc680$64065380$@oststrom.com>
+Date: Wed, 10 Jan 2018 00:56:27 +0100
+From: "oststrom \(public\)" <pub@...strom.com>
+To: <oss-security@...ts.openwall.com>
+Subject: CVE-2017-18016 - Paritytech Parity Ethereum built-in Dapp Browser <= v1.6.10  webproxy token reuse same-origin policy bypass
 Content-Type: text/plain; charset=utf-8
 
-On Thu, May 10, 2018 at 2:05 PM, Vladis Dronov <vdronov@...hat.com> wrote:
-> Hello,
->
-> A null pointer dereference in dccp_write_xmit() function in net/dccp/output.c
-> in the Linux kernel before v4.16-rc7 allows a local user to cause a denial of
-> service by a number of certain crafted system calls.
->
-> References:
->
-> https://syzkaller.appspot.com/bug?id=833568de043e0909b2aeaef7be136db39d21ba94
->
-> https://marc.info/?t=152036611500003&r=1&w=2
->
-> An upstream patch:
->
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=67f93df79aeefc3add4e4b31a752600f834236e2
->
-> Best regards,
-> Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+VuNote
+======
 
-Hi Vladis,
+Author:     <github.com/tintinweb>
+Ref:        https://github.com/tintinweb/pub/tree/master/pocs/cve-2017-18016
+[5]
+Version:    0.3
+Date:       Jun 16th, 2017
 
-I've been wondering, how do you choose which bugs you request CVEs
-for? Syzbot reported a few hundreds of them over the last few months
-and a decent fraction of them looks scarier than a null pointer
-dereference.
+Tag:        parity same origin policy bypass webproxy token reuse
 
-Thanks!
+Overview
+--------
+
+Name:           parity
+Vendor:         paritytech
+References:     * https://parity.io/ [1]
+
+Version:        1.6.8
+Latest Version: 1.7.12 (stable) - fixed
+                1.8.5 (beta) - fixed
+Other Versions: <= 1.6.10 (stable) - vulnerable
+Platform(s):    cross
+Technology:     rust js
+
+Vuln Classes:   CWE-346
+Origin:         local (remote website, malicious dapp)
+Min. Privs.:    ---
+
+CVE:            CVE-2017-18016
+
+
+
+Description
+---------
+
+quote website [1]
+
+>Parity Technologies is proud to present our powerful new Parity Browser.
+Integrated directly into your Web browser, Parity is the fastest and most
+secure way of interacting with the Ethereum network.
+
+Summary 
+-------
+
+PoC: https://tintinweb.github.io/pub/pocs/cve-2017-18016/ [4]
+
+> Parity Browser <=1.6.8 allows remote attackers to bypass the Same Origin
+Policy and obtain sensitive information by requesting other websites via the
+Parity web proxy engine (reusing the current website's token, which is not
+bound to an origin).
+
+![parity cookie](sop_cookie.gif)
+
+**(A)** Ethereum Parity's built-in dapp/web-browsing functionality is  
+rendering browser same-origin policy (SOP) ineffective by proxying 
+requests with the parity main process. As a result, any website 
+navigated to ends up being origin http://localhost:8080. This also means
+that all websites navigated to share the same origin and thus are not 
+protected by the browser SOP allowing any proxied website/dapp to access
+another proxied website/dapp's resources (Cookies, ...).
+
+//see attached PoC - index.html / PoC
+
+![parity frame](sop_frame.gif)
+
+**(B)** Worse, due to the structure of proxy cache urls and the fact that
+they 
+contain a reusable non-secret non-url specific cache-token it is 
+possible for one proxied website/dapp to navigate to any other proxied
+website/dapp gaining full script/XHR control due to **(A)** the SOP being
+applied without any restrictions. This could allow a malicious
+website/dapp to take control of another website/dapp, performing user
+interactions, XHR or injecting scripts/DOM elements to mislead the
+user or to cause other unspecified damage.
+
+When navigating to a website with the built-in parity webbrowser a webproxy
+request
+token is requested and sent along an encoded request for an url. For
+example, navigating
+parity to http://oststrom.com the url gets turned into a proxy url like
+http://127.0.0.1:8080/web/8X4Q4EBJ71SM2CK6E5AQ6YBNB4NPGX3ME0X2YBVFEDT76X3JDX
+PJWRVFDM of
+the form http://127.0.0.1:8080/web/[base32_encode(token+url)]. A malicious
+dapp can use
+this information to decode its own url, extract the token and reuse it for
+any other 
+url as the token is not locked to the url. The PoC exploits this in order to
+load any
+other website into a same-origin iframe by reusing the proxy token.
+
+Code see [2]
+
+//see attached PoC - index.html / PoC
+//see github [5] for details 
+    
+
+Proof of Concept
+----------------
+
+Prerequisites: 
+
+* (if hosted locally) modify /etc/hosts to resolve your testdomain to your
+webserver
+* make `index.html` accessible on a webserver (e.g. `cd /path/to/index.html;
+python -m SimpleHTTPServer 80`)
+
+1. launch parity, navigate to the built-in webbrowser
+(http://127.0.0.1:8180/#/web)
+2. navigate the built-in parity webbrowser to where the PoC `index.html` is
+hosted (e.g. [4])
+3. follow the instructions. 
+4. Issue 1: navigate to some websites to have them set cookies, reload the
+PoC page and click "Display Cookies". Note that while the main request is
+proxied by parity, subsequent calls might not be (e.g. xhr, resources). That
+means you'll only see cookies set by the main site as only the initial call
+shares the origin `localhost:8080`.
+5. Issue 2: enter an url into the textbox and hit `Spawn SOP Iframe`. A new
+iframe will appear on the bottom of the page containing the proxied website.
+Note that the calling website has full script/dom/xhr access to the proxied
+target. You can also use the "Display Cookies" button from Issue 1 to show
+cookies that have been merged into the origin by loading the proxied iframe.
+6. Demo 2: Just a PoC to find local-lan web interfaces (e.g. your gateways
+web interface) and potentially mess with its configuration (e.g. router with
+default password on your lan being reconfigured by malicious dapp that
+excploits the token reuse issue 2)
+
+ 
+Fix
+-----
+
+* Commit [3] (first in 1.7.0)
+* Does not fix Issue #1 - sites are generally put into same origin due to
+proxy
+* Fixes Issue #2 - Token Reuse
+* Parity now added a note that browsing websites with their browser is
+insecure
+
+![parity fixed](v1712.png)
+
+* Issue #1 is not yet fixed as the cookie of instagram.com is still shown.
+* Parity v1.7.12 added a note.
+
+References
+----------
+
+[1] https://parity.io/
+[2]
+https://github.com/paritytech/parity/blame/e8b418ca03866fd952d456830b30e9225
+c81035a/dapps/src/web.rs
+[3]
+https://github.com/paritytech/parity/commit/53609f703e2f1af76441344ac3b72811
+c726a215
+[4] https://tintinweb.github.io/pub/pocs/cve-2017-18016/
+[5] https://github.com/tintinweb/pub/tree/master/pocs/cve-2017-18016
+
+
+Contact
+-------
+
+https://github.com/tintinweb
+
