@@ -1,33 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/08/5
-Message-ID: <20180208210539.dg4mzriaow57g6sz@jumper.schlittermann.de>
-Date: Thu, 8 Feb 2018 22:05:39 +0100
-From: Heiko Schlittermann <hs@...littermann.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE-2018-6789 Exim 4.90 and earlier: buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/09/8
+Message-ID: <CAEwge-FmJu4wu9Q14iOFkD3RK3KZJqFazi=x8F1JpF+9BQXC-A@mail.gmail.com>
+Date: Tue, 9 Jan 2018 14:05:34 -0800
+From: Anthony Baker <abaker@...che.org>
+To: dev@...de.apache.org, user@...de.apache.org, announce@...che.org,  asf-security <security@...che.org>, oss-security@...ts.openwall.com
+Subject: [SECURITY] CVE-2017-9796 Apache Geode OQL bind parameter vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Ian Zimmerman <itz@...y.loosely.org> (Do 08 Feb 2018 21:16:04 CET):
-…
-> <center><h1>404 Not Found</h1></center>
-Thank you.
+CVE-2017-9796 Apache Geode OQL bind parameter vulnerability
 
-> On 2018-02-07 11:39, Heiko Schlittermann wrote:
-> > Updates will follow. Here and on 
-> > https://exim.org/security/CVE-2018-6789.txt
+Severity:  Important
 
-Update:
+Vendor: The Apache Software Foundation
 
-    https://exim.org/static/doc/security/CVE-2018-6789.txt
+Versions Affected:  Apache Geode 1.0.0 through 1.2.1
 
+Description:
+A malicious user with read access to specific regions within a Geode
+cluster may execute OQL queries containing a region name as a bind
+parameter that allow read access to objects within unauthorized
+regions.
 
-    Best regards from Dresden/Germany
-    Viele Grüße aus Dresden
-    Heiko Schlittermann
--- 
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
- ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
+Mitigation:
+Users of the affected versions should upgrade to Apache Geode 1.3.0 or later.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Credit:
+This issue was reported responsibly to the Apache Geode Security Team
+by Dan Smith from Pivotal.
+
+References:
+[1] https://issues.apache.org/jira/browse/GEODE-3248
+[2] https://cwiki.apache.org/confluence/display/GEODE/Release+Notes#ReleaseNotes-SecurityVulnerabilities
+
+---
+The Geode PMC
