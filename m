@@ -1,45 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/25/6
-Message-ID: <20180925191022.bqfadai7rfsu46nf@yuggoth.org>
-Date: Tue, 25 Sep 2018 19:10:23 +0000
-From: Jeremy Stanley <fungi@...goth.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/09/3
+Message-ID: <67BB8FFF-4D14-4129-84CC-D21A38846436@nic.cz>
+Date: Tue, 09 Jan 2018 17:02:44 +0100
+From: Michal Hrušecký <michal.hrusecky@....cz>
 To: oss-security@...ts.openwall.com
-Subject: Re: bounties
+Subject: Re: Own on install. How grave it is?
 Content-Type: text/plain; charset=utf-8
 
-[Full Disclosure ML dropped from followup]
+On January 9, 2018 2:42:07 PM CET, Georgi Guninski <guninski@...inski.com> wrote:
+>[don't know if this is ontopic. Not on the list so CC me].
+>
+>This is well known, haven't seen it discussed.
+>
+>In short doing clean install (factory defaults) has a window of
+>opportunity when the device is vulnerable to a known network attack.
+>
+>It used to be common sense to reinstall after compromise (probably
+>doesn't apply to the windows world where the antivirus takes care).
+>
+>All versions of windoze are affected by the SMB bug to my knowledge.
+>Debian jessie (old stable) is vulnerable to malicious mirror attack.
+>
+>More of interest to me are devices where the installation media is
+>fixed and can't be changed.
+>
+>This includes smartphones and wireless routers.
+>
+>Some smartphones might be vulnerable to wifi RCE (found by google?).
+>Some wireless routers might be vulnerable to wifi RCE or
+>default admin password attack over wifi.
+>
+>Internet of Things will make things worse (some NAS devices are
+>affected).
+>
+>Shielding the device might not be solution since updates must be
+>applied.
 
-On 2018-09-21 21:12:15 -0700 (-0700), Justin Ferguson wrote:
-> I was curious about peoples experiences with bug bounties
-> particularly those through the prominent clearing houses for them.
-> My experience is that I have been either ripped off or extremely
-> slow-walked in payment that was substantially below the listed
-> payout in every single instance. I'm curious how accurately that
-> reflects other peoples experiences.
-[...]
+Hi,
 
-As someone handling intake of suspected vulnerability reports for a
-large community of free/libre open source software projects, I've
-seen another side of it. The projects I work on have been
-incorrectly added and re-added to lists of supposed bug bounty
-targets over the years, and it's caused us to deal with floods of
-useless reports from everyone who can figure out how to run a static
-code analyzer, fuzzer or vulnerability scanner (and also people who
-can't even figure out the difference between the projects and the
-code which powers their community Web sites).
+we are manufacturers of Turris Omnia routers and our approach to minimise those attacks is that on factory reset, your wan and wifi is disconnected till you setup your router. So your workflow after factory reset has to be connect localy via wire, setup your own password and then recommended steps are sugested in this order - setup wan, update, setup wifi. In theory somebody can beat you on LAN, but you should have enough common sense to disconect other computers if you are doing factory reset. You can also skip updates, but hey, you can setup passwordless wifi if you try hard enough (not easy that easy in our setup) and make your pasword admin1234. We can't protect you from every mistake and there are usecases where it might make sense.
 
-Convincing the people who maintain those clearing house lists to
-de-list your projects can be a challenge, as they're just as likely
-to ignore you, or even simply be abandoned Web sites with nobody at
-the helm. If this is the sort of experience other projects endure, I
-can't imagine why any would willingly put themselves on such bounty
-registries. I have much more interest in dealing with reports of
-suspected vulnerabilities from engaged users of the software than
-from people out to make a quick buck, disinterested in even
-following up enough on the bugs they think they've found to
-determine they're unreachable cruft or even intentional features of
-the software.
+
 -- 
-Jeremy Stanley
-
-Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
+Sent from my Jolla device with K-9 Mail. Please excuse my brevity.
