@@ -1,38 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/22/2
-Message-ID: <713d7e651cd8e9eda903f26392d30c8cb45afc38.camel@decadent.org.uk>
-Date: Wed, 22 Aug 2018 20:11:00 +0100
-From: Ben Hutchings <ben@...adent.org.uk>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: Antonio Diaz Diaz <antonio@....org>
-Subject: Re: Heap-based buffer overflow in zutils zcat
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/09/6
+Message-ID: <CAEwge-FTf8zMT-U2XuHRv8L9ksiQExKMExOoR0Rp0W2TvpO1oA@mail.gmail.com>
+Date: Tue, 9 Jan 2018 14:02:13 -0800
+From: Anthony Baker <abaker@...che.org>
+To: user@...de.apache.org, dev@...de.apache.org, announce@...che.org,  asf-security <security@...che.org>, oss-security@...ts.openwall.com
+Subject: [SECURITY] CVE-2017-9795 Apache Geode OQL method invocation vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Sun, 2018-08-05 at 21:36 +0800, Ben Hutchings wrote:
-> A heap-based buffer overflow (CWE-122) was discovered in the zutils
-> implementation of zcat.  It is apparently possible only if the -v
-> option, or one of the other options that implies -v, is used.
-> 
-> This seems to have been first discovered in 2016 as a result of
-> interaction between initramfs-tools and zutils, but was initially
-> thought to be a bug in the gzip implementation of zcat:
-> https://bugs.launchpad.net/ubuntu/+source/intel-microcode/+bug/1507443
-> https://bugs.debian.org/815915
-> 
-> It was eventually reported to the zutils upstream developer (Antonio
-> Diaz Diaz, cc'd) in the last few weeks and was fixed in version
-> 1.8-pre2.  This was announced in:
-> https://lists.nongnu.org/archive/html/zutils-bug/2018-08/msg00000.html
-> 
-> I will request a CVE ID for this.
+CVE-2017-9795 Apache Geode OQL method invocation vulnerability
 
-This has been designated as CVE-2018-1000637.
+Severity:  Important
 
-Ben.
+Vendor: The Apache Software Foundation
 
--- 
-Ben Hutchings
-You can't have everything.  Where would you put it?
+Versions Affected:  Apache Geode 1.0.0 through 1.2.1
 
+Description:
+A malicious user with read access to specific regions within a Geode
+cluster may execute OQL queries that allow read and write access to
+objects within unauthorized regions.  In addition a user could invoke
+methods that allow remote code execution.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Mitigation:
+Users of the affected versions should upgrade to Apache Geode 1.3.0 or later.
+
+Credit:
+This issue was reported responsibly to the Apache Geode Security Team
+by Dan Smith from Pivotal.
+
+References:
+[1] https://issues.apache.org/jira/browse/GEODE-3247
+[2] https://cwiki.apache.org/confluence/display/GEODE/Release+Notes#ReleaseNotes-SecurityVulnerabilities
+
+---
+The Geode PMC
