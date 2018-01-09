@@ -1,4 +1,9 @@
-Received: (qmail 13885 invoked by uid 550); 12 Jun 2024 23:12:15 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2058" "Tuesday" "9" "January" "2018" "08:37:08" "-0700" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty070FkdfSVcz35pYXsa+BBbgoN7zWheAO-XudbD34n1Kw@mail.gmail.com>" "55" "Re: [oss-security] Own on install. How grave it is?" "^Date:" nil nil "1" "2018010915:37:08" "[oss-security] Own on install. How grave it is?" (number mark "        kseifried@re Jan  9   55/2058  " thread-indent "\"Re: [oss-security] Own on install. How grave it is?\"\n") "<20180109134207.GI869@sivokote.iziade.m$>" ("<20180109134207.GI869@sivokote.iziade.m$>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 15735 invoked by uid 550); 9 Jan 2018 15:37:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,71 +11,86 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13867 invoked from network); 12 Jun 2024 23:12:15 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718233927; x=1718838727; darn=lists.openwall.com;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=xK6YOhwO6HlpvIOhtszKdBrT4GIF4S1XntiuVsU4HlU=;
-        b=J9oNA9SEEkhKShimoZPYDj609ajanpOoOzcH6Zr++gojnBFYERlLe+P0T0eWKhZrXE
-         kvXNT934XaoZwWTPgsHJYgRNSH8G95dz43RWrswvTAQA2Kj0csYu87+lPlvp3hzyMaiH
-         +0XpV/TyELzQGOwEK1W2U1TzeA9OGv1/bJxE4mAKNvzuOCj0cA6GhntQx+daVT1kqA2O
-         1E1nEGBIC/PZx3ao8w0LvSkmJKOh8dEGLK6dLB2cK6eJePEo4IeX0vbiZAlnfA5ND3E3
-         NHcgkXu9j8EM5xSLm1WoSy1/BIcjv62PSNtfcbWzjbw3AL1nfFS8ZXHnXpHvwKOkBWgt
-         rlGQ==
+Received: (qmail 15699 invoked from network); 9 Jan 2018 15:37:21 -0000
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718233927; x=1718838727;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xK6YOhwO6HlpvIOhtszKdBrT4GIF4S1XntiuVsU4HlU=;
-        b=BwYHOQXfkTkV8+djfYpYcXKwU0Ab3zMyJArIKKaBYgk/+8Mafgsx+w1H9cDKftVIkc
-         i7uI0JRPXVOKE2Eu6coXaGbtesu1Rn16m/d4BAinVvllmcn4GOXxSCKWJnG6RUTJoLVm
-         LIQandzDGHH0/8yDfHE1jvDDXfHmzj9otlftxG2WBh55JeDOKif9JJsohNr9YIIywuVb
-         UL8UobdO6FfZGvH/e1NoUhIVYFpgBbliYaHT8SH3Tmac9SJwzIg2THIPfd0/hWkP36Bo
-         C7HGhlGVkrLNiigIJuKyA+VV9QTa8dDeeOwke2IC9+s2251dNMBiIT2Dexi+glGg2G1v
-         hukw==
-X-Gm-Message-State: AOJu0YxLp9wunYTpYWB7XhUJvIiw7115rHM7o0zSyAl79+099f+qQTN0
-	1KN5UkMo8kYgVjbUHNJRlR0h7VgQ0oZ9cW7wtoaN/n2r7paKBl1rT/OJig==
-X-Google-Smtp-Source: AGHT+IHqZ4IcB3AM6+lewb+NAS4urMnlmGpyziDT8txvdLV6ZqLXS+XH3++JTPOnxclCrThmTAwsZA==
-X-Received: by 2002:a05:6808:d51:b0:3d2:2749:6a8a with SMTP id 5614622812f47-3d23dfaf567mr4045079b6e.4.1718233926645;
-        Wed, 12 Jun 2024 16:12:06 -0700 (PDT)
-Message-ID: <ae09940c-6dc5-4de2-899a-0093cff4d6a0@gmail.com>
-Date: Thu, 13 Jun 2024 09:12:02 +1000
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=7RoUpiRXqjWXvndokLI7svAyywbCN28a4/qivhXw3WI=;
+        b=EDz9zB2HRrThym53J/yUKL3L8rBacxA9msDtU6DJbKM+owrNVcwmSRMyrCQfscsE3N
+         HuMqqkk86RDE/1cCSzrmK67QoLH3E9Wczn80S26Bt4P6oDqUCg1iaYtCjScga6PN9+CW
+         f4yzePktxzh8W5GBrxxf8U4pEojpUCkliua4HZ6q+d/zjrTZNJ2TfOp8rXug5kM/FYaU
+         vF2vP8xU0XwTEG7sQOPYzKfCXjdqlGm0cR4sItXQ24zfGJrLCJPqClJ8rC1OXSAn4ig5
+         caU4ib4BqjB/qQtXKFS+x8SPv+oqKAtZTT/zW/a2wrr6rLqwkFoyll0Q4hSvG5jze5tQ
+         UZSw==
+X-Gm-Message-State: AKGB3mK3cJEy7nrebLJ5icys3LIsnb9Zqf3aHEs0UJIhytMjCEVSA9Z+
+	hE09/tRyX+J+W9mhg2SL5ZY4cdrm6vd9FWqPciU4Lg/gsKY=
+X-Google-Smtp-Source: ACJfBotyru/7Q0bVsUiAzuutkUiZSwg/DJqB4uILDDMmv2whnN/jgGVr6DMWqio9uKMhKy3EC3Ohlgmu2eTVMnlBneU=
+X-Received: by 10.202.57.87 with SMTP id g84mr7431644oia.201.1515512229238;
+ Tue, 09 Jan 2018 07:37:09 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: oss-security@lists.openwall.com
-References: <28902b9a-3255-4bfe-a3c8-d0e08fb5f426@redhat.com>
- <v4d8ln$2ut$1@ciao.gmane.io>
-Content-Language: en-US
-From: Matthew Fernandez <matthew.fernandez@gmail.com>
-In-Reply-To: <v4d8ln$2ut$1@ciao.gmane.io>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] Re: CVE-2024-35235 cups: Cupsd Listen arbitrary
- chmod 0140777
+In-Reply-To: <20180109134207.GI869@sivokote.iziade.m$>
+References: <20180109134207.GI869@sivokote.iziade.m$>
+Message-ID: <CANO=Ty070FkdfSVcz35pYXsa+BBbgoN7zWheAO-XudbD34n1Kw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Date: Tue, 9 Jan 2018 08:37:08 -0700
+From: Kurt Seifried <kseifried@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Own on install. How grave it is?
+To: oss-security <oss-security@lists.openwall.com>
+
+Many OS installs/etc take a password during install, either manually
+(e.g. prompting you at the command line), or the OS is installed using
+tools that allow a password to be set (e.g. Red Hat kickstarter,
+Satellite, CloudForms).
+
+In general if an OS install does NOT give you any way to set a
+password during install and forces you to install the product, boot it
+and then login with blank credentials and set a password you end up
+with a CVE since a network based attacker can easily win that race, a
+good example being FreeNAS CVE-2014-5334. If the installer can prompt
+for a password or take a password through other means (e.g.
+kickstarter) than there's a safe option so no CVE is needed typically.
+
+On Tue, Jan 9, 2018 at 6:42 AM, Georgi Guninski <guninski@guninski.com> wrote:
+> [don't know if this is ontopic. Not on the list so CC me].
+>
+> This is well known, haven't seen it discussed.
+>
+> In short doing clean install (factory defaults) has a window of
+> opportunity when the device is vulnerable to a known network attack.
+>
+> It used to be common sense to reinstall after compromise (probably
+> doesn't apply to the windows world where the antivirus takes care).
+>
+> All versions of windoze are affected by the SMB bug to my knowledge.
+> Debian jessie (old stable) is vulnerable to malicious mirror attack.
+>
+> More of interest to me are devices where the installation media is
+> fixed and can't be changed.
+>
+> This includes smartphones and wireless routers.
+>
+> Some smartphones might be vulnerable to wifi RCE (found by google?).
+> Some wireless routers might be vulnerable to wifi RCE or
+> default admin password attack over wifi.
+>
+> Internet of Things will make things worse (some NAS devices are
+> affected).
+>
+> Shielding the device might not be solution since updates must be
+> applied.
+>
+> Are the above concerns real?
+>
+> Have this been studied systematically?
+>
+>
 
 
 
-On 6/13/24 08:49, Tavis Ormandy wrote:
-> On 2024-06-11, Zdenek Dohnal wrote:
->>   ???????? Impact
->>
->> Given that cupsd is often running as root, this can result in the change
->> of permission of any user or system files to be world writable.
->>
->>
->> https://github.com/OpenPrinting/cups/commit/a436956f3
->>
-> 
-> This is a pretty confusing description... if we accept the premise that an
-> attacker can somehow get root to run cupsd with a modified configuration
-> file (how???), then this patch doesn't seem sufficient. They can still
-> get root to unlink() an arbitrary file, no?
+-- 
 
-Also with debug printing enabled `DEBUG_printf` does not 
-save-and-restore `errno` and then does numerous things that can 
-overwrite it. So presumably the `errno == ENOENT` branch is not reliable 
-in this scenario.
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
