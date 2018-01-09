@@ -1,41 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/09/3
-Message-ID: <20180409171105.wexxnmf6fwgzeur7@matica.foolinux.mooo.com>
-Date: Mon, 9 Apr 2018 10:11:05 -0700
-From: Ian Zimmerman <itz@...y.loosely.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/09/1
+Message-ID: <20180109134207.GI869@sivokote.iziade.m$>
+Date: Tue, 9 Jan 2018 15:42:07 +0200
+From: Georgi Guninski <guninski@...inski.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Terminal Control Chars
+Subject: Own on install. How grave it is?
 Content-Type: text/plain; charset=utf-8
 
-On 2018-03-05 17:50, up201407890@...nos.dcc.fc.up.pt wrote:
+[don't know if this is ontopic. Not on the list so CC me].
 
-> When pasting characters into several terminal emulators, control
-> characters are allowed.  This turns to be a security problem, due to
-> the fact that when pasting these characters into terminal text
-> editors, such as vi/vim, emacs, nano, etc., remote code execution is
-> possible.
-> 
-> This is supposed to be fixed in recent versions of VTE [3], which
-> means VTE-based terminal emulators should be safe, but the problem is
-> that most distros are shipping older versions and remain vulnerable.
-> 
-> Here's a list of terminal emulators I tested this where it
-> worked. Some came by default in my distro (debian), others were
-> installed via apt-get. This should also work on other distros:
+This is well known, haven't seen it discussed.
 
-[...]
-> urxvt
-[...]
+In short doing clean install (factory defaults) has a window of
+opportunity when the device is vulnerable to a known network attack.
 
-> Please, update VTE and check if the below still works. For the others
-> that aren't based on VTE, CVEs should be assigned to each of them. Can
-> someone help me figure out which ones are based on VTE and those that
-> aren't?
+It used to be common sense to reinstall after compromise (probably
+doesn't apply to the windows world where the antivirus takes care).
 
-As far as I can see, urxvt (aka rxvt-unicode) does not use vte.
+All versions of windoze are affected by the SMB bug to my knowledge.
+Debian jessie (old stable) is vulnerable to malicious mirror attack.
 
--- 
-Please don't Cc: me privately on mailing lists and Usenet,
-if you also post the followup to the list or newsgroup.
-To reply privately _only_ on Usenet and on broken lists
-which rewrite From, fetch the TXT record for no-use.mooo.com.
+More of interest to me are devices where the installation media is
+fixed and can't be changed.
+
+This includes smartphones and wireless routers.
+
+Some smartphones might be vulnerable to wifi RCE (found by google?).
+Some wireless routers might be vulnerable to wifi RCE or
+default admin password attack over wifi.
+
+Internet of Things will make things worse (some NAS devices are
+affected).
+
+Shielding the device might not be solution since updates must be
+applied.
+
+Are the above concerns real?
+
+Have this been studied systematically?
+
+
