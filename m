@@ -1,142 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/14/12
-Message-Id: <E1fpcxH-0007Gh-9J@xenbits.xenproject.org>
-Date: Tue, 14 Aug 2018 17:18:03 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 271 v2 (CVE-2018-14007) - XAPI HTTP directory traversal
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/09/7
+Message-ID: <CAEwge-FQAHe37U1zdM19NCj8NkAuyVUx7=ii5WHz_3=EY+BkLw@mail.gmail.com>
+Date: Tue, 9 Jan 2018 14:07:14 -0800
+From: Anthony Baker <abaker@...che.org>
+To: user@...de.apache.org, dev@...de.apache.org, announce@...che.org,  asf-security <security@...che.org>, oss-security@...ts.openwall.com
+Subject: [SECURITY] CVE-2017-12622 Apache Geode gfsh authorization vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+CVE-2017-12622 Apache Geode gfsh authorization vulnerability
 
-            Xen Security Advisory CVE-2018-14007 / XSA-271
-                               version 2
+Severity:  Important
 
-                     XAPI HTTP directory traversal
+Vendor: The Apache Software Foundation
 
-UPDATES IN VERSION 2
-====================
+Versions Affected:  Apache Geode 1.0.0 through 1.2.1
 
-Public release.
+Description:
+When an authenticated user connects to a Geode cluster using the gfsh
+tool with HTTP, the user is able to obtain status information and
+control cluster members even without CLUSTER:MANAGE privileges.
 
-ISSUE DESCRIPTION
-=================
+Mitigation:
+Users of the affected versions should upgrade to Apache Geode 1.3.0 or later.
 
-XAPI has an unauthenticated HTTP endpoint update/ which exports the
-contents of /var/update for other hosts to use.
+Credit:
+This issue was reported responsibly to the Apache Geode Security Team
+by Patrick Rhomberg from Pivotal.
 
-However, the resolution of . and .. in paths is performed before url
-unquoting is performed.  This allows an attacker to traverse out of the
-web root.
+References:
+[1] https://issues.apache.org/jira/browse/GEODE-3685
+[2] https://cwiki.apache.org/confluence/display/GEODE/Release+Notes#ReleaseNotes-SecurityVulnerabilities
 
-IMPACT
-======
-
-An unauthenticated user with access to the management network can read
-arbitrary files from the dom0 filesystem.  This includes the pool secret
-/etc/xensource/ptoken which grants the attacker full administrator
-access.
-
-VULNERABLE SYSTEMS
-==================
-
-All versions of XAPI since v1.13.0 are vulnerable.
-
-If the directory /var/update doesn't exist, the vulnerability is not
-exposed.
-
-MITIGATION
-==========
-
-In the recommended configuration, the management network is isolated and
-isn't reachable from untrusted hosts, or by general network traffic.
-
-CREDITS
-=======
-
-This issue was discovered by Ronald Volgers of Computest
-https://www.computest.nl/en/
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa271-xapi.patch
-
-$ sha256sum xsa271*
-ffefb71cd328e0ee5654c135bf9b08f48abedd013f1c68d5589132e2a03a01f8  xsa271-xapi.patch
-$
-
-REGENERATION OF POOL SECRET
-===========================
-
-There are no known exploits in the wild.  If there is a risk that
-credentials could have been stolen, they should be reset.
-
-Most credentials can be reset via normal administrative means, but the
-pool secret doesn't have any mechanism to reset.  The following
-instructions should be used:
-
- 1) On all pool members, stop Xapi:
-    # service xapi stop
-
- 2) On the pool master:
-    # rm /etc/xensource/ptoken
-    # /opt/xensource/libexec/genptoken -f -o /etc/xensource/ptoken
-
- 3) Copy /etc/xensource/ptoken to all pool slaves
-
- 4) On the pool master, restart the toolstack:
-    # xe-toolstack-restart
-
- 5) On all pool slaves, restart the toolstack:
-    # xe-toolstack-restart
-
-Once the pool secret has been regenerated, the root password can be
-changed with:
-    # xe user-password-change
-
-Furthermore, consideration should be given to other credentials, such as
-(but not limited to) SSL keys, Storage SAN/iSCSI/NFS details, as well as
-secrets contained within VMs disks/snapshots/etc.
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJbcw6vAAoJEIP+FMlX6CvZx6cH/0qaq4PDDHSrIONP7v35ZYWe
-nZEoA+IWk0u35t4MwSRA8qcXZ9m+d7icHdE0c5Jwdh2sBOSFKzoehCuZOFXVpYTv
-SHdr/J3ilZRN1KV7Zo/agZJFYClV5QxR118PnVYFqsAHVGjxh6RzazyBNPUTkoIa
-qw/FBQwsib4Wkj5/RPympYscxetzAUoYiFeVtTgtqknXlt3UbXqzwg/lXTrMZwtG
-nBSjFEW+EURlkKR0HF85mtFBmqA1I3xsKgJDaob5KWl+HmlIj0SY9knQ2le3lgxn
-7zXiPSwOARg2E+vl3GB1Xd1fgcRGykBtjVWPX9uAgdb/C7qx6DN2PYEdyz1xZtI=
-=5lIm
------END PGP SIGNATURE-----
-
-Download attachment "xsa271-xapi.patch" of type "application/octet-stream" (1199 bytes)
+---
+The Geode PMC
