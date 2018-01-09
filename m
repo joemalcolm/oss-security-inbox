@@ -1,4 +1,9 @@
-Received: (qmail 10232 invoked by uid 550); 26 Mar 2026 03:05:10 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5345" "Wednesday" "10" "January" "2018" "00:56:27" "+0100" "oststrom \\(public\\)" "pub@oststrom.com" "<000101d389a5$76acc680$64065380$@oststrom.com>" "162" "[oss-security] CVE-2017-18016 - Paritytech Parity Ethereum built-in Dapp Browser <= v1.6.10  webproxy token reuse same-origin policy bypass" nil nil nil "1" "2018010923:56:27" "[oss-security] CVE-2017-18016 - Paritytech Parity Ethereum built-in Dapp Browser <= v1.6.10 webproxy token reuse same-origin policy bypass" (number mark "U       pub@oststrom Jan 10  162/5345  " thread-indent "\"[oss-security] CVE-2017-18016 - Paritytech Parity Ethereum built-in Dapp Browser <= v1.6.10  webproxy token reuse same-origin policy bypass\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 1993 invoked by uid 550); 10 Jan 2018 00:11:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,84 +12,179 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 3298 invoked from network); 26 Mar 2026 03:01:26 -0000
-Date: Thu, 26 Mar 2026 04:01:12 +0100
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Cc: Sergey Kandaurov <pluknet@nginx.com>
-Message-ID: <20260326030111.GA2606@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.3i
-Subject: [oss-security] 7 CVEs fixed in nginx
+Received: (qmail 21907 invoked from network); 9 Jan 2018 23:56:37 -0000
+From: "oststrom \(public\)" <pub@oststrom.com>
+To: <oss-security@lists.openwall.com>
+Date: Wed, 10 Jan 2018 00:56:27 +0100
+Message-ID: <000101d389a5$76acc680$64065380$@oststrom.com>
+MIME-Version: 1.0
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 14.0
+Thread-Index: AdOJpTmJ0nXENVQWQwW3ezQakAs/yg==
+Content-Language: en-us
+Subject: [oss-security] CVE-2017-18016 - Paritytech Parity Ethereum built-in Dapp Browser <= v1.6.10  webproxy token reuse same-origin policy bypass
 
-Hi,
+VuNote
+======
 
-Since the last nginx CVE I brought in here last year, there appeared 7
-more CVEs/advisories at:
+Author:     <github.com/tintinweb>
+Ref:        https://github.com/tintinweb/pub/tree/master/pocs/cve-2017-18016
+[5]
+Version:    0.3
+Date:       Jun 16th, 2017
 
-https://nginx.org/en/security_advisories.html
+Tag:        parity same origin policy bypass webproxy token reuse
 
-6 of these are dated Mar 24, 2026 and one Feb 4, 2026.  Here are the
-summaries copy-pasted from the above:
+Overview
+--------
 
-Buffer overflow in ngx_http_dav_module
-Severity: medium
-CVE-2026-27654
-Not vulnerable: 1.29.7+, 1.28.3+
-Vulnerable: 0.5.13-1.29.6
+Name:           parity
+Vendor:         paritytech
+References:     * https://parity.io/ [1]
 
-Buffer overflow in the ngx_http_mp4_module
-Severity: medium
-CVE-2026-27784
-Not vulnerable: 1.29.7+, 1.28.3+
-Vulnerable: 1.1.19-1.29.6
+Version:        1.6.8
+Latest Version: 1.7.12 (stable) - fixed
+                1.8.5 (beta) - fixed
+Other Versions: <= 1.6.10 (stable) - vulnerable
+Platform(s):    cross
+Technology:     rust js
 
-Buffer overflow in the ngx_http_mp4_module
-Severity: medium
-CVE-2026-32647
-Not vulnerable: 1.29.7+, 1.28.3+
-Vulnerable: 1.1.19-1.29.6
+Vuln Classes:   CWE-346
+Origin:         local (remote website, malicious dapp)
+Min. Privs.:    ---
 
-NULL pointer dereference while using CRAM-MD5 or APOP
-Severity: low
-CVE-2026-27651
-Not vulnerable: 1.29.7+, 1.28.3+
-Vulnerable: 0.5.15-1.29.6
+CVE:            CVE-2017-18016
 
-Injection in auth_http and XCLIENT
-Severity: medium
-CVE-2026-28753
-Not vulnerable: 1.29.7+, 1.28.3+
-Vulnerable: 0.6.27-1.29.6
 
-OCSP result bypass in stream
-Severity: medium
-CVE-2026-28755
-Not vulnerable: 1.29.7+, 1.28.3+
-Vulnerable: 1.27.2-1.29.6
 
-SSL upstream injection
-Severity: medium
-CVE-2026-1642
-Not vulnerable: 1.29.5+, 1.28.2+
-Vulnerable: 1.3.0-1.29.4
+Description
+---------
 
-Each of these has a link to the actual advisory on the MyF5 website, but
-these are just the CVE description fields plus tables on (not) affected
-F5 product versions in addition to "NGINX Open Source" versions above.
+quote website [1]
 
-I think I am still subscribed to the nginx-announce mailing list where
-things like this were sent to last year, but I didn't receive anything
-this time.  I just went to the list archive at:
+>Parity Technologies is proud to present our powerful new Parity Browser.
+Integrated directly into your Web browser, Parity is the fastest and most
+secure way of interacting with the Ethereum network.
 
-https://mailman.nginx.org/pipermail/nginx-announce/
+Summary 
+-------
 
-and it also ends in 2025.
+PoC: https://tintinweb.github.io/pub/pocs/cve-2017-18016/ [4]
 
-I only learned of these CVEs from a third-party website by chance, which
-is not ideal.  Maybe something the nginx project should correct.
+> Parity Browser <=1.6.8 allows remote attackers to bypass the Same Origin
+Policy and obtain sensitive information by requesting other websites via the
+Parity web proxy engine (reusing the current website's token, which is not
+bound to an origin).
 
-Alexander
+![parity cookie](sop_cookie.gif)
+
+**(A)** Ethereum Parity's built-in dapp/web-browsing functionality is  
+rendering browser same-origin policy (SOP) ineffective by proxying 
+requests with the parity main process. As a result, any website 
+navigated to ends up being origin http://localhost:8080. This also means
+that all websites navigated to share the same origin and thus are not 
+protected by the browser SOP allowing any proxied website/dapp to access
+another proxied website/dapp's resources (Cookies, ...).
+
+//see attached PoC - index.html / PoC
+
+![parity frame](sop_frame.gif)
+
+**(B)** Worse, due to the structure of proxy cache urls and the fact that
+they 
+contain a reusable non-secret non-url specific cache-token it is 
+possible for one proxied website/dapp to navigate to any other proxied
+website/dapp gaining full script/XHR control due to **(A)** the SOP being
+applied without any restrictions. This could allow a malicious
+website/dapp to take control of another website/dapp, performing user
+interactions, XHR or injecting scripts/DOM elements to mislead the
+user or to cause other unspecified damage.
+
+When navigating to a website with the built-in parity webbrowser a webproxy
+request
+token is requested and sent along an encoded request for an url. For
+example, navigating
+parity to http://oststrom.com the url gets turned into a proxy url like
+http://127.0.0.1:8080/web/8X4Q4EBJ71SM2CK6E5AQ6YBNB4NPGX3ME0X2YBVFEDT76X3JDX
+PJWRVFDM of
+the form http://127.0.0.1:8080/web/[base32_encode(token+url)]. A malicious
+dapp can use
+this information to decode its own url, extract the token and reuse it for
+any other 
+url as the token is not locked to the url. The PoC exploits this in order to
+load any
+other website into a same-origin iframe by reusing the proxy token.
+
+Code see [2]
+
+//see attached PoC - index.html / PoC
+//see github [5] for details 
+    
+
+Proof of Concept
+----------------
+
+Prerequisites: 
+
+* (if hosted locally) modify /etc/hosts to resolve your testdomain to your
+webserver
+* make `index.html` accessible on a webserver (e.g. `cd /path/to/index.html;
+python -m SimpleHTTPServer 80`)
+
+1. launch parity, navigate to the built-in webbrowser
+(http://127.0.0.1:8180/#/web)
+2. navigate the built-in parity webbrowser to where the PoC `index.html` is
+hosted (e.g. [4])
+3. follow the instructions. 
+4. Issue 1: navigate to some websites to have them set cookies, reload the
+PoC page and click "Display Cookies". Note that while the main request is
+proxied by parity, subsequent calls might not be (e.g. xhr, resources). That
+means you'll only see cookies set by the main site as only the initial call
+shares the origin `localhost:8080`.
+5. Issue 2: enter an url into the textbox and hit `Spawn SOP Iframe`. A new
+iframe will appear on the bottom of the page containing the proxied website.
+Note that the calling website has full script/dom/xhr access to the proxied
+target. You can also use the "Display Cookies" button from Issue 1 to show
+cookies that have been merged into the origin by loading the proxied iframe.
+6. Demo 2: Just a PoC to find local-lan web interfaces (e.g. your gateways
+web interface) and potentially mess with its configuration (e.g. router with
+default password on your lan being reconfigured by malicious dapp that
+excploits the token reuse issue 2)
+
+ 
+Fix
+-----
+
+* Commit [3] (first in 1.7.0)
+* Does not fix Issue #1 - sites are generally put into same origin due to
+proxy
+* Fixes Issue #2 - Token Reuse
+* Parity now added a note that browsing websites with their browser is
+insecure
+
+![parity fixed](v1712.png)
+
+* Issue #1 is not yet fixed as the cookie of instagram.com is still shown.
+* Parity v1.7.12 added a note.
+
+References
+----------
+
+[1] https://parity.io/
+[2]
+https://github.com/paritytech/parity/blame/e8b418ca03866fd952d456830b30e9225
+c81035a/dapps/src/web.rs
+[3]
+https://github.com/paritytech/parity/commit/53609f703e2f1af76441344ac3b72811
+c726a215
+[4] https://tintinweb.github.io/pub/pocs/cve-2017-18016/
+[5] https://github.com/tintinweb/pub/tree/master/pocs/cve-2017-18016
+
+
+Contact
+-------
+
+https://github.com/tintinweb
+
