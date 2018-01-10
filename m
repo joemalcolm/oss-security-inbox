@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2357" "Wednesday" "16" "May" "2018" "08:25:56" "+0200" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1805140829220.16381@tvnag.unkk.fr>" "87" "[oss-security] [SECURITY AVISORY] curl: FTP shutdown response buffer overflow" nil nil nil "5" "2018051606:25:56" "[oss-security] [SECURITY AVISORY] curl: FTP shutdown response buffer overflow" (number mark "U       daniel@haxx. May 16   87/2357  " thread-indent "\"[oss-security] [SECURITY AVISORY] curl: FTP shutdown response buffer overflow\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5530" "Wednesday" "10" "January" "2018" "18:49:27" "+0100" "Thomas Voegtlin" "thomasv@electrum.org" "<e0927f84-ff6c-8581-56b3-e2c0debb12b0@electrum.org>" "140" "[oss-security] JSONRPC vulnerability in Electrum 2.6 to 3.0.4" nil nil nil "1" "2018011017:49:27" "[oss-security] JSONRPC vulnerability in Electrum 2.6 to 3.0.4" (number mark "U       thomasv@elec Jan 10  140/5530  " thread-indent "\"[oss-security] JSONRPC vulnerability in Electrum 2.6 to 3.0.4\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26341 invoked by uid 550); 16 May 2018 06:26:09 -0000
+Received: (qmail 11578 invoked by uid 550); 10 Jan 2018 18:11:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,106 +12,157 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26319 invoked from network); 16 May 2018 06:26:09 -0000
-X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
-Date: Wed, 16 May 2018 08:25:56 +0200 (CEST)
-From: Daniel Stenberg <daniel@haxx.se>
-X-X-Sender: dast@giant.haxx.se
-To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
-        curl-announce@cool.haxx.se,
-        libcurl hacking <curl-library@cool.haxx.se>,
-        oss-security@lists.openwall.com
-Message-ID: <alpine.DEB.2.20.1805140829220.16381@tvnag.unkk.fr>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-fromdanielhimself: yes
+Received: (qmail 28648 invoked from network); 10 Jan 2018 17:49:40 -0000
+X-Originating-IP: 77.179.99.84
+From: Thomas Voegtlin <thomasv@electrum.org>
+To: oss-security@lists.openwall.com
+Message-ID: <e0927f84-ff6c-8581-56b3-e2c0debb12b0@electrum.org>
+Date: Wed, 10 Jan 2018 18:49:27 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] [SECURITY AVISORY] curl: FTP shutdown response buffer overflow
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+Subject: [oss-security] JSONRPC vulnerability in Electrum 2.6 to 3.0.4
 
-FTP shutdown response buffer overflow
-=====================================
+A vulnerability has been found in Electrum, and patched in version
+3.0.5. Please update your software if you are running an earlier version.
 
-Project curl Security Advisory, May 16th 2018 -
-[Permalink](https://curl.haxx.se/docs/adv_2018-82c2.html)
+The following is a copy of the summary and guidelines we posted on our
+website: https://github.com/spesmilo/electrum-docs/blob/master/cve.rst
 
-VULNERABILITY
--------------
+A CVE number for the issue has been requested 2 days ago, and has not
+been attributed yet.
 
-curl might overflow a heap based memory buffer when closing down an FTP
-connection with very long server command replies.
 
-When doing FTP transfers, curl keeps a spare "closure handle" around
-internally that will be used when an FTP connection gets shut down since the
-original curl easy handle is then already removed.
 
-FTP server response data that gets cached from the original transfer might
-then be larger than the default buffer size (16 KB) allocated in the "closure
-handle", which can lead to a buffer overwrite. The contents and size of that
-overwrite is controllable by the server.
+JSONRPC vulnerability in Electrum 2.6 to 3.0.4
+==============================================
 
-This situation was detected by an assert() in the code, but that was of course
-only preventing bad stuff in debug builds. This bug is very unlikely to
-trigger with non-malicious servers.
+On January 6th, a vulnerability was disclosed in the Electrum wallet
+software, that allows malicious websites to execute wallet commands
+through JSONRPC executed in a web browser. The bug affects versions
+2.6 to 3.0.4 of Electrum, on all platforms. It also affects clones of
+Electrum such as Electron Cash.
 
-We are not aware of any exploit of this flaw.
 
-INFO
-----
+Can funds be stolen?
+--------------------
 
-This bug was introduced in April 2017 in [this
-commit](https://github.com/curl/curl/commit/e40e9d7f0decc79) when we
-introduced the use of increased buffer sizes for FTP.
+Wallets that are not password protected are at risk of theft, if they
+are opened with a version of Electrum older than 3.0.5 while a web
+browser is active.
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2018-1000300 to this issue.
+In addition, the vulnerability allows an attacker to modify user
+settings, the list of contacts in a wallet, and the "payto" and
+"amount" fields of the user interface while Electrum is running.
 
-CWE-122: Heap-based Buffer Overflow
+Although there is no known occurrence of Bitcoin theft occurring
+because of this vulnerability, the risk increases substantially now
+that the vulnerability has been made public.
 
-AFFECTED VERSIONS
------------------
 
-- Affected versions: curl 7.54.1 to and including curl 7.59.0
-- Not affected versions: curl < 7.54.1 and curl >= 7.60.0
+Can wallet data be leaked?
+--------------------------
 
-libcurl is used by many applications, but not always advertised as such.
+Yes, an attacker can obtain private data, such as: Bitcoin addresses,
+transaction labels, address labels, wallet contacts and master public
+keys.
 
-THE SOLUTION
-------------
 
-In curl version 7.60.0, curl will return an error if this situation happens.
+Can a password-protected wallet be bruteforced?
+-----------------------------------------------
 
-A [patch for CVE-2018-1000300](https://curl.haxx.se/CVE-2018-1000300.patch) is
-available.
+Not realistically. The vulnerability does not allow an attacker to
+access encrypted seed or private keys, which would be needed in order
+to perform an efficient brute force attack. Without the encrypted
+seed, an attacker must try passwords using the JSONRPC interface,
+while the user is visiting a malicious page. This is several orders of
+magnitude slower than an attack with the encrypted seed, and
+restricted in time. Even a weak password will protect against that.
 
-RECOMMENDATIONS
----------------
 
-We suggest you take one of the following actions immediately, in order of
-preference:
+What should users do?
+---------------------
 
-  A - Upgrade curl to version 7.60.0
+All users should upgrade their Electrum software, and stop using old
+versions.
 
-  B - Apply the patch to your version and rebuild
+Users who did not protect their wallet with a password should create a
+new wallet, and move their funds to that wallet. Even if it never
+received any funds, a wallet without password should not be used
+anymore, because its seed might have been compromised.
 
-  C - Avoing using FTP
+In addition, users should review their settings, and delete all
+contacts from their contacts list, because the Bitcoin addresses of
+their contacts might have been modified.
 
-TIME LINE
----------
 
-It was reported to the curl project on March 22, 2018
+How to upgrade Electrum
+-----------------------
 
-We contacted distros@openwall on May 7, 2018.
+Stop running any version of Electrum older than 3.0.5, and install
+Electrum the most recent version. On desktop, make sure you download
+Electrum from https://electrum.org and no other website. On Android,
+the most recent version is available in Google Play.
 
-curl 7.60.0 was released on May 16 2018, coordinated with the publication of
-this advisory.
+If Electrum 3.0.5 (or any later version) cannot be installed or does
+not work on your computer, stop using Electrum on that computer, and
+access your funds from a device that can run Electrum 3.0.5. If you
+really need to use an older version of Electrum, for example in order
+to access wallet seed, make sure that your computer is offline, and
+that no web browser is running on the computer at the same time.
 
-CREDITS
--------
 
-Detected by Dario Weisser. Patch by Daniel Stenberg.
+Should all users move their funds to a new address?
+---------------------------------------------------
 
-Thanks a lot!
+We do not recommend moving funds from password protected wallets. For
+wallets that were not password protected, moving funds is an extreme
+precaution, that might not be necessary; indeed, if a wallet was
+compromised, it is very likely that the attacker would have stolen the
+funds immediately.
+
+
+When was the issue reported and fixed?
+--------------------------------------
+
+The absence of password protection in the JSONRPC interface was
+reported on November 25th, 2017 by user jsmad:
+https://github.com/spesmilo/electrum/issues/3374
+
+jsmad's report was about the Electrum daemon, a piece of software that
+runs on web servers and is used by merchants in order to receive
+Bitcoin payments. In that context, connections to the daemon from the
+outside world must be explicitly authorized, by setting 'rpchost' and
+'rpcport' in the Electrum configuration.
+
+On January 6th, 2018, Tavis Ormandy demonstrated that the JSONRPC
+interface could be exploited against the Electrum GUI, and that the
+attack could be carried out by a web browser running locally, visiting
+a webpage with specially crafted JavaScript.
+
+We released a new version (3.0.4) in the hours following Tavis' post,
+with a patch written by mithrandi (Debian packager), that addressed
+the attack demonstrated by Tavis. In addition, the Github issue
+remained open, because mithrandi's patch was not adding password
+protection to the JSONRPC interface.
+
+Shortly after the 3.0.4 release we started to work on adding proper
+password protection to the JSONRPC interface of the daemon, and that
+part was ready on Sunday, January 7th. We also learned on Sunday
+afternoon that the first patch was not effective against another,
+similar attack, using POST. This is why we did not delay the 3.0.5
+release, which includes password protection, and completely disables
+JSONRPC in the GUI.
+
+
+
+
+
 
 -- 
-
-  / daniel.haxx.se
+Electrum Technologies GmbH / Waldemarstr 37a / 10999 Berlin / Germany
+Sitz, Registergericht: Berlin, Amtsgericht Charlottenburg, HRB 164636
+Geschäftsführer: Thomas Voegtlin
