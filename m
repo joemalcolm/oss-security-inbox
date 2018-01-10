@@ -1,41 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/25/3
-Message-ID: <20181125133006.GA3680@eldamar.local>
-Date: Sun, 25 Nov 2018 14:30:06 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: PHP imap_open() script injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/10/3
+Message-ID: <0c0db4bd-37e4-7e3d-1ce8-bcee37fb40fb@igalia.com>
+Date: Wed, 10 Jan 2018 17:36:24 +0100
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: "webkit-gtk@...ts.webkit.org" <webkit-gtk@...ts.webkit.org>
+Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: WebKitGTK+ Security Advisory WSA-2018-0001
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+------------------------------------------------------------------------
+WebKitGTK+ Security Advisory                               WSA-2018-0001
+------------------------------------------------------------------------
 
-On Thu, Nov 22, 2018 at 09:02:14PM +0100, Hanno Böck wrote:
-> Hi,
-> 
-> This was apparently posted on some russian forum recently and then
-> re-posted to github:
-> https://antichat.com/threads/463395/#post-4254681
-> https://github.com/Bo0oM/PHP_imap_open_exploit/blob/master/exploit.php
-> 
-> PoC code:
-> $server = "x -oProxyCommand=echo\tZWNobyAnMTIzNDU2Nzg5MCc+L3RtcC90ZXN0MDAwMQo=|base64\t-d|sh}";
-> imap_open('{'.$server.':143/imap}INBOX', '', '') or die("\n\nError: ".imap_last_error());
-> 
-> It's pretty self explaining, it seems imap_open() will pass things to
-> ssh and this is vulnerable to a shell injection.
-> 
-> Impact would be mostly relevant if someone has some imap functionality
-> where a user can define a custom imap server. (Though it might also be
-> used as a bypass for environments where exec() and similar functions
-> are restricted.)
-> 
-> I reported it to upstream PHP a few days ago, it was closed as a
-> duplicate, so it seems they already knew about it. It's unfixed in
-> current versions.
+Date reported      : January 10, 2018
+Advisory ID        : WSA-2018-0001
+Advisory URL       : https://webkitgtk.org/security/WSA-2018-0001.html
+CVE identifiers    : CVE-2017-5753, CVE-2017-5715.
 
-CVE-2018-19518 has been assigned by MITRE for this issue.
+Several vulnerabilities were discovered in WebKitGTK+.
 
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-19518
+CVE-2017-5753
+    Versions affected: WebKitGTK+ before 2.18.5.
+    Credit to Jann Horn of Google Project Zero; and Paul Kocher in
+    collaboration with Daniel Genkin of University of Pennsylvania and
+    University of Maryland, Daniel Gruss of Graz University of
+    Technology, Werner Haas of Cyberus Technology, Mike Hamburg of
+    Rambus (Cryptography Research Division), Moritz Lipp of Graz
+    University of Technology, Stefan Mangard of Graz University of
+    Technology, Thomas Prescher of Cyberus Technology, Michael Schwarz
+    of Graz University of Technology, and Yuval Yarom of University of
+    Adelaide and Data61.
+    Impact: Systems with microprocessors utilizing speculative execution
+    and branch prediction may allow unauthorized disclosure of
+    information to an attacker via a side-channel analysis. This variant
+    of the Spectre vulnerability triggers the speculative execution by
+    performing a bounds-check bypass. Description: Security improvements
+    are included to mitigate the effects.
 
-Regards,
-Salvatore
+CVE-2017-5715
+    Versions affected: WebKitGTK+ before 2.18.5.
+    Credit to Jann Horn of Google Project Zero; and Paul Kocher in
+    collaboration with Daniel Genkin of University of Pennsylvania and
+    University of Maryland, Daniel Gruss of Graz University of
+    Technology, Werner Haas of Cyberus Technology, Mike Hamburg of
+    Rambus (Cryptography Research Division), Moritz Lipp of Graz
+    University of Technology, Stefan Mangard of Graz University of
+    Technology, Thomas Prescher of Cyberus Technology, Michael Schwarz
+    of Graz University of Technology, and Yuval Yarom of University of
+    Adelaide and Data61.
+    Impact: Systems with microprocessors utilizing speculative execution
+    and branch prediction may allow unauthorized disclosure of
+    information to an attacker via a side-channel analysis. This variant
+    of the Spectre vulnerability triggers the speculative execution by
+    utilizing branch target injection. Description: Security
+    improvements are included to mitigate the effects.
+
+
+We recommend updating to the last stable version of WebKitGTK+. It is
+the best way of ensuring that you are running a safe version of
+WebKitGTK+. Please check our website for information about the last
+stable releases.
+
+Further information about WebKitGTK+ Security Advisories can be found
+at: https://webkitgtk.org/security.html
+
+The WebKitGTK+ team,
+January 10, 2018
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (898 bytes)
