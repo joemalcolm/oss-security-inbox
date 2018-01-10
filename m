@@ -1,96 +1,149 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/17/2
-Message-ID: <CAFB0D2SFn6Hc2NQcHrTc3d2Pmx0SgE37Y1LjxhGVEXhRprBr=g@mail.gmail.com>
-Date: Tue, 17 Jul 2018 10:16:06 -0400
-From: Justin Bull <me@...tinbull.ca>
-To: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com,  fulldisclosure@...lists.org
-Subject: [CVE-2018-1000211] Public apps can't revoke OAuth access & refresh tokens in Doorkeeper
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/10/4
+Message-ID: <e0927f84-ff6c-8581-56b3-e2c0debb12b0@electrum.org>
+Date: Wed, 10 Jan 2018 18:49:27 +0100
+From: Thomas Voegtlin <thomasv@...ctrum.org>
+To: oss-security@...ts.openwall.com
+Subject: JSONRPC vulnerability in Electrum 2.6 to 3.0.4
 Content-Type: text/plain; charset=utf-8
 
-Good morning everyone,
+A vulnerability has been found in Electrum, and patched in version
+3.0.5. Please update your software if you are running an earlier version.
 
-A security bulletin for all of you.
+The following is a copy of the summary and guidelines we posted on our
+website: https://github.com/spesmilo/electrum-docs/blob/master/cve.rst
 
-Software:
---------
-Doorkeeper (https://github.com/doorkeeper-gem/doorkeeper)
+A CVE number for the issue has been requested 2 days ago, and has not
+been attributed yet.
 
-Description:
-----------
-Doorkeeper is an OAuth 2 provider for Rails written in Ruby.
 
-Affected Versions:
----------------
-4.2.0 - 4.3.2
-5.0.0.rc1
 
-Fixed Versions:
--------------
-4.4.0
-5.0.0.rc2
+JSONRPC vulnerability in Electrum 2.6 to 3.0.4
+==============================================
 
-Problem:
---------
+On January 6th, a vulnerability was disclosed in the Electrum wallet
+software, that allows malicious websites to execute wallet commands
+through JSONRPC executed in a web browser. The bug affects versions
+2.6 to 3.0.4 of Electrum, on all platforms. It also affects clones of
+Electrum such as Electron Cash.
 
-Any OAuth application that uses public/non-confidential authentication when
-interacting with Doorkeeper is unable to revoke its tokens when calling the
-revocation endpoint.
 
-A bug in the token revocation API causes it to try to authenticate the public
-OAuth client as if it was a confidential app. Because of this, the token is
-never revoked.
+Can funds be stolen?
+--------------------
 
-If Doorkeeper is used to facilitate public OAuth apps and leverage token
-revocation functionality (RFC 7009[1]), upgrade to the patched versions
-immediately.
+Wallets that are not password protected are at risk of theft, if they
+are opened with a version of Electrum older than 3.0.5 while a web
+browser is active.
 
-Impact:
--------
+In addition, the vulnerability allows an attacker to modify user
+settings, the list of contacts in a wallet, and the "payto" and
+"amount" fields of the user interface while Electrum is running.
 
-All public, non-confidential clients respecting the RFC will not have their
-access or refresh tokens revoked when sending a valid, well-formed &
-unauthenticated revocation request to doorkeeper.
+Although there is no known occurrence of Bitcoin theft occurring
+because of this vulnerability, the risk increases substantially now
+that the vulnerability has been made public.
 
-Any such clients relying on Doorkeeper's revocation functionality are
-susceptible to a session replay attack, even after the victim terminates their
-session via a revocation/log out.
 
-1. Attacker gains access token via any acceptable means (MiTM, physical
-   computer access, bug in client code, etc.)
-2. Victim logs out/attempts to revoke the access token
-3. Attacker is not affected, as the token is still valid for the duration of
-   its lifespan. Furthermore, the refresh token can be used to extend the
-   attacker's privileged access.
+Can wallet data be leaked?
+--------------------------
 
-This scenario is captured under the OWASP Top 10 (2013)'s A2: Broken
-Authentication and Session Management as a vulnerability[2].
+Yes, an attacker can obtain private data, such as: Bitcoin addresses,
+transaction labels, address labels, wallet contacts and master public
+keys.
 
-Solution:
----------
 
-Doorkeeper needed a structural update so it is able to define which OAuth
-client application is intended to be public or confidential.
+Can a password-protected wallet be bruteforced?
+-----------------------------------------------
 
-With that now available, the tokens revocation API knows to either enforce
-authentication (as required for confidential clients) or accept just the client
-ID (as is the case for a public client)[1].
+Not realistically. The vulnerability does not allow an attacker to
+access encrypted seed or private keys, which would be needed in order
+to perform an efficient brute force attack. Without the encrypted
+seed, an attacker must try passwords using the JSONRPC interface,
+while the user is visiting a malicious page. This is several orders of
+magnitude slower than an attack with the encrypted seed, and
+restricted in time. Even a weak password will protect against that.
 
-See the following PRs for more info:
 
-* https://github.com/doorkeeper-gem/doorkeeper/pull/1119
-* https://github.com/doorkeeper-gem/doorkeeper/pull/1031
-* https://github.com/doorkeeper-gem/doorkeeper/issues/891
+What should users do?
+---------------------
 
-Credit:
--------
-All credit to Roberto Ostinelli[3] for discovery.
+All users should upgrade their Electrum software, and stop using old
+versions.
 
-Thanks to the Distributed Weakness Filing Project for a swift assignment of a
-CVE identifier (CVE-2018-1000211).
+Users who did not protect their wallet with a password should create a
+new wallet, and move their funds to that wallet. Even if it never
+received any funds, a wallet without password should not be used
+anymore, because its seed might have been compromised.
 
-References:
------------
+In addition, users should review their settings, and delete all
+contacts from their contacts list, because the Bitcoin addresses of
+their contacts might have been modified.
 
-[1]: https://tools.ietf.org/html/rfc7009
-[2]: https://www.owasp.org/index.php/Top_10_2013-A2-Broken_Authentication_and_Session_Management
-[3]: https://github.com/ostinelli
+
+How to upgrade Electrum
+-----------------------
+
+Stop running any version of Electrum older than 3.0.5, and install
+Electrum the most recent version. On desktop, make sure you download
+Electrum from https://electrum.org and no other website. On Android,
+the most recent version is available in Google Play.
+
+If Electrum 3.0.5 (or any later version) cannot be installed or does
+not work on your computer, stop using Electrum on that computer, and
+access your funds from a device that can run Electrum 3.0.5. If you
+really need to use an older version of Electrum, for example in order
+to access wallet seed, make sure that your computer is offline, and
+that no web browser is running on the computer at the same time.
+
+
+Should all users move their funds to a new address?
+---------------------------------------------------
+
+We do not recommend moving funds from password protected wallets. For
+wallets that were not password protected, moving funds is an extreme
+precaution, that might not be necessary; indeed, if a wallet was
+compromised, it is very likely that the attacker would have stolen the
+funds immediately.
+
+
+When was the issue reported and fixed?
+--------------------------------------
+
+The absence of password protection in the JSONRPC interface was
+reported on November 25th, 2017 by user jsmad:
+https://github.com/spesmilo/electrum/issues/3374
+
+jsmad's report was about the Electrum daemon, a piece of software that
+runs on web servers and is used by merchants in order to receive
+Bitcoin payments. In that context, connections to the daemon from the
+outside world must be explicitly authorized, by setting 'rpchost' and
+'rpcport' in the Electrum configuration.
+
+On January 6th, 2018, Tavis Ormandy demonstrated that the JSONRPC
+interface could be exploited against the Electrum GUI, and that the
+attack could be carried out by a web browser running locally, visiting
+a webpage with specially crafted JavaScript.
+
+We released a new version (3.0.4) in the hours following Tavis' post,
+with a patch written by mithrandi (Debian packager), that addressed
+the attack demonstrated by Tavis. In addition, the Github issue
+remained open, because mithrandi's patch was not adding password
+protection to the JSONRPC interface.
+
+Shortly after the 3.0.4 release we started to work on adding proper
+password protection to the JSONRPC interface of the daemon, and that
+part was ready on Sunday, January 7th. We also learned on Sunday
+afternoon that the first patch was not effective against another,
+similar attack, using POST. This is why we did not delay the 3.0.5
+release, which includes password protection, and completely disables
+JSONRPC in the GUI.
+
+
+
+
+
+
+-- 
+Electrum Technologies GmbH / Waldemarstr 37a / 10999 Berlin / Germany
+Sitz, Registergericht: Berlin, Amtsgericht Charlottenburg, HRB 164636
+Geschäftsführer: Thomas Voegtlin
