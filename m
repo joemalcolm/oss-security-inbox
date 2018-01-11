@@ -1,32 +1,100 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/23/12
-Message-ID: <5b7eac3c.1c69fb81.6a504.6766@mx.google.com>
-Date: Thu, 23 Aug 2018 14:44:40 +0200
-From: Leonardo Taccari <iamleot@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/11/1
+Message-ID: <CAJ_zFkLDRxE3wOXw9AwmOR1URO0xwTAK6Ud3i72mmOV7An=67A@mail.gmail.com>
+Date: Thu, 11 Jan 2018 10:47:38 -0800
+From: Tavis Ormandy <taviso@...gle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
+Subject: transmission: rpc session-id mechanism design flaw results in RCE
 Content-Type: text/plain; charset=utf-8
 
-Hello Mateusz,
+Hello, the transmission bittorrent client uses a client/server
+architecture, the user interface is the client and a daemon runs in the
+background managing the downloading, seeding, etc.
 
-Mateusz Lenik writes:
-> [...]
-> It seems to be possible to disable GhostScript in ImageMagick completely by
-> the policy rule below. It's not possible to miss any format with it.
->
-> <policy domain="delegate" rights="none" pattern="gs" />
->
-> [...]
+Clients interact with the daemon using JSON RPC requests to a web server
+listening on port 9091. The daemon will only accept requests from localhost
+by default, but it's common to configure NAS devices to accept remote
+clients.
 
-Please note that this will work *only* when ImageMagick is built
-with `--without-gslib'. In that case ImageMagick is not linked
-against gslib and ghostscript is directly invoked via `gs' or
-similar.
+A sample RPC session looks like this:
 
-If ImageMagick was built `--with-gslib' then no `gs' is invoked
-and there is no delegation, so the problems described by Tavis can
-be reproduced with that delegate policy rule as well.
+$ curl -sI http://localhost:9091/transmission/rpc
+HTTP/1.1 409 Conflict
+Server: Transmission
+X-Transmission-Session-Id: JL641xTn2h53UsN6bVa0kJjRBLA6oX1Ayl06AJwuhHvSgE6H
+Date: Wed, 29 Nov 2017 21:37:41 GMT
 
+$ curl -H 'X-Transmission-Session-Id:
+JL641xTn2h53UsN6bVa0kJjRBLA6oX1Ayl06AJwuhHvSgE6H'  -d
+'{"method":"session-set","arguments":{"download-dir":"/home/user"}}' -si
+http://localhost:9091/transmission/rpc
+HTTP/1.1 200 OK
+Server: Transmission
+Content-Type: application/json; charset=UTF-8
+Date: Wed, 29 Nov 2017 21:38:57 GMT
+Content-Length: 36
 
-It is probably safer to follow the workaround described in:
-<https://www.kb.cert.org/vuls/id/332928>
+{"arguments":{},"result":"success"}
+
+As with all HTTP RPC schemes like this, any website can send requests to
+the daemon listening on localhost with XMLHttpRequest(), but the theory is
+they will be ignored because clients must prove they can read and set a
+specific header, X-Transmission-Session-Id.
+
+Unfortunately, this design doesn't work because of an attack called "DNS
+rebinding". Any website can simply create a dns name that they are
+authorized to communicate with, and then make it resolve to localhost.
+
+The attack works like this:
+
+1. A user visits http://attacker.com, which has an <iframe> to a subdomain
+the attacker controls.
+2. The attacker configures their DNS server to respond alternately with
+127.0.0.1 and 123.123.123.123 (an address they control) with a very low TTL.
+3. When the browser resolves to 123.123.123.123, they serve HTML that waits
+for the DNS entry to expire (or force it to expire by flooding the cache
+with lookups), then they have permission to read and set headers.
+
+I have a domain I use for testing dns rebinding called rbndr.us, you can
+use this page to generate hostnames (source code is here:
+https://github.com/taviso/rbndr):
+
+https://lock.cmpxchg8b.com/rebinder.html
+
+Here I want to alternate between 127.0.0.1 and 199.241.29.227, so I use
+7f000001.c7f11de3.rbndr.us:
+
+$ host 7f000001.c7f11de3.rbndr.us
+7f000001.c7f11de3.rbndr.us has address 127.0.0.1
+$ host 7f000001.c7f11de3.rbndr.us
+7f000001.c7f11de3.rbndr.us has address 199.241.29.227
+$ host 7f000001.c7f11de3.rbndr.us
+7f000001.c7f11de3.rbndr.us has address 127.0.0.1
+
+Here you can see the resolution alternates between the two addresses I want
+(note that depending on caching it might take a while to switch, the TTL is
+set to minimum but some servers round up).
+
+I just wait for the cached response to expire, and then POST commands to
+the server.
+
+Exploitation is simple, you could set script-torrent-done-enabled and run
+any command, or set download-dir to /home/user/ and then upload a torrent
+for ".bashrc".
+
+Here is my (simple) demo, it's slow, but could be made very fast:
+
+http://lock.cmpxchg8b.com/Asoquu3e.html
+
+I've verified it works on Chrome and Firefox on Windows and Linux (I tried
+Fedora and Ubuntu), I expect other platforms and browsers are affected. There
+are screenshots of how the attack is supposed to look on the bug report
+here:
+
+https://github.com/transmission/transmission/pull/468
+
+Tavis.
+
+Content of type "text/html" skipped
+
+View attachment "0001-mitigate-dns-rebinding-attacks.patch" of type "text/x-patch" (10374 bytes)
