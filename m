@@ -1,58 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/20/2
-Message-ID: <b700e851-08b0-003d-b428-58ebd1fefc21@gmail.com>
-Date: Fri, 20 Jul 2018 10:41:40 +0200
-From: Emilio Pozuelo Monfort <pochu27@...il.com>
-To: oss-security@...ts.openwall.com, Iris Morelle <shadowm2006@...il.com>
-Subject: Re: CVE request: Wesnoth arbitrary code execution/sandbox escape
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/11/3
+Message-ID: <1052-1515706382.849134@g0OE.W9FL.fhCU>
+Date: Thu, 11 Jan 2018 21:33:02 +0000
+From: halfdog <me@...fdog.net>
+To: oss-security@...ts.openwall.com
+Subject: util-linux mount/unmount ASLR bypass via environment variable
 Content-Type: text/plain; charset=utf-8
 
-On 20/07/18 03:13, Iris Morelle wrote:
-> Hello,
-> 
-> We've found an issue in our software, "The Battle for Wesnoth", which allows 
-> arbitrary code execution by exploiting a vulnerability within the Lua 
-> scripting language engine which allows escaping existing sandbox measures in 
-> place and executing untrusted bytecode.
-> 
-> We would like to have a CVE id assigned to this issue if possible.
+Hello list,
 
-Please request one by filling https://cveform.mitre.org and let this list know
-the CVE id if/when you get one assigned.
+Just FYI. The issue was not rated important, hence reported in
+public mailing list, see [0]. Copy of message:
 
-Cheers,
-Emilio
 
-> 
-> 
-> Description:
-> 
-> The Wesnoth game engine uses the vanilla Lua programming language library to 
-> implement most of its game scripting capabilities. Lua is able to execute 
-> bytecode using its load(), loadfile(), loadstring(), dofile(), and require() 
-> functions. Wesnoth in particular exposes load(), loadstring(), and two 
-> wrappers for the former in the form of wesnoth.dofile() and wesnoth.require(), 
-> without making sure to disable the ability to load and execute bytecode.
-> 
-> It has been documented [1] that it is possible to exploit the Lua load 
-> functions to execute untrusted bytecode that can then bypass sandbox measures, 
-> or even gain and abuse special knowledge about the process' memory layout.
-> 
->   [1] https://gist.github.com/corsix/6575486
-> 
-> Wesnoth executes Lua code from untrusted local files either written by players 
-> or downloaded through a player content distribution server, as well as from 
-> data sent over the network in multiplayer games; thus this vulnerability is 
-> rather severe as it can be exploited remotely by malicious parties without the 
-> user's knowledge.
-> 
-> This issue was found by Daniel Dräger, a Wesnoth developer, and author of an 
-> unmerged patch fixing it.
-> 
-> 
-> Affected versions:
-> 
-> All existing versions of Wesnoth with the Lua scripting capability, i.e. 
-> versions 1.7.0 through 1.14.3.
-> 
+Cleaning up another issue, I noticed that I haven't reported this
+one yet. Debugging of libmount can be activated, also in SUID
+binaries, thus spilling out the heap addresses. Note that "CXT"
+structure contains function pointers to overwrite.
+
+Test:
+
+LIBMOUNT_DEBUG=all /bin/umount /
+
+Output:
+
+2401: libmount:      CXT: [0x562d3abb0760]: ----> allocate [RESTRICTED]
+2401: libmount:      CXT: [0x562d3abb0760]: umount: /
+2401: libmount:      CXT: [0x562d3abb0760]: umount: lookup FS for '/'
+2401: libmount:      CXT: [0x562d3abb0760]: checking for writable tab files
+2401: libmount:    UTILS: utab: /run/mount/utab
+2401: libmount:    CACHE: [0x562d3abb1950]: alloc
+2401: libmount:    CACHE: [0x562d3abb1950]: canonicalize path /
+2401: libmount:    CACHE: [0x562d3abb1950]: add entry [ 1] (path): /: /
+2401: libmount:      CXT: [0x562d3abb0760]: tabfilter ENABLED!
+2401: libmount:      TAB: [0x562d3abb35b0]: alloc
+...
+
+The output can easily be used by creating a local domain socket
+with only 4k buffer size, filling it up until writes are blocking
+and then start umount with that socket as stdout. This allows
+race-free reading of the address output before umount accesses
+other user-controlled resource. Thus any error during the downstream
+procedure creating some kind of write-where vulnerability will
+always find the correct target.
+
+hd
+
+[0] https://www.spinics.net/lists/util-linux-ng/msg14978.html
+
 
