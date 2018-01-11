@@ -1,56 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/31/2
-Message-ID: <87d0ty355b.fsf@fifthhorseman.net>
-Date: Fri, 31 Aug 2018 11:52:16 -0400
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: zugtprgfwprz@...rnkuller.de, oss-security@...ts.openwall.com
-Subject: Re: Travis CI MITM RCE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/11/4
+Message-ID: <1068-1515706439.624909@uP7q.LsC9.WmNw>
+Date: Thu, 11 Jan 2018 21:33:59 +0000
+From: halfdog <me@...fdog.net>
+To: oss-security@...ts.openwall.com
+Subject: OpenSSH sftp remote code execution in chroot mode in VERY RARE cases
 Content-Type: text/plain; charset=utf-8
 
-On Thu 2018-08-30 18:13:34 +0200, zugtprgfwprz@...rnkuller.de wrote:
-> I agree about the "key ID" part, but not about the "fingerprint" part.
-> Pinning a cryptographic hash over a public key isn't a security
-> antipattern by any strech of the imagination. Sure, you could argue that
-> the SHA-1 used by GPG isn't state-of-the-art anymore, but we're not
-> talking about collision attacks, but second preimage attacks. Far worse
-> for the attacker.
->
-> The way you phrased it, however, all applications of fingerprints/hashes
-> would be broken (SSH fingerprints, HPKP, etc.), regardless of the hash
-> function they use.
+Hello list,
 
-sorry, i think i wasn't clear enough about my complaint.  I'm not
-claiming that fingerprints are broken, or that second preimage attacks
-against sha-1 are possible today.  I'm saying that they're ill-suited to
-many of the specific use cases where they show up.
+This sounds worse, but it is not. And it is public anyway, so FYI:
 
-If all i send you is a fingerprint, you *still* need to get the public
-key somewhere.  This is a point of potential failure.
+With internal-sftp and chroot, sftp still attempts to execute
+code from /etc/ssh/sshrc. See [0] for more information on testing
+the issue. It will only affect you when using a writable chroot
+(which is already documented in man-pages to be insecure) but
+also some strange configuration settings, e.g. when using
 
-In nearly every case where we're talking about automated signature
-checking, the cost of shipping the public key instead of (or in addition
-to) the fingerprint is negligible.  and shipping just the fingerprint
-introduces robustness and reliability problems for the signature
-verification.
+ChrootDirectory /home
 
-This is not to say that these sorts of things shouldn't consider looking
-for updates to the keys that they have -- revocation checks, new
-subkeys, etc all might be useful in some contexts.  But there's no good
-reason to ship a sophisticated, signature-verifying package with just a
-fingerprint in it, when you could ship the whole key instead.
+as recommended in [1] and having a user named "etc" and "bin"
+created.
 
-so, where are fingerprints useful?  they're useful in *extremely
-bandwidth-limited* cases, such as situations dealing with human
-attention spans (e.g. fingerprint verification) or technically or
-socially constrained channels like twitter, visible e-mail .signatures,
-or SMS.  They're also useful internally in programs that deal with many
-keys, as concise references to known keys, or placeholders for unknown
-keys.
+When creating a user "proc" that way, another issue prohibits
+closing of inherited file descriptors, that then again may leak
+to the two other users.
 
-Fingerprints are even arguably too long for most human attention spans,
-so we need additional user research to look into better ways to do
-verification that involves humans.
+hd
 
-     --dkg
+[0] https://www.halfdog.net/Security/2018/OpensshSftpChrootCodeExecution/
+[1] https://www.tecmint.com/restrict-sftp-user-home-directories-using-chroot/
 
-Download attachment "signature.asc" of type "application/pgp-signature" (228 bytes)
+
