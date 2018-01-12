@@ -1,206 +1,207 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/08/1
-Message-Id: <E1fG5yJ-0000ao-2G@xenbits.xenproject.org>
-Date: Tue, 08 May 2018 17:00:15 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/12/6
+Message-Id: <E1ea3Fo-0000JJ-8f@xenbits.xenproject.org>
+Date: Fri, 12 Jan 2018 17:36:32 +0000
 From: Xen.org security team <security@....org>
 To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
 CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 260 (CVE-2018-8897) - x86: mishandling of debug exceptions
+Subject: Xen Security Advisory 254 (CVE-2017-5753,CVE-2017-5715,CVE-2017-5754) - Information leak via side effects of speculative execution
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-            Xen Security Advisory CVE-2018-8897 / XSA-260
-                              version 2
+ Xen Security Advisory CVE-2017-5753,CVE-2017-5715,CVE-2017-5754 / XSA-254
+                                 version 6
 
-                 x86: mishandling of debug exceptions
+        Information leak via side effects of speculative execution
 
-UPDATES IN VERSION 2
+UPDATES IN VERSION 6
 ====================
 
-Public release.
+PVH shim ("Comet") for 4.10 is available.
 
-Updated .meta file
+Mention within-guest attack in README.vixen as well as
+README.which-shim.
+
+Vixen shim converter script "exec"s qemu, avoiding stale qemu
+processes (and, therefore, avoiding stale domains).
 
 ISSUE DESCRIPTION
 =================
 
-When switching stacks, it is critical to have a matching stack segment
-and stack pointer.  To allow an atomic update from what would otherwise
-be two adjacent instructions, an update which changes the stack segment
-(either a mov or pop instruction with %ss encoded as the destination
-register) sets the movss shadow for one instruction.
+Processors give the illusion of a sequence of instructions executed
+one-by-one.  However, in order to most efficiently use cpu resources,
+modern superscalar processors actually begin executing many
+instructions in parallel.  In cases where instructions depend on the
+result of previous instructions or checks which have not yet
+completed, execution happens based on guesses about what the outcome
+will be.  If the guess is correct, execution has been sped up.  If the
+guess is incorrect, partially-executed instructions are cancelled and
+architectural state changes (to registers, memory, and so on)
+reverted; but the whole process is no slower than if no guess had been
+made at all.  This is sometimes called "speculative execution".
 
-The exact behaviour of the movss shadow is poorly understood.
+Unfortunately, although architectural state is rolled back, there are
+other side effects, such as changes to TLB or cache state, which are
+not rolled back.  These side effects can subsequently be detected by
+an attacker to determine information about what happened during the
+speculative execution phase.  If an attacker can cause speculative
+execution to access sensitive memory areas, they may be able to infer
+what that sensitive memory contained.
 
-In practice, a movss shadow delays some debug exceptions (e.g. from a
-hardware breakpoint) until the subsequent instruction has completed.  If
-the subsequent instruction normally transitions to supervisor mode
-(e.g. a system call), then the debug exception will be taken after the
-transition to ring0 is completed.
+Furthermore, these guesses can often be 'poisoned', such that attacker
+can cause logic to reliably 'guess' the way the attacker chooses.
+This advisory discusses three ways to cause speculative execution to
+access sensitive memory areas (named here according to the
+discoverer's naming scheme):
 
-For most transitions to supervisor mode, this only confuses Xen into
-printing a lot of debugging information.  For the syscall instruction
-however, the exception gets taken before the syscall handler can move
-off the guest stack.
+"Bounds-check bypass" (aka SP1, "Variant 1", Spectre CVE-2017-5753):
+Poison the branch predictor, such that victim code is speculatively
+executed past boundary and security checks.  This would allow an
+attacker to, for instance, cause speculative code in the normal
+hypercall / emulation path to execute with wild array indexes.
+
+"Branch Target Injection" (aka SP2, "Variant 2", Spectre CVE-2017-5715):
+Poison the branch predictor.  Well-abstracted code often involves
+calling function pointers via indirect branches; reading these
+function pointers may involve a (slow) memory access, so the CPU
+attempts to guess where indirect branches will lead.  Poisoning this
+enables an attacker to speculatively branch to any code that is
+executable by the victim (eg, anywhere in the hypervisor).
+
+"Rogue Data Load" (aka SP3, "Variant 3", Meltdown, CVE-2017-5754):
+On some processors, certain pagetable permission checks only happen
+when the instruction is retired; effectively meaning that speculative
+execution is not subject to pagetable permission checks.  On such
+processors, an attacker can speculatively execute arbitrary code in
+userspace with, effectively, the highest privilege level.
+
+More information is available here:
+  https://meltdownattack.com/
+  https://spectreattack.com/
+  https://googleprojectzero.blogspot.co.uk/2018/01/reading-privileged-memory-with-side.html
+
+Additional Xen-specific background:
+
+Xen hypervisors on most systems map all of physical RAM, so code
+speculatively executed in a hypervisor context can read all of system
+RAM.
+
+When running PV guests, the guest and the hypervisor share the address
+space; guest kernels run in a lower privilege level, and Xen runs in
+the highest privilege level.  (x86 HVM and PVH guests, and ARM guests,
+run in a separate address space to the hypervisor.)  However, only
+64-bit PV guests can generate addresses large enough to point to
+hypervisor memory.
 
 IMPACT
 ======
 
-A malicious PV guest can escalate their privilege to that of the
-hypervisor.
+Xen guests may be able to infer the contents of arbitrary host memory,
+including memory assigned to other guests.
+
+An attacker's choice of code to speculatively execute (and thus the
+ease of extracting useful information) goes up with the numbers.  For
+SP1, an attacker is limited to windows of code after bound checks of
+user-supplied indexes.  For SP2, the attacker will in many cases will
+be limited to executing arbitrary pre-existing code inside of Xen.
+For SP3 (and other cases for SP2), an attacker can write arbitrary
+code to speculatively execute.
+
+Additionally, in general, attacks within a guest (from guest user to
+guest kernel) will be the same as on real hardware.  Consult your
+operating system provider for more information.
+
+NOTE ON TIMING
+==============
+
+This vulnerability was originally scheduled to be made public on 9
+January.  It was accelerated at the request of the discloser due to
+one of the issues being made public.
 
 VULNERABLE SYSTEMS
 ==================
 
-All versions of Xen are vulnerable.
+Systems running all versions of Xen are affected.
 
-Only x86 systems are vulnerable.  ARM systems are not vulnerable.
+For SP1 and SP2, both Intel and AMD are vulnerable.  Vulnerability of
+ARM processors to SP1 and SP2 varies by model and manufacturer.  ARM
+has information on affected models on the following website:
+   https://developer.arm.com/support/security-update
 
-Only x86 PV guests can exploit the vulnerability.  x86 HVM and PVH
-guests cannot exploit the vulnerability.
+For SP3, only Intel processors are vulnerable.  (The hypervisor cannot
+be attacked using SP3 on any ARM processors, even those that are
+listed as affected by SP3.)
 
-An attacker needs to be able to control hardware debugging facilities to
-exploit the vulnerability, but such permissions are typically available
-to unprivileged users.
+Furthermore, only 64-bit PV guests can exploit SP3 against Xen.  PVH,
+HVM, and 32-bit PV guests cannot exploit SP3.
 
 MITIGATION
 ==========
 
-Running only HVM or PVH guests avoids the vulnerability.
+There is no mitigation for SP1 and SP2.
 
-Note however that a compromised device model (running in dom0 or a
-stub domain) can carry out this attack, so users with HVM domains are
-also advised to patch their systems.
+SP3 can be mitigated by running guests in HVM or PVH mode.
+(Within-guest attacks are still possible unless the guest OS has also
+been updated with an SP3 mitigation series such as KPTI/Kaiser.)
 
-CREDITS
-=======
+For guests with legacy PV kernels which cannot be run in HVM or PVH
+mode directly, we have developed two "shim" hypervisors that allow PV
+guests to run in HVM mode or PVH mode.  This prevents attacks on the
+host, but it leaves the guest vulnerable to Meltdown attacks by its
+own unprivileged processes, even if the guest OS has KPTI or similar
+Meltdown mitigation.
 
-This issue was discovered by Andy Lutomirski, and Nick Peterson of Everdox
-Tech LLC.
+The HVM shim (codenamed "Vixen") is available now, as is the PVH shim
+(codenamed "Comet") for Xen 4.10.  We expect to have Comet for 4.8 and
+4.9 within a few days.  Please read README.which-shim to determine
+which shim is suitable for you.
+
+$ sha256sum xsa254*/*
+f81c4624f8b188a2c33efa8687d3442bbd17c476e1a10761ef70c0aa99f6c659  xsa254/README.comet
+1c594822dbd95998951203f6094bc77586d5720788de15897784d20bacb2ef08  xsa254/README.vixen
+7e816160c1c1d1cd93ec3c3dd9753c8f3957fefe86b7aa967e9e77833828f849  xsa254/README.which-shim
+1d2098ad3890a5be49444560406f8f271c716e9f80e7dfe11ff5c818277f33f8  xsa254/pvshim-converter.pl
+$
 
 RESOLUTION
 ==========
 
-Applying the appropriate attached patch resolves this issue.
+There is no available resolution for SP1.  A solution may be available
+in the future.
 
-xsa260-unstable/*.patch xen-unstable
-xsa260-4.10/*.patch     Xen 4.10.x
-xsa260-4.9/*.patch      Xen 4.9.x
-xsa260-4.8/*.patch      Xen 4.8.x
-xsa260-4.7/*.patch      Xen 4.7.x
-xsa260-4.6/*.patch      Xen 4.6.x
+We are working on patches which mitigate SP2 but these are not
+currently available.  Given that the vulnerabilities are now public,
+these will be developed and published in public, initially via
+xen-devel.
 
-$ sha256sum xsa260* xsa260*/*
-f436009ea6d6a30cf9c316e909dcd260c223264884d2e4fc5b74bdaf2e515815  xsa260.meta
-0f7e3cfecc59986fc950694bba7bb31ee9680b2390920335d6853fdf83ded9ef  xsa260-unstable/xsa260-1.patch
-4df5b9d05a8f02754b1e819b8cad35b3da9ba7fcdaee0fc762d572481ef69f93  xsa260-unstable/xsa260-2.patch
-5c3f9cbc777ed7a93a97a4665e0188e1b1a05dd057da830203e018c73e9e5ce7  xsa260-unstable/xsa260-3.patch
-4b280ec02418f30f0576e84f23ae565acee4fcc2d398b3828c1e12d9346583af  xsa260-unstable/xsa260-4.patch
-2c5ce2851351a40df9ed17fae3c6f7505dcda60209945321b545b6b6e4f065cb  xsa260-4.6/xsa260-1.patch
-bfa2eb161f570b0295464ef41fc5add52e10853a1ec81de107f1a9deb945982f  xsa260-4.6/xsa260-2.patch
-2f30c4fbebeb77da50caff62a0f28d3afe8993bee19233543170f1955cebdcbc  xsa260-4.6/xsa260-3.patch
-363af89377d5819ad1450c8806824707d3e15700c179129aed62128e62ab1a0e  xsa260-4.6/xsa260-4.patch
-0c2552a36737975f4f46d7054b49fd018b68c302cef3b39b27c2f17cc60eb531  xsa260-4.7/xsa260-1.patch
-a92ef233a83923d6a18d51528ff28630ae3f1134ee76f2347397e22da9c84c24  xsa260-4.7/xsa260-2.patch
-8469af8ba5b6722738b27c328eccc1d341af49c2e2bb23fe7b327a3349267b0e  xsa260-4.7/xsa260-3.patch
-0327c2ef7984a4aa000849c68a01181fdb01962637e78629c6fb34bb95414a74  xsa260-4.7/xsa260-4.patch
-a9be346f111bca3faf98045c089638ba960f291eb9ace03e8922d7b4f8a9b37e  xsa260-4.8/xsa260-1.patch
-740c0ee49936430fdf66ae8b75f9f51fe728c71a7c7a56667f845aea7669d344  xsa260-4.8/xsa260-2.patch
-94dbb7ad7d409f9170950162904247c7cf0e360cec2a0a1f1a6653ce9ca43283  xsa260-4.8/xsa260-3.patch
-db440d76685cf1e8c332aea2aa13e6be43b1b7f68d9225dfe99bb2ee12e18b9e  xsa260-4.8/xsa260-4.patch
-11b55f664a4043ed3a79d3e1a07877c68c8c19df6112feffdac1e55547f0002e  xsa260-4.9/xsa260-1.patch
-38a762f8cf8db763d70f1ef35a4c2cac23282b694527a97b2eaf100a14f767eb  xsa260-4.9/xsa260-2.patch
-18d9ffd273bdbd070e1b613e7f18ed21cdb874dba5f7964e14bb4a3dbc8844ec  xsa260-4.9/xsa260-3.patch
-c3d689d581c2ce6beaaa9d955f159a3b5da8007a24a08969b0953e89491f15a5  xsa260-4.9/xsa260-4.patch
-ffac7ab75bf65f8286b37d21cb4a4401d898670a4e52af88d8202ce4fe66edef  xsa260-4.10/xsa260-1.patch
-fe85832a9b5b1076b3a9bdbd28a2f3be57cd019d66a725ce64698b1bd74145a8  xsa260-4.10/xsa260-2.patch
-1955aed73828e23da871ef10e5ec49670ce59bdd06af2772e978f8e817e0319f  xsa260-4.10/xsa260-3.patch
-8f504f8fcf100f8a00bece9c4df8b8933dceeaf29b50492317f9cbf74aaf4aa4  xsa260-4.10/xsa260-4.patch
-$
 
-DEPLOYMENT DURING EMBARGO
-=========================
+NOTE ON LACK OF EMBARGO
+=======================
 
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
+The timetable and process were set by the discloser.
 
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
+After the intensive initial response period for these vulnerabilities
+is over, we will prepare and publish a full timeline, as we have done
+in a handful of other cases of significant public interest where we
+saw opportunities for process improvement.
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQEcBAEBCAAGBQJa8dQdAAoJEIP+FMlX6CvZwp4H/AxlMq1xyIAiDNGEESGlJpQh
-Y0dD9I1dLraUr2tTpaDZM4qUjV2cQ5MRaFeiAxDVCNraNPTLeC5TRStkIMHWc3jK
-C8/XzRq0lDdebQA04Usj7648HbtAoxkAV1SOOxsqPSBRHb1jPpa2/jvuA3BzCl+o
-gZo0urWinKlIJ032KWOd/9j96M0YgqqdJ+h2bfSg5uBSdXcQ6at5nYc1T4s3fi2R
-AQvs8aQ/yylKVsCit+AypcyOMRELNA2jHWEelZ7L18zMGHwTa9qt1NZAL+VM2pMW
-SKNphOdrCJxVZdGMJlc6ujzxUBgUC7qdfsqprBrKi/4eT+K5I9CvfV21er+7+BA=
-=0+sm
+iQEcBAEBCAAGBQJaWPIbAAoJEIP+FMlX6CvZQuoH/0A21scnQhrQPmFjtBO0b0Ai
+/xQ7VCf2t3iKeZYJJGzj2atE1Hj91H6sZe6t6tLFbfPeYv2Gbfpl/09EE8ONSpSj
+ae69fgwQN/EvpkCVec+QWQ0pWj7tLYgkT4IwQJSW+6VrTWjEV8PzQgkfjgclJEOk
+J7EhaauI0qZVPEC2QZoMGJlgwfoS4xJalpCUGflrvgtmPhYbGGYDP8bP7WbVtqYS
+I9nIoqndBdeWeyyu1O+cnMquV5BX2Nq7BDOTB3SMwNBHsnKudRQQRc3yNdmvQa2C
+jvUMs/U7rqfK5pgOfimvLSDLR0TSnzNC8ahuI9Tv6TSwIl+AVt4xg0DZzhMjiqQ=
+=aOVG
 -----END PGP SIGNATURE-----
 
-Download attachment "xsa260.meta" of type "application/octet-stream" (2374 bytes)
+Download attachment "xsa254/README.comet" of type "application/octet-stream" (1828 bytes)
 
-Download attachment "xsa260-unstable/xsa260-1.patch" of type "application/octet-stream" (3019 bytes)
+Download attachment "xsa254/README.vixen" of type "application/octet-stream" (2736 bytes)
 
-Download attachment "xsa260-unstable/xsa260-2.patch" of type "application/octet-stream" (3831 bytes)
+Download attachment "xsa254/README.which-shim" of type "application/octet-stream" (4010 bytes)
 
-Download attachment "xsa260-unstable/xsa260-3.patch" of type "application/octet-stream" (4189 bytes)
-
-Download attachment "xsa260-unstable/xsa260-4.patch" of type "application/octet-stream" (2891 bytes)
-
-Download attachment "xsa260-4.6/xsa260-1.patch" of type "application/octet-stream" (2785 bytes)
-
-Download attachment "xsa260-4.6/xsa260-2.patch" of type "application/octet-stream" (3600 bytes)
-
-Download attachment "xsa260-4.6/xsa260-3.patch" of type "application/octet-stream" (4917 bytes)
-
-Download attachment "xsa260-4.6/xsa260-4.patch" of type "application/octet-stream" (2803 bytes)
-
-Download attachment "xsa260-4.7/xsa260-1.patch" of type "application/octet-stream" (2785 bytes)
-
-Download attachment "xsa260-4.7/xsa260-2.patch" of type "application/octet-stream" (3662 bytes)
-
-Download attachment "xsa260-4.7/xsa260-3.patch" of type "application/octet-stream" (4973 bytes)
-
-Download attachment "xsa260-4.7/xsa260-4.patch" of type "application/octet-stream" (2803 bytes)
-
-Download attachment "xsa260-4.8/xsa260-1.patch" of type "application/octet-stream" (2805 bytes)
-
-Download attachment "xsa260-4.8/xsa260-2.patch" of type "application/octet-stream" (3614 bytes)
-
-Download attachment "xsa260-4.8/xsa260-3.patch" of type "application/octet-stream" (5017 bytes)
-
-Download attachment "xsa260-4.8/xsa260-4.patch" of type "application/octet-stream" (2809 bytes)
-
-Download attachment "xsa260-4.9/xsa260-1.patch" of type "application/octet-stream" (2805 bytes)
-
-Download attachment "xsa260-4.9/xsa260-2.patch" of type "application/octet-stream" (3614 bytes)
-
-Download attachment "xsa260-4.9/xsa260-3.patch" of type "application/octet-stream" (5025 bytes)
-
-Download attachment "xsa260-4.9/xsa260-4.patch" of type "application/octet-stream" (2804 bytes)
-
-Download attachment "xsa260-4.10/xsa260-1.patch" of type "application/octet-stream" (2969 bytes)
-
-Download attachment "xsa260-4.10/xsa260-2.patch" of type "application/octet-stream" (3614 bytes)
-
-Download attachment "xsa260-4.10/xsa260-3.patch" of type "application/octet-stream" (5025 bytes)
-
-Download attachment "xsa260-4.10/xsa260-4.patch" of type "application/octet-stream" (2804 bytes)
+Download attachment "xsa254/pvshim-converter.pl" of type "application/octet-stream" (6762 bytes)
