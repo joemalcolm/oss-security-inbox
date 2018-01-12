@@ -1,29 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/15/2
-Message-ID: <nycvar.YSQ.7.76.1801152331280.28933@wniryva>
-Date: Mon, 15 Jan 2018 23:34:52 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: jiangxin1@...wei.com
-Subject: CVE-2018-5683 Qemu: Out-of-bounds read in vga_draw_text routine
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/12/3
+Message-ID: <CAFHm6iuD6BpN8JZeF9qhjWQFpUKar7fiumszdWwCBtE03m9N+g@mail.gmail.com>
+Date: Fri, 12 Jan 2018 15:10:23 +0100
+From: Daniël van Eeden <daniel.vaneeden@...king.com>
+To: dbi-dev@...l.org, oss-security@...ts.openwall.com
+Subject: DBD::mysql and SSL/TLS
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Hi,
 
-Quick Emulator(QEMU) built with the VGA emulator support is vulnerable to an 
-out-of-bounds access issue in vga_draw_text. It could occur while updating vga 
-display area.
+I have some serious concerns about the state of SSL/TLS in DBD::mysql.
 
-A privileged user inside guest could use this flaw to crash the Qemu process 
-resulting in DoS.
+Issue 1: CVE-2017-10789 isn't fixed
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-10789
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2018-01/msg02131.html
+Issue 2: Using DBD::mysql with MariaDB 10.0 or higher or MySQL 8.0 or
+higher provides a false sense of security
 
-This issue was reported by Jiang Xin of Huawei.com.
+SSL_LAST_VERIFY_VERSION is set to 50799.
+Any version higher than that silently ignores mysql_ssl_verify_server_cert
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+This can lead to unencrypted connections even with strict SSL settings.
+
+Issue 3: If SSL support is unavailable but ssl options are set then these
+options are silently ignored.
+
+issue 4: If compiled against MySQL 5.7 then SSL/TLS is used when available,
+but can't be disabled. (mysql_ssl=0 is ignored).
+
+This makes upgrading to 5.7 more difficult. And 5.7 is needed to get
+support for TLSv1.1 and TLSv1.2.
+
+There is a patch available for this:
+https://github.com/perl5-dbi/DBD-mysql/pull/114
+
+
+-- 
+Daniël van Eeden
+Database Administrator
+
+Booking.com B.V.
+Vijzelstraat 66-80 Amsterdam 1017HL Netherlands
+Direct +31207033812
+[image: Booking.com] <http://www.booking.com/>
+The world's #1 accommodation site
+43 languages, 187+ offices worldwide, 96,000+ global destinations,
+1,200,000+ room nights booked every day
+No booking fees, best price always guaranteed
+Subsidiary of the Priceline Group (NASDAQ: PCLN)
+
