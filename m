@@ -1,167 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/18/2
-Message-ID: <8485f19a-ffd3-2e0e-a040-49256937e3cf@treenet.co.nz>
-Date: Thu, 19 Apr 2018 00:45:18 +1200
-From: Amos Jeffries <squid3@...enet.co.nz>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/12/4
+Message-ID: <709-1515769090.506949@jdQ9.qWPC.bG_Z>
+Date: Fri, 12 Jan 2018 14:58:10 +0000
+From: halfdog <me@...fdog.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2018-1172 Squid Proxy Cache Denial of Service vulnerability
+Subject: On reading, thinking, copying
 Content-Type: text/plain; charset=utf-8
 
-__________________________________________________________________
+Hello list,
 
-    Squid Proxy Cache Security Update Advisory SQUID-2018:3
-__________________________________________________________________
+After getting home from work (and after fixing my emulated server
+that could not handle the SSL handshakes any more), I was quite
+amused reading the references around yesterday's CVE-2018-1000001.
 
-Advisory ID:        SQUID-2018:3
-Date:               April 18, 2018
-Summary:            Denial of Service issue
-                    in ESI Response processing.
-Affected versions:  Squid 3.1.12.2 -> 3.1.23
-                    Squid 3.2.0.8 -> 3.2.14
-                    Squid 3.3 -> 4.0.12
-Fixed in version:   Squid 4.0.13
-__________________________________________________________________
-
-    http://www.squid-cache.org/Advisories/SQUID-2018_3.txt
-    http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-1172
-__________________________________________________________________
-
-Problem Description:
-
- Due to incorrect pointer handling Squid is vulnerable to denial
- of service attack when processing ESI responses.
-
-__________________________________________________________________
-
-Severity:
-
- This problem allows a remote server delivering ESI responses
- to trigger a denial of service for all clients accessing the
- Squid service.
-
- This problem is limited to Squid operating as reverse proxy.
-
-__________________________________________________________________
-
-Updated Packages:
-
- This bug is fixed by Squid version 4.0.13.
-
- In addition, patches addressing this problem for the stable
- releases can be found in our patch archives:
-
-Squid 3.5:
- <http://www.squid-cache.org/Versions/v3/3.5/changesets/SQUID-2018_3.patch>
-
- If you are using a prepackaged version of Squid then please refer
- to the package vendor for availability information on updated
- packages.
-
-__________________________________________________________________
-
-Determining if your version is vulnerable:
-
- All Squid-2.x and older are not vulnerable.
-
- All Squid-3.0 and older version are not vulnerable.
-
- All Squid built with --disable-esi are not vulnerable.
-
- All Squid-3.x versions up to and including 3.4.14 built with
- --disable-ssl are not vulnerable.
-
- All Squid-3.x versions up to and including 3.4.14 built without
- --enable-ssl are not vulnerable.
-
- All Squid-3.x versions up to and including 3.5.27 built without
- --enable-esi are not vulnerable.
-
- All Squid-3.1.12.2 and later versions up to and including
- Squid-3.1.23 built with --enable-esi and--enable-ssl, and being
- used for reverse-proxy are vulnerable.
-
- All Squid-3.2.0.8 and later versions up to and including
- Squid-3.2.14 built with --enable-esi and --enable-ssl, and being
- used for reverse-proxy are vulnerable.
-
- All Squid-3.3 and later versions up to and including
- Squid-3.3.14 built with --enable-esi and --enable-ssl, and being
- used for reverse-proxy are vulnerable.
-
- All Squid-3.4 and later versions up to and including
- Squid-3.4.14 built with --enable-esi and --enable-ssl, and being
- used for reverse-proxy are vulnerable.
-
- All Squid-3.5 versions up to and including 3.5.27 built without
- --with-openssl are not vulnerable.
-
- All Squid-3.5 and later versions up to and including 3.5.27 built
- with --enable-esi and --with-openssl, and being used for
- reverse-proxy are vulnerable.
-
- All Squid-4 versions up to and including 4.0.12 built without
- --with-openssl are not vulnerable.
-
- All Squid-4 versions up to and including 4.0.12 built with
- --with-openssl and being used for reverse-proxy are vulnerable.
-
-__________________________________________________________________
-
-Workarounds:
-
-Either;
-
- Build Squid with --disable-esi
-
-Or,
-
- Build Squid-3.1 to 3.4.14 or later with "--disable-ssl"
-
-Or,
-
- Build Squid-3.5 or later with "--without-openssl"
-
-__________________________________________________________________
-
-Contact details for the Squid project:
-
- For installation / upgrade support on binary packaged versions
- of Squid: Your first point of contact should be your binary
- package vendor.
-
- If your install and build Squid from the original Squid sources
- then the squid-users@...ts.squid-cache.org mailing list is your
- primary support point. For subscription details see
- <http://www.squid-cache.org/Support/mailing-lists.html>.
-
- For reporting of non-security bugs in the latest STABLE release
- the squid bugzilla database should be used
- <http://bugs.squid-cache.org/>.
-
- For reporting of security sensitive bugs send an email to the
- squid-bugs@...ts.squid-cache.org mailing list. It's a closed
- list (though anyone can post) and security related bug reports
- are treated in confidence until the impact has been established.
-
-__________________________________________________________________
-
-Credits:
-
- This vulnerability was discovered by Michael Marshall of Trend
- Micro working with Trend Micro's Zero Day Initiative.
-
- Fixed by Christos Tsantilas on behalf of Measurement Factory.
-
-__________________________________________________________________
-
-Revision history:
-
- 2018-04-16 18:20:15 UTC Initial Report
- 2018-04-16 22:02:25 UTC Patches Released
- 2018-04-18 12:28:00 UTC Advisory Released
-__________________________________________________________________
-END
+Derived from that, here some hints to improve quality in security
+information handling:
 
 
+1) The first link in an article usually is not the most important
+one. This is due to probability theory and correlates with the
+number of citations in the article. It even is less likely to
+be relevant, when the article starts citing the historic context
+- unless you are a software archeologist.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+2) If the resource behind the first reference has some well-known
+name in the first few lines, you should not conclude, that this
+prooves the argument, you want to have prooven. You should still
+read, what this source says and put it in the context of the current
+argument. Otherwise you might end up at crap-press quality level:
+cite Harvard in the first line (no one will check the reference
+anyway) and the claim whatever you want.
+
+3) There are quite some differences between an errant lxstat call
+and a buffer overflow. SOC members should know that. While the
+first by itself is just a bug and has zero security relevance
+when triggered in a fully user-controlled directory structure
+(proove me wrong), still the later might have quite severe security
+implications.
+
+4) Just because someone else copied crap without thinking, you
+should not do the same.
+
+
+Here is a suboptimal Google dork to get an approximate ranking
+of the most popular copy-without-thinking sites related to this
+issue (and subtract automated feed forwarding and correct context
+citations by hand).
+
+https://www.google.com/search?q=%22CVE-2018-1000001%22+%22sourceware.org/bugzilla/show_bug.cgi%3Fid%3D18203%22&filter=0
+
+hd
+
+
