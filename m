@@ -1,38 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/15/2
-Message-ID: <20180615132506.m2ks4ptiky4byayq@suse.de>
-Date: Fri, 15 Jun 2018 15:25:07 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/12/5
+Message-ID: <20180112155812.l3ye6n4ymengrcbc@jwilk.net>
+Date: Fri, 12 Jan 2018 16:58:13 +0100
+From: Jakub Wilk <jwilk@...lk.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: Intel FP security issue
+Subject: Re: Libc Realpath Buffer Underflow CVE-2018-1000001
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+* halfdog <me@...fdog.net>, 2018-01-11, 21:34:
+>One of the weaknesses of Linux kernel is, that it is not fully POSIX 
+>compliant
 
-On Wed, Jun 13, 2018 at 11:07:18PM +0400, Loganaden Velvindron wrote:
-> On Wed, Jun 13, 2018 at 7:34 PM, Loganaden Velvindron
-> <loganaden@...il.com> wrote:
-> > Hi All,
-> >
-> > Both OpenBSD and DragonflyBSD have gone ahead and committed fixes for
-> > the rumored Intel FP issue:
-> >
-> > OpenBSD: https://marc.info/?l=openbsd-cvs&m=152818076013158&w=2
-> > DragonflyBSD: http://lists.dragonflybsd.org/pipermail/commits/2018-June/672324.html
-> >
-> > I think that the cat is already out of the bag, and releasing details
-> > of this security problem makes sense. Since this has gone public, Is
-> > there a reason to keep this under embargo ?
-> >
-> 
-> FreeBSD appears to be moving in this direction too:
-> https://svnweb.freebsd.org/base?view=revision&revision=335072
+To clarify, POSIX deliberately doesn't have concepts of "kernel" or 
+"system call"[*]. If you're debating POSIX compliance, you should take 
+the whole system (kernel, libc, compiler, shell and what not...) into 
+account.
 
-For the record, this is https://www.intel.com/content/www/us/en/security-center/advisory/intel-sa-00145.html
-aka CVE-2018-3665 with codename "Lazy FPU Save/Restore".
+That said, it's true that the current behavior of the getcwd() syscall, 
+apart from being incredibly stupid, makes building a POSIX-compliant OS 
+on top of the Linux kernel harder than it could be.
 
-XEN advisory https://xenbits.xen.org/xsa/advisory-267.html was posted here too, describing it a bit better.
 
-Full details are planned to be released June 27th.
+[*] http://pubs.opengroup.org/onlinepubs/9699919799/xrat/V4_xbd_chap03.html#tag_21_03_00_77
 
-Ciao, Marcus
+-- 
+Jakub Wilk
