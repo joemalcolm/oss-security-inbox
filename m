@@ -1,36 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/05/4
-Message-ID: <1f56b378-6bf8-610b-ab5d-e81c49fbbc44@linux.com>
-Date: Fri, 6 Apr 2018 02:38:50 +0300
-From: Alexander Popov <alex.popov@...ux.com>
-To: Kees Cook <keescook@...omium.org>
-Cc: Kurt Seifried <kseifried@...hat.com>, oss-security@...ts.openwall.com, James Morris <jmorris@...ei.org>, "Serge E. Hallyn" <serge@...lyn.com>, Brad Spengler <spender@...ecurity.net>, PaX Team <pageexec@...email.hu>, "Reshetova, Elena" <elena.reshetova@...el.com>
-Subject: Re: Linux Kernel Defence Map
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/14/2
+Message-ID: <CABD0r12nvkM2zhaSKNPU84jzEqLuvFy9=1yzFKCQuyXaCBPCNQ@mail.gmail.com>
+Date: Sun, 14 Jan 2018 08:38:35 +0100
+From: Michiel Beijen <michiel.beijen@...il.com>
+To: Daniël van Eeden <daniel.vaneeden@...king.com>
+Cc: DBI Developers Mailing List <dbi-dev@...l.org>, oss-security@...ts.openwall.com,  Patrick Galbraith <patg@...g.net>
+Subject: Re: DBD::mysql and SSL/TLS
 Content-Type: text/plain; charset=utf-8
 
-On 05.04.2018 22:20, Kees Cook wrote:
-> On Thu, Apr 5, 2018 at 5:32 AM, Alexander Popov <alex.popov@...ux.com> wrote:
->> On 05.04.2018 01:17, Kees Cook wrote:
-> "type confusion" seems weird to me, but I haven't spent a lot of time
-> weighing the options of the naming of these things. "Overwriting a
-> function pointer" is the method, and the bug is "unexpectedly
-> accessing userspace memory from the kernel" (which is usually
-> "something overwrite a pointer").
+Thanks for pointing this out. We had applied these patches before but had
+to revert because of breakage created by other changes in the code.
 
-Just got an idea to call it "userspace data access". Short and simple!
+The difficulty is also that mariadb and MySQL use a different approach to
+handling TLS in the client libs.
 
-I also combined SMAP/PAN and UDEREF into a cluster to reduce the number of
-edges. Now it looks a bit better.
+I'll make sure we'll apply this PR again and create a release ASAP.
 
->> Kees, thanks again for such a cool feedback. The map is updated.
-> 
-> Very cool! Maybe also add an out-of-tree bubble for "Clang CFI", which
-> gives forward-edge protection for code-reuse...
+--
+Michiel
 
-Ok. Created a CFI cluster with RAP and Clang CFI inside.
+Op 14 jan. 2018 06:49 schreef "Daniël van Eeden via dbi-dev" <
+dbi-dev@...l.org>:
 
-However, I didn't manage to find any materials about applying Clang CFI to the
-Linux kernel.
+> Hi,
+>
+> I have some serious concerns about the state of SSL/TLS in DBD::mysql.
+>
+> Issue 1: CVE-2017-10789 isn't fixed
+> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-10789
+>
+> Issue 2: Using DBD::mysql with MariaDB 10.0 or higher or MySQL 8.0 or
+> higher provides a false sense of security
+>
+> SSL_LAST_VERIFY_VERSION is set to 50799.
+> Any version higher than that silently ignores mysql_ssl_verify_server_cert
+>
+> This can lead to unencrypted connections even with strict SSL settings.
+>
+> Issue 3: If SSL support is unavailable but ssl options are set then these
+> options are silently ignored.
+>
+> issue 4: If compiled against MySQL 5.7 then SSL/TLS is used when
+> available, but can't be disabled. (mysql_ssl=0 is ignored).
+>
+> This makes upgrading to 5.7 more difficult. And 5.7 is needed to get
+> support for TLSv1.1 and TLSv1.2.
+>
+> There is a patch available for this:
+> https://github.com/perl5-dbi/DBD-mysql/pull/114
+>
+>
+> --
+> Daniël van Eeden
+> Database Administrator
+>
+> Booking.com B.V.
+> Vijzelstraat 66
+> <https://maps.google.com/?q=Vijzelstraat+66&entry=gmail&source=g>-80
+> Amsterdam 1017HL Netherlands
+> Direct +31207033812 <020%20703%203812>
+> [image: Booking.com] <http://www.booking.com/>
+> The world's #1 accommodation site
+> 43 languages, 187+ offices worldwide, 96,000+ global destinations,
+> 1,200,000+ room nights booked every day
+> No booking fees, best price always guaranteed
+> Subsidiary of the Priceline Group (NASDAQ: PCLN)
+>
 
-Thanks!
-Alexander
