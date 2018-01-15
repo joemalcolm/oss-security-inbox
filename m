@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6671" "Thursday" "2" "March" "2017" "16:35:17" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<847337.788527028-sendEmail@localhost>" "113" "[oss-security] podofo: global buffer overflow in PoDoFo::PdfParser::ReadXRefSubsection (PdfParser.cpp)" nil nil nil "3" "2017030216:35:17" "[oss-security] podofo: global buffer overflow in PoDoFo::PdfParser::ReadXRefSubsection (PdfParser.cpp)" (number mark "U       ago@gentoo.o Mar  2  113/6671  " thread-indent "\"[oss-security] podofo: global buffer overflow in PoDoFo::PdfParser::ReadXRefSubsection (PdfParser.cpp)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["14826" "Monday" "15" "January" "2018" "17:33:15" "+0100" "Marcus Meissner" "meissner@suse.de" "<20180115163315.GG5534@suse.de>" "392" "Re: [oss-security] transmission: rpc session-id mechanism design flaw results in RCE" nil nil nil "1" "2018011516:33:15" "[oss-security] transmission: rpc session-id mechanism design flaw results in RCE" (number mark "U       meissner@sus Jan 15  392/14826 " thread-indent "\"Re: [oss-security] transmission: rpc session-id mechanism design flaw results in RCE\"\n") "<CAJ_zFkLDRxE3wOXw9AwmOR1URO0xwTAK6Ud3i72mmOV7An=67A@mail.gmail.com>" ("<CAJ_zFkLDRxE3wOXw9AwmOR1URO0xwTAK6Ud3i72mmOV7An=67A@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17967 invoked by uid 550); 2 Mar 2017 16:35:36 -0000
+Received: (qmail 32601 invoked by uid 550); 15 Jan 2018 16:33:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,125 +12,413 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17831 invoked from network); 2 Mar 2017 16:35:34 -0000
-Message-ID: <847337.788527028-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Thu, 2 Mar 2017 16:35:17 +0000
+Received: (qmail 32577 invoked from network); 15 Jan 2018 16:33:27 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Date: Mon, 15 Jan 2018 17:33:15 +0100
+From: Marcus Meissner <meissner@suse.de>
+To: oss-security@lists.openwall.com
+Message-ID: <20180115163315.GG5534@suse.de>
+References: <CAJ_zFkLDRxE3wOXw9AwmOR1URO0xwTAK6Ud3i72mmOV7An=67A@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-608850.194447772"
-Subject: [oss-security] podofo: global buffer overflow in PoDoFo::PdfParser::ReadXRefSubsection (PdfParser.cpp)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAJ_zFkLDRxE3wOXw9AwmOR1URO0xwTAK6Ud3i72mmOV7An=67A@mail.gmail.com>
+Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
+ =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
+ =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Subject: Re: [oss-security] transmission: rpc session-id mechanism design
+ flaw results in RCE
 
-------MIME delimiter for sendEmail-608850.194447772
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+Hi,
 
-Description:
-podofo is a C++ library to work with the PDF file format.
+Mitre assigned CVE-2018-5702.
 
-A fuzz on it discovered a global overflow. The upstream project denies me to open a new ticket. So, I just will forward this on the -users mailing list.
-
-The complete ASan output:
-
-# podofocolor dummy $FILE foo
-==15599==ERROR: AddressSanitizer: global-buffer-overflow on address 0x0000014a5838 at pc 0x0000004ca58c bp 0x7ffebe3248b0 sp 0x7ffebe324060
-WRITE of size 24 at 0x0000014a5838 thread T0
-    #0 0x4ca58b in __asan_memcpy /tmp/portage/sys-devel/llvm-3.9.0-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:413
-    #1 0x7efe75862464 in void std::_Construct(PoDoFo::PdfParser::TXRefEntry*, PoDoFo::PdfParser::TXRefEntry const&) /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.3/include/g++-v4/bits/stl_construct.h:83:38
-    #2 0x7efe75862464 in void std::__uninitialized_fill_n::__uninit_fill_n(PoDoFo::PdfParser::TXRefEntry*, unsigned long, PoDoFo::PdfParser::TXRefEntry const&) 
-/usr/lib/gcc/x86_64-pc-linux-gnu/4.9.3/include/g++-v4/bits/stl_uninitialized.h:202
-    #3 0x7efe75862464 in void std::uninitialized_fill_n(PoDoFo::PdfParser::TXRefEntry*, unsigned long, PoDoFo::PdfParser::TXRefEntry const&) /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.3/include/g++-v4/bits/stl_uninitialized.h:244
-    #4 0x7efe75862464 in void std::__uninitialized_fill_n_a(PoDoFo::PdfParser::TXRefEntry*, unsigned long, PoDoFo::PdfParser::TXRefEntry const&, std::allocator&) 
-/usr/lib/gcc/x86_64-pc-linux-gnu/4.9.3/include/g++-v4/bits/stl_uninitialized.h:355
-    #5 0x7efe75862464 in std::vector<PoDoFo::PdfParser::TXRefEntry, std::allocator >::_M_fill_insert(__gnu_cxx::__normal_iterator<PoDoFo::PdfParser::TXRefEntry*, std::vector<PoDoFo::PdfParser::TXRefEntry, std::allocator > >, 
-unsigned long, PoDoFo::PdfParser::TXRefEntry const&) /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.3/include/g++-v4/bits/vector.tcc:496
-    #6 0x7efe75855a47 in std::vector<PoDoFo::PdfParser::TXRefEntry, std::allocator >::insert(__gnu_cxx::__normal_iterator<PoDoFo::PdfParser::TXRefEntry*, std::vector<PoDoFo::PdfParser::TXRefEntry, std::allocator > >, unsigned 
-long, PoDoFo::PdfParser::TXRefEntry const&) /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.3/include/g++-v4/bits/stl_vector.h:1073:9
-    #7 0x7efe75855a47 in std::vector<PoDoFo::PdfParser::TXRefEntry, std::allocator >::resize(unsigned long, PoDoFo::PdfParser::TXRefEntry) /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.3/include/g++-v4/bits/stl_vector.h:716
-    #8 0x7efe75855a47 in PoDoFo::PdfParser::ReadXRefSubsection(long&, long&) /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfParser.cpp:772
-    #9 0x7efe758470ad in PoDoFo::PdfParser::ReadXRefContents(long, bool) /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfParser.cpp:725:17
-    #10 0x7efe75840a9e in PoDoFo::PdfParser::ReadDocumentStructure() /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfParser.cpp:337:9
-    #11 0x7efe7583de0f in PoDoFo::PdfParser::ParseFile(PoDoFo::PdfRefCountedInputDevice const&, bool) /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfParser.cpp:220:9
-    #12 0x7efe7583c1d4 in PoDoFo::PdfParser::ParseFile(char const*, bool) /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfParser.cpp:164:11
-    #13 0x7efe75a993f3 in PoDoFo::PdfMemDocument::Load(char const*) /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/doc/PdfMemDocument.cpp:186:16
-    #14 0x7efe75a990c2 in PoDoFo::PdfMemDocument::PdfMemDocument(char const*) /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/doc/PdfMemDocument.cpp:88:11
-    #15 0x51e96d in ColorChanger::start() /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/colorchanger.cpp:110:20
-    #16 0x51c06d in main /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/podofocolor.cpp:116:12
-    #17 0x7efe7424861f in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #18 0x428718 in _start (/usr/bin/podofocolor+0x428718)
-
-0x0000014a5838 is located 0 bytes to the right of global variable 'PoDoFo::PODOFO_BUILTIN_FONTS' defined in '/tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/doc/PdfFontFactoryBase14Data.h:4460:33' (0x14a4aa0) of size 
-3480
-SUMMARY: AddressSanitizer: global-buffer-overflow /tmp/portage/sys-devel/llvm-3.9.0-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:413 in __asan_memcpy
-Shadow bytes around the buggy address:
-  0x00008028cab0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x00008028cac0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x00008028cad0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x00008028cae0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x00008028caf0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x00008028cb00: 00 00 00 00 00 00 00[f9]f9 f9 f9 f9 f9 f9 f9 f9
-  0x00008028cb10: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
-  0x00008028cb20: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
-  0x00008028cb30: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
-  0x00008028cb40: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
-  0x00008028cb50: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==15599==ABORTING
-
-Affected version:
-0.9.4
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00171-podofo-globaloverflow-PoDoFo-PdfParser-ReadXRefSubsection
-
-Timeline:
-2017-02-13: bug discovered
-2017-03-02: bug reported to upstream
-2017-03-02: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/03/02/podofo-global-buffer-overflow-in-podofopdfparserreadxrefsubsection-pdfparser-cpp
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
+Ciao, Marcus
 
 
-------MIME delimiter for sendEmail-608850.194447772--
+On Thu, Jan 11, 2018 at 10:47:38AM -0800, Tavis Ormandy wrote:
+> Hello, the transmission bittorrent client uses a client/server
+> architecture, the user interface is the client and a daemon runs in the
+> background managing the downloading, seeding, etc.
+> 
+> Clients interact with the daemon using JSON RPC requests to a web server
+> listening on port 9091. The daemon will only accept requests from localhost
+> by default, but it's common to configure NAS devices to accept remote
+> clients.
+> 
+> A sample RPC session looks like this:
+> 
+> $ curl -sI http://localhost:9091/transmission/rpc
+> HTTP/1.1 409 Conflict
+> Server: Transmission
+> X-Transmission-Session-Id: JL641xTn2h53UsN6bVa0kJjRBLA6oX1Ayl06AJwuhHvSgE6H
+> Date: Wed, 29 Nov 2017 21:37:41 GMT
+> 
+> $ curl -H 'X-Transmission-Session-Id:
+> JL641xTn2h53UsN6bVa0kJjRBLA6oX1Ayl06AJwuhHvSgE6H'  -d
+> '{"method":"session-set","arguments":{"download-dir":"/home/user"}}' -si
+> http://localhost:9091/transmission/rpc
+> HTTP/1.1 200 OK
+> Server: Transmission
+> Content-Type: application/json; charset=UTF-8
+> Date: Wed, 29 Nov 2017 21:38:57 GMT
+> Content-Length: 36
+> 
+> {"arguments":{},"result":"success"}
+> 
+> As with all HTTP RPC schemes like this, any website can send requests to
+> the daemon listening on localhost with XMLHttpRequest(), but the theory is
+> they will be ignored because clients must prove they can read and set a
+> specific header, X-Transmission-Session-Id.
+> 
+> Unfortunately, this design doesn't work because of an attack called "DNS
+> rebinding". Any website can simply create a dns name that they are
+> authorized to communicate with, and then make it resolve to localhost.
+> 
+> The attack works like this:
+> 
+> 1. A user visits http://attacker.com, which has an <iframe> to a subdomain
+> the attacker controls.
+> 2. The attacker configures their DNS server to respond alternately with
+> 127.0.0.1 and 123.123.123.123 (an address they control) with a very low TTL.
+> 3. When the browser resolves to 123.123.123.123, they serve HTML that waits
+> for the DNS entry to expire (or force it to expire by flooding the cache
+> with lookups), then they have permission to read and set headers.
+> 
+> I have a domain I use for testing dns rebinding called rbndr.us, you can
+> use this page to generate hostnames (source code is here:
+> https://github.com/taviso/rbndr):
+> 
+> https://lock.cmpxchg8b.com/rebinder.html
+> 
+> Here I want to alternate between 127.0.0.1 and 199.241.29.227, so I use
+> 7f000001.c7f11de3.rbndr.us:
+> 
+> $ host 7f000001.c7f11de3.rbndr.us
+> 7f000001.c7f11de3.rbndr.us has address 127.0.0.1
+> $ host 7f000001.c7f11de3.rbndr.us
+> 7f000001.c7f11de3.rbndr.us has address 199.241.29.227
+> $ host 7f000001.c7f11de3.rbndr.us
+> 7f000001.c7f11de3.rbndr.us has address 127.0.0.1
+> 
+> Here you can see the resolution alternates between the two addresses I want
+> (note that depending on caching it might take a while to switch, the TTL is
+> set to minimum but some servers round up).
+> 
+> I just wait for the cached response to expire, and then POST commands to
+> the server.
+> 
+> Exploitation is simple, you could set script-torrent-done-enabled and run
+> any command, or set download-dir to /home/user/ and then upload a torrent
+> for ".bashrc".
+> 
+> Here is my (simple) demo, it's slow, but could be made very fast:
+> 
+> http://lock.cmpxchg8b.com/Asoquu3e.html
+> 
+> I've verified it works on Chrome and Firefox on Windows and Linux (I tried
+> Fedora and Ubuntu), I expect other platforms and browsers are affected. There
+> are screenshots of how the attack is supposed to look on the bug report
+> here:
+> 
+> https://github.com/transmission/transmission/pull/468
+> 
+> Tavis.
 
+> From a82c9d154613a5f99394029c28a01148749735af Mon Sep 17 00:00:00 2001
+> From: Tavis Ormandy <taviso@gmail.com>
+> Date: Fri, 1 Dec 2017 12:49:25 -0800
+> Subject: [PATCH] mitigate dns rebinding attacks
+> 
+> ---
+>  libtransmission/quark.c        |   2 +
+>  libtransmission/quark.h        |   2 +
+>  libtransmission/rpc-server.c   | 116 +++++++++++++++++++++++++++++++++++++----
+>  libtransmission/rpc-server.h   |   4 ++
+>  libtransmission/session.c      |   2 +
+>  libtransmission/transmission.h |   1 +
+>  libtransmission/web.c          |   3 ++
+>  7 files changed, 121 insertions(+), 9 deletions(-)
+> 
+> diff --git a/libtransmission/quark.c b/libtransmission/quark.c
+> index 861050057..87ed9f3ef 100644
+> --- a/libtransmission/quark.c
+> +++ b/libtransmission/quark.c
+> @@ -296,6 +296,8 @@ static struct tr_key_struct const my_static[] =
+>      { "rpc-version-minimum", 19 },
+>      { "rpc-whitelist", 13 },
+>      { "rpc-whitelist-enabled", 21 },
+> +    { "rpc-host-whitelist", 18 },
+> +    { "rpc-host-whitelist-enabled", 26 },
+>      { "scrape", 6 },
+>      { "scrape-paused-torrents-enabled", 30 },
+>      { "scrapeState", 11 },
+> diff --git a/libtransmission/quark.h b/libtransmission/quark.h
+> index d40ab75fa..d82c7051b 100644
+> --- a/libtransmission/quark.h
+> +++ b/libtransmission/quark.h
+> @@ -298,6 +298,8 @@ enum
+>      TR_KEY_rpc_version_minimum,
+>      TR_KEY_rpc_whitelist,
+>      TR_KEY_rpc_whitelist_enabled,
+> +    TR_KEY_rpc_host_whitelist,
+> +    TR_KEY_rpc_host_whitelist_enabled,
+>      TR_KEY_scrape,
+>      TR_KEY_scrape_paused_torrents_enabled,
+>      TR_KEY_scrapeState,
+> diff --git a/libtransmission/rpc-server.c b/libtransmission/rpc-server.c
+> index 7c78f92ac..a33f07e10 100644
+> --- a/libtransmission/rpc-server.c
+> +++ b/libtransmission/rpc-server.c
+> @@ -51,6 +51,7 @@ struct tr_rpc_server
+>      bool isEnabled;
+>      bool isPasswordEnabled;
+>      bool isWhitelistEnabled;
+> +    bool isHostWhitelistEnabled;
+>      tr_port port;
+>      char* url;
+>      struct tr_address bindAddress;
+> @@ -62,6 +63,7 @@ struct tr_rpc_server
+>      char* password;
+>      char* whitelistStr;
+>      tr_list* whitelist;
+> +    tr_list* hostWhitelist;
+>      int loginattempts;
+>  
+>      bool isStreamInitialized;
+> @@ -547,6 +549,47 @@ static bool isAddressAllowed(tr_rpc_server const* server, char const* address)
+>      return false;
+>  }
+>  
+> +static bool isHostnameAllowed(tr_rpc_server const* server, struct evhttp_request* req)
+> +{
+> +    const char *host = evhttp_find_header(req->input_headers, "Host");
+> +    char *hostname;
+> +
+> +    // If password auth is enabled, any hostname is permitted.
+> +    if (server->isPasswordEnabled)
+> +        return true;
+> +
+> +    // No host header, invalid request.
+> +    if (!host)
+> +        return false;
+> +
+> +    // Host header might include the port.
+> +    hostname = tr_strndup(host, strcspn(host, ":"));
+> +
+> +    // localhost or ipaddress is always acceptable.
+> +    if (strcmp(hostname, "localhost") == 0
+> +     || strcmp(hostname, "localhost.") == 0
+> +     || tr_addressIsIP(hostname))
+> +    {
+> +        tr_free(hostname);
+> +        return true;
+> +    }
+> +
+> +    // Otherwise, hostname must be whitelisted.
+> +    if (server->isHostWhitelistEnabled)
+> +    {
+> +        for (tr_list* l = server->hostWhitelist; l != NULL; l = l->next) {
+> +            if (tr_wildmat(hostname, l->data))
+> +            {
+> +                tr_free(hostname);
+> +                return true;
+> +            }
+> +        }
+> +    }
+> +
+> +    tr_free(hostname);
+> +    return false;
+> +}
+> +
+>  static bool test_session_id(struct tr_rpc_server* server, struct evhttp_request* req)
+>  {
+>      char const* ours = get_current_session_id(server);
+> @@ -636,6 +679,22 @@ static void handle_request(struct evhttp_request* req, void* arg)
+>  
+>  #ifdef REQUIRE_SESSION_ID
+>  
+> +        else if (!isHostnameAllowed(server, req))
+> +        {
+> +            char* tmp = tr_strdup_printf(
+> +                "<p>Transmission received your request, but the hostname was unrecognized.</p>"
+> +                "<p>To fix this, choose one of the following options:"
+> +                "<ul>"
+> +                "<li>Enable password authentication, then any hostname is allowed.</li>"
+> +                "<li>Add the hostname you want to use to the whitelist in settings.</li>"
+> +                "</ul></p>"
+> +                "<p>If you're editing settings.json, see the 'rpc-host-whitelist' and 'rpc-host-whitelist-enabled' entries.</p>"
+> +                "<p>This requirement has been added to help prevent "
+> +                "<a href=\"https://en.wikipedia.org/wiki/DNS_rebinding\">DNS Rebinding</a> "
+> +                "attacks.</p>");
+> +            send_simple_response(req, 421, tmp);
+> +            tr_free(tmp);
+> +        }
+>          else if (!test_session_id(server, req))
+>          {
+>              char const* sessionId = get_current_session_id(server);
+> @@ -647,7 +706,7 @@ static void handle_request(struct evhttp_request* req, void* arg)
+>                  "<li> When you get this 409 error message, resend your request with the updated header"
+>                  "</ol></p>"
+>                  "<p>This requirement has been added to help prevent "
+> -                "<a href=\"http://en.wikipedia.org/wiki/Cross-site_request_forgery\">CSRF</a> "
+> +                "<a href=\"https://en.wikipedia.org/wiki/Cross-site_request_forgery\">CSRF</a> "
+>                  "attacks.</p>"
+>                  "<p><code>%s: %s</code></p>",
+>                  TR_RPC_SESSION_ID_HEADER, sessionId);
+> @@ -844,17 +903,12 @@ char const* tr_rpcGetUrl(tr_rpc_server const* server)
+>      return server->url != NULL ? server->url : "";
+>  }
+>  
+> -void tr_rpcSetWhitelist(tr_rpc_server* server, char const* whitelistStr)
+> +static void tr_rpcSetList(char const* whitelistStr, tr_list** list)
+>  {
+>      void* tmp;
+>  
+> -    /* keep the string */
+> -    tmp = server->whitelistStr;
+> -    server->whitelistStr = tr_strdup(whitelistStr);
+> -    tr_free(tmp);
+> -
+>      /* clear out the old whitelist entries */
+> -    while ((tmp = tr_list_pop_front(&server->whitelist)) != NULL)
+> +    while ((tmp = tr_list_pop_front(list)) != NULL)
+>      {
+>          tr_free(tmp);
+>      }
+> @@ -866,7 +920,7 @@ void tr_rpcSetWhitelist(tr_rpc_server* server, char const* whitelistStr)
+>          size_t const len = strcspn(walk, delimiters);
+>          char* token = tr_strndup(walk, len);
+>  
+> -        tr_list_append(&server->whitelist, token);
+> +        tr_list_append(list, token);
+>  
+>          if (strcspn(token, "+-") < len)
+>          {
+> @@ -889,6 +943,23 @@ void tr_rpcSetWhitelist(tr_rpc_server* server, char const* whitelistStr)
+>      }
+>  }
+>  
+> +void tr_rpcSetHostWhitelist(tr_rpc_server* server, char const* whitelistStr)
+> +{
+> +    tr_rpcSetList(whitelistStr, &server->hostWhitelist);
+> +}
+> +
+> +void tr_rpcSetWhitelist(tr_rpc_server* server, char const* whitelistStr)
+> +{
+> +    void* tmp;
+> +
+> +    /* keep the string */
+> +    tmp = server->whitelistStr;
+> +    server->whitelistStr = tr_strdup(whitelistStr);
+> +    tr_free(tmp);
+> +
+> +    tr_rpcSetList(whitelistStr, &server->whitelist);
+> +}
+> +
+>  char const* tr_rpcGetWhitelist(tr_rpc_server const* server)
+>  {
+>      return server->whitelistStr != NULL ? server->whitelistStr : "";
+> @@ -904,6 +975,11 @@ bool tr_rpcGetWhitelistEnabled(tr_rpc_server const* server)
+>      return server->isWhitelistEnabled;
+>  }
+>  
+> +void tr_rpcSetHostWhitelistEnabled(tr_rpc_server* server, bool isEnabled)
+> +{
+> +    server->isHostWhitelistEnabled = isEnabled;
+> +}
+> +
+>  /****
+>  *****  PASSWORD
+>  ****/
+> @@ -1054,6 +1130,28 @@ tr_rpc_server* tr_rpcInit(tr_session* session, tr_variant* settings)
+>          tr_rpcSetWhitelistEnabled(s, boolVal);
+>      }
+>  
+> +    key = TR_KEY_rpc_host_whitelist_enabled;
+> +
+> +    if (!tr_variantDictFindBool(settings, key, &boolVal))
+> +    {
+> +        missing_settings_key(key);
+> +    }
+> +    else
+> +    {
+> +        tr_rpcSetHostWhitelistEnabled(s, boolVal);
+> +    }
+> +
+> +    key = TR_KEY_rpc_host_whitelist;
+> +
+> +    if (!tr_variantDictFindStr(settings, key, &str, NULL) && str != NULL)
+> +    {
+> +        missing_settings_key(key);
+> +    }
+> +    else
+> +    {
+> +        tr_rpcSetHostWhitelist(s, str);
+> +    }
+> +
+>      key = TR_KEY_rpc_authentication_required;
+>  
+>      if (!tr_variantDictFindBool(settings, key, &boolVal))
+> diff --git a/libtransmission/rpc-server.h b/libtransmission/rpc-server.h
+> index 46e8a871f..ad1eb5204 100644
+> --- a/libtransmission/rpc-server.h
+> +++ b/libtransmission/rpc-server.h
+> @@ -42,6 +42,10 @@ void tr_rpcSetWhitelist(tr_rpc_server* server, char const* whitelist);
+>  
+>  char const* tr_rpcGetWhitelist(tr_rpc_server const* server);
+>  
+> +void tr_rpcSetHostWhitelistEnabled(tr_rpc_server* server, bool isEnabled);
+> +
+> +void tr_rpcSetHostWhitelist(tr_rpc_server* server, char const* whitelist);
+> +
+>  void tr_rpcSetPassword(tr_rpc_server* server, char const* password);
+>  
+>  char const* tr_rpcGetPassword(tr_rpc_server const* server);
+> diff --git a/libtransmission/session.c b/libtransmission/session.c
+> index 86d054f7f..9a0b7c104 100644
+> --- a/libtransmission/session.c
+> +++ b/libtransmission/session.c
+> @@ -371,6 +371,8 @@ void tr_sessionGetDefaultSettings(tr_variant* d)
+>      tr_variantDictAddStr(d, TR_KEY_rpc_username, "");
+>      tr_variantDictAddStr(d, TR_KEY_rpc_whitelist, TR_DEFAULT_RPC_WHITELIST);
+>      tr_variantDictAddBool(d, TR_KEY_rpc_whitelist_enabled, true);
+> +    tr_variantDictAddStr(d, TR_KEY_rpc_host_whitelist, TR_DEFAULT_RPC_HOST_WHITELIST);
+> +    tr_variantDictAddBool(d, TR_KEY_rpc_host_whitelist_enabled, true);
+>      tr_variantDictAddInt(d, TR_KEY_rpc_port, atoi(TR_DEFAULT_RPC_PORT_STR));
+>      tr_variantDictAddStr(d, TR_KEY_rpc_url, TR_DEFAULT_RPC_URL_STR);
+>      tr_variantDictAddBool(d, TR_KEY_scrape_paused_torrents_enabled, true);
+> diff --git a/libtransmission/transmission.h b/libtransmission/transmission.h
+> index ac1871adb..08a24eca4 100644
+> --- a/libtransmission/transmission.h
+> +++ b/libtransmission/transmission.h
+> @@ -109,6 +109,7 @@ char const* tr_getDefaultDownloadDir(void);
+>  #define TR_DEFAULT_BIND_ADDRESS_IPV4 "0.0.0.0"
+>  #define TR_DEFAULT_BIND_ADDRESS_IPV6 "::"
+>  #define TR_DEFAULT_RPC_WHITELIST "127.0.0.1,::1"
+> +#define TR_DEFAULT_RPC_HOST_WHITELIST ""
+>  #define TR_DEFAULT_RPC_PORT_STR "9091"
+>  #define TR_DEFAULT_RPC_URL_STR "/transmission/"
+>  #define TR_DEFAULT_PEER_PORT_STR "51413"
+> diff --git a/libtransmission/web.c b/libtransmission/web.c
+> index cca888b66..a57c85457 100644
+> --- a/libtransmission/web.c
+> +++ b/libtransmission/web.c
+> @@ -678,6 +678,9 @@ char const* tr_webGetResponseStr(long code)
+>      case 417:
+>          return "Expectation Failed";
+>  
+> +    case 421:
+> +        return "Misdirected Request";
+> +
+>      case 500:
+>          return "Internal Server Error";
+>  
+> -- 
+> 2.15.0.531.g2ccb3012c9-goog
+> 
+
+
+-- 
+Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@suse.de>
