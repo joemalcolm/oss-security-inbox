@@ -1,19 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/23/6
-Message-ID: <5b7dd771.1c69fb81.a6d8.6521@mx.google.com>
-Date: Wed, 22 Aug 2018 23:36:44 +0200
-From: Leonardo Taccari <iamleot@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/15/3
+Message-ID: <nycvar.YSQ.7.76.1801152337380.28933@wniryva>
+Date: Mon, 15 Jan 2018 23:40:26 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: jiangxin1@...wei.com
+Subject: CVE-2017-18030 Qemu: Out-of-bounds access in cirrus_invalidate_region routine
 Content-Type: text/plain; charset=utf-8
 
-Hello Bob,
+   Hello,
 
-Bob Friesenhahn writes:
-> The CERT advisory at https://www.kb.cert.org/vuls/id/332928 provides a 
-> policy.xml example which does not appear to block PS2 and PS3, which 
-> are also entry points for reading Postscript.
-> [...]
+Quick emulator(Qemu) built with the Cirrus CLGD 54xx VGA Emulator support is 
+vulnerable to an out-of-bounds access issue. It could occur while refreshing 
+vnc surface area, in case the initial pitch was negative in 
+cirrus_invalidate_region.
 
-If I am not missing something I think that ghostscript isn't used
-for them though.
+A privileged user inside guest could use this flaw to crash the Qemu process 
+resulting in DoS.
+
+Upstream patch:
+---------------
+   -> https://git.qemu.org/?p=qemu.git;a=commitdiff;h=f153b563f8cf121aebf5a2fff5f0110faf58ccb3
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
