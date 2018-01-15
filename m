@@ -1,45 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/09/3
-Message-ID: <67BB8FFF-4D14-4129-84CC-D21A38846436@nic.cz>
-Date: Tue, 09 Jan 2018 17:02:44 +0100
-From: Michal Hrušecký <michal.hrusecky@....cz>
-To: oss-security@...ts.openwall.com
-Subject: Re: Own on install. How grave it is?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/15/2
+Message-ID: <nycvar.YSQ.7.76.1801152331280.28933@wniryva>
+Date: Mon, 15 Jan 2018 23:34:52 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: jiangxin1@...wei.com
+Subject: CVE-2018-5683 Qemu: Out-of-bounds read in vga_draw_text routine
 Content-Type: text/plain; charset=utf-8
 
-On January 9, 2018 2:42:07 PM CET, Georgi Guninski <guninski@...inski.com> wrote:
->[don't know if this is ontopic. Not on the list so CC me].
->
->This is well known, haven't seen it discussed.
->
->In short doing clean install (factory defaults) has a window of
->opportunity when the device is vulnerable to a known network attack.
->
->It used to be common sense to reinstall after compromise (probably
->doesn't apply to the windows world where the antivirus takes care).
->
->All versions of windoze are affected by the SMB bug to my knowledge.
->Debian jessie (old stable) is vulnerable to malicious mirror attack.
->
->More of interest to me are devices where the installation media is
->fixed and can't be changed.
->
->This includes smartphones and wireless routers.
->
->Some smartphones might be vulnerable to wifi RCE (found by google?).
->Some wireless routers might be vulnerable to wifi RCE or
->default admin password attack over wifi.
->
->Internet of Things will make things worse (some NAS devices are
->affected).
->
->Shielding the device might not be solution since updates must be
->applied.
+   Hello,
 
-Hi,
+Quick Emulator(QEMU) built with the VGA emulator support is vulnerable to an 
+out-of-bounds access issue in vga_draw_text. It could occur while updating vga 
+display area.
 
-we are manufacturers of Turris Omnia routers and our approach to minimise those attacks is that on factory reset, your wan and wifi is disconnected till you setup your router. So your workflow after factory reset has to be connect localy via wire, setup your own password and then recommended steps are sugested in this order - setup wan, update, setup wifi. In theory somebody can beat you on LAN, but you should have enough common sense to disconect other computers if you are doing factory reset. You can also skip updates, but hey, you can setup passwordless wifi if you try hard enough (not easy that easy in our setup) and make your pasword admin1234. We can't protect you from every mistake and there are usecases where it might make sense.
+A privileged user inside guest could use this flaw to crash the Qemu process 
+resulting in DoS.
 
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2018-01/msg02131.html
 
--- 
-Sent from my Jolla device with K-9 Mail. Please excuse my brevity.
+This issue was reported by Jiang Xin of Huawei.com.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
