@@ -1,108 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/24/6
-Message-ID: <37380262-28c4-2852-175c-98b7937014c4@igalia.com>
-Date: Wed, 24 Jan 2018 18:53:52 +0100
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: "webkit-gtk@...ts.webkit.org" <webkit-gtk@...ts.webkit.org>
-Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: WebKitGTK+ Security Advisory WSA-2018-0002
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/16/7
+Message-ID: <e8547db4-2186-98a4-0247-de855e202879@isc.org>
+Date: Tue, 16 Jan 2018 15:25:46 -0600
+From: ISC Security Officer <security-officer@....org>
+To: oss-security@...ts.openwall.com
+Cc: ISC Security Officer <security-officer@....org>
+Subject: New vulnerability in ISC BIND announced (CVE-2017-3145)
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK+ Security Advisory                               WSA-2018-0002
-------------------------------------------------------------------------
+Please be advised that ISC public announced a vulnerability in ISC BIND.
 
-Date reported      : January 24, 2018
-Advisory ID        : WSA-2018-0002
-Advisory URL       : https://webkitgtk.org/security/WSA-2018-0002.html
-CVE identifiers    : CVE-2018-4088, CVE-2018-4089, CVE-2018-4096,
-                     CVE-2017-7153, CVE-2017-7160, CVE-2017-7161,
-                     CVE-2017-7165, CVE-2017-13884, CVE-2017-13885.
+CVE-2017-3145 is a denial-of-service vector which can potentially be
+exploited against ISC BIND servers, causing them to crash.  The
+underlying flaw has existed since BIND 9.0.0 but is not known to be
+reachable in any version prior to those containing the fix for
+CVE-2017-3137 [9.9.9-P8 to 9.9.11, 9.10.4-P8 to 9.10.6, 9.11.0-P5 to
+9.11.2, 9.9.9-S10 to 9.9.11-S1, 9.10.5-S1 to 9.10.6-S1, and 9.12.0a1 to
+9.12.0rc1], and then only when acting as DNSSEC validating resolvers.
 
-Several vulnerabilities were discovered in WebKitGTK+.
+Our full CVE text can be found at https://kb.isc.org/article/AA-01542
 
-CVE-2018-4088
-    Versions affected: WebKitGTK+ before 2.18.6.
-    Credit to Jeonghoon Shin of Theori.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+New releases of ISC BIND, including security fixes for this
+vulnerability, are available at: https://www.isc.org/downloads/
 
-CVE-2018-4089
-    Versions affected: WebKitGTK+ before 2.18.4.
-    Credit to Ivan Fratric of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+Release notes can be obtained using the following links:
 
-CVE-2018-4096
-    Versions affected: WebKitGTK+ before 2.18.6.
-    Credit to OSS-Fuzz.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+ftp://ftp.isc.org/isc/bind9/9.9.11-P1/RELEASE-NOTES-bind-9.9.11-P1.txt
+ftp://ftp.isc.org/isc/bind9/9.10.6-P1/RELEASE-NOTES-bind-9.10.6-P1.txt
+ftp://ftp.isc.org/isc/bind9/9.11.2-P1/RELEASE-NOTES-bind-9.11.2-P1.txt
+ftp://ftp.isc.org/isc/bind9/9.12.0rc3/RELEASE-NOTES-bind-9.12.0rc3.txt
 
-CVE-2017-7153
-    Versions affected: WebKitGTK+ before 2.18.6.
-    Credit to Jerry Decime.
-    Impact: Visiting a malicious website may lead to user interface
-    spoofing. Description: Redirect responses to 401 Unauthorized may
-    allow a malicious website to incorrectly display the lock icon on
-    mixed content. This issue was addressed through improved URL display
-    logic.
-
-CVE-2017-7160
-    Versions affected: WebKitGTK+ before 2.18.6.
-    Credit to Richard Zhu (fluorescence) working with Trend Micro's Zero
-    Day Initiative.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2017-7161
-    Versions affected: WebKitGTK+ before 2.18.6.
-    Credit to Mitin Svyat.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A command injection issue
-    existed in Web Inspector. This issue was addressed through improved
-    escaping of special characters.
-
-CVE-2017-7165
-    Versions affected: WebKitGTK+ before 2.18.6.
-    Credit to 360 Security working with Trend Micro's Zero Day
-    Initiative.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2017-13884
-    Versions affected: WebKitGTK+ before 2.18.6.
-    Credit to 360 Security working with Trend Micro's Zero Day
-    Initiative.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2017-13885
-    Versions affected: WebKitGTK+ before 2.18.6.
-    Credit to 360 Security working with Trend Micro's Zero Day
-    Initiative.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-
-We recommend updating to the last stable version of WebKitGTK+. It is
-the best way of ensuring that you are running a safe version of
-WebKitGTK+. Please check our website for information about the last
-stable releases.
-
-Further information about WebKitGTK+ Security Advisories can be found
-at: https://webkitgtk.org/security.html
-
-The WebKitGTK+ team,
-January 24, 2018
+--
+Brian Conry
+ISC Support
+Acting Security Officer
 
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (898 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (521 bytes)
