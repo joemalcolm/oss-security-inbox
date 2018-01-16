@@ -1,44 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/17/7
-Message-ID: <alpine.GSO.2.20.1810170816290.3841@freddy.simplesystems.org>
-Date: Wed, 17 Oct 2018 08:30:43 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/16/6
+Message-ID: <c6a80b3d-e325-d09d-32f2-aa3ccb21be7a@isc.org>
+Date: Tue, 16 Jan 2018 16:38:07 -0500
+From: Michael McNally <mcnally@....org>
 To: oss-security@...ts.openwall.com
-Subject: Re: ghostscript: 1Policy operator gives access to .forceput CVE-2018-18284
+Subject: ISC has announced CVE-2017-3144, a defect in ISC DHCP
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 17 Oct 2018, Rich Felker wrote:
->>
->> Even with the easy to exploit stuff compiled out (which upstream do not
->> support), I haven't been bothering to get CVE's for all the memory
->> corruption or UaF I've been reporting, because nobody can keep up with
->> these operator leaks anyway.
->
-> An obvious fix for UaF's would be just removing the frees. Use of gs
-> as an interactive program where leaks would matter is a historical
-> curiosity; the only meaningful modern use is as a converter.
+Please be advised that ISC has publicly announced a vulnerability in
+ISC DHCP.
 
-Memory allocations would build to extremely large values across 
-hundreds of rendered pages.  Use of Ghostscript in interactive 
-programs is still surely common.  Programs using libgs will inherit 
-any leaks.  These leaks and other issues should be fixed.
+CVE-2017-3144 is a partial denial-of-service vector which can be used
+to exhaust the server's pool of socket descriptors if an attacker can
+open connections to the server's OMAPI control port.  If successfully
+exploited the attacker can prevent the operator from being able to
+connect to the server, for example to change server state or to add
+lease reservations without restarting the server.
 
-Keep in mind that Ghostscript is also used to render/view PDF files. 
-When interactively viewing it is common to do just-in-time rendering. 
-Even for bulk conversions, conversion on a page-by-page basis will 
-save resources when dealing with many pages.
+Since an unauthorized client should not be permitted access to this
+port under normal circumstances, we are recommending that most operators
+should simply secure access to the control port; however a patch which
+properly cleans up the hung socket descriptors is available upon request
+(and will be included in future maintenance releases.)
 
-Alternatives do exist now for PDF due to Xpdf and the derived Poppler 
-project and Poppler has become heavily used.
+Our full CVE text can be found at https://kb.isc.org/article/AA-01541
 
-Ghostscript is still more competent at rendering PDF than Poppler is. 
-Ghostscript is able to deal with CMYK color spaces, per-object 
-colorspaces, and transparency, and it is able to render to various 
-quality levels (bilevel, grayscale, RGB, RGBA, CMYK) depending on the 
-output driver selected.
+--
+Michael McNally
+ISC Security Officer
 
-Bob
--- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
