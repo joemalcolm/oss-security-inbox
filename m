@@ -1,541 +1,209 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/30/1
-Message-ID: <CACWOJOy1xDnr8wrYvKq+aJBKpnHZasNmEGq8r2g47tUONp+LMw@mail.gmail.com>
-Date: Fri, 30 Mar 2018 23:08:02 +0800
-From: flanker017 <flankerhqd017@...il.com>
-To: oss-security@...ts.openwall.com, zhuozhuozhuozhuozhuo@...il.com,  l.dmxcsnsbh@...il.com
-Subject: Fwd: [scr485440] 5 Samsung CVEs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/16/5
+Message-Id: <E1ebVGo-0005UP-WF@xenbits.xenproject.org>
+Date: Tue, 16 Jan 2018 17:43:34 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 254 (CVE-2017-5753,CVE-2017-5715,CVE-2017-5754) - Information leak via side effects of speculative execution
 Content-Type: text/plain; charset=utf-8
-
- Hello:
-
-The following issues are addressed with corresponding CVEs assigned by
-MITRE for Samsung Mobile Security February update 2018.
-
-Security bulletin: https://security.samsungmobile.com/securityUpdate.smsb
-
-Referring to SMR-FEB-2018 section:
-
-SVE-2017-10991: Heap overflow in sensorhub binder service lead to code
-> execution in privileged process
-> Severity: Moderate
-> Affected Versions: M(6.0), N(7.x)
-> Reported on: November 8, 2017
-> Disclosure status: Privately disclosed.
-> Heap overflow vulnerability in sensorhub binder service can lead to code
-> execution in privileged process.
-> The patch checks the size of buffer before the memcpy() to avoid heap
-> overflow.
->
-
-This issue is assigned CVE-2018-9143
-Credits: Qidan He (@flanker_hqd) , Zhuoyuan Li
-
-
-> SVE-2017-11165: Buffer overflow in vision
-> Severity: High
-> Affected Versions: N(7.x)
-> Reported on: November 8, 2017
-> Disclosure status: Privately disclosed.
-> Buffer overflow vulnerability in vision service can lead to local
-> arbitrary code execution in a privileged process when the frame size is
-> over 2M.
-> The patch protects the size under enqueue frame using memcpy.
->
->
-This issue is assigned CVE-2018-9139
-Credits: Qidan He(@flanker_hqd)
-
-SVE-2017-10747: Code Execution and arbitrary file loading in Email
-> Severity: Critical
-> Affected Versions: M(6.0)
-> Reported on: Nobember 2, 2017
-> Disclosure status: Privately disclosed.
-> Vulnerability email app allows an attacker to execute javascript using
-> event attribute and load arbitrary local file using src attribute.
-> The patch restricts the file scheme and javascript in event attribute.
->
-> This issue is assigned CVE-2018-9140
-Credits: Qidan He(@flanker_hqd), Gengming Liu(@dmxcsnsbh), Zhen Feng
-
-SVE-2017-10932: Arbitrary application installation in Secure Folder
-> Severity: Moderate
-> Affected Versions: N(7.x)
-> Reported on: November 10, 2017
-> Disclosure status: Privately disclosed.
-> A random APK can be installed through Secure Folder SDCARD area.
-> The patch fixed the logic to check package signature and package name to
-> install verified Backup and restore APK.
->
-> This issue is assigned CVE-2018-9142
-Credits: Qidan He(@flanker_hqd)
-
-
-> SVE-2017-11105: Code execution in Samsung Gallery
-> Severity: Low
-> Affected Versions: L(5.x), M(6.0), N(7.x)
-> Reported on: November 8, 2017
-> Disclosure status: Privately disclosed.
-> Vulnerability in Gallery allows code execution with a BMP file.
-> The patch fixed the parser to validate proper resolution of BMP file.
-
-
-This issue is assigned CVE-2018-9141
-Credits: Qidan He(@flanker_hqd), Zhuoyuan Li
-
-Thanks.
----------- Forwarded message ----------
-From: <cve-request@...re.org>
-Date: 2018-03-30 14:46 GMT+08:00
-Subject: Re: [scr485440] 5 Samsung CVEs
-Cc: cve-request@...re.org
-
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> [Suggested description]
-> On Samsung mobile devices with N(7.x) software, a buffer overflow in the
-vision service allows code execution in a privileged process
-> via a large frame size, aka
-> SVE-2017-11165.
->
-> ------------------------------------------
->
-> [Additional Information]
-> Security bulletin: https://security.samsungmobile.com/securityUpdate.smsb
->
-> Referring to SMR-FEB-2018 section:
->
-> SVE-2017-11165: Buffer overflow in vision
-> Severity: High
-> Affected Versions: N(7.x)
-> Reported on: November 8, 2017
-> Disclosure status: Privately disclosed.
-> Buffer overflow vulnerability in vision service can lead to local
-arbitrary code execution in a privileged process when the frame size is
-over 2M.
-> The patch protects the size under enqueue frame using memcpy.
->
-> ------------------------------------------
->
-> [Vulnerability Type]
-> Buffer Overflow
->
-> ------------------------------------------
->
-> [Vendor of Product]
-> Samsung Mobile
->
-> ------------------------------------------
->
-> [Affected Product Code Base]
-> Samsung Mobile Android N(7.x) - N(7.x) before patch level SMR-FEB-2018
->
-> ------------------------------------------
->
-> [Affected Component]
-> Samsung System Service: vision
->
-> ------------------------------------------
->
-> [Attack Type]
-> Local
->
-> ------------------------------------------
->
-> [Impact Code execution]
-> true
->
-> ------------------------------------------
->
-> [Impact Denial of Service]
-> true
->
-> ------------------------------------------
->
-> [Impact Escalation of Privileges]
-> true
->
-> ------------------------------------------
->
-> [Attack Vectors]
-> Local malicious app
->
-> ------------------------------------------
->
-> [Reference]
-> https://security.samsungmobile.com/securityUpdate.smsb
->
-> ------------------------------------------
->
-> [Has vendor confirmed or acknowledged the vulnerability?]
-> true
->
-> ------------------------------------------
->
-> [Discoverer]
-> Qidan He (@flanker_hqd)
+ Xen Security Advisory CVE-2017-5753,CVE-2017-5715,CVE-2017-5754 / XSA-254
+                                 version 8
 
-Use CVE-2018-9139.
+        Information leak via side effects of speculative execution
 
+UPDATES IN VERSION 8
+====================
 
-> [Suggested description]
-> On Samsung mobile devices with M(6.0) software, the Email application
-allows XSS via an event attribute and arbitrary file loading via a src
-attribute,
-> aka SVE-2017-10747.
->
-> ------------------------------------------
->
->
-> Security bulletin: https://security.samsungmobile.com/securityUpdate.smsb
->
-> Referring to SMR-FEB-2018 section:
->
-> SVE-2017-10747: Code Execution and arbitrary file loading in Email
-> Severity: Critical
-> Affected Versions: M(6.0)
-> Reported on: Nobember 2, 2017
-> Disclosure status: Privately disclosed.
-> Vulnerability email app allows an attacker to execute javascript using
-event attribute and load arbitrary local file using src attribute.
-> The patch restricts the file scheme and javascript in event attribute.
->
-> ------------------------------------------
->
-> [Vulnerability Type]
-> Cross Site Scripting (XSS)
->
-> ------------------------------------------
->
-> [Vendor of Product]
-> Samsung Mobile
->
-> ------------------------------------------
->
-> [Affected Product Code Base]
-> Samsung Mobile M(6.0) - M(6.0) before patch level SMR-FEB-2018
->
-> ------------------------------------------
->
-> [Affected Component]
-> Samsung Email Application
->
-> ------------------------------------------
->
-> [Attack Type]
-> Remote
->
-> ------------------------------------------
->
-> [Impact Code execution]
-> true
->
-> ------------------------------------------
->
-> [Impact Escalation of Privileges]
-> true
->
-> ------------------------------------------
->
-> [Attack Vectors]
-> Remote
->
-> ------------------------------------------
->
-> [Reference]
-> https://security.samsungmobile.com/securityUpdate.smsb
->
-> ------------------------------------------
->
-> [Has vendor confirmed or acknowledged the vulnerability?]
-> true
->
-> ------------------------------------------
->
-> [Discoverer]
-> Qidan He (@flanker_hqd), Gengming Liu, Zhen Feng
+PVH shim ("Comet") is now available for Xen 4.8.
 
-Use CVE-2018-9140.
+Fixes for two bugs in PVH shim "Comet": one relating to shim
+initialisation, which can cause hangs during guest boot shortly after
+host boot(!), and one to make qemu PV backends work in PVH mode.
+Thanks to the respective contributors.
 
+We are longer inclined to port the "Comet" patches to Xen 4.9.  If
+this causes you a problem please let us know by contacting us:
+ To: security@...project.org; CC: xen-devel@...ts.xenproject.org
 
-> [Suggested description]
-> On Samsung mobile devices with L(5.x), M(6.0), and N(7.x) software,
-Gallery allows remote attackers to execute arbitrary code via a
-> BMP file with a crafted resolution, aka SVE-2017-11105.
->
-> ------------------------------------------
->
-> [Additional Information]
-> Security bulletin: https://security.samsungmobile.com/securityUpdate.smsb
->
-> Referring to SMR-FEB-2018 section:
-> SVE-2017-11105: Code execution in Samsung Gallery
-> Severity: Low
-> Affected Versions: L(5.x), M(6.0), N(7.x)
-> Reported on: November 8, 2017
-> Disclosure status: Privately disclosed.
-> Vulnerability in Gallery allows code execution with a BMP file.
-> The patch fixed the parser to validate proper resolution of BMP file.
->
-> ------------------------------------------
->
-> [Vulnerability Type]
-> Buffer Overflow
->
-> ------------------------------------------
->
-> [Vendor of Product]
-> Samsung Mobile
->
-> ------------------------------------------
->
-> [Affected Product Code Base]
-> Samsung Mobile Android L(5.x), M(6.0), N(7.x) - L(5.x), M(6.0), N(7.x)
-before patch level SMR-FEB-2018
->
-> ------------------------------------------
->
-> [Affected Component]
-> Samsung Gallery
->
-> ------------------------------------------
->
-> [Attack Type]
-> Remote
->
-> ------------------------------------------
->
-> [Impact Code execution]
-> true
->
-> ------------------------------------------
->
-> [Impact Denial of Service]
-> true
->
-> ------------------------------------------
->
-> [Attack Vectors]
-> Remote BMP file
->
-> ------------------------------------------
->
-> [Reference]
-> https://security.samsungmobile.com/securityUpdate.smsb
->
-> ------------------------------------------
->
-> [Has vendor confirmed or acknowledged the vulnerability?]
-> true
->
-> ------------------------------------------
->
-> [Discoverer]
-> Qidan He (@flanker_hqd), Zhuoyuan Li
+ISSUE DESCRIPTION
+=================
 
-Use CVE-2018-9141.
+Processors give the illusion of a sequence of instructions executed
+one-by-one.  However, in order to most efficiently use cpu resources,
+modern superscalar processors actually begin executing many
+instructions in parallel.  In cases where instructions depend on the
+result of previous instructions or checks which have not yet
+completed, execution happens based on guesses about what the outcome
+will be.  If the guess is correct, execution has been sped up.  If the
+guess is incorrect, partially-executed instructions are cancelled and
+architectural state changes (to registers, memory, and so on)
+reverted; but the whole process is no slower than if no guess had been
+made at all.  This is sometimes called "speculative execution".
+
+Unfortunately, although architectural state is rolled back, there are
+other side effects, such as changes to TLB or cache state, which are
+not rolled back.  These side effects can subsequently be detected by
+an attacker to determine information about what happened during the
+speculative execution phase.  If an attacker can cause speculative
+execution to access sensitive memory areas, they may be able to infer
+what that sensitive memory contained.
+
+Furthermore, these guesses can often be 'poisoned', such that attacker
+can cause logic to reliably 'guess' the way the attacker chooses.
+This advisory discusses three ways to cause speculative execution to
+access sensitive memory areas (named here according to the
+discoverer's naming scheme):
+
+"Bounds-check bypass" (aka SP1, "Variant 1", Spectre CVE-2017-5753):
+Poison the branch predictor, such that victim code is speculatively
+executed past boundary and security checks.  This would allow an
+attacker to, for instance, cause speculative code in the normal
+hypercall / emulation path to execute with wild array indexes.
+
+"Branch Target Injection" (aka SP2, "Variant 2", Spectre CVE-2017-5715):
+Poison the branch predictor.  Well-abstracted code often involves
+calling function pointers via indirect branches; reading these
+function pointers may involve a (slow) memory access, so the CPU
+attempts to guess where indirect branches will lead.  Poisoning this
+enables an attacker to speculatively branch to any code that is
+executable by the victim (eg, anywhere in the hypervisor).
+
+"Rogue Data Load" (aka SP3, "Variant 3", Meltdown, CVE-2017-5754):
+On some processors, certain pagetable permission checks only happen
+when the instruction is retired; effectively meaning that speculative
+execution is not subject to pagetable permission checks.  On such
+processors, an attacker can speculatively execute arbitrary code in
+userspace with, effectively, the highest privilege level.
+
+More information is available here:
+  https://meltdownattack.com/
+  https://spectreattack.com/
+  https://googleprojectzero.blogspot.co.uk/2018/01/reading-privileged-memory-with-side.html
+
+Additional Xen-specific background:
+
+Xen hypervisors on most systems map all of physical RAM, so code
+speculatively executed in a hypervisor context can read all of system
+RAM.
+
+When running PV guests, the guest and the hypervisor share the address
+space; guest kernels run in a lower privilege level, and Xen runs in
+the highest privilege level.  (x86 HVM and PVH guests, and ARM guests,
+run in a separate address space to the hypervisor.)  However, only
+64-bit PV guests can generate addresses large enough to point to
+hypervisor memory.
+
+IMPACT
+======
+
+Xen guests may be able to infer the contents of arbitrary host memory,
+including memory assigned to other guests.
+
+An attacker's choice of code to speculatively execute (and thus the
+ease of extracting useful information) goes up with the numbers.  For
+SP1, an attacker is limited to windows of code after bound checks of
+user-supplied indexes.  For SP2, the attacker will in many cases will
+be limited to executing arbitrary pre-existing code inside of Xen.
+For SP3 (and other cases for SP2), an attacker can write arbitrary
+code to speculatively execute.
+
+Additionally, in general, attacks within a guest (from guest user to
+guest kernel) will be the same as on real hardware.  Consult your
+operating system provider for more information.
+
+NOTE ON TIMING
+==============
+
+This vulnerability was originally scheduled to be made public on 9
+January.  It was accelerated at the request of the discloser due to
+one of the issues being made public.
+
+VULNERABLE SYSTEMS
+==================
+
+Systems running all versions of Xen are affected.
+
+For SP1 and SP2, both Intel and AMD are vulnerable.  Vulnerability of
+ARM processors to SP1 and SP2 varies by model and manufacturer.  ARM
+has information on affected models on the following website:
+   https://developer.arm.com/support/security-update
+
+For SP3, only Intel processors are vulnerable.  (The hypervisor cannot
+be attacked using SP3 on any ARM processors, even those that are
+listed as affected by SP3.)
+
+Furthermore, only 64-bit PV guests can exploit SP3 against Xen.  PVH,
+HVM, and 32-bit PV guests cannot exploit SP3.
+
+MITIGATION
+==========
+
+There is no mitigation for SP1 and SP2.
+
+SP3 can be mitigated by running guests in HVM or PVH mode.
+(Within-guest attacks are still possible unless the guest OS has also
+been updated with an SP3 mitigation series such as KPTI/Kaiser.)
+
+For guests with legacy PV kernels which cannot be run in HVM or PVH
+mode directly, we have developed two "shim" hypervisors that allow PV
+guests to run in HVM mode or PVH mode.  This prevents attacks on the
+host, but it leaves the guest vulnerable to Meltdown attacks by its
+own unprivileged processes, even if the guest OS has KPTI or similar
+Meltdown mitigation.
+
+The HVM shim (codenamed "Vixen") is available now, as is the PVH shim
+(codenamed "Comet") for Xen 4.10 and Xen 4.8.   Please read
+README.which-shim to determine which shim is suitable for you.
+
+$ sha256sum xsa254*/*
+2f830fede5d58d3d90fe942ec2d8c4ef65cd14c4d565f9a1b9817847662ebba1  xsa254/README.comet
+1c594822dbd95998951203f6094bc77586d5720788de15897784d20bacb2ef08  xsa254/README.vixen
+7e816160c1c1d1cd93ec3c3dd9753c8f3957fefe86b7aa967e9e77833828f849  xsa254/README.which-shim
+1d2098ad3890a5be49444560406f8f271c716e9f80e7dfe11ff5c818277f33f8  xsa254/pvshim-converter.pl
+$
+
+RESOLUTION
+==========
+
+There is no available resolution for SP1.  A solution may be available
+in the future.
+
+We are working on patches which mitigate SP2 but these are not
+currently available.  Given that the vulnerabilities are now public,
+these will be developed and published in public, initially via
+xen-devel.
 
 
-> [Suggested description]
-> On Samsung mobile devices with N(7.x) software, attackers can install an
-arbitrary APK in the Secure Folder SD Card area because
-> of faulty validation of a package signature and package name, aka
-SVE-2017-10932.
->
-> ------------------------------------------
->
-> [Additional Information]
-> Security bulletin: https://security.samsungmobile.com/securityUpdate.smsb
->
-> Referring to SMR-FEB-2018 section:
-> SVE-2017-10932: Arbitrary application installation in Secure Folder
-> Severity: Moderate
-> Affected Versions: N(7.x)
-> Reported on: November 10, 2017
-> Disclosure status: Privately disclosed.
-> A random APK can be installed through Secure Folder SDCARD area.
-> The patch fixed the logic to check package signature and package name to
-install verified Backup and restore APK.
->
-> ------------------------------------------
->
-> [Vulnerability Type]
-> Insecure Permissions
->
-> ------------------------------------------
->
-> [Vendor of Product]
-> Samsung Mobile
->
-> ------------------------------------------
->
-> [Affected Product Code Base]
-> Samsung Mobile N(7.x) - N(7.x) before patch level SMR-FEB-2018
->
-> ------------------------------------------
->
-> [Affected Component]
-> Samsung Secure Folder
->
-> ------------------------------------------
->
-> [Attack Type]
-> Local
->
-> ------------------------------------------
->
-> [Impact Code execution]
-> true
->
-> ------------------------------------------
->
-> [Impact Escalation of Privileges]
-> true
->
-> ------------------------------------------
->
-> [Attack Vectors]
-> Local Malicious App
->
-> ------------------------------------------
->
-> [Reference]
-> https://security.samsungmobile.com/securityUpdate.smsb
->
-> ------------------------------------------
->
-> [Has vendor confirmed or acknowledged the vulnerability?]
-> true
->
-> ------------------------------------------
->
-> [Discoverer]
-> Qidan He (@flanker_hqd)
+NOTE ON LACK OF EMBARGO
+=======================
 
-Use CVE-2018-9142.
+The timetable and process were set by the discloser.
 
-
-> [Suggested description]
-> On Samsung mobile devices with M(6.0) and N(7.x) software, a heap
-overflow in the sensorhub binder service leads to code execution in a
-privileged process,
-> aka SVE-2017-10991.
->
-> ------------------------------------------
->
-> [Additional Information]
-> Security bulletin: https://security.samsungmobile.com/securityUpdate.smsb
->
-> Referring to SMR-FEB-2018 section:
->
-> SVE-2017-10991: Heap overflow in sensorhub binder service lead to code
-execution in privileged process
-> Severity: Moderate
-> Affected Versions: M(6.0), N(7.x)
-> Reported on: November 8, 2017
-> Disclosure status: Privately disclosed.
-> Heap overflow vulnerability in sensorhub binder service can lead to code
-execution in privileged process.
-> The patch checks the size of buffer before the memcpy() to avoid heap
-overflow.
->
-> ------------------------------------------
->
-> [Vulnerability Type]
-> Buffer Overflow
->
-> ------------------------------------------
->
-> [Vendor of Product]
-> Samsung Mobile
->
-> ------------------------------------------
->
-> [Affected Product Code Base]
-> Samsung Mobile Android M(6.0), N(7.x) - M(6.0) N(7.x) before SMR-FEB-2018
->
-> ------------------------------------------
->
-> [Affected Component]
-> Samsung System Process: sensorhub binder service
->
-> ------------------------------------------
->
-> [Attack Type]
-> Local
->
-> ------------------------------------------
->
-> [Impact Code execution]
-> true
->
-> ------------------------------------------
->
-> [Impact Denial of Service]
-> true
->
-> ------------------------------------------
->
-> [Impact Escalation of Privileges]
-> true
->
-> ------------------------------------------
->
-> [Impact Information Disclosure]
-> true
->
-> ------------------------------------------
->
-> [Attack Vectors]
-> Local malicious app
->
-> ------------------------------------------
->
-> [Reference]
-> https://security.samsungmobile.com/securityUpdate.smsb
->
-> ------------------------------------------
->
-> [Has vendor confirmed or acknowledged the vulnerability?]
-> true
->
-> ------------------------------------------
->
-> [Discoverer]
-> Qidan He (@flanker_hqd) , Zhuoyuan Li
-
-Use CVE-2018-9143.
-
-
-- --
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+After the intensive initial response period for these vulnerabilities
+is over, we will prepare and publish a full timeline, as we have done
+in a handful of other cases of significant public interest where we
+saw opportunities for process improvement.
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJavdzuAAoJEA2h+fVryJLoC8wP/06qp7yIGOo/LxASGnUM1EEb
-xBBEbyhlZ2d9NWb81Z5lsdx17JGfuZXSlS8rKMJCjP401ls8Vy6uDvjJdVKHQODw
-mohK/IAO+3D7989JMBGTStBDcZfMydTN170CiKXnyxP0pRwEnb9To3XOB3fLnwmW
-v1TlMndd+n3nBj9A0esycmxteZ4d7iL3JdMJlpMNsTKQLC/GgVCcuXOyyHs5WK5R
-tMGDK1dbQoxoQpyYohmwsQY+YanKdcrilRiWn+fl4kNw6rRbkrQ0DDnrtsDJ/sPD
-kRWOG7znaSWF0+Jnd0LGQvPHsJ/9iG949UuGvXau9k9jCl+q7t3wBmkfPSVhgqJp
-HSyXuJLsTdlEEwc9Rb2W4e33X9IpFwH7eqW7Herb8L+tE6zNsiWsFxPAvSgXFg8v
-LciDdklIHm5P09AHs/Wbtk3t1m6GTWMbJ9SZHHrDxWJBUYdwOnlqKKAcZsxEjXxu
-9KI7nb2trZ3MclgOXC63Rkw9cmGXyn1hw1H/4uE3+eAFsQIMf0mEuPS2kCAT2ydQ
-hL5hMM7LdxDpacGMP8qhQYP2EPq8d7vjk7U2S9IFHVw9+PBsCrzPy6kejY3WcHWn
-+sQZ1McS9jno86n3DVqtwe2KR+1Yp2eoFYombziXxdy43XfRPpiJxjhenTKKml8d
-L1OsYAsavgLdvMvOM6dK
-=Y3Ps
+iQEcBAEBCAAGBQJaXjm9AAoJEIP+FMlX6CvZ5VwH/1KQOIRXgsfYILMkdYIR4mG4
+VGFcPT7l6egTndGOxPUUDcjxchP1guyyAucSMX+OzoK+SNJReqlSM/mjIN9Vvka4
+BQiTr2Xh0y6GcyB+ldd29YTYAv45FYaIiMzrWUfATdkswezraW/uv3AKFkIrmwt3
+LRNMGws0fyXLYfLAISdUJtlLN5pfuQ6jKNGXQTnAbmJ+PbGuOBJcOrJZjf+estGK
+ptIp3jLwjBPuKwO8IR8jSYEAP7vOTRwOES1+TNeMyU9vPqWIa6D0L1wyjt4uTrjz
+OPeAgD52v/Xh4nekFDaAZYaezqhLuzQqpIJKAtGbAUMxJkzFhevgCcBzOu/1/vM=
+=F+76
 -----END PGP SIGNATURE-----
 
+Download attachment "xsa254/README.comet" of type "application/octet-stream" (2854 bytes)
 
+Download attachment "xsa254/README.vixen" of type "application/octet-stream" (2736 bytes)
 
--- 
-Sincerely,
-Flanker He (a.k.a. Qidan He)
-Website: https://flanker017.me <http://flanker017.me>
+Download attachment "xsa254/README.which-shim" of type "application/octet-stream" (4010 bytes)
 
+Download attachment "xsa254/pvshim-converter.pl" of type "application/octet-stream" (6762 bytes)
