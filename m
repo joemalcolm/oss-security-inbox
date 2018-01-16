@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1330" "Saturday" "18" "December" "2021" "18:02:02" "-0600" "Matt Sicker" "mattsicker@apache.org" nil "43" "[oss-security] CVE-2021-45105: Apache Log4j2 does not always protect from infinite recursion in lookup evaluation" nil nil nil "12" nil nil (number mark "U       mattsicker@a Dec 18   43/1330  " thread-indent "\"[oss-security] CVE-2021-45105: Apache Log4j2 does not always protect from infinite recursion in lookup evaluation\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-45105: Apache Log4j2 does not always protect from infinite recursion in lookup evaluation" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3395" "Tuesday" "16" "January" "2018" "15:12:37" "+0000" "Luke Hinds" "lhinds@redhat.com" "<fd739193-ade8-6f8d-3831-58b8e752eaba@redhat.com>" "96" "[oss-security] opendaylight-advisory: Multiple \"expired\" flows consume the memory resource of CONFIG DS" "^Date:" nil nil "1" "2018011615:12:37" "[oss-security] opendaylight-advisory: Multiple \"expired\" flows consume the memory resource of CONFIG DS" (number mark "U       lhinds@redha Jan 16   96/3395  " thread-indent "\"[oss-security] opendaylight-advisory: Multiple \"expired\" flows consume the memory resource of CONFIG DS\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9946 invoked by uid 550); 19 Dec 2021 00:34:08 -0000
+Received: (qmail 22262 invoked by uid 550); 16 Jan 2018 15:18:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,64 +11,130 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26603 invoked from network); 19 Dec 2021 00:02:26 -0000
-X-Gm-Message-State: AOAM533dxzQ69QFFuaI+sGGF+k2uyAOrKqa2UYYKzwB17fpkCN39yvLP
-	8QNNUCLA4f03EZ5CbqBaTZsfaDHSoGOU88WfxOw=
-X-Google-Smtp-Source: ABdhPJz5/OsY+dwHM6hihxNYW5S0LQws1mShDb48Jm2m18e9clNr7QkQESdX5XPK9y3m7clLy6XmZxcNt/WCw4Yg9f8=
-X-Received: by 2002:a5d:590e:: with SMTP id v14mr1070584wrd.208.1639872133165;
- Sat, 18 Dec 2021 16:02:13 -0800 (PST)
+Received: (qmail 18012 invoked from network); 16 Jan 2018 15:12:55 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
+         :mime-version;
+        bh=3duJQh5moqot2BZcJHQRys6f2nvpeZcqg51nnBYzN8g=;
+        b=OsxbrTtteK2XBvbJ+o/Dgvzcn4OEjBvRfcla6hzJqd4FNf6L+qBqHeg0WoXE+UAUNC
+         k/UXI/CHWGPJA0DhTd+ooIhS4/WE/bZTBuZTVCYZuqhnsWr6fEk+X039d3v+3q72oHrt
+         KuA19S8+ZuxwiA90ah3hl7IQHXm8RdAbeSgy8PsIhbfit7ZVhxeO2/dd4Xt9P3XyBW+i
+         Q/4FfzaTNh8G+WlJeMo6ggDWWHpDNKyk5JDZ/lT3jTPUqjTY623FngFgm+itrMrx/k8S
+         fOAd/JxBNW1fjQH5isM6cHr1KGgdZ6W2O8STWMN/4Ss7WS9ZKpBMzvMmxSr7hFBXa3Z1
+         lqdA==
+X-Gm-Message-State: AKwxyteTQeyzRATegSA+9IlJncEEEkX0np8xHwb+PbqID8P53mA3+fwh
+	j0lrpiLIFSqNTF5uW2LNVD1MvNdXGg==
+X-Google-Smtp-Source: ACJfBov8Kxg4iYroRFFwwfNVQ5i0p0luFmOZucU/J7YvsjE6sAIrblct0zyGDYDvzfxMbVB4gRUf5g==
+X-Received: by 10.223.197.72 with SMTP id s8mr1347242wrf.96.1516115563515;
+        Tue, 16 Jan 2018 07:12:43 -0800 (PST)
+Message-ID: <fd739193-ade8-6f8d-3831-58b8e752eaba@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.2
 MIME-Version: 1.0
-From: Matt Sicker <mattsicker@apache.org>
-Date: Sat, 18 Dec 2021 18:02:02 -0600
-X-Gmail-Original-Message-ID: <CACmp6kqFOo0+SsDk-xEuBTvwz6zDRSEpsKobu=dcjVza=TN1pA@mail.gmail.com>
-Message-ID: <CACmp6kqFOo0+SsDk-xEuBTvwz6zDRSEpsKobu=dcjVza=TN1pA@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="lol8VOFoD3brl5TJEl15U1TAjmSFK5v2j"
+Date: Tue, 16 Jan 2018 15:12:37 +0000
+From: Luke Hinds <lhinds@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] opendaylight-advisory: Multiple "expired" flows consume the memory
+ resource of CONFIG DS
+To: oss-security <oss-security@lists.openwall.com>
+
+--lol8VOFoD3brl5TJEl15U1TAjmSFK5v2j
+Content-Type: multipart/mixed; boundary="l1k3rDBgsWvJ6krw6uFWPuHx5uCu33muO";
+ protected-headers="v1"
+From: Luke Hinds <lhinds@redhat.com>
+To: oss-security <oss-security@lists.openwall.com>
+Message-ID: <fd739193-ade8-6f8d-3831-58b8e752eaba@redhat.com>
+Subject: opendaylight-advisory: Multiple "expired" flows consume the memory
+ resource of CONFIG DS
+
+--l1k3rDBgsWvJ6krw6uFWPuHx5uCu33muO
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB-large
 Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] CVE-2021-45105: Apache Log4j2 does not always protect from infinite
- recursion in lookup evaluation
 
-Severity: high
+Issue
 
-Description:
+Multiple "expired" flows consume memory resources of CONFIG DS which
+leads to Controller shutdown.
 
-Apache Log4j2 versions 2.0-alpha1 through 2.16.0 (excluding 2.12.3)
-did not protect from uncontrolled recursion from self-referential
-lookups. This allows an attacker with control over Thread Context Map
-data to cause a denial of service when a crafted string is
-interpreted. This issue was fixed in Log4j 2.17.0 and 2.12.3.
+The following issue was discovered and reported by Vaibhav Hemant Dixit.
 
-This issue is being tracked as LOG4J2-3230
+Summary
 
-Mitigation:
+Multiple "expired" flows take up the memory resource of CONFIG DATASTORE
+which leads to CONTROLLER shutdown.
 
-Implement one of the following mitigation techniques:
+Affected Services / Software
 
-* Java 8 (or later) users should upgrade to release 2.17.0.
+OpenFlow Plugin and OpenDayLight Controller.
 
-Alternatively, this can be mitigated in configuration:
+Versions: Nitrogen, Carbon, Boron   Robert Varga, Anil Vishnoi -< please
+verify versions affected (back to depreciated releases).
 
-* In PatternLayout in the logging configuration, replace Context
-Lookups like `${ctx:loginId}` or `$${ctx:loginId}` with Thread Context
-Map patterns (%X, %mdc, or %MDC).
-* Otherwise, in the configuration, remove references to Context
-Lookups like `${ctx:loginId}` or `$${ctx:loginId}` where they
-originate
-from sources external to the application such as HTTP headers or user input.
+Discussion
 
-Credit:
+If multiple different flows with "idle-timeout" and "hard-timeout" are
+sent to the Openflow Plugin REST API, the expired flows will eventually
+crash the controller once its resource allocations set with the JVM size
+are exceeded.
 
-Independently discovered by Hideki Okamoto of Akamai Technologies, Guy
-Lederfein of Trend Micro Research working with Trend Micro=E2=80=99s Zero D=
-ay
-Initiative, and another anonymous vulnerability researcher
+Although the installed flows(with timeout set) are removed from network
+(an thus also from controller's operations DS), the expired entries are
+still present in CONFIG DS.
 
-References:
+The attack can originate both from NORTH or SOUTH. The above description
+is for a north bound attack. A south bound attack can originate when an
+attacker attempts a flow flooding attack and since flows come with
+timeouts, the attack is not successful. However, the attacker will now
+be successful in CONTROLLER overflow attack (resource consumption).
 
-https://logging.apache.org/log4j/2.x/security.html
+Although, the network(actual flow tables) and operational DS are only
+(~)1% occupied, the controller requests for resource consumption. This
+happens because the installed flows get removed from the network upon
+timeout.
+
+Proposed patch
+
+No patches have been made available, as this issue is mitigated by means
+of a secure architecture (See Recommended Actions below).
+
+Recommended Actions
+
+Management API=E2=80=99s within OpenDayLight should only ever be deployed w=
+ithin
+a segregated private network and never exposed to public networks, this
+includes the OpenFlowPlugin. Further protections can be implemented by
+deploying a rate limiting proxy (such as OpenRepose, HAProxy, nginx,
+mod_ratelimit etc) or web application firewall.
+
+CVE: CVE-2017-1000411
+
+Regards,
+
+Luke Hinds (OpenDayLight Security Manager)
 
 
---=20
-Matt Sicker
-PMC Member, Logging Services, Apache Software Foundation
+--l1k3rDBgsWvJ6krw6uFWPuHx5uCu33muO--
+
+--lol8VOFoD3brl5TJEl15U1TAjmSFK5v2j
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEElSwKI1Vlx+dE6h5a8WVWFzwgJhQFAlpeFmkACgkQ8WVWFzwg
+JhR8eggAhtj3CcsJWBy45nFjqUou4RxWK0MfDGCGpAyy40PEQ4N1Ya5CkX857FOm
+uMctsRzx/VI4RuCOeTVHWT+IFwtfh5XhkRD2piyDKP1kSue+ZJTXCqCh3tcKrIF5
+0/5wKAld7p0TTOK7/OodUvi/oYBR2sYCx+F7i6vm8VNZgl0v3BwAvvitGoRfQBaT
+w3e1BOWqdjYs+xp3uAHKSCzabG53JcWQqYZlt4gSTLJsZAwhDQQSWhYSXRLaQW3c
+jCRTFK4NiODmABOOyI2uOK4VrkvG2s9gNgLJlRz0Uba3u7vPmCkq1f8DRQgdrIP4
+1O28YD+cso/l6K+49wXl5EL31yajRw==
+=btQe
+-----END PGP SIGNATURE-----
+
+--lol8VOFoD3brl5TJEl15U1TAjmSFK5v2j--
