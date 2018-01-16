@@ -1,44 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/18/7
-Message-ID: <CAFRnB2W1ggmiuz=3x3mrDBbkp2rQKWkAQUcuObmLM=xwv1Q-fQ@mail.gmail.com>
-Date: Tue, 18 Dec 2018 14:24:08 -0500
-From: Alex Gaynor <alex.gaynor@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: Cfir Cohen <cfir@...gle.com>
-Subject: Re: CVE-2018-16882 Kernel: KVM: nVMX: use after free in posted interrupt processing
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/16/2
+Message-ID: <fd739193-ade8-6f8d-3831-58b8e752eaba@redhat.com>
+Date: Tue, 16 Jan 2018 15:12:37 +0000
+From: Luke Hinds <lhinds@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: opendaylight-advisory: Multiple "expired" flows consume the memory resource of CONFIG DS
 Content-Type: text/plain; charset=utf-8
 
-Can you say more about why this is only a DoS? The commit message sounds
-(to someone with little domain expertise in KVM) like a fairly traditional
-pattern for an exploitable for code exec uaf.
+Issue
 
-Cheers,
-Alex
+Multiple "expired" flows consume memory resources of CONFIG DS which
+leads to Controller shutdown.
 
-On Tue, Dec 18, 2018, 2:16 PM P J P <ppandit@...hat.com wrote:
+The following issue was discovered and reported by Vaibhav Hemant Dixit.
 
->    Hello,
->
-> A use after free issue was found in the way Linux kernel's KVM hypervisor
-> processed posted interrupts, when nested(=1) virtualization is enabled. In
-> nested_get_vmcs12_pages(), in case of an error while processing posted
-> interrupt address, it unmaps the 'pi_desc_page' without resetting
-> 'pi_desc'
-> descriptor address. Which is latter used in pi_test_and_clear_on().
->
-> A guest user/process could use this flaw to crash the host kernel
-> resulting in
-> DoS.
->
-> Upstream patch:
-> ---------------
->    -> https://marc.info/?l=kvm&m=154514994222809&w=2
->
-> This issue was reported by Cfir Cohen of google.com.
->
-> Thank you.
-> --
-> Prasad J Pandit / Red Hat Product Security Team
-> 47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
->
+Summary
 
+Multiple "expired" flows take up the memory resource of CONFIG DATASTORE
+which leads to CONTROLLER shutdown.
+
+Affected Services / Software
+
+OpenFlow Plugin and OpenDayLight Controller.
+
+Versions: Nitrogen, Carbon, Boron   Robert Varga, Anil Vishnoi -< please
+verify versions affected (back to depreciated releases).
+
+Discussion
+
+If multiple different flows with "idle-timeout" and "hard-timeout" are
+sent to the Openflow Plugin REST API, the expired flows will eventually
+crash the controller once its resource allocations set with the JVM size
+are exceeded.
+
+Although the installed flows(with timeout set) are removed from network
+(an thus also from controller's operations DS), the expired entries are
+still present in CONFIG DS.
+
+The attack can originate both from NORTH or SOUTH. The above description
+is for a north bound attack. A south bound attack can originate when an
+attacker attempts a flow flooding attack and since flows come with
+timeouts, the attack is not successful. However, the attacker will now
+be successful in CONTROLLER overflow attack (resource consumption).
+
+Although, the network(actual flow tables) and operational DS are only
+(~)1% occupied, the controller requests for resource consumption. This
+happens because the installed flows get removed from the network upon
+timeout.
+
+Proposed patch
+
+No patches have been made available, as this issue is mitigated by means
+of a secure architecture (See Recommended Actions below).
+
+Recommended Actions
+
+Management API’s within OpenDayLight should only ever be deployed within
+a segregated private network and never exposed to public networks, this
+includes the OpenFlowPlugin. Further protections can be implemented by
+deploying a rate limiting proxy (such as OpenRepose, HAProxy, nginx,
+mod_ratelimit etc) or web application firewall.
+
+CVE: CVE-2017-1000411
+
+Regards,
+
+Luke Hinds (OpenDayLight Security Manager)
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
