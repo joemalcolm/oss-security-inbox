@@ -1,88 +1,238 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/06/2
-Message-ID: <1515248018.2869.2.camel@gmail.com>
-Date: Sat, 06 Jan 2018 15:13:38 +0100
-From: Ailin Nemui <ailin.nemui@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Irssi 1.0.6: CVE-2018-5206, CVE-2018-5205, CVE-2018-5208, CVE-2018-5207
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/17/3
+Message-Id: <E1ebrGm-0003TG-2n@xenbits.xenproject.org>
+Date: Wed, 17 Jan 2018 17:13:00 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 254 (CVE-2017-5753,CVE-2017-5715,CVE-2017-5754) - Information leak via side effects of speculative execution
 Content-Type: text/plain; charset=utf-8
 
-IRSSI-SA-2018-01 Irssi Security Advisory [1]
-============================================
-CVE-2018-5206, CVE-2018-5205, CVE-2018-5208, CVE-2018-5207
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Description
------------
+ Xen Security Advisory CVE-2017-5753,CVE-2017-5715,CVE-2017-5754 / XSA-254
+                                 version 9
 
-Multiple vulnerabilities have been located in Irssi.
+        Information leak via side effects of speculative execution
 
-(a) When the channel topic is set without specifying a sender, Irssi
-    may dereference NULL pointer. Found by Joseph Bisch. (CWE-476)
+UPDATES IN VERSION 9
+====================
 
-    CVE-2018-5206 was assigned to this issue.
+"Stage 1" pagetable isolation (PTI) Meltdown fixes for Xen are
+available.
 
-(b) When using incomplete escape codes, Irssi may access data beyond
-    the end of the string. (CWE-126) Found by Joseph Bisch.
+"Comet" updates to shim code (4.10 branch):
+ * Include >32vcpu workaround in shim branch so that all shim
+   guests can boot without hypervisor changes.
+ * Fix shim build on systems whose find(1) lacks -printf
+ * Place shim trampoline at page 0x1 to avoid having 0 mapped
+(4.8 "Comet" users are using the 4.10 shim and may want to update.)
 
-    CVE-2018-5205 was assigned to this issue.
+ISSUE DESCRIPTION
+=================
 
-(c) A calculation error in the completion code could cause a heap
-    buffer overflow when completing certain strings. (CWE-126) Found
-    by Joseph Bisch.
+Processors give the illusion of a sequence of instructions executed
+one-by-one.  However, in order to most efficiently use cpu resources,
+modern superscalar processors actually begin executing many
+instructions in parallel.  In cases where instructions depend on the
+result of previous instructions or checks which have not yet
+completed, execution happens based on guesses about what the outcome
+will be.  If the guess is correct, execution has been sped up.  If the
+guess is incorrect, partially-executed instructions are cancelled and
+architectural state changes (to registers, memory, and so on)
+reverted; but the whole process is no slower than if no guess had been
+made at all.  This is sometimes called "speculative execution".
 
-    CVE-2018-5208 was assigned to this issue.
+Unfortunately, although architectural state is rolled back, there are
+other side effects, such as changes to TLB or cache state, which are
+not rolled back.  These side effects can subsequently be detected by
+an attacker to determine information about what happened during the
+speculative execution phase.  If an attacker can cause speculative
+execution to access sensitive memory areas, they may be able to infer
+what that sensitive memory contained.
 
-(d) When using an incomplete variable argument, Irssi may access data
-    beyond the end of the string. (CWE-126) Found by Joseph Bisch.
+Furthermore, these guesses can often be 'poisoned', such that attacker
+can cause logic to reliably 'guess' the way the attacker chooses.
+This advisory discusses three ways to cause speculative execution to
+access sensitive memory areas (named here according to the
+discoverer's naming scheme):
 
-    CVE-2018-5207 was assigned to this issue.
+"Bounds-check bypass" (aka SP1, "Variant 1", Spectre CVE-2017-5753):
+Poison the branch predictor, such that victim code is speculatively
+executed past boundary and security checks.  This would allow an
+attacker to, for instance, cause speculative code in the normal
+hypercall / emulation path to execute with wild array indexes.
+
+"Branch Target Injection" (aka SP2, "Variant 2", Spectre CVE-2017-5715):
+Poison the branch predictor.  Well-abstracted code often involves
+calling function pointers via indirect branches; reading these
+function pointers may involve a (slow) memory access, so the CPU
+attempts to guess where indirect branches will lead.  Poisoning this
+enables an attacker to speculatively branch to any code that is
+executable by the victim (eg, anywhere in the hypervisor).
+
+"Rogue Data Load" (aka SP3, "Variant 3", Meltdown, CVE-2017-5754):
+On some processors, certain pagetable permission checks only happen
+when the instruction is retired; effectively meaning that speculative
+execution is not subject to pagetable permission checks.  On such
+processors, an attacker can speculatively execute arbitrary code in
+userspace with, effectively, the highest privilege level.
+
+More information is available here:
+  https://meltdownattack.com/
+  https://spectreattack.com/
+  https://googleprojectzero.blogspot.co.uk/2018/01/reading-privileged-memory-with-side.html
+
+Additional Xen-specific background:
+
+Xen hypervisors on most systems map all of physical RAM, so code
+speculatively executed in a hypervisor context can read all of system
+RAM.
+
+When running PV guests, the guest and the hypervisor share the address
+space; guest kernels run in a lower privilege level, and Xen runs in
+the highest privilege level.  (x86 HVM and PVH guests, and ARM guests,
+run in a separate address space to the hypervisor.)  However, only
+64-bit PV guests can generate addresses large enough to point to
+hypervisor memory.
+
+IMPACT
+======
+
+Xen guests may be able to infer the contents of arbitrary host memory,
+including memory assigned to other guests.
+
+An attacker's choice of code to speculatively execute (and thus the
+ease of extracting useful information) goes up with the numbers.  For
+SP1, an attacker is limited to windows of code after bound checks of
+user-supplied indexes.  For SP2, the attacker will in many cases will
+be limited to executing arbitrary pre-existing code inside of Xen.
+For SP3 (and other cases for SP2), an attacker can write arbitrary
+code to speculatively execute.
+
+Additionally, in general, attacks within a guest (from guest user to
+guest kernel) will be the same as on real hardware.  Consult your
+operating system provider for more information.
+
+NOTE ON TIMING
+==============
+
+This vulnerability was originally scheduled to be made public on 9
+January.  It was accelerated at the request of the discloser due to
+one of the issues being made public.
+
+VULNERABLE SYSTEMS
+==================
+
+Systems running all versions of Xen are affected.
+
+For SP1 and SP2, both Intel and AMD are vulnerable.  Vulnerability of
+ARM processors to SP1 and SP2 varies by model and manufacturer.  ARM
+has information on affected models on the following website:
+   https://developer.arm.com/support/security-update
+
+For SP3, only Intel processors are vulnerable.  (The hypervisor cannot
+be attacked using SP3 on any ARM processors, even those that are
+listed as affected by SP3.)
+
+Furthermore, only 64-bit PV guests can exploit SP3 against Xen.  PVH,
+HVM, and 32-bit PV guests cannot exploit SP3.
+
+MITIGATION
+==========
+
+There is no mitigation for SP1 and SP2.
+
+SP3 can be mitigated by page-table isolation ("PTI").
+See Resolution below.
+
+SP3 can be mitigated by running guests in HVM or PVH mode.
+(Within-guest attacks are still possible unless the guest OS has also
+been updated with an SP3 mitigation series such as KPTI/Kaiser.)
+
+For guests with legacy PV kernels which cannot be run in HVM or PVH
+mode directly, we have developed two "shim" hypervisors that allow PV
+guests to run in HVM mode or PVH mode.  This prevents attacks on the
+host, but it leaves the guest vulnerable to Meltdown attacks by its
+own unprivileged processes, even if the guest OS has KPTI or similar
+Meltdown mitigation.
+
+The HVM shim (codenamed "Vixen") is available now, as is the PVH shim
+(codenamed "Comet") for Xen 4.10 and Xen 4.8.   Please read
+README.which-shim to determine which shim is suitable for you.
 
 
-Impact
-------
+$ sha256sum xsa254*/*
+1cba14ff83844d001d6c8a74afc3f764f49182cc7a06bb4463548450ac96cc2f  xsa254/README.comet
+cddd78cd7a00df9fa254156993f0309cea825d600f5ad8b36243148cf686bc9b  xsa254/README.pti
+3ef42381879befc84aa78b67d3a9b7b0cd862a2ffa445810466e90be6c6a5e86  xsa254/README.vixen
+7e816160c1c1d1cd93ec3c3dd9753c8f3957fefe86b7aa967e9e77833828f849  xsa254/README.which-shim
+1d2098ad3890a5be49444560406f8f271c716e9f80e7dfe11ff5c818277f33f8  xsa254/pvshim-converter.pl
+$
 
-May affect the stability of Irssi.
+RESOLUTION
+==========
 
-
-Affected versions
------------------
-
-(a,b,c,d) All Irssi versions that we observed.
-
-
-Fixed in
---------
-
-Irssi 1.0.6
+These are hardware bugs, so technically speaking they cannot be
+properly fixed in software.  However, it is possible in many cases to
+provide patches to software to work around the problems.
 
 
-Recommended action
-------------------
+There is no available resolution for SP1.  A solution may be available
+in the future.
 
-Upgrade to Irssi 1.0.6. Irssi 1.0.6 is a maintenance release in the
-1.0 series, without any new features.
-
-After installing the updated packages, one can issue the /upgrade
-command to load the new binary. TLS connections will require
-/reconnect.
+We are working on patches which mitigate SP2 but these are not
+currently available.  Given that the vulnerabilities are now public,
+these will be developed and published in public, initially via
+xen-devel.
 
 
-Mitigating facts
-----------------
+SP3 can be mitigated by page-table isolation ("PTI").
 
-(a) requires a broken ircd or control over the ircd
+We have a "stage 1" implementation.  It allows 64-bit PV guests to be
+run natively while restricting what can be accessed via SP3 to the Xen
+stack of the current pcpu (which may contain remnants of information
+from other guests, but should be much more difficult to attack
+reliably).
 
-(b,d) requires user to install malicious or broken files or enter
-      affected commands
+Unfortunately these "stage 1" patches incur a non-negligible
+performance overhead; about equivalent to the "PV shim" approaches
+above.  Moving to plain HVM or PVH guests is recommended where
+possible.  For more information on that, see below.
+
+Patches for the "stage-1" PTI implementation are available in the Xen
+staging-NN branches for each Xen revision.  See README.pti for
+specific revisons.
 
 
-Patch
------
-https://github.com/irssi/irssi/releases/download/1.0.6/irssi-1.0.5_1.0.
-6.diff
+NOTE ON LACK OF EMBARGO
+=======================
 
+The timetable and process were set by the discloser.
 
-References
-----------
+After the intensive initial response period for these vulnerabilities
+is over, we will prepare and publish a full timeline, as we have done
+in a handful of other cases of significant public interest where we
+saw opportunities for process improvement.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-[1] https://irssi.org/security/irssi_sa_2018_01.txt
+iQEcBAEBCAAGBQJaX4QSAAoJEIP+FMlX6CvZubQH/iuxfjnW24mzMX+hVughCH5Q
+PKoZiNDnKMoWCzztrRjMNNcXRFcLAo+IU/+jWdjytJr5ISvNtICPtU6mzRTduqRe
+KwfvOxrX8bfkoxJWdM7g4ux6sGTNKGS27+HaJYHNBypPexmwQwb/GBJnp+Yj+TRJ
+0p+OGvN/F+gVBrOm17rD2/NE2jwDLa3WAX/oS12WaTJtwvnnFjTKmNAKj4XU3FRs
+PMZdmE6Iimix5rA6YlYLmmsVrS+kD9B7SSU2CRX0wqOQcFpLn1ZM1QXQ7ux7p9+I
+bAE7EMrA28ZJ+TS8H+1AYYL8e8xvo2/KIXPjEKsEAEr1nXIEOciSuVjHByvTGbQ=
+=2SAx
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa254/README.comet" of type "application/octet-stream" (2896 bytes)
+
+Download attachment "xsa254/README.pti" of type "application/octet-stream" (2280 bytes)
+
+Download attachment "xsa254/README.vixen" of type "application/octet-stream" (2738 bytes)
+
+Download attachment "xsa254/README.which-shim" of type "application/octet-stream" (4010 bytes)
+
+Download attachment "xsa254/pvshim-converter.pl" of type "application/octet-stream" (6762 bytes)
