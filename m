@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1283" "Friday" "14" "August" "2015" "15:04:03" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20150814130403.GA15575@eldamar.local>" "42" "Re: [oss-security] CVE request: GNUTLS-SA-2015-3 double free in certificate DN decoding" nil nil nil "8" "2015081413:04:03" "[oss-security] CVE request: GNUTLS-SA-2015-3 double free in certificate DN decoding" (number mark "        carnil@debia Aug 14   42/1283  " thread-indent "\"Re: [oss-security] CVE request: GNUTLS-SA-2015-3 double free in certificate DN decoding\"\n") "<87d1yv1oqx.fsf@redhat.com>" ("<87d1yv1oqx.fsf@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2282" "Tuesday" "16" "January" "2018" "23:03:20" "-0500" "Michael Orlitzky" "michael@orlitzky.com" "<be5a8985-59e8-1b2a-174e-7309979b4bc1@orlitzky.com>" "58" "[oss-security] CVE-2017-16933: Icinga2 root privilege escalation via init script and systemd service" nil nil nil "1" "2018011704:03:20" "[oss-security] CVE-2017-16933: Icinga2 root privilege escalation via init script and systemd service" (number mark "U       michael@orli Jan 16   58/2282  " thread-indent "\"[oss-security] CVE-2017-16933: Icinga2 root privilege escalation via init script and systemd service\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 14190 invoked by uid 550); 14 Aug 2015 13:04:16 -0000
+Received: (qmail 22490 invoked by uid 550); 17 Jan 2018 04:03:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,75 +11,82 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 14172 invoked from network); 14 Aug 2015 13:04:15 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=yf8BwUUcAEFtapRlQSvoTAkD2BEAPBHA4hi/iN0E7IU=;
-        b=VRwXPmxQlfb+RGk7ZVxlfQE9y90FhccC7k3hFVDWCw6jOGGw5x3HqczYjPU+G3UFj4
-         EQS5dIWeNZELF/9RZPdvgJew7oBWE3DK7hf1j3HTdgmLWOe8/3NFNAsKnOx6Sa1oyinc
-         86MQiNgkPKFp5c/+F8lq55w/T+Y8IiyIT3+vRbi9Fnq6piOQhiDg0a4zUUJOFjA8uZOC
-         U2sxnSBSprXI/+4LYP0ILz5gJd1eqezNyyWLHSulpMAMDoGJLs1KYpAACIlUBVaSf0eL
-         +5k/HPRksbdpM2clK7ROZ1HJVxSzy5GeKRRWk1Hid+OWcVAImP0OiddvhrTFn4loF/aQ
-         5ujA==
-X-Received: by 10.180.39.172 with SMTP id q12mr6626921wik.17.1439557444565;
-        Fri, 14 Aug 2015 06:04:04 -0700 (PDT)
-Message-ID: <20150814130403.GA15575@eldamar.local>
-References: <87d1yv1oqx.fsf@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87d1yv1oqx.fsf@redhat.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Cc: CVE Assignments MITRE <cve-assign@mitre.org>
-Date: Fri, 14 Aug 2015 15:04:03 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Subject: Re: [oss-security] CVE request: GNUTLS-SA-2015-3 double free in
- certificate DN decoding
+Received: (qmail 22422 invoked from network); 17 Jan 2018 04:03:34 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=orlitzky.com; s=mail2;
+	t=1516161802; bh=dxCncmhunnCMvSOZLqwwl6KIoX6azRrv2bH4RGhWHpw=;
+	h=To:From:Subject:Date;
+	b=eUwB3hhJFg+3DFMLfDdzVMmgOmzeiG6Qs5myrroCcgvCb5vlN0hWRhBHuZ6rC5X9t
+	 Td4WgL3+lTJL98Ae3jojmseqnuzK3assP6SdqckDvsEfHQHftcwQH2EMOO+9Dhsq8S
+	 YzmG3tRdM2N8nJq5kZuqUJv+kx8zitF26/ifpP+E=
 To: oss-security@lists.openwall.com
+From: Michael Orlitzky <michael@orlitzky.com>
+Message-ID: <be5a8985-59e8-1b2a-174e-7309979b4bc1@orlitzky.com>
+Date: Tue, 16 Jan 2018 23:03:20 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.2
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+Subject: [oss-security] CVE-2017-16933: Icinga2 root privilege escalation via init script and
+ systemd service
 
-Hi,
+Product: Icinga2 open source monitoring system
+Versions-affected: 2.8.0 and earlier (all current 2.x versions)
+Author: Michael Orlitzky
+Bug-report: https://github.com/Icinga/icinga2/issues/5793
 
-On Mon, Aug 10, 2015 at 11:23:02AM +0200, Martin Prpic wrote:
-> Hi,
-> 
-> GnuTLS released versions 3.4.4 and 3.3.17 that fix one security issue:
-> 
-> http://www.gnutls.org/security.html#GNUTLS-SA-2015-3
-> 
-> "Kurt Roeckx reported that decoding a specific certificate with very
-> long DistinguishedName (DN) entries leads to double free, which may
-> result to a denial of service. Since the DN decoding occurs in almost
-> all applications using certificates it is recommended to upgrade the
-> latest GnuTLS version fixing the issue. Recommendation: Upgrade to
-> GnuTLS 3.4.4, or 3.3.17."
-> 
-> The upstream patch that fixes this issue is available at:
-> 
-> https://gitlab.com/gnutls/gnutls/commit/272854367efc130fbd4f1a51840d80c630214e12
-> 
-> Can a CVE please be assigned to this issue?
-> 
-> Also, there is still no CVE for the issue before this one. The CVE
-> request was sent on May 5:
-> 
-> http://seclists.org/oss-sec/2015/q2/367
-> 
-> Can a CVE be assigned to this as well?
-> 
-> Thank you!
-> 
-> Refs:
-> rhbz GNUTLS-SA-2015-2: https://bugzilla.redhat.com/1218426
-> rhbz GNUTLS-SA-2015-3: https://bugzilla.redhat.com/1251902
 
-Adding explicitly MITRE CVE assignment team to the loop.
+== Summary ==
 
-Can CVEs be assigned for both GNUTLS-SA-2015-2 and GNUTLS-SA-2015-3
-issues?
+The icinga2 init script and systemd service file allow the unprivileged
+$ICINGA2_USER to gain root privileges by replacing the target of chown
+with a link.
 
-Regards,
-Salvatore
+
+== Details ==
+
+The "chown" command follows both symlinks and hard links by default on
+a vanilla Linux kernel. It is therefore unsafe to call "chown" on a
+path that is not wholly controlled by root; if the target path can be
+replaced with a link by a non-root user, then that user can do so to
+gain root when "chown" is called.
+
+The "etc/initsystem/prepare-dirs" script that ships with icinga2 calls
+"chown" in that manner, leading to a root exploit for the $ICINGA2_USER.
+For example,
+
+  chown $ICINGA2_USER... $(dirname -- $ICINGA2_PID_FILE)
+  if [ -f $ICINGA2_PID_FILE ]; then
+    chown $ICINGA2_USER:$ICINGA2_GROUP $ICINGA2_PID_FILE
+  fi
+
+The first line gives away ownership of the directory containing the
+$ICINGA2_PID_FILE, and the next line calls chown on that file. The
+exploit is that, after the first line executes, the $ICINGA2_USER can
+simply replace $ICINGA2_PID_FILE with a link (sym or hard) to a
+root-owned file. The call to "chown" will then change ownership of the
+link's target. That is easily exploitable to gain root, by taking
+ownership of e.g. "/etc/passwd" or root's ".bashrc" file.
+
+The prepare-dirs script is used by both the SysV-style init script,
+
+  start() {
+    printf "Starting Icinga 2: "
+    @CMAKE_INSTALL_PREFIX@/lib/icinga2/prepare-dirs $SYSCONFIGFILE
+    ...
+
+and the systemd service file,
+
+  ExecStartPre=.../prepare-dirs @ICINGA2_SYSCONFIGFILE@
+
+and so both are vulnerable to the problem in prepare-dirs.
+
+To exploit the "chown" calls the first time the service is started,
+you would need to take advantage of the race condition to create a
+link before the "-f" test is executed. However, there's a much easier
+scenario: if the service is started, stopped, and started again (even
+across reboots, for persistent directories), then the "-f" test will
+succeed, and call "chown" on a path that has been controlled by
+$ICINGA2_USER since the first time the service was started.
