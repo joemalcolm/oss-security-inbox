@@ -1,24 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/11/4
-Message-Id: <20180711021534.2C8121000DA@webmail.sinamail.sina.com.cn>
-Date: Wed, 11 Jul 2018 10:15:34 +0800
-From: <zrlw@...a.com>
-To: "Greg KH" <greg@...ah.com>, "oss-security" <oss-security@...ts.openwall.com>,
-Cc: "Solar Designer" <solar@...nwall.com>
-Subject: Re: mmap vulnerability in motion eye video4linux driver for Sony Vaio PictureBook
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/17/2
+Message-ID: <20180117135945.0d3fd93a@redhat.com>
+Date: Wed, 17 Jan 2018 13:59:45 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: MySQL sha256_password authentication plugin DoS issues
 Content-Type: text/plain; charset=utf-8
 
-i think commit be83bbf80682 maybe has a problem: if file_mmap_size_max return 0 (not regular, not block, fmode & FMODE_UNSIGNED_OFFSET == true) , maxsize will be set to -len, correct? 
-+static inline bool file_mmap_ok(struct file *file, struct inode *inode,
-+               unsigned long pgoff, unsigned long len)
-+{
-+   u64 maxsize = file_mmap_size_max(file, inode);
-+
-+   if (maxsize && len > maxsize)
-+       return false;
-+   maxsize -= len;                                         <==  maxsize = -len when file_mmap_size_max return 0 
-+   if (pgoff > maxsize >> PAGE_SHIFT)
-+       return false;
-+   return true;
-+}
-+
+Hi!
+
+As Oracle does not share any information about the CVEs they assign,
+here's info about two CVEs fixed in MySQL 5.6.39 and 5.7.21 and listed
+in Oracle CPU Jan 2018.  Both flaws affect sha256_password
+authentication plugin, which uses SHA256 crypt algorithm to hash
+passwords, and was affected by the known algorithm issues.
+
+MySQL did not set any explicit limit on the length of the password that
+can be provided during the authentication phase.  Long passwords
+trigger DoS - high CPU usage and even server crash (because of use of
+alloca()).  This was assigned CVE-2018-2696 and fixed by enforcing
+maximum password length limit:
+
+https://github.com/mysql/mysql-server/commit/475dcde2c7856dd0050b967099a86c087d94f32f
+
+SHA256 crypt makes it possible to adjust the cost of computing password
+hash by changing the number of "rounds".  This is only a problem if
+user can directly specify their password hash and hence manipulate the
+rounds setting.  That is possible in MySQL 5.6 (via SET PASSWORD =
+'hash_string';), but no longer possible in MySQL 5.7.  This isn't very
+exciting issue, as SQL access is a precondition.  Impact is that
+sha256_password can be made to use excessive amount of CPU even if
+short password is provided.  This was assigned CVE-2018-2703 and fixed
+by limiting the maximum rounds value:
+
+https://github.com/mysql/mysql-server/commit/efb4087cfe12134e1541b39ee9a4305f7cd225f5
+
+References:
+
+http://www.oracle.com/technetwork/security-advisory/cpujan2018-3236628.html#AppendixMSQL
+https://dev.mysql.com/doc/relnotes/mysql/5.6/en/news-5-6-39.html
+https://dev.mysql.com/doc/relnotes/mysql/5.7/en/news-5-7-21.html
+
+Note that these issues were found while researching a related fix from
+Oct 2017 CPU:
+
+https://github.com/mysql/mysql-server/commit/f4e4405ebe319a840eb720db52c0e28b4fef5062
+
+I believe that's CVE-2017-10155, wonder if any Oracle subscribers on
+this list are going to speak up to confirm.
+
+-- 
+Tomas Hoger / Red Hat Product Security
