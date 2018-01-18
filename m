@@ -1,30 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/10/6
-Message-ID: <CANnUo4JFixDvNxLPLZtEE_TWV3+Aafw5kYGf20xgkFjZRuKuDA@mail.gmail.com>
-Date: Tue, 10 Apr 2018 12:18:11 +0100
-From: Mark Cox <mjc@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: Change to ASF httpd vulnerability XML format
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/18/4
+Message-ID: <87shb36qyd.fsf@gnu.org>
+Date: Thu, 18 Jan 2018 18:02:02 +0100
+From: ludo@....org (Ludovic Courtès)
+To: Florian Weimer <fweimer@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: How to deal with reporters who don't want their bugs fixed?
 Content-Type: text/plain; charset=utf-8
 
-Various OSS projects I've been involved with use a master vulnerability
-database in XML used for various internal functions such as generating web
-pages.  I know some folks monitor or use/convert these XML feeds too even
-though we've not really publicised them or given them a schema.
+Florian Weimer <fweimer@...hat.com> skribis:
 
-Later today I will be performing a major update to the Apache HTTP Server
-XML file[1] so that each CVE has a unique entry (rather than currently
-where the issues are repeated for each major version affected).  This
-brings it more into line with the OpenSSL XML file[2] and allows us to
-automate more of our release process (i.e. generating the required JSON for
-Mitre CVE submissions).
+> Subject says it all: What do you do if you receive a vulnerability
+> report, and the reporter requests an embargo at some time in the
+> future because that's when their paper/conference presentation/patent
+> submission is scheduled?
 
-Some entries will have other minor updates to their text and to fix link
-locations so if you are monitoring the html pages you will see some minor
-changes at that time.
+Perhaps you could publicly state upfront that your project will not
+accept deadlines put forth by the people who report vulnerabilities
+(other than making sure to coordinate with the relevant parties)?
 
-Regards, Mark J Cox
-
-[1] https://httpd.apache.org/security/vulnerabilities-httpd.xml
-[2] https://www.openssl.org/news/vulnerabilities.xml
-
+Ludo’.
