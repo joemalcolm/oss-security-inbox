@@ -1,4 +1,9 @@
-Received: (qmail 26224 invoked by uid 550); 13 Apr 2022 15:42:42 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["282" "Thursday" "18" "January" "2018" "17:35:07" "-0500" "Michael Orlitzky" "michael@orlitzky.com" "<9ea9a94c-e971-19b4-3c01-4c3cb3a853ae@orlitzky.com>" "7" "Re: [oss-security] How to deal with reporters who don't want their bugs fixed?" "^Date:" nil nil "1" "2018011822:35:07" "[oss-security] How to deal with reporters who don't want their bugs fixed?" (number mark "        michael@orli Jan 18    7/282   " thread-indent "\"Re: [oss-security] How to deal with reporters who don't want their bugs fixed?\"\n") "<07f40446-1917-893c-2a87-b0d7990579b2@redhat.com>" ("<07f40446-1917-893c-2a87-b0d7990579b2@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 18268 invoked by uid 550); 18 Jan 2018 22:35:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,89 +11,33 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26205 invoked from network); 13 Apr 2022 15:42:41 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=ge89vMg/PH2Usso7c5V8L3SxFZekIpxeV+eQcoh2jEk=;
-        b=Tbx/1Iqzco8RItk2xZxzeKuacCUH8TcVOohcX350uigSvT5k63e3HQIlkfHsP/0lLA
-         51tH80pao/EYzL680nK1a5E3pkmsnn2YMC1DEcX2ZCrGZfwp4cwEtuyzhl/m752cujPi
-         iRkPiCJrgYPADvNIjcPVm/saMT6idjwItihREcrV4/nMcBdW9yRpQbFdKCxsPhlWXSeL
-         XGPyn8mWvihJkWZQiEy76EmJ54v+6Ao5OEjYVg2D+/43K+KawkKK+I90SCqD9NXS7uxd
-         R8be1jNPBRZe8vatZoH9KMg6ATC3lYnl6HNcqkgvJKouibBUZhO2oXz36mAWJwVkivJ6
-         DgRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=ge89vMg/PH2Usso7c5V8L3SxFZekIpxeV+eQcoh2jEk=;
-        b=Ti/hlORsVZzl99UZBbO+k8rXKBhwkEKsYjGapHSGpKiTD4bp5KJZiQoAlhTmeOPXL1
-         qfMoSWOv2fqnX9TiQx/gqPrz58Ilok9wwMHgqW6lNSL3kGWpSyeDMYv9z8YaQWam1mDq
-         7TFYZG51RCS1n+11H/cG0dYoIo2hEnKLL+DIwU8qpvdMjRM97Qpq5Vu9KrjAQcxmHU9H
-         E5zplXH7gC09TIBa7qk/70nHiZ2iEIIEAxRHfgAdg0BLV4FLXNZ1gRLGRop+epBeMRL5
-         ACU1h5MibMbTv0maXibM2dH6rsAMe7S03pglU/DdL5x3uR7gEBGv+6E4dqIOts0AMQq6
-         5mKg==
-X-Gm-Message-State: AOAM530V9sYpT89TP6EzO0wMpDj46DVTKWQitQvt8ZoWHshfyR8e8KW0
-	FAqkLp3XhV/+bfamsl7LsJgiB2WTBUcs+IaQQhyjxx/3i82log==
-X-Google-Smtp-Source: ABdhPJyK53q6lQoaTCpE6yEEhvmm02furWO9lVcp/Alxyvw0AoJZT6mQtObxdNYqQ4qY5nekwSmW06V1NKwBj+SQg4I=
-X-Received: by 2002:a5b:803:0:b0:633:749f:9acd with SMTP id
- x3-20020a5b0803000000b00633749f9acdmr30890856ybp.236.1649864549349; Wed, 13
- Apr 2022 08:42:29 -0700 (PDT)
+Received: (qmail 18201 invoked from network); 18 Jan 2018 22:35:30 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=orlitzky.com; s=mail2;
+	t=1516314918; bh=XJTrK7N9h4gHazw8ao37CG9PGPKf1UjvgQ71XYLc6dQ=;
+	h=Subject:To:References:From:Date:In-Reply-To;
+	b=FC/wH5bPJW+tr7lUbmrAB0Eb/tcdg9USBibafZZfixzfwSKY1OiyFje0G97cP2TEw
+	 vvwwQtEFh6P1FIGXo4geiAXBM+1RssHLiemlyTornhv/yb4BD2aSPWlPylJjg3KQSm
+	 cjH4ykwA+CNdp0goQxEc7tipxj7O+1yaJgV9Xk3g=
+References: <07f40446-1917-893c-2a87-b0d7990579b2@redhat.com>
+Message-ID: <9ea9a94c-e971-19b4-3c01-4c3cb3a853ae@orlitzky.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.2
 MIME-Version: 1.0
-From: butt3rflyh4ck <butterflyhuangxx@gmail.com>
-Date: Wed, 13 Apr 2022 23:42:18 +0800
-Message-ID: <CAFcO6XPukbwY3wK6AqP6qJ-3-3KPN760pAJCDu0tV-EXSGRecA@mail.gmail.com>
+In-Reply-To: <07f40446-1917-893c-2a87-b0d7990579b2@redhat.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+Date: Thu, 18 Jan 2018 17:35:07 -0500
+From: Michael Orlitzky <michael@orlitzky.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] How to deal with reporters who don't want their
+ bugs fixed?
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] CVE-2022-0617: udf:A null-ptr-deref bug be triggered
- when write to an ICB inode
 
-A NULL pointer dereference was found in the Linux kernel=E2=80=99s UDF file
-system functionality in the way the user triggers the
-udf_file_write_iter function for a malicious UDF image. Actual from
-Linux kernel 4.2-rc1 till 5.17-rc2.
+On 01/18/2018 11:10 AM, Florian Weimer wrote:
+> 
+> The obvious approach is to find a prior public report of essentially the 
+> same bug and fix that (which will work surprisingly often), but let's 
+> assume that this isn't the case.
 
-#Root Cause
-udf_expand_file_adinicb() calls directly ->writepage to write data
-expanded into a page. This however misses to setup inode for writeback
-properly and so we can crash on inode->i_wb dereference when submitting
-page for IO like:
-
-  BUG: kernel NULL pointer dereference, address: 0000000000000158
-  #PF: supervisor read access in kernel mode
-...
-  <TASK>
-  __folio_start_writeback+0x2ac/0x350
-  __block_write_full_page+0x37d/0x490
-  udf_expand_file_adinicb+0x255/0x400 [udf]
-  udf_file_write_iter+0xbe/0x1b0 [udf]
-  new_sync_write+0x125/0x1c0
-  vfs_write+0x28e/0x400
-
-Fix the problem by marking the page dirty and going through the standard
-writeback path to write the page. Strictly speaking we would not even
-have to write the page but we want to catch e.g. ENOSPC errors early.
-
-#Fix
-1.https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit=
-/?id=3D7fc3b7c2981bbd1047916ade327beccb90994eee
-2.https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit=
-/?id=3Dea8569194b43f0f01f0a84c689388542c7254a1f
-
-#CVE
-Red Hat has assigned CVE-2022-0617 to this issue.
-1. https://access.redhat.com/security/cve/CVE-2022-0617
-2. https://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2022-0617
-
-#Credit
-this issue is reported by Active Defense Lab of Venustech.
-
-
-Regards,
- butt3rflyh4ck.
-
---=20
-Active Defense Lab of Venustech
+Pay a homeless guy to file a public bug report?
