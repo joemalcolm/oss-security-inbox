@@ -1,50 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/26/4
-Message-ID: <20180826145405.3ynuaq5efx4zq33p@yuggoth.org>
-Date: Sun, 26 Aug 2018 14:54:06 +0000
-From: Jeremy Stanley <fungi@...goth.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/18/8
+Message-ID: <20180118205843.GR1627@oevtugenva.nrevsny.pk>
+Date: Thu, 18 Jan 2018 15:58:43 -0500
+From: Rich Felker <dalias@...c.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Travis CI MITM RCE
+Subject: Re: How to deal with reporters who don't want their bugs fixed?
 Content-Type: text/plain; charset=utf-8
 
-On 2018-08-25 20:56:59 -0400 (-0400), Phil Pennock wrote:
-> On 2018-08-25 at 23:49 +0200, Jakub Wilk wrote:
-> > The new code looks like this:
-> > 
-> >    apt-key list | awk -F'[ /]+' '/expired:/{printf "apt-key adv --recv-keys --keyserver keys.gnupg.net %s\\n", $3}' | sudo sh
-> ...
-> >   $ apt-key list | grep -A1 -w A15703C6
-> >   pub   4096R/A15703C6 2016-01-11 [expires: 2020-01-05]
-> >   uid                  MongoDB 3.4 Release Signing Key <packaging@...godb.com>
-[...]
-> If you're building infrastructure which needs to get data from off-site,
-> then consider whether or not you can provide template directives which
-> people can include in their command lists, and you then populate the
-> template with the correct current commands for that directive.  Eg, if
-> I'm talking to Docker inside Circle CI, I don't set a bunch of variables
-> myself, I just say `setup_remote_docker` and let Circle CI figure out
-> which commands should be run.  For "everything is a shell command"
-> setup, then perhaps `$CICMD_APT_KEYS_UPDATE` could be made available.
-> Or `"${CICMD_APT_KEYS_UPDATE[@]}"` if even more constrained.
+On Thu, Jan 18, 2018 at 05:10:05PM +0100, Florian Weimer wrote:
+> Subject says it all: What do you do if you receive a vulnerability
+> report, and the reporter requests an embargo at some time in the
+> future because that's when their paper/conference
+> presentation/patent submission is scheduled?
+> 
+> The obvious approach is to find a prior public report of essentially
+> the same bug and fix that (which will work surprisingly often), but
+> let's assume that this isn't the case.
 
-Indeed, as someone who helps design and run very large CI systems, I
-can say with certainty that every extra request you make in your
-jobs to retrieve something over a network connection is one more
-false negative failure waiting to happen. The Internet is _not_
-reliable, and it becomes obvious when you start looking at
-connection failures and random API errors at scale from lots of
-different places on the planet. If there's basically static data
-that your job needs (especially public keys/certs) just bake it
-directly into the job itself, and for things that change more often
-than that cache as much of it as you can local to (or even directly
-on the filesystems of) the systems which run those jobs.
+Assuming there is no good reason for the embargo (like coordination
+with other affected parties), ignore the embargo, fix the bug, and
+report the behavior to the conference. Conferences should adopt
+policies not to host speakers who request that users be left
+unprotected for any extended period for the sake of their own ego
+trip.
 
-Unfortunately a lot of this sort of silliness comes about because
-people write CI jobs by translating their own developer environment
-configuration documentation or user guides into scripts and don't
-think about (or perhaps don't even understand in many cases) how
-technologies like OpenPGP work.
--- 
-Jeremy Stanley
-
-Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
+Rich
