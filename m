@@ -1,31 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/04/2
-Message-ID: <b6ed322e-95ee-25cf-19bd-7a3317d7c747@linux.com>
-Date: Wed, 4 Apr 2018 19:15:16 +0300
-From: Alexander Popov <alex.popov@...ux.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/18/12
+Message-ID: <9ea9a94c-e971-19b4-3c01-4c3cb3a853ae@orlitzky.com>
+Date: Thu, 18 Jan 2018 17:35:07 -0500
+From: Michael Orlitzky <michael@...itzky.com>
 To: oss-security@...ts.openwall.com
-Cc: Kees Cook <keescook@...omium.org>, James Morris <jmorris@...ei.org>, "Serge E. Hallyn" <serge@...lyn.com>, Brad Spengler <spender@...ecurity.net>, PaX Team <pageexec@...email.hu>
-Subject: Linux Kernel Defence Map
+Subject: Re: How to deal with reporters who don't want their bugs fixed?
 Content-Type: text/plain; charset=utf-8
 
-Linux kernel security is a very complex area. It would be nice to have some
-graphical representation of its current state. So I've created a Linux Kernel
-Defence Map showing the relations between:
- - vulnerability classes / exploitation techniques,
- - kernel defences,
- - bug detection means.
+On 01/18/2018 11:10 AM, Florian Weimer wrote:
+> 
+> The obvious approach is to find a prior public report of essentially the 
+> same bug and fix that (which will work surprisingly often), but let's 
+> assume that this isn't the case.
 
-Link:
-   https://github.com/a13xp0p0v/linux-kernel-defence-map
-
-N.B. The node connections don't mean "full mitigation". These connections
-represent some kind of relation. So ideally, this map should help to navigate in
-documentation and Linux kernel sources.
-
-I wrote it in DOT language and generated the picture using GraphViz. So it is
-very pleasant to maintain this map with git.
-
-I would be grateful for any feedback.
-
-Best regards,
-Alexander
+Pay a homeless guy to file a public bug report?
