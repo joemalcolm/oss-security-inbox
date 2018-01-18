@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2047" "Thursday" "28" "March" "2019" "19:53:45" "+0100" "Daniel Beck" "ml@beckweb.net" nil "71" nil "^Date:" nil nil "3" nil nil (number mark "U       ml@beckweb.n Mar 28   71/2047  " thread-indent "\"Re: [oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["426" "Thursday" "18" "January" "2018" "17:10:05" "+0100" "Florian Weimer" "fweimer@redhat.com" "<07f40446-1917-893c-2a87-b0d7990579b2@redhat.com>" "11" "[oss-security] How to deal with reporters who don't want their bugs fixed?" "^Date:" nil nil "1" "2018011816:10:05" "[oss-security] How to deal with reporters who don't want their bugs fixed?" (number mark "U       fweimer@redh Jan 18   11/426   " thread-indent "\"[oss-security] How to deal with reporters who don't want their bugs fixed?\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9580 invoked by uid 550); 28 Mar 2019 18:53:59 -0000
+Received: (qmail 22350 invoked by uid 550); 18 Jan 2018 16:10:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,91 +11,30 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9557 invoked from network); 28 Mar 2019 18:53:58 -0000
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 11.5 \(3445.9.1\))
-References: <B9DFA5CD-50A7-4C49-B93A-64555FBAF031@beckweb.net>
-In-Reply-To: <B9DFA5CD-50A7-4C49-B93A-64555FBAF031@beckweb.net>
-Message-Id: <65BCED7D-3903-40C3-97C7-27E0BF1E7A48@beckweb.net>
-X-Mailer: Apple Mail (2.3445.9.1)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1553799238;b885f43c;
-X-HE-SMSGID: 1h9a9r-00062E-Br
-Date: Thu, 28 Mar 2019 19:53:45 +0100
-From: Daniel Beck <ml@beckweb.net>
+Received: (qmail 22282 invoked from network); 18 Jan 2018 16:10:19 -0000
+Message-ID: <07f40446-1917-893c-2a87-b0d7990579b2@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.2
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.26]); Thu, 18 Jan 2018 16:10:07 +0000 (UTC)
+Date: Thu, 18 Jan 2018 17:10:05 +0100
+From: Florian Weimer <fweimer@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Multiple vulnerabilities in Jenkins plugins
+Subject: [oss-security] How to deal with reporters who don't want their bugs fixed?
 To: oss-security@lists.openwall.com
 
+Subject says it all: What do you do if you receive a vulnerability 
+report, and the reporter requests an embargo at some time in the future 
+because that's when their paper/conference presentation/patent 
+submission is scheduled?
 
+The obvious approach is to find a prior public report of essentially the 
+same bug and fix that (which will work surprisingly often), but let's 
+assume that this isn't the case.
 
-> On 25. Mar 2019, at 16:09, Daniel Beck <ml@beckweb.net> wrote:
->=20
-> SECURITY-1353
-> Sandbox projection in the Script Security and Pipeline: Groovy Plugins=20
-> could be circumvented through methods supporting type casts and type=20
-> coercion. This allowed attackers to invoke constructors for arbitrary typ=
-es.
-
-CVE-2019-1003040 (Script Security) and CVE-2019-1003041 (Pipeline: Groovy)
-
-> SECURITY-1361
-> Lockable Resources Plugin did not properly escape resource names in=20
-> generated JavaScript code, thus leading to a cross-site scripting (XSS)=20
-> vulnerability.
-
-CVE-2019-1003042
-
-> SECURITY-976
-> [Slack Notification Plugin] did not perform permission checks on a method=
-=20
-> implementing form validation. This allowed users with Overall/Read access=
-=20
-> to Jenkins to connect to an attacker-specified URL using attacker-specifi=
-ed=20
-> credentials IDs obtained through another method, capturing credentials=20
-> stored in Jenkins.
-
-CVE-2019-1003043
-
-> Additionally, this form validation method did not require POST requests,=
-=20
-> resulting in a cross-site request forgery vulnerability.
-
-CVE-2019-1003044
-
-> SECURITY-846
-> ECS Publisher Plugin stored the API token unencrypted in jobs' config.xml=
-=20
-> files and its global configuration file on the Jenkins master. This token=
-=20
-> could be viewed by users with Extended Read permission, or access to the=
-=20
-> master file system.
-
-CVE-2019-1003045
-
-> SECURITY-992
-> A missing permission check in multiple form validation methods in Fortify=
-=20
-> on Demand Uploader Plugin allowed users with Overall/Read permission to=20
-> initiate a connection test to an attacker-specified server.
-
-CVE-2019-1003047
-
-> Additionally, the form validation methods did not require POST requests,=
-=20
-> resulting in a CSRF vulnerability.
-
-CVE-2019-1003046
-
-> SECURITY-1089
-> PRQA Plugin stored a password unencrypted in its global configuration fil=
-e=20
-> on the Jenkins master. This password could be viewed by users with access=
-=20
-> to the master file system.
-
-CVE-2019-1003048
-
+Thanks,
+Florian
