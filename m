@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1277" "Wednesday" "15" "March" "2017" "23:47:49" "+0100" "Peter Bex" "peter@more-magic.net" "<20170315224749.GG759@scully.more-magic.net>" "38" "[oss-security] CVE request for unchecked size argument in malloc() in CHICKEN Scheme" nil nil nil "3" "2017031522:47:49" "[oss-security] CVE request for unchecked size argument in malloc() in CHICKEN Scheme" (number mark "U       peter@more-m Mar 15   38/1277  " thread-indent "\"[oss-security] CVE request for unchecked size argument in malloc() in CHICKEN Scheme\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1816" "Thursday" "18" "January" "2018" "20:53:25" "+0100" "Yves-Alexis Perez" "corsac@debian.org" "<1516305205.23740.8.camel@debian.org>" "47" "Re: [oss-security] How to deal with reporters who don't want their bugs fixed?" "^Date:" nil nil "1" "2018011819:53:25" "[oss-security] How to deal with reporters who don't want their bugs fixed?" (number mark "        corsac@debia Jan 18   47/1816  " thread-indent "\"Re: [oss-security] How to deal with reporters who don't want their bugs fixed?\"\n") "<40a5c55e-aef3-f900-9ad1-5b2d9931a07e@rofl.cat>" ("<07f40446-1917-893c-2a87-b0d7990579b2@redhat.com>" "<CAAnPYQ4Ck7uzf7FFOJX-H1GDOtnHDbXyZ_mzYztSK8O6DF4y7Q@mail.gmail.com>" "<40a5c55e-aef3-f900-9ad1-5b2d9931a07e@rofl.cat>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 23987 invoked by uid 550); 15 Mar 2017 22:48:01 -0000
+Received: (qmail 13388 invoked by uid 550); 18 Jan 2018 19:53:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,59 +11,67 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 13356 invoked from network); 18 Jan 2018 19:53:43 -0000
+Message-ID: <1516305205.23740.8.camel@debian.org>
+In-Reply-To: <40a5c55e-aef3-f900-9ad1-5b2d9931a07e@rofl.cat>
+References: <07f40446-1917-893c-2a87-b0d7990579b2@redhat.com>
+	 <CAAnPYQ4Ck7uzf7FFOJX-H1GDOtnHDbXyZ_mzYztSK8O6DF4y7Q@mail.gmail.com>
+	 <40a5c55e-aef3-f900-9ad1-5b2d9931a07e@rofl.cat>
+Content-Type: multipart/signed; micalg="pgp-sha256";
+	protocol="application/pgp-signature"; boundary="=-rcyDzDvmHDyClH+qCsl0"
+X-Mailer: Evolution 3.26.3-1 
+Mime-Version: 1.0
+Date: Thu, 18 Jan 2018 20:53:25 +0100
+From: Yves-Alexis Perez <corsac@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23963 invoked from network); 15 Mar 2017 22:48:00 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=more-magic.net; s=dkim-2016-12;
-	h=Content-Type:MIME-Version:Message-ID:Subject:To:From:Date; bh=a/5eDKFwTPd+Ql0XKLEcOVDMxb6OaB66XE2Dhw4/jdU=;
-	b=d++uSGH3/9G1Of20XgKKUya8kSRZhF9ziEuA8yvupTiY1Fh3ED+fLeNxu7XjBCBHl83gl4PCD4J0ErVEp5JrGsupoTpJvxxE7d/sK/ZU1mEqX/rLFFGRZmxhhLqZfpXc0e96q/Vf5FTOy2sLPRUSmOO3efWyFF4zC+ZWLfDalw8=;
-Date: Wed, 15 Mar 2017 23:47:49 +0100
-From: Peter Bex <peter@more-magic.net>
-To: Open Source Security <oss-security@lists.openwall.com>
-Message-ID: <20170315224749.GG759@scully.more-magic.net>
-Mail-Followup-To: Open Source Security <oss-security@lists.openwall.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="U3s59FfKcByyGl+j"
-Content-Disposition: inline
-X-PGP-Key: http://www.more-magic.net/peter-bex.asc
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Subject: [oss-security] CVE request for unchecked size argument in malloc() in CHICKEN Scheme
+Subject: Re: [oss-security] How to deal with reporters who don't want their
+ bugs fixed?
+To: oss-security@lists.openwall.com
 
---U3s59FfKcByyGl+j
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--=-rcyDzDvmHDyClH+qCsl0
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hello all,
+On Thu, 2018-01-18 at 18:21 +0100, Matthias Fetzer wrote:
+> Well. The result might be, that they will *not* report the vulnerability
+> at all, but publish their findings as a 0day at a conference. So the
+> users security highly benefits, if patches are available right
+> before/after/during the conference.
+>=20
+> This is not the best case, but still better than unpatched, published 0da=
+ys.
 
-I'd like to request a CVE for an unchecked malloc() argument in
-CHICKEN Scheme's SRFI-4 vector constructors, when allocating the
-vector in unmanaged memory.  Due to the missing range check, this
-could result in negative or too small size allocations, which would
-result in a crash or a buffer overrun, depending on the size.
+I'm also not a huge fan of embargoes for conferences. It did happen for Deb=
+ian
+ so we discussed that issues with the security researchers to make the fix
+happens rather sooner than later.=20
 
-This issue affects all current releases of CHICKEN Scheme, including
-the latest release, 4.12.0.
+One important thing, in my opinion, is that conferences should also encoura=
+ge
+their speakers to actively coordinate with vendors in order for things to be
+fixed *before* and published either before or just for the conference. It
+might be wishful thinking but I'm not sure conferences organizers are really
+thrilled when a 0day is dumped right before the audience during the talk
+(pwn2own might be an exception though).
 
-The official announcement was made here:
-http://lists.gnu.org/archive/html/chicken-announce/2017-03/msg00000.html
+Regards,
+--=20
+Yves-Alexis=
 
-Cheers,
-Peter Bex
-
---U3s59FfKcByyGl+j
+--=-rcyDzDvmHDyClH+qCsl0
 Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+Content-Description: This is a digitally signed message part
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQEcBAEBAgAGBQJYycSVAAoJEBEdufnLRYmwdcYH/RSZnyoOEv8jjhdFi0hy5udT
-zV2Sn08UbKdIbJDZeTFU5r22DJUo69KS23VO/uRG5RQuJXOU/S2TnEFWQFEHD879
-C68MPpGhzDgB0I0UBZy/dCbl4PydZBDGfHa8KFeTM/EaMRjUuHTrXk5OBmMspB/U
-Is7xqpr7c8WJBpxEG9l5fGWnEcNZHodemt9cAdGTuTjLGY+3J9zxe1Dhxt9tuJQy
-bKpzK1Smysp90RyJ46GhItir+cf4Whc4YqBfSHJVucf5ZRvTPFjNuIdKYy9q7LlV
-7xD+dXQDFiEC2bD9nDBF1/lA7J3+eQvqKBnn/ltIxpQw9jpI5e5n7WDcrfsu80c=
-=U8I3
+iQEzBAABCAAdFiEE8vi34Qgfo83x35gF3rYcyPpXRFsFAlpg+zUACgkQ3rYcyPpX
+RFtlYgf8CysIbYuKVF3TI9jZazPpJSeOQ9cZWc46viTsq0ZFMwwSwZ/4ZY4ZaVZ8
+zjEACvJ+EA1aN/YdMc3pinl8loNdVLw9s9x5VXxP/SnbBa1Vh0EVvG4UGahDnwDT
+NMM2IujJNhL3vafbsJj0F27QenPwgPLtgGx7f7RofMae5pIHG9v9mxRXhyGnYXr2
+ZMlZ0hQ1FE5pow3oiPNDvg5NtvdNLt9Dv0x4LdKJ+wjO6xkbN4U7K0TsBvNy4YUv
+Sa7bUue7PLatXwyU+vm7Kd2sJzKhtofBkLAFQF0hTxHgfcedCPKksXmmRWTr4GL6
+ttfBYqZaJZh1rJoVEN7U12LHDWOBqg==
+=7LkC
 -----END PGP SIGNATURE-----
 
---U3s59FfKcByyGl+j--
+--=-rcyDzDvmHDyClH+qCsl0--
