@@ -1,19 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/15/9
-Message-ID: <d06db3bb-d353-7b66-b627-a091acd2ceb3@oracle.com>
-Date: Fri, 15 Jun 2018 12:23:23 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com, Anthony Liguori <aliguori@...zon.com>
-Cc: thomas.prescher@...erus-technology.de, jsteckli@...zon.de
-Subject: Re: CVE-2018-3665 Lazy FPU Context Switching Information Leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/18/9
+Message-ID: <20180118212114.GA8771@openwall.com>
+Date: Thu, 18 Jan 2018 22:21:14 +0100
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: How to deal with reporters who don't want their bugs fixed?
 Content-Type: text/plain; charset=utf-8
 
-On 06/15/18 07:55 AM, Anthony Liguori wrote:
-> Working exploit code that leaks one XMM register for Linux and FreeBSD is 
-> attached to this email.
+On Thu, Jan 18, 2018 at 05:10:05PM +0100, Florian Weimer wrote:
+> Subject says it all: What do you do if you receive a vulnerability 
+> report, and the reporter requests an embargo at some time in the future 
+> because that's when their paper/conference presentation/patent 
+> submission is scheduled?
 
-Did the attachment get lost on the way to the list?  I didn't see any.
+I think it's best for your project (I guess glibc?) to prominently
+publish near the security contact address a maximum embargo time you'd
+(be likely to) agree to.  That's what security at kernel.org does
+(7 days) and what we do with (linux-)distros (14 days).  That way, it's
+less important for you to judge whether the reason for embargo is
+valid/altruistic or bogus/selfish - a sane maximum embargo time
+minimizes the damage to all parties either way.  When someone requests a
+longer embargo for whatever reason, just decline and insist on your
+previously published maximum.  Those who want to have their issue
+disclosure timed with some other event will then be expected to delay
+reporting the issue to your project until it's close enough to that
+other event.  That's not ideal, but I think it's better than having no
+maximum embargo time specified.
 
--- 
-	-Alan Coopersmith-               alan.coopersmith@...cle.com
-	 Oracle Solaris Engineering - https://blogs.oracle.com/alanc
+Alexander
