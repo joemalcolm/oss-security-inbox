@@ -1,55 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/10/7
-Message-ID: <200f245d2ec342c3bc05586d3f277b42@kaspersky.com>
-Date: Mon, 10 Dec 2018 16:08:00 +0000
-From: Pavel Cheremushkin <Pavel.Cheremushkin@...persky.com>
-To: Solar Designer <solar@...nwall.com>
-CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RE: libvnc and tightvnc vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/18/6
+Message-ID: <40a5c55e-aef3-f900-9ad1-5b2d9931a07e@rofl.cat>
+Date: Thu, 18 Jan 2018 18:21:27 +0100
+From: Matthias Fetzer <admin@...l.cat>
+To: oss-security@...ts.openwall.com
+Subject: Re: How to deal with reporters who don't want their bugs fixed?
 Content-Type: text/plain; charset=utf-8
 
-Thanks for an answer. 
+Hi Gynvael,
 
-> This one is interesting in that related server-side code got some scrutiny before, yet apparently this similar issue in its client-side counterpart was overlooked.  (I assume this is in libvncclient/rfbproto.c, and you meant line 2220, not 1220.)
+On 01/18/2018 06:06 PM, Gynvael Coldwind wrote:
+> On the other hand there are reasons for embargoes which I don't find valid,
+> where the examples you've given ("paper/conference presentation/patent
+> submission") fall into this category.
+> They don't sound as something that would benefit users' security (please
+> correct me if I'm wrong) and I'm not a big fan of sitting on already
+> discovered unpatched security bugs (in the end bug discovery might be a
+> function of time for all we know).
 
-These particular issues I was describing in my previous letter are located in source code of TightVNC vncviewer. Source code of TightVNC 1.3.10 vncviewer can be acquired though this link https://www.tightvnc.com/download/1.3.10/tightvnc-1.3.10_unixsrc.tar.gz and integer overflow that leads to a heap-buffer-overflow I was speaking about is located on the line 1220 inside file `vnc_unixsrc/vncviewer/rfbproto.c`. It is a fun fact that inside `libvncclient/rfbproto.c` the same code is located on line 2220, but all bugs connected with LibVNC I described in Github issues inside LibVNC repository.
+Well. The result might be, that they will *not* report the vulnerability
+at all, but publish their findings as a 0day at a conference. So the
+users security highly benefits, if patches are available right
+before/after/during the conference.
 
-Best Regards,
-Pavel Cheremushkin
-Security Researcher| ICS CERT Vulnerability Research Group | Kaspersky Lab
-39A bld.2 Leningradskoye Highway, Moscow 125212, Russia | www.kaspersky.com,www.securelist.com
+This is not the best case, but still better than unpatched, published 0days.
 
-
------Original Message-----
-From: Solar Designer [mailto:solar@...nwall.com] 
-Sent: Monday, December 10, 2018 6:40 PM
-To: Pavel Cheremushkin <Pavel.Cheremushkin@...persky.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: [oss-security] libvnc and tightvnc vulnerabilities
-
-On Mon, Dec 10, 2018 at 12:48:43PM +0000, Pavel Cheremushkin wrote:
-> 2. heap buffer overflow in rfbServerCutText handler
->     Heap buffer overflow in `rfbServerCutText` handler inside `HandleRFBServerMessage` happens due to the malloc argument unsigned integer overflow on line rfbproto.c:1220. Suppose msg.sct.length equals 0xffffffff, then `malloc(msg.sct.length+1);` = `malloc(0);` will allocate small heap chunk of size 0x10. But `msg.sct.length` = 0xffffffff bytes may be read in this chunk on line 1222 (`ReadFromRFBServer(serverCutText, msg.sct.length)`).
-
-This one is interesting in that related server-side code got some scrutiny before, yet apparently this similar issue in its client-side counterpart was overlooked.  (I assume this is in libvncclient/rfbproto.c, and you meant line 2220, not 1220.)
-
-Specifically, the oCERT advisory from 2014 based on "vulnerability report received from Nicolas Ruff of Google Security Team":
-
-https://www.openwall.com/lists/oss-security/2014/09/25/11
-https://ocert.org/advisories/ocert-2014-007.html
-
-"A malicious VNC client can trigger multiple DoS conditions on the VNC server by advertising a large [...] ClientCutText message length [...]"
-
-Per this wording, there was no integer overflow potential in the server-side code.  Just potentially maliciously large allocation.
-
-This reminds us now: in the client-side code, we should also deal not only with the integer overflow potential, but also with potentially maliciously large allocation.
-
-The thread I started earlier this year:
-
-https://www.openwall.com/lists/oss-security/2018/02/18/1
-
-"LibVNCServer rfbserver.c: rfbProcessClientNormalMessage() case rfbClientCutText doesn't sanitize msg.cct.length"
-
-I did not look at the VNC client code as it was not relevant to the security audit I was working on when I found the server-side issue.
-
-Alexander
+Best regards,
+Matthias
