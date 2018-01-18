@@ -1,32 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/22/2
-Message-ID: <20181022182638.uja7q6jhxn5md36n@jwilk.net>
-Date: Mon, 22 Oct 2018 20:26:38 +0200
-From: Jakub Wilk <jwilk@...lk.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Using quilt on untrusted RPM spec files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/18/2
+Message-ID: <CANO=Ty3XSnvLXmXuVmpKahoToTdYrMegKs6HeQSco3m9fK1udQ@mail.gmail.com>
+Date: Thu, 18 Jan 2018 09:51:37 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: How to deal with reporters who don't want their bugs fixed?
 Content-Type: text/plain; charset=utf-8
 
-* Matthias Gerstner <mgerstner@...e.de>, 2018-09-27, 17:59:
->It turns out that running `quilt setup` on untrusted sources is not a 
->good idea:
+On Thu, Jan 18, 2018 at 9:10 AM, Florian Weimer <fweimer@...hat.com> wrote:
+> Subject says it all: What do you do if you receive a vulnerability report,
+> and the reporter requests an embargo at some time in the future because
+> that's when their paper/conference presentation/patent submission is
+> scheduled?
 
-Debian largely avoids this problem by having a source package format 
-with built-in patch system[0]. Most of the time the unpacked source 
-package will have patches applied, so there's no need for the reviewer 
-to run untrusted code to prepare the source.
+We (Red Hat) respect the embargo request (although we will often try
+to negotiate something a bit more sensible if they make a really
+awkward request), but ultimately we want the researchers to come to
+us, if we annoy them to much they might stop coming to us and just
+drop their results as a 0day at the conference with no heads up.
 
-(That said, dpkg-source had quite a few path traversal bugs in the 
-past[1] and I have a hunch there's more to be found...)
+> The obvious approach is to find a prior public report of essentially the
+> same bug and fix that (which will work surprisingly often), but let's assume
+> that this isn't the case.
 
-While debian/rules can have optional "patch" target[2] (which is a bit 
-like RPM's %prep), it felt to disuse these days. A developer wouldn't 
-call "debian/rules patch" against a random not-yet-reviewed package, 
-because it would be unusual to have this target implemented.
+I'm not sure this is a sustainable approach as researchers who want to
+make a name for themselves are faced with the "well if I tell them,
+they'll try to ignore my embargo request" which incentivizes them to
+not do a coordinated disclosure.
 
-[0] https://manpages.debian.org/stretch/dpkg-dev/dpkg-source.1.en.html#Format:_3.0_%28quilt%29
-[1] https://security-tracker.debian.org/tracker/source-package/dpkg
-[2] https://www.debian.org/doc/debian-policy/ch-source.html#main-building-script-debian-rules
+>
+> Thanks,
+> Florian
+
+
 
 -- 
-Jakub Wilk
+
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
