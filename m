@@ -1,4 +1,9 @@
-Received: (qmail 7963 invoked by uid 550); 13 Dec 2023 14:59:13 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1746" "Thursday" "18" "January" "2018" "16:38:41" "-0500" "Luedtke, Nicholas (Cyber Security)" "nicholas.luedtke@hpe.com" "<519d9522-0531-a553-5bf3-de6d4e712a35@hpe.com>" "36" "Re: [oss-security] How to deal with reporters who don't want their bugs fixed?" "^Date:" nil nil "1" "2018011821:38:41" "[oss-security] How to deal with reporters who don't want their bugs fixed?" (number mark "        nicholas.lue Jan 18   36/1746  " thread-indent "\"Re: [oss-security] How to deal with reporters who don't want their bugs fixed?\"\n") "<20180118212114.GA8771@openwall.com>" ("<07f40446-1917-893c-2a87-b0d7990579b2@redhat.com>" "<20180118212114.GA8771@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 1925 invoked by uid 550); 18 Jan 2018 21:52:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,85 +11,57 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11460 invoked from network); 13 Dec 2023 14:11:36 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1702476706;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type;
-	bh=0upV1CNocKXovuQKcxnjQ8K4ItqbKR7TFk8EVwAqQKo=;
-	b=hMVwmM4mDx1gSV+th6S7vBdB1SYLyMVmfW4PO7KoY+c2bD5QGryzMtOv1+T2lL6opaJnWW
-	VVZ0KwdvttaDR2a/7lMwIkKHkY1GCpEb8IOjlB/pp9GjvtECTKMVm+JDDN02GocEw71bAN
-	9ljon1CDxY0n7KnvNvbEsq8eZr1dM+A=
-X-MC-Unique: rh9mFGDtMkKOAKzz7_WIZQ-1
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702476703; x=1703081503;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=0upV1CNocKXovuQKcxnjQ8K4ItqbKR7TFk8EVwAqQKo=;
-        b=rit3jKUgp5tKaYo9bLW6TpHqalt1PVBnJf+7QV2q1cbzCn4hQ446EWOHrj2B+FMVlR
-         Zjq1eshG6tBrM2fLlpC4FDd/wknJuSzFVYu6g60w7SY1GhbOVOOJpFzlcdIAFxlfst9o
-         +BOGfBzyJxMtqERl6eeCdLYuD59QKKpnx8SLSst0YhrF6Qd4PB8axUWoVg0KttbbxF1s
-         fOBQ4RxJqoQ2PVCcpc08fS5eka/TeLXGGlZn+1Q541CojdIN7NrCMc7R65Ru/t6C98b8
-         Ni6rnnvGxF607zMrfvrvK0iifdH7k2uo054P+QKai9yruWx9wzVsiJfRL4lBghYByUtg
-         MWfg==
-X-Gm-Message-State: AOJu0Ywp7FECFHreA5P6vnoblENSvAQd9kvw3am/abKs7TDUbaLXVOYN
-	CHbbvY743vd/GS9tB2ApM/GH6f2IQT0aqXtglXyQaRcYwsnZHK66aWqfpmv4B/scdIvJ7trKiD4
-	lVKx3OFdglcBhkGqnP5rubTNANmZi4cgRUTvgvy3SSrQ+3nvHEBtf7xE=
-X-Received: by 2002:a05:651c:158c:b0:2cc:2751:a113 with SMTP id h12-20020a05651c158c00b002cc2751a113mr3943202ljq.12.1702476703654;
-        Wed, 13 Dec 2023 06:11:43 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEB/cU0K56o6gvp6KI3+P7erVcokngpmlu7M5WG6CQxzp5vfQATOHOqKwHelH8SEOHzk+SSg9Q9ZSORnVPw+pE=
-X-Received: by 2002:a05:651c:158c:b0:2cc:2751:a113 with SMTP id
- h12-20020a05651c158c00b002cc2751a113mr3943190ljq.12.1702476703289; Wed, 13
- Dec 2023 06:11:43 -0800 (PST)
+Received: (qmail 7910 invoked from network); 18 Jan 2018 21:38:53 -0000
+References: <07f40446-1917-893c-2a87-b0d7990579b2@redhat.com>
+ <20180118212114.GA8771@openwall.com>
+Message-ID: <519d9522-0531-a553-5bf3-de6d4e712a35@hpe.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-From: Jakub Jelen <jjelen@redhat.com>
-Date: Wed, 13 Dec 2023 15:11:32 +0100
-Message-ID: <CAHrFiA8AHe6mk3cVSubH3b0CH1A=vSqqtmFvcoPwiK2zTQ8RUg@mail.gmail.com>
+In-Reply-To: <20180118212114.GA8771@openwall.com>
+Content-Type: multipart/alternative;
+ boundary="------------32428BAEE822DACBC0D82734"
+Content-Language: en-US
+Date: Thu, 18 Jan 2018 16:38:41 -0500
+From: "Luedtke, Nicholas (Cyber Security)" <nicholas.luedtke@hpe.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] How to deal with reporters who don't want their
+ bugs fixed?
 To: oss-security@lists.openwall.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] CVE-2023-40660: Potential PIN bypass with empty PIN in OpenSC before 0.24.0
 
-When the token/card was plugged into the computer and authenticated
-from one process, it could be used to provide cryptographic operations
-from different process when the empty, zero-length PIN was provided
-and the token could track the login status using some of its
-internals. This is dangerous for OS logon/screen unlock and small
-tokens that are plugged permanently to the computer. The bypass was
-removed and OpenSC implemented explicit logout for most of the card
-drivers to prevent leaving unattended logged-in tokens.
+--------------32428BAEE822DACBC0D82734
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-The PoC is available for MacOS screen unlock bypass with Yubikey. The
-issue can be reproduced also with a PKCS#11 module and Minidriver if
-the calling applications does not bail out on empty pin (For example
-with Firefox. The SSSD does not allow empty PIN under Linux even
-before reaching out to the PKCS#11 module).
 
-Note, that the login tracking is still useful on the pkcs15init layer
-so the second commit restores the similar code block in more
-appropriate place which could not be misused to bypass authentication
-on PKCS#11 layer.
+On 1/18/2018 4:21 PM, Solar Designer wrote:
+> I think it's best for your project (I guess glibc?) to prominently
+> publish near the security contact address a maximum embargo time you'd
+> (be likely to) agree to.  That's what security at kernel.org does
+> (7 days) and what we do with (linux-)distros (14 days).  That way, it's
+> less important for you to judge whether the reason for embargo is
+> valid/altruistic or bogus/selfish - a sane maximum embargo time
+> minimizes the damage to all parties either way.  When someone requests a
+> longer embargo for whatever reason, just decline and insist on your
+> previously published maximum.  Those who want to have their issue
+> disclosure timed with some other event will then be expected to delay
+> reporting the issue to your project until it's close enough to that
+> other event.  That's not ideal, but I think it's better than having no
+> maximum embargo time specified.
 
-Affected versions: OpenSC 0.17.0 - 0.23.0
+I generally agree with this, but it also creates the risk that reporters 
+will simply wait till the maximum time frame fits within their desired 
+reporting time.  Which of course delays the reporting of the bug to the 
+vendor/project. What I have seen in the past is a negotiated partial 
+disclosure where the patch is released with minimum details with the 
+line that says "Full details with be released by XXX at YYY conference." 
+That way if ego is the factor then the reporter also gets a slight 
+teaser for his/her talk. Of course one could just use the patch to get 
+the details depending on the issue.
 
-Fixed with:
-
-868f76fb31255fd3fdacfc3e476452efeb61c3e7
-80cc5d30635f0d2c92b5099c0f9dc680d0ffce2f
-
-Originally reported by Deepanjan Pal (Oracle Corporation)
-
-CVSS:3.0/AV:P/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:H (7.3)
+--Nicholas Luedtke HPE Cyber Security
 
 
 
-The full release notes for the 0.24.0 is available in announce list:
 
-https://sourceforge.net/p/opensc/mailman/message/58712583/
-
-and on github:
-
-https://github.com/OpenSC/OpenSC/releases/tag/0.24.0
-
+--------------32428BAEE822DACBC0D82734--
