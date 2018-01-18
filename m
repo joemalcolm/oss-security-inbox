@@ -1,65 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/10/3
-Message-Id: <B8A19B32-67C8-4FEE-BBC3-7729176CC70C@beckweb.net>
-Date: Mon, 10 Dec 2018 01:52:09 +0100
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/18/11
+Message-ID: <20180118220124.GA9185@openwall.com>
+Date: Thu, 18 Jan 2018 23:01:24 +0100
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Multiple vulnerabilities in Jenkins
+Subject: Re: How to deal with reporters who don't want their bugs fixed?
 Content-Type: text/plain; charset=utf-8
 
-
-
-> On 15. Aug 2018, at 17:10, Daniel Beck <ml@...kweb.net> wrote:
+On Thu, Jan 18, 2018 at 04:38:41PM -0500, Luedtke, Nicholas (Cyber Security) wrote:
+> On 1/18/2018 4:21 PM, Solar Designer wrote:
+> >I think it's best for your project (I guess glibc?) to prominently
+> >publish near the security contact address a maximum embargo time you'd
+> >(be likely to) agree to.  That's what security at kernel.org does
+> >(7 days) and what we do with (linux-)distros (14 days).  That way, it's
+> >less important for you to judge whether the reason for embargo is
+> >valid/altruistic or bogus/selfish - a sane maximum embargo time
+> >minimizes the damage to all parties either way.  When someone requests a
+> >longer embargo for whatever reason, just decline and insist on your
+> >previously published maximum.  Those who want to have their issue
+> >disclosure timed with some other event will then be expected to delay
+> >reporting the issue to your project until it's close enough to that
+> >other event.  That's not ideal, but I think it's better than having no
+> >maximum embargo time specified.
 > 
-> 
-> SECURITY-637
-> Jenkins allowed deserialization of URL objects via Remoting (agent 
-> communication) and XStream.
-> 
-> This could in rare cases be used by attackers to have Jenkins look up 
-> specified hosts' DNS records.
+> I generally agree with this, but it also creates the risk that reporters 
+> will simply wait till the maximum time frame fits within their desired 
+> reporting time.  Which of course delays the reporting of the bug to the 
+> vendor/project.
 
-CVE-2018-1999042
+That's precisely what I wrote above, and I think it's not as bad as the
+original situation Florian described.  The project gets less time, but
+does it need more time when it can't release a fix anyway?  The reduced
+exposure - even if to people and infrastructure of the project itself -
+reduces risk of leaks.
 
-> SECURITY-672
-> When attempting to authenticate using API token, an ephemeral user record 
-> was created to validate the token in case an external security realm was 
-> used, and the user record in Jenkins not previously saved, as (legacy) API 
-> tokens could exist without a persisted user record.
-> 
-> This behavior could be abused to create a large number of ephemeral user 
-> records in memory.
+Terms like this will also serve as a reminder to the reporter that
+they're indeed being selfish and would have wanted an unreasonably long
+embargo.  Some, but not all, will change their mind.
 
-CVE-2018-1999043
+> What I have seen in the past is a negotiated partial 
+> disclosure where the patch is released with minimum details with the 
+> line that says "Full details with be released by XXX at YYY conference." 
+> That way if ego is the factor then the reporter also gets a slight 
+> teaser for his/her talk. Of course one could just use the patch to get 
+> the details depending on the issue.
 
-> SECURITY-790
-> The form validation for cron expressions (e.g. "Poll SCM", "Build 
-> periodically") could enter infinite loops when cron expressions only 
-> matching certain rare dates were entered, blocking request handling 
-> threads indefinitely.
+I think "semi-public" is the worst state an issue can be in, making the
+above suggestion the worst of those mentioned in this thread so far.
 
-CVE-2018-1999044
-
-> SECURITY-996
-> The "Remember me" feature can be disabled in the Jenkins security 
-> configuration.
-> 
-> This did not disable the processing of previously set "Remember me" 
-> cookies, so they still allowed users to be logged in.
-
-CVE-2018-1999045
-
-> SECURITY-1071
-> Users with Overall/Read permission were able to access the URL serving 
-> agent logs on the UI due to a lack of permission checks.
-
-CVE-2018-1999046
-
-> SECURITY-1076
-> Users with Overall/Read permission were able to access the URL used to 
-> cancel scheduled restart jobs initiated via the update center ("Restart 
-> Jenkins when installation is complete and no jobs are running") due to a 
-> lack of permission checks.
-
-CVE-2018-1999047
-
+Alexander
