@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3910" "Wednesday" "22" "July" "2015" "23:07:05" "+0000" "mancha" "mancha1@zoho.com" "<20150722230705.GB7017@zoho.com>" "116" "Re: [oss-security] CVE Request for OpenSSH vulnerability - authentication limits bypass" nil nil nil "7" "2015072223:07:05" "[oss-security] CVE Request for OpenSSH vulnerability - authentication limits bypass" (number mark "        mancha1@zoho Jul 22  116/3910  " thread-indent "\"Re: [oss-security] CVE Request for OpenSSH vulnerability - authentication limits bypass\"\n") "<CAFB=mGAAaJOB3VsvhGnsBVP0COwe4MiRv5t2cDx9UA=qJ0KyPw@mail.gmail.com>" ("<CAFB=mGAAaJOB3VsvhGnsBVP0COwe4MiRv5t2cDx9UA=qJ0KyPw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2313" "Thursday" "18" "January" "2018" "23:01:24" "+0100" "Solar Designer" "solar@openwall.com" "<20180118220124.GA9185@openwall.com>" "42" "Re: [oss-security] How to deal with reporters who don't want their bugs fixed?" "^Date:" nil nil "1" "2018011822:01:24" "[oss-security] How to deal with reporters who don't want their bugs fixed?" (number mark "        solar@openwa Jan 18   42/2313  " thread-indent "\"Re: [oss-security] How to deal with reporters who don't want their bugs fixed?\"\n") "<519d9522-0531-a553-5bf3-de6d4e712a35@hpe.com>" ("<07f40446-1917-893c-2a87-b0d7990579b2@redhat.com>" "<20180118212114.GA8771@openwall.com>" "<519d9522-0531-a553-5bf3-de6d4e712a35@hpe.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 16353 invoked by uid 550); 22 Jul 2015 23:07:31 -0000
+Received: (qmail 9624 invoked by uid 550); 18 Jan 2018 22:03:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,142 +11,59 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 16316 invoked from network); 22 Jul 2015 23:07:30 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; 
-  s=zapps768; d=zoho.com; 
-  h=date:from:to:subject:message-id:references:mime-version:content-type:in-reply-to; 
-  b=Y5MtDFEtlcA0IGcs6CUVKnMQCjfPnuRCvLBkOxc0cBGlH5cfZMCom4FpNJxcys09HgsGc9tJvY61
-    T6Vukk4ZkkN6icIsZj6GZbFW6IoGQhj3F1UBWJpHIOOSsqcPh5zo  
-Message-ID: <20150722230705.GB7017@zoho.com>
-References: <CAFB=mGAAaJOB3VsvhGnsBVP0COwe4MiRv5t2cDx9UA=qJ0KyPw@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="T7mxYSe680VjQnyC"
+Received: (qmail 3834 invoked from network); 18 Jan 2018 22:01:29 -0000
+Message-ID: <20180118220124.GA9185@openwall.com>
+References: <07f40446-1917-893c-2a87-b0d7990579b2@redhat.com> <20180118212114.GA8771@openwall.com> <519d9522-0531-a553-5bf3-de6d4e712a35@hpe.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAFB=mGAAaJOB3VsvhGnsBVP0COwe4MiRv5t2cDx9UA=qJ0KyPw@mail.gmail.com>
-X-PGP-Key: http://hkps.pool.sks-keyservers.net/pks/lookup?op=vindex&search=0x25168eb24f0b22ac
-X-PGP-FP: 56B7 100E F4D5 811C 8FEF  ADD1 2516 8EB2 4F0B 22AC
-X-Zoho-Virus-Status: 1
-Date: Wed, 22 Jul 2015 23:07:05 +0000
-From: mancha <mancha1@zoho.com>
+In-Reply-To: <519d9522-0531-a553-5bf3-de6d4e712a35@hpe.com>
+User-Agent: Mutt/1.4.2.3i
+Date: Thu, 18 Jan 2018 23:01:24 +0100
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE Request for OpenSSH vulnerability -
- authentication limits bypass
+Subject: Re: [oss-security] How to deal with reporters who don't want their bugs fixed?
 To: oss-security@lists.openwall.com
 
---T7mxYSe680VjQnyC
-Content-Type: multipart/mixed; boundary="z4+8/lEcDcG5Ke9S"
-Content-Disposition: inline
+On Thu, Jan 18, 2018 at 04:38:41PM -0500, Luedtke, Nicholas (Cyber Security) wrote:
+> On 1/18/2018 4:21 PM, Solar Designer wrote:
+> >I think it's best for your project (I guess glibc?) to prominently
+> >publish near the security contact address a maximum embargo time you'd
+> >(be likely to) agree to.  That's what security at kernel.org does
+> >(7 days) and what we do with (linux-)distros (14 days).  That way, it's
+> >less important for you to judge whether the reason for embargo is
+> >valid/altruistic or bogus/selfish - a sane maximum embargo time
+> >minimizes the damage to all parties either way.  When someone requests a
+> >longer embargo for whatever reason, just decline and insist on your
+> >previously published maximum.  Those who want to have their issue
+> >disclosure timed with some other event will then be expected to delay
+> >reporting the issue to your project until it's close enough to that
+> >other event.  That's not ideal, but I think it's better than having no
+> >maximum embargo time specified.
+> 
+> I generally agree with this, but it also creates the risk that reporters 
+> will simply wait till the maximum time frame fits within their desired 
+> reporting time.  Which of course delays the reporting of the bug to the 
+> vendor/project.
 
+That's precisely what I wrote above, and I think it's not as bad as the
+original situation Florian described.  The project gets less time, but
+does it need more time when it can't release a fix anyway?  The reduced
+exposure - even if to people and infrastructure of the project itself -
+reduces risk of leaks.
 
---z4+8/lEcDcG5Ke9S
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Terms like this will also serve as a reminder to the reporter that
+they're indeed being selfish and would have wanted an unreasonably long
+embargo.  Some, but not all, will change their mind.
 
-Attached patch fixes.
+> What I have seen in the past is a negotiated partial 
+> disclosure where the patch is released with minimum details with the 
+> line that says "Full details with be released by XXX at YYY conference." 
+> That way if ego is the factor then the reporter also gets a slight 
+> teaser for his/her talk. Of course one could just use the patch to get 
+> the details depending on the issue.
 
---mancha
+I think "semi-public" is the worst state an issue can be in, making the
+above suggestion the worst of those mentioned in this thread so far.
 
-On Tue, Jul 21, 2015 at 11:16:35AM +0200, king cope wrote:
-> Hello list, solar designer,
->=20
-> Can you please add a CVE for the mentioned vulnerability in OpenSSH.
->=20
-> The OpenSSH server normally wouldn't allow successive authentications
-> that exceed the MaxAuthTries setting in sshd_config, with this
-> vulnerability the allowed login retries can be extended limited only
-> by the LoginGraceTime setting, that can be more than 10000 tries
-> (depends on the network speed), and even more for local attacks.
-> Technically this vulnerability affects OpenSSH. It can be found with
-> FreeBSD installations because these use the keyboard-interactive
-> authentication mechanism (that is the one affected) in combination
-> with pam. I haven't tested skey/bsd auth.  To note that this
-> vulnerability looks pretty old, a test against FreeBSD 6.2 (2007
-> release date) showed it vulnerable.  Additionally there is no delay
-> between the authentication retries, but this is another issue that
-> makes this vulnerability more effective.
->=20
-> CVE please!
->=20
-> Thank you,
->=20
-> KC
->=20
-> Reference: http://seclists.org/fulldisclosure/2015/Jul/92
-
---z4+8/lEcDcG5Ke9S
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename="openssl-6.9p1_kbd-interactive.diff"
-Content-Transfer-Encoding: quoted-printable
-
-=46rom 5b64f85bb811246c59ebab70aed331f26ba37b18 Mon Sep 17 00:00:00 2001
-From: "djm@openbsd.org" <djm@openbsd.org>
-Date: Sat, 18 Jul 2015 07:57:14 +0000
-Subject: [PATCH] upstream commit
-
-Query each keyboard-interactive device only once per authentication
-request regardless of how many times it is listed; ok markus@
-
-Upstream-ID:  d73fafba6e86030436ff673656ec1f33d9ffeda1
-Reference-ID: 701a201481b751df5ed85b68de259637
-
----
- auth2-chall.c | 11 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
-
---- a/auth2-chall.c
-+++ b/auth2-chall.c
-@@ -83,6 +83,7 @@ struct KbdintAuthctxt
- 	void *ctxt;
- 	KbdintDevice *device;
- 	u_int nreq;
-+	u_int devices_done;
- };
-=20
- #ifdef USE_PAM
-@@ -169,11 +170,15 @@ kbdint_next_device(Authctxt *authctxt, KbdintAuthctxt=
- *kbdintctxt)
- 		if (len =3D=3D 0)
- 			break;
- 		for (i =3D 0; devices[i]; i++) {
--			if (!auth2_method_allowed(authctxt,
-+			if ((kbdintctxt->devices_done & (1 << i)) !=3D 0 ||
-+			    !auth2_method_allowed(authctxt,
- 			    "keyboard-interactive", devices[i]->name))
- 				continue;
--			if (strncmp(kbdintctxt->devices, devices[i]->name, len) =3D=3D 0)
-+			if (strncmp(kbdintctxt->devices, devices[i]->name,
-+			    len) =3D=3D 0) {
- 				kbdintctxt->device =3D devices[i];
-+				kbdintctxt->devices_done |=3D 1 << i;
-+			}
- 		}
- 		t =3D kbdintctxt->devices;
- 		kbdintctxt->devices =3D t[len] ? xstrdup(t+len+1) : NULL;
-
---z4+8/lEcDcG5Ke9S--
-
---T7mxYSe680VjQnyC
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCgAGBQJVsCIZAAoJEB4VYy8JqhaDKJwQAIPFq1VpxeQw0Vv4rr2kcSo3
-YE39c5dSyusnTVeKPRJQ8doG/4lajzMfc6Gnil4N6oV7LfghhjInOaKMfcTq+Yok
-2UXd918BDRwfASJ3lCPJyy83htRj5tZ+vhDns8jIQOTExxeVn4FhJQx48vyo0j/F
-vW1UZVz7kB2/gSUUdmoQC8Vbl48SX10GO3ptrMCLdCwe1MFCk3ODPzSqTdvUIDKD
-ZTITwLnM1KLpcyIp1b41f9y3e6ikTwk0IDaktPBE3Y2X85J1PsfFiCKjLg5uG5/I
-PRBKC9QyAY65lZ9zqG0wISdaz/LdbsJlihZ07DEgKU7tpUdG4GIgcSaqsz8uc2f2
-PIquERK2GkIrfBeVGFWql4u5EeuvE+l2lboZNJtLh2vngnYuGUpeSq0Z7vhW7VgS
-vPR+fRPGS4qZlRAYZhv9L2HZEdDfqS5TX6Yo1R2QkaCfEaX6HXaLFW/PlrWbA4HX
-RhXzbc3jU9gu7DO3SQvzx6CG3A2Jpw2M6MlyOYDQGSvTSvqRnjIpou+i0GbIWo59
-d9q4l9vOW3p5YcGScbX8BElzc4AUCn7ePyvdM373F93P2ifYlJWiLEgw1O5LazQn
-qXQCgYgZ0HouWfRez3sIPyGH7ObDaO6Ad6aO7DXKTLMaO4kZo7YURZ9fn/09W2i6
-JYnuv0zkvmVzofSStgz2
-=GCtd
------END PGP SIGNATURE-----
-
---T7mxYSe680VjQnyC--
-
+Alexander
