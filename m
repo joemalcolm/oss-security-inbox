@@ -1,51 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/12/3
-Message-ID: <KBGc1jApJZIJ7ISv_bB8MS1GLVaDWKb2J89dL8hnV0DlCJyVQ2f0VYI0-JpMbF4B9o5uHNn6ZTLlYLpseEup2hOfJ17rofaARO-joZhPOl4=@protonmail.ch>
-Date: Tue, 12 Jun 2018 11:25:45 -0400
-From: Jordan Glover <Golden_Miller83@...tonmail.ch>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Are `su user' and/or `sudo -u user sh' considered dangerous?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/18/3
+Message-ID: <CAAnPYQ4Ck7uzf7FFOJX-H1GDOtnHDbXyZ_mzYztSK8O6DF4y7Q@mail.gmail.com>
+Date: Thu, 18 Jan 2018 17:06:04 +0000
+From: Gynvael Coldwind <gynvael@...dwind.pl>
+To: oss-security@...ts.openwall.com
+Subject: Re: How to deal with reporters who don't want their bugs fixed?
 Content-Type: text/plain; charset=utf-8
 
-On June 12, 2018 1:38 PM, Jakub Wilk <jwilk@...lk.net> wrote:
+Hi there,
 
-> -   Georgi Guninski guninski@...inski.com, 2018-06-12, 13:17:
-> 
-> > https://j.ludost.net/blog/archives/2018/06/12/are_su_user_andor_sudo_-u_user_sh_considered_dangerous/index.html
-> > 
-> > Per vague memory I discussed half of this with some linux crowd and
-> > 
-> > they said "won't fix" long ago.
-> > 
-> > `su user' and`sudo -u user sh' give the user the fd of root's tty and
-> > 
-> > it is readable and writable. After closing the session, the user can
-> > 
-> > keep it and on root's tty potentially do:
-> > 
-> > 1.  inject keypresses via ioctl()
-> >     
-> >     and/or
-> >     
-> > 2.  read the output of root's tty, probably with some analogue of
-> >     
-> >     tee(1).
-> >     
-> > 
-> > Is this really a concern?
-> 
-> This class of vulnerabilities has been known since at least 2005:
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=173008 (CVE-2005-4890)
-> 
-> It was last discussed on oss-security in 2017:
-> 
-> http://seclists.org/oss-sec/2017/q2/412
-> 
-> > Any workarounds?
-> 
-> For sudo, there's the "use_pty" flag. (It's not enabled by default.)
+Speaking for myself from a security researcher's perspective, I would say
+it depends on the reason for embargo, and what ends up protecting users
+better.
 
-Why this isn't default? Where's the catch?
+There might be valid reasons for embargoes - one example (but not the only
+one) is when a given bug affects multiple similar products, and a
+disclosure on the side of one product would 0-day users using other
+products. It sounds logical to wait until fixes are available before
+disclosure (keeping in mind at the same time that a certain sane deadline
+must be met too).
 
-​Jordan
+On the other hand there are reasons for embargoes which I don't find valid,
+where the examples you've given ("paper/conference presentation/patent
+submission") fall into this category.
+They don't sound as something that would benefit users' security (please
+correct me if I'm wrong) and I'm not a big fan of sitting on already
+discovered unpatched security bugs (in the end bug discovery might be a
+function of time for all we know).
+
+In this case I would consider explaining this to the researcher and
+proceeding with patching.
+In the end if this causes a given person to report a known-to-them bug just
+before a conference/etc it changes little vs. actually waiting for the
+proposed just-before-conference/etc deadline anyway (if accepting the
+embargo agreement that is).
+
+Cheers,
+Gynvael
+
+On Thu, Jan 18, 2018 at 5:11 PM Florian Weimer <fweimer@...hat.com> wrote:
+
+> Subject says it all: What do you do if you receive a vulnerability
+> report, and the reporter requests an embargo at some time in the future
+> because that's when their paper/conference presentation/patent
+> submission is scheduled?
+>
+> The obvious approach is to find a prior public report of essentially the
+> same bug and fix that (which will work surprisingly often), but let's
+> assume that this isn't the case.
+>
+> Thanks,
+> Florian
+>
+
