@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1340" "Monday" "16" "January" "2017" "19:08:48" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<6a99e3df9a9449dcb2ea3a4358c469b0@imshyb01.MITRE.ORG>" "35" "[oss-security] Re: jasper: invalid memory write in dec_clnpass (jpc_t1dec.c)" nil nil nil "1" "2017011700:08:48" "[oss-security] Re: jasper: invalid memory write in dec_clnpass (jpc_t1dec.c)" (number mark "U       cve-assign@m Jan 16   35/1340  " thread-indent "\"[oss-security] Re: jasper: invalid memory write in dec_clnpass (jpc_t1dec.c)\"\n") "<2047603.jilSxc2Osk@blackgate>" ("<2047603.jilSxc2Osk@blackgate>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["853" "Thursday" "18" "January" "2018" "18:21:27" "+0100" "Matthias Fetzer" "admin@rofl.cat" "<40a5c55e-aef3-f900-9ad1-5b2d9931a07e@rofl.cat>" "20" "Re: [oss-security] How to deal with reporters who don't want their bugs fixed?" "^Date:" nil nil "1" "2018011817:21:27" "[oss-security] How to deal with reporters who don't want their bugs fixed?" (number mark "        admin@rofl.c Jan 18   20/853   " thread-indent "\"Re: [oss-security] How to deal with reporters who don't want their bugs fixed?\"\n") "<CAAnPYQ4Ck7uzf7FFOJX-H1GDOtnHDbXyZ_mzYztSK8O6DF4y7Q@mail.gmail.com>" ("<07f40446-1917-893c-2a87-b0d7990579b2@redhat.com>" "<CAAnPYQ4Ck7uzf7FFOJX-H1GDOtnHDbXyZ_mzYztSK8O6DF4y7Q@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5848 invoked by uid 550); 17 Jan 2017 00:09:11 -0000
+Received: (qmail 9959 invoked by uid 550); 18 Jan 2018 19:06:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,50 +11,55 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5737 invoked from network); 17 Jan 2017 00:09:09 -0000
-From: <cve-assign@mitre.org>
-To: <ago@gentoo.org>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <2047603.jilSxc2Osk@blackgate>
-Message-ID: <6a99e3df9a9449dcb2ea3a4358c469b0@imshyb01.MITRE.ORG>
-Date: Mon, 16 Jan 2017 19:08:48 -0500
+Received: (qmail 5449 invoked from network); 18 Jan 2018 17:21:42 -0000
+Authentication-Results: mx.rofl.cat (amavisd-new); dkim=pass
+	reason="pass (just generated, assumed good)" header.d=rofl.cat
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=rofl.cat; h=
+	content-transfer-encoding:content-language:content-type
+	:content-type:in-reply-to:mime-version:user-agent:date:date
+	:message-id:from:from:references:to:subject:subject; s=dkim; t=
+	1516296085; x=1517160086; bh=FcOQbXSBskLvY+4a7kMqexOQPEw1F1IO+2g
+	4hG+v8u8=; b=hMWreigs6bXvNO6RVoj80QZEs8sKgr3D/ojBzwkedb9D+ZiXIc3
+	ZZPP3dQFw95fdEmVpTK1pZB5vWZBGvFri/+/3J8ID32Dw20uF+FvVn6SxYBc5b3J
+	5Jaz79Ydp5lazYyrQTZoTvRhruH+USGEBmGe4MFO9AVGn7AoinBKluABwYYE/k8Q
+	UqZnkyCzjDQSdBSGd0r8KNH5Wkn5NCIcmzqSiL4zGopMEp2ImurzLUlatzr09zd8
+	iaBe/E5BmjV201CYKiBjjtEoBTQThD4RHLmcDFzD1pAUNydxk66fB9BOv1CQ00ku
+	2+0BMTdW99cia3uTxidSTPHY168smD/bu7Q==
+X-Virus-Scanned: Debian amavisd-new at mx.rofl.cat
+References: <07f40446-1917-893c-2a87-b0d7990579b2@redhat.com>
+ <CAAnPYQ4Ck7uzf7FFOJX-H1GDOtnHDbXyZ_mzYztSK8O6DF4y7Q@mail.gmail.com>
+Message-ID: <40a5c55e-aef3-f900-9ad1-5b2d9931a07e@rofl.cat>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.0
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: jasper: invalid memory write in dec_clnpass (jpc_t1dec.c)
+In-Reply-To: <CAAnPYQ4Ck7uzf7FFOJX-H1GDOtnHDbXyZ_mzYztSK8O6DF4y7Q@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+Date: Thu, 18 Jan 2018 18:21:27 +0100
+From: Matthias Fetzer <admin@rofl.cat>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] How to deal with reporters who don't want their
+ bugs fixed?
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi Gynvael,
 
-> [] https://blogs.gentoo.org/ago/2017/01/16/jasper-invalid-memory-write-in-dec_clnpass-jpc_t1dec-c
-> 
-> AddressSanitizer: SEGV on unknown address
-> The signal is caused by a WRITE memory access.
-> 
-> dec_clnpass ... jasper-1.900.27/src/libjasper/jpc/jpc_t1dec.c:869:4
+On 01/18/2018 06:06 PM, Gynvael Coldwind wrote:
+> On the other hand there are reasons for embargoes which I don't find valid,
+> where the examples you've given ("paper/conference presentation/patent
+> submission") fall into this category.
+> They don't sound as something that would benefit users' security (please
+> correct me if I'm wrong) and I'm not a big fan of sitting on already
+> discovered unpatched security bugs (in the end bug discovery might be a
+> function of time for all we know).
 
-Use CVE-2017-5503.
+Well. The result might be, that they will *not* report the vulnerability
+at all, but publish their findings as a 0day at a conference. So the
+users security highly benefits, if patches are available right
+before/after/during the conference.
 
+This is not the best case, but still better than unpatched, published 0days.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYfV+OAAoJEHb/MwWLVhi2MgsP/RhVEboMm9UMLEpF8m4ZYraO
-lDJaf20dpH2yKmiGnxl1ZGr3FxPdLW7TG50sJdJ6aJ6uXcI9j5mgNBsHP/d7Iccv
-i3oYr7QFGY+vTmi8HvXTCPVJmeGLZiniUWZaGmnblWkRHBlBU1zOrv+C3R78BvGR
-XcrYX/E6fUSZEVe0kdb+8lMUG7NHpPqF3xsp1Ys1Yoyj2AAt2EkEP9sR0qc3xD0X
-69IRLfV4v6KNzqYp72uJ7JrETKY0VKAGjM1PKRtLZdcEL1HJBHL1J/BkvjtHH3hk
-cEEROgbamXFX2B2LjQAFdL4emcAIvPRBztR4cojmNwi3lEwP3ZsLjTIWyX+3ZyCv
-V3TAy9tDdO9e8oBUGQSdMzSH8zh6Yb0alJZYcBRNOQhgDnxuLGtKEbSiE3+lbNmJ
-Z4mTR4xlH9KGjFkseHmdD0UoNUJrYNzokeoy0sXJUkBDUERkc935gmeUWAKnJ/s1
-U5MZpyKydRJsk+qulp7r+1I2MRXChx6kZiKkRu2iI931GH2f/TGiQxB6I7JZqtLX
-mhq+UUR6aYoSKxNAWciDiTrrbFuAyHtQ90uvwxTU/ySpzHuJN4CUPJ3iUzjauPMa
-BOfP6lhwlV6t/1x5volP5A55xNsyhCnmguacdoK0r8YkPjfIyraEd8VX17sCq2FS
-DJIvlsjb/y8uB9Dh5KYN
-=etAz
------END PGP SIGNATURE-----
+Best regards,
+Matthias
