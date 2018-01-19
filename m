@@ -1,67 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/07/3
-Message-ID: <CAKG8Do6CyL4JQxhvXSx5a31KAZEP7PpEy29cyFp+bTeRm5=wzQ@mail.gmail.com>
-Date: Mon, 7 May 2018 17:35:30 +0200
-From: Cedric Buissart <cbuissar@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/19/3
+Message-ID: <0cbfa06b-ffd9-9b08-c16c-2e28d2cb768e@nlnetlabs.nl>
+Date: Fri, 19 Jan 2018 11:47:21 +0100
+From: Ralph Dolmans <ralph@...etlabs.nl>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2018-1089 389-ds-base: unauthenticated ns-slapd crash via large filter value in ldapsearch
+Subject: CVE-2017-15105 Unbound: NSEC processing vulnerability (DNSSEC)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, May 7, 2018 at 5:30 PM, Cedric Buissart <cbuissar@...hat.com> wrote:
+Hi,
 
-> Hi all,
->
-> This is to disclose the following flaw, CVE-2018-1089 :
->
-> 389-ds-base, a.k.a 389 Directory Server, https://pagure.io/389-ds-base/,
-> is a highly usable, fully featured, reliable and secure LDAP server
-> implementation. It handles many of the largest LDAP deployments in the
-> world.
->
-> 389-ds server did not properly handle characters needed to be escaped in
-> its query filter. This could result in buffer overflows, from the heap
-> or the stack, on larger filters.  An unauthenticated attacker could send
-> a specially crafted LDAP request and crash the server. RCE has not been
-> demonstrated at this time.
->
-> Red Hat would like to thank Greg Kubok for alerting us of the issue.
->
->
-> Reproducer1 :
-> [root@...ver1 ~]# payload=$(printf '.*$%.0s' {1..1000})
-> [root@...ver1 ~]# ldapsearch -h localhost -p 389 -x -b "dc=blah"
-> "(&(|(telephoneNumber=*${payload}*)(uid=*${payload}*)(
-> title=*${payload}*)(sn=*${payload}*)(ou=*${payload}*)(
-> givenName=*${payload}*))(objectClass=posixaccount))"
-> "telephoneNumber sshpubkeyfp ipaSshPubKey uid krbCanonicalName title
-> loginShell uidNumber gidNumber sn homeDirectory mail krbPrincipalName
-> givenName nsAccountLock"
->
-> Reproducer2:
-> [root@...ver1 ~]# perl -e 'print ".*\$" x (1400)' | ldapsearch -x -f-
-> "(&(uid=%s)(objectClass=posixaccount))"
->
->
-> Patch attached for versions 1.3.7 & 1.2.11
->
-Patches are now attached for real.
+Below is a copy of Unbound's CVE description that can be found at
+https://unbound.net/downloads/CVE-2017-15105.txt
 
->
-> Thanks!
->
-> --
-> Cedric Buissart,
-> Product Security
->
+Regards,
+Ralph
 
+==
 
+The CVE number for this vulnerability is CVE-2017-15105.
 
--- 
-Cedric Buissart,
-Product Security
+== Summary
+We discovered a vulnerability in the processing of wildcard synthesized
+NSEC records. While synthesis of NSEC records is allowed by RFC4592,
+these synthesized owner names should not be used in the NSEC processing.
+This does, however, happen in Unbound 1.6.7 and earlier versions.
 
-Content of type "text/html" skipped
+== Description
+NSEC records are used to prove the non-existence of records between its
+owner name and its next owner, and for the proof that the queried for
+type does not exist when the queried for name matches the owner of the
+NSEC. It is therefore important that the owner name of the NSEC record
+can not be changed, this is enforced using a DNSSEC signature (RRSIG).
 
-View attachment "v1.3.7.5-CVE-2018-1089-Crash-from-long-search-filter.patch" of type "text/x-patch" (3369 bytes)
+Because wildcard synthesis on NSEC records is allowed, it is possible to
+have DNSSEC valid NSEC records for which the owner name must not be used
+for non-existence proofs. A validator can determine that it is a
+wildcard record using the label count in the NSEC signature and must in
+that case use the non-synthesized wildcard name as NSEC owner.
 
-View attachment "v1.2.11.15-CVE-2018-1089-crash-in-long-search-filter.patch" of type "text/x-patch" (1549 bytes)
+Unbound validates these NSEC records (using the label count), and then
+uses the owner of the NSEC it received for the non-existence proof.
+
+Unbound is only vulnerable for zones that contain a wildcard record and
+use NSEC records for the non-existence proof. NSEC3 records do not work
+for this attack.
+
+== Impact
+The wildcard NSEC record can be used to proof the non-existence
+(NXDOMAIN answer) of an existing wildcard record. This can be done by
+changing the owner of the wildcard NSEC into a label that will be sorted
+before the wildcard label.
+
+The wildcard NSEC record can also be used to trick Unbound into
+accepting a NODATA proof. This can be done by changing the owner name of
+the NSEC wildcard record into the queried for name. This is only
+possible when the queried for type is not in the type bitmap of the NSEC
+wildcard record.
+
+This vulnerability can not be used to trick Unbound into accepting an
+insecure delegation proof (proof of no DS). The NS bit must be set in
+the NSEC type bitmap when proving an insecure delegation, this is never
+the case for wildcard records.
+
+== Solution
+Download patched version of Unbound, or apply the patch manually.
+
++ Downloading patched version
+Unbound 1.6.8 is released with the patch
+https://unbound.net/downloads/unbound-1.6.8.tar.gz
+
++ Applying the Patch manually
+For Unbound version 1.6.7 the patch is:
+https://unbound.net/downloads/patch_cve_2017_15105.diff
+
+Apply the patch on Unbound source directory with 'patch -p0 < filename'
+then run 'make install' to install Unbound.
+
+== Acknowledgements
+Ralph Dolmans (NLnet Labs)
+Karst Koymans (University of Amsterdam)
