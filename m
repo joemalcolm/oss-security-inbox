@@ -1,48 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/22/5
-Message-ID: <20180622192607.GA27571@hunt>
-Date: Fri, 22 Jun 2018 12:26:07 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/19/8
+Message-ID: <1505981632.2048745.1516380009804.JavaMail.zimbra@redhat.com>
+Date: Fri, 19 Jan 2018 11:40:09 -0500 (EST)
+From: Vladis Dronov <vdronov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Intel hyper-threading security issues
+Subject: CVE-2018-1049: systemd: automount: access to automounted volumes can lock up
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jun 22, 2018 at 02:08:03PM +1000, Michael Ellerman wrote:
-> See the script below for example, which shows CPUs grouped by core.
+Heololo,
 
-> #!/usr/bin/python3
-> 
-> import os
-> import glob
-> 
-> by_core = {}
-> 
-> for path in glob.iglob('/sys/devices/system/cpu/cpu*/topology/core_id'):
->     num = int(path.split('/')[5].replace('cpu', ''))
->     core_id = int(open(path).read(), 10)
->     by_core.setdefault(core_id, []).append(num)
-> 
-> for core in sorted(by_core.keys()):
->     print('%d: %s' % (core, ', '.join([str(s) for s in sorted(by_core[core])])))
-> 
+In systemd prior to v234 a race exists between .mount and .automount units such
+that automount requests from kernel may not be serviced by systemd resulting in
+kernel holding the mountpoint and any processes that try to use said mount will
+hang. A race like this may lead to denial of service, until mount points are
+unmounted. This race is easily reproducible.
 
-Note that this gives misleading results on multi-socket systems:
+References:
 
-0: 0, 8, 16, 24
-1: 1, 9, 17, 25
-2: 2, 10, 18, 26
-3: 3, 11, 19, 27
-4: 4, 12, 20, 28
-5: 5, 13, 21, 29
-6: 6, 14, 22, 30
-7: 7, 15, 23, 31
+https://bugs.launchpad.net/ubuntu/+source/systemd/+bug/1709649
 
-This system has two sockets, eight cores per socket, two threads per core.
+https://github.com/coreos/bugs/issues/1630
 
-Solar's cpuinfo reports;
-$ ./cpuinfo
-Found 32 logical processors across 16 physical cores
+https://bugzilla.redhat.com/show_bug.cgi?id=1534701
 
-Thanks
+An upstream issue:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+https://github.com/systemd/systemd/pull/5916
+
+An upstream patch:
+
+https://github.com/systemd/systemd/commit/e7d54bf58789545a9eb0b3964233defa0b007318
+
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
