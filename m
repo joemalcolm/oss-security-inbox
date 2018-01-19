@@ -1,46 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/13/2
-Message-ID: <CAO8bUyka=0g1xJmCH5_DkKc-JsWnCDGmsPUUTbbeKpkaC4=pvg@mail.gmail.com>
-Date: Thu, 13 Sep 2018 15:12:01 +0200
-From: Frank Morgner <frankmorgner@...il.com>
-To: opensc-announce@...ts.sourceforge.net,  OpenSC Development <opensc-devel@...ts.sourceforge.net>
-Cc: oss-security@...ts.openwall.com
-Subject: OpenSC release 0.19.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/19/6
+Message-ID: <CA+-XxSHrxf42PbHDpcNfjiwp2f4tTtruke30bOwK9xCG1-r-fQ@mail.gmail.com>
+Date: Fri, 19 Jan 2018 06:04:11 -0800
+From: Igor Seletskiy <i@...udlinux.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: How to deal with reporters who don't want their bugs fixed?
 Content-Type: text/plain; charset=utf-8
 
-Hi all!
+Hi Greg,
 
-I'm happy to announce the new OpenSC release 0.19.0, which be found here
-https://github.com/OpenSC/OpenSC/releases/tag/0.19.0 including the full
-list of changes.
+I am sure you are right, as you were in the epicenter of it and saw things
+happening. More than that -- I am really thankful to a group of people who
+worked on fixing it for months to get us where we are. Don't get me wrong -
+in no way, I am blaming anyone.
 
-Most notably, this release contains fixes for mutliple issues, ranging from
-stack based buffer overflows to out of bounds reads and writes on the heap.
-They can be triggered by malicious smartcards sending malformed responses
-to APDU commands. A detailed description can be found at X41-2018-002
-<https://www.x41-dsec.de/lab/advisories/x41-2018-002-OpenSC/>. The issues
-are tracked as CVE-2018-16391
-<http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-16391> CVE
--2018-16392 <http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-16392>
-CVE-2018-16393
-<http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-16393> CVE
--2018-16418 <http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-16418>
-CVE-2018-16419
-<http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-16419> CVE
--2018-16420 <http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-16420>
-CVE-2018-16421
-<http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-16421> CVE
--2018-16422 <http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-16422>
-CVE-2018-16423
-<http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-16423> CVE
--2018-16424 <http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-16424>
-CVE-2018-16425
-<http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-16425> CVE
--2018-16426 <http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-16426>
-CVE-2018-16427
-<http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-16427>. Thanks to
-Eric Sesterhenn from X41 D-Sec GmbH for reporting and helping fixing the
-problems.
+Yet, KAISER patch & especially patch from AMD to the mailing list created a
+lot of rumors, that I believe forced earlier disclosure -- because things
+got into 'semi-public' state.
+I might be wrong, I don't have all the info, and I am sure that people who
+were at the center of it have a better understanding of what & why happened.
 
-Regards, Frank
+
+Regards,
+Igor Seletskiy |  CEO
+CloudLinux OS <https://cloudlinux.com/cloudlinuxos>   |   KernelCare
+<https://www.cloudlinux.com/kernelcare>   |   Imunify360
+<http://imunify360.com/>
+
+Get 24/7 free, exceptionally good support at cloudlinux.zendesk.com
+Follow us on twitter for technical updates: @CloudLinuxOS
+<https://twitter.com/cloudlinuxos>
+
+On Fri, Jan 19, 2018 at 5:58 AM, Greg KH <greg@...ah.com> wrote:
+
+> On Fri, Jan 19, 2018 at 05:22:58AM -0800, i@...udlinux.com wrote:
+> > We have seen "semi-public" with Meltdown -- I think it was dreadful. I
+> > would prefer private to "semi-public" any day.
+>
+> Meltdown was not semi-public, it was private and siloed and a whole
+> bunch of other horrible things.  If it were semi-public, we would have
+> had it fixed sooner :)
+>
+> And yes, a number of us involved are probably going to be writing up a
+> post-mortum of that whole horrid affair, feel free to let me know if
+> anyone wants to help out with it.  I think it's a great example of what
+> not to ever do in the future...
+>
+> thanks,
+>
+> greg k-h
+>
 
