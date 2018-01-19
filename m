@@ -1,49 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/24/8
-Message-Id: <E1ezZFn-00031E-TI@romulus.home.bitnebula.com>
-Date: Fri, 23 Mar 2018 21:49:59 -0500
-From: Daniel Ruggeri <druggeri@...che.org>
-To: announce@...pd.apache.org, oss-security@...ts.openwall.com, security@...pd.apache.org
-Subject: CVE-2017-15710: Out of bound write in mod_authnz_ldap when using too small Accept-Language values
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/19/7
+Message-ID: <CAMqJVeOJ6D5qgreA6ZiN3u30iQx2_1s3h+dns-60voG6H1fxNQ@mail.gmail.com>
+Date: Fri, 19 Jan 2018 08:46:40 -0600
+From: Jason Lowe <jlowe@...che.org>
+To: general@...oop.apache.org, user@...oop.apache.org,  Hadoop Common <common-dev@...oop.apache.org>,  "<security@...oop.apache.org>" <security@...oop.apache.org>, full-disclosure@...ts.grok.org.uk,  bugtraq@...urityfocus.com, oss-security@...ts.openwall.com
+Subject: CVE-2017-15713: Apache Hadoop MapReduce job history server vulnerability
 Content-Type: text/plain; charset=utf-8
 
+CVE-2017-15713: Apache Hadoop MapReduce job history server vulnerability
 
-CVE-2017-15710: Out of bound write in mod_authnz_ldap when using too small Accept-Language values.
-
-Severity: Low
+Severity: Severe
 
 Vendor: The Apache Software Foundation
 
 Versions Affected:
-httpd 2.0.23 to 2.0.65
-httpd 2.2.0 to 2.2.34
-httpd 2.4.0 to 2.4.29
+  Hadoop 0.23.0 to 0.23.11
+  Hadoop 2.0.0-alpha to 2.8.2
+  Hadoop 3.0.0-alpha to 3.0.0-beta1
 
-Description:
+Users affected: Users running the MapReduce job history server daemon
 
-mod_authnz_ldap, if configured with AuthLDAPCharsetConfig,
-uses the Accept-Language header value to lookup the right charset encoding
-when verifying the user's credentials.
-If the header value is not present in the charset conversion
-table, a fallback mechanism is used to truncate it to a two
-characters value to allow a quick retry (for example, 'en-US' is truncated
-to 'en'). A header value of less than two characters forces an out of bound
-write of one NUL byte to a memory location that is not part of the string.
-In the worst case, quite unlikely, the process would crash which could
-be used as a Denial of Service attack. In the more likely case, this memory is
-already reserved for future use and the issue has no effect at all."
+Impact:  Vulnerability allows a cluster user to expose private files
+owned by the user running the MapReduce job history server process.
+The malicious user can construct a configuration file containing XML
+directives that reference sensitive files on the MapReduce job history
+server host.
 
-Mitigation:
-All httpd users should upgrade to 2.4.30 or later.
+Mitigation: Users should upgrade to Apache Hadoop 2.7.5, 2.8.3, 2.9.0, or 3.0.0.
 
-Users of (the now end-of-life) httpd 2.2 who cannot upgrade at this time should
-apply CVE-2017-15710.patch, which is available at
-
-   https://www.apache.org/dist/httpd/patches/apply_to_2.2.34/
-
-Credit:
-The Apache HTTP Server security team would like to thank Alex Nichols
-and Jakob Hirsch for reporting this issue.
-
-References:
-https://httpd.apache.org/security/vulnerabilities_24.html
+Credit: This issue was discovered by Man Yue Mo of lgtm.com
