@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["344" "Tuesday" "18" "October" "2016" "10:42:15" "+0300" "Lior Kaplan" "kaplanlior@gmail.com" "<CAEsznC7n7U35nHEx64ma39PtbqKd6TjPyvAWJMBaP6YRacJEog@mail.gmail.com>" "16" "[oss-security] CVE assignment for PHP 5.6.27 and 7.0.12" nil nil nil "10" "2016101807:42:15" "[oss-security] CVE assignment for PHP 5.6.27 and 7.0.12" (number mark "U       kaplanlior@g Oct 18   16/344   " thread-indent "\"[oss-security] CVE assignment for PHP 5.6.27 and 7.0.12\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["615" "Friday" "19" "January" "2018" "14:58:37" "+0100" "Greg KH" "greg@kroah.com" "<20180119135837.GA1212@kroah.com>" "16" "Re: [oss-security] How to deal with reporters who don't want their bugs fixed?" "^Date:" nil nil "1" "2018011913:58:37" "[oss-security] How to deal with reporters who don't want their bugs fixed?" (number mark "        greg@kroah.c Jan 19   16/615   " thread-indent "\"Re: [oss-security] How to deal with reporters who don't want their bugs fixed?\"\n") "<CA+-XxSE1d+8b7cbfs7BknJQ9yy7w4sw=0EVwf=gpz43JAVWyhQ@mail.gmail.com>" ("<20180118220124.GA9185@openwall.com>" "<efa92101-facb-84ff-7582-78583e8c7381@hpe.com>" "<CA+-XxSE1d+8b7cbfs7BknJQ9yy7w4sw=0EVwf=gpz43JAVWyhQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 11585 invoked by uid 550); 18 Oct 2016 07:42:30 -0000
+Received: (qmail 15683 invoked by uid 550); 19 Jan 2018 13:58:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,52 +11,47 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11549 invoked from network); 18 Oct 2016 07:42:28 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=9wJnw4C7FjXLVRzGnh9tv8Mz1OMUGdZbRlA9jmlg22c=;
-        b=Ijwl6juhg7svZVBG54jxR/t6iuAE3KRD7/eini+uTIGMuBm55fyQ18VaPfXOCiks5Z
-         pveCot0r0IJnXw2UkipSC1dquuHxjZSfgo7eHhnfaXSIFOfpXywfG0EoVDDBcuSxr3+e
-         /xWeT6+j+4E4R6S88V+XCHUT4rLCPJvCdAyyJoniNnO8Fi30WPflXyDsxSbYfMaj735A
-         SolVKdX5XVLGtC3rZfmuUj4+0lGOgWaZlerfUcB8M6G5hUCHHTOkI36OFkf9+epFUdor
-         LYJNx08GLFjfB50zAQm83iqgx/kokUlAJjnlSA7QB8rlNDsta9yeoL67DgyTgNyUrMB9
-         ShKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=9wJnw4C7FjXLVRzGnh9tv8Mz1OMUGdZbRlA9jmlg22c=;
-        b=mgr+BTm6NMV0c9s1Pz+1nnieS5oKI6QQZ0Z9QbJsZbanS/vLos/7aN+j476UJkDSqD
-         84zRXf6QExLhji8X/u6nqgXp2sHR0FwoSf+XNdfO6Tm90rT23MFfujEkViSTZb98UriS
-         KbERJGVeM6uPMvbUgawto4hY2r3+iUj7l4FJuixo2jFzm7xwtEyI2ILx+k6/apRBb7ti
-         /gt7hYht5MaAWlBdfQViuDqBjU4XJCYgEOo9mho/xmPCzN81/5HsZnG1WDamRFtU83OZ
-         GwFa1HCqdw2KNdivxSAOFbv48jpp/MJyF8vmRtD5dMjsK39zKCix/rosUeLu3w2BieGM
-         DzBw==
-X-Gm-Message-State: AA6/9Rn6mKrJEpsYgWF5uvAVFzf1y97Q0b/I6yaaw3SVwx5Nxca8E+vbTbUpF92lRjMRywAswniJ0zRwgHFgDg==
-X-Received: by 10.31.95.7 with SMTP id t7mr1263733vkb.0.1476776536060; Tue, 18
- Oct 2016 00:42:16 -0700 (PDT)
+Received: (qmail 15656 invoked from network); 19 Jan 2018 13:58:56 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm1; bh=zO+x/dyRRjkyOCSbII04M/3OPWw1S
+	++4koM+OmwaLlc=; b=FyTURWSc1TYMxy0UZi3h7gNIUevv8AmXiDNwahd57ozqN
+	WUKF9rl938y2kUAyPUIq8N6oA4FtkMub8aVZ2vVkFSl7AcYv6cogFo3sd0ZbRhW3
+	0V15ZvosdbN5z3sx3ZRphIGsMuGEXVRTxBaB1jqOCvsQDYw0OWvD6Hsz1vYRCUVe
+	bdGdWhuvlz/vuIS0NX8EPDmko85Wgpln6Iu1kQM15X0Vs0l5GzzvfmwLb+AEA4IP
+	uCmjon7NxdJysVapIGhefU5o14fzhX04/8l6taLndo3K1/JGE04iECecnF2xe73y
+	iugZQw9AL6at5skw9QQ0AzmAtcxekFos3hKrPXGLg==
+X-ME-Sender: <xms:k_lhWpLBPPJxpUrCDuxkyxp52_hg0HKQx8lecdcieBJhAWlR-j_vLw>
+Message-ID: <20180119135837.GA1212@kroah.com>
+References: <20180118220124.GA9185@openwall.com>
+ <efa92101-facb-84ff-7582-78583e8c7381@hpe.com>
+ <CA+-XxSE1d+8b7cbfs7BknJQ9yy7w4sw=0EVwf=gpz43JAVWyhQ@mail.gmail.com>
 MIME-Version: 1.0
-From: Lior Kaplan <kaplanlior@gmail.com>
-Date: Tue, 18 Oct 2016 10:42:15 +0300
-Message-ID: <CAEsznC7n7U35nHEx64ma39PtbqKd6TjPyvAWJMBaP6YRacJEog@mail.gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CA+-XxSE1d+8b7cbfs7BknJQ9yy7w4sw=0EVwf=gpz43JAVWyhQ@mail.gmail.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
+Date: Fri, 19 Jan 2018 14:58:37 +0100
+From: Greg KH <greg@kroah.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] How to deal with reporters who don't want their
+ bugs fixed?
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=001a114e2932d838b1053f1ed478
-Subject: [oss-security] CVE assignment for PHP 5.6.27 and 7.0.12
 
---001a114e2932d838b1053f1ed478
-Content-Type: text/plain; charset=UTF-8
+On Fri, Jan 19, 2018 at 05:22:58AM -0800, i@cloudlinux.com wrote:
+> We have seen "semi-public" with Meltdown -- I think it was dreadful. I
+> would prefer private to "semi-public" any day.
 
-Hi,
+Meltdown was not semi-public, it was private and siloed and a whole
+bunch of other horrible things.  If it were semi-public, we would have
+had it fixed sooner :)
 
-Please assign a CVE for the following issue:
+And yes, a number of us involved are probably going to be writing up a
+post-mortum of that whole horrid affair, feel free to let me know if
+anyone wants to help out with it.  I think it's a great example of what
+not to ever do in the future...
 
-Bug #73147    Use After Free in unserialize()
-https://bugs.php.net/bug.php?id=73147
-http://git.php.net/?p=php-src.git;a=commit;h=0e6fe3a4c96be2d3e88389a5776f878021b4c59f
+thanks,
 
-Thanks,
-
-Kaplan
-
---001a114e2932d838b1053f1ed478--
+greg k-h
