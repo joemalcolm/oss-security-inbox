@@ -1,24 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/03/1
-Message-ID: <87y3bf1pry.fsf@mid.deneb.enyo.de>
-Date: Wed, 03 Oct 2018 08:57:05 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
-To: Henri Salo <henri@...v.fi>
-Cc: marc.zyngier@....com,  oss-security@...ts.openwall.com
-Subject: Re: arm64 Linux kernel: Privilege escalation by taking control of the KVM hypervisor
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/19/4
+Message-ID: <CA+-XxSE1d+8b7cbfs7BknJQ9yy7w4sw=0EVwf=gpz43JAVWyhQ@mail.gmail.com>
+Date: Fri, 19 Jan 2018 05:22:58 -0800
+From: i@...udlinux.com
+To: oss-security@...ts.openwall.com
+Subject: Re: How to deal with reporters who don't want their bugs fixed?
 Content-Type: text/plain; charset=utf-8
 
-* Henri Salo:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> On Tue, Oct 02, 2018 at 05:07:14PM +0100, Will Deacon wrote:
->> There has not yet been a CVE requested for this (mainly because I don't know
->> how to do it).
->
-> Please use https://cveform.mitre.org/ thanks.
+We have seen "semi-public" with Meltdown -- I think it was dreadful. I
+would prefer private to "semi-public" any day.
+-----BEGIN PGP SIGNATURE-----
+Version: FlowCrypt 5.1.8 Gmail Encryption flowcrypt.com
+Comment: Seamlessly send, receive and search encrypted email
 
-Would DFW work as well?
-
-  <https://github.com/distributedweaknessfiling/cvelist>
-
-I'm asking because the Rust people tried to get an ID from there, but
-apparently never got a reply.
+wsFcBAEBCAAQBQJaYfEwCRDNe7NtZrd+DQAA/i4P/jjhkbmnFTDXU+ksSwYS
+x0pyAPKj0Qzbn/fS2QVMcmRnZl2U3oYDpwRIJbRnLV+NGwFeqBMHVqx+kFMB
+DeNMxqtlt6N15RbyjphLLK20QwdqD7RuqXh9xhV2eCm0SRk2hnzIw/z/u8Hq
+CnQRXgsT6eiscvT+/uHzI628lGz7N5J+c7h4RoNbbtNVx64BDDEvsrWZgbKJ
+9iW65HQ6S+lu6UiDXaGcbRJ5bYbbAumg0E/5KZMBlvc7ADQddiFg/nM2M+zW
+JQX8ZqHOkMmOMvtuR6QkkkQqibWKEyRjwyTSexocdfU1azeZYS4BGk/t0m4o
+cjCgEwbguLgfCoye1y9jIuNIMFyMSq9scoU84PqFlRWTjDkjsaR+Sjtp/0sf
+S07vlRXAe2t9ZuBOU8/H5Vf9GNQKg9oV3OfKvAu5QGAGos/rjkSLSIgqZl/n
+815jHyM63IDBB+cYBCNxoRhxdzklrxi5smjtm25vD58SZxtyND0e2oXXnrnH
+B60dT9tH4PPfyFigSfNU34R8yJC8cvOOaSvFu3dV0MUexMs0vVayyHzVccwe
+sZsfeTBI/8VyfRChcF9vshrBn2MdGhOG8rYxvm0wqBU0ISQPf8Cv9P7c6jPq
+2mmjBDdH2hckos3VbyYgdqFbo7A0OMTN0a06mPgjreLL8eQZ33CTAk3DBo1A
+r8lx
+=Crf/
+-----END PGP SIGNATURE-----
