@@ -1,42 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/27/4
-Message-ID: <20180627094047.GA13011@openwall.com>
-Date: Wed, 27 Jun 2018 11:40:47 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/19/5
+Message-ID: <20180119135837.GA1212@kroah.com>
+Date: Fri, 19 Jan 2018 14:58:37 +0100
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Cc: oss-security-list@...tactdaniel.net
-Subject: Re: rclone data exflitration / unauthorized API use
+Subject: Re: How to deal with reporters who don't want their bugs fixed?
 Content-Type: text/plain; charset=utf-8
 
-Hi Daniel,
+On Fri, Jan 19, 2018 at 05:22:58AM -0800, i@...udlinux.com wrote:
+> We have seen "semi-public" with Meltdown -- I think it was dreadful. I
+> would prefer private to "semi-public" any day.
 
-On Tue, Jun 26, 2018 at 05:56:18PM -0700, oss-security-list@...tactdaniel.net wrote:
-> Due to it's reliance on vulnerable upstream vendor SDKs & APIs, all 
-> current versions of 'rclone' are subject to a variety of attacks.
-> 
-> This vulnerability is an instance of a class of security vulnerabilities 
-> that affect a wide variety of software. Any API which has clients 
-> perform actions on arbitrary URLs chosen by the API server will lead to 
-> this class of attack becoming a concern.
-> 
-> Current Google Cloud Storage SDKs/APIs, Backblaze B2 APIs, and Yandex 
-> Disk APIs are affected.
-> 
-> No CVE is presently assigned.
-> 
-> Further details at: 
-> https://www.danieldent.com/blog/restless-vulnerability-non-browser-cross-domain-http-request-attacks/
+Meltdown was not semi-public, it was private and siloed and a whole
+bunch of other horrible things.  If it were semi-public, we would have
+had it fixed sooner :)
 
-We have a policy here that while list postings may refer to external
-URLs, they must be complete on their own, and yours is not.  Please see:
+And yes, a number of us involved are probably going to be writing up a
+post-mortum of that whole horrid affair, feel free to let me know if
+anyone wants to help out with it.  I think it's a great example of what
+not to ever do in the future...
 
-http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
+thanks,
 
-I'm attaching a text export of your blog post to this message.  Next
-time, please do something like this on your own.
-
-Thanks,
-
-Alexander
-
-View attachment "restless-vuln.txt" of type "text/plain" (5799 bytes)
+greg k-h
