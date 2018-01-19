@@ -1,20 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/06/1
-Message-ID: <2145096.zCNlfaKS3V@tjmaciei-mobl1>
-Date: Sun, 05 Aug 2018 11:21:00 -0700
-From: Thiago Macieira <thiago@...ieira.org>
-To: oss-security@...ts.openwall.com
-Cc: security@...project.org
-Subject: Requesting CVE number for Qt Creator / Botan issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/19/1
+Message-ID: <nycvar.YSQ.7.76.1801191547190.7816@wniryva>
+Date: Fri, 19 Jan 2018 15:56:51 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE-2017-18043 Qemu: integer overflow in ROUND_UP macro could result in DoS
 Content-Type: text/plain; charset=utf-8
 
-Hello
+   Hello,
 
-I would like to request a CVE number for an advisory about Qt Creator shipping 
-old Botan (and potentially vulnerable) sources.
--- 
-Thiago Macieira - thiago (AT) macieira.info - thiago (AT) kde.org
-   Software Architect - Intel Open Source Technology Center
+Quick Emulator(Qemu) built with a macro ROUND_UP(n, d), used to promote number 
+'n' to the nearest multiple of 'd', is vulnerable to an integer overflow 
+issue. It could occur if 'd' is unsigned and smaller in type from 'n'.
 
+A user could use this flaw to crash the Qemu process resulting in DoS.
 
+Upstream patch:
+---------------
+   -> https://git.qemu.org/?p=qemu.git;a=commit;h=2098b073f398cd628c09c5a78537a6854
 
+CVE-2017-18043 assigned via - https://cveform.mitre.org.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
