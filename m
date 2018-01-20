@@ -1,17 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/06/1
-Message-Id: <20180706123543.E8F634800B4@webmail.sinamail.sina.com.cn>
-Date: Fri, 06 Jul 2018 20:35:43 +0800
-From: <zrlw@...a.com>
-To: "oss-security" <oss-security@...ts.openwall.com>
-Subject: mmap vulnerability in motion eye video4linux driver for Sony Vaio PictureBook
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/20/2
+Message-ID: <d777592f-f00c-6b12-64c2-ac762f7b8b38@redhat.com>
+Date: Sat, 20 Jan 2018 21:18:25 +0100
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: How to deal with reporters who don't want their bugs fixed?
 Content-Type: text/plain; charset=utf-8
 
-Hi all,i found a vulnerability in motion eye video4linux driver for Sony Vaio PictureBook,it desn't validate user-controlled parameter 'vma->vm_pgoff', a malicious process might access all of kernel memory from user space by trying pass different arbitrary address.
-/usr/src/linux-4.4.21-69/drivers/media/pci/meye/meye.c:
-static int meye_mmap(struct file *file, struct vm_area_struct *vma)
-...        unsigned long offset = vma->vm_pgoff << PAGE_SHIFT;
-...        pos = (unsigned long)meye.grab_fbuffer + offset;
-        while (size > 0) {
-                page = vmalloc_to_pfn((void *)pos);
-                if (remap_pfn_range(vma, start, page, PAGE_SIZE, PAGE_SHARED)) {...
+On 01/18/2018 10:21 PM, Solar Designer wrote:
+> On Thu, Jan 18, 2018 at 05:10:05PM +0100, Florian Weimer wrote:
+>> Subject says it all: What do you do if you receive a vulnerability
+>> report, and the reporter requests an embargo at some time in the future
+>> because that's when their paper/conference presentation/patent
+>> submission is scheduled?
+> 
+> I think it's best for your project (I guess glibc?) to prominently
+> publish near the security contact address a maximum embargo time you'd
+> (be likely to) agree to.  That's what security at kernel.org does
+> (7 days) and what we do with (linux-)distros (14 days).
+
+I would prefer to be flexible in case something truly awful happens.
+
+Your perspective is skewed because people know that you have a 
+preference for short embargoes, so at least I tell people to make sure 
+that they have a final patch before contacting the distros list.  Then a 
+week or two is probably enough in most cases.  Without a patch, not so much.
+
+On the other hand, it is near impossible to develop quality solutions 
+under long embargoes.  We tried that in 2008 and largely failed.  The 
+GCC stack checking improvements wouldn't be available today if there had 
+been an indefinite, multi-party embargo (we have an aarch64 
+implementation which still hasn't been merged upstream).  And a more 
+recent attempt yielded few durable results as well.
+
+It also looks like that some reporters see embargoes as a kind of 
+validation for their work.  Everyone loves their first embargoes.
+
+> That way, it's
+> less important for you to judge whether the reason for embargo is
+> valid/altruistic or bogus/selfish - a sane maximum embargo time
+> minimizes the damage to all parties either way.
+
+That's not really true.  Depending on the nature of the vulnerability, 
+there can be a lot of work before we're confident that we can ship an 
+update.  We have some rather bad code out there, with very little or no 
+test coverage, and if we modify such code, we really need to make sure 
+that users receive a net improvement.  (For example, we thought we had 
+the final patch for a DNS stub resolver issue, but it turned out very 
+late that it had a crippling memory leak.)
+
+Thanks,
+Florian
