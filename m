@@ -1,58 +1,144 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/26/8
-Message-ID: <20180126193448.GA10683@openwall.com>
-Date: Fri, 26 Jan 2018 20:34:48 +0100
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/22/4
+Message-ID: <0a99b9a5-e47c-1cf4-dc8a-59557ae32ab3@treenet.co.nz>
+Date: Mon, 22 Jan 2018 22:42:53 +1300
+From: Amos Jeffries <squid3@...enet.co.nz>
 To: oss-security@...ts.openwall.com
-Subject: Re: How to deal with reporters who don't want their bugs fixed?
+Subject: SQUID-2018:2 Denial of Service issue in HTTP Message processing
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jan 20, 2018 at 09:18:25PM +0100, Florian Weimer wrote:
-> On 01/18/2018 10:21 PM, Solar Designer wrote:
-> >I think it's best for your project (I guess glibc?) to prominently
-> >publish near the security contact address a maximum embargo time you'd
-> >(be likely to) agree to.  That's what security at kernel.org does
-> >(7 days) and what we do with (linux-)distros (14 days).
-> 
-> I would prefer to be flexible in case something truly awful happens.
+Notes for OSS-Security people:
 
-As an option, you may state that your project will agree to embargoes of
-up to e.g. 14 days (as long as there's no leak, etc.), but at your sole
-discretion might agree to longer embargoes (ditto).
+* CVE has been requested through DWF, waiting on assignment.
 
-> Your perspective is skewed because people know that you have a 
-> preference for short embargoes, so at least I tell people to make sure 
-> that they have a final patch before contacting the distros list.  Then a 
-> week or two is probably enough in most cases.  Without a patch, not so much.
+* The patch for Squid-3.5 should also be applicable for most other
+Squid-3.x releases.
 
-As another option, you can state a longer maximum embargo for your
-project - e.g., 30 days - although that seems excessive to me.
+* The patch for Squid-4 is provided for anyone having to use older betas
+if any unrelated issues prevent an upgrade. This being a beta release
+series at present the preferred option is upgrade.
 
-I understand that for complex or/and complicated issues it might take a
-lot of time to come up with what looks like a final fix, but as you
-point out below it might also be unrealistic to expect that fix to
-actually be final.  So maybe it's best not to even try, and instead to
-release non-invasive preliminary mitigations first (clearly calling them
-such), then work on cleaner and more complete fixes in public.
+__________________________________________________________________
 
-> On the other hand, it is near impossible to develop quality solutions 
-> under long embargoes.  We tried that in 2008 and largely failed.
+    Squid Proxy Cache Security Update Advisory SQUID-2018:2
+__________________________________________________________________
 
-> >That way, it's
-> >less important for you to judge whether the reason for embargo is
-> >valid/altruistic or bogus/selfish - a sane maximum embargo time
-> >minimizes the damage to all parties either way.
-> 
-> That's not really true.  Depending on the nature of the vulnerability, 
-> there can be a lot of work before we're confident that we can ship an 
-> update.  We have some rather bad code out there, with very little or no 
-> test coverage, and if we modify such code, we really need to make sure 
-> that users receive a net improvement.  (For example, we thought we had 
-> the final patch for a DNS stub resolver issue, but it turned out very 
-> late that it had a crippling memory leak.)
+Advisory ID:        SQUID-2018:2
+Date:               Jan 19, 2018
+Summary:            Denial of Service issue
+                    in HTTP Message processing.
+Affected versions:  Squid 3.x -> 3.5.27
+                    Squid 4.x -> 4.0.22
+Fixed in version:   Squid 4.0.23
+__________________________________________________________________
 
-I think we're on the same page here.  This is a reason to avoid long
-embargoes, and in complex/complicated cases to avoid even trying to make
-the very first public updates "final".
+    http://www.squid-cache.org/Advisories/SQUID-2018_2.txt
+__________________________________________________________________
 
-Alexander
+Problem Description:
+
+ Due to incorrect pointer handling Squid is vulnerable to denial
+ of service attack when processing ESI responses or downloading
+ intermediate CA certificates.
+
+__________________________________________________________________
+
+Severity:
+
+ This problem allows a remote client delivering certain HTTP
+ requests in conjunction with certain trusted server responses to
+ trigger a denial of service for all clients accessing the Squid
+ service.
+
+__________________________________________________________________
+
+Updated Packages:
+
+ This bug is fixed by Squid version 4.0.23.
+
+ In addition, patches addressing this problem for the stable
+ releases can be found in our patch archives:
+
+Squid 3.5:
+ <http://www.squid-cache.org/Versions/v3/3.5/changesets/SQUID-2018_2.patch>
+
+Squid 4:
+ <http://www.squid-cache.org/Versions/v4/changesets/SQUID-2018_2.patch>
+
+ If you are using a prepackaged version of Squid then please refer
+ to the package vendor for availability information on updated
+ packages.
+
+__________________________________________________________________
+
+Determining if your version is vulnerable:
+
+ All Squid configured with "log_uses_indirect_client off" are not
+ vulnerable.
+
+ All Squid-3.0 versions built with --enable-esi and being used for
+ reverse-proxy with squid.conf containing
+ "log_uses_indirect_client on" are vulnerable.
+
+ All Squid-3.1 and later versions up to and including
+ Squid-3.5.27 being used for reverse-proxy with squid.conf
+ containing "log_uses_indirect_client on" are vulnerable.
+
+ All Squid-4 up to and including Squid-4.0.22 being used for
+ reverse-proxy with squid.conf containing
+ "log_uses_indirect_client on" are vulnerable.
+
+ All unpatched Squid-4 up to and including Squid-4.0.22 being
+ used for TLS/HTTPS intercept proxy with squid.conf containing
+ "log_uses_indirect_client on" are vulnerable.
+
+__________________________________________________________________
+
+Workarounds:
+
+ Configure "log_uses_indirect_client off" in squid.conf
+
+__________________________________________________________________
+
+Contact details for the Squid project:
+
+ For installation / upgrade support on binary packaged versions
+ of Squid: Your first point of contact should be your binary
+ package vendor.
+
+ If your install and build Squid from the original Squid sources
+ then the squid-users@...ts.squid-cache.org mailing list is your
+ primary support point. For subscription details see
+ <http://www.squid-cache.org/Support/mailing-lists.html>.
+
+ For reporting of non-security bugs in the latest STABLE release
+ the squid bugzilla database should be used
+ <http://bugs.squid-cache.org/>.
+
+ For reporting of security sensitive bugs send an email to the
+ squid-bugs@...ts.squid-cache.org mailing list. It's a closed
+ list (though anyone can post) and security related bug reports
+ are treated in confidence until the impact has been established.
+
+__________________________________________________________________
+
+Credits:
+
+ The initial issue was reported by Louis Dion-Marcil on behalf of
+ GoSecure.
+
+ Fixed by Amos Jeffries from Treehouse Networks Ltd.
+
+__________________________________________________________________
+
+Revision history:
+
+ 2017-12-13 20:09:30 UTC Initial Report
+ 2018-01-18 23:10:00 UTC Patches Released
+ 2018-01-21 07:45:00 UTC Advisory and fixed packages released
+__________________________________________________________________
+END
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
