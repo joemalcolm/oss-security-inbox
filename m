@@ -1,46 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/18/2
-Message-ID: <234fcf46-0b7e-1055-de68-ca30adcd6e5b@nanthrax.net>
-Date: Tue, 18 Sep 2018 14:36:56 +0200
-From: Jean-Baptiste Onofré <jb@...thrax.net>
-To: Karaf Dev <dev@...af.apache.org>, user@...af.apache.org, Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com, coyotesqrl@...il.com
-Subject: [SECURITY] New security advisory for CVE-2018-11786 released for Apache Karaf
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/22/6
+Message-ID: <20180122194156.gficsy3pnsvyrlaf@matica.foolinux.mooo.com>
+Date: Mon, 22 Jan 2018 11:41:56 -0800
+From: Ian Zimmerman <itz@...y.loosely.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: How to deal with reporters who don't want their bugs fixed?
 Content-Type: text/plain; charset=utf-8
 
-A new security advisory has been released for Apache Karaf, that is
-fixed in recent 4.2.0 release.
+On 2018-01-22 17:20, Mikhail Utin wrote:
 
-CVS-2018-11786: Apache Karaf SSH RBAC security enforcement
+>> Keeping it individual without public announced maximum embargo time
+>> would also help prevent folks from jumping to 0daying everything per
+>> default:)
 
-Severity: Moderate
+> However, to me it is pure "Security by Obscurity" in a bit different
+> wording. It never worked. Simply think that somebody else knows the
+> secret and with your help continues using that.
 
-Vendor: The Apache Software Foundation
+I think you misunderstand the parent post.
 
-Versions Affected: all versions of Apache Karaf prior to 4.2.0.M1
+Nobody is proposing that the embargo period for any _particular_ issue
+be secret.  The proposal in the parent post was to not have a public
+general embargo policy for _all_ issues present & future.
 
-Description:
-
-If the sshd service in Karaf is left on so an administrator can manage
-the running instance, any user with rights to the Karaf console can
-pivot and read/write any file on the file system to which the Karaf
-process user has access. This can be locked down a bit by using chroot
-to change the root directory to protect files outside of the Karaf
-install directory; it can be further locked down by defining a
-security manager policy that limits file system access to those
-directories beneath the Karaf home that are necessary for the system
-to run. However, this still allows anyone with ssh access to the Karaf
-process to read and write a large number of files as the Karaf process
-user.
-
-
-This has been fixed in revision:
-
-https://gitbox.apache.org/repos/asf?p=karaf.git;h=24fb477
-https://gitbox.apache.org/repos/asf?p=karaf.git;h=7ad0da3
-
-Mitigation: Apache Karaf users should upgrade to 4.2.0.M1 or later as
-soon as possible.
-
-JIRA Tickets: https://issues.apache.org/jira/browse/KARAF-5427
-
-Credit: This issue was reported by R.A. Porter
+-- 
+Please don't Cc: me privately on mailing lists and Usenet,
+if you also post the followup to the list or newsgroup.
+To reply privately _only_ on Usenet, fetch the TXT record for the domain.
