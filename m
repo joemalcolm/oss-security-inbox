@@ -1,4 +1,9 @@
-Received: (qmail 3352 invoked by uid 550); 30 Oct 2025 06:15:14 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2495" "Monday" "22" "January" "2018" "12:35:15" "+0100" "Daniel Beck" "ml@beckweb.net" "<9FA8984F-15E3-43F7-A50F-408E92B9D266@beckweb.net>" "77" "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil "1" "2018012211:35:15" "[oss-security] Multiple vulnerabilities in Jenkins plugins" (number mark "U       ml@beckweb.n Jan 22   77/2495  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 13828 invoked by uid 550); 22 Jan 2018 11:35:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,85 +12,93 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 3304 invoked from network); 30 Oct 2025 06:15:14 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761804903; x=1762409703; darn=lists.openwall.com;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=P3T6sjOY2TF+p1mlVDk/e8U6xCFjeuJA7Cz4LrZODsU=;
-        b=URyzEDHMh3dJscaoGxHO0aN0rqfpNkGwOHncMXQDOjWQoArxetnwjwOArc7CJMOnws
-         r/I4Qd/VcMBESj2Dp72OECEBby0WqyxLsMJqSXr5e8yuRddWVNKSOkx9RQenCK1B11my
-         ZME/Wv3z22EeKRBvvLvKDfOcNTpdeOJFdPxgdRYPLu4qkMzj2/eIsANdeXrCiVsETqY5
-         SE/XwDVuKCtBegMvtz5Sp59imqjAyEyEy5n1TXOAgiBk33nRJD+3lxRYmOomodM8/+X7
-         Y0O2kKWuiVEP12CxDicRDPX4HGeDJ7QpfBHs6h4drxMW/VNgwD2ZASl7LZ3Pj4AyAWX1
-         +2mQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761804903; x=1762409703;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=P3T6sjOY2TF+p1mlVDk/e8U6xCFjeuJA7Cz4LrZODsU=;
-        b=DDm3PEyLFy/6gk32upMh6/c5IaX6F0R/+ybQAzN7IXZI91NnW4rCXiKJsYo9AnFSFZ
-         +MKlc3nMVb0LTl1apulrNqscpotGE6AIjMlgyRaNr6CZpVHdj+p+CEy8lLm4YXe3uid8
-         mGMY9wQyT1+ioreABtA3ckHG9jjQp8SqUPdgyCCxUYKCDBwm8C5EegIHK0aBLDgUyamB
-         31vaHOEAmlqPJTtSOUnDtlGH7X+hWPl+losPXnQiSN2cMCKAW+jCyJkMvW5xTiFf93xO
-         5dIFF72NSXC6YZCNkG2/dPTRfX1JzNqGYOpftmiwCUu6s5W8iixL4Z2Hf5/yEu6EHNYk
-         3Z3w==
-X-Gm-Message-State: AOJu0Yz+wrIaV6FwRlFvJFttUnfLukHPbSz52wdPjtFBrah2ko9SDst8
-	DtLsxxrm5c2+kPQvtBpxsFSm+W7lu2p8AKKdU+Kz0yX1cCWs1qiOnIPXyoUm1Nyt
-X-Gm-Gg: ASbGncvOryJNQvzS0Brfvpl0nJVirAy7QD4bEX6l15mOvRlyGGcAB+Af5cB5nG9yb98
-	OMdDeeSQR7MgwNH23gydz2R8+Y1sbl6Z47JHJHANSr65jjxn7iOwCNvgf4EneuSuSA6UP586ygd
-	qpQOwV6+zVVV8DqlGRY/gQnffslmJc3zShS//8pmSJ2p/ls+zvOrdEV0xuzJLIJB8D7mdNMfEA6
-	KoMNsGnxKCimdNVVPgCeJw+XeW1XCtsajjPboqNs2LtDNusOQm9DW0O1zyUsyMNeU8ffEl0iIOk
-	Kvhxpg3vKHNHx3MJsemCFOzvv8B8mlAqYxtFLbl5bRDVDiRXfmL9ByWeEuUorz0tAp9Wz8v3yzb
-	yjwp1R5rJBWv+Ug/yjDdQgfij0omanNVJTPc+6IVySrVyfmFIGD/qkBO+uBfueKqa/JWIi+HgTn
-	Pn4Vsgv/mY4Wq+2ESUlViDh2Dor/61Obs5Ug==
-X-Google-Smtp-Source: AGHT+IHwmvbqHwilmoYSHp6MDbmzKW1tIAgN4ZMjjZY3CZrF1Tq1IBdkwTZSDdPfS1FY+Fwtmi8Efg==
-X-Received: by 2002:a17:907:3e12:b0:b6d:6a35:999d with SMTP id a640c23a62f3a-b703d382cf5mr632512066b.27.1761804903289;
-        Wed, 29 Oct 2025 23:15:03 -0700 (PDT)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Thu, 30 Oct 2025 07:15:01 +0100
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: oss-security@lists.openwall.com
-Message-ID: <aQMCZWK1xr3-3DeO@eldamar.lan>
-References: <2ccbcc13-fc25-484c-a34d-56f27ac87db7@oracle.com>
- <aP-rxft9ra58z9EZ@yuggoth.org>
- <CA+qj4S-=TtjPN5Us5tva1TUo7a2MJKzpXweiQCM=QLMwcq5Xjw@mail.gmail.com>
- <6c9a4094-6af3-4aa3-940d-0d19505da3b1@pipping.org>
- <aP_L7mY0OXB2iDmk@symphytum.spacehopper.org>
- <9eefb12f-5de8-4638-a4e8-b0c309e81cec@pipping.org>
-MIME-Version: 1.0
+Received: (qmail 13809 invoked from network); 22 Jan 2018 11:35:27 -0000
+From: Daniel Beck <ml@beckweb.net>
 Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <9eefb12f-5de8-4638-a4e8-b0c309e81cec@pipping.org>
-Subject: Re: [oss-security] Questionable CVE's reported against dnsmasq
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
+Message-Id: <9FA8984F-15E3-43F7-A50F-408E92B9D266@beckweb.net>
+Date: Mon, 22 Jan 2018 12:35:15 +0100
+To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3273)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1516620927;e8267485;
+X-HE-SMSGID: 1edaNg-0003mS-9l
+Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
 
-Hi,
+Jenkins is an open source automation server which enables developers around=
+=20
+the world to reliably build, test, and deploy their software. The following=
+=20
+plugin releases contain fixes for security vulnerabilities:
 
-On Mon, Oct 27, 2025 at 09:40:35PM +0100, Sebastian Pipping wrote:
-> Hello Stuart,
-> 
-> 
-> On 10/27/25 20:45, Stuart Henderson wrote:
-> > On 2025/10/27 19:51, Sebastian Pipping wrote:
-> > > Also, fixes without a CVE will not be backported downstream.
-> > 
-> > That depends on the downstream.
-> 
-> I'm happy to learn which downstreams backport security issues
-> without a CVE, in practice. Do you have an example or two?
+* Ant plugin 1.8
+* Checkstyle plugin 3.50
+* DRY plugin 2.50
+* FindBugs plugin 4.72
+* Pipeline: Nodes and Processes plugin 2.18
+* PMD plugin 3.50
+* Release plugin 2.10
+* Translation Assistance plugin 1.16
+* Warnings plugin 4.65
 
-Another very recent example is
-https://lists.debian.org/debian-security-announce/2025/msg00200.html
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2018-01-22/
 
-It is about:
-https://discuss.tryton.org/t/security-release-for-issue-14290/8895
-https://foss.heptapod.net/tryton/tryton/-/issues/14290
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-While it would be nice that a identifier exists for this issue (has
-not yet happend), this was not blocking doing an update.
+If you find security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
 
-Regards,
-Salvatore
+---
+
+SECURITY-655 (PMD)
+SECURITY-656 (Checkstyle)
+SECURITY-657 (DRY)
+SECURITY-658 (FindBugs)
+SECURITY-695 (Warnings)
+Multiple plugins based on the Static Analysis Utilities plugin are affected=
+ by=20
+an XML External Entity (XXE) processing vulnerability. This allows attacker=
+ to=20
+configure build processes so that one of these plugins parses a maliciously=
+=20
+crafted file that uses external entities for extraction of secrets from the=
+=20
+Jenkins master, server-side request forgery, or denial-of-service attacks.
+
+
+SECURITY-607
+Release plugin did not require form submissions to be submitted via POST,=20
+resulting in a CSRF vulnerability allowing attackers to trigger release bui=
+lds.
+
+
+SECURITY-507
+Translation Assistance did not require form submissions to be submitted via=
+=20
+POST, resulting in a CSRF vulnerability allowing attackers to override=20
+localized strings displayed to all users on the current Jenkins instance if=
+=20
+the victim is a Jenkins administrator.
+
+
+SECURITY-675
+On instances with Authorize Project plugin, the authentication associated w=
+ith=20
+a build may lack the Computer/Build permission on some agents. This did not=
+=20
+prevent the execution of Pipeline `node` blocks on those agents due to=20
+incorrect permissions checks in Pipeline: Nodes and Processes plugin.
+
+
+SECURITY-624 and SECURITY-694
+Ant plugin failed to escape tool names it shows on job configuration=20
+screens, resulting in a cross-site scripting (XSS) vulnerability that is=20
+exploitable only by Jenkins administrators.
+
+This is the same vulnerability that was announced without a fix on 2017-12-=
+05.
+
