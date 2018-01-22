@@ -1,30 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/17/1
-Message-ID: <cbee626b-67e6-73a4-f82e-0f4adb6da1a4@redhat.com>
-Date: Tue, 17 Apr 2018 09:51:56 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com, Billy Brumley <bbrumley@...il.com>
-Subject: Re: CVE-2018-0737 OpenSSL: RSA key generation follows several non constant time code paths
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/22/5
+Message-ID: <BN4PR11MB0882F9FE65C1607B1F2A45BDAAEC0@BN4PR11MB0882.namprd11.prod.outlook.com>
+Date: Mon, 22 Jan 2018 17:20:36 +0000
+From: Mikhail Utin <mikhailutin@...mail.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: How to deal with reporters who don't want their bugs fixed?
 Content-Type: text/plain; charset=utf-8
 
-On 04/16/2018 10:16 PM, Billy Brumley wrote:
-
-> 6939eab03a6e23d2bd2c3f5e34fe1d48e542e787
-> 
-> we verified with a debugger they cumulatively solve (1) (2) and (3).
-> 
-> Look for our preprint on http://eprint.iacr.org/ soon -- working title
-> is "One Shot, One Trace, One Key: Cache-Timing Attacks on RSA Key
-> Generation". We'll update the list with the full URL once it's posted.
-> 
+ r.hering@....de <r.hering@....de> wrote:
 
 
-Can you post a link to the draft here please?
-
-The attack vector is not clear, does the attacker need to be on the same
-physical machine or is this a cross-vm attack?
+Keeping it individual without public announced maximum embargo time would
+also help prevent folks from jumping to 0daying everything per default:)
 
 
+However, to me it is pure "Security by Obscurity" in a bit different wording. It never worked. Simply think that somebody else knows the secret and with your help continues using that.
 
--- 
-Huzaifa Sidhpurwala / Red Hat Product Security Team
+
+"hiding intention for fame / paper publications / product selling" Hiding is not good. We are not monks and Security is not our God. Things like publications and selling require time and actually help to move things forward.
+
+
+Mikhail Utin, CISSP
+
+
+________________________________
+From: r.hering@....de <r.hering@....de>
+Sent: Monday, January 22, 2018 05:49
+To: oss-security@...ts.openwall.com
+Subject: Re: [oss-security] How to deal with reporters who don't want their bugs fixed?
+
+Point is, many "security researchers" overly pretend to work for security
+hiding intention for fame / paper publications / product selling.
+
+Accept unnecessary long embargoes then you support this behaviour but
+might provide patches faster after public release.
+Reject unnecessary long embargoes then you discourage this behaviour but
+might provide patches slower after public release next time.
+
+I think the decision is always individual per vulnerability weighting how
+grave/easy to find/abuse it is vs. how interested you are in future early
+reports.
+Keeping it individual without public announced maximum embargo time would
+also help prevent folks from jumping to 0daying everything per default:)
+
+(°X|
+
