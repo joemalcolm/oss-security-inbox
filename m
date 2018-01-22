@@ -1,100 +1,163 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/24/4
-Message-ID: <alpine.DEB.2.20.1801240022210.4042@tvnag.unkk.fr>
-Date: Wed, 24 Jan 2018 08:11:37 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: HTTP authentication leak in redirects
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/22/3
+Message-ID: <3b60c584-07f9-2888-448e-854f0e793cf0@treenet.co.nz>
+Date: Mon, 22 Jan 2018 22:41:58 +1300
+From: Amos Jeffries <squid3@...enet.co.nz>
+To: oss-security@...ts.openwall.com
+Subject: SQUID-2018:1 Denial of Service issue in ESI Response processing
 Content-Type: text/plain; charset=utf-8
 
-HTTP authentication leak in redirects
-=====================================
+Notes for OSS-Security people:
 
-Project curl Security Advisory, January 24th 2018 -
-[Permalink](https://curl.haxx.se/docs/adv_2018-b3bf.html)
+* CVE has been requested through DWF, waiting on assignment.
 
-VULNERABILITY
--------------
+* The patch for Squid-3.5 should also be applicable for most other
+Squid-3.x releases.
 
-libcurl might leak authentication data to third parties.
+__________________________________________________________________
 
-When asked to send custom headers in its HTTP requests, libcurl will send that
-set of headers first to the host in the initial URL but also, if asked to
-follow redirects and a 30X HTTP response code is returned, to the host
-mentioned in URL in the `Location:` response header value.
+    Squid Proxy Cache Security Update Advisory SQUID-2018:1
+__________________________________________________________________
 
-Sending the same set of headers to subsequest hosts is in particular a problem
-for applications that pass on custom `Authorization:` headers, as this header
-often contains privacy sensitive information or data that could allow others
-to impersonate the libcurl-using client's request.
+Advisory ID:        SQUID-2018:1
+Date:               Jan 19, 2018
+Summary:            Denial of Service issue
+                    in ESI Response processing.
+Affected versions:  Squid 3.x -> 3.5.27
+                    Squid 4.x -> 4.0.22
+Fixed in version:   Squid 4.0.23
+__________________________________________________________________
 
-We are not aware of any exploit of this flaw.
+    http://www.squid-cache.org/Advisories/SQUID-2018_1.txt
+__________________________________________________________________
 
-INFO
-----
+Problem Description:
 
-This bug has existed since before curl 6.0. It existed in the first commit we
-have recorded in the project.
+ Due to incorrect pointer handling Squid is vulnerable to denial
+ of service attack when processing ESI responses.
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2018-1000007 to this issue.
+__________________________________________________________________
 
-AFFECTED VERSIONS
------------------
+Severity:
 
-- Affected versions: libcurl 7.1 to and including 7.57.0
-- Not affected versions: libcurl >= 7.58.0
+ This problem allows a remote server delivering certain ESI
+ response syntax to trigger a denial of service for all clients
+ accessing the Squid service.
 
-libcurl is used by many applications, but not always advertised as such.
+ This problem is limited to the Squid custom ESI parser.
+ Squid built to use libxml2 or libexpat XML parsers do not have
+ this problem.
 
-THE SOLUTION
-------------
+__________________________________________________________________
 
-In libcurl version 7.58.0, custom `Authorization:` headers will be limited the
-same way other such headers is controlled within libcurl: they will only be
-sent to the host used in the original URL unless libcurl is told that it is ok
-to pass on to others using the `CURLOPT_UNRESTRICTED_AUTH` option.
+Updated Packages:
 
-**NOTE**: this solution creates a slight change in behavior. Users who
-actually want to pass on the header to other hosts now need to give curl that
-specific permission. You do this with
-[--location-trusted](https://curl.haxx.se/docs/manpage.html#--location-trusted)
-with the curl command line tool.
+ This bug is fixed by Squid version 4.0.23.
 
-A [patch for
-CVE-2018-1000007](https://github.com/curl/curl/commit/af32cd3859336ab.patch)
-is available.
+ In addition, patches addressing this problem for the stable
+ releases can be found in our patch archives:
 
-RECOMMENDATIONS
----------------
+Squid 3.5:
+ <http://www.squid-cache.org/Versions/v3/3.5/changesets/SQUID-2018_1.patch>
 
-We suggest you take one of the following actions immediately, in order of
-preference:
+Squid 4:
+ <http://www.squid-cache.org/Versions/v4/changesets/SQUID-2018_1.patch>
 
-  A - Upgrade curl to version 7.58.0
+ If you are using a prepackaged version of Squid then please refer
+ to the package vendor for availability information on updated
+ packages.
 
-  B - Apply the patch to your version and rebuild
+__________________________________________________________________
 
-  C - Do not enable CURLOPT_FOLLOWLOCATION if you pass on custom Authorization
-      headers
+Determining if your version is vulnerable:
 
-TIME LINE
----------
+ All Squid-2.x are not vulnerable.
 
-It was reported to the curl project on January 18, 2018
+ All Squid built with --disable-esi are not vulnerable.
 
-We contacted distros@...nwall on January 19.
+ All Squid configured with "esi_parser expat" are not vulnerable.
 
-curl 7.58.0 was released on January 24 2018, coordinated with the publication
-of this advisory.
+ All Squid configured with "esi_parser libxml2" are not
+ vulnerable.
 
-CREDITS
--------
+ All Squid-3.0 versions built without --enable-esi are not
+ vulnerable.
 
-Reported by Craig de Stigter. Patch by Daniel Stenberg.
+ All Squid-3.0 versions built with --enable-esi and using
+ custom ESI parser for reverse-proxy are vulnerable.
 
-Thanks a lot!
+ All Squid-3.1 and later versions up to and including
+ Squid-3.5.27 being used for reverse-proxy are vulnerable.
 
--- 
+ All Squid-3.1 and later versions up to and including
+ Squid-3.5.27 being used for TLS / HTTPS interception are
+ vulnerable.
 
-  / daniel.haxx.se
+ All unpatched Squid-4 up to and including Squid-4.0.22 being
+ used as reverse-proxy are vulnerable.
+
+ All unpatched Squid-4 up to and including Squid-4.0.22 being
+ used as TLS/HTTPS intercept proxy are vulnerable.
+
+__________________________________________________________________
+
+Workarounds:
+
+Either;
+
+ Build Squid with --disable-esi
+
+Or,
+
+ Build Squid with "--enable-esi --with-libxml2" and in squid.conf
+ configure "esi_parser libxml2"
+
+Or,
+
+ Build Squid with "--enable-esi --with-expat" and in squid.conf
+ configure "esi_parser expat"
+
+__________________________________________________________________
+
+Contact details for the Squid project:
+
+ For installation / upgrade support on binary packaged versions
+ of Squid: Your first point of contact should be your binary
+ package vendor.
+
+ If your install and build Squid from the original Squid sources
+ then the squid-users@...ts.squid-cache.org mailing list is your
+ primary support point. For subscription details see
+ <http://www.squid-cache.org/Support/mailing-lists.html>.
+
+ For reporting of non-security bugs in the latest STABLE release
+ the squid bugzilla database should be used
+ <http://bugs.squid-cache.org/>.
+
+ For reporting of security sensitive bugs send an email to the
+ squid-bugs@...ts.squid-cache.org mailing list. It's a closed
+ list (though anyone can post) and security related bug reports
+ are treated in confidence until the impact has been established.
+
+__________________________________________________________________
+
+Credits:
+
+ The initial issue was reported by Louis Dion-Marcil on behalf of
+ GoSecure.
+
+ Fixed by Amos Jeffries from Treehouse Networks Ltd.
+
+__________________________________________________________________
+
+Revision history:
+
+ 2017-12-13 20:09:30 UTC Initial Report
+ 2018-01-18 23:10:00 UTC Patches Released
+ 2018-01-21 07:45:00 UTC Advisory and fixed packages released
+__________________________________________________________________
+END
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
