@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3297" "Saturday" "21" "March" "2015" "23:01:31" "-0400" "Daniel Micay" "danielmicay@gmail.com" "<550E308B.6080808@gmail.com>" "79" "Re: [oss-security] CVE for Kali Linux" nil nil nil "3" "2015032203:01:31" "[oss-security] CVE for Kali Linux" (number mark "        danielmicay@ Mar 21   79/3297  " thread-indent "\"Re: [oss-security] CVE for Kali Linux\"\n") "<550E21FA.6090704@redhat.com>" ("<550E21FA.6090704@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6061" "Monday" "22" "January" "2018" "22:42:53" "+1300" "Amos Jeffries" "squid3@treenet.co.nz" "<0a99b9a5-e47c-1cf4-dc8a-59557ae32ab3@treenet.co.nz>" "171" "[oss-security] SQUID-2018:2 Denial of Service issue in HTTP Message processing" nil nil nil "1" "2018012209:42:53" "[oss-security] SQUID-2018:2 Denial of Service issue in HTTP Message processing" (number mark "U       squid3@treen Jan 22  171/6061  " thread-indent "\"[oss-security] SQUID-2018:2 Denial of Service issue in HTTP Message processing\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30185 invoked by uid 550); 22 Mar 2015 03:01:47 -0000
+Received: (qmail 27851 invoked by uid 550); 22 Jan 2018 11:37:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,110 +11,188 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30164 invoked from network); 22 Mar 2015 03:01:47 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type;
-        bh=O2iskhCmqAKBjvkOKj5ZTm14FNATipxEM4qrQgOQ6sM=;
-        b=E+teDfX2ZVRxf67CPQhMP0+iAV3/95OHgk18mlOeKNriLE8RtDkTbKCRvVDtHodgzh
-         +jHSDyWr0TkMTFPgJrpMb0IENtZcatVrZ1f7LubN95bYpyj/fr5jcQalcrgyIzR4lnWf
-         LFkZH9ryroaKdnSjkgweaoc2y1g0B7KzZOtXSb4iGkaYAsVlKLNbZyK9jwF5ncWfel/Q
-         TqjhG4Fg3YcDzhNxG6+VP77PwFnSppta6hhh15DPFRRzwVCf9YUv57INlThZmvpgz3O2
-         MGVUZj2OFr3GyE4Uq0aHcjj/cYSQNoYDoYRmLoFj0VCmPos0KGyQdIM1A1NRSbL5q3hH
-         +CAA==
-X-Received: by 10.50.7.1 with SMTP id f1mr6271026iga.8.1426993295678;
-        Sat, 21 Mar 2015 20:01:35 -0700 (PDT)
-Message-ID: <550E308B.6080808@gmail.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
-MIME-Version: 1.0
-References: <550E21FA.6090704@redhat.com>
-In-Reply-To: <550E21FA.6090704@redhat.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="jEAVPE44lrmBTIn9lSh5QgcLqciwiOtwO"
-Date: Sat, 21 Mar 2015 23:01:31 -0400
-From: Daniel Micay <danielmicay@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE for Kali Linux
+Received: (qmail 12113 invoked from network); 22 Jan 2018 09:43:05 -0000
+From: Amos Jeffries <squid3@treenet.co.nz>
 To: oss-security@lists.openwall.com
+Message-ID: <0a99b9a5-e47c-1cf4-dc8a-59557ae32ab3@treenet.co.nz>
+Date: Mon, 22 Jan 2018 22:42:53 +1300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.2
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="lcBJTw5hr4xkS9bQ5vC0Bu1hPsbz5umrP"
+Subject: [oss-security] SQUID-2018:2 Denial of Service issue in HTTP Message processing
 
---jEAVPE44lrmBTIn9lSh5QgcLqciwiOtwO
+--lcBJTw5hr4xkS9bQ5vC0Bu1hPsbz5umrP
+Content-Type: multipart/mixed; boundary="dDeDBzKNmKMXHWLCKxXV7jnWCx1xlLyPh";
+ protected-headers="v1"
+From: Amos Jeffries <squid3@treenet.co.nz>
+To: oss-security@lists.openwall.com
+Message-ID: <0a99b9a5-e47c-1cf4-dc8a-59557ae32ab3@treenet.co.nz>
+Subject: SQUID-2018:2 Denial of Service issue in HTTP Message processing
+
+--dDeDBzKNmKMXHWLCKxXV7jnWCx1xlLyPh
 Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
 
-On 21/03/15 09:59 PM, Kurt Seifried wrote:
-> From RISKS, looks like it needs a CVE
->=20
-> Date: Tue, 17 Mar 2015 07:37:50 -0700
-> From: Henry Baker <hbaker1@pipeline.com>
-> Subject: Kali Linux security is a joke!
->=20
-> FYI -- Your best chance to hack the hackers...
->=20
->   "Downloading Kali Linux"
->=20
->   "Alert!  Always make certain you are downloading Kali Linux from offici=
-al
->   sources, as well as verifying md5sums against official values.  It would
->   be easy for a malicious entity to modify a Kali install to contain
->   malicious code, and host it unofficially."
->   http://docs.kali.org/category/introduction
->=20
-> ---
->=20
-> No kidding!
->=20
-> So how come whenever you do apt-get install in Kali Linux, it accesses
-> http://security.kali.org and http://http.kali.org ??
->=20
-> Hasn't Kali heard about MITM attacks against http ??
+Notes for OSS-Security people:
 
-Using HTTPS for package downloads would only make it harder to figure
-out which packages are installed on the system. A dedicated attacker
-could figure this out based on side channels over time and I'm not at
-all convinced that it's valuable information anyway. There are usually
-other ways of distinguishing between different client/server software
-and it's not like attacking Thunderbird with a mutt imap exploit is
-going to trigger any kind of alert...
+* CVE has been requested through DWF, waiting on assignment.
 
-Community distributions like Debian and Arch rely heavily on completely
-untrusted third party mirrors. That's probably even true of many with
-commercial support. At some point, someone in the computer science club
-at $UNIVERSITY sets up a cron job on a machine that many people probably
-have access to anyway. The people who set up most of the mirrors
-probably don't even have access to them anymore. Is there really trust
-between the client and mirror that's worth securing?
+* The patch for Squid-3.5 should also be applicable for most other
+Squid-3.x releases.
 
-> What's the point of verifying md5 sums against "official values", if Kali
-> can't even get the "official values" securely ??
+* The patch for Squid-4 is provided for anyone having to use older betas
+if any unrelated issues prevent an upgrade. This being a beta release
+series at present the preferred option is upgrade.
 
-Obtaining the initial ISO is a different issue from the package security
-model. They seem to use SHA1 anyway. Perhaps they used MD5 some time ago
-and the summary on the main page was never updated.
+__________________________________________________________________
+
+    Squid Proxy Cache Security Update Advisory SQUID-2018:2
+__________________________________________________________________
+
+Advisory ID:        SQUID-2018:2
+Date:               Jan 19, 2018
+Summary:            Denial of Service issue
+                    in HTTP Message processing.
+Affected versions:  Squid 3.x -> 3.5.27
+                    Squid 4.x -> 4.0.22
+Fixed in version:   Squid 4.0.23
+__________________________________________________________________
+
+    http://www.squid-cache.org/Advisories/SQUID-2018_2.txt
+__________________________________________________________________
+
+Problem Description:
+
+ Due to incorrect pointer handling Squid is vulnerable to denial
+ of service attack when processing ESI responses or downloading
+ intermediate CA certificates.
+
+__________________________________________________________________
+
+Severity:
+
+ This problem allows a remote client delivering certain HTTP
+ requests in conjunction with certain trusted server responses to
+ trigger a denial of service for all clients accessing the Squid
+ service.
+
+__________________________________________________________________
+
+Updated Packages:
+
+ This bug is fixed by Squid version 4.0.23.
+
+ In addition, patches addressing this problem for the stable
+ releases can be found in our patch archives:
+
+Squid 3.5:
+ <http://www.squid-cache.org/Versions/v3/3.5/changesets/SQUID-2018_2.patch>
+
+Squid 4:
+ <http://www.squid-cache.org/Versions/v4/changesets/SQUID-2018_2.patch>
+
+ If you are using a prepackaged version of Squid then please refer
+ to the package vendor for availability information on updated
+ packages.
+
+__________________________________________________________________
+
+Determining if your version is vulnerable:
+
+ All Squid configured with "log_uses_indirect_client off" are not
+ vulnerable.
+
+ All Squid-3.0 versions built with --enable-esi and being used for
+ reverse-proxy with squid.conf containing
+ "log_uses_indirect_client on" are vulnerable.
+
+ All Squid-3.1 and later versions up to and including
+ Squid-3.5.27 being used for reverse-proxy with squid.conf
+ containing "log_uses_indirect_client on" are vulnerable.
+
+ All Squid-4 up to and including Squid-4.0.22 being used for
+ reverse-proxy with squid.conf containing
+ "log_uses_indirect_client on" are vulnerable.
+
+ All unpatched Squid-4 up to and including Squid-4.0.22 being
+ used for TLS/HTTPS intercept proxy with squid.conf containing
+ "log_uses_indirect_client on" are vulnerable.
+
+__________________________________________________________________
+
+Workarounds:
+
+ Configure "log_uses_indirect_client off" in squid.conf
+
+__________________________________________________________________
+
+Contact details for the Squid project:
+
+ For installation / upgrade support on binary packaged versions
+ of Squid: Your first point of contact should be your binary
+ package vendor.
+
+ If your install and build Squid from the original Squid sources
+ then the squid-users@lists.squid-cache.org mailing list is your
+ primary support point. For subscription details see
+ <http://www.squid-cache.org/Support/mailing-lists.html>.
+
+ For reporting of non-security bugs in the latest STABLE release
+ the squid bugzilla database should be used
+ <http://bugs.squid-cache.org/>.
+
+ For reporting of security sensitive bugs send an email to the
+ squid-bugs@lists.squid-cache.org mailing list. It's a closed
+ list (though anyone can post) and security related bug reports
+ are treated in confidence until the impact has been established.
+
+__________________________________________________________________
+
+Credits:
+
+ The initial issue was reported by Louis Dion-Marcil on behalf of
+ GoSecure.
+
+ Fixed by Amos Jeffries from Treehouse Networks Ltd.
+
+__________________________________________________________________
+
+Revision history:
+
+ 2017-12-13 20:09:30 UTC Initial Report
+ 2018-01-18 23:10:00 UTC Patches Released
+ 2018-01-21 07:45:00 UTC Advisory and fixed packages released
+__________________________________________________________________
+END
 
 
---jEAVPE44lrmBTIn9lSh5QgcLqciwiOtwO
+--dDeDBzKNmKMXHWLCKxXV7jnWCx1xlLyPh--
+
+--lcBJTw5hr4xkS9bQ5vC0Bu1hPsbz5umrP
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: OpenPGP digital signature
 Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
 
-iQIcBAEBCAAGBQJVDjCOAAoJEPnnEuWa9fIqJikP/i/5+/BzYV87vGLKBm9ZMYTs
-uHgkGehzM6+dj+daWiNFgKfTXrwzfX9Pf2QNvcozQxW2WhpDa3vaoMeGlxlxOYr2
-vzUI+wkgA1vFHCWAwbBWulysOM4AYg24Eblt969P8ehnfdTfYi5KCeMFoCh4dZ8s
-wpNJME9VTNJGcJ8K75R0YZ6pe44oG/p5TWkuLfPMDpZfaCQt9KutDK+aq98VdbT3
-J4MMGLSJASv23p9Egj/yKEK/yyXYvSu7RmcHoHMmO2PhDbKd0TEMinFRXanKYbdP
-/Yuhf9xYduXBbDTXZDf1/V+EGJdBh/UILpA7WivMFsduJ9U0vpv65g6SWFgBjAhV
-4pJE72boOCZHHxvFlj+0R8BjYLQoCwku9hO2MP+28LIw0KW7cTq9FbAjlByAmdBH
-AUba3R5YVf0DyvPTJ11ZftpXJt5CksKMEzhZ8UHJ0DXJsKT4kstPe7REuExdA30q
-r8sWnXsEIEQggmezXS+OYxz6xLsKEipW6e9k6G7/Tra/jewb2UKVUtSZcGpS5hQw
-c4px80ynI3v4HRAXiuAK45HuPEnPHgdhxV/U2gvWmmlQtm7qrBpnlZxzMNhvmcB5
-dvk8oArxYJmMRuPlA9jxmMz6Xz087QMdZNuyS9uLEC9+Ucmzj+SvyJrlRV5QD8h0
-fijsv/n9rku1iEv9xW2N
-=yPcY
+iQIzBAEBCgAdFiEEAimzwkzOwlQSfJUyANhjZ5QgvdMFAlplsh0ACgkQANhjZ5Qg
+vdMEQRAApgvPMa3lyoaii4409Zxg8tBrAxMjEUPBKcjtGW4FkW2AXX4DgKtZPiQ7
+fFHZvVhNtl5wYnwVdzrel1u6EitwZqX1GTJ67lzsdWVaxOZtjXh7BF5Wsxqo/T65
+7n0iH4aUQlh9lRaPP7rzrWQ/f4oPKdQ/ak+vkXKL8H7toNSXCNKQQWlaf0ugeUQZ
+nHauOvMIdoie3GVByY0Rj0/4/fbPbRwF3vw+m1f6aSG56NlCPV6+u4z6sGhckFh8
+sJ1416tN7M/MqNCdq9g4DmVhiTcMZbhoj5qAqOVDHQlvMn63Iy3m9oV8ewTaQMRq
+f6VBfmBC3W+ifMQ8pfSCWMmAGnYGvlA5Z0sa+R4JqKhrujUAjZxRwWS13cOxwf/K
+NFEYYczY3ro2kFflrpYzEwIE56+G7z6ycu/nWQjqPC+LF2guOueAR8a3vHZCsjlm
+blgklTRBBRiAGaFEzNzUCpbZA3j/WCjKdKbs+9Cav280QSNvlaP3DgYrOUs89kYS
+NLYDcyiFiQ+B23STs5yt/jZdFhOEZM6D7x+PBUqtQFMzHEB2rGDVDrZrznw48Nfd
+TZ7aAmmspDc/OXT5qz7n7K78TozDmKRgVgQqP0JJ9ZmY73Xql5kC48Xd44l/Nrth
+q5Kjt0acLJzEED4mddOkdSaNH+/ct3o6OsrM31ivRCmwk85Xog4=
+=DdHB
 -----END PGP SIGNATURE-----
 
---jEAVPE44lrmBTIn9lSh5QgcLqciwiOtwO--
+--lcBJTw5hr4xkS9bQ5vC0Bu1hPsbz5umrP--
