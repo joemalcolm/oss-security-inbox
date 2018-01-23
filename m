@@ -1,52 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/17/5
-Message-ID: <20180817114516.GA27667@nautica>
-Date: Fri, 17 Aug 2018 13:45:16 +0200
-From: Dominique Martinet <asmadeus@...ewreck.org>
-To: oss-security@...ts.openwall.com
-Subject: Rule for releasing fixes for embargoed bugs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/23/2
+Message-Id: <5E61C789-3F39-47CC-9E4C-A28978BDD3F4@apache.org>
+Date: Tue, 23 Jan 2018 11:39:32 -0800
+From: Andy LoPresto <alopresto@...che.org>
+To: security@...i.apache.org
+Cc: dev@...i.apache.org, users@...i.apache.org, oss-security@...ts.openwall.com
+Subject: [ANNOUNCE] CVE fixes in Apache NiFi 1.5.0
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+The Apache NiFi PMC would like to announce the following CVE discoveries and resolutions in Apache NiFi 1.5.0, released January 12, 2018. NiFi is an easy to use, powerful, and reliable system to process and distribute data. It supports powerful and scalable directed graphs of data routing, transformation, and system mediation logic. For more information, see https://nifi.apache.org/security.html <https://nifi.apache.org/security.html>.
 
-I tried asking this question in private and was told there is no clear
-rule (and opinions vary) on the subject of releasing fixes for bugs
-still under embargo; and to ask the list, so here we go:
+CVE-2017-12632 <https://nifi.apache.org/security.html#CVE-2017-12632>: Apache NiFi host header poisoning issue
 
- When should vendors publish fixes for bugs that are under embargo ?
+Severity: Medium
 
+Versions Affected:
 
-My opinion is that the point of security embargoes, and linux-distro in
-particular, is to give vendors time to prepare a fix so that fixes can
-be released almost immediately after the issue is made public.
+Apache NiFi 0.1.0 - 1.4.0
 
-Releasing a fix early pretty much leaks the issue to people monitoring
-distro updates, especially if there is a clear changelog that states
-there have been security fixes with a neat summary and sources are
-available.
+Description: A malicious host header in an incoming HTTP request could cause NiFi to load resources from an external server.
 
+Mitigation: The fix to sanitize host headers and compare to a controlled whitelist was applied on the Apache NiFi 1.5.0 release. Users running a prior 1.x release should upgrade to the appropriate release.
 
-I'm asking because this happened today and some vendor released a kernel
-with patches for CVE-2018-3690 (yet another speculation/side-channel
-vulnerability), but their fix for it broke another component in the
-kernel (RDMA networking) and people trying to fix that bug are now
-wasting their's and everyone's/my time saying they cannot make the RDMA
-issue public because it has been caused by a security fix still under
-embargo.
-At this point, I'm not sure what this is supposed to protect: I have a
-pretty good idea of what the fixes are about and I'm not a security
-researcher, so if I could figure this much I'm sure smarter people can
-use it, and folks who are waiting for the embargo to end before actually
-posting fixes (including upstream!) are now leaving their users in
-trouble.
+Credit: This issue was discovered by Mike Cole.
 
+Released: January 12, 2018
 
-I don't really care about speculation/side channel attacks frankly but
-there's no reason other bugs won't have the same issue, so I think
-"waiting for the issue to be made public before releasing fixes" should
-be made a rule if at all possible.
+CVE-2017-15697 <https://nifi.apache.org/security.html#CVE-2017-15697>: Apache NiFi XSS issue in context path handling
+
+Severity: Medium
+
+Versions Affected:
+
+Apache NiFi 1.0.0 - 1.4.0
+
+Description: A malicious X-ProxyContextPath or X-Forwarded-Context header containing external resources or embedded code could cause remote code execution.
+
+Mitigation: The fix to properly handle these headers was applied on the Apache NiFi 1.5.0 release. Users running a prior 1.x release should upgrade to the appropriate release.
+
+Credit: This issue was discovered by Andy LoPresto.
+
+Released: January 12, 2018
 
 
-Thanks,
--- 
-Dominique Martinet | Asmadeus
+
+
+Andy LoPresto
+alopresto@...che.org
+alopresto.apache@...il.com
+PGP Fingerprint: 70EC B3E5 98A6 5A3F D3C4  BACE 3C6E F65B 2F7D EF69
+
+
+Content of type "text/html" skipped
+
+Download attachment "signature.asc" of type "application/pgp-signature" (843 bytes)
