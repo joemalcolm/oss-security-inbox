@@ -1,68 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/18/8
-Message-Id: <D2FED7A8-F45F-403A-B474-A1B42B1A815F@beckweb.net>
-Date: Wed, 18 Jul 2018 18:32:10 +0200
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/23/1
+Message-ID: <97a50aff-565f-867a-209c-4c1e93166c9d@customcrypto.com>
+Date: Mon, 22 Jan 2018 19:42:23 -0800
+From: Tristan Henning <tristan@...tomcrypto.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Multiple vulnerabilities in Jenkins
+Subject: Re: Re: How to deal with reporters who don't want their bugs fixed?
 Content-Type: text/plain; charset=utf-8
 
+I don't know if you've all seen this, but, this is definitely how not to 
+run a bug bounty.
 
-> On 18. Jul 2018, at 16:38, Daniel Beck <ml@...kweb.net> wrote:
-> 
-> SECURITY-897
-> Unauthenticated users could provide maliciously crafted login credentials 
-> that cause Jenkins to move the config.xml file from the Jenkins home 
-> directory. This configuration file contains basic configuration of 
-> Jenkins, including the selected security realm and authorization strategy. 
-> If Jenkins is started without this file present, it will revert to the 
-> legacy defaults of granting administrator access to anonymous users.
+http://www.digitalmunition.com/WhyIWalkedFrom3k.pdf
 
-CVE-2018-1999001
+And the /r/netsec discussion from reddit
 
-> SECURITY-914
-> An arbitrary file read vulnerability in the Stapler web framework used by 
-> Jenkins allowed unauthenticated users to send crafted HTTP requests 
-> returning the contents of any file on the Jenkins master file system that 
-> the Jenkins master process has access to.
+https://www.reddit.com/r/netsec/comments/7dc275/bug_bounty_hunter_walks_away_on_30k_bounty_from/
 
-CVE-2018-1999002
+TL;DR
+A researcher found major infrastructure issues and after clarification 
+of scope managed to compromise a very large part of DJI along with large 
+amounts of PII. DJI sicked legal on him and he was forced to walk from a 
+$30,000 bug bounty.
 
-> SECURITY-891
-> The URLs handling cancellation of queued builds did not perform a 
-> permission check, allowing users with Overall/Read permission to cancel 
-> queued builds.
+This document and story received a large amount of traction in the 
+"hacking" community. How many bug hunters will be reporting issues to 
+DJI in the future? My guess, not a lot...
 
-CVE-2018-1999003
+-Tristan
 
-> SECURITY-892
-> The URL that initiates agent launches on the Jenkins master did not perform 
-> a permission check, allowing users with Overall/Read permission to initiate 
-> agent launches.
-
-CVE-2018-1999004
-
-> SECURITY-944
-> The build timeline widget shown on URLs like /view/…/builds did not 
-> properly escape display names of items. This resulted in a cross-site 
-> scripting vulnerability exploitable by users able to control item display 
-> names.
-
-CVE-2018-1999005
-
-> SECURITY-925
-> Files indicating when a plugin JPI file was last extracted into a 
-> subdirectory of plugins/ in the Jenkins home directory was accessible via 
-> HTTP by users with Overall/Read permission. This allowed unauthorized users 
-> to determine the likely install date of a given plugin.
-
-CVE-2018-1999006
-
-> SECURITY-390
-> Stapler is the web framework used by Jenkins to route HTTP requests. When 
-> its debug mode is enabled, HTTP 404 error pages display diagnostic 
-> information. Those error pages did not escape parts of URLs they displayed, 
-> in rare cases resulting in a cross-site scripting vulnerability.
-
-CVE-2018-1999007
-
+On 1/22/2018 11:41 AM, Ian Zimmerman wrote:
+> On 2018-01-22 17:20, Mikhail Utin wrote:
+>
+>>> Keeping it individual without public announced maximum embargo time
+>>> would also help prevent folks from jumping to 0daying everything per
+>>> default:)
+>> However, to me it is pure "Security by Obscurity" in a bit different
+>> wording. It never worked. Simply think that somebody else knows the
+>> secret and with your help continues using that.
+> I think you misunderstand the parent post.
+>
+> Nobody is proposing that the embargo period for any _particular_ issue
+> be secret.  The proposal in the parent post was to not have a public
+> general embargo policy for _all_ issues present & future.
+>
