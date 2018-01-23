@@ -1,4 +1,9 @@
-Received: (qmail 1655 invoked by uid 550); 10 Oct 2023 12:06:20 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["12651" "Tuesday" "23" "January" "2018" "11:39:32" "-0800" "Andy LoPresto" "alopresto@apache.org" "<5E61C789-3F39-47CC-9E4C-A28978BDD3F4@apache.org>" "224" "[oss-security] [ANNOUNCE] CVE fixes in Apache NiFi 1.5.0" nil nil nil "1" "2018012319:39:32" "[oss-security] [ANNOUNCE] CVE fixes in Apache NiFi 1.5.0" (number mark "U       alopresto@ap Jan 23  224/12651 " thread-indent "\"[oss-security] [ANNOUNCE] CVE fixes in Apache NiFi 1.5.0\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 31863 invoked by uid 550); 23 Jan 2018 20:05:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,222 +12,256 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1613 invoked from network); 10 Oct 2023 12:06:19 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
-	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
-	Content-Transfer-Encoding:Content-Type;
-	bh=D37PBAC+RolY3esUiWHAEVeU0TNDo2qa+fvFZqvFW40=; b=pW495gIoBCV6hyolajy4eEsnWF
-	61JxceFiXPg3KLY3azjMnlyO3Y1u7KnjJ5VFHio7qHVtT/sWrvI/Yvx8TrJhWP3bTjnfdPjIRAp5z
-	chDbep5J/BYnlR2oRJZp2xAQa3f/uVgKWFn3/sddGtVhMrMVyAFIuyhVjWJ/YBXMo7eM=;
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
-MIME-Version: 1.0
-X-Mailer: MIME-tools 5.509 (Entity 5.509)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1qqBUr-0002FK-BR@xenbits.xenproject.org>
-Date: Tue, 10 Oct 2023 12:05:57 +0000
-Subject: [oss-security] Xen Security Advisory 440 v3 (CVE-2023-34323) - xenstored: A
- transaction conflict can crash C Xenstored
+Received: (qmail 9402 invoked from network); 23 Jan 2018 19:39:49 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:reply-to:subject:date:message-id:cc:to
+         :mime-version;
+        bh=jrYKQVZncJbNw0qc0JkqjjzNsqha02dL8XRKYHHW3Jg=;
+        b=YNsadYkn2aJArTeIFl3gpod89gR4JRyy6riVUAdKWTWmVLSbbCaG9yRR4/u8/j/+9x
+         GhqefHum6QTPuew1gDj0Ya06Aougu/vtsNofGb6KIQBzFGA/ol2mBTHqyMCNmsvBxtSZ
+         id1Mzgd/PzCsN5p84osluhlSfguUaSspG23O5K2m4ItcshF2zQxUBoltsejZYBMWRpz8
+         GSGo0zA1hxIBkDlXaSG2TB1mujErLyM0/gMBG184i+jUv8uynNQJIoT1ojWYoP6gxn8z
+         Af1U+5E3ilet6duQoHt2XOMoTk8f5zI6KmsXThoSsAHnYIeHuNa7A7C4yOZrNNc27Rcr
+         aHVw==
+X-Gm-Message-State: AKwxytdimeQslC57HXeRvYCnIEpJrhpQawtHSD6s/6BMbb/Khjb0Gxlm
+	0XgNbztzl1yo+50A8N7cHC8egk+l
+X-Google-Smtp-Source: AH8x227kj4dUN6hyB8eoMJLJF6urtsUaWogMzuljiKfbKSfyvj8/cwh4eae6ZtCLp8PFfz3qu889IA==
+X-Received: by 2002:a17:902:b596:: with SMTP id a22-v6mr6090322pls.60.1516736377436;
+        Tue, 23 Jan 2018 11:39:37 -0800 (PST)
+From: Andy LoPresto <alopresto@apache.org>
+Content-Type: multipart/signed; boundary="Apple-Mail=_90F0B068-A458-4FAF-83A4-0A6E3E2C8A42"; protocol="application/pgp-signature"; micalg=pgp-sha512
+Date: Tue, 23 Jan 2018 11:39:32 -0800
+Message-Id: <5E61C789-3F39-47CC-9E4C-A28978BDD3F4@apache.org>
+Cc: dev@nifi.apache.org,
+ users@nifi.apache.org,
+ oss-security@lists.openwall.com
+To: security@nifi.apache.org
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+X-Mailer: Apple Mail (2.3124)
+Subject: [oss-security] [ANNOUNCE] CVE fixes in Apache NiFi 1.5.0
 
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
+--Apple-Mail=_90F0B068-A458-4FAF-83A4-0A6E3E2C8A42
+Content-Type: multipart/alternative;
+	boundary="Apple-Mail=_F74BB442-71A8-4945-A428-33DA78B76474"
+
+
+--Apple-Mail=_F74BB442-71A8-4945-A428-33DA78B76474
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=us-ascii
+
+The Apache NiFi PMC would like to announce the following CVE discoveries an=
+d resolutions in Apache NiFi 1.5.0, released January 12, 2018. NiFi is an e=
+asy to use, powerful, and reliable system to process and distribute data. I=
+t supports powerful and scalable directed graphs of data routing, transform=
+ation, and system mediation logic. For more information, see https://nifi.a=
+pache.org/security.html <https://nifi.apache.org/security.html>.
+
+CVE-2017-12632 <https://nifi.apache.org/security.html#CVE-2017-12632>: Apac=
+he NiFi host header poisoning issue
+
+Severity: Medium
+
+Versions Affected:
+
+Apache NiFi 0.1.0 - 1.4.0
+
+Description: A malicious host header in an incoming HTTP request could caus=
+e NiFi to load resources from an external server.
+
+Mitigation: The fix to sanitize host headers and compare to a controlled wh=
+itelist was applied on the Apache NiFi 1.5.0 release. Users running a prior=
+ 1.x release should upgrade to the appropriate release.
+
+Credit: This issue was discovered by Mike Cole.
+
+Released: January 12, 2018
+
+CVE-2017-15697 <https://nifi.apache.org/security.html#CVE-2017-15697>: Apac=
+he NiFi XSS issue in context path handling
+
+Severity: Medium
+
+Versions Affected:
+
+Apache NiFi 1.0.0 - 1.4.0
+
+Description: A malicious X-ProxyContextPath or X-Forwarded-Context header c=
+ontaining external resources or embedded code could cause remote code execu=
+tion.
+
+Mitigation: The fix to properly handle these headers was applied on the Apa=
+che NiFi 1.5.0 release. Users running a prior 1.x release should upgrade to=
+ the appropriate release.
+
+Credit: This issue was discovered by Andy LoPresto.
+
+Released: January 12, 2018
+
+
+
+
+Andy LoPresto
+alopresto@apache.org
+alopresto.apache@gmail.com
+PGP Fingerprint: 70EC B3E5 98A6 5A3F D3C4  BACE 3C6E F65B 2F7D EF69
+
+
+--Apple-Mail=_F74BB442-71A8-4945-A428-33DA78B76474
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=us-ascii
+
+<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html charset=
+=3Dus-ascii"></head><body style=3D"word-wrap: break-word; -webkit-nbsp-mode=
+: space; -webkit-line-break: after-white-space;" class=3D"">The Apache NiFi=
+ PMC would like to announce the following CVE discoveries and resolutions i=
+n Apache NiFi 1.5.0, released January 12, 2018. NiFi is an easy to use, pow=
+erful, and reliable system to process and distribute data. It supports powe=
+rful and scalable directed graphs of data routing, transformation, and syst=
+em mediation logic. For more information, see&nbsp;<a href=3D"https://nifi.=
+apache.org/security.html" class=3D"">https://nifi.apache.org/security.html<=
+/a>.&nbsp;<div class=3D""><br class=3D""></div><div class=3D""><div class=
+=3D"row" style=3D"box-sizing: border-box; margin: 0px auto; padding: 0px; m=
+ax-width: 62.5rem; width: 1000px; color: rgb(34, 34, 34); font-family: 'Hel=
+vetica Neue', Helvetica, Roboto, Arial, sans-serif; font-size: 16px; font-v=
+ariant-ligatures: normal; orphans: 2; widows: 2;"><div class=3D"columns lar=
+ge-12" style=3D"box-sizing: border-box; margin: 0px; padding: 0px 0.9375rem=
+; width: 1000px; float: left; position: relative;"><p style=3D"box-sizing: =
+border-box; margin: 0px 0px 1.25rem; padding: 0px; font-family: inherit; fo=
+nt-size: 1rem; line-height: 1.6; text-rendering: optimizelegibility;" class=
+=3D""><a id=3D"CVE-2017-12632" href=3D"https://nifi.apache.org/security.htm=
+l#CVE-2017-12632" style=3D"box-sizing: border-box; color: rgb(57, 104, 119)=
+; line-height: inherit; text-decoration: none; -webkit-font-smoothing: anti=
+aliased; text-shadow: rgba(0, 0, 0, 0.004) 1px 1px 1px;" class=3D""><strong=
+ style=3D"box-sizing: border-box; line-height: inherit;" class=3D"">CVE-201=
+7-12632</strong></a>: Apache NiFi host header poisoning issue</p><p style=
+=3D"box-sizing: border-box; margin: 0px 0px 1.25rem; padding: 0px; font-fam=
+ily: inherit; font-size: 1rem; line-height: 1.6; text-rendering: optimizele=
+gibility;" class=3D"">Severity:&nbsp;<strong style=3D"box-sizing: border-bo=
+x; line-height: inherit;" class=3D"">Medium</strong></p><p style=3D"box-siz=
+ing: border-box; margin: 0px 0px 1.25rem; padding: 0px; font-family: inheri=
+t; font-size: 1rem; line-height: 1.6; text-rendering: optimizelegibility;" =
+class=3D"">Versions Affected:</p><ul style=3D"box-sizing: border-box; margi=
+n: 0px 0px 1.25rem 2rem; padding: 0px; font-family: inherit; font-size: 1re=
+m; line-height: 1.6; list-style-position: outside;" class=3D""><li style=3D=
+"box-sizing: border-box; margin: 0px; padding: 0px;" class=3D"">Apache NiFi=
+ 0.1.0 - 1.4.0</li></ul><div style=3D"box-sizing: border-box; margin: 0px 0=
+px 1.25rem; padding: 0px; font-family: inherit; font-size: 1rem; line-heigh=
+t: 1.6; text-rendering: optimizelegibility;" class=3D""><br class=3D"webkit=
+-block-placeholder"></div><p style=3D"box-sizing: border-box; margin: 0px 0=
+px 1.25rem; padding: 0px; font-family: inherit; font-size: 1rem; line-heigh=
+t: 1.6; text-rendering: optimizelegibility;" class=3D"">Description: A mali=
+cious host header in an incoming HTTP request could cause NiFi to load reso=
+urces from an external server.</p><p style=3D"box-sizing: border-box; margi=
+n: 0px 0px 1.25rem; padding: 0px; font-family: inherit; font-size: 1rem; li=
+ne-height: 1.6; text-rendering: optimizelegibility;" class=3D"">Mitigation:=
+ The fix to sanitize host headers and compare to a controlled whitelist was=
+ applied on the Apache NiFi 1.5.0 release. Users running a prior 1.x releas=
+e should upgrade to the appropriate release.</p><p style=3D"box-sizing: bor=
+der-box; margin: 0px 0px 1.25rem; padding: 0px; font-family: inherit; font-=
+size: 1rem; line-height: 1.6; text-rendering: optimizelegibility;" class=3D=
+"">Credit: This issue was discovered by Mike Cole.</p><p style=3D"box-sizin=
+g: border-box; margin: 0px 0px 1.25rem; padding: 0px; font-family: inherit;=
+ font-size: 1rem; line-height: 1.6; text-rendering: optimizelegibility;" cl=
+ass=3D"">Released: January 12, 2018</p></div></div><div class=3D"row" style=
+=3D"box-sizing: border-box; margin: 0px auto; padding: 0px; max-width: 62.5=
+rem; width: 1000px; color: rgb(34, 34, 34); font-family: 'Helvetica Neue', =
+Helvetica, Roboto, Arial, sans-serif; font-size: 16px; font-variant-ligatur=
+es: normal; orphans: 2; widows: 2;"><div class=3D"columns large-12" style=
+=3D"box-sizing: border-box; margin: 0px; padding: 0px 0.9375rem; width: 100=
+0px; float: left; position: relative;"><p style=3D"box-sizing: border-box; =
+margin: 0px 0px 1.25rem; padding: 0px; font-family: inherit; font-size: 1re=
+m; line-height: 1.6; text-rendering: optimizelegibility;" class=3D""><a id=
+=3D"CVE-2017-15697" href=3D"https://nifi.apache.org/security.html#CVE-2017-=
+15697" style=3D"box-sizing: border-box; color: rgb(57, 104, 119); line-heig=
+ht: inherit; text-decoration: none; -webkit-font-smoothing: antialiased; te=
+xt-shadow: rgba(0, 0, 0, 0.004) 1px 1px 1px;" class=3D""><strong style=3D"b=
+ox-sizing: border-box; line-height: inherit;" class=3D"">CVE-2017-15697</st=
+rong></a>: Apache NiFi XSS issue in context path handling</p><p style=3D"bo=
+x-sizing: border-box; margin: 0px 0px 1.25rem; padding: 0px; font-family: i=
+nherit; font-size: 1rem; line-height: 1.6; text-rendering: optimizelegibili=
+ty;" class=3D"">Severity:&nbsp;<strong style=3D"box-sizing: border-box; lin=
+e-height: inherit;" class=3D"">Medium</strong></p><p style=3D"box-sizing: b=
+order-box; margin: 0px 0px 1.25rem; padding: 0px; font-family: inherit; fon=
+t-size: 1rem; line-height: 1.6; text-rendering: optimizelegibility;" class=
+=3D"">Versions Affected:</p><ul style=3D"box-sizing: border-box; margin: 0p=
+x 0px 1.25rem 2rem; padding: 0px; font-family: inherit; font-size: 1rem; li=
+ne-height: 1.6; list-style-position: outside;" class=3D""><li style=3D"box-=
+sizing: border-box; margin: 0px; padding: 0px;" class=3D"">Apache NiFi 1.0.=
+0 - 1.4.0</li></ul><div style=3D"box-sizing: border-box; margin: 0px 0px 1.=
+25rem; padding: 0px; font-family: inherit; font-size: 1rem; line-height: 1.=
+6; text-rendering: optimizelegibility;" class=3D""><br class=3D"webkit-bloc=
+k-placeholder"></div><p style=3D"box-sizing: border-box; margin: 0px 0px 1.=
+25rem; padding: 0px; font-family: inherit; font-size: 1rem; line-height: 1.=
+6; text-rendering: optimizelegibility;" class=3D"">Description: A malicious=
+&nbsp;<code style=3D"box-sizing: border-box; background-color: rgb(248, 248=
+, 248); border: 0px solid rgb(223, 223, 223); color: rgb(51, 51, 51); font-=
+family: Consolas, 'Liberation Mono', Courier, monospace; padding: 0.125rem =
+0.3125rem 0.0625rem;" class=3D"">X-ProxyContextPath</code>&nbsp;or&nbsp;<co=
+de style=3D"box-sizing: border-box; background-color: rgb(248, 248, 248); b=
+order: 0px solid rgb(223, 223, 223); color: rgb(51, 51, 51); font-family: C=
+onsolas, 'Liberation Mono', Courier, monospace; padding: 0.125rem 0.3125rem=
+ 0.0625rem;" class=3D"">X-Forwarded-Context</code>&nbsp;header containing e=
+xternal resources or embedded code could cause remote code execution.</p><p=
+ style=3D"box-sizing: border-box; margin: 0px 0px 1.25rem; padding: 0px; fo=
+nt-family: inherit; font-size: 1rem; line-height: 1.6; text-rendering: opti=
+mizelegibility;" class=3D"">Mitigation: The fix to properly handle these he=
+aders was applied on the Apache NiFi 1.5.0 release. Users running a prior 1=
+.x release should upgrade to the appropriate release.</p><p style=3D"box-si=
+zing: border-box; margin: 0px 0px 1.25rem; padding: 0px; font-family: inher=
+it; font-size: 1rem; line-height: 1.6; text-rendering: optimizelegibility;"=
+ class=3D"">Credit: This issue was discovered by Andy LoPresto.</p><p style=
+=3D"box-sizing: border-box; margin: 0px 0px 1.25rem; padding: 0px; font-fam=
+ily: inherit; font-size: 1rem; line-height: 1.6; text-rendering: optimizele=
+gibility;" class=3D"">Released: January 12, 2018</p></div></div></div><div =
+class=3D""><br class=3D""></div><div class=3D""><br class=3D""></div><div c=
+lass=3D""><br class=3D""><div class=3D"">
+<div style=3D"letter-spacing: normal; orphans: auto; text-align: start; tex=
+t-indent: 0px; text-transform: none; white-space: normal; widows: auto; wor=
+d-spacing: 0px; -webkit-text-stroke-width: 0px; word-wrap: break-word; -web=
+kit-nbsp-mode: space; -webkit-line-break: after-white-space;" class=3D""><d=
+iv style=3D"letter-spacing: normal; orphans: auto; text-align: start; text-=
+indent: 0px; text-transform: none; white-space: normal; widows: auto; word-=
+spacing: 0px; -webkit-text-stroke-width: 0px; word-wrap: break-word; -webki=
+t-nbsp-mode: space; -webkit-line-break: after-white-space;" class=3D""><div=
+ style=3D"color: rgb(0, 0, 0);" class=3D"">Andy LoPresto</div><div style=3D=
+"color: rgb(0, 0, 0);" class=3D""><a href=3D"mailto:alopresto@apache.org" c=
+lass=3D"">alopresto@apache.org</a></div><div class=3D""><i class=3D""><font=
+ color=3D"#c0c0c0" class=3D""><a href=3D"mailto:alopresto.apache@gmail.com"=
+ class=3D"">alopresto.apache@gmail.com</a></font></i></div><div style=3D"co=
+lor: rgb(0, 0, 0);" class=3D"">PGP Fingerprint:&nbsp;70EC B3E5 98A6 5A3F D3=
+C4 &nbsp;BACE 3C6E F65B 2F7D EF69</div></div></div>
+</div>
+<br class=3D""></div></body></html>=
+
+--Apple-Mail=_F74BB442-71A8-4945-A428-33DA78B76474--
+
+--Apple-Mail=_90F0B068-A458-4FAF-83A4-0A6E3E2C8A42
 Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename=signature.asc
+Content-Type: application/pgp-signature;
+	name=signature.asc
+Content-Description: Message signed with OpenPGP using GPGMail
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-            Xen Security Advisory CVE-2023-34323 / XSA-440
-                               version 3
-
-        xenstored: A transaction conflict can crash C Xenstored
-
-UPDATES IN VERSION 3
-====================
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-When a transaction is committed, C Xenstored will first check
-the quota is correct before attempting to commit any nodes.  It would
-be possible that accounting is temporarily negative if a node has
-been removed outside of the transaction.
-
-Unfortunately, some versions of C Xenstored are assuming that the
-quota cannot be negative and are using assert() to confirm it.  This
-will lead to C Xenstored crash when tools are built without -DNDEBUG
-(this is the default).
-
-IMPACT
-======
-
-A malicious guest could craft a transaction that will hit the C
-Xenstored bug and crash it.  This will result to the inability to
-perform any further domain administration like starting new guests,
-or adding/removing resources to or from any existing guest.
-
-VULNERABLE SYSTEMS
-==================
-
-All versions of Xen up to and including 4.17 are vulnerable if XSA-326
-was ingested.
-
-All Xen systems using C Xenstored are vulnerable.  C Xenstored built
-using -DNDEBUG (can be specified via EXTRA_CFLAGS_XEN_TOOLS=-DNDEBUG)
-are not vulnerable.  Systems using the OCaml variant of Xenstored are
-not vulnerable.
-
-MITIGATION
-==========
-
-The problem can be avoided by using OCaml Xenstored variant.
-
-CREDITS
-=======
-
-This issue was discovered by Stanislav Uschakow and Julien Grall, all
-from Amazon.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa440-4.17.patch      Xen 4.17.x - Xen 4.15.x.
-
-$ sha256sum xsa440*
-187b7edef4f509f3d7ec1662901fa638a900ab4213447438171fb2935f387014  xsa440.meta
-431dab53baf2b57a299d1a151b330b62d9a007715d700e8515db71ff813d0037  xsa440-4.17.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
+Comment: GPGTools - https://gpgtools.org
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmUlNOMMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZy64IAIZBqlKJAGVeGMzSpuJfkP2YXLe9JNeR46HRG90e
-mV94MWmsf+4kMu2ZhnXQaR2+lafjNfAQVdh9nXV0tdJu//yzLRfXnLfFWrroqBTS
-g69/9zvgGRYvobHe6X/WmLwXCV8N27q04zLK7R9nYwntw2mJBBCvUfRPVHk/6lpH
-4Ke6o0XbjmOjForl2PA3ISRqXKD5nB0pWp1cEfPt3PzCUV02kI/N3veWDRN2wyPN
-jclvwlVVASJdCrcs0+NlOalN5XhD9+K5RN+VVGu3dchXpaa3qEOiTc/V5T1U5cX8
-pqNqUBlo4ECFLygE2aUTITIX+dpLaGYD8rmFq0CPnsB6E5U=
-=6W84
+iQIcBAEBCgAGBQJaZ492AAoJEDxu9lsvfe9pANsP/0giQfgzE6o62VtEsGIsEj1s
+orkd/cIwik0q8S5FSURqC/R8bCpBVXrsBRba03Bv3q/eoWYAee1yTOj9+cOyhcAe
+naDIOK5lC7Dcak13MX79pAzwMOHYoDiB2dosKPYKMh/6QvTV6NWy9VxixF/eCY9m
+NDwhb5zQHh/1NDgNN9Qt/KSvsp1+MqwoYe09x5Z1EFEFPPtIehRQmDfQbmeJIsnz
+ZtwNcoX2jTlcwzDhWzLeNCHAunv3qyHvVvFZQhJjcEyjH6+z6P8uNdm2noaGmt4J
+hkiPCo+zx5zk+oZpxwo7Z/jq6iAKi0mk8xFpcEY+34RS6blI9qtmhF+JlPpDLlHS
+EtVxQGpiOM/AllUtqlm0XRtlrOQPAbgvWHQCNdl4m5aGF5QUh/9sA/SvcJzcq9UH
+eul1DoficYbz5EvXtlBgT0pYVLfdYtgQG0CdFXA7N9EawjvB7d+yHTm9kUdDUnsZ
+dOMNjX31s86sjNzs+1NFMQDYjagMxEYSqBSHM4NkFKT6+akD6WdLKZ93yv6e8PAV
+zwh/hWrCPaFbaVqflM6tDIIRL/0jjKd9HTf/auaeZvenmLGmueig+nltFSs14FTD
+YpwVyqPnLoFH4o4oDw78uV7RAto+VO3bBQCEQCuYQpe3v1lfFqOsPVrw5tcc4bIV
+N8TSIpPFy5N8TdBrMM8N
+=jgEP
 -----END PGP SIGNATURE-----
 
---=separator
-Content-Type: application/octet-stream; name="xsa440.meta"
-Content-Disposition: attachment; filename="xsa440.meta"
-Content-Transfer-Encoding: base64
-
-ewogICJYU0EiOiA0NDAsCiAgIlN1cHBvcnRlZFZlcnNpb25zIjogWwogICAg
-Im1hc3RlciIsCiAgICAiNC4xNyIsCiAgICAiNC4xNiIsCiAgICAiNC4xNSIK
-ICBdLAogICJUcmVlcyI6IFsKICAgICJ4ZW4iCiAgXSwKICAiUmVjaXBlcyI6
-IHsKICAgICI0LjE1IjogewogICAgICAiUmVjaXBlcyI6IHsKICAgICAgICAi
-eGVuIjogewogICAgICAgICAgIlN0YWJsZVJlZiI6ICIzYTlhMjkwMWNjOGIy
-NGYyOGRiZGM2ZmI2M2Y1NzAwNmM3N2ExZjQ3IiwKICAgICAgICAgICJQcmVy
-ZXFzIjogW10sCiAgICAgICAgICAiUGF0Y2hlcyI6IFsKICAgICAgICAgICAg
-InhzYTQ0MC00LjE3LnBhdGNoIgogICAgICAgICAgXQogICAgICAgIH0KICAg
-ICAgfQogICAgfSwKICAgICI0LjE2IjogewogICAgICAiUmVjaXBlcyI6IHsK
-ICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0YWJsZVJlZiI6ICJjNDUw
-YTRiYzExZTk3ZWFiZTk3ZGNlZmUwNmY1MTBkN2FjZWE4ZDZkIiwKICAgICAg
-ICAgICJQcmVyZXFzIjogW10sCiAgICAgICAgICAiUGF0Y2hlcyI6IFsKICAg
-ICAgICAgICAgInhzYTQ0MC00LjE3LnBhdGNoIgogICAgICAgICAgXQogICAg
-ICAgIH0KICAgICAgfQogICAgfSwKICAgICI0LjE3IjogewogICAgICAiUmVj
-aXBlcyI6IHsKICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0YWJsZVJl
-ZiI6ICI5MGM1NDBjNTg5ODVkYzc3NGNmMGExZDJkYzQyMzQ3M2QzZjM3MjY3
-IiwKICAgICAgICAgICJQcmVyZXFzIjogW10sCiAgICAgICAgICAiUGF0Y2hl
-cyI6IFsKICAgICAgICAgICAgInhzYTQ0MC00LjE3LnBhdGNoIgogICAgICAg
-ICAgXQogICAgICAgIH0KICAgICAgfQogICAgfSwKICAgICJtYXN0ZXIiOiB7
-CiAgICAgICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4iOiB7CiAgICAgICAg
-ICAiU3RhYmxlUmVmIjogImQwOWU0NGU1ZDhmZGZlMGE4YjhhZjFlZjYwNGRi
-YzY5OTQ5N2UxMWEiLAogICAgICAgICAgIlByZXJlcXMiOiBbXSwKICAgICAg
-ICAgICJQYXRjaGVzIjogW10KICAgICAgICB9CiAgICAgIH0KICAgIH0KICB9
-Cn0=
-
---=separator
-Content-Type: application/octet-stream; name="xsa440-4.17.patch"
-Content-Disposition: attachment; filename="xsa440-4.17.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSA1ZDhiM2QxZWM5OGU1NjE1NWQ5NjUwZDdmNGE3MGNkOGJhOWRjMjdk
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBKdWxpZW4gR3JhbGwg
-PGpncmFsbEBhbWF6b24uY29tPgpEYXRlOiBGcmksIDIyIFNlcCAyMDIzIDEx
-OjMyOjE2ICswMTAwClN1YmplY3Q6IHRvb2xzL3hlbnN0b3JlZDogZG9tYWlu
-X2VudHJ5X2ZpeCgpOiBIYW5kbGUgY29uZmxpY3RpbmcgdHJhbnNhY3Rpb24K
-ClRoZSBmdW5jdGlvbiBkb21haW5fZW50cnlfZml4KCkgd2lsbCBiZSBpbml0
-aWFsbHkgY2FsbGVkIHRvIGNoZWNrIGlmIHRoZQpxdW90YSBpcyBjb3JyZWN0
-IGJlZm9yZSBhdHRlbXB0IHRvIGNvbW1pdCBhbnkgbm9kZXMuIFNvIGl0IHdv
-dWxkIGJlCnBvc3NpYmxlIHRoYXQgYWNjb3VudGluZyBpcyB0ZW1wb3Jhcmls
-eSBuZWdhdGl2ZS4gVGhpcyBpcyB0aGUgY2FzZQppbiB0aGUgZm9sbG93aW5n
-IHNlcXVlbmNlOgoKICAxKSBDcmVhdGUgNTAgbm9kZXMKICAyKSBTdGFydCB0
-d28gdHJhbnNhY3Rpb25zCiAgMykgRGVsZXRlIGFsbCB0aGUgbm9kZXMgaW4g
-ZWFjaCB0cmFuc2FjdGlvbgogIDQpIENvbW1pdCB0aGUgdHdvIHRyYW5zYWN0
-aW9ucwoKQmVjYXVzZSB0aGUgZmlyc3QgdHJhbnNhY3Rpb24gd2lsbCBoYXZl
-IHN1Y2NlZWQgYW5kIHVwZGF0ZWQgdGhlCmFjY291bnRpbmcsIHRoZXJlIGlz
-IG5vIGd1YXJhbnRlZSB0aGF0ICdkLT5uYmVudHJ5ICsgbnVtJyB3aWxsIHN0
-aWxsCmJlIGFib3ZlIDAuIFNvIHRoZSBhc3NlcnQoKSB3b3VsZCBiZSB0cmln
-Z2VyZWQuClRoZSBhc3NlcnQoKSB3YXMgaW50cm9kdWNlZCBpbiBkYmVmMWY3
-NDgyODkgKCJ0b29scy94ZW5zdG9yZTogc2ltcGxpZnkKYW5kIGZpeCBwZXIg
-ZG9tYWluIG5vZGUgYWNjb3VudGluZyIpIHdpdGggdGhlIGFzc3VtcHRpb24g
-dGhhdCB0aGUKdmFsdWUgY2FuJ3QgYmUgbmVnYXRpdmUuIEFzIHRoaXMgaXMg
-bm90IHRydWUgcmV2ZXJ0IHRvIHRoZSBvcmlnaW5hbApjaGVjayBidXQgcmVz
-dHJpY3RlZCB0byB0aGUgcGF0aCB3aGVyZSB3ZSBkb24ndCB1cGRhdGUuIFRh
-a2UgdGhlCm9wcG9ydHVuaXR5IHRvIGV4cGxhaW4gdGhlIHJhdGlvbmFsZSBi
-ZWhpbmQgdGhlIGNoZWNrLgoKVGhpcyBDVkUtMjAyMy0zNDMyMyAvIFhTQS00
-NDAuCgpSZXBvcnRlZC1ieTogU3RhbmlzbGF2IFVzY2hha293IDxzdXNjaGFr
-b0BhbWF6b24uZGU+CkZpeGVzOiBkYmVmMWY3NDgyODkgKCJ0b29scy94ZW5z
-dG9yZTogc2ltcGxpZnkgYW5kIGZpeCBwZXIgZG9tYWluIG5vZGUgYWNjb3Vu
-dGluZyIpClNpZ25lZC1vZmYtYnk6IEp1bGllbiBHcmFsbCA8amdyYWxsQGFt
-YXpvbi5jb20+ClJldmlld2VkLWJ5OiBKdWVyZ2VuIEdyb3NzIDxqZ3Jvc3NA
-c3VzZS5jb20+CgpkaWZmIC0tZ2l0IGEvdG9vbHMveGVuc3RvcmUveGVuc3Rv
-cmVkX2RvbWFpbi5jIGIvdG9vbHMveGVuc3RvcmUveGVuc3RvcmVkX2RvbWFp
-bi5jCmluZGV4IGFhODY4OTJmZWQ5ZS4uNjA3NGRmMjEwYzZlIDEwMDY0NAot
-LS0gYS90b29scy94ZW5zdG9yZS94ZW5zdG9yZWRfZG9tYWluLmMKKysrIGIv
-dG9vbHMveGVuc3RvcmUveGVuc3RvcmVkX2RvbWFpbi5jCkBAIC0xMDk0LDEw
-ICsxMDk0LDIwIEBAIGludCBkb21haW5fZW50cnlfZml4KHVuc2lnbmVkIGlu
-dCBkb21pZCwgaW50IG51bSwgYm9vbCB1cGRhdGUpCiAJfQogCiAJY250ID0g
-ZC0+bmJlbnRyeSArIG51bTsKLQlhc3NlcnQoY250ID49IDApOwogCi0JaWYg
-KHVwZGF0ZSkKKwlpZiAodXBkYXRlKSB7CisJCWFzc2VydChjbnQgPj0gMCk7
-CiAJCWQtPm5iZW50cnkgPSBjbnQ7CisJfSBlbHNlIGlmIChjbnQgPCAwKSB7
-CisJCS8qCisJCSAqIEluIGEgdHJhbnNhY3Rpb24gd2hlbiBhIG5vZGUgaXMg
-YmVpbmcgYWRkZWQvcmVtb3ZlZCBBTkQKKwkJICogdGhlIHNhbWUgbm9kZSBo
-YXMgYmVlbiBhZGRlZC9yZW1vdmVkIG91dHNpZGUgdGhlCisJCSAqIHRyYW5z
-YWN0aW9uIGluIHBhcmFsbGVsLCB0aGUgcmVzdWx0IHZhbHVlIG1heSBiZSBu
-ZWdhdGl2ZS4KKwkJICogVGhpcyBpcyBubyBwcm9ibGVtLCBhcyB0aGUgdHJh
-bnNhY3Rpb24gd2lsbCBmYWlsIGR1ZSB0bworCQkgKiB0aGUgcmVzdWx0aW5n
-IGNvbmZsaWN0LiBTbyBvdmVycmlkZSAnY250Jy4KKwkJICovCisJCWNudCA9
-IDA7CisJfQogCiAJcmV0dXJuIGRvbWlkX2lzX3VucHJpdmlsZWdlZChkb21p
-ZCkgPyBjbnQgOiAwOwogfQo=
-
---=separator--
+--Apple-Mail=_90F0B068-A458-4FAF-83A4-0A6E3E2C8A42--
