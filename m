@@ -1,24 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/25/1
-Message-ID: <CAJmbs8i241-OvnTKwC=Z-GmaNaV5BB9PwmXw668BKsamLiwntQ@mail.gmail.com>
-Date: Sun, 25 Feb 2018 18:50:34 +0700
-From: Maxim Solodovnik <solomax@...che.org>
-To: Openmeetings user-list <user@...nmeetings.apache.org>, dev <dev@...nmeetings.apache.org>,  user-russian@...nmeetings.apache.org, Sahil <sdhar@...urityinnovation.com>,  security@...nmeetings.apache.org, oss-security@...ts.openwall.com
-Subject: [ANNOUNCE] CVE-2018-1286 - Apache OpenMeetings - Insufficient Access Controls
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/24/5
+Message-ID: <0e5a12ae-69ca-0227-319c-f661c037e48d@apache.org>
+Date: Wed, 24 Jan 2018 19:59:23 +0900
+From: Akira Ajisaka <aajisaka@...che.org>
+To: general@...oop.apache.org, user@...oop.apache.org, security@...oop.apache.org, bugtraq@...urityfocus.com, oss-security@...ts.openwall.com
+Subject: CVE-2017-15718: Apache Hadoop YARN NodeManager vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Severity: Medium
+CVE-2017-15718: Apache Hadoop YARN NodeManager vulnerability
+
+Severity: Important
 
 Vendor: The Apache Software Foundation
 
-Versions Affected: Apache OpenMeetings 3.0.0
+Versions Affected:
+Hadoop 2.7.3, 2.7.4
 
-Description: CRUD operations on privileged users are not password
-protected allowing an authenticated attacker to deny service for
-privileged users.
+Description:
+In Apache Hadoop 2.7.3 and 2.7.4, the security fix for CVE-2016-3086 is incomplete.
+The YARN NodeManager can leak the password for credential store provider
+used by the NodeManager to YARN Applications.
 
+If you use the CredentialProvider feature to encrypt passwords used in
+NodeManager configs, it may be possible for any Container launched
+by that NodeManager to gain access to the encryption password.
+The other passwords themselves are not directly exposed.
 
-The issue was fixed in 4.0.2
-All users are recommended to upgrade to Apache OpenMeetings 4.0.2
+Mitigation:
+2.7.3 and 2.7.4 users should upgrade to 2.7.5.
+If you cannot upgrade to the latest version, set the permission of
+the jceks file appropriately to restrict access from unauthorized users.
 
-Credit: This issue was identified by Sahil Dhar of Security Innovation Inc
+Credit:
+This issue was discovered by Vinayakumar B.
