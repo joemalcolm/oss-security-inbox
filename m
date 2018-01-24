@@ -1,98 +1,100 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/20/1
-Message-ID: <a723f5ff-7a36-2f89-3c13-e22c6c3558c8@linux.com>
-Date: Tue, 20 Feb 2018 12:45:13 +0300
-From: Alexander Popov <alex.popov@...ux.com>
-To: Mohamed Ghannam <simo.ghannam@...il.com>, oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-17712 net/ipv4/raw.c: raw_sendmsg() race condition
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/24/4
+Message-ID: <alpine.DEB.2.20.1801240022210.4042@tvnag.unkk.fr>
+Date: Wed, 24 Jan 2018 08:11:37 +0100 (CET)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: HTTP authentication leak in redirects
 Content-Type: text/plain; charset=utf-8
 
-Hello Mohamed,
+HTTP authentication leak in redirects
+=====================================
 
-On 16.12.2017 03:29, Mohamed Ghannam wrote:
-> Hi,
-> 
-> This is an announcement for CVE-2017-17712 which is a race condition leads to
-> uninitialized stack variable, this might be used to gain code execution.
-> 
-> The bug was introduced  here
-> : https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c008ba5bdc9fa830e1a349b20b0be5a137bdef7a
-> 
-> And fixed here :
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=8f659a03a0ba9289b9aeb9b4470e6fb263d6f483
+Project curl Security Advisory, January 24th 2018 -
+[Permalink](https://curl.haxx.se/docs/adv_2018-b3bf.html)
 
-Thanks a lot for your report, PoC and patch fixing the issue. Really great!
+VULNERABILITY
+-------------
 
-The exploitation of this kind of vulnerabilities should be blocked by STACKLEAK.
+libcurl might leak authentication data to third parties.
 
-STACKLEAK is a Linux kernel hardening feature initially developed by
-Grsecurity/PaX. I'm doing my best to introduce it to the mainline kernel:
-http://www.openwall.com/lists/kernel-hardening/2018/02/16/2
+When asked to send custom headers in its HTTP requests, libcurl will send that
+set of headers first to the host in the initial URL but also, if asked to
+follow redirects and a 30X HTTP response code is returned, to the host
+mentioned in URL in the `Location:` response header value.
 
-> By spraying the stack with controlled user data , we can take control of msg
-> pointer which is used later in ip_append_data().
+Sending the same set of headers to subsequest hosts is in particular a problem
+for applications that pass on custom `Authorization:` headers, as this header
+often contains privacy sensitive information or data that could allow others
+to impersonate the libcurl-using client's request.
 
-I've tested your PoC against the kernel with STACKLEAK. The msg pointer is now
-initialized with STACKLEAK_POISON (-0xBEEF), which points to the unused hole in
-the virtual memory map.
+We are not aware of any exploit of this flaw.
 
-So the access to msg->msg_iter gives the following:
+INFO
+----
 
-[    8.806868] BUG: unable to handle kernel paging request at ffffffffffff4121
-[    8.807738] IP: csum_and_copy_from_iter_full+0x2d/0x400
-[    8.807738] PGD 220c067 P4D 220c067 PUD 220e067 PMD 0
-[    8.807738] Oops: 0000 [#1] SMP PTI
-[    8.807738] Dumping ftrace buffer:
-[    8.807738]    (ftrace buffer empty)
-[    8.807738] Modules linked in:
-[    8.807738] CPU: 0 PID: 2893 Comm: poc Not tainted 4.16.0-rc1+ #4
-[    8.807738] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
-Ubuntu-1.8.2-1ubuntu1 04/01/2014
-[    8.807738] RIP: 0010:csum_and_copy_from_iter_full+0x2d/0x400
-[    8.807738] RSP: 0018:ffffc900015679c0 EFLAGS: 00010246
-[    8.807738] RAX: 0000000000000000 RBX: 0000000000006400 RCX: ffffffffffff4121
-[    8.807738] RDX: ffffc90001567a44 RSI: 0000000000006400 RDI: ffff88003d398024
-[    8.807738] RBP: ffffffffffff4111 R08: 0000000000000000 R09: ffff88003d0291c0
-[    8.807738] R10: 0000000000000000 R11: 0000000000000001 R12: 0000000000000000
-[    8.807738] R13: ffffffffffff4121 R14: 0000000000006400 R15: ffff88003d2e6b10
-[    8.807738] FS:  00007f671dff4700(0000) GS:ffff88003ec00000(0000)
-knlGS:0000000000000000
-[    8.807738] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[    8.807738] CR2: ffffffffffff4121 CR3: 000000003e044000 CR4: 00000000000006f0
-[    8.807738] Call Trace:
-[    8.807738]  ? __kmalloc_reserve.isra.41+0x32/0x80
-[    8.807738]  ip_generic_getfrag+0x84/0xc0
-[    8.807738]  __ip_append_data.isra.48+0x69c/0x8a0
-[    8.807738]  ? raw_destroy+0x20/0x20
-[    8.807738]  ? raw_destroy+0x20/0x20
-[    8.807738]  ip_append_data.part.50+0x6f/0xd0
-[    8.807738]  raw_sendmsg+0x432/0xa30
-[    8.807738]  ? _copy_from_user+0x44/0x70
-[    8.807738]  ? rw_copy_check_uvector+0x5b/0x110
-[    8.807738]  sock_sendmsg+0x37/0x40
-[    8.807738]  ___sys_sendmsg+0x269/0x2c0
-[    8.807738]  ? __sys_sendmsg+0x55/0x90
-[    8.807738]  __sys_sendmsg+0x55/0x90
-[    8.807738]  do_syscall_64+0x63/0x120
-[    8.807738]  entry_SYSCALL_64_after_hwframe+0x21/0x86
-[    8.807738] RIP: 0033:0x7f6780c68e90
-[    8.807738] RSP: 002b:00007f671dff3f00 EFLAGS: 00000293 ORIG_RAX:
-000000000000002e
-[    8.807738] RAX: ffffffffffffffda RBX: 0000000000000003 RCX: 00007f6780c68e90
-[    8.807738] RDX: 0000000000000000 RSI: 0000000001ec6010 RDI: 0000000000000003
-[    8.807738] RBP: 0000000001ec6010 R08: 0000000000000000 R09: 00007f671dff4700
-[    8.807738] R10: 00007f671dff3f40 R11: 0000000000000293 R12: 0000000000000000
-[    8.807738] R13: 00007ffcbe8d1c9f R14: 0000000000000000 R15: 00007f6781099040
-[    8.807738] Code: 41 56 49 89 f6 41 55 41 54 49 89 cd 55 53 48 83 ec 48 65 48
-8b 04 25 28 00 00 00 48 89 44 24 40 31 c0 48 89 7c 24 08 48 89 14 24 <41> 8b 45
-00 a8 08 0f 85 58 01 00 00 4d 39 75 10 72 79 48 8b 3c
-[    8.807738] RIP: csum_and_copy_from_iter_full+0x2d/0x400 RSP: ffffc900015679c0
-[    8.807738] CR2: ffffffffffff4121
-[    8.807738] ---[ end trace d60ea40e033c90b3 ]---
+This bug has existed since before curl 6.0. It existed in the first commit we
+have recorded in the project.
 
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2018-1000007 to this issue.
 
-Do you think the attacker is able to bypass it?
-Thanks a lot again!
+AFFECTED VERSIONS
+-----------------
 
-Best regards,
-Alexander
+- Affected versions: libcurl 7.1 to and including 7.57.0
+- Not affected versions: libcurl >= 7.58.0
+
+libcurl is used by many applications, but not always advertised as such.
+
+THE SOLUTION
+------------
+
+In libcurl version 7.58.0, custom `Authorization:` headers will be limited the
+same way other such headers is controlled within libcurl: they will only be
+sent to the host used in the original URL unless libcurl is told that it is ok
+to pass on to others using the `CURLOPT_UNRESTRICTED_AUTH` option.
+
+**NOTE**: this solution creates a slight change in behavior. Users who
+actually want to pass on the header to other hosts now need to give curl that
+specific permission. You do this with
+[--location-trusted](https://curl.haxx.se/docs/manpage.html#--location-trusted)
+with the curl command line tool.
+
+A [patch for
+CVE-2018-1000007](https://github.com/curl/curl/commit/af32cd3859336ab.patch)
+is available.
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl to version 7.58.0
+
+  B - Apply the patch to your version and rebuild
+
+  C - Do not enable CURLOPT_FOLLOWLOCATION if you pass on custom Authorization
+      headers
+
+TIME LINE
+---------
+
+It was reported to the curl project on January 18, 2018
+
+We contacted distros@...nwall on January 19.
+
+curl 7.58.0 was released on January 24 2018, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+Reported by Craig de Stigter. Patch by Daniel Stenberg.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
