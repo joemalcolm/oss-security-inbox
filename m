@@ -1,48 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/06/1
-Message-ID: <20180406085243.514739f2@pc1>
-Date: Fri, 6 Apr 2018 08:52:43 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/24/1
+Message-ID: <20180124030215.ugiofq23lmyurwsa@dojo.mi.org>
+Date: Tue, 23 Jan 2018 22:02:15 -0500
+From: "Mike O'Connor" <mjo@...o.mi.org>
 To: oss-security@...ts.openwall.com
-Subject: Privsec vuln in beep / Code execution in GNU patch
+Subject: Re: How to deal with reporters who don't want their bugs fixed?
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+:Subject says it all: What do you do if you receive a vulnerability report,
+:and the reporter requests an embargo at some time in the future because
+:that's when their paper/conference presentation/patent submission is
+:scheduled?
+:
+:The obvious approach is to find a prior public report of essentially the same
+:bug and fix that (which will work surprisingly often), but let's assume that
+:this isn't the case.
 
-There was a joke webpage about a vulnerability in beep a few days ago:
-http://holeybeep.ninja/
-There's also a corresponding Debian Advisory:
-https://lists.debian.org/debian-security-announce/2018/msg00089.html
-Neither have any technical details. CVE is CVE-2018-0492.
+Well, does the embargo add value for the consumers of the product?
+That had historically been my guideline, when I've had to make that
+call.  Will it improve the fix, documentation, delivery mechanisms,
+etc.  Sometimes, the answer is "yes".  Other times, not so much or
+it's fairly indeterminate.  You don't always know all the facts, or
+all the players, you're left with educated guessing.  
 
-If anyone knows the background of this please share it.
+Sometimes, you can persuade researchers to a vendor-friendly point of
+view on disclosure by simply asking them if they think this is in the
+best interests of the users.  Other times, you work with someone who
+cares more about adding a CVE and|or bounty to their resume, or they
+are disingenuous or simply incapable of keeping secrets.
 
-However it turned out that on that joke holey beep webpage there's a
-patch with a hidden easter egg that's actually a vulnerability in GNU
-patch.
-GNU patch supports a legacy "ed" format for patches and that allows
-executing external commands.
+If there's evidence of open exploitation, all bets should be off and
+that should be stated up front.  At that point, of course, it ceases
+adding value.  An agreed disclosure date does not generally amount to
+an NDA or the like.
 
-It's been reported to GNU patch now here:
-https://savannah.gnu.org/bugs/index.php?53566
-CVE is CVE-2018-1000156. (says an anonymous commenter...)
-
-A minimal poc looks like this:
---- a	2018-13-37 13:37:37.000000000 +0100
-+++ b	2018-13-37 13:38:38.000000000 +0100
-1337a
-1,112d
-!id>~/pwn.lol
-
-It looks like FreeBSD and OpenBSD have fixed something alike in 2015:
-https://www.freebsd.org/security/advisories/FreeBSD-SA-15:18.bsdpatch.asc
-https://ftp.openbsd.org/pub/OpenBSD/patches/5.7/common/013_patch.patch.sig
-
-
+-Mike
 
 -- 
-Hanno Böck
-https://hboeck.de/
+ Michael J. O'Connor                                          mjo@...o.mi.org
+ =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
+"The defendant pleaded exterminating circumstances."       -Anguished English
 
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+Download attachment "signature.asc" of type "application/pgp-signature" (188 bytes)
