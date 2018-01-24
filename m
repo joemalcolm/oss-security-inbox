@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["555" "Wednesday" "20" "July" "2016" "09:32:53" "+0200" "Christian Wressnegger" "c.wressnegger@tu-bs.de" "<578F2925.2090104@tu-bs.de>" "18" "[oss-security] Buffer overflow in libarchive-3.2.0" nil nil nil "7" "2016072007:32:53" "[oss-security] Buffer overflow in libarchive-3.2.0" (number mark "U       c.wressnegge Jul 20   18/555   " thread-indent "\"[oss-security] Buffer overflow in libarchive-3.2.0\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2706" "Wednesday" "24" "January" "2018" "08:11:37" "+0100" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1801240022210.4042@tvnag.unkk.fr>" "91" "[oss-security] [SECURITY ADVISORY] curl: HTTP authentication leak in redirects" nil nil nil "1" "2018012407:11:37" "[oss-security] [SECURITY ADVISORY] curl: HTTP authentication leak in redirects" (number mark "U       daniel@haxx. Jan 24   91/2706  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl: HTTP authentication leak in redirects\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30419 invoked by uid 550); 20 Jul 2016 07:49:53 -0000
+Received: (qmail 9312 invoked by uid 550); 24 Jan 2018 07:11:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,35 +12,110 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23606 invoked from network); 20 Jul 2016 07:33:07 -0000
-To: oss-security@lists.openwall.com
-From: Christian Wressnegger <c.wressnegger@tu-bs.de>
-Cc: Fabian Yamaguchi <f.yamaguchi@tu-bs.de>,
- Alwin Maier <alwin.maier@tu-bs.de>
-Message-ID: <578F2925.2090104@tu-bs.de>
-Date: Wed, 20 Jul 2016 09:32:53 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.8.0
+Received: (qmail 8113 invoked from network); 24 Jan 2018 07:11:50 -0000
+X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
+Date: Wed, 24 Jan 2018 08:11:37 +0100 (CET)
+From: Daniel Stenberg <daniel@haxx.se>
+X-X-Sender: dast@giant.haxx.se
+To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
+        curl-announce@cool.haxx.se,
+        libcurl hacking <curl-library@cool.haxx.se>,
+        oss-security@lists.openwall.com
+Message-ID: <alpine.DEB.2.20.1801240022210.4042@tvnag.unkk.fr>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-fromdanielhimself: yes
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] Buffer overflow in libarchive-3.2.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [SECURITY ADVISORY] curl: HTTP authentication leak in redirects
 
-Hi oss-security,
-(please note, I'm not on the list.)
+HTTP authentication leak in redirects
+=====================================
 
-We've recently discovered a vulnerability in libarchive-3.2.0 when
-writing iso9660 containers and reported it to the developers.
+Project curl Security Advisory, January 24th 2018 -
+[Permalink](https://curl.haxx.se/docs/adv_2018-b3bf.html)
 
-https://github.com/libarchive/libarchive/issues/711
+VULNERABILITY
+-------------
 
-The issue has been addressed by the following commit
+libcurl might leak authentication data to third parties.
 
-https://github.com/libarchive/libarchive/commit/3014e19820ea53c15c90f9d447ca3e668a0b76c6
+When asked to send custom headers in its HTTP requests, libcurl will send that
+set of headers first to the host in the initial URL but also, if asked to
+follow redirects and a 30X HTTP response code is returned, to the host
+mentioned in URL in the `Location:` response header value.
 
-and included in version 3.2.1 of the library.
+Sending the same set of headers to subsequest hosts is in particular a problem
+for applications that pass on custom `Authorization:` headers, as this header
+often contains privacy sensitive information or data that could allow others
+to impersonate the libcurl-using client's request.
 
-I was wondering whether anybody could assign a CVE for this?
+We are not aware of any exploit of this flaw.
 
-Thanks and kind regards,
-Christian Wressnegger (TU Braunschweig)
+INFO
+----
+
+This bug has existed since before curl 6.0. It existed in the first commit we
+have recorded in the project.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2018-1000007 to this issue.
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: libcurl 7.1 to and including 7.57.0
+- Not affected versions: libcurl >= 7.58.0
+
+libcurl is used by many applications, but not always advertised as such.
+
+THE SOLUTION
+------------
+
+In libcurl version 7.58.0, custom `Authorization:` headers will be limited the
+same way other such headers is controlled within libcurl: they will only be
+sent to the host used in the original URL unless libcurl is told that it is ok
+to pass on to others using the `CURLOPT_UNRESTRICTED_AUTH` option.
+
+**NOTE**: this solution creates a slight change in behavior. Users who
+actually want to pass on the header to other hosts now need to give curl that
+specific permission. You do this with
+[--location-trusted](https://curl.haxx.se/docs/manpage.html#--location-trusted)
+with the curl command line tool.
+
+A [patch for
+CVE-2018-1000007](https://github.com/curl/curl/commit/af32cd3859336ab.patch)
+is available.
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl to version 7.58.0
+
+  B - Apply the patch to your version and rebuild
+
+  C - Do not enable CURLOPT_FOLLOWLOCATION if you pass on custom Authorization
+      headers
+
+TIME LINE
+---------
+
+It was reported to the curl project on January 18, 2018
+
+We contacted distros@openwall on January 19.
+
+curl 7.58.0 was released on January 24 2018, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+Reported by Craig de Stigter. Patch by Daniel Stenberg.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
