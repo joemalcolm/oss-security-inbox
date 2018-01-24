@@ -1,81 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/27/4
-Message-ID: <bf67ba8b-e03f-424b-92ba-c32b01ab1c08@Spark>
-Date: Tue, 27 Nov 2018 16:06:36 -0500
-From: Rafael Mendonça França <rafaelmfranca@...il.com>
-To: Rubyonrails-Security  <rubyonrails-security@...glegroups.com>,  Ruby-Security-Ann  <ruby-security-ann@...glegroups.com>, Oss-Security  <oss-security@...ts.openwall.com>
-Subject: [CVE-2018-16476] Broken Access Control vulnerability in Active Job
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/24/3
+Message-ID: <alpine.DEB.2.20.1801240021400.4042@tvnag.unkk.fr>
+Date: Wed, 24 Jan 2018 08:11:30 +0100 (CET)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: HTTP/2 trailer out-of-bounds read
 Content-Type: text/plain; charset=utf-8
 
-There is a vulnerability in Active Job. This vulnerability has been
-assigned the CVE identifier CVE-2018-16476.
+HTTP/2 trailer out-of-bounds read
+=================================
 
-Versions Affected: >= 4.2.0
-Not affected: < 4.2.0
-Fixed Versions: 4.2.11, 5.0.7.1, 5.1.6.1, 5.2.1.1
+Project curl Security Advisory, January 24th 2018 -
+[Permalink](https://curl.haxx.se/docs/adv_2018-824a.html)
 
-Impact
-------
-Carefully crafted user input can cause Active Job to deserialize it using GlobalId
-and allow an attacker to have access to information that they should not have.
+VULNERABILITY
+-------------
 
-Vulnerable code will look something like this:
+libcurl contains an out bounds read in code handling HTTP/2 trailers.
 
-    MyJob.perform_later(user_input)
+It was [reported](https://github.com/curl/curl/pull/2231) that reading an
+HTTP/2 trailer could mess up future trailers since the stored size was one
+byte less than required.
 
-All users running an affected release should either upgrade or use one of the
-workarounds immediately.
+The problem is that the code that creates HTTP/1-like headers from the HTTP/2
+trailer data once appended a string like `":"` to the target buffer, while
+this was recently changed to `": "` (a space was added after the colon) but
+the associated math wasn't updated correspondingly.
 
-Releases
---------
-The FIXED releases are available at the normal locations.
+When accessed, the data is read out of bounds and causes either a crash or
+that the (too large) data gets passed to the libcurl callback. This might lead
+to a denial-of-service situation or an information disclosure if someone has a
+service that echoes back or uses the trailers for something.
 
-Workarounds
------------
-Putting the following monkey patch in an intializer can help to mitigate the issue:
+We are not aware of any exploit of this flaw.
 
-```
-require 'active_job'
-require 'active_job/arguments'
+INFO
+----
 
-module ArgumentsNotDeserializingGlobalId
-  def deserialize_argument(argument)
-    case argument
-    when String
-      argument
-    else
-      super
-    end
-  end
-end
+This bug was introduced in commit
+[0761a51ee0551ad9e5](https://github.com/curl/curl/commit/0761a51ee0551ad9e5),
+May 11 2016.
 
-ActiveJob::Arguments.singleton_class.prepend(ArgumentsNotDeserializingGlobalId)
-```
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2018-1000005 to this issue.
 
-Patches
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: libcurl 7.49.0 to and including 7.57.0
+- Not affected versions: libcurl < 7.49.0 and >= 7.58.0
+
+libcurl is used by many applications, but not always advertised as such.
+
+THE SOLUTION
+------------
+
+In libcurl version 7.58.0, the allocation size is corrected.
+
+A [patch for
+CVE-2018-1000005](https://github.com/curl/curl/commit/fa3dbb9a147488a294.patch)
+is available.
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl to version 7.58.0
+
+  B - Apply the patch to your version and rebuild
+
+TIME LINE
+---------
+
+It was publicly [reported to the curl
+project](https://github.com/curl/curl/issues/2231) on January 10, 2018.
+
+The security impact was realized and assessed on January 11. The fix was
+merged publicly in git on the same day, not mentioning the security impact.
+
+We contacted distros@...nwall on January 17.
+
+curl 7.58.0 was released on January 24 2018, coordinated with the publication
+of this advisory.
+
+CREDITS
 -------
-To aid users who aren't able to upgrade immediately we have provided patches for
-the two supported release series. They are in git-am format and consist of a
-single changeset.
 
-* 4-2-activejob-direct-access.patch - Patch for 4.2 series
-* 5-0-activejob-direct-access.patch - Patch for 5.0 series
-* 5-1-activejob-direct-access.patch - Patch for 5.1 series
-* 5-2-activejob-direct-access.patch - Patch for 5.2 series
+Reported and patched by Zhouyihai Ding. Researched by Ray Satiro.
 
-Please note that only the 5.x and 4.2.x series are supported at present. Users
-of earlier unsupported releases are advised to upgrade as soon as possible as we
-cannot guarantee the continued availability of security fixes for unsupported
-releases.
+Thanks a lot!
 
-Rafael França
+-- 
 
-Content of type "text/html" skipped
-
-Download attachment "4-2-activejob-direct-access.patch" of type "application/octet-stream" (1780 bytes)
-
-Download attachment "5-0-activejob-direct-access.patch" of type "application/octet-stream" (1796 bytes)
-
-Download attachment "5-1-activejob-direct-access.patch" of type "application/octet-stream" (1796 bytes)
-
-Download attachment "5-2-activejob-direct-access.patch" of type "application/octet-stream" (1796 bytes)
+  / daniel.haxx.se
