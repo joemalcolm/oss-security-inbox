@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3370" "Saturday" "3" "June" "2017" "08:30:18" "-0400" "Daniel Micay" "danielmicay@gmail.com" "<1496493018.21640.5.camel@gmail.com>" "68" "Re: [oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function" "^Date:" nil nil "6" "2017060312:30:18" "[oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function" (number mark "        danielmicay@ Jun  3   68/3370  " thread-indent "\"Re: [oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function\"\n") "<06202a69-0da3-68fa-a2b3-6a10c1599014@redhat.com>" ("<EBDB967B-92F8-47B9-AC79-CBF338A835F2@gmail.com>" "<20170530114138.jpcppn4j67niqhyb@perpetual.pseudorandom.co.uk>" "<d522fd07-7916-48a4-270c-933ffacddb98@redhat.com>" "<CA+DvKQ+TfTcK79YgeMZorvpG38HP8zAeB=gioL6xUVDPyn7Ghg@mail.gmail.com>" "<CANO=Ty2tYv6KAjgrN3fL_YisPSMHQqpSWagEwA+T2Rz15-wGDQ@mail.gmail.com>" "<20170530165015.GA4884@openwall.com>" "<06202a69-0da3-68fa-a2b3-6a10c1599014@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2508" "Wednesday" "24" "January" "2018" "08:11:30" "+0100" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1801240021400.4042@tvnag.unkk.fr>" "88" "[oss-security] [SECURITY ADVISORY] curl: HTTP/2 trailer out-of-bounds read" nil nil nil "1" "2018012407:11:30" "[oss-security] [SECURITY ADVISORY] curl: HTTP/2 trailer out-of-bounds read" (number mark "U       daniel@haxx. Jan 24   88/2508  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl: HTTP/2 trailer out-of-bounds read\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5983 invoked by uid 550); 3 Jun 2017 12:30:32 -0000
+Received: (qmail 7591 invoked by uid 550); 24 Jan 2018 07:11:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,118 +11,108 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5953 invoked from network); 3 Jun 2017 12:30:31 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:date:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=PvNxHyeWKlMwHxs85zwqzI+94tsBMdj49RUJbPV6NLo=;
-        b=LsvGWFKPYnNCWDpz8MeTaOdD1efrw85QIVkB6Hgqr4wS//BleKbA/jqVAtTbqQx1CI
-         tLGmMEnP6eIy2+MNIljHDae+BFJK0Bm2++eNHVlbLu9x1OgXw6byt8GVz+MCkO8ntLaP
-         VoBAuJPb+QvcwKwTN+Ar3aj8mWG1+2+f2MxQAgigRdFinzR4R5vpCbiSjCOL6R9zHiaP
-         kHsRtA58xDNvO95Y6kaa9//Q82rfI5ogjBFbO0jbHJZO+yeNyIW4K5af2RN94dt+LXfS
-         9KsAItcsWLuYQ3DeHxM+eYNPPXnpW1fuysvGDKpA8BfoRVq4Tj0Ausx24jiwDiOWlAcD
-         UhWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=PvNxHyeWKlMwHxs85zwqzI+94tsBMdj49RUJbPV6NLo=;
-        b=LgWXlD8+7P8rCWVXFGJQv3IAVlZDh4OicStyKmuHw6G5xkUyG6IJGaT1L2wFSZRk3a
-         ePol7w56WxYuy260z3wev8dZ+Fq8dSct0xgOXd3QbX5OJs+SJs+2VfTnzkjFlymtEDoU
-         pKET/kuIUQcZVxUENuTJoAFEJh1kyOw74+XPtz2cHkxMcHAolrraxs4uFuWW8bpp90RL
-         5dZugGrThW3lI4GNhiTtHYZPK5rjP7eDt2d7E5SLMv2cS923rprtUCv0MkH1U3FXIMiz
-         tNFbp+9gyw4vxH5jll28uQODEsHunPt7/Ae6hBtsJKHY3bj9HcfBqO9aPGwKH0QSFWJr
-         G2ug==
-X-Gm-Message-State: AODbwcDo4jnwmOHJsoQxvsNrnzJZP/Y6UTzeSK8YE5VNW5fc71TYIBKU
-	mF8Pzh52MjX4ev5i4Wf6sw==
-X-Received: by 10.36.80.18 with SMTP id m18mr3914865itb.49.1496493019400;
-        Sat, 03 Jun 2017 05:30:19 -0700 (PDT)
-Message-ID: <1496493018.21640.5.camel@gmail.com>
-In-Reply-To: <06202a69-0da3-68fa-a2b3-6a10c1599014@redhat.com>
-References: <EBDB967B-92F8-47B9-AC79-CBF338A835F2@gmail.com>
-	 <20170530114138.jpcppn4j67niqhyb@perpetual.pseudorandom.co.uk>
-	 <d522fd07-7916-48a4-270c-933ffacddb98@redhat.com>
-	 <CA+DvKQ+TfTcK79YgeMZorvpG38HP8zAeB=gioL6xUVDPyn7Ghg@mail.gmail.com>
-	 <CANO=Ty2tYv6KAjgrN3fL_YisPSMHQqpSWagEwA+T2Rz15-wGDQ@mail.gmail.com>
-	 <20170530165015.GA4884@openwall.com>
-	 <06202a69-0da3-68fa-a2b3-6a10c1599014@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.24.2 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Date: Sat, 03 Jun 2017 08:30:18 -0400
-From: Daniel Micay <danielmicay@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Linux kernel: stack buffer overflow with
- controlled payload in get_options() function
-To: oss-security@lists.openwall.com
+Received: (qmail 7550 invoked from network); 24 Jan 2018 07:11:43 -0000
+X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
+Date: Wed, 24 Jan 2018 08:11:30 +0100 (CET)
+From: Daniel Stenberg <daniel@haxx.se>
+X-X-Sender: dast@giant.haxx.se
+To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
+        curl-announce@cool.haxx.se,
+        libcurl hacking <curl-library@cool.haxx.se>,
+        oss-security@lists.openwall.com
+Message-ID: <alpine.DEB.2.20.1801240021400.4042@tvnag.unkk.fr>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-fromdanielhimself: yes
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [SECURITY ADVISORY] curl: HTTP/2 trailer out-of-bounds read
 
-On Sat, 2017-06-03 at 12:06 +0200, Florian Weimer wrote:
-> On 05/30/2017 06:50 PM, Solar Designer wrote:
-> > I guess Daniel might be associating the other side's arguments with
-> > Red
-> > Hat's because Florian was posting from a redhat.com address.  I have
-> > no
-> > idea whether Florian actually spoke on behalf of Red Hat or not, but
-> 
-> I'm not a Red Hat spokesperson, and I did not speak for Red Hat.  I
-> hope
-> I don't have to include a silly disclaimer in every message to counter
-> such assumptions.
+HTTP/2 trailer out-of-bounds read
+=================================
 
-Yet you're citing Red Hat's cargo cult interpretation of secure boot and
-claiming that other people following a meaningful definition are wrong
-about it. If you don't want to act as a Red Hat spokesperson, use a
-personal email address and don't push poor definitions of terms based on
-Red Hat marketing while claiming that those are the correct ones.
+Project curl Security Advisory, January 24th 2018 -
+[Permalink](https://curl.haxx.se/docs/adv_2018-824a.html)
 
-> > either way I think the focus on Red Hat is excessive - e.g., in the
-> > distros list thread on the previous issue, another distro vendor
-> > inquired about the proposed public disclosure date, implying they
-> > also
-> > might care.  A better summary would be: understanding & opinions
-> > vary.
-> Right, I think those distributions that strive to boot under the
-> Microsoft trust root for UEFI Secure Boot may also have concerns about
-> this issue.  Part of the problem with UEFI Secure Boot is that no one
-> has documented clear security objectives for UEFI Secure Boot.  Fedora
-> sort of evolved into “no unsigned code running in ring 0 without
-> virtualization”.  From what I can tell, Microsoft picked that up and
-> urged other distributions under their trust root to implement that as
-> well.
+VULNERABILITY
+-------------
 
-So, no meaningful security objective, and not implemented in the Linux
-kernel or the downstream forks of it in distributions. The lockdown
-patches would be useful if they were complete but they aren't upstream
-and the connection to secure boot is bogus. Secure boot can work in a
-meaningful way (i.e. verifying at least a useful subset of userspace)
-*without* those patches since the non-verified portions can be contained
-without them. Making that lockdown mandatory based on secure boot simply
-doesn't make any sense and is clear cut cargo culting without any real
-meaningful objective in mind.
+libcurl contains an out bounds read in code handling HTTP/2 trailers.
 
-> If restricted access to ring 0 is the goal (and I think it currently
-> is)
+It was [reported](https://github.com/curl/curl/pull/2231) that reading an
+HTTP/2 trailer could mess up future trailers since the stored size was one
+byte less than required.
 
-Please stop misrepresenting Red Hat's interpretation of secure boot as
-the only one. Some of us care about meaningful security, not marketing.
+The problem is that the code that creates HTTP/1-like headers from the HTTP/2
+trailer data once appended a string like `":"` to the target buffer, while
+this was recently changed to `": "` (a space was added after the colon) but
+the associated math wasn't updated correspondingly.
 
-If you keep doing it, I'll keep pointing out what you're doing.
+When accessed, the data is read out of bounds and causes either a crash or
+that the (too large) data gets passed to the libcurl callback. This might lead
+to a denial-of-service situation or an information disclosure if someone has a
+service that echoes back or uses the trailers for something.
 
-> then Linux kernel command line parsing bugs exploitable for code
-> execution can be used to bypass an intended security policy, and
-> qualifies as a security vulnerability.
+We are not aware of any exploit of this flaw.
 
-Sorry, but fixing every single one of these parsing bugs doesn't provide
-that security property that you claim.
+INFO
+----
 
-The kernel line options trust the kernel line. There are many options
-placing a whole lot of trust in it.
+This bug was introduced in commit
+[0761a51ee0551ad9e5](https://github.com/curl/curl/commit/0761a51ee0551ad9e5),
+May 11 2016.
 
-Here's why the Android-based justification given earlier is bogus: you
-can boot from a usb flash drive as real root, without SELinux containing
-the init launched from there. It has full control over the kernel. In
-fact, there is no way to contain real root on those devices. They have
-DMA access over the kernel via peripherals that are not contained by the
-IOMMU with APIs exposed to userspace offering that control.
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2018-1000005 to this issue.
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: libcurl 7.49.0 to and including 7.57.0
+- Not affected versions: libcurl < 7.49.0 and >= 7.58.0
+
+libcurl is used by many applications, but not always advertised as such.
+
+THE SOLUTION
+------------
+
+In libcurl version 7.58.0, the allocation size is corrected.
+
+A [patch for
+CVE-2018-1000005](https://github.com/curl/curl/commit/fa3dbb9a147488a294.patch)
+is available.
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl to version 7.58.0
+
+  B - Apply the patch to your version and rebuild
+
+TIME LINE
+---------
+
+It was publicly [reported to the curl
+project](https://github.com/curl/curl/issues/2231) on January 10, 2018.
+
+The security impact was realized and assessed on January 11. The fix was
+merged publicly in git on the same day, not mentioning the security impact.
+
+We contacted distros@openwall on January 17.
+
+curl 7.58.0 was released on January 24 2018, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+Reported and patched by Zhouyihai Ding. Researched by Ray Satiro.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
