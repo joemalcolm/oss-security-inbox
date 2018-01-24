@@ -1,24 +1,108 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/09/7
-Message-ID: <20180809152738.GA19476@espresso.pseudorandom.co.uk>
-Date: Thu, 9 Aug 2018 16:27:38 +0100
-From: Simon McVittie <smcv@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: Linux kernel: CVE-2017-18344: arbitrary-read vulnerability in the timer subsystem
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/24/6
+Message-ID: <37380262-28c4-2852-175c-98b7937014c4@igalia.com>
+Date: Wed, 24 Jan 2018 18:53:52 +0100
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: "webkit-gtk@...ts.webkit.org" <webkit-gtk@...ts.webkit.org>
+Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: WebKitGTK+ Security Advisory WSA-2018-0002
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 09 Aug 2018 at 16:21:03 +0200, Andrey Konovalov wrote:
-> See the comment in the exploit source code for a
-> usage example that shows how to read /etc/shadow on Ubuntu xenial
-> 4.13.0-38-generic
+------------------------------------------------------------------------
+WebKitGTK+ Security Advisory                               WSA-2018-0002
+------------------------------------------------------------------------
 
-Note that because of the way Debian and Ubuntu kernels are packaged, this
-is an "ABI version" describing a class of kernels with compatible module
-ABIs, not a specific version number. The version number for Ubuntu kernels
-looks like 4.13.0-38.43~16.04.1 or similar. If you are illustrating
-how to reproduce an exploit against a specific binary kernel, you'll
-probably want to quote both the package name and the version number: for
-example https://packages.ubuntu.com/xenial/linux-image-4.13.0-38-generic
-currently lists "linux-image-4.13.0-38-generic (4.13.0-38.43~16.04.1)".
+Date reported      : January 24, 2018
+Advisory ID        : WSA-2018-0002
+Advisory URL       : https://webkitgtk.org/security/WSA-2018-0002.html
+CVE identifiers    : CVE-2018-4088, CVE-2018-4089, CVE-2018-4096,
+                     CVE-2017-7153, CVE-2017-7160, CVE-2017-7161,
+                     CVE-2017-7165, CVE-2017-13884, CVE-2017-13885.
 
-    smcv
+Several vulnerabilities were discovered in WebKitGTK+.
+
+CVE-2018-4088
+    Versions affected: WebKitGTK+ before 2.18.6.
+    Credit to Jeonghoon Shin of Theori.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2018-4089
+    Versions affected: WebKitGTK+ before 2.18.4.
+    Credit to Ivan Fratric of Google Project Zero.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2018-4096
+    Versions affected: WebKitGTK+ before 2.18.6.
+    Credit to OSS-Fuzz.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2017-7153
+    Versions affected: WebKitGTK+ before 2.18.6.
+    Credit to Jerry Decime.
+    Impact: Visiting a malicious website may lead to user interface
+    spoofing. Description: Redirect responses to 401 Unauthorized may
+    allow a malicious website to incorrectly display the lock icon on
+    mixed content. This issue was addressed through improved URL display
+    logic.
+
+CVE-2017-7160
+    Versions affected: WebKitGTK+ before 2.18.6.
+    Credit to Richard Zhu (fluorescence) working with Trend Micro's Zero
+    Day Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2017-7161
+    Versions affected: WebKitGTK+ before 2.18.6.
+    Credit to Mitin Svyat.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A command injection issue
+    existed in Web Inspector. This issue was addressed through improved
+    escaping of special characters.
+
+CVE-2017-7165
+    Versions affected: WebKitGTK+ before 2.18.6.
+    Credit to 360 Security working with Trend Micro's Zero Day
+    Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2017-13884
+    Versions affected: WebKitGTK+ before 2.18.6.
+    Credit to 360 Security working with Trend Micro's Zero Day
+    Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2017-13885
+    Versions affected: WebKitGTK+ before 2.18.6.
+    Credit to 360 Security working with Trend Micro's Zero Day
+    Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+
+We recommend updating to the last stable version of WebKitGTK+. It is
+the best way of ensuring that you are running a safe version of
+WebKitGTK+. Please check our website for information about the last
+stable releases.
+
+Further information about WebKitGTK+ Security Advisories can be found
+at: https://webkitgtk.org/security.html
+
+The WebKitGTK+ team,
+January 24, 2018
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (898 bytes)
