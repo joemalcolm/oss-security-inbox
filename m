@@ -1,4 +1,9 @@
-Received: (qmail 27940 invoked by uid 550); 8 Aug 2023 17:00:42 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["420" "Thursday" "25" "January" "2018" "09:58:09" "+0100" "Daniel Beck" "ml@beckweb.net" "<59BE1921-4A41-4927-86AF-78C8A74C6EDB@beckweb.net>" "13" "Re: [oss-security] Jenkins EC2 Plugin 1.37 and earlier arbitrary shell command execution" nil nil nil "1" "2018012508:58:09" "[oss-security] Jenkins EC2 Plugin 1.37 and earlier arbitrary shell command execution" (number mark "U       ml@beckweb.n Jan 25   13/420   " thread-indent "\"Re: [oss-security] Jenkins EC2 Plugin 1.37 and earlier arbitrary shell command execution\"\n") "<8AE227B9-E337-45DC-9D8A-C4DB2452FB87@beckweb.net>" ("<8AE227B9-E337-45DC-9D8A-C4DB2452FB87@beckweb.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 5175 invoked by uid 550); 25 Jan 2018 08:58:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,117 +12,32 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27859 invoked from network); 8 Aug 2023 17:00:41 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
-	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
-	Content-Transfer-Encoding:Content-Type;
-	bh=XF+UrQzxCsQAO1ziUVnoWjoX2Wjp8D0sLL+ai1kpVc8=; b=pwUzTpFpAOwLBfHDBG7djxbQM4
-	mREzvolVB1T3ZIfsnyjjGMkT/B+fTcsuD7VhpYtCCAZNS96m/098QIRxLlkXVmFn20J4I+/sPmHpx
-	J1cwyy6tGPdnkTtnXoAV/aPTQ13vad0Cl5z3AwoJOSTGUzVOOnXTgoBGmiqJ8jMc2P20=;
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
-MIME-Version: 1.0
-X-Mailer: MIME-tools 5.509 (Entity 5.509)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1qTQ4E-0002Mq-KX@xenbits.xenproject.org>
-Date: Tue, 08 Aug 2023 17:00:22 +0000
-Subject: [oss-security] Xen Security Advisory 434 v1 (CVE-2023-20569) - x86/AMD:
- Speculative Return Stack Overflow
-
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
+Received: (qmail 4091 invoked from network); 25 Jan 2018 08:58:20 -0000
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
+Date: Thu, 25 Jan 2018 09:58:09 +0100
+References: <8AE227B9-E337-45DC-9D8A-C4DB2452FB87@beckweb.net>
+To: oss-security@lists.openwall.com
+In-Reply-To: <8AE227B9-E337-45DC-9D8A-C4DB2452FB87@beckweb.net>
+Message-Id: <59BE1921-4A41-4927-86AF-78C8A74C6EDB@beckweb.net>
+X-Mailer: Apple Mail (2.3273)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1516870700;eeb3034c;
+X-HE-SMSGID: 1eedMH-0001L6-3i
+Subject: Re: [oss-security] Jenkins EC2 Plugin 1.37 and earlier arbitrary
+ shell command execution
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
 
-            Xen Security Advisory CVE-2023-20569 / XSA-434
+> On 6. Dec 2017, at 14:37, Daniel Beck <ml@beckweb.net> wrote:
+> 
+> SECURITY-643
+> Users with permission to create or configure agents in Jenkins could
+> configure an EC2 agent to run arbitrary shell commands on the master node
+> whenever the agent was supposed to be launched.
+> 
+> Configuration of these agents now requires the 'Run Scripts' permission
+> typically only granted to administrators.
 
-               x86/AMD: Speculative Return Stack Overflow
+CVE-2017-1000502
 
-ISSUE DESCRIPTION
-=================
-
-Researchers from ETH Zurich have extended their prior research (XSA-422,
-Branch Type Confusion, a.k.a Retbleed) and have discovered INCEPTION,
-also know as RAS (Return Address Stack) Poisoning, and Speculative
-Return Stack Overflow.
-
-The RAS is updated when a CALL instruction is predicted, rather than at
-a later point in the pipeline.  However, the RAS is still fundamentally
-a circular stack.
-
-It is possible to poison the branch type and target predictions such
-that, at a point of the attackers choosing, the branch predictor
-predicts enough CALLs back-to-back to wrap around the entire RAS and
-overwrite a correct return prediction with one of the attackers
-choosing.
-
-This allows the attacker to control RET speculation in a victim context,
-and leak arbitrary data as a result.
-
-For more details, see:
-  https://comsec.ethz.ch/inception
-  https://www.amd.com/en/corporate/product-security/bulletin/amd-sb-7005
-
-IMPACT
-======
-
-An attacker might be able to infer the contents of memory belonging to
-other guests.
-
-VULNERABLE SYSTEMS
-==================
-
-Only CPUs from AMD are believed to be potentially vulnerable.  CPUs from
-other manufacturers are not believed to be impacted.
-
-At the time of writing, all in-support AMD CPUs (that is, Zen1 thru Zen4
-microarchitectures) are believed to be potentially vulnerable.  Older
-CPUs have not been analysed.
-
-By default following XSA-422, Xen mitigates BTC on AMD Zen2 and older
-CPUs by issuing an IBPB on entry to Xen.  On Zen2 and older CPUs, this
-is believed to be sufficient to protect against SRSO too.
-
-AMD Zen3 and Zen4 CPUs are susceptible to SRSO too.  All versions of Xen
-are vulnerable on these CPUs.
-
-MITIGATION
-==========
-
-On Zen3 and Zen4, there is no mitigation.
-
-RESOLUTION
-==========
-
-AMD are producing microcode updates for Zen3 and Zen4.  Consult your
-dom0 OS vendor.
-
-With the microcode update applied, booting Xen with
-`spec-ctrl=ibpb-entry` is sufficient to protect against SRSO.
-
-The appropriate set of patches will default to using IBPB-on-entry on
-Zen3 and Zen4 CPUs, as well as synthesise new CPUID bits for guests to
-use in order to determine their susceptibility in a migration-safe way.
-
-The patches for this issue interact texturally but not logically with
-the fixes for XSA-435, which itself has complexities.  See XSA-435 for
-details of how to obtain the fixes.
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmTSZOsMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZ8uMIAL2xBV/B3O0t90aFhX75dOWZBUkujMN0xHDjyI+c
-lnEmy44QnX+jI9IBSuc4qaJmLXnUO71WsMU1XeKucOnh9E1kjgHB2H0GgS+GI6dG
-LtAVxn+RRK39YIO0CHAXvr/tlX/eyodvxtmxOKLRY47J0hHLToXBEdc2VfXrUEfk
-8AZn4hhHDGfRMX7jguxPFnrKCS3sZCFn1FYPtUxNGi2BbUzFacc+zZ2OISR7C59H
-24q9UIgUVoVwOnUWBEzW6oHmjP44Q0kG3E8LhZQhr1YkAG++KapgTPllc3cU4xja
-G8ozTeMeyVbM29EMS7QknOlkvMSUmtgzNg7Pt6El9oSyuH4=
-=rrcN
------END PGP SIGNATURE-----
-
---=separator--
