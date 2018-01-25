@@ -1,4 +1,9 @@
-Received: (qmail 21627 invoked by uid 550); 20 Jan 2026 16:01:33 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1569" "Thursday" "25" "January" "2018" "11:35:59" "+0200" "Aki Tuomi" "aki.tuomi@open-xchange.com" "<1876333558.159.1516872958654@appsuite-guard.open-xchange.com>" "40" "[oss-security] CVE-2017-15132: dovecot: auth client leaks memory if SASL authentication is aborted." nil nil nil "1" "2018012509:35:59" "[oss-security] CVE-2017-15132: dovecot: auth client leaks memory if SASL authentication is aborted." (number mark "U       aki.tuomi@op Jan 25   40/1569  " thread-indent "\"[oss-security] CVE-2017-15132: dovecot: auth client leaks memory if SASL authentication is aborted.\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 5991 invoked by uid 550); 25 Jan 2018 10:52:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,62 +12,88 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 1393 invoked from network); 20 Jan 2026 15:52:05 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Jason Gerlowski <gerlowskija@apache.org>
+Received: (qmail 6090 invoked from network); 25 Jan 2018 09:36:11 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=open-xchange.com;
+	s=201705; t=1516872960;
+	bh=6PJ4IhPdUtM8Q8NGpgGTZvb7E51B8kVaQK3rvFsiQcY=;
+	h=Date:From:To:Subject:From;
+	b=T9FgkHBLI8UVEewVq8F+DSR+yCiqiRJi9/vU71BFRap46LRLA8CRr77bl80+R8PW1
+	 t4EBwHyGVDooCsGIRIXtt1NLEMzZnEOdawrS6WtZgkiCRE9F5gRPvUia8eQkhNvwHZ
+	 iwF8d+HAvfbSWkgYbxfED18lUmYaWMMNw0g2tgNrBbwfTmYFp64iqFJbydwwDi/Zvd
+	 axg8jeHZg9P1IsnZAAdvX0FGJTGPQVgCKb10GWy3wWRG7amptMpH0PVXdFYPZ8AGWs
+	 n4Frwk0cDFHfZ/whBdmCGUKBKuXLEPq8zx8okftYrxNKK+TEbkgtCV5ULzsmRWkGpm
+	 4R2P9GaqTxh1Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=open-xchange.com;
+	s=201705; t=1516872960;
+	bh=6PJ4IhPdUtM8Q8NGpgGTZvb7E51B8kVaQK3rvFsiQcY=;
+	h=Date:From:To:Subject:From;
+	b=T9FgkHBLI8UVEewVq8F+DSR+yCiqiRJi9/vU71BFRap46LRLA8CRr77bl80+R8PW1
+	 t4EBwHyGVDooCsGIRIXtt1NLEMzZnEOdawrS6WtZgkiCRE9F5gRPvUia8eQkhNvwHZ
+	 iwF8d+HAvfbSWkgYbxfED18lUmYaWMMNw0g2tgNrBbwfTmYFp64iqFJbydwwDi/Zvd
+	 axg8jeHZg9P1IsnZAAdvX0FGJTGPQVgCKb10GWy3wWRG7amptMpH0PVXdFYPZ8AGWs
+	 n4Frwk0cDFHfZ/whBdmCGUKBKuXLEPq8zx8okftYrxNKK+TEbkgtCV5ULzsmRWkGpm
+	 4R2P9GaqTxh1Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=open-xchange.com;
+	s=201705; t=1516872960;
+	bh=6PJ4IhPdUtM8Q8NGpgGTZvb7E51B8kVaQK3rvFsiQcY=;
+	h=Date:From:To:Subject:From;
+	b=T9FgkHBLI8UVEewVq8F+DSR+yCiqiRJi9/vU71BFRap46LRLA8CRr77bl80+R8PW1
+	 t4EBwHyGVDooCsGIRIXtt1NLEMzZnEOdawrS6WtZgkiCRE9F5gRPvUia8eQkhNvwHZ
+	 iwF8d+HAvfbSWkgYbxfED18lUmYaWMMNw0g2tgNrBbwfTmYFp64iqFJbydwwDi/Zvd
+	 axg8jeHZg9P1IsnZAAdvX0FGJTGPQVgCKb10GWy3wWRG7amptMpH0PVXdFYPZ8AGWs
+	 n4Frwk0cDFHfZ/whBdmCGUKBKuXLEPq8zx8okftYrxNKK+TEbkgtCV5ULzsmRWkGpm
+	 4R2P9GaqTxh1Q==
+Date: Thu, 25 Jan 2018 11:35:59 +0200 (EET)
+From: Aki Tuomi <aki.tuomi@open-xchange.com>
 To: oss-security@lists.openwall.com
-Message-ID: <4baedddc-7d59-0d80-3f89-ff9bae6051bc@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 20 Jan 2026 15:50:52 +0000
+Message-ID: <1876333558.159.1516872958654@appsuite-guard.open-xchange.com>
 MIME-Version: 1.0
-Subject: [oss-security] =?UTF-8?Q?CVE-2026-22022=3A_Apache_Solr=3A_Unautho?=
- =?UTF-8?Q?rized_bypass_of_certain_=22predefined_pe?=
- =?UTF-8?Q?rmission=22_rules_in_the_RuleBasedAuthor?=
- =?UTF-8?Q?izationPlugin=20?=
+Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; 
+	boundary="----=_Part_158_277251643.1516872958649"
+X-Priority: 3
+Importance: Medium
+X-Mailer: Open-Xchange Mailer v7.8.4-Rev21
+X-Originating-Client: open-xchange-appsuite
+Subject: [oss-security] CVE-2017-15132: dovecot: auth client leaks memory if SASL
+ authentication is aborted.
 
-Severity: moderate=20
+------=_Part_158_277251643.1516872958649
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Affected versions:
+Score: 5.3, AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L
+Affected versions: 2.0 up to 2.2.33 and 2.3.0
+Fixed versions: 2.2.34 (not released yet), 2.3.1 (not released yet)
 
-- Apache Solr 5.3 through 9.10.0
+We have identified a memory leak in Dovecot auth client used by login
+processes. The leak has impact in high performance configuration where
+same login processes are reused and can cause the process to crash due to memory exhaustion.
 
-Description:
+Patch to apply this issue can be found from https://github.com/dovecot/core/commit/1a29ed2f96da1be22fa5a4d96c7583aa81b8b060.patch
 
-Deployments of Apache Solr 5.3.0 through 9.10.0 that rely on Solr's "Rule B=
-ased Authorization Plugin" are vulnerable to allowing unauthorized access t=
-o certain Solr APIs, due to insufficiently strict input validation in those=
- components.=C2=A0 Only deployments that meet all of the following criteria=
- are impacted by this vulnerability:
+To our best knowledge, this patch should apply to all versions.
 
-  *  Use of Solr's "RuleBasedAuthorizationPlugin"
-  *  A RuleBasedAuthorizationPlugin config (see security.json) that specifi=
-es multiple "roles"
-  *  A RuleBasedAuthorizationPlugin permission list (see security.json) tha=
-t uses one or more of the following pre-defined permission rules: "config-r=
-ead", "config-edit", "schema-read", "metrics-read", or "security-read".
-  *  A RuleBasedAuthorizationPlugin permission list that doesn't define the=
- "all" pre-defined permission
-  *  A networking setup that allows clients to make unfiltered network requ=
-ests to Solr. (i.e. user-submitted HTTP/HTTPS requests reach Solr as-is, un=
-modified or restricted by any intervening proxy or gateway)
+This issue can be mitigated on vulnerably systems by limiting login process to single request per process, which is also the default value.
 
-Users can mitigate this vulnerability by ensuring that their RuleBasedAutho=
-rizationPlugin configuration specifies the "all" pre-defined permission and=
- associates the permission with an "admin" or other privileged role.=C2=A0 =
-Users can also upgrade to a Solr version outside of the impacted range, suc=
-h as the recently released Solr 9.10.1.
+Regards,
+Aki Tuomi
+Dovecot oy
 
-This issue is being tracked as SOLR-18054=20
+------=_Part_158_277251643.1516872958649
+Content-Type: application/pgp-signature
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename=signature.asc
 
-Credit:
+-----BEGIN PGP SIGNATURE-----
+Version: BCPG v1.56
 
-monkeontheroof (finder)
+iQEbBAABCgAGBQJaaaT+AAoJEBk7Y2OzREIGcY8H93doAw8B/0TYxUMNB+KHQrKa
+FKW/5z4/87Sn303vjtWAcNWegjVM4mz8Gt0XFmaUI4kP19TKFfdSsL/pe+2Cgfd8
+BrYdGmpKkshADlrfc5NF570HMNG3Ez1stfrZCI9zW6WbHgGeqkYI0fWQHZ8ClwHv
+oI18k4viBTt/uHAU5Y3m1ddol5nUtot/r1qyDVqpHog29tjh79K8BiJsHscYgjpT
+l3IxjPAxGwM+BzLFJ9cNjbHRDKstRzU4eesfvSVB4SWxZPTyhUlaJ7d+fS4PJCa1
+50SX6v+mspbSTwKZaCJXK3mWhYmI4qc3z27RzigXPqZlHI/cZUpmBFBDoW1Hmg==
+=amVr
+-----END PGP SIGNATURE-----
 
-References:
-
-https://solr.apache.org
-https://www.cve.org/CVERecord?id=3DCVE-2026-22022
-https://issues.apache.org/jira/browse/SOLR-18054
-
+------=_Part_158_277251643.1516872958649--
