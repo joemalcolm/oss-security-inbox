@@ -1,50 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/26/2
-Message-Id: <OF86D0194F.A1B3DF32-ONC12582B8.003C8D37-C12582B8.00427E73@notes.na.collabserv.com>
-Date: Tue, 26 Jun 2018 14:06:17 +0200
-From: "Martin Scott Nicklous" <Scott.Nicklous@...ibm.com>
-To: oss-security@...ts.openwall.com, "Apache Security Team" <security@...che.org>, "Portals PMC" <private@...tals.apache.org>, pluto-dev@...tals.apache.org, pluto-user@...tals.apache.org, Jackson <kuojackson17@...il.com>
-Subject: [ CVE-2018-1306 ] Apache Portals Pluto information disclosure vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/25/6
+Message-Id: <272754A9-6299-4B6E-B0FB-BCC3FD8668B6@apache.org>
+Date: Thu, 25 Jan 2018 11:56:19 -0800
+From: Andy LoPresto <alopresto@...che.org>
+To: security@...i.apache.org
+Cc: users@...i.apache.org, dev@...i.apache.org, oss-security@...ts.openwall.com
+Subject: [ANNOUNCE] CVE advisory for Apache NiFi 1.0.0 - 1.3.0
 Content-Type: text/plain; charset=utf-8
 
+The Apache NiFi PMC would like to announce the following CVE discovery in Apache NiFi 1.1.0 - 1.3.0. This issue was resolved with the release of NiFi 1.4.0 on October 2, 2017. NiFi is an easy to use, powerful, and reliable system to process and distribute data. It supports powerful and scalable directed graphs of data routing, transformation, and system mediation logic. For more information, see https://nifi.apache.org/security.html.
 
+CVE-2017-15703 <https://nifi.apache.org/security.html#CVE-2017-15703>: Apache NiFi Java deserialization issue in template XML upload
 
-Affected Product: Apache Pluto
-
-Severity: Important
-
-Vendor: The Apache Software Foundation
-
-CVEID: CVE-2018-1306
-
-DESCRIPTION: The PortletV3AnnotatedDemo Multipart Portlet war file code
-could allow a remote attacker to obtain sensitive information, caused by
-the failure to restrict path information provided during a file upload. An
-attacker could exploit this vulnerability to obtain configuration data and
-other sensitive information.
+Severity: Moderate
 
 Versions Affected:
-3.0.0
 
-Mitigation:
-* Uninstall the  PortletV3AnnotatedDemo Multipart Portlet war file
-- or -
-* migrate to version 3.0.1
+Apache NiFi 1.0.0 - 1.3.0
 
-Credit:
-Che-Chun Kuo
+Description: Any authenticated user (valid client certificate but without ACL permissions) could upload a template which contained malicious code and caused a denial of service via Java deserialization attack.
 
-Mit freundlichen Grüßen, / Kind regards,
-Scott Nicklous
+Mitigation: The fix to properly handle Java deserialization was applied on the Apache NiFi 1.4.0 release. Users running a prior 1.x release should upgrade to the appropriate release.
 
-WebSphere Portal Standardization Lead & Technology Consultant
-Specification Lead, JSR 362 Portlet Specification 3.0
-IBM Commerce, Digital Experience Development
+Credit: This issue was discovered by Mike Cole.
 
-Phone: +49-7031-16-4808 / E-Mail:scott.nicklous@...ibm.com /  Schoenaicher
-Str. 220, 71032 Boeblingen, Germany
-IBM Deutschland Research & Development GmbH / Vorsitzender des
-Aufsichtsrats: Martina Koederitz / Geschäftsführung: Dirk Wittkopp
-Sitz der Gesellschaft: Böblingen / Registergericht: Amtsgericht Stuttgart,
-HRB 243294
+Released: October 2, 2017 (Updated January 25, 2018)
 
+
+Andy LoPresto
+alopresto@...che.org
+alopresto.apache@...il.com
+PGP Fingerprint: 70EC B3E5 98A6 5A3F D3C4  BACE 3C6E F65B 2F7D EF69
+
+
+Content of type "text/html" skipped
+
+Download attachment "signature.asc" of type "application/pgp-signature" (843 bytes)
