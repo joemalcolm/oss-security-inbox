@@ -1,30 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/09/3
-Message-ID: <CALLT8khw=hXWCd2piwfH4NaXSnPao7Uv_CmQVb3SzKo6dVGswQ@mail.gmail.com>
-Date: Fri, 9 Feb 2018 10:58:08 -0500
-From: "Alex O'Ree" <alexoree@...che.org>
-To: user@...di.apache.org, dev@...di.apache.org, security@...che.org,  oss-security@...ts.openwall.com
-Subject: [Security] CVE-2018-1307 XML Entity Expansion in juddi-client v3.2 through 3.3.4
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/25/2
+Message-Id: <64204672-5D14-48CD-95F4-984EB0197C02@beckweb.net>
+Date: Thu, 25 Jan 2018 09:59:31 +0100
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Multiple vulnerabilities in Jenkins
 Content-Type: text/plain; charset=utf-8
 
-CVEID  CVE-2018-1307
 
-VERSION:  3.2 through 3.3.4
+> On 14. Dec 2017, at 04:10, Daniel Beck <ml@...kweb.net> wrote:
+> 
+> SECURITY-667
+> A race condition during Jenkins startup could result in the wrong order of
+> execution of commands during initialization.
+> 
+> On Jenkins 2.81 and newer, including LTS 2.89.1, this could in rare cases
+> (we estimate less than 20% of new instances) result in failure to
+> initialize the setup wizard on the first startup. This resulted in multiple
+> security-related settings not being set to their usual strict default.
+> Affected instances need to be configured to restrict access.
 
-PROBLEMTYPE: XML Entity Expansion
+CVE-2017-1000503
 
-REFERENCES: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-4267
+> Additionally, there's a very short window of time after startup during
+> which Jenkins may no longer show the "Please wait while Jenkins is getting
+> ready to work" message, but Cross-Site Request Forgery (CSRF) protection
+> may not yet be effective. As of publication of this advisory, we've been
+> unable to confirm this can actually be exploited, but generally recommend
+> that users upgrade their instances.
 
-DISCRIPTION: If using the WADL2Java or WSDL2Java classes, which parse a
-local or remote XML document and then mediates the data structures into
-UDDI data structures, there are little protections present against entity
-expansion and DTD type of attacks. This was fixed with
-https://issues.apache.org/jira/browse/JUDDI-987
-
-Severity: Moderate
-
-Mitigation:
-
-Update your juddi-client dependencies to 3.3.5 or newer and/or discontinue
-use of the effected classes.
+CVE-2017-1000504
 
