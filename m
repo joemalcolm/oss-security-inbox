@@ -1,134 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/24/1
-Message-ID: <20180424111109.oigpkbl5nqcxqmvw@f195.suse.de>
-Date: Tue, 24 Apr 2018 13:11:09 +0200
-From: Matthias Gerstner <mgerstner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/25/5
+Message-Id: <0B04A942-3122-44F7-9102-F714F14771EF@beckweb.net>
+Date: Thu, 25 Jan 2018 16:59:35 +0100
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: ktexteditor / Kate local privilege escalation
+Subject: Re: Jenkins Script Security Plugin 1.36 and earlier arbitrary file read vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hello list,
 
-following is a report about a local privilege escalation I found in
-ktexteditor. I just informed upstream about it and will obtain a CVE
-soon.
+> On 11. Dec 2017, at 15:27, Daniel Beck <ml@...kweb.net> wrote:
+> 
+> SECURITY-663
+> Users with the ability to configure sandboxed Groovy scripts are able to
+> use a type coercion feature in Groovy to create new `File` objects from
+> strings. This allowed reading arbitrary files on the Jenkins master file
+> system.
+> 
+> Such a type coercion is now subject to sandbox protection and considered
+> to be a call to the `new File(String)` constructor for the purpose of
+> in-process script approval.
 
-ktexteditor (https://api.kde.org/frameworks/ktexteditor/html/) provides
-a text editor component for KDE applications. It is, for example, used
-in the "kate" text editor program.
+CVE-2017-1000505
 
-One of ktexteditor's features is support to write files owned by root or
-other users after entering the root password via polkit authentication.
-The authentication part is handled via the "kauth" framework. The actual
-work of saving files on behalf of the authenticated user is performed by
-a small program named "kauth_ktexteditor_helper". The related code is
-found in the upstream repository in the following source files:
-
-src/buffer/katesecuretextbuffer_p.h
-src/buffer/katesecuretextbuffer.cpp
-
-The logic for saving the file goes roughly as follows:
-
-- the caller provides source and target file paths, a sha512 digest of
-  the source file content and (optionally) the target file owner and
-  group IDs.
-- the helper tries to open a temporary file in the directory containing
-  the target file, reads chunk from the source file and writes them to
-  the target file, recalculating the sha512 digest on the way.
-- in the end, if the digest matches, the temporary file will be
-  rename()'d for replacing the target file path with the new file
-  content.
-
-For temporary file handling the qt5 core library facilities are employed
-and the following source code lines are the important ones:
-
-```
-    // We will first generate temporary filename and then use it relatively to prevent an attacker
-    // to trick us to write contents to a different file by changing underlying directory.
-    QTemporaryFile tempFile(targetFileName);
-    if (!tempFile.open()) {
-        return false;
-    }
-    tempFile.close();
-    QString tempFileName = QFileInfo(tempFile).fileName();
-    tempFile.setFileName(tempFileName);
-    if (!readFile.open(QIODevice::ReadOnly) || !tempFile.open()) {
-        return false;
-    }
-```
-
-This code results in the following system call sequence:
-
-```
-    openat(AT_FDCWD, "/etc", O_RDWR|O_CLOEXEC|O_TMPFILE, 0600) = 11
-    lseek(11, 0, SEEK_SET)      = 0
-    linkat(AT_FDCWD, "/proc/self/fd/11", AT_FDCWD, "/etc/fstab.hdRIFU",
-    	AT_SYMLINK_FOLLOW) = 0
-    close(11) = 0
-    [...]
-    openat(AT_FDCWD, "fstab.hdRIFU", O_RDWR|O_CREAT|O_CLOEXEC, 0666) = 12
-```
-
-So while the code author(s) have been seemingly aware that temporary
-file handling needs to be done carefully they somehow still broke it in
-the end which we can see from the system calls. The initially unnamed
-temporary file is linked, the associated file descriptor closed and the
-now named temporary file is reopened with the `O_CREAT` flag. On file
-systems that don't support O_TMPFILE the vulnerability is also existing,
-the code will fall back to named files right away.
-
-As it turns out this situation can be exploited in scenarios like the
-following:
-
-A user running "kate" wants to edit and save a file in a directory that
-is owned by another unprivileged user. Such directories exist for
-various software e.g. in /var/lib or in /etc. The user enters root
-credentials to perform the privileged save operation.
-
-The other unprivileged user can now perform a symlink attack on the
-temporary file being opened by the "kauth_ktexteditor_helper" and
-achieve various effects:
-
-- creation of new files in arbitrary file system locations.
-- corruption of arbitrary existing files (because the helper will write
-  the source file content into the symlinked file).
-- taking ownership of arbitrary files (because the helper will perform
-  an fchown() call on the symlinked file), thereby facilitating local
-  root privilege escalation.
-
-The attached proof of concept code succeeds in gaining ownership of
-/etc/shadow in the described situation. Exploiting the race condition
-does not work very reliably, because the window of opportunity is very
-small. Some more advanced exploit code might improve the chances.
-
-The API of the QTemporaryFile class has some non-obvious semantics. The
-close() method does not really close the underlying file descriptor. The
-setFileName() function, however, does. I am not clear what the original
-intentions of the code above being this way might have been. As far as I
-can tell the attached patch fixes the race condition detailed in this
-report without breaking anything.
-
-The vulnerable code is already found in upstream commit
-f7a9573d973e6ef0cd6f2c419290c0c7e46381b7 and therefore ktexteditor
-starting from version 5.34.0 can be considered vulnerable.
-
-Cheers
-
-Matthias
-
--- 
-Matthias Gerstner <matthias.gerstner@...e.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Telefon: +49 911 740 53 290
-GPG Key ID: 0x14C405C971923553
-
-SUSE Linux GmbH
-GF: Felix Imendörffer, Jane Smithard, Graham Norton
-HRB 21284 (AG Nuernberg)
-
-View attachment "ktexteditor_tmpfile_fix.patch" of type "text/x-patch" (960 bytes)
-
-View attachment "kattack.cpp" of type "text/x-c" (9065 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
