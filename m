@@ -1,4 +1,9 @@
-Received: (qmail 23837 invoked by uid 550); 23 Jan 2025 02:42:43 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1580" "Thursday" "25" "January" "2018" "10:01:56" "+0100" "Daniel Beck" "ml@beckweb.net" "<199D28DA-A105-401F-B57F-26CEC04C9A80@beckweb.net>" "62" "Re: [oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil "1" "2018012509:01:56" "[oss-security] Multiple vulnerabilities in Jenkins plugins" (number mark "U       ml@beckweb.n Jan 25   62/1580  " thread-indent "\"Re: [oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") "<9FA8984F-15E3-43F7-A50F-408E92B9D266@beckweb.net>" ("<9FA8984F-15E3-43F7-A50F-408E92B9D266@beckweb.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 11803 invoked by uid 550); 25 Jan 2018 09:03:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,63 +12,80 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 21510 invoked from network); 23 Jan 2025 02:42:25 -0000
-Date: Thu, 23 Jan 2025 03:42:22 +0100
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20250123024222.GA16803@openwall.com>
-Mime-Version: 1.0
+Received: (qmail 10036 invoked from network); 25 Jan 2018 09:02:07 -0000
+From: Daniel Beck <ml@beckweb.net>
 Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.3i
-Subject: [oss-security] Oracle January 2025 Critical Patch Update
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
+Date: Thu, 25 Jan 2018 10:01:56 +0100
+References: <9FA8984F-15E3-43F7-A50F-408E92B9D266@beckweb.net>
+To: oss-security@lists.openwall.com
+In-Reply-To: <9FA8984F-15E3-43F7-A50F-408E92B9D266@beckweb.net>
+Message-Id: <199D28DA-A105-401F-B57F-26CEC04C9A80@beckweb.net>
+X-Mailer: Apple Mail (2.3273)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1516870927;203c19c4;
+X-HE-SMSGID: 1eedPw-00048A-3B
+Subject: Re: [oss-security] Multiple vulnerabilities in Jenkins plugins
 
-Hi,
 
-Once in a while, Oracle publishes what they call Critical Patch Update
-documents, which list many vulnerabilities addressed across many Oracle
-products, some of them Open Source and some not.  This is great, but it
-would be even better if Oracle also communicated to oss-security about
-those vulnerabilities in its Open Source products, perhaps one message
-per product (e.g., MySQL separately from VirtualBox).  I hope someone
-from Oracle reads this and will get the wheels moving.  Anyone?
+> On 22. Jan 2018, at 12:35, Daniel Beck <ml@beckweb.net> wrote:
+>=20
+> SECURITY-655 (PMD)
 
-Meanwhile, the latest Critical Patch Update is:
+CVE-2018-1000008
 
-https://blogs.oracle.com/security/post/january-2025-cpu-released
-https://www.oracle.com/security-alerts/cpujan2025.html
+> SECURITY-656 (Checkstyle)
 
-For MySQL, it says:
+CVE-2018-1000009
 
-https://www.oracle.com/security-alerts/cpujan2025.html#AppendixMSQL
+> SECURITY-657 (DRY)
 
-"Oracle MySQL Risk Matrix
+CVE-2018-1000010
 
-This Critical Patch Update contains 39 new security patches, plus
-additional third party patches noted below, for Oracle MySQL.  4 of
-these vulnerabilities may be remotely exploitable without
-authentication, i.e., may be exploited over a network without requiring
-user credentials.  The English text form of this Risk Matrix can be
-found here."
+> SECURITY-658 (FindBugs)
 
-and links to:
+CVE-2018-1000011
 
-https://www.oracle.com/security-alerts/cpujan2025verbose.html#MSQL
+> SECURITY-695 (Warnings)
 
-and lists additional information on some CVEs not included in the matrix
-itself (duplicate or not vulnerable).  With so many CVEs, all of this is
-rather long, but I imagine someone from Oracle - or someone external -
-could copy-paste the "English text form of this Risk Matrix" and the
-extra notes on a few CVEs to a separate message focusing on MySQL.
+CVE-2018-1000012
 
-Similarly, there's info on a couple of VirtualBox CVEs here, which would
-ideally be a separate message with copy-pasted detail:
+> Multiple plugins based on the Static Analysis Utilities plugin are affect=
+ed by=20
+> an XML External Entity (XXE) processing vulnerability. This allows attack=
+er to=20
+> configure build processes so that one of these plugins parses a malicious=
+ly=20
+> crafted file that uses external entities for extraction of secrets from t=
+he=20
+> Jenkins master, server-side request forgery, or denial-of-service attacks.
+>=20
+>=20
+> SECURITY-607
+> Release plugin did not require form submissions to be submitted via POST,=
+=20
+> resulting in a CSRF vulnerability allowing attackers to trigger release b=
+uilds.
 
-https://www.oracle.com/security-alerts/cpujan2025.html#AppendixOVIR
-https://www.oracle.com/security-alerts/cpujan2025verbose.html#OVIR
+CVE-2018-1000013
 
-Perhaps there's more Open Source software listed in there, which needs
-similar treatment.  Not only this time, but each time, please.
+> SECURITY-507
+> Translation Assistance did not require form submissions to be submitted v=
+ia=20
+> POST, resulting in a CSRF vulnerability allowing attackers to override=20
+> localized strings displayed to all users on the current Jenkins instance =
+if=20
+> the victim is a Jenkins administrator.
 
-Alexander
+CVE-2018-1000014
+
+> SECURITY-675
+> On instances with Authorize Project plugin, the authentication associated=
+ with=20
+> a build may lack the Computer/Build permission on some agents. This did n=
+ot=20
+> prevent the execution of Pipeline `node` blocks on those agents due to=20
+> incorrect permissions checks in Pipeline: Nodes and Processes plugin.
+
+CVE-2018-1000015
+
