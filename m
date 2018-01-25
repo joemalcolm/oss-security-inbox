@@ -1,125 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/20/1
-Message-Id: <E1frgmY-0003e7-W2@xenbits.xenproject.org>
-Date: Mon, 20 Aug 2018 09:47:30 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 269 v3 (CVE-2018-15468) - x86: Incorrect MSR_DEBUGCTL handling lets guests enable BTS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/25/3
+Message-Id: <199D28DA-A105-401F-B57F-26CEC04C9A80@beckweb.net>
+Date: Thu, 25 Jan 2018 10:01:56 +0100
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
 
-            Xen Security Advisory CVE-2018-15468 / XSA-269
-                              version 3
+> On 22. Jan 2018, at 12:35, Daniel Beck <ml@...kweb.net> wrote:
+> 
+> SECURITY-655 (PMD)
 
-      x86: Incorrect MSR_DEBUGCTL handling lets guests enable BTS
+CVE-2018-1000008
 
-UPDATES IN VERSION 3
-====================
+> SECURITY-656 (Checkstyle)
 
-CVE assigned.
+CVE-2018-1000009
 
-ISSUE DESCRIPTION
-=================
+> SECURITY-657 (DRY)
 
-The DEBUGCTL MSR contains several debugging features, some of which virtualise
-cleanly, but some do not.  In particular, Branch Trace Store is not
-virtualised by the processor, and software has to be careful to configure it
-suitably not to lock up the core.  As a result, it must only be available to
-fully trusted guests.
+CVE-2018-1000010
 
-Unfortunately, in the case that vPMU is disabled, all value checking was
-skipped, allowing the guest to chose any MSR_DEBUGCTL setting it likes.
+> SECURITY-658 (FindBugs)
 
-IMPACT
-======
+CVE-2018-1000011
 
-A malicious or buggy guest administrator can lock up the entire host, causing
-a Denial of Service.
+> SECURITY-695 (Warnings)
 
-VULNERABLE SYSTEMS
-==================
+CVE-2018-1000012
 
-Xen versions 4.6 and later are vulnerable.
+> Multiple plugins based on the Static Analysis Utilities plugin are affected by 
+> an XML External Entity (XXE) processing vulnerability. This allows attacker to 
+> configure build processes so that one of these plugins parses a maliciously 
+> crafted file that uses external entities for extraction of secrets from the 
+> Jenkins master, server-side request forgery, or denial-of-service attacks.
+> 
+> 
+> SECURITY-607
+> Release plugin did not require form submissions to be submitted via POST, 
+> resulting in a CSRF vulnerability allowing attackers to trigger release builds.
 
-Only systems using Intel CPUs are affected. ARM and AMD systems are
-unaffected.
+CVE-2018-1000013
 
-Only x86 HVM or PVH guests can exploit the vulnerability.  x86 PV guests
-cannot exploit the vulnerability.
+> SECURITY-507
+> Translation Assistance did not require form submissions to be submitted via 
+> POST, resulting in a CSRF vulnerability allowing attackers to override 
+> localized strings displayed to all users on the current Jenkins instance if 
+> the victim is a Jenkins administrator.
 
-MITIGATION
-==========
+CVE-2018-1000014
 
-Running only x86 PV guests avoids the vulnerability.
+> SECURITY-675
+> On instances with Authorize Project plugin, the authentication associated with 
+> a build may lack the Computer/Build permission on some agents. This did not 
+> prevent the execution of Pipeline `node` blocks on those agents due to 
+> incorrect permissions checks in Pipeline: Nodes and Processes plugin.
 
-CREDITS
-=======
+CVE-2018-1000015
 
-This issue was discovered by Andrew Cooper of Citrix.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa269.patch           xen-unstable
-xsa269-4.11.patch      Xen 4.11
-xsa269-4.10.patch      4.10, 4.9
-xsa269-4.8.patch       Xen 4.8, 4.7, 4.6
-
-$ sha256sum xsa269*
-4733d09bb63523744ca2ee172e2fade0c39082c15d9a746144f279cf1359b723  xsa269.meta
-5a5fe36f1f876a5029493e7fa191436fd021929aaba2d820636df17f4ed20113  xsa269.patch
-ea11cef818050bca13d4eb89294627c97e4cdb830124f679e77d37a44a370286  xsa269-4.8.patch
-45ba1823530f329dd73088b77098e686b32f5daac0bc5177b2afea09f8c3593a  xsa269-4.10.patch
-e0ca060311fb9ba3247e2fe65bca4806a131644f8894fd08be374904904b1944  xsa269-4.11.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJbeo4KAAoJEIP+FMlX6CvZfakIAJRgw9LWW7fnr0WX11dt/Rm1
-GgBxMWS7DrnBPBjE7GqhtqgFyvIVHBnWEEj1WW1WvHWIV/XIbV8GKOi6ecfF5p3o
-vK/a/8S0qOSOtOPZZJkZGuZn6pNd9V0Ynx296Hn6DKildBBEkGSXoWo67ViaxrP2
-iPzhYukDRYlqjF5pYfPr7Zek+RodtB+rxJEKMpDDIW8aeA3hnsOZNXAmr5n+Q465
-rNojqJDV5Zwuli+L0SVzmtkY6dbeXyhMWn3zAj8a5Pq+/VkK3PdcEBVNADLXbh3a
-lnDmjwsY9ZX64HhXbamFMV1Wykhbjb+Jprj6CJjuz4wcGArKW+lsTV86p8Q5Kzk=
-=uYjg
------END PGP SIGNATURE-----
-
-Download attachment "xsa269.meta" of type "application/octet-stream" (1991 bytes)
-
-Download attachment "xsa269.patch" of type "application/octet-stream" (4733 bytes)
-
-Download attachment "xsa269-4.8.patch" of type "application/octet-stream" (5351 bytes)
-
-Download attachment "xsa269-4.10.patch" of type "application/octet-stream" (4662 bytes)
-
-Download attachment "xsa269-4.11.patch" of type "application/octet-stream" (4329 bytes)
