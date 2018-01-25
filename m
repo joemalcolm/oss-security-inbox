@@ -1,21 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/02/4
-Message-ID: <20180702141024.iudvf2tx7fsf3q66@jwilk.net>
-Date: Mon, 2 Jul 2018 16:10:24 +0200
-From: Jakub Wilk <jwilk@...lk.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/25/4
+Message-ID: <1876333558.159.1516872958654@appsuite-guard.open-xchange.com>
+Date: Thu, 25 Jan 2018 11:35:59 +0200 (EET)
+From: Aki Tuomi <aki.tuomi@...n-xchange.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: accountsservice: insufficient path check in user_change_icon_file_authorized_cb()
+Subject: CVE-2017-15132: dovecot: auth client leaks memory if SASL authentication is aborted.
 Content-Type: text/plain; charset=utf-8
 
-* Matthias Gerstner <mgerstner@...e.de>, 2018-07-02, 14:21:
->I think the easiest way to fix this is to normalize the user supplied 
->filename e.g. using realpath()
+Score: 5.3, AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L
+Affected versions: 2.0 up to 2.2.33 and 2.3.0
+Fixed versions: 2.2.34 (not released yet), 2.3.1 (not released yet)
 
-Using realpath(3) for access control is almost always a mistake: this 
-function expands symlinks, including attacker-controlled symlinks.
+We have identified a memory leak in Dovecot auth client used by login
+processes. The leak has impact in high performance configuration where
+same login processes are reused and can cause the process to crash due to memory exhaustion.
 
-You patch uses g_file_get_path(), which AFIACT doesn't use any 
-filesystem I/O for canonicalisation, so that should be fine.
+Patch to apply this issue can be found from https://github.com/dovecot/core/commit/1a29ed2f96da1be22fa5a4d96c7583aa81b8b060.patch
 
--- 
-Jakub Wilk
+To our best knowledge, this patch should apply to all versions.
+
+This issue can be mitigated on vulnerably systems by limiting login process to single request per process, which is also the default value.
+
+Regards,
+Aki Tuomi
+Dovecot oy
+
+Download attachment "signature.asc" of type "application/pgp-signature" (476 bytes)
