@@ -1,24 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/10/4
-Message-ID: <CAE=eJscZ-56D2hFjn1LMRQMOOhQG0aUF-4snqfasXfDMW4e5QA@mail.gmail.com>
-Date: Tue, 10 Apr 2018 13:40:48 +0300
-From: Tomer Brisker <tbrisker@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2018-1097 Foreman: oVirt credentials exposed by host power API
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/26/7
+Message-ID: <1190211676.1193152.1516995087060@mail.yahoo.com>
+Date: Fri, 26 Jan 2018 19:31:27 +0000 (UTC)
+From: Tim Allison <tallison@...che.org>
+To: "announce@...che.org" <announce@...che.org>,  Security <security@...che.org>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>,  "user@....apache.org" <user@....apache.org>,  "dev@....apache.org" <dev@....apache.org>,  "davidedillard@...il.com" <davidedillard@...il.com>
+Subject: CVE-2017-12626 – Denial of Service Vulnerabilities in Apache POI < 3.17
 Content-Type: text/plain; charset=utf-8
 
-An information disclosure vulnerability was discovered in the host power
-API in Foreman.
-When sending a power action to a host provisioned on an oVirt compute
-resource, the API responded with details of the compute resource, including
-credentials in clear text.
+Title: CVE-2017-12626 – Denial of Service Vulnerabilities in Apache POI < 3.17
 
-This issue affect Foreman 1.3 or newer.
-A fix is included in the 1.16.1 release.
-Details are available at http://projects.theforeman.org/issues/22546​
+Severity: Important
 
--- 
-Have a nice day,
-Tomer Brisker
-Red Hat Engineering
+Vendor: The Apache Software Foundation
 
+Versions affected: versions prior to version 3.17
+
+Description:   
+    Apache POI versions prior to release 3.17 are vulnerable to Denial of Service Attacks:
+    * Infinite Loops while parsing specially crafted WMF, EMF, MSG and macros
+          (POI bugs 61338 [0] and 61294 [1])
+    * Out of Memory Exceptions while parsing specially crafted DOC, PPT and XLS 
+          (POI bugs 52372 [2] and 61295 [3])
+
+
+Mitigation:  Users with applications which accept content from external or untrusted sources are advised to upgrade to Apache POI 3.17 or newer.
+
+-Tim Allison
+
+on behalf of the Apache POI PMC
+
+ 
+
+[0] https://bz.apache.org/bugzilla/show_bug.cgi?id=61338
+[1] https://bz.apache.org/bugzilla/show_bug.cgi?id=61294
+[2] https://bz.apache.org/bugzilla/show_bug.cgi?id=52372
+[3] https://bz.apache.org/bugzilla/show_bug.cgi?id=61295
