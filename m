@@ -1,138 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/09/2
-Message-ID: <c6f17dee-ca33-7d57-ef89-0707d3189826@nic.cz>
-Date: Thu, 9 Aug 2018 08:06:36 +0200
-From: Petr Špaček <petr.spacek@....cz>
-To: oss-security@...ts.openwall.com
-Subject: Knot Resolver 2.4.1 security release
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/26/5
+Message-ID: <CAF8HOZ+J3NkaywfbHuQpHxK9ZXeT4=4Vs9rOwCDiUdnt1QA1Yw@mail.gmail.com>
+Date: Fri, 26 Jan 2018 20:05:03 +0100
+From: Jochen Wiedmann <jochen.wiedmann@...il.com>
+To: security@...mons.apache.org, security <security@...che.org>,  private@...mons.apache.org, Alexander Lehmann <alexlehm@...il.com>,  oss-security@...ts.openwall.com
+Subject: CVE-2018-1294: Apache Commons Email vulnerability information disclosure
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+CVE-2018-1294: Apache Commons Email vulnerability information
+disclosure
 
-this is copy of e-mail for distros@ mailing list.
+Severity: Moderate
 
-Fixed version 2.4.1 is already available from
-https://secure.nic.cz/files/knot-resolver/
+Vendor:
+The Apache Software Foundation
 
-I apologize for delay between release and this post.
-Petr Špaček  @  CZ.NIC
+Versions Affected:
+All Versions of Commons-Email, from 1.0, to 1.4, inclusive. The
+current version 1.5 is not affected.
 
+Description: If a user of Commons-Email (typically an application
+programmer) passes unvalidated input as the so-called "Bounce
+Address", and that input contains line-breaks, then the email details
+(recipients, contents, etc.) might be manipulated.
 
+Mitigation: Users should upgrade to Commons-Email 1.5.
+You can mitigate this vulnerability for older versions of Commons
+Email by stripping line-breaks from data, that will be passed to
+Email.setBounceAddress(String).
 
--------- Forwarded Message --------
-Subject: [vs] Knot Resolver 2.4.1 security release + CVE request
-Date: Wed, 1 Aug 2018 16:47:14 +0200
-From: Petr Špaček <petr.spacek@....cz>
-Organization: CZ.NIC
-To: distros@...openwall.org
+Credit: Alexander Lehmann
 
-Hello,
-
-this is pre-release advisory about bugs affecting security of Knot
-Resolver (a DNS resolver by CZ.NIC).
-
-Impact
-======
-Under certain circumstances this bug allows an attacker to hijack
-DNS domains.
-
-
-Unembargo date
-==============
-Thursday 2nd August 2018 12:00 (noon) GMT
-
-Fixes
-=====
-Minimal patch on top of version 2.4.0 is in attached fix.patch.
-The second file hardening.patch which provides additional hardening
-(defense in depth but not strictly necessary). We will be releasing
-version 2.4.1 with other fixes as well.
-
-If you are interested we could provide encrypted tarball with 2.4.1
-sooner so you can build version with other fixes as well, just let me know.
-
-
-CVE assignment request
-======================
-[Requestors emails address (required)]:
-petr.spacek@....cz
-
-[I confirm that this CVE is for an Open Source software
-component/library/etc. (required)]:
-yes
-
-[I confirm that I have read the CVE Terms of Use and agree to them
-(required)]:
-yes
-
-[Vendor/Project of the product (required)]:
-CZ.NIC
-
-[Affected product name (required)]:
-Knot Resolver
-
-[Product URL (required)]:
-https://www.knot-resolver.cz/
-
-[Affected version (required)]:
-Knot Resolver <= 2.4.0
-
-[Fixed version (optional)]:
-Knot Resolver 2.4.1
-
-[Vulnerability type (required)]:
-CWE-20: Improper Input Validation
-
-[Affected component (required)]:
-resolver
-
-[Impact of exploitation (required)]:
-Under certain circumstances this bug allows an attacker to hijack
-DNS domains.
-
-[Description of vulnerability]:
-Improper input validation bug in DNS resolver component of Knot
-Resolver allows remote attacker to poison cache.
-
-To execute this attack the attacker has to have:
-+ access to rogue authoritative server and
-+ ability to trigger query from resolver under attack to authoritative
-server under attacker's control
-
-For successful exploitation the data used to poison cache need to match
-certain criteria which we decided not to disclose at the moment.
-
-Please note that "classical" DNS answer spoofing is going to be very
-hard because Knot Resolver randomizes ports, query ID, and query name
-capitalization - i.e. plain Kaminsky attack will be difficult. This is
-why attacker needs to control an authoritative server.
-
-
-Attack Vector (AV): Network
-Attack Complexity (AC): Low
-Privileges Required (PR): None
-User Interaction (UI): None
-Scope (S): Unchanged
-Confidentiality (C): None
-Integrity (I): High
-Availability (A): None
-
-Technical Details:
-CWE-20
-
-Acknowledgment:
-CZ.NIC would like to thank Marek Vavrusa for reporting this issue.
-
-[Reference URL 1 (required)]:
-https://www.knot-resolver.cz/2018-08-02-knot-resolver-2.4.1.html
-
-Thank you for processing this.
-
--- 
-Petr Špaček  @  CZ.NIC
-
-
-
-View attachment "fix.patch" of type "text/x-patch" (1348 bytes)
-
-View attachment "hardening.patch" of type "text/x-patch" (2741 bytes)
+References:
+http://commons.apache.org/proper/commons-email/security-reports.html
