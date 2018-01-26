@@ -1,16 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/01/3
-Message-ID: <410408356.339.1519887146548@appsuite-dev.open-xchange.com>
-Date: Thu, 1 Mar 2018 08:52:26 +0200 (EET)
-From: Aki Tuomi <aki.tuomi@...n-xchange.com>
-To: oss-security@...ts.openwall.com
-Subject: Dovecot Security Advisory: CVE-2017-15130 TLS SNI config lookups are inefficient and can be used for DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/26/3
+Message-ID: <0B018C16-38A7-467C-BD58-5C810C51FBFE@vmware.com>
+Date: Fri, 26 Jan 2018 18:39:26 +0000
+From: VMware Security Response Center <security@...are.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Deserialization Vulnerability in VMware Xenon (CVE-2017-4947) 
 Content-Type: text/plain; charset=utf-8
 
-Vulnerable versions: 2.2.0 - 2.2.33, 2.3.0
-Fixed versions: 2.2.34, 2.3.0.1
-Score: 3.7, AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L
+VMware Xenon contains a deserialization vulnerability (CVE-2017-4947) due to insufficient content-type filtering of inbound requests. Successful exploitation of this issue may result in remote code execution.
 
-If dovecot has been configured with local name or local net
-configuration blocks, SNI lookups can be used to trash memory with
-useless config by using random servernames.
+Fixes/References
+--------------
+https://github.com/vmware/xenon/commit/092ea98105040e68c6bd0bdf89b86d149dfad1b1
+
+We would like to thank Chris Todd of VMware for reporting this issue.
+
+--------------
+Edward Hawkins
+Senior Program Manager, Security Response
+security@...are.com
