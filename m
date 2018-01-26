@@ -1,22 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/18/1
-Message-ID: <9Oh6Q_oGBdLOE2SpGuy67o4P_ytW1KG0urBaQPvPOskA6d6uwyU_et3aIaNCb0M6mSWw8T90Lb2OQIXkE38PlXk5eSCsQqS3Dr0QZ_2Q2ns=@protonmail.ch>
-Date: Thu, 18 Oct 2018 10:51:25 +0000
-From: Jordan Glover <Golden_Miller83@...tonmail.ch>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "taviso@...gle.com" <taviso@...gle.com>
-Subject: Re: Re: ghostscript: 1Policy operator gives access to .forceput CVE-2018-18284
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/26/4
+Message-ID: <BN4PR11MB0882BF16C0E31311122387B9AAE00@BN4PR11MB0882.namprd11.prod.outlook.com>
+Date: Fri, 26 Jan 2018 17:48:14 +0000
+From: Mikhail Utin <mikhailutin@...mail.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: How to deal with reporters who don't want their bugs fixed?
 Content-Type: text/plain; charset=utf-8
 
-‐‐‐‐‐‐‐ Original Message ‐‐‐‐‐‐‐
-On Wednesday, October 17, 2018 10:48 PM, Tavis Ormandy <taviso@...gle.com> wrote:
+I 100% agree with Solar's response. We should not limit our freedom to choose how we will handle our intellectual property. That is how I read the original statements below.
 
-> Apparently it wasn't clear that this allowed reading and writing of arbitrary files, here is a full exploit (I just modified the CVE-2018-17961 exploit).
->
-> $ convert executeonly-bypass.pdf exploit.jpg
-> $ tail -1 ~/.bashrc
-> echo pwned by postscript
->
-> Thanks, Tavis.
+Not to cause more discussion, but here is the example of how "universal ethics" work:
 
-Do you know if upstream is going to make new release soon or distros should take the
-pain and backport all of those themselves?
+
+https://www.theregister.co.uk/2018/01/25/intel_spectre_disclosed_flaws_november/
+
+
+
+Mikhail Utin, CISSP
+
+
+________________________________
+From: Solar Designer <solar@...nwall.com>
+Sent: Friday, January 26, 2018 12:16
+To: oss-security@...ts.openwall.com
+Subject: Re: [oss-security] How to deal with reporters who don't want their bugs fixed?
+
+On Fri, Jan 26, 2018 at 10:23:49AM -0500, Stiepan wrote:
+> I think that clear rules might be welcome:
+
+I agree (specifically, I had suggested explicit maximum embargo times),
+but such rules must not be one and only industry standard.  Anyone or
+any project may propose rules, and other projects are welcome to reuse
+those rules, but they must not have to - they could as well use
+different rules, or none.  At best, a relatively non-controversial
+and brief boilerplate could end up being reused by many projects.
+
+> We as a profession should have a clear code of ethics
+
+No.  Let's not use the word ethics.  That word, except when explicitly
+referring to a particular person's or group's ethics, implies that when
+we (dis)agree or are judging others, we claim to be necessarily right -
+but in reality we're necessarily subjective.
+
+This would be just as flawed a concept/term as "responsible disclosure".
+(I refrain from using that term as well, except when pointing out just
+how unnecessarily judgemental it is - implying that other kinds of
+disclosure would have been "irresponsible" - but we're subjective.)
+
+> universal ethics' code
+
+That's an oxymoron.  No such thing can possibly exist.
+
+Alexander
+
