@@ -1,4 +1,9 @@
-Received: (qmail 11274 invoked by uid 550); 26 Sep 2023 09:50:55 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2043" "Friday" "26" "January" "2018" "17:48:14" "+0000" "Mikhail Utin" "mikhailutin@hotmail.com" "<BN4PR11MB0882BF16C0E31311122387B9AAE00@BN4PR11MB0882.namprd11.prod.outlook.com>" "56" "Re: [oss-security] How to deal with reporters who don't want their bugs fixed?" "^Date:" nil nil "1" "2018012617:48:14" "[oss-security] How to deal with reporters who don't want their bugs fixed?" (number mark "        mikhailutin@ Jan 26   56/2043  " thread-indent "\"Re: [oss-security] How to deal with reporters who don't want their bugs fixed?\"\n") "<20180126171624.GA9007@openwall.com>" ("<07f40446-1917-893c-2a87-b0d7990579b2@redhat.com>" "<20180124030215.ugiofq23lmyurwsa@dojo.mi.org>" "<BSTa0xkd6PUstoK62HXIf9i3UbZq_tCsSclHxAN7KTx3C1KFs-sF5C7ob4tsKCoYkw9Tb-axNViD4GKkd-VvX8g163zTLOvsngO4-M3jlus=@itk.swiss>" "<20180126171624.GA9007@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 24123 invoked by uid 550); 26 Jan 2018 18:55:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,81 +11,108 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 10210 invoked from network); 26 Sep 2023 09:50:54 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm2; t=1695721843; x=1695808243; bh=Zu
-	m+eLk+vvEy9DOcoAuEOEof6QKvF4eVjI2ltLJwoac=; b=BkQC9+c0CXIE0BJ1WI
-	MJKOSsqYVSCmgQFWeSxZs0d/ku67Sfg2e8c2cLeJbY4qrNuhOv2oiWNUlUAd1XmR
-	+1KOU2h8dKU4q/9lS7jRp51S72cjjSQWZPBCr7x4As1ecDe3IdRKgWm9dZS7+Ok0
-	Ch6Myg9jMAaoZ0F/s50+G1vy3oPJ8ZTTyI/+mUBUIMfaRauvmIZoes/pd93/Cnjc
-	oua6UcN5UF0IIuWITYW5iQKrMFfbG9JiR2FMLjHiuCkITfNwjSIOc6wuOyCDrgJm
-	Pu9KDSvunLb4uOEgYWjJbl42elUg5joIgqL9m/DQMw+FX01IdtOU9nJLORfveWdl
-	YdrA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm2; t=1695721843; x=1695808243; bh=Zum+eLk+vvEy9
-	DOcoAuEOEof6QKvF4eVjI2ltLJwoac=; b=lcYxLtYKZqlkperFkJVv+kQ/0gs0w
-	WV+joTCa6H6rl4qr0yijb3x2EjyzERY6MD1cs3/HjErkN5zkWvJ5Ydp5C7JG4dlM
-	k0nzU1F4TgCKxudxZ2OGmPCCCvcrPJeo+XgJtuRXWx9GD822Set1e52GKZXHU2mw
-	btY2f2bwaivZ9vRIxGFKDelOPdxs9VnGKQWNqdsPzUXAQXIWGTRnQFJj/rWP2ON/
-	I3ag4wNdWiNZG2iPFOhhUQH+VkZSxlcmURYO6Nxc9/FlMnKglqYpqeOICsY8oELX
-	uMJEPHIIJ72hS1S/kDankeuqqqWFYrTj4kwGfZ+WmyZUhO2GE8ogbpPqA==
-X-ME-Sender: <xms:cqkSZaJSvgSc6hHyQ4WRYwlvcGVTuY3yk7s5i_IhWpuVlHdOogazrw>
-    <xme:cqkSZSLXlPR5aMV2mMoWHaxZpeHJ6gVBnypiQwUppzJNXBJr2Mk3veo9ysZmE_w8K
-    bv4lUupS4ZQAw>
-X-ME-Received: <xmr:cqkSZat9YKOT0NPmnkfBLN0pfgxEEO7RY4-n36lhRlFOLLhzWnlchtPGjQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrudeliedgvdduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesthdtre
-    dttddtvdenucfhrhhomhepifhrvghgucfmjfcuoehgrhgvgheskhhrohgrhhdrtghomheq
-    necuggftrfgrthhtvghrnhepueelledtheekleethfeludduvdfhffeuvdffudevgeehke
-    egieffveehgeeftefgnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushht
-    vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgrhgvgheskhhrohgrhh
-    drtghomh
-X-ME-Proxy: <xmx:c6kSZfaPhKlYA8suu4q7bboTOmbkdTSmE0NK_GNru5L9QZ9eYVDBxA>
-    <xmx:c6kSZRYU1I1YoNjrZo2mtrfPrpc_I8eR3d7fqITW1z6_mYXqCJKB1w>
-    <xmx:c6kSZbDthgbGnTOdjV_7vowz-_qPEjeD1qfNDEIhuZ_kd--ubGAYXg>
-    <xmx:c6kSZSCFgYST913S17mf4S-Or4Hnh_XOzcdAbna004JEN6tx9fvckQ>
-Feedback-ID: i787e41f1:Fastmail
-Date: Tue, 26 Sep 2023 11:50:37 +0200
-From: Greg KH <greg@kroah.com>
-To: oss-security@lists.openwall.com
-Message-ID: <ZRKpbYtTL0OYpzKy@kroah.com>
-References: <ZRHp39Aa3dOf1y/O@westworld>
+Received: (qmail 21882 invoked from network); 26 Jan 2018 17:48:27 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
+ bh=uC5Ilc+wJhKx1liXUN/oZjIIs+FJTb2j2yOV9OtGmes=;
+ b=O9tYO5LaKokLfWBTQyESzuGt8/9HQNKtXfaUr1NhG8hiEblFPZUldQh7iJHZQBTqevXPSkncS0Wyb6f9nH9IcE8zqRvQGJJzO+2gGufiVbSOO67Nn+YWO5nsSoDNnSUnEZZ2gheX71/rDcqX0h7VPXXls1B/evew2G04cvQrq8d9bRadsmW4B9OpSKjkx/o+kBHN5Y7hH09zT8rG/J/7K5NzZBo2etkUO/E2CZpLLGrAnMkP06P5YQsfWlNMN29rruY3I3FWLPgd+Y6l8pbYbu+nbmLcMMucHHu/IfreTCPmsx1NUqWPgTuiF1CHnXtKquFytRyfShrSDl846OBkmw==
+Thread-Topic: [oss-security] How to deal with reporters who don't want their
+ bugs fixed?
+Thread-Index: AQHTkHcRoMgW1wjhWU6AOc0H3s5frqOCXouAgAPz2oCAAB91AIAABgbf
+Message-ID: <BN4PR11MB0882BF16C0E31311122387B9AAE00@BN4PR11MB0882.namprd11.prod.outlook.com>
+References: <07f40446-1917-893c-2a87-b0d7990579b2@redhat.com>
+ <20180124030215.ugiofq23lmyurwsa@dojo.mi.org>
+ <BSTa0xkd6PUstoK62HXIf9i3UbZq_tCsSclHxAN7KTx3C1KFs-sF5C7ob4tsKCoYkw9Tb-axNViD4GKkd-VvX8g163zTLOvsngO4-M3jlus=@itk.swiss>,<20180126171624.GA9007@openwall.com>
+In-Reply-To: <20180126171624.GA9007@openwall.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-incomingtopheadermarker: OriginalChecksum:627D02A4C42FB2F00484CCF530CA90BF41078C1285652FF5B0B57F36049A6C22;UpperCasedChecksum:8E3193705B3E3A9752F0660F3C2BF709BEBCC684F47DE16839454709D66AFA40;SizeAsReceived:7292;Count:46
+x-ms-exchange-messagesentrepresentingtype: 1
+x-tmn: [eXT1F6cslu8AKejjY1btj1twpk3wWZCA]
+x-ms-publictraffictype: Email
+x-microsoft-exchange-diagnostics: 1;BN3NAM01HT191;6:FUAhtUt1+X6WbXse5MB6HM2cOAn8pBmbhuXWceFZ8ewuKt4MUx0gAcX9soAHEcIrivt/9fI+3wUU+Tgzx2oKHASvEuyi1hKuqckG++yqb8AnqgwrLZUs08tFYfrxKV5J3IHKxGvULgsXs9ijUcSd13L3k/2VjdrzCnARkpLG9n8w3hDMK2u/Mi+tZfiVnJi1Hs1Y5ePnJV8EPAK0u1TBVm6bIUgRmr5JOSx2U5uCQo2HChyOvRBiqMxz49ZebXvoLVZ3kwIvG0xnk7mxPzCiokNE6M+Gtc/15yOsGq+1earZmZcCrHJ3bRiQ2wD3l2MECMFlj2OXCzlA1La5nsvk4RSEAqxum36Xr22cJzm4yHQ=;5:PgAg9EUCL6j4TffSjB+nbHQmHret15Ux1KvGb8OkgQGiV8HSVrGKlptl5KZs8Evh38JppliOOXbisqUL5XtG97J2047mrRJFRKiuWBrILWnI1VD3HGOe40ji4zQ7iTRS36AmQl2NWrooXNzkrKDSElqtNlD082aVzWPUf4iqHw4=;24:mIZH+R735/+By8ZJ/haBoz0q6Qmsc2WMXxQn9xXfF+FV1ISras1+r3UfYt45uzkwCC02l3up3C/vGMOTtcratF0zhjcscxgjV0Q8EG+Pl6I=;7:SpLuWhTQ01UhgK63LrgmdWmO/kIVoDa2Rzgd3KLEpcKXat5Ssn/4ub973OcfGEe5RNoqeJ0QDg/oidnPArahKsZersu98r3m2RRKA7LS5GotW/UN2MUE6JVUAZ8B3ne4FhVcd5FKtDnilJJAIbOLLxbwgEvxtxjGR/0OMniCthrTMjTRt0u0N3TYi8DXJBQ4hzyRudOKK7+g3LjCDhs5ge0xHH3OLHt9s7gcCE8ePrAMK0Z9vnYyVzv49BMVLlrk
+x-incomingheadercount: 46
+x-eopattributedmessage: 0
+x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(201702061074)(5061506573)(5061507331)(1603103135)(2017031320274)(2017031324274)(2017031323274)(2017031322404)(1603101448)(1601125374)(1701031045);SRVR:BN3NAM01HT191;
+x-ms-traffictypediagnostic: BN3NAM01HT191:
+x-ms-office365-filtering-correlation-id: d8f6b704-4b07-4607-e5c0-08d564e4f996
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(444000031);SRVR:BN3NAM01HT191;BCL:0;PCL:0;RULEID:;SRVR:BN3NAM01HT191;
+x-forefront-prvs: 05641FD966
+x-forefront-antispam-report: SFV:NSPM;SFS:(7070007)(98901004);DIR:OUT;SFP:1901;SCL:1;SRVR:BN3NAM01HT191;H:BN4PR11MB0882.namprd11.prod.outlook.com;FPR:;SPF:None;LANG:;
+spamdiagnosticoutput: 1:99
+spamdiagnosticmetadata: NSPM
+Content-Type: multipart/alternative;
+	boundary="_000_BN4PR11MB0882BF16C0E31311122387B9AAE00BN4PR11MB0882namp_"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZRHp39Aa3dOf1y/O@westworld>
-Subject: Re: [oss-security] [CVE-2023-42755] Linux kernel wild pointer access
- <= v6.2
+X-OriginatorOrg: hotmail.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d8f6b704-4b07-4607-e5c0-08d564e4f996
+X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Jan 2018 17:48:14.1780
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Internet
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN3NAM01HT191
+Date: Fri, 26 Jan 2018 17:48:14 +0000
+From: Mikhail Utin <mikhailutin@hotmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] How to deal with reporters who don't want their
+ bugs fixed?
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
-On Mon, Sep 25, 2023 at 01:13:19PM -0700, Kyle Zeng wrote:
-> [Patch]
-> The patch is to follow the upstream and retire the rsvp classifier in
-> all the stable trees.
-> And it is queued in all the stable trees, but not merged yet.
-> For example, the patch for v6.1 can be found here:
-> https://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git/diff/queue-6.1/net-sched-retire-rsvp-classifier.patch?id=f75b6fc19b6ec061f59b4e18d72ebb32ceea8587
+--_000_BN4PR11MB0882BF16C0E31311122387B9AAE00BN4PR11MB0882namp_
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 
-This change is in released kernels already, specifically all of the
-following ones:
-	4.14.326 4.19.295 5.4.257 5.10.197 5.15.133 6.1.55 6.3
+I 100% agree with Solar's response. We should not limit our freedom to choo=
+se how we will handle our intellectual property. That is how I read the ori=
+ginal statements below.
 
-Perhaps this advisory was written before those kernels were released?
+Not to cause more discussion, but here is the example of how "universal eth=
+ics" work:
 
-> [Affected Version]
-> I confirmed that this bug affects v6.2, v6.1, v5.15, v5.10, v5.4,
-> v4.19, and v4.14.
 
-v6.2 is long end-of-life, sorry, that's not going to be fixed.  But for
-all of the other versions you quote above, it should now be resolved.
+https://www.theregister.co.uk/2018/01/25/intel_spectre_disclosed_flaws_nove=
+mber/
 
-thanks,
 
-greg k-h
+
+Mikhail Utin, CISSP
+
+
+________________________________
+From: Solar Designer <solar@openwall.com>
+Sent: Friday, January 26, 2018 12:16
+To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] How to deal with reporters who don't want their=
+ bugs fixed?
+
+On Fri, Jan 26, 2018 at 10:23:49AM -0500, Stiepan wrote:
+> I think that clear rules might be welcome:
+
+I agree (specifically, I had suggested explicit maximum embargo times),
+but such rules must not be one and only industry standard.  Anyone or
+any project may propose rules, and other projects are welcome to reuse
+those rules, but they must not have to - they could as well use
+different rules, or none.  At best, a relatively non-controversial
+and brief boilerplate could end up being reused by many projects.
+
+> We as a profession should have a clear code of ethics
+
+No.  Let's not use the word ethics.  That word, except when explicitly
+referring to a particular person's or group's ethics, implies that when
+we (dis)agree or are judging others, we claim to be necessarily right -
+but in reality we're necessarily subjective.
+
+This would be just as flawed a concept/term as "responsible disclosure".
+(I refrain from using that term as well, except when pointing out just
+how unnecessarily judgemental it is - implying that other kinds of
+disclosure would have been "irresponsible" - but we're subjective.)
+
+> universal ethics' code
+
+That's an oxymoron.  No such thing can possibly exist.
+
+Alexander
+
+--_000_BN4PR11MB0882BF16C0E31311122387B9AAE00BN4PR11MB0882namp_--
