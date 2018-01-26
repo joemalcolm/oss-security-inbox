@@ -1,64 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/10/4
-Message-ID: <CALoRt7RdH+PYW9TDmzX1bSZhiPqEbQdCgGEJ9VWZnKLrBftCLA@mail.gmail.com>
-Date: Sun, 9 Dec 2018 18:11:00 -0500
-From: Ren Kimura <rkx1209dev@...il.com>
-To: oss-security@...ts.openwall.com, matthew.fernandez@...il.com
-Subject: Re: mpg321: Out-of-bounds Write
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/26/6
+Message-ID: <20180126191503.GA10433@openwall.com>
+Date: Fri, 26 Jan 2018 20:15:03 +0100
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: How to deal with reporters who don't want their bugs fixed?
 Content-Type: text/plain; charset=utf-8
 
-> Did you report this one upstream? In trying to understand this, it looks to me like the problem isn’t that mpg321 fails
-> to check the bitrate is positive, but rather that there’s an unchecked malloc elsewhere.
->
-> The point where the OOB write occurs (mad.c:285) looks like the following:
->
->    282     /* update cached table of frames & times */
->    283     if (current_frame <= playbuf->num_frames) /* we only allocate enough for our estimate. */
->    284     {
->    285         playbuf->frames[current_frame] = playbuf->frames[current_frame-1] + (header->bitrate / 8 / 1000)
->    286             * mad_timer_count(header->duration, MAD_UNITS_MILLISECONDS);
->    287         playbuf->times[current_frame] = current_time;
->
-> At this point, header->bitrate is 0 and playbuf->num_frames is the correct limit to check against for this buffer. The
-> problem seems to stem from the point at which playbuf->frames was allocated (mpg321.c:990):
+On Fri, Jan 26, 2018 at 05:48:14PM +0000, Mikhail Utin wrote:
+> I 100% agree with Solar's response. We should not limit our freedom to choose how we will handle our intellectual property. That is how I read the original statements below.
 
->    985             if ((options.maxframes != -1) && (options.maxframes <= playbuf.num_frames))
->    986             {
->    987                 playbuf.max_frames = options.maxframes;
->    988             }
->    989
->    990             playbuf.frames = malloc((playbuf.num_frames + 1) * sizeof(void*));
->    991             playbuf.times = malloc((playbuf.num_frames + 1) * sizeof(mad_timer_t));
->    992 #ifdef __uClinux__
->    993       if((playbuf.buf = mmap(0, playbuf.length, PROT_READ, MAP_PRIVATE, fd, 0)) == MAP_FAILED)
->    994 #else
->    995       if((playbuf.buf = mmap(0, playbuf.length, PROT_READ, MAP_SHARED, fd, 0)) == MAP_FAILED)
->    996 #endif
->
-> At this point, playbuf.num_frames is whatever the your platform happens to yield when ∞ is cast to a long (undefined
-> behavior in C). AFAICT there is no check that malloc succeeded before the code later writes to the frames array (the
-> same applies to playbuf.times). Poking around a bit more, this (unchecked malloc) seems common in the code.
+Oh, so-called "intellectual property".  I'm not thinking in such terms.
 
-checking malloc status is not enough, because playbuf.num_frames can
-be very large value, in my environment Ubuntu 18.04, gcc 7.03,
-it becomes 0x8000000000000000.
-990             playbuf.frames = malloc((playbuf.num_frames + 1) *
-sizeof(void*));
-So at this point it try to calculate (0x8000000000000000 + 1) * 8 =
-0x8 (INTEGER OVERFLOW).
-As a result malloc succeed but it only allocate 0x8 byte buffer, lead
-OOB write at following points.
+What I meant is that projects expecting to receive vulnerability reports
+are not to be obliged by some industry standard to impose any specific
+rules on the reporters.  This does mean that, among other things, those
+projects do not have to insist on a maximum embargo time (even though I
+advocate that they do), and as a side-effect this might assist someone
+probably selfish with monetization of so-called "intellectual property".
 
-283     if (current_frame <= playbuf->num_frames) /* we only allocate
-enough for our estimate. */
-285         playbuf->frames[current_frame] =
-playbuf->frames[current_frame-1] + (header->bitrate / 8 / 1000)
-286             * mad_timer_count(header->duration, MAD_UNITS_MILLISECONDS);
-287         playbuf->times[current_frame] = current_time;
+Basically, you saw what you wanted to see.  Yes, it's kind of there, but
+it wasn't in focus.
 
-The value of playbuf.num_frames may depend on platform because it's
-calculated from INF value. (undefined behavior)
-I only tried to Ubuntu package of mpg321 (may be compiled by gcc?). At
-least on ubuntu, OOB write always happen due to above reason.
-
-Ren Kimura
+Alexander
