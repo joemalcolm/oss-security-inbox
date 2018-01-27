@@ -1,172 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/26/1
-Message-Id: <EE50D829-E164-4655-8E42-E289C14E8E58@beckweb.net>
-Date: Mon, 26 Feb 2018 13:39:42 +0100
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/27/2
+Message-ID: <9-jL1EFZob81hdKZAE8646fR5VeNxFQIxfAtnfzyRYZpvcVvb52EgIzPiJrAZ9gnM88j8xNjQK5eirL1bslyzdywhfGdEHDJcLmdR6Zx3DE=@itk.swiss>
+Date: Sat, 27 Jan 2018 10:02:03 -0500
+From: Stiepan <stie@....swiss>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins plugins
+Subject: Re: How to deal with reporters who don't want their bugs fixed?
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software. The following
-releases contain fixes for security vulnerabilities:
+I will try responding to both here: well, however flawed it might be and oftentimes is in practice, there is the universal Hyppocrate's oath in the case of medicine and it sort of works. That is what I meant, using possibly inadequate words.
 
-* Coverity Plugin 1.11.0
-* CppNCSS Plugin 1.2
-* Environment Injector Plugin 1.91
-* Gerrit Trigger Plugin 2.27.5
-* Git Plugin 3.8.0
-* Google Play Android Publisher Plugin 1.7
-* Job and Node ownership Plugin 0.12.0
-* Mercurial Plugin 2.3
-* promoted builds Plugin 3.0
-* Subversion Plugin 2.10.3
-* TestLink Plugin 3.13
+If boilerplate agreement sounds better than an universal code of ethics for our profession (and I think this is attainable, not "universal ethics" taken out of context, making it an oxymoron), as long as the effects are with it, I don't think that wording should be the main issue at hand.
 
-Additionally, one plugin was removed from distribution as it has been 
-deprecated in 2016, and there are no plans to fix its security issue:
+As for the register's article, it gives this image -
+https://www.theregister.co.uk/Design/graphics/icons/404_img.jpg - in guise of a 404 error, so I cannot make a proper opinion for the moment. Without reading it though, I cannot but see the parallel between Intel deactivating some CPU feature to make it secure and surgical ablation! There are (less mediatized) precedents of the like: see for instance how Apple had to remove Apple Pay history in a rush because it exposed an otherwise (provably?) secure enclave. What I do see in common here is that the end user's interests were sacrificed and some sold feature removed, to remedy a design flaw affecting the security of their information. If you remove the ICT Security professional glasses and take the more generic context of planned obsolescence into account, this becomes very interesting, and there are quite a few other examples of the like.
+Hence, a need probably arises to have an oath for ICT in general and not security in particular, sec. being what surgery is to general medicine, when not done preventively / by design, as we (CEuniX.world) and hopefully others are making every effort to do, instead of the "accept defeat" approach we hear so often from many vendors and even certification bodies, which is itself a reason to begin worrying about the status quo.
 
-- Azure Slave Plugin
+-------- Mensaje original --------
+On 26 ene. 2018 18:48, Mikhail Utin escribió:
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2018-02-26/
-
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you find security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-248
-EnvInject plugin stores environment variables in order to visualize them in 
-the "Injected Environment Variables" view. Sensitive build variables, 
-typically passwords, are exempt from this behavior. Plugin versions older 
-than 1.91 (released on Mar 08, 2015) however did not exempt sensitive 
-variables, and persisted them on disk too. Such persisted sensitive 
-variables may be displayed by any release of this plugin for builds run 
-before it was updated to version 1.91 or newer.
-
-While the bug persisting sensitive build variables has been addressed in
-release 1.91, there is no fix addressing this problem for historical build
-data.
-
-To prevent the further exposure of sensitive build variables, we recommend
-that you (temporarily) disable the visualization of Injected Environment
-variables in the global configuration, then remove the sensitive data from
-disk by manually removing corresponding entries from injectedEnvVars.txt
-files, or deleting the injectedEnvVars.txt files in old build directories,
-and rotate all secrets that have potentially been exposed.
-
-
-SECURITY-260
-The Coverity Plugin stored passwords unencrypted as part of its
-configuration. This allowed users with Jenkins master local file system
-access and Jenkins administrators to retrieve the stored password. The
-latter could result in exposure of the passwords through browser
-extensions, cross-site scripting vulnerabilities, and similar situations.
-
-
-SECURITY-402
-Missing permission checks in Gerrit Trigger Plugin allowed users with
-Overall/Read permission to access a form that showed the configuration of
-Gerrit servers in Jenkins. The key file password was only shown in its
-encrypted form, if configured. Other options were plainly visible.
-
-
-SECURITY-403
-Missing permission checks in Gerrit Trigger Plugin allowed users with
-Overall/Read permission to perform the following actions:
-
-- Configure Gerrit servers
-- Connect and disconnect configured Gerrit servers
-
-
-SECURITY-498
-Job and Node ownership Plugin did not prevent the ownership metadata being
-overwritten when a job or node configuration was updated from the CLI or
-using the remote API (POST config.xml).
-
-This allowed users with Job/Configure permission but without
-ManageOwnership/Jobs permission to change job ownership metadata, and users
-with Computer/Configure but without ManageOwnership/Nodes to change node
-ownership metadata.
-
-
-SECURITY-554 / CVE-2015-5262
-The Azure Slave Plugin bundles a version of the httpclient library that is
-vulnerable to CVE-2015-5262.
-
-As the plugin has been deprecated in favor of Azure VM Agents Plugin in
-2016, there are no plans to release a fix. It has been removed from
-distribution per request by the former maintainers.
-
-
-SECURITY-712
-CppNCSS Plugin did not properly escape the report name and graph name,
-resulting in a reflected cross-site scripting vulnerability.
-
-
-SECURITY-715
-Google Play Android Publisher Plugin provides a list of applicable
-credential IDs to allow users configuring a job to select the one they’d
-like to use to authenticate with the Google Play API.
-
-This functionality did not check permissions, allowing any user with
-Overall/Read permission to get a list of valid credential IDs. Those could
-be used as part of an attack to capture the credentials using another
-vulnerability.
-
-Additionally, a related form validation function would allow verification
-whether a specified credential is valid for use with the Google Play API.
-
-
-SECURITY-723
-The class handling unauthenticated Git post-commit hook notification
-requests at the /git/ path unnecessarily extended another type that handled
-requests to the …/search/ sub-path.
-
-This allowed submission of search queries to Jenkins, and getting a list of
-search results usually available to anyone with Overall/Read permission. In
-current Jenkins releases, those are typically the names of known users
-(both actual users of Jenkins, and known SCM committers) and nodes (master
-and agents).
-
-
-SECURITY-724
-The class handling unauthenticated Subversion post-commit hook notification
-requests at the /subversion/ path unnecessarily extended another type that
-handled requests to the …/search/ sub-path.
-
-This allowed submission of search queries to Jenkins, and getting a list of
-search results usually available to anyone with Overall/Read permission. In
-current Jenkins releases, those are typically the names of known users
-(both actual users of Jenkins, and known SCM committers) and nodes (master
-and agents).
-
-
-SECURITY-726
-The class handling unauthenticated Mercurial post-commit hook notification
-requests at the /mercurial/ path unnecessarily extended another type that
-handled requests to the …/search/ sub-path.
-
-This allowed submission of search queries to Jenkins, and getting a list of
-search results usually available to anyone with Overall/Read permission. In
-current Jenkins releases, those are typically the names of known users
-(both actual users of Jenkins, and known SCM committers) and nodes (master
-and agents).
-
-
-SECURITY-731
-Users with Job/Configure permission were able to configure TestLink reports
-to display arbitrary unescaped HTML e.g. in test case names.
-
-
-SECURITY-746
-In Promoted Builds Plugin, users with Job/Read access were able to approve
-and re-execute promotion processes with a manual promotion condition that
-did not specify a list of users allowed to manually approve the promotion.
-
+> I 100% agree with Solar's response. We should not limit our freedom to choose how we will handle our intellectual property. That is how I read the original statements below.
+>
+> Not to cause more discussion, but here is the example of how "universal ethics" work:
+>
+> https://www.theregister.co.uk/2018/01/25/intel_spectre_disclosed_flaws_november/
+>
+> Mikhail Utin, CISSP
+>
+> ________________________________
+> From: Solar Designer
+> Sent: Friday, January 26, 2018 12:16
+> To: oss-security@...ts.openwall.com
+> Subject: Re: [oss-security] How to deal with reporters who don't want their bugs fixed?
+>
+> On Fri, Jan 26, 2018 at 10:23:49AM -0500, Stiepan wrote:
+>> I think that clear rules might be welcome:
+>
+> I agree (specifically, I had suggested explicit maximum embargo times),
+> but such rules must not be one and only industry standard. Anyone or
+> any project may propose rules, and other projects are welcome to reuse
+> those rules, but they must not have to - they could as well use
+> different rules, or none. At best, a relatively non-controversial
+> and brief boilerplate could end up being reused by many projects.
+>
+>> We as a profession should have a clear code of ethics
+>
+> No. Let's not use the word ethics. That word, except when explicitly
+> referring to a particular person's or group's ethics, implies that when
+> we (dis)agree or are judging others, we claim to be necessarily right -
+> but in reality we're necessarily subjective.
+>
+> This would be just as flawed a concept/term as "responsible disclosure".
+> (I refrain from using that term as well, except when pointing out just
+> how unnecessarily judgemental it is - implying that other kinds of
+> disclosure would have been "irresponsible" - but we're subjective.)
+>
+>> universal ethics' code
+>
+> That's an oxymoron. No such thing can possibly exist.
+>
+> Alexander @openwall.com>
