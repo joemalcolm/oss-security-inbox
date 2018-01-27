@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1021" "Thursday" "23" "April" "2015" "18:36:09" "+0200" "Sven Kieske" "svenkieske@gmail.com" "<55391F79.8030809@gmail.com>" "35" "Re: [oss-security] tlsdate havoc ahead - default host randomizes tls timestamps" nil nil nil "4" "2015042316:36:09" "[oss-security] tlsdate havoc ahead - default host randomizes tls timestamps" (number mark "        svenkieske@g Apr 23   35/1021  " thread-indent "\"Re: [oss-security] tlsdate havoc ahead - default host randomizes tls timestamps\"\n") "<20150423173748.2c2a53d2@pc1.fritz.box>" ("<20150423173748.2c2a53d2@pc1.fritz.box>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5324" "Saturday" "27" "January" "2018" "10:02:03" "-0500" "Stiepan" "stie@itk.swiss" "<9-jL1EFZob81hdKZAE8646fR5VeNxFQIxfAtnfzyRYZpvcVvb52EgIzPiJrAZ9gnM88j8xNjQK5eirL1bslyzdywhfGdEHDJcLmdR6Zx3DE=@itk.swiss>" "92" "Re: [oss-security] How to deal with reporters who don't want their bugs fixed?" "^Date:" nil nil "1" "2018012715:02:03" "[oss-security] How to deal with reporters who don't want their bugs fixed?" (number mark "        stie@itk.swi Jan 27   92/5324  " thread-indent "\"Re: [oss-security] How to deal with reporters who don't want their bugs fixed?\"\n") "<BN4PR11MB0882BF16C0E31311122387B9AAE00@BN4PR11MB0882.namprd11.prod.outlook.com>" ("<07f40446-1917-893c-2a87-b0d7990579b2@redhat.com>" "<20180124030215.ugiofq23lmyurwsa@dojo.mi.org>" "<BSTa0xkd6PUstoK62HXIf9i3UbZq_tCsSclHxAN7KTx3C1KFs-sF5C7ob4tsKCoYkw9Tb-axNViD4GKkd-VvX8g163zTLOvsngO4-M3jlus=@itk.swiss>" "<20180126171624.GA9007@openwall.com>" "<BN4PR11MB0882BF16C0E31311122387B9AAE00@BN4PR11MB0882.namprd11.prod.outlook.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 15847 invoked by uid 550); 23 Apr 2015 16:36:29 -0000
+Received: (qmail 19951 invoked by uid 550); 27 Jan 2018 16:23:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,66 +11,113 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15826 invoked from network); 23 Apr 2015 16:36:28 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=ANcq5nJx8LaPQ3GElOEK2SgBqxs0U5bGrL0V65cDV+U=;
-        b=UkxTADPkj23U6UfvYS9Tj8BsBUXCgkCNN1yQueLfzoANZrwj3b2Bx6lbd4g8o0KgVC
-         5Kv3AESWqbB1qkftAkmfzzm5IjtP9Rf7Uc6rc0P4RCWkWu0q/s7yZG+Jme3zlP5DGWih
-         p+eyfvrbnszKheRms4ygTkuAIWULy564jZsARlVpH7CnJp2WxbCoD06Rv6v8Yo8VwTL/
-         kWi5yy+NKJXNHfKJDSJCucskzmmWdOnIqAYl5fhHLt5XFbSKUa+iDZWxPqJDaOiPsmAk
-         8LC/qtsCeRoQE60W9Z9Xo5k68eONAY0razUkfZgt+7DkhrS2npYQ2Yj+VATAbOhqmbCJ
-         +TKg==
-X-Received: by 10.194.9.161 with SMTP id a1mr7142198wjb.39.1429806977579;
-        Thu, 23 Apr 2015 09:36:17 -0700 (PDT)
-Message-ID: <55391F79.8030809@gmail.com>
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
+Received: (qmail 3264 invoked from network); 27 Jan 2018 15:02:27 -0000
+Authentication-Results: mail2.protonmail.ch; dkim=none
+Message-ID: <9-jL1EFZob81hdKZAE8646fR5VeNxFQIxfAtnfzyRYZpvcVvb52EgIzPiJrAZ9gnM88j8xNjQK5eirL1bslyzdywhfGdEHDJcLmdR6Zx3DE=@itk.swiss>
+In-Reply-To: <BN4PR11MB0882BF16C0E31311122387B9AAE00@BN4PR11MB0882.namprd11.prod.outlook.com>
+References: <07f40446-1917-893c-2a87-b0d7990579b2@redhat.com>
+ <20180124030215.ugiofq23lmyurwsa@dojo.mi.org>
+ <BSTa0xkd6PUstoK62HXIf9i3UbZq_tCsSclHxAN7KTx3C1KFs-sF5C7ob4tsKCoYkw9Tb-axNViD4GKkd-VvX8g163zTLOvsngO4-M3jlus=@itk.swiss>,<20180126171624.GA9007@openwall.com>
+ <BN4PR11MB0882BF16C0E31311122387B9AAE00@BN4PR11MB0882.namprd11.prod.outlook.com>
+Feedback-ID: wnsnnc8Us3MVqt1IALGduDJl-d16B_hEkg50pF7qo11mpeysEHmUOGy-yvw8MEApAPX3TXcPDHQwu7hti-kzSw==:Ext:ProtonMail
 MIME-Version: 1.0
-References: <20150423173748.2c2a53d2@pc1.fritz.box>
-In-Reply-To: <20150423173748.2c2a53d2@pc1.fritz.box>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Date: Thu, 23 Apr 2015 18:36:09 +0200
-From: Sven Kieske <svenkieske@gmail.com>
+Content-Type: multipart/alternative;
+	boundary="b1_835573ad6d99e27accc353c3bcab074e"
+Date: Sat, 27 Jan 2018 10:02:03 -0500
+From: Stiepan <stie@itk.swiss>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] tlsdate havoc ahead - default host randomizes
- tls timestamps
+Subject: Re: [oss-security] How to deal with reporters who don't want their bugs fixed?
 To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--b1_835573ad6d99e27accc353c3bcab074e
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-This shows imho
-that tlsdate is also not a very good idea.
+SSB3aWxsIHRyeSByZXNwb25kaW5nIHRvIGJvdGggaGVyZTogd2VsbCwgaG93
+ZXZlciBmbGF3ZWQgaXQgbWlnaHQgYmUgYW5kIG9mdGVudGltZXMgaXMgaW4g
+cHJhY3RpY2UsIHRoZXJlIGlzIHRoZSB1bml2ZXJzYWwgSHlwcG9jcmF0ZSdz
+IG9hdGggaW4gdGhlIGNhc2Ugb2YgbWVkaWNpbmUgYW5kIGl0IHNvcnQgb2Yg
+d29ya3MuIFRoYXQgaXMgd2hhdCBJIG1lYW50LCB1c2luZyBwb3NzaWJseSBp
+bmFkZXF1YXRlIHdvcmRzLgoKSWYgYm9pbGVycGxhdGUgYWdyZWVtZW50IHNv
+dW5kcyBiZXR0ZXIgdGhhbiBhbiB1bml2ZXJzYWwgY29kZSBvZiBldGhpY3Mg
+Zm9yIG91ciBwcm9mZXNzaW9uIChhbmQgSSB0aGluayB0aGlzIGlzIGF0dGFp
+bmFibGUsIG5vdCAidW5pdmVyc2FsIGV0aGljcyIgdGFrZW4gb3V0IG9mIGNv
+bnRleHQsIG1ha2luZyBpdCBhbiBveHltb3JvbiksIGFzIGxvbmcgYXMgdGhl
+IGVmZmVjdHMgYXJlIHdpdGggaXQsIEkgZG9uJ3QgdGhpbmsgdGhhdCB3b3Jk
+aW5nIHNob3VsZCBiZSB0aGUgbWFpbiBpc3N1ZSBhdCBoYW5kLgoKQXMgZm9y
+IHRoZSByZWdpc3RlcidzIGFydGljbGUsIGl0IGdpdmVzIHRoaXMgaW1hZ2Ug
+LQpodHRwczovL3d3dy50aGVyZWdpc3Rlci5jby51ay9EZXNpZ24vZ3JhcGhp
+Y3MvaWNvbnMvNDA0X2ltZy5qcGcgLSBpbiBndWlzZSBvZiBhIDQwNCBlcnJv
+ciwgc28gSSBjYW5ub3QgbWFrZSBhIHByb3BlciBvcGluaW9uIGZvciB0aGUg
+bW9tZW50LiBXaXRob3V0IHJlYWRpbmcgaXQgdGhvdWdoLCBJIGNhbm5vdCBi
+dXQgc2VlIHRoZSBwYXJhbGxlbCBiZXR3ZWVuIEludGVsIGRlYWN0aXZhdGlu
+ZyBzb21lIENQVSBmZWF0dXJlIHRvIG1ha2UgaXQgc2VjdXJlIGFuZCBzdXJn
+aWNhbCBhYmxhdGlvbiEgVGhlcmUgYXJlIChsZXNzIG1lZGlhdGl6ZWQpIHBy
+ZWNlZGVudHMgb2YgdGhlIGxpa2U6IHNlZSBmb3IgaW5zdGFuY2UgaG93IEFw
+cGxlIGhhZCB0byByZW1vdmUgQXBwbGUgUGF5IGhpc3RvcnkgaW4gYSBydXNo
+IGJlY2F1c2UgaXQgZXhwb3NlZCBhbiBvdGhlcndpc2UgKHByb3ZhYmx5Pykg
+c2VjdXJlIGVuY2xhdmUuIFdoYXQgSSBkbyBzZWUgaW4gY29tbW9uIGhlcmUg
+aXMgdGhhdCB0aGUgZW5kIHVzZXIncyBpbnRlcmVzdHMgd2VyZSBzYWNyaWZp
+Y2VkIGFuZCBzb21lIHNvbGQgZmVhdHVyZSByZW1vdmVkLCB0byByZW1lZHkg
+YSBkZXNpZ24gZmxhdyBhZmZlY3RpbmcgdGhlIHNlY3VyaXR5IG9mIHRoZWly
+IGluZm9ybWF0aW9uLiBJZiB5b3UgcmVtb3ZlIHRoZSBJQ1QgU2VjdXJpdHkg
+cHJvZmVzc2lvbmFsIGdsYXNzZXMgYW5kIHRha2UgdGhlIG1vcmUgZ2VuZXJp
+YyBjb250ZXh0IG9mIHBsYW5uZWQgb2Jzb2xlc2NlbmNlIGludG8gYWNjb3Vu
+dCwgdGhpcyBiZWNvbWVzIHZlcnkgaW50ZXJlc3RpbmcsIGFuZCB0aGVyZSBh
+cmUgcXVpdGUgYSBmZXcgb3RoZXIgZXhhbXBsZXMgb2YgdGhlIGxpa2UuCkhl
+bmNlLCBhIG5lZWQgcHJvYmFibHkgYXJpc2VzIHRvIGhhdmUgYW4gb2F0aCBm
+b3IgSUNUIGluIGdlbmVyYWwgYW5kIG5vdCBzZWN1cml0eSBpbiBwYXJ0aWN1
+bGFyLCBzZWMuIGJlaW5nIHdoYXQgc3VyZ2VyeSBpcyB0byBnZW5lcmFsIG1l
+ZGljaW5lLCB3aGVuIG5vdCBkb25lIHByZXZlbnRpdmVseSAvIGJ5IGRlc2ln
+biwgYXMgd2UgKENFdW5pWC53b3JsZCkgYW5kIGhvcGVmdWxseSBvdGhlcnMg
+YXJlIG1ha2luZyBldmVyeSBlZmZvcnQgdG8gZG8sIGluc3RlYWQgb2YgdGhl
+ICJhY2NlcHQgZGVmZWF0IiBhcHByb2FjaCB3ZSBoZWFyIHNvIG9mdGVuIGZy
+b20gbWFueSB2ZW5kb3JzIGFuZCBldmVuIGNlcnRpZmljYXRpb24gYm9kaWVz
+LCB3aGljaCBpcyBpdHNlbGYgYSByZWFzb24gdG8gYmVnaW4gd29ycnlpbmcg
+YWJvdXQgdGhlIHN0YXR1cyBxdW8uCgotLS0tLS0tLSBNZW5zYWplIG9yaWdp
+bmFsIC0tLS0tLS0tCk9uIDI2IGVuZS4gMjAxOCAxODo0OCwgTWlraGFpbCBV
+dGluIGVzY3JpYmnDszoKCj4gSSAxMDAlIGFncmVlIHdpdGggU29sYXIncyBy
+ZXNwb25zZS4gV2Ugc2hvdWxkIG5vdCBsaW1pdCBvdXIgZnJlZWRvbSB0byBj
+aG9vc2UgaG93IHdlIHdpbGwgaGFuZGxlIG91ciBpbnRlbGxlY3R1YWwgcHJv
+cGVydHkuIFRoYXQgaXMgaG93IEkgcmVhZCB0aGUgb3JpZ2luYWwgc3RhdGVt
+ZW50cyBiZWxvdy4KPgo+IE5vdCB0byBjYXVzZSBtb3JlIGRpc2N1c3Npb24s
+IGJ1dCBoZXJlIGlzIHRoZSBleGFtcGxlIG9mIGhvdyAidW5pdmVyc2FsIGV0
+aGljcyIgd29yazoKPgo+IGh0dHBzOi8vd3d3LnRoZXJlZ2lzdGVyLmNvLnVr
+LzIwMTgvMDEvMjUvaW50ZWxfc3BlY3RyZV9kaXNjbG9zZWRfZmxhd3Nfbm92
+ZW1iZXIvCj4KPiBNaWtoYWlsIFV0aW4sIENJU1NQCj4KPiBfX19fX19fX19f
+X19fX19fX19fX19fX19fX19fX19fXwo+IEZyb206IFNvbGFyIERlc2lnbmVy
+Cj4gU2VudDogRnJpZGF5LCBKYW51YXJ5IDI2LCAyMDE4IDEyOjE2Cj4gVG86
+IG9zcy1zZWN1cml0eUBsaXN0cy5vcGVud2FsbC5jb20KPiBTdWJqZWN0OiBS
+ZTogW29zcy1zZWN1cml0eV0gSG93IHRvIGRlYWwgd2l0aCByZXBvcnRlcnMg
+d2hvIGRvbid0IHdhbnQgdGhlaXIgYnVncyBmaXhlZD8KPgo+IE9uIEZyaSwg
+SmFuIDI2LCAyMDE4IGF0IDEwOjIzOjQ5QU0gLTA1MDAsIFN0aWVwYW4gd3Jv
+dGU6Cj4+IEkgdGhpbmsgdGhhdCBjbGVhciBydWxlcyBtaWdodCBiZSB3ZWxj
+b21lOgo+Cj4gSSBhZ3JlZSAoc3BlY2lmaWNhbGx5LCBJIGhhZCBzdWdnZXN0
+ZWQgZXhwbGljaXQgbWF4aW11bSBlbWJhcmdvIHRpbWVzKSwKPiBidXQgc3Vj
+aCBydWxlcyBtdXN0IG5vdCBiZSBvbmUgYW5kIG9ubHkgaW5kdXN0cnkgc3Rh
+bmRhcmQuIEFueW9uZSBvcgo+IGFueSBwcm9qZWN0IG1heSBwcm9wb3NlIHJ1
+bGVzLCBhbmQgb3RoZXIgcHJvamVjdHMgYXJlIHdlbGNvbWUgdG8gcmV1c2UK
+PiB0aG9zZSBydWxlcywgYnV0IHRoZXkgbXVzdCBub3QgaGF2ZSB0byAtIHRo
+ZXkgY291bGQgYXMgd2VsbCB1c2UKPiBkaWZmZXJlbnQgcnVsZXMsIG9yIG5v
+bmUuIEF0IGJlc3QsIGEgcmVsYXRpdmVseSBub24tY29udHJvdmVyc2lhbAo+
+IGFuZCBicmllZiBib2lsZXJwbGF0ZSBjb3VsZCBlbmQgdXAgYmVpbmcgcmV1
+c2VkIGJ5IG1hbnkgcHJvamVjdHMuCj4KPj4gV2UgYXMgYSBwcm9mZXNzaW9u
+IHNob3VsZCBoYXZlIGEgY2xlYXIgY29kZSBvZiBldGhpY3MKPgo+IE5vLiBM
+ZXQncyBub3QgdXNlIHRoZSB3b3JkIGV0aGljcy4gVGhhdCB3b3JkLCBleGNl
+cHQgd2hlbiBleHBsaWNpdGx5Cj4gcmVmZXJyaW5nIHRvIGEgcGFydGljdWxh
+ciBwZXJzb24ncyBvciBncm91cCdzIGV0aGljcywgaW1wbGllcyB0aGF0IHdo
+ZW4KPiB3ZSAoZGlzKWFncmVlIG9yIGFyZSBqdWRnaW5nIG90aGVycywgd2Ug
+Y2xhaW0gdG8gYmUgbmVjZXNzYXJpbHkgcmlnaHQgLQo+IGJ1dCBpbiByZWFs
+aXR5IHdlJ3JlIG5lY2Vzc2FyaWx5IHN1YmplY3RpdmUuCj4KPiBUaGlzIHdv
+dWxkIGJlIGp1c3QgYXMgZmxhd2VkIGEgY29uY2VwdC90ZXJtIGFzICJyZXNw
+b25zaWJsZSBkaXNjbG9zdXJlIi4KPiAoSSByZWZyYWluIGZyb20gdXNpbmcg
+dGhhdCB0ZXJtIGFzIHdlbGwsIGV4Y2VwdCB3aGVuIHBvaW50aW5nIG91dCBq
+dXN0Cj4gaG93IHVubmVjZXNzYXJpbHkganVkZ2VtZW50YWwgaXQgaXMgLSBp
+bXBseWluZyB0aGF0IG90aGVyIGtpbmRzIG9mCj4gZGlzY2xvc3VyZSB3b3Vs
+ZCBoYXZlIGJlZW4gImlycmVzcG9uc2libGUiIC0gYnV0IHdlJ3JlIHN1Ympl
+Y3RpdmUuKQo+Cj4+IHVuaXZlcnNhbCBldGhpY3MnIGNvZGUKPgo+IFRoYXQn
+cyBhbiBveHltb3Jvbi4gTm8gc3VjaCB0aGluZyBjYW4gcG9zc2libHkgZXhp
+c3QuCj4KPiBBbGV4YW5kZXIgQG9wZW53YWxsLmNvbT4=
 
-I also don't get why it was invented, you jump from:
+--b1_835573ad6d99e27accc353c3bcab074e--
 
-"hey our old timekeeping protocol
-is totally insecure"
-to:
-"let's use this random protocol
-which was never designed for timekeeping
-but at least it's secure"
-
-turns out this does not work.
-
-kind regards
-
-Sven
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQGcBAEBCAAGBQJVOR94AAoJEAq0kGAWDrqlE3UMAJkIXR2V4ezhqFXQZ2CjaAlp
-EvI4CQ5ax5769bAtX+rYbMK0/4xJZple6vO60miaWJjzRxXl8i+twyZgixTyDgpy
-wvvDJOzHX0EVlCg04HhXOREdSCtKovtiwZAL51qXYiIVgX8MbvZh1lLGrEOmak5x
-l4e26PgO7HVP+8J/FVXVXMB/Zge8Zz8agGM/klaqxiQKSvhfiy+w+kLsFNoXsQa0
-v1JyQCGkRFuDRfGryOfgQk2f5wouby59aCHroIx0eV+BWR1mDnD8y/fksgzdMZWX
-4/Llo+xzrGDmNwyN0X7t9I55kvceN+DcKrtQPaBiHUAJoyixAh9OqTjQnq3CGDw5
-CfaIrJnQzJcrhmHtP8hmbiG93JyAOCnirwuCJUiam1db7nCcGiqhcavz6vymD1e3
-UVbLX1wN74EzlFidOed8vmk3IzGKe7D4SPysW+WLIuYaOiqryYd1eKd38rZ+U/dz
-8NqEAkEYbTw7OO2EzmqzQ0KEn/1XgXrNE5bPEXzZUQ==
-=bmuJ
------END PGP SIGNATURE-----
