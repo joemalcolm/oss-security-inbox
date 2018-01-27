@@ -1,59 +1,131 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/23/5
-Message-ID: <1540266401.7250.22.camel@tecnocode.co.uk>
-Date: Tue, 23 Oct 2018 16:46:41 +1300
-From: Philip Withnall <philip@...nocode.co.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/27/1
+Message-ID: <2003-1517054605.235676@1C3y.fVz9.71eN>
+Date: Sat, 27 Jan 2018 12:03:25 +0000
+From: halfdog <me@...fdog.net>
 To: oss-security@...ts.openwall.com
-Subject: GLib (2.20.0+): GVariant, GDBus and GMarkup out of bounds reads, DoS and unbounded recursion
+Subject: Re: How to deal with reporters who don't want their bugs fixed?
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Mikhail Utin wrote:
+> I 100% agree with Solar's response. We should not limit our
+> freedom to choose how we will handle our intellectual property.
 
-Various fixes to GVariant, GDBus and GMarkup have just been pushed to
-GLib, to deal with several problems kindly found in them by the oss-
-fuzz project.
+We should not limit our "effective freedom", that is limit the
+number of options we could direct our results or activities. As
+reality is a strange thing, our "effective freedom" in the long
+run can be reduced greatly by using "real freedom" at the beginning.
 
-The fixes are here, with an explanation of each problem in the commit
-messages:
+OS example: take your "real freedom" to strace SUID-binaries and
+you lose the "effective freedom", what you could do with that
+binary if it would have kept its SUID properties.
 
-https://gitlab.gnome.org/GNOME/glib/merge_requests/411
+Disclosure example: If you take your "real freedom" to publish
+as you want, you will limit the "effective freedom" to evolve
+your ideas in a cooperative, stimulating environment, getting
+information earlier or unfiltered, get your results and solutions
+into the community faster and at a higher quality, ...
 
-We are looking at doing backports to the glib-2-58 and glib-2-56
-branches. They will be linked from the above merge request when
-available, but will differ due to not being able to introduce new APIs.
 
-We do not plan to make new tarball releases purely to include these
-fixes. If you need to package the fixes, please pick them from the
-merge request above.
 
-It’s likely that the GVariant and GDBus implementations shipped in all
-prior versions of GLib are affected. GVariant first shipped in GLib
-2.20.0; GDBus in GLib 2.26.0. It’s also likely that the GMarkup code
-has always been vulnerable. We have not verified the minimum bound of
-the vulnerable versions, though.
+Therefore rules describing how we limit or extend our own freedom
+seem to make sense to me. As pointed out, writing them under the
+term "ethics" might not be the right approach as it requires some
+wider concept of good and bad. But from my point of view, something
+else might make sense: defining a "code of conduct"
 
-In brief, the problems fixed are:
- • Arithmetic underflow when calculating GVariant tuple element ends
-resulting from missing validation of the offset table. This can result
-in an out of bound read. Fixed by adding validation.
- • Unbounded call recursion when handling highly recursive GVariant
-types. This can result in a call stack overflow. Fixed by limiting
-GVariant type recursion with static and dynamic types in untrusted
-GVariant instances.
- • Infinite loop when getting a child from a serialised variable array,
-due to missing validation that the child offset does not point into the
-offset table itself. Fixed by adding validation.
- • Similarly for serialised tuples.
- • nul bytes could pass through UTF-8 validation for long GVariant
-strings due to a signed/unsigned mismatch. Fix: add a new validation
-function which operates on an unsigned string length.
- • Critical warning when parsing a D-Bus message with the wrong type
-for its signature field in its message header. Fix: validate the type
-before unwrapping that field.
- • Critical warning when parsing a D-Bus message with a header field
-containing a variant with an empty type signature, due to a mismatch
-between validation of D-Bus type signatures and validation of GVariant
-type strings. Fix: validate that the field is a valid type string too.
+This code does not attempt to make a distinction if something
+is universially good or bad, it just declares how things are.
+I have the impression, that defining such codes in a somehow
+standardised way (boilerplate approach) for both sides, reporters
+and projects/vendors, may ease the collaboration and thus give
+both parties more "effective freedom".
 
-Philip
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+I took my "real freedom" to disgrace myself and attached an attempt
+to write a personal "code of conduct", see below. As there is
+no applicable international legal framework or en gros accepted
+certifications or standards, that is suitable to build trust in
+the person or organization behind such plain-text CoC-documents,
+trust should be generated by the community.
+
+Maybe heavyweight reputation management might be an overkill,
+but some involved parties may want a technical scheme to manage
+trust. Maybe something like signing code of conducts of other
+parties could be used for that, although I did not really develop
+that idea further, how that could be done technically. I usually
+assume, that standardizing a procedure is the real work, the tools
+to assist it are easy to find or create, as soon as a majority
+of parties are commited to move in the same direction. See the
+last paragraph of the attachment, for some kind of proposal.
+
+> That is how I read the original statements below.
+>
+> Not to cause more discussion, but here is the example of how
+> "universal ethics" work:
+>
+> https://www.theregister.co.uk/2018/01/25/intel_spectre_disclosed_flaws_november/
+
+Spectre is a nice example, also from another perspective. Did someone
+compare e.g. the current wiki pages on Spectre/Meltdown with e.g.
+https://usn.ubuntu.com/usn/usn-3522-1/ ?
+
+Of course there are notorious "IT-security professionals", who
+just want to spread destruction in their name. But there are also
+ones, that just want to make a decent living from their skils or
+in research areas, want to be seen at some level to earn research
+grants (yes, universities have to get their funding also on the
+free market), keep their position at universities (publish or
+parish), ...
+
+Question: someone knowing both documents, what (correct or incorrect)
+conclusions he might draw and how would he adapt his disclosure
+strategy in future?
+
+In my opinion, without having a minimalistic underlying framework
+to build and leverage trust, irrational and risky behaviour might
+become the more effective strategy, not only for egoistic individuals
+but also those who want to play nice but have the feeling that
+they are losing grounds compared to the big ones. Hence this is
+also about managing "attribution" in a consistent way, as without
+other standards, you are only judged by your deeds (and what is
+known about them).
+
+hd
+
+> ________________________________ From: Solar Designer
+> <solar@...nwall.com> Sent: Friday, January 26, 2018 12:16 To:
+> oss-security@...ts.openwall.com Subject: Re: [oss-security]
+> How to deal with reporters who don't want their bugs fixed?
+>
+> On Fri, Jan 26, 2018 at 10:23:49AM -0500, Stiepan wrote:
+>> I think that clear rules might be welcome:
+>
+> I agree (specifically, I had suggested explicit maximum embargo
+> times), but such rules must not be one and only industry standard.
+>  Anyone or any project may propose rules, and other projects
+> are welcome to reuse those rules, but they must not have to
+> - they could as well use different rules, or none.  At best,
+> a relatively non-controversial and brief boilerplate could
+> end up being reused by many projects.
+>
+>> We as a profession should have a clear code of ethics
+>
+> No.  Let's not use the word ethics.  That word, except when
+> explicitly referring to a particular person's or group's ethics,
+> implies that when we (dis)agree or are judging others, we claim
+> to be necessarily right - but in reality we're necessarily
+> subjective.
+>
+> This would be just as flawed a concept/term as "responsible
+> disclosure". (I refrain from using that term as well, except
+> when pointing out just how unnecessarily judgemental it is
+> - implying that other kinds of disclosure would have been
+> "irresponsible" - but we're subjective.)
+>
+>> universal ethics' code
+>
+> That's an oxymoron.  No such thing can possibly exist.
+>
+> Alexander
+
+View attachment "SecurityResearcher-CodeOfConduct-LeisureResearcher.txt" of type "text/plain" (1821 bytes)
