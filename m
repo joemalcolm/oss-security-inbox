@@ -1,29 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/18/2
-Message-ID: <nycvar.YSQ.7.76.1812181420590.5773@xnncv>
-Date: Tue, 18 Dec 2018 14:23:07 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: saar amar <saaramar5@...il.com>
-Subject: CVE-2018-20124 QEMU: rdma: OOB access when building scatter-gather array
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/29/1
+Message-ID: <1a3dc112-9207-cb87-5e69-4bcbd6be5457@treenet.co.nz>
+Date: Mon, 29 Jan 2018 16:24:10 +1300
+From: Amos Jeffries <squid3@...enet.co.nz>
+To: oss-security@...ts.openwall.com
+Subject: Re: SQUID-2018:1 Denial of Service issue in ESI Response processing
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+On 22/01/18 22:41, Amos Jeffries wrote:
+> Notes for OSS-Security people:
+> 
+> * CVE has been requested through DWF, waiting on assignment.
 
-An out-of-bound stack buffer r/w access issue was found in QEMU's generic RDMA 
-back-end implementation. It could occur when a driver tries to build 
-scatter/gather element's array in build_host_sge_array() routine.
 
-A guest user/process could use this flaw to crash the QEMU process resulting 
-in DoS.
+CVE-2018-1000024
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2018-12/msg02822.html
+Amos Jeffries
+The Squid Software Foundation
 
-This issue was reported by Saar Amar.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
