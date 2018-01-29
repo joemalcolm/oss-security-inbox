@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1476" "Wednesday" "10" "June" "2020" "21:21:03" "+1000" "Wade Mealing" "wmealing@redhat.com" "<CALJHwhSuSiuK+gU07w1-MNoB1sW0XQwfpYCOzcXhky5K5Ynj9w@mail.gmail.com>" "48" "[oss-security] kernel: Multiple SSBD related flaws CVE-2020-10766 , CVE-2020-10767, CVE-2020-10768" "^Date:" nil nil "6" "2020061011:21:03" "[oss-security] kernel: Multiple SSBD related flaws CVE-2020-10766 , CVE-2020-10767, CVE-2020-10768" (number mark "        wmealing@red Jun 10   48/1476  " thread-indent "\"[oss-security] kernel: Multiple SSBD related flaws CVE-2020-10766 , CVE-2020-10767, CVE-2020-10768\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] kernel: Multiple SSBD related flaws CVE-2020-10766 , CVE-2020-10767, CVE-2020-10768" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1973" "Monday" "29" "January" "2018" "16:24:10" "+1300" "Amos Jeffries" "squid3@treenet.co.nz" "<1a3dc112-9207-cb87-5e69-4bcbd6be5457@treenet.co.nz>" "53" "Re: [oss-security] SQUID-2018:1 Denial of Service issue in ESI Response processing" nil nil nil "1" "2018012903:24:10" "[oss-security] SQUID-2018:1 Denial of Service issue in ESI Response processing" (number mark "U       squid3@treen Jan 29   53/1973  " thread-indent "\"Re: [oss-security] SQUID-2018:1 Denial of Service issue in ESI Response processing\"\n") "<3b60c584-07f9-2888-448e-854f0e793cf0@treenet.co.nz>" ("<3b60c584-07f9-2888-448e-854f0e793cf0@treenet.co.nz>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 22291 invoked by uid 550); 10 Jun 2020 11:21:38 -0000
+Received: (qmail 26033 invoked by uid 550); 29 Jan 2018 04:25:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,90 +11,73 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 22273 invoked from network); 10 Jun 2020 11:21:37 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1591788086;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type;
-	bh=kL7UQqHRIICGwFyObtt/00tGDrW1NzUl6TQXtWtVidI=;
-	b=HopCDNupra0ondK1hScrGYJ6r2BmmpAZ30UU1GRG0P7LZTkhTW5hlfnPq8fkNQbQrOq9Ol
-	tfMbZJHU157Wo65VJhpU96g2s6l7rWfceDFYvqbVE8Y8Zlt0mvFMRf4nPfAM7GXdeqgbpv
-	daOWqk77bpGJP5w2pYYecum5w4HXneA=
-X-MC-Unique: oRcsOd9ANde5pbA83qpHXA-1
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=kL7UQqHRIICGwFyObtt/00tGDrW1NzUl6TQXtWtVidI=;
-        b=N9dL+nrr86SGRIlxw8mdknkx56OcJ8dEwvMgPDMMeWYoI5kYCwI0elBTa7eLlKGHRZ
-         TaEWnPTH/+1SyfUvTYowj3nkZ/CFNT2YmKZ0O6hHiFI69DA2WhmBV5OB3GMhxUvs0Xru
-         MnwPTeC2ASiXzl2cDrnRLQww+fMLP6IHXQkvp+VlfrRAJiDNz2TeunKRdt2X1dAw8BVD
-         mSMBIM0VAUq+Nr7/tLyAtPYeA+GNtPPCGe1paQRWUPJf2abaOWWpyBkgn8XG/iG2adBK
-         QzkBLpWUcQ0C407n/weFoSvT/MJRa6ikPPJlkZTPEW35U6JU3JInD2KSuf58Ar9kOktD
-         nWaA==
-X-Gm-Message-State: AOAM533G81RT/hq86zeOT8oZyqL7ySTCIFblaE9ymNIfU+VH3IyCZJNb
-	+a+Pk9S3fFbmXmEbln2Vl6aoivjq3TNxu8rmIgab0z3A2M79hxsV4DDQrJa7QcT+nhAJEeUaU75
-	hTUi+BNaQnh6hC5+m2g+HOLUaT0phBWY7Lb7+qpG+27wo
-X-Received: by 2002:adf:e749:: with SMTP id c9mr3410357wrn.25.1591788075104;
-        Wed, 10 Jun 2020 04:21:15 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJx4ePnFckpLTRfQ+9hynFCx1mg3AvOtBG/qJfgGrneKg076SBCPDubERmmEMR7cEt/sl1ipUB1sQa5cUWub6Oc=
-X-Received: by 2002:adf:e749:: with SMTP id c9mr3410336wrn.25.1591788074867;
- Wed, 10 Jun 2020 04:21:14 -0700 (PDT)
-MIME-Version: 1.0
-Message-ID: <CALJHwhSuSiuK+gU07w1-MNoB1sW0XQwfpYCOzcXhky5K5Ynj9w@mail.gmail.com>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Date: Wed, 10 Jun 2020 21:21:03 +1000
-From: Wade Mealing <wmealing@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] kernel: Multiple SSBD related flaws CVE-2020-10766 , CVE-2020-10767, CVE-2020-10768
+Received: (qmail 14285 invoked from network); 29 Jan 2018 03:24:25 -0000
 To: oss-security@lists.openwall.com
+References: <3b60c584-07f9-2888-448e-854f0e793cf0@treenet.co.nz>
+From: Amos Jeffries <squid3@treenet.co.nz>
+Message-ID: <1a3dc112-9207-cb87-5e69-4bcbd6be5457@treenet.co.nz>
+Date: Mon, 29 Jan 2018 16:24:10 +1300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
+MIME-Version: 1.0
+In-Reply-To: <3b60c584-07f9-2888-448e-854f0e793cf0@treenet.co.nz>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="gYpNJLV7LvWzwn3Ra8bB8K8yyQGlDeH02"
+Subject: Re: [oss-security] SQUID-2018:1 Denial of Service issue in ESI
+ Response processing
 
-A number of flaws were discussed in the registers article this morning
-( https://www.theregister.com/2020/06/09/linux_kernel_bugs_spectre )
-which have been submitted for inclusion upstream already.
+--gYpNJLV7LvWzwn3Ra8bB8K8yyQGlDeH02
+Content-Type: multipart/mixed; boundary="kF7bc5x8NxdLtZccOW6D8pjkhKKbbpKhu";
+ protected-headers="v1"
+From: Amos Jeffries <squid3@treenet.co.nz>
+To: oss-security@lists.openwall.com
+Message-ID: <1a3dc112-9207-cb87-5e69-4bcbd6be5457@treenet.co.nz>
+Subject: Re: [oss-security] SQUID-2018:1 Denial of Service issue in ESI
+ Response processing
+References: <3b60c584-07f9-2888-448e-854f0e793cf0@treenet.co.nz>
+In-Reply-To: <3b60c584-07f9-2888-448e-854f0e793cf0@treenet.co.nz>
 
-Listed below are the CVE's that Red Hat has assigned.  As far as I can
-tell there are no existing  CVE assignments for these flaws. I have
-not done adequate investigation to correctly identify affected
-versions of the kernel, however this is a flaw in the fix for
-CVE-2018-3639, affected systems would likely be affected by the flaws
-listed below if they required the fix.
+--kF7bc5x8NxdLtZccOW6D8pjkhKKbbpKhu
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
 
-CVE-2020-10766
-- Rogue cross-process SSBD shutdown. Linux scheduler logical bug
-allows an attacker to turn off the SSBD protection.
-https://lkml.org/lkml/2020/6/9/181
+On 22/01/18 22:41, Amos Jeffries wrote:
+> Notes for OSS-Security people:
+>=20
+> * CVE has been requested through DWF, waiting on assignment.
 
-CVE-2020-10767
-- Indirect Branch Prediction Barrier is force-disabled when STIBP is
-unavailable or enhanced IBRS is available.
-https://lkml.org/lkml/2020/6/9/183
 
-CVE-2020-10768
--  Indirect branch speculation can be enabled after it was
-force-disabled by the PR_SPEC_FORCE_DISABLE prctl command.
-https://lkml.org/lkml/2020/6/9/184
+CVE-2018-1000024
 
-The Red Hat Bugzillas for these flaws are
+Amos Jeffries
+The Squid Software Foundation
 
-http://bugzilla.redhat.com/CVE-2020-10766
-http://bugzilla.redhat.com/CVE-2020-10767
-http://bugzilla.redhat.com/CVE-2020-10768
 
-These  bugzillas are a work in progress and will be updated as I get
-more time to correctly input adequate information.
+--kF7bc5x8NxdLtZccOW6D8pjkhKKbbpKhu--
 
-Thank you.
+--gYpNJLV7LvWzwn3Ra8bB8K8yyQGlDeH02
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
--- 
-Wade Mealing
+-----BEGIN PGP SIGNATURE-----
 
-Product Security - Kernel
+iQIzBAEBCgAdFiEEAimzwkzOwlQSfJUyANhjZ5QgvdMFAlpuk9oACgkQANhjZ5Qg
+vdMpxA//ZZdWCpOX074XK+7IfuqZ6EE80CH+8mkS9C4nd6nhddBnWpKSKQxpZY7T
+gufhAPIZoHwmy7vanmZS8wMIkaBV4PgP5xL4LP3h7rK/syxtPrBsOi8kaEgSILrt
+VFd5/suy0jcGwqSA9HVOtba4ypcrtHhTAkMYnLt2TsegZ3/sHXy/FGkdJLdVyXqv
+1CEN1tBRPDrAXT2zMSYeu8ReS0l9qLOBH66nzjrWISxeQ/Wzw7C3WSxPxvT16Lzi
+F+Zawa+a4N5lxEqqiIUJgeb9dz/7HiXy+iarDDtGcuQtqma3/IPdalHkkKVQRxcb
+E2dBEsq8ADlEbrIfzGt7Q4LqDB1Wq4Gvwi/LkvIen4V9YyYZXzg0/UlkRccvEIzb
+oyERfRwiuYRl1eJrsaerui/8W8Od+drcGBNih1oDuPgWcjucCN8CoXLEE9RQmeon
+WNo5rZCZqxSY1f6TLRJd8dZXXDKLW7ALgHioeP1zaehHIeW/PEeNOLkBD1owbWj4
+9k7SpuWqLLtLxd4//O86AwFAJgRIF7XBrRNEzyHObpWM5RYDI7Tz3UBaUVvV8tuC
+W3JxZlPEX4XFuO7TV47V98eki1z53AM4r2bjil/kH0Dve64XbaEpkztNpdP9CymO
+RceIciunusNmVlfL9tOX/WrHsXjc+Fj7ItCC7Jgny8AYudqjnrM=
+=hVTh
+-----END PGP SIGNATURE-----
 
-Red Hat
-
-wmealing@redhat.com
-
-TRIED. TESTED. TRUSTED.
-
+--gYpNJLV7LvWzwn3Ra8bB8K8yyQGlDeH02--
