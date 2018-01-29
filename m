@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2178" "Saturday" "11" "April" "2015" "20:17:31" "+0000" "Jeremy Stanley" "fungi@yuggoth.org" "<20150411201731.GX2456@yuggoth.org>" "57" "[oss-security] Re: CVE Request for read-only directory traversal in Etherpad frontend tests" nil nil nil "4" "2015041120:17:31" "[oss-security] Re: CVE Request for read-only directory traversal in Etherpad frontend tests" (number mark "        fungi@yuggot Apr 11   57/2178  " thread-indent "\"[oss-security] Re: CVE Request for read-only directory traversal in Etherpad frontend tests\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["962" "Monday" "29" "January" "2018" "11:29:14" "-0500" "Michael Orlitzky" "michael@orlitzky.com" "<7835816e-4c5d-94a7-0de3-4b69fe7f4cb7@orlitzky.com>" "26" "Re: [oss-security] CVE-2017-18078: systemd-tmpfiles root privilege escalation with fs.protected_hardlinks=0" nil nil nil "1" "2018012916:29:14" "[oss-security] CVE-2017-18078: systemd-tmpfiles root privilege escalation with fs.protected_hardlinks=0" (number mark "U       michael@orli Jan 29   26/962   " thread-indent "\"Re: [oss-security] CVE-2017-18078: systemd-tmpfiles root privilege escalation with fs.protected_hardlinks=0\"\n") "<8e45c60c-44db-c9ba-c804-bb45bd0a3b0a@redhat.com>" ("<efa2af21-aeb9-39a0-bc87-38842e56a9b2@orlitzky.com>" "<a1a06b98-7f7b-60f9-dff9-0396a522d428@orlitzky.com>" "<8e45c60c-44db-c9ba-c804-bb45bd0a3b0a@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26580 invoked by uid 550); 11 Apr 2015 20:17:46 -0000
+Received: (qmail 7569 invoked by uid 550); 29 Jan 2018 16:29:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,82 +11,54 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26553 invoked from network); 11 Apr 2015 20:17:45 -0000
-Message-ID: <20150411201731.GX2456@yuggoth.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="xkJEvbTYpfqRozZ0"
-Content-Disposition: inline
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-SA-Exim-Connect-IP: 2001:4802:7801:102:be76:4eff:fe20:63e0
-X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com, cve-assign@mitre.org, security@etherpad.org, John@mclear.co, tom@furycodes.com, stefan@stefans-entwicklerecke.de
-X-SA-Exim-Mail-From: fungi@yuggoth.org
-X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
-Cc: CVE Request <cve-assign@mitre.org>,
-	Etherpad Security <security@etherpad.org>,
-	John McLear <John@mclear.co>, Tom Hunkapiller <tom@furycodes.com>,
-	Stefan =?utf-8?Q?M=C3=BCller?= <stefan@stefans-entwicklerecke.de>
-Date: Sat, 11 Apr 2015 20:17:31 +0000
-From: Jeremy Stanley <fungi@yuggoth.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request for read-only directory traversal in Etherpad
- frontend tests
-To: OSS Security <oss-security@lists.openwall.com>
+Received: (qmail 7551 invoked from network); 29 Jan 2018 16:29:27 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=orlitzky.com; s=mail2;
+	t=1517243355; bh=zgRN1PdpqGHt9EZI0dOtf1RoF6zV779QsWZbyJ2yddI=;
+	h=Subject:To:References:From:Date:In-Reply-To;
+	b=noBlJKfcflZuOtdQtZDjEaQIBTSRB5tVSNY+vWllC+tuaKhJq14VsdNPxAiCXE0vr
+	 T4CTNEFATmyvWqpEuQ2VtRkq7bqApKRvAa339MRG3tn3afquyEDBv9Pm55j0PJrhln
+	 DZCKEPJ4tuPD1xMdbDaGZb2xXkWDzxrJsezK2rgc=
+To: oss-security@lists.openwall.com
+References: <efa2af21-aeb9-39a0-bc87-38842e56a9b2@orlitzky.com>
+ <a1a06b98-7f7b-60f9-dff9-0396a522d428@orlitzky.com>
+ <8e45c60c-44db-c9ba-c804-bb45bd0a3b0a@redhat.com>
+From: Michael Orlitzky <michael@orlitzky.com>
+Message-ID: <7835816e-4c5d-94a7-0de3-4b69fe7f4cb7@orlitzky.com>
+Date: Mon, 29 Jan 2018 11:29:14 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.2
+MIME-Version: 1.0
+In-Reply-To: <8e45c60c-44db-c9ba-c804-bb45bd0a3b0a@redhat.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+Subject: Re: [oss-security] CVE-2017-18078: systemd-tmpfiles root privilege
+ escalation with fs.protected_hardlinks=0
 
---xkJEvbTYpfqRozZ0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 01/29/2018 11:13 AM, Florian Weimer wrote:
+> On 01/29/2018 05:09 PM, Michael Orlitzky wrote:
+>> Correction to the CVE-ID: it's 2017, not 2018. So CVE-2017-18078.
+> 
+> Isn't it a duplicate of CVE-2013-4392?
+> 
 
-A vulnerability was discovered in Etherpad (see below). In order to
-ensure full traceability, we need a CVE number assigned that we can
-attach to further notifications. This issue is already public.
+They look pretty similar. The symlink issue was fixed as far as I can
+tell -- I tried to exploit them, and failed. The tmpfiles code is using
+a clever trick:
 
-Title: Read-only directory traversal in Etherpad frontend tests
-Reporter: Tom Hunkapiller
-Versions: 1.2.0 through 1.5.3
+  xsprintf(fn, "/proc/self/fd/%i", fd);
+  ...
+  if (chown(fn, ...
 
-Description:
-Tom Hunkapiller reported a vulnerability in the frontend tests of
-previous Etherpad releases, which are enabled by default. Parent
-directory references were not correctly sanitized in frontend test
-URLs of HTTP API calls, allowing an attacker to remotely read
-arbitrary files on the server's filesystem with the privileges of
-the account running the service.
+On Linux, the proc stuff is magic, and that just does the right thing,
+even though a priori it looks like "chown" will follow symlinks.
 
-Notes:
-This bug was introduced in commit ba4ebbb which was initially
-included in the 1.2.0 release, and is fixed in commit 5409eb3 which
-appears in the 1.5.4 release.
+Hard links were a different story, and there was no attempt made to
+avoid them outside of relying on the fs.protected_hardlinks sysctl. So
+if the administrator disables that protection, there's no safety net.
 
-References:
-https://github.com/ether/etherpad-lite/commit/5409eb3
+Did you cover the hard link problem in CVE-2013-4392, too? Regardless,
+there is now some extra protection built-in to tmpfiles to reduce the
+risk when the sysctl is disabled.
 
---=20
-Jeremy Stanley
-
---xkJEvbTYpfqRozZ0
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQJ8BAEBCgBmBQJVKYFbXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25zLm9w
-ZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXQ5N0FFNDk2RkMwMkRFQzlGQzM1M0IyRTc0
-OEY5OTYxMTQzNDk1ODI5AAoJEEj5lhFDSVgpAw8QAJ4Uj0YDZppZQ/Cs3D++V3mU
-aCmYyRo75727qTo8wb2/GcDi9cUqLzZIyU/SFofLc2RGSorWQrAWcOqUckObYb9e
-qHLAoF4L9gBKw/NpbBUcVYT9dSSWCNAisioRCQZ3lkHbNmfLyFQOmcXf9ILINXAs
-w0zdBpFQdTzT4VVyFR3D6k883brdLPQkA+VStXpIGipQtNzNLe3gZdz9CwmXa4eF
-eWjP3SnwGXD3xtr3WVmtJzDRi/iwzXi8UpMDsSmDXVlTPyLQqHDpk7Q5WKnTd9Q8
-CN+nukLLgAMyhcdwxXRhtFL9bfmcGUUXowL7RMRo/X2W7QhGoRYYkynJb27lqVPO
-k5wtn7vaE0hoh0DwqMhW4zIF//4AYOhWdf45To+wgF1RZhZSvArLX8nETTrjfuCA
-B5JFRZSo+oLIffAsYYt0lz/eqHfEpPcD7YDQG7pXIGsZPwnrZ4FdzJXlMvNOC8fQ
-qq+DegZHdZSNJ5t6aDec8RHJJ2sWYHbTYA+HIAVWdZEDmkx0L6r+h3HZprphHe2i
-Q9sETXdwXKyhraCz3YqS4pa/ssO0We2a9x/SbUNmnhf09X5reRG2fObf9cV75evg
-BhE8QQ4QD38IgezdHcNzg1m1MBBTX6cjxuVe+H0XlrZFYNs+9gJRyKq5OuGzMzmS
-gwZ8w0V3gg6sbXUHOjiR
-=l0z6
------END PGP SIGNATURE-----
-
---xkJEvbTYpfqRozZ0--
