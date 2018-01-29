@@ -1,43 +1,10 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/28/8
-Message-ID: <20180828125530.GB14413@kroah.com>
-Date: Tue, 28 Aug 2018 14:55:30 +0200
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/29/4
+Message-ID: <a1a06b98-7f7b-60f9-dff9-0396a522d428@orlitzky.com>
+Date: Mon, 29 Jan 2018 11:09:30 -0500
+From: Michael Orlitzky <michael@...itzky.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2018-10938: Linux kernel: net: infinite loop in net/ipv4/cipso_ipv4.c:cipso_v4_optptr() allows a remote DoS
+Subject: Re: CVE-2017-18078: systemd-tmpfiles root privilege escalation with fs.protected_hardlinks=0
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Aug 27, 2018 at 05:25:15AM -0400, Vladis Dronov wrote:
-> Heololo,
-> 
-> A flaw was found in the Linux kernel present since v4.0-rc1 and through v4.13-rc4.
-> A crafted network packet sent remotely by an attacker may force the kernel to enter
-> an infinite loop in the cipso_v4_optptr() function in net/ipv4/cipso_ipv4.c leading
-> to a denial-of-service.
-> 
-> All the kernels with the cipso_v4_optptr() function which have not backported
-> the upstream commit 40413955ee26 are vulnerable.
-> 
-> Thanks to Yves Younan from Cisco for mentioning this.
-> 
-> References:
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1622404
-> 
-> Upstream Patch introduced the flaw:
-> 
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=04f81f0154e4bf002be6f4d85668ce1257efa4d9
-> 
-> Upstream Patch fixed the flaw:
-> 
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=40413955ee265a5e42f710940ec78f5450d49149
-
-To be more specific here (as I complained about the other CVE report for
-the kernel a minute ago), this means currently the 3.18.y, 4.4.y, and
-4.9.y kernels are vulnerable to this problem.  I'll go backport the
-patch above now to those trees and it will be included in the next
-releases of these kernel trees later this week.
-
-Thanks for posting this here, it is helpful, and I appreciate it.
-
-greg k-h
+Correction to the CVE-ID: it's 2017, not 2018. So CVE-2017-18078.
