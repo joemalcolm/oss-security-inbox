@@ -1,45 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/07/4
-Message-ID: <20180607184125.GA16629@eldamar.local>
-Date: Thu, 7 Jun 2018 20:41:25 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: Perl: CVE-2018-12015: Archive::Tar: directory traversal vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/29/5
+Message-ID: <8e45c60c-44db-c9ba-c804-bb45bd0a3b0a@redhat.com>
+Date: Mon, 29 Jan 2018 17:13:49 +0100
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com, Michael Orlitzky <michael@...itzky.com>
+Subject: Re: CVE-2017-18078: systemd-tmpfiles root privilege escalation with fs.protected_hardlinks=0
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On 01/29/2018 05:09 PM, Michael Orlitzky wrote:
+> Correction to the CVE-ID: it's 2017, not 2018. So CVE-2017-18078.
 
-The following dirctory traversal vulnerability was reporte to the
-Debian bugtracker at https://bugs.debian.org/900834 , which got
-assigned CVE-2018-12015 by MITRE (requested via the
-http://cveform.mitre.org/):
+Isn't it a duplicate of CVE-2013-4392?
 
-> By default, the Archive::Tar module doesn't allow extracting files
-> outside the current working directory. However, you can bypass this
-> secure extraction mode easily by putting a symlink and a regular file
-> with the same name into the tarball.
-> 
-> I've attached proof of concept tarball, which makes Archive::Tar create
-> /tmp/moo, regardless of what the current working directory is:
-> 
->   $ tar -tvvf traversal.tar.gz
->   lrwxrwxrwx root/root         0 2018-06-05 18:55 moo -> /tmp/moo
->   -rw-r--r-- root/root         4 2018-06-05 18:55 moo
-> 
->   $ pwd
->   /home/jwilk
-> 
->   $ ls /tmp/moo
->   ls: cannot access '/tmp/moo': No such file or directory
-> 
->   $ perl -MArchive::Tar -e 'Archive::Tar->extract_archive("traversal.tar.gz")'
-> 
->   $ ls /tmp/moo
->   /tmp/moo
+Thanks,
+Florian
 
-The mentioned proof of concept tarball is attached to the Debian bug at
-https://bugs.debian.org/cgi-bin/bugreport.cgi?att=1;bug=900834;filename=traversal.tar.gz;msg=3
-.
-
-Regards,
-Salvatore
