@@ -1,67 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/17/2
-Message-ID: <20180317100343.4edeba53@pc1>
-Date: Sat, 17 Mar 2018 10:03:43 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Squirrelmail directory traversal vulnerability allows exfiltrating files from server
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/29/6
+Message-ID: <7835816e-4c5d-94a7-0de3-4b69fe7f4cb7@orlitzky.com>
+Date: Mon, 29 Jan 2018 11:29:14 -0500
+From: Michael Orlitzky <michael@...itzky.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2017-18078: systemd-tmpfiles root privilege escalation with fs.protected_hardlinks=0
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 01/29/2018 11:13 AM, Florian Weimer wrote:
+> On 01/29/2018 05:09 PM, Michael Orlitzky wrote:
+>> Correction to the CVE-ID: it's 2017, not 2018. So CVE-2017-18078.
+> 
+> Isn't it a duplicate of CVE-2013-4392?
+> 
 
-During the Troopers conference this week an unpatched vulnerability in
-squirrelmail was presented by Florian Grunow from ERNW [1].
+They look pretty similar. The symlink issue was fixed as far as I can
+tell -- I tried to exploit them, and failed. The tmpfiles code is using
+a clever trick:
 
-The issue is that when uploading a mail attachment a temporary file is
-generated on the server that the client later references when sending
-the mail. The filename is not sanitized in any way, so by passing a
-filename of the form "../../../../some_path/some_filename" one can use
-this to attach arbitrary files from the server that can be accessed by
-the PHP process to a mail. Thus an attacker who has a mail account
-could use this to exfiltrate files and send them as attachments.
+  xsprintf(fn, "/proc/self/fd/%i", fd);
+  ...
+  if (chown(fn, ...
 
-The bug is unfixed. The finders say they tried to reach out to the
-squirrelmail developers, but were unable to contact them.
+On Linux, the proc stuff is magic, and that just does the right thing,
+even though a priori it looks like "chown" will follow symlinks.
 
-Squirrelmail hasn't had a release for many years and the webpage has
-its last news from 2013. But despite that until recently the subversion
-repository and the provided svn snapshots still provided security
-fixes, e.g. a 2017 found injection vuln [2] was fixed.
-Despite its stale state I believe many people still use squirrelmail,
-in my experience it works better than alternatives like roundcube in
-situations where you have very weak internet connections.
+Hard links were a different story, and there was no attempt made to
+avoid them outside of relying on the fs.protected_hardlinks sysctl. So
+if the administrator disables that protection, there's no safety net.
 
-I created a preliminary quick and dirty patch that should close the
-main hole [3]. It guarantees that the filename only contains letters
-and numbers (this should be okay as the filename is created by
-squirrelmail and usually doesn't contain any user-controlled
-characters in normal operation) and otherwise just terminates the
-process. There may be an obscure cornercase where this patch does not
-fully protect: If for some reason a user can guess another users
-temporary filename while writing a mail one may be able to exfiltrate
-that. I find that unlikely enough that I haven't bothered looking more
-into this.
+Did you cover the hard link problem in CVE-2013-4392, too? Regardless,
+there is now some extra protection built-in to tmpfiles to reduce the
+risk when the sysctl is disabled.
 
-The researchers found this flaw while investigating a check point
-appliance that bundles squirrelmail for their webmail functionality. As
-squirrelmail is GPL I asked check point to share the patch, which they
-did and I'm providing it here [4]. I haven't reviewed it, but the ERNW
-people told me it may not work with all PHP versions.
-
-In any case if anyone has contact to the squirrelmail authors it would
-be great if they could incorporate a fix (and maybe even provide a new
-release). Otherwise everyone using squirrelmail should obviously
-patch this manually.
-
-[1]
-https://insinuator.net/2018/03/squirrelmail-full-disclosure-troopers18/
-[2]
-https://legalhackers.com/advisories/SquirrelMail-Exploit-Remote-Code-Exec-CVE-2017-7692-Vuln.html
-[3] https://gist.github.com/hannob/3c4f86863c418930ad08853c1109364e
-[4] https://paste.pound-python.org/show/OjSLiFTxiBrTk63jqEUu/
--- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
