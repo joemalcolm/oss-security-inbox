@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2394" "Tuesday" "1" "September" "2015" "20:24:36" "+0000" "Tristan Cacqueray" "tdecacqu@redhat.com" "<55E60984.3070807@redhat.com>" "79" "[oss-security] [OSSA 2015-017] Nova may fail to delete images in resize state (CVE-2015-3280)" nil nil nil "9" "2015090120:24:36" "[oss-security] [OSSA 2015-017] Nova may fail to delete images in resize state (CVE-2015-3280)" (number mark "U       tdecacqu@red Sep  1   79/2394  " thread-indent "\"[oss-security] [OSSA 2015-017] Nova may fail to delete images in resize state (CVE-2015-3280)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["404" "Wednesday" "31" "January" "2018" "14:10:57" "+0530" "P J P" "ppandit@redhat.com" "<nycvar.YSQ.7.76.1801311406110.22220@wniryva>" "11" "Re: [oss-security] Re: CVE-2017-16845 Qemu: ps2: information leakage via post_load routine" nil nil nil "1" "2018013108:40:57" "[oss-security] Re: CVE-2017-16845 Qemu: ps2: information leakage via post_load routine" (number mark "U       ppandit@redh Jan 31   11/404   " thread-indent "\"Re: [oss-security] Re: CVE-2017-16845 Qemu: ps2: information leakage via post_load routine\"\n") "<nycvar.YSQ.7.76.1711221200110.4822@wniryva>" ("<nycvar.YSQ.7.76.1711171112070.7823@wniryva>" "<20171122035243.edl3dqbnpyaa337h@matica.foolinux.mooo.com>" "<nycvar.YSQ.7.76.1711221200110.4822@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28048 invoked by uid 550); 1 Sep 2015 20:24:32 -0000
+Received: (qmail 13494 invoked by uid 550); 31 Jan 2018 08:41:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,98 +11,30 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28026 invoked from network); 1 Sep 2015 20:24:31 -0000
-Message-ID: <55E60984.3070807@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.1.0
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="6QQVqNfBXhXAN4a8uAh25jRI9k9iNHsnb"
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
-Date: Tue, 1 Sep 2015 20:24:36 +0000
-From: Tristan Cacqueray <tdecacqu@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] [OSSA 2015-017] Nova may fail to delete images in resize state
- (CVE-2015-3280)
-To: oss-security@lists.openwall.com
+Received: (qmail 13473 invoked from network); 31 Jan 2018 08:41:13 -0000
+Date: Wed, 31 Jan 2018 14:10:57 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss security list <oss-security@lists.openwall.com>
+In-Reply-To: <nycvar.YSQ.7.76.1711221200110.4822@wniryva>
+Message-ID: <nycvar.YSQ.7.76.1801311406110.22220@wniryva>
+References: <nycvar.YSQ.7.76.1711171112070.7823@wniryva> <20171122035243.edl3dqbnpyaa337h@matica.foolinux.mooo.com> <nycvar.YSQ.7.76.1711221200110.4822@wniryva>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.12
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.28]); Wed, 31 Jan 2018 08:41:01 +0000 (UTC)
+Subject: Re: [oss-security] Re: CVE-2017-16845 Qemu: ps2: information leakage
+ via post_load routine
 
---6QQVqNfBXhXAN4a8uAh25jRI9k9iNHsnb
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
++-- On Wed, 22 Nov 2017, P J P wrote --+
+|   -> https://lists.gnu.org/archive/html/qemu-devel/2017-11/msg02946.html
+| It should make it upstream soon, I'll update here accordingly.
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-OSSA-2015-017: Nova may fail to delete images in resize state
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Upstream patch
+  -> https://git.qemu.org/?p=qemu.git;a=commitdiff;h=802cbcb73002b92e6ddc8464d39b668a71b78d74
 
-:Date: September 01, 2015
-:CVE: CVE-2015-3280
-
-
-Affects
-~~~~~~~
-- Nova: 2014.2 versions through 2014.2.3, and
-2015.1 versions through 2015.1.1
-
-
-Description
-~~~~~~~~~~~
-George Shuklin from Webzilla LTD and Tushar Patil from NTT DATA, Inc
-independently reported a vulnerability in Nova resize state. If an
-authenticated user deletes an instance while it is in resize state, it
-will cause the original instance to not be deleted from the compute
-node it was running on. An attacker can use this to launch a denial of
-service attack. All Nova setups are affected.
-
-
-Patches
-~~~~~~~
-- https://review.openstack.org/219301 (Juno)
-- https://review.openstack.org/219300 (Kilo)
-- https://review.openstack.org/219299 (Liberty)
-
-
-Credits
-~~~~~~~
-- George Shuklin from Webzilla LTD (CVE-2015-3280)
-- Tushar Patil from NTT Data (CVE-2015-3280)
-
-
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/1392527
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2015-3280
-
-
-Notes
-~~~~~
-- This fix will be included in future 2014.2.4 (juno) and 2015.1.2
-(kilo) releases.
-
+Thank you.
 --
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
-
---6QQVqNfBXhXAN4a8uAh25jRI9k9iNHsnb
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQEcBAEBAgAGBQJV5gmEAAoJECK5oFySXMXYtY0H/3Uu00H/e/qXr9blNmrw71fN
-F+s3KEnprDOrNZ9vpb4Scf8OKv/zVV4fszdBIrGHDkFhAFisXdLiaTcMqb5T81tK
-bgKBm8Isyy0t9bzFXMuU0I6eQFgfYrUBk+NPy1OUDuKykSX1UEe8BDRk6d/PWUF5
-Ac9UeKCniOKLMgtKUJCYgwQdo12/7qxJazIqt2G0/O/2iW+BjysQCVeEYQD2KE1O
-yDrl3IKD/5RcHlfQON1LzDHG0CwBMrLH/7CRpE5UXM2PsDqfo5vjOZ/hzH5+0Ln/
-8n4IONMjOqpRnZiTnxj8v2+Ql59KgvmcF/LnpyosfVev2zD3ZM+TCvAq3e79DqA=
-=xYDm
------END PGP SIGNATURE-----
-
---6QQVqNfBXhXAN4a8uAh25jRI9k9iNHsnb--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
