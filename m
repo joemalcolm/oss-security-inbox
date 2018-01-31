@@ -1,97 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/09/3
-Message-Id: <C421ACBB-3B9C-49FC-A8D5-D122C448BB07@beckweb.net>
-Date: Wed, 9 May 2018 11:45:54 +0200
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/31/1
+Message-ID: <1460642161.10860.1517381308655@appsuite.open-xchange.com>
+Date: Wed, 31 Jan 2018 08:48:28 +0200 (EET)
+From: Aki Tuomi <aki.tuomi@...n-xchange.com>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins and Jenkins plugins
+Subject: Re: CVE-2017-15132: dovecot: auth client leaks memory if SASL authentication is aborted.
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software. The following
-releases contain fixes for security vulnerabilities:
 
-* Jenkins (weekly) 2.121
-* Jenkins (LTS) 2.107.3
-* Black Duck Hub Plugin 4.0.0
-* Groovy Postbuild Plugin 2.4
+> On January 25, 2018 at 11:35 AM Aki Tuomi <aki.tuomi@...n-xchange.com> wrote:
+> 
+> 
+> Score: 5.3, AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L
+> Affected versions: 2.0 up to 2.2.33 and 2.3.0
+> Fixed versions: 2.2.34 (not released yet), 2.3.1 (not released yet)
+> 
+> We have identified a memory leak in Dovecot auth client used by login
+> processes. The leak has impact in high performance configuration where
+> same login processes are reused and can cause the process to crash due to memory exhaustion.
+> 
+> Patch to apply this issue can be found from https://github.com/dovecot/core/commit/1a29ed2f96da1be22fa5a4d96c7583aa81b8b060.patch
+> 
+> To our best knowledge, this patch should apply to all versions.
+> 
+> This issue can be mitigated on vulnerably systems by limiting login process to single request per process, which is also the default value.
+> 
+> Regards,
+> Aki Tuomi
+> Dovecot oy
 
-Additionally, these plugin have security vulnerabilities that have been made
-public, but have no releases containing a fix yet:
+Team Debian has found an issue with our patch. Dovecot login process would crash after few minutes of idle after consecutive aborted logins.
 
-* Gitlab Hook Plugin
+This is fixed with https://github.com/dovecot/core/commit/a9b135760aea6d1790d447d351c56b78889dac22.patch
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2018-05-09/
+We would like to thank Apollon and Salvatore for raising this to our attention. 
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-771
-Users with Overall/Read permission were able use the list-plugins CLI
-command and view the About Jenkins page to list all installed plugins.
-
-
-SECURITY-786
-The built-in Jenkins user database optionally allows user registration.
-This feature did not properly sanitize user names, allowing registration of
-user names containing control characters. This could be used to confuse
-administrators (appearing to be a different user) while preventing deletion
-of such users through the UI.
-
-
-SECURITY-788
-The agent to master security subsystem ensures that the Jenkins master is
-protected from maliciously configured agents. A path traversal vulnerability
-allowed agents to escape whitelisted directories to read and write to files
-they should not be able to access.
-
-
-SECURITY-794
-The form validation code for a tool installer improperly checked
-permissions, allowing any user with Overall/Read permission to submit a
-HTTP GET request to any user specified URL, and learn whether the response
-was successful (HTTP 200) or not.
-
-Additionally, this functionality did not require POST requests be used,
-thereby allowing the above to be performed without direct access to Jenkins
-via Cross-Site Request Forgery attacks.
-
-
-SECURITY-263
-Gitlab Hook Plugin does not encrypt the Gitlab API token used to access
-Gitlab. This can be used by users with master file system access to obtain
-GitHub credentials.
-
-Additionally, the Gitlab API token round-trips in its plaintext form, and
-is displayed in a regular text field to users with Overall/Administer
-permission. This exposes the API token to people viewing a Jenkins
-administrator’s screen, browser extensions, cross-site scripting
-vulnerabilities, etc.
-
-
-SECURITY-670
-Black Duck Hub Plugin did not perform permission checks for its config.xml
-API endpoint. This allowed any user with Overall/Read permission to both
-read and write the plugin configuration XML.
-
-
-SECURITY-671
-Black Duck Hub Plugin config.xml API endpoint was affected by an XML
-External Entity (XXE) processing vulnerability. This allowed an attacker
-with Overall/Read access to have Jenkins parse a maliciously crafted file
-that uses external entities for extraction of secrets from the Jenkins
-master, server-side request forgery, or denial-of-service attacks.
-
-
-SECURITY-821 / CVE pending
-Groovy Postbuild Plugin did not properly escape badge content from user
-input, resulting in a stored cross-site scripting vulnerability.
-
+Aki Tuomi
+Dovecot oy
