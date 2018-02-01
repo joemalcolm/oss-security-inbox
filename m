@@ -1,136 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/01/1
-Message-ID: <39F1760BE5F140BDB54F91F084E43FD6@W340>
-Date: Fri, 1 Jun 2018 15:18:44 +0200
-From: "Stefan Kanthak" <stefan.kanthak@...go.de>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: rufus
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/01/1
+Message-ID: <1517473830.3552.3.camel@redhat.com>
+Date: Thu, 01 Feb 2018 09:30:30 +0100
+From: Adam Maris <amaris@...hat.com>
+To: XinleiHe <hxl1999@...h.net>
+Cc: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: report a vulnerability in sfcb software.
 Content-Type: text/plain; charset=utf-8
 
-> On 2018.05.31 19:04, Stefan Kanthak wrote:
->> As always, your poor reading skills perfectly match your poor programming
->> skills.
+On Wed, 2018-01-31 at 22:44 +0800, XinleiHe wrote:
 > 
-> Ad hominem.
-
-Wrong. The plain and simple truth.
-
->> "We" wait until the requested CVEs are assigned for both well-known
->> vulnerabilities.
+> I want to apply a cve id for this vulnerabilty.
 > 
-> Again, what happened to responsible disclosure?
 
-What happened with YOUR responsibility to protect YOUR user's from YOUR
-faults.
+You can request CVE via https://cveform.mitre.org/
 
->> DLL spoofing was VERY well known long before 2016, and it is neither restricted
->> to the CWD nor to runtime linking:
-> 
-> You are deliberately misinterpreting what I said.
+Best Regards,
 
-Wrong again:
-
-| Also, FYI, we did apply mitigation for #1 (DLL sideloading attacks) very 
-| shortly after the time it became publicized:
-
-Read again what you wrote, and especially notice the plural inside the
-parentheses.
-In short: you LIED!
-
-> In 2016 there was a new DLL side loading vulnerability that made the 
-> rounds, and that we mitigated against.
-
-Wrong again: ALL DLL spoofing vulnerabilities are known since more than
-20 years.
-To write programs that still show it is a "bloody beginner's error".
-
-[...]
-
->> Until then, to protect your users, remove Rufus from the net!
-> 
-> I will only say this once: Unless you stop acting like an asshole,
-
-Thanks.
-
-Your incompetence and extraordinary manners deserve audience.
-
-Let's start with the "blind command injection" of "rufus.com\r\n" your
-bug-riddled software attempts, and how it fails, MISERABLY!
-
-JFTR: see <https://cwe.mitre.org/data/definitions/377.html>
-      and <https://cwe.mitre.org/data/definitions/379.html>
-      plus <https://capec.mitre.org/data/definitions/29.html>
-
-1. open a command prompt, then run the following command lines:
-
-   SET NoDefaultCurrentDirectoryInExePath=*
-   <path>\rufus-3.0.exe
-
-   OUCH!
-
-   JFTR: this DOCUMENTED setting was introduced with Windows Vista,
-         more than 12 years ago: it's REALLY time for your homework,
-         kid!
-         <https://msdn.microsoft.com/en-us/library/ms684269.aspx>
-
-2. open a command prompt, CD into a directory without "write file"
-   permission, for example a CD-ROM drive, and run the following
-   command line:
-
-   <path>\rufus-3.0.exe
-
-   OUCH!
-
-3. open a command prompt, CD into a directory without "execute file"
-   permission, i.e. where your security conscious administrator
-   added the NTFS ACE "(D;OIIO;WP;;;WD)", and run the following
-   command line:
-
-   <path>\rufus-3.0.exe
-
-   OUCH!
-
-4. ask your security conscious administrator to set the well-known
-   and well-documented policies (introduced with Windows Vista, more
-   than 12 years ago: <https://support.microsoft.com/en-us/kb/979621>,
-   <https://msdn.microsoft.com/en-us/library/bb530324.aspx>)
-
-   [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\RemovableStorageDevices]
-   "Deny_All"=dword:00000001
-
-   [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\RemovableStorageDevices\{53F56307-B6BF-11D0-94F2-00A0C91EFB8B}]
-   "Deny_Execute"=dword:00000001
-   "Deny_Write"=dword:00000001
-
-   [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\RemovableStorageDevices\{53F5630A-B6BF-11D0-94F2-00A0C91EFB8B}]
-   "Deny_Execute"=dword:00000001
-   "Deny_Write"=dword:00000001
-
-
-   [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\RemovableStorageDevices\{53F5630D-B6BF-11D0-94F2-00A0C91EFB8B}]
-   "Deny_Execute"=dword:00000001
-   "Deny_Write"=dword:00000001
-
-   [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\RemovableStorageDevices\{53F56311-B6BF-11D0-94F2-00A0C91EFB8B}]
-   "Deny_Execute"=dword:00000001
-   "Deny_Write"=dword:00000001
-
-   then open a command prompt, CD into a directory on a removable
-   volume, and run the following command line:
-
-   <path>\rufus-3.0.exe
-
-   OUCH!
-
-5. open a command prompt, run the following command line, and
-   immediately switch the focus to an editor window (for example):
-
-   <path>\rufus-3.0.exe
-
-   OUCH!
-
-That's what I call "bloody beginner's error".
-Or just EPIC FAIL!
-
-stay tuned
-Stefan
+-- 
+Adam Mariš, Red Hat Product Security
+1CCD 3446 0529 81E3 86AF  2D4C 4869 76E7 BEF0 6BC2 
