@@ -1,38 +1,170 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/06/2
-Message-ID: <26b869b9-5aad-d234-de78-67ea3a43e7a9@redhat.com>
-Date: Tue, 6 Mar 2018 09:26:00 +0530
-From: Dhiru Kholia <dkholia@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Salvatore Bonaccorso <carnil@...ian.org>
-Subject: Remote DoS flaw in 389-ds-base
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/02/2
+Message-ID: <001001d39c24$48886390$d9992ab0$@secunia.com>
+Date: Fri, 2 Feb 2018 13:49:37 +0100
+From: "Secunia Research" <vuln@...unia.com>
+To: <oss-security@...ts.openwall.com>
+Cc: <vuln@...unia.com>
+Subject: Secunia Research: Linux Kernel USB over IP Multiple Denial of Service Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-  
-Here is a notification about a remote DoS flaw in the 389-ds-base
-package (389 Directory Server).
+======================================================================
 
-NOTE: This notification was sent to "distros" mailing list on
-02-March-2018.
+ 
+                     Secunia Research 2017/12/11
+ 
+ Linux Kernel USB over IP Multiple Denial of Service Vulnerabilities
+ 
+======================================================================
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1537314 has some more
-information about this flaw, including a patch.
+Table of Contents
+ 
+Affected Software....................................................1
+Severity.............................................................2
+Description of Vulnerabilities.......................................3
+Solution.............................................................4
+Time Table...........................................................5
+Credits..............................................................6
+References...........................................................7
+About Flexera .......................................................8
+Verification.........................................................9
+ 
+======================================================================
 
-CVE-2018-1054
--------------
+1) Affected Software
+ 
+Linux Kernel versions 4.1.x prior 4.1.49, 4.4.x prior to 4.4.114, 4.9.x
+prior to 4.9.71, and 4.14.x prior to 4.14.8.
+ 
+======================================================================
 
-389-ds-base: remote Denial of Service (DoS) via search filters in 
-SetUnicodeStringFromUTF_8 in collate.c
+2) Severity
+ 
+Rating: Less critical
+Impact: DoS (Denial of Service)
+Where:  Local Area Network
+ 
+======================================================================
 
-A flaw was found in 389 Directory Server that affects all versions. An
-improper handling of the search feature with an extended filter, when
-read access on <attribute_name> is enabled, in SetUnicodeStringFromUTF_8
-function in collate.c, can lead to out-of-bounds memory operations. This
-may allow a remote unauthenticated attacker to trigger a server crash,
-thus resulting in denial of service.
+3) Description of Vulnerabilities
+ 
+Secunia Research has discovered multiple vulnerabilities in Linux Kernel,
+which can be exploited by malicious people to cause a DoS (Denial of
+Service).
+ 
+An error in the "get_pipe()" function (drivers/usb/usbip/stub_rx.c) can be
+exploited to cause an out-of-bounds read memory access and subsequently
+trigger a BUG() failure and a kernel crash by sending a specially crafted
+USB over IP packet.
+ 
+An error in the "stub_recv_cmd_submit()" function
+(drivers/usb/usbip/stub_rx.c) when handling CMD_SUBMIT packets can be
+exploited to trigger an arbitrary memory allocation and subsequently cause a
+kernel crash by sending a specially crafted USB over IP packet.
+ 
+These vulnerabilities are confirmed in version 4.14.0-rc1 and reported in
+versions 4.4.x prior to 4.4.114, 4.9.x prior to 4.9.71, and 4.14.x prior to
+4.14.8. Other versions may also be affected.
+ 
+An error in the "stub_send_ret_submit()" function
+(drivers/usb/usbip/stub_tx.c) can be exploited to trigger a NULL pointer
+dereference and subsequently cause a kernel crash by sending a specially
+crafted USB over IP packet.
+ 
+Successful exploitation of the vulnerabilities requires USB over IP daemon
+(usbipd) to be running.
+ 
+This vulnerability is confirmed in version 4.14.0-rc1 and reported in
+versions 4.1.x prior 4.1.49, 4.4.x prior to 4.4.107, 4.9.x prior to 4.9.71,
+and 4.14.x prior to 4.14.8. Other versions may also be affected.
+ 
+======================================================================
 
-CVSSv3: 7.5/CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H
+4) Solution
+ 
+Update to version 4.1.49, 4.4.114, 4.9.71, or 4.14.8.
+https://git.kernel.org/linus/635f545a7e8be7596b9b2b6a43cab6bbd5a88e43
+https://git.kernel.org/linus/c6688ef9f29762e65bce325ef4acd6c675806366
+https://git.kernel.org/linus/be6123df1ea8f01ee2f896a16c2b7be3e4557a5a
+ 
+======================================================================
 
-Thanks,
-Dhiru
+5) Time Table
+ 
+2017/11/29 - Linux Kernel team contacted with vulnerability details.
+2017/11/29 - Linux Kernel team confirmed the vulnerabilities.
+2017/12/07 - Public disclosure of the vulnerabilities.
+2017/12/11 - Release of Secunia Advisory SA77000.
+2017/12/11 - Public disclosure of Secunia Research Advisory.
+2017/12/21 - Split Secunia Advisory SA77000 into Secunia Advisories
+             SA77000, SA80722, and SA80601 concerning the
+             vulnerabilities. Updated Secunia Research Advisory
+             due to GIT commits having been applied and certain
+             fixed versions having been released.
+2017/12/27 - Updated due to updates of Secunia Advisories SA77000,
+             SA80722, and SA80601.
+2018/02/01 - Updated due to updates of Secunia Advisories SA77000,
+             SA80722, and SA80601.
+ 
+======================================================================
+
+6) Credits
+ 
+Jakub Jirasek, Secunia Research at Flexera.
+ 
+======================================================================
+
+7) References
+ 
+The Flexera CNA has assigned the CVE-2017-16912, CVE-2017-16913, and
+CVE-2017-16914 identifiers for the vulnerabilities through the Common
+Vulnerabilities and Exposures (CVE) project.
+ 
+======================================================================
+
+8) About Flexera
+ 
+Flexera helps application producers and enterprises increase application
+usage and the value they derive from their software.
+ 
+http://www.flexera.com
+ 
+Flexera delivers market-leading Software Vulnerability Management solutions
+enabling enterprises to proactively identify and remediate software
+vulnerabilities, effectively reducing the risk of costly security breaches.
+ 
+https://www.flexera.com/enterprise/products/
+ 
+Flexera supports and contributes to the community in several ways. We have
+always believed that reliable vulnerability intelligence and tools to aid
+identifying and fixing vulnerabilities should be freely available for
+consumers to ensure that users, who care about their online privacy and
+security, can stay secure.
+Only a few vendors address vulnerabilities in a proper way and help users
+get updated and stay secure. End-users (whether private individuals or
+businesses) are otherwise left largely alone, and that is why back in 2002,
+Secunia Research started investigating, coordinating disclosure and
+verifying software vulnerabilities.
+In 2016, Secunia Research became a part of Flexera and today our in-house
+software vulnerability research remains the core of the Software
+Vulnerability Management products at Flexera.
+ 
+https://www.flexera.com/enterprise/company/about/secunia-research/
+ 
+The public Secunia Advisory database contains information for researchers,
+security enthusiasts, and consumers to lookup individual products and
+vulnerabilities and assess, whether they need to take any actions to secure
+their systems or whether a given vulnerability has already been discovered
+ 
+https://secuniaresearch.flexerasoftware.com/community/advisories/
+ 
+======================================================================
+
+9) Verification
+ 
+Please verify this advisory by visiting the Secunia Research website:
+https://secuniaresearch.flexerasoftware.com/secunia_research/2017-21
+ 
+======================================================================
+
+
