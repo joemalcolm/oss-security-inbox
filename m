@@ -1,4 +1,9 @@
-Received: (qmail 8085 invoked by uid 550); 7 Apr 2022 09:00:23 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5349" "Friday" "2" "February" "2018" "13:40:32" "+0100" "Secunia Research" "vuln@secunia.com" "<000e01d39c23$0408cb70$0c1a6250$@secunia.com>" "140" "[oss-security] Secunia Research: Linux Kernel USB over IP Information Disclosure Vulnerability" nil nil nil "2" "2018020212:40:32" "[oss-security] Secunia Research: Linux Kernel USB over IP Information Disclosure Vulnerability" (number mark "U       vuln@secunia Feb  2  140/5349  " thread-indent "\"[oss-security] Secunia Research: Linux Kernel USB over IP Information Disclosure Vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 30560 invoked by uid 550); 2 Feb 2018 12:52:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,88 +12,160 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5315 invoked from network); 7 Apr 2022 08:53:33 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1649321601;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=yckr7PJNIMMthFLMCXzqsWZslbPgX5RLaE3NxKJL8FY=;
-	b=C0Z1AXZZ8RLgI9FZw9X4TiS9j7P7k+9WjGqsHYPshnShIpblgsWPobfROGnGr8KRNaMeEy
-	ZC5b0zPZ2D3VBCvre5zUzVH3VNKhXkTHqJu3pJEvxdlmbihePBLIgXe1ZfBDbwEmQC1vvL
-	qMnYAUYeTJMLpgcyqggKtCRzvd1O4B4=
-X-MC-Unique: yxMMZrH2NOydSVnpNTXnvg-1
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=yckr7PJNIMMthFLMCXzqsWZslbPgX5RLaE3NxKJL8FY=;
-        b=GrrLV4fPh3GE1f0CdIlPE/mpFHbpus8g2pm9oBaECPkn3HsQ93sejmaOsdtPVcfa6c
-         vCIRFYWx9U3D+pHSEdHcvTWqi6ytZHACX5DMVMOCFVBjDJCnlwuIQMJEq+R+XZRJy0Xh
-         TI6s+QnXRQJB7/C+QCpu3EjMIJPU4Gz2tMg94HkEb8b6Kt4pLLaBLSE3GxzVmYNOSDPP
-         ONvh3+ypQAW1ankGO6+ei5A+40kHY39guCaya2UPGXIIWrIUqFiHQ7kBHeb8CiOu6v/q
-         OmQcISYCCKtuGISAXJOslnuz08ExG6gRCDpDLp1NsnvtSUDSa2uBE239IIuqOE2/HjLw
-         MhJg==
-X-Gm-Message-State: AOAM532WwsH5b09cigw7nWzSKc1UfomhBLVqaHsVfUCMo+cBqomhHXM/
-	danMLqgCghukzOE4OlJpvWWU0pQG96F/Ab/M9nUR9kQYiJC+4gRvqn1uef4tS36QLUR82NIthv8
-	12YaXY4PTTULwPGL0BDHU2taZw5du
-X-Received: by 2002:a17:906:2991:b0:6cd:ac19:ce34 with SMTP id x17-20020a170906299100b006cdac19ce34mr12356628eje.746.1649321599110;
-        Thu, 07 Apr 2022 01:53:19 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJwIrxSehfOpO6/GnvU9an2PbYDbmiERfKGYvuiXBvZGkXOyr3bGIi+23aMfR6gjTUEh4hQLEA==
-X-Received: by 2002:a17:906:2991:b0:6cd:ac19:ce34 with SMTP id x17-20020a170906299100b006cdac19ce34mr12356615eje.746.1649321598871;
-        Thu, 07 Apr 2022 01:53:18 -0700 (PDT)
-Message-ID: <6e8a1fe2-b07f-b5b7-0bac-495f70c88e12@redhat.com>
-Date: Thu, 7 Apr 2022 10:53:17 +0200
+Received: (qmail 19596 invoked from network); 2 Feb 2018 12:40:47 -0000
+From: "Secunia Research" <vuln@secunia.com>
+To: <oss-security@lists.openwall.com>
+Cc: <vuln@secunia.com>
+References: 
+In-Reply-To: 
+Date: Fri, 2 Feb 2018 13:40:32 +0100
+Message-ID: <000e01d39c23$0408cb70$0c1a6250$@secunia.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-To: Solar Designer <solar@openwall.com>, kangel <kangel@zju.edu.cn>
-Cc: oss-security@lists.openwall.com, pgn@zju.edu.cn, qiuhao@sysec.org,
- Pedro Sampaio <psampaio@redhat.com>
-References: <657e93b4.3cced.18001ce5999.Coremail.kangel@zju.edu.cn>
- <20220407083543.GA16833@openwall.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-In-Reply-To: <20220407083543.GA16833@openwall.com>
-Authentication-Results: relay.mimecast.com;
-	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=pbonzini@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain;
+	charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] Linux kernel: x86/kvm: null-ptr-deref in
- kvm_dirty_ring_push
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AdOcIge+jLKQJPsrSsOfHaHh6KM9zAAAKjrg
+Content-Language: en-us
+Subject: [oss-security] Secunia Research: Linux Kernel USB over IP Information Disclosure Vulnerability
 
-On 4/7/22 10:35, Solar Designer wrote:
-> On Thu, Apr 07, 2022 at 10:15:42AM +0800, kangel wrote:
->>      We found a null-ptr-deref in the kvm module which can lead to DoS. This flaw is in kvm_dirty_ring_push in virt/kvm/dirty_ring.c. The linux kernel version is 5.17.0-rc8. We would appreciate a CVE ID if this is a security issue.
-> 
-> Further in the linux-distros thread, this got assigned CVE-2022-1263,
-> however is this really a security issue - in other words, is a security
-> boundary crossed in triggering the bug?  I think it is not, and if so
-> the CVE ID should probably be rejected.  From the PoC:
+======================================================================
 
-Alexander,
+ 
+                     Secunia Research 2017/12/11
+ 
+    Linux Kernel USB over IP Information Disclosure Vulnerability
+ 
+======================================================================
 
-indeed it doesn't cross guest-host boundaries.  However, /dev/kvm is 
-accessible by unprivileged users, so it should be treated like any other 
-unprivileged NULL pointer dereference in Linux.  I do not apply an 
-embargo for those bugs, but whether to assign a CVE is not my choice.
+Table of Contents
+ 
+Affected Software....................................................1
+Severity.............................................................2
+Description of Vulnerability.........................................3
+Solution.............................................................4
+Time Table...........................................................5
+Credits..............................................................6
+References...........................................................7
+About Flexera .......................................................8
+Verification.........................................................9
+ 
+======================================================================
 
-(As an aside, this is the third fuzzing bug reported for KVM on 
-security@kernel.org and linux-distros, but I think only one of them was 
-really security sensitive).
+1) Affected Software
+ 
+Linux Kernel versions 4.4.x prior to 4.4.114, 4.9.x prior to 4.9.79, and
+4.14.x prior to 4.14.8.
+ 
+======================================================================
 
-Thanks,
+2) Severity
+ 
+Rating: Not critical
+Impact: Information Disclosure
+Where:  Local System
+ 
+======================================================================
 
-Paolo
+3) Description of Vulnerability
+ 
+Secunia Research has discovered a vulnerability in Linux Kernel, which can
+be exploited by malicious, local users to disclose potentially sensitive
+information.
+ 
+An error in the vhci_hcd driver can be exploited to disclose otherwise
+restricted kernel memory address.
+ 
+Successful exploitation of this vulnerability requires a USB device attached
+over IP.
+ 
+The vulnerability is confirmed in version 4.14.0-rc1 and reported in
+versions 4.4.x prior to 4.4.114, 4.9.x prior to 4.9.79, and 4.14.x prior to
+4.14.8. Other versions may also be affected.
+ 
+======================================================================
 
->> 		res = syscall(__NR_openat, 0xffffffffffffff9cul, "/dev/kvm", 0ul, 0ul);
-> 
-> In fact, also in the linux-distros thread it was promptly agreed that
-> this doesn't need an embargo - perhaps precisely because of no security
-> relevance?  If so, that should have been said explicitly, so a CVE ID
-> wouldn't be assigned (it was by another person).
+4) Solution
+ 
+Update to version 4.4.114, 4.9.79, or 4.14.8.
+https://git.kernel.org/linus/2f2d0088eb93db5c649d2a5e34a3800a8a935fc5
+ 
+======================================================================
+
+5) Time Table
+ 
+2017/11/29 - Linux Kernel team contacted with vulnerability details.
+2017/11/29 - Linux Kernel team confirmed the vulnerability.
+2017/12/07 - Public disclosure of the vulnerability.
+2017/12/11 - Release of Secunia Advisory SA77000.
+2017/12/11 - Public disclosure of Secunia Research Advisory.
+2017/12/21 - Moved this vulnerability from Secunia Advisory SA77000
+             to SA80454. Updated Secunia Research Advisory
+             due to a GIT commit having been applied and certain
+             fixed versions having been released.
+2017/12/27 - Updated due to an update of Secunia Advisory SA80454.
+2018/02/01 - Updated due to an update of Secunia Advisory SA80454.
+ 
+======================================================================
+
+6) Credits
+ 
+Jakub Jirasek, Secunia Research at Flexera.
+ 
+======================================================================
+
+7) References
+ 
+The Flexera CNA has assigned the CVE-2017-16911 identifier for the
+vulnerability through the Common Vulnerabilities and Exposures (CVE)
+project.
+ 
+======================================================================
+
+8) About Flexera
+ 
+Flexera helps application producers and enterprises increase application
+usage and the value they derive from their software.
+ 
+http://www.flexera.com
+ 
+Flexera delivers market-leading Software Vulnerability Management solutions
+enabling enterprises to proactively identify and remediate software
+vulnerabilities, effectively reducing the risk of costly security breaches.
+ 
+https://www.flexera.com/enterprise/products/
+ 
+Flexera supports and contributes to the community in several ways. We have
+always believed that reliable vulnerability intelligence and tools to aid
+identifying and fixing vulnerabilities should be freely available for
+consumers to ensure that users, who care about their online privacy and
+security, can stay secure.
+Only a few vendors address vulnerabilities in a proper way and help users
+get updated and stay secure. End-users (whether private individuals or
+businesses) are otherwise left largely alone, and that is why back in 2002,
+Secunia Research started investigating, coordinating disclosure and
+verifying software vulnerabilities.
+In 2016, Secunia Research became a part of Flexera and today our in-house
+software vulnerability research remains the core of the Software
+Vulnerability Management products at Flexera.
+ 
+https://www.flexera.com/enterprise/company/about/secunia-research/
+ 
+The public Secunia Advisory database contains information for researchers,
+security enthusiasts, and consumers to lookup individual products and
+vulnerabilities and assess, whether they need to take any actions to secure
+their systems or whether a given vulnerability has already been discovered
+ 
+https://secuniaresearch.flexerasoftware.com/community/advisories/
+ 
+======================================================================
+
+9) Verification
+ 
+Please verify this advisory by visiting the Secunia Research website:
+https://secuniaresearch.flexerasoftware.com/secunia_research/2017-20
+ 
+======================================================================
+
+
 
