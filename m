@@ -1,146 +1,150 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/06/1
-Message-ID: <20180606133359.149aeded@redhat.com>
-Date: Wed, 6 Jun 2018 13:33:59 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: Denis Magda <dmagda@...che.org>
-Cc: oss-security@...ts.openwall.com, dev <dev@...ite.apache.org>, "Rai, Harendra" <harendra.rai@....com>
-Subject: Re: [CVE-2014-0114]: Apache Ignite is vulnerable to existing CVE-2014-0114
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/02/1
+Message-ID: <000e01d39c23$0408cb70$0c1a6250$@secunia.com>
+Date: Fri, 2 Feb 2018 13:40:32 +0100
+From: "Secunia Research" <vuln@...unia.com>
+To: <oss-security@...ts.openwall.com>
+Cc: <vuln@...unia.com>
+Subject: Secunia Research: Linux Kernel USB over IP Information Disclosure Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi Denis!
+======================================================================
 
-On Fri, 1 Jun 2018 10:16:50 -0700 Denis Magda wrote:
+ 
+                     Secunia Research 2017/12/11
+ 
+    Linux Kernel USB over IP Information Disclosure Vulnerability
+ 
+======================================================================
 
-> [CVE-2014-0114]: Apache Ignite is vulnerable to existing CVE-2014-0114
-> 
-> Severity: Important
-> 
-> Vendor: The Apache Software Foundation
-> 
-> Versions Affected: Apache Ignite 2.4 or earlier
-> 
-> Impact:
-> An attacker can execute arbitrary code on Ignite nodes in the case
-> when Ignite classpath contains arbitrary vulnerable classes.
-> 
-> Description:
-> Apache Ignite used commons-beanutils-1.8.3.jar library which did not
-> suppress the class property, which allowed remote attackers to
-> "manipulate" the ClassLoader and execute arbitrary code via the class
-> parameter, as demonstrated by the passing of this parameter to the
-> getClass method of the ActionForm object in Struts 1.
+Table of Contents
+ 
+Affected Software....................................................1
+Severity.............................................................2
+Description of Vulnerability.........................................3
+Solution.............................................................4
+Time Table...........................................................5
+Credits..............................................................6
+References...........................................................7
+About Flexera .......................................................8
+Verification.........................................................9
+ 
+======================================================================
 
-This announcement is very light on details.  Would it be possible to
-provide more details, ideally a link to the fix that was applied to
-address this issue?
+1) Affected Software
+ 
+Linux Kernel versions 4.4.x prior to 4.4.114, 4.9.x prior to 4.9.79, and
+4.14.x prior to 4.14.8.
+ 
+======================================================================
 
-Searching for more information, I found out that the upstream Jira
-ticket for this issue should be:
+2) Severity
+ 
+Rating: Not critical
+Impact: Information Disclosure
+Where:  Local System
+ 
+======================================================================
 
-https://issues.apache.org/jira/browse/IGNITE-8472
+3) Description of Vulnerability
+ 
+Secunia Research has discovered a vulnerability in Linux Kernel, which can
+be exploited by malicious, local users to disclose potentially sensitive
+information.
+ 
+An error in the vhci_hcd driver can be exploited to disclose otherwise
+restricted kernel memory address.
+ 
+Successful exploitation of this vulnerability requires a USB device attached
+over IP.
+ 
+The vulnerability is confirmed in version 4.14.0-rc1 and reported in
+versions 4.4.x prior to 4.4.114, 4.9.x prior to 4.9.79, and 4.14.x prior to
+4.14.8. Other versions may also be affected.
+ 
+======================================================================
 
-The ticket is non-public, but its content is leaked via a mailing list:
+4) Solution
+ 
+Update to version 4.4.114, 4.9.79, or 4.14.8.
+https://git.kernel.org/linus/2f2d0088eb93db5c649d2a5e34a3800a8a935fc5
+ 
+======================================================================
 
-https://www.mail-archive.com/search?l=issues%40ignite.apache.org&q=subject%3AIGNITE-8472
+5) Time Table
+ 
+2017/11/29 - Linux Kernel team contacted with vulnerability details.
+2017/11/29 - Linux Kernel team confirmed the vulnerability.
+2017/12/07 - Public disclosure of the vulnerability.
+2017/12/11 - Release of Secunia Advisory SA77000.
+2017/12/11 - Public disclosure of Secunia Research Advisory.
+2017/12/21 - Moved this vulnerability from Secunia Advisory SA77000
+             to SA80454. Updated Secunia Research Advisory
+             due to a GIT commit having been applied and certain
+             fixed versions having been released.
+2017/12/27 - Updated due to an update of Secunia Advisory SA80454.
+2018/02/01 - Updated due to an update of Secunia Advisory SA80454.
+ 
+======================================================================
 
-This has some important info, indicating that the problem (only?)
-affects Ignite for .NET.  The reported problem basically seems to be:
-Ignite for .NET bundles commons-beanutils 1.8.3 and that should be
-upgraded to 1.9.2.  Looking into apache.ignite.2.4.0.nupkg and
-apache.ignite.2.5.0.nupkg, I can see that commons-beanutils upgrade as
-requested did happen in 2.5.0.
+6) Credits
+ 
+Jakub Jirasek, Secunia Research at Flexera.
+ 
+======================================================================
 
-Note that I do not see any commons-beanutils jar in
-apache-ignite-fabric-2.4.0-bin.zip and
-apache-ignite-fabric-2.5.0-bin.zip.  Are those, as well as source
-distribution, considered unaffected?
+7) References
+ 
+The Flexera CNA has assigned the CVE-2017-16911 identifier for the
+vulnerability through the Common Vulnerabilities and Exposures (CVE)
+project.
+ 
+======================================================================
 
-Now back to the CVE - I do not believe that your re-use of the old
-CVE-2014-0114 is correct.  In the report, there was some ambiguity
-whether Struts or Commons-BeanUtils should be blamed for the flaw,
-however it seems to be explicit enough that the CVE-2014-0114 is for
-Struts:
+8) About Flexera
+ 
+Flexera helps application producers and enterprises increase application
+usage and the value they derive from their software.
+ 
+http://www.flexera.com
+ 
+Flexera delivers market-leading Software Vulnerability Management solutions
+enabling enterprises to proactively identify and remediate software
+vulnerabilities, effectively reducing the risk of costly security breaches.
+ 
+https://www.flexera.com/enterprise/products/
+ 
+Flexera supports and contributes to the community in several ways. We have
+always believed that reliable vulnerability intelligence and tools to aid
+identifying and fixing vulnerabilities should be freely available for
+consumers to ensure that users, who care about their online privacy and
+security, can stay secure.
+Only a few vendors address vulnerabilities in a proper way and help users
+get updated and stay secure. End-users (whether private individuals or
+businesses) are otherwise left largely alone, and that is why back in 2002,
+Secunia Research started investigating, coordinating disclosure and
+verifying software vulnerabilities.
+In 2016, Secunia Research became a part of Flexera and today our in-house
+software vulnerability research remains the core of the Software
+Vulnerability Management products at Flexera.
+ 
+https://www.flexera.com/enterprise/company/about/secunia-research/
+ 
+The public Secunia Advisory database contains information for researchers,
+security enthusiasts, and consumers to lookup individual products and
+vulnerabilities and assess, whether they need to take any actions to secure
+their systems or whether a given vulnerability has already been discovered
+ 
+https://secuniaresearch.flexerasoftware.com/community/advisories/
+ 
+======================================================================
 
-http://openwall.com/lists/oss-security/2014/06/15/10
+9) Verification
+ 
+Please verify this advisory by visiting the Secunia Research website:
+https://secuniaresearch.flexerasoftware.com/secunia_research/2017-20
+ 
+======================================================================
 
-As noted in the mail, the problem wasn't fixed in Commons-BeanUtils,
-which only added mechanisms to make it easy for applications using
-Commons-BeanUtils to easily disable processing of the "class"
-property.  It did not even disable processing by default, as noted in
-the release notes:
 
-http://commons.apache.org/proper/commons-beanutils/javadocs/v1.9.2/RELEASE-NOTES.txt
 
-"""
-Release 1.9.2 mainly addresses a potential security issue when accessing
-properties in an uncontrolled way. In a nutshell, if an application that uses
-Commons BeanUtils passes property paths from an external source directly to
-the getProperty() method of BeanUtilsBean, an attacker can access the class
-loader via the class property available on all Java objects.
-
-In version 1.9.2 now a special BeanIntrospector class was added which allows
-suppressing this property. Note that this BeanIntrospector is NOT enabled by
-default! Commons BeanUtils is a low-level library, and on this layer it cannot
-be decided whether access to a certain property is legal or not. Therefore,
-an application has to activate this suppressing BeanIntrospector explicitly.
-This can be done with the following lines of code:
-
-BeanUtilsBean bub = new BeanUtilsBean();
-bub.getPropertyUtils().addBeanIntrospector(
-    SuppressPropertiesBeanIntrospector.SUPPRESS_CLASS);
-
-Now all access to properties has to be done via the specially configured
-BeanUtilsBean instance. More information about this issue can be found at
-https://issues.apache.org/jira/browse/BEANUTILS-463 or in section 2.5
-of the user's guide.
-"""
-
-Note that there was a request to assign a separate CVE for the
-BeanUtils part that was rejected (actually, CVE-2014-3540 was assigned
-and later rejected), see this post from Mitre for details:
-
-http://openwall.com/lists/oss-security/2014/07/08/1
-
-It has few parts that are relevant to Ignite:
-
-"""
-In particular, the 1597344 change has this documentation:
-
-   Adding this instance as BeanIntrospector to an instance of
-   PropertyUtilsBean suppresses the class property; it can then no
-   longer be accessed.
-
-This is an additional step that would need to be followed for any
-currently shipped product that relies on commons-beanutils. Simply
-picking up version 1.9.2 does not solve the problem. The product's
-source code must additionally be modified by (for example) changing
-or adding an addBeanIntrospector method call.
-"""
-
-Did Ignite get any other changes related to this issue apart from
-upgrading Commons-BeanUtils?  If not, Commons-BeanUtils upgrade should
-not be expected to solve the problem (if Ignite actually was affected /
-used Commons-BeanUtils in a vulnerable way, which isn't demonstrated in
-the IGNITE-8472).
-
-Another relevant part is:
-
-"""
-If any other product makes a security announcement that they have
-added
-addBeanIntrospector(SuppressPropertiesBeanIntrospector.SUPPRESS_CLASS)
-or equivalent code as a change to the default behavior, then there can
-be an individual CVE ID for that product. However, if any other product
-simply makes a security announcement that they have decided to ship
-commons-beanutils 1.9.2 -- but the class property remains exposed in
-the product as it is shipped and installed by default -- then a CVE ID
-would not be assigned.
-"""
-
-If Ignite got/gets a fix that leverages the SUPPRESS_CLASS from
-Commons-BeanUtils 1.9.2 to disable processing of the class property, it
-should get its own CVE assigned.
-
--- 
-Tomas Hoger / Red Hat Product Security
