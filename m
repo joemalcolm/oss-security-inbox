@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1015" "Wednesday" "12" "April" "2017" "15:00:45" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20170412150045.2ce45082@pc1>" "26" "Re: [oss-security] CVE-2017-7592: libtiff: left shift" "^Date:" nil nil "4" "2017041213:00:45" "[oss-security] CVE-2017-7592: libtiff: left shift" (number mark "        hanno@hboeck Apr 12   26/1015  " thread-indent "\"Re: [oss-security] CVE-2017-7592: libtiff: left shift\"\n") "<20170410072931.o5ptcv5uyhw34gxf@perpetual.pseudorandom.co.uk>" ("<457875.000636221-sendEmail@localhost>" "<20170410072931.o5ptcv5uyhw34gxf@perpetual.pseudorandom.co.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6552" "Friday" "2" "February" "2018" "13:49:37" "+0100" "Secunia Research" "vuln@secunia.com" "<001001d39c24$48886390$d9992ab0$@secunia.com>" "160" "[oss-security] Secunia Research: Linux Kernel USB over IP Multiple Denial of Service Vulnerabilities" "^Cc:" nil nil "2" "2018020212:49:37" "[oss-security] Secunia Research: Linux Kernel USB over IP Multiple Denial of Service Vulnerabilities" (number mark "U       vuln@secunia Feb  2  160/6552  " thread-indent "\"[oss-security] Secunia Research: Linux Kernel USB over IP Multiple Denial of Service Vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21875 invoked by uid 550); 12 Apr 2017 13:00:58 -0000
+Received: (qmail 31809 invoked by uid 550); 2 Feb 2018 12:52:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,44 +11,181 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 21852 invoked from network); 12 Apr 2017 13:00:58 -0000
-Message-ID: <20170412150045.2ce45082@pc1>
-In-Reply-To: <20170410072931.o5ptcv5uyhw34gxf@perpetual.pseudorandom.co.uk>
-References: <457875.000636221-sendEmail@localhost>
-	<20170410072931.o5ptcv5uyhw34gxf@perpetual.pseudorandom.co.uk>
-X-Mailer: Claws Mail 3.15.0-dirty (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+Received: (qmail 28038 invoked from network); 2 Feb 2018 12:49:51 -0000
+References: 
+In-Reply-To: 
+Message-ID: <001001d39c24$48886390$d9992ab0$@secunia.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 12 Apr 2017 15:00:45 +0200
-From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AdOcI0Ts9bxn5kCIQ/G0CSQ78X6h8gAAH+Ew
+Content-Language: en-us
+Cc: <vuln@secunia.com>
+Date: Fri, 2 Feb 2018 13:49:37 +0100
+From: "Secunia Research" <vuln@secunia.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2017-7592: libtiff: left shift
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Secunia Research: Linux Kernel USB over IP Multiple Denial of Service Vulnerabilities
+To: <oss-security@lists.openwall.com>
 
-On Mon, 10 Apr 2017 08:29:31 +0100
-Simon McVittie <smcv@debian.org> wrote:
+======================================================================
 
-> This is a bug, but how is it a security vulnerability? Can an attacker
-> exploit it for DoS or code execution or something with a malformed
-> TIFF image?
+ 
+                     Secunia Research 2017/12/11
+ 
+ Linux Kernel USB over IP Multiple Denial of Service Vulnerabilities
+ 
+======================================================================
 
-Quesitons like this come up quite often. Maybe we need a final definite
-answer to them all :-)
+Table of Contents
+ 
+Affected Software....................................................1
+Severity.............................................................2
+Description of Vulnerabilities.......................................3
+Solution.............................................................4
+Time Table...........................................................5
+Credits..............................................................6
+References...........................................................7
+About Flexera .......................................................8
+Verification.........................................................9
+ 
+======================================================================
 
-The reasoning is roughly: It's undefined behavior, so the compiler can
-do whatever it wants. So all undefined behavior should be considered
-security relevant, because the compiler can always do something that
-will turn it into a vuln.
-Whether you agree to this or not, it's definitely good secure coding
-practice to avoid undefined behavior. People have different ideas of
-what to call a vuln and what not. CVE-assigners have lately taken a
-very wide approach of declaring many things as cve-worthy. Just accept
-that not every CVE means "it's definitely exploitable".
+1) Affected Software
+ 
+Linux Kernel versions 4.1.x prior 4.1.49, 4.4.x prior to 4.4.114, 4.9.x
+prior to 4.9.71, and 4.14.x prior to 4.14.8.
+ 
+======================================================================
 
---=20
-Hanno B=C3=B6ck
-https://hboeck.de/
+2) Severity
+ 
+Rating: Less critical
+Impact: DoS (Denial of Service)
+Where:  Local Area Network
+ 
+======================================================================
 
-mail/jabber: hanno@hboeck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+3) Description of Vulnerabilities
+ 
+Secunia Research has discovered multiple vulnerabilities in Linux Kernel,
+which can be exploited by malicious people to cause a DoS (Denial of
+Service).
+ 
+An error in the "get_pipe()" function (drivers/usb/usbip/stub_rx.c) can be
+exploited to cause an out-of-bounds read memory access and subsequently
+trigger a BUG() failure and a kernel crash by sending a specially crafted
+USB over IP packet.
+ 
+An error in the "stub_recv_cmd_submit()" function
+(drivers/usb/usbip/stub_rx.c) when handling CMD_SUBMIT packets can be
+exploited to trigger an arbitrary memory allocation and subsequently cause a
+kernel crash by sending a specially crafted USB over IP packet.
+ 
+These vulnerabilities are confirmed in version 4.14.0-rc1 and reported in
+versions 4.4.x prior to 4.4.114, 4.9.x prior to 4.9.71, and 4.14.x prior to
+4.14.8. Other versions may also be affected.
+ 
+An error in the "stub_send_ret_submit()" function
+(drivers/usb/usbip/stub_tx.c) can be exploited to trigger a NULL pointer
+dereference and subsequently cause a kernel crash by sending a specially
+crafted USB over IP packet.
+ 
+Successful exploitation of the vulnerabilities requires USB over IP daemon
+(usbipd) to be running.
+ 
+This vulnerability is confirmed in version 4.14.0-rc1 and reported in
+versions 4.1.x prior 4.1.49, 4.4.x prior to 4.4.107, 4.9.x prior to 4.9.71,
+and 4.14.x prior to 4.14.8. Other versions may also be affected.
+ 
+======================================================================
+
+4) Solution
+ 
+Update to version 4.1.49, 4.4.114, 4.9.71, or 4.14.8.
+https://git.kernel.org/linus/635f545a7e8be7596b9b2b6a43cab6bbd5a88e43
+https://git.kernel.org/linus/c6688ef9f29762e65bce325ef4acd6c675806366
+https://git.kernel.org/linus/be6123df1ea8f01ee2f896a16c2b7be3e4557a5a
+ 
+======================================================================
+
+5) Time Table
+ 
+2017/11/29 - Linux Kernel team contacted with vulnerability details.
+2017/11/29 - Linux Kernel team confirmed the vulnerabilities.
+2017/12/07 - Public disclosure of the vulnerabilities.
+2017/12/11 - Release of Secunia Advisory SA77000.
+2017/12/11 - Public disclosure of Secunia Research Advisory.
+2017/12/21 - Split Secunia Advisory SA77000 into Secunia Advisories
+             SA77000, SA80722, and SA80601 concerning the
+             vulnerabilities. Updated Secunia Research Advisory
+             due to GIT commits having been applied and certain
+             fixed versions having been released.
+2017/12/27 - Updated due to updates of Secunia Advisories SA77000,
+             SA80722, and SA80601.
+2018/02/01 - Updated due to updates of Secunia Advisories SA77000,
+             SA80722, and SA80601.
+ 
+======================================================================
+
+6) Credits
+ 
+Jakub Jirasek, Secunia Research at Flexera.
+ 
+======================================================================
+
+7) References
+ 
+The Flexera CNA has assigned the CVE-2017-16912, CVE-2017-16913, and
+CVE-2017-16914 identifiers for the vulnerabilities through the Common
+Vulnerabilities and Exposures (CVE) project.
+ 
+======================================================================
+
+8) About Flexera
+ 
+Flexera helps application producers and enterprises increase application
+usage and the value they derive from their software.
+ 
+http://www.flexera.com
+ 
+Flexera delivers market-leading Software Vulnerability Management solutions
+enabling enterprises to proactively identify and remediate software
+vulnerabilities, effectively reducing the risk of costly security breaches.
+ 
+https://www.flexera.com/enterprise/products/
+ 
+Flexera supports and contributes to the community in several ways. We have
+always believed that reliable vulnerability intelligence and tools to aid
+identifying and fixing vulnerabilities should be freely available for
+consumers to ensure that users, who care about their online privacy and
+security, can stay secure.
+Only a few vendors address vulnerabilities in a proper way and help users
+get updated and stay secure. End-users (whether private individuals or
+businesses) are otherwise left largely alone, and that is why back in 2002,
+Secunia Research started investigating, coordinating disclosure and
+verifying software vulnerabilities.
+In 2016, Secunia Research became a part of Flexera and today our in-house
+software vulnerability research remains the core of the Software
+Vulnerability Management products at Flexera.
+ 
+https://www.flexera.com/enterprise/company/about/secunia-research/
+ 
+The public Secunia Advisory database contains information for researchers,
+security enthusiasts, and consumers to lookup individual products and
+vulnerabilities and assess, whether they need to take any actions to secure
+their systems or whether a given vulnerability has already been discovered
+ 
+https://secuniaresearch.flexerasoftware.com/community/advisories/
+ 
+======================================================================
+
+9) Verification
+ 
+Please verify this advisory by visiting the Secunia Research website:
+https://secuniaresearch.flexerasoftware.com/secunia_research/2017-21
+ 
+======================================================================
+
+
