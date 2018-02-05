@@ -1,29 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/05/1
-Message-ID: <CALJHwhT7V1h7fWpfJZ=9t5mWzMfyeN+s3+9u1-epeX28LdmENA@mail.gmail.com>
-Date: Mon, 05 Mar 2018 05:15:13 +0000
-From: Wade Mealing <wmealing@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Linux kernel: CVE-2018-1065 - netfilter rule insertion may panic system.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/05/1
+Message-ID: <CAHmME9qztqkfFWeHJuaDviei2eqGW-AF+tSh7Su3ZBu6za5+kw@mail.gmail.com>
+Date: Mon, 5 Feb 2018 01:01:30 +0100
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: KDE Notification URI Loading Issues
 Content-Type: text/plain; charset=utf-8
 
-This flaw was reported to nedev via syzbot (the Syzkaller fuzzer). It is
-possible that a user with the capabilities to insert iptables/netfilter
-rules is able to insert a rule that can jump to a non user-user
-chain/invalid chain.  This is not possible using the iptables/netfilter
-libitc code, however it is possible via setsockopt with the appropriate
-capabilities set.
+Hi folks,
 
-The bug is not specific to SCTP it is just coincidental that the syzcaller
-code has tripped it using this path. The patches fix both ipv6 and ipv4
-paths that are able to trigger the issue.
+There's an interesting issue in the progress of being addressed over
+in KDE-land. Since it's already public, I'm told it's okay to discuss
+it wherever. Here's the discussion: https://phabricator.kde.org/D10188
 
-Thanks
+Essentially, chat programs or the like that render remote data into
+notifications allow remote users to inject some limited subset of
+HTML, which is then rendered by the KDE notification UI. One
+implication of this is that an attacker can cause a victim to load an
+arbitrary URI in an <img> tag. There are probably other implications
+too.
 
-Report:
-http://lists.openwall.net/netdev/2018/01/27/46
+The solution in that thread was to make an HTML whitelist by way of
+the XML parser, allowing some innocuous looking tags but blocking
+others. There's a patch for 5.8 LTS which will also be coming out in
+5.12, and probably the various distros should update. The KDE folks
+are preparing some official text on the matter to this end.
 
-Proposed patch:
-<http://patchwork.ozlabs.org/patch/870355/>
-http://patchwork.ozlabs.org/patch/870355/
+One interesting aspect of KDE's current fix is that in the case of an
+<img> tag, the following code then examines the "src" attribute:
 
++ const QUrl url(src);
++ if (url.isLocalFile()) {
++ out.writeAttribute(QStringLiteral("src"), src);
++ } else {
++ //image denied for security reasons! Do not copy the image src here!
++ }
+
+Aside from the fact that this places a great deal of faith in QUrl and
+also does not re-serialize the value from the url object since it
+simply reuses src after validation, it also very explicitly allows for
+local files to be specified. I'm told that this is intended by the
+spec, and changing the behavior would be a violation of the spec. Is
+the spec then broken? The developers think not, and believe that
+programs using the global notification mechanism should be responsible
+for supplying their own whitelist sanitization. I suppose the approach
+of offloading the security issues onto the other people is not really
+a shocking one. But it does raise the question of how we should be
+approaching this API in general:
+
+- Should we audit all consumers of it and duplicate the whitelist
+parsing situation and open various bug reports?
+- Should we produce an additional patch, not carried by upstream, but
+shipped by various distros, that entirely disables <img> loading
+(perhaps except from data: paths)?
+- Should we just live with IRC clients that allow remote users to load
+arbitrary files into memory (remote mem leak --> remote file
+disclosure) or cause other mischief?
+- Something else?
+
+I'm interested in hearing various approaches to this.
+
+Regards,
+Jason
