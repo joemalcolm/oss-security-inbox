@@ -1,138 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/14/9
-Message-Id: <E1fpcx4-00075z-B7@xenbits.xenproject.org>
-Date: Tue, 14 Aug 2018 17:17:50 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 268 v2 - Use of v2 grant tables may cause crash on ARM
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/05/3
+Message-ID: <20180205120720.GB21315@perpetual.pseudorandom.co.uk>
+Date: Mon, 5 Feb 2018 13:07:20 +0100
+From: Simon McVittie <smcv@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: KDE Notification URI Loading Issues
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Mon, 05 Feb 2018 at 01:01:30 +0100, Jason A. Donenfeld wrote:
+> Essentially, chat programs or the like that render remote data into
+> notifications allow remote users to inject some limited subset of
+> HTML, which is then rendered by the KDE notification UI.
 
-                    Xen Security Advisory XSA-268
-                              version 2
+I think this is for the chat programs to fix, really: they're the
+boundary between untrusted and trusted content. The Notifications
+implementation can't be expected to know which applications generate
+notifications internally from trusted code, and which applications
+interpolate untrusted content into notifications.
 
-             Use of v2 grant tables may cause crash on ARM
+Arguably the chat programs should be parsing messages into an internal
+representation that is designed to be unable to represent anything
+potentially malicious, then re-serializing that internal representation
+to HTML for the notification.
 
-UPDATES IN VERSION 2
-====================
+A minimal implementation would be to strip all HTML from the version of
+the chat message that goes to the notifications API, and only include
+the text content. That probably doesn't work for protocols whose users
+make extensive use of image-based "custom smilies" and pseudo-emoji, though.
 
-Public release.
+> Aside from the fact that this places a great deal of faith in QUrl
 
-ISSUE DESCRIPTION
-=================
+Which other URL parser would you have used in Qt-based programs? If QUrl
+isn't correctly implemented, the solution would seem to be to fix it,
+not to implement a parallel URL parser with different bugs?
 
-ARM never properly implemented grant table v2, either in the
-hypervisor or in Linux.
+> it also very explicitly allows for
+> local files to be specified. I'm told that this is intended by the
+> spec, and changing the behavior would be a violation of the spec. Is
+> the spec then broken? The developers think not, and believe that
+> programs using the global notification mechanism should be responsible
+> for supplying their own whitelist sanitization.
 
-Unfortunately, an ARM guest can still request v2 grant tables; they
-will simply not be properly set up, resulting in subsequent
-grant-related hypercalls hitting BUG() checks.
+Presumably these global notifications are either an implementation of
+the freedesktop.org Notifications API, or something very similar. If so,
+they're intended for many uses, not just chat - for instance my GNOME
+desktop uses notifications for "low disk space on /home", "you have a
+meeting in 15 minutes" and "now playing: <song title>", among others.
+Chat clients are interesting because they process untrusted content,
+not because they are the only user of this API.
 
-IMPACT
-======
+My understanding is that, if a local application that is not chat and
+does not process untrusted data wants to include an icon or image in
+its notifications, the intention of the spec is that it can do so;
+for instance media players that show "now playing:" notifications
+often include the album cover from the user's music library in the
+notification. Forbidding that would remove functionality from all
+notification clients, not just chat programs.
 
-An unprivileged guest can cause a BUG() check in the hypervisor,
-resulting in a denial-of-service.
+Similarly, if a chat client translates ":-)" into an <img> that
+references an icon from the user's icon theme (for example it might be
+file:///usr/share/icons/Adwaita/48x48/emotes/face-smile.png on GNOME) then
+that's something we can trust not to be malicious (if there's malicious
+content in /usr/share we have much bigger problems). I personally don't
+want text smilies translated to images, but some people do.
 
-VULNERABLE SYSTEMS
-==================
+> - Should we audit all consumers of it and duplicate the whitelist
+> parsing situation and open various bug reports?
 
-Only ARM systems are vulnerable.  All supported versions of Xen are
-vulnerable.
+The consumers that process untrusted data (chat clients etc.) and
+send HTML in their notifications, yes; all consumers of the same API,
+probably not, because many of them don't process untrusted data.
 
-MITIGATION
-==========
+If a chat client sends partially or fully attacker-supplied HTML in
+its notifications then it's almost certainly passing the same HTML to
+a WebKit WebView or a similar general-purpose HTML renderer to display
+the message in its own window, for which it will need to take very
+similar precautions anyway.
 
-None.
+> - Should we just live with IRC clients that allow remote users to load
+> arbitrary files into memory
 
-CREDITS
-=======
+If the text-only IRC protocol can do this then something has gone very
+wrong. There's a de facto standard for mIRC-compatible colours, bold
+and italic in IRC (which would be translated into very simple HTML for
+clients that use HTML notifications or a WebView to render messages),
+but I'm not aware of anything that would be translated into an <img>,
+except for possibly translating text smilies like ":-)" or emoji into
+a file:/// reference to a trusted, local icon from the icon theme.
 
-This issue was discovered by 王磊 of Samsung.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue by
-preventing a guest from switching to grant v2.
-
-xsa268.patch           xen-unstable
-xsa268-4.11.patch      Xen 4.11.0
-xsa268-4.10-?.patch    Xen 4.10.x
-xsa268-4.9-?.patch     Xen 4.9.x, Xen 4.8.x
-xsa268-4.7-?.patch     Xen 4.7.x
-xsa268-4.6-?.patch     Xen 4.6.x
-
-$ sha256sum xsa268*
-f336b45676e73f8b102e5dddf78af2d1d288f9a254142a8a8e9949db55e1cc3b  xsa268.meta
-ca5f69cb8cfb74fae44a0f39f80ec9ae4d269c4895f36311b50d191be97bbcf0  xsa268.patch
-93a68a5b23aedc6adf0aae23303dc8eb2c02dc40a5e1d7eb0a1b497cd66da209  xsa268-4.6-1.patch
-5b74afd13d96779a72dc34ba7c63a1735cd267fb9bb643f735ac69b0e6ff54d5  xsa268-4.6-2.patch
-820e1018f76ef2828b1cbb33e2966b99f6934a80ab55f11749ff847d375d1b02  xsa268-4.7-1.patch
-233f7e69e5fb931d2e5cf03f4407f38ff960c039c9eced957df13d3cc37fa6b1  xsa268-4.7-2.patch
-4a0c705f0266185b32daf313e686abc340e2fbb1a1644647500fc405bc180913  xsa268-4.9-1.patch
-ce16eaab94cd1e64f9c9127b64da7ebb6a7758eb540fecc3bbcc2dbfbcc4d7e2  xsa268-4.9-2.patch
-f413d41fadefe0e275c8bff16a2061bb325f3900b7ccf214a9e97fabf3ee1a89  xsa268-4.10-1.patch
-531654f82908c1aa7b0fcea818c82c4b53d4750a697db3353cc05e9e91e5d639  xsa268-4.10-2.patch
-baeb6b2c28a9cbe929c9cf34398780002fffe12b928df4d1e5951c0a5b51336a  xsa268-4.11.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJbcw6rAAoJEIP+FMlX6CvZ+i0H/0E0ezqXT58ivMM4QAGo5kkc
-jlJH1WikhqPYEaZ2XSLDSOj9Ukllfc3WKokxMCZJzFZPtjCBFd5ClVikDNiUotl3
-tOyHTh+qQrVasWWZq0MG6vg+yCMBrVXolY8K7YgfT9A+nbkzaTTsTGTMKVKZwGDI
-jXoUUtkYn0n3OlnbNYYV3GcCTvfLnXxSAGzC+0NxjrKR4lXjZ/dT0U5eQerZfNha
-bEsP7Stt4B+ITWNIuMxLPYGNKNHq65gaTNmBQbxRE0lRdn8N5Q5KNeccpOhOKJMi
-U+ZhZ8cLEN1wNyZItO/MMB/zjVZwYaYxPYyKXAaf9uU21oOGFO6vrnF8f9oKlnQ=
-=ocO0
------END PGP SIGNATURE-----
-
-Download attachment "xsa268.meta" of type "application/octet-stream" (1982 bytes)
-
-Download attachment "xsa268.patch" of type "application/octet-stream" (1629 bytes)
-
-Download attachment "xsa268-4.6-1.patch" of type "application/octet-stream" (3507 bytes)
-
-Download attachment "xsa268-4.6-2.patch" of type "application/octet-stream" (1663 bytes)
-
-Download attachment "xsa268-4.7-1.patch" of type "application/octet-stream" (3518 bytes)
-
-Download attachment "xsa268-4.7-2.patch" of type "application/octet-stream" (1663 bytes)
-
-Download attachment "xsa268-4.9-1.patch" of type "application/octet-stream" (3519 bytes)
-
-Download attachment "xsa268-4.9-2.patch" of type "application/octet-stream" (1664 bytes)
-
-Download attachment "xsa268-4.10-1.patch" of type "application/octet-stream" (3539 bytes)
-
-Download attachment "xsa268-4.10-2.patch" of type "application/octet-stream" (1627 bytes)
-
-Download attachment "xsa268-4.11.patch" of type "application/octet-stream" (1642 bytes)
+    smcv
