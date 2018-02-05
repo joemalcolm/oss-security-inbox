@@ -1,41 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/05/5
-Message-ID: <CAHmME9or=myCkR3_iNfZ__k0tcYpPK5_FBpSqdR43p9p5qYEgA@mail.gmail.com>
-Date: Fri, 5 Jan 2018 21:28:11 +0100
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE-2017-18021: predictably random password generation in third-party pass-compatible software, "QtPass"
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/05/4
+Message-Id: <8B6190B4-46B5-45D1-B079-BD6AABEDDC64@beckweb.net>
+Date: Mon, 5 Feb 2018 13:17:40 +0100
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-Hi folks,
+Jenkins is an open source automation server which enables developers around 
+the world to reliably build, test, and deploy their software. The following 
+plugin releases contain fixes for security vulnerabilities:
 
-"QtPass" is a separate project entirely from pass. It shares no code
-with "pass", the project I maintain. But, "QtPass" does endeavor to be
-compatible with pass. However, it is in fact a completely separate
-project. Best practice is probably not to stray too far from my nest
-to these third-party GUIs, given bugs like this one, CVE-2017-18021, a
-way of trivially predicting all passwords ever generated with
-"QtPass".
+* Android Lint 2.6
+* CCM 3.2
+* Credentials Binding 1.15
+* JUnit 1.24
+* Pipeline: Supporting APIs 2.18
 
-Bug report is here: https://github.com/IJHack/QtPass/issues/338
-Fix landed in v1.2.1: https://github.com/IJHack/QtPass/releases/tag/v1.2.1
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2018-02-05/
 
-All passwords generated with "QtPass"'s built-in password generator
-are possibly predictable and enumerable by hackers. The generator used
-libc's random(), seeded with srand(msecs), where msecs is not the
-msecs since 1970 (not that that'd be secure anyway), but rather the
-msecs since the last second. This means there are only 1000 different
-sequences of generated passwords. Disaster.
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-If you're using this software, now would be a good time to change all
-your passwords and regenerate them using a secure utility such as pass
-(what this mailing list is about), or update to the latest version of
-this third party "QtPass" software and regenerate from there. All
-distributions should update and remove vulnerable versions from their
-package trees.
+If you find security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
 
-The fix I proposed to the "QtPass" developers involves using Qt 5.10's
-built-in CSPRNG wrapper, or /dev/urandom for older Qt versions.
+---
 
-Regards,
-Jason
+SECURITY-521
+JUnit plugin is affected by an XML External Entity (XXE) processing 
+vulnerability. This allows an attacker to configure build processes such 
+that JUnit plugin parses a maliciously crafted file that uses external 
+entities for extraction of secrets from the Jenkins master, server-side 
+request forgery, or denial-of-service attacks.
+
+
+SECURITY-659 (CCM)
+SECURITY-660 (Android Lint)
+Multiple plugins based on Static Analysis Utilities plugin are affected
+by an XML External Entity (XXE) processing vulnerability. This allows an
+attacker to configure build processes such that one of these plugins
+parses a maliciously crafted file that uses external entities for
+extraction of secrets from the Jenkins master, server-side request
+forgery, or denial-of-service attacks.
+
+
+SECURITY-698
+Credentials Binding plugin allows specifying passwords and other secrets as
+environment variables, and will hide them from console output in builds.
+
+However, since Jenkins will try to resolve references to other environment 
+variables in environment variables passed to a build, this can result in 
+other values than the one specified being provided to a build. For 
+example, the value p4$$w0rd would result in Jenkins passing on p4$w0rd, as 
+$$ is the escape sequence for a single $.
+
+Credentials Binding plugin does not prevent such a transformed value (e.g. 
+p4$w0rd) from being shown on the build log, allowing users to reconstruct 
+the actual password value from the transformed one.
+
+Credentials Binding plugin will now escape any $ characters in password 
+values so they are correctly passed to the build.
+
+
+SECURITY-699
+Arbitrary code execution due to incomplete sandbox protection in Pipeline: 
+Supporting APIs Plugin: Methods related to Java deserialization like 
+readResolve implemented in Pipeline scripts were not subject to sandbox 
+protection, and could therefore execute arbitrary code. This could be 
+exploited e.g. by regular Jenkins users with the permission to configure 
+Pipelines in Jenkins, or by trusted committers to repositories containing 
+Jenkinsfiles.
+
+Deserialization of objects in Pipeline is now also subject to sandbox 
+protection.
