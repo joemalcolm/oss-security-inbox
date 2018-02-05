@@ -1,77 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/05/2
-Message-ID: <086671aa-726c-8f27-0a6d-fd38461df00b@gmx.ch>
-Date: Wed, 5 Dec 2018 20:44:20 +0100
-From: sjw@....ch
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/05/5
+Message-Id: <AB29FCB4-3D11-43B6-AC4D-5AC1E3B3D426@beckweb.net>
+Date: Mon, 5 Feb 2018 14:09:15 +0100
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: PHP imap_open() script injection
+Subject: Re: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-Hi
 
-New releases to fix this have been scheduled for tomorrow:
-
-https://github.com/php/php-src/blob/php-5.6.39/NEWS#L11
-https://github.com/php/php-src/blob/php-7.0.33/NEWS#L11
-https://github.com/php/php-src/blob/php-7.1.25/NEWS#L21
-https://github.com/php/php-src/blob/php-7.2.13/NEWS#L25
-https://github.com/php/php-src/blob/php-7.3.0/NEWS#L162
-
-Note: support for PHP 7.0 has officially ended two days ago, but the
-patch is included in 7.0.33.
-
-Quoting from UPGRADING:
-"rsh/ssh logins are disabled by default. Use imap.enable_insecure_rsh if
-you want to enable them. Note that the IMAP
-library does not filter mailbox names before passing them to rsh/ssh
-command, thus passing untrusted data to this function with rsh/ssh
-enabled is insecure."
-
-The relevant commit can be found on
-https://github.com/php/php-src/commit/3a144d3f7f6bad308e2bf112ebf16829eb298f20
-
-The assigned CVE-2018-19158 in https://bugs.php.net/bug.php?id=77153
-seems to be a typo of CVE-2018-19518.
-
-
-
-
-
-Am 25.11.18 um 14:30 schrieb Salvatore Bonaccorso:
-> Hi,
+> On 5. Feb 2018, at 13:17, Daniel Beck <ml@...kweb.net> wrote:
 > 
-> On Thu, Nov 22, 2018 at 09:02:14PM +0100, Hanno Böck wrote:
->> Hi,
->>
->> This was apparently posted on some russian forum recently and then
->> re-posted to github:
->> https://antichat.com/threads/463395/#post-4254681
->> https://github.com/Bo0oM/PHP_imap_open_exploit/blob/master/exploit.php
->>
->> PoC code:
->> $server = "x -oProxyCommand=echo\tZWNobyAnMTIzNDU2Nzg5MCc+L3RtcC90ZXN0MDAwMQo=|base64\t-d|sh}";
->> imap_open('{'.$server.':143/imap}INBOX', '', '') or die("\n\nError: ".imap_last_error());
->>
->> It's pretty self explaining, it seems imap_open() will pass things to
->> ssh and this is vulnerable to a shell injection.
->>
->> Impact would be mostly relevant if someone has some imap functionality
->> where a user can define a custom imap server. (Though it might also be
->> used as a bypass for environments where exec() and similar functions
->> are restricted.)
->>
->> I reported it to upstream PHP a few days ago, it was closed as a
->> duplicate, so it seems they already knew about it. It's unfixed in
->> current versions.
-> 
-> CVE-2018-19518 has been assigned by MITRE for this issue.
-> 
-> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-19518
-> 
-> Regards,
-> Salvatore
-> 
+> SECURITY-521
+> JUnit plugin is affected by an XML External Entity (XXE) processing 
+> vulnerability. This allows an attacker to configure build processes such 
+> that JUnit plugin parses a maliciously crafted file that uses external 
+> entities for extraction of secrets from the Jenkins master, server-side 
+> request forgery, or denial-of-service attacks.
+
+CVE-2018-1000056
 
 
+> SECURITY-659 (CCM)
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+CVE-2018-1000054
+
+
+> SECURITY-660 (Android Lint)
+
+CVE-2018-1000055
+
+
+> SECURITY-698
+> Credentials Binding plugin allows specifying passwords and other secrets as
+> environment variables, and will hide them from console output in builds.
+> 
+> However, since Jenkins will try to resolve references to other environment 
+> variables in environment variables passed to a build, this can result in 
+> other values than the one specified being provided to a build. For 
+> example, the value p4$$w0rd would result in Jenkins passing on p4$w0rd, as 
+> $$ is the escape sequence for a single $.
+> 
+> Credentials Binding plugin does not prevent such a transformed value (e.g. 
+> p4$w0rd) from being shown on the build log, allowing users to reconstruct 
+> the actual password value from the transformed one.
+> 
+> Credentials Binding plugin will now escape any $ characters in password 
+> values so they are correctly passed to the build.
+
+CVE-2018-1000057
+
+
+> SECURITY-699
+> Arbitrary code execution due to incomplete sandbox protection in Pipeline: 
+> Supporting APIs Plugin: Methods related to Java deserialization like 
+> readResolve implemented in Pipeline scripts were not subject to sandbox 
+> protection, and could therefore execute arbitrary code. This could be 
+> exploited e.g. by regular Jenkins users with the permission to configure 
+> Pipelines in Jenkins, or by trusted committers to repositories containing 
+> Jenkinsfiles.
+> 
+> Deserialization of objects in Pipeline is now also subject to sandbox 
+> protection.
+
+CVE-2018-1000058
+
