@@ -1,43 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/12/1
-Message-ID: <77328247.2610677.1536746725418@mail.yahoo.com>
-Date: Wed, 12 Sep 2018 10:05:25 +0000 (UTC)
-From: Andrea Cosentino <ancosen1985@...oo.com>
-To: Dev <dev@...el.apache.org>, Users <users@...el.apache.org>,  Apache Security Team <security@...che.org>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>,  "Shapira Eedo (GE Digital)" <eedo.shapira@...com>
-Subject: [SECURITY] New security advisory CVE-2018-8041 released for Apache Camel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/06/1
+Message-ID: <ecde8662-12c8-e921-f169-e7bd64967e31@apache.org>
+Date: Tue, 6 Feb 2018 12:55:10 -0500
+From: Dave Brondsema <brondsem@...che.org>
+To: dev@...ura.apache.org, users@...ura.apache.org, announce@...che.org, oss-security@...ts.openwall.com, security@...che.org
+Subject: [SECURITY] CVE-2018-1299 Apache Allura directory traversal vulnerability
 Content-Type: text/plain; charset=utf-8
 
-A new security advisory has been released for Apache Camel, that is fixed in
-the recent 2.20.4, 2.21.2 and 2.22.1 releases:
+CVE-2018-1299 Apache Allura directory traversal vulnerability
 
-CVE-2018-8041: Apache Camel's Mail is vulnerable to path traversal
-
-Severity: MEDIUM
+Severity: Important
 
 Vendor: The Apache Software Foundation
 
-Versions Affected: Camel 2.20.0 to 2.20.3, Camel 2.21.0 to 2.21.1 and Camel 2.22.0 
+Versions Affected: Apache Allura 1.7.0 and earlier
 
-The unsupported Camel 2.x (2.19 and earlier) versions may be also affected.
+Description:
+Unauthenticated attackers may retrieve arbitrary files through the Allura web
+application.  Some webservers used with Allura, such as Nginx, Apache/mod_wsgi
+or paster may prevent the attack from succeeding.  Others, such as gunicorn do
+not prevent it and leave Allura vulnerable.
 
-Description: Apache Camel's Mail is vulnerable to path traversal
+Mitigation:
+Users of vulnerable webservers with Allura should upgrade to Allura 1.8.0
+immediately.
 
-Mitigation: 2.20.x users should upgrade to 2.20.4, 2.21.0 users should upgrade to 2.21.2 and Camel 2.22.x users should upgrade to 2.22.1
-
-The JIRA tickets: https://issues.apache.org/jira/browse/CAMEL-12630 
-refers to the various commits that resovoled the issue, and have more details.
-
-Credit: This issue was discovered by Eedo Shapira <eedo dot shapira at ge dot com> from GE .
-
-On behalf of the Apache Camel PMC
-
-
---
-Andrea Cosentino 
-----------------------------------
-Apache Camel PMC Chair
-Apache Karaf Committer
-Apache Servicemix PMC Member
-Email: ancosen1985@...oo.com
-Twitter: @oscerd2
-Github: oscerd
+Credit:
+This issue was discovered by Everardo Padilla Saca
