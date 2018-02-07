@@ -1,151 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/05/1
-Message-ID: <d8b7ec52-6138-de35-d309-e8b776f247eb@isc.org>
-Date: Wed, 4 Jul 2018 17:50:09 -0800
-From: Michael McNally <mcnally@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/07/2
+Message-ID: <20180207103943.wwijjdmnlzpp46lm@jumper.schlittermann.de>
+Date: Wed, 7 Feb 2018 11:39:43 +0100
+From: Heiko Schlittermann <hs@...littermann.de>
 To: oss-security@...ts.openwall.com
-Cc: "security-officer@....org" <security-officer@....org>
-Subject: BIND Operational Notification: Extremely large zone transfers can result in corrupted journal files or server process termination
+Subject: CVE-2018-6789 Exim 4.90 and earlier: buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-I believe this meets the criteria for submission to your list,
-apologies if it does not.  But since we generally publish BIND
-Security Advisories to this list, I thought we should also provide
-this Operational Notification (which is our term for an issue
-which does not rise to the level of a disclosable security vulnerability
-under our policy but which has enough potential operational impact that
-we feel operators and packagers should be made aware.)
+CVE-2018-6789 Exim 4.90 and earlier
+===================================
 
-Sincerely,
+There is a buffer overflow in an utility function, if some pre-conditions
+are met.  Using a handcrafted message, remote code execution seems to be
+possible.
 
-Michael McNally
-ISC Security Officer
+A patch exists already and is being tested.
 
-----
+Currently we're unsure about the severity, we *believe*, an exploit
+is difficult. A mitigation isn't known.
 
-BIND Operational Notification: Extremely large zone transfers can
-result in corrupted journal files or server process termination
+Next steps:
 
-Summary:
+* t0:     Distros will get access to our "security" non-public git repo
+          (based on the SSH keys known to us)
+* t0 +7d: Patch will be published on the official public git repo
 
-   In versions of BIND released prior to July 2018 (before BIND
-   9.9.13, 9.10.8, 9.11.4, 9.12.2, and BIND 9.13.1) it is possible
-   for extraordinarily large zone transfers to cause several related
-   problems, with possible outcomes including corrupted journal
-   files or server exit due to assertion failure.
+t0 will be around 2018-02-08.
 
-Posting date:        03 July 2018
-Program Impacted:    BIND
-Versions affected:   9.0.x -> 9.8.8, 9.9.0 -> 9.9.12, 9.10.0 -> 9.10.7,
-                     9.11.0 -> 9.11.3, 9.12.0 -> 9.12.1, and versions
-                     9.13.0 -> 9.13.1 of the 9.13 development branch
+Timeline
+--------
 
-Description:
+* 2018-02-05 Report from Meh Chang <meh@...co.re> via exim-security mailing list
+* 2018-02-06 Request CVE on https://cveform.mitre.org/ (heiko)
+             CVE-2018-6789
+* 2018-02-07 Announcement to the public via exim-users, exim-maintainers
+             mailing lists and on oss-security mailing list
 
-   A problem in named can potentially lead to corrupted journal
-   files when handling extraordinarily large zone transfers.
+Updates will follow. Here and on https://exim.org/security/CVE-2018-6789.txt
+(Link will start to exist around 11.00 UTC).
 
-Impact:
+    Best regards from Dresden/Germany
+    Viele Grüße aus Dresden
+    Heiko Schlittermann
+-- 
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+ ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
 
-   This problem potentially affects authoritative servers providing
-   slave service for zones if the server accepts zone data via
-   incremental zone transfer (IXFR) from a master source or if a
-   large zone transfer (AXFR) is received and ixfr-from-differences
-   is not set to "no" (the default setting is "yes", and possible
-   values are "yes", "no", "slave", and "master").
-
-   We warned of a similar class of problems in 2016 in this previous
-   Operational Notification "A party that is allowed control over
-   zone data can overwhelm a server by transferring huge quantities
-   of data." (https://kb.isc.org/article/AA-01390)
-
-Workarounds:
-
-   Like any unvalidated input, zone transfers are a potential source
-   of risk for servers under any circumstances.  BIND therefore
-   supports a variety of mechanisms to control zone transfer
-   permissions.  Permission to transfer can be restricted to trusted
-   servers using IP-address-based ACLs or shared secrets (TSIG keys)
-   or both.  Under most circumstances a slave server should not
-   encounter this defect when receiving data from a trusted server,
-   but it can be prevented entirely by forbidding incremental zone
-   transfer as a zone data transfer mechanism.  It may be preferable
-   to instead set a reasonable limit for the number of records which
-   may be in a zone (using the max-records parameter) which should
-   also prevent accidentally encountering this defect.
-
-   Servers which must accept zone data from untrusted sources (for
-   example, when seconding zones for other parties) are at slightly
-   higher risk if a party decides to deliberately feed a dangerously
-   large zone transfer.  Operators of servers which must accept
-   untrusted zone data should consider limiting zone size using
-   max-records, setting "ixfr-from-differences no;", or upgrading
-   to a version of BIND which will reject dangerously large transfers.
-
-Active exploits:
-
-   No known active exploits.
-
-Solution:
-
-   It is our opinion that most customers do not need to worry about
-   this issue unless they accept zone data via zone transfer from
-   untrusted sources, but we have included changes in upcoming
-   maintenance releases of BIND which will prevent the condition
-   from being reached.
-
-   Maintenance releases of BIND issued on or after 4 July 2018 will
-   contain change #4984, which will cause BIND to reject an
-   extraordinarily large IXFR if it is potentially large enough to
-   corrupt the journal file. These release candidates are available
-   now via https://www.isc.org/downloads and the change will be
-   included in future versions of BIND
-
-    BIND 9 version 9.9.13rc2
-    BIND 9 version 9.10.8rc2
-    BIND 9 version 9.11.4rc2
-    BIND 9 version 9.12.2rc2
-
-
-Do you still have questions?  Questions regarding this advisory
-should go to security-officer@....org.  To report a new issue,
-please encrypt your message using security-officer@....org's PGP
-key which can be found here:
-
-   https://www.isc.org/downloads/software-support-policy/openpgp-key/.
-
-If you are unable to use encrypted email, you may also report new
-issues at: https://www.isc.org/community/report-bug/.
-
-Note:
-
-   ISC patches only currently supported versions. When possible we
-   indicate EOL versions affected.  (For current information on
-   which versions are actively supported, please see
-   http://www.isc.org/downloads/).
-
-ISC Security Vulnerability Disclosure Policy:
-
-   Details of our current security advisory policy and practice can
-   be found here: https://kb.isc.org/article/AA-00861
-
-This Knowledge Base article https://kb.isc.org/article/AA-01627
-is the complete and official security advisory document.
-
-Legal Disclaimer:
-
-   Internet Systems Consortium (ISC) is providing this notice on
-   an "AS IS" basis. No warranty or guarantee of any kind is expressed
-   in this notice and none should be implied. ISC expressly excludes
-   and disclaims any warranties regarding this notice or materials
-   referred to in this notice, including, without limitation, any
-   implied warranty of merchantability, fitness for a particular
-   purpose, absence of hidden defects, or of non-infringement. Your
-   use or reliance on this notice or materials referred to in this
-   notice is at your own risk. ISC may change this notice at any
-   time.  A stand-alone copy or paraphrase of the text of this
-   document that omits the document URL is an uncontrolled copy.
-   Uncontrolled copies may lack important information, be out of
-   date, or contain factual errors.
-
-(c) 2001-2018 Internet Systems Consortium
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
