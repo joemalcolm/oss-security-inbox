@@ -1,4 +1,9 @@
-Received: (qmail 4017 invoked by uid 550); 30 Mar 2024 19:16:16 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["28623" "Thursday" "8" "February" "2018" "08:19:20" "+0100" "SEC Consult Vulnerability Lab" "research@sec-consult.com" "<3e9d24ce-dfc7-bea5-83f2-3e195e9ee2f8@sec-consult.com>" "662" "[oss-security] SEC Consult SA-20180207-0 :: Multiple buffer overflow vulnerabilities in InfoZip UnZip" nil nil nil "2" "2018020807:19:20" "[oss-security] SEC Consult SA-20180207-0 :: Multiple buffer overflow vulnerabilities in InfoZip UnZip" (number mark "U       research@sec Feb  8  662/28623 " thread-indent "\"[oss-security] SEC Consult SA-20180207-0 :: Multiple buffer overflow vulnerabilities in InfoZip UnZip\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 13631 invoked by uid 550); 8 Feb 2018 11:42:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,100 +12,679 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13408 invoked from network); 30 Mar 2024 19:03:27 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711825398; x=1712430198; darn=lists.openwall.com;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=t7pmvFny6BgHNFyXbtBWPW32upE+svhVvO1iAoHyGPg=;
-        b=baPffJKGFStEVqraz3yWRu19fbssI+nBtKVAgUAPlnuze7SUkyDDe2O1OzIk9U9cxd
-         nTYlfdZYijsfsHR8HJMmKk1ENPTGQFGzUYuyj6EqSguZ3jpRwcupJVfXcB3X9KE/8tk7
-         QuvgbdmKM9rEHCCalMDYlJSe1QoFh6KE51tcyb4QGzsYmL/8cqCDGUF4O06d5q30KKp6
-         oJ5M/QuZArNaSRojKmKfprdhTnWgLJXZ4OitQwdehojJ7RsfV3rof5ucbwnSpZgAvXvD
-         jefDJNFaoIpuGf5AA16LR+WYavVnZqUkijoXw7HdorxH1IBx21JJM3eorYjnpt5AuYSP
-         sv1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711825398; x=1712430198;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=t7pmvFny6BgHNFyXbtBWPW32upE+svhVvO1iAoHyGPg=;
-        b=hwsrv1E2r9uUUuq/6G1VfICLx7Nss4bK7nwAnMyp8ltY5sloFz2z/JWPAqjJg6/jnf
-         tkKO3IoZNbYp+Fesx9/JfGZNFokrn9RX6qMVSWJwu39gJTEx/n3I5G+6q+bthVngfKDI
-         rQxw07s+c0z2rkKeDVI+3/EQ/hb8n0cG5Xa0D1HpuCuJ22FchC18ByD9KMyjRKkJwKKy
-         R2V9c7ZhI8a81nG3cdsV3AVE8olq92eNXX4RRynSfSIeSnUCMyzr6hciRhwuNQmqyYDv
-         GBz/M0FNqstlNIF1LUans77G9WYWGEVLekM6xzzmTAsHfmVG8zpcjQM8axBmJqVzvZHf
-         E8AA==
-X-Gm-Message-State: AOJu0Yw4gfXWdvx0ckY3I57GHCe5WJ4YaJo8ns2JmGKbGVfLjKZZpPqP
-	YUS+kWPrRiKhM1pnn5Z05wvGhuKWRwKNhf3oySYMIpeNWE0oFiv6rW2xdeJMxBXxiKNjH1Xx3YV
-	J/iuEB3dEZTDJvPnzNp0StrivoGYvaeACSCD3+A==
-X-Google-Smtp-Source: AGHT+IGZlepBZci5VkudMT4azOcglcwXkFapj2KvbwqpsaFqft7jSXi0F+X+sSKPwhIDpEImDXJ0NlEdfWeaVj2yCfc=
-X-Received: by 2002:a05:651c:2005:b0:2d4:3c32:814d with SMTP id
- s5-20020a05651c200500b002d43c32814dmr2633663ljo.26.1711825398336; Sat, 30 Mar
- 2024 12:03:18 -0700 (PDT)
+Received: (qmail 25814 invoked from network); 8 Feb 2018 07:19:33 -0000
+From: SEC Consult Vulnerability Lab <research@sec-consult.com>
+Organization: SEC Consult Unternehmensberatung GmbH
+To: <oss-security@lists.openwall.com>
+Message-ID: <3e9d24ce-dfc7-bea5-83f2-3e195e9ee2f8@sec-consult.com>
+Date: Thu, 8 Feb 2018 08:19:20 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
-References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
- <ZgcOVnk5hCVkDUt/@ycc.fr> <uu9f4s$oga$2@ciao.gmane.io>
-In-Reply-To: <uu9f4s$oga$2@ciao.gmane.io>
-From: Loganaden Velvindron <loganaden@gmail.com>
-Date: Sat, 30 Mar 2024 23:03:05 +0400
-Message-ID: <CAOp4FwTiyuHZ9HGBzTx35gahFbkrTpjrm1oUPVWp8VAoQhSC1w@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000c918fe0614e56848"
-Subject: Re: [oss-security] Re: backdoor in upstream xz/liblzma leading to ssh
- server compromise
+Content-Type: multipart/signed; protocol="application/pkcs7-signature";
+	micalg=sha-256; boundary="------------ms020903090804000907050309"
+Subject: [oss-security] SEC Consult SA-20180207-0 :: Multiple buffer overflow vulnerabilities
+ in InfoZip UnZip
 
---000000000000c918fe0614e56848
-Content-Type: text/plain; charset="UTF-8"
+--------------ms020903090804000907050309
+Content-Type: text/plain; charset=utf-8
+Content-Language: de-DE
+Content-Transfer-Encoding: quoted-printable
 
-A look at systemd does show dlopen() to libarchive.
+SEC Consult Vulnerability Lab Security Advisory < 20180207-0 >
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+              title: Multiple buffer overflow vulnerabilities
+            product: InfoZip UnZip
+ vulnerable version: UnZip <=3D 6.00 / UnZip <=3D 6.1c22
+      fixed version: 6.10c23
+         CVE number: CVE-2018-1000031,CVE-2018-1000032,CVE-2018-1000033
+                     CVE-2018-1000034,CVE-2018-1000035
+             impact: high
+           homepage: http://www.info-zip.org/UnZip.html
+              found: 2017-11-03
+                 by: R. Freingruber (Office Vienna)
+                     SEC Consult Vulnerability Lab
+
+                     An integrated part of SEC Consult
+                     Bangkok - Berlin - Linz - Luxembourg - Montreal - Mosc=
+ow
+                     Kuala Lumpur - Singapore - Vienna (HQ) - Vilnius - Zur=
+ich
+
+                     https://www.sec-consult.com
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Vendor description:
+-------------------
+"UnZip is an extraction utility for archives compressed in .zip format (also
+called "zipfiles"). Although highly compatible both with PKWARE's PKZIP and
+PKUNZIP utilities for MS-DOS and with Info-ZIP's own Zip program, our
+primary objectives have been portability and non-MSDOS functionality.
+UnZip will list, test, or extract files from a .zip archive, commonly found
+on MS-DOS systems. The default behavior (with no options) is to extract into
+the current directory (and subdirectories below it) all files from the
+specified zipfile."
+
+Source: http://www.info-zip.org/UnZip.html
+
+InfoZip's UnZip is used as default utility for uncompressing ZIP archives
+on nearly all *nix systems. It gets shipped with many commerical products on
+Windows to provide (un)compressing functionality as well.
 
 
-Perhaps it was supposed to  be another point of entry.
+Business recommendation:
+------------------------
+InfoZip Unzip should be updated to the latest available version.
+
+
+Vulnerability overview/description:
+-----------------------------------
+1) Heap-based buffer overflow in password protected ZIP archives (CVE-2018-=
+1000035)
+
+InfoZip's UnZip suffers from a heap-based buffer overflow when uncompressing
+password protected ZIP archives. An attacker can exploit this vulnerability
+to overwrite heap chunks to get arbitrary code execution on the target syst=
+em.
+
+For newer builds the risk for this vulnerability is partially mitigated
+because modern compilers automatically replace unsafe functions with length
+checking variants of the same function (for example sprintf gets replaced
+by sprintf_chk). This is done by the compiler at locations were the length
+of the destination buffer can be calculated.
+
+Nevertheless, it must be mentioned that UnZip is used on many systems
+including older systems or on exotic architectures on which this protection
+is not in place. Moreover, pre-compiled binaries which can be found on the
+internet lack the protection because the last major release of InfoZip's
+UnZip was in 2009 and compilers didn't enable this protection per default at
+that time. The required compiler flags are also not set in the Makefile of
+UnZip. Compiled applications are therefore only protected if the used compi=
+ler
+has this protection enabled per default which is only the case with modern
+compilers.
+
+To trigger this vulnerability (and the following) it's enough to uncompress
+a manipulated ZIP archive. Any of the following invocations can be used to
+trigger and abuse the vulnerabilities:
+
+> unzip malicious.zip
+> unzip -p malicious.zip
+> unzip -t malicious.zip
+
+2) Heap-based out-of-bounds write (CVE-2018-1000031)
+
+This vulnerability only affects UnZip 6.1c22 (next beta version of UnZip).
+InfoZip's UnZip suffers from a heap-based out-of-bounds write if the
+archive filename does not contain a .zip suffix.
+
+3) Heap/BSS-based buffer overflow (Bypass of CVE-2015-1315) (CVE-2018-10000=
+32)
+
+This vulnerability only affects UnZip 6.1c22 (next beta version of UnZip).
+InfoZip's UnZip suffers from a heap/BSS-based buffer-overflow which
+can be used to write null-bytes out-of-bound when converting
+attacker-controlled strings to the local charset.
+
+4) Heap out-of-bounds access in ef_scan_for_stream (CVE-2018-1000033)
+
+This vulnerability only affects UnZip 6.1c22 (next beta version of UnZip).
+InfoZip's UnZip suffers from a heap out-of-bounds access
+vulnerability.
+
+5) Multiple vulnerabilities in the LZMA compression algorithm (CVE-2018-100=
+0034)
+
+This vulnerability only affects UnZip 6.1c22 (next beta version of UnZip).
+InfoZip's UnZip suffers from multiple vulnerabilities in the LZMA
+implementation. Various crash dumps have been supplied to the vendor
+but no further analysis has been performed.
+
+
+Proof of concept:
+-----------------
+1) Heap-based buffer overflow in password protected ZIP archives (CVE-2018-=
+1000035)
+
+Unzipping a malicious archive results in the following output:
+(On Ubuntu 16.04 with UnZip 6.0 which was installed via aptitude install un=
+zip)
+
+*** buffer overflow detected ***: unzip terminated
+=3D=3D=3D=3D=3D=3D=3D Backtrace: =3D=3D=3D=3D=3D=3D=3D=3D=3D
+/lib/x86_64-linux-gnu/libc.so.6(+0x*****)[0x************]
+/lib/x86_64-linux-gnu/libc.so.6(__fortify_fail+0x**)[0x************]
+/lib/x86_64-linux-gnu/libc.so.6(+0x*****)[0x************]
+/lib/x86_64-linux-gnu/libc.so.6(+0x*****)[0x************]
+/lib/x86_64-linux-gnu/libc.so.6(_IO_default_xsputn+0x**)[0x************]
+/lib/x86_64-linux-gnu/libc.so.6(_IO_vfprintf+0x**)[0x************]
+/lib/x86_64-linux-gnu/libc.so.6(__vsprintf_chk+0x**)[0x************]
+/lib/x86_64-linux-gnu/libc.so.6(__sprintf_chk+0x**)[0x************]
+unzip[0x40c02b]
+unzip[0x4049ac]
+unzip[0x40762c]
+unzip[0x409b60]
+unzip[0x411175]
+unzip[0x411bdf]
+unzip[0x404191]
+
+Function names can be mapped to the backtrace by compiling the application
+with debug symbols:
+
+(gdb) backtrace
+#0  0x000000000040c706 in UzpPassword ()
+#1  0x00000000004043ce in decrypt ()
+#2  0x000000000040731c in extract_or_test_entrylist ()
+#3  0x00000000004094af in extract_or_test_files ()
+#4  0x00000000004149a5 in do_seekable ()
+#5  0x000000000041540f in process_zipfiles ()
+#6  0x0000000000403921 in unzip ()
+
+The vulnerability resides inside the UzpPassword function in the following
+code snippet (file ./fileio.c):
+
+[1591]	if ((prompt =3D (char *)malloc(2*FILNAMSIZ + 15)) !=3D (char *)NULL)=
+ {
+[1592]		sprintf(prompt, LoadFarString(PasswPrompt),
+[1593]					FnFilter1(zfn), FnFilter2(efn));
+...
+[1595]	}=09=09=09=09=09
+=09=09=09=09=09
+The allocation at line 1591 allocates a fixed size buffer and then writes i=
+nto
+it at line 1592. It writes the following format string (PasswPrompt) into
+the buffer: "[%s] %s password: "
+
+This string has a length of 15 including the null-termination which explains
+the +15 in the allocation. The developer allocated 2*FILENAMESIZ which
+corresponds to 2 * PATH_MAX for the two format strings (zfn and efn).
+zfn is the archive filename and can therefore not exceed PATH_MAX.
+efn is the current processed filename inside the ZIP archive which should
+typically be smaller than PATH_MAX for normal files. However, since an
+attacker can manipulate the archive file the name can arbitrarily be chosen
+which leads to a heap-based buffer overflow.
+
+As already mentioned, modern compilers replace unsafe functions with
+safe alternatives as a defense in depth mechanism.
+This feature is called BOSC (Built-in object size checking) and is part
+of the FORTIFY_SOURCE=3D2 protection.
+The following link shows the source code (and vulnerability) inside
+the Ubuntu package:
+http://bazaar.launchpad.net/~ubuntu-branches/ubuntu/trusty/unzip/trusty-upd=
+ates/view/head:/fileio.c#L1593
+
+By checking the installed compiled binary the following code can be seen:
+(UnZip 6.0 from Ubuntu 16.04)
+
+0x40bfc6:    mov    edi,0x200f
+0x40bfcb:    mov    r13,r8
+0x40bfce:    mov    QWORD PTR [rsp+0x8],r9
+0x40bfd3:    call   0x401d30 <malloc@plt>
+...
+0x40c01a:    mov    edx,0x200f
+0x40c01f:    mov    esi,0x1
+0x40c024:    xor    eax,eax
+0x40c026:    call   0x401f40 <__sprintf_chk@plt>
+
+The code allocates 0x200f (=3D4096*2 + 15) bytes but the unsafe sprintf
+function was replaced with the length-checking sprintf_chk() function
+which receives as argument the size of the buffer (0x200f at address
+0x40c01a). The risk is therefore mitigated on Ubuntu (and other modern
+operating systems), at least with the currently used compiler default flags.
+
+However, many pre-compiled UnZip binaries can be found on the internet
+which are not compiled with this protection.
+For example, the following three links are the first links which can be
+found when searching for InfoZip UnZIP on the internet and which contain
+unprotected binaries:
+http://gnuwin32.sourceforge.net/packages/unzip.htm
+https://oss.oracle.com/el4/unzip/unzip.tar
+http://www.willus.com/archive/zip64/
+
+
+2) Heap-based out-of-bounds write (CVE-2018-1000031)
+
+When uncompressing ZIP archives the following code gets executed
+(file fileio.c:345 function set_zipfn_sgmnt_name() in UnZip 6.1c22):
+
+#define SGMNT_NAME_BOOST 8
+...
+	if (G.zipfn_sgmnt =3D=3D NULL)
+	{
+[1]		G.zipfn_sgmnt_size =3D (int)strlen(G.zipfn)+ SGMNT_NAME_BOOST;
+		if ((G.zipfn_sgmnt =3D izu_malloc(G.zipfn_sgmnt_size)) =3D=3D NULL)
+	...
+[2]	zfstrcpy(G.zipfn_sgmnt, G.zipfn);
+	/* Expect to find ".zXX" at the end of the segment file name. */
+[3]	sufx_len =3D IZ_MAX( 0, ((int)strlen(G.zipfn_sgmnt)- 4));
+[4]	suffix =3D G.zipfn_sgmnt+ sufx_len;
+	...
+	else	// No .zip extension
+	{
+[5]		zfstrcpy( (suffix+ sufx_len), ZSUFX);
+[6]		suffix +=3D sufx_len+ 2;
+	}
+	/* Insert the next segment number into the file name (G.zipfn_sgmnt). */
+[7]	sprintf(suffix, "%02d", (sgmnt_nr+ 1));
+
+G.zipfn is the filename / path of the archive file. Line [1] allocates space
+for this name plus 8 (SGMNT_NAME_BOOST). Line [2] copies the name.
+[3] and [4] calculate the end address minus 4 which should point to a suffix
+if one is present. After [4] the variable suffix already points to this
+address. However, line [5] adds sufx_len again to suffix, the write target
+is therefore the base address + 2*(allocation_length - 4) but the buffer
+can only hold allocation_len bytes.
+Line [7] is another out-of-bounds write because of line [6].
+
+Memory trace of the crash:
+#1 0xf7af3c2f in memcpy (/usr/lib/i386-linux-gnu/libasan.so.2+0x8ac2f)
+#2 0x80969be in set_zipfn_sgmnt_name unzip610c22/fileio.c:424
+#3 0x808eb82 in find_local_header unzip610c22/extract.c:4469
+#4 0x808eb82 in extract_or_test_entrylist unzip610c22/extract.c:4745
+#5 0x808eb82 in extract_or_test_files unzip610c22/extract.c:5698
+#6 0x80cf6ca in extract_archive_seekable unzip610c22/process.c:1314
+#7 0x80cf6ca in extract_archive unzip610c22/process.c:1465
+#8 0x80d5676 in process_zipfiles unzip610c22/process.c:2033
+#9 0x80636a2 in unzip unzip610c22/unzip.c:1840
+#10 0x804a5b6 in main unzip610c22/unzip.c:1280
+#11 0xf78cb636 in __libc_start_main (/lib/i386-linux-gnu/libc.so.6+0x18636)
+
+Please note that this vulnerability must not lead to a crash. If the
+overwritten memory is not used, the program works as expected.
+
+
+3) Heap/BSS-based buffer overflow (Bypass of CVE-2015-1315) (CVE-2018-10000=
+32)
+
+During parsing ZIP archives the function charset_to_intern() can be called
+(unix/Unix.c:2427) with the "string" argument pointing to attacker
+controlled data. This function converts the string in-place to another
+charset (string is an INOUT argument).
+
+The following code performs this task in the function:
+[1]		slen =3D strlen(string);
+[2]		s =3D string;
+[3]		dlen =3D buflen =3D 2 * slen;
+[4]		d =3D buf =3D izu_malloc(buflen + 1);
+		if (d)
+		{
+[5]			memset( buf, 0, buflen);
+
+			/* 2015-02-12 William Robinet, SMS.  CVE-2015-1315.
+			 * Added FILNAMSIZ check to avoid buffer overflow. Better would
+			 * be to pass in an actual destination buffer size.
+			 */
+[6]			if ((iconv(cd, &s, &slen, &d, &dlen) !=3D (size_t)-1) &&
+[7]			 (strlen(buf) < FILNAMSIZ))
+			{
+[8]				strncpy(string, buf, buflen);
+			}
+			izu_free(buf);
+		}
+=09=09
+The input string pointer is stored in the variable "string" and "s" (see [2=
+]).
+Line [6] tries to convert the input ("s") via iconv() to another charset.
+The destination is "d" / "buf" (see line [4]).
+This destination buffer has a size of two times the input length plus one (=
+[3]).
+
+The first problem can be found in line [5] which just initializes "buflen" =
+bytes
+and not "buflen+1" bytes. Consider the input string is empty, therefore sle=
+n=3D0.
+This will allocate 1 byte at line [4] because of the +1. However, [5] calls
+memset with buflen=3D0 which leaves the 1-byte buffer uninitialized. In lin=
+e [7]
+strlen() can therefore access data out-of-bounds if the uninitialized byte =
+does
+not contain a null-byte. This flaw is not critical because it can just cras=
+h the
+application. Nevertheless, it should be fixed.
+
+The second problem is harder to identify. The function do_string() is used =
+to
+parse strings from ZIP archives. If the option DS_FN gets passed, the string
+is written into the filename[] array from the global variable G.
+The code at extract.c:5584 (in the function extract_or_test_files()) calls
+for example this function with this option:
+
+do_string(__G__ G.crec.filename_length, DS_FN)) !=3D PK_COOL)
+
+Inside do_string() the following code can be found (fileio.c:3225):
+
+Ext_ASCII_TO_Native(G.filename, G.pInfo->hostnum, G.pInfo->hostver,
+	G.pInfo->HasUxAtt, (option =3D=3D DS_FN_L));
+
+The "Ext_ASCII_TO_Native" is a define which redirects to charset_to_intern(=
+).
+The first argument (G.filename in this case) is passed to this function
+and can be accessed with the "string" argument in the above code.
+At line [6] iconv() is used to convert the input string from one charset
+(e.g.: CP850) to another (e.g.: UTF-8). Therefore "buf" contains the
+converted string after this call. With line [8] this converted string
+should be copied over the original location from the argument
+(G.filename in our case).
+
+The strncpy at [8] limits the number of written characters to buflen.
+Because of [3] buflen is two times the input length and therefore a buffer
+overflow can happen (the real size of the input buffer is not passed to the
+function). This vulnerability was CVE-2015-1315 and an additional check was
+added to prevent this buffer overflow. The additional check at [7] checks
+the length of the converted string with this line:
+[7]			 (strlen(buf) < FILNAMSIZ))
+
+Only if this check is passed the code at [8] gets executed:
+
+[8]				strncpy(string, buf, buflen);
+
+This should logically limit the number of bytes which can be written to
+be smaller than FILNAMSIZ (even if the wrong, higher number, is passed
+to strncpy).
+
+For example:
+G.filename is defined in globals.h:372 (inside the Uz_Globs struct):
+
+char     filename[FILNAMSIZ];
+
+FILNAMSIZ is defined in unzpriv.h and is equal to PATH_MAX (4096).
+Therefore, filename can hold a buffer of size 4096. When the above
+code gets executed and G.filename gets converted to another charset,
+this code gets executed:
+
+[6]			if ((iconv(cd, &s, &slen, &d, &dlen) !=3D (size_t)-1) &&
+[7]			 (strlen(buf) < FILNAMSIZ))
+			{
+[8]				strncpy(string, buf, buflen);
+			}
+
+Let's assume that our input string had a length of 2940. Because of
+[3] buflen will be 5880 (2*2940). That means if [8] is reached
+a strncpy with a limit of 5880 gets executed, however, the destination
+buffer only has a size of 4096 bytes (G.filename).
+The check at [7] should protect against this because if strlen(buf) (the
+source from strncpy) is bigger or equal than FILNAMSIZ (4096), the
+strncpy does not get executed. And since strncpy just copies until the
+first null-byte, it should just be possible to copy at maximum strlen(buf)
+bytes in this strncpy.
+
+This assumption is wrong though.
+Strncpy() always writes n bytes - in the above case it will always write
+5880 bytes and therefore a buffer overflow will always occur.
+This behavior can be found in the manpage of strncpy:
+"If the length of src is less than n, strncpy() writes additional null
+bytes to dest to ensure that a total of n bytes are written."
+
+The strncpy can therefore be used to write null-bytes out-of-bound
+in the BSS or heap segment. Since the input string length is under
+attacker control, the write length can be manipulated. That means
+that an attacker can perform a partial overwrite to exploit this
+vulnerability. For example, the attacker can overwrite data in the
+Uz_Globs struct after G.filename with null-bytes. One attack target
+can be heap addresses. They can be partially overwritten (lower
+bytes) to change the heap address to point to an attacker
+controlled heap chunk to get control over the data and therefore
+also over the execution.
+
+
+4) Heap out-of-bounds access in ef_scan_for_stream (CVE-2018-1000033)
+
+The first two arguments to the function ef_scan_for_stream()
+(extract.c:1167) are: ef_ptr and ef_len.
+This function is for example called at: extract.c:4795
+
+sts =3D ef_scan_for_stream( G.extra_field,
+	(long)G.lrec.extra_field_length,
+	&btmp_siz,
+	&bitmap[ 0],
+	&xlhdr,
+	&cmnt);
+
+The second argument (ef_len) stores the length / size of the first
+argument (ef_ptr) and access checks must be performed to ensure
+that no out-of-bounds access occurs.
+
+Code line extract.c:1233 can access data out-of-bounds because length
+checks are missing:
+
+bitmap =3D *(ef_ptr+ (data_byte++));
+
+Debugger output:
+
+Program received signal SIGSEGV, Segmentation fault.
+ef_scan_for_stream (...) at extract.c:1233
+1233            bitmap =3D *(ef_ptr+ (data_byte++));
+(gdb) print /x ef_ptr
+$10 =3D 0x7ffff7ed5f3b
+(gdb) print /x data_byte
+$11 =3D 0xc6
+(gdb) print /x ef_len
+$12 =3D 0xc5
 
 
 
-On Sat, Mar 30, 2024, 20:44 Tavis Ormandy <taviso@gmail.com> wrote:
+5) Multiple vulnerabilities in the LZMA compression algorithm (CVE-2018-100=
+0034)
 
-> On 2024-03-29, Ivan Delalande wrote:
-> > On Fri, Mar 29, 2024 at 08:51:26AM -0700, Andres Freund wrote:
-> >> For which the exploit code was then adjusted:
-> >>
-> https://github.com/tukaani-project/xz/commit/6e636819e8f070330d835fce46289a3ff72a7b89
-> >>
-> >> Given the activity over several weeks, the committer is either directly
-> >> involved or there was some quite severe compromise of their
-> >> system. Unfortunately the latter looks like the less likely
-> explanation, given
-> >> they communicated on various lists about the "fixes" mentioned above.
-> >
-> > Knowing this, I hope the recent kernel patch series involving the same
-> > person to some degree will get extra scrutiny:
-> >
-> https://lore.kernel.org/lkml/20240320183846.19475-1-lasse.collin@tukaani.org/t/
-> >
-> > Thanks Andres, incredible find and write-up!
-> >
->
-> It was also pointed out they submitted an odd PR to libarchive:
->
-> https://github.com/libarchive/libarchive/pull/1609
->
-> In summary, they replaced calls to safe_fprintf() with fprintf() --
-> meaning control characters are no longer filtered from errors. That
-> seems pretty minor, but now that we know they were in the business of
-> obfuscating the presence of backdoors -- seems a bit suspicious.
->
-> Regardless, that change has now been reverted:
->
-> https://github.com/libarchive/libarchive/pull/2101
->
-> Tavis.
->
-> --
->  _o)            $ lynx lock.cmpxchg8b.com
->  /\\  _o)  _o)  $ finger taviso@sdf.org
-> _\_V _( ) _( )  @taviso
->
->
+Invalid access attempts can occur at:
+szip/LzmaDec.c:275 - IF_BIT_0(probLen)
+szip/LzmaDec.c:242 - IF_BIT_0(prob)
+szip/LzmaDec.c:217 - IF_BIT_0(prob)
+szip/LzmaDec.c:299 - TREE_6_DECODE(prob, distance);
+szip/LzmaDec.c:189 - GET_BIT2(probLit, symbol, offs &=3D ~bit, offs &=3D bi=
+t)
+szip/LzmaDec.c:264 - IF_BIT_0(probLen)
+szip/LzmaDec.c:201 - IF_BIT_0(prob)
+szip/LzmaDec.c:213 - IF_BIT_0(prob)
+szip/LzmaDec.c:290 - TREE_DECODE(probLen, limit, len);
+szip/LzmaDec.c:233 - IF_BIT_0(prob)
 
---000000000000c918fe0614e56848--
+No further analysis has been performed on the LZMA compression code.
+The vendor will remove this code entirely in future releases.
+
+
+Vulnerable / tested versions:
+-----------------------------
+Versions before and including 6.10 / 6.1c22 of InfoZip's Unzip have been fo=
+und
+to be vulnerable. Version 6.0 was the latest major release at the time the
+security vulnerabilities were discovered. The next beta version is 6.1c22 w=
+hich
+has been tested as well.
+
+
+Vendor contact timeline:
+------------------------
+2017-11-03: Vulnerability 1 identified, further internal analysis
+2017-11-06: Attempt to contact the developers via bug report page
+2017-11-10: Initial contact to the developer via sms@antinode.info
+2017-11-10: Information from the main developer: A new beta version (6.1c22=
+),
+            which will be released soon, incorporates some security feature=
+s.
+            A link to the new beta version was provided.
+2017-11-12: Sending encrypted advisory to sms@antinode.info
+            Informed developer of the latest possible release date (2017-12=
+-30).
+2017-11-13: Developer confirms the vulnerability and notes that
+            it should be easy to fix. The developer asks for a notification
+            if vulnerabilities are found in version 6.1c22.
+2017-11-21: Vulnerability 2-5 in UnZip 6.1c22 identified,
+            the updated encrypted advisory with crash files was sent to
+            the developer.
+2017-11-23: Developer confirmed the e-mail containing the updated advisory.
+2017-12-06: Asking the developer when an update will be available and
+            to coordinate the release of the advisory together.
+2017-12-11: E-mail from the developer: All vulnerabilities (except LZMA
+            vulnerabilities) are fixed in version 6.1c23. A link to the new
+            version was provided. The LZMA code / feature will likely be di=
+sabled
+            until a better solution is available.
+2017-12-13: Asking the developer for a coordinated release of the advisory.
+2018-01-04: Informing the developer about the changed release date because
+            of the holidays. Distribution mailing lists will be informed on
+            2018-01-17, the advisory will be released about one week after =
+that.
+            Asking the developer for an InfoZip version with LZMA disabled.
+2018-01-10: Informing the developer again that the current solution is to
+            upgrade to version 6.10c23 which still contains the LZMA
+            vulnerabilities and if a version without LZMA is available.
+2018-01-17: Informing distros@vs.openwall.org about the upcoming advisory.
+2018-02-01: Received CVE numbers.
+2018-02-07: Publication of the advisory
+
+
+
+Solution:
+---------
+Update to version 6.10c23: http://antinode.info/ftp/info-zip/unzip610c23.zip
+Please note that the LZMA vulnerabilities are not yet fixed in this version.
+
+
+Workaround:
+-----------
+None
+
+
+Advisory URL:
+-------------
+https://www.sec-consult.com/en/vulnerability-lab/advisories/index.html
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+SEC Consult Vulnerability Lab
+
+SEC Consult
+Bangkok - Berlin - Linz - Luxembourg - Montreal - Moscow
+Kuala Lumpur - Singapore - Vienna (HQ) - Vilnius - Zurich
+
+About SEC Consult Vulnerability Lab
+The SEC Consult Vulnerability Lab is an integrated part of SEC Consult. It
+ensures the continued knowledge gain of SEC Consult in the field of network
+and application security to stay ahead of the attacker. The SEC Consult
+Vulnerability Lab supports high-quality penetration testing and the evaluat=
+ion
+of new offensive and defensive technologies for our customers. Hence our
+customers obtain the most current information about vulnerabilities and val=
+id
+recommendation about the risk profile of new technologies.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Interested to work with the experts of SEC Consult?
+Send us your application https://www.sec-consult.com/en/career/index.html
+
+Interested in improving your cyber security with the experts of SEC Consult?
+Contact our local offices https://www.sec-consult.com/en/contact/index.html
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Mail: research at sec-consult dot com
+Web: https://www.sec-consult.com
+Blog: http://blog.sec-consult.com
+Twitter: https://twitter.com/sec_consult
+
+EOF R. Freingruber @2018
+
+
+--------------ms020903090804000907050309
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Description: S/MIME Cryptographic Signature
+
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG
+9w0BBwEAAKCCCxgwggSvMIIDl6ADAgECAhEA4CPLFRKDU4mtYW56VGdrITAN
+BgkqhkiG9w0BAQsFADBvMQswCQYDVQQGEwJTRTEUMBIGA1UEChMLQWRkVHJ1
+c3QgQUIxJjAkBgNVBAsTHUFkZFRydXN0IEV4dGVybmFsIFRUUCBOZXR3b3Jr
+MSIwIAYDVQQDExlBZGRUcnVzdCBFeHRlcm5hbCBDQSBSb290MB4XDTE0MTIy
+MjAwMDAwMFoXDTIwMDUzMDEwNDgzOFowgZsxCzAJBgNVBAYTAkdCMRswGQYD
+VQQIExJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAOBgNVBAcTB1NhbGZvcmQxGjAY
+BgNVBAoTEUNPTU9ETyBDQSBMaW1pdGVkMUEwPwYDVQQDEzhDT01PRE8gU0hB
+LTI1NiBDbGllbnQgQXV0aGVudGljYXRpb24gYW5kIFNlY3VyZSBFbWFpbCBD
+QTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAImxDdp6UxlOcFId
+vFamBia3uEngludRq/HwWhNJFaO0jBtgvHpRQqd5jKQi3xdhTpHVdiMKFNNK
+An+2HQmAbqUEPdm6uxb+oYepLkNSQxZ8rzJQyKZPWukI2M+TJZx7iOgwZOak
++FaA/SokFDMXmaxE5WmLo0YGS8Iz1OlAnwawsayTQLm1CJM6nCpToxDbPSBh
+PFUDjtlOdiUCISn6o3xxdk/u4V+B6ftUgNvDezVSt4TeIj0sMC0xf1m9Ujew
+M2ktQ+v61qXxl3dnUYzZ7ifrvKUHOHaMpKk4/9+M9QOsSb7K93OZOg8yq5yV
+OhM9DkY6V3RhUL7GQD/L5OKfoiECAwEAAaOCARcwggETMB8GA1UdIwQYMBaA
+FK29mHo0tCb3+sQmVO8DveAky1QaMB0GA1UdDgQWBBSSYWuC4aKgqk/sZ/HC
+o/e0gADB7DAOBgNVHQ8BAf8EBAMCAYYwEgYDVR0TAQH/BAgwBgEB/wIBADAd
+BgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwEQYDVR0gBAowCDAGBgRV
+HSAAMEQGA1UdHwQ9MDswOaA3oDWGM2h0dHA6Ly9jcmwudXNlcnRydXN0LmNv
+bS9BZGRUcnVzdEV4dGVybmFsQ0FSb290LmNybDA1BggrBgEFBQcBAQQpMCcw
+JQYIKwYBBQUHMAGGGWh0dHA6Ly9vY3NwLnVzZXJ0cnVzdC5jb20wDQYJKoZI
+hvcNAQELBQADggEBABsqbqxVwTqriMXY7c1V86prYSvACRAjmQ/FZmpvsfW0
+tXdeDwJhAN99Bf4Ss6SAgAD8+x1banICCkG8BbrBWNUmwurVTYT7/oKYz1gb
+4yJjnFL4uwU2q31Ypd6rO2Pl2tVz7+zg+3vio//wQiOcyraNTT7kSxgDsqgt
+1Ni7QkuQaYUQ26Y3NOh74AEQpZzKOsefT4g0bopl0BqKu6ncyso20fT8wmQp
+Na/WsadxEdIDQ7GPPprsnjJT9HaSyoY0B7ksyuYcStiZDcGG4pCS+1pCaiMh
+EOllx/XVu37qjIUgAmLq0ToHLFnFmTPyOInltukWeh95FPZKEBom+nyK+5sw
+ggZhMIIFSaADAgECAhAriv4GJbNgG4KONRhUqx20MA0GCSqGSIb3DQEBCwUA
+MIGbMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVy
+MRAwDgYDVQQHEwdTYWxmb3JkMRowGAYDVQQKExFDT01PRE8gQ0EgTGltaXRl
+ZDFBMD8GA1UEAxM4Q09NT0RPIFNIQS0yNTYgQ2xpZW50IEF1dGhlbnRpY2F0
+aW9uIGFuZCBTZWN1cmUgRW1haWwgQ0EwHhcNMTcwMzAxMDAwMDAwWhcNMjAw
+MjI5MjM1OTU5WjCCAVcxCzAJBgNVBAYTAkFUMQ0wCwYDVQQREwQyNzAwMRow
+GAYDVQQIExFOaWVkZXJvZXN0ZXJyZWljaDEVMBMGA1UEBxMMV3IuIE5ldXN0
+YWR0MRkwFwYDVQQJExBLb21hcmlnYXNzZSAxNC8xMS4wLAYDVQQKEyVTRUMg
+Q29uc3VsdCBVbnRlcm5laG1lbnNiZXJhdHVuZyBHbWJIMUkwRwYDVQQLE0BJ
+c3N1ZWQgdGhyb3VnaCBTRUMgQ29uc3VsdCBVbnRlcm5laG1lbnNiZXJhdHVu
+ZyBHbWJIIEUtUEtJIE1hbmFnMR8wHQYDVQQLExZDb3Jwb3JhdGUgU2VjdXJl
+IEVtYWlsMSYwJAYDVQQDEx1TRUMgQ29uc3VsdCBWdWxuZXJhYmlsaXR5IExh
+YjEnMCUGCSqGSIb3DQEJARYYcmVzZWFyY2hAc2VjLWNvbnN1bHQuY29tMIIB
+IjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5+LisxDXcLwArMnTESPr
+5G/6PY0xWAvPc81sZGgHbf4at31qtZn9eVMGAPx4nJShJVZsB3+0OavWSM1P
+vcsMgVp8ovIfgnE05A/LZ4k38pMU+Zl0pcGx5TFQevKmCDwqV9JqLIoleIKH
+CeQVmZhGC7zccEYvKtvQqWsqVJDFHPZisoIGl9YS048T8c9al1FQtIx3SDtx
+ZhyigHI1t8kFAHloWGP8KCMIMX6g9FlTIlnQYFUAkQ/49KRyUDEHdRZey9hQ
+LuvrgRKWZn1TxeTWW41IZKUQC6Lhb3LgrQzUQoR7dbdASh+3sqiw1642dkyx
+ChRoOptpoC1Wo5HLTELzYQIDAQABo4IB4DCCAdwwHwYDVR0jBBgwFoAUkmFr
+guGioKpP7GfxwqP3tIAAwewwHQYDVR0OBBYEFBEBR5dneBkup36i0hf8pUVs
+EpMlMA4GA1UdDwEB/wQEAwIFoDAMBgNVHRMBAf8EAjAAMB0GA1UdJQQWMBQG
+CCsGAQUFBwMEBggrBgEFBQcDAjBGBgNVHSAEPzA9MDsGDCsGAQQBsjEBAgED
+BTArMCkGCCsGAQUFBwIBFh1odHRwczovL3NlY3VyZS5jb21vZG8ubmV0L0NQ
+UzBdBgNVHR8EVjBUMFKgUKBOhkxodHRwOi8vY3JsLmNvbW9kb2NhLmNvbS9D
+T01PRE9TSEEyNTZDbGllbnRBdXRoZW50aWNhdGlvbmFuZFNlY3VyZUVtYWls
+Q0EuY3JsMIGQBggrBgEFBQcBAQSBgzCBgDBYBggrBgEFBQcwAoZMaHR0cDov
+L2NydC5jb21vZG9jYS5jb20vQ09NT0RPU0hBMjU2Q2xpZW50QXV0aGVudGlj
+YXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAkBggrBgEFBQcwAYYYaHR0cDov
+L29jc3AuY29tb2RvY2EuY29tMCMGA1UdEQQcMBqBGHJlc2VhcmNoQHNlYy1j
+b25zdWx0LmNvbTANBgkqhkiG9w0BAQsFAAOCAQEAQ9HL1/pw/3RSCgHwSKfA
+ejchG11KoLrm+7xdqBC1nVgJaQeX8smjraljd1PAL4KthtNP0Tr+DNr4d4hQ
+WwHz/LnB0iap44v8LTaHTDUbWYD5NsOg8sD1JMQI8Jt6vC7Im+9O/rHxmvhL
+18hWoK4aIK/kQG7eOfO5UmurKh7StuhE3t4KKEQnSTUCy+kNe8ut4KZdRs+o
++mpSH09ecLo99Qs/FuaZMTghhZWkcSC1YT1jQDIF3lRDk+/+HbQ0h34tgPi/
+wJlI/7moci7B2AzYWFeHWcrGnuE6kZkRWtQVF/u1NODSMp1DU3EzHLueYNuf
+SYLWHh+yyzNnaoP5u7oLeDGCBEEwggQ9AgEBMIGwMIGbMQswCQYDVQQGEwJH
+QjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxm
+b3JkMRowGAYDVQQKExFDT01PRE8gQ0EgTGltaXRlZDFBMD8GA1UEAxM4Q09N
+T0RPIFNIQS0yNTYgQ2xpZW50IEF1dGhlbnRpY2F0aW9uIGFuZCBTZWN1cmUg
+RW1haWwgQ0ECECuK/gYls2Abgo41GFSrHbQwDQYJYIZIAWUDBAIBBQCgggJh
+MBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTE4
+MDIwODA3MTkyMFowLwYJKoZIhvcNAQkEMSIEIJ4fD5wkoz+u1+7xQxVowHgS
+JmRtG3vo/5QRPYqihVSQMGwGCSqGSIb3DQEJDzFfMF0wCwYJYIZIAWUDBAEq
+MAsGCWCGSAFlAwQBAjAKBggqhkiG9w0DBzAOBggqhkiG9w0DAgICAIAwDQYI
+KoZIhvcNAwICAUAwBwYFKw4DAgcwDQYIKoZIhvcNAwICASgwgcEGCSsGAQQB
+gjcQBDGBszCBsDCBmzELMAkGA1UEBhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIg
+TWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEaMBgGA1UEChMRQ09NT0RP
+IENBIExpbWl0ZWQxQTA/BgNVBAMTOENPTU9ETyBTSEEtMjU2IENsaWVudCBB
+dXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhAriv4GJbNgG4KO
+NRhUqx20MIHDBgsqhkiG9w0BCRACCzGBs6CBsDCBmzELMAkGA1UEBhMCR0Ix
+GzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9y
+ZDEaMBgGA1UEChMRQ09NT0RPIENBIExpbWl0ZWQxQTA/BgNVBAMTOENPTU9E
+TyBTSEEtMjU2IENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVt
+YWlsIENBAhAriv4GJbNgG4KONRhUqx20MA0GCSqGSIb3DQEBAQUABIIBAOfc
+MBUztrtX5R5rQHXu4sauEWgUjH6OTZaT6o326rSgz03O8L1jYMgQ4ulYqkI8
+eKKIoiyKbO/Y6fXHzRg7LWuMQM5UZmY8nRMhpEmhwcDsCJjw1D8175vWUccS
+od7AsYraWDFCCNBR1poFawV1MSzH98Q1OuUQm/FakhzjoXz5KlCHrMJlcTwH
+hwHwa94sU0ksbdsWh9gFVUPH7XhqTnM/UAAT2ahvY7W7I45A2b9nJX+O59M3
+58ErSmTKjtClGWTjzxianxGlDPtHgqAer4aQjyQ4YCqYY0d7+Hw2XDNA7elL
+o3FajjI7jNIkCWoA0CV2aKOhFcKI4lN0MLSDwTsAAAAAAAA=
+
+--------------ms020903090804000907050309--
