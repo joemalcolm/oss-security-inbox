@@ -1,29 +1,100 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/19/7
-Message-ID: <CAHydKRCdXAepr6pjqqXUSWhSnnRrrYKnNSQVjsX6V2JTvM1xNA@mail.gmail.com>
-Date: Wed, 19 Dec 2018 19:46:03 +0100
-From: Gézapeti Cseh <gezapeti@...che.org>
-To: user@...ie.apache.org
-Cc: dev@...ie.apache.org, private@...ie.apache.org,  oss-security@...ts.openwall.com, satishsaley@...che.org
-Subject: [CVE-2018-11799] Apache Oozie security vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/08/7
+Message-ID: <CAP3WMuQ9dfe=3FCtqoZ1Q4xkFZZ+ogdqn6KVxyb_O4s5rLBwuw@mail.gmail.com>
+Date: Thu, 8 Feb 2018 22:39:29 +0000
+From: Alex Rudyy <orudyy@...che.org>
+To: "users@...d.apache.org" <users@...d.apache.org>, "dev@...d.apache.org" <dev@...d.apache.org>,  Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com, announce@...che.org
+Subject: [SECURITY][CVE-2018-1298] Apache Qpid Broker-J Denial of Service Vulnerability with PLAIN and XOAUTH2 SASL mechanisms
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-11799: Apache Oozie security vulnerability
+CVE-2018-1298: Apache Qpid Broker-J Denial of Service Vulnerability with
+PLAIN and XOAUTH2 SASL mechanisms
 
-Severity:  8.7 (High) (CVSS:3.0/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:N)
+Severity: Important
 
 Vendor: The Apache Software Foundation
 
-Versions Affected: Oozie versions earlier than 5.1.0
+Versions Affected: Versions 7.0.0
 
-Description: A malicious user can construct an XML that results workflows
-running in other user's name.
+Description:
 
-Mitigation: Upgrade to Apache Oozie 5.1.0
+A Denial of Service vulnerability [1] was found in Apache Qpid Broker-J
+7.0.0
+in functionality for authentication of connections for AMQP protocols 0-8,
+0-9,
+0-91 and 0-10 when PLAIN or XOAUTH2 SASL mechanism is used. The
+vulnerability
+allows unauthenticated attacker to crash the broker instance. AMQP 1.0 and
+HTTP connections are not affected.
 
-Credit: This issue was discovered by
+An authentication of incoming AMQP connections in Apache Qpid Broker-J is
+performed by special entities called "Authentication Providers". Each
+Authentication Provider can support several SASL mechanisms
+which are offered to the connecting clients as part of SASL negotiation
+process.
+The client chooses the most appropriate SASL mechanism for authentication.
 
-*Satish Subhashrao Saley at Oath / Yahoo!*
+Authentication Providers of following types supports PLAIN SASL mechanism:
+* Plain
+* PlainPasswordFile
+* SimpleLDAP
+* Base64MD5PasswordFile
+* MD5
+* SCRAM-SHA-256
+* SCRAM-SHA-1
 
-Gezapeti Cseh
+XOAUTH2 SASL mechanism is supported by Authentication Providers of type
+OAuth2.
+
+If an AMQP port is configured with any of these Authentication Providers,
+the
+Broker may be vulnerable.
+
+Resolution:
+
+Users of Broker-J version 7.0.0 utilizing affected Authentication Providers
+on
+AMQP ports with support for AMQP 0-8, 0-9, 0-91 or 0-10 must upgrade to
+version
+7.0.1 or later.
+
+Mitigation:
+
+If upgrade of the broker is not possible, the SimpleLDAP and OAuth2 must be
+replaced with an alternative provider. For the remaining affected types of
+Authentication Providers the PLAIN SASL mechanism must be disabled by
+including
+"PLAIN" in the "disabledMechanisms" attribute of the provider. The changes
+can
+be made either directly in the broker configuration file or via management
+interfaces (for example, REST API [2]). A broker restart is required for the
+changes to take effect. Here is a template for curl utility call to disable
+PLAIN mechanism using REST API:
+
+curl --user <user-name> -X POST  -d '{"disabledMechanisms":["PLAIN"]}' \
+https://<broker host>:<broker https
+port>/api/latest/authenticationprovider/<provider name>
+
+Alternatively, when only AMQP 1.0 protocol is used, the support for older
+AMQP
+protocols can be removed on the AMQP port. It can be done either from
+Broker-J
+Web Management Console or via management interfaces. A broker restart is
+required for the changes to take effect. Here is a template for curl REST
+API
+call to restrict port supported AMQP protocols to AMQP 1.0:
+
+curl --user <user-name> -X POST  -d '{"protocols":["AMQP_1_0"]}' \
+https://<broker host>:<broker https port>/api/latest/port/<port name>
+
+References:
+
+[1] https://issues.apache.org/jira/browse/QPID-8046
+[2]
+https://qpid.apache.org/releases/qpid-broker-j-7.0.0/book/Java-Broker-Management-Channel-REST-API.html
+[3] http://qpid.apache.org/components/broker-j/index.html
+
+---------------------------------------------------------------------
+To unsubscribe, e-mail: dev-unsubscribe@...d.apache.org
+For additional commands, e-mail: dev-help@...d.apache.org
 
