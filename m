@@ -1,133 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/28/5
-Message-Id: <7515A5D7-EBF4-49A1-BDBF-DA715092FB1A@beckweb.net>
-Date: Wed, 28 Feb 2018 23:20:56 +0100
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/08/4
+Message-ID: <20180208201604.rfilwmwbjow5braq@matica.foolinux.mooo.com>
+Date: Thu, 8 Feb 2018 12:16:04 -0800
+From: Ian Zimmerman <itz@...y.loosely.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Multiple vulnerabilities in Jenkins plugins
+Subject: Re: CVE-2018-6789 Exim 4.90 and earlier: buffer overflow
 Content-Type: text/plain; charset=utf-8
 
+On 2018-02-07 11:39, Heiko Schlittermann wrote:
 
-> On 26. Feb 2018, at 13:39, Daniel Beck <ml@...kweb.net> wrote:
-> 
-> SECURITY-260
-> The Coverity Plugin stored passwords unencrypted as part of its
-> configuration. This allowed users with Jenkins master local file system
-> access and Jenkins administrators to retrieve the stored password. The
-> latter could result in exposure of the passwords through browser
-> extensions, cross-site scripting vulnerabilities, and similar situations.
+> Updates will follow. Here and on https://exim.org/security/CVE-2018-6789.txt
 
-CVE-2018-1000104
+ ahiker!3 ~$ curl -L https://exim.org/security/CVE-2018-6789.txt
+<html>
+<head><title>404 Not Found</title></head>
+<body bgcolor="white">
+<center><h1>404 Not Found</h1></center>
+<hr><center>nginx</center>
+</body>
+</html>
 
+?
 
-> SECURITY-402
-> Missing permission checks in Gerrit Trigger Plugin allowed users with
-> Overall/Read permission to access a form that showed the configuration of
-> Gerrit servers in Jenkins. The key file password was only shown in its
-> encrypted form, if configured. Other options were plainly visible.
-
-CVE-2018-1000105
-
-
-> SECURITY-403
-> Missing permission checks in Gerrit Trigger Plugin allowed users with
-> Overall/Read permission to perform the following actions:
-> 
-> - Configure Gerrit servers
-> - Connect and disconnect configured Gerrit servers
-
-CVE-2018-1000106
-
-
-> SECURITY-498
-> Job and Node ownership Plugin did not prevent the ownership metadata being
-> overwritten when a job or node configuration was updated from the CLI or
-> using the remote API (POST config.xml).
-> 
-> This allowed users with Job/Configure permission but without
-> ManageOwnership/Jobs permission to change job ownership metadata, and users
-> with Computer/Configure but without ManageOwnership/Nodes to change node
-> ownership metadata.
-
-CVE-2018-1000107
-
-
-> SECURITY-712
-> CppNCSS Plugin did not properly escape the report name and graph name,
-> resulting in a reflected cross-site scripting vulnerability.
-
-CVE-2018-1000108
-
-
-> SECURITY-715
-> Google Play Android Publisher Plugin provides a list of applicable
-> credential IDs to allow users configuring a job to select the one they’d
-> like to use to authenticate with the Google Play API.
-> 
-> This functionality did not check permissions, allowing any user with
-> Overall/Read permission to get a list of valid credential IDs. Those could
-> be used as part of an attack to capture the credentials using another
-> vulnerability.
-> 
-> Additionally, a related form validation function would allow verification
-> whether a specified credential is valid for use with the Google Play API.
-
-CVE-2018-1000109
-
-
-> SECURITY-723
-> The class handling unauthenticated Git post-commit hook notification
-> requests at the /git/ path unnecessarily extended another type that handled
-> requests to the …/search/ sub-path.
-> 
-> This allowed submission of search queries to Jenkins, and getting a list of
-> search results usually available to anyone with Overall/Read permission. In
-> current Jenkins releases, those are typically the names of known users
-> (both actual users of Jenkins, and known SCM committers) and nodes (master
-> and agents).
-
-CVE-2018-1000110
-
-
-> SECURITY-724
-> The class handling unauthenticated Subversion post-commit hook notification
-> requests at the /subversion/ path unnecessarily extended another type that
-> handled requests to the …/search/ sub-path.
-> 
-> This allowed submission of search queries to Jenkins, and getting a list of
-> search results usually available to anyone with Overall/Read permission. In
-> current Jenkins releases, those are typically the names of known users
-> (both actual users of Jenkins, and known SCM committers) and nodes (master
-> and agents).
-
-CVE-2018-1000111
-
-
-> SECURITY-726
-> The class handling unauthenticated Mercurial post-commit hook notification
-> requests at the /mercurial/ path unnecessarily extended another type that
-> handled requests to the …/search/ sub-path.
-> 
-> This allowed submission of search queries to Jenkins, and getting a list of
-> search results usually available to anyone with Overall/Read permission. In
-> current Jenkins releases, those are typically the names of known users
-> (both actual users of Jenkins, and known SCM committers) and nodes (master
-> and agents).
-
-CVE-2018-1000112
-
-
-> SECURITY-731
-> Users with Job/Configure permission were able to configure TestLink reports
-> to display arbitrary unescaped HTML e.g. in test case names.
-
-CVE-2018-1000113
-
-
-> SECURITY-746
-> In Promoted Builds Plugin, users with Job/Read access were able to approve
-> and re-execute promotion processes with a manual promotion condition that
-> did not specify a list of users allowed to manually approve the promotion.
-
-CVE-2018-1000114
-
+-- 
+Please don't Cc: me privately on mailing lists and Usenet,
+if you also post the followup to the list or newsgroup.
+To reply privately _only_ on Usenet, fetch the TXT record for the domain.
