@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["264" "Thursday" "30" "June" "2016" "15:42:24" "+0200" "Gustavo Grieco" "gustavo.grieco@gmail.com" "<CACn5sdT2ie2cp7VShA-VqafyiMn-oDsv_0dGtXP-Xcf82LWihA@mail.gmail.com>" "10" "[oss-security] CVE Request: A read out-of-bands was found in the parsing of TGA files using libgd" nil nil nil "6" "2016063013:42:24" "[oss-security] CVE Request: A read out-of-bands was found in the parsing of TGA files using libgd" (number mark "U       gustavo.grie Jun 30   10/264   " thread-indent "\"[oss-security] CVE Request: A read out-of-bands was found in the parsing of TGA files using libgd\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3259" "Thursday" "8" "February" "2018" "22:39:29" "+0000" "Alex Rudyy" "orudyy@apache.org" "<CAP3WMuQ9dfe=3FCtqoZ1Q4xkFZZ+ogdqn6KVxyb_O4s5rLBwuw@mail.gmail.com>" "95" "[oss-security] [SECURITY][CVE-2018-1298] Apache Qpid Broker-J Denial of Service Vulnerability with PLAIN and XOAUTH2 SASL mechanisms" "^Date:" nil nil "2" "2018020822:39:29" "[oss-security] [SECURITY][CVE-2018-1298] Apache Qpid Broker-J Denial of Service Vulnerability with PLAIN and XOAUTH2 SASL mechanisms" (number mark "U       orudyy@apach Feb  8   95/3259  " thread-indent "\"[oss-security] [SECURITY][CVE-2018-1298] Apache Qpid Broker-J Denial of Service Vulnerability with PLAIN and XOAUTH2 SASL mechanisms\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17856 invoked by uid 550); 30 Jun 2016 13:42:37 -0000
+Received: (qmail 7939 invoked by uid 550); 8 Feb 2018 22:42:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,47 +11,116 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17838 invoked from network); 30 Jun 2016 13:42:37 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=g/AdUObuQUvKcuSLxYd3/QUKf9Da1NmV+vfccG614+U=;
-        b=LlX7i9kc8MX7ce12JJOR4R3zLgwCk9DTwzJ5ceAkPqj0AzWZPGDbkIPe++EfaCW1Re
-         XWIVd84znFYeY6ajLfdVRXUroqe5PqK+P4zcbey0s7P2WaTHkAUVceoPrIV9BGLYTAGw
-         fqoWp23aJByryV3oke9llt+yk8sEzpRnaCBO2xvw2azFnuASWkAXM2hCdeTp953lzwCD
-         J82ikjR6P4BdXL4NBObPcGmNP/2X/hYVD7YA/yu8gJvnHVhGNLlOF7HgJUIfTA0aGiWM
-         T1emPc98lS6srF6MZc6EwgrsDRsK2Qfv0r/gagFKlY67vk3qLCeDC4fsXmkx5WYltCzd
-         r6Tw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=g/AdUObuQUvKcuSLxYd3/QUKf9Da1NmV+vfccG614+U=;
-        b=fxeA470s5zHsPr2UD6qK+HjbJdNjyPSOOuCPe5CwXmmYCHoSQNqQlAJsELkVwlGU1g
-         adgStkTIWFXuyrCvZl//ihxN9a+uM+Og6+ImQMwPtfrOvlJnJ3eY5sQ+6ZRywuQNr71t
-         2m0Zk6/Oklf0lyGYuib8fcJ+08y6O7ro5ishf2pbMqkGpHT42Xj50YY7PgtXuGQR6W4D
-         M2Y19jiTR7AWbDuEbqOJ/uI1lYd3Jn3elkgouTkZ1M+6MKt69u7QGi9ds0f+sRfdn3CU
-         XaEjoKj/mJHvFMHFovTh8Q8/5yw+tTv3WVsaZndGtpXfdCDixkEgzyTeKWldaIbNFShN
-         5TUA==
-X-Gm-Message-State: ALyK8tIs7/J0DjOuhcy2uJhpYzLh8Tc+8lDJdPv+ZkobBdgFJ4z8YM+tpgFChg2FeIlTNwvnrvE/ua4wTr5vnA==
-X-Received: by 10.107.137.95 with SMTP id l92mr15026863iod.177.1467294144742;
- Thu, 30 Jun 2016 06:42:24 -0700 (PDT)
+Received: (qmail 5793 invoked from network); 8 Feb 2018 22:39:47 -0000
+X-Gm-Message-State: APf1xPA4fb/JiQnRHX6gFXqJa7FYZSg3sVQsZL0L2uRRk2RLjBkLZE/F
+	9F1t4yFDkoxJ5q7pDqPb3VrM7cDqKIM0q1rcrHs=
+X-Google-Smtp-Source: AH8x224Rw9u4yc4J4N409M61mqZTR1qvRKt9Q/X+o/uOGC+r8cO9siou4ScCcv6/vmf+AubR6j8IKzsRfu0re3WpmSg=
+X-Received: by 10.25.44.147 with SMTP id s141mr442889lfs.15.1518129570488;
+ Thu, 08 Feb 2018 14:39:30 -0800 (PST)
 MIME-Version: 1.0
-From: Gustavo Grieco <gustavo.grieco@gmail.com>
-Date: Thu, 30 Jun 2016 15:42:24 +0200
-Message-ID: <CACn5sdT2ie2cp7VShA-VqafyiMn-oDsv_0dGtXP-Xcf82LWihA@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8
-Subject: [oss-security] CVE Request: A read out-of-bands was found in the parsing of TGA
- files using libgd
+X-Gmail-Original-Message-ID: <CAP3WMuQ9dfe=3FCtqoZ1Q4xkFZZ+ogdqn6KVxyb_O4s5rLBwuw@mail.gmail.com>
+Message-ID: <CAP3WMuQ9dfe=3FCtqoZ1Q4xkFZZ+ogdqn6KVxyb_O4s5rLBwuw@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="001a1141094ec5ab050564bb1580"
+Date: Thu, 8 Feb 2018 22:39:29 +0000
+From: Alex Rudyy <orudyy@apache.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] [SECURITY][CVE-2018-1298] Apache Qpid Broker-J Denial of Service
+ Vulnerability with PLAIN and XOAUTH2 SASL mechanisms
+To: "users@qpid.apache.org" <users@qpid.apache.org>, "dev@qpid.apache.org" <dev@qpid.apache.org>, 
+	Apache Security Team <security@apache.org>, oss-security@lists.openwall.com, announce@apache.org
 
-Hi,
+--001a1141094ec5ab050564bb1580
+Content-Type: text/plain; charset="UTF-8"
 
-A read out-of-bands was found in the parsing of TGA files using the
-last revision of libgd (a6a0e7f) but older versions can be affected. A
-reproducer and some technical details are available here:
+CVE-2018-1298: Apache Qpid Broker-J Denial of Service Vulnerability with
+PLAIN and XOAUTH2 SASL mechanisms
 
-https://github.com/libgd/libgd/issues/247
+Severity: Important
 
-Regards,
-Gustavo.
+Vendor: The Apache Software Foundation
+
+Versions Affected: Versions 7.0.0
+
+Description:
+
+A Denial of Service vulnerability [1] was found in Apache Qpid Broker-J
+7.0.0
+in functionality for authentication of connections for AMQP protocols 0-8,
+0-9,
+0-91 and 0-10 when PLAIN or XOAUTH2 SASL mechanism is used. The
+vulnerability
+allows unauthenticated attacker to crash the broker instance. AMQP 1.0 and
+HTTP connections are not affected.
+
+An authentication of incoming AMQP connections in Apache Qpid Broker-J is
+performed by special entities called "Authentication Providers". Each
+Authentication Provider can support several SASL mechanisms
+which are offered to the connecting clients as part of SASL negotiation
+process.
+The client chooses the most appropriate SASL mechanism for authentication.
+
+Authentication Providers of following types supports PLAIN SASL mechanism:
+* Plain
+* PlainPasswordFile
+* SimpleLDAP
+* Base64MD5PasswordFile
+* MD5
+* SCRAM-SHA-256
+* SCRAM-SHA-1
+
+XOAUTH2 SASL mechanism is supported by Authentication Providers of type
+OAuth2.
+
+If an AMQP port is configured with any of these Authentication Providers,
+the
+Broker may be vulnerable.
+
+Resolution:
+
+Users of Broker-J version 7.0.0 utilizing affected Authentication Providers
+on
+AMQP ports with support for AMQP 0-8, 0-9, 0-91 or 0-10 must upgrade to
+version
+7.0.1 or later.
+
+Mitigation:
+
+If upgrade of the broker is not possible, the SimpleLDAP and OAuth2 must be
+replaced with an alternative provider. For the remaining affected types of
+Authentication Providers the PLAIN SASL mechanism must be disabled by
+including
+"PLAIN" in the "disabledMechanisms" attribute of the provider. The changes
+can
+be made either directly in the broker configuration file or via management
+interfaces (for example, REST API [2]). A broker restart is required for the
+changes to take effect. Here is a template for curl utility call to disable
+PLAIN mechanism using REST API:
+
+curl --user <user-name> -X POST  -d '{"disabledMechanisms":["PLAIN"]}' \
+https://<broker host>:<broker https
+port>/api/latest/authenticationprovider/<provider name>
+
+Alternatively, when only AMQP 1.0 protocol is used, the support for older
+AMQP
+protocols can be removed on the AMQP port. It can be done either from
+Broker-J
+Web Management Console or via management interfaces. A broker restart is
+required for the changes to take effect. Here is a template for curl REST
+API
+call to restrict port supported AMQP protocols to AMQP 1.0:
+
+curl --user <user-name> -X POST  -d '{"protocols":["AMQP_1_0"]}' \
+https://<broker host>:<broker https port>/api/latest/port/<port name>
+
+References:
+
+[1] https://issues.apache.org/jira/browse/QPID-8046
+[2]
+https://qpid.apache.org/releases/qpid-broker-j-7.0.0/book/Java-Broker-Management-Channel-REST-API.html
+[3] http://qpid.apache.org/components/broker-j/index.html
+
+---------------------------------------------------------------------
+To unsubscribe, e-mail: dev-unsubscribe@qpid.apache.org
+For additional commands, e-mail: dev-help@qpid.apache.org
+
+--001a1141094ec5ab050564bb1580--
