@@ -1,58 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/15/2
-Message-ID: <83c6b5d6e961fc6c1130e634ab35763b3aaf43b8.camel@debian.org>
-Date: Tue, 15 May 2018 10:22:46 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: Brian May <brian@...uxpenguins.xyz>, oss-security@...ts.openwall.com
-Subject: Re: PGP/MIME and S/MIME mail clients vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/09/3
+Message-ID: <CALLT8khw=hXWCd2piwfH4NaXSnPao7Uv_CmQVb3SzKo6dVGswQ@mail.gmail.com>
+Date: Fri, 9 Feb 2018 10:58:08 -0500
+From: "Alex O'Ree" <alexoree@...che.org>
+To: user@...di.apache.org, dev@...di.apache.org, security@...che.org,  oss-security@...ts.openwall.com
+Subject: [Security] CVE-2018-1307 XML Entity Expansion in juddi-client v3.2 through 3.3.4
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+CVEID  CVE-2018-1307
 
-On Tue, 2018-05-15 at 17:40 +1000, Brian May wrote:
-> Have a look at some official statements on this:
-> 
-> * https://lists.gnupg.org/pipermail/gnupg-users/2018-May/060334.html
-> * https://protonmail.com/blog/pgp-vulnerability-efail/
-> 
-> For the case of PGP it sounds like the only problems occur when mail
-> clients ignore the GPG hints.
+VERSION:  3.2 through 3.3.4
 
-Thanks for the links (I had already included the information in my summary
-though).
-> 
-> For S/MIME, it does sound like the standard is broken and needs fixing.
+PROBLEMTYPE: XML Entity Expansion
 
-That was my understanding as well, thus the mitigations.
-> 
-> If I understand this correctly, the "Direct Exfiltration" is an attack
-> that doesn't require modifying the encrypted data - so presumably the
-> MDC in PGP won't help. 
+REFERENCES: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-4267
 
-Yes indeed.
+DISCRIPTION: If using the WADL2Java or WSDL2Java classes, which parse a
+local or remote XML document and then mediates the data structures into
+UDDI data structures, there are little protections present against entity
+expansion and DTD type of attacks. This was fixed with
+https://issues.apache.org/jira/browse/JUDDI-987
 
-> To me this sounds like a email client problem
-> (allowing mixing encrypted and encrypted data in the one HTML document
-> seems like a very bad idea), but the https://efail.de/ page says the
-> standards need to be updated to fix this.
+Severity: Moderate
 
-Maybe the fixing the standard will help, but indeed the client can already
-sanitize the various chunks of message and not render them as part of one HTML
-document. As far as I can tell only Thunderbird was vulnerable to this (in
-open-source software), but I can't find a CVE number or a public bug for this.
+Mitigation:
 
-Regards,
-- -- 
-Yves-Alexis
------BEGIN PGP SIGNATURE-----
+Update your juddi-client dependencies to 3.3.5 or newer and/or discontinue
+use of the effected classes.
 
-iQEzBAEBCAAdFiEE8vi34Qgfo83x35gF3rYcyPpXRFsFAlr6mNYACgkQ3rYcyPpX
-RFtn4ggAtq1Ex6jbj0XbMxQt2j9l4/p1OFSoemqJEEXse2E6cgB/UMd4LPBpzeW0
-kS1I6glL4j3ODpUrcBKFkWTqUMXwYATayzBGX08HWti5vj+CRtqd+QtpMziymhiC
-UzB77gsDi3IBssANPDVrW1YmF/pN5FUvrmBx6F+yEXOd0dQkKwQrbnvgQVskVGBP
-TisoHpMDvEAZGToNlHh/HokonliCnnN7vQRp4ZiardcWsFY5oBnmHcvZKYaW1R9G
-PG65KWRDSxiU9hB6UGoZNAgM8vlBjZzEk6kgSm8XC5vam2Co/Egg0JQenK0C8YyP
-ATG6D5cEDa31XswrNeZLVr5VF035JQ==
-=dZri
------END PGP SIGNATURE-----
