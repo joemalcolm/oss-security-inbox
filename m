@@ -1,145 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/31/4
-Message-ID: <678AB44AD82642D6993A19E3C8ADCB9E@W340>
-Date: Thu, 31 May 2018 20:04:52 +0200
-From: "Stefan Kanthak" <stefan.kanthak@...go.de>
-To: "Pete Batard" <pete@...o.ie>
-Cc: <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: rufus
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/09/1
+Message-ID: <ad030315-66c0-608e-62fd-622413bf6188@nic.cz>
+Date: Fri, 9 Feb 2018 08:47:00 +0100
+From: Petr Špaček <petr.spacek@....cz>
+To: Anthony Liguori <aliguori@...zon.com>, oss-security@...ts.openwall.com
+Cc: Jan Pavlinec <jan.pavlinec@....cz>, Remi Gacogne <remi.gacogne@...erdns.com>, Solar Designer <solar@...nwall.com>, Kristian Fiskerstrand <k_f@...too.org>
+Subject: Re: bug in DNS resolvers - DNSSEC validation
 Content-Type: text/plain; charset=utf-8
 
-Pete,
+Please accept my apology for this omission, the issue were made public
+right after end of embargo but I totally forgot about posting it again here.
 
-> Hi Stefan,
+On 9.2.2018 02:46, Anthony Liguori wrote:
+> The following issues were reported on distros@ on Jan 15th and
+> subsequently made public without a post here.  I'm referencing the
+> public announcements I've found with hope that Petr et al can provide
+> more specific information here.
 > 
-> Thank you very much for your very depreciative and less than informative 
-> report.
+> https://nvd.nist.gov/vuln/detail/CVE-2018-1000002?cpeVersion=2.2
+> https://doc.powerdns.com/recursor/security-advisories/powerdns-advisory-2018-01.html
 
-As always, your poor reading skills perfectly match your poor programming
-skills.
-READ THE SUBJECT!
-Hint: it reads "CVE request".
+Announcement for Knot Resolver 1.5.2 is here:
+https://lists.nic.cz/pipermail/knot-resolver-users/2018/000000.html
 
-> Since a vulnerability report works a lot better with an actual 
-> exploitation scenario conducted with the actual application, that we can 
-> look into, we will be waiting on that from you.
+Nature of the issue is that original DNSSEC specification in dection 5.4
+of [RFC4035] under-specifies the algorithm for checking nonexistence
+proofs.
 
-"We" wait until the requested CVEs are assigned for both well-known
-vulnerabilities.
+While implementing DNSSEC validation into Knot Resolver, we forgot to
+implement additional conditions explained in RFC 6840, so our DNSSEC
+validator could accept an NSEC or NSEC3 RR proofs from an ancestor zone
+as proving the nonexistence of an RR in a child zone.
 
-> Also, FYI, we did apply mitigation for #1 (DLL sideloading attacks) very 
-> shortly after the time it became publicized:
-> https://github.com/pbatard/rufus/commit/8473e9ef561295fd10dd9526010c1fd1cb1e6701
 
-OUCH!
-Or shall I write: BWAHAHAHA!?
+Please note that Knot Resolver versions older than latest 1.5.z are
+obsolete and not maintained by CZ.NIC anymore so all users all advised
+to upgrade immediatelly to to latests 1.5 or 2.0 branches.
 
-DLL spoofing was VERY well known long before 2016, and it is neither restricted
-to the CWD nor to runtime linking:
+Version 1.5.z is going to be end-of-life in approximatelly one month so
+direct upgrade to version 2.0 or later is strongly recommended.
 
-a) in 1996, the NSA-sponsored report "An intro to... Windows NT security"
-   (its copy <http://www.blacksheepnetworks.com/security/info/nt/ntintrotosec.htm>
-   is unfortunately gone) was published;
+Petr Špaček  @  CZ.NIC
 
-b) in 2000, Georgi Guninski published <http://www.guninski.com/officedll.html>
 
-b) in 2006, the paper "DLL Spoofing in Windows"
-   <https://www.it.uu.se/edu/course/homepage/sakdat/ht05/assignments/pm/programme/DLL_Spoofing_in_Windows.pdf>
-   was published;
-
-c) in 2008, Microsoft's David LeBlanc wrote
-   <https://blogs.msdn.microsoft.com/david_leblanc/2008/02/20/dll-preloading-attacks/>,
-   while CERT's Will Dormann wrote
-   <https://insights.sei.cmu.edu/cert/2008/09/carpet-bombing-and-directory-poisoning.html>
-
-d) in 2010 and 2012, Acros Security published <http://www.binaryplanting.com/>
-   plus <http://blog.acrossecurity.com/2012/02/downloads-folder-binary-planting.html>
-
-e) since then, Microsoft published
-   <https://technet.microsoft.com/en-us/library/2269637.aspx>,
-   <https://msdn.microsoft.com/en-us/library/ff919712.aspx>,
-   <https://msdn.microsoft.com/en-us/library/ms682586.aspx> and
-   <http://blogs.technet.com/b/srd/archive/2014/05/13/load-library-safely.aspx>
-
-I recommend to do YOUR homework first, BEFORE you dare to publish software
-riddled with well-known and well-documented vulnerabilities, which allows
-escalation of privilege.
-It's YOUR duty to protect YOUR users.
-
-As a starting point, read and try to understand
-<https://skanthak.homepage.t-online.de/sentinel.html> and
-<https://skanthak.homepage.t-online.de/!execute.html>
-
-When done, continue with
-<https://skanthak.homepage.t-online.de/verifier.html> and
-<https://skanthak.homepage.t-online.de/minesweeper.html>
-
-Until then, to protect your users, remove Rufus from the net!
-
-> And of course, with proper non disparaging involvement of security 
-> researchers, who subscribe to the established responsible disclosure 
-> policy of their profession, we are always eager to improve on our 
-> mitigation fixes, if it turns out they aren't adequate.
+> The distros@ list has a policy that after the embargo lifts, the report
+> is also made to oss-security to ensure there is a public record of what
+> has been reported.
 > 
-> However, we would appreciate if you refrained from jumping to erroneous 
-> conclusion about Rufus development being conducted by "bloody 
-> beginners", when it is clear that some of the "beginner's" 
-> vulnerabilities you list have long had some mitigation factors applied.
-
-I recommend to read the advice other people gave you on
-<https://github.com/pbatard/rufus/issues/1009>: SOME mitigations are
-clearly NOT sufficient, especially if you choose to apply the WRONG
-and IMPROPER mitigations.
-
-Stefan Kanthak
-
-PS: I might even show you that pasting the string "rufus.com" to the
-    window which has the focus yields interesting effects.
-
-> All the best,
+> Regards,
 > 
-> /Pete
-> 
-> 
-> On 2018.05.31 17:05, Stefan Kanthak wrote:
->> Hi @ll,
->> 
->> like its predecessors, the recently (2018-05-29) published version
->> 3.0 of "Rufus" (<https://rufus.akeo.ie/downloads/rufus-3.0.exe> and
->> <https://rufus.akeo.ie/downloads/rufus-3.0p.exe>) is riddled with
->> bloody beginners errors, which allow arbitrary code execution WITH
->> escalation of privilege.
->> 
->> Vulnerability #1
->> ~~~~~~~~~~~~~~~~
->> 
->> See <https://cwe.mitre.org/data/definitions/426.html>
->> and <https://cwe.mitre.org/data/definitions/427.html>
->> plus <https://capec.mitre.org/data/definitions/471.html>.
->> 
->> Additionally see Microsoft's developer guidance
->> <https://technet.microsoft.com/en-us/library/2269637.aspx>,
->> <https://msdn.microsoft.com/en-us/library/ff919712.aspx>,
->> <https://msdn.microsoft.com/en-us/library/ms682586.aspx> und
->> <http://blogs.technet.com/b/srd/archive/2014/05/13/load-library-safely.aspx>
->> for avoiding this bloody beginner's error.
->> 
->> Also see
->> <https://insights.sei.cmu.edu/cert/2008/09/carpet-bombing-and-directory-poisoning.html>
->> and
->> <http://blog.acrossecurity.com/2012/02/downloads-folder-binary-planting.html>
->> plus
->> <https://insights.sei.cmu.edu/cert/2016/06/bypassing-application-whitelisting.html>
->> for "prior art".
->> 
->> 
->> Vulnerability #2
->> ~~~~~~~~~~~~~~~~
->> 
->> See <https://cwe.mitre.org/data/definitions/377.html>
->> and <https://cwe.mitre.org/data/definitions/379.html>
->> plus <https://capec.mitre.org/data/definitions/29.html>
->> 
->> stay tuned
->> Stefan Kanthak
->>
+> Anthony Liguori
+
