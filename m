@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4587" "Tuesday" "11" "June" "2019" "15:10:00" "+0200" "Daniel Beck" "ml@beckweb.net" "<121B8053-3DA3-4BF8-903E-3615504626C5@beckweb.net>" "128" "[oss-security] Multiple vulnerabilities in Jenkins plugins" "^Date:" nil nil "6" "2019061113:10:00" "[oss-security] Multiple vulnerabilities in Jenkins plugins" (number mark "U       ml@beckweb.n Jun 11  128/4587  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2372" "Saturday" "10" "February" "2018" "19:11:21" "+0100" "Heiko Schlittermann" "hs@nodmarc.schlittermann.de" "<20180210181121.y757bod5yjdefrj4@jumper.schlittermann.de>" "69" "[oss-security] Exim 4.90.1 released. (Was: CVE-2018-6789 Exim 4.90 and earlier: buffer overflow)" "^Date:" nil nil "2" "2018021018:11:21" "[oss-security] Exim 4.90.1 released. (Was: CVE-2018-6789 Exim 4.90 and earlier: buffer overflow)" (number mark "        hs@nodmarc.s Feb 10   69/2372  " thread-indent "\"[oss-security] Exim 4.90.1 released. (Was: CVE-2018-6789 Exim 4.90 and earlier: buffer overflow)\"\n") "<20180207103943.wwijjdmnlzpp46lm@jumper.schlittermann.de>" ("<20180207103943.wwijjdmnlzpp46lm@jumper.schlittermann.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 2024 invoked by uid 550); 11 Jun 2019 13:10:14 -0000
+Received: (qmail 30089 invoked by uid 550); 10 Feb 2018 18:11:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,146 +11,104 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 2000 invoked from network); 11 Jun 2019 13:10:13 -0000
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 11.5 \(3445.9.1\))
-Message-Id: <121B8053-3DA3-4BF8-903E-3615504626C5@beckweb.net>
-X-Mailer: Apple Mail (2.3445.9.1)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1560258613;ece84384;
-X-HE-SMSGID: 1hagXJ-0006Wb-Rz
-Date: Tue, 11 Jun 2019 15:10:00 +0200
-From: Daniel Beck <ml@beckweb.net>
+Received: (qmail 30067 invoked from network); 10 Feb 2018 18:11:33 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=schlittermann.de; s=dd201504; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:To:From:Date:Cc:Content-Description:Content-ID:
+	Content-Transfer-Encoding:Resent-Cc:Resent-To;
+	bh=ojJ5xjunBPY7RvuJPCKbaQdGXiSnO88p6mHEXAm0RdM=; b=fNJ2VPhwydp2eLPYHqfBwSQg/s
+	tTU2KjncguZ0/ZP3YSgFWCS817/KyCZ/5FuuMK8BDKF/g4Sk7ek/k2BxCc6lbK6TbDHL5/DCRJHDx
+	skL2C/cgfTfkvgMtQ1Wn47ldu/8e4oCMsx117Yxn8eW1hdOMMp9BLiz6uVWPK3xThX5Y=;
+Message-ID: <20180210181121.y757bod5yjdefrj4@jumper.schlittermann.de>
+References: <20180207103943.wwijjdmnlzpp46lm@jumper.schlittermann.de>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="gu4yrwca5pzoeeab"
+Content-Disposition: inline
+In-Reply-To: <20180207103943.wwijjdmnlzpp46lm@jumper.schlittermann.de>
+Organization: schlittermann -- internet & unix support
+X-Face: =y#&-VlCH8uT|8#-#JE_^c<:+qPbYxFD`}8`m)xjyA$93tpwm-vKsa(V,0?906(2VIVNQbU
+ QzD%zhE+~-AA?\v-v.HY6]ebO4_$vY`l|||Q!EZT5*Xx/>Fj{8E_a.;;#<4S$>&T%n5()2Yt=R5FSC
+ y:Na&@T{Rf`kPq^'ffPFA%`mP~>%-LU$d*]]{-%>j={&MsMND.">]H)&#AoSI~(U8Jk;v*;,Pf+l85
+ X?H&`
+X-Telegram: @HeikoSchlittermann
+X-Phone: +49.172.7909055
+X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
+X-GPG-Key-ID: F69376CE
+User-Agent: NeoMutt/20170113 (1.7.2)
+Date: Sat, 10 Feb 2018 19:11:21 +0100
+From: Heiko Schlittermann <hs@nodmarc.schlittermann.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
+Subject: [oss-security] Exim 4.90.1 released. (Was: CVE-2018-6789 Exim 4.90 and earlier:
+ buffer overflow)
 To: oss-security@lists.openwall.com
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software. The following
-releases contain fixes for security vulnerabilities:
+--gu4yrwca5pzoeeab
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-* ElectricFlow Plugin 1.1.7
-* JX Resources Plugin 1.0.37
-* Token Macro Plugin 2.8
+We released Exim 4.90.1 just now.
+---------------------------------
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2019-06-11/
+This is mainly a security release to fix CVE-2018-6789, a buffer
+overflow in base64d(). Please update your systems to 4.90.1.  The
+reporter of the bug claims to have a working exploit.  See
+http://exim.org/static/doc/security/CVE-2018-6789.txt for the timeline.
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+This release contains some other important bug fixes since 4.90, but no
+additional features. Please see the ChangeLog
+ftp://ftp.exim.org/pub/exim/exim4/ChangeLog
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
+The Distros should have built packages already.
 
----
+The sources can be obtained directly from the Git repos
 
-SECURITY-1399 / CVE-2019-10337
-Token Macro Plugin did not configure its XML parser in a way that would=20
-prevent XML External Entity (XXE) processing.
+    git://git.exim.org/exim.git     tag: exim-4_90_1
+    git://git.exim.org/exim.git     tag: exim-4_90_1
 
-This allowed attackers able to control the contents of files processed with=
-=20
-the ${XML} macro to have Jenkins parse a maliciously crafted XML file that=
-=20
-uses external entities for extraction of secrets from the Jenkins agent,=20
-server-side request forgery, or denial-of-service attacks.
+The tag is signed with my GPG key=C2=B9.
 
-Token Macro Plugin no longer processes XML External Entities in XML documen=
-ts.
+Alternativly you may fetch the tarballs from the mirrors listed
+on=20
+    https://www.exim.org/mirmon/ftp_mirrors.html
 
+or directly from
 
-SECURITY-1379 / CVE-2019-10338 (CSRF), CVE-2019-10339 (improper authorizati=
-on)
-JX Resources Plugin did not perform permission checks on a method=20
-implementing form validation. This allowed users with Overall/Read access t=
-o=20
-Jenkins to connect to an attacker-specified Kubernetes server and obtain=20
-information about an attacker-specified namespace. Doing so might also leak=
-=20
-service account credentials used for the connection. Additionally, it allow=
-ed=20
-attackers to obtain the value of any attacker-specified environment variabl=
-e=20
-for the Jenkins master process.
+      ftp://ftp.exim.org/pub/exim/exim4/
+    https://ftp.exim.org/pub/exim/exim4/
 
-Additionally, this form validation method did not require POST requests,=20
-resulting in a cross-site request forgery vulnerability.
+The tarballs are signed with my GPG key=C2=B9. Next to the tarballs you will
+find a sha512sum.txt, in case you are happy with simple integrity check
+only.
 
-This form validation method now requires POST requests and Overall/Administ=
-er=20
-permissions.
+=C2=B9) If you get a "key expired" message, please refresh my key from
+the public keyservers.
 
+Thank you for using Exim.
 
-SECURITY-1410 (1) / CVE-2019-10331 (CSRF), CVE-2019-10332 (improper authori=
-zation)
-A missing permission check in a form validation method in ElectricFlow Plug=
-in=20
-allowed users with Overall/Read permission to initiate a connection test to=
-=20
-an attacker-specified server with attacker-specified username and password.
+    Best regards from Dresden/Germany
+    Viele Gr=C3=BC=C3=9Fe aus Dresden
+    Heiko Schlittermann
+--=20
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+ ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
 
-Additionally, the form validation method did not require POST requests,=20
-resulting in a CSRF vulnerability.
+--gu4yrwca5pzoeeab
+Content-Type: application/pgp-signature; name="signature.asc"
 
-This form validation method now requires POST requests and Overall/Administ=
-er=20
-permissions.
+-----BEGIN PGP SIGNATURE-----
 
+iQEzBAABCgAdFiEE0L/WueylaUpvFJ3Or0zGdqa2wUIFAlp/NcgACgkQr0zGdqa2
+wUIS0gf9EFoyNNKC4nvsnSDL8ZUxgMCHJTeUnac1pm742IiILi/rdXX1jOMG/HgJ
+FpO22nOdaWsFPqBENVx/orgQl/uxv7BuO60YTEZQKPFcuaDhyYUv1sRQ5SC5meY0
+o7fKMEWE67hBtNoc5unZUo3EM7D8wV/qIPCmJItVG3EvMCeMK/vR9tSpnkDXo+89
+KUTKqz2sOcxloTQY/xSM3UCC4wCeD60uvlTKdALSDlWeQdTvxPq6XrHTI1wp/VOw
+DjVM6NWrET8NcWiJcQVdsaUHphGYOcrMAKb4biC3uDKj1TKKV7Joq8l7qynz0C1x
+TkzopeB82MVsjCC0bUGAU++WXYiYnw==
+=x9gA
+-----END PGP SIGNATURE-----
 
-SECURITY-1410 (2) / CVE-2019-10333
-Various form validation and form autocompletion methods in ElectricFlow=20
-Plugin lacked permission checks. This allowed attackers with Overall/Read=20
-access to obtain information about the configuration of ElectricFlow Plugin=
-,=20
-as well as the configuration and data of connected ElectricFlow servers.
-
-These form validation and autocompletion methods now require=20
-Overall/Administer or Job/Configure permission, as appropriate for the give=
-n=20
-method.
-
-
-SECURITY-1411 / CVE-2019-10334
-ElectricFlow Plugin unconditionally disabled SSL/TLS certificate validation=
-=20
-for the entire Jenkins master JVM during the deployment/publication of an=20
-application.
-
-ElectricFlow Plugin no longer does that. Instead, the existing opt-in optio=
-n to
-ignore SSL/TLS errors is used during deployment for the specific connection.
-
-
-SECURITY-1412 / CVE-2019-10335
-The plugin adds metadata displayed on build pages during its operations.
-
-Any user content was not escaped, resulting in a cross-site scripting=20
-vulnerability allowing users with Job/Configure permission, or attackers=20
-controlling API responses received from ElectricFlow to render arbitrary HT=
-ML=20
-and JavaScript on Jenkins build pages.
-
-Build metadata is now filtered through a HTML formatter that only allows=20
-showing basic HTML, neutralizing any unsafe data. Additionally, all builds=
-=20
-executed after the security update is applied will now properly escape=20
-content received from ElectricFlow.
-
-
-SECURITY-1420 / CVE-2019-10336
-The configuration forms of various post-build steps contributed by=20
-ElectricFlow Plugin were vulnerable to cross-site scripting.
-
-This allowed attackers able to control the output of connected ElectricFlow=
-=20
-servers' APIs to inject arbitrary HTML and JavaScript into the configuratio=
-n=20
-form.
-
-ElectricFlow Plugin no longer interprets HTML/JavaScript in responses from=
-=20
-ElectricFlow server APIs on job configuration forms.
-
+--gu4yrwca5pzoeeab--
