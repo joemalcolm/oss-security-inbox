@@ -1,165 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/22/1
-Message-ID: <30c90215-d7f0-9540-1455-cd6fed6095b6@orlitzky.com>
-Date: Fri, 21 Dec 2018 22:14:24 -0500
-From: Michael Orlitzky <michael@...itzky.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/10/2
+Message-ID: <20180210181121.y757bod5yjdefrj4@jumper.schlittermann.de>
+Date: Sat, 10 Feb 2018 19:11:21 +0100
+From: Heiko Schlittermann <hs@...marc.schlittermann.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2018-6954: systemd-tmpfiles root privilege escalation by following non-terminal symlinks
+Subject: Exim 4.90.1 released. (Was: CVE-2018-6789 Exim 4.90 and earlier: buffer overflow)
 Content-Type: text/plain; charset=utf-8
 
-Product: systemd (tmpfiles)
-Versions-affected: 239 and earlier
-Author: Michael Orlitzky
-Fixed-in: v240
-Bug-report: https://github.com/systemd/systemd/issues/7986
-Acknowledgments:
-   Franck Bui of SUSE put forth a massive amount of effort to fix this,
-   and Lennart Poettering consistently provided timely reviews over the
-   course of a few months.
+We released Exim 4.90.1 just now.
+---------------------------------
 
+This is mainly a security release to fix CVE-2018-6789, a buffer
+overflow in base64d(). Please update your systems to 4.90.1.  The
+reporter of the bug claims to have a working exploit.  See
+http://exim.org/static/doc/security/CVE-2018-6789.txt for the timeline.
 
-== Summary ==
+This release contains some other important bug fixes since 4.90, but no
+additional features. Please see the ChangeLog
+ftp://ftp.exim.org/pub/exim/exim4/ChangeLog
 
-Before version 240, the systemd-tmpfiles program will follow symlinks 
-present in a non-terminal path component while adjusting permissions and 
-ownership. Often -- and particularly with "Z" type entries -- an 
-attacker can introduce such a symlink and take control of arbitrary 
-files on the system to gain root. The "fs.protected_symlinks" sysctl 
-does not prevent this attack. Version 239 contained a partial fix, but 
-only for the easy-to-exploit recursive "Z" type entries.
+The Distros should have built packages already.
 
+The sources can be obtained directly from the Git repos
 
-== Details ==
+    git://git.exim.org/exim.git     tag: exim-4_90_1
+    git://git.exim.org/exim.git     tag: exim-4_90_1
 
-The systemd-tmpfiles program tries to avoid following symlinks in the 
-last component of a path. To that end, the following trick is used in 
-src/tmpfiles/tmpfiles.c:
+The tag is signed with my GPG key¹.
 
-   fd = open(path, O_NOFOLLOW|O_CLOEXEC|O_PATH);
-   ...
-   xsprintf(fn, "/proc/self/fd/%i", fd);
-   ...
-   if (chown(fn, ...
+Alternativly you may fetch the tarballs from the mirrors listed
+on 
+    https://www.exim.org/mirmon/ftp_mirrors.html
 
-The call to chown will follow the "/proc/self/fd/%i" symlink, but only 
-once; it will then operate on the real file described by fd.
+or directly from
 
-However, there is another way to exploit the code above. The call to 
-open() will follow symlinks if they appear in a non-terminal component 
-of path, even with the O_NOFOLLOW flag set. Citing the open(2) man page,
+      ftp://ftp.exim.org/pub/exim/exim4/
+    https://ftp.exim.org/pub/exim/exim4/
 
-   O_NOFOLLOW
+The tarballs are signed with my GPG key¹. Next to the tarballs you will
+find a sha512sum.txt, in case you are happy with simple integrity check
+only.
 
-   If pathname is a symbolic link, then the open fails, with the error
-   ELOOP. Symbolic links in earlier components of the pathname will still
-   be followed.
+¹) If you get a "key expired" message, please refresh my key from
+the public keyservers.
 
-So, for example, if the path variable contains "/run/foo/a/b" and if "a" 
-is a symlink, then open() will follow it. If systemd-tmpfiles will be 
-changing ownership of "/run/foo/a/b" after that of "/run/foo", then the 
-owner of "/run/foo" can exploit that fact to gain root by replacing 
-"/run/foo/a" with a symlink. With a Z-type tmpfiles.d entry, the 
-attacker can create this situation himself.
+Thank you for using Exim.
 
-The "fs.protected_symlinks" sysctl does not protect against these sorts 
-of attacks. Due to the widespread and legitimate use of symlinks in 
-situations like these, the symlink protection is much weaker than the 
-corresponding hardlink protection.
+    Best regards from Dresden/Germany
+    Viele Grüße aus Dresden
+    Heiko Schlittermann
+-- 
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+ ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
 
-
-== Exploitation ==
-
-Consider the following entry in /etc/tmpfiles.d/exploit-recursive.conf:
-
-   d /var/lib/systemd-exploit-recursive 0755 mjo mjo
-   Z /var/lib/systemd-exploit-recursive 0755 mjo mjo
-
-Once systemd-tmpfiles has been started once, my "mjo" user will own that 
-directory:
-
-   mjo $ sudo ./build/systemd-tmpfiles --create
-   mjo $ ls -ld /var/lib/systemd-exploit-recursive
-   drwxr-xr-x  2 mjo mjo 4.0K 2018-02-13 09:38 /var/lib/systemd...
-
-At this point, I am able to create a directory "foo" and a file 
-"foo/passwd" under /var/lib/systemd-exploit-recursive. The next time 
-that systemd-tmpfiles is run (perhaps after a reboot), the tmpfiles.c 
-function item_do_children() will be called on "foo". Within that 
-function, there is a macro FOREACH_DIRENT_ALL that loops through the 
-entries of "foo".
-
-The FOREACH_DIRENT_ALL macro defers to readdir(3), and thus requires the 
-real directory stream pointer for "foo", because we want it to see 
-"foo/passwd". However, while the macro is iterating, the "q = action(i, 
-p)" will be performed on "p" which consists of the path "foo" and some 
-filename "d", but without reference to its file descriptor. So, between 
-the time that item_do_children() is called on "foo" and the time that "q 
-= action(i, p)" is run on "foo/passwd", I have the opportunity to 
-replace "foo" with a symlink to "/etc", causing "/etc/passwd" to be 
-affected by the change of ownership and permissions.
-
-But there's more: the FOREACH_DIRENT_ALL macro processes the contents of 
-"foo" in whatever order readdir() returns them. Since mjo owns "foo", I 
-can fill it with junk to buy myself as much time as I like before 
-"foo/passwd" is reached:
-
-   mjo $ cd /var/lib/systemd-exploit-recursive
-   mjo $ mkdir foo
-   mjo $ cd foo
-   mjo $ echo $(seq 1 500000) | xargs touch
-   mjo $ touch passwd
-
-Now, restarting systemd-tmpfiles will change ownership of all of those 
-files...
-
-   mjo $ sudo ./build/systemd-tmpfiles --create
-
-and it takes some time for it to process the 500,000 dummy files before 
-reaching "foo/passwd". At my leisure, I can replace foo with a symlink:
-
-   mjo $ cd /var/lib/systemd-exploit-recursive
-   mjo $ mv foo bar && ln -s /etc ./foo
-
-After some time, systemd-tmpfiles will eventually reach the path 
-"foo/passwd", which now points to "/etc/passwd", and grant me root access.
-
-A similar, but more difficult attack works against non-recursive entry 
-types. Consider the following tmpfiles.d entry:
-
-   d /var/lib/systemd-exploit 0755 mjo mjo
-   d /var/lib/systemd-exploit/foo 0755 mjo mjo
-   f /var/lib/systemd-exploit/foo/bar 0755 mjo mjo
-
-After "/var/lib/systemd-exploit/foo" is created but before the 
-permissions are adjusted on "/var/lib/systemd-exploit/foo/bar", there is 
-a short window of opportunity for me to replace "foo" with a symlink to 
-(for example) "/etc/env.d". If I'm fast enough, tmpfiles will open 
-"foo/bar", following the "foo" symlink, and give me ownership of 
-something sensitive in the "/etc/env.d" directory. However, this attack 
-is more difficult because I can't arbitrary widen my own window of 
-opportunity with junk files, as was possible with the "Z" type entries.
-
-
-== Resolution ==
-
-Commit 936f6bdb, which is present in systemd v239, changes the recursive 
-loop in two important ways. First, it passes file descriptors -- rather 
-than parent paths -- to each successive iteration. That allows the next 
-iteration to use the openat() system call, eliminating the non-terminal 
-path components from the equation. Second, it ensures that each "open" 
-call has the O_NOFOLLOW and O_PATH flags to prevent symlinks from being 
-followed at the current depth. Note: only the recursive loop was made 
-safe; the call to open() the top-level path will still follow 
-non-terminal symlinks and is vulnerable to the second attack above.
-
-The commits in pull request 8822 aim to make everything safe from this 
-type of symlink attack. As far as tmpfiles is concerned, the main idea 
-is to use the chase_symlinks() function in place of the open() system 
-call. Since chase_symlinks() calls openat() recursively from the root 
-up, it will never follow a non-terminal symlink. Commit 1f56e4ce then 
-introduces the CHASE_NOFOLLOW flag for that function, preventing it from 
-following terminal symlinks. In subsequent commits (e.g. addc3e30), the 
-consumers of chase_symlinks() were updated to pass CHASE_NOFOLLOW to 
-chase_symlinks(), preventing them from following any symlinks.
-
-The complete fix is available in systemd v240.
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
