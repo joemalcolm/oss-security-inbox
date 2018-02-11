@@ -1,4 +1,9 @@
-Received: (qmail 20294 invoked by uid 550); 17 May 2023 06:41:17 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1297" "Sunday" "11" "February" "2018" "09:59:05" "+0100" "Philippe Mouawad" "pmouawad@apache.org" "<CAH9fUpaNzk5am8oFe07RQ-kynCsQv54yB-uYs9bEnz7tbX-O7g@mail.gmail.com>" "46" "[oss-security] CVE-2018-1297: Apache JMeter uses an unsecure RMI connection in Distributed mode" "^Date:" nil nil "2" "2018021108:59:05" "[oss-security] CVE-2018-1297: Apache JMeter uses an unsecure RMI connection in Distributed mode" (number mark "        pmouawad@apa Feb 11   46/1297  " thread-indent "\"[oss-security] CVE-2018-1297: Apache JMeter uses an unsecure RMI connection in Distributed mode\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 17788 invoked by uid 550); 11 Feb 2018 09:01:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,97 +11,68 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20236 invoked from network); 17 May 2023 06:41:17 -0000
-Date: Wed, 17 May 2023 08:41:05 +0200 (CEST)
-From: Daniel Stenberg <daniel@haxx.se>
-To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
-    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
-    oss-security@lists.openwall.com
-Message-ID: <9o58s92-22n-48p5-5p37-234s3r70np67@unkk.fr>
-X-fromdanielhimself: yes
+Received: (qmail 15555 invoked from network); 11 Feb 2018 08:59:21 -0000
+X-Gm-Message-State: APf1xPBdxeWJq+EuI5bTSp67WhJeZ3kgP2zHHB78tXnB0/hlU2Ehn4xH
+	Ohf7ENalcE7pxzQei/uuDYf4wmXgZCTH4DxzdE8=
+X-Google-Smtp-Source: AH8x225aN+Dw0ll6diFNKJfhRgSV3dmY+tObOVibw2jPFypH58e7mCJPF8tM8/GdcrfeczS/BVDNCtdHufmPMkXGaRU=
+X-Received: by 10.55.92.133 with SMTP id q127mr12022535qkb.225.1518339546326;
+ Sun, 11 Feb 2018 00:59:06 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] curl: CVE-2023-28320: siglongjmp race condition
+X-Gmail-Original-Message-ID: <CAH9fUpaNzk5am8oFe07RQ-kynCsQv54yB-uYs9bEnz7tbX-O7g@mail.gmail.com>
+Message-ID: <CAH9fUpaNzk5am8oFe07RQ-kynCsQv54yB-uYs9bEnz7tbX-O7g@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="001a114e3d724eacd60564ebf96f"
+Date: Sun, 11 Feb 2018 09:59:05 +0100
+From: Philippe Mouawad <pmouawad@apache.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE-2018-1297: Apache JMeter uses an unsecure RMI connection in
+ Distributed mode
+To: JMeter Users List <user@jmeter.apache.org>, dev@jmeter.apache.org, announce@apache.org, 
+	asf-security <security@apache.org>, oss-security@lists.openwall.com, 
+	Brenden Meeder <fishing.for.jormungandr@gmail.com>
 
-siglongjmp race condition
-=========================
+--001a114e3d724eacd60564ebf96f
+Content-Type: text/plain; charset="UTF-8"
 
-Project curl Security Advisory, May 17th 2023 -
-[Permalink](https://curl.se/docs/CVE-2023-28320.html)
+Severity: Important
 
-VULNERABILITY
--------------
+Vendor: The Apache Software Foundation
 
-libcurl provides several different backends for resolving host names, selected
-at build time. If it is built to use the synchronous resolver, it allows name
-resolves to time-out slow operations using `alarm()` and `siglongjmp()`.
+Versions Affected: JMeter 2.X, 3.X
 
-When doing this, libcurl used a global buffer that was not mutex protected and
-a multi-threaded application might therefore crash or otherwise misbehave.
+Description [0]:
 
-INFO
-----
+When using Distributed Test only (RMI based), jmeter uses an unsecured RMI
+connection.
+This could allow an attacker to get Access to JMeterEngine and send
+unauthorized code.
+This only affect tests running in Distributed mode.
 
-Most platforms and systems build libcurl to use the threaded resolver or with
-c-ares, neither of those suffer from this flaw. Most platforms that build with
-the synchronous resolver don't feature `alarm()` and `siglongjmp()` and
-therefor are not vulnerable either.
+Mitigation:
+  * Users must use last version of Java 8 or Java 9
+  * Users must upgrade to last JMeter 4.0 version and use the default /
+enabled authenticated SSL RMI connection.
 
-Since `alarm()` uses signals, it is not advisable to use in a multi-threaded
-environment (signals and threads rarely mix very well) which reduces the risk
-that this flaw hurts many users.
+Besides, we remind users that in distributed mode, JMeter makes an
+Architectural assumption
+that it is operating on a 'safe' network. i.e. everyone with access to the
+network is considered trusted.
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2023-28320 to this issue.
+This typically means a dedicated VPN or similar is being used.
 
-CWE-662: Improper Synchronization
 
-Severity: Low
+Example:
+  * Start JMeter server using either jmeter-server or jmeter -s
+  * If JMeter listens on unsecure rmi connection (ie you can connect to it
+using a JMeter client), you are vulnerable
 
-AFFECTED VERSIONS
------------------
+Credit:
+This issue was reported responsibly to the Apache Tomcat Security Team
+by Brenden Meeder.
 
-- Affected versions: curl 7.9.8 to and including 8.0.1
-- Not affected versions: curl < 7.9.8 and curl >= 8.1.0
-- Introduced-in: https://github.com/curl/curl/commit/3c49b405de4fbf1f
+- Philippe Mouawad
 
-libcurl is used by many applications, but not always advertised as such!
+on behalf of the Apache JMeter PMC
 
-SOLUTION
-------------
+[0] https://bz.apache.org/bugzilla/show_bug.cgi?id=62039
 
-The fix is to only support this timeout ability if curl has and can properly
-mutex protect the buffer.
-
-- Fixed-in: https://github.com/curl/curl/commit/13718030ad4b3209a7583b
-
-RECOMMENDATIONS
---------------
-
-  A - Upgrade curl to version 8.1.0
-
-  B - Apply the patch to your local version
-
-  C - Do not use the synchronous name resolver option
-
-TIMELINE
---------
-
-This issue was reported to the curl project on April 2 2023. We contacted
-distros@openwall on May 9, 2023.
-
-curl 8.1.0 was released on May 17 2023, coordinated with the publication of
-this advisory.
-
-CREDITS
--------
-
-- Reported-by: Harry Sintonen
-- Patched-by: Harry Sintonen, Daniel Stenberg
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
+--001a114e3d724eacd60564ebf96f--
