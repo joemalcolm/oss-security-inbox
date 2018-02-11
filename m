@@ -1,43 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/23/14
-Message-ID: <5b7eb7b2.1c69fb81.6b98e.519f@mx.google.com>
-Date: Thu, 23 Aug 2018 15:33:33 +0200
-From: Leonardo Taccari <iamleot@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/11/1
+Message-ID: <CAH9fUpaNzk5am8oFe07RQ-kynCsQv54yB-uYs9bEnz7tbX-O7g@mail.gmail.com>
+Date: Sun, 11 Feb 2018 09:59:05 +0100
+From: Philippe Mouawad <pmouawad@...che.org>
+To: JMeter Users List <user@...ter.apache.org>, dev@...ter.apache.org, announce@...che.org,  asf-security <security@...che.org>, oss-security@...ts.openwall.com,  Brenden Meeder <fishing.for.jormungandr@...il.com>
+Subject: CVE-2018-1297: Apache JMeter uses an unsecure RMI connection in Distributed mode
 Content-Type: text/plain; charset=utf-8
 
-Hello Bob,
+Severity: Important
 
-Bob Friesenhahn writes:
-> You are missing something.  While they are unlikely to be triggered by 
-> default (but still could be triggered by an attacker with sufficient 
-> control), testing shows that
->
->    convert -verbose PS2:file.ps outfile.png
->    convert -verbose file.ps2 outfile.png
->    convert -verbose PS3:file.ps outfile.png
->    convert -verbose file.ps3 outfile.png
->
-> does in fact invoke Ghostscript.
+Vendor: The Apache Software Foundation
 
-Whoops, I stand corrected, sorry for the incorrect information!
-(at least when invoking them with the `PS2:' or `PS3:' prefixes,
-anyway, yes, both PS2 and PS3 policy rules are worth to be added
-as well).
+Versions Affected: JMeter 2.X, 3.X
 
-(Regarding the `file.ps2' and `file.ps3' examples without `PS2:' or
-`PS3:' prefixes according `convert -debug Policy -log "%e"' it seems
-that they ends up as:
+Description [0]:
 
- Domain: Coder; rights=Read; pattern="PS" ...
+When using Distributed Test only (RMI based), jmeter uses an unsecured RMI
+connection.
+This could allow an attacker to get Access to JMeterEngine and send
+unauthorized code.
+This only affect tests running in Distributed mode.
 
-...so should be blocked by the workaround described in
-VU#332928. But please correct me if I'm wrong.)
+Mitigation:
+  * Users must use last version of Java 8 or Java 9
+  * Users must upgrade to last JMeter 4.0 version and use the default /
+enabled authenticated SSL RMI connection.
 
-JFTR, not related to PS2 and PS3 but also a possible ghostcript
-consumer: EPT seems to ends up as `pattern="PS"' too (unlike PS2
-and PS3).
+Besides, we remind users that in distributed mode, JMeter makes an
+Architectural assumption
+that it is operating on a 'safe' network. i.e. everyone with access to the
+network is considered trusted.
+
+This typically means a dedicated VPN or similar is being used.
 
 
-Thank you!
+Example:
+  * Start JMeter server using either jmeter-server or jmeter -s
+  * If JMeter listens on unsecure rmi connection (ie you can connect to it
+using a JMeter client), you are vulnerable
+
+Credit:
+This issue was reported responsibly to the Apache Tomcat Security Team
+by Brenden Meeder.
+
+- Philippe Mouawad
+
+on behalf of the Apache JMeter PMC
+
+[0] https://bz.apache.org/bugzilla/show_bug.cgi?id=62039
+
