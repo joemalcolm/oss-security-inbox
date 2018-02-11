@@ -1,36 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/09/6
-Message-ID: <CAEwge-FTf8zMT-U2XuHRv8L9ksiQExKMExOoR0Rp0W2TvpO1oA@mail.gmail.com>
-Date: Tue, 9 Jan 2018 14:02:13 -0800
-From: Anthony Baker <abaker@...che.org>
-To: user@...de.apache.org, dev@...de.apache.org, announce@...che.org,  asf-security <security@...che.org>, oss-security@...ts.openwall.com
-Subject: [SECURITY] CVE-2017-9795 Apache Geode OQL method invocation vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/11/2
+Message-ID: <CAH9fUpYsFx1+rwz1A=mc7wAgbDHARyj1VrWNg41y9OySuL1mqw@mail.gmail.com>
+Date: Sun, 11 Feb 2018 09:59:35 +0100
+From: Philippe Mouawad <pmouawad@...che.org>
+To: JMeter Users List <user@...ter.apache.org>, dev@...ter.apache.org, announce@...che.org,  asf-security <security@...che.org>, oss-security@...ts.openwall.com,  Brenden Meeder <fishing.for.jormungandr@...il.com>
+Subject: CVE-2018-1287: Apache JMeter binds RMI server to wildcard in distributed mode (based on RMI)
 Content-Type: text/plain; charset=utf-8
 
-CVE-2017-9795 Apache Geode OQL method invocation vulnerability
-
-Severity:  Important
+Severity: Important
 
 Vendor: The Apache Software Foundation
 
-Versions Affected:  Apache Geode 1.0.0 through 1.2.1
+Versions Affected: JMeter 2.X, 3.X
 
 Description:
-A malicious user with read access to specific regions within a Geode
-cluster may execute OQL queries that allow read and write access to
-objects within unauthorized regions.  In addition a user could invoke
-methods that allow remote code execution.
+
+When using Distributed Test only (RMI based), jmeter server binds RMI
+Registry to wildcard host.
+This could allow an attacker to get Access to JMeterEngine and send
+unauthorized code.
+This only affect tests running in Distributed mode.
 
 Mitigation:
-Users of the affected versions should upgrade to Apache Geode 1.3.0 or later.
+
+  * Users must use last version of Java 8 or Java 9
+  * Users must upgrade to last JMeter 4.0 version
+
+Besides, we remind users that in distributed mode, JMeter makes an
+Architectural assumption
+that it is operating on a 'safe' network. i.e. everyone with access to the
+network is considered trusted.
+
+This typically means a dedicated VPN or similar is being used.
+
+
+Example:
+
+  * Start JMeter server using either jmeter-server or jmeter -s
+  * If JMeter listens on *:1099, you are vulnerable
+
 
 Credit:
-This issue was reported responsibly to the Apache Geode Security Team
-by Dan Smith from Pivotal.
+This issue was reported responsibly to the Apache Tomcat Security Team
+by Brenden Meeder.
 
-References:
-[1] https://issues.apache.org/jira/browse/GEODE-3247
-[2] https://cwiki.apache.org/confluence/display/GEODE/Release+Notes#ReleaseNotes-SecurityVulnerabilities
+- Philippe Mouawad
 
----
-The Geode PMC
+on behalf of the Apache JMeter PMC
+
+[0] https://bz.apache.org/bugzilla/show_bug.cgi?id=62039
+
