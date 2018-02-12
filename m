@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4733" "Friday" "23" "November" "2018" "09:22:17" "+0100" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20181123092217.7e4a0f84@computer>" "111" "[oss-security] Crashes and memory safety bugs in dcraw" "^Date:" nil nil "11" "2018112308:22:17" "[oss-security] Crashes and memory safety bugs in dcraw" (number mark "        hanno@hboeck Nov 23  111/4733  " thread-indent "\"[oss-security] Crashes and memory safety bugs in dcraw\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2088" "Monday" "12" "February" "2018" "17:31:47" "-0500" "Leo Famulari" "leo@famulari.name" "<20180212223147.GA16518@jasmine.lan>" "48" "Re: [oss-security] SEC Consult SA-20180207-0 :: Multiple buffer overflow vulnerabilities in InfoZip UnZip" nil nil nil "2" "2018021222:31:47" "[oss-security] SEC Consult SA-20180207-0 :: Multiple buffer overflow vulnerabilities in InfoZip UnZip" (number mark "U       leo@famulari Feb 12   48/2088  " thread-indent "\"Re: [oss-security] SEC Consult SA-20180207-0 :: Multiple buffer overflow vulnerabilities in InfoZip UnZip\"\n") "<3e9d24ce-dfc7-bea5-83f2-3e195e9ee2f8@sec-consult.com>" ("<3e9d24ce-dfc7-bea5-83f2-3e195e9ee2f8@sec-consult.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 8071 invoked by uid 550); 23 Nov 2018 08:22:22 -0000
+Received: (qmail 13433 invoked by uid 550); 13 Feb 2018 01:06:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,126 +11,86 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 8039 invoked from network); 23 Nov 2018 08:22:22 -0000
-Message-ID: <20181123092217.7e4a0f84@computer>
-X-Mailer: Claws Mail 3.17.1 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 23 Nov 2018 09:22:17 +0100
-From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Crashes and memory safety bugs in dcraw
-To: oss-security@lists.openwall.com
+Received: (qmail 29916 invoked from network); 12 Feb 2018 22:32:01 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=famulari.name;
+	 h=cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to:x-me-sender:x-me-sender:x-sasl-enc; s=
+	mesmtp; bh=b+UN+mUwxIEUPu9JvEdQtxSmRwEfqO94FP1wx6Zk4pE=; b=R1Z/S
+	PVxvvdyKCQVWEe2gP14Jcac/0zKJNTRl14tR5Qu16qXY/C48aM6JnJl6ei1LPsWT
+	UTrFJb0xz/z8MYxstIeIcFsf16GSlvdz2QGKTWe/GEg9Jf1c2NHjMo8plFpmr+Zt
+	rTwAnCHz5jFat+jrTROPbUAwuPhHe10T3kb970=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm2; bh=b+UN+mUwxIEUPu9JvEdQtxSmRwEfq
+	O94FP1wx6Zk4pE=; b=H5WphiASdTvM+4a5FCYMudVy8+VWCYlxFBpkj7JA5L4i0
+	fdlrq+zqr0JTLvvONuKz6FxZpXsagATg05fk/6NS7fUkLxCIQyXLbBmCU9L1P0iA
+	RhZ9chWWch14ZZEz7jFxVAn2CAgKs/Q7IJzzMOaiZTBdmQ5lj3i2y1fv6MvTHytO
+	q4EsUEb7qLpJtwmr36cx/d75pAmrYaYEVwAxklvZ+Xo/UWU8GPEsyh17uHP6vTdo
+	+vEmSsaSoyG0pfBByiJe7J6ztSYB34BWxfDBrLiaVp3/kTiMJMJhZQO96iG5jNhe
+	mdCnx1x4uusdU5Qcx7lM6Ll3m5CqeiM5vKzI8VHBQ==
+X-ME-Sender: <xms:1RWCWoGcQarZsDuZSdau3I8iH1hl8-6b4PYern35Fm1pAmix76QqkQ>
+Date: Mon, 12 Feb 2018 17:31:47 -0500
+From: Leo Famulari <leo@famulari.name>
+To: SEC Consult Vulnerability Lab <research@sec-consult.com>
+Cc: oss-security@lists.openwall.com
+Message-ID: <20180212223147.GA16518@jasmine.lan>
+References: <3e9d24ce-dfc7-bea5-83f2-3e195e9ee2f8@sec-consult.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="ZPt4rx8FFjLCG7dd"
+Content-Disposition: inline
+In-Reply-To: <3e9d24ce-dfc7-bea5-83f2-3e195e9ee2f8@sec-consult.com>
+User-Agent: Mutt/1.9.3 (2018-01-21)
+Subject: Re: [oss-security] SEC Consult SA-20180207-0 :: Multiple buffer
+ overflow vulnerabilities in InfoZip UnZip
 
-Hi,
+--ZPt4rx8FFjLCG7dd
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-dcraw is a tool to process raw images from digital cameras.
-It easily crashes with various issues (tested version 9.28.0). This was
-very shallow testing (afl fuzzing with random inputs, not starting with
-valid images), I assume there's much more. I reported those a long time
-ago to its author, he didn't seem interested in fixing such issues.
+On Thu, Feb 08, 2018 at 08:19:20AM +0100, SEC Consult Vulnerability Lab wrote:
+> 1) Heap-based buffer overflow in password protected ZIP archives (CVE-2018-1000035)
 
-Some applications use dcraw automatically to parse images (gthumb,
-kphotoalbum, kde thumbnailers, gwenview).
+[...]
 
-Input samples are base64.
+> As already mentioned, modern compilers replace unsafe functions with
+> safe alternatives as a defense in depth mechanism.
+> This feature is called BOSC (Built-in object size checking) and is part
+> of the FORTIFY_SOURCE=2 protection.
+> The following link shows the source code (and vulnerability) inside
+> the Ubuntu package:
+> http://bazaar.launchpad.net/~ubuntu-branches/ubuntu/trusty/unzip/trusty-updates/view/head:/fileio.c#L1593
 
+If you are not sure how to pass flags to the compiler when building UnZip 6.0
+(the Makefile does not respect CFLAGS), you should export them as LOCAL_UNZIP in
+the build environment. Quoting 'unix/Makefile':
 
-Segfault / memory read on invalid address in crop_masked_pixels
----------------------------------------------------------------
+# LOCAL_UNZIP is an environment variable that can be used to add default C flags
+# to your compile without editing the Makefile (e.g., -DDEBUG_STRUC, or -FPi87
+# on PCs using Microsoft C).
 
-TU0wMIEwMDAAMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAw
-MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMIX/MDAwMDAw
-MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMLTCMDAw
-MDAwAAAAMDAwMDAwMDAwMDAwMMaN
+It took me a little too long to figure that out...
 
-=3D=3D6511=3D=3DERROR: AddressSanitizer: SEGV on unknown address 0x7fa0aa2a=
-d79e (pc 0x0000005992fe bp 0x7ffdd236bb50 sp 0x7ffdd236b9e0 T0)
-=3D=3D6511=3D=3DThe signal is caused by a READ memory access.
-    #0 0x5992fd in crop_masked_pixels /mnt/ram/dcraw/dcraw.c:3775:20
-    #1 0x668a33 in main /mnt/ram/dcraw/dcraw.c:10406:7
-    #2 0x7fa05f3264ca in __libc_start_main (/lib64/libc.so.6+0x234ca)
-    #3 0x41c629 in _start (/mnt/ram/dcraw/a.out+0x41c629)
+--ZPt4rx8FFjLCG7dd
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
 
-Heap out of bounds read in parse_tiff_ifd
------------------------------------------
+iQIzBAABCAAdFiEEsFFZSPHn08G5gDigJkb6MLrKfwgFAlqCFdAACgkQJkb6MLrK
+fwgFqxAApHa1n4pN8ty2nxaVI59a3NjvJvYPHDsOkjiiwqtnbpdLjDNanGS/LwMO
+Nq438wnr8NBQVj3dGTfY3jIiRJbYXmGTBaKpbo8Ti840XToMwlGLKbwMp1c4Yw0E
+vOI2fgu+PbmKS7FQATzO0zTc8WRDKqt7GjyR1cicWZiK3aXtsRD4+yrs3i/l29LP
+eADPjni3nQoeYA39yt9oZjFQkI0xj2qYAs0lVNRLNwQs/iM9JxjMXgRo1UXpsgo+
+d/0XMtMr0eRwSKo9XhGzqcsPOsJ2YSkm8XidyqMq+DSmOjKkdxshxaQ4wMdBVsJ3
+pv1lFxh2PgWQVJnvj5gzWb3vpm3aCS0aTJ6g/fW6JaSpEazAwGg/CVAxEUK4eEO8
+mbYEBOFqAAlpG6E+KbwuEsLsXFvGGDj1vMEssDHAvL2hM5LpK/0PyWF/jQ963NFr
+MgT8ImpmjN529rzkL26kgcuzW9szMT0WoBj+Y8SuuIR5FDYj9aC01b4F5cYRSOSW
+vtFzlISajmgGKsI+7mVor6pWZu83zGCM/mfYJGuN72jnxg+aSoEFx8vNrnAv7PgW
+SK8WU49+FnYBbGG8Zk5K6XwXJziFMJamwsvNW8E0WYZO1dsvpK22I4A7qxyyfAkJ
+V65Ftkij+jgkoG6OOZkc3oevSzKF03Vl4uExLLb8ApcgvZsSmVU=
+=/eBh
+-----END PGP SIGNATURE-----
 
-TU0wMIAwMDAAMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMMUWMDAAAAA=3D
-
-
-=3D=3D6729=3D=3DERROR: AddressSanitizer: heap-buffer-overflow on address 0x=
-61100000013f at pc 0x00000043690d bp 0x7ffeaaba2270 sp 0x7ffeaaba1a18
-READ of size 256 at 0x61100000013f thread T0
-    #0 0x43690c in __interceptor_index (/mnt/ram/dcraw/a.out+0x43690c)
-    #1 0x5ec1d1 in parse_tiff_ifd /mnt/ram/dcraw/dcraw.c:6014:46
-    #2 0x60cc64 in parse_tiff /mnt/ram/dcraw/dcraw.c:6193:9
-    #3 0x63d0d6 in identify /mnt/ram/dcraw/dcraw.c:8674:16
-    #4 0x666eab in main /mnt/ram/dcraw/dcraw.c:10252:15
-    #5 0x7f1ec0bfc4ca in __libc_start_main (/lib64/libc.so.6+0x234ca)
-    #6 0x41c629 in _start (/mnt/ram/dcraw/a.out+0x41c629)
-
-0x61100000013f is located 0 bytes to the right of 255-byte region [0x611000=
-000040,0x61100000013f)
-allocated by thread T0 here:
-    #0 0x4c6b23 in malloc (/mnt/ram/dcraw/a.out+0x4c6b23)
-    #1 0x5ec070 in parse_tiff_ifd /mnt/ram/dcraw/dcraw.c:6012:24
-    #2 0x60cc64 in parse_tiff /mnt/ram/dcraw/dcraw.c:6193:9
-    #3 0x63d0d6 in identify /mnt/ram/dcraw/dcraw.c:8674:16
-    #4 0x666eab in main /mnt/ram/dcraw/dcraw.c:10252:15
-    #5 0x7f1ec0bfc4ca in __libc_start_main (/lib64/libc.so.6+0x234ca)
-
-
-Invalid memory read in crop_masked_pixels
------------------------------------------
-
-TU0wMIEwMDAAMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAw
-MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMIX/MDAwMDAw
-MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMLTCMDAw
-MDAwAAAAMDAwMDAwMDAwMDAwMMaN
-
-=3D=3D6893=3D=3DERROR: AddressSanitizer: SEGV on unknown address 0x7f5514da=
-d79e (pc 0x0000005992fe bp 0x7ffc83994ad0 sp 0x7ffc83994960 T0)
-=3D=3D6893=3D=3DThe signal is caused by a READ memory access.
-    #0 0x5992fd in crop_masked_pixels /mnt/ram/dcraw/dcraw.c:3775:20
-    #1 0x668a33 in main /mnt/ram/dcraw/dcraw.c:10406:7
-    #2 0x7f54c9df64ca in __libc_start_main (/lib64/libc.so.6+0x234ca)
-    #3 0x41c629 in _start (/mnt/ram/dcraw/a.out+0x41c629)
-
-
-floating point exception / segfault in parse_tiff_ifd
------------------------------------------------------
-
-TU0wMIAwMDAAMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMP0JMDAAAAAA
-
-=3D=3D6910=3D=3DERROR: AddressSanitizer: FPE on unknown address 0x0000005f7=
-0ee (pc 0x0000005f70ee bp 0x7ffc259155f0 sp 0x7ffc259142a0 T0)
-    #0 0x5f70ed in parse_tiff_ifd /mnt/ram/dcraw/dcraw.c:6055:43
-    #1 0x60cc64 in parse_tiff /mnt/ram/dcraw/dcraw.c:6193:9
-    #2 0x63d0d6 in identify /mnt/ram/dcraw/dcraw.c:8674:16
-    #3 0x666eab in main /mnt/ram/dcraw/dcraw.c:10252:15
-    #4 0x7fc98bd024ca in __libc_start_main (/lib64/libc.so.6+0x234ca)
-    #5 0x41c629 in _start (/mnt/ram/dcraw/a.out+0x41c629)
-
-
-floating point exception in kodac_radc_load_raw
------------------------------------------------
-
-UFhOAA=3D=3D
-
-=3D=3D6919=3D=3DERROR: AddressSanitizer: FPE on unknown address 0x00000054e=
-85e (pc 0x00000054e85e bp 0x7fffc0b15150 sp 0x7fffc0b10be0 T0)
-    #0 0x54e85d in kodak_radc_load_raw /mnt/ram/dcraw/dcraw.c:2272:34
-    #1 0x6687ad in main /mnt/ram/dcraw/dcraw.c:10395:10
-    #2 0x7f8f61ecf4ca in __libc_start_main (/lib64/libc.so.6+0x234ca)
-    #3 0x41c629 in _start (/mnt/ram/dcraw/a.out+0x41c629)
-
-
-
---=20
-Hanno B=C3=B6ck
-https://hboeck.de/
-
-mail/jabber: hanno@hboeck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+--ZPt4rx8FFjLCG7dd--
