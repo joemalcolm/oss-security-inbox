@@ -1,30 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/18/9
-Message-ID: <20180118212114.GA8771@openwall.com>
-Date: Thu, 18 Jan 2018 22:21:14 +0100
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: How to deal with reporters who don't want their bugs fixed?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/13/1
+Message-ID: <20180212223147.GA16518@jasmine.lan>
+Date: Mon, 12 Feb 2018 17:31:47 -0500
+From: Leo Famulari <leo@...ulari.name>
+To: SEC Consult Vulnerability Lab <research@...-consult.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: SEC Consult SA-20180207-0 :: Multiple buffer overflow vulnerabilities in InfoZip UnZip
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jan 18, 2018 at 05:10:05PM +0100, Florian Weimer wrote:
-> Subject says it all: What do you do if you receive a vulnerability 
-> report, and the reporter requests an embargo at some time in the future 
-> because that's when their paper/conference presentation/patent 
-> submission is scheduled?
+On Thu, Feb 08, 2018 at 08:19:20AM +0100, SEC Consult Vulnerability Lab wrote:
+> 1) Heap-based buffer overflow in password protected ZIP archives (CVE-2018-1000035)
 
-I think it's best for your project (I guess glibc?) to prominently
-publish near the security contact address a maximum embargo time you'd
-(be likely to) agree to.  That's what security at kernel.org does
-(7 days) and what we do with (linux-)distros (14 days).  That way, it's
-less important for you to judge whether the reason for embargo is
-valid/altruistic or bogus/selfish - a sane maximum embargo time
-minimizes the damage to all parties either way.  When someone requests a
-longer embargo for whatever reason, just decline and insist on your
-previously published maximum.  Those who want to have their issue
-disclosure timed with some other event will then be expected to delay
-reporting the issue to your project until it's close enough to that
-other event.  That's not ideal, but I think it's better than having no
-maximum embargo time specified.
+[...]
 
-Alexander
+> As already mentioned, modern compilers replace unsafe functions with
+> safe alternatives as a defense in depth mechanism.
+> This feature is called BOSC (Built-in object size checking) and is part
+> of the FORTIFY_SOURCE=2 protection.
+> The following link shows the source code (and vulnerability) inside
+> the Ubuntu package:
+> http://bazaar.launchpad.net/~ubuntu-branches/ubuntu/trusty/unzip/trusty-updates/view/head:/fileio.c#L1593
+
+If you are not sure how to pass flags to the compiler when building UnZip 6.0
+(the Makefile does not respect CFLAGS), you should export them as LOCAL_UNZIP in
+the build environment. Quoting 'unix/Makefile':
+
+# LOCAL_UNZIP is an environment variable that can be used to add default C flags
+# to your compile without editing the Makefile (e.g., -DDEBUG_STRUC, or -FPi87
+# on PCs using Microsoft C).
+
+It took me a little too long to figure that out...
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
