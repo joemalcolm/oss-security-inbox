@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1542" "Wednesday" "17" "August" "2016" "23:42:50" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160818034250.D3AA3ABC96C@smtpvmsrv1.mitre.org>" "39" "[oss-security] Re: CVE Request - Samsung Exynos fimg2d NULL Pointer Dereference" nil nil nil "8" "2016081803:42:50" "[oss-security] Re: CVE Request - Samsung Exynos fimg2d NULL Pointer Dereference" (number mark "U       cve-assign@m Aug 17   39/1542  " thread-indent "\"[oss-security] Re: CVE Request - Samsung Exynos fimg2d NULL Pointer Dereference\"\n") "<CACCOJE22F7zG5Ay1qL1bO0OvFyixGiuLOC_Y_L6tneeieVMdeA@mail.gmail.com>" ("<CACCOJE22F7zG5Ay1qL1bO0OvFyixGiuLOC_Y_L6tneeieVMdeA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["767" "Tuesday" "13" "February" "2018" "12:04:50" "+0100" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20180213120450.29f126cf@pc1>" "26" "[oss-security] GNU patch out of bounds read, null pointer crash and double free" nil nil nil "2" "2018021311:04:50" "[oss-security] GNU patch out of bounds read, null pointer crash and double free" (number mark "U       hanno@hboeck Feb 13   26/767   " thread-indent "\"[oss-security] GNU patch out of bounds read, null pointer crash and double free\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 23802 invoked by uid 550); 18 Aug 2016 03:43:04 -0000
+Received: (qmail 1650 invoked by uid 550); 13 Feb 2018 11:05:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,51 +12,40 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23684 invoked from network); 18 Aug 2016 03:43:02 -0000
-From: cve-assign@mitre.org
-To: idler1984@gmail.com
-Cc: cve-assign@mitre.org, anarcheuz@gmail.com, oss-security@lists.openwall.com
-In-Reply-To: <CACCOJE22F7zG5Ay1qL1bO0OvFyixGiuLOC_Y_L6tneeieVMdeA@mail.gmail.com>
-Message-Id: <20160818034250.D3AA3ABC96C@smtpvmsrv1.mitre.org>
-Date: Wed, 17 Aug 2016 23:42:50 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request - Samsung Exynos fimg2d NULL Pointer Dereference
+Received: (qmail 1606 invoked from network); 13 Feb 2018 11:05:04 -0000
+Date: Tue, 13 Feb 2018 12:04:50 +0100
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
+To: oss-security@lists.openwall.com
+Message-ID: <20180213120450.29f126cf@pc1>
+X-Mailer: Claws Mail 3.16.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] GNU patch out of bounds read, null pointer crash and double free
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+The recent release of GNU patch 2.7.6 fixed an old out of bounds read I
+had reported in 2015:
 
-> I'd like to request CVE for the following vulnerability fixed in
-> Samsung Exynos fimg2d driver for Android:
-> 
-> Security bulletin: http://security.samsungmobile.com/smrupdate.html#SMR-AUG-2016
-> 
-> SVE-2016-6382: fimg2d NULL Pointer Dereference
-> 
-> Affected versions: L(5.0/5.1), M(6.0) devices with Exynos7420 chipset
+out of bounds read with malformed patch in pch_write_line
+https://savannah.gnu.org/bugs/index.php?45990
 
-> The vulnerability exists due to a null pointer dereference on fimg2d driver.
-> The patch verifies if the object is null before dereferencing it.
+Commit:
+https://git.savannah.gnu.org/cgit/patch.git/commit/src/pch.c?id=3Da0d7fe458=
+9651c64bd16ddaaa634030bb0455866
 
-Use CVE-2016-6604.
+I re-checked patch now and found a few more issues:
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+segfault / null pointer (probably crash only)
+https://savannah.gnu.org/bugs/index.php?53132
+https://git.savannah.gnu.org/cgit/patch.git/commit/?id=3Df290f48a6218670848=
+84bfff87f8093c15195e6a
 
-iQIcBAEBCAAGBQJXtShzAAoJEHb/MwWLVhi2leUP/02zyUfHhnmwTrd8RwCoGMDL
-nm+W6AToaFzif7Ihn4qTcRR2v5YCQkBx10mj+BJ5JrS48/Gh6h2A3zfP0VpkdpVi
-cROaCDhuYWDAEoKvgcFjvKLQbCUrEGUvUJzhToKj7cv95j237m7kXJfmc33tftla
-vipSUQTRqiBxSvnFIp/3xiA05N2dLi+4Yw7IN9FqwMkGse1n+4BhcE2iLgP/OoBq
-EUS/qn2xszN9jw5DcGlsZ5nFZMlm8Ru5pgaHERN785aNSZU1LlWTdZhvJlgmeiIw
-m/zHoV71T/4fh/FP2z+2EjW59lI/kQmJNKon/88EoNlCNTZQ+sQmgNNykYhvF9QP
-lBP1gCvVryHBDKKVwni7HjoMSMEtgbK3da/pqvR551bhWYt1f8xJUDyEol643GW6
-ViH/wjtA2L/BLFmmbPSX1jedgFCRYZ1pdV1vrJ+MgyAK+fi7ioLvIt/L1ygy5sTI
-pQHCRpzSgM0YsPhcS0QvTNoskA2XOltcW0KOgy3xg3EJvZVK2FppD850xXOOHSb8
-ykUJzg9WKzIcg/yJe2eb2Yeo8VdbI2lZTaRWRKFTNM1AdrHe4ZpFldDosAzHvZwH
-DrFsF+TbDXFJO8ke3WW0xTvTRwZumGfYaIYKuotQaunBTWvQUHt/yBJy+z+8hSRg
-dk1NFu/a5sPs6/cN5efe
-=5c4e
------END PGP SIGNATURE-----
+double free in function another_hunk()
+https://savannah.gnu.org/bugs/index.php?53133
+
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
+
+mail/jabber: hanno@hboeck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
