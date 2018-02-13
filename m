@@ -1,55 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/26/4
-Message-ID: <BN4PR11MB0882BF16C0E31311122387B9AAE00@BN4PR11MB0882.namprd11.prod.outlook.com>
-Date: Fri, 26 Jan 2018 17:48:14 +0000
-From: Mikhail Utin <mikhailutin@...mail.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: How to deal with reporters who don't want their bugs fixed?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/13/3
+Message-ID: <20180213120450.29f126cf@pc1>
+Date: Tue, 13 Feb 2018 12:04:50 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: GNU patch out of bounds read, null pointer crash and double free
 Content-Type: text/plain; charset=utf-8
 
-I 100% agree with Solar's response. We should not limit our freedom to choose how we will handle our intellectual property. That is how I read the original statements below.
+The recent release of GNU patch 2.7.6 fixed an old out of bounds read I
+had reported in 2015:
 
-Not to cause more discussion, but here is the example of how "universal ethics" work:
+out of bounds read with malformed patch in pch_write_line
+https://savannah.gnu.org/bugs/index.php?45990
 
+Commit:
+https://git.savannah.gnu.org/cgit/patch.git/commit/src/pch.c?id=a0d7fe4589651c64bd16ddaaa634030bb0455866
 
-https://www.theregister.co.uk/2018/01/25/intel_spectre_disclosed_flaws_november/
+I re-checked patch now and found a few more issues:
 
+segfault / null pointer (probably crash only)
+https://savannah.gnu.org/bugs/index.php?53132
+https://git.savannah.gnu.org/cgit/patch.git/commit/?id=f290f48a621867084884bfff87f8093c15195e6a
 
+double free in function another_hunk()
+https://savannah.gnu.org/bugs/index.php?53133
 
-Mikhail Utin, CISSP
+-- 
+Hanno Böck
+https://hboeck.de/
 
-
-________________________________
-From: Solar Designer <solar@...nwall.com>
-Sent: Friday, January 26, 2018 12:16
-To: oss-security@...ts.openwall.com
-Subject: Re: [oss-security] How to deal with reporters who don't want their bugs fixed?
-
-On Fri, Jan 26, 2018 at 10:23:49AM -0500, Stiepan wrote:
-> I think that clear rules might be welcome:
-
-I agree (specifically, I had suggested explicit maximum embargo times),
-but such rules must not be one and only industry standard.  Anyone or
-any project may propose rules, and other projects are welcome to reuse
-those rules, but they must not have to - they could as well use
-different rules, or none.  At best, a relatively non-controversial
-and brief boilerplate could end up being reused by many projects.
-
-> We as a profession should have a clear code of ethics
-
-No.  Let's not use the word ethics.  That word, except when explicitly
-referring to a particular person's or group's ethics, implies that when
-we (dis)agree or are judging others, we claim to be necessarily right -
-but in reality we're necessarily subjective.
-
-This would be just as flawed a concept/term as "responsible disclosure".
-(I refrain from using that term as well, except when pointing out just
-how unnecessarily judgemental it is - implying that other kinds of
-disclosure would have been "irresponsible" - but we're subjective.)
-
-> universal ethics' code
-
-That's an oxymoron.  No such thing can possibly exist.
-
-Alexander
-
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
