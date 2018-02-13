@@ -1,53 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/09/1
-Message-ID: <ad030315-66c0-608e-62fd-622413bf6188@nic.cz>
-Date: Fri, 9 Feb 2018 08:47:00 +0100
-From: Petr Špaček <petr.spacek@....cz>
-To: Anthony Liguori <aliguori@...zon.com>, oss-security@...ts.openwall.com
-Cc: Jan Pavlinec <jan.pavlinec@....cz>, Remi Gacogne <remi.gacogne@...erdns.com>, Solar Designer <solar@...nwall.com>, Kristian Fiskerstrand <k_f@...too.org>
-Subject: Re: bug in DNS resolvers - DNSSEC validation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/13/2
+Message-ID: <20180213120136.04d1d703@pc1>
+Date: Tue, 13 Feb 2018 12:01:36 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: qpdf: multiple vulnerabilities before 7.0.0
 Content-Type: text/plain; charset=utf-8
 
-Please accept my apology for this omission, the issue were made public
-right after end of embargo but I totally forgot about posting it again here.
+Hi,
 
-On 9.2.2018 02:46, Anthony Liguori wrote:
-> The following issues were reported on distros@ on Jan 15th and
-> subsequently made public without a post here.  I'm referencing the
-> public announcements I've found with hope that Petr et al can provide
-> more specific information here.
-> 
-> https://nvd.nist.gov/vuln/detail/CVE-2018-1000002?cpeVersion=2.2
-> https://doc.powerdns.com/recursor/security-advisories/powerdns-advisory-2018-01.html
+This is a bit older, but I'll share it anyway. A while ago I tested
+qpdf with libfuzzer, all those issues have been fixed in 7.0.0 (latest
+is 7.1.1).
 
-Announcement for Knot Resolver 1.5.2 is here:
-https://lists.nic.cz/pipermail/knot-resolver-users/2018/000000.html
+Stack overflow due to endless recursion in
+QPDFTokenizer::resolveLiteral()
+https://github.com/qpdf/qpdf/issues/51
 
-Nature of the issue is that original DNSSEC specification in dection 5.4
-of [RFC4035] under-specifies the algorithm for checking nonexistence
-proofs.
+Another stack overflow / endless recursion in
+QPDFWriter::enqueueObject()
+https://github.com/qpdf/qpdf/issues/143
 
-While implementing DNSSEC validation into Knot Resolver, we forgot to
-implement additional conditions explained in RFC 6840, so our DNSSEC
-validator could accept an NSEC or NSEC3 RR proofs from an ancestor zone
-as proving the nonexistence of an RR in a child zone.
+Stack out of bounds read in iterate_rc4()
+https://github.com/qpdf/qpdf/issues/147
+
+heap out of bounds read (large) in Pl_Buffer::write
+https://github.com/qpdf/qpdf/issues/150
 
 
-Please note that Knot Resolver versions older than latest 1.5.z are
-obsolete and not maintained by CZ.NIC anymore so all users all advised
-to upgrade immediatelly to to latests 1.5 or 2.0 branches.
-
-Version 1.5.z is going to be end-of-life in approximatelly one month so
-direct upgrade to version 2.0 or later is strongly recommended.
-
-Petr Špaček  @  CZ.NIC
+Hang due to a pdf xref loop:
+https://github.com/qpdf/qpdf/issues/149
+Background:
+https://blog.fuzzing-project.org/59-Six-year-old-PDF-loop-bug-affects-most-major-implementations.html
 
 
-> The distros@ list has a policy that after the embargo lifts, the report
-> is also made to oss-security to ensure there is a public record of what
-> has been reported.
-> 
-> Regards,
-> 
-> Anthony Liguori
+A quick check with the latst 7.1.1 with libfuzzer and asan revealed no
+further bugs.
 
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
