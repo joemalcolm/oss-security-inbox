@@ -1,36 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/12/9
-Message-ID: <20180412225441.GC15390@espresso.pseudorandom.co.uk>
-Date: Thu, 12 Apr 2018 23:54:41 +0100
-From: Simon McVittie <smcv@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: Terminal Control Chars
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/13/4
+Message-ID: <CACHnxzwtXFy7YPD1w2w+NT1yRuXP2f6S5WExFqZCz=yHGRuVww@mail.gmail.com>
+Date: Tue, 13 Feb 2018 07:06:47 -0500
+From: Christopher Shannon <christopher.l.shannon@...il.com>
+To: dev@...ivemq.apache.org, users@...ivemq.apache.org,  The Apache Security Team <security@...che.org>, jianan huang <sevcks@...il.com>, oss-security@...ts.openwall.com
+Subject: [ANNOUNCE] CVE-2017-15709 - Information Leak
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 12 Apr 2018 at 17:18:45 -0400, David A. Wheeler wrote:
-> Russ Allbery:
-> > I think a useful definition of "control character" in this context (and I
-> > realize this doesn't exactly match the ASCII definition) is a character
-> > that results in an action other than insertion being taken...
-> > CR and LF would not be control characters in that definition
-> 
-> As you noted, that definition doesn't match the ASCII definition, but
-> I also think it's misleading.  If someone pastes a CR/LF into a shell prompt,
-> it certainly *DOES* cause an action, namely, execution of that line.
+CVE-2017-15709 - Information Leak
 
-I hope you're not proposing that, to protect users of terminal emulators,
-general-purpose web browsers should not allow copying more than a
-paragraph at a time? That seems like a change that is unlikely to be
-accepted.
+Severity: Low
 
-Similarly, if filtering of pastes is done at the destination side (the
-terminal emulator), it would seem bad to be unable to paste more than
-a line at a time into a text editor that happens to be running in a
-terminal emulator (for instance the one in which I'm writing this email).
+Vendor:
+The Apache Software Foundation
 
-Russ's more loose definition of "control character" (in particular,
-preventing copying and/or pasting ESC and the 0x80-0x9F range) would be
-enough to protect users of a terminal/shell combination that supports
-bracketed paste, as far as I'm aware?
+Versions Affected:
+Apache ActiveMQ 5.14.0 - 5.15.2
 
-    smcv
+Description:
+
+When using the OpenWire protocol it was found that certain system
+details (such as the OS and kernel version) are exposed as plain text.
+
+Mitigation:
+
+Use a TLS enabled transport or upgrade to Apache ActiveMQ 5.15.3.
+
+Credit:
+This issue was discovered by QingTeng cloud Security of Minded
+Security Researcher jianan.huang
