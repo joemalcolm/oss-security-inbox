@@ -1,38 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/25/6
-Message-Id: <272754A9-6299-4B6E-B0FB-BCC3FD8668B6@apache.org>
-Date: Thu, 25 Jan 2018 11:56:19 -0800
-From: Andy LoPresto <alopresto@...che.org>
-To: security@...i.apache.org
-Cc: users@...i.apache.org, dev@...i.apache.org, oss-security@...ts.openwall.com
-Subject: [ANNOUNCE] CVE advisory for Apache NiFi 1.0.0 - 1.3.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/14/1
+Message-Id: <077A6F23-B377-4356-8FD7-A21B6AB47148@beckweb.net>
+Date: Wed, 14 Feb 2018 16:35:43 +0100
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Multiple vulnerabilities in Jenkins
 Content-Type: text/plain; charset=utf-8
 
-The Apache NiFi PMC would like to announce the following CVE discovery in Apache NiFi 1.1.0 - 1.3.0. This issue was resolved with the release of NiFi 1.4.0 on October 2, 2017. NiFi is an easy to use, powerful, and reliable system to process and distribute data. It supports powerful and scalable directed graphs of data routing, transformation, and system mediation logic. For more information, see https://nifi.apache.org/security.html.
+Jenkins is an open source automation server which enables developers around 
+the world to reliably build, test, and deploy their software. The following 
+releases contain fixes for security vulnerabilities:
 
-CVE-2017-15703 <https://nifi.apache.org/security.html#CVE-2017-15703>: Apache NiFi Java deserialization issue in template XML upload
+* Jenkins (weekly) 2.107
+* Jenkins (LTS) 2.89.4
 
-Severity: Moderate
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2018-02-14/
 
-Versions Affected:
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-Apache NiFi 1.0.0 - 1.3.0
+If you find security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
 
-Description: Any authenticated user (valid client certificate but without ACL permissions) could upload a template which contained malicious code and caused a denial of service via Java deserialization attack.
+---
 
-Mitigation: The fix to properly handle Java deserialization was applied on the Apache NiFi 1.4.0 release. Users running a prior 1.x release should upgrade to the appropriate release.
+SECURITY-506
+The form validation for the proxy configuration form did not check the 
+permission of the user accessing it, allowing anyone with Overall/Read 
+access to Jenkins to cause Jenkins to send a GET request to a specified 
+URL, optionally with a specified proxy configuration.
 
-Credit: This issue was discovered by Mike Cole.
-
-Released: October 2, 2017 (Updated January 25, 2018)
-
-
-Andy LoPresto
-alopresto@...che.org
-alopresto.apache@...il.com
-PGP Fingerprint: 70EC B3E5 98A6 5A3F D3C4  BACE 3C6E F65B 2F7D EF69
+If that request’s HTTP response code indicates success, the form validation 
+is returning a generic success message, otherwise the HTTP status code is 
+returned. It was not possible to reuse an existing proxy configuration to 
+send those requests; that configuration had to be provided by the attacker.
 
 
-Content of type "text/html" skipped
+SECURITY-705 / CVE-2018-6356
+Jenkins did not properly prevent specifying relative paths that escape a 
+base directory for URLs accessing plugin resource files. This allowed users 
+with Overall/Read permission to download files from the Jenkins master they 
+should not have access to.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (843 bytes)
+On Windows, any file accessible to the Jenkins master process could be 
+downloaded. On other operating systems, any file within the Jenkins home 
+directory accessible to the Jenkins master process could be downloaded.
+
+
+SECURITY-717
+Jenkins did not take into account case-insensitive file systems when 
+preventing access to plugin resource files that should not be accessible. 
+This allowed users with Overall/Read permission to download plugin resource 
+files in META-INF and WEB-INF directories, such as the plugins' JAR files, 
+which could contain hardcoded secrets.
+
