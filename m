@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1910" "Monday" "20" "March" "2017" "10:25:22" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<363108.313034417-sendEmail@localhost>" "58" "[oss-security] libpcre: NULL pointer dereference in main (pcretest.c)" nil nil nil "3" "2017032010:25:22" "[oss-security] libpcre: NULL pointer dereference in main (pcretest.c)" (number mark "U       ago@gentoo.o Mar 20   58/1910  " thread-indent "\"[oss-security] libpcre: NULL pointer dereference in main (pcretest.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["882" "Thursday" "15" "February" "2018" "14:09:50" "-0800" "Rohini Palaniswamy" "rohini@apache.org" "<CABBupGWtC2vN-JzXWeuDaN-_bP6yzRJhK+DAfr=gSGLZJGbFCQ@mail.gmail.com>" "31" "[oss-security] [CVE-2017-15712] Apache Oozie Server vulnerability" nil nil nil "2" "2018021522:09:50" "[oss-security] [CVE-2017-15712] Apache Oozie Server vulnerability" (number mark "U       rohini@apach Feb 15   31/882   " thread-indent "\"[oss-security] [CVE-2017-15712] Apache Oozie Server vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28116 invoked by uid 550); 20 Mar 2017 10:25:41 -0000
+Received: (qmail 28429 invoked by uid 550); 15 Feb 2018 22:13:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,70 +12,50 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28084 invoked from network); 20 Mar 2017 10:25:40 -0000
-Message-ID: <363108.313034417-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Mon, 20 Mar 2017 10:25:22 +0000
+Received: (qmail 26453 invoked from network); 15 Feb 2018 22:10:47 -0000
+X-Gm-Message-State: APf1xPDbsQPTFrVVQNl9uyzOvKaBGePHc7q4gRycEi9HB/ndSVJjKsR3
+	WBzHNlCflqPLRc/iC+VVr3oYMJ7TvffCbRBXWPA=
+X-Google-Smtp-Source: AH8x226Rzxe3uvkJIQCdIbnveYDRc+W4nwoRl736BwiNuW+TVx5nNuiYBIIqz4Ubue8DxoX9YMaQo6KoMO9nurH4c2E=
+X-Received: by 10.200.63.60 with SMTP id c57mr6953649qtk.286.1518732631345;
+ Thu, 15 Feb 2018 14:10:31 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-584141.214451851"
-Subject: [oss-security] libpcre: NULL pointer dereference in main (pcretest.c)
+From: Rohini Palaniswamy <rohini@apache.org>
+Date: Thu, 15 Feb 2018 14:09:50 -0800
+X-Gmail-Original-Message-ID: <CABBupGWtC2vN-JzXWeuDaN-_bP6yzRJhK+DAfr=gSGLZJGbFCQ@mail.gmail.com>
+Message-ID: <CABBupGWtC2vN-JzXWeuDaN-_bP6yzRJhK+DAfr=gSGLZJGbFCQ@mail.gmail.com>
+To: dev@oozie.apache.org, user@oozie.apache.org, announce@apache.org, 
+	security@apache.org, oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="001a114f20920011730565477fe5"
+Subject: [oss-security] [CVE-2017-15712] Apache Oozie Server vulnerability
 
-------MIME delimiter for sendEmail-584141.214451851
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+--001a114f20920011730565477fe5
+Content-Type: text/plain; charset="UTF-8"
+
+Apache Oozie is a workflow scheduler system to manage Apache Hadoop jobs.
+
+Severity: Severe
+
+Vendor:
+The Apache Software Foundation
+
+Versions Affected:
+Oozie 3.1.3-incubating to Oozie 4.3.0
+Oozie 5.0.0-beta1
 
 Description:
-libpcre is a perl-compatible regular expression library.
+Vulnerability allows a user of Oozie to expose private files on the Oozie
+server process.  The malicious user can construct a workflow XML file
+containing XML directives and configuration that reference sensitive files
+on the Oozie server host.
 
-A fuzz on libpcre1 through the pcretest utility revealed a null pointer dereference in the utility itself. For the nature of the crash, it is not security relevant because the library is not affected 
-but if you have a web application that calls directly the pcretest utility to parse untrusted data, then you are affected.
-Also, it is important share the details because some distros/packagers may want to take the patch in their repository.
-
-The complete ASan output:
-
-# pcretest -16 -d $FILE
-==26399==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x00000052db1c bp 0x7ffc7de68070 sp 0x7ffc7de67ba0 T0)
-==26399==The signal is caused by a READ memory access.
-==26399==Hint: address points to the zero page.
-    #0 0x52db1b in main /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcretest.c:5083:25
-    #1 0x7f70603bc78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #2 0x41b438 in _init (/usr/bin/pcretest+0x41b438) 
-
-Affected version:
-8.40
-
-Fixed version:
-8.41 (not released atm)
-
-Commit fix:
-https://vcs.pcre.org/pcre/code/trunk/pcretest.c?r1=1685&r2=1686&sortby=date
+Mitigation:
+Users should upgrade to Apache Oozie 4.3.1 release from
+http://oozie.apache.org/ .
+Users should use 5.0.0-beta1 release only for testing purposes and wait for
+the 5.0.0 GA which will have the fix.
 
 Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+The issues were discovered by Daryn Sharp and Jason Lowe of Oath (formerly
+Yahoo! Inc).
 
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00195-pcre-nullptr-main
-
-Timeline:
-2017-02-22: bug discovered and reported to upstream
-2017-02-23: upstream released a patch
-2017-03-14: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/03/14/libpcre-null-pointer-dereference-in-main-pcretest-c
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
-------MIME delimiter for sendEmail-584141.214451851--
-
+--001a114f20920011730565477fe5--
