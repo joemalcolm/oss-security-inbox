@@ -1,53 +1,99 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/10/4
-Message-ID: <20181010145330.63e183d8@computer>
-Date: Wed, 10 Oct 2018 14:53:30 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/15/1
+Message-ID: <1518721454.9434.0.camel@gmail.com>
+Date: Thu, 15 Feb 2018 20:04:14 +0100
+From: Ailin Nemui <ailin.nemui@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)
+Subject: Irssi 1.1.1&1.0.7: CVE-2018-7054, CVE-2018-7053, CVE-2018-7050, CVE-2018-7052, CVE-2018-7051
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 10 Oct 2018 10:10:58 +0100
-Eddie Chapman <eddie@...k.net> wrote:
+IRSSI-SA-2018-02 Irssi Security Advisory [1]
+============================================
+CVE-2018-7054, CVE-2018-7053, CVE-2018-7050, CVE-2018-7052, CVE-2018-
+7051
 
-> While the vulnerability in ghostscript itself is clear in this
-> thread, does anyone have any more info on the above aspect of this?
-> i.e is the above scenario (inadvertently running postscript, perhaps
-> contained in an image, through ghostscript by just browsing a
-> malicious site) limited to just nautilus in gnome environments? Do
-> other browsers/environments handle this better or do they do similar?
-> It seems that, strictly speaking, the "critical" nature of this
-> vulnerability hinges on the behaviour of the browser/desktop
-> environment. Otherwise the scope is limited to an individual manually
-> downloading a postscript file and opening it outside of the browser.
+Description
+-----------
 
-evince installs a thumbnail entry to
-/usr/share/thumbnailers
+Multiple vulnerabilities have been located in Irssi.
 
-This is a generic location where applications can install files (I
-believe they follow the .desktop specification, which is an ini-based
-format). This is thus not nautilus-specific, but every filemanager that
-uses this format will be affected. A quick googling tells me e.g.
-pcmanfm is also affected. I'm not sure if dolphin uses them as well.
+(a) Use after free when server is disconnected during netsplits. Found
+    by Joseph Bisch. (CWE-416, CWE-825)
 
-Nautilus is trying to solve this by sandboxing the thumbnailers.
-However this depends on bubblewrap and is currently fail-open, i.e. if
-bubblewrap is not available it will not disable the thumbnailing, it
-will just not sandbox it. In practice this means it's often not
-sandboxed. I doubt this will change any time soon.
+    CVE-2018-7054 [2] was assigned to this issue.
 
-Very similar problems show up with desktop search tools.
+(b) Use after free when SASL messages are received in unexpected order.
+    Found by Joseph Bisch. (CWE-416, CWE-691)
 
-I think this whole concept is questionable and should be reviewed. I
-think it's not desirable to have thumbnailers for all kinds of formats,
-instead a more reasonable approach would be to limit thumbnailing to a
-few widely used formats that have well-reviewed libraries (e.g. I don't
-think that libjpeg or libpng will have any vulnerabilities left that are
-even remotely as severe as the things tavis found in ghostscript).
+    CVE-2018-7053 [3] was assigned to this issue.
 
--- 
-Hanno Böck
-https://hboeck.de/
+(c) Null pointer dereference when an "empty" nick has been observed by
+    Irssi. Found by Joseph Bisch. (CWE-476, CWE-475)
 
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+    CVE-2018-7050 [4] was assigned to this issue.
+
+(d) When the number of windows exceed the available space, Irssi would
+    crash due to Null pointer dereference. Found by Joseph Bisch.
+    (CWE-690)
+
+    CVE-2018-7052 [5] was assigned to this issue.
+
+(e) Certain nick names could result in out of bounds access when
+    printing theme strings. Found by Oss-Fuzz. (CWE-126)
+
+    CVE-2018-7051 [6] was assigned to this issue.
+
+
+Affected versions
+-----------------
+
+(a) Irssi 1.0.0 and later
+
+(b) Irssi 0.8.18 and later
+
+(c) All Irssi versions that we observed
+
+(d) All Irssi versions that we observed
+
+(e) Irssi 0.8.7 and later
+
+
+Fixed in
+--------
+
+Irssi 1.0.7, 1.1.1
+
+
+Recommended action
+------------------
+
+Upgrade to the latest stable Irssi version. Irssi 1.0.7 and 1.1.1 are
+maintenance release in the 1.0 and 1.1 series, without any new
+features.
+
+After installing the updated packages, one can issue the /upgrade
+command to load the new binary. TLS connections will require
+/reconnect.
+
+
+Mitigating facts
+----------------
+
+(b) requires a non-conforming ircd
+
+(c) requires a broken ircd or control over the ircd
+
+(d) depends on non-default configuration
+
+
+
+References
+----------
+
+[1] https://irssi.org/security/irssi_sa_2018_02.txt
+[2] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-7054
+[3] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-7053
+[4] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-7050
+[5] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-7052
+[6] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-7051
+
