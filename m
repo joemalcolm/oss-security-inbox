@@ -1,39 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/31/1
-Message-ID: <1460642161.10860.1517381308655@appsuite.open-xchange.com>
-Date: Wed, 31 Jan 2018 08:48:28 +0200 (EET)
-From: Aki Tuomi <aki.tuomi@...n-xchange.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-15132: dovecot: auth client leaks memory if SASL authentication is aborted.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/15/3
+Message-ID: <CABBupGWtC2vN-JzXWeuDaN-_bP6yzRJhK+DAfr=gSGLZJGbFCQ@mail.gmail.com>
+Date: Thu, 15 Feb 2018 14:09:50 -0800
+From: Rohini Palaniswamy <rohini@...che.org>
+To: dev@...ie.apache.org, user@...ie.apache.org, announce@...che.org,  security@...che.org, oss-security@...ts.openwall.com
+Subject: [CVE-2017-15712] Apache Oozie Server vulnerability
 Content-Type: text/plain; charset=utf-8
 
+Apache Oozie is a workflow scheduler system to manage Apache Hadoop jobs.
 
-> On January 25, 2018 at 11:35 AM Aki Tuomi <aki.tuomi@...n-xchange.com> wrote:
-> 
-> 
-> Score: 5.3, AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L
-> Affected versions: 2.0 up to 2.2.33 and 2.3.0
-> Fixed versions: 2.2.34 (not released yet), 2.3.1 (not released yet)
-> 
-> We have identified a memory leak in Dovecot auth client used by login
-> processes. The leak has impact in high performance configuration where
-> same login processes are reused and can cause the process to crash due to memory exhaustion.
-> 
-> Patch to apply this issue can be found from https://github.com/dovecot/core/commit/1a29ed2f96da1be22fa5a4d96c7583aa81b8b060.patch
-> 
-> To our best knowledge, this patch should apply to all versions.
-> 
-> This issue can be mitigated on vulnerably systems by limiting login process to single request per process, which is also the default value.
-> 
-> Regards,
-> Aki Tuomi
-> Dovecot oy
+Severity: Severe
 
-Team Debian has found an issue with our patch. Dovecot login process would crash after few minutes of idle after consecutive aborted logins.
+Vendor:
+The Apache Software Foundation
 
-This is fixed with https://github.com/dovecot/core/commit/a9b135760aea6d1790d447d351c56b78889dac22.patch
+Versions Affected:
+Oozie 3.1.3-incubating to Oozie 4.3.0
+Oozie 5.0.0-beta1
 
-We would like to thank Apollon and Salvatore for raising this to our attention. 
+Description:
+Vulnerability allows a user of Oozie to expose private files on the Oozie
+server process.  The malicious user can construct a workflow XML file
+containing XML directives and configuration that reference sensitive files
+on the Oozie server host.
 
-Aki Tuomi
-Dovecot oy
+Mitigation:
+Users should upgrade to Apache Oozie 4.3.1 release from
+http://oozie.apache.org/ .
+Users should use 5.0.0-beta1 release only for testing purposes and wait for
+the 5.0.0 GA which will have the fix.
+
+Credit:
+The issues were discovered by Daryn Sharp and Jason Lowe of Oath (formerly
+Yahoo! Inc).
+
