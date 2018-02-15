@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2707" "Thursday" "21" "May" "2015" "14:46:50" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150521184650.AFDABB2E2B0@smtpvbsrv1.mitre.org>" "54" "[oss-security] Re: CVE request: ssl.match_hostname(): sub string wildcard should not match IDNA prefix" "^Cc:" nil nil "5" "2015052118:46:50" "[oss-security] Re: CVE request: ssl.match_hostname(): sub string wildcard should not match IDNA prefix" (number mark "        cve-assign@m May 21   54/2707  " thread-indent "\"[oss-security] Re: CVE request: ssl.match_hostname(): sub string wildcard should not match IDNA prefix\"\n") "<87iobqdzot.fsf@redhat.com>" ("<87iobqdzot.fsf@redhat.com>") nil nil nil nil nil nil nil "[oss-security] Re: CVE request: ssl.match_hostname(): sub string wildcard should not match IDNA prefix" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2262" "Thursday" "15" "February" "2018" "20:04:14" "+0100" "Ailin Nemui" "ailin.nemui@gmail.com" "<1518721454.9434.0.camel@gmail.com>" "90" "[oss-security] Irssi 1.1.1&1.0.7: CVE-2018-7054, CVE-2018-7053, CVE-2018-7050, CVE-2018-7052, CVE-2018-7051" nil nil nil "2" "2018021519:04:14" "[oss-security] Irssi 1.1.1&1.0.7: CVE-2018-7054, CVE-2018-7053, CVE-2018-7050, CVE-2018-7052, CVE-2018-7051" (number mark "U       ailin.nemui@ Feb 15   90/2262  " thread-indent "\"[oss-security] Irssi 1.1.1&1.0.7: CVE-2018-7054, CVE-2018-7053, CVE-2018-7050, CVE-2018-7052, CVE-2018-7051\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11305 invoked by uid 550); 21 May 2015 18:47:04 -0000
+Received: (qmail 20212 invoked by uid 550); 15 Feb 2018 19:05:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,67 +11,133 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11287 invoked from network); 21 May 2015 18:47:03 -0000
-In-Reply-To: <87iobqdzot.fsf@redhat.com>
-Message-Id: <20150521184650.AFDABB2E2B0@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Thu, 21 May 2015 14:46:50 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request: ssl.match_hostname(): sub string wildcard should not match IDNA prefix
-To: mprpic@redhat.com
+Received: (qmail 17862 invoked from network); 15 Feb 2018 19:04:27 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:subject:from:to:date:mime-version
+         :content-transfer-encoding;
+        bh=A+dZJePusL61DhIpyt+bf2tVX6Fv6J/lZN5UAp5Xl88=;
+        b=Rl8/GucO2+o1tbPcora3lrtT+RToAu/LO84nxwGlFvwcajDYHmZA1M+y63Lh/QReh0
+         Xi01ACs+1VYECqIlUTtTQXznEYJbxhgwJ9J81ng8bxKbrDd0x3WZK7un9zyNobQAF1MA
+         tXyq9P8yj5TPCou8RJoyVqSsk9gzuHcnkYa5aveg1CqygidPeUYy0Gk8o926PFpLdr1F
+         Qaizae7oFPjIQ66KXFFytj8nwA6oUVCueg5CYMWz6MYI1kkDvwgM11oU7PQppgGokUWz
+         h82xdyJ1uVsO3XNjsWX4/k+dXUz/bMKeuAqP3KPph+cbpcGYpRfN9WTRj4LKGavOJ9b0
+         KDZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:subject:from:to:date:mime-version
+         :content-transfer-encoding;
+        bh=A+dZJePusL61DhIpyt+bf2tVX6Fv6J/lZN5UAp5Xl88=;
+        b=XdMidEULenmJaNMWHy8B9Xt/FBPV9HD6zWqHeq6dJ3Gtjrtj/BBBc6dUSbGIU427y3
+         1Jf9ee4UBbBjUJn454F5xd0J8xB0J4yya/UD5inUXjWFxweyatY/82t9ZVKhqmm+4p4/
+         GMt2Z30VDL4Irtgmk6BgLkR4Jfs6kPldulLjYJpDwVbvyZbtwEWQmSmZGIL1liXrfdMm
+         w27CIt7W4TZh3l6c1OMDdmeMggryW0sfbCDIO7LTRa0zG/zqQjrMrK4B25fH/Gwqwxen
+         jguqYkejPKVpNgpIzrPkjSUEyOZLc/8nsJN2Od85ou6jVREjhvMfkgZ5baqHXVwXK0KZ
+         0eig==
+X-Gm-Message-State: APf1xPA/1cYNDyAEohqu5uPl7RDa8XHN+5M19fhQ2Q6rgT3h03lrugye
+	5kAqcwS+6T9AwYQDyf69FQy6dw==
+X-Google-Smtp-Source: AH8x226AXcDpDU/w870Ev5p7TqWjoFg/lpFsrBl1ClkEaLT56T5Wlc59jvR/DTRs8iuw2XSD+0mscw==
+X-Received: by 10.80.151.35 with SMTP id c32mr2561520edb.103.1518721455804;
+        Thu, 15 Feb 2018 11:04:15 -0800 (PST)
+Message-ID: <1518721454.9434.0.camel@gmail.com>
+From: Ailin Nemui <ailin.nemui@gmail.com>
+To: oss-security@lists.openwall.com
+Date: Thu, 15 Feb 2018 20:04:14 +0100
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.26.5 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] Irssi 1.1.1&1.0.7: CVE-2018-7054, CVE-2018-7053, CVE-2018-7050,
+ CVE-2018-7052, CVE-2018-7051
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+IRSSI-SA-2018-02 Irssi Security Advisory [1]
+============================================
+CVE-2018-7054, CVE-2018-7053, CVE-2018-7050, CVE-2018-7052, CVE-2018-
+7051
 
-> https://bugs.python.org/issue17997
-> https://hg.python.org/cpython/rev/10d0edadbcdd/
+Description
+-----------
 
-Our perspective on issue17997 is that the "multiple wildcards" issue
-can have a CVE ID but the "IDNA prefix" issue probably cannot.
+Multiple vulnerabilities have been located in Irssi.
 
-RFC 2818 says "Names may contain the wildcard character * which is
-considered to match any single domain name component or component
-fragment. E.g., *.a.com matches foo.a.com but not bar.foo.a.com.
-f*.com matches foo.com but not bar.com." It isn't completely clear
-whether multiple instances of '*' such as *.*.com were considered
-valid. Also, https://bugs.python.org/msg194950 says "For security
-reasons matching rules like *.*.com should be not supported." Use
-CVE-2013-7440 for this issue.
+(a) Use after free when server is disconnected during netsplits. Found
+    by Joseph Bisch. (CWE-416, CWE-825)
 
-The IDNA report seems to be about wanting to change the specification
-from RFC 2818 to RFC 6125. https://bugs.python.org/msg189454 mentions
-that the old behavior 'can result into false positive matches for a
-rule like "x*.example.de"' but, in practice, it seems unlikely that
-anyone would have a need for rules beginning with x* or xn* or xn-*
-(these are essentially the only three cases). It seems more likely
-that someone would have created a rule for xn--*.example.de because
-they specifically wanted to match all IDNA names but did not want to
-match www.example.de (which might be separately administered). In
-other words, the IDNA aspect of 10d0edadbcdd doesn't seem to be a
-vulnerability fix; it seems to be a policy change that, relative to
-existing deployments, sometimes strengthens security and sometimes
-weakens security. The policy change (i.e., adopting a more recent RFC)
-does, of course, seem appropriate for new deployments. Similarly,
-https://bugs.python.org/msg227895 says "I won't apply this for 3.2
-since at this point a behavior change might do more harm than good."
-In any case, because RFC 2818 was intended when the code was written,
-we feel that 'false positive matches for a rule like "x*.example.de"'
-is not a vulnerability and should not have a CVE.
+    CVE-2018-7054 [2] was assigned to this issue.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+(b) Use after free when SASL messages are received in unexpected order.
+    Found by Joseph Bisch. (CWE-416, CWE-691)
 
-iQEcBAEBAgAGBQJVXielAAoJEKllVAevmvmsOiAH/ihqkIzpYITVkDisLMRfcvyz
-M3NxEbB2l7PozcWTmupMQ7CSyG6lSPjzB/eBA7sJgzDkPnbJRQu6OD0YHLsQ7H9O
-DUMq77w9utEy+KbrMOKaYqu4uRAWY8s7zmRlumqO6nJ8YTMhqbHj+laaVJK/VIon
-7Yr83n8H6BLSse67n9khcxmmxyhwPaQRMNVg5Bpk4A3S2E6jpPQUXiSTSreHGwfU
-jemrbYn9bPosy0Ga7zl8HUzWVHFkEP1zexXcI3Ruk/lRVqhRlcwOEKXHsz0RpfAx
-vrF70GHR3kGg+lPi6DGZGW4rmEkk4shemg/fCy55j7p2YxxDnufIxClaUJmDmoE=
-=68Zt
------END PGP SIGNATURE-----
+    CVE-2018-7053 [3] was assigned to this issue.
+
+(c) Null pointer dereference when an "empty" nick has been observed by
+    Irssi. Found by Joseph Bisch. (CWE-476, CWE-475)
+
+    CVE-2018-7050 [4] was assigned to this issue.
+
+(d) When the number of windows exceed the available space, Irssi would
+    crash due to Null pointer dereference. Found by Joseph Bisch.
+    (CWE-690)
+
+    CVE-2018-7052 [5] was assigned to this issue.
+
+(e) Certain nick names could result in out of bounds access when
+    printing theme strings. Found by Oss-Fuzz. (CWE-126)
+
+    CVE-2018-7051 [6] was assigned to this issue.
+
+
+Affected versions
+-----------------
+
+(a) Irssi 1.0.0 and later
+
+(b) Irssi 0.8.18 and later
+
+(c) All Irssi versions that we observed
+
+(d) All Irssi versions that we observed
+
+(e) Irssi 0.8.7 and later
+
+
+Fixed in
+--------
+
+Irssi 1.0.7, 1.1.1
+
+
+Recommended action
+------------------
+
+Upgrade to the latest stable Irssi version. Irssi 1.0.7 and 1.1.1 are
+maintenance release in the 1.0 and 1.1 series, without any new
+features.
+
+After installing the updated packages, one can issue the /upgrade
+command to load the new binary. TLS connections will require
+/reconnect.
+
+
+Mitigating facts
+----------------
+
+(b) requires a non-conforming ircd
+
+(c) requires a broken ircd or control over the ircd
+
+(d) depends on non-default configuration
+
+
+
+References
+----------
+
+[1] https://irssi.org/security/irssi_sa_2018_02.txt
+[2] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-7054
+[3] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-7053
+[4] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-7050
+[5] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-7052
+[6] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-7051
+
