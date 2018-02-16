@@ -1,63 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/10/8
-Message-ID: <20181210185721.GA4259@openwall.com>
-Date: Mon, 10 Dec 2018 19:57:21 +0100
-From: Solar Designer <solar@...nwall.com>
-To: Pavel Cheremushkin <Pavel.Cheremushkin@...persky.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: libvnc and tightvnc vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/16/2
+Message-ID: <57f3ff1c-b639-0691-3452-c4c0871523a1@chbi.eu>
+Date: Fri, 16 Feb 2018 18:42:59 +0100
+From: chbi@...i.eu
+To: oss-security@...ts.openwall.com
+Subject: Re: XSS vulnerability in Tiki < 18
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Dec 10, 2018 at 04:08:00PM +0000, Pavel Cheremushkin wrote:
-> These particular issues I was describing in my previous letter are located in source code of TightVNC vncviewer. Source code of TightVNC 1.3.10 vncviewer can be acquired though this link https://www.tightvnc.com/download/1.3.10/tightvnc-1.3.10_unixsrc.tar.gz and integer overflow that leads to a heap-buffer-overflow I was speaking about is located on the line 1220 inside file `vnc_unixsrc/vncviewer/rfbproto.c`. It is a fun fact that inside `libvncclient/rfbproto.c` the same code is located on line 2220, but all bugs connected with LibVNC I described in Github issues inside LibVNC repository.
 
-Oh.  So you reported the instance of that one issue in LibVNC here:
+> A XSS vulnerability via SVG image allows an authenticated user to gain
+> administrator privileges if an administrator opens a wiki page with a
+> malicious SVG image, related to filegallib.php.
+> 
+> 
+> Fix:
+> https://sourceforge.net/p/tikiwiki/code/65327
 
-https://github.com/LibVNC/libvncserver/issues/247
 
-Upstream's fix appears to be to add casts to (uint64_t) before adding 1
-in those many malloc() calls.  On platforms with larger than 32-bit
-size_t, this should be sufficient against integer overflows since the
-sizes are read from 32-bit protocol fields, but it isn't sufficient to
-prevent maliciously large memory allocation on the client by a rogue
-server.  On a platform with 32-bit size_t, this isn't even sufficient to
-prevent the integer overflows.  If I haven't missed anything, it'd be
-great if you open a new issue suggesting introduction of safety limits
-prior to those malloc() lines.
+CVE-2018-7188 has been assigned.
 
-The current code is:
+-- 
+chbi
+https://chbi.eu
 
-  case rfbServerCutText:
-  {
-    char *buffer;
+GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
+     https://chbi.eu/chbi.asc
 
-    if (!ReadFromRFBServer(client, ((char *)&msg) + 1,
-			   sz_rfbServerCutTextMsg - 1))
-      return FALSE;
 
-    msg.sct.length = rfbClientSwap32IfLE(msg.sct.length);
 
-    buffer = malloc((uint64_t)msg.sct.length+1);
-
-    if (!ReadFromRFBServer(client, buffer, msg.sct.length)) {
-      free(buffer);
-      return FALSE;
-    }
-
-    buffer[msg.sct.length] = 0;
-
-    if (client->GotXCutText)
-      client->GotXCutText(client, buffer, msg.sct.length);
-
-    free(buffer);
-
-    break;
-}
-
-but per the commits referenced in issue #247 above, there are many more
-instances of the "malloc(... + 1)" pattern, which were patched similarly
-incompletely.
-
-Thanks,
-
-Alexander
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
