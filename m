@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["654" "Thursday" "1" "November" "2018" "11:56:28" "+0530" "P J P" "ppandit@redhat.com" "<nycvar.YSQ.7.76.1811011151230.336@xnncv>" "19" "[oss-security] CVE-2018-18849 Qemu: lsi53c895a: OOB msg buffer access leads to DoS" nil nil nil "11" "2018110106:26:28" "[oss-security] CVE-2018-18849 Qemu: lsi53c895a: OOB msg buffer access leads to DoS" (number mark "U       ppandit@redh Nov  1   19/654   " thread-indent "\"[oss-security] CVE-2018-18849 Qemu: lsi53c895a: OOB msg buffer access leads to DoS\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2103" "Friday" "16" "February" "2018" "18:42:59" "+0100" "chbi@chbi.eu" "chbi@chbi.eu" "<57f3ff1c-b639-0691-3452-c4c0871523a1@chbi.eu>" "60" "Re: [oss-security] XSS vulnerability in Tiki < 18" nil nil nil "2" "2018021617:42:59" "[oss-security] XSS vulnerability in Tiki < 18" (number mark "U       chbi@chbi.eu Feb 16   60/2103  " thread-indent "\"Re: [oss-security] XSS vulnerability in Tiki < 18\"\n") "<c2ab2ef4-95a5-9c51-44c4-85df20e07a7d@chbi.eu>" ("<c2ab2ef4-95a5-9c51-44c4-85df20e07a7d@chbi.eu>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 18202 invoked by uid 550); 1 Nov 2018 06:26:47 -0000
+Received: (qmail 16014 invoked by uid 550); 16 Feb 2018 17:43:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,36 +12,78 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18184 invoked from network); 1 Nov 2018 06:26:47 -0000
-Date: Thu, 1 Nov 2018 11:56:28 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@kaapi
-To: oss security list <oss-security@lists.openwall.com>
-cc: ameya.more@oracle.com
-Message-ID: <nycvar.YSQ.7.76.1811011151230.336@xnncv>
+Received: (qmail 15985 invoked from network); 16 Feb 2018 17:43:21 -0000
+To: oss-security@lists.openwall.com
+References: <c2ab2ef4-95a5-9c51-44c4-85df20e07a7d@chbi.eu>
+From: chbi@chbi.eu
+Message-ID: <57f3ff1c-b639-0691-3452-c4c0871523a1@chbi.eu>
+Date: Fri, 16 Feb 2018 18:42:59 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.30]); Thu, 01 Nov 2018 06:26:35 +0000 (UTC)
-Subject: [oss-security] CVE-2018-18849 Qemu: lsi53c895a: OOB msg buffer access leads to
- DoS
+In-Reply-To: <c2ab2ef4-95a5-9c51-44c4-85df20e07a7d@chbi.eu>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="1uINEXLGj8SmOSU9zES5skujNsicbpay0"
+Subject: Re: [oss-security] XSS vulnerability in Tiki < 18
 
-   Hello,
+--1uINEXLGj8SmOSU9zES5skujNsicbpay0
+Content-Type: multipart/mixed; boundary="JUV40GYdw8o1Al5qVSb0y0WjPd9O7P81c";
+ protected-headers="v1"
+From: chbi@chbi.eu
+To: oss-security@lists.openwall.com
+Message-ID: <57f3ff1c-b639-0691-3452-c4c0871523a1@chbi.eu>
+Subject: Re: [oss-security] XSS vulnerability in Tiki < 18
+References: <c2ab2ef4-95a5-9c51-44c4-85df20e07a7d@chbi.eu>
+In-Reply-To: <c2ab2ef4-95a5-9c51-44c4-85df20e07a7d@chbi.eu>
 
-An out of bounds memory access issue was found in the LSI53C895A SCSI Host Bus 
-Adapter emulation while writing a message in lsi_do_msgin. It could occur 
-during migration if the 'msg_len' field has an invalid value.  A user/process 
-could use this flaw to crash the Qemu process resulting in DoS.
+--JUV40GYdw8o1Al5qVSb0y0WjPd9O7P81c
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2018-10/msg06682.html
 
-This issue was discovered by dejavusecurity.com and reported by Oracle.com.
+> A XSS vulnerability via SVG image allows an authenticated user to gain
+> administrator privileges if an administrator opens a wiki page with a
+> malicious SVG image, related to filegallib.php.
+>=20
+>=20
+> Fix:
+> https://sourceforge.net/p/tikiwiki/code/65327
 
-CVE assigned via -> https://cveform.mitre.org/
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+CVE-2018-7188 has been assigned.
+
+--=20
+chbi
+https://chbi.eu
+
+GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
+     https://chbi.eu/chbi.asc
+
+
+--JUV40GYdw8o1Al5qVSb0y0WjPd9O7P81c--
+
+--1uINEXLGj8SmOSU9zES5skujNsicbpay0
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEPemRh0vp6uY8qNwgunuT+ZA3rn4FAlqHGCMACgkQunuT+ZA3
+rn6aAxAAgBGdhW9FT2V/RLovWhg1yBrz6HP6nuMob3knL77vPxFgkKcapZt06/R4
+b9XOQDNv8rCP7V6vXMRbq7GR2/NDtbOVsClKlHd+h4PmxNtUqapGE5y/GIywrbJM
+04wcjrSmX6wW723wA7OCViBH666mIVM5tKqREZM3gsCd52ncEIzFINtYPBzrXOft
+9q+VKvYOulBvOnRQHkQLb7SNPJmAo4/quzywwwJ/PPSdbftULf04z38LvrfzcJl2
+bj5tg4ALgfSUOioNli+P8FVk0kf4i1ilZPS+ak1ghELvO7slQfTa6sRwzErEvUY/
+lXNExqpjxJITzrlh1U7oSyd1KCrCqmkaRa+t2H76rVu8c8+QHC47ckIxa8tbmZdO
+Jr9KMyC9K4n9FUNM07WqmnzZaH54ngkqo5maGeJVH7DUg/pt2nfaSF+QrL7k9Rd8
+rJfiGiswSAcx5J+DcvOV6fnTleGkQS0Hs1zqV2AFwnQ8+H2IYEH4cfXKfyI481As
+QN0bVUEk6f8bXv9Arg7iGTgKQI8O/tAfWNmWhz1LSbw+xeEOWaR+gTrt/KjlA7xe
+JLA4BT/DDG+akKhcjiioJ2s0kBegKrfNE5+ZzRDLq8/+Szq7RkTZzvuqY6tCrsAg
+ssHyCBenMv6yKuNDm2fKdXPB4x9ZUov2Op1RsoJmfOebHA08NU8=
+=nMCW
+-----END PGP SIGNATURE-----
+
+--1uINEXLGj8SmOSU9zES5skujNsicbpay0--
