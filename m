@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1004" "Thursday" "13" "October" "2016" "10:07:08" "-0400" "CAI Qian" "caiqian@redhat.com" "<1215560150.734283.1476367628231.JavaMail.zimbra@redhat.com>" "22" "[oss-security] CVE request: kernel - local DoS due to a page lock order bug in the XFS seek hole/data implementation" nil nil nil "10" "2016101314:07:08" "[oss-security] CVE request: kernel - local DoS due to a page lock order bug in the XFS seek hole/data implementation" (number mark "U       caiqian@redh Oct 13   22/1004  " thread-indent "\"[oss-security] CVE request: kernel - local DoS due to a page lock order bug in the XFS seek hole/data implementation\"\n") "<963884651.726428.1476366904945.JavaMail.zimbra@redhat.com>" ("<963884651.726428.1476366904945.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["7340" "Sunday" "18" "February" "2018" "19:09:45" "+0100" "Solar Designer" "solar@openwall.com" "<20180218180945.GA22931@openwall.com>" "151" "[oss-security] LibVNCServer rfbserver.c: rfbProcessClientNormalMessage() case rfbClientCutText doesn't sanitize msg.cct.length" "^Date:" nil nil "2" "2018021818:09:45" "[oss-security] LibVNCServer rfbserver.c: rfbProcessClientNormalMessage() case rfbClientCutText doesn't sanitize msg.cct.length" (number mark "        solar@openwa Feb 18  151/7340  " thread-indent "\"[oss-security] LibVNCServer rfbserver.c: rfbProcessClientNormalMessage() case rfbClientCutText doesn't sanitize msg.cct.length\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 32756 invoked by uid 550); 13 Oct 2016 14:07:21 -0000
+Received: (qmail 11446 invoked by uid 550); 18 Feb 2018 18:10:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,42 +11,166 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 10225 invoked from network); 18 Feb 2018 18:10:01 -0000
+Message-ID: <20180218180945.GA22931@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+Date: Sun, 18 Feb 2018 19:09:45 +0100
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32735 invoked from network); 13 Oct 2016 14:07:20 -0000
-Date: Thu, 13 Oct 2016 10:07:08 -0400 (EDT)
-From: CAI Qian <caiqian@redhat.com>
+Subject: [oss-security] LibVNCServer rfbserver.c: rfbProcessClientNormalMessage() case rfbClientCutText doesn't sanitize msg.cct.length
 To: oss-security@lists.openwall.com
-Message-ID: <1215560150.734283.1476367628231.JavaMail.zimbra@redhat.com>
-In-Reply-To: <963884651.726428.1476366904945.JavaMail.zimbra@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.18.41.13]
-X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - GC45 (Linux)/8.0.6_GA_5922)
-Thread-Topic: CVE request: kernel - local DoS due to a page lock order bug in the XFS seek hole/data implementation
-Thread-Index: iQU5r9CeEuByr2ZZ6M/Ek5qvrO6o2A==
-Subject: [oss-security] CVE request: kernel - local DoS due to a page lock order bug in the
- XFS seek hole/data implementation
 
-Running the trinity syscall fuzzer inside a docker container as an non-privileged user below,
+Hi,
 
-$ trinity -g vfs --arch 64 --disable-fds=sockets --disable-fds=perf --disable-fds=epoll
---disable-fds=eventfd --disable-fds=pseudo --disable-fds=timerfd --disable-fds=memfd
---disable-fds=drm
+I've just created the below GitHub issue, and I'm also posting its
+description in here.  This applies at least to LibVNCServer versions
+0.9.9 (RHEL7) to latest in the GitHub repo as of this writing (and thus
+probably including latest release, which is 0.9.11, but I didn't check
+the release specifically).
 
-always trigger a deadlock/hang at the fdatasync() syscall within 30 minutes with traces
-(including sysrq-w info as well) like this, http://people.redhat.com/qcai/tmp/dmesg
+https://github.com/LibVNC/libvncserver/issues/218
 
-This can be reproduced on any kernel post v4.4-rc1 as long as including this commit.
+While I consider this a security-relevant issue, I feel there's no
+overall benefit from reporting it under an embargo, so here goes.
 
-fc0561cefc04e7803c0f6501ca4f310a502f65b8
-xfs: optimise away log forces on timestamp updates for fdatasync
+libvncserver/rfbserver.c: rfbProcessClientNormalMessage() contains the
+following code:
 
-Reverted the above commit against the latest mainline allows the trinity to run more than
-10 hours without any deadlock/hang.
+    case rfbClientCutText:
 
-This had also been reported to the XFS maintainer and diagnosed as a page lock order bug
-in the XFS seek hole/data implementation and presumably is still working on a fix better
-than to revert the above commit.
+        if ((n = rfbReadExact(cl, ((char *)&msg) + 1,
+                           sz_rfbClientCutTextMsg - 1)) <= 0) {
+            if (n != 0)
+                rfbLogPerror("rfbProcessClientNormalMessage: read");
+            rfbCloseClient(cl);
+            return;
+        }
 
-   CAI Qian
+        msg.cct.length = Swap32IfLE(msg.cct.length);
+
+        str = (char *)malloc(msg.cct.length);
+        if (str == NULL) {
+                rfbLogPerror("rfbProcessClientNormalMessage: not enough memory");
+                rfbCloseClient(cl);
+                return;
+        }
+
+        if ((n = rfbReadExact(cl, str, msg.cct.length)) <= 0) {
+            if (n != 0)
+                rfbLogPerror("rfbProcessClientNormalMessage: read");
+            free(str);
+            rfbCloseClient(cl);
+            return;
+        }
+        rfbStatRecordMessageRcvd(cl, msg.type, sz_rfbClientCutTextMsg+msg.cct.length, sz_rfbClientCutTextMsg+msg.cct.length);
+        if(!cl->viewOnly) {
+            cl->screen->setXCutText(str, msg.cct.length, cl);
+        }
+        free(str);
+
+        return;
+
+This passes the client-provided 32-bit message length field's value
+directly into malloc(), reads up to this many bytes from the client, and
+then passes the full value to the library-user-provided setXCutText()
+callback (where the value might be higher than the number of bytes
+actually read - with uninitialized and potentially sensitive data
+afterwards - and it might also be too high for the callback's
+implementation to handle safely).  There may also be integer overflow in
+the addition of sz_rfbClientCutTextMsg (which is 8) to the value in the
+call to rfbStatRecordMessageRcvd(); I did not look into what
+consequences this might have.
+
+I first found the issue during Openwall's security audit of the
+Virtuozzo 7 product, which uses a RHEL7-derived package of
+LibVNCServer-0.9.9 from its prl-vzvncserver component.  A corresponding
+Virtuozzo 7 fix is:
+
+https://src.openvz.org/projects/OVZ/repos/prl-vzvncserver/commits/1204a8872d90c78a2be404dd4b025124bb01b2c5
+
+which hardens prl-vzvncserver's setXCutText() callback - but the rest of
+the issue needs to be fixed in LibVNCServer itself, hence the (belated)
+report to them and in here.
+
+We would like to thank the Virtuozzo company for funding the effort.
+
+Included below is the relevant excerpt from our Virtuozzo 7 report:
+
+--- cut ---
+01090, PSBM-58099: prl-vzvncserver and LibVNCServer integer overflows, unlimited memory allocations, and unchecked malloc()
+Severity: medium
+Thread: 20161226 "prl-vzvncserver"
+
+A particular combination of these 3 problems is demonstrated by sending the
+output of "echo -e "RFB 003.003\n\001\006\0\0\0\xff\xff\xff\xff"" to
+prl-vzvncserver's TCP port, when prl-vzvncserver is running without password.
+(When running with password, authentication would be needed before the specific
+vulnerable code can be reached, and the string to send would accordingly be
+longer.)  This first causes LibVNCServer to allocate 4 GiB of address space and
+then to hand out this uninitialized memory to the prl-vzvncserver/console.c:
+vcSetXCutTextProc() callback, which would attempt to make another similar
+allocation and make a copy of the data.  Unfortunately, this LibVNCServer API,
+as well as many others, is defined to use "int" rather than "size_t" for data
+sizes, and indeed prl-vzvncserver uses "int" too.  For this particular request,
+this results in a zero byte allocation with malloc(), which succeeds, and then
+in a memcpy() of (size_t)-1 bytes to it.  With a range of other similar
+requests, malloc() may instead be made to fail (for trying to allocate a
+ridiculous amount of address space, sign-extended to 64-bit), in which case the
+memcpy() more reliably fails on a NULL pointer dereference.  Either way, the
+service crashes.  Finally, it is possible to have the process actually write to
+(and thus allocate for real) almost 4 GiB of memory with one request, by making
+the length field just below 2 GiB.  If no data is sent, then 2 GiB would be
+written from the uninitialized memory (likely mostly read-as-zero) to the
+memory allocated by prl-vzvncserver's callback.  If the data is actually sent,
+then first it is written to memory by LibVNCServer and then is copied by the
+callback, for 4 GiB total.  Exploitability of this specific issue into
+something worse than these varying possibilities is highly doubtful (although
+exploitation of unlimited size memcpy() is not unheard of), but all 3 of these
+issues are prevalent in prl-vzvncserver and LibVNCServer code in general, so
+maybe the impact of another similar issue would more obviously be worse.
+
+We recommend that sanity checks be introduced into LibVNCServer so that it
+doesn't try to allocate unreasonable amounts of memory and pass unsafe sizes to
+callbacks.  We also recommend prl-vzvncserver to sanity-check its inputs
+(including received from LibVNCServer) and in this way avoid integer overflows
+and unreasonably large allocations.  Finally, it is good practice to check
+whether a malloc() succeeded before writing to the memory.  The function
+vcSetXCutTextProc() came from LibVNCServer-0.9.9/vncterm/VNConsole.c, so its
+shortcomings also need to be reported to LibVNCServer upstream.
+
+Fix: Some aspects of this issue, most importantly covering prl-vzvncserver's
+vcSetXCutTextProc() callback, have been addressed with commit
+1204a8872d90c78a2be404dd4b025124bb01b2c5 on 20170130.
+
+Related:
+https://googleprojectzero.blogspot.com/2015/03/taming-wild-copy-parallel-thread.html
+http://www.giac.org/paper/gcih/361/port-80-apache-http-daemon-exploit/103818
+--- cut ---
+
+LibVNCServer-0.9.9/vncterm/VNConsole.c mentioned above is not currently
+part of the libvncserver repo, hence is not otherwise included in
+description of this issue.  However, vncterm exists as a separate repo,
+so I might report its issues in there: https://github.com/LibVNC/vncterm
+
+Timeline:
+
+201612xx - issue found while auditing prl-vzvncserver
+20161226 - report to Virtuozzo with a focus on prl-vzvncserver specifics
+20170130 - a relevant prl-vzvncserver fix committed in Virtuozzo
+20180218 - public report to LibVNCServer and oss-security
+
+The ridiculous delay in making this report to LibVNCServer and
+oss-security is unintentional.  I just didn't get around to doing this
+sooner, and I'm sorry about that.
+
+In case anyone cares and would have asked, no, I did not request CVE
+ID(s) for this, and I don't intend to do so.  I also don't know if this
+is CVE-worthy.  Please feel free to track the LibVNCServer issue(s)
+described here (rfbClientCutText's lack of sanity-checking of the length
+field, passing of the full specified rather than actual read byte count
+to other functions, and the +8 integer overflow) as OVE-20180218-0001.
+
+Alexander
