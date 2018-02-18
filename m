@@ -1,172 +1,160 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/25/4
-Message-Id: <E00DE545-C35C-4E5F-8AEF-022602DEB087@beckweb.net>
-Date: Mon, 25 Jun 2018 16:10:22 +0200
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/18/1
+Message-ID: <20180218180945.GA22931@openwall.com>
+Date: Sun, 18 Feb 2018 19:09:45 +0100
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins plugins
+Subject: LibVNCServer rfbserver.c: rfbProcessClientNormalMessage() case rfbClientCutText doesn't sanitize msg.cct.length
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software. The following
-releases contain fixes for security vulnerabilities:
+Hi,
 
-* AWS CodeBuild 0.27
-* AWS CodeDeploy 1.20
-* AWS CodePipeline 0.37
-* Badge 1.5
-* CollabNet 2.0.5
-* Configuration as Code 0.8-alpha
-* Fortify CloudScan 1.5.2
-* GitHub 1.29.2
-* IBM z/OS Connector 2.0.0
-* Openstack Cloud 2.36
-* SAML 1.0.7
-* SSH Credentials 1.14
-* URLTrigger 0.43
+I've just created the below GitHub issue, and I'm also posting its
+description in here.  This applies at least to LibVNCServer versions
+0.9.9 (RHEL7) to latest in the GitHub repo as of this writing (and thus
+probably including latest release, which is 0.9.11, but I didn't check
+the release specifically).
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2018-06-25/
+https://github.com/LibVNC/libvncserver/issues/218
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+While I consider this a security-relevant issue, I feel there's no
+overall benefit from reporting it under an embargo, so here goes.
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
+libvncserver/rfbserver.c: rfbProcessClientNormalMessage() contains the
+following code:
 
----
+    case rfbClientCutText:
 
-SECURITY-915
-A form action method in GitHub Plugin did not check the permission of the 
-user accessing it, allowing anyone with Overall/Read access to Jenkins to 
-cause Jenkins to send a GitHub API request to create an API token to a an 
-attacker specified URL.
+        if ((n = rfbReadExact(cl, ((char *)&msg) + 1,
+                           sz_rfbClientCutTextMsg - 1)) <= 0) {
+            if (n != 0)
+                rfbLogPerror("rfbProcessClientNormalMessage: read");
+            rfbCloseClient(cl);
+            return;
+        }
 
-This allowed users with Overall/Read access to Jenkins to connect to an 
-attacker-specified URL using attacker-specified credentials IDs obtained 
-through another method, capturing credentials stored in Jenkins.
+        msg.cct.length = Swap32IfLE(msg.cct.length);
 
-Additionally, this form validation method did not require POST requests, 
-resulting in a CSRF vulnerability.
+        str = (char *)malloc(msg.cct.length);
+        if (str == NULL) {
+                rfbLogPerror("rfbProcessClientNormalMessage: not enough memory");
+                rfbCloseClient(cl);
+                return;
+        }
 
+        if ((n = rfbReadExact(cl, str, msg.cct.length)) <= 0) {
+            if (n != 0)
+                rfbLogPerror("rfbProcessClientNormalMessage: read");
+            free(str);
+            rfbCloseClient(cl);
+            return;
+        }
+        rfbStatRecordMessageRcvd(cl, msg.type, sz_rfbClientCutTextMsg+msg.cct.length, sz_rfbClientCutTextMsg+msg.cct.length);
+        if(!cl->viewOnly) {
+            cl->screen->setXCutText(str, msg.cct.length, cl);
+        }
+        free(str);
 
-SECURITY-440
-SSH Credentials Plugin allowed the creation of SSH credentials with keys 
-"From a file on Jenkins master". Credentials Binding Plugin 1.13 and newer 
-allows binding SSH credentials to environment variables. In combination, 
-these two features allow users with the permission to configure a job to 
-read arbitrary files on the Jenkins master by creating an SSH credential 
-referencing an arbitrary file on the Jenkins master, and binding it to an 
-environment variable in a job.
+        return;
 
+This passes the client-provided 32-bit message length field's value
+directly into malloc(), reads up to this many bytes from the client, and
+then passes the full value to the library-user-provided setXCutText()
+callback (where the value might be higher than the number of bytes
+actually read - with uninitialized and potentially sensitive data
+afterwards - and it might also be too high for the callback's
+implementation to handle safely).  There may also be integer overflow in
+the addition of sz_rfbClientCutTextMsg (which is 8) to the value in the
+call to rfbStatRecordMessageRcvd(); I did not look into what
+consequences this might have.
 
-SECURITY-916
-SAML Plugin did not invalidate the previous session and create a new one 
-upon successful login, allowing attackers able to control or obtain 
-another user’s pre-login session ID to impersonate them.
+I first found the issue during Openwall's security audit of the
+Virtuozzo 7 product, which uses a RHEL7-derived package of
+LibVNCServer-0.9.9 from its prl-vzvncserver component.  A corresponding
+Virtuozzo 7 fix is:
 
+https://src.openvz.org/projects/OVZ/repos/prl-vzvncserver/commits/1204a8872d90c78a2be404dd4b025124bb01b2c5
 
-SECURITY-808
-Openstack Cloud Plugin did not perform permission checks on methods 
-implementing form validation. This allowed users with Overall/Read access 
-to Jenkins to connect to an attacker-specified URL using attacker-
-specified credentials IDs obtained through another method, capturing 
-credentials stored in Jenkins, and to cause Jenkins to submit HTTP 
-requests to attacker-specified URLs.
+which hardens prl-vzvncserver's setXCutText() callback - but the rest of
+the issue needs to be fixed in LibVNCServer itself, hence the (belated)
+report to them and in here.
 
-Additionally, these form validation methods did not require POST requests, 
-resulting in a CSRF vulnerability.
+We would like to thank the Virtuozzo company for funding the effort.
 
+Included below is the relevant excerpt from our Virtuozzo 7 report:
 
-SECURITY-825 / CVE-2018-1000402
-AWS CodeDeploy Plugin could persist environment variables from the last 
-run of any project with the post-build step configured in the job’s
-config.xml file.
+--- cut ---
+01090, PSBM-58099: prl-vzvncserver and LibVNCServer integer overflows, unlimited memory allocations, and unchecked malloc()
+Severity: medium
+Thread: 20161226 "prl-vzvncserver"
 
-In some cases, this allowed users with file system access or Extended Read 
-permission to obtain those potentially sensitive environment variables by 
-accessing the project’s config.xml.
+A particular combination of these 3 problems is demonstrated by sending the
+output of "echo -e "RFB 003.003\n\001\006\0\0\0\xff\xff\xff\xff"" to
+prl-vzvncserver's TCP port, when prl-vzvncserver is running without password.
+(When running with password, authentication would be needed before the specific
+vulnerable code can be reached, and the string to send would accordingly be
+longer.)  This first causes LibVNCServer to allocate 4 GiB of address space and
+then to hand out this uninitialized memory to the prl-vzvncserver/console.c:
+vcSetXCutTextProc() callback, which would attempt to make another similar
+allocation and make a copy of the data.  Unfortunately, this LibVNCServer API,
+as well as many others, is defined to use "int" rather than "size_t" for data
+sizes, and indeed prl-vzvncserver uses "int" too.  For this particular request,
+this results in a zero byte allocation with malloc(), which succeeds, and then
+in a memcpy() of (size_t)-1 bytes to it.  With a range of other similar
+requests, malloc() may instead be made to fail (for trying to allocate a
+ridiculous amount of address space, sign-extended to 64-bit), in which case the
+memcpy() more reliably fails on a NULL pointer dereference.  Either way, the
+service crashes.  Finally, it is possible to have the process actually write to
+(and thus allocate for real) almost 4 GiB of memory with one request, by making
+the length field just below 2 GiB.  If no data is sent, then 2 GiB would be
+written from the uninitialized memory (likely mostly read-as-zero) to the
+memory allocated by prl-vzvncserver's callback.  If the data is actually sent,
+then first it is written to memory by LibVNCServer and then is copied by the
+callback, for 4 GiB total.  Exploitability of this specific issue into
+something worse than these varying possibilities is highly doubtful (although
+exploitation of unlimited size memcpy() is not unheard of), but all 3 of these
+issues are prevalent in prl-vzvncserver and LibVNCServer code in general, so
+maybe the impact of another similar issue would more obviously be worse.
 
+We recommend that sanity checks be introduced into LibVNCServer so that it
+doesn't try to allocate unreasonable amounts of memory and pass unsafe sizes to
+callbacks.  We also recommend prl-vzvncserver to sanity-check its inputs
+(including received from LibVNCServer) and in this way avoid integer overflows
+and unreasonably large allocations.  Finally, it is good practice to check
+whether a malloc() succeeded before writing to the memory.  The function
+vcSetXCutTextProc() came from LibVNCServer-0.9.9/vncterm/VNConsole.c, so its
+shortcomings also need to be reported to LibVNCServer upstream.
 
-SECURITY-833 / CVE-2018-1000403
-AWS CodeDeploy Plugin stored the AWS Secret Key in its configuration 
-unencrypted in jobs' config.xml files on the Jenkins master. This key 
-could be viewed by users with Extended Read permission, or access to the 
-master file system.
+Fix: Some aspects of this issue, most importantly covering prl-vzvncserver's
+vcSetXCutTextProc() callback, have been addressed with commit
+1204a8872d90c78a2be404dd4b025124bb01b2c5 on 20170130.
 
-While masked from view using a password form field, the AWS Secret Key was 
-transferred in plain text to users when accessing the job configuration 
-form.
+Related:
+https://googleprojectzero.blogspot.com/2015/03/taming-wild-copy-parallel-thread.html
+http://www.giac.org/paper/gcih/361/port-80-apache-http-daemon-exploit/103818
+--- cut ---
 
+LibVNCServer-0.9.9/vncterm/VNConsole.c mentioned above is not currently
+part of the libvncserver repo, hence is not otherwise included in
+description of this issue.  However, vncterm exists as a separate repo,
+so I might report its issues in there: https://github.com/LibVNC/vncterm
 
-SECURITY-834 / CVE-2018-1000404
-AWS CodeBuild Plugin stored the AWS Secret Key in its configuration 
-unencrypted in jobs' config.xml files on the Jenkins master. This key 
-could be viewed by users with Extended Read permission, or access to the 
-master file system.
+Timeline:
 
-While masked from view using a password form field, the AWS Secret Key was 
-transferred in plain text to users when accessing the job configuration 
-form.
+201612xx - issue found while auditing prl-vzvncserver
+20161226 - report to Virtuozzo with a focus on prl-vzvncserver specifics
+20170130 - a relevant prl-vzvncserver fix committed in Virtuozzo
+20180218 - public report to LibVNCServer and oss-security
 
+The ridiculous delay in making this report to LibVNCServer and
+oss-security is unintentional.  I just didn't get around to doing this
+sooner, and I'm sorry about that.
 
-SECURITY-967 / CVE-2018-1000401
-AWS CodePipeline Plugin stored the AWS Secret Key in its configuration 
-unencrypted in jobs' config.xml files on the Jenkins master. This key 
-could be viewed by users with Extended Read permission, or access to the 
-master file system.
+In case anyone cares and would have asked, no, I did not request CVE
+ID(s) for this, and I don't intend to do so.  I also don't know if this
+is CVE-worthy.  Please feel free to track the LibVNCServer issue(s)
+described here (rfbClientCutText's lack of sanity-checking of the length
+field, passing of the full specified rather than actual read byte count
+to other functions, and the +8 integer overflow) as OVE-20180218-0001.
 
-While masked from view using a password form field, the AWS Secret Key was 
-transferred in plain text to users when accessing the job configuration 
-form.
-
-
-SECURITY-906
-Badge Plugin stored and displayed user-provided HTML for badges and 
-summaries unprocessed, allowing users with the ability to control badge 
-content to store malicious HTML to be displayed within Jenkins.
-
-
-SECURITY-941
-CollabNet Plugin disabled SSL/TLS certificate validation for the entire 
-Jenkins master JVM by default.
-
-
-SECURITY-819
-A form validation method in URLTrigger Plugin did not check the permission 
-of the user accessing them, allowing anyone with Overall/Read access to 
-Jenkins to cause Jenkins to send a GET request to a specified URL.
-
-Additionally, this form validation method did not require POST requests, 
-resulting in a CSRF vulnerability.
-
-
-SECURITY-870
-Fortify CloudScan Plugin did not validate file names in rulepack ZIP 
-archives it extracts, resulting in an arbitrary file write vulnerability.
-
-
-SECURITY-950
-IBM z/OS Connector Plugin did not encrypt password credentials stored in 
-its configuration. This could be used by users with master file system 
-access to obtain the password.
-
-While masked from view using a password form field, the AWS Secret Key was 
-transferred in plain text to administrators when accessing the global 
-configuration form.
-
-
-SECURITY-927
-Configuration as Code Plugin lacked a permission check in the method 
-handling the URL exporting the system configuration. This allows users 
-with Overall/Read access to Jenkins to obtain this YAML export.
-
-
-SECURITY-929
-Configuration as Code Plugin logged secrets set via its configuration to 
-the Jenkins master system log in plain text. This allowed users with 
-access to the Jenkins log files to obtain these passwords and similar 
-secrets.
-
+Alexander
