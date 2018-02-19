@@ -1,71 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/28/1
-Message-ID: <20180728212357.GA1623@eldamar.local>
-Date: Sat, 28 Jul 2018 23:23:57 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/19/2
+Message-ID: <0e7db15c-3b0a-5209-4498-edb5088e45e6@suse.de>
+Date: Mon, 19 Feb 2018 17:45:16 +0100
+From: Karol Babioch <kbabioch@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Fw: New cabextract 1.7 and libmspack 0.7 release
+Subject: Re: LibVNCServer rfbserver.c: rfbProcessClientNormalMessage() case rfbClientCutText doesn't sanitize msg.cct.length
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-On Thu, Jul 26, 2018 at 09:09:36AM +0200, Hanno Böck wrote:
-> Several memory safety bugs fixed, see below.
-> 
-> Begin forwarded message:
-> 
-> Date: Thu, 26 Jul 2018 00:46:18 +0100
-> From: Stuart Caie
-> Subject: New cabextract 1.7 and libmspack 0.7 release
-> 
-> 
-> Hello all,
-> 
-> cabextract 1.7 has been released.
-> 
-> It fixes a few bugs, an introduces a new "--encoding" option, which is 
-> made available if the iconv() function and/or libiconv library are 
-> available on your system. It also now tries calling setlocale() (if 
-> present) with several possible locales that have a UTF-8 ctype, to
-> allow towlower() (if present) to lowercase non-ASCII characters.
-> 
-> cabextract can be downloaded from https://www.cabextract.org.uk/
-> 
-> SHA256 sums:
-> 
-> 06d3cdded6519fccff1532f64ab54ce6cc3c7be51bcc6fff0f91092179a9bb26 
-> cabextract-1.7-1.i386.rpm
-> 11570d7e5ba0f46f458b88d76d2f0bdcad3a1266055ea5c8229830be2023e16e 
-> cabextract-1.7-1.src.rpm
-> 297203c826c004801ea1b17414f568e7bdf56c3ae9bbaca4d8514e8a56e506bd 
-> cabextract-1.7.tar.gz
-> 
-> libmspack 0.7alpha has also been released. It fixes several bugs:
-> 
-> * bad KWAJ file header extensions could cause a one or two byte
->   overwrite
-> * The character U+0100 in a CHM filename could cause a one-byte overread
-> * libmspack now rejects blank CHM filenames.
-> * Fixed off-by-one error in CHM PMGI/PMGL chunk number validity checks, 
-> which could cause a crash by dereferencing uninitialised data beyond
->   the end of the fast_find() chunk cache.
+Am 18.02.2018 um 22:44 schrieb Solar Designer:
+> I did not request CVE ID(s) for this, and I don't intend to do so.
 
-MITRE has assigned four CVEs as follows
+This has been assigned: CVE-2018-7226.
 
-CVE-2018-14679:
-https://github.com/kyz/libmspack/commit/72e70a921f0f07fee748aec2274b30784e1d312a
-(for the off-by-one error in CHM PMGI/PMGL chunk number validity
-checks part).
+Best regards,
+Karol Babioch
 
-CVE-2018-14680:
-https://github.com/kyz/libmspack/commit/72e70a921f0f07fee748aec2274b30784e1d312a
-(for not-rejecting blank CHM filenames part).
+-- 
+OpenPGP: 4687 CA1E A0F7 3B1E BB7D  E179 DF49 418F 6267 267B
 
-CVE-2018-14681:
-https://github.com/kyz/libmspack/commit/0b0ef9344255ff5acfac6b7af09198ac9c9756c8
+SUSE Linux GmbH
+GF: Felix Imendörffer, Jane Smithard, Graham Norton
+HRB 21284 (AG Nürnberg)
 
-CVE-2018-14682:
-https://github.com/kyz/libmspack/commit/4fd9ccaa54e1aebde1e4b95fb0163b699fd7bcc8
 
-Regards,
-Salvatore
+
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
