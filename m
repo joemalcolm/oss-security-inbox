@@ -1,180 +1,98 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/13/10
-Message-ID: <CAG-OieOk+nyreyHs9xP5V+e=4KciHbcc0vh0poggCxYAa-CrEg@mail.gmail.com>
-Date: Thu, 13 Dec 2018 08:07:40 -0800
-From: Hacker Fantastic <hackerfantastic@...glemail.com>
-To: Tavis Ormandy <taviso@...gle.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Multiple telnet.c overflows
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/20/1
+Message-ID: <a723f5ff-7a36-2f89-3c13-e22c6c3558c8@linux.com>
+Date: Tue, 20 Feb 2018 12:45:13 +0300
+From: Alexander Popov <alex.popov@...ux.com>
+To: Mohamed Ghannam <simo.ghannam@...il.com>, oss-security@...ts.openwall.com
+Subject: Re: CVE-2017-17712 net/ipv4/raw.c: raw_sendmsg() race condition
 Content-Type: text/plain; charset=utf-8
 
-Morning coffee not fully consumed, I meant to write NetBSD (stack overflow,
-others unsure as no time to test but assumed vulnerable) in the list of
-clients. I hope the supplied PoC is useful to others in testing and
-removing these flaws. In my past life of having free time I would write an
-IAC environment handling stress tester to isolate all occurrences of these
-issues. If you think about the growing risk of IoT equipment and the use of
-telnet as a management protocol still being put to use then the core issues
-at play here will ultimately be in systems that I cannot reasonably account
-for all occurrences. Mikrotik are just the vendor whose equipment is
-immediately accessible to me at present, other embedded device vendors
-should check their telnet client implementations for the bugs using the 4
-test cases I have outlined.
+Hello Mohamed,
 
-1. stack overflow by connecting with large DISPLAY= parameter
-2. heap corruption by supplying large USER= & or other supported
-environment variables (DISPLAY, LOGNAME, TERM, etc.)
-3. heap ring.cc corruption through IAC handlers when setting environment
-variables, telnet_term_0day.py can trigger and takes a few minutes due to
-the nature of the heap
-4. review the use of URI handlers in applications that reference telnet://
-to ensure environment variables cannot be supplied to vulnerable functions
-via telnet://user@ip
+On 16.12.2017 03:29, Mohamed Ghannam wrote:
+> Hi,
+> 
+> This is an announcement for CVE-2017-17712 which is a race condition leads to
+> uninitialized stack variable, this might be used to gain code execution.
+> 
+> The bug was introduced  here
+> : https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c008ba5bdc9fa830e1a349b20b0be5a137bdef7a
+> 
+> And fixed here :
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=8f659a03a0ba9289b9aeb9b4470e6fb263d6f483
 
-These issues are only present when a connection occurs and so the telnet
-client implementation needs to be connected to a server to trigger the flaw
-as this happens within the handling of telnet protocol packets,
-specifically those related to environment variable handling.
+Thanks a lot for your report, PoC and patch fixing the issue. Really great!
 
-Cheers,
-Matthew
+The exploitation of this kind of vulnerabilities should be blocked by STACKLEAK.
 
-On Thu, Dec 13, 2018 at 7:53 AM Hacker Fantastic <
-hackerfantastic@...glemail.com> wrote:
+STACKLEAK is a Linux kernel hardening feature initially developed by
+Grsecurity/PaX. I'm doing my best to introduce it to the mainline kernel:
+http://www.openwall.com/lists/kernel-hardening/2018/02/16/2
 
-> Hi, I do not believe this is either CVE-2005-0469 or CVE-2005-0468. The
-> issue is the same problem I described in handling environment variables
-> originally, the TERM environment being a remotely reachable way of trigger
-> the issue in inetutils and other clients. The issue appears to behave
-> differently on netkit-telnet instances, and mirrors that of the Mikrotik
-> client - causing a ring.cc assertion error to be printed, however the
-> application still causes a SIGABRT when the connection is then terminated
-> with the large buffers having caused a failure in ring.cc.
->
-> Here is an example of the latest netkit-telnet behaviour with what I
-> believe is heap corruption caused by the same PoC trigger -
-> telnet_term_0day.py (the SIGABRT happens after the connection is killed to
-> cause the ring.cc assertion):
->
-> telnet: buffer overflow, losing data, sorry
-> telnet: ring.cc:143: int ringbuf::flush(): Assertion `top-bot > 0 &&
-> top-bot <= count' failed.
-> Aborted (core dumped)
-> Program received signal SIGABRT, Aborted.
-> 0x00007ffff7a59d7f in raise () from /usr/lib/libc.so.6
-> (gdb) bt
-> #0  0x00007ffff7a59d7f in raise () from /usr/lib/libc.so.6
-> #1  0x00007ffff7a44672 in abort () from /usr/lib/libc.so.6
-> #2  0x00007ffff7a44548 in __assert_fail_base.cold.0 () from
-> /usr/lib/libc.so.6
-> #3  0x00007ffff7a52396 in __assert_fail () from /usr/lib/libc.so.6
-> #4  0x000055555555f417 in ringbuf::flush() ()
-> #5  0x000055555555f01f in netflush() ()
-> #6  0x000055555555fcbe in process_rings(int, int, int, int, int, int) ()
-> #7  0x00005555555639cf in Scheduler(int) ()
-> #8  0x0000555555563acf in telnet(char const*) ()
-> #9  0x000055555555ea9b in tn(int, char const**) ()
-> #10 0x0000555555559acd in main ()
->
-> I couldn't account for all clients in my original advisory as I stated,
-> the telnet client code is quite messy and there are buffers that are
-> referenced in loops using functions such as sprintf() / free() and
-> realloc() - supplied environment arguments DISPLAY, USER, TERM and things
-> like LOGNAME,LINEMODE which have a corresponding IAC handler all seem to be
-> ways of reaching the root vulnerable code paths. It also appears that this
-> issue maybe much deeper rooted in the BSD code base that is shared amongst
-> many telnet clients - inetutils and Mikrotik included. I have provided a
-> PoC for testing purposes of the issue through a supplied IAC handler to set
-> the TERM protocol in a connecting client.
->
-> I have also learned that Safari still supports "telnet://" URI handlers
-> however telnet command is deprecated on OS-X, a user would need to have a
-> vulnerable telnet client installed such as the one in "homebrew" - however
-> the USER= overflow is not reached in that client due to some additional
-> argument length checking code by Apple. For a remote telnet client to
-> trigger this issue in a URI handler an attacker would need to supply the
-> "USER=" environment variable through telnet://user@ip which is a correct
-> way of supplying a username in a uniform resource identifier - thus giving
-> these vulnerabilities a potential way of being called remotely when a user
-> supports telnet URI handlers and is using a vulnerable telnet
-> implementation. Alternatively if USER= cannot be reached or overflown (as
-> in the Apple client) then the overflows could be caused by a connecting
-> telnetd service such as the telnet_term_0day.py example proof-of-concept.
-> That could be reached simply by accessing telnet:// - URI handlers are not
-> just limited to web browsers and are a means to identify network resources,
-> there could be other clients not just web browsers out there using them
-> (rfc3986)
->
-> Unfortunately it is really busy for me this time of year and I do not have
-> the time to investigate further beyond what I have provided to the list.
-> They are present in at least a dozen BSD based telnet clients so far,
-> Apple's telnet client from Sierra, NetKIT BSD (stack overflow confirmed,
-> heap unsure), inetutils-1.9.4 & also netkit-telnet. It is hard for me to
-> determine exploitation risk of all such instances that are out there but I
-> hope now this list can see that this is a widespread problem not just
-> limited to a single telnet client and has security implications from a
-> remote perspective and also locally - when a user is in a restricted shell
-> and calls the "telnet" command they could breakout of the shell using one
-> of these overflows. Hackers out there might now cry out "ah-hah but what
-> about !sh" - in some restricted shells in embedded devices (Mikrotik) such
-> functionality is often removed and thus this offers a way to overwrite /
-> corrupt memory and potentially breakout of such shells. I will agree that
-> the use of the stack-overflow and its restricted shell breakout is minimal
-> but it should still not be dismissed as "not a vulnerability" because
-> security implications aren't immediately apparent.
->
-> With that my original advisory needs amending to take into account that
-> the core problem being demonstrated here is more wide-spread than I
-> initially realised. I would argue telnet should be deprecated entirely in
-> systems where it has not yet been disabled in favour of more regularly
-> audited & peer reviewed OpenSSH. I believe the reasons these flaws have
-> persisted for some 20 years in various forms is that no-one takes telnet
-> client security as an issue yet I have shown two ways it could be triggered
-> remotely and also used in a local context.
->
-> Happy Hacking to all and to all a Merry Haxmas!
->
-> Kind Regards,
-> Hacker Fantastic
->
->
-> On Wed, Dec 12, 2018 at 10:13 PM Tavis Ormandy <taviso@...gle.com> wrote:
->
->> On Wed, Dec 12, 2018 at 5:21 PM Hacker Fantastic
->> <hackerfantastic@...glemail.com> wrote:
->> >
->> > Please see the below proof of concept in triggering the heap overflow
->> using the IAC SB TELQUAL_IS environment option variable assignment. As per
->> my original advisory, which did not fully indicate the details but gave the
->> overview of how to trigger the condition.
->>
->> Cool, but I think this is a different bug (AFAICT, it's CVE-2005-0469,
->> it was fixed in netkit, but far fewer distros use inetutils). I agree
->> this was a real vulnerability, It's a pretty good sign inetutils
->> should be deprecated imho.
->>
->> Tavis.
->>
->
->
-> --
-> Matthew Hickey
-> Tel: +44 7543 661237
-> Web: http://blog.hackerfantastic.com
->
-> Please visit my website for blog postings, status updates and project
-> information.
->
->
->
->
->
+> By spraying the stack with controlled user data , we can take control of msg
+> pointer which is used later in ip_append_data().
 
--- 
-Matthew Hickey
-Tel: +44 7543 661237
-Web: http://blog.hackerfantastic.com
+I've tested your PoC against the kernel with STACKLEAK. The msg pointer is now
+initialized with STACKLEAK_POISON (-0xBEEF), which points to the unused hole in
+the virtual memory map.
 
-Please visit my website for blog postings, status updates and project
-information.
+So the access to msg->msg_iter gives the following:
 
+[    8.806868] BUG: unable to handle kernel paging request at ffffffffffff4121
+[    8.807738] IP: csum_and_copy_from_iter_full+0x2d/0x400
+[    8.807738] PGD 220c067 P4D 220c067 PUD 220e067 PMD 0
+[    8.807738] Oops: 0000 [#1] SMP PTI
+[    8.807738] Dumping ftrace buffer:
+[    8.807738]    (ftrace buffer empty)
+[    8.807738] Modules linked in:
+[    8.807738] CPU: 0 PID: 2893 Comm: poc Not tainted 4.16.0-rc1+ #4
+[    8.807738] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
+Ubuntu-1.8.2-1ubuntu1 04/01/2014
+[    8.807738] RIP: 0010:csum_and_copy_from_iter_full+0x2d/0x400
+[    8.807738] RSP: 0018:ffffc900015679c0 EFLAGS: 00010246
+[    8.807738] RAX: 0000000000000000 RBX: 0000000000006400 RCX: ffffffffffff4121
+[    8.807738] RDX: ffffc90001567a44 RSI: 0000000000006400 RDI: ffff88003d398024
+[    8.807738] RBP: ffffffffffff4111 R08: 0000000000000000 R09: ffff88003d0291c0
+[    8.807738] R10: 0000000000000000 R11: 0000000000000001 R12: 0000000000000000
+[    8.807738] R13: ffffffffffff4121 R14: 0000000000006400 R15: ffff88003d2e6b10
+[    8.807738] FS:  00007f671dff4700(0000) GS:ffff88003ec00000(0000)
+knlGS:0000000000000000
+[    8.807738] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[    8.807738] CR2: ffffffffffff4121 CR3: 000000003e044000 CR4: 00000000000006f0
+[    8.807738] Call Trace:
+[    8.807738]  ? __kmalloc_reserve.isra.41+0x32/0x80
+[    8.807738]  ip_generic_getfrag+0x84/0xc0
+[    8.807738]  __ip_append_data.isra.48+0x69c/0x8a0
+[    8.807738]  ? raw_destroy+0x20/0x20
+[    8.807738]  ? raw_destroy+0x20/0x20
+[    8.807738]  ip_append_data.part.50+0x6f/0xd0
+[    8.807738]  raw_sendmsg+0x432/0xa30
+[    8.807738]  ? _copy_from_user+0x44/0x70
+[    8.807738]  ? rw_copy_check_uvector+0x5b/0x110
+[    8.807738]  sock_sendmsg+0x37/0x40
+[    8.807738]  ___sys_sendmsg+0x269/0x2c0
+[    8.807738]  ? __sys_sendmsg+0x55/0x90
+[    8.807738]  __sys_sendmsg+0x55/0x90
+[    8.807738]  do_syscall_64+0x63/0x120
+[    8.807738]  entry_SYSCALL_64_after_hwframe+0x21/0x86
+[    8.807738] RIP: 0033:0x7f6780c68e90
+[    8.807738] RSP: 002b:00007f671dff3f00 EFLAGS: 00000293 ORIG_RAX:
+000000000000002e
+[    8.807738] RAX: ffffffffffffffda RBX: 0000000000000003 RCX: 00007f6780c68e90
+[    8.807738] RDX: 0000000000000000 RSI: 0000000001ec6010 RDI: 0000000000000003
+[    8.807738] RBP: 0000000001ec6010 R08: 0000000000000000 R09: 00007f671dff4700
+[    8.807738] R10: 00007f671dff3f40 R11: 0000000000000293 R12: 0000000000000000
+[    8.807738] R13: 00007ffcbe8d1c9f R14: 0000000000000000 R15: 00007f6781099040
+[    8.807738] Code: 41 56 49 89 f6 41 55 41 54 49 89 cd 55 53 48 83 ec 48 65 48
+8b 04 25 28 00 00 00 48 89 44 24 40 31 c0 48 89 7c 24 08 48 89 14 24 <41> 8b 45
+00 a8 08 0f 85 58 01 00 00 4d 39 75 10 72 79 48 8b 3c
+[    8.807738] RIP: csum_and_copy_from_iter_full+0x2d/0x400 RSP: ffffc900015679c0
+[    8.807738] CR2: ffffffffffff4121
+[    8.807738] ---[ end trace d60ea40e033c90b3 ]---
+
+
+Do you think the attacker is able to bypass it?
+Thanks a lot again!
+
+Best regards,
+Alexander
