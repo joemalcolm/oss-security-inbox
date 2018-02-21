@@ -1,117 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/29/1
-Message-ID: <CABejAMJfYbPQAeLLAdFojWawcACw3rHXBLp=6XOFOhV5wmwE1w@mail.gmail.com>
-Date: Sun, 29 Jul 2018 11:58:08 -0700
-From: Justin Ferguson <justin@...c.co>
-To: oss-security@...ts.openwall.com
-Subject: Re: Pointer misuse unziping files with busybox
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/22/1
+Message-ID: <CAFB0D2Qx9-vK+EUh1sTV7Wfj1LJt3r7qZGZxQdmReWsOTwOnoQ@mail.gmail.com>
+Date: Wed, 21 Feb 2018 17:17:13 -0500
+From: Justin Bull <me@...tinbull.ca>
+To: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com,  fulldisclosure@...lists.org
+Subject: [CVE-2018-1000088] Stored XSS vulnerability in Doorkeeper gem v2.1.0 - v4.2.5
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hey everyone,
 
-As an additional addendum, bugs are sometimes hard to quantify in
-terms of what vernacular to use. From the written description this
-would be termed as an "out-of-bounds read" or "read access violation".
-(I stopped and read because I was curious what weird thing was
-happening with a pointer)
+A security bulletin for you.
 
--me
+Software:
+---------
+Doorkeeper (https://github.com/doorkeeper-gem/doorkeeper)
 
+Description:
+------------
+Doorkeeper is an OAuth 2 provider for Rails written in Ruby.
 
-On Thu, Jul 26, 2018 at 12:11 PM, Salvatore Bonaccorso
-<carnil@...ian.org> wrote:
-> Hi,
->
-> On Sun, Oct 25, 2015 at 11:34:27PM +0100, Gustavo Grieco wrote:
->> Unziping a specially crafted zip file results in a computation of an invalid
->> pointer and a crash reading an invalid address. Upstream is taking a look
->> to it, but in the meantime if someone wants to provide some feedback, it
->> will be nice. Find an attached a test case to reproduce it. A
->> complete backtrace in busybox 1.21 (debug) is available here:
->>
->> $ gdb --args ./busybox_unstripped unzip x.-6170921383890712452
->> ...
->> (gdb) run
->> Starting program: /home/g/Code/busybox-1.21.0/busybox_unstripped unzip
->> x.-6170921383890712452
->> [Thread debugging using libthread_db enabled]
->> Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
->> Archive:  x.-6170921383890712452
->>   inflating: ]3j½r«I  K-%Ix
->>
->> Program received signal SIGSEGV, Segmentation fault.
->> huft_build (b=b@...ry=0x7fffffffd320, n=n@...ry=264, s=s@...ry=257,
->> d=d@...ry=0x5fa900 <cplens>, e=e@...ry=0x5fa8c0 <cplext> "",
->> t=0x60620000eb08,
->>     t@...ry=0x602c0000fe60, m=0x7fffffffd260) at
->> archival/libarchive/decompress_gunzip.c:441
->> 441                    r.e = (unsigned char) e[*p - s]; /* non-simple--look
->> up
->> in lists */
->> (gdb) bt
->> #0  huft_build (b=b@...ry=0x7fffffffd320, n=n@...ry=264, s=s@...ry=257,
->> d=d@...ry=0x5fa900 <cplens>, e=e@...ry=0x5fa8c0 <cplext> "",
->>     t=0x60620000eb08, t@...ry=0x602c0000fe60, m=0x7fffffffd260) at
->> archival/libarchive/decompress_gunzip.c:441
->> #1  0x0000000000520b52 in inflate_block (state=state@...ry=0x602c0000fe00,
->> e=e@...ry=0x602c0000fe83 "") at archival/libarchive/decompress_gunzip.c:905
->> #2  0x00000000005222d1 in inflate_get_next_window (state=0x602c0000fe00) at
->> archival/libarchive/decompress_gunzip.c:947
->> #3  inflate_unzip_internal (state=state@...ry=0x602c0000fe00, in=in@...ry=3,
->> out=out@...ry=4) at archival/libarchive/decompress_gunzip.c:1004
->> #4  0x0000000000522a6a in inflate_unzip (aux=aux@...ry=0x7fffffffdc30,
->> in=in@...ry=3, out=out@...ry=4) at
->> archival/libarchive/decompress_gunzip.c:1048
->> #5  0x000000000051b255 in unzip_extract (dst_fd=4,
->> zip_header=0x7fffffffdd50)
->> at archival/unzip.c:255
->> #6  unzip_main (argc=<optimized out>, argv=<optimized out>) at
->> archival/unzip.c:654
->> #7  0x00000000004088bd in run_applet_no_and_exit
->> (applet_no=applet_no@...ry=328, argv=argv@...ry=0x7fffffffe170) at
->> libbb/appletlib.c:759
->> #8  0x0000000000408935 in run_applet_and_exit (name=0x7fffffffe4c8 "unzip",
->> argv=argv@...ry=0x7fffffffe170) at libbb/appletlib.c:766
->> #9  0x0000000000408e7c in busybox_main (argv=0x7fffffffe170) at
->> libbb/appletlib.c:728
->> #10 run_applet_and_exit (name=<optimized out>, argv=argv@...ry
->> =0x7fffffffe168)
->> at libbb/appletlib.c:768
->> #11 0x0000000000408f65 in main (argc=<optimized out>, argv=0x7fffffffe168)
->> at
->> libbb/appletlib.c:823
->>
->> (gdb) x/i $rip
->> => 0x51fb17 <huft_build+2852>:    mov    (%rdi),%dl
->> (gdb) info registers
->> rax            0x0    0
->> rbx            0x57    87
->> rcx            0x814a18    8473112
->> rdx            0x140900    1313024
->> rsi            0x5fa900    6269184
->> rdi            0xa04dcc    10505676
->> rbp            0x10007fff7940    0x10007fff7940
->> rsp            0x7fffffffc930    0x7fffffffc930
->> r8             0x7fffffffcb64    140737488341860
->> r9             0x7fffffffcbe8    140737488341992
->> r10            0x60620000eb10    105974023121680
->> r11            0x7fffffffcadc    140737488341724
->> r12            0x7fffffffd260    140737488343648
->> r13            0x8    8
->> r14            0x10007fff7944    17594333493572
->> r15            0x0    0
->> rip            0x51fb17    0x51fb17 <huft_build+2852>
->> eflags         0x10216    [ PF AF IF RF ]
->> cs             0x33    51
->> ss             0x2b    43
->> ds             0x0    0
->> es             0x0    0
->> fs             0x0    0
->> gs             0x0    0
->>
->> This issue was discovered with QuickFuzz
->
-> FTR, this older issue got CVE-2015-9261 assigned.
->
-> Regards,
-> Salvatore
+Affected Versions:
+------------------
+2.1.0 - 4.2.5
+
+Fixed Versions:
+---------------
+4.2.6 or later
+
+Problem:
+--------
+Stored XSS on the OAuth Client's name will cause users being prompted
+for consent via the "implicit" grant type to execute the XSS payload.
+
+The XSS attack could gain access to the user's active session,
+resulting in account compromise.
+
+Any user is susceptible if they click the authorization link for the
+malicious OAuth client. Because of how the links work, a user cannot
+tell if a link is malicious or not without first visiting the page
+with the XSS payload.
+
+The requirement for this attack to be dangerous in the wild is the
+software using Doorkeeper must allow regular users to create or edit
+OAuth client applications.
+
+If 3rd parties are allowed to create OAuth clients in the app using
+Doorkeeper, upgrade to the patched versions immediately.
+
+Additionally there is stored XSS in the native_redirect_uri form element.
+
+DWF has assigned CVE-2018-1000088.
+
+Solution:
+---------
+Upgrade to Doorkeeper v4.2.6 or later
+
+Timeline:
+---------
+2017-05-25: Discovered by Gauthier Monserand[0]
+2017-05:25: Fix prepared by Gauthier Monserand[1]
+2017-05-26: Maintainer released patched version
+2018-02-17: CVE requested
+2018-02-20: CVE assigned via DWF
+2018-02-21: Bulletin published[2]
+
+Acknowledgements:
+-----------------
+Credit to Gauthier Monserand (https://github.com/simkim) for finding
+and fixing this vulnerability.
+
+References:
+-----------
+[0]: https://github.com/doorkeeper-gem/doorkeeper/issues/969
+[1]: https://github.com/doorkeeper-gem/doorkeeper/pull/970
+[2]: https://blog.justinbull.ca/cve-2018-1000088-stored-xss-in-doorkeeper/
+
+-- 
+Best Regards,
+Justin Bull
+PGP Fingerprint: E09D 38DE 8FB7 5745 2044 A0F4 1A2B DEAA 68FD B34C
