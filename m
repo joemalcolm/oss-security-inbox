@@ -1,38 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/29/4
-Message-Id: <8A23CEFE-CFC4-4A8A-B9C0-997DCEA27A8A@apache.org>
-Date: Tue, 28 Aug 2018 15:39:43 -0700
-From: Bryan Call <bcall@...che.org>
-To: announce@...fficserver.apache.org, dev <dev@...fficserver.apache.org>, users <users@...fficserver.apache.org>, security@...fficserver.apache.org, oss-security@...ts.openwall.com
-Subject: [ANNOUNCE] Apache Traffic Server vulnerability with multi-range requests - CVE-2018-8005 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/22/3
+Message-ID: <20180222172329.GA4137@openwall.com>
+Date: Thu, 22 Feb 2018 18:23:29 +0100
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: LibVNCServer rfbserver.c: rfbProcessClientNormalMessage() case rfbClientCutText doesn't sanitize msg.cct.length
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-8005: Apache Traffic Server vulnerability with multi-range requests
+On Sun, Feb 18, 2018 at 07:09:45PM +0100, Solar Designer wrote:
+> https://github.com/LibVNC/libvncserver/issues/218
 
-Vendor:
-The Apache Software Foundation
+> libvncserver/rfbserver.c: rfbProcessClientNormalMessage() contains the
+> following code:
+> 
+>     case rfbClientCutText:
+> 
+>         if ((n = rfbReadExact(cl, ((char *)&msg) + 1,
+>                            sz_rfbClientCutTextMsg - 1)) <= 0) {
+>             if (n != 0)
+>                 rfbLogPerror("rfbProcessClientNormalMessage: read");
+>             rfbCloseClient(cl);
+>             return;
+>         }
+> 
+>         msg.cct.length = Swap32IfLE(msg.cct.length);
+> 
+>         str = (char *)malloc(msg.cct.length);
+>         if (str == NULL) {
+>                 rfbLogPerror("rfbProcessClientNormalMessage: not enough memory");
+>                 rfbCloseClient(cl);
+>                 return;
+>         }
+> 
+>         if ((n = rfbReadExact(cl, str, msg.cct.length)) <= 0) {
 
-Version Affected:
-ATS 6.0.0 to 6.2.2
-ATS 7.0.0 to 7.1.3
+As I just wrote in a comment to the GitHub issue above:
 
-Description:
-When the there are multiple ranges in a range request ATS will read the entire object from cache.  This can cause performance problems with large objects in cache.
+There's another issue I had missed: the first rfbReadExact() reading the
+msg header is only checked for <= 0, but that doesn't catch a partial
+read e.g. on a prematurely closed connection.  The same issue is present
+all over the codebase.  I guess "Exact" in the name was understood
+literally, but the function doesn't guarantee that when a lower-level
+read() or the like returns 0, such as when there's no more data to read.
+Maybe the function itself should be adjusted to match the semantics the
+callers expects from it (set errno to a value of its choosing and return
+-1 on a partial read? it already does that on a timeout, so this change
+wouldn't make it more inconsistent).
 
-Mitigation:
-6.x users should upgrade to 6.2.3 or later versions
-7.x users should upgrade to 7.1.4 or later versions
+There's no clear security impact from most of those misunderstandings
+of "Exact".  Some uninitialized data may be processed e.g. as if it were
+a payload length (as in the example above), but such values could as
+well have been provided by the client, so the only possible security
+impact is if such leftover data happens to be security sensitive.
 
-References:
-	Downloads:
-		https://trafficserver.apache.org/downloads
-	Github Pull Request:
-		https://github.com/apache/trafficserver/pull/3106
-		https://github.com/apache/trafficserver/pull/3124
-	CVE:
-		https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-8005
+As to fixing the issues I reported originally:
 
--Bryan
+I think part of the fix should be not invoking the setXCutText()
+callback at all when rfbReadExact() reads other than exactly
+msg.cct.length bytes from the client.  (This can be done in the code
+quoted above, or it can be done by adjusting rfbReadExact()'s semantics
+as I've just suggested.)  Invoking the callback with the actual read
+count would avoid the uninitialized memory issue, but would be
+weird/unneeded.
 
+There should also be a sane limit on the value of msg.cct.length that
+this code would agree to process, so that unreasonably large memory
+allocation and integer overflow risk (including inside a realistic
+implementation of the callback) are avoided.
 
-
+Alexander
