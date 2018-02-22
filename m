@@ -1,59 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/23/6
-Message-ID: <20180223113344.GA6246@openwall.com>
-Date: Fri, 23 Feb 2018 12:33:44 +0100
-From: Solar Designer <solar@...nwall.com>
-To: Dominik Csapak <d.csapak@...xmox.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: review of LibVNCServer/vncterm proxmox/vncterm proxmox/spiceterm xenserver/vncterm qemu/ui/console.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/22/5
+Message-ID: <CAEwge-GQLV_9Y56psCejkhA-B3jx4amnQP5AoVwURbzn=DCZOw@mail.gmail.com>
+Date: Thu, 22 Feb 2018 13:46:43 -0800
+From: Anthony Baker <abaker@...che.org>
+To: user@...de.apache.org, dev@...de.apache.org,  asf-security <security@...che.org>, announce@...che.org, oss-security@...ts.openwall.com
+Subject: [SECURITY] CVE-2017-15696 Apache Geode configuration request authorization vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi Dominik,
+CVE-2017-15696 Apache Geode configuration request authorization vulnerability
 
-On Fri, Feb 23, 2018 at 09:20:48AM +0100, Dominik Csapak wrote:
-> I do not know where you looked at our code,
+Severity:  Important
 
-In these GitHub repos, which I thought were official:
+Vendor: The Apache Software Foundation
 
-https://github.com/proxmox/vncterm
-https://github.com/proxmox/spiceterm
+Versions Affected:  Apache Geode 1.0.0 through 1.3.0
 
-Shortly after I sent the message, I realized I should have included
-these links in it.  Ditto for other projects, so here they are:
+Description:
+The Geode configuration service does not properly authorize
+configuration requests.  This allows an unprivileged user who gains
+access to the Geode locator to extract configuration data and
+previously deployed application code.
 
-XenServer vncterm:
+Mitigation:
+Users of the affected versions should upgrade to Apache Geode 1.4.0 or later.
 
-https://github.com/xenserver/vncterm
+Credit:
+This issue was reported responsibly to the Apache Geode Security Team
+by Dan Smith from Pivotal.
 
-Might be also out of date, since last commit is 2 years ago?  But could
-also be latest.  These things don't have to be updated frequently.
-
-For QEMU, I did:
-
-git clone git://git.qemu.org/qemu.git
-
-> but in our official git repositories for vncterm[1] and spiceterm[2]
-> 
-> those issues are already fixed (since 2017-05-05)
-> 
-> i changed those variables all to unsigned int, which makes those 
-> increments defined behavior, and the range checks are ok, because
-> they cannot be negative anymore.
-> (it may behave strange, but you cannot trigger an out-of-bounds 
-> read/write anymore)
-> also, i replaced the vt->cy += buf code paths with calls to
-> vncterm_gotoxy (which as you mentioned, perform all necessary checks)
-> 
-> Dominik
-> 
-> [1]: https://git.proxmox.com/?p=vncterm.git;a=summary
-> [2]: https://git.proxmox.com/?p=spiceterm.git;a=summary
-
-Sounds great.  (I haven't looked yet.)
-
-Sorry for the false alarm, then.  (I imagine some users would like to
-know of these issues having existed and having been fixed, though.)
-
-Thanks,
-
-Alexander
+References:
+[1] https://issues.apache.org/jira/browse/GEODE-3962
+[2] https://cwiki.apache.org/confluence/display/GEODE/Release+Notes#ReleaseNotes-SecurityVulnerabilities
