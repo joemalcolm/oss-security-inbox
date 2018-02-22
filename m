@@ -1,74 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/25/1
-Message-ID: <20181025142539.GD9126@timmy.laas.fr>
-Date: Thu, 25 Oct 2018 16:25:39 +0200
-From: Matthieu Herrb <matthieu@...rb.eu>
-To: oss-security@...ts.openwall.com
-Subject: X.Org security advisory: October 25, 2018
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/22/2
+Message-ID: <CAFB0D2QndLM--WJEGQFSpEcFp0ts_r0b-vHD-WL+tFH+uiX7SQ@mail.gmail.com>
+Date: Thu, 22 Feb 2018 16:46:55 +0000
+From: Justin Bull <me@...tinbull.ca>
+To: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com,  fulldisclosure@...lists.org
+Subject: Re: [CVE-2018-1000088] Stored XSS vulnerability in Doorkeeper gem v2.1.0 - v4.2.5
 Content-Type: text/plain; charset=utf-8
 
-X.Org security advisory: October 25, 2018
+On Wed, Feb 21, 2018 at 5:17 PM Justin Bull <me@...tinbull.ca> wrote:
 
-Privilege escalation and file overwrite in X.Org X server 1.19 and later
-========================================================================
+>
+> Solution:
+> ---------
+> Upgrade to Doorkeeper v4.2.6 or later
+>
+>
+Apologies. This fails to account for a non-trivial scenario.
 
-Incorrect command-line parameter validation in the Xorg X server can
-lead to privilege elevation and/or arbitrary files overwrite, when the
-X server is running with elevated privileges (ie when Xorg is
-installed with the setuid bit set and started by a non-root user).
+Any software using Doorkeeper that has generated its own custom views[0]
+requires manual work to verify there's no explicit HTML in the
+`client_name` and `native_redirect_uri` field values.
 
-The -modulepath argument can be used to specify an insecure path to
-modules that are going to be loaded in the X server, allowing to
-execute unprivileged code in the privileged process.
+This has been updated in the bulletin's Fix section[1].
 
-The -logfile argument can be used to overwrite arbitrary files in the
-file system, due to incorrect checks in the parsing of the option.
-
-This issue has been assigned CVE-2018-14665
-
-Background
-==========
-
-The commit
-https://gitlab.freedesktop.org/xorg/xserver/commit/032b1d79b7 which
-first appeared in xorg-server 1.19.0 introduced a regression in the
-security checks performed for potentially dangerous options, enabling
-the vulnerabilities listed above.
-
-Overwriting /etc/shadow with -logfile can also lead to privilege
-elevation since it's possible to control some part of the written log
-file, for example using the -fp option to set the font search path
-(which is logged) and thus inject a line that will be considered as
-valid by some systems.
-
-Patches
-=======
-
-A patch for the issue was added to the xserver repository on
-October 25, 2018.
-
-https://gitlab.freedesktop.org/xorg/xserver/commit/50c0cf885a6e91c0ea71fb49fa8f1b7c86fe330e
-
-Workaround
-==========
-
-If a patched version of the X server is not available, X.Org
-recommends to remove the setuid bit (ie chmod 755) of the installed
-Xorg binary.  Note that this can cause issues if people are starting
-the X window system using the 'startx', 'xinit' commands or variations
-thereof.
-
-X.Org recommends the use of a display manager to start X sessions,
-which does not require Xorg to be installed setuid.
-
-Thanks
-======
-
-X.Org thanks Narendra Shinde who discovered and reported the issue,
-and the Red Hat Product Security Team who helped understand all
-impacts.
-
+[0]: https://github.com/doorkeeper-gem/doorkeeper/wiki/Customizing-views
+[1]:
+https://blog.justinbull.ca/cve-2018-1000088-stored-xss-in-doorkeeper/#fix
 -- 
-Matthieu Herrb
+Justin Bull
+PGP Fingerprint: E09D 38DE 8FB7 5745 2044 A0F4 1A2B DEAA 68FD B34C
 
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
