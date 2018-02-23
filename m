@@ -1,47 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/10/2
-Message-Id: <D2FFFDDC-6092-409E-B535-561A53B8763F@stubman.eu>
-Date: Wed, 10 Oct 2018 08:38:50 +0200
-From: Magnus Klaaborg Stubman <magnus@...bman.eu>
-To: carnil@...ian.org, abergmann@...e.com
-Cc: oss-security@...ts.openwall.com
-Subject: Re: net-snmp 5.7.3 unauthenticated remote Denial of Service (exploit available)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/23/3
+Message-ID: <20180223042948.GA9316@sin.redhat.com>
+Date: Fri, 23 Feb 2018 14:59:49 +1030
+From: Doran Moppert <dmoppert@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Mark Thomas <markt@...che.org>
+Subject: Re: Fwd: [SECURITY] CVE-2018-1304 Security constraints mapped to context root are ignored
 Content-Type: text/plain; charset=utf-8
 
-Hi guys,
-
-Yesterday I submitted a change request asking MITRE to mark CVE-2018-18066 as a duplicate of CVE-2015-5621.
-Thank you for bringing the issue to my attention!
-
-Magnus
-
-> On 9 Oct 2018, at 11.21, Salvatore Bonaccorso <carnil@...ian.org> wrote:
+On Feb 23 2018, Mark Thomas wrote:
+> CVE-2018-1304 Security constraints mapped to context root are ignored
 > 
-> Hi,
-> 
-> On Tue, Oct 09, 2018 at 12:31:32AM +0200, Alexander Bergmann wrote:
->> Hi Magnus,
->> 
->> thanks for your report. I can reproduce VULN#2 (CVE-2018-18065) with our
->> net-snmp-5.7.3 version (sle12/sle15). Our net-snmp-5.4.2.1 version seams
->> to be unaffected.
->> 
->> Regarding your VULN#1 (CVE-2018-18066) I noticed that the patch was
->> already applied to our code base and CVE-2015-5621 was assigned. The
->> issue was already mentioned here at oss-security.
->> 
->> https://www.openwall.com/lists/oss-security/2015/07/31/1
->> 
->> I didn't check the details yet, but if the new CVE is a duplicate,
->> please contact NIST about it.
-> 
-> Is it actually the same issue? I'm asking because for instance, there
-> was indeed earlier CVE-2015-5621 and CVE-2018-1000116, which both were
-> adressed with this same commit, but are considered two separate
-> issues. So if CVE-2018-18066 is different from CVE-2015-5621 or
-> CVE-2018-1000116, the assignment would not be a duplicate.
-> 
-> Regards,
-> Salvatore
+> Mitigation:
+> Users of the affected versions should apply one of the following
+> mitigations:
+> - Review security constraints and confirm none use a URL patten of ""
+>   (the empty string)
 
+Will a URL pattern of "/" correctly protect the context root of
+vulnerable versions?  If so, this seems worth mentioning.
 
+-- 
+Doran Moppert
+Red Hat Product Security
+
+Content of type "application/pgp-signature" skipped
