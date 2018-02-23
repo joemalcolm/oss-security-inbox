@@ -1,26 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/19/2
-Message-ID: <efa92101-facb-84ff-7582-78583e8c7381@hpe.com>
-Date: Thu, 18 Jan 2018 19:23:45 -0500
-From: Nicholas Luedtke <nicholas.luedtke@....com>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: How to deal with reporters who don't want their bugs fixed?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/23/2
+Message-ID: <119799b0-8d2a-c235-fcb2-7662f02024e2@apache.org>
+Date: Fri, 23 Feb 2018 00:33:21 +0000
+From: Mark Thomas <markt@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: Fwd: [SECURITY] CVE-2018-1304 Security constraints mapped to context root are ignored
 Content-Type: text/plain; charset=utf-8
 
-On 1/18/2018 5:01 PM, Solar Designer wrote:
+-------- Forwarded Message --------
+Subject: [SECURITY] CVE-2018-1304 Security constraints mapped to context
+root are ignored
+Date: Fri, 23 Feb 2018 00:27:30 +0000
+From: Mark Thomas <markt@...che.org>
+Reply-To: announce@...cat.apache.org, announce@...cat.apache.org
+To: Tomcat Users List <users@...cat.apache.org>
+CC: Tomcat Developers List <dev@...cat.apache.org>, announce@...che.org,
+announce@...cat.apache.org <announce@...cat.apache.org>
 
-> I think "semi-public" is the worst state an issue can be in, making the
-> above suggestion the worst of those mentioned in this thread so far.
+CVE-2018-1304 Security constraints mapped to context root are ignored
 
-In my extremely humble opinion, a patched "semi-public" issue is better
-than a unpatched private issue that is known to unknown number of people
-with unknown intentions.
+Severity: High
 
--Nicholas
+Vendor: The Apache Software Foundation
 
-Apologies for sending this off list Alexander. 
+Versions Affected:
+Apache Tomcat 9.0.0.M1 to 9.0.4
+Apache Tomcat 8.5.0 to 8.5.27
+Apache Tomcat 8.0.0.RC1 to 8.0.49
+Apache Tomcat 7.0.0 to 7.0.84
 
+Description:
+The URL pattern of "" (the empty string) which exactly maps to the
+context root was not correctly handled when used as part of a security
+constraint definition. This caused the constraint to be ignored. It was,
+therefore, possible for unauthorised users to gain access to web
+application resources that should have been protected. Only security
+constraints with a URL pattern of the empty string were affected.
 
+Mitigation:
+Users of the affected versions should apply one of the following
+mitigations:
+- Review security constraints and confirm none use a URL patten of ""
+  (the empty string)
+- Upgrade to Apache Tomcat 9.0.5 or later
+- Upgrade to Apache Tomcat 8.5.28 or later
+- Upgrade to Apache Tomcat 8.0.50 or later
+- Upgrade to Apache Tomcat 7.0.85 or later
 
+Credit:
+This issue was reported publicly as bug 62067 and the security
+implications identified by the Apache Tomcat Security Team.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+History:
+2018-02-23 Original advisory
+
+References:
+[1] http://tomcat.apache.org/security-9.html
+[2] http://tomcat.apache.org/security-8.html
+[3] http://tomcat.apache.org/security-7.html
+
