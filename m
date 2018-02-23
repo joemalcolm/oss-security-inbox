@@ -1,131 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/12/11
-Message-ID: <CAG-OieOUdanQyhyksodXwP7WyQpnAh0t3gy_Z_Cq-PTf+22GYw@mail.gmail.com>
-Date: Wed, 12 Dec 2018 11:34:59 -0800
-From: Hacker Fantastic <hackerfantastic@...glemail.com>
-To: Tavis Ormandy <taviso@...gle.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Multiple telnet.c overflows
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/23/9
+Message-ID: <CAEwge-EA=armRcEHu5R3zZhyuTm=ZTLKHNJa5wPrsCYd3AeNfA@mail.gmail.com>
+Date: Fri, 23 Feb 2018 14:17:15 -0800
+From: Anthony Baker <abaker@...che.org>
+To: user@...de.apache.org, dev@...de.apache.org, announce@...che.org,  oss-security@...ts.openwall.com, asf-security <security@...che.org>, mmo@...mle.com
+Subject: [SECURITY] CVE-2017-15692 Apache Geode unsafe deserialization in TcpServer
 Content-Type: text/plain; charset=utf-8
 
-Hi Tavis,
+CVE-2017-15692 Apache Geode unsafe deserialization in TcpServer
 
-The "little used" package you mentioned is in some distributions a
-dependency of "xorg-xinit" (:: removing inetutils breaks dependency
-'inetutils' required by xorg-xinit in Arch Linux). The security boundary in
-the Mikrotik example is "escape of restricted shells" which is also in the
-TLDR; advisory. If you are unhappy with how I described the issue and wish
-to spend time and ultimately money researching remotely reachable code
-paths (aside from the URI handler example I already gave you) then it is
-worth looking into more detail the issues with the heap overflow and if it
-is reachable in the client via a server-side telnetd implementation for
-instance. The code there is a mess.
+Severity:  Important
 
-As I already stated, I am unable to account for every use of telnet
-client-side code or how it is called in every application, particularly all
-the projects out there used from open-source community or co-opted by
-vendors into commercial offerings (like the given example, Mikrotik).
-Splitting hairs over security boundaries of a single issue with many use
-cases is not something I have time for, the vulnerability is exactly as
-described with security relevant impacts in my original advisory. It would
-be nice to see the heap overflow reached via a telnetd service just to
-prove a point but ultimately it is beyond the scope of this discussion, why
-not put the energy you spent on these emails to use exploring if the heap
-is also corrupted in such instances? ;-)
+Vendor: The Apache Software Foundation
 
-It was considered a security issue for such straight-forward restricted
-shell escapes in 2004/2005 (when there were numerous reported instances of
-such occurring in telnet clients alongside other client-side overflows).
-One of the issues is addressed in the implementations of some BSD clients
-and not in others.
+Versions Affected:  Apache Geode 1.0.0 through 1.3.0
 
-Just because you do not know how to exploit a bug does not mean it does not
-have security implications, it just means they have not been discovered yet
-or the researcher does not have the luxury of time that others have.
+Description:
+The TcpServer within the Geode locator opens a network port that
+deserializes data.  If an unprivileged user gains access to the Geode
+locator, they may be able to cause remote code execution if certain
+classes are present on the classpath.
 
-I hope this clarifies my points satisfactorily for you.
+A malicious user can send a network message to the Geode locator and
+execute code if certain classes are present on the classpath.
 
-Kind Regards,
-Hacker Fantastic
+Mitigation:
+Users of the affected versions should upgrade to Apache Geode 1.4.0 or
+later.  In addition, users should set the flag
+validate-serializable-objects.
 
+Credit:
+This issue was reported responsibly to the Apache Geode Security Team
+by Man Yue Mo from Semmle.
 
-
-
-
-
-
-
-
-
-
-
-
-On Wed, Dec 12, 2018 at 11:03 AM Tavis Ormandy <taviso@...gle.com> wrote:
-
-> On Wed, Dec 12, 2018 at 10:08 AM Hacker Fantastic
-> <hackerfantastic@...glemail.com> wrote:
-> >
-> > Hi Tavis, thanks for the input - I referenced Mikrotik as a vendor using
-> a vulnerable implementation that can be used to escape restricted shells.
-> This is just one example of a instance where a restricted shell could be
-> escaped when using inetutils, or when the vulnerable code path reached
-> unexpected systems (like NetBSD).
->
-> Yes, the bug exists on NetBSD, but in order for it to be a security
-> issue, there has to be an example of this bug being used to cross a
-> privilege boundary. I assume we agree that not every bug is a security
-> bug, there has to be some sort of supported security boundary that the
-> bug allows an attacker to violate. The question I'm asking is can you
-> elaborate on which security boundary is being crossed? I don't dispute
-> the bug exists and that NetBSD are shipping the code.
->
-> > As Mikrotik case is not an oss security issue I did not post the
-> advisory here, but as I shared to you already on social media:
-> >
-> > https://hacker.house/releasez/expl0itz/mikrotik-jailbreak.txt
-> >
-> > (The overflows are present in those devices as well, several million of
-> them, in case this isn't clear in our advisory)
->
-> That part is clear, but it's not clear to me that Mikrotik intend for
-> this to be a security boundary. Do you get unintended privileges from
-> exploiting this? Either way, RouterOS is not open source, so
-> oss-security isn't the right place to discuss it.
->
-> >
-> > The heap overflow occurs in ANY environment variables (an example
-> instead of DISPLAY, use USER which maybe reachable via telnet://user@ip),
-> yes the stack sprintf might not be remotely reachable which is why the
-> advisory states "multiple overflows". If instances of telnet being called
-> with a username via a URI handler the this would reach the heap overflow
-> code path as described in the advisory. Thankfully, most modern browsers no
-> longer implement telnet URI handlers anymore.
->
-> You say "most", but do you have an example of anyone invoking GNU
-> inetutils via untrusted telnet URIs? I think any example in a security
-> supported open-source project would be enough to justify calling this
-> a security issue.
->
-> > You are welcome to dismiss client side environment handling
-> vulnerabilities as none-security issues or feel free to patch the
-> referenced vulnerabilities as stated in the advisory. Thanks for your input
-> I hope the comments above with the referenced advisory are clear enough and
-> that the issue can be addressed by projects still using inetutils.
-> >
->
-> It's not that environment handling is a non-issue, I've reported
-> dozens over the years, it's just that it requires a privilege
-> boundary. For example, setuid binaries are the classic example.
->
-> Tavis.
->
-
-
--- 
-Matthew Hickey
-Tel: +44 7543 661237
-Web: http://blog.hackerfantastic.com
-
-Please visit my website for blog postings, status updates and project
-information.
-
+References:
+[1] https://issues.apache.org/jira/browse/GEODE-3923
+[2] https://cwiki.apache.org/confluence/display/GEODE/Release+Notes#ReleaseNotes-SecurityVulnerabilities
