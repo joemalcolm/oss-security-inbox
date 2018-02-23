@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["11232" "Tuesday" "25" "January" "2022" "12:05:07" "+0000" "Xen.org security team" "security@xen.org" nil "246" "[oss-security] Xen Security Advisory 395 v2 (CVE-2022-23035) - Insufficient cleanup of passed-through device IRQs" nil nil nil "1" nil nil (number mark "U       security@xen Jan 25  246/11232 " thread-indent "\"[oss-security] Xen Security Advisory 395 v2 (CVE-2022-23035) - Insufficient cleanup of passed-through device IRQs\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Xen Security Advisory 395 v2 (CVE-2022-23035) - Insufficient cleanup of passed-through device IRQs" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1523" "Friday" "23" "February" "2018" "14:59:49" "+1030" "Doran Moppert" "dmoppert@redhat.com" "<20180223042948.GA9316@sin.redhat.com>" "43" "Re: [oss-security] Fwd: [SECURITY] CVE-2018-1304 Security constraints mapped to context root are ignored" nil nil nil "2" "2018022304:29:49" "[oss-security] Fwd: [SECURITY] CVE-2018-1304 Security constraints mapped to context root are ignored" (number mark "U       dmoppert@red Feb 23   43/1523  " thread-indent "\"Re: [oss-security] Fwd: [SECURITY] CVE-2018-1304 Security constraints mapped to context root are ignored\"\n") "<119799b0-8d2a-c235-fcb2-7662f02024e2@apache.org>" ("<2a8f2292-2aee-d8fa-9ccc-d1f9b20d0eed@apache.org>" "<119799b0-8d2a-c235-fcb2-7662f02024e2@apache.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 25603 invoked by uid 550); 25 Jan 2022 12:05:28 -0000
+Received: (qmail 30270 invoked by uid 550); 23 Feb 2018 04:30:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,269 +12,65 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24478 invoked from network); 25 Jan 2022 12:05:27 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
-	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
-	Content-Transfer-Encoding:Content-Type;
-	bh=XjImBY627dzjE6CAOBihcwCbC0zmFDELfKNBy+FyDb4=; b=INuodAE6zxiLlqwttASajLYK9T
-	qBZwj+RmvDQIE/tzkDOJEKvi1R/iFoIcXUWmIN4bi35HLHu7BlUWjbdjTaapoi+Opmuymv+UxTEc9
-	IXQu5ZinWM4Y7JHzkreaT9HKzrwwQ7atGF7Qc319S3zri6tTG8WafDvr9Xti29KiikaU=;
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 30238 invoked from network); 23 Feb 2018 04:30:06 -0000
+Date: Fri, 23 Feb 2018 14:59:49 +1030
+From: Doran Moppert <dmoppert@redhat.com>
+To: oss-security@lists.openwall.com
+Cc: Mark Thomas <markt@apache.org>
+Message-ID: <20180223042948.GA9316@sin.redhat.com>
+References: <2a8f2292-2aee-d8fa-9ccc-d1f9b20d0eed@apache.org>
+ <119799b0-8d2a-c235-fcb2-7662f02024e2@apache.org>
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.509 (Entity 5.509)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1nCKZP-0003vf-6C@xenbits.xenproject.org>
-Date: Tue, 25 Jan 2022 12:05:07 +0000
-Subject: [oss-security] Xen Security Advisory 395 v2 (CVE-2022-23035) - Insufficient
- cleanup of passed-through device IRQs
-
---=separator
-Content-Type: text/plain; charset="utf-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="BXVAT5kNtrzKuDFl"
 Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <119799b0-8d2a-c235-fcb2-7662f02024e2@apache.org>
+X-Scanned-By: MIMEDefang 2.78 on 10.11.54.3
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.11.55.7]); Fri, 23 Feb 2018 04:29:55 +0000 (UTC)
+X-Greylist: inspected by milter-greylist-4.5.16 (mx1.redhat.com [10.11.55.7]); Fri, 23 Feb 2018 04:29:55 +0000 (UTC) for IP:'10.11.54.3' DOMAIN:'int-mx03.intmail.prod.int.rdu2.redhat.com' HELO:'smtp.corp.redhat.com' FROM:'dmoppert@redhat.com' RCPT:''
+Subject: Re: [oss-security] Fwd: [SECURITY] CVE-2018-1304 Security
+ constraints mapped to context root are ignored
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--BXVAT5kNtrzKuDFl
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-            Xen Security Advisory CVE-2022-23035 / XSA-395
-                               version 2
+On Feb 23 2018, Mark Thomas wrote:
+> CVE-2018-1304 Security constraints mapped to context root are ignored
+>=20
+> Mitigation:
+> Users of the affected versions should apply one of the following
+> mitigations:
+> - Review security constraints and confirm none use a URL patten of ""
+>   (the empty string)
 
-          Insufficient cleanup of passed-through device IRQs
+Will a URL pattern of "/" correctly protect the context root of
+vulnerable versions?  If so, this seems worth mentioning.
 
-UPDATES IN VERSION 2
-====================
+--=20
+Doran Moppert
+Red Hat Product Security
 
-Adjust patch subject.
+--BXVAT5kNtrzKuDFl
+Content-Type: application/pgp-signature
 
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-The management of IRQs associated with physical devices exposed to x86
-HVM guests involves an iterative operation in particular when cleaning
-up after the guest's use of the device.  In the case where an interrupt
-is not quiescent yet at the time this cleanup gets invoked, the cleanup
-attempt may be scheduled to be retried.  When multiple interrupts are
-involved, this scheduling of a retry may get erroneously skipped.  At
-the same time pointers may get cleared (resulting in a de-reference of
-NULL) and freed (resulting in a use-after-free), while other code would
-continue to assume them to be valid.
-
-IMPACT
-======
-
-The precise impact is system specific, but would typically be a Denial
-of Service (DoS) affecting the entire host.  Privilege escalation and
-information leaks cannot be ruled out.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen versions 4.6 and later are vulnerable.  Xen versions 4.5 and earlier
-are not vulnerable.
-
-Only x86 HVM guests with one or more passed-through physical devices
-using (together) multiple physical interupts can leverage the
-vulnerability.  x86 PV guests cannot leverage the vulnerability.  x86
-HVM guests without passed-through devices or with a passed-through
-device using just a single physical interrupt also cannot leverage the
-vulnerability.  Device pass-through is unsupported for x86 PVH guests
-and all Arm guests.
-
-MITIGATION
-==========
-
-There is no mitigation (other than not passing through to x86 HVM guests
-PCI devices with, overall, more than a single physical interrupt).
-
-CREDITS
-=======
-
-This issue was discovered by Julien Grall of Amazon.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa395.patch           xen-unstable - Xen 4.15.x
-xsa395-4.14.patch      Xen 4.14.x - Xen 4.12.x
-
-$ sha256sum xsa395*
-f460be598b936bb5cfb9276787f2f21d90b029d1fe10dabd572ae50f84a1124d  xsa395.meta
-295b876c52cf5efe19150757275da3d154beb72ac2d7be267e16c9262e410de3  xsa395.patch
-5697f3137e0a202744f31b1c6cbcfa459d8fa9b4b68be59561b78c40fe1233c5  xsa395-4.14.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmHv39QMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZhowIAIZYZq4efyEAP5rB3zX4yRel2GNz+2Dpjok4PExB
-uSOrPaH5dDILhNdVJNG48MckDe0dMDsn3OGr1I6lbxcV1TWR1JFrBQoxeUnwdiEf
-GjeTni0hhefan3IEEd5HUDInQgf9oI7fUcgEdVAoIV87BQdlK0ofjJ3TggSrr8jl
-pL5dmIh4OICD6YttR11Of1vhPY2WhZQb2xgSxzEQbDeY8k3JaRWy8mYwwxPD0HXn
-+hmLK59ZhkJd5Sk8AxttRUTEsl6nKESrUz3vv/vFInV5Go+35AElL//gQNgOOTAS
-nljLLtJdfHSuRy459Sw/lm4mwQ9zkfOFH6B+M6efSkHMyoE=
-=Iv+w
+iQIcBAEBCgAGBQJaj5i8AAoJEGohqWcZR7qpmoEP/RHuQUfbOBYb6H06EYhARY7h
+ilVulPwKjOkAse+joQ3IHYR85CMW4u3oUjPEJX3pLeKH+OtzzuLURGYzFoN4PZ7q
+yyf0o/peBylg5pBVf0k6gjEVSB3WMhu5qrrHLRO5kQkUd/5wmHE02IvyWzC5RxE6
+eWxacLY/urHQ/F+PIJWl0dIeoSX/zTkzevpry7/z9SaOiyyynoX/hU8bp9ZVXHME
+x2xJlCKCuSCe+f/Zhfjjq2M/9k5FZFf6S+fJbsmSxsQQNRW3SgOqZeaknseW1gXm
+plUM7GjHTUBVH6m26yuO2++O4WJ3P9vOGEGS93G4ydGXeBuPOLx82pV7ymk4DUtL
+hA4EO64hLU9Xg2Yt9haaTVAhfB/P/mO2KovuNs2TsJPryVmmoDqhP8SAep1/DcQm
+VHE6ABKfXXHB8AM2jyKr20COtgsDsjoFC0hJ4e+S0/o66/0bdB+0cyk3w8vvWoSS
+C4Tko2WVPuRq5cERgOtJLlCclYFVOmUn9DrzAeDjv4oGhD1X7c3tI5x+GUtQ4/2C
+9Li005nSBRgT7gD7nKNYGMvcmjuVsAY0VkFX1CLoUZp1P5fGOpF7BKxfaQ6iYsPH
+Z2cB7p2WOml9G+M+sbnuBJhgeg6Sl0+H/4WlRn5KgmzelQs1mh3Z5EErRDcduiGO
+Ov8+x54q0313Z1etm2HC
+=uN5S
 -----END PGP SIGNATURE-----
 
---=separator
-Content-Type: application/octet-stream; name="xsa395.meta"
-Content-Disposition: attachment; filename="xsa395.meta"
-Content-Transfer-Encoding: base64
-
-ewogICJYU0EiOiAzOTUsCiAgIlN1cHBvcnRlZFZlcnNpb25zIjogWwogICAg
-Im1hc3RlciIsCiAgICAiNC4xNiIsCiAgICAiNC4xNSIsCiAgICAiNC4xNCIs
-CiAgICAiNC4xMyIsCiAgICAiNC4xMiIKICBdLAogICJUcmVlcyI6IFsKICAg
-ICJ4ZW4iCiAgXSwKICAiUmVjaXBlcyI6IHsKICAgICI0LjEyIjogewogICAg
-ICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0
-YWJsZVJlZiI6ICJiOWFhMTYzNWIzOGE3YmMwOTJkNjAxMjNiODdjNTQ1ZjI1
-ZGIzMWU0IiwKICAgICAgICAgICJQcmVyZXFzIjogWwogICAgICAgICAgICAz
-OTMsCiAgICAgICAgICAgIDM5NAogICAgICAgICAgXSwKICAgICAgICAgICJQ
-YXRjaGVzIjogWwogICAgICAgICAgICAieHNhMzk1LTQuMTQucGF0Y2giCiAg
-ICAgICAgICBdCiAgICAgICAgfQogICAgICB9CiAgICB9LAogICAgIjQuMTMi
-OiB7CiAgICAgICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4iOiB7CiAgICAg
-ICAgICAiU3RhYmxlUmVmIjogImQwZTJjMjc2MmI5ODFhYmQ5ODRhZjY2YTg0
-NGFjMTJkOGJmOGY4MTMiLAogICAgICAgICAgIlByZXJlcXMiOiBbCiAgICAg
-ICAgICAgIDM5MywKICAgICAgICAgICAgMzk0CiAgICAgICAgICBdLAogICAg
-ICAgICAgIlBhdGNoZXMiOiBbCiAgICAgICAgICAgICJ4c2EzOTUtNC4xNC5w
-YXRjaCIKICAgICAgICAgIF0KICAgICAgICB9CiAgICAgIH0KICAgIH0sCiAg
-ICAiNC4xNCI6IHsKICAgICAgIlJlY2lwZXMiOiB7CiAgICAgICAgInhlbiI6
-IHsKICAgICAgICAgICJTdGFibGVSZWYiOiAiY2JhZGY2N2JjYWI0ZTI5Yzg4
-MzQxMGRiMzkzZjRmNWVmMzRkZjA0YSIsCiAgICAgICAgICAiUHJlcmVxcyI6
-IFsKICAgICAgICAgICAgMzkzLAogICAgICAgICAgICAzOTQKICAgICAgICAg
-IF0sCiAgICAgICAgICAiUGF0Y2hlcyI6IFsKICAgICAgICAgICAgInhzYTM5
-NS00LjE0LnBhdGNoIgogICAgICAgICAgXQogICAgICAgIH0KICAgICAgfQog
-ICAgfSwKICAgICI0LjE1IjogewogICAgICAiUmVjaXBlcyI6IHsKICAgICAg
-ICAieGVuIjogewogICAgICAgICAgIlN0YWJsZVJlZiI6ICJhYmEyMmM2N2Vm
-ZTQ0MDRhMmE4NGUzNzhiZmQ5OGRlZjVlYzhlNjQ3IiwKICAgICAgICAgICJQ
-cmVyZXFzIjogWwogICAgICAgICAgICAzOTMsCiAgICAgICAgICAgIDM5NAog
-ICAgICAgICAgXSwKICAgICAgICAgICJQYXRjaGVzIjogWwogICAgICAgICAg
-ICAieHNhMzk1LnBhdGNoIgogICAgICAgICAgXQogICAgICAgIH0KICAgICAg
-fQogICAgfSwKICAgICI0LjE2IjogewogICAgICAiUmVjaXBlcyI6IHsKICAg
-ICAgICAieGVuIjogewogICAgICAgICAgIlN0YWJsZVJlZiI6ICJkMGQwYWY2
-N2VlZGU1NjBmYWFiNThmMTYxZDk2MDhhNjljNzc5ZDQxIiwKICAgICAgICAg
-ICJQcmVyZXFzIjogWwogICAgICAgICAgICAzOTMsCiAgICAgICAgICAgIDM5
-NAogICAgICAgICAgXSwKICAgICAgICAgICJQYXRjaGVzIjogWwogICAgICAg
-ICAgICAieHNhMzk1LnBhdGNoIgogICAgICAgICAgXQogICAgICAgIH0KICAg
-ICAgfQogICAgfSwKICAgICJtYXN0ZXIiOiB7CiAgICAgICJSZWNpcGVzIjog
-ewogICAgICAgICJ4ZW4iOiB7CiAgICAgICAgICAiU3RhYmxlUmVmIjogIjMx
-ZjNiYzk3ZjQ1MDg2ODcyMTVlNDU5YTVlMzU2NzZlZWNmMTc3MmIiLAogICAg
-ICAgICAgIlByZXJlcXMiOiBbCiAgICAgICAgICAgIDM5MywKICAgICAgICAg
-ICAgMzk0CiAgICAgICAgICBdLAogICAgICAgICAgIlBhdGNoZXMiOiBbCiAg
-ICAgICAgICAgICJ4c2EzOTUucGF0Y2giCiAgICAgICAgICBdCiAgICAgICAg
-fQogICAgICB9CiAgICB9CiAgfQp9
-
---=separator
-Content-Type: application/octet-stream; name="xsa395.patch"
-Content-Disposition: attachment; filename="xsa395.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSA0Y2M5MjRjM2UzYTBkNTMzMDZkMDhiMDQ3MjBjNDI3ZDFjMjk4YmE4
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBKdWxpZW4gR3JhbGwg
-PGpncmFsbEBhbWF6b24uY29tPgpEYXRlOiBXZWQsIDUgSmFuIDIwMjIgMTg6
-MDk6MjAgKzAwMDAKU3ViamVjdDogW1BBVENIXSBwYXNzdGhyb3VnaC94ODY6
-IHN0b3AgcGlycSBpdGVyYXRpb24gaW1tZWRpYXRlbHkgaW4gY2FzZSBvZgog
-ZXJyb3IKCnB0X3BpcnFfaXRlcmF0ZSgpIHdpbGwgaXRlcmF0ZSBpbiBiYXRj
-aCBvdmVyIGFsbCB0aGUgUElSUXMuIFRoZSBvdXRlcgpsb29wIHdpbGwgYmFp
-bCBvdXQgaWYgJ3JjJyBpcyBub24temVybyBidXQgdGhlIGlubmVyIGxvb3Ag
-d2lsbCBjb250aW51ZS4KClRoaXMgbWVhbnMgJ3JjJyB3aWxsIGdldCBjbG9i
-YmVyZWQgYW5kIHdlIG1heSBtaXNzIGFueSBlcnJvcnMgKHN1Y2ggYXMKLUVS
-RVNUQVJUIGluIHRoZSBjYXNlIG9mIHRoZSBjYWxsYmFjayBwY2lfY2xlYW5f
-ZHBjaV9pcnEoKSkuCgpUaGlzIGlzIENWRS0yMDIyLTIzMDM1IC8gWFNBLTM5
-NS4KCkZpeGVzOiBjMjQ1MzZiNjM2ZjIgKCJyZXBsYWNlIGQtPm5yX3BpcnFz
-IHNpemVkIGFycmF5cyB3aXRoIHJhZGl4IHRyZWUiKQpGaXhlczogZjZkZDI5
-NTM4MWY0ICgiZHBjaTogcmVwbGFjZSB0YXNrbGV0IHdpdGggc29mdGlycSIp
-ClNpZ25lZC1vZmYtYnk6IEp1bGllbiBHcmFsbCA8amdyYWxsQGFtYXpvbi5j
-b20+ClNpZ25lZC1vZmYtYnk6IEphbiBCZXVsaWNoIDxqYmV1bGljaEBzdXNl
-LmNvbT4KUmV2aWV3ZWQtYnk6IFJvZ2VyIFBhdSBNb25uw6kgPHJvZ2VyLnBh
-dUBjaXRyaXguY29tPgotLS0KIHhlbi9kcml2ZXJzL3Bhc3N0aHJvdWdoL3g4
-Ni9odm0uYyB8IDQgKysrKwogMSBmaWxlIGNoYW5nZWQsIDQgaW5zZXJ0aW9u
-cygrKQoKZGlmZiAtLWdpdCBhL3hlbi9kcml2ZXJzL3Bhc3N0aHJvdWdoL3g4
-Ni9odm0uYyBiL3hlbi9kcml2ZXJzL3Bhc3N0aHJvdWdoL3g4Ni9odm0uYwpp
-bmRleCAzNTFkYWFmZGM5YmYuLjBiMzdjZDE0NWI2MCAxMDA2NDQKLS0tIGEv
-eGVuL2RyaXZlcnMvcGFzc3Rocm91Z2gveDg2L2h2bS5jCisrKyBiL3hlbi9k
-cml2ZXJzL3Bhc3N0aHJvdWdoL3g4Ni9odm0uYwpAQCAtNzMyLDcgKzczMiwx
-MSBAQCBpbnQgcHRfcGlycV9pdGVyYXRlKHN0cnVjdCBkb21haW4gKmQsCiAK
-ICAgICAgICAgICAgIHBpcnEgPSBwaXJxc1tpXS0+cGlycTsKICAgICAgICAg
-ICAgIGlmICggKHBpcnFfZHBjaS0+ZmxhZ3MgJiBIVk1fSVJRX0RQQ0lfTUFQ
-UEVEKSApCisgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgcmMgPSBj
-YihkLCBwaXJxX2RwY2ksIGFyZyk7CisgICAgICAgICAgICAgICAgaWYgKCBy
-YyApCisgICAgICAgICAgICAgICAgICAgIGJyZWFrOworICAgICAgICAgICAg
-fQogICAgICAgICB9CiAgICAgfSB3aGlsZSAoICFyYyAmJiArK3BpcnEgPCBk
-LT5ucl9waXJxcyAmJiBuID09IEFSUkFZX1NJWkUocGlycXMpICk7CiAKLS0g
-CjIuMzIuMAoK
-
---=separator
-Content-Type: application/octet-stream; name="xsa395-4.14.patch"
-Content-Disposition: attachment; filename="xsa395-4.14.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSA3NDMzNDhmNWQ1NDVjN2ZmZjljZGVhNzQ2ODQwYjc5NWY1YzI2ZDQz
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBKdWxpZW4gR3JhbGwg
-PGpncmFsbEBhbWF6b24uY29tPgpEYXRlOiBXZWQsIDUgSmFuIDIwMjIgMTg6
-MDk6MzkgKzAwMDAKU3ViamVjdDogW1BBVENIXSBwYXNzdGhyb3VnaC94ODY6
-IHN0b3AgcGlycSBpdGVyYXRpb24gaW1tZWRpYXRlbHkgaW4gY2FzZSBvZgog
-ZXJyb3IKCnB0X3BpcnFfaXRlcmF0ZSgpIHdpbGwgaXRlcmF0ZSBpbiBiYXRj
-aCBvdmVyIGFsbCB0aGUgUElSUXMuIFRoZSBvdXRlcgpsb29wIHdpbGwgYmFp
-bCBvdXQgaWYgJ3JjJyBpcyBub24temVybyBidXQgdGhlIGlubmVyIGxvb3Ag
-d2lsbCBjb250aW51ZS4KClRoaXMgbWVhbnMgJ3JjJyB3aWxsIGdldCBjbG9i
-YmVyZWQgYW5kIHdlIG1heSBtaXNzIGFueSBlcnJvcnMgKHN1Y2ggYXMKLUVS
-RVNUQVJUIGluIHRoZSBjYXNlIG9mIHRoZSBjYWxsYmFjayBwY2lfY2xlYW5f
-ZHBjaV9pcnEoKSkuCgpUaGlzIGlzIENWRS0yMDIyLTIzMDM1IC8gWFNBLTM5
-NS4KCkZpeGVzOiBjMjQ1MzZiNjM2ZjIgKCJyZXBsYWNlIGQtPm5yX3BpcnFz
-IHNpemVkIGFycmF5cyB3aXRoIHJhZGl4IHRyZWUiKQpGaXhlczogZjZkZDI5
-NTM4MWY0ICgiZHBjaTogcmVwbGFjZSB0YXNrbGV0IHdpdGggc29mdGlycSIp
-ClNpZ25lZC1vZmYtYnk6IEp1bGllbiBHcmFsbCA8amdyYWxsQGFtYXpvbi5j
-b20+ClNpZ25lZC1vZmYtYnk6IEphbiBCZXVsaWNoIDxqYmV1bGljaEBzdXNl
-LmNvbT4KUmV2aWV3ZWQtYnk6IFJvZ2VyIFBhdSBNb25uw6kgPHJvZ2VyLnBh
-dUBjaXRyaXguY29tPgotLS0KIHhlbi9kcml2ZXJzL3Bhc3N0aHJvdWdoL2lv
-LmMgfCA0ICsrKysKIDEgZmlsZSBjaGFuZ2VkLCA0IGluc2VydGlvbnMoKykK
-CmRpZmYgLS1naXQgYS94ZW4vZHJpdmVycy9wYXNzdGhyb3VnaC9pby5jIGIv
-eGVuL2RyaXZlcnMvcGFzc3Rocm91Z2gvaW8uYwppbmRleCA3MWVhZjJjMTdl
-MjcuLmI2ZTg4ZWJjODY0NiAxMDA2NDQKLS0tIGEveGVuL2RyaXZlcnMvcGFz
-c3Rocm91Z2gvaW8uYworKysgYi94ZW4vZHJpdmVycy9wYXNzdGhyb3VnaC9p
-by5jCkBAIC04MTAsNyArODEwLDExIEBAIGludCBwdF9waXJxX2l0ZXJhdGUo
-c3RydWN0IGRvbWFpbiAqZCwKIAogICAgICAgICAgICAgcGlycSA9IHBpcnFz
-W2ldLT5waXJxOwogICAgICAgICAgICAgaWYgKCAocGlycV9kcGNpLT5mbGFn
-cyAmIEhWTV9JUlFfRFBDSV9NQVBQRUQpICkKKyAgICAgICAgICAgIHsKICAg
-ICAgICAgICAgICAgICByYyA9IGNiKGQsIHBpcnFfZHBjaSwgYXJnKTsKKyAg
-ICAgICAgICAgICAgICBpZiAoIHJjICkKKyAgICAgICAgICAgICAgICAgICAg
-YnJlYWs7CisgICAgICAgICAgICB9CiAgICAgICAgIH0KICAgICB9IHdoaWxl
-ICggIXJjICYmICsrcGlycSA8IGQtPm5yX3BpcnFzICYmIG4gPT0gQVJSQVlf
-U0laRShwaXJxcykgKTsKIAotLSAKMi4zMi4wCgo=
-
---=separator--
+--BXVAT5kNtrzKuDFl--
