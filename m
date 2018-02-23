@@ -1,32 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/17/3
-Message-ID: <baedf150-30b4-9039-6488-f5c7b479bb50@thelounge.net>
-Date: Sun, 16 Sep 2018 23:29:27 +0200
-From: Reindl Harald <h.reindl@...lounge.net>
-To: "Kevin A. McGrail" <kmcgrail@...che.org>
-Cc: SA Mailing list <users@...massassin.apache.org>, Spamassassin Devel List <dev@...massassin.apache.org>, announce@...massassin.apache.org, announce@...che.org, security@...massassin.apache.org, oss-security@...ts.openwall.com
-Subject: Re: [SECURITY] Apache SpamAssassin 3.4.2 resolves CVE-2017-15705, CVE-2016-1238, CVE-2018-11780 & CVE-2018-11781
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/23/5
+Message-ID: <b1b66680-c525-4bdd-0359-4162372ad073@apache.org>
+Date: Fri, 23 Feb 2018 09:25:55 +0000
+From: Mark Thomas <markt@...che.org>
+To: Doran Moppert <dmoppert@...hat.com>, oss-security@...ts.openwall.com
+Subject: Re: Fwd: [SECURITY] CVE-2018-1304 Security constraints mapped to context root are ignored
 Content-Type: text/plain; charset=utf-8
 
-
-
-Am 16.09.18 um 23:11 schrieb Kevin A. McGrail:
-> Per the asf security team, mitre considers the public rc1 from a few
-> days ago as the start of the clock for the publishing so we were already
-> way past the 24 hour windiw.
-
-again: i doubt that distributions push updates *NOW* because most
-maintainers are not ware of the release nor do the expecit it at all
-given how long we hear about 3.4.2 with no other official bugfix
-releases for years
-
-bad guys typically watch better than anyone else
-
-> Hopefully, the announcements and reports are obfuscated and bugzilla ia
-> private so it'll be contained.
+On 23/02/18 04:29, Doran Moppert wrote:
+> On Feb 23 2018, Mark Thomas wrote:
+>> CVE-2018-1304 Security constraints mapped to context root are ignored
+>>
+>> Mitigation:
+>> Users of the affected versions should apply one of the following
+>> mitigations:
+>> - Review security constraints and confirm none use a URL patten of ""
+>>   (the empty string)
 > 
-> On Sun, Sep 16, 2018, 16:59 Reindl Harald <h.reindl@...lounge.net
-> <mailto:h.reindl@...lounge.net>> wrote:
-> 
->     i doubt that it is wiese to blwo out security notes *that short* after
->     release and *that long* after the last release
+> Will a URL pattern of "/" correctly protect the context root of
+> vulnerable versions?  If so, this seems worth mentioning.
+
+The problem typically occurs with security annotations on servlets. In
+this case the security annotations pick up the mappings from the servlet
+they are annotating. If you changed the servlet mapping from "" to "/"
+that would almost certainly significantly change the behaviour of the
+web application since you are changing the mapping from "exact match to
+context root" to "default servlet".
+
+Mark
