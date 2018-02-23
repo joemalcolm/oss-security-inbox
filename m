@@ -1,118 +1,369 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/02/3
-Message-ID: <CA+fCnZcE=6dyUeU9CazgUR_yHTerNYXiK0gQNzjFSwjG=G-1uQ@mail.gmail.com>
-Date: Thu, 2 Aug 2018 20:57:07 +0200
-From: Andrey Konovalov <andreyknvl@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: Kostya Serebryany <kcc@...gle.com>, Dmitry Vyukov <dvyukov@...gle.com>,  Alexander Potapenko <glider@...gle.com>, keescook@...gle.com
-Subject: Linux kernel: CVE-2017-18344: arbitrary-read vulnerability in the timer subsystem
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/23/7
+Message-Id: <E1epIq7-0001yc-0n@xenbits.xenproject.org>
+Date: Fri, 23 Feb 2018 19:17:03 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 254 (CVE-2017-5753,CVE-2017-5715,CVE-2017-5754) - Information leak via side effects of speculative execution
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Syzkaller/syzbot found a global-out-of-bounds bug in the timer
-subsystem of the Linux kernel [1], that is exploitable and can be used
-to gain an arbitrary-read primitive. This allows to access kernel
-memory and leak keys, credentials or other sensitive information that
-is stored there (so the bug has a similar impact to Meltdown). I'll
-share a PoC exploit in a week.
+ Xen Security Advisory CVE-2017-5753,CVE-2017-5715,CVE-2017-5754 / XSA-254
+                                 version 11
 
-The bug was introduced in commit 57b8015e ("posix-timers: Show
-sigevent info in proc file") [2] in 3.10 and fixed by commit cef31d9a
-("posix-timer: Properly check sigevent->sigev_notify") [3] in
-4.15-rc4. The bug only affects kernels that have CONFIG_POSIX_TIMERS
-and CONFIG_CHECKPOINT_RESTORE enabled, which is done by a lot of
-modern distros.
+        Information leak via side effects of speculative execution
 
-This bug has been fixed in Ubuntu 16.04 [7], but still affects at
-least CentOS 7 at this moment (at least 3.10.0-862.9.1.el7.x86_64 that
-I've checked). I haven't checked the other distros.
+UPDATES IN VERSION 11
+=====================
 
-I've contacted linux-distros@ today and was asked to post to
-oss-security@ right away, since the issue is already public (and has
-been for the last 8 months, see the timeline below).
+Information provided about migitation for Spectre variant 2.
 
+Mention whether CPU hardware virtualisation extensions are required
+in the SP3 mitigations summary table.
+
+An additional patch "x86: fix GET_STACK_END" is required to fix a
+possible build failure in the PTI patches.  README.pti updated
+accordingly.
+
+ISSUE DESCRIPTION
+=================
+
+Processors give the illusion of a sequence of instructions executed
+one-by-one.  However, in order to most efficiently use cpu resources,
+modern superscalar processors actually begin executing many
+instructions in parallel.  In cases where instructions depend on the
+result of previous instructions or checks which have not yet
+completed, execution happens based on guesses about what the outcome
+will be.  If the guess is correct, execution has been sped up.  If the
+guess is incorrect, partially-executed instructions are cancelled and
+architectural state changes (to registers, memory, and so on)
+reverted; but the whole process is no slower than if no guess had been
+made at all.  This is sometimes called "speculative execution".
+
+Unfortunately, although architectural state is rolled back, there are
+other side effects, such as changes to TLB or cache state, which are
+not rolled back.  These side effects can subsequently be detected by
+an attacker to determine information about what happened during the
+speculative execution phase.  If an attacker can cause speculative
+execution to access sensitive memory areas, they may be able to infer
+what that sensitive memory contained.
+
+Furthermore, these guesses can often be 'poisoned', such that attacker
+can cause logic to reliably 'guess' the way the attacker chooses.
+This advisory discusses three ways to cause speculative execution to
+access sensitive memory areas (named here according to the
+discoverer's naming scheme):
+
+"Bounds-check bypass" (aka SP1, "Variant 1", Spectre CVE-2017-5753):
+Poison the branch predictor, such that victim code is speculatively
+executed past boundary and security checks.  This would allow an
+attacker to, for instance, cause speculative code in the normal
+hypercall / emulation path to execute with wild array indexes.
+
+"Branch Target Injection" (aka SP2, "Variant 2", Spectre CVE-2017-5715):
+Poison the branch predictor.  Well-abstracted code often involves
+calling function pointers via indirect branches; reading these
+function pointers may involve a (slow) memory access, so the CPU
+attempts to guess where indirect branches will lead.  Poisoning this
+enables an attacker to speculatively branch to any code that is
+executable by the victim (eg, anywhere in the hypervisor).
+
+"Rogue Data Load" (aka SP3, "Variant 3", Meltdown, CVE-2017-5754):
+On some processors, certain pagetable permission checks only happen
+when the instruction is retired; effectively meaning that speculative
+execution is not subject to pagetable permission checks.  On such
+processors, an attacker can speculatively execute arbitrary code in
+userspace with, effectively, the highest privilege level.
+
+More information is available here:
+  https://meltdownattack.com/
+  https://spectreattack.com/
+  https://googleprojectzero.blogspot.co.uk/2018/01/reading-privileged-memory-with-side.html
+
+Additional Xen-specific background:
+
+Xen hypervisors on most systems map all of physical RAM, so code
+speculatively executed in a hypervisor context can read all of system
+RAM.
+
+When running PV guests, the guest and the hypervisor share the address
+space; guest kernels run in a lower privilege level, and Xen runs in
+the highest privilege level.  (x86 HVM and PVH guests, and ARM guests,
+run in a separate address space to the hypervisor.)  However, only
+64-bit PV guests can generate addresses large enough to point to
+hypervisor memory.
+
+IMPACT
 ======
 
-Description from MITRE [4]:
+Xen guests may be able to infer the contents of arbitrary host memory,
+including memory assigned to other guests.
 
-The timer_create syscall implementation in kernel/time/posix-timers.c
-in the Linux kernel before 4.14.8 doesn't properly validate the
-sigevent->sigev_notify field, which leads to out-of-bounds access in
-the show_timer function (called when /proc/$PID/timers is read). This
-allows userspace applications to read arbitrary kernel memory (on a
-kernel built with CONFIG_POSIX_TIMERS and CONFIG_CHECKPOINT_RESTORE).
+An attacker's choice of code to speculatively execute (and thus the
+ease of extracting useful information) goes up with the numbers.  For
+SP1, an attacker is limited to windows of code after bound checks of
+user-supplied indexes.  For SP2, the attacker will in many cases will
+be limited to executing arbitrary pre-existing code inside of Xen.
+For SP3 (and other cases for SP2), an attacker can write arbitrary
+code to speculatively execute.
 
-======
+Additionally, in general, attacks within a guest (from guest user to
+guest kernel) will be the same as on real hardware.  Consult your
+operating system provider for more information.
 
-I thought it would be quite interesting to see when some Linux distros
-fixed this bug, since there was no CVE requested and assigned until
-recently.
+NOTE ON TIMING
+==============
 
-Initially I was only looking at Ubuntu 16.04, here's the related timeline:
+This vulnerability was originally scheduled to be made public on 9
+January.  It was accelerated at the request of the discloser due to
+one of the issues being made public.
 
-* Nov 30, 2017 - the bug reported by syzbot [5]
-* Dec 15, 2017 - the fix committed upstream [3]
-* Feb 17, 2018 - the fix backported to the 4.4 stable kernel branch [6]
-* Mar 15, 2018 - the fix added to the Ubuntu Xenial 4.4 kernel branch [7]
-* Jul 25, 2018 - CVE requested
-* Aug 2, 2018 - notified linux-distros@
-* Aug 2, 2018 - announcement on oss-security@
+VULNERABLE SYSTEMS
+==================
 
-In this particular case of a somewhat "scary" bug there was a window
-of 3.5 months between the bug being reported and the fixing commit
-reaching the Ubuntu Xenial 4.4 kernel branch. This gives some insight
-into how much time it usually takes for a fix to travel from upstream
-through stable into a distro kernel when there's no CVE. Compared to
-the 14 days, that distros are usually given to fix a security bug
-reported through linux-distros@, that seems rather long.
+Systems running all versions of Xen are affected.
 
-Then I decided to take a look at the CentOS kernel. I was quite
-surprised to find out that this bug hasn't been fixed there at all. I
-was under the impression that most Linux distros either follow stable
-kernel branches or monitor upstream commits for security related fixes
-themselves. It seems that this is not the case. Perhaps this fix was
-missed because CentOS 7 kernel is based on the 3.10 kernel version,
-and the 3.10 stable kernel release stopped being supported in November
-2017.
+For SP1 and SP2, both Intel and AMD are vulnerable.  Vulnerability of
+ARM processors to SP1 and SP2 varies by model and manufacturer.  ARM
+has information on affected models on the following website:
+   https://developer.arm.com/support/security-update
 
-This is just one bug though. Right now there are 700+ fixed bugs
-reported by syzbot [8] and 200+ more, which are still not fixed [9].
-Almost none of them have CVEs (if anybody want to practice requesting
-CVEs, go for it). There are also ~9000 fixes backported to 4.4 stable
-kernel. Some of them are security relevant and don't have CVEs. On top
-of that apparently there are ~700 fixes that are missing in the 4.4
-stable kernel [10].
+For SP3, only Intel processors are vulnerable.  (The hypervisor cannot
+be attacked using SP3 on any ARM processors, even those that are
+listed as affected by SP3.)
 
-It seems that a CVE is required for a particular security related fix
-to end up in distro kernels, but there are no CVEs requested for most
-of the bugs that are being fixed. So there's this inconsistency
-between the Linux kernel community that just fixes the bugs without
-bothering about CVEs and the distros, which require CVEs to apply
-fixes to their kernels.
+Furthermore, only 64-bit PV guests can exploit SP3 against Xen.  PVH,
+HVM, and 32-bit PV guests cannot exploit SP3.
 
-Just some thoughts :)
+MITIGATION
+==========
 
-Thanks!
+There is no mitigation for SP1.
 
-======
+SP2 can be mitigated by a combination of new microcode and compiler
+and hypervisor changes.  See Resolution below.
 
-[1] https://syzkaller.appspot.com/bug?id=e4cd90db60c4517094c0ffcb9468de1bf86809e7
+SP3 can be mitigated by page-table isolation ("PTI").
+See Resolution below.
 
-[2] https://github.com/torvalds/linux/commit/57b8015e07a70301e9ec9f324db1a8b73b5a1e2b
+SP3 can, alternatively, be mitigated by running guests in HVM or PVH
+mode.  (Within-guest attacks are still possible unless the guest OS
+has also been updated with an SP3 mitigation series such as
+KPTI/Kaiser.)
 
-[3] https://github.com/torvalds/linux/commit/cef31d9af908243421258f1df35a4a644604efbe
+For guests with legacy PV kernels which cannot be run in HVM or PVH
+mode directly, we have developed two "shim" hypervisors that allow PV
+guests to run in HVM mode or PVH mode.  This prevents attacks on the
+host, but it leaves the guest vulnerable to Meltdown attacks by its
+own unprivileged processes, even if the guest OS has KPTI or similar
+Meltdown mitigation.
 
-[4] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-18344
+The HVM shim (codenamed "Vixen") is available now, as is the PVH shim
+(codenamed "Comet") for Xen 4.10 and Xen 4.8.   Please read
+README.which-shim to determine which shim is suitable for you.
 
-[5] https://groups.google.com/d/msg/syzkaller-bugs/9mUyHIix2ys/bTLPoT-kAgAJ
 
-[6] https://lkml.org/lkml/2018/2/17/139
+RESOLUTION
+==========
 
-[7] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1756121
+These are hardware bugs, so technically speaking they cannot be
+properly fixed in software.  However, it is possible in many cases to
+provide patches to software to work around the problems.
 
-[8] https://syzkaller.appspot.com/
 
-[9] https://syzkaller.appspot.com/?fixed=upstream
+There is no available resolution for SP1.  A solution may be available
+in the future.
 
-[10] https://twitter.com/grsecurity/status/1022599945604526087
+
+SP2 can be mitigated on x86 by combinations of new CPU microcode and
+new hypervisor code.  The required hypervisor changes for Xen 4.6,
+4.7, 4.8, 4.9 and 4.10 are detailed in the attached README.bti.
+
+For AMD hardware, and for Intel hardware pre-dating the Skylake
+microarchitecture, the hypervisor changes alone are sufficient to
+mitigate the issue for Xen itself.  No microcode updates are required.
+For the Intel Skylake microarchitecture the hypervisor changes are
+insufficient to protect Xen without appropriate new microcode.
+Microcode updates are required in any event to guard against one guest
+attacking another.
+
+Consult Intel, your hardware vendor, or your dom0 OS distributor for the
+microcode updates.
+
+Additionally, compiler support for `indirect thunk' is required.
+Again, without appropriate compiler support, the hypervisor patches
+are insufficient.  Consult your compiler distributor.
+
+
+SP2 is mitigated on ARM 32-bit by a set of changes to the hypervisor
+alone.  SP2 can be mitigated on ARM 64-bit (aarch64) by a combination
+of new PSCI firmware and new hypervisor code.  The required hypervisor
+changes for Xen 4.6, 4.7, 4.8, 4.9 and 4.10 are detailed in the
+attached README.bti.
+
+For ARM 32-bit these changes are complete.
+
+For ARM 64-bit the hypervisor changes are still in development and are
+expected to be available soon.
+
+
+SP3 can be mitigated by page-table isolation ("PTI").
+
+We have a "stage 1" implementation.  It allows 64-bit PV guests to be
+run natively while restricting what can be accessed via SP3 to the Xen
+stack of the current pcpu (which may contain remnants of information
+from other guests, but should be much more difficult to attack
+reliably).
+
+Unfortunately these "stage 1" patches incur a non-negligible
+performance overhead; about equivalent to the "PV shim" approaches
+above.  Moving to plain HVM or PVH guests is recommended where
+possible.  For more information on that, see below.
+
+Patches for the "stage-1" PTI implementation are available in the Xen
+staging-NN branches for each Xen revision.  See README.pti for
+specific revisons.
+
+
+SP3 MITIGATION OPTIONS SUMMARY TABLE FOR 64-bit X86 PV GUESTS
+=============================================================
+
+Everything in this section applies to 64-bit PV x86 guests only.
+
+             Xen PTI      Use PVH      Use HVM     PVH shim     HVM shim
+             "stage 1"                             "Comet"      "Vixen"
+
+How to use   README.pti  type="pvh"  type="hvm"  README.comet  README.vixen
+
+Guest          All        Linux 4.11+  Most[4]     All         All
+support                ?unikernels?[3]
+
+Xen            4.6+      4.10+         All         4.10, 4.8   All
+ versions                4.8-comet[1]
+
+Testing       Limited    4.10: Good    Very good   Moderate    Very good
+ status       Very new   4.8: Moderate
+
+Performance    Fair        Excellent   Varies[4]   Fair        Fair
+
+Hypervisor     Needed      No need     No need     No need     No need
+  changes
+
+SP3 guest   Substantially  Protected   Protected   Protected   Protected
+ to host      protected
+
+SP3 within    Protected    Guest       Guest       Vulnerable  Vulnerable
+ guest                     patches     patches      [5]         [5]
+
+SP3 from      Protected    n/a; vuln.  n/a; vuln.  n/a; vuln.  n/a; vuln.
+ dom0 user                  [9]         [9]         [9]         [9]
+
+Device model   No dm       No dm       Qemu        No dm       Qemu
+
+Config change  None      type="pvh"  type="hvm"/  type="pvh"   Tool to rewrite
+                                    builder="hvm"  pvshim=1    Needs "sidecar"
+
+Within-guest   None       Should be    Disks+net   None        None
+ changes?                  none        may change
+
+CPU hw virt   Not needed  Needed       Needed      Needed      Needed
+feature (VT-x)
+
+Extra RAM use  V. slight   None       ~9Mb/guest >=~20Mb/guest >=~29Mb/guest
+
+Migration      OK          OK          OK[4]       OK          Unsupported[2]
+Guest mem adj  OK          OK          OK          Broken[2]   Unsupported[2]
+vcpu hotplug   OK          OK          OK          OK          Unsupported[2]
+
+Solution      Indefinite  Indefinite  Indefinite  Indefinite  Limited
+ lifetime                                           [7]        [6]
+
+[1] PVH is supported in Xen 4.8 only with the 4.8 "Comet" security
+release branch.
+
+[2] Some features in PVH/HVM shim guests are not inherently broken,
+but buggy in the currently available versions.  These may be fixed in
+future proper releases of the same feature.
+
+[3] Most unikernels have Xen support based on a version of mini-os.
+mini-os master can boot PVH.  But this is very recent.
+
+[4] Some guests which have support for Xen PV fail to boot properly in
+Xen HVM.  Some such guests can made to boot HVM by disabling the
+PV-on-HVM support entirely in the guest or in Xen; in that case the
+guest may work but IO performance will be poor.  Some PV-supporting
+guests can boot as HVM, with PV drivers, but fail when migrated.
+
+[5] The Comet and Vixen shim hypervisors direct-map all of their
+"physical" memory, and that direct-map can be accessed using Meltdown
+by unprivileged processes in the guest.  So the guest is vulnerable to
+within-guest Meltdown attacks and the guest operating system cannot
+protect itself.
+
+[6] "Vixen" HVM shim is not expected to be incorporated in future Xen
+stable releases.  At some point, support for it will be withdrawn.
+However, HVM shim functionality may be available in a future Xen 4.10
+stable point release and would then probably be useable with the
+existing conversion script provided in this advisory.
+
+[7] The lifetime of the special Comet branches is limited, but we will
+not desupport them until some time after the same functionality is in
+appropriate Xen stable point releases.
+
+[8] The 64-bit x86 PV guest ABI precludes a guest from mapping its
+kernel and userspace in the same address space.  So these guests are
+inherently immune to within-guest Meltdown attacks, without
+within-guest patching.  (This applies to 64-bit x86 PV guests only.)
+
+[9] It is not possible to run dom0 as HVM.  dom0 PVH is a planned
+enhancement which is not yet available even in preview form.
+
+
+ATTACHMENTS
+===========
+
+$ sha256sum xsa254*/*
+c5f2d8f87169edc9be890416a4d261cfc11d9f8d898d83a8922360b210676015  xsa254/README.bti
+1cba14ff83844d001d6c8a74afc3f764f49182cc7a06bb4463548450ac96cc2f  xsa254/README.comet
+208453583ee3c7bb427aa2f70fc5fdc687ba084341129624e511eb6c064fb801  xsa254/README.pti
+3ef42381879befc84aa78b67d3a9b7b0cd862a2ffa445810466e90be6c6a5e86  xsa254/README.vixen
+7e816160c1c1d1cd93ec3c3dd9753c8f3957fefe86b7aa967e9e77833828f849  xsa254/README.which-shim
+1d2098ad3890a5be49444560406f8f271c716e9f80e7dfe11ff5c818277f33f8  xsa254/pvshim-converter.pl
+$
+
+
+NOTE ON LACK OF EMBARGO
+=======================
+
+The timetable and process were set by the discloser.
+
+After the intensive initial response period for these vulnerabilities
+is over, we will prepare and publish a full timeline, as we have done
+in a handful of other cases of significant public interest where we
+saw opportunities for process improvement.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJakGiYAAoJEIP+FMlX6CvZTo0H/jmtssoZhVRYDbi5UP07eWla
+ZefMHnwagNUeMEf4rZgWoGSuftiRPMXH73V4r02SDfIauC/7qTPJTxg3ozBLP6RK
+d3bQtdb+Hr/i5mtYnD/ubjmg+VgB04Q4CF5Ikgc8Yx8qiUuSxo5HTHQV72a175eZ
+ze6xRBvUSt4hw25X7kNGYpkpN1Hoyydv2/pHPdkuAfP90ZTlxPq+UWDwa37Z55ON
+E/hVjBcvsnpvmgfztablVz5kFA+6O1aXzFuouNCQz0x62necQCrRgz9T173dlB1+
+uQlvNN8gXV513ePaYjVP3B7c7P3QjMszX4WlK498KZTwo4ck+h0XtYdLtPAAZrg=
+=2SNf
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa254/README.bti" of type "application/octet-stream" (22223 bytes)
+
+Download attachment "xsa254/README.comet" of type "application/octet-stream" (2896 bytes)
+
+Download attachment "xsa254/README.pti" of type "application/octet-stream" (2536 bytes)
+
+Download attachment "xsa254/README.vixen" of type "application/octet-stream" (2738 bytes)
+
+Download attachment "xsa254/README.which-shim" of type "application/octet-stream" (4010 bytes)
+
+Download attachment "xsa254/pvshim-converter.pl" of type "application/octet-stream" (6762 bytes)
