@@ -1,93 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/01/4
-Message-ID: <CAFeDd5Ya=q28T2b0v9Z2guTGjwccaq8AU_5OnybvuEVABWnFJA@mail.gmail.com>
-Date: Fri, 2 Nov 2018 00:12:27 +0200
-From: Billy Brumley <bbrumley@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2018-5407: new side-channel vulnerability on SMT/Hyper-Threading architectures
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/23/6
+Message-ID: <20180223113344.GA6246@openwall.com>
+Date: Fri, 23 Feb 2018 12:33:44 +0100
+From: Solar Designer <solar@...nwall.com>
+To: Dominik Csapak <d.csapak@...xmox.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: review of LibVNCServer/vncterm proxmox/vncterm proxmox/spiceterm xenserver/vncterm qemu/ui/console.c
 Content-Type: text/plain; charset=utf-8
 
-Howdy Folks,
+Hi Dominik,
 
-We recently discovered a new CPU microarchitecture attack vector. The
-nature of the leakage is due to execution engine sharing on SMT (e.g.
-Hyper-Threading) architectures. More specifically, we detect port
-contention to construct a timing side channel to exfiltrate
-information from processes running in parallel on the same physical
-core. Report is below.
+On Fri, Feb 23, 2018 at 09:20:48AM +0100, Dominik Csapak wrote:
+> I do not know where you looked at our code,
 
-Thanks for reading!
+In these GitHub repos, which I thought were official:
 
-BBB
+https://github.com/proxmox/vncterm
+https://github.com/proxmox/spiceterm
 
-# Report
+Shortly after I sent the message, I realized I should have included
+these links in it.  Ditto for other projects, so here they are:
 
-We steal an OpenSSL (<= 1.1.0h) P-384 private key from a TLS server
-using this new side-channel vector. It is a local attack in the sense
-that the malicious process must be running on the same physical core
-as the victim (an OpenSSL-powered TLS server in this case).
+XenServer vncterm:
 
-## Affected hardware
+https://github.com/xenserver/vncterm
 
-SMT/Hyper-Threading architectures (verified on Skylake and Kaby Lake)
+Might be also out of date, since last commit is 2 years ago?  But could
+also be latest.  These things don't have to be updated frequently.
 
-## Affected software
+For QEMU, I did:
 
-OpenSSL <= 1.1.0h (but in general, software that has secret dependent
-control flow at any granularity; this particular application is a
-known vulnerability since 2009 only recently fixed)
+git clone git://git.qemu.org/qemu.git
 
-Ubuntu 18.04 (again, it is really a hardware issue, but anyway this
-distro is where we ran our experiments)
+> but in our official git repositories for vncterm[1] and spiceterm[2]
+> 
+> those issues are already fixed (since 2017-05-05)
+> 
+> i changed those variables all to unsigned int, which makes those 
+> increments defined behavior, and the range checks are ok, because
+> they cannot be negative anymore.
+> (it may behave strange, but you cannot trigger an out-of-bounds 
+> read/write anymore)
+> also, i replaced the vt->cy += buf code paths with calls to
+> vncterm_gotoxy (which as you mentioned, perform all necessary checks)
+> 
+> Dominik
+> 
+> [1]: https://git.proxmox.com/?p=vncterm.git;a=summary
+> [2]: https://git.proxmox.com/?p=spiceterm.git;a=summary
 
-## Classification and rating
+Sounds great.  (I haven't looked yet.)
 
-Tracked by CVE-2018-5407.
+Sorry for the false alarm, then.  (I imagine some users would like to
+know of these issues having existed and having been fixed, though.)
 
-CWE wise, I would label it like
+Thanks,
 
-CWE-208: Information Exposure Through Timing Discrepancy
-
-At a very high level (e.g. CVSS string), it is similar to this CVE:
-
-https://nvd.nist.gov/vuln/detail/CVE-2005-0109
-
-But the underlying uarch component is totally different. Our attack
-has nothing to do with the memory subsystem or caching, and that CVE
-is specifically for data caching (e.g. some fixes for CVE-2005-0109 do
-not address this new attack vector at all).
-
-## Disclosure timeline
-
-01 Oct 2018: Notified Intel Security
-26 Oct 2018: Notified openssl-security
-26 Oct 2018: Notified CERT-FI
-26 Oct 2018: Notified oss-security distros list
-01 Nov 2018: Embargo expired
-
-## Fix
-
-Disable SMT/Hyper-Threading in the bios
-
-Upgrade to OpenSSL 1.1.1 (or >= 1.1.0i if you are looking for patches)
-
-## Credit
-
-Billy Bob Brumley, Cesar Pereida Garcia, Sohaib ul Hassan, Nicola
-Tuveri (Tampere University of Technology, Finland)
-Alejandro Cabrera Aldaya (Universidad Tecnologica de la Habana CUJAE, Cuba)
-
-## Refs
-
-https://marc.info/?l=openbsd-cvs&m=152943660103446
-https://marc.info/?l=openbsd-tech&m=153504937925732
-
-## Exploit
-
-Attached exploit code (password "infected") should work out of the box
-for Skylake and Kaby Lake. Said code, soon to be followed by a
-preprint with all the nitty-gritty details, is also here:
-
-https://github.com/bbbrumley/portsmash
-
-Download attachment "spy.zip" of type "application/zip" (76765 bytes)
+Alexander
