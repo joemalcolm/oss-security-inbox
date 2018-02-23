@@ -1,4 +1,9 @@
-Received: (qmail 11344 invoked by uid 550); 8 Sep 2023 17:52:16 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1006" "Friday" "23" "February" "2018" "14:17:15" "-0800" "Anthony Baker" "abaker@apache.org" "<CAEwge-EA=armRcEHu5R3zZhyuTm=ZTLKHNJa5wPrsCYd3AeNfA@mail.gmail.com>" "29" "[oss-security] [SECURITY] CVE-2017-15692 Apache Geode unsafe deserialization in TcpServer" nil nil nil "2" "2018022322:17:15" "[oss-security] [SECURITY] CVE-2017-15692 Apache Geode unsafe deserialization in TcpServer" (number mark "U       abaker@apach Feb 23   29/1006  " thread-indent "\"[oss-security] [SECURITY] CVE-2017-15692 Apache Geode unsafe deserialization in TcpServer\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 6055 invoked by uid 550); 23 Feb 2018 22:44:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,77 +12,48 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7256 invoked from network); 8 Sep 2023 17:48:34 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=di.uniroma1.it; s=google; t=1694195303; x=1694800103; darn=lists.openwall.com;
-        h=content-transfer-encoding:to:subject:from:content-language
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=y7d9FhX/0eQ25J5qWM9Jh1j5bpajH/Zzpz8WKGMb1HI=;
-        b=Qz6wKCuG3OvANncQo9OV2PNG3308TzlDszoSIByPZq4mlD7yYrDCilChvDddwEvbBc
-         8cinD+yIU/BcfaUC9reGLnJmlpGsDKW+K6cxLjHFKTfyiZ3QTtLt3+1MME9u4kXPvHCk
-         vu/HDHBTqGqnWZuFInFA4G9z4qjQS/e3SLgLM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694195303; x=1694800103;
-        h=content-transfer-encoding:to:subject:from:content-language
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=y7d9FhX/0eQ25J5qWM9Jh1j5bpajH/Zzpz8WKGMb1HI=;
-        b=vUF0cIJL78i/Qal7VfTvV45tVX1W2aPPJHHAZ2I7ekKaOHrWnQSdIbsRGPugiG6puf
-         uutTZRWVlYTZvprX5YuRnHR33Sm2f61cEBQg2AIJ+6gvBdFF/xSq3Jj64C5EO7JO+nS1
-         VsrWCyGSpa+RtfRhHaP3IpqnCjIBx3mVKEYxLw3jGeCZV1248Hk6Sx+gwXUqqx+oRYLt
-         sfq+4Y+4KIY9RFck1o59QTOaWO7RK0NWWQDWLMVF5LJCu0kKjI6vSHSnxktR2im3Ra48
-         ukD/mdnG+r07okIVh5NWwo5LaMu7GOhjVzis4/KeM2rWCyDiGg/JJfUd2bWHT0G87llI
-         cW2A==
-X-Gm-Message-State: AOJu0YyH9bhq0nwnWP51V3deqoOCW9CR2NJV5Ns91EajUt5A7Kbl/GB1
-	tFcrJYbsKcWtCxP8NtM6T9JcwUsLscHcOPleCMCiFw==
-X-Google-Smtp-Source: AGHT+IHumFuRJK5HfA/HgQnpDsVAUr/Ki3ALTjiDu74PmRTQWbtout+s6X0rhgtLpn3jnJ7E+ATbIw==
-X-Received: by 2002:a05:600c:3782:b0:3fe:19cf:93c9 with SMTP id o2-20020a05600c378200b003fe19cf93c9mr2856930wmr.1.1694195302983;
-        Fri, 08 Sep 2023 10:48:22 -0700 (PDT)
-Message-ID: <50dfd9cf-a4c8-9b4c-6419-91f68ca45e88@di.uniroma1.it>
-Date: Fri, 8 Sep 2023 19:48:21 +0200
+Received: (qmail 18157 invoked from network); 23 Feb 2018 22:17:30 -0000
+X-Gm-Message-State: APf1xPBX/KiRq5CKRNaipAxfekJHYvuuXeHp1hWSiKtNIYUr7x3QzjlX
+	M/uYRnjL5FTmd+sjEYM+hNTJnBnY5sb8VU+137leZQ==
+X-Google-Smtp-Source: AG47ELu5VP3Ficjb5YmMJ+MP12CJqXr5ZiHVXKyvMTCT6wqw49JfLBM1z3+q0UsubEbAKQ/wqX2s8CgsQNgpoFWY2c4=
+X-Received: by 10.176.93.35 with SMTP id u35mr2572221uaf.74.1519424236430;
+ Fri, 23 Feb 2018 14:17:16 -0800 (PST)
 MIME-Version: 1.0
-Content-Language: en-US, it
-From: Enrico Bassetti <bassetti@di.uniroma1.it>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE-2023-4809: FreeBSD pf bypass when using IPv6
+From: Anthony Baker <abaker@apache.org>
+Date: Fri, 23 Feb 2018 14:17:15 -0800
+X-Gmail-Original-Message-ID: <CAEwge-EA=armRcEHu5R3zZhyuTm=ZTLKHNJa5wPrsCYd3AeNfA@mail.gmail.com>
+Message-ID: <CAEwge-EA=armRcEHu5R3zZhyuTm=ZTLKHNJa5wPrsCYd3AeNfA@mail.gmail.com>
+To: user@geode.apache.org, dev@geode.apache.org, announce@apache.org, 
+	oss-security@lists.openwall.com, asf-security <security@apache.org>, mmo@semmle.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] [SECURITY] CVE-2017-15692 Apache Geode unsafe deserialization in TcpServer
 
-Hello *,
+CVE-2017-15692 Apache Geode unsafe deserialization in TcpServer
 
-A few months ago, as part of our investigations on IPv6 security in the 
-NetSecurityLab @ Sapienza University, we discovered a vulnerability that 
-allows attackers to bypass rules in pf-based IPv6 firewalls in 
-particular conditions.
+Severity:  Important
 
-Vulnerability (TL;DR)
-==============
-A FreeBSD with `pf` as firewall for IPv6 traffic and `scrub` enabled to 
-reassemble IPv6 fragments is vulnerable to an attack that uses a crafted 
-packet posing as IPv6 "atomic" fragment to bypass the rules. After the 
-fragment is matched against some firewall rules (but not all!), it is 
-then "corrected" and forwarded to the destination (if no "deny" rule is 
-matched).
+Vendor: The Apache Software Foundation
 
+Versions Affected:  Apache Geode 1.0.0 through 1.3.0
 
-References
-==============
-This vulnerability has been assigned the ID CVE-2023-4809.
+Description:
+The TcpServer within the Geode locator opens a network port that
+deserializes data.  If an unprivileged user gains access to the Geode
+locator, they may be able to cause remote code execution if certain
+classes are present on the classpath.
 
-The FreeBSD advisory is at
-https://www.freebsd.org/security/advisories/FreeBSD-SA-23:10.pf.asc
+A malicious user can send a network message to the Geode locator and
+execute code if certain classes are present on the classpath.
 
-We wrote a description with an example at:
-https://www.enricobassetti.it/2023/09/cve-2023-4809-freebsd-pf-bypass-when-using-ipv6/
+Mitigation:
+Users of the affected versions should upgrade to Apache Geode 1.4.0 or
+later.  In addition, users should set the flag
+validate-serializable-objects.
 
+Credit:
+This issue was reported responsibly to the Apache Geode Security Team
+by Man Yue Mo from Semmle.
 
-Solution
-==============
-The solution is to update FreeBSD to the latest version. All FreeBSD 
-versions up to (but not including) 13.2-STABLE, 13.2-RELEASE-p3, 
-12.4-STABLE, and 12.4-RELEASE-p5 are affected.
-
-
-Best regards,
-Enrico Bassetti
+References:
+[1] https://issues.apache.org/jira/browse/GEODE-3923
+[2] https://cwiki.apache.org/confluence/display/GEODE/Release+Notes#ReleaseNotes-SecurityVulnerabilities
