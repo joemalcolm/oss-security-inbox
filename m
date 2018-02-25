@@ -1,70 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/19/7
-Message-ID: <ebbf80ff-6a12-b851-e771-a6d94905918e@chbi.eu>
-Date: Wed, 19 Sep 2018 19:36:40 +0200
-From: chbi@...i.eu
-To: oss-security@...ts.openwall.com
-Subject: CVE-2018-12642: Incorrect Access Control of tickets in Froxlor <= 0.9.39.5
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/25/2
+Message-ID: <CAAJwaYXXm-xmzik1chHH6a-w=YU3+awo1tZBvcvr47TtRVUGpQ@mail.gmail.com>
+Date: Sun, 25 Feb 2018 12:32:32 +0100
+From: Sebastien Briquet <sbriquet@...che.org>
+To: users@...ket.apache.org
+Cc: Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com,  Sahil <sdhar@...urityinnovation.com>
+Subject: [ANNOUNCE] CVE-2017-15719 - Wicket jQuery UI: XSS in WYSIWYG Editor
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+CVE-2017-15719 - Wicket jQuery UI: XSS in WYSIWYG editor
 
-I've discovered security issues in Froxlor <= 0.9.39.5
-(https://www.froxlor.org)
+Severity: High
+Versions Affected: <= 6.28.0, <= 7.9.1, <= 8.0.0-M8
 
-An authenticated customer can read all messages of all support tickets
-of every user by simply changing the "id".
+Artifacts Affected:
 
-It is also possible to add a new message, change the priority, close and
-reopen a support ticket as another customer than the owner of the
-support ticket.
+   - wicket-jquery-ui-plugins (
+   com.googlecode.wicket.jquery.ui.plugins.wysiwyg.WysiwygEditor)
+   - wicket-kendo-ui (com.googlecode.wicket.kendo.ui.widget.editor.Editor)
 
+Description: A security issue as been discovered in the WYSIWYG Editor that
+allows an attacker to submit arbitrary JS code to WYSIWYG editor.
 
-Until now there is no corrected version of Froxlor available, because
-the main developer has no spare time to release a new version nor to
-inform users about the fixes for three months. It's also not foreseeable
-when a corrected version will be released.
+All users are recommended to upgrade to the latest version (6.29.0, 7.10.1,
+8.0.0-M9.1)
+The issue was fixed in 6.28.1, 7.9.2, 8.0.0-M8.1
 
-But Froxlor users can manually patch these issues by replacing
-customer_tickets.php and lib/classes/ticket/class.ticket.php with the
-corrected ones from
-https://github.com/Froxlor/Froxlor/blob/436d141bd1c6f06a66b6d6e593d359afc3c2a80e/customer_tickets.php
-and
-https://github.com/Froxlor/Froxlor/blob/436d141bd1c6f06a66b6d6e593d359afc3c2a80e/lib/classes/ticket/class.ticket.php
+Credit: The issue has been identified in Apache OpenMeeting by Sahil Dhar
+(Security Innovation Inc)
 
+References:
+https://github.com/sebfz1/wicket-jquery-ui/wiki#cve-2017-15719---xss-in-wysiwyg-editor
 
-I've decided to post about these security issues, because I think it is
-better that Froxlor users know that fixes for security issues are
-available, even if there is no corrected version released yet.
-
-
-Fixes:
-https://github.com/Froxlor/Froxlor/commit/aa881560cc996c38cbf8c20ee62854e27f72c73c
-https://github.com/Froxlor/Froxlor/commit/436d141bd1c6f06a66b6d6e593d359afc3c2a80e
-
-
-Timeline:
-2018-06-19: Issues discovered and reported
-2018-06-19: Issues confirmed and partial fixed
-2018-06-21: Issues fixed; Response summarized: Developer needs a few
-days for a new release
-2018-07-12: Asked when developer plan to release a new version
-2018-07-12: Response summarized: Developer wait until package builder is
-available again
-2018-08-20: Notified the developer about posting on 2018-09-19 to inform
-Froxlor users
-2018-08-21: Response summarized: Lack of understanding regarding a
-posting. I should give users a chance to update. Developer has no spare
-time to release a new version.
-
-
--- 
-chbi
-https://chbi.eu
-
-GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
-     https://chbi.eu/chbi.asc
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
