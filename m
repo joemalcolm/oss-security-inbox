@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5375" "Monday" "17" "October" "2016" "17:04:53" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<1531511.3Otosgf4bN@blackgate>" "112" "[oss-security] imagemagick: memory allocation failure in AcquireMagickMemory (memory.c)" nil nil nil "10" "2016101715:04:53" "[oss-security] imagemagick: memory allocation failure in AcquireMagickMemory (memory.c)" (number mark "U       ago@gentoo.o Oct 17  112/5375  " thread-indent "\"[oss-security] imagemagick: memory allocation failure in AcquireMagickMemory (memory.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["426" "Sunday" "25" "February" "2018" "18:50:34" "+0700" "Maxim Solodovnik" "solomax@apache.org" "<CAJmbs8i241-OvnTKwC=Z-GmaNaV5BB9PwmXw668BKsamLiwntQ@mail.gmail.com>" "15" "[oss-security] [ANNOUNCE] CVE-2018-1286 - Apache OpenMeetings - Insufficient Access Controls" nil nil nil "2" "2018022511:50:34" "[oss-security] [ANNOUNCE] CVE-2018-1286 - Apache OpenMeetings - Insufficient Access Controls" (number mark "U       solomax@apac Feb 25   15/426   " thread-indent "\"[oss-security] [ANNOUNCE] CVE-2018-1286 - Apache OpenMeetings - Insufficient Access Controls\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26263 invoked by uid 550); 17 Oct 2016 15:05:14 -0000
+Received: (qmail 32432 invoked by uid 550); 25 Feb 2018 11:50:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,127 +12,35 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26201 invoked from network); 17 Oct 2016 15:05:10 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
-To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Date: Mon, 17 Oct 2016 17:04:53 +0200
-Message-ID: <1531511.3Otosgf4bN@blackgate>
-User-Agent: KMail/4.14.10 (Linux/4.4.21-gentoo; KDE/4.14.24; x86_64; ; )
+Received: (qmail 32405 invoked from network); 25 Feb 2018 11:50:49 -0000
+X-Gm-Message-State: APf1xPDqAhNNsYRxrKzWDjVHqU+GWcsz19WdRFLpZsAXrnxoLm9aL/6K
+	ar67oARfuqCVVEU6CfNsS8ZWcn8MuQkclG3P/lU=
+X-Google-Smtp-Source: AG47ELs2I09WM9nvr47DnBETqAfrOy2XkWmHEkNM/unHKLqiK9F2UgSSXlLvQeGw5nV7/BhAgrmRtSZJu+aY8B87veA=
+X-Received: by 10.36.120.211 with SMTP id p202mr9441639itc.28.1519559434500;
+ Sun, 25 Feb 2018 03:50:34 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Subject: [oss-security] imagemagick: memory allocation failure in AcquireMagickMemory (memory.c)
+From: Maxim Solodovnik <solomax@apache.org>
+Date: Sun, 25 Feb 2018 18:50:34 +0700
+X-Gmail-Original-Message-ID: <CAJmbs8i241-OvnTKwC=Z-GmaNaV5BB9PwmXw668BKsamLiwntQ@mail.gmail.com>
+Message-ID: <CAJmbs8i241-OvnTKwC=Z-GmaNaV5BB9PwmXw668BKsamLiwntQ@mail.gmail.com>
+To: Openmeetings user-list <user@openmeetings.apache.org>, dev <dev@openmeetings.apache.org>, 
+	user-russian@openmeetings.apache.org, Sahil <sdhar@securityinnovation.com>, 
+	security@openmeetings.apache.org, oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] [ANNOUNCE] CVE-2018-1286 - Apache OpenMeetings - Insufficient Access Controls
 
-Description:
-imagemagick is a software suite to create, edit, compose, or convert bitmap 
-images.
+Severity: Medium
 
-A fuzzing with the upstream security policy enabled revealed a memory 
-allocation failure.
+Vendor: The Apache Software Foundation
 
-The complete ASan output:
-# identify $FILE
-==14275==ERROR: AddressSanitizer failed to allocate 0x99ad49000 (41252327424) 
-bytes of LargeMmapAllocator (error code: 12)
-==14275==Process memory map follows:
-[..cut here..]
-==14275==End of process memory map.
-==14275==AddressSanitizer CHECK failed: /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/sanitizer_common/sanitizer_common.cc:183 "((0 && "unable to mmap")) != 
-(0)" (0x0, 0x0)
-    #0 0x4c9f9d in AsanCheckFailed /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_rtl.cc:67
-    #1 0x4d0ad3 in __sanitizer::CheckFailed(char const*, int, char const*, 
-unsigned long long, unsigned long long) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/sanitizer_common/sanitizer_common.cc:159
-    #2 0x4d0cc1 in __sanitizer::ReportMmapFailureAndDie(unsigned long, char 
-const*, char const*, int, bool) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/sanitizer_common/sanitizer_common.cc:183
-    #3 0x4d9cfa in __sanitizer::MmapOrDie(unsigned long, char const*, bool) 
-/var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/sanitizer_common/sanitizer_posix.cc:122
-    #4 0x42208f in 
-__sanitizer::LargeMmapAllocator::Allocate(__sanitizer::AllocatorStats*, 
-unsigned long, unsigned long) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:1033
-    #5 0x42208f in 
-__sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<105553116266496ul, 
-4398046511104ul, 0ul, __sanitizer::SizeClassMap, 
-__asan::AsanMapUnmapCallback>, 
-__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
-4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
->, __sanitizer::LargeMmapAllocator 
->::Allocate(__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
-4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
->*, unsigned long, unsigned long, bool, bool) /var/tmp/portage/sys-
-devel/llvm-3.8.1-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:1302
-    #6 0x42208f in __asan::Allocator::Allocate(unsigned long, unsigned long, 
-__sanitizer::BufferedStackTrace*, __asan::AllocType, bool) 
-/var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:368
-    #7 0x42208f in __asan::asan_malloc(unsigned long, 
-__sanitizer::BufferedStackTrace*) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:718
-    #8 0x4c0661 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:53
-    #9 0x7fe5713b3b3b in AcquireMagickMemory /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/memory.c:460:10
-    #10 0x7fe5713b3b3b in AcquireVirtualMemory /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/memory.c:642
-    #11 0x7fe564f7af95 in ReadPCXImage /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/coders/pcx.c:400:16
-    #12 0x7fe571087b12 in ReadImage /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/constitute.c:496:13
-    #13 0x7fe57181f406 in ReadStream /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/stream.c:1012:9
-    #14 0x7fe5710865ca in PingImage /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/constitute.c:226:9
-    #15 0x7fe571086e25 in PingImages /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/constitute.c:326:10
-    #16 0x7fe57090c4c3 in IdentifyImageCommand /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickWand/identify.c:319:18
-    #17 0x7fe5709a226a in MagickCommandGenesis /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickWand/mogrify.c:183:14
-    #18 0x4f1fb5 in MagickMain /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/utilities/magick.c:145:10
-    #19 0x4f1fb5 in main /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/utilities/magick.c:176
-    #20 0x7fe56f84661f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #21 0x419138 in _init (/usr/bin/magick+0x419138)
+Versions Affected: Apache OpenMeetings 3.0.0
 
-Affected version:
-7.0.3.2
+Description: CRUD operations on privileged users are not password
+protected allowing an authenticated attacker to deny service for
+privileged users.
 
-Fixed version:
-7.0.3.3
 
-Commit fix:
-https://github.com/ImageMagick/ImageMagick/commit/aea6c6507f55632829e6432f8177a084a57c9fcc
+The issue was fixed in 4.0.2
+All users are recommended to upgrade to Apache OpenMeetings 4.0.2
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Timeline:
-2016-09-14: bug discovered
-2016-09-14: bug reported to upstream
-2016-10-07: upstream released a patch
-2016-10-08: upstream released 7.0.3.3
-2016-10-17: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/10/17/imagemagick-memory-allocation-failure-in-acquiremagickmemory-memory-c/
-
+Credit: This issue was identified by Sahil Dhar of Security Innovation Inc
