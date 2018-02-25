@@ -1,62 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/15/4
-Message-ID: <alpine.LFD.2.21.1802152258500.12267@stoner.jakma.org>
-Date: Thu, 15 Feb 2018 23:07:20 +0000 (GMT)
-From: Paul Jakma <paul@...ma.org>
-To: oss-security@...ts.openwall.com
-Subject: Quagga 1.2.3 release with BGP security issue fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/25/1
+Message-ID: <CAJmbs8i241-OvnTKwC=Z-GmaNaV5BB9PwmXw668BKsamLiwntQ@mail.gmail.com>
+Date: Sun, 25 Feb 2018 18:50:34 +0700
+From: Maxim Solodovnik <solomax@...che.org>
+To: Openmeetings user-list <user@...nmeetings.apache.org>, dev <dev@...nmeetings.apache.org>,  user-russian@...nmeetings.apache.org, Sahil <sdhar@...urityinnovation.com>,  security@...nmeetings.apache.org, oss-security@...ts.openwall.com
+Subject: [ANNOUNCE] CVE-2018-1286 - Apache OpenMeetings - Insufficient Access Controls
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Severity: Medium
 
-Hi,
+Vendor: The Apache Software Foundation
 
-Quagga 1.2.3 has been released, and it contains fixes for a number of 
-BGP security issues, 3 of which were not public till today. Please see:
+Versions Affected: Apache OpenMeetings 3.0.0
 
-   http://savannah.nongnu.org/forum/forum.php?forum_id=9095
+Description: CRUD operations on privileged users are not password
+protected allowing an authenticated attacker to deny service for
+privileged users.
 
-The CERT vulnerability note is at:
 
-   https://www.kb.cert.org/vuls/id/940439
+The issue was fixed in 4.0.2
+All users are recommended to upgrade to Apache OpenMeetings 4.0.2
 
-Quagga advisories are at the URIs in the release announcement, also 
-available via either of:
-
-   https://gogs.quagga.net/Quagga/quagga/src/master/doc/security
-   https://git.savannah.gnu.org/cgit/quagga.git/tree/doc/security
-
-Quagga-2018-1114 can be triggered by receiving a transitive BGP 
-attribute - meaning it potentially could be triggered by a message sent 
-by a BGP speaker far away. It involves a double-free, which could be 
-serious, depending on the malloc implementation. See:
-
-  https://gogs.quagga.net/Quagga/quagga/src/master/doc/security/Quagga-2018-1114.txt
-
-Vendors are encouraged to provide backports to older releases.
-
-Quagga users should upgrade to a release appropriate for their stability 
-needs with the relevant fixes applied.
-
-regards,
-- -- 
-Paul Jakma | paul@...ma.org | @pjakma | Key ID: 0xD86BF79464A2FF6A
-
------BEGIN PGP SIGNATURE-----
-
-iQJMBAEBCAA2BQJahhKpLxpodHRwczovL3d3dy5qYWttYS5vcmcvfnBhdWwvcGdw
-X3BvbGljeS0xLjEudHh0AAoJEOFGbL/NtBuaDNsP/2l3tczRgiGVpoiDu3yAWkWT
-Q4VSv7lbDgorvm5FYDiEPr8e7rp6ERiJNGjjlpl907pmDU2TAEaeQI3PQj4I9uag
-hv4sq1+n/ODoXPGtlQKsDWN4ob0B3fZ6bOh8a4Y6iUl9s0ESk0Ogi34k7hjqjWp2
-4RbjpLbLMOAF3IOZo3uFoA9+Uzr8jDkC6FVNULfcWDOaTlagjJgE+Amr0a6gM+yK
-DSjYommtAmqSrV3/Wv3uC96/whWnjzTZluObBTc8FVWy9zxP5zwvRMirDxehWrEh
-N9C9A38ZsfXMQ+IWbaosdCClMNSZqbiRSZP6aNmBk9/HlSUK6yF6e6jNOzmiPdy3
-0n1507rkfBInu5ALeqs/DyWGqVLkV2h+RHKJyUCIzmHaBomHf3MS9iPBy+63whQg
-aGPuT6283dzcjD20qYY1u0KLziRVHg8TdDu4aCy3UXD/w2pvbn3Nymo3RoL/g20/
-9VylvokNujnzaGxjG9nc5/fqA/XKkT9G/7sCnG2OHU7hheaPrq/6+7OL4RCS6kz4
-iL40V0RDp26yg7lHm51MtCEHn91yv5wFKnG2fESfkUUMTeqO8jiThbl8UOYE4j/l
-66VvLca/XwP4r0KASmrM8O3PiktmulGg2TTCo30nx4bmr30j10dGtteBQupwpRWn
-UXXvosef5rPdV887X4EK
-=YNE6
------END PGP SIGNATURE-----
+Credit: This issue was identified by Sahil Dhar of Security Innovation Inc
