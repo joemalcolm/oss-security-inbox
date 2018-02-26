@@ -1,51 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/11/1
-Message-ID: <CAH9fUpaNzk5am8oFe07RQ-kynCsQv54yB-uYs9bEnz7tbX-O7g@mail.gmail.com>
-Date: Sun, 11 Feb 2018 09:59:05 +0100
-From: Philippe Mouawad <pmouawad@...che.org>
-To: JMeter Users List <user@...ter.apache.org>, dev@...ter.apache.org, announce@...che.org,  asf-security <security@...che.org>, oss-security@...ts.openwall.com,  Brenden Meeder <fishing.for.jormungandr@...il.com>
-Subject: CVE-2018-1297: Apache JMeter uses an unsecure RMI connection in Distributed mode
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/26/2
+Message-ID: <CA+=eHdTkJv3e+=M_oUEhiQk8tXxrNJohHMytNTskvkcbG9tieA@mail.gmail.com>
+Date: Mon, 26 Feb 2018 10:40:54 +0530
+From: Sahil Dhar <sdhar@...urityinnovation.com>
+To: Maxim Solodovnik <solomax@...che.org>
+Cc: security@...nmeetings.apache.org,  Openmeetings user-list <user@...nmeetings.apache.org>, dev <dev@...nmeetings.apache.org>,  user-russian@...nmeetings.apache.org, Sahil <sdhar@...urityinnovation.com>,  oss-security@...ts.openwall.com
+Subject: Re: [ANNOUNCE] CVE-2018-1286 - Apache OpenMeetings - Insufficient Access Controls
 Content-Type: text/plain; charset=utf-8
 
-Severity: Important
-
-Vendor: The Apache Software Foundation
-
-Versions Affected: JMeter 2.X, 3.X
-
-Description [0]:
-
-When using Distributed Test only (RMI based), jmeter uses an unsecured RMI
-connection.
-This could allow an attacker to get Access to JMeterEngine and send
-unauthorized code.
-This only affect tests running in Distributed mode.
-
-Mitigation:
-  * Users must use last version of Java 8 or Java 9
-  * Users must upgrade to last JMeter 4.0 version and use the default /
-enabled authenticated SSL RMI connection.
-
-Besides, we remind users that in distributed mode, JMeter makes an
-Architectural assumption
-that it is operating on a 'safe' network. i.e. everyone with access to the
-network is considered trusted.
-
-This typically means a dedicated VPN or similar is being used.
+Hi Maxim,
 
 
-Example:
-  * Start JMeter server using either jmeter-server or jmeter -s
-  * If JMeter listens on unsecure rmi connection (ie you can connect to it
-using a JMeter client), you are vulnerable
+I just noticed that there is a typo in the CVE-2018-1286 description, as it
+states that the affected version is 3.0.0. However, the vulnerability was
+reported for 4.0.1 release. Can you please update it?
 
-Credit:
-This issue was reported responsibly to the Apache Tomcat Security Team
-by Brenden Meeder.
+Thanks,
+~ Sahil
 
-- Philippe Mouawad
 
-on behalf of the Apache JMeter PMC
 
-[0] https://bz.apache.org/bugzilla/show_bug.cgi?id=62039
+
+
+
+On Sun, Feb 25, 2018 at 5:20 PM, Maxim Solodovnik <solomax@...che.org>
+wrote:
+
+> Severity: Medium
+>
+> Vendor: The Apache Software Foundation
+>
+> Versions Affected: Apache OpenMeetings 3.0.0
+>
+> Description: CRUD operations on privileged users are not password
+> protected allowing an authenticated attacker to deny service for
+> privileged users.
+>
+>
+> The issue was fixed in 4.0.2
+> All users are recommended to upgrade to Apache OpenMeetings 4.0.2
+>
+> Credit: This issue was identified by Sahil Dhar of Security Innovation Inc
+>
 
