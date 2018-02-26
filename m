@@ -1,66 +1,102 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/10/3
-Message-ID: <4e6974e5-337f-6fe8-78f1-2efbc2c273e0@treenet.co.nz>
-Date: Fri, 10 Aug 2018 15:14:46 +1200
-From: Amos Jeffries <squid3@...enet.co.nz>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux TCP implementation vulnerable to Denial of Service (CVE 2018-5390)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/26/5
+Message-ID: <CAJmbs8gqAfP0QPTSggDLSHwXzpv3H1rsuuo9wE024MzwhTSXTg@mail.gmail.com>
+Date: Mon, 26 Feb 2018 12:18:58 +0700
+From: Maxim Solodovnik <solomax666@...il.com>
+To: Sahil Dhar <sdhar@...urityinnovation.com>
+Cc: security@...nmeetings.apache.org,  Openmeetings user-list <user@...nmeetings.apache.org>, dev <dev@...nmeetings.apache.org>,  user-russian@...nmeetings.apache.org, oss-security@...ts.openwall.com
+Subject: Re: [ANNOUNCE] CVE-2018-1286 - Apache OpenMeetings - Insufficient Access Controls
 Content-Type: text/plain; charset=utf-8
 
-On 09/08/18 19:12, Stiepan wrote:
-> Hi,
-> 
-> Could you please provide some more details on the issue? About the same period, our secure e-mail provider suffered an unprecedented DDoS with some e-mail messages never reaching us.
-> Since this has business impact, we consider legal action against the opaque Linux-distros vulnerability-disclosure-among-friends-for-fun-and-profit scheme, that we exposed at the ITU earlier this year. This is digital divide in the works, with real impact for non-club-members.
-> 
+Make sense,
+I'll change it in a moment :)
 
-Surely your lawyer should be aware of these clauses in the license under
-which you are assigned the right to use the Linux kernel:
+On Mon, Feb 26, 2018 at 12:17 PM, Sahil Dhar
+<sdhar@...urityinnovation.com> wrote:
+> Hi Maxim,
+>
+> I got your point, however, the description seems to be stating that only
+> version 3.0.0 is affected instead of <=4.0.1.
+>
+>
+> CVE-2018-1286 - Apache OpenMeetings - Insufficient Access Controls
+> Severity: Medium
+>
+> Vendor: The Apache Software Foundation
+>
+> Versions Affected: Apache OpenMeetings 3.0.0
+> Versions Affected: <= 4.0.1  (Corrected)
+>
+> Description: CRUD operations on privileged users are not password protected
+> allowing an authenticated attacker to deny service for privileged users.
+> CVE-2018-1286
+>
+> The issue was fixed in 4.0.2
+> All users are recommended to upgrade to Apache OpenMeetings 4.0.2
+>
+>
+> Thanks,
+> ~ Sahil
+>
+> On Mon, Feb 26, 2018 at 10:43 AM, Maxim Solodovnik <solomax666@...il.com>
+> wrote:
+>>
+>> I have analyzed the code
+>> Wysiwyg editor was introduced in 3.0.0
+>> and it was vulnerable from the very beginning
+>> So all versions are affected :(
+>>
+>> On Mon, Feb 26, 2018 at 12:10 PM, Sahil Dhar
+>> <sdhar@...urityinnovation.com> wrote:
+>> > Hi Maxim,
+>> >
+>> >
+>> > I just noticed that there is a typo in the CVE-2018-1286 description, as
+>> > it
+>> > states that the affected version is 3.0.0. However, the vulnerability
+>> > was
+>> > reported for 4.0.1 release. Can you please update it?
+>> >
+>> > Thanks,
+>> > ~ Sahil
+>> >
+>> >
+>> >
+>> >
+>> >
+>> >
+>> > On Sun, Feb 25, 2018 at 5:20 PM, Maxim Solodovnik <solomax@...che.org>
+>> > wrote:
+>> >>
+>> >> Severity: Medium
+>> >>
+>> >> Vendor: The Apache Software Foundation
+>> >>
+>> >> Versions Affected: Apache OpenMeetings 3.0.0
+>> >>
+>> >> Description: CRUD operations on privileged users are not password
+>> >> protected allowing an authenticated attacker to deny service for
+>> >> privileged users.
+>> >>
+>> >>
+>> >> The issue was fixed in 4.0.2
+>> >> All users are recommended to upgrade to Apache OpenMeetings 4.0.2
+>> >>
+>> >> Credit: This issue was identified by Sahil Dhar of Security Innovation
+>> >> Inc
+>> >
+>> >
+>>
+>>
+>>
+>> --
+>> WBR
+>> Maxim aka solomax
+>
+>
 
-"
-15. Disclaimer of Warranty.
-
-THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY
-APPLICABLE LAW. EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT
-HOLDERS AND/OR OTHER PARTIES PROVIDE THE PROGRAM “AS IS” WITHOUT
-WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT
-LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
-PARTICULAR PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF
-THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE, YOU ASSUME
-THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
-
-16. Limitation of Liability.
-
-IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING
-WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MODIFIES AND/OR
-CONVEYS THE PROGRAM AS PERMITTED ABOVE, BE LIABLE TO YOU FOR DAMAGES,
-INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES
-ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT
-NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES
-SUSTAINED BY YOU OR THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE
-WITH ANY OTHER PROGRAMS), EVEN IF SUCH HOLDER OR OTHER PARTY HAS BEEN
-ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
-
-17. Interpretation of Sections 15 and 16.
-
-If the disclaimer of warranty and limitation of liability provided above
-cannot be given local legal effect according to their terms, reviewing
-courts shall apply local law that most closely approximates an absolute
-waiver of all civil liability in connection with the Program, unless a
-warranty or assumption of liability accompanies a copy of the Program in
-return for a fee.
-"
-
-If a particular Vendor is providing any warranty or guarantees - that is
-a sales and contractual agreement between you and them. Not between you
-and the linux-distros group.
 
 
-(with my Hat on as a Vendor of OS software using this same license, not
-otherwise related to any of the parties is this discussion.)
-
-AYJ
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+-- 
+WBR
+Maxim aka solomax
