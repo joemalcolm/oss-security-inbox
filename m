@@ -1,51 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/19/2
-Message-ID: <bf269dd1-c9df-54dd-209a-7a32d03705c7@apache.org>
-Date: Mon, 19 Mar 2018 12:47:45 +0100
-From: Francesco Chicchiriccò <ilgrosso@...che.org>
-To: "user@...cope.apache.org" <user@...cope.apache.org>, dev@...cope.apache.org, "security@...che.org" <security@...che.org>, oss-security@...ts.openwall.com
-Subject: [SECURITY] CVE-2018-1321: Remote code execution by administrators with report and template entitlements
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/26/4
+Message-ID: <CA+=eHdR-Ym0O0kpxbjSPpNYqMhp3nCKUBHQh8GtjV4AKbJavUg@mail.gmail.com>
+Date: Mon, 26 Feb 2018 10:47:49 +0530
+From: Sahil Dhar <sdhar@...urityinnovation.com>
+To: Maxim Solodovnik <solomax666@...il.com>
+Cc: security@...nmeetings.apache.org,  Openmeetings user-list <user@...nmeetings.apache.org>, dev <dev@...nmeetings.apache.org>,  user-russian@...nmeetings.apache.org, oss-security@...ts.openwall.com
+Subject: Re: [ANNOUNCE] CVE-2018-1286 - Apache OpenMeetings - Insufficient Access Controls
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-1321: Remote code execution by administrators with report and 
-template entitlements
+Hi Maxim,
 
+I got your point, however, the description seems to be stating that only
+version *3.0.0* is affected instead of *<=4.0.1*.
+
+
+CVE-2018-1286 - Apache OpenMeetings - Insufficient Access Controls
 Severity: Medium
 
-Vendor:
-The Apache Software Foundation
+Vendor: The Apache Software Foundation
 
-Versions Affected:
-* Releases prior to 1.2.11
-* Releases prior to 2.0.8
+*Versions Affected: Apache OpenMeetings 3.0.0*
 
-The unsupported Releases 1.0.x, 1.1.x may be also affected.
+* Versions Affected: <= 4.0.1  (Corrected)*
 
-Description:
-An administrator with report and template entitlements can use XSL 
-Transformations (XSLT) to perform malicious operations, including but 
-not limited to file read, file write, and code execution.
+Description: CRUD operations on privileged users are not password protected
+allowing an authenticated attacker to deny service for privileged users.
+CVE-2018-1286
 
-Solution:
-Syncope 1.2.x users upgrade to 1.2.11.
-Syncope 2.0.x users upgrade to 2.0.8.
+The issue was fixed in 4.0.2
+All users are recommended to upgrade to Apache OpenMeetings 4.0.2
 
-Mitigation:
-Do not assign report and template entitlements to any administrator.
 
-Credit:
-This issue was discovered by ﻿Che-Chun Kuo.
+Thanks,
+~ Sahil
 
-References:
-[1] http://syncope.apache.org/security.html
+On Mon, Feb 26, 2018 at 10:43 AM, Maxim Solodovnik <solomax666@...il.com>
+wrote:
 
--- 
-Francesco Chicchiriccò
-
-Tirasa - Open Source Excellence
-http://www.tirasa.net/
-
-Member at The Apache Software Foundation
-Syncope, Cocoon, Olingo, CXF, OpenJPA, PonyMail
-http://home.apache.org/~ilgrosso/
+> I have analyzed the code
+> Wysiwyg editor was introduced in 3.0.0
+> and it was vulnerable from the very beginning
+> So all versions are affected :(
+>
+> On Mon, Feb 26, 2018 at 12:10 PM, Sahil Dhar
+> <sdhar@...urityinnovation.com> wrote:
+> > Hi Maxim,
+> >
+> >
+> > I just noticed that there is a typo in the CVE-2018-1286 description, as
+> it
+> > states that the affected version is 3.0.0. However, the vulnerability was
+> > reported for 4.0.1 release. Can you please update it?
+> >
+> > Thanks,
+> > ~ Sahil
+> >
+> >
+> >
+> >
+> >
+> >
+> > On Sun, Feb 25, 2018 at 5:20 PM, Maxim Solodovnik <solomax@...che.org>
+> > wrote:
+> >>
+> >> Severity: Medium
+> >>
+> >> Vendor: The Apache Software Foundation
+> >>
+> >> Versions Affected: Apache OpenMeetings 3.0.0
+> >>
+> >> Description: CRUD operations on privileged users are not password
+> >> protected allowing an authenticated attacker to deny service for
+> >> privileged users.
+> >>
+> >>
+> >> The issue was fixed in 4.0.2
+> >> All users are recommended to upgrade to Apache OpenMeetings 4.0.2
+> >>
+> >> Credit: This issue was identified by Sahil Dhar of Security Innovation
+> Inc
+> >
+> >
+>
+>
+>
+> --
+> WBR
+> Maxim aka solomax
+>
 
