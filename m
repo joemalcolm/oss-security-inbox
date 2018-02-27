@@ -1,94 +1,117 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/17/2
-Message-ID: <CAMMMAUH38nTHLyjMkZQdhLHh6trT+Ezd=MGhS=+=bTuGWcYJSA@mail.gmail.com>
-Date: Sun, 16 Sep 2018 17:11:48 -0400
-From: "Kevin A. McGrail" <kmcgrail@...che.org>
-To: Reindl Harald <h.reindl@...lounge.net>
-Cc: SA Mailing list <users@...massassin.apache.org>,  Spamassassin Devel List <dev@...massassin.apache.org>, announce@...massassin.apache.org,  announce@...che.org, security@...massassin.apache.org,  oss-security@...ts.openwall.com
-Subject: Re: [SECURITY] Apache SpamAssassin 3.4.2 resolves CVE-2017-15705, CVE-2016-1238, CVE-2018-11780 & CVE-2018-11781
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/27/4
+Message-Id: <E1eqdvX-0006o2-1W@xenbits.xenproject.org>
+Date: Tue, 27 Feb 2018 12:00:11 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 256 - x86 PVH guest without LAPIC may DoS the host
 Content-Type: text/plain; charset=utf-8
 
-Per the asf security team, mitre considers the public rc1 from a few days
-ago as the start of the clock for the publishing so we were already way
-past the 24 hour windiw.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Hopefully, the announcements and reports are obfuscated and bugzilla ia
-private so it'll be contained.
+                    Xen Security Advisory XSA-256
+                              version 2
 
-On Sun, Sep 16, 2018, 16:59 Reindl Harald <h.reindl@...lounge.net> wrote:
+             x86 PVH guest without LAPIC may DoS the host
 
-> i doubt that it is wiese to blwo out security notes *that short* after
-> release and *that long* after the last release
->
-> Am 16.09.18 um 18:59 schrieb Kevin A. McGrail:
-> > Apache SpamAssassin 3.4.2 was recently released [1], and fixes several
-> > issues of security note.
-> >
-> > First, a denial of service vulnerability that exists in all modern
-> versions.
-> >
-> > The vulnerability arises with certain unclosed tags in emails that cause
-> > markup to be handled incorrectly leading to scan timeouts.
-> >
-> > In Apache SpamAssassin, using HTML::Parser, we setup an object and hook
-> > into the begin and end tag event handlers  In both cases, the "open"
-> > event is immediately followed by a "close" event - even if the tag *does
-> > not* close in the HTML being parsed.
-> >
-> > Because of this, we are missing the "text" event to deal with the object
-> > normally.  This can cause carefully crafted emails that might take more
-> > scan time than expected leading to a Denial of Service.
-> >
-> > The issue is possibly a bug or design decision in HTML::Parser that
-> > specifically impacts the way Apache SpamAssassin uses the module with
-> > poorly formed html.
-> >
-> > The exploit has been seen in the wild but not believe to have been
-> > purposefully part of a Denial of Service attempt.  We are concerned that
-> > there may be attempts to abuse the vulnerability in the future.
-> > Therefore, we strongly recommend all users of these versions upgrade to
-> > Apache SpamAssassin 3.4.2 as soon as possible.
-> >
-> > This issue has been assigned CVE id CVE-2017-15705 [2].
-> >
-> >
-> > Second, this release also fixes a reliance on "." in @INC in one
-> > configuration script.  Whether this can be exploited in any way is
-> > uncertain.
-> >
-> > This issue has been assigned CVE id CVE-2016-1238 [3].
-> >
-> >
-> > Third, this release fixes a potential Remote Code Execution bug with the
-> > PDFInfo plugin.  Thanks to cPanel Security Team for their report of this
-> > issue.
-> >
-> > This issue has been assigned CVE id CVE-2018-11780 [4].
-> >
-> >
-> > Fourth, this release fixes a local user code injection in the meta rule
-> > syntax. Thanks again to cPanel Security Team for their report of this
-> issue.
-> >
-> > This issue has been assigned CVE id CVE-2018-11781 [5].
-> >
-> >
-> > To contact the Apache SpamAssassin security team, please e-mail
-> > security at spamassassin.apache.org.  For more information about Apache
-> > SpamAssassin, visit the http://spamassassin.apache.org/ web site.
-> >
-> > Apache SpamAssassin Security Team
-> >
-> > [1]:
-> >
-> https://lists.apache.org/thread.html/1ac11532235b5459aa16c4e9d636bf4aa0b141d347d1361e40cc1b78@%3Cannounce.apache.org%3E
-> >
-> > [2]: https://cve.mitre.org/cgi-bin/cvename.cgi?name=2017-15705
-> >
-> > [3]: https://cve.mitre.org/cgi-bin/cvename.cgi?name=2016-1238
-> >
-> > [4]: https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-11780
-> >
-> > [5]: https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-11781
->
+UPDATES IN VERSION 2
+====================
 
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+So far, x86 PVH guests can be configured with or without Local APICs.
+Configurations with Local APICs are identical to x86 HVM guests, and
+will use as much hardware acceleration support as possible.
+Configurations without Local APICs try to turn off all hardware
+acceleration, and disable all software emulation.
+
+Multiple paths in Xen assume the presence of a Local APIC without
+sufficient checks, and can fall over a NULL pointer.  On Intel hardware,
+the logic to turn off hardware acceleration is incomplete and leaves the
+guest with full control of the real Task Priority Register.
+
+IMPACT
+======
+
+A malicious or buggy guest may cause a hypervisor crash, resulting in
+a Denial of Service (DoS) affecting the entire host.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen version 4.8 and onwards are vulnerable.
+
+Only x86 systems are vulnerable.  ARM systems are not vulnerable.
+
+Only x86 PVH guests can exploit the vulnerability.  x86 PV and HVM
+guests cannot exploit the vulnerability.
+
+MITIGATION
+==========
+
+Running only PV or HVM guests avoids the vulnerability.
+
+Running all PVH guests with "apic=1" in the guest configuration file
+(or equivalent thereof) also avoids the vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Ian Jackson of Citrix.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa256.patch           xen-unstable, Xen 4.10.x, Xen 4.9.x
+xsa256-4.8.patch       Xen 4.8.x
+
+$ sha256sum xsa256*
+3e45cc3f2ea516e7470083592041e238c0dfe32324790b2fba0e47c9efe38865  xsa256.patch
+c029fcb67ff7c3c9a2adcb8e6f5e245a0d347acc8a9b3530591a639cbf321349  xsa256-4.8.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJalUe0AAoJEIP+FMlX6CvZsmIH/3B9QnpiL1+NRkGIE62xljEG
+NfV/vL6gE2ytNMs8PRdhycovQum7qj+l9S53EswiwgiaUFw9VW5Jq9pg1UQlAQ/q
+7aIIke33TgkVKwZnb+7ercGfLNWsJAIldGc5emc9lBSBkPOUhFtxmTytdudB6dy1
+VMI+MVM1f4xgxEizNN7QstmlaMB34m0WH0nEdoCR8evXlAcmcBi+HwYDouUNnR5x
+21DkEBxyslvheX6SI8sbocfrZpT/K2b8B3zdLmd3nO3TF5ypC1daowIk0vl8o4Yj
+TSx4nsBlJ4V0G0gYa1UDBktUfDbVrpoEcdGb5zO3RhoMhcagzWVD6P6F25aYbiU=
+=PLNS
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa256.patch" of type "application/octet-stream" (1711 bytes)
+
+Download attachment "xsa256-4.8.patch" of type "application/octet-stream" (2062 bytes)
