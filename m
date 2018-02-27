@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["11168" "Sunday" "1" "November" "2020" "13:12:13" "+0000" "=?gb2312?B?a2l5aW4o?==?gb2312?B?0vw=?==?gb2312?B?wcEp?=" "kiyin@tencent.com" "<46067adf216242518dc3f87bba579c83@tencent.com>" "184" "[oss-security] [CVE-2020-25670,CVE-2020-25671,CVE-2020-25672,CVE-2020-25673]Linux kernel: many bugs in nfc socket" nil nil nil "11" "2020110113:12:13" "[oss-security] [CVE-2020-25670,CVE-2020-25671,CVE-2020-25672,CVE-2020-25673]Linux kernel: many bugs in nfc socket" (number mark "U       kiyin@tencen Nov  1  184/11168 " thread-indent "\"[oss-security] [CVE-2020-25670,CVE-2020-25671,CVE-2020-25672,CVE-2020-25673]Linux kernel: many bugs in nfc socket\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2020-25670,CVE-2020-25671,CVE-2020-25672,CVE-2020-25673]Linux kernel: many bugs in nfc socket" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["697" "Tuesday" "27" "February" "2018" "10:31:15" "-0800" "Bryan Call" "bcall@apache.org" "<8E450C60-66C7-4821-9147-DC4E032121A4@apache.org>" "31" "[oss-security] [ANNOUNCE] Apache Traffic Server vulnerability with TLS handshake - CVE-2017-7671" nil nil nil "2" "2018022718:31:15" "[oss-security] [ANNOUNCE] Apache Traffic Server vulnerability with TLS handshake - CVE-2017-7671" (number mark "U       bcall@apache Feb 27   31/697   " thread-indent "\"[oss-security] [ANNOUNCE] Apache Traffic Server vulnerability with TLS handshake - CVE-2017-7671\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9966 invoked by uid 550); 1 Nov 2020 13:18:45 -0000
+Received: (qmail 17932 invoked by uid 550); 27 Feb 2018 18:38:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,214 +12,51 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7421 invoked from network); 1 Nov 2020 13:12:31 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tencent.com;
-	s=s202002; t=1604236333;
-	bh=3Ld6NqN0j4/ciLGx0MaPbNke2R92c7xvMvSqqH/Ckqc=;
-	h=From:To:CC:Subject:Date;
-	b=ZWld9cRSAxXK2inyM2ENtP1+gpnZG7vC8rvSxdXWo169nb1kD/ucXGN65O9buAfoB
-	 LtLt6BM7fkgQ/LHirw5IiU2ZYZlQ5Eef1MENRfrklXVBAlrw+ya+frdFbdFUMLOiI3
-	 AS7+A36OPtnDxgwgzh6CR2gsSV3e56HkQZen4ilY=
-From: =?gb2312?B?a2l5aW4o0vzBwSk=?= <kiyin@tencent.com>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-CC: Greg KH <greg@kroah.com>, Anthony Liguori <aliguori@amazon.com>
-Thread-Topic: [CVE-2020-25670,CVE-2020-25671,CVE-2020-25672,CVE-2020-25673]Linux kernel:
- many bugs in nfc socket
-Thread-Index: AdawTH0Ixcyy3g+fR3WAY9duU7PyHA==
-Date: Sun, 1 Nov 2020 13:12:13 +0000
-Message-ID: <46067adf216242518dc3f87bba579c83@tencent.com>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [9.218.225.16]
-Content-Type: text/plain; charset="gb2312"
-Content-Transfer-Encoding: base64
-MIME-Version: 1.0
-Subject: [oss-security] [CVE-2020-25670,CVE-2020-25671,CVE-2020-25672,CVE-2020-25673]Linux
- kernel: many bugs in nfc socket
+Received: (qmail 12180 invoked from network); 27 Feb 2018 18:31:31 -0000
+From: Bryan Call <bcall@apache.org>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 11.2 \(3445.5.20\))
+Message-Id: <8E450C60-66C7-4821-9147-DC4E032121A4@apache.org>
+Date: Tue, 27 Feb 2018 10:31:15 -0800
+To: dev <dev@trafficserver.apache.org>,
+ users <users@trafficserver.apache.org>,
+ announce@trafficserver.apache.org,
+ security@trafficserver.apache.org,
+ oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3445.5.20)
+Subject: [oss-security] [ANNOUNCE] Apache Traffic Server vulnerability with TLS handshake -
+ CVE-2017-7671
 
-Q1ZFIEFzc2lnbmVkOg0KPiBDVkUtMjAyMC0yNTY3MCA6IG5ldyBidWcgMQ0K
-PiBDVkUtMjAyMC0yNTY3MSA6IG5ldyBidWcgMg0KPiBDVkUtMjAyMC0yNTY3
-MiA6IG5ldyBidWcgMw0KPiBDVkUtMjAyMC0yNTY3MyA6IG5ldyBidWcgNA0K
-DQpQYXRjaGVzOg0Kbm90IHlldCBhdmFpbGFibGUNCg0KRGV0YWlsczoNCg0K
-SGksDQoNCndlIGZvdW5kIG1hbnkgYnVncyBpbiBuZmMgc29ja2V0LiBIZXJl
-IGlzIHRoZSBkZXRhaWwuDQoNCkF0IGZpcnN0LCBsZXQncyBzZWUgYSBmaXhl
-ZCBidWcgZnJvbSBodHRwczovL2xvcmUua2VybmVsLm9yZy9wYXRjaHdvcmsv
-cGF0Y2gvMTEzNTgzNi4gdGhpcyBwYXRjaCBmaXhlZCBhIG1lbW9yeSBsZWFr
-IGJ1ZyBpbiBsbGNwX3NvY2tfYmluZCgpDQoNCi0tLSBhL25ldC9uZmMvbGxj
-cF9zb2NrLmMNCisrKyBiL25ldC9uZmMvbGxjcF9zb2NrLmMNCkBAIC0xMTks
-OSArMTE5LDE0IEBAICBzdGF0aWMgaW50IGxsY3Bfc29ja19iaW5kKHN0cnVj
-dCBzb2NrZXQNCiAgICAgbGxjcF9zb2NrLT5zZXJ2aWNlX25hbWUgPSBrbWVt
-ZHVwKGxsY3BfYWRkci5zZXJ2aWNlX25hbWUsDQogICAgICAgICAgICAgICAg
-ICAgICAgIGxsY3Bfc29jay0+c2VydmljZV9uYW1lX2xlbiwNCiAgICAgICAg
-ICAgICAgICAgICAgICAgR0ZQX0tFUk5FTCk7DQotDQorICAgIGlmICghbGxj
-cF9zb2NrLT5zZXJ2aWNlX25hbWUpIHsNCisgICAgICAgIHJldCA9IC1FTk9N
-RU07DQorICAgICAgICBnb3RvIHB1dF9kZXY7DQorICAgIH0NCiAgICAgbGxj
-cF9zb2NrLT5zc2FwID0gbmZjX2xsY3BfZ2V0X3NkcF9zc2FwKGxvY2FsLCBs
-bGNwX3NvY2spOw0KICAgICBpZiAobGxjcF9zb2NrLT5zc2FwID09IExMQ1Bf
-U0FQX01BWCkgew0KKyAgICAgICAga2ZyZWUobGxjcF9zb2NrLT5zZXJ2aWNl
-X25hbWUpOw0KKyAgICAgICAgbGxjcF9zb2NrLT5zZXJ2aWNlX25hbWUgPSBO
-VUxMOw0KICAgICAgICAgcmV0ID0gLUVBRERSSU5VU0U7DQogICAgICAgICBn
-b3RvIHB1dF9kZXY7DQogICAgIH0NCg0KaWYgbmZjX2xsY3BfZ2V0X3NkcF9z
-c2FwIGZhaWxlZCwgbGxjcF9zb2NrLT5zZXJ2aWNlX25hbWUgd2lsbCBiZSBm
-cmVlZC4gVGhhdCdzIHJlYWxseSBmaXhlZC4NCg0KDQpuZXcgYnVnIDEsIHJl
-ZmNvdW50IGxlYWsgaW4gbGxjcF9zb2NrX2JpbmQoKToNCkluIHRoZSBzYW1l
-IGZ1bmN0aW9uIGxsY3Bfc29ja19iaW5kKCksIG5mY19sbGNwX2xvY2FsX2dl
-dCgpIGlzIGNhbGxlZCBiZWZvcmUga21lbWR1cC4NCg0KaHR0cHM6Ly9naXQu
-a2VybmVsLm9yZy9wdWIvc2NtL2xpbnV4L2tlcm5lbC9naXQvc3RhYmxlL2xp
-bnV4LmdpdC90cmVlL25ldC9uZmMvbGxjcF9zb2NrLmM/aD12NS4zLjE4I24x
-MDENCjEwMSAgICBsbGNwX3NvY2stPmRldiA9IGRldjsNCjEwMiAgICBsbGNw
-X3NvY2stPmxvY2FsID0gbmZjX2xsY3BfbG9jYWxfZ2V0KGxvY2FsKTsgICAg
-ICAgICAgICAgICAgICAgICA8LS0tLSBuZmNfbGxjcF9sb2NhbF9nZXQgaW5j
-cmVhc2VzIHRoZSByZWZjb3VudCBvZiBsb2NhbCwgYWRkcyBwbHVzIDENCjEw
-MyAgICBsbGNwX3NvY2stPm5mY19wcm90b2NvbCA9IGxsY3BfYWRkci5uZmNf
-cHJvdG9jb2w7DQoxMDQgICAgbGxjcF9zb2NrLT5zZXJ2aWNlX25hbWVfbGVu
-ID0gbWluX3QodW5zaWduZWQgaW50LA0KMTA1ICAgICAgICAgICAgICAgICAg
-ICAgICAgbGxjcF9hZGRyLnNlcnZpY2VfbmFtZV9sZW4sDQoxMDYgICAgICAg
-ICAgICAgICAgICAgICAgICBORkNfTExDUF9NQVhfU0VSVklDRV9OQU1FKTsN
-CjEwNyAgICBsbGNwX3NvY2stPnNlcnZpY2VfbmFtZSA9IGttZW1kdXAobGxj
-cF9hZGRyLnNlcnZpY2VfbmFtZSwNCjEwOCAgICAgICAgICAgICAgICAgICAg
-ICBsbGNwX3NvY2stPnNlcnZpY2VfbmFtZV9sZW4sDQoxMDkgICAgICAgICAg
-ICAgICAgICAgICAgR0ZQX0tFUk5FTCk7DQoxMTAgICAgaWYgKCFsbGNwX3Nv
-Y2stPnNlcnZpY2VfbmFtZSkgew0KMTExICAgICAgICByZXQgPSAtRU5PTUVN
-Ow0KMTEyICAgICAgICBnb3RvIHB1dF9kZXY7DQoxMTMgICAgfQ0KMTE0ICAg
-IGxsY3Bfc29jay0+c3NhcCA9IG5mY19sbGNwX2dldF9zZHBfc3NhcChsb2Nh
-bCwgbGxjcF9zb2NrKTsNCjExNSAgICBpZiAobGxjcF9zb2NrLT5zc2FwID09
-IExMQ1BfU0FQX01BWCkgew0KMTE2ICAgICAgICBrZnJlZShsbGNwX3NvY2st
-PnNlcnZpY2VfbmFtZSk7ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-IDwtLS0tIGlmIG5mY19sbGNwX2dldF9zZHBfc3NhcCByZXR1cm5zIExMQ1Bf
-U0FQX01BWCwgb25seSBsbGNwX3NvY2stPnNlcnZpY2VfbmFtZSBnZXRzIGJl
-IGZyZWVkLg0KMTE3ICAgICAgICBsbGNwX3NvY2stPnNlcnZpY2VfbmFtZSA9
-IE5VTEw7ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDwtLS0tIG5v
-dGhpbmcgaXMgZG9uZSB0byBsb2NhbC4NCjExOCAgICAgICAgcmV0ID0gLUVB
-RERSSU5VU0U7DQoxMTkgICAgICAgIGdvdG8gcHV0X2RldjsNCjEyMCAgICB9
-DQouLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4NCjEzMCBwdXRfZGV2
-OiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICA8LS0tLSBub3RoaW5nIGlzIGRvbmUgdG8gbG9j
-YWwgaW4gcHV0X2RldiBsYWJlbCBlaXRoZXIuDQoxMzEgICAgIG5mY19wdXRf
-ZGV2aWNlKGRldik7DQoxMzIgDQoxMzMgZXJyb3I6DQoxMzQgICAgIHJlbGVh
-c2Vfc29jayhzayk7DQoxMzUgICAgIHJldHVybiByZXQ7ICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPC0t
-LS0gdGhlIHJlZmNvdW50IG9mIGxvY2FsIHJlbWFpbnMgYWRkZWQuDQoNCg0K
-ZnJvbSB0aGUgYW5hbHlzaXMgYWJvdmUsIHdlIGNhbiBzZWUgdGhhdDogaWYg
-bmZjX2xsY3BfZ2V0X3NkcF9zc2FwIHJldHVybnMgTExDUF9TQVBfTUFYLCB3
-aGVuIGxsY3Bfc29ja19iaW5kKCkgaXMgcmV0dXJuZWQsIHNrLT5za19zdGF0
-ZSBpcyBzdGlsbCBMTENQX0NMT1NFRC4gU28gd2UgY2FuIGNhbGwgbGxjcF9z
-b2NrX2JpbmQoKSBtYW55IHRpbWVzLCBrZWVwIHRoZSByZWZjb3VudCBvZiBs
-b2NhbCBpbmNyZWFzaW5nLg0KDQpUaHJlcmUgaXMgYSBSRUZDT1VOVF9DSEVD
-S19MVF9aRVJPIGluIHJlZmNvdW50X2luYy4gV2hlbiB0aGUgcmVmY291bnQg
-b2YgbG9jYWwgZ2V0cyB0byAweDgwMDAwMDAwLCBpZiB0aGUgc3lzdGVtIGhh
-bmRsZXMgdGhlIHJlZmNvdW50IGV4Y2VwdGlvbiwgaXQgbGVhZHMgdG8gYSBz
-eXN0ZW0gcGFuaWMuIElmIG5vdCwgaXQgd2lsbCBnZXQgdG8gMHhGRkZGRkZG
-RiBhbmQgdGhlbiB0byAwLCB0aGVuIHRvIDEuLi4gaWYgbmZjX2xsY3BfbG9j
-YWxfcHV0IGlzIGNhbGxlZCwgdGhlIGxvY2FsIHdpbGwgYmUgZnJlZWQuIHRo
-YXQgaXMgYSB3b3JzZSBVQUYgYnVnIHdoaWNoIG1pZ2h0IGxlYWQgdG8gcHJp
-dmlsZWdlIGVzY2FsYXRpb25zLg0KDQpIZXJlIGlzIHRoZSB0ZXN0IGNvZGU6
-DQoNCiNpbmNsdWRlIDx1bmlzdGQuaD4NCiNpbmNsdWRlIDxzdHJpbmcuaD4N
-CiNpbmNsdWRlIDxzeXMvc29ja2V0Lmg+DQojaW5jbHVkZSA8bGludXgvbmZj
-Lmg+DQoNCiNkZWZpbmUgTkZDX1NPQ0tQUk9UT19MTENQICAxDQojZGVmaW5l
-IE5GQ19QUk9UT19ORkNfREVQICAgNQ0KDQppbnQgbWFpbigpDQp7DQogICAg
-dW5zaWduZWQgaW50IGk7DQogICAgaW50IGZkOw0KICAgIHN0cnVjdCBzb2Nr
-YWRkcl9uZmNfbGxjcCBhZGRyOw0KDQogICAgZmQgPSBzb2NrZXQoIEFGX05G
-QywgU09DS19TVFJFQU0sIE5GQ19TT0NLUFJPVE9fTExDUCApOw0KICAgIGlm
-ICggZmQgPCAwICkNCiAgICAgICAgcmV0dXJuIDA7DQoNCiAgICBtZW1zZXQo
-ICZhZGRyLCAwLCBzaXplb2Yoc3RydWN0IHNvY2thZGRyX25mY19sbGNwKSAp
-Ow0KICAgIGFkZHIuc2FfZmFtaWx5ID0gQUZfTkZDOw0KICAgIGFkZHIuZGV2
-X2lkeCA9IDA7DQogICAgYWRkci5uZmNfcHJvdG9jb2wgPSBORkNfUFJPVE9f
-TkZDX0RFUDsNCiAgICBhZGRyLnNlcnZpY2VfbmFtZV9sZW4gPSAwOw0KDQog
-ICAgZm9yICggaSA9IDA7IGkgPCAweDkwMDAwMDAwOyBpKysgKQ0KICAgIHsN
-CiAgICAgICAgYmluZCggZmQsIChzdHJ1Y3Qgc29ja2FkZHIqKSAmYWRkciwg
-c2l6ZW9mKHN0cnVjdCBzb2NrYWRkcl9uZmNfbGxjcCkgKTsNCiAgICB9DQoN
-CiAgICBjbG9zZSggZmQgKTsNCiAgICByZXR1cm4gMDsNCn0NCg0KbmV3IGJ1
-ZyAyLCByZWZjb3VudCBsZWFrIGluIGxsY3Bfc29ja19jb25uZWN0KCk6DQpp
-dCBpcyB0aGUgc2FtZSBidWcgYXMgdGhlIG9uZSBkZXNjcmliZWQgYWJvdmUu
-DQpodHRwczovL2dpdC5rZXJuZWwub3JnL3B1Yi9zY20vbGludXgva2VybmVs
-L2dpdC9zdGFibGUvbGludXguZ2l0L3RyZWUvbmV0L25mYy9sbGNwX3NvY2su
-Yz9oPXY1LjMuMTgjbjcwMQ0KNzAxICAgIGxsY3Bfc29jay0+ZGV2ID0gZGV2
-Ow0KNzAyICAgIGxsY3Bfc29jay0+bG9jYWwgPSBuZmNfbGxjcF9sb2NhbF9n
-ZXQobG9jYWwpOyAgICAgICAgICAgICAgICAgICAgIDwtLS0tIG5mY19sbGNw
-X2xvY2FsX2dldCBpbmNyZWFzZXMgdGhlIHJlZmNvdW50IG9mIGxvY2FsLCBh
-ZGRzIHBsdXMgMQ0KNzAzICAgIGxsY3Bfc29jay0+c3NhcCA9IG5mY19sbGNw
-X2dldF9sb2NhbF9zc2FwKGxvY2FsKTsNCjcwNCAgICBpZiAobGxjcF9zb2Nr
-LT5zc2FwID09IExMQ1BfU0FQX01BWCkgeyAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICA8LS0tLSBpZiBuZmNfbGxjcF9nZXRfbG9jYWxfc3NhcCByZXR1
-cm5zIExMQ1BfU0FQX01BWA0KNzA1ICAgICAgICByZXQgPSAtRU5PTUVNOw0K
-NzA2ICAgICAgICBnb3RvIHB1dF9kZXY7DQo3MDcgICAgfQ0KLi4uLi4uLi4u
-Li4uLi4uLi4uLi4uLi4uLi4uLi4uDQo3NTAgcHV0X2RldjogICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgPC0tLS0gbm90aGluZyBpcyBkb25lIHRvIGxvY2FsIGluIHB1dF9k
-ZXYgbGFiZWwuDQo3NTEgICAgIG5mY19wdXRfZGV2aWNlKGRldik7DQo3NTIg
-DQo3NTMgZXJyb3I6DQo3NTQgICAgIHJlbGVhc2Vfc29jayhzayk7DQo3NTUg
-ICAgIHJldHVybiByZXQ7ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgPC0tLS0gdGhlIHJlZmNvdW50IG9m
-IGxvY2FsIHJlbWFpbnMgYWRkZWQuDQoNCg0KbmV3IGJ1ZyAzLCBtZW1vcnkg
-bGVhayBpbiBsbGNwX3NvY2tfY29ubmVjdCgpOg0KDQppdCBpcyB0aGUgc2Ft
-ZSBidWcgYXMgdGhlIGZpeGVkIG9uZSBpbiBsbGNwX3NvY2tfYmluZCgpDQoN
-Cmh0dHBzOi8vZ2l0Lmtlcm5lbC5vcmcvcHViL3NjbS9saW51eC9rZXJuZWwv
-Z2l0L3N0YWJsZS9saW51eC5naXQvdHJlZS9uZXQvbmZjL2xsY3Bfc29jay5j
-P2g9djUuMy4xOCNuNzE5DQo3MTkgICAgICAgIGxsY3Bfc29jay0+c2Vydmlj
-ZV9uYW1lID0ga21lbWR1cChhZGRyLT5zZXJ2aWNlX25hbWUsDQo3MjAgICAg
-ICAgICAgICAgICAgICAgICAgICAgIGxsY3Bfc29jay0+c2VydmljZV9uYW1l
-X2xlbiwNCjcyMSAgICAgICAgICAgICAgICAgICAgICAgICAgR0ZQX0tFUk5F
-TCk7ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8LS0tLSBrbWVt
-ZHVwIGFsbG9jYXRlcyBtZW1vcnkgZm9yIGxsY3Bfc29jay0+c2VydmljZV9u
-YW1lDQo3MjIgICAgICAgIGlmICghbGxjcF9zb2NrLT5zZXJ2aWNlX25hbWUp
-IHsNCjcyMyAgICAgICAgICAgIHJldCA9IC1FTk9NRU07DQo3MjQgICAgICAg
-ICAgICBnb3RvIHNvY2tfbGxjcF9yZWxlYXNlOw0KNzI1ICAgICAgICB9DQo3
-MjYgICAgDQo3MjcgICAgICAgIG5mY19sbGNwX3NvY2tfbGluaygmbG9jYWwt
-PmNvbm5lY3Rpbmdfc29ja2V0cywgc2spOw0KNzI4ICAgIA0KNzI5ICAgICAg
-ICByZXQgPSBuZmNfbGxjcF9zZW5kX2Nvbm5lY3QobGxjcF9zb2NrKTsNCjcz
-MCAgICAgICAgaWYgKHJldCkNCjczMSAgICAgICAgICAgIGdvdG8gc29ja191
-bmxpbms7ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICA8LS0tLSBpZiBuZmNfbGxjcF9zZW5kX2Nvbm5lY3QgaXMgZmFpbGVkLCBs
-bGNwX3NvY2stPnNlcnZpY2VfbmFtZSBpcyBub3QgZnJlZWQuDQouLi4uLi4u
-Li4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLg0KNzQ0ICAg
-IHNvY2tfdW5saW5rOiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgIDwtLS0tIGxsY3Bfc29jay0+c2Vydmlj
-ZV9uYW1lIGlzIG5vdCBmcmVlZCBpbiB0aGUgbmV4dC4NCjc0NSAgICAgICAg
-bmZjX2xsY3Bfc29ja191bmxpbmsoJmxvY2FsLT5jb25uZWN0aW5nX3NvY2tl
-dHMsIHNrKTsNCjc0NiAgICANCjc0NyAgICBzb2NrX2xsY3BfcmVsZWFzZToN
-Cjc0OCAgICAgICAgbmZjX2xsY3BfcHV0X3NzYXAobG9jYWwsIGxsY3Bfc29j
-ay0+c3NhcCk7DQo3NDkgICAgDQo3NTAgICAgcHV0X2RldjoNCjc1MSAgICAg
-ICAgbmZjX3B1dF9kZXZpY2UoZGV2KTsNCjc1MiAgICANCjc1MyAgICBlcnJv
-cjoNCjc1NCAgICAgICAgcmVsZWFzZV9zb2NrKHNrKTsNCjc1NSAgICAgICAg
-cmV0dXJuIHJldDsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICA8LS0tLSBzay0+c2tfc3RhdGUgaXMgbm90IExM
-Q1BfQ09OTkVDVEVELiB3ZSBjYW4gY2FsbCBsbGNwX3NvY2tfY29ubmVjdCgp
-IG1hbnkgdGltZXMuDQoNCg0KbmV3IGJ1ZyA0LCBub24tYmxvY2tpbmcgc29j
-a2V0IGluIGxsY3Bfc29ja19jb25uZWN0KCk6DQoNCmh0dHBzOi8vZ2l0Lmtl
-cm5lbC5vcmcvcHViL3NjbS9saW51eC9rZXJuZWwvZ2l0L3N0YWJsZS9saW51
-eC5naXQvdHJlZS9uZXQvbmZjL2xsY3Bfc29jay5jP2g9djUuMy4xOCNuNzI3
-DQoNCjcyNyAgICBuZmNfbGxjcF9zb2NrX2xpbmsoJmxvY2FsLT5jb25uZWN0
-aW5nX3NvY2tldHMsIHNrKTsgICAgICAgICAgICAgICA8LS0tLSBzayBpcyBs
-aW5rZWQgdG8gbG9jYWwtPmNvbm5lY3Rpbmdfc29ja2V0cw0KNzI4DQo3Mjkg
-ICAgcmV0ID0gbmZjX2xsY3Bfc2VuZF9jb25uZWN0KGxsY3Bfc29jayk7DQo3
-MzAgICAgaWYgKHJldCkNCjczMSAgICAgICAgZ290byBzb2NrX3VubGluazsN
-CjczMg0KNzMzICAgIHNrLT5za19zdGF0ZSA9IExMQ1BfQ09OTkVDVElORzsN
-CjczNA0KNzM1ICAgIHJldCA9IHNvY2tfd2FpdF9zdGF0ZShzaywgTExDUF9D
-T05ORUNURUQsDQo3MzYgICAgICAgICAgICAgICAgICBzb2NrX3NuZHRpbWVv
-KHNrLCBmbGFncyAmIE9fTk9OQkxPQ0spKTsgICAgICAgICAgICAgPC0tLS0g
-Y2FsbGluZyBpb2N0bChmZCwgRklPTkJJTywgJmltb2RlKSBiZWZvcmUgY29u
-bmVjdCB3aWxsIG1ha2UgdGhlIHNvY2tldCBmbGFnIGdldCBPX05PTkJMT0NL
-IG1hc2suDQo3MzcgICAgaWYgKHJldCAmJiByZXQgIT0gLUVJTlBST0dSRVNT
-KSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPC0tLS0gc29j
-a193YWl0X3N0YXRlIHJldHVybnMgLUVJTlBST0dSRVNTIHJpZ2h0IGF3YXkN
-CjczOCAgICAgICAgZ290byBzb2NrX3VubGluazsNCjczOQ0KNzQwICAgIHJl
-bGVhc2Vfc29jayhzayk7DQo3NDENCjc0MiAgICByZXR1cm4gcmV0OyAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICA8LS0tLSBsbGNwX3NvY2tfY29ubmVjdCgpIHJldHVybnMgcmlnaHQg
-YXdheQ0KDQppZiB3ZSBzZXQgbGxjcF9zb2NrLT5zZXJ2aWNlX25hbWUgdG8g
-bWVhbmluZ2xlc3Mgc3RyaW5nLCB0aGUgY29ubmVjdCB3aWxsIGJlIGZhaWxl
-ZC4gYW5kIHNrLT5za19zdGF0ZSB3aWxsIG5vdCBiZSBMTENQX0NPTk5FQ1RF
-RC4gdGhlbiB3ZSBjYW4gY2FsbCBsbGNwX3NvY2tfY29ubmVjdCgpIG1hbnkg
-dGltZXMuIHRoYXQgbGVha3MgZXZlcnl0aGluZzoNCmxsY3Bfc29jay0+ZGV2
-LCBsbGNwX3NvY2stPmxvY2FsLCBsbGNwX3NvY2stPnNzYXAsIGxsY3Bfc29j
-ay0+c2VydmljZV9uYW1lLi4uDQpsZWFrIGlzIG9uZSBwcm9ibGVtLiBhbm90
-aGVyIHByb2JsZW0gaXMgdGhhdCB3ZSBjYW4gY2FsbCBsbGNwX3NvY2tfY29u
-bmVjdCgpIHR3aWNlIGJlZm9yZSBuZmMgdGFyZ2V0IHJlc3BvbnNlLiBuZmNf
-bGxjcF9zb2NrX2xpbmsoKSB3aWxsIGFkZCBzayB0byBsb2NhbC0+Y29ubmVj
-dGluZ19zb2NrZXRzIHR3aWNlLiBzay0+c2tfbm9kZS0+bmV4dCB3aWxsIHBv
-aW50IHRvIGl0c2VsZiwgdGhhdCB3aWxsIG1ha2UgYW4gZW5kbGVzcyBsb29w
-IGFuZCBoYW5nLXVwIHRoZSBzeXN0ZW0uDQoNClJlZ2FyZHMsDQpraXlpbi4N
-Cg==
+CVE-2017-7671: Apache Traffic Server vulnerability with TLS handshake
+
+Vendor:
+The Apache Software Foundation
+
+Version Affected:
+ATS 5.2.0 to 5.3.2
+ATS 6.0.0 to 6.2.0
+ATS 7.0.0
+
+Description:
+There is a DOS attack vulnerability in ATS with the TLS handshake.  This is=
+sue can cause the server to coredump.
+
+Mitigation:
+5.x users should upgrade to 7.1.2 or later versions
+6.x users should upgrade to 6.2.2 or later versions
+7.x users should upgrade to 7.1.2 or later versions
+
+References:
+	Downloads:
+		https://trafficserver.apache.org/downloads
+	Github Pull Request:
+		https://github.com/apache/trafficserver/pull/1941
+	CVE:
+		https://cve.mitre.org/cgi-bin/cvename.cgi?name=3D2017-7671
+
+-Bryan
+
+
+
