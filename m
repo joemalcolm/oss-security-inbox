@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2798" "Tuesday" "4" "September" "2018" "11:47:06" "-0500" "Tyler Hicks" "tyhicks@canonical.com" "<f97cfa42-1bb0-edd0-f254-ab0545be3b6a@canonical.com>" "70" "[oss-security] CVE-2018-6554 and CVE-2018-6555: Linux kernel: irda memory leak and use after free" "^Date:" nil nil "9" "2018090416:47:06" "[oss-security] CVE-2018-6554 and CVE-2018-6555: Linux kernel: irda memory leak and use after free" (number mark "        tyhicks@cano Sep  4   70/2798  " thread-indent "\"[oss-security] CVE-2018-6554 and CVE-2018-6555: Linux kernel: irda memory leak and use after free\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["8949" "Tuesday" "27" "February" "2018" "12:00:11" "+0000" "Xen.org security team" "security@xen.org" "<E1eqdvX-0006o2-1W@xenbits.xenproject.org>" "207" "[oss-security] Xen Security Advisory 256 - x86 PVH guest without LAPIC may DoS the host" nil nil nil "2" "2018022712:00:11" "[oss-security] Xen Security Advisory 256 - x86 PVH guest without LAPIC may DoS the host" (number mark "U       security@xen Feb 27  207/8949  " thread-indent "\"[oss-security] Xen Security Advisory 256 - x86 PVH guest without LAPIC may DoS the host\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 25767 invoked by uid 550); 4 Sep 2018 16:47:59 -0000
+Received: (qmail 22439 invoked by uid 550); 27 Feb 2018 12:00:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,131 +11,225 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 25749 invoked from network); 4 Sep 2018 16:47:58 -0000
-Openpgp: preference=signencrypt
-Autocrypt: addr=tyhicks@canonical.com; prefer-encrypt=mutual; keydata=
- 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
-Message-ID: <f97cfa42-1bb0-edd0-f254-ab0545be3b6a@canonical.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="gcGZFwdB2JBsW04B1UjhWBjRHl4yAsDeV"
-Date: Tue, 4 Sep 2018 11:47:06 -0500
-From: Tyler Hicks <tyhicks@canonical.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2018-6554 and CVE-2018-6555: Linux kernel: irda memory leak and
- use after free
-To: oss-security@lists.openwall.com
+Received: (qmail 22312 invoked from network); 27 Feb 2018 12:00:30 -0000
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
+MIME-Version: 1.0
+X-Mailer: MIME-tools 5.505 (Entity 5.505)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1eqdvX-0006o2-1W@xenbits.xenproject.org>
+Date: Tue, 27 Feb 2018 12:00:11 +0000
+Subject: [oss-security] Xen Security Advisory 256 - x86 PVH guest without LAPIC may DoS
+ the host
 
---gcGZFwdB2JBsW04B1UjhWBjRHl4yAsDeV
-Content-Type: multipart/mixed; boundary="pYUuRlHJYGwBuoaww1CpOCqxv92obNQeV";
- protected-headers="v1"
-From: Tyler Hicks <tyhicks@canonical.com>
-To: oss-security@lists.openwall.com
-Message-ID: <f97cfa42-1bb0-edd0-f254-ab0545be3b6a@canonical.com>
-Subject: CVE-2018-6554 and CVE-2018-6555: Linux kernel: irda memory leak and
- use after free
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
---pYUuRlHJYGwBuoaww1CpOCqxv92obNQeV
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Two issues were discovered in the irda subsystem within the Linux
-kernel.
+                    Xen Security Advisory XSA-256
+                              version 2
 
-The irda subsystem has been removed from the upstream kernel starting in
-v4.17 but it is present in many distro kernels and the stable kernel tree.
+             x86 PVH guest without LAPIC may DoS the host
 
-Memory leak in the irda_bind function in net/irda/af_irda.c and later
-in drivers/staging/irda/net/af_irda.c in the Linux kernel before 4.17
-allows local users to cause a denial of service (memory consumption) by
-repeatedly binding an AF_IRDA socket. (CVE-2018-6554)
+UPDATES IN VERSION 2
+====================
 
-The irda_setsockopt function in net/irda/af_irda.c and later in
-drivers/staging/irda/net/af_irda.c in the Linux kernel before 4.17
-allows local users to cause a denial of service (ias_object
-use-after-free and system crash) or possibly have unspecified other
-impact via an AF_IRDA socket. (CVE-2018-6555)
+Public release.
 
-I've sent the fixes to the stable kernel list but I don't yet see my
-submissions in the list archive on Spinics. Here are the equivalent
-versions of the patches against the Ubuntu kernel:
+ISSUE DESCRIPTION
+=================
 
-https://lists.ubuntu.com/archives/kernel-team/2018-September/095134.html
-(>=3D 4.14)
+So far, x86 PVH guests can be configured with or without Local APICs.
+Configurations with Local APICs are identical to x86 HVM guests, and
+will use as much hardware acceleration support as possible.
+Configurations without Local APICs try to turn off all hardware
+acceleration, and disable all software emulation.
 
-https://lists.ubuntu.com/archives/kernel-team/2018-September/095137.html
-(< 4.14)
+Multiple paths in Xen assume the presence of a Local APIC without
+sufficient checks, and can fall over a NULL pointer.  On Intel hardware,
+the logic to turn off hardware acceleration is incomplete and leaves the
+guest with full control of the real Task Priority Register.
 
-Tyler
+IMPACT
+======
 
+A malicious or buggy guest may cause a hypervisor crash, resulting in
+a Denial of Service (DoS) affecting the entire host.
 
+VULNERABLE SYSTEMS
+==================
 
---pYUuRlHJYGwBuoaww1CpOCqxv92obNQeV--
+Xen version 4.8 and onwards are vulnerable.
 
---gcGZFwdB2JBsW04B1UjhWBjRHl4yAsDeV
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+Only x86 systems are vulnerable.  ARM systems are not vulnerable.
 
+Only x86 PVH guests can exploit the vulnerability.  x86 PV and HVM
+guests cannot exploit the vulnerability.
+
+MITIGATION
+==========
+
+Running only PV or HVM guests avoids the vulnerability.
+
+Running all PVH guests with "apic=1" in the guest configuration file
+(or equivalent thereof) also avoids the vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Ian Jackson of Citrix.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa256.patch           xen-unstable, Xen 4.10.x, Xen 4.9.x
+xsa256-4.8.patch       Xen 4.8.x
+
+$ sha256sum xsa256*
+3e45cc3f2ea516e7470083592041e238c0dfe32324790b2fba0e47c9efe38865  xsa256.patch
+c029fcb67ff7c3c9a2adcb8e6f5e245a0d347acc8a9b3530591a639cbf321349  xsa256-4.8.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-iQIzBAEBCgAdFiEEPgU+cN5AsTrekT5+1pIAPaoCxwoFAluOtyEACgkQ1pIAPaoC
-xwrFyhAAtXh2DVIC93feS8L3pji3FzxvXzjARJPVgrIhwruibOe/ZEDTPDyEy1sh
-5H6vPrKPabIdb7qz7Rb+1hQvZ028HE4LPjKWCwHOMVeiu5n1lT2XSAN6SPB84qNA
-zlNMuV2xRJG4c5cPuujzFdE7ph5QG20i6pHVMCj+EtDJshlNjGjzdvA19R2LWPc8
-w7z3cNr2VI+WWBs5oQZLoNN7PxYkBjdlUsImvtjiqATRXhAND7RQ9+I8HEXvZ9Ns
-TVCVo1D9qsvwWpp2O7Cl9kmTO2LffFXpS7C8sYuXllGWp4GIHpYu4SOHKMikGfry
-zImNj5RM3FU13O4PYDmTkLcME+CcEcqJoC4F6HFe80Zk+K/QZ8uVF4xf6o+1DSOP
-RL0gk3N3wqQ1qg9uUDgJc1ooAKcqAoZGeDUIwTLVSnPpkhoOuV1XUhfGXQm+bsB6
-DsERC/5e2s1D35zDvwQX222rLG4KxK47cWZ60Rlcdu9HW4U7lGRXKVavnU5vWB2G
-2kKfmcxk3Q4yEJwDgo8P4AQ+BQUhbGwckTsFYK+UAxWV7WlsSHY8s8LxoNcwmC5j
-S9zZRWvExAsKCuVpMcKtuD7YwCFKP8nSdcZQawvDN+Fd5c89czebcSI3M92IohqN
-Xiw3N/fBbDrT6Oo6ZaiWKcM5Do4cryRzGDYed0KRymipDk8PBP8=
-=7bgM
+iQEcBAEBCAAGBQJalUe0AAoJEIP+FMlX6CvZsmIH/3B9QnpiL1+NRkGIE62xljEG
+NfV/vL6gE2ytNMs8PRdhycovQum7qj+l9S53EswiwgiaUFw9VW5Jq9pg1UQlAQ/q
+7aIIke33TgkVKwZnb+7ercGfLNWsJAIldGc5emc9lBSBkPOUhFtxmTytdudB6dy1
+VMI+MVM1f4xgxEizNN7QstmlaMB34m0WH0nEdoCR8evXlAcmcBi+HwYDouUNnR5x
+21DkEBxyslvheX6SI8sbocfrZpT/K2b8B3zdLmd3nO3TF5ypC1daowIk0vl8o4Yj
+TSx4nsBlJ4V0G0gYa1UDBktUfDbVrpoEcdGb5zO3RhoMhcagzWVD6P6F25aYbiU=
+=PLNS
 -----END PGP SIGNATURE-----
 
---gcGZFwdB2JBsW04B1UjhWBjRHl4yAsDeV--
+--=separator
+Content-Type: application/octet-stream; name="xsa256.patch"
+Content-Disposition: attachment; filename="xsa256.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNv
+bT4KU3ViamVjdDogeDg2L2h2bTogRGlzYWxsb3cgdGhlIGNyZWF0aW9uIG9m
+IEhWTSBkb21haW5zIHdpdGhvdXQgTG9jYWwgQVBJQyBlbXVsYXRpb24KClRo
+ZXJlIGFyZSBtdWx0aXBsZSBwcm9ibGVtcywgbm90IG5lY2Vzc2VyaWx5IGxp
+bWl0ZWQgdG86CgogKiBHdWVzdHMgd2hpY2ggY29uZmlndXJlIGV2ZW50IGNo
+YW5uZWxzIHZpYSBodm1vcF9zZXRfZXZ0Y2huX3VwY2FsbF92ZWN0b3IoKSwK
+ICAgb3Igd2hpY2ggaGl0ICVjcjggZW11bGF0aW9uIHdpbGwgY2F1c2UgWGVu
+IHRvIGZhbGwgb3ZlciBhIE5VTEwgdmxhcGljLT5yZWdzCiAgIHBvaW50ZXIu
+CgogKiBPbiBJbnRlbCBoYXJkd2FyZSwgZGlzYWJsaW5nIHRoZSBUUFJfU0hB
+RE9XIGV4ZWN1dGlvbiBjb250cm9sIHdpdGhvdXQKICAgcmVlbmFibGluZyBD
+Ujhfe0xPQUQsU1RPUkV9IGludGVyY2VwdGlvbiBtZWFucyB0aGF0IHRoZSBn
+dWVzdHMgJWNyOAogICBhY2Nlc3NlcyBpbnRlcmFjdCB3aXRoIHRoZSByZWFs
+IFRQUi4gIEFtb25nc3Qgb3RoZXIgdGhpbmdzLCBzZXR0aW5nIHRoZQogICBy
+ZWFsIFRQUiB0byAweGYgYmxvY2tzIGV2ZW4gSVBJcyBmcm9tIGludGVycnVw
+dGluZyB0aGlzIENQVS4KCiAqIE9uIGhhcmR3YXJlIHdoaWNoIHNldHMgdXAg
+dGhlIHVzZSBvZiBJbnRlcnJ1cHQgUG9zdGluZywgaW5jbHVkaW5nCiAgIElP
+TU1VLVBvc3RpbmcsIGd1ZXN0cyBydW4gd2l0aG91dCB0aGUgYXBwcm9wcmlh
+dGUgbm9uLXJvb3QgY29uZmlndXJhdGlvbiwKICAgd2hpY2ggYXQgYSBtaW5p
+bXVtIHdpbGwgcmVzdWx0IGluIGRyb3BwZWQgaW50ZXJydXB0cy4KCldoZXRo
+ZXIgbm8tTEFQSUMgbW9kZSBpcyBvZiBhbnkgdXNlIGF0IGFsbCByZW1haW5z
+IHRvIGJlIHNlZW4uCgpUaGlzIGlzIFhTQS0yNTYuCgpSZXBvcnRlZC1ieTog
+SWFuIEphY2tzb24gPGlhbi5qYWNrc29uQGV1LmNpdHJpeC5jb20+ClJldmll
+d2VkLWJ5OiBSb2dlciBQYXUgTW9ubsOpIDxyb2dlci5wYXVAY2l0cml4LmNv
+bT4KU2lnbmVkLW9mZi1ieTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3Bl
+cjNAY2l0cml4LmNvbT4KUmV2aWV3ZWQtYnk6IEphbiBCZXVsaWNoIDxqYmV1
+bGljaEBzdXNlLmNvbT4KCmRpZmYgLS1naXQgYS94ZW4vYXJjaC94ODYvZG9t
+YWluLmMgYi94ZW4vYXJjaC94ODYvZG9tYWluLmMKaW5kZXggZjkzMzI3Yi4u
+ZjY1ZmMxMiAxMDA2NDQKLS0tIGEveGVuL2FyY2gveDg2L2RvbWFpbi5jCisr
+KyBiL3hlbi9hcmNoL3g4Ni9kb21haW4uYwpAQCAtNDEzLDcgKzQxMyw3IEBA
+IHN0YXRpYyBib29sIGVtdWxhdGlvbl9mbGFnc19vayhjb25zdCBzdHJ1Y3Qg
+ZG9tYWluICpkLCB1aW50MzJfdCBlbWZsYWdzKQogICAgICAgICBpZiAoIGlz
+X2hhcmR3YXJlX2RvbWFpbihkKSAmJgogICAgICAgICAgICAgIGVtZmxhZ3Mg
+IT0gKFhFTl9YODZfRU1VX0xBUElDfFhFTl9YODZfRU1VX0lPQVBJQykgKQog
+ICAgICAgICAgICAgcmV0dXJuIGZhbHNlOwotICAgICAgICBpZiAoICFpc19o
+YXJkd2FyZV9kb21haW4oZCkgJiYgZW1mbGFncyAmJgorICAgICAgICBpZiAo
+ICFpc19oYXJkd2FyZV9kb21haW4oZCkgJiYKICAgICAgICAgICAgICBlbWZs
+YWdzICE9IFhFTl9YODZfRU1VX0FMTCAmJiBlbWZsYWdzICE9IFhFTl9YODZf
+RU1VX0xBUElDICkKICAgICAgICAgICAgIHJldHVybiBmYWxzZTsKICAgICB9
+Cg==
+
+--=separator
+Content-Type: application/octet-stream; name="xsa256-4.8.patch"
+Content-Disposition: attachment; filename="xsa256-4.8.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNv
+bT4KU3ViamVjdDogeDg2L2h2bTogRGlzYWxsb3cgdGhlIGNyZWF0aW9uIG9m
+IEhWTSBkb21haW5zIHdpdGhvdXQgTG9jYWwgQVBJQyBlbXVsYXRpb24KClRo
+ZXJlIGFyZSBtdWx0aXBsZSBwcm9ibGVtcywgbm90IG5lY2Vzc2VyaWx5IGxp
+bWl0ZWQgdG86CgogKiBHdWVzdHMgd2hpY2ggY29uZmlndXJlIGV2ZW50IGNo
+YW5uZWxzIHZpYSBodm1vcF9zZXRfZXZ0Y2huX3VwY2FsbF92ZWN0b3IoKSwK
+ICAgb3Igd2hpY2ggaGl0ICVjcjggZW11bGF0aW9uIHdpbGwgY2F1c2UgWGVu
+IHRvIGZhbGwgb3ZlciBhIE5VTEwgdmxhcGljLT5yZWdzCiAgIHBvaW50ZXIu
+CgogKiBPbiBJbnRlbCBoYXJkd2FyZSwgZGlzYWJsaW5nIHRoZSBUUFJfU0hB
+RE9XIGV4ZWN1dGlvbiBjb250cm9sIHdpdGhvdXQKICAgcmVlbmFibGluZyBD
+Ujhfe0xPQUQsU1RPUkV9IGludGVyY2VwdGlvbiBtZWFucyB0aGF0IHRoZSBn
+dWVzdHMgJWNyOAogICBhY2Nlc3NlcyBpbnRlcmFjdCB3aXRoIHRoZSByZWFs
+IFRQUi4gIEFtb25nc3Qgb3RoZXIgdGhpbmdzLCBzZXR0aW5nIHRoZQogICBy
+ZWFsIFRQUiB0byAweGYgYmxvY2tzIGV2ZW4gSVBJcyBmcm9tIGludGVycnVw
+dGluZyB0aGlzIENQVS4KCiAqIE9uIGhhcmR3YXJlIHdoaWNoIHNldHMgdXAg
+dGhlIHVzZSBvZiBJbnRlcnJ1cHQgUG9zdGluZywgaW5jbHVkaW5nCiAgIElP
+TU1VLVBvc3RpbmcsIGd1ZXN0cyBydW4gd2l0aG91dCB0aGUgYXBwcm9wcmlh
+dGUgbm9uLXJvb3QgY29uZmlndXJhdGlvbiwKICAgd2hpY2ggYXQgYSBtaW5p
+bXVtIHdpbGwgcmVzdWx0IGluIGRyb3BwZWQgaW50ZXJydXB0cy4KCldoZXRo
+ZXIgbm8tTEFQSUMgbW9kZSBpcyBvZiBhbnkgdXNlIGF0IGFsbCByZW1haW5z
+IHRvIGJlIHNlZW4uCgpUaGlzIGlzIFhTQS0yNTYuCgpSZXBvcnRlZC1ieTog
+SWFuIEphY2tzb24gPGlhbi5qYWNrc29uQGV1LmNpdHJpeC5jb20+ClJldmll
+d2VkLWJ5OiBSb2dlciBQYXUgTW9ubsOpIDxyb2dlci5wYXVAY2l0cml4LmNv
+bT4KU2lnbmVkLW9mZi1ieTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3Bl
+cjNAY2l0cml4LmNvbT4KUmV2aWV3ZWQtYnk6IEphbiBCZXVsaWNoIDxqYmV1
+bGljaEBzdXNlLmNvbT4KCmRpZmYgLS1naXQgYS94ZW4vYXJjaC94ODYvZG9t
+YWluLmMgYi94ZW4vYXJjaC94ODYvZG9tYWluLmMKaW5kZXggODgxNzI2My4u
+OTFiOWFiNyAxMDA2NDQKLS0tIGEveGVuL2FyY2gveDg2L2RvbWFpbi5jCisr
+KyBiL3hlbi9hcmNoL3g4Ni9kb21haW4uYwpAQCAtNTU3LDExICs1NTcsOSBA
+QCBpbnQgYXJjaF9kb21haW5fY3JlYXRlKHN0cnVjdCBkb21haW4gKmQsIHVu
+c2lnbmVkIGludCBkb21jcl9mbGFncywKICAgICAgICAgICAgIHJldHVybiAt
+RUlOVkFMOwogICAgICAgICB9CiAKLSAgICAgICAgLyogUFZIdjIgZ3Vlc3Rz
+IGNhbiByZXF1ZXN0IGVtdWxhdGVkIEFQSUMuICovCi0gICAgICAgIGlmICgg
+ZW1mbGFncyAmJgotICAgICAgICAgICAgKGlzX2h2bV9kb21haW4oZCkgPyAo
+KGVtZmxhZ3MgIT0gWEVOX1g4Nl9FTVVfQUxMKSAmJgotICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgKGVtZmxhZ3MgIT0gWEVOX1g4Nl9FTVVf
+TEFQSUMpKSA6Ci0gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIChl
+bWZsYWdzICE9IFhFTl9YODZfRU1VX1BJVCkpICkKKyAgICAgICAgaWYgKCBp
+c19odm1fZG9tYWluKGQpID8gKChlbWZsYWdzICE9IFhFTl9YODZfRU1VX0FM
+TCkgJiYKKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIChlbWZs
+YWdzICE9IFhFTl9YODZfRU1VX0xBUElDKSkKKyAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgIDogKGVtZmxhZ3MgJiYgZW1mbGFncyAhPSBYRU5fWDg2
+X0VNVV9QSVQpICkKICAgICAgICAgewogICAgICAgICAgICAgcHJpbnRrKFhF
+TkxPR19HX0VSUiAiZCVkOiBYZW4gZG9lcyBub3QgYWxsb3cgJXMgZG9tYWlu
+IGNyZWF0aW9uICIKICAgICAgICAgICAgICAgICAgICAid2l0aCB0aGUgY3Vy
+cmVudCBzZWxlY3Rpb24gb2YgZW11bGF0b3JzOiAlI3hcbiIsCg==
+
+--=separator--
