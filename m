@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["995" "Friday" "9" "June" "2017" "11:47:55" "-0400" "Christos Zoulas" "christos@zoulas.com" "<20170609154755.2597617FDAB@rebar.astron.com>" "33" "Re: [oss-security] Vixie/ISC Cron group crontab to root escalation" "^Date:" nil nil "6" "2017060915:47:55" "[oss-security] Vixie/ISC Cron group crontab to root escalation" (number mark "        christos@zou Jun  9   33/995   " thread-indent "\"Re: [oss-security] Vixie/ISC Cron group crontab to root escalation\"\n") "<20170608180534.GA27098@openwall.com>" ("<20170608180534.GA27098@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["689" "Tuesday" "27" "February" "2018" "09:38:23" "-0800" "Bryan Call" "bcall@apache.org" "<0328E5ED-8D75-4C17-99A6-5D65B3AF4E5E@apache.org>" "32" "[oss-security] [ANNOUNCE] Apache Traffic Server host header and line folding - CVE-2017-5660" nil nil nil "2" "2018022717:38:23" "[oss-security] [ANNOUNCE] Apache Traffic Server host header and line folding - CVE-2017-5660" (number mark "U       bcall@apache Feb 27   32/689   " thread-indent "\"[oss-security] [ANNOUNCE] Apache Traffic Server host header and line folding - CVE-2017-5660\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 10097 invoked by uid 550); 9 Jun 2017 16:22:00 -0000
+Received: (qmail 11766 invoked by uid 550); 27 Feb 2018 17:40:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,48 +11,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17416 invoked from network); 9 Jun 2017 15:48:07 -0000
-In-Reply-To: <20170608180534.GA27098@openwall.com>
-       from Solar Designer (Jun  8,  8:05pm)
-Organization: Astron Software
-X-Mailer: Mail User's Shell (7.2.6 beta(4.pl1)+dynamic 20000103)
-Message-Id: <20170609154755.2597617FDAB@rebar.astron.com>
-Date: Fri, 9 Jun 2017 11:47:55 -0400
-From: christos@zoulas.com (Christos Zoulas)
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Vixie/ISC Cron group crontab to root escalation
-To: oss-security@lists.openwall.com
+Received: (qmail 9523 invoked from network); 27 Feb 2018 17:38:41 -0000
+From: Bryan Call <bcall@apache.org>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 11.2 \(3445.5.20\))
+Message-Id: <0328E5ED-8D75-4C17-99A6-5D65B3AF4E5E@apache.org>
+Date: Tue, 27 Feb 2018 09:38:23 -0800
+To: dev <dev@trafficserver.apache.org>,
+ users <users@trafficserver.apache.org>,
+ announce@trafficserver.apache.org,
+ security@trafficserver.apache.org,
+ oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3445.5.20)
+Subject: [oss-security] [ANNOUNCE] Apache Traffic Server host header and line folding -
+ CVE-2017-5660
 
-On Jun 8,  8:05pm, solar@openwall.com (Solar Designer) wrote:
--- Subject: [oss-security] Vixie/ISC Cron group crontab to root escalation
+CVE-2017-5660: Apache Traffic Server host header and line folding
 
-In this patch:
-http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/vixie-cron/vixie-cron-4.1.20040916-owl-crond.diff
+Vendor:
+The Apache Software Foundation
 
-Why do:
+Version Affected:
+ATS 6.2.0 and prior
+ATS 7.0.0 and prior
 
-+	if (lstat(tabname, &lstatbuf) < OK) {
-+		log_it(fname, getpid(), "CAN'T LSTAT", tabname);
-+		goto next_crontab;
-+	}
-+	if (!S_ISREG(lstatbuf.st_mode)) {
-+		log_it(fname, getpid(), "NOT REGULAR", tabname);
-+		goto next_crontab;
-+	}
-+	if ((!pw && (lstatbuf.st_mode & 07533) != 0400) ||
-+	    (pw && (lstatbuf.st_mode & 07577) != 0400)) {
-+		log_it(fname, getpid(), "BAD FILE MODE", tabname);
-+		goto next_crontab;
-+	}
-+	if (lstatbuf.st_nlink != 1) {
-+		log_it(fname, getpid(), "BAD LINK COUNT", tabname);
-+		goto next_crontab;
-+	}
-+
- 	if ((crontab_fd = open(tabname, O_RDONLY|O_NONBLOCK|O_NOFOLLOW, 0)) < OK) {
- 		/* crontab not accessible?
- 		 */
+Description:
+There is a vulnerability in ATS with the Host header and line folding.  Thi=
+s can have issues when interacting with upstream proxies and the wrong host=
+ being used.
 
-Instead of doing the open first and then fstat(2) to prevent TOCTOU?
+Mitigation:
+6.2.x users should upgrade to 6.2.2 or later versions
+7.x users should upgrade to 7.1.2 or later versions
 
-christos
+References:
+	Downloads:
+		https://trafficserver.apache.org/downloads
+
+	Github Pull Request:
+		https://github.com/apache/trafficserver/pull/1657
+
+	CVE:
+		https://cve.mitre.org/cgi-bin/cvename.cgi?name=3D2017-5660
+
+-Bryan
+
+
+
