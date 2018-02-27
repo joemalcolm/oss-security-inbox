@@ -1,40 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/14/2
-Message-ID: <20180614181259.s2qbbdaeudg4h5pz@jwilk.net>
-Date: Thu, 14 Jun 2018 20:12:59 +0200
-From: Jakub Wilk <jwilk@...lk.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Are `su user' and/or `sudo -u user sh' considered dangerous?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/27/7
+Message-Id: <8E450C60-66C7-4821-9147-DC4E032121A4@apache.org>
+Date: Tue, 27 Feb 2018 10:31:15 -0800
+From: Bryan Call <bcall@...che.org>
+To: dev <dev@...fficserver.apache.org>, users <users@...fficserver.apache.org>, announce@...fficserver.apache.org, security@...fficserver.apache.org, oss-security@...ts.openwall.com
+Subject: [ANNOUNCE] Apache Traffic Server vulnerability with TLS handshake - CVE-2017-7671
 Content-Type: text/plain; charset=utf-8
 
-* Georgi Guninski <guninski@...inski.com>, 2018-06-13, 12:54:
->>Is there POC for relatively new distros?
->debian 8 and 9 are vulnerable to su - hostile:
->https://j.ludost.net/blog/archives/2018/06/13/ancient_su_-_hostile_vulnerability_in_debian_8_and_9/index.html
+CVE-2017-7671: Apache Traffic Server vulnerability with TLS handshake
 
-(Please fix unescaped "<" and "&" characters on that page.)
+Vendor:
+The Apache Software Foundation
 
-For Debian this bug is tracked here:
-https://bugs.debian.org/628843
+Version Affected:
+ATS 5.2.0 to 5.3.2
+ATS 6.0.0 to 6.2.0
+ATS 7.0.0
 
->what about the second potential vulnerability: reading root's tty after 
->the session is closed with something like tee(1) ?
+Description:
+There is a DOS attack vulnerability in ATS with the TLS handshake.  This issue can cause the server to coredump.
 
-The list of nasty things you can do when you get your hands on the tty 
-fd is probably very long...
+Mitigation:
+5.x users should upgrade to 7.1.2 or later versions
+6.x users should upgrade to 6.2.2 or later versions
+7.x users should upgrade to 7.1.2 or later versions
 
->several sources suggest disabling TIOCSTI or using setsid(), are they 
->enough?
+References:
+	Downloads:
+		https://trafficserver.apache.org/downloads
+	Github Pull Request:
+		https://github.com/apache/trafficserver/pull/1941
+	CVE:
+		https://cve.mitre.org/cgi-bin/cvename.cgi?name=2017-7671
 
-setsid() defeats TIOCSTI (while breaking other things like job 
-control...); it doesn't stop other attacks that don't require 
-controlling terminal.
+-Bryan
 
-Until su is fixed to allocate new pty, I recommend running it under a 
-standalone terminal emulator, such as screen or tmux. This has also an 
-advantage that it's possible to tell that the invoked program actually 
-terminated, instead of just pretending to terminate and faking root 
-shell UI.
 
--- 
-Jakub Wilk
+
