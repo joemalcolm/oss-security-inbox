@@ -1,27 +1,124 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/16/1
-Message-ID: <CAG48ez3sBak6JSO6p=qZ8S3mo8kARevAmUOY2TtFawaxXBk3wA@mail.gmail.com>
-Date: Fri, 16 Nov 2018 00:38:18 +0100
-From: Jann Horn <jannh@...gle.com>
-To: oss-security@...ts.openwall.com
-Subject: Linux kernel: broken uid/gid mapping for nested user namespaces with >5 ranges (CVE-2018-18955; since 4.15; fixed in 4.18.19 and 4.19.2)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/27/2
+Message-Id: <E1eqdvQ-0006jx-H6@xenbits.xenproject.org>
+Date: Tue, 27 Feb 2018 12:00:04 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 252 - DoS via non-preemptable L3/L4 pagetable freeing
 Content-Type: text/plain; charset=utf-8
 
-NOTE: I have requested a CVE identifier, and I'm sending this message,
-to make tracking of the fix easier; however, to avoid missing security
-fixes without CVE identifiers, you should *NOT* be cherry-picking a
-specific patch in response to a notification about a kernel security
-bug.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-In Linux kernel versions since 4.15, map_write() in
-kernel/user_namespace.c handles nested user namespaces with more than
-5 UID or GID ranges incorrectly. This can allow a user who has
-CAP_SYS_ADMIN in a user namespace which maps at least 6 UIDs or GIDs
-to bypass access controls on resources outside the namespace.
+                    Xen Security Advisory XSA-252
+                              version 2
 
-This is CVE-2018-18955.
+             DoS via non-preemptable L3/L4 pagetable freeing
 
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=d2f007dbe7e4c9583eea6eb04d60001e85c6f1bd
-https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.18.19
-https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.19.2
-https://bugs.chromium.org/p/project-zero/issues/detail?id=1712
+UPDATES IN VERSION 2
+====================
+
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+Guests have the ability to request removal of memory from themselves.
+This operation is intended to be requested for normal read/write pages,
+but is also permitted to be used on other types of pages.  So far this
+in particular included pages pinned to their current type, with the
+necessary unpinning happening implicitly.  The unpinning of higher level
+page tables can, however, take a significant amount of time, and hence
+is generally expected to be carried out with intermediate preemption
+checks.  Such checks were missing from the code path involved here.
+
+IMPACT
+======
+
+A malicious guest administrator can cause a Denial of Service (DoS).
+Specifically, prevent use of a physical CPU for a significant period of
+time.
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen versions are vulnerable.
+
+Only x86 systems are affected.  ARM systems are not affected.
+
+Only PV guests can leverage this vulnerability.  HVM guests cannot
+leverage this vulnerability.
+
+MITIGATION
+==========
+
+Running only HVM guests will avoid this issue.
+
+CREDITS
+=======
+
+This issue was discovered by Jann Horn of Google Project Zero.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa252.patch           xen-unstable, Xen 4.10.0
+xsa252-4.9.patch       Xen 4.9.x, Xen 4.8.x
+xsa252-4.7.patch       Xen 4.7.x
+xsa252-4.6.patch       Xen 4.6.x, Xen 4.5.x
+
+$ sha256sum xsa252*
+5bf651378b92520969cde49d11500bcaeffab15590d21c16736be408a85ab3fa  xsa252.meta
+53174dfd05eb274431dc756c9c3a39b355d485d6c9d12a8797b350bab343d22e  xsa252.patch
+b7ba005fa62ace07f4880cc79824968c24ead3182245e4ed3a6e22cf8d2d7c05  xsa252-4.6.patch
+14f37eb6b7a9fb19b258ca3c0e2da71dbc4240e6273137d5eb4003b122101aa6  xsa252-4.7.patch
+cb679f2145e76b1c754c4377b397d201007f50438ee18e451c4b0da3f510a293  xsa252-4.9.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJalUevAAoJEIP+FMlX6CvZaDEH/0MrInFkPbVr0OFNs8KHuZNh
+5fz3sXFbf/7O0aTdFT5JJpwZaOngSyjnnKJKZMtsEHz52Nzs6o4xnYzqzNlemPJf
+FG5NKjWgQI762H8Co4z65eWwHevfDo9a1XAy2LRHlbaNkGXMwic3B2VbhW2A0Hkp
+nAATx19TpS21Fk4dK5+P8HCy+YN5RwPKKADE1Jps0MsCcSZ9NHcKfedokqpaD2DQ
+XEWlfhclzHGLdrBGFWtvBUGuxUIioB/ovVQK/6q7/Go2nLNvkrU63tdiCchzpVLA
+qXskJeatqqH/QnLXxhgzAQWf4rmjCU21l3Lh75ZK0xrRKAPFMOiPLuQ3VtVhcYA=
+=sq8W
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa252.meta" of type "application/octet-stream" (2339 bytes)
+
+Download attachment "xsa252.patch" of type "application/octet-stream" (955 bytes)
+
+Download attachment "xsa252-4.6.patch" of type "application/octet-stream" (868 bytes)
+
+Download attachment "xsa252-4.7.patch" of type "application/octet-stream" (920 bytes)
+
+Download attachment "xsa252-4.9.patch" of type "application/octet-stream" (926 bytes)
