@@ -1,100 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/14/11
-Message-Id: <E1fpcxD-00079t-UA@xenbits.xenproject.org>
-Date: Tue, 14 Aug 2018 17:17:59 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 270 v2 - Linux netback driver OOB access in hash handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/28/1
+Message-ID: <e0737f7c-7572-b3ac-bdd2-39ec72fd78c4@isc.org>
+Date: Wed, 28 Feb 2018 15:29:55 -0500
+From: Michael McNally <mcnally@....org>
+To: oss-security@...ts.openwall.com, isc-os-security@...ts.isc.org
+Cc: "security-officer@....org" <security-officer@....org>
+Subject: Multiple CVEs announced by ISC (ISC DHCP: CVE-2018-5732 & CVE-2018-5733, BIND CVE-2018-5734)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Today ISC publicly disclosed three CVEs, two in ISC DHCP and a third
+in BIND Supported Preview Edition [which is a customer-only non-public
+version of BIND, but since the disclosure is public we wish to be
+clear about it here so as not to confuse those who are following the
+public open source version of the product.]
 
-                    Xen Security Advisory XSA-270
-                              version 2
+All three vulnerabilities are now public.  Thank you, to those who were
+informed in advance, for cooperating with our disclosure schedule.
 
-           Linux netback driver OOB access in hash handling
+The two DHCP vulnerabilities are:
 
-UPDATES IN VERSION 2
-====================
+   CVE-2018-5732: A specially constructed response from a
+   malicious server can cause a buffer overflow in dhclient
+   https://kb.isc.org/article/AA-01565/75/CVE-2018-5732
 
-Public release.
+   CVE-2018-5733: A malicious client can overflow a
+   reference counter in ISC dhcpd
+   https://kb.isc.org/article/AA-01567/75/CVE-2018-5733
 
-ISSUE DESCRIPTION
-=================
+And the (Supported Preview Edition-only) BIND vulnerability is:
 
-Linux's netback driver allows frontends to control mapping of requests
-to request queues.  When processing a request to set or change this
-mapping, some input validation was missing or flawed.
+   CVE-2018-5734: A malformed request can trigger an
+   assertion failure in badcache.c
+   https://kb.isc.org/article/AA-01562/74/CVE-2018-5734
 
-IMPACT
-======
+If you have questions about these announcements please direct
+them to security-officer@....org
 
-A malicious or buggy frontend may cause the (usually privileged)
-backend to make out of bounds memory accesses, potentially resulting
-in one or more of privilege escalation, Denial of Service (DoS), or
-information leaks.
 
-VULNERABLE SYSTEMS
-==================
-
-Linux kernel versions from 4.7 onwards are affected.
-
-MITIGATION
-==========
-
-There is no known mitigation.
-
-CREDITS
-=======
-
-This issue was discovered by Felix Wilhelm of Google Project Zero.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa270.patch           Linux 4.7 ... 4.17
-
-$ sha256sum xsa270*
-392868c37c1fe0d16c36086208fd0fc045c1baf8ab9b207995bce72681cb8c54  xsa270.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJbcw6uAAoJEIP+FMlX6CvZjxgH/iUkqOm+3T+Mr51itOmeOThy
-J10GbMvqyI8kb7oTVsfHRTMU/zCm01FSCb94B9WXxrKyr3J2RCWygZpS5D5+ujkK
-w8Ec3tqfRiJ6wXm+SUh+cFeiJBc4BUbTrSgc6VdtNqXO+uGB65CGVqFXTOZfSGMH
-AJKXQYOYe0gLtGU+H1TrCut6IC5RQKkdbI+gCEgahgc9HnPJnOrJZYoDaXsYCt1l
-gFPkd1UcVvtGbn+SUjNpXJlpWH8dY2tPeueqgu9LicGZ8jZkGI8FMCfOQ0g9dFMz
-t0Q8op8N3UAVXsPws+WvbGMuZ9mF71y9y8JUZYKRdg2iLND3CRO+asaMfN+3LSk=
-=gqkS
------END PGP SIGNATURE-----
-
-Download attachment "xsa270.patch" of type "application/octet-stream" (2105 bytes)
+Michael McNally
+ISC Security Officer
