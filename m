@@ -1,4 +1,9 @@
-Received: (qmail 9233 invoked by uid 550); 16 Feb 2025 16:20:06 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["794" "Wednesday" "28" "February" "2018" "23:09:51" "+0100" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20180228230951.37205826@pc1>" "22" "Re: [oss-security] Information on file, sqlite, libarchive, pcre issues for CVE IDs assigned by Apple?" "^Date:" nil nil "2" "2018022822:09:51" "[oss-security] Information on file, sqlite, libarchive, pcre issues for CVE IDs assigned by Apple?" (number mark "        hanno@hboeck Feb 28   22/794   " thread-indent "\"Re: [oss-security] Information on file, sqlite, libarchive, pcre issues for CVE IDs assigned by Apple?\"\n") "<20180228202410.GA822@inutil.org>" ("<20180228202410.GA822@inutil.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 5429 invoked by uid 550); 28 Feb 2018 22:10:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,139 +11,40 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 5410 invoked from network); 28 Feb 2018 22:10:05 -0000
+Message-ID: <20180228230951.37205826@pc1>
+In-Reply-To: <20180228202410.GA822@inutil.org>
+References: <20180228202410.GA822@inutil.org>
+X-Mailer: Claws Mail 3.16.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 28 Feb 2018 23:09:51 +0100
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 7521 invoked from network); 16 Feb 2025 16:19:17 -0000
-Date: Sun, 16 Feb 2025 17:18:18 +0100
-From: Solar Designer <solar@openwall.com>
+Subject: Re: [oss-security] Information on file, sqlite, libarchive, pcre
+ issues for CVE IDs assigned by Apple?
 To: oss-security@lists.openwall.com
-Message-ID: <20250216161818.GA12372@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-User-Agent: Mutt/1.4.2.3i
-Subject: [oss-security] CVE-2025-1094: PostgreSQL: Quoting APIs miss neutralizing quoting syntax in text that fails encoding validation, enabling psql SQL injection
 
-Hi,
+On Wed, 28 Feb 2018 21:24:10 +0100
+Moritz Muehlenhoff <jmm@debian.org> wrote:
 
-As announced on February 13 in:
+> Of the IDs mentioned above, only CVE-2017-10989 refers to specific,
+> identifiable information. Does anyone on the list have additional
+> information on any of these bugs; allowing to map them to upstream
+> bug reports/patches?
 
-https://www.postgresql.org/about/news/postgresql-173-167-1511-1416-and-1319-released-3015/
-https://www.postgresql.org/message-id/173945575457.197393.6175786842655230205%40wrigleys.postgresql.org
+This only partly answers your question, but the oss-fuzz issues are
+handled in a public bug tracker (public as in "they become public once
+they're fixed or a deadline has passed" I believe):
+https://bugs.chromium.org/p/oss-fuzz/issues/list
 
-> The PostgreSQL Global Development Group has released an update to all supported
-> versions of PostgreSQL, including 17.3, 16.7, 15.11, 14.16, and 13.19.
-> This release fixes 1 security vulnerability and over 70 bugs reported over the
-> last several months.
-> 
-> For the full list of changes, please review the
-> [release notes](https://www.postgresql.org/docs/release/).
-> 
-> Security Issues
-> ---------------
-> 
-> ### [CVE-2025-1094](https://www.postgresql.org/support/security/CVE-2025-1094/): PostgreSQL quoting APIs miss neutralizing quoting syntax in text that fails encoding validation
-> 
-> CVSS v3.1 Base Score: [8.1](https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator?version=3.1&vector=AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H)
-> 
-> Supported, Vulnerable Versions: 13 - 17. 
-> 
-> Improper neutralization of quoting syntax in PostgreSQL [`libpq`](https://www.postgresql.org/docs/current/libpq.html)
-> functions `PQescapeLiteral()`, `PQescapeIdentifier()`, `PQescapeString()`, and
-> `PQescapeStringConn()` allows a database input provider to achieve SQL
-> injection in certain usage patterns. Specifically, SQL injection requires the
-> application to use the function result to construct input to psql, the
-> PostgreSQL interactive terminal. Similarly, improper neutralization of quoting
-> syntax in PostgreSQL command line utility programs allows a source of command
-> line arguments to achieve SQL injection when [`client_encoding`](https://www.postgresql.org/docs/current/runtime-config-client.html#GUC-CLIENT-ENCODING)
-> is `BIG5` and
-> [`server_encoding`](https://www.postgresql.org/docs/current/runtime-config-preset.html#GUC-SERVER-ENCODING)
-> is one of `EUC_TW` or `MULE_INTERNAL`. Versions before PostgreSQL 17.3, 16.7,
-> 15.11, 14.16, and 13.19 are affected.
-> 
-> The PostgreSQL project thanks Stephen Fewer, Principal Security Researcher,
-> Rapid7 for reporting this problem.
+You'll find issues in sqlite, file and libarchive there, but of course
+that doesn't give you a mapping to the CVEs assigned.
 
-This vulnerability is related to BeyondTrust CVE-2024-12356:
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
 
-https://infosec.exchange/@catc0n/113997298617317751
-
-In Caitlin Condon's words in the thread above:
-
-> New #Rapid7 vuln disclosure c/o @stephenfewer: CVE-2025-1094 is a SQL injection flaw in PostgreSQL's psql interactive tool that was discovered while analyzing BeyondTrust RS CVE-2024-12356. The bug is interesting - thread on its relation to BeyondTrust exploitation https://www.rapid7.com/blog/post/2025/02/13/cve-2025-1094-postgresql-psql-sql-injection-fixed/
-> CVE-2025-1094: PostgreSQL psql SQL injection (FIXED) | Rapid7 Blog
-> 
-> CVE-2024-12356, as you may recall, is a zero-day bug that has garnered broad attention in recent weeks as a result of its link to a high-profile attack on the U.S. Treasury Department that was attributed to Chinese state-sponsored adversaries. https://www.nytimes.com/2024/12/30/us/politics/china-hack-treasury.html
-> The Treasury Department said it had worked with the F.B.I., the intelligence community and other investigators to determine the impact of the breach.
-> The New York Times б╥ Dec 30, 202
-> China Hacked Treasury Dept. in 'Major' Breach, U.S. Says
-> By Ana Swanson
-> 
-> In every scenario Rapid7 tested during analysis of BeyondTrust Remote Support CVE-2024-12356, a successful exploit for CVE-2024-12356 *had* to include exploitation of PostgreSQL CVE-2025-1094 in order to achieve remote code execution.
-> 
-> CVE-2024-12356 was patched in December 2024, and the patch successfully neutralized what we believe to be the original exploit chain (including CVE-2025-1094). So neither CVE-2024-12356 nor CVE-2025-1094 was exploitable in BeyondTrust RS post-patch.
-> 
-> The BeyondTrust patch for CVE-2024-12356 did not address the root cause of CVE-2025-1094 in PostgreSQL psql, however - so CVE-2025-1094 remained a zero-day vulnerability until it was reported to the PostgreSQL dev group and remediated in today's release. https://www.postgresql.org/support/security/CVE-2025-1094/
-> PostgreSQL: CVE-2025-1094: PostgreSQL quoting APIs miss neutralizing quoting syntax in text that fails encoding validation
-> 
-> Finally, plot twist! @stephenfewer also discovered that before BeyondTrust's patch was released, it was possible to exploit CVE-2025-1094 against a vulnerable Remote Support target without leveraging CVE-2024-12356 at all.
-> 
-> CVE-2025-1094 affects all supported versions of PostgreSQL and is non-trivial to exploit. We wouldn't expect to see it exploited in PostgreSQL implementations more broadly (outside known-vulnerable BeyondTrust RS and PRA versions), given the complexity of the exploit pattern.
-> 
-> But with the above said, it's clear that the adversaries who perpetrated the December attack *really* knew the target technology, which is yet another example of an 0day exploit trend Rapid7 started tracking in 2023.
-> 
-> Full analysis of BeyondTrust PRA and RS CVE-2024-12356 in AttackerKB c/o @stephenfewer, and our sincere thanks to the PostgreSQL development group for their quick response and timely resolution. https://attackerkb.com/topics/G5s8ZWAbYH/cve-2024-12356/rapid7-analysis
-> 
-> One teeny tiny last semi-personal note - this is one of the most straightforward disclosure timelines we've been able to put in a CVD blog in a while, which is extra nice (and unfortunately not the norm in recent years) and also makes me extra grateful to the PostgreSQL dev group
-
-The referenced Rapid7 blog post:
-
-https://www.rapid7.com/blog/post/2025/02/13/cve-2025-1094-postgresql-psql-sql-injection-fixed/
-
-> CVE-2025-1094: PostgreSQL psql SQL injection (FIXED)
-> 
->     Feb 13, 2025 3 min read Stephen Fewer
-> 
-> Last updated at Fri, 14 Feb 2025 02:54:50 GMT
-> 
-> Rapid7 discovered a high-severity SQL injection vulnerability, CVE-2025-1094, affecting the PostgreSQL interactive tool psql. This discovery was made while Rapid7 was performing research into the recent exploitation of CVE-2024-12356 - an unauthenticated remote code execution (RCE) vulnerability that affects both BeyondTrust Privileged Remote Access (PRA) and BeyondTrust Remote Support (RS). Rapid7 discovered that in every scenario we tested, a successful exploit for CVE-2024-12356 had to include exploitation of CVE-2025-1094 in order to achieve remote code execution. While CVE-2024-12356 was patched by BeyondTrust in December 2024, and this patch successfully blocks exploitation of both CVE-2024-12356 and CVE-2025-1094, the patch did not address the root cause of CVE-2025-1094, which remained a zero-day until Rapid7 discovered and reported it to PostgreSQL.
-> 
-> All supported versions before PostgreSQL 17.3, 16.7, 15.11, 14.16, and 13.19 are affected. CVE-2025-1094 has a CVSS 3.1 base score of 8.1 (High). More information is available in the PostgreSQL advisory.
-> Impact
-> 
-> CVE-2025-1094 arises from an incorrect assumption that when attacker-controlled untrusted input has been safely escaped via PostgreSQL's string escaping routines, it cannot be leveraged to generate a successful SQL injection attack. Rapid7 found that SQL injection is, in fact, still possible in a certain scenario when escaped untrusted input is included as part of a SQL statement executed by the interactive psql tool.
-> 
-> Because of how PostgreSQL string escaping routines handle invalid UTF-8 characters, in combination with how invalid byte sequences within the invalid UTF-8 characters are processed by psql, an attacker can leverage CVE-2025-1094 to generate a SQL injection.
-> 
-> An attacker who can generate a SQL injection via CVE-2025-1094 can then achieve arbitrary code execution (ACE) by leveraging the interactive tool's ability to run meta-commands. Meta-commands extend the interactive tools functionality, by providing a wide variety of additional operations that the interactive tool can perform. The meta-command, identified by the exclamation mark symbol, allows for an operating system shell command to be executed. An attacker can leverage CVE-2025-1094 to perform this meta-command, thus controlling the operating system shell command that is executed.
-> 
-> Alternatively, an attacker who can generate a SQL injection via CVE-2025-1094 can execute arbitrary attacker-controlled SQL statements.
-> Credit
-> 
-> This vulnerability was discovered by Stephen Fewer, Principal Security Researcher at Rapid7 and is being disclosed in accordance with Rapid7's vulnerability disclosure policy.
-> Analysis
-> 
-> A technical analysis of CVE-2025-1094, as it relates to the exploitation of the BeyondTrust vulnerability CVE-2024-12356, is available in AttackerKB.
-> 
-> A Metasploit exploit module that exploits CVE-2025-1094 against a vulnerable BeyondTrust Privileged Remote Access (PRA) and Remote Support (RS) target is available here.
-> Vendor Statement
-> 
->     The PostgreSQL Global Development Group provides information on security vulnerability reporting, releases processes, and known vulnerability fixes at https://www.postgresql.org/support/security/.
-> 
-> Remediation
-> 
-> To remediate CVE-2025-1094, PostgreSQL users should upgrade to PostgreSQL 17.3, 16.7, 15.11, 14.16, or 13.19. For additional details, please see the PostgreSQL advisory.
-> Rapid7 customers
-> 
-> InsightVM and Nexpose customers can assess their exposure to CVE-2025-1094 with an authenticated vulnerability check available in today's (February 13) content release.
-> 
-> For CVE-2024-12356 affecting BeyondTrust Privileged Remote Access (PRA) and Remote Support (RS) products, InsightVM and Nexpose customers have been able to assess exposure with authenticated checks for Windows systems (Scan Engine only checks) as of the February 10, 2025 content release.
-> Disclosure timeline
-> 
->     January 27, 2025: Rapid7 makes initial contact with the PostgreSQL security team and discloses vulnerability details.
->     January 29, 2025: The PostgreSQL development group confirms the finding; Rapid7 and PostgreSQL developers agree on a coordinated disclosure date.
->     February 11, 2025: The PostgreSQL development group provides a CVE ID and affected versions.
->     February 13, 2025: This disclosure.
-
-Alexander
+mail/jabber: hanno@hboeck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
