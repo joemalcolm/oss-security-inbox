@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1020" "Wednesday" "19" "August" "2015" "15:50:19" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty3WvawiwP7FbyzCjPrx9BK9pnzPc-EPq2RHw=E2uKH_ow@mail.gmail.com>" "29" "Re: [oss-security] CVE REJECT noise" nil nil nil "8" "2015081921:50:19" "[oss-security] CVE REJECT noise" (number mark "        kseifried@re Aug 19   29/1020  " thread-indent "\"Re: [oss-security] CVE REJECT noise\"\n") "<20150819214225.GA20825@openwall.com>" ("<20150819214225.GA20825@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2745" "Wednesday" "28" "February" "2018" "21:24:10" "+0100" "Moritz Muehlenhoff" "jmm@debian.org" "<20180228202410.GA822@inutil.org>" "68" "[oss-security] Information on file, sqlite, libarchive, pcre issues for CVE IDs assigned by Apple?" "^Date:" nil nil "2" "2018022820:24:10" "[oss-security] Information on file, sqlite, libarchive, pcre issues for CVE IDs assigned by Apple?" (number mark "        jmm@debian.o Feb 28   68/2745  " thread-indent "\"[oss-security] Information on file, sqlite, libarchive, pcre issues for CVE IDs assigned by Apple?\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 16361 invoked by uid 550); 19 Aug 2015 21:50:32 -0000
+Received: (qmail 20005 invoked by uid 550); 28 Feb 2018 22:00:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,58 +11,87 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 16329 invoked from network); 19 Aug 2015 21:50:31 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:content-type;
-        bh=+QlrxpScn8R9aEHj0FUyyhkQltLINjZDcvwUSQ+8uOQ=;
-        b=IvBPRRcgsJUAAwIEuqA2EpK+obgll/nqfrcUfm++WoQJiaWhkunMyfhdDT5EFxuvfJ
-         FiAicQ3/59d1Tv3IVaucigVdtzNCRcyDcLpOAT7f9CCpHvXRhIIfUa8oH9Z9s6n9rmQK
-         0JkkgYmpg3cZSXBA6orf0BGDODxqZUKtkxIZ5RkSG5NVBy7ymclO5LHSTetVm5flegsv
-         fCjxWsgp5On9gnvvVYcnXMd+LCs1hX7JmslwG5geoiJh5eHvhNXFXyeFVa21Xb0xKo2p
-         3DUDPf741p8molJqD8CNTbiPc7YHI5i8NJp9p2xh3gn5GZ8sXgf8qJomDDNMAvT4TpLw
-         OMFQ==
-X-Gm-Message-State: ALoCoQlu2JsNVTEvHaI28Qw/km3Jm4icsgvtICAuhEVrVdCTkR9Su5nbOFjYq60cqQjqpUfmwUXb
+Received: (qmail 19967 invoked from network); 28 Feb 2018 22:00:36 -0000
+Message-ID: <20180228202410.GA822@inutil.org>
 MIME-Version: 1.0
-X-Received: by 10.13.245.69 with SMTP id e66mr15654457ywf.176.1440021019945;
- Wed, 19 Aug 2015 14:50:19 -0700 (PDT)
-In-Reply-To: <20150819214225.GA20825@openwall.com>
-References: <20150819214225.GA20825@openwall.com>
-Message-ID: <CANO=Ty3WvawiwP7FbyzCjPrx9BK9pnzPc-EPq2RHw=E2uKH_ow@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=94eb2c0885be5d41fe051db10527
-Date: Wed, 19 Aug 2015 15:50:19 -0600
-From: Kurt Seifried <kseifried@redhat.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: jmm@inutil.org
+X-SA-Exim-Scanned: No (on inutil.org); SAEximRunCond expanded to false
+Date: Wed, 28 Feb 2018 21:24:10 +0100
+From: Moritz Muehlenhoff <jmm@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE REJECT noise
-To: oss-security <oss-security@lists.openwall.com>
+Subject: [oss-security] Information on file, sqlite, libarchive, pcre issues for CVE IDs
+ assigned by Apple?
+To: oss-security@lists.openwall.com
 
---94eb2c0885be5d41fe051db10527
-Content-Type: text/plain; charset=UTF-8
+Hi,
+Apple has assigned a few CVE IDs for open source components not engineered at Apple:
 
-On Wed, Aug 19, 2015 at 3:42 PM, Solar Designer <solar@openwall.com> wrote:
+https://support.apple.com/en-us/HT208144 refers to
 
-> All -
->
-> Can we please agree that CVE REJECT postings such as those Kurt has been
-> occasionally making in here for a while are not to be made anymore?  To
-> me, and I suspect to almost(?) all other oss-security subscribers, they
-> are just noise.  I mean things like this:
->
->
-Stupid question but who is "We"? I mean it's your list and if you want me
-to definitely not post these, I can respect that no problem, OTOH if you're
-looking for community consensus I doubt that'll happen in any meaningful
-way (bike shedding is the most likely outcome). Mitre people: is it
-sufficient if I privately inform you of such CVE rejects so they can be put
-int he database?
+file
+  Available for: OS X Mountain Lion 10.8 and later
+  Impact: Multiple issues in file
+  Description: Multiple issues were addressed by updating to version 5.30.
+  CVE-2017-7121: found by OSS-Fuzz
+  CVE-2017-7122: found by OSS-Fuzz
+  CVE-2017-7123: found by OSS-Fuzz
+  CVE-2017-7124: found by OSS-Fuzz
+  CVE-2017-7125: found by OSS-Fuzz
+  CVE-2017-7126: found by OSS-Fuzz
 
+SQLite
+  Available for: iPhone 5s and later, iPad Air and later, and iPod touch 6th generation
+  Impact: Multiple issues in SQLite
+  Description: Multiple issues were addressed by updating to version 3.19.3.
+  CVE-2017-10989: found by OSS-Fuzz
+  CVE-2017-7128: found by OSS-Fuzz
+  CVE-2017-7129: found by OSS-Fuzz
+  CVE-2017-7130: found by OSS-Fuzz
 
--- 
+SQLite
+  Available for: iPhone 5s and later, iPad Air and later, and iPod touch 6th generation
+  Impact: An application may be able to execute arbitrary code with system privileges
+  Description: A memory corruption issue was addressed with improved memory handling.
+  CVE-2017-7127: an anonymous researcher
 
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
+https://support.apple.com/en-us/HT208221 refers to:
 
---94eb2c0885be5d41fe051db10527--
+libarchive
+  Available for: macOS Sierra 10.12.6, OS X El Capitan 10.11.6
+  Impact: Unpacking a maliciously crafted archive may lead to arbitrary code execution
+  Description: Multiple memory corruption issues existed in libarchive. These issues were addressed through improved input validation.
+  CVE-2017-13812: found by OSS-Fuzz
+
+libarchive
+  Available for: macOS Sierra 10.12.6, OS X El Capitan 10.11.6
+  Impact: Unpacking a maliciously crafted archive may lead to arbitrary code execution
+  Description: A buffer overflow issue was addressed through improved memory handling.
+  CVE-2017-13813: found by OSS-Fuzz
+  CVE-2017-13816: found by OSS-Fuzz
+
+file
+  Available for: macOS Sierra 10.12.6, OS X El Capitan 10.11.6
+  Impact: Multiple issues in file
+  Description: Multiple issues were addressed by updating to version 5.31.
+  CVE-2017-13815
+
+PCRE
+  Available for: macOS Sierra 10.12.6, OS X El Capitan 10.11.6
+  Impact: Multiple issues in pcre
+  Description: Multiple issues were addressed by updating to version 8.40.
+  CVE-2017-13846
+
+Of the IDs mentioned above, only CVE-2017-10989 refers to specific, identifiable information.
+Does anyone on the list have additional information on any of these bugs; allowing to map them
+to upstream bug reports/patches?
+
+Why does the Apple CNA have a mandate to assign CVE IDs to generic FLOSS components not
+written by Apple to begin with? Especially if they're not participating in standard open source
+security information sharing practices.
+
+Cheers,
+        Moritz
