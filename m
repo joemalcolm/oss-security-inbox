@@ -1,82 +1,133 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/14/3
-Message-ID: <20181214132723.GA27168@grsecurity.net>
-Date: Fri, 14 Dec 2018 08:27:24 -0500
-From: Brad Spengler <spender@...ecurity.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/28/5
+Message-Id: <7515A5D7-EBF4-49A1-BDBF-DA715092FB1A@beckweb.net>
+Date: Wed, 28 Feb 2018 23:20:56 +0100
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Cc: Jann Horn <jannh@...gle.com>
-Subject: Re: Linux kernel: userfaultfd bypasses tmpfs file permissions (CVE-2018-18397; since 4.11; fixed in 4.14.87 and 4.19.7)
+Subject: Re: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-I really wish such statistics would stop being cited as evidence of anything,
-since the ingrained bias of CVE allocation (which is generally not done by
-upstream itself, and is instead mostly done by the distros for issues that
-affect their older kernels) inherently changes the range of conclusions that
-can be reached.  These statistics and the "5 year lifetime" of Linux kernel
-bugs are simply myths.  The original "5 year lifetime" analysis was wrong
-from the start and already pointed out back then
-(https://lwn.net/Articles/410674/), but people continue to cite it.
 
-Garbage in, garbage out -- can we please stop feeding this pseudo-science?
+> On 26. Feb 2018, at 13:39, Daniel Beck <ml@...kweb.net> wrote:
+> 
+> SECURITY-260
+> The Coverity Plugin stored passwords unencrypted as part of its
+> configuration. This allowed users with Jenkins master local file system
+> access and Jenkins administrators to retrieve the stored password. The
+> latter could result in exposure of the passwords through browser
+> extensions, cross-site scripting vulnerabilities, and similar situations.
 
--Brad
+CVE-2018-1000104
 
-On Fri, Dec 14, 2018 at 02:07:55PM +0100, Solar Designer wrote:
-> On Thu, Dec 13, 2018 at 09:02:12PM +0100, Yves-Alexis Perez wrote:
-> > On Wed, 2018-12-12 at 15:24 +0100, Solar Designer wrote:
-> > > A question to ask may be: out of Linux kernel vulnerabilities being
-> > > patched, are there more high and critical overall severity (e.g., as
-> > > risk impact times risk probability) vulnerabilities found in "too
-> > > recent" kernels than there are high and critical severity untracked
-> > > vulnerabilities (also or instead) affecting "sufficiently old" kernels?
-> > 
-> > Data collected by Kees and regularly updated might help here. See 
-> > https://events.linuxfoundation.org/wp-content/uploads/2017/12/Overview-and-Recent-Developments-Kernel-Self-Protection-Project_Kees-Cook.pdf#%5B%7B%22num%22%3A22%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C0%2C446.4%2C0%5D
-> > for the last edition (sorry for the weird anchor, in case it breaks it's on
-> > slide 5)
-> 
-> Thanks!  Slide 4 says average lifetime among 3 critical issues is 5.3
-> years, and among 79 high severity issues is 5.6 years.  (And then
-> there's over a thousand of medium and low severity issues.  Ouch.)
-> 
-> However, to answer my question above we need median and not average.
-> For example, (1, 2, 3, 16) has an average of 5.5 years, but in that
-> example by choosing a kernel version that is 2.5 years old, which is way
-> below the average, we'd nevertheless avoid half of the issues.
-> 
-> Slide 5 is in fact more relevant: it's an illustration showing
-> "critical & high CVE lifetimes" against kernel versions.  Per this
-> illustration, we can see that my example of 3.10 (as RHEL7's base
-> kernel) is hit by many low-numbered issues, but is hit by only two in
-> the 67 to 82 range, which is 1/8 or 12.5% of issues found that recently.
-> This is consistent with what I said about it having needed to mature
-> "for a few years and a few hundred revisions" after RHEL7 was first
-> released.  I think it became mature enough just recently.  It didn't
-> feel mature enough to me when I ran Trinity for a few days (with many
-> restarts) on a RHEL7-derived system two years ago.  I hope those crashes
-> have since been rediscovered with superior fuzzers allowing for easy
-> reproduction, and patched.  We've seen major improvement in fuzzing.
-> 
-> Somehow Nicholas' reply below isn't part of the same thread (no proper
-> In-Reply-To header), so let me bring it to the thread:
-> 
-> https://www.openwall.com/lists/oss-security/2018/12/13/14
-> 
-> On Thu, Dec 13, 2018 at 06:07:32PM -0500, Nicholas Luedtke wrote:
-> > We have also been compiling and presenting the CVEs on a per stream
-> > basis at https://www.linuxkernelcves.com because the question of which
-> > upstream stable branch to choose has been asked on a enterprise level
-> > many times. Of course, once you choose once you still have to track the
-> > changes (or lack there of).
-> 
-> This is also very interesting and relevant.  As the website (and GitHub
-> README.md) acknowledges:
-> 
-> "This is currently autogenerated and will go through testing before any
-> promises of accuracy are made.  The eventual goal would be to have a
-> community curated list of CVEs along with when the code was introduced
-> and when it was fixed."
-> 
-> Alexander
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+> SECURITY-402
+> Missing permission checks in Gerrit Trigger Plugin allowed users with
+> Overall/Read permission to access a form that showed the configuration of
+> Gerrit servers in Jenkins. The key file password was only shown in its
+> encrypted form, if configured. Other options were plainly visible.
+
+CVE-2018-1000105
+
+
+> SECURITY-403
+> Missing permission checks in Gerrit Trigger Plugin allowed users with
+> Overall/Read permission to perform the following actions:
+> 
+> - Configure Gerrit servers
+> - Connect and disconnect configured Gerrit servers
+
+CVE-2018-1000106
+
+
+> SECURITY-498
+> Job and Node ownership Plugin did not prevent the ownership metadata being
+> overwritten when a job or node configuration was updated from the CLI or
+> using the remote API (POST config.xml).
+> 
+> This allowed users with Job/Configure permission but without
+> ManageOwnership/Jobs permission to change job ownership metadata, and users
+> with Computer/Configure but without ManageOwnership/Nodes to change node
+> ownership metadata.
+
+CVE-2018-1000107
+
+
+> SECURITY-712
+> CppNCSS Plugin did not properly escape the report name and graph name,
+> resulting in a reflected cross-site scripting vulnerability.
+
+CVE-2018-1000108
+
+
+> SECURITY-715
+> Google Play Android Publisher Plugin provides a list of applicable
+> credential IDs to allow users configuring a job to select the one they’d
+> like to use to authenticate with the Google Play API.
+> 
+> This functionality did not check permissions, allowing any user with
+> Overall/Read permission to get a list of valid credential IDs. Those could
+> be used as part of an attack to capture the credentials using another
+> vulnerability.
+> 
+> Additionally, a related form validation function would allow verification
+> whether a specified credential is valid for use with the Google Play API.
+
+CVE-2018-1000109
+
+
+> SECURITY-723
+> The class handling unauthenticated Git post-commit hook notification
+> requests at the /git/ path unnecessarily extended another type that handled
+> requests to the …/search/ sub-path.
+> 
+> This allowed submission of search queries to Jenkins, and getting a list of
+> search results usually available to anyone with Overall/Read permission. In
+> current Jenkins releases, those are typically the names of known users
+> (both actual users of Jenkins, and known SCM committers) and nodes (master
+> and agents).
+
+CVE-2018-1000110
+
+
+> SECURITY-724
+> The class handling unauthenticated Subversion post-commit hook notification
+> requests at the /subversion/ path unnecessarily extended another type that
+> handled requests to the …/search/ sub-path.
+> 
+> This allowed submission of search queries to Jenkins, and getting a list of
+> search results usually available to anyone with Overall/Read permission. In
+> current Jenkins releases, those are typically the names of known users
+> (both actual users of Jenkins, and known SCM committers) and nodes (master
+> and agents).
+
+CVE-2018-1000111
+
+
+> SECURITY-726
+> The class handling unauthenticated Mercurial post-commit hook notification
+> requests at the /mercurial/ path unnecessarily extended another type that
+> handled requests to the …/search/ sub-path.
+> 
+> This allowed submission of search queries to Jenkins, and getting a list of
+> search results usually available to anyone with Overall/Read permission. In
+> current Jenkins releases, those are typically the names of known users
+> (both actual users of Jenkins, and known SCM committers) and nodes (master
+> and agents).
+
+CVE-2018-1000112
+
+
+> SECURITY-731
+> Users with Job/Configure permission were able to configure TestLink reports
+> to display arbitrary unescaped HTML e.g. in test case names.
+
+CVE-2018-1000113
+
+
+> SECURITY-746
+> In Promoted Builds Plugin, users with Job/Read access were able to approve
+> and re-execute promotion processes with a manual promotion condition that
+> did not specify a list of users allowed to manually approve the promotion.
+
+CVE-2018-1000114
+
