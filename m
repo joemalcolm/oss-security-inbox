@@ -1,90 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/14/2
-Message-ID: <alpine.DEB.2.20.1803132312370.29869@tvnag.unkk.fr>
-Date: Wed, 14 Mar 2018 07:55:08 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: LDAP NULL pointer dereference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/28/2
+Message-ID: <20180228202410.GA822@inutil.org>
+Date: Wed, 28 Feb 2018 21:24:10 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Information on file, sqlite, libarchive, pcre issues for CVE IDs assigned by Apple?
 Content-Type: text/plain; charset=utf-8
 
-LDAP NULL pointer dereference
-=============================
+Hi,
+Apple has assigned a few CVE IDs for open source components not engineered at Apple:
 
-Project curl Security Advisory, March 14th 2018 -
-[Permalink](https://curl.haxx.se/docs/adv_2018-97a2.html)
+https://support.apple.com/en-us/HT208144 refers to
 
-VULNERABILITY
--------------
+file
+  Available for: OS X Mountain Lion 10.8 and later
+  Impact: Multiple issues in file
+  Description: Multiple issues were addressed by updating to version 5.30.
+  CVE-2017-7121: found by OSS-Fuzz
+  CVE-2017-7122: found by OSS-Fuzz
+  CVE-2017-7123: found by OSS-Fuzz
+  CVE-2017-7124: found by OSS-Fuzz
+  CVE-2017-7125: found by OSS-Fuzz
+  CVE-2017-7126: found by OSS-Fuzz
 
-curl might dereference a near-NULL address when getting an LDAP URL.
+SQLite
+  Available for: iPhone 5s and later, iPad Air and later, and iPod touch 6th generation
+  Impact: Multiple issues in SQLite
+  Description: Multiple issues were addressed by updating to version 3.19.3.
+  CVE-2017-10989: found by OSS-Fuzz
+  CVE-2017-7128: found by OSS-Fuzz
+  CVE-2017-7129: found by OSS-Fuzz
+  CVE-2017-7130: found by OSS-Fuzz
 
-The function `ldap_get_attribute_ber()` is called to get attributes, but it
-turns out that it can return `LDAP_SUCCESS` and still return a `NULL` pointer
-in the result pointer when getting a particularly crafted response. This was a
-surprise to us and to the code.
+SQLite
+  Available for: iPhone 5s and later, iPad Air and later, and iPod touch 6th generation
+  Impact: An application may be able to execute arbitrary code with system privileges
+  Description: A memory corruption issue was addressed with improved memory handling.
+  CVE-2017-7127: an anonymous researcher
 
-libcurl-using applications that allow LDAP URLs, or that allow redirects to
-LDAP URLs could be made to crash by a malicious server.
+https://support.apple.com/en-us/HT208221 refers to:
 
-We are not aware of any exploit of this flaw.
+libarchive
+  Available for: macOS Sierra 10.12.6, OS X El Capitan 10.11.6
+  Impact: Unpacking a maliciously crafted archive may lead to arbitrary code execution
+  Description: Multiple memory corruption issues existed in libarchive. These issues were addressed through improved input validation.
+  CVE-2017-13812: found by OSS-Fuzz
 
-INFO
-----
+libarchive
+  Available for: macOS Sierra 10.12.6, OS X El Capitan 10.11.6
+  Impact: Unpacking a maliciously crafted archive may lead to arbitrary code execution
+  Description: A buffer overflow issue was addressed through improved memory handling.
+  CVE-2017-13813: found by OSS-Fuzz
+  CVE-2017-13816: found by OSS-Fuzz
 
-The bug is only present in curl versions built to use OpenLDAP.
+file
+  Available for: macOS Sierra 10.12.6, OS X El Capitan 10.11.6
+  Impact: Multiple issues in file
+  Description: Multiple issues were addressed by updating to version 5.31.
+  CVE-2017-13815
 
-This bug was introduced in May 2010 in [this
-commit](https://github.com/curl/curl/commit/2e056353b00d09).
+PCRE
+  Available for: macOS Sierra 10.12.6, OS X El Capitan 10.11.6
+  Impact: Multiple issues in pcre
+  Description: Multiple issues were addressed by updating to version 8.40.
+  CVE-2017-13846
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2018-1000121 to this issue.
+Of the IDs mentioned above, only CVE-2017-10989 refers to specific, identifiable information.
+Does anyone on the list have additional information on any of these bugs; allowing to map them
+to upstream bug reports/patches?
 
-CWE-476: NULL Pointer Dereference
+Why does the Apple CNA have a mandate to assign CVE IDs to generic FLOSS components not
+written by Apple to begin with? Especially if they're not participating in standard open source
+security information sharing practices.
 
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.21.0 to and including curl 7.58.0
-- Not affected versions: curl < 7.21.0 and curl >= 7.59.0
-
-libcurl is used by many applications, but not always advertised as such.
-
-THE SOLUTION
-------------
-
-In curl version 7.59.0, curl checks the pointer properly before using it.
-
-A [patch for CVE-2018-1000121](https://curl.haxx.se/CVE-2018-1000121.patch) is available.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl to version 7.59.0
-
-  B - Apply the patch to your version and rebuild
-
-  C - Make sure you disable LDAP in your transfers
-
-TIME LINE
----------
-
-It was reported to the curl project on March 6, 2018
-
-We contacted distros@...nwall on March 7, 2018.
-
-curl 7.59.0 was released on March 14 2018, coordinated with the publication of
-this advisory.
-
-CREDITS
--------
-
-Reported by Dario Weisser. Patch by Daniel Stenberg.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
+Cheers,
+        Moritz
