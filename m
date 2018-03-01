@@ -1,33 +1,117 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/17/3
-Message-ID: <nycvar.YSQ.7.76.1810171256410.14417@xnncv>
-Date: Wed, 17 Oct 2018 12:59:01 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Arash TC <tohidi.arash@...il.com>
-Subject: CVE-2018-18438 Qemu: Integer overflow in ccid_card_vscard_read() allows memory corruption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/01/5
+Message-Id: <E1erO3M-0007EH-8Z@xenbits.xenproject.org>
+Date: Thu, 01 Mar 2018 13:15:20 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 256 (CVE-2018-7542) - x86 PVH guest without LAPIC may DoS the host
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-An integer overflow issue was found in the CCID Passthru card device 
-emulation, while reading card data in ccid_card_vscard_read() function. The 
-ccid_card_vscard_read() function accepts a signed integer 'size' argument, 
-which is subsequently used as unsigned size_t value in memcpy(), copying large 
-amounts of memory.
+            Xen Security Advisory CVE-2018-7542 / XSA-256
+                              version 3
 
-A user inside guest could use this flaw to crash the Qemu process resulting in 
-DoS.
+             x86 PVH guest without LAPIC may DoS the host
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2018-10/msg02396.html
-   -> https://lists.gnu.org/archive/html/qemu-devel/2018-10/msg02402.html
+UPDATES IN VERSION 3
+====================
 
-This issue was reported by Arash Tohidi. CVE requested via -> https://cveform.mitre.org/
+CVE assigned.
 
+ISSUE DESCRIPTION
+=================
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+So far, x86 PVH guests can be configured with or without Local APICs.
+Configurations with Local APICs are identical to x86 HVM guests, and
+will use as much hardware acceleration support as possible.
+Configurations without Local APICs try to turn off all hardware
+acceleration, and disable all software emulation.
+
+Multiple paths in Xen assume the presence of a Local APIC without
+sufficient checks, and can fall over a NULL pointer.  On Intel hardware,
+the logic to turn off hardware acceleration is incomplete and leaves the
+guest with full control of the real Task Priority Register.
+
+IMPACT
+======
+
+A malicious or buggy guest may cause a hypervisor crash, resulting in
+a Denial of Service (DoS) affecting the entire host.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen version 4.8 and onwards are vulnerable.
+
+Only x86 systems are vulnerable.  ARM systems are not vulnerable.
+
+Only x86 PVH guests can exploit the vulnerability.  x86 PV and HVM
+guests cannot exploit the vulnerability.
+
+MITIGATION
+==========
+
+Running only PV or HVM guests avoids the vulnerability.
+
+Running all PVH guests with "apic=1" in the guest configuration file
+(or equivalent thereof) also avoids the vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Ian Jackson of Citrix.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa256.patch           xen-unstable, Xen 4.10.x, Xen 4.9.x
+xsa256-4.8.patch       Xen 4.8.x
+
+$ sha256sum xsa256*
+3e45cc3f2ea516e7470083592041e238c0dfe32324790b2fba0e47c9efe38865  xsa256.patch
+c029fcb67ff7c3c9a2adcb8e6f5e245a0d347acc8a9b3530591a639cbf321349  xsa256-4.8.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJal/zVAAoJEIP+FMlX6CvZkSgIAJG8fezZnjklV1FlQpzIfy5Y
+qMg0PaUUg69vSmc1uxuM51pi/KATCE541VdJesZ7CviFvrNm46fj2OF4L5wGNbq7
+wqi1Ywn3J8iVOkzVyhQbb0ZXzBQK0Z48Q7qcZNlnJ8Ci1MP8wjWK5Aq0BO7qUEpM
+oHawLRAmEY0JKxIWwlpvR35dwoGp3cOSy0yHSWrpuj+Q59rhOuY/hyn0NlMBjDqp
+CbJqLC1T0lfC9fpe7LRxDBusleZm/QGiWDHjFMS560koDt4gq6i8zTpVIJrpHdFF
+eGhKY4JhVJpNljOB0CD87qk9WpN8+jxb1hVigMfZcyMMNygPLH5Bnh5QfhZwd00=
+=JPu9
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa256.patch" of type "application/octet-stream" (1711 bytes)
+
+Download attachment "xsa256-4.8.patch" of type "application/octet-stream" (2062 bytes)
