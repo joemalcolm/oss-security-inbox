@@ -1,10 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/29/4
-Message-ID: <a1a06b98-7f7b-60f9-dff9-0396a522d428@orlitzky.com>
-Date: Mon, 29 Jan 2018 11:09:30 -0500
-From: Michael Orlitzky <michael@...itzky.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-18078: systemd-tmpfiles root privilege escalation with fs.protected_hardlinks=0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/01/1
+Message-ID: <DC701A09-7FAD-4064-8B6F-89D8202B65F9@osu.edu>
+Date: Thu, 1 Mar 2018 02:26:43 +0000
+From: "Cantor, Scott" <cantor.2@....edu>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Apache Xerces-C Security Advisory for versions < 3.2.1 [CVE-2017-12627]
 Content-Type: text/plain; charset=utf-8
 
-Correction to the CVE-ID: it's 2017, not 2018. So CVE-2017-18078.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+
+CVE-2017-12627: Apache Xerces-C DTD vulnerability processing external paths
+
+Severity: Medium
+
+Vendor: The Apache Software Foundation
+
+Versions Affected: Apache Xerces-C XML Parser library versions
+prior to V3.2.1
+
+Description: The Xerces-C XML parser mishandles certain kinds of external
+DTD references, resulting in dereference of a NULL pointer while processing
+the path to the DTD. The bug allows for a denial of service attack in
+applications that allow DTD processing and do not prevent external DTD
+usage, and could conceivably result in remote code execution.
+
+Mitigation: Applications that are using library versions older than
+V3.2.1 should upgrade as soon as possible. Distributors of older versions
+should apply the patch from this subversion revision:
+
+http://svn.apache.org/viewvc?view=revision&revision=1819998
+
+Applications should strongly consider blocking remote entity resolution
+and/or outright disabling of DTD processing in light of the continued
+identification of bugs in this area of the library.
+
+Credit: This issue was reported by Alberto Garcia, Francisco Oca,
+and Suleman Ali of Offensive Research at Salesforce.com.
+
+References:
+http://xerces.apache.org/xerces-c/secadv/CVE-2017-12627.txt
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEE3KoVAHvtneaQzZUjN4uEVAIneWIFAlqXX9QACgkQN4uEVAIn
+eWIQaBAAikR87i0rxicryFO8xVkhEnrneWn4AM1h55HZNlIdYXzkzfcQqeLbtVSO
+bJey5xZIiL6lo+ybMKXyoIrqjtkD1LjqnHcyFPNCFZMD59vS+B47c86U2JU7jEPI
+N+Q33U8g8H0fAPhdop0XnhUiXBBvfpWIflunUWefLE+ybd8J5/B7CK54feC0/8CK
+Q47Lmj0aMKDtCM37gADbd6gI6PMJ7Kqjf5yb45okp2qhUZFp+8zrbczVmk/W9Opt
+JcuoxJFx+yfquMvs+yEelOr0m8vGtVJSFEJILZYEpbiMjMFvvBbXNCSQsPp7c7B9
+idLSect9ZDh5f/r3vEWKWq63dILxNBVm3D6K9PyEsYMk3rOTLeYin4KM5RRsmRV6
+8QUC0LS5y7q8ZsE8ou3XoFnBNwckHY3yixZ99kplM7SnzAN7N1EHBlQsGYOsEoQ+
+rqIWSPrbRE6Axdbrqo8FMjwq+kBB3zu4/AVl9VbUrV9o1dQGppWxqpRthUAIz6hS
+7abqQXrdrpXwVOx/dPN9/VK8EwmiBLcvgGIGmloABkPrzt7DqgqQfUUeNSUbQlBD
+exhckp4ivJre/F2lbdNcYq4ETSBybB++RCJF74DKhp6EwuFddCQfV5bqjeioCu9K
+cYjTbzLboz8jVrXTiavqY1Rpazv2agp+bv1jTU+nV0WQVaoSd0c=
+=4BQ4
+-----END PGP SIGNATURE-----
+
