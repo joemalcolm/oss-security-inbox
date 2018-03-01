@@ -1,34 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/23/7
-Message-Id: <1540266141.431.3@mail.gathman.org>
-Date: Mon, 22 Oct 2018 23:42:21 -0400
-From: "Stuart D. Gathman" <stuart@...hman.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/01/2
+Message-ID: <753925945.338.1519887112610@appsuite-dev.open-xchange.com>
+Date: Thu, 1 Mar 2018 08:51:52 +0200 (EET)
+From: Aki Tuomi <aki.tuomi@...n-xchange.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Using quilt on untrusted RPM spec files
+Subject: Dovecot Security Advisory: CVE-2017-14461 rfc822_parse_domain Information Leak Vulnerability
 Content-Type: text/plain; charset=utf-8
 
+Vulnerable versions: 2.0 - 2.2.33, 2.3.0
+Fixed versions: 2.2.34, 2.3.0.1
+Score: 7.5, AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H
 
+This vulnerability comes in two flavors. A malicious party can send a
+specially crafted email to a vulnerable system, causing it to crash
+dovecot. In some systems, the mail can be stored into the mail system, 
+causing crash every time it is being opened.
 
-On Thu, Oct 18, 2018 at 10:57 AM, Jakub Wilk <jwilk@...lk.net> wrote:
-> * Randy Barlow <randy@...ctronsweatshop.com>, 2018-09-27, 22:39:
->> In Fedora we have similar challenges. We've got a tool called 
->> fedora-review[0] that is maybe kinda similar to quilt.
-> 
-> Quilt is a tool to manage patch series, so maybe not that similar. :-)
+If the mail is stored into the mail system, it can be used to also leak
+heap memory from IMAP process by requesting bodystructure of the mail.
 
-mock can run quilt also
-
-> 
->> It uses mock[1] to build the source RPM (and mock does this in a 
->> chroot to help with the problems you described)
-> 
-> If it's really just chroot, then I'm afraid that's not a sufficient 
-> protection. One can easily escape the chroot with ptrace(2).
-
-Doesn't that escape require root?  Or at least a ptraceable process 
-(i.e. with the same uid) outside the chroot?
-
-Not that I'd stake anything really important on current container 
-security...  (And even VMs are vulnerable to the latest round of 
-hardware bugs.)
-
+This bug was separately reported by Cisco TALOS and thru HackerOne
+program by 'flxflndy'.
