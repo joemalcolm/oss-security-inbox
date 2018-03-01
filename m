@@ -1,151 +1,124 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/14/1
-Message-Id: <1528987730.4808.1@mail.igalia.com>
-Date: Thu, 14 Jun 2018 09:48:50 -0500
-From: Michael Catanzaro <mcatanzaro@...lia.com>
-To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
-Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: WebKitGTK+ and WPE WebKit Security Advisory WSA-2018-0005
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/01/4
+Message-Id: <E1erO3G-0007Aw-0E@xenbits.xenproject.org>
+Date: Thu, 01 Mar 2018 13:15:14 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 252 (CVE-2018-7540) - DoS via non-preemptable L3/L4 pagetable freeing
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK+ and WPE WebKit Security Advisory                WSA-2018-0005
-------------------------------------------------------------------------
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Date reported           : June 13, 2018
-Advisory ID             : WSA-2018-0005
-WebKitGTK+ Advisory URL : 
-https://webkitgtk.org/security/WSA-2018-0005.html
-WPE WebKit Advisory URL : 
-https://wpewebkit.org/security/WSA-2018-0005.html
-CVE identifiers         : CVE-2018-4190, CVE-2018-4192, CVE-2018-4199,
-                          CVE-2018-4201, CVE-2018-4214, CVE-2018-4218,
-                          CVE-2018-4222, CVE-2018-4232, CVE-2018-4233,
-                          CVE-2018-11646, CVE-2018-11712,
-                          CVE-2018-11713, CVE-2018-12293,
-                          CVE-2018-12294.
+            Xen Security Advisory CVE-2018-7540 / XSA-252
+                              version 3
 
-Several vulnerabilities were discovered in WebKitGTK+ and WPE WebKit.
+             DoS via non-preemptable L3/L4 pagetable freeing
 
-CVE-2018-4190
-    Versions affected: WebKitGTK+ before 2.20.3 and WPE WebKit before
-    2.20.1.
-    Credit to Jun Kokatsu (@shhnjk).
-    Impact: Visiting a maliciously crafted website may leak sensitive
-    data. Description: Credentials were unexpectedly sent when fetching
-    CSS mask images. This was addressed by using a CORS-enabled fetch
-    method.
+UPDATES IN VERSION 3
+====================
 
-CVE-2018-4192
-    Versions affected: WebKitGTK+ before 2.20.1.
-    Credit to Markus Gaasedelen, Nick Burnett, and Patrick Biernat of
-    Ret2 Systems, Inc working with Trend Micro's Zero Day Initiative.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A race condition was
-    addressed with improved locking.
+CVE assigned.
 
-CVE-2018-4199
-    Versions affected: WebKitGTK+ before 2.20.3 and WPE WebKit before
-    2.20.1.
-    Credit to Alex Plaskett, Georgi Geshev, Fabi Beterke, and Nils of
-    MWR Labs working with Trend Micro's Zero Day Initiative.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A buffer overflow issue was
-    addressed with improved memory handling.
+ISSUE DESCRIPTION
+=================
 
-CVE-2018-4201
-    Versions affected: WebKitGTK+ before 2.20.1.
-    Credit to an anonymous researcher.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+Guests have the ability to request removal of memory from themselves.
+This operation is intended to be requested for normal read/write pages,
+but is also permitted to be used on other types of pages.  So far this
+in particular included pages pinned to their current type, with the
+necessary unpinning happening implicitly.  The unpinning of higher level
+page tables can, however, take a significant amount of time, and hence
+is generally expected to be carried out with intermediate preemption
+checks.  Such checks were missing from the code path involved here.
 
-CVE-2018-4214
-    Versions affected: WebKitGTK+ before 2.20.0.
-    Credit to OSS-Fuzz.
-    Impact: Processing maliciously crafted web content may lead to an
-    unexpected application crash. Description: A memory corruption issue
-    was addressed with improved input validation.
+IMPACT
+======
 
-CVE-2018-4218
-    Versions affected: WebKitGTK+ before 2.20.3 and WPE WebKit before
-    2.20.1.
-    Credit to Natalie Silvanovich of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+A malicious guest administrator can cause a Denial of Service (DoS).
+Specifically, prevent use of a physical CPU for a significant period of
+time.
 
-CVE-2018-4222
-    Versions affected: WebKitGTK+ before 2.20.3 and WPE WebKit before
-    2.20.1.
-    Credit to Natalie Silvanovich of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: An out-of-bounds read was
-    addressed with improved input validation.
+VULNERABLE SYSTEMS
+==================
 
-CVE-2018-4232
-    Versions affected: WebKitGTK+ before 2.20.3 and WPE WebKit before
-    2.20.1.
-    Credit to Aymeric Chaib.
-    Impact: Visiting a maliciously crafted website may lead to cookies
-    being overwritten. Description: A permissions issue existed in the
-    handling of web browser cookies. This issue was addressed with
-    improved restrictions.
+All Xen versions are vulnerable.
 
-CVE-2018-4233
-    Versions affected: WebKitGTK+ before 2.20.3 and WPE WebKit before
-    2.20.1.
-    Credit to Samuel Groß (@5aelo) working with Trend Micro's Zero Day
-    Initiative.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+Only x86 systems are affected.  ARM systems are not affected.
 
-CVE-2018-11646
-    Versions affected: WebKitGTK+ before 2.20.3 and WPE WebKit before
-    2.20.1.
-    Credit to Mishra Dhiraj.
-    Maliciously crafted web content could trigger an application crash
-    in WebKitFaviconDatabase, caused by mishandling unexpected input.
+Only PV guests can leverage this vulnerability.  HVM guests cannot
+leverage this vulnerability.
 
-CVE-2018-11712
-    Versions affected: WebKitGTK+ 2.20.0 and 2.20.1.
-    Credit to Metrological Group B.V.
-    The libsoup network backend of WebKit failed to perform TLS
-    certificate verification for WebSocket connections.
+MITIGATION
+==========
 
-CVE-2018-11713
-    Versions affected: WebKitGTK+ before 2.20.0 or without libsoup
-    2.62.0.
-    Credit to Dirkjan Ochtman.
-    The libsoup network backend of WebKit unexpectedly failed to use
-    system proxy settings for WebSocket connections. As a result, users
-    could be deanonymized by crafted web sites via a WebSocket
-    connection.
+Running only HVM guests will avoid this issue.
 
-CVE-2018-12293
-    Versions affected: WebKitGTK+ before 2.20.3 and WPE WebKit before
-    2.20.1.
-    Credit to ADlab of Venustech.
-    Maliciously crafted web content could achieve a heap buffer overflow
-    in ImageBufferCairo by exploiting multiple integer overflow issues.
+CREDITS
+=======
 
-CVE-2018-12294
-    Versions affected: WebKitGTK+ before 2.20.2.
-    Credit to ADlab of Venustech.
-    Maliciously crafted web content could trigger a use-after-free of a
-    TextureMapperLayer object.
+This issue was discovered by Jann Horn of Google Project Zero.
 
+RESOLUTION
+==========
 
-We recommend updating to the latest stable versions of WebKitGTK+ and
-WPE WebKit. It is the best way to ensure that you are running a safe
-version of WebKit. Please check our websites for information about the
-latest stable releases.
+Applying the appropriate attached patch resolves this issue.
 
-Further information about WebKitGTK+ and WPE WebKit security advisories
-can be found at https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
+xsa252.patch           xen-unstable, Xen 4.10.0
+xsa252-4.9.patch       Xen 4.9.x, Xen 4.8.x
+xsa252-4.7.patch       Xen 4.7.x
+xsa252-4.6.patch       Xen 4.6.x, Xen 4.5.x
 
-The WebKitGTK+ and WPE WebKit team,
-June 13, 2018
+$ sha256sum xsa252*
+5bf651378b92520969cde49d11500bcaeffab15590d21c16736be408a85ab3fa  xsa252.meta
+53174dfd05eb274431dc756c9c3a39b355d485d6c9d12a8797b350bab343d22e  xsa252.patch
+b7ba005fa62ace07f4880cc79824968c24ead3182245e4ed3a6e22cf8d2d7c05  xsa252-4.6.patch
+14f37eb6b7a9fb19b258ca3c0e2da71dbc4240e6273137d5eb4003b122101aa6  xsa252-4.7.patch
+cb679f2145e76b1c754c4377b397d201007f50438ee18e451c4b0da3f510a293  xsa252-4.9.patch
+$
 
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJal/zQAAoJEIP+FMlX6CvZKAAH+gKqf6lQicFUpzEGqbVbXTg9
+DYm8S6nKvn5/tgcquznswDZ2EpEMN4j8NaII4it2UQSZo7jOn7FOxiewdhAHcIAf
+vW2MHz9tkE+DXPOod4tDwhjonzLo1n0uqVuoUylq8atIrX2KxcSDJAbRp78lmUoY
+rxklw0uOlpno4hAJ4BaNY+fvjDyPBksApstJ6CZ/BUhaJeebYHbkCo92CTUvcThg
+xdA/M+w62plLCpwdnAJY5YV8NP32I5FNTe0sPnpszfk+gyDTLBMDHXdr+yegGayt
+ZvcH5c/NEeqeeF+MSd6ibnVfboQilDoPCnf9iL5ISOHtajkR2TK2vToi2hWQsi4=
+=Bn7r
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa252.meta" of type "application/octet-stream" (2339 bytes)
+
+Download attachment "xsa252.patch" of type "application/octet-stream" (955 bytes)
+
+Download attachment "xsa252-4.6.patch" of type "application/octet-stream" (868 bytes)
+
+Download attachment "xsa252-4.7.patch" of type "application/octet-stream" (920 bytes)
+
+Download attachment "xsa252-4.9.patch" of type "application/octet-stream" (926 bytes)
