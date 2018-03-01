@@ -1,61 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/25/3
-Message-Id: <199D28DA-A105-401F-B57F-26CEC04C9A80@beckweb.net>
-Date: Thu, 25 Jan 2018 10:01:56 +0100
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/01/3
+Message-ID: <410408356.339.1519887146548@appsuite-dev.open-xchange.com>
+Date: Thu, 1 Mar 2018 08:52:26 +0200 (EET)
+From: Aki Tuomi <aki.tuomi@...n-xchange.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Multiple vulnerabilities in Jenkins plugins
+Subject: Dovecot Security Advisory: CVE-2017-15130 TLS SNI config lookups are inefficient and can be used for DoS
 Content-Type: text/plain; charset=utf-8
 
+Vulnerable versions: 2.2.0 - 2.2.33, 2.3.0
+Fixed versions: 2.2.34, 2.3.0.1
+Score: 3.7, AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L
 
-> On 22. Jan 2018, at 12:35, Daniel Beck <ml@...kweb.net> wrote:
-> 
-> SECURITY-655 (PMD)
-
-CVE-2018-1000008
-
-> SECURITY-656 (Checkstyle)
-
-CVE-2018-1000009
-
-> SECURITY-657 (DRY)
-
-CVE-2018-1000010
-
-> SECURITY-658 (FindBugs)
-
-CVE-2018-1000011
-
-> SECURITY-695 (Warnings)
-
-CVE-2018-1000012
-
-> Multiple plugins based on the Static Analysis Utilities plugin are affected by 
-> an XML External Entity (XXE) processing vulnerability. This allows attacker to 
-> configure build processes so that one of these plugins parses a maliciously 
-> crafted file that uses external entities for extraction of secrets from the 
-> Jenkins master, server-side request forgery, or denial-of-service attacks.
-> 
-> 
-> SECURITY-607
-> Release plugin did not require form submissions to be submitted via POST, 
-> resulting in a CSRF vulnerability allowing attackers to trigger release builds.
-
-CVE-2018-1000013
-
-> SECURITY-507
-> Translation Assistance did not require form submissions to be submitted via 
-> POST, resulting in a CSRF vulnerability allowing attackers to override 
-> localized strings displayed to all users on the current Jenkins instance if 
-> the victim is a Jenkins administrator.
-
-CVE-2018-1000014
-
-> SECURITY-675
-> On instances with Authorize Project plugin, the authentication associated with 
-> a build may lack the Computer/Build permission on some agents. This did not 
-> prevent the execution of Pipeline `node` blocks on those agents due to 
-> incorrect permissions checks in Pipeline: Nodes and Processes plugin.
-
-CVE-2018-1000015
-
+If dovecot has been configured with local name or local net
+configuration blocks, SNI lookups can be used to trash memory with
+useless config by using random servernames.
