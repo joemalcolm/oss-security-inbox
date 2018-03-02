@@ -1,51 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/25/2
-Message-ID: <20180725180039.figvv6qq4ivqdnj5@gentoo.org>
-Date: Wed, 25 Jul 2018 13:00:39 -0500
-From: Matthew Thode <prometheanfire@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: [OSSA-2018-002] GET /v3/OS-FEDERATION/projects leaks project information (CVE-2018-14432)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/02/2
+Message-ID: <CANO=Ty09HPfSbp8QsZHU24EnEyzOw1H1C-Zr+7mqwDhOG6=HYg@mail.gmail.com>
+Date: Fri, 2 Mar 2018 04:58:50 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: memcached UDP amplification attacks
 Content-Type: text/plain; charset=utf-8
 
-=======================================================================
-OSSA-2018-002: GET /v3/OS-FEDERATION/projects leaks project information
-=======================================================================
+On Fri, Mar 2, 2018 at 4:44 AM, Hanno Böck <hanno@...eck.de> wrote:
 
-:Date: July 25, 2018
-:CVE: CVE-2018-14432
+> Hi,
+>
+> In the past days there have been reports about some DDoS attacks
+> abusing the memcached UDP protocol:
+> https://blog.cloudflare.com/memcrashed-major-amplification-attacks-from-
+> port-11211/
+> https://www.wired.com/story/github-ddos-memcached/
+>
+>
+> The issue: memcached has an UDP protocol that allows getting a much
+> larger reply than the query sent, thus allowing amplification attacks
+> with forged sender IPs.
+>
+>
+> Upstream memcached reacted by disabling the UDP-based protocol by
+> default:
+> https://github.com/memcached/memcached/wiki/ReleaseNotes156
+> This is good, however one could argue that they should also default to
+> localhost only.
+>
+>
+> Most distros I checked right now default to enabling UDP, but
+> restricting connections to 127.0.0.1. While this is not directly
+> vulnerable it's only a minor change away from being so. The memcached
+> announcement sounds like the UDP protocol is rarely used and should be
+> considered deprecated and replaced by the TCP-based one.
+>
+> I recommend all distributions consider changing their defaults to
+> disabling the UDP-based memcached protocol by default.
+>
+>
+I think in general ALL network applications that support UDP need to think
+about hardening their default configurations due to the potential for
+amplification attacks.
+
+While it is not yet CVE worthy I can see the bar moving (much like it has
+for default passwords, and crypto) in the near future as this is clearly
+becoming a problem. Please note that this problem is already covered by
+CWE-406 (to some degree) which makes the case for CVE assignment stronger.
 
 
-Affects
-~~~~~~~
-- Keystone: <11.0.4, ==12.0.0, ==13.0.0
+> --
+> Hanno Böck
+> https://hboeck.de/
+>
+> mail/jabber: hanno@...eck.de
+> GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+>
 
 
-Description
-~~~~~~~~~~~
-Kristi Nikolla with Boston University reported a vulnerability in
-Keystone federation. By doing GET /v3/OS-FEDERATION/projects an
-authenticated user may discover projects they have no authority to
-access, leaking all projects in the deployment and their attributes.
-Only Keystone with the /v3/OS-FEDERATION endpoint enabled via
-policy.json is affected.
 
+-- 
 
-Patches
-~~~~~~~
-- https://review.openstack.org/585802 (Ocata)
-- https://review.openstack.org/585792 (Pike)
-- https://review.openstack.org/585788 (Queens)
-- https://review.openstack.org/585782 (Rocky)
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
-
-Credits
-~~~~~~~
-- Kristi Nikolla from Boston University (CVE-2018-14432)
-
-
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/1779205
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-14432
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
