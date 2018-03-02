@@ -1,53 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/13/8
-Message-ID: <CAAtL=4L-Cpcsgy8AZACFwytH0BHF32Fz2vVoZgvuSPjn0ihaNg@mail.gmail.com>
-Date: Wed, 13 Jun 2018 21:05:36 +0530
-From: Lets Secure <is3curi5@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/02/1
+Message-ID: <20180302124428.440b9c3b@pc1>
+Date: Fri, 2 Mar 2018 12:44:28 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Third Party Code Signing Vulnerability in Squirrel & Sparkle
+Subject: memcached UDP amplification attacks
 Content-Type: text/plain; charset=utf-8
 
-Based on the recent disclosure at
-https://www.okta.com/security-blog/2018/06/issues-around-third-party-apple-code-signing-checks/
+Hi,
 
-The Squirrel
-<https://github.com/Squirrel/Squirrel.Mac/blob/e9e2188cda3efb4bc08b1719bdef71880f9dc9b1/Squirrel/SQRLCodeSignature.m#L127>
-&
-Sparkle
-<https://github.com/sparkle-project/Sparkle/blob/d19c98a8771e6a38766199bb96654de5d8c3efb2/Sparkle/SUCodeSigningVerifier.m#L98>
- framework also doesn't perform strict validation to check nested
-architecture and revocations & validity of the signer cert and can
-essentially result in bypassing the code sign validations.
+In the past days there have been reports about some DDoS attacks
+abusing the memcached UDP protocol:
+https://blog.cloudflare.com/memcrashed-major-amplification-attacks-from-port-11211/
+https://www.wired.com/story/github-ddos-memcached/
 
-*Squirrel*
-SQRLCodeSignature.m#L127
-result = SecStaticCodeCheckValidityWithErrors(staticCode,
-kSecCSCheckAllArchitectures, (__bridge SecRequirementRef)self.requirement,
-&validityError);
 
-SecStaticCodeCheckValidityWithErros is called without flags -
-kSecCSDefaultFlags
-| kSecCSCheckNestedCode | kSecCSCheckAllArchitectures |
-kSecCSEnforceRevocationChecks
+The issue: memcached has an UDP protocol that allows getting a much
+larger reply than the query sent, thus allowing amplification attacks
+with forged sender IPs.
 
-Also, it lacks checks for chain of trust across nested binaries in Fat
-file.
-i.e. missing this code:
-SecRequirementCreateWithString(CFSTR("anchor apple"), kSecCSDefaultFlags,
-&requirementRef);
 
-*Sparkle*
-SUCodeSigningVerifier.m#L98
-SecCSFlags flags = (SecCSFlags) (kSecCSDefaultFlags |
-kSecCSCheckAllArchitectures);
-result = SecStaticCodeCheckValidityWithErrors(staticCode, flags, NULL,
-&cfError);
+Upstream memcached reacted by disabling the UDP-based protocol by
+default:
+https://github.com/memcached/memcached/wiki/ReleaseNotes156
+This is good, however one could argue that they should also default to
+localhost only.
 
-The flags should have been set with:
-SecCSFlags flags = (SecCSFlags) (kSecCSDefaultFlags | kSecCSCheckNestedCode
-| kSecCSCheckAllArchitectures | kSecCSEnforceRevocationChecks)
 
-But, that's not the case with Sparkle.
+Most distros I checked right now default to enabling UDP, but
+restricting connections to 127.0.0.1. While this is not directly
+vulnerable it's only a minor change away from being so. The memcached
+announcement sounds like the UDP protocol is rarely used and should be
+considered deprecated and replaced by the TCP-based one.
 
-Best Regards!
+I recommend all distributions consider changing their defaults to
+disabling the UDP-based memcached protocol by default.
 
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
