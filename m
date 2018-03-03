@@ -1,4 +1,9 @@
-Received: (qmail 3575 invoked by uid 550); 1 May 2026 12:38:39 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4582" "Friday" "2" "March" "2018" "21:42:30" "-0700" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty0X6iVTG=BUhdUgxYSLN9XnA-NcvH96DgTALQRvsNnn4Q@mail.gmail.com>" "124" "Re: [oss-security] memcached UDP amplification attacks" "^Date:" nil nil "3" "2018030304:42:30" "[oss-security] memcached UDP amplification attacks" (number mark "        kseifried@re Mar  2  124/4582  " thread-indent "\"Re: [oss-security] memcached UDP amplification attacks\"\n") "<CANO=Ty09HPfSbp8QsZHU24EnEyzOw1H1C-Zr+7mqwDhOG6=HYg@mail.gmail.com>" ("<20180302124428.440b9c3b@pc1>" "<CANO=Ty09HPfSbp8QsZHU24EnEyzOw1H1C-Zr+7mqwDhOG6=HYg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 11498 invoked by uid 550); 3 Mar 2018 04:42:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,292 +11,155 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 3526 invoked from network); 1 May 2026 12:38:38 -0000
-ARC-Seal: i=1; a=rsa-sha256; t=1777639108; cv=none;
-        d=google.com; s=arc-20240605;
-        b=Nuki5OqWTREyrw6GY6D7t/XKX+cT5gfd/vsrA6/RKSlbPed2CKTp8xsvWE3N6tJeel
-         oRcC2olrUaik3E9D3qkNIhYAGD0mPHnyghc94+RBrg+b0HJIrhILSihlszV1dPU9cwkw
-         xqcPM8YQddCt6posalw1HezqxR/zQO9Cr1g8FE6SHE06Zpw49BEcfwOJ2UV1w7MmFKYz
-         HC5iV82FMLEWTN/xN3cJ1dQC2Ki+DoMjEowK8ND2LQYurT7dciQ+B6wySi0nhBtlxaVx
-         PSGI2NLDTNe+hgdgpylpTKju10ZUHpCyCSpQGI1k3BjeGBsThkBlsFOIMjNprdlImQTQ
-         ap/A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=uscJk0GtU24EMM+1Bbrdpm3pfwQFg0Wb93gSnqCn3b4=;
-        fh=9jsPTyo6edd9xvAeG+KFFrRrXMmgB/RdwUKOrvy9dcA=;
-        b=PNSgtLD+jLdvm71fM+MeqQKf0Q17pQ9FRf7bcDInM31PNwgeJXiyjz9fdJsIm4g9N0
-         ye1c/dC69kYCVwl6vq3U2LSgwPV5em+t3GCPEfCB6zF1P9srs0BHP0xAD7TPfU+HDLqZ
-         V04qDfCF8F36Sp+aT47SM+bK3XLtqQk9cq93357kYlY/ks4whYgmjw6MS4O+FnYz7hlC
-         81JsG6LjyfD0bgFgLbJrRaMyAxCfB1bVDa9RrMDpXn4CdtPmJAnPAaCOtHt5sdD1jtS0
-         p+01Snju+afJpmh3pXxo0MW81SzpCzoopV5jzO9iRVbSvzYXLqBjdBgIxMI8ys5a1MYt
-         sB0Q==;
-        darn=lists.openwall.com
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777639108; x=1778243908; darn=lists.openwall.com;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=uscJk0GtU24EMM+1Bbrdpm3pfwQFg0Wb93gSnqCn3b4=;
-        b=H+0Jj1BO2DAUeQA06C9YV68XJNKo4RMBilHWfEdM8SSowoNNgz9bAe29iL2X099Zcm
-         0H23NZMhkEvAFGiASpwUbvAiwgb704lGtXkHfqlsK6gZ4nrIp2OM3En9mPuJGyXs3FQn
-         nECNezslBMYtLk4R+U+DzXj1y5tn9fFh3nyLx18QiETvMFDODOlW4kZURRVv83IScvva
-         0RqhQglWqODaxd+9cer/q37K5ODI4AVHQHv+2KDLm2DLoqCPaMnDwppgVgqvENVkknhC
-         sPpg7AbOZI1ethkhfJaRr7oPlJqgNszaADVtXzzCozWYQBsXEc0zva/izdu21UDm6Bk+
-         4iIQ==
+Received: (qmail 11474 invoked from network); 3 Mar 2018 04:42:43 -0000
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777639108; x=1778243908;
-        h=to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uscJk0GtU24EMM+1Bbrdpm3pfwQFg0Wb93gSnqCn3b4=;
-        b=Gjoi0TwDulFC8G40Z8Tr3W04ubbuhPY/ED0p0B1fSwbhzIsOfTcVmpxKaTu1EdCcZg
-         5O0tz8RUWbZYY2VTAGBD9g79t/5vQZ/sV9Bk4gSM9Ksk5yKpS/Mr9wz5S8tAdRNar0hl
-         y5FXC88ScAQ7lFID7IaHJd148J1W5CbEJuQtFk09DpmmBFaf1SWZsX6SidBvkOx1l5YX
-         5oUluKfMfm+U+IR5M1+XYP4kD8/DKwIxXXdQmgeD7ktWljAwGcBRpuzNU0H9n2cQzJZN
-         oDspA/ksczSXJFR0CTw8mJy5PHdZL3BZHNIt+bFVXOJGnvkJwiafBDRHd0Vksm7XpFUe
-         MnRg==
-X-Gm-Message-State: AOJu0Yy7KyYSLOUgGHOxHXmeuHNLIcY53uHNSnPQnGOVfiyGQRIihEGW
-	IDqzFYkZvRTnGLpn6Fk1j7DglpXKYKmhYju1+74D5o2WkDCWJxi2gwwdA+w7bBfWEROzNoSbnR4
-	IChJAT2lSgCLUMoCNB8WtSfevUPIgNhEVpH7oq6Q=
-X-Gm-Gg: AeBDieuQ6prrIBuJPe5hQn4SC4WDICp/REf6twJDaGaxPSK9e/TTVTegT5y1U6ewnp8
-	62INDLfG9mAVoWiJ308vgwpcmlKDY5iz5bo5NDxjLhM/eHdsttHUgdURxNhkr53FfZRDQDRSIkr
-	/1IRzBlhlrR1/KGANU7MeECUFX3lDpQGi5E9HiSNU4G0ZFDlkZ0pF1EruIM481NNP1PTYIFKidX
-	1qJZBsjJOEShqTrA+bGfS8IcZVUu4CijROtB7o/KmXQnejjk/rtWZg4aj2IRwb1vsCZ98Lx8QCw
-	Q1mPJdTxluas/bMlKXEmHZLqBpJzaSu0HSBzxD0ccH18+qXD
-X-Received: by 2002:a05:6214:5993:b0:89c:4cac:74c5 with SMTP id
- 6a1803df08f44-8b3fe7bc8f2mr121967466d6.25.1777639108021; Fri, 01 May 2026
- 05:38:28 -0700 (PDT)
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=pLS46dxgJrC76KnKIOzLRX1MyxD5vD6JQBFKwpilgak=;
+        b=t1wDF8xmTwR+lEApbVr6wnNCvD69tSxi7JUcv5jVf20mb+uafZ7A9lY9b+I3/xi+0/
+         SP+RW/2TXIpdAJ2PcjiMmN0tdC7Jtxxs6DzlaoskYNp1WQA8EFCCRXtZbP/gbSji1Ybd
+         QyYZ0W+PoQ+mHMhHvAha+yvHdos8SYhPFIDEg5bfKgPUiutNvYxCFpQecnx8UqZGzUSQ
+         /sXn7Hfomyq+oKNPyg8ukviqznXk2Ppb3VNr4uJVvPXPTWTQG8hc/P9UdAQAH54sVBmg
+         JkAW7Z3df5RSlPvrFVjzaukFgmW7vDMqJpbcDFO+Wi5vdGi4wO/HNB9/xjKZaAoMXDEb
+         VCaA==
+X-Gm-Message-State: APf1xPCdsRVAlJPc8Um3mVQfi/n27OCTuldyl0xefPugCPRQFWnR66Wd
+	gOR4/71G5k/uY2lNzWG6F6LLDevAVDDwXV1Zg4UZVj/Cjf4=
+X-Google-Smtp-Source: AG47ELt3TFo7ODvv3Vyv/tCXWpN5yMt3/JIFvnVYd7k4/1/j1SDqG3LTJOHRJ1qKXUaTiWt4cTLk9zabNA03e7dDEWg=
+X-Received: by 10.157.29.154 with SMTP id y26mr5788295otd.66.1520052151086;
+ Fri, 02 Mar 2018 20:42:31 -0800 (PST)
 MIME-Version: 1.0
-From: Matthew Wild <mwild1@gmail.com>
-Date: Fri, 1 May 2026 13:38:16 +0100
-X-Gm-Features: AVHnY4IvaTW6-JGfxhiE2aa885oHi6ViuIjMBF9hZu6AApakOmZRKS698ckFBJw
-Message-ID: <CAJt9-x4hqhaH7NrFUmk0ULE7xHtNMMbE4M+miu=pQ8PNuLQ-=w@mail.gmail.com>
-To: oss-security@lists.openwall.com
+In-Reply-To: <CANO=Ty09HPfSbp8QsZHU24EnEyzOw1H1C-Zr+7mqwDhOG6=HYg@mail.gmail.com>
+References: <20180302124428.440b9c3b@pc1> <CANO=Ty09HPfSbp8QsZHU24EnEyzOw1H1C-Zr+7mqwDhOG6=HYg@mail.gmail.com>
+Message-ID: <CANO=Ty0X6iVTG=BUhdUgxYSLN9XnA-NcvH96DgTALQRvsNnn4Q@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="001a113cfd06818bbc05667ab87d"
+Date: Fri, 2 Mar 2018 21:42:30 -0700
+From: Kurt Seifried <kseifried@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] memcached UDP amplification attacks
+To: oss-security <oss-security@lists.openwall.com>
+
+--001a113cfd06818bbc05667ab87d
 Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] Prosody XMPP server security advisory 2026-04-31 (multiple vulnerabilities)
-
-Project
-:   Prosody XMPP server
-
-URL
-:   https://prosody.im/
-
-Date
-:   2026-04-29
-
-This advisory details two security vulnerabilities discovered in the
-Prosody.im XMPP server software. Fixes are available in Prosody 13.0.5.
-Deployments still using the Prosody 0.12 series can upgrade to 0.12.6.
-
-In this advisory:
-
-- Denial of Service via Memory Exhaustion
-- Unauthenticated Use of SOCKS5 Proxy (mod_proxy65)
-
-Full details of the vulnerabilities are below.
-
-The recommended advice is for all Prosody users to:
-
-- Upgrade to 13.0.5
-- For extra protection, review system firewall limits (see below)
-
-This advisory can be found online at:
-
-- https://prosody.im/security/advisory_735dd9d3/ (HTML)
-- https://prosody.im/security/advisory_735dd9d3.txt (text)
-
-Denial of Service via Memory Exhaustion
--------------------------------------------------------
-
-CVEs
-: We have requested 2 CVEs
-
-CVSS
-: 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)
-
-CWEs
-: CWE-405, CWE-770, CWE-772
-
-Affected versions
-: All versions prior to 13.0.5
-
-Fixed versions
-: 0.12.6, 13.0.5
-
-**References**
-
- - https://blog.unionium.org/ARTICLES/1.HTM (third-party, see below)
-
-*Note:* We have provided the original reporter's blog post as a reference,
-as it contains the original report and proof-of-concept exploit code.
-However, the Prosody developers do not recommend the analysis and
-mitigations provided in that post to Prosody operators.
-
-**Description**
-
-Traffic patterns were discovered which can cause Prosody to consume
-excessive amounts of memory with much smaller amounts of incoming
-traffic. This traffic can be sent by unauthenticated connections.
-
-Prosody has per-connection rate limits. However, the protection provided
-by rate limits was reduced due to amplification of memory usage compared
-to the data transmitted by the attacker.
-
-Further, Prosody does not enforce limits on the total number of
-connections, allowing an attacker to increase the impact by using
-multiple concurrent connections.
-
-Finally, the attack revealed per-connection resource leaks, where a
-connection could continue to consume resources in Prosody even after
-the stream is finished.
-
-**Affected configurations**
-
-All Prosody versions prior to 13.0.5 are believed to be affected.
-
-Further, the issues described in this advisory are closely related
-to libexpat CVE-2025-59375. Fully protecting Prosody deployments
-requires that LuaExpat (a required dependency of Prosody) is linked
-against libexpat 2.7.2 or later (the version of expat in use can be
-discovered in the output of 'prosodyctl about').
-
-**Mitigation**
-
-Operators of Prosody servers are encouraged to utilize their system's
-firewall to limit the rate and total number of connections to their
-service.
-
-For example, 'ufw' is a widely available firewall tool which can limit
-excessive incoming connection requests. To apply this limiting to the
-standard XMPP ports, you would run:
-
-```
-  ufw limit 5222
-  ufw limit 5269
-```
-
-iptables and nftables also have 'connlimit' features to limit the
-total number of connections per IP address. Refer to the
-documentation of your firewall for correct configuration.
-
-It is **not** recommended to drastically lower Prosody's per-connection
-bandwidth rate limits as described in the blog post by the original
-reporter. Lowering rate limits slows down processing of an attacker's
-connections, causing them to remain active for longer. This can
-negatively impact Prosody's resource usage. Prosody's default rate
-limits are generally considered sufficient.
-
-**Fixes**
-
-The attack revealed a number of areas where the resource usage of connections
-could exceed expected and desired levels. Multiple fixes were applied.
-
-Resource amplification (first CVE):
-
-- Lower stanza size limits have been introduced for unauthenticated
-  streams.\
-  Commits: [8a4417d32b0f](https://hg.prosody.im/trunk/rev/8a4417d32b0f),
-  [166ac7d65cb6](https://hg.prosody.im/trunk/rev/166ac7d65cb6),
-  [a4327478678f](https://hg.prosody.im/trunk/rev/a4327478678f)
-- Limits have been placed on the complexity of XML stanzas, to
-  disallow stanzas that will consume significantly larger amounts
-  of memory than their serialized form.\
-  Commits: [6c7549964d4d](https://hg.prosody.im/trunk/rev/6c7549964d4d),
-[1e005ba71f0d](https://hg.prosody.im/trunk/rev/1e005ba71f0d)
-
-Memory leaks (second CVE):
-
-- Four memory leaks have been fixed, two could be triggered by
-  unauthenticated connections, and two by authenticated users.\
-  Commits:
-  [836a70deb3c9](https://hg.prosody.im/trunk/rev/836a70deb3c9)
-(unauthenticated),
-  [e27d94d8f505](https://hg.prosody.im/trunk/rev/e27d94d8f505)
-(unauthenticated),
-  [041c7ff18f76](https://hg.prosody.im/trunk/rev/041c7ff18f76) (authenticated),
-  [374b72785488](https://hg.prosody.im/trunk/rev/374b72785488) (authenticated)
-
-Other:
-
-- Code to configure per-IP connection limits has been introduced,
-  however this is currently in an experimental status, and it is
-  preferable to utilize a system firewall to enforce such limits
-  if possible. Refer to the documentation for your system firewall.
-
-**Attribution**
-
-The resource amplification attack was discovered and disclosed to the
-Prosody team by Ley <unionium.org> in advance of their public blog post.
-
-The memory leaks were discovered by the Prosody team during their
-research into this issue.
-
-Unauthenticated Use of SOCKS5 Proxy (mod_proxy65)
--------------------------------------------------------
-
-CVEs
-: We have requested 1 CVE
-
-CVSS
-: 5.3 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L)
-
-CWEs
-: CWE-863
-
-Affected versions
-: All versions prior to 0.12.6 and 13.0.5
-
-Fixed versions
-: 0.12.6, 13.0.5
-
-**Description**
-
-It was discovered that mod_proxy65's access control was broken and incomplete
-due to two bugs.
-
-Firstly, due to changes in our default network backend, a connection that
-mod_proxy65 believed to be "paused" would actually be able to send data
-through the proxy before authorization.
-
-Secondly, mod_proxy65 only checked the access control rules during the
-discoverability stage of the protocol, but not during the activation stage.
-Any entity able to guess the domain and port of the proxy (which defaults to
-port 5000) could skip the discoverability stage and would be able to use it.
-
-**Limitations**
-
-mod_proxy65 is designed to facilitate file transfers and other binary streams
-between two XMPP entities. It is not a generic SOCKS5 proxy, and this limits
-the scope of potential abuse.
-
-For example, mod_proxy65 does not make outbound connections, and therefore
-cannot be abused for forward proxying of an attacker's connections to
-arbitrary endpoints. It requires both peers to make a connection to the proxy
-and perform a SOCKS5 handshake.
-
-**Affected configurations**
-
-All deployments with mod_proxy65 enabled are affected. mod_proxy65 is not
-enabled in the default configuration.
-
-**Mitigation**
-
-mod_proxy65 can be disabled, however this may have a negative impact on some
-kinds of file transfers.
-
-**Fixes**
-
-Fixes were made in two commits:
-
-- [f34ad235cf3b](https://hg.prosody.im/trunk/rev/f34ad235cf3b)
-- [4bbb17445ed9](https://hg.prosody.im/trunk/rev/4bbb17445ed9)
-
-**Attribution**
-
-The issue with unpausing connections was discovered and disclosed by Max
-Hearnden <https://github.com/MaxHearnden/>.
-
-The missing authorization was discovered during review of the code by
-a Prosody team
-member.
+Content-Transfer-Encoding: quoted-printable
+
+So long story short:
+
+A CVE is assigned when a security vulnerability "crosses a trust boundary",
+so for something that is easy, e.g. remote RCE, or "ping of death" (a
+single ICMP packet that crashes the remote system, that was a fun week).
+
+For a lot of things like encryption and denial of service the line in the
+sand is somewhat arbitrary. For example a traffic amplification attack that
+is 1:1 is probably not going to get a CVE today, but for example a 1:50000
+traffic amplification (so 1 megabit/sec turns into ~=3D 50 gigabits/second)
+is clearly a problem, especially if it's via UDP which can 1) be spoofed
+and 2) can result in the remote end just firing the traffic off blindly.
+
+I am told this memcached attack is causing traffic reflection well past 1:5
+(an arbitrary line I've drawn in the sand, 1:2 isn't enough to really worry
+about with some exceptions, and 1:10 is clearly a problem, so because of
+how many fingers we mostly have, 1:5 seems fair), in fact this attack is
+seeing amplification by several orders of magnitude past 1:5. Also memached
+has fixed this in release 1.5.6 by disabling UDP by default (one metric for
+CVE is "can this be fixed", if yes that's a good sign we didn't want the
+previous behavior).
+
+I have assigned CVE-2018-1000115 to this issue:
+
+Memcached version 1.5.5 contains an Insufficient Control of Network Message
+Volume (Network Amplification, CWE-406) vulnerability in the UDP support of
+the memcached server that can result in denial of service via network flood
+(traffic amplification of 1:50,000 has been reported by reliable sources).
+This attack appear to be exploitable via network connectivity to port 11211
+UDP. This vulnerability appears to have been fixed in 1.5.6 due to the
+disabling of the UDP protocol by default.
+
+References:
+
+     "url": "https://github.com/memcached/memcached/wiki/ReleaseNotes156"
+        "url": "
+https://blogs.akamai.com/2018/03/memcached-fueled-13-tbps-attacks.html"
+        "url": "https://twitter.com/dormando/status/968579781729009664"
+        "url": "
+https://github.com/memcached/memcached/commit/dbb7a8af90054bf4ef51f5814ef7c=
+eb17d83d974
+"
+
+
+
+
+
+On Fri, Mar 2, 2018 at 4:58 AM, Kurt Seifried <kseifried@redhat.com> wrote:
+
+>
+>
+> On Fri, Mar 2, 2018 at 4:44 AM, Hanno B=C3=B6ck <hanno@hboeck.de> wrote:
+>
+>> Hi,
+>>
+>> In the past days there have been reports about some DDoS attacks
+>> abusing the memcached UDP protocol:
+>> https://blog.cloudflare.com/memcrashed-major-amplification-
+>> attacks-from-port-11211/
+>> https://www.wired.com/story/github-ddos-memcached/
+>>
+>>
+>> The issue: memcached has an UDP protocol that allows getting a much
+>> larger reply than the query sent, thus allowing amplification attacks
+>> with forged sender IPs.
+>>
+>>
+>> Upstream memcached reacted by disabling the UDP-based protocol by
+>> default:
+>> https://github.com/memcached/memcached/wiki/ReleaseNotes156
+>> This is good, however one could argue that they should also default to
+>> localhost only.
+>>
+>>
+>> Most distros I checked right now default to enabling UDP, but
+>> restricting connections to 127.0.0.1. While this is not directly
+>> vulnerable it's only a minor change away from being so. The memcached
+>> announcement sounds like the UDP protocol is rarely used and should be
+>> considered deprecated and replaced by the TCP-based one.
+>>
+>> I recommend all distributions consider changing their defaults to
+>> disabling the UDP-based memcached protocol by default.
+>>
+>>
+> I think in general ALL network applications that support UDP need to think
+> about hardening their default configurations due to the potential for
+> amplification attacks.
+>
+> While it is not yet CVE worthy I can see the bar moving (much like it has
+> for default passwords, and crypto) in the near future as this is clearly
+> becoming a problem. Please note that this problem is already covered by
+> CWE-406 (to some degree) which makes the case for CVE assignment stronger.
+>
+>
+>> --
+>> Hanno B=C3=B6ck
+>> https://hboeck.de/
+>>
+>> mail/jabber: hanno@hboeck.de
+>> GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+>>
+>
+>
+>
+> --
+>
+> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> Red Hat Product Security contact: secalert@redhat.com
+>
+
+
+
+--=20
+
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
+
+--001a113cfd06818bbc05667ab87d--
