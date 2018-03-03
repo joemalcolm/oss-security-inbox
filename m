@@ -1,170 +1,127 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/04/3
-Message-Id: <1522867580.22588.1@mail.igalia.com>
-Date: Wed, 04 Apr 2018 13:46:20 -0500
-From: Michael Catanzaro <mcatanzaro@...lia.com>
-To: webkit-gtk@...ts.webkit.org
-Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: WebKitGTK+ Security Advisory WSA-2018-0003
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/03/1
+Message-ID: <CANO=Ty0X6iVTG=BUhdUgxYSLN9XnA-NcvH96DgTALQRvsNnn4Q@mail.gmail.com>
+Date: Fri, 2 Mar 2018 21:42:30 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: memcached UDP amplification attacks
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK+ Security Advisory WSA-2018-0003
-------------------------------------------------------------------------
+So long story short:
 
-Date reported : April 04, 2018
-Advisory ID : WSA-2018-0003
-Advisory URL : https://webkitgtk.org/security/WSA-2018-0003.html
-CVE identifiers : CVE-2018-4101, CVE-2018-4113, CVE-2018-4114,
-                     CVE-2018-4117, CVE-2018-4118, CVE-2018-4119,
-                     CVE-2018-4120, CVE-2018-4122, CVE-2018-4125,
-                     CVE-2018-4127, CVE-2018-4128, CVE-2018-4129,
-                     CVE-2018-4133, CVE-2018-4146, CVE-2018-4161,
-                     CVE-2018-4162, CVE-2018-4163, CVE-2018-4165.
+A CVE is assigned when a security vulnerability "crosses a trust boundary",
+so for something that is easy, e.g. remote RCE, or "ping of death" (a
+single ICMP packet that crashes the remote system, that was a fun week).
 
-Several vulnerabilities were discovered in WebKitGTK+.
+For a lot of things like encryption and denial of service the line in the
+sand is somewhat arbitrary. For example a traffic amplification attack that
+is 1:1 is probably not going to get a CVE today, but for example a 1:50000
+traffic amplification (so 1 megabit/sec turns into ~= 50 gigabits/second)
+is clearly a problem, especially if it's via UDP which can 1) be spoofed
+and 2) can result in the remote end just firing the traffic off blindly.
 
-CVE-2018-4101
-    Versions affected: WebKitGTK+ before 2.20.0.
-    Credit to Yuan Deng of Ant-financial Light-Year Security Lab.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+I am told this memcached attack is causing traffic reflection well past 1:5
+(an arbitrary line I've drawn in the sand, 1:2 isn't enough to really worry
+about with some exceptions, and 1:10 is clearly a problem, so because of
+how many fingers we mostly have, 1:5 seems fair), in fact this attack is
+seeing amplification by several orders of magnitude past 1:5. Also memached
+has fixed this in release 1.5.6 by disabling UDP by default (one metric for
+CVE is "can this be fixed", if yes that's a good sign we didn't want the
+previous behavior).
 
-CVE-2018-4113
-    Versions affected: WebKitGTK+ before 2.20.0.
-    Credit to OSS-Fuzz.
-    Impact: Unexpected interaction with indexing types causing an ASSERT
-    failure. Description: An array indexing issue existed in the
-    handling of a function in JavaScriptCore. This issue was addressed
-    through improved checks.
+I have assigned CVE-2018-1000115 to this issue:
 
-CVE-2018-4114
-    Versions affected: WebKitGTK+ before 2.20.0.
-    Credit to OSS-Fuzz.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+Memcached version 1.5.5 contains an Insufficient Control of Network Message
+Volume (Network Amplification, CWE-406) vulnerability in the UDP support of
+the memcached server that can result in denial of service via network flood
+(traffic amplification of 1:50,000 has been reported by reliable sources).
+This attack appear to be exploitable via network connectivity to port 11211
+UDP. This vulnerability appears to have been fixed in 1.5.6 due to the
+disabling of the UDP protocol by default.
 
-CVE-2018-4117
-    Versions affected: WebKitGTK+ before 2.20.0.
-    Credit to an anonymous researcher.
-    Impact: A malicious website may exfiltrate data cross-origin.
-    Description: A cross-origin issue existed with the fetch API. This
-    was addressed through improved input validation.
+References:
 
-CVE-2018-4118
-    Versions affected: WebKitGTK+ before 2.18.1.
-    Credit to Jun Kokatsu (@shhnjk).
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2018-4119
-    Versions affected: WebKitGTK+ before 2.20.0.
-    Credit to an anonymous researcher working with Trend Micro’s Zero
-    Day Initiative.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2018-4120
-    Versions affected: WebKitGTK+ before 2.20.0.
-    Credit to Hanming Zhang (@4shitak4) of Qihoo 360 Vulcan Team.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2018-4122
-    Versions affected: WebKitGTK+ before 2.20.0.
-    Credit to WanderingGlitch of Trend Micro's Zero Day Initiative.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2018-4125
-    Versions affected: WebKitGTK+ before 2.20.0.
-    Credit to WanderingGlitch of Trend Micro's Zero Day Initiative.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2018-4127
-    Versions affected: WebKitGTK+ before 2.20.0.
-    Credit to an anonymous researcher working with Trend Micro’s Zero
-    Day Initiative.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2018-4128
-    Versions affected: WebKitGTK+ before 2.20.0.
-    Credit to Zach Markley.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2018-4129
-    Versions affected: WebKitGTK+ before 2.20.0.
-    Credit to likemeng of Baidu Security Lab working with Trend Micro's
-    Zero Day Initiative.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2018-4133
-    Versions affected: WebKitGTK+ before 2.20.0.
-    Credit to Anton Lopanitsyn of Wallarm, Linus Särud of Detectify
-    (detectify.com), Yuji Tounai of NTT Communications Corporation.
-    Impact: Visiting a maliciously crafted website may lead to a cross-
-    site scripting attack. Description: A cross-site scripting issue
-    existed in WebKit. This issue was addressed with improved URL
-    validation.
-
-CVE-2018-4146
-    Versions affected: WebKitGTK+ before 2.20.0.
-    Credit to OSS-Fuzz.
-    Impact: Processing maliciously crafted web content may lead to a
-    denial of service. Description: A memory corruption issue was
-    addressed through improved input validation.
-
-CVE-2018-4161
-    Versions affected: WebKitGTK+ before 2.20.0.
-    Credit to WanderingGlitch of Trend Micro's Zero Day Initiative.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2018-4162
-    Versions affected: WebKitGTK+ before 2.20.0.
-    Credit to WanderingGlitch of Trend Micro's Zero Day Initiative.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2018-4163
-    Versions affected: WebKitGTK+ before 2.20.0.
-    Credit to WanderingGlitch of Trend Micro's Zero Day Initiative.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2018-4165
-    Versions affected: WebKitGTK+ before 2.20.0.
-    Credit to Hanming Zhang (@4shitak4) of Qihoo 360 Vulcan Team.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+     "url": "https://github.com/memcached/memcached/wiki/ReleaseNotes156"
+        "url": "
+https://blogs.akamai.com/2018/03/memcached-fueled-13-tbps-attacks.html"
+        "url": "https://twitter.com/dormando/status/968579781729009664"
+        "url": "
+https://github.com/memcached/memcached/commit/dbb7a8af90054bf4ef51f5814ef7ceb17d83d974
+"
 
 
-We recommend updating to the last stable version of WebKitGTK+. It is
-the best way of ensuring that you are running a safe version of
-WebKitGTK+. Please check our website for information about the last
-stable releases.
 
-Further information about WebKitGTK+ Security Advisories can be found
-at: https://webkitgtk.org/security.html
 
-The WebKitGTK+ team,
-April 04, 2018
+
+On Fri, Mar 2, 2018 at 4:58 AM, Kurt Seifried <kseifried@...hat.com> wrote:
+
+>
+>
+> On Fri, Mar 2, 2018 at 4:44 AM, Hanno Böck <hanno@...eck.de> wrote:
+>
+>> Hi,
+>>
+>> In the past days there have been reports about some DDoS attacks
+>> abusing the memcached UDP protocol:
+>> https://blog.cloudflare.com/memcrashed-major-amplification-
+>> attacks-from-port-11211/
+>> https://www.wired.com/story/github-ddos-memcached/
+>>
+>>
+>> The issue: memcached has an UDP protocol that allows getting a much
+>> larger reply than the query sent, thus allowing amplification attacks
+>> with forged sender IPs.
+>>
+>>
+>> Upstream memcached reacted by disabling the UDP-based protocol by
+>> default:
+>> https://github.com/memcached/memcached/wiki/ReleaseNotes156
+>> This is good, however one could argue that they should also default to
+>> localhost only.
+>>
+>>
+>> Most distros I checked right now default to enabling UDP, but
+>> restricting connections to 127.0.0.1. While this is not directly
+>> vulnerable it's only a minor change away from being so. The memcached
+>> announcement sounds like the UDP protocol is rarely used and should be
+>> considered deprecated and replaced by the TCP-based one.
+>>
+>> I recommend all distributions consider changing their defaults to
+>> disabling the UDP-based memcached protocol by default.
+>>
+>>
+> I think in general ALL network applications that support UDP need to think
+> about hardening their default configurations due to the potential for
+> amplification attacks.
+>
+> While it is not yet CVE worthy I can see the bar moving (much like it has
+> for default passwords, and crypto) in the near future as this is clearly
+> becoming a problem. Please note that this problem is already covered by
+> CWE-406 (to some degree) which makes the case for CVE assignment stronger.
+>
+>
+>> --
+>> Hanno Böck
+>> https://hboeck.de/
+>>
+>> mail/jabber: hanno@...eck.de
+>> GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+>>
+>
+>
+>
+> --
+>
+> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> Red Hat Product Security contact: secalert@...hat.com
+>
+
+
+
+-- 
+
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
