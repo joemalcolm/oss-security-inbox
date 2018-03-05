@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3314" "Friday" "18" "August" "2017" "13:54:45" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<815123.168143572-sendEmail@localhost>" "68" "[oss-security] graphicsmagick: invalid memory read in SetImageColorCallBack (image.c)" nil nil nil "8" "2017081813:54:45" "[oss-security] graphicsmagick: invalid memory read in SetImageColorCallBack (image.c)" (number mark "U       ago@gentoo.o Aug 18   68/3314  " thread-indent "\"[oss-security] graphicsmagick: invalid memory read in SetImageColorCallBack (image.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4355" "Monday" "5" "March" "2018" "17:50:24" "+0100" "up201407890@alunos.dcc.fc.up.pt" "up201407890@alunos.dcc.fc.up.pt" "<20180305175024.16801hoj775zje4g@webmail.alunos.dcc.fc.up.pt>" "117" "[oss-security] Terminal Control Chars" nil nil nil "3" "2018030516:50:24" "[oss-security] Terminal Control Chars" (number mark "U       up201407890@ Mar  5  117/4355  " thread-indent "\"[oss-security] Terminal Control Chars\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32015 invoked by uid 550); 18 Aug 2017 13:55:06 -0000
+Received: (qmail 30358 invoked by uid 550); 5 Mar 2018 17:01:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,80 +12,136 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30610 invoked from network); 18 Aug 2017 13:55:01 -0000
-Message-ID: <815123.168143572-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Fri, 18 Aug 2017 13:54:45 +0000
+Received: (qmail 21964 invoked from network); 5 Mar 2018 16:50:45 -0000
+Message-ID: <20180305175024.16801hoj775zje4g@webmail.alunos.dcc.fc.up.pt>
+Date: Mon, 05 Mar 2018 17:50:24 +0100
+From: up201407890@alunos.dcc.fc.up.pt
+To: oss-security@lists.openwall.com
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-886541.85093856"
-Subject: [oss-security] graphicsmagick: invalid memory read in SetImageColorCallBack (image.c)
-
-------MIME delimiter for sendEmail-886541.85093856
 Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+	charset=ISO-8859-1;
+	DelSp="Yes";
+	format="flowed"
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Internet Messaging Program (IMP) H3 (4.2)
+X-Virus-Scanned: amavisd-new at alunos.dcc.fc.up.pt
+Subject: [oss-security] Terminal Control Chars
 
-Description:
-graphicsmagick is a collection of tools and libraries for many image formats.
+Hello,
 
-The complete ASan output of the issue:
+When pasting characters into several terminal emulators, control=20=20
+characters are allowed.
+This turns to be a security problem, due to the fact that when pasting=20=20
+these characters into terminal text editors, such as vi/vim, emacs,=20=20
+nano, etc., remote code execution is possible.
 
-# gm convert -clip -negate $FILE out
-==11324==ERROR: AddressSanitizer: SEGV on unknown address 0x7f9ccac18000 (pc 0x7f9dbacf58ce bp 0x7ffec95349c0 sp 0x7ffec9534980 T0)
-    #0 0x7f9dbacf58cd in SetImageColorCallBack /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/image.c:2090:15
-    #1 0x7f9dbaf16bbd in .omp_outlined..4 /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/pixel_iterator.c:378:23
-    #2 0x7f9dbaf11873 in PixelIterateMonoModifyImplementation /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/pixel_iterator.c:348:33
-    #3 0x7f9dbaf111be in PixelIterateMonoSet /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/pixel_iterator.c:415:10
-    #4 0x7f9dbacf379b in SetImageEx /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/image.c:2125:10
-    #5 0x7f9db448bc86 in ReadMNGImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/png.c:5016:26
-    #6 0x7f9dbaa14e88 in ReadImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1607:13
-    #7 0x7f9dba8a7f18 in ConvertImageCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:4348:22
-    #8 0x7f9dba8e40c5 in MagickCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8869:17
-    #9 0x7f9dba98f85b in GMCommandSingle /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17396:10
-    #10 0x7f9dba98c991 in GMCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17449:16
-    #11 0x7f9db91f7680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #12 0x419cd8 in _init (/usr/bin/gm+0x419cd8)
+This is supposed to be fixed in recent versions of VTE [3], which=20=20
+means VTE-based terminal emulators should be safe, but the problem is=20=20
+that most distros are shipping older versions and remain vulnerable.
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/image.c:2090:15 in SetImageColorCallBack
-==11324==ABORTING
+Here's a list of terminal emulators I tested this where it worked.=20=20
+Some came by default in my distro (debian), others were installed via=20=20
+apt-get. This should also work on other distros:
 
-Affected version:
-1.3.26
-
-Fixed version:
-N/A
-
-Commit fix:
-http://hg.code.sf.net/p/graphicsmagick/code/rev/cd699a44f188
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-12935
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00303-graphicsmagick-invalidread-SetImageColorCallBack
-
-Timeline:
-2017-07-12: bug discovered and reported to upstream
-2017-07-26: upstream released a fix
-2017-08-05: blog post about the issue
-2017-08-18: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/08/05/graphicsmagick-invalid-memory-read-in-setimagecolorcallback-image-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
+LXTerminal
+rxvt
+urxvt
+putty
+gnome-terminal
+Konsole
+Guake
+Yakuake
+tilda
+Terminator
+xfce4-terminal
+Terminology
+ROXTerm
+sakura
+lilyterm
+Eterm
+aterm
+mrxvt
+pterm
 
 
-------MIME delimiter for sendEmail-886541.85093856--
+Please, update VTE and check if the below still works. For the others=20=20
+that aren't based on VTE, CVEs should be assigned to each of them. Can=20=20
+someone help me figure out which ones are based on VTE and those that=20=20
+aren't?
+
+
+To reproduce using vi/vim, create an html with the following command:
+
+$ printf '<html>something;&#27;:!id<br>a</html>' > poc.html
+
+Open the poc.html in a browser, select and copy the text that is=20=20
+presented, and paste it into vi/vim in insert mode. The command "id"=20=20
+should then be executed.
+
+This works because pasting "&#27;" is allowed, wich is the "escape".=20=20
+By pressing "escape" in insert mode, it is possible to go back to=20=20
+default mode, and by using the exclamation mark (!) it is possible to=20=20
+execute arbitrary commands.
+
+
+To reproduce using nano, create an html with the following command:
+
+$ printf=20=20
+'<html>something<br>something\x18y\b\b\b\bfile<br>y<br>a</html>' >=20=20
+poc.html
+
+Open the poc.html in a browser, select and copy the text that is=20=20
+presented, start nano with "nano test", and paste the contents in=20=20
+nano. This should quit you from nano, but instead of saving the=20=20
+contents into the file "test", it saves them into "file".
+
+This works because '\x18' is ^X (Control-X), which exits nano. On=20=20
+exit, it asks if you want to "Save modified buffer", so you press 'y'.=20=20
+This is why there's an 'y' after '\x18'. Once you press 'y', it asks=20=20
+the "File Name to Write". If you started nano with an argument, such=20=20
+as "nano test", then it will appear as the default "File Name to=20=20
+Write". In order to specify an arbitrary file name, and overwriting an=20=20
+existing one, we can use multiple '\b' to delete this file name, and=20=20
+then specify our target file name. To get remote command execution, an=20=20
+interesting target would be ".bashrc". However, as a PoC I used "file"=20=20
+as can be seen after the 4 '\b'. Since "test" is 4 characters, I used=20=20
+4 \b. You should use "nano test" to try the above. As a remote=20=20
+attacker, you don't know how many characters your target used for the=20=20
+file name, but you can input an arbitrary number of \b. We could use=20=20
+255 \b since that's the file name limit in most filesystems.
+
+
+To reproduce using emacs, create an html with the following command:
+
+$ printf '<html>something;&#27;!id<br>a</html>' > poc.html
+
+Open the poc.html in a browser, select and copy the text that is=20=20
+presented, startemacs with "emacs -nw file", and paste the contents=20=20
+into it. This should execute the command "id".
+
+This works because pasting "&#27;" is allowed, wich is the "escape".=20=20
+By pressing "escape" and then "!" (M-!) it is possible to execute=20=20
+arbitrary commands in emacs.
+The command "id" will be executed, but you may not see the output in emacs.
+Use something like "touch file" and see that "file" was created.
+
+
+One could argue that an user could see that what is being copied from=20=20
+the browser
+is malicious, but it is easy fool the user. [1]
+
+The correct solution would be to disallow the pasting of certain=20=20
+control characters.
+
+See:
+[1] https://thejh.net/misc/website-terminal-copy-paste
+[2] http://invisible-island.net/xterm/xterm.log.html#xterm_292
+[3] https://bugzilla.gnome.org/show_bug.cgi?id=3D753197
+
+Thanks,
+Federico Bento.
+
+----------------------------------------------------------------
+This message was sent using IMP, the Internet Messaging Program.
 
