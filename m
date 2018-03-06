@@ -1,32 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/18/7
-Message-ID: <1516305205.23740.8.camel@debian.org>
-Date: Thu, 18 Jan 2018 20:53:25 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/06/2
+Message-ID: <26b869b9-5aad-d234-de78-67ea3a43e7a9@redhat.com>
+Date: Tue, 6 Mar 2018 09:26:00 +0530
+From: Dhiru Kholia <dkholia@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: How to deal with reporters who don't want their bugs fixed?
+Cc: Salvatore Bonaccorso <carnil@...ian.org>
+Subject: Remote DoS flaw in 389-ds-base
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 2018-01-18 at 18:21 +0100, Matthias Fetzer wrote:
-> Well. The result might be, that they will *not* report the vulnerability
-> at all, but publish their findings as a 0day at a conference. So the
-> users security highly benefits, if patches are available right
-> before/after/during the conference.
-> 
-> This is not the best case, but still better than unpatched, published 0days.
+Hi,
+  
+Here is a notification about a remote DoS flaw in the 389-ds-base
+package (389 Directory Server).
 
-I'm also not a huge fan of embargoes for conferences. It did happen for Debian
- so we discussed that issues with the security researchers to make the fix
-happens rather sooner than later. 
+NOTE: This notification was sent to "distros" mailing list on
+02-March-2018.
 
-One important thing, in my opinion, is that conferences should also encourage
-their speakers to actively coordinate with vendors in order for things to be
-fixed *before* and published either before or just for the conference. It
-might be wishful thinking but I'm not sure conferences organizers are really
-thrilled when a 0day is dumped right before the audience during the talk
-(pwn2own might be an exception though).
+https://bugzilla.redhat.com/show_bug.cgi?id=1537314 has some more
+information about this flaw, including a patch.
 
-Regards,
--- 
-Yves-Alexis
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+CVE-2018-1054
+-------------
+
+389-ds-base: remote Denial of Service (DoS) via search filters in 
+SetUnicodeStringFromUTF_8 in collate.c
+
+A flaw was found in 389 Directory Server that affects all versions. An
+improper handling of the search feature with an extended filter, when
+read access on <attribute_name> is enabled, in SetUnicodeStringFromUTF_8
+function in collate.c, can lead to out-of-bounds memory operations. This
+may allow a remote unauthenticated attacker to trigger a server crash,
+thus resulting in denial of service.
+
+CVSSv3: 7.5/CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H
+
+Thanks,
+Dhiru
