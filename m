@@ -1,29 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/19/2
-Message-ID: <nycvar.YSQ.7.76.1812191246500.14650@xnncv>
-Date: Wed, 19 Dec 2018 12:49:47 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liq3ea@....com>
-Subject: CVE-2018-20216 QEMU: pvrdma: infinite loop in pvrdma_qp_send/recv
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/07/1
+Message-ID: <CAJznFrtqyw8rGLZ0DV9e8ZkKH+YAwjZOfaxD+0eBKCAje9YnYQ@mail.gmail.com>
+Date: Wed, 7 Mar 2018 01:17:46 +0100
+From: Slavco Mihajloski <slavco.mihajloski@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Authentication bypass mainwp-child < 3.4.5
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+https://wordpress.org/plugins/mainwp-child/ remote administration plugin
+for Wordpress with 300k+ active installations.
 
-An infinite loop issue was found in QEMU's implementation of VMWare's 
-paravirtual RDMA device. It could occur while transferring QP ring objects' 
-data in pvrdma_qp_send/recv functions.
+There is authentication bypass on mainwp-child < 3.4.5 and due the nature
+of the Wordpress itself, it is a RCE too.
 
-A guest user/process could use this flaw to cause infinite loop resulting in 
-DoS.
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2018-12/msg03052.html
+Disclosure:
+https://medium.com/websec/authentication-bypass-rce-on-300k-live-websites-using-mainwp-child-3-4-5-30a69097f633
 
-This issue was reported by Li Qiang.
+Patch:
+https://github.com/mainwp/mainwp-child/commit/1b03e47300d1ee30776a63f4d526e45e1baef4e3#diff-b7c78d39c028166665d187e06e5058a7
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
