@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2757" "Wednesday" "5" "October" "2016" "14:04:33" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161005180433.E7BC8B2E063@smtpvbsrv1.mitre.org>" "67" "[oss-security] Re: CVE Request - multiple ghostscript -dSAFER sandbox problems" "^Cc:" nil nil "10" "2016100518:04:33" "[oss-security] Re: CVE Request - multiple ghostscript -dSAFER sandbox problems" (number mark "        cve-assign@m Oct  5   67/2757  " thread-indent "\"[oss-security] Re: CVE Request - multiple ghostscript -dSAFER sandbox problems\"\n") "<CAJ_zFk+f8Q-4UQt0gv6X_v_gSb12UVVVQ1knJBdZjpA=MQ-S5w@mail.gmail.com>" ("<CAJ_zFk+f8Q-4UQt0gv6X_v_gSb12UVVVQ1knJBdZjpA=MQ-S5w@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1029" "Wednesday" "7" "March" "2018" "14:53:07" "+0100" "Raphael Geissert" "atomo64@gmail.com" "<CAA7hUgH=wqxeQpG-xJ_u1QHHFcUnuS=zCtD6voO_e+BZQ+=fyA@mail.gmail.com>" "22" "[oss-security] And Harbor? (was: Portus, missing certificate validation on proxified https traffic)" nil nil nil "3" "2018030713:53:07" "[oss-security] And Harbor? (was: Portus, missing certificate validation on proxified https traffic)" (number mark "U       atomo64@gmai Mar  7   22/1029  " thread-indent "\"[oss-security] And Harbor? (was: Portus, missing certificate validation on proxified https traffic)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 23901 invoked by uid 550); 5 Oct 2016 18:04:46 -0000
+Received: (qmail 19603 invoked by uid 550); 7 Mar 2018 13:53:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,80 +11,62 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 23879 invoked from network); 5 Oct 2016 18:04:45 -0000
-In-Reply-To: <CAJ_zFk+f8Q-4UQt0gv6X_v_gSb12UVVVQ1knJBdZjpA=MQ-S5w@mail.gmail.com>
-Message-Id: <20161005180433.E7BC8B2E063@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Wed,  5 Oct 2016 14:04:33 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request - multiple ghostscript -dSAFER sandbox problems
-To: taviso@google.com
+Received: (qmail 19558 invoked from network); 7 Mar 2018 13:53:39 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=AYLJLxrHihDH0huvCRmioohikGbV7Ryrgxkuhx0zqAo=;
+        b=lxkmMckGjbE3rbVqMo8T4HaqNgaeEkP+Iefp4J9UzlS8fpm5QSDDkSSsFateBYd2H9
+         EQn6bCba+AP6kW9EaNeHEvsnsaJtVL8cTko0PHRzj86gsCOtubKwF1W+8waK5Lw6mbKJ
+         ELNtmdnUCZIrbtM6D+tJLTuTJTNpw+n0YqrofEQYt1F0S57edb8yOU9SMx6ZEV8WubfW
+         j/qr3mxoTxlhwETu5ty5B2A44U72DbcZtT2392cKLU1B96iFKTl4TVCaUGHST1kuo9AN
+         ewcO+FZUTovUz2r4rwTu+4DHXJz8y/wW2x4wnrST1gag8EYSRcUXRRrvuQ/Qo1GDIuHv
+         G24w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=AYLJLxrHihDH0huvCRmioohikGbV7Ryrgxkuhx0zqAo=;
+        b=n3fPQl33xl3eslec0CQ8C6p6Z3GkE1chXFE6BieUHU5iGPLwewrXevJQ4o2IYMNF1y
+         xnK/xbYIMul64BMrJEMUjTs7vB45SlMK2ZK0IpTyMROg9eZ2UXvAM/ZIgjhwgqBKnNMN
+         Lh3wQW00h4xEFQptZI9RV9qPUdi2rXzrdnadMn2RNs4zmFxh+QPGd/cK3CxnwQ3Hon4f
+         /16wWpmQwSw5oD+wN5Z/CRYxe8vwNTNMNABkUeDriGiGXEzYiBYKBPyK13EpuAQEPCKp
+         j3Ns9qEh54JoISdwUr5FovmOXhAifQJzJnZVghceY1rM6yHJPXB6lkojGQ3Y0vmxAqlJ
+         qDOg==
+X-Gm-Message-State: APf1xPD67mnxCatITXFUgV1RutInnY/PcLdyc9HrFGZZ1IRhOgZTk72B
+	kriBnHGsghWGi8TyxfGd6ZUA3rk1L88U3IVXvWqEUr6+
+X-Google-Smtp-Source: AG47ELunK/ZRU4D5VoAuyIHnY7zf8WfAepDpbsGb7mWtQL2g9ZNNm7ITce4k1kHeRveJsETEHDT3/KmNbdfLuioDx0w=
+X-Received: by 10.159.51.235 with SMTP id y43mr16931256uab.104.1520430807987;
+ Wed, 07 Mar 2018 05:53:27 -0800 (PST)
+MIME-Version: 1.0
+From: Raphael Geissert <atomo64@gmail.com>
+Date: Wed, 7 Mar 2018 14:53:07 +0100
+Message-ID: <CAA7hUgH=wqxeQpG-xJ_u1QHHFcUnuS=zCtD6voO_e+BZQ+=fyA@mail.gmail.com>
+To: Open Source Security <oss-security@lists.openwall.com>
+Cc: security@suse.de, avi.miller@gmail.com, security@vmware.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] And Harbor? (was: Portus, missing certificate validation on proxified
+ https traffic)
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On 7 March 2018 at 14:34, Raphael Geissert <atomo64@gmail.com> wrote:
+[...]
+> Oh and it appears that this one comes from the
+> Portus-On-OracleLinux7[4] repo from which "[they] borrowed a lot of
+> the NGinx configuration"[2] :
+> https://github.com/Djelibeybi/Portus-On-OracleLinux7/blob/f2e7a167f6325a0247eb1ca49a962478daf49a8b/nginx/proxy.conf#L57
 
->> using libgs ... the same issues apply there.
+>From a quick look at harbor, it would appear to also be missing the
+certificate validation on the proxified connections:
+https://github.com/vmware/harbor/tree/master/make/common/templates/nginx
+(as of 19a13e8)
 
-> bug: various userparams allow %pipe% in paths, allowing remote shell
-> command execution.
-> id: http://bugs.ghostscript.com/show_bug.cgi?id=697178
-> repro: http://www.openwall.com/lists/oss-security/2016/09/30/8
-> patch: http://git.ghostscript.com/?p=user/chrisl/ghostpdl.git;h=71ac87493b1e445d6c07554d4246cf7d4f44875c
+CC'ing vmware security, fwiw.
 
-Use CVE-2016-7976.
+> [1]https://github.com/SUSE/Portus/blob/146076d543e8f1618f837dd7466c5f0fdc26438d/examples/compose/nginx/nginx.conf
+> [2]https://github.com/SUSE/Portus/blob/146076d543e8f1618f837dd7466c5f0fdc26438d/examples/compose/README.md
+> [3]https://github.com/SUSE/Portus/blob/146076d543e8f1618f837dd7466c5f0fdc26438d/examples/compose/docker-compose.yml#L21
+> [4] https://github.com/Djelibeybi/Portus-On-OracleLinux7
 
-There currently isn't a separate CVE ID for the earlier impact that
-occurred when "b" was in the mode argument to popen. The question of
-whether popen will execute anyway (even with the 'b" character) is,
-more or less, a reachability concern in this context, and doesn't mean
-that a second vulnerability needs to be defined.
-
-
-> bug: .libfile doesn't check PermitFileReading array, allowing remote
-> file disclosure.
-> id: http://bugs.ghostscript.com/show_bug.cgi?id=697169
-> repro: http://www.openwall.com/lists/oss-security/2016/09/29/28
-> patch: http://git.ghostscript.com/?p=user/chrisl/ghostpdl.git;h=cf046d2f0fa2c6973c6ca8d582a9b185cc4bd280
-
-Use CVE-2016-7977.
-
-
-> bug: reference leak in .setdevice allows use-after-free and remote
-> code execution
-> id: http://bugs.ghostscript.com/show_bug.cgi?id=697179
-> repro: http://bugs.ghostscript.com/show_bug.cgi?id=697179#c0
-> patch: http://git.ghostscript.com/?p=user/chrisl/ghostpdl.git;h=d5ad1e0298e1c193087c824eb4f79628b182e28b
-
-Use CVE-2016-7978.
-
-
-> bug: type confusion in .initialize_dsc_parser allows remote code execution
-> id: http://bugs.ghostscript.com/show_bug.cgi?id=697190
-> repro: http://bugs.ghostscript.com/show_bug.cgi?id=697190#c0
-> patch: http://git.ghostscript.com/?p=ghostpdl.git;h=875a0095f37626a721c7ff57d606a0f95af03913
-
-Use CVE-2016-7979.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJX9T/VAAoJEHb/MwWLVhi2cAIQAK8qd8U2OgbvvMLLHcWB3Ga8
-BOkFNMfEXPYmzsSH7JAL7nv6JMuep5gRCKIVMVfbhSgFtCyb5m7sR7qb3SwAJ8j6
-9Vj0Cm/wEif2NkuLQzstqir/wSlh0ltTiBI7Y+BoxVZbXyeh4yOJSbR0SADgp4Kv
-Vczvr3Ys37mqjFTBULf9AaLIPQO3PF9iG8P48lJFVk+ZedWcJOV1XQIEwaJt1NJv
-jW/w87MDDQxCmDOcZwha5mMWmiHc3oA3H/DllwMqb5GyW56+ek2zpykj1K2NmDVA
-VPv01YTZh/PGQeBsnVNJpY9P3NI1FUsxRj7AunUUr50l2b2+0WLxE1fzHvgpd7fV
-wuJuOoOZoFob6Bsv/OuxmOpsCqGPj5U4Q7CfCamNAHl14ahTZJzTO8plrTD5sexU
-9wWSBqMeqtl5QdwcFu0RFvoxK+mPvOT1ufwkTWjk3eaH58tuk6FpacspAqH2sv/F
-DqEMAGQ7pT6at6c2frQhBRX6aMyp/dUHsoSNRvcLYgR+m0boscez+ayFQGeq1DlT
-pSbQbKyNb9KBa6u6kN72Ts8uwVKrqFbwuxCgOrXxdCeZQCGMh4vftA317jLDUJbV
-2b8fNfMrssi11P7CmAMYX/PRM97ZlPHvdb2l1BcpUASymPj2SCivVQpxOj/pKXLw
-ihoKA67NoYZiwgVqR44j
-=2xkJ
------END PGP SIGNATURE-----
+Cheers,
+-- 
+Raphael Geissert
