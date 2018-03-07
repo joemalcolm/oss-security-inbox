@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3211" "Friday" "23" "September" "2016" "14:35:41" "+0200" "Thomas Deutschmann" "whissi@gentoo.org" "<9cfba660-64cf-c287-2be2-2545c46afac3@gentoo.org>" "93" "[oss-security] CVEs for vulnerabilities listed in MySQL 5.6.33 release note" nil nil nil "9" "2016092312:35:41" "[oss-security] CVEs for vulnerabilities listed in MySQL 5.6.33 release note" (number mark "U       whissi@gento Sep 23   93/3211  " thread-indent "\"[oss-security] CVEs for vulnerabilities listed in MySQL 5.6.33 release note\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1887" "Wednesday" "7" "March" "2018" "21:57:30" "+0000" "Seaman, Chad" "cseaman@akamai.com" "<D8D24F8C-3644-4DB1-960A-C418453F7F2C@akamai.com>" "31" "Re: [oss-security] memcached UDP amplification attacks" "^Date:" nil nil "3" "2018030721:57:30" "[oss-security] memcached UDP amplification attacks" (number mark "        cseaman@akam Mar  7   31/1887  " thread-indent "\"Re: [oss-security] memcached UDP amplification attacks\"\n") "<20180307110950.4eb041a8@redhat.com>" ("<20180302124428.440b9c3b@pc1>" "<CANO=Ty09HPfSbp8QsZHU24EnEyzOw1H1C-Zr+7mqwDhOG6=HYg@mail.gmail.com>" "<CANO=Ty0X6iVTG=BUhdUgxYSLN9XnA-NcvH96DgTALQRvsNnn4Q@mail.gmail.com>" "<20180307110950.4eb041a8@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 10239 invoked by uid 550); 23 Sep 2016 12:42:51 -0000
+Received: (qmail 32500 invoked by uid 550); 7 Mar 2018 21:57:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,111 +11,85 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7809 invoked from network); 23 Sep 2016 12:36:11 -0000
-To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-From: Thomas Deutschmann <whissi@gentoo.org>
-Message-ID: <9cfba660-64cf-c287-2be2-2545c46afac3@gentoo.org>
-Date: Fri, 23 Sep 2016 14:35:41 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.3.0
+Received: (qmail 32478 invoked from network); 7 Mar 2018 21:57:49 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=akamai.com; h=from : to : subject :
+ date : message-id : references : in-reply-to : content-type : content-id :
+ content-transfer-encoding : mime-version; s=jan2016.eng;
+ bh=zeo+kD9s4y7ae0mJWSK1ca8KGZ8FCyefXqOkJykyv8o=;
+ b=e0AVn4Mcte99wkccu8Wz1if8/YK7eZHKoJnuXaP5aPnhA5DS5JX4IBZD+FS2ma/qA1gR
+ o7Wy2/Zd6qnT0qZXVblLDIzvvuNFOvb7gzRwWfAn8lbC9/gE3M3J8LT7Vg8kf5G5iUx3
+ WfEJ+piCczKXE0Uw7ECFr5a0V1Ut4DrO+oFvkEP227Ba322l/WwIW5vRo1SuVuOUvCIo
+ jJVEWBXQ9A2V62qBcoja8ZZQoIeCgUFrgslgrVCi3+rZksBN33kTKxMwvC9I3bMgsxTM
+ gtY0L4R6oytUjx6cvsK24Ddb4YDD1/2Wvp2588iQmCzYwHPT80KZlvZG1vmEIxSDTHd9 iQ== 
+Thread-Topic: [oss-security] memcached UDP amplification attacks
+Thread-Index: AQHTshvjyBI268JaFUSb7Q8pglB5raO9K0EAgAEYbACABqTIAIAAxbgA
+Message-ID: <D8D24F8C-3644-4DB1-960A-C418453F7F2C@akamai.com>
+References: <20180302124428.440b9c3b@pc1>
+ <CANO=Ty09HPfSbp8QsZHU24EnEyzOw1H1C-Zr+7mqwDhOG6=HYg@mail.gmail.com>
+ <CANO=Ty0X6iVTG=BUhdUgxYSLN9XnA-NcvH96DgTALQRvsNnn4Q@mail.gmail.com>
+ <20180307110950.4eb041a8@redhat.com>
+In-Reply-To: <20180307110950.4eb041a8@redhat.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+user-agent: Microsoft-MacOutlook/f.27.0.171010
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [172.19.248.154]
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <F58F61EB95E1BB45AFE29E3712899718@akamai.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="lvdD2JdGUfXwoNxCLtDbc2g7sVh3Wkd9C"
-Subject: [oss-security] CVEs for vulnerabilities listed in MySQL 5.6.33 release note
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2018-03-07_10:,,
+ signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 malwarescore=0
+ phishscore=0 bulkscore=0 spamscore=0 mlxscore=0 mlxlogscore=999
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.0.1-1711220000 definitions=main-1803070248
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2018-03-07_10:,,
+ signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 priorityscore=1501 malwarescore=0
+ suspectscore=0 phishscore=0 bulkscore=0 spamscore=0 clxscore=1011
+ lowpriorityscore=0 mlxscore=0 impostorscore=0 mlxlogscore=999 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.0.1-1711220000
+ definitions=main-1803070249
+Date: Wed, 7 Mar 2018 21:57:30 +0000
+From: "Seaman, Chad" <cseaman@akamai.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] memcached UDP amplification attacks
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>,
+        "Kurt
+ Seifried" <kseifried@redhat.com>
 
---lvdD2JdGUfXwoNxCLtDbc2g7sVh3Wkd9C
-Content-Type: multipart/mixed; boundary="2LPWeOopMFJKN3tch6Np1nLu5gbnAN40r";
- protected-headers="v1"
-From: Thomas Deutschmann <whissi@gentoo.org>
-To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Message-ID: <9cfba660-64cf-c287-2be2-2545c46afac3@gentoo.org>
-Subject: CVEs for vulnerabilities listed in MySQL 5.6.33 release note
-
---2LPWeOopMFJKN3tch6Np1nLu5gbnAN40r
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-
-Hi,
-
-the MySQL 5.6.33 changelog [1] lists multiple fixed vulnerabilities but
-I can't find CVEs for all of these problems. Am I missing something? If
-not, could you please assign CVEs which would help tracking the status
-of these problems in MariaDB and Percona-Server (see Percona's latest
-release notes for their 5.6.32-based fork [2] which seems to address
-vulnerabilities listed in 5.6.33):
-
-> For mysqld_safe, the argument to --malloc-lib now must be one of the
->  directories /usr/lib, /usr/lib64, /usr/lib/i386-linux-gnu, or=20
-> /usr/lib/x86_64-linux-gnu. In addition, the --mysqld and=20
-> --mysqld-version options can be used only on the command line and not
-> in an option file. (Bug #24464380)
-
-This one seems to be related to CVE-2016-6662 but one could argue this
-deserve its one CVE.
-
-
-> It was possible to write log files ending with .ini or .cnf that=20
-> later could be parsed as option files. The general query log and
-> slow query log can no longer be written to a file ending with .ini
-> or .cnf. (Bug #24388753)
-
-This is CVE-2016-6662.
-
-
-> Privilege escalation was possible by exploiting the way REPAIR TABLE
-> used temporary files. (Bug #24388746)
-
-This one seems to be without a CVE (I guess this isn't CVE-2016-6663).
-
-
-Thanks!
-
-
-
-See also:
-=3D=3D=3D=3D=3D=3D=3D=3D=3D
-[1] https://dev.mysql.com/doc/relnotes/mysql/5.6/en/news-5-6-33.html
-
-[2]
-https://www.percona.com/blog/2016/09/21/percona-server-5-6-32-78-1-is-now-a=
-vailable/
-
-
---=20
-Regards,
-Thomas
-
-
-
---2LPWeOopMFJKN3tch6Np1nLu5gbnAN40r--
-
---lvdD2JdGUfXwoNxCLtDbc2g7sVh3Wkd9C
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0
-
-iQJ8BAEBCgBmBQJX5SGhXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25zLm9w
-ZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXQzM0M1ODQ4MkM0MDIyOTJEMkUzQzVDMDY5
-NzA5RjkwQzNDOTZGRkM4AAoJEJcJ+Qw8lv/IFJ8P/RG47twiC4yekUWMMFCgHPRX
-vKXNyELpr9taHWYSTTt51g/l6cPPkjuIc7KCNpCZQxm7ATJGewojRRFOF3NlBB5Z
-6mXN0IgCcBXzloZiEQJ3pWjmPd1Xo3a1KbUP3Qa3AScRhKdDzrN5UMoBMRnruFHn
-FEjvdFNGBQhi8ZZNRiOzPRoj0IwLbjF2YXyclPpP35hI6L0VmbLxOEBvDnn2XoKk
-2wsly2c5N3qOjpkUJpgU+hwpmNR8PmN1GXhAQYQqCYjb7t8EKhUY4fD7VDCEUw02
-a+tmX+BrO1uQw3/gwE5SZFl9tu+Yv8xPvp9G3Lu5lPnt1iRxy6aAQ2WO4UH7H8ZD
-cR1m8E2s4VDhZkaVfGeqf1Rt0SCerVuQKsKYxnBx3w/w2GXBjPxlRwKNfXfzOtsm
-qQfNd3JEFnR4rFcJnzjUvum41W65e6L4hXshr+WwPUMnfJn+eFHWY0VAq628/C5c
-nVidk9y+lyjyTlT8UxBtdXl5JI/pVJK48neWOswEb7h7SNBdS9j6KVicHse+LX+B
-OKsVfY8yP8wmX9j3hV42RrMk6omRh0/aB3i+BE8zLpSyYWX6r/TsNBbgJ1DZ0zgS
-zf+elKt9+Uy/htAizQvuK0TVQfEt0dTw9lbEbGMO9ctcY1VKCjDbZOXdAdoJlQMh
-0W7DL7J1RTilP/GPutrb
-=xvR8
------END PGP SIGNATURE-----
-
---lvdD2JdGUfXwoNxCLtDbc2g7sVh3Wkd9C--
+VG9tYXMsDQoNCllvdeKAmXJlIG5vdCB3cm9uZywgdGhhdCB3YXMgYSB0eXBv
+IGluIHRoZSBibG9nLg0KDQpSZWdhcmRzLA0KQ2hhZA0KDQpPbiAzLzcvMTgs
+IDU6MTAgQU0sICJUb21hcyBIb2dlciIgPHRob2dlckByZWRoYXQuY29tPiB3
+cm90ZToNCg0KICAgIE9uIEZyaSwgMiBNYXIgMjAxOCAyMTo0MjozMCAtMDcw
+MCBLdXJ0IFNlaWZyaWVkIHdyb3RlOg0KICAgIA0KICAgID4gSSBoYXZlIGFz
+c2lnbmVkIENWRS0yMDE4LTEwMDAxMTUgdG8gdGhpcyBpc3N1ZToNCiAgICA+
+IA0KICAgID4gTWVtY2FjaGVkIHZlcnNpb24gMS41LjUgY29udGFpbnMgYW4g
+SW5zdWZmaWNpZW50IENvbnRyb2wgb2YgTmV0d29yaw0KICAgID4gTWVzc2Fn
+ZSBWb2x1bWUgKE5ldHdvcmsgQW1wbGlmaWNhdGlvbiwgQ1dFLTQwNikgdnVs
+bmVyYWJpbGl0eSBpbiB0aGUNCiAgICA+IFVEUCBzdXBwb3J0IG9mIHRoZSBt
+ZW1jYWNoZWQgc2VydmVyIHRoYXQgY2FuIHJlc3VsdCBpbiBkZW5pYWwgb2YN
+CiAgICA+IHNlcnZpY2UgdmlhIG5ldHdvcmsgZmxvb2QgKHRyYWZmaWMgYW1w
+bGlmaWNhdGlvbiBvZiAxOjUwLDAwMCBoYXMgYmVlbg0KICAgID4gcmVwb3J0
+ZWQgYnkgcmVsaWFibGUgc291cmNlcykuIFRoaXMgYXR0YWNrIGFwcGVhciB0
+byBiZSBleHBsb2l0YWJsZQ0KICAgID4gdmlhIG5ldHdvcmsgY29ubmVjdGl2
+aXR5IHRvIHBvcnQgMTEyMTEgVURQLiBUaGlzIHZ1bG5lcmFiaWxpdHkNCiAg
+ICA+IGFwcGVhcnMgdG8gaGF2ZSBiZWVuIGZpeGVkIGluIDEuNS42IGR1ZSB0
+byB0aGUgZGlzYWJsaW5nIG9mIHRoZSBVRFANCiAgICA+IHByb3RvY29sIGJ5
+IGRlZmF1bHQuDQogICAgDQogICAgTWlub3Igbml0cGljaywgdGhlIGRlc2Ny
+aXB0aW9uIG1lbnRpb25zIDE6NTAsMDAwIHJhdGlvLCBhcHBhcmVudGx5DQog
+ICAgYmFzZWQgb24gdGhlIGluZm9ybWF0aW9uIGluIHRoZSBmb2xsb3dpbmcg
+cmVmZXJlbmNlOg0KICAgIA0KICAgID4gaHR0cHM6Ly9ibG9ncy5ha2FtYWku
+Y29tLzIwMTgvMDMvbWVtY2FjaGVkLWZ1ZWxlZC0xMy10YnBzLWF0dGFja3Mu
+aHRtbA0KICAgIA0KICAgIHdoZXJlIGl0J3MgbWVudGlvbmVkIGFzOg0KICAg
+IA0KICAgICIiIg0KICAgIFdvcnNlLCBtZW1jYWNoZWQgY2FuIGhhdmUgYW4g
+YW1wbGlmaWNhdGlvbiBmYWN0b3Igb2Ygb3ZlciA1MCwwMDAsDQogICAgbWVh
+bmluZyBhIDIwMyBieXRlIHJlcXVlc3QgcmVzdWx0cyBpbiBhIDEwMCBtZWdh
+Ynl0ZSByZXNwb25zZS4NCiAgICAiIiINCiAgICANCiAgICBIb3dldmVyLCAy
+MDAgKiA1MGsgPSAxMG0sIG5vdCAxMDBtLiAgV29uZGVyIGlmIEknbSBkb2lu
+ZyBteSBtYXRoIHdyb25nLg0KICAgIA0KICAgIC0tIA0KICAgIFRvbWFzIEhv
+Z2VyIC8gUmVkIEhhdCBQcm9kdWN0IFNlY3VyaXR5DQogICAgDQoNCg==
