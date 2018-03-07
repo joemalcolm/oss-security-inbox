@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2154" "Tuesday" "2" "February" "2016" "12:27:46" "-0800" "Seth Arnold" "seth.arnold@canonical.com" "<20160202202746.GA27418@hunt>" "49" "Re: [oss-security] Re: Socat security advisory 7 - Created new 2048bit DH modulus" "^Cc:" nil nil "2" "2016020220:27:46" "[oss-security] Re: Socat security advisory 7 - Created new 2048bit DH modulus" (number mark "        seth.arnold@ Feb  2   49/2154  " thread-indent "\"Re: [oss-security] Re: Socat security advisory 7 - Created new 2048bit DH modulus\"\n") "<20160202193606.7345E8BC044@smtpvmsrv1.mitre.org>" ("<56AF7AA7.7080609@dest-unreach.org>" "<20160202193606.7345E8BC044@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2059" "Wednesday" "7" "March" "2018" "23:33:37" "+0100" "Patrick Forsberg" "fors@cert.sunet.se" "<fe452830-1090-7f3d-f740-df1ed6f2d9ee@cert.sunet.se>" "59" "Re: [oss-security] memcached UDP amplification attacks" "^Date:" nil nil "3" "2018030722:33:37" "[oss-security] memcached UDP amplification attacks" (number mark "        fors@cert.su Mar  7   59/2059  " thread-indent "\"Re: [oss-security] memcached UDP amplification attacks\"\n") "<D8D24F8C-3644-4DB1-960A-C418453F7F2C@akamai.com>" ("<20180302124428.440b9c3b@pc1>" "<CANO=Ty09HPfSbp8QsZHU24EnEyzOw1H1C-Zr+7mqwDhOG6=HYg@mail.gmail.com>" "<CANO=Ty0X6iVTG=BUhdUgxYSLN9XnA-NcvH96DgTALQRvsNnn4Q@mail.gmail.com>" "<20180307110950.4eb041a8@redhat.com>" "<D8D24F8C-3644-4DB1-960A-C418453F7F2C@akamai.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 27833 invoked by uid 550); 2 Feb 2016 20:28:02 -0000
+Received: (qmail 1660 invoked by uid 550); 8 Mar 2018 08:41:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,71 +11,93 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 27812 invoked from network); 2 Feb 2016 20:28:01 -0000
-Message-ID: <20160202202746.GA27418@hunt>
-Mail-Followup-To: cve-assign@mitre.org, oss-security@lists.openwall.com
-References: <56AF7AA7.7080609@dest-unreach.org>
- <20160202193606.7345E8BC044@smtpvmsrv1.mitre.org>
+Received: (qmail 5482 invoked from network); 7 Mar 2018 22:33:54 -0000
+References: <20180302124428.440b9c3b@pc1>
+ <CANO=Ty09HPfSbp8QsZHU24EnEyzOw1H1C-Zr+7mqwDhOG6=HYg@mail.gmail.com>
+ <CANO=Ty0X6iVTG=BUhdUgxYSLN9XnA-NcvH96DgTALQRvsNnn4Q@mail.gmail.com>
+ <20180307110950.4eb041a8@redhat.com>
+ <D8D24F8C-3644-4DB1-960A-C418453F7F2C@akamai.com>
+Message-ID: <fe452830-1090-7f3d-f740-df1ed6f2d9ee@cert.sunet.se>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:52.0)
+ Gecko/20100101 Thunderbird/52.6.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="7AUc2qLy4jB3hD7Z"
-Content-Disposition: inline
-In-Reply-To: <20160202193606.7345E8BC044@smtpvmsrv1.mitre.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Cc: oss-security@lists.openwall.com
-Date: Tue, 2 Feb 2016 12:27:46 -0800
-From: Seth Arnold <seth.arnold@canonical.com>
-Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: Socat security advisory 7 - Created new
- 2048bit DH modulus
-To: cve-assign@mitre.org
-
---7AUc2qLy4jB3hD7Z
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+In-Reply-To: <D8D24F8C-3644-4DB1-960A-C418453F7F2C@akamai.com>
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
+X-Bayes-Prob: 0.005 (Score 0, tokens from: outbound, outbound-sunet-se:default, sunet-se:default, base:default, @@RPTN)
+X-CanIt-Geo: ip=89.45.232.214; country=SE; latitude=59.3247; longitude=18.0560; http://maps.google.com/maps?q=59.3247,18.0560&z=6
+X-CanItPRO-Stream: outbound-sunet-se:outbound (inherits from outbound-sunet-se:default,sunet-se:default,base:default)
+X-Canit-Stats-ID: 09VjaxGUG - 66a6c6b67bd5 - 20180307
+X-CanIt-Archive-Cluster: PfMRe/vJWMiXwM2YIH5BVExnUnw
+Received-SPF: neutral (e-mailfilter01.sunet.se: 89.45.232.214 is neither permitted
+	nor denied by domain fors@cert.sunet.se)
+	receiver=e-mailfilter01.sunet.se; client-ip=89.45.232.214;
+	envelope-from=<fors@cert.sunet.se>; helo=smtp1.sunet.se;
+	identity=mailfrom
+X-Scanned-By: CanIt (www . roaringpenguin . com)
+Date: Wed, 7 Mar 2018 23:33:37 +0100
+From: Patrick Forsberg <fors@cert.sunet.se>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] memcached UDP amplification attacks
+To: oss-security@lists.openwall.com
 
-On Tue, Feb 02, 2016 at 02:36:06PM -0500, cve-assign@mitre.org wrote:
-> useful. Our question is about whether anyone needs two CVE IDs.
->=20
-> A CVE ID must be for a specific vulnerability (although we realize
-> that the CVE ID may often be used to track the update). Here, there
-> can be a CVE ID for the "was not prime" finding in the sense that p is
-> supposed to be prime, and a non-prime value is an implementation error
-> regardless of any other details of the situation. With the currently
-> published information, we do not see a way to generate a second CVE ID
-> for something related to "no indication of how these parameters were
-> chosen" or "cannot be ruled out."
+On 2018-03-07 22:57, Seaman, Chad wrote:
 
-Ubuntu won't issue an Ubuntu Security Notice for the socat issue (because
-socat is in our "universe" archive); however, we wouldn't find it useful
-to have a second CVE assigned for "no indication of how these parameters
-were chosen" or "cannot be ruled out".
+> Tomas,
+>
+> You=E2=80=99re not wrong, that was a typo in the blog.
+>
+> Regards,
+> Chad
+On the other hand I think the blog is wrong. (Just reading the protocol
+specs)
 
-This is one area where distro needs don't 100% align with MITRE's: one CVE
-per line of code is sufficient for us but not for MITRE. When in doubt I'd
-suggest to limit the number of CVEs issued just on the principle of less
-work for everyone. When it's clear, of course, do what you must; we're
-lucky we get to use CVEs to identify issues, and some slight duplication
-(from our perspective) is a price well worth paying to use CVE's many
-positive benefits.
+The default maximum size of an item is 1M, but you can easily request
+more than one item using the gets command.
+=C2=A0=C2=A0 gets <key>*\r\n
+where <key>* is one or several keys separated by whitespace.
+A key is a text string that must not include control characters or
+whitespace. The maximum length of a key is 250 characters but I don't
+think there's a minimum size so one byte keys should be fine.
 
-Thanks
+/Patrick
+>
+> On 3/7/18, 5:10 AM, "Tomas Hoger" <thoger@redhat.com> wrote:
+>
+>     On Fri, 2 Mar 2018 21:42:30 -0700 Kurt Seifried wrote:
+>=20=20=20=20=20
+>     > I have assigned CVE-2018-1000115 to this issue:
+>     >=20
+>     > Memcached version 1.5.5 contains an Insufficient Control of Network
+>     > Message Volume (Network Amplification, CWE-406) vulnerability in the
+>     > UDP support of the memcached server that can result in denial of
+>     > service via network flood (traffic amplification of 1:50,000 has be=
+en
+>     > reported by reliable sources). This attack appear to be exploitable
+>     > via network connectivity to port 11211 UDP. This vulnerability
+>     > appears to have been fixed in 1.5.6 due to the disabling of the UDP
+>     > protocol by default.
+>=20=20=20=20=20
+>     Minor nitpick, the description mentions 1:50,000 ratio, apparently
+>     based on the information in the following reference:
+>=20=20=20=20=20
+>     > https://blogs.akamai.com/2018/03/memcached-fueled-13-tbps-attacks.h=
+tml
+>=20=20=20=20=20
+>     where it's mentioned as:
+>=20=20=20=20=20
+>     """
+>     Worse, memcached can have an amplification factor of over 50,000,
+>     meaning a 203 byte request results in a 100 megabyte response.
+>     """
+>=20=20=20=20=20
+>     However, 200 * 50k =3D 10m, not 100m.  Wonder if I'm doing my math wr=
+ong.
+>=20=20=20=20=20
+>     --=20
+>     Tomas Hoger / Red Hat Product Security
+>=20=20=20=20=20
+>
 
---7AUc2qLy4jB3hD7Z
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBAgAGBQJWsRFCAAoJEPMhclmdjS6XYZAH/3KTXkyt9Xctf6FZBCV+jC/u
-zU/vZ/EWs6Hq1lSANMjEaN6RfxAhGWIWSY7fuqaAirG7J9nzI4Nyyu9uyteRsjPe
-ZqJhdh72Lnq7kRXRguVrHs3lrgE4gwBS1O5IJZ7R4yOnQp2akVADGtYxLqsW1ZmA
-YtcmgHkFq33sxLejPGZ+3OQ6Bkc3eAeN+kP2nDauBoO2EwT3iBfCtZVeFxVu5jbJ
-DI1v1SfHbHmtg7oYsH00kWo+EXK32IxXCFeaVBZUFNaQ2qzZQm/VraSoaXpXTpzF
-3raSTSRlcLQbOgkF4zxI0gsbiQfjlP12xBB1zvrBVpBrjpAZqk1NfyAEvRa9tA0=
-=6sRv
------END PGP SIGNATURE-----
-
---7AUc2qLy4jB3hD7Z--
