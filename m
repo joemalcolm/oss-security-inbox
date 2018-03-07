@@ -1,24 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/19/1
-Message-ID: <nycvar.YSQ.7.76.1812191033330.13086@xnncv>
-Date: Wed, 19 Dec 2018 10:55:55 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Cfir Cohen <cfir@...gle.com>, Alex Gaynor <alex.gaynor@...il.com>
-Subject: Re: CVE-2018-16882 Kernel: KVM: nVMX: use after free in posted interrupt processing
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/07/6
+Message-Id: <A0F9A5C4-B009-40D3-B3B7-CE1AB9B0B8FB@redhat.com>
+Date: Wed, 7 Mar 2018 07:20:47 -0700
+From: Kurt Seifried <kseifrie@...hat.com>
+To: Tomas Hoger <thoger@...hat.com>
+Cc: Kurt Seifried <kseifried@...hat.com>, oss-security@...ts.openwall.com
+Subject: Re: memcached UDP amplification attacks
 Content-Type: text/plain; charset=utf-8
 
-  Hello Alex,
+Actually the 50k was based on a private but trustworthy reporter (The 3 letter agency people), some people store very big things in memcached like cached web pages...
 
-+-- On Tue, 18 Dec 2018, Alex Gaynor wrote --+
-| Can you say more about why this is only a DoS? The commit message sounds (to 
-| someone with little domain expertise in KVM) like a fairly traditional 
-| pattern for an exploitable for code exec uaf.
-
-That's right, it does have potential for more misuse, though it may not be as 
-easy. I missed to mention that earlier.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+> On Mar 7, 2018, at 3:09 AM, Tomas Hoger <thoger@...hat.com> wrote:
+> 
+>> On Fri, 2 Mar 2018 21:42:30 -0700 Kurt Seifried wrote:
+>> 
+>> I have assigned CVE-2018-1000115 to this issue:
+>> 
+>> Memcached version 1.5.5 contains an Insufficient Control of Network
+>> Message Volume (Network Amplification, CWE-406) vulnerability in the
+>> UDP support of the memcached server that can result in denial of
+>> service via network flood (traffic amplification of 1:50,000 has been
+>> reported by reliable sources). This attack appear to be exploitable
+>> via network connectivity to port 11211 UDP. This vulnerability
+>> appears to have been fixed in 1.5.6 due to the disabling of the UDP
+>> protocol by default.
+> 
+> Minor nitpick, the description mentions 1:50,000 ratio, apparently
+> based on the information in the following reference:
+> 
+>> https://blogs.akamai.com/2018/03/memcached-fueled-13-tbps-attacks.html
+> 
+> where it's mentioned as:
+> 
+> """
+> Worse, memcached can have an amplification factor of over 50,000,
+> meaning a 203 byte request results in a 100 megabyte response.
+> """
+> 
+> However, 200 * 50k = 10m, not 100m.  Wonder if I'm doing my math wrong.
+> 
+> -- 
+> Tomas Hoger / Red Hat Product Security
