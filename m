@@ -1,87 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/21/6
-Message-ID: <20180821155022.GG25380@timmy.laas.fr>
-Date: Tue, 21 Aug 2018 17:50:22 +0200
-From: Matthieu Herrb <matthieu@...rb.eu>
-To: oss-security@...ts.openwall.com
-Subject: X.Org security advisory: August 21, 2018
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/07/3
+Message-ID: <20180307110950.4eb041a8@redhat.com>
+Date: Wed, 7 Mar 2018 11:09:50 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: memcached UDP amplification attacks
 Content-Type: text/plain; charset=utf-8
 
+On Fri, 2 Mar 2018 21:42:30 -0700 Kurt Seifried wrote:
 
-X.Org security advisory: August 21, 2018
+> I have assigned CVE-2018-1000115 to this issue:
+> 
+> Memcached version 1.5.5 contains an Insufficient Control of Network
+> Message Volume (Network Amplification, CWE-406) vulnerability in the
+> UDP support of the memcached server that can result in denial of
+> service via network flood (traffic amplification of 1:50,000 has been
+> reported by reliable sources). This attack appear to be exploitable
+> via network connectivity to port 11211 UDP. This vulnerability
+> appears to have been fixed in 1.5.6 due to the disabling of the UDP
+> protocol by default.
 
-Multiple issues in libX11
-=========================
+Minor nitpick, the description mentions 1:50,000 ratio, apparently
+based on the information in the following reference:
 
-The functions XGetFontPath, XListExtensions and XListFonts from libX11
-are vulnerable to three different issues:
+> https://blogs.akamai.com/2018/03/memcached-fueled-13-tbps-attacks.html
 
-Off-by-one writes (CVE-2018-14599).
------------------------------------
+where it's mentioned as:
 
-The functions XGetFontPath, XListExtensions, and XListFonts are
-vulnerable to an off-by-one override on malicious server responses.
+"""
+Worse, memcached can have an amplification factor of over 50,000,
+meaning a 203 byte request results in a 100 megabyte response.
+"""
 
-The server replies consist of chunks consisting of a length byte
-followed by actual string, which is not NUL-terminated.
+However, 200 * 50k = 10m, not 100m.  Wonder if I'm doing my math wrong.
 
-While parsing the response, the length byte is overridden with '\0',
-thus the memory area can be used as storage of C strings later on. To
-be able to NUL-terminate the last string, the buffer is reserved with
-an additional byte of space.
-
-For a boundary check, the variable chend (end of ch) was introduced,
-pointing at the end of the buffer which ch initially points to.
-Unfortunately there is a difference in handling "the end of ch".
-
-While chend points at the first byte that must not be written to,
-the for-loop uses chend as the last byte that can be written to.
-
-Therefore, an off-by-one can occur.
-
-
-Out of boundary write (CVE-2018-14600).
----------------------------------------
-
-The length value is interpreted as signed char on many systems
-(depending on default signedness of char), which can lead to an out of
-boundary write up to 128 bytes in front of the allocated storage, but
-limited to NUL byte(s).
-
-Casting the length value to unsigned char fixes the problem and allows
-string values with up to 255 characters.
-
-Crash on invalid reply (CVE-2018-14598).
-----------------------------------------
-
-If the server sends a reply in which even the first string would
-overflow the transmitted bytes, list[0] (or flist[0]) will be set to
-NULL and a count of 0 is returned.
-
-If the resulting list is freed with XFreeExtensionList or
-XFreeFontPath later on, the first Xfree call:
-
-    Xfree (list[0]-1)
- turns into
-    Xfree (NULL-1)
-
-which will most likely trigger a segmentation fault.
-
-Patches
-=======
-
-Patches for these issues have been commited to the libX11 git repository.
-libX11 1.6.6 will be released shortly and will include those patches.
-
-https://gitlab.freedesktop.org/xorg/lib/libx11
-
-b469da1430cdcee06e31c6251b83aede072a1ff0  CVE-2018-14599
-dbf72805fd9d7b1846fe9a11b46f3994bfc27fea  CVE-2018-14600
-e83722768fd5c467ef61fa159e8c6278770b45c2  CVE-2018-14598
-
-Thanks
-======
-
-X.Org thanks Tobias Stoeckmann for reporting these issues to our
-security team and assisting them in understanding them and evaluating
-our fixes.
+-- 
+Tomas Hoger / Red Hat Product Security
