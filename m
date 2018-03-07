@@ -1,52 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/09/4
-Message-ID: <20180109164643.GA26974@perpetual.pseudorandom.co.uk>
-Date: Tue, 9 Jan 2018 16:46:43 +0000
-From: Simon McVittie <smcv@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: Georgi Guninski <guninski@...inski.com>
-Subject: Re: Own on install. How grave it is?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/07/4
+Message-ID: <CAA7hUgG=6G+HYQQdByu=KV+t0RJ2UOBo+8iz2ZB=NyyGTpqcYA@mail.gmail.com>
+Date: Wed, 7 Mar 2018 14:34:06 +0100
+From: Raphael Geissert <atomo64@...il.com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Cc: security@...e.de, avi.miller@...il.com
+Subject: Portus, missing certificate validation on proxified https traffic
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 09 Jan 2018 at 08:37:08 -0700, Kurt Seifried wrote:
-> Many OS installs/etc take a password during install
+Hi,
 
-I think Georgi was more concerned about the installation having a secure
-design, but an insecure (vulnerable) implementation appearing on the
-installation media due to either unfixed vulnerabilities, or
-vulnerabilities that were fixed elsewhere but not on the installation
-media?
+Taking another look at portus, this time at the nginx sample
+configuration[1], I noticed that it doesn't enable certificate
+validation of the proxified traffic that is forwarded to portus and
+registry.
 
-For instance, the Debian installer installs packages from the install
-media (CD, USB stick, whatever), then immediately updates them
-from the Internet if possible; but there's a chicken-and-egg
-problem here, because that update has to be done with whatever
-version of apt was on the media. If that version happens to suffer
-from a vulnerability that can be exploited at that time (such as
-https://security-tracker.debian.org/tracker/CVE-2016-1252 in apt itself,
-or a vulnerability in the http or signature verification code that it
-uses) then there's an opportunity for attack.
+Given that the documentation claims the examples are of "A
+production-ready setup where all communication is encrypted."[2], I
+plan to request a CVE id.
 
-The same is true for the kernel and network-device firmware used to boot
-the installer. Debian mitigates this by releasing updated installation
-media at every point release (about 1 per 2 months for stable, somewhat
-slower for oldstable).
+The details:
 
-I don't see any way to prevent that class of attack completely. Releasing
-updated installation media sooner would mitigate it, but preparing
-installation media is far from being a rapid process.
+The example nginx configuration is based on running nginx as a
+reverse-proxy of portus and (docker) registry. The docker-compose
+provided along the nginx config sets up a certificate[3] for both
+components (first smell: only one certificate).
 
-> On Tue, Jan 9, 2018 at 6:42 AM, Georgi Guninski <guninski@...inski.com> wrote:
-> > Debian jessie (old stable) is vulnerable to malicious mirror attack.
+The one an only certificate is also configured on the reverse proxy,
+and a decent ciphers list among other security-related http headers
+are setup.
 
-Assuming you're referring to CVE-2016-1252, whether this is true depends
-what you mean by jessie. Installs from older media (up to and including
-8.6) will be vulnerable to CVE-2016-1252 during the first upgrade run,
-whereas installs from newer media (8.7 or newer, with the current version
-being 8.10) are not vulnerable.
+But there's no single proxy_ssl_* directive in the whole nginx
+configuration (second smell). Meaning that proxy_ssl_verify is off
+(nginx default).
 
-It's true that there was a window (in this case it happens to be 1 month)
-during which Debian offered an update for CVE-2016-1252, but the newest
-available installation media still suffered from it.
+Has anyone reviewed portus? this is the second missing certificate
+verification I noticed.
 
-    smcv
+CC'ing the SUSE security team.
+
+Oh and it appears that this one comes from the
+Portus-On-OracleLinux7[4] repo from which "[they] borrowed a lot of
+the NGinx configuration"[2] :
+https://github.com/Djelibeybi/Portus-On-OracleLinux7/blob/f2e7a167f6325a0247eb1ca49a962478daf49a8b/nginx/proxy.conf#L57
+
+CC'ing Avi Miller.
+
+[1]https://github.com/SUSE/Portus/blob/146076d543e8f1618f837dd7466c5f0fdc26438d/examples/compose/nginx/nginx.conf
+[2]https://github.com/SUSE/Portus/blob/146076d543e8f1618f837dd7466c5f0fdc26438d/examples/compose/README.md
+[3]https://github.com/SUSE/Portus/blob/146076d543e8f1618f837dd7466c5f0fdc26438d/examples/compose/docker-compose.yml#L21
+[4] https://github.com/Djelibeybi/Portus-On-OracleLinux7
+
+
+Cheers,
+-- 
+Raphael Geissert
