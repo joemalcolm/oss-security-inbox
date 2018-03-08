@@ -1,4 +1,9 @@
-Received: (qmail 3183 invoked by uid 550); 18 Apr 2024 09:05:28 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2272" "Thursday" "8" "March" "2018" "19:37:19" "+0100" "chbi@chbi.eu" "chbi@chbi.eu" "<782aca04-721c-cea0-9984-cbc7ebaedeec@chbi.eu>" "69" "[oss-security] CVE-2018-7290: Stored XSS vulnerability in Tiki <= 18" nil nil nil "3" "2018030818:37:19" "[oss-security] CVE-2018-7290: Stored XSS vulnerability in Tiki <= 18" (number mark "U       chbi@chbi.eu Mar  8   69/2272  " thread-indent "\"[oss-security] CVE-2018-7290: Stored XSS vulnerability in Tiki <= 18\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 9948 invoked by uid 550); 8 Mar 2018 18:37:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,51 +12,85 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27893 invoked from network); 18 Apr 2024 08:01:57 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713427307; x=1714032107;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hAacAvf2PA4fba1Xj7YX1hv4D+WO8IQImTkoQRMl6uc=;
-        b=OZNsrXLekw+LuWtqSct7lTb1zdCqqyRShjOlmwEU3Bfv0mXq1be/ByV/jHXmmyeztN
-         e+565YBZmphbizVKMahZuh0NaIDc1aJTGd2FpkZgSFLtFn/jp7J0QiTs7eRggOWflhPx
-         ItXXx1LNtx7WPt8oiqRXjsGjskpYXJxt4a+9+odgfrbGFbBauuiX3cD7gEw/HxOyt1+r
-         jzJ74PLAWS4jAu6B6rk5U2TGyrcOSM2KRcZWP/Hji+HatoN9+MbvRuR7ESPNBWkrO4OD
-         UcUO06hKgRB24nZrGGQuEbUZer3VIkBYsrLyITrroWPA5h7SXxxUAC4NkgHYLrT4JJxT
-         hxOw==
-X-Gm-Message-State: AOJu0YxJ14GywehNdyoLaKF3dy9I92uecUU28j+AHhUJ7q8laMPVywcx
-	rAXipmlKTWT1XfH4Z0CHHTK/P/RsqmapSBE3dVhFvD0hLmHhIzWv8Iw7RGtO
-X-Google-Smtp-Source: AGHT+IFNZHk1K/mdYvyhY3Xhnpg4BspUsgUqgnnsqOFbL3St+XTT2dBq9rKxtRReG3iO49Rtwh88vQ==
-X-Received: by 2002:a05:600c:2246:b0:418:8df1:ca73 with SMTP id a6-20020a05600c224600b004188df1ca73mr1239473wmm.19.1713427307333;
-        Thu, 18 Apr 2024 01:01:47 -0700 (PDT)
-Date: Thu, 18 Apr 2024 10:01:41 +0200
-From: David Morel <david.morel@vates.tech>
+Received: (qmail 9925 invoked from network); 8 Mar 2018 18:37:45 -0000
 To: oss-security@lists.openwall.com
-Message-ID: <ZiDTZcjVnt-uqHRQ@raton>
+From: chbi@chbi.eu
+Message-ID: <782aca04-721c-cea0-9984-cbc7ebaedeec@chbi.eu>
+Date: Thu, 8 Mar 2018 19:37:19 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Subject: [oss-security] libreswan: IKEv1 default AH/ESP responder can crash and restart
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="awTezoKAw247NtxpyeHKCeNuhnkgeEoUR"
+Subject: [oss-security] CVE-2018-7290: Stored XSS vulnerability in Tiki <= 18
 
-Hello,
+--awTezoKAw247NtxpyeHKCeNuhnkgeEoUR
+Content-Type: multipart/mixed; boundary="UKjutTzSNDLYU25qtgZ9sbGphbJBXXnwn";
+ protected-headers="v1"
+From: chbi@chbi.eu
+To: oss-security@lists.openwall.com
+Message-ID: <782aca04-721c-cea0-9984-cbc7ebaedeec@chbi.eu>
+Subject: CVE-2018-7290: Stored XSS vulnerability in Tiki <= 18
 
-I noticed I missed a few CVEs on libreswan recently as the project is
-not posting them here, I subscribed to their announce mailing-list to
-monitor that for work, and thought I could try to follow and post them
-here when there are new things. That being said, here is the latest one:
+--UKjutTzSNDLYU25qtgZ9sbGphbJBXXnwn
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
 
-Vulnerability information
-=========================
-The function compute_proto_keymat() did not handle unexpected proposals
-for which the keymat size is 0, such as AES-GMAC which can be used only
-with NULL encryption.  The function ends up calling an assertion failure
-routine. No Remote Code Execution is possible.
+Hi,
 
-- CVE-2024-3652
-- Advisory: https://libreswan.org/security/CVE-2024-3652/CVE-2024-3652.txt
-- Severity: Medium
-- Vulnerable versions: libreswan 3.22 - 4.14
-- Not vulnerable: libreswan 3.0 - 3.21, 4.15+, 5.0+
+I've discovered a security issue in Tiki <=3D 18 (https://tiki.org)
 
--- 
-David Morel
+
+A stored XSS vulnerability allows an authenticated user injecting
+JavaScript to gain administrator privileges if an administrator opens a
+wiki page and moves the mouse pointer over a modified external link,
+related to lib/parser/parserlib.php.
+
+
+The issue is fixed in Tiki 18.1 and was backported to 12.13, 15.6 and 17.2.
+
+Fix:
+https://sourceforge.net/p/tikiwiki/code/65537
+
+
+Timeline:
+2018-02-16: Issue discovered and reported
+2018-02-19: Issue confirmed and fixed
+2018-03-08: New Tiki version released
+
+
+--=20
+chbi
+https://chbi.eu
+
+GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
+     https://chbi.eu/chbi.asc
+
+
+--UKjutTzSNDLYU25qtgZ9sbGphbJBXXnwn--
+
+--awTezoKAw247NtxpyeHKCeNuhnkgeEoUR
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEPemRh0vp6uY8qNwgunuT+ZA3rn4FAlqhguwACgkQunuT+ZA3
+rn7Rmw/8DVjtm86z0gm2XmbDEYeE+P07W463HRQOLc5ksjjLUKrkqmCfeU6WyU6a
+9aXKpIVQ3XP+uaC6pA0RtbEgreE4WVlfwlNmSlF3jXNc5+DMYzOm6Ydx8b3ycxJ7
+z29JG8/1vV5E6NG7GnFY2Y2Tj7V7OA8dizvDsofa9rqQtWt4oQMwxSWzhexItnSJ
+qMoTwRj5qtgjJA9VxNH47bbKtIrlVV6JMpWlMhHRCA7+U58jQ0kHemtXMJpXBuxh
+uh5WAEBkiYbPmB3J8Vmix4/Q6AafWpK9VeWwsiIRba7AmUrwDWQsA12iFABzUm2R
+ShzCNFF1TrI5JLhb/M4bElu1sMfTYvyF+21xd73zobkpxSArj/HL2fDAabDjdXJU
+cnyylpROtcdm/yw86GqPlOnOMUqPggE7wIxr5J4vxBT55yEIXAPLm5OF5/Ez9ymC
+3OqA8YnbzREh3nP5IC4ajxB5jhm6xMWZ+zC9YzET/PCwh634aBygzOZl6+jktlMg
+RiQxKMW8Uc1Euvo3Hg/9XwQjLAqc/AsPvG5BCjiTzjR+qWJWLCngshCTTYAyeeWb
+D8jeOLnHL0m92aH5OvvS0/mVfH3DLL0GBvbs1crmw2i+O7QCSLKAnVuShfkq7Wax
+AwLheUcy05K9f0Y6/q6rzIvTMwbDNtKD0rmjSwal5Xcn32r2heM=
+=M7o+
+-----END PGP SIGNATURE-----
+
+--awTezoKAw247NtxpyeHKCeNuhnkgeEoUR--
