@@ -1,30 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/02/2
-Message-ID: <c987bdf4-456d-d23c-ee94-4fdc7c7f7d22@chbi.eu>
-Date: Thu, 2 Aug 2018 20:48:23 +0200
-From: chbi@...i.eu
-To: oss-security@...ts.openwall.com
-Subject: Re: Stored XSS vulnerabilities in Tiki <= 18.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/08/3
+Message-ID: <EB45373C-707C-442D-8A90-7036229F1789@akamai.com>
+Date: Thu, 8 Mar 2018 14:34:32 +0000
+From: "Seaman, Chad" <cseaman@...mai.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: memcached UDP amplification attacks
 Content-Type: text/plain; charset=utf-8
 
+Correct, in our testing you could load up a 1MB cache value, we assume a single character key.
 
-> https://sourceforge.net/p/tikiwiki/code/66809
+(5 bytes) get a = 1MB
 
-CVE-2018-14849 has been assigned.
+(7 bytes) get a a = 2MB
 
+(204 bytes) get a a … a{100x} = 100MB
 
-> https://sourceforge.net/p/tikiwiki/code/66990
+When doing the initial write-up I forgot to include the magic bytes, so the actual payload is a few bytes larger than 204 bytes but the query itself is 204 bytes, this is a mistake on my part while preparing the write-up.  
 
-CVE-2018-14850 has been assigned.
+We also did some testing against a memcached install to see how far we could chain/repeat keys in a single request and the cut-off was right around 100MB response using a 1MB loaded value with single character key.
 
+Regards,
+Chad
 
--- 
-chbi
-https://chbi.eu
+On 3/8/18, 3:41 AM, "Patrick Forsberg" <fors@...t.sunet.se> wrote:
 
-GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
-     https://chbi.eu/chbi.asc
+    On 2018-03-07 22:57, Seaman, Chad wrote:
+    
+    > Tomas,
+    >
+    > You’re not wrong, that was a typo in the blog.
+    >
+    > Regards,
+    > Chad
+    On the other hand I think the blog is wrong. (Just reading the protocol
+    specs)
+    
+    The default maximum size of an item is 1M, but you can easily request
+    more than one item using the gets command.
+       gets <key>*\r\n
+    where <key>* is one or several keys separated by whitespace.
+    A key is a text string that must not include control characters or
+    whitespace. The maximum length of a key is 250 characters but I don't
+    think there's a minimum size so one byte keys should be fine.
+    
+    /Patrick
+    >
+    > On 3/7/18, 5:10 AM, "Tomas Hoger" <thoger@...hat.com> wrote:
+    >
+    >     On Fri, 2 Mar 2018 21:42:30 -0700 Kurt Seifried wrote:
+    >     
+    >     > I have assigned CVE-2018-1000115 to this issue:
+    >     > 
+    >     > Memcached version 1.5.5 contains an Insufficient Control of Network
+    >     > Message Volume (Network Amplification, CWE-406) vulnerability in the
+    >     > UDP support of the memcached server that can result in denial of
+    >     > service via network flood (traffic amplification of 1:50,000 has been
+    >     > reported by reliable sources). This attack appear to be exploitable
+    >     > via network connectivity to port 11211 UDP. This vulnerability
+    >     > appears to have been fixed in 1.5.6 due to the disabling of the UDP
+    >     > protocol by default.
+    >     
+    >     Minor nitpick, the description mentions 1:50,000 ratio, apparently
+    >     based on the information in the following reference:
+    >     
+    >     > https://blogs.akamai.com/2018/03/memcached-fueled-13-tbps-attacks.html
+    >     
+    >     where it's mentioned as:
+    >     
+    >     """
+    >     Worse, memcached can have an amplification factor of over 50,000,
+    >     meaning a 203 byte request results in a 100 megabyte response.
+    >     """
+    >     
+    >     However, 200 * 50k = 10m, not 100m.  Wonder if I'm doing my math wrong.
+    >     
+    >     -- 
+    >     Tomas Hoger / Red Hat Product Security
+    >     
+    >
+    
+    
+    
 
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
