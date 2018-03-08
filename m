@@ -1,48 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/16/7
-Message-ID: <53c49e5e-942e-1c01-0df9-1c0fb9c8ada5@apache.org>
-Date: Wed, 16 May 2018 15:59:37 +0100
-From: Mark Thomas <markt@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/08/1
+Message-ID: <alpine.DEB.2.20.1803071743230.20789@di7>
+Date: Wed, 7 Mar 2018 17:48:56 -0800 (PST)
+From: dormando <dormando@...ia.net>
 To: oss-security@...ts.openwall.com
-Subject: [SECURITY] CVE-2018-8014 Insecure defaults for CORS filter
+Subject: Memcached remote DoS in older versions
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-8014 Insecure defaults for CORS filter
+Hello,
 
-Severity: Low
+There are a number of hang/crash bugs fixed in older versions of
+memcached. All are noted in the release notes of the versions containing
+the respective fixes, and most are years old.
 
-Vendor: The Apache Software Foundation
+I'm writing this in case pointing this out can help drive users to close
+their instances from the internet; aside from participating in DDoS
+attacks and remote users being able to read any data stored in the
+instances, they can also be crashed or deadlocked.
 
-Versions Affected:
-Apache Tomcat 9.0.0.M1 to 9.0.8
-Apache Tomcat 8.5.0 to 8.5.31
-Apache Tomcat 8.0.0.RC1 to 8.0.52
-Apache Tomcat 7.0.41 to 7.0.88
+I have a working POC deadlock for versions 1.4.20ish to 1.4.37. Older ones
+should still be vulernable as well. I can supply the POC if there's
+interest, or adjust it for even older versions. The POC only takes a few
+seconds and kilobytes over a TCP connection and causes a mutex deadlock.
 
-Description:
-The defaults settings for the CORS filter are insecure and enable
-'supportsCredentials' for all origins.
-It is expected that users of the CORS filter will have configured it
-appropriately for their environment rather than using it in the default
-configuration. Therefore, it is expected that most users will not be
-impacted by this issue.
-
-Mitigation:
-Users of the affected versions should apply one of the following
-mitigations.
-- Configure the filter appropriately for your environment
-
-Secure defaults will be provided in the following versions:
-- Apache Tomcat 9.0.9 or later when released
-- Apache Tomcat 8.5.32 or later when released
-- Apache Tomcat 8.0.53 or later when released
-- Apache Tomcat 7.0.89 or later when released
-
-History:
-2018-05-15 Original advisory
-
-References:
-[1] http://tomcat.apache.org/security-9.html
-[2] http://tomcat.apache.org/security-8.html
-[3] http://tomcat.apache.org/security-7.html
-
+Thanks,
+-Dormando
