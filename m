@@ -1,92 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/12/2
-Message-ID: <874leu7sdc.fsf@fifthhorseman.net>
-Date: Wed, 12 Sep 2018 09:33:19 -0400
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: Dhiraj Mishra <mishra.dhiraj95@...il.com>, oss-security@...ts.openwall.com
-Subject: Re: tdesktop leaks user IP address
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/08/4
+Message-ID: <nycvar.YSQ.7.76.1803082349521.8732@wniryva>
+Date: Thu, 8 Mar 2018 23:52:33 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Cyrille Chatras <cyrille.chatras@...nge.com>
+Subject: CVE-2018-7550 Qemu: i386: multiboot OOB access while loading kernel image
 Content-Type: text/plain; charset=utf-8
 
-Hi Dhiraj--
+   Hello,
 
-On Tue 2018-09-11 17:25:47 +0530, Dhiraj Mishra wrote:
-> tdesktop leaks user IP address
-> 
-> This is still not fix in telegram desktop  team says their is nothing to
-> fix here and this is working has intended.
+Quick Emulator(QEMU) built with the PC System Emulator with multiboot feature 
+support is vulnerable to an OOB r/w memory access issue. It could occur while 
+loading a kernel image during a guest boot if multiboot head addresses 
+mh_load_end_addr was greater than mh_bss_end_addr.
 
-Thanks for this report -- it's good to have people looking at metadata
-leakage and considering it as a security concern.  It is.
+A user/process could use this flaw to potentially achieve arbitrary code 
+execution on a host.
 
-However, i'm not convinced that you've described the problem you're
-seeing well enough to be actionable yet.  In particular, it's not clear
-to me *whose IP address* you are concerned about leaking, and *where*
-you are concerned about it leaking.  It's also not clear to me that
-you've evaluated the impact/consequences of your proposed mitigation.
+Upstream patch:
+---------------
+   -> https://lists.nongnu.org/archive/html/qemu-devel/2018-03/msg01885.html
 
-I've written out several questions below in the hopes of helping clarify
-the concern, and figuring out what makes sense to do about it.  Please
-take these questions in the spirit of constructive engagement!
+This issue was reported by Cyrille Chatras of Orange.com.
 
-> tdesktop: https://github.com/telegramdesktop/tdesktop
->
-> *Steps to reproduce:*
-> 1. ./Telegram
-> 2. Call end user
-> 3. The access log on CLI reveals the end user public IP address.
+CVE-2018-7550 assigned via -> https://cveform.mitre.org/
 
-let's give the parties involved in this names so that it's easier to
-reason about.  Let's say that the call Initiator is Inigo, and that the
-call recipient is Rebecca.  So Inigo takes steps 1 and 2.  Whose public
-IP address (Inigo's?  Rebecca's?) leaks into which access log
-(Inigo's?  Rebecca's?  both?)?
-
-Is the concern really the inclusion of the IP address in the access log,
-or is it the fact that Rebecca's public IP address is visible to Inigo,
-and vice versa?  To whom else is this IP address visible?  Another way
-of asking this is: who is the adversary you're concerned about learning
-this IP address information?
-
- * someone looking at some specific logfile in the future?
-
- * the other party on the call during the call? (i.e. Inigo is Rebecca's
-   adversary, and vice versa)
-
- * the Telegram server operator?
-
- * a network monitor inspecting traffic?
-
- * …
-
-> By default in tdesktop p2p is enable, which open a direct communication
-> when calling to the other user, potentially seeing his/her IP. Telegram is
-> supposedly is a secure messaging application but while calling another user
-> leaks his/her public IP address in access log. However, by navigating to
-> Settings and Privacy  > Calls > and set P2P to `nobody` in telegram apps in
-> (iOS and android) will not allow others to view public IP of end user, but
-> this option is still not available in tdesktop, which makes tdesktop
-> vulnerable to this issue.
-
-Who needs to set P2P to "nobody" to have this change?  If either party
-makes this choice is it sufficient for a given call?
-
-Presumably turning off P2P means routing the calls through a central
-server (perhaps via STUN/TURN or some other relay/proxy equivalent).  If
-that's not the case, how are calls completed when P2P is disabled?  Who
-operates that central server?
-
-What is the performance impact (on rates of successful connections, on
-latency during calls) of such a change?
-
-Is the central server operator already in a position to be able to force
-this shift from P2P to a centralized fallback?  What cost(s) would they
-pay if they force this shift?
-
-How does the potential for centralized mass surveillance of call traffic
-change if all calls are routed through the central server by default?
-
-Regards,
-
-       --dkg
-
-Download attachment "signature.asc" of type "application/pgp-signature" (228 bytes)
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
