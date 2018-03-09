@@ -1,30 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/11/2
-Message-ID: <3f060bee-a765-4cd8-e752-e0cdfef5c6f2@oracle.com>
-Date: Tue, 11 Dec 2018 13:10:51 -0800
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com, Hacker Fantastic <hackerfantastic@...glemail.com>
-Subject: Re: Multiple telnet.c overflows
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/09/1
+Message-ID: <nycvar.YSQ.7.76.1803091521260.21217@wniryva>
+Date: Fri, 9 Mar 2018 15:25:36 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Ross Lagerwall <ross.lagerwall@...rix.com>
+Subject: CVE-2018-7858 Qemu: cirrus: OOB access when updating vga display
 Content-Type: text/plain; charset=utf-8
 
-On 12/11/18 10:39 AM, Hacker Fantastic wrote:
-> When a telnet server requests environment options the sprintf on line 1002 will
-> not perform bounds checking and causes an overflow of stack buffer
-> temp[50] defined
-> at line 990. This issue can be trivially fixed using a patch to add
-> bounds checking
-> to sprintf such as with a call to snprintf();
+   Hello,
 
-GNU inetutils telnet is a fork of the original BSD telnet code, but most of
-the BSD's seem to have already switched to snprintf a while ago:
+Quick emulator(QEMU) built with the Cirrus CLGD 54xx VGA Emulator support is 
+vulnerable to an out-of-bounds access issue. It could occur while updating VGA 
+display, after guest has adjusted the display dimensions.
 
-https://cvsweb.openbsd.org/cgi-bin/cvsweb/src/usr.bin/telnet/telnet.c.diff?r1=1.3&r2=1.4&f=h
-https://github.com/freebsd/freebsd/commit/d2f83e4ec488ec62281318b26dad107e65d96d0c#diff-3503402e6a2ad1eb960a4f475f19fb9f
+A privileged user inside guest could use this flaw to crash the Qemu process 
+resulting in DoS.
 
-with NetBSD as the outlier:
-http://cvsweb.netbsd.org/bsdweb.cgi/src/usr.bin/telnet/telnet.c?rev=1.36&content-type=text/x-cvsweb-markup&only_with_tag=MAIN
+Upstream patch:
+---------------
+   -> https://lists.nongnu.org/archive/html/qemu-devel/2018-03/msg02174.html
 
-illumos also uses snprintf, in the code it inherited from OpenSolaris:
-https://github.com/illumos/illumos-gate/blob/master/usr/src/cmd/cmd-inet/usr.bin/telnet/telnet.c#L955
+This issue was reported by Ross Lagerwall of citrix.com.
 
-	-alan-
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
