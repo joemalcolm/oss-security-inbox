@@ -1,44 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/06/4
-Message-ID: <4b0e1b5d-5615-c7bb-50b6-06cee6cf0458@linux.com>
-Date: Fri, 6 Apr 2018 21:01:02 +0300
-From: Alexander Popov <alex.popov@...ux.com>
-To: Kees Cook <keescook@...omium.org>
-Cc: Kurt Seifried <kseifried@...hat.com>, oss-security@...ts.openwall.com, James Morris <jmorris@...ei.org>, "Serge E. Hallyn" <serge@...lyn.com>, Brad Spengler <spender@...ecurity.net>, PaX Team <pageexec@...email.hu>, "Reshetova, Elena" <elena.reshetova@...el.com>
-Subject: Re: Linux Kernel Defence Map
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/11/1
+Message-ID: <CAA7hUgGRmab57_-iNd58m2RS+8GMtv8hgnN0JMfYFuo0-DKzZQ@mail.gmail.com>
+Date: Sun, 11 Mar 2018 21:32:44 +0100
+From: Raphael Geissert <atomo64@...il.com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Cc: security@...e.de, Avi Miller <avi.miller@...il.com>
+Subject: Re: Portus, missing certificate validation on proxified https traffic
 Content-Type: text/plain; charset=utf-8
 
-On 06.04.2018 02:55, Kees Cook wrote:
-> On Thu, Apr 5, 2018 at 4:38 PM, Alexander Popov <alex.popov@...ux.com> wrote:
->> On 05.04.2018 22:20, Kees Cook wrote:
->>> Very cool! Maybe also add an out-of-tree bubble for "Clang CFI", which
->>> gives forward-edge protection for code-reuse...
->>
->> Ok. Created a CFI cluster with RAP and Clang CFI inside.
-> 
-> Well, naming can get confusing here. RAP got renamed along the way to
-> include both "Return Address Protection" (backward edge) and "Indirect
-> Control Transfer Protection" (forward edge). Clang CFI is forward edge
-> only, though things like shadow stacks or pointer authentication can
-> provide backward edge protection. 
+Hi,
 
-Thanks for the details.
+This has been assigned CVE-2018-8059.
 
-> So... I'm not sure how much detail
-> you want to capture in the bubbles. :)
-
-I'd like to avoid showing comparisons between security features on that map.
-That would make it much more complicated (and trigger holy wars).
-
-This map is just for the navigation in the documentation.
-
->> However, I didn't manage to find any materials about applying Clang CFI to the
->> Linux kernel.
-> 
-> Here's Sami Tolvanen's work on doing Clang CFI (on top of Clang LTO):
-> https://android-review.googlesource.com/q/topic:android-4.9-cfi
-
-Cool, thanks!
-
---
-Alexander
+Cheers,
+-- 
+Raphael Geissert
