@@ -1,49 +1,101 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/30/2
-Message-ID: <CA+fCnZd4OdWkWzh6e9t67MJysyQi=qXY2PQsDwczobS1U5Ln-g@mail.gmail.com>
-Date: Tue, 30 Oct 2018 16:24:54 +0100
-From: Andrey Konovalov <andreyknvl@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: Kostya Serebryany <kcc@...gle.com>, Dmitry Vyukov <dvyukov@...gle.com>,  Alexander Potapenko <glider@...gle.com>, Kees Cook <keescook@...gle.com>
-Subject: Re: Linux kernel: CVE-2017-18344: arbitrary-read vulnerability in the timer subsystem
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/14/1
+Message-ID: <alpine.DEB.2.20.1803132313170.29869@tvnag.unkk.fr>
+Date: Wed, 14 Mar 2018 07:55:04 +0100 (CET)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: FTP path trickery leads to NIL byte out of bounds write
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Aug 2, 2018 at 8:57 PM Andrey Konovalov <andreyknvl@...il.com> wrote:
->
-> Hi!
->
-> Syzkaller/syzbot found a global-out-of-bounds bug in the timer
-> subsystem of the Linux kernel [1], that is exploitable and can be used
-> to gain an arbitrary-read primitive. This allows to access kernel
-> memory and leak keys, credentials or other sensitive information that
-> is stored there (so the bug has a similar impact to Meltdown). I'll
-> share a PoC exploit in a week.
->
-> The bug was introduced in commit 57b8015e ("posix-timers: Show
-> sigevent info in proc file") [2] in 3.10 and fixed by commit cef31d9a
-> ("posix-timer: Properly check sigevent->sigev_notify") [3] in
-> 4.15-rc4. The bug only affects kernels that have CONFIG_POSIX_TIMERS
-> and CONFIG_CHECKPOINT_RESTORE enabled, which is done by a lot of
-> modern distros.
->
-> This bug has been fixed in Ubuntu 16.04 [7], but still affects at
-> least CentOS 7 at this moment (at least 3.10.0-862.9.1.el7.x86_64 that
-> I've checked). I haven't checked the other distros.
+FTP path trickery leads to NIL byte out of bounds write
+=======================================================
 
-[...]
+Project curl Security Advisory, March 14th 2018 -
+[Permalink](https://curl.haxx.se/docs/adv_2018-9cd6.html)
 
-> Then I decided to take a look at the CentOS kernel. I was quite
-> surprised to find out that this bug hasn't been fixed there at all. I
-> was under the impression that most Linux distros either follow stable
-> kernel branches or monitor upstream commits for security related fixes
-> themselves. It seems that this is not the case. Perhaps this fix was
-> missed because CentOS 7 kernel is based on the 3.10 kernel version,
-> and the 3.10 stable kernel release stopped being supported in November
-> 2017.
+VULNERABILITY
+-------------
 
-This bug has finally been fixed in the Red Hat kernels [1] (so it's
-probably fixed in CentOS as well, do they use the same kernel?), which
-took another 3 months since my announcement on oss-security and 11
-months since the initial syzbot bug report.
+curl can be fooled into writing a zero byte out of bounds.
 
-[1] https://access.redhat.com/errata/RHSA-2018:3083
+This bug can trigger when curl is told to work on an FTP URL, with the setting
+to only issue a single CWD command (`--ftp-method singlecwd` or the libcurl
+alternative `CURLOPT_FTP_FILEMETHOD`).
+
+curl then URL-decodes the given path, calls strlen() on the result and deducts
+the length of the file name part to find the end of the directory within the
+buffer. It then writes a zero byte on that index, in a buffer allocated on the
+heap.
+
+If the directory part of the URL contains a "%00" sequence, the directory
+length might end up shorter than the file name path, making the calculation
+`size_t index = directory_len - filepart_len` end up with a huge index
+variable for where the zero byte gets stored: `heap_buffer[index] = 0`. On
+several architectures that huge index will wrap and work as a negative value,
+thus overwriting memory *before* the intended heap buffer.
+
+By using different file part lengths and putting %00 in different places in
+the URL, an attacker that can control what paths a curl-using application uses
+can write that zero byte on different indexes.
+
+We are not aware of any exploit of this flaw.
+
+INFO
+----
+
+This bug was introduced in December 2004 in [this
+commit](https://github.com/curl/curl/commit/6e1e9caa32da0995).
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2018-1000120 to this issue.
+
+CWE-122: Heap-based Buffer Overflow
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 7.12.3 to and including curl 7.58.0
+- Not affected versions: curl < 7.12.3 and curl >= 7.59.0
+
+libcurl is used by many applications, but not always advertised as such.
+
+THE SOLUTION
+------------
+
+In curl version 7.59.0, curl rejects FTP URLs that contain any "control
+characters". That is byte values below ascii 32.
+
+A [patch for CVE-2018-1000120](https://curl.haxx.se/CVE-2018-1000120.patch) is available.
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl to version 7.59.0
+
+  B - Apply the patch to your version and rebuild
+
+  C - Do not enable singlecwd mode for FTP transfers
+
+TIME LINE
+---------
+
+It was reported to the curl project on January 29, 2018
+
+We contacted distros@...nwall on March 7, 2018.
+
+curl 7.59.0 was released on March 14 2018, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+Reported by Duy Phan Thanh. Patch by Daniel Stenberg.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
