@@ -1,54 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/22/4
-Message-ID: <33d0cf4f-30f8-4690-b7ad-508c1c1bd037@Spark>
-Date: Thu, 22 Mar 2018 15:10:58 -0400
-From: Rafael Mendonça França <rafaelmfranca@...il.com>
-To: rubyonrails-security@...glegroups.com,  ruby-security-ann@...glegroups.com, oss-security@...ts.openwall.com
-Subject: [CVE-2018-3741] XSS vulnerability in rails-html-sanitizer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/14/2
+Message-ID: <alpine.DEB.2.20.1803132312370.29869@tvnag.unkk.fr>
+Date: Wed, 14 Mar 2018 07:55:08 +0100 (CET)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: LDAP NULL pointer dereference
 Content-Type: text/plain; charset=utf-8
 
-Possible XSS vulnerability in rails-html-sanitizer
+LDAP NULL pointer dereference
+=============================
 
-There is a possible XSS vulnerability in rails-html-sanitizer. This
-vulnerability has been assigned the CVE identifier CVE-2018-3741.
+Project curl Security Advisory, March 14th 2018 -
+[Permalink](https://curl.haxx.se/docs/adv_2018-97a2.html)
 
-Versions Affected:  1.0.3 or older.
-Not affected:       None.
-Fixed Versions:     1.0.4
+VULNERABILITY
+-------------
 
-Impact
-------
-There is a possible XSS vulnerability in rails-html-sanitizer.  The gem allows non-whitelisted
-attributes to be present in sanitized output when input with specially-crafted HTML fragments,
-and these attributes can lead to an XSS attack on target applications.
+curl might dereference a near-NULL address when getting an LDAP URL.
 
-This issue is similar to CVE-2018-8048 in Loofah.
+The function `ldap_get_attribute_ber()` is called to get attributes, but it
+turns out that it can return `LDAP_SUCCESS` and still return a `NULL` pointer
+in the result pointer when getting a particularly crafted response. This was a
+surprise to us and to the code.
 
-All users running an affected release should either upgrade or use one of the
-workarounds immediately.
+libcurl-using applications that allow LDAP URLs, or that allow redirects to
+LDAP URLs could be made to crash by a malicious server.
 
-Releases
---------
-The FIXED releases are available at the normal locations.
+We are not aware of any exploit of this flaw.
 
-Workarounds
------------
-There are no feasible workarounds for this issue.
+INFO
+----
 
-Patches
+The bug is only present in curl versions built to use OpenLDAP.
+
+This bug was introduced in May 2010 in [this
+commit](https://github.com/curl/curl/commit/2e056353b00d09).
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2018-1000121 to this issue.
+
+CWE-476: NULL Pointer Dereference
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 7.21.0 to and including curl 7.58.0
+- Not affected versions: curl < 7.21.0 and curl >= 7.59.0
+
+libcurl is used by many applications, but not always advertised as such.
+
+THE SOLUTION
+------------
+
+In curl version 7.59.0, curl checks the pointer properly before using it.
+
+A [patch for CVE-2018-1000121](https://curl.haxx.se/CVE-2018-1000121.patch) is available.
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl to version 7.59.0
+
+  B - Apply the patch to your version and rebuild
+
+  C - Make sure you disable LDAP in your transfers
+
+TIME LINE
+---------
+
+It was reported to the curl project on March 6, 2018
+
+We contacted distros@...nwall on March 7, 2018.
+
+curl 7.59.0 was released on March 14 2018, coordinated with the publication of
+this advisory.
+
+CREDITS
 -------
-To aid users who aren't able to upgrade immediately we have provided patches for
-the two supported release series. They are in git-am format and consist of a
-single changeset.
 
-* 1-0-sanitize_attributes.patch - Patch for 1.0 series
+Reported by Dario Weisser. Patch by Daniel Stenberg.
 
-Credits
--------
-Thanks to Kaarlo Haikonen for reporting this issue and Mike Dalessio for providing the original fix in the Loofah gem.
+Thanks a lot!
 
-Rafael França
+-- 
 
-Content of type "text/html" skipped
-
-Download attachment "1-0-santize_attributes.patch" of type "application/octet-stream" (5469 bytes)
+  / daniel.haxx.se
