@@ -1,154 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/09/1
-Message-ID: <997e5c81-da6d-b8a9-e384-bb62ff81fffc@isc.org>
-Date: Wed, 8 Aug 2018 21:45:43 -0800
-From: Michael McNally <mcnally@....org>
-To: oss-security@...ts.openwall.com, isc-os-security@...ts.isc.org
-Cc: "security-officer@....org" <security-officer@....org>
-Subject: CVE-2018-5740: A flaw in the "deny-answer-aliases" feature can cause an INSIST assertion failure in named
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/14/3
+Message-ID: <alpine.DEB.2.20.1803132310150.29869@tvnag.unkk.fr>
+Date: Wed, 14 Mar 2018 07:55:11 +0100 (CET)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: RTSP RTP buffer over-read
 Content-Type: text/plain; charset=utf-8
 
-Earlier today ISC disclosed CVE-2018-5740, involving a potential
-denial-of-service vector in an uncommonly-used feature of BIND.
+RTSP RTP buffer over-read
+=========================
 
-Our official security advisory document is posted in the ISC Knowledge Base
-at this URL: https://kb.isc.org/article/AA-01639 but for your convenience
-the text is provided below.
+Project curl Security Advisory, March 14th 2018 -
+[Permalink](https://curl.haxx.se/docs/adv_2018-b047.html)
 
-Patched versions of BIND are available from https://www.isc.org/downloads
+VULNERABILITY
+-------------
 
-Michael McNally
-ISC Security Officer
+curl can be tricked into copying data beyond end of its heap based buffer.
 
-----------
+When asked to transfer an RTSP URL, curl could calculate a wrong data length
+to copy from the read buffer. The memcpy call would copy data from the heap
+following the buffer to a storage area that would subsequently be delivered to
+the application (if it didn't cause a crash). We've managed to get it to reach
+several hundreds bytes out of range.
 
-A rarely-used feature in BIND has a flaw which can cause named to
-exit with an INSIST assertion failure.
+This could lead to information leakage or a denial of service for the
+application if the server offering the RTSP data can trigger this.
 
-CVE:                  CVE-2018-5740
-Document Version:     2.0
-Posting date:         08 August 2018
-Program Impacted:     BIND
-Versions affected:    9.7.0->9.8.8, 9.9.0->9.9.13, 9.10.0->9.10.8,
-                      9.11.0->9.11.4, 9.12.0->9.12.2, 9.13.0->9.13.2
-                      and also versions of BIND 9 Supported Preview Edition
-Severity:             High (but only for servers on which the
-"deny-answer-aliases"
-                      feature is explicitly enabled)
-Exploitable:          Remotely
+We are not aware of any exploit of this flaw.
 
-Description:
+INFO
+----
 
-   "deny-answer-aliases" is a little-used feature intended to help
-   recursive server operators protect end users against DNS rebinding
-   attacks, a potential method of circumventing the security model
-   used by client browsers.  However, a defect in this feature makes
-   it easy, when the feature is in use, to experience an INSIST
-   assertion failure in name.c.
+This bug was introduced in January 2010 in [this
+commit](https://github.com/curl/curl/commit/bc4582b68a673d3) when RTSP support
+was first added.
 
-Impact:
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2018-1000122 to this issue.
 
-   Accidental or deliberate triggering of this defect will cause
-   an INSIST assertion failure in named, causing the named process
-   to stop execution and resulting in denial of service to clients.
-   Only servers which have explicitly enabled the "deny-answer-aliases"
-   feature are at risk and disabling the feature prevents exploitation.
+CWE-126: Buffer Over-read
 
-CVSS Score:          7.5
-CVSS Vector:         CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H
+AFFECTED VERSIONS
+-----------------
 
-For more information on the Common Vulnerability Scoring System and
-to obtain your specific environmental score please visit:
-https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H
+- Affected versions: curl 7.20.0 to and including curl 7.58.0
+- Not affected versions: curl < 7.20.0 and curl >= 7.59.0
 
-Workarounds:
+libcurl is used by many applications, but not always advertised as such.
 
-   This vulnerability can be avoided by disabling the "deny-answer-aliases"
-   feature if it is in use.
+THE SOLUTION
+------------
 
-Active exploits:
+In curl version 7.59.0, curl makes sure that this code never gets told to copy
+more data than it is allowed to read from the buffer.
 
-   No known active exploits.
+A [patch for CVE-2018-1000122](https://curl.haxx.se/CVE-2018-1000122.patch) is available.
 
-Solution:
+RECOMMENDATIONS
+---------------
 
-   Most operators will not need to make any changes unless they are
-   using the "deny-answer-aliases" feature (which is described in
-   the BIND 9 Adminstrator Reference Manual section 6.2.)
-   "deny-answer-aliases" is off by default; only configurations
-   which explicitly enable it can be affected by this defect.
+We suggest you take one of the following actions immediately, in order of
+preference:
 
-   If you are using "deny-answer-aliases", upgrade to the patched
-   release most closely related to your current version of BIND.
+  A - Upgrade curl to version 7.59.0
 
-   -  9.9.13-P1
-   -  9.10.8-P1
-   -  9.11.4-P1
-   -  9.12.2-P1
+  B - Apply the patch to your version and rebuild
 
-   BIND Supported Preview Edition is a special feature preview
-   branch of BIND provided to eligible ISC support customers.
+TIME LINE
+---------
 
-   -  9.11.3-S3
+It was reported to the curl project on February 20, 2018
 
-Acknowledgements:
+We contacted distros@...nwall on March 8, 2018.
 
-   ISC would like to thank Tony Finch of the University of Cambridge
-   for reporting this issue.
+curl 7.59.0 was released on March 14 2018, coordinated with the publication of
+this advisory.
 
-Document Revision History:
+CREDITS
+-------
 
-   1.0 Advance Notification 31 July, 2018
-   2.0 Public Disclosure 08 August, 2018
+Detected by OSS-fuzz. Assisted by Max Dymond. Patch by Daniel Stenberg.
 
-Related Documents:
+Thanks a lot!
 
-   See our BIND9 Security Vulnerability Matrix at
-   https://kb.isc.org/article/AA-00913 for a complete listing of
-   Security Vulnerabilities and versions affected.
+-- 
 
-If you'd like more information on ISC Subscription Support and
-Advance Security Notifications, please visit http://www.isc.org/support/.
-
-Do you still have questions?  Questions regarding this advisory
-should go to security-officer@....org.  To report a new issue,
-please encrypt your message using security-officer@....org's PGP
-key which can be found here:
-
-  https://www.isc.org/downloads/software-support-policy/openpgp-key/.
-
-If you are unable to use encrypted email, you may also report new
-issues at: https://www.isc.org/community/report-bug/.
-
-Note:
-
-   ISC patches only currently supported versions. When possible we
-   indicate EOL versions affected.  (For current information on
-   which versions are actively supported, please see
-   http://www.isc.org/downloads/&#41;.
-
-ISC Security Vulnerability Disclosure Policy:
-
-   Details of our current security advisory policy and practice can
-   be found here: https://kb.isc.org/article/AA-00861
-
-This Knowledge Base article https://kb.isc.org/article/AA-01639 is
-the complete and official security advisory document.
-
-Legal Disclaimer:
-
-   Internet Systems Consortium (ISC) is providing this notice on
-   an "AS IS" basis. No warranty or guarantee of any kind is expressed
-   in this notice and none should be implied. ISC expressly excludes
-   and disclaims any warranties regarding this notice or materials
-   referred to in this notice, including, without limitation, any
-   implied warranty of merchantability, fitness for a particular
-   purpose, absence of hidden defects, or of non-infringement. Your
-   use or reliance on this notice or materials referred to in this
-   notice is at your own risk. ISC may change this notice at any
-   time.  A stand-alone copy or paraphrase of the text of this
-   document that omits the document URL is an uncontrolled copy.
-   Uncontrolled copies may lack important information, be out of
-   date, or contain factual errors.
-
-(c) 2001-2018 Internet Systems Consortium
+  / daniel.haxx.se
