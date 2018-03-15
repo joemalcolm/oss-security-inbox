@@ -1,29 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/23/2
-Message-ID: <20181223093130.77312548@computer>
-Date: Sun, 23 Dec 2018 09:31:30 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/15/2
+Message-Id: <1521122159.1270614.1304206128.19D1CFEA@webmail.messagingengine.com>
+Date: Thu, 15 Mar 2018 13:55:59 +0000
+From: Thomas Kluyver <thomas@...yver.me.uk>
 To: oss-security@...ts.openwall.com
-Subject: Use after free in monit / _handleEvent
+Cc: security <security@...thon.org>, MinRK <benjaminrk@...il.com>, jkamens@...ntopian.com, ssanderson@...ntopian.com
+Subject: CVE request: maliciously crafted notebook files in Jupyter
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Email address of requester: security@...thon.org, thomas@...yver.me.uk, benjaminrk@...il.com, jkamens@...ntopian.com, ssanderson@...ntopian.com
 
-There's a use after free in monit that shows up if you run it for a
-while on an active system with address sanitizer enabled.
+Software name: Jupyter Notebook (formerly IPython Notebook)
+Type of vulnerability: Maliciously forged file
+Attack outcome: Possible remote execution
 
-I reported this in august:
-https://bitbucket.org/tildeslash/monit/issues/764/use-after-free-in-function-_handleevent
+Vulnerability: A maliciously forged notebook file can bypass sanitization to execute Javascript in the notebook context. Specifically, invalid HTML is 'fixed' by jQuery after sanitization, making it dangerous.
 
-Fix is here:
-https://bitbucket.org/tildeslash/monit/commits/5827927c4623
+Affected versions:
 
-The fix is unreleased, the current version (5.25.2) is still affected.
+- notebook ≤ 5.4.0
 
+URI with issues:
 
--- 
-Hanno Böck
-https://hboeck.de/
+- GET /notebook/**
 
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+Patches:  not yet finalised
+
+Mitigations:
+
+Upgrade to Jupyter notebook 5.4.1 or 5.5 once available.
+If using pip,
+
+    pip install --upgrade notebook
+
+For conda:
+
+    conda update conda
+    conda update notebook
+
+Vulnerability reported by vkgonka@...l.ru , via Jonathan Kamens at Quantopian
+
