@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1647" "Thursday" "19" "May" "2016" "12:17:11" "+0530" "Huzaifa Sidhpurwala" "huzaifas@redhat.com" "<ffaed073-e299-5c01-eb3d-998c8e4e80bb@redhat.com>" "36" "Re: [oss-security] Re: CVE Request: null pointer deref in openslp, can be triggered remotely" nil nil nil "5" "2016051906:47:11" "[oss-security] Re: CVE Request: null pointer deref in openslp, can be triggered remotely" (number mark "U       huzaifas@red May 19   36/1647  " thread-indent "\"Re: [oss-security] Re: CVE Request: null pointer deref in openslp, can be triggered remotely\"\n") "<20160518162539.B5707B2E038@smtpvbsrv1.mitre.org>" ("<20160518162539.B5707B2E038@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["892" "Thursday" "15" "March" "2018" "13:55:59" "+0000" "Thomas Kluyver" "thomas@kluyver.me.uk" "<1521122159.1270614.1304206128.19D1CFEA@webmail.messagingengine.com>" "36" "[oss-security] CVE request: maliciously crafted notebook files in Jupyter" "^Cc:" nil nil "3" "2018031513:55:59" "[oss-security] CVE request: maliciously crafted notebook files in Jupyter" (number mark "        thomas@kluyv Mar 15   36/892   " thread-indent "\"[oss-security] CVE request: maliciously crafted notebook files in Jupyter\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3363 invoked by uid 550); 19 May 2016 06:47:26 -0000
+Received: (qmail 11264 invoked by uid 550); 15 Mar 2018 14:26:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,58 +11,74 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3341 invoked from network); 19 May 2016 06:47:25 -0000
-To: cve-assign@mitre.org
-References: <20160518162539.B5707B2E038@smtpvbsrv1.mitre.org>
-Cc: oss-security@lists.openwall.com
-From: Huzaifa Sidhpurwala <huzaifas@redhat.com>
-Message-ID: <ffaed073-e299-5c01-eb3d-998c8e4e80bb@redhat.com>
-Date: Thu, 19 May 2016 12:17:11 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.0
+Received: (qmail 13921 invoked from network); 15 Mar 2018 13:56:13 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kluyver.me.uk;
+	 h=cc:content-transfer-encoding:content-type:date:from
+	:message-id:mime-version:subject:to:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm2; bh=JPvpAS/RwD8JeWFcPoxCVAQKjG/E5oA7M43l53DwX
+	dA=; b=xxUz3mkzifJgriqbdTszAW2qL4ebtjOR5pSviPdk+Kt1xNoHHjcH4l8wl
+	V7uHBLPjV59gtg4bmMpCMcEY4ShtasC3msPR//WWm2YJiDD3kjv11v20Srw2g428
+	qfizgmkIHEIhcZYeurbqhzr7BMjuOWe04HT0s/llbl+I5Z6QHckv7MyoxN2cgXCu
+	lMU2cPE/PxAnXeHxhHIN6NAsgxyxUUgBUBqlMrySX1/Mgi9ohexnmfhtWEASyfEt
+	IUEL92UTtRu3Dbhoy6b6hEZZPuGJGBbJU9iDjbbbSHIk5U8QltpW/Ufx6NWgoAkz
+	d6uJGjUOH8p5Pjdpi+xwSdolf7GrA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:from:message-id:mime-version:subject:to:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm2; bh=JPvpAS/RwD8JeWFcPoxCVAQKjG/E5
+	oA7M43l53DwXdA=; b=J5+5NQ18Faz4jSnQ6KjS1QlWwllcOlla8OTK0a/naojMm
+	+zZIryIx8E6h+7kPoKARGB9bfh5jt2TXZF1eNbf3QXyChx2eHNjTCo6eZJke5b4Y
+	h534qrlntTp0g8ub2fkEZDOeeNAeMdzDbs9k3xcbByYimsYLK0O1AT78us6Zu0WN
+	B3evRPm5Xl/crgEPuonTvw2FrNWYRSpi+TUjMR9fPUvtrzadt/qKORwde9Yn97ov
+	2rzUz3UecZRO26+J4qn9sexY7a8hsZwPjSv/YTOATrmBYxC3k5g/4Eq9ERW9XweK
+	wgog2RVs6+84dKhrbHhyB7qOJ5q3Vhr2a5Qh8fu0g==
+X-ME-Sender: <xms:b3uqWnhpjK_V4l1S4Q6oKpMDAODYZi7u_TK1CWSLkeAWpuhG9JDC0A>
+Message-Id: <1521122159.1270614.1304206128.19D1CFEA@webmail.messagingengine.com>
 MIME-Version: 1.0
-In-Reply-To: <20160518162539.B5707B2E038@smtpvbsrv1.mitre.org>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.39]); Thu, 19 May 2016 06:47:14 +0000 (UTC)
-Subject: Re: [oss-security] Re: CVE Request: null pointer deref in openslp,
- can be triggered remotely
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+X-Mailer: MessagingEngine.com Webmail Interface - ajax-b3834dbb
+Cc: security <security@ipython.org>, MinRK <benjaminrk@gmail.com>,
+ jkamens@quantopian.com, ssanderson@quantopian.com
+Date: Thu, 15 Mar 2018 13:55:59 +0000
+From: Thomas Kluyver <thomas@kluyver.me.uk>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE request: maliciously crafted notebook files in Jupyter
+To: oss-security@lists.openwall.com
 
-On 05/18/2016 09:55 PM, cve-assign@mitre.org wrote:
+Email address of requester: security@ipython.org, thomas@kluyver.me.uk, ben=
+jaminrk@gmail.com, jkamens@quantopian.com, ssanderson@quantopian.com
 
-> The oss-security message and the rhbz document seem to describe the
-> impact in different ways, i.e., "Basically return value from malloc
-> isn't checked ... This can be triggered remotely by sending a large
-> number of requests, which could possibly lead malloc to fail at one
-> point, causing crash via null pointer deref" versus "A remote attacker
-> could potentially deplete the memory of the server." For purposes of
-> CVE, this type of scenario is often not interpreted as two independent
-> problems. Roughly speaking, it is interpreted as "The unchecked malloc
-> return value is the primary problem. This problem becomes reachable
-> for reasons that aren't fully described, but those reasons might
-> involve a design limitation in which the memory consumption of
-> requests is not strictly controlled."
-> 
-I fixed the description in the bug. The problem basically is unchecked
-return value from malloc inside the realloc function. So when "crafted"
-packets are sent to the server, realloc is triggered to extend the size
-of the data structure which holds the network data. Under memory
-pressure malloc could fail, which will trigger a null pointer deref.
+Software name: Jupyter Notebook (formerly IPython Notebook)
+Type of vulnerability: Maliciously forged file
+Attack outcome: Possible remote execution
 
+Vulnerability: A maliciously forged notebook file can bypass sanitization t=
+o execute Javascript in the notebook context. Specifically, invalid HTML is=
+ 'fixed' by jQuery after sanitization, making it dangerous.
 
+Affected versions:
 
-> Finally, although perhaps not related to the issue of whether a CVE ID
-> should exist, that Security.html page says "If you find a security
-> hole in OpenSLP, please bring it to the attention of the OpenSLP
-> maintainer" and names John Calcote. Possibly Red Hat could do this
-> upstream notification if that hasn't already happened.
-> 
+- notebook =E2=89=A4 5.4.0
 
+URI with issues:
 
-Yes, we will inform upstream
+- GET /notebook/**
 
+Patches:  not yet finalised
 
--- 
-Huzaifa Sidhpurwala / Red Hat Product Security Team
+Mitigations:
+
+Upgrade to Jupyter notebook 5.4.1 or 5.5 once available.
+If using pip,
+
+    pip install --upgrade notebook
+
+For conda:
+
+    conda update conda
+    conda update notebook
+
+Vulnerability reported by vkgonka@mail.ru , via Jonathan Kamens at Quantopi=
+an
+
