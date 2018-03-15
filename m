@@ -1,4 +1,9 @@
-Received: (qmail 14318 invoked by uid 550); 21 Apr 2026 16:31:31 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["446" "Thursday" "15" "March" "2018" "14:52:52" "-0400" "Dave Brondsema" "brondsem@apache.org" "<f89f6551-b72e-5a20-6013-8adf5acd752a@apache.org>" "15" "[oss-security] [SECURITY] CVE-2018-1319 Apache Allura HTTP response splitting" "^Date:" nil nil "3" "2018031518:52:52" "[oss-security] [SECURITY] CVE-2018-1319 Apache Allura HTTP response splitting" (number mark "U       brondsem@apa Mar 15   15/446   " thread-indent "\"[oss-security] [SECURITY] CVE-2018-1319 Apache Allura HTTP response splitting\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 27788 invoked by uid 550); 15 Mar 2018 19:13:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,68 +11,33 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 1720 invoked from network); 21 Apr 2026 15:36:08 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
-	t=1776785758;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=XZylB3a8XD/FkHfzvxHQdUDIYiIMu9mfdBv5O5n2EtQ=;
-	b=nAZQFQ7cnZzKJoTy0sbRHtF3QrH+0oaU1wTc8Inr9VF5YE2UacPauTnlc6ksolIiSGYwIh
-	8a5nHaFKcGOocabMZMZoB1na1j7q05G7SiYXqSkFhgLckhWp/cxwfMGre0hEkobbClvBOE
-	OzT02OrlSqOxqnitsp4sE8Xjncd81IOZCAuA+Zg8WJP2PUC5YjVkBUmQ7QvEkDEk26YJD9
-	lZzitZyZzKD9J8Pisa5Nsrj1j9Crr2KgR2q3HBqfH8PvOwzOUKqmUpsaK9I8YKDTT2Pa8A
-	h3y7EZvWmGIQQQiTo8+bNrJchlEU69MN8Ks9iL/CaxBPQ+To02ZZlFXy9AwOvQ==
-Message-ID: <74bd30d5-179d-4a2b-9180-6123011813e5@cpansec.org>
-Date: Tue, 21 Apr 2026 16:35:57 +0100
+Received: (qmail 18260 invoked from network); 15 Mar 2018 18:53:07 -0000
+Message-ID: <f89f6551-b72e-5a20-6013-8adf5acd752a@apache.org>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:52.0)
+ Gecko/20100101 Thunderbird/52.6.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Robert Rothenberg <rrwo@cpansec.org>
-Content-Language: en-GB, en-ZA
-To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-GND-Sasl: rrwo@cpansec.org
-X-GND-Cause: dmFkZTGWAv+m164jUjpSzzkLHoF/qnllThqv8z9BuxpudLTQOvyMUOiPRWH9fQHamNUrynYmA0LzNNAd32VfMZ1Y37iGowwS9Vc7U3KpxeqrU10EUmEY9auCU9QUxeR6Z5Nw7qwZD8C+tMaUxcCr5D3/+E1OR6VN2qwSSwsDCACb1e4rkrWFBCIuLjK4JVEYDpONvO7l7Jf9lGuO0y+FmLwHZgnG9FqM2qFOrMS3W2oucZwpYHwfcine9mXx/K8fZlyQp7vuFLVZBhTzZ0D4euB6GuUQ9U+OCL9N+a6hNFqAp3cHE6cW6EyNsvLyuX+rSmsOmmaOlpqg7qJNn0+dg0YxY94pnHCyaHZ8GyoSNwf3NEODM6Q3ZRi1QIE4KFOIGVJFlhoD9s5MNJZDY5xZI1TIzUyHE/zBS57ccry7G7lRbXfFS78PImcBVLTWKprcfNGwwJ49PP+RvPWTwZoHo5zfjEPNTiBKXxrfgFqnuTp2v1Ot42AiAr9DI483Ki1MUB7rDCwHXmOHiex7/PyBUtmuiAhrWxEcnF8HRMZxUqlps9ucH5tlfySFUSrCGYilqHvZXDFRvi8CLd4WRA5VYbK9cozX/4Q1x23nfsy7NH1wy86+1vkmBbvNCWMoD9NWYj54Pf2gpPsUmv6IHEgHQtj67DXnKq0PT2wNxuiJ87mhhSK7Qg
-X-GND-State: clean
-X-GND-Score: 0
-Subject: [oss-security] CVE-2025-15638: Net::Dropbear versions before 0.14 for Perl contains
- a vulnerable version of libtomcrypt
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+Date: Thu, 15 Mar 2018 14:52:52 -0400
+From: Dave Brondsema <brondsem@apache.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] [SECURITY] CVE-2018-1319 Apache Allura HTTP response splitting
+To: dev@allura.apache.org, users@allura.apache.org, announce@apache.org,
+ oss-security@lists.openwall.com, Apache Security Team <security@apache.org>
 
-========================================================================
-CVE-2025-15638                                       CPAN Security Group
-========================================================================
+CVE-2018-1319 Apache Allura HTTP response splitting
 
-         CVE ID:  CVE-2025-15638
-   Distribution:  Net-Dropbear
-       Versions:  before 0.14
+Severity: Important
+Versions Affected: All
 
-       MetaCPAN:  https://metacpan.org/dist/Net-Dropbear
-       VCS Repo:  https://github.com/atrodo/Net-Dropbear
+Description:
+Attackers may craft URLs that cause HTTP response splitting.  If a victim goes
+to a maliciously crafted URL, unwanted results may occur including XSS or
+service denial for the victim's browsing session.
 
+Mitigation:
+Users of Allura should upgrade to Allura 1.8.1 immediately.
 
-Net::Dropbear versions before 0.14 for Perl contains a vulnerable
-version of libtomcrypt
-
-Description
------------
-Net::Dropbear versions before 0.14 for Perl contains a vulnerable
-version of libtomcrypt.
-
-Net::Dropbear versions before 0.14 includes versions of Dropbear
-2019.78 or earlier. These include versions of libtomcrypt v1.18.1 or
-earlier, which is affected by CVE-2016-6129 and CVE-2018-12437.
-
-Problem types
--------------
-- CWE-1395 Dependency on Vulnerable Third-Party Component
-
-References
-----------
-https://www.cve.org/CVERecord?id=CVE-2016-6129
-https://www.cve.org/CVERecord?id=CVE-2018-12437
-https://metacpan.org/release/ATRODO/Net-Dropbear-0.14/source/dropbear/libtomcrypt/changes
-
-
+Credit:
+This issue was discovered by Everardo Padilla Saca
