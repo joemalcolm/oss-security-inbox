@@ -1,40 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/07/1
-Message-ID: <bc734975-d19a-6198-7a8f-6762924342b0@e2security.de>
-Date: Sun, 7 Jan 2018 04:32:32 +0100
-From: Stefan Pietsch <s.pietsch@...ecurity.de>
-To: oss-security@...ts.openwall.com, Hanno Böck <hanno@...eck.de>, John Lightsey <jd@...nel.net>
-Subject: Re: Path traversal flaws in awstats 7.6 and earlier.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/16/2
+Message-ID: <87woycifgl.fsf@v45346.1blu.de>
+Date: Fri, 16 Mar 2018 09:37:14 +0100
+From: Stefan Bodewig <bodewig@...che.org>
+To: Commons Developers List <dev@...mons.apache.org>, user@...mons.apache.org, announce@...che.org
+CC: security@...mons.apache.org, oss-security@...ts.openwall.com
+Subject: [CVE-2018-1324] Apache Commons Compress denial of service vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 06.01.2018 10:33, Hanno Böck wrote:
+CVE-2018-1324: Apache Commons Compress denial of service vulnerability
 
->> The cPanel Security Team discovered two path traversal flaws in
->> awstats that could be leveraged for unauthenticated remote code
->> execution.
-> 
-> On
-> https://awstats.sourceforge.io/#DOWNLOAD
-> the latest version is still 7.6
-> On the github repo you linked the latest version is 7.5.
+Severity: Low
 
-The awstats GitHub page has version 7.6:
-https://github.com/eldy/awstats/tags
+Vendor:
+The Apache Software Foundation
 
-> Are you in contact with the developers? It's not exactly ideal that
-> there's a publicly known remote code execution and there is no new
-> release containing the fix.
+Versions Affected:
+Apache Commons Compress 1.11 to 1.15
 
-By not releasing a new version of awstats it gets unnecessarily
-difficult to track the fix in distributions.
+Description:
+A specially crafted ZIP archive can be used to cause an infinite loop
+inside of Compress' extra field parser used by the ZipFile and
+ZipArchiveInputStream classes.  This can be used to mount a denial of
+service attack against services that use Compress' zip package.
 
-The author has proven that he is not able to handle security issues well
-when I contacted him last year.
-(https://github.com/Dolibarr/dolibarr/issues/6504)
+Mitigation:
+Commons Compress users should upgrade to 1.16 or later
 
-On the project's security page there is no update so far:
-http://www.awstats.org/awstats_security_news.php
-
-
-Regards,
-Stefan
+Credit:
+This issue was discovered by Luis Filipe Nassif.
