@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["388" "Sunday" "8" "October" "2017" "15:04:36" "+0300" "Henri S." "henri@nerv.fi" "<20171008120436.5dmapb3v6cwzsnjg@tunkki.bugs.fi>" "11" "Re: [oss-security] Several Privilege Escalation issues in Kanboard <= 1.0.46" nil nil nil "10" "2017100812:04:36" "[oss-security] Several Privilege Escalation issues in Kanboard <= 1.0.46" (number mark "U       henri@nerv.f Oct  8   11/388   " thread-indent "\"Re: [oss-security] Several Privilege Escalation issues in Kanboard <= 1.0.46\"\n") "<084a2018-ecd5-186d-dba2-0cc051001019@chbi.eu>" ("<084a2018-ecd5-186d-dba2-0cc051001019@chbi.eu>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1256" "Friday" "16" "March" "2018" "05:30:50" "-0400" "Vladis Dronov" "vdronov@redhat.com" "<1169499474.11558307.1521192650055.JavaMail.zimbra@redhat.com>" "34" "[oss-security] CVE-2018-1068: Linux kernel: netfilter: ebtables: CONFIG_COMPAT: don't trust userland offsets" nil nil nil "3" "2018031609:30:50" "[oss-security] CVE-2018-1068: Linux kernel: netfilter: ebtables: CONFIG_COMPAT: don't trust userland offsets" (number mark "U       vdronov@redh Mar 16   34/1256  " thread-indent "\"[oss-security] CVE-2018-1068: Linux kernel: netfilter: ebtables: CONFIG_COMPAT: don't trust userland offsets\"\n") "<2028892076.10666435.1520944689288.JavaMail.zimbra@redhat.com>" ("<2028892076.10666435.1520944689288.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26475 invoked by uid 550); 8 Oct 2017 12:05:18 -0000
+Received: (qmail 28394 invoked by uid 550); 16 Mar 2018 09:31:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,30 +12,55 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26286 invoked from network); 8 Oct 2017 12:04:59 -0000
-X-Virus-Scanned: Debian amavisd-new at coconut.nerv.fi
-Date: Sun, 8 Oct 2017 15:04:36 +0300
-From: "Henri S." <henri@nerv.fi>
-To: chbi@chbi.eu
-Cc: oss-security@lists.openwall.com
-Message-ID: <20171008120436.5dmapb3v6cwzsnjg@tunkki.bugs.fi>
-References: <084a2018-ecd5-186d-dba2-0cc051001019@chbi.eu>
+Received: (qmail 28373 invoked from network); 16 Mar 2018 09:31:02 -0000
+Date: Fri, 16 Mar 2018 05:30:50 -0400 (EDT)
+From: Vladis Dronov <vdronov@redhat.com>
+To: oss-security@lists.openwall.com
+Message-ID: <1169499474.11558307.1521192650055.JavaMail.zimbra@redhat.com>
+In-Reply-To: <2028892076.10666435.1520944689288.JavaMail.zimbra@redhat.com>
+References: <2028892076.10666435.1520944689288.JavaMail.zimbra@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <084a2018-ecd5-186d-dba2-0cc051001019@chbi.eu>
-User-Agent: NeoMutt/20170113 (1.7.2)
-Subject: Re: [oss-security] Several Privilege Escalation issues in Kanboard
- <= 1.0.46
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.64.54.16, 10.4.195.2]
+Thread-Topic: CVE-2018-1068: kernel: netfilter: ebtables: CONFIG_COMPAT: don't trust userland offsets
+Thread-Index: 3j53dZ3HDNxoeXREaHFmvZgWx4J+js7fCqWB
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.13
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.38]); Fri, 16 Mar 2018 09:30:50 +0000 (UTC)
+Subject: [oss-security] CVE-2018-1068: Linux kernel: netfilter: ebtables: CONFIG_COMPAT:
+ don't trust userland offsets
 
-On Wed, Oct 04, 2017 at 08:18:40PM +0200, chbi@chbi.eu wrote:
-> https://kanboard.net/news/version-1.0.47
-> 
-> Should I request a CVE ID for each issue or one CVE ID for all issues?
+hello,
 
-I usually request one CVE identifier per issue type if they are fixed in the
-same version and reported by the same person. Could you notify the list when
-you have received the CVEs, thanks.
+(we believe this flaw is semi-public. there are posts in public mailing
+lists and a commit in the upstream Linux tree, but we are not aware of this bug
+being considered as a security flaw and not aware of any exploits in the wild.
+so we would like to explicitly post to oss-sec@)
 
--- 
-Henri Salo
+a CVE id of CVE-2018-1068 was assigned to this flaw and we would like to ask to
+use it in the related public communications.
+
+so:
+
+A flaw was found in the Linux kernel implementation of 32 bit syscall interface
+for bridging allowing a privileged user to arbitrarily write to a limited range
+of kernel memory. This flaw can be exploited not only by a system's privileged
+user (a real "root" user), but also by an attacker who is a privileged user
+(a "root" user) in a user+network namespace.
+
+References:
+
+https://marc.info/?l=linux-netdev&m=152023808817590&w=2
+
+https://marc.info/?l=linux-netdev&m=152025888924151&w=2
+
+https://bugzilla.redhat.com/show_bug.cgi?id=1552048
+
+An upstream patch:
+
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=b71812168571fa55e44cdd0254471331b9c4c4c6
+
+https://github.com/torvalds/linux/commit/b71812168571fa55e44cdd0254471331b9c4c4c6
+
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
