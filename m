@@ -1,49 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/15/2
-Message-ID: <20180815100654.vr67od6epctljw7v@suse.de>
-Date: Wed, 15 Aug 2018 12:06:54 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/16/4
+Message-ID: <c67f0613-d673-96a3-ba51-01610913d706@mozilla.com>
+Date: Fri, 16 Mar 2018 10:34:46 -0700
+From: Daniel Veditz <dveditz@...illa.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2018-5391: Linux kernel: IP fragments with random offsets allow a remote denial of service (FragmentSmack)
+Subject: libvorbis/libtremor OOB write
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+libvorbis and libtremor can write out of bounds when processing
+malformed Vorbis audio data.
 
-no.
+libvorbis 1.3.6 fixes CVE-2018-5146
+https://github.com/xiph/vorbis/releases/tag/v1.3.6
 
-SegmentSmack affects TCP segments,
-FragmentSmack affects IP fragments (lower protocol level).
+libtremor doesn't have numbered releases but CVE-2018-5147 is fixed in
+the git repo at https://git.xiph.org/?p=tremor.git
 
-Ciao, Marcus
-On Tue, Aug 14, 2018 at 05:09:38PM -0400, David T. wrote:
-> Is this the same as "SegmentSmack" that came out last week, CVE-2018-5390?
-> Or, what is the difference?
-> 
-> On Tue, Aug 14, 2018 at 16:31 Vladis Dronov <vdronov@...hat.com> wrote:
-> 
-> > Heololo,
-> >
-> > A flaw named FragmentSmack was found in the way the Linux kernel handled
-> > reassembly of fragmented IPv4 and IPv6 packets. A remote attacker could
-> > use this flaw to trigger time and calculation expensive fragment reassembly
-> > algorithms by sending specially crafted packets which could lead to a CPU
-> > saturation and hence a denial of service on the system.
-> >
-> > External References:
-> >
-> > https://www.kb.cert.org/vuls/id/641765
-> >
-> > https://access.redhat.com/articles/3553061
-> >
-> > https://bugzilla.redhat.com/show_bug.cgi?id=1609664
-> >
-> > Best regards,
-> > Vladis Dronov | Red Hat, Inc. | Product Security Engineer
-> >
-> -- 
-> Very respectfully,
-> 
-> David M Thomsen
-
--- 
-Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@...e.de>
+-Dan Veditz
