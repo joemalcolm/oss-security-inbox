@@ -1,44 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/04/1
-Message-ID: <20180204080812.GA12818@eldamar.local>
-Date: Sun, 4 Feb 2018 09:08:12 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: Anymail: CVE-2018-6596: timing attack on WEBHOOK_AUTHORIZATION secret
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/16/3
+Message-ID: <CALf+9VTETE6Xm3vfDtZQdJ=52n67wdtHsdusMBcOG8TbZ+QmBA@mail.gmail.com>
+Date: Fri, 16 Mar 2018 18:12:23 +0100
+From: Julien Cristau <jcristau@...illa.com>
+To: oss-security@...ts.openwall.com
+Subject: Fwd: Firefox 52.7.2 (Fwd: Linux ARM ESR-52 builds need additional patch!)
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Forwarding this heads-up from Dan for distros shipping Firefox on ARM
 
-MITRE has assigned CVE-2018-6596 for the following issue in Anymail, a
-Django email backends for multiple ESPs:
+---------- Forwarded message ----------
+From: Daniel Veditz
+Date: Fri, Mar 16, 2018 at 5:58 PM
+Subject: Linux ARM ESR-52 builds need additional patch!
+To: Security Group
 
-https://github.com/anymail/django-anymail/releases/tag/v1.2.1
-> Prevent timing attack on WEBHOOK_AUTHORIZATION secret
-> 
-> If you are using Anymail's tracking webhooks, you should upgrade to
-> this release, and you may want to rotate to a new
-> WEBHOOK_AUTHORIZATION shared secret (see docs). You should
-> definitely change your webhook auth if your logs indicate attempted
-> exploit.
-> 
-> More information
-> 
-> Anymail's webhook validation was vulnerable to a timing attack. An
-> attacker could have used this to obtain your WEBHOOK_AUTHORIZATION
-> shared secret, potentially allowing them to post fabricated or
-> malicious email tracking events to your app.
-> 
-> There have not been any reports of attempted exploit. (The
-> vulnerability was discovered through code review.) Attempts would be
-> visible in HTTP logs as a very large number of 400 responses on
-> Anymail's webhook urls (by default "/anymail/esp_name/tracking/"),
-> and in Python error monitoring as a very large number of
-> AnymailWebhookValidationFailure exceptions.
 
-There is the upstream fix for v1.3
-https://github.com/anymail/django-anymail/commit/db586ede1fbb41dce21310ea28ae15a1cf1286c5
-and v1.2.1
-https://github.com/anymail/django-anymail/commit/c07998304b4a31df4c61deddcb03d3607a04691b
+To those of you who build Linux-ARM distributions it's important to note
+that you'll need one patch past the ESR 52.7.2 release tag to pick up
+the libtremor fix.
 
-Regards,
-Salvatore
+On 59.0.1 this patch is included in the _BUILD2 and _RELEASE tags, but
+because we didn't have an ARM build for ESR there was no _BUILD2
+tagging. You will want to build with
+https://hg.mozilla.org/releases/mozilla-esr52/rev/5cd5586a2f48
+
+Please spread the word amongst the linux distro community.
+
+-Dan Veditz
+_______________________________________________
+
+Cheers,
+Julien
+
