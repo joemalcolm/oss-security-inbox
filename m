@@ -1,57 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/27/1
-Message-ID: <20181027145446.xmvhpq6ttyvcme3m@jwilk.net>
-Date: Sat, 27 Oct 2018 16:54:46 +0200
-From: Jakub Wilk <jwilk@...lk.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Travis CI MITM RCE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/17/2
+Message-ID: <20180317100343.4edeba53@pc1>
+Date: Sat, 17 Mar 2018 10:03:43 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Squirrelmail directory traversal vulnerability allows exfiltrating files from server
 Content-Type: text/plain; charset=utf-8
 
-Response from Travis CI:
-https://blog.travis-ci.com/2018-08-29-addressing-reported-mitm-rce
+Hi,
 
-Some clarifications:
+During the Troopers conference this week an unpatched vulnerability in
+squirrelmail was presented by Florian Grunow from ERNW [1].
 
-* Jakub Wilk <jwilk@...lk.net>, 2018-08-25, 23:49:
->On 2018-07-05, --force-yes was replaced with --allow-downgrades 
->--allow-remove-essential --allow-change-held-packages: 
->https://github.com/travis-ci/travis-build/pull/1422
->
->I'm not sure how could this change possibly work, because APT in the 
->Ubuntu versions Travis CI supports (precise, trusty) doesn't have 
->these options…
+The issue is that when uploading a mail attachment a temporary file is
+generated on the server that the client later references when sending
+the mail. The filename is not sanitized in any way, so by passing a
+filename of the form "../../../../some_path/some_filename" one can use
+this to attach arbitrary files from the server that can be accessed by
+the PHP process to a mail. Thus an attacker who has a mail account
+could use this to exfiltrate files and send them as attachments.
 
-It did work, because Travis CI folks installed backported APT 1.2.X, 
-with support for these options...
+The bug is unfixed. The finders say they tried to reach out to the
+squirrelmail developers, but were unable to contact them.
 
->So a few days later --force-yes was added back: 
->https://github.com/travis-ci/travis-build/pull/1433
+Squirrelmail hasn't had a release for many years and the webpage has
+its last news from 2013. But despite that until recently the subversion
+repository and the provided svn snapshots still provided security
+fixes, e.g. a 2017 found injection vuln [2] was fixed.
+Despite its stale state I believe many people still use squirrelmail,
+in my experience it works better than alternatives like roundcube in
+situations where you have very weak internet connections.
 
-...but this fix had an off-by-one bug in version check, which made APT 
-1.2.X still use --force-yes. The bug was fixed soon after my advisory:
-https://github.com/travis-ci/travis-build/commit/1ee43f25e45cad99c283b8fe53145617fd115dbb
+I created a preliminary quick and dirty patch that should close the
+main hole [3]. It guarantees that the filename only contains letters
+and numbers (this should be okay as the filename is created by
+squirrelmail and usually doesn't contain any user-controlled
+characters in normal operation) and otherwise just terminates the
+process. There may be an obscure cornercase where this patch does not
+fully protect: If for some reason a user can guess another users
+temporary filename while writing a mail one may be able to exfiltrate
+that. I find that unlikely enough that I haven't bothered looking more
+into this.
 
->2) On 2017-10-12, code was added to refresh an expired signing key: 
->https://github.com/travis-ci/travis-build/pull/1192
->
->The code used 32-bit key ID to retrieve the key from the keyserver. I 
->reported this on 2017-12-06: 
->https://github.com/travis-ci/travis-build/pull/1269
+The researchers found this flaw while investigating a check point
+appliance that bundles squirrelmail for their webmail functionality. As
+squirrelmail is GPL I asked check point to share the patch, which they
+did and I'm providing it here [4]. I haven't reviewed it, but the ERNW
+people told me it may not work with all PHP versions.
 
-My proposed fix was to use "gpg --recv-key" with full fingerprint. But I 
-now discovered that even this is not resistant against MitM attacks:
+In any case if anyone has contact to the squirrelmail authors it would
+be great if they could incorporate a fix (and maybe even provide a new
+release). Otherwise everyone using squirrelmail should obviously
+patch this manually.
 
-https://dev.gnupg.org/T3398
-
-"[...] modern gpg automatically applies an import screener that only 
-accepts OpenPGP certificates that have the given fingerprint [...]
-
-However, it's possible for someone else to make a new OpenPGP 
-certificate that includes the key in question without knowledge of the 
-secret key (e.g. as a non-cross-signed subkey).
-
-As a result, an attacker can bypass the import screener and inject new 
-primary keys into the keyring. [...]"
-
+[1]
+https://insinuator.net/2018/03/squirrelmail-full-disclosure-troopers18/
+[2]
+https://legalhackers.com/advisories/SquirrelMail-Exploit-Remote-Code-Exec-CVE-2017-7692-Vuln.html
+[3] https://gist.github.com/hannob/3c4f86863c418930ad08853c1109364e
+[4] https://paste.pound-python.org/show/OjSLiFTxiBrTk63jqEUu/
 -- 
-Jakub Wilk
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
