@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1302" "Saturday" "31" "December" "2016" "16:40:54" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20161231154054.abrg2lwgdfj3354p@eldamar.local>" "46" "[oss-security] CVE Request: UnRTF: stack-based buffer overflows in cmd_* functions" nil nil nil "12" "2016123115:40:54" "[oss-security] CVE Request: UnRTF: stack-based buffer overflows in cmd_* functions" (number mark "U       carnil@debia Dec 31   46/1302  " thread-indent "\"[oss-security] CVE Request: UnRTF: stack-based buffer overflows in cmd_* functions\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1400" "Saturday" "17" "March" "2018" "15:05:46" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20180317140214.GB8389@eldamar.local>" "47" "Re: [oss-security] CVE request: maliciously crafted notebook files in Jupyter" nil nil nil "3" "2018031714:05:46" "[oss-security] CVE request: maliciously crafted notebook files in Jupyter" (number mark "U       carnil@debia Mar 17   47/1400  " thread-indent "\"Re: [oss-security] CVE request: maliciously crafted notebook files in Jupyter\"\n") "<1521122159.1270614.1304206128.19D1CFEA@webmail.messagingengine.com>" ("<1521122159.1270614.1304206128.19D1CFEA@webmail.messagingengine.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13348 invoked by uid 550); 31 Dec 2016 15:41:07 -0000
+Received: (qmail 23855 invoked by uid 550); 17 Mar 2018 14:05:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,88 +12,97 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13328 invoked from network); 31 Dec 2016 15:41:07 -0000
+Received: (qmail 23834 invoked from network); 17 Mar 2018 14:05:59 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=erbukwGQECnf5F6Ue3f0p1iruHqPZmObTox0VG72cpQ=;
-        b=biYnr/8Cmj/vYFpuXViqaAG8Pr7Y2J1v4ABI7CZ5RDV5U5j3GEBIeWy+QSr4AbeSqO
-         m03uOl4et6kOYQEa/0CFDOyf3otQc3EW9sen1j1Kp5eqrqYkp1xlgNI1l5JMeFQSJq5R
-         ks/+rQNgXsWPc3mCeQGj++surK0u9W0nUpTkYYJ4Vs6kDvr1N/BypFfkzXXopJf4moJJ
-         1m4YGuUscCYoNZL7bFK0wzdTtbeERg2BSv8Ie3NBKemKbmzfWLnSzHtz2CZ8DM3Xdsw3
-         b01E3oWz9ZHLOQBeMvJn8xs1bxsHeGIloT0XsAKb8J0bH/oZJhZ4qz3rs2CM6a0exMbB
-         EW7g==
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=zL0Epz0iLx1MoZ/ICRDaMiUHApdVVN/PEFerny7iqmo=;
+        b=iPdZdLkIJ/I/uCK1OriMfsHsZiISIDgJhLHEgBmzZmamVFADWTYzbilh/9sxyhcH2L
+         prFGb7AaXrCYGqqSmbJ7ZWFGheVp9iC6zvSXWytxCCa9rcRkkivpWlMxO+ilvglQHT5r
+         6jiWnKNpdWD1ZENuupO4CYFDeJSGK6sAbwQA0rPEGemsp92f/8yvQo478LcLVcQASddT
+         UNctz5rEU1aMF5Kim0dwgXib0dIESY+X6e6n9VJn0gslJbfXOLjptinbkFqy6RH1WIJq
+         PfStDPpVZ965R8gRmH0ReCosXIdB38BcC+BGAu8ifS5px4mBvwdT9a1nWJHVHePTmxlR
+         vUjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :mime-version:content-disposition:user-agent;
-        bh=erbukwGQECnf5F6Ue3f0p1iruHqPZmObTox0VG72cpQ=;
-        b=Bd4SMqw8cUdfPRnyoP0f5/7WSxRiWmrqJI/Nq8LPSw9794aU+9jXwdc2sX93zIqxik
-         SoQkcYBLW4V9a+p8POtYsWmZRXFAzxe9+FQMRdxF55khFgYvpzgnhfL/UbVSrha0CZjk
-         Q2ziev8zmPz9OlBvGFNlVvwwwtBgBgbGxzMts+Kv/GCUfdgUfLsFoK3qfABqrnzzy93e
-         AItCiMQf1zfPvxuQmKLhE+13p2RVa6XCOuQVIEq43RSNEpfJRDUAidBpKVahhO+aZqzD
-         7b5PdFIZNpvMDltidFRsGlF/yRIozVpEpHJ1jGCJhypYreSIMA/imx2l20Nri8FCWHSo
-         d1dg==
-X-Gm-Message-State: AIkVDXL/Jl8x+qecA4+T2QlKMna7RukuFj5KcpCf/R8C0piZH4MmcLjF/IaMaw+T+I3qpA==
-X-Received: by 10.28.92.209 with SMTP id q200mr34543407wmb.1.1483198855728;
-        Sat, 31 Dec 2016 07:40:55 -0800 (PST)
+         :references:mime-version:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=zL0Epz0iLx1MoZ/ICRDaMiUHApdVVN/PEFerny7iqmo=;
+        b=tEmhStFF4U2EWM4i4COK+ddk7jabkpZqTzIZukSBsh1qUDXLcjQpkaJOK/Nr3y2ldR
+         OxsSAl8gD+sAozseWA9J5Wcx3Y7K9vBwRWLOCq6zkSECaSshg71XoLTpS0VHClwysJ0I
+         IyMW1kXN0i1jewm5sdRnAXeugV88FpGLZtgR8Ova7p2+Yvktiwa7ma2KRq2qzZOSvo7F
+         6goywlleV2X4oCO47PtpaNNqtL1cZPj2Y/Ark1JFcj1ft7BSpIVOwTfDtFqNGFoqAQs4
+         izCwU7pTaEATEAWnQdNvWM6SNVA2XE+iWTjyndV0Lygj0ashjxyYM7G1IEU4LKi9qPRt
+         2sew==
+X-Gm-Message-State: AElRT7EeVZI0s2WoFyn9sZTz+foaqT5AMGpCYGaPboDl5PqrPWqBZJP1
+	DGaBjr1UmKY+aH6dm0Um0uM=
+X-Google-Smtp-Source: AG47ELvvWTytn7XOIkZLV3NUjpr2bJxYPlXRJJEBw4+ln/JvKUiqYJxJJr+HakVsi/tcq5uwPTZ9jA==
+X-Received: by 10.80.153.221 with SMTP id n29mr6571713edb.303.1521295547740;
+        Sat, 17 Mar 2018 07:05:47 -0700 (PDT)
 Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Sat, 31 Dec 2016 16:40:54 +0100
+Date: Sat, 17 Mar 2018 15:05:46 +0100
 From: Salvatore Bonaccorso <carnil@debian.org>
-To: OSS Security Mailinglist <oss-security@lists.openwall.com>
-Cc: daved@physiol.usyd.edu.au, Jean-Francois Dockes <jf@dockes.org>,
-	Willi Mann <willi@debian.org>, security@debian.org
-Message-ID: <20161231154054.abrg2lwgdfj3354p@eldamar.local>
+To: oss-security@lists.openwall.com
+Cc: security <security@ipython.org>, MinRK <benjaminrk@gmail.com>,
+	jkamens@quantopian.com, ssanderson@quantopian.com
+Message-ID: <20180317140214.GB8389@eldamar.local>
+References: <1521122159.1270614.1304206128.19D1CFEA@webmail.messagingengine.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-User-Agent: NeoMutt/20161126 (1.7.1)
-Subject: [oss-security] CVE Request: UnRTF: stack-based buffer overflows in cmd_* functions
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1521122159.1270614.1304206128.19D1CFEA@webmail.messagingengine.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+Subject: Re: [oss-security] CVE request: maliciously crafted notebook files
+ in Jupyter
 
-Hi
+Hi,
 
-As reported by "Skylake" in the Debian bugtracker[1], UnRTF is prone
-to stack-based buffer overflows in various cmd_* functions.
-
-> I've found a Stack-based buffer overflow in unrtf 0.21.9, which
-> affects three functions including: cmd_expand, cmd_emboss and
-> cmd_engrave.
+On Thu, Mar 15, 2018 at 01:55:59PM +0000, Thomas Kluyver wrote:
+> Email address of requester: security@ipython.org, thomas@kluyver.me.uk, benjaminrk@gmail.com, jkamens@quantopian.com, ssanderson@quantopian.com
 > 
-> # convert.c
+> Software name: Jupyter Notebook (formerly IPython Notebook)
+> Type of vulnerability: Maliciously forged file
+> Attack outcome: Possible remote execution
 > 
-> static int
-> cmd_expand (Word *w, int align, char has_param, int param) {
-> char str[10];
-> if (has_param) {
-> sprintf(str, "%d", param/4); // Overflow, 9-digit negative value triggers the bug
-> if (!param)
-> attr_pop(ATTR_EXPAND);
-> else
-> attr_push(ATTR_EXPAND, str);
-> }
-> return FALSE;
-> }
+> Vulnerability: A maliciously forged notebook file can bypass sanitization to execute Javascript in the notebook context. Specifically, invalid HTML is 'fixed' by jQuery after sanitization, making it dangerous.
 > 
-> Apparently writing a negative integer to the buffer can trigger the
-> overflow (Minus sign needs an extra byte).
+> Affected versions:
 > 
-> * How to trigger the bug *
+> - notebook ≤ 5.4.0
 > 
-> $ echo "\expnd-400000000" > poc
-> $ unrtf poc
+> URI with issues:
+> 
+> - GET /notebook/**
+> 
+> Patches:  not yet finalised
+> 
+> Mitigations:
+> 
+> Upgrade to Jupyter notebook 5.4.1 or 5.5 once available.
+> If using pip,
+> 
+>     pip install --upgrade notebook
+> 
+> For conda:
+> 
+>     conda update conda
+>     conda update notebook
+> 
+> Vulnerability reported by vkgonka@mail.ru , via Jonathan Kamens at Quantopian
 
-A preliminary patch can be found in the Debian bugtracker, but it is
-not yet finalized.
+Thanks for the headsup.
 
-Could you assign (a?) CVE as needed? Does one CVE suffice here, since
-same class of issue in various cmd_* functions from one reporter?
-Whilest, at least in Debian, unrtf is compiled with FORTIFY_SOURCE=2
-and the buffer overflows are detected, at least if any exposed
-application uses unrtf to process untrusted input, this might lead to
-a denial-of-service.
+This reply is mainly for this other purpose: It looks you wanted to
+have a CVE assigned trough this reply to the list. CVE's cannot
+anymore be requested via the oss-security list. If you want to request
+one please have a look at https://cveform.mitre.org/
 
- [1] https://bugs.debian.org/849705
+Once you have the CVE assigned, can you please loop back the
+assignement in this thread?
 
 Regards,
 Salvatore
