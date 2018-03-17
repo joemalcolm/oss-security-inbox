@@ -1,29 +1,109 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/27/6
-Message-ID: <20180627125532.21ce2e53@computer>
-Date: Wed, 27 Jun 2018 12:55:32 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/17/1
+Message-ID: <20180317004150.GF4105@hunt>
+Date: Fri, 16 Mar 2018 17:41:50 -0700
+From: Seth Arnold <seth.arnold@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: squirrelmail XSS issues in bug tracker since 2016
+Subject: [cve-request@...re.org: Re: [scr479280] sqlite3 - all; fix is in source control but not yet released]
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 27 Jun 2018 12:26:09 +0200
-Hanno Böck <hanno@...eck.de> wrote:
+Hello, our friends at MITRE have assigned CVE-2018-8740 to an issue in
+SQLite3 that was discovered by OSS-Fuzz working on GDAL.
 
-> PoC2: This is "XSS-via-data-uri", a data URI runs in its own origin,
-> thus I don't see how this is a security risk. It's not really an XSS.
+Thanks to Even Rouault for passing along the issue and D. Richard Hipp
+for the fix.
 
-Have to correct myself: As Mario Heiderich has pointed out to me [1]
-this actually depends on the browser. While most modern browsers run
-data URIs in their own origin, this is not the case in Firefox 52 ESR
-and in the Tor Browser (which is based on Firefox 52 ESR).
+----- Forwarded message from cve-request@...re.org -----
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+> [Suggested description]
+> In SQLite
+> through 3.22.0,
+> databases whose schema is corrupted using a CREATE TABLE AS statement could cause a NULL pointer dereference,
+> related to build.c and prepare.c.
+> 
+> ------------------------------------------
+> 
+> [VulnerabilityType Other]
+> NULL pointer dereference
+> 
+> ------------------------------------------
+> 
+> [Vendor of Product]
+> SQLite
+> 
+> ------------------------------------------
+> 
+> [Affected Product Code Base]
+> sqlite3 - all; fix is in source control but not yet released
+> 
+> ------------------------------------------
+> 
+> [Affected Component]
+> src/build.c, src/prepare.c
+> 
+> ------------------------------------------
+> 
+> [Attack Type]
+> Context-dependent
+> 
+> ------------------------------------------
+> 
+> [Impact Denial of Service]
+> true
+> 
+> ------------------------------------------
+> 
+> [Attack Vectors]
+> A corrupted SQLite3 database file must be accessed.
+> 
+> ------------------------------------------
+> 
+> [Reference]
+> https://bugs.launchpad.net/ubuntu/+source/sqlite3/+bug/1756349
+> https://www.sqlite.org/cgi/src/timeline?r=corrupt-schema
+> https://www.sqlite.org/cgi/src/vdiff?from=1774f1c3baf0bc3d&to=d75e67654aa9620b
+> https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=6964
+> 
+> ------------------------------------------
+> 
+> [Has vendor confirmed or acknowledged the vulnerability?]
+> true
+> 
+> ------------------------------------------
+> 
+> [Discoverer]
+> OSS-Fuzz
+
+Use CVE-2018-8740.
 
 
-[1] https://twitter.com/0x6D6172696F/status/1011916899867922432
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
--- 
-Hanno Böck
-https://hboeck.de/
+iQIcBAEBCAAGBQJarFm6AAoJEHb/MwWLVhi2C3oP/1rVX4scV1Ilox/LgOCjPDE1
+Oxq3swzeowK8rEDbBMhyuYKrz3dY8Rir/wzgQ2PXiRItw0fNY4dxFf/ZwSR16l5k
+0YzYc9FsnljK+6OJ9ZrH/4VmgbXAZOf+wANeISqndgfaBFPqv/WYb5aprr6GTVkM
+k73m3r+Wzp+yHg4mth+Y9eAqGOOi8s+W3yR5hTscLAxRaBcMq2rH0MNJKL6AUIxx
+gkTrqYh2tQqfaZFtm+Gfv3j3coKj/gpzK+fFAyqDjjrEFajhb3NKoiMu8+nvjsQx
+yOt02P2cqn/qb3jdu4dGDu4oaRvMazP6bvHaDyfSd3zfYb0RBuRzEfa5ZAWmHFcw
+7RUq1ryvX+zUdK4cpfywC2/9XUfPoM37cWhV2+myd9lgbiCwdbF094omdEiHI4HB
+hnPfBzk1ZlizgNKaV8iK+RNdLDKLwv2MjyJ1X7SEe0xmengetfFvOEa7qWRFNog8
+5aQOG0r2oLg4/ZirOlUkIwLa2OFlG0VnhDww9TMtdEiz95slmmXgv6cVGHdTEteo
+WginOrUnMBjkm+jUDKilBABw49UxFpzKAqa+z0zTsheaKAm1Ydu2j8I2K5bLLhAc
+MX4MHG3y8M/5nn7HXvhIIOP2Gcxc14WPJhug3rgq0VVdS+O4NFSXG1Umjc+boHCv
+RF7PZ9dM9WOVd4QFf3RI
+=gkoK
+-----END PGP SIGNATURE-----
 
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+
+----- End forwarded message -----
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
