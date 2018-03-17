@@ -1,71 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/27/1
-Message-ID: <703439990.6459977.1519732529278.JavaMail.zimbra@redhat.com>
-Date: Tue, 27 Feb 2018 06:55:29 -0500 (EST)
-From: Vladis Dronov <vdronov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/17/3
+Message-ID: <20180317135346.GA8389@eldamar.local>
+Date: Sat, 17 Mar 2018 14:53:46 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2018-7492: Linux kernel: Null pointer dereference in net/rds/rdma.c:__rds_rdma_map()
+Subject: Re: Squirrelmail directory traversal vulnerability allows exfiltrating files from server
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi
 
-> > [Suggested description]
-> > A NULL pointer dereference was found in the net/rds/rdma.c __rds_rdma_map()
-> > function in the Linux kernel before 4.14.7 allowing local attackers to cause
-> > a system panic and a denial-of-service, related to RDS_GET_MR and
-> > RDS_GET_MR_FOR_DEST.
-> > 
-> > ------------------------------------------
-> > 
-> > [VulnerabilityType Other]
-> > CWE-476 NULL Pointer Dereference
-> > 
-> > ------------------------------------------
-> > 
-> > [Vendor of Product]
-> > kernel.org: Linux kernel
-> > 
-> > ------------------------------------------
-> > 
-> > [Affected Product Code Base]
-> > Linux kernel - fixed since v4.15-rc3
-> > 
-> > ------------------------------------------
-> > 
-> > [Affected Component]
-> > 'net/rds/rdma.c' file, __rds_rdma_map() function
-> > 
-> > ------------------------------------------
-> > 
-> > [Attack Type]
-> > Local
-> > 
-> > ------------------------------------------
-> > 
-> > [Impact Denial of Service]
-> > true
-> > 
-> > ------------------------------------------
-> > 
-> > [Attack Vectors]
-> > to exploit vulnerability a certain setsockopt() call should be made for an AF_RDS socket.
-> > 
-> > ------------------------------------------
-> > 
-> > [Reference]
-> > https://patchwork.kernel.org/patch/10096441/
-> > https://xorl.wordpress.com/2017/12/18/linux-kernel-rdma-null-pointer-dereference/
-> > https://bugzilla.redhat.com/show_bug.cgi?id=1527393
-> > https://github.com/torvalds/linux/commit/f3069c6d33f6ae63a1668737bc78aaaa51bff7ca
-> > http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=f3069c6d33f6ae63a1668737bc78aaaa51bff7ca
-> > https://www.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.14.7
-> > 
-> > ------------------------------------------
-> > 
-> > [Discoverer]
-> > syzkaller719569
+On Sat, Mar 17, 2018 at 10:03:43AM +0100, Hanno Böck wrote:
+> Hi,
 > 
-> Use CVE-2018-7492.
+> During the Troopers conference this week an unpatched vulnerability in
+> squirrelmail was presented by Florian Grunow from ERNW [1].
+> 
+> The issue is that when uploading a mail attachment a temporary file is
+> generated on the server that the client later references when sending
+> the mail. The filename is not sanitized in any way, so by passing a
+> filename of the form "../../../../some_path/some_filename" one can use
+> this to attach arbitrary files from the server that can be accessed by
+> the PHP process to a mail. Thus an attacker who has a mail account
+> could use this to exfiltrate files and send them as attachments.
+> 
+> The bug is unfixed. The finders say they tried to reach out to the
+> squirrelmail developers, but were unable to contact them.
+> 
+> Squirrelmail hasn't had a release for many years and the webpage has
+> its last news from 2013. But despite that until recently the subversion
+> repository and the provided svn snapshots still provided security
+> fixes, e.g. a 2017 found injection vuln [2] was fixed.
+> Despite its stale state I believe many people still use squirrelmail,
+> in my experience it works better than alternatives like roundcube in
+> situations where you have very weak internet connections.
+> 
+> I created a preliminary quick and dirty patch that should close the
+> main hole [3]. It guarantees that the filename only contains letters
+> and numbers (this should be okay as the filename is created by
+> squirrelmail and usually doesn't contain any user-controlled
+> characters in normal operation) and otherwise just terminates the
+> process. There may be an obscure cornercase where this patch does not
+> fully protect: If for some reason a user can guess another users
+> temporary filename while writing a mail one may be able to exfiltrate
+> that. I find that unlikely enough that I haven't bothered looking more
+> into this.
+> 
+> The researchers found this flaw while investigating a check point
+> appliance that bundles squirrelmail for their webmail functionality. As
+> squirrelmail is GPL I asked check point to share the patch, which they
+> did and I'm providing it here [4]. I haven't reviewed it, but the ERNW
+> people told me it may not work with all PHP versions.
+> 
+> In any case if anyone has contact to the squirrelmail authors it would
+> be great if they could incorporate a fix (and maybe even provide a new
+> release). Otherwise everyone using squirrelmail should obviously
+> patch this manually.
 
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+MITRE has assigned 'CVE-2018-8741' for this issue.
+
+Regards,
+Salvatore
