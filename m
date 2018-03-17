@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6821" "Monday" "18" "September" "2017" "15:18:34" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20170918151834.2228fb73@pc1>" "171" "[oss-security] Optionsbleed bug in Apache HTTPD" "^Date:" nil nil "9" "2017091813:18:34" "[oss-security] Optionsbleed bug in Apache HTTPD" (number mark "        hanno@hboeck Sep 18  171/6821  " thread-indent "\"[oss-security] Optionsbleed bug in Apache HTTPD\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2611" "Saturday" "17" "March" "2018" "14:53:46" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20180317135346.GA8389@eldamar.local>" "53" "Re: [oss-security] Squirrelmail directory traversal vulnerability allows exfiltrating files from server" nil nil nil "3" "2018031713:53:46" "[oss-security] Squirrelmail directory traversal vulnerability allows exfiltrating files from server" (number mark "U       carnil@debia Mar 17   53/2611  " thread-indent "\"Re: [oss-security] Squirrelmail directory traversal vulnerability allows exfiltrating files from server\"\n") "<20180317100343.4edeba53@pc1>" ("<20180317100343.4edeba53@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 23625 invoked by uid 550); 18 Sep 2017 13:19:09 -0000
+Received: (qmail 1357 invoked by uid 550); 17 Mar 2018 13:54:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,186 +11,102 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 23591 invoked from network); 18 Sep 2017 13:19:08 -0000
-Message-ID: <20170918151834.2228fb73@pc1>
-X-Mailer: Claws Mail 3.15.1-dirty (GTK+ 2.24.31; x86_64-pc-linux-gnu)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 18 Sep 2017 15:18:34 +0200
-From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Optionsbleed bug in Apache HTTPD
+Received: (qmail 1328 invoked from network); 17 Mar 2018 13:53:59 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=bMVktK3MEyJ/1w/Zgnd/2Tzzyk63XdJeHMpJSScxzfk=;
+        b=Wb3GMTsnrvoknD9Jcom7QkpB8/gKV4934T/4inwNtw3FEUfxffLQcd5+HL7Db27QeQ
+         QdcMRqTsGexOujKCn6MzGEuPIEZWvYfxGHSvneIepDV5pBuWvS7YZAqG/sJk+USwOi/B
+         RcG/Ac/VqRRP4Nnq1u7DspugP0E4HX2JUZN6x+LAYaPivOPW7jVV2hctONk6vOUVNVwQ
+         cvPDU02OXUqTLgT+prL7/WgQAHPWINIp+jcz1+HM9evp+yo3Di40rKABqG2q25LRoJa3
+         AOpsJ/M4YOTXKzxgTlB5oAKFxvf9YN58JlkaKk4W78Ob2LIGl6ATPKoR1zRVw49yolNl
+         MrEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :references:mime-version:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=bMVktK3MEyJ/1w/Zgnd/2Tzzyk63XdJeHMpJSScxzfk=;
+        b=UCHMOABRZERfxesl9EdFotOCg+zqmCV4+0POJkfGsV0ybqQMcjFzQAkrsG1C/JSoGW
+         5JYD8YRYy4nAmK8lMzZQCN7KObAs7cmScj/a5qTJdbR3YQCo8dA24dQ+P+hDW8lXErmM
+         cuqbF96qtZlXMtYzOIYSJBASZX6mK+QA3ahZQMFfutbb3TC2+Ug+L508ziCfp8F3tkVT
+         i6C96HzSxf/fnkt4Kkux8mBR3XLUgHwX3ak3zmZor53x9kTmB9odl6FumR51JLeJIdw8
+         X4+svsh+S0NaTM7AqTQp8vb7uzCNuvUs3sMR5G4b0C1pGilYOuF+Q+iB58KT61oe+jLJ
+         9LQA==
+X-Gm-Message-State: AElRT7HKZeljjIYJkKsZ4hcQeb6R7oslmli3q32qfw2FO24y2E1WcxVW
+	vzzXZDBLfbBa7CkTqiUzVj0KVQ==
+X-Google-Smtp-Source: AG47ELuhVo5MGzqsd2a+RWHTd6Ihmo8kjsVusYtz0tx6CJeDNQKr+rFQ5lAmlD7iK5fln8k7wUiqRQ==
+X-Received: by 10.28.217.67 with SMTP id q64mr368247wmg.12.1521294827693;
+        Sat, 17 Mar 2018 06:53:47 -0700 (PDT)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Sat, 17 Mar 2018 14:53:46 +0100
+From: Salvatore Bonaccorso <carnil@debian.org>
 To: oss-security@lists.openwall.com
+Message-ID: <20180317135346.GA8389@eldamar.local>
+References: <20180317100343.4edeba53@pc1>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180317100343.4edeba53@pc1>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+Subject: Re: [oss-security] Squirrelmail directory traversal vulnerability
+ allows exfiltrating files from server
 
-Also at:
-https://blog.fuzzing-project.org/60-Optionsbleed-HTTP-OPTIONS-method-can-le=
-ak-Apaches-server-memory.html
+Hi
 
-If you're using the HTTP protocol in everday Internet use you are
-usually only using two of its methods: GET and POST. However HTTP has a
-number of other methods, so I wondered what you can do with them and if
-there are any vulnerabilities.
+On Sat, Mar 17, 2018 at 10:03:43AM +0100, Hanno Böck wrote:
+> Hi,
+> 
+> During the Troopers conference this week an unpatched vulnerability in
+> squirrelmail was presented by Florian Grunow from ERNW [1].
+> 
+> The issue is that when uploading a mail attachment a temporary file is
+> generated on the server that the client later references when sending
+> the mail. The filename is not sanitized in any way, so by passing a
+> filename of the form "../../../../some_path/some_filename" one can use
+> this to attach arbitrary files from the server that can be accessed by
+> the PHP process to a mail. Thus an attacker who has a mail account
+> could use this to exfiltrate files and send them as attachments.
+> 
+> The bug is unfixed. The finders say they tried to reach out to the
+> squirrelmail developers, but were unable to contact them.
+> 
+> Squirrelmail hasn't had a release for many years and the webpage has
+> its last news from 2013. But despite that until recently the subversion
+> repository and the provided svn snapshots still provided security
+> fixes, e.g. a 2017 found injection vuln [2] was fixed.
+> Despite its stale state I believe many people still use squirrelmail,
+> in my experience it works better than alternatives like roundcube in
+> situations where you have very weak internet connections.
+> 
+> I created a preliminary quick and dirty patch that should close the
+> main hole [3]. It guarantees that the filename only contains letters
+> and numbers (this should be okay as the filename is created by
+> squirrelmail and usually doesn't contain any user-controlled
+> characters in normal operation) and otherwise just terminates the
+> process. There may be an obscure cornercase where this patch does not
+> fully protect: If for some reason a user can guess another users
+> temporary filename while writing a mail one may be able to exfiltrate
+> that. I find that unlikely enough that I haven't bothered looking more
+> into this.
+> 
+> The researchers found this flaw while investigating a check point
+> appliance that bundles squirrelmail for their webmail functionality. As
+> squirrelmail is GPL I asked check point to share the patch, which they
+> did and I'm providing it here [4]. I haven't reviewed it, but the ERNW
+> people told me it may not work with all PHP versions.
+> 
+> In any case if anyone has contact to the squirrelmail authors it would
+> be great if they could incorporate a fix (and maybe even provide a new
+> release). Otherwise everyone using squirrelmail should obviously
+> patch this manually.
 
-One HTTP method is called OPTIONS. It simply allows asking a server
-which other HTTP methods it supports. The server answers with the
-"Allow" header and gives us a comma separated list of supported methods.
+MITRE has assigned 'CVE-2018-8741' for this issue.
 
-A scan of the Alexa Top 1 Million revealed something strange: Plenty of
-servers sent out an "Allow" header with what looked like corrupted
-data. Some examples: Allow: ,GET,,,POST,OPTIONS,HEAD,, Allow:
-POST,OPTIONS,,HEAD,:09:44 GMT Allow:
-GET,HEAD,OPTIONS,,HEAD,,HEAD,,HEAD,,
-HEAD,,HEAD,,HEAD,,HEAD,POST,,HEAD,, HEAD,!DOCTYPE html PUBLIC
-"-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" Allow:
-GET,HEAD,OPTIONS,=3Dwrite HTTP/1.0,HEAD,,HEAD,POST,,HEAD,TRACE
-
-That clearly looked interesting - and dangerous. It suspiciously looked
-like a "bleed"-style bug, which has become a name for bugs where
-arbitrary pieces of memory are leaked to a potential attacker. However
-these were random servers on the Internet, so at first I didn't know
-what software was causing this.
-
-Sometimes HTTP servers send a "Server" header telling the software.
-However one needs to be aware that the "Server" header can lie. It's
-quite common to have one HTTP server proxying another. I got all kinds
-of different "Server" headers back, but I very much suspected that
-these were all from the same bug.
-
-I tried to contact the affected server operators, but only one of them
-answered, and he was extremely reluctant to tell me anything about his
-setup, so that wasn't very helpful either.
-
-However I got one clue: Some of the corrupted headers contained strings
-that were clearly configuration options from Apache. It seemed quite
-unlikely that those would show up in the memory of other server
-software. But I was unable to reproduce anything alike on my own Apache
-servers. I also tried reading the code that put together the Allow
-header to see if I can find any clues, but with no success. So without
-knowing any details I contacted the Apache security team.
-
-Fortunately Apache developer Jacob Champion digged into it and figured
-out what was going on: Apache supports a configuration directive Limits
-that allows restricting access to certain HTTP methods to a specific
-user. And if one sets the Limit directive in an .htaccess file for an
-HTTP method that's not globally registered in the server then the
-corruption happens. After that I was able to reproduce it myself.
-Setting a Limit directive for any invalid HTTP method in an .htaccess
-file caused a use after free error in the construction of the Allow
-header which was also detectable with Address Sanitizer. (However ASAN
-doesn't work reliable due to the memory allocation abstraction done by
-APR.)
-
-FAQ
-
-What's Optionsbleed?
-
-Optionsbleed is a use after free error in Apache HTTP that causes a
-corrupted Allow header to be constructed in response to HTTP OPTIONS
-requests. This can leak pieces of arbitrary memory from the server
-process that may contain secrets. The memory pieces change after
-multiple requests, so for a vulnerable host an arbitrary number of
-memory chunks can be leaked.
-
-The bug appears if a webmaster tries to use the "Limit" directive with
-an invalid HTTP method.
-
-Example .htaccess:
-
-<Limit abcxyz>
-</Limit>
-
-How prevalent is it?
-
-Scanning the Alexa Top 1 Million revealed 466 hosts with corrupted
-Allow headers. In theory it's possible that other server software has
-similar bugs. On the other hand this bug is nondeterministic, so not
-all vulnerable hosts may have been catched.
-
-So it only happens if you set a quite unusual configuration option?
-
-There's an additional risk in shared hosting environments. The
-corruption is not limited to a single virtual host. One customer of a
-shared hosting provider could deliberately create an .htaccess file
-causing this corruption hoping to be able to extract secret data from
-other hosts on the same system.
-
-I can't reproduce it!
-
-Due to its nature the bug doesn't appear deterministically. It only
-seems to appear on busy servers. Sometimes it only appears after
-multiple requests.
-
-Does it have a CVE?
-
-CVE-2017-9798.
-
-I'm seeing Allow headers containing HEAD multiple times!
-
-This is actually a different Apache bug (#61207) [1] that I found during
-this investigation. It causes HEAD to appear three times instead of
-once. However it's harmless and not a security bug.
-
-Launchpad also has a harmless bug [2] that produces a malformed Allow
-header, using a space-separated list instead of a comma-separated one.
-
-How can I test it?
-
-A simple way is to use Curl in a loop and send OPTIONS requests:
-
-for i in {1..100}; do curl -sI -X OPTIONS https://www.google.com/|grep
--i "allow:"; done
-
-Depending on the server configuration it may not answer to OPTIONS
-requests on some URLs. Try different paths, HTTP versus HTTPS hosts,
-non-www versus www etc. may lead to different results.
-
-Please note that this bug does not show up with the "*" OPTIONS target,
-you need a specific path.
-
-Here's a python proof of concept script [3].
-
-What shall I do?
-
-If you run an Apache web server you should update. Most distributions
-should have updated packages by now or very soon. A patch [4] can be
-found here. A patch for Apache 2.2 is available here [5] (thanks to
-Thomas Deutschmann for backporting it).
-
-Unfortunately the communication with the Apache security team wasn't
-ideal. They were unable to provide a timeline for a coordinated release
-with a fix, so I decided to define a disclosure date on my own without
-an upstream fix.
-
-If you run an Apache web server in a shared hosting environment that
-allows users to create .htaccess files you should drop everything you
-do right now, update immediately and make sure you restart the server
-afterwards.
-
-Is this as bad as Heartbleed?
-
-No. Although similar in nature, this bug leaks only small chunks of
-memory and more importantly only affects a small number of hosts by
-default.
-
-It's still a pretty bad bug, particularly for shared hosting
-environments.
-
-
-[1] https://bz.apache.org/bugzilla/show_bug.cgi?id=3D61207
-[2] https://bugs.launchpad.net/launchpad/+bug/1717682
-[3] https://github.com/hannob/optionsbleed
-[4]
-https://svn.apache.org/viewvc/httpd/httpd/branches/2.4.x/server/core.c?r1=
-=3D1805223&r2=3D1807754&pathrev=3D1807754&view=3Dpatch
-[5]
-https://blog.fuzzing-project.org/uploads/apache-2.2-optionsbleed-backport.p=
-atch
-
---=20
-Hanno B=C3=B6ck
-https://hboeck.de/
-
-mail/jabber: hanno@hboeck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+Regards,
+Salvatore
