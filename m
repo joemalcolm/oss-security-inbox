@@ -1,32 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/27/1
-Message-ID: <CAKQ1sVM601_qrcr_-Y8axM=etSCDVh7k3h_ZkRjSA1Va1aH_Tw@mail.gmail.com>
-Date: Tue, 27 Mar 2018 10:58:50 +0200
-From: Yann Ylavic <ylavic.dev@...il.com>
-To: Dagobert Michelsen <dam@...ncsw.org>
-Cc: httpd-security <security@...pd.apache.org>, announce@...pd.apache.org,  oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-15710: Out of bound write in mod_authnz_ldap when using too small Accept-Language values
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/18/1
+Message-ID: <CAOvn4qiRLkETd=3+5f0PJ1r47CmFQWk0_aFiR0mpdRH26LzRJA@mail.gmail.com>
+Date: Sun, 18 Mar 2018 07:59:06 +0000
+From: Thomas Kluyver <takowl@...il.com>
+To: Salvatore Bonaccorso <carnil@...ian.org>
+Cc: oss-security@...ts.openwall.com, security <security@...thon.org>,  MinRK <benjaminrk@...il.com>, jkamens@...ntopian.com, ssanderson@...ntopian.com
+Subject: Re: CVE request: maliciously crafted notebook files in Jupyter
 Content-Type: text/plain; charset=utf-8
 
-Hi Dago,
+Thanks Salvatore. Devdatta Akhawe filled in the form on my behalf, and
+we've now been assigned CVE-2018-8768.
 
-On Mon, Mar 26, 2018 at 9:42 PM, Dagobert [...] wrote:
+I'm going to merge the fix now and start the release process for 5.4.1.
+
+Thomas
+
+On 17 March 2018 at 14:05, Salvatore Bonaccorso <carnil@...ian.org> wrote:
+
+> Hi,
 >
-> Am 26.03.2018 um 07:06 schrieb Daniel Ruggeri:
->>
->> Users of (the now end-of-life) httpd 2.2 who cannot upgrade at this time
->> should apply CVE-2017-15710.patch, which is available at
->>
->>   https://www.apache.org/dist/httpd/patches/apply_to_2.2.34/
+> On Thu, Mar 15, 2018 at 01:55:59PM +0000, Thomas Kluyver wrote:
+> > Email address of requester: security@...thon.org, thomas@...yver.me.uk,
+> benjaminrk@...il.com, jkamens@...ntopian.com, ssanderson@...ntopian.com
+> >
+> > Software name: Jupyter Notebook (formerly IPython Notebook)
+> > Type of vulnerability: Maliciously forged file
+> > Attack outcome: Possible remote execution
+> >
+> > Vulnerability: A maliciously forged notebook file can bypass
+> sanitization to execute Javascript in the notebook context. Specifically,
+> invalid HTML is 'fixed' by jQuery after sanitization, making it dangerous.
+> >
+> > Affected versions:
+> >
+> > - notebook ≤ 5.4.0
+> >
+> > URI with issues:
+> >
+> > - GET /notebook/**
+> >
+> > Patches:  not yet finalised
+> >
+> > Mitigations:
+> >
+> > Upgrade to Jupyter notebook 5.4.1 or 5.5 once available.
+> > If using pip,
+> >
+> >     pip install --upgrade notebook
+> >
+> > For conda:
+> >
+> >     conda update conda
+> >     conda update notebook
+> >
+> > Vulnerability reported by vkgonka@...l.ru , via Jonathan Kamens at
+> Quantopian
 >
-> This link does not exist, there is only
->   https://www.apache.org/dist/httpd/patches/apply_to_2.4.27/
+> Thanks for the headsup.
+>
+> This reply is mainly for this other purpose: It looks you wanted to
+> have a CVE assigned trough this reply to the list. CVE's cannot
+> anymore be requested via the oss-security list. If you want to request
+> one please have a look at https://cveform.mitre.org/
+>
+> Once you have the CVE assigned, can you please loop back the
+> assignement in this thread?
+>
+> Regards,
+> Salvatore
+>
 
-Thanks for noticing and letting us know.
-
-The 2.2 version of httpd has ended its long life and went to the attic
-(almost simultaneously with this announcement):
-  https://archive.apache.org/dist/httpd/patches/apply_to_2.2.34/
-
-Regards,
-Yann.
