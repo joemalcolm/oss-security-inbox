@@ -1,4 +1,9 @@
-Received: (qmail 11431 invoked by uid 550); 31 Dec 2025 03:40:51 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2163" "Monday" "19" "March" "2018" "19:16:17" "-0400" "Gordo Lowrey" "gordo@zeneval.com" "<1521501377.17063.0@smtp.gmail.com>" "78" "Re: [oss-security] CVE request: maliciously crafted notebook files in Jupyter" nil nil nil "3" "2018031923:16:17" "[oss-security] CVE request: maliciously crafted notebook files in Jupyter" (number mark "U       gordo@zeneva Mar 19   78/2163  " thread-indent "\"Re: [oss-security] CVE request: maliciously crafted notebook files in Jupyter\"\n") "<CAL3XhzYp1A0UY8nDW_sQXR_B3NoOwEsakh0J=oma46HB9zFx=g@mail.gmail.com>" ("<1521122159.1270614.1304206128.19D1CFEA@webmail.messagingengine.com>" "<CAL3XhzYp1A0UY8nDW_sQXR_B3NoOwEsakh0J=oma46HB9zFx=g@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 18205 invoked by uid 550); 20 Mar 2018 11:27:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,111 +12,120 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 19871 invoked from network); 31 Dec 2025 02:56:58 -0000
-Message-ID: <a26015c8-29e0-46d2-b918-8468f35dbe89@gentoo.org>
-Date: Tue, 30 Dec 2025 21:56:44 -0500
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+Received: (qmail 7558 invoked from network); 19 Mar 2018 23:16:32 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=zeneval.com; s=google;
+        h=date:from:subject:to:message-id:in-reply-to:references:mime-version;
+        bh=BGe3XU20fCHY9fTGXEJQANJvz4/H1UgkCEGQSXFmQpA=;
+        b=NPOy2oyk7OsXuYxx7FFjbHOY4QeKhh31gwWlPDM75wRh1gk1n+iyT+CpQT3MR5kuux
+         /rKDYdQhmqmziPFsnvZU7fnatV/+5rubkmmlQPOCCsgsLlELDokyOA8Gyu7iFKri457O
+         fuKvyG4D7h0QtKc0stAVOxz9Vvj6NJ9DXPzBQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:subject:to:message-id:in-reply-to
+         :references:mime-version;
+        bh=BGe3XU20fCHY9fTGXEJQANJvz4/H1UgkCEGQSXFmQpA=;
+        b=OPbWnGONxPsmFj0VypwbwlXzVGlBjnRtcd9ehyx377PIYSwz9WdwL0+md3wSUjYchZ
+         xMUfauwXnndv0WrlQ9aLx8dVw9rSInOjCzQurbkgs0Rew5Ul7Mgby3aFuS6Gn8RZXPoy
+         o3eq1zs1ydfeV7ZFjGSlCLFQ3+1oX0oUF/TZXFh0DT0H9xAoxmFoJ1dl4CGpuH/PIoD3
+         aePAxriAGwbuJtlBfFBey9PWl2t7N4k9fDzmUanYJrhQuC1tBu7UraLDDR/sENtfDaVl
+         /bHwjCSgIu2MySITuE1pyobX3w0GddKToZaaNmkugwK6Gi2vyoZig728kVXpEz6ZHxS1
+         IDhQ==
+X-Gm-Message-State: AElRT7HK0eRf1kdrBkWp1eOmaV2mMA5nwMH00+1vZV3QoIM5nHTR6jr/
+	TBFcLhroWj7569rHgZ0UQPfQv93V8b8=
+X-Google-Smtp-Source: AG47ELvbVZ8wixg9ECTPHoYlOnbzDn2V0ibI9MOz0gJotbA7zIPLcUiAsFSeFDg9mXAHsmgHarztow==
+X-Received: by 10.55.2.140 with SMTP id v12mr19922704qkg.251.1521501379825;
+        Mon, 19 Mar 2018 16:16:19 -0700 (PDT)
+Date: Mon, 19 Mar 2018 19:16:17 -0400
+From: Gordo Lowrey <gordo@zeneval.com>
 To: oss-security@lists.openwall.com
-References: <4bb0e4f7-a4f3-45cc-b519-2044b4b2871c@gmail.com>
- <kijdjK8TrndDINJsZmPKxfdpiDaRwCvpNP0cqzmmySQwBeDhQWDHTsOMFkNH9vZ8KvEZG8hy027J4PnqWL18_BcaxkDgGdDvgmF3K0pJ-no=@hexsys.org>
-Content-Language: en-US
-From: Eli Schwartz <eschwartz@gentoo.org>
-Autocrypt: addr=eschwartz@gentoo.org; keydata=
- xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
- I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
- CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
- CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
- mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
- 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
- Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
- TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
-In-Reply-To: <kijdjK8TrndDINJsZmPKxfdpiDaRwCvpNP0cqzmmySQwBeDhQWDHTsOMFkNH9vZ8KvEZG8hy027J4PnqWL18_BcaxkDgGdDvgmF3K0pJ-no=@hexsys.org>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------40RJdDXYXFXbrhK0tKyN60lZ"
-Subject: Re: [oss-security] Re: Best practices for signature verifcation
-
---------------40RJdDXYXFXbrhK0tKyN60lZ
-Content-Type: multipart/mixed; boundary="------------PygIhR2oK4YnGzJdWNkncBgo";
- protected-headers="v1"
-Message-ID: <a26015c8-29e0-46d2-b918-8468f35dbe89@gentoo.org>
-Date: Tue, 30 Dec 2025 21:56:44 -0500
+Message-Id: <1521501377.17063.0@smtp.gmail.com>
+In-Reply-To: 
+ <CAL3XhzYp1A0UY8nDW_sQXR_B3NoOwEsakh0J=oma46HB9zFx=g@mail.gmail.com>
+References:
+	<1521122159.1270614.1304206128.19D1CFEA@webmail.messagingengine.com>
+	<CAL3XhzYp1A0UY8nDW_sQXR_B3NoOwEsakh0J=oma46HB9zFx=g@mail.gmail.com>
+X-Mailer: geary/0.12-dev
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [oss-security] Re: Best practices for signature verifcation
-To: oss-security@lists.openwall.com
-References: <4bb0e4f7-a4f3-45cc-b519-2044b4b2871c@gmail.com>
- <kijdjK8TrndDINJsZmPKxfdpiDaRwCvpNP0cqzmmySQwBeDhQWDHTsOMFkNH9vZ8KvEZG8hy027J4PnqWL18_BcaxkDgGdDvgmF3K0pJ-no=@hexsys.org>
-Content-Language: en-US
-From: Eli Schwartz <eschwartz@gentoo.org>
-Autocrypt: addr=eschwartz@gentoo.org; keydata=
- xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
- I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
- CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
- CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
- mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
- 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
- Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
- TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
-In-Reply-To: <kijdjK8TrndDINJsZmPKxfdpiDaRwCvpNP0cqzmmySQwBeDhQWDHTsOMFkNH9vZ8KvEZG8hy027J4PnqWL18_BcaxkDgGdDvgmF3K0pJ-no=@hexsys.org>
+Content-Type: multipart/alternative; boundary="=-V2iT52BES9Ci/obhSLIk"
+Subject: Re: [oss-security] CVE request: maliciously crafted notebook files in
+ Jupyter
 
---------------PygIhR2oK4YnGzJdWNkncBgo
-Content-Type: text/plain; charset=UTF-8
+--=-V2iT52BES9Ci/obhSLIk
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
 
-On 12/30/25 7:27 PM, Ali Polatel wrote:
+Obviously, running a python notebook from an untrusted party is a bad=20
+idea, since notebooks are litearlly code executors...
 
-> signing yet again. This time, though, I decided to act on it. I wrote
-> a clean Rust implementation of signify and called it signify-rs[3].
-> It uses the same license (ISC) as the reference implementation. Code
-> is free of unsafes and arithmetic side effects. No proc macros are used
-> in the code or any dependencies making it static-linking friendly. It's
-> fairly portable and passes tests on FreeBSD, NetBSD, Linux and Windows.
+Sure, there is something to be said about *javascript* execution... but=20
+there are a plethora of addons for Python notebooks that generate=20
+Javascript on-demand. Especially for visualizations, etc...
+
+Why is this a "vulnerability" necessarily?
+
+Just curious...
+
+
+On Mon, Mar 19, 2018 at 7:53 AM, Ricter Zheng <ricterzheng@gmail.com>=20
+wrote:
+> Hi Thomas Klutver,
 >=20
-[...]>
-> Sharing is caring, so here is the git[5] and CI[6]. CI saves
-> static-linked signify binaries as build artifacts which gives
-> an option to quickly test. Enjoy.
+> I am a student from china major in information security, I'm very=20
+> interest
+> about the vulnerability. I tried to reproduction the vulnerability but
+> failed, so can you provide some technology detail about it?
+>=20
+> Thank you.
+> --
+> Ricter Zheng
+>=20
+> Thomas Kluyver <thomas@kluyver.me.uk>=E4=BA=8E2018=E5=B9=B43=E6=9C=8815=
+=E6=97=A5=E5=91=A8=E5=9B=9B=20
+> =E4=B8=8B=E5=8D=8810:27=E5=86=99=E9=81=93=EF=BC=9A
+>=20
+>>  Email address of requester: security@ipython.org,=20
+>> thomas@kluyver.me.uk,
+>>  benjaminrk@gmail.com, jkamens@quantopian.com,=20
+>> ssanderson@quantopian.com
+>>=20
+>>  Software name: Jupyter Notebook (formerly IPython Notebook)
+>>  Type of vulnerability: Maliciously forged file
+>>  Attack outcome: Possible remote execution
+>>=20
+>>  Vulnerability: A maliciously forged notebook file can bypass=20
+>> sanitization
+>>  to execute Javascript in the notebook context. Specifically,=20
+>> invalid HTML
+>>  is 'fixed' by jQuery after sanitization, making it dangerous.
+>>=20
+>>  Affected versions:
+>>=20
+>>  - notebook =E2=89=A4 5.4.0
+>>=20
+>>  URI with issues:
+>>=20
+>>  - GET /notebook/**
+>>=20
+>>  Patches:  not yet finalised
+>>=20
+>>  Mitigations:
+>>=20
+>>  Upgrade to Jupyter notebook 5.4.1 or 5.5 once available.
+>>  If using pip,
+>>=20
+>>      pip install --upgrade notebook
+>>=20
+>>  For conda:
+>>=20
+>>      conda update conda
+>>      conda update notebook
+>>=20
+>>  Vulnerability reported by vkgonka@mail.ru , via Jonathan Kamens at
+>>  Quantopian
+>>=20
+>>  --
+> Ricter Z
 
-> [5]: https://git.sr.ht/~alip/signify
-> [6]: https://builds.sr.ht/~alip/signify
+--=-V2iT52BES9Ci/obhSLIk--
 
-
-This looks... slightly worrying to me. Is it called "signify" or
-signify-rs"?
-
-I assume the latter is a workaround for the fact that there's already a
-semi-popular "clean rust" implementation that started life in 2016,
-which owns the former name:
-
-https://crates.io/crates/signify
-https://github.com/badboy/signify-rs
-
-So we have a venerable "signify-rs" repo that provides "signify", and a
-new "signify" repo that provides "signify-rs". Which one to use?
-
-It seems evident given you published as "signify-rs that you're aware of
-the conflict, at least.
-
-
---=20
-Eli Schwartz
-
---------------PygIhR2oK4YnGzJdWNkncBgo--
-
---------------40RJdDXYXFXbrhK0tKyN60lZ
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCaVSQ7QUDAAAAAAAKCRCEp9ErcA0vVxIm
-AQDSsTyAr3/dwU6bwQRbfynuYZyBSBuM4qEVOBKQgDibWQD/bm1iEa8uDSpV8TYcGRbW5yiEw95g
-1NlTQFYY/NdaLQQ=
-=23gJ
------END PGP SIGNATURE-----
-
---------------40RJdDXYXFXbrhK0tKyN60lZ--
