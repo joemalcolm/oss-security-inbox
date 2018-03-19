@@ -1,157 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/25/4
-Message-Id: <E1fBJ92-00043j-0a@xenbits.xenproject.org>
-Date: Wed, 25 Apr 2018 12:03:32 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 258 - Information leak via crafted user-supplied CDROM
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/19/5
+Message-ID: <CAGJbjKaR+G7r8DnrXmvf0hXgtSYh8VAU7cJRmt+7iqn1fzwizw@mail.gmail.com>
+Date: Mon, 19 Mar 2018 17:08:14 -0400
+From: Mike Dalessio <mike.dalessio@...il.com>
+To: ruby-security-ann@...glegroups.com, rubyonrails-security@...glegroups.com,  oss-security@...ts.openwall.com,  nokogiri-talk <nokogiri-talk@...glegroups.com>
+Subject: [CVE-2018-8048] Loofah XSS Vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello all,
 
-                    Xen Security Advisory XSA-258
-                              version 2
+A *medium* severity vulnerability has been identified and patched in
+Loofah, which is a library used by `rails-html-sanitizer`. This issue has
+been assigned CVE-2018-8048.
 
-           Information leak via crafted user-supplied CDROM
+The public notice can be found here:
 
-UPDATES IN VERSION 2
-====================
+    https://github.com/flavorjones/loofah/issues/144
 
-Public release.
+To save you a click, I've reproduced the contents of the initial
+announcement here.
 
-ISSUE DESCRIPTION
-=================
+-----
 
-QEMU handles many different file formats for virtual disks (e.g., raw,
-qcow2, vhd, &c).  Some of these formats are "snapshots" that specify
-"patches" to an alternate disk image, whose filename is included in
-the snapshot file.
+*# CVE-2018-8048 - Loofah XSS Vulnerability*
 
-When qemu is given a disk but the type is not specified, it attempts
-to guess the file format by reading it.  If a disk image is intended
-to be 'raw', but the image is entirely controlled by an attacker, the
-attacker could write a header to the image, describing one of these
-"snapshot" formats, and pointing to an arbitrary file as the "backing"
-file.
+This issue has been created for public disclosure of an XSS / code
+injection vulnerability that was responsibly reported by the Shopify
+Application Security Team.
 
-When attaching disks via command-line parameters at boot time
-(including both "normal" disks and CDROMs), libxl specifies the
-format; however, when inserting a CDROM live via QMP, the format was
-not specified.
+*## Severity*
 
-IMPACT
-======
+Medium (6.7)
 
-An attacker supplying a crafted CDROM image can read any file (or
-device node) on the dom0 filesystem with the permissions of the qemu
-devicemodel process.  (The virtual CDROM device is read-only, so
-no data can be written.)
 
-VULNERABLE SYSTEMS
-==================
+*## Description*
 
-Only x86 HVM guests with a virtual CDROM device are affected.  ARM
-guests, x86 PV guests, x86 PVH guests, and x86 HVM guests without a
-virtual CDROM device are not affected.
+Loofah allows non-whitelisted attributes to be present in sanitized output
+when input with specially-crafted HTML fragments.
 
-Only systems with qemu running in dom0 are affected; systems running
-stub domains are not affected.  Only systems using qemu-xen (aka
-"qemu-upstream" are affected; systems running qemu-xen-traditional
-are not affected.
 
-Only systems in which an attacker can provide a raw CDROM image, and
-cause that image to be virtually inserted while the guest is running,
-are affected.  Systems which only have host administrator-supplied
-CDROM images, or systems which allow images to be added only at boot
-time, are not affected.
+*## Affected Versions*
 
-MITIGATION
-==========
+Loofah < 2.2.1, but only:
 
-One workaround is to "wrap" the guest-supplied image in a specific
-format; i.e., accept a raw image from the untrusted user, and convert
-it into qcow2 format; for example:
+* when running on MRI or RBX,
+* in combination with libxml2 >= 2.9.2.
 
-    qemu-img convert -f raw -O qcow2 untrusted.raw wrapped.qcow2
+Please note: JRuby users are not affected.
 
-WARNING: Make sure to specify `-f raw` if you do this, or qemu will
-"guess" the format of "untrusted.raw" (which the attacker may have
-crafted to look like a qcow2 snapshot image with an alternativee base).
 
-Another workaround is to allow guests to only change CDROMs at boot
-time, not while the guest is running.
+*## Mitigation*
 
-CREDITS
-=======
+Upgrade to Loofah 2.2.1.
 
-This issue was discovered by Anthony Perard of Citrix.
 
-RESOLUTION
-==========
+*## History of this public disclosure*
 
-Applying the appropriate attached patch resolves this issue.
+2018-03-19: Initial vulnerability report published
 
-xsa258.patch           xen-unstable, Xen 4.10.x, Xen 4.9.x
-xsa258-4.8.patch       Xen 4.8.x, Xen 4.7.x
-xsa258-4.6.patch       Xen 4.6.x
-
-$ sha256sum xsa258*
-2c35a77eeca5579b5c32517c5ba511c836fa70f8b824ca8883fc6e1a7e608405  xsa258.meta
-7e8014deae4fa19464fe6570d0719f8f0d7730dd153d58b2fa38b0cd5ed2e459  xsa258.patch
-2c58060a42dafbf65563941dd8c737732124b49eb47007cc60f647553227f557  xsa258-4.6.patch
-ebba2f1f084249cd1e1c2f59e338412161884c31c83dbba03fc1e10bf4ba57a1  xsa258-4.8.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or the "wrap" mitigation described above
-(or others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-However, deploying the "only allow guests to change CDROMs at boot
-time" is NOT permitted (except where all the affected systems and VMs
-are administered and used only by organisations which are members of
-the Xen Project Security Issues Predisclosure List).  Specifically,
-deployment on public cloud systems is NOT permitted.  This is because
-it may give attackers a hint of where to look for the vulnerability.
-Deployment of this mitigation is permitted only AFTER the embargo
-ends.
-
-Additionally, distribution of updated software is prohibited (except
-to other members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJa4G55AAoJEIP+FMlX6CvZHjYIAJEtdHT5yPyQuSjh8ATOYN/s
-DrpUSw65EvvgbuGJTcmWZMc335AvyoMDtYVtk+Ouy5dMlfuUXcwjimoLWC6FfEDg
-aJ19puvjVaA8JcRzimlWQjru8Eqyso1+uNjuvsv1RCSkhN6qGBGCx6xlyWJL0tGk
-H/C9HPT7EAKw0bfyFJLOkl7PEohMxXSvGa9oiOZfEJnyr91AuvehTrQWM2Dwf2sz
-sXp2drOlWQphwE3o/D+qDv5LOkyJY1NaKvGtTem3TmNT/YImMCWLZ3bS76GDE0io
-qsMPHwndwMKDM7ST9bYcKy1Oq2f7DXHBcLVUtn1Q3DhPeSqBmxAfBuESveUIOl4=
-=nyQb
------END PGP SIGNATURE-----
-
-Download attachment "xsa258.meta" of type "application/octet-stream" (1546 bytes)
-
-Download attachment "xsa258.patch" of type "application/octet-stream" (4258 bytes)
-
-Download attachment "xsa258-4.6.patch" of type "application/octet-stream" (4886 bytes)
-
-Download attachment "xsa258-4.8.patch" of type "application/octet-stream" (4162 bytes)
