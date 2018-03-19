@@ -1,23 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/13/2
-Message-ID: <7554309d-a8e5-d9ac-7882-d10b09a93650@gentoo.org>
-Date: Fri, 13 Apr 2018 02:11:25 +0200
-From: Kristian Fiskerstrand <k_f@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: Updated distros statistics
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/19/3
+Message-ID: <47a2120e-2b3d-4e39-4e6f-1914d57c5c7c@apache.org>
+Date: Mon, 19 Mar 2018 12:49:36 +0100
+From: Francesco Chicchiriccò <ilgrosso@...che.org>
+To: "user@...cope.apache.org" <user@...cope.apache.org>, dev@...cope.apache.org, "security@...che.org" <security@...che.org>, oss-security@...ts.openwall.com
+Subject: [SECURITY] CVE-2018-1322: Information disclosure via FIQL and ORDER BY sorting
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+CVE-2018-1322: Information disclosure via FIQL and ORDER BY sorting
 
-Just a heads up that I updated the distros ML statistics at
-http://oss-security.openwall.org/wiki/mailing-lists/distros/stats now
-for the end of March.
+Severity: Medium
+
+Vendor:
+The Apache Software Foundation
+
+Versions Affected:
+* Releases prior to 1.2.11
+* Releases prior to 2.0.8
+
+The unsupported Releases 1.0.x, 1.1.x may be also affected.
+
+Description:
+An administrator with user search entitlements can recover sensitive
+security values using the fiql and orderby parameters.
+
+Solution:
+Syncope 1.2.x users upgrade to 1.2.11.
+Syncope 2.0.x users upgrade to 2.0.8.
+
+Mitigation:
+Do not assign user search entitlements to any administrator.
+
+Credit:
+This issue was discovered by ﻿Che-Chun Kuo.
+
+References:
+[1] http://syncope.apache.org/security.html
 
 -- 
-Kristian Fiskerstrand
-OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
-fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
+Francesco Chicchiriccò
 
+Tirasa - Open Source Excellence
+http://www.tirasa.net/
 
+Member at The Apache Software Foundation
+Syncope, Cocoon, Olingo, CXF, OpenJPA, PonyMail
+http://home.apache.org/~ilgrosso/
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
