@@ -1,44 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/19/2
-Message-ID: <CAK0qHnrpBcaDc65bjdX1jEqr6L9a+OWcouC9P6JwEY1vh9gbhQ@mail.gmail.com>
-Date: Thu, 19 Jul 2018 10:14:16 -0700
-From: Denis Magda <dmagda@...che.org>
-To: announce@...che.org, security@...ite.apache.org,  Apache Security Team <security@...che.org>, Man Yue Mo <mmo@...mle.com>, oss-security@...ts.openwall.com
-Cc: user@...ite.apache.org, dev <dev@...ite.apache.org>
-Subject: [CVE-2018-8018] Possible Execution of Arbitrary Code via Apache Ignite GridClientJdkMarshaller
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/20/1
+Message-Id: <F7427CA5-7D24-4B79-B881-19AAE8FF6305@wonko.com>
+Date: Mon, 19 Mar 2018 19:50:42 -0700
+From: Ryan Grove <ryan@...ko.com>
+To: oss-security@...ts.openwall.com
+Subject: Sanitize <= 4.6.2 HTML injection and XSS
 Content-Type: text/plain; charset=utf-8
 
-Severity: Important
+Sanitize is a Ruby library that removes unacceptable HTML and CSS from a string based on a whitelist. Versions 4.6.2 and below contain an HTML injection vulnerability that allows XSS.
 
-Vendor: The Apache Software Foundation
+Details are included below, and can also be found at:
 
-Versions Affected: Apache Ignite 2.5 and earlier
+https://github.com/rgrove/sanitize/issues/176 
 
-Impact:
-An attacker can execute arbitrary code on Ignite nodes via
-GridClientJdkMarshaller deserialization endpoint in the case when Ignite
-classpath contains arbitrary vulnerable classes.
+====
 
-Description:
-Apache Ignite serialization mechanism does not have a list of classes
-allowed for serialization/deserialization, which makes it possible to run
-arbitrary code when 3-rd party vulnerable classes are present in Ignite
-classpath. The vulnerability can be exploited if the one sends a specially
-prepared form of a serialized object to GridClientJdkMarshaller
-deserialization endpoint.
+# Sanitize XSS vulnerability
 
-Mitigation:
-•    All Ignite versions: make sure there are no vulnerable classes among
-your custom code used in Apache Ignite.
-•    Ignite 2.5 or earlier users: upgrade to Ignite 2.6 and use
-IGNITE_MARSHALLER_WHITELIST and/or IGNITE_MARSHALLER_BLACKLIST system
-properties to define classes allowed for deserialization. Refer to this
-documentation for more details:
-https://apacheignite.readme.io/docs/securing-data-deserialization
+This is a public disclosure of an HTML injection vulnerability in Sanitize that could allow XSS. I’d like to thank the Shopify Application Security Team for responsibly reporting this vulnerability.
 
-Credit:
-* The vulnerability was discovered by Man Yue Mo of lgtm.com.
+## Description
 
-References:
-* http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-8018
+A specially crafted HTML fragment can cause Sanitize to allow non-whitelisted attributes to be used on a whitelisted HTML element.
+
+## Affected Versions
+
+Sanitize < 4.6.3, but only in combination with libxml2 >= 2.9.2
+
+## Mitigation
+
+Upgrade to Sanitize 4.6.3.
+
+## History of this vulnerability
+
+- 2018-03-19: Reported by Shopify Application Security Team via email
+- 2018-03-19: Sanitize 4.6.3 released with a fix
+- 2018-03-19: Initial vulnerability report published
+
 
