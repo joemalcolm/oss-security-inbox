@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1149" "Tuesday" "8" "September" "2015" "12:55:15" "+0200" "Florian Weimer" "fweimer@redhat.com" "<55EEBE93.3030206@redhat.com>" "28" "Re: [oss-security] CVE Request: libgcrypt hardening for RSA-CRT leak" nil nil nil "9" "2015090810:55:15" "[oss-security] CVE Request: libgcrypt hardening for RSA-CRT leak" (number mark "        fweimer@redh Sep  8   28/1149  " thread-indent "\"Re: [oss-security] CVE Request: libgcrypt hardening for RSA-CRT leak\"\n") "<20150908100534.GC18322@suse.de>" ("<20150908100534.GC18322@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5721" "Tuesday" "20" "March" "2018" "22:34:25" "+0100" "Guido Vranken" "guidovranken@gmail.com" "<CAO5O-E+iB2dy2BfQrLmCsNjXnuXjxAToPSETBfrJpe38TF7Dag@mail.gmail.com>" "124" "[oss-security] OpenSSL: bug in modular exponentiation" "^Date:" nil nil "3" "2018032021:34:25" "[oss-security] OpenSSL: bug in modular exponentiation" (number mark "        guidovranken Mar 20  124/5721  " thread-indent "\"[oss-security] OpenSSL: bug in modular exponentiation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 23556 invoked by uid 550); 8 Sep 2015 10:55:30 -0000
+Received: (qmail 11941 invoked by uid 550); 20 Mar 2018 21:34:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,47 +11,165 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 22501 invoked from network); 8 Sep 2015 10:55:29 -0000
-References: <20150908100534.GC18322@suse.de>
-Message-ID: <55EEBE93.3030206@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.1.0
+Received: (qmail 11899 invoked from network); 20 Mar 2018 21:34:38 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=WcfHtDQkRqGt7Ig4eTyq0VLQtYO5tW5GV1dgibw4+nA=;
+        b=UdBMOuU/dqvT1BMRz+dmcPk+IUDQ+7SXhuJcW/Io6iZuXd2kMuZH9Xd7apPknHreUd
+         pxVWf5OQL7buvbm3yz+BX/qWZV/fMy3hJW+wqoW25YZcshRon25FCeJEtAKsSxMnA82d
+         lvL0eDRWWQZLK/olWUo4O9QvUvgD0pzWg+rOXCTGPU2kgvNDMkMYLuKIipetW2+jHCa1
+         rVDgflc2G1vhe12fUEy7FUXeb5F8foYODQZLOWgKi/EqmeVoClWhYsxVq7jpwU7x14jJ
+         18MOJsnvnhxHnzuQTSDZAwQqpDuJC6JrhTVY4MjugOK5FTSkx3Npmmgkt8sTcXf48WFt
+         H/gQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=WcfHtDQkRqGt7Ig4eTyq0VLQtYO5tW5GV1dgibw4+nA=;
+        b=LONtTiqPXzchb50HPtw65mCB2luv+vPrujuNQH5f49nPPYG7Xl0e6FDpiWRXiQInFm
+         kOY5LGH9TtxUkAI0Ii1J534xCawrENCJO9tUxlN7gWqwe3C+XUCLz/erTh+saVSCQ7wr
+         X19lHB0t2Pcto+jtQWTMSrnLiMQuyhh7WwnZsdyYN2yYTjj4qjpOey2zqOSsfLN6cc6X
+         pgm/4Jn5s3pGwDkage6niyq6OCtfmz2snrmBzjwpCT/+oE5ZW7pJYNVUcNqi0kbEeAYm
+         yA0DTKMA4XFck7KGgsRGl2hHXCxGysaajKqPPeg3meDyKxK0SIal4nX1/1ukVLGry5Ry
+         eoQg==
+X-Gm-Message-State: AElRT7FSjkZjfPBvJImppCvNCRCj7Ac7grR7lDhhZrXyAqEX95lnQ0ZX
+	F76csrZpoOBkkAcMt1UPKPQ3B66lD3yX4xSMx/E2dkKy
+X-Google-Smtp-Source: AG47ELvrAyj2aWjxTFI7VrokAdYd5+oLL8GgW6U2KHApbIZJ7BGf73rTxboS5+AreHeiTx5KHH2Q3kC1viOb6Jt03gs=
+X-Received: by 10.167.128.143 with SMTP id v15mr14998570pff.36.1521581666159;
+ Tue, 20 Mar 2018 14:34:26 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20150908100534.GC18322@suse.de>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
-Date: Tue, 8 Sep 2015 12:55:15 +0200
-From: Florian Weimer <fweimer@redhat.com>
+Message-ID: <CAO5O-E+iB2dy2BfQrLmCsNjXnuXjxAToPSETBfrJpe38TF7Dag@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 20 Mar 2018 22:34:25 +0100
+From: Guido Vranken <guidovranken@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE Request: libgcrypt hardening for RSA-CRT leak
-To: oss-security@lists.openwall.com, cve-assign@mitre.org
+Subject: [oss-security] OpenSSL: bug in modular exponentiation
+To: oss-security@lists.openwall.com
 
-On 09/08/2015 12:05 PM, Marcus Meissner wrote:
-> Hi,
-> 
-> Redhat has published a paper on RSA-CRT keyleakage.
-> 
-> https://securityblog.redhat.com/2015/09/02/factoring-rsa-keys-with-tls-perfect-forward-secrecy/
-> 
-> There was a CVE assigned for this issue CVE-2015-5738, but the software scope of this assigned is not clear.
-> 
-> libgcrypt has published a hardening fix for the same issue.
-> https://lists.gnupg.org/pipermail/gnupg-announce/2015q3/000370.html
-> http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libgcrypt.git;a=commit;h=b85c8d6645039fc9d403791750510e439731d479
-> 
-> Should it get a new CVE?
+My bignum fuzzer (https://github.com/guidovranken/bignum-fuzzer)
+running on Google's oss-fuzz recently found a bug in affecting
+constant-time modular exponentiation.
+OpenSSL does not treat this as a security vulnerability. This is a
+heads-up to developers who rely on the affected code so they can
+review the impact on their applications on a case-by-case basis.
 
-For context, Oracle has assigned CVE-2015-0478 for the missing hardening
-in the default JCE implementation:
+The bug is located in a function written in assembly language and the
+bug can only manifest on specific processors, most likely the same as
+CVE-2017-3738 (see https://www.openssl.org/news/vulnerabilities.html):
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1210355
-http://www.oracle.com/technetwork/topics/security/cpuapr2015-2365600.html#AppendixJAVA
-https://access.redhat.com/security/cve/CVE-2015-0478
+"This only affects processors that support the AVX2 but not ADX
+extensions like Intel Haswell (4th generation)"
 
-This case is similar to libgcrypt, I believe: no key leaks have been
-attributed to this implementation, the change is purely hardening in
-this sense (and I would not have assigned a CVE ID to this).
+As far as I know BoringSSL and LibreSSL are not affected.
 
--- 
-Florian Weimer / Red Hat Product Security
+You can use the PoC below the line to see if your system is affected.
+
+A system that is affected:
+
+$ cat /proc/cpuinfo | grep "avx2\|adx" -o | sort -u
+avx2
+$ ./a.out
+result is 0
+result is 17976931348623159077293051907890247336179769789423065727343008115=
+773267580550096313270847732240753602112011387987139335765878976881441662249=
+284743063947412437776789342486548527630221960124609411945308295208500576883=
+815068234246288147391311054082723716335051068458629823994724593847971630483=
+5356083471597445343
+
+A system that is not affected:
+
+$ cat /proc/cpuinfo | grep "avx2\|adx" -o | sort -u
+adx
+avx2
+$ ./a.out
+result is 0
+result is 0
+
+-------------------
+
+#include <openssl/bn.h>
+
+static void do_mod_exp(int consttime)
+{
+    BIGNUM *res, *A =3D NULL, *B =3D NULL, *C =3D NULL;
+    BN_CTX *ctx =3D BN_CTX_new();
+    char* bn_str =3D NULL;
+
+    res =3D BN_new();
+    BN_dec2bn(&A,
+"00000000000000000000000000000000000000000000000000000000000000000000000000=
+000000000000000000000000000000000000000000000000000000000000000000000000000=
+000000000000000000000000000000000000000000000000000000000000000000000000000=
+000000000000000000000000000000000000000000000000000000000000000000000000000=
+000000000000000000000000000000000000000000000000000000000000000000000000000=
+000000000000000000000000000000000000000000000000000000000000000000000000000=
+000000000000000000000000000000000000000000000000000000000000000000000000000=
+000000000000000000000000000000000000000000000000000000000000000000000000000=
+000000000000000000000000000000000000000000000000000000000000000000000000000=
+000000000000000000000000000000000000000000000000000000000000000000000000000=
+000000000000000000000000000000000000000000000000000000000000000000000000000=
+000000000000000000000000000000000000000000000000000000000000000000017976931=
+348623159077293051907890247336179769789423065727343008115773267580550096313=
+270847732240753602112011387987139335765878976881441662249284743063947412437=
+776789342486548527630221960124609411945308295208500576883815068234246288147=
+391311054082723716335051068458629823994724593847971630483535608347159744534=
+3");
+    BN_dec2bn(&B,
+"00000000000000000000000000000000000000000000000000000000000000000000000000=
+000000000000000000000000000000000000000000000000000000000000000000000000000=
+000000000000000000000000000000000000000000000000000000000000000000000000000=
+000000000000000000000000000000000000000000000000000000000000000000000000000=
+000000000000000000000000000000000000000000000000000000000000000000000000000=
+000000000000000000000000000000000000000000000000000000000000000000000000000=
+000000000000000000000000000000000000000000000000000000000000000000000000000=
+000000000000000000000000000000000000000000000000000000000000000000000000000=
+000000000000000000000000000000000000000000000000000000000000000000000000000=
+000000000000000000000000000000000000000000000000000000000000000000000000000=
+000000000000000000000000000000000000000000000000000000000000000000000000000=
+000000000000000000000000000000000000000000000000000000000000000000002222222=
+222222222222222222222222222222222222222222222222222222222222222222222222222=
+222222222222222222222222222222222222222222222222222222222222222222222222222=
+222222222222222222222222222222222222222222222222222222222222222222222222222=
+222222222222222222222222222222222222222222222222222222222222222222222222222=
+2");
+    BN_dec2bn(&C,
+"00000000000000000000000000000000000000000000000000000000000000000000000000=
+000000000000000000000000000000000000000000000000000000000000000000000000000=
+000000000000000000000000000000000000000000000000000000000000000000000000000=
+000000000000000000000000000000000000000000000000000000000000000000000000000=
+000000000000000000000000000000000000000000000000000000000000000000000000000=
+000000000000000000000000000000000000000000000000000000000000000000000000000=
+000000000000000000000000000000000000000000000000000000000000000000000000000=
+000000000000000000000000000000000000000000000000000000000000000000000000000=
+000000000000000000000000000000000000000000000000000000000000000000000000000=
+000000000000000000000000000000000000000000000000000000000000000000000000000=
+000000000000000000000000000000000000000000000000000000000000000000000000000=
+000000000000000000000000000000000000000000000000000000000000000000017976931=
+348623159077293051907890247336179769789423065727343008115773267580550096313=
+270847732240753602112011387987139335765878976881441662249284743063947412437=
+776789342486548527630221960124609411945308295208500576883815068234246288147=
+391311054082723716335051068458629823994724593847971630483535608347159744534=
+3");
+
+    if ( consttime ) {
+        BN_set_flags(A, BN_FLG_CONSTTIME);
+    }
+    BN_mod_exp(res, A, B, C, ctx);
+    bn_str =3D BN_bn2dec(res);
+    printf("result is %s\n", bn_str);
+    OPENSSL_free(bn_str);
+    BN_CTX_free(ctx);
+    BN_free(A);
+    BN_free(B);
+    BN_free(C);
+}
+
+int main(void)
+{
+    do_mod_exp(0);
+    do_mod_exp(1);
+    return 0;
+}
