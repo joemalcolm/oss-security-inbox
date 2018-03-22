@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["915" "Wednesday" "24" "April" "2019" "17:04:55" "+1000" "Noble Paul" "noble@apache.org" "<CABVqxwCYodUFPHcR407OMiOSThCXyd3d+6xZz1ODGcyRTsznsQ@mail.gmail.com>" "21" "[oss-security] CVE-2018-11802: Apache Solr authorization bug vulnerability disclosure" nil nil nil "4" "2019042407:04:55" "[oss-security] CVE-2018-11802: Apache Solr authorization bug vulnerability disclosure" (number mark "U       noble@apache Apr 24   21/915   " thread-indent "\"[oss-security] CVE-2018-11802: Apache Solr authorization bug vulnerability disclosure\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2018-11802: Apache Solr authorization bug vulnerability disclosure" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["909" "Thursday" "22" "March" "2018" "13:09:29" "+0100" "zugtprgfwprz@spornkuller.de" "zugtprgfwprz@spornkuller.de" "<ae42a693-c165-33c6-8942-18f8911bcb24@johannes-bauer.com>" "23" "Re: [oss-security] OpenSSL: bug in modular exponentiation" "^Date:" nil nil "3" "2018032212:09:29" "[oss-security] OpenSSL: bug in modular exponentiation" (number mark "        zugtprgfwprz Mar 22   23/909   " thread-indent "\"Re: [oss-security] OpenSSL: bug in modular exponentiation\"\n") "<CAO5O-E+iB2dy2BfQrLmCsNjXnuXjxAToPSETBfrJpe38TF7Dag@mail.gmail.com>" ("<CAO5O-E+iB2dy2BfQrLmCsNjXnuXjxAToPSETBfrJpe38TF7Dag@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 19862 invoked by uid 550); 24 Apr 2019 10:04:27 -0000
+Received: (qmail 25840 invoked by uid 550); 22 Mar 2018 12:17:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,50 +11,42 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30497 invoked from network); 24 Apr 2019 07:05:19 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=M+7OGQFMNfUkaVxKiYifmg0xQ8tfCrFJx1cNggzGyhk=;
-        b=Up4Nf6Ou44ZxdjPSDKSWc6qTvoBgr9sr9V7144+SFQZTeWbCFbE1qzpZYNcSmZMhyH
-         Job4iFgvh43kTL/VruoieJuPSwqmmQlsr3h87yLhm9/hro6hcMv+xQmy30s6eTDT0AKN
-         r546A/R9VRDIhtGXg6ISF877BOOP2BSUXRMT0Jz5fZicNN15URozIIPk9ikBz9RbAxv5
-         0y9NNi0ViFuYjaUnjbOkbc5IuTVuGlSMocogtrSnLs6uGOXdcisBCzsLojUOavogagDM
-         4Zlfh91f+bEAO+C2KU0j+j/Dh0IXKS/LhZKaaUK6oQ/Nuhmr5ZoTu4zyfVmEWPQPe2W8
-         +5Mw==
-X-Gm-Message-State: APjAAAWNFhU2t6J1yJ2DQuNOA6zZoE7fAzX6P5L9jxLF/D1jMfmMGUXE
-	PqNd6PAJd0Lix6XZgmouXMy0yc8XP2eOji0ZfxI=
-X-Google-Smtp-Source: APXvYqxQja8RC2HzVwiYj4RrPh6w1TUDSCujsbPX6cGLEclkFQAhQcoYc8FqknnjrLzpsJ8IUJlHt/FEhh0/q06PgWM=
-X-Received: by 2002:a0c:d2f2:: with SMTP id x47mr24158081qvh.90.1556089507057;
- Wed, 24 Apr 2019 00:05:07 -0700 (PDT)
+Received: (qmail 15998 invoked from network); 22 Mar 2018 12:09:41 -0000
+References: <CAO5O-E+iB2dy2BfQrLmCsNjXnuXjxAToPSETBfrJpe38TF7Dag@mail.gmail.com>
+Message-ID: <ae42a693-c165-33c6-8942-18f8911bcb24@johannes-bauer.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
-From: Noble Paul <noble@apache.org>
-Date: Wed, 24 Apr 2019 17:04:55 +1000
-Message-ID: <CABVqxwCYodUFPHcR407OMiOSThCXyd3d+6xZz1ODGcyRTsznsQ@mail.gmail.com>
-To: Lucene Dev <dev@lucene.apache.org>, java-user@lucene.apache.org, security@apache.org, 
-	oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] CVE-2018-11802: Apache Solr authorization bug vulnerability disclosure
+In-Reply-To: <CAO5O-E+iB2dy2BfQrLmCsNjXnuXjxAToPSETBfrJpe38TF7Dag@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: de-LU
+Content-Transfer-Encoding: 7bit
+Date: Thu, 22 Mar 2018 13:09:29 +0100
+From: zugtprgfwprz@spornkuller.de
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] OpenSSL: bug in modular exponentiation
+To: oss-security@lists.openwall.com
 
-CVE-2018-11802: Apache Solr authorization bug disclosure
-Severity: Important
-Vendor: The Apache Software Foundation
-Versions Affected: Apache Solr 7.6 or less
+Hi Guido,
 
-Description:
-jira  ticket : https://issues.apache.org/jira/browse/SOLR-12514
-In apache Solr the cluster can be partitioned into multiple
-collections and only a subset of nodes actually host any given
-collection. However, if a node receives a request for a collection it
-does not host, it proxies the request to a relevant node and serves
-the request. Solr bypasses all authorization settings for such
-requests. This affects all Solr versions that uses the default
-authorization mechanism of Solr (RuleBasedAuthorizationPlugin)
+On 20.03.2018 22:34, Guido Vranken wrote:
+> My bignum fuzzer (https://github.com/guidovranken/bignum-fuzzer)
+> running on Google's oss-fuzz recently found a bug in affecting
+> constant-time modular exponentiation.
 
-Mitigation:
-A fix is provided in Solr 7.7 version and upwards. If you use Solr's
-authorization mechanism, please upgrade to a version newer than Solr
-7.7.
+Interesting -- could you confirm that the effect of this bug is a
+miscalculation? Or is it breaking the constant-time assertion?
 
-Credit: This issue was discovered by Mahesh Kumar Vasanthu Somashekar.
+> OpenSSL does not treat this as a security vulnerability. This is a
+> heads-up to developers who rely on the affected code so they can
+> review the impact on their applications on a case-by-case basis.
+
+Do you have a pointer as to where this was discussed? Do you consider it
+a security vulnerability? Can you give advice to developers of how to
+mitigate this kind of issue?
+
+Is it regarded a WONTFIX by OpenSSL or is it going to be fixed (just not
+treated as security-criticial)? If so, do you know the fix version?
+
+Cheers and best regards,
+Johannes
