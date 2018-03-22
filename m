@@ -1,126 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/04/1
-Message-ID: <1340116763.28074569.1536049871778.JavaMail.zimbra@redhat.com>
-Date: Tue, 4 Sep 2018 04:31:11 -0400 (EDT)
-From: Siddharth Sharma <siddharth@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: glusterfs: multiple flaws
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/22/4
+Message-ID: <33d0cf4f-30f8-4690-b7ad-508c1c1bd037@Spark>
+Date: Thu, 22 Mar 2018 15:10:58 -0400
+From: Rafael Mendonça França <rafaelmfranca@...il.com>
+To: rubyonrails-security@...glegroups.com,  ruby-security-ann@...glegroups.com, oss-security@...ts.openwall.com
+Subject: [CVE-2018-3741] XSS vulnerability in rails-html-sanitizer
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Possible XSS vulnerability in rails-html-sanitizer
 
-We were informed about several security flaws affecting glusterfs.
-All of the following bugs were reported by Michael Hanselmann (hansmi.ch).
+There is a possible XSS vulnerability in rails-html-sanitizer. This
+vulnerability has been assigned the CVE identifier CVE-2018-3741.
 
-CVE count: 12
+Versions Affected:  1.0.3 or older.
+Not affected:       None.
+Fixed Versions:     1.0.4
 
+Impact
+------
+There is a possible XSS vulnerability in rails-html-sanitizer.  The gem allows non-whitelisted
+attributes to be present in sanitized output when input with specially-crafted HTML fragments,
+and these attributes can lead to an XSS attack on target applications.
 
-CVE-2018-10904
-==============
+This issue is similar to CVE-2018-8048 in Loofah.
 
-It was found that glusterfs server does not properly sanitize file paths in the 
-"trusted.io-stats-dump" extended attribute which is used by the 
-"debug/io-stats" translator. An attacker can use this flaw to create files and 
-execute arbitrary code. To exploit this, the attacker would require sufficient 
-access to modify the extended attributes of files on a gluster volume.
+All users running an affected release should either upgrade or use one of the
+workarounds immediately.
 
+Releases
+--------
+The FIXED releases are available at the normal locations.
 
-CVE-2018-10907
-==============
+Workarounds
+-----------
+There are no feasible workarounds for this issue.
 
-It was found that glusterfs server is vulnerable to mulitple stack based buffer 
-overflows due to functions in server-rpc-fopc.c allocating fixed size buffers 
-using 'alloca(3)'. An authenticated attacker could exploit this by mounting a 
-gluster volume and sending a string longer that the fixed buffer size to cause 
-crash or potential code execution.
+Patches
+-------
+To aid users who aren't able to upgrade immediately we have provided patches for
+the two supported release series. They are in git-am format and consist of a
+single changeset.
 
+* 1-0-sanitize_attributes.patch - Patch for 1.0 series
 
-CVE-2018-10911
-==============
+Credits
+-------
+Thanks to Kaarlo Haikonen for reporting this issue and Mike Dalessio for providing the original fix in the Loofah gem.
 
-A flaw was found in dict.c:dict_unserialize function of glusterfs, 
-dic_unserialize function does not handle negative key length values. An attacker 
-could use this flaw to read memory from other locations into the stored dict 
-value.
+Rafael França
 
+Content of type "text/html" skipped
 
-CVE-2018-10913
-==============
-An information disclosure vulnerability was discovered in glusterfs server. An 
-attacker could issue a xattr request via glusterfs FUSE to determine the 
-existence of any file.
-
-
-CVE-2018-10914
-==============
-
-It was found that an attacker could issue a xattr request via glusterfs FUSE to 
-cause gluster brick process to crash which will result in a remote denial of 
-service. If gluster multiplexing is enabled this will result in a crash of 
-multiple bricks and gluster volumes.
-
-
-CVE-2018-10923
-==============
-
-It was found that the "mknod" call derived from mknod(2) can create files 
-pointing to devices on a glusterfs server node. An authenticated attacker could 
-use this to create an arbitrary device and read data from any device attached 
-to the glusterfs server node.
-
-
-CVE-2018-10924
-==============
-
-It was discovered that fsync(2) system call in glusterfs client code leaks 
-memory. An authenticated attacker could use this flaw to launch a denial of 
-service attack by making gluster clients consume memory of the host machine.
-
-
-CVE-2018-10926
-==============
-
-A flaw was found in RPC request using gfs3_mknod_req supported by glusterfs 
-server. An authenticated attacker could use this flaw to write files to an 
-arbitrary location via path traversal and execute arbitrary code on a glusterfs 
-server node.
-
-
-CVE-2018-10927
-==============
-
-A flaw was found in RPC request using gfs3_lookup_req in glusterfs server. An 
-authenticated attacker could use this flaw to leak information and execute 
-remote denial of service by crashing gluster brick process.
-
-
-CVE-2018-10928
-==============
-
-A flaw was found in RPC request using gfs3_symlink_req in glusterfs server 
-which allows symlink destinations to point to file paths outside of the gluster 
-volume. An authenticated attacker could use this flaw to create arbitrary 
-symlinks pointing anywhere on the server and execute arbitrary code on 
-glusterfs server nodes.
-
-
-CVE-2018-10929
-==============
-
-A flaw was found in RPC request using gfs2_create_req in glusterfs server. An 
-authenticated attacker could use this flaw to create arbitrary files and 
-execute arbitrary code on glusterfs server nodes.
-
-
-CVE-2018-10930
-==============
-
-A flaw was found in RPC request using gfs3_rename_req in glusterfs server. An 
-authenticated attacker could use this flaw to write to a destination outside 
-the gluster volume.
-
-
-Respectfully,
------------------------------------------------------------------
-Siddharth Sharma / Red Hat Product Security / Key ID : 0xD9F6489A      
-Fingerprint  :  6F04 C684 A49C E4CE 8148 E841 CD6F 8E55 D9F6 489A
+Download attachment "1-0-santize_attributes.patch" of type "application/octet-stream" (5469 bytes)
