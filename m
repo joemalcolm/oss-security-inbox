@@ -1,35 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/28/10
-Message-ID: <20180828131800.GA14585@kroah.com>
-Date: Tue, 28 Aug 2018 15:18:00 +0200
-From: Greg KH <greg@...ah.com>
-To: Florian Weimer <fweimer@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: CVE-2018-14619 kernel: crash (possible privesc) in kernel crypto subsystem.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/22/2
+Message-ID: <CAO5O-EJ_t5m92qzFtjBXffhc3spX-VtiBZJsKpHn78mnxORu9Q@mail.gmail.com>
+Date: Thu, 22 Mar 2018 14:12:25 +0100
+From: Guido Vranken <guidovranken@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: OpenSSL: bug in modular exponentiation
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Aug 28, 2018 at 03:08:18PM +0200, Florian Weimer wrote:
-> On 08/28/2018 02:51 PM, Greg KH wrote:
-> > On Tue, Aug 28, 2018 at 04:49:14PM +1000, Wade Mealing wrote:
-> > > Gday,
-> > > 
-> > > Syzkaller/syzbot found a use-after-free bug in the cryptographic
-> > > subsystem of the Linux kernel [1], that can be used to panic the
-> > > system and possibly escalate privileges.
-> > 
-> > Are we seriously now going to be assigning cves to everything that
-> > syzbot finds?  If so, great, this is going to be fun!
-> > 
-> > If not, why this specific patch?  What makes it specia from the hundreds
-> > of other syzbot finds that have been fixed (and not fixed yet)?
-> 
-> > If RHEL is not exposed, why does Red Hat care about this?
-> 
-> We have shipped supported kernels with this vulnerability.
-> 
-> But the real reason why I want this fixed is that the Python 3 test suite
-> triggers this bug and panics some of our RPM builders. 8-/
+> Interesting -- could you confirm that the effect of this bug is a
+> miscalculation? Or is it breaking the constant-time assertion?
 
-Heh, ok, fair enough, thanks for being honest :)
+It is a miscalculation. Note that in the PoC, the 'A' and 'C' bignums
+are the same. So modular exponentiation A ** B MOD C is the same as A
+** B MOD A in this case, and this should always result in zero,
+because A ** B by definition results in a multiple of A, and A MOD A =
+0.
 
-greg k-h
+I don't know if this bug makes any difference to execution time.
+
+> Do you have a pointer as to where this was discussed?
+
+It was found with Google oss-fuzz, which sends bug reports
+automatically to me and the OpenSSL team. The OpenSSL team later
+shared their thoughts with me via e-mail.
+
+> Do you consider it a security vulnerability?
+
+The OpenSSL team tends to assign severity according to the extent
+their SSL library is impacted. But OpenSSL is in very widespread use
+and the use of its bignum library is probably not even limited to
+cryptographic applications alone. I don't consider it a security
+vulnerability per se as I don't know of any approach towards
+exploitation, but as with every API whose operation is not concomitant
+with the expected behavior, it has the potential to give rise to
+corner cases in specific use cases.
+
+Various cryptographic functions in OpenSSL like Diffie-Hellman use
+constant-time modular exponentiation, and with the recent bug in the
+same assembly code they said the following about this:
+
+"No EC algorithms are affected. Analysis suggests that attacks against
+RSA and DSA as a result of this defect would be very difficult to
+perform and are not believed likely. Attacks against DH1024 are
+considered just feasible, because most of the work necessary to deduce
+information about a private key may be performed offline. The amount
+of resources required for such an attack would be significant.
+However, for an attack on TLS to be meaningful, the server would have
+to share the DH1024 private key among multiple clients, which is no
+longer an option since CVE-2016-0701"
+
+But this particular bug is not harmful, according to the team.
+
+> Can you give advice to developers of how to mitigate this kind of issue?
+
+Either don't use constant-time modular exponentiation or compile with
+assembly disabled (./config no-asm). There's probably also a way to
+specifically disable the offending assembly code, but I don't know how
+to do that off-hand.
+
+> Is it regarded a WONTFIX by OpenSSL or is it going to be fixed (just not
+> treated as security-criticial)? If so, do you know the fix version?
+
+They've told me that they want to fix it. But I don't know the ETA.
+
+Guido
