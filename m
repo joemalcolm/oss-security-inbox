@@ -1,71 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/01/1
-Message-ID: <397dc1a9-c8dc-7f26-d305-73db32044fd9@apache.org>
-Date: Mon, 1 Jan 2018 11:35:46 +0100
-From: Andrea Pescetti <pescetti@...che.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Apache OpenOffice 4.1.4 - fixes CVE-2017-3157 CVE-2017-9806 CVE-2017-12607 CVE-2017-12608
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/22/1
+Message-ID: <ae42a693-c165-33c6-8942-18f8911bcb24@johannes-bauer.com>
+Date: Thu, 22 Mar 2018 13:09:29 +0100
+From: zugtprgfwprz@...rnkuller.de
+To: oss-security@...ts.openwall.com
+Subject: Re: OpenSSL: bug in modular exponentiation
 Content-Type: text/plain; charset=utf-8
 
-(I'm not subscribed to the list, so please CC me when replying, thanks)
+Hi Guido,
 
-Apache OpenOffice 4.1.5 was released on 30 Dec 2017.
+On 20.03.2018 22:34, Guido Vranken wrote:
+> My bignum fuzzer (https://github.com/guidovranken/bignum-fuzzer)
+> running on Google's oss-fuzz recently found a bug in affecting
+> constant-time modular exponentiation.
 
-- No security vulnerabilities fixed in this release; listed here just to 
-avoid confusion.
+Interesting -- could you confirm that the effect of this bug is a
+miscalculation? Or is it breaking the constant-time assertion?
 
-Apache OpenOffice 4.1.4 was released on 19 Oct 2017.
+> OpenSSL does not treat this as a security vulnerability. This is a
+> heads-up to developers who rely on the affected code so they can
+> review the impact on their applications on a case-by-case basis.
 
-- This release contained 4 security fixes that had not been reported to 
-this list at release time; they are listed below.
+Do you have a pointer as to where this was discussed? Do you consider it
+a security vulnerability? Can you give advice to developers of how to
+mitigate this kind of issue?
 
+Is it regarded a WONTFIX by OpenSSL or is it going to be fixed (just not
+treated as security-criticial)? If so, do you know the fix version?
 
-## 1. CVE-2017-3157: Arbitrary file disclosure in Calc and Writer
-
-By exploiting the way OpenOffice renders embedded objects, an attacker 
-could craft a document that allows reading in a file from the user's 
-filesystem. Information could be retrieved by the attacker by, e.g., 
-using hidden sections to store the information, tricking the user into 
-saving the document and convincing the user to send the document back to 
-the attacker.
-
-The vulnerability is mitigated by the need for the attacker to know the 
-precise file path in the target system, and the need to trick the user 
-into saving the document and sending it back.
-
-Thanks to Ben Hayak for reporting this issue.
-
-
-## 2. CVE-2017-9806: Out-of-Bounds Write in Writer's WW8Fonts Constructor
-
-A vulnerability in the OpenOffice Writer DOC file parser, and 
-specifically in the WW8Fonts Constructor, allows attackers to craft 
-malicious documents that cause denial of service (memory corruption and 
-application crash) potentially resulting in arbitrary code execution.
-
-Thanks to Marcin 'Icewall' Noga of Cisco Talos for discovering this issue.
-
-
-## 3. CVE-2017-12607: Out-of-Bounds Write in Impress' PPT Filter
-
-A vulnerability in OpenOffice's PPT file parser, and specifically in 
-PPTStyleSheet, allows attackers to craft malicious documents that cause 
-denial of service (memory corruption and application crash) potentially 
-resulting in arbitrary code execution.
-
-Thanks to Marcin 'Icewall' Noga of Cisco Talos for discovering this issue.
-
-
-## 4. CVE-2017-12608: Out-of-Bounds Write in Writer's ImportOldFormatStyles
-
-A vulnerability in OpenOffice Writer DOC file parser, and specifically 
-in ImportOldFormatStyles, allows attackers to craft malicious documents 
-that cause denial of service (memory corruption and application crash) 
-potentially resulting in arbitrary code execution.
-
-Thanks to Marcin 'Icewall' Noga of Cisco Talos for discovering this issue.
-
-
-See https://www.openoffice.org/security/bulletin.html for more information.
-
-Posted by Andrea Pescetti on behalf of the Apache OpenOffice Security Team
+Cheers and best regards,
+Johannes
