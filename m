@@ -1,29 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/19/3
-Message-ID: <nycvar.YSQ.7.76.1812191250250.14650@xnncv>
-Date: Wed, 19 Dec 2018 12:52:06 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liq3ea@....com>
-Subject: CVE-2018-20125 QEMU: pvrdma: null dereference or excessive memory allocation when creating QP/CQ
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/23/1
+Message-ID: <CANO=Ty2wT7aX4fi5TAsE0sSkN+4ysqZkdzAjUtDF4tHchK08UQ@mail.gmail.com>
+Date: Fri, 23 Mar 2018 12:44:09 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE-2018-1000140 - rsyslog librelp X.509 parsing issue
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+This was embargoed but then it got sent to the PUBLIC cve request page, so
+the cat is out of the bag as it were, so notifying oss-sec.
 
-A Null pointer dereference issue was found in QEMU's implementation of 
-VMWare's paravirtual RDMA device. It could occur while creating CQ/QP ring 
-objects in pvrdma_ring_init() routine.
 
-A guest user/process could use this flaw to crash QEMU process or allocate 
-excessive memory on host resulting in DoS.
+{"data_version":"4.0","references":{"reference_data":[{"url":"
+https://github.com/rsyslog/librelp/blob/532aa362f0f7a8d037505b0a27a1df452f9bac9e/src/tcp.c#L1205
+"},{"url":"https://lgtm.com/rules/1505913226124/"}]},"description":{"description_data":[{"lang":"eng","value":"rsyslog
+librelp version 1.2.14 and earlier contains a Buffer Overflow vulnerability
+in the checking of x509 certificates from a peer that can result in Remote
+code execution. This attack appear to be exploitable a remote attacker that
+can connect to rsyslog and trigger a stack buffer overflow by sending a
+specially crafted x509
+certificate."}]},"data_type":"CVE","affects":{"vendor":{"vendor_data":[{"product":{"product_data":[{"version":{"version_data":[{"version_value":"1.2.14
+and
+earlier"}]},"product_name":"librelp"}]},"vendor_name":"rsyslog"}]}},"CVE_data_meta":{"DATE_ASSIGNED":"3/20/2018
+10:38:48","ID":"CVE-2018-1000140","ASSIGNER":"kurt@...fried.org
+","REQUESTER":"kev@...mle.com"},"data_format":"MITRE","problemtype":{"problemtype_data":[{"description":[{"lang":"eng","value":"Buffer
+Overflow"}]}]}}
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2018-12/msg02823.html
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
-This issue was reported by Li Qiang.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
