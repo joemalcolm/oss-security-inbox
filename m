@@ -1,4 +1,9 @@
-Received: (qmail 25919 invoked by uid 550); 28 Sep 2025 00:12:58 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["431" "Friday" "23" "March" "2018" "16:10:16" "+0000" "Daniel Kahn Gillmor" "dkg@fifthhorseman.net" "<87zi2yojrr.fsf@fifthhorseman.net>" "13" "Re: [oss-security] [SECURITY] CVE-2018-1321: Remote code execution by administrators with report and template entitlements" nil nil nil "3" "2018032316:10:16" "[oss-security] [SECURITY] CVE-2018-1321: Remote code execution by administrators with report and template entitlements" (number mark "U       dkg@fifthhor Mar 23   13/431   " thread-indent "\"Re: [oss-security] [SECURITY] CVE-2018-1321: Remote code execution by administrators with report and template entitlements\"\n") "<bf269dd1-c9df-54dd-209a-7a32d03705c7@apache.org>" ("<bf269dd1-c9df-54dd-209a-7a32d03705c7@apache.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 25823 invoked by uid 550); 24 Mar 2018 02:50:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,63 +12,29 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 21869 invoked from network); 27 Sep 2025 23:57:27 -0000
-Authentication-Results: apache.org; auth=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
-	t=1759017436; bh=wBw00dGxWScqSpUAY8+yi7WfCNB2fgxxJyl3PXBVnJo=;
-	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=oUru4pRVtp8iejld/exIPukmV8LXsaGzJNysLLWlO0d2evOltFZcOG/7Qdf+KCGQB
-	 cz/mPh8o4XArjjn7QXc/2TkrcnWpqprI0hV8eiJwKtnO0kF7G7N1D34SLkLuoh2Zpc
-	 lJ1Plqe4+vMoBn4ozeTM9NFDxb2NYuV3kUPAhcQY66mL2NgPySE/gtJq1BWsWJyYlC
-	 j8pjYJxjaLFhrkXr3I0rsL1Y6qWYQcSd9nDGkI6yIrVGJP4udDyA9Tv+JPw+c1GXep
-	 XLDTOt6ZM6V4EfxFllS6NBuqx3wfhNfQDk7qr8cLbwFALEHe6s7IKlobaP7jU3OO+T
-	 Adr6cGPVJbB6w==
-Message-ID: <544cce0b-2734-47cd-9037-dc29a6ed0f73@apache.org>
-Date: Sat, 27 Sep 2025 16:57:15 -0700
+Received: (qmail 25802 invoked from network); 24 Mar 2018 02:50:39 -0000
+From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+To: Francesco =?utf-8?Q?Chicchiricc=C3=B2?= <ilgrosso@apache.org>,
+ oss-security@lists.openwall.com
+In-Reply-To: <bf269dd1-c9df-54dd-209a-7a32d03705c7@apache.org>
+References: <bf269dd1-c9df-54dd-209a-7a32d03705c7@apache.org>
+Date: Fri, 23 Mar 2018 16:10:16 +0000
+Message-ID: <87zi2yojrr.fsf@fifthhorseman.net>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: oss-security@lists.openwall.com
-References: <CAFf+5ziKPTBLFmDAffWTH+MCnOp5NHhZNM803PsemVLRuQoCaQ@mail.gmail.com>
-Content-Language: en-US
-From: Michael Jumper <mjumper@apache.org>
-In-Reply-To: <CAFf+5ziKPTBLFmDAffWTH+MCnOp5NHhZNM803PsemVLRuQoCaQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] How to do secure coding and create secure software
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Subject: Re: [oss-security] [SECURITY] CVE-2018-1321: Remote code execution by administrators with report and template entitlements
 
-On 9/27/25 1:30 AM, Amit wrote:
-> -----------------------------------------------------------------------
-> How to do secure coding and create secure software
-> -----------------------------------------------------------------------
-> 
-> I can do secure coding and no one can hack my code unless the language/OS have
-> some issues. You can challenge me on this.
-> 
-> Ultimately, all software boil down to functions/methods. If functions/methods
-> are secure then the whole software is secure.
->
-Unfortunately, this is simply a faulty premise. You need to consider the 
-security of what you've built separately from the security of your 
-building materials.
+On Mon 2018-03-19 12:47:45 +0100, Francesco Chicchiriccò wrote:
+> CVE-2018-1321: Remote code execution by administrators with report and 
+> template entitlements
 
-Security of software isn't inherited from the isolated security of each 
-of its functions, and it is generally not valid logic to assume that a 
-particular quality of the components of a whole will extend to the 
-entire whole:
+Thanks for the report!  for future reports, please put the *name* of the
+project clearly in the subject line and prominently in the message body.
 
-https://en.wikipedia.org/wiki/Fallacy_of_composition
+I had to read down into the footnotes to figure out what this report was
+talking about :P
 
-Consider individual CPU instructions as an easy counter example. Every 
-function is made up of such low-level instructions, and these 
-instructions are functions in their own right. The original core premise 
-would imply that no software vulnerabilities can exist except where 
-individual CPU instructions are vulnerable, which is clearly not the case.
+All the best,
 
-When you build something out of lower-level components, focusing purely 
-on the security of those components ignores the *arrangement* of those 
-components. From arrangement ("I'm made up of atoms"), higher levels of 
-behavior emerge ("I'm writing this email"), and you're left with 
-something that has its own security model that must be freshly considered.
-
-- Mike
+        --dkg
