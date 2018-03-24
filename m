@@ -1,28 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/05/1
-Message-Id: <5A8CF0F7-6FD9-4534-884A-A8AE71777270@apache.org>
-Date: Thu, 4 Oct 2018 22:28:16 -0400
-From: Velmurugan Periasamy <vel@...che.org>
-To: security <security@...che.org>, oss-security@...ts.openwall.com
-Cc: private@...ger.apache.org, dev@...ger.apache.org, user@...ger.apache.org
-Subject: CVE update - fixed in Apache Ranger 1.2.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/24/2
+Message-Id: <E1ezZFo-00031W-7i@romulus.home.bitnebula.com>
+Date: Fri, 23 Mar 2018 21:50:00 -0500
+From: Daniel Ruggeri <druggeri@...che.org>
+To: announce@...pd.apache.org, oss-security@...ts.openwall.com, security@...pd.apache.org
+Subject: CVE-2018-1301: Possible out of bound access after failure in reading the HTTP request
 Content-Type: text/plain; charset=utf-8
 
-Hello:
 
-Please find below details on CVE fixed in Ranger 1.2.0 release. Release details can be found at https://cwiki.apache.org/confluence/display/RANGER/1.2.0+Release+-+Apache+Ranger
+CVE-2018-1301: Possible out of bound access after failure in reading the HTTP request
 
-————————————————————————————————————————————————————————————————————————————————————————————————————————
-CVE-2018-11778: Apache Ranger Stack based buffer overflow
-Severity: Critical
+Severity: Low
+
 Vendor: The Apache Software Foundation
-Versions Affected: Apache Ranger versions prior to 1.2.0
-Users affected: Unix Authentication Service users 
-Description: Apache Ranger UnixAuthenticationService should properly handle user input to avoid Stack-based buffer overflow.
-Fix detail: UnixAuthenticationService was updated to correctly handle user input.
-Mitigation: Users should upgrade to 1.2.0 or later version of Apache Ranger with the fix.
-Credit: Alexander Klink.
-————————————————————————————————————————————————————————————————————————————————————————————————————————
 
-Thank you,
-Velmurugan Periasamy
+Versions Affected:
+httpd 2.0.1 to 2.4.29
+
+Description:
+A specially crafted request could have crashed the Apache HTTP Server prior to
+version 2.4.30, due to an out of bound access after a size limit is reached by
+reading the HTTP header. This vulnerability is considered very hard if not
+impossible to trigger in non-debug mode (both log and build level), so it is
+classified as low risk for common server usage.
+
+Mitigation:
+All httpd users should upgrade to 2.4.30 or later.
+
+Credit:
+The issue was discovered by Robert Swiecki, bug found by honggfuzz
+
+References:
+https://httpd.apache.org/security/vulnerabilities_24.html
