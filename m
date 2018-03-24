@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1745" "Tuesday" "7" "April" "2015" "19:15:27" "+0100" "Tom Chiverton" "tomc@apache.org" "<6741161.mB5NBRWkoP@wopr.house>" "46" "[oss-security] CVE-2015-1773 Apache Flex reflected XSS vulnerability" nil nil nil "4" "2015040718:15:27" "[oss-security] CVE-2015-1773 Apache Flex reflected XSS vulnerability" (number mark "        tomc@apache. Apr  7   46/1745  " thread-indent "\"[oss-security] CVE-2015-1773 Apache Flex reflected XSS vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["705" "Friday" "23" "March" "2018" "21:50:00" "-0500" "Daniel Ruggeri" "druggeri@apache.org" "<E1ezZFo-00031K-0Y@romulus.home.bitnebula.com>" "24" "[oss-security] CVE-2017-15715: <FilesMatch> bypass with a trailing newline in the file name" nil nil nil "3" "2018032402:50:00" "[oss-security] CVE-2017-15715: <FilesMatch> bypass with a trailing newline in the file name" (number mark "U       druggeri@apa Mar 23   24/705   " thread-indent "\"[oss-security] CVE-2017-15715: <FilesMatch> bypass with a trailing newline in the file name\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21690 invoked by uid 550); 7 Apr 2015 18:27:07 -0000
+Received: (qmail 23725 invoked by uid 550); 24 Mar 2018 11:24:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,61 +11,36 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13714 invoked from network); 7 Apr 2015 18:15:39 -0000
-Message-ID: <6741161.mB5NBRWkoP@wopr.house>
-Organization: Apache Flex
-User-Agent: KMail/4.14.2 (Linux/3.16.0-33-generic; KDE/4.14.2; i686; ; )
-MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="nextPart16235447.7zzOP2HANb"; micalg="pgp-sha256"; protocol="application/pgp-signature"
-Date: Tue, 07 Apr 2015 19:15:27 +0100
-From: Tom Chiverton <tomc@apache.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2015-1773 Apache Flex reflected XSS vulnerability
-To: security@apache.org, oss-security@lists.openwall.com, bugtraq@securityfocus.com
+Received: (qmail 24391 invoked from network); 24 Mar 2018 02:50:15 -0000
+To: announce@httpd.apache.org, oss-security@lists.openwall.com,
+    security@httpd.apache.org
+From: Daniel Ruggeri <druggeri@apache.org>
+Message-Id: <E1ezZFo-00031K-0Y@romulus.home.bitnebula.com>
+Date: Fri, 23 Mar 2018 21:50:00 -0500
+Subject: [oss-security] CVE-2017-15715: <FilesMatch> bypass with a trailing newline in the file name
 
---nextPart16235447.7zzOP2HANb
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
 
-CVE-2015-1773 Apache Flex reflected XSS vulnerability
+CVE-2017-15715: <FilesMatch> bypass with a trailing newline in the file name
 
 Severity: Low
 
 Vendor: The Apache Software Foundation
 
 Versions Affected:
-All versions of Apache Flex before 4.14.1
+httpd 2.4.0 to 2.4.29
 
 Description:
-The asdoc tool produced JavaScript code that was vulnerable to a reflected XSS attack. A request with a specially crafted URL could execute malicious JavaScript in the user's web browser. The attacker would have to convince the user to click the attacker's crafted link.
-
-This only affects the output of the 'asdoc' tool, not the output of the 'mxmlc' compiler or deployed Apache Flex applications.
+The expression specified in <FilesMatch> could match '$' to a newline character
+in a malicious filename, rather than matching only the end of the filename.
+This could be exploited in environments where uploads of some files are are
+externally blocked, but only by matching the trailing portion of the filename.
 
 Mitigation:
-Users should upgrade to the most recent version of Apache Flex and regenerate any local files produced by the asdoc tool.
-If you have made local modifications to the asdoc index.html file, such as altering the TITLE tags, you will need to make sure these are preserved.
-
-Alternatively, apply the following changes to any already generated asdoc index.html files, as well as to the file
-asdoc/templates/index.html in any older Apache Flex SDKs
-http://bit.ly/apache-flex-asdoc-fix
+All httpd users should upgrade to 2.4.30 or later.
 
 Credit:
-Thanks to Radjnies Bhansingh of Securify BV for reporting this issue.
+The issue was discovered by Elar Lang - security.elarlang.eu
 
-Tom Chiverton
-Apache Flex PMC
---nextPart16235447.7zzOP2HANb
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part.
-Content-Transfer-Encoding: 7Bit
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
-
-iF4EABEIAAYFAlUkHr8ACgkQReH4oC6rjLf1VAD/RjOcfElvMa1pfsqDUc1y94lj
-w2cwYIIUylQUybLQi5AA/0RlwZRpVAjzOh1+EvQnfESzXwCrwOXY1LTu8ZCAbugC
-=iuVM
------END PGP SIGNATURE-----
-
---nextPart16235447.7zzOP2HANb--
-
+References:
+https://httpd.apache.org/security/vulnerabilities_24.html
