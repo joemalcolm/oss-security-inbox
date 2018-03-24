@@ -1,41 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/12/8
-Message-ID: <87efjkoy4o.fsf@hope.eyrie.org>
-Date: Thu, 12 Apr 2018 15:31:19 -0700
-From: Russ Allbery <eagle@...ie.org>
-To: "David A. Wheeler" <dwheeler@...eeler.com>
-Cc: "oss-security" <oss-security@...ts.openwall.com>
-Subject: Re: Re: Terminal Control Chars
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/24/6
+Message-Id: <E1ezZFo-00031K-0Y@romulus.home.bitnebula.com>
+Date: Fri, 23 Mar 2018 21:50:00 -0500
+From: Daniel Ruggeri <druggeri@...che.org>
+To: announce@...pd.apache.org, oss-security@...ts.openwall.com, security@...pd.apache.org
+Subject: CVE-2017-15715: <FilesMatch> bypass with a trailing newline in the file name
 Content-Type: text/plain; charset=utf-8
 
-"David A. Wheeler" <dwheeler@...eeler.com> writes:
-> Russ Allbery:
 
->> I think a useful definition of "control character" in this context (and
->> I realize this doesn't exactly match the ASCII definition) is a
->> character that results in an action other than insertion being taken...
->> CR and LF would not be control characters in that definition, since
->> they insert a newline and don't cause an action. Similarly, TAB
->> wouldn't be a control character in that definition.
+CVE-2017-15715: <FilesMatch> bypass with a trailing newline in the file name
 
-> As you noted, that definition doesn't match the ASCII definition, but I
-> also think it's misleading.  If someone pastes a CR/LF into a shell
-> prompt, it certainly *DOES* cause an action, namely, execution of that
-> line.  That's probably not what you meant by "action", but from a
-> security point-of-view, causing a script to execute is rather important
-> :-).
+Severity: Low
 
-That's a fair counterpoint.
+Vendor: The Apache Software Foundation
 
-That unfortunately means that the specification one wants is to deny
-pasting control messages except for a particular set (since you're
-certainly not going to want to stop pasting of a newline sequence, and
-probably not pasting of tabs), and then you have to find the right way to
-define that set of characters that you want to allow.
+Versions Affected:
+httpd 2.4.0 to 2.4.29
 
-I have some "I know it when I see it" definition in my head, but it's hard
-to be precise without listing out the specific characters that I would
-allow and that I would disallow (at least as interpreted commands).
+Description:
+The expression specified in <FilesMatch> could match '$' to a newline character
+in a malicious filename, rather than matching only the end of the filename.
+This could be exploited in environments where uploads of some files are are
+externally blocked, but only by matching the trailing portion of the filename.
 
--- 
-Russ Allbery (eagle@...ie.org)              <http://www.eyrie.org/~eagle/>
+Mitigation:
+All httpd users should upgrade to 2.4.30 or later.
+
+Credit:
+The issue was discovered by Elar Lang - security.elarlang.eu
+
+References:
+https://httpd.apache.org/security/vulnerabilities_24.html
