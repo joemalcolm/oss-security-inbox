@@ -1,36 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/05/2
-Message-ID: <CAB8XdGA7292ec89FB144X1vFd_gFSDYezZrKU52oSd_0f2h4aw@mail.gmail.com>
-Date: Fri, 5 Jan 2018 15:48:34 +0000
-From: Colm O hEigeartaigh <coheigea@...che.org>
-To: dev <dev@...try.apache.org>
-Cc: security@...try.apache.org, announce@...che.org,  oss-security@...ts.openwall.com
-Subject: [ANNOUNCE] Apache Sentry 1.7.1 released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/24/8
+Message-Id: <E1ezZFn-00031E-TI@romulus.home.bitnebula.com>
+Date: Fri, 23 Mar 2018 21:49:59 -0500
+From: Daniel Ruggeri <druggeri@...che.org>
+To: announce@...pd.apache.org, oss-security@...ts.openwall.com, security@...pd.apache.org
+Subject: CVE-2017-15710: Out of bound write in mod_authnz_ldap when using too small Accept-Language values
 Content-Type: text/plain; charset=utf-8
 
-Apache Sentry is a system to enforce fine grained role based authorization
-to data and metadata stored on a Hadoop cluster.
 
-The Apache Sentry team is happy to announce the release of version 1.7.1.
-This release contains a fix for the following security advisory:
+CVE-2017-15710: Out of bound write in mod_authnz_ldap when using too small Accept-Language values.
 
-CVE-2015-3254: Apache Sentry vulnerabilities due to use of vulnerable
-version of Apache Thrift
+Severity: Low
 
-The full advisory text is available here:
+Vendor: The Apache Software Foundation
 
-https://cwiki.apache.org/confluence/download/attachments/65864610/CVE-2015-3254.txt.asc
+Versions Affected:
+httpd 2.0.23 to 2.0.65
+httpd 2.2.0 to 2.2.34
+httpd 2.4.0 to 2.4.29
 
-The release bits are available at:
+Description:
 
-http://sentry.apache.org/general/downloads.html
+mod_authnz_ldap, if configured with AuthLDAPCharsetConfig,
+uses the Accept-Language header value to lookup the right charset encoding
+when verifying the user's credentials.
+If the header value is not present in the charset conversion
+table, a fallback mechanism is used to truncate it to a two
+characters value to allow a quick retry (for example, 'en-US' is truncated
+to 'en'). A header value of less than two characters forces an out of bound
+write of one NUL byte to a memory location that is not part of the string.
+In the worst case, quite unlikely, the process would crash which could
+be used as a Denial of Service attack. In the more likely case, this memory is
+already reserved for future use and the issue has no effect at all."
 
-Regards,
-Sentry team
+Mitigation:
+All httpd users should upgrade to 2.4.30 or later.
 
--- 
-Colm O hEigeartaigh
+Users of (the now end-of-life) httpd 2.2 who cannot upgrade at this time should
+apply CVE-2017-15710.patch, which is available at
 
-Talend Community Coder
-http://coders.talend.com
+   https://www.apache.org/dist/httpd/patches/apply_to_2.2.34/
 
+Credit:
+The Apache HTTP Server security team would like to thank Alex Nichols
+and Jakob Hirsch for reporting this issue.
+
+References:
+https://httpd.apache.org/security/vulnerabilities_24.html
