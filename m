@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["933" "Thursday" "10" "September" "2020" "07:27:04" "+0200" "Jean-Baptiste Onofre" "jb@nanthrax.net" "<91D3B5A6-C405-4FF3-BE8D-042122A1780B@nanthrax.net>" "29" "[oss-security] [CVE-2020-13920] ActiveMQ JMX vulenarable to MITM attack" nil nil nil "9" "2020091005:27:04" "[oss-security] [CVE-2020-13920] ActiveMQ JMX vulenarable to MITM attack" (number mark "U       jb@nanthrax. Sep 10   29/933   " thread-indent "\"[oss-security] [CVE-2020-13920] ActiveMQ JMX vulenarable to MITM attack\"\n") "<97C2A4E8-5CA9-467F-AE63-C79E17F3F5D5@nanthrax.net>" ("<97C2A4E8-5CA9-467F-AE63-C79E17F3F5D5@nanthrax.net>") nil nil nil nil nil nil nil "[oss-security] [CVE-2020-13920] ActiveMQ JMX vulenarable to MITM attack" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["767" "Friday" "23" "March" "2018" "21:50:00" "-0500" "Daniel Ruggeri" "druggeri@apache.org" "<E1ezZFo-00031W-7i@romulus.home.bitnebula.com>" "25" "[oss-security] CVE-2018-1301: Possible out of bound access after failure in reading the HTTP request" nil nil nil "3" "2018032402:50:00" "[oss-security] CVE-2018-1301: Possible out of bound access after failure in reading the HTTP request" (number mark "U       druggeri@apa Mar 23   25/767   " thread-indent "\"[oss-security] CVE-2018-1301: Possible out of bound access after failure in reading the HTTP request\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13515 invoked by uid 550); 10 Sep 2020 06:58:17 -0000
+Received: (qmail 11444 invoked by uid 550); 24 Mar 2018 11:22:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,45 +12,36 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 12020 invoked from network); 10 Sep 2020 05:27:22 -0000
-X-Originating-IP: 82.64.90.43
-From: Jean-Baptiste Onofre <jb@nanthrax.net>
-Content-Type: multipart/alternative;
-	boundary="Apple-Mail=_333FC975-4A5E-41B3-A8D5-14BF07E843EC"
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.1\))
-Message-Id: <91D3B5A6-C405-4FF3-BE8D-042122A1780B@nanthrax.net>
-References: <97C2A4E8-5CA9-467F-AE63-C79E17F3F5D5@nanthrax.net>
-To: oss-security@lists.openwall.com
-Date: Thu, 10 Sep 2020 07:27:04 +0200
-X-Mailer: Apple Mail (2.3608.120.23.2.1)
-Subject: [oss-security] [CVE-2020-13920] ActiveMQ JMX vulenarable to MITM attack
+Received: (qmail 24394 invoked from network); 24 Mar 2018 02:50:15 -0000
+To: announce@httpd.apache.org, oss-security@lists.openwall.com,
+    security@httpd.apache.org
+From: Daniel Ruggeri <druggeri@apache.org>
+Message-Id: <E1ezZFo-00031W-7i@romulus.home.bitnebula.com>
+Date: Fri, 23 Mar 2018 21:50:00 -0500
+Subject: [oss-security] CVE-2018-1301: Possible out of bound access after failure in reading the HTTP request
 
---Apple-Mail=_333FC975-4A5E-41B3-A8D5-14BF07E843EC
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain;
-	charset=us-ascii
 
-CVE-2020-13920: Apache ActiveMQ JMX is vulnerable to a MITM attack
+CVE-2018-1301: Possible out of bound access after failure in reading the HTTP request
 
-Severity: Moderate
+Severity: Low
 
 Vendor: The Apache Software Foundation
 
-Affected Version: Apache ActiveMQ version prior to 5.15.12
+Versions Affected:
+httpd 2.0.1 to 2.4.29
 
-Vulnerability details:
-Apache ActiveMQ uses LocateRegistry.createRegistry() to create the JMX RMI
-registry and binds the server to the "jmxrmi" entry. It is possible
-to connect to the registry without authentication and call the rebind
-method to rebind jmxrmi to something else. If an attacker creates another
-server to proxy the original, and bound that, he effectively becomes a 
-man in the middle and is able to intercept the credentials when an user
-connects.
+Description:
+A specially crafted request could have crashed the Apache HTTP Server prior to
+version 2.4.30, due to an out of bound access after a size limit is reached by
+reading the HTTP header. This vulnerability is considered very hard if not
+impossible to trigger in non-debug mode (both log and build level), so it is
+classified as low risk for common server usage.
 
 Mitigation:
-Upgrade to Apache ActiveMQ 5.15.12
+All httpd users should upgrade to 2.4.30 or later.
 
-Credit: Jonathan Gallimore & Colm O hEigeartaigh
+Credit:
+The issue was discovered by Robert Swiecki, bug found by honggfuzz
 
-
---Apple-Mail=_333FC975-4A5E-41B3-A8D5-14BF07E843EC--
+References:
+https://httpd.apache.org/security/vulnerabilities_24.html
