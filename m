@@ -1,32 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/19/5
-Message-ID: <110923674.56846830.1545214087115.JavaMail.zimbra@redhat.com>
-Date: Wed, 19 Dec 2018 05:08:07 -0500 (EST)
-From: Vladis Dronov <vdronov@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2018-16884: Linux kernel: nfs: use-after-free in svc_process_common()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/24/4
+Message-Id: <E1ezZFo-00031Q-45@romulus.home.bitnebula.com>
+Date: Fri, 23 Mar 2018 21:50:00 -0500
+From: Daniel Ruggeri <druggeri@...che.org>
+To: announce@...pd.apache.org, oss-security@...ts.openwall.com, security@...pd.apache.org
+Subject: CVE-2018-1283: Tampering of mod_session data for CGI applications
 Content-Type: text/plain; charset=utf-8
 
-Heololo,
 
-A flaw was found in the Linux kernel in the NFS4 subsystem. NFS41+ shares mounted
-in different network namespaces at the same time can make bc_svc_process() use wrong
-back-channel id and cause a use-after-free. Thus a malicious container user can cause
-a host kernel memory corruption and a system panic. Due to the nature of the flaw,
-privilege escalation cannot be fully ruled out.
+CVE-2018-1283: Tampering of mod_session data for CGI applications.
 
-The CVE-2018-16884 id was assigned to this flaw and proposed to MITRE. We would like
-to suggest to use this id in public communications regarding this flaw.
+Severity: Medium
 
-A proposed patchset and a discussion:
+Vendor: The Apache Software Foundation
 
-https://patchwork.kernel.org/cover/10733767/
+Versions Affected:
+httpd 2.4.0 to 2.4.29
 
-https://patchwork.kernel.org/patch/10733769/
+Description:
+
+When mod_session is configured to forward its session data to CGI
+applications (SessionEnv on, not the default), a remote user may influence
+their content by using a "Session" header. This comes from the "HTTP_SESSION"
+variable name used by mod_session to forward its data to CGIs, since the
+prefix "HTTP_" is also used by the Apache HTTP Server to pass HTTP header
+fields, per CGI specifications.
+
+The severity is set to Medium because "SessionEnv on" is not a default nor
+common configuration, it should be considered High when this is the case
+though, because of the possible remote exploitation.
+
+Mitigation:
+All httpd users should upgrade to 2.4.30 or later.
+
+Credit:
+The issue was discovered internally by the Apache HTTP Server team.
 
 References:
-
-https://bugzilla.redhat.com/show_bug.cgi?id=1660375
-
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+https://httpd.apache.org/security/vulnerabilities_24.html
