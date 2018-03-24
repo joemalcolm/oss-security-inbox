@@ -1,36 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/09/8
-Message-ID: <20181009221050.44c7ca99@computer>
-Date: Tue, 9 Oct 2018 22:10:50 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: Leonid Isaev <leonid.isaev@...a.colorado.edu>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/24/3
+Message-Id: <E1ezZFo-00031j-Ew@romulus.home.bitnebula.com>
+Date: Fri, 23 Mar 2018 21:50:00 -0500
+From: Daniel Ruggeri <druggeri@...che.org>
+To: announce@...pd.apache.org, oss-security@...ts.openwall.com, security@...pd.apache.org
+Subject: CVE-2018-1303: Possible out of bound read in mod_cache_socache
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-On Tue, 9 Oct 2018 09:30:06 -0600
-Leonid Isaev <leonid.isaev@...a.colorado.edu> wrote:
+CVE-2018-1303: Possible out of bound read in mod_cache_socache
 
-> Which means any postscript file downloaded from the internet... Then
-> how should people read arXiv.org, for example?
+Severity: Low
 
-Surprised by this claim I did a quick check on arxiv. I don't see any
-papers that are only available as postscript. All papers seem to be
-available as PDF, some additionally as PS.
+Vendor: The Apache Software Foundation
 
-Which also makes sense: Many browsers support direct PDF display. While
-PDF is also a complex format with pitfalls I'd still trust the
-in-browser PDF readers much more than something like ghostscript.
+Versions Affected:
+httpd 2.4.5 to 2.4.29
 
-If there are sites that rely on PS documents they should probably be
-encouraged to do a server-side sandboxed auto-conversion of them and
-offer PDF also.
+Description:
+A specially crafted HTTP request header could have crashed the Apache HTTP
+Server prior to version 2.4.30 due to an out of bound read while preparing data
+to be cached in shared memory. It could be used as a Denial of Service attack
+against users of mod_cache_socache.
 
--- 
-Hanno Böck
-https://hboeck.de/
+Mitigation:
+All httpd users should upgrade to 2.4.30 or later.
 
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+Credit:
+The issue was discovered by Robert Swiecki, bug found by honggfuzz
+
+References:
+https://httpd.apache.org/security/vulnerabilities_24.html
