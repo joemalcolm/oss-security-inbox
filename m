@@ -1,54 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/20/1
-Message-ID: <2222700.WJvhPnAmYh@hanacore>
-Date: Thu, 19 Jul 2018 21:13:42 -0400
-From: Iris Morelle <shadowm2006@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/25/2
+Message-ID: <2296bb0c-ea7e-427b-10f0-43c48e80325c@apache.org>
+Date: Sun, 25 Mar 2018 15:11:21 +0200
+From: Yann Ylavic <ylavic@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Wesnoth arbitrary code execution/sandbox escape
+Cc: Marius Bakke <mbakke@...tmail.com>, Daniel Ruggeri <druggeri@...che.org>, security@...pd.apache.org
+Subject: Re: CVE-2017-15710: Out of bound write in mod_authnz_ldap when using too small Accept-Language values
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On 03/25/2018 12:52 PM, Marius Bakke wrote:
+> Daniel Ruggeri <druggeri@...che.org> writes:
+>> References:
+>> https://httpd.apache.org/security/vulnerabilities_24.html
+>
+> Perhaps I'm hitting an outdated mirror (195.154.151.36), but this
+> page lists "OptionsBleed" as the most recent CVE, and the download
+> page shows 2.4.29 as the latest release.
 
-We've found an issue in our software, "The Battle for Wesnoth", which allows 
-arbitrary code execution by exploiting a vulnerability within the Lua 
-scripting language engine which allows escaping existing sandbox measures in 
-place and executing untrusted bytecode.
+The httpd website is missing some synchronization still, we are
+currently looking into it.
 
-We would like to have a CVE id assigned to this issue if possible.
+>
+> I found 2.4.33 by browsing my suggested mirror "manually", but it
+> does not have the PGP signatures.
+>
+> https://apache.uib.no/httpd/
+>
+> I had to go to <https://www-eu.apache.org/dist/httpd/> in order to
+> verify the integrity.
 
+The website should be updated soon too, in the meantime the tarballs
+(and signatures) are available here: https://archive.apache.org/dist/httpd/
 
-Description:
+Thanks for noticing and letting us now.
 
-The Wesnoth game engine uses the vanilla Lua programming language library to 
-implement most of its game scripting capabilities. Lua is able to execute 
-bytecode using its load(), loadfile(), loadstring(), dofile(), and require() 
-functions. Wesnoth in particular exposes load(), loadstring(), and two 
-wrappers for the former in the form of wesnoth.dofile() and wesnoth.require(), 
-without making sure to disable the ability to load and execute bytecode.
-
-It has been documented [1] that it is possible to exploit the Lua load 
-functions to execute untrusted bytecode that can then bypass sandbox measures, 
-or even gain and abuse special knowledge about the process' memory layout.
-
-  [1] https://gist.github.com/corsix/6575486
-
-Wesnoth executes Lua code from untrusted local files either written by players 
-or downloaded through a player content distribution server, as well as from 
-data sent over the network in multiplayer games; thus this vulnerability is 
-rather severe as it can be exploited remotely by malicious parties without the 
-user's knowledge.
-
-This issue was found by Daniel Dräger, a Wesnoth developer, and author of an 
-unmerged patch fixing it.
-
-
-Affected versions:
-
-All existing versions of Wesnoth with the Lua scripting capability, i.e. 
-versions 1.7.0 through 1.14.3.
-
--- 
-Regards
-  Iris Morelle, Wesnoth developer
-
-
+Regards,
+Yann.
