@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4249" "Wednesday" "26" "August" "2015" "23:01:28" "+0200" "Gustavo Grieco" "gustavo.grieco@gmail.com" "<CACn5sdTXNGv3CMY6zWws_7GLPoC2Ep5RO0ogdc9PZOsxuxEmXg@mail.gmail.com>" "103" "[oss-security] Multiple memory corruptions caused by uninitialized values in JasPer 1.900" nil nil nil "8" "2015082621:01:28" "[oss-security] Multiple memory corruptions caused by uninitialized values in JasPer 1.900" (number mark "U       gustavo.grie Aug 26  103/4249  " thread-indent "\"[oss-security] Multiple memory corruptions caused by uninitialized values in JasPer 1.900\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["579" "Sunday" "25" "March" "2018" "23:27:08" "+0200" "Yann Ylavic" "ylavic@apache.org" "<4e9a34f8-3445-f9e2-0595-62ae863a9f89@apache.org>" "18" "Re: [oss-security] CVE-2017-15710: Out of bound write in mod_authnz_ldap when using too small Accept-Language values" nil nil nil "3" "2018032521:27:08" "[oss-security] CVE-2017-15710: Out of bound write in mod_authnz_ldap when using too small Accept-Language values" (number mark "U       ylavic@apach Mar 25   18/579   " thread-indent "\"Re: [oss-security] CVE-2017-15710: Out of bound write in mod_authnz_ldap when using too small Accept-Language values\"\n") "<2296bb0c-ea7e-427b-10f0-43c48e80325c@apache.org>" ("<E1ezZFn-00031E-TI@romulus.home.bitnebula.com>" "<87r2o8jukc.fsf@fastmail.com>" "<2296bb0c-ea7e-427b-10f0-43c48e80325c@apache.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17493 invoked by uid 550); 26 Aug 2015 21:01:45 -0000
+Received: (qmail 9473 invoked by uid 550); 26 Mar 2018 10:11:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,127 +12,41 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17446 invoked from network); 26 Aug 2015 21:01:39 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=wtga6kyDmffrEmDHeTv3R/yEhbbTiG5idusLeqdZoSU=;
-        b=TvpD5mSBSWWrQw32WMX4NzRtjj3k97OXAQD7y6OfxVVMFapCMFDSQZqoDL6UhZUMkW
-         wCwfvB9pmNRiZC1gEBUwPgCRkxLuEE/p/H+QUFJNvZkjGruwirg20Lbdx70WJAfIMmVb
-         yQ76KWiRFdjCKSx5f71Si6eHRzLbMhN2IG5XAxy6q5rBmqHax5ArvRIC0hdb89rA+vAp
-         FkZuivxMeuusqnA0HbN17vJkO+NhCHKvex6PRxx9omuA9CE1f8Jl/kBHPovZUi1AG8lD
-         dnh1LLKriJdIZ6lRG1/uECVRCsWMFyLSXxJW16ZPGoGH58LgG2jiGBe4dCqJ/pkdcN0o
-         LUOw==
-MIME-Version: 1.0
-X-Received: by 10.112.235.130 with SMTP id um2mr469497lbc.72.1440622888207;
- Wed, 26 Aug 2015 14:01:28 -0700 (PDT)
-Date: Wed, 26 Aug 2015 23:01:28 +0200
-Message-ID: <CACn5sdTXNGv3CMY6zWws_7GLPoC2Ep5RO0ogdc9PZOsxuxEmXg@mail.gmail.com>
-From: Gustavo Grieco <gustavo.grieco@gmail.com>
+Received: (qmail 9403 invoked from network); 25 Mar 2018 21:27:24 -0000
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=001a11c3170a81cb6a051e3d27d5
-Subject: [oss-security] Multiple memory corruptions caused by uninitialized values in JasPer 1.900
+Cc: Marius Bakke <mbakke@fastmail.com>, Daniel Ruggeri <druggeri@apache.org>,
+ security@httpd.apache.org
+References: <E1ezZFn-00031E-TI@romulus.home.bitnebula.com>
+ <87r2o8jukc.fsf@fastmail.com>
+ <2296bb0c-ea7e-427b-10f0-43c48e80325c@apache.org>
+From: Yann Ylavic <ylavic@apache.org>
+Message-ID: <4e9a34f8-3445-f9e2-0595-62ae863a9f89@apache.org>
+Date: Sun, 25 Mar 2018 23:27:08 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
+MIME-Version: 1.0
+In-Reply-To: <2296bb0c-ea7e-427b-10f0-43c48e80325c@apache.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: fr-classic
+Content-Transfer-Encoding: 8bit
+Subject: Re: [oss-security] CVE-2017-15710: Out of bound write in
+ mod_authnz_ldap when using too small Accept-Language values
 
---001a11c3170a81cb6a051e3d27d5
-Content-Type: text/plain; charset=UTF-8
+On 03/25/2018 03:11 PM, Yann Ylavic wrote:
+> On 03/25/2018 12:52 PM, Marius Bakke wrote:
+>>
+>> Perhaps I'm hitting an outdated mirror (195.154.151.36), but this
+>> page lists "OptionsBleed" as the most recent CVE, and the download
+>> page shows 2.4.29 as the latest release.
+> 
+> The httpd website is missing some synchronization still, we are
+> currently looking into it.
 
-Hi,
+Both security and download pages should be up to date now:
+- https://httpd.apache.org/security/vulnerabilities_24.html
+- https://httpd.apache.org/download.cgi
 
-Following Raphael's advice, i found some memory corruptions in JasPer 1.900
-after a quick round of fuzzing of the regression tests of Openjpeg. A few
-interesting test cases are available here:
-
-https://zimbra.imag.fr/home/gustavo.grieco@imag.fr/Briefcase/Public/cases.tar.gz
-
-They are compressed to avoid easily crash programs like Nautilus and
-Firefox. All them can be verified using:
-
-jasper --input $filename --output-format pnm
-
-(tested in Ubuntu 14.04, 32-bit but it should work in other configurations)
-
-Additionally. sigsegv.jp2 crashes most of the programs using gdk-pixbuf
-like Firefox and Chrome (!). I report them this issue a few days ago and
-advise them to disable preview of jpeg images since Jasper is unmaintained
-and vulnerable. Mozilla developers are working hard trying to find a
-workaround to avoid use vulnerable code.
-On the other hand, Chromium developers dismissed this issue saying that
-they will wait the "upstream fix".
-
-I think the cause of such memory corruptions is uninitialized values, taken
-from the heap, as valgrind reports:
-
-
-==15417== Memcheck, a memory error detector
-==15417== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==15417== Using Valgrind-3.10.0.SVN and LibVEX; rerun with -h for copyright
-info
-==15417== Command: jasper --input sigsegv.jp2 --output-format pnm
-==15417==
-==15417== Conditional jump or move depends on uninitialised value(s)
-==15417==    at 0x405EE3F: ??? (in
-/usr/lib/i386-linux-gnu/libjasper.so.1.0.0)
-==15417==    by 0x405F110: ??? (in
-/usr/lib/i386-linux-gnu/libjasper.so.1.0.0)
-==15417==    by 0x405E6FC: jpc_decode (in
-/usr/lib/i386-linux-gnu/libjasper.so.1.0.0)
-==15417==    by 0x4057805: jp2_decode (in
-/usr/lib/i386-linux-gnu/libjasper.so.1.0.0)
-==15417==    by 0x404BDAB: jas_image_decode (in
-/usr/lib/i386-linux-gnu/libjasper.so.1.0.0)
-==15417==    by 0x8048D78: ??? (in /usr/bin/jasper)
-==15417==    by 0x40B1A82: (below main) (libc-start.c:287)
-==15417==  Uninitialised value was created by a heap allocation
-==15417==    at 0x402A17C: malloc (in
-/usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
-==15417==    by 0x405127A: jas_malloc (in
-/usr/lib/i386-linux-gnu/libjasper.so.1.0.0)
-==15417==    by 0x4051323: jas_alloc2 (in
-/usr/lib/i386-linux-gnu/libjasper.so.1.0.0)
-==15417==    by 0x405C926: ??? (in
-/usr/lib/i386-linux-gnu/libjasper.so.1.0.0)
-==15417==    by 0x405E6FC: jpc_decode (in
-/usr/lib/i386-linux-gnu/libjasper.so.1.0.0)
-==15417==    by 0x4057805: jp2_decode (in
-/usr/lib/i386-linux-gnu/libjasper.so.1.0.0)
-==15417==    by 0x404BDAB: jas_image_decode (in
-/usr/lib/i386-linux-gnu/libjasper.so.1.0.0)
-==15417==    by 0x8048D78: ??? (in /usr/bin/jasper)
-==15417==    by 0x40B1A82: (below main) (libc-start.c:287)
-==15417==
-==15417== Conditional jump or move depends on uninitialised value(s)
-==15417==    at 0x405F06C: ??? (in
-/usr/lib/i386-linux-gnu/libjasper.so.1.0.0)
-==15417==    by 0x405F110: ??? (in
-/usr/lib/i386-linux-gnu/libjasper.so.1.0.0)
-==15417==    by 0x405E6FC: jpc_decode (in
-/usr/lib/i386-linux-gnu/libjasper.so.1.0.0)
-==15417==    by 0x4057805: jp2_decode (in
-/usr/lib/i386-linux-gnu/libjasper.so.1.0.0)
-==15417==    by 0x404BDAB: jas_image_decode (in
-/usr/lib/i386-linux-gnu/libjasper.so.1.0.0)
-==15417==    by 0x8048D78: ??? (in /usr/bin/jasper)
-==15417==    by 0x40B1A82: (below main) (libc-start.c:287)
-==15417==  Uninitialised value was created by a heap allocation
-==15417==    at 0x402A17C: malloc (in
-/usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
-==15417==    by 0x405127A: jas_malloc (in
-/usr/lib/i386-linux-gnu/libjasper.so.1.0.0)
-==15417==    by 0x4051323: jas_alloc2 (in
-/usr/lib/i386-linux-gnu/libjasper.so.1.0.0)
-==15417==    by 0x405C826: ??? (in
-/usr/lib/i386-linux-gnu/libjasper.so.1.0.0)
-==15417==    by 0x405E6FC: jpc_decode (in
-/usr/lib/i386-linux-gnu/libjasper.so.1.0.0)
-==15417==    by 0x4057805: jp2_decode (in
-/usr/lib/i386-linux-gnu/libjasper.so.1.0.0)
-==15417==    by 0x404BDAB: jas_image_decode (in
-/usr/lib/i386-linux-gnu/libjasper.so.1.0.0)
-==15417==    by 0x8048D78: ??? (in /usr/bin/jasper)
-==15417==    by 0x40B1A82: (below main) (libc-start.c:287)
-==15417==
+Sorry for the inconvenience.
 
 Regards,
-Gustavo.
-
---001a11c3170a81cb6a051e3d27d5--
+Yann.
