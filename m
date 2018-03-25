@@ -1,4 +1,9 @@
-Received: (qmail 32760 invoked by uid 550); 14 Nov 2023 19:07:39 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2933" "Sunday" "25" "March" "2018" "19:26:15" "+0200" "Solar Designer" "solar@openwall.com" "<20180325172614.GA26989@openwall.com>" "73" "Re: [oss-security] LibVNCServer rfbserver.c: rfbProcessClientNormalMessage() case rfbClientCutText doesn't sanitize msg.cct.length" nil nil nil "3" "2018032517:26:15" "[oss-security] LibVNCServer rfbserver.c: rfbProcessClientNormalMessage() case rfbClientCutText doesn't sanitize msg.cct.length" (number mark "U       solar@openwa Mar 25   73/2933  " thread-indent "\"Re: [oss-security] LibVNCServer rfbserver.c: rfbProcessClientNormalMessage() case rfbClientCutText doesn't sanitize msg.cct.length\"\n") "<20180222172329.GA4137@openwall.com>" ("<20180218180945.GA22931@openwall.com>" "<20180222172329.GA4137@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 30640 invoked by uid 550); 25 Mar 2018 17:28:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,115 +12,89 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24113 invoked from network); 14 Nov 2023 18:58:37 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	invisiblethingslab.com; h=cc:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:sender:subject:subject:to:to; s=fm3; t=
-	1699988305; x=1700074705; bh=w9ev0WKUO9xRl0yorZpRb0lRTdrAIl+Y7s6
-	jq9+d2CI=; b=qM/h2HBSqutobuNMsoFM6RgB/R8zYHHSNLmIDxCVDwzqh4PQ0C9
-	6+LZNbgyzpDhi/Z2hA7eHWYoAsK0INiqiBojVF/intBmerFh7A9maYztDFJSD2JB
-	tlRwCYpCf6F12SXsRh1FgGmifPBKKJVnUoFmjEgufWQbjbDxn5T4zmlo13YJo9SH
-	SVaCRmwMeUFou83L2MPqxbdLCyd6oSVYfTWj2DEMHdqOgw5UQopDuXgMZqW8557C
-	GArf5RQM4KHdk5Ir1vzz3c3GE5QQlcLynzO+awqtxsskw3K4Fk2w3Pp6/0q5yhez
-	9XBSfWQJMksw3TLt2zhrBE7CKfgvI7irM7A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm1; t=1699988305; x=1700074705; bh=w9ev0WKUO9xRl
-	0yorZpRb0lRTdrAIl+Y7s6jq9+d2CI=; b=uGK0xBrKs3AST30LEC8ZKWgWfaNif
-	5a8ValZrUegtrMSssg8MpzlGBn0wmPPN6SBBg5U59Wu0kVDOPWRhAIGxsbz2m7WQ
-	st20/6zOH9ezpJ4R4+1ndoY2FwmRBjJieHhC/HQvtoyAkP82PvjsWtESjCLznLQM
-	tC9CNQXx3AuQYi3t2l5xVN1FjzM4yAYb9elZNtMv6EHN9eL59A7+V8SkGqvlucPW
-	//hnPbGqyhFrbbgDwKS8/g1tPo3Kfw/gzuTl/rGt9KGhIcLUxI0Et3hPF7Cr0vgQ
-	EQ5cfwVDDe3nfZj5LHcUX2qnYvpPlZAbAQ3T3PXJLxlqDrVrpcb0iAR6g==
-X-ME-Sender: <xms:UcNTZUqA9pBjBzxLU4mTW-dVGFARkd3G8fRROdgf3XiLxdPhulfRtQ>
-    <xme:UcNTZao3Zehp2iHPualXefpT5A1APUHUjZ3PmNfCW0FJa110wU-EXdviEH7MD4NKK
-    mbDRieYeJiZbp0>
-X-ME-Received: <xmr:UcNTZZPHM5dPjW-lfyVZ0eJ3p27YPC6G5a11cu6jn9k4Vj0DWAL4JpnzeOJawXA1EtxPaiF_kEJH2Yjf1tWN-Axoz9Oos6fKSpMS2B1INEwVYdrx>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudeffedgvdejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtro
-    ertddtvdenucfhrhhomhepffgvmhhiucforghrihgvucfqsggvnhhouhhruceouggvmhhi
-    sehinhhvihhsihgslhgvthhhihhnghhslhgrsgdrtghomheqnecuggftrfgrthhtvghrnh
-    epfeeiudeiteegfffgkeeijeefhedttdffjeeluedufeduudejueegffefveeugefgnecu
-    ffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpeguvghmihesihhnvhhishhisghlvghthhhinhhgshhl
-    rggsrdgtohhm
-X-ME-Proxy: <xmx:UcNTZb53waCKSXy929naV2rr6IEnTDI5WNR5q9pba7eE023tklqFQQ>
-    <xmx:UcNTZT50YKezDDbGZKeaifGKTR6FffYiTQjimwFTUyCh7RFor5N8eg>
-    <xmx:UcNTZbjOj1po8aZ81SC4mrhaR9ld2AmA8_5WRt84EQoRTtTcQIrUAQ>
-    <xmx:UcNTZVHqdtaQTvrXVB2VKxh_1TSsVdM3V5xyibG5MKHK892TStKmgw>
-Feedback-ID: iac594737:Fastmail
-Date: Tue, 14 Nov 2023 13:58:21 -0500
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
+Received: (qmail 28605 invoked from network); 25 Mar 2018 17:26:27 -0000
+Date: Sun, 25 Mar 2018 19:26:15 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-Message-ID: <ZVPDUJndrHVBadOt@itl-email>
-References: <ae728a21-91d5-463d-9f54-44186a01253d@intel.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="wYxRJQI36YtgnBQF"
+Message-ID: <20180325172614.GA26989@openwall.com>
+References: <20180218180945.GA22931@openwall.com> <20180222172329.GA4137@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ae728a21-91d5-463d-9f54-44186a01253d@intel.com>
-Subject: Re: [oss-security] CVE-2023-23583: Intel - Denial of Service -
- Privilege Escalation (Reptar)
+In-Reply-To: <20180222172329.GA4137@openwall.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] LibVNCServer rfbserver.c: rfbProcessClientNormalMessage() case rfbClientCutText doesn't sanitize msg.cct.length
 
---wYxRJQI36YtgnBQF
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 14 Nov 2023 13:58:21 -0500
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2023-23583: Intel - Denial of Service -
- Privilege Escalation (Reptar)
+On Thu, Feb 22, 2018 at 06:23:29PM +0100, Solar Designer wrote:
+> On Sun, Feb 18, 2018 at 07:09:45PM +0100, Solar Designer wrote:
+> > https://github.com/LibVNC/libvncserver/issues/218
+> 
+> > libvncserver/rfbserver.c: rfbProcessClientNormalMessage() contains the
+> > following code:
+> > 
+> >     case rfbClientCutText:
+> > 
+> >         if ((n = rfbReadExact(cl, ((char *)&msg) + 1,
+> >                            sz_rfbClientCutTextMsg - 1)) <= 0) {
+> >             if (n != 0)
+> >                 rfbLogPerror("rfbProcessClientNormalMessage: read");
+> >             rfbCloseClient(cl);
+> >             return;
+> >         }
+> > 
+> >         msg.cct.length = Swap32IfLE(msg.cct.length);
+> > 
+> >         str = (char *)malloc(msg.cct.length);
+> >         if (str == NULL) {
+> >                 rfbLogPerror("rfbProcessClientNormalMessage: not enough memory");
+> >                 rfbCloseClient(cl);
+> >                 return;
+> >         }
+> > 
+> >         if ((n = rfbReadExact(cl, str, msg.cct.length)) <= 0) {
+> 
+> As I just wrote in a comment to the GitHub issue above:
+> 
+> There's another issue I had missed: the first rfbReadExact() reading the
+> msg header is only checked for <= 0, but that doesn't catch a partial
+> read e.g. on a prematurely closed connection.  The same issue is present
+> all over the codebase.  I guess "Exact" in the name was understood
+> literally, but the function doesn't guarantee that when a lower-level
+> read() or the like returns 0, such as when there's no more data to read.
+> Maybe the function itself should be adjusted to match the semantics the
+> callers expects from it (set errno to a value of its choosing and return
+> -1 on a partial read? it already does that on a timeout, so this change
+> wouldn't make it more inconsistent).
 
-On Tue, Nov 14, 2023 at 10:31:51AM -0800, Antonio Gomez Iglesias wrote:
-> Name of the issue: Redundant Prefix Issue
->=20
->=20
-> Description of the issue
-> Under certain microarchitectural conditions, Intel has identified cases
-> where execution of an instruction (REP MOVSB) encoded with a redundant
-> REX prefix may result in unpredictable system behavior resulting in a
-> system crash/hang, or, in some limited scenarios, may allow escalation
-> of privilege from CPL3 to CPL0.
-> This Redundant Prefix Issue is assigned CVE-2023-23583 with a CVSS Base
-> Score of 8.8 High CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H.
->=20
->=20
-> Mitigation
-> Intel is providing a microcode update to mitigate this issue: https://git=
-hub.com/intel/Intel-Linux-Processor-Microcode-Data-Files/releases/tag/micro=
-code-20231114
+As Petr Pisar pointed out on the GitHub issue, I was wrong about that
+"another issue" above.  rfbReadExact() returns 0 on a partial read, so
+the "<= 0" checks do correctly detect this failure mode.  So, no,
+luckily the issue is not "present all over the codebase."
 
-Does this also allow privilege escalation from a VM guest to the host?
-What are the limited scenarios?
---=20
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+The cause of the behavior I had observed, where rfbReadExact() was not
+"<= 0" on a partial read in my original test case, was different: it was
+implicit conversion of msg.cct.length to int (resulting in a negative
+value) when making the call to rfbReadExact().  In that case,
+rfbReadExactTimeout() and thus rfbReadExact() return 1:
 
---wYxRJQI36YtgnBQF
-Content-Type: application/pgp-signature; name="signature.asc"
+int
+rfbReadExactTimeout(rfbClientPtr cl, char* buf, int len, int timeout)
+{
+[...]
+    while (len > 0) {
+[...]
+    }
+[...]
+    return 1;
+}
 
------BEGIN PGP SIGNATURE-----
+As I wrote in a comment to the GitHub issue, as a hardening measure
+"maybe rfbReadExactTimeout() semantics should be adjusted so that it'd
+return failure when called with negative len."
 
-iQIzBAEBCgAdFiEEdodNnxM2uiJZBxxxsoi1X/+cIsEFAmVTw1AACgkQsoi1X/+c
-IsEsfhAAqUVYeXmoSa/bxCdWzk1ELzFuiw9ocOJ/44ZSH8vsoZFYGU/JwHSz1OQv
-BF8G8NnOY4Aq5a7X3+IInDi/fPaKMCxZRdf0239/lRxvaV83WQ2zAPqhzKWDG+UG
-cpqoOcBVrF6Zg6xfMMwFt1wHLls42XD+mLEP6cm+wiIrXKuqifjsh/8iUHZPMQd6
-SPlEew7sdlk1M0gneqwhih1KQqMdJN6QsoL3rM6gBNL1D7eob2gHlET1wdIv3JFk
-juBQ6Ag5rqvvFVA5f2qRR2lPp/frZvW0IxNQ2Vl1dRi7Kksgk6Th4GVyGUnlbnxU
-k2knSdBsGoZCmoyGBKk6+YReyeQJ7MIRKMtulUCWZI6ZZ7gauhoMjRzgtAjk8uCY
-vGYl0S1yag+fxH+o+NgQHCkG3dDEtNkGfVTMILDBrYFPQOb7knsidw8qqiSogPZe
-XPQ1q8Ui9lWBb8ptuXUMAfCGJDjUxOnRaDfKeUMnPauxHY5tJkrvaB5S6zcXJaDT
-74IADHkKW6Xg6xM1eIXw0hnaFB96NcuXKB2wVm4W8FTOi9TVB4ZRWVGJPtJhxM2T
-ZU2Pt/UAq4/CDcnRp2Xc70yzDfnJ5gdaUNB2SMVVoImHjZi3jeJ3RspatBhYfzeh
-GdZE5xMAf4HWyPXnuThjFc0238LKhOkd4YCdMIAc9Rl0pLuh9Y4=
-=0i9q
------END PGP SIGNATURE-----
+Meanwhile, Petr fixed the original issue I had reported, by limiting the
+cut text length to 1 MiB (the same limit that QEMU uses):
 
---wYxRJQI36YtgnBQF--
+https://github.com/LibVNC/libvncserver/commit/b0c77391e6bd0a2305bbc9b37a2499af74ddd9ee
+
+Alexander
