@@ -1,21 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/22/1
-Message-ID: <DB5PR08MB10623BF00ACDCA92BF685C63AF300@DB5PR08MB1062.eurprd08.prod.outlook.com>
-Date: Wed, 22 Aug 2018 07:37:24 +0000
-From: Yasser Zamani <yasserzamani@...che.org>
-To: Struts User <user@...uts.apache.org>, Struts Dev <dev@...uts.apache.org>, Struts Announcements <announcements@...uts.apache.org>, Apache Announce <announce@...che.org>, "security-reports@...mle.com" <security-reports@...mle.com>, Struts Security <security@...uts.apache.org>, oss-security <oss-security@...ts.openwall.com>, full-disclosure <full-disclosure@...ts.grok.org.uk>, bugtraq <bugtraq@...urityfocus.com>
-Subject: [ANN] CVE-2018-11776 Apache Struts 2.3 to 2.3.34 and 2.5 to 2.5.16
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/25/1
+Message-ID: <87r2o8jukc.fsf@fastmail.com>
+Date: Sun, 25 Mar 2018 12:52:51 +0200
+From: Marius Bakke <mbakke@...tmail.com>
+To: Daniel Ruggeri <druggeri@...che.org>, oss-security@...ts.openwall.com, security@...pd.apache.org
+Subject: Re: CVE-2017-15710: Out of bound write in mod_authnz_ldap when using too small Accept-Language values
 Content-Type: text/plain; charset=utf-8
 
-[CVEID]:CVE-2018-11776
-[PRODUCT]:Apache Struts
-[VERSION]:Apache Struts 2.3 to 2.3.34 and 2.5 to 2.5.16
-[PROBLEMTYPE]:Remote Code Execution
-[REFERENCES]:https://cwiki.apache.org/confluence/display/WW/S2-057
-[DESCRIPTION]:Man Yue Mo from the Semmle Security Research team was
-noticed that Apache Struts versions 2.3 to 2.3.34 and 2.5 to 2.5.16
-suffer from possible Remote Code Execution when using results with no
-namespace and in same time, its upper action(s) have no or wildcard
-namespace. Same possibility when using url tag which doesn’t have value
-and action set and in same time, its upper action(s) have no or wildcard
-namespace.
+Daniel Ruggeri <druggeri@...che.org> writes:
+
+> CVE-2017-15710: Out of bound write in mod_authnz_ldap when using too small Accept-Language values.
+>
+> Severity: Low
+>
+> Vendor: The Apache Software Foundation
+>
+> Versions Affected:
+> httpd 2.0.23 to 2.0.65
+> httpd 2.2.0 to 2.2.34
+> httpd 2.4.0 to 2.4.29
+
+[...]
+
+> Mitigation:
+> All httpd users should upgrade to 2.4.30 or later.
+
+[...]
+
+> References:
+> https://httpd.apache.org/security/vulnerabilities_24.html
+
+Perhaps I'm hitting an outdated mirror (195.154.151.36), but this page
+lists "OptionsBleed" as the most recent CVE, and the download page shows
+2.4.29 as the latest release.
+
+I found 2.4.33 by browsing my suggested mirror "manually", but it does
+not have the PGP signatures.
+
+https://apache.uib.no/httpd/
+
+I had to go to <https://www-eu.apache.org/dist/httpd/> in order to
+verify the integrity.
+
+Please look into it, and thanks for the notices.
+
+Download attachment "signature.asc" of type "application/pgp-signature" (488 bytes)
