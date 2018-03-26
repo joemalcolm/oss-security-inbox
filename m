@@ -1,35 +1,173 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/05/1
-Message-ID: <e099b2d21c5febadcb4de930cd5cffacbd08f41a.camel@decadent.org.uk>
-Date: Sun, 05 Aug 2018 21:36:09 +0800
-From: Ben Hutchings <ben@...adent.org.uk>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: Antonio Diaz Diaz <antonio@....org>
-Subject: Heap-based buffer overflow in zutils zcat
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/26/3
+Message-Id: <0A92B24E-DD0F-4B77-8CF5-C6C997D305E5@beckweb.net>
+Date: Mon, 26 Mar 2018 13:22:37 +0200
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-A heap-based buffer overflow (CWE-122) was discovered in the zutils
-implementation of zcat.  It is apparently possible only if the -v
-option, or one of the other options that implies -v, is used.
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software. The following
+releases contain fixes for security vulnerabilities:
 
-This seems to have been first discovered in 2016 as a result of
-interaction between initramfs-tools and zutils, but was initially
-thought to be a bug in the gzip implementation of zcat:
-https://bugs.launchpad.net/ubuntu/+source/intel-microcode/+bug/1507443
-https://bugs.debian.org/815915
+* Ansible Plugin 1.0
+* Cucumber Living Documentation Plugin 1.1.0
+* GitHub Pull Request Builder Plugin 1.40.0
+* Mailer Plugin 1.21
+* Reverse Proxy Auth Plugin 1.6.0
+* vSphere Plugin 2.17
 
-It was eventually reported to the zutils upstream developer (Antonio
-Diaz Diaz, cc'd) in the last few weeks and was fixed in version
-1.8-pre2.  This was announced in:
-https://lists.nongnu.org/archive/html/zutils-bug/2018-08/msg00000.html
+Additionally, these plugin were removed from distribution as they are
+unmaintained, and there are no plans to fix their security issues:
 
-I will request a CVE ID for this.
+* Copy To Slave Plugin
+* Liquibase Runner Plugin
+* Perforce Plugin
 
-Ben.
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2018-03-26/
 
--- 
-Ben Hutchings
-One of the nice things about standards is that
-there are so many of them.
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-261
+GitHub Pull Request Builder Plugin stored serialized objects in `build.xml` 
+files that contained the credential used to poll Jenkins. This can be used 
+by users with master file system access to obtain GitHub credentials.
+
+Since 1.40.0, the plugin no longer stores serialized objects containing the 
+credential on disk.
+
+Builds started before the plugin was updated to 1.40.0 will retain the 
+encoded credentials on disk. We strongly recommend revoking old GitHub 
+credentials used in Jenkins.
+
+
+SECURITY-262
+GitHub Pull Request Builder Plugin stored the webhook secret shared between 
+Jenkins and GitHub in plain text.
+
+This allowed users with Jenkins master local file system access and Jenkins 
+administrators to retrieve the stored password. The latter could result in 
+exposure of the passwords through browser extensions, cross-site scripting 
+vulnerabilities, and similar situations.
+
+GitHub Pull Request Builder Plugin 1.32.1 and newer stores the webhook 
+secret encrypted on disk.
+
+
+SECURITY-308
+Cucumber Living Documentation Plugin disabled the 'Content-Security-Policy' 
+HTTP header XSS protection for files served by Jenkins until Jenkins was 
+restarted whenever a Cucumber peport was viewed by any user.
+
+This has been addressed in version 1.1.0 of the plugin, and it will now 
+request that users manually change the Content-Security-Policy option in 
+Jenkins.
+
+
+SECURITY-373
+Perforce Plugin encrypts its credentials using DES and a public key stored 
+in its public source code, so it only serves as basic obfuscation. This 
+allowed users with Jenkins master local file system access and Jenkins 
+administrators to retrieve the stored password. The latter could result in 
+exposure of the passwords through browser extensions, cross-site scripting 
+vulnerabilities, and similar situations.
+
+As of publication of this advisory, there is no fix. The plugin has been 
+removed from publication at the request of its former maintainers.
+
+
+SECURITY-504
+vSphere Plugin disabled SSL/TLS certificate validation unconditionally,
+allowing potential man-in-the-middle attacks.
+
+vSphere Plugin 2.17 now has SSL/TLS certificate validation enabled by
+default.
+
+
+SECURITY-519
+Liquibase Runner Plugin allows users with Job/Configure permission to 
+configure its build step in a way that loads arbitrary class files into the 
+Jenkins master JVM, resulting in arbitrary code execution.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-536
+Perforce Plugin implements its own credential encryption using DES and an 
+encryption key stored in its public source code. This is not considered a 
+secret by Jenkins, resulting in potential exposure of Perforce credentials 
+stored in job configurations to users with Extended Read permission.
+While these are encrypted, this can only be considered basic obfuscation 
+due to the hard-coded public encryption key used.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-545
+Copy To Slave Plugin allows users with Job/Configure permissions to 
+configure it in such a way that it allows obtaining arbitrary files 
+accessible to the Jenkins master process from the Jenkins master file
+system.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-630
+Ansible Plugin disabled host key verification by default, having it only as 
+an opt-in option.
+
+Ansible Plugin 1.0 now enables host key verification by default, adding 
+options allowing users to opt out.
+
+Existing configurations that previously did not opt into host key 
+verification will have host key verification enabled after update, possibly 
+resulting in failures.
+
+
+SECURITY-736
+Reverse Proxy Auth Plugin persisted a cache of granted authorities (group 
+memberships) on disk.
+
+This could allow users with local Jenkins master file system access to 
+obtain group membership information of Jenkins users.
+
+
+SECURITY-745
+vSphere Plugin did not perform permission checks on methods implementing 
+form validation. This allowed users with Overall/Read access to Jenkins to 
+perform various actions such as:
+
+* Connect to an attacker-specified vSphere server using attacker-specified 
+  credentials IDs obtained through another method, capturing credentials 
+  stored in Jenkins
+* Connect to configured vSphere servers and looking up information, 
+  potentially resulting in denial of service
+
+Additionally, these form validation methods did not require POST requests, 
+resulting in a CSRF vulnerability.
+
+These form validation methods now require POST requests and appropriate 
+user permissions.
+
+
+SECURITY-774 / CVE-2018-8718
+A missing permission check in Mailer Plugin allowed users with Overall/Read 
+access to Jenkins to have it connect to a user-specified mail server with 
+user-specified credentials to send a test email to a user-specified email 
+address. The email subject and body could not be changed. This could result 
+in DoS if, for example, specifying a valid mail server but invalid 
+credentials.
+
+As the same URL did not require POST to be used, it also was vulnerable to 
+cross-site request forgery.
+
