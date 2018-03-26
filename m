@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2008" "Monday" "24" "February" "2020" "15:34:51" "+0100" "Hanno =?iso-8859-1?Q?B=F6ck?=" "hanno@hboeck.de" nil "48" nil "^Date:" nil nil "2" nil nil (number mark "        hanno@hboeck Feb 24   48/2008  " thread-indent "\"[oss-security] mailman 2.x: XSS via file attachments in list archives\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] mailman 2.x: XSS via file attachments in list archives" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1270" "Monday" "26" "March" "2018" "09:55:05" "+0200" "Yves-Alexis Perez" "corsac@debian.org" "<1522050905.3114.4.camel@debian.org>" "38" "Re: [oss-security] Stack buffer overflow in WolfSSL before 3.13.0" nil nil nil "3" "2018032607:55:05" "[oss-security] Stack buffer overflow in WolfSSL before 3.13.0" (number mark "U       corsac@debia Mar 26   38/1270  " thread-indent "\"Re: [oss-security] Stack buffer overflow in WolfSSL before 3.13.0\"\n") "<20180324234829.01cc3edb@pc1>" ("<20180324234829.01cc3edb@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11795 invoked by uid 550); 24 Feb 2020 14:35:04 -0000
+Received: (qmail 26139 invoked by uid 550); 26 Mar 2018 07:55:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,63 +11,56 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11758 invoked from network); 24 Feb 2020 14:35:03 -0000
-Message-ID: <20200224153451.4d773294@computer>
-X-Mailer: Claws Mail 3.17.4 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 24 Feb 2020 15:34:51 +0100
-From: Hanno =?iso-8859-1?q?B=F6ck?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] mailman 2.x: XSS via file attachments in list archives
-To: oss-security@lists.openwall.com
+Received: (qmail 26114 invoked from network); 26 Mar 2018 07:55:21 -0000
+Message-ID: <1522050905.3114.4.camel@debian.org>
+From: Yves-Alexis Perez <corsac@debian.org>
+To: oss-security@lists.openwall.com, Hanno =?ISO-8859-1?Q?B=F6ck?=
+	 <hanno@hboeck.de>
+Date: Mon, 26 Mar 2018 09:55:05 +0200
+In-Reply-To: <20180324234829.01cc3edb@pc1>
+References: <20180324234829.01cc3edb@pc1>
+Content-Type: multipart/signed; micalg="pgp-sha256";
+	protocol="application/pgp-signature"; boundary="=-dtuXm9viAGQt1/EUQFo3"
+X-Mailer: Evolution 3.26.5-1+b1 
+Mime-Version: 1.0
+Subject: Re: [oss-security] Stack buffer overflow in WolfSSL before 3.13.0
 
-I have reported this quite a while ago and forgotten to properly
-announce it.
+--=-dtuXm9viAGQt1/EUQFo3
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-In the mailman 2 mailing list manager there's a stored cross site
-scripting vulnerability due to the way file attachments are handled.
+On Sat, 2018-03-24 at 23:48 +0100, Hanno B=C3=B6ck wrote:
+> https://blog.fuzzing-project.org/63-Stack-buffer-overflow-in-WolfSSL-befo=
+re-3.13.0.html
+>=20
+> During some tests of TLS libraries I found a stack buffer overflow
+> vulnerability in the WolfSSL library. Finding this one was surprisingly
+> simple: I had a wolfssl server that was compiled with address sanitizer
+> and ran the SSL Labs test against it.
 
-Up to mailman 2.1.29 when sending a file without a file extension (or
-an unknown file extension) then the file is stored in the list archive
-with the file extension .obj.
-Most web servers (e.g. apache httpd) will try to assign a mime type
-based on the file extension and entries in /etc/mime.types.
+Hi,
 
-In many Linux distributions (Debian, Fedora, Ubuntu) .obj is not
-specified in /etc/mime.types. This means the web server will usually
-send it out without a mime type.
-The browser will then try to guess the MIME type based on the file's
-content (MIME-sniffing). If the content is HTML then it will execute any
-javascript contained.
+was a CVE requested/assigned for this issue?
 
-I have reported this a while ago to mailman and they changed the
-default from .obj to .bin. All distributions I tested assign
-application/octet-stream to .bin files, which makes sure the browser
-does not try to sniff the file type.
-This change is in mailman 2.1.30rc1, but not in any stable release of
-mailman.
-
-I gave a talk discussing this type of vulnerability at last year's
-SecurityFest conference:
-https://www.youtube.com/watch?v=3D8t8JYpt0egE
-
-
-Mitigating factors:
-* Some web servers send a default mime type (e.g. nginx). This is
-  generally a good way to prevent such vulnerabilities, although some
-  people disagree [1]
-* In Gentoo and Suse it is assigned to application/x-tgif, which is
-  probably not what's intended here, but enough to prevent the
-  vulnerability.
-* Setting "X-Content-Type-Options: nosniff" will not prevent this
-  vulnerability type in all browsers. The reason is that originally
-  this header only applied to javascript and css content, not to HTML.
-  Chrome still disables content sniffing for HTML, Firefox hopefully
-  will soon.
-
-[1] https://www.w3.org/2001/tag/doc/mime-respect.html
+Regards,
 --=20
-Hanno B=C3=B6ck
-https://hboeck.de/
+Yves-Alexis=
+
+--=-dtuXm9viAGQt1/EUQFo3
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCAAdFiEE8vi34Qgfo83x35gF3rYcyPpXRFsFAlq4p1kACgkQ3rYcyPpX
+RFv5KggAvhLuP4G0ML3zL/QE+3lD5D7F0VFgnR5sm5uau6knlGYmYqyox65qiRQu
+75cfOT/uouKvhT7JBeFxAwZWBrCGqS66gCl6IR4gEec/Ub/7HNIvKMJMiPe+gp33
+m6IM0/+NEnL8hE5jMghfBaLm8o8kePPA+/MeKS7oH/GnMW4pcWfZ0kut26RTtCEv
+pu3AlSR5389FG/R7Ko1r5h8CT2ck1zBiYebSb0ruwDwUiK8TPjfA4975sS8UB2Il
+cPaveX8n5e6zlO0wFEmXvl5BK69PbZHJRag3mPaQP236gru/da8sWxvBi4+FXZ9M
+C9HXI3g7mqlKi5l8Yh6kxvJMQxw53A==
+=VHhd
+-----END PGP SIGNATURE-----
+
+--=-dtuXm9viAGQt1/EUQFo3--
