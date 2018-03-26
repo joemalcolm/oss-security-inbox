@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5345" "Wednesday" "10" "January" "2018" "00:56:27" "+0100" "oststrom \\(public\\)" "pub@oststrom.com" "<000101d389a5$76acc680$64065380$@oststrom.com>" "162" "[oss-security] CVE-2017-18016 - Paritytech Parity Ethereum built-in Dapp Browser <= v1.6.10  webproxy token reuse same-origin policy bypass" nil nil nil "1" "2018010923:56:27" "[oss-security] CVE-2017-18016 - Paritytech Parity Ethereum built-in Dapp Browser <= v1.6.10 webproxy token reuse same-origin policy bypass" (number mark "U       pub@oststrom Jan 10  162/5345  " thread-indent "\"[oss-security] CVE-2017-18016 - Paritytech Parity Ethereum built-in Dapp Browser <= v1.6.10  webproxy token reuse same-origin policy bypass\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6092" "Monday" "26" "March" "2018" "13:22:37" "+0200" "Daniel Beck" "ml@beckweb.net" "<0A92B24E-DD0F-4B77-8CF5-C6C997D305E5@beckweb.net>" "164" "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil "3" "2018032611:22:37" "[oss-security] Multiple vulnerabilities in Jenkins plugins" (number mark "U       ml@beckweb.n Mar 26  164/6092  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1993 invoked by uid 550); 10 Jan 2018 00:11:21 -0000
+Received: (qmail 3684 invoked by uid 550); 26 Mar 2018 11:22:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,179 +12,180 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21907 invoked from network); 9 Jan 2018 23:56:37 -0000
-From: "oststrom \(public\)" <pub@oststrom.com>
-To: <oss-security@lists.openwall.com>
-Date: Wed, 10 Jan 2018 00:56:27 +0100
-Message-ID: <000101d389a5$76acc680$64065380$@oststrom.com>
-MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
+Received: (qmail 3658 invoked from network); 26 Mar 2018 11:22:51 -0000
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: AdOJpTmJ0nXENVQWQwW3ezQakAs/yg==
-Content-Language: en-us
-Subject: [oss-security] CVE-2017-18016 - Paritytech Parity Ethereum built-in Dapp Browser <= v1.6.10  webproxy token reuse same-origin policy bypass
+Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
+Message-Id: <0A92B24E-DD0F-4B77-8CF5-C6C997D305E5@beckweb.net>
+Date: Mon, 26 Mar 2018 13:22:37 +0200
+To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3273)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1522063371;aa9eef97;
+X-HE-SMSGID: 1f0QD1-0002y6-Jl
+Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
 
-VuNote
-======
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software. The following
+releases contain fixes for security vulnerabilities:
 
-Author:     <github.com/tintinweb>
-Ref:        https://github.com/tintinweb/pub/tree/master/pocs/cve-2017-18016
-[5]
-Version:    0.3
-Date:       Jun 16th, 2017
+* Ansible Plugin 1.0
+* Cucumber Living Documentation Plugin 1.1.0
+* GitHub Pull Request Builder Plugin 1.40.0
+* Mailer Plugin 1.21
+* Reverse Proxy Auth Plugin 1.6.0
+* vSphere Plugin 2.17
 
-Tag:        parity same origin policy bypass webproxy token reuse
+Additionally, these plugin were removed from distribution as they are
+unmaintained, and there are no plans to fix their security issues:
 
-Overview
---------
+* Copy To Slave Plugin
+* Liquibase Runner Plugin
+* Perforce Plugin
 
-Name:           parity
-Vendor:         paritytech
-References:     * https://parity.io/ [1]
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2018-03-26/
 
-Version:        1.6.8
-Latest Version: 1.7.12 (stable) - fixed
-                1.8.5 (beta) - fixed
-Other Versions: <= 1.6.10 (stable) - vulnerable
-Platform(s):    cross
-Technology:     rust js
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-Vuln Classes:   CWE-346
-Origin:         local (remote website, malicious dapp)
-Min. Privs.:    ---
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
 
-CVE:            CVE-2017-18016
+---
 
+SECURITY-261
+GitHub Pull Request Builder Plugin stored serialized objects in `build.xml` 
+files that contained the credential used to poll Jenkins. This can be used 
+by users with master file system access to obtain GitHub credentials.
 
+Since 1.40.0, the plugin no longer stores serialized objects containing the 
+credential on disk.
 
-Description
----------
-
-quote website [1]
-
->Parity Technologies is proud to present our powerful new Parity Browser.
-Integrated directly into your Web browser, Parity is the fastest and most
-secure way of interacting with the Ethereum network.
-
-Summary 
--------
-
-PoC: https://tintinweb.github.io/pub/pocs/cve-2017-18016/ [4]
-
-> Parity Browser <=1.6.8 allows remote attackers to bypass the Same Origin
-Policy and obtain sensitive information by requesting other websites via the
-Parity web proxy engine (reusing the current website's token, which is not
-bound to an origin).
-
-![parity cookie](sop_cookie.gif)
-
-**(A)** Ethereum Parity's built-in dapp/web-browsing functionality is  
-rendering browser same-origin policy (SOP) ineffective by proxying 
-requests with the parity main process. As a result, any website 
-navigated to ends up being origin http://localhost:8080. This also means
-that all websites navigated to share the same origin and thus are not 
-protected by the browser SOP allowing any proxied website/dapp to access
-another proxied website/dapp's resources (Cookies, ...).
-
-//see attached PoC - index.html / PoC
-
-![parity frame](sop_frame.gif)
-
-**(B)** Worse, due to the structure of proxy cache urls and the fact that
-they 
-contain a reusable non-secret non-url specific cache-token it is 
-possible for one proxied website/dapp to navigate to any other proxied
-website/dapp gaining full script/XHR control due to **(A)** the SOP being
-applied without any restrictions. This could allow a malicious
-website/dapp to take control of another website/dapp, performing user
-interactions, XHR or injecting scripts/DOM elements to mislead the
-user or to cause other unspecified damage.
-
-When navigating to a website with the built-in parity webbrowser a webproxy
-request
-token is requested and sent along an encoded request for an url. For
-example, navigating
-parity to http://oststrom.com the url gets turned into a proxy url like
-http://127.0.0.1:8080/web/8X4Q4EBJ71SM2CK6E5AQ6YBNB4NPGX3ME0X2YBVFEDT76X3JDX
-PJWRVFDM of
-the form http://127.0.0.1:8080/web/[base32_encode(token+url)]. A malicious
-dapp can use
-this information to decode its own url, extract the token and reuse it for
-any other 
-url as the token is not locked to the url. The PoC exploits this in order to
-load any
-other website into a same-origin iframe by reusing the proxy token.
-
-Code see [2]
-
-//see attached PoC - index.html / PoC
-//see github [5] for details 
-    
-
-Proof of Concept
-----------------
-
-Prerequisites: 
-
-* (if hosted locally) modify /etc/hosts to resolve your testdomain to your
-webserver
-* make `index.html` accessible on a webserver (e.g. `cd /path/to/index.html;
-python -m SimpleHTTPServer 80`)
-
-1. launch parity, navigate to the built-in webbrowser
-(http://127.0.0.1:8180/#/web)
-2. navigate the built-in parity webbrowser to where the PoC `index.html` is
-hosted (e.g. [4])
-3. follow the instructions. 
-4. Issue 1: navigate to some websites to have them set cookies, reload the
-PoC page and click "Display Cookies". Note that while the main request is
-proxied by parity, subsequent calls might not be (e.g. xhr, resources). That
-means you'll only see cookies set by the main site as only the initial call
-shares the origin `localhost:8080`.
-5. Issue 2: enter an url into the textbox and hit `Spawn SOP Iframe`. A new
-iframe will appear on the bottom of the page containing the proxied website.
-Note that the calling website has full script/dom/xhr access to the proxied
-target. You can also use the "Display Cookies" button from Issue 1 to show
-cookies that have been merged into the origin by loading the proxied iframe.
-6. Demo 2: Just a PoC to find local-lan web interfaces (e.g. your gateways
-web interface) and potentially mess with its configuration (e.g. router with
-default password on your lan being reconfigured by malicious dapp that
-excploits the token reuse issue 2)
-
- 
-Fix
------
-
-* Commit [3] (first in 1.7.0)
-* Does not fix Issue #1 - sites are generally put into same origin due to
-proxy
-* Fixes Issue #2 - Token Reuse
-* Parity now added a note that browsing websites with their browser is
-insecure
-
-![parity fixed](v1712.png)
-
-* Issue #1 is not yet fixed as the cookie of instagram.com is still shown.
-* Parity v1.7.12 added a note.
-
-References
-----------
-
-[1] https://parity.io/
-[2]
-https://github.com/paritytech/parity/blame/e8b418ca03866fd952d456830b30e9225
-c81035a/dapps/src/web.rs
-[3]
-https://github.com/paritytech/parity/commit/53609f703e2f1af76441344ac3b72811
-c726a215
-[4] https://tintinweb.github.io/pub/pocs/cve-2017-18016/
-[5] https://github.com/tintinweb/pub/tree/master/pocs/cve-2017-18016
+Builds started before the plugin was updated to 1.40.0 will retain the 
+encoded credentials on disk. We strongly recommend revoking old GitHub 
+credentials used in Jenkins.
 
 
-Contact
--------
+SECURITY-262
+GitHub Pull Request Builder Plugin stored the webhook secret shared between 
+Jenkins and GitHub in plain text.
 
-https://github.com/tintinweb
+This allowed users with Jenkins master local file system access and Jenkins 
+administrators to retrieve the stored password. The latter could result in 
+exposure of the passwords through browser extensions, cross-site scripting 
+vulnerabilities, and similar situations.
+
+GitHub Pull Request Builder Plugin 1.32.1 and newer stores the webhook 
+secret encrypted on disk.
+
+
+SECURITY-308
+Cucumber Living Documentation Plugin disabled the 'Content-Security-Policy' 
+HTTP header XSS protection for files served by Jenkins until Jenkins was 
+restarted whenever a Cucumber peport was viewed by any user.
+
+This has been addressed in version 1.1.0 of the plugin, and it will now 
+request that users manually change the Content-Security-Policy option in 
+Jenkins.
+
+
+SECURITY-373
+Perforce Plugin encrypts its credentials using DES and a public key stored 
+in its public source code, so it only serves as basic obfuscation. This 
+allowed users with Jenkins master local file system access and Jenkins 
+administrators to retrieve the stored password. The latter could result in 
+exposure of the passwords through browser extensions, cross-site scripting 
+vulnerabilities, and similar situations.
+
+As of publication of this advisory, there is no fix. The plugin has been 
+removed from publication at the request of its former maintainers.
+
+
+SECURITY-504
+vSphere Plugin disabled SSL/TLS certificate validation unconditionally,
+allowing potential man-in-the-middle attacks.
+
+vSphere Plugin 2.17 now has SSL/TLS certificate validation enabled by
+default.
+
+
+SECURITY-519
+Liquibase Runner Plugin allows users with Job/Configure permission to 
+configure its build step in a way that loads arbitrary class files into the 
+Jenkins master JVM, resulting in arbitrary code execution.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-536
+Perforce Plugin implements its own credential encryption using DES and an 
+encryption key stored in its public source code. This is not considered a 
+secret by Jenkins, resulting in potential exposure of Perforce credentials 
+stored in job configurations to users with Extended Read permission.
+While these are encrypted, this can only be considered basic obfuscation 
+due to the hard-coded public encryption key used.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-545
+Copy To Slave Plugin allows users with Job/Configure permissions to 
+configure it in such a way that it allows obtaining arbitrary files 
+accessible to the Jenkins master process from the Jenkins master file
+system.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-630
+Ansible Plugin disabled host key verification by default, having it only as 
+an opt-in option.
+
+Ansible Plugin 1.0 now enables host key verification by default, adding 
+options allowing users to opt out.
+
+Existing configurations that previously did not opt into host key 
+verification will have host key verification enabled after update, possibly 
+resulting in failures.
+
+
+SECURITY-736
+Reverse Proxy Auth Plugin persisted a cache of granted authorities (group 
+memberships) on disk.
+
+This could allow users with local Jenkins master file system access to 
+obtain group membership information of Jenkins users.
+
+
+SECURITY-745
+vSphere Plugin did not perform permission checks on methods implementing 
+form validation. This allowed users with Overall/Read access to Jenkins to 
+perform various actions such as:
+
+* Connect to an attacker-specified vSphere server using attacker-specified 
+  credentials IDs obtained through another method, capturing credentials 
+  stored in Jenkins
+* Connect to configured vSphere servers and looking up information, 
+  potentially resulting in denial of service
+
+Additionally, these form validation methods did not require POST requests, 
+resulting in a CSRF vulnerability.
+
+These form validation methods now require POST requests and appropriate 
+user permissions.
+
+
+SECURITY-774 / CVE-2018-8718
+A missing permission check in Mailer Plugin allowed users with Overall/Read 
+access to Jenkins to have it connect to a user-specified mail server with 
+user-specified credentials to send a test email to a user-specified email 
+address. The email subject and body could not be changed. This could result 
+in DoS if, for example, specifying a valid mail server but invalid 
+credentials.
+
+As the same URL did not require POST to be used, it also was vulnerable to 
+cross-site request forgery.
 
