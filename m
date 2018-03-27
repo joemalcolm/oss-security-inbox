@@ -1,36 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/15/3
-Message-ID: <CABBupGWtC2vN-JzXWeuDaN-_bP6yzRJhK+DAfr=gSGLZJGbFCQ@mail.gmail.com>
-Date: Thu, 15 Feb 2018 14:09:50 -0800
-From: Rohini Palaniswamy <rohini@...che.org>
-To: dev@...ie.apache.org, user@...ie.apache.org, announce@...che.org,  security@...che.org, oss-security@...ts.openwall.com
-Subject: [CVE-2017-15712] Apache Oozie Server vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/27/1
+Message-ID: <CAKQ1sVM601_qrcr_-Y8axM=etSCDVh7k3h_ZkRjSA1Va1aH_Tw@mail.gmail.com>
+Date: Tue, 27 Mar 2018 10:58:50 +0200
+From: Yann Ylavic <ylavic.dev@...il.com>
+To: Dagobert Michelsen <dam@...ncsw.org>
+Cc: httpd-security <security@...pd.apache.org>, announce@...pd.apache.org,  oss-security@...ts.openwall.com
+Subject: Re: CVE-2017-15710: Out of bound write in mod_authnz_ldap when using too small Accept-Language values
 Content-Type: text/plain; charset=utf-8
 
-Apache Oozie is a workflow scheduler system to manage Apache Hadoop jobs.
+Hi Dago,
 
-Severity: Severe
+On Mon, Mar 26, 2018 at 9:42 PM, Dagobert [...] wrote:
+>
+> Am 26.03.2018 um 07:06 schrieb Daniel Ruggeri:
+>>
+>> Users of (the now end-of-life) httpd 2.2 who cannot upgrade at this time
+>> should apply CVE-2017-15710.patch, which is available at
+>>
+>>   https://www.apache.org/dist/httpd/patches/apply_to_2.2.34/
+>
+> This link does not exist, there is only
+>   https://www.apache.org/dist/httpd/patches/apply_to_2.4.27/
 
-Vendor:
-The Apache Software Foundation
+Thanks for noticing and letting us know.
 
-Versions Affected:
-Oozie 3.1.3-incubating to Oozie 4.3.0
-Oozie 5.0.0-beta1
+The 2.2 version of httpd has ended its long life and went to the attic
+(almost simultaneously with this announcement):
+  https://archive.apache.org/dist/httpd/patches/apply_to_2.2.34/
 
-Description:
-Vulnerability allows a user of Oozie to expose private files on the Oozie
-server process.  The malicious user can construct a workflow XML file
-containing XML directives and configuration that reference sensitive files
-on the Oozie server host.
-
-Mitigation:
-Users should upgrade to Apache Oozie 4.3.1 release from
-http://oozie.apache.org/ .
-Users should use 5.0.0-beta1 release only for testing purposes and wait for
-the 5.0.0 GA which will have the fix.
-
-Credit:
-The issues were discovered by Daryn Sharp and Jason Lowe of Oath (formerly
-Yahoo! Inc).
-
+Regards,
+Yann.
