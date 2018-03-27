@@ -1,40 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/15/8
-Message-ID: <alpine.GSO.2.20.1906151433090.1813@freddy.simplesystems.org>
-Date: Sat, 15 Jun 2019 14:41:28 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/27/3
+Message-ID: <CA+fCnZcF-sNgp=Z35B7SvktMsex3CKYh+VcBs_1me43ZkB6eOg@mail.gmail.com>
+Date: Tue, 27 Mar 2018 14:50:32 +0200
+From: Andrey Konovalov <andreyknvl@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
+Subject: Linux kernel: syzkaller dashboard
 Content-Type: text/plain; charset=utf-8
 
-On Sat, 15 Jun 2019, Alex Gaynor wrote:
->
-> I think you're quite right that the central challenge here is the mismatch
-> between how Linux distributions operate and what their claims/people's
-> expectations are.
+Hi!
 
-Within four years, most users will encounter updated software which 
-includes the fixes, assuming that an available developer did produce a 
-fix.
+Syzkaller dashboard is live:
+https://syzkaller.appspot.com/
 
-If you are interested in improving the software, I suggest rolling up 
-your sleeves and getting involved with implementing fixes.  Indeed, 
-only a small fraction of involved people are working on implementing 
-fixes.
+See the full announcement here:
+https://lwn.net/Articles/749910/
 
-> PS: I'd be remiss if I didn't at least mention that basically all the bug
-> classes we're discussing are induced by C/C++'s memory unsafety and better
-> programming language prevent them outright.
+Syzkaller [1] is an unsupervised coverage-guided kernel fuzzer, mostly
+targeted at fuzzing the Linux kernel. Since some time ago, bugs found
+by syzbot [2], a continuous fuzzing system for syzkaller, are
+automatically reported to the kernel maintainers. The dashboard
+provides a web interfaces for all the bugs reported by syzbot.
 
-The "better" programming languages may prevent some of these problems 
-due to not allowing direct access to memory, but they introduce 
-new/different types of problems which can also be serious.  Indeed 
-some popular languages like Python, Perl, or Javascript seem more 
-dangerous than C/C++ programs.
+Thanks!
 
-Bob
--- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
-Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
+[1] https://github.com/google/syzkaller
+
+[2] https://github.com/google/syzkaller/blob/master/docs/syzbot.md
