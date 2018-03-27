@@ -1,42 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/17/2
-Message-ID: <20181017061446.GM5150@oevtugenva.nrevsny.pk>
-Date: Wed, 17 Oct 2018 02:14:46 -0400
-From: Rich Felker <dalias@...c.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/27/4
+Message-ID: <1140246180.13859318.1522172259182.JavaMail.zimbra@redhat.com>
+Date: Tue, 27 Mar 2018 13:37:39 -0400 (EDT)
+From: Vladis Dronov <vdronov@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Perry Metzger <perry@...rmont.com>
-Subject: Re: ghostscript: 1Policy operator gives access to .forceput CVE-2018-18284
+Subject: CVE-2018-1091: Linux kernel: a KVM guest kernel crash during core dump on POWER9 host
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 16, 2018 at 01:33:32PM -0700, Tavis Ormandy wrote:
-> On Tue, Oct 16, 2018 at 12:57 PM Perry E. Metzger <perry@...rmont.com>
-> wrote:
-> 
-> > On Tue, 16 Oct 2018 11:06:14 -0700 Tavis Ormandy <taviso@...gle.com>
-> > wrote:
-> > > Side note: I'm done looking at ghostscript for now, but still
-> > > *strongly* recommend that we deprecate untrusted postscript and
-> > > disable ghostscript coders by default in policy.xml.
-> >
-> > Again, given that PostScript is an archival format for a lot of
-> > documents, wouldn't a version of ghostscript with all the ability to
-> > do anything dangerous removed from the interpreter at compile time be
-> > rational?
-> >
-> >
-> We have to work with what we've got.
-> 
-> Even with the easy to exploit stuff compiled out (which upstream do not
-> support), I haven't been bothering to get CVE's for all the memory
-> corruption or UaF I've been reporting, because nobody can keep up with
-> these operator leaks anyway.
+Hello,
 
-An obvious fix for UaF's would be just removing the frees. Use of gs
-as an interactive program where leaks would matter is a historical
-curiosity; the only meaningful modern use is as a converter.
+A guest kernel crash can be triggered from unprivileged userspace during core
+dump on POWER host due to a missing processor feature check and an erroneous
+use of transactional memory (TM) instructions in the core dump path leading to
+a denial of service.
 
-If someone insists there are still uses where freeing matters,
-something like talloc may be a reasonable solution, removing all the
-internal frees and only performing frees of the whole context.
+References:
 
-Rich
+https://marc.info/?l=linuxppc-embedded&m=150535531910494&w=2
+
+https://bugzilla.redhat.com/show_bug.cgi?id=1558149
+
+An upstream fix:
+
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c1fa0768a8713b135848f78fd43ffc208d8ded70
+
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
