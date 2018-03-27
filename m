@@ -1,4 +1,9 @@
-Received: (qmail 29904 invoked by uid 550); 14 Dec 2025 11:09:08 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["581" "Tuesday" "27" "March" "2018" "12:16:58" "+0200" "Lukasz Lenart" "lukaszlenart@apache.org" "<CAMopvkNZoHH3qx+9brdRdAoZ7zy9w6QPotjohVwqsopGEk=sgw@mail.gmail.com>" "16" "[oss-security] [ANN] A crafted XML request can be used to perform a DoS attack when using the Struts REST plugin" nil nil nil "3" "2018032710:16:58" "[oss-security] [ANN] A crafted XML request can be used to perform a DoS attack when using the Struts REST plugin" (number mark "U       lukaszlenart Mar 27   16/581   " thread-indent "\"[oss-security] [ANN] A crafted XML request can be used to perform a DoS attack when using the Struts REST plugin\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 5980 invoked by uid 550); 27 Mar 2018 10:30:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,78 +12,39 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 29860 invoked from network); 14 Dec 2025 11:09:08 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=nodmarc.schlittermann.de; s=2020-06-19; h=In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:To:From:Date:Cc:
-	Content-Description:Content-ID:Content-Transfer-Encoding:Resent-Cc:Resent-To;
-	bh=C6RVvjZD/ktW9mQRjaKNsQDa8NzOVto+vIZ9Y4iFl+E=; b=KuHewXHyLIbg89/oHd+7IrDBxz
-	doHfmMQ8u9qSWun5VdOyq8sdCNgKTrnLvPg9irqgDhBLmHxlpFTCKM5IwvfCZ54w2NDcc0xVcWl3p
-	Nr9MM37d/LTYwmbycWz1GQbgXwtQewz4NO8dWF3qfzCZUzLDhj36PuDVYzIDpWh4Q6pmusRIqZc9Q
-	69ck+6pDx4A4pEin+A1ygYAho9CJAPMsRahVtIF9/rgafdrf9MvDGQiW9ztrAunRXA6FEX0IMhiBM
-	YiECCqWzH9lCox6U/iVdngmiEmtz/eEpw1GsBkBtVm9DA+UuYZFRgUsG8NpVK08XNkN/xKheTW7kH
-	vFgxuGyg==;
-Date: Sun, 14 Dec 2025 12:08:57 +0100
-From: Heiko Schlittermann <hs@nodmarc.schlittermann.de>
-To: oss-security <oss-security@lists.openwall.com>
-Message-ID: <aT6ayYIIGv8i5vFu@jumper.schlittermann.de>
-Mail-Followup-To: oss-security <oss-security@lists.openwall.com>
-References: <aTlswbw7mu0DyFec@jumper.schlittermann.de>
- <aTrbpVe2BkcRT6L9@jumper.schlittermann.de>
+Received: (qmail 21964 invoked from network); 27 Mar 2018 10:17:36 -0000
+X-Gm-Message-State: AElRT7FiMJimSFR55I8Z9Ol4tlIF4FcJe4KklK8ATwfpUGHOYW0vKedc
+	0jAn4o13lWiW79BOlGOygbk0IAK/1aZOFll/ZGw=
+X-Google-Smtp-Source: AIpwx4/dsjpM6ZPm/d1hZKKgLiAtVb3h7ys2PR+zWxQeKbQNn+k4f4Nqgr09PV2fv5pI19MaHa9cTx6wGEf0zOjXlpg=
+X-Received: by 2002:a19:d202:: with SMTP id j2-v6mr1519070lfg.68.1522145838923;
+ Tue, 27 Mar 2018 03:17:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="DSfZnjoGQzbVNN+P"
-Content-Disposition: inline
-In-Reply-To: <aTrbpVe2BkcRT6L9@jumper.schlittermann.de>
-Organization: schlittermann -- internet & unix support
-X-Face: =y#&-VlCH8uT|8#-#JE_^c<:+qPbYxFD`}8`m)xjyA$93tpwm-vKsa(V,0?906(2VIVNQbU
- QzD%zhE+~-AA?\v-v.HY6]ebO4_$vY`l|||Q!EZT5*Xx/>Fj{8E_a.;;#<4S$>&T%n5()2Yt=R5FSC
- y:Na&@T{Rf`kPq^'ffPFA%`mP~>%-LU$d*]]{-%>j={&MsMND.">]H)&#AoSI~(U8Jk;v*;,Pf+l85
- X?H&`
-X-Telegram: @HeikoSchlittermann
-X-Threema: T5RPWMSS
-X-Signal: +49.172.7909055
-X-Phone: +49.172.7909055
-X-SMS: +49.172.7909055
-X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
-X-GPG-Key-ID: F69376CE
-Subject: [oss-security] Re: Update: CVE-2025-67896: EXIM-Security-2025-12-09.1: Exim 4.99:
- Remote heap corruption
-
---DSfZnjoGQzbVNN+P
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+From: Lukasz Lenart <lukaszlenart@apache.org>
+Date: Tue, 27 Mar 2018 12:16:58 +0200
+X-Gmail-Original-Message-ID: <CAMopvkNZoHH3qx+9brdRdAoZ7zy9w6QPotjohVwqsopGEk=sgw@mail.gmail.com>
+Message-ID: <CAMopvkNZoHH3qx+9brdRdAoZ7zy9w6QPotjohVwqsopGEk=sgw@mail.gmail.com>
+To: Struts Users Mailing List <user@struts.apache.org>
+Cc: announce@apache.org, announcements@struts.apache.org, 
+	oss-security@lists.openwall.com, 
+	"Munoz, Alvaro" <alvaro.munoz@microfocus.com>, "Grushka, Yevgeniy" <grushka@microfocus.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] [ANN] A crafted XML request can be used to perform a DoS attack when
+ using the Struts REST plugin
 
-Update: We got assigned CVE-2025-67896
+The Apache Security Struts Team recommends to immediately upgrade your
+Struts 2 based projects to use the latest released version of the
+Apache Struts. This is necessary to prevent your publicly accessible
+web site, which is using the Struts REST plugin and performing XML
+serialisation, from being exposed to possible DoS attack.
 
-    Best regards from Dresden/Germany
-    Viele Gr=C3=BC=C3=9Fe aus Dresden
-    Heiko Schlittermann
+You can find more details in a Security Bulletin S2-056 -
+https://cwiki.apache.org/confluence/display/WW/S2-056
+
+All developers are strongly advised to perform this action.
+
+
+Kind regards
 --=20
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
-
---DSfZnjoGQzbVNN+P
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEE3ZjZI1nenjwmY/KRaX8O3WgJn28FAmk+msUACgkQaX8O3WgJ
-n2/17RAArVWp//nDhWkpHB3fJtR+Qz+LhwQdbY1eDY89YggYEBZUveOxMTqnRf3O
-b/E8BEkUjmA/mqARK4HaIgcgP3jC0WycNdNevc4MhGFLQaz0gySz6lCktpMa61Qk
-sSQvF+DouaBzN7BHpVjMT7gOSwDSI0HKYgbtaoLY3+VJP9Tpk6TI2gGxu0kiRWZN
-5aDXbkkBDcx5+rn2/OLPuU79Ue1yWDyBxM+jHwWvbKr3MG07YF6PYa/uw6K26yke
-08zYi6TmCgpeYhjh3poUugxNqB9xGSmWh4Xp3e2tB6wc72NKqcX9K6H68v0wEG2V
-cNKalstYKkPVkBLkuj1z5F0qjTQeyYWTYgoHodfsGqxQz/FqQqZe2TtqpznnYpM2
-6ggjZEVFp4vk3wO1HB0H9JMubIiCqDY0a5o2U1wg5LR1js+DVfe85iuS7xX4A8SC
-Sm6TrMCc343uzT6XrX/u294ySxzJDu70vj5PVzApU0Bny5dPUg19kBhIbavC1jMZ
-ffGHmA4tYLpsY5xAMAfowlNMouhLEww02bbd13D+ZyH3HkHimpaYeH01g5dsRVLa
-SfKQsbACLjOOI8xcOXRSHI5b8mARsNvr4ufZvu57krzygTrj3xK+2jwrq1hF9kEX
-0OgzbnsKgXDQhjQ2/29JpmU/a5W5y77goVygmXStmpBv9ctqUDY=
-=v4CM
------END PGP SIGNATURE-----
-
---DSfZnjoGQzbVNN+P--
+=C5=81ukasz
++ 48 606 323 122 http://www.lenart.org.pl/
