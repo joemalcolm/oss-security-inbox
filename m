@@ -1,28 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/27/1
-Message-ID: <CAFRnB2U-tEMNDwXgY-_-VxA8A8anCF22YeJT_ELsGLjRUy-1xg@mail.gmail.com>
-Date: Tue, 26 Jun 2018 21:18:39 -0400
-From: Alex Gaynor <alex.gaynor@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/29/1
+Message-ID: <2142970777.14264014.1522310169467.JavaMail.zimbra@redhat.com>
+Date: Thu, 29 Mar 2018 03:56:09 -0400 (EDT)
+From: Vladis Dronov <vdronov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE for PyYAML RCE-factory API
+Subject: a number of CVEs for issues in the filesystem's code in the Linux kernel
 Content-Type: text/plain; charset=utf-8
 
-In releases of PyYAML < 4.1 using the `yaml.load()` API on untrusted input
-could lead to arbitrary code execution. Instead, users were advised to use
-the `yaml.safe_load()` API.
+Hello,
 
-Starting with the PyYAML 4.1 release, the `yaml.load()` API has been made
-safe-by-default. Users wishing to opt into the old behavior and produce
-RCEs (or who trust their input) can use the `yaml.danger_load`.
+A number of CVEs were assigned to recently found issues in the filesystem's code in the Linux kernel:
 
-Because of the degree to which this API presented a footgun, I would like
-to request a CVE for it.
+====
 
-Alex
+CVE-2018-1092 kernel: NULL pointer dereference in ext4/mballoc.c:ext4_process_freed_data() when mounting crafted ext4 image
 
--- 
-"I disapprove of what you say, but I will defend to the death your right to
-say it." -- Evelyn Beatrice Hall (summarizing Voltaire)
-"The people's good is the highest law." -- Cicero
-GPG Key fingerprint: D1B3 ADC0 E023 8CA6
+The Linux kernel through version 4.15 is vulnerable to a NULL pointer dereference
+in the ext4/mballoc.c:ext4_process_freed_data() function. An attacker with
+privileged access could exploit this by mounting a crafted ext4 image to cause a kernel panic.
 
+References:
+https://bugzilla.kernel.org/show_bug.cgi?id=199179
+https://bugzilla.redhat.com/show_bug.cgi?id=1560777
+
+=====
+
+CVE-2018-1093 kernel: Out of bounds read in ext4/balloc.c:ext4_valid_block_bitmap() causes crash with crafted ext4 image
+
+The Linux kernel through version 4.15 is vulnerable to an out-of-bounds
+read in ext4/balloc.c:ext4_valid_block_bitmap() function. An privileged
+attacker could exploit this by mounting a crafted ext4 image to cause a crash.
+
+References:
+https://bugzilla.kernel.org/show_bug.cgi?id=199181
+https://bugzilla.redhat.com/show_bug.cgi?id=1560782
+
+=====
+
+CVE-2018-1094 kernel: NULL pointer dereference in ext4/xattr.c:ext4_xattr_inode_hash() causes crash with crafted ext4 image
+
+The Linux kernel through version 4.15 is vulnerable to a NULL pointer dereference
+in the ext4/xattr.c:ext4_xattr_inode_hash() function. A privileged attacker could
+exploit this to cause a NULL pointer dereference with a crafted ext4 image.
+
+References:
+https://bugzilla.kernel.org/show_bug.cgi?id=199183
+https://bugzilla.redhat.com/show_bug.cgi?id=1560788
+
+=====
+
+CVE-2018-1095 kernel: NULL pointer dereference in fs/posix_acl.c:get_acl() causes crash with crafted ext4 image
+
+The Linux kernel through version 4.15 is vulnerable to a NULL pointer
+dereference in the  fs/posix_acl.c:get_acl()function. A privileged attacker
+could exploit this to cause a NULL pointer dereference with a crafted ext4
+image.
+
+References:
+
+https://bugzilla.kernel.org/show_bug.cgi?id=199185
+https://bugzilla.redhat.com/show_bug.cgi?id=1560793
+
+=====
+
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
