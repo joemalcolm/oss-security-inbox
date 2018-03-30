@@ -1,40 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/14/1
-Message-ID: <31e2919a-bcc5-bd87-8df2-5d14054ec65b@canonical.com>
-Date: Tue, 14 Aug 2018 09:16:03 +0100
-From: Chris Coulson <chris.coulson@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2018-14424: Use-after-free in GDM
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/30/2
+Message-ID: <20180330162801.GB10289@openwall.com>
+Date: Fri, 30 Mar 2018 18:28:01 +0200
+From: Solar Designer <solar@...nwall.com>
+To: flanker017 <flankerhqd017@...il.com>
+Cc: oss-security@...ts.openwall.com, zhuozhuozhuozhuozhuo@...il.com, l.dmxcsnsbh@...il.com
+Subject: Re: Fwd: [scr485440] 5 Samsung CVEs
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-I recently discovered a use-after-free in the GDM daemon, which is
-possible to trigger via a specially crafted sequence of D-Bus method
-calls as an unprivileged user.
+On Fri, Mar 30, 2018 at 11:08:02PM +0800, flanker017 wrote:
+> The following issues are addressed with corresponding CVEs assigned by
+> MITRE for Samsung Mobile Security February update 2018.
 
-Details from https://gitlab.gnome.org/GNOME/gdm/issues/401 follow:
+As a moderator for oss-security, I'd like open source relevance to be
+clear from the postings, like Idler did here for another Samsung issue:
 
-----
-When GdmDisplayStore (daemon/gdm-display-store.c) emits the
-"display-removed" signal, the GdmDisplay being removed has already been
-removed from the store. Subsequent calls to gdm_display_store_lookup
-from signal handlers using the display ID associated with the signal
-then fail to look up the removed display. In on_display_removed
-(daemon/gdm-manager.c), this results in the display object not being
-correctly unexported from the system bus. Subsequent D-Bus calls to the
-stale object trigger a use-after-free.
+http://www.openwall.com/lists/oss-security/2017/01/19/3
 
-An unprivileged user can trigger this by creating a transient display,
-waiting a short time and then making D-Bus requests to it.
-----
+Also see the followups to that posting, via "thread-next" links.
 
-A fix for this can be found in the upstream git repository: https://gitlab.gnome.org/GNOME/gdm/commit/1ac1697b3b019f50729a6e992065959586e170da.
+Please reply (to the list) with this sort of detail for these issues.
 
-Many thanks,
-- Chris
+Thanks,
 
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Alexander
