@@ -1,32 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/07/5
-Message-ID: <CAA7hUgH=wqxeQpG-xJ_u1QHHFcUnuS=zCtD6voO_e+BZQ+=fyA@mail.gmail.com>
-Date: Wed, 7 Mar 2018 14:53:07 +0100
-From: Raphael Geissert <atomo64@...il.com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Cc: security@...e.de, avi.miller@...il.com, security@...are.com
-Subject: And Harbor? (was: Portus, missing certificate validation on proxified https traffic)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/02/1
+Message-ID: <CAK0qHnqF7Ls+FfxfO=kdnaAWDrLcRSE8PUUyp20SKht1Ko+sWQ@mail.gmail.com>
+Date: Sun, 1 Apr 2018 21:11:12 -0700
+From: Denis Magda <dmagda@...che.org>
+To: dev <dev@...ite.apache.org>, user@...ite.apache.org,  Man Yue Mo <mmo@...mle.com>, security@...che.org, security@...ite.apache.org,  oss-security@...ts.openwall.com
+Subject: [CVE-2018-1295]: Possible Execution of Arbitrary Code Within Deserialization Endpoints of Apache Ignite
 Content-Type: text/plain; charset=utf-8
 
-On 7 March 2018 at 14:34, Raphael Geissert <atomo64@...il.com> wrote:
-[...]
-> Oh and it appears that this one comes from the
-> Portus-On-OracleLinux7[4] repo from which "[they] borrowed a lot of
-> the NGinx configuration"[2] :
-> https://github.com/Djelibeybi/Portus-On-OracleLinux7/blob/f2e7a167f6325a0247eb1ca49a962478daf49a8b/nginx/proxy.conf#L57
+CVE-2018-1295: Possible Execution of Arbitrary Code Within Deserialization
+Endpoints of Apache Ignite
 
->From a quick look at harbor, it would appear to also be missing the
-certificate validation on the proxified connections:
-https://github.com/vmware/harbor/tree/master/make/common/templates/nginx
-(as of 19a13e8)
+Severity: Important
 
-CC'ing vmware security, fwiw.
+Vendor: The Apache Software Foundation
 
-> [1]https://github.com/SUSE/Portus/blob/146076d543e8f1618f837dd7466c5f0fdc26438d/examples/compose/nginx/nginx.conf
-> [2]https://github.com/SUSE/Portus/blob/146076d543e8f1618f837dd7466c5f0fdc26438d/examples/compose/README.md
-> [3]https://github.com/SUSE/Portus/blob/146076d543e8f1618f837dd7466c5f0fdc26438d/examples/compose/docker-compose.yml#L21
-> [4] https://github.com/Djelibeybi/Portus-On-OracleLinux7
+Versions Affected: Apache Ignite 2.3 or earlier
 
-Cheers,
--- 
-Raphael Geissert
+Impact:
+An attacker can execute arbitrary code on Ignite nodes in the case when
+Ignite classpath contains arbitrary vulnerable classes.
+
+Description:
+Apache Ignite serialization mechanism does not have a list of classes
+allowed for serialization/deserialization, which makes it possible to run
+arbitrary code when 3-rd party vulnerable classes are present in Ignite
+classpath. The vulnerability can be exploited if the one sends a specially
+prepared form of a serialized object to one of the deserialization
+endpoints of some Ignite components -   discovery SPI, Ignite persistence,
+Memcached endpoint, socket steamer.
+
+Mitigation:
+•    All Ignite versions: make sure there are no vulnerable classes among
+your custom code used in Apache Ignite.
+•    Ignite 2.3 or earlier users: upgrade to Ignite 2.4 and use
+IGNITE_MARSHALLER_WHITELIST and/or IGNITE_MARSHALLER_BLACKLIST system
+properties to define classes allowed for deserialization
+
+Credit:
+The vulnerability was discovered by Man Yue Mo of lgtm.com.
+
+References:
+* http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-1295
+
