@@ -1,4 +1,9 @@
-Received: (qmail 22415 invoked by uid 550); 24 Jan 2025 14:24:55 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["7402" "Monday" "2" "April" "2018" "18:15:30" "-0600" "Damien Miller" "djm@openbsd.org" "<0d064c34ac3bb6e9@openbsd.org>" "187" "[oss-security] Announce: OpenSSH 7.7 released" nil nil nil "4" "2018040300:15:30" "[oss-security] Announce: OpenSSH 7.7 released" (number mark "U       djm@openbsd. Apr  2  187/7402  " thread-indent "\"[oss-security] Announce: OpenSSH 7.7 released\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 18032 invoked by uid 550); 3 Apr 2018 00:15:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,388 +12,197 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 22372 invoked from network); 24 Jan 2025 14:24:55 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1737728687; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=ffg7DLu/IhzGgMTWFZL/WadumqnyEB0gqmtw9Ow3HFo=;
-	b=L3Bphk8cHJyb2Cefbc3Ri4fs4XnMRcmBgt06GVFggdeBUMLsx1BkhHFQHV1oO6UCnbJFrO
-	fkkHqmJ428wFdIdDwVlYW6nDosiVSD6eA1Qds/1KnIshvBeihU6Bcxs6mr/GU28H/lPLqD
-	Lz364sRWkdhsHacxCvc6S/nTQ5gIOoE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1737728687;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=ffg7DLu/IhzGgMTWFZL/WadumqnyEB0gqmtw9Ow3HFo=;
-	b=tfwrIQLH25WRAfxUxtyNhFeA90dC0ioXU0wmP5CQgNb68mHHhUyvOmfYJ2w4Z3VUwF9vaL
-	ZzLCQ4eNJrs6UfBQ==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1737728686; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=ffg7DLu/IhzGgMTWFZL/WadumqnyEB0gqmtw9Ow3HFo=;
-	b=VTnW/s0PY6REt42nVjaDPOnVNlRlZTq25GeEHOC2jh3Ctiyhx0REYLAfvPK8D5yJOLIAtd
-	3NofSiKFZW8IM4UH1YiMcIrvhjWeoxSTpygYDik3Dqip+Yt9C8FFU7vuoSZYmMfMTTu6Zm
-	ltKMRDsV2l6TuDFHJPnDXCvUVtAEXOo=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1737728686;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=ffg7DLu/IhzGgMTWFZL/WadumqnyEB0gqmtw9Ow3HFo=;
-	b=T6OChpHOqeQSbU2JnGSaEXBNeyv8jWpaxEWR3jUYyCIHLv92lJWnrnoXAZpXbYdd1/TPei
-	QujrGcnIFthHYdCg==
-Date: Fri, 24 Jan 2025 15:24:46 +0100
-From: Matthias Gerstner <mgerstner@suse.de>
+Received: (qmail 17993 invoked from network); 3 Apr 2018 00:15:43 -0000
+From: Damien Miller <djm@openbsd.org>
+Date: Mon, 2 Apr 2018 18:15:30 -0600 (MDT)
 To: oss-security@lists.openwall.com
-Message-ID: <Z5Oiro01QGLzfaXu@kasco.suse.de>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="/5H1VwkgaEc08gZT"
-Content-Disposition: inline
-Subject: [oss-security] dde-api-proxy: Authentication Bypass in Deepin D-Bus Proxy Service
- (CVE-2025-23222)
+Message-Id: <0d064c34ac3bb6e9@openbsd.org>
+Subject: [oss-security] Announce: OpenSSH 7.7 released
 
---/5H1VwkgaEc08gZT
-Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 24 Jan 2025 15:24:46 +0100
-From: Matthias Gerstner <mgerstner@suse.de>
-To: oss-security@lists.openwall.com
-Subject: dde-api-proxy: Authentication Bypass in Deepin D-Bus Proxy Service
- (CVE-2025-23222)
+OpenSSH 7.7 has just been released. It will be available from the
+mirrors listed at http://www.openssh.com/ shortly.
 
-Hello list,
+OpenSSH is a 100% complete SSH protocol 2.0 implementation and
+includes sftp client and server support.
 
-following is a report about a local privilege escalation in
-dde-api-proxy. This report is also available as a rendered version on
-our blog [1].
+Once again, we would like to thank the OpenSSH community for their
+continued support of the project, especially those who contributed
+code or patches, reported bugs, tested snapshots or donated to the
+project. More information on donations may be found at:
+http://www.openssh.com/donations.html
 
-1) Introduction
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Potentially-incompatible changes
+================================
 
-We received a review request [2] for the Deepin api-proxy D-Bus service
-[3] which is part of the Deepin desktop environment [4]. During the
-review we discovered a major authentication flaw in the design of this
-D-Bus service which allows local users to escalate privileges in various
-ways.
+This release includes a number of changes that may affect existing
+configurations:
 
-We reported this issue privately to Deepin security in December and did
-not receive a reply for a month. As we were preparing for publication,
-upstream became alive and quickly released a bugfix which is, sadly,
-still incomplete.
+ * ssh(1)/sshd(8): Drop compatibility support for some very old SSH
+   implementations, including ssh.com <=2.* and OpenSSH <= 3.*. These
+   versions were all released in or before 2001 and predate the final
+   SSH RFCs. The support in question isn't necessary for RFC-compliant
+   SSH implementations.
 
-This report is based on dde-api-proxy version 1.0.17 [5]. The findings
-still apply to release 1.0.18. Upstream has attempted to fix these
-findings in release 1.0.19, but the bugfix is insufficient as outlined
-in section 6).
+Changes since OpenSSH 7.6
+=========================
 
-2) Authentication Bypass Issue
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D
+This is primarily a bugfix release.
 
-Dde-api-proxy runs as `root` and provides various D-Bus services on the
-D-Bus system bus. It sticks out since it ships a lot of D-Bus
-configuration files but only little code. The reason for this is that
-the service only forwards D-Bus requests between its clients and the
-actual Deepin D-Bus services. We believe this is for backward
-compatibility due to changes in Deepin D-Bus interface names, alas the
-component's GitHub repository [3] provides little insight into its
-purpose.
+New Features
+------------
 
-During startup the proxy service proactively registers the requested
-legacy D-Bus interface and creates a connection to the actual Deepin
-D-Bus service, to which messages will be forwarded to. When a client
-sends a message to one of the legacy service names, the proxy
-synchronously forwards the message (see `handleMessage()` [6]) via its
-existing connection and returns the reply to the client.
+ * All: Add experimental support for PQC XMSS keys (Extended Hash-
+   Based Signatures) based on the algorithm described in
+   https://tools.ietf.org/html/draft-irtf-cfrg-xmss-hash-based-signatures-12
+   The XMSS signature code is experimental and not compiled in by
+   default.
 
-This rather straightforward approach of proxying D-Bus messages has a
-major security flaw, however:
+ * sshd(8): Add a "rdomain" criteria for the sshd_config Match keyword
+   to allow conditional configuration that depends on which routing
+   domain a connection was received on (currently supported on OpenBSD
+   and Linux).
 
-- the proxy runs as `root`.
-- the proxy forwards messages from arbitrary local users to the actual D-Bus
-  services without any authentication requirements.
-- the actual D-Bus services don't know about the proxy situation, they beli=
-eve
-  that `root` is asking them to perform operations.
+ * sshd_config(5): Add an optional rdomain qualifier to the
+   ListenAddress directive to allow listening on different routing
+   domains. This is supported only on OpenBSD and Linux at present.
 
-Consequently with the help of dde-api-proxy, legacy D-Bus methods that
-normally wouldn't be accessible to non-root users will become accessible
-without authentication.
+ * sshd_config(5): Add RDomain directive to allow the authenticated
+   session to be placed in an explicit routing domain. This is only
+   supported on OpenBSD at present.
 
-3) Reproducers
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+ * sshd(8): Add "expiry-time" option for authorized_keys files to
+   allow for expiring keys.
 
-D-Bus Method without Polkit
----------------------------
+ * ssh(1): Add a BindInterface option to allow binding the outgoing
+   connection to an interface's address (basically a more usable
+   BindAddress)
 
-Following is a simple demonstration of the issue based on the Deepin
-Grub2 service. This service simply checks the UID of the D-Bus client
-for authentication of privileged operations. In the first command shown
-below the actual D-Bus service name is used, and the service rejects the
-operation, because the caller is not privileged:
+ * ssh(1): Expose device allocated for tun/tap forwarding via a new
+   %T expansion for LocalCommand. This allows LocalCommand to be used
+   to prepare the interface.
 
-    user$ gdbus call -y -d org.deepin.dde.Grub2 \
-        -o /org/deepin/dde/Grub2 -m org.deepin.dde.Grub2.SetTimeout 100
-    Error: GDBus.Error:org.deepin.dde.DBus.Error.Unnamed: not allow :1.167 =
-call this method
+ * sshd(8): Expose the device allocated for tun/tap forwarding via a
+   new SSH_TUNNEL environment variable. This allows automatic setup of
+   the interface and surrounding network configuration automatically on
+   the server.
 
-In the next command the legacy D-Bus service name is used, and this time
-the target service performs the operation, because it believes the
-request originates from a privileged UID 0 client (dde-api-proxy):
+ * ssh(1)/scp(1)/sftp(1): Add URI support to ssh, sftp and scp, e.g.
+   ssh://user@host or sftp://user@host/path.  Additional connection
+   parameters described in draft-ietf-secsh-scp-sftp-ssh-uri-04 are not
+   implemented since the ssh fingerprint format in the draft uses the
+   deprecated MD5 hash with no way to specify the any other algorithm.
 
-    user$ gdbus call -y  -d com.deepin.daemon.Grub2 \
-        -o /com/deepin/daemon/Grub2 -m com.deepin.daemon.Grub2.SetTimeout 10
-    ()
+ * ssh-keygen(1): Allow certificate validity intervals that specify
+   only a start or stop time (instead of both or neither).
 
-D-Bus method using Polkit
--------------------------
+ * sftp(1): Allow "cd" and "lcd" commands with no explicit path
+   argument. lcd will change to the local user's home directory as
+   usual. cd will change to the starting directory for session (because
+   the protocol offers no way to obtain the remote user's home
+   directory). bz#2760
 
-In the previous example Polkit authentication was not involved. When it
-is involved then the caller is treated as "admin", resulting in a
-similar escalation of privileges. We found a suitable example using
-Polkit in the Deepin accounts service. This service offers a large range
-of system operations, among them the possibility to add users to groups.
-It checks the authorization of the "org.deepin.dde.accounts.user-administra=
-tion"
-Polkit action, which is by default only allowed for users in a local
-session if they provide admin credentials.
+ * sshd(8): When doing a config test with sshd -T, only require the
+   attributes that are actually used in Match criteria rather than (an
+   incomplete list of) all criteria.
 
-The following `gdbus` call attempts to add the unprivileged user with
-UID 1000 to the `root` group. The call only works this way when it runs
-from within a (Deepin) graphical session. The actual accounts service
-interface is invoked here, thus the operation fails (it would require
-entering a root password).
+Bugfixes
+--------
 
-    user$ gdbus call -y -d org.deepin.dde.Accounts1 -o /org/deepin/dde/Acco=
-unts1/User1000 \
-        -m org.deepin.dde.Accounts1.User.AddGroup root
-    Error: GDBus.Error:org.deepin.dde.DBus.Error.Unnamed: Policykit authent=
-ication failed
+ * ssh(1)/sshd(8): More strictly check signature types during key
+   exchange against what was negotiated. Prevents downgrade of RSA
+   signatures made with SHA-256/512 to SHA-1.
 
-When switching to the legacy accounts service interface offered by
-dde-api-proxy, the operation succeeds without any authentication
-request, because the accounts service again believes root with UID 0 is
-the client asking for this:
+ * sshd(8): Fix support for client that advertise a protocol version
+   of "1.99" (indicating that they are prepared to accept both SSHv1 and
+   SSHv2). This was broken in OpenSSH 7.6 during the removal of SSHv1
+   support. bz#2810
 
-    user$ gdbus call -y -d com.deepin.daemon.Accounts -o /com/deepin/daemon=
-/Accounts/User1000 \
-        -m com.deepin.daemon.Accounts.User.AddGroup root
-    ()
+ * ssh(1): Warn when the agent returns a ssh-rsa (SHA1) signature when
+   a rsa-sha2-256/512 signature was requested. This condition is possible
+   when an old or non-OpenSSH agent is in use. bz#2799
 
-4) Affected D-Bus Interfaces
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D
+ * ssh-agent(1): Fix regression introduced in 7.6 that caused ssh-agent
+   to fatally exit if presented an invalid signature request message.
 
-We did not look into all the privileged D-Bus methods that become
-available to unauthenticated local users via dde-api-proxy. On some of
-the proxied interfaces only a certain set of "filtered methods" is
-allowed to be invoked. The rest of the interfaces don't put
-restrictions on the methods invoked, though. On first look, interesting
-attack surface seems to be found in the following D-Bus interfaces
-offered by dde-api-proxy:
+ * sshd_config(5): Accept yes/no flag options case-insensitively, as
+   has been the case in ssh_config(5) for a long time. bz#2664
 
-- Accounts services (no method filter list)
-- network proxy settings (no method filter list)
-- PasswdConf1 WriteConfig method
-- Lastore service (Apt backend, no method filter list)
-- Lastore manager install package method
+ * ssh(1): Improve error reporting for failures during connection.
+   Under some circumstances misleading errors were being shown. bz#2814
 
-5) Suggested Bugfix
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+ * ssh-keyscan(1): Add -D option to allow printing of results directly
+   in SSHFP format. bz#2821
 
-The authentication bypass is deeply rooted in the design of
-dde-api-proxy, thus fixing it is difficult. Possible approaches to
-addressing it are presented in the following sub-sections.
+ * regress tests: fix PuTTY interop test broken in last release's SSHv1
+   removal. bz#2823
 
-a) Dropping Privileges
-----------------------
+ * ssh(1): Compatibility fix for some servers that erroneously drop the
+   connection when the IUTF8 (RFC8160) option is sent.
 
-The proxy could temporarily drop privileges to the unprivileged caller's
-credentials, create a new D-Bus connection and forward the message to
-the proper service. This still won't work properly if the D-Bus service
-in question is using Polkit for authentication, because Polkit
-differentiates whether the caller is in an active session or not. The
-D-Bus proxy service will never be in a session, though. This means that
-authentication requirements could be stronger than necessary. At least
-this approach would be safer than what currently happens.
+ * scp(1): Disable RemoteCommand and RequestTTY in the ssh session
+   started by scp (sftp was already doing this.)
 
-b) Reimplementing Authentication Checks
----------------------------------------
+ * ssh-keygen(1): Refuse to create a certificate with an unusable
+   number of principals.
 
-The proxy could implement all necessary authentication checks on its
-own. This would result in the proper authentication being performed, but
-would lead to duplication of a lot of code. It would also add the danger
-that the authentication requirements of the proxy service and the actual
-service get out of sync.
+ * ssh-keygen(1): Fatally exit if ssh-keygen is unable to write all the
+   public key during key generation. Previously it would silently
+   ignore errors writing the comment and terminating newline.
 
-c) Implementing Legacy Interfaces in the Affected Services
-----------------------------------------------------------
+ * ssh(1): Do not modify hostname arguments that are addresses by
+   automatically forcing them to lower-case. Instead canonicalise them
+   to resolve ambiguities (e.g. ::0001 => ::1) before they are matched
+   against known_hosts. bz#2763
 
-Finally dde-api-proxy could be dropped completely and the backward
-compatibility could be implemented in every one of the affected
-services. This is a less generic approach than what dde-api-proxy
-attempts to achieve, of course.
+ * ssh(1): Don't accept junk after "yes" or "no" responses to hostkey
+   prompts. bz#2803
 
-6) Upstream Bugfix
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+ * sftp(1): Have sftp print a warning about shell cleanliness when
+   decoding the first packet fails, which is usually caused by shells
+   polluting stdout of non-interactive startups. bz#2800
 
-After a longer period of silence, upstream unexpectedly replied to our
-report and a short embargo period was established until a bugfix was
-published on January 17. The bugfix is found in upstream commit
-95b50dd [7] which made its way into release 1.0.19 [8].
+ * ssh(1)/sshd(8): Switch timers in packet code from using wall-clock
+   time to monotonic time, allowing the packet layer to better function
+   over a clock step and avoiding possible integer overflows during
+   steps.
 
-For the bugfix upstream went in the direction of our suggestion outlined
-in section 5.b), by implementing redundant Polkit authorization checks
-in the proxy service. A list of sensitive D-Bus methods offered by the
-proxy is now maintained in the source code. All of these methods are
-protected by a single, newly introduced Polkit action
-"org.deepin.dde.api.proxy" which requires admin authentication.
+ * Numerous manual page fixes and improvements.
 
-The bugfix introduces a new problem, though. The Polkit authorization
-check is implemented as follows:
+Portability
+-----------
 
-```
-bool checkAuthorization(const QString &actionId, const QString &service,con=
-st QDBusConnection &connection) const
-{
-    auto pid =3D connection.interface()->servicePid(service).value();
-    auto authority =3D PolkitQt1::Authority::instance();
-    auto result =3D authority->checkAuthorizationSync(actionId,
-                                                    PolkitQt1::UnixProcessS=
-ubject(pid),
-                                                    PolkitQt1::Authority::A=
-llowUserInteraction);
-    /* snip */
-}
-```
+ * sshd(8): Correctly detect MIPS ABI in use at configure time. Fixes
+   sandbox violations on some environments.
 
-This code forwards the client's process ID (PID) to the Polkit service
-for authentication. This way of using the Polkit UnixProcessSubject has
-been deprecated for a long time, because it is subject to a race
-condition that allows to bypass such authorization checks. This issue
-was discovered [9] in 2013 by former SUSE security engineer Sebastian
-Krahmer, and was assigned CVE-2013-4288.
+ * sshd(8): Remove UNICOS support. The hardware and software are literal
+   museum pieces and support in sshd is too intrusive to justify
+   maintaining.
 
-Upstream did not share the bugfix with us before publication, thus we
-were not able to prevent this incomplete bugfix. It should be possible
-to amend the incomplete bugfix by switching to the SystemBusName subject
-for authentication.
+ * All: Build and link with "retpoline" flags when available to mitigate
+   the "branch target injection" style (variant 2) of the Spectre
+   branch-prediction vulnerability.
 
-Even with an improved fix we believe this approach is not ideal, since
-it requires proper maintenance of all the proxied methods by upstream.
-If new methods are added at a later time, security issues could sneak in
-again. Also the newly introduced Polkit action makes the proxy service
-less transparent and could hamper the user experience. There is no more
-fine-grained control over the authentication requirements of individual
-D-Bus methods, and the authentication message for all of these proxied
-D-Bus methods is generic and unhelpful for end users.
+ * All: Add auto-generated dependency information to Makefile.
 
-7) Possible Workarounds
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+ * Numerous fixed to the RPM spec files.
 
-We don't see any viable ways to work around this issue, except for
-removing dde-api-proxy from the system.
+Checksums:
+==========
 
-8) CVE Assignment
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+- SHA1 (openssh-7.7.tar.gz) = 24812e05fa233014c847c7775748316e7f8a836c
+- SHA256 (openssh-7.7.tar.gz) = T4ua1L/vgAYqwB0muRahvnm5ZUr3PLY9nPljaG8egvo=
 
-This finding is a bigger design issue in dde-api-proxy that allows for a
-local root (group) exploit and likely more similar attack vectors. We
-decided to request a CVE from Mitre to make the community aware of the
-issue. Mitre assigned CVE-2025-23222 to track this issue.
+- SHA1 (openssh-7.7p1.tar.gz) = 446fe9ed171f289f0d62197dffdbfdaaf21c49f2
+- SHA256 (openssh-7.7p1.tar.gz) = 1zvn5oTpnvzQJL4Vowv/y+QbASsvezyQhK7WIXdea48=
 
-Formally another CVE would need to be assigned for the new security
-issue introduced by the incomplete bugfix described in section 6), but
-we refrained from doing so at this time.
+Please note that the SHA256 signatures are base64 encoded and not
+hexadecimal (which is the default for most checksum tools). The PGP
+key used to sign the releases is available as RELEASE_KEY.asc from
+the mirror sites.
 
-9) Timeline
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Reporting Bugs:
+===============
 
-2024-12-18: We reported the issues by email to security@deepin.com,
-	    which is documented on the project's contact page [10]. The
-	    email was rejected by the mail server.
-2024-12-18: We reached out to support@deepin.org asking what the proper
-            way to report Deepin security issues is. We quickly got a reply=
- that
-            pointed us to their (public) bug tracker or security@deepin.org.
-2024-12-19: We reported the issues by email to security@deepin.org,
-	    offering coordinated disclosure. This time the email was not
-	    rejected.
-2025-01-07: Since we did not receive a reply yet from Deepin security
-	    yet we sent another email asking for an initial reply until
-	    2025-01-12, otherwise we would publish the information.
-2025-01-13: Since we still did not receive a reply we started working on
-            publishing the full report. We requested a CVE from Mitre.
-2025-01-14: Mitre assigned CVE-2025-23222.
-2025-01-16: An upstream contact unexpectedly replied and confirmed the
-	    issue, stating they are working on a bugfix. We asked once
-	    more whether coordinated disclosure is desired, and also
-	    forwarded the assigned CVE.
-2025-01-17: Upstream replied that they want to maintain an embargo until
-            2025-01-20.
-2025-01-23: Since no activity at the publication date was visible
-	    upstream and we did not get a notification, we asked
-	    upstream whether publication will happen as planned.
-2025-01-24: Upstream pointed us to the bugfix [7], which had already
-            been published with no further communication on 2025-01-17.
-2025-01-24: Since the bugfix was published, we decided to publish all
-	    information. While reviewing the bugfix, we realised it was
-	    incomplete and notified upstream by email.
+- Please read http://www.openssh.com/report.html
+  Security bugs should be reported directly to openssh@openssh.com
 
-10) References
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-[1]: https://security.opensuse.org/2025/01/24/dde-api-proxy-privilege-escal=
-ation.html
-[2]: https://bugzilla.suse.com/show_bug.cgi?id=3D1229918
-[3]: https://github.com/linuxdeepin/dde-api-proxy
-[4]: https://www.deepin.org/en/dde/
-[5]: https://github.com/linuxdeepin/dde-api-proxy/releases/tag/1.0.17
-[6]: https://github.com/linuxdeepin/dde-api-proxy/blob/1.0.17/src/dbus-prox=
-y/common/dbusproxybase.hpp#L92
-[7]: https://github.com/linuxdeepin/dde-api-proxy/commit/95b50ddead0c86fa2c=
-baaa7c130088fda8315c01
-[8]: https://github.com/linuxdeepin/dde-api-proxy/releases/tag/1.0.19
-[9]: https://www.openwall.com/lists/oss-security/2014/03/24/2
-[10]: https://www.deepin.org/index/en/docs/wiki/en/About_Deepin/Contact-the=
--deepin-Officials
-
-Best Regards
-
-Matthias
-
---=20
-Matthias Gerstner <matthias.gerstner@suse.de>
-Security Engineer
-https://www.suse.com/security
-GPG Key ID: 0x14C405C971923553
-=20
-SUSE Software Solutions Germany GmbH
-HRB 36809, AG N=FCrnberg
-Gesch=E4ftsf=FChrer: Ivo Totev, Andrew McDonald, Werner Knoblich
-
---/5H1VwkgaEc08gZT
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAmeToq4ACgkQFMQFyXGS
-NVO6VBAAih8oef0ni6G+G2l3kKbqn3g/nqdKABJEPFiQP0hJmTl95W571MSBkbR6
-zKUqYFWeI4f9XpTIdGuLgRBhOgjbX5dSVKfQCpwI8e62GhHkAJhev29AKgrAmens
-il15NVqwt9nuZ0Z6PGRHDF4NyytLB4q/3XqBCU3PxHeX3WtfzBF9Z5cTBA1zq0pm
-8cVhgAsGf2TM/zL9ZbZZy8cREVtgMEfqIX5V0qB0YTbkE4VZDXtkEwG+Cc01KrzL
-/ChDxcbpgLNrPTvZjv9ULLkFy3E+MhkxklaOc9nFc+WH/TntbU/cbB2XFSwjfuse
-LCtHgN48uR5sqs7v7ATZtEEJdDBpZvOO/XuVoEwSE+A40IVUNuxrgl1Mr4JFADp1
-THYF7whVrOIrssz6SQ9fqsWamMqecHLc+GhBf1E0wiJkDRf40hBE/hxXhRCxTjZ7
-pA2S/2B3VMGpaj6u8B1FdEiGRwfQe0RdCQRJVLQAdRGG6vi3QmWY29+25SUFPdzH
-IFg+ZGlO2bJ/3yqls1KrwdHd6/34kSNIZjAtdFeIQtG57D1fl0riIYJ1EGZsr9Tq
-NlhwKXNIIQWjOqdECE3jBPRe4rOXyGTweq+4YL8Hdj+eBZ5lxfpab/zMhCfu1SyB
-hYPsugmOIpe+eKX+lbeQgwF5aGG/tZBu8ChOXb1QT/1+ZfxoubM=
-=6uH4
------END PGP SIGNATURE-----
-
---/5H1VwkgaEc08gZT--
