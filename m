@@ -1,49 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/19/3
-Message-ID: <47a2120e-2b3d-4e39-4e6f-1914d57c5c7c@apache.org>
-Date: Mon, 19 Mar 2018 12:49:36 +0100
-From: Francesco Chicchiriccò <ilgrosso@...che.org>
-To: "user@...cope.apache.org" <user@...cope.apache.org>, dev@...cope.apache.org, "security@...che.org" <security@...che.org>, oss-security@...ts.openwall.com
-Subject: [SECURITY] CVE-2018-1322: Information disclosure via FIQL and ORDER BY sorting
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/04/7
+Message-ID: <CABDpyCjSKaT9bVNajr0L52b_abuxHL0xWLB=5++ytUzD_JyCRg@mail.gmail.com>
+Date: Wed, 4 Apr 2018 15:04:17 -0700
+From: Daniel Dai <daijy@...che.org>
+To: user@...e.apache.org, dev@...e.apache.org, announce@...che.org,  security <security@...e.apache.org>, oss-security@...ts.openwall.com,  The bear in Boulder <bgiles@...otesong.com>
+Subject: [SECURITY] CVE-2018-1282 JDBC driver is susceptible to SQL injection attack if the input parameters are not properly cleaned
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-1322: Information disclosure via FIQL and ORDER BY sorting
+CVE-2018-1282: JDBC driver is susceptible to SQL injection attack if
+the input parameters are not properly cleaned
 
-Severity: Medium
+Severity: Important
 
-Vendor:
-The Apache Software Foundation
+Vendor: The Apache Software Foundation
 
-Versions Affected:
-* Releases prior to 1.2.11
-* Releases prior to 2.0.8
+Versions Affected: This vulnerability affects all versions of Hive
+JDBC driver from 0.7.1
 
-The unsupported Releases 1.0.x, 1.1.x may be also affected.
+Description: This vulnerability in Hive allows carefully crafted arguments to be
+used to bypass the argument escaping/cleanup that JDBC driver does in
+PreparedStatement implementation.
 
-Description:
-An administrator with user search entitlements can recover sensitive
-security values using the fiql and orderby parameters.
+Mitigation: It is recommended to upgrade prior version of Hive JDBC
+driver to 2.3.3.
+Note Hive JDBC driver is not backward compatible with HiveServer2,
+which means newer version of Hive JDBC driver may not talk to older version
+of HiveServer2. In particular, Hive JDBC driver 2.3.3 won't talk
+to HiveServer2 2.1.1 or prior. If user is using Hive code 2.1.1 or below
+they might need to upgrade all the Hive instances to 2.3.3.
 
-Solution:
-Syncope 1.2.x users upgrade to 1.2.11.
-Syncope 2.0.x users upgrade to 2.0.8.
 
-Mitigation:
-Do not assign user search entitlements to any administrator.
+Alternative to the upgrade, is to take the follow two actions in your
+Hive JDBC client code/application when dealing with user provided
+input in PreparedStatement:
+1. Avoid passing user input PreparedStatement.setBinaryStream
+2. Sanitize the user input for PreparedStatement.setString, by
+replacing all occurrences of \' to '
 
-Credit:
-This issue was discovered by ﻿Che-Chun Kuo.
-
-References:
-[1] http://syncope.apache.org/security.html
-
--- 
-Francesco Chicchiriccò
-
-Tirasa - Open Source Excellence
-http://www.tirasa.net/
-
-Member at The Apache Software Foundation
-Syncope, Cocoon, Olingo, CXF, OpenJPA, PonyMail
-http://home.apache.org/~ilgrosso/
-
+Credit: This issue was discovered by Bear Giles of SnapLogic
