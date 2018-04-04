@@ -1,59 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/14/1
-Message-Id: <077A6F23-B377-4356-8FD7-A21B6AB47148@beckweb.net>
-Date: Wed, 14 Feb 2018 16:35:43 +0100
-From: Daniel Beck <ml@...kweb.net>
-To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/04/4
+Message-Id: <1522869773.22588.2@mail.igalia.com>
+Date: Wed, 04 Apr 2018 14:22:53 -0500
+From: Michael Catanzaro <mcatanzaro@...lia.com>
+To: webkit-gtk@...ts.webkit.org
+Cc: oss-security@...ts.openwall.com, security@...kit.org, bugtraq@...urityfocus.com, distributor-list@...me.org
+Subject: Re: [webkit-security] WebKitGTK+ Security Advisory WSA-2018-0003
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around 
-the world to reliably build, test, and deploy their software. The following 
-releases contain fixes for security vulnerabilities:
 
-* Jenkins (weekly) 2.107
-* Jenkins (LTS) 2.89.4
+Correction:
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2018-02-14/
+On Wed, Apr 4, 2018 at 1:46 PM, Michael Catanzaro 
+<mcatanzaro@...lia.com> wrote:
+> CVE-2018-4118
+>     Versions affected: WebKitGTK+ before 2.18.1.
+>     Credit to Jun Kokatsu (@shhnjk).
+>     Impact: Processing maliciously crafted web content may lead to
+>     arbitrary code execution. Description: Multiple memory corruption
+>     issues were addressed with improved memory handling.
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+The versions affected for CVE-2018-4118 was not correct. An attempt to 
+fix this issue was included in 2.18.1, but the change was incomplete. 
+This should have read:
 
-If you find security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-506
-The form validation for the proxy configuration form did not check the 
-permission of the user accessing it, allowing anyone with Overall/Read 
-access to Jenkins to cause Jenkins to send a GET request to a specified 
-URL, optionally with a specified proxy configuration.
-
-If that request’s HTTP response code indicates success, the form validation 
-is returning a generic success message, otherwise the HTTP status code is 
-returned. It was not possible to reuse an existing proxy configuration to 
-send those requests; that configuration had to be provided by the attacker.
-
-
-SECURITY-705 / CVE-2018-6356
-Jenkins did not properly prevent specifying relative paths that escape a 
-base directory for URLs accessing plugin resource files. This allowed users 
-with Overall/Read permission to download files from the Jenkins master they 
-should not have access to.
-
-On Windows, any file accessible to the Jenkins master process could be 
-downloaded. On other operating systems, any file within the Jenkins home 
-directory accessible to the Jenkins master process could be downloaded.
-
-
-SECURITY-717
-Jenkins did not take into account case-insensitive file systems when 
-preventing access to plugin resource files that should not be accessible. 
-This allowed users with Overall/Read permission to download plugin resource 
-files in META-INF and WEB-INF directories, such as the plugins' JAR files, 
-which could contain hardcoded secrets.
+Versions affected: WebKitGTK+ before 2.20.0
 
