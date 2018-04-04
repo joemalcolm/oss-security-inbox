@@ -1,24 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/08/1
-Message-ID: <CAEWfVJmF52fMY8wYZ-35ic7=T1dnmSArDZuC3oydUJBqSugsGA@mail.gmail.com>
-Date: Mon, 8 Jan 2018 15:04:28 +0100
-From: Bertrand Delacretaz <bdelacretaz@...che.org>
-To: dev <dev@...ng.apache.org>
-Cc: users <users@...ng.apache.org>,  "security@...ng.apache.org" <security@...ng.apache.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
-Subject: CVE-2012-3353: Apache Sling Content Loading Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/04/1
+Message-ID: <20180404135736.GA14395@workstation.home.puiterwijk.org>
+Date: Wed, 4 Apr 2018 15:57:36 +0200
+From: Patrick Uiterwijk <puiterwijk@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2018-1002150: koji: Dist Repo call missing authorization check allowing filesystem manipulation
 Content-Type: text/plain; charset=utf-8
 
-Severity: Important
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-Vendor: The Apache Software Foundation
+Description
+===========
 
-Versions Affected: Sling  JCR ContentLoader 2.1.4
+A vulnerability in Koji was found that allows manipulation of the koji filesystem.
+This allows an attacker to extract secrets from disk that the Hub has access to or to overwrite
+files on disk that httpd can write to.
 
-Description:
-The Apache Sling JCR ContentLoader 2.1.4 XmlReader
-used in the Sling JCR content loader module makes it
-possible to import arbitrary files in the content repository,
-including local files, causing potential information leaks.
 
-Mitigation:
-Users should upgrade to version 2.1.6 of the JCR ContentLoader
+Affected versions
+=================
+
+All versions of Koji 1.12 before 1.12.1 are vulnerable.
+All versions of Koji 1.13 before 1.13.1 are vulnerable.
+All versions of Koji 1.14 before 1.14.1 are vulnerable.
+All versions of Koji 1.15 before 1.15.1 are vulnerable.
+
+
+Patched versions
+================
+
+Koji versions 1.12.1, 1.13.1, 1.14.1 and 1.15.1 are available on the website, and
+all include patches to solve this problem.
+
+
+Mitigation
+==========
+
+A temporary mitigation until the code patch is applied would be to move the repos-dist
+folder in the koji root directory out of the way and create a file with the same name
+as the folder that was just moved away.
+
+
+Credits
+=======
+
+This issue was discovered by Mike McLean of Red Hat.
+
+
+References
+==========
+
+https://docs.pagure.org/koji/CVE-2018-1002150/
+-----BEGIN PGP SIGNATURE-----
+
+iQIcBAEBCgAGBQJaxNnQAAoJEIZXmA2atR5Q2/MQAJnIw5m4l64npyPmyZMzTbB1
+6hn7OBjTa4NUD1xlxkPDPjo1Z1SgnQP3D01mJCU/Ot9b3eBNiznfqDIc++y78xIs
+Hdb9b3IY7OcHhXwHbqr9Y4XfcvnDIG9p9q94uHnAmCpGURZhWG7QzDJ7vZsy4916
+vSepVhxhGtP6pLYG5BLkUan3YmS3Eg0eUVJ25Ijhm7WRlOEHAQI2Ih52LIljExzq
+3EhA1j2zeWz58Zw3zOnlX8b03yfN56y8HbCIF9fJtFAf7+5noEHL4gO8IGuvKn1d
+jw+RZVzezJzHTejapML9ttrRRnP7DGNanah0DJFphm3BxfuleSotCmE0phTe8aIK
+7vRGqtrWdPfkjaDe6nXOL1YlMm8Vy0qyw4qbUazY+mB5eFZXTS8W6cJyH6eeM9Kg
+cnN5cOfkP82CoT7akTLjoO8RZRMme5okTqsetMrJkvqLTaYJ+UjD+ODFmEXczT8o
+DwbfqWSBysfRQtukdHNsQ49TAAc+xFSjTBcTBYBvXoo46oOZo3NNYYIe8uTWipeH
+coIVoJwCRvNpsSkwaLsUA3qETtq/+H3pep+dx4td2xpLbFFwo8XP+IMpgEIIMij5
+fKzz1NMxAogUanBVnjdP/mVAvf1tnu2rKF/MqLirv11t5IvDymJBPGeyUkJhwT89
++AXA2bXHVAhBiqiD12qO
+=zv8L
+-----END PGP SIGNATURE-----
