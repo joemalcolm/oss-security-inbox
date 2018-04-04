@@ -1,106 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/01/1
-Message-ID: <CABVn_oqyEvT+ma9SuydE8OV1DpXD3Nuo-D3+qLfeWpcM-hX+BQ@mail.gmail.com>
-Date: Tue, 1 May 2018 10:45:18 +0200
-From: nongiach nongiach <nongiach@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>, sputnick@...ssel-irc.org
-Subject: Re: CVE-XXX (quasselclient/quasselcore version 0.12.4): Heap Remote Code Execution and Null Pointer DDOS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/04/8
+Message-ID: <CABDpyChQXi-JSh=bytOLsdq7o+eSst6hU_s8RN4jQoPzLR2vLQ@mail.gmail.com>
+Date: Wed, 4 Apr 2018 14:58:43 -0700
+From: Daniel Dai <daijy@...che.org>
+To: user@...e.apache.org, dev@...e.apache.org, announce@...che.org,  security <security@...e.apache.org>, oss-security@...ts.openwall.com,  Danny Grander <danny@...k.io>
+Subject: [SECURITY] CVE-2018-1315 'COPY FROM FTP' statement in HPL/SQL can write to arbitrary location if the FTP server is compromised
 Content-Type: text/plain; charset=utf-8
 
-Hey,
-here are the two CVE numbers assigned:
+CVE-2018-1315: 'COPY FROM FTP' statement in HPL/SQL can write to
+arbitrary location if the FTP server is compromised
 
-Vuln1: CVE-2018-1000178,  CWE-120: heap corruption
-{"data_version": "4.0","references": {"reference_data": [{"url": "
-https://i.imgur.com/JJ4QcNq.png"},{"url": "https://github.com/quassel/
-quassel/blob/master/src/common/protocols/datastream/datastreampeer.cpp#L62
-"}]},"description": {"description_data": [{"lang": "eng","value": "A heap
-corruption of type CWE-120 exists in quassel version 0.12.4 in quasselcore
-in void DataStreamPeer::processMessage(const QByteArray &msg),
-datastreampeer.cpp line 62 that allows an attacker to execute code
-remotely."}]},"data_type": "CVE","affects": {"vendor": {"vendor_data":
-[{"product": {"product_data": [{"version": {"version_data":
-[{"version_value": "0.12.4>version"}]},"product_name": "quasselcore,
-quasselclient"}]},"vendor_name": "quassel"}]}},"CVE_data_meta":
-{"DATE_ASSIGNED": "2018-04-30T19:35:42.127351","DATE_REQUESTED":
-"2018-04-23T00:00:00","ID": "CVE-2018-1000178","ASSIGNER": "
-kurt@...fried.org","REQUESTER": "nongiach@...il.com"},"data_format":
-"MITRE","problemtype": {"problemtype_data": [{"description": [{"lang":
-"eng","value": "CWE-120: heap corruption"}]}]}}
+Severity: Moderate
 
-Vuln2:  CVE-2018-1000179,  CWE-476: NULL Pointer Dereference
-{"data_version": "4.0","references": {"reference_data": [{"url": "
-https://github.com/quassel/quassel/blob/master/src/core/
-coreauthhandler.cpp#L236"}]},"description": {"description_data": [{"lang":
-"eng","value": "A NULL Pointer Dereference of CWE-476 exists in quassel
-version 0.12.4 in the quasselcore void CoreAuthHandler::handle(const Login
-&msg), coreauthhandler.cpp  line 235 that allows an atacker to denial of
-service."}]},"data_type": "CVE","affects": {"vendor": {"vendor_data":
-[{"product": {"product_data": [{"version": {"version_data":
-[{"version_value": "0.12.4>version"}]},"product_name":
-"quasselcore"}]},"vendor_name": "quassel"}]}},"CVE_data_meta":
-{"DATE_ASSIGNED": "2018-04-30T19:35:42.127797","DATE_REQUESTED":
-"2018-04-23T00:00:00","ID": "CVE-2018-1000179","ASSIGNER": "
-kurt@...fried.org","REQUESTER": "nongiach@...il.com"},"data_format":
-"MITRE","problemtype": {"problemtype_data": [{"description": [{"lang":
-"eng","value": "CWE-476: NULL Pointer Dereference"}]}]}}
+Vendor: The Apache Software Foundation
 
-Thx.
+Versions Affected: Hive 2.1.0 to 2.3.2
 
-2018-04-27 0:39 GMT+02:00 nongiach nongiach <nongiach@...il.com>:
+Description: When 'COPY FROM FTP' statement is run using HPL/SQL extension to
+Hive, a compromised/malicious FTP server can cause the file to be
+written to an arbitrary location on the cluster where the command is
+run from. This is because FTP client code in HPL/SQL does not verify
+the destination
+location of the downloaded file. This does not affect hive
+cli user and hiveserver2 user as hplsql is a separate command line
+script and needs to be invoked differently.
 
-> Hey,
->
-> two vulnerabilities have been fixed in quassel, an IRC connection
-> multiplexer,
-> one with a high severity and another with a low severity, they are both
-> publicly fixed:
-> - these patches apply cleanly to 0.12.4 sources
-> - 0.12.5 release (Tuesday 24.04) includes these patches, distros have
-> been notified for the embargo.
->
-> ==============================================
-> Vuln 1:
-> Title: quasselcore, corruption of heap metadata caused by qdatastream
-> leading to preauth remote code execution.
-> Severity: high, by default the server port is publicly open and the
-> address can be requested using the /WHOIS command of IRC protocol.
-> Description: In Qdatastream protocol each object are prepended with 4
-> bytes for the object size, this can be used to trigger allocation errors.
-> Source: void DataStreamPeer::processMessage(const QByteArray &msg),
-> datastreampeer.cpp line 62
-> CWE: A heap corruption of type CWE-120 exists in quassel version 0.12.4 in
-> the quasselcore that allows an attacker to remote code execution.
-> Patch: https://quassel-irc.org/pub/misc/0001-Implement-custo
-> m-deserializer-to-add-our-own-sanity-.patch
-> Screen POC: https://i.imgur.com/JJ4QcNq.png
-> Credit: @chaign_c
-> Information: This vulnerability is not specific to qdatastream.
->
-> ==============================================
-> Vuln 2:
-> Title: quasselcore DDOS
-> Severity: low, impact only a quasselcore not configured.
-> Description: A login attempt causes a NULL pointer dereference because
-> when the database is not initialized.
-> Source: void CoreAuthHandler::handle(const Login &msg),
-> coreauthhandler.cpp  line 235
-> CWE: A NULL Pointer Dereference of CWE-476 exists in quassel version
-> 0.12.4 in the quasselcore that allows an attacker to denial of service.
-> Patch: https://quassel-irc.org/pub/misc/0002-Reject-clients-
-> that-attempt-to-login-before-the-core.patch
-> Credit: @chaign_c
->
-> ==============================================
->
-> With lead dev agreement, POC will be released here https://github.com/
-> nongiach/CVE/ in one month from now.
-> A big thx to quassel team for their quick responses and reaction.
->
-> CVE number assignation is ongoing.
->
-> Thx.
->
->
+Mitigation: User who use HPL/SQL with Hive 2.1.0 through 2.3.2 should upgrade to
+2.3.3 which removes support for "COPY FROM FTP". Alternatively, the
+usage of HPL/SQL can be disabled through
+other means.
 
+Credit: This issue was discovered by Danny Grander of Snyk
