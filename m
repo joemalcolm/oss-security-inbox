@@ -1,30 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/10/2
-Message-ID: <CAFkwx-e3akvTZGb+ZX2AtzPKMvyDu413rPmdBgoteuj-hafnRA@mail.gmail.com>
-Date: Wed, 10 Jan 2018 07:18:57 +0000
-From: Radu Cotescu <radu@...che.org>
-To: Sling Dev <dev@...ng.apache.org>, security@...ng.apache.org, users@...ng.apache.org,  oss-security@...ts.openwall.com, lkrapf@...be.com
-Subject: CVE-2017-15717: Insufficient XSS protection for HREF attributes in Apache Sling XSS Protection API
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/04/6
+Message-ID: <CABDpyChmEOPSBAxb+ipyGVfhuS4Zq+w0CFn-EANy+_TD0o-8+w@mail.gmail.com>
+Date: Wed, 4 Apr 2018 15:06:09 -0700
+From: Daniel Dai <daijy@...che.org>
+To: user@...e.apache.org, dev@...e.apache.org, announce@...che.org,  security <security@...e.apache.org>, oss-security@...ts.openwall.com
+Subject: [SECURITY] CVE-2018-1284: Hive UDF series UDFXPathXXXX allow users to pass carefully crafted XML to access arbitrary files
 Content-Type: text/plain; charset=utf-8
 
-Severity: High
+CVE-2018-1284: Hive UDF series UDFXPathXXXX allow users to pass
+carefully crafted XML to access arbitrary files
+
+Severity: Important
 
 Vendor: The Apache Software Foundation
 
-Versions Affected:
-Apache Sling XSS Protection API 1.0.4 to 1.0.18,
-Apache Sling XSS Protection API Compat 1.1.0,
-Apache Sling XSS Protection API 2.0.0
+Versions Affected: This vulnerability affects all versions from 0.6.0
 
-Description:
-A flaw in the way URLs are escaped and encoded in the
-org.apache.sling.xss.impl.XSSAPIImpl#getValidHref and
-org.apache.sling.xss.impl.XSSFilterImpl#isValidHref allows special crafted
-URLs to pass as valid,
-although they carry XSS payloads.
+Description: Malicious user might use any xpath UDFs
+(xpath/xpath_string/xpath_boolean/xpath_number/xpath_double/xpath_float/xpath_long/xpath_int/xpath_short)
+to expose the content of a file on the machine running HiveServer2
+owned by HiveServer2 user (usually hive) if
+hive.server2.enable.doAs=false.
 
-Mitigation:
-Users should upgrade to version 2.0.4 or later of the Apache Sling XSS
-Protection
-API module.
-
+Mitigation: Users who use xpath UDFs in HiveServer2 and
+hive.server2.enable.doAs=false are recommended to upgrade to 2.3.3, or
+update UDFXPathUtil.java to the head of branch-2.3 and rebuild
+hive-exec.jar: https://git1-us-west.apache.org/repos/asf?p=hive.git;a=blob;f=ql/src/java/org/apache/hadoop/hive/ql/udf/xml/UDFXPathUtil.java;hb=refs/heads/branch-2.3.
+If these functions are not being used at present, you can also
+disable its use by adding them to the value of the config
+hive.server2.builtin.udf.blacklist.
