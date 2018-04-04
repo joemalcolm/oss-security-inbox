@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4255" "Tuesday" "10" "November" "2015" "10:29:05" "-0300" "Gustavo Grieco" "gustavo.grieco@gmail.com" "<CACn5sdSp7D-1_qhZzB2Z5D4esN4K4aczp5cc+Vzm4J+ySDReyw@mail.gmail.com>" "117" "[oss-security] Several reads out-of-bound in mplayer 1.1" "^Date:" nil nil "11" "2015111013:29:05" "[oss-security] Several reads out-of-bound in mplayer 1.1" (number mark "U       gustavo.grie Nov 10  117/4255  " thread-indent "\"[oss-security] Several reads out-of-bound in mplayer 1.1\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1270" "Wednesday" "4" "April" "2018" "15:04:17" "-0700" "Daniel Dai" "daijy@apache.org" "<CABDpyCjSKaT9bVNajr0L52b_abuxHL0xWLB=5++ytUzD_JyCRg@mail.gmail.com>" "31" "[oss-security] [SECURITY] CVE-2018-1282 JDBC driver is susceptible to SQL injection attack if the input parameters are not properly cleaned" nil nil nil "4" "2018040422:04:17" "[oss-security] [SECURITY] CVE-2018-1282 JDBC driver is susceptible to SQL injection attack if the input parameters are not properly cleaned" (number mark "U       daijy@apache Apr  4   31/1270  " thread-indent "\"[oss-security] [SECURITY] CVE-2018-1282 JDBC driver is susceptible to SQL injection attack if the input parameters are not properly cleaned\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 29912 invoked by uid 550); 10 Nov 2015 13:29:25 -0000
+Received: (qmail 27831 invoked by uid 550); 4 Apr 2018 23:50:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,142 +11,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 29759 invoked from network); 10 Nov 2015 13:29:17 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=jpE5pUJfOWudrpUsyF0Pq9W3ZZlTQy7BQut1etMRpD8=;
-        b=HaillL5cshRnbCxJpNTDGn2sr/qyZKsnVZaC6nihAk8J/5E6yIFkmfb55VgPPVEvgu
-         fUD3ekcF2MmTVktQ+gUVaxQIUOXCQR9gTYETN/66DtbHqQ0LDJAirQw+bYUeuI7F+Ozj
-         xKMaJgM8sG/Z2NkCHLtYA939VSiCLWfmTR/Kd8FD3DMrC8M66uZeVeAVPt4/ebmsqb0A
-         ikil267PzXBxfFI7TsRbtjVzA+9A+VZzeGeWcTz+ApFx9yq1Gp1/5+Sq2wJZZV1k4Wmn
-         Usy8BttIbO+9XylsxFh6eggGVmT+0280ZPgIEq8GHVjePf2oVWYcH4ykFTunrBW6HfLr
-         8B5A==
-MIME-Version: 1.0
-X-Received: by 10.112.136.136 with SMTP id qa8mr1718489lbb.14.1447162145280;
- Tue, 10 Nov 2015 05:29:05 -0800 (PST)
-Message-ID: <CACn5sdSp7D-1_qhZzB2Z5D4esN4K4aczp5cc+Vzm4J+ySDReyw@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=089e011831169a1fb705242fb1a5
-Date: Tue, 10 Nov 2015 10:29:05 -0300
-From: Gustavo Grieco <gustavo.grieco@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Several reads out-of-bound in mplayer 1.1
-To: oss-security@lists.openwall.com
+Received: (qmail 28131 invoked from network); 4 Apr 2018 22:04:32 -0000
+X-Gm-Message-State: AElRT7GVaj21XKd2oMtUvCdgCcxCGy7Sc0ep4AHwJo8JTpFuSVEeMCfM
+	ZisiaS7AUCawxEpvwmjJ2Zms2duc4JVwYH8l4wk=
+X-Google-Smtp-Source: AIpwx4+LX/EzLtYLpyA/3XN4R56RZuTZ+y1IUA1QDQtTUkFZAIu80h2Y3wBsauGaSzO1no+8Y+2G0vzF1JKcjVhJguk=
+X-Received: by 10.107.183.65 with SMTP id h62mr17958954iof.204.1522879458526;
+ Wed, 04 Apr 2018 15:04:18 -0700 (PDT)
+MIME-Version: 1.0
+From: Daniel Dai <daijy@apache.org>
+Date: Wed, 4 Apr 2018 15:04:17 -0700
+X-Gmail-Original-Message-ID: <CABDpyCjSKaT9bVNajr0L52b_abuxHL0xWLB=5++ytUzD_JyCRg@mail.gmail.com>
+Message-ID: <CABDpyCjSKaT9bVNajr0L52b_abuxHL0xWLB=5++ytUzD_JyCRg@mail.gmail.com>
+To: user@hive.apache.org, dev@hive.apache.org, announce@apache.org, 
+	security <security@hive.apache.org>, oss-security@lists.openwall.com, 
+	The bear in Boulder <bgiles@coyotesong.com>
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] [SECURITY] CVE-2018-1282 JDBC driver is susceptible to SQL injection
+ attack if the input parameters are not properly cleaned
 
---089e011831169a1fb705242fb1a5
-Content-Type: text/plain; charset=UTF-8
+CVE-2018-1282: JDBC driver is susceptible to SQL injection attack if
+the input parameters are not properly cleaned
 
-Some reads out-of-bound in functions asf_mmst_streaming_start and
-http_build_request are present in Mplayer 1.1-4.8 (tested in Ubuntu 14.04).
-Other versions are probably affected. Upstream is notified.
+Severity: Important
 
-How to reproduce:
+Vendor: The Apache Software Foundation
 
-First, launch a dummy server:
+Versions Affected: This vulnerability affects all versions of Hive
+JDBC driver from 0.7.1
 
-$ true | netcat -l 127.0.0.1 5002
+Description: This vulnerability in Hive allows carefully crafted arguments to be
+used to bypass the argument escaping/cleanup that JDBC driver does in
+PreparedStatement implementation.
 
-Then, mplayer using valgrind:
-
-$ valgrind mplayer mms://127.0.0.1:5002
-==31830== Memcheck, a memory error detector
-==31830== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==31830== Using Valgrind-3.10.0.SVN and LibVEX; rerun with -h for copyright
-info
-==31830== Command: mplayer mms://127.0.0.1:5002
-==31830==
-MPlayer 1.1-4.8 (C) 2000-2012 MPlayer Team
-mplayer: could not connect to socket
-mplayer: No such file or directory
-Failed to open LIRC support. You will not be able to use your remote
-control.
-
-Playing mms://127.0.0.1:5002.
-STREAM_ASF, URL: mms://127.0.0.1:5002
-Resolving 127.0.0.1 for AF_INET6...
-
-Couldn't resolve name for AF_INET6: 127.0.0.1
-Connecting to server 127.0.0.1[127.0.0.1]: 5002...
-
-Connected
-==31830== Invalid read of size 4
-==31830==    at 0x5A6792: asf_mmst_streaming_start
-(asf_mmst_streaming.c:595)
-==31830==    by 0x5A8AA8: open_s (asf_streaming.c:94)
-==31830==    by 0x54FD1F: open_stream_full (stream.c:186)
-==31830==    by 0x54F3D0: open_stream (open.c:65)
-==31830==    by 0x4321D9: main (mplayer.c:3223)
-==31830==  Address 0x153e0ef0 is 0 bytes inside a block of size 1 alloc'd
-==31830==    at 0x4C2AB80: malloc (in
-/usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==31830==    by 0x5A65E7: asf_mmst_streaming_start
-(asf_mmst_streaming.c:539)
-==31830==    by 0x5A8AA8: open_s (asf_streaming.c:94)
-==31830==    by 0x54FD1F: open_stream_full (stream.c:186)
-==31830==    by 0x54F3D0: open_stream (open.c:65)
-==31830==    by 0x4321D9: main (mplayer.c:3223)
-==31830==
-==31830== Invalid read of size 4
-==31830==    at 0x5A67E6: asf_mmst_streaming_start
-(asf_mmst_streaming.c:597)
-==31830==    by 0x5A8AA8: open_s (asf_streaming.c:94)
-==31830==    by 0x54FD1F: open_stream_full (stream.c:186)
-==31830==    by 0x54F3D0: open_stream (open.c:65)
-==31830==    by 0x4321D9: main (mplayer.c:3223)
-==31830==  Address 0x153e0ef0 is 0 bytes inside a block of size 1 alloc'd
-==31830==    at 0x4C2AB80: malloc (in
-/usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==31830==    by 0x5A65E7: asf_mmst_streaming_start
-(asf_mmst_streaming.c:539)
-==31830==    by 0x5A8AA8: open_s (asf_streaming.c:94)
-==31830==    by 0x54FD1F: open_stream_full (stream.c:186)
-==31830==    by 0x54F3D0: open_stream (open.c:65)
-==31830==    by 0x4321D9: main (mplayer.c:3223)
-==31830==
-
-Alert! EOF
-read error:: Operation now in progress
-pre-header read failed
-Resolving 127.0.0.1 for AF_INET6...
-
-Couldn't resolve name for AF_INET6: 127.0.0.1
-Connecting to server 127.0.0.1[127.0.0.1]: 5002...
-
-connect error: Connection refused
-Failed, exiting.
-==31830== Invalid read of size 4
-==31830==    at 0x5AA4BA: http_build_request (http.c:478)
-==31830==    by 0x5AB409: http_send_request (network.c:261)
-==31830==    by 0x5AA827: http_streaming_start (http.c:725)
-==31830==    by 0x5AAF5B: open_s2 (http.c:936)
-==31830==    by 0x54FD1F: open_stream_full (stream.c:186)
-==31830==    by 0x54F3D0: open_stream (open.c:65)
-==31830==    by 0x4321D9: main (mplayer.c:3223)
-==31830==  Address 0x153ecf90 is 0 bytes inside a block of size 2 alloc'd
-==31830==    at 0x4C2AB80: malloc (in
-/usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==31830==    by 0x5AA492: http_build_request (http.c:468)
-==31830==    by 0x5AB409: http_send_request (network.c:261)
-==31830==    by 0x5AA827: http_streaming_start (http.c:725)
-==31830==    by 0x5AAF5B: open_s2 (http.c:936)
-==31830==    by 0x54FD1F: open_stream_full (stream.c:186)
-==31830==    by 0x54F3D0: open_stream (open.c:65)
-==31830==    by 0x4321D9: main (mplayer.c:3223)
-==31830==
-Resolving 127.0.0.1 for AF_INET6...
-
-Couldn't resolve name for AF_INET6: 127.0.0.1
-Connecting to server 127.0.0.1[127.0.0.1]: 5002...
-
-connect error: Connection refused
-No stream found to handle url mms://127.0.0.1:5002
+Mitigation: It is recommended to upgrade prior version of Hive JDBC
+driver to 2.3.3.
+Note Hive JDBC driver is not backward compatible with HiveServer2,
+which means newer version of Hive JDBC driver may not talk to older version
+of HiveServer2. In particular, Hive JDBC driver 2.3.3 won't talk
+to HiveServer2 2.1.1 or prior. If user is using Hive code 2.1.1 or below
+they might need to upgrade all the Hive instances to 2.3.3.
 
 
-Exiting... (End of file)
+Alternative to the upgrade, is to take the follow two actions in your
+Hive JDBC client code/application when dealing with user provided
+input in PreparedStatement:
+1. Avoid passing user input PreparedStatement.setBinaryStream
+2. Sanitize the user input for PreparedStatement.setString, by
+replacing all occurrences of \' to '
 
-This issue was discovered using QuickFuzz and minimized manually
-
-Regards,
-Gus.
-
---089e011831169a1fb705242fb1a5--
+Credit: This issue was discovered by Bear Giles of SnapLogic
