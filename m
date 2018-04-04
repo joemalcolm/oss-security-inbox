@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1451" "Thursday" "30" "June" "2016" "11:48:55" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160630154855.660056C0B4F@smtpvmsrv1.mitre.org>" "37" "[oss-security] Re: CVE Request: A read out-of-bands was found in the parsing of TGA files using libgd" nil nil nil "6" "2016063015:48:55" "[oss-security] Re: CVE Request: A read out-of-bands was found in the parsing of TGA files using libgd" (number mark "U       cve-assign@m Jun 30   37/1451  " thread-indent "\"[oss-security] Re: CVE Request: A read out-of-bands was found in the parsing of TGA files using libgd\"\n") "<CACn5sdT2ie2cp7VShA-VqafyiMn-oDsv_0dGtXP-Xcf82LWihA@mail.gmail.com>" ("<CACn5sdT2ie2cp7VShA-VqafyiMn-oDsv_0dGtXP-Xcf82LWihA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1900" "Wednesday" "4" "April" "2018" "15:57:36" "+0200" "Patrick Uiterwijk" "puiterwijk@redhat.com" "<20180404135736.GA14395@workstation.home.puiterwijk.org>" "61" "[oss-security] CVE-2018-1002150: koji: Dist Repo call missing authorization check allowing filesystem manipulation" nil nil nil "4" "2018040413:57:36" "[oss-security] CVE-2018-1002150: koji: Dist Repo call missing authorization check allowing filesystem manipulation" (number mark "U       puiterwijk@r Apr  4   61/1900  " thread-indent "\"[oss-security] CVE-2018-1002150: koji: Dist Repo call missing authorization check allowing filesystem manipulation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28558 invoked by uid 550); 30 Jun 2016 15:49:08 -0000
+Received: (qmail 26446 invoked by uid 550); 4 Apr 2018 14:57:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,49 +12,91 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28533 invoked from network); 30 Jun 2016 15:49:08 -0000
-From: cve-assign@mitre.org
-To: gustavo.grieco@gmail.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <CACn5sdT2ie2cp7VShA-VqafyiMn-oDsv_0dGtXP-Xcf82LWihA@mail.gmail.com>
-Message-Id: <20160630154855.660056C0B4F@smtpvmsrv1.mitre.org>
-Date: Thu, 30 Jun 2016 11:48:55 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request: A read out-of-bands was found in the parsing of TGA files using libgd
+Received: (qmail 5827 invoked from network); 4 Apr 2018 14:06:21 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :user-agent;
+        bh=6pgjfxc3ZIZNL0pAvmZMThiafz+J8cAtYJWT8EyOBC4=;
+        b=iRDYSi0Txd3uBE0BSeYg16gR+Cz7Z3T0LfFmPkdxQx/Qrf9JFWpmtmKcjj9lJXJ+vq
+         0X9Fxh6aQ9dDTSS3aUm8cuEu/vA4GiOBMkCw5xinaswiN+QuFFaQgnvalrvgLMtLVVZU
+         fvj4waK/GshwkG0ykrqtBF2JRyWODgjENPiGcLYj6amZiTcXs3qZNXiJKTfRouemlGCQ
+         2a2467OK5sFwzaWYaZcdm7gxEgPQ9uKKSShreIxmYtG7mEfDmXBXvn8tjUDp8d6p7Zft
+         PZ2CCbtBonZGPwpjARiBmLoqDG2198E5OHdd0IinKfOmkX/kruDhpRdUq2GJvL1/PHnC
+         a/jA==
+X-Gm-Message-State: ALQs6tAkMGzJ8APieFPqElvV7TE1ZzN3ClyMFe4u57/h0A64NkkiUxGe
+	NkZu2j/Z7Ppv+TyQiovRDU18N5snVdk=
+X-Google-Smtp-Source: AIpwx48IP5ZqtQGN8+rMj0JVECjKVL7/3ALi1WoDk63GSAzcegQ49C8MDyBJbpNvkSnkA5Lw63bLoA==
+X-Received: by 2002:a9d:9c:: with SMTP id w28-v6mr11361761oti.328.1522850769226;
+        Wed, 04 Apr 2018 07:06:09 -0700 (PDT)
+Date: Wed, 4 Apr 2018 15:57:36 +0200
+From: Patrick Uiterwijk <puiterwijk@redhat.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20180404135736.GA14395@workstation.home.puiterwijk.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii; x-action=pgp-signed
+User-Agent: Mutt/1.9.3 (2018-01-21)
+Subject: [oss-security] CVE-2018-1002150: koji: Dist Repo call missing authorization check
+ allowing filesystem manipulation
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA512
 
-> A read out-of-bands was found in the parsing of TGA files using the
-> last revision of libgd (a6a0e7f) but older versions can be affected. A
-> reproducer and some technical details are available here:
-> 
-> https://github.com/libgd/libgd/issues/247
+Description
+===========
 
->> AddressSanitizer: heap-buffer-overflow ...
->> READ of size 4
->> ... in gdImageCreateFromTgaCtx
+A vulnerability in Koji was found that allows manipulation of the koji filesystem.
+This allows an attacker to extract secrets from disk that the Hub has access to or to overwrite
+files on disk that httpd can write to.
 
-Use CVE-2016-6132 for this buffer over-read issue.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+Affected versions
+=================
+
+All versions of Koji 1.12 before 1.12.1 are vulnerable.
+All versions of Koji 1.13 before 1.13.1 are vulnerable.
+All versions of Koji 1.14 before 1.14.1 are vulnerable.
+All versions of Koji 1.15 before 1.15.1 are vulnerable.
+
+
+Patched versions
+================
+
+Koji versions 1.12.1, 1.13.1, 1.14.1 and 1.15.1 are available on the website, and
+all include patches to solve this problem.
+
+
+Mitigation
+==========
+
+A temporary mitigation until the code patch is applied would be to move the repos-dist
+folder in the koji root directory out of the way and create a file with the same name
+as the folder that was just moved away.
+
+
+Credits
+=======
+
+This issue was discovered by Mike McLean of Red Hat.
+
+
+References
+==========
+
+https://docs.pagure.org/koji/CVE-2018-1002150/
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXdT8ZAAoJEHb/MwWLVhi2SjkQAIges7jISzaEMV4SPSu9Di8B
-4re9gzln2m8wIKQ3c9NLFGp5lR8fWCx73vSguwBUWVPBFCJZntup5rZlX/rq9P3+
-fFmMhM8g+lsDczm5bNhqUp3lQbSGzts/gPMUbEWlKYKX4sNRdwzlIoxiHq2NxwcB
-ue/Ci1nNDkL2ykvfJA8z3twOm9kFu/qMY+CG6oZ5wA6HSRiRb7kxYCmUd1HMlDKb
-JOhjyJ+qMKwAaQbQKMERSOz03tvzCzCgZvmUOjtd0lsk7a/E1Q3wwPWJ8+wyBbdw
-DZalq2JBQyFNkQ/sy9NGWpya1OSLiuly7xwH+qOGuFmxlXpB87UWq1Mkq6+Hfib5
-0pq4cKvdM3gBe1k1lXMAVxikTamvnLizMmRz+tcwHFoGCQoSTwuIegBst3vx9yIJ
-7QEiq1ergZTJEpMoG6EtxBSsOejSfhWmRYkcGkaCusYrDdT2WXFly7zWAQtnL5qT
-7X5QcpuYs/in7C0rY3UoJqOsDX7cO8b21g16Ya3pGyFjX5DIUr/ZPqSF2GcB6jXn
-/rPyeSvv1py40HWsvx8ZUQND9rgGn2g5CPIfEkYapp6IAYtJgA96jIORfuui4lEp
-+PAKIvn5LVsdAMcoq50RdOpCqD9VRjA1B6EgtZsjUs1bDsdB7qujm+wBIsu9vkGo
-qhxbyEP0bA9VFaM6jxMO
-=BZV9
+iQIcBAEBCgAGBQJaxNnQAAoJEIZXmA2atR5Q2/MQAJnIw5m4l64npyPmyZMzTbB1
+6hn7OBjTa4NUD1xlxkPDPjo1Z1SgnQP3D01mJCU/Ot9b3eBNiznfqDIc++y78xIs
+Hdb9b3IY7OcHhXwHbqr9Y4XfcvnDIG9p9q94uHnAmCpGURZhWG7QzDJ7vZsy4916
+vSepVhxhGtP6pLYG5BLkUan3YmS3Eg0eUVJ25Ijhm7WRlOEHAQI2Ih52LIljExzq
+3EhA1j2zeWz58Zw3zOnlX8b03yfN56y8HbCIF9fJtFAf7+5noEHL4gO8IGuvKn1d
+jw+RZVzezJzHTejapML9ttrRRnP7DGNanah0DJFphm3BxfuleSotCmE0phTe8aIK
+7vRGqtrWdPfkjaDe6nXOL1YlMm8Vy0qyw4qbUazY+mB5eFZXTS8W6cJyH6eeM9Kg
+cnN5cOfkP82CoT7akTLjoO8RZRMme5okTqsetMrJkvqLTaYJ+UjD+ODFmEXczT8o
+DwbfqWSBysfRQtukdHNsQ49TAAc+xFSjTBcTBYBvXoo46oOZo3NNYYIe8uTWipeH
+coIVoJwCRvNpsSkwaLsUA3qETtq/+H3pep+dx4td2xpLbFFwo8XP+IMpgEIIMij5
+fKzz1NMxAogUanBVnjdP/mVAvf1tnu2rKF/MqLirv11t5IvDymJBPGeyUkJhwT89
++AXA2bXHVAhBiqiD12qO
+=zv8L
 -----END PGP SIGNATURE-----
