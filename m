@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1648" "Tuesday" "12" "April" "2016" "07:37:33" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160412113733.EA7506C0082@smtpvmsrv1.mitre.org>" "39" "[oss-security] Re: CVE request: Qemu: net: buffer overflow in stellaris_enet emulator" "^Cc:" nil nil "4" "2016041211:37:33" "[oss-security] Re: CVE request: Qemu: net: buffer overflow in stellaris_enet emulator" (number mark "        cve-assign@m Apr 12   39/1648  " thread-indent "\"[oss-security] Re: CVE request: Qemu: net: buffer overflow in stellaris_enet emulator\"\n") "<alpine.LFD.2.20.1604111754560.8367@wniryva>" ("<alpine.LFD.2.20.1604111754560.8367@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["741" "Wednesday" "4" "April" "2018" "19:15:16" "+0300" "Alexander Popov" "alex.popov@linux.com" "<b6ed322e-95ee-25cf-19bd-7a3317d7c747@linux.com>" "21" "[oss-security] Linux Kernel Defence Map" "^Cc:" nil nil "4" "2018040416:15:16" "[oss-security] Linux Kernel Defence Map" (number mark "        alex.popov@l Apr  4   21/741   " thread-indent "\"[oss-security] Linux Kernel Defence Map\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 30245 invoked by uid 550); 12 Apr 2016 11:37:46 -0000
+Received: (qmail 29846 invoked by uid 550); 4 Apr 2018 16:15:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,52 +11,57 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30227 invoked from network); 12 Apr 2016 11:37:45 -0000
-In-Reply-To: <alpine.LFD.2.20.1604111754560.8367@wniryva>
-Message-Id: <20160412113733.EA7506C0082@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, oleksandr.bazhaniuk@intel.com
-Date: Tue, 12 Apr 2016 07:37:33 -0400 (EDT)
-From: cve-assign@mitre.org
+Received: (qmail 29812 invoked from network); 4 Apr 2018 16:15:30 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:reply-to:to:cc:from:subject:message-id:date
+         :user-agent:mime-version:content-language:content-transfer-encoding;
+        bh=bWS/YOBha2dn4Bm4hXYZzKmzPfyp7WC+g6OkiWDGavE=;
+        b=Pyyxi11CSRJeaG8aCJJlbAOf52OsV912yJKbZw+ZdNEXdThyRWgx24iChRNrvJXT9O
+         Qk8CSkIiyhZ2oxL0SdIq8MWABOVy1M34KpLZ3VFs+Jf/a+ZRaeMBgwnbBgY5FhJO/d0V
+         l58IUk+rVAMrBK70CBnbqlhXw5rsXMbScVCsQ1OE1g0dECw4TlPpDFlzBfgUrQ/Y1liF
+         YkZsb19u1TMzNDyCcWZC8eWvuA+kwCnQJn0YJYIpqnuVhIE//bhc0a6UWG+wcMawwqFG
+         ET8Rm6cC7GSFFQu/DHwpqpb9R6lp5VnYTiXeyD2vLV1s3F1uq8MGbE6n/oM3gv3cvOYO
+         ww7g==
+X-Gm-Message-State: ALQs6tDmzgmNInl6oDw+MtcHLHhwfxaI8DouhOQFAptGbi4TIoE1WbAi
+	VaFMNXdZ7beMBbGD82cqL4Q=
+X-Google-Smtp-Source: AIpwx4+C47Mm4unkxqEaA6V3cpomIXL0hsJqYyRlfPiKFgofKcCxo9V5BPImf9zzHyqCebBHrvaYAA==
+X-Received: by 10.46.155.204 with SMTP id w12mr9712262ljj.76.1522858519500;
+        Wed, 04 Apr 2018 09:15:19 -0700 (PDT)
+Message-ID: <b6ed322e-95ee-25cf-19bd-7a3317d7c747@linux.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+Cc: Kees Cook <keescook@chromium.org>, James Morris <jmorris@namei.org>,
+ "Serge E. Hallyn" <serge@hallyn.com>, Brad Spengler
+ <spender@grsecurity.net>, PaX Team <pageexec@freemail.hu>
+Date: Wed, 4 Apr 2018 19:15:16 +0300
+From: Alexander Popov <alex.popov@linux.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request: Qemu: net: buffer overflow in stellaris_enet emulator
-To: ppandit@redhat.com
+Subject: [oss-security] Linux Kernel Defence Map
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Linux kernel security is a very complex area. It would be nice to have some
+graphical representation of its current state. So I've created a Linux Kernel
+Defence Map showing the relations between:
+ - vulnerability classes / exploitation techniques,
+ - kernel defences,
+ - bug detection means.
 
-> Qemu emulator built with the Luminary Micro Stellaris Ethernet Controller is
-> vulnerable to a buffer overflow issue. It could occur while receiving network
-> packets in stellaris_enet_receive(), if the guest NIC is configured to accept
-> large(MTU) packets.
-> 
-> A remote user/process could use this flaw to crash the Qemu process on a host,
-> resulting in DoS.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-04/msg01334.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1325884
-> http://git.qemu.org/?p=qemu.git;a=commit;h=3a15cc0e1ee7168db0782133d2607a6bfa422d66
+Link:
+   https://github.com/a13xp0p0v/linux-kernel-defence-map
 
-Use CVE-2016-4001.
+N.B. The node connections don't mean "full mitigation". These connections
+represent some kind of relation. So ideally, this map should help to navigate in
+documentation and Linux kernel sources.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+I wrote it in DOT language and generated the picture using GraphViz. So it is
+very pleasant to maintain this map with git.
 
-iQIcBAEBCAAGBQJXDN1qAAoJEL54rhJi8gl5hf8P/A+5Vn01oCk1xlc8z4he/gN6
-4LJ95B1hUQKaIestlMoKghcO/xbOhiYb84Yb47+iBbQopHVL5PsW5/aGSM6dwlPS
-Kw+VMM0EJjveTDy/cY47IEBCrghcKeoE1PPmgzMBGI9lzMgYRI8atQkyBxG1dHSb
-I1UxOursYDnVN+xdn/qYRYrOVzqgfb8pvEQ4TBXemrCvHCdYJndEBSFoePWVIN3m
-C4d/nRmncflKdm61P+q/7R1NrYcvunky1xR4rIKsTfZbnNVcdvDmQ7EDqdFyF3VL
-OWtiOFfwgn+cp2047RgRGecsdYSs7oCsdS9xmoAFLYYyBKHN1Z0Eh8I/+FY6Deby
-lyyfPPkS+ruJMAmuBIySGNhj+leyFM1JQ8mCgpQt29Hx20/uPmjtb2bwlUiO4WPC
-qfgqLE5QKwycMsvHgenG3v7BxXsBrlxEd6e3w44Vegl2rNHJLZxRvaYFNy0pKG4J
-RXYglpULTs8n9whj9ULWiS5hCyXrHMpz9HNtMGomUnQT1YB2EYvVJZDc54/Ff8nZ
-m06EPebckrb+696feEqTDBCoNPyj//AvII5kJyFuJyN1ZjsmHmN5mr2ycHUXmvrm
-dAYUM2wGxiERaeKFGEs2AF7vQU78UNB5CoE+TJT/Ge1dAs3zwSY0HaciwQ30Np2A
-R82cpClaOw8Zl6bghbmF
-=1M6c
------END PGP SIGNATURE-----
+I would be grateful for any feedback.
+
+Best regards,
+Alexander
