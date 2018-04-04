@@ -1,4 +1,9 @@
-Received: (qmail 19643 invoked by uid 550); 13 Jul 2024 15:05:48 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1062" "Wednesday" "4" "April" "2018" "15:06:09" "-0700" "Daniel Dai" "daijy@apache.org" "<CABDpyChmEOPSBAxb+ipyGVfhuS4Zq+w0CFn-EANy+_TD0o-8+w@mail.gmail.com>" "22" "[oss-security] [SECURITY] CVE-2018-1284: Hive UDF series UDFXPathXXXX allow users to pass carefully crafted XML to access arbitrary files" nil nil nil "4" "2018040422:06:09" "[oss-security] [SECURITY] CVE-2018-1284: Hive UDF series UDFXPathXXXX allow users to pass carefully crafted XML to access arbitrary files" (number mark "U       daijy@apache Apr  4   22/1062  " thread-indent "\"[oss-security] [SECURITY] CVE-2018-1284: Hive UDF series UDFXPathXXXX allow users to pass carefully crafted XML to access arbitrary files\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 26306 invoked by uid 550); 4 Apr 2018 23:50:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,50 +12,42 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5862 invoked from network); 13 Jul 2024 15:01:12 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Heping Wang <peacewong@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <7ef85b5a-7333-fee8-7cb3-2ed29b637d56@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Sat, 13 Jul 2024 15:01:02 +0000
+Received: (qmail 32483 invoked from network); 4 Apr 2018 22:06:31 -0000
+X-Gm-Message-State: ALQs6tBVwxgkoCM3HgW1p/VMZLjheYQyurYRv+ve0a7TsSw8rwNdfz1G
+	KL5YPfM+f8B2r/dMQ/g4jNpcTT0EcgChUpaNSFU=
+X-Google-Smtp-Source: AIpwx4/PTCrcZxsPVnfE8csGFRXQXnuRFMxXB59K0llnbVG1ph1jGOz4ZAt2gD4TWNDbVG14ou8KDLj+kDeEh1kqSIs=
+X-Received: by 10.107.101.21 with SMTP id z21mr17355154iob.3.1522879569872;
+ Wed, 04 Apr 2018 15:06:09 -0700 (PDT)
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2023-49566: Apache Linkis DataSource: JDBC Datasource Module
- with DB2 has JNDI Injection vulnerability 
+From: Daniel Dai <daijy@apache.org>
+Date: Wed, 4 Apr 2018 15:06:09 -0700
+X-Gmail-Original-Message-ID: <CABDpyChmEOPSBAxb+ipyGVfhuS4Zq+w0CFn-EANy+_TD0o-8+w@mail.gmail.com>
+Message-ID: <CABDpyChmEOPSBAxb+ipyGVfhuS4Zq+w0CFn-EANy+_TD0o-8+w@mail.gmail.com>
+To: user@hive.apache.org, dev@hive.apache.org, announce@apache.org, 
+	security <security@hive.apache.org>, oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] [SECURITY] CVE-2018-1284: Hive UDF series UDFXPathXXXX allow users to
+ pass carefully crafted XML to access arbitrary files
 
-Severity: important
+CVE-2018-1284: Hive UDF series UDFXPathXXXX allow users to pass
+carefully crafted XML to access arbitrary files
 
-Affected versions:
+Severity: Important
 
-- Apache Linkis DataSource * before 1.6.0
+Vendor: The Apache Software Foundation
 
-Description:
+Versions Affected: This vulnerability affects all versions from 0.6.0
 
-In Apache Linkis <=3D1.5.0, due to the lack of effective filtering
-of parameters, an attacker configuring malicious=20
+Description: Malicious user might use any xpath UDFs
+(xpath/xpath_string/xpath_boolean/xpath_number/xpath_double/xpath_float/xpath_long/xpath_int/xpath_short)
+to expose the content of a file on the machine running HiveServer2
+owned by HiveServer2 user (usually hive) if
+hive.server2.enable.doAs=false.
 
-db2
-
- parameters in the DataSource Manager Module will result=C2=A0in jndi injec=
-tion. Therefore, the parameters in the DB2 URL should be blacklisted.=C2=A0
-
-This attack requires the attacker to obtain an authorized account from Link=
-is before it can be carried out.
-
- Versions of Apache Linkis=20
-
-<=3D1.5.0
-
- will be affected.
-We recommend users upgrade the version of Linkis to version 1.6.0.
-
-Credit:
-
-Joyh (reporter)
-
-References:
-
-https://linkis.apache.org
-https://www.cve.org/CVERecord?id=3DCVE-2023-49566
-
+Mitigation: Users who use xpath UDFs in HiveServer2 and
+hive.server2.enable.doAs=false are recommended to upgrade to 2.3.3, or
+update UDFXPathUtil.java to the head of branch-2.3 and rebuild
+hive-exec.jar: https://git1-us-west.apache.org/repos/asf?p=hive.git;a=blob;f=ql/src/java/org/apache/hadoop/hive/ql/udf/xml/UDFXPathUtil.java;hb=refs/heads/branch-2.3.
+If these functions are not being used at present, you can also
+disable its use by adding them to the value of the config
+hive.server2.builtin.udf.blacklist.
