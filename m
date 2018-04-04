@@ -1,65 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/09/9
-Message-ID: <CAKG8Do5TnCQtc=o7Z1mkk94_gM9LbFywkrt218a0NpeL1a=9wA@mail.gmail.com>
-Date: Thu, 9 Aug 2018 17:42:39 +0200
-From: Cedric Buissart <cbuissar@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/04/2
+Message-ID: <b6ed322e-95ee-25cf-19bd-7a3317d7c747@linux.com>
+Date: Wed, 4 Apr 2018 19:15:16 +0300
+From: Alexander Popov <alex.popov@...ux.com>
 To: oss-security@...ts.openwall.com
-Subject: cobbler CVE-2018-10931: CobblerXMLRPCInterface exports internal only functions over XMLRPC
+Cc: Kees Cook <keescook@...omium.org>, James Morris <jmorris@...ei.org>, "Serge E. Hallyn" <serge@...lyn.com>, Brad Spengler <spender@...ecurity.net>, PaX Team <pageexec@...email.hu>
+Subject: Linux Kernel Defence Map
 Content-Type: text/plain; charset=utf-8
 
-Cobbler is a Linux installation server that allows for rapid setup of
-network
-installation environments. It is used in products like Red Hat Enterprise
-Satellite 5 and Spacewalk.  Upstream project is at :
-https://cobbler.github.io/
+Linux kernel security is a very complex area. It would be nice to have some
+graphical representation of its current state. So I've created a Linux Kernel
+Defence Map showing the relations between:
+ - vulnerability classes / exploitation techniques,
+ - kernel defences,
+ - bug detection means.
 
+Link:
+   https://github.com/a13xp0p0v/linux-kernel-defence-map
 
-While diagnosing the following 2 flaws :
-https://movermeyer.com/2018-08-02-privilege-escalation-exploits-in-cobblers-api/
+N.B. The node connections don't mean "full mitigation". These connections
+represent some kind of relation. So ideally, this map should help to navigate in
+documentation and Linux kernel sources.
 
-Another flaw has been found: cobbler exposes all functions from its
-CobblerXMLRPCInterface class over XMLRPC. However, python renames the __*
-function with _<classname>__<functionname>.  A remote, unauthenticated
-attacker
-could use this flaw by calling the real name of any __* function and gain
-high
-privileges within cobbler or upload files to arbitrary location in the
-context
-of the daemon.  This is identified as CVE-2018-10931
+I wrote it in DOT language and generated the picture using GraphViz. So it is
+very pleasant to maintain this map with git.
 
-All versions of cobbler (at least since 2.0.7) are affected.
-
-To reproduce the issue: use the reproducers from the report above and call
-any
-__<name> function as _CobblerXMLRPCInterface__<name>
-
-The patch for this specific vulnerability (i.e.: it does *not* fix the
-vulnerability reported by movermeyer.com) :
-
----
- cobbler/remote.py | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/cobbler/remote.py b/cobbler/remote.py
-index 94a18e7..ea0e354 100644
---- a/cobbler/remote.py
-+++ b/cobbler/remote.py
-@@ -1752,6 +1752,9 @@ class ProxiedXMLRPCInterface:
-
-     def _dispatch(self, method, params, **rest):
-
-+        if method.startswith('_'):
-+            raise CX("forbidden method")
-+
-         if not hasattr(self.proxied, method):
-             raise CX("unknown remote method")
-
----
-
+I would be grateful for any feedback.
 
 Best regards,
-
--- 
-Cedric Buissart,
-Product Security
-
+Alexander
