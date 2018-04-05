@@ -1,57 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/28/5
-Message-ID: <20180828094537.GA10578@localvm.private.f2light.com>+6A304428CF1ACB2B
-Date: Tue, 28 Aug 2018 17:45:37 +0800
-From: Xiami <pengyu.tao@...li.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: FS_IOC_FSSETXATTR will lead to EXT4-fs shut down
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/05/3
+Message-ID: <CAGXu5jL8x8TTwgJpRJUjM3erfrv7-49YHEKm_Lo3F46FumdWzw@mail.gmail.com>
+Date: Thu, 5 Apr 2018 12:20:24 -0700
+From: Kees Cook <keescook@...omium.org>
+To: Alexander Popov <alex.popov@...ux.com>
+Cc: Kurt Seifried <kseifried@...hat.com>, oss-security@...ts.openwall.com,  James Morris <jmorris@...ei.org>, "Serge E. Hallyn" <serge@...lyn.com>,  Brad Spengler <spender@...ecurity.net>, PaX Team <pageexec@...email.hu>,  "Reshetova, Elena" <elena.reshetova@...el.com>
+Subject: Re: Linux Kernel Defence Map
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Aug 28, 2018 at 08:27:50AM +0000, zhrzhang(张洪睿) wrote:
-> Hello：
->         when I fuzz，I found the kernel will always no output from machine, and error FS_IOC_FSSETXATTR contribute to this.
-> 
->         the syzlog is as below:
-> 
-> r0 = creat(&(0x7f0000000140)='./file0\x00', 0x0)
-> ioctl$FS_IOC_FSSETXATTR(r0, 0x8004587d, &(0x7f0000000080)={0x0, 0x0, 0x0, 0x8})
+On Thu, Apr 5, 2018 at 5:32 AM, Alexander Popov <alex.popov@...ux.com> wrote:
+> On 05.04.2018 01:17, Kees Cook wrote:
+>> (I think "info leaks" and "finding kernel objects" may need some kind
+>> of clarifying language for how they're different)
+>
+> Info Exposure is a vulnerability (red node). STACKLEAK, PAGE_POISONING, etc
+> mitigate this kind of bugs.
+>
+> Finding Kernel Objects is an exploitation technique (orange node). KASLR,
+> RANDSTRUCT are statistical defences which make it harder for an adversary.
+>
+> Kees, Kurt, does it sound reasonable?
 
-Your ioctl command 0x8004587d is exactly EXT4_IOC_SHUTDOWN defined in fs/ext4/ext4.h
+Yeah, that makes sense.
 
-> 
->         the poc will show like this:
-> 
-> #define _GNU_SOURCE
-> 
-> #include <endian.h>
-> #include <stdint.h>
-> #include <stdio.h>
-> #include <stdlib.h>
-> #include <string.h>
-> #include <sys/syscall.h>
-> #include <sys/types.h>
-> #include <unistd.h>
-> 
-> uint64_t r[1] = {0xffffffffffffffff};
-> 
-> int main(void)
-> {
-> syscall(__NR_mmap, 0x20000000, 0x1000000, 3, 0x32, -1, 0);
-> long res = 0;
-> memcpy((void*)0x20000140, "./file0", 8);
-> res = syscall(__NR_creat, 0x20000140, 0);
-> if (res != -1)
-> r[0] = res;
-> *(uint32_t*)0x20000080 = 0;
-> *(uint32_t*)0x20000084 = 0;
-> *(uint32_t*)0x20000088 = 0;
-> *(uint32_t*)0x2000008c = 8;
-> *(uint32_t*)0x20000090 = 0;
-> *(uint64_t*)0x20000098 = 0;
-> syscall(__NR_ioctl, r[0], 0x8004587d, 0x20000080);
-> return 0;
-> }
-> ________________________________
-> zhrzhang(张洪睿)
+>> Upstream's /proc/sys/net/core/bpf_jit_harden (see commit 4f3446bb809f)
+>
+> Thanks, added.
+>
+>> and other JIT features (RO-setting, randomized offset, etc) are
+>> designed to defend against JIT Abuse.
+>
+> Didn't manage to find config for them. Are they always enabled?
 
+Yes. Per-arch inplementations of bpf_int_jit_compile() make calls to
+bpf_jit_binary_alloc() which does the randomized page offset with trap
+instructions, and calls bpf_jit_binary_lock_ro() to make the memory
+read-only at the end.
 
+>> UDEREF and SMAP pointing at ret2usr+ROP is fine, but seems
+>> "incomplete". Is there a good name for "reading user memory and
+>> operating on a malicious structure"? It's a more narrow exploit
+>> technique than ROP or executing userspace memory, but it's important
+>> to cover.
+>
+> Yes, agree. That's what I did exploiting CVE-2017-2636: allocating struct
+> skb_shared_info in the userspace memory with the destructor callback pointing to
+> native_write_cr4() to disable SMEP. Is it what you mean?
+
+Yup. Function pointers are the traditional target.
+
+> I've added "ret2usr + type confusion". Do you like it?
+>
+> Kurt, that is CWE-843: Access of Resource Using Incompatible Type ('Type
+> Confusion').
+
+"type confusion" seems weird to me, but I haven't spent a lot of time
+weighing the options of the naming of these things. "Overwriting a
+function pointer" is the method, and the bug is "unexpectedly
+accessing userspace memory from the kernel" (which is usually
+"something overwrite a pointer").
+
+> Kees, thanks again for such a cool feedback. The map is updated.
+
+Very cool! Maybe also add an out-of-tree bubble for "Clang CFI", which
+gives forward-edge protection for code-reuse...
+
+-Kees
+
+-- 
+Kees Cook
+Pixel Security
