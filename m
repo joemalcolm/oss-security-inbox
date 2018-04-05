@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1915" "Wednesday" "24" "August" "2016" "16:28:12" "+0930" "Doran Moppert" "dmoppert@redhat.com" "<20160824065811.GB7400@sin.redhat.com>" "54" "[oss-security] CVE request - sudoers on Red Hat, Fedora, Mageia information disclosure" nil nil nil "8" "2016082406:58:12" "[oss-security] CVE request - sudoers on Red Hat, Fedora, Mageia information disclosure" (number mark "U       dmoppert@red Aug 24   54/1915  " thread-indent "\"[oss-security] CVE request - sudoers on Red Hat, Fedora, Mageia information disclosure\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2304" "Thursday" "5" "April" "2018" "12:20:24" "-0700" "Kees Cook" "keescook@chromium.org" "<CAGXu5jL8x8TTwgJpRJUjM3erfrv7-49YHEKm_Lo3F46FumdWzw@mail.gmail.com>" "62" "[oss-security] Re: Linux Kernel Defence Map" "^Cc:" nil nil "4" "2018040519:20:24" "[oss-security] Re: Linux Kernel Defence Map" (number mark "U       keescook@chr Apr  5   62/2304  " thread-indent "\"[oss-security] Re: Linux Kernel Defence Map\"\n") "<2e0bd890-5c3b-9b03-f984-90b452a94c64@linux.com>" ("<b6ed322e-95ee-25cf-19bd-7a3317d7c747@linux.com>" "<CAGXu5jJD0X7okv9=Dm00YP6UjtCSV21gj30Orc_VrYO+94dMzQ@mail.gmail.com>" "<2e0bd890-5c3b-9b03-f984-90b452a94c64@linux.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7889 invoked by uid 550); 24 Aug 2016 13:03:10 -0000
+Received: (qmail 14098 invoked by uid 550); 5 Apr 2018 19:22:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,72 +11,119 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5821 invoked from network); 24 Aug 2016 06:58:29 -0000
-Date: Wed, 24 Aug 2016 16:28:12 +0930
-From: Doran Moppert <dmoppert@redhat.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20160824065811.GB7400@sin.redhat.com>
+Received: (qmail 11434 invoked from network); 5 Apr 2018 19:20:37 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=2YT8hr+LWO6xB1TKqwhGLoGk/ohEeJDYVQGqZa+FsS8=;
+        b=D1izhiqKOMdwyPTrLZJ28+pBlPfdiKYbyyzTmuB4+On3ayrDc+Wc21EdWUhmoYTVR0
+         jwZbUHVvrZdgt3/yjCAd5HE6AuoeyVpOYRPNuV0nVwsdzn+z9QfTpxrKtTY2eVfqBfqr
+         ABq1B5fP/WdUE0xax3Q6x9Sj4WiTEE3HwpoxDV1fyqX19LlkNEyrVQDvM5Dn2VKCrCwX
+         EG5iOhgkgkoDg1xL8aIq4JsiE4Wq6P755Ec4hZiOx8Vo2FlkBgSO4qj73Y2p1ed2BYM+
+         epBJWichP2JR72qOQnvpBM3uix0t7T/qWIX/1N/NJKAHYSobS4WFJqwCwRC6fKD68tyY
+         Tjmg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=2YT8hr+LWO6xB1TKqwhGLoGk/ohEeJDYVQGqZa+FsS8=;
+        b=TUSlnqM30dSa8vfwldd57dn2L/O8YEszjmaBbFi3YzuCbqp92IwzcNZESJXE+bu+as
+         xSKWv0yubDASJr8T8xh5iEQJmhhgLmz05c/8GQgj5JPZ82Ozv2ibGyopchnZn1R4QRUJ
+         QEv60FT+WVluLpBcgMQT9y2wVKJ6Slr61JdY0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=2YT8hr+LWO6xB1TKqwhGLoGk/ohEeJDYVQGqZa+FsS8=;
+        b=heRMcgkx5VEIYVbpEpD3VNLPOXAdtQL2YZX5tVES7cJh6xKXbO2CY/qyYybEvDE2+a
+         zdHLc/Tw2vkUR/3mfxHWp4BdUhqmMXaD/pT7z86VbmAH6EXczMp/djKWv+mRSb+RMptJ
+         T59UuCe/Udotz6Pd8lURHTTPtZ+ocEvl6iaVM/RGhUGGf6cB2JbU1HigiTWETng/T8C8
+         0R7DC99LvB8t3AtsXxSBhGYnpHiZVuFNgGcfF9lW7jWOfC2pelskVosqrgMUyYC+bJIW
+         MPh8urTv/FrkF+mbJbSTT5MUWiVra40fGqkUb/bktASKewF+GffjxdtN44rCq4paatIv
+         2K/Q==
+X-Gm-Message-State: ALQs6tCQhBiAy6DpPl5LhfoHNVDqY8GN/poFjWUoVfUZVKsDy/IoVZxL
+	Fk1O4kICtf9wCdDR9Fzjwlv/fw9fmuifddaQBBQgPw==
+X-Google-Smtp-Source: AIpwx4/WZPL5Ptc2g1s8HFOVYfevio2wiHAvYO8BI2hCjomUK4B87mJGeUWFrTXjMZai5KrQf8D09j8M/Ja7dsXlLG4=
+X-Received: by 10.176.35.198 with SMTP id c6mr3833486uan.83.1522956025715;
+ Thu, 05 Apr 2018 12:20:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="k1lZvvs/B4yU6o8G"
-Content-Disposition: inline
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.38]); Wed, 24 Aug 2016 06:58:17 +0000 (UTC)
-Subject: [oss-security] CVE request - sudoers on Red Hat, Fedora, Mageia information
- disclosure
+In-Reply-To: <2e0bd890-5c3b-9b03-f984-90b452a94c64@linux.com>
+References: <b6ed322e-95ee-25cf-19bd-7a3317d7c747@linux.com>
+ <CAGXu5jJD0X7okv9=Dm00YP6UjtCSV21gj30Orc_VrYO+94dMzQ@mail.gmail.com> <2e0bd890-5c3b-9b03-f984-90b452a94c64@linux.com>
+X-Google-Sender-Auth: DvdQytHIF-5WoeMEO2wnzATooqM
+Message-ID: <CAGXu5jL8x8TTwgJpRJUjM3erfrv7-49YHEKm_Lo3F46FumdWzw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Cc: Kurt Seifried <kseifried@redhat.com>, oss-security@lists.openwall.com, 
+	James Morris <jmorris@namei.org>, "Serge E. Hallyn" <serge@hallyn.com>, 
+	Brad Spengler <spender@grsecurity.net>, PaX Team <pageexec@freemail.hu>, 
+	"Reshetova, Elena" <elena.reshetova@intel.com>
+Date: Thu, 5 Apr 2018 12:20:24 -0700
+From: Kees Cook <keescook@chromium.org>
+Reply-To: oss-security@lists.openwall.com
+Sender: keescook@google.com
+Subject: [oss-security] Re: Linux Kernel Defence Map
+To: Alexander Popov <alex.popov@linux.com>
 
---k1lZvvs/B4yU6o8G
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Thu, Apr 5, 2018 at 5:32 AM, Alexander Popov <alex.popov@linux.com> wrote:
+> On 05.04.2018 01:17, Kees Cook wrote:
+>> (I think "info leaks" and "finding kernel objects" may need some kind
+>> of clarifying language for how they're different)
+>
+> Info Exposure is a vulnerability (red node). STACKLEAK, PAGE_POISONING, etc
+> mitigate this kind of bugs.
+>
+> Finding Kernel Objects is an exploitation technique (orange node). KASLR,
+> RANDSTRUCT are statistical defences which make it harder for an adversary.
+>
+> Kees, Kurt, does it sound reasonable?
 
-The inclusion of "INPUTRC" in env_keep in /etc/sudoers allowed
-information disclosure through readline-enabled programs parsing the
-named file with elevated privileges.  Local users with sudo access could
-read (portions of) specially-formatted files with elevated privileges.
-Future versions of readline will make the vulnerability more significant
-by showing error messages for malformed entries, rather than silently
-ignoring them.
+Yeah, that makes sense.
 
-This flaw is distribution-specific - upstream sudo does not include
-INPUTRC, and we are not aware at this time of any other distros that
-include it.
+>> Upstream's /proc/sys/net/core/bpf_jit_harden (see commit 4f3446bb809f)
+>
+> Thanks, added.
+>
+>> and other JIT features (RO-setting, randomized offset, etc) are
+>> designed to defend against JIT Abuse.
+>
+> Didn't manage to find config for them. Are they always enabled?
 
-The following packages address this issue:
+Yes. Per-arch inplementations of bpf_int_jit_compile() make calls to
+bpf_jit_binary_alloc() which does the randomized page offset with trap
+instructions, and calls bpf_jit_binary_lock_ro() to make the memory
+read-only at the end.
 
-	sudo-1.8.15-2.fc22
-	sudo-1.8.15-2.fc23
-	sudo-1.8.16-4.fc24
-	sudo-1.8.17p1-1.mga5
+>> UDEREF and SMAP pointing at ret2usr+ROP is fine, but seems
+>> "incomplete". Is there a good name for "reading user memory and
+>> operating on a malicious structure"? It's a more narrow exploit
+>> technique than ROP or executing userspace memory, but it's important
+>> to cover.
+>
+> Yes, agree. That's what I did exploiting CVE-2017-2636: allocating struct
+> skb_shared_info in the userspace memory with the destructor callback pointing to
+> native_write_cr4() to disable SMEP. Is it what you mean?
 
-This was brought to our attention by Grisha Levit.
+Yup. Function pointers are the traditional target.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=3D1339935
+> I've added "ret2usr + type confusion". Do you like it?
+>
+> Kurt, that is CWE-843: Access of Resource Using Incompatible Type ('Type
+> Confusion').
 
---=20
-Doran Moppert
-Red Hat Product Security
+"type confusion" seems weird to me, but I haven't spent a lot of time
+weighing the options of the naming of these things. "Overwriting a
+function pointer" is the method, and the bug is "unexpectedly
+accessing userspace memory from the kernel" (which is usually
+"something overwrite a pointer").
 
---k1lZvvs/B4yU6o8G
-Content-Type: application/pgp-signature
+> Kees, thanks again for such a cool feedback. The map is updated.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
+Very cool! Maybe also add an out-of-tree bubble for "Clang CFI", which
+gives forward-edge protection for code-reuse...
 
-iQIcBAEBCgAGBQJXvUWDAAoJEGohqWcZR7qpMykP/03AOV3PN22zdHi1fjxNkhHQ
-L+TnbJFATvJikhs0qp4XKWAiNAZJSIcM9tE68IIGL0dhO7ZSnepUqkPdTqjUULu7
-kk4pWUvCsnLxSzH6ETqexYmf3Ir/JY6ZWRYKP2/CKVwOc3aHo7ytxbImIV+rs5zt
-hmrri8NPSQBfRl7IrRSH48F8fOt+SFL39zzZO3tVAgV6+/3TkQ8ysxaZ5aqFJQyF
-ZfYnm4ZzKmAT815cwx6f1RAPB9zULTxjOZkaA89sklZ0cHvQ04dZ486YokOnShfb
-/CoftNOUFXfSR5xLwyZo0v8cIY0RkJ2R7CbdbVvgcaVolKRDZTIXXievXEr20g5Z
-7iJgRBkq39Btg6yGgZqQfPq1mU/VXXQT0Cq40QNBujzh0us7Q+ARrjPaaxFTxXVu
-eQTrtDADoVn/jUKzqhcVxkrlii3xZv3y0OpuoK+tmq9xkdHPErq7zq2L+v/tW6Wv
-DTVguD2WWYjUj565YTOLyOJdJCiSAM4e8bjFBVMFXL8gA9/4x/GDVQJRlLE38ozY
-5WDgfIZ4EAMkLaLWnQUMAUjIQmmxBF+rgC4hsZt8ndFRYwXJvknM9nz8H2BfB2+M
-1T3TL1ti5aVya64IvoWx3X/4bdg9nF9H5Ab4XtFu86yTkYc+p2KWiahaYJ3THvR8
-ZJdSN8sOpM1VUTJRJcKp
-=qg+/
------END PGP SIGNATURE-----
+-Kees
 
---k1lZvvs/B4yU6o8G--
+-- 
+Kees Cook
+Pixel Security
