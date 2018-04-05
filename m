@@ -1,19 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/13/3
-Message-ID: <20180413002300.GC27026@hunt>
-Date: Thu, 12 Apr 2018 17:23:00 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Updated distros statistics
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/05/5
+Message-ID: <CAGXu5jKpGPORh=YtAhSgEwERyxCQyZBKspqquqMb7uOjBwsN_g@mail.gmail.com>
+Date: Thu, 5 Apr 2018 16:55:49 -0700
+From: Kees Cook <keescook@...omium.org>
+To: Alexander Popov <alex.popov@...ux.com>
+Cc: Kurt Seifried <kseifried@...hat.com>, oss-security@...ts.openwall.com,  James Morris <jmorris@...ei.org>, "Serge E. Hallyn" <serge@...lyn.com>,  Brad Spengler <spender@...ecurity.net>, PaX Team <pageexec@...email.hu>,  "Reshetova, Elena" <elena.reshetova@...el.com>
+Subject: Re: Linux Kernel Defence Map
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 13, 2018 at 02:11:25AM +0200, Kristian Fiskerstrand wrote:
-> Just a heads up that I updated the distros ML statistics at
-> http://oss-security.openwall.org/wiki/mailing-lists/distros/stats now
-> for the end of March.
+On Thu, Apr 5, 2018 at 4:38 PM, Alexander Popov <alex.popov@...ux.com> wrote:
+> On 05.04.2018 22:20, Kees Cook wrote:
+>> On Thu, Apr 5, 2018 at 5:32 AM, Alexander Popov <alex.popov@...ux.com> wrote:
+>>> On 05.04.2018 01:17, Kees Cook wrote:
+>> "type confusion" seems weird to me, but I haven't spent a lot of time
+>> weighing the options of the naming of these things. "Overwriting a
+>> function pointer" is the method, and the bug is "unexpectedly
+>> accessing userspace memory from the kernel" (which is usually
+>> "something overwrite a pointer").
+>
+> Just got an idea to call it "userspace data access". Short and simple!
+>
+> I also combined SMAP/PAN and UDEREF into a cluster to reduce the number of
+> edges. Now it looks a bit better.
+>
+>>> Kees, thanks again for such a cool feedback. The map is updated.
+>>
+>> Very cool! Maybe also add an out-of-tree bubble for "Clang CFI", which
+>> gives forward-edge protection for code-reuse...
+>
+> Ok. Created a CFI cluster with RAP and Clang CFI inside.
 
-Very nice statistics, thanks for maintaining and reporting these.
+Well, naming can get confusing here. RAP got renamed along the way to
+include both "Return Address Protection" (backward edge) and "Indirect
+Control Transfer Protection" (forward edge). Clang CFI is forward edge
+only, though things like shadow stacks or pointer authentication can
+provide backward edge protection. So... I'm not sure how much detail
+you want to capture in the bubbles. :)
 
-Thanks
+> However, I didn't manage to find any materials about applying Clang CFI to the
+> Linux kernel.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Here's Sami Tolvanen's work on doing Clang CFI (on top of Clang LTO):
+https://android-review.googlesource.com/q/topic:android-4.9-cfi
+
+-Kees
+
+-- 
+Kees Cook
+Pixel Security
