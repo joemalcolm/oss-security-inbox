@@ -1,72 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/10/3
-Message-ID: <0c0db4bd-37e4-7e3d-1ce8-bcee37fb40fb@igalia.com>
-Date: Wed, 10 Jan 2018 17:36:24 +0100
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: "webkit-gtk@...ts.webkit.org" <webkit-gtk@...ts.webkit.org>
-Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: WebKitGTK+ Security Advisory WSA-2018-0001
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/06/1
+Message-ID: <20180406085243.514739f2@pc1>
+Date: Fri, 6 Apr 2018 08:52:43 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Privsec vuln in beep / Code execution in GNU patch
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK+ Security Advisory                               WSA-2018-0001
-------------------------------------------------------------------------
+Hi,
 
-Date reported      : January 10, 2018
-Advisory ID        : WSA-2018-0001
-Advisory URL       : https://webkitgtk.org/security/WSA-2018-0001.html
-CVE identifiers    : CVE-2017-5753, CVE-2017-5715.
+There was a joke webpage about a vulnerability in beep a few days ago:
+http://holeybeep.ninja/
+There's also a corresponding Debian Advisory:
+https://lists.debian.org/debian-security-announce/2018/msg00089.html
+Neither have any technical details. CVE is CVE-2018-0492.
 
-Several vulnerabilities were discovered in WebKitGTK+.
+If anyone knows the background of this please share it.
 
-CVE-2017-5753
-    Versions affected: WebKitGTK+ before 2.18.5.
-    Credit to Jann Horn of Google Project Zero; and Paul Kocher in
-    collaboration with Daniel Genkin of University of Pennsylvania and
-    University of Maryland, Daniel Gruss of Graz University of
-    Technology, Werner Haas of Cyberus Technology, Mike Hamburg of
-    Rambus (Cryptography Research Division), Moritz Lipp of Graz
-    University of Technology, Stefan Mangard of Graz University of
-    Technology, Thomas Prescher of Cyberus Technology, Michael Schwarz
-    of Graz University of Technology, and Yuval Yarom of University of
-    Adelaide and Data61.
-    Impact: Systems with microprocessors utilizing speculative execution
-    and branch prediction may allow unauthorized disclosure of
-    information to an attacker via a side-channel analysis. This variant
-    of the Spectre vulnerability triggers the speculative execution by
-    performing a bounds-check bypass. Description: Security improvements
-    are included to mitigate the effects.
+However it turned out that on that joke holey beep webpage there's a
+patch with a hidden easter egg that's actually a vulnerability in GNU
+patch.
+GNU patch supports a legacy "ed" format for patches and that allows
+executing external commands.
 
-CVE-2017-5715
-    Versions affected: WebKitGTK+ before 2.18.5.
-    Credit to Jann Horn of Google Project Zero; and Paul Kocher in
-    collaboration with Daniel Genkin of University of Pennsylvania and
-    University of Maryland, Daniel Gruss of Graz University of
-    Technology, Werner Haas of Cyberus Technology, Mike Hamburg of
-    Rambus (Cryptography Research Division), Moritz Lipp of Graz
-    University of Technology, Stefan Mangard of Graz University of
-    Technology, Thomas Prescher of Cyberus Technology, Michael Schwarz
-    of Graz University of Technology, and Yuval Yarom of University of
-    Adelaide and Data61.
-    Impact: Systems with microprocessors utilizing speculative execution
-    and branch prediction may allow unauthorized disclosure of
-    information to an attacker via a side-channel analysis. This variant
-    of the Spectre vulnerability triggers the speculative execution by
-    utilizing branch target injection. Description: Security
-    improvements are included to mitigate the effects.
+It's been reported to GNU patch now here:
+https://savannah.gnu.org/bugs/index.php?53566
+CVE is CVE-2018-1000156. (says an anonymous commenter...)
 
+A minimal poc looks like this:
+--- a	2018-13-37 13:37:37.000000000 +0100
++++ b	2018-13-37 13:38:38.000000000 +0100
+1337a
+1,112d
+!id>~/pwn.lol
 
-We recommend updating to the last stable version of WebKitGTK+. It is
-the best way of ensuring that you are running a safe version of
-WebKitGTK+. Please check our website for information about the last
-stable releases.
-
-Further information about WebKitGTK+ Security Advisories can be found
-at: https://webkitgtk.org/security.html
-
-The WebKitGTK+ team,
-January 10, 2018
+It looks like FreeBSD and OpenBSD have fixed something alike in 2015:
+https://www.freebsd.org/security/advisories/FreeBSD-SA-15:18.bsdpatch.asc
+https://ftp.openbsd.org/pub/OpenBSD/patches/5.7/common/013_patch.patch.sig
 
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (898 bytes)
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
