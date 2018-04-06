@@ -1,26 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/27/2
-Message-ID: <CAMopvkNZoHH3qx+9brdRdAoZ7zy9w6QPotjohVwqsopGEk=sgw@mail.gmail.com>
-Date: Tue, 27 Mar 2018 12:16:58 +0200
-From: Lukasz Lenart <lukaszlenart@...che.org>
-To: Struts Users Mailing List <user@...uts.apache.org>
-Cc: announce@...che.org, announcements@...uts.apache.org,  oss-security@...ts.openwall.com,  "Munoz, Alvaro" <alvaro.munoz@...rofocus.com>, "Grushka, Yevgeniy" <grushka@...rofocus.com>
-Subject: [ANN] A crafted XML request can be used to perform a DoS attack when using the Struts REST plugin
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/06/4
+Message-ID: <4b0e1b5d-5615-c7bb-50b6-06cee6cf0458@linux.com>
+Date: Fri, 6 Apr 2018 21:01:02 +0300
+From: Alexander Popov <alex.popov@...ux.com>
+To: Kees Cook <keescook@...omium.org>
+Cc: Kurt Seifried <kseifried@...hat.com>, oss-security@...ts.openwall.com, James Morris <jmorris@...ei.org>, "Serge E. Hallyn" <serge@...lyn.com>, Brad Spengler <spender@...ecurity.net>, PaX Team <pageexec@...email.hu>, "Reshetova, Elena" <elena.reshetova@...el.com>
+Subject: Re: Linux Kernel Defence Map
 Content-Type: text/plain; charset=utf-8
 
-The Apache Security Struts Team recommends to immediately upgrade your
-Struts 2 based projects to use the latest released version of the
-Apache Struts. This is necessary to prevent your publicly accessible
-web site, which is using the Struts REST plugin and performing XML
-serialisation, from being exposed to possible DoS attack.
+On 06.04.2018 02:55, Kees Cook wrote:
+> On Thu, Apr 5, 2018 at 4:38 PM, Alexander Popov <alex.popov@...ux.com> wrote:
+>> On 05.04.2018 22:20, Kees Cook wrote:
+>>> Very cool! Maybe also add an out-of-tree bubble for "Clang CFI", which
+>>> gives forward-edge protection for code-reuse...
+>>
+>> Ok. Created a CFI cluster with RAP and Clang CFI inside.
+> 
+> Well, naming can get confusing here. RAP got renamed along the way to
+> include both "Return Address Protection" (backward edge) and "Indirect
+> Control Transfer Protection" (forward edge). Clang CFI is forward edge
+> only, though things like shadow stacks or pointer authentication can
+> provide backward edge protection. 
 
-You can find more details in a Security Bulletin S2-056 -
-https://cwiki.apache.org/confluence/display/WW/S2-056
+Thanks for the details.
 
-All developers are strongly advised to perform this action.
+> So... I'm not sure how much detail
+> you want to capture in the bubbles. :)
 
+I'd like to avoid showing comparisons between security features on that map.
+That would make it much more complicated (and trigger holy wars).
 
-Kind regards
--- 
-Łukasz
-+ 48 606 323 122 http://www.lenart.org.pl/
+This map is just for the navigation in the documentation.
+
+>> However, I didn't manage to find any materials about applying Clang CFI to the
+>> Linux kernel.
+> 
+> Here's Sami Tolvanen's work on doing Clang CFI (on top of Clang LTO):
+> https://android-review.googlesource.com/q/topic:android-4.9-cfi
+
+Cool, thanks!
+
+--
+Alexander
