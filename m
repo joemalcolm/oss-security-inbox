@@ -1,63 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/26/1
-Message-ID: <CANi-yg-yDVpTxvDEuRLefXW8fWRem=QKRzZY0DEb36KAxOVpkA@mail.gmail.com>
-Date: Sat, 26 May 2018 06:53:09 -0700
-From: Bryan Pendleton <bpendleton.derby@...il.com>
-To: Tomas Hoger <thoger@...hat.com>
-Cc: oss-security@...ts.openwall.com, security <security@...che.org>,  gregory draperi <gregory.draperi@...il.com>
-Subject: Re: [ANNOUNCE] CVE-2018-1313: Apache Derby externally-controlled input vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/06/3
+Message-ID: <20180406095140.qhrrbwmwrir4nxhb@jwilk.net>
+Date: Fri, 6 Apr 2018 11:51:40 +0200
+From: Jakub Wilk <jwilk@...lk.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Privsec vuln in beep / Code execution in GNU patch
 Content-Type: text/plain; charset=utf-8
 
-Yes, Tomas, that is a very good point; I agree completely.
+* Hanno Böck <hanno@...eck.de>, 2018-04-06, 08:52:
+>There was a joke webpage about a vulnerability in beep a few days ago:
+>http://holeybeep.ninja/
+>There's also a corresponding Debian Advisory:
+>https://lists.debian.org/debian-security-announce/2018/msg00089.html
+>Neither have any technical details. CVE is CVE-2018-0492.
+>
+>If anyone knows the background of this please share it.
 
-Thank you for the follow-ups and discussion!
+Upstream bug report:
+https://github.com/johnath/beep/issues/11
 
-bryan
+>GNU patch supports a legacy "ed" format for patches and that allows 
+>executing external commands.
+[...]
+>--- a	2018-13-37 13:37:37.000000000 +0100
+>+++ b	2018-13-37 13:38:38.000000000 +0100
+>1337a
+>1,112d
+>!id>~/pwn.lol
 
-On Mon, May 21, 2018 at 5:57 AM, Tomas Hoger <thoger@...hat.com> wrote:
-> On Mon, 14 May 2018 21:04:58 -0700 Bryan Pendleton wrote:
->
->> Hi Tomas, thank you for getting in touch, and for the excellent questions.
->>
->> I think the problem here is primarily my lack of skill in clearly writing
->> disclosure information about vulnerabilities, so let me try to do my best
->> to clarify.
->>
->> Indeed, allowing the Derby server to open an untrusted database is
->> of serious concern, and, due to Derby's rich extensibility features, can
->> allow the execution of arbitrary *Java* code directly in Derby. So this
->> is an important concern.
->>
->> And yes, you are correct that the selection of 10.3.1.4 as the first
->> affected release is because the default security policy dates from
->> that release, and you are also correct that the "ping with arguments"
->> pre-dates that. We certainly hope that nobody is running such 11-year-old
->> software any more; if possible, we would really like them to upgrade.
->>
->> Regarding the question of which fix is the "actual security fix," I find
->> this a challenging question. In order to exploit the vulnerability, the
->> ping command must allow the specially crafted request packet, *and*
->> the security policy must allow the access to the untrusted database.
->> Closing *either* of those holes is enough to prevent that exploit; we chose
->> to close *both* of them with the 10.14.2.0 release.
->>
->> The Derby development team's primary recommendation is that
->> any Derby Network Server deployed in a production environment
->> should use an explicitly-developed custom security policy, and not
->> depend on the default policy; still, the new security policy that is
->> installed by default by 10.14.2.0 is considerably more secure than
->> the policy that was previously in place.
->>
->> I hope this helps. If I have misunderstood the intent of any of your
->> questions, please let me know.
->
-> Thank you for your detailed reply.  It addresses my questions.
->
-> FWIW, in this case, the change of the ping command handling is what I'd
-> view as the security fix.  The change of the default security policy
-> would not be sufficient in deployments where custom security policy is
-> used and that policy is less restrictive than the new default policy
-> (even though it's maybe more restrictive than the old default).
->
-> --
-> Tomas Hoger / Red Hat Product Security
+This bug triggers even with -u (which is supposed to disable patch type 
+detection). :-/
+
+-- 
+Jakub Wilk
