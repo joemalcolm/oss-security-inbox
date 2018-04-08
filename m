@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2208" "Tuesday" "16" "June" "2015" "15:29:19" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150616192919.8A680132E1AC@smtpvbsrv1.mitre.org>" "53" "[oss-security] Re: CVE Request - Cross-Site Request Forgery Vulnerability in Users to CSV Wordpress Plugin v1.4.5" nil nil nil "6" "2015061619:29:19" "[oss-security] Re: CVE Request - Cross-Site Request Forgery Vulnerability in Users to CSV Wordpress Plugin v1.4.5" (number mark "U       cve-assign@m Jun 16   53/2208  " thread-indent "\"[oss-security] Re: CVE Request - Cross-Site Request Forgery Vulnerability in Users to CSV Wordpress Plugin v1.4.5\"\n") "<CAARZ5vpCbfa2rGHcQWnscRjbd5xRWk3whK922FwU15PyLdJm_Q@mail.gmail.com>" ("<CAARZ5vpCbfa2rGHcQWnscRjbd5xRWk3whK922FwU15PyLdJm_Q@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1076" "Sunday" "8" "April" "2018" "10:11:47" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20180408101147.505cd109@pc1>" "30" "[oss-security] beep infoleak" nil nil nil "4" "2018040808:11:47" "[oss-security] beep infoleak" (number mark "U       hanno@hboeck Apr  8   30/1076  " thread-indent "\"[oss-security] beep infoleak\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30036 invoked by uid 550); 16 Jun 2015 19:29:31 -0000
+Received: (qmail 8023 invoked by uid 550); 8 Apr 2018 08:12:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,65 +12,44 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30011 invoked from network); 16 Jun 2015 19:29:31 -0000
-From: cve-assign@mitre.org
-To: venkatesh.nitin@gmail.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <CAARZ5vpCbfa2rGHcQWnscRjbd5xRWk3whK922FwU15PyLdJm_Q@mail.gmail.com>
-Message-Id: <20150616192919.8A680132E1AC@smtpvbsrv1.mitre.org>
-Date: Tue, 16 Jun 2015 15:29:19 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request - Cross-Site Request Forgery Vulnerability in Users to CSV Wordpress Plugin v1.4.5
+Received: (qmail 7990 invoked from network); 8 Apr 2018 08:12:00 -0000
+Date: Sun, 8 Apr 2018 10:11:47 +0200
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
+To: oss-security@lists.openwall.com
+Message-ID: <20180408101147.505cd109@pc1>
+X-Mailer: Claws Mail 3.16.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] beep infoleak
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-> I've discovered a CSRF vulnerability in the Users to CSV Wordpress Plugin
-> v1.4.5 which allows for user information can be exported via a GET request
-> to users.php. I request a CVE for the same.
-> 
-> http://seclists.org/fulldisclosure/2015/Jun/44
+It's been found that beep - even after the fix for "holey beep" - can
+be used to create an infoleak and to see which files exist with root
+permissions:
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=3D895115
 
-We typically don't have CVEs for CSRF issues in which the impact is
-information disclosure, because the information is disclosed to the
-victim rather than to the attacker.
+Also there are Integer Overflows:
+https://github.com/johnath/beep/issues/13
 
-Is there any way that the attacker can specify that the CSV data
-should be written to a file with a public URL served by the web
-server, so that the attacker can read it later? The source code
-perhaps suggests that the data is always sent to the victim, e.g.,
+Also Sebastian Krahmer pointed out the fix is incomplete:
+http://seclists.org/oss-sec/2018/q2/17
 
-  https://plugins.svn.wordpress.org/users-to-csv/trunk/users2csv.php
+All of that without an existing upstream.
 
-  if ( is_admin() ) {
-  ...
-  header('Content-Disposition: attachment; filename="'.$table.'.csv"');
-  ...
-  echo $csv;
+I question whether beep should be saved. It would require someone
+carefully reviewing the code and effectively become the new upstream.
+And all that for a tool talking to the PC speaker, which doesn't exist
+in most modern systems anyway. Instead distros should consider not
+installing it as suid or just killing the package altogether.
+I heard some distros (suse) replace beep with a simple "printf '\a'"
+which seems also a safe solution. (although it obviously kills all
+frequency/length/etc features of original "beep").
 
-Possibly there is a concern that the user data is sensitive
-information that might be transmitted over an insecure network path in
-cleartext during the CSRF attack, and this might be a network path
-that the admin would avoid during any intentional access to the
-WordPress installation. However, this is not the type of CSRF impact
-that normally has a CVE, and the scenario in question could be
-considered a site-specific problem or user error (i.e., either follow
-http://codex.wordpress.org/Administration_Over_SSL or at least don't
-remain logged in after moving the client machine to an especially
-insecure network).
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJVgHiOAAoJEKllVAevmvmsGRsIAIMgm3tIcS9q4jY4Yjogl2+S
-rGHvAxR2jkLFYTOH0zEkWiQyblYInhyLaoesmsTimlJxcMnRrgMf81oJp2+0Rihw
-gQXeD5tvoq5G4lY8F4QAbo3SMrvpAE568ng8HG4w+m8ku/iQ2Lal0Dye/h1MEimX
-jEyQfyetyP6wQUDaZjIdJpyvuKKfyYdq32ai89/nXiW2hw/fEEs+v3AhcFegOg0G
-SOgOLyV8CVwouTl1PNPjyva/c44ufeJ8AKomiz+rYx6YfN8FpRAUS0PMTJgjBG45
-SjxE39McuDNowXLoUwge8hVsEGqjo/9JM1jFR8n5UjjrUo86gmkvsCak170BUpg=
-=swvs
------END PGP SIGNATURE-----
+mail/jabber: hanno@hboeck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
