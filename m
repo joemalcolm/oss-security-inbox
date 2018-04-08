@@ -1,30 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/21/3
-Message-ID: <CAJ_zFk+RtYrqWQ4Mj1SLVJ7BTZBHLjo_M9t-gDVS_uDEPhuCrg@mail.gmail.com>
-Date: Tue, 21 Aug 2018 07:48:22 -0700
-From: Tavis Ormandy <taviso@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/08/1
+Message-ID: <20180408101147.505cd109@pc1>
+Date: Sun, 8 Apr 2018 10:11:47 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
+Subject: beep infoleak
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Aug 21, 2018 at 5:46 AM Tavis Ormandy <taviso@...gle.com> wrote:
+Hi,
 
->
-> $ convert input.jpg output.gif
-> uid=1000(taviso) gid=1000(taviso) groups=1000(taviso),10(wheel)
-> context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
->
->
->
-My colleague Jann Horn pointed out evince (which uses libgs, which is
-affected with some tweaks to the PoC) is used to generate previews in
-Nautilus, which means previews can trigger code execution (see
-/usr/share/thumbnailers/evince.thumbnailer). I think it's possible to
-trigger that via file automatic download in a browser just by visiting a
-URL, but I haven't tested it.
+It's been found that beep - even after the fix for "holey beep" - can
+be used to create an infoleak and to see which files exist with root
+permissions:
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=895115
 
-I think those thumbnails should be disabled, but you've probably noticed I
-think everything related to untrusted ghostscript should be disabled :-)
+Also there are Integer Overflows:
+https://github.com/johnath/beep/issues/13
 
-Tavis.
+Also Sebastian Krahmer pointed out the fix is incomplete:
+http://seclists.org/oss-sec/2018/q2/17
 
+All of that without an existing upstream.
+
+I question whether beep should be saved. It would require someone
+carefully reviewing the code and effectively become the new upstream.
+And all that for a tool talking to the PC speaker, which doesn't exist
+in most modern systems anyway. Instead distros should consider not
+installing it as suid or just killing the package altogether.
+I heard some distros (suse) replace beep with a simple "printf '\a'"
+which seems also a safe solution. (although it obviously kills all
+frequency/length/etc features of original "beep").
+
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
