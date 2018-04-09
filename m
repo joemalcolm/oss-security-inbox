@@ -1,66 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/06/1
-Message-ID: <35327fc3.2a64.166473248b9.Coremail.a4651386@163.com>
-Date: Sat, 6 Oct 2018 10:26:09 +0800 (CST)
-From: luo  <a4651386@....com>
-To: "Solar Designer" <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2018-17977: CentOS ipsec remote denial of service vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/09/3
+Message-ID: <20180409171105.wexxnmf6fwgzeur7@matica.foolinux.mooo.com>
+Date: Mon, 9 Apr 2018 10:11:05 -0700
+From: Ian Zimmerman <itz@...y.loosely.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Terminal Control Chars
 Content-Type: text/plain; charset=utf-8
 
+On 2018-03-05 17:50, up201407890@...nos.dcc.fc.up.pt wrote:
 
+> When pasting characters into several terminal emulators, control
+> characters are allowed.  This turns to be a security problem, due to
+> the fact that when pasting these characters into terminal text
+> editors, such as vi/vim, emacs, nano, etc., remote code execution is
+> possible.
+> 
+> This is supposed to be fixed in recent versions of VTE [3], which
+> means VTE-based terminal emulators should be safe, but the problem is
+> that most distros are shipping older versions and remain vulnerable.
+> 
+> Here's a list of terminal emulators I tested this where it
+> worked. Some came by default in my distro (debian), others were
+> installed via apt-get. This should also work on other distros:
 
-Oh, sorry, maybe I didn't explain it.
+[...]
+> urxvt
+[...]
 
+> Please, update VTE and check if the below still works. For the others
+> that aren't based on VTE, CVEs should be assigned to each of them. Can
+> someone help me figure out which ones are based on VTE and those that
+> aren't?
 
-I am demonstrating the remote denial of service vulnerability in the centos desktop version of the ipsec feature.Ipsec is currently the most widely used vpn technology, it uses ah protocol or esp protocol to encrypt or authenticate ip packets.
+As far as I can see, urxvt (aka rxvt-unicode) does not use vte.
 
-
-My test is divided into two parts. The first part is to open the ipsec function, which is what ah_add.c does. He didn't do too much, just opened a transfer mode ah protocol, ipsec is divided into ah protocol and esp Protocol, for simplicity, I set the encryption length to 0, which is my only non-mainstream operation.
-
-
-The second part sends a special ah protocol packet, triggering the delayed release of the skb effect, causing the memory to be released in time, causing accumulation, and finally leading to denial of service.
-
-
-
-
-
-
-The purpose of ah_add.c is just to register an IPSec encrypted channel. For simplicity, I set the encryption authentication length to 0.
-
-
-In theory, as long as the target machine starts the ipsec function and allows ipsec message interaction with the target machine, it can cause the target machine to refuse service by sending a data packet.
-
-
-
-
-Ah_add is just an operation that starts the ipsec service and allows the interaction with the target to be encrypted with a length of 0.
-
-
-
-
-
-
-
-At 2018-10-06 00:54:06, "Solar Designer" <solar@...nwall.com> wrote:
->On Fri, Oct 05, 2018 at 11:46:07PM +0800, luo wrote:
->> I don't know if it is correct to publish the complete information.
->
->It is.  Linking to temporary resources like Google Drive isn't great,
->but luckily your message itself includes some detail.
->
->> > The Linux kernel 4.14.67 mishandles certain interaction among XFRM
->> > Netlink messages, IPPROTO_AH packets, and IPPROTO_IP packets, which
->> > allows local users to cause a denial of service (memory consumption
->> > and system hang) by leveraging root access to execute crafted
->> > applications, as demonstrated on CentOS 7.
->
->Since you say that "leveraging root access to execute crafted
->applications" is required, how is this a security issue?  Also, since
->this setup has to be prepared locally, how is the attack "remote"?
->
->In other words, would a sysadmin plausibly make this kind of custom
->local setup, and why?  If the answer is no, then I think there's no
->security issue here.
->
->Alexander
+-- 
+Please don't Cc: me privately on mailing lists and Usenet,
+if you also post the followup to the list or newsgroup.
+To reply privately _only_ on Usenet and on broken lists
+which rewrite From, fetch the TXT record for no-use.mooo.com.
