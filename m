@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["894" "Thursday" "18" "April" "2019" "20:40:56" "-0400" "Havoc Pennington" "hp@tidelift.com" "<CAC7nai19LLaw_ZGOQK9XvLOMcMCpxF0ZKRoniRGvU3URTaALWw@mail.gmail.com>" "27" "[oss-security] Re: urllib3: adds system certificates to ssl_context" nil nil nil "4" "2019041900:40:56" "[oss-security] Re: urllib3: adds system certificates to ssl_context" (number mark "U       hp@tidelift. Apr 18   27/894   " thread-indent "\"[oss-security] Re: urllib3: adds system certificates to ssl_context\"\n") "<CAC7nai00CbzPWbcd2pF-E6hi8pKBrUF5+oanEd++ME1FtsJaoQ@mail.gmail.com>" ("<CAC7nai00CbzPWbcd2pF-E6hi8pKBrUF5+oanEd++ME1FtsJaoQ@mail.gmail.com>") nil nil nil nil nil nil nil "[oss-security] Re: urllib3: adds system certificates to ssl_context" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["367" "Monday" "9" "April" "2018" "13:35:21" "-0500" "Not Real" "theborland1@gmail.com" "<CAJys2kWQ4K4dEK0uC_OCVaHEOZfh+EqWmEprSUFVWH_ai-+Mrg@mail.gmail.com>" "10" "Re: [oss-security] Re: Terminal Control Chars" nil nil nil "4" "2018040918:35:21" "[oss-security] Re: Terminal Control Chars" (number mark "U       theborland1@ Apr  9   10/367   " thread-indent "\"Re: [oss-security] Re: Terminal Control Chars\"\n") "<20180409171105.wexxnmf6fwgzeur7@matica.foolinux.mooo.com>" ("<20180305175024.16801hoj775zje4g@webmail.alunos.dcc.fc.up.pt>" "<20180409171105.wexxnmf6fwgzeur7@matica.foolinux.mooo.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30174 invoked by uid 550); 19 Apr 2019 10:26:26 -0000
+Received: (qmail 26359 invoked by uid 550); 9 Apr 2018 18:38:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,67 +12,50 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28222 invoked from network); 19 Apr 2019 00:41:19 -0000
+Received: (qmail 22212 invoked from network); 9 Apr 2018 18:35:33 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=tidelift-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=foGSphjSeh+8hct2AxAmrFRmxi1KEU3WkgDxboGV7+w=;
-        b=dQE2rvRx9h1ZpIln1n3hFNgXshmdr8T3OLXF1A+rMOJdQzxsl1waFnCYeFt5E8nzKp
-         KTRqJasKTmzgW45la3TjSH9k17aDkaVSjaBN1IDLxj3RXiI4WTGWMnHpQ2K5NN2aNjKR
-         y3DVQVFW7ZPw4+0yn008y5/CrZbObdvbrm/kjTNyV3V6aPDaU40eIzufD68m/RfYJdge
-         nasSurBvBVt+GcEkhN3OkWLCBExE7QqMFKCqtztKhLV7WnMFk+CQHghEhrg6gqXTYCGa
-         azroRQvTEabRaK7iAq2zfkGZZFDiFt6m8O2S/HN884/KybRKS1xEDgP1xijaQn5eegIY
-         nE0w==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=9c19XzQzzLEtvtZgnbpZZikEcdF+0CEtcXn46JEBIy0=;
+        b=kJusVFir8r/3v++dW8yRkCsQnEguzLPHPsFlYLF6FFuGMvdvc2QuY5DTCSuAhjuA/P
+         xWFjPaR74gUJ6+hp1DhtAmL6Atwb8la+riQs9XVEHSagpl28iZQpMjScqhaBtBeacxKA
+         e+cfm9lnK+McKt2RdrXntiInl4KN87+jAax74ZNkvyr88g4yCBoHqsnkR5qrZM9CaQ2V
+         nZlFuujb2g+5clWBs0It667CmxJSgUBt2Z9WTtgmcWZYZfCh5vBzGK4NIHti95TjyR5P
+         Hxmn9jtEAiqqOlMBCwk+Zqv//KcwHSZb72DAsMt3/A/tK3qjDJLbKDoBnruI4NgMbBm7
+         zX0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to;
-        bh=foGSphjSeh+8hct2AxAmrFRmxi1KEU3WkgDxboGV7+w=;
-        b=YCxIO3dxHg/Ehgm3+eM7Sr5okHH+ZWsrpQUQYz1LDJDAHEn3z6ReSnu1CxelXAOwjc
-         vA+wsoHIslMmKYdBo7xsI99CitvApzlaZldoBovg6SsTAKptkuomdJSxlq0OOzNlPlfh
-         4VrOxNuwI9HH+ImnziI2aC8hym1GjVznCzHlS73eQqgxq6iKVDYXQO2Vnuj3wuhlHGc1
-         Q01LfP13eqWo6X4G+IGYf4Af1+gWRfTCSa+oXOFD61X8Nx3iJORaX6dgh8ZQA0cl4GQ7
-         eYSocc5vHOpk8T7kVv91rZcRW48dpV1OHecVJFcEUJoRD4+FuYlBUsGgxgfoCu0oOmJQ
-         E1og==
-X-Gm-Message-State: APjAAAVGMMXqBhRs+Umhoxdf84t0lRGMR2rOUst1MnvzYR9tRqbUKRE2
-	a1Ajg8s+XdudHWopyRRH0wppVEzwWshAmBhIuoGM/0ex5mHAbg==
-X-Google-Smtp-Source: APXvYqybo6YY+AMtAHbCzN8/b7Uy8IGGvS2qBiNv+zGx+3OagabALeXJCsYgqy7C8w+w5PEg6F4W+YxidnaUhrmIwII=
-X-Received: by 2002:ac8:1aec:: with SMTP id h41mr950111qtk.345.1555634467010;
- Thu, 18 Apr 2019 17:41:07 -0700 (PDT)
+        bh=9c19XzQzzLEtvtZgnbpZZikEcdF+0CEtcXn46JEBIy0=;
+        b=OgnnL1vkrgNtFlQCBa8em9+5ADSxXNisuxNMyjK1FsK6In2qam91kvh5uyOPWV1J+g
+         WY2w0AfyoJx3sAvKrieJ0Dr+VMY2W6t93ZAvq41UTpRaEq/mIpa0m8cB33XeTQl2AqtU
+         D8cLaypWLPhSR/EnlKSgm0lQ6soNQw7F+ZCFn8qtsiGpxCUAJHWN6wCVD0fqIFmf2AHu
+         Dznr6KdDzqSzYPoJ74uWRKaph6WaWrPL4dECBSEuN7lwaRthleb7ADv9YxcwFrDqDvUt
+         nhn0ZLh5qloecokXvEg1ux2EbCIvNCevZh6dcHyAuQiNIl2JAZ/eDlNRt+J0K/5yKNj4
+         6TrA==
+X-Gm-Message-State: AElRT7Eo0vT0h6o7VhWhM3q0GJtIcgINmfPLVs/smFb8G3CVxmkN+Kxq
+	bRUxCSawydahRQPBbtpgPYUuht9zt4EUAriRwufY1oLf
+X-Google-Smtp-Source: AIpwx4+5Dlr/T0W6EKTh9CjUoTlfn6TdOJ+HkpprOogJzjiAoL7fjt7G2ekd0E37USX4OyL5ZRROGwDTWdx1PPb6ydo=
+X-Received: by 2002:a9d:32c7:: with SMTP id u65-v6mr24811394otb.121.1523298922112;
+ Mon, 09 Apr 2018 11:35:22 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAC7nai00CbzPWbcd2pF-E6hi8pKBrUF5+oanEd++ME1FtsJaoQ@mail.gmail.com>
-In-Reply-To: <CAC7nai00CbzPWbcd2pF-E6hi8pKBrUF5+oanEd++ME1FtsJaoQ@mail.gmail.com>
-From: Havoc Pennington <hp@tidelift.com>
-Date: Thu, 18 Apr 2019 20:40:56 -0400
-Message-ID: <CAC7nai19LLaw_ZGOQK9XvLOMcMCpxF0ZKRoniRGvU3URTaALWw@mail.gmail.com>
+In-Reply-To: <20180409171105.wexxnmf6fwgzeur7@matica.foolinux.mooo.com>
+References: <20180305175024.16801hoj775zje4g@webmail.alunos.dcc.fc.up.pt> <20180409171105.wexxnmf6fwgzeur7@matica.foolinux.mooo.com>
+From: Not Real <theborland1@gmail.com>
+Date: Mon, 9 Apr 2018 13:35:21 -0500
+Message-ID: <CAJys2kWQ4K4dEK0uC_OCVaHEOZfh+EqWmEprSUFVWH_ai-+Mrg@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="00000000000023aa5005696eab49"
+Subject: Re: [oss-security] Re: Terminal Control Chars
+
+--00000000000023aa5005696eab49
 Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] Re: urllib3: adds system certificates to ssl_context
 
-Hello,
+This is posted here every few months. Frankly, there's a lackluster care in
+fixing this in these terminals.
+ For terminals, here's a decent avenue (gnome-terminal as example):
 
-This vulnerability "urllib3: adds system certificates to ssl_context"
-has been assigned CVE-2019-11324
+https://turbochaos.blogspot.com/2014/08/journalctl-terminal-escape-injection.html
 
-Thank you
-Havoc
-
-On Wed, Apr 17, 2019 at 2:21 PM Havoc Pennington <hp@tidelift.com> wrote:
->
-> A vulnerability has been discovered in the urllib3 Python library.
->
-> When verifying HTTPS connections when an SSLContext is passed to
-> urllib3, system CA certificates will be loaded into the SSLContext
-> by default in addition to any manually-specified CA certificates.
-> This causes TLS handshakes that should fail given only the
-> manually specified certs to succeed based on system CA certs.
->
-> This affects urllib3 1.24.1 and below. The fix has been released
-> in version 1.24.2.
->
-> The vulnerability was reported by Christian Heimes.
->
-> A CVE ID has been requested, will follow up with it when we have it.
->
-> Best
-> Havoc / on behalf of Tidelift security team & urllib3 team
+--00000000000023aa5005696eab49--
