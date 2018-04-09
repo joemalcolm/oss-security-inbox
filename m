@@ -1,57 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/07/4
-Message-ID: <CAA7hUgG=6G+HYQQdByu=KV+t0RJ2UOBo+8iz2ZB=NyyGTpqcYA@mail.gmail.com>
-Date: Wed, 7 Mar 2018 14:34:06 +0100
-From: Raphael Geissert <atomo64@...il.com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Cc: security@...e.de, avi.miller@...il.com
-Subject: Portus, missing certificate validation on proxified https traffic
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/09/4
+Message-ID: <CAJys2kWQ4K4dEK0uC_OCVaHEOZfh+EqWmEprSUFVWH_ai-+Mrg@mail.gmail.com>
+Date: Mon, 9 Apr 2018 13:35:21 -0500
+From: Not Real <theborland1@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: Terminal Control Chars
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+This is posted here every few months. Frankly, there's a lackluster care in
+fixing this in these terminals.
+ For terminals, here's a decent avenue (gnome-terminal as example):
 
-Taking another look at portus, this time at the nginx sample
-configuration[1], I noticed that it doesn't enable certificate
-validation of the proxified traffic that is forwarded to portus and
-registry.
+https://turbochaos.blogspot.com/2014/08/journalctl-terminal-escape-injection.html
 
-Given that the documentation claims the examples are of "A
-production-ready setup where all communication is encrypted."[2], I
-plan to request a CVE id.
-
-The details:
-
-The example nginx configuration is based on running nginx as a
-reverse-proxy of portus and (docker) registry. The docker-compose
-provided along the nginx config sets up a certificate[3] for both
-components (first smell: only one certificate).
-
-The one an only certificate is also configured on the reverse proxy,
-and a decent ciphers list among other security-related http headers
-are setup.
-
-But there's no single proxy_ssl_* directive in the whole nginx
-configuration (second smell). Meaning that proxy_ssl_verify is off
-(nginx default).
-
-Has anyone reviewed portus? this is the second missing certificate
-verification I noticed.
-
-CC'ing the SUSE security team.
-
-Oh and it appears that this one comes from the
-Portus-On-OracleLinux7[4] repo from which "[they] borrowed a lot of
-the NGinx configuration"[2] :
-https://github.com/Djelibeybi/Portus-On-OracleLinux7/blob/f2e7a167f6325a0247eb1ca49a962478daf49a8b/nginx/proxy.conf#L57
-
-CC'ing Avi Miller.
-
-[1]https://github.com/SUSE/Portus/blob/146076d543e8f1618f837dd7466c5f0fdc26438d/examples/compose/nginx/nginx.conf
-[2]https://github.com/SUSE/Portus/blob/146076d543e8f1618f837dd7466c5f0fdc26438d/examples/compose/README.md
-[3]https://github.com/SUSE/Portus/blob/146076d543e8f1618f837dd7466c5f0fdc26438d/examples/compose/docker-compose.yml#L21
-[4] https://github.com/Djelibeybi/Portus-On-OracleLinux7
-
-
-Cheers,
--- 
-Raphael Geissert
