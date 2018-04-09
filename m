@@ -1,29 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/06/1
-Message-ID: <ecde8662-12c8-e921-f169-e7bd64967e31@apache.org>
-Date: Tue, 6 Feb 2018 12:55:10 -0500
-From: Dave Brondsema <brondsem@...che.org>
-To: dev@...ura.apache.org, users@...ura.apache.org, announce@...che.org, oss-security@...ts.openwall.com, security@...che.org
-Subject: [SECURITY] CVE-2018-1299 Apache Allura directory traversal vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/09/2
+Message-ID: <CAKG8Do5EX36W3Bz_fzs5i0kTb6h7RSp5McOLu0-TagTX23mEAA@mail.gmail.com>
+Date: Mon, 9 Apr 2018 13:28:08 +0200
+From: Cedric Buissart <cbuissar@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: pcs: disclosure of CVE-2018-1079 and CVE-2018-1086
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-1299 Apache Allura directory traversal vulnerability
+Hi all,
 
-Severity: Important
+This is to publicly disclose the following CVEs, rated as Medium and High.
+Affected product is pcs (Pacemaker command line interface and GUI,
+https://github.com/ClusterLabs/pcs)
 
-Vendor: The Apache Software Foundation
+* [high] CVE-2018-1079 pcs: Privilege escalation via authorized user
+malicious REST call
 
-Versions Affected: Apache Allura 1.7.0 and earlier
+It was found that the REST interface of the pcsd service did not properly
+sanitize the file name from the /remote/put_file query. If the /etc/booth
+directory exists, an authenticated attacker with write permissions could
+create or overwrite arbitrary files with arbitrary data outside of the
+/etc/booth directory, in the context of the pcsd process.
 
-Description:
-Unauthenticated attackers may retrieve arbitrary files through the Allura web
-application.  Some webservers used with Allura, such as Nginx, Apache/mod_wsgi
-or paster may prevent the attack from succeeding.  Others, such as gunicorn do
-not prevent it and leave Allura vulnerable.
+vulnerable since: support for booth file transfer was added (commit
+dc7089b1, v. 0.9.157)
 
-Mitigation:
-Users of vulnerable webservers with Allura should upgrade to Allura 1.8.0
-immediately.
+Patch attached
 
-Credit:
-This issue was discovered by Everardo Padilla Saca
+* [medium] CVE-2018-1086 pcs: Debug parameter removal bypass, allowing
+information disclosure:
+
+To prevent some information disclosure, pcsd actively removes '--debug'
+from command requested over the REST interface, but this can be bypassed.
+The information gained could then be used to gain higher privileges.
+
+Patch attached
+
+The CVE-2018-1079 issue was discovered by Ondrej Mular (Red Hat) and the
+CVE-2018-1086 issue was discovered by Cedric Buissart (Red Hat).
+
+-- 
+Cedric Buissart,
+Product Security
+
+Content of type "text/html" skipped
+
+View attachment "CVE-2018-1079.patch" of type "text/x-patch" (479 bytes)
+
+View attachment "CVE-2018-1086.patch" of type "text/x-patch" (1744 bytes)
