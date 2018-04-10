@@ -1,4 +1,9 @@
-Received: (qmail 11657 invoked by uid 550); 8 Jun 2022 09:47:47 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["755" "Tuesday" "10" "April" "2018" "12:24:03" "+0200" "Jakub Wilk" "jwilk@jwilk.net" "<20180410102403.6gb45xp4kt75ybpj@jwilk.net>" "21" "Re: [oss-security] Re: Terminal Control Chars" nil nil nil "4" "2018041010:24:03" "[oss-security] Re: Terminal Control Chars" (number mark "U       jwilk@jwilk. Apr 10   21/755   " thread-indent "\"Re: [oss-security] Re: Terminal Control Chars\"\n") "<CAJys2kWQ4K4dEK0uC_OCVaHEOZfh+EqWmEprSUFVWH_ai-+Mrg@mail.gmail.com>" ("<20180305175024.16801hoj775zje4g@webmail.alunos.dcc.fc.up.pt>" "<20180409171105.wexxnmf6fwgzeur7@matica.foolinux.mooo.com>" "<CAJys2kWQ4K4dEK0uC_OCVaHEOZfh+EqWmEprSUFVWH_ai-+Mrg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 30411 invoked by uid 550); 10 Apr 2018 10:24:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,30 +12,44 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21732 invoked from network); 8 Jun 2022 09:43:28 -0000
-Content-Type: text/plain; charset=utf-8
-From: Stefan Eissing <icing@apache.org>
+Received: (qmail 30392 invoked from network); 10 Apr 2018 10:24:17 -0000
+Date: Tue, 10 Apr 2018 12:24:03 +0200
+From: Jakub Wilk <jwilk@jwilk.net>
 To: oss-security@lists.openwall.com
-Message-ID: <5ee00238-2486-0a35-a227-265eaa6f7f47@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 08 Jun 2022 09:43:16 +0000
+Message-ID: <20180410102403.6gb45xp4kt75ybpj@jwilk.net>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <20180305175024.16801hoj775zje4g@webmail.alunos.dcc.fc.up.pt>
+ <20180409171105.wexxnmf6fwgzeur7@matica.foolinux.mooo.com>
+ <CAJys2kWQ4K4dEK0uC_OCVaHEOZfh+EqWmEprSUFVWH_ai-+Mrg@mail.gmail.com>
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2022-28330: Apache HTTP Server: read beyond bounds in
- mod_isapi 
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <CAJys2kWQ4K4dEK0uC_OCVaHEOZfh+EqWmEprSUFVWH_ai-+Mrg@mail.gmail.com>
+User-Agent: NeoMutt/20180323
+X-Ovh-Tracer-Id: 10431744112765425574
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedtgedrheeigddvkecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemuceftddtnecu
+Subject: Re: [oss-security] Re: Terminal Control Chars
 
-Severity: low
+* Not Real <theborland1@gmail.com>, 2018-04-09, 13:35:
+>This is posted here every few months.
 
-Description:
+The thread subject is not as informative as it could be. The original 
+post was about pasting control characters. While the problem is not 
+new[0], I don't recall it being ever discussed on oss-security before.
 
-Apache HTTP Server 2.4.53 and earlier on Windows may read beyond bounds whe=
-n configured to process requests with the mod_isapi module.=20
+>https://turbochaos.blogspot.com/2014/08/journalctl-terminal-escape-injection.html
 
-Credit:
+OTOH, this is about terminal escape injection, an entirely different 
+problem, and a frequent topic on oss-security.
 
-The Apache HTTP Server project would like to thank Ronald Crane (Zippenhop =
-LLC) for reporting this issue
 
-References:
+[0] The original post links to 
+https://thejh.net/misc/website-terminal-copy-paste (from 2013?), 
+which links to 
+http://www.ush.it/team/ascii/hack-tricks_253C_CCC2008/wysinwyc/what_you_see_is_not_what_you_copy.txt 
+(from 2008).
 
-https://httpd.apache.org/security/vulnerabilities_24.html
-
+-- 
+Jakub Wilk
