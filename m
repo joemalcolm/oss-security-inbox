@@ -1,4 +1,9 @@
-Received: (qmail 26399 invoked by uid 550); 6 Mar 2025 06:05:14 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["782" "Tuesday" "10" "April" "2018" "03:53:17" "-0400" "Gordo Lowrey" "gordo@zeneval.com" "<1523346797.16686.6@smtp.gmail.com>" "25" "Re: [oss-security] Terminal Control Chars" nil nil nil "4" "2018041007:53:17" "[oss-security] Terminal Control Chars" (number mark "U       gordo@zeneva Apr 10   25/782   " thread-indent "\"Re: [oss-security] Terminal Control Chars\"\n") "<20180305175024.16801hoj775zje4g@webmail.alunos.dcc.fc.up.pt>" ("<20180305175024.16801hoj775zje4g@webmail.alunos.dcc.fc.up.pt>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 12154 invoked by uid 550); 10 Apr 2018 08:57:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,49 +12,63 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 26176 invoked from network); 6 Mar 2025 06:05:06 -0000
-Date: Thu, 6 Mar 2025 07:04:54 +0100
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 32370 invoked from network); 10 Apr 2018 07:53:31 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=zeneval.com; s=google;
+        h=date:from:subject:to:message-id:in-reply-to:references:mime-version;
+        bh=lOGesZ1UzahhpCTnLxK7UIKE0lwhH3lgWjKr08MkBjA=;
+        b=RnejGeUSyieXUxqKLKt/8pHCv/KMyBvuxUknNA5tmrkfmWxMjR/mPDIy6jrIEsL6YS
+         EhMaLixFUpmUvz7592SckXEvv81UMuMMWTi8/N6uP8I4O4UtoECkQWVUI6RN2fqhzz3K
+         ehfkeJWWLrr8Og9T3FPXd8cP21wvoxu1oCikc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:subject:to:message-id:in-reply-to
+         :references:mime-version;
+        bh=lOGesZ1UzahhpCTnLxK7UIKE0lwhH3lgWjKr08MkBjA=;
+        b=tGL1c7MT/x8NKcAKFq4ulEgoF03gT0NA3TQNxYZGEEJtm8BJc1QsA/Zl57crAqGiy1
+         1Bb95pRO0wdF5coloecKL4PP4r/4ybOshKATsxUrFF9uBNJRP70q8V1QYs4e9Sv4Qpzx
+         xm5LPxFjWHavFZpAhrKx8I2zj8W7Z6t6NGUhvxGqvfhKIT9q8wC4rbZSR10GqJy05HIu
+         vugUA7KzEMdnpZpv3HCMzj0cEfwbrGwsZm5v9qiMBKMiU5J4+Ll12tmjguHKSngmd6k+
+         qA/psV/VgmGbnARv08MwzmP2Q1bsxF9dWX2poyWxmOhCrnXwEE02Ur5k0xuRUlJb0S6m
+         99rg==
+X-Gm-Message-State: ALQs6tD/Jxt6kXu1WxpDVfawYuIG40In3hDk2zGFHbgwQ9OfghOe63TG
+	jmmHRodUXqDPDN/Pptp4Kl9fsBfYijo=
+X-Google-Smtp-Source: AIpwx49XMRDFEOnTOP0SI212GtJ47bQcq+SIOD1WDTq8NmrWyYzOy6ax1yrICRpKO3sCKLpntUXiVw==
+X-Received: by 10.200.51.215 with SMTP id d23mr56275252qtb.338.1523346799608;
+        Tue, 10 Apr 2018 00:53:19 -0700 (PDT)
+Date: Tue, 10 Apr 2018 03:53:17 -0400
+From: Gordo Lowrey <gordo@zeneval.com>
 To: oss-security@lists.openwall.com
-Cc: Tavis Ormandy <taviso@gmail.com>
-Message-ID: <20250306060454.GA6918@openwall.com>
-References: <Z5BYg9WPFBF7JBEB@thinkstation.cmpxchg8b.net> <Z5B2PA7DHTBbvbOq@itl-email> <Z5EUUMd1xkSSKAEM@thinkstation.cmpxchg8b.net> <20250204101028.GA20864@openwall.com> <20250306033000.GA4987@openwall.com> <6f9ffc49-ad46-45eb-9d6f-7d58769c3671@gmail.com> <20250306053416.GA6682@openwall.com> <97c9b035-2a68-4182-93c8-0495abdd193f@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <97c9b035-2a68-4182-93c8-0495abdd193f@gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] AMD Microcode Signature Verification Vulnerability
+Message-Id: <1523346797.16686.6@smtp.gmail.com>
+In-Reply-To: <20180305175024.16801hoj775zje4g@webmail.alunos.dcc.fc.up.pt>
+References: <20180305175024.16801hoj775zje4g@webmail.alunos.dcc.fc.up.pt>
+X-Mailer: geary/0.12.1
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="=-azwmSd7U1WtT4u7o4s/i"
+Subject: Re: [oss-security] Terminal Control Chars
 
-On Wed, Mar 05, 2025 at 11:50:45PM -0600, Jacob Bachmeyer wrote:
-> On 3/5/25 23:34, Solar Designer wrote:
-> >The real issue is the use of CMAC without understanding its properties,
-> >not the key choice.
-> 
-> The fact that it is called a "key" (and not a "public key") should be 
-> the hint that it must be kept secret, which means do not use an example 
-> value, just like you do not set your password to "password" or your PIN 
-> to 1-2-3-4-5 unless you really mean to have no security on that system.
+--=-azwmSd7U1WtT4u7o4s/i
+Content-Type: text/plain; charset=us-ascii; format=flowed
 
-... or you mean not to use this specific authentication factor, relying
-on some other(s) - like the console being protected physically.  A risky
-thing to do ("what can possibly go wrong?"), but the analogy is there.
+On Mon, Mar 5, 2018 at 11:50 AM, up201407890@alunos.dcc.fc.up.pt wrote:
+> The correct solution would be to disallow the pasting of certain 
+> control characters.
 
-> >Indeed, HMAC wouldn't be any weaker than its underlying hash on its own
-> >even when used with a publicly known example key.  So I can see how they
-> >could have (wrongly) expected the same from CMAC.
-> 
-> If the system is no weaker if the HMAC key is known, then you should not 
-> be using HMAC and you should be using a plain digest instead.  (Or am I 
-> missing something?  What would HMAC with a known key give you that a 
-> plain digest does not?)
+I'm just gonna go out on a limb here, and say this is an unfounded 
+assertion.
 
-My point is that sometimes a building block you readily have or can
-create most cheaply provides excessive functionality, or so they
-thought.  Perhaps they could implement CMAC-AES easier than implement
-SHA-256 (if they already had AES, but not yet SHA-256), and thought it's
-as good as an HMAC.
+Perhaps the correct solution would be to prevent the browser from 
+copying invisible characters.
 
-Alexander
+If you're going to break some basic mechanic of human computer 
+interaction, at least don't break my damn terminal (not that I use VTE, 
+it doesn't support OSC 52, among others), but the principle stands... 
+Instead of worrying about sanitizing what is pasted, why not worry 
+about sanitizing what is copied instead?
+
+Thanks.
+
+
+
+--=-azwmSd7U1WtT4u7o4s/i--
+
