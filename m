@@ -1,34 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/09/1
-Message-ID: <314613aa-0068-e4b3-f892-a1fd2d7ce5b0@suse.de>
-Date: Fri, 9 Nov 2018 13:45:01 +0100
-From: Karol Babioch <kbabioch@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/10/2
+Message-ID: <1627665717.17705240.1523351738464.JavaMail.zimbra@redhat.com>
+Date: Tue, 10 Apr 2018 05:15:38 -0400 (EDT)
+From: Vladis Dronov <vdronov@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Amos Jeffries <squid3@...enet.co.nz>
-Subject: Re: Squid Proxy multiple vulnerabilities
+Subject: CVE-2017-13220 / Android A-63527053: Linux kernel: Possible out-of-bound access in Bluetooth subsystem
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Hello,
 
-Am 31.10.18 um 11:37 schrieb Karol Babioch:
-> Am 28.10.18 um 17:13 schrieb Amos Jeffries:
->> CVE have been requested and awaiting assignment by the DWF project.
-> Is there any update and/or ETA on this ;-)?
+There was a flaw CVE-2017-13220 / Android A-63527053 reported in Android
+security bulletin with not much of public details:
 
-Since the assignment from DWF hasn't happened yet, I've requested CVEs
-via Mitre in the mean time. They have assigned CVE-2018-19131 and
-CVE-2018-19132 for this.
+https://source.android.com/security/bulletin/pixel/2018-01-01#kernel-components
+
+Per discussion with Android security developer this flaw is related to
+an upstream commit 51bda2bca53b ("Bluetooth: hidp_connection_add() unsafe
+use of l2cap_pi()").
+
+Red Hat is handling this flaw in:
+
+https://bugzilla.redhat.com/show_bug.cgi?id=1536155
+
+I believe the other distributions may want to update the related bug pages
+with the info above:
+
+https://bugzilla.suse.com/show_bug.cgi?id=1076537
+https://security-tracker.debian.org/tracker/CVE-2017-13220
+https://people.canonical.com/~ubuntu-security/cve/2017/CVE-2017-13220.html
 
 Best regards,
-Karol Babioch
-
--- 
-OpenPGP: 4687 CA1E A0F7 3B1E BB7D E179 DF49 418F 6267 267B
-
-SUSE Linux GmbH
-GF: Felix Imendörffer, Jane Smithard, Graham Norton
-HRB 21284 (AG Nürnberg)
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
