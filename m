@@ -1,43 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/19/1
-Message-ID: <CAPnWRTiQ3GroywG6rD-RB6g96Gjd1O+0BqCSR8E5D655xJ8fHA@mail.gmail.com>
-Date: Thu, 19 Apr 2018 14:30:49 -0700
-From: Ed Cable <edcable@...os.org>
-To: user@...eract.apache.org, Dev <dev@...eract.apache.org>,  oss-security@...ts.openwall.com, security <security@...che.org>,  圆珠笔 <627963028@...com>
-Subject: [SECURITY] CVE-2018-1289: Apache Fineract SQL Injection Vulnerability by orderBy and sortOrder parameters
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/10/5
+Message-ID: <20180410110227.GE19724@256bit.org>
+Date: Tue, 10 Apr 2018 13:02:27 +0200
+From: Christian Brabandt <cb@...bit.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Terminal Control Chars
 Content-Type: text/plain; charset=utf-8
 
-Severity: Critical
 
-Vendor:
-The Apache Software Foundation
+On Di, 10 Apr 2018, Gordo Lowrey wrote:
 
-Versions Affected:
-Apache Fineract 1.0.0
-Apache Fineract 0.6.0-incubating
-Apache Fineract 0.5.0-incubating
-Apache Fineract 0.4.0-incubating
+> On Mon, Mar 5, 2018 at 11:50 AM, up201407890@...nos.dcc.fc.up.pt wrote:
+> >The correct solution would be to disallow the pasting of certain control
+> >characters.
 
-Description:
-Apache Fineract exposes different REST end points to query domain specific
-entities with a Query Parameter 'orderBy' and 'sortOrder' which
-are appended directly with SQL statements. A hacker/user can inject/draft
-the  'orderBy' and 'sortOrder'  query parameter in such a way to
-to read/update the data for which he doesn't have authorization.
+FWIW: The vim poc has been "fixed" as of 
+https://github.com/vim/vim/releases/tag/v8.0.1587
 
-Mitigation:
-All users should migrate to Apache Fineract 1.1.0 version
-https://github.com/apache/fineract/tree/1.1.0
+> I'm just gonna go out on a limb here, and say this is an unfounded
+> assertion.
+> 
+> Perhaps the correct solution would be to prevent the browser from copying
+> invisible characters.
+> 
+> If you're going to break some basic mechanic of human computer interaction,
+> at least don't break my damn terminal (not that I use VTE, it doesn't
+> support OSC 52, among others), but the principle stands... Instead of
+> worrying about sanitizing what is pasted, why not worry about sanitizing
+> what is copied instead?
 
+That was also the conclusion on the vim-dev list.
 
-Credit:
-This issue was discovered by 圆珠笔 (627963028@...com)
+There is a similar Debian bug report against rxvt-unicode where the same 
+conclusion is drawn:
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=787628#15
 
-References:
-http://fineract.apache.org/
-https://cwiki.apache.org/confluence/display/FINERACT/Apache+
-Fineract+Security+Report
+And the corresponding mozilla/firefox bug:
+https://bugzilla.mozilla.org/show_bug.cgi?id=637895
 
-Regards,
-Apache Fineract Team
-
+Best,
+Christian
