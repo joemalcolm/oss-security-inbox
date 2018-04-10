@@ -1,48 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/07/1
-Message-ID: <20181007060451.GA28781@eldamar.local>
-Date: Sun, 7 Oct 2018 08:04:51 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: Will Deacon <will.deacon@....com>, marc.zyngier@....com
-Subject: Re: arm64 Linux kernel: Privilege escalation by taking control of the KVM hypervisor
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/10/1
+Message-Id: <1523346797.16686.6@smtp.gmail.com>
+Date: Tue, 10 Apr 2018 03:53:17 -0400
+From: Gordo Lowrey <gordo@...eval.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Terminal Control Chars
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Mon, Mar 5, 2018 at 11:50 AM, up201407890@...nos.dcc.fc.up.pt wrote:
+> The correct solution would be to disallow the pasting of certain 
+> control characters.
 
-On Tue, Oct 02, 2018 at 05:07:14PM +0100, Will Deacon wrote:
-> Hi all,
-> 
-> Whilst reviewing some proposed arm64 KVM changes, it became apparent that
-> the sanity checking for the KVM_SET_ON_REG ioctl() on arm64 does not
-> correctly handle a number of cases:
-> 
-> 	- Unaligned register accesses and accesses that span multiple
-> 	  registers can bypass PSTATE sanity checking
-> 
-> 	- The PSTATE sanity checking fails to take into account the
-> 	  capabilities of the physical CPU, or the configuration of
-> 	  the virtual CPU
-> 
-> This allows an attacker with permission to create KVM-based virtual machines
-> to both panic the hypervisor by triggering an illegal exception return
-> (resulting in a DoS) and to redirect execution elsewhere within the
-> hypervisor with full register control, instead of causing a return to the
-> guest.
-> 
-> This has been fixed by upstream commits:
-> 
-> d26c25a9d19b ("arm64: KVM: Tighten guest core register access from userspace")
-> 2a3f93459d68 ("arm64: KVM: Sanitize PSTATE.M when being set from userspace")
-> 
-> which are being backported and applied to all active -stable kernels.
-> 
-> 32-bit Arm is unaffected by this issue.
-> 
-> There has not yet been a CVE requested for this (mainly because I don't know
-> how to do it).
+I'm just gonna go out on a limb here, and say this is an unfounded 
+assertion.
 
-This issue got CVE-2018-18021 assigned.
+Perhaps the correct solution would be to prevent the browser from 
+copying invisible characters.
 
-Regards,
-Salvatore
+If you're going to break some basic mechanic of human computer 
+interaction, at least don't break my damn terminal (not that I use VTE, 
+it doesn't support OSC 52, among others), but the principle stands... 
+Instead of worrying about sanitizing what is pasted, why not worry 
+about sanitizing what is copied instead?
+
+Thanks.
+
+
+
