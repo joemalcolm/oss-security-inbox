@@ -1,20 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/15/4
-Message-ID: <20180615141249.GA14370@openwall.com>
-Date: Fri, 15 Jun 2018 16:12:49 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/10/6
+Message-ID: <CANnUo4JFixDvNxLPLZtEE_TWV3+Aafw5kYGf20xgkFjZRuKuDA@mail.gmail.com>
+Date: Tue, 10 Apr 2018 12:18:11 +0100
+From: Mark Cox <mjc@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Intel FP security issue
+Subject: Change to ASF httpd vulnerability XML format
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jun 15, 2018 at 01:36:05PM +0000, Liguori, Anthony wrote:
-> The discover sent a post here but I suspect it's stuck in the moderation queue.  I'll repost later today.
+Various OSS projects I've been involved with use a master vulnerability
+database in XML used for various internal functions such as generating web
+pages.  I know some folks monitor or use/convert these XML feeds too even
+though we've not really publicised them or given them a schema.
 
-There's nothing like this in the moderation queue.  Also not in the spam
-filter.  Please repost right away.
+Later today I will be performing a major update to the Apache HTTP Server
+XML file[1] so that each CVE has a unique entry (rather than currently
+where the issues are repeated for each major version affected).  This
+brings it more into line with the OpenSSL XML file[2] and allows us to
+automate more of our release process (i.e. generating the required JSON for
+Mitre CVE submissions).
 
-BTW, the above message of yours lacks an In-Reply-To header, even though
-it appears to be a reply to Marcus' message.  So technically it started
-a new thread.  There's probably something broken on your end.
+Some entries will have other minor updates to their text and to fix link
+locations so if you are monitoring the html pages you will see some minor
+changes at that time.
 
-Alexander
+Regards, Mark J Cox
+
+[1] https://httpd.apache.org/security/vulnerabilities-httpd.xml
+[2] https://www.openssl.org/news/vulnerabilities.xml
+
