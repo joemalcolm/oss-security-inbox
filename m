@@ -1,62 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/26/4
-Message-ID: <CAOJcB3_j1XqXK3TnJaqZrga0d13=taYOVoG9cGG0og5Zf+=L5w@mail.gmail.com>
-Date: Thu, 26 Jul 2018 10:25:22 +0100
-From: Rajini Sivaram <rajinisivaram@...il.com>
-To: security@...ka.apache.org, oss-security@...ts.openwall.com,  announce@...che.org, Users <users@...ka.apache.org>, dev <dev@...ka.apache.org>,  kafka-clients <kafka-clients@...glegroups.com>
-Subject: CVE-2018-1288: Authenticated Kafka clients may interfere with data replication
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/11/1
+Message-Id: <EFA5C38E-331E-4F5D-8F21-F1FC0CADBBD1@beckweb.net>
+Date: Wed, 11 Apr 2018 12:48:57 +0200
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Multiple vulnerabilities in Jenkins
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-1288: Authenticated Kafka clients may interfere with data
-replication
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software. The following
+releases contain fixes for security vulnerabilities:
+
+* Jenkins (weekly) 2.116
+* Jenkins (LTS) 2.107.2
+
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2018-04-11/
+
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-754
+The Jenkins CLI sent different error responses for commands with view and
+agent arguments depending on the existence of the specified views or agents
+to unauthorized users. This allowed attackers to determine whether views or
+agents with specified names exist.
 
 
-
-Severity: Moderate
-
-
-
-Vendor: The Apache Software Foundation
-
-
-
-Versions Affected:
-
-Apache Kafka 0.9.0.0 to 0.9.0.1, 0.10.0.0 to 0.10.2.1, 0.11.0.0 to
-0.11.0.2, 1.0.0
-
-
-
-Description:
-
-Authenticated Kafka users may perform action reserved for the Broker via a
-manually created fetch request interfering with data replication, resulting
-in data loss.
-
-
-
-Mitigation:
-
-Apache Kafka users should upgrade to one of the following versions where
-this vulnerability has been fixed.
-
-
-   - 0.10.2.2 or higher
-   - 0.11.0.3 or higher
-   - 1.0.1 or higher
-   - 1.1.0 or higher
-
-
-
-Acknowledgements:
-
-We would like to thank Edoardo Comar and Mickael Maison for reporting this
-issue and providing a resolution.
-
-
-
-Regards,
-
-
-Rajini
+SECURITY-759
+Some JavaScript confirmation dialogs included the item name in an unsafe
+manner, resulting in a possible cross-site scripting vulnerability
+exploitable by users with permission to create or configure items.
 
