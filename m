@@ -1,4 +1,9 @@
-Received: (qmail 11936 invoked by uid 550); 4 Feb 2025 10:11:16 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1189" "Wednesday" "11" "April" "2018" "12:48:57" "+0200" "Daniel Beck" "ml@beckweb.net" "<EFA5C38E-331E-4F5D-8F21-F1FC0CADBBD1@beckweb.net>" "32" "[oss-security] Multiple vulnerabilities in Jenkins" nil nil nil "4" "2018041110:48:57" "[oss-security] Multiple vulnerabilities in Jenkins" (number mark "U       ml@beckweb.n Apr 11   32/1189  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 30449 invoked by uid 550); 11 Apr 2018 10:49:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,147 +12,48 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 10108 invoked from network); 4 Feb 2025 10:10:35 -0000
-Date: Tue, 4 Feb 2025 11:10:28 +0100
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20250204101028.GA20864@openwall.com>
-References: <Z5BYg9WPFBF7JBEB@thinkstation.cmpxchg8b.net> <Z5B2PA7DHTBbvbOq@itl-email> <Z5EUUMd1xkSSKAEM@thinkstation.cmpxchg8b.net>
-Mime-Version: 1.0
+Received: (qmail 30425 invoked from network); 11 Apr 2018 10:49:09 -0000
+From: Daniel Beck <ml@beckweb.net>
 Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z5EUUMd1xkSSKAEM@thinkstation.cmpxchg8b.net>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] AMD Microcode Signature Verification Vulnerability
+Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
+Message-Id: <EFA5C38E-331E-4F5D-8F21-F1FC0CADBBD1@beckweb.net>
+Date: Wed, 11 Apr 2018 12:48:57 +0200
+To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3273)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1523443749;d48d7b24;
+X-HE-SMSGID: 1f6DJC-0007fK-4y
+Subject: [oss-security] Multiple vulnerabilities in Jenkins
 
-On Wed, Jan 22, 2025 at 07:52:48AM -0800, Tavis Ormandy wrote:
-> On Tue, Jan 21, 2025 at 11:38:16PM -0500, Demi Marie Obenour wrote:
-> > On Tue, Jan 21, 2025 at 06:31:31PM -0800, Tavis Ormandy wrote:
-> > > It looks like an OEM leaked the patch for a major upcoming CPU
-> > > vulnerability, i.e. "AMD Microcode Signature Verification
-> > > Vulnerability":
-> > > 
-> > > https://rog.asus.com/motherboards/rog-strix/rog-strix-x870-i-gaming-wifi/helpdesk_bios/
-> > > 
-> > > I'm not thrilled about this - the patch is *not* currently in
-> > > linux-firmware, so this is the only publicly available patch.
-> > > 
-> > > However, other people are discussing how to extract them:
-> > > 
-> > > https://winraid.level1techs.com/t/offer-intel-amd-via-cpu-microcode-archives-1995-present/102857/53
-> > 
-> > Is this fix effective, or can it be bypassed via a downgrade attack?
-> 
-> I'm not sure yet, the vendor has been really excruciating to deal with,
-> this is the first time I've been allowed to see the patch!! :(
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software. The following
+releases contain fixes for security vulnerabilities:
 
-Much of the info is finally public (with more planned for March):
+* Jenkins (weekly) 2.116
+* Jenkins (LTS) 2.107.2
 
-https://github.com/google/security-research/security/advisories/GHSA-4xq7-4mgh-gp6w
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2018-04-11/
 
-> AMD: Microcode Signature Verification Vulnerability
-> sirdarckcat published GHSA-4xq7-4mgh-gp6w Feb 3, 2025
-> 
-> Package
-> AMD CPUs
-> 
-> Affected versions
-> Zen 1-4 CPUs
-> 
-> Patched versions
-> Naples/Rome/Milan PI 2024-12-13 and Genoa 2024-12-16
-> 
-> Description
-> 
-> Summary
-> 
-> Google Security Team has identified a security vulnerability in some AMD
-> Zen-based CPUs. This vulnerability allows an adversary with local
-> administrator privileges (ring 0 from outside a VM) to load malicious
-> microcode patches. We have demonstrated the ability to craft arbitrary
-> malicious microcode patches on Zen 1 through Zen 4 CPUs. The
-> vulnerability is that the CPU uses an insecure hash function in the
-> signature validation for microcode updates. This vulnerability could be
-> used by an adversary to compromise confidential computing workloads
-> protected by the newest version of AMD Secure Encrypted Virtualization,
-> SEV-SNP or to compromise Dynamic Root of Trust Measurement.
-> 
-> AMD SEV-SNP users can verify the fix by confirming TCB values for SNP in
-> their attestation reports (can be observed from a VM, consult AMD's
-> security bulletin for further details).
-> 
-> Severity
-> 
-> HIGH - Improper signature verification in AMD CPU ROM microcode patch
-> loader may allow an attacker with local administrator privilege to load
-> malicious CPU microcode resulting in loss of confidentiality and
-> integrity of a confidential guest running under AMD SEV-SNP.
-> 
-> Proof of Concept
-> 
-> A test payload for Milan and Genoa CPUs that makes the RDRAND
-> instruction return 4 can be downloaded here (applying it requires the
-> user to be root from outside of a VM).
-> 
-> Timeline
-> 
-> Date reported: September 25, 2024
-> Date fixed: December 17, 2024
-> Date disclosed: February 3, 2025
-> 
-> Google notified AMD of this vulnerability on September 25, 2024. AMD
-> subsequently provided an embargoed fix to its customers on December 17,
-> 2024. To coordinate with AMD, we made a one-off exception to our
-> standard vulnerability disclosure policy and delayed public disclosure
-> until today, February 3, 2025. This joint disclosure occurs 46 days
-> after AMD shared the fix with its customers and 131 days after Google's
-> initial report. Due to the deep supply chain, sequence and coordination
-> required to fix this issue, we will not be sharing full details at this
-> time in order to give users time to re-establish trust on their
-> confidential-compute workloads. We will share additional details and
-> tools on March 5, 2025.
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-> CVSS:3.1/AV:L/AC:H/PR:H/UI:N/S:C/C:H/I:H/A:N
-> CVE-2024-56161
-> 
-> Credits
-> 
->     @josheads josheads Finder
->     @spq spq Finder
->     @matrizzo matrizzo Finder
->     @sirdarckcat sirdarckcat Finder
->     @taviso taviso Finder
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
 
-There's a PoC in:
+---
 
-https://github.com/google/security-research/tree/master/pocs/cpus/entrysign
+SECURITY-754
+The Jenkins CLI sent different error responses for commands with view and
+agent arguments depending on the existence of the specified views or agents
+to unauthorized users. This allowed attackers to determine whether views or
+agents with specified names exist.
 
-> Tested on AMD EPYC 7B13 64-Core Processor (Milan) and AMD Ryzen 9 7940HS
-> w/ Radeon 780M Graphics (Phoenix).
 
-> We've provided these PoCs to demonstrate that this vulnerability allows
-> an adversary to produce arbitrary microcode patches. They cause the
-> RDRAND instruction to always return the constant 4, but also set the
-> carry flag (CF) to 0 to indicate that the returned value is invalid.
-> Because correct use of the RDRAND instruction requires checking that CF
-> is 1, this PoC can not be used to compromise correctly functioning
-> confidential computing workloads. Additional tools and resources will be
-> made public on March 5.
+SECURITY-759
+Some JavaScript confirmation dialogs included the item name in an unsafe
+manner, resulting in a possible cross-site scripting vulnerability
+exploitable by users with permission to create or configure items.
 
-The corresponding AMD security bulletin is:
-
-https://www.amd.com/en/resources/product-security/bulletin/amd-sb-3019.html
-
-> AMD SEV Confidential Computing Vulnerability
-
-> AMD has made available a mitigation for this issue which requires
-> updating microcode on all impacted platforms to help prevent an attacker
-> from loading malicious microcode. Additionally, an SEV firmware update
-> is required for some platforms to support SEV-SNP attestation. Updating
-> the system BIOS image and rebooting the platform will enable attestation
-> of the mitigation. A confidential guest can verify the mitigation has
-> been enabled on the target platform through the SEV-SNP attestation
-> report.
-
-Alexander
