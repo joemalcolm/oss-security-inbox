@@ -1,92 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/15/4
-Message-Id: <E1fpyMp-0006mM-Vn@xenbits.xenproject.org>
-Date: Wed, 15 Aug 2018 16:09:51 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 274 v3 (CVE-2018-14678) - Linux: Uninitialized state in x86 PV failsafe callback path
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/12/4
+Message-ID: <CAPyZ6=KEt-TcHZ=Cj6_as2vt=K8s17+f_VCTZt1bw-8W7vdgQw@mail.gmail.com>
+Date: Fri, 13 Apr 2018 00:20:40 +0900
+From: Tatsuhiro Tsujikawa <tatsuhiro.t@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2018-1000168: nghttp2: Denial of service due to NULL pointer dereference.
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+There are some typos in the previous post.  Here is the corrected message:
 
-            Xen Security Advisory CVE-2018-14678 / XSA-274
-                               version 3
+## Security Advisory
 
-      Linux: Uninitialized state in x86 PV failsafe callback path
+CVE-2018-1000168: nghttp2: Denial of service due to NULL pointer
+dereference.
 
-UPDATES IN VERSION 3
-====================
+### Vulnerability
 
-Fix spelling in CREDITS.
+If ALTSVC frame is received by libnghttp2 and it is larger than it can
+accept, the pointer field which points to ALTSVC frame payload is left
+NULL.  Later libnghttp2 attempts to access another field through the
+pointer, and gets segmentation fault.
 
-ISSUE DESCRIPTION
-=================
+ALTSVC frame is defined by RFC 7838.
 
-Linux has a `failsafe` callback, invoked by Xen under certain
-conditions.  Normally in this failsafe callback, error_entry is paired
-with error_exit; and error_entry uses %ebx to communicate to
-error_exit whether to use the user or kernel return path.
+The largest frame size libnghttp2 accept is by default 16384 bytes.
 
-Unfortunately, on 64-bit PV Xen on x86, error_exit is called without
-error_entry being called first, leaving %ebx with an invalid value.
+Receiving ALTSVC frame is disabled by default.  Application has to
+enable it explicitly by calling
+`nghttp2_option_set_builtin_recv_extension_type(opt, NGHTTP2_ALTSVC)`.
 
-IMPACT
-======
+Transmission of ALTSVC is always enabled, and it does not cause this
+vulnerability.
 
-A rogue user-space program could crash a guest kernel.  Privilege
-escalation cannot be ruled out.
+ALTSVC frame is expected to be sent by server, and received by client
+as defined in RFC 7838.
 
-VULNERABLE SYSTEMS
-==================
+Client and server are both affected by this vulnerability if the
+reception of ALTSVC frame is enabled.  As written earlier, it is
+useless to enable reception of ALTSVC frame on server side.  So,
+server is generally safe unless application accidentally enabled the
+reception of ALTSVC frame.
 
-Only 64-bit x86 PV Linux systems are vulnerable.
+### Affected Versions
 
-All versions of Linux are vulnerable.
+* Affected versions: nghttp2 >= 1.10.0 and nghttp2 <= v1.31.0
+* Not affected versions: nghttp2 >= 1.31.1
 
-MITIGATION
-==========
+### The Solution
 
-Switching to HVM or PVH guests will mitigate this issue.
+Upgrade to nghttp2 v1.31.1.
 
-CREDITS
-=======
+If the upgrade cannot be possible:
 
-This issue was discovered by M. Vefa Bicakci, and recognized as a
-security issue by Andy Lutomirski.
+For client, disable ALTSVC, removing the call to
+`nghttp2_option_set_builtin_recv_extension_type(opt, NGHTTP2_ALTSVC)`
 
-RESOLUTION
-==========
+For server, because it is never expected to receive ALTSVC, just
+remove `nghttp2_option_set_builtin_recv_extension_type(opt,
+NGHTTP2_ALTSVC)`.
 
-Applying the appropriate attached patch resolves this issue.
+### Time Line
 
-NB this patch has not been accepted into Linux upstream yet.  An
-updated advisory will be sent if the fix upstreamed looks
-significantly different.
+It was first reported to the nghttp2 team April 4 2018.
 
-xsa274-linux-4.17.patch           Linux 4.17
+nghttp2 v1.31.1 was released on April 12 2018.
 
-$ sha256sum xsa274*
-0c30cb13d1d573f446c8cb8d4824ffad8ef9149a7589a19ef9bcc83c07bddcf5  xsa274-linux-4.17.patch
-$
+### Credits
 
-NOTE ON THE LACK OF EMBARGO
-===========================
+Reported by Jordan Zebor at F5 Networks, and James M Snell from
+Node.js project.  Fixed by the nghttp2 team.
 
-The patch for this issue was published on linux-kernel without being
-first reported to the XenProject Security Team.
+Thank you for all who involved.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+This security advisory format is inspired from curl/libcurl project.
 
-iQEcBAEBCAAGBQJbdFA5AAoJEIP+FMlX6CvZWQQIAIxMK2w6CsH2aNQRDiDrgcBc
-2FkBbroS5I1XHEhWVyO19aPhp1R3mYNU+pTUUFOevQuKvTP0nuZ0csgk5LUj9UP7
-EE/3vM3jkAfmIIuXCAegOcznnEl6Wi9aMKGVXcxMkRu9qjKStGr4We5qvmdPncUj
-DkTdD6VbmM/Q665b0jU4j2aZPDMsH63qrsbz1rsnPAlYUi1R+yKw56Q5UdRJK17j
-Jc74v+elyqOkFq7QwH1usfnko+DQziLyLqEBQOztTSps2qYM+VwHLAZkhxNyuLsu
-2x9/1D8XoZ+BHvVsVe50QmoNcJViMMunnHNhWYHmtXLYFErwUOt48N1vl+3xFpo=
-=k4Ak
------END PGP SIGNATURE-----
-
-Download attachment "xsa274-linux-4.17.patch" of type "application/octet-stream" (4131 bytes)
