@@ -1,69 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/17/2
-Message-ID: <CAHfHakEnvyeMLZkyTSmWC4k5k9SaVU66NPVuMLWwt_eVU23cuA@mail.gmail.com>
-Date: Thu, 17 May 2018 15:10:15 -0700
-From: "Owen O'Malley" <owen.omalley@...il.com>
-To: user@....apache.org
-Cc: Terry Chia <terrycwk1994@...il.com>, security@....apache.org,  oss-security@...ts.openwall.com
-Subject: Apache ORC 1.5.0 and 1.4.4 Released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/12/9
+Message-ID: <20180412225441.GC15390@espresso.pseudorandom.co.uk>
+Date: Thu, 12 Apr 2018 23:54:41 +0100
+From: Simon McVittie <smcv@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: Terminal Control Chars
 Content-Type: text/plain; charset=utf-8
 
-All,
-   This week we released two releases ORC 1.5.0 and ORC 1.4.4. The 1.5
-release adds some great new features:
+On Thu, 12 Apr 2018 at 17:18:45 -0400, David A. Wheeler wrote:
+> Russ Allbery:
+> > I think a useful definition of "control character" in this context (and I
+> > realize this doesn't exactly match the ASCII definition) is a character
+> > that results in an action other than insertion being taken...
+> > CR and LF would not be control characters in that definition
+> 
+> As you noted, that definition doesn't match the ASCII definition, but
+> I also think it's misleading.  If someone pastes a CR/LF into a shell prompt,
+> it certainly *DOES* cause an action, namely, execution of that line.
 
-   - New C++ Writer
-   - Support for variable length HDFS blocks
-   - CSV to ORC converter
-   - Much faster decimal implementation for precision <= 18 digits
-   - Support for building C++ library on Microsoft Visual C++.
-   - Support for older versions of Hadoop (all of the way back to 2.2.x)
+I hope you're not proposing that, to protect users of terminal emulators,
+general-purpose web browsers should not allow copying more than a
+paragraph at a time? That seems like a change that is unlikely to be
+accepted.
 
-For more details, please see
-https://orc.apache.org/news/2018/05/14/ORC-1.5.0/ .
+Similarly, if filtering of pastes is done at the destination side (the
+terminal emulator), it would seem bad to be unable to paste more than
+a line at a time into a text editor that happens to be running in a
+terminal emulator (for instance the one in which I'm writing this email).
 
-These releases also fix a denial of service vulnerability. Users are
-encouraged to update.
+Russ's more loose definition of "control character" (in particular,
+preventing copying and/or pasting ESC and the 0x80-0x9F range) would be
+enough to protect users of a terminal/shell combination that supports
+bracketed paste, as far as I'm aware?
 
-# CVE-2018-8015: Apache ORC denial of service vulnerability
-
-## Severity:
-
-Medium
-
-## Vendor:
-
-[The Apache Software Foundation](https://apache.org)
-
-## Versions Affected:
-
-* ORC 1.0.0 to 1.4.3
-
-## Description:
-
-A malformed ORC file can trigger an endlessly recursive function call in the
-C++ or Java parser.
-
-The impact of this bug is most likely denial-of-service against software
-that
-uses the ORC file parser. With the C++ parser, the stack overflow might
-possibly corrupt the stack.
-
-## Mitigation:
-
-* 1.3.x and 1.4.x users should upgrade to 1.4.4.
-* 1.0.x to 1.2.x users should apply ORC-360 (Java) and ORC-313 (C++).
-
-## Example:
-
-An ORC file with a struct, union, array, or map type that includes itself as
-a child will cause the parser to infinitely recurse until the stack
-overflows.
-
-## Credit:
-
-This issue was discovered by Terry Chia.
-
-## References:
-[Apache ORC security](https://orc.apache.org/security/)
-
+    smcv
