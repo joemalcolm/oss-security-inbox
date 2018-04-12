@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["116" "Tuesday" "26" "September" "2017" "16:55:24" "+0000" "Priedhorsky, Reid" "reidpr@lanl.gov" "<6A9A46EC-195A-4940-A22F-85BD01CDB6E2@lanl.gov>" "4" "Re: [oss-security] Linux kernel CVEs not mentioned on oss-security" "^Date:" nil nil "9" "2017092616:55:24" "[oss-security] Linux kernel CVEs not mentioned on oss-security" (number mark "        reidpr@lanl. Sep 26    4/116   " thread-indent "\"Re: [oss-security] Linux kernel CVEs not mentioned on oss-security\"\n") "<CANO=Ty2T4=wPUVuDQcO59Pgvq7j_agZnT0TUmAa_0Fkk4Laafw@mail.gmail.com>" ("<EB502BBD-AA97-4FC5-A0E7-D148B0E33FF7@lanl.gov>" "<CANO=Ty2T4=wPUVuDQcO59Pgvq7j_agZnT0TUmAa_0Fkk4Laafw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["660" "Thursday" "12" "April" "2018" "11:07:20" "-0700" "Ian Zimmerman" "itz@very.loosely.org" "<20180412180720.qmtilbpi27kxa3dm@matica.foolinux.mooo.com>" "17" "[oss-security] Re: Terminal Control Chars" nil nil nil "4" "2018041218:07:20" "[oss-security] Re: Terminal Control Chars" (number mark "U       itz@very.loo Apr 12   17/660   " thread-indent "\"[oss-security] Re: Terminal Control Chars\"\n") "<20180412171327.vc5epogdi7ryc3te@jwilk.net>" ("<20180305175024.16801hoj775zje4g@webmail.alunos.dcc.fc.up.pt>" "<1523346797.16686.6@smtp.gmail.com>" "<20180412171327.vc5epogdi7ryc3te@jwilk.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24024 invoked by uid 550); 26 Sep 2017 17:12:52 -0000
+Received: (qmail 28458 invoked by uid 550); 12 Apr 2018 18:07:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,38 +11,38 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 14075 invoked from network); 26 Sep 2017 16:55:38 -0000
-X-NIE-2-Virus-Scanner: amavisd-new at mailrelay2.lanl.gov
-Thread-Topic: [oss-security] Linux kernel CVEs not mentioned on oss-security
-Thread-Index: AQHTNkhfvr1YD0sOT0K2k+eS4VxEtaLGyR8AgAD/YwA=
-Message-ID: <6A9A46EC-195A-4940-A22F-85BD01CDB6E2@lanl.gov>
-References: <EB502BBD-AA97-4FC5-A0E7-D148B0E33FF7@lanl.gov>
- <CANO=Ty2T4=wPUVuDQcO59Pgvq7j_agZnT0TUmAa_0Fkk4Laafw@mail.gmail.com>
-In-Reply-To: <CANO=Ty2T4=wPUVuDQcO59Pgvq7j_agZnT0TUmAa_0Fkk4Laafw@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [128.165.106.201]
-Content-Type: text/plain; charset="us-ascii"
-Content-ID: <15348331C32B7A4688D7CE9888679E8B@win.lanl.gov>
-Content-Transfer-Encoding: quoted-printable
-MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2017-09-26_06:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 suspectscore=0
- malwarescore=0 phishscore=0 adultscore=0 bulkscore=0 classifier=spam
- adjust=0 reason=mlx scancount=1 engine=8.0.1-1707230000
- definitions=main-1709260239
-Date: Tue, 26 Sep 2017 16:55:24 +0000
-From: "Priedhorsky, Reid" <reidpr@lanl.gov>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Linux kernel CVEs not mentioned on oss-security
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Received: (qmail 28421 invoked from network); 12 Apr 2018 18:07:40 -0000
+Date: Thu, 12 Apr 2018 11:07:20 -0700
+From: Ian Zimmerman <itz@very.loosely.org>
+To: oss-security@lists.openwall.com
+Message-ID: <20180412180720.qmtilbpi27kxa3dm@matica.foolinux.mooo.com>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <20180305175024.16801hoj775zje4g@webmail.alunos.dcc.fc.up.pt>
+ <1523346797.16686.6@smtp.gmail.com>
+ <20180412171327.vc5epogdi7ryc3te@jwilk.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180412171327.vc5epogdi7ryc3te@jwilk.net>
+X-Loosely-Listed: yes
+User-Agent: NeoMutt/20170707-dirty (1.8.3)
+Subject: [oss-security] Re: Terminal Control Chars
 
-Thanks everyone. This thread answers my questions and provides a number of =
-good resources to follow up on.
+On 2018-04-12 19:13, Jakub Wilk wrote:
 
-Reid=
+> > Perhaps the correct solution would be to prevent the browser from
+> > copying invisible characters.
+> 
+> Do you mean control characters, or something else?
+
+The term "invisible character" has some obvious (if perhaps informal)
+meaning.  But I don't really know what "control character" means.  Is a
+page separator (^L) a control character, for example?  Is DEL one (ASCII
+127)?
+
+-- 
+Please don't Cc: me privately on mailing lists and Usenet,
+if you also post the followup to the list or newsgroup.
+To reply privately _only_ on Usenet and on broken lists
+which rewrite From, fetch the TXT record for no-use.mooo.com.
