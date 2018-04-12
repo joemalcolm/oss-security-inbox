@@ -1,40 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/01/3
-Message-ID: <CAK0qHnrDU3PVMWdeBEZjatHGjiB8SBbmk1UMuPEphvMuCHkbhA@mail.gmail.com>
-Date: Fri, 1 Jun 2018 10:16:50 -0700
-From: Denis Magda <dmagda@...che.org>
-To: announce@...che.org, dev <dev@...ite.apache.org>, user@...ite.apache.org,  oss-security@...ts.openwall.com, "Rai, Harendra" <harendra.rai@....com>
-Subject: [CVE-2014-0114]: Apache Ignite is vulnerable to existing CVE-2014-0114
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/12/6
+Message-ID: <87efjkntal.fsf@hope.eyrie.org>
+Date: Thu, 12 Apr 2018 12:01:06 -0700
+From: Russ Allbery <eagle@...ie.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: Terminal Control Chars
 Content-Type: text/plain; charset=utf-8
 
-[CVE-2014-0114]: Apache Ignite is vulnerable to existing CVE-2014-0114
+Ian Zimmerman <itz@...y.loosely.org> writes:
 
-Severity: Important
+> The term "invisible character" has some obvious (if perhaps informal)
+> meaning.  But I don't really know what "control character" means.  Is a
+> page separator (^L) a control character, for example?  Is DEL one (ASCII
+> 127)?
 
-Vendor: The Apache Software Foundation
+I think a useful definition of "control character" in this context (and I
+realize this doesn't exactly match the ASCII definition) is a character
+that results in an action other than insertion being taken, as opposed to
+a glyph (possibly invisible) being inserted (and not counting contexts
+such as vi outside of insert mode where basically all characters are
+interpreted as actions).
 
-Versions Affected: Apache Ignite 2.4 or earlier
+CR and LF would not be control characters in that definition, since they
+insert a newline and don't cause an action.  Similarly, TAB wouldn't be a
+control character in that definition.  DEL would be if it deleted a
+character as opposed to inserting a ^? sequence.  ESC would be if it
+changed terminal modes or colors or did all the other things escape
+sequences can do.  BEL would be if it rung the terminal bell.  And so
+forth.
 
-Impact:
-An attacker can execute arbitrary code on Ignite nodes in the case when
-Ignite classpath contains arbitrary vulnerable classes.
+I think it's reasonable to expect that pasting something into a terminal
+will cause insertion of text, including whitespace, but will not cause the
+terminal to take *actions* that are not the insertion of text.  Certainly,
+I think there are a lot of people in the world who do have that
+assumption.
 
-Description:
-Apache Ignite used commons-beanutils-1.8.3.jar library which did not
-suppress the class property, which allowed remote attackers to "manipulate"
-the ClassLoader and execute arbitrary code via the class parameter, as
-demonstrated by the passing of this parameter to the getClass method of the
-ActionForm object in Struts 1.
-
-Mitigation:
-•    All Ignite versions: make sure there are no vulnerable classes among
-your custom code used in Apache Ignite.
-•    Upgrade to Apache Ignite 2.5 or later version
-
-Credit:
-Harendra Rai of NCR Corporation discovered the impact of the existing
-vulnerability on Apache Ignite.
-
-References:
-* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0114
-
+-- 
+Russ Allbery (eagle@...ie.org)              <http://www.eyrie.org/~eagle/>
