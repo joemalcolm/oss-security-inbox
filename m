@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["407" "Thursday" "13" "July" "2017" "23:26:13" "+0700" "Maxim Solodovnik" "solomax@apache.org" "<CAJmbs8hsosH_RNHXdxQ6=HKWdZwwKxkzyGBGt98U+40ChhMQLQ@mail.gmail.com>" "15" "[oss-security] CVE-2017-7682 - Apache OpenMeetings - Business Logic Bypass" nil nil nil "7" "2017071316:26:13" "[oss-security] CVE-2017-7682 - Apache OpenMeetings - Business Logic Bypass" (number mark "U       solomax@apac Jul 13   15/407   " thread-indent "\"[oss-security] CVE-2017-7682 - Apache OpenMeetings - Business Logic Bypass\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1505" "Thursday" "12" "April" "2018" "15:31:19" "-0700" "Russ Allbery" "eagle@eyrie.org" "<87efjkoy4o.fsf@hope.eyrie.org>" "31" "Re: [oss-security] Re: Terminal Control Chars" nil nil nil "4" "2018041222:31:19" "[oss-security] Re: Terminal Control Chars" (number mark "U       eagle@eyrie. Apr 12   31/1505  " thread-indent "\"Re: [oss-security] Re: Terminal Control Chars\"\n") "<E1f6jcD-0002pc-T3@rmmprod07.runbox>" ("<E1f6jcD-0002pc-T3@rmmprod07.runbox>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24033 invoked by uid 550); 13 Jul 2017 16:26:27 -0000
+Received: (qmail 23812 invoked by uid 550); 12 Apr 2018 22:31:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,37 +12,49 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23970 invoked from network); 13 Jul 2017 16:26:26 -0000
-X-Gm-Message-State: AIVw111qyQT6w0qQC7LL5FBzoG4SsqyhzqlXvJKclTw6VRHl+pUZ4lic
-	LWrPmkJDg8YU8MSUsc15CwZwqu7ybQ==
-X-Received: by 10.101.86.68 with SMTP id m4mr10340887pgs.46.1499963174329;
- Thu, 13 Jul 2017 09:26:14 -0700 (PDT)
+Received: (qmail 23793 invoked from network); 12 Apr 2018 22:31:33 -0000
+From: Russ Allbery <eagle@eyrie.org>
+To: "David A. Wheeler" <dwheeler@dwheeler.com>
+Cc: "oss-security" <oss-security@lists.openwall.com>
+In-Reply-To: <E1f6jcD-0002pc-T3@rmmprod07.runbox> (David A. Wheeler's message
+	of "Thu, 12 Apr 2018 17:18:45 -0400 (EDT)")
+Organization: The Eyrie
+References: <E1f6jcD-0002pc-T3@rmmprod07.runbox>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+Date: Thu, 12 Apr 2018 15:31:19 -0700
+Message-ID: <87efjkoy4o.fsf@hope.eyrie.org>
 MIME-Version: 1.0
-From: Maxim Solodovnik <solomax@apache.org>
-Date: Thu, 13 Jul 2017 23:26:13 +0700
-X-Gmail-Original-Message-ID: <CAJmbs8hsosH_RNHXdxQ6=HKWdZwwKxkzyGBGt98U+40ChhMQLQ@mail.gmail.com>
-Message-ID: <CAJmbs8hsosH_RNHXdxQ6=HKWdZwwKxkzyGBGt98U+40ChhMQLQ@mail.gmail.com>
-To: Openmeetings user-list <user@openmeetings.apache.org>, dev <dev@openmeetings.apache.org>, 
-	security@openmeetings.apache.org, 
-	Joe Basirico <jbasirico@securityinnovation.com>, 
-	Sharath Unni <sunni@securityinnovation.com>, 
-	Dinesh Shetty <dshetty@securityinnovation.com>, oss-security@lists.openwall.com, 
-	bugtraq@securityfocus.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] CVE-2017-7682 - Apache OpenMeetings - Business Logic Bypass
+Content-Type: text/plain
+Subject: Re: [oss-security] Re: Terminal Control Chars
 
-Severity: Medium
+"David A. Wheeler" <dwheeler@dwheeler.com> writes:
+> Russ Allbery:
 
-Vendor: The Apache Software Foundation
+>> I think a useful definition of "control character" in this context (and
+>> I realize this doesn't exactly match the ASCII definition) is a
+>> character that results in an action other than insertion being taken...
+>> CR and LF would not be control characters in that definition, since
+>> they insert a newline and don't cause an action. Similarly, TAB
+>> wouldn't be a control character in that definition.
 
-Versions Affected: Apache OpenMeetings 3.2.0
+> As you noted, that definition doesn't match the ASCII definition, but I
+> also think it's misleading.  If someone pastes a CR/LF into a shell
+> prompt, it certainly *DOES* cause an action, namely, execution of that
+> line.  That's probably not what you meant by "action", but from a
+> security point-of-view, causing a script to execute is rather important
+> :-).
 
-Description: Apache OpenMeetings is vulnerable to parameter
-manipulation attacks, as a result attacker has access to restricted
-areas.
-CVE-2017-7682
+That's a fair counterpoint.
 
-The issue was fixed in 3.3.0
-All users are recommended to upgrade to Apache OpenMeetings 3.3.0
+That unfortunately means that the specification one wants is to deny
+pasting control messages except for a particular set (since you're
+certainly not going to want to stop pasting of a newline sequence, and
+probably not pasting of tabs), and then you have to find the right way to
+define that set of characters that you want to allow.
 
-Credit: This issue was identified by Security Innovation
+I have some "I know it when I see it" definition in my head, but it's hard
+to be precise without listing out the specific characters that I would
+allow and that I would disallow (at least as interpreted commands).
+
+-- 
+Russ Allbery (eagle@eyrie.org)              <http://www.eyrie.org/~eagle/>
