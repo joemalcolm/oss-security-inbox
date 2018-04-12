@@ -1,27 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/17/4
-Message-ID: <CAH8yC8mk=9pj20AUcDuCgJ7aabf+2chHhknS5=pjQF5LSq7Ptw@mail.gmail.com>
-Date: Fri, 17 Aug 2018 06:33:12 -0400
-From: Jeffrey Walton <noloader@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: Florian Weimer <fweimer@...hat.com>, Doran Moppert <dmoppert@...hat.com>,  Christophe Fergeau <cfergeau@...hat.com>
-Subject: Re: spice CVE-2018-10873: post-auth crash or potential heap corruption when demarshalling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/12/7
+Message-Id: <E1f6jcD-0002pc-T3@rmmprod07.runbox>
+Date: Thu, 12 Apr 2018 17:18:45 -0400 (EDT)
+From: "David A. Wheeler" <dwheeler@...eeler.com>
+To: "oss-security" <oss-security@...ts.openwall.com>
+CC: "oss-security" <oss-security@...ts.openwall.com>
+Subject: Re: Re: Terminal Control Chars
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Aug 17, 2018 at 5:43 AM, Frediano Ziglio <fziglio@...hat.com> wrote:
->> On 08/17/2018 02:51 AM, Doran Moppert wrote:
->> >      +        if (SPICE_UNLIKELY((start + 2) > message_end)) {
->> >      +            goto error;
->> >      +        }
->>
->> These checks are still technically invalid because start + 2 is not a
->> valid pointer if it points past the allocated object.
->>
-> Technical but not real. Unless it wraps is correct...
+On Thu, 12 Apr 2018 11:07:20 -0700, Ian Zimmerman <itz@...y.loosely.org> wrote:
+> The term "invisible character" has some obvious (if perhaps informal)
+> meaning.  But I don't really know what "control character" means.  Is a
+> page separator (^L) a control character, for example?  Is DEL one (ASCII
+> 127)?
 
-I believe Florian is correct. I think the most freedom you are allowed
-is to access one beyond the "end" of the array; otherwise it is
-undefined behavior. The compiler is free to remove the code or dragons
-can fly out your nose.
+The term "control character" has a standard definition for every encoding
+I'm familiar with.  ASCII defined a set of control characters, and
+Unicode built on them.
 
-Jeff
+The Unicode list of control characters is here:
+https://www.fileformat.info/info/unicode/category/Cc/list.htm
+You'll see it includes:
+U+0007 	BELL
+U+0008 	BACKSPACE
+U+0009 	CHARACTER TABULATION
+U+000A 	LINE FEED (LF)
+U+000C 	FORM FEED (FF) (aka ^L)
+U+000D 	CARRIAGE RETURN (CR)
+U+007F 	DELETE
+
+According to Wikipedia <https://en.wikipedia.org/wiki/ASCII>,
+the set of control characters in US-ASCII is 00..1F and 7F (hex).
+
+Russ Allbery:
+> I think a useful definition of "control character" in this context (and I
+> realize this doesn't exactly match the ASCII definition) is a character
+> that results in an action other than insertion being taken...
+> CR and LF would not be control characters in that definition, since they
+> insert a newline and don't cause an action. Similarly, TAB wouldn't be a
+> control character in that definition.
+
+As you noted, that definition doesn't match the ASCII definition, but
+I also think it's misleading.  If someone pastes a CR/LF into a shell prompt,
+it certainly *DOES* cause an action, namely, execution of that line.
+That's probably not what you meant by "action", but from a security
+point-of-view, causing a script to execute is rather important :-).
+
+--- David A. Wheeler
