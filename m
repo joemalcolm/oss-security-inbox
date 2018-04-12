@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3600" "Tuesday" "10" "May" "2016" "14:09:11" "+0200" "Andreas Stieger" "astieger@suse.com" "<ab2d729f-e62c-3d92-09d2-4845bbae7a97@suse.com>" "96" "Re: [oss-security] Re: CVE request: three issues in libksba" "^Cc:" nil nil "5" "2016051012:09:11" "[oss-security] Re: CVE request: three issues in libksba" (number mark "U       astieger@sus May 10   96/3600  " thread-indent "\"Re: [oss-security] Re: CVE request: three issues in libksba\"\n") "<20160429161308.1775333600A@smtpvbsrv1.mitre.org>" ("<20160429161308.1775333600A@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2373" "Thursday" "12" "April" "2018" "19:13:27" "+0200" "Jakub Wilk" "jwilk@jwilk.net" "<20180412171327.vc5epogdi7ryc3te@jwilk.net>" "59" "Re: [oss-security] Terminal Control Chars" nil nil nil "4" "2018041217:13:27" "[oss-security] Terminal Control Chars" (number mark "U       jwilk@jwilk. Apr 12   59/2373  " thread-indent "\"Re: [oss-security] Terminal Control Chars\"\n") "<1523346797.16686.6@smtp.gmail.com>" ("<20180305175024.16801hoj775zje4g@webmail.alunos.dcc.fc.up.pt>" "<1523346797.16686.6@smtp.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 19637 invoked by uid 550); 10 May 2016 12:09:37 -0000
+Received: (qmail 9551 invoked by uid 550); 12 Apr 2018 17:13:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,117 +11,83 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19618 invoked from network); 10 May 2016 12:09:37 -0000
-References: <20160429161308.1775333600A@smtpvbsrv1.mitre.org>
-Organization: SUSE Linux GmbH
-Message-ID: <ab2d729f-e62c-3d92-09d2-4845bbae7a97@suse.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.0
-MIME-Version: 1.0
-In-Reply-To: <20160429161308.1775333600A@smtpvbsrv1.mitre.org>
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="9Wlxwx0atHiGQhUxADRDdcvXKBpgum56p"
-Cc: cve-assign@mitre.org
-Date: Tue, 10 May 2016 14:09:11 +0200
-From: Andreas Stieger <astieger@suse.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: CVE request: three issues in libksba
-To: oss-security@lists.openwall.com, mprpic@redhat.com
-
---9Wlxwx0atHiGQhUxADRDdcvXKBpgum56p
-Content-Type: multipart/mixed; boundary="RxWrfdQhli1XTBbNafODxu9lg4jweQTRs"
-From: Andreas Stieger <astieger@suse.com>
-To: oss-security@lists.openwall.com, mprpic@redhat.com
-Cc: cve-assign@mitre.org
-Message-ID: <ab2d729f-e62c-3d92-09d2-4845bbae7a97@suse.com>
-Subject: Re: [oss-security] Re: CVE request: three issues in libksba
-References: <20160429161308.1775333600A@smtpvbsrv1.mitre.org>
-In-Reply-To: <20160429161308.1775333600A@smtpvbsrv1.mitre.org>
-
---RxWrfdQhli1XTBbNafODxu9lg4jweQTRs
-Content-Type: text/plain; charset=windows-1252
+Received: (qmail 9525 invoked from network); 12 Apr 2018 17:13:44 -0000
+Date: Thu, 12 Apr 2018 19:13:27 +0200
+From: Jakub Wilk <jwilk@jwilk.net>
+To: oss-security@lists.openwall.com
+Message-ID: <20180412171327.vc5epogdi7ryc3te@jwilk.net>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <20180305175024.16801hoj775zje4g@webmail.alunos.dcc.fc.up.pt>
+ <1523346797.16686.6@smtp.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1523346797.16686.6@smtp.gmail.com>
+User-Agent: NeoMutt/20180323
+X-Ovh-Tracer-Id: 10645383619813562278
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedtgedriedtgdekkecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemuceftddtnecu
+Subject: Re: [oss-security] Terminal Control Chars
 
-Hello,
-
-On 04/29/2016 06:13 PM, cve-assign@mitre.org wrote:
-> > Integer overflow in the DN decoder src/dn.c
-> >
-> http://git.gnupg.org/cgi-bin/gitweb.cgi?p=3Dlibksba.git;a=3Dcommit;h=3D24=
-3d12fdec66a4360fbb3e307a046b39b5b4ffc3
+* Gordo Lowrey <gordo@zeneval.com>, 2018-04-10, 03:53:
+>>The correct solution would be to disallow the pasting of certain=20
+>>control characters.
 >
-> This might be an error in the original
-> https://security.gentoo.org/glsa/201604-04 advisory. We did not notice
-> any obvious relationship between
-> 243d12fdec66a4360fbb3e307a046b39b5b4ffc3 and an integer overflow fix.
-> The 243d12fdec66a4360fbb3e307a046b39b5b4ffc3 commit message seems to
-> focus on "read access out of bounds." Also, there is no other recent
-> commit at
-> http://git.gnupg.org/cgi-bin/gitweb.cgi?p=3Dlibksba.git;a=3Dhistory;f=3Ds=
-rc/dn.c
-> that refers to an integer overflow. Possibly there was an inapplicable
-> copy-and-paste of "Integer overflow in the" from the previous report
-> about the BER decoder.
+>I'm just gonna go out on a limb here, and say this is an unfounded=20
+>assertion.
 >
-> Use CVE-2016-4356 for the 243d12fdec66a4360fbb3e307a046b39b5b4ffc3
-> issue that is described as "Fix encoding of invalid utf-8 strings in
-> dn.c" and "read access out of bounds."
+>Perhaps the correct solution would be to prevent the browser from=20
+>copying invisible characters.
 
+Do you mean control characters, or something else?
 
-There is a follow-up fix in libksba 1.3.4 for this issue:
-http://git.gnupg.org/cgi-bin/gitweb.cgi?p=3Dlibksba.git;a=3Dcommit;h=3D6be6=
-1daac047d8e6aa941eb103f8e71a1d4e3c75
+>If you're going to break some basic mechanic of human computer=20
+>interaction,
 
-> Fix an OOB read access in _ksba_dn_to_str.
->
-> * src/dn.c (append_utf8_value): Use a straightforward check to fix an
-> off-by-one.
-> --
->
-> The old fix for the problem from April 2015 had an off-by-one in the
-> bad encoding handing.
->
-> Fixes-commit: 243d12fdec66a4360fbb3e307a046b39b5b4ffc3
-> <http://git.gnupg.org/cgi-bin/gitweb.cgi?p=3Dlibksba.git;a=3Dobject;h=3D2=
-43d12fdec66a4360fbb3e307a046b39b5b4ffc3>
-> GnuPG-bug-id: 2344
-> Reported-by: Pascal Cuoq
-> Signed-off-by: Werner Koch <wk@gnupg.org>
+Huh? Most users don't interact with their terminal-based software by=20
+pasting control characters. I bet most people don't even realize that=20
+it's even possible to do that. I've been using terminal emulators for 15=20
+years, and the only time I willingly did such pastes was to test=20
+exploits for this very problem.
 
-Andreas
+If you have a practical use case for such interaction, please tell us=20
+what is. I, for one, have no idea what this might be.
+
+>Instead of worrying about sanitizing what is pasted, why not worry=20
+>about sanitizing what is copied instead?
+
+Why? Is it the browser fault that terminal emulators interpret some=20
+characters in a funny way?
+
+Besides, paste consumers have much better idea what needs to be=20
+sanitized than paste producers.
+
+* For software that access the clipboard directly, no sanitization is=20
+needed. Yay!
+
+* On some systems, if terminal is a cooked mode, control characters can=20
+be escaped, usually with ^V. (But a paste producer can't possibly know=20
+what the terminal mode or the escape character is going to be!)
+
+* In bracketed paste mode, the only sequence that needs to be=20
+neutralized is the one that leaves the mode.
+
+>From egoistical point of view, I'd also prefer if this was fixed in my=20
+terminal. On my system, I have multiple paste producers potentially=20
+affected by this (web browser, two PDF readers, office suite, ...), but=20
+only one terminal emulator installed. It's much easier for me to verify=20
+that the terminal emulator behaves (it doesn't) than to check the rest=20
+of the software involved in this mess.
+
+BTW, a recent LWN article about terminal emulators briefly mentioned the=20
+problem of pasting security:
+https://lwn.net/Articles/749992/
+(The article incorrectly states that urxvt's confirm-paste plugin=20
+protects against this attack. Read the article comments to see why this=20
+is not the case.)
 
 --=20
-Andreas Stieger <astieger@suse.com>
-Project Manager Security
-SUSE Linux GmbH, GF: Felix Imend=F6rffer, Jane Smithard, Graham Norton,
-HRB 21284 (AG N=FCrnberg)
-
-
-
-
---RxWrfdQhli1XTBbNafODxu9lg4jweQTRs--
-
---9Wlxwx0atHiGQhUxADRDdcvXKBpgum56p
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIcBAEBCgAGBQJXMc9tAAoJECzWqVXhWUVG6DEP/RxSLiPV4xwvVBUAYmNVONU8
-7h09MwdoFjCwq/4h8v/L++csp+6hzm8PwW2uvvg3IFY+rxQNP9BexHmJKtlacZv0
-XNL+wLRmt3F7OOEnucw12uHcJ4jWfEXDhG5JQk46xxA1624bUotvNmzv+YqDZl32
-SN9x3HhtVM4J1FAT+zedtP9EsFs1muGJ73vYyzNbX4EMg9z1a0VzRiPlYfPj3HOD
-jz0jTZ//2OmlxnzQKkEGlsfnrqWKzmgS7mkBhhKGT93hRtu1SVAMM8eMfiaP37uE
-PJN/LMnYgFJPPX8yjCunpqj2A+CPtIsYq/SWDbl3DhhqvKOYVS8Ec40v59KaxYQI
-3dbaOvickcQeUkwlEeorqYTghG5aLDk3rJVXJf8HuQss04gcgbQVatcp19c76+h5
-WHjjZU956rMkHuP/BKellscZ42c/jmK0bvuxkdNNXxo/xhKuQE8c/Y6PMTpRM4dj
-bQUZrJnhKkq/WrpmDH1fmnnr2dPKwhF2pczpsjqt8qOegfCRKEqcY5lXmrrbIznY
-MyyOBkm4YmQPFiOAa+b8NNDHVAdImVnWOThRE3TfZ/E3q19N48PDxBVIh/dHwg9D
-jFUqBBGF2DHsuVJFxhn4wyUQT6gpbbyUsYX1Gw0rXwFUxxeQFnwh/0uTW+PoXC9v
-/RKkpeWsT16KQCSFTzPM
-=jk0M
------END PGP SIGNATURE-----
-
---9Wlxwx0atHiGQhUxADRDdcvXKBpgum56p--
+Jakub Wilk
