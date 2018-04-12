@@ -1,25 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/22/1
-Message-ID: <1892896.1vvHKffLvn@hanacore>
-Date: Sun, 22 Jul 2018 08:20:13 -0400
-From: Iris Morelle <shadowm2006@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Wesnoth arbitrary code execution/sandbox escape
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/12/8
+Message-ID: <87efjkoy4o.fsf@hope.eyrie.org>
+Date: Thu, 12 Apr 2018 15:31:19 -0700
+From: Russ Allbery <eagle@...ie.org>
+To: "David A. Wheeler" <dwheeler@...eeler.com>
+Cc: "oss-security" <oss-security@...ts.openwall.com>
+Subject: Re: Re: Terminal Control Chars
 Content-Type: text/plain; charset=utf-8
 
-On Thursday, July 19, 2018 9:13:42 PM -04 you wrote:
-> Hello,
-> 
-> We've found an issue in our software, "The Battle for Wesnoth", which allows
-> arbitrary code execution by exploiting a vulnerability within the Lua
-> scripting language engine which allows escaping existing sandbox measures
-> in place and executing untrusted bytecode.
+"David A. Wheeler" <dwheeler@...eeler.com> writes:
+> Russ Allbery:
 
-This has been assigned CVE-2018-1999023. The fix is shipped in the newly-
-released version 1.14.4.
+>> I think a useful definition of "control character" in this context (and
+>> I realize this doesn't exactly match the ASCII definition) is a
+>> character that results in an action other than insertion being taken...
+>> CR and LF would not be control characters in that definition, since
+>> they insert a newline and don't cause an action. Similarly, TAB
+>> wouldn't be a control character in that definition.
+
+> As you noted, that definition doesn't match the ASCII definition, but I
+> also think it's misleading.  If someone pastes a CR/LF into a shell
+> prompt, it certainly *DOES* cause an action, namely, execution of that
+> line.  That's probably not what you meant by "action", but from a
+> security point-of-view, causing a script to execute is rather important
+> :-).
+
+That's a fair counterpoint.
+
+That unfortunately means that the specification one wants is to deny
+pasting control messages except for a particular set (since you're
+certainly not going to want to stop pasting of a newline sequence, and
+probably not pasting of tabs), and then you have to find the right way to
+define that set of characters that you want to allow.
+
+I have some "I know it when I see it" definition in my head, but it's hard
+to be precise without listing out the specific characters that I would
+allow and that I would disallow (at least as interpreted commands).
 
 -- 
-Regards
-  Iris Morelle
-
-
+Russ Allbery (eagle@...ie.org)              <http://www.eyrie.org/~eagle/>
