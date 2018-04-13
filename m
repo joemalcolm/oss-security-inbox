@@ -1,81 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/27/5
-Message-ID: <20180627122609.11940d53@computer>
-Date: Wed, 27 Jun 2018 12:26:09 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/13/4
+Message-ID: <20180413074310.rccsuzyslbkm3xag@jwilk.net>
+Date: Fri, 13 Apr 2018 09:43:10 +0200
+From: Jakub Wilk <jwilk@...lk.net>
 To: oss-security@...ts.openwall.com
-Subject: squirrelmail XSS issues in bug tracker since 2016
+Subject: Re: Terminal Control Chars
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+* Jakub Wilk <jwilk@...lk.net>, 2018-04-12, 19:13:
+>>Perhaps the correct solution would be to prevent the browser from 
+>>copying invisible characters.
+>
+>Do you mean control characters, or something else?
 
-I found this in the squirrelmail bug tracker:
-https://sourceforge.net/p/squirrelmail/bugs/2831/
-I'll paste the content below to have it archived in oss-security.
+One reason I asked because for some people knee-jerk reaction upon 
+learning about this issue is to insist that the browser should only copy 
+what the user sees. Cleverly, they never elaborate what that means 
+exactly.
 
-Squirrelmail had reacted slowly to security issues in the past and has
-not released a new version for a long time, however security bugs (like
-one RCE in 2017 and one directory traversal in 2018) tended to be
-fixed within the SVN repo and snapshots, so running a snapshot seemed
-like a safe option.
+Is a "font-size: 3pt" text visible? Should the browser consult the 
+user's eye exam results before deciding what to copy?
 
-However it seems this bug report got ignored. It lists 4 possible
-scenarios / PoCs for XSS. From my quick judgement they are not all
-legit:
+Does it mean Ctrl+A Ctrl+C would copy only text within the viewport? I 
+guess so, but that's not what browser users expect.
 
-PoC1: I couldn't reproduce it (either it's fixed or the browser
-behavior changed, I haven't verified in-depth).
-PoC2: This is "XSS-via-data-uri", a data URI runs in its own origin,
-thus I don't see how this is a security risk. It's not really an XSS.
-PoC3/PoC4: Works in Firefox, seems legit.
+And in the PDF world: the user is often shown a scan, and there's a 
+hidden copyable text layer. Should the PDF browser somehow refuse to 
+copy text with recognition errors?
 
-Preventing XSS in webmail is a hard problem, so I wouldn't be surprised
-if there's more to be found.
+>>If you're going to break some basic mechanic of human computer 
+>>interaction,
+>Huh? Most users don't interact with their terminal-based software by 
+>pasting control characters.
 
--------------------
-
-There are multiple XSS vulnerabilities in the mail message display
-page(functions/mime.php),the function magicHTML can not filter some
-special tags.
-
-The steps to reproduce are below:
-
-Compose email content via HTML mode(use any other webmail client).The
-HTML content is below: PoC1 (triggered in Chrome,Firefox):
-
-<svg><a xlink:href="javascript:alert(/XSS/)"><rect width="1000"
-height="1000" fill="white"/></a></svg>
-
-PoC2 (triggered in Chrome,Firefox,safari):
-
-<form
-action='data:text&sol;html,&lt;script&gt;alert(/XSS/)&lt/script&gt'><button></form>
-
-PoC3 (triggered in Firefox):
-
-<math><maction actiontype="" xlink:href="javascript:alert(/XSS/)">
-Click here
-
-PoC4 (triggered in Firefox):
-
-<math xlink:href=javascript:alert(/XSS/)> Click here
-
-Choose one of PoCs and send it to squirrelmail webmail system.
-
-Log in to squirrelmail webmail system and view the mail received(HTML
-Version is opened)
-
-Click the area in the content.The xss will be triggered
-
-Version:
-The testing squirrelmail webmail version is 1.4.23.Link is below:
-http://squirrelmail.org/download.php
-php:5.3.17
-apache:2.2.12
+As it was noted elsewhere in this thread, tabs and newlines are control 
+characters, too. People paste them all the time. But I don't think 
+anyone is seriously proposing to filter out these two.
 
 -- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+Jakub Wilk
