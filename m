@@ -1,95 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/08/4
-Message-ID: <CACVwi=KLCbDhMvzSmrBU7vi=zexSn-EfoHszYHzmt8VWLXD9Fg@mail.gmail.com>
-Date: Wed, 8 Aug 2018 17:33:00 +0200
-From: Jens Timmerman <jens.timmerman@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/13/2
+Message-ID: <7554309d-a8e5-d9ac-7882-d10b09a93650@gentoo.org>
+Date: Fri, 13 Apr 2018 02:11:25 +0200
+From: Kristian Fiskerstrand <k_f@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Unauthenticated EAPOL-Key decryption in wpa_supplicant
+Subject: Updated distros statistics
 Content-Type: text/plain; charset=utf-8
 
-I have to ask since this was only published 4 days ago and also describes
-an attack on the EAPOL frames
-Is this in any way related to atom's new attack on WPA/WPA2 using PMKID,
-https://hashcat.net/forum/thread-7717.html
+Hi all,
 
-As far as I can see these are 2 different attacks?
+Just a heads up that I updated the distros ML statistics at
+http://oss-security.openwall.org/wiki/mailing-lists/distros/stats now
+for the end of March.
 
-Regards,
-Jens Timmerman
+-- 
+Kristian Fiskerstrand
+OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
+fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
 
-On 8 August 2018 at 16:22, Jouni Malinen <j@...fi> wrote:
 
-> Published: August 8, 2018
-> Identifiers:
-> - CVE-2018-14526
-> Latest version available from: https://w1.fi/security/2018-1/
->
-> Vulnerability
->
-> A vulnerability was found in how wpa_supplicant processes EAPOL-Key
-> frames. It is possible for an attacker to modify the frame in a way that
-> makes wpa_supplicant decrypt the Key Data field without requiring a
-> valid MIC value in the frame, i.e., without the frame being
-> authenticated. This has a potential issue in the case where WPA2/RSN
-> style of EAPOL-Key construction is used with TKIP negotiated as the
-> pairwise cipher. It should be noted that WPA2 is not supposed to be used
-> with TKIP as the pairwise cipher. Instead, CCMP is expected to be used
-> and with that pairwise cipher, this vulnerability is not applicable in
-> practice.
->
-> When TKIP is negotiated as the pairwise cipher, the EAPOL-Key Key Data
-> field is encrypted using RC4. This vulnerability allows unauthenticated
-> EAPOL-Key frames to be processed and due to the RC4 design, this makes
-> it possible for an attacker to modify the plaintext version of the Key
-> Data field with bitwise XOR operations without knowing the contents.
-> This can be used to cause a denial of service attack by modifying
-> GTK/IGTK on the station (without the attacker learning any of the keys)
-> which would prevent the station from accepting received group-addressed
-> frames. Furthermore, this might be abused by making wpa_supplicant act
-> as a decryption oracle to try to recover some of the Key Data payload
-> (GTK/IGTK) to get knowledge of the group encryption keys.
->
-> Full recovery of the group encryption keys requires multiple attempts
-> (128 connection attempts per octet) and each attempt results in
-> disconnection due to a failure to complete the 4-way handshake. These
-> failures can result in the AP/network getting disabled temporarily or
-> even permanently (requiring user action to re-enable) which may make it
-> impractical to perform the attack to recover the keys before the AP has
-> already changes the group keys. By default, wpa_supplicant is enforcing
-> at minimum a ten second wait time between each failed connection
-> attempt, i.e., over 20 minutes waiting to recover each octet while
-> hostapd AP implementation uses 10 minute default for GTK rekeying when
-> using TKIP. With such timing behavior, practical attack would need large
-> number of impacted stations to be trying to connect to the same AP to be
-> able to recover sufficient information from the GTK to be able to
-> determine the key before it gets changed.
->
->
-> Vulnerable versions/configurations
->
-> All wpa_supplicant versions.
->
->
-> Acknowledgments
->
-> Thanks to Mathy Vanhoef of the imec-DistriNet research group of KU
-> Leuven for discovering and reporting this issue.
->
->
-> Possible mitigation steps
->
-> - Remove TKIP as an allowed pairwise cipher in RSN/WPA2 networks. This
->   can be done also on the AP side.
->
-> - Merge the following commits to wpa_supplicant and rebuild:
->
->   WPA: Ignore unauthenticated encrypted EAPOL-Key data
->
->   This patch is available from https://w1.fi/security/2018-1/
->
-> - Update to wpa_supplicant v2.7 or newer, once available
->
-> --
-> Jouni Malinen                                            PGP id EFC895FA
->
 
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
