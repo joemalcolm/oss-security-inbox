@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["612" "Wednesday" "21" "October" "2015" "17:01:13" "+0200" "Matthias Weckbecker" "matthias@weckbecker.name" "<20151021170113.128d3a8e@silentmaxx>" "22" "Re: [oss-security] Prime example of a can of worms" nil nil nil "10" "2015102115:01:13" "[oss-security] Prime example of a can of worms" (number mark "        matthias@wec Oct 21   22/612   " thread-indent "\"Re: [oss-security] Prime example of a can of worms\"\n") "<87eggqmta9.fsf@alice.fifthhorseman.net>" ("<CANO=Ty18_pMLco8RdabsEbhs9sLahRhT_U93PGhDVwhcRaqzpQ@mail.gmail.com>" "<CAFRnB2Wrz=zexGonV5fHosVqfiOhNvA6Ya2YsCYyDkt7UE_0mw@mail.gmail.com>" "<20151019193411.GA15710@hunt>" "<87eggqmta9.fsf@alice.fifthhorseman.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1244" "Friday" "13" "April" "2018" "09:43:10" "+0200" "Jakub Wilk" "jwilk@jwilk.net" "<20180413074310.rccsuzyslbkm3xag@jwilk.net>" "32" "Re: [oss-security] Terminal Control Chars" nil nil nil "4" "2018041307:43:10" "[oss-security] Terminal Control Chars" (number mark "U       jwilk@jwilk. Apr 13   32/1244  " thread-indent "\"Re: [oss-security] Terminal Control Chars\"\n") "<20180412171327.vc5epogdi7ryc3te@jwilk.net>" ("<20180305175024.16801hoj775zje4g@webmail.alunos.dcc.fc.up.pt>" "<1523346797.16686.6@smtp.gmail.com>" "<20180412171327.vc5epogdi7ryc3te@jwilk.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3807 invoked by uid 550); 21 Oct 2015 15:03:42 -0000
+Received: (qmail 29920 invoked by uid 550); 13 Apr 2018 07:43:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,40 +11,56 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1785 invoked from network); 21 Oct 2015 15:01:30 -0000
-Message-ID: <20151021170113.128d3a8e@silentmaxx>
-In-Reply-To: <87eggqmta9.fsf@alice.fifthhorseman.net>
-References: <CANO=Ty18_pMLco8RdabsEbhs9sLahRhT_U93PGhDVwhcRaqzpQ@mail.gmail.com>
- <CAFRnB2Wrz=zexGonV5fHosVqfiOhNvA6Ya2YsCYyDkt7UE_0mw@mail.gmail.com>
- <20151019193411.GA15710@hunt>
- <87eggqmta9.fsf@alice.fifthhorseman.net>
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Date: Wed, 21 Oct 2015 17:01:13 +0200
-From: Matthias Weckbecker <matthias@weckbecker.name>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Prime example of a can of worms
+Received: (qmail 29899 invoked from network); 13 Apr 2018 07:43:26 -0000
+Date: Fri, 13 Apr 2018 09:43:10 +0200
+From: Jakub Wilk <jwilk@jwilk.net>
 To: oss-security@lists.openwall.com
+Message-ID: <20180413074310.rccsuzyslbkm3xag@jwilk.net>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <20180305175024.16801hoj775zje4g@webmail.alunos.dcc.fc.up.pt>
+ <1523346797.16686.6@smtp.gmail.com>
+ <20180412171327.vc5epogdi7ryc3te@jwilk.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20180412171327.vc5epogdi7ryc3te@jwilk.net>
+User-Agent: NeoMutt/20180323
+X-Ovh-Tracer-Id: 6886566783405119398
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedtgedriedugdduvdegucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecufedttdenuc
+Subject: Re: [oss-security] Terminal Control Chars
 
-On Mon, 19 Oct 2015 17:40:14 -0400
-Daniel Kahn Gillmor <dkg@fifthhorseman.net> wrote:
-[...]
-> On the flip side, saying "use only strong (>=2048bit today in 2015?),
-> well-known, well-structured, publicly-vetted groups" is very simple
-> guidance: clear and easy to follow.
-> 
+* Jakub Wilk <jwilk@jwilk.net>, 2018-04-12, 19:13:
+>>Perhaps the correct solution would be to prevent the browser from 
+>>copying invisible characters.
+>
+>Do you mean control characters, or something else?
 
-Interestingly I noticed OpenSSH bumped their 'DH_GRP_MIN' to 2048 bit
-just a few days ago to account for precomputation attacks:
+One reason I asked because for some people knee-jerk reaction upon 
+learning about this issue is to insist that the browser should only copy 
+what the user sees. Cleverly, they never elaborate what that means 
+exactly.
 
-http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/usr.bin/ssh/dh.h.diff?
-r1=1.13&r2=1.14
+Is a "font-size: 3pt" text visible? Should the browser consult the 
+user's eye exam results before deciding what to copy?
 
-RFC4419 seems to recommend 1024 bit minimum, but the document appears
-to be from 2006.
+Does it mean Ctrl+A Ctrl+C would copy only text within the viewport? I 
+guess so, but that's not what browser users expect.
 
-[...]
-> 
->       --dkg
+And in the PDF world: the user is often shown a scan, and there's a 
+hidden copyable text layer. Should the PDF browser somehow refuse to 
+copy text with recognition errors?
 
-Matthias
+>>If you're going to break some basic mechanic of human computer 
+>>interaction,
+>Huh? Most users don't interact with their terminal-based software by 
+>pasting control characters.
+
+As it was noted elsewhere in this thread, tabs and newlines are control 
+characters, too. People paste them all the time. But I don't think 
+anyone is seriously proposing to filter out these two.
+
+-- 
+Jakub Wilk
