@@ -1,34 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/06/1
-Message-ID: <CALJHwhTFmGV=uM0NUxE1Bs5fG3nmMATEOW=bJ6jzO2XzePNaQw@mail.gmail.com>
-Date: Tue, 6 Mar 2018 14:07:43 +1000
-From: Wade Mealing <wmealing@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2018-1066 : kernel - CIFS - Null pointer dereference in ntlmv2 response client crash.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/13/1
+Message-Id: <E1f6mFw-0007bA-AS@rmmprod06.runbox>
+Date: Thu, 12 Apr 2018 20:07:56 -0400 (EDT)
+From: "David A. Wheeler" <dwheeler@...eeler.com>
+To: "oss-security" <oss-security@...ts.openwall.com>
+CC: "oss-security" <oss-security@...ts.openwall.com>
+Subject: Re: Re: Terminal Control Chars
 Content-Type: text/plain; charset=utf-8
 
-Gday,
+On Thu, 12 Apr 2018 23:54:41 +0100, Simon McVittie <smcv@...ian.org> wrote:
+> I hope you're not proposing that, to protect users of terminal emulators,
+> general-purpose web browsers should not allow copying more than a
+> paragraph at a time?
 
-Dan Aloni reported to Red Hat that there was a flaw in the CIFS client
-implementation in kernel that could cause a null pointer dereference
-and panic the a Linux CIFS client.  It would require the server to
-implement the CIFS protocol incorrectly or momentarily impersonate the
-CIFS server during session recovery (such as when the server was shut
-down, or the network conditions were bad). The attacker would need to
-return an empty "TargetInfo" in the NTLMSSP setup negotiation response
-causing the null pointer dereference when interpreted by the client.
+Not at all!  My point is that we should be careful about terminology.
+"Control characters" already has a well-known standard definition,
+using the same term for a different set is confusing & could lead to misimplementation.
+Just call them something else that doesn't already have a standard
+definition ("dangerous bytes" or whatever).
 
-
-Report ( and patch )
-
-https://patchwork.kernel.org/patch/10187633/
-
-
-RedHat Bugzilla:
-
-https://bugzilla.redhat.com/show_bug.cgi?id=1539599
-
-Thanks,
-
-Wade Mealing
-Red Hat Product Security
+--- David A. Wheeler
