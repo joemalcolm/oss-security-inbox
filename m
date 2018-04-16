@@ -1,38 +1,99 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/05/4
-Message-ID: <61f3f180-f1a2-40d6-db4f-bd50d5e48789@apache.org>
-Date: Fri, 5 Oct 2018 16:10:49 +0200
-From: Andreas Lehmkuehler <lehmi@...che.org>
-To: announce@...che.org, security@...che.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: [CVE-2018-11797] DoS vulnerability in Apache PDFBox parser
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/16/3
+Message-ID: <CAFeDd5bgmNV4=u0GNwpuszCv-k+ZeOJv=uF+z3MZybf+thG+fg@mail.gmail.com>
+Date: Mon, 16 Apr 2018 19:46:03 +0300
+From: Billy Brumley <bbrumley@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2018-0737 OpenSSL: RSA key generation follows several non constant time code paths
 Content-Type: text/plain; charset=utf-8
 
-[CVE-2018-11797] DoS vulnerability in Apache PDFBox parser
+Hey Folks,
 
-Severity: Important
+We discovered 3 vulnerabilities in OpenSSL that allow cache-timing
+enabled attackers to recover RSA private keys during key generation.
 
-Vendor:
-The Apache Software Foundation
+1. BN_gcd gets called to check that _e_ and _p-1_ are relatively
+prime. This function is not constant time, and leaks critical GCD
+state leading to information on _p_.
 
-Versions Affected:
-Apache PDFBox <= 1.8.15
-Apache PDFBox <= 2.0.11
-Earlier, unsupported Apache PDFBox versions may be affected as well
+2. During primality testing, BN_mod_inverse gets called without the
+BN_FLG_CONSTTIME set during Montgomery arithmetic setup. The resulting
+code path is not constant time, and leaks critical GCD state leading
+to information on _p_.
 
-Description:
-A carefully crafted PDF file can trigger an extremely long
-running computation when parsing the page tree.
+3. During primality testing, BN_mod_exp_mont gets called without the
+BN_FLG_CONSTTIME set during modular exponentiation, with an exponent
+_x_ satisfying _p - 1 = 2**k * x_ hence recovering _x_ gives you most
+of _p_. The resulting code path is not constant time, and leaks
+critical exponentiation state leading to information on _x_ and hence
+_p_.
 
-Mitigation:
-Upgrade to Apache PDFBox 1.8.16 respectively 2.0.12
+OpenSSL issued CVE-2018-0737 to track this issue.
 
-Credit:
-This issue was discovered by Shawn Rasheed
+# Affected software
 
-Website:
-https://pdfbox.apache.org/
+LibreSSL fixed these issues (nice!) way back when this was reported in
+Jan 2017. Looks like commits
 
-Download:
-https://pdfbox.apache.org/download.cgi
-https://www.apache.org/dist/pdfbox/2.0.12/RELEASE-NOTES.txt
-https://www.apache.org/dist/pdfbox/1.8.16/RELEASE-NOTES.txt
+5a1bc054398ec4d2c33e5bdc3a16eece01c8901d
+952c1252f58f5f57227f5efaeec0169759c77d72
+
+We verified that with a debugger.
+
+OTOH, OpenSSL wanted concrete evidence of exploitability. That's what
+we did over the past year and a half or so.We ran with bug (1) and
+recover RSA keys with cache-timings, achieving roughly 30% success
+rate in over 10K trials on a cluster.
+
+Affects 1.1.0, 1.0.2, and presumably all the EOL lines.
+
+## Fixes
+
+Recently, it looks like (1) was independently discovered, and some
+code changes happened. Nothing for (2) and (3).
+
+### 1.0.2-stable
+
+Part of the fix (1) is in commits
+
+0d6710289307d277ebc3354105c965b6e8ba8eb0
+64eb614ccc7ccf30cc412b736f509f1d82bbf897
+0b199a883e9170cdfe8e61c150bbaf8d8951f3e7
+
+In combination with our contributed patch in
+
+349a41da1ad88ad87825414752a8ff5fdd6a6c3f
+
+we verified with a debugger they cumulatively solve (1) (2) and (3).
+
+### 1.1.0-stable
+
+Part of the fix (1) is in commits
+
+7150a4720af7913cae16f2e4eaf768b578c0b298
+011f82e66f4bf131c733fd41a8390039859aafb2
+9db724cfede4ba7a3668bff533973ee70145ec07
+
+In combination with our contributed patch in
+
+6939eab03a6e23d2bd2c3f5e34fe1d48e542e787
+
+we verified with a debugger they cumulatively solve (1) (2) and (3).
+
+Look for our preprint on http://eprint.iacr.org/ soon -- working title
+is "One Shot, One Trace, One Key: Cache-Timing Attacks on RSA Key
+Generation". We'll update the list with the full URL once it's posted.
+
+# Timeline
+
+Jan 2017: Notified OpenSSL, LibreSSL, BoringSSL
+4 Apr 2018: Notified OpenSSL again, with PoC and 16 Apr, 15:00 UTC embargo
+11 Apr 2018: Notified distros list
+16 Apr 2018: Notified oss-security list
+
+Thanks for reading!
+
+Alejandro Cabrera Aldaya
+Cesar Pereida Garcia
+Luis Manuel Alvarez Tapia
+Billy Brumley
