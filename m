@@ -1,26 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/23/3
-Message-ID: <20181123094709.2e493b23@computer>
-Date: Fri, 23 Nov 2018 09:47:09 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/16/2
+Message-Id: <05E0E047-0C5E-4459-890A-39522576EF0F@beckweb.net>
+Date: Mon, 16 Apr 2018 13:25:08 +0200
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Crashes and memory safety bugs in dcraw
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 23 Nov 2018 09:34:51 +0100
-Agostino Sarubbo <ago@...too.org> wrote:
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software. The following
+releases contain fixes for security vulnerabilities:
 
-> are the first and the third similar or I'm missing something?
+* Email Extension 2.62
+* Google Login 1.3.1
+* HTML Publisher 1.16
+* S3 Publisher 0.11.0
 
-That looks like the same, sorry, my mistake.
-Ignore the second one :-)
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2018-04-16/
 
-Somewhere in the "minify crashing inputs, sort them" I must have
-missed that.
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
--- 
-Hanno Böck
-https://hboeck.de/
+If you find security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
 
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+---
+
+SECURITY-442
+Google Login Plugin did not invalidate the previous session and create a 
+new one upon successful login, allowing attackers able to control or 
+obtain another user’s pre-login session ID to impersonate them.
+
+
+SECURITY-684
+Google Login Plugin redirected users to an arbitrary URL specified as a 
+query parameter after successful login, enabling phishing attacks.
+
+
+SECURITY-729
+Email Extension Plugin stores an SMTP password in the global Jenkins 
+configuration.
+
+While the password is stored encrypted on disk, it was transmitted in 
+plain text as part of the configuration form. This could result in 
+exposure of the password through browser extensions, cross-site scripting 
+vulnerabilities, and similar situations.
+
+
+SECURITY-730
+S3 Publisher Plugin did not properly escape file names shown on the
+Jenkins UI. This resulted in a cross-site scripting vulnerability
+exploitable by users able to control the names of uploaded files.
+
+
+SECURITY-784
+HTML Publisher Plugin allows specifying a name for the HTML reports it 
+publishes. This report name was used in the URL of the report and as a 
+directory name on the Jenkins master without further processing, resulting 
+in a path traversal vulnerability that allowed overriding files outside 
+the intended directory.
+
