@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5877" "Thursday" "22" "June" "2017" "14:13:30" "+0200" "Solar Designer" "solar@openwall.com" "<20170622121330.GA18550@openwall.com>" "183" "[oss-security] stackguard fix in Red Hat and Ubuntu kernels" nil nil nil "6" "2017062212:13:30" "[oss-security] stackguard fix in Red Hat and Ubuntu kernels" (number mark "U       solar@openwa Jun 22  183/5877  " thread-indent "\"[oss-security] stackguard fix in Red Hat and Ubuntu kernels\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["611" "Tuesday" "17" "April" "2018" "09:51:56" "+0530" "Huzaifa Sidhpurwala" "huzaifas@redhat.com" "<cbee626b-67e6-73a4-f82e-0f4adb6da1a4@redhat.com>" "21" "Re: [oss-security] CVE-2018-0737 OpenSSL: RSA key generation follows several non constant time code paths" nil nil nil "4" "2018041704:21:56" "[oss-security] CVE-2018-0737 OpenSSL: RSA key generation follows several non constant time code paths" (number mark "U       huzaifas@red Apr 17   21/611   " thread-indent "\"Re: [oss-security] CVE-2018-0737 OpenSSL: RSA key generation follows several non constant time code paths\"\n") "<CAFeDd5bgmNV4=u0GNwpuszCv-k+ZeOJv=uF+z3MZybf+thG+fg@mail.gmail.com>" ("<CAFeDd5bgmNV4=u0GNwpuszCv-k+ZeOJv=uF+z3MZybf+thG+fg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 23782 invoked by uid 550); 22 Jun 2017 12:14:06 -0000
+Received: (qmail 22457 invoked by uid 550); 17 Apr 2018 04:22:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,199 +12,62 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23601 invoked from network); 22 Jun 2017 12:13:45 -0000
-Date: Thu, 22 Jun 2017 14:13:30 +0200
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Cc: Vasily Averin <vvs@virtuozzo.com>,
-	Konstantin Khorenko <khorenko@virtuozzo.com>
-Message-ID: <20170622121330.GA18550@openwall.com>
-Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="jI8keyz6grp/JLjh"
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.3i
-Subject: [oss-security] stackguard fix in Red Hat and Ubuntu kernels
+Received: (qmail 22404 invoked from network); 17 Apr 2018 04:22:12 -0000
+To: oss-security@lists.openwall.com, Billy Brumley <bbrumley@gmail.com>
+References: <CAFeDd5bgmNV4=u0GNwpuszCv-k+ZeOJv=uF+z3MZybf+thG+fg@mail.gmail.com>
+From: Huzaifa Sidhpurwala <huzaifas@redhat.com>
+Openpgp: preference=signencrypt
+Autocrypt: addr=huzaifas@redhat.com; keydata=
+ xsDiBETun5sRBACOCWbRM5KLDngL46w371lRBMCCmBRpzQHXuxllk1dbku3GYQu5ApCYVvck
+ 45GWqFAYqWVjXGjEOnATxg693FI3Mw8tv8E9JED1OMbyaI4bhUxP1H7Ia89BOEFHjHKR7VPY
+ S9tSwvTr2AkjK1j+CrMcWmV2rL4KooRk/ykB/4joJwCgnoMEbrNCrnSIiZNGxS7Okxgknb8D
+ /AxkMwysc39T68fp0AOAr4wNrwWzgBPqjyF0As5n9ewZie9Z+uqqGCnjn9XgMmMNkL1DsXXs
+ 4dJXaFrAdlcArtWaiQX/d2nZaZj8kw9D7ADudBTA0YzAnVQGk4wf2zL9WT/YwYhV3Sb1TERa
+ H6g4gg8b+KwsbmhJSrqsg06mWR3eA/9j86ollyU31Fq/qIjsbHR+tSManlv57wGiH9luburk
+ bUSFgLo9t2h6bHZ4sTQyt6aJcxXzon2IuiTYVpDrnoAfYfvFvzSae0BPG7nP8moAL7X1nnW0
+ xP8+ZATAqwds75yAQMpGRXuOntFl5ZL1xmzzeDS5aUfMg3gC9M0jIWK3zc0sSHV6YWlmYSBT
+ LiBTaWRocHVyd2FsYSA8aHV6YWlmYXNAcmVkaGF0LmNvbT7CXgQTEQIAHgUCRO6fmwIbAwYL
+ CQgHAwIDFQIDAxYCAQIeAQIXgAAKCRDMcNzy2lva5e+DAJ4hG6WLhJfmJ27UOKZLPRi3gVNx
+ owCeP5f7Cp5aU4DXyK3X81poNLIW2i3OwE0ERO6fnRAEALle4LaG+djyt8slfQbwAPf06dgz
+ bC6o1TcPg/ZRSE8TSE6d1fRkLSLJJZSW9gGpl5fphNYUSzarFKP4xLRol/fZCY4tupcAv+Vm
+ jfzaLqdIiy+G6ei1UpQTP6uRHxLdtXmMmg6kWds0ZavEU2+y18HzAczCCPBQN30dd/1/5jUn
+ AAMFBACOEdEjzZIQmK6ciB6TymIcD8nf6Jn0zz6+DjxrtdEnP7V/zyZgv/tD1GdneOBaGJTL
+ FTqT5vNSsmMTtQ03tjg/e4+P1MX8YcbhObj186Js47moYoeWgfAGZlFd6mNl/aSITVSHsooF
+ zVi9Xs6zKZNWsY2LcENMnE/xM7Qdpi5ChMJJBBgRAgAJBQJE7p+dAhsMAAoJEMxw3PLaW9rl
+ XKEAnjySXTUlGFzWQ9BiLx5Fo91JziLYAJ4lQdBofA+Gf1Vewb/61ilmdq4Qqg==
+Message-ID: <cbee626b-67e6-73a4-f82e-0f4adb6da1a4@redhat.com>
+Date: Tue, 17 Apr 2018 09:51:56 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.0
+MIME-Version: 1.0
+In-Reply-To: <CAFeDd5bgmNV4=u0GNwpuszCv-k+ZeOJv=uF+z3MZybf+thG+fg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 2.78 on 10.11.54.4
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.11.55.7]); Tue, 17 Apr 2018 04:22:00 +0000 (UTC)
+X-Greylist: inspected by milter-greylist-4.5.16 (mx1.redhat.com [10.11.55.7]); Tue, 17 Apr 2018 04:22:00 +0000 (UTC) for IP:'10.11.54.4' DOMAIN:'int-mx04.intmail.prod.int.rdu2.redhat.com' HELO:'smtp.corp.redhat.com' FROM:'huzaifas@redhat.com' RCPT:''
+Subject: Re: [oss-security] CVE-2018-0737 OpenSSL: RSA key generation follows
+ several non constant time code paths
 
---jI8keyz6grp/JLjh
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On 04/16/2018 10:16 PM, Billy Brumley wrote:
 
-I think the below should be in here regardless of whether it was already
-known or not, so forwarding.
-
-I've re-attached the reproducer program.
-
-Thanks, Vasily and Konstantin.
-
-(And yes, I've verified that both Vasily's and Konstantin's e-mail
-addresses here were already publicly known.  It's something everyone
-should do before forwarding stuff to a public mailing list.)
-
------ Forwarded message from Vasily Averin <vvs@virtuozzo.com> -----
-
-From: Vasily Averin <vvs@virtuozzo.com>
-To: Solar Designer <solar@openwall.com>
-Cc: Konstantin Khorenko <khorenko@virtuozzo.com>
-Subject: stackguard fix in RedHat and Ubuntu kernels
-Date: Thu, 22 Jun 2017 14:40:02 +0300
-
-Dear Alexander,
-probably it is already known,
-otherwise please share it in oss-security@
-I've noticed the problem on Red Hat kernels first, and reported to Red Hat already,
-but now I've found the same problem on Ubuntu kernels.
-It does not affect mainline patch "mm: larger stack guard gap, between vmas"
-but seems distributors have used some other incorrect patch (shared in linux-distros@ ??? )
-
-Description of problem:
-mmap(MAP_GROUWSDOWN) works incorrectly on Red Hat and Ubuntu kernels with stackguard fix.
-
-We have application that creates stack by using MAP_GROUWSDOWN , provide this area into clone(), 
-where it fails on access to mapped area.
-
-Steps to Reproduce:
-execute attached reproducer.
-It maps 2 pages with MAP_GROUWSDOWN, an access to 2nd page mapped page triggers SIGBUS or SIGSEGV
-
-Actual results:
-- access to end of mapped area generated SIGBUS or SIGSEGV
-- /proc/<pid>/maps shows incorrect start address for allocated area
-please see details below
-
-Expected results:
-on previous Ubuntu/RHEL kernels this testcase works well without crashes
-http://man7.org/linux/man-pages/man2/mmap.2.html
-
-       MAP_GROWSDOWN
-              This flag is used for stacks.  It indicates to the kernel
-              virtual memory system that the mapping should extend downward
-              in memory.  The return address is one page lower than the
-              memory area that is actually created in the process's virtual
-              address space.  Touching an address in the "guard" page below
-              the mapping will cause the mapping to grow by a page.  This
-              growth can be repeated until the mapping grows to within a
-              page of the high end of the next lower mapping, at which point
-              touching the "guard" page will result in a SIGSEGV signal.
-
-On new Ubuntu kernel 4.4.0-81-generic (with stackguard fix)
-
-20	        unsigned char *stack = mmap(NULL, STACK_SIZE, PROT_READ | PROT_WRITE,
-(gdb) n
-
-(changes in /proc/<pid>/maps)
- 7ffff7dd3000-7ffff7dd7000 rw-p 00000000 00:00 0 
- 7ffff7dd7000-7ffff7dfd000 r-xp 00000000 fc:00 524776                     /lib/x86_64-linux-gnu/ld-2.23.so
- 7ffff7feb000-7ffff7fee000 rw-p 00000000 00:00 0 
-+7ffff80f4000-7ffff7ff6000 rw-p 00000000 00:00 0  <<<< incorrect start address is shown here 
- 7ffff7ff6000-7ffff7ff8000 rw-p 00000000 00:00 0 
- 7ffff7ff8000-7ffff7ffa000 r--p 00000000 00:00 0                          [vvar]
- 7ffff7ffa000-7ffff7ffc000 r-xp 00000000 00:00 0                          [vdso]
-
-23		printf("stack = %p\n", stack);
-(gdb) n
-stack = 0x7ffff7ff4000
-24		end = stack + STACK_SIZE - 8;
-(gdb) n
-25		printf("end = %p\n", end);
-(gdb) n
-end = 0x7ffff7ff5ff8
-26		printf("write to *end\n");
-(gdb) n
-write to *end
-27		*end = 0;
-(gdb) n
-
-Program received signal SIGSEGV, Segmentation fault.
-0x000000000040062f in main () at sk.c:27
+> 6939eab03a6e23d2bd2c3f5e34fe1d48e542e787
+> 
+> we verified with a debugger they cumulatively solve (1) (2) and (3).
+> 
+> Look for our preprint on http://eprint.iacr.org/ soon -- working title
+> is "One Shot, One Trace, One Key: Cache-Timing Attacks on RSA Key
+> Generation". We'll update the list with the full URL once it's posted.
+> 
 
 
-on Ubuntu 4.4.0-79-generic  -- works as expected
+Can you post a link to the draft here please?
 
-mmap return address of guard page,
-access to end of mapped area works works correctly,
-touch on guard page grows stack down,
-then touch of previous page grows stack down again.
-
-20	        unsigned char *stack = mmap(NULL, STACK_SIZE, PROT_READ | PROT_WRITE,
-(gdb) n
-23		printf("stack = %p\n", stack);
-(gdb) n
-stack = 0x7ffff7ff4000
-
- 7ffff7dd3000-7ffff7dd7000 rw-p 00000000 00:00 0 
- 7ffff7dd7000-7ffff7dfd000 r-xp 00000000 08:01 27001906                   /lib/x86_64-linux-gnu/ld-2.23.so
- 7ffff7fc8000-7ffff7fcb000 rw-p 00000000 00:00 0 
-+7ffff7ff5000-7ffff7ff6000 rw-p 00000000 00:00 0 
- 7ffff7ff6000-7ffff7ff8000 rw-p 00000000 00:00 0 
- 7ffff7ff8000-7ffff7ffa000 r--p 00000000 00:00 0                          [vvar]
- 7ffff7ffa000-7ffff7ffc000 r-xp 00000000 00:00 0                          [vdso]
-
-24		end = stack + STACK_SIZE - 8;
-(gdb) n
-25		printf("end = %p\n", end);
-(gdb) n
-end = 0x7ffff7ff5ff8
-26		printf("write to *end\n");
-(gdb) n
-write to *end
-27		*end = 0;
-(gdb) n
-28		printf("write to *stack\n");
-(gdb) n
-write to *stack
-29		*(stack) = 0;
-(gdb) n
-
--7ffff7ff5000-7ffff7ff6000 rw-p 00000000 00:00 0 
-+7ffff7ff4000-7ffff7ff6000 rw-p 00000000 00:00 0   <<<< Stack grow down
-
-30		printf("write to *(stack-1)\n");
-(gdb) n
-write to *(stack-1)
-31		*(stack-1) = 0;
-(gdb) n
-32	}
-
--7ffff7ff4000-7ffff7ff6000 rw-p 00000000 00:00 0 
-+7ffff7ff3000-7ffff7ff6000 rw-p 00000000 00:00 0 <<<< Stack grows down again
-
------ End forwarded message -----
-
---jI8keyz6grp/JLjh
-Content-Type: text/x-c; charset=us-ascii
-Content-Disposition: attachment; filename="sk.c"
+The attack vector is not clear, does the attacker need to be on the same
+physical machine or is this a cross-vm attack?
 
 
-#define _GNU_SOURCE
 
-#include <stdio.h>
-#include <errno.h>
-#include <string.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <sys/param.h>
-#include <sys/mman.h>
-
-#define STACK_SIZE	2*4096
-
-int main()
-{
-	unsigned char *end;
-	/* Allocate stack */
-        unsigned char *stack = mmap(NULL, STACK_SIZE, PROT_READ | PROT_WRITE,
-			MAP_PRIVATE | MAP_ANON | MAP_GROWSDOWN, 0, 0);
-
-	printf("stack = %p\n", stack);
-	end = stack + STACK_SIZE - 8;
-	printf("end = %p\n", end);
-	printf("write to *end\n");
-	*end = 0;
-	printf("write to *stack\n");
-	*(stack) = 0;
-	printf("write to *(stack-1)\n");
-	*(stack-1) = 0;
-}
-
---jI8keyz6grp/JLjh--
+-- 
+Huzaifa Sidhpurwala / Red Hat Product Security Team
