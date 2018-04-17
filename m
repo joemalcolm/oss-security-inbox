@@ -1,46 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/09/1
-Message-ID: <44254614-42f1-9908-a55c-401d20ffc2bd@ruhr-uni-bochum.de>
-Date: Sat, 9 Jun 2018 02:02:43 +0200
-From: Marcus Brinkmann <marcus.brinkmann@...r-uni-bochum.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2018-12020 in GnuPG
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/17/1
+Message-ID: <cbee626b-67e6-73a4-f82e-0f4adb6da1a4@redhat.com>
+Date: Tue, 17 Apr 2018 09:51:56 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: oss-security@...ts.openwall.com, Billy Brumley <bbrumley@...il.com>
+Subject: Re: CVE-2018-0737 OpenSSL: RSA key generation follows several non constant time code paths
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 04/16/2018 10:16 PM, Billy Brumley wrote:
 
-On 06/08/2018 09:36 PM, Yves-Alexis Perez wrote:
-> Hi everybody,
+> 6939eab03a6e23d2bd2c3f5e34fe1d48e542e787
 > 
-> just a heads up, since we weren't notified in advance and it's Friday evening
-> (in Europe at least).
-
-Yes.  I tried to disclose this responsibly with Werner Koch (and in
-coordination with other affected projects), but within two hours he did
-a unilateral full disclosure without getting back to me.
-
-:(
-
-> There's a nasty vulnerability in GnuPG which can be apparently used to bypass
-> signature verification when a program calls gpg to verify a signature and
-> parses the output:
+> we verified with a debugger they cumulatively solve (1) (2) and (3).
 > 
-> https://lists.gnupg.org/pipermail/gnupg-announce/2018q2/000425.html
-> https://dev.gnupg.org/T4012
+> Look for our preprint on http://eprint.iacr.org/ soon -- working title
+> is "One Shot, One Trace, One Key: Cache-Timing Attacks on RSA Key
+> Generation". We'll update the list with the full URL once it's posted.
 > 
-> It might be worth checking whether package managers signature verification is
-> affected.
-> 
-> Apt doesn't seems affected at first sight (it uses gpgv) but we'll double
-> check.
 
-I am still handling this under responsible disclosure. This is why I
-have not spoken out yet, and the CVE is not public. But what you say is
-important and correct.
 
-Thanks,
-Marcus
+Can you post a link to the draft here please?
+
+The attack vector is not clear, does the attacker need to be on the same
+physical machine or is this a cross-vm attack?
 
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+-- 
+Huzaifa Sidhpurwala / Red Hat Product Security Team
