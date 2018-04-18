@@ -1,129 +1,167 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/06/6
-Message-Id: <E1eXr8b-0004ji-1y@xenbits.xenproject.org>
-Date: Sat, 06 Jan 2018 16:16:01 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 251 (CVE-2017-17565) - improper bug check in x86 log-dirty handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/18/2
+Message-ID: <8485f19a-ffd3-2e0e-a040-49256937e3cf@treenet.co.nz>
+Date: Thu, 19 Apr 2018 00:45:18 +1200
+From: Amos Jeffries <squid3@...enet.co.nz>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2018-1172 Squid Proxy Cache Denial of Service vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+__________________________________________________________________
 
-            Xen Security Advisory CVE-2017-17565 / XSA-251
-                              version 3
+    Squid Proxy Cache Security Update Advisory SQUID-2018:3
+__________________________________________________________________
 
-             improper bug check in x86 log-dirty handling
+Advisory ID:        SQUID-2018:3
+Date:               April 18, 2018
+Summary:            Denial of Service issue
+                    in ESI Response processing.
+Affected versions:  Squid 3.1.12.2 -> 3.1.23
+                    Squid 3.2.0.8 -> 3.2.14
+                    Squid 3.3 -> 4.0.12
+Fixed in version:   Squid 4.0.13
+__________________________________________________________________
 
-UPDATES IN VERSION 3
-====================
+    http://www.squid-cache.org/Advisories/SQUID-2018_3.txt
+    http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-1172
+__________________________________________________________________
 
-CVE assigned.
+Problem Description:
 
-ISSUE DESCRIPTION
-=================
+ Due to incorrect pointer handling Squid is vulnerable to denial
+ of service attack when processing ESI responses.
 
-Memory sharing, available to x86 HVM guests only, uses a special value
-in the global machine to physical address translation table (M2P).  PV
-guests have full control over M2P entries corresponding to pages they
-own.  A bug check (specifically, an assertion that an M2P entry is not
-the special "shared" indicator) was insufficiently qualified, and as a
-consequence is triggerable by PV guests in log-dirty mode
-(e.g. because of being live migrated).
+__________________________________________________________________
 
-IMPACT
-======
+Severity:
 
-A malicious or buggy PV guest may cause a hypervisor crash, resulting in
-a Denial of Service (DoS) affecting the entire host.
+ This problem allows a remote server delivering ESI responses
+ to trigger a denial of service for all clients accessing the
+ Squid service.
 
-VULNERABLE SYSTEMS
-==================
+ This problem is limited to Squid operating as reverse proxy.
 
-Xen versions 4.0 and later are affected.  Xen versions 3.4 and earlier
-are not affected.
+__________________________________________________________________
 
-Only x86 systems are vulnerable.  ARM systems are not vulnerable.
+Updated Packages:
 
-x86 HVM guests cannot exploit this vulnerability.
+ This bug is fixed by Squid version 4.0.13.
 
-Only x86 PV guests can exploit this vulnerability, and only when being
-run in shadow mode.  PV guests are typically run in shadow mode for live
-migration, as well as for features like VM snapshot.
+ In addition, patches addressing this problem for the stable
+ releases can be found in our patch archives:
 
-Note that save / restore does *not* use shadow mode, and so does not
-expose this vulnerability.  Some downstreams also  include a "non-live
-migration" feature, which also does not use shadow mode (and thus does
-not expose this vulnerability).
+Squid 3.5:
+ <http://www.squid-cache.org/Versions/v3/3.5/changesets/SQUID-2018_3.patch>
 
-MITIGATION
-==========
+ If you are using a prepackaged version of Squid then please refer
+ to the package vendor for availability information on updated
+ packages.
 
-Running only HVM guests avoids the vulnerability.
+__________________________________________________________________
 
-Avoiding live migration of x86 PV guests also avoids the vulnerability.
+Determining if your version is vulnerable:
 
-CREDITS
-=======
+ All Squid-2.x and older are not vulnerable.
 
-This issue was discovered by Jan Beulich of SUSE.
+ All Squid-3.0 and older version are not vulnerable.
 
-RESOLUTION
-==========
+ All Squid built with --disable-esi are not vulnerable.
 
-Applying the appropriate attached patch resolves this issue.
+ All Squid-3.x versions up to and including 3.4.14 built with
+ --disable-ssl are not vulnerable.
 
-xsa251.patch           xen-unstable, Xen 4.9.x
-xsa251-4.8.patch       Xen 4.8.x, Xen 4.7.x, Xen 4.6.x
-xsa251-4.5.patch       Xen 4.5.x
+ All Squid-3.x versions up to and including 3.4.14 built without
+ --enable-ssl are not vulnerable.
 
-$ sha256sum xsa251*
-152cf5c88c3e441af01cdf5749877cabb6ab961afee9f29ae3077e725b703aa2  xsa251.meta
-0dfbcfe459f051abb571d3fbedbe9760a4c6cd540ab5d525627050e3eeb9234e  xsa251.patch
-345a6e004e0d0d89c7fc8db55d48d68f53402a521bd1aa3cb4168043e1ae5673  xsa251-4.5.patch
-f8cecf013a3628038e0a4566778852a560b25a1ce2f3872a989087ab2fc9a913  xsa251-4.8.patch
-$
+ All Squid-3.x versions up to and including 3.5.27 built without
+ --enable-esi are not vulnerable.
 
-DEPLOYMENT DURING EMBARGO
-=========================
+ All Squid-3.1.12.2 and later versions up to and including
+ Squid-3.1.23 built with --enable-esi and--enable-ssl, and being
+ used for reverse-proxy are vulnerable.
 
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
+ All Squid-3.2.0.8 and later versions up to and including
+ Squid-3.2.14 built with --enable-esi and --enable-ssl, and being
+ used for reverse-proxy are vulnerable.
 
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
+ All Squid-3.3 and later versions up to and including
+ Squid-3.3.14 built with --enable-esi and --enable-ssl, and being
+ used for reverse-proxy are vulnerable.
 
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
+ All Squid-3.4 and later versions up to and including
+ Squid-3.4.14 built with --enable-esi and --enable-ssl, and being
+ used for reverse-proxy are vulnerable.
 
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
+ All Squid-3.5 versions up to and including 3.5.27 built without
+ --with-openssl are not vulnerable.
 
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+ All Squid-3.5 and later versions up to and including 3.5.27 built
+ with --enable-esi and --with-openssl, and being used for
+ reverse-proxy are vulnerable.
 
-iQEcBAEBCAAGBQJaUPXgAAoJEIP+FMlX6CvZd1wIALEfYx5UtaqCZrUpgc+TwN8u
-Fg+huu3hE/YDVMY5IHueUsVU4WMk7/XJL/hXxf0+Dr01M5nVUbs1cJIB7Gqch37n
-Vo6JMHM0XHUEQB/Ctxn/nRi1PfAjvz/nSrCcRacIeTZNHm6Wzc7qtlOyjDWgbVwJ
-JvboCmK0ueGTVd3RIGvxM0jDzWqRuObf4KLaCWka3rqZvYzZJJOGAO9C8HdZn9Bc
-pMIV79QuYySvJm9rdNUSno2s19DJNNCOki2/HpU1CHv/b8May82fE+qZH5XexsnZ
-x2d1G8cvsK0L+auqQO/U3Rln9B2MWp9hn2cVGP2DbLq/AO2yir5b7d/CPzqhIag=
-=O0vJ
------END PGP SIGNATURE-----
+ All Squid-4 versions up to and including 4.0.12 built without
+ --with-openssl are not vulnerable.
 
-Download attachment "xsa251.meta" of type "application/octet-stream" (2407 bytes)
+ All Squid-4 versions up to and including 4.0.12 built with
+ --with-openssl and being used for reverse-proxy are vulnerable.
 
-Download attachment "xsa251.patch" of type "application/octet-stream" (680 bytes)
+__________________________________________________________________
 
-Download attachment "xsa251-4.5.patch" of type "application/octet-stream" (760 bytes)
+Workarounds:
 
-Download attachment "xsa251-4.8.patch" of type "application/octet-stream" (666 bytes)
+Either;
+
+ Build Squid with --disable-esi
+
+Or,
+
+ Build Squid-3.1 to 3.4.14 or later with "--disable-ssl"
+
+Or,
+
+ Build Squid-3.5 or later with "--without-openssl"
+
+__________________________________________________________________
+
+Contact details for the Squid project:
+
+ For installation / upgrade support on binary packaged versions
+ of Squid: Your first point of contact should be your binary
+ package vendor.
+
+ If your install and build Squid from the original Squid sources
+ then the squid-users@...ts.squid-cache.org mailing list is your
+ primary support point. For subscription details see
+ <http://www.squid-cache.org/Support/mailing-lists.html>.
+
+ For reporting of non-security bugs in the latest STABLE release
+ the squid bugzilla database should be used
+ <http://bugs.squid-cache.org/>.
+
+ For reporting of security sensitive bugs send an email to the
+ squid-bugs@...ts.squid-cache.org mailing list. It's a closed
+ list (though anyone can post) and security related bug reports
+ are treated in confidence until the impact has been established.
+
+__________________________________________________________________
+
+Credits:
+
+ This vulnerability was discovered by Michael Marshall of Trend
+ Micro working with Trend Micro's Zero Day Initiative.
+
+ Fixed by Christos Tsantilas on behalf of Measurement Factory.
+
+__________________________________________________________________
+
+Revision history:
+
+ 2018-04-16 18:20:15 UTC Initial Report
+ 2018-04-16 22:02:25 UTC Patches Released
+ 2018-04-18 12:28:00 UTC Advisory Released
+__________________________________________________________________
+END
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
