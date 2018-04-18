@@ -1,45 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/05/1
-Message-ID: <CANi-yg-6VPUhWvAHHEkQYByYT4HPBcpTgqb+d5WsGJBVHKrm1Q@mail.gmail.com>
-Date: Sat, 5 May 2018 07:52:08 -0700
-From: Bryan Pendleton <bpendleton.derby@...il.com>
-To: derby-dev@...apache.org, Derby Discussion <derby-user@...apache.org>,  security <security@...che.org>, oss-security@...ts.openwall.com
-Cc: gregory draperi <gregory.draperi@...il.com>
-Subject: [ANNOUNCE] CVE-2018-1313: Apache Derby externally-controlled input vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/18/1
+Message-ID: <2086549779.1418796.1524054250024.JavaMail.zimbra@redhat.com>
+Date: Wed, 18 Apr 2018 08:24:10 -0400 (EDT)
+From: Siddharth Sharma <siddharth@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2018-1088 glusterfs: Privilege escalation via gluster_shared_storage when snapshot scheduling is enabled
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-1313: Apache Derby externally-controlled input vulnerability
+Hi,
 
-Severity: Important
+A flaw was found in glusterfs which can lead to privilege escalation on 
+gluster server nodes.
 
-Vendor:
-The Apache Software Foundation
+This flaw is based on symlink attack. Any glusterfs unauthenticated client 
+having access to gluster nodes can mount gluster_shared_storage volume which 
+contains file symlink to /etc/cron.d which is owned by root. After mounting
+this shared volume client can schedule malicious cronjob which would run as 
+root. This would lead to privilege escalation. Symlink is created when gluster
+snapshot scheduling is enabled. This requires gluster administrator to run 
+command "snap_scheduler.py init", this is shipped with glusterfs-server 
+package.
 
-Versions Affected:
-Derby 10.3.1.4 to 10.14.1.0
+This flaw was discovered by John Strunk (Red Hat)
 
-Description:
-A specially-crafted network packet can be used to request the Derby
-Network Server to boot a database whose location and contents are under
-the user's control. If the Derby Network Server is not running with a
-Java Security Manager policy file, the attack is successful. If the
-server is using a policy file, the policy file must permit the
-database location to be read for the attack to work. The default
-Derby Network Server policy file distributed with the affected releases
-includes a permissive policy as the default Network Server policy, which
-allows the attack to work.
 
-Mitigation:
-Users should specify an explicit security policy file, as described here:
-http://db.apache.org/derby/docs/10.14/security/csecjavasecurity.html
+Respectfully,
+-----------------------------------------------------------------
+Siddharth Sharma / Red Hat Product Security / Key ID : 0xD9F6489A      
+Fingerprint  :  6F04 C684 A49C E4CE 8148 E841 CD6F 8E55 D9F6 489A
 
-Derby release 10.14.2.0 disallows the specially-crafted network packet,
-and also modifies the default Derby Network Server policy file to be
-significantly less permissive (the default file access policy is now
-limited to the derby.system.home directory and the directory from
-which the Derby jar files were loaded). It is still recommended that
-production installations of the Derby Network Server should specify
-an explicit security policy file.
 
-Credit:
-This issue was discovered by Grégory Draperi
