@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1323" "Wednesday" "13" "January" "2016" "19:42:12" "+0530" "Rahul Pratap Singh" "techno.rps@gmail.com" "<CADLX=aE8i3sGRMXGAAXwrgxY47b-QcPMBQoGRPKOAsmWcTJoZA@mail.gmail.com>" "48" "[oss-security] CVE Request: Commentator WordPress Plugin 2.5.2 XSS Vulnerability" "^Date:" nil nil "1" "2016011314:12:12" "[oss-security] CVE Request: Commentator WordPress Plugin 2.5.2 XSS Vulnerability" (number mark "        techno.rps@g Jan 13   48/1323  " thread-indent "\"[oss-security] CVE Request: Commentator WordPress Plugin 2.5.2 XSS Vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1068" "Thursday" "19" "April" "2018" "14:30:59" "-0700" "Ed Cable" "edcable@mifos.org" "<CAPnWRTg33J=jQSU6E02creHzNvC_oVk+hgbC1y-V07m9ATXY6Q@mail.gmail.com>" "41" "[oss-security] [SECURITY] CVE-2018-1291: Apache Fineract SQL Injection Vulnerability - Order by injection via Order Param" nil nil nil "4" "2018041921:30:59" "[oss-security] [SECURITY] CVE-2018-1291: Apache Fineract SQL Injection Vulnerability - Order by injection via Order Param" (number mark "U       edcable@mifo Apr 19   41/1068  " thread-indent "\"[oss-security] [SECURITY] CVE-2018-1291: Apache Fineract SQL Injection Vulnerability - Order by injection via Order Param\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17727 invoked by uid 550); 13 Jan 2016 14:27:46 -0000
+Received: (qmail 23920 invoked by uid 550); 19 Apr 2018 21:34:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,85 +11,82 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3329 invoked from network); 13 Jan 2016 14:12:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=iO1N4XNUVzG1Hz3eSly/f+knQgnzqnsqocLWo336tb4=;
-        b=mUFZKmWo8zIRnja0xN8xapSop2vDth3jtlTUG8zWxD93BACcRB5QE9J5qOS5xbZvUj
-         7ugYKzq2B2FPRD//9s6oNiHPRl//7ssK1msj6wYO8SepLdPkXQLzrTd1qoMp3zC5ClRe
-         /Os25aP6BaaFWIJYFBkEPPBfDLYNYAHubez7eYhpvGew4RZ4sc3HpTPY8zY43RZ557mm
-         9qqb4970Y/eOYlsSxleNJxyurohMtC9rwiFSrtKOnwDza5CKl82GUMbXgq9uRQb7pn3t
-         lrSaz6v4mxPoJeoaFXd92GWbh4FMKPGvoQd/CwY9wuQlafOxl51bLPchmpHytHLtVAmP
-         V50Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=iO1N4XNUVzG1Hz3eSly/f+knQgnzqnsqocLWo336tb4=;
-        b=kC1XS54KYS7h0J5sr47YoOLBFxzniEt+dbANDaI59RqfPbHc9nJhXd4Dty0uLYVgX/
-         hW4M9aY+hFEBZZwyKwXXs13uwwUQE3jHWmR1p+bWQgLErPm1LmIBwJxpQPGzrIx4MzGI
-         gUkvHcWNW6X0vsHmQN1rnlOywsNRQbg6D919CU3ZgCCWbNO2A8xhw7iPkAcIL++PQ/q4
-         l+UBIDzlrKswe7s2NaCMn5emtBoaEwlEnziqO7UzG13ufLoN1VkKjIU2OLwmpnqiJ5cL
-         ePI20XYBo4T2G7u5KPoZzzLSg8MRWLJ3jBJ0TTqySGHpCO6MPgEw8clC5ePrvMBpQCHf
-         ZXig==
-X-Gm-Message-State: ALoCoQlpiw+57/8HTkLkopDNOpTh6nxSnFwGKuAOXjAcgqhqGTjNc0lVaJPRoXZAUGotm/kYVgAehZznieuaNHd/d7uwBL4KVQ==
-MIME-Version: 1.0
-X-Received: by 10.50.21.10 with SMTP id r10mr23979934ige.93.1452694332154;
- Wed, 13 Jan 2016 06:12:12 -0800 (PST)
-Message-ID: <CADLX=aE8i3sGRMXGAAXwrgxY47b-QcPMBQoGRPKOAsmWcTJoZA@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=047d7b86eeaea2ab45052937c1b8
-Date: Wed, 13 Jan 2016 19:42:12 +0530
-From: Rahul Pratap Singh <techno.rps@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Request: Commentator WordPress Plugin 2.5.2 XSS Vulnerability
-To: oss-security@lists.openwall.com
+Received: (qmail 15429 invoked from network); 19 Apr 2018 21:31:31 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=mifos-org.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=lLesceM07wP0B4dYPLSdwbaJGTnWm9GtxhKsc10UuT8=;
+        b=RJ0y9F/5D4+F6xKgr8Uo80NEbeVsgNg19dfJ/bpcUuzc6/STRv5yYd1MpwSXLAdD5m
+         K45LSvQ0EcUfwOcclqb1WqAMGNfDjZ+c2T6iE31BWAm4LZiNpGmTHs/66jlvibtvCPUZ
+         pPVcZ/zUnwLfY86q60vPNjJKb+iOdHW5Jx+NqqDuWO7MN5QYjjGVywT8O5H4WyePH6V/
+         8c9zR6C+TWtOMB7E2e1vczbLpsrnFqIhh7OqaS6RsGiJv13WoesbV9dBDEnq0bdeOuCv
+         7zzualvYWuSMj6nLSbDxQS8gGUKVRGmBnbvLPhPiUJubPMR0GeRP2qLLHOSHJC1UoNyD
+         gUMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=lLesceM07wP0B4dYPLSdwbaJGTnWm9GtxhKsc10UuT8=;
+        b=PV26Ho0zVF6YqRHXLUBTJGVmP+gPHtuFoeW4VGnyksPERvdOhmWBBZRf+nCrE0KMJR
+         5vzr9+X/dC22zI9p1FyfLCMZa5LlfNN32z6Tl9c6A7yG46Nll4qeenzXUXaUiSSjWdmG
+         oUYR/7u4yuU6lTVBDdGSs8TdrAEJ5kLd1nWjuzrTDIjc4YdjmgPMcIfc4h3KAMe0VSI+
+         g8Q3OM71BezQdPkpv0BbTP3uGennLQzePjuOS45CVGmWzrvfDjj68H8G4GtztHTPbcad
+         wyT4p2L0PaZkmCRRjUVCkqfZS1k93+cJWORXtRq98NqZzZCMKvnTuE28ywFfhn81bvOy
+         zbjQ==
+X-Gm-Message-State: ALQs6tCIYo8ab/IDKy4p5f9a/n/q4KSyZfXESBinet65WuuIe0/kN2Nk
+	wZLPxwhbuBQbBw3zCRVDA4vfUUFKOwW9y+PR5nU0qd6rSeU=
+X-Google-Smtp-Source: AB8JxZovZ2bjEv8E+efBZ9X52gAGup/zbgHXURzNlL3lFtA5gZTWLQYDIoNzZt/Pns7CkDuaXgBpYDmHgO4waYWpHms=
+X-Received: by 2002:a19:a395:: with SMTP id m143-v6mr1058927lfe.70.1524173480568;
+ Thu, 19 Apr 2018 14:31:20 -0700 (PDT)
+MIME-Version: 1.0
+From: Ed Cable <edcable@mifos.org>
+Date: Thu, 19 Apr 2018 14:30:59 -0700
+Message-ID: <CAPnWRTg33J=jQSU6E02creHzNvC_oVk+hgbC1y-V07m9ATXY6Q@mail.gmail.com>
+To: user@fineract.apache.org, Dev <dev@fineract.apache.org>, 
+	security <security@apache.org>, oss-security@lists.openwall.com, 
+	=?UTF-8?B?5ZyG54+g56yU?= <627963028@qq.com>
+Content-Type: multipart/alternative; boundary="000000000000e2be6a056a3a4abb"
+Subject: [oss-security] [SECURITY] CVE-2018-1291: Apache Fineract SQL Injection Vulnerability
+ - Order by injection via Order Param
 
---047d7b86eeaea2ab45052937c1b8
-Content-Type: text/plain; charset=UTF-8
+--000000000000e2be6a056a3a4abb
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Reflected XSS Vulnerability:
+Severity: Critical
 
-I would request you to assign CVE id to this issue.
+Vendor:
+The Apache Software Foundation
 
-----------------------------------------
+Versions Affected:
+Apache Fineract 1.0.0
+Apache Fineract 0.6.0-incubating
+Apache Fineract 0.5.0-incubating
+Apache Fineract 0.4.0-incubating
+
 Description:
-----------------------------------------
-"provider" parameter is not sanitized that leads to Reflected XSS.
 
-----------------------------------------
-Vulnerable Code:
-----------------------------------------
-file: commentator.php
+Apache Fineract exposes different REST end points to query domain specific
+entities with a Query Parameter 'orderBy' which
+are appended directly with SQL statements. A hacker/user can inject/draft
+the  'orderBy'  query parameter by way of the "order" param  in such a way
+to
+to read/update the data for which he doesn't have authorization.
 
-line:441
-$provider_name = $_REQUEST["provider"];
+Mitigation:
+All users should migrate to Apache Fineract 1.1.0 version
+https://github.com/apache/fineract/tree/1.1.0
 
-line:544
-<div id="commentator-social-signin" class="commentator-<?php echo
-$provider_name; ?>">
 
-----------------------------------------
-Exploit:
-----------------------------------------
-/wp-admin/admin-ajax.php?action=commentator_social_signin&provider=facebook">%20<IMG%20SRC=axc%20onerror=alert(1)>
+Credit:
+This issue was discovered by =E5=9C=86=E7=8F=A0=E7=AC=94 (627963028@qq.com)
 
-----------------------------------------
-POC:
-----------------------------------------
-https://0x62626262.files.wordpress.com/2016/01/commentatorxsspoc.png
+References:
+http://fineract.apache.org/
+https://cwiki.apache.org/confluence/display/FINERACT/Apache+
+Fineract+Security+Report
 
-Fix:
-Update to 2.5.3
+Regards,
+Apache Fineract Team
 
-Disclosure Timeline:
-reported to vendor  : 9/1/2016
-vendor response     : 11/1/2016
-vendor acknowledged : 11/1/2016
-vendor deployed a patch: 11/1/2016
-
-Pub ref:
-http://codecanyon.net/item/commentator-wordpress-plugin/6425752
-https://0x62626262.wordpress.com/2016/01/13/commentator-wordpress-plugin-xss-vulnerability
-
---047d7b86eeaea2ab45052937c1b8--
+--000000000000e2be6a056a3a4abb--
