@@ -1,36 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/12/13
-Message-ID: <CAJ_zFkKWP18xP6jUh=Gax3o_R4mFB905FC9yKWTd9-VEwEZEmA@mail.gmail.com>
-Date: Wed, 12 Dec 2018 12:09:53 -0800
-From: Tavis Ormandy <taviso@...gle.com>
-To: hackerfantastic@...glemail.com
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Multiple telnet.c overflows
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/19/1
+Message-ID: <CAPnWRTiQ3GroywG6rD-RB6g96Gjd1O+0BqCSR8E5D655xJ8fHA@mail.gmail.com>
+Date: Thu, 19 Apr 2018 14:30:49 -0700
+From: Ed Cable <edcable@...os.org>
+To: user@...eract.apache.org, Dev <dev@...eract.apache.org>,  oss-security@...ts.openwall.com, security <security@...che.org>,  圆珠笔 <627963028@...com>
+Subject: [SECURITY] CVE-2018-1289: Apache Fineract SQL Injection Vulnerability by orderBy and sortOrder parameters
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Dec 12, 2018 at 11:35 AM Hacker Fantastic
-<hackerfantastic@...glemail.com> wrote:
->
-> Hi Tavis,
->
-> The "little used" package you mentioned is in some distributions a dependency of "xorg-xinit" (:: removing inetutils breaks dependency 'inetutils' required by xorg-xinit in Arch Linux). The security boundary in the Mikrotik example is "escape of restricted shells" which is also in the TLDR; advisory. If you are unhappy with how I described the issue and wish to spend time and ultimately money researching remotely reachable code paths (aside from the URI handler example I already gave you) then it is worth looking into more detail the issues with the heap overflow and if it is reachable in the client via a server-side telnetd implementation for instance. The code there is a mess.
->
-> As I already stated, I am unable to account for every use of telnet client-side code or how it is called in every application, particularly all the projects out there used from open-source community or co-opted by vendors into commercial offerings (like the given example, Mikrotik). Splitting hairs over security boundaries of a single issue with many use cases is not something I have time for, the vulnerability is exactly as described with security relevant impacts in my original advisory. It would be nice to see the heap overflow reached via a telnetd service just to prove a point but ultimately it is beyond the scope of this discussion, why not put the energy you spent on these emails to use exploring if the heap is also corrupted in such instances? ;-)
->
+Severity: Critical
 
-The energy I spent asking if a security boundary being crossed was
-minimal. I think the answer is that you do not know of any cases of
-this being a security boundary, but you feel that all bugs are
-security bugs whether or not a security boundary is crossed, because
-you don't know how someone might be using the software.
+Vendor:
+The Apache Software Foundation
 
-> It was considered a security issue for such straight-forward restricted shell escapes in 2004/2005 (when there were numerous reported instances of such occurring in telnet clients alongside other client-side overflows). One of the issues is addressed in the implementations of some BSD clients and not in others.
->
-> Just because you do not know how to exploit a bug does not mean it does not have security implications, it just means they have not been discovered yet or the researcher does not have the luxury of time that others have.
->
-> I hope this clarifies my points satisfactorily for you.
+Versions Affected:
+Apache Fineract 1.0.0
+Apache Fineract 0.6.0-incubating
+Apache Fineract 0.5.0-incubating
+Apache Fineract 0.4.0-incubating
 
-It certainly does, thank you. I think we disagree on what qualifies as
-a vulnerability, but I'm still very grateful for you reporting this.
+Description:
+Apache Fineract exposes different REST end points to query domain specific
+entities with a Query Parameter 'orderBy' and 'sortOrder' which
+are appended directly with SQL statements. A hacker/user can inject/draft
+the  'orderBy' and 'sortOrder'  query parameter in such a way to
+to read/update the data for which he doesn't have authorization.
 
-Tavis.
+Mitigation:
+All users should migrate to Apache Fineract 1.1.0 version
+https://github.com/apache/fineract/tree/1.1.0
+
+
+Credit:
+This issue was discovered by 圆珠笔 (627963028@...com)
+
+References:
+http://fineract.apache.org/
+https://cwiki.apache.org/confluence/display/FINERACT/Apache+
+Fineract+Security+Report
+
+Regards,
+Apache Fineract Team
+
