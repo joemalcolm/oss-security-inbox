@@ -1,141 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/07/1
-Message-ID: <CALUCNEsCwE0fC2XCHi996=OdUCZZLK8WzF2KOdaLPYkZzWE_8A@mail.gmail.com>
-Date: Fri, 7 Dec 2018 17:06:27 +0300
-From: Dmitriy Pavlov <dpavlov@...che.org>
-To: user <user@...ite.apache.org>, dev <dev@...ite.apache.org>,  "security@...ite.apache.org" <security@...ite.apache.org>, announce@...che.org,  oss-security@...ts.openwall.com
-Subject: [ANNOUNCE] Apache Ignite 2.7.0 Vulnerable Dependecies Updates
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/19/2
+Message-ID: <CAPnWRTj6xGZuO7f5ASRKG81uis-kmgrJ2Pws4cyZRv58X38f_g@mail.gmail.com>
+Date: Thu, 19 Apr 2018 14:30:56 -0700
+From: Ed Cable <edcable@...os.org>
+To: user@...eract.apache.org, Dev <dev@...eract.apache.org>,  security <security@...che.org>, oss-security@...ts.openwall.com,  圆珠笔 <627963028@...com>
+Subject: [SECURITY] CVE-2018-1290: Apache Fineract SQL Injection Vulnerability - Single quotation escape caused by two continuous SQL parameters
 Content-Type: text/plain; charset=utf-8
 
-The Apache Ignite Community is pleased to announce that recently released
-Apache Ignite 2.7.0 replaces some vulnerable dependencies to versions with
-fixes.
+Severity: Critical
 
+Vendor:
+The Apache Software Foundation
 
+Versions Affected:
+Apache Fineract 1.0.0
+Apache Fineract 0.6.0-incubating
+Apache Fineract 0.5.0-incubating
+Apache Fineract 0.4.0-incubating
 
-Apache Ignite https://ignite.apache.org/  is a memory-centric distributed
-database, caching, and processing platform for transactional, analytical,
-and streaming workloads delivering in-memory speeds at petabyte scale.
+Description:
 
-
-
-Apache Ignite 2.7 replaced following dependencies in to avoid usage of
-vulnerable 3rd party software by end users:
-
-
-
-Apache Log4j
-https://nvd.nist.gov/vuln/detail/CVE-2017-5645
-
-FasterXML jackson-databind
-https://nvd.nist.gov/vuln/detail/CVE-2017-15095 ,
-
-https://nvd.nist.gov/vuln/detail/CVE-2017-17485 ,
-
-https://nvd.nist.gov/vuln/detail/CVE-2017-7525 ,
-
-https://nvd.nist.gov/vuln/detail/CVE-2018-5968 ,
-
-https://nvd.nist.gov/vuln/detail/CVE-2018-7489
-
-
-
-Scala
-https://nvd.nist.gov/vuln/detail/CVE-2017-15288
-
-Apache Commons
-https://nvd.nist.gov/vuln/detail/CVE-2015-6420 ,
-
-https://nvd.nist.gov/vuln/detail/CVE-2015-7501 ,
-
-https://nvd.nist.gov/vuln/detail/CVE-2017-15708
-
-
-
-Netty Project
-
-https://nvd.nist.gov/vuln/detail/CVE-2016-4970
-
-JCraft
-
-https://nvd.nist.gov/vuln/detail/CVE-2016-5725
-
-
-
-Apache Tomcat
-https://nvd.nist.gov/vuln/detail/CVE-2016-3092 ,
-
-https://nvd.nist.gov/vuln/detail/CVE-2016-8735 ,
-
-https://nvd.nist.gov/vuln/detail/CVE-2018-8014
-
-
-Guava
-https://nvd.nist.gov/vuln/detail/CVE-2018-10237
-
-Apache Camel
-https://nvd.nist.gov/vuln/detail/CVE-2015-5344 ,
-
-https://nvd.nist.gov/vuln/detail/CVE-2015-5348 ,
-
-https://nvd.nist.gov/vuln/detail/CVE-2016-8749 ,
-
-https://nvd.nist.gov/vuln/detail/CVE-2017-12633 ,
-
-https://nvd.nist.gov/vuln/detail/CVE-2017-12634  ,
-
-https://nvd.nist.gov/vuln/detail/CVE-2017-3159 ,
-
-https://nvd.nist.gov/vuln/detail/CVE-2017-5643
-
-Spring Framework
-
-https://nvd.nist.gov/vuln/detail/CVE-2018-1257 ,
-
-https://nvd.nist.gov/vuln/detail/CVE-2018-1258
-
-
-
-Spring Data Commons
-
-https://nvd.nist.gov/vuln/detail/CVE-2018-1259 ,
-
-https://nvd.nist.gov/vuln/detail/CVE-2018-1273
-
-
-
-Jetty
-
-https://nvd.nist.gov/vuln/detail/CVE-2016-4800 ,
-
-https://nvd.nist.gov/vuln/detail/CVE-2017-9735 ,
-
-https://nvd.nist.gov/vuln/detail/CVE-2016-4800 ,
-
-https://nvd.nist.gov/vuln/detail/CVE-2017-9735 ,
-
-https://nvd.nist.gov/vuln/detail/CVE-2016-4800 ,
-
-https://nvd.nist.gov/vuln/detail/CVE-2017-7658
-
-
-
-Lucene
-https://nvd.nist.gov/vuln/detail/CVE-2017-12629
-
-Mitigation:
-•    Upgrade to Apache Ignite 2.7 or later version
-
-
+Using a single quotation escape with two continuous SQL parameters can
+cause a SQL injection. This could be done in Methods like
+retrieveAuditEntries of AuditsApiResource Class
+retrieveCommands of MakercheckersApiResource Class
 
 Credit:
-Segu Riluvan discovered the usage of vulnerable modules in dependencies of
-Apache Ignite.
+This issue was discovered by 圆珠笔 (627963028@...com)
 
+References:
+http://fineract.apache.org/
+https://cwiki.apache.org/confluence/display/FINERACT/Apache+
+Fineract+Security+Report
 
-Thanks for everyone who was involved into dependencies migration.
-
-Best Regards,
-
-Dmitriy Pavlov on behalf of Apache Ignite community
+Regards,
+Apache Fineract Team
 
