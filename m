@@ -1,30 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/25/7
-Message-ID: <CAC1dCwVvwLpJMi+-YYx=u_9YxZnMpd729Hy=B+BADXaCEpWceQ@mail.gmail.com>
-Date: Wed, 25 Apr 2018 13:04:59 -0400
-From: Tim Allison <tallison@...che.org>
-To: announce@...che.org, dev@...a.apache.org, user@...a.apache.org,  oss-security@...ts.openwall.com
-Subject: [CVE-2018-1339] DoS (Infinite Loop) Vulnerability in Apache Tika’s ChmParser
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/19/5
+Message-ID: <8250f648-c517-fa70-36db-214d87671a4c@gmail.com>
+Date: Thu, 19 Apr 2018 23:22:28 +0100
+From: Vítor Silva <vitorhg20080@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2018-10194 Ghostscript 9.18 stack-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-1339 – DoS (Infinite Loop) Vulnerability in Apache Tika’s ChmParser
+Hello,
+
+I think I found a possible RCE on ghostscript 9.23. I can reproduce on
+9.18 (but not in 9.23) and the vendor confirmed the vulnerability and
+applied a fix for 9.23.
 
 
-Severity: Important
+[Suggested description]
+The set_text_distance function in devices/vector/gdevpdts.c in the
+pdfwrite component in Artifex Ghostscript through 9.22 does not prevent
+overflows in text-positioning calculation, which allows remote attackers
+to cause a denial of service (application crash) or possibly have
+unspecified other impact via a crafted PDF document.
+
+------------------------------------------
+
+[Additional Information]
+This seems to be affected only on ghostscript 9.18 or less. My
+analysis seems this is a bad validation on input at
+pdf_set_text_matrix at gdevpdts.c causing pprintg1 function at
+spprint.c to write outbounds of the stack.
+
+I can provide with a file use case. Even this seems not to trigger on
+newer versions, this package is still available on a lot of systems
+(such as ubuntu or debian) as the latest version available.
+
+$ gs -o tested.pdf -sDEVICE=pdfwrite -dPDFSETTINGS=/prepress
+-dHaveTrueTypes=true -dEmbedAllFonts=true \
+  -dSubsetFonts=false -c ".setpdfwrite <</NeverEmbed [ ]>>
+setdistillerparams" -f fuzzed-case1.ps
+GPL Ghostscript 9.18 (2015-10-05)
+Copyright (C) 2015 Artifex Software, Inc.  All rights reserved.
+This software comes with NO WARRANTY: see the file PUBLIC for details.
+Loading NimbusRomNo9L-Reg font from
+/usr/share/ghostscript/9.18/Resource/Font/NimbusRomNo9L-Reg... 4743540
+3133830 2015200 710957 1 done.
+Loading NimbusRomNo9L-Med font from
+/usr/share/ghostscript/9.18/Resource/Font/NimbusRomNo9L-Med... 4820876
+3332725 2035392 735152 1 done.
+Loading NimbusMono-Regular font from
+/usr/share/ghostscript/9.18/Resource/Font/NimbusMono-Regular... 4900004
+3527153 2055584 752136 1 done.
+Loading NimbusMono-Bold font from
+/usr/share/ghostscript/9.18/Resource/Font/NimbusMono-Bold... 5118700
+3762771 2095968 786137 1 done.
+Loading NimbusRomNo9L-RegIta font from
+/usr/share/ghostscript/9.18/Resource/Font/NimbusRomNo9L-RegIta...
+5357220 4001795 2156544 851571 1 done.
+Loading NimbusSanL-Reg font from
+/usr/share/ghostscript/9.18/Resource/Font/NimbusSanL-Reg... 5556092
+4193319 2358464 1039445 1 done.
+*** stack smashing detected ***: gs terminated
+Aborted (core dumped)
+
+------------------------------------------
+
+[Vulnerability Type]
+Buffer Overflow
+
+------------------------------------------
+
+[Vendor of Product]
+ghostscript
+
+------------------------------------------
+
+[Affected Product Code Base]
+ghostscript - 9.18
+
+------------------------------------------
+
+[Affected Component]
+pprintg1 of ghostscript
+
+------------------------------------------
+
+[Attack Type]
+Remote
+
+------------------------------------------
+
+[Impact Code execution]
+true
+
+------------------------------------------
+
+[Impact Denial of Service]
+true
+
+------------------------------------------
+
+[Attack Vectors]
+crafted postscript can crash and/or execute code via buffer overflow
+
+------------------------------------------
+
+[Reference]
+https://bugs.ghostscript.com/show_bug.cgi?id=699255
 
 
-Vendor: The Apache Software Foundation
-
-
-Versions Affected: <1.18
-
-
-Description: A carefully crafted (or fuzzed) file can trigger an infinite
-loop in Apache Tika's ChmParser.
-
-Mitigation: Turn off the ChmParser or upgrade to Apache Tika >=1.18.
-
-
-Credit: Tobias Ospelt of modzero AG discovered this issue by fuzzing with
-Kelinci (https://github.com/isstac/kelinci).
-
+Download attachment "pEpkey.asc" of type "application/pgp-keys" (1766 bytes)
