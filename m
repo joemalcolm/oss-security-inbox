@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1610" "Wednesday" "4" "May" "2016" "01:33:55" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160504053355.82E858BC11B@smtpvmsrv1.mitre.org>" "46" "[oss-security] Re: CVE request: out-of-bounds read parsing an XML in libxml2 using recover mode" nil nil nil "5" "2016050405:33:55" "[oss-security] Re: CVE request: out-of-bounds read parsing an XML in libxml2 using recover mode" (number mark "U       cve-assign@m May  4   46/1610  " thread-indent "\"[oss-security] Re: CVE request: out-of-bounds read parsing an XML in libxml2 using recover mode\"\n") "<CACn5sdQe0-qg68k+Zb5XtTk9Q2z1j38akrPxbAQQu_4Qf+g3Lw@mail.gmail.com>" ("<CACn5sdQe0-qg68k+Zb5XtTk9Q2z1j38akrPxbAQQu_4Qf+g3Lw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["838" "Thursday" "19" "April" "2018" "14:30:56" "-0700" "Ed Cable" "edcable@mifos.org" "<CAPnWRTj6xGZuO7f5ASRKG81uis-kmgrJ2Pws4cyZRv58X38f_g@mail.gmail.com>" "34" "[oss-security] [SECURITY] CVE-2018-1290: Apache Fineract SQL Injection Vulnerability - Single quotation escape caused by two continuous SQL parameters" nil nil nil "4" "2018041921:30:56" "[oss-security] [SECURITY] CVE-2018-1290: Apache Fineract SQL Injection Vulnerability - Single quotation escape caused by two continuous SQL parameters" (number mark "U       edcable@mifo Apr 19   34/838   " thread-indent "\"[oss-security] [SECURITY] CVE-2018-1290: Apache Fineract SQL Injection Vulnerability - Single quotation escape caused by two continuous SQL parameters\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26039 invoked by uid 550); 4 May 2016 05:34:07 -0000
+Received: (qmail 20444 invoked by uid 550); 19 Apr 2018 21:34:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,58 +12,74 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26018 invoked from network); 4 May 2016 05:34:07 -0000
-From: cve-assign@mitre.org
-To: gustavo.grieco@gmail.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <CACn5sdQe0-qg68k+Zb5XtTk9Q2z1j38akrPxbAQQu_4Qf+g3Lw@mail.gmail.com>
-Message-Id: <20160504053355.82E858BC11B@smtpvmsrv1.mitre.org>
-Date: Wed,  4 May 2016 01:33:55 -0400 (EDT)
-Subject: [oss-security] Re: CVE request: out-of-bounds read parsing an XML in libxml2 using recover mode
+Received: (qmail 14315 invoked from network); 19 Apr 2018 21:31:28 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=mifos-org.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=CwP8t8W4U59Q+EuNDo3jCawAc1VbRAZ7xjpNLYQtIK4=;
+        b=FYAINNhBuH9/znWqGt7kWEQhnuDftCybqiTdz3NlQoytTQTatJap8EqVHTT/NFJ3y9
+         WsbS9iEqddGFfzXPIIOYlP6ozLzMfUl8AyQ8wbgSzAFvq1JSTzMkJV9H81flu6F44V2A
+         cXGUj/G3J5mBb3hoZgNbKMa3HE0E2azm6bUKRs7sz4fRo8YKHYsINLqLON7XADSSjF/r
+         pzXPvR61iUXBgqcW3vbiqZBU1FcsNfMRnM/W7SdyAdNLI9jPmj86lVOr6J0W3Uve1MWR
+         N8L6Ak5CTsP7nCFbivRnNk2MYj3KYEO9Ca/IzeLDqhNCIsQMHaGCzJZ6yohq4Fd41EvD
+         REFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=CwP8t8W4U59Q+EuNDo3jCawAc1VbRAZ7xjpNLYQtIK4=;
+        b=FLXag88ITixOt4nr4kUcIfyINmzPLOZqrB9DXhRmT6I51AV6qvrg8nVHxoq2EvIg7P
+         KTXXUEMVLYXZrZf2TCFZBYbEXpCQRSuRy+Rk7/cPBL4LRhFjWym9zqisWU0qU96uOqa1
+         Ai6dIh76wz7Xbu9fKJWCOzBjib5M0Fv2WJi+rK/qSRkHZdiEd8LSqcOGHoZOLkJuU9F/
+         JuevX5K9Iwq+ArITEGo8uV3IEqtrqlLUu+8ccAFP2UxmAEnCXIIOVj/33hUHPRja7/PN
+         I2XyudbzAOaq1eQAitUZd02MyV/fDWyZBgB14Levnjxrnr/D7KcGaUSh/l6Wb5Yx6JKm
+         1nyw==
+X-Gm-Message-State: ALQs6tCIpeRu0q7Z4bz29TMtV5aRNQQ7NueGRJ7JxA5YQSvkt2Tn9r+5
+	fTocslaYCsXcFaxY6XUKAlXwYcJg06WYJJxbcJWRKg==
+X-Google-Smtp-Source: AB8JxZqarfzfR+ZgppWzG7uPUVwsHIcYeEA+lkFd9aawtanA0FPPFEDC5T7RQaY62ukh2LUsYWJksyLL09ZvZdVljpY=
+X-Received: by 2002:a19:43:: with SMTP id 64-v6mr1052411lfa.13.1524173476732;
+ Thu, 19 Apr 2018 14:31:16 -0700 (PDT)
+MIME-Version: 1.0
+From: Ed Cable <edcable@mifos.org>
+Date: Thu, 19 Apr 2018 14:30:56 -0700
+Message-ID: <CAPnWRTj6xGZuO7f5ASRKG81uis-kmgrJ2Pws4cyZRv58X38f_g@mail.gmail.com>
+To: user@fineract.apache.org, Dev <dev@fineract.apache.org>, 
+	security <security@apache.org>, oss-security@lists.openwall.com, 
+	=?UTF-8?B?5ZyG54+g56yU?= <627963028@qq.com>
+Content-Type: multipart/alternative; boundary="000000000000a832b4056a3a4a47"
+Subject: [oss-security] [SECURITY] CVE-2018-1290: Apache Fineract SQL Injection Vulnerability
+ - Single quotation escape caused by two continuous SQL parameters
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--000000000000a832b4056a3a4a47
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> We found an out-of-bounds read parsing a specially crafted xml in libxml2
-> if recover mode is used.
+Severity: Critical
 
-> xmllint -recover
+Vendor:
+The Apache Software Foundation
 
-> AddressSanitizer: heap-buffer-overflow ...
-> READ of size 1
+Versions Affected:
+Apache Fineract 1.0.0
+Apache Fineract 0.6.0-incubating
+Apache Fineract 0.5.0-incubating
+Apache Fineract 0.4.0-incubating
 
-> in xmlBufAttrSerializeTxtContent
-> at xmlsave.c:2057
+Description:
 
-Use CVE-2016-4483 for this buffer over-read issue.
+Using a single quotation escape with two continuous SQL parameters can
+cause a SQL injection. This could be done in Methods like
+retrieveAuditEntries of AuditsApiResource Class
+retrieveCommands of MakercheckersApiResource Class
 
-(As far as we can tell, xmlsave.c is not specific to the xmllint program, e.g.,
+Credit:
+This issue was discovered by =E5=9C=86=E7=8F=A0=E7=AC=94 (627963028@qq.com)
 
-  libxml2_la_SOURCES = SAX.c entities.c encoding.c error.c parserInternals.c  \
-  ...
-                  xmlwriter.c legacy.c chvalid.c pattern.c xmlsave.c \
+References:
+http://fineract.apache.org/
+https://cwiki.apache.org/confluence/display/FINERACT/Apache+
+Fineract+Security+Report
 
-in the Makefile.in file.)
+Regards,
+Apache Fineract Team
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXKYjwAAoJEHb/MwWLVhi2XyQP/0HHmJWg4qK6CZ3MP51QXnpN
-moUDMdEST1oGlOSjfQcZ0i/i3yesk0qqfG2V1E+uH0Yu5FS78ud2mc+5/SZnjFzj
-RO71qkIUN8vrXSJRJ2CZrySAa6Z3VM5P3NZQHq1pZ/BF2fzwgFATwLb+476+BDOu
-tAIFMhWVH4TQ3YtG5dGrgDjCPK2LJCFockvvtjsYElfZQkTDKapk8/JjbZxmMcFY
-QPvM4YqCXrJ6i+LCO+LERFW51xZso6o32HqeeizfuT5Q+XTfx1Kd+t/VasVcGp77
-k8AqhNJSNFnDFUCmN+fQN093q7GQQG80spKwYSOXfP9ZGb7g/jP5IRv1kbmtdDof
-eKKA2gQr7XMiGlqMxEUPFkVXYcX37oH1BMcjS7erw6+zE+EI6seW+6gWxK8Ke/Hg
-ycklozYz9ZsvrqS2cfR5kdG5EmNvgatYQ3pivZmjfp3V4W+dwXTxeNh4oiEF3YJv
-mhgdi3WqeH0z8ibyU75GVeZh3WHbcB4yNlyqeNOOcosvy6O2DNlA4LDqK7ouriGF
-AB0t+sy289WdDKHIPRVwTMlZkNaqtiuR5MUVKeYHH6y+qiqwdv4y69y5opBd+caP
-2rAYNJx8e/lbBF6EvXVfQZdgzfLP644tv7+rsJwi5K7J0Nbvn6rkI6/nQIDRKNKe
-sNb0SV4CM2Tym0y40PGq
-=meeO
------END PGP SIGNATURE-----
+--000000000000a832b4056a3a4a47--
