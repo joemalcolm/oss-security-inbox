@@ -1,31 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/15/4
-Message-ID: <8c240b53-09e0-c365-ebac-c35da1714817@gaspard.io>
-Date: Tue, 15 May 2018 14:23:11 +0200
-From: Leo Gaspard <oss-security@....gaspard.ninja>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/20/2
+Message-ID: <1871023181.21407601.1524216639486.JavaMail.zimbra@redhat.com>
+Date: Fri, 20 Apr 2018 05:30:39 -0400 (EDT)
+From: Vladis Dronov <vdronov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: PGP/MIME and S/MIME mail clients vulnerabilities
+Subject: Re: a number of CVEs for issues in the filesystem's code in the Linux kernel
 Content-Type: text/plain; charset=utf-8
 
-On 05/14/2018 04:01 PM, Yves-Alexis Perez wrote:> - PGP/MIME is a bit
-safer because the OpenPGP format compresses plaintext
-> before encryption (which makes it harder for the attacker) and has some kind
-> of authenticated (symmetric) encryption (the MDC), which helps gnupg detects
-> modifications to the cyphertext. Most mail clients properly handle gnupg hints
-> when something went wrong but the external interface is a bit fragile (gnupg
-> will still output the cleartext, for example). One exception is apparently
-> Thunderbird with enigmail before 2.0.0, but this is now fixed (I didn't find
-> the proper commit yet). Again, not displaying HTML mails and not allowing
-> remote content loading can help, but other “backchannels” might be found in
-> the future.
+Hello,
 
-Just to add in about Thunderbird with Enigmail after 2.0.0:
+It appeared that there is another reproducer for CVE-2018-1092 ("kernel:
+NULL pointer dereference in ext4/mballoc.c:ext4_process_freed_data() when
+mounting crafted ext4 image") which possibly affects a wider range of
+systems (than a previous one):
 
-https://lists.gnupg.org/pipermail/gnupg-users/2018-May/060325.html
-https://lists.gnupg.org/pipermail/gnupg-users/2018-May/060327.html
-https://lists.gnupg.org/pipermail/gnupg-users/2018-May/060329.html
+https://bugzilla.kernel.org/show_bug.cgi?id=199275
 
-So it looks like data encrypted with CAST5 (and possibly 3DES?) may be
-at risk even with Enigmail 2.0.0, with what I guess is latest GnuPG
-(don't know whether it is with 1.4, 2.2 or both, though), likely due to
-a GnuPG bug.
+It was verified that a crash caused by this reproducer (88.img) is fixed
+by the same upstream commit 8e4b5eae5decd.
+
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
