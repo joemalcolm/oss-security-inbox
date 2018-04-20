@@ -1,51 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/13/1
-Message-ID: <CAEccTyy0JwT+1B4qHVhMB3SRYw-g2x6gmwWUZbd5dcVDk0H0tw@mail.gmail.com>
-Date: Mon, 13 Aug 2018 09:24:46 -0500
-From: Sean Owen <srowen@...che.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2018-11770: Apache Spark standalone master, Mesos REST APIs not controlled by authentication
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/20/3
+Message-Id: <1524234832.jzv1c3sqzc.tristanC@fedora>
+Date: Fri, 20 Apr 2018 14:48:08 +0000
+From: Tristan Cacqueray <tdecacqu@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: [OSSA-2018-001] Raw underlying encrypted volume access (CVE-2017-18191)
 Content-Type: text/plain; charset=utf-8
 
-Severity: Medium
+=====================================================
+OSSA-2018-001: Raw underlying encrypted volume access
+=====================================================
 
-Vendor: The Apache Software Foundation
+:Date: April 20, 2018
+:CVE: CVE-2017-18191
 
-Versions Affected:
-Spark versions from 1.3.0, running standalone master with REST API enabled,
-or running Mesos master with cluster mode enabled
 
-Description:
->From version 1.3.0 onward, Spark's standalone master exposes a REST API for
-job submission, in addition to the submission mechanism used by
-spark-submit. In standalone, the config property
-'spark.authenticate.secret' establishes a shared secret for authenticating
-requests to submit jobs via spark-submit. However, the REST API does not
-use this or any other authentication mechanism, and this is not adequately
-documented. In this case, a user would be able to run a driver program
-without authenticating, but not launch executors, using the REST API. This
-REST API is also used by Mesos, when set up to run in cluster mode (i.e.,
-when also running MesosClusterDispatcher), for job submission. Future
-versions of Spark will improve documentation on these points, and prohibit
-setting 'spark.authenticate.secret' when running the REST APIs, to make
-this clear. Future versions will also disable the REST API by default in
-the standalone master by changing the default value of
-'spark.master.rest.enabled' to 'false'.
+Affects
+~~~~~~~
+- Nova: >=15.0.0 <=15.1.0, >=16.0.0 <=16.1.1
 
-Mitigation:
-For standalone masters, disable the REST API by setting
-'spark.master.rest.enabled' to 'false' if it is unused, and/or ensure that
-all network access to the REST API (port 6066 by default) is restricted to
-hosts that are trusted to submit jobs. Mesos users can stop the
-MesosClusterDispatcher, though that will prevent them from running jobs in
-cluster mode. Alternatively, they can ensure access to the
-MesosRestSubmissionServer (port 7077 by default) is restricted to trusted
-hosts.
 
-Credit:
-Imran Rashid, Cloudera
-Fengwei Zhang, Alibaba Cloud Security Team
+Description
+~~~~~~~~~~~
+Lee Yarwood (Red Hat) reported a vulnerability in Nova encrypted
+volumes handling. By detaching and reattaching an encrypted volume an
+attacker may access the underlying raw volume and corrupt the LUKS
+header resuling in a denial of service attack on the compute host. All
+Nova setups supporting encrypted volumes are affected.
 
-Reference:
-https://spark.apache.org/security.html
 
+Patches
+~~~~~~~
+- https://review.openstack.org/561604 (Ocata)
+- https://review.openstack.org/543569 (Pike)
+- https://review.openstack.org/460243 (Queens)
+
+
+Credits
+~~~~~~~
+- Lee Yarwood from Red Hat (CVE-2017-18191)
+
+
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/1739593
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-18191
+
+
+Notes
+~~~~~
+- Pike and Ocata patches disable encrypted volume swapping, this feature is now
+  only supported in Nova version >= 17.0.0.
+
+--
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
+
+
+Content of type "application/pgp-signature" skipped
