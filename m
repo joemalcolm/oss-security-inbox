@@ -1,117 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/01/5
-Message-Id: <E1erO3M-0007EH-8Z@xenbits.xenproject.org>
-Date: Thu, 01 Mar 2018 13:15:20 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 256 (CVE-2018-7542) - x86 PVH guest without LAPIC may DoS the host
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/23/2
+Message-ID: <22f17f0e-a1e9-54d3-39ed-0f9984042985@nic.cz>
+Date: Mon, 23 Apr 2018 14:30:02 +0200
+From: Petr Špaček <petr.spacek@....cz>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2018-1110: Knot Resolver <= 2.2.0 Improper Input Validation
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello,
 
-            Xen Security Advisory CVE-2018-7542 / XSA-256
-                              version 3
+Knot Resolver software version <= 2.2.0 suffers from Improper Input
+Validation bugs which allow remote attacker to crash the resolver by
+sending specially crafted packets.
 
-             x86 PVH guest without LAPIC may DoS the host
+Fixes
+=====
+Knot Resolver 2.3.0 fixes all known security bugs and is available from
+https://www.knot-resolver.cz/download/
 
-UPDATES IN VERSION 3
-====================
+Backports
+=========
+To fix the bugs we had to do major changes to some data structures so
+backport it most likely not feasible. We are discontinuing support for
+*all* versions older than 2.3.0 and discourage attempts to backport
+fixes because these will most likely introduce additional bugs.
 
-CVE assigned.
+CVE request data
+================
+Fixed version:
+Knot Resolver 2.3.0
 
-ISSUE DESCRIPTION
-=================
+Vulnerability type:
+CWE-20: Improper Input Validation
 
-So far, x86 PVH guests can be configured with or without Local APICs.
-Configurations with Local APICs are identical to x86 HVM guests, and
-will use as much hardware acceleration support as possible.
-Configurations without Local APICs try to turn off all hardware
-acceleration, and disable all software emulation.
+Affected component:
+resolver
 
-Multiple paths in Xen assume the presence of a Local APIC without
-sufficient checks, and can fall over a NULL pointer.  On Intel hardware,
-the logic to turn off hardware acceleration is incomplete and leaves the
-guest with full control of the real Task Priority Register.
+Impact of exploitation:
+Program crashes.
 
-IMPACT
-======
+Description of vulnerability:
+Improper input validation bugs in DNS resolver component of Knot
+Resolver (up to and including version 2.2.0) allow remote attacker who
+can create malformed packets to cause denial of service.
 
-A malicious or buggy guest may cause a hypervisor crash, resulting in
-a Denial of Service (DoS) affecting the entire host.
+Attack Vector (AV): Network
+Attack Complexity (AC): Low
+Privileges Required (PR): None
+User Interaction (UI): None
+Scope (S): Unchanged
+Confidentiality (C): None
+Integrity (I): Low
+Availability (A): High
 
-VULNERABLE SYSTEMS
-==================
+Technical Details:
+CWE-20
+CWE-476
+CWE-626
 
-Xen version 4.8 and onwards are vulnerable.
+Acknowledgment:
+CZ.NIC would like to thank Toshifumi Sakaguchi and Vicky Shrestha for
+their responsible reporting of security vulnerabilities.
 
-Only x86 systems are vulnerable.  ARM systems are not vulnerable.
-
-Only x86 PVH guests can exploit the vulnerability.  x86 PV and HVM
-guests cannot exploit the vulnerability.
-
-MITIGATION
-==========
-
-Running only PV or HVM guests avoids the vulnerability.
-
-Running all PVH guests with "apic=1" in the guest configuration file
-(or equivalent thereof) also avoids the vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Ian Jackson of Citrix.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa256.patch           xen-unstable, Xen 4.10.x, Xen 4.9.x
-xsa256-4.8.patch       Xen 4.8.x
-
-$ sha256sum xsa256*
-3e45cc3f2ea516e7470083592041e238c0dfe32324790b2fba0e47c9efe38865  xsa256.patch
-c029fcb67ff7c3c9a2adcb8e6f5e245a0d347acc8a9b3530591a639cbf321349  xsa256-4.8.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJal/zVAAoJEIP+FMlX6CvZkSgIAJG8fezZnjklV1FlQpzIfy5Y
-qMg0PaUUg69vSmc1uxuM51pi/KATCE541VdJesZ7CviFvrNm46fj2OF4L5wGNbq7
-wqi1Ywn3J8iVOkzVyhQbb0ZXzBQK0Z48Q7qcZNlnJ8Ci1MP8wjWK5Aq0BO7qUEpM
-oHawLRAmEY0JKxIWwlpvR35dwoGp3cOSy0yHSWrpuj+Q59rhOuY/hyn0NlMBjDqp
-CbJqLC1T0lfC9fpe7LRxDBusleZm/QGiWDHjFMS560koDt4gq6i8zTpVIJrpHdFF
-eGhKY4JhVJpNljOB0CD87qk9WpN8+jxb1hVigMfZcyMMNygPLH5Bnh5QfhZwd00=
-=JPu9
------END PGP SIGNATURE-----
-
-Download attachment "xsa256.patch" of type "application/octet-stream" (1711 bytes)
-
-Download attachment "xsa256-4.8.patch" of type "application/octet-stream" (2062 bytes)
+-- 
+Petr Špaček  @  CZ.NIC
