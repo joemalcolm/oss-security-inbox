@@ -1,86 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/23/4
-Message-ID: <CANO=Ty1iLpdsxX+vcFRfJ4L7ZgG1NCPW-oOzxftbdzO0-XHuQA@mail.gmail.com>
-Date: Wed, 23 May 2018 08:57:45 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: Vladis Dronov <vdronov@...hat.com>
-Subject: Re: CVE-2018-1130: Linux kernel: dccp: a null pointer dereference in net/dccp/output.c:dccp_write_xmit
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/24/3
+Message-ID: <alpine.DEB.2.21.1804241538200.28739@chino.kir.corp.google.com>
+Date: Tue, 24 Apr 2018 15:48:02 -0700 (PDT)
+From: David Rientjes <rientjes@...gle.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2018-1000200 (Linux): Bad memory access on oom kill of large mlocked process
 Content-Type: text/plain; charset=utf-8
 
-On Wed, May 23, 2018 at 8:49 AM, Andrey Konovalov <andreyknvl@...il.com>
-wrote:
+Hi all,
 
-> On Thu, May 10, 2018 at 2:05 PM, Vladis Dronov <vdronov@...hat.com> wrote:
-> > Hello,
-> >
-> > A null pointer dereference in dccp_write_xmit() function in
-> net/dccp/output.c
-> > in the Linux kernel before v4.16-rc7 allows a local user to cause a
-> denial of
-> > service by a number of certain crafted system calls.
->
+Out of memory (oom) killing a process that has large spans of mlocked 
+memory can result in a bad memory access or a NULL pointer dereference due 
+to concurrent memory unmapping by the oom reaper kernel thread.
 
+This affects Linux 4.14, 4.15, and 4.16.
 
-So the classic CVE statement for this is "does it cross/violate a trust
-boundary". Yeah I know, not super helpful.
+It is much more likely on PowerPC where clearing a huge pmd results in
+serialize_against_pte_lookup(), which forces all cpus out of idle.  All
+architectures are vulnerable, however.
 
-In general when I look at something and need to decide whether or not it
-deserves/needs a CVE the fundamentals are:
+An example dereference:
 
-1) Can an attacker use this vulnerability to gain access, additional
-privileges, basically is there an impact to
-Confidentiality/Availability/Integrity? This is really two tests: is there
-an impact, and is there a way for the attacker to trigger or exploit it?
-That's a CVE.
+Unable to handle kernel paging request for data at address 0x00000018
+Faulting instruction address: 0xc000000000167ac0
+Oops: Kernel access of bad area, sig: 11 [#1]
+SMP NR_CPUS=256 NUMA PowerNV
+NIP __lock_acquire
+LR lock_acquire
+Call Trace:
+lock_acquire
+_raw_spin_lock
+follow_page_pte
+munlock_vma_pages_range
+exit_mmap
+mmput
+do_exit
+do_group_exit
+get_signal
+do_signal
+do_notify_resume
 
-2) Does the software/system make a specific security claim that they then
-fail to meet? E.g. "we include a firewall that blocks access to everything
-inbound except for port 22", if they were to then also allow port 80,
-that'd be a CVE.
+The issue arises from an oom killed process's final thread calling
+exit_mmap(), which calls munlock_vma_pages_all() for mlocked vmas.  This
+can happen synchronously with the oom reaper's unmap_page_range() since
+the vma's VM_LOCKED bit is cleared before munlocking (to determine if any
+other vmas share the memory and are mlocked).
 
-So for the syzbot stuff mostly what you need to determine is:
+The simple exploit is provided inline, below.  The amount of memory to be 
+mlocked, MEM_LENGTH, must be large enough to trigger an oom kill.  There 
+are two common ways to do that: (1) MEM_LENGTH exceeds all memory on the 
+system, or (2) the exploit is attached to a memory control group (cgroup) 
+that is limited to less than MEM_LENGTH.  Note that this has only been 
+reproduced on PowerPC so far, due to the pmd clearing mentioned above but 
+all platforms should be equally as vulnerable since the oom reaper kernel 
+thread can race with munlock.
 
-a) is there a security related impact?
-AND
-b) can an attacker trigger it?
+The proposed fix is https://marc.info/?l=linux-kernel&m=152460926619256.  
+(Please note that key maintainers are currently at a conference, so review 
+and merge may be delayed longer than normal.)
 
-If both are yes, then a CVE is warranted.
+Thanks for your time.
+---
+#include <sys/mman.h>
 
+#define MEM_LENGTH	(1UL << 30)
 
+int main(void)
+{
+	void *ptr = mmap(0, MEM_LENGTH, PROT_WRITE,
+		MAP_PRIVATE | MAP_ANONYMOUS, 0, 0);
+	if (ptr == MAP_FAILED)
+		return -1;
 
-
-> >
-> > References:
-> >
-> > https://syzkaller.appspot.com/bug?id=833568de043e0909b2aeaef7be136d
-> b39d21ba94
-> >
-> > https://marc.info/?t=152036611500003&r=1&w=2
-> >
-> > An upstream patch:
-> >
-> > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/
-> linux.git/commit/?id=67f93df79aeefc3add4e4b31a752600f834236e2
-> >
-> > Best regards,
-> > Vladis Dronov | Red Hat, Inc. | Product Security Engineer
->
-> Hi Vladis,
->
-> I've been wondering, how do you choose which bugs you request CVEs
-> for? Syzbot reported a few hundreds of them over the last few months
-> and a decent fraction of them looks scarier than a null pointer
-> dereference.
->
-> Thanks!
->
-
-
-
--- 
-
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+	return mlock(ptr, MEM_LENGTH);
+}
