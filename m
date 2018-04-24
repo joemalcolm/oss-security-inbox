@@ -1,42 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/10/5
-Message-ID: <20180410110227.GE19724@256bit.org>
-Date: Tue, 10 Apr 2018 13:02:27 +0200
-From: Christian Brabandt <cb@...bit.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Terminal Control Chars
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/24/2
+Message-ID: <CAFeDd5YC9dheyHq5xSmtvW5dDO+2v5AOuSEgq=7QuO2NDBzRbQ@mail.gmail.com>
+Date: Tue, 24 Apr 2018 18:48:38 +0300
+From: Billy Brumley <bbrumley@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2018-0737 OpenSSL: RSA key generation follows several non constant time code paths
 Content-Type: text/plain; charset=utf-8
 
+>> Look for our preprint on http://eprint.iacr.org/ soon -- working title
+>> is "One Shot, One Trace, One Key: Cache-Timing Attacks on RSA Key
+>> Generation". We'll update the list with the full URL once it's posted.
+>>
+>
+>
+> Can you post a link to the draft here please?
 
-On Di, 10 Apr 2018, Gordo Lowrey wrote:
+The preprint is now up: https://eprint.iacr.org/2018/367
 
-> On Mon, Mar 5, 2018 at 11:50 AM, up201407890@...nos.dcc.fc.up.pt wrote:
-> >The correct solution would be to disallow the pasting of certain control
-> >characters.
+> The attack vector is not clear, does the attacker need to be on the same
+> physical machine or is this a cross-vm attack?
 
-FWIW: The vim poc has been "fixed" as of 
-https://github.com/vim/vim/releases/tag/v8.0.1587
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2018-0737
 
-> I'm just gonna go out on a limb here, and say this is an unfounded
-> assertion.
-> 
-> Perhaps the correct solution would be to prevent the browser from copying
-> invisible characters.
-> 
-> If you're going to break some basic mechanic of human computer interaction,
-> at least don't break my damn terminal (not that I use VTE, it doesn't
-> support OSC 52, among others), but the principle stands... Instead of
-> worrying about sanitizing what is pasted, why not worry about sanitizing
-> what is copied instead?
+Your statement is pretty accurate. (Although I fail to see the
+difference between physical machine and cross-vm.)
 
-That was also the conclusion on the vim-dev list.
-
-There is a similar Debian bug report against rxvt-unicode where the same 
-conclusion is drawn:
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=787628#15
-
-And the corresponding mozilla/firefox bug:
-https://bugzilla.mozilla.org/show_bug.cgi?id=637895
-
-Best,
-Christian
+BBB
