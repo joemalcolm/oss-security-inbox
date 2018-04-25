@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["330" "Monday" "31" "August" "2015" "22:50:11" "-0700" "Michal Zalewski" "lcamtuf@coredump.cx" "<CALx_OUC8jZN6ebpF18M890KmP8u7A=VE5HCoNxbuB3YhVq1mXA@mail.gmail.com>" "12" "Re: [oss-security] Terminal escape sequences - the new XSS for admins?" nil nil nil "8" "2015090105:50:11" "[oss-security] Terminal escape sequences - the new XSS for admins?" (number mark "        lcamtuf@core Aug 31   12/330   " thread-indent "\"Re: [oss-security] Terminal escape sequences - the new XSS for admins?\"\n") "<CALx_OUCRbOcpFHyU=kju+WTZju-orChnU50wOP2Tw=8V3mpUtA@mail.gmail.com>" ("<CANO=Ty1ku4Hs-eFzCWK_K0=QXEZbtDFR4c--gBnoHPQi7Ko+XQ@mail.gmail.com>" "<CALx_OUDJbSmjcgOAe27h9k4h5dq6cHUXOTgbO9YTkCanopGzUA@mail.gmail.com>" "<20150817202748.GA3032@openwall.com>" "<CALx_OUCRbOcpFHyU=kju+WTZju-orChnU50wOP2Tw=8V3mpUtA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1221" "Wednesday" "25" "April" "2018" "10:57:01" "+0200" "Matthias Gerstner" "mgerstner@suse.de" "<20180425085700.kepnvaabam4tno52@f195.suse.de>" "33" "Re: [oss-security] ktexteditor / Kate local privilege escalation (CVE-2018-10361)" nil nil nil "4" "2018042508:57:01" "[oss-security] ktexteditor / Kate local privilege escalation (CVE-2018-10361)" (number mark "U       mgerstner@su Apr 25   33/1221  " thread-indent "\"Re: [oss-security] ktexteditor / Kate local privilege escalation (CVE-2018-10361)\"\n") "<20180424111109.oigpkbl5nqcxqmvw@f195.suse.de>" ("<20180424111109.oigpkbl5nqcxqmvw@f195.suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21592 invoked by uid 550); 1 Sep 2015 05:50:42 -0000
+Received: (qmail 28065 invoked by uid 550); 25 Apr 2018 09:15:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,43 +11,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 21571 invoked from network); 1 Sep 2015 05:50:42 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:content-type;
-        bh=k1hpcicgLRiiM41g2Lnu0RydW9mPN8rZ+yXAzbGv3dE=;
-        b=VeWOiVdw2+FqTVljnBYYkU7gmGCcKtwAFgWhSkF91074N2leHwc7A+u7+wyUtV68nJ
-         MbviglhllzLZiY2vFlsBmEMnjwSshhfRBzk/4vFR+ipK7KTNIpir4Bzc35RUfnISlYP5
-         BrOw3TA/KHJ3rr0sZYJ+ZT8EtFYuifC7V36RJ8Mnu7qSus7bz9uShG8c46YiddwL4155
-         SYOV5ZW84JXHFbk7YXO2c1EHc+W+8t1EnxgZFdFTIk0k0EAsHLDLZPGEvwGpbcDdAb/X
-         NSrj4RZKCVA9kVmJeqYfbyBk64oKB9YF3FBE7joDf1nP9ty7DLyMEnbqr7RiaPhT6n3P
-         GBDQ==
-X-Gm-Message-State: ALoCoQmzwjoutSpOSJcx8BYWWbLsHQiy8j+sDo+Fn/MO3c8zmA4Yyw2cDCPR+t1dwhrJXciMEV6Q
-X-Received: by 10.107.17.33 with SMTP id z33mr26213072ioi.130.1441086630583;
- Mon, 31 Aug 2015 22:50:30 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <CALx_OUCRbOcpFHyU=kju+WTZju-orChnU50wOP2Tw=8V3mpUtA@mail.gmail.com>
-References: <CANO=Ty1ku4Hs-eFzCWK_K0=QXEZbtDFR4c--gBnoHPQi7Ko+XQ@mail.gmail.com>
- <CALx_OUDJbSmjcgOAe27h9k4h5dq6cHUXOTgbO9YTkCanopGzUA@mail.gmail.com>
- <20150817202748.GA3032@openwall.com> <CALx_OUCRbOcpFHyU=kju+WTZju-orChnU50wOP2Tw=8V3mpUtA@mail.gmail.com>
-Message-ID: <CALx_OUC8jZN6ebpF18M890KmP8u7A=VE5HCoNxbuB3YhVq1mXA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 31 Aug 2015 22:50:11 -0700
-From: Michal Zalewski <lcamtuf@coredump.cx>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Terminal escape sequences - the new XSS for admins?
-To: oss-security <oss-security@lists.openwall.com>, =?UTF-8?Q?Hanno_B=C3=B6ck?= <hanno@hboeck.de>
+Received: (qmail 11439 invoked from network); 25 Apr 2018 08:57:13 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Date: Wed, 25 Apr 2018 10:57:01 +0200
+From: Matthias Gerstner <mgerstner@suse.de>
+To: oss-security@lists.openwall.com
+Message-ID: <20180425085700.kepnvaabam4tno52@f195.suse.de>
+References: <20180424111109.oigpkbl5nqcxqmvw@f195.suse.de>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="eh4wsn3krdqr5bel"
+Content-Disposition: inline
+In-Reply-To: <20180424111109.oigpkbl5nqcxqmvw@f195.suse.de>
+User-Agent: NeoMutt/20170421 (1.8.2)
+Subject: Re: [oss-security] ktexteditor / Kate local privilege escalation
+ (CVE-2018-10361)
 
-> I definitely think it deserves a closer look. Here are three recent
-> finds that kcwu reported after apparently testing GNU screen with
-> afl-fuzz:
->
-> https://savannah.gnu.org/bugs/?45713
-> https://savannah.gnu.org/bugs/?45715
-> https://savannah.gnu.org/bugs/?45714
+--eh4wsn3krdqr5bel
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Ditto for tmux:
-https://github.com/tmux/tmux/issues/92
+On Tue, Apr 24, 2018 at 01:11:09PM +0200, Matthias Gerstner wrote:
 
-/mz
+> I just informed upstream about it and will obtain a CVE soon.
+
+This was assigned CVE-2018-10361.
+
+--eh4wsn3krdqr5bel
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBAgAGBQJa4ELcAAoJEBTEBclxkjVT9wQP/iRwXlXqGyBSx1vy8DoyM9T4
+gIZMFFAGUTgjm3RUFJZVV3wyB9M1HTTRmdjg1pdZ6u5UVR67dSBB8/YDGkktJFyj
+VtaJK1rLrTfEgf70s4QeqIT95EqouwyfZAGsVzauHkLcpUhQJ4nM/AhU/WnxY2qt
+51DBQfOTxmAVnRmd/VM407I0aW6Ai/Ch1HdCMYzph5rKYHw/+F7bPhj2ImlD4G6R
+RQI7F8iKIECyPLTEtfTNUTYR05H9RmwbvC9q5WrQv7o6dYeIj2KZ/LoxRdsjUiQW
+HfMY6PFCWIfqmmDKvLGomKXH0QdoGpvHalxJ28Lmicuel8yRTpEAeVjSuTfEX/fG
+LQA1dshFWNP0I7pvuuyDlrkmYeOo7/Sh91mZTlAIN/wISB8MmAEkcmGJSDpn79DD
+dwGZ14mm2cU6wqoNIZWsS8hv8qLDLNnaRTco6fB5Ft1t09rytnSVZBGSYu+urjPx
+TFxfQw76/ZvnSBOT0U5QFrXwVKQ0SgzXTmmfcIPZ1J+vsivrTRXZgkybWbc7LASW
+IEZnIBK1wt3YKDeYQ1yuxVW5rAQRVadhiPu3sHbDVBaVztVaj/Xx1BpNyB+2pCHG
+NUcJsfMo2+O8PMIM6u9wRsI+T+BIbmjzB+fOjo/GzcS+X9IfGUlV5d6ezwxRMiKH
+GQGxtVmYMncjr8fxu34Q
+=wwcA
+-----END PGP SIGNATURE-----
+
+--eh4wsn3krdqr5bel--
