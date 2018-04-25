@@ -1,31 +1,112 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/18/6
-Message-ID: <nycvar.YSQ.7.76.1812190041530.7329@xnncv>
-Date: Wed, 19 Dec 2018 00:45:34 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Cfir Cohen <cfir@...gle.com>
-Subject: CVE-2018-16882 Kernel: KVM: nVMX: use after free in posted interrupt processing
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/25/5
+Message-Id: <E1fBJ96-00044j-0I@xenbits.xenproject.org>
+Date: Wed, 25 Apr 2018 12:03:36 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 259 - x86: PV guest may crash Xen with XPTI
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-A use after free issue was found in the way Linux kernel's KVM hypervisor 
-processed posted interrupts, when nested(=1) virtualization is enabled. In 
-nested_get_vmcs12_pages(), in case of an error while processing posted 
-interrupt address, it unmaps the 'pi_desc_page' without resetting 'pi_desc' 
-descriptor address. Which is latter used in pi_test_and_clear_on().
+                    Xen Security Advisory XSA-259
+                              version 2
 
-A guest user/process could use this flaw to crash the host kernel resulting in 
-DoS.
+                 x86: PV guest may crash Xen with XPTI
 
-Upstream patch:
----------------
-   -> https://marc.info/?l=kvm&m=154514994222809&w=2
+UPDATES IN VERSION 2
+====================
 
-This issue was reported by Cfir Cohen of google.com.
+Public release.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+ISSUE DESCRIPTION
+=================
+
+The workaround for the Meltdown vulnerability (XSA-254) failed to deal
+with an error code path connecting the INT 80 handling with general
+exception handling.  This results in an unconditional write attempt of
+the value zero to an address near 2^64, in cases where a PV guest has no
+handler installed for INT 80 on one of its vCPU-s.
+
+IMPACT
+======
+
+A malicious or buggy guest may cause a hypervisor crash, resulting in
+a Denial of Service (DoS) affecting the entire host.
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen versions which the XSA-254 fixes were applied to are vulnerable.
+
+Only x86 systems are vulnerable.  ARM systems are not vulnerable.
+
+Only x86 PV guests can exploit the vulnerability.  x86 PVH and HVM
+guests cannot exploit the vulnerability.
+
+MITIGATION
+==========
+
+Running only PVH or HVM guests avoids the vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Andrew Cooper of Citrix.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa259.patch          xen-unstable, Xen 4.10.x ... xen 4.7.x
+xsa259-4.6.patch      Xen 4.6.x
+
+$ sha256sum xsa259*
+5c14a90af066c952974324b361e2a428c280f876b854f0c85a78e8579054a4d1  xsa259.meta
+ff2efb5eb2502ded988d0aa15351030a15494a9e2223eafbb88377a8e4d39dcb  xsa259.patch
+c40bc8802077cf73f8393fb50574b7c7efbc4d127e202b0ebd757d34aa07aac3  xsa259-4.6.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJa4G58AAoJEIP+FMlX6CvZrqIH+QFfC5NOoFhVZAChTU0WQ7U6
+UwP7yEyLeY15VrGb4YvwzKhvTNwsRRiYTbTNB/QjAkrUkMRhBiUIz7mQqBl0Vc/N
+4zblt+YNdDMjhCllTjvtYU6OJzbsqvEBByB4mFrz6fxfZiuXIbOnMUOxLHRRdXLR
+6JR8+4RrheKNl9DF6lmLj50d3G/fKrNLY9id8VcDG1TGIB6E1CbJ6gibw7FiYDSq
+PETa5O1szo2FO2yY+xcMzzGLHv+oVeKZnmuq9KYtP7Q+G823Twz1RE6rTBEjwhs9
+sDGUlgZ48QVfSzer10syzyeX0p9hLHyKhlJnCrmCiywvKq68/uVexZFNcOKRPtE=
+=n+01
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa259.meta" of type "application/octet-stream" (1700 bytes)
+
+Download attachment "xsa259.patch" of type "application/octet-stream" (1225 bytes)
+
+Download attachment "xsa259-4.6.patch" of type "application/octet-stream" (1283 bytes)
