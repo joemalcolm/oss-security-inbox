@@ -1,314 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/27/1
-Message-ID: <20181127102935.lsb4epjnzf4zkmru@suse.de>
-Date: Tue, 27 Nov 2018 11:29:35 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Crashes and memory safety bugs in dcraw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/25/8
+Message-ID: <CAC1dCwVhrPRyFJMS5BbY02+495CUODrAzndqZkvKacJnXUSm+w@mail.gmail.com>
+Date: Wed, 25 Apr 2018 13:06:53 -0400
+From: Tim Allison <tallison@...che.org>
+To: announce@...che.org, dev@...a.apache.org, user@...a.apache.org,  oss-security@...ts.openwall.com
+Subject: [CVE-2018-1335] Command Injection Vulnerability in Apache Tika’s tika-server module
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Nov 23, 2018 at 09:22:17AM +0100, Hanno Böck wrote:
-> Hi,
-> 
-> dcraw is a tool to process raw images from digital cameras.
-> It easily crashes with various issues (tested version 9.28.0). This was
-> very shallow testing (afl fuzzing with random inputs, not starting with
-> valid images), I assume there's much more. I reported those a long time
-> ago to its author, he didn't seem interested in fixing such issues.
-> 
-> Some applications use dcraw automatically to parse images (gthumb,
-> kphotoalbum, kde thumbnailers, gwenview).
-
-I have requested and received CVEs from Mitre for those.
-
-Ciao, Marcus
-
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-The 4 CVE IDs are below.
-
-We would not ordinarily have CVE IDs for these types of crash issues.
-However, https://seclists.org/oss-sec/2018/q4/171 says "because dcraw
-intentionally doesn't provide a library, only an executable, code from
-it is bundled in at least some applications."
-
-For example, an FPE (such as a divide-by-zero) in the dcraw executable
-isn't a security issue because it is only a way for the local user to
-attack himself. However, it is plausible that someone has bundled the
-dcraw code in an application that is supposed to continue running
-forever to accept a continuous series of raw images from a camera over
-Wi-Fi.
-
-In https://seclists.org/oss-sec/2018/q4/165, "kodac_radc_load_raw" has
-a typo in the fifth letter.
+CVE-2018-1335 – Command Injection Vulnerability in Apache Tika’s tika-server
+module
 
 
-> [Suggested description]
-> A buffer over-read in crop_masked_pixels in dcraw through 9.28 could be
-> used by attackers able to supply malicious files to crash an application that bundles the dcraw code or leak
-> private information.
-> 
-> ------------------------------------------
-> 
-> [Additional Information]
-> issue 1 listed
-> 
-> ------------------------------------------
-> 
-> [VulnerabilityType Other]
-> CWE-126
-> 
-> ------------------------------------------
-> 
-> [Vendor of Product]
-> Dave Coffin
-> 
-> ------------------------------------------
-> 
-> [Affected Product Code Base]
-> dcraw - 9.28
-> 
-> ------------------------------------------
-> 
-> [Affected Component]
-> dcraw
-> 
-> ------------------------------------------
-> 
-> [Attack Type]
-> Local
-> 
-> ------------------------------------------
-> 
-> [Impact Information Disclosure]
-> true
-> 
-> ------------------------------------------
-> 
-> [CVE Impact Other]
-> crash
-> 
-> ------------------------------------------
-> 
-> [Attack Vectors]
-> processing raw files
-> 
-> ------------------------------------------
-> 
-> [Reference]
-> https://seclists.org/oss-sec/2018/q4/165
-> https://seclists.org/oss-sec/2018/q4/171
-> 
-> ------------------------------------------
-> 
-> [Discoverer]
-> Hanno Boeck
-
-Use CVE-2018-19565.
+Severity: High
 
 
-> [Suggested description]
-> A heap buffer over-read in parse_tiff_ifd in dcraw through 9.28 could be
-> used by attackers able to supply malicious files to crash an application that bundles the dcraw code or leak
-> private information.
-> 
-> ------------------------------------------
-> 
-> [Additional Information]
-> second issue in posting
-> 
-> ------------------------------------------
-> 
-> [Vulnerability Type]
-> Buffer Overflow
-> 
-> ------------------------------------------
-> 
-> [Vendor of Product]
-> Dave Coffin
-> 
-> ------------------------------------------
-> 
-> [Affected Product Code Base]
-> dcraw - 9.28
-> 
-> ------------------------------------------
-> 
-> [Affected Component]
-> dcraw
-> 
-> ------------------------------------------
-> 
-> [Attack Type]
-> Local
-> 
-> ------------------------------------------
-> 
-> [Impact Information Disclosure]
-> true
-> 
-> ------------------------------------------
-> 
-> [CVE Impact Other]
-> crash
-> 
-> ------------------------------------------
-> 
-> [Attack Vectors]
-> processing supplied raw files
-> 
-> ------------------------------------------
-> 
-> [Reference]
-> https://seclists.org/oss-sec/2018/q4/165
-> https://seclists.org/oss-sec/2018/q4/171
-> 
-> ------------------------------------------
-> 
-> [Discoverer]
-> Hanno Boeck
 
-Use CVE-2018-19566.
+Vendor: The Apache Software Foundation
 
 
-> [Suggested description]
-> A floating point exception in parse_tiff_ifd in dcraw through 9.28 could
-> be used by attackers able to supply malicious files to crash an application that bundles the dcraw code.
-> 
-> ------------------------------------------
-> 
-> [Additional Information]
-> fourth issue in list
-> 
-> ------------------------------------------
-> 
-> [VulnerabilityType Other]
-> crash
-> 
-> ------------------------------------------
-> 
-> [Vendor of Product]
-> Dave Coffin
-> 
-> ------------------------------------------
-> 
-> [Affected Product Code Base]
-> dcraw - 9.28
-> 
-> ------------------------------------------
-> 
-> [Affected Component]
-> dcraw
-> 
-> ------------------------------------------
-> 
-> [Attack Type]
-> Local
-> 
-> ------------------------------------------
-> 
-> [Impact Denial of Service]
-> true
-> 
-> ------------------------------------------
-> 
-> [Attack Vectors]
-> attackers able to supply crafted files
-> 
-> ------------------------------------------
-> 
-> [Reference]
-> https://seclists.org/oss-sec/2018/q4/165
-> https://seclists.org/oss-sec/2018/q4/171
-> 
-> ------------------------------------------
-> 
-> [Discoverer]
-> Hanno Boeck
 
-Use CVE-2018-19567.
+Versions Affected: <1.18
 
 
-> [Suggested description]
-> A floating point exception in kodak_radc_load_raw in dcraw through 9.28
-> could be used by attackers able to supply malicious files to crash
-> an application that bundles the dcraw code.
-> 
-> ------------------------------------------
-> 
-> [Additional Information]
-> last issue in post
-> 
-> ------------------------------------------
-> 
-> [VulnerabilityType Other]
-> crash
-> 
-> ------------------------------------------
-> 
-> [Vendor of Product]
-> Dave Coffin
-> 
-> ------------------------------------------
-> 
-> [Affected Product Code Base]
-> dcraw - 9.28
-> 
-> ------------------------------------------
-> 
-> [Affected Component]
-> dcraw
-> 
-> ------------------------------------------
-> 
-> [Attack Type]
-> Local
-> 
-> ------------------------------------------
-> 
-> [Impact Denial of Service]
-> true
-> 
-> ------------------------------------------
-> 
-> [Attack Vectors]
-> attackers able to supply crafted raw images
-> 
-> ------------------------------------------
-> 
-> [Reference]
-> https://seclists.org/oss-sec/2018/q4/165
-> https://seclists.org/oss-sec/2018/q4/171
-> 
-> ------------------------------------------
-> 
-> [Discoverer]
-> Hanno Boeck
 
-Use CVE-2018-19568.
+Description: Before Tika 1.18, clients could send carefully crafted
+
+headers to tika-server that could be used to inject commands into the
+
+command line of the server running tika-server.  This vulnerability
+
+only affects those running tika-server on a server that is open to
+
+ untrusted clients.
 
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJb/E9MAAoJEA2h+fVryJLo3uIP/3Vb9oOJKgQfo2R2DgLcvMeN
-G87/1iAGgkvVSQk7vB5bUeockwHtcIRfy/yN6FwPKe893ec80o9R4dixDUp9mr+P
-R2hJFYAsnGGuSbz1h25HOMQDmkg6jk2WWBtXuB7nVoWo9sabzTthqq5ykjdN8lLm
-JFrvRQxTh2+FKSEZUP3UqaYngMktbOec+F8dEu7KlOeR+kBtrG2OoMU4RED/oAIW
-HX2rdTs1tlEC2Awqa0gM4BbGB1Zrp/OvuRescV8BPDo/qHrLZbRmYuNR2JP0Rz9X
-mxq26CZO29y5Vsghsg+Y/ytpBGwQUGYWo475Nt/YXbAOowammPCX/2zrEeoW+lSM
-6J1mkuRC4dXOf3zZBX1GQaUJHS3ixMNJ5mtcURVo+2vQRyCMrAdMvWabhruzndTQ
-4aCc+B3/UvxW+zzBrf0CSOt1An8XDrk/XCN/YlKsbJRJ7cSqKDtzlKtHmQHxxktQ
-hTFGr4KKP6pgPHhLhMS6U2JL2LzOAyliT33uRJyE35dALs+WNSu5GKtpPHrxwf0L
-4+lXhbi+6sjEBhVXQx7Lo7vStBQetEEVHJnQKfqSZZX6bJ65RstY3iaJ8aQDxi+C
-f2PZcnxV49OU2bTR/zdlpMCT+5xrhivtKCuweiw9R04aGjztA6EErwTH0141v5RJ
-9SfuauD6zHzlImz0/Uw5
-=AUEp
------END PGP SIGNATURE-----
+Mitigation: Ensure that untrusted users don't have access to
+
+tika-server and/or upgrade to Apache Tika >=1.18.
+
+
+
+Credit: Tim Allison, a member of the Apache Tika team, discovered this.
 
