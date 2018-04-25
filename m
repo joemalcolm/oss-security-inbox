@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["855" "Wednesday" "5" "July" "2017" "17:47:11" "+0100" "Simon McVittie" "smcv@debian.org" "<20170705164711.nbu6ltcyeyfql3ol@perpetual.pseudorandom.co.uk>" "18" "Re: [oss-security] systemd fails to parse user that should run service" "^Date:" nil nil "7" "2017070516:47:11" "[oss-security] systemd fails to parse user that should run service" (number mark "        smcv@debian. Jul  5   18/855   " thread-indent "\"Re: [oss-security] systemd fails to parse user that should run service\"\n") "<1499269723.28229.2.camel@gmail.com>" ("<VI1PR04MB310470DAAF5F79C8BA8AE789D6D10@VI1PR04MB3104.eurprd04.prod.outlook.com>" "<20170705085034.GA2638@pali>" "<201707051202.v65C2NDB005864@room101.nl.oracle.com>" "<20170705135320.ue7fojrds4tu2vpp@perpetual.pseudorandom.co.uk>" "<1b6f7cd9-2eb7-2c2d-e2e0-327cf3dd1e82@oracle.com>" "<1499267174.28229.1.camel@gmail.com>" "<efcc5a85-2d36-7659-9c98-18945a4f70f9@oracle.com>" "<1499269723.28229.2.camel@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["980" "Wednesday" "25" "April" "2018" "11:11:14" "+0530" "Huzaifa Sidhpurwala" "huzaifas@redhat.com" "<72b41311-ec4d-4336-eb84-931c88fae250@redhat.com>" "29" "Re: [oss-security] CVE-2018-0737 OpenSSL: RSA key generation follows several non constant time code paths" nil nil nil "4" "2018042505:41:14" "[oss-security] CVE-2018-0737 OpenSSL: RSA key generation follows several non constant time code paths" (number mark "U       huzaifas@red Apr 25   29/980   " thread-indent "\"Re: [oss-security] CVE-2018-0737 OpenSSL: RSA key generation follows several non constant time code paths\"\n") "<CAFeDd5YC9dheyHq5xSmtvW5dDO+2v5AOuSEgq=7QuO2NDBzRbQ@mail.gmail.com>" ("<CAFeDd5bgmNV4=u0GNwpuszCv-k+ZeOJv=uF+z3MZybf+thG+fg@mail.gmail.com>" "<cbee626b-67e6-73a4-f82e-0f4adb6da1a4@redhat.com>" "<CAFeDd5YC9dheyHq5xSmtvW5dDO+2v5AOuSEgq=7QuO2NDBzRbQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30141 invoked by uid 550); 5 Jul 2017 16:47:30 -0000
+Received: (qmail 16295 invoked by uid 550); 25 Apr 2018 05:41:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,43 +11,73 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30117 invoked from network); 5 Jul 2017 16:47:29 -0000
-Message-ID: <20170705164711.nbu6ltcyeyfql3ol@perpetual.pseudorandom.co.uk>
-References: <VI1PR04MB310470DAAF5F79C8BA8AE789D6D10@VI1PR04MB3104.eurprd04.prod.outlook.com>
- <20170705085034.GA2638@pali>
- <201707051202.v65C2NDB005864@room101.nl.oracle.com>
- <20170705135320.ue7fojrds4tu2vpp@perpetual.pseudorandom.co.uk>
- <1b6f7cd9-2eb7-2c2d-e2e0-327cf3dd1e82@oracle.com>
- <1499267174.28229.1.camel@gmail.com>
- <efcc5a85-2d36-7659-9c98-18945a4f70f9@oracle.com>
- <1499269723.28229.2.camel@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1499269723.28229.2.camel@gmail.com>
-User-Agent: NeoMutt/20170609 (1.8.3)
-Date: Wed, 5 Jul 2017 17:47:11 +0100
-From: Simon McVittie <smcv@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] systemd fails to parse user that should run
- service
+Received: (qmail 16269 invoked from network); 25 Apr 2018 05:41:28 -0000
 To: oss-security@lists.openwall.com
+References: <CAFeDd5bgmNV4=u0GNwpuszCv-k+ZeOJv=uF+z3MZybf+thG+fg@mail.gmail.com>
+ <cbee626b-67e6-73a4-f82e-0f4adb6da1a4@redhat.com>
+ <CAFeDd5YC9dheyHq5xSmtvW5dDO+2v5AOuSEgq=7QuO2NDBzRbQ@mail.gmail.com>
+From: Huzaifa Sidhpurwala <huzaifas@redhat.com>
+Openpgp: preference=signencrypt
+Autocrypt: addr=huzaifas@redhat.com; keydata=
+ xsDiBETun5sRBACOCWbRM5KLDngL46w371lRBMCCmBRpzQHXuxllk1dbku3GYQu5ApCYVvck
+ 45GWqFAYqWVjXGjEOnATxg693FI3Mw8tv8E9JED1OMbyaI4bhUxP1H7Ia89BOEFHjHKR7VPY
+ S9tSwvTr2AkjK1j+CrMcWmV2rL4KooRk/ykB/4joJwCgnoMEbrNCrnSIiZNGxS7Okxgknb8D
+ /AxkMwysc39T68fp0AOAr4wNrwWzgBPqjyF0As5n9ewZie9Z+uqqGCnjn9XgMmMNkL1DsXXs
+ 4dJXaFrAdlcArtWaiQX/d2nZaZj8kw9D7ADudBTA0YzAnVQGk4wf2zL9WT/YwYhV3Sb1TERa
+ H6g4gg8b+KwsbmhJSrqsg06mWR3eA/9j86ollyU31Fq/qIjsbHR+tSManlv57wGiH9luburk
+ bUSFgLo9t2h6bHZ4sTQyt6aJcxXzon2IuiTYVpDrnoAfYfvFvzSae0BPG7nP8moAL7X1nnW0
+ xP8+ZATAqwds75yAQMpGRXuOntFl5ZL1xmzzeDS5aUfMg3gC9M0jIWK3zc0sSHV6YWlmYSBT
+ LiBTaWRocHVyd2FsYSA8aHV6YWlmYXNAcmVkaGF0LmNvbT7CXgQTEQIAHgUCRO6fmwIbAwYL
+ CQgHAwIDFQIDAxYCAQIeAQIXgAAKCRDMcNzy2lva5e+DAJ4hG6WLhJfmJ27UOKZLPRi3gVNx
+ owCeP5f7Cp5aU4DXyK3X81poNLIW2i3OwE0ERO6fnRAEALle4LaG+djyt8slfQbwAPf06dgz
+ bC6o1TcPg/ZRSE8TSE6d1fRkLSLJJZSW9gGpl5fphNYUSzarFKP4xLRol/fZCY4tupcAv+Vm
+ jfzaLqdIiy+G6ei1UpQTP6uRHxLdtXmMmg6kWds0ZavEU2+y18HzAczCCPBQN30dd/1/5jUn
+ AAMFBACOEdEjzZIQmK6ciB6TymIcD8nf6Jn0zz6+DjxrtdEnP7V/zyZgv/tD1GdneOBaGJTL
+ FTqT5vNSsmMTtQ03tjg/e4+P1MX8YcbhObj186Js47moYoeWgfAGZlFd6mNl/aSITVSHsooF
+ zVi9Xs6zKZNWsY2LcENMnE/xM7Qdpi5ChMJJBBgRAgAJBQJE7p+dAhsMAAoJEMxw3PLaW9rl
+ XKEAnjySXTUlGFzWQ9BiLx5Fo91JziLYAJ4lQdBofA+Gf1Vewb/61ilmdq4Qqg==
+Message-ID: <72b41311-ec4d-4336-eb84-931c88fae250@redhat.com>
+Date: Wed, 25 Apr 2018 11:11:14 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
+MIME-Version: 1.0
+In-Reply-To: <CAFeDd5YC9dheyHq5xSmtvW5dDO+2v5AOuSEgq=7QuO2NDBzRbQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 2.78 on 10.11.54.3
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.11.55.8]); Wed, 25 Apr 2018 05:41:16 +0000 (UTC)
+X-Greylist: inspected by milter-greylist-4.5.16 (mx1.redhat.com [10.11.55.8]); Wed, 25 Apr 2018 05:41:16 +0000 (UTC) for IP:'10.11.54.3' DOMAIN:'int-mx03.intmail.prod.int.rdu2.redhat.com' HELO:'smtp.corp.redhat.com' FROM:'huzaifas@redhat.com' RCPT:''
+Subject: Re: [oss-security] CVE-2018-0737 OpenSSL: RSA key generation follows
+ several non constant time code paths
 
-On Wed, 05 Jul 2017 at 11:48:43 -0400, Daniel Micay wrote:
-> It seems some distributions get useradd/userdel from somewhere else.
+On 04/24/2018 09:18 PM, Billy Brumley wrote:
+>>> Look for our preprint on http://eprint.iacr.org/ soon -- working title
+>>> is "One Shot, One Trace, One Key: Cache-Timing Attacks on RSA Key
+>>> Generation". We'll update the list with the full URL once it's posted.
+>>>
+>>
+>>
+>> Can you post a link to the draft here please?
+> 
+> The preprint is now up: https://eprint.iacr.org/2018/367
+> 
+>> The attack vector is not clear, does the attacker need to be on the same
+>> physical machine or is this a cross-vm attack?
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2018-0737
+> 
+> Your statement is pretty accurate. (Although I fail to see the
+> difference between physical machine and cross-vm.)
+> 
+Physical machine implies, the attacker and victim is on the same host
+(real computer or a vm). Cross-vm implies attacker and the victim can be
+on two different virtual machines, running on the same hypervisor.
 
-shadow and util-linux have a lot of overlap. Fedora has historically
-used util-linux for as much as possible; Debian has historically used
-shadow, but is gradually moving towards util-linux because in practice
-it's more actively maintained; other distributions I don't know. The
-major user-visible difference has usually been differing su behaviour.
+> BBB
+> 
 
-> Maybe you have adduser from shadow? It'd be funny if they had different
-> rules enforced even for adduser vs. useradd...
 
-In Debian and its derivatives there are certainly different rules. useradd
-is the mechanism layer, and adduser is a Debian-specific policy layer (for
-instance adduser rejects weird/inadvisable usernames unless given an option
-to force them).
-
-    S
+-- 
+Huzaifa Sidhpurwala / Red Hat Product Security Team
