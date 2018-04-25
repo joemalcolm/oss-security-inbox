@@ -1,36 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/30/1
-Message-ID: <3e3fad60-244f-e11d-f3c9-4757be6e6f93@johannes-bauer.com>
-Date: Thu, 30 Aug 2018 18:13:34 +0200
-From: zugtprgfwprz@...rnkuller.de
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/25/2
+Message-ID: <20180425085700.kepnvaabam4tno52@f195.suse.de>
+Date: Wed, 25 Apr 2018 10:57:01 +0200
+From: Matthias Gerstner <mgerstner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Travis CI MITM RCE
+Subject: Re: ktexteditor / Kate local privilege escalation (CVE-2018-10361)
 Content-Type: text/plain; charset=utf-8
 
-Hi Daniel,
+On Tue, Apr 24, 2018 at 01:11:09PM +0200, Matthias Gerstner wrote:
 
-On 28.08.2018 18:43, Daniel Kahn Gillmor wrote:
+> I just informed upstream about it and will obtain a CVE soon.
 
-> In some ways, the keyserver network has done the OpenPGP community a
-> disservice, by encouraging OpenPGP users to refer to keys by
-> fingerprints (or even worse, by key IDs).  While this is a useful
-> shorthand in some contexts, it's really a security/reliability
-> anti-pattern when it comes to secure programming.
+This was assigned CVE-2018-10361.
 
-I agree about the "key ID" part, but not about the "fingerprint" part.
-Pinning a cryptographic hash over a public key isn't a security
-antipattern by any strech of the imagination. Sure, you could argue that
-the SHA-1 used by GPG isn't state-of-the-art anymore, but we're not
-talking about collision attacks, but second preimage attacks. Far worse
-for the attacker.
-
-The way you phrased it, however, all applications of fingerprints/hashes
-would be broken (SSH fingerprints, HPKP, etc.), regardless of the hash
-function they use.
-
-Cheers,
-Joe
-t
-
--- 
-"A PC without Windows is like a chocolate cake without mustard."
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
