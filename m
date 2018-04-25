@@ -1,123 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/06/1
-Message-ID: <CAG8b5tTY45qXBP3_sUcCwP5epnNVRjrgRB6Em2Zi00eePHX6wg@mail.gmail.com>
-Date: Tue, 6 Nov 2018 11:57:46 +0530
-From: Dhiraj Mishra <mishra.dhiraj95@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/25/3
+Message-ID: <b38f682c-45db-111b-2741-27946d4fca6b@kkoenig.net>
+Date: Wed, 25 Apr 2018 10:57:55 +0200
+From: Karsten König <mail@...enig.net>
 To: oss-security@...ts.openwall.com
-Subject: libiec61850 stack based buffer overflow - CVE-2018-18957
+Subject: Re: Authorization bypass in PHPLiteAdmin since 1.9.5
 Content-Type: text/plain; charset=utf-8
 
-## Summary
+Hello,
 
-While fuzzing a stack based buffer overflow was found in libIEC61850 (the
-open-source library for the IEC 61850 protocols) in prepareGooseBuffer in
-goose/goose_publisher.c
+wbowling from GitHub found out that this bug is even more serious and
+can be used to bypass the authorization for arbitary passwords. The bug
+is in Line 40 of classes/Authorization.php[0]. The salt is generated
+with every reload. You can create cookies again and again until you have
+a salt which gives you a hash like '0e179250003459658275905707244744'.
+Now you can login with that specific salt and '0' as the cookie.
 
-## Steps to reproduce
+Best,
 
-$ ./goose_publisher_example crash_goosecr_stack_smash_overflow_aaaaaaaaa
-Using interface crash_goosecr_stack_smash_overflow_aaaaaaaaa
-*** stack smashing detected ***: <unknown> terminated
-Aborted
-$
+Karsten
 
-## Debugging
+[0]
+https://github.com/phpLiteAdmin/pla/blob/f3998704a846ddf71539092cd6fe84f2e9c35725/classes/Authorization.php#L40
 
-(gdb) run crash_goosecr_stack_smash_overflow_aaaaaaaaa
-Starting program:
-/home/input0/Desktop/libiec61850/examples/goose_publisher/goose_publisher_example
-crash_goosecr_stack_smash_overflow_aaaaaaaaa
-[Thread debugging using libthread_db enabled]
-Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
-Using interface crash_goosecr_stack_smash_overflow_aaaaaaaaa
-*** stack smashing detected ***: <unknown> terminated
-
-Program received signal SIGABRT, Aborted.
-__GI_raise (sig=sig@...ry=6) at ../sysdeps/unix/sysv/linux/raise.c:51
-51    ../sysdeps/unix/sysv/linux/raise.c: No such file or directory.
-(gdb) bt
-#0  __GI_raise (sig=sig@...ry=6) at ../sysdeps/unix/sysv/linux/raise.c:51
-#1  0x00007ffff7805801 in __GI_abort () at abort.c:79
-#2  0x00007ffff784e897 in __libc_message (action=action@...ry=do_abort,
-fmt=fmt@...ry=0x7ffff797b988 "*** %s ***: %s terminated\n")
-    at ../sysdeps/posix/libc_fatal.c:181
-#3  0x00007ffff78f9cd1 in __GI___fortify_fail_abort
-(need_backtrace=need_backtrace@...ry=false,
-    msg=msg@...ry=0x7ffff797b966 "stack smashing detected") at
-fortify_fail.c:33
-#4  0x00007ffff78f9c92 in __stack_chk_fail () at stack_chk_fail.c:29
-#5  0x000055555555a211 in Ethernet_getInterfaceMACAddress
-(interfaceId=0x7fffffffdeee "crash_goosecr_stack_smash_overflow_aaaaaaaaa",
-    addr=0x7fffffffd91c "k_smas\377\377") at
-hal/ethernet/linux/ethernet_linux.c:170
-#6  0x00005555555594ee in prepareGooseBuffer (self=0x5555557637d0,
-parameters=0x7fffffffd9ac,
-    interfaceID=0x7fffffffdeee
-"crash_goosecr_stack_smash_overflow_aaaaaaaaa") at
-src/goose/goose_publisher.c:168
-#7  0x0000555555559293 in GoosePublisher_create (parameters=0x7fffffffd9ac,
-    interfaceID=0x7fffffffdeee
-"crash_goosecr_stack_smash_overflow_aaaaaaaaa") at
-src/goose/goose_publisher.c:72
-#8  0x0000555555555387 in main (argc=2, argv=0x7fffffffdaa8) at
-goose_publisher_example.c:52
-(gdb) i r
-rax            0x0    0
-rbx            0x7fffffffd6b0    140737488344752
-rcx            0x7ffff7803e97    140737345765015
-rdx            0x0    0
-rsi            0x7fffffffd410    140737488344080
-rdi            0x2    2
-rbp            0x7fffffffd840    0x7fffffffd840
-rsp            0x7fffffffd410    0x7fffffffd410
-r8             0x0    0
-r9             0x7fffffffd410    140737488344080
-r10            0x8    8
-r11            0x246    582
-r12            0x7fffffffd6b0    140737488344752
-r13            0x1000    4096
-r14            0x0    0
-r15            0x30    48
-rip            0x7ffff7803e97    0x7ffff7803e97 <__GI_raise+199>
-eflags         0x246    [ PF ZF IF ]
-cs             0x33    51
-ss             0x2b    43
-ds             0x0    0
-es             0x0    0
-fs             0x0    0
-gs             0x0    0
-(gdb)
-
-## src
-
-Snip : src/goose/goose_publisher.c
-
-{
-    GoosePublisher self = (GoosePublisher) GLOBAL_CALLOC(1, sizeof(struct
-sGoosePublisher));
-    prepareGooseBuffer(self, parameters, interfaceID);
-    self->timestamp = MmsValue_newUtcTimeByMsTime(Hal_getTimeInMs());
-    GoosePublisher_reset(self);
-    return self;
-}
-
-Snip: src/goose/goose_publisher.c
-
-    if (interfaceID != NULL)
-        Ethernet_getInterfaceMACAddress(interfaceID, srcAddr);
-    else
-Ethernet_getInterfaceMACAddress(CONFIG_ETHERNET_INTERFACE_ID, srcAddr);
-
-## Reference
-
-https://github.com/mz-automation/libiec61850/issues/83
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-18957
-
-
-Thank you
--- 
-Regards
-
-*Dhiraj Mishra.*GPG ID :  51720F56   |  Finger Print : 1F6A FC7B 05AA CF29
-8C1C  ED65 3233 4D18 5172 0F56
-
+On 23.04.2018 06:41, Karsten König wrote:
+> Hello,
+> 
+> I found a small issue in PHPLiteAdmin. It's an authorization bypass
+> which works since version 1.9.5 from 2014 (current is 1.9.7.1) because
+> PLA uses '==' instead of '===' for the password comparison in
+> 'attemptGrant' of the 'Authorization' class. If the password is set to
+> one which correspondends to a number in scientific notation, one could
+> easier bruteforce the password or bypass it completely, e.g.:
+> 
+> php > var_dump('200' == '2e2');
+> bool(true)
+> php > var_dump('0' == '0e2');
+> bool(true)
+> php > var_dump('0' == '0e2342');
+> bool(true)
+> 
+> I opened an issue at GitHub for this[0] and have written about it[1]
+> (section 2 is the interesting one for this issue).
+> 
+> Best,
+> 
+> Karsten
+> 
+> [0] https://github.com/phpLiteAdmin/pla/issues/11
+> [1]
+> http://k3research.outerhaven.de/posts/small-mistakes-lead-to-big-problems.html
+> 
