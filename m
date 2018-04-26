@@ -1,27 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/12/5
-Message-ID: <20180112155812.l3ye6n4ymengrcbc@jwilk.net>
-Date: Fri, 12 Jan 2018 16:58:13 +0100
-From: Jakub Wilk <jwilk@...lk.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/26/1
+Message-ID: <65b16598-8390-9199-e391-84422cd2f4ac@apache.org>
+Date: Thu, 26 Apr 2018 12:11:06 -0400
+From: Marshall Schor <schor@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Libc Realpath Buffer Underflow CVE-2018-1000001
+Subject: [ANNOUNCE] CVE-2017-15691: Apache UIMA XML external entity expansion (XXE) attack exposure
 Content-Type: text/plain; charset=utf-8
 
-* halfdog <me@...fdog.net>, 2018-01-11, 21:34:
->One of the weaknesses of Linux kernel is, that it is not fully POSIX 
->compliant
+CVE-2017-15691: Apache UIMA XML external entity expansion (XXE) attack exposure
 
-To clarify, POSIX deliberately doesn't have concepts of "kernel" or 
-"system call"[*]. If you're debating POSIX compliance, you should take 
-the whole system (kernel, libc, compiler, shell and what not...) into 
-account.
+Severity: Important  
 
-That said, it's true that the current behavior of the getcwd() syscall, 
-apart from being incredibly stupid, makes building a POSIX-compliant OS 
-on top of the Linux kernel harder than it could be.
+Vendor:
+The Apache Software Foundation
+
+Versions Affected:
+  - uimaj 2.x.x releases prior to 2.10.2
+  - uimaj 3.0.0 releases prior to 3.0.0-beta
+  - uima-as releases prior to 2.10.2
+  - uimaFIT releases prior to 2.4.0
+  - uimaDUCC releases prior to 2.2.2
+
+Description.
+The details of this vulnerability were reported to the Apache UIMA Private
+mailing list.
+
+This  vulnerability relates to an XML external entity expansion (XXE) capability
+of various XML parsers. See
+   https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Processing
+for more details.
+
+UIMA as part of its configuration and operation may read XML from various
+sources, which could be tainted in ways to cause inadvertent disclosure of local
+files or other internal content.
+
+Mitigation:
+Users are advised to upgrade these UIMA components to the following levels or later:
+  - uimaj: 2.x.x upgrade to 2.10.2 or later
+  - uimaj: 3.x.x upgrade to 3.0.0 or later
+  - uima-as: upgrade to 2.10.2 or later
+  - uimaFIT: upgrade to 2.4.0 or later
+  - uimaDUCC: upgrade to 2.2.2 or later
+
+Credit: Joern Kottmann
+
+-Marshall Schor, on behalf of the UIMA Project Management Committee 
 
 
-[*] http://pubs.opengroup.org/onlinepubs/9699919799/xrat/V4_xbd_chap03.html#tag_21_03_00_77
-
--- 
-Jakub Wilk
