@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1741" "Friday" "21" "July" "2017" "15:26:47" "+0200" "Solar Designer" "solar@openwall.com" "<20170721132647.GA4223@openwall.com>" "30" "Re: [oss-security] CoreOS membership to linux-distros (updated)" "^Cc:" nil nil "7" "2017072113:26:47" "[oss-security] CoreOS membership to linux-distros (updated)" (number mark "        solar@openwa Jul 21   30/1741  " thread-indent "\"Re: [oss-security] CoreOS membership to linux-distros (updated)\"\n") "<9479d640-2002-2462-9d81-2379d60d8f54@coreos.com>" ("<9479d640-2002-2462-9d81-2379d60d8f54@coreos.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1417" "Thursday" "26" "April" "2018" "12:11:06" "-0400" "Marshall Schor" "schor@apache.org" "<65b16598-8390-9199-e391-84422cd2f4ac@apache.org>" "45" "[oss-security] [ANNOUNCE] CVE-2017-15691: Apache UIMA XML external entity expansion (XXE) attack exposure" nil nil nil "4" "2018042616:11:06" "[oss-security] [ANNOUNCE] CVE-2017-15691: Apache UIMA XML external entity expansion (XXE) attack exposure" (number mark "U       schor@apache Apr 26   45/1417  " thread-indent "\"[oss-security] [ANNOUNCE] CVE-2017-15691: Apache UIMA XML external entity expansion (XXE) attack exposure\"\n") "<fac969e1-6a15-186a-d49c-338c58a0b37e@apache.org>" ("<fac969e1-6a15-186a-d49c-338c58a0b37e@apache.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1509 invoked by uid 550); 21 Jul 2017 13:27:42 -0000
+Received: (qmail 16076 invoked by uid 550); 26 Apr 2018 16:18:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,50 +11,67 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32390 invoked from network); 21 Jul 2017 13:27:12 -0000
-Message-ID: <20170721132647.GA4223@openwall.com>
-References: <9479d640-2002-2462-9d81-2379d60d8f54@coreos.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <9479d640-2002-2462-9d81-2379d60d8f54@coreos.com>
-User-Agent: Mutt/1.4.2.3i
-Cc: oss-security@lists.openwall.com, keescook@google.com,
-	Brandon Philips <brandon.philips@coreos.com>,
-	Alex Crawford <alex.crawford@coreos.com>
-Date: Fri, 21 Jul 2017 15:26:47 +0200
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CoreOS membership to linux-distros (updated)
-To: Euan Kemp <euan.kemp@coreos.com>
+Received: (qmail 11697 invoked from network); 26 Apr 2018 16:11:17 -0000
+References: <fac969e1-6a15-186a-d49c-338c58a0b37e@apache.org>
+To: oss-security@lists.openwall.com
+From: Marshall Schor <schor@apache.org>
+Openpgp: preference=signencrypt
+X-Forwarded-Message-Id: <fac969e1-6a15-186a-d49c-338c58a0b37e@apache.org>
+Message-ID: <65b16598-8390-9199-e391-84422cd2f4ac@apache.org>
+Date: Thu, 26 Apr 2018 12:11:06 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
+MIME-Version: 1.0
+In-Reply-To: <fac969e1-6a15-186a-d49c-338c58a0b37e@apache.org>
+Content-Type: multipart/alternative;
+ boundary="------------757EF9CD05B1293AF3CD97D0"
+Content-Language: en-US
+Subject: [oss-security] [ANNOUNCE] CVE-2017-15691: Apache UIMA XML external entity expansion
+ (XXE) attack exposure
 
-On Tue, Jul 18, 2017 at 02:56:23PM -0700, Euan Kemp wrote:
-> I???ve listed each criterion and why I think we, the Container Linux team
-> at CoreOS, qualify.
+--------------757EF9CD05B1293AF3CD97D0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-I intend to add CoreOS to linux-distros in early August unless there are
-any well-reasoned objections by then.
+CVE-2017-15691: Apache UIMA XML external entity expansion (XXE) attack exposure
 
-> Based on your previous messages, it sounds like it???s expected for us to
-> inherit 'primary' for the administrative tasks of:
-> > 1. Promptly review new issue reports for meeting the list's requirements and confirm receipt of the report and, when necessary, inform the reporter of any issues with their report (e.g., obviously not actionable by the distros) and request and/or propose any required yet missing information (most notably, a tentative public disclosure date) - primary: CloudLinux, backup: vacant
-> > 2. If the proposed public disclosure date is not within list policy, insist on getting this corrected and propose a suitable earlier date - primary: CloudLinux, backup: vacant
+Severity: Important  
 
-Right.  CloudLinux - please get ready to pick up some other task(s).
+Vendor:
+The Apache Software Foundation
 
-> I???ll also volunteer us for the administrative task of:
-> > 6. If multiple issues are reported at once, see if any of them can reasonably be made public sooner than the rest, and if so help untangle them and stay on top of their disclosure process
-> 
-> We???ll be happy to be on the lookout for possible conflation of issues
-> and kick off discussion if we think something can be broken up.
+Versions Affected:
+  - uimaj 2.x.x releases prior to 2.10.2
+  - uimaj 3.0.0 releases prior to 3.0.0-beta
+  - uima-as releases prior to 2.10.2
+  - uimaFIT releases prior to 2.4.0
+  - uimaDUCC releases prior to 2.2.2
 
-This works.  Thanks.
+Description.
+The details of this vulnerability were reported to the Apache UIMA Private
+mailing list.
 
-> We???ll provide relevant GPG keys separately if our membership is accepted.
+This  vulnerability relates to an XML external entity expansion (XXE) capability
+of various XML parsers. See
+   https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Processing
+for more details.
 
-> Kees Cook can vouch for Brandon Philips (both on cc).
+UIMA as part of its configuration and operation may read XML from various
+sources, which could be tainted in ways to cause inadvertent disclosure of local
+files or other internal content.
 
-Please feel free to provide the GPG keys to me off-list.  Also, Brandon
-should vouch for the rest of your team (again, off-list to me is OK).
+Mitigation:
+Users are advised to upgrade these UIMA components to the following levels or later:
+  - uimaj: 2.x.x upgrade to 2.10.2 or later
+  - uimaj: 3.x.x upgrade to 3.0.0 or later
+  - uima-as: upgrade to 2.10.2 or later
+  - uimaFIT: upgrade to 2.4.0 or later
+  - uimaDUCC: upgrade to 2.2.2 or later
 
-Alexander
+Credit: Joern Kottmann
+
+-Marshall Schor, on behalf of the UIMA Project Management Committee 
+
+
+--------------757EF9CD05B1293AF3CD97D0--
