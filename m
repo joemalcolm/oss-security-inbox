@@ -1,101 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/14/1
-Message-ID: <alpine.DEB.2.20.1803132313170.29869@tvnag.unkk.fr>
-Date: Wed, 14 Mar 2018 07:55:04 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: FTP path trickery leads to NIL byte out of bounds write
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/30/3
+Message-ID: <d7e924ef-f121-92b2-dcbd-3c03c88d9831@linux.com>
+Date: Tue, 1 May 2018 01:17:36 +0300
+From: Alexander Popov <alex.popov@...ux.com>
+To: Kurt Seifried <kseifried@...hat.com>, oss-security <oss-security@...ts.openwall.com>
+Cc: Kees Cook <keescook@...omium.org>, "Serge E. Hallyn" <serge@...lyn.com>, Brad Spengler <spender@...ecurity.net>, PaX Team <pageexec@...email.hu>, James Morris <jmorris@...ei.org>, "Reshetova, Elena" <elena.reshetova@...el.com>
+Subject: Re: Re: Linux Kernel Defence Map
 Content-Type: text/plain; charset=utf-8
 
-FTP path trickery leads to NIL byte out of bounds write
-=======================================================
+On 05.04.2018 02:55, Kurt Seifried wrote:
+> Please use a CWE identifier if one exists (https://cwe.mitre.org/), if one
+> doesn't exist perhaps we should have one (email me and I'm happy to help get
+> that ball rolling). Having a CWE not only helps categorize things correctly but
+> gives us something to point developers at for resources around flaws and how
+> they can be avoided/dealt with/etc. 
 
-Project curl Security Advisory, March 14th 2018 -
-[Permalink](https://curl.haxx.se/docs/adv_2018-9cd6.html)
+Hello Kurt,
 
-VULNERABILITY
--------------
+I've just added the corresponding CWE IDs to the vulnerability classes showed on
+the map: https://github.com/a13xp0p0v/linux-kernel-defence-map
 
-curl can be fooled into writing a zero byte out of bounds.
+It think there is only one vuln class that misses a CWE ID -- Stack Depth
+Overflow. We currently have CWE-674 (Uncontrolled Recursion), but it doesn't
+cover the Stack Clash case, which also refers to Stack Depth Overflow.
 
-This bug can trigger when curl is told to work on an FTP URL, with the setting
-to only issue a single CWD command (`--ftp-method singlecwd` or the libcurl
-alternative `CURLOPT_FTP_FILEMETHOD`).
-
-curl then URL-decodes the given path, calls strlen() on the result and deducts
-the length of the file name part to find the end of the directory within the
-buffer. It then writes a zero byte on that index, in a buffer allocated on the
-heap.
-
-If the directory part of the URL contains a "%00" sequence, the directory
-length might end up shorter than the file name path, making the calculation
-`size_t index = directory_len - filepart_len` end up with a huge index
-variable for where the zero byte gets stored: `heap_buffer[index] = 0`. On
-several architectures that huge index will wrap and work as a negative value,
-thus overwriting memory *before* the intended heap buffer.
-
-By using different file part lengths and putting %00 in different places in
-the URL, an attacker that can control what paths a curl-using application uses
-can write that zero byte on different indexes.
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-This bug was introduced in December 2004 in [this
-commit](https://github.com/curl/curl/commit/6e1e9caa32da0995).
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2018-1000120 to this issue.
-
-CWE-122: Heap-based Buffer Overflow
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.12.3 to and including curl 7.58.0
-- Not affected versions: curl < 7.12.3 and curl >= 7.59.0
-
-libcurl is used by many applications, but not always advertised as such.
-
-THE SOLUTION
-------------
-
-In curl version 7.59.0, curl rejects FTP URLs that contain any "control
-characters". That is byte values below ascii 32.
-
-A [patch for CVE-2018-1000120](https://curl.haxx.se/CVE-2018-1000120.patch) is available.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl to version 7.59.0
-
-  B - Apply the patch to your version and rebuild
-
-  C - Do not enable singlecwd mode for FTP transfers
-
-TIME LINE
----------
-
-It was reported to the curl project on January 29, 2018
-
-We contacted distros@...nwall on March 7, 2018.
-
-curl 7.59.0 was released on March 14 2018, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-Reported by Duy Phan Thanh. Patch by Daniel Stenberg.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
+Best regards,
+Alexander
