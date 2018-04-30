@@ -1,87 +1,112 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/13/13
-Message-Id: <1544738009.80391.0@mail.igalia.com>
-Date: Thu, 13 Dec 2018 15:53:29 -0600
-From: Michael Catanzaro <mcatanzaro@...lia.com>
-To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
-Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: WebKitGTK+ and WPE WebKit Security Advisory WSA-2018-0009
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/30/2
+Message-Id: <E1fD8fT-0007wS-Ti@xenbits.xenproject.org>
+Date: Mon, 30 Apr 2018 13:16:35 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 259 (CVE-2018-10471) - x86: PV guest may crash Xen with XPTI
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK+ and WPE WebKit Security Advisory                WSA-2018-0009
-------------------------------------------------------------------------
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Date reported           : December 13, 2018
-Advisory ID             : WSA-2018-0009
-WebKitGTK+ Advisory URL : 
-https://webkitgtk.org/security/WSA-2018-0009.html
-WPE WebKit Advisory URL : 
-https://wpewebkit.org/security/WSA-2018-0009.html
-CVE identifiers         : CVE-2018-4437, CVE-2018-4438, CVE-2018-4441,
-                          CVE-2018-4442, CVE-2018-4443, CVE-2018-4464.
+            Xen Security Advisory CVE-2018-10471 / XSA-259
+                              version 3
 
-Several vulnerabilities were discovered in WebKitGTK+ and WPE WebKit.
+                 x86: PV guest may crash Xen with XPTI
 
-CVE-2018-4437
-    Versions affected: WebKitGTK+ before 2.22.5 and WPE WebKit before
-    2.22.3.
-    Credit to HyungSeok Han, DongHyeon Oh, and Sang Kil Cha of KAIST
-    Softsec Lab, Korea.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
+UPDATES IN VERSION 3
+====================
 
-CVE-2018-4438
-    Versions affected: WebKitGTK+ before 2.22.3 and WPE WebKit before
-    2.22.1.
-    Credit to lokihardt of Google Project Zero.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. A logic issue existed resulting in memory
-    corruption. This was addressed with improved state management.
+CVE assigned.
 
-CVE-2018-4441
-    Versions affected: WebKitGTK+ before 2.22.3 and WPE WebKit before
-    2.22.1.
-    Credit to lokihardt of Google Project Zero.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. A memory corruption issue was addressed with
-    improved memory handling.
+ISSUE DESCRIPTION
+=================
 
-CVE-2018-4442
-    Versions affected: WebKitGTK+ before 2.22.3 and WPE WebKit before
-    2.22.1.
-    Credit to lokihardt of Google Project Zero.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. A memory corruption issue was addressed with
-    improved memory handling.
+The workaround for the Meltdown vulnerability (XSA-254) failed to deal
+with an error code path connecting the INT 80 handling with general
+exception handling.  This results in an unconditional write attempt of
+the value zero to an address near 2^64, in cases where a PV guest has no
+handler installed for INT 80 on one of its vCPU-s.
 
-CVE-2018-4443
-    Versions affected: WebKitGTK+ before 2.22.3 and WPE WebKit before
-    2.22.1.
-    Credit to lokihardt of Google Project Zero.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. A memory corruption issue was addressed with
-    improved memory handling.
+IMPACT
+======
 
-CVE-2018-4464
-    Versions affected: WebKitGTK+ and WPE WebKit before 2.22.0.
-    Credit to HyungSeok Han, DongHyeon Oh, and Sang Kil Cha of KAIST
-    Softsec Lab, Korea.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. Multiple memory corruption issues were addressed
-    with improved memory handling.
+A malicious or buggy guest may cause a hypervisor crash, resulting in
+a Denial of Service (DoS) affecting the entire host.
 
+VULNERABLE SYSTEMS
+==================
 
-We recommend updating to the latest stable versions of WebKitGTK+ and
-WPE WebKit. It is the best way to ensure that you are running safe
-versions of WebKit. Please check our websites for information about the
-latest stable releases.
+All Xen versions which the XSA-254 fixes were applied to are vulnerable.
 
-Further information about WebKitGTK+ and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
+Only x86 systems are vulnerable.  ARM systems are not vulnerable.
 
-The WebKitGTK+ and WPE WebKit team,
-December 13, 2018
+Only x86 PV guests can exploit the vulnerability.  x86 PVH and HVM
+guests cannot exploit the vulnerability.
 
+MITIGATION
+==========
+
+Running only PVH or HVM guests avoids the vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Andrew Cooper of Citrix.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa259.patch          xen-unstable, Xen 4.10.x ... xen 4.7.x
+xsa259-4.6.patch      Xen 4.6.x
+
+$ sha256sum xsa259*
+5c14a90af066c952974324b361e2a428c280f876b854f0c85a78e8579054a4d1  xsa259.meta
+ff2efb5eb2502ded988d0aa15351030a15494a9e2223eafbb88377a8e4d39dcb  xsa259.patch
+c40bc8802077cf73f8393fb50574b7c7efbc4d127e202b0ebd757d34aa07aac3  xsa259-4.6.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJa5xa0AAoJEIP+FMlX6CvZDGEIAL5KbzcBUVjNsguU0HQ2Q6k8
+WejwrXdKkncObK3yoxuybDE4NS+A5o0FbhdpJ86ukemZd2pMutgz79Z14UhSiURk
+Owdj7BlzD64O42OftKqXiNKVp4QhOlOh02TU08Q4m6GKAtCi+HlBcK8EQFR8URhX
+E2zLtpqGv5z6qx26raTDWQAssak4qL/NPSQ7oc3Eqo7P7H8B3Jw+F7DoR9a1g2ye
+gwuINHuk0ea9+jLoinNTDDn17xDAwp8KHPGrI/ivlwGyFipBISICdReDHe/EfIWS
+BNvrZl4ccDe95B1SosN8d0/qGYPLfpSN910hmm0ZTit0XffDseLv/odxoLuDvuQ=
+=clOX
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa259.meta" of type "application/octet-stream" (1700 bytes)
+
+Download attachment "xsa259.patch" of type "application/octet-stream" (1225 bytes)
+
+Download attachment "xsa259-4.6.patch" of type "application/octet-stream" (1283 bytes)
