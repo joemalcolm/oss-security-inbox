@@ -1,17 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/23/6
-Message-Id: <1540265618.431.2@mail.gathman.org>
-Date: Mon, 22 Oct 2018 23:33:38 -0400
-From: "Stuart D. Gathman" <stuart@...hman.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Using quilt on untrusted RPM spec files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/01/3
+Message-ID: <CALCETrULDOyC7po=DcKzPRrYTmSY0ye0xtmtZ2xRD6Xxh9K24Q@mail.gmail.com>
+Date: Tue, 01 May 2018 15:35:06 +0000
+From: Andy Lutomirski <luto@...nel.org>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE-2018-1000199: ptrace() incorrect error handling leads to corruption and DoS
 Content-Type: text/plain; charset=utf-8
 
-Fedora avoids the problem by running rpmbuild in a chroot mini 
-container (provided by systemd) as the mockbuild user with no network 
-access - this extracts source, does %prep, etc.   This is done with the 
-'mock' utility.  The reviewer can still examine the prepped source in 
-the host filesystem.  The reviewer can also run commands inside the 
-mock chroot container, install additional packages (like vim), get a 
-shell inside the container, etc.
+The Linux ptrace code virtualizes access to the debug registers, and
+the virtualization code has incorrect error handling.  This means that
+if you write an illegal value to, say, DR0, the internal state of the
+kernel's breakpoint tracking can become corrupt despite the fact that
+the ptrace() call will return -EINVAL.
 
+As a example, you can find the address of do_debug in /proc/kallsyms
+on an x86 kernel and pass that address to the attached PoC.  I suspect
+that architectures other than x86 are affected as well, but I haven't
+tried to exploit it.  The bug itself is spread all over the place in
+the kernel in generic and arch code.
+
+I haven't spotted an obvious way to get privilege escalation using
+this bug, but it may exist.  For example, it's plausible that using
+this bug to target the perf NMI handler could result in overflowing
+the NMI stack, resulting in various forms of corruption.  I haven't
+tried to analyze the impact on non-x86 architectures since I only know
+how x86 breakpoints work, but the effects of the bug could be very
+different.
+
+Linus has mostly fixed this upstream in commit
+f67b15037a7a50c57f72e69a6d59941ad90a0f0f.  With that commit applied,
+the error handling is still wrong but the defect results in a disabled
+breakpoint instead of an incorrect breakpoint.
+
+This bug was discovered by me.
+
+View attachment "dr7_clash.c" of type "text/x-csrc" (1672 bytes)
