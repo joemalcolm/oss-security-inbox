@@ -1,105 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/11/1
-Message-ID: <CAG8b5tS4=cCT+dmaoeqT3eF6_xoQLLBRuoRYy_C855pXmeQM-g@mail.gmail.com>
-Date: Sun, 11 Nov 2018 23:01:14 +0530
-From: Dhiraj Mishra <mishra.dhiraj95@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: null-pointer dereference in poppler library
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/01/2
+Message-ID: <64d9c5ed-3387-8649-944d-c95e4ef08f1a@apache.org>
+Date: Tue, 1 May 2018 13:02:58 +0900
+From: Akira Ajisaka <aajisaka@...che.org>
+To: general@...oop.apache.org, user@...oop.apache.org, "<security@...oop.apache.org>" <security@...oop.apache.org>, bugtraq@...urityfocus.com, oss-security@...ts.openwall.com
+Subject: CVE-2016-6811: Apache Hadoop Privilege escalation vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Later CVE-2018-19149 was assigned to this, because that fuzzing result
-show's a very important vulnerability in a package currently shipped by a
-major Linux distribution is still of interest, even if that Linux
-distribution does not package the latest released upstream version.
+CVE-2016-6811: Apache Hadoop Privilege escalation vulnerability
 
-For example, an out-of-bounds write finding is still very useful in that
-case, but not out-of-bounds read, NULL pointer dereference,
-divide-by-zero, etc.
+Severity: Critical
 
+Vendor: The Apache Software Foundation
 
-Reference: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-19149
+Versions Affected:
+All the Apache Hadoop versions from 2.2.0 to 2.7.3
 
-On Sat, Nov 10, 2018 at 4:22 PM Dhiraj Mishra <mishra.dhiraj95@...il.com>
-wrote:
+Description:
+A user who can escalate to yarn user can possibly run arbitrary commands as root user.
 
-> ## Summary
->
-> While fuzzing evince v3.28.4, on linux 4.15.0-38-generic (Ubuntu 18.04
-> LTS), a null-pointer dereference was observed, initially this was reported
-> to evince but the evince team advised that the issue is in poppler, the
-> library used by evince to render PDF. Poppler version: 0.62.0-2ubuntu2.2 is
-> vulnerable to null-pointer dereference, however the issue is already fixed
-> in poppler 0.70, but this will still crash your evince v3.28.4 if poppler
-> is not updated to v.0.70.
->
-> ## Debug
->
-> (gdb) run NullPointerDeference.h_134
-> Starting program: /usr/bin/evince NullPointerDeference.h_134
-> [Thread debugging using libthread_db enabled]
-> Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
-> [New Thread 0x7fd84d3cf700 (LWP 17587)]
-> [New Thread 0x7fd84cbce700 (LWP 17588)]
-> [New Thread 0x7fd84718c700 (LWP 17589)]
-> [New Thread 0x7fd84651c700 (LWP 17594)]
-> [New Thread 0x7fd845b0e700 (LWP 17596)]
-> [New Thread 0x7fd83223e700 (LWP 17597)]
->
-> Thread 7 "EvJobScheduler" received signal SIGSEGV, Segmentation fault.
-> [Switching to Thread 0x7fd83223e700 (LWP 17597)]
-> 0x00007fd8315f629a in _poppler_attachment_new(FileSpec*) () from
-> /usr/lib/x86_64-linux-gnu/libpoppler-glib.so.8
-> (gdb) bt
-> #0  0x00007fd8315f629a in _poppler_attachment_new(FileSpec*) () at
-> /usr/lib/x86_64-linux-gnu/libpoppler-glib.so.8
-> #1  0x00007fd8315fa14a in poppler_annot_file_attachment_get_attachment ()
-> at /usr/lib/x86_64-linux-gnu/libpoppler-glib.so.8
-> #2  0x00007fd83183673d in  () at
-> /usr/lib/x86_64-linux-gnu/evince/4/backends/libpdfdocument.so
-> #3  0x00007fd8592c3bfa in  () at /usr/lib/x86_64-linux-gnu/libevview3.so.3
-> #4  0x00007fd8592c5c02 in  () at /usr/lib/x86_64-linux-gnu/libevview3.so.3
-> #5  0x00007fd856bbee85 in  () at /usr/lib/x86_64-linux-gnu/libglib-2.0.so.0
-> #6  0x00007fd8565956db in start_thread (arg=0x7fd83223e700) at
-> pthread_create.c:463
-> #7  0x00007fd8562be88f in clone () at
-> ../sysdeps/unix/sysv/linux/x86_64/clone.S:95
-> (gdb) i r
-> rax            0x0    0
-> rbx            0x0    0
-> rcx            0x0    0
-> rdx            0x0    0
-> rsi            0x7fd82c0587c0    140566428223424
-> rdi            0x55720784c640    93948240774720
-> rbp            0x7fd834004a90    0x7fd834004a90
-> rsp            0x7fd83223d9e0    0x7fd83223d9e0
-> r8             0xffffffffffffffb0    -80
-> r9             0x10    16
-> r10            0x7fd82c0008d0    140566427863248
-> r11            0x1    1
-> r12            0x7fd82c0587c0    140566428223424
-> r13            0x7fd834004a80    140566562097792
-> r14            0x5572072f5a60    93948235176544
-> r15            0x0    0
-> rip            0x7fd8315f629a    0x7fd8315f629a
-> <_poppler_attachment_new(FileSpec*)+122>
-> eflags         0x10206    [ PF IF RF ]
-> cs             0x33    51
-> ss             0x2b    43
-> ds             0x0    0
-> es             0x0    0
-> fs             0x0    0
-> gs             0x0    0
-> (gdb) info reg ebp rip
-> ebp            0x34004a90    872434320
-> rip            0x7fd8315f629a    0x7fd8315f629a
-> <_poppler_attachment_new(FileSpec*)+122>
-> (gdb)
->
->
+Mitigation:
+Users should upgrade to 2.7.4 or upper.
+If you are using the affected version of Apache Hadoop and there are
+any users who can escalate to yarn user and cannot escalate to root user,
+remove the permission to escalate to yarn user from them.
 
--- 
-Regards
-
-*Dhiraj Mishra.*GPG ID :  51720F56   |  Finger Print : 1F6A FC7B 05AA CF29
-8C1C  ED65 3233 4D18 5172 0F56
-
+Credit:
+This issue was discovered by Freddie Rice.
