@@ -1,103 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/07/1
-Message-ID: <CAFeDd5aqTomuwP=zf0EOVqWks819r5S+cr2mVkZGW0EuqttkGA@mail.gmail.com>
-Date: Wed, 7 Nov 2018 09:42:46 +0200
-From: Billy Brumley <bbrumley@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2018-5407: new side-channel vulnerability on SMT/Hyper-Threading architectures
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/03/1
+Message-ID: <3BED38C7-C42A-41C1-B397-E43DCB7D8079@lanl.gov>
+Date: Thu, 3 May 2018 17:12:06 +0000
+From: "Priedhorsky, Reid" <reidpr@...l.gov>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Singularity's Linux kernel vulnerability claim
 Content-Type: text/plain; charset=utf-8
 
-> > For the 1.1.0 branch, at
-> >
-> > https://github.com/openssl/openssl/commits/OpenSSL_1_1_0-stable/crypto/ec/ec_mult.c
-> >
-> > everything starting from aab7c770353b1dc4ba045938c8fb446dd1c4531e
+Folks,
 
-This was not very responsible of me, since the changes are across
-several files. I reckon the best source is checking the diff between
-1.1.0h and 1.1.0i releases.
+Singularity is a container runtime targeting the high-performance computing market. It appears to be the sole product of Sylabs, Inc. [1] and has both “community” (open source) and “pro” (closed source) versions.
 
-If you are a package maintainer, and are putting together a patch set
-for this, please reach out to me. My team can help test.
+Recently, the Singularity team announced on their blog [2], following up an earlier mailing list post [3], that they’ve found:
 
-> I assume ec_GFp_simple_dbl and ec_GFp_simple_add are in fact called via
-> EC_POINT_dbl and EC_POINT_add (via function pointer indirection inside
-> them, which I didn't follow), respectively.  This code skips the call to
-> EC_POINT_add when digit is 0, and the setting and handling of is_neg is
-> also potentially leaky:
+> an exploit vector to all container runtimes, that allows a malicious user to gain additional privileges within a container on hosts running kernels that do not support the PR_SET_NO_NEW_PRIVS feature
 
-The skipping when digit is 0: yea that's basically it, and what
-researchers have been targeting since 2009 (Section 3.2):
+No technical details are publically available:
 
-https://www.iacr.org/archive/asiacrypt2009/59120664/59120664.pdf
+> Sylabs has not provided details about this exploit because there is no workaround short of upgrading the kernel or uninstalling Singularity. So giving more information will only help malicious parties.
 
-The setting and handling of is_neg: yea that leaks too (Section 6.4):
+We understand that details have been offered by Sylabs to at least one third party under NDA. This third party declined, but others may have accepted.
 
-https://eprint.iacr.org/2015/1141
+Sylabs does not plan to request a CVE (link in original):
 
-> Also, while the newly introduced implementation is still called
-> ec_mul_consttime in OpenSSL_1_1_0-stable, it's renamed to
-> ec_scalar_mul_ladder in OpenSSL_1_1_1-stable and has this comment on it:
->
->  * NB: This says nothing about the constant-timeness of the ladder step
->  * implementation (i.e., the default implementation is based on EC_POINT_add and
->  * EC_POINT_dbl, which of course are not constant time themselves) or the
->  * underlying multiprecision arithmetic.
->
-> Is this still an issue needing fixing, or is it e.g. believed to be
-> sufficiently mitigated by blinding?
+> As of now, Sylabs will not request a  CVE for this issue because it only affects old kernels and CVE’s associated with PR_SET_NO_NEW_PRIVS have already been provided and resolved [4].
 
-Does it still leak? Yes. For example, browse this PR:
 
-https://github.com/openssl/openssl/pull/6116
+My questions:
 
-Where David Benjamin (BoringSSL) states: "Note BN_mod_mul is itself
-not constant-time ..."
+1. Does anyone know what is going on with this alleged vulnerability?
+2. Has anything been independently corroborated?
+3. Would a CVE request be appropriate?
 
-So if a library's basic arithmetic function that takes two numbers,
-multiplies them, and returns the remainder after division is not
-constant time, that potentially affects quite a lot of public key
-cryptography across the board
+Thanks,
+Reid
 
-In the context of OpenSSL ECC, should people worry about it? Not
-immediately. But don't take my word -- look at the data:
-
-https://eprint.iacr.org/2018/651
-
-(You can safely ignore the crazy Chinese crypto stuff -- that was just
-a way to academically sell the ECC improvements in OpenSSL.)
-
-That paper shows a concrete, measurable improvement in side-channel
-security with the changes that went into 1.1.1 and 1.1.0i.
-
-openssl-security reached out to me recently for some disclosure
-assistance -- here is a quote from me in that discussion:
-
-"In the future, you're going to see more and more SCA attacks drilling
-down into the BN module (where it's harder to exploit). It's a good
-trend, as lower hanging fruit is drying up!"
-
-OpenSSL knows that constant time crypto is important. At the same
-time, there is no quick fix because the set of crypto that OpenSSL
-must support is significantly larger than you'll find in other
-libraries that lack flexibility (and market share).
-
-For OpenSSL, it's windy at the top! You will see steady improvements
-in OpenSSL side-channel security moving forward.
-
-> P.S. Congrats on receiving the grant for "SCARE: Side-Channel Aware
-> Engineering", and I hope we'll see more excellent research from your
-> team in the next 5 years:
->
-> https://pervasive.cs.tut.fi/?p=2747
-
-Thanks :) If you're still reading, here at the end a call to action
-for researchers.
-
-If you are a side-channel researcher: Don't just approach
-openssl-security pointing at a line of code that you think might leak.
-At a bare minimum, accompany that with patches. Even better, bring
-them empirical data. They are not side-channel experts, and you are --
-so act like it.
-
-BBB
+[1]: https://www.sylabs.io/
+[2]: https://www.sylabs.io/2018/05/whatsnew-singularity-2-5-why-affects-everyone-using-containers/
+[3]: https://groups.google.com/a/lbl.gov/forum/#!topic/singularity/2h8KYUblVxA
+[4]: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3215
