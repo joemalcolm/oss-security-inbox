@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4009" "Sunday" "18" "September" "2016" "11:45:33" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160918154533.28FC16C579F@smtpvmsrv1.mitre.org>" "99" "[oss-security] Re: GraphicsMagick 1.3.25 fixes some security issues" nil nil nil "9" "2016091815:45:33" "[oss-security] Re: GraphicsMagick 1.3.25 fixes some security issues" (number mark "U       cve-assign@m Sep 18   99/4009  " thread-indent "\"[oss-security] Re: GraphicsMagick 1.3.25 fixes some security issues\"\n") "<alpine.GSO.2.20.1609062029590.6469@freddy.simplesystems.org>" ("<alpine.GSO.2.20.1609062029590.6469@freddy.simplesystems.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2314" "Thursday" "3" "May" "2018" "17:12:06" "+0000" "Priedhorsky, Reid" "reidpr@lanl.gov" "<3BED38C7-C42A-41C1-B397-E43DCB7D8079@lanl.gov>" "38" "[oss-security] Singularity's Linux kernel vulnerability claim" nil nil nil "5" "2018050317:12:06" "[oss-security] Singularity's Linux kernel vulnerability claim" (number mark "U       reidpr@lanl. May  3   38/2314  " thread-indent "\"[oss-security] Singularity's Linux kernel vulnerability claim\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 27816 invoked by uid 550); 18 Sep 2016 15:45:48 -0000
+Received: (qmail 25623 invoked by uid 550); 3 May 2018 17:19:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,111 +12,67 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27787 invoked from network); 18 Sep 2016 15:45:44 -0000
-From: cve-assign@mitre.org
-To: bfriesen@simple.dallas.tx.us
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <alpine.GSO.2.20.1609062029590.6469@freddy.simplesystems.org>
-Message-Id: <20160918154533.28FC16C579F@smtpvmsrv1.mitre.org>
-Date: Sun, 18 Sep 2016 11:45:33 -0400 (EDT)
-Subject: [oss-security] Re: GraphicsMagick 1.3.25 fixes some security issues
+Received: (qmail 14021 invoked from network); 3 May 2018 17:12:20 -0000
+X-NIE-2-Virus-Scanner: amavisd-new at mailrelay2.lanl.gov
+From: "Priedhorsky, Reid" <reidpr@lanl.gov>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Thread-Topic: Singularity's Linux kernel vulnerability claim
+Thread-Index: AQHT4wHckAFeX7JlyUKHfuidTnUzRg==
+Date: Thu, 3 May 2018 17:12:06 +0000
+Message-ID: <3BED38C7-C42A-41C1-B397-E43DCB7D8079@lanl.gov>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [128.165.106.201]
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <6B5E4B50546A524FA62B358AA2569DDD@win.lanl.gov>
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018-05-03_08:,,
+ signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 priorityscore=1501 malwarescore=0
+ suspectscore=0 phishscore=0 bulkscore=0 spamscore=0 clxscore=1011
+ lowpriorityscore=0 mlxscore=0 impostorscore=0 mlxlogscore=999 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.0.1-1711220000
+ definitions=main-1805030148
+Subject: [oss-security] Singularity's Linux kernel vulnerability claim
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> Date: Tue, 6 Sep 2016 20:50:23 -0500 (CDT)
-
-> Yesterday GraphicsMagick 1.3.25 was released. It fixes several
-> security issues:
-
-> 1. A last instance of CVE-2016-2317 (heap buffer overflow) in the MVG
-> rendering code (also impacts SVG). This problem was originally
-> reported by Gustavo Grieco.
-
-CVE does not support the concept of a different "instance" of an ID
-number that has different affected versions. For the aspect of the
-heap buffer overflow issue in MVG/SVG rendering that remained present
-in the 1.3.24 release (and was not fixed until 1.3.25), use
-CVE-2016-7446.
-
-This should be considered a clarification to the following NEWS
-excerpts:
-
-   http://www.graphicsmagick.org/NEWS.html#may-30-2016
-   1.3.24 (May 30, 2016)
-   SVG: Fixed heap and stack buffer overflows, as well as segmentation
-   violations (CVE-2016-2317 and CVE-2016-2318).
-
-   http://www.graphicsmagick.org/NEWS.html#september-5-2016
-   1.3.25 (September 5, 2016)
-   SVG/MVG: Fix another case of CVE-2016-2317 (heap buffer overflow)
-   in the MVG rendering code (also impacts SVG).
-
-
-> 2. A possible heap overflow of the EscapeParenthesis() function.
-> While I was not able to reproduce it for myself, the implementation is
-> replaced with a different algorithm. This problem was reported by
-> Gustavo Grieco.
-
-Use CVE-2016-7447.
-
-
-> 3. The Utah RLE reader did not validate that header information was
-> reasonable given the file size and so it could cause huge memory
-> allocations and/or consume huge amounts of CPU. This problem was
-> reported by Agostino Sarubbo.
-
-Use CVE-2016-7448.
-
-
-> 4. The TIFF reader had a bug pertaining to use of TIFFGetField() when
-> a 'count' value is returned. The bug caused a heap read overflow (due
-> to using strlcpy() to copy a possibly unterminated string) which could
-> allow an untrusted file to crash the software.
-
->> Fix heap buffer read overflow while copying sized TIFF attributes.
-
->> http://hg.code.sf.net/p/graphicsmagick/code/rev/eb58028dacf5
-
->>> https://blogs.gentoo.org/ago/2016/08/23/graphicsmagick-two-heap-based-buffer-overflow-in-readtiffimage-tiff-c/
->>> https://blogs.gentoo.org/ago/2016/09/07/graphicsmagick-null-pointer-dereference-in-magickstrlcpy-utility-c/
-
->>>> The problem was due to the definition of strlcpy() in that it is 
->>>> supposed to return the number of characters which would have been 
->>>> copied if the destination buffer was large enough. To satisfy this 
->>>> requirement, strlcpy() needs to continue scanning memory until it 
->>>> encounters a null byte in memory.
->>>> 
->>>> The strlcpy() function has very nice properties but this weakness is 
->>>> something that developers need to be aware of.
-
-Use CVE-2016-7449 for all of these reported TIFF problems. The
-ultimate vulnerability was use of:
-
-  strlcpy(attribute,text,Min(sizeof(attribute),(count+1)));
-
-three times in coders/tiff.c, where strlcpy is not an appropriate
-function choice for this type of scenario of untrusted-data copying.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJX3rYOAAoJEHb/MwWLVhi2T8AP/2FLvqniHnnBY6teYw5BlnFI
-CfQhTDZnh9Y1/yKcHci9A3QPtcuNRkhpwTXIV3pBNsTLIm+/E+/q28YZzS+j9pzJ
-wdURRmR40Hg1fCztO+VRpoe2WTu1qwKiC7nVcnol2fGqtx+umy25Frtwo6TaQ6q6
-D1YpbHwP4u5S91KX2dC3BStKY4jwgRtMCCOiojelKftvpxYu8oLXsVwBwKGOZPr9
-Kk4SJiFdSKQrJzzZKB8srIwLkDjA8fXz3KV7nfSznt6TGwQyx0hMJdHm/bif9oVt
-ILZ6/IKXlAgN3z+gVdEhPaqzMjyUXskfiX1+8UZx2d9cumSlW9xbaQUBrdhIbC3w
-6d0Mwcs/fG0zYULNpIiVCJrQFNjkAsIEL9wcEqaUoQmifXqgFZ4g1FPJi1xyjUNg
-hrkSOn4N/e2Y7LYlPgJeCUEjl+f00FA5/2rWSyk8V78vz5cLpFV5tQ2+5mRhXJCO
-mcmfo0TPeboyYidBXlLWj9BVPHSJySeylYdH6yHnhD1ZjC1C4gQVHhIcYezkFIiO
-KspZxgBpo+FC6uXnm4Pn3tR2o+XdgDvg8oe7pW4ZNb1lB6qMd90sMnWGIW+4XSWQ
-JQurAylyajRnZ0MN8pHR9fel++8aaIXqY/QK1JwUC3MIBZdwHs1OH6t2VBu4eNff
-Lk+EMJgP868wTRmhGWwK
-=DLQk
------END PGP SIGNATURE-----
+Rm9sa3MsDQoNClNpbmd1bGFyaXR5IGlzIGEgY29udGFpbmVyIHJ1bnRpbWUg
+dGFyZ2V0aW5nIHRoZSBoaWdoLXBlcmZvcm1hbmNlIGNvbXB1dGluZyBtYXJr
+ZXQuIEl0IGFwcGVhcnMgdG8gYmUgdGhlIHNvbGUgcHJvZHVjdCBvZiBTeWxh
+YnMsIEluYy4gWzFdIGFuZCBoYXMgYm90aCDigJxjb21tdW5pdHnigJ0gKG9w
+ZW4gc291cmNlKSBhbmQg4oCccHJv4oCdIChjbG9zZWQgc291cmNlKSB2ZXJz
+aW9ucy4NCg0KUmVjZW50bHksIHRoZSBTaW5ndWxhcml0eSB0ZWFtIGFubm91
+bmNlZCBvbiB0aGVpciBibG9nIFsyXSwgZm9sbG93aW5nIHVwIGFuIGVhcmxp
+ZXIgbWFpbGluZyBsaXN0IHBvc3QgWzNdLCB0aGF0IHRoZXnigJl2ZSBmb3Vu
+ZDoNCg0KPiBhbiBleHBsb2l0IHZlY3RvciB0byBhbGwgY29udGFpbmVyIHJ1
+bnRpbWVzLCB0aGF0IGFsbG93cyBhIG1hbGljaW91cyB1c2VyIHRvIGdhaW4g
+YWRkaXRpb25hbCBwcml2aWxlZ2VzIHdpdGhpbiBhIGNvbnRhaW5lciBvbiBo
+b3N0cyBydW5uaW5nIGtlcm5lbHMgdGhhdCBkbyBub3Qgc3VwcG9ydCB0aGUg
+UFJfU0VUX05PX05FV19QUklWUyBmZWF0dXJlDQoNCk5vIHRlY2huaWNhbCBk
+ZXRhaWxzIGFyZSBwdWJsaWNhbGx5IGF2YWlsYWJsZToNCg0KPiBTeWxhYnMg
+aGFzIG5vdCBwcm92aWRlZCBkZXRhaWxzIGFib3V0IHRoaXMgZXhwbG9pdCBi
+ZWNhdXNlIHRoZXJlIGlzIG5vIHdvcmthcm91bmQgc2hvcnQgb2YgdXBncmFk
+aW5nIHRoZSBrZXJuZWwgb3IgdW5pbnN0YWxsaW5nIFNpbmd1bGFyaXR5LiBT
+byBnaXZpbmcgbW9yZSBpbmZvcm1hdGlvbiB3aWxsIG9ubHkgaGVscCBtYWxp
+Y2lvdXMgcGFydGllcy4NCg0KV2UgdW5kZXJzdGFuZCB0aGF0IGRldGFpbHMg
+aGF2ZSBiZWVuIG9mZmVyZWQgYnkgU3lsYWJzIHRvIGF0IGxlYXN0IG9uZSB0
+aGlyZCBwYXJ0eSB1bmRlciBOREEuIFRoaXMgdGhpcmQgcGFydHkgZGVjbGlu
+ZWQsIGJ1dCBvdGhlcnMgbWF5IGhhdmUgYWNjZXB0ZWQuDQoNClN5bGFicyBk
+b2VzIG5vdCBwbGFuIHRvIHJlcXVlc3QgYSBDVkUgKGxpbmsgaW4gb3JpZ2lu
+YWwpOg0KDQo+IEFzIG9mIG5vdywgU3lsYWJzIHdpbGwgbm90IHJlcXVlc3Qg
+YSAgQ1ZFIGZvciB0aGlzIGlzc3VlIGJlY2F1c2UgaXQgb25seSBhZmZlY3Rz
+IG9sZCBrZXJuZWxzIGFuZCBDVkXigJlzIGFzc29jaWF0ZWQgd2l0aCBQUl9T
+RVRfTk9fTkVXX1BSSVZTIGhhdmUgYWxyZWFkeSBiZWVuIHByb3ZpZGVkIGFu
+ZCByZXNvbHZlZCBbNF0uDQoNCg0KTXkgcXVlc3Rpb25zOg0KDQoxLiBEb2Vz
+IGFueW9uZSBrbm93IHdoYXQgaXMgZ29pbmcgb24gd2l0aCB0aGlzIGFsbGVn
+ZWQgdnVsbmVyYWJpbGl0eT8NCjIuIEhhcyBhbnl0aGluZyBiZWVuIGluZGVw
+ZW5kZW50bHkgY29ycm9ib3JhdGVkPw0KMy4gV291bGQgYSBDVkUgcmVxdWVz
+dCBiZSBhcHByb3ByaWF0ZT8NCg0KVGhhbmtzLA0KUmVpZA0KDQpbMV06IGh0
+dHBzOi8vd3d3LnN5bGFicy5pby8NClsyXTogaHR0cHM6Ly93d3cuc3lsYWJz
+LmlvLzIwMTgvMDUvd2hhdHNuZXctc2luZ3VsYXJpdHktMi01LXdoeS1hZmZl
+Y3RzLWV2ZXJ5b25lLXVzaW5nLWNvbnRhaW5lcnMvDQpbM106IGh0dHBzOi8v
+Z3JvdXBzLmdvb2dsZS5jb20vYS9sYmwuZ292L2ZvcnVtLyMhdG9waWMvc2lu
+Z3VsYXJpdHkvMmg4S1lVYmxWeEENCls0XTogaHR0cDovL2N2ZS5taXRyZS5v
+cmcvY2dpLWJpbi9jdmVuYW1lLmNnaT9uYW1lPUNWRS0yMDE0LTMyMTU=
