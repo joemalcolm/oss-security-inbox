@@ -1,109 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/17/1
-Message-ID: <20180317004150.GF4105@hunt>
-Date: Fri, 16 Mar 2018 17:41:50 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/03/2
+Message-ID: <20180503180348.GA3185@gremlin.ru>
+Date: Thu, 3 May 2018 21:03:48 +0300
+From: gremlin@...mlin.ru
 To: oss-security@...ts.openwall.com
-Subject: [cve-request@...re.org: Re: [scr479280] sqlite3 - all; fix is in source control but not yet released]
+Subject: Re: Singularity's Linux kernel vulnerability claim
 Content-Type: text/plain; charset=utf-8
 
-Hello, our friends at MITRE have assigned CVE-2018-8740 to an issue in
-SQLite3 that was discovered by OSS-Fuzz working on GDAL.
+On 2018-05-03 17:12:06 +0000, Priedhorsky, Reid wrote:
 
-Thanks to Even Rouault for passing along the issue and D. Richard Hipp
-for the fix.
+ > Singularity is a container runtime targeting the high-performance
+ > computing market. It appears to be the sole product of Sylabs,
+ > Inc. [1] and has both 'community' (open source) and
+ > 'pro' (closed source) versions.
+ > Recently, the Singularity team announced on their blog [2],
+ > following up an earlier mailing list post [3], that they've
+ > found:
+ >> an exploit vector to all container runtimes, that allows a
+ >> malicious user to gain additional privileges within a container on
+ >> hosts running kernels that do not support the PR_SET_NO_NEW_PRIVS
+ >> feature
 
------ Forwarded message from cve-request@...re.org -----
+That's normal: the container runtimes (except OpenVZ VPSes) are
+designed to be just a resource-limiting solution. Even the (quite
+trivial) "undock" exploit (developed for Docker, works everywhere
+except OpenVZ) allows escaping the container and getting into the
+host system once you have got root access inside of the container.
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+ > No technical details are publically available:
+ >> Sylabs has not provided details about this exploit because there
+ >> is no workaround short of upgrading the kernel or uninstalling
+ >> Singularity. So giving more information will only help malicious
+ >> parties.
+ > We understand that details have been offered by Sylabs to at
+ > least one third party under NDA. This third party declined,
+ > but others may have accepted.
 
-> [Suggested description]
-> In SQLite
-> through 3.22.0,
-> databases whose schema is corrupted using a CREATE TABLE AS statement could cause a NULL pointer dereference,
-> related to build.c and prepare.c.
-> 
-> ------------------------------------------
-> 
-> [VulnerabilityType Other]
-> NULL pointer dereference
-> 
-> ------------------------------------------
-> 
-> [Vendor of Product]
-> SQLite
-> 
-> ------------------------------------------
-> 
-> [Affected Product Code Base]
-> sqlite3 - all; fix is in source control but not yet released
-> 
-> ------------------------------------------
-> 
-> [Affected Component]
-> src/build.c, src/prepare.c
-> 
-> ------------------------------------------
-> 
-> [Attack Type]
-> Context-dependent
-> 
-> ------------------------------------------
-> 
-> [Impact Denial of Service]
-> true
-> 
-> ------------------------------------------
-> 
-> [Attack Vectors]
-> A corrupted SQLite3 database file must be accessed.
-> 
-> ------------------------------------------
-> 
-> [Reference]
-> https://bugs.launchpad.net/ubuntu/+source/sqlite3/+bug/1756349
-> https://www.sqlite.org/cgi/src/timeline?r=corrupt-schema
-> https://www.sqlite.org/cgi/src/vdiff?from=1774f1c3baf0bc3d&to=d75e67654aa9620b
-> https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=6964
-> 
-> ------------------------------------------
-> 
-> [Has vendor confirmed or acknowledged the vulnerability?]
-> true
-> 
-> ------------------------------------------
-> 
-> [Discoverer]
-> OSS-Fuzz
+That's their right. However, publishing the zero-day exploit could
+be much more funny...
 
-Use CVE-2018-8740.
+ > Sylabs does not plan to request a CVE (link in original):
+ >> As of now, Sylabs will not request a CVE for this issue
+ >> because it only affects old kernels and CVE's associated with
+ >> PR_SET_NO_NEW_PRIVS have already been provided and resolved [4].
+ > My questions:
+ > 1. Does anyone know what is going on with this alleged
+ > vulnerability?
+
+That's not actually a vulnerability, but just a misuse of kernel
+containerization features. Or would you put an elephant in a car
+instead of getting a truck?
+
+ > 2. Has anything been independently corroborated?
+ > 3. Would a CVE request be appropriate?
+
+My guess: unlikely.
 
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+-- 
+Alexey V. Vissarionov aka Gremlin from Kremlin
+GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8
 
-iQIcBAEBCAAGBQJarFm6AAoJEHb/MwWLVhi2C3oP/1rVX4scV1Ilox/LgOCjPDE1
-Oxq3swzeowK8rEDbBMhyuYKrz3dY8Rir/wzgQ2PXiRItw0fNY4dxFf/ZwSR16l5k
-0YzYc9FsnljK+6OJ9ZrH/4VmgbXAZOf+wANeISqndgfaBFPqv/WYb5aprr6GTVkM
-k73m3r+Wzp+yHg4mth+Y9eAqGOOi8s+W3yR5hTscLAxRaBcMq2rH0MNJKL6AUIxx
-gkTrqYh2tQqfaZFtm+Gfv3j3coKj/gpzK+fFAyqDjjrEFajhb3NKoiMu8+nvjsQx
-yOt02P2cqn/qb3jdu4dGDu4oaRvMazP6bvHaDyfSd3zfYb0RBuRzEfa5ZAWmHFcw
-7RUq1ryvX+zUdK4cpfywC2/9XUfPoM37cWhV2+myd9lgbiCwdbF094omdEiHI4HB
-hnPfBzk1ZlizgNKaV8iK+RNdLDKLwv2MjyJ1X7SEe0xmengetfFvOEa7qWRFNog8
-5aQOG0r2oLg4/ZirOlUkIwLa2OFlG0VnhDww9TMtdEiz95slmmXgv6cVGHdTEteo
-WginOrUnMBjkm+jUDKilBABw49UxFpzKAqa+z0zTsheaKAm1Ydu2j8I2K5bLLhAc
-MX4MHG3y8M/5nn7HXvhIIOP2Gcxc14WPJhug3rgq0VVdS+O4NFSXG1Umjc+boHCv
-RF7PZ9dM9WOVd4QFf3RI
-=gkoK
------END PGP SIGNATURE-----
-
-
------ End forwarded message -----
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Content of type "application/pgp-signature" skipped
