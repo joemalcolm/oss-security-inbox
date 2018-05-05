@@ -1,26 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/04/2
-Message-ID: <85588672-185e-0540-d787-dd591f53b2ab@apache.org>
-Date: Thu, 4 Oct 2018 13:40:34 +0200
-From: Daniel Gruno <humbedooh@...che.org>
-To: oss-security@...ts.openwall.com, security <security@...che.org>
-Subject: [NOTICE] CVE-2017-5658: Derived information disclosure by Apache Pony Mail
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/05/1
+Message-ID: <CANi-yg-6VPUhWvAHHEkQYByYT4HPBcpTgqb+d5WsGJBVHKrm1Q@mail.gmail.com>
+Date: Sat, 5 May 2018 07:52:08 -0700
+From: Bryan Pendleton <bpendleton.derby@...il.com>
+To: derby-dev@...apache.org, Derby Discussion <derby-user@...apache.org>,  security <security@...che.org>, oss-security@...ts.openwall.com
+Cc: gregory draperi <gregory.draperi@...il.com>
+Subject: [ANNOUNCE] CVE-2018-1313: Apache Derby externally-controlled input vulnerability
 Content-Type: text/plain; charset=utf-8
 
+CVE-2018-1313: Apache Derby externally-controlled input vulnerability
 
-CVE-2017-5658
-Product: Apache Pony Mail (incubating)
-Version affected: Apache Pony Mail 0.7 to 0.9
-Vulnerability type: Information Disclosure
-Severity: Medium
+Severity: Important
 
-The statistics generator was found to be returning timestamp data 
-without proper authorization checks. This could lead to derived 
-information disclosure on private lists about the timing of specific 
-email subjects or text bodies, though without disclosing the content 
-itself. As this was primarily used as a caching feature for faster 
-loading times, the caching was disabled by default to prevent this. 
-Users using 0.9 should upgrade to 0.10 to address this issue.
+Vendor:
+The Apache Software Foundation
 
-Please see http://ponymail.incubator.apache.org/downloads.html for the 
-0.10 release that addresses these issues.
+Versions Affected:
+Derby 10.3.1.4 to 10.14.1.0
+
+Description:
+A specially-crafted network packet can be used to request the Derby
+Network Server to boot a database whose location and contents are under
+the user's control. If the Derby Network Server is not running with a
+Java Security Manager policy file, the attack is successful. If the
+server is using a policy file, the policy file must permit the
+database location to be read for the attack to work. The default
+Derby Network Server policy file distributed with the affected releases
+includes a permissive policy as the default Network Server policy, which
+allows the attack to work.
+
+Mitigation:
+Users should specify an explicit security policy file, as described here:
+http://db.apache.org/derby/docs/10.14/security/csecjavasecurity.html
+
+Derby release 10.14.2.0 disallows the specially-crafted network packet,
+and also modifies the default Derby Network Server policy file to be
+significantly less permissive (the default file access policy is now
+limited to the derby.system.home directory and the directory from
+which the Derby jar files were loaded). It is still recommended that
+production installations of the Derby Network Server should specify
+an explicit security policy file.
+
+Credit:
+This issue was discovered by Grégory Draperi
