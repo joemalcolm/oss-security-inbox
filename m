@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4903" "Wednesday" "9" "October" "2019" "10:14:30" "-0400" "Michael Orlitzky" "michael@orlitzky.com" "<e758e2d9-3c1f-c006-4ad2-f0f38ec7e669@orlitzky.com>" "131" "[oss-security] CVE-2019-17365: Nix per-user profile directory hijack" nil nil nil "10" "2019100914:14:30" "[oss-security] CVE-2019-17365: Nix per-user profile directory hijack" (number mark "U       michael@orli Oct  9  131/4903  " thread-indent "\"[oss-security] CVE-2019-17365: Nix per-user profile directory hijack\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2019-17365: Nix per-user profile directory hijack" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["12126" "Monday" "7" "May" "2018" "17:35:30" "+0200" "Cedric Buissart" "cbuissar@redhat.com" "<CAKG8Do6CyL4JQxhvXSx5a31KAZEP7PpEy29cyFp+bTeRm5=wzQ@mail.gmail.com>" "235" "[oss-security] Re: CVE-2018-1089 389-ds-base: unauthenticated ns-slapd crash via large filter value in ldapsearch" nil nil nil "5" "2018050715:35:30" "[oss-security] Re: CVE-2018-1089 389-ds-base: unauthenticated ns-slapd crash via large filter value in ldapsearch" (number mark "U       cbuissar@red May  7  235/12126 " thread-indent "\"[oss-security] Re: CVE-2018-1089 389-ds-base: unauthenticated ns-slapd crash via large filter value in ldapsearch\"\n") "<CAKG8Do7DJOj05DgTnztiM7O780z3kXmKRoeNy6yB5_Yr1Uahwg@mail.gmail.com>" ("<CAKG8Do7DJOj05DgTnztiM7O780z3kXmKRoeNy6yB5_Yr1Uahwg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 31785 invoked by uid 550); 9 Oct 2019 14:14:49 -0000
+Received: (qmail 13612 invoked by uid 550); 7 May 2018 15:36:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,228 +12,266 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 31764 invoked from network); 9 Oct 2019 14:14:47 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=orlitzky.com; s=mail2;
-	t=1570630474; bh=+MsY0tVmm5CivgXyAZKEHoS+EQ5u1eWm+V3xGxrQnBo=;
-	h=From:Subject:To:Date;
-	b=wXiFXpJu2lSAPy1EOWtjW6xEl7+WuWAiei9xvoHa239WYi7zJ/fekye5Lp8BEkOU3
-	 6KIrwoiSTbcT7OuIlx9XIf5pm0oYmsvLqCBTkzPYfQ8MeV0ZzPYlGIdWI/NYEe646p
-	 ck86Liivqw7q2BTqi31F8OiFdM/yBlNpg0Vnvpys=
-From: Michael Orlitzky <michael@orlitzky.com>
-Openpgp: preference=signencrypt
-Autocrypt: addr=michael@orlitzky.com; prefer-encrypt=mutual; keydata=
- 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
-To: oss-security@lists.openwall.com
-Message-ID: <e758e2d9-3c1f-c006-4ad2-f0f38ec7e669@orlitzky.com>
-Date: Wed, 9 Oct 2019 10:14:30 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+Received: (qmail 13591 invoked from network); 7 May 2018 15:36:02 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=5dFdls40fq0KAYoue6iZyMlGpTH4WLag0d8mARtkydI=;
+        b=rjPTS5yUyDe3fB62nPV5LyD+V/csw6YssiiLJT4NuZmbnOnw4Abp7F2KVwqk9PBc1G
+         PieHFu1EKqKEMvVaWgK0ZLt4NR0+GzjBtbmcTb6k/WMpunP9PlwK0ikbiWXiDG3NWWs5
+         KWfX9SsyMhU3G235wWjZswrmtxssrs8eevXuxgkKoosXuRxAnJCDn6qpP8uxNnMDvThy
+         yqTRrSTT8uGuKF7PbapO8MyjunmV3wVnElfiInyMczojSZMLbTK4yEWhXxTu+E8OXnPS
+         ciZzmTfDGFXFL8WTjaxEyaVetQ4hTT7rwGUbzBf7FKGar/t6KEiEDRiTjmtPoTmTd/FK
+         ARnQ==
+X-Gm-Message-State: ALQs6tDI9mrF6evz/p4poxIPGjy485pDeCSrZKBKNr47JGo7U7JXsQqi
+	hzLlPmai2pF7Hf6JEMtOoZ7ga/kBOyRQBSNlUptgFg==
+X-Google-Smtp-Source: AB8JxZpV+OB03hdoHCADES8JwLWG90yaYoDWQbKJbZtoMkuVJs1gVhQ9/Xuaxnh400v5xF7/M8WgcqzIGyehM6dLn90=
+X-Received: by 2002:a6b:b889:: with SMTP id i131-v6mr40056017iof.300.1525707350921;
+ Mon, 07 May 2018 08:35:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] CVE-2019-17365: Nix per-user profile directory hijack
+In-Reply-To: <CAKG8Do7DJOj05DgTnztiM7O780z3kXmKRoeNy6yB5_Yr1Uahwg@mail.gmail.com>
+References: <CAKG8Do7DJOj05DgTnztiM7O780z3kXmKRoeNy6yB5_Yr1Uahwg@mail.gmail.com>
+From: Cedric Buissart <cbuissar@redhat.com>
+Date: Mon, 7 May 2018 17:35:30 +0200
+Message-ID: <CAKG8Do6CyL4JQxhvXSx5a31KAZEP7PpEy29cyFp+bTeRm5=wzQ@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/mixed; boundary="000000000000af2f23056b9f6c5d"
+Subject: [oss-security] Re: CVE-2018-1089 389-ds-base: unauthenticated ns-slapd crash via
+ large filter value in ldapsearch
 
-Product: Nix
-Versions affected: 2.3 and earlier
-Author: Michael Orlitzky
-Bug report: Reported privately to the NixOS security team on 2019-08-19.
+--000000000000af2f23056b9f6c5d
+Content-Type: multipart/alternative; boundary="000000000000af2f1f056b9f6c5b"
 
+--000000000000af2f1f056b9f6c5b
+Content-Type: text/plain; charset="UTF-8"
 
-== Summary ==
+On Mon, May 7, 2018 at 5:30 PM, Cedric Buissart <cbuissar@redhat.com> wrote:
 
-Out of the box, Nix creates an empty, world-writable, per-user profile
-directory. After Nix is installed but before a victim has (re)logged in,
-the victim's personal profile directory can be hijacked by an attacker
-on on the system who has no other special privileges. Thenceforth, the
-attacker controls that profile directory and can take over the target
-account.
+> Hi all,
+>
+> This is to disclose the following flaw, CVE-2018-1089 :
+>
+> 389-ds-base, a.k.a 389 Directory Server, https://pagure.io/389-ds-base/,
+> is a highly usable, fully featured, reliable and secure LDAP server
+> implementation. It handles many of the largest LDAP deployments in the
+> world.
+>
+> 389-ds server did not properly handle characters needed to be escaped in
+> its query filter. This could result in buffer overflows, from the heap
+> or the stack, on larger filters.  An unauthenticated attacker could send
+> a specially crafted LDAP request and crash the server. RCE has not been
+> demonstrated at this time.
+>
+> Red Hat would like to thank Greg Kubok for alerting us of the issue.
+>
+>
+> Reproducer1 :
+> [root@server1 ~]# payload=$(printf '.*$%.0s' {1..1000})
+> [root@server1 ~]# ldapsearch -h localhost -p 389 -x -b "dc=blah"
+> "(&(|(telephoneNumber=*${payload}*)(uid=*${payload}*)(
+> title=*${payload}*)(sn=*${payload}*)(ou=*${payload}*)(
+> givenName=*${payload}*))(objectClass=posixaccount))"
+> "telephoneNumber sshpubkeyfp ipaSshPubKey uid krbCanonicalName title
+> loginShell uidNumber gidNumber sn homeDirectory mail krbPrincipalName
+> givenName nsAccountLock"
+>
+> Reproducer2:
+> [root@server1 ~]# perl -e 'print ".*\$" x (1400)' | ldapsearch -x -f-
+> "(&(uid=%s)(objectClass=posixaccount))"
+>
+>
+> Patch attached for versions 1.3.7 & 1.2.11
+>
+Patches are now attached for real.
 
-
-== Details ==
-
-Nix is a package manager that can install software both globally (for
-the system) and locally (for each user). One critical aspect of the
-per-user support is that each user has a unique local "Nix profile"
-directory. After installing Nix, the intent is that the next time a
-user logs in, her per-user profile directory is created automatically
-and some tweaks are made to allow her to use Nix right away.
-
-The automatic profile-directory creation involves two key things.
-First, the Nix installation script (scripts/install-multi-user.sh)
-modifies /etc/bashrc, /etc/zshrc, and /etc/profile.d/nix.sh to include
-the upstream file scripts/nix-profile-daemon.sh.in every time a user
-logs in. That script, in turn, is supposed to create the user's Nix
-profile directory if it does not exist:
-
-  # Set up the per-user profile.
-  mkdir -m 0755 -p $NIX_USER_PROFILE_DIR
-  if ! test -O "$NIX_USER_PROFILE_DIR"; then
-    echo "WARNING: bad ownership on $NIX_USER_PROFILE_DIR" >&2
-  fi
-
-If the directory does not exist, then when the user creates it, he
-will own it and everything is fine.
-
-However the second key aspect of this process is that, for the user to
-be able to create $NIX_USER_PROFILE_DIR, he must be able to write to
-its parent directory. That parent directory is shared by all users on
-the system, and as a result, is world-writable (so that everyone can
-create his own subdirectory thereof). This is enforced by the
-installation script scripts/install-multi-user.sh...
-
-  _sudo "to make the basic directory structure of Nix (part 2)" \
-    mkdir -pv -m 1777 /nix/var/nix/{gcroots,profiles}/per-user
-
-by the RPM spec file nix.spec.in...
-
-  # make per-user directories
-  for d in profiles gcroots;
-  do
-    mkdir -p $RPM_BUILD_ROOT/nix/var/nix/$d/per-user
-    chmod 1777 $RPM_BUILD_ROOT/nix/var/nix/$d/per-user
-  done
-
-and even in one place by the Nix "LocalStore" class in
-src/libstore/local-store.cc,
-
-  Path perUserDir = profilesDir + "/per-user";
-  createDirs(perUserDir);
-  if (chmod(perUserDir.c_str(), 01777) == -1) ...
-
-The sticky bit here is better than nothing, but is ultimately
-insufficient. The problem with this approach is that after Nix is
-installed, _any_ user on the system can create and thereafter own
-_any_ local profile directory. I can't overwrite an existing one, but
-I can create your profile directory before you have ever logged in.
-Since the global hacks above load code from your Nix profile
-directory, this lets me run code when you log in.
-
-To make the situation a bit worse, the very last thing that gets
-executed by scripts/nix-profile-daemon.sh.in when you log in is,
-
-  export PATH="$HOME/.nix-profile/bin:...:$PATH"
-
-where $HOME/.nix-profile is a symlink to your Nix local profile directory,
-
-  if test "$USER" != root; then
-    ln -s $NIX_USER_PROFILE_DIR/profile $HOME/.nix-profile
-  else
-
-Since I can write to your local profile directory, and since that
-location is prepended to your path, I can override all of your system
-executables with my own copies. Putting everything together, this
-allows any user on the system to escalate his privileges to that of
-any other non-root user. The root user is probably safe since he does
-not use a local profile directory; however, on many systems, "root" is
-not the only super-user account.
+>
+> Thanks!
+>
+> --
+> Cedric Buissart,
+> Product Security
+>
 
 
-== Exploitation ==
 
-The following example takes over the "toor" account using an
-unprivileged "user" account.
+-- 
+Cedric Buissart,
+Product Security
 
-  1. Install Nix as root.
+--000000000000af2f1f056b9f6c5b
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-  2. As "user", create the directory that "toor" would like to use for
-     his per-user profile:
+<div dir=3D"ltr"><br><div class=3D"gmail_extra"><br><div class=3D"gmail_quo=
+te">On Mon, May 7, 2018 at 5:30 PM, Cedric Buissart <span dir=3D"ltr">&lt;<=
+a href=3D"mailto:cbuissar@redhat.com" target=3D"_blank">cbuissar@redhat.com=
+</a>&gt;</span> wrote:<br><blockquote class=3D"gmail_quote" style=3D"margin=
+:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex"><div dir=3D"ltr">H=
+i all,<br><br>This is to disclose the following flaw, CVE-2018-1089 :<br><b=
+r>389-ds-base, a.k.a 389 Directory Server, <a href=3D"https://pagure.io/389=
+-ds-base/" target=3D"_blank">https://pagure.io/389-ds-base/</a><wbr>,<br>is=
+ a highly usable, fully featured, reliable and secure LDAP server<br>implem=
+entation. It handles many of the largest LDAP deployments in the<br>world.=
+=C2=A0 <br><br>389-ds server did not properly handle characters needed to b=
+e escaped in<br>its query filter. This could result in buffer overflows, fr=
+om the heap<br>or the stack, on larger filters.=C2=A0 An unauthenticated at=
+tacker could send<br>a specially crafted LDAP request and crash the server.=
+ RCE has not been<br>demonstrated at this time.<br><br>Red Hat would like t=
+o thank Greg Kubok for alerting us of the issue.<br><br><br>Reproducer1 :<b=
+r>[root@server1 ~]# payload=3D$(printf &#39;.*$%.0s&#39; {1..1000})<br>[roo=
+t@server1 ~]# ldapsearch -h localhost -p 389 -x -b &quot;dc=3Dblah&quot;<br=
+>&quot;(&amp;(|(telephoneNumber=3D*${<wbr>payload}*)(uid=3D*${payload}*)(<w=
+br>title=3D*${payload}*)(sn=3D*${<wbr>payload}*)(ou=3D*${payload}*)(<wbr>gi=
+venName=3D*${payload}*))(<wbr>objectClass=3Dposixaccount))&quot;<br>&quot;t=
+elephoneNumber sshpubkeyfp ipaSshPubKey uid krbCanonicalName title<br>login=
+Shell uidNumber gidNumber sn homeDirectory mail krbPrincipalName<br>givenNa=
+me nsAccountLock&quot;<br><br>Reproducer2:<br>[root@server1 ~]# perl -e &#3=
+9;print &quot;.*\$&quot; x (1400)&#39; | ldapsearch -x -f- &quot;(&amp;(uid=
+=3D%s)(objectClass=3D<wbr>posixaccount))&quot;<br><br><br>Patch attached fo=
+r versions 1.3.7 &amp; 1.2.11<br></div></blockquote><div>Patches are now at=
+tached for real.<br></div><blockquote class=3D"gmail_quote" style=3D"margin=
+:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex"><div dir=3D"ltr"><=
+br>Thanks!<span class=3D"HOEnZb"><font color=3D"#888888"><br clear=3D"all">=
+<br>-- <br><div class=3D"m_-1131220615611433655gmail_signature"><div dir=3D=
+"ltr"><div><div dir=3D"ltr"><div><div dir=3D"ltr"><div><div dir=3D"ltr">Ced=
+ric Buissart,<br>Product Security</div></div></div></div></div></div></div>=
+</div>
+</font></span></div>
+</blockquote></div><br><br clear=3D"all"><br>-- <br><div class=3D"gmail_sig=
+nature" data-smartmail=3D"gmail_signature"><div dir=3D"ltr"><div><div dir=
+=3D"ltr"><div><div dir=3D"ltr"><div><div dir=3D"ltr">Cedric Buissart,<br>Pr=
+oduct Security</div></div></div></div></div></div></div></div>
+</div></div>
 
-       user $ cd /nix/var/nix/profiles/per-user
-       user $ mkdir toor
+--000000000000af2f1f056b9f6c5b--
 
-     At this point, "user" owns toor's profile directory; the end is
-     nigh.
+--000000000000af2f23056b9f6c5d
+Content-Type: text/x-patch; charset="US-ASCII"; 
+	name="v1.3.7.5-CVE-2018-1089-Crash-from-long-search-filter.patch"
+Content-Disposition: attachment; 
+	filename="v1.3.7.5-CVE-2018-1089-Crash-from-long-search-filter.patch"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_jgwep7k40
 
-  3. To make matters worse, the unprivileged "user" can inject programs
-     into toor's PATH:
+RnJvbSA3MWI4N2U2NzhiY2MwM2JiOWEwODAyZjdkZmZjOTdjZjM1NGVlNjlh
+IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQ0KRnJvbTogTWFyayBSZXlub2xk
+cyA8bXJleW5vbGRzQHJlZGhhdC5jb20+DQpEYXRlOiBUaHUsIDUgQXByIDIw
+MTggMTQ6NTI6MzQgLTA0MDANClN1YmplY3Q6IFtQQVRDSF0gQ1ZFLTIwMTgt
+MTA4OSAtIENyYXNoIGZyb20gbG9uZyBzZWFyY2ggZmlsdGVyDQoNCi0tLQ0K
+IGxkYXAvc2VydmVycy9zbGFwZC9maWx0ZXIuYyB8ICA4ICsrKystLS0tDQog
+bGRhcC9zZXJ2ZXJzL3NsYXBkL3V0aWwuYyAgIHwgMTAgKysrKystLS0tLQ0K
+IDIgZmlsZXMgY2hhbmdlZCwgOSBpbnNlcnRpb25zKCspLCA5IGRlbGV0aW9u
+cygtKQ0KDQpkaWZmIC0tZ2l0IGEvbGRhcC9zZXJ2ZXJzL3NsYXBkL2ZpbHRl
+ci5jIGIvbGRhcC9zZXJ2ZXJzL3NsYXBkL2ZpbHRlci5jDQppbmRleCAyYWMz
+ZDJjZDguLjM5M2E0ZGNlZSAxMDA2NDQNCi0tLSBhL2xkYXAvc2VydmVycy9z
+bGFwZC9maWx0ZXIuYw0KKysrIGIvbGRhcC9zZXJ2ZXJzL3NsYXBkL2ZpbHRl
+ci5jDQpAQCAtNDcyLDcgKzQ3Miw3IEBAIGdldF9zdWJzdHJpbmdfZmlsdGVy
+KA0KICAgICAgICAgICAgIGYtPmZfc3ViX2luaXRpYWwgPSB2YWw7DQogICAg
+ICAgICAgICAgZXZhbCA9IChjaGFyICopc2xhcGlfZXNjYXBlX2ZpbHRlcl92
+YWx1ZSh2YWwsIC0xKTsNCiAgICAgICAgICAgICBpZiAoZXZhbCkgew0KLSAg
+ICAgICAgICAgICAgICBpZiAoZnN0cl9sZW4gPCBzdHJsZW4oKmZzdHIpICsg
+c3RybGVuKGV2YWwpICsgMSkgew0KKyAgICAgICAgICAgICAgICBpZiAoZnN0
+cl9sZW4gPD0gc3RybGVuKCpmc3RyKSArIHN0cmxlbihldmFsKSArIDEpIHsN
+CiAgICAgICAgICAgICAgICAgICAgIGZzdHJfbGVuICs9IChzdHJsZW4oZXZh
+bCkgKyAxKSAqIDI7DQogICAgICAgICAgICAgICAgICAgICAqZnN0ciA9IHNs
+YXBpX2NoX3JlYWxsb2MoKmZzdHIsIGZzdHJfbGVuKTsNCiAgICAgICAgICAg
+ICAgICAgfQ0KQEAgLTQ4Niw3ICs0ODYsNyBAQCBnZXRfc3Vic3RyaW5nX2Zp
+bHRlcigNCiAgICAgICAgICAgICBjaGFycmF5X2FkZCgmZi0+Zl9zdWJfYW55
+LCB2YWwpOw0KICAgICAgICAgICAgIGV2YWwgPSAoY2hhciAqKXNsYXBpX2Vz
+Y2FwZV9maWx0ZXJfdmFsdWUodmFsLCAtMSk7DQogICAgICAgICAgICAgaWYg
+KGV2YWwpIHsNCi0gICAgICAgICAgICAgICAgaWYgKGZzdHJfbGVuIDwgc3Ry
+bGVuKCpmc3RyKSArIHN0cmxlbihldmFsKSArIDEpIHsNCisgICAgICAgICAg
+ICAgICAgaWYgKGZzdHJfbGVuIDw9IHN0cmxlbigqZnN0cikgKyBzdHJsZW4o
+ZXZhbCkgKyAxKSB7DQogICAgICAgICAgICAgICAgICAgICBmc3RyX2xlbiAr
+PSAoc3RybGVuKGV2YWwpICsgMSkgKiAyOw0KICAgICAgICAgICAgICAgICAg
+ICAgKmZzdHIgPSBzbGFwaV9jaF9yZWFsbG9jKCpmc3RyLCBmc3RyX2xlbik7
+DQogICAgICAgICAgICAgICAgIH0NCkBAIC01MDQsNyArNTA0LDcgQEAgZ2V0
+X3N1YnN0cmluZ19maWx0ZXIoDQogICAgICAgICAgICAgZi0+Zl9zdWJfZmlu
+YWwgPSB2YWw7DQogICAgICAgICAgICAgZXZhbCA9IChjaGFyICopc2xhcGlf
+ZXNjYXBlX2ZpbHRlcl92YWx1ZSh2YWwsIC0xKTsNCiAgICAgICAgICAgICBp
+ZiAoZXZhbCkgew0KLSAgICAgICAgICAgICAgICBpZiAoZnN0cl9sZW4gPCBz
+dHJsZW4oKmZzdHIpICsgc3RybGVuKGV2YWwpICsgMSkgew0KKyAgICAgICAg
+ICAgICAgICBpZiAoZnN0cl9sZW4gPD0gc3RybGVuKCpmc3RyKSArIHN0cmxl
+bihldmFsKSArIDEpIHsNCiAgICAgICAgICAgICAgICAgICAgIGZzdHJfbGVu
+ICs9IChzdHJsZW4oZXZhbCkgKyAxKSAqIDI7DQogICAgICAgICAgICAgICAg
+ICAgICAqZnN0ciA9IHNsYXBpX2NoX3JlYWxsb2MoKmZzdHIsIGZzdHJfbGVu
+KTsNCiAgICAgICAgICAgICAgICAgfQ0KQEAgLTUzMCw3ICs1MzAsNyBAQCBn
+ZXRfc3Vic3RyaW5nX2ZpbHRlcigNCiAgICAgfQ0KIA0KICAgICBmaWx0ZXJf
+Y29tcHV0ZV9oYXNoKGYpOw0KLSAgICBpZiAoZnN0cl9sZW4gPCBzdHJsZW4o
+KmZzdHIpICsgMykgew0KKyAgICBpZiAoZnN0cl9sZW4gPD0gc3RybGVuKCpm
+c3RyKSArIDMpIHsNCiAgICAgICAgIGZzdHJfbGVuICs9IDM7DQogICAgICAg
+ICAqZnN0ciA9IHNsYXBpX2NoX3JlYWxsb2MoKmZzdHIsIGZzdHJfbGVuKTsN
+CiAgICAgfQ0KZGlmZiAtLWdpdCBhL2xkYXAvc2VydmVycy9zbGFwZC91dGls
+LmMgYi9sZGFwL3NlcnZlcnMvc2xhcGQvdXRpbC5jDQppbmRleCBkZGIyY2M4
+OTkuLmNiNDZlZmIzZCAxMDA2NDQNCi0tLSBhL2xkYXAvc2VydmVycy9zbGFw
+ZC91dGlsLmMNCisrKyBiL2xkYXAvc2VydmVycy9zbGFwZC91dGlsLmMNCkBA
+IC0xNjEsNiArMTYxLDExIEBAIGRvX2VzY2FwZV9zdHJpbmcoDQogICAgICAg
+ICAgICAgICAgICAgICBicmVhazsNCiAgICAgICAgICAgICAgICAgfQ0KICAg
+ICAgICAgICAgICAgICBkbyB7DQorICAgICAgICAgICAgICAgICAgICBpZiAo
+YnVmU3BhY2UgPCA0KSB7DQorICAgICAgICAgICAgICAgICAgICAgICAgbWVt
+Y3B5KGJ1Zk5leHQsICIuLiIsIDIpOw0KKyAgICAgICAgICAgICAgICAgICAg
+ICAgIGJ1Zk5leHQgKz0gMjsNCisgICAgICAgICAgICAgICAgICAgICAgICBn
+b3RvIGJhaWw7DQorICAgICAgICAgICAgICAgICAgICB9DQogICAgICAgICAg
+ICAgICAgICAgICBpZiAoZXNjID09IFVUSUxfRVNDQVBFX0JBQ0tTTEFTSCkg
+ew0KICAgICAgICAgICAgICAgICAgICAgICAgIC8qICpzIGlzICdcXCcgKi8N
+CiAgICAgICAgICAgICAgICAgICAgICAgICAvKiBJZiAqKHMrMSkgYW5kICoo
+cysyKSBhcmUgYm90aCBoZXggZGlnaXRzLA0KQEAgLTE3OSwxMSArMTg0LDYg
+QEAgZG9fZXNjYXBlX3N0cmluZygNCiAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgKmJ1Zk5leHQrKyA9ICdcXCc7DQogICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgIC0tYnVmU3BhY2U7DQogICAgICAgICAgICAgICAgICAgICAg
+ICAgfQ0KLSAgICAgICAgICAgICAgICAgICAgICAgIGlmIChidWZTcGFjZSA8
+IDMpIHsNCi0gICAgICAgICAgICAgICAgICAgICAgICAgICAgbWVtY3B5KGJ1
+Zk5leHQsICIuLiIsIDIpOw0KLSAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICBidWZOZXh0ICs9IDI7DQotICAgICAgICAgICAgICAgICAgICAgICAgICAg
+IGdvdG8gYmFpbDsNCi0gICAgICAgICAgICAgICAgICAgICAgICB9DQogICAg
+ICAgICAgICAgICAgICAgICAgICAgUFJfc25wcmludGYoYnVmTmV4dCwgMywg
+IiUwMngiLCAqKHVuc2lnbmVkIGNoYXIgKilzKTsNCiAgICAgICAgICAgICAg
+ICAgICAgICAgICBidWZOZXh0ICs9IDI7DQogICAgICAgICAgICAgICAgICAg
+ICAgICAgYnVmU3BhY2UgLT0gMjsNCi0tIA0KMi4xMy42DQoNCg0K
 
-       user $ mkdir -p toor/profile/bin
-       user $ cp /path/to/exploit toor/profile/bin/cd
-       user $ cp /path/to/exploit toor/profile/bin/cp
-       user $ cp /path/to/exploit toor/profile/bin/ls
-       user $ cp /path/to/exploit toor/profile/bin/exit
-       user $ ...
+--000000000000af2f23056b9f6c5d
+Content-Type: text/x-patch; charset="US-ASCII"; 
+	name="v1.2.11.15-CVE-2018-1089-crash-in-long-search-filter.patch"
+Content-Disposition: attachment; 
+	filename="v1.2.11.15-CVE-2018-1089-crash-in-long-search-filter.patch"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_jgwep7kc1
 
-  4. Log in as toor; a warning is issued:
+RnJvbSBmYmQ0YTVmMzhjYzZlNTdiOGM3Y2FhZGE1ZTM5MDJlZjBjYjFjY2Rk
+IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBNYXJrIFJleW5vbGRz
+IDxtcmV5bm9sZHNAcmVkaGF0LmNvbT4KRGF0ZTogVGh1LCAxMiBBcHIgMjAx
+OCAxNDo0NToyOCAtMDQwMApTdWJqZWN0OiBbUEFUQ0hdIENWRS0yMDE4LTEw
+ODkgLSBjcmFzaCBpbiBsb25nIHNlYXJjaCBmaWx0ZXIKCi0tLQogbGRhcC9z
+ZXJ2ZXJzL3NsYXBkL3V0aWwuYyB8IDE4ICsrKysrKysrKystLS0tLS0tLQog
+MSBmaWxlIGNoYW5nZWQsIDEwIGluc2VydGlvbnMoKyksIDggZGVsZXRpb25z
+KC0pCgpkaWZmIC0tZ2l0IGEvbGRhcC9zZXJ2ZXJzL3NsYXBkL3V0aWwuYyBi
+L2xkYXAvc2VydmVycy9zbGFwZC91dGlsLmMKaW5kZXggOGMwYjdlZWY5Li5l
+N2NjNGUzNTMgMTAwNjQ0Ci0tLSBhL2xkYXAvc2VydmVycy9zbGFwZC91dGls
+LmMKKysrIGIvbGRhcC9zZXJ2ZXJzL3NsYXBkL3V0aWwuYwpAQCAtMTQ4LDYg
+KzE0OCwxMSBAQCBkb19lc2NhcGVfc3RyaW5nICgKIAkJICAgIGJyZWFrOwog
+CQl9CiAJCWRvIHsKKyAgICAgICAgICAgICAgICAgICAgaWYgKGJ1ZlNwYWNl
+IDwgNCkgeworICAgICAgICAgICAgICAgICAgICAgICAgbWVtY3B5KGJ1Zk5l
+eHQsICIuLiIsIDIpOworICAgICAgICAgICAgICAgICAgICAgICAgYnVmTmV4
+dCArPSAyOworICAgICAgICAgICAgICAgICAgICAgICAgZ290byBiYWlsOwor
+ICAgICAgICAgICAgICAgICAgICB9CiAJCSAgICBpZiAoZXNjID09IFVUSUxf
+RVNDQVBFX0JBQ0tTTEFTSCkgewogCQkJLyogKnMgaXMgJ1xcJyAqLwogCQkJ
+LyogSWYgKihzKzEpIGFuZCAqKHMrMikgYXJlIGJvdGggaGV4IGRpZ2l0cywK
+QEAgLTE2MSwxNCArMTY2LDExIEBAIGRvX2VzY2FwZV9zdHJpbmcgKAogCQkJ
+ICAgICpidWZOZXh0KysgPSAqczsgLS1idWZTcGFjZTsKIAkJCX0KIAkJICAg
+IH0gZWxzZSB7ICAgIC8qIFVUSUxfRVNDQVBFX0hFWCAqLwotCQkJKmJ1Zk5l
+eHQrKyA9ICdcXCc7IC0tYnVmU3BhY2U7Ci0JCQlpZiAoYnVmU3BhY2UgPCAz
+KSB7Ci0JCQkgICAgbWVtY3B5KGJ1Zk5leHQsICIuLiIsIDIpOwotCQkJICAg
+IGJ1Zk5leHQgKz0gMjsKLQkJCSAgICBnb3RvIGJhaWw7Ci0JCQl9Ci0JCQlQ
+Ul9zbnByaW50ZihidWZOZXh0LCAzLCAiJTAyeCIsICoodW5zaWduZWQgY2hh
+ciopcyk7Ci0JCQlidWZOZXh0ICs9IDI7IGJ1ZlNwYWNlIC09IDI7CisJCQkq
+YnVmTmV4dCsrID0gJ1xcJzsKKyAgICAgICAgICAgICAgICAgICAgICAgIC0t
+YnVmU3BhY2U7CisgICAgICAgICAgICAgICAgICAgICAgICBQUl9zbnByaW50
+ZihidWZOZXh0LCAzLCAiJTAyeCIsICoodW5zaWduZWQgY2hhciopcyk7Cisg
+ICAgICAgICAgICAgICAgICAgICAgICBidWZOZXh0ICs9IDI7CisgICAgICAg
+ICAgICAgICAgICAgICAgICBidWZTcGFjZSAtPSAyOwogCQkgICAgfQogCSAg
+ICAgICAgfSB3aGlsZSAoKytzIDw9IGxhc3QgJiYgCiAgICAgICAgICAgICAg
+ICAgICAgICAgICAgKGVzYyA9ICgqc3BlY2lhbCkoKHVuc2lnbmVkIGNoYXIp
+KnMpKSk7Ci0tIAoyLjEzLjYKCg==
 
-       Nix: WARNING: bad ownership on /nix/var/nix/profiles/per-
-       user/toor, should be toor
-       toor $
-
-     This is better than nothing, but it's too late.
-
-  5. Anything "toor" does (cd, cp, ls, exit,...) gives the unprivileged
-     user control of his account.
+--000000000000af2f23056b9f6c5d--
