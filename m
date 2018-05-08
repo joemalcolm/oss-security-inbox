@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["654" "Tuesday" "22" "November" "2016" "13:16:46" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1611221311230.12350@wniryva>" "22" "[oss-security] CVE-2016-8630 kernel: kvm: x86: NULL pointer dereference duringinstruction decode" nil nil nil "11" "2016112207:46:46" "[oss-security] CVE-2016-8630 kernel: kvm: x86: NULL pointer dereference duringinstruction decode" (number mark "U       ppandit@redh Nov 22   22/654   " thread-indent "\"[oss-security] CVE-2016-8630 kernel: kvm: x86: NULL pointer dereference duringinstruction decode\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1231" "Tuesday" "8" "May" "2018" "17:38:28" "+0000" "Andy Lutomirski" "luto@kernel.org" "<CALCETrXb4H5qa1o9qbC=+VJ+y6PGdoO-XWV3QNtNxkwCWC2ZTw@mail.gmail.com>" "23" "[oss-security] CVE-2018-1087: KVM incorrectly handles #DB exceptions while deferred by MOV SS/POP SS" nil nil nil "5" "2018050817:38:28" "[oss-security] CVE-2018-1087: KVM incorrectly handles #DB exceptions while deferred by MOV SS/POP SS" (number mark "U       luto@kernel. May  8   23/1231  " thread-indent "\"[oss-security] CVE-2018-1087: KVM incorrectly handles #DB exceptions while deferred by MOV SS/POP SS\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5994 invoked by uid 550); 22 Nov 2016 07:47:05 -0000
+Received: (qmail 1524 invoked by uid 550); 8 May 2018 18:27:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,39 +12,49 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5976 invoked from network); 22 Nov 2016 07:47:04 -0000
-Date: Tue, 22 Nov 2016 13:16:46 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@javelin
-To: oss security list <oss-security@lists.openwall.com>
-cc: Owen Hofmann <osh@google.com>
-Message-ID: <alpine.LFD.2.20.1611221311230.12350@wniryva>
+Received: (qmail 11456 invoked from network); 8 May 2018 17:38:53 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1525801121;
+	bh=58J2z/sWE8PazJOemKhoBDOXFOQt1uC+q/s6s+e9iFU=;
+	h=From:Date:Subject:To:From;
+	b=pn6mgwaTxwHnvyB3/NGbT8vSGg+6NFsf9wY2pmhAc3MXRHT5ipYIPJU+yPCFbMuef
+	 H7QdgbU9Em/k9iFY6hn4yc0R64OSiEhllD6XoSktIqN0LqOBMVtCylxiW1fXFkU0v7
+	 zIK+gcoHUSnNPiP079qVM9GVD4cBc0WfgjspXIU4=
+X-Gm-Message-State: ALQs6tDTBCaM6AE9fwGVpnB/kbPhECmT0npjf50U+vAA9FplfmFpNl0r
+	x3mE4XGh+M9QUuMgcUVqhH8WtCxQHTR+VfOcWUF4eA==
+X-Google-Smtp-Source: AB8JxZqgeJVmp4L1OcV/7bZY43SbjG+iSIqGdY7XeE+utRwQHo1eET6ZbiEH58JdwolgKj+AuFGoOQsAqTabCIHH5cA=
+X-Received: by 2002:adf:85dd:: with SMTP id 29-v6mr34067042wru.120.1525801119267;
+ Tue, 08 May 2018 10:38:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.25]); Tue, 22 Nov 2016 07:46:53 +0000 (UTC)
-Subject: [oss-security] CVE-2016-8630 kernel: kvm: x86: NULL pointer dereference duringinstruction
- decode
+From: Andy Lutomirski <luto@kernel.org>
+Date: Tue, 08 May 2018 17:38:28 +0000
+X-Gmail-Original-Message-ID: <CALCETrXb4H5qa1o9qbC=+VJ+y6PGdoO-XWV3QNtNxkwCWC2ZTw@mail.gmail.com>
+Message-ID: <CALCETrXb4H5qa1o9qbC=+VJ+y6PGdoO-XWV3QNtNxkwCWC2ZTw@mail.gmail.com>
+To: oss security list <oss-security@lists.openwall.com>
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CVE-2018-1087: KVM incorrectly handles #DB exceptions while deferred
+ by MOV SS/POP SS
 
-   Hello,
+On x86, MOV SS and POP SS behave strangely if they encounter a data
+breakpoint.  If this occurs in a KVM guest, KVM incorrectly thinks that a
+#DB instruction was caused by the undocumented ICEBP instruction.  This
+results in #DB being delivered to the guest kernel with an incorrect RIP on
+the stack.  On most guest kernels, this will allow a guest user to DoS the
+guest kernel or even to escalate privilege to that of the guest kernel.
 
-Linux kernel built with the Kernel-based Virtual Machine (CONFIG_KVM) support 
-is vulnerable to a null pointer dereference flaw. It could occur on x86 
-platform, when emulating an undefined instruction.
+Fixed upstream by commit 32d43cd391ba ("kvm/x86: fix icebp instruction
+handling").
 
-A user/process could use this flaw to crash the host kernel resulting in DoS.
+If you are running a guest OS that runs untrusted userspace code and you
+are forced to run on an unpatched host, you may be able to mitigate this
+issue by inserting 15 consecutive NOP instructions in your SYSCALL64 and
+SYSCALL32 entry points as well as in your IDT vectors 3 and 4.  I am
+hesitant to submit such a patch for upstream Linux, since the bug is
+clearly a KVM bug and is now fixed.
 
-Upstream patch:
----------------
-   -> https://git.kernel.org/linus/d9092f52d7e61dd1557f2db2400ddb430e85937e
+Discovered by me.  A PoC can be found here:
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1393350
+https://lkml.kernel.org/r/67e08b69817171da8026e0eb3af0214b06b4d74f.1525800455.git.luto@kernel.org/67e08b69817171da8026e0eb3af0214b06b4d74f.1525800455.git.luto@kernel.org
 
-CVE-2016-8630 was assigned to this issue by Red Hat Inc.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Thank you to Paolo Bonzini and Linus Torvalds for handling most of the
+technical bits of this bug.
