@@ -1,96 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/16/1
-Message-ID: <alpine.DEB.2.20.1805140829220.16381@tvnag.unkk.fr>
-Date: Wed, 16 May 2018 08:25:56 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY AVISORY] curl: FTP shutdown response buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/08/5
+Message-ID: <CALCETrXb4H5qa1o9qbC=+VJ+y6PGdoO-XWV3QNtNxkwCWC2ZTw@mail.gmail.com>
+Date: Tue, 08 May 2018 17:38:28 +0000
+From: Andy Lutomirski <luto@...nel.org>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE-2018-1087: KVM incorrectly handles #DB exceptions while deferred by MOV SS/POP SS
 Content-Type: text/plain; charset=utf-8
 
-FTP shutdown response buffer overflow
-=====================================
+On x86, MOV SS and POP SS behave strangely if they encounter a data
+breakpoint.  If this occurs in a KVM guest, KVM incorrectly thinks that a
+#DB instruction was caused by the undocumented ICEBP instruction.  This
+results in #DB being delivered to the guest kernel with an incorrect RIP on
+the stack.  On most guest kernels, this will allow a guest user to DoS the
+guest kernel or even to escalate privilege to that of the guest kernel.
 
-Project curl Security Advisory, May 16th 2018 -
-[Permalink](https://curl.haxx.se/docs/adv_2018-82c2.html)
+Fixed upstream by commit 32d43cd391ba ("kvm/x86: fix icebp instruction
+handling").
 
-VULNERABILITY
--------------
+If you are running a guest OS that runs untrusted userspace code and you
+are forced to run on an unpatched host, you may be able to mitigate this
+issue by inserting 15 consecutive NOP instructions in your SYSCALL64 and
+SYSCALL32 entry points as well as in your IDT vectors 3 and 4.  I am
+hesitant to submit such a patch for upstream Linux, since the bug is
+clearly a KVM bug and is now fixed.
 
-curl might overflow a heap based memory buffer when closing down an FTP
-connection with very long server command replies.
+Discovered by me.  A PoC can be found here:
 
-When doing FTP transfers, curl keeps a spare "closure handle" around
-internally that will be used when an FTP connection gets shut down since the
-original curl easy handle is then already removed.
+https://lkml.kernel.org/r/67e08b69817171da8026e0eb3af0214b06b4d74f.1525800455.git.luto@kernel.org/67e08b69817171da8026e0eb3af0214b06b4d74f.1525800455.git.luto@kernel.org
 
-FTP server response data that gets cached from the original transfer might
-then be larger than the default buffer size (16 KB) allocated in the "closure
-handle", which can lead to a buffer overwrite. The contents and size of that
-overwrite is controllable by the server.
-
-This situation was detected by an assert() in the code, but that was of course
-only preventing bad stuff in debug builds. This bug is very unlikely to
-trigger with non-malicious servers.
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-This bug was introduced in April 2017 in [this
-commit](https://github.com/curl/curl/commit/e40e9d7f0decc79) when we
-introduced the use of increased buffer sizes for FTP.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2018-1000300 to this issue.
-
-CWE-122: Heap-based Buffer Overflow
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.54.1 to and including curl 7.59.0
-- Not affected versions: curl < 7.54.1 and curl >= 7.60.0
-
-libcurl is used by many applications, but not always advertised as such.
-
-THE SOLUTION
-------------
-
-In curl version 7.60.0, curl will return an error if this situation happens.
-
-A [patch for CVE-2018-1000300](https://curl.haxx.se/CVE-2018-1000300.patch) is
-available.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl to version 7.60.0
-
-  B - Apply the patch to your version and rebuild
-
-  C - Avoing using FTP
-
-TIME LINE
----------
-
-It was reported to the curl project on March 22, 2018
-
-We contacted distros@...nwall on May 7, 2018.
-
-curl 7.60.0 was released on May 16 2018, coordinated with the publication of
-this advisory.
-
-CREDITS
--------
-
-Detected by Dario Weisser. Patch by Daniel Stenberg.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
+Thank you to Paolo Bonzini and Linus Torvalds for handling most of the
+technical bits of this bug.
