@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3670" "Tuesday" "25" "February" "2020" "00:54:50" "+0500" "Alexander E. Patrakov" "patrakov@gmail.com" nil "86" nil "^Date:" nil nil "2" nil nil (number mark "        patrakov@gma Feb 25   86/3670  " thread-indent "\"Re: [oss-security] LPE and RCE in OpenSMTPD's default install (CVE-2020-8794)\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] LPE and RCE in OpenSMTPD's default install (CVE-2020-8794)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2520" "Tuesday" "8" "May" "2018" "17:35:48" "+0000" "Andy Lutomirski" "luto@kernel.org" "<CALCETrVz9CzEYz-9EWYxEm2FAbxk6Dfhm9ZH7zcPPNP2YCdfqA@mail.gmail.com>" "43" "[oss-security] CVE-2018-8897: #DB exceptions that are deferred by MOV SS or POP SS may cause unexpected behavior" nil nil nil "5" "2018050817:35:48" "[oss-security] CVE-2018-8897: #DB exceptions that are deferred by MOV SS or POP SS may cause unexpected behavior" (number mark "U       luto@kernel. May  8   43/2520  " thread-indent "\"[oss-security] CVE-2018-8897: #DB exceptions that are deferred by MOV SS or POP SS may cause unexpected behavior\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30211 invoked by uid 550); 24 Feb 2020 19:55:14 -0000
+Received: (qmail 32723 invoked by uid 550); 8 May 2018 18:27:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,127 +11,70 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30189 invoked from network); 24 Feb 2020 19:55:13 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=QVk+cTilGRsQt4fW6qRnUZDQXmg2M8hLXJzC01QZTJw=;
-        b=hG5eXKV/Kptka0ZgFkK70+Vo3qKBXsxwqY/jYeSXbzqXwcUK77+ck0F7CjRma/kx+s
-         HQpW7wG2f61Tla+w3KrM/s1BT1/Tx7nB8X79If9d1QgRWEiZt1dMaxOmHntfgEY4kSo6
-         QQ2bABiVYxnyZo7IPLEn1N+dQbKOBKOBhaCq7qxkKcI8fiU3gt3DOddiYzSPSObFfHuF
-         awraA4rIJGWTYBRjyUrUc8B71bt1G9fZCSS9F+khMA/WY0xOt/F8y++A8KSx9ULeu58u
-         FwFBclq2LmJY7i3bl6vLbG04GgbqmiWP9ppzNalUM3BqrT99d7YT1decz1AfFfYrkIiU
-         31oA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=QVk+cTilGRsQt4fW6qRnUZDQXmg2M8hLXJzC01QZTJw=;
-        b=Hu39lWm23+cRo2rgtGlCZf2ZJXN+vs8MVFv6Ru62AXNHWm8u/F3lcjLn6xXkMkAFCV
-         uoXZb8i8ZxadybA+XOoe5D5yhAqUkFb9mE6Np10CINXw68jxaYsbRncsRzqR4YxnGUad
-         ofvtt8m0z6JmQWZpV/SgrDjzhK6612o3UY8hy+J8D9YeEyRPw9jpBzF5qGFwL8LiB+W2
-         UhqvNFyjoePwuR9UC+YGiWzf96ZGnzM0ra5X9utrHTTpX7p/efCtYqB8Lyi3Oc7A5Hb4
-         5HAiQ68/XXyp5Xb3ddYpe1rSAqappmiErhqVsDlt+tT+0zuZG3xScJ9kzVwmx39xaxWg
-         N+og==
-X-Gm-Message-State: APjAAAUCh9vAruamyfo9ohPXK62c6CYrdZp5VY3t6t5OXel3IdV7WGnk
-	DuDYyiTZnG96xkvSKeqHgILO7gRoCn3cho+BbyC94hvD4Eo=
-X-Google-Smtp-Source: APXvYqy06P4FmY8fq7Sby+qUdojN40hRRBsEacRjEr+XpdeVp7tAiifUhpOk7VsjEIT5/QekbqF1TpQ3bJRIm8d40BQ=
-X-Received: by 2002:a05:620a:135c:: with SMTP id c28mr26220542qkl.19.1582574101638;
- Mon, 24 Feb 2020 11:55:01 -0800 (PST)
-MIME-Version: 1.0
-References: <20200224184538.GF17396@localhost.localdomain>
-In-Reply-To: <20200224184538.GF17396@localhost.localdomain>
-Message-ID: <CAN_LGv3fr1pk3Xwp39Qv4mFv6b2xNw+pfo6Ban993FCQZoqfAA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Date: Tue, 25 Feb 2020 00:54:50 +0500
-From: "Alexander E. Patrakov" <patrakov@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] LPE and RCE in OpenSMTPD's default install (CVE-2020-8794)
-To: oss-security@lists.openwall.com
+Received: (qmail 7721 invoked from network); 8 May 2018 17:36:12 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1525800960;
+	bh=ZgYJBBJT8iO4kLcTq91eyF9WV2jseQCibgfwt6NHRDg=;
+	h=From:Date:Subject:To:From;
+	b=G6JNgYuEu3nNmguX45Xadw4fVh91L/TyVpKpvTghSVLvW2WqpF1u7Z4f99Q0tbFVJ
+	 XdJ66ExVnrnRJpsn6II9TLszxxtsXeVcUXATlqt+QdD8QjtUZ14NahgzJl0gJSdrod
+	 7BV0ke+rPqfG73BkwBHcdtNTSCS12/V21x7dOI/8=
+X-Gm-Message-State: ALQs6tCE+ZekuF07kmQRrXMPMjbXBWMNVAZGa8099tuMZYB6QNFSS9GX
+	BmhYddNLQrXq12d1LmjPyOjXaiVSHDnrL76MVelz4g==
+X-Google-Smtp-Source: AB8JxZrKnNlVCA0/EJ7xhjeskP9xr1/NJiddZ9R5f8XdOD53vknxBEmAFLT8shRSMuZgd09RYB7kXN4rOUCSWwr7suk=
+X-Received: by 2002:adf:9c01:: with SMTP id f1-v6mr25632572wrc.171.1525800958445;
+ Tue, 08 May 2018 10:35:58 -0700 (PDT)
+MIME-Version: 1.0
+From: Andy Lutomirski <luto@kernel.org>
+Date: Tue, 08 May 2018 17:35:48 +0000
+X-Gmail-Original-Message-ID: <CALCETrVz9CzEYz-9EWYxEm2FAbxk6Dfhm9ZH7zcPPNP2YCdfqA@mail.gmail.com>
+Message-ID: <CALCETrVz9CzEYz-9EWYxEm2FAbxk6Dfhm9ZH7zcPPNP2YCdfqA@mail.gmail.com>
+To: oss security list <oss-security@lists.openwall.com>
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CVE-2018-8897: #DB exceptions that are deferred by MOV SS or POP SS
+ may cause unexpected behavior
 
-On Mon, Feb 24, 2020 at 10:55 PM Qualys Security Advisory
-<qsa@qualys.com> wrote:
->
->
-> Qualys Security Advisory
->
-> LPE and RCE in OpenSMTPD's default install (CVE-2020-8794)
->
->
-> ==============================================================================
-> Contents
-> ==============================================================================
->
-> Summary
-> Analysis
-> ...
-> Acknowledgments
->
->
-> ==============================================================================
-> Summary
-> ==============================================================================
->
-> We discovered a vulnerability in OpenSMTPD, OpenBSD's mail server. This
-> vulnerability, an out-of-bounds read introduced in December 2015 (commit
-> 80c6a60c, "when peer outputs a multi-line response ..."), is exploitable
-> remotely and leads to the execution of arbitrary shell commands: either
-> as root, after May 2018 (commit a8e22235, "switch smtpd to new
-> grammar"); or as any non-root user, before May 2018.
->
-> Because this vulnerability resides in OpenSMTPD's client-side code
-> (which delivers mail to remote SMTP servers), we must consider two
-> different scenarios:
->
-> - Client-side exploitation: This vulnerability is remotely exploitable
->   in OpenSMTPD's (and hence OpenBSD's) default configuration. Although
->   OpenSMTPD listens on localhost only, by default, it does accept mail
->   from local users and delivers it to remote servers. If such a remote
->   server is controlled by an attacker (either because it is malicious or
->   compromised, or because of a man-in-the-middle, DNS, or BGP attack --
->   SMTP is not TLS-encrypted by default), then the attacker can execute
->   arbitrary shell commands on the vulnerable OpenSMTPD installation.
->
-> - Server-side exploitation: First, the attacker must connect to the
->   OpenSMTPD server (which accepts external mail) and send a mail that
->   creates a bounce. Next, when OpenSMTPD connects back to their mail
->   server to deliver this bounce, the attacker can exploit OpenSMTPD's
->   client-side vulnerability. Last, for their shell commands to be
->   executed, the attacker must (to the best of our knowledge) crash
->   OpenSMTPD and wait until it is restarted (either manually by an
->   administrator, or automatically by a system update or reboot).
->
-> We developed a simple exploit for this vulnerability and successfully
-> tested it against OpenBSD 6.6 (the current release), OpenBSD 5.9 (the
-> first vulnerable release), Debian 10 (stable), Debian 11 (testing), and
-> Fedora 31. At OpenBSD's request, and to give OpenSMTPD's users a chance
-> to patch their systems, we are withholding the exploitation details and
-> code until Wednesday, February 26, 2020.
->
-> Last-minute note: we tested our exploit against the recent changes in
-> OpenSMTPD 6.6.3p1, and our results are: if the "mbox" method is used for
-> local delivery (the default in OpenBSD -current), then arbitrary command
-> execution as root is still possible; otherwise (if the "maildir" method
-> is used, for example), arbitrary command execution as any non-root user
-> is possible.
+On x86 CPUs, the MOV to SS and POP SS instructions inhibit interrupts
+(including NMIs), data breakpoints, and single step trap exceptions until
+the instruction boundary following the next instruction (SDM Vol. 3A;
+section 6.8.3). (The inhibited data breakpoints are those on memory
+accessed by the MOV to SS or POP to SS instruction itself.) Note that debug
+exceptions are not inhibited by the interrupt enable (EFLAGS.IF) system
+flag (SDM Vol 3A; section 2.3). If the instruction following the MOV to SS
+or POP to SS instruction is an instruction like SYSCALL, SYSENTER, INT 3,
+etc. that transfers control to the operating system at CPL < 3, the debug
+exception is delivered after the transfer to CPL < 3 is complete.  OS
+kernels may not expect this order of events and may therefore experience
+unexpected behavior when it occurs.
 
-I would like a bit of clarification. We use OpenSMTPD as a dumb thing
-that only relays mail to a central server and never delivers it
-locally. The remote server is under our control.
+It appears that few or no 64-bit operating system kernels handler this
+correctly. On operating systems that allow users to install data
+breakpoints, the only correct way that a kernel can handle this CPU
+behavior is to use the IST mechanism for the #DB vector or to disable
+SYSCALL. Needless to say, the latter is unpopular.
 
-=============
-table credentials { smarthost.example.com=myuser:mypassword }
+Linux has always used IST for #DB, but it used the same IST slot for #BP,
+so it was vulnerable to a DoS.  Many other operating systems did not use
+IST for #DB and are likely vulnerable to privilege escalation.  Some
+operating systems did not allow user control over hardware debugging, and
+they are believed to be immune. Similarly, operating systems that run
+hardware virtualized guests only are likely immune, since VM exits are
+handled differently.  (However, see CVE-2018-1087 for a related issue
+affecting KVM.)
 
-listen on 127.0.0.1
+On Linux, the issue is fixed by commit d8ba61ba58c8 ("x86/entry/64: Don't
+use IST entry for #BP stack"), which has been available in Linus' tree and
+-stable kernels for some time.  (Yes, the patch really was written in
+2015.  I fixed the issue as part of related work by accident, but I wasn't
+aware that the issue was at all urgent at the time, so the patch was never
+pushed out.)  Most other vendors should have their own advisories and fixes
+available now.
 
-# No local mailboxes
-action to_postfix relay host
-smtp+tls://smarthost.example.com@smarthost.example.com auth
-<credentials> helo myhostname.example.com
-match from local for any action to_postfix
-=============
+This issue was discovered by Nick Peterson of Everdox Tech, LLC.  A number
+of industry players coordinated very professionally to handle this issue --
+thanks to all involved.
 
-Is the hole exploitable in this configuration?
+A PoC for Linux can be found here:
 
--- 
-Alexander E. Patrakov
+https://lkml.kernel.org/r/67e08b69817171da8026e0eb3af0214b06b4d74f.1525800455.git.luto@kernel.org/67e08b69817171da8026e0eb3af0214b06b4d74f.1525800455.git.luto@kernel.org
