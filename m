@@ -1,51 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/17/1
-Message-ID: <20181017060928.GL5150@oevtugenva.nrevsny.pk>
-Date: Wed, 17 Oct 2018 02:09:28 -0400
-From: Rich Felker <dalias@...c.org>
-To: oss-security@...ts.openwall.com
-Cc: Tavis Ormandy <taviso@...gle.com>, Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
-Subject: Re: ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/08/4
+Message-ID: <CALCETrVz9CzEYz-9EWYxEm2FAbxk6Dfhm9ZH7zcPPNP2YCdfqA@mail.gmail.com>
+Date: Tue, 08 May 2018 17:35:48 +0000
+From: Andy Lutomirski <luto@...nel.org>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE-2018-8897: #DB exceptions that are deferred by MOV SS or POP SS may cause unexpected behavior
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 10, 2018 at 03:26:05PM -0400, Perry E. Metzger wrote:
-> On Tue, 9 Oct 2018 15:32:02 -0700 Tavis Ormandy <taviso@...gle.com>
-> wrote:
-> > On Tue, Oct 9, 2018 at 3:27 PM Perry E. Metzger
-> > <perry@...rmont.com> wrote:
-> > 
-> > > I keep wondering if there isn't a way to fully remove the
-> > > dangerous bits from a postscript interpreter so it can _only_ be
-> > > used to view the document and literally has no file system access
-> > > compiled in at all, so there's no way to touch the fs etc.
-> > > regardless of what flags the interpreter is invoked with.
-> > >
-> > > (I, too, find removing the ability to look at historical
-> > > postscript documents a bit more draconian than I like.)
-> > >
-> > >  
-> > I've discussed it with upstream, it's a hard no because they feel
-> > it would make ghostscript non-conforming (i.e. non-conforming with
-> > the Adobe PostScript Language Reference Manual)
-> > 
-> > We probably have similar thoughts on this, but that is the final
-> > word from upstream.
-> 
-> They wouldn't even support a compilation mode where if you #define
-> the right thing those syscalls are cut out?
-> 
-> I don't care much about upstream's desires on this if they oppose
-> that. I'd be happy to have patches that simply cut out the dangerous
-> syscalls entirely. It's open source, that should be feasible.
+On x86 CPUs, the MOV to SS and POP SS instructions inhibit interrupts
+(including NMIs), data breakpoints, and single step trap exceptions until
+the instruction boundary following the next instruction (SDM Vol. 3A;
+section 6.8.3). (The inhibited data breakpoints are those on memory
+accessed by the MOV to SS or POP to SS instruction itself.) Note that debug
+exceptions are not inhibited by the interrupt enable (EFLAGS.IF) system
+flag (SDM Vol 3A; section 2.3). If the instruction following the MOV to SS
+or POP to SS instruction is an instruction like SYSCALL, SYSENTER, INT 3,
+etc. that transfers control to the operating system at CPL < 3, the debug
+exception is delivered after the transfer to CPL < 3 is complete.  OS
+kernels may not expect this order of events and may therefore experience
+unexpected behavior when it occurs.
 
-This. It's utterly ridiculous that the interpreter even has bindings
-for accessing the filesystem and such. But I wonder if some of its
-library routines (e.g. font loading) are implemented in Postscript,
-using these bindings, rather than being implemented in C outside of
-the language interpreter. If so it might be harder to extricate. But I
-still think it's worthwhile to try. Once there are patches I would
-expect all reasonable distros to start shipping with them, and if
-upstream tries to make it hard, I would expect one of the big distros
-to just fork and abandon upstream.
+It appears that few or no 64-bit operating system kernels handler this
+correctly. On operating systems that allow users to install data
+breakpoints, the only correct way that a kernel can handle this CPU
+behavior is to use the IST mechanism for the #DB vector or to disable
+SYSCALL. Needless to say, the latter is unpopular.
 
-Rich
+Linux has always used IST for #DB, but it used the same IST slot for #BP,
+so it was vulnerable to a DoS.  Many other operating systems did not use
+IST for #DB and are likely vulnerable to privilege escalation.  Some
+operating systems did not allow user control over hardware debugging, and
+they are believed to be immune. Similarly, operating systems that run
+hardware virtualized guests only are likely immune, since VM exits are
+handled differently.  (However, see CVE-2018-1087 for a related issue
+affecting KVM.)
+
+On Linux, the issue is fixed by commit d8ba61ba58c8 ("x86/entry/64: Don't
+use IST entry for #BP stack"), which has been available in Linus' tree and
+-stable kernels for some time.  (Yes, the patch really was written in
+2015.  I fixed the issue as part of related work by accident, but I wasn't
+aware that the issue was at all urgent at the time, so the patch was never
+pushed out.)  Most other vendors should have their own advisories and fixes
+available now.
+
+This issue was discovered by Nick Peterson of Everdox Tech, LLC.  A number
+of industry players coordinated very professionally to handle this issue --
+thanks to all involved.
+
+A PoC for Linux can be found here:
+
+https://lkml.kernel.org/r/67e08b69817171da8026e0eb3af0214b06b4d74f.1525800455.git.luto@kernel.org/67e08b69817171da8026e0eb3af0214b06b4d74f.1525800455.git.luto@kernel.org
