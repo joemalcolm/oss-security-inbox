@@ -1,128 +1,148 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/15/5
-Message-ID: <cig332r2l8rtee.fsf@u44850075a5a8574dc8a1.ant.amazon.com>
-Date: Fri, 15 Jun 2018 07:55:37 -0700
-From: Anthony Liguori <aliguori@...zon.com>
-To: <oss-security@...ts.openwall.com>
-CC: <thomas.prescher@...erus-technology.de>, <jsteckli@...zon.de>
-Subject: CVE-2018-3665 Lazy FPU Context Switching Information Leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/08/2
+Message-Id: <E1fG5yN-0000cU-2D@xenbits.xenproject.org>
+Date: Tue, 08 May 2018 17:00:19 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 261 - x86 vHPET interrupt injection errors
 Content-Type: text/plain; charset=utf-8
 
-Affected Software / Hardware:
-All operating system kernels / hypervisors using Lazy FPU context switching
-running on Intel CPUs
-(more details below)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Summary:
-The FPU register state (legacy/MMX/SSE/AVX/AVX-512 registers) can be
-leaked across process or virtual machine boundaries using speculative execution
-on Intel CPUs when the hypervisor or operating system kernel uses lazy FPU
-context switching.
+                    Xen Security Advisory XSA-261
+                              version 2
 
-Impact:
-Any information in the above registers is accessible to a local attacker.
+                 x86 vHPET interrupt injection errors
 
-Mitigation:
-Operating systems and hypervisor need to switch to eager FPU context switching
-or clear FPU register state on context switch. Relying on CR0.TS to protect
-FPU registers is insufficient.
-
-Credit:
-This issue was reported to Intel by Amazon and Cyberus Technology.  The issue
-was discovered by Julian Stecklina (jsteckli@...zon.de) and Thomas Prescher
-(thomas.prescher@...erus-technology.de).
-
-This issue was also independently discovered by Zdenek Sojka - SYSGO AG
-(http://sysgo.com) and Colin Percival.
-
-Detailed Description
+UPDATES IN VERSION 2
 ====================
 
-Technical Description
----------------------
+Versions 3.1 ... 3.3 don't appear to be vulnerable.
 
-Lazy FPU context switching optimizes context switch times by lazily saving and
-restoring the content of legacy FPU/MMX/SSE/AVX/AVX-512 registers. When the
-kernel switches from task A to task B, task A's register content stays in the
-FPU, but the FPU is disabled via CR0.TS. If task B touches the FPU, a #NM
-exception is generated, the kernel switches the register content, and enables
-the FPU agan. From that point task B can use the FPU.
+Public release.
 
-Between the context switch to task B and the #NM exception that would trigger
-the actual context switch, the FPU registers contain task A's register content
-and the FPU is disabled. 
+Updated .meta file
 
-The attack works by speculatively reading the task A's FPU register contents
-from task B in this time frame and retrieving the contents via a cache
-side-channel. Let's call task A the victim and task B the attacker.
+ISSUE DESCRIPTION
+=================
 
-The attacker loads XMM0 with 0 and installs a SIGSEGV handler. Then he gives the
-victim (task A) a chance to run by sleeping. Afterwards, the attacker flushes
-the cache line pointed to by mem + 64 (see below), runs the following code:
+The High Precision Event Timer (HPET) can be configured to deliver
+interrupts in one of three different modes - through legacy interrupts;
+through the IO-APIC; or optionally via a method similar to PCI MSI.  The
+last mode is optional and not implemented by Xen.  However, of the first
+two modes, only the legacy variant was properly implemented.
 
-; Cause a page fault and execute the below code speculatively until the
-; processor rolls-back execution and delivers the page fault.
-mov dword [0], 0
+If a guest set up an HPET timer in IO-APIC mode, Xen would still
+handle this using the code for the legacy mode.  Unfortunately, the
+available IO-APIC mode interrupt numbers are higher than legacy mode
+interrupts.  The result was array overruns.
 
-; Read xmm0. This would cause a #NM exception because the FPU is disabled, but
-; it is never delivered, because execution is rolled back to the page fault.
-movq rax, xmm0
+IMPACT
+======
 
-; Now mask a bit in the value we read and touch memory depending on the result.
-; If the bit contained 0, we touch [mem] otherwise we touch [mem + 64]. This cache
-; side-effect survives when the CPU discards this speculative execution flow!
-and rax, 1               ; mask bit 0
-shl rax, 6               ; align to cache line (64 bytes)
-mov dword [mem + rax], 0 ; access buffer with offset depending on xmm0 content
+A malicious or buggy HVM guest may cause a hypervisor crash, resulting
+in a Denial of Service (DoS) affecting the entire host.  Privilege
+escalation, or information leaks, cannot be excluded.
 
-After handling the SIGSEGV, the attacker probes the access latency of [mem +
-64]. If it's fast, the bit was 1, because the cache line was pulled in by the
-speculatively executed code. If it's slow, we read a 0.
+VULNERABLE SYSTEMS
+==================
 
-Because the kernel has not seen the #NM exception, the FPU registers still
-contain the victim's FPU register content. The attacker can continue leaking
-different bits from different registers.
+Xen versions 3.4 and later are vulnerable.
 
-Working exploit code that leaks one XMM register for Linux and FreeBSD is
-attached to this email.
+Only x86 systems are vulnerable.  ARM systems are not vulnerable.
 
-Affected Hardware
------------------
+Only x86 HVM guests can exploit the vulnerability.  x86 PV and PVH
+guests cannot exploit the vulnerability.
 
-We have reproduced this issue on the Intel Core microarchitecture from Sandy
-Bridge to Skylake. Until there is a detailed list by Intel, it's reasonable to
-assume that all current Intel CPUs are affected.
+Only x86 HVM guests provided with hypervisor-side HPET emulation can
+exploit the vulnerability.  That is the default configuration.  x86
+HVM guests whose configuration explicitly disables this emulation (via
+"hpet=0") cannot exploit the vulnerability.
 
-Other CPU architectures that allow similar lazy context switching mechanisms
-might be affected as well.
+MITIGATION
+==========
 
-Affected Software
------------------
+Running only PV or PVH guests avoids the vulnerability.
 
-The following is an incomplete list of vulnerable system software.
+Not exposing the hypervisor based HPET emulation to HVM guests, by
+adding "hpet=0" to the guest configuration, also avoids the
+vulnerability.
 
-Affected operating systems:
-- Linux:
- - kernel versions < 4.9 with non-default boot parameters (`eagerfpu=off`) are affected
- - kernel versions < 4.6 running on affected Intel CPUs prior to Haswell [10] or with custom boot parameters (`eagerfpu=off` or `noxsave`)
- - kernel versions < 3.7 on all affected CPUs
-- FreeBSD
-- ...
+CREDITS
+=======
 
-Affected hypervisors:
-- KVM when run on affected Linux version
-- All Xen versions
-- ...
+This issue was discovered by Roger Pau Monné of Citrix.
 
-Mitigation
-----------
+RESOLUTION
+==========
 
-For Linux versions between 3.7 and 4.8, it is sufficient to add eagerfpu=on to
-the kernel command line. Linux starting from 4.9 has no lazy switching code
-anymore and are not affected.
+Applying the appropriate attached patch resolves this issue.
 
-Linux 4.4.y releases up to 4.4.137 haves a bug present that does not respect
-the eagerfpu=on command line.  This is expected to be fixed in the 4.4.138
-release.
+xsa261.patch           xen-unstable, Xen 4.10.x
+xsa261-4.9.patch       Xen 4.9.x
+xsa261-4.8.patch       Xen 4.8.x
+xsa261-4.7.patch       Xen 4.7.x, Xen 4.6.x
 
-Other operating systems and hypervisors need a source code fix.
+$ sha256sum xsa261*
+7b7bbf0fb497491911816e522902f72d3b41355ba71455ab82ebf980160d1a1f  xsa261.meta
+175501977204db84d08a6fd81d9fd4b69f97f70cbf6f65e6ce0abfeab03eae95  xsa261.patch
+98fb28bac871aae7c2f897a5506a2b03f340bf122a3a7f65aa65f3b3c9a525b4  xsa261-4.7.patch
+503f1476813e6572dc37b5a0df65b5390567230d9cc006752bf72bf57bbd754d  xsa261-4.8.patch
+f1aac841327d3b5b1e2007b4ebe56223de488e1eb2fa636653725d7d7cd5f82a  xsa261-4.9.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches described above (or others which are
+substantially similar) and the PV/PVH guest mitigation are permitted
+during the embargo, even on public-facing systems with untrusted guest
+users and administrators.
+
+HOWEVER deployment of the "hpet=0" guest config mitigation described
+above is NOT permitted (except where all the affected systems and VMs
+are administered and used only by organisations which are members of
+the Xen Project Security Issues Predisclosure List).  Specifically,
+deployment on public cloud systems is NOT permitted.
+
+This is because in that case the configuration change is visible to the
+guest, which could lead to the rediscovery of the vulnerability.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJa8dQgAAoJEIP+FMlX6CvZZ54IAIlcZ6vu0mYvjwL8I23QbbtW
+8uDzgozK9S8r2tPXxn6gbqSwFACuKeS61hnhw7v3gNEClpSQip+dHlGS6ME3AUVZ
+m0Vtn6eDQXHiwW+9jM4/j8gxLAqgfxUUpTuR74tZxh0kMmXKShirt+ob+9ptxfB7
+nu8QiEVDH87P7JnDUXn1czNBRuD3KP0cmsAW/7VaOUm5R/+1RwYX6df9rEN6TU/+
+LWMrBeepU8mh8oRgA5yJ78iiCB6KUfURsz1JuPmNd49rSTVK2WGFAH5vNz7EjRyU
+kbVAJgjWYGGFo0BTXSt8kCi0pdlGEHRh3+KIIuvAxm+JfQtrFC0K8lpzQcpTPYY=
+=jUil
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa261.meta" of type "application/octet-stream" (1712 bytes)
+
+Download attachment "xsa261.patch" of type "application/octet-stream" (9249 bytes)
+
+Download attachment "xsa261-4.7.patch" of type "application/octet-stream" (9253 bytes)
+
+Download attachment "xsa261-4.8.patch" of type "application/octet-stream" (8223 bytes)
+
+Download attachment "xsa261-4.9.patch" of type "application/octet-stream" (9046 bytes)
