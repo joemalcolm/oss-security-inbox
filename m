@@ -1,32 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/27/2
-Message-ID: <CAP+3qq7S4BcPrSiCS4zoNU3E+g5=FWeB2GCK9zW7tMNHPrNumw@mail.gmail.com>
-Date: Tue, 27 Nov 2018 09:49:16 +0900
-From: Akira Ajisaka <aajisaka@...che.org>
-To: general@...oop.apache.org, user@...oop.apache.org,  security@...oop.apache.org, oss-security@...ts.openwall.com
-Subject: CVE-2018-11766: Apache Hadoop privilege escalation vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/09/1
+Message-ID: <CALJHwhRC-+DmnUY-xvOx0uyynp7T2jfarnAcnJbxNqAFesefjw@mail.gmail.com>
+Date: Wed, 9 May 2018 15:20:03 +1000
+From: Wade Mealing <wmealing@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2018-1118 linux kernel: vhost: Information disclosure in vhost/vhost.c:vhost_new_msg()
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-11766: Apache Hadoop privilege escalation vulnerability
+Gday,
 
-Severity: Critical
+A flaw was found in the vhost_new_msg() function which does not
+properly initialize memory in messages passed between virtual guests
+and the host operating system. This can allow local privileged users
+to read previously set kernel memory contents when reading from the
+/dev/vhost-net device file.  This would be classified as an
+information leak that could be used to defeat other protection
+mechanisms.
 
-Vendor: The Apache Software Foundation
+As far as I can tell this information doesn't flow to guests, only to
+the parent system which is hosting the virtual machines.
 
-Versions Affected:
-Apache Hadoop versions from 2.7.4 to 2.7.6
 
-Description:
-In Apache Hadoop 2.7.4 to 2.7.6, the security fix for CVE-2016-6811 is
-incomplete.
-A user who can escalate to yarn user can possibly run arbitrary
-commands as root user.
 
-Mitigation:
-Users should upgrade to 2.7.7 or upper.
-If you are using the affected version of Apache Hadoop and there are
-any users who can escalate to yarn user and cannot escalate to root user,
-remove the permission to escalate to yarn user from them.
+Upstream post:
 
-Credit:
-This issue was discovered by Wilfred Spiegelenburg.
+https://lkml.org/lkml/2018/4/27/833
+
+https://bugzilla.redhat.com/show_bug.cgi?id=1573699
+
+Thanks
+-- 
+Wade Mealing
+
+Product Security - Kernel, RHCE
+
+Red Hat
