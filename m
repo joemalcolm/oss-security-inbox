@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2240" "Monday" "29" "March" "2021" "12:57:46" "+0000" "John Haxby" "john.haxby@oracle.com" nil "73" "Re: [oss-security] Linux Kernel: out of bounds array access in dm-ioctl.c" nil nil nil "3" nil nil (number mark "U       john.haxby@o Mar 29   73/2240  " thread-indent "\"Re: [oss-security] Linux Kernel: out of bounds array access in dm-ioctl.c\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Linux Kernel: out of bounds array access in dm-ioctl.c" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3498" "Wednesday" "9" "May" "2018" "10:15:31" "+0200" "Remi Gacogne" "remi.gacogne@powerdns.com" "<6a293bd2-77f7-4ce0-a5ba-f9fb32985086@powerdns.com>" "92" "[oss-security] PowerDNS Security Advisory 2018-02" nil nil nil "5" "2018050908:15:31" "[oss-security] PowerDNS Security Advisory 2018-02" (number mark "U       remi.gacogne May  9   92/3498  " thread-indent "\"[oss-security] PowerDNS Security Advisory 2018-02\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9325 invoked by uid 550); 29 Mar 2021 12:58:03 -0000
+Received: (qmail 18171 invoked by uid 550); 9 May 2018 08:15:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,190 +12,131 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9298 invoked from network); 29 Mar 2021 12:58:02 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=from : to : subject :
- date : message-id : references : in-reply-to : content-type :
- mime-version; s=corp-2020-01-29;
- bh=jAJ4/h50zVeNDVMJYUrWkQUEfEVJh87bq+Tbonr1IpI=;
- b=XRPAdM2q1+UON7EYDoYCCMGRGLeWMZ53li4rlkQqYXhfb9zlaoQ+mZg+OUwafV7kHP8e
- 9gZpbTROf47F1Irtsm31cSrgpKAEtdVUKTdv/TUQ4Aq4Ia6gN/gaxRRA62CcVafzpvOR
- buL1z0mk/qkKvx4YdWsYggpCuVtHZQcp7BC+A0A1T12GR6r4KhXGmEF8IX83LXV/FucJ
- qDy7UWnu5UL+U9BilyxOycTpnFaWLbgAQl+d4/HMaveV0FNfQ87p8z+dV+7TEGW2hMXf
- 1xHY+Sz5+2miYa4SwkXhTuxp7c4+/bbbNyEQ5FSUQicfZa3lbCwwrCQzCNkYa23nEZL+ TQ== 
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=GeHyFQ58FbF2bTLKws+cIpiRpr0YMkeNOaaPpDOWjSKCkWIhBkdTkxaYnke8ThRuMWKEFw7xIk+vAzHUo6WVanChoHEFGurVibL7kYBGcqPdoXqrHbu0dl/0fZ79TgUJztU37GTk2M9xJ+EEQfBdpS6L+GsV88a9iKUzjtinbTRhpqGBm1kt0GvDh5lx0Q3lJGv9zgtqVa+wfN6UDy5o037GAN66mKPrVRE0cRwYgk5PA03caaKeXIVGJAMExClxjU16L3iaLI2xxoumIxokMGlt/Ksii8uQWFAqc39TFbX8+XsqtUzVAOR5zfTeXr49lIIANNdJ0R4IlOHAtK9ZiQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=jAJ4/h50zVeNDVMJYUrWkQUEfEVJh87bq+Tbonr1IpI=;
- b=PK5XOptPGvaOpuCZSaIywR+YplxgHXxTwNkyJXmQie96JDc5+g+i4QnmTmT/KeQrLNF+lDszMoFwz4K0bkrPNIoNBaMqfCpD7s9KZteV6P26NAGz/5iLQv4yy+EPOdVmR50EUAd+KeFFs3KQP5erT1UGfZGFSnerNRSU9O4RlCOujB3VTXRulLybf0CjhDpMwpjtORs0aPL6sj7ERf0dyn7kqzMQL5utZ7PYsP2tdEWIPNTaw5mBXn8Cd5CtcvhIphW3/tfO/owOoTdVT6RluNkKjxqN+PXZGLggvdgBPmonKoTjonYqu1h4dQiPdH+OVpe5l2Onhvo7790Adqsntg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=jAJ4/h50zVeNDVMJYUrWkQUEfEVJh87bq+Tbonr1IpI=;
- b=T+9CHvDWEhwx7E28RFsX+lGai+D64X6F30+mpryhnurA/dc+3XwokYS1vkVSMGiFIwDBT23FvBSNPalXy5aNse9XADJHwA5jZLtiez9xXYo56kIMHbpTfFFJPps1l3OOEjUbZliQT+TUrCW7LeGaJT+3l3xHFrRcPdYUv/4mprw=
-From: John Haxby <john.haxby@oracle.com>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: [oss-security] Linux Kernel: out of bounds array access in
- dm-ioctl.c
-Thread-Index: AQHXI4XhsPhJjAedVEmnfZffM7Vb5aqa7y2A
-Date: Mon, 29 Mar 2021 12:57:46 +0000
-Message-ID: <6C2649B1-621E-40B3-A9CD-7252FC4FBA66@oracle.com>
-References: 
- <CA+-U7QC-zxn_XYLJifSm=cDmsW0_Rs+juQuoCUTw1+TQmdfpGg@mail.gmail.com>
-In-Reply-To: 
- <CA+-U7QC-zxn_XYLJifSm=cDmsW0_Rs+juQuoCUTw1+TQmdfpGg@mail.gmail.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-authentication-results: lists.openwall.com; dkim=none (message not signed)
- header.d=none;lists.openwall.com; dmarc=none action=none
- header.from=oracle.com;
-x-originating-ip: [2001:470:1f09:58d:49f7:1e10:a4cb:7b0]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: ada63483-d319-44c5-b218-08d8f2b24032
-x-ms-traffictypediagnostic: BYAPR10MB2758:
-x-microsoft-antispam-prvs: 
- <BYAPR10MB27585BF78F07811394FD658FE47E9@BYAPR10MB2758.namprd10.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:2803;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 
- oooCecBYCD7Gj9RV7te8IfP1mLtyliabUFzcvxwfWD2uABTZRYhVC3uypyv564jf2oETsDZse79hpI8JR1l3+IQ7GKiVnn/zS+zxmeLBdde0pS/gYD6+zvzvENqmiWFRBHl8tEI1LvZ9+qphB9i+ha9CY16nAi647A03uFF7tDdSKhyr1BgpctCM6nDie04Q6LWvk9NP0opdG/4U9FHlqA+dO4HcB3mz9G7RfSlRHLd0ZILL992RMka9Flr1bde1iUVmKWSTmnxCDkgkfyxhdZyunCAP6lgOAIuIn3yoz3jyNhwhlzMUxQnCQ2DymS+Z9BuTeDyHzZmGDouMqDGVZWwDdJkxgVcoPvygKksoQikGPBgMGNkl2kQ3E2ryXt9u1gLeIt3d81ZEPlkxhJut3CEePtsxg/TD90qLHHO85de0xdogIat+s8kymgXqCYSaRQo2NShSsohBQmZd7HvUxhwvUIeFYqqVjIRW76Sq5HworswuVy6+RyoNyb1DpKQMjtm4rvDEtGHMUkVoOglkVNhlyycValHnkhtAsbBhVeB4r279JMLHP4YOcGMLsNBIYnagBF0zX/hVgnWVcunUOHrhcrBomT+usNt16dxgNjIO8T5qjziRurQHlFXIGobuPkme5xA5uAH4AneJcHBT117Kz0KkqMZFcMOVGsOs1PI54MKA5tncQjGdNNWwXEIbGiJiRJ0yzsRWWZuIQ06FiLjb91JBmzn8L0CeBmJLNE8j5FTn/JQYI8nKyPcybQ3EsrQjUy6B5BgU23+CzpqQGA==
-x-forefront-antispam-report: 
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR10MB4429.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(366004)(136003)(346002)(376002)(396003)(39860400002)(44832011)(966005)(316002)(53546011)(478600001)(66556008)(186003)(6506007)(8936002)(83380400001)(71200400001)(2616005)(2906002)(6486002)(33656002)(6916009)(38100700001)(66476007)(86362001)(36756003)(91956017)(5660300002)(6512007)(99936003)(64756008)(66946007)(8676002)(66616009)(66446008)(76116006)(45980500001);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata: 
- =?us-ascii?Q?kHokeBrjuGgrWDQ6s5PTRw3YYr5v+b/mrWPxCupjkiWW/HKZiaT8dvLj5cIk?=
- =?us-ascii?Q?dDRGxAsCjvLARJB9aW2h6lSzGg7ls4Ooy6BKpyaO6L7xqngjudo8rU/SHw2o?=
- =?us-ascii?Q?l7ANbUgqQTLoclxqJJdqbvjk7GjvUrHx7t7iWFQ0aXBRJH63jo3iGQRNLA/Q?=
- =?us-ascii?Q?8+mot8QT34m327nRO25/44C75oLg4T7sJ8D/TIf2VE/VOfLlWTirTnczjps4?=
- =?us-ascii?Q?Kli7nIGTS2c5bHL6mQv0WP8xCAuqMuiKdEsa7Ry+vXjQ2ybBh5XbRFcigGDL?=
- =?us-ascii?Q?3WJM7UwjfEB0TtqxKy4SN5ss+7S5tnXGQ4URpKzVDlb8W42ORvV6SrFIBJOI?=
- =?us-ascii?Q?wPcqCwkcbJHo0vKiwi65yKVegRwPj26rJKZ4HKtBNjZTYnH3akLpumS6seS0?=
- =?us-ascii?Q?fjOMUZXPW+EaObwBWvaSIUd2hDhU9cui6pJZDsI1wOeekzqZRic4HraWc35j?=
- =?us-ascii?Q?XI5vTa8/ibn/ZK4/EqMhieiaM4/VgCf0m73HrbGUsqXHe8Y0PdQ0YAasmwfC?=
- =?us-ascii?Q?pHoDZRFBWOtmMdiYSLG5vvQfoMHO3uQWvkvJOVM2C1CxQGwWcTeZlliw1bhD?=
- =?us-ascii?Q?MyryYLJAhzEeOWKe+1L52aRdlQBmtLco0XypJMj08U/pkR6THE8Va3TvQFsd?=
- =?us-ascii?Q?2PeyZlMqXZziYo/4tBf+m+vBymqJeoQZE2KOiDpbvClxk2Nsg1DBnTVB6Lhs?=
- =?us-ascii?Q?vs2nI40QsMF3xjx2g5TaJDits5aP50jucx2C3SQrLywyHdYva3305Ej2p22k?=
- =?us-ascii?Q?sMU5FT7A4gE5PTPG7glk6+vPYc71Vm9P9zjSb6rgBB29pkvPHUZI61sS453J?=
- =?us-ascii?Q?r0466VNd4JlZJL+JyUAfURiRd0LEwictB74/44ayt3KEek3Iw5DC5/Sn9APe?=
- =?us-ascii?Q?r8xbJdgUa5kOROsYICFY5/K948o1jUiYhwuFnXMtXeLr3TRxm6zWb/SMjV6w?=
- =?us-ascii?Q?uOswofMCgYlBVSLARf+SLEi9uiamk1L7os3QtekoINKTOidOXpMVYLkBS4TO?=
- =?us-ascii?Q?FTSJDoLfu5o/8fXzzuR09XTtvz9JJC4IugjbsuOgf7myt4kHsQgcSZc54EgA?=
- =?us-ascii?Q?zC5XxZ86MH1ifSn3oZAo1PtTq11O4qDJiazH5kYka0CXj/2qyuzvcAFrmnLA?=
- =?us-ascii?Q?TN+YDU8VPCUL65/UrIS5gY1Y5HJYe2DuZjofzbo+3WenHAPCx5Uz4qN1rhdI?=
- =?us-ascii?Q?G2FjNd4teT+26fV+LtV7BVSgblEGWbd5+EKfnCw7m9RsIt4ECFq2z2s5frUg?=
- =?us-ascii?Q?8eSxECWaiWngwieyhpWb2hh6huoVp9EE9tznnG4FVUl3RpIaBk2by9R2sW3K?=
- =?us-ascii?Q?CMJdNFv/UV82yGBOCrLOcRPz+kE6Og5fRb80bAMG2b73bWfPElM1ODWrZGYV?=
- =?us-ascii?Q?GFIJD8hvM111j0Q7/1M5VcU+Fm4n?=
-x-ms-exchange-transport-forked: True
-Content-Type: multipart/signed;
-	boundary="Apple-Mail=_316BB58D-F1CA-4E80-B1E7-CD97977B1D5A";
-	protocol="application/pgp-signature";
-	micalg=pgp-sha256
+Received: (qmail 18138 invoked from network); 9 May 2018 08:15:47 -0000
+From: Remi Gacogne <remi.gacogne@powerdns.com>
+Openpgp: preference=signencrypt
+Autocrypt: addr=remi.gacogne@powerdns.com; prefer-encrypt=mutual; keydata=
+ xsBNBFY4pAcBCACIU5HRkBG3VcBfJaqetxIoKdLRxW3XmeCwruLFt6DN3q8bTtsNuQMJHa8O
+ Y0aKWJoXjOQSbBoKSGVAFKTmpCUfH4vhErt8DWqyglRfio2L3cTe48GZjiObdXLZxnsINAx2
+ WbcpoCRKTjdWX0MH2Jg/yf5PS6nb+glclRsDQmVGQjt92v23nNdsCp8I9rjP1+bQy5iHB1Ii
+ QuFJ6DBQJhgWQzksT2azZ83aADvc4/+Fg7VFYSzZHkp98NfyzUkiUzYi0I5Oy4KvyoXeS/CX
+ 9WtQGM1vjZAXXiD+ODJ0OvB2EsCUT6t4i9pWWh/+LnNtRWIVn8PJeQbCAO2wJlMxX28BABEB
+ AAHNKFJlbWkgR2Fjb2duZSA8cmVtaS5nYWNvZ25lQHBvd2VyZG5zLmNvbT7CwH0EEwEKACcF
+ AlawcTICGwMFCRLMAwAFCwkIBwQFFQoJCAsFFgIDAQACHgECF4AACgkQogjtT4r1hEZ0zgf+
+ Iy73sdDPkxOYi/xVJIvBB8o+uuPLDgh51Bx50vrJTBNm+9YgLyycQpQyYyw+NyY+xS9Ibtiz
+ p8PuT0Ga4S8gdVhGtbQtLS7yJD7swlSTyOBR+/gHoJgaxmDeueeB8tAv2ERfJjhp4C+fIa7p
+ iU4Iwe7wvgrw6dO9eFkBv0oHCqpOI5CM/yHqdr493Qon3YfpCZGiv558yE9Xrojs6fMSwcol
+ WwjnZW72KFXraryXKiIThwoJb9OOZWXAKfZD/aZv5BMxzN+D4ZB+kq0f7qHbITh+Kd1MdMBo
+ MFG6Lg7x1LY5SvhgfHGF3UZ8tLb3RgWFDuwrBTcz6EQvArw/lWPA5c7ATQRWOKQHAQgAjr1x
+ EZh1yglszi94+HLNFcgRPgRNktg2vxOGf64dAreJvL5iDrS2lrFMknh5BNuj7nJZ2r40OOS9
+ 1oH1qkVk+v9Cyo/3xwCpCOPQCkhzHpuQWXoMGMw/3/0tG6zTxnYdC999faCH0lLA8oDwHCHl
+ ZSHgsH9+qSNyjaJXvS+HVoGYzyuanU6OTM7EM5c7RCPhNjT9JzHLISnwaxgDpwi7Ez6yudcr
+ g6DqS/uUwkyNtWyesx1DF9y2VJUNwa4NKIJkSH+niEoxK9NBfBAmAKc4o5+KPs6BvpvpiYY9
+ gTKaaLypPHNcveQTDFv/26XHyzrCZmwuGlcYBjboH/BWzKbhuQARAQABwsBxBBgBAgAbBQJW
+ OKQHAhsMBAsJCAcGFQgCCQoLBQkSzAMAAAoJEKII7U+K9YRGXJQH/3PtQG0AkrXOpkOMXFLT
+ KdCEViNNHN94VIaceVn60zbmXzxhYeKz7K345/EqATi3P3/yDHcht7j3uYPhvaMjy3smN6vE
+ wX7Ue40PbFDWmm8mHpLdlOfPXF0SRUD8KTSD6+W2VJfEcDI6DDfUmCx9yYZ1U5u+O8Aj+1l2
+ gdQbgAioPnQgqzf43qgnRcsfNmsVsXg7EbHspRpJOR1XyXl/9KrDP7p6kjwWTQ1NoRjCw0qa
+ X93odLeKIpd2riShlB7GteUTps0IfuiL94CA58PV2YvZapN1KmwDohHU8rndN7zte7jbCyv1
+ Vv9tP6Ns0TvycBAqlOZYdgabrT+Pccb4jCc=
+To: oss-security@lists.openwall.com
+Message-ID: <6a293bd2-77f7-4ce0-a5ba-f9fb32985086@powerdns.com>
+Date: Wed, 9 May 2018 10:15:31 +0200
 MIME-Version: 1.0
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR10MB4429.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ada63483-d319-44c5-b218-08d8f2b24032
-X-MS-Exchange-CrossTenant-originalarrivaltime: 29 Mar 2021 12:57:46.7064
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: kUUdmzNPACMDf2ARbuKhYEGr5DqKj9FbO6htrTsiQkvsUxNI9EYNOi+Aa5zVlga8lzrkwnUNglVYBSwVhfbWYQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR10MB2758
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=9938 signatures=668683
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0 malwarescore=0 mlxscore=0
- phishscore=0 suspectscore=0 mlxlogscore=999 adultscore=0 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2103250000
- definitions=main-2103290098
-X-Proofpoint-GUID: YQuaDztBFw726ShapAxznbKDOIiFK6Pf
-X-Proofpoint-ORIG-GUID: YQuaDztBFw726ShapAxznbKDOIiFK6Pf
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=9937 signatures=668683
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 impostorscore=0 clxscore=1034
- phishscore=0 mlxscore=0 malwarescore=0 mlxlogscore=999 suspectscore=0
- spamscore=0 bulkscore=0 priorityscore=1501 adultscore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2103250000
- definitions=main-2103290098
-Subject: Re: [oss-security] Linux Kernel: out of bounds array access in
- dm-ioctl.c
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="Esr72NDZejb0kFcvTIM6BXKoahWCD1FH0"
+Subject: [oss-security] PowerDNS Security Advisory 2018-02
 
---Apple-Mail=_316BB58D-F1CA-4E80-B1E7-CD97977B1D5A
+--Esr72NDZejb0kFcvTIM6BXKoahWCD1FH0
+Content-Type: multipart/mixed; boundary="JaigPYmQBW0hwtN4V2ouZMaoTdXm59SrR";
+ protected-headers="v1"
+From: Remi Gacogne <remi.gacogne@powerdns.com>
+To: oss-security@lists.openwall.com
+Message-ID: <6a293bd2-77f7-4ce0-a5ba-f9fb32985086@powerdns.com>
+Subject: PowerDNS Security Advisory 2018-02
+
+--JaigPYmQBW0hwtN4V2ouZMaoTdXm59SrR
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=us-ascii
+
+Hello everybody,
+
+We released PowerDNS Authoritative 4.1.2 yesterday, fixing a security
+issue (CVE-2018-1046) affecting the dnsreplay tool included with it.
+Versions of dnsreplay from 4.0.0 up to and including 4.1.1 are
+vulnerable. The full security advisory can be found below and at
+https://doc.powerdns.com/authoritative/security-advisories/powerdns-advisor=
+y-2018-02.html
+
+The issue is a stack-based buffer overflow occurring when replaying a
+specially crafted PCAP file with the `--ecs-stamp` option enabled,
+leading to a denial of service or potentially arbitrary code execution.
+Regardless of this issue, we do not advise the use of dnsreplay with
+untrusted PCAP files.
+
+The commit fixing the issue can be found here:
+https://github.com/PowerDNS/pdns/commit/f9c57c98da1b1007a51680629b667d57d9b=
+702b8
+
+We would like to thank Wei Hao for finding and subsequently reporting
+this issue.
+
+Please feel free to contact me directly if you have any question.
+
+Best regards,
+
+Remi and the PowerDNS team
 
 
+PowerDNS Security Advisory 2018-02: Buffer overflow in dnsreplay
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-> On 28 Mar 2021, at 04:47, - Nop <nopitydays@gmail.com> wrote:
->=20
-> Hi,
->=20
-> We found an out of bounds array accessing bug in drivers/md/dm-ioctl.c, a=
-nd
-> reproduced it in the latest kernel (v5.11.10).
->=20
-> The root cause of this BUG is :
->=20
-> The field "data_size" in function ctl_ioctl is fully controlled by users
-> and this argument controls the size of kvmalloc in function copy_params.
->=20
-> When the data_size is in a range of [0x131,0x138], the allocated memory
-> which is pointed by the variable "param" used in ioctl
-> "DM_LIST_DEVICES_CMD" is too small, causing an oob bug at line "nl->dev =
-=3D
-> 0; /* Flags no data */" (
-> https://github.com/torvalds/linux/blob/0d02ec6b3136c73c09e7859f0d0e4e2c4c=
-07b49b/drivers/md/dm-ioctl.c#L538
-> )
->=20
+-  CVE: CVE-2018-1046
+-  Date: May 8th 2018
+-  Credit: Wei Hao
+-  Affects: dnsreplay from 4.0.0 up to and including 4.1.1
+-  Not affected: dnsreplay 3.4.11, 4.1.2
+-  Severity: High
+-  Impact: Arbitrary code execution
+-  Exploit: This problem can be triggered via a crafted PCAP file
+-  Risk of system compromise: Yes
+-  Solution: Upgrade to a non-affected version
 
-DM_LIST_DEVICES_CMD, and in fact, any function called from ctl_ioctl is lim=
-ited to users with CAP_SYS_ADMIN.  Without that root-equivalent privilege I=
- don't see any way to exploit this bug.   Did you find a way to exploit it =
-as an unprivileged user?
+An issue has been found in the dnsreplay tool provided with PowerDNS
+Authoritative, where replaying a specially crafted PCAP file can trigger
+a stack-based buffer overflow, leading to a crash and potentially
+arbitrary code execution. This buffer overflow only occurs when the
+`--ecs-stamp` option of dnsreplay is used. Regardless of this issue, the
+use of dnsreplay with untrusted PCAP files is not advised.
+This issue has been assigned CVE-2018-1046 by Red Hat.
 
-jch
+PowerDNS Authoritative from 4.0.0 up to and including 4.1.1 is affected.
 
-> Attachments are the poc, kernel config and Kernel report.
->=20
-> The patch:
-> https://github.com/torvalds/linux/commit/4edbe1d7bcffcd6269f3b5eb63f71039=
-3ff2ec7a
->     * Grab our output buffer.
->     */
->     nl =3D orig_nl =3D get_result_buffer(param, param_size, &len);
-> -    if (len < needed) {
-> +    if (len < needed || len < sizeof(nl->dev)) {
->         param->flags |=3D DM_BUFFER_FULL_FLAG;
->         goto out;
->     }
->=20
-> Regards,
-> Bodong Zhao of NISL lab, Tsinghua University
+We would like to thank Wei Hao for finding and subsequently reporting
+this issue.
 
 
---Apple-Mail=_316BB58D-F1CA-4E80-B1E7-CD97977B1D5A
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename=signature.asc
-Content-Type: application/pgp-signature;
-	name=signature.asc
-Content-Description: Message signed with OpenPGP
+--JaigPYmQBW0hwtN4V2ouZMaoTdXm59SrR--
+
+--Esr72NDZejb0kFcvTIM6BXKoahWCD1FH0
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
-Comment: GPGTools - http://gpgtools.org
 
-iHUEAREIAB0WIQT+pxvb11CFWUkNSOVFC7t+lC+jyAUCYGHOyQAKCRBFC7t+lC+j
-yHiEAQCY/T1fRdcspmslC1dVLZx7tCQ0v4auHXw8VkyCI8kvqwEAs4zUH5y3BKBp
-J5MuRuFTJPwHH+swcwEtFjkp7M7SMFo=
-=YjGr
+iQEzBAEBCgAdFiEE1jAMq8v0abvjkuUDogjtT4r1hEYFAlryriMACgkQogjtT4r1
+hEY94ggAgByDbEBhVYsqIRni9aeCZLokKimWLRPNVJAzDO8rYezEBmnLKbRw8R+N
+shBZdTg4LldUYeDiJrLr/AXCv8dDEvlSHbXAKJbaSJ6GsYTKqVQ+iNe7Kzt+IPbU
+6CWkv+ET7m+KuJ1OlwBCiLpg7WqR6ZQ1PZtC36fpwYIl4fxK/055rOAiyQ3p3zu6
+KDwzmFCxlQ0osfuofF/a73pQ/O2tABCo/YFx8lkkqbSQsRsC+BDpu1TOJjzZrosh
+AGvkfxyn21Jtmks49f6hmno7k6dGCsqSEMlBO2HxB1EhRgS85B1EtPFEKKVA23v0
+Aq/yi7f69ppMvtmsRDO6XhGuFMBHLg==
+=p3Cc
 -----END PGP SIGNATURE-----
 
---Apple-Mail=_316BB58D-F1CA-4E80-B1E7-CD97977B1D5A--
+--Esr72NDZejb0kFcvTIM6BXKoahWCD1FH0--
