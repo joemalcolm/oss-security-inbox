@@ -1,24 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/24/2
-Message-ID: <20180124060817.GE19133@sin.redhat.com>
-Date: Wed, 24 Jan 2018 16:38:18 +1030
-From: Doran Moppert <dmoppert@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/09/2
+Message-ID: <6a293bd2-77f7-4ce0-a5ba-f9fb32985086@powerdns.com>
+Date: Wed, 9 May 2018 10:15:31 +0200
+From: Remi Gacogne <remi.gacogne@...erdns.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2018-1000018: ovirt-engine-setup: root password disclosed in provisioning logs
+Subject: PowerDNS Security Advisory 2018-02
 Content-Type: text/plain; charset=utf-8
 
-Distributions of ovirt using hosted-engine-setup should check if their
-configuration is affected by this issue, as the default log file
-permissions were 0755 and the root password was not correctly filtered.
+Hello everybody,
 
-https://gerrit.ovirt.org/#/c/86635/
-https://gerrit.ovirt.org/#/c/62679/
+We released PowerDNS Authoritative 4.1.2 yesterday, fixing a security
+issue (CVE-2018-1046) affecting the dnsreplay tool included with it.
+Versions of dnsreplay from 4.0.0 up to and including 4.1.1 are
+vulnerable. The full security advisory can be found below and at
+https://doc.powerdns.com/authoritative/security-advisories/powerdns-advisory-2018-02.html
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1537904
+The issue is a stack-based buffer overflow occurring when replaying a
+specially crafted PCAP file with the `--ecs-stamp` option enabled,
+leading to a denial of service or potentially arbitrary code execution.
+Regardless of this issue, we do not advise the use of dnsreplay with
+untrusted PCAP files.
+
+The commit fixing the issue can be found here:
+https://github.com/PowerDNS/pdns/commit/f9c57c98da1b1007a51680629b667d57d9b702b8
+
+We would like to thank Wei Hao for finding and subsequently reporting
+this issue.
+
+Please feel free to contact me directly if you have any question.
+
+Best regards,
+
+Remi and the PowerDNS team
 
 
--- 
-Doran Moppert
-Red Hat Product Security
+PowerDNS Security Advisory 2018-02: Buffer overflow in dnsreplay
+================================================================
 
-Content of type "application/pgp-signature" skipped
+-  CVE: CVE-2018-1046
+-  Date: May 8th 2018
+-  Credit: Wei Hao
+-  Affects: dnsreplay from 4.0.0 up to and including 4.1.1
+-  Not affected: dnsreplay 3.4.11, 4.1.2
+-  Severity: High
+-  Impact: Arbitrary code execution
+-  Exploit: This problem can be triggered via a crafted PCAP file
+-  Risk of system compromise: Yes
+-  Solution: Upgrade to a non-affected version
+
+An issue has been found in the dnsreplay tool provided with PowerDNS
+Authoritative, where replaying a specially crafted PCAP file can trigger
+a stack-based buffer overflow, leading to a crash and potentially
+arbitrary code execution. This buffer overflow only occurs when the
+`--ecs-stamp` option of dnsreplay is used. Regardless of this issue, the
+use of dnsreplay with untrusted PCAP files is not advised.
+This issue has been assigned CVE-2018-1046 by Red Hat.
+
+PowerDNS Authoritative from 4.0.0 up to and including 4.1.1 is affected.
+
+We would like to thank Wei Hao for finding and subsequently reporting
+this issue.
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
