@@ -1,4 +1,9 @@
-Received: (qmail 17515 invoked by uid 550); 6 Aug 2024 22:09:05 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3358" "Wednesday" "9" "May" "2018" "11:45:54" "+0200" "Daniel Beck" "ml@beckweb.net" "<C421ACBB-3B9C-49FC-A8D5-D122C448BB07@beckweb.net>" "88" "[oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins" nil nil nil "5" "2018050909:45:54" "[oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins" (number mark "U       ml@beckweb.n May  9   88/3358  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 7431 invoked by uid 550); 9 May 2018 09:46:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,107 +12,104 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17489 invoked from network); 6 Aug 2024 22:09:05 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1722982137; x=1723586937; darn=lists.openwall.com;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=H7ncoE1p+I0OAscqswEnMB8Xbz6EbiLf/+TtvJQq+54=;
-        b=HiUz0BYG7HvAs42Sy9NpxINCpXmOg3sGU6W+rB1T+fj70wdVG9Nb5J6tze84/QweUl
-         dERo1MW205OwXHZLRYjMzDepmX+A2xGEW+FcUVPy9TEX+tU814qSinGjpYvsoy9ILv4A
-         jvA30iW0/NvElTTPkQJ4zfGvoqc/BuzhHqWHCrwilZ/90nTqAhzaC+MdHC58Ehsfi1sQ
-         GzstLQGx2xSqE0T1CvFwYYKC0MZSJW6VNgPgIiFNAL1QFL/TJItKrdEUDt+Up7HuneC/
-         CU9uhpbQQ4i1bmDTJ4rnt0zB9WrLd+whGPPlDd8LiLmiL6m7X+eaTGFA7Pp0mgPjGv02
-         XaDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722982137; x=1723586937;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=H7ncoE1p+I0OAscqswEnMB8Xbz6EbiLf/+TtvJQq+54=;
-        b=koIj6rAl4AAmGaF7ygHSSAASehivol6xlzgGYSq+6mrF+VJIJ5dQsoo/BWpUULqx+3
-         xZ768MaH+oowPxP/wEwCR6a9EY0FOQVM9stZzsZnBbTnaUbq0TVbk0FKCgod469PF2Ef
-         D8wNbvOilhOujOjw3y6lZlPSA12uZyddECnKPj9Iqqvw7FxIaE7PWcfsRIgUO31tqWZ2
-         ZRNITPjYj0xer2J6sLAYjSxd97ZI0EAT2Wz65hmxjxU1o0eRlmw5rEs2hM1t6HeRmD+x
-         d0VGCkvPJUvOHtd9xIDtJo+jVMQRdyNw6Q6ncanQD217RXmwksXjAkM5uoeF12gfVfL2
-         KrlA==
-X-Gm-Message-State: AOJu0YwWlBKAFymEGQNRfrPUNOw8wghGxPUeKUljIpgDMDJlGUS0rlZd
-	P+MK1FGX/MPeB8GC1QEE7ALom9XXhjEM98xtLIjdyo2Uv1Mkr4P/fcqYsp1NMiHpjz4gzq0jZ1X
-	RNDMGY0Jf0L/5O2OYN72HVQxRAYs/hg==
-X-Google-Smtp-Source: AGHT+IHdKjRuP71n0lBxWaCfaK9575tOCGFY1ngS+3tnIIFcPEsNpahrVFsXd8S3g6shb8zifXxgMyDY/OVi9W9lD7w=
-X-Received: by 2002:a05:6902:2b03:b0:e06:1bd:976 with SMTP id
- 3f1490d57ef6-e0bde3a553dmr20659945276.22.1722982136923; Tue, 06 Aug 2024
- 15:08:56 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAJbOq16ebWS21u439bcV764HhaeQHF+eO64LdMAAKFgjdDLrMg@mail.gmail.com>
-In-Reply-To: <CAJbOq16ebWS21u439bcV764HhaeQHF+eO64LdMAAKFgjdDLrMg@mail.gmail.com>
-From: Alex Gaynor <alex.gaynor@gmail.com>
-Date: Tue, 6 Aug 2024 18:08:46 -0400
-Message-ID: <CAFRnB2V=WV_vECtLQ1dgxATOd+raWGbqvGjcXyhEQnaCYfjiFA@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
+Received: (qmail 7410 invoked from network); 9 May 2018 09:46:06 -0000
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] feedback requested regarding deprecation of TLS 1.0/1.1
+Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
+Message-Id: <C421ACBB-3B9C-49FC-A8D5-D122C448BB07@beckweb.net>
+Date: Wed, 9 May 2018 11:45:54 +0200
+To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3273)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1525859166;27a5b306;
+X-HE-SMSGID: 1fGLfW-00059s-T2
+Subject: [oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins
 
-Hi Neil,
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software. The following
+releases contain fixes for security vulnerabilities:
 
-Answering on behalf of the Python Cryptographic Authority, which
-develops pyca/cryptography, the most widely used Python cryptography
-library. We distribute binary builds that statically link a copy of
-OpenSSL.
+* Jenkins (weekly) 2.121
+* Jenkins (LTS) 2.107.3
+* Black Duck Hub Plugin 4.0.0
+* Groovy Postbuild Plugin 2.4
 
-1) Yes, we're fine with dropping TLS 1.0/1.1 on this time frame.
-Frankly, we'd be fine dropping it faster.
+Additionally, these plugin have security vulnerabilities that have been made
+public, but have no releases containing a fix yet:
 
-2) We would not re-enable TLS1.0/1.1 in our releases. Users wishing to
-use these protocols would be responsible for building and linking
-their own OpenSSL.
+* Gitlab Hook Plugin
 
-3) I don't have a good answer for you. I think systems programming is
-fairly impoverished in terms of ways to emit _runtime_ warnings. I'd
-suggest focusing on compile-time warnings.
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2018-05-09/
 
-Alex
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-On Tue, Aug 6, 2024 at 7:29=E2=80=AFAM Neil Horman <nhorman@openssl.org> wr=
-ote:
->
-> Neil Horman <nhorman@openssl.org>
-> 4:19=E2=80=AFAM (42 minutes ago)
-> to openssl-security
->
-> OpenSSL is currently considering the deprecation of the TLS 1.0/1.1
-> protocols.  Currently TLS1.1 and TLS 1.0 are disabled at run time, and
-> requires enablement by reducing the ssl security level value.
->
-> The current proposal under consideration is to explicitly disable TLS
-> 1.0/1.1 at build time, in our 4.0 release (tentatively scheduled to relea=
-se
-> in the next 12-18 months), with an eye to completely remove the impacted
-> code in a future major release.  The default configuration could be
-> overridden to re-enable TLS 1.0/1.1 at build time.
->
-> Questions to the community are:
->
-> 1) Are distributions/users comfortable with this approach in the time fra=
-me
-> proposed?
->
-> 2) Would builders of OpenSSL consider using the default configuration (wi=
-th
-> TLS1.0/1.1 disabled in 4.0), or would they ship with these protocols
-> re-enabled in their builds?
->
-> 3) If the deprecated protocols are re-enabled, what would constitute a
-> reasonable warning mechanism to inform users that these protocols are goi=
-ng
-> away at some point in the future to pressure users to update to a newer,
-> more secure protocol?
->
-> Input on these questions is requested and appreciated
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-771
+Users with Overall/Read permission were able use the list-plugins CLI
+command and view the About Jenkins page to list all installed plugins.
 
 
+SECURITY-786
+The built-in Jenkins user database optionally allows user registration.
+This feature did not properly sanitize user names, allowing registration of
+user names containing control characters. This could be used to confuse
+administrators (appearing to be a different user) while preventing deletion
+of such users through the UI.
 
---=20
-All that is necessary for evil to succeed is for good people to do nothing.
+
+SECURITY-788
+The agent to master security subsystem ensures that the Jenkins master is
+protected from maliciously configured agents. A path traversal vulnerability
+allowed agents to escape whitelisted directories to read and write to files
+they should not be able to access.
+
+
+SECURITY-794
+The form validation code for a tool installer improperly checked
+permissions, allowing any user with Overall/Read permission to submit a
+HTTP GET request to any user specified URL, and learn whether the response
+was successful (HTTP 200) or not.
+
+Additionally, this functionality did not require POST requests be used,
+thereby allowing the above to be performed without direct access to Jenkins
+via Cross-Site Request Forgery attacks.
+
+
+SECURITY-263
+Gitlab Hook Plugin does not encrypt the Gitlab API token used to access
+Gitlab. This can be used by users with master file system access to obtain
+GitHub credentials.
+
+Additionally, the Gitlab API token round-trips in its plaintext form, and
+is displayed in a regular text field to users with Overall/Administer
+permission. This exposes the API token to people viewing a Jenkins
+administrator=E2=80=99s screen, browser extensions, cross-site scripting
+vulnerabilities, etc.
+
+
+SECURITY-670
+Black Duck Hub Plugin did not perform permission checks for its config.xml
+API endpoint. This allowed any user with Overall/Read permission to both
+read and write the plugin configuration XML.
+
+
+SECURITY-671
+Black Duck Hub Plugin config.xml API endpoint was affected by an XML
+External Entity (XXE) processing vulnerability. This allowed an attacker
+with Overall/Read access to have Jenkins parse a maliciously crafted file
+that uses external entities for extraction of secrets from the Jenkins
+master, server-side request forgery, or denial-of-service attacks.
+
+
+SECURITY-821 / CVE pending
+Groovy Postbuild Plugin did not properly escape badge content from user
+input, resulting in a stored cross-site scripting vulnerability.
+
