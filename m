@@ -1,23 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/04/3
-Message-ID: <0158ab4d-34ba-a303-b606-63187968e168@gentoo.org>
-Date: Wed, 4 Jul 2018 22:49:26 +0200
-From: Kristian Fiskerstrand <k_f@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/09/4
+Message-ID: <df84809c-8192-2855-c0ea-2b609d176aa8@sect.tu-berlin.de>
+Date: Wed, 9 May 2018 11:48:40 +0200
+From: Kashyap Thimmaraju <kashyap.thimmaraju@...t.tu-berlin.de>
 To: oss-security@...ts.openwall.com
-Subject: Statistics for distros lists updated for Q2
+Cc: Stefan Schmid <schmiste@...il.com>, Liron Schiff <schiff.liron@...il.com>, Brian O'Connor <bocon@...nnetworking.org>
+Subject: CVE-2018-1000155: Denial of Service, Improper Authentication and Authorization, and Covert Channel in the OpenFlow 1.0+ handshake
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello Everybody,
 
-Just a short notice that the statistics for the distros list have been
-updated for the 2nd Quarter at
-http://oss-security.openwall.org/wiki/mailing-lists/distros/stats
+We have identified issues with a popular Software-Defined Networking
+protocol, OpenFlow. Below are the details of the vulnerabilities.
+OpenFlow controller implementations should strongly consider addressing
+these issues, and OpenFlow adopters should be aware of such security risks.
+
+CVE-2018-1000155: Denial of Service, Improper Authentication and
+Authorization, and Covert Channel in the OpenFlow handshake
+
+Severity: Important
+
+Vendor: Open Networking Foundation (ONF), OpenFlow controllers
+
+Versions Affected: OpenFlow specification 1.0 onwards
+
+Description:
+The OpenFlow handshake does not require the controller to authenticate
+switches during the OpenFlow handshake. Furthermore, the controller is
+not required to authorize switches access to the controller. The absence
+of authentication and authorization in the OpenFlow handshake allows one
+or more malicious switches connected to an OpenFlow controller to cause
+Denial of Service attacks in certain OpenFlow controllers by spoofing
+OpenFlow switch identifiers known as DataPath Identifiers (DPIDs).
+Additionally, the lack of authentication and authorization in the
+OpenFlow handshake can be exploited by malicious switches for covert
+communications, bypassing data plane (and potentially control plane)
+security mechanisms. In particular, the OpenFlow "Features Reply"
+message sent by the switch is inherently trusted by the controller. Note
+that for the attacker to launch an attack, the OpenFlow switch must
+first establish a (secure) transport connection with the OpenFlow
+controller (e.g., TLS and TCP), and the switch must be controlled by the
+attacker.
+
+Mitigation:
+The attack can be deterred if OpenFlow connections are secured via the
+following hardened authentication scheme: Unique TLS certificates for
+switches, white-list of switch DPIDs at controllers which also includes
+the switches’ respective public-key certificate identifier, and lastly a
+controller mechanism that verifies the DPID announced in the OpenFlow
+handshake is over the TLS connection with the associated (DPID) certificate.
+
+Credit:
+Kashyap Thimmaraju (Technische Universität Berlin), Robert Krösche
+(Technische Universität Berlin), Liron Schiff (GuardiCore Labs) and
+Stefan Schmid (University of Vienna)
 
 -- 
-Kristian Fiskerstrand
-OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
-fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
+Thanks,
+
+Kashyap Thimmaraju <kashyap.thimmaraju@...t.tu-berlin.de>
+Security in Telecommunications <sect.tu-berlin.de>
+Technische Universität Berlin
+Ernst-Reuter-Platz 7, Sekr TEL 17
+10587 Berlin, Germany
+Phone: +49 30 8353 58351
 
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
