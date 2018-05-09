@@ -1,4 +1,9 @@
-Received: (qmail 1229 invoked by uid 550); 1 May 2026 20:46:47 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2533" "Wednesday" "9" "May" "2018" "11:48:40" "+0200" "Kashyap Thimmaraju" "kashyap.thimmaraju@sect.tu-berlin.de" "<df84809c-8192-2855-c0ea-2b609d176aa8@sect.tu-berlin.de>" "59" "[oss-security] CVE-2018-1000155: Denial of Service, Improper Authentication and Authorization, and Covert Channel in the OpenFlow 1.0+ handshake" nil nil nil "5" "2018050909:48:40" "[oss-security] CVE-2018-1000155: Denial of Service, Improper Authentication and Authorization, and Covert Channel in the OpenFlow 1.0+ handshake" (number mark "U       kashyap.thim May  9   59/2533  " thread-indent "\"[oss-security] CVE-2018-1000155: Denial of Service, Improper Authentication and Authorization, and Covert Channel in the OpenFlow 1.0+ handshake\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 32716 invoked by uid 550); 9 May 2018 10:26:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,203 +12,78 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 9364 invoked from network); 1 May 2026 20:18:53 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777666724;
-	bh=z5dLF6RTaqC0Y/bL9qv8btlXUpTn6qLIrA8inUG+wAQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=jghcKBALTHHKThRK7ud0oZVrSzREda7M/Cw15kOwqORaUJ2tKr6RbnB1bh/YtrQGR
-	 Ru3FAziuxeAshC+jhHKyvoPVe+oJZDx0K3UHliykiVp5266nNX5qgcDIyWUH/qpK2L
-	 WdPzGqklG1c9jA07tUr9I+Ch103Id3b0dcNWOMJ4J5mLBAgEbs7elIvXX/ijGJ44a/
-	 YhiDU+3yyk2mYfHbcrkZXFDHIq1re/aoa2ZJNMZp2FtbL5uTqdP+nJJnTxJL7dwo3I
-	 Z7qrUQdH4zcyckb3FELKh0uKd9Tt9khe5VhAeeGCRi8Am5AUDbXHDp8Aofz1Grn2U5
-	 u1H43fsoD09Qg==
-Date: Fri, 1 May 2026 13:18:41 -0700
-From: Eric Biggers <ebiggers@kernel.org>
-To: Demi Marie Obenour <demiobenour@gmail.com>
-Cc: oss-security@lists.openwall.com,
-	Jan Schaumann <jschauma@netmeister.org>, iwd@lists.linux.dev
-Message-ID: <20260501201841.GA2540@quark>
-References: <afJorKIje4O6dXbH@netmeister.org>
- <d6111caa-db61-498a-92cb-ea7a0aa0a5e2@ehuk.net>
- <87se8dgicq.fsf@gentoo.org>
- <afL-QhLfEKqHZqka@eldamar.lan>
- <20260430071917.GB54208@sol>
- <177abb5d-8ba9-4bb9-8b23-9fbc868ed3cd@gmail.com>
- <20260501180028.GA2260@sol>
- <19837ef5-e5b6-45f4-8336-3ce07423dfb1@gmail.com>
+Received: (qmail 21897 invoked from network); 9 May 2018 09:48:53 -0000
+To: oss-security@lists.openwall.com
+Cc: Stefan Schmid <schmiste@gmail.com>, Liron Schiff
+ <schiff.liron@gmail.com>, Brian O'Connor <bocon@opennetworking.org>
+From: Kashyap Thimmaraju <kashyap.thimmaraju@sect.tu-berlin.de>
+Message-ID: <df84809c-8192-2855-c0ea-2b609d176aa8@sect.tu-berlin.de>
+Date: Wed, 9 May 2018 11:48:40 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <19837ef5-e5b6-45f4-8336-3ce07423dfb1@gmail.com>
-Subject: Re: [oss-security] CVE-2026-31431: CopyFail: linux local privilege
- scalation
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
+Subject: [oss-security] CVE-2018-1000155: Denial of Service, Improper Authentication and
+ Authorization, and Covert Channel in the OpenFlow 1.0+ handshake
 
-On Fri, May 01, 2026 at 03:24:51PM -0400, Demi Marie Obenour wrote:
-> On 5/1/26 14:00, Eric Biggers wrote:
-> > On Fri, May 01, 2026 at 11:30:17AM -0400, Demi Marie Obenour wrote:
-> >>> But I also hope this finally provides some more impetus for AF_ALG to be
-> >>> deprecated and removed.  It's a massive, largely pointless attack
-> >>> surface which has been causing problems, including regular CVEs, ever
-> >>> since it was added to the kernel in 2010.  And of course it's gotten
-> >>> even worse lately, with LLMs now being able to find the bugs.
-> >>>
-> >>> Userspace crypto libraries exist.  There's no need to escalate to kernel
-> >>> mode just to do some math.
-> >>
-> >> The only reason I can think of to keep it is for embedded systems
-> >> with weak CPUs and crypto accelerators that are actually worth using.
-> >> However, those seem to be very rare outside of things like routers,
-> >> which run specialized distros like OpenWRT.  Even when the accelerator
-> >> exists and is worth using, AF_ALG is certainly not an efficient way
-> >> to access it.
-> >>
-> >> Furthermore, an inline encryption engine in the NIC would be a much
-> >> better choice for future router designs.  AF_ALG doesn't work with
-> >> that at all.
-> > 
-> > All correct, of course.
-> > 
-> > The main other claimed benefit of AF_ALG (and the similar KEYCTL_PKEY_*)
-> > that sometimes gets mentioned is, ironically, a security one: keys can
-> > be kept out of a particular userspace processes's address space.
-> > 
-> > But:
-> > 
-> > - Different userspace processes have different address spaces too.  So
-> >   it already can be, and indeed often already is, done in userspace.
-> > 
-> > - This security benefit is kind of besides the point when the interface
-> >   has a privilege escalation bug every few months.
-> > 
-> > - The kernel often doesn't support the algorithm needed, or if it does,
-> >   some of them just aren't as well maintained as userspace libraries
-> >   like OpenSSL and BoringSSL.  For example, the kernel's RSA
-> >   signing/decryption code is vulnerable to timing side-channels.
-> > 
-> > (I'd like to specifically call out
-> > https://blog.cloudflare.com/the-linux-kernel-key-retention-service-and-why-you-should-use-it-in-your-next-application/
-> > as being misleading and harmful.  It says to use the kernel for RSA
-> > private key operations.  But it fails to mention the kernel's RSA
-> > implementation being vulnerable to timing side-channels or the steady
-> > stream of vulnerabilities in the associated UAPIs.)
-> > 
-> >>> On Linux systems with no programs that use AF_ALG, it can already be
-> >>> disabled in the kconfig by unsetting CONFIG_CRYPTO_USER_API_*.
-> >>>
-> >>> But there are some holdouts like iwd (iNet wireless daemon) that are
-> >>> keeping general-purpose Linux distros from being able to disable it.
-> >>
-> >> If AF_ALG was removed from the kernel, that would provide an incentive
-> >> for someone to patch iwd to use a userspace library instead.  Or if
-> >> iwd is unmaintained, it (sadly) needs to be removed from distros.
-> >> (Sadly because wpa-supplicant is much less well designed.)
-> > 
-> > Where iwd is used, AF_ALG can't just be removed from the kernel
-> > unilaterally.  People would complain that iwd is broken and invoke the
-> > "no regressions" rule.  While only a few programs use it (iwd, bluez,
-> > cryptsetup with certain options), they are enough for this to happen.
-> > 
-> > We do remove algorithms from AF_ALG occasionally, but we've been unable
-> > to remove ones like MD4 (yes, that MD4) that are still used by iwd:
-> > https://lore.kernel.org/linux-crypto/946591db-36aa-23db-a5c4-808546eab762@gmail.com/
-> > Likewise with removing support for SHA-1 from KEYCTL_PKEY_*
-> > (https://lore.kernel.org/linux-crypto/f0492c92-1015-48e3-bfce-598c7a4843d1@quicinc.com/).
-> > People even post the Linus quote "we simply do not break user space".
-> > 
-> > Unfortunately, the developers and users of this small set of userspace
-> > programs are disconnected from the extraordinary amount of time and
-> > effort that the rest of the Linux community is putting in to maintain
-> > these UAPIs and respond to the continuous stream of vulnerabilities.
-> > 
-> > To them these are simply APIs available that work.
-> > 
-> > This is actually one of the reasons I've been making these public posts:
-> > this needs to be a community effort to deprecate these UAPIs.
-> > 
-> > If the developers of these userspace programs aren't taking action yet,
-> > people need to volunteer to go in and fix these programs.  Again, it's
-> > actually a pretty small set of programs that even uses this stuff.
-> > 
-> > This would be really impactful to the security of Linux.
-> > 
-> > A lot of the discourse around this vulnerability has focused on the
-> > things that went wrong with the patching.  It did go very badly, but I
-> > feel it's also missing the point a bit.  AF_ALG and KEYCTL_PKEY_*
-> > actually have a continuous stream of vulnerabilities, which has only
-> > accelerated in the era of LLMs.  Just in the last year there have been
-> > at least 4 privilege escalations in AF_ALG, I think.  We need to fix the
-> > root cause of why this is happening.
-> > 
-> > And I think it really can be fixed.  It's just a few programs that are
-> > using these UAPIs.  Many systems already don't need them at all.
-> > 
-> > But people need to help.  Send patches to iwd, bluez, cryptsetup, etc.
-> > that make them use userspace crypto libraries instead of AF_ALG and
-> > KEYCTL_PKEY_*.  If the maintainers aren't convinced yet, then patch
-> > downstream in your distro as a starting point (and disable the UAPIs in
-> > your kernel).  Or help in other ways like writing blog posts that
-> > promote attack surface reduction and the alternatives to these UAPIs.
-> > 
-> > I'd also like to explore some more incremental approaches, such as
-> > making these UAPIs require CAP_SYS_ADMIN, possibly configurable by a
-> > sysctl.  If anyone knows of anything important that would be broken by a
-> > CAP_SYS_ADMIN requirement on AF_ALG and KEYCTL_PKEY_*, let me know.
-> 
-> Cryptsetup needs CAP_SYS_ADMIN, but iwd definitely does not, and
-> presumably BlueZ should not use have it either.
-> 
-> Cryptsetup is a special case because there are times when it may not
-> be safe to allocate memory: if I/O to the swap partition is suspended,
-> and the kernel tries to page data out to it, the system may deadlock.
-> So calling into arbitrary third-party libraries might not be the best
-> idea.  Thankfully, Nettle should meet all of cryptsetup's requirements.
+Hello Everybody,
 
-Cryptsetup only uses AF_ALG for certain operations like keyslot
-encryption, and only in certain cases: Cryptsetup's default settings
-work fine with all CONFIG_CRYPTO_USER_API_* options disabled in the
-kernel.  The actual I/O to/from encrypted partitions is handled by
-dm-crypt in the kernel and has nothing to do with AF_ALG.
+We have identified issues with a popular Software-Defined Networking
+protocol, OpenFlow. Below are the details of the vulnerabilities.
+OpenFlow controller implementations should strongly consider addressing
+these issues, and OpenFlow adopters should be aware of such security risks.
 
-Cryptsetup even already supports userspace crypto libraries as well.  It
-seems there are just some gaps in how it's using them.  For example for
-AES-GCM it seems to just go directly to AF_ALG, despite the cryptsetup
-binary already being linked to OpenSSL, which means a complete userspace
-implementation of AES-GCM is already present in its address space!
+CVE-2018-1000155: Denial of Service, Improper Authentication and
+Authorization, and Covert Channel in the OpenFlow handshake
 
-> > I think there should also be an allowlist of algorithms, and the splice
-> > support should be removed.  (Interestingly, there's precedent for
-> > removing splice support from AF_ALG: it was already removed from the 6.1
-> > LTS kernel last year, seemingly accidentally.  That's why the copy.fail
-> > exploit didn't work on 6.1 but did work on other versions.)
-> > 
-> > - Eric
-> 
-> Would an allowlist and removing splice support allow migrating to
-> the crypto library code?  I looked at the list of CVEs you provided,
-> and I think it would prevent most of the recent ones.  The crypto
-> library is (as you pointed out) so much easier to use.
+Severity: Important
 
-I'm hoping that at least some of these ideas for attack surface
-reduction (requiring CAP_SYS_ADMIN, allowlisting the algorithms,
-removing splice support) can be implemented in parallel without waiting
-for every userspace program to stop using these UAPIs.  Full removal
-needs to be the goal, though.
+Vendor: Open Networking Foundation (ONF), OpenFlow controllers
 
-> Also CCing the iwd mailing list.  iwd uses the kernel crypto APIs
-> wherever possible, which is a serious problem.  However, it already
-> needs to perform cryptography in userspace because of ECC.
-> 
-> Nettle provides trivial no-allocation cryptographic APIs.  Nettle's
-> licensing (LGPLv3+ or GPLv2+) might prevent this, though.  OpenSSL has
-> a horrible API, but AWS-LC has a much better one.  It also implements
-> TLS, which would might allow iwd to get rid of its built-in TLS code
-> for EAP-TLS.
+Versions Affected: OpenFlow specification 1.0 onwards
 
-It's unfortunate that the situation with userspace crypto libraries is
-fragmented, with the de facto standard one (OpenSSL) not being all that
-great.  But that's no excuse to say "put it all in the kernel".  Even
-using OpenSSL would still be much better.
+Description:
+The OpenFlow handshake does not require the controller to authenticate
+switches during the OpenFlow handshake. Furthermore, the controller is
+not required to authorize switches access to the controller. The absence
+of authentication and authorization in the OpenFlow handshake allows one
+or more malicious switches connected to an OpenFlow controller to cause
+Denial of Service attacks in certain OpenFlow controllers by spoofing
+OpenFlow switch identifiers known as DataPath Identifiers (DPIDs).
+Additionally, the lack of authentication and authorization in the
+OpenFlow handshake can be exploited by malicious switches for covert
+communications, bypassing data plane (and potentially control plane)
+security mechanisms. In particular, the OpenFlow "Features Reply"
+message sent by the switch is inherently trusted by the controller. Note
+that for the attacker to launch an attack, the OpenFlow switch must
+first establish a (secure) transport connection with the OpenFlow
+controller (e.g., TLS and TCP), and the switch must be controlled by the
+attacker.
 
-- Eric
+Mitigation:
+The attack can be deterred if OpenFlow connections are secured via the
+following hardened authentication scheme: Unique TLS certificates for
+switches, white-list of switch DPIDs at controllers which also includes
+the switches=E2=80=99 respective public-key certificate identifier, and las=
+tly a
+controller mechanism that verifies the DPID announced in the OpenFlow
+handshake is over the TLS connection with the associated (DPID) certificate.
+
+Credit:
+Kashyap Thimmaraju (Technische Universit=C3=A4t Berlin), Robert Kr=C3=B6sche
+(Technische Universit=C3=A4t Berlin), Liron Schiff (GuardiCore Labs) and
+Stefan Schmid (University of Vienna)
+
+--=20
+Thanks,
+
+Kashyap Thimmaraju <kashyap.thimmaraju@sect.tu-berlin.de>
+Security in Telecommunications <sect.tu-berlin.de>
+Technische Universit=C3=A4t Berlin
+Ernst-Reuter-Platz 7, Sekr TEL 17
+10587 Berlin, Germany
+Phone: +49 30 8353 58351
+
+
