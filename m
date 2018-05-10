@@ -1,76 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/12/4
-Message-ID: <CAPyZ6=KEt-TcHZ=Cj6_as2vt=K8s17+f_VCTZt1bw-8W7vdgQw@mail.gmail.com>
-Date: Fri, 13 Apr 2018 00:20:40 +0900
-From: Tatsuhiro Tsujikawa <tatsuhiro.t@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/10/1
+Message-ID: <1961715083.28767602.1525953956902.JavaMail.zimbra@redhat.com>
+Date: Thu, 10 May 2018 08:05:56 -0400 (EDT)
+From: Vladis Dronov <vdronov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2018-1000168: nghttp2: Denial of service due to NULL pointer dereference.
+Subject: CVE-2018-1130: Linux kernel: dccp: a null pointer dereference in net/dccp/output.c:dccp_write_xmit
 Content-Type: text/plain; charset=utf-8
 
-There are some typos in the previous post.  Here is the corrected message:
+Hello,
 
-## Security Advisory
+A null pointer dereference in dccp_write_xmit() function in net/dccp/output.c
+in the Linux kernel before v4.16-rc7 allows a local user to cause a denial of
+service by a number of certain crafted system calls.
 
-CVE-2018-1000168: nghttp2: Denial of service due to NULL pointer
-dereference.
+References:
 
-### Vulnerability
+https://syzkaller.appspot.com/bug?id=833568de043e0909b2aeaef7be136db39d21ba94
 
-If ALTSVC frame is received by libnghttp2 and it is larger than it can
-accept, the pointer field which points to ALTSVC frame payload is left
-NULL.  Later libnghttp2 attempts to access another field through the
-pointer, and gets segmentation fault.
+https://marc.info/?t=152036611500003&r=1&w=2
 
-ALTSVC frame is defined by RFC 7838.
+An upstream patch:
 
-The largest frame size libnghttp2 accept is by default 16384 bytes.
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=67f93df79aeefc3add4e4b31a752600f834236e2
 
-Receiving ALTSVC frame is disabled by default.  Application has to
-enable it explicitly by calling
-`nghttp2_option_set_builtin_recv_extension_type(opt, NGHTTP2_ALTSVC)`.
-
-Transmission of ALTSVC is always enabled, and it does not cause this
-vulnerability.
-
-ALTSVC frame is expected to be sent by server, and received by client
-as defined in RFC 7838.
-
-Client and server are both affected by this vulnerability if the
-reception of ALTSVC frame is enabled.  As written earlier, it is
-useless to enable reception of ALTSVC frame on server side.  So,
-server is generally safe unless application accidentally enabled the
-reception of ALTSVC frame.
-
-### Affected Versions
-
-* Affected versions: nghttp2 >= 1.10.0 and nghttp2 <= v1.31.0
-* Not affected versions: nghttp2 >= 1.31.1
-
-### The Solution
-
-Upgrade to nghttp2 v1.31.1.
-
-If the upgrade cannot be possible:
-
-For client, disable ALTSVC, removing the call to
-`nghttp2_option_set_builtin_recv_extension_type(opt, NGHTTP2_ALTSVC)`
-
-For server, because it is never expected to receive ALTSVC, just
-remove `nghttp2_option_set_builtin_recv_extension_type(opt,
-NGHTTP2_ALTSVC)`.
-
-### Time Line
-
-It was first reported to the nghttp2 team April 4 2018.
-
-nghttp2 v1.31.1 was released on April 12 2018.
-
-### Credits
-
-Reported by Jordan Zebor at F5 Networks, and James M Snell from
-Node.js project.  Fixed by the nghttp2 team.
-
-Thank you for all who involved.
-
-This security advisory format is inspired from curl/libcurl project.
-
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
