@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["956" "Thursday" "25" "June" "2020" "22:58:40" "+0100" "Mark Thomas" "markt@apache.org" "<64b43a38-c0c8-9d45-596d-2d89c55aee56@apache.org>" "30" "[oss-security] CVE-2020-11996 Apache Tomcat HTTP/2 Denial of Service" nil nil nil "6" "2020062521:58:40" "[oss-security] CVE-2020-11996 Apache Tomcat HTTP/2 Denial of Service" (number mark "U       markt@apache Jun 25   30/956   " thread-indent "\"[oss-security] CVE-2020-11996 Apache Tomcat HTTP/2 Denial of Service\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-11996 Apache Tomcat HTTP/2 Denial of Service" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["568" "Thursday" "10" "May" "2018" "08:05:56" "-0400" "Vladis Dronov" "vdronov@redhat.com" "<1961715083.28767602.1525953956902.JavaMail.zimbra@redhat.com>" "18" "[oss-security] CVE-2018-1130: Linux kernel: dccp: a null pointer dereference in net/dccp/output.c:dccp_write_xmit" nil nil nil "5" "2018051012:05:56" "[oss-security] CVE-2018-1130: Linux kernel: dccp: a null pointer dereference in net/dccp/output.c:dccp_write_xmit" (number mark "U       vdronov@redh May 10   18/568   " thread-indent "\"[oss-security] CVE-2018-1130: Linux kernel: dccp: a null pointer dereference in net/dccp/output.c:dccp_write_xmit\"\n") "<982848644.28761175.1525953818635.JavaMail.zimbra@redhat.com>" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 20383 invoked by uid 550); 25 Jun 2020 22:54:26 -0000
+Received: (qmail 5722 invoked by uid 550); 10 May 2018 12:06:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,46 +12,38 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28352 invoked from network); 25 Jun 2020 21:58:49 -0000
-From: Mark Thomas <markt@apache.org>
+Received: (qmail 5676 invoked from network); 10 May 2018 12:06:09 -0000
+Date: Thu, 10 May 2018 08:05:56 -0400 (EDT)
+From: Vladis Dronov <vdronov@redhat.com>
 To: oss-security@lists.openwall.com
-Message-ID: <64b43a38-c0c8-9d45-596d-2d89c55aee56@apache.org>
-Date: Thu, 25 Jun 2020 22:58:40 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.1
+Message-ID: <1961715083.28767602.1525953956902.JavaMail.zimbra@redhat.com>
+In-Reply-To: <982848644.28761175.1525953818635.JavaMail.zimbra@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE-2020-11996 Apache Tomcat HTTP/2 Denial of Service
+X-Originating-IP: [10.40.5.81, 10.4.195.25]
+Thread-Topic: CVE-2018-1130: Linux kernel: dccp: a null pointer dereference in net/dccp/output.c:dccp_write_xmit
+Thread-Index: IE3hqurjeM8jelCV14Pi7a9x358h4w==
+X-Scanned-By: MIMEDefang 2.84 on 10.5.11.24
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.32]); Thu, 10 May 2018 12:05:57 +0000 (UTC)
+Subject: [oss-security] CVE-2018-1130: Linux kernel: dccp: a null pointer dereference in
+ net/dccp/output.c:dccp_write_xmit
 
-CVE-2020-11996 Apache Tomcat HTTP/2 Denial of Service
+Hello,
 
-Severity: Important
-
-Vendor: The Apache Software Foundation
-
-Versions Affected:
-Apache Tomcat 10.0.0-M1 to 10.0.0-M5
-Apache Tomcat 9.0.0.M1 to 9.0.35
-Apache Tomcat 8.5.0 to 8.5.55
-
-Description:
-A specially crafted sequence of HTTP/2 requests could trigger high CPU
-usage for several seconds. If a sufficient number of such requests were
-made on concurrent HTTP/2 connections, the server could become unresponsive.
-
-Mitigation:
-- Upgrade to Apache Tomcat 10.0.0-M6 or later
-- Upgrade to Apache Tomcat 9.0.36 or later
-- Upgrade to Apache Tomcat 8.5.56 or later
-
-Credit:
-This issue was reported publicly via the Apache Tomcat Users mailing
-list without reference to the potential for DoS. The DoS risks were
-identified by the Apache Tomcat Security Team.
+A null pointer dereference in dccp_write_xmit() function in net/dccp/output.c
+in the Linux kernel before v4.16-rc7 allows a local user to cause a denial of
+service by a number of certain crafted system calls.
 
 References:
-[1] http://tomcat.apache.org/security-10.html
-[2] http://tomcat.apache.org/security-9.html
-[3] http://tomcat.apache.org/security-8.html
+
+https://syzkaller.appspot.com/bug?id=833568de043e0909b2aeaef7be136db39d21ba94
+
+https://marc.info/?t=152036611500003&r=1&w=2
+
+An upstream patch:
+
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=67f93df79aeefc3add4e4b31a752600f834236e2
+
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
