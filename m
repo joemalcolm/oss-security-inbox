@@ -1,56 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/18/1
-Message-ID: <854523480.13779866.1537264949483.JavaMail.zimbra@redhat.com>
-Date: Tue, 18 Sep 2018 06:02:29 -0400 (EDT)
-From: Vladis Dronov <vdronov@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2018-14641: Linux kernel: a security flaw in the ip_frag_reasm()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/14/4
+Message-ID: <20180514145244.64c73b08@redhat.com>
+Date: Mon, 14 May 2018 14:52:44 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: Bryan Pendleton <bpendleton.derby@...il.com>
+Cc: oss-security@...ts.openwall.com, security <security@...che.org>, gregory draperi <gregory.draperi@...il.com>
+Subject: Re: [ANNOUNCE] CVE-2018-1313: Apache Derby externally-controlled input vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Heololo,
+Hi Bryan!
 
-A security flaw was found in the ip_frag_reasm() function in
-net/ipv4/ip_fragment.c in the Linux kernel which can cause a later system crash
-in ip_do_fragment(). With certain non-default but non-rare configuration of
-a victim host an attacker can trigger this crash remotely, thus leading to a
-remote denial-of-service.
+On Sat, 5 May 2018 07:52:08 -0700 Bryan Pendleton wrote:
 
-The CVE-ID CVE-2018-14641 was assigned to this flaw and we would suggest to use
-it in the public communications.
+> CVE-2018-1313: Apache Derby externally-controlled input vulnerability
+> 
+> Severity: Important
+> 
+> Vendor:
+> The Apache Software Foundation
+> 
+> Versions Affected:
+> Derby 10.3.1.4 to 10.14.1.0
+> 
+> Description:
+> A specially-crafted network packet can be used to request the Derby
+> Network Server to boot a database whose location and contents are under
+> the user's control. If the Derby Network Server is not running with a
+> Java Security Manager policy file, the attack is successful. If the
+> server is using a policy file, the policy file must permit the
+> database location to be read for the attack to work. The default
+> Derby Network Server policy file distributed with the affected releases
+> includes a permissive policy as the default Network Server policy, which
+> allows the attack to work.
+> 
+> Mitigation:
+> Users should specify an explicit security policy file, as described here:
+> http://db.apache.org/derby/docs/10.14/security/csecjavasecurity.html
+> 
+> Derby release 10.14.2.0 disallows the specially-crafted network packet,
+> and also modifies the default Derby Network Server policy file to be
+> significantly less permissive (the default file access policy is now
+> limited to the derby.system.home directory and the directory from
+> which the Derby jar files were loaded). It is still recommended that
+> production installations of the Derby Network Server should specify
+> an explicit security policy file.
+> 
+> Credit:
+> This issue was discovered by Grégory Draperi
 
-Reference: https://bugzilla.redhat.com/show_bug.cgi?id=1629636
+Can you clarify what upstream considers to be the fix for this issue?
+Some sources such as:
 
-The flaw was introduced in:
+http://www.systemtek.co.uk/2018/05/apache-derby-externally-controlled-input-vulnerability-cve-2018-1313/
 
-$ git tag --contain fa0f527358bd
-v4.19-rc1
+indicate that the fix is the change to the default security policy,
+i.e. DERBY-6987.  However, the wording above seems to consider that as
+more of an additional hardening fix, and the actual security fix is
+change to handling of the ping command to disallow additional
+arguments, i.e. DERBY-6986.
 
-and fixed in:
+Related to the above is the question regarding the list of affected
+versions.  Version 10.3.1.4 is listed as the first affected, however
+the "ping with arguments" should pre-date that version, and even
+DERBY-6986 indicates it's old code.  However, 10.3.1.4 seems to be the
+first version to include the default security policy, which may be the
+reason why it's listed as the first affected.
 
-$ git tag --contain 5d407b071dc3
-v4.19-rc4
+And one more clarification for those of us not familiar with Derby:
+What is the known impact of opening some untrusted database?  Is it
+known to e.g. allow arbitrary code execution directly in Derby?
 
-The fix is the upstream commit 5d407b071dc3 ("ip: frags: fix crash in
-ip_do_fragment()") and it is fixing fa0f527358bd ("ip: use rb trees for IP frag
-queue."). Namely, the following part of fa0f527358bd which unions sk and
-ip_defrag_offset fields of struct sk_buff has introduced the vulnerability:
+Thank you!
 
-+++ b/include/linux/skbuff.h
-@@ -676,13 +676,16 @@ struct sk_buff {
-+
-+       union {
-+               struct sock             *sk;
-+               int                     ip_defrag_offset;
-+       };
-
-Distributions which has backported this part of fa0f527358bd (which in turn is
-a part of the fix of the CVE-2018-5391/FragmentSmack) are vulnerable.
-
-For the remote attack masquerading and forwarding should be configured on a
-victim host. Then an attacker can ping an external host from inside a
-masqueraded zone, so that the malicious ping is masqueraded and forwarded by a
-victim host. This is not default but (we believe) not rare configuration, so
-for example, a VM hosting provider could be vulnerable.
-
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+-- 
+Tomas Hoger / Red Hat Product Security
