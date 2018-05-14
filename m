@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1069" "Wednesday" "9" "November" "2016" "15:50:38" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<2147367.62QfxKV9DH@blackgate>" "44" "[oss-security] libming: listmp3: left shift in listmp3.c" nil nil nil "11" "2016110914:50:38" "[oss-security] libming: listmp3: left shift in listmp3.c" (number mark "U       ago@gentoo.o Nov  9   44/1069  " thread-indent "\"[oss-security] libming: listmp3: left shift in listmp3.c\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2271" "Monday" "14" "May" "2018" "16:01:42" "+0200" "Yves-Alexis Perez" "corsac@debian.org" "<e4671df7733e6783cb7dd9ecce3062f4964fbf71.camel@debian.org>" "54" "Re: [oss-security] PGP/MIME and S/MIME mail clients vulnerabilities" "^Date:" nil nil "5" "2018051414:01:42" "[oss-security] PGP/MIME and S/MIME mail clients vulnerabilities" (number mark "        corsac@debia May 14   54/2271  " thread-indent "\"Re: [oss-security] PGP/MIME and S/MIME mail clients vulnerabilities\"\n") "<20180514102951.GD18567@256bit.org>" ("<6770b401c944860c2288ebf7738f40010d938b33.camel@debian.org>" "<20180514102951.GD18567@256bit.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 14240 invoked by uid 550); 9 Nov 2016 14:50:57 -0000
+Received: (qmail 22362 invoked by uid 550); 14 May 2018 14:02:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,60 +11,72 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 22344 invoked from network); 14 May 2018 14:02:03 -0000
+Message-ID: <e4671df7733e6783cb7dd9ecce3062f4964fbf71.camel@debian.org>
+In-Reply-To: <20180514102951.GD18567@256bit.org>
+References: <6770b401c944860c2288ebf7738f40010d938b33.camel@debian.org>
+	 <20180514102951.GD18567@256bit.org>
+Content-Type: multipart/signed; micalg="pgp-sha256";
+	protocol="application/pgp-signature"; boundary="=-Ujl1HWkQ6gNGopsOxvWa"
+X-Mailer: Evolution 3.28.2-1 
+Mime-Version: 1.0
+Date: Mon, 14 May 2018 16:01:42 +0200
+From: Yves-Alexis Perez <corsac@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14128 invoked from network); 9 Nov 2016 14:50:55 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
+Subject: Re: [oss-security] PGP/MIME and S/MIME mail clients vulnerabilities
 To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Date: Wed, 09 Nov 2016 15:50:38 +0100
-Message-ID: <2147367.62QfxKV9DH@blackgate>
-User-Agent: KMail/4.14.10 (Linux/4.4.26-gentoo; KDE/4.14.24; x86_64; ; )
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Subject: [oss-security] libming: listmp3: left shift in listmp3.c
 
-If it is suitable for a CVE please assign one. Thanks.
+--=-Ujl1HWkQ6gNGopsOxvWa
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Description:
-libming is a Flash (SWF) output library. It can be used from PHP, Perl, Ruby, 
-Python, C, C++, Java, and probably more on the way..
+On Mon, 2018-05-14 at 12:29 +0200, Christian Brabandt wrote:
+> Looks like details have just been published:
+> https://efail.de/
 
-A fuzzing revealed a left shift in listmp3. The bug does not reside in any 
-shared object but if you have a web application that calls directly the 
-listmp3 binary to parse untrusted mp3, then you are affected.
+So, as far as I can tell, in that attack scenario (where the attacker has
+read/write access to encrypted mails):
 
-The complete UBSan output:
+- S/MIME is completely broken at the protocol level since it has no way to
+defend against blind modification. Only mitigation for the clients are to
+prevent HTML mails and/or prevent loading of external resources. There might
+be other avenues to exploit the vulnerability in the future though.
 
-# listmp3 $FILE
-listmp3.c:94:23: runtime error: left shift of negative value -1
-listmp3.c:95:23: runtime error: left shift of negative value -1
+- PGP/MIME is a bit safer because the OpenPGP format compresses plaintext
+before encryption (which makes it harder for the attacker) and has some kind
+of authenticated (symmetric) encryption (the MDC), which helps gnupg detects
+modifications to the cyphertext. Most mail clients properly handle gnupg hi=
+nts
+when something went wrong but the external interface is a bit fragile (gnupg
+will still output the cleartext, for example). One exception is apparently
+Thunderbird with enigmail before 2.0.0, but this is now fixed (I didn't find
+the proper commit yet). Again, not displaying HTML mails and not allowing
+remote content loading can help, but other =E2=80=9Cbackchannels=E2=80=9D m=
+ight be found in
+the future.
 
-Affected version:
-0.4.7
+I hope this can help other people. I'm no cryptographer so I didn't look
+thoroughly to the crypto part of the paper, rather to the mail client
+integration. Feel free to correct me if there's anything wrong.
 
-Fixed version:
-N/A
+Regards,
+--=20
+Yves-Alexis=
 
-Commit fix:
-N/A
+--=-Ujl1HWkQ6gNGopsOxvWa
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+-----BEGIN PGP SIGNATURE-----
 
-CVE:
-N/A
+iQEzBAABCAAdFiEE8vi34Qgfo83x35gF3rYcyPpXRFsFAlr5lsYACgkQ3rYcyPpX
+RFu64wf+IMp0TFu8kk35QVQ8uCaQfU1IhqmsOh8AAqiL1U/h5U89zPLUaBZxbQLt
+SzWrmB+JKkfuUTw4PHFzfuhf+jcKYdM0YQHL2hcaq8dSnmjHLKMmWXejWTPcvcFQ
+sszgnSIlzDGdfxAvypLRpiPtTRNY7rnW2nGao/yBiVQbfiyEUtj2tLzjzsHH5d2d
+xrm13GU7OBp/6QjbtzGVZR7OfJemGEtxM7eaY5qE1V/goMBgHmOTEC2DzHWXP/nd
+0iTl+BTKO+D7UHhCE2rjbL0m3TNu7RaVIcosB5ivhKo/GgXqjAgoo9hrhL3l+9Vo
++jiMI9Ea/0HhnC7X5UwXcB68bBeuHA==
+=acJF
+-----END PGP SIGNATURE-----
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00046-libming-leftshift-listmp3_c
-
-Timeline:
-2016-08-13: bug discovered
-2016-10-20: bug reported to upstream
-2016-11-09: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/11/09/libming-listmp3-left-shift-in-listmp3-c
+--=-Ujl1HWkQ6gNGopsOxvWa--
