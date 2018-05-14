@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4784" "Tuesday" "20" "September" "2016" "11:51:22" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<1623280.0e6yKCzhd8@willoughby>" "120" "[oss-security] libav: NULL pointer dereference in ff_put_pixels8_xy2_mmx (rnd_template.c)" nil nil nil "9" "2016092009:51:22" "[oss-security] libav: NULL pointer dereference in ff_put_pixels8_xy2_mmx (rnd_template.c)" (number mark "U       ago@gentoo.o Sep 20  120/4784  " thread-indent "\"[oss-security] libav: NULL pointer dereference in ff_put_pixels8_xy2_mmx (rnd_template.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2736" "Monday" "14" "May" "2018" "14:52:44" "+0200" "Tomas Hoger" "thoger@redhat.com" "<20180514145244.64c73b08@redhat.com>" "67" "Re: [oss-security] [ANNOUNCE] CVE-2018-1313: Apache Derby externally-controlled input vulnerability" "^Cc:" nil nil "5" "2018051412:52:44" "[oss-security] [ANNOUNCE] CVE-2018-1313: Apache Derby externally-controlled input vulnerability" (number mark "        thoger@redha May 14   67/2736  " thread-indent "\"Re: [oss-security] [ANNOUNCE] CVE-2018-1313: Apache Derby externally-controlled input vulnerability\"\n") "<CANi-yg-6VPUhWvAHHEkQYByYT4HPBcpTgqb+d5WsGJBVHKrm1Q@mail.gmail.com>" ("<CANi-yg-6VPUhWvAHHEkQYByYT4HPBcpTgqb+d5WsGJBVHKrm1Q@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 26481 invoked by uid 550); 20 Sep 2016 09:51:43 -0000
+Received: (qmail 28528 invoked by uid 550); 14 May 2018 12:53:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,136 +11,89 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26449 invoked from network); 20 Sep 2016 09:51:41 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
-To: oss-security@lists.openwall.com
-Cc: cve-assign <cve-assign@mitre.org>
-Date: Tue, 20 Sep 2016 11:51:22 +0200
-Message-ID: <1623280.0e6yKCzhd8@willoughby>
-User-Agent: KMail/4.14.10 (Linux/4.4.6-gentoo; KDE/4.14.24; x86_64; ; )
+Received: (qmail 28462 invoked from network); 14 May 2018 12:53:00 -0000
+Message-ID: <20180514145244.64c73b08@redhat.com>
+In-Reply-To: <CANi-yg-6VPUhWvAHHEkQYByYT4HPBcpTgqb+d5WsGJBVHKrm1Q@mail.gmail.com>
+References: <CANi-yg-6VPUhWvAHHEkQYByYT4HPBcpTgqb+d5WsGJBVHKrm1Q@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Subject: [oss-security] libav: NULL pointer dereference in ff_put_pixels8_xy2_mmx (rnd_template.c)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 2.78 on 10.11.54.4
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.11.55.7]); Mon, 14 May 2018 12:52:48 +0000 (UTC)
+X-Greylist: inspected by milter-greylist-4.5.16 (mx1.redhat.com [10.11.55.7]); Mon, 14 May 2018 12:52:48 +0000 (UTC) for IP:'10.11.54.4' DOMAIN:'int-mx04.intmail.prod.int.rdu2.redhat.com' HELO:'smtp.corp.redhat.com' FROM:'thoger@redhat.com' RCPT:''
+Cc: oss-security@lists.openwall.com, security <security@apache.org>, gregory
+ draperi <gregory.draperi@gmail.com>
+Date: Mon, 14 May 2018 14:52:44 +0200
+From: Tomas Hoger <thoger@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] [ANNOUNCE] CVE-2018-1313: Apache Derby
+ externally-controlled input vulnerability
+To: Bryan Pendleton <bpendleton.derby@gmail.com>
 
-If it is suitable for a CVE please assign one. 
-Thanks.
+Hi Bryan!
 
-Description:
-Libav is an open source set of tools for audio and video processing.
+On Sat, 5 May 2018 07:52:08 -0700 Bryan Pendleton wrote:
 
-A fuzzing with an mp3 file as input discovered a null pointer access in 
-ff_put_pixels8_xy2_mmx.
+> CVE-2018-1313: Apache Derby externally-controlled input vulnerability
+>=20
+> Severity: Important
+>=20
+> Vendor:
+> The Apache Software Foundation
+>=20
+> Versions Affected:
+> Derby 10.3.1.4 to 10.14.1.0
+>=20
+> Description:
+> A specially-crafted network packet can be used to request the Derby
+> Network Server to boot a database whose location and contents are under
+> the user's control. If the Derby Network Server is not running with a
+> Java Security Manager policy file, the attack is successful. If the
+> server is using a policy file, the policy file must permit the
+> database location to be read for the attack to work. The default
+> Derby Network Server policy file distributed with the affected releases
+> includes a permissive policy as the default Network Server policy, which
+> allows the attack to work.
+>=20
+> Mitigation:
+> Users should specify an explicit security policy file, as described here:
+> http://db.apache.org/derby/docs/10.14/security/csecjavasecurity.html
+>=20
+> Derby release 10.14.2.0 disallows the specially-crafted network packet,
+> and also modifies the default Derby Network Server policy file to be
+> significantly less permissive (the default file access policy is now
+> limited to the derby.system.home directory and the directory from
+> which the Derby jar files were loaded). It is still recommended that
+> production installations of the Derby Network Server should specify
+> an explicit security policy file.
+>=20
+> Credit:
+> This issue was discovered by Gr=C3=A9gory Draperi
 
-The complete ASan output:
+Can you clarify what upstream considers to be the fix for this issue?
+Some sources such as:
 
-# avconv -i $FILE -f null -
-avconv version 11.7, Copyright (c) 2000-2016 the Libav developers
-  built on Aug 16 2016 15:34:42 with clang version 3.8.1 
-(tags/RELEASE_381/final)
-[h263 @ 0x61a00001f280] Format detected only with low score of 25, 
-misdetection possible!
-[h263 @ 0x619000000580] warning: first frame is no keyframe
-[h263 @ 0x619000000580] cbpc damaged at 2 0
-[h263 @ 0x619000000580] Error at MB: 2
-[h263 @ 0x619000000580] concealing 6336 DC, 6336 AC, 6336 MV errors
-[h263 @ 0x61a00001f280] Estimating duration from bitrate, this may be 
-inaccurate
-Input #0, h263, from '70.crashes':
-  Duration: N/A, bitrate: N/A
-    Stream #0.0: Video: h263, yuv420p, 1408x1152 [PAR 12:11 DAR 4:3], 25 fps, 
-25 tbn, 29.97 tbc
-Output #0, null, to 'pipe:':
-  Metadata:
-    encoder         : Lavf56.1.0
-    Stream #0.0: Video: rawvideo, yuv420p, 1408x1152 [PAR 12:11 DAR 4:3], 
-q=2-31, 200 kb/s, 25 tbn, 25 tbc
-    Metadata:
-      encoder         : Lavc56.1.0 rawvideo
-Stream mapping:
-  Stream #0:0 -> #0:0 (h263 (native) -> rawvideo (native))
-Press ctrl-c to stop encoding
-[h263 @ 0x61900001cc80] warning: first frame is no keyframe
-[h263 @ 0x61900001cc80] cbpc damaged at 2 0
-[h263 @ 0x61900001cc80] Error at MB: 2
-[h263 @ 0x61900001cc80] concealing 6336 DC, 6336 AC, 6336 MV errors
-[h263 @ 0x61900001cc80] warning: first frame is no keyframe
-[h263 @ 0x61900001cc80] cbpc damaged at 0 0
-[h263 @ 0x61900001cc80] Error at MB: 0
-[h263 @ 0x61900001cc80] concealing 99 DC, 99 AC, 99 MV errors
-Input stream #0:0 frame changed from size:1408x1152 fmt:yuv420p to 
-size:176x144 fmt:yuv420p
-[h263 @ 0x61900001cc80] warning: first frame is no keyframe
-ASAN:DEADLYSIGNAL
-=================================================================
-==28973==ERROR: AddressSanitizer: SEGV on unknown address 0x7f22da99ac95 (pc 
-0x7f22e80d8892 bp 0x7ffcd7c28e90 sp 0x7ffcd7c28e20 T0)
-    #0 0x7f22e80d8891 in ff_put_pixels8_xy2_mmx /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/x86/rnd_template.c:37:5
-    #1 0x7f22e7217de0 in hpel_motion /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/mpegvideo_motion.c:224:5
-    #2 0x7f22e7217de0 in apply_8x8 /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/mpegvideo_motion.c:798
-    #3 0x7f22e7217de0 in mpv_motion_internal /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/mpegvideo_motion.c:877
-    #4 0x7f22e7217de0 in ff_mpv_motion /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/mpegvideo_motion.c:981
-    #5 0x7f22e714459b in mpv_decode_mb_internal /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/mpegvideo.c:2223:21
-    #6 0x7f22e714459b in ff_mpv_decode_mb /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/mpegvideo.c:2358
-    #7 0x7f22e6056c95 in decode_slice /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/h263dec.c:273:13
-    #8 0x7f22e60522cd in ff_h263_decode_frame /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/h263dec.c:575:11
-    #9 0x7f22e79dd906 in avcodec_decode_video2 /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/utils.c:1600:19
-    #10 0x5647eb in decode_video /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/avconv.c:1259:11
-    #11 0x5647eb in process_input_packet /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/avconv.c:1398
-    #12 0x550e63 in process_input /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/avconv.c:2440:11
-    #13 0x550e63 in transcode /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/avconv.c:2488
-    #14 0x550e63 in main /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/avconv.c:2647
-    #15 0x7f22e3d7261f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #16 0x41d098 in _init (/usr/bin/avconv+0x41d098)
+http://www.systemtek.co.uk/2018/05/apache-derby-externally-controlled-input=
+-vulnerability-cve-2018-1313/
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/x86/rnd_template.c:37:5 in 
-ff_put_pixels8_xy2_mmx
-==28973==ABORTING
+indicate that the fix is the change to the default security policy,
+i.e. DERBY-6987.  However, the wording above seems to consider that as
+more of an additional hardening fix, and the actual security fix is
+change to handling of the ping command to disallow additional
+arguments, i.e. DERBY-6986.
 
-Affected version:
-11.7
+Related to the above is the question regarding the list of affected
+versions.  Version 10.3.1.4 is listed as the first affected, however
+the "ping with arguments" should pre-date that version, and even
+DERBY-6986 indicates it's old code.  However, 10.3.1.4 seems to be the
+first version to include the default security policy, which may be the
+reason why it's listed as the first affected.
 
-Fixed version:
-N/A
+And one more clarification for those of us not familiar with Derby:
+What is the known impact of opening some untrusted database?  Is it
+known to e.g. allow arbitrary code execution directly in Derby?
 
-Commit fix:
-N/A
+Thank you!
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Timeline:
-2016-08-15: bug discovered
-2016-08-16: bug reported to upstream
-2016-09-20: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/09/20/libav-null-pointer-dereference-in-ff_put_pixels8_xy2_mmx-rnd_template-c
-
---
-Agostino
+--=20
+Tomas Hoger / Red Hat Product Security
