@@ -1,33 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/08/2
-Message-ID: <20180208170222.bq63nttdhpj72zxi@jumper.schlittermann.de>
-Date: Thu, 8 Feb 2018 18:02:22 +0100
-From: Heiko Schlittermann <hs@...littermann.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/14/3
+Message-ID: <20180514102951.GD18567@256bit.org>
+Date: Mon, 14 May 2018 12:29:51 +0200
+From: Christian Brabandt <cb@...bit.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2018-6789 Exim 4.90 and earlier: buffer overflow
+Subject: Re: PGP/MIME and S/MIME mail clients vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Heiko Schlittermann <hs@...littermann.de> (Do 08 Feb 2018 17:57:00 CET):
-…
-> > * t0:     Distros will get access to our "security" non-public git repo
-> >           (based on the SSH keys known to us)
-> > * t0 +7d: Patch will be published on the official public git repo
-> > 
-> > t0 will be around 2018-02-08.
+
+On Mo, 14 Mai 2018, Yves-Alexis Perez wrote:
+
+> I guess most people have already saw  this, but just in case, it seems that a
+> vulnerability in PGP/MIME and S/MIME handling in various mail clients will be
+> published tomorrow.
 > 
-> t0 is now. Distro maintainers please use the following repo URLs:
+> Debian Security team didn't get any private information yet, but there have
+> been multiple twitter threads and blog posts published already:
+> 
+> https://twitter.com/seecurity/status/995906576170053633
+> https://arstechnica.com/information-technology/2018/05/critical-pgp-and-smime-
+> bugs-can-reveal-encrypted-e-mails-uninstall-now/
+> https://www.eff.org/deeplinks/2018/05/attention-pgp-users-new-vulnerabilities-
+> require-you-take-action-now
+> 
+> GnuPG has posted a tweet (https://twitter.com/gnupg/status/995931083584757760)
+> indicating it's likely a vulnerability in mail clients themselves and not in
+> the protocol, and which is related to HTML mail handling.
+> 
+> The vulnerabilities apparently enable an attacker to decrypt previous mails,
+> but my (wild) guess is that the attack actually requests decryption from the
+> mail client (which has access to the private key), rather than by actually
+> decrypting itself.
 
-We'll push the patch to our public Git repo on
+Looks like details have just been published:
+https://efail.de/
 
-    Thu 15. Feb 16:59:37 UTC 2018
-
-    Best regards from Dresden/Germany
-    Viele Grüße aus Dresden
-    Heiko Schlittermann
+Best,
+Christian
 -- 
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
- ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Ein Flirt ohne tiefere Absicht ist ungefähr so sinnvoll wie ein
+Fahrplan ohne Eisenbahn.
+		-- William Somerset Maugham
