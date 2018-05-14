@@ -1,69 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/25/2
-Message-ID: <20180825100149.GA2596@openwall.com>
-Date: Sat, 25 Aug 2018 12:01:49 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/14/2
+Message-ID: <20180514082952.nf64klmaqvjjqyt6@jwilk.net>
+Date: Mon, 14 May 2018 10:29:52 +0200
+From: Jakub Wilk <jwilk@...lk.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: About OpenSSH "user enumeration" / CVE-2018-15473
+Subject: Re: PGP/MIME and S/MIME mail clients vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Aug 25, 2018 at 10:32:12AM +1000, Damien Miller wrote:
-> On Fri, 24 Aug 2018, Solar Designer wrote:
-> > On Fri, Aug 24, 2018 at 10:58:20AM +1000, Damien Miller wrote:
-> > > Finally, and perhaps most importantly: there's a fundamental tradeoff
-> > > between attack surface and fixing this class of bug. As a concrete
-> > > example, fixing this one added about 150 lines of code to our
-> > > pre-authentication attack surface. In this case, we were willing to do
-> > > this because we had confidence in the additional parsing, mostly because
-> > > it's been reviewed several times and we've conducted a decent amount of
-> > > fuzzing on it. But, given the choice between leaving a known account
-> > > validity oracle or exposing something we don't trust, we'll choose the
-> > > former every time.
-> > 
-> > Can you summarize for us all (on these mailing lists) the commits
-> > leading to OpenSSH 7.8 that deal with this issue and add "about 150
-> > lines of code", please? 
-> 
-> It's this one:
-> 
-> >  * sshd(8): avoid observable differences in request parsing that could
-> >    be used to determine whether a target user is valid.
-> 
-> (Commit 74287f5df9)
+https://lists.gnupg.org/pipermail/gnupg-users/2018-May/060315.html has 
+more details:
 
-This is the same commit that Qualys referenced, but in a different tree:
+"[...] HTML is used as a back channel to create an oracle for modified 
+encrypted mails.  It is long known that HTML mails and in particular 
+external links like <img href="tla.org/TAG"/> are evil if the MUA 
+actually honors them (which many meanwhile seem to do again; see all 
+these newsletters).  Due to broken MIME parsers a bunch of MUAs seem to 
+concatenate decrypted HTML mime parts which makes it easy to plant such 
+HTML snippets."
 
-https://github.com/openssh/openssh-portable/commit/74287f5df9966a0648b4a68417451dd18f079ab8
-
-> Note that there's no new code added, but delaying the checks means more
-> code is exposed before the authentication handler bails out.
-
-Oh, right.  Thanks.  However, exposing more code before one specific
-authentication attempt bails out isn't necessarily as bad as adding that
-code to the attack surface: some or all of this code might have already
-been exposed under different usernames.
-
-To be confident we're only reaching code that's already exposed under a
-different username, we may replace the tested-non-existent username with
-that existing username and also set a flag to force authentication to
-fail later.  Yes, more checks would then be run when authenticating with
-an unknown username, but those wouldn't add to attack surface as they
-were reachable with that other username anyway.
-
-This doesn't have to be literally all conditions and checks - it may be
-sufficient to match behavior for one certain existing username.
-
-This could mean an extra getpwnam(3) call, which is a slightly greater
-timing leak than what's present in one call.  That may be further
-mitigated by always doing two calls.  Of course, this won't be anywhere
-near timing-safe anyway.
-
-Now, it can be tricky to pick a specific fallback username in
-OpenSSH-portable that we'd be OK with all non-existent usernames to
-behave similarly to.  "root" may somewhat likely have unusual password
-hash (like it historically did on OpenBSD); "nobody" likely has its
-password locked (but maybe that's OK - it is in fact common for SSH
-users to have only public keys setup, and no passwords).  Maybe there
-should be a way to override this dummy username in sshd_config.
-
-Alexander
+-- 
+Jakub Wilk
