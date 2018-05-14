@@ -1,29 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/09/1
-Message-ID: <nycvar.YSQ.7.76.1803091521260.21217@wniryva>
-Date: Fri, 9 Mar 2018 15:25:36 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Ross Lagerwall <ross.lagerwall@...rix.com>
-Subject: CVE-2018-7858 Qemu: cirrus: OOB access when updating vga display
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/14/1
+Message-ID: <6770b401c944860c2288ebf7738f40010d938b33.camel@debian.org>
+Date: Mon, 14 May 2018 10:05:20 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: PGP/MIME and S/MIME mail clients vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+I guess most people have already saw  this, but just in case, it seems that a
+vulnerability in PGP/MIME and S/MIME handling in various mail clients will be
+published tomorrow.
 
-Quick emulator(QEMU) built with the Cirrus CLGD 54xx VGA Emulator support is 
-vulnerable to an out-of-bounds access issue. It could occur while updating VGA 
-display, after guest has adjusted the display dimensions.
+Debian Security team didn't get any private information yet, but there have
+been multiple twitter threads and blog posts published already:
 
-A privileged user inside guest could use this flaw to crash the Qemu process 
-resulting in DoS.
+https://twitter.com/seecurity/status/995906576170053633
+https://arstechnica.com/information-technology/2018/05/critical-pgp-and-smime-
+bugs-can-reveal-encrypted-e-mails-uninstall-now/
+https://www.eff.org/deeplinks/2018/05/attention-pgp-users-new-vulnerabilities-
+require-you-take-action-now
 
-Upstream patch:
----------------
-   -> https://lists.nongnu.org/archive/html/qemu-devel/2018-03/msg02174.html
+GnuPG has posted a tweet (https://twitter.com/gnupg/status/995931083584757760)
+indicating it's likely a vulnerability in mail clients themselves and not in
+the protocol, and which is related to HTML mail handling.
 
-This issue was reported by Ross Lagerwall of citrix.com.
+The vulnerabilities apparently enable an attacker to decrypt previous mails,
+but my (wild) guess is that the attack actually requests decryption from the
+mail client (which has access to the private key), rather than by actually
+decrypting itself.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Regards,
+-- 
+Yves-Alexis Perez - Debian Security
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
