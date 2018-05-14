@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2233" "Tuesday" "14" "July" "2015" "10:20:17" "+0100" "Cory Benfield" "cory@lukasa.co.uk" "<98FF0D5E-9DA0-4570-A93D-CDD6F85E91AC@lukasa.co.uk>" "57" "[oss-security] [CVE-2015-3908] Improper TLS Certificate Validation in Ansible" nil nil nil "7" "2015071409:20:17" "[oss-security] [CVE-2015-3908] Improper TLS Certificate Validation in Ansible" (number mark "U       cory@lukasa. Jul 14   57/2233  " thread-indent "\"[oss-security] [CVE-2015-3908] Improper TLS Certificate Validation in Ansible\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1914" "Monday" "14" "May" "2018" "10:05:20" "+0200" "Yves-Alexis Perez" "corsac@debian.org" "<6770b401c944860c2288ebf7738f40010d938b33.camel@debian.org>" "53" "[oss-security] PGP/MIME and S/MIME mail clients vulnerabilities" "^Date:" nil nil "5" "2018051408:05:20" "[oss-security] PGP/MIME and S/MIME mail clients vulnerabilities" (number mark "        corsac@debia May 14   53/1914  " thread-indent "\"[oss-security] PGP/MIME and S/MIME mail clients vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 23678 invoked by uid 550); 14 Jul 2015 14:47:59 -0000
+Received: (qmail 26285 invoked by uid 550); 14 May 2018 08:05:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,86 +11,68 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 16099 invoked from network); 14 Jul 2015 09:20:26 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:content-type:subject:date:message-id:to
-         :mime-version;
-        bh=/8TXAbIO80x25FD2fe1h6F0Fk1dnu4CY4uIJaua1ZKc=;
-        b=GdN6lzx5WsY+ZbyoWh9gSOF/+ZBNWUcIt5dw0dTlpBpByRFdoI6Du42OgX+Wmcpwv2
-         ZSw0n2BWB0SihpuRgkH8E8fGjX/9r+/ygoOSLGyTKB5tpFljR3xIj3xSG7zHj0JTvBxM
-         2MTtwqLKXFiyd7iNYM9YwRSafdBX1St74wE/N06pRfmuaxziW8FEChQpK1nNEpXdaH9t
-         ys2azzMUCspDU9CTUXUNKGDQldvq/NhDBIzquBg7yTTz0+6jwxtEl4o9uQWUEu9S8aLz
-         1bR/GuKOY7W4la7aaobk49OgjeV/6Dqi34pfBCRMzome4vvA2UBzZJ9uRRJ43GUHJt0Z
-         Vxpw==
-X-Gm-Message-State: ALoCoQmj7vnwnYDai4/tzwbKLLcnUZpdzH83ttl3qWm1u3uwU7ChXod7WUx+bFmISKTkDlfLqAAq
-X-Received: by 10.194.89.72 with SMTP id bm8mr77225093wjb.116.1436865615107;
-        Tue, 14 Jul 2015 02:20:15 -0700 (PDT)
-X-Pgp-Agent: GPGMail 2.5
-Content-Type: multipart/signed; boundary="Apple-Mail=_8DE8869E-1FF2-41D7-B3D2-31FD2CBFE89E"; protocol="application/pgp-signature"; micalg=pgp-sha256
-Message-Id: <98FF0D5E-9DA0-4570-A93D-CDD6F85E91AC@lukasa.co.uk>
-Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2102\))
-X-Mailer: Apple Mail (2.2102)
-Date: Tue, 14 Jul 2015 10:20:17 +0100
-From: Cory Benfield <cory@lukasa.co.uk>
+Received: (qmail 26264 invoked from network); 14 May 2018 08:05:43 -0000
+Message-ID: <6770b401c944860c2288ebf7738f40010d938b33.camel@debian.org>
+Content-Type: multipart/signed; micalg="pgp-sha256";
+	protocol="application/pgp-signature"; boundary="=-yWkURFHMjh27uXznBNOR"
+X-Mailer: Evolution 3.28.2-1 
+Mime-Version: 1.0
+Date: Mon, 14 May 2018 10:05:20 +0200
+From: Yves-Alexis Perez <corsac@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] [CVE-2015-3908] Improper TLS Certificate Validation in Ansible
+Subject: [oss-security] PGP/MIME and S/MIME mail clients vulnerabilities
 To: oss-security@lists.openwall.com
 
---Apple-Mail=_8DE8869E-1FF2-41D7-B3D2-31FD2CBFE89E
+--=-yWkURFHMjh27uXznBNOR
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
 
-Versions of Ansible prior to 1.9.2 fail to adequately validate HTTPS certif=
-icates when using the get_url and uri modules, and when using the url and e=
-tcd lookup plugins. This allows for man-in-the-middle attacks on those conn=
-ections.
+I guess most people have already saw  this, but just in case, it seems that=
+ a
+vulnerability in PGP/MIME and S/MIME handling in various mail clients will =
+be
+published tomorrow.
 
-The fix for this problem has been released as part of Ansible 1.9.2.
+Debian Security team didn't get any private information yet, but there have
+been multiple twitter threads and blog posts published already:
 
-The Ansible playbook below is a proof-of-concept that can be used to safely=
- validate the incorrect behaviour:
+https://twitter.com/seecurity/status/995906576170053633
+https://arstechnica.com/information-technology/2018/05/critical-pgp-and-smi=
+me-
+bugs-can-reveal-encrypted-e-mails-uninstall-now/
+https://www.eff.org/deeplinks/2018/05/attention-pgp-users-new-vulnerabiliti=
+es-
+require-you-take-action-now
 
-  - name: a playbook demonstrating MITM in ansible
-    hosts: 127.0.0.1
-    connection: local
-    tasks:
-    - name: this should fail
-      get_url: url=3Dhttps://kennethreitz.org/ dest=3D"/tmp/shouldnotexist.=
-html=E2=80=9D
+GnuPG has posted a tweet (https://twitter.com/gnupg/status/9959310835847577=
+60)
+indicating it's likely a vulnerability in mail clients themselves and not in
+the protocol, and which is related to HTML mail handling.
 
-This playbook attempts to download a HTML file from a site presenting a cer=
-tificate that is valid, but not for the site in question. Versions of Ansib=
-le from 1.9.2 onward correctly fail to validate the certificate, but earlie=
-r versions will download the file regardless and the playbook will successf=
-ully exit.
+The vulnerabilities apparently enable an attacker to decrypt previous mails,
+but my (wild) guess is that the attack actually requests decryption from the
+mail client (which has access to the private key), rather than by actually
+decrypting itself.
 
-Cory
+Regards,
+--=20
+Yves-Alexis Perez - Debian Security
 
---Apple-Mail=_8DE8869E-1FF2-41D7-B3D2-31FD2CBFE89E
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename=signature.asc
-Content-Type: application/pgp-signature;
-	name=signature.asc
-Content-Description: Message signed with OpenPGP using GPGMail
+
+--=-yWkURFHMjh27uXznBNOR
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIcBAEBCAAGBQJVpNRRAAoJEHD+F/imQ+Fb9F4P/3mvcHC/PS7tu2Wnw1OLfd/+
-IlXhbJBrSHtM8iwXg/h3M/0vAIXu1u27z7hplIbAsvzubcKqGEwgXWVv1FFRfF1e
-o4X2vZz75Hc3hbgrSmT8toilmXLM29G17hPavdJz9Z3gFHzibqAkAmBVY+a0OHeg
-6p5lGfOHzIo57PQ34HI69+YNABzm0VQc2NL5j9u8PbzNzp9OFVM2GSWyJja/XwQl
-eBKNsH+49ByzgAhvgQFXrZylYBb9iJ2pQ3B9+pRhxhCXMaAIv0mX1MThX0HNdgQz
-VbZNHEpMkohUvz7llGSU3kzESdXoDwGWMpY8/vlRYyl4Fw1xQIkiolEkCblEQTFh
-m8P9M3CQ+Wo9ySaY2n/oYm1Ywm3U+q8sMzlrfk9lsxj98LJ5J0Ooao/81kr5l1x4
-Wp3PUFirbzPaAxD/zF26pLd1Dp6Zo+lVx2rhYWXO+7o3tOmK4ihpBH84Zzk7U1Di
-Fm5HRoYwPKLtrWNKkOfbaCWqQFHEHO4SxhPjkzG6mWvQrcE2KjlvxuAJB1KMjd1v
-JPiFJQDXf8qyiyjr9ai3IDWX+Nd4G41HUGTZYhvWSq8qqSQAjtcnX2ub/e0mS4Yh
-szBAElV50Za8w9pokNrgNQKj/+QrWfdvY/RN48Imi3MlT1RQmmrWSgQjF2/hyEGv
-5cEAlzSFIjIv+DtUVRQM
-=UzTF
+iQEzBAABCAAdFiEE8vi34Qgfo83x35gF3rYcyPpXRFsFAlr5Q0AACgkQ3rYcyPpX
+RFuUUAf+Mqv6urcHdvB62LVRwPnj4ZHQIHulT/o6m/pX0T8+gstDDMl2APqtcUIR
+6fnyjqTpUfIqPiNMoL8zX2CKw5DqUlN72lwQwxmmimNq/wkgrLE1Zu0vsoUaRukP
+nzka46hVc8DxF+YI5sZE32AkXMlKFTHTvode/sLMV1I0jFBtkW3sGWCtbwuOCVj0
+KOIo0Fr7GN1WSCRP9iVQFExgVdQoq2VwosEAaKdYLQDkJT4nsOdgaPmF3bxDMpQE
+9yV7phJfdwfC+C+4IzW3SRTp21ALaKSqmVxPboehNbbb/mNfvwygl2dIGLYu5f+4
+8lyCfdcX6MZdp31HBYXTfIyMD9PUow==
+=k5vq
 -----END PGP SIGNATURE-----
 
---Apple-Mail=_8DE8869E-1FF2-41D7-B3D2-31FD2CBFE89E--
+--=-yWkURFHMjh27uXznBNOR--
