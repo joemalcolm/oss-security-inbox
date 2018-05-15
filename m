@@ -1,66 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/22/2
-Message-ID: <CAO5O-EJ_t5m92qzFtjBXffhc3spX-VtiBZJsKpHn78mnxORu9Q@mail.gmail.com>
-Date: Thu, 22 Mar 2018 14:12:25 +0100
-From: Guido Vranken <guidovranken@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSL: bug in modular exponentiation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/15/2
+Message-ID: <83c6b5d6e961fc6c1130e634ab35763b3aaf43b8.camel@debian.org>
+Date: Tue, 15 May 2018 10:22:46 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: Brian May <brian@...uxpenguins.xyz>, oss-security@...ts.openwall.com
+Subject: Re: PGP/MIME and S/MIME mail clients vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-> Interesting -- could you confirm that the effect of this bug is a
-> miscalculation? Or is it breaking the constant-time assertion?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-It is a miscalculation. Note that in the PoC, the 'A' and 'C' bignums
-are the same. So modular exponentiation A ** B MOD C is the same as A
-** B MOD A in this case, and this should always result in zero,
-because A ** B by definition results in a multiple of A, and A MOD A =
-0.
+On Tue, 2018-05-15 at 17:40 +1000, Brian May wrote:
+> Have a look at some official statements on this:
+> 
+> * https://lists.gnupg.org/pipermail/gnupg-users/2018-May/060334.html
+> * https://protonmail.com/blog/pgp-vulnerability-efail/
+> 
+> For the case of PGP it sounds like the only problems occur when mail
+> clients ignore the GPG hints.
 
-I don't know if this bug makes any difference to execution time.
+Thanks for the links (I had already included the information in my summary
+though).
+> 
+> For S/MIME, it does sound like the standard is broken and needs fixing.
 
-> Do you have a pointer as to where this was discussed?
+That was my understanding as well, thus the mitigations.
+> 
+> If I understand this correctly, the "Direct Exfiltration" is an attack
+> that doesn't require modifying the encrypted data - so presumably the
+> MDC in PGP won't help. 
 
-It was found with Google oss-fuzz, which sends bug reports
-automatically to me and the OpenSSL team. The OpenSSL team later
-shared their thoughts with me via e-mail.
+Yes indeed.
 
-> Do you consider it a security vulnerability?
+> To me this sounds like a email client problem
+> (allowing mixing encrypted and encrypted data in the one HTML document
+> seems like a very bad idea), but the https://efail.de/ page says the
+> standards need to be updated to fix this.
 
-The OpenSSL team tends to assign severity according to the extent
-their SSL library is impacted. But OpenSSL is in very widespread use
-and the use of its bignum library is probably not even limited to
-cryptographic applications alone. I don't consider it a security
-vulnerability per se as I don't know of any approach towards
-exploitation, but as with every API whose operation is not concomitant
-with the expected behavior, it has the potential to give rise to
-corner cases in specific use cases.
+Maybe the fixing the standard will help, but indeed the client can already
+sanitize the various chunks of message and not render them as part of one HTML
+document. As far as I can tell only Thunderbird was vulnerable to this (in
+open-source software), but I can't find a CVE number or a public bug for this.
 
-Various cryptographic functions in OpenSSL like Diffie-Hellman use
-constant-time modular exponentiation, and with the recent bug in the
-same assembly code they said the following about this:
+Regards,
+- -- 
+Yves-Alexis
+-----BEGIN PGP SIGNATURE-----
 
-"No EC algorithms are affected. Analysis suggests that attacks against
-RSA and DSA as a result of this defect would be very difficult to
-perform and are not believed likely. Attacks against DH1024 are
-considered just feasible, because most of the work necessary to deduce
-information about a private key may be performed offline. The amount
-of resources required for such an attack would be significant.
-However, for an attack on TLS to be meaningful, the server would have
-to share the DH1024 private key among multiple clients, which is no
-longer an option since CVE-2016-0701"
-
-But this particular bug is not harmful, according to the team.
-
-> Can you give advice to developers of how to mitigate this kind of issue?
-
-Either don't use constant-time modular exponentiation or compile with
-assembly disabled (./config no-asm). There's probably also a way to
-specifically disable the offending assembly code, but I don't know how
-to do that off-hand.
-
-> Is it regarded a WONTFIX by OpenSSL or is it going to be fixed (just not
-> treated as security-criticial)? If so, do you know the fix version?
-
-They've told me that they want to fix it. But I don't know the ETA.
-
-Guido
+iQEzBAEBCAAdFiEE8vi34Qgfo83x35gF3rYcyPpXRFsFAlr6mNYACgkQ3rYcyPpX
+RFtn4ggAtq1Ex6jbj0XbMxQt2j9l4/p1OFSoemqJEEXse2E6cgB/UMd4LPBpzeW0
+kS1I6glL4j3ODpUrcBKFkWTqUMXwYATayzBGX08HWti5vj+CRtqd+QtpMziymhiC
+UzB77gsDi3IBssANPDVrW1YmF/pN5FUvrmBx6F+yEXOd0dQkKwQrbnvgQVskVGBP
+TisoHpMDvEAZGToNlHh/HokonliCnnN7vQRp4ZiardcWsFY5oBnmHcvZKYaW1R9G
+PG65KWRDSxiU9hB6UGoZNAgM8vlBjZzEk6kgSm8XC5vam2Co/Egg0JQenK0C8YyP
+ATG6D5cEDa31XswrNeZLVr5VF035JQ==
+=dZri
+-----END PGP SIGNATURE-----
