@@ -1,78 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/10/9
-Message-ID: <CALoRt7T8LLCCU5svHOuPfr9dZ+UV_B4WaQZruByMnkjkcLDypg@mail.gmail.com>
-Date: Mon, 10 Dec 2018 15:45:14 -0500
-From: Ren Kimura <rkx1209dev@...il.com>
-To: Matthew Fernandez <matthew.fernandez@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: mpg321: Out-of-bounds Write
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/15/1
+Message-ID: <87vabp5puz.fsf@silverfish.pri>
+Date: Tue, 15 May 2018 17:40:04 +1000
+From: Brian May <brian@...uxpenguins.xyz>
+To: Yves-Alexis Perez <corsac@...ian.org>, oss-security@...ts.openwall.com
+Subject: Re: PGP/MIME and S/MIME mail clients vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-2018年12月10日(月) 12:44 Matthew Fernandez <matthew.fernandez@...il.com>:
->
->
->
-> On Sun, 9 Dec 2018 at 15:11, Ren Kimura <rkx1209dev@...il.com> wrote:
->>
->> > Did you report this one upstream? In trying to understand this, it looks to me like the problem isn’t that mpg321 fails
->> > to check the bitrate is positive, but rather that there’s an unchecked malloc elsewhere.
->> >
->> > The point where the OOB write occurs (mad.c:285) looks like the following:
->> >
->> >    282     /* update cached table of frames & times */
->> >    283     if (current_frame <= playbuf->num_frames) /* we only allocate enough for our estimate. */
->> >    284     {
->> >    285         playbuf->frames[current_frame] = playbuf->frames[current_frame-1] + (header->bitrate / 8 / 1000)
->> >    286             * mad_timer_count(header->duration, MAD_UNITS_MILLISECONDS);
->> >    287         playbuf->times[current_frame] = current_time;
->> >
->> > At this point, header->bitrate is 0 and playbuf->num_frames is the correct limit to check against for this buffer. The
->> > problem seems to stem from the point at which playbuf->frames was allocated (mpg321.c:990):
->>
->> >    985             if ((options.maxframes != -1) && (options.maxframes <= playbuf.num_frames))
->> >    986             {
->> >    987                 playbuf.max_frames = options.maxframes;
->> >    988             }
->> >    989
->> >    990             playbuf.frames = malloc((playbuf.num_frames + 1) * sizeof(void*));
->> >    991             playbuf.times = malloc((playbuf.num_frames + 1) * sizeof(mad_timer_t));
->> >    992 #ifdef __uClinux__
->> >    993       if((playbuf.buf = mmap(0, playbuf.length, PROT_READ, MAP_PRIVATE, fd, 0)) == MAP_FAILED)
->> >    994 #else
->> >    995       if((playbuf.buf = mmap(0, playbuf.length, PROT_READ, MAP_SHARED, fd, 0)) == MAP_FAILED)
->> >    996 #endif
->> >
->> > At this point, playbuf.num_frames is whatever the your platform happens to yield when ∞ is cast to a long (undefined
->> > behavior in C). AFAICT there is no check that malloc succeeded before the code later writes to the frames array (the
->> > same applies to playbuf.times). Poking around a bit more, this (unchecked malloc) seems common in the code.
->>
->> checking malloc status is not enough, because playbuf.num_frames can
->> be very large value, in my environment Ubuntu 18.04, gcc 7.03,
->> it becomes 0x8000000000000000.
->> 990             playbuf.frames = malloc((playbuf.num_frames + 1) *
->> sizeof(void*));
->> So at this point it try to calculate (0x8000000000000000 + 1) * 8 =
->> 0x8 (INTEGER OVERFLOW).
->> As a result malloc succeed but it only allocate 0x8 byte buffer, lead
->> OOB write at following points.
->>
->> 283     if (current_frame <= playbuf->num_frames) /* we only allocate
->> enough for our estimate. */
->> 285         playbuf->frames[current_frame] =
->> playbuf->frames[current_frame-1] + (header->bitrate / 8 / 1000)
->> 286             * mad_timer_count(header->duration, MAD_UNITS_MILLISECONDS);
->> 287         playbuf->times[current_frame] = current_time;
->>
->> The value of playbuf.num_frames may depend on platform because it's
->> calculated from INF value. (undefined behavior)
->> I only tried to Ubuntu package of mpg321 (may be compiled by gcc?). At
->> least on ubuntu, OOB write always happen due to above reason.
->>
->> Ren Kimura
->
-> Did you report this upstream?
+Yves-Alexis Perez <corsac@...ian.org> writes:
 
-Yes. I've reported it to Ubuntu security team.
-But there is no response yet.
+> So, as far as I can tell, in that attack scenario (where the attacker has
+> read/write access to encrypted mails):
+>
+> - S/MIME is completely broken at the protocol level since it has no way to
+> defend against blind modification. Only mitigation for the clients are to
+> prevent HTML mails and/or prevent loading of external resources. There might
+> be other avenues to exploit the vulnerability in the future though.
+>
+> - PGP/MIME is a bit safer because the OpenPGP format compresses plaintext
+> before encryption (which makes it harder for the attacker) and has some kind
+> of authenticated (symmetric) encryption (the MDC), which helps gnupg detects
+> modifications to the cyphertext. Most mail clients properly handle gnupg hints
+> when something went wrong but the external interface is a bit fragile (gnupg
+> will still output the cleartext, for example). One exception is apparently
+> Thunderbird with enigmail before 2.0.0, but this is now fixed (I didn't find
+> the proper commit yet). Again, not displaying HTML mails and not allowing
+> remote content loading can help, but other “backchannels” might be found in
+> the future.
 
-Ren Kimura
+Have a look at some official statements on this:
+
+* https://lists.gnupg.org/pipermail/gnupg-users/2018-May/060334.html
+* https://protonmail.com/blog/pgp-vulnerability-efail/
+
+For the case of PGP it sounds like the only problems occur when mail
+clients ignore the GPG hints.
+
+For S/MIME, it does sound like the standard is broken and needs fixing.
+
+If I understand this correctly, the "Direct Exfiltration" is an attack
+that doesn't require modifying the encrypted data - so presumably the
+MDC in PGP won't help. To me this sounds like a email client problem
+(allowing mixing encrypted and encrypted data in the one HTML document
+seems like a very bad idea), but the https://efail.de/ page says the
+standards need to be updated to fix this.
+-- 
+Brian May <brian@...uxpenguins.xyz>
+https://linuxpenguins.xyz/brian/
