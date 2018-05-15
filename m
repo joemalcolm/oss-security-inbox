@@ -1,59 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/01/2
-Message-ID: <20181001124547.GA6845@openwall.com>
-Date: Mon, 1 Oct 2018 14:45:47 +0200
-From: Solar Designer <solar@...nwall.com>
-To: Carlton Gibson <carlton.gibson@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/15/5
+Message-ID: <87zi10u5kl.fsf@mid.deneb.enyo.de>
+Date: Tue, 15 May 2018 20:39:06 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
+To: Christian Brabandt <cb@...bit.org>
 Cc: oss-security@...ts.openwall.com
-Subject: Re: Django security release issued: 2.1.2
+Subject: Re: PGP/MIME and S/MIME mail clients vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Oct 01, 2018 at 11:33:47AM +0200, Carlton Gibson wrote:
-> Today the Django team issued 2.1.2 as part of our security 
-> process. This release address a security issue, and we encourage all 
-> users to upgrade as soon as possible: 
-> 
-> https://www.djangoproject.com/weblog/2018/oct/01/security-release/
+* Christian Brabandt:
 
-First of all, thank you for sharing this with oss-security.
+> Looks like details have just been published:
+> https://efail.de/
 
-Per oss-security list content guidelines, actual vulnerability detail
-must be included in postings (message body or text/plain attachment).
-The Subject could have easily been more descriptive for this list, too -
-e.g., "CVE-2018-16984: Django: Password hash disclosure to "view only"
-admin users".
-
-Carlton, I'd appreciate it if you include such detail in your
-oss-security postings (if any) on future occasions.  Including the links
-as well is great (such as for easy access to updated revisions while
-the links work); including only links is discouraged.
-
-Here's the vulnerability detail from the above URL:
-
----
-CVE-2018-16984: Password hash disclosure to "view only" admin users
-
-If an admin user has the change permission to the user model, only part
-of the password hash is displayed in the change form. Admin users with
-the view (but not change) permission to the user model were displayed
-the entire hash. While it's typically infeasible to reverse a strong
-password hash, if your site uses weaker password hashing algorithms such
-as MD5 or SHA1, it could be a problem.
-
-Thanks Phithon Gong for reporting this issue.
----
-
-BTW, the feasibility of "reversing" a password hash depends not only on
-hash type, but also on how many guesses the attacker would need to make
-before likely hitting the right password.  Without target user specific
-information, that number depends on how common or not the password is.
-
-Maybe the word "typically" allows for this exception for weak passwords.
-However, unnecessarily revealing the password hash is a problem on its
-own, not just "could be a problem" depending on hash type, although the
-restriction to "admin users" and password hashing do mitigate the issue
-to some extent.
-
-Thanks,
-
-Alexander
+I don't see any discussion of cid: URLs.  Are vendors planning to fix
+vectors related to those as well?
