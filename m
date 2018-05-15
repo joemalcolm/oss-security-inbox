@@ -1,22 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/07/1
-Message-ID: <CAJznFrtqyw8rGLZ0DV9e8ZkKH+YAwjZOfaxD+0eBKCAje9YnYQ@mail.gmail.com>
-Date: Wed, 7 Mar 2018 01:17:46 +0100
-From: Slavco Mihajloski <slavco.mihajloski@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/15/4
+Message-ID: <8c240b53-09e0-c365-ebac-c35da1714817@gaspard.io>
+Date: Tue, 15 May 2018 14:23:11 +0200
+From: Leo Gaspard <oss-security@....gaspard.ninja>
 To: oss-security@...ts.openwall.com
-Subject: Authentication bypass mainwp-child < 3.4.5
+Subject: Re: PGP/MIME and S/MIME mail clients vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-https://wordpress.org/plugins/mainwp-child/ remote administration plugin
-for Wordpress with 300k+ active installations.
+On 05/14/2018 04:01 PM, Yves-Alexis Perez wrote:> - PGP/MIME is a bit
+safer because the OpenPGP format compresses plaintext
+> before encryption (which makes it harder for the attacker) and has some kind
+> of authenticated (symmetric) encryption (the MDC), which helps gnupg detects
+> modifications to the cyphertext. Most mail clients properly handle gnupg hints
+> when something went wrong but the external interface is a bit fragile (gnupg
+> will still output the cleartext, for example). One exception is apparently
+> Thunderbird with enigmail before 2.0.0, but this is now fixed (I didn't find
+> the proper commit yet). Again, not displaying HTML mails and not allowing
+> remote content loading can help, but other “backchannels” might be found in
+> the future.
 
-There is authentication bypass on mainwp-child < 3.4.5 and due the nature
-of the Wordpress itself, it is a RCE too.
+Just to add in about Thunderbird with Enigmail after 2.0.0:
 
+https://lists.gnupg.org/pipermail/gnupg-users/2018-May/060325.html
+https://lists.gnupg.org/pipermail/gnupg-users/2018-May/060327.html
+https://lists.gnupg.org/pipermail/gnupg-users/2018-May/060329.html
 
-Disclosure:
-https://medium.com/websec/authentication-bypass-rce-on-300k-live-websites-using-mainwp-child-3-4-5-30a69097f633
-
-Patch:
-https://github.com/mainwp/mainwp-child/commit/1b03e47300d1ee30776a63f4d526e45e1baef4e3#diff-b7c78d39c028166665d187e06e5058a7
-
+So it looks like data encrypted with CAST5 (and possibly 3DES?) may be
+at risk even with Enigmail 2.0.0, with what I guess is latest GnuPG
+(don't know whether it is with 1.4, 2.2 or both, though), likely due to
+a GnuPG bug.
