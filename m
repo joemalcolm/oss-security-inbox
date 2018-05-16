@@ -1,37 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/22/2
-Message-ID: <CAP+3qq5GcGNU-gdn0BW7fxaXr8_F2v6MuUgRx+Ho1pN=p1U6qA@mail.gmail.com>
-Date: Thu, 22 Nov 2018 10:25:00 +0900
-From: Akira Ajisaka <aajisaka@...che.org>
-To: general@...oop.apache.org, user@...oop.apache.org,  security@...oop.apache.org, oss-security@...ts.openwall.com, security@...k.io
-Subject: CVE-2018-8009: Apache Hadoop distributed cache archive vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/16/5
+Message-ID: <87po1w5aa5.fsf@silverfish.pri>
+Date: Wed, 16 May 2018 17:28:50 +1000
+From: Brian May <bam@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: PGP/MIME and S/MIME mail clients vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-8009: Apache Hadoop distributed cache archive vulnerability
+Brian May <bam@...ian.org> writes:
 
-Severity: Severe
+> From https://lists.gnupg.org/pipermail/gnupg-users/2018-May/060361.html:
+>
+> "We should also be very careful to note that none of this discussion
+> thread applies to the MIME concatenation vulnerability, which is a
+> problem in Thunderbird and other mail clients, and which cannot be
+> solved by gnupg."
 
-Vendor: The Apache Software Foundation
+Also see links in
+https://lists.gnupg.org/pipermail/gnupg-users/2018-May/060358.html to
+upstream bug reports in GnuPG and Enigmail.
 
-Versions Affected:
-  Hadoop 0.23.0 to 0.23.11
-  Hadoop 2.0.0-alpha to 2.7.6
-  Hadoop 2.8.0 to 2.8.4
-  Hadoop 2.9.0 to 2.9.1
-  Hadoop 3.0.0-alpha to 3.0.2
-  Hadoop 3.1.0
-
-Users affected: User running the YARN NodeManager daemon and YARN
-users that leverage public archives in the distributed cache
-
-Impact: Vulnerability allows a cluster user to publish a public
-archive that can affect other files owned by the user running the YARN
-NodeManager daemon. If the impacted files belong to another already
-localized, public archive on the node then code can be injected into
-the jobs of other cluster users using the public archive.
-
-Mitigation: Users should upgrade to Apache Hadoop 2.7.7, 2.8.5, 2.9.2,
-3.0.3, or 3.1.1.
-
-Credit: This issue was discovered by Snyk Security Research Team
-https://snyk.io/research/zip-slip-vulnerability
+https://dev.gnupg.org/T3981
+https://sourceforge.net/p/enigmail/bugs/838/
+-- 
+Brian May <bam@...ian.org>
