@@ -1,13 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/25/2
-Message-Id: <20180625063653.8536D16600D9@webmail.sinamail.sina.com.cn>
-Date: Mon, 25 Jun 2018 14:36:53 +0800
-From: <zrlw@...a.com>
-To: "oss-security" <oss-security@...ts.openwall.com>
-Subject: Libc Realpath Buffer Underflow CVE-2018-1000001  expolit source code for SuSE 12 SP2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/16/7
+Message-ID: <53c49e5e-942e-1c01-0df9-1c0fb9c8ada5@apache.org>
+Date: Wed, 16 May 2018 15:59:37 +0100
+From: Mark Thomas <markt@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: [SECURITY] CVE-2018-8014 Insecure defaults for CORS filter
 Content-Type: text/plain; charset=utf-8
 
-Hi, i wrote a exploit  base on  halfdog's RationalLove.c, and successfully tested on SuSE Enterprise Server 12 SP 2.I want send it back to halfdog, but it seemed that my email always be rejected(maybe because i'm in china), may you transfer it to halfdog? all the code belong to him. Thanks!LaoWei2018/6/25   
-Content of type "text/html" skipped
+CVE-2018-8014 Insecure defaults for CORS filter
 
-View attachment "RationalLove_SuSE12SP2.c" of type "text/plain" (38304 bytes)
+Severity: Low
+
+Vendor: The Apache Software Foundation
+
+Versions Affected:
+Apache Tomcat 9.0.0.M1 to 9.0.8
+Apache Tomcat 8.5.0 to 8.5.31
+Apache Tomcat 8.0.0.RC1 to 8.0.52
+Apache Tomcat 7.0.41 to 7.0.88
+
+Description:
+The defaults settings for the CORS filter are insecure and enable
+'supportsCredentials' for all origins.
+It is expected that users of the CORS filter will have configured it
+appropriately for their environment rather than using it in the default
+configuration. Therefore, it is expected that most users will not be
+impacted by this issue.
+
+Mitigation:
+Users of the affected versions should apply one of the following
+mitigations.
+- Configure the filter appropriately for your environment
+
+Secure defaults will be provided in the following versions:
+- Apache Tomcat 9.0.9 or later when released
+- Apache Tomcat 8.5.32 or later when released
+- Apache Tomcat 8.0.53 or later when released
+- Apache Tomcat 7.0.89 or later when released
+
+History:
+2018-05-15 Original advisory
+
+References:
+[1] http://tomcat.apache.org/security-9.html
+[2] http://tomcat.apache.org/security-8.html
+[3] http://tomcat.apache.org/security-7.html
+
