@@ -1,108 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/05/2
-Message-ID: <20181105200854.GC25817@TC-275.local>
-Date: Mon, 5 Nov 2018 12:08:54 -0800
-From: Aaron Patterson <tenderlove@...y-lang.org>
-To: security@...e.de, rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
-Subject: [CVE-2018-16471] Possible XSS vulnerability in Rack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/16/6
+Message-Id: <969E7C7D-5A8E-4FF8-A1CB-CBFB20E24E8D@gmail.com>
+Date: Wed, 16 May 2018 07:57:21 -0700
+From: Matthew Fernandez <matthew.fernandez@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: Christian Brabandt <cb@...bit.org>
+Subject: Re: PGP/MIME and S/MIME mail clients vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-There is a possible vulnerability in Rack. This vulnerability has been
-assigned the CVE identifier CVE-2018-16471.
 
-Versions Affected:  All.
-Not affected:       None.
-Fixed Versions:     2.0.6, 1.6.11
 
-Impact
-------
-There is a possible XSS vulnerability in Rack.  Carefully crafted requests can
-impact the data returned by the `scheme` method on `Rack::Request`.
-Applications that expect the scheme to be limited to "http" or "https" and do
-not escape the return value could be vulnerable to an XSS attack.
+> On May 16, 2018, at 02:39, Yves-Alexis Perez <corsac@...ian.org> wrote:
+> 
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+> 
+> On Tue, 2018-05-15 at 20:39 +0200, Florian Weimer wrote:
+>> * Christian Brabandt:
+>> 
+>>> Looks like details have just been published:
+>>> https://efail.de/
+>> 
+>> I don't see any discussion of cid: URLs.  Are vendors planning to fix
+>> vectors related to those as well?
+> 
+> Hi Florian,
+> 
+> I might have missed something, but I'm not sure what you're referring to here?
 
-Vulnerable code looks something like this:
+I presume what Florian is asking about is Content-ID links [0]. One purpose of CID links is to include images as a message part and then reference them from the HTML email content. I would think a CID URL would not be immediately vulnerable to the “direct exfiltration” attack because it shouldn’t result in a network fetch; just a lookup locally. However, RFC 2392 requires the IDs to be “globally unique” and some mail clients (e.g. iOS Mail) take the RFC at its word and render images from CID URLs that reference content included in entirely distinct emails in your mailbox. Perhaps the attacker can hide their payload within a message part with the chosen ID included in another email.
 
-```
-  <%= request.scheme.html_safe %>
-```
+I haven’t fully thought through whether this is feasible, but this is a fairly convoluted vector that an attacker has no reason to use if they have available the attack described on the efail site. Closing exploitation of the original attack looks like it would cut off this hypothetical indirect attack too.
 
-Note that applications using the normal escaping mechanisms provided by Rails
-may not impacted, but applications that bypass the escaping mechanisms, or do
-not use them may be vulnerable.
-
-All users running an affected release should either upgrade or use one of the
-workarounds immediately.
-
-Releases
---------
-The 2.0.6 and 1.6.11 releases are available at the normal locations.
-
-Workarounds
------------
-The following monkey patch can be applied to work around this issue:
-
-```
-require "rack"
-require "rack/request"
-
-class Rack::Request
-  SCHEME_WHITELIST = %w(https http).freeze
-
-  def scheme
-    if get_header(Rack::HTTPS) == 'on'
-      'https'
-    elsif get_header(HTTP_X_FORWARDED_SSL) == 'on'
-      'https'
-    elsif forwarded_scheme
-      forwarded_scheme
-    else
-      get_header(Rack::RACK_URL_SCHEME)
-    end
-  end
-
-  def forwarded_scheme
-    scheme_headers = [
-      get_header(HTTP_X_FORWARDED_SCHEME),
-      get_header(HTTP_X_FORWARDED_PROTO).to_s.split(',')[0]
-    ]
-
-    scheme_headers.each do |header|
-      return header if SCHEME_WHITELIST.include?(header)
-    end
-
-    nil
-  end
-end
-```
-
-Patches
--------
-To aid users who aren't able to upgrade immediately we have provided patches for
-the supported release series. They are in git-am format and consist of a
-single changeset.
-
-* 2-0-scheme-xss.patch - Patch for 2.0 series
-* 1-6-scheme-xss.patch - Patch for 1.6 series
-
-Please note that only the 1.6.x and 2.0.x series are supported at present. Users
-of earlier unsupported releases are advised to upgrade as soon as possible as we
-cannot guarantee the continued availability of security fixes for unsupported
-releases.
-
-Credits
--------
-
-* Patrick Tulskie <patricktulskie@...il.com>
-
-Thank you!
-
--- 
-Aaron Patterson
-http://tenderlovemaking.com/
-
-View attachment "1-6-scheme-xss.patch" of type "text/plain" (2087 bytes)
-
-View attachment "2-0-scheme-xss.patch" of type "text/plain" (2230 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+  [0]: RFC 2392, https://tools.ietf.org/html/rfc2392 <https://tools.ietf.org/html/rfc2392>
