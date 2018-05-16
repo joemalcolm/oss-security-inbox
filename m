@@ -1,113 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/25/5
-Message-Id: <ECE1726C-BB55-4159-9A7F-EA4A0F087CE5@beckweb.net>
-Date: Mon, 25 Jun 2018 20:21:20 +0200
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/16/4
+Message-ID: <87sh6s5akn.fsf@silverfish.pri>
+Date: Wed, 16 May 2018 17:22:32 +1000
+From: Brian May <bam@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Multiple vulnerabilities in Jenkins plugins
+Subject: Re: PGP/MIME and S/MIME mail clients vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
+Leo Gaspard <oss-security@....gaspard.ninja> writes:
 
-> On 25. Jun 2018, at 16:10, Daniel Beck <ml@...kweb.net> wrote:
-> 
-> SECURITY-915
-> A form action method in GitHub Plugin did not check the permission of the 
-> user accessing it, allowing anyone with Overall/Read access to Jenkins to 
-> cause Jenkins to send a GitHub API request to create an API token to a an 
-> attacker specified URL.
-> 
-> This allowed users with Overall/Read access to Jenkins to connect to an 
-> attacker-specified URL using attacker-specified credentials IDs obtained 
-> through another method, capturing credentials stored in Jenkins.
-> 
-> Additionally, this form validation method did not require POST requests, 
-> resulting in a CSRF vulnerability.
+> Just to add in about Thunderbird with Enigmail after 2.0.0:
+>
+> https://lists.gnupg.org/pipermail/gnupg-users/2018-May/060325.html
+> https://lists.gnupg.org/pipermail/gnupg-users/2018-May/060327.html
+> https://lists.gnupg.org/pipermail/gnupg-users/2018-May/060329.html
+>
+> So it looks like data encrypted with CAST5 (and possibly 3DES?) may be
+> at risk even with Enigmail 2.0.0, with what I guess is latest GnuPG
+> (don't know whether it is with 1.4, 2.2 or both, though), likely due to
+> a GnuPG bug.
 
-CVE-2018-1000600
+>From https://lists.gnupg.org/pipermail/gnupg-users/2018-May/060361.html:
 
-> SECURITY-440
-> SSH Credentials Plugin allowed the creation of SSH credentials with keys 
-> "From a file on Jenkins master". Credentials Binding Plugin 1.13 and newer 
-> allows binding SSH credentials to environment variables. In combination, 
-> these two features allow users with the permission to configure a job to 
-> read arbitrary files on the Jenkins master by creating an SSH credential 
-> referencing an arbitrary file on the Jenkins master, and binding it to an 
-> environment variable in a job.
-
-CVE-2018-1000601
-
-> SECURITY-916
-> SAML Plugin did not invalidate the previous session and create a new one 
-> upon successful login, allowing attackers able to control or obtain 
-> another user’s pre-login session ID to impersonate them.
-
-CVE-2018-1000602
-
-> SECURITY-808
-> Openstack Cloud Plugin did not perform permission checks on methods 
-> implementing form validation. This allowed users with Overall/Read access 
-> to Jenkins to connect to an attacker-specified URL using attacker-
-> specified credentials IDs obtained through another method, capturing 
-> credentials stored in Jenkins, and to cause Jenkins to submit HTTP 
-> requests to attacker-specified URLs.
-> 
-> Additionally, these form validation methods did not require POST requests, 
-> resulting in a CSRF vulnerability.
-
-CVE-2018-1000603
-
-> SECURITY-906
-> Badge Plugin stored and displayed user-provided HTML for badges and 
-> summaries unprocessed, allowing users with the ability to control badge 
-> content to store malicious HTML to be displayed within Jenkins.
-
-CVE-2018-1000604
-
-> SECURITY-941
-> CollabNet Plugin disabled SSL/TLS certificate validation for the entire 
-> Jenkins master JVM by default.
-
-CVE-2018-1000605
-
-> SECURITY-819
-> A form validation method in URLTrigger Plugin did not check the permission 
-> of the user accessing them, allowing anyone with Overall/Read access to 
-> Jenkins to cause Jenkins to send a GET request to a specified URL.
-> 
-> Additionally, this form validation method did not require POST requests, 
-> resulting in a CSRF vulnerability.
-
-CVE-2018-1000606
-
-> SECURITY-870
-> Fortify CloudScan Plugin did not validate file names in rulepack ZIP 
-> archives it extracts, resulting in an arbitrary file write vulnerability.
-
-CVE-2018-1000607
-
-> SECURITY-950
-> IBM z/OS Connector Plugin did not encrypt password credentials stored in 
-> its configuration. This could be used by users with master file system 
-> access to obtain the password.
-> 
-> While masked from view using a password form field, the AWS Secret Key was 
-> transferred in plain text to administrators when accessing the global 
-> configuration form.
-
-CVE-2018-1000608
-
-> SECURITY-927
-> Configuration as Code Plugin lacked a permission check in the method 
-> handling the URL exporting the system configuration. This allows users 
-> with Overall/Read access to Jenkins to obtain this YAML export.
-
-CVE-2018-1000609
-
-> SECURITY-929
-> Configuration as Code Plugin logged secrets set via its configuration to 
-> the Jenkins master system log in plain text. This allowed users with 
-> access to the Jenkins log files to obtain these passwords and similar 
-> secrets.
-
-CVE-2018-1000610
-
+"We should also be very careful to note that none of this discussion
+thread applies to the MIME concatenation vulnerability, which is a
+problem in Thunderbird and other mail clients, and which cannot be
+solved by gnupg."
+-- 
+Brian May <bam@...ian.org>
