@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2024" "Wednesday" "7" "June" "2017" "12:53:10" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<569426.726873161-sendEmail@localhost>" "61" "[oss-security] ytnef: NULL pointer dereference in MAPIPrint (ytnef.c)" "^Date:" nil nil "6" "2017060712:53:10" "[oss-security] ytnef: NULL pointer dereference in MAPIPrint (ytnef.c)" (number mark "        ago@gentoo.o Jun  7   61/2024  " thread-indent "\"[oss-security] ytnef: NULL pointer dereference in MAPIPrint (ytnef.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2357" "Wednesday" "16" "May" "2018" "08:25:56" "+0200" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1805140829220.16381@tvnag.unkk.fr>" "87" "[oss-security] [SECURITY AVISORY] curl: FTP shutdown response buffer overflow" nil nil nil "5" "2018051606:25:56" "[oss-security] [SECURITY AVISORY] curl: FTP shutdown response buffer overflow" (number mark "U       daniel@haxx. May 16   87/2357  " thread-indent "\"[oss-security] [SECURITY AVISORY] curl: FTP shutdown response buffer overflow\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15709 invoked by uid 550); 7 Jun 2017 12:53:29 -0000
+Received: (qmail 26341 invoked by uid 550); 16 May 2018 06:26:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,74 +11,107 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 14313 invoked from network); 7 Jun 2017 12:53:25 -0000
-Message-ID: <569426.726873161-sendEmail@localhost>
-MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-550891.119129123"
-Date: Wed, 7 Jun 2017 12:53:10 +0000
-From: "Agostino Sarubbo" <ago@gentoo.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] ytnef: NULL pointer dereference in MAPIPrint (ytnef.c)
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Received: (qmail 26319 invoked from network); 16 May 2018 06:26:09 -0000
+X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
+Date: Wed, 16 May 2018 08:25:56 +0200 (CEST)
+From: Daniel Stenberg <daniel@haxx.se>
+X-X-Sender: dast@giant.haxx.se
+To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
+        curl-announce@cool.haxx.se,
+        libcurl hacking <curl-library@cool.haxx.se>,
+        oss-security@lists.openwall.com
+Message-ID: <alpine.DEB.2.20.1805140829220.16381@tvnag.unkk.fr>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-fromdanielhimself: yes
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [SECURITY AVISORY] curl: FTP shutdown response buffer overflow
 
-------MIME delimiter for sendEmail-550891.119129123
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+FTP shutdown response buffer overflow
+=====================================
 
-Description:
-ytnef is Yeraze’s TNEF Stream Reader – for winmail.dat files.
+Project curl Security Advisory, May 16th 2018 -
+[Permalink](https://curl.haxx.se/docs/adv_2018-82c2.html)
 
-The complete ASan output of the issue:
+VULNERABILITY
+-------------
 
-# ytnefprint $FILE
-==12467==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x7f59364c62b6 bp 0x7ffe1b8d4af0 sp 0x7ffe1b8d4278 T0)
-==12467==The signal is caused by a READ memory access.
-==12467==Hint: address points to the zero page.
-    #0 0x7f59364c62b5 in strlen /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/string/../sysdeps/x86_64/strlen.S:76
-    #1 0x43e99c in __interceptor_strlen.part.31 /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:282
-    #2 0x7f593734a162 in MAPIPrint /tmp/ytnef-1.9.2/lib/ytnef.c:1437:15
-    #3 0x508f50 in PrintTNEF /tmp/ytnef-1.9.2/ytnefprint/main.c:169:5
-    #4 0x50882e in main /tmp/ytnef-1.9.2/ytnefprint/main.c:84:5
-    #5 0x7f593646878f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #6 0x419c38 in _start (/usr/bin/ytnefprint+0x419c38)
+curl might overflow a heap based memory buffer when closing down an FTP
+connection with very long server command replies.
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/string/../sysdeps/x86_64/strlen.S:76 in strlen
-==12467==ABORTING
-Affected version:
-1.9.2
+When doing FTP transfers, curl keeps a spare "closure handle" around
+internally that will be used when an FTP connection gets shut down since the
+original curl easy handle is then already removed.
 
-Fixed version:
-N/A
+FTP server response data that gets cached from the original transfer might
+then be larger than the default buffer size (16 KB) allocated in the "closure
+handle", which can lead to a buffer overwrite. The contents and size of that
+overwrite is controllable by the server.
 
-Commit fix:
-N/A
+This situation was detected by an assert() in the code, but that was of course
+only preventing bad stuff in debug builds. This bug is very unlikely to
+trigger with non-malicious servers.
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+We are not aware of any exploit of this flaw.
 
-CVE:
-CVE-2017-9470
+INFO
+----
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00241-ytnef-nullptr-MAPIPrint
+This bug was introduced in April 2017 in [this
+commit](https://github.com/curl/curl/commit/e40e9d7f0decc79) when we
+introduced the use of increased buffer sizes for FTP.
 
-Timeline:
-2017-03-27: bug discovered and reported to upstream
-2017-05-24: blog post about the issue
-2017-06-07: CVE assigned
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2018-1000300 to this issue.
 
-Note:
-This bug was found with American Fuzzy Lop.
+CWE-122: Heap-based Buffer Overflow
 
-Permalink:
-https://blogs.gentoo.org/ago/2017/05/24/ytnef-null-pointer-dereference-in-mapiprint-ytnef-c/
+AFFECTED VERSIONS
+-----------------
 
---
-Agostino Sarubbo
-Gentoo Linux Developer
+- Affected versions: curl 7.54.1 to and including curl 7.59.0
+- Not affected versions: curl < 7.54.1 and curl >= 7.60.0
 
+libcurl is used by many applications, but not always advertised as such.
 
-------MIME delimiter for sendEmail-550891.119129123--
+THE SOLUTION
+------------
 
+In curl version 7.60.0, curl will return an error if this situation happens.
+
+A [patch for CVE-2018-1000300](https://curl.haxx.se/CVE-2018-1000300.patch) is
+available.
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl to version 7.60.0
+
+  B - Apply the patch to your version and rebuild
+
+  C - Avoing using FTP
+
+TIME LINE
+---------
+
+It was reported to the curl project on March 22, 2018
+
+We contacted distros@openwall on May 7, 2018.
+
+curl 7.60.0 was released on May 16 2018, coordinated with the publication of
+this advisory.
+
+CREDITS
+-------
+
+Detected by Dario Weisser. Patch by Daniel Stenberg.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
