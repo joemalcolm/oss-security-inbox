@@ -1,117 +1,101 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/12/1
-Message-ID: <CAFeDd5YXQNepOMjpjvniVQS7roxkO_2k33ac3X13LxLETA0rMw@mail.gmail.com>
-Date: Mon, 12 Nov 2018 11:34:22 +0200
-From: Billy Brumley <bbrumley@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2018-5407: new side-channel vulnerability on SMT/Hyper-Threading architectures
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/16/2
+Message-ID: <alpine.DEB.2.20.1805140831040.16381@tvnag.unkk.fr>
+Date: Wed, 16 May 2018 08:26:01 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY AVISORY] curl: RTSP bad headers buffer over-read
 Content-Type: text/plain; charset=utf-8
 
-> > If you are a package maintainer, and are putting together a patch set
-> > for this, please reach out to me. My team can help test.
-> >
-> <snip>
->
-> Could you please confirm the following commits are sufficient to fix CVE-2018-5407?
+RTSP bad headers buffer over-read
+=================================
 
-Some more technical advice below. Hope it helps!
+Project curl Security Advisory, May 16th 2018 -
+[Permalink](https://curl.haxx.se/docs/adv_2018-b138.html)
 
-BBB
+VULNERABILITY
+-------------
 
-# 1.0.1
+curl can be tricked into reading data beyond the end of a heap based buffer
+used to store downloaded content.
 
-That is EOL. Try your luck with porting the 1.0.2 solution.
+When servers send RTSP responses back to curl, the data starts out with a set
+of headers. curl parses that data to separate it into a number of headers to
+deal with those appropriately and to find the end of the headers that signal
+the start of the "body" part.
 
-Shameless self plug: read Section 2
+The function that splits up the response into headers is called
+`Curl_http_readwrite_headers()` and in situations where it can't find a single
+header in the buffer, it might end up leaving a pointer pointing into the
+buffer instead of to the start of the buffer which then later on may lead to
+an out of buffer read when code assumes that pointer points to a full buffer
+size worth of memory to use.
 
-https://eprint.iacr.org/2018/354
+This could potentially lead to information leakage but most likely a
+crash/denial of service for applications if a server triggers this flaw.
 
-for a related discussion about EOL issues and security in the context
-of OpenSSL.
+We are not aware of any exploit of this flaw.
 
-# 1.0.2
+INFO
+----
 
-Wait until this gets merged into OpenSSL_1_0_2-stable :
+This bug was originally introduced in May 2003 in [this
+commit](https://github.com/curl/curl/commit/b2ef79ef3d47b37) but it didn't
+become a problem until we added RTSP in January 2010 in [this
+commit](https://github.com/curl/curl/commit/bc4582b68a673d3).
 
-https://github.com/openssl/openssl/pull/7593
+We have only proven this to trigger with RTSP traffic even though this is code
+shared with HTTP. We believe this is not a problem for HTTP transfers.
 
-# 1.1.0 up to and including 1.1.0h
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2018-1000301 to this issue.
 
-So I went through the process to patch this myself:
+CWE-126: Buffer Over-read
 
-https://github.com/bbbrumley/openssl/tree/bbb_ecc_fix_110h
+AFFECTED VERSIONS
+-----------------
 
-Ofc I have no idea what 1.1.0 version you started with, or what
-patches you're applying. So take this as more of a HOWTO build and
-test your own patchset.
+- Affected versions: curl 7.20.0 to and including curl 7.59.0
+- Not affected versions: curl < 7.20.0 and curl >= 7.60.0
 
-## CVE-2018-5407
+libcurl is used by many applications, but not always advertised as such.
 
-git checkout OpenSSL_1_1_0h -b bbb_ecc_fix_110h
-git cherry-pick aab7c770353b1dc4ba045938c8fb446dd1c4531e
-git cherry-pick f06437c751d6f6ec7f4176518e2897f44dd58eb0
-git cherry-pick 33588c930d39d67d1128794dc7c85bae71af24ad
-git cherry-pick f916a735bcdce496cebc7653a8ad2e72b333405a
-git cherry-pick b43ad53119c0ac2ecfa6e4356210ccda57e0d16b
-git cherry-pick 2172133d0dc58256bf776da074c0d1944fef15cb
-git cherry-pick cc39f9250957dfe6e9f1b62a4eca1863e8451483
-git cherry-pick 7b3e775a6a78650bbd3e8e19a5aa12981880402b
-git cherry-pick 5eee95a54de6854e60886c8e662a902184b12d04
-git cherry-pick 875ba8b21ecc65ad9a6bdc66971e50461660fcbb
-git checkout --theirs CHANGES
-git add CHANGES
-git cherry-pick --continue
-git checkout OpenSSL_1_1_0h -- CHANGES
-git add CHANGES
-git commit -m "revert changelog diffs"
-git rebase -i OpenSSL_1_1_0h
+THE SOLUTION
+------------
 
-(I skipped 926b21117df939241f1cd63f2f9e3ab87819f0ed because it is not
-related to CVE-2018-5407. See
+In curl version 7.60.0, curl makes sure to restore the pointer back to where
+its supposed to point.
 
-https://github.com/openssl/openssl/issues/6302
+A [patch for CVE-2018-1000301](https://curl.haxx.se/CVE-2018-1000301.patch) is
+available.
 
-For a lengthy discussion. I'm not familiar enough with the issue to
-give advice if you need to pick it up or not.)
+RECOMMENDATIONS
+---------------
 
-All of them cherry pick cleanly except for the last one, but it's only
-a trivial conflict with the changelog.
+We suggest you take one of the following actions immediately, in order of
+preference:
 
-I checked the scalar multiplication code paths in ecdsatest with gdb
-(break ec_mult.c:423), and indeed they are early exiting to the new
-function when signing.
+  A - Upgrade curl to version 7.60.0
 
-A lot of new regression testing went into 1.1.1. Some of it was
-backported 1.1.0:
+  B - Apply the patch to your version and rebuild
 
-https://github.com/openssl/openssl/commits/OpenSSL_1_1_0-stable/test
+TIME LINE
+---------
 
-So I fetched these KATs:
+It was reported to the curl project on March 24, 2018
 
-https://raw.githubusercontent.com/openssl/openssl/23fe5c582a83bce394a3cdf0bc8f6f4f2eb71ebb/test/recipes/30-test_evp_data/evppkey_ecc.txt
+We contacted distros@...nwall on May 7, 2018.
 
-To run those tests, you also need to pick up this bug fix for
-evp_test.c (this is for testing, not part of the CVE-2018-5407 fix) :
+curl 7.60.0 was released on May 16 2018, coordinated with the publication of
+this advisory.
 
-git cherry-pick e35e5941e0b2f7af1cd56f07ee8d4eaf2b445132
+CREDITS
+-------
 
-Then rebuilt, and ran
+Detected by OSS-fuzz. Assisted by Max Dymond. Patch by Daniel Stenberg.
 
-$ test/evp_test /path/to/evppkey_ecc.txt
-484 tests completed with 0 errors, 0 skipped
+Thanks a lot!
 
-All of those (positive and negative) tests pass; they are for ECC
-keygen and ECDH. I checked the scalar multiplication code paths with
-gdb (break ec_mult.c:423), and indeed they all early exit to the new
-function.
+-- 
 
-## CVE-2018-0735
-
-Apply this small fix on top:
-
-git cherry-pick 56fb454d281a023b3f950d969693553d3f3ceea1
-git cherry-pick 003f1bfd185267cc67ac9dc521a27d7a2af0d0ee
-git rebase -i HEAD~2
-
-Then ofc rerun all the regression testing ("make test", as well as the
-custom EVP tests described above.)
+  / daniel.haxx.se
