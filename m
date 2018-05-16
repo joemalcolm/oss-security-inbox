@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2151" "Wednesday" "30" "September" "2015" "12:50:31" "+0200" "Alessandro Ghedini" "alessandro@ghedini.me" "<20150930105031.GA8507@kronk.local>" "64" "Re: [oss-security] CVE Request: cacti multiple SQL injections" nil nil nil "9" "2015093010:50:31" "[oss-security] CVE Request: cacti multiple SQL injections" (number mark "        alessandro@g Sep 30   64/2151  " thread-indent "\"Re: [oss-security] CVE Request: cacti multiple SQL injections\"\n") "<20150718173121.GA15158@kronk.local>" ("<20150718173121.GA15158@kronk.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2730" "Wednesday" "16" "May" "2018" "08:26:01" "+0200" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1805140831040.16381@tvnag.unkk.fr>" "92" "[oss-security] [SECURITY AVISORY] curl: RTSP bad headers buffer over-read" nil nil nil "5" "2018051606:26:01" "[oss-security] [SECURITY AVISORY] curl: RTSP bad headers buffer over-read" (number mark "U       daniel@haxx. May 16   92/2730  " thread-indent "\"[oss-security] [SECURITY AVISORY] curl: RTSP bad headers buffer over-read\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 19739 invoked by uid 550); 30 Sep 2015 10:50:45 -0000
+Received: (qmail 27837 invoked by uid 550); 16 May 2018 06:26:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,98 +11,112 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19715 invoked from network); 30 Sep 2015 10:50:44 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=hsC598ELcJTvDocV8Np9onx+bXqUO3LNTr+lA38WCqM=;
-        b=RtWLpU9DIj4bKzDR129Uf/cw0fucyMfldsR7BmAnqmrk+GDcnxyekuPTq93lO1fa0+
-         /Kpe0hmW7aP7VPY1nCe427eGwUe5P4vaF6JIxWuzxmkTf+QJcl51bTM2waANV5UlzkjM
-         ZuYvUvFxOMLP8yQ0U9INQCLUfR/brvI9cr3ggd/rT/D9+qWBn413fyJF6cH/p2GmIgRp
-         KmCpBIQFYnoAsSOZrvQ6xDwqpTpA5ACaGBIBtskuf2XJX8N3iP3OxoLz5XOiCh/Z4bKk
-         6K7znbHSBcocMa32E8G0QTxJ0u12TJU8PBBmxXIxt3WApsUtu3Zd0PP8GTJEUaUR9sgF
-         kNJQ==
-X-Received: by 10.180.106.66 with SMTP id gs2mr31463034wib.14.1443610232980;
-        Wed, 30 Sep 2015 03:50:32 -0700 (PDT)
-Message-ID: <20150930105031.GA8507@kronk.local>
-Mail-Followup-To: oss-security@lists.openwall.com, cve-assign@mitre.org
-References: <20150718173121.GA15158@kronk.local>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="cNdxnHkX5QqsyA0e"
-Content-Disposition: inline
-In-Reply-To: <20150718173121.GA15158@kronk.local>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Cc: cve-assign@mitre.org
-Date: Wed, 30 Sep 2015 12:50:31 +0200
-From: Alessandro Ghedini <alessandro@ghedini.me>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE Request: cacti multiple SQL injections
-To: oss-security@lists.openwall.com
+Received: (qmail 26581 invoked from network); 16 May 2018 06:26:13 -0000
+X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
+Date: Wed, 16 May 2018 08:26:01 +0200 (CEST)
+From: Daniel Stenberg <daniel@haxx.se>
+X-X-Sender: dast@giant.haxx.se
+To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
+        curl-announce@cool.haxx.se,
+        libcurl hacking <curl-library@cool.haxx.se>,
+        oss-security@lists.openwall.com
+Message-ID: <alpine.DEB.2.20.1805140831040.16381@tvnag.unkk.fr>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-fromdanielhimself: yes
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [SECURITY AVISORY] curl: RTSP bad headers buffer over-read
 
---cNdxnHkX5QqsyA0e
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+RTSP bad headers buffer over-read
+=================================
 
-On Sat, Jul 18, 2015 at 07:31:21PM +0200, Alessandro Ghedini wrote:
-> Hi,
->=20
-> CVE-2015-4634 was assigned for an SQL injection in cacti [0], but accordi=
-ng to
-> the commit fixing it [1] several other SQL injections were also found:
->=20
-> -bug#0002574: SQL Injection Vulnerabilitie in graph items and graph templ=
-ate items
-> http://bugs.cacti.net/view.php?id=3D0002574
->=20
-> -bug#0002579: SQL Injection Vulnerabilitie in data sources
-> http://bugs.cacti.net/view.php?id=3D0002579
->=20
-> -bug#0002580: SQL Injection in cdef.php
-> http://bugs.cacti.net/view.php?id=3D0002580
->=20
-> -bug#0002582: SQL Injection in data_templates.php
-> http://bugs.cacti.net/view.php?id=3D0002582
->=20
-> -bug#0002583: SQL Injection in graph_templates.php
-> http://bugs.cacti.net/view.php?id=3D0002583
->=20
-> -bug#0002584: SQL Injection in host_templates.php
-> http://bugs.cacti.net/view.php?id=3D0002584
->=20
-> Could CVEs be assigned for these issues as well?
->=20
-> Thanks
->=20
-> [0] http://bugs.cacti.net/view.php?id=3D0002577
-> [1] http://svn.cacti.net/viewvc?view=3Drev&revision=3D7731
+Project curl Security Advisory, May 16th 2018 -
+[Permalink](https://curl.haxx.se/docs/adv_2018-b138.html)
 
-Re-ping?
+VULNERABILITY
+-------------
 
-Cheers
+curl can be tricked into reading data beyond the end of a heap based buffer
+used to store downloaded content.
 
---cNdxnHkX5QqsyA0e
-Content-Type: application/pgp-signature; name="signature.asc"
+When servers send RTSP responses back to curl, the data starts out with a set
+of headers. curl parses that data to separate it into a number of headers to
+deal with those appropriately and to find the end of the headers that signal
+the start of the "body" part.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+The function that splits up the response into headers is called
+`Curl_http_readwrite_headers()` and in situations where it can't find a single
+header in the buffer, it might end up leaving a pointer pointing into the
+buffer instead of to the start of the buffer which then later on may lead to
+an out of buffer read when code assumes that pointer points to a full buffer
+size worth of memory to use.
 
-iQIcBAEBCgAGBQJWC753AAoJEK+lG9bN5XPLXBMP/1yCoq0t7ouNlefeifOMAusX
-8yVGC/Hj7JMSGguAVHaGQNeiHg1AfmJ5BCpcCaGjQyUKwUnW+ZM2GpejpUK8DYiD
-IEJnhZB7GQ9JKY/lht8PnvJDDmicLzx3n36OX13kzXbqAtiErZlTeGXWIzPseVJM
-0FxLnlwzLVa4cHg1IuoRHsNLXqjC6EGr+iUwRDrEtx/bNiSGxoSD74N4SBcX9xO1
-ec+Z72Gbhn8YDlO/gSzPouErbwESYyDlRPmxin3h0sC3BXsO8ttoXoHXcU32Ky2t
-IQURQgqq4chKBp4IGqbIxXIXkH9Q167go2uB/Pl1yVRibKpItst1/rq6/3TY5KEz
-fBMUAEnL6wOm2a1KImTN+yn6KzhEbVD7yMDzacLVv05IS6Xt+LD98P966FECphsP
-ifFfAOn3N9skRDJNFdCIUR5M3Pfdk0+eswRBRplAB9x4k+Mv/9hY694SfWQTtFoY
-7Sra0CfBFGoPa21vNdgPloMRqNO7oT27rfNc8Tb1BlyKocJ/HDoeaA6APHN+EZ1t
-yPvzSQKbxZj1suzmX01T5YRMvKfTxZpg/cuG1knmPjFCTdekSTZsLz2K+jqp3qwq
-o03lKys25HKBoqwZgBv3ubnwJ19BX0GMy+jmN14zISJEOcV1EO/PBMoKr5dzdNO0
-5JHaklOTCCeikptPzoLt
-=poZ6
------END PGP SIGNATURE-----
+This could potentially lead to information leakage but most likely a
+crash/denial of service for applications if a server triggers this flaw.
 
---cNdxnHkX5QqsyA0e--
+We are not aware of any exploit of this flaw.
+
+INFO
+----
+
+This bug was originally introduced in May 2003 in [this
+commit](https://github.com/curl/curl/commit/b2ef79ef3d47b37) but it didn't
+become a problem until we added RTSP in January 2010 in [this
+commit](https://github.com/curl/curl/commit/bc4582b68a673d3).
+
+We have only proven this to trigger with RTSP traffic even though this is code
+shared with HTTP. We believe this is not a problem for HTTP transfers.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2018-1000301 to this issue.
+
+CWE-126: Buffer Over-read
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 7.20.0 to and including curl 7.59.0
+- Not affected versions: curl < 7.20.0 and curl >= 7.60.0
+
+libcurl is used by many applications, but not always advertised as such.
+
+THE SOLUTION
+------------
+
+In curl version 7.60.0, curl makes sure to restore the pointer back to where
+its supposed to point.
+
+A [patch for CVE-2018-1000301](https://curl.haxx.se/CVE-2018-1000301.patch) is
+available.
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl to version 7.60.0
+
+  B - Apply the patch to your version and rebuild
+
+TIME LINE
+---------
+
+It was reported to the curl project on March 24, 2018
+
+We contacted distros@openwall on May 7, 2018.
+
+curl 7.60.0 was released on May 16 2018, coordinated with the publication of
+this advisory.
+
+CREDITS
+-------
+
+Detected by OSS-fuzz. Assisted by Max Dymond. Patch by Daniel Stenberg.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
