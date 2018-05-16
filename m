@@ -1,214 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/06/8
-Message-ID: <8f08e590-decb-af7b-d715-009581e280c1@powerdns.com>
-Date: Tue, 6 Nov 2018 23:28:37 +0100
-From: Remi Gacogne <remi.gacogne@...erdns.com>
-To: oss-security@...ts.openwall.com
-Subject: PowerDNS Security Advisories 2018-03, 2018-04, 2018-05, 2018-06 and 2018-07
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/16/1
+Message-ID: <alpine.DEB.2.20.1805140829220.16381@tvnag.unkk.fr>
+Date: Wed, 16 May 2018 08:25:56 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY AVISORY] curl: FTP shutdown response buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hello everybody,
+FTP shutdown response buffer overflow
+=====================================
 
-We just released PowerDNS Authoritative 4.1.5 and 4.0.6, and Recursor
-4.1.5 and 4.0.9, fixing several security issues:
+Project curl Security Advisory, May 16th 2018 -
+[Permalink](https://curl.haxx.se/docs/adv_2018-82c2.html)
 
- * 2018-03: Crafted zone record can cause a denial of service
-(CVE-2018-10851, Authoritative)
- * 2018-04: Crafted answer can cause a denial of service
-(CVE-2018-10851, Recursor)
- * 2018-05: Packet cache pollution via crafted query (CVE-2018-14626,
-Authoritative >= 4.1.0)
- * 2018-06: Packet cache pollution via crafted query (CVE-2018-14626,
-Recursor >= 4.0.0)
- * 2018-07: Crafted query for meta-types can cause a denial of service
-(CVE-2018-14644, Recursor >= 4.0.0)
+VULNERABILITY
+-------------
 
-The full security advisories can be found below, and also at:
+curl might overflow a heap based memory buffer when closing down an FTP
+connection with very long server command replies.
 
--
-https://doc.powerdns.com/authoritative/security-advisories/powerdns-advisory-2018-03.html
--
-https://doc.powerdns.com/recursor/security-advisories/powerdns-advisory-2018-04.html
--
-https://doc.powerdns.com/authoritative/security-advisories/powerdns-advisory-2018-05.html
--
-https://doc.powerdns.com/recursor/security-advisories/powerdns-advisory-2018-06.html
--
-https://doc.powerdns.com/recursor/security-advisories/powerdns-advisory-2018-07.html
+When doing FTP transfers, curl keeps a spare "closure handle" around
+internally that will be used when an FTP connection gets shut down since the
+original curl easy handle is then already removed.
 
-We also provide minimal patches here:
+FTP server response data that gets cached from the original transfer might
+then be larger than the default buffer size (16 KB) allocated in the "closure
+handle", which can lead to a buffer overwrite. The contents and size of that
+overwrite is controllable by the server.
 
-- https://downloads.powerdns.com/patches/2018-03/
-- https://downloads.powerdns.com/patches/2018-04/
-- https://downloads.powerdns.com/patches/2018-05/
-- https://downloads.powerdns.com/patches/2018-06/
-- https://downloads.powerdns.com/patches/2018-07/
+This situation was detected by an assert() in the code, but that was of course
+only preventing bad stuff in debug builds. This bug is very unlikely to
+trigger with non-malicious servers.
 
+We are not aware of any exploit of this flaw.
 
-Please feel free to contact me directly if you have any question.
+INFO
+----
 
-Best regards,
+This bug was introduced in April 2017 in [this
+commit](https://github.com/curl/curl/commit/e40e9d7f0decc79) when we
+introduced the use of increased buffer sizes for FTP.
 
-Remi Gacogne
-PowerDNS.COM BV - https://www.powerdns.com/
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2018-1000300 to this issue.
 
-PowerDNS Security Advisory 2018-03: Crafted zone record can cause a
-denial of service
-=====================================================================================
+CWE-122: Heap-based Buffer Overflow
 
--  CVE: CVE-2018-10851
--  Date: November 6th 2018
--  Affects: PowerDNS Authoritative from 3.3.0 up to and including 4.1.4
--  Not affected: 4.1.5, 4.0.6
--  Severity: Medium
--  Impact: Denial of service
--  Exploit: This problem can be triggered via crafted records
--  Risk of system compromise: No
--  Solution: Upgrade to a non-affected version
--  Workaround: run the process inside the guardian or inside a
-   supervisor
+AFFECTED VERSIONS
+-----------------
 
-An issue has been found in PowerDNS Authoritative Server allowing an
-authorized user to cause a memory leak by inserting a specially crafted
-record in a zone under their control, then sending a DNS query for that
-record.
-The issue is due to the fact that some memory is allocated before the
-parsing and is not always properly released if the record is malformed.
+- Affected versions: curl 7.54.1 to and including curl 7.59.0
+- Not affected versions: curl < 7.54.1 and curl >= 7.60.0
 
-This issue has been assigned CVE-2018-10851.
+libcurl is used by many applications, but not always advertised as such.
 
-When the PowerDNS Authoritative Server is run inside the guardian
-(``--guardian``), or inside a supervisor like supervisord or systemd, an
-out-of-memory crash will lead to an automatic restart, limiting the
-impact to a somewhat degraded service.
+THE SOLUTION
+------------
 
-PowerDNS Authoritative from 3.3.0 up to and including 4.1.4 is affected.
-Please note that at the time of writing, PowerDNS Authoritative 3.4 and
-below are no longer supported, as described in
-https://doc.powerdns.com/authoritative/appendices/EOL.html.
+In curl version 7.60.0, curl will return an error if this situation happens.
 
-PowerDNS Security Advisory 2018-04: Crafted answer can cause a denial of
-service
-================================================================================
+A [patch for CVE-2018-1000300](https://curl.haxx.se/CVE-2018-1000300.patch) is
+available.
 
--  CVE: CVE-2018-10851
--  Date: November 6th 2018
--  Affects: PowerDNS Recursor from 3.2 up to and including 4.1.4
--  Not affected: 4.1.5, 4.0.9
--  Severity: Medium
--  Impact: Denial of service
--  Exploit: This problem can be triggered by an authoritative server
--  Risk of system compromise: No
--  Solution: Upgrade to a non-affected version
--  Workaround: run the process inside a supervisor
+RECOMMENDATIONS
+---------------
 
-An issue has been found in PowerDNS Recursor allowing a malicious
-authoritative server to cause a memory leak by sending specially crafted
-records.
-The issue is due to the fact that some memory is allocated before the
-parsing and is not always properly released if the record is malformed.
+We suggest you take one of the following actions immediately, in order of
+preference:
 
-This issue has been assigned CVE-2018-10851.
+  A - Upgrade curl to version 7.60.0
 
-When the PowerDNS Recursor is run inside a supervisor like supervisord
-or systemd, an out-of-memory crash will lead to an automatic restart,
-limiting
-the impact to a somewhat degraded service.
+  B - Apply the patch to your version and rebuild
 
-PowerDNS Recursor from 3.2 up to and including 4.1.4 is affected. Please
-note that at the time of writing, PowerDNS Recursor 3.7 and below are no
-longer supported, as described in
-https://doc.powerdns.com/recursor/appendices/EOL.html.
+  C - Avoing using FTP
 
-PowerDNS Security Advisory 2018-05: Packet cache pollution via crafted query
-============================================================================
+TIME LINE
+---------
 
--  CVE: CVE-2018-14626
--  Date: November 6th 2018
--  Affects: PowerDNS Authoritative from 4.1.0 up to and including 4.1.4
--  Not affected: 4.1.5, 4.0.x
--  Severity: Medium
--  Impact: Denial of service
--  Exploit: This problem can be triggered via crafted queries
--  Risk of system compromise: No
--  Solution: Upgrade to a non-affected version
+It was reported to the curl project on March 22, 2018
 
-An issue has been found in PowerDNS Authoritative Server allowing a
-remote user to craft a DNS query that will cause an answer without DNSSEC
-records to be inserted into the packet cache and be returned to clients
-asking for DNSSEC records, thus hiding the presence of DNSSEC signatures
-for a specific qname and qtype.
-For a DNSSEC-signed domain, this means that DNSSEC validating clients
-will consider the answer to be bogus until it expires from the packet
-cache, leading to a denial of service.
+We contacted distros@...nwall on May 7, 2018.
 
-This issue has been assigned CVE-2018-14626.
+curl 7.60.0 was released on May 16 2018, coordinated with the publication of
+this advisory.
 
-PowerDNS Authoritative from 4.1.0 up to and including 4.1.4 is affected.
+CREDITS
+-------
 
-We would like to thank Kees Monshouwer for finding and subsequently
-reporting this issue.
+Detected by Dario Weisser. Patch by Daniel Stenberg.
 
-PowerDNS Security Advisory 2018-06: Packet cache pollution via crafted query
-============================================================================
+Thanks a lot!
 
--  CVE: CVE-2018-14626
--  Date: November 6th 2018
--  Affects: PowerDNS Recursor from 4.0.0 up to and including 4.1.4
--  Not affected: 4.1.5, 4.0.9
--  Severity: Medium
--  Impact: Denial of service
--  Exploit: This problem can be triggered via crafted queries
--  Risk of system compromise: No
--  Solution: Upgrade to a non-affected version
+-- 
 
-An issue has been found in PowerDNS Recursor allowing a remote user to
-craft a DNS query that will cause an answer without DNSSEC records to be
-inserted into the packet cache and be returned to clients asking for
-DNSSEC records, thus hiding the presence of DNSSEC signatures for a
-specific qname and qtype. For a DNSSEC-signed domain, this means that
-clients performing DNSSEC validation by themselves might consider the
-answer to be bogus until it expires from the packet cache, leading to a
-denial of service.
-
-This issue has been assigned CVE-2018-14626.
-
-PowerDNS Recursor from 4.0.0 up to and including 4.1.4 is affected.
-
-We would like to thank Kees Monshouwer for finding and subsequently
-reporting this issue.
-
-PowerDNS Security Advisory 2018-07: Crafted query for meta-types can
-cause a denial of service
-==============================================================================================
-
--  CVE: CVE-2018-14644
--  Date: November 6th 2018
--  Affects: PowerDNS Recursor from 4.0.0 up to and including 4.1.4
--  Not affected: 4.0.9, 4.1.5
--  Severity: Medium
--  Impact: Denial of service
--  Exploit: This problem can be triggered via crafted queries for some
-domains
--  Risk of system compromise: No
--  Solution: Upgrade to a non-affected version
-
-An issue has been found in PowerDNS Recursor where a remote attacker
-sending a DNS query for a meta-type like OPT can lead to a zone being
-wrongly cached as failing DNSSEC validation. It only arises if the
-parent zone is signed, and all the authoritative servers for that parent
-zone answer with FORMERR to a query for at least one of the meta-types.
-As a result, subsequent queries from clients requesting DNSSEC
-validation will be answered with a ServFail.
-
-This issue has been assigned CVE-2018-14644 by Red Hat.
-
-PowerDNS Recursor from 4.0.0 up to and including 4.1.4 is affected.
-
-We would like to thank Toshifumi Sakaguchi for finding and subsequently
-reporting this issue.
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+  / daniel.haxx.se
