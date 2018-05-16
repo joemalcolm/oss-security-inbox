@@ -1,4 +1,9 @@
-Received: (qmail 27720 invoked by uid 550); 14 May 2025 01:11:07 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["938" "Wednesday" "16" "May" "2018" "11:39:14" "+0200" "Yves-Alexis Perez" "corsac@debian.org" "<e7d7bccd3a2ed7776390f89a003fcd0d17bb9d7f.camel@debian.org>" "31" "Re: [oss-security] PGP/MIME and S/MIME mail clients vulnerabilities" nil nil nil "5" "2018051609:39:14" "[oss-security] PGP/MIME and S/MIME mail clients vulnerabilities" (number mark "U       corsac@debia May 16   31/938   " thread-indent "\"Re: [oss-security] PGP/MIME and S/MIME mail clients vulnerabilities\"\n") "<87zi10u5kl.fsf@mid.deneb.enyo.de>" ("<6770b401c944860c2288ebf7738f40010d938b33.camel@debian.org>" "<20180514102951.GD18567@256bit.org>" "<87zi10u5kl.fsf@mid.deneb.enyo.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 5268 invoked by uid 550); 16 May 2018 09:39:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,60 +12,48 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 26365 invoked from network); 14 May 2025 01:10:58 -0000
-Date: Wed, 14 May 2025 03:10:45 +0200
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20250514011045.GA5111@openwall.com>
-References: <A398F21D-1899-4061-A56A-8CDD5A31904E@graemef.net>
+Received: (qmail 5242 invoked from network); 16 May 2018 09:39:31 -0000
+Message-ID: <e7d7bccd3a2ed7776390f89a003fcd0d17bb9d7f.camel@debian.org>
+From: Yves-Alexis Perez <corsac@debian.org>
+To: oss-security@lists.openwall.com, Christian Brabandt <cb@256bit.org>
+Date: Wed, 16 May 2018 11:39:14 +0200
+In-Reply-To: <87zi10u5kl.fsf@mid.deneb.enyo.de>
+References: <6770b401c944860c2288ebf7738f40010d938b33.camel@debian.org>
+	 <20180514102951.GD18567@256bit.org> <87zi10u5kl.fsf@mid.deneb.enyo.de>
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.2-1 
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <A398F21D-1899-4061-A56A-8CDD5A31904E@graemef.net>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] EU Vulnerability Database
+Subject: Re: [oss-security] PGP/MIME and S/MIME mail clients vulnerabilities
 
-On Tue, May 13, 2025 at 07:43:37PM +0100, Graeme Fowler wrote:
-> EUVD is in beta testing - given all the shenanigans with MITRE and CVE, it might be worth checking out.
-> 
-> https://euvd.enisa.europa.eu/about
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-To make this more useful in list archives, here's what the above web
-page says at this time:
+On Tue, 2018-05-15 at 20:39 +0200, Florian Weimer wrote:
+> * Christian Brabandt:
+>=20
+> > Looks like details have just been published:
+> > https://efail.de/
+>=20
+> I don't see any discussion of cid: URLs.  Are vendors planning to fix
+> vectors related to those as well?
 
-> As per the NIS2 Directive, ENISA is mandated to develop and maintain the
-> European vulnerability database.
-> 
-> Access to reliable and timely information about vulnerabilities
-> affecting Information and Communication Technology (ICT) products and
-> services contributes to an enhanced cybersecurity risk management.
-> Sources of publicly available information about vulnerabilities are an
-> important tool for users of these services, competent authorities, and
-> the broader cybersecurity community. ENISA has established a European
-> Vulnerability Database (EUVD) where entities, regardless of whether they
-> fall within the scope of the NIS2 Directive, and their suppliers of
-> network and information systems, as well as competent authorities, most
-> notably CSIRTs, can voluntarily disclose and register publicly known
-> vulnerabilities to allow users to take appropriate mitigating measures.
-> 
-> In line with Coordinated Vulnerability Disclosure practices, which aim
-> at providing improved transparency regarding the publication process,
-> the EUVD is eventually used to publicly disclose the vulnerability
-> information.
-> 
-> To avoid efforts duplication and to support complementarity, ENISA
-> closely cooperates with MITRE and European as well as non-European
-> operators of the Common Vulnerabilities and Exposures (CVE) system. In
-> this context, ENISA offers vulnerability registry services after its
-> onboarding as a CVE Numbering Authority (CNA), with a focus on
-> vulnerabilities in IT products discovered by or reported to European
-> CSIRTs for coordinated disclosure.
-> 
-> Following its official launch, ENISA will continue engaging with its
-> stakeholders to further develop and improve the EUVD service catalogue.
+Hi Florian,
 
-This is the entirety of content specific to the /about page (the rest of
-content at that URL is header and footer common with other pages).
+I might have missed something, but I'm not sure what you're referring to he=
+re?
 
-Alexander
+Regards,
+- --=20
+Yves-Alexis
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEE8vi34Qgfo83x35gF3rYcyPpXRFsFAlr7/EIACgkQ3rYcyPpX
+RFvDSgf/b1WKcQCdUA3NfbXbltR79jJruH+ycKtMEvFCRNKP2hu8UNDswrUQBs+4
+DBmeXF6FTuCbum8fd7hjUvHQ0CjDpTqvdcixRwL93dtnxbJ4cMUTgCoVwyyx5co/
+sXCWeb96cz8zQucAD/ftSIaAEab4CwgAITYvRT4VFUeLywyW1iTEiarPAyd/8UQI
+iFQY23fgQ76kDWoq0e9X2aVGySt8R4JnT4QbrAY+X8wDwuEvNXPlx9vKM+OyiDH9
+lU0AoyPNSY4pTBRn+fAuDOSUuWI++iI2txWtb86qu4K0s1gNWVKvB/de8vKRlHvd
+r4mVqFVlt/a/0pvS9lA/6Y75v1b75A=3D=3D
+=3DLCzc
+-----END PGP SIGNATURE-----
