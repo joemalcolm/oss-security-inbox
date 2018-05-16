@@ -1,33 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/29/4
-Message-ID: <20181129231255.25fe8a92@computer>
-Date: Thu, 29 Nov 2018 23:12:55 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: memory safety bugs in bc
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/16/3
+Message-ID: <e7d7bccd3a2ed7776390f89a003fcd0d17bb9d7f.camel@debian.org>
+Date: Wed, 16 May 2018 11:39:14 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: oss-security@...ts.openwall.com, Christian Brabandt <cb@...bit.org>
+Subject: Re: PGP/MIME and S/MIME mail clients vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 29 Nov 2018 11:40:54 -0500
-Daniel Kahn Gillmor <dkg@...thhorseman.net> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> I haven't evaluated how many of those systems might pass untrusted
-> input to bc (maybe none!), but this is hardly "standalone".
+On Tue, 2018-05-15 at 20:39 +0200, Florian Weimer wrote:
+> * Christian Brabandt:
+> 
+> > Looks like details have just been published:
+> > https://efail.de/
+> 
+> I don't see any discussion of cid: URLs.  Are vendors planning to fix
+> vectors related to those as well?
 
-I think that's not what Marcus meant.
+Hi Florian,
 
-These packages on debian likely call bc via the commandline.
+I might have missed something, but I'm not sure what you're referring to here?
 
-The idea here is that "mild" memory safety violations (invalid reads,
-nullptr) don't get security treatment if they're in a standalone tool,
-yet they do if they're in a library, which may have larger implications
-in more complex apps.
-I can somewhat understand that. (And decided for myself not to care
-too much about CVEs anyway. Relevant for me is primarily that I shared
-the info, so others can decide how they act on it.)
+Regards,
+- -- 
+Yves-Alexis
+-----BEGIN PGP SIGNATURE-----
 
--- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+iQEzBAEBCAAdFiEE8vi34Qgfo83x35gF3rYcyPpXRFsFAlr7/EIACgkQ3rYcyPpX
+RFvDSgf/b1WKcQCdUA3NfbXbltR79jJruH+ycKtMEvFCRNKP2hu8UNDswrUQBs+4
+DBmeXF6FTuCbum8fd7hjUvHQ0CjDpTqvdcixRwL93dtnxbJ4cMUTgCoVwyyx5co/
+sXCWeb96cz8zQucAD/ftSIaAEab4CwgAITYvRT4VFUeLywyW1iTEiarPAyd/8UQI
+iFQY23fgQ76kDWoq0e9X2aVGySt8R4JnT4QbrAY+X8wDwuEvNXPlx9vKM+OyiDH9
+lU0AoyPNSY4pTBRn+fAuDOSUuWI++iI2txWtb86qu4K0s1gNWVKvB/de8vKRlHvd
+r4mVqFVlt/a/0pvS9lA/6Y75v1b75A==
+=LCzc
+-----END PGP SIGNATURE-----
