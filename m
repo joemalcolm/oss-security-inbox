@@ -1,34 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/05/1
-Message-ID: <1410041057.3565448.1515156752734.JavaMail.zimbra@redhat.com>
-Date: Fri, 5 Jan 2018 07:52:32 -0500 (EST)
-From: Vladis Dronov <vdronov@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2017-15129: Linux kernel: net: double-free and memory corruption in get_net_ns_by_id()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/18/1
+Message-ID: <4fada0db-0ec8-087e-e44f-14accbc7ac6a@redhat.com>
+Date: Fri, 18 May 2018 14:04:23 +0100
+From: Luke Hinds <lhinds@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: [opendaylight-security-note]: SDNInterfaceapp SQL injection
 Content-Type: text/plain; charset=utf-8
 
-Heololo,
+OpenDayLight Security Note
 
-A use-after-free vulnerability was found in a network namespaces code affecting the Linux
-kernel since  v4.0-rc1 through v4.15-rc5. The function get_net_ns_by_id() does not check
-for the net::count value after it has found a peer network in netns_ids idr which could
-lead to double free and memory corruption. This vulnerability could allow an unprivileged
-local user to induce kernel memory corruption on the system, leading to a crash. Due to
-the nature of the flaw, privilege escalation cannot be fully ruled out, although we believe
-it is unlikely.
+cve: CVE-2018-1132
 
-References:
+jira: https://jira.opendaylight.org/browse/SDNINTRFAC-14
 
-https://marc.info/?l=linux-netdev&m=151370451121029&w=2
+advisory-date: 18/05/18
 
-https://marc.info/?t=151370468900001&r=1&w=2 (a whole thread)
+Summary
+-------
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1531174
+SQL injection in the component database(SQLite) without authenticating
+to the controller or SDNInterfaceapp.
 
-An upstream patch:
+Discussion
+----------
 
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=21b5944350052d2583e82dd59b19a9ba94a007f0
+Feng Xiao and Jianwei Huang from Wuhan University discovered a
+vulnerability in SDNInterfaceapp (SDNI).
 
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+Attackers can SQL inject the component's database(SQLite) without
+authenticating to the controller or SDNInterfaceapp.
 
+The bug can be found in
+/impl/src/main/java/org/opendaylight/sdninterfaceapp/impl/database/SdniDataBase.java
+(line 373~391)
+
+The SDNI concats port information to build an insert SQL query, and it
+executes the query in SQLite.
+
+However, in line 386, the portName is a string that can be customized by
+switches. Since SQLite supports multiple sql queries in one run,
+attackers can customize the port name to inject another SQL if they
+compromise or forge a switch.
+
+For example, set portName as:
+");drop table NAME;//
+
+Recommended Actions
+-------------------
+
+The SDNI project is no longer maintained nor developed since the Carbon
+release of OpenDayLight and as the aforementioned vulnerability was
+reported after Carbons last service release (SR4) was shipped, the
+decision was made to not release a patch.
+
+The security team instead recommends that users upgrade to a later release.
+
+Luke Hinds
+OpenDayLight Security Manager
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
