@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1370" "Saturday" "5" "December" "2015" "22:07:46" "+0200" "Henri Salo" "henri@nerv.fi" "<20151205200746.GA28593@lakka.kapsi.fi>" "35" "Re: [oss-security] Re: CVE request: Redmine: cross-site scripting vulnerability fixed in 3.0.0 and 2.6.2" nil nil nil "12" "2015120520:07:46" "[oss-security] Re: CVE request: Redmine: cross-site scripting vulnerability fixed in 3.0.0 and 2.6.2" (number mark "U       henri@nerv.f Dec  5   35/1370  " thread-indent "\"Re: [oss-security] Re: CVE request: Redmine: cross-site scripting vulnerability fixed in 3.0.0 and 2.6.2\"\n") "<20151205144023.D7E276C0237@smtpvmsrv1.mitre.org>" ("<20151205073937.GB14618@lakka.kapsi.fi>" "<20151205144023.D7E276C0237@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2715" "Friday" "18" "May" "2018" "14:04:23" "+0100" "Luke Hinds" "lhinds@redhat.com" "<4fada0db-0ec8-087e-e44f-14accbc7ac6a@redhat.com>" "87" "[oss-security] [opendaylight-security-note]: SDNInterfaceapp SQL injection" nil nil nil "5" "2018051813:04:23" "[oss-security] [opendaylight-security-note]: SDNInterfaceapp SQL injection" (number mark "U       lhinds@redha May 18   87/2715  " thread-indent "\"[oss-security] [opendaylight-security-note]: SDNInterfaceapp SQL injection\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28388 invoked by uid 550); 5 Dec 2015 20:07:58 -0000
+Received: (qmail 22307 invoked by uid 550); 18 May 2018 13:17:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,56 +12,143 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28367 invoked from network); 5 Dec 2015 20:07:58 -0000
-Date: Sat, 5 Dec 2015 22:07:46 +0200
-From: Henri Salo <henri@nerv.fi>
-To: cve-assign@mitre.org
-Cc: oss-security@lists.openwall.com
-Message-ID: <20151205200746.GA28593@lakka.kapsi.fi>
-References: <20151205073937.GB14618@lakka.kapsi.fi>
- <20151205144023.D7E276C0237@smtpvmsrv1.mitre.org>
+Received: (qmail 11501 invoked from network); 18 May 2018 13:04:36 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:to:from:subject:openpgp:autocrypt:message-id
+         :date:user-agent:mime-version;
+        bh=zhrgyD4ccTEnsjLNA1k2p2Bprrwpq90FhKek1MapUT8=;
+        b=V+aTIeN3hPQ1cg05ENgEpGtx73EQNDQKqZRsA+CmAbSE0mBZtjnwgpo+/Pt81/lXam
+         7wtIbufbiqVRnPhwdj4Ppf6ZjEPODF8Or2SqaS12RneLleTolewcnSY1X74S03OIvCup
+         cov8bCeSABBHEsbcD8G4UzhUGiFh/bSgm4FTEnlry5KDA9ijJICQA48UohD2uE4UkMqS
+         lIbuEsIcHEcRvs1fGaQ+93I2bhKZgJsktKMt88L1Tfis9gpTAhxIY899Gcs2KJ4f/nSd
+         MROfA6udkJcizjJCWpMRBw0lr7S5LMbVyPkA18P2v2+74S+/Omcf42PfPue24IFGixz7
+         WpvA==
+X-Gm-Message-State: ALKqPwcQFQ4efBNrwmT2JgWLjE3rLqyCWUFm7OFDfFtSdyAxiKfdIAtI
+	MsxlTzssZEd5y73mtnTPfMcDmSPv3A==
+X-Google-Smtp-Source: AB8JxZp98NCVJUri8LgCI2QUbE/LSsxv5N5QmaSRv1VGfy2UvF566pBKkWP6meIqtQNtBBjSV/tI9A==
+X-Received: by 2002:adf:e985:: with SMTP id h5-v6mr8064685wrm.137.1526648665013;
+        Fri, 18 May 2018 06:04:25 -0700 (PDT)
+To: oss-security <oss-security@lists.openwall.com>
+From: Luke Hinds <lhinds@redhat.com>
+Openpgp: preference=signencrypt
+Autocrypt: addr=lhinds@redhat.com; prefer-encrypt=mutual; keydata=
+ xsBNBFcLyhwBCADSNb8iiJtTiTVyLB9gmIah09wj48CULxqIC8VYogNRwky3CmQefLQgcirI
+ lvWFqL39PHHon3AYzpEU1fBB1G0SN2/bFT+qO/vE8fjkCuAxMJkfollN7Nq9y1/bSnXpw0uS
+ +avKHClLD5OGX2oY2mDkiExkm8bzONu2+Iu3ZW313KU6Qw//sukJNwVVB8t67xsxiADUcfxU
+ YQEZ1CGKPD4KFovrzmRodFE3BtMnsJNzHPMsI1CTBt+8BuQhmoZ5akQSPQfojfVZvqr3DbCc
+ FEQaBm5GCz6Rdqch1R7kQ+lgudXqpW92N+qm0kozx34TMFHw6mazuV2XhGpRUbV3r2GpABEB
+ AAHNHkx1a2UgSGluZHMgPGxoaW5kc0ByZWRoYXQuY29tPsLAeAQTAQIAIgUCVwvKHAIbAwYL
+ CQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQ8WVWFzwgJhRnyQf6AnYhPjNfL6pKCQ/Pjmyi
+ sgfMIXwHwK3P8Ev2Am1+xipt254NyZbO7P5i7efJ3GZqBc4TR93j8WqKalri+CYYao+PpNqE
+ u6nlA3vbL9LA6W7B/hQLSFt2gNmMp24tNBenpqYkNOQA8A/5H0EOiyvhjepxUQ7+1jz1kKhK
+ Fua4a6nBSEdtqNGckOTx9T3q5ktQAp3tjhXQTaqNFKme4Wq5axT/aIe1gJRwa9ZPWEMdK1jy
+ w88vFrEa4Y/3N29QlpaN9XwU4Wp8Amij2MN+C3BjF30sFXd3Cr6KU3VpcqqfM4s1ryrEJCtC
+ pelOs8wK8Hr9xLeZ114PRYm+xSsAacNptM7ATQRXC8ocAQgAuqHCGpL2e3CNLbYFm19la3Z2
+ 3/zbLZrSZyvhxHDuYlEfdK9qjX7zyYxVyNHyI6jhxDXED6ZObDgZNhST2V+E5h0t5PvLdfzL
+ Vffe/2bDa4GP+t63cqxtWPTVkiPHyvDNsBrMmM9n7iiEa01OxKOnAxBxvUJshfzUAiy5Atek
+ rFRFTGOeBRiJXJI7N6dGtFBdQ7KfZRbQT3DMhz0nlERilva/+sbJ1sMbwDixMHhGBzVck9dW
+ s+rJeMnl6lTeDBXg8kYXkMwdcV4vjaoRs7d7haF4vhlL9VQbM1I/3rhUXjXHX8Ct8XMMYhtI
+ mHpbmqueX/lL4Rq71EAKoy4luvQk1QARAQABwsBfBBgBAgAJBQJXC8ocAhsMAAoJEPFlVhc8
+ ICYUOnUIAKMnO8bxB1UQRAkpzDq97fWaPSJgSxKRD8fzDg2k0zzuxeQ6D6EtSxmViTqYbjxr
+ 6Gd/bzuNQOkKy/fQXHbGL/zDurR+Xh+GH7yr+ynFdlWY701OSa1+xAT5igQaKl29ofjH/I5s
+ xCTZiCwySFcwhdpGUg1IMn7TlzPT6r/2Pafueqyha0VPUxL91H+2emxu5EALHPaOmwyTlZWU
+ mr4KL5BE88RTdZtu851nXSH6/qtGPmoeNrAh2yuKR9EkQYh9XyqC7dHQM4gM12XGTlwIwEg0
+ zsE7Ve7ZewmXEKeqo2VTMPAmeC5p/0sWKobjfctTp6nuzolU6Ph6zJxPrHK+EoY=
+Message-ID: <4fada0db-0ec8-087e-e44f-14accbc7ac6a@redhat.com>
+Date: Fri, 18 May 2018 14:04:23 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; x-action=pgp-signed
-In-Reply-To: <20151205144023.D7E276C0237@smtpvmsrv1.mitre.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-SA-Exim-Connect-IP: 2001:1bc8:1004::1
-X-SA-Exim-Mail-From: fgeek@kapsi.fi
-X-SA-Exim-Scanned: No (on mail.kapsi.fi); SAEximRunCond expanded to false
-Subject: Re: [oss-security] Re: CVE request: Redmine: cross-site scripting
- vulnerability fixed in 3.0.0 and 2.6.2
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="r5w4mnqlYXtZN4A4FkN00JaDkYYDFkqDa"
+Subject: [oss-security] [opendaylight-security-note]: SDNInterfaceapp SQL injection
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+--r5w4mnqlYXtZN4A4FkN00JaDkYYDFkqDa
+Content-Type: multipart/mixed; boundary="cOavrHzn6QjPtvcgeD2JK8dDjAZgCJBKB";
+ protected-headers="v1"
+From: Luke Hinds <lhinds@redhat.com>
+To: oss-security <oss-security@lists.openwall.com>
+Message-ID: <4fada0db-0ec8-087e-e44f-14accbc7ac6a@redhat.com>
+Subject: [opendaylight-security-note]: SDNInterfaceapp SQL injection
 
-On Sat, Dec 05, 2015 at 09:40:23AM -0500, cve-assign@mitre.org wrote:
-> Is there any public information that associates 19117 with the
-> 
->   "Potential XSS vulnerability when rendering some flash messages" "2.6.2 and 3.0.0"
-> 
-> line, or are you providing this association based on your own involvement with the
-> vulnerability disclosure?
+--cOavrHzn6QjPtvcgeD2JK8dDjAZgCJBKB
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB-large
+Content-Transfer-Encoding: quoted-printable
 
-File ./doc/CHANGELOG says:
+OpenDayLight Security Note
 
-== 2015-02-19 v2.6.2
-* Defect #19117: Potential XSS vulnerability in some flash messages rendering
+cve: CVE-2018-1132
 
-- -- 
-Henri Salo
+jira: https://jira.opendaylight.org/browse/SDNINTRFAC-14
+
+advisory-date: 18/05/18
+
+Summary
+-------
+
+SQL injection in the component database(SQLite) without authenticating
+to the controller or SDNInterfaceapp.
+
+Discussion
+----------
+
+Feng Xiao and Jianwei Huang from Wuhan University discovered a
+vulnerability in SDNInterfaceapp (SDNI).
+
+Attackers can SQL inject the component's database(SQLite) without
+authenticating to the controller or SDNInterfaceapp.
+
+The bug can be found in
+/impl/src/main/java/org/opendaylight/sdninterfaceapp/impl/database/SdniData=
+Base.java
+(line 373~391)
+
+The SDNI concats port information to build an insert SQL query, and it
+executes the query in SQLite.
+
+However, in line 386, the portName is a string that can be customized by
+switches. Since SQLite supports multiple sql queries in one run,
+attackers can customize the port name to inject another SQL if they
+compromise or forge a switch.
+
+For example, set portName as:
+");drop table NAME;//
+
+Recommended Actions
+-------------------
+
+The SDNI project is no longer maintained nor developed since the Carbon
+release of OpenDayLight and as the aforementioned vulnerability was
+reported after Carbons last service release (SR4) was shipped, the
+decision was made to not release a patch.
+
+The security team instead recommends that users upgrade to a later release.
+
+Luke Hinds
+OpenDayLight Security Manager
+
+
+
+--cOavrHzn6QjPtvcgeD2JK8dDjAZgCJBKB--
+
+--r5w4mnqlYXtZN4A4FkN00JaDkYYDFkqDa
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQIcBAEBAgAGBQJWY0QSAAoJECet96ROqnV0Eu4QAMpX7Xkqs0e5mOltgTuzDs1j
-ML7q9L1VVJylflXcuRvAnJEVDS4LVNylBomlCZmZl8nY88vjZnwUXXh8h0ZRakfY
-bUQjrmSQVZrecpO/UVuYQLJUeOO7MvTJFFVsCIQKHA8Y6nGsxtixgTNDOnWHrckn
-NVqOf8wg29drsqAXTMoQrDofRJ2l9KgAA52gIdqw3aLx7I1PKyxmscWFuReDfdFt
-o9YYl6Z4+Vynre4TfFXFS8h+6U/4zOGUoHo+LbLgjhebQwRXG2sXABB9qJ71aH9K
-n8xwTWjKV3M3VjY7bf7tv4O+GCxsC1KMylqZtS3quQjSEKsS2fGuj7Nrd/2J+HqC
-4d15fAgg0JRVfZcEmsi0WYVNfN25PrQHpPP7Urh3YhuwL3dDQtHTaqv3Jafx49JG
-W0ZLtYRGi5d9a1ZHPt4cpnTDl+eSFLX1Jxcm3LEONBeilnXVYyk689U8P0US4dbj
-1iqD/UXMoKs3hpEvi+yRdaPy0OB3DQvdc1k0BdAkbaCYpK7SVQpGed991mtc43MK
-t5HhZUXBodlIouEeJkdFB/l33SkhkAnoYwFPJXN+hIkxn/H71+q7uZV7O0QxVtWT
-AaalcKRd11ch0q9JpSO1Jh/hCvor85Oib6o8a3v7nu6WMCXxqReICl2SFF8QpRA/
-2cBSXbWVcCZTg9gTav85
-=/k8P
+iQEzBAEBCAAdFiEElSwKI1Vlx+dE6h5a8WVWFzwgJhQFAlr+z1cACgkQ8WVWFzwg
+JhToGwf9FVjQRxq8rX91ZVCQTJNdqhK38PnNz9iyEtCpikS/6NPUiChQvJ75SeT5
+C0Oz7LC6whIEWQIV2zqJhQZNKQqlId2P7kcVFMBcKkT1ZL85Fvu2qcpwWPnfG/Ho
+PEtY2isUD2syt24qDKmV4go1Ku3qarLUJIJ3otoJ6xRT5JnYjXqkwjxAadITc9T+
+L7vb3l3h6cNxnV06YLxz+h5FE1q5YekVudMsANwJqJl1myUDsglUpuiJ+HubzjW+
+BJTKp4c6tDjf1h2Spuz+9PrPzKtVxkT3BciFJ8WP84b7nxi8NsW7gfKkGHZ2JzCK
+ZMXtjlG+3jufduzY9x7ty9K/H0JKFQ==
+=822k
 -----END PGP SIGNATURE-----
+
+--r5w4mnqlYXtZN4A4FkN00JaDkYYDFkqDa--
