@@ -1,31 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/18/5
-Message-ID: <f1c32a4f-e1dc-fcab-fcde-bae9d1460b1a@asokolov.org>
-Date: Wed, 18 Jul 2018 08:30:18 +0100
-From: Alexey Sokolov <alexey+znc@...kolov.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/20/1
+Message-ID: <CAPbtD9m-rSCBh5S4EmW-VT5tLHPnp9UqUW4F6CicS4P-bbt3BQ@mail.gmail.com>
+Date: Sun, 20 May 2018 14:46:05 +0300
+From: nullbyte <seclist45@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2018-14056: path traversal in ZNC
+Subject: Reptile: a LKM rootkit written for evil purposes
 Content-Type: text/plain; charset=utf-8
 
-Severity: medium
+Features:
 
-Versions affected:
-0.045 through 1.7.0
+- Supported Linux kernel versions: 2.6.x/3.x/4.x
+- Give root to unprivileged users
+- Hide files and directories
+- Hide files contents
+- Hide processes
+- Hide himself
+- Hidden boot persistence
+- ICMP/UDP/TCP port-knocking backdoor
+- Full TTY/PTY shell with file transfer
+- Client to handle Reptile Shell
 
-Mitigation:
-upgrade to 1.7.1, or disable HTTP via `/msg *status AddPort`, `/msg
-*status DelPort` commands.
+Download: https://github.com/f0rb1dd3n/Reptile
 
-Description:
-ZNC before 1.7.1-rc1 is prone to a path traversal flaw. A non-admin user
-can set web skin name to ../ to access files outside of the intended
-skins directories and to cause DoS.
-
-Upstream patch:
-https://github.com/znc/znc/commit/a4a5aeeb17d32937d8c7d743dae9a4cc755ce773
-
-Reported by: Jeriko One <jeriko.one@....us>
-
--- 
-Best regards,
-Alexey "DarthGandalf" Sokolov
