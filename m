@@ -1,69 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/14/2
-Message-ID: <CABD0r12nvkM2zhaSKNPU84jzEqLuvFy9=1yzFKCQuyXaCBPCNQ@mail.gmail.com>
-Date: Sun, 14 Jan 2018 08:38:35 +0100
-From: Michiel Beijen <michiel.beijen@...il.com>
-To: Daniël van Eeden <daniel.vaneeden@...king.com>
-Cc: DBI Developers Mailing List <dbi-dev@...l.org>, oss-security@...ts.openwall.com,  Patrick Galbraith <patg@...g.net>
-Subject: Re: DBD::mysql and SSL/TLS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/21/5
+Message-ID: <20180521145731.60826823@redhat.com>
+Date: Mon, 21 May 2018 14:57:31 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: Bryan Pendleton <bpendleton.derby@...il.com>
+Cc: oss-security@...ts.openwall.com, security <security@...che.org>, gregory draperi <gregory.draperi@...il.com>
+Subject: Re: [ANNOUNCE] CVE-2018-1313: Apache Derby externally-controlled input vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Thanks for pointing this out. We had applied these patches before but had
-to revert because of breakage created by other changes in the code.
+On Mon, 14 May 2018 21:04:58 -0700 Bryan Pendleton wrote:
 
-The difficulty is also that mariadb and MySQL use a different approach to
-handling TLS in the client libs.
+> Hi Tomas, thank you for getting in touch, and for the excellent questions.
+> 
+> I think the problem here is primarily my lack of skill in clearly writing
+> disclosure information about vulnerabilities, so let me try to do my best
+> to clarify.
+> 
+> Indeed, allowing the Derby server to open an untrusted database is
+> of serious concern, and, due to Derby's rich extensibility features, can
+> allow the execution of arbitrary *Java* code directly in Derby. So this
+> is an important concern.
+> 
+> And yes, you are correct that the selection of 10.3.1.4 as the first
+> affected release is because the default security policy dates from
+> that release, and you are also correct that the "ping with arguments"
+> pre-dates that. We certainly hope that nobody is running such 11-year-old
+> software any more; if possible, we would really like them to upgrade.
+> 
+> Regarding the question of which fix is the "actual security fix," I find
+> this a challenging question. In order to exploit the vulnerability, the
+> ping command must allow the specially crafted request packet, *and*
+> the security policy must allow the access to the untrusted database.
+> Closing *either* of those holes is enough to prevent that exploit; we chose
+> to close *both* of them with the 10.14.2.0 release.
+> 
+> The Derby development team's primary recommendation is that
+> any Derby Network Server deployed in a production environment
+> should use an explicitly-developed custom security policy, and not
+> depend on the default policy; still, the new security policy that is
+> installed by default by 10.14.2.0 is considerably more secure than
+> the policy that was previously in place.
+> 
+> I hope this helps. If I have misunderstood the intent of any of your
+> questions, please let me know.
 
-I'll make sure we'll apply this PR again and create a release ASAP.
+Thank you for your detailed reply.  It addresses my questions.
 
---
-Michiel
+FWIW, in this case, the change of the ping command handling is what I'd
+view as the security fix.  The change of the default security policy
+would not be sufficient in deployments where custom security policy is
+used and that policy is less restrictive than the new default policy
+(even though it's maybe more restrictive than the old default).
 
-Op 14 jan. 2018 06:49 schreef "Daniël van Eeden via dbi-dev" <
-dbi-dev@...l.org>:
-
-> Hi,
->
-> I have some serious concerns about the state of SSL/TLS in DBD::mysql.
->
-> Issue 1: CVE-2017-10789 isn't fixed
-> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-10789
->
-> Issue 2: Using DBD::mysql with MariaDB 10.0 or higher or MySQL 8.0 or
-> higher provides a false sense of security
->
-> SSL_LAST_VERIFY_VERSION is set to 50799.
-> Any version higher than that silently ignores mysql_ssl_verify_server_cert
->
-> This can lead to unencrypted connections even with strict SSL settings.
->
-> Issue 3: If SSL support is unavailable but ssl options are set then these
-> options are silently ignored.
->
-> issue 4: If compiled against MySQL 5.7 then SSL/TLS is used when
-> available, but can't be disabled. (mysql_ssl=0 is ignored).
->
-> This makes upgrading to 5.7 more difficult. And 5.7 is needed to get
-> support for TLSv1.1 and TLSv1.2.
->
-> There is a patch available for this:
-> https://github.com/perl5-dbi/DBD-mysql/pull/114
->
->
-> --
-> Daniël van Eeden
-> Database Administrator
->
-> Booking.com B.V.
-> Vijzelstraat 66
-> <https://maps.google.com/?q=Vijzelstraat+66&entry=gmail&source=g>-80
-> Amsterdam 1017HL Netherlands
-> Direct +31207033812 <020%20703%203812>
-> [image: Booking.com] <http://www.booking.com/>
-> The world's #1 accommodation site
-> 43 languages, 187+ offices worldwide, 96,000+ global destinations,
-> 1,200,000+ room nights booked every day
-> No booking fees, best price always guaranteed
-> Subsidiary of the Priceline Group (NASDAQ: PCLN)
->
-
+-- 
+Tomas Hoger / Red Hat Product Security
