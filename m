@@ -1,41 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/10/2
-Message-ID: <7897eadf67144a237334450d05396572daa60e34.camel@debian.org>
-Date: Sun, 10 Jun 2018 18:38:47 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: oss-security@...ts.openwall.com, marcus.brinkmann@...r-uni-bochum.de
-Subject: Re: Re : Re: CVE-2018-12020 in GnuPG
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/21/4
+Message-ID: <08a801d3f0f9$df46d300$9dd47900$@apache.org>
+Date: Mon, 21 May 2018 13:50:07 +0200
+From: "Uwe Schindler" <uschindler@...che.org>
+To: <announce@...che.org>, <general@...ene.apache.org>, <dev@...ene.apache.org>, <solr-user@...ene.apache.org>
+Cc: "'security'" <security@...che.org>, <oss-security@...ts.openwall.com>
+Subject: [SECURITY] CVE-2018-8010: XXE vulnerability due to Apache Solr configset upload
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+CVE-2018-8010: XXE vulnerability due to Apache Solr configset upload
 
-On Sun, 2018-06-10 at 10:58 -0400, Stiepan wrote:
+Severity: High
 
-Hi Stepian,
+Vendor:
+The Apache Software Foundation
 
-> This responsibility discussion is all well and fine, but now that this is
-> half-public, may we know for sure whether we are affected :
-> 1. as debian(-like) package consumers
+Versions Affected:
+Solr 6.0.0 to 6.6.3
+Solr 7.0.0 to 7.3.0
 
-Not entirely sure what you mean here, but if you're talking about the apt
-package managers (which relies on gpgv for signature verification), it's
-currently investigated.
+Description:
+The details of this vulnerability were reported internally by one of Apache
+Solr's committers.
+This vulnerability relates to an XML external entity expansion (XXE) in Solr
+config files (solrconfig.xml, schema.xml, managed-schema). In addition,
+Xinclude functionality provided in these config files is also affected in a
+similar way. The vulnerability can be used as XXE using file/ftp/http
+protocols in order to read arbitrary local files from the Solr server or the
+internal network. See [1] for more details.
 
-Note that all supported suites have had their gnupg version updated: https://s
-ecurity-tracker.debian.org/tracker/CVE-2018-12020
+Mitigation:
+Users are advised to upgrade to either Solr 6.6.4 or Solr 7.3.1 releases both
+of which address the vulnerability. Once upgrade is complete, no other steps
+are required. Those releases only allow external entities and Xincludes that
+refer to local files / zookeeper resources below the Solr instance directory
+(using Solr's ResourceLoader); usage of absolute URLs is denied. Keep in
+mind, that external entities and XInclude are explicitly supported to better
+structure config files in large installations. Before Solr 6 this was no
+problem, as config files were not accessible through the APIs.
 
-Regards,
-- -- 
-Yves-Alexis
------BEGIN PGP SIGNATURE-----
+If users are unable to upgrade to Solr 6.6.4 or Solr 7.3.1 then they are
+advised to make sure that Solr instances are only used locally without access
+to public internet, so the vulnerability cannot be exploited. In addition,
+reverse proxies should be guarded to not allow end users to reach the
+configset APIs. Please refer to [2] on how to correctly secure Solr servers.
 
-iQEzBAEBCAAdFiEE8vi34Qgfo83x35gF3rYcyPpXRFsFAlsdVBcACgkQ3rYcyPpX
-RFvs6wgAyOwnS9uaOmW1Qg6pM7iKDlTYVe7SteOlVn6QyAQzKhTmsazdo+xZJ6+y
-Bd7BScDNRRvyTCZKtqyMvuTMCBjVoGcIQoGvrZW64X9wVCCgk/U5bpe39WwTpePZ
-uScfW3MZKGOvYEKAGbC8aZDbTAkJ1D1HjOe0xVAv7Ifc0lpinYJSwQ2dEu9qDyRm
-jxD9IpsZwAA2IX+yAb87ebW5Cm6ZFMoWUuj2VmE8Eth3k6wmHexLahiz/JR+qrET
-+s3aRcDTae7dajEPfIWLrSnxxVYHrdYs3xiDsD4NbapJ2YACSZ/ayL8P5GWIuQZ/
-tipCq/jMIikHy59/fc247FOxSgCOew==
-=c5lf
------END PGP SIGNATURE-----
+Solr 5.x and earlier are not affected by this vulnerability; those versions
+do not allow to upload configsets via the API. Nevertheless, users should
+upgrade those versions as soon as possible, because there may be other ways
+to inject config files through file upload functionality of the old web
+interface. Those versions are no longer maintained, so no deep analysis was
+done.
+
+Credit:
+Ananthesh, Ishan Chattopadhyaya
+
+References:
+[1] https://issues.apache.org/jira/browse/SOLR-12316
+[2] https://wiki.apache.org/solr/SolrSecurity
+
+-----
+Uwe Schindler
+uschindler@...che.org 
+ASF Member, Apache Lucene PMC / Committer
+Bremen, Germany
+http://lucene.apache.org/
+
+
