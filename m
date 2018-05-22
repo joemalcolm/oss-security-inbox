@@ -1,34 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/13/1
-Message-ID: <20180212223147.GA16518@jasmine.lan>
-Date: Mon, 12 Feb 2018 17:31:47 -0500
-From: Leo Famulari <leo@...ulari.name>
-To: SEC Consult Vulnerability Lab <research@...-consult.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: SEC Consult SA-20180207-0 :: Multiple buffer overflow vulnerabilities in InfoZip UnZip
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/22/1
+Message-Id: <8DD0F0D5-D38D-4EF2-8B1A-3068B9E73DC6@apache.org>
+Date: Tue, 22 May 2018 11:09:36 -0700
+From: Andy LoPresto <alopresto@...che.org>
+To: announce@...che.org, users@...i.apache.org, dev@...i.apache.org
+Cc: security <security@...che.org>, security@...i.apache.org, oss-security@...ts.openwall.com
+Subject: [ANNOUNCE] CVE Announcement for Apache NiFi 1.0.0 - 1.5.0
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Feb 08, 2018 at 08:19:20AM +0100, SEC Consult Vulnerability Lab wrote:
-> 1) Heap-based buffer overflow in password protected ZIP archives (CVE-2018-1000035)
+The Apache NiFi PMC would like to announce the following CVE discoveries in Apache NiFi 1.0.0 - 1.5.0. These issues were resolved with the release of NiFi 1.6.0 on April 8, 2018. NiFi is an easy to use, powerful, and reliable system to process and distribute data. It supports powerful and scalable directed graphs of data routing, transformation, and system mediation logic. For more information, see https://nifi.apache.org/security.html <https://nifi.apache.org/security.html>.
 
-[...]
+CVE-2018-1309 <https://nifi.apache.org/security.html#CVE-2018-1309>: Apache NiFi External XML Entity issue in SplitXML processor
 
-> As already mentioned, modern compilers replace unsafe functions with
-> safe alternatives as a defense in depth mechanism.
-> This feature is called BOSC (Built-in object size checking) and is part
-> of the FORTIFY_SOURCE=2 protection.
-> The following link shows the source code (and vulnerability) inside
-> the Ubuntu package:
-> http://bazaar.launchpad.net/~ubuntu-branches/ubuntu/trusty/unzip/trusty-updates/view/head:/fileio.c#L1593
+Severity: Moderate
 
-If you are not sure how to pass flags to the compiler when building UnZip 6.0
-(the Makefile does not respect CFLAGS), you should export them as LOCAL_UNZIP in
-the build environment. Quoting 'unix/Makefile':
+Versions Affected:
 
-# LOCAL_UNZIP is an environment variable that can be used to add default C flags
-# to your compile without editing the Makefile (e.g., -DDEBUG_STRUC, or -FPi87
-# on PCs using Microsoft C).
+Apache NiFi 0.1.0 - 1.5.0
+Description: Malicious XML content could cause information disclosure or remote code execution.
 
-It took me a little too long to figure that out...
+Mitigation: The fix to disable external general entity parsing and disallow doctype declarations was applied on the Apache NiFi 1.6.0 release. Users running a prior 1.x release should upgrade to the appropriate release.
+
+Credit: This issue was discovered by 圆珠笔.
+
+CVE Link: Mitre Database: CVE-2018-1309 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-1309>
+
+CVE-2018-1310 <https://nifi.apache.org/security.html#CVE-2018-1310>: Apache NiFi JMS Deserialization issue because of ActiveMQ client vulnerability
+
+Severity: Moderate
+
+Versions Affected:
+
+Apache NiFi 0.1.0 - 1.5.0
+Description: Malicious JMS content could cause denial of service. See ActiveMQ CVE-2015-5254 announcement <http://activemq.apache.org/security-advisories.data/CVE-2015-5254-announcement.txt> for more information.
+
+Mitigation: The fix to upgrade the activemq-client library to 5.15.3 was applied on the Apache NiFi 1.6.0 release. Users running a prior 1.x release should upgrade to the appropriate release.
+
+Credit: This issue was discovered by 圆珠笔.
+
+CVE Link: Mitre Database: CVE-2018-1310 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-1310>
+
+CVE-2017-8028 <https://nifi.apache.org/security.html#CVE-2017-8028>: Apache NiFi LDAP TLS issue because of Spring Security LDAP vulnerability
+
+Severity: Severe
+
+Versions Affected:
+
+Apache NiFi 0.1.0 - 1.5.0
+Description: Spring Security LDAP library was not enforcing credential authentication after TLS handshake negotiation. See NVD CVE-2017-8028 disclosure <https://nvd.nist.gov/vuln/detail/CVE-2017-8028> for more information.
+
+Mitigation: The fix to upgrade the spring-ldap library to 2.3.2.RELEASE+ was applied on the Apache NiFi 1.6.0 release. Users running a prior 1.x release should upgrade to the appropriate release.
+
+Credit: This issue was discovered by Matthew Elder.
+
+CVE Link: Mitre Database: CVE-2017-8028 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-8028>
+
+CVE-2018-1324 <https://nifi.apache.org/security.html#CVE-2018-1324>: Apache NiFi Denial of service issue because of commons-compress vulnerability
+
+Severity: Low
+
+Versions Affected:
+
+Apache NiFi 0.1.0 - 1.5.0
+Description: A vulnerability in the commons-compress library could cause denial of service. See commons-compress CVE-2018-1324 announcement <https://commons.apache.org/proper/commons-compress/security-reports.html> for more information.
+
+Mitigation: The fix to upgrade the commons-compress library to 1.16.1 was applied on the Apache NiFi 1.6.0 release. Users running a prior 1.x release should upgrade to the appropriate release.
+
+Credit: This issue was discovered by Joe Witt.
+
+CVE Link: Mitre Database: CVE-2018-1324 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-1324>
+
+
+Andy LoPresto
+alopresto@...che.org
+alopresto.apache@...il.com
+PGP Fingerprint: 70EC B3E5 98A6 5A3F D3C4  BACE 3C6E F65B 2F7D EF69
+
+
+Content of type "text/html" skipped
 
 Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
