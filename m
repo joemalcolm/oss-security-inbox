@@ -1,4 +1,9 @@
-Received: (qmail 11885 invoked by uid 550); 8 Jan 2024 11:58:37 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1156" "Tuesday" "22" "May" "2018" "21:06:53" "+0200" "Florian Weimer" "fw@deneb.enyo.de" "<87vabfbjci.fsf@mid.deneb.enyo.de>" "25" "Re: [oss-security] PGP/MIME and S/MIME mail clients vulnerabilities" nil nil nil "5" "2018052219:06:53" "[oss-security] PGP/MIME and S/MIME mail clients vulnerabilities" (number mark "U       fw@deneb.eny May 22   25/1156  " thread-indent "\"Re: [oss-security] PGP/MIME and S/MIME mail clients vulnerabilities\"\n") "<969E7C7D-5A8E-4FF8-A1CB-CBFB20E24E8D@gmail.com>" ("<6770b401c944860c2288ebf7738f40010d938b33.camel@debian.org>" "<20180514102951.GD18567@256bit.org>" "<87zi10u5kl.fsf@mid.deneb.enyo.de>" "<e7d7bccd3a2ed7776390f89a003fcd0d17bb9d7f.camel@debian.org>" "<969E7C7D-5A8E-4FF8-A1CB-CBFB20E24E8D@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 23965 invoked by uid 550); 22 May 2018 19:10:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,64 +12,45 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9900 invoked from network); 8 Jan 2024 11:56:50 -0000
-DKIM-Filter: OpenDKIM Filter v2.10.3 james.steelbluetech.co.uk 5D569BFC19
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ehuk.net; s=default;
-	t=1704715086; bh=PVB2PiQMjsY6BEfOGa0Avy7UfMuRskeoKEr9Qe7kW+Y=;
-	h=Date:From:Subject:Reply-To:To:References:In-Reply-To:From;
-	b=puyOLSYnYYND5ofUcFTY4XMZOcfZOhaF1awOGXNxS6a65pNJ59369AbtNuZD9ZQiP
-	 1lTv1eq6O7AMFoyPweyZESk5/4+0n/uq7iiIHUUDTqYbmwe2Hazhtmsi2G76nwQImK
-	 Pi0zCJrIafCej6vALmeWBgpgxDtcWrL5W49n5EGVVcAHjzUmz2rEev8jpwf2QcShXO
-	 iuuWfza4e1oiEdS4CH9NX4wBZr6uEvkfx5v06HwL9Ng5U+dPYjgPbmWQ251YTife55
-	 w1bujFSDJTN/GpPVQhUK5ZJ42zipVIeChVs8XlbRyOERk8XrbUqxJpO0o06QpORaC7
-	 RuRYwtqP9KEnA==
-Message-ID: <e5b767b2-373c-4fea-9bd2-1bbc1a2359a3@ehuk.net>
-Date: Mon, 8 Jan 2024 11:58:06 +0000
+Received: (qmail 23947 invoked from network); 22 May 2018 19:10:11 -0000
+From: Florian Weimer <fw@deneb.enyo.de>
+To: Matthew Fernandez <matthew.fernandez@gmail.com>
+Cc: oss-security@lists.openwall.com,  Christian Brabandt <cb@256bit.org>
+References: <6770b401c944860c2288ebf7738f40010d938b33.camel@debian.org>
+	<20180514102951.GD18567@256bit.org> <87zi10u5kl.fsf@mid.deneb.enyo.de>
+	<e7d7bccd3a2ed7776390f89a003fcd0d17bb9d7f.camel@debian.org>
+	<969E7C7D-5A8E-4FF8-A1CB-CBFB20E24E8D@gmail.com>
+Date: Tue, 22 May 2018 21:06:53 +0200
+In-Reply-To: <969E7C7D-5A8E-4FF8-A1CB-CBFB20E24E8D@gmail.com> (Matthew
+	Fernandez's message of "Wed, 16 May 2018 07:57:21 -0700")
+Message-ID: <87vabfbjci.fsf@mid.deneb.enyo.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Eddie Chapman <eddie@ehuk.net>
-To: oss-security@lists.openwall.com
-References: <20230314095103.1ed76cc0.hanno@hboeck.de>
- <20230314103626.3ucbt2rjdfhjbe6t@jwilk.net>
- <20230317114844.21563d9a.hanno@hboeck.de>
- <20230317194102.wvso2ex65fuwbukg@jwilk.net>
- <20230319091821.6f2073fb.hanno@hboeck.de>
- <20230321154519.xoymfc2t6ixalgls@jwilk.net>
- <20230324195650.6785dd20.hanno@hboeck.de>
- <20240108055242.nyoj4uosjl6udonx@jwilk.net>
-Content-Language: en-GB
-In-Reply-To: <20240108055242.nyoj4uosjl6udonx@jwilk.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang
-Subject: Re: [oss-security] TTY pushback vulnerabilities / TIOCSTI
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] PGP/MIME and S/MIME mail clients vulnerabilities
 
-Jakub Wilk wrote:
-> * Hanno Böck <hanno@hboeck.de>, 2023-03-24 19:56:
-> 
->> Here's a proposed patch to restrict access to the dangerous
->> functionality.
-> 
-> This patch has been included in Linux v6.7:
-> https://git.kernel.org/linus/8d1b43f6a6df7bcea20982ad376a000d90906b42
-> 
-> --
-> Jakub Wilk
-> 
+* Matthew Fernandez:
 
-FWICT neither this nor the 2022 TIOCSTI patch
-https://git.kernel.org/linus/83efeeeb3d04b22aaed1df99bc70a48fe9d22c4d
+> I presume what Florian is asking about is Content-ID links [0]. One
+> purpose of CID links is to include images as a message part and then
+> reference them from the HTML email content. I would think a CID URL
+> would not be immediately vulnerable to the =E2=80=9Cdirect exfiltration=
+=E2=80=9D
+> attack because it shouldn=E2=80=99t result in a network fetch; just a loo=
+kup
+> locally. However, RFC 2392 requires the IDs to be =E2=80=9Cglobally uniqu=
+e=E2=80=9D
+> and some mail clients (e.g. iOS Mail) take the RFC at its word and
+> render images from CID URLs that reference content included in
+> entirely distinct emails in your mailbox. Perhaps the attacker can
+> hide their payload within a message part with the chosen ID included
+> in another email.
 
-have been backported to any earlier kernels (yet).
+Or they can alter the displayed content of a signed message with a
+colliding cid: URL, assuming the ones generated by the original client
+are not unpredictable (and you might actually have many tries within
+the same crafted message).
 
-I'd like to ask, does anyone know if any other work was needed in 6.2 
-and/or 6.7 in addition to these 2 simple patches? They weren't part of a 
-series, or have necessary prerequisite patches, right?
-
-I've no idea nor wish to comment on whether either of them should/should 
-not be backported. However, each by themselves look quite minimal and 
-straightforward. On the face of it, anyone building their own older 
-kernel could probably easily backport either of them if they wanted, if 
-indeed this is all that is needed.
-
-Eddie
+There could also be some automated exfiltration angles, but those
+probably rely on client HTML rendering bugs, so they don't really
+count.
