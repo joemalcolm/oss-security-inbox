@@ -1,37 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/28/1
-Message-ID: <CALJHwhQyQQjyWxczrjtBgt8GSmHHarzfSDPPFKt3xY0Sk0Sd_g@mail.gmail.com>
-Date: Tue, 28 Aug 2018 16:49:14 +1000
-From: Wade Mealing <wmealing@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Linux kernel: CVE-2018-14619 kernel: crash (possible privesc) in kernel crypto subsystem.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/23/4
+Message-ID: <CANO=Ty1iLpdsxX+vcFRfJ4L7ZgG1NCPW-oOzxftbdzO0-XHuQA@mail.gmail.com>
+Date: Wed, 23 May 2018 08:57:45 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: Vladis Dronov <vdronov@...hat.com>
+Subject: Re: CVE-2018-1130: Linux kernel: dccp: a null pointer dereference in net/dccp/output.c:dccp_write_xmit
 Content-Type: text/plain; charset=utf-8
 
-Gday,
+On Wed, May 23, 2018 at 8:49 AM, Andrey Konovalov <andreyknvl@...il.com>
+wrote:
 
-Syzkaller/syzbot found a use-after-free bug in the cryptographic
-subsystem of the Linux kernel [1], that can be used to panic the
-system and possibly escalate privileges.
+> On Thu, May 10, 2018 at 2:05 PM, Vladis Dronov <vdronov@...hat.com> wrote:
+> > Hello,
+> >
+> > A null pointer dereference in dccp_write_xmit() function in
+> net/dccp/output.c
+> > in the Linux kernel before v4.16-rc7 allows a local user to cause a
+> denial of
+> > service by a number of certain crafted system calls.
+>
 
-The bug was introduced in commit 72548b093ee3, and has been addressed
-in b32a7dc8aef1882fbf983eb354837488cc9d54dc, a reproducer is available
-on the tail end of  syzbots email to kernel list (
-https://lkml.org/lkml/2017/11/27/866 ).  Most RHEL kernels are not
-affected as they do not have the feature, but it does affect the
-kernel-alt package (the 4.11 based kernel for 64-bit ARM , IBM POWER9
-(little endian ) and IBM z Systems ).
 
-Upstream fix:
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=b32a7dc8aef1882fbf983eb354837488cc9d54dc
+So the classic CVE statement for this is "does it cross/violate a trust
+boundary". Yeah I know, not super helpful.
 
-Reproducer:
-https://lkml.org/lkml/2017/11/27/866
+In general when I look at something and need to decide whether or not it
+deserves/needs a CVE the fundamentals are:
 
-Thanks.
+1) Can an attacker use this vulnerability to gain access, additional
+privileges, basically is there an impact to
+Confidentiality/Availability/Integrity? This is really two tests: is there
+an impact, and is there a way for the attacker to trigger or exploit it?
+That's a CVE.
+
+2) Does the software/system make a specific security claim that they then
+fail to meet? E.g. "we include a firewall that blocks access to everything
+inbound except for port 22", if they were to then also allow port 80,
+that'd be a CVE.
+
+So for the syzbot stuff mostly what you need to determine is:
+
+a) is there a security related impact?
+AND
+b) can an attacker trigger it?
+
+If both are yes, then a CVE is warranted.
+
+
+
+
+> >
+> > References:
+> >
+> > https://syzkaller.appspot.com/bug?id=833568de043e0909b2aeaef7be136d
+> b39d21ba94
+> >
+> > https://marc.info/?t=152036611500003&r=1&w=2
+> >
+> > An upstream patch:
+> >
+> > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/
+> linux.git/commit/?id=67f93df79aeefc3add4e4b31a752600f834236e2
+> >
+> > Best regards,
+> > Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+>
+> Hi Vladis,
+>
+> I've been wondering, how do you choose which bugs you request CVEs
+> for? Syzbot reported a few hundreds of them over the last few months
+> and a decent fraction of them looks scarier than a null pointer
+> dereference.
+>
+> Thanks!
+>
+
+
 
 -- 
-Wade Mealing
 
-Product Security - Kernel
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
-Red Hat
