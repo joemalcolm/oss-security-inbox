@@ -1,128 +1,101 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/06/5
-Message-Id: <E1eXr8V-0004gc-K0@xenbits.xenproject.org>
-Date: Sat, 06 Jan 2018 16:15:55 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 249 (CVE-2017-17563) - broken x86 shadow mode refcount overflow check
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/23/2
+Message-ID: <20180523133223.GB27451@localhost.localdomain>
+Date: Wed, 23 May 2018 06:32:23 -0700
+From: Qualys Security Advisory <qsa@...lys.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Qualys Security Advisory - Procps-ng Audit Report
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi all,
 
-            Xen Security Advisory CVE-2017-17563 / XSA-249
-                              version 3
+As a follow-up to our procps-ng advisory, below are the answers to some
+frequently asked questions that you may find useful.
 
-            broken x86 shadow mode refcount overflow check
+> - which is the first version with the fixes, does it include all of the
+> fixes (and if not, what is it missing and are those missing fixes
+> important to have?), and where to download it?
 
-UPDATES IN VERSION 3
-====================
+Procps-ng 3.3.15 has been released and includes most of our patches; it
+is available at:
 
-CVE assigned.
+https://sourceforge.net/projects/procps-ng/
 
-ISSUE DESCRIPTION
-=================
+The patches that are missing from procps-ng 3.3.15 are:
 
-Pages being used to run x86 guests in shadow mode are reference counted
-to track their uses.  Unfortunately the overflow check when trying to
-obtain a new reference used a mask one bit wider than the reference
-count actually is, rendering the entire check ineffective.
+- 7 low-priority patches (0120-0126), which have not yet been validated
+  by upstream;
 
-IMPACT
-======
+- most of our patches for top, which unfortunately have been reverted by
+  top's author; for example:
 
-A malicious or buggy guest may cause a hypervisor crash, resulting in
-a Denial of Service (DoS) affecting the entire host, or cause hypervisor
-memory corruption.  We cannot rule out a guest being able to escalate
-its privilege.
+https://gitlab.com/procps-ng/procps/commit/c5026787156d23512487ad9bbf540be7e3ee8de1
+https://gitlab.com/procps-ng/procps/commit/c9dfcdebdc6b482ca2030c6ea3aa376c218232e9
 
-VULNERABLE SYSTEMS
-==================
+> Can you let us know which patches the CVEs align with as it will
+> make chasing all of this down a lot easier, thanks!
 
-Xen versions 4.1 and later are affected.  Xen versions 4.0 and earlier
-are not affected.
+The patch for CVE-2018-1122 is:
+0097-top-Do-not-default-to-the-cwd-in-configs_read.patch
 
-x86 systems are vulnerable.  ARM systems are not vulnerable.
+The patch for CVE-2018-1123 is:
+0054-ps-output.c-Fix-outbuf-overflows-in-pr_args-etc.patch
 
-Only guests run in shadow mode can exploit the vulnerability.
+The patch for CVE-2018-1124 is:
+0074-proc-readproc.c-Fix-bugs-and-overflows-in-file2strve.patch
 
-PV guests typically only run in shadow mode during live migration, as
-well as for features like VM snapshot.
+The patch for CVE-2018-1125 is:
+0008-pgrep-Prevent-a-potential-stack-based-buffer-overflo.patch
 
-Note that save / restore does *not* use shadow mode, and so does not
-expose this vulnerability.  Some downstreams also include a "non-live
-migration" feature, which also does not use shadow mode (and thus does
-not expose this vulnerability).
+The patch for CVE-2018-1126 is:
+0035-proc-alloc.-Use-size_t-not-unsigned-int.patch
 
-HVM guests run in shadow mode on hardware without HAP support, or when
-HAP is disabled (globally or in the VM configuration file).  Live
-migration does not affect an HVM guest's use of shadow mode.
+The kernel patch for CVE-2018-1120 is:
+https://git.kernel.org/linus/7f7ccc2ccc2e70c6054685f5e3522efa81556830
 
-MITIGATION
-==========
+There is currently no patch for CVE-2018-1121, because no satisfactory
+solution (secure and efficient) has been found. Please feel free to
+suggest ideas here!
 
-For HVM guest explicitly configured to use shadow paging (e.g. via the
-`hap=0' xl domain configuration file parameter), changing to HAP (e.g.
-by setting `hap=1') will avoid exposing the vulnerability to those
-guests.  HAP is the default (in upstream Xen), where the hardware
-supports it; so this mitigation is only applicable if HAP has been
-disabled by configuration.
+> - which versions are vulnerable?
 
-For PV guests, avoiding their live migration avoids the vulnerability.
+We did not try to track down the first vulnerable version, but we had a
+quick look at procps 3.0.0 (from October 2002) and it was already
+vulnerable to the 5 CVEs.
 
-CREDITS
-=======
+> - which version was audited?
 
-This issue was discovered by Jan Beulich of SUSE.
+We audited procps-ng 3.3.12 (the version used by many stable
+distributions), but we probably ended up reading most of the master
+branch too while writing the patches.
 
-RESOLUTION
-==========
+> what testing have you done?
 
-Applying the attached patch resolves this issue.
+Because procps-ng is a critical package, and because 126 patches
+introduce significant changes, here is what we did to minimize the
+risks:
 
-xsa249.patch           xen-unstable, Xen 4.9.x ... 4.5.x
+- we were two to perform the audit, and we decided to both write the
+  most important patches, independently; the final patches are the
+  result of this double-work, which clearly avoided a few bugs;
 
-$ sha256sum xsa249*
-38a4b8033d634e22939ad42b882c35e46482782619e3e03b968a2f6489e459c9  xsa249.meta
-e99066b0171d4757c6a66e1223aabe01e990de2d0dc50416936e064e6e750d00  xsa249.patch
-$
+- we ran procps-ng's test-suite ("make check") after each change;
 
-DEPLOYMENT DURING EMBARGO
-=========================
+- we manually ran some tests after each major change, to make sure that
+  the code-path leading to the change is not broken, and to make sure
+  that the change actually fixes the issue;
 
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
+- we started sending our patches to upstream on March 30 (for reviewing
+  and testing), long before we contacted linux-distros@;
 
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
+- we contacted linux-distros@ on May 4, and were asked for an embargo
+  extension (for more time to review and test the patches), so we set
+  the Coordinated Release Date to May 17, 17:00 UTC (13 days -- almost
+  the maximum embargo, but we wanted to avoid releasing on a Friday).
 
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
+We are at your disposal for questions, comments, and further
+discussions. We thank Solar Designer and Kurt Seifried for their help!
+With best regards,
 
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJaUPXbAAoJEIP+FMlX6CvZdqQH/2b6yXlcScNp9SWs2VIoDLcc
-Hh3Wxmvx4oRBkdUOiE7/YNJK3yScnW2Jled+fLrBd7yuFNmztlA6Hue1thxgQmFN
-N2qDReHVBhLDQSv4Xolyifqx/leMo/s7jYkL8zBEPvRrf4DMkj7+i9/JBn8gri8G
-hiImDmIet9pKL9OP+jQDsgQia5p7ygPVLommMVS/2VZp4O4sBnpvfrAIHNvmmLPy
-xbr3Jw8cska7gspfmsXU1PziBFmawxk21pvozef9XN1lxC/ZY56yODtph/6KoBvr
-KGtGleF0QVtj/Nvt42yBr5nMagl9XsjdFz4Jero0K4hOE1Kw7IgO0Oigav8nap8=
-=Z+E8
------END PGP SIGNATURE-----
-
-Download attachment "xsa249.meta" of type "application/octet-stream" (2153 bytes)
-
-Download attachment "xsa249.patch" of type "application/octet-stream" (1656 bytes)
+-- 
+the Qualys Security Advisory team
