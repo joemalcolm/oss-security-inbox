@@ -1,42 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/15/2
-Message-Id: <1521122159.1270614.1304206128.19D1CFEA@webmail.messagingengine.com>
-Date: Thu, 15 Mar 2018 13:55:59 +0000
-From: Thomas Kluyver <thomas@...yver.me.uk>
-To: oss-security@...ts.openwall.com
-Cc: security <security@...thon.org>, MinRK <benjaminrk@...il.com>, jkamens@...ntopian.com, ssanderson@...ntopian.com
-Subject: CVE request: maliciously crafted notebook files in Jupyter
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/23/1
+Message-ID: <000701d3f28f$d01860a0$704921e0$@gmail.com>
+Date: Wed, 23 May 2018 13:16:00 +0100
+From: "Simon Steiner" <simonsteiner1984@...il.com>
+To: <general@...graphics.apache.org>, <batik-dev@...graphics.apache.org>, <batik-users@...graphics.apache.org>, <oss-security@...ts.openwall.com>, <bugtraq@...urityfocus.com>, <security-reports@...mle.com>, <security@...che.org>
+Subject: [CVE-2018-8013] Apache Batik information disclosure vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Email address of requester: security@...thon.org, thomas@...yver.me.uk, benjaminrk@...il.com, jkamens@...ntopian.com, ssanderson@...ntopian.com
+CVE-2018-8013:
+        Apache Batik information disclosure vulnerability
 
-Software name: Jupyter Notebook (formerly IPython Notebook)
-Type of vulnerability: Maliciously forged file
-Attack outcome: Possible remote execution
+Severity:
+        Medium
 
-Vulnerability: A maliciously forged notebook file can bypass sanitization to execute Javascript in the notebook context. Specifically, invalid HTML is 'fixed' by jQuery after sanitization, making it dangerous.
+Vendor:
+        The Apache Software Foundation
 
-Affected versions:
+Versions Affected:
+        Batik 1.0 - 1.9.1
+ 
+Description:
+        When deserializing subclass of `AbstractDocument`, the class takes a
+string from the inputStream as the class name which then use it to call the
+no-arg constructor of the class.
+        Fix was to check the class type before calling newInstance in
+deserialization.
 
-- notebook ≤ 5.4.0
+Mitigation:
+        Users should upgrade to Batik 1.10+
 
-URI with issues:
+Credit:
+        This issue was independently reported by Man Yue Mo.
 
-- GET /notebook/**
+References:
+        http://xmlgraphics.apache.org/security.html
 
-Patches:  not yet finalised
-
-Mitigations:
-
-Upgrade to Jupyter notebook 5.4.1 or 5.5 once available.
-If using pip,
-
-    pip install --upgrade notebook
-
-For conda:
-
-    conda update conda
-    conda update notebook
-
-Vulnerability reported by vkgonka@...l.ru , via Jonathan Kamens at Quantopian
+The Apache XML Graphics team.
 
