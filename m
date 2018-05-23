@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["648" "Tuesday" "12" "June" "2018" "16:07:30" "-0800" "ISC Security Officer" "security-officer@isc.org" "<820f3419-4347-8f37-adc1-498cea1fb17e@isc.org>" "18" "[oss-security] ISC has announced CVE-2018-5738, a defect in some versions of BIND" "^Date:" nil nil "6" "2018061300:07:30" "[oss-security] ISC has announced CVE-2018-5738, a defect in some versions of BIND" (number mark "        security-off Jun 12   18/648   " thread-indent "\"[oss-security] ISC has announced CVE-2018-5738, a defect in some versions of BIND\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["705" "Wednesday" "23" "May" "2018" "13:16:00" "+0100" "Simon Steiner" "simonsteiner1984@gmail.com" "<000701d3f28f$d01860a0$704921e0$@gmail.com>" "30" "[oss-security] [CVE-2018-8013] Apache Batik information disclosure vulnerability" nil nil nil "5" "2018052312:16:00" "[oss-security] [CVE-2018-8013] Apache Batik information disclosure vulnerability" (number mark "U       simonsteiner May 23   30/705   " thread-indent "\"[oss-security] [CVE-2018-8013] Apache Batik information disclosure vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 25965 invoked by uid 550); 13 Jun 2018 04:02:20 -0000
+Received: (qmail 7962 invoked by uid 550); 23 May 2018 12:17:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,59 +11,81 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 25830 invoked from network); 13 Jun 2018 00:07:47 -0000
-Openpgp: preference=signencrypt
-Autocrypt: addr=security-officer@isc.org; prefer-encrypt=mutual; keydata=
- xsBNBEsnyOQBCAC+WKYHcaDGD9a2ztwdccmhnzo0YJ9SOPVIonqGxCa6o8TwfipyH9Wh5uFq
- c6Ne+I0+vWohQtBIeodQHgGGlbjdxMp3QxohvqCmZcoObH7kjI1lpKQ6TMvRvo79pq5WRIuE
- +Jbm6Rt9Hz3w9APrYzISzeCuHFK7vlZfaLdoI0SxzEuzMmyOvQpa6dgSKQF6G2Nsbz1RYujZ
- 6fE6GXtc+I9q44yJS4llYpUqYpPh5CsfbDx8HwMWPj9eYOwjf3/vniFeG9tHIB8E+p7UBTG7
- bTVRlEgmyC1Ry0OPO3UPKjL/Dja8IeeJamT0dlsRCD/O/WTyxQg9EceCgUvOz65puKkrABEB
- AAHNL0lTQyBTZWN1cml0eSBPZmZpY2VyIDxzZWN1cml0eS1vZmZpY2VyQGlzYy5vcmc+wsBx
- BBMBAgAbBQJLJ8jkAhsDBgsJCAcKAgQVCggCAh4BAheAAAoJEL2X3GOe6MR7gZYIAI4uSaX7
- HwU2ywaCO77q5O/Zzzp6M+Oi+z7G00GFpACMSDSjX8kbZoIIW7FXb9US/9XLwqDtjlrGOLbd
- zcZ/+EMsJM/HpT796YH8Y9gMpsH5SZq5gByeguT6KgjqF2w8yNX7/r0AM3psfVSv9l595CoJ
- WNbDBHqGpqMi55SqKLCQOJ8noDp4x+JVNcJ1AdK/QVSk+gEhLqrvoYNyG8B/C2LL1fBQC8sF
- kX/M1mKlkM83GnJlPWCrig69VlR+relppEuZ5G34z93c9NtCqdH6zLzzej2qmwLb/dYJYvhE
- EMDlgvlSWw6yaJTuuEfuqHonrgOTXgb3Ln8A7XJECuSgWrLOwE0ESyfI5AEIAKUsrY4AxF87
- HvBEqhCXIt1o8plzVoIT5kY/p2n48U+oNGl5v4qNiC4SQZIvsA+Fcew8BhAYbNFTOsK/NKVO
- yiLkLOqQnkuBlESzzvMcl0gSuX1t99V2SJpCKukCa+jkTcjJnURODJn5Wp9GLAWXutxJvJnT
- t4oxcnAKun6Zt1vyOQs2lI9zXCTi8AdDKTiA/Es66CPVCRcMFUS6l9ArN57gUP0KRj8N0OfO
- QPdzShnGrSdtM0D2Ei2pmUcgkvSIeNU5HRd2iMpWGO1L8yfGQvp7dzjWbG7i/2RTnZ+KR3a2
- OMmtXUNuWQF3AfohS0TRTAcAR7IgOLzyy2prT9XKtCcAEQEAAcLAXwQYAQIACQUCSyfI5AIb
- DAAKCRC9l9xjnujEeze1CAC4A+KZdRi08gBxG4hKuvpL0fHfwnVmrLR39c0mQR9tE+iUcOez
- qER3z2fn/Zm5nMTZcauzCXMmFXwKWlGufiDrXVqKCyEHkYyBnn3U9ksRigo8eG/X3+G3US9k
- 0c7FfWaIrOY2IdGWUQic0ENOu/94VAFaleI4BBQvnDIY6hr4Fm14qXgssF7YwcEreoUU+Ayh
- Yc52tlDssU9DUaX/vn7OD42FIzpUzgUyoZ97UtPX+m9P5YN2Teeq0iVkcxxmT9wuNYCCZb1W
- 03hvcA8uwvRkNDbdQ//dma2gXdUPoXfBJT4kLo1/KV5GimPHdn0h172E1RKLgKtrJ58TVTJ6 UV1r
-Message-ID: <820f3419-4347-8f37-adc1-498cea1fb17e@isc.org>
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:52.0)
- Gecko/20100101 Thunderbird/52.8.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 12 Jun 2018 16:07:30 -0800
-From: ISC Security Officer <security-officer@isc.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] ISC has announced CVE-2018-5738, a defect in some versions of BIND
-To: oss-security@lists.openwall.com
+Received: (qmail 5980 invoked from network); 23 May 2018 12:16:12 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding:thread-index:content-language;
+        bh=wD6hYiI7+e0NbK+rmFNoeus8h6MN6I/AXEY9UGwHhjc=;
+        b=d1ow8zKDV8qRH1cxyUVHhUIGU5vL8FMRjb9S4UILVeQWT6BZOwmHCv7biwdGUtsVXc
+         1W/1IZeoFdZqfeJUcilqo7woRem7ZhoAfWetXoZO3JmyENOvzF8qb+00TcBEuaDD90sr
+         TjAk3xjfe4JXoxSusohyo8eDqT8eZ73wQlwFt9Q/U5lsxTUnziW8M2DcxF30Y1tBEPQs
+         cauqwNa2zS5B6pk6W8T+nD0UMwQIuvjFIF/XCX/Qdb5IWPXWVe4WByoX2IFCZ38qpGEW
+         BELyQE7IpLuZ1UGgLDtLYikKJYBXbSrNg74Kc4GK4tRlWhqr8WooRFH09oxhGTVLj2ZL
+         p9bA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding:thread-index:content-language;
+        bh=wD6hYiI7+e0NbK+rmFNoeus8h6MN6I/AXEY9UGwHhjc=;
+        b=rODD/4jxQqQbw0ZO+rwnUK5VLiEy3dvjvEq27UF7kHcGbqRTKtpdtKt3LUhIhrxQS5
+         Hz2rDdQEpME7Oh3RD5qvPZDhNddD0s+Ik5bwHyZgWlGtEua3+9UeBzFUzVbRprGxBv5X
+         IOhwxTngBi5Gmo8s5e1PAzi7ZXlQEu0/LpFuauEd7BvsoyLivBiv7y/GxFYC3AnArWXd
+         iLZlungnUw4X8Oe0XrlUpa02JSW9zJSIc7gw5hpT710hKKJPArVqPqlF9AXQBF/hUb0k
+         vZf7dixOsdXOa9Avu8xev4MvSCzyb+RcpL4h/VIASNeH9USgmBEk05GeqXAY1G3LQ1LL
+         5dBQ==
+X-Gm-Message-State: ALKqPweLVhaJC1PhiNc/Jd+GB45Gy/94p3FdD8iyBig2h+u1ix52dHiQ
+	/8m6qWHJ0oCTdxnJUjQHLAQ=
+X-Google-Smtp-Source: AB8JxZqN3UNfq9TeETKZmH66OFxI5b9Tx5S5a6ywwSfdlpH3PJNRcvLl7nCkPsaQsHR/fzu0iY/Pyg==
+X-Received: by 2002:adf:afe4:: with SMTP id y36-v6mr2171358wrd.107.1527077761021;
+        Wed, 23 May 2018 05:16:01 -0700 (PDT)
+From: "Simon Steiner" <simonsteiner1984@gmail.com>
+To: <general@xmlgraphics.apache.org>,
+	<batik-dev@xmlgraphics.apache.org>,
+	<batik-users@xmlgraphics.apache.org>,
+	<oss-security@lists.openwall.com>,
+	<bugtraq@securityfocus.com>,
+	<security-reports@semmle.com>,
+	<security@apache.org>
+Date: Wed, 23 May 2018 13:16:00 +0100
+Message-ID: <000701d3f28f$d01860a0$704921e0$@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AdPyjpW15mpVsRR4RmeDT6bpMyWZ9g==
+Content-Language: en-gb
+Subject: [oss-security] [CVE-2018-8013] Apache Batik information disclosure vulnerability
 
-Please be advised that ISC has publicly announced a vulnerability in
-some versions of BIND.
+CVE-2018-8013:
+        Apache Batik information disclosure vulnerability
 
-CVE-2018-5738 is a medium severity vulnerability in which nameservers
-containing the previous change #4777 (from October 2017), if they
-are configured to permit recursive service to some clients, may because
-of this error improperly inherit the wrong default permission, causing
-the server to permit recursive service to ALL clients.  Several workarounds
-are documented in the official security advisory document, which can be
-found in ISC's knowledge base:
+Severity:
+        Medium
 
-   https://kb.isc.org/article/AA-01616/0/CVE-2018-5738
+Vendor:
+        The Apache Software Foundation
 
+Versions Affected:
+        Batik 1.0 - 1.9.1
+ 
+Description:
+        When deserializing subclass of `AbstractDocument`, the class takes a
+string from the inputStream as the class name which then use it to call the
+no-arg constructor of the class.
+        Fix was to check the class type before calling newInstance in
+deserialization.
 
-Michael McNally
-ISC Security Officer
+Mitigation:
+        Users should upgrade to Batik 1.10+
 
+Credit:
+        This issue was independently reported by Man Yue Mo.
+
+References:
+        http://xmlgraphics.apache.org/security.html
+
+The Apache XML Graphics team.
 
