@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4016" "Thursday" "10" "March" "2016" "09:33:37" "-0800" "Timothy D. Morgan" "tim-security@sentinelchicken.org" "<20160310173337.GN1250@sentinelchicken.org>" "84" "Re: [oss-security] Concerns about CVE coverage shrinking - direct impact to researchers/companies" nil nil nil "3" "2016031017:33:37" "[oss-security] Concerns about CVE coverage shrinking - direct impact to researchers/companies" (number mark "U       tim-security Mar 10   84/4016  " thread-indent "\"Re: [oss-security] Concerns about CVE coverage shrinking - direct impact to researchers/companies\"\n") "<CANO=Ty0T=HkGovAZzYhvOSZKWCTaQtM1EDuUTZmEBZDA_5Wx1A@mail.gmail.com>" ("<CANO=Ty3pi9EBe-yARnJamWb1hW9p0Bztmj_Gr9SyWyXDqfCLDQ@mail.gmail.com>" "<E1adjOu-0005MK-Kx@rmm6prod02.runbox.com>" "<20160309203420.GJ1250@sentinelchicken.org>" "<CANO=Ty0T=HkGovAZzYhvOSZKWCTaQtM1EDuUTZmEBZDA_5Wx1A@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["907" "Wednesday" "23" "May" "2018" "16:49:58" "+0200" "Andrey Konovalov" "andreyknvl@gmail.com" "<CA+fCnZfA=_nZfUQzS+r6ZbOqPFTLSzAEbh8EHHnvNsoDH+C87w@mail.gmail.com>" "28" "Re: [oss-security] CVE-2018-1130: Linux kernel: dccp: a null pointer dereference in net/dccp/output.c:dccp_write_xmit" nil nil nil "5" "2018052314:49:58" "[oss-security] CVE-2018-1130: Linux kernel: dccp: a null pointer dereference in net/dccp/output.c:dccp_write_xmit" (number mark "U       andreyknvl@g May 23   28/907   " thread-indent "\"Re: [oss-security] CVE-2018-1130: Linux kernel: dccp: a null pointer dereference in net/dccp/output.c:dccp_write_xmit\"\n") "<1961715083.28767602.1525953956902.JavaMail.zimbra@redhat.com>" ("<982848644.28761175.1525953818635.JavaMail.zimbra@redhat.com>" "<1961715083.28767602.1525953956902.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26173 invoked by uid 550); 10 Mar 2016 17:34:03 -0000
+Received: (qmail 4043 invoked by uid 550); 23 May 2018 14:50:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,104 +12,69 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26155 invoked from network); 10 Mar 2016 17:34:02 -0000
-Date: Thu, 10 Mar 2016 09:33:37 -0800
-From: "Timothy D. Morgan" <tim-security@sentinelchicken.org>
-To: oss-security@lists.openwall.com
-Message-ID: <20160310173337.GN1250@sentinelchicken.org>
-References: <CANO=Ty3pi9EBe-yARnJamWb1hW9p0Bztmj_Gr9SyWyXDqfCLDQ@mail.gmail.com>
- <E1adjOu-0005MK-Kx@rmm6prod02.runbox.com>
- <20160309203420.GJ1250@sentinelchicken.org>
- <CANO=Ty0T=HkGovAZzYhvOSZKWCTaQtM1EDuUTZmEBZDA_5Wx1A@mail.gmail.com>
+Received: (qmail 4022 invoked from network); 23 May 2018 14:50:10 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=qSAxzFXxY/dyvZpKF1Rx0e+5MkLSgasZFzdUgQ9zCCI=;
+        b=oEc6djspFi0HOSxetEJubUkzidW2pPU4lEpxL7TvBsoCqlo5TadxDWslXMc0/qQm58
+         DhjhRjUZUmYxVsyCxCH52Rm7eEZUvjaoFzR6ZEReBnURqri+uH99EzAwTdLjCKqa72BH
+         0SkeyIt/enIa/KjVc4rQs4rWGoIkuho9oEQaesxqG1PThEagpYENFNHod6v3w/8ddLkl
+         yoGmESkpKjjlTAFI7ItY70zzUYydG3N/vzDzZEPlmVh4U39J9D0yt960hcA63U5EiKlM
+         Xqew2X66Pl4iDu2Wsx+bA06j6I7oOb9BkxlgncWAa1Cr4/5B/RDRgx3hy7riqtUXSSmc
+         auKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=qSAxzFXxY/dyvZpKF1Rx0e+5MkLSgasZFzdUgQ9zCCI=;
+        b=Z1Je+xdMrlBWmogMrgamZNnBBXMN/aVJz7O0m09oSXq/lqgBkvZhTZOfuYYzOQDz+/
+         BlQuwlITvj905SSxpY8vE44Sv+l2xWk0QkZVz4HeXGjjbkq/0CeK3D1qrpHadAiScl+i
+         LeuPsGO7uQVRv8CrsxlSbT+SNh6V27VQldfKpXBbUU0OX0EpJHjS1vkbJ4ufxJZPa5fk
+         vT3ALJokciSSY5YSjR/kGAYvf/qoxV1gwafV6TRa+yv1fM4rLvY062lcvaSEQT6CmnWG
+         V9s68CalP22igum+WWVqmJ3Ry9vytqGO8GURKdLvB6Qr23jM2jCzZwU98z/S79pUciBM
+         iE2A==
+X-Gm-Message-State: ALKqPwdep7qDEG8WAhchBmuvrRfZVYboVwgLV/VbkWbXe+4EIwcovD7C
+	qlvHpDjHamqXP9bKCiMCnv+NSqGNtwjWiC3PKY+33Zns
+X-Google-Smtp-Source: AB8JxZo8gOLOmg3p3tkFrhd2KsDvGGc/RfhBgsluUJFxF2UVmpTRB+IfE7dmLFZavQIcLAEj1vjTozUCB1tGn8ArPR8=
+X-Received: by 2002:a2e:9101:: with SMTP id m1-v6mr2025679ljg.93.1527086999060;
+ Wed, 23 May 2018 07:49:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CANO=Ty0T=HkGovAZzYhvOSZKWCTaQtM1EDuUTZmEBZDA_5Wx1A@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Subject: Re: [oss-security] Concerns about CVE coverage shrinking - direct
- impact to researchers/companies
+In-Reply-To: <1961715083.28767602.1525953956902.JavaMail.zimbra@redhat.com>
+References: <982848644.28761175.1525953818635.JavaMail.zimbra@redhat.com> <1961715083.28767602.1525953956902.JavaMail.zimbra@redhat.com>
+From: Andrey Konovalov <andreyknvl@gmail.com>
+Date: Wed, 23 May 2018 16:49:58 +0200
+Message-ID: <CA+fCnZfA=_nZfUQzS+r6ZbOqPFTLSzAEbh8EHHnvNsoDH+C87w@mail.gmail.com>
+To: oss-security@lists.openwall.com, vdronov@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [oss-security] CVE-2018-1130: Linux kernel: dccp: a null pointer
+ dereference in net/dccp/output.c:dccp_write_xmit
 
+On Thu, May 10, 2018 at 2:05 PM, Vladis Dronov <vdronov@redhat.com> wrote:
+> Hello,
+>
+> A null pointer dereference in dccp_write_xmit() function in net/dccp/output.c
+> in the Linux kernel before v4.16-rc7 allows a local user to cause a denial of
+> service by a number of certain crafted system calls.
+>
+> References:
+>
+> https://syzkaller.appspot.com/bug?id=833568de043e0909b2aeaef7be136db39d21ba94
+>
+> https://marc.info/?t=152036611500003&r=1&w=2
+>
+> An upstream patch:
+>
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=67f93df79aeefc3add4e4b31a752600f834236e2
+>
+> Best regards,
+> Vladis Dronov | Red Hat, Inc. | Product Security Engineer
 
-Hi Kurt,
+Hi Vladis,
 
-I don't mean to ignore what you guys have been working on.  It is
-arguably the most mature of the alternatives so far, and we need
-people experimenting with real tools right now.  All I was trying to
-point out was that we should keep this discussion going even if MITRE
-gets their act together in the short term.
+I've been wondering, how do you choose which bugs you request CVEs
+for? Syzbot reported a few hundreds of them over the last few months
+and a decent fraction of them looks scarier than a null pointer
+dereference.
 
-More comments below.
-
-> > Suppose MITRE fixes their issues tomorrow and the CVE goes back to the
-> > way it was.  Is that really want we need going forward?  A system
-> > that's based on sending emails between humans and posting only
-> > one-line descriptions with a series of links (half of which are broken
-> > after a short time)?  A system which tries to distribute the load by
-> > using "big" software vendors, many of whom have a vested interest in
-> > limiting what vulnerabilities get published in their software?
-> >
-> > It seems like we can do better than this.  Infosec hasn't been
-> > "working" for some time.  Perhaps we need better tools to help us get
-> > ahead of the game.
-> >
-> 
-> Even if Mitre had unlimited funding there will be a need for the community
-> to be involved, especially if we're going to make sure that CVE/DWF cover
-> important flaws (of which there are thousands right now, and we haven't
-> even dealt with the IoT or non english software markets like China....).
-> 
-> Putting on my info security economics hat:
-> 
-> And I suspect the solution to this is the same as Open Source, we scale
-> out, build a community and process that works and change as needed. DWF is
-> one such effort. We aim to reduce the cost of vulnerability identification,
-> and vulnerability coordination so that there's more less negative incentive
-> (cost in time and effort) to do this right.
-> 
-> As I've repeatedly stated the DWF wants to work with CVE/Mitre if possible,
-> forking vulnerability identification will create additional costs
-> (retooling all the systems and process that rely on CVE) so I want to
-> minimize that as much as possible, the goal is to make things better and
-> easier, not to add another standard for the sake of itself.
-
-
-Looking at DWF, it seems to have a few advantages over CVE,
-particularly for researchers, but it's hardly what I would hope for as
-a solution for the public.  Please view this as *constructive*
-criticism:
-
-* It is unclear to me on how the system is currently "distributed".
-  Yeah, it's in git, but that basically means it is just hosted on
-  GitHub.  What if GitHub's policies change tomorrow on distribution
-  of vulnerability information?  I imagine you've thought about this,
-  so I'm probably just pointing out the obvious.
-
-* There's no facility to describe anything about the vulnerabilites in
-  the DWF-database.  As you've probably seen from my past emails, I'm
-  arguing for a system that tracks more than just metadata and links.
-  (DWF doesn't appear to have links or even simple descriptions.)
-
-The "end user" (sys admins, pentesters, other auditors) need a
-database of vulnerability information that is actually useful and
-isn't going to go away.   Tomorrow your vuln scanner finds a box
-missing a patch in obscure software X from 5 years ago.  All patch
-info and researcher info has been taken offline.  How do you
-represent that risk to your management?  If the software is no longer
-supported by the vendor, but it is still in production in your org,
-how do you argue for funds to replace the software?  THIS HAPPENS ALL
-OF THE TIME.    
-
-We literally need a way to copy/paste vendor and researcher
-advisories, when the bug is first published, into a central database.
-(Of course there's copyright/IP concerns there, but if it is valuable
-to the community, that can be worked out.)  You can argue that this 
-archival should be handled by third-party databases, but pretty much
-all of them are commercial and many have gone offline years after
-inception.
-
-I recognize you're just getting this started, but I feel when building
-a new system, it's always best to tackle the hard problems first.
-
-Best,
-tim
-@ecbftw
+Thanks!
