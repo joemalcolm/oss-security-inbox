@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6871" "Thursday" "25" "August" "2016" "02:02:16" "+0200" "Carlos Alberto Lopez Perez" "clopez@igalia.com" "<57BE3588.40608@igalia.com>" "163" "[oss-security] WebKitGTK+ Security Advisory WSA-2016-0005" nil nil nil "8" "2016082500:02:16" "[oss-security] WebKitGTK+ Security Advisory WSA-2016-0005" (number mark "U       clopez@igali Aug 25  163/6871  " thread-indent "\"[oss-security] WebKitGTK+ Security Advisory WSA-2016-0005\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3360" "Wednesday" "23" "May" "2018" "06:32:23" "-0700" "Qualys Security Advisory" "qsa@qualys.com" "<20180523133223.GB27451@localhost.localdomain>" "92" "Re: [oss-security] Qualys Security Advisory - Procps-ng Audit Report" nil nil nil "5" "2018052313:32:23" "[oss-security] Qualys Security Advisory - Procps-ng Audit Report" (number mark "U       qsa@qualys.c May 23   92/3360  " thread-indent "\"Re: [oss-security] Qualys Security Advisory - Procps-ng Audit Report\"\n") "<20180517171708.GA21447@localhost.localdomain>" ("<20180517171708.GA21447@localhost.localdomain>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28586 invoked by uid 550); 25 Aug 2016 00:02:46 -0000
+Received: (qmail 28553 invoked by uid 550); 23 May 2018 13:46:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,190 +12,134 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28536 invoked from network); 25 Aug 2016 00:02:43 -0000
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2D3AQDhNL5X/5tjdVtcHAEBgwsBAQEBAR5WfI0uqmWBfhQQhXmBTDgUAQEBAQEBAQEBXhwLhQtWPBQNAhECTA0IAogyAQmwEY9tAQEBAQYCARYOgimEBYYGhgmCWgWIK4YAix2DPoFzb4kDgW2EXIMQhFSBI4xAg3keNoIigV1uiFcBAQE
-X-IPAS-Result: A2D3AQDhNL5X/5tjdVtcHAEBgwsBAQEBAR5WfI0uqmWBfhQQhXmBTDgUAQEBAQEBAQEBXhwLhQtWPBQNAhECTA0IAogyAQmwEY9tAQEBAQYCARYOgimEBYYGhgmCWgWIK4YAix2DPoFzb4kDgW2EXIMQhFSBI4xAg3keNoIigV1uiFcBAQE
-X-IronPort-AV: E=Sophos;i="5.28,573,1464645600"; 
-   d="asc'?scan'208";a="164997982"
-To: "webkit-gtk@lists.webkit.org" <webkit-gtk@lists.webkit.org>
-Cc: security@webkit.org, distributor-list@gnome.org,
- oss-security@lists.openwall.com, bugtraq@securityfocus.com
-From: Carlos Alberto Lopez Perez <clopez@igalia.com>
-Openpgp: id=B5D2B50BC48EC7F1EE90D9AB965089CE6B95F882;
- url=http://key.neutrino.es
-X-Enigmail-Draft-Status: N1110
-Organization: Igalia S.L.
-Message-ID: <57BE3588.40608@igalia.com>
-Date: Thu, 25 Aug 2016 02:02:16 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Icedove/38.8.0
+Received: (qmail 21694 invoked from network); 23 May 2018 13:36:30 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=qualys.com; s=google;
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=0ltyxrAEV9tl6x2QWJPb7uHD1ll3B+Ffqv8quMhIVIY=;
+        b=Rq8f+AUQiLfvknZlJ76NXjizRBW+fMis5mhmIBu/1PGeTZgmaRhs0BX9LA2vy64eVu
+         wxMq31OnS5S7KQrd+fepnkd5ENgjwRYIjDHxNr5Lz/gsRXy1pt9uSRnjiO0u7ktMslVx
+         OHOoz80lUA7vm7d0zjMtAlpgmFC5ETYSmwL7lfGPFl+h7eou/8+oYZK6Y6aookyJGRCv
+         vD+2TfvTxtiC3IbQFX4ZCMISjLAwSkbcbVfQ3udJH+yQZUTjHcDqSxxyrl9W6L5YvVGF
+         H5156DYkAC12NYa16bhigT+OblDl+SZNQDXoBNbxEFnlJcEKrMCzb/pXkx52BcKcDxZ0
+         EWEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=0ltyxrAEV9tl6x2QWJPb7uHD1ll3B+Ffqv8quMhIVIY=;
+        b=gbtRPLs6UzKFyC/MbFEf2jvz3qGh5B0Uy/1lyBBhkLlr/D9uwVp4TG9ZjTwuDjSsJE
+         /pMEtbiQ2QuXFe4/cXU3h4yGWEi5jCQcbq/4DdL54TpCLvUNiXqjB00qMuTt0PECZQ/V
+         +LPM/dZYUYxzd9GmD3viJzPHaamUD6maNVv3F1YL+pkVQOsZBw9cJKmtgBPbPRkxoS1/
+         QlhZd4TnyU7F87b31Fd/NibwIIeJWuioRkheXEWx9cigiLvj7he5ZTSY6K+SFAtAoXfG
+         eeCK3pWHrYfhM+XBguxllexlk8iDbGZ3zXSyJmbvh719BU4qkRMVuErm5SsEEXAUK+B8
+         47uw==
+X-Gm-Message-State: ALKqPwf+5IOyCQNJSbRqOPXmS4r2bBuu25yvL450JIs+i1kJNrJwMKjp
+	RccGy4K4Agw6SIawZpVSIkX6H8fm
+X-Google-Smtp-Source: AB8JxZq9H9vgWBd8oOa1w1b4NDB9GDnwYEPFcwyWzkuyM+TN8qC5u7SBYOEdaZP//eX/1QOCrkmTUQ==
+X-Received: by 2002:a62:8605:: with SMTP id x5-v6mr2958955pfd.103.1527082578124;
+        Wed, 23 May 2018 06:36:18 -0700 (PDT)
+Date: Wed, 23 May 2018 06:32:23 -0700
+From: Qualys Security Advisory <qsa@qualys.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20180523133223.GB27451@localhost.localdomain>
+References: <20180517171708.GA21447@localhost.localdomain>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="dCnJfacq2LEMW83bt7PtN76ooCi1pwbRM"
-Subject: [oss-security] WebKitGTK+ Security Advisory WSA-2016-0005
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180517171708.GA21447@localhost.localdomain>
+Subject: Re: [oss-security] Qualys Security Advisory - Procps-ng Audit Report
 
---dCnJfacq2LEMW83bt7PtN76ooCi1pwbRM
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Hi all,
 
-------------------------------------------------------------------------
-WebKitGTK+ Security Advisory                               WSA-2016-0005
-------------------------------------------------------------------------
+As a follow-up to our procps-ng advisory, below are the answers to some
+frequently asked questions that you may find useful.
 
-Date reported      : August 25, 2016
-Advisory ID        : WSA-2016-0005
-Advisory URL       : https://webkitgtk.org/security/WSA-2016-0005.html
-CVE identifiers    : CVE-2016-4583, CVE-2016-4585, CVE-2016-4586,
-                     CVE-2016-4587, CVE-2016-4588, CVE-2016-4589,
-                     CVE-2016-4590, CVE-2016-4591, CVE-2016-4592,
-                     CVE-2016-4622, CVE-2016-4623, CVE-2016-4624,
-                     CVE-2016-4651.
+> - which is the first version with the fixes, does it include all of the
+> fixes (and if not, what is it missing and are those missing fixes
+> important to have?), and where to download it?
 
-Several vulnerabilities were discovered in WebKitGTK+.
+Procps-ng 3.3.15 has been released and includes most of our patches; it
+is available at:
 
-CVE-2016-4583
-    Versions affected: WebKitGTK+ before 2.12.2.
-    Credit to Roeland Krak.
-    WebKit in Apple iOS before 9.3.3, Safari before 9.1.2, and tvOS
-    before 9.2.2 allows remote attackers to bypass the Same Origin
-    Policy and obtain image date from an unintended web site via a
-    timing attack involving an SVG document.
+https://sourceforge.net/projects/procps-ng/
 
-CVE-2016-4585
-    Versions affected: WebKitGTK+ before 2.12.1.
-    Credit to Takeshi Terada of Mitsui Bussan Secure Directions, Inc.
-    (www.mbsd.jp).
-    Cross-site scripting (XSS) vulnerability in the WebKit Page Loading
-    implementation in Apple iOS before 9.3.3, Safari before 9.1.2, and
-    tvOS before 9.2.2 allows remote attackers to inject arbitrary web
-    script or HTML via an HTTP response specifying redirection that is
-    mishandled by Safari.
+The patches that are missing from procps-ng 3.3.15 are:
 
-CVE-2016-4586
-    Versions affected: WebKitGTK+ before 2.12.1.
-    Credit to Apple.
-    WebKit in Apple Safari before 9.1.2 and tvOS before 9.2.2 allows
-    remote attackers to execute arbitrary code or cause a denial of
-    service (memory corruption) via a crafted web site.
+- 7 low-priority patches (0120-0126), which have not yet been validated
+  by upstream;
 
-CVE-2016-4587
-    Versions affected: WebKitGTK+ before 2.10.1.
-    Credit to Apple.
-    WebKit in Apple iOS before 9.3.3 and tvOS before 9.2.2 allows remote
-    attackers to obtain sensitive information from uninitialized process
-    memory via a crafted web site.
+- most of our patches for top, which unfortunately have been reverted by
+  top's author; for example:
 
-CVE-2016-4588
-    Versions affected: WebKitGTK+ before 2.12.3.
-    Credit to Apple.
-    WebKit in Apple tvOS before 9.2.2 allows remote attackers to execute
-    arbitrary code or cause a denial of service (memory corruption) via
-    a crafted web site.
+https://gitlab.com/procps-ng/procps/commit/c5026787156d23512487ad9bbf540be7e3ee8de1
+https://gitlab.com/procps-ng/procps/commit/c9dfcdebdc6b482ca2030c6ea3aa376c218232e9
 
-CVE-2016-4589
-    Versions affected: WebKitGTK+ before 2.12.3.
-    Credit to Tongbo Luo and Bo Qu of Palo Alto Networks.
-    WebKit in Apple iOS before 9.3.3, Safari before 9.1.2, and tvOS
-    before 9.2.2 allows remote attackers to execute arbitrary code or
-    cause a denial of service (memory corruption) via a crafted web
-    site, a different vulnerability than CVE-2016-4622, CVE-2016-4623,
-    and CVE-2016-4624.
+> Can you let us know which patches the CVEs align with as it will
+> make chasing all of this down a lot easier, thanks!
 
-CVE-2016-4590
-    Versions affected: WebKitGTK+ before 2.12.4.
-    Credit to xisigr of Tencent's Xuanwu Lab (www.tencent.com).
-    WebKit in Apple iOS before 9.3.3 and Safari before 9.1.2 mishandles
-    about: URLs, which allows remote attackers to bypass the Same Origin
-    Policy via a crafted web site.
+The patch for CVE-2018-1122 is:
+0097-top-Do-not-default-to-the-cwd-in-configs_read.patch
 
-CVE-2016-4591
-    Versions affected: WebKitGTK+ before 2.12.4.
-    Credit to ma.la of LINE Corporation.
-    WebKit in Apple iOS before 9.3.3, Safari before 9.1.2, and tvOS
-    before 9.2.2 mishandles the location variable, which allows remote
-    attackers to access the local filesystem via unspecified vectors.
+The patch for CVE-2018-1123 is:
+0054-ps-output.c-Fix-outbuf-overflows-in-pr_args-etc.patch
 
-CVE-2016-4592
-    Versions affected: WebKitGTK+ before 2.10.5.
-    Credit to Mikhail.
-    WebKit in Apple iOS before 9.3.3, Safari before 9.1.2, and tvOS
-    before 9.2.2 allows remote attackers to cause a denial of service
-    (memory consumption) via a crafted web site.
+The patch for CVE-2018-1124 is:
+0074-proc-readproc.c-Fix-bugs-and-overflows-in-file2strve.patch
 
-CVE-2016-4622
-    Versions affected: WebKitGTK+ before 2.12.4.
-    Credit to Samuel Gross working with Trend Micro's Zero Day
-    Initiative.
-    WebKit in Apple iOS before 9.3.3, Safari before 9.1.2, and tvOS
-    before 9.2.2 allows remote attackers to execute arbitrary code or
-    cause a denial of service (memory corruption) via a crafted web
-    site, a different vulnerability than CVE-2016-4589, CVE-2016-4623,
-    and CVE-2016-4624.
+The patch for CVE-2018-1125 is:
+0008-pgrep-Prevent-a-potential-stack-based-buffer-overflo.patch
 
-CVE-2016-4623
-    Versions affected: WebKitGTK+ before 2.12.0.
-    Credit to Apple.
-    WebKit in Apple iOS before 9.3.3, Safari before 9.1.2, and tvOS
-    before 9.2.2 allows remote attackers to execute arbitrary code or
-    cause a denial of service (memory corruption) via a crafted web
-    site, a different vulnerability than CVE-2016-4589, CVE-2016-4622,
-    and CVE-2016-4624.
+The patch for CVE-2018-1126 is:
+0035-proc-alloc.-Use-size_t-not-unsigned-int.patch
 
-CVE-2016-4624
-    Versions affected: WebKitGTK+ before 2.12.4.
-    Credit to Apple.
-    WebKit in Apple iOS before 9.3.3, Safari before 9.1.2, and tvOS
-    before 9.2.2 allows remote attackers to execute arbitrary code or
-    cause a denial of service (memory corruption) via a crafted web
-    site, a different vulnerability than CVE-2016-4589, CVE-2016-4622,
-    and CVE-2016-4623.
+The kernel patch for CVE-2018-1120 is:
+https://git.kernel.org/linus/7f7ccc2ccc2e70c6054685f5e3522efa81556830
 
-CVE-2016-4651
-    Versions affected: WebKitGTK+ before 2.12.0.
-    Credit to Obscure.
-    Cross-site scripting (XSS) vulnerability in the WebKit JavaScript
-    bindings in Apple iOS before 9.3.3 and Safari before 9.1.2 allows
-    remote attackers to inject arbitrary web script or HTML via a
-    crafted HTTP/0.9 response, related to a "cross-protocol cross-site
-    scripting (XPXSS)" vulnerability.
+There is currently no patch for CVE-2018-1121, because no satisfactory
+solution (secure and efficient) has been found. Please feel free to
+suggest ideas here!
 
+> - which versions are vulnerable?
 
-We recommend updating to the last stable version of WebKitGTK+. It is
-the best way of ensuring that you are running a safe version of
-WebKitGTK+. Please check our website for information about the last
-stable releases.
+We did not try to track down the first vulnerable version, but we had a
+quick look at procps 3.0.0 (from October 2002) and it was already
+vulnerable to the 5 CVEs.
 
-Further information about WebKitGTK+ Security Advisories can be found
-at: https://webkitgtk.org/security.html
+> - which version was audited?
 
-The WebKitGTK+ team,
-August 25, 2016
+We audited procps-ng 3.3.12 (the version used by many stable
+distributions), but we probably ended up reading most of the master
+branch too while writing the patches.
 
+> what testing have you done?
 
---dCnJfacq2LEMW83bt7PtN76ooCi1pwbRM
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+Because procps-ng is a critical package, and because 126 patches
+introduce significant changes, here is what we did to minimize the
+risks:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-Comment: You can fetch my GnuPG key from http://key.neutrino.es
+- we were two to perform the audit, and we decided to both write the
+  most important patches, independently; the final patches are the
+  result of this double-work, which clearly avoided a few bugs;
 
-iQIcBAEBCgAGBQJXvjWIAAoJEJZQic5rlfiC67gQAKob7Hab+1HJbWsvTFeWJvbF
-2RBfRcD22PtuaI79T2A/dcJ5gPni0kLV6KS9xI9E0Frq/9fOsgt7AqQ5ccyFxBAL
-GyXEp3GGKHZYcuru9a6WazAN7cgfVxD68KaSbYyvhgWvosvW7THR/e7SGSOXuFDt
-U7PB6wbDmlt/DdeV2pcmljneKVCFr9CDOebICG8FQlANmediUP4lb+EVupcw8Mi4
-sgFbo7ydll4FTfCa12NQwo+xKXHbqVtt7cY/CEwJmKM/jv8gCDpAVrvx2pM2wPyu
-3+C2u9XC+ckiQeQZ1WsrFXxoCprTJAioqWv0xu0IRW3i9L5GklzYc8ctHYYUyqZ1
-p1IlbtEiCmC+Mmg+04zA9p98eB/KqILRRMbOR8XLgxsQ8AFrQt+3Nqyx67n77sJy
-TRIiwrzoKofl8qnEOri8IPEBE20N7e0yNN8ObaUXhkutNVhvbAP9/Q6nQLYc13/C
-Sntlju9l5g4PbFkekpUKy7AUc5JW6C2Hi1Uodjg03YKhLoSkGfQCSE6fiU+M0yBD
-RRWES+j6HqKMiCHo07jbR5Yg374R9fcPoA2V4Y1YLGRGJROkPR+wSkEsRlKYWxpw
-kIY0x60DkTfZ1wkfDzeDS0JopuMnTCjfmKDtDQa/SKrPHgX/7CX5u0cSmEeTvd+y
-OVFGyFzesuv95XW8su7m
-=OGm1
------END PGP SIGNATURE-----
+- we ran procps-ng's test-suite ("make check") after each change;
 
---dCnJfacq2LEMW83bt7PtN76ooCi1pwbRM--
+- we manually ran some tests after each major change, to make sure that
+  the code-path leading to the change is not broken, and to make sure
+  that the change actually fixes the issue;
+
+- we started sending our patches to upstream on March 30 (for reviewing
+  and testing), long before we contacted linux-distros@;
+
+- we contacted linux-distros@ on May 4, and were asked for an embargo
+  extension (for more time to review and test the patches), so we set
+  the Coordinated Release Date to May 17, 17:00 UTC (13 days -- almost
+  the maximum embargo, but we wanted to avoid releasing on a Friday).
+
+We are at your disposal for questions, comments, and further
+discussions. We thank Solar Designer and Kurt Seifried for their help!
+With best regards,
+
+-- 
+the Qualys Security Advisory team
