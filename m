@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2286" "Sunday" "12" "April" "2015" "18:19:29" "+0000" "Jeremy Stanley" "fungi@yuggoth.org" "<20150412181929.GB2456@yuggoth.org>" "59" "[oss-security] Corrections to CVE-2015-3297" nil nil nil "4" "2015041218:19:29" "[oss-security] Corrections to CVE-2015-3297" (number mark "        fungi@yuggot Apr 12   59/2286  " thread-indent "\"[oss-security] Corrections to CVE-2015-3297\"\n") "<20150410232241.GS2456@yuggoth.org>" ("<20150410232241.GS2456@yuggoth.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1169" "Friday" "25" "May" "2018" "17:07:08" "+0200" "Andrey Konovalov" "andreyknvl@gmail.com" "<CA+fCnZf1bGzpUUqUWamvLwP+x=pmMmojRsn9jRma9GsHnaZhFQ@mail.gmail.com>" "26" "Re: [oss-security] CVE-2018-1130: Linux kernel: dccp: a null pointer dereference in net/dccp/output.c:dccp_write_xmit" nil nil nil "5" "2018052515:07:08" "[oss-security] CVE-2018-1130: Linux kernel: dccp: a null pointer dereference in net/dccp/output.c:dccp_write_xmit" (number mark "U       andreyknvl@g May 25   26/1169  " thread-indent "\"Re: [oss-security] CVE-2018-1130: Linux kernel: dccp: a null pointer dereference in net/dccp/output.c:dccp_write_xmit\"\n") "<7c124869-2387-dac5-2a26-deda05e18ede@virtuozzo.com>" ("<982848644.28761175.1525953818635.JavaMail.zimbra@redhat.com>" "<1961715083.28767602.1525953956902.JavaMail.zimbra@redhat.com>" "<CA+fCnZfA=_nZfUQzS+r6ZbOqPFTLSzAEbh8EHHnvNsoDH+C87w@mail.gmail.com>" "<CANO=Ty1iLpdsxX+vcFRfJ4L7ZgG1NCPW-oOzxftbdzO0-XHuQA@mail.gmail.com>" "<CA+fCnZf2Dpv9BB4E3VUsZpeKkeqO6EDq5qJOz5tSsXru89POVA@mail.gmail.com>" "<7c124869-2387-dac5-2a26-deda05e18ede@virtuozzo.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26256 invoked by uid 550); 12 Apr 2015 18:19:48 -0000
+Received: (qmail 22159 invoked by uid 550); 25 May 2018 15:07:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,85 +11,74 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26216 invoked from network); 12 Apr 2015 18:19:43 -0000
-Message-ID: <20150412181929.GB2456@yuggoth.org>
-References: <20150410232241.GS2456@yuggoth.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="tS13At5XYQCJjijI"
-Content-Disposition: inline
-In-Reply-To: <20150410232241.GS2456@yuggoth.org>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-SA-Exim-Connect-IP: 2001:4802:7801:102:be76:4eff:fe20:63e0
-X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com, cve-assign@mitre.org, security@etherpad.org, John@mclear.co, tom@furycodes.com, stefan@stefans-entwicklerecke.de
-X-SA-Exim-Mail-From: fungi@yuggoth.org
-X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
-Cc: CVE Request <cve-assign@mitre.org>,
-	Etherpad Security <security@etherpad.org>,
-	John McLear <John@mclear.co>, Tom Hunkapiller <tom@furycodes.com>,
-	Stefan =?utf-8?Q?M=C3=BCller?= <stefan@stefans-entwicklerecke.de>
-Date: Sun, 12 Apr 2015 18:19:29 +0000
-From: Jeremy Stanley <fungi@yuggoth.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Corrections to CVE-2015-3297
-To: OSS Security <oss-security@lists.openwall.com>
+Received: (qmail 22139 invoked from network); 25 May 2018 15:07:20 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=FX4mmLgZTgFC1j/AiFrCwsoz6uTCj8yFffFrWWLLviw=;
+        b=h6bJxUIn1UhPMllacTTud+GGwLNbn+/B+4tLPJPpny2dcs2oA5pDoCDcnp4q7JCrjH
+         +4fPKChMZ9xTMeuWUjQGZsE+RHCgI0ZQjoYcon0Y7DTSiyOp9cZdLGA0szr5wN1m9SsP
+         o10zuooHIZtihV1N6rGQ62W/qdXjgl9LHua3KPLLFDg+cHxLRB0vazuvVlgBmbE1+vXS
+         OAtzs6+sXCIASw6rpfSUBLHlO/GTnF7JkudsoJ5iMp2PGpG0YpI9dBRYvQGUcQ1/OYJm
+         fWQJ59edyTUeE0dzZ4bH3zB6rPguDhWMAge7nyuso7Y8rBlKdk/zHp5iuNxnSoLwlN4g
+         cBOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=FX4mmLgZTgFC1j/AiFrCwsoz6uTCj8yFffFrWWLLviw=;
+        b=DFHYlsv1Ly3BCDJ9ZmJd4h2FGLo7iVL/eFGeQNkx2CcmRji45OtHWuekMgZ8stAjZ/
+         BCg/4NajegJsdk3/GwKHUfoRtZxRMysuMTL1bxBx/xXlmjPAsy7W6E4qTn/OHsqFeGp3
+         3vJSdv4pUxAP/rPx3JpNE0fpBNwgbYwNMEgbq3OGweMjwn6z4oOIFGHZ/qGp3Pj+ulXp
+         psE3M+fTIaU4hto7Pje8XfPSCzhuqQ/moheAMpZs2JsQRtn3A+pS1EaJIUOlo/BBW8Gv
+         NV4ildp+rZHRbKxNpTVrnh1u35CTcgY8BHG9MiS5dW21AAdLdskBMLIpuLhGU39oC7b0
+         hj2g==
+X-Gm-Message-State: ALKqPwddpvgAEPx4Es9sB9DTBe0dFHbvwCPnfgbJAlja/8MyRJUyo3it
+	IbxFywzLbfb3JU9NLoKgYXnLAHxadWZfg7cfw0k=
+X-Google-Smtp-Source: AB8JxZqkRQqFBEHyp9fKZVTOMJXceGw5N+U65lbEOC/Dq58YFA6tcIr4Vw/pe+o9Z5BmoZZf3MVTMskPR+64ALHCbPc=
+X-Received: by 2002:a2e:9d41:: with SMTP id y1-v6mr1979112ljj.112.1527260829065;
+ Fri, 25 May 2018 08:07:09 -0700 (PDT)
+MIME-Version: 1.0
+In-Reply-To: <7c124869-2387-dac5-2a26-deda05e18ede@virtuozzo.com>
+References: <982848644.28761175.1525953818635.JavaMail.zimbra@redhat.com>
+ <1961715083.28767602.1525953956902.JavaMail.zimbra@redhat.com>
+ <CA+fCnZfA=_nZfUQzS+r6ZbOqPFTLSzAEbh8EHHnvNsoDH+C87w@mail.gmail.com>
+ <CANO=Ty1iLpdsxX+vcFRfJ4L7ZgG1NCPW-oOzxftbdzO0-XHuQA@mail.gmail.com>
+ <CA+fCnZf2Dpv9BB4E3VUsZpeKkeqO6EDq5qJOz5tSsXru89POVA@mail.gmail.com> <7c124869-2387-dac5-2a26-deda05e18ede@virtuozzo.com>
+From: Andrey Konovalov <andreyknvl@gmail.com>
+Date: Fri, 25 May 2018 17:07:08 +0200
+Message-ID: <CA+fCnZf1bGzpUUqUWamvLwP+x=pmMmojRsn9jRma9GsHnaZhFQ@mail.gmail.com>
+To: Evgenii Shatokhin <eshatokhin@virtuozzo.com>
+Cc: oss-security@lists.openwall.com, Vladis Dronov <vdronov@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [oss-security] CVE-2018-1130: Linux kernel: dccp: a null pointer
+ dereference in net/dccp/output.c:dccp_write_xmit
 
---tS13At5XYQCJjijI
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Fri, May 25, 2018 at 2:04 PM, Evgenii Shatokhin
+<eshatokhin@virtuozzo.com> wrote:
+> If I understand it correctly, Syzkaller programs run as root. Therefore, it
+> is still needed to check which of the bugs it has found are security flaws.
 
-The original report for CVE-2015-3297 incorrectly specified the
-commit introducing the bug as a97b83b when it should actually have
-been 7b518eeb. As a result the earliest affected version is actually
-1.1.1 rather than 1.1.2 as was originally reported. A corrected
-report can be found below.
+No, syzkaller/syzbot runs programs in a user namespace, so any distro
+that allows unprivileged users to create user namespaces (e.g. Ubuntu)
+is vulnerable to most of the bugs syzbot finds.
 
-Title: Read-only directory traversal in Etherpad Minify
-Reporter: Tom Hunkapiller
-Versions: 1.1.1 through 1.5.2
+But nevertheless all those bugs need to be checked whether they
+actually are security flaws, and that requires quite a lot of effort.
 
-Description:
-Tom Hunkapiller reported a vulnerability in the minify feature of
-current Etherpad releases. Backslashes are replaced with slashes in
-the path parameter of HTTP API calls after path normalization is
-applied, allowing an attacker supplying specially-crafted requests
-to remotely read arbitrary files on the server's filesystem with the
-privileges of the account running the service.
+> As for this particular bug in dccp_write_xmit() - I stumbled upon that
+> Syzbot's report and checked that the bug was exploitable by an unprivileged
+> user if dccp modules were loaded. Then I reported the problem to RedHat, and
+> they desided to request a CVE for that. The problem is not critical for
+> RHEL, by the way, but still.
+>
+> I don't know, if the process was the same for other bugs found by Syzkaller
+> they requested CVEs for.
 
-Notes:
-This bug was introduced in commit 7b518eeb which was initially
-included in the 1.1.1 release, and is fixed in commit 9d4e5f6 which
-appears in the 1.5.3 release.
+OK, if the process was like that for the rest of those bugs, that
+explains a somewhat random selection of syzbot bugs for which CVEs
+were assigned :)
 
-References:
-https://github.com/ether/etherpad-lite/commit/9d4e5f6
-
---=20
-Jeremy Stanley
-
---tS13At5XYQCJjijI
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQJ8BAEBCgBmBQJVKrcxXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25zLm9w
-ZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXQ5N0FFNDk2RkMwMkRFQzlGQzM1M0IyRTc0
-OEY5OTYxMTQzNDk1ODI5AAoJEEj5lhFDSVgpmTcP/3V0LGQSdQ3pAVW0+PPr6oW9
-kGAgeSwiMOJf8l3v5/usqhDe9kX2E6yfcBNaDoeDQRYzNRePBxWDtdM11lHTaTRm
-VdF0duAOnm5OY/Kpc7C9hfbxDN5hacSHuvLm1JDoklUMCcAHc2DcLXwRvacp2GvK
-Lz40GPLAAQ1wr9aHqD+XUiIfL2gfLB2unW0NVJRTf7iQbte2k/lNP/3+o0fxmW0R
-gw+7TssTV8xrH00oJ58itEOZ+dFzHiQnWuptDGv1d8gbfLvpuIbsJBEg/zRbwiyx
-QGwbWIHWAWMnmIm1ZE7ioh19GbV2h366ZICjufxFU5Zgr2vJh77Nb8TFyY3E1FOS
-QO6fcgkM4qBw4pevrjuhML4SLrypX1bB//QUZ0JmD16WDKQYsrlOavJ6LX5Qxasz
-aTkNes81VdEuq4ORNX49kyR2SmTvnCxF89HKRMejk/Y2f2BEgNUV+3g95bTGuLc6
-DtV7KN9e8J8yEbZjXb4aqcUg+NrbW3c/pMmhMMfoSIkdfhGg/qe1VaT9npBqhQU/
-6jPm1owrvyk6rZydhg62BWfoQAWcadDDGyyWTffqRRKOYubgryug3tgEHWuqif11
-wL1vXb8Yvu3PRsJVlz3xE0wzvvbQNEQePEQ1SVSsdNDQ7Lml9hNptV4pvt6VYewg
-NlKGK+7+Cvlnl+JDr8Oa
-=GRpj
------END PGP SIGNATURE-----
-
---tS13At5XYQCJjijI--
+Thanks!
