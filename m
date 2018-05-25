@@ -1,52 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/08/4
-Message-ID: <CALCETrVz9CzEYz-9EWYxEm2FAbxk6Dfhm9ZH7zcPPNP2YCdfqA@mail.gmail.com>
-Date: Tue, 08 May 2018 17:35:48 +0000
-From: Andy Lutomirski <luto@...nel.org>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE-2018-8897: #DB exceptions that are deferred by MOV SS or POP SS may cause unexpected behavior
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/25/1
+Message-ID: <CA+fCnZf2Dpv9BB4E3VUsZpeKkeqO6EDq5qJOz5tSsXru89POVA@mail.gmail.com>
+Date: Fri, 25 May 2018 12:48:59 +0200
+From: Andrey Konovalov <andreyknvl@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: Vladis Dronov <vdronov@...hat.com>
+Subject: Re: CVE-2018-1130: Linux kernel: dccp: a null pointer dereference in net/dccp/output.c:dccp_write_xmit
 Content-Type: text/plain; charset=utf-8
 
-On x86 CPUs, the MOV to SS and POP SS instructions inhibit interrupts
-(including NMIs), data breakpoints, and single step trap exceptions until
-the instruction boundary following the next instruction (SDM Vol. 3A;
-section 6.8.3). (The inhibited data breakpoints are those on memory
-accessed by the MOV to SS or POP to SS instruction itself.) Note that debug
-exceptions are not inhibited by the interrupt enable (EFLAGS.IF) system
-flag (SDM Vol 3A; section 2.3). If the instruction following the MOV to SS
-or POP to SS instruction is an instruction like SYSCALL, SYSENTER, INT 3,
-etc. that transfers control to the operating system at CPL < 3, the debug
-exception is delivered after the transfer to CPL < 3 is complete.  OS
-kernels may not expect this order of events and may therefore experience
-unexpected behavior when it occurs.
+On Wed, May 23, 2018 at 4:57 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+> On Wed, May 23, 2018 at 8:49 AM, Andrey Konovalov <andreyknvl@...il.com>
+> wrote:
+>
+>> On Thu, May 10, 2018 at 2:05 PM, Vladis Dronov <vdronov@...hat.com> wrote:
+>> > Hello,
+>> >
+>> > A null pointer dereference in dccp_write_xmit() function in
+>> net/dccp/output.c
+>> > in the Linux kernel before v4.16-rc7 allows a local user to cause a
+>> denial of
+>> > service by a number of certain crafted system calls.
+>>
+>
+>
+> So the classic CVE statement for this is "does it cross/violate a trust
+> boundary". Yeah I know, not super helpful.
+>
+> In general when I look at something and need to decide whether or not it
+> deserves/needs a CVE the fundamentals are:
+>
+> 1) Can an attacker use this vulnerability to gain access, additional
+> privileges, basically is there an impact to
+> Confidentiality/Availability/Integrity? This is really two tests: is there
+> an impact, and is there a way for the attacker to trigger or exploit it?
+> That's a CVE.
+>
+> 2) Does the software/system make a specific security claim that they then
+> fail to meet? E.g. "we include a firewall that blocks access to everything
+> inbound except for port 22", if they were to then also allow port 80,
+> that'd be a CVE.
+>
+> So for the syzbot stuff mostly what you need to determine is:
+>
+> a) is there a security related impact?
+> AND
+> b) can an attacker trigger it?
+>
+> If both are yes, then a CVE is warranted.
 
-It appears that few or no 64-bit operating system kernels handler this
-correctly. On operating systems that allow users to install data
-breakpoints, the only correct way that a kernel can handle this CPU
-behavior is to use the IST mechanism for the #DB vector or to disable
-SYSCALL. Needless to say, the latter is unpopular.
+Hi Kurt,
 
-Linux has always used IST for #DB, but it used the same IST slot for #BP,
-so it was vulnerable to a DoS.  Many other operating systems did not use
-IST for #DB and are likely vulnerable to privilege escalation.  Some
-operating systems did not allow user control over hardware debugging, and
-they are believed to be immune. Similarly, operating systems that run
-hardware virtualized guests only are likely immune, since VM exits are
-handled differently.  (However, see CVE-2018-1087 for a related issue
-affecting KVM.)
+Perhaps I should've been more clear. I wasn't asking "what qualifies
+for a CVE?", but rather "There are a 100 bugs that qualify for CVEs,
+how do single out 10 of them to actually request CVEs for?".
 
-On Linux, the issue is fixed by commit d8ba61ba58c8 ("x86/entry/64: Don't
-use IST entry for #BP stack"), which has been available in Linus' tree and
--stable kernels for some time.  (Yes, the patch really was written in
-2015.  I fixed the issue as part of related work by accident, but I wasn't
-aware that the issue was at all urgent at the time, so the patch was never
-pushed out.)  Most other vendors should have their own advisories and fixes
-available now.
+In particular, the 100 bugs that I'm referring to are the bugs
+reported by syzbot (perhaps there's even more:
+https://syzkaller.appspot.com/?fixed=upstream) and the 10 bugs (or so)
+are the ones Vladis announced on oss-security over the last few
+months. I'm just curious how did he choose those 10 bugs out of that
+100+.
 
-This issue was discovered by Nick Peterson of Everdox Tech, LLC.  A number
-of industry players coordinated very professionally to handle this issue --
-thanks to all involved.
-
-A PoC for Linux can be found here:
-
-https://lkml.kernel.org/r/67e08b69817171da8026e0eb3af0214b06b4d74f.1525800455.git.luto@kernel.org/67e08b69817171da8026e0eb3af0214b06b4d74f.1525800455.git.luto@kernel.org
+Thanks!
