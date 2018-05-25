@@ -1,32 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/02/1
-Message-ID: <nycvar.YSQ.7.76.1809030005140.14426@xnncv>
-Date: Mon, 3 Sep 2018 00:10:05 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Andy Lutomirski <luto@...nel.org>,  Mika Penttilä <mika.penttila@...tfour.com>
-Subject: CVE-2018-10853 kernel: kvm: guest userspace to guest kernel write
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/25/5
+Message-ID: <CA+fCnZf1bGzpUUqUWamvLwP+x=pmMmojRsn9jRma9GsHnaZhFQ@mail.gmail.com>
+Date: Fri, 25 May 2018 17:07:08 +0200
+From: Andrey Konovalov <andreyknvl@...il.com>
+To: Evgenii Shatokhin <eshatokhin@...tuozzo.com>
+Cc: oss-security@...ts.openwall.com, Vladis Dronov <vdronov@...hat.com>
+Subject: Re: CVE-2018-1130: Linux kernel: dccp: a null pointer dereference in net/dccp/output.c:dccp_write_xmit
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+On Fri, May 25, 2018 at 2:04 PM, Evgenii Shatokhin
+<eshatokhin@...tuozzo.com> wrote:
+> If I understand it correctly, Syzkaller programs run as root. Therefore, it
+> is still needed to check which of the bugs it has found are security flaws.
 
-A flaw was found in the way Linux kernel KVM hypervisor emulated instructions 
-such as sgdt/sidt/fxsave/fxrstor. It did not check current privilege(CPL) 
-level while emulating unprivileged instructions.
+No, syzkaller/syzbot runs programs in a user namespace, so any distro
+that allows unprivileged users to create user namespaces (e.g. Ubuntu)
+is vulnerable to most of the bugs syzbot finds.
 
-An unprivileged guest user/process could use this flaw to potentially escalate 
-privileges inside guest.
+But nevertheless all those bugs need to be checked whether they
+actually are security flaws, and that requires quite a lot of effort.
 
-Upstream patch:
-   -> https://git.kernel.org/linus/3c9fa24ca7c9c47605672916491f79e8ccacb9e6
+> As for this particular bug in dccp_write_xmit() - I stumbled upon that
+> Syzbot's report and checked that the bug was exploitable by an unprivileged
+> user if dccp modules were loaded. Then I reported the problem to RedHat, and
+> they desided to request a CVE for that. The problem is not critical for
+> RHEL, by the way, but still.
+>
+> I don't know, if the process was the same for other bugs found by Syzkaller
+> they requested CVEs for.
 
-Issue introduced in: (kernel v4.10+)
-   -> https://git.kernel.org/linus/129a72a0d3c8e139a04512325384fe5ac119e74
+OK, if the process was like that for the rest of those bugs, that
+explains a somewhat random selection of syzbot bugs for which CVEs
+were assigned :)
 
-This issue was reported by Andy Lutomirski and Mika Penttilä. CVE-2018-10853 
-assigned by Red Hat Inc.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Thanks!
