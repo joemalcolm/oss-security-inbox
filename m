@@ -1,58 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/10/2
-Message-ID: <20180210181121.y757bod5yjdefrj4@jumper.schlittermann.de>
-Date: Sat, 10 Feb 2018 19:11:21 +0100
-From: Heiko Schlittermann <hs@...marc.schlittermann.de>
-To: oss-security@...ts.openwall.com
-Subject: Exim 4.90.1 released. (Was: CVE-2018-6789 Exim 4.90 and earlier: buffer overflow)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/26/1
+Message-ID: <CANi-yg-yDVpTxvDEuRLefXW8fWRem=QKRzZY0DEb36KAxOVpkA@mail.gmail.com>
+Date: Sat, 26 May 2018 06:53:09 -0700
+From: Bryan Pendleton <bpendleton.derby@...il.com>
+To: Tomas Hoger <thoger@...hat.com>
+Cc: oss-security@...ts.openwall.com, security <security@...che.org>,  gregory draperi <gregory.draperi@...il.com>
+Subject: Re: [ANNOUNCE] CVE-2018-1313: Apache Derby externally-controlled input vulnerability
 Content-Type: text/plain; charset=utf-8
 
-We released Exim 4.90.1 just now.
----------------------------------
+Yes, Tomas, that is a very good point; I agree completely.
 
-This is mainly a security release to fix CVE-2018-6789, a buffer
-overflow in base64d(). Please update your systems to 4.90.1.  The
-reporter of the bug claims to have a working exploit.  See
-http://exim.org/static/doc/security/CVE-2018-6789.txt for the timeline.
+Thank you for the follow-ups and discussion!
 
-This release contains some other important bug fixes since 4.90, but no
-additional features. Please see the ChangeLog
-ftp://ftp.exim.org/pub/exim/exim4/ChangeLog
+bryan
 
-The Distros should have built packages already.
-
-The sources can be obtained directly from the Git repos
-
-    git://git.exim.org/exim.git     tag: exim-4_90_1
-    git://git.exim.org/exim.git     tag: exim-4_90_1
-
-The tag is signed with my GPG key¹.
-
-Alternativly you may fetch the tarballs from the mirrors listed
-on 
-    https://www.exim.org/mirmon/ftp_mirrors.html
-
-or directly from
-
-      ftp://ftp.exim.org/pub/exim/exim4/
-    https://ftp.exim.org/pub/exim/exim4/
-
-The tarballs are signed with my GPG key¹. Next to the tarballs you will
-find a sha512sum.txt, in case you are happy with simple integrity check
-only.
-
-¹) If you get a "key expired" message, please refresh my key from
-the public keyservers.
-
-Thank you for using Exim.
-
-    Best regards from Dresden/Germany
-    Viele Grüße aus Dresden
-    Heiko Schlittermann
--- 
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
- ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+On Mon, May 21, 2018 at 5:57 AM, Tomas Hoger <thoger@...hat.com> wrote:
+> On Mon, 14 May 2018 21:04:58 -0700 Bryan Pendleton wrote:
+>
+>> Hi Tomas, thank you for getting in touch, and for the excellent questions.
+>>
+>> I think the problem here is primarily my lack of skill in clearly writing
+>> disclosure information about vulnerabilities, so let me try to do my best
+>> to clarify.
+>>
+>> Indeed, allowing the Derby server to open an untrusted database is
+>> of serious concern, and, due to Derby's rich extensibility features, can
+>> allow the execution of arbitrary *Java* code directly in Derby. So this
+>> is an important concern.
+>>
+>> And yes, you are correct that the selection of 10.3.1.4 as the first
+>> affected release is because the default security policy dates from
+>> that release, and you are also correct that the "ping with arguments"
+>> pre-dates that. We certainly hope that nobody is running such 11-year-old
+>> software any more; if possible, we would really like them to upgrade.
+>>
+>> Regarding the question of which fix is the "actual security fix," I find
+>> this a challenging question. In order to exploit the vulnerability, the
+>> ping command must allow the specially crafted request packet, *and*
+>> the security policy must allow the access to the untrusted database.
+>> Closing *either* of those holes is enough to prevent that exploit; we chose
+>> to close *both* of them with the 10.14.2.0 release.
+>>
+>> The Derby development team's primary recommendation is that
+>> any Derby Network Server deployed in a production environment
+>> should use an explicitly-developed custom security policy, and not
+>> depend on the default policy; still, the new security policy that is
+>> installed by default by 10.14.2.0 is considerably more secure than
+>> the policy that was previously in place.
+>>
+>> I hope this helps. If I have misunderstood the intent of any of your
+>> questions, please let me know.
+>
+> Thank you for your detailed reply.  It addresses my questions.
+>
+> FWIW, in this case, the change of the ping command handling is what I'd
+> view as the security fix.  The change of the default security policy
+> would not be sufficient in deployments where custom security policy is
+> used and that policy is less restrictive than the new default policy
+> (even though it's maybe more restrictive than the old default).
+>
+> --
+> Tomas Hoger / Red Hat Product Security
