@@ -1,4 +1,9 @@
-Received: (qmail 1557 invoked by uid 550); 7 Jun 2023 03:39:42 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2516" "Saturday" "26" "May" "2018" "06:53:09" "-0700" "Bryan Pendleton" "bpendleton.derby@gmail.com" "<CANi-yg-yDVpTxvDEuRLefXW8fWRem=QKRzZY0DEb36KAxOVpkA@mail.gmail.com>" "53" "Re: [oss-security] [ANNOUNCE] CVE-2018-1313: Apache Derby externally-controlled input vulnerability" nil nil nil "5" "2018052613:53:09" "[oss-security] [ANNOUNCE] CVE-2018-1313: Apache Derby externally-controlled input vulnerability" (number mark "U       bpendleton.d May 26   53/2516  " thread-indent "\"Re: [oss-security] [ANNOUNCE] CVE-2018-1313: Apache Derby externally-controlled input vulnerability\"\n") "<20180521145731.60826823@redhat.com>" ("<CANi-yg-6VPUhWvAHHEkQYByYT4HPBcpTgqb+d5WsGJBVHKrm1Q@mail.gmail.com>" "<20180514145244.64c73b08@redhat.com>" "<CANi-yg8cdZzBMZRv_siCMwt8gfLWrtPvyO_vGNgGvzcAC-QngA@mail.gmail.com>" "<20180521145731.60826823@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 24146 invoked by uid 550); 26 May 2018 16:42:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,127 +12,99 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28001 invoked from network); 7 Jun 2023 03:32:48 -0000
+Received: (qmail 3500 invoked from network); 26 May 2018 13:53:21 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686108755; x=1688700755;
-        h=content-transfer-encoding:subject:from:to:content-language
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qqHc9UEAodsgetudggc2KEfd+hirA1caIADabIKqO/8=;
-        b=Qlq44V6jvI8DnpWMTJb7YDMtPUxUhjkNCDslZ0qm2QttUy7dVlgtG4NJMGgve68Pt4
-         29QRq6GL7m1MSizvsh6MU21Z4y8N5yX+ivwzfMequ4eK77tFBDMNDqsbCgjc/THdcAuK
-         76s85qMiSMQGcn5A0AnHi3eBHg22FDOpN8gZMAUkMvzSQBnIAbZC0dIChkaV3ML88T2v
-         mp/W0U7OUGQhPSGcfVjGh4NmKA6wA4HNrOKsebbqg4i38DBXco2y1WXingRQSO3s3R7W
-         QhWfmPvfYNpOvnGVOlmmNtXzieeO86LstTIwjlwvGgWnpREMStgVFuraO5NmGGH7OLcR
-         x0dg==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=WH3HFZHSAfNm8/+PjErzSii6flE9mNZQ+OOz/WY+3Ao=;
+        b=TP2iQXgw8LzQC4Hm4W+7fR1qTOJC0sm5biDP+zQxd0grjGd6JX0TMVhr83P5n3gPyE
+         tx1Ic9hhJWbQRYJO/wjHnfc7m79V9b4xhyKPPUuVBmhh8dANHf0q1+8IrWB0M32XMYwY
+         NrJ9tKUv4Fs9U/PvpvLW1SClK4aBNZNllCgqha2hysFZ0Ga/u2vbiFj64ui0tblIqd95
+         L0sn2WUzZCZOmySSnA9TdeK0JGae55CqtmtcPeRTqCmqvx4j+6FhcA6jOsuat1FrmUpI
+         mEWwDNIGachZleoJjsUegWuumps3mjFP08bB6Dr6B5TXUacTQY47ePOZtHh4ddyKgHFd
+         xA1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686108755; x=1688700755;
-        h=content-transfer-encoding:subject:from:to:content-language
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=qqHc9UEAodsgetudggc2KEfd+hirA1caIADabIKqO/8=;
-        b=koIMoX6vMSxS6MaMieODmvqjOAfUhTthzyYX9iHiCWfhp8eGDx/9qEsylHWJTjZgke
-         ZX4SGb1QWlthgsEASIt76/b/NmePjf+EKoyJRaY5eGAV5iu9SbhSmqnu79lF7apvCXZ8
-         YNcAjYqH2KLQgWvN5U77vmdI9FNczQQqA+azu+dG7E/I2Y2tiNcFsv46Tn8BEXd8Iu+h
-         AUryfWT4vCilmHqEHHkkbEXqGXDP3yZM48Rho8/OWZqnpUCfuQ1lOReP7PXy0NxIyAjL
-         M03QmqsdEMHJowe2lr+d8yX4eqZDpFr1q1Y4RzrLhAY3J/4PaabwJOZQKR+lT2AqbY3D
-         XaKg==
-X-Gm-Message-State: AC+VfDyY5JQEXgeLdOx6nzyYq8WAvc3QRJvqo1Pop6yINBxk5jkjN4Xr
-	el80ab/yfPhNIEQypWcLVw3kFz8tjTSph0Jp
-X-Google-Smtp-Source: ACHHUZ5zDIxpN4DtCvQTtIKNEhZRZhDF1dXYYbJKvIsr+1nTdpwCZxrHlAG42K3Mbl/ZMcYSg2CAjg==
-X-Received: by 2002:a05:6a20:394c:b0:100:b92b:e8be with SMTP id r12-20020a056a20394c00b00100b92be8bemr713325pzg.2.1686108755162;
-        Tue, 06 Jun 2023 20:32:35 -0700 (PDT)
-Message-ID: <ee226490-51c6-f8e9-821a-6061202c01b1@gmail.com>
-Date: Wed, 7 Jun 2023 11:32:31 +0800
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=WH3HFZHSAfNm8/+PjErzSii6flE9mNZQ+OOz/WY+3Ao=;
+        b=hy93YU4qKzKGyB8AslSZZEjcJBJ1cg+RmZP6LIWlim6EKdSkFn7BWh0Q4y5kRAgh+d
+         feGh0S3W1yS/peJamPPhYg1IOrnRiu5eETR3KphBfbcuQNX6m/5Y1/X6ByWdiVv9ONzC
+         Wh9YNlpduGtpy5aDCXqtas/at2xqX9NG7L4Jyy2MJDyZIzr2tdA4ojhOUXB/S9fGWH35
+         Qub92IRlAOXoS1EI6YEpNUpVwN3dfkUq+h1rgljNawq1x/6aKLjOL2lHxNB280StVgPT
+         n0trMG2/SglG3dPSeZuRV5V5YPI5qJTXkjsNO8k6xmnEeUSrr/SaP8pW4GUSWpfFKOj9
+         4QcA==
+X-Gm-Message-State: ALKqPwdAasvrYVsWDYDOjDMfkesimH1UbXpLKGUnl3cTspTpctlOC0nb
+	gyHjlWDTo526sU07iSD0CH+SaA93JcQmkJDqda4=
+X-Google-Smtp-Source: ADUXVKJxYoefsB590eV3Awo3zllMxGLREGlv4geOTD8+klOT2vEFCSIAidg4yUM8yZauGIRtjvV9/q+mBs2b4lhfpOM=
+X-Received: by 2002:a1f:3197:: with SMTP id x145-v6mr3828930vkx.3.1527342789543;
+ Sat, 26 May 2018 06:53:09 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Content-Language: en-US
-To: oss-security@lists.openwall.com
-From: Hangyu Hua <hbh25y@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] Linux kernel: off-by-one in fl_set_geneve_opt
+In-Reply-To: <20180521145731.60826823@redhat.com>
+References: <CANi-yg-6VPUhWvAHHEkQYByYT4HPBcpTgqb+d5WsGJBVHKrm1Q@mail.gmail.com>
+ <20180514145244.64c73b08@redhat.com> <CANi-yg8cdZzBMZRv_siCMwt8gfLWrtPvyO_vGNgGvzcAC-QngA@mail.gmail.com>
+ <20180521145731.60826823@redhat.com>
+From: Bryan Pendleton <bpendleton.derby@gmail.com>
+Date: Sat, 26 May 2018 06:53:09 -0700
+Message-ID: <CANi-yg-yDVpTxvDEuRLefXW8fWRem=QKRzZY0DEb36KAxOVpkA@mail.gmail.com>
+To: Tomas Hoger <thoger@redhat.com>
+Cc: oss-security@lists.openwall.com, security <security@apache.org>, 
+	gregory draperi <gregory.draperi@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [oss-security] [ANNOUNCE] CVE-2018-1313: Apache Derby
+ externally-controlled input vulnerability
 
-Hi guys,
+Yes, Tomas, that is a very good point; I agree completely.
 
-I find a off-by-one bug in linux kernel's Flower
-classifier(NET_CLS_FLOWER). It can cause denial-of-service and privilege 
-escalation.
+Thank you for the follow-ups and discussion!
 
-# Details:
+bryan
 
-static int fl_set_geneve_opt(const struct nlattr *nla, struct 
-fl_flow_key *key,
-      int depth, int option_len,
-      struct netlink_ext_ack *extack)
-{
-struct nlattr *tb[TCA_FLOWER_KEY_ENC_OPT_GENEVE_MAX + 1];
-struct nlattr *class = NULL, *type = NULL, *data = NULL;
-struct geneve_opt *opt;
-int err, data_len = 0;
-
-if (option_len > sizeof(struct geneve_opt))
-data_len = option_len - sizeof(struct geneve_opt);
-
-opt = (struct geneve_opt *)&key->enc_opts.data[key->enc_opts.len]; <--- [1]
-memset(opt, 0xff, option_len);
-opt->length = data_len / 4;
-opt->r1 = 0;
-opt->r2 = 0;
-opt->r3 = 0;
-
-...
-if (tb[TCA_FLOWER_KEY_ENC_OPT_GENEVE_DATA]) {
-int new_len = key->enc_opts.len;
-
-data = tb[TCA_FLOWER_KEY_ENC_OPT_GENEVE_DATA];
-data_len = nla_len(data);
-if (data_len < 4) {
-NL_SET_ERR_MSG(extack, "Tunnel key geneve option data is less than 4
-bytes long");
-return -ERANGE;
-}
-if (data_len % 4) {
-NL_SET_ERR_MSG(extack, "Tunnel key geneve option data is not a
-multiple of 4 bytes long");
-return -ERANGE;
-}
-
-new_len += sizeof(struct geneve_opt) + data_len;
-BUILD_BUG_ON(FLOW_DIS_TUN_OPTS_MAX != IP_TUNNEL_OPTS_MAX);
-if (new_len > FLOW_DIS_TUN_OPTS_MAX) { <--- [2]
-NL_SET_ERR_MSG(extack, "Tunnel options exceeds max size");
-return -ERANGE;
-}
-opt->length = data_len / 4;
-memcpy(opt->opt_data, nla_data(data), data_len); <--- [3]
-}
-...
-}
-
-We can see that opt use key->enc_opts.len to get its pointer from
-key->enc_opts.data[] in [1]. Then length will be set to "data_len /
-4". The bug is that if we send two TCA_FLOWER_KEY_ENC_OPTS_GENEVE
-packets and their total size is 252 bytes(key->enc_opts.len = 252)
-then key->enc_opts.len = opt->length = data_len / 4 when the third
-TCA_FLOWER_KEY_ENC_OPTS_GENEVE packet enters fl_set_geneve_opt. This
-can bypass the check in [2] and cause out of bound write in
-[3](opt->opt_data = key->enc_opts.data[257]).
-
-# Patch
-
-I already contacted the linux security team and made a patch:
-
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/net/sched?id=4d56304e5827c8cc8cc18c75343d283af7c4825c
-
-# CVE
-
-Pending
-
-# EXP
-
-In order to avoid confusion i will publish it after I get CVE.
-
-Thanks,
-Hangyu
+On Mon, May 21, 2018 at 5:57 AM, Tomas Hoger <thoger@redhat.com> wrote:
+> On Mon, 14 May 2018 21:04:58 -0700 Bryan Pendleton wrote:
+>
+>> Hi Tomas, thank you for getting in touch, and for the excellent questions.
+>>
+>> I think the problem here is primarily my lack of skill in clearly writing
+>> disclosure information about vulnerabilities, so let me try to do my best
+>> to clarify.
+>>
+>> Indeed, allowing the Derby server to open an untrusted database is
+>> of serious concern, and, due to Derby's rich extensibility features, can
+>> allow the execution of arbitrary *Java* code directly in Derby. So this
+>> is an important concern.
+>>
+>> And yes, you are correct that the selection of 10.3.1.4 as the first
+>> affected release is because the default security policy dates from
+>> that release, and you are also correct that the "ping with arguments"
+>> pre-dates that. We certainly hope that nobody is running such 11-year-old
+>> software any more; if possible, we would really like them to upgrade.
+>>
+>> Regarding the question of which fix is the "actual security fix," I find
+>> this a challenging question. In order to exploit the vulnerability, the
+>> ping command must allow the specially crafted request packet, *and*
+>> the security policy must allow the access to the untrusted database.
+>> Closing *either* of those holes is enough to prevent that exploit; we chose
+>> to close *both* of them with the 10.14.2.0 release.
+>>
+>> The Derby development team's primary recommendation is that
+>> any Derby Network Server deployed in a production environment
+>> should use an explicitly-developed custom security policy, and not
+>> depend on the default policy; still, the new security policy that is
+>> installed by default by 10.14.2.0 is considerably more secure than
+>> the policy that was previously in place.
+>>
+>> I hope this helps. If I have misunderstood the intent of any of your
+>> questions, please let me know.
+>
+> Thank you for your detailed reply.  It addresses my questions.
+>
+> FWIW, in this case, the change of the ping command handling is what I'd
+> view as the security fix.  The change of the default security policy
+> would not be sufficient in deployments where custom security policy is
+> used and that policy is less restrictive than the new default policy
+> (even though it's maybe more restrictive than the old default).
+>
+> --
+> Tomas Hoger / Red Hat Product Security
