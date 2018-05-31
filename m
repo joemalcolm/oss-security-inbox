@@ -1,4 +1,9 @@
-Received: (qmail 7295 invoked by uid 550); 24 Jan 2024 14:56:03 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1660" "Thursday" "31" "May" "2018" "20:55:28" "+0200" "Solar Designer" "solar@openwall.com" "<20180531185528.GA29608@openwall.com>" "37" "Re: [oss-security] CVE request: rufus" nil nil nil "5" "2018053118:55:28" "[oss-security] CVE request: rufus" (number mark "U       solar@openwa May 31   37/1660  " thread-indent "\"Re: [oss-security] CVE request: rufus\"\n") "<678AB44AD82642D6993A19E3C8ADCB9E@W340>" ("<77B308CE34E747C3AE00239F60DBAEE4@W340>" "<6d79aec1-dd2e-a18e-6a4e-d9105f740d64@akeo.ie>" "<678AB44AD82642D6993A19E3C8ADCB9E@W340>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 19979 invoked by uid 550); 31 May 2018 18:56:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,267 +12,54 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7262 invoked from network); 24 Jan 2024 14:56:02 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.300.61.1.2\))
-Message-Id: <3E104BB5-6336-49DD-9C5D-4B0F6DB7D403@beckweb.net>
-Date: Wed, 24 Jan 2024 15:57:49 +0100
-To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3774.300.61.1.2)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1706108291;8cfda064;
-X-HE-SMSGID: 1rSehU-0007bN-K0
-Subject: [oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins
+Received: (qmail 19641 invoked from network); 31 May 2018 18:55:38 -0000
+Date: Thu, 31 May 2018 20:55:28 +0200
+From: Solar Designer <solar@openwall.com>
+To: Stefan Kanthak <stefan.kanthak@nexgo.de>
+Cc: Pete Batard <pete@akeo.ie>, oss-security@lists.openwall.com
+Message-ID: <20180531185528.GA29608@openwall.com>
+References: <77B308CE34E747C3AE00239F60DBAEE4@W340> <6d79aec1-dd2e-a18e-6a4e-d9105f740d64@akeo.ie> <678AB44AD82642D6993A19E3C8ADCB9E@W340>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <678AB44AD82642D6993A19E3C8ADCB9E@W340>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] CVE request: rufus
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+Stefan, Pete -
 
-The following releases contain fixes for security vulnerabilities:
+As a moderator for oss-security, I approved these messages for their
+technical substance, but I don't appreciate the personal
+(counter-)attacks.  Let's please refrain from discussing people's
+experience, behavior, etc. and focus solely on the technical issues.
 
-* Jenkins 2.442
-* Jenkins LTS 2.426.3
-* Git server Plugin 99.101.v720e86326c09
-* GitLab Branch Source Plugin 688.v5fa_356ee8520
-* Matrix Project Plugin 822.824.v14451b_c0fd42
-* Qualys Policy Compliance Scanning Connector Plugin 1.0.6
-* Red Hat Dependency Analytics Plugin 0.9.0
+(Unfortunately, when I say this I do point out an issue with behavior,
+but only as it relates to what I'd like not to see on this list.  I don't
+judge what's appropriate or not in general; I only set the policy here.)
 
-Additionally, we announce unresolved security issues in the following
-plugins:
+On Thu, May 31, 2018 at 08:04:52PM +0200, Stefan Kanthak wrote:
+> READ THE SUBJECT!
+> Hint: it reads "CVE request".
 
-* Log Command Plugin
+oss-security is no longer a place to make CVE requests.  Please see:
 
-Summaries of the vulnerabilities are below. More details, workarounds,
-severity, and attribution can be found here:
-https://www.jenkins.io/security/advisory/2024-01-24/
+http://oss-security.openwall.org/wiki/mailing-lists/oss-security#cve-requests
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+"Previously, one could request CVE IDs for issues in Open Source
+software from oss-security.  This is no longer the case.  Instead, please
+start by posting about the (to be made) public issue to oss-security
+(without a CVE ID), request a CVE ID from MITRE directly, and finally
+"reply" to your own posting when you also have the CVE ID to add.  With
+the described approach you would only approach MITRE after the issue is
+already public, but if you choose to do things differently and contact
+MITRE about an issue that is not yet public, then please do not disclose
+to them more than the absolute minimum needed for them to assign a CVE ID."
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
+When the occasional CVE request messages that still arrive in here are
+otherwise on topic, like this time, we approve those anyway for their
+content.  If a CVE ID is desired, the sender is then expected to follow
+the above procedure.
 
----
+Thanks,
 
-SECURITY-3314 / CVE-2024-23897
-Jenkins has a built-in command line interface (CLI) to access Jenkins from
-a script or shell environment.
-
-Jenkins uses the args4j library to parse command arguments and options on
-the Jenkins controller when processing CLI commands. This command parser
-has a feature that replaces an `@` character followed by a file path in an
-argument with the file's contents (`expandAtFiles`). This feature is
-enabled by default and Jenkins 2.441 and earlier, LTS 2.426.2 and earlier
-does not disable it.
-
-This allows attackers to read arbitrary files on the Jenkins controller
-file system using the default character encoding of the Jenkins controller
-process.
-
-* Attackers with Overall/Read permission can read entire files.
-* Attackers _without_ Overall/Read permission can read the first few lines
-  of files. The number of lines that can be read depends on available CLI
-  commands. As of publication of this advisory, the Jenkins security team
-  has found ways to read the first three lines of files in recent releases
-  of Jenkins without having any plugins installed, and has not identified
-  any plugins that would increase this line count.
-
-Binary files containing cryptographic keys used for various Jenkins
-features can also be read, with some limitations. As of publication,
-the Jenkins security team has confirmed the following possible attacks in
-addition to reading contents of all files with a known file path. All of
-them leverage attackers' ability to obtain cryptographic keys from binary
-files, and are therefore only applicable to instances where that is
-feasible.
-
-WARNING: This list is not definitive. Further attacks likely exist,
-including ones that do not need attackers to obtain cryptographic keys from
-binary files.
-
-* Remote code execution via Resource Root URLs (Variant 1)
-* Remote code execution via Resource Root URLs (Variant 2)
-* Remote code execution via "Remember me" cookie
-* Remote code execution via stored cross-site scripting (XSS) attacks
-  through build logs
-* Remote code execution via CSRF protection bypass
-* Decrypt secrets stored in Jenkins
-* Delete any item in Jenkins
-* Download a Java heap dump
-
-Limitations for reading binary files:
-While files containing binary data can be read, the affected feature
-attempts to read them as strings using the controller process's default
-character encoding. This is likely to result in some bytes not being read
-successfully and being replaced with a placeholder value. Which bytes can
-or cannot be read depends on this character encoding. For example,
-attempting to read random binary data using UTF-8, roughly half of all
-bytes will be replaced with a placeholder for an illegal value. For 32 byte
-random binary secrets, as commonly used in Jenkins for HMAC-SHA256, this
-would require attackers to correctly guess on average 16 bytes, which is
-infeasible. In contrast, with the encoding Windows-1252, only 5 out of 256
-possible values are illegal and would be replaced with a placeholder. This
-is a significantly lower number of bytes to guess in a binary secret on
-average, as well as fewer possible options for each byte.
-
-IMPORTANT: While it is _unlikely_ that randomly generated keys use
-significantly fewer than average of the byte values that cannot be read
-using a character encoding like UTF-8, it isn't _impossible_. Therefore
-administrators should update Jenkins in a timely manner, regardless of the
-value of `file.encoding`.
-
-
-SECURITY-3315 / CVE-2024-23898
-Jenkins has a built-in command line interface (CLI) to access Jenkins from
-a script or shell environment. Since Jenkins 2.217 and LTS 2.222.1, one of
-the ways to communicate with the CLI is through a WebSocket endpoint. This
-endpoint relies on the default Jenkins web request authentication
-functionality, like HTTP Basic authentication with API tokens, or session
-cookies. This endpoint is enabled when running on a version of Jetty for
-which Jenkins supports WebSockets. This is the case when using the provided
-native installers, packages, or the Docker containers, as well as when
-running Jenkins with the command `java -jar jenkins.war`.
-
-Jenkins 2.217 through 2.441 (both inclusive), LTS 2.222.1 through 2.426.2
-(both inclusive) does not perform origin validation of requests made
-through the CLI WebSocket endpoint, resulting in a cross-site WebSocket
-hijacking (CSWSH) vulnerability.
-
-Additionally, Jenkins does not set an explicit `SameSite` attribute for
-session cookies. This can allow cross-site requests to make use of the
-session cookie, i.e., those requests are sent with the logged-in user's
-authentication.
-
-This vulnerability allows attackers to execute CLI commands on the Jenkins
-controller. The impact depends on the permissions of the anonymous user
-and/or the browser(s) used by the victim(s) of the CSWSH attack.
-
-Additionally, this vulnerability allows exploiting SECURITY-3314 to read
-the first few lines of files on the Jenkins controller. See that issue for
-more information about the potential impact.
-
-
-SECURITY-3319 / CVE-2024-23899
-Git server Plugin uses the args4j library to parse command arguments and
-options on the Jenkins controller when processing Git commands received via
-SSH. This command parser has a feature that replaces an `@` character
-followed by a file path in an argument with the file's contents
-(`expandAtFiles`). This feature is enabled by default and Git server Plugin
-99.va_0826a_b_cdfa_d and earlier does not disable it.
-
-This allows attackers with Overall/Read permission to read the first two
-lines of arbitrary files on the Jenkins controller file system using the
-default character encoding of the Jenkins controller process.
-
-See SECURITY-3314 for further information about the potential impact of bei=
-ng
-able to read files on the Jenkins controller, as well as the limitations for
-reading binary files. Note that for this issue, unlike SECURITY-3314, attac=
-kers
-need Overall/Read permission.
-
-
-SECURITY-3289 / CVE-2024-23900
-Matrix Project Plugin 822.v01b_8c85d16d2 and earlier does not sanitize
-user-defined axis names of multi-configuration projects submitted through
-the `config.xml` REST API endpoint.
-
-This allows attackers with Item/Configure permission to create or replace
-any `config.xml` file on the Jenkins controller file system with content
-not controllable by the attackers.
-
-
-SECURITY-3040 / CVE-2024-23901
-GitLab allows sharing a project with another group.
-
-GitLab Branch Source Plugin 684.vea_fa_7c1e2fe3 and earlier unconditionally
-discovers projects that are shared with the configured owner group.
-
-This allows attackers to configure and share a project, resulting in a
-crafted Pipeline being built by Jenkins after the next scan of the group's
-projects.
-
-
-SECURITY-3251 / CVE-2024-23902
-GitLab Branch Source Plugin 684.vea_fa_7c1e2fe3 and earlier does not
-require POST requests for a form validation endpoint, resulting in a
-cross-site request forgery (CSRF) vulnerability.
-
-This vulnerability allows attackers to connect to an attacker-specified
-URL.
-
-
-SECURITY-2871 / CVE-2024-23903
-GitLab Branch Source Plugin 684.vea_fa_7c1e2fe3 and earlier does not use a
-constant-time comparison function when checking whether the provided and
-expected webhook token are equal.
-
-This could potentially allow attackers to use statistical methods to obtain
-a valid webhook token.
-
-
-SECURITY-3006 / CVE-2023-6148
-Qualys Policy Compliance Scanning Connector Plugin 1.0.5 and earlier does
-not escape Qualys API responses displayed on the job configuration page.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers able to configure jobs.
-
-
-SECURITY-3005 / CVE-2023-6147
-Qualys Policy Compliance Scanning Connector Plugin 1.0.5 and earlier does
-not configure its XML parser to prevent XML external entity (XXE) attacks.
-
-This allows attackers able to configure jobs to have Jenkins parse a
-crafted HTTP response with XML data that uses external entities for
-extraction of secrets from the Jenkins controller or server-side request
-forgery.
-
-
-SECURITY-3007 / CVE pending
-Qualys Policy Compliance Scanning Connector Plugin 1.0.5 and earlier does
-not correctly perform permission checks in several HTTP endpoints.
-
-This allows attackers with global Item/Configure permission (while lacking
-Item/Configure permission on any particular job) to connect to an
-attacker-specified URL using attacker-specified credentials IDs obtained
-through another method, capturing credentials stored in Jenkins.
-
-
-SECURITY-3322 / CVE-2024-23905
-Jenkins sets the `Content-Security-Policy` header to static files served by
-Jenkins (specifically `DirectoryBrowserSupport`), such as workspaces,
-`/userContent`, or archived artifacts, unless a Resource Root URL is
-specified.
-
-Red Hat Dependency Analytics Plugin 0.7.1 and earlier globally disables the
-`Content-Security-Policy` header for static files served by Jenkins
-whenever the 'Invoke Red Hat Dependency Analytics (RHDA)' build step is
-executed. This allows cross-site scripting (XSS) attacks by users with the
-ability to control files in workspaces, archived artifacts, etc.
-
-
-SECURITY-3334 / CVE-2024-23904
-Log Command Plugin uses the args4j library to parse command arguments and
-options on the Jenkins controller when processing commands received via
-instant messaging platforms such as IRC or Jabber. This command parser has
-a feature that replaces an `@` character followed by a file path in an
-argument with the file's contents (`expandAtFiles`). This feature is
-enabled by default and Log Command Plugin 1.0.2 and earlier does not
-disable it.
-
-This allows unauthenticated attackers to read the first line of arbitrary
-files on the Jenkins controller file system using the default character
-encoding of the Jenkins controller process.
-
-See SECURITY-3314 for further information about the potential impact of bei=
-ng
-able to read files on the Jenkins controller, as well as the limitations for
-reading binary files.
-
-As of publication of this advisory, there is no fix.
-
-
-
+Alexander
