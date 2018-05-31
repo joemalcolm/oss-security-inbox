@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3786" "Saturday" "23" "September" "2017" "07:11:36" "-0700" "Anthony Liguori" "anthony@codemonkey.ws" "<CA+aC4ktR00GiL3H-E9g2YP9bdecQvioWXonXEPpFumMEoXdWaA@mail.gmail.com>" "84" "Re: [oss-security] Why send bugs embargoed to distros?" "^Date:" nil nil "9" "2017092314:11:36" "[oss-security] Why send bugs embargoed to distros?" (number mark "        anthony@code Sep 23   84/3786  " thread-indent "\"Re: [oss-security] Why send bugs embargoed to distros?\"\n") "<5af4f41e-2cd6-c40e-16ef-736961903579@leventepolyak.net>" ("<20170923134418.6e460656@pc1>" "<5af4f41e-2cd6-c40e-16ef-736961903579@leventepolyak.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5125" "Thursday" "31" "May" "2018" "20:04:52" "+0200" "Stefan Kanthak" "stefan.kanthak@nexgo.de" "<678AB44AD82642D6993A19E3C8ADCB9E@W340>" "135" "[oss-security] Re: CVE request: rufus" "^Cc:" nil nil "5" "2018053118:04:52" "[oss-security] Re: CVE request: rufus" (number mark "        stefan.kanth May 31  135/5125  " thread-indent "\"[oss-security] Re: CVE request: rufus\"\n") "<6d79aec1-dd2e-a18e-6a4e-d9105f740d64@akeo.ie>" ("<77B308CE34E747C3AE00239F60DBAEE4@W340>" "<6d79aec1-dd2e-a18e-6a4e-d9105f740d64@akeo.ie>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 32303 invoked by uid 550); 23 Sep 2017 14:40:41 -0000
+Received: (qmail 13930 invoked by uid 550); 31 May 2018 18:42:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,127 +11,158 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 16002 invoked from network); 23 Sep 2017 14:11:48 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=codemonkey-ws.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=Bwqwvr+hkJDyloL6uO3c4gbH7lZWVHrV+ZFC5KkSa4I=;
-        b=o4WAJyi07Po2ST6YzPER2xaeoCPCLrrhsK5lzccgXDxJEThIAW9D0parIpesqHQwsm
-         KDdePIDZivPaCeAac8tZVt+eVLLXCiLL/o15z+7W/12C27xq7vuk5bnVK6KdBAixb8GZ
-         e+o2pXtAVoWzUPJEcQNiXGN37NQJ7Ph5gSQZqeE3HJFIQnpCJYHwd2YiRdMmDY06PEs6
-         evCNnPfagh37ELocR+p2vq0OPsJ+OGAHEWKcQvdWLsfya9ecKxrpLsgOSHwRueBEu5l+
-         IEl4b0w6MTqqVOI7BqLK87Z+1HpmR9YhXGVUr6OfdLmS6OGaHsFX1tL70TnAWHJVEYTg
-         rOyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=Bwqwvr+hkJDyloL6uO3c4gbH7lZWVHrV+ZFC5KkSa4I=;
-        b=arKaIILo3tjswjE2vEKMmeSLFoB6AHHK4ul0hL1SF+TjLb557zsx/zRQ/eiI/VqV57
-         HPYP2U1NQvsyqHGGzNwKZkm/2H9PF8+bD/Ny5+egsdAb37FoZxBlc3awB0/EXqnQuN1v
-         eKHKIANUT7ESIAChg43UXi56NagC6Pd/QnjAu2pJ+SddXMkT0AUbDLP8Fmw9Ry5r4LAe
-         GcWFfNNbaPhZ3ZfRLPiY8X1LswE5LOJlCsbHPFAUtQLdndoOFh31dT2z75MgcDl5iFkd
-         lACkKjJWYntaRxP9uWIf8uq3/eQNuTbj0vbgFVMLz3W1Cv40u7yR9aEr7lanHjVLupvy
-         xdrA==
-X-Gm-Message-State: AHPjjUhJ/yviWvbCrSZ919m8DWSVrttFwtI5Gzg+jmOzvMiODFrrQFqM
-	iK2LiP/H9B1gbqX2kwwvUJARgLp6MIKNgGBc4B+1rQ==
-X-Google-Smtp-Source: AOwi7QBYsHafYxl77cS8RfjeQSKAsAEyYNcXz05csx4JJMeSH+hyiaiHN4jbArfXQOZuKNSlB10TTe5xFTbZZqGmlpM=
-X-Received: by 10.46.21.25 with SMTP id s25mr873024ljd.71.1506175896929; Sat,
- 23 Sep 2017 07:11:36 -0700 (PDT)
+Received: (qmail 25777 invoked from network); 31 May 2018 18:07:45 -0000
+Message-ID: <678AB44AD82642D6993A19E3C8ADCB9E@W340>
+References: <77B308CE34E747C3AE00239F60DBAEE4@W340> <6d79aec1-dd2e-a18e-6a4e-d9105f740d64@akeo.ie>
+Organization: Me, myself & IT
 MIME-Version: 1.0
-In-Reply-To: <5af4f41e-2cd6-c40e-16ef-736961903579@leventepolyak.net>
-References: <20170923134418.6e460656@pc1> <5af4f41e-2cd6-c40e-16ef-736961903579@leventepolyak.net>
-Message-ID: <CA+aC4ktR00GiL3H-E9g2YP9bdecQvioWXonXEPpFumMEoXdWaA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Date: Sat, 23 Sep 2017 07:11:36 -0700
-From: Anthony Liguori <anthony@codemonkey.ws>
+Content-Type: text/plain;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.7474
+X-VADE-STATUS: LEGIT
+Cc: <oss-security@lists.openwall.com>
+Date: Thu, 31 May 2018 20:04:52 +0200
+From: "Stefan Kanthak" <stefan.kanthak@nexgo.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Why send bugs embargoed to distros?
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE request: rufus
+To: "Pete Batard" <pete@akeo.ie>
 
-On Sat, Sep 23, 2017 at 6:56 AM, Levente Polyak
-<levente@leventepolyak.net> wrote:
-> On 09/23/2017 01:44 PM, Hanno B=C3=B6ck wrote:
->> My understanding is that the purpose of the distros list is that
->> updates can be prepared so after a disclosure the time between "vuln is
->> known" and "patch is available" is short.
->> However from all I can see this largely didn't happen.
+Pete,
+
+> Hi Stefan,
+> 
+> Thank you very much for your very depreciative and less than informative 
+> report.
+
+As always, your poor reading skills perfectly match your poor programming
+skills.
+READ THE SUBJECT!
+Hint: it reads "CVE request".
+
+> Since a vulnerability report works a lot better with an actual 
+> exploitation scenario conducted with the actual application, that we can 
+> look into, we will be waiting on that from you.
+
+"We" wait until the requested CVEs are assigned for both well-known
+vulnerabilities.
+
+> Also, FYI, we did apply mitigation for #1 (DLL sideloading attacks) very 
+> shortly after the time it became publicized:
+> https://github.com/pbatard/rufus/commit/8473e9ef561295fd10dd9526010c1fd1cb1e6701
+
+OUCH!
+Or shall I write: BWAHAHAHA!?
+
+DLL spoofing was VERY well known long before 2016, and it is neither restricted
+to the CWD nor to runtime linking:
+
+a) in 1996, the NSA-sponsored report "An intro to... Windows NT security"
+   (its copy <http://www.blacksheepnetworks.com/security/info/nt/ntintrotosec.htm>
+   is unfortunately gone) was published;
+
+b) in 2000, Georgi Guninski published <http://www.guninski.com/officedll.html>
+
+b) in 2006, the paper "DLL Spoofing in Windows"
+   <https://www.it.uu.se/edu/course/homepage/sakdat/ht05/assignments/pm/programme/DLL_Spoofing_in_Windows.pdf>
+   was published;
+
+c) in 2008, Microsoft's David LeBlanc wrote
+   <https://blogs.msdn.microsoft.com/david_leblanc/2008/02/20/dll-preloading-attacks/>,
+   while CERT's Will Dormann wrote
+   <https://insights.sei.cmu.edu/cert/2008/09/carpet-bombing-and-directory-poisoning.html>
+
+d) in 2010 and 2012, Acros Security published <http://www.binaryplanting.com/>
+   plus <http://blog.acrossecurity.com/2012/02/downloads-folder-binary-planting.html>
+
+e) since then, Microsoft published
+   <https://technet.microsoft.com/en-us/library/2269637.aspx>,
+   <https://msdn.microsoft.com/en-us/library/ff919712.aspx>,
+   <https://msdn.microsoft.com/en-us/library/ms682586.aspx> and
+   <http://blogs.technet.com/b/srd/archive/2014/05/13/load-library-safely.aspx>
+
+I recommend to do YOUR homework first, BEFORE you dare to publish software
+riddled with well-known and well-documented vulnerabilities, which allows
+escalation of privilege.
+It's YOUR duty to protect YOUR users.
+
+As a starting point, read and try to understand
+<https://skanthak.homepage.t-online.de/sentinel.html> and
+<https://skanthak.homepage.t-online.de/!execute.html>
+
+When done, continue with
+<https://skanthak.homepage.t-online.de/verifier.html> and
+<https://skanthak.homepage.t-online.de/minesweeper.html>
+
+Until then, to protect your users, remove Rufus from the net!
+
+> And of course, with proper non disparaging involvement of security 
+> researchers, who subscribe to the established responsible disclosure 
+> policy of their profession, we are always eager to improve on our 
+> mitigation fixes, if it turns out they aren't adequate.
+> 
+> However, we would appreciate if you refrained from jumping to erroneous 
+> conclusion about Rufus development being conducted by "bloody 
+> beginners", when it is clear that some of the "beginner's" 
+> vulnerabilities you list have long had some mitigation factors applied.
+
+I recommend to read the advice other people gave you on
+<https://github.com/pbatard/rufus/issues/1009>: SOME mitigations are
+clearly NOT sufficient, especially if you choose to apply the WRONG
+and IMPROPER mitigations.
+
+Stefan Kanthak
+
+PS: I might even show you that pasting the string "rufus.com" to the
+    window which has the focus yields interesting effects.
+
+> All the best,
+> 
+> /Pete
+> 
+> 
+> On 2018.05.31 17:05, Stefan Kanthak wrote:
+>> Hi @ll,
+>> 
+>> like its predecessors, the recently (2018-05-29) published version
+>> 3.0 of "Rufus" (<https://rufus.akeo.ie/downloads/rufus-3.0.exe> and
+>> <https://rufus.akeo.ie/downloads/rufus-3.0p.exe>) is riddled with
+>> bloody beginners errors, which allow arbitrary code execution WITH
+>> escalation of privilege.
+>> 
+>> Vulnerability #1
+>> ~~~~~~~~~~~~~~~~
+>> 
+>> See <https://cwe.mitre.org/data/definitions/426.html>
+>> and <https://cwe.mitre.org/data/definitions/427.html>
+>> plus <https://capec.mitre.org/data/definitions/471.html>.
+>> 
+>> Additionally see Microsoft's developer guidance
+>> <https://technet.microsoft.com/en-us/library/2269637.aspx>,
+>> <https://msdn.microsoft.com/en-us/library/ff919712.aspx>,
+>> <https://msdn.microsoft.com/en-us/library/ms682586.aspx> und
+>> <http://blogs.technet.com/b/srd/archive/2014/05/13/load-library-safely.aspx>
+>> for avoiding this bloody beginner's error.
+>> 
+>> Also see
+>> <https://insights.sei.cmu.edu/cert/2008/09/carpet-bombing-and-directory-poisoning.html>
+>> and
+>> <http://blog.acrossecurity.com/2012/02/downloads-folder-binary-planting.html>
+>> plus
+>> <https://insights.sei.cmu.edu/cert/2016/06/bypassing-application-whitelisting.html>
+>> for "prior art".
+>> 
+>> 
+>> Vulnerability #2
+>> ~~~~~~~~~~~~~~~~
+>> 
+>> See <https://cwe.mitre.org/data/definitions/377.html>
+>> and <https://cwe.mitre.org/data/definitions/379.html>
+>> plus <https://capec.mitre.org/data/definitions/29.html>
+>> 
+>> stay tuned
+>> Stefan Kanthak
 >>
->
-> [...]
->
->> The only distro I'm aware of that prepared packages and pushed them
->> right after disclosure is Gentoo.
->>
->
-> For Arch Linux I tested the patch beforehand and prepared the changed
-> buildscripts locally. The final build/release/publication process was
-> invoked just minutes after the public disclosure and the final artifact
-> was signed and hit the repository just 20 minutes after the disclosure.
-> The advisories were sent ~4 hours later once gone through a
-> peer-reviewing process (yes this could have been done even faster).
-
-Just as an FYI, we (Amazon Linux AMI) also did all of the preparation
-during the embargo period published shortly after embargo lift.
-
-> But that's not actually the primary goal of your mail, so lets focus on
-> answering the more important questions below from my personal point of vi=
-ew.
->
->> All of this makes me wonder if the distros list serves its purpose.
->>
->> I'd be curious to hear:
->>
->> a) if any people felt that pre-disclosure of optionsbleed was helpful
->> to them and in which way (after all - even if it only helps minor
->> distros and major distros ignore it it may still be a good thing).
-
-The pre-disclosure period gives us an opportunity to take the time to
-analyze the problem and run through testing of the reported fix.  It's
-super valuable for us.
-
-Regards,
-
-Anthony Liguori
-
->> b) if people think that they'd usually prepare a fixed package, however
->> they didn't consider optionsbleed important enough. (Naturally I
->> probably have a bias seeing my findings as more important as other
->> people, but I could live with that.)
->>
->
-> I think everyone should have come to the conclusion that this is
-> potentially pretty bad for a shared hosting environment or anywhere
-> where non-privileged users are able to fulfill the needed pre-requirement=
-s.
->
-> Anyway, my personal believe is that the list is important, useful and in
-> fact definitively helps preparing coordinated releases and doing all
-> needed work before a final fixed package can be deployed for security
-> relevant fixes.
-> Most of the time the provided information (at least for me :P) helps to
-> analyze and understand the underlying problem and its impact beforehand.
-> If patches are available (like for optionbleed) those can be tested and
-> possibly slightly adjusted or discussed when not fitting a specific
-> version/branch.
-> All this is part of the whole process before a problem is
-> analyzed/understood, prioritized, build-requirements adjusted, artifacts
-> prepared and finally released so being able to do the first steps in a
-> coordinated way definitively helps.
->
-> However, I indeed see your point and understand the frustration and the
-> reason for your mail demonstrated via the optionbleed case. I neither
-> say nor believe that every entity did perfectly to provide the users
-> with fixed packages as that's obviously not the case.
-> What I try to point out is that the list is IMO far from being useless
-> and indeed serves its purpose. I think blaming or questioning the list
-> itself is the wrong conclusion. Instead every entity on its own should
-> rethink their process, prioritization and possibly lack of resources (I
-> include myself to do this). This is not meant to anyone as blaming but
-> we all share the goal to protect the users as good as possible and I
-> believe that the distros list aids in doing so.
->
-> cheers,
-> Levente
