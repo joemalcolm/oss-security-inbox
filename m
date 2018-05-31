@@ -1,23 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/31/1
-Message-ID: <20180831121802.4mq7cag23e4fkzoz@raspberrypi>
-Date: Fri, 31 Aug 2018 12:18:03 +0000
-From: vines@...eup.net
-To: oss-security@...ts.openwall.com
-Subject: Re: Travis CI MITM RCE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/31/3
+Message-ID: <6d79aec1-dd2e-a18e-6a4e-d9105f740d64@akeo.ie>
+Date: Thu, 31 May 2018 17:42:42 +0100
+From: Pete Batard <pete@...o.ie>
+To: Stefan Kanthak <stefan.kanthak@...go.de>, oss-security@...ts.openwall.com
+Subject: Re: CVE request: rufus
 Content-Type: text/plain; charset=utf-8
 
+Hi Stefan,
+
+Thank you very much for your very depreciative and less than informative 
+report.
+
+Since a vulnerability report works a lot better with an actual 
+exploitation scenario conducted with the actual application, that we can 
+look into, we will be waiting on that from you.
+
+Also, FYI, we did apply mitigation for #1 (DLL sideloading attacks) very 
+shortly after the time it became publicized:
+https://github.com/pbatard/rufus/commit/8473e9ef561295fd10dd9526010c1fd1cb1e6701
+
+And of course, with proper non disparaging involvement of security 
+researchers, who subscribe to the established responsible disclosure 
+policy of their profession, we are always eager to improve on our 
+mitigation fixes, if it turns out they aren't adequate.
+
+However, we would appreciate if you refrained from jumping to erroneous 
+conclusion about Rufus development being conducted by "bloody 
+beginners", when it is clear that some of the "beginner's" 
+vulnerabilities you list have long had some mitigation factors applied.
+
+All the best,
+
+/Pete
+
+
+On 2018.05.31 17:05, Stefan Kanthak wrote:
+> Hi @ll,
 > 
-> I agree about the "key ID" part, but not about the "fingerprint" part.
-> Pinning a cryptographic hash over a public key isn't a security
-> antipattern by any strech of the imagination. Sure, you could argue that
-> the SHA-1 used by GPG isn't state-of-the-art anymore, but we're not
-> talking about collision attacks, but second preimage attacks. Far worse
-> for the attacker.
+> like its predecessors, the recently (2018-05-29) published version
+> 3.0 of "Rufus" (<https://rufus.akeo.ie/downloads/rufus-3.0.exe> and
+> <https://rufus.akeo.ie/downloads/rufus-3.0p.exe>) is riddled with
+> bloody beginners errors, which allow arbitrary code execution WITH
+> escalation of privilege.
+> 
+> Vulnerability #1
+> ~~~~~~~~~~~~~~~~
+> 
+> See <https://cwe.mitre.org/data/definitions/426.html>
+> and <https://cwe.mitre.org/data/definitions/427.html>
+> plus <https://capec.mitre.org/data/definitions/471.html>.
+> 
+> Additionally see Microsoft's developer guidance
+> <https://technet.microsoft.com/en-us/library/2269637.aspx>,
+> <https://msdn.microsoft.com/en-us/library/ff919712.aspx>,
+> <https://msdn.microsoft.com/en-us/library/ms682586.aspx> und
+> <http://blogs.technet.com/b/srd/archive/2014/05/13/load-library-safely.aspx>
+> for avoiding this bloody beginner's error.
+> 
+> Also see
+> <https://insights.sei.cmu.edu/cert/2008/09/carpet-bombing-and-directory-poisoning.html>
+> and
+> <http://blog.acrossecurity.com/2012/02/downloads-folder-binary-planting.html>
+> plus
+> <https://insights.sei.cmu.edu/cert/2016/06/bypassing-application-whitelisting.html>
+> for "prior art".
+> 
+> 
+> Vulnerability #2
+> ~~~~~~~~~~~~~~~~
+> 
+> See <https://cwe.mitre.org/data/definitions/377.html>
+> and <https://cwe.mitre.org/data/definitions/379.html>
+> plus <https://capec.mitre.org/data/definitions/29.html>
+> 
+> stay tuned
+> Stefan Kanthak
 > 
 
-True, yes, harder to brute-force a identical private key, than a key with an identical fingerprint.
-
-However, if someone hadn't considered the possibility of a SHA1 collision attack, and a signature verification fails, despite the fingerprint they see matching, what % of GPG users would skip signature verification?
-Perhaps due to confusion/self-doubt/inexperience/other.
-Admittedly, this could be stepping into the realm of social engineering.
