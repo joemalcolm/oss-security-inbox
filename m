@@ -1,40 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/24/4
-Message-Id: <E1ezZFo-00031Q-45@romulus.home.bitnebula.com>
-Date: Fri, 23 Mar 2018 21:50:00 -0500
-From: Daniel Ruggeri <druggeri@...che.org>
-To: announce@...pd.apache.org, oss-security@...ts.openwall.com, security@...pd.apache.org
-Subject: CVE-2018-1283: Tampering of mod_session data for CGI applications
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/31/5
+Message-ID: <20180531185528.GA29608@openwall.com>
+Date: Thu, 31 May 2018 20:55:28 +0200
+From: Solar Designer <solar@...nwall.com>
+To: Stefan Kanthak <stefan.kanthak@...go.de>
+Cc: Pete Batard <pete@...o.ie>, oss-security@...ts.openwall.com
+Subject: Re: CVE request: rufus
 Content-Type: text/plain; charset=utf-8
 
+Stefan, Pete -
 
-CVE-2018-1283: Tampering of mod_session data for CGI applications.
+As a moderator for oss-security, I approved these messages for their
+technical substance, but I don't appreciate the personal
+(counter-)attacks.  Let's please refrain from discussing people's
+experience, behavior, etc. and focus solely on the technical issues.
 
-Severity: Medium
+(Unfortunately, when I say this I do point out an issue with behavior,
+but only as it relates to what I'd like not to see on this list.  I don't
+judge what's appropriate or not in general; I only set the policy here.)
 
-Vendor: The Apache Software Foundation
+On Thu, May 31, 2018 at 08:04:52PM +0200, Stefan Kanthak wrote:
+> READ THE SUBJECT!
+> Hint: it reads "CVE request".
 
-Versions Affected:
-httpd 2.4.0 to 2.4.29
+oss-security is no longer a place to make CVE requests.  Please see:
 
-Description:
+http://oss-security.openwall.org/wiki/mailing-lists/oss-security#cve-requests
 
-When mod_session is configured to forward its session data to CGI
-applications (SessionEnv on, not the default), a remote user may influence
-their content by using a "Session" header. This comes from the "HTTP_SESSION"
-variable name used by mod_session to forward its data to CGIs, since the
-prefix "HTTP_" is also used by the Apache HTTP Server to pass HTTP header
-fields, per CGI specifications.
+"Previously, one could request CVE IDs for issues in Open Source
+software from oss-security.  This is no longer the case.  Instead, please
+start by posting about the (to be made) public issue to oss-security
+(without a CVE ID), request a CVE ID from MITRE directly, and finally
+"reply" to your own posting when you also have the CVE ID to add.  With
+the described approach you would only approach MITRE after the issue is
+already public, but if you choose to do things differently and contact
+MITRE about an issue that is not yet public, then please do not disclose
+to them more than the absolute minimum needed for them to assign a CVE ID."
 
-The severity is set to Medium because "SessionEnv on" is not a default nor
-common configuration, it should be considered High when this is the case
-though, because of the possible remote exploitation.
+When the occasional CVE request messages that still arrive in here are
+otherwise on topic, like this time, we approve those anyway for their
+content.  If a CVE ID is desired, the sender is then expected to follow
+the above procedure.
 
-Mitigation:
-All httpd users should upgrade to 2.4.30 or later.
+Thanks,
 
-Credit:
-The issue was discovered internally by the Apache HTTP Server team.
-
-References:
-https://httpd.apache.org/security/vulnerabilities_24.html
+Alexander
