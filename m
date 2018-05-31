@@ -1,32 +1,99 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/08/5
-Message-ID: <CALCETrXb4H5qa1o9qbC=+VJ+y6PGdoO-XWV3QNtNxkwCWC2ZTw@mail.gmail.com>
-Date: Tue, 08 May 2018 17:38:28 +0000
-From: Andy Lutomirski <luto@...nel.org>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE-2018-1087: KVM incorrectly handles #DB exceptions while deferred by MOV SS/POP SS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/31/2
+Message-ID: <CAJt9-x4hcHPjWShOPMrZDQRoUvhJ7ZDo5ntANoTvR-m5ma2w6w@mail.gmail.com>
+Date: Thu, 31 May 2018 19:31:02 +0100
+From: Matthew Wild <mwild1@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: [CVE-2018-10847] prosody: insufficient stream header validation
 Content-Type: text/plain; charset=utf-8
 
-On x86, MOV SS and POP SS behave strangely if they encounter a data
-breakpoint.  If this occurs in a KVM guest, KVM incorrectly thinks that a
-#DB instruction was caused by the undocumented ICEBP instruction.  This
-results in #DB being delivered to the guest kernel with an incorrect RIP on
-the stack.  On most guest kernels, this will allow a guest user to DoS the
-guest kernel or even to escalate privilege to that of the guest kernel.
+Prosody security advisory 2018-05-31
+====================================
 
-Fixed upstream by commit 32d43cd391ba ("kvm/x86: fix icebp instruction
-handling").
+CVE-2018-10847
+------------
 
-If you are running a guest OS that runs untrusted userspace code and you
-are forced to run on an unpatched host, you may be able to mitigate this
-issue by inserting 15 consecutive NOP instructions in your SYSCALL64 and
-SYSCALL32 entry points as well as in your IDT vectors 3 and 4.  I am
-hesitant to submit such a patch for upstream Linux, since the bug is
-clearly a KVM bug and is now fixed.
+Project
+:   Prosody XMPP server
 
-Discovered by me.  A PoC can be found here:
+URL
+:   https://prosody.im/
 
-https://lkml.kernel.org/r/67e08b69817171da8026e0eb3af0214b06b4d74f.1525800455.git.luto@kernel.org/67e08b69817171da8026e0eb3af0214b06b4d74f.1525800455.git.luto@kernel.org
+CVE
+:   CVE-2018-10847
 
-Thank you to Paolo Bonzini and Linus Torvalds for handling most of the
-technical bits of this bug.
+Date
+:   2018-05-31
+
+Affected versions
+:   0.9.x prior to 0.9.14, 0.10.x prior to 0.10.2. All prior series affected.
+
+Fixed versions
+:   0.9.14, 0.10.2
+
+Description
+-----------
+
+Due to insufficient validation of client-provided parameters during XMPP
+stream restarts, authenticated users may override the realm associated
+with their session, potentially bypassing security policies and allowing
+impersonation.
+
+Details
+-------
+
+Prosody did not verify that the virtual host associated with a user
+session remained the same across stream restarts.
+
+In practice this means that a user may authenticate to XMPP host A
+and migrate their authenticated session to XMPP host B of the same
+Prosody instance.
+
+Note that successful authentication to host A is required to initiate
+the attack. This includes SASL ANONYMOUS.
+
+Overriding the authenticated username is not possible via this exploit,
+and this limits impersonation to usernames on host B that the attacker
+also has access to on host A. In the case of ANONYMOUS authentication,
+the username is random and enforced by the server.
+
+If a user has the account user1@...ta.example, they may impersonate
+user1@...tb.example, with security policies of host B applied.
+
+Affected configurations
+-----------------------
+
+Prosody deployments configured with multiple virtual hosts are
+vulnerable.
+
+Standard TCP connections and websocket connections are affected,
+but BOSH connections are not affected - i.e. deployments where
+the only access to Prosody is via BOSH are not vulnerable.
+
+Temporary mitigation
+--------------------
+
+Patch available.
+
+-  stable 0.10 branch:
+https://prosody.im/security/advisory_20180531/issue1147-0.10.1.patch
+- old stable 0.9 branc:
+https://prosody.im/security/advisory_20180531/issue1147-0.9.patch
+
+Advice
+------
+
+All users should upgrade to at least 0.9.14, 0.10.2 or check their OS
+distribution for security updates. Users of development branches (0.10,
+trunk) should upgrade to the latest nightly builds.
+
+Credits
+-------
+
+Reported by Princess Pepperoni from nonfree.pizza
+
+Links
+-----
+
+  - https://issues.prosody.im/1147
+  - https://blog.prosody.im/prosody-0-10-2-security-release/
