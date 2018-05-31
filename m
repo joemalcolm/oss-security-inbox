@@ -1,112 +1,145 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/25/5
-Message-Id: <E1fBJ96-00044j-0I@xenbits.xenproject.org>
-Date: Wed, 25 Apr 2018 12:03:36 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 259 - x86: PV guest may crash Xen with XPTI
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/31/4
+Message-ID: <678AB44AD82642D6993A19E3C8ADCB9E@W340>
+Date: Thu, 31 May 2018 20:04:52 +0200
+From: "Stefan Kanthak" <stefan.kanthak@...go.de>
+To: "Pete Batard" <pete@...o.ie>
+Cc: <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: rufus
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Pete,
 
-                    Xen Security Advisory XSA-259
-                              version 2
+> Hi Stefan,
+> 
+> Thank you very much for your very depreciative and less than informative 
+> report.
 
-                 x86: PV guest may crash Xen with XPTI
+As always, your poor reading skills perfectly match your poor programming
+skills.
+READ THE SUBJECT!
+Hint: it reads "CVE request".
 
-UPDATES IN VERSION 2
-====================
+> Since a vulnerability report works a lot better with an actual 
+> exploitation scenario conducted with the actual application, that we can 
+> look into, we will be waiting on that from you.
 
-Public release.
+"We" wait until the requested CVEs are assigned for both well-known
+vulnerabilities.
 
-ISSUE DESCRIPTION
-=================
+> Also, FYI, we did apply mitigation for #1 (DLL sideloading attacks) very 
+> shortly after the time it became publicized:
+> https://github.com/pbatard/rufus/commit/8473e9ef561295fd10dd9526010c1fd1cb1e6701
 
-The workaround for the Meltdown vulnerability (XSA-254) failed to deal
-with an error code path connecting the INT 80 handling with general
-exception handling.  This results in an unconditional write attempt of
-the value zero to an address near 2^64, in cases where a PV guest has no
-handler installed for INT 80 on one of its vCPU-s.
+OUCH!
+Or shall I write: BWAHAHAHA!?
 
-IMPACT
-======
+DLL spoofing was VERY well known long before 2016, and it is neither restricted
+to the CWD nor to runtime linking:
 
-A malicious or buggy guest may cause a hypervisor crash, resulting in
-a Denial of Service (DoS) affecting the entire host.
+a) in 1996, the NSA-sponsored report "An intro to... Windows NT security"
+   (its copy <http://www.blacksheepnetworks.com/security/info/nt/ntintrotosec.htm>
+   is unfortunately gone) was published;
 
-VULNERABLE SYSTEMS
-==================
+b) in 2000, Georgi Guninski published <http://www.guninski.com/officedll.html>
 
-All Xen versions which the XSA-254 fixes were applied to are vulnerable.
+b) in 2006, the paper "DLL Spoofing in Windows"
+   <https://www.it.uu.se/edu/course/homepage/sakdat/ht05/assignments/pm/programme/DLL_Spoofing_in_Windows.pdf>
+   was published;
 
-Only x86 systems are vulnerable.  ARM systems are not vulnerable.
+c) in 2008, Microsoft's David LeBlanc wrote
+   <https://blogs.msdn.microsoft.com/david_leblanc/2008/02/20/dll-preloading-attacks/>,
+   while CERT's Will Dormann wrote
+   <https://insights.sei.cmu.edu/cert/2008/09/carpet-bombing-and-directory-poisoning.html>
 
-Only x86 PV guests can exploit the vulnerability.  x86 PVH and HVM
-guests cannot exploit the vulnerability.
+d) in 2010 and 2012, Acros Security published <http://www.binaryplanting.com/>
+   plus <http://blog.acrossecurity.com/2012/02/downloads-folder-binary-planting.html>
 
-MITIGATION
-==========
+e) since then, Microsoft published
+   <https://technet.microsoft.com/en-us/library/2269637.aspx>,
+   <https://msdn.microsoft.com/en-us/library/ff919712.aspx>,
+   <https://msdn.microsoft.com/en-us/library/ms682586.aspx> and
+   <http://blogs.technet.com/b/srd/archive/2014/05/13/load-library-safely.aspx>
 
-Running only PVH or HVM guests avoids the vulnerability.
+I recommend to do YOUR homework first, BEFORE you dare to publish software
+riddled with well-known and well-documented vulnerabilities, which allows
+escalation of privilege.
+It's YOUR duty to protect YOUR users.
 
-CREDITS
-=======
+As a starting point, read and try to understand
+<https://skanthak.homepage.t-online.de/sentinel.html> and
+<https://skanthak.homepage.t-online.de/!execute.html>
 
-This issue was discovered by Andrew Cooper of Citrix.
+When done, continue with
+<https://skanthak.homepage.t-online.de/verifier.html> and
+<https://skanthak.homepage.t-online.de/minesweeper.html>
 
-RESOLUTION
-==========
+Until then, to protect your users, remove Rufus from the net!
 
-Applying the appropriate attached patch resolves this issue.
+> And of course, with proper non disparaging involvement of security 
+> researchers, who subscribe to the established responsible disclosure 
+> policy of their profession, we are always eager to improve on our 
+> mitigation fixes, if it turns out they aren't adequate.
+> 
+> However, we would appreciate if you refrained from jumping to erroneous 
+> conclusion about Rufus development being conducted by "bloody 
+> beginners", when it is clear that some of the "beginner's" 
+> vulnerabilities you list have long had some mitigation factors applied.
 
-xsa259.patch          xen-unstable, Xen 4.10.x ... xen 4.7.x
-xsa259-4.6.patch      Xen 4.6.x
+I recommend to read the advice other people gave you on
+<https://github.com/pbatard/rufus/issues/1009>: SOME mitigations are
+clearly NOT sufficient, especially if you choose to apply the WRONG
+and IMPROPER mitigations.
 
-$ sha256sum xsa259*
-5c14a90af066c952974324b361e2a428c280f876b854f0c85a78e8579054a4d1  xsa259.meta
-ff2efb5eb2502ded988d0aa15351030a15494a9e2223eafbb88377a8e4d39dcb  xsa259.patch
-c40bc8802077cf73f8393fb50574b7c7efbc4d127e202b0ebd757d34aa07aac3  xsa259-4.6.patch
-$
+Stefan Kanthak
 
-DEPLOYMENT DURING EMBARGO
-=========================
+PS: I might even show you that pasting the string "rufus.com" to the
+    window which has the focus yields interesting effects.
 
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJa4G58AAoJEIP+FMlX6CvZrqIH+QFfC5NOoFhVZAChTU0WQ7U6
-UwP7yEyLeY15VrGb4YvwzKhvTNwsRRiYTbTNB/QjAkrUkMRhBiUIz7mQqBl0Vc/N
-4zblt+YNdDMjhCllTjvtYU6OJzbsqvEBByB4mFrz6fxfZiuXIbOnMUOxLHRRdXLR
-6JR8+4RrheKNl9DF6lmLj50d3G/fKrNLY9id8VcDG1TGIB6E1CbJ6gibw7FiYDSq
-PETa5O1szo2FO2yY+xcMzzGLHv+oVeKZnmuq9KYtP7Q+G823Twz1RE6rTBEjwhs9
-sDGUlgZ48QVfSzer10syzyeX0p9hLHyKhlJnCrmCiywvKq68/uVexZFNcOKRPtE=
-=n+01
------END PGP SIGNATURE-----
-
-Download attachment "xsa259.meta" of type "application/octet-stream" (1700 bytes)
-
-Download attachment "xsa259.patch" of type "application/octet-stream" (1225 bytes)
-
-Download attachment "xsa259-4.6.patch" of type "application/octet-stream" (1283 bytes)
+> All the best,
+> 
+> /Pete
+> 
+> 
+> On 2018.05.31 17:05, Stefan Kanthak wrote:
+>> Hi @ll,
+>> 
+>> like its predecessors, the recently (2018-05-29) published version
+>> 3.0 of "Rufus" (<https://rufus.akeo.ie/downloads/rufus-3.0.exe> and
+>> <https://rufus.akeo.ie/downloads/rufus-3.0p.exe>) is riddled with
+>> bloody beginners errors, which allow arbitrary code execution WITH
+>> escalation of privilege.
+>> 
+>> Vulnerability #1
+>> ~~~~~~~~~~~~~~~~
+>> 
+>> See <https://cwe.mitre.org/data/definitions/426.html>
+>> and <https://cwe.mitre.org/data/definitions/427.html>
+>> plus <https://capec.mitre.org/data/definitions/471.html>.
+>> 
+>> Additionally see Microsoft's developer guidance
+>> <https://technet.microsoft.com/en-us/library/2269637.aspx>,
+>> <https://msdn.microsoft.com/en-us/library/ff919712.aspx>,
+>> <https://msdn.microsoft.com/en-us/library/ms682586.aspx> und
+>> <http://blogs.technet.com/b/srd/archive/2014/05/13/load-library-safely.aspx>
+>> for avoiding this bloody beginner's error.
+>> 
+>> Also see
+>> <https://insights.sei.cmu.edu/cert/2008/09/carpet-bombing-and-directory-poisoning.html>
+>> and
+>> <http://blog.acrossecurity.com/2012/02/downloads-folder-binary-planting.html>
+>> plus
+>> <https://insights.sei.cmu.edu/cert/2016/06/bypassing-application-whitelisting.html>
+>> for "prior art".
+>> 
+>> 
+>> Vulnerability #2
+>> ~~~~~~~~~~~~~~~~
+>> 
+>> See <https://cwe.mitre.org/data/definitions/377.html>
+>> and <https://cwe.mitre.org/data/definitions/379.html>
+>> plus <https://capec.mitre.org/data/definitions/29.html>
+>> 
+>> stay tuned
+>> Stefan Kanthak
+>>
