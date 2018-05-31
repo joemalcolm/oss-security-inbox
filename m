@@ -1,36 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/18/1
-Message-ID: <CAEccTyxgEHqpH3a5fa+Yj+AptwyATbau8T24b8JjU41mP_d01w@mail.gmail.com>
-Date: Sun, 18 Nov 2018 09:37:02 -0600
-From: Sean Owen <srowen@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2018-17190: Unsecured Apache Spark standalone executes user code
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/31/1
+Message-ID: <77B308CE34E747C3AE00239F60DBAEE4@W340>
+Date: Thu, 31 May 2018 18:05:19 +0200
+From: "Stefan Kanthak" <stefan.kanthak@...go.de>
+To: <oss-security@...ts.openwall.com>
+Cc: <pete@...o.ie>
+Subject: CVE request: rufus
 Content-Type: text/plain; charset=utf-8
 
-Severity: Low
+Hi @ll,
 
-Vendor: The Apache Software Foundation
+like its predecessors, the recently (2018-05-29) published version
+3.0 of "Rufus" (<https://rufus.akeo.ie/downloads/rufus-3.0.exe> and
+<https://rufus.akeo.ie/downloads/rufus-3.0p.exe>) is riddled with
+bloody beginners errors, which allow arbitrary code execution WITH
+escalation of privilege.
 
-Versions Affected:
-All versions of Apache Spark
+Vulnerability #1
+~~~~~~~~~~~~~~~~
 
-Description:
-Spark's standalone resource manager accepts code to execute on a 'master' host,
-that then runs that code on 'worker' hosts. The master itself does not, by
-design, execute user code. A specially-crafted request to the master can,
-however, cause the master to execute code too. Note that this does not affect
-standalone clusters with authentication enabled. While the master host
-typically has less outbound access to other resources than a worker, the
-execution of code on the master is nevertheless unexpected.
+See <https://cwe.mitre.org/data/definitions/426.html>
+and <https://cwe.mitre.org/data/definitions/427.html>
+plus <https://capec.mitre.org/data/definitions/471.html>.
 
-Mitigation:
-Enable authentication on any Spark standalone cluster that is not otherwise
-secured from unwanted access, for example by network-level restrictions. Use
-spark.authenticate and related security properties described at
-https://spark.apache.org/docs/latest/security.html
+Additionally see Microsoft's developer guidance
+<https://technet.microsoft.com/en-us/library/2269637.aspx>,
+<https://msdn.microsoft.com/en-us/library/ff919712.aspx>,
+<https://msdn.microsoft.com/en-us/library/ms682586.aspx> und
+<http://blogs.technet.com/b/srd/archive/2014/05/13/load-library-safely.aspx>
+for avoiding this bloody beginner's error.
 
-Credit:
-Andre Protas, Apple Information Security
+Also see
+<https://insights.sei.cmu.edu/cert/2008/09/carpet-bombing-and-directory-poisoning.html>
+and
+<http://blog.acrossecurity.com/2012/02/downloads-folder-binary-planting.html>
+plus
+<https://insights.sei.cmu.edu/cert/2016/06/bypassing-application-whitelisting.html>
+for "prior art".
 
-References:
-https://spark.apache.org/security.html
+
+Vulnerability #2
+~~~~~~~~~~~~~~~~
+
+See <https://cwe.mitre.org/data/definitions/377.html>
+and <https://cwe.mitre.org/data/definitions/379.html>
+plus <https://capec.mitre.org/data/definitions/29.html>
+
+stay tuned
+Stefan Kanthak
