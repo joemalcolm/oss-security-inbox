@@ -1,32 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/24/1
-Message-ID: <alpine.GSO.2.20.1811231930580.16715@scrappy.simplesystems.org>
-Date: Fri, 23 Nov 2018 19:33:55 -0600 (CST)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: Crashes and memory safety bugs in dcraw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/01/3
+Message-ID: <CAK0qHnrDU3PVMWdeBEZjatHGjiB8SBbmk1UMuPEphvMuCHkbhA@mail.gmail.com>
+Date: Fri, 1 Jun 2018 10:16:50 -0700
+From: Denis Magda <dmagda@...che.org>
+To: announce@...che.org, dev <dev@...ite.apache.org>, user@...ite.apache.org,  oss-security@...ts.openwall.com, "Rai, Harendra" <harendra.rai@....com>
+Subject: [CVE-2014-0114]: Apache Ignite is vulnerable to existing CVE-2014-0114
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 23 Nov 2018, Ian Zimmerman wrote:
-> An important side note: because dcraw intentionally doesn't provide a
-> library, only an executable, code from it is bundled in at least some
-> applications that use it; thus updating the dcraw package in a distro
-> will not by itself be the end of this problem for the distro.  One such
-> application : RawTherapee
+[CVE-2014-0114]: Apache Ignite is vulnerable to existing CVE-2014-0114
 
-GraphicsMagick also bundles some version of dcraw for its Microsoft 
-Windows builds.  It is executed as an external program so if it 
-becomes corrupted, it will not corrupt the invoking application.
+Severity: Important
 
-Another consideration is that the dcraw author has huge sample image 
-archive that he is only willing to sell for private use.  This means 
-that other projects (including those which derived code from dcraw) 
-might not work correctly with as many input files since they have not 
-done as much validation.
+Vendor: The Apache Software Foundation
 
-Bob
--- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
-Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
+Versions Affected: Apache Ignite 2.4 or earlier
+
+Impact:
+An attacker can execute arbitrary code on Ignite nodes in the case when
+Ignite classpath contains arbitrary vulnerable classes.
+
+Description:
+Apache Ignite used commons-beanutils-1.8.3.jar library which did not
+suppress the class property, which allowed remote attackers to "manipulate"
+the ClassLoader and execute arbitrary code via the class parameter, as
+demonstrated by the passing of this parameter to the getClass method of the
+ActionForm object in Struts 1.
+
+Mitigation:
+•    All Ignite versions: make sure there are no vulnerable classes among
+your custom code used in Apache Ignite.
+•    Upgrade to Apache Ignite 2.5 or later version
+
+Credit:
+Harendra Rai of NCR Corporation discovered the impact of the existing
+vulnerability on Apache Ignite.
+
+References:
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0114
+
