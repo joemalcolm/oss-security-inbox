@@ -1,45 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/02/1
-Message-ID: <CAG8b5tQFCzHRn5WY_DHN9prhKSqG2qVDQxbssTyfoBm3rZmH8A@mail.gmail.com>
-Date: Sun, 2 Dec 2018 12:30:51 +0530
-From: Dhiraj Mishra <mishra.dhiraj95@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: ww9210@...il.com
-Subject: Re: fwd: [vs-plain] Kernel heap overflow in bpf leading to LPE (exploit provided)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/01/4
+Message-ID: <1c871d1e-9ed7-3926-7e75-1bce238c79d6@yahoo.fr>
+Date: Fri, 1 Jun 2018 17:11:41 +0200
+From: Lionel Debroux <lionel_debroux@...oo.fr>
+To: Stefan Kanthak <stefan.kanthak@...go.de>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE request: rufus
 Content-Type: text/plain; charset=utf-8
 
-Hey,
+Hello Stefan,
 
-Just wanted to know is there any CVE assigned to this issue?
+Like Henri and certainly others, I've been appreciating the technical
+content from your advisories for years. The tone sometimes looked dry,
+even slightly abrasive, but it was tolerable.
 
+This time, I think that you're going too far - well into the aggressive,
+arrogant, abusive territory. It's not the technical background, which
+remains sound as usual, it's the tone.
+Sure, Pete's first reply wasn't fully nice, but clearly, to begin with,
+you could have done *a lot* better (more constructive) than
+1) posting about "bloody beginners" and failing to post details about
+what's wrong with that installer. That's what he rightfully pointed.
+Pete is usually nice enough to nice people, you know.
+2) getting on your high horses in your reply to his reply.
 
-
-Thanks
-
-On Sat, Nov 24, 2018 at 2:39 PM Yves-Alexis Perez <corsac@...ian.org> wrote:
-
-> On Fri, 2018-11-23 at 21:45 +0100, Yves-Alexis Perez wrote:
-> > On Fri, 2018-11-23 at 19:09 +0100, Greg KH wrote:
-> > > As was discussed further on one of the threads on this topic, it looks
-> > > like this is a 4.20-rc issue only, and that 4.19 does not have this
-> > > issue.  So it might not be relevant to any distro at all, but I suggest
-> > > that people test themselves to be sure.
-> >
-> > Hi Greg, thanks for the precision.
->
-> And considering no released kernel is vulnerable, here is the proof of
-> concept
-> code provided initially.
->
-> Regards,
-> --
-> Yves-Alexis
->
+Do you understand how your posts can come across as negative,
+interfering with the otherwise interesting meaning of your posts ?
+Toning down on those aspects will reduce the likelihood of derailing
+issue reports, and damaging your reputation over the long term.
 
 
--- 
-Regards
+Two cents from a bystander, anyway.
 
-*Dhiraj Mishra.*GPG ID :  51720F56   |  Finger Print : 1F6A FC7B 05AA CF29
-8C1C  ED65 3233 4D18 5172 0F56
 
+Regards,
+Lionel.
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
