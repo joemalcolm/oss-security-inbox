@@ -1,30 +1,137 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/29/1
-Message-ID: <nycvar.YSQ.7.76.1811291443100.21164@xnncv>
-Date: Thu, 29 Nov 2018 14:45:05 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Arash TC <tohidi.arash@...il.com>
-Subject: CVE-2018-19665 Qemu: bt: integer overflow in Bluetooth routines allows memory corruption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/04/1
+Message-Id: <13E3F1F3-822B-405C-A12B-CB6BB2E62F4C@beckweb.net>
+Date: Mon, 4 Jun 2018 14:37:28 +0200
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software. The following
+releases contain fixes for security vulnerabilities:
 
-An integer overflow resulting in memory corruption issue was found in various 
-Bluetooth functions. It could occur in routines wherein 'len' parameter is a 
-'signed int' which subsequently converts to an unsigned integer resulting in 
-memcpy() copying large amounts of memory.
+* AbsInt Astrée 1.0.7
+* Black Duck Detect 1.4.1
+* Black Duck Hub 4.0.1
+* CAS 1.4.2
+* Git 3.9.1
+* GitHub 1.29.1
+* GitHub Branch Source 2.3.5
+* GitHub Pull Request Builder 1.42.0
+* Kubernetes 1.7.1
 
-A user inside guest could use this flaw to crash the Qemu process resulting in 
-DoS.
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2018-06-04/
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2018-11/msg03570.html
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-This issue was reported by Arash TC
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+---
+
+SECURITY-810
+Various form validation methods in Git Plugin did not check the permission 
+of the user accessing them, allowing anyone with Overall/Read access to 
+Jenkins to cause Jenkins to send a GET request to a specified URL.
+
+Additionally, these form validation methods did not require POST requests, 
+resulting in a CSRF vulnerability.
+
+
+SECURITY-799
+A form validation method in GitHub Plugin did not check the permission of 
+the user accessing it, allowing anyone with Overall/Read access to Jenkins 
+to cause Jenkins to send a POST request to a specified URL.
+
+If that request’s HTTP response code indicates success, the form 
+validation is returning a generic success message, otherwise the HTTP 
+status code is returned.
+
+Additionally, this form validation method did not require POST requests, 
+resulting in a CSRF vulnerability.
+
+
+SECURITY-804
+GitHub Plugin did not perform permission checks on a method implementing 
+form validation. This allowed users with Overall/Read access to Jenkins to 
+connect to an attacker-specified URL using attacker-specified credentials 
+IDs obtained through another method, capturing credentials stored in 
+Jenkins.
+
+Additionally, this form validation method did not require POST requests, 
+resulting in a CSRF vulnerability.
+
+
+SECURITY-806
+A form validation method in GitHub Branch Source Plugin did not check the 
+permission of the user accessing them, allowing anyone with Overall/Read 
+access to Jenkins to cause Jenkins to send a GET request to a specified URL.
+
+Additionally, this form validation method did not require POST requests, 
+resulting in a CSRF vulnerability.
+
+
+SECURITY-805
+GitHub Pull Request Builder Plugin did not perform permission checks on 
+methods implementing form validation. This allowed users with Overall/Read 
+access to Jenkins to connect to an attacker-specified URL using attacker-
+specified credentials IDs obtained through another method, capturing 
+credentials stored in Jenkins, and to cause Jenkins to submit HTTP 
+requests to attacker-specified URLs.
+
+Additionally, these form validation methods did not require POST requests, 
+resulting in a CSRF vulnerability.
+
+
+SECURITY-883
+Kubernetes Plugin printed sensitive build variables, like passwords, to 
+the build log and master log, when using pipeline steps like
+withDockerRegistry.
+
+
+SECURITY-809
+A form validation method in GitHub Branch Source Plugin did not check the 
+permission of the user accessing them, allowing anyone with Overall/Read 
+access to Jenkins to cause Jenkins to send a GET request to a specified URL.
+
+Additionally, this form validation method did not require POST requests, 
+resulting in a CSRF vulnerability.
+
+
+SECURITY-807
+AbsInt Astrée Plugin did not perform permission checks on a method 
+implementing form validation. This allowed users with Overall/Read access 
+to Jenkins to run a user-specified program on the Jenkins master.
+
+Additionally, this form validation method did not require POST requests, 
+resulting in a CSRF vulnerability.
+
+
+SECURITY-865
+Black Duck Hub Plugin did not perform permission checks on methods 
+implementing form validation. This allowed users with Overall/Read access 
+to Jenkins to connect to an attacker-specified URL using attacker-
+specified credentials IDs obtained through another method, capturing 
+credentials stored in Jenkins, and to cause Jenkins to submit HTTP 
+requests to attacker-specified URLs. 
+
+Additionally, these form validation methods did not require POST requests, 
+resulting in a CSRF vulnerability.
+
+
+SECURITY-866
+Black Duck Detect Plugin did not perform permission checks on methods 
+implementing form validation. This allowed users with Overall/Read access 
+to Jenkins to connect to an attacker-specified URL using attacker-
+specified credentials IDs obtained through another method, capturing 
+credentials stored in Jenkins, and to cause Jenkins to submit HTTP 
+requests to attacker-specified URLs. 
+
+Additionally, these form validation methods did not require POST requests, 
+resulting in a CSRF vulnerability.
+
