@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1664" "Wednesday" "20" "April" "2016" "11:18:32" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20160420091832.GA580@lorien.valinor.li>" "52" "[oss-security] CVE Request: perl: denial-of-service / Regexp-matching \"hangs\" indefinitely on illegal input using binmode :utf8 using 100%CPU" nil nil nil "4" "2016042009:18:32" "[oss-security] CVE Request: perl: denial-of-service / Regexp-matching \"hangs\" indefinitely on illegal input using binmode :utf8 using 100%CPU" (number mark "U       carnil@debia Apr 20   52/1664  " thread-indent "\"[oss-security] CVE Request: perl: denial-of-service / Regexp-matching \"hangs\" indefinitely on illegal input using binmode :utf8 using 100%CPU\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1251" "Tuesday" "5" "June" "2018" "10:36:05" "-0400" "P. Taylor Goetz" "ptgoetz@apache.org" "<7ACF84EA-55E8-419D-B4B7-BE43C60070A5@apache.org>" "40" "[oss-security] [CVE-2018-8008] Apache Storm arbitrary file write vulnerability" nil nil nil "6" "2018060514:36:05" "[oss-security] [CVE-2018-8008] Apache Storm arbitrary file write vulnerability" (number mark "U       ptgoetz@apac Jun  5   40/1251  " thread-indent "\"[oss-security] [CVE-2018-8008] Apache Storm arbitrary file write vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3780 invoked by uid 550); 20 Apr 2016 09:18:46 -0000
+Received: (qmail 1471 invoked by uid 550); 5 Jun 2018 14:47:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,95 +12,75 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3760 invoked from network); 20 Apr 2016 09:18:46 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=TPupL36KyQLuX7t7VeT6uGjEW4ULTCMiVLhbbJoc/4Y=;
-        b=bDeOUwPuShxx8AjugvL6jZ++bOpI55xCsRjNxfOBEHxJ26fOaeVwnnsoLtjVtYLLzc
-         moBSt7DAwPodhUX0Z3T2NxMgqroHV5DaKnQLXcnX9sGqsjNL7cqV6qQ1KHURkDDCXXFn
-         M8nHBBenAFl67wjgh8mBfxvoDhjXt/7hA8Bw0sxuCAJguwnIjIgQ9BC7TyVpdibrAgjm
-         4hdpsRN+JSgmH1SvK0K28eo7ipCQ6saE4XAK2KF9MdFJPU7z2+4I4fORCpkXG6UXxCCI
-         F/VL82Au0Qmm6iW+BJqasymiVlvpv0kkHYH+jktpTKw3kgCkMIdg6YWVAH36QIdh66u/
-         WxOw==
+Received: (qmail 22378 invoked from network); 5 Jun 2018 14:36:18 -0000
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :mime-version:content-disposition:user-agent;
-        bh=TPupL36KyQLuX7t7VeT6uGjEW4ULTCMiVLhbbJoc/4Y=;
-        b=WcsWvSbccnmb6h3IB/lWTaTMZ4a+j6SvZrGqjVTUH7znZKQ0uqIq6kQSac3fJXew/X
-         iLAr0ePRjG1YVtn3DGsR6Y1d9jiYrcPi9p4gpGCQQMgnytYsyhG291vJ4tmjwwjleWU9
-         T5huhUYJ42OjSkLbqZhKyTYH7j2Q6x9pR8EtFAaNjXZK37Wx2lcskz/fWMV69CkOG8GV
-         Zg8EVer4zpFHAWuOae+aOdeYRs9F3X1i/jpGRSeprtUsf9aXwdJyXGHyGifjpieUKTVu
-         vLiSLODnxWAjMllQAQq096qwbZe92nOOP16MpBIbg8F9Yl5KYZ633uXPoxA5DblA8482
-         MTKg==
-X-Gm-Message-State: AOPr4FUAR40vaWguT2jPR65Qm7ews3bTnNgJp+xte7DpNH4L6YaTZ8SLcbkZa6yEoWbMbA==
-X-Received: by 10.194.144.10 with SMTP id si10mr7373394wjb.180.1461143914365;
-        Wed, 20 Apr 2016 02:18:34 -0700 (PDT)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Wed, 20 Apr 2016 11:18:32 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: OSS Security Mailinglist <oss-security@lists.openwall.com>
-Cc: CVE Assignments MITRE <cve-assign@mitre.org>
-Message-ID: <20160420091832.GA580@lorien.valinor.li>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="qDbXVdCdHGoSgWSk"
-Content-Disposition: inline
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Subject: [oss-security] CVE Request: perl: denial-of-service / Regexp-matching "hangs"
- indefinitely on illegal input using binmode :utf8 using 100%CPU
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:content-transfer-encoding:mime-version
+         :subject:message-id:date:to;
+        bh=0+Pk94rkXlG45RRDKdATBmSMPPQ3ljSrqg7eu7+/AWE=;
+        b=WOwJvEe480b1LkxH6DY/qC2atDk0hq/EX4odMsZFalLB5UPT3U/Xr7hNDJKfAORMpK
+         Jq7gnwWlw0cB1GMZm4cWRwKj6/7pvYYzHukwh11xs0bbRG1V25uQdPh1Bmo88mrNaJhy
+         eN7xnS035NK/xSvADp8qaL7Ta/e1XlcHNBP49Uqa7J8Hc6JMrP8lZauQENFnrBz5upds
+         GUrdwj2rAOktoCUqant9ThbiQVjaTNpfbYGtfj8AGElSZ0Y2glJETbmPLjOIbBzDyKWj
+         Zn1ApdGOZk6HYPKkcWRouZluekWC1X4aHX9CpnexMwH2gPMZ2vkB4Prza55TDu30lgU1
+         hjFg==
+X-Gm-Message-State: APt69E1tvcNcjwgAu+jN23ZbRo1nZ/sq0gHUNXG5Vsrj89Hnpcl73V11
+	Pd6P7QQECMwne+rZ889OczQ=
+X-Google-Smtp-Source: ADUXVKLWtBwolx2aRWiguc5WobO7otQopRqpyN+t2Juh3Sg4Vo9O4usXYPkRQMy1Icpx5I/jipR2CQ==
+X-Received: by 2002:a0c:d972:: with SMTP id t47-v6mr24109434qvj.128.1528209366429;
+        Tue, 05 Jun 2018 07:36:06 -0700 (PDT)
+From: "P. Taylor Goetz" <ptgoetz@apache.org>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 11.3 \(3445.6.18\))
+Message-Id: <7ACF84EA-55E8-419D-B4B7-BE43C60070A5@apache.org>
+Date: Tue, 5 Jun 2018 10:36:05 -0400
+To: user@storm.apache.org,
+ dev@storm.apache.org,
+ announce@apache.org,
+ Apache Security Team <security@apache.org>,
+ oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3445.6.18)
+Subject: [oss-security] [CVE-2018-8008] Apache Storm arbitrary file write vulnerability
 
---qDbXVdCdHGoSgWSk
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+CVE-2018-8008: Apache Storm arbitrary file write vulnerability
 
-Hi
+Severity: Important
 
-A bug in perl can cause regular expressions an malformed UTF8 inputs
-to go into a forever loop and consume 100% CPU. The issue was found to
-drive a realworld web application into an infinite loop"
+Vendor:
+The Apache Software Foundation
 
-The Upstream bugreport about this issue:
+Versions Affected:
+Apache Storm 1.2.1
+Apache Storm 1.1.2
 
-https://rt.perl.org/Public/Bug/Display.html?id=123562
+Description:
+Apache Storm version 1.0.6 and earlier, 1.2.1 and earlier, and version 1.1.=
+2 and earlier expose an arbitrary file write vulnerability, that can be ach=
+ieved using a specially crafted zip archive (affects other archives as well=
+, bzip2, tar, xz, war, cpio, 7z), that holds path traversal filenames. So w=
+hen the filename gets concatenated to the target extraction directory, the =
+final path ends up outside of the target folder.
 
-Upstream commit:
+Mitigation:
+1.2.1 users should upgrade to version 1.2.2.
+1.1.2 users should upgrade to version 1.1.3.
+1.0.6 users should upgrade to version 1.1.3.
 
-http://perl5.git.perl.org/perl.git/commitdiff/22b433eff9a1ffa2454e18405a56650f07b385b5
-(which e.g. has been as well cherry-picked back to the maint-5.22
-branch).
+Apache Storm 1.2.2 artifacts are available for immediate download here:
 
-It as well was reported in Debian as:
+http://www.us.apache.org/dist/storm/apache-storm-1.2.2/
 
-https://bugs.debian.org/821848
+Apache Storm 1.1.3 artifacts are available for immediate download here:
 
-Could you assign a CVE for this issue?
+http://www.us.apache.org/dist/storm/apache-storm-1.1.3/
 
-Regards,
-Salvatore
+Credit:
+This issue was discovered by Snyk Security Research Team
 
---qDbXVdCdHGoSgWSk
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+References:
+http://storm.apache.org/2018/06/04/storm122-released.html
+http://storm.apache.org/2018/06/04/storm113-released.html
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCgAGBQJXF0loAAoJEAVMuPMTQ89E8BQP/2ZDAT0JrxwPbEYFa3zwsmuN
-Kz4EDeYaneKDF1ZPdY/ELeZH7cikv9Vo/3csRvR53C9qiCjop/O3tX9T5wuRFU/C
-e/t/1guMbPxSKZ0CE+DVKDP+YtKnqtNIsU/3ZHoAklzw/yBR/ersW1PFLkzfwdvp
-fhUul4GdUzjVzshV1S3FjrgVXleetTKxXgleLNl/+il3j/0LjH8d+kEAk+E+FW6F
-NK2HNJ2tH2iFTT/qvqVtcyHLd64c0FbYb/A6RCI9vIvI0eaRlEWASHCTHgD1NzZb
-qKBO/0tbBYP4ixsPqPrsh9ItzlPgRSSvjWMl0vwXL5GyyzQGd4g3ufoUHlg3ZzQY
-jShlQytQSF6aTF5x0W39lG+97v1mUSCgPmxEyl6DSuVJy/vohZlcyaePoDQ7/LIL
-FJp84MOQEcxoHBkYoBwDKOusvq92m41LfMn5XmNoqjnYBx56QeVogElxLHilSxbY
-d9wvu6t3sZs83nxHY6A5ILRYwH0Q9xotROHY1dLlzJQ5dX4v2KfgQbcVEsxhkJ/u
-GalJwaYouAasxjIj0yrUA0mme0h5yRuU2tsUhDX/LP+RAkMN0JEQOOPNMN86NZ/j
-Y7iLR52eVsSi3MrSkoF0k32URthp/R/UqWF8AXYqINFR9AHUcel0i/iH9mtuEFK1
-BNnDurEuSyBv4PCkOXoz
-=FIul
------END PGP SIGNATURE-----
-
---qDbXVdCdHGoSgWSk--
+P. Taylor Goetz=
