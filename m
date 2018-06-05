@@ -1,47 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/22/5
-Message-ID: <BN4PR11MB0882F9FE65C1607B1F2A45BDAAEC0@BN4PR11MB0882.namprd11.prod.outlook.com>
-Date: Mon, 22 Jan 2018 17:20:36 +0000
-From: Mikhail Utin <mikhailutin@...mail.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: How to deal with reporters who don't want their bugs fixed?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/05/3
+Message-ID: <MWHPR15MB1711FD389FCC54BF5F9FB74A99660@MWHPR15MB1711.namprd15.prod.outlook.com>
+Date: Tue, 5 Jun 2018 17:11:11 +0000
+From: "Rai, Harendra" <Harendra.Rai@....com>
+To: Denis Magda <dmagda@...che.org>, "announce@...che.org" <announce@...che.org>, dev <dev@...ite.apache.org>, "user@...ite.apache.org" <user@...ite.apache.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RE: [CVE-2014-0114]: Apache Ignite is vulnerable to existing CVE-2014-0114
 Content-Type: text/plain; charset=utf-8
 
- r.hering@....de <r.hering@....de> wrote:
+I found other security issues and I have created a bug. https://issues.apache.org/jira/browse/IGNITE-8713
 
 
-Keeping it individual without public announced maximum embargo time would
-also help prevent folks from jumping to 0daying everything per default:)
+Harendra Rai
+Software Engineer
+NCR Corporation
+office: 770.495.2864
+mobile: 248.787.2876
+harendra.rai@....com<mailto:harendra.rai@....com>
+www.ncr.com<http://www.ncr.com>
+[cid:image003.png@...0405E.86F4AD70]
 
+From: Denis Magda [mailto:dmagda@...che.org]
+Sent: Friday, June 01, 2018 1:17 PM
+To: announce@...che.org; dev <dev@...ite.apache.org>; user@...ite.apache.org; oss-security@...ts.openwall.com; Rai, Harendra <Harendra.Rai@....com>
+Subject: [CVE-2014-0114]: Apache Ignite is vulnerable to existing CVE-2014-0114
 
-However, to me it is pure "Security by Obscurity" in a bit different wording. It never worked. Simply think that somebody else knows the secret and with your help continues using that.
+[CVE-2014-0114]: Apache Ignite is vulnerable to existing CVE-2014-0114
 
+Severity: Important
 
-"hiding intention for fame / paper publications / product selling" Hiding is not good. We are not monks and Security is not our God. Things like publications and selling require time and actually help to move things forward.
+Vendor: The Apache Software Foundation
 
+Versions Affected: Apache Ignite 2.4 or earlier
 
-Mikhail Utin, CISSP
+Impact:
+An attacker can execute arbitrary code on Ignite nodes in the case when Ignite classpath contains arbitrary vulnerable classes.
 
+Description:
+Apache Ignite used commons-beanutils-1.8.3.jar library which did not suppress the class property, which allowed remote attackers to "manipulate" the ClassLoader and execute arbitrary code via the class parameter, as demonstrated by the passing of this parameter to the getClass method of the ActionForm object in Struts 1.
 
-________________________________
-From: r.hering@....de <r.hering@....de>
-Sent: Monday, January 22, 2018 05:49
-To: oss-security@...ts.openwall.com
-Subject: Re: [oss-security] How to deal with reporters who don't want their bugs fixed?
+Mitigation:
+•    All Ignite versions: make sure there are no vulnerable classes among your custom code used in Apache Ignite.
+•    Upgrade to Apache Ignite 2.5 or later version
 
-Point is, many "security researchers" overly pretend to work for security
-hiding intention for fame / paper publications / product selling.
+Credit:
+Harendra Rai of NCR Corporation discovered the impact of the existing vulnerability on Apache Ignite.
 
-Accept unnecessary long embargoes then you support this behaviour but
-might provide patches faster after public release.
-Reject unnecessary long embargoes then you discourage this behaviour but
-might provide patches slower after public release next time.
+References:
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0114<https://urldefense.proofpoint.com/v2/url?u=https-3A__cve.mitre.org_cgi-2Dbin_cvename.cgi-3Fname-3DCVE-2D2014-2D0114&d=DwMFaQ&c=gJN2jf8AyP5Q6Np0yWY19w&r=9MqLDuI-YOHfnUsZj8zKAiE5cb4pd-EqZwfbefzAn18&m=O7V5T4VKtGxA1W7Dnp3dZmxv7FT2fy722704x0eAntk&s=shK2q4cumx70o8xqWHBcY19R-DVSgNIy32P-zTTbJNo&e=>
 
-I think the decision is always individual per vulnerability weighting how
-grave/easy to find/abuse it is vs. how interested you are in future early
-reports.
-Keeping it individual without public announced maximum embargo time would
-also help prevent folks from jumping to 0daying everything per default:)
-
-(°X|
-
+Content of type "text/html" skipped
