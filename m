@@ -1,24 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/25/5
-Message-Id: <0B04A942-3122-44F7-9102-F714F14771EF@beckweb.net>
-Date: Thu, 25 Jan 2018 16:59:35 +0100
-From: Daniel Beck <ml@...kweb.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Jenkins Script Security Plugin 1.36 and earlier arbitrary file read vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/05/2
+Message-Id: <7ACF84EA-55E8-419D-B4B7-BE43C60070A5@apache.org>
+Date: Tue, 5 Jun 2018 10:36:05 -0400
+From: "P. Taylor Goetz" <ptgoetz@...che.org>
+To: user@...rm.apache.org, dev@...rm.apache.org, announce@...che.org, Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com
+Subject: [CVE-2018-8008] Apache Storm arbitrary file write vulnerability
 Content-Type: text/plain; charset=utf-8
 
+CVE-2018-8008: Apache Storm arbitrary file write vulnerability
 
-> On 11. Dec 2017, at 15:27, Daniel Beck <ml@...kweb.net> wrote:
-> 
-> SECURITY-663
-> Users with the ability to configure sandboxed Groovy scripts are able to
-> use a type coercion feature in Groovy to create new `File` objects from
-> strings. This allowed reading arbitrary files on the Jenkins master file
-> system.
-> 
-> Such a type coercion is now subject to sandbox protection and considered
-> to be a call to the `new File(String)` constructor for the purpose of
-> in-process script approval.
+Severity: Important
 
-CVE-2017-1000505
+Vendor:
+The Apache Software Foundation
 
+Versions Affected:
+Apache Storm 1.2.1
+Apache Storm 1.1.2
+
+Description:
+Apache Storm version 1.0.6 and earlier, 1.2.1 and earlier, and version 1.1.2 and earlier expose an arbitrary file write vulnerability, that can be achieved using a specially crafted zip archive (affects other archives as well, bzip2, tar, xz, war, cpio, 7z), that holds path traversal filenames. So when the filename gets concatenated to the target extraction directory, the final path ends up outside of the target folder.
+
+Mitigation:
+1.2.1 users should upgrade to version 1.2.2.
+1.1.2 users should upgrade to version 1.1.3.
+1.0.6 users should upgrade to version 1.1.3.
+
+Apache Storm 1.2.2 artifacts are available for immediate download here:
+
+http://www.us.apache.org/dist/storm/apache-storm-1.2.2/
+
+Apache Storm 1.1.3 artifacts are available for immediate download here:
+
+http://www.us.apache.org/dist/storm/apache-storm-1.1.3/
+
+Credit:
+This issue was discovered by Snyk Security Research Team
+
+References:
+http://storm.apache.org/2018/06/04/storm122-released.html
+http://storm.apache.org/2018/06/04/storm113-released.html
+
+P. Taylor Goetz
