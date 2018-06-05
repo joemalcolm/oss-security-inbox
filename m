@@ -1,45 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/23/1
-Message-ID: <97a50aff-565f-867a-209c-4c1e93166c9d@customcrypto.com>
-Date: Mon, 22 Jan 2018 19:42:23 -0800
-From: Tristan Henning <tristan@...tomcrypto.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/05/4
+Message-Id: <1E76A6EF-1593-4183-A222-CDDA8A32296E@beckweb.net>
+Date: Tue, 5 Jun 2018 21:04:43 +0200
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: How to deal with reporters who don't want their bugs fixed?
+Subject: Re: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-I don't know if you've all seen this, but, this is definitely how not to 
-run a bug bounty.
 
-http://www.digitalmunition.com/WhyIWalkedFrom3k.pdf
+> On 4. Jun 2018, at 14:37, Daniel Beck <ml@...kweb.net> wrote:
+> 
+> SECURITY-810
 
-And the /r/netsec discussion from reddit
+CVE-2018-1000182
 
-https://www.reddit.com/r/netsec/comments/7dc275/bug_bounty_hunter_walks_away_on_30k_bounty_from/
+> SECURITY-799
 
-TL;DR
-A researcher found major infrastructure issues and after clarification 
-of scope managed to compromise a very large part of DJI along with large 
-amounts of PII. DJI sicked legal on him and he was forced to walk from a 
-$30,000 bug bounty.
+CVE-2018-1000184
 
-This document and story received a large amount of traction in the 
-"hacking" community. How many bug hunters will be reporting issues to 
-DJI in the future? My guess, not a lot...
+> SECURITY-804
 
--Tristan
+CVE-2018-1000183
 
-On 1/22/2018 11:41 AM, Ian Zimmerman wrote:
-> On 2018-01-22 17:20, Mikhail Utin wrote:
->
->>> Keeping it individual without public announced maximum embargo time
->>> would also help prevent folks from jumping to 0daying everything per
->>> default:)
->> However, to me it is pure "Security by Obscurity" in a bit different
->> wording. It never worked. Simply think that somebody else knows the
->> secret and with your help continues using that.
-> I think you misunderstand the parent post.
->
-> Nobody is proposing that the embargo period for any _particular_ issue
-> be secret.  The proposal in the parent post was to not have a public
-> general embargo policy for _all_ issues present & future.
->
+> SECURITY-806
+
+CVE-2018-1000185
+
+> SECURITY-805
+
+CVE-2018-1000186
+
+> SECURITY-883
+
+CVE-2018-1000187
+
+> SECURITY-809
+
+CVE-2018-1000188
+
+> SECURITY-807
+
+CVE-2018-1000189
+
+> SECURITY-865
+
+CVE-2018-1000190
+
+> SECURITY-866
+
+CVE-2018-1000191
+
