@@ -1,87 +1,184 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/23/8
-Message-ID: <b175ea89-96b7-8645-4d82-1d8be96fc78e@securitum.pl>
-Date: Thu, 23 Aug 2018 09:50:08 +0200
-From: Dariusz Tytko <dariusz.tytko@...uritum.pl>
-To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSH Username Enumeration
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/07/3
+Message-ID: <CAK1mX7HgUV2_fcro107pDA8e5VNQD_NDcyz53QKZhhKFhAb3fA@mail.gmail.com>
+Date: Thu, 7 Jun 2018 19:32:22 +0300
+From: Andrey Gura <agura@...che.org>
+To: dev <dev@...ite.apache.org>
+Cc: Tomas Hoger <thoger@...hat.com>, oss-security@...ts.openwall.com,  "Rai, Harendra" <harendra.rai@....com>
+Subject: Re: [CVE-2014-0114]: Apache Ignite is vulnerable to existing CVE-2014-0114
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-We have published our writeup
-https://sekurak.pl/openssh-users-enumeration-cve-2018-15473/, hope it
-helps to better understanding the problem.
+I've looked to the problem and didn't see any problem with BeanUtils.
+Only module that depends on BeanUtils is Cassandra cache store in
+order to map POJO to CQL queries. Usages are only on Ignite side with
+configured Cassandra cache store and can't exploit described
+vulnerability from my point of view. All classes are already
+accessible on Ignite node (so class loader is also accessible without
+any exploites) and this classes don't exist on Cassandra side.
 
-Best regards,
-Dariusz Tytko
+I also don't see any reason to include BeanUtils library into Ignite
+.Net package because it never uses this library. Just a bug in build
+procedure.
 
+Thanks!
 
-W dniu 17.08.2018 o 20:31, Salvatore Bonaccorso pisze:
-> Hi,
+On Wed, Jun 6, 2018 at 7:08 PM, Denis Magda <dmagda@...che.org> wrote:
+> Hello Tomas,
 >
-> On Wed, Aug 15, 2018 at 09:05:58AM -0700, Qualys Security Advisory wrote:
->> Hi all,
->>
->> We sent the following email to openssh@...nssh.com and
->> distros@...openwall.org about an hour ago, and it was decided that we
->> should send it to oss-security@...ts.openwall.com right away (as far as
->> we know, no CVE has been assigned to this issue yet):
->>
->> ========================================================================
->>
->> While reviewing the latest OpenSSH commits, we stumbled across:
->>
->> https://github.com/openbsd/src/commit/779974d35b4859c07bc3cb8a12c74b43b0a7d1e0
->>
->> Date:   Tue Jul 31 03:10:27 2018 +0000
->>     delay bailout for invalid authenticating user until after the packet
->>     containing the request has been fully parsed. Reported by Dariusz Tytko
->>     and Michal Sajdak; ok deraadt
->>
->> We realized that without this patch, a remote attacker can easily test
->> whether a certain user exists or not (username enumeration) on a target
->> OpenSSH server:
->>
->>   87 static int
->>   88 userauth_pubkey(struct ssh *ssh)
->>   89 {
->>  ...
->>  101         if (!authctxt->valid) {
->>  102                 debug2("%s: disabled because of invalid user", __func__);
->>  103                 return 0;
->>  104         }
->>  105         if ((r = sshpkt_get_u8(ssh, &have_sig)) != 0 ||
->>  106             (r = sshpkt_get_cstring(ssh, &pkalg, NULL)) != 0 ||
->>  107             (r = sshpkt_get_string(ssh, &pkblob, &blen)) != 0)
->>  108                 fatal("%s: parse request failed: %s", __func__, ssh_err(r));
->>
->> The attacker can try to authenticate a user with a malformed packet (for
->> example, a truncated packet), and:
->>
->> - if the user is invalid (it does not exist), then userauth_pubkey()
->>   returns immediately, and the server sends an SSH2_MSG_USERAUTH_FAILURE
->>   to the attacker;
->>
->> - if the user is valid (it exists), then sshpkt_get_u8() fails, and the
->>   server calls fatal() and closes its connection to the attacker.
->>
->> We believe that this issue warrants a CVE; it affects all operating
->> systems, all OpenSSH versions (we went back as far as OpenSSH 2.3.0,
->> released in November 2000), and is easier to exploit than previous
->> OpenSSH username enumerations (which were all timing attacks):
->>
->> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2003-0190
->> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-5229
->> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-6210
-> This new issue got assigned CVE-2018-15473 by MITRE.
+> We've just updated the version of Binutils because Ignite doesn't use this
+> library directly. So we don't need to inject addBeanIntrospector call.
 >
-> Regards,
-> Salvatore
-
--- 
-Dariusz Tytko
-
-securitum.pl - bezpieczeństwo systemów IT.
-sekurak.pl   - piszemy o bezpieczeństwie.
-
+> Binutils are used by some dependencies like Cassandra. Let us confirm that
+> the dependencies shouldn't be upgraded.
+>
+> --
+> Denis
+>
+> On Wed, Jun 6, 2018 at 4:33 AM, Tomas Hoger <thoger@...hat.com> wrote:
+>
+>> Hi Denis!
+>>
+>> On Fri, 1 Jun 2018 10:16:50 -0700 Denis Magda wrote:
+>>
+>> > [CVE-2014-0114]: Apache Ignite is vulnerable to existing CVE-2014-0114
+>> >
+>> > Severity: Important
+>> >
+>> > Vendor: The Apache Software Foundation
+>> >
+>> > Versions Affected: Apache Ignite 2.4 or earlier
+>> >
+>> > Impact:
+>> > An attacker can execute arbitrary code on Ignite nodes in the case
+>> > when Ignite classpath contains arbitrary vulnerable classes.
+>> >
+>> > Description:
+>> > Apache Ignite used commons-beanutils-1.8.3.jar library which did not
+>> > suppress the class property, which allowed remote attackers to
+>> > "manipulate" the ClassLoader and execute arbitrary code via the class
+>> > parameter, as demonstrated by the passing of this parameter to the
+>> > getClass method of the ActionForm object in Struts 1.
+>>
+>> This announcement is very light on details.  Would it be possible to
+>> provide more details, ideally a link to the fix that was applied to
+>> address this issue?
+>>
+>> Searching for more information, I found out that the upstream Jira
+>> ticket for this issue should be:
+>>
+>> https://issues.apache.org/jira/browse/IGNITE-8472
+>>
+>> The ticket is non-public, but its content is leaked via a mailing list:
+>>
+>> https://www.mail-archive.com/search?l=issues%40ignite.
+>> apache.org&q=subject%3AIGNITE-8472
+>>
+>> This has some important info, indicating that the problem (only?)
+>> affects Ignite for .NET.  The reported problem basically seems to be:
+>> Ignite for .NET bundles commons-beanutils 1.8.3 and that should be
+>> upgraded to 1.9.2.  Looking into apache.ignite.2.4.0.nupkg and
+>> apache.ignite.2.5.0.nupkg, I can see that commons-beanutils upgrade as
+>> requested did happen in 2.5.0.
+>>
+>> Note that I do not see any commons-beanutils jar in
+>> apache-ignite-fabric-2.4.0-bin.zip and
+>> apache-ignite-fabric-2.5.0-bin.zip.  Are those, as well as source
+>> distribution, considered unaffected?
+>>
+>> Now back to the CVE - I do not believe that your re-use of the old
+>> CVE-2014-0114 is correct.  In the report, there was some ambiguity
+>> whether Struts or Commons-BeanUtils should be blamed for the flaw,
+>> however it seems to be explicit enough that the CVE-2014-0114 is for
+>> Struts:
+>>
+>> http://openwall.com/lists/oss-security/2014/06/15/10
+>>
+>> As noted in the mail, the problem wasn't fixed in Commons-BeanUtils,
+>> which only added mechanisms to make it easy for applications using
+>> Commons-BeanUtils to easily disable processing of the "class"
+>> property.  It did not even disable processing by default, as noted in
+>> the release notes:
+>>
+>> http://commons.apache.org/proper/commons-beanutils/
+>> javadocs/v1.9.2/RELEASE-NOTES.txt
+>>
+>> """
+>> Release 1.9.2 mainly addresses a potential security issue when accessing
+>> properties in an uncontrolled way. In a nutshell, if an application that
+>> uses
+>> Commons BeanUtils passes property paths from an external source directly to
+>> the getProperty() method of BeanUtilsBean, an attacker can access the class
+>> loader via the class property available on all Java objects.
+>>
+>> In version 1.9.2 now a special BeanIntrospector class was added which
+>> allows
+>> suppressing this property. Note that this BeanIntrospector is NOT enabled
+>> by
+>> default! Commons BeanUtils is a low-level library, and on this layer it
+>> cannot
+>> be decided whether access to a certain property is legal or not. Therefore,
+>> an application has to activate this suppressing BeanIntrospector
+>> explicitly.
+>> This can be done with the following lines of code:
+>>
+>> BeanUtilsBean bub = new BeanUtilsBean();
+>> bub.getPropertyUtils().addBeanIntrospector(
+>>     SuppressPropertiesBeanIntrospector.SUPPRESS_CLASS);
+>>
+>> Now all access to properties has to be done via the specially configured
+>> BeanUtilsBean instance. More information about this issue can be found at
+>> https://issues.apache.org/jira/browse/BEANUTILS-463 or in section 2.5
+>> of the user's guide.
+>> """
+>>
+>> Note that there was a request to assign a separate CVE for the
+>> BeanUtils part that was rejected (actually, CVE-2014-3540 was assigned
+>> and later rejected), see this post from Mitre for details:
+>>
+>> http://openwall.com/lists/oss-security/2014/07/08/1
+>>
+>> It has few parts that are relevant to Ignite:
+>>
+>> """
+>> In particular, the 1597344 change has this documentation:
+>>
+>>    Adding this instance as BeanIntrospector to an instance of
+>>    PropertyUtilsBean suppresses the class property; it can then no
+>>    longer be accessed.
+>>
+>> This is an additional step that would need to be followed for any
+>> currently shipped product that relies on commons-beanutils. Simply
+>> picking up version 1.9.2 does not solve the problem. The product's
+>> source code must additionally be modified by (for example) changing
+>> or adding an addBeanIntrospector method call.
+>> """
+>>
+>> Did Ignite get any other changes related to this issue apart from
+>> upgrading Commons-BeanUtils?  If not, Commons-BeanUtils upgrade should
+>> not be expected to solve the problem (if Ignite actually was affected /
+>> used Commons-BeanUtils in a vulnerable way, which isn't demonstrated in
+>> the IGNITE-8472).
+>>
+>> Another relevant part is:
+>>
+>> """
+>> If any other product makes a security announcement that they have
+>> added
+>> addBeanIntrospector(SuppressPropertiesBeanIntrospector.SUPPRESS_CLASS)
+>> or equivalent code as a change to the default behavior, then there can
+>> be an individual CVE ID for that product. However, if any other product
+>> simply makes a security announcement that they have decided to ship
+>> commons-beanutils 1.9.2 -- but the class property remains exposed in
+>> the product as it is shipped and installed by default -- then a CVE ID
+>> would not be assigned.
+>> """
+>>
+>> If Ignite got/gets a fix that leverages the SUPPRESS_CLASS from
+>> Commons-BeanUtils 1.9.2 to disable processing of the class property, it
+>> should get its own CVE assigned.
+>>
+>> --
+>> Tomas Hoger / Red Hat Product Security
+>>
