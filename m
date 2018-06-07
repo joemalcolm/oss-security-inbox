@@ -1,39 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/07/3
-Message-ID: <20180307110950.4eb041a8@redhat.com>
-Date: Wed, 7 Mar 2018 11:09:50 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: memcached UDP amplification attacks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/07/1
+Message-ID: <nycvar.YSQ.7.76.1806071203320.23724@wniryva>
+Date: Thu, 7 Jun 2018 12:08:19 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: ZDI Disclosures <zdi-disclosures@...ndmicro.com>
+Subject: CVE-2018-11806 Qemu: slirp: heap buffer overflow while reassembling fragmented datagrams
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 2 Mar 2018 21:42:30 -0700 Kurt Seifried wrote:
+   Hello,
 
-> I have assigned CVE-2018-1000115 to this issue:
-> 
-> Memcached version 1.5.5 contains an Insufficient Control of Network
-> Message Volume (Network Amplification, CWE-406) vulnerability in the
-> UDP support of the memcached server that can result in denial of
-> service via network flood (traffic amplification of 1:50,000 has been
-> reported by reliable sources). This attack appear to be exploitable
-> via network connectivity to port 11211 UDP. This vulnerability
-> appears to have been fixed in 1.5.6 due to the disabling of the UDP
-> protocol by default.
+A heap buffer overflow issue was found in the way Slirp networking back-end in 
+QEMU processes fragmented packets. It could occur while reassembling the 
+fragmented datagrams of an incoming packet.
 
-Minor nitpick, the description mentions 1:50,000 ratio, apparently
-based on the information in the following reference:
+A privileged user/process inside guest could use this flaw to crash the Qemu 
+process resulting in DoS OR potentially leverage it to execute arbitrary code 
+on the host with privileges of the Qemu process.
 
-> https://blogs.akamai.com/2018/03/memcached-fueled-13-tbps-attacks.html
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2018-06/msg01012.html
 
-where it's mentioned as:
+This issue was reported by Jskz - Zero Day Initiative (trendmicro.com).
 
-"""
-Worse, memcached can have an amplification factor of over 50,000,
-meaning a 203 byte request results in a 100 megabyte response.
-"""
+'CVE-2018-11806' assigned via -> https://cveform.mitre.org/
 
-However, 200 * 50k = 10m, not 100m.  Wonder if I'm doing my math wrong.
-
--- 
-Tomas Hoger / Red Hat Product Security
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
