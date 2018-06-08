@@ -1,32 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/20/3
-Message-ID: <20180920093210.GA8763@openwall.com>
-Date: Thu, 20 Sep 2018 11:32:10 +0200
-From: Solar Designer <solar@...nwall.com>
-To: Michael McNally <mcnally@....org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: ISC has issued new patch releases of BIND
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/08/2
+Message-ID: <167bc7e898d02f7bd13c43d272d64178f00e7e23.camel@debian.org>
+Date: Fri, 08 Jun 2018 21:36:09 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2018-12020 in GnuPG
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Sep 19, 2018 at 03:16:25PM -0800, Michael McNally wrote:
-> Details on the security vulnerability and the two operational
-> notifications can be found via the following links:
-> 
->    https://kb.isc.org/docs/cve-2018-5741
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Per oss-security list content guidelines, actual vulnerability detail
-must be included in postings (message body or text/plain attachment).
+Hi everybody,
 
-I've attached a text export of the above web page to this message.
-(I did not bother doing the same for the operational notifications.)
+just a heads up, since we weren't notified in advance and it's Friday evening
+(in Europe at least).
 
-Michael, I'd appreciate it if you start including such detail in your
-oss-security postings.  Including the links as well is great (such as
-for easy access to updated revisions while the links work); including
-only links is discouraged.
+There's a nasty vulnerability in GnuPG which can be apparently used to bypass
+signature verification when a program calls gpg to verify a signature and
+parses the output:
 
-Thanks,
+https://lists.gnupg.org/pipermail/gnupg-announce/2018q2/000425.html
+https://dev.gnupg.org/T4012
 
-Alexander
+It might be worth checking whether package managers signature verification is
+affected.
 
-View attachment "CVE-2018-5741_BIND_Update_policies_krb5-subdomain_and_ms-subdomain.txt" of type "text/plain" (7563 bytes)
+Apt doesn't seems affected at first sight (it uses gpgv) but we'll double
+check.
+
+Regards,
+- -- 
+Yves-Alexis
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEE8vi34Qgfo83x35gF3rYcyPpXRFsFAlsa2qkACgkQ3rYcyPpX
+RFv/vAf+MVxGn1N+UT1W6HLMnR2BJLcRI0emIAdYOW+HNoXGgAnRckQa2vbLv645
+bKdrpjGR8vsMMiCNmk2vUUOuV5lhfX4XN7ik9wyLpJhJWrxTZ+OdfIPwWE7dOj3x
+bsw+8gYi2gK6v274nUtFXbU2XcTCkgAlqcIfeJlhh8MLDqJ7Fka8YJO02EsW+pRa
+Bu2fblFm5P4TcTMOBjoX4zRHob4S2po57vCIgbA0GKLAzzjB8vWzPbo73waozvQR
+OAL69guzAFKIdVNZ4x4WOcgNoZt6/sx1DWs1+oYfhWC5TNlrK5HcfUmmZ5bq1ov3
+S8SJhFB1Q7c5xyCcmza8mQSwkBrpfA==
+=AI6O
+-----END PGP SIGNATURE-----
