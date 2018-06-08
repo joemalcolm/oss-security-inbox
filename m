@@ -1,39 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/20/4
-Message-ID: <20180720154723.5rgdhg2n5nj5bgce@jwilk.net>
-Date: Fri, 20 Jul 2018 17:47:24 +0200
-From: Jakub Wilk <jwilk@...lk.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/08/1
+Message-ID: <CAG_fn=VEy8E4C4gTC2wZ-FSma5Lh5c5mtxTmhfdFKN_TSjvggQ@mail.gmail.com>
+Date: Fri, 8 Jun 2018 19:38:27 +0200
+From: Alexander Potapenko <glider@...gle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: accountsservice: insufficient path check in user_change_icon_file_authorized_cb()
+Subject: CVE-2018-1000204: Linux kernel 3.18 to 4.16 infoleak due to incorrect handling of SG_IO ioctl
 Content-Type: text/plain; charset=utf-8
 
-* Matthias Gerstner <mgerstner@...e.de>, 2018-07-02, 16:38:
->>>I think the easiest way to fix this is to normalize the user supplied 
->>>filename e.g. using realpath()
->>
->>Using realpath(3) for access control is almost always a mistake: this 
->>function expands symlinks, including attacker-controlled symlinks.
->
->can you elaborate what your main worry of using realpath is in this 
->context?
+Hi all,
 
-AIUI, in your original patch, canonicalized path was used for prefix 
-check, but then the orignal was stored. If you used realpath() for 
-canonicalization, the attacker could make a symlink that points to 
-/usr/share/icons/moo.png, so that the check passes, and then switch 
-the symlink to something else.
+Linux Kernel version 3.18 to 4.16 incorrectly handles an SG_IO ioctl
+on /dev/sg0 (or any other SCSI device) with
+dxfer_direction=SG_DXFER_FROM_DEV and an empty 6-byte cmdp.
+This may lead to copying up to 1000 kernel heap pages to the userspace.
+See the PoC exploit attached.
 
-But in the patch that went upstream[0], it's the canonicalized path that 
-is stored, which is probably a good idea anyway.
+This bug has been fixed in the upstream kernel already:
+https://github.com/torvalds/linux/commit/a45b599ad808c3c982fdcdc12b0b8611c2f92824,
+and CVE-2018-1000204 has been assigned to it.
 
-Another problem with realpath(), unrelated to symlinks, is that if it's 
-run as root, it could reveal to the attacker whether an 
-otherwise-inaccessible directory exists. For example, 
-realpath("/home/bob/foobar/../../../usr/share/icons/moo.png", ...) would 
-succeed iff /home/bob/foobar/ existed.
-
-
-[0] https://cgit.freedesktop.org/accountsservice/commit/?id=f9abd359f71a5bce421b9ae23432f539a067847a
+The problem has limited scope, as users don't usually have permissions
+to access SCSI devices. On the other hand, e.g. the Nero user manual
+suggests doing `chmod o+r+w /dev/sg*` to make the devices accessible.
 
 -- 
-Jakub Wilk
+Alexander Potapenko
+Software Engineer
+
+Google Germany GmbH
+Erika-Mann-Straße, 33
+80636 München
+
+Geschäftsführer: Paul Manicle, Halimah DeLaine Prado
+Registergericht und -nummer: Hamburg, HRB 86891
+Sitz der Gesellschaft: Hamburg
+
+View attachment "sg_io_leak.c" of type "text/x-csrc" (1832 bytes)
