@@ -1,38 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/04/6
-Message-ID: <CAJ_zFkLmua6XK9iRV-TRQsXKXo=s9Y32FQjOM5UB_UPrrNsAxw@mail.gmail.com>
-Date: Tue, 4 Sep 2018 13:08:57 -0700
-From: Tavis Ormandy <taviso@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/09/1
+Message-ID: <44254614-42f1-9908-a55c-401d20ffc2bd@ruhr-uni-bochum.de>
+Date: Sat, 9 Jun 2018 02:02:43 +0200
+From: Marcus Brinkmann <marcus.brinkmann@...r-uni-bochum.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
+Subject: Re: CVE-2018-12020 in GnuPG
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Sep 4, 2018 at 1:03 PM Brandon Perry <bperry.volatile@...il.com>
-wrote:
+Hi,
 
->
->
-> > On Sep 4, 2018, at 2:59 PM, Tavis Ormandy <taviso@...gle.com> wrote:
-> >
-> > OK, well, the fixes missed 9.24 so vendors will have to either ship
-> patches
-> > once they land or wait for 9.25.
-> >
-> > $ ./gs -v
-> > GPL Ghostscript 9.24 (2018-09-03)
-> > Copyright (C) 2018 Artifex Software, Inc.  All rights reserved.
-> > $ ./gs -q -dSAFER -sDEVICE=ppmraw -f testcase.ps
-> > uid=1000(taviso) gid=1000(taviso)
-> >
-> > Let me know if anyone wants that testcase.
->
-> Hey Tavis, could I have a copy of the test case please? Thanks so much.
->
+On 06/08/2018 09:36 PM, Yves-Alexis Perez wrote:
+> Hi everybody,
+> 
+> just a heads up, since we weren't notified in advance and it's Friday evening
+> (in Europe at least).
 
-Sure, here it is.
+Yes.  I tried to disclose this responsibly with Werner Koch (and in
+coordination with other affected projects), but within two hours he did
+a unilateral full disclosure without getting back to me.
 
-Thanks, Tavis.
+:(
 
-Content of type "text/html" skipped
+> There's a nasty vulnerability in GnuPG which can be apparently used to bypass
+> signature verification when a program calls gpg to verify a signature and
+> parses the output:
+> 
+> https://lists.gnupg.org/pipermail/gnupg-announce/2018q2/000425.html
+> https://dev.gnupg.org/T4012
+> 
+> It might be worth checking whether package managers signature verification is
+> affected.
+> 
+> Apt doesn't seems affected at first sight (it uses gpgv) but we'll double
+> check.
 
-View attachment "bug699714.txt" of type "text/plain" (363 bytes)
+I am still handling this under responsible disclosure. This is why I
+have not spoken out yet, and the CVE is not public. But what you say is
+important and correct.
+
+Thanks,
+Marcus
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
