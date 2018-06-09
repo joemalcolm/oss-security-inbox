@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3109" "Monday" "20" "July" "2020" "14:44:48" "+0100" "Andrew Cooper" "andrew.cooper3@citrix.com" "<57e20b43-53cb-acc6-2634-4fc3b29e2312@citrix.com>" "111" "Re: [oss-security] Xen Security Advisory 329 v2 - Linux ioperm bitmap context switching issues" nil nil nil "7" "2020072013:44:48" "[oss-security] Xen Security Advisory 329 v2 - Linux ioperm bitmap context switching issues" (number mark "U       andrew.coope Jul 20  111/3109  " thread-indent "\"Re: [oss-security] Xen Security Advisory 329 v2 - Linux ioperm bitmap context switching issues\"\n") "<CAA8xKjVib9UERsMrAy3nNdVssNxLciXTmmhmXqq1gvhO16URew@mail.gmail.com>" ("<E1jw3ms-0006i6-Se@xenbits.xenproject.org>" "<CAA8xKjVib9UERsMrAy3nNdVssNxLciXTmmhmXqq1gvhO16URew@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Xen Security Advisory 329 v2 - Linux ioperm bitmap context switching issues" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2802" "Saturday" "9" "June" "2018" "02:02:43" "+0200" "Marcus Brinkmann" "marcus.brinkmann@ruhr-uni-bochum.de" "<44254614-42f1-9908-a55c-401d20ffc2bd@ruhr-uni-bochum.de>" "78" "Re: [oss-security] CVE-2018-12020 in GnuPG" "^Date:" nil nil "6" "2018060900:02:43" "[oss-security] CVE-2018-12020 in GnuPG" (number mark "        marcus.brink Jun  9   78/2802  " thread-indent "\"Re: [oss-security] CVE-2018-12020 in GnuPG\"\n") "<167bc7e898d02f7bd13c43d272d64178f00e7e23.camel@debian.org>" ("<167bc7e898d02f7bd13c43d272d64178f00e7e23.camel@debian.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 12286 invoked by uid 550); 20 Jul 2020 13:46:15 -0000
+Received: (qmail 9815 invoked by uid 550); 9 Jun 2018 09:00:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,160 +11,109 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11996 invoked from network); 20 Jul 2020 13:45:04 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=citrix.com; s=securemail; t=1595252704;
-  h=subject:to:cc:references:from:message-id:date:
-   mime-version:in-reply-to:content-transfer-encoding;
-  bh=OuiEP3D65JBIDm2R1AzKgKM4VFlaTnShCJIfjbHA2Dg=;
-  b=B3VNs0qNrEnQNC4UCVTiRCN2cewf1cElBIvDMzhuwiuwGC9ittyl6+7h
-   ZVrjdsklrGLMCnGUFheEyPClIoFRRe+3wN3cyJpfdyK0utD+evuiaP4Dy
-   NYtnBHwEW85vdy0sfhQVRPURn7l4FofCpGxNqK/0Vh5W/mjdapkw7n5VS
-   I=;
-Authentication-Results: esa5.hc3370-68.iphmx.com; dkim=none (message not signed) header.i=none
-IronPort-SDR: sNyUv7VO9pjGKXyswLM1TpeV6PWBf4YBhqlfyQbFFMeziSp3EwpWsVcfqABUCpw1FTCaHzUAiw
- ij+9alrRXwiPyLEBu6RgqkIuhM2WIGLbZSOWCqIIbO68a5oGUBt368oGDD0ovD2gTxmpgexUKM
- IxtU0mpQjgJv2B64F5+kc99RKPJavAYpwe3+EpvVgVOYKPcCJjIYnxqg0a86mOx6MBgv01FDqk
- pSc2vBe4DWoIs8K1Aw7NS9AJkkc8+b9OvYFvBzQr6fG4PvAmAMDLFn1LLnSNvZarYUi58i0etn
- H6c=
-X-SBRS: 2.7
-X-MesageID: 22950362
-X-Ironport-Server: esa5.hc3370-68.iphmx.com
-X-Remote-IP: 162.221.158.21
-X-Policy: $RELAYED
-X-IronPort-AV: E=Sophos;i="5.75,375,1589256000"; 
-   d="scan'208";a="22950362"
-To: Mauro Matteo Cascella <mcascell@redhat.com>,
-	<oss-security@lists.openwall.com>
-CC: <xen-announce@lists.xen.org>, <xen-devel@lists.xen.org>,
-	<xen-users@lists.xen.org>, Xen.org security team
-	<security-team-members@xen.org>
-References: <E1jw3ms-0006i6-Se@xenbits.xenproject.org>
- <CAA8xKjVib9UERsMrAy3nNdVssNxLciXTmmhmXqq1gvhO16URew@mail.gmail.com>
-From: Andrew Cooper <andrew.cooper3@citrix.com>
-Message-ID: <57e20b43-53cb-acc6-2634-4fc3b29e2312@citrix.com>
-Date: Mon, 20 Jul 2020 14:44:48 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+Received: (qmail 23847 invoked from network); 9 Jun 2018 00:02:59 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ruhr-uni-bochum.de;
+	s=mail-2017; t=1528502570;
+	bh=V2saMmvgF/po5kVyk8ZGQACa/igPpJYQpQpLyR8ugGs=;
+	h=Subject:To:References:From:Date:In-Reply-To:From;
+	b=s32DHZmiVYofAI5GFIliOG0ZNvk2uiDblk7MO4c1df7Qo8bKENYLTQm8kNFIa4fD4
+	 szNiMgC7sCvnC48l3weQBQY4HtFiF14EgShZIDO6FzZ4gVVVVHs6VqSNImadfoU2eT
+	 mYd3mZ6s8HqQzIpxRIEkyc9xkCVTWmhPIKdRllVk=
+X-Envelope-Sender: <marcus.brinkmann@ruhr-uni-bochum.de>
+X-RUB-Notes: Internal origin=134.147.42.227
+References: <167bc7e898d02f7bd13c43d272d64178f00e7e23.camel@debian.org>
+Openpgp: preference=signencrypt
+Message-ID: <44254614-42f1-9908-a55c-401d20ffc2bd@ruhr-uni-bochum.de>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.8.0
 MIME-Version: 1.0
-In-Reply-To: <CAA8xKjVib9UERsMrAy3nNdVssNxLciXTmmhmXqq1gvhO16URew@mail.gmail.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
-X-ClientProxiedBy: AMSPEX02CAS02.citrite.net (10.69.22.113) To
- AMSPEX02CL02.citrite.net (10.69.22.126)
-Subject: Re: [oss-security] Xen Security Advisory 329 v2 - Linux ioperm bitmap
- context switching issues
+In-Reply-To: <167bc7e898d02f7bd13c43d272d64178f00e7e23.camel@debian.org>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="xlO75RdwM5bH97tf2vfstcv1O9ECIHRkC"
+X-Virus-Scanned: clamav-milter 0.99.4 at mail1.mail.ruhr-uni-bochum.de
+X-Virus-Status: Clean
+Date: Sat, 9 Jun 2018 02:02:43 +0200
+From: Marcus Brinkmann <marcus.brinkmann@ruhr-uni-bochum.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE-2018-12020 in GnuPG
+To: oss-security@lists.openwall.com
 
-/sigh - it seems that stuff like this doesn't get done when I'm on holiday.
+--xlO75RdwM5bH97tf2vfstcv1O9ECIHRkC
+Content-Type: multipart/mixed; boundary="RQypvR1FxSjORBjeuazVfcHhOkVdoiNqD";
+ protected-headers="v1"
+From: Marcus Brinkmann <marcus.brinkmann@ruhr-uni-bochum.de>
+To: oss-security@lists.openwall.com
+Message-ID: <44254614-42f1-9908-a55c-401d20ffc2bd@ruhr-uni-bochum.de>
+Subject: Re: [oss-security] CVE-2018-12020 in GnuPG
+References: <167bc7e898d02f7bd13c43d272d64178f00e7e23.camel@debian.org>
+In-Reply-To: <167bc7e898d02f7bd13c43d272d64178f00e7e23.camel@debian.org>
 
-I'll get one sorted.
+--RQypvR1FxSjORBjeuazVfcHhOkVdoiNqD
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
 
-~Andrew
+Hi,
 
-On 17/07/2020 08:54, Mauro Matteo Cascella wrote:
-> Hello,
->
-> Will a CVE be assigned to this flaw?
->
-> Thanks,
->
-> On Thu, Jul 16, 2020 at 3:21 PM Xen.org security team
-<security@xen.org <mailto:security@xen.org>> wrote:
->
->                     Xen Security Advisory XSA-329
->                               version 2
->
->              Linux ioperm bitmap context switching issues
->
-> UPDATES IN VERSION 2
-> ====================
->
-> Public release.
->
-> ISSUE DESCRIPTION
-> =================
->
-> Linux 5.5 overhauled the internal state handling for the iopl() and
-> ioperm()
-> system calls.  Unfortunately, one aspect on context switch wasn't wired up
-> correctly for the Xen PVOps case.
->
-> IMPACT
-> ======
->
-> IO port permissions don't get rescinded when context switching to an
-> unprivileged task.  Therefore, all userspace can use the IO ports
-> granted to
-> the most recently scheduled task with IO port permissions.
->
-> VULNERABLE SYSTEMS
-> ==================
->
-> Only x86 guests are vulnerable.
->
-> All versions of Linux from 5.5 are potentially vulnerable.
->
-> Linux is only vulnerable when running as x86 PV guest.  Linux is not
-> vulnerable when running as an x86 HVM/PVH guests.
->
-> The vulnerability can only be exploited in domains which have been granted
-> access to IO ports by Xen.  This is typically only the hardware
-> domain, and
-> guests configured with PCI Passthrough.
->
-> MITIGATION
-> ==========
->
-> Running only HVM/PVH guests avoids the vulnerability.
->
-> CREDITS
-> =======
->
-> This issue was discovered by Andy Lutomirski.
->
-> RESOLUTION
-> ==========
->
-> Applying the appropriate attached patch resolves this issue.
->
-> xsa329.patch           Linux 5.5 and later
->
-> $ sha256sum xsa329*
-> cdb5ac9bfd21192b5965e8ec0a1c4fcf12d0a94a962a8158cd27810e6aa362f0 
-> xsa329.patch
-> $
->
-> DEPLOYMENT DURING EMBARGO
-> =========================
->
-> Deployment of the patches and/or mitigations described above (or
-> others which are substantially similar) is permitted during the
-> embargo, even on public-facing systems with untrusted guest users and
-> administrators.
->
-> But: Distribution of updated software is prohibited (except to other
-> members of the predisclosure list).
->
-> Predisclosure list members who wish to deploy significantly different
-> patches and/or mitigations, please contact the Xen Project Security
-> Team.
->
->
-> (Note: this during-embargo deployment notice is retained in
-> post-embargo publicly released Xen Project advisories, even though it
-> is then no longer applicable.  This is to enable the community to have
-> oversight of the Xen Project Security Team's decisionmaking.)
->
-> For more information about permissible uses of embargoed information,
-> consult the Xen Project community's agreed Security Policy:
->   http://www.xenproject.org/security-policy.html
->
->
->
-> --
-> Mauro Matteo Cascella, Red Hat Product Security
-> 6F78 E20B 5935 928C F0A8  1A9D 4E55 23B8 BB34 10B0
+On 06/08/2018 09:36 PM, Yves-Alexis Perez wrote:
+> Hi everybody,
+>=20
+> just a heads up, since we weren't notified in advance and it's Friday eve=
+ning
+> (in Europe at least).
+
+Yes.  I tried to disclose this responsibly with Werner Koch (and in
+coordination with other affected projects), but within two hours he did
+a unilateral full disclosure without getting back to me.
+
+:(
+
+> There's a nasty vulnerability in GnuPG which can be apparently used to by=
+pass
+> signature verification when a program calls gpg to verify a signature and
+> parses the output:
+>=20
+> https://lists.gnupg.org/pipermail/gnupg-announce/2018q2/000425.html
+> https://dev.gnupg.org/T4012
+>=20
+> It might be worth checking whether package managers signature verificatio=
+n is
+> affected.
+>=20
+> Apt doesn't seems affected at first sight (it uses gpgv) but we'll double
+> check.
+
+I am still handling this under responsible disclosure. This is why I
+have not spoken out yet, and the CVE is not public. But what you say is
+important and correct.
+
+Thanks,
+Marcus
 
 
+--RQypvR1FxSjORBjeuazVfcHhOkVdoiNqD--
+
+--xlO75RdwM5bH97tf2vfstcv1O9ECIHRkC
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEPLDoRBatUvfhhlQYiLCNWle2IUAFAlsbGSYACgkQiLCNWle2
+IUALPA//ZY6Axu+5uy3ccDoD5x4AXfsf5nIYLG/neRTygRTsuH7wSoruCsHkM15w
+xRQVpnuF0Pko/s3pBx3qA930tiMhG96UakYlY5Vz2hceP3WH9MUd4NLz4wNz4bLa
+Ac5SlwL9CbCGv3QwuevUjSl3hPANlrIfByUcU45jOjZCwniRL7Q7KYOS3yKMfcUw
+oWL05GK7BQkGB/+vluqRm0nBZlSWK3TvDN45R6+5rmQfsRUnAopxR3wF0Sxim2V7
+LlUAR66nPbLM7HUT5HEpyNYBjAhCv8rOojjkxrSRE1v8OxGIpnTAesbx0LuoXyHN
+x67iSiGUgaTLZHvtQOqJksQCITMjE0zRUGwQSuO88UnOBTcc3zPD31U6PtiH2U6+
+rBk27tRw7F2dYLr0ugKmFtIzgGM9cI3RD/gKlN8/kdmIkL7FQcXZaHCzjAxMGDjW
+ioGjkHhcNy4g9GaW1ugQWDX3J7rfjEz9uJR4elOHbWVr8wPoeW7Ol/WEhWUSg/st
+Ke1FRQpOnSZEcaiUFx8lidGfpbNu6lslaSyDbINNDadQjv3RLHKw+wkXnLCZ9Wfr
+AUNDU6zjZg+4nJ3hrQFbEazsxjz7wnEcNkdx/WRRn8aVhgCwsDptHiGFCMWxvzW4
+J0h6OuNme+mpNoVEOhV7gzqC/1G9OHUNM6IHv+jJ+LpzsrRHKZw=
+=xLCs
+-----END PGP SIGNATURE-----
+
+--xlO75RdwM5bH97tf2vfstcv1O9ECIHRkC--
