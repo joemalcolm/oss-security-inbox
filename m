@@ -1,43 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/16/1
-Message-ID: <1169499474.11558307.1521192650055.JavaMail.zimbra@redhat.com>
-Date: Fri, 16 Mar 2018 05:30:50 -0400 (EDT)
-From: Vladis Dronov <vdronov@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2018-1068: Linux kernel: netfilter: ebtables: CONFIG_COMPAT: don't trust userland offsets
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/10/1
+Message-ID: <bzwjweLsc_IpouMt05ni4KMcd4XJPVuF1Bp42jMQhPiNaYdT-Cei_P1CYdQzwJWMYMdRtC0GwvgBM6A774c2_EGFE3onwBMEd5lHH2KBD0s=@itk.swiss>
+Date: Sun, 10 Jun 2018 10:58:38 -0400
+From: Stiepan <stie@....swiss>
+To: marcus.brinkmann@...r-uni-bochum.de, oss-security@...ts.openwall.com
+Cc: ProtonMail Security Team <security@...tonmail.ch>
+Subject: Re : Re: CVE-2018-12020 in GnuPG
 Content-Type: text/plain; charset=utf-8
 
-hello,
+Hello to both,
 
-(we believe this flaw is semi-public. there are posts in public mailing
-lists and a commit in the upstream Linux tree, but we are not aware of this bug
-being considered as a security flaw and not aware of any exploits in the wild.
-so we would like to explicitly post to oss-sec@)
+This responsibility discussion is all well and fine, but now that this is half-public, may we know for sure whether we are affected :
+1. as debian(-like) package consumers
+2. as users of GPG for other purposes, such as webmail (have CC-ed protonmail to that regard)
+and since when, so as to do proper rollbacks or other applicable mitigations (w.r.t packages) ?
+By the way, this is why I think disclosure of such issues and mitigations should be a matter discussed at an official international forum such as the ITU is, before everything gets out.
 
-a CVE id of CVE-2018-1068 was assigned to this flaw and we would like to ask to
-use it in the related public communications.
+Enjoy your Sunday,
+Stiepan A. Kovac
+President
+itk AVtobvS SARL
 
-so:
+Envoyé depuis ProtonMail mobile
 
-A flaw was found in the Linux kernel implementation of 32 bit syscall interface
-for bridging allowing a privileged user to arbitrarily write to a limited range
-of kernel memory. This flaw can be exploited not only by a system's privileged
-user (a real "root" user), but also by an attacker who is a privileged user
-(a "root" user) in a user+network namespace.
+-------- Message d'origine --------
+On 9 juin 2018 à 2:02, Marcus Brinkmann a écrit :
 
-References:
-
-https://marc.info/?l=linux-netdev&m=152023808817590&w=2
-
-https://marc.info/?l=linux-netdev&m=152025888924151&w=2
-
-https://bugzilla.redhat.com/show_bug.cgi?id=1552048
-
-An upstream patch:
-
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=b71812168571fa55e44cdd0254471331b9c4c4c6
-
-https://github.com/torvalds/linux/commit/b71812168571fa55e44cdd0254471331b9c4c4c6
-
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+> Hi,
+>
+> On 06/08/2018 09:36 PM, Yves-Alexis Perez wrote:
+>> Hi everybody,
+>>
+>> just a heads up, since we weren't notified in advance and it's Friday evening
+>> (in Europe at least).
+>
+> Yes. I tried to disclose this responsibly with Werner Koch (and in
+> coordination with other affected projects), but within two hours he did
+> a unilateral full disclosure without getting back to me.
+>
+> :(
+>
+>> There's a nasty vulnerability in GnuPG which can be apparently used to bypass
+>> signature verification when a program calls gpg to verify a signature and
+>> parses the output:
+>>
+>> https://lists.gnupg.org/pipermail/gnupg-announce/2018q2/000425.html
+>> https://dev.gnupg.org/T4012
+>>
+>> It might be worth checking whether package managers signature verification is
+>> affected.
+>>
+>> Apt doesn't seems affected at first sight (it uses gpgv) but we'll double
+>> check.
+>
+> I am still handling this under responsible disclosure. This is why I
+> have not spoken out yet, and the CVE is not public. But what you say is
+> important and correct.
+>
+> Thanks,
+> Marcus
