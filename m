@@ -1,62 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/27/1
-Message-ID: <CABVn_oo4q7Re5N=n9gZ_bbM=-xbdk7MB3g2bKfRnrFf8Y3ryoA@mail.gmail.com>
-Date: Fri, 27 Apr 2018 00:39:42 +0200
-From: nongiach nongiach <nongiach@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>, sputnick@...ssel-irc.org
-Subject: CVE-XXX (quasselclient/quasselcore version 0.12.4): Heap Remote Code Execution and Null Pointer DDOS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/10/2
+Message-ID: <7897eadf67144a237334450d05396572daa60e34.camel@debian.org>
+Date: Sun, 10 Jun 2018 18:38:47 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: oss-security@...ts.openwall.com, marcus.brinkmann@...r-uni-bochum.de
+Subject: Re: Re : Re: CVE-2018-12020 in GnuPG
 Content-Type: text/plain; charset=utf-8
 
- Hey,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-two vulnerabilities have been fixed in quassel, an IRC connection
-multiplexer,
-one with a high severity and another with a low severity, they are both
-publicly fixed:
-- these patches apply cleanly to 0.12.4 sources
-- 0.12.5 release (Tuesday 24.04) includes these patches, distros have been
-notified for the embargo.
+On Sun, 2018-06-10 at 10:58 -0400, Stiepan wrote:
 
-==============================================
-Vuln 1:
-Title: quasselcore, corruption of heap metadata caused by qdatastream
-leading to preauth remote code execution.
-Severity: high, by default the server port is publicly open and the address
-can be requested using the /WHOIS command of IRC protocol.
-Description: In Qdatastream protocol each object are prepended with 4 bytes
-for the object size, this can be used to trigger allocation errors.
-Source: void DataStreamPeer::processMessage(const QByteArray &msg),
-datastreampeer.cpp line 62
-CWE: A heap corruption of type CWE-120 exists in quassel version 0.12.4 in
-the quasselcore that allows an attacker to remote code execution.
-Patch: https://quassel-irc.org/pub/misc/0001-Implement-
-custom-deserializer-to-add-our-own-sanity-.patch
-Screen POC: https://i.imgur.com/JJ4QcNq.png
-Credit: @chaign_c
-Information: This vulnerability is not specific to qdatastream.
+Hi Stepian,
 
-==============================================
-Vuln 2:
-Title: quasselcore DDOS
-Severity: low, impact only a quasselcore not configured.
-Description: A login attempt causes a NULL pointer dereference because when
-the database is not initialized.
-Source: void CoreAuthHandler::handle(const Login &msg),
-coreauthhandler.cpp  line 235
-CWE: A NULL Pointer Dereference of CWE-476 exists in quassel version 0.12.4
-in the quasselcore that allows an attacker to denial of service.
-Patch: https://quassel-irc.org/pub/misc/0002-Reject-
-clients-that-attempt-to-login-before-the-core.patch
-Credit: @chaign_c
+> This responsibility discussion is all well and fine, but now that this is
+> half-public, may we know for sure whether we are affected :
+> 1. as debian(-like) package consumers
 
-==============================================
+Not entirely sure what you mean here, but if you're talking about the apt
+package managers (which relies on gpgv for signature verification), it's
+currently investigated.
 
-With lead dev agreement, POC will be released here
-https://github.com/nongiach/CVE/ in one month from now.
-A big thx to quassel team for their quick responses and reaction.
+Note that all supported suites have had their gnupg version updated: https://s
+ecurity-tracker.debian.org/tracker/CVE-2018-12020
 
-CVE number assignation is ongoing.
+Regards,
+- -- 
+Yves-Alexis
+-----BEGIN PGP SIGNATURE-----
 
-Thx.
-
+iQEzBAEBCAAdFiEE8vi34Qgfo83x35gF3rYcyPpXRFsFAlsdVBcACgkQ3rYcyPpX
+RFvs6wgAyOwnS9uaOmW1Qg6pM7iKDlTYVe7SteOlVn6QyAQzKhTmsazdo+xZJ6+y
+Bd7BScDNRRvyTCZKtqyMvuTMCBjVoGcIQoGvrZW64X9wVCCgk/U5bpe39WwTpePZ
+uScfW3MZKGOvYEKAGbC8aZDbTAkJ1D1HjOe0xVAv7Ifc0lpinYJSwQ2dEu9qDyRm
+jxD9IpsZwAA2IX+yAb87ebW5Cm6ZFMoWUuj2VmE8Eth3k6wmHexLahiz/JR+qrET
++s3aRcDTae7dajEPfIWLrSnxxVYHrdYs3xiDsD4NbapJ2YACSZ/ayL8P5GWIuQZ/
+tipCq/jMIikHy59/fc247FOxSgCOew==
+=c5lf
+-----END PGP SIGNATURE-----
