@@ -1,4 +1,9 @@
-Received: (qmail 11543 invoked by uid 550); 17 May 2026 19:01:07 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1119" "Sunday" "10" "June" "2018" "18:38:47" "+0200" "Yves-Alexis Perez" "corsac@debian.org" "<7897eadf67144a237334450d05396572daa60e34.camel@debian.org>" "33" "Re: [oss-security] Re : Re: [oss-security] CVE-2018-12020 in GnuPG" "^Date:" nil nil "6" "2018061016:38:47" "[oss-security] Re : Re: [oss-security] CVE-2018-12020 in GnuPG" (number mark "        corsac@debia Jun 10   33/1119  " thread-indent "\"Re: [oss-security] Re : Re: [oss-security] CVE-2018-12020 in GnuPG\"\n") "<bzwjweLsc_IpouMt05ni4KMcd4XJPVuF1Bp42jMQhPiNaYdT-Cei_P1CYdQzwJWMYMdRtC0GwvgBM6A774c2_EGFE3onwBMEd5lHH2KBD0s=@itk.swiss>" ("<167bc7e898d02f7bd13c43d272d64178f00e7e23.camel@debian.org>" "<44254614-42f1-9908-a55c-401d20ffc2bd@ruhr-uni-bochum.de>" "<bzwjweLsc_IpouMt05ni4KMcd4XJPVuF1Bp42jMQhPiNaYdT-Cei_P1CYdQzwJWMYMdRtC0GwvgBM6A774c2_EGFE3onwBMEd5lHH2KBD0s=@itk.swiss>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 27655 invoked by uid 550); 10 Jun 2018 16:39:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,128 +11,52 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 26613 invoked from network); 10 Jun 2018 16:39:03 -0000
+Message-ID: <7897eadf67144a237334450d05396572daa60e34.camel@debian.org>
+In-Reply-To: <bzwjweLsc_IpouMt05ni4KMcd4XJPVuF1Bp42jMQhPiNaYdT-Cei_P1CYdQzwJWMYMdRtC0GwvgBM6A774c2_EGFE3onwBMEd5lHH2KBD0s=@itk.swiss>
+References: <167bc7e898d02f7bd13c43d272d64178f00e7e23.camel@debian.org>
+	 <44254614-42f1-9908-a55c-401d20ffc2bd@ruhr-uni-bochum.de>
+	 <bzwjweLsc_IpouMt05ni4KMcd4XJPVuF1Bp42jMQhPiNaYdT-Cei_P1CYdQzwJWMYMdRtC0GwvgBM6A774c2_EGFE3onwBMEd5lHH2KBD0s=@itk.swiss>
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.2-1 
+Mime-Version: 1.0
+Date: Sun, 10 Jun 2018 18:38:47 +0200
+From: Yves-Alexis Perez <corsac@debian.org>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 11498 invoked from network); 17 May 2026 19:01:07 -0000
-Date: Sun, 17 May 2026 21:00:55 +0200
-From: Christian Brabandt <cb@256bit.org>
-To: oss-security@lists.openwall.com
-Message-ID: <agoQZ1+n+yF+JEMd@256bit.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: cb@256bit.org
-X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
-Subject: [oss-security] [vim-security] Vimscript Code Injection in netrw NetrwBookHistSave()
- via crafted directory name affects Vim < 9.2.495
+Subject: Re: [oss-security] Re : Re: [oss-security] CVE-2018-12020 in GnuPG
+To: oss-security@lists.openwall.com, marcus.brinkmann@ruhr-uni-bochum.de
 
-Vimscript Code Injection in netrw NetrwBookHistSave() via crafted directory name affects Vim < 9.2.495
-======================================================================================================
-Date: 17.05.2026
-Severity: Medium
-CVE: *requested, not yet assigned*
-CWE: Improper Control of Generation of Code (CWE-94) /
-     Improper Neutralization of Special Elements in Output Used by a Downstream Component (CWE-74)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-## Summary
+On Sun, 2018-06-10 at 10:58 -0400, Stiepan wrote:
 
-A Vimscript code injection vulnerability exists in `s:NetrwBookHistSave()`
-in the netrw plugin (`runtime/pack/dist/opt/netrw/autoload/netrw.vim`)
-when serializing browsed directory paths to the history file
-`~/.vim/.netrwhist`.  A directory name derived from the filesystem is
-interpolated into a single-quoted Vimscript string literal without
-escaping embedded single quotes, allowing a crafted directory name to
-break out of the string context and execute arbitrary Vimscript,
-including shell commands via `system()` and `:!`, the next time the
-history file is sourced.
+Hi Stepian,
 
-## Description
+> This responsibility discussion is all well and fine, but now that this is
+> half-public, may we know for sure whether we are affected :
+> 1. as debian(-like) package consumers
 
-netrw records every directory the user browses into a per-user history
-file at `~/.vim/.netrwhist`.  `s:NetrwBookHistSave()` writes each entry
-as a Vimscript assignment statement:
+Not entirely sure what you mean here, but if you're talking about the apt
+package managers (which relies on gpgv for signature verification), it's
+currently investigated.
 
-    call setline(lastline,'let g:netrw_dirhist_'.cnt."='".g:netrw_dirhist_{cnt}."'")
+Note that all supported suites have had their gnupg version updated: https:=
+//s
+ecurity-tracker.debian.org/tracker/CVE-2018-12020
 
-The directory path `g:netrw_dirhist_{cnt}` is inserted between two
-literal `'` characters without escaping any single quotes contained in
-the path, an embedded single quote therefore terminates the string
-early, after which the remainder of the path is parsed as additional
-Vimscript statement.  Vim statements may be chained with `|`, so a directory name
-of the form
+Regards,
+- --=20
+Yves-Alexis
+-----BEGIN PGP SIGNATURE-----
 
-    x'|<injected Vimscript>|let y='z
-
-is serialized as three valid statements on a single line.
-
-The sibling bookmark serializer thirty lines below in the same function
-uses `string()` correctly, which is the canonical primitive for this
-purpose; only the history serializer was missing the escape.
-
-The history file is read back on every netrw initialization with:
-
-    exe "keepalt NetrwKeepj so ".savefile
-
-The `:source` invocation evaluates every statement in the file, so any
-injected Vimscript executes with the privileges of the user running
-Vim.  Calls such as `system()`, `:!`, or `writefile()` in the injected
-fragment yield arbitrary command execution.
-
-The directory name reaches `s:NetrwBookHistSave()` through the normal
-netrw browse flow: when the user navigates into a directory via netrw,
-the path is appended to the in-memory history list, which is flushed to
-disk by an autocmd on `VimLeave`.  The injection therefore arms on any
-netrw browse of a maliciously named directory and fires on any
-subsequent Vim invocation that opens a directory through netrw.
-
-The default configuration is affected: `g:netrw_dirhistmax` defaults to
-10, which enables the history mechanism.
-
-POSIX forbids `/` inside a single filename component, so the dirname
-payload cannot directly construct an absolute path; this constraint is
-bypassed via environment-variable expansion (e.g. `$HOME`) or relative
-paths evaluated at Vim's current working directory.
-
-## Impact
-
-The vulnerability allows arbitrary Vimscript execution, and by
-extension arbitrary shell command execution, with the privileges of the
-user running Vim.  Exploitation requires:
-
-- a Unix-like system on which a filename may contain a single quote,
-- a crafted directory present in a location the victim browses with
-  netrw (e.g. delivered via a cloned repository, extracted archive, or
-  shared filesystem), and
-- the victim to (1) browse the crafted directory once with netrw, then
-  (2) launch Vim on any directory at a later point so that
-  `.netrwhist` is sourced.
-
-The severity is rated Medium because exploitation requires a planted
-directory name with an unusual name and a deliberate "edit directory" command
-by the victim, although the resulting primitive is full
-command execution as the victim user.
-
-The injection persists in `.netrwhist` until the entry is rotated out of
-the history.
-
-## Acknowledgements
-
-The Vim project would like to thank Srinivas Piskala Ganesh Babu for
-reporting and analyzing the issue and suggesting a fix.
-
-## References
-
-The issue has been fixed as of Vim patch [v9.2.0495](https://github.com/vim/vim/releases/tag/v9.2.0495).
-
-- [Commit](https://github.com/vim/vim/commit/f08ab2f4d7d2947c8dd6c179ae08ee6146a2694b)
-- [Github Security Advisory](https://github.com/vim/vim/security/advisories/GHSA-crm5-rh6j-2c7c)
-
-
-Thanks,
-Chris
--- 
-Wenn die Leute jemanden zu einer Dummheit verleiten wollen, dann sagen
-sie: Sei doch vernünftig!
-		-- Arthur Miller (Stern-Interview im März 2000)
+iQEzBAEBCAAdFiEE8vi34Qgfo83x35gF3rYcyPpXRFsFAlsdVBcACgkQ3rYcyPpX
+RFvs6wgAyOwnS9uaOmW1Qg6pM7iKDlTYVe7SteOlVn6QyAQzKhTmsazdo+xZJ6+y
+Bd7BScDNRRvyTCZKtqyMvuTMCBjVoGcIQoGvrZW64X9wVCCgk/U5bpe39WwTpePZ
+uScfW3MZKGOvYEKAGbC8aZDbTAkJ1D1HjOe0xVAv7Ifc0lpinYJSwQ2dEu9qDyRm
+jxD9IpsZwAA2IX+yAb87ebW5Cm6ZFMoWUuj2VmE8Eth3k6wmHexLahiz/JR+qrET
++s3aRcDTae7dajEPfIWLrSnxxVYHrdYs3xiDsD4NbapJ2YACSZ/ayL8P5GWIuQZ/
+tipCq/jMIikHy59/fc247FOxSgCOew=3D=3D
+=3Dc5lf
+-----END PGP SIGNATURE-----
