@@ -1,15 +1,119 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/26/1
-Message-ID: <BSTa0xkd6PUstoK62HXIf9i3UbZq_tCsSclHxAN7KTx3C1KFs-sF5C7ob4tsKCoYkw9Tb-axNViD4GKkd-VvX8g163zTLOvsngO4-M3jlus=@itk.swiss>
-Date: Fri, 26 Jan 2018 10:23:49 -0500
-From: Stiepan <stie@....swiss>
-To: mjo@...o.mi.org, oss-security@...ts.openwall.com
-Subject: Re: How to deal with reporters who don't want their bugs fixed?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/11/1
+Message-ID: <0f3fb414-b874-b09d-d931-83678b0f8a8d@debian.org>
+Date: Mon, 11 Jun 2018 14:57:16 -0400
+From: Luciano Bello <luciano@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: team@...urity.debian.org
+Subject: Buffer Overflow in pppd EAP-TLS implementation
 Content-Type: text/plain; charset=utf-8
 
-With the risk of displeasing the supporters of a "common sense" approach to this topic, I think that clear rules might be welcome: We as a profession should have a clear code of ethics just like physicians do, instead of relying on the parties' social engineering skills to set the outcome of this kind of issue. End users would thank us and the profession's image could evolve from pirate in a garage to a respectable one (by the majority). Just like barbers became surgeons after some time, to keep the medical analogy. There are of course precedents, such as the privacy professionals' code of conduct, to name one as an example (leaning towards secret keeping), but we lack an universal ethics' code, which would not be bound to a private certification body and would put the end user's interests first. I have yet to find something of the like, with broad applicability to the ICT Security profession(s), but I would love to be corrected!
+- Software: pppd, in particular the EAP-TLS patch[1]
 
--------- Mensaje original --------
-On 24 ene. 2018 4:02, Mike O'Connor escribió:
+- Summary: Several buffer overflows can be trigger even when pppd is not
+configured to take EAP-TLS (but the binary was patched with the
+extension).
 
-> :Subject says it all: What do you do if you receive a vulnerability report, :and the reporter requests an embargo at some time in the future because :that's when their paper/conference presentation/patent submission is :scheduled? : :The obvious approach is to find a prior public report of essentially the same :bug and fix that (which will work surprisingly often), but let's assume that :this isn't the case. Well, does the embargo add value for the consumers of the product? That had historically been my guideline, when I've had to make that call. Will it improve the fix, documentation, delivery mechanisms, etc. Sometimes, the answer is "yes". Other times, not so much or it's fairly indeterminate. You don't always know all the facts, or all the players, you're left with educated guessing. Sometimes, you can persuade researchers to a vendor-friendly point of view on disclosure by simply asking them if they think this is in the best interests of the users. Other times, you work with someone who cares more about adding a CVE and|or bounty to their resume, or they are disingenuous or simply incapable of keeping secrets. If there's evidence of open exploitation, all bets should be off and that should be stated up front. At that point, of course, it ceases adding value. An agreed disclosure date does not generally amount to an NDA or the like. -Mike -- Michael J. O'Connor mjo@...o.mi.org =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--= "The defendant pleaded exterminating circumstances." -Anguished English
+- CVE: CVE-2018-11574
+
+- Credit:
+Ivan Gotovchits <ivg@...e.org>, from Carnegie Mellon University Binary
+Analysis Team
+
+- Background:
+We, the Debian security team, received the report and contacted the
+package maintainer and upstream. Upstream and submitter work together to
+agree a patch.
+
+- Patch:
+attached.
+
+- Relevant parts of the original report:
+
+
+We would like to report a security vulnerability that we have discovered
+in the EAP-TLS patch for pppd [1]. Improper input validation together
+with an integer overflow may cause a crash on both sides and, unlikely,
+may lead to the information disclosure or authentication bypass.
+
+Detailed Description
+===============
+
+Context
+-----------
+
+The `eaptls_receive` function (eap-tls.c) is used to process data passed
+via the ppp channel. It is used on both peer and authenticator sides and
+is tasked to process and accumulate fragmented messages and pass them to
+the SSL backend for the authentication. The message format is described
+in RFC 5216. The `eaptls_receive` function is called by `eap_response`
+(eap.c) and `eap_request` (eap.c), which implement the `input` method
+of the EAP protocol, that is invoked in the `get_input` (main.c)
+procedure, when the EAP protocol is enabled.
+
+Problem Description
+---------------------------
+
+The EAP TLS protocol uses packages with variable lengths and passing a
+short package message will result in the out-of-bounds read (CWE-125)
+and calling `memcpy` with a negative length parameter will lead to the
+buffer overread (CWE-126), as well as the buffer overflow (CWE-122).
+Details, follow.
+
+The `eaptls_receive` function is called with three parameters, the
+session pointer `ets`, the pointer `inp` to the buffer that contains
+data received by the ppp channel, and the length `len` of this buffer.
+The `len` parameter is a signed `int`.
+
+Under all paths that reach this point, the constraint on the `len`
+parameter is `len >= 0`, i.e., all checks before the invocation only
+verify that the message is long enough to be dispatched. Every check
+advances the pointer and decrements the length. For example,
+
+     - main.c:1048-1058 // ensures that len was at least 4
+     - eap.c:2077-2083  // ensures that len was at least 1
+
+There are no checks of the `len` parameter in the `eaptls_receive`
+function at all. The very first operation (eap-tls.c:804) in the
+function is to read the flags field, that is not guaranteed to be
+present, as `len` could be `0` here.  There are few more unbounded reads
+at `eap-tls.c:812` and `eap-tls.c:838`. Each read is accompanied with
+the corresponding decrementation of the length parameter. Thus, in case
+of a short package, the length could have a negative value (anything
+between -1 and -5). The check `!(len + ets->datalen > etc->tlslen)` is
+passed easily since `len` is negative, thus the `memcpy` call
+(obfuscated with the BCOPY macro) will receive the negative `len`
+parameter, that will most likely result in the segmentation fault and a
+crash of the server or client.
+
+
+More Advanced Scenarios
+-----------------------------------
+
+We're hypothesizing, that instead of crashing the daemon it is
+theoretically possible to overwrite server memory structures, during the
+buffer-overflow in `memcpy` in such way that it will change the state of
+authentication FSM to a more advanced state (e.g., to the authenticated
+state). To achieve this, an adversary may rely on the Session Resumption
+mechanism (RFC 5216, section 2.1.2), create the first session and put it
+on hold, then create several other sessions and fill in the memory of
+the server until the brk raises till the 4Gb bar (the `len` parameter is
+32 bit in x86 and x86-64), then the first session could be resumed, and
+the `memcpy` won't cause the segmentation fault, but overwrite internal
+structures of the server.
+
+We did not investigate this scenario any further.
+
+
+Further Details
+--------------------
+
+The vulnerability was detected using the Memcheck verification tool of
+the Primus Microexecution Framework (a part of the CMU Binary Analysis
+Framework [2]). We ran it on a vanilla `pppd` binary as shipped in
+Ubuntu Xenial. All source code references are made on the patched source
+obtained with `apt-source`. Primus runs a program in the emulated
+environment. A reduced trace showing the problem is attached (in IDA Pro
+format and in plain-text)
+
+View attachment "ppp-2.4.7-eaptls-mppe-1.101a.patch" of type "text/x-patch" (88939 bytes)
