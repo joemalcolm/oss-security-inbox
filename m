@@ -1,26 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/14/6
-Message-ID: <alpine.DEB.2.21.1805141433390.31401@chino.kir.corp.google.com>
-Date: Mon, 14 May 2018 14:35:14 -0700 (PDT)
-From: David Rientjes <rientjes@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/12/2
+Message-ID: <20180612113836.6flipg4zlq4fw4ue@jwilk.net>
+Date: Tue, 12 Jun 2018 13:38:36 +0200
+From: Jakub Wilk <jwilk@...lk.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2018-1000200 (Linux): Bad memory access on oom kill of large mlocked process
+Subject: Re: Are `su user' and/or `sudo -u user sh' considered dangerous?
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 24 Apr 2018, David Rientjes wrote:
+* Georgi Guninski <guninski@...inski.com>, 2018-06-12, 13:17:
+>https://j.ludost.net/blog/archives/2018/06/12/are_su_user_andor_sudo_-u_user_sh_considered_dangerous/index.html
+>
+>Per vague memory I discussed half of this with some linux crowd and 
+>they said "won't fix" long ago.
+>
+>`su user' and `sudo -u user sh' give the user the fd of root's tty and 
+>it is readable and writable. After closing the session, the user can 
+>keep it and on root's tty potentially do:
+>
+>1. inject keypresses via ioctl()
+>and/or
+>2. read the output of root's tty, probably with some analogue of 
+>tee(1).
+>
+>Is this really a concern?
 
-> Hi all,
-> 
-> Out of memory (oom) killing a process that has large spans of mlocked 
-> memory can result in a bad memory access or a NULL pointer dereference due 
-> to concurrent memory unmapping by the oom reaper kernel thread.
-> 
-> This affects Linux 4.14, 4.15, and 4.16.
-> 
+This class of vulnerabilities has been known since at least 2005:
+https://bugzilla.redhat.com/show_bug.cgi?id=173008 (CVE-2005-4890)
 
-The fix for this has been merged into 4.17-rc5 as commit 27ae357fa82b 
-("mm, oom: fix concurrent munlock and oom reaper unmap, v3"), see 
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=27ae357fa82be5ab73b2ef8d39dcb8ca2563483a
+It was last discussed on oss-security in 2017:
+http://seclists.org/oss-sec/2017/q2/412
 
-Furthermore, it has been staged for inclusion in both the 4.14 and 4.16 
-stable kernels.
+>Any workarounds?
+
+For sudo, there's the "use_pty" flag. (It's not enabled by default.)
+
+-- 
+Jakub Wilk
