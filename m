@@ -1,55 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/08/2
-Message-Id: <F8409406-8B47-4C23-B934-7FA38B940135@gmail.com>
-Date: Sat, 8 Dec 2018 09:04:17 -0800
-From: Matthew Fernandez <matthew.fernandez@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: mpg321: Out-of-bounds Write
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/12/3
+Message-ID: <KBGc1jApJZIJ7ISv_bB8MS1GLVaDWKb2J89dL8hnV0DlCJyVQ2f0VYI0-JpMbF4B9o5uHNn6ZTLlYLpseEup2hOfJ17rofaARO-joZhPOl4=@protonmail.ch>
+Date: Tue, 12 Jun 2018 11:25:45 -0400
+From: Jordan Glover <Golden_Miller83@...tonmail.ch>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Are `su user' and/or `sudo -u user sh' considered dangerous?
 Content-Type: text/plain; charset=utf-8
 
+On June 12, 2018 1:38 PM, Jakub Wilk <jwilk@...lk.net> wrote:
 
-> On Dec 7, 2018, at 19:16, Ren Kimura <rkx1209dev@...il.com> wrote:
+> -   Georgi Guninski guninski@...inski.com, 2018-06-12, 13:17:
 > 
-> Hi.
-> mpg321 is a free command-line mp3 player that is commonly available on
-> many Linux distributions.
-> For example, in ubuntu you can download the latest mpg321 by "apt-get
-> install mpg321."
+> > https://j.ludost.net/blog/archives/2018/06/12/are_su_user_andor_sudo_-u_user_sh_considered_dangerous/index.html
+> > 
+> > Per vague memory I discussed half of this with some linux crowd and
+> > 
+> > they said "won't fix" long ago.
+> > 
+> > `su user' and`sudo -u user sh' give the user the fd of root's tty and
+> > 
+> > it is readable and writable. After closing the session, the user can
+> > 
+> > keep it and on root's tty potentially do:
+> > 
+> > 1.  inject keypresses via ioctl()
+> >     
+> >     and/or
+> >     
+> > 2.  read the output of root's tty, probably with some analogue of
+> >     
+> >     tee(1).
+> >     
+> > 
+> > Is this really a concern?
 > 
-> latest mpg321 0.3.2, in scan() in mad.c calculate the number of frames
-> using bit rate.
-> If crafted mp3 whose bit rate equal 0 is taken, sampling time become
-> INF value due to floating point division by 0.
-> As a result, the frame number become a very large (1<<63), leading out
-> of bounds write, memory corruption at mad.c:285.
-> note. frames buffer have been allocated only 8-byte at mpg321.c:990.
+> This class of vulnerabilities has been known since at least 2005:
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=173008 (CVE-2005-4890)
+> 
+> It was last discussed on oss-security in 2017:
+> 
+> http://seclists.org/oss-sec/2017/q2/412
+> 
+> > Any workarounds?
+> 
+> For sudo, there's the "use_pty" flag. (It's not enabled by default.)
 
-Did you report this one upstream? In trying to understand this, it looks to me like the problem isn’t that mpg321 fails to check the bitrate is positive, but rather that there’s an unchecked malloc elsewhere.
+Why this isn't default? Where's the catch?
 
-The point where the OOB write occurs (mad.c:285) looks like the following:
-
-    282     /* update cached table of frames & times */
-    283     if (current_frame <= playbuf->num_frames) /* we only allocate enough for our estimate. */
-    284     {
-    285         playbuf->frames[current_frame] = playbuf->frames[current_frame-1] + (header->bitrate / 8 / 1000)
-    286             * mad_timer_count(header->duration, MAD_UNITS_MILLISECONDS);
-    287         playbuf->times[current_frame] = current_time;
-
-At this point, header->bitrate is 0 and playbuf->num_frames is the correct limit to check against for this buffer. The problem seems to stem from the point at which playbuf->frames was allocated (mpg321.c:990):
-
-    985             if ((options.maxframes != -1) && (options.maxframes <= playbuf.num_frames))
-    986             {
-    987                 playbuf.max_frames = options.maxframes;
-    988             }
-    989
-    990             playbuf.frames = malloc((playbuf.num_frames + 1) * sizeof(void*));
-    991             playbuf.times = malloc((playbuf.num_frames + 1) * sizeof(mad_timer_t));
-    992 #ifdef __uClinux__
-    993       if((playbuf.buf = mmap(0, playbuf.length, PROT_READ, MAP_PRIVATE, fd, 0)) == MAP_FAILED)
-    994 #else
-    995       if((playbuf.buf = mmap(0, playbuf.length, PROT_READ, MAP_SHARED, fd, 0)) == MAP_FAILED)
-    996 #endif
-
-At this point, playbuf.num_frames is whatever the your platform happens to yield when ∞ is cast to a long (undefined behavior in C). AFAICT there is no check that malloc succeeded before the code later writes to the frames array (the same applies to playbuf.times). Poking around a bit more, this (unchecked malloc) seems common in the code.
-
-I’m not familiar with the mpg321 code base and the above is based on a cursory inspection, so please correct me if I am wrong.
+​Jordan
