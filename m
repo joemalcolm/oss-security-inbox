@@ -1,4 +1,9 @@
-Received: (qmail 12164 invoked by uid 550); 10 Aug 2022 18:26:03 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1815" "Tuesday" "12" "June" "2018" "16:56:13" "-0400" "Stiepan" "stie@itk.swiss" "<olv_Epzwz4jvQCGNLIBY5Ij1Xizr1uG9HSj2IbgCrP8mqjkxs2s_jD9rz1L_gubdClRr71MOFF6pYj_i-NWiYgwSrlvZLV9cu6CHaBNSm0w=@itk.swiss>" "35" "[oss-security] Re : Re: [oss-security] Re : Re: [oss-security] CVE-2018-12020 in GnuPG" "^Date:" nil nil "6" "2018061220:56:13" "[oss-security] Re : Re: [oss-security] Re : Re: [oss-security] CVE-2018-12020 in GnuPG" (number mark "        stie@itk.swi Jun 12   35/1815  " thread-indent "\"[oss-security] Re : Re: [oss-security] Re : Re: [oss-security] CVE-2018-12020 in GnuPG\"\n") "<7897eadf67144a237334450d05396572daa60e34.camel@debian.org>" ("<167bc7e898d02f7bd13c43d272d64178f00e7e23.camel@debian.org>" "<44254614-42f1-9908-a55c-401d20ffc2bd@ruhr-uni-bochum.de>" "<bzwjweLsc_IpouMt05ni4KMcd4XJPVuF1Bp42jMQhPiNaYdT-Cei_P1CYdQzwJWMYMdRtC0GwvgBM6A774c2_EGFE3onwBMEd5lHH2KBD0s=@itk.swiss>" "<7897eadf67144a237334450d05396572daa60e34.camel@debian.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 9880 invoked by uid 550); 13 Jun 2018 08:28:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,60 +11,56 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 20301 invoked from network); 12 Jun 2018 20:56:37 -0000
+Authentication-Results: mail2.protonmail.ch; dkim=none
+Message-ID: <olv_Epzwz4jvQCGNLIBY5Ij1Xizr1uG9HSj2IbgCrP8mqjkxs2s_jD9rz1L_gubdClRr71MOFF6pYj_i-NWiYgwSrlvZLV9cu6CHaBNSm0w=@itk.swiss>
+In-Reply-To: <7897eadf67144a237334450d05396572daa60e34.camel@debian.org>
+References: <167bc7e898d02f7bd13c43d272d64178f00e7e23.camel@debian.org>
+ <44254614-42f1-9908-a55c-401d20ffc2bd@ruhr-uni-bochum.de>
+ <bzwjweLsc_IpouMt05ni4KMcd4XJPVuF1Bp42jMQhPiNaYdT-Cei_P1CYdQzwJWMYMdRtC0GwvgBM6A774c2_EGFE3onwBMEd5lHH2KBD0s=@itk.swiss>
+ <7897eadf67144a237334450d05396572daa60e34.camel@debian.org>
+Feedback-ID: wnsnnc8Us3MVqt1IALGduDJl-d16B_hEkg50pF7qo11mpeysEHmUOGy-yvw8MEApAPX3TXcPDHQwu7hti-kzSw==:Ext:ProtonMail
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+	boundary="b1_92357a7dd61d8a56ddd573033dd627e2"
+Date: Tue, 12 Jun 2018 16:56:13 -0400
+From: Stiepan <stie@itk.swiss>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24523 invoked from network); 10 Aug 2022 14:44:41 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=graemef.net
-	; s=20151104; h=Message-Id:In-Reply-To:To:References:Date:Subject:
-	Mime-Version:Content-Transfer-Encoding:Content-Type:From:Sender:Reply-To:Cc:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=LaTTATclIx+q5p3dNqJt6GiN3FnU7BH/lZeyJ/yMj/0=; b=D57fV8n0DDxupRGWJDpFZklzTg
-	/qQjDVzskr78b9mflBQfXrlgiD5pi3B2Go2zkk5pXQ/vvN5k0XC8Y6yvXQ8w3W2H4B+T3gLgLhjyY
-	ohxXTRVEeof/EWrv2g6AaDvAms8nl8OCMrNIIJpLB3MQO+q3MSjzrr6w0POAZUPrAe1Q=;
-From: Graeme Fowler <graeme+osssec@graemef.net>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.1\))
-Date: Wed, 10 Aug 2022 15:44:25 +0100
-References: <2dc37111-fd35-e10e-0162-1bdad2e80f5e@vulndisco.cc>
- <Yu7WIlgb9y4tGUDQ@gentoo.org>
- <CAB=ivF95gmkRr74nu5+_XmNkQKdGd==4hB+9N8EmaELQz+vHxQ@mail.gmail.com>
-To: oss-security@lists.openwall.com
-In-Reply-To: <CAB=ivF95gmkRr74nu5+_XmNkQKdGd==4hB+9N8EmaELQz+vHxQ@mail.gmail.com>
-Message-Id: <0D1F6213-D667-4E9C-B541-52E52429B756@graemef.net>
-X-Mailer: Apple Mail (2.3696.120.41.1.1)
-Subject: [oss-security] Re: [Exim-Security] [oss-security] Exim < 4.95 heap overflow
+Subject: [oss-security] Re : Re: [oss-security] Re : Re: [oss-security] CVE-2018-12020 in GnuPG
+To: corsac@debian.org, oss-security@lists.openwall.com, marcus.brinkmann@ruhr-uni-bochum.de
 
-On 7 Aug 2022, at 16:39, Roxana Bradescu via Security <security@exim.org> w=
-rote:
-> Adding the Exim security folks to this thread to shed some light on the o=
-riginal report and CVE discussion.=20
+--b1_92357a7dd61d8a56ddd573033dd627e2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-Responding separately to each list...
+SGkgWXZlcy1BbGV4aXMsCgpBbnkgdXBkYXRlcyBvbiB0aGlzPwoKQnkgdGhl
+IHdheSwgaXQgbWlnaHQgYmUgdGhlIG9jY2FzaW9uIHRvIHN3aXRjaCB0byBt
+b3JlIGZ1dHVyZS1wcm9vZiBzaWduYXR1cmVzLCBzdWNoIGFzCmh0dHBzOi8v
+ZGF0YXRyYWNrZXIuaWV0Zi5vcmcvZG9jL3JmYzgzOTEgLCB3aGljaCBhcmUg
+cmVwdXRlZCBhcyBxdWFudHVtLXNhZmUgYW5kIGRvIG5vdCBkZXBlbmQgb24g
+c29tZSBoYXJkbmVzcyBhc3N1bXB0aW9ucy4KV2UgY291bGQgaGVscCB3aXRo
+IGFuIG9wZW4tc291cmNlIGltcGxlbS4gaWYgbmVlZGVkLgpBcHBhcmVudGx5
+LCBOSVNUIGlzIGFsc28gbW92aW5nIGludG8gdGhhdCBkaXJlY3Rpb24gZm9y
+IHNvZnR3YXJlIHNpZ25hdHVyZXMsIGFjY29yZGluZyB0byBpbmZvcm1hdGlv
+biBnaXZlbiBub3cgYXQgRVRTSSdzIHNlY3VyaXR5IHdlZWsuCgpCZXN0IHJl
+Z2FyZHMsClN0aWVwYW4gQS4gS292YWMKUHJlc2lkZW50Cml0ayBBVnRvYnZT
+IFNBUkwKCkVudm95w6kgZGVwdWlzIFByb3Rvbk1haWwgbW9iaWxlCgotLS0t
+LS0tLSBNZXNzYWdlIGQnb3JpZ2luZSAtLS0tLS0tLQpPbiAxMCBqdWluIDIw
+MTggw6AgMTg6MzgsIFl2ZXMtQWxleGlzIFBlcmV6IGEgw6ljcml0IDoKCj4g
+T24gU3VuLCAyMDE4LTA2LTEwIGF0IDEwOjU4IC0wNDAwLCBTdGllcGFuIHdy
+b3RlOgo+Cj4gSGkgU3RlcGlhbiwKPgo+PiBUaGlzIHJlc3BvbnNpYmlsaXR5
+IGRpc2N1c3Npb24gaXMgYWxsIHdlbGwgYW5kIGZpbmUsIGJ1dCBub3cgdGhh
+dCB0aGlzIGlzCj4+IGhhbGYtcHVibGljLCBtYXkgd2Uga25vdyBmb3Igc3Vy
+ZSB3aGV0aGVyIHdlIGFyZSBhZmZlY3RlZCA6Cj4+IDEuIGFzIGRlYmlhbigt
+bGlrZSkgcGFja2FnZSBjb25zdW1lcnMKPgo+IE5vdCBlbnRpcmVseSBzdXJl
+IHdoYXQgeW91IG1lYW4gaGVyZSwgYnV0IGlmIHlvdSdyZSB0YWxraW5nIGFi
+b3V0IHRoZSBhcHQKPiBwYWNrYWdlIG1hbmFnZXJzICh3aGljaCByZWxpZXMg
+b24gZ3BndiBmb3Igc2lnbmF0dXJlIHZlcmlmaWNhdGlvbiksIGl0J3MKPiBj
+dXJyZW50bHkgaW52ZXN0aWdhdGVkLgo+Cj4gTm90ZSB0aGF0IGFsbCBzdXBw
+b3J0ZWQgc3VpdGVzIGhhdmUgaGFkIHRoZWlyIGdudXBnIHZlcnNpb24gdXBk
+YXRlZDogaHR0cHM6Ly9zCj4gZWN1cml0eS10cmFja2VyLmRlYmlhbi5vcmcv
+dHJhY2tlci9DVkUtMjAxOC0xMjAyMAo+Cj4gUmVnYXJkcywKPiAtLQo+IFl2
+ZXMtQWxleGlz
 
-The Exim developers don't use github to track bugs, there is a bugzilla ins=
-tance used for that which is detailed on the Github Readme.pod page.
-
-This issue (and others) weren't "silently fixed"; they were openly tracked =
-in Bugzilla, and an example is here:
-
-https://bugs.exim.org/show_bug.cgi?id=3D2747 (fixing the observed issue in =
-this thread).
-
-The pages detailing CVEs were regularly updated by a developer who is no lo=
-nger involved. These have not been updated since 2019 as you observe, yet t=
-here have been 23 CVEs addressed by the developers. These are fairly easy t=
-o find using your favourite CVE tracker.
-
-The development process - excepting times when a CVE has been allocated - i=
-s pretty open and easy to find, as all the commits are in the Git repo and =
-bugzilla updates are mirrored into the exim-dev mailing list, often includi=
-ng the commit also.
-
-Regards
-
-Graeme
-(wearing my exim mailing list admin hat)
+--b1_92357a7dd61d8a56ddd573033dd627e2--
 
