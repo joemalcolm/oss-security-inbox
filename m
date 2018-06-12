@@ -1,45 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/19/3
-Message-ID: <20180619180604.e7pwkjjgemwdpwm7@pali>
-Date: Tue, 19 Jun 2018 20:06:04 +0200
-From: Pali Rohár <pali.rohar@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2018-12558: DOS in perl module Email::Address
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/13/3
+Message-ID: <olv_Epzwz4jvQCGNLIBY5Ij1Xizr1uG9HSj2IbgCrP8mqjkxs2s_jD9rz1L_gubdClRr71MOFF6pYj_i-NWiYgwSrlvZLV9cu6CHaBNSm0w=@itk.swiss>
+Date: Tue, 12 Jun 2018 16:56:13 -0400
+From: Stiepan <stie@....swiss>
+To: corsac@...ian.org, oss-security@...ts.openwall.com, marcus.brinkmann@...r-uni-bochum.de
+Subject: Re : Re: Re : Re: CVE-2018-12020 in GnuPG
 Content-Type: text/plain; charset=utf-8
 
-Hello!
+Hi Yves-Alexis,
 
-Perl module Email::Address, also in the last version 1.909 is vulnerable
-to Algorithm Complexity problem and can cause Denial of Service when
-attacker prepares specially crafted input. Root of this problem is that
-parsing of email addresses in Email::Address module is done by regular
-expressions, which in perl can be exponential.
+Any updates on this?
 
-The trivial input is 30 form-fields characters. You can test it with
-following oneliner:
+By the way, it might be the occasion to switch to more future-proof signatures, such as
+https://datatracker.ietf.org/doc/rfc8391 , which are reputed as quantum-safe and do not depend on some hardness assumptions.
+We could help with an open-source implem. if needed.
+Apparently, NIST is also moving into that direction for software signatures, according to information given now at ETSI's security week.
 
-$ perl -MEmail::Address -E 'Email::Address->parse("\f" x 30)'
+Best regards,
+Stiepan A. Kovac
+President
+itk AVtobvS SARL
 
-Vulnerable are all applications which receive (untrusted) emails and
-parse address headers (From/To/Cc/...) by Email::Address module. Such
-application can be DOSed by sending email with 30 form-fields characters
-in From or To header.
+Envoyé depuis ProtonMail mobile
 
-Note that this is not the only one problematic input, due to way how is
-Email::Address implemented it should be possible to prepare more
-non-trivial inputs.
+-------- Message d'origine --------
+On 10 juin 2018 à 18:38, Yves-Alexis Perez a écrit :
 
-This problem was already reported to Debian Security Team and they
-suggested to ask MITRE for assigning CVE identifier. MITRE now assigned
-CVE-2018-12558.
-
-References:
-https://metacpan.org/pod/Email::Address
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=901873
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-12558
-
--- 
-Pali Rohár
-pali.rohar@...il.com
-
-Download attachment "signature.asc" of type "application/pgp-signature" (196 bytes)
+> On Sun, 2018-06-10 at 10:58 -0400, Stiepan wrote:
+>
+> Hi Stepian,
+>
+>> This responsibility discussion is all well and fine, but now that this is
+>> half-public, may we know for sure whether we are affected :
+>> 1. as debian(-like) package consumers
+>
+> Not entirely sure what you mean here, but if you're talking about the apt
+> package managers (which relies on gpgv for signature verification), it's
+> currently investigated.
+>
+> Note that all supported suites have had their gnupg version updated: https://s
+> ecurity-tracker.debian.org/tracker/CVE-2018-12020
+>
+> Regards,
+> --
+> Yves-Alexis
