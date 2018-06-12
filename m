@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2466" "Tuesday" "23" "February" "2016" "10:14:13" "+1100" "Brian May" "brian@linuxpenguins.xyz" "<87fuwkmj7e.fsf@prune.linuxpenguins.xyz>" "76" "[oss-security] imagemagick: request for CVEs" nil nil nil "2" "2016022223:14:13" "[oss-security] imagemagick: request for CVEs" (number mark "U       brian@linuxp Feb 23   76/2466  " thread-indent "\"[oss-security] imagemagick: request for CVEs\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["345" "Tuesday" "12" "June" "2018" "09:47:10" "-0600" "Todd C. Miller" "Todd.Miller@sudo.ws" "<40b16e14fcb3e3bf@sudo.ws>" "11" "Re: [oss-security] Are `su user' and/or `sudo -u user sh' considered dangerous?" "^Date:" nil nil "6" "2018061215:47:10" "[oss-security] Are `su user' and/or `sudo -u user sh' considered dangerous?" (number mark "        Todd.Miller@ Jun 12   11/345   " thread-indent "\"Re: [oss-security] Are `su user' and/or `sudo -u user sh' considered dangerous?\"\n") "<KBGc1jApJZIJ7ISv_bB8MS1GLVaDWKb2J89dL8hnV0DlCJyVQ2f0VYI0-JpMbF4B9o5uHNn6ZTLlYLpseEup2hOfJ17rofaARO-joZhPOl4=@protonmail.ch>" ("<20180612095613.GC1073@sivokote.iziade.m$>" "<20180612113836.6flipg4zlq4fw4ue@jwilk.net>" "<KBGc1jApJZIJ7ISv_bB8MS1GLVaDWKb2J89dL8hnV0DlCJyVQ2f0VYI0-JpMbF4B9o5uHNn6ZTLlYLpseEup2hOfJ17rofaARO-joZhPOl4=@protonmail.ch>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1469 invoked by uid 550); 22 Feb 2016 23:22:32 -0000
+Received: (qmail 9523 invoked by uid 550); 12 Jun 2018 15:48:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,89 +11,41 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 7751 invoked from network); 12 Jun 2018 15:47:23 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=sudo.ws; h=from:to
+	:subject:in-reply-to:references:mime-version:content-type
+	:content-id:date:message-id; s=selector1; bh=/ygw/lfKlwYMnHMvGkg
+	pWSgSsNT4LN01ipHH+kDc6TQ=; b=hEe6XRL+25J2FFvsGgM+pNXmdT9WBaj5TAV
+	SvRFeT8/PyhT4CSxqxJkHa/rzgIZaKhDBOU6H/+13G4K+vu1xaslIzjP8MOarv6h
+	cXE35Tw0FxVC9hjV5WyBuVq6J8O+NGsyuuMEt0jkHT59iHHn53Np1ROymiaU+JT9
+	S2FbIenQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=sudo.ws; h=from:to:subject
+	:in-reply-to:references:mime-version:content-type:content-id
+	:date:message-id; q=dns; s=selector1; b=IrgWimCHGxbWeEDdyhDG5txP
+	UejLPadZGRQwDz/NRIjcGWeZAS6jnbuW2f628hgWWmiDSEWZUFFiuxv+2Jo757WX
+	YGZJQwKGMJAyaEb0e8xTMqb9XRj1KbKgccEOoPRI2F+D3SsdyafaNVORK/g7yI4O
+	Fhe9DybNUSB2IX82hjs=
+In-reply-to: Your message of "Tue, 12 Jun 2018 11:25:45 -0400."
+             <KBGc1jApJZIJ7ISv_bB8MS1GLVaDWKb2J89dL8hnV0DlCJyVQ2f0VYI0-JpMbF4B9o5uHNn6ZTLlYLpseEup2hOfJ17rofaARO-joZhPOl4=@protonmail.ch>
+References: <20180612095613.GC1073@sivokote.iziade.m$> <20180612113836.6flipg4zlq4fw4ue@jwilk.net> <KBGc1jApJZIJ7ISv_bB8MS1GLVaDWKb2J89dL8hnV0DlCJyVQ2f0VYI0-JpMbF4B9o5uHNn6ZTLlYLpseEup2hOfJ17rofaARO-joZhPOl4=@protonmail.ch>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-ID: <2651.1528818430.1@xerxes.sudo.ws>
+Message-Id: <40b16e14fcb3e3bf@sudo.ws>
+Date: Tue, 12 Jun 2018 09:47:10 -0600
+From: "Todd C. Miller" <Todd.Miller@sudo.ws>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28482 invoked from network); 22 Feb 2016 23:14:40 -0000
-X-Virus-Scanned: amavisd-new at kolabnow.com
-From: Brian May <brian@linuxpenguins.xyz>
-To: oss security list <oss-security@lists.openwall.com>
-Date: Tue, 23 Feb 2016 10:14:13 +1100
-Message-ID: <87fuwkmj7e.fsf@prune.linuxpenguins.xyz>
-Content-Type: text/plain
-Subject: [oss-security] imagemagick: request for CVEs
+Subject: Re: [oss-security] Are `su user' and/or `sudo -u user sh' considered dangerous?
+To: oss-security@lists.openwall.com
 
-Hello,
+On Tue, 12 Jun 2018 11:25:45 -0400, Jordan Glover wrote:
 
-Debian has been tracking a number of security issues in imagemagick, and
-as a Debian-LTS maintainer I have been advised to try to obtain CVEs for
-these issue. On investigation some of these issues have already had CVE
-requests however as far as I can tell, CVEs were not assigned (apologies
-if I missed something), and I am not sure why.
+> > For sudo, there's the "use_pty" flag. (It's not enabled by default.)
+>
+> Why this isn't default? Where's the catch?
 
-As there are no CVEs allocated, I have used the temp ids given by Debian
-for now.
+Up until recently there were issues with background processes being
+killed when the pty went away.  Using a pty will become the default
+in a future release.
 
-https://security-tracker.debian.org/tracker/source-package/imagemagick
-
-
-
-TEMP-0773834-5EB6CF: multiple vulnerabilities found by Google
-
-CVE was already requested here:
-http://www.openwall.com/lists/oss-security/2014/12/24/1
-
-
-
-TEMP-0806441-76CD60: Integer and Buffer overflow in coders/icon.c
-
-CVE was already requested here:
-http://www.openwall.com/lists/oss-security/2015/10/07/2
-
-
-
-TEMP-0806441-CB092C: Double free in coders/pict.c:2000
-
-CVE was already requested here:
-http://www.openwall.com/lists/oss-security/2015/10/07/2
-
-
-
-TEMP-0811308-B63DA1 is multiple issues; each should have its own
-CVE. Not sure if the momory leaks or the "PixelColor off by one" are
-security issues, have included them here for sake of being complete:
-
-
-  - Memory Leaks
-    http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=28791
-    Upstream fix: https://github.com/ImageMagick/ImageMagick/commit/9043f3d1fb76c8f4f158d75dc6e2455c43d2f1de
-
-
-
-  - Out of bounds error in SpliceImage
-    http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=28466
-    Upstream fix: https://github.com/ImageMagick/ImageMagick/commit/7b1cf5784b5bcd85aa9293ecf56769f68c037231
-
-
-
-  - Prevent null pointer access in magick/constitute.c
-    https://github.com/ImageMagick/ImageMagick/pull/34
-    Upstream fix: https://github.com/ImageMagick/ImageMagick/commit/5b4bebaa91849c592a8448bc353ab25a54ff8c44
-
-
-
-  - PixelColor off by one on i386
-    https://github.com/ImageMagick/ImageMagick/issues/54
-    Upstream fix:
-    https://github.com/ImageMagick/ImageMagick/commit/8f424002488d9f5ece29228d8ede0e39d838f38b
-    https://github.com/ImageMagick/ImageMagick/commit/0e560d16873c166005eeb79bcca13b9f74177732
-    https://github.com/ImageMagick/ImageMagick/commit/95c8394eaacc8c2f272177269416daf0b2ba004f
-    
-
-
-  - Fixed memory leak when reading incorrect PSD files
-    Upstream fix: https://github.com/ImageMagick/ImageMagick/commit/bd9f1e7d1bd2c8e2cf7895d133c5c5b5cd3526b6
-
-
-Regards
--- 
-Brian May <brian@linuxpenguins.xyz>
-https://linuxpenguins.xyz/brian/
+ - todd
