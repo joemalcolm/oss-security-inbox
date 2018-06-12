@@ -1,38 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/29/1
-Message-Id: <DE6B4C1E-5C1C-49FB-903D-9013F433AAEB@apache.org>
-Date: Tue, 28 Aug 2018 15:39:46 -0700
-From: Bryan Call <bcall@...che.org>
-To: announce@...fficserver.apache.org, dev <dev@...fficserver.apache.org>, users <users@...fficserver.apache.org>, security@...fficserver.apache.org, oss-security@...ts.openwall.com
-Subject: [ANNOUNCE] Apache Traffic Server vulnerability with an invalid TLS handshake - CVE-2018-8022
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/13/2
+Message-ID: <CAEwge-EDm10LZzjbz0wqWEHzOO03L_VMY7uEc66eRHj3TNTvFA@mail.gmail.com>
+Date: Tue, 12 Jun 2018 14:11:34 -0700
+From: Anthony Baker <abaker@...otal.io>
+To: user@...de.apache.org, dev@...de.apache.org, announce@...che.org, asf-security <security@...che.org>, oss-security@...ts.openwall.com
+Subject: [SECURITY] CVE-2017-15695 Apache Geode remote code execution vulnerability
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-8022: Apache Traffic Server vulnerability with an invalid TLS handshake
+CVE-2017-15695 Apache Geode remote code execution vulnerability
 
-Reported By:
-Shigeki Otsu
+Severity:  Important
 
-Vendor:
-The Apache Software Foundation
+Vendor: The Apache Software Foundation
 
-Version Affected:
-ATS 6.2.2
+Versions Affected:  Apache Geode 1.0.0 through 1.4.0
 
 Description:
-An carefully crafted invalid TLS handshake can cause ATS to segfault.
+When a Geode server is configured with a security manager, a user with
+DATA:WRITE privileges is allowed to deploy code by invoking an
+internal Geode function.  This allows remote code execution.  Code
+deployment should be restricted to users with DATA:MANAGE privilege.
 
 Mitigation:
-6.x users should upgrade to 6.2.3 or later versions
+Users of the affected versions should upgrade to Apache Geode 1.5.0 or later.
+
+Credit:
+This issue was reported responsibly to the Apache Geode Security Team
+by Dan Smith from Pivotal Software.
 
 References:
-	Downloads:
-		https://trafficserver.apache.org/downloads
-	Github Pull Request:
-		https://github.com/apache/trafficserver/pull/2147
-	CVE:
-		https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-8022
-
--Bryan
-
-
-
+[1] https://issues.apache.org/jira/browse/GEODE-3974
+[2] https://cwiki.apache.org/confluence/display/GEODE/Release+Notes#ReleaseNotes-SecurityVulnerabilities
