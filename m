@@ -1,45 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/31/1
-Message-ID: <695060699.77400.1533021059750@mail.yahoo.com>
-Date: Tue, 31 Jul 2018 07:10:59 +0000 (UTC)
-From: Andrea Cosentino <ancosen1985@...oo.com>
-To: Dev <dev@...el.apache.org>, Users <users@...el.apache.org>,  Apache Security Team <security@...che.org>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>,  "karel.jelinek@...corm.com" <karel.jelinek@...corm.com>
-Subject: [SECURITY] New security advisory CVE-2018-8027 released for Apache Camel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/12/1
+Message-ID: <20180612095613.GC1073@sivokote.iziade.m$>
+Date: Tue, 12 Jun 2018 13:17:43 +0300
+From: Georgi Guninski <guninski@...inski.com>
+To: oss-security@...ts.openwall.com
+Subject: Are `su user' and/or `sudo -u user sh' considered dangerous?
 Content-Type: text/plain; charset=utf-8
 
-A new security advisory has been released for Apache Camel, that is fixed in
-the recent 2.20.4 and 2.21.1 releases:
+ From
+https://j.ludost.net/blog/archives/2018/06/12/are_su_user_andor_sudo_-u_user_sh_considered_dangerous/index.html
 
-CVE-2018-8027: Apache Camel's Core is vulnerable to XXE in XSD validation processor
+Per vague memory I discussed half of this with some linux crowd and
+they said "won't fix" long ago.
 
-The full text of the advisory is the following:
+`su user' and `sudo -u user sh' give the user the fd of root's tty
+and it is readable and writable. After closing the session, the
+user can keep it and on root's tty potentially do:
 
-CVE-2018-8027: Apache Camel's Core is vulnerable to XXE in XSD validation processor
+1. inject keypresses via ioctl()
+and/or
+2. read the output of root's tty, probably with some analogue of
+tee(1).
 
-Severity: MEDIUM
+Is this really a concern?
 
-Vendor: The Apache Software Foundation
+Any workarounds?
 
-Versions Affected: Camel 2.20.0 to 2.20.3 and Camel 2.21.0
-The unsupported Camel 2.x (2.19 and earlier) versions may be also affected.
-
-Description: Apache Camel's Core is vulnerable to XXE External Entity vulnerability XSD validation processor.
-
-Mitigation: 2.20.x users should upgrade to 2.20.4, 2.21.0 users should upgrade to 2.21.1. 
-
-The JIRA tickets: https://issues.apache.org/jira/browse/CAMEL-12444 and https://issues.apache.org/jira/browse/CAMEL-10894 (partial fix)
-refer to the various commits that resovoled the issue, and have more details.
-
-Credit: This issue was discovered by Karel Jelínek <karel dot jelinek at unicorn dot com> from Unicorn Systems.
-
-On behalf of the Apache Camel PMC
-
---
-Andrea Cosentino 
-----------------------------------
-Apache Camel PMC Chair
-Apache Karaf Committer
-Apache Servicemix PMC Member
-Email: ancosen1985@...oo.com
-Twitter: @oscerd2
-Github: oscerd
