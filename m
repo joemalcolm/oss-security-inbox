@@ -1,57 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/17/4
-Message-ID: <20180317140214.GB8389@eldamar.local>
-Date: Sat, 17 Mar 2018 15:05:46 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/13/4
+Message-ID: <20180613074043.GA1166@sivokote.iziade.m$>
+Date: Wed, 13 Jun 2018 10:40:43 +0300
+From: Georgi Guninski <guninski@...inski.com>
 To: oss-security@...ts.openwall.com
-Cc: security <security@...thon.org>, MinRK <benjaminrk@...il.com>, jkamens@...ntopian.com, ssanderson@...ntopian.com
-Subject: Re: CVE request: maliciously crafted notebook files in Jupyter
+Subject: Re: Are `su user' and/or `sudo -u user sh' considered dangerous?
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-On Thu, Mar 15, 2018 at 01:55:59PM +0000, Thomas Kluyver wrote:
-> Email address of requester: security@...thon.org, thomas@...yver.me.uk, benjaminrk@...il.com, jkamens@...ntopian.com, ssanderson@...ntopian.com
+On Tue, Jun 12, 2018 at 01:38:36PM +0200, Jakub Wilk wrote:
+> https://bugzilla.redhat.com/show_bug.cgi?id=173008 (CVE-2005-4890)
 > 
-> Software name: Jupyter Notebook (formerly IPython Notebook)
-> Type of vulnerability: Maliciously forged file
-> Attack outcome: Possible remote execution
-> 
-> Vulnerability: A maliciously forged notebook file can bypass sanitization to execute Javascript in the notebook context. Specifically, invalid HTML is 'fixed' by jQuery after sanitization, making it dangerous.
-> 
-> Affected versions:
-> 
-> - notebook ≤ 5.4.0
-> 
-> URI with issues:
-> 
-> - GET /notebook/**
-> 
-> Patches:  not yet finalised
-> 
-> Mitigations:
-> 
-> Upgrade to Jupyter notebook 5.4.1 or 5.5 once available.
-> If using pip,
-> 
->     pip install --upgrade notebook
-> 
-> For conda:
-> 
->     conda update conda
->     conda update notebook
-> 
-> Vulnerability reported by vkgonka@...l.ru , via Jonathan Kamens at Quantopian
-
-Thanks for the headsup.
-
-This reply is mainly for this other purpose: It looks you wanted to
-have a CVE assigned trough this reply to the list. CVE's cannot
-anymore be requested via the oss-security list. If you want to request
-one please have a look at https://cveform.mitre.org/
-
-Once you have the CVE assigned, can you please loop back the
-assignement in this thread?
-
-Regards,
-Salvatore
+> It was last discussed on oss-security in 2017:
+> http://seclists.org/oss-sec/2017/q2/412
+>
+Thanks. The readhat link is fixed in su in 2005.
+Is there POC for relatively new distros?
+I couldn't make TIOCSTI work at all in debian 8 and 9.
+ 
