@@ -1,53 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/29/6
-Message-Id: <A9E2B7B3-FCD2-4439-8B86-21C3B1BD5339@apache.org>
-Date: Tue, 28 Aug 2018 17:17:01 -0700
-From: Bryan Call <bcall@...che.org>
-To: users <users@...fficserver.apache.org>
-Cc: announce@...fficserver.apache.org, dev <dev@...fficserver.apache.org>, security@...fficserver.apache.org, oss-security@...ts.openwall.com
-Subject: Re: [ANNOUNCE] Apache Traffic Server vulnerability with header variable access in the ESI plugin - CVE-2018-8040
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/13/10
+Message-ID: <d51627cd-ceef-bdca-6f4f-52b2edf78d6d@ruhr-uni-bochum.de>
+Date: Wed, 13 Jun 2018 20:22:23 +0200
+From: Marcus Brinkmann <marcus.brinkmann@...r-uni-bochum.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2018-12020, CVE-2018-12019 in GnuPG, Enigmails, GPGTools, python-gnupg
 Content-Type: text/plain; charset=utf-8
 
-There was an error in the Version Affected section.  This also effects version 7.1.3 and users running 7.x should upgrade to 7.1.4 or later versions.
+I have published my reports:
 
-Thank you,
+CVE-2018-12020: The signature verification routine in Enigmail 2.0.6.1,
+GPGTools 2018.2, and python-gnupg 0.4.2 parse the output of GnuPG 2.2.6
+with a “--status-fd 2” option, which allows remote attackers to spoof
+arbitrary signatures via the embedded “filename” parameter in OpenPGP
+literal data packets, if the user has the verbose option set in their
+gpg.conf file.
 
--Bryan
+https://neopg.io/blog/gpg-signature-spoof/
 
 
+CVE-2018-12019: The signature verification routine in Enigmail 2.0.6.1
+interprets user ids as status/control messages and does not correctly
+keep track of the status of multiple signatures, which allows remote
+attackers to spoof arbitrary email signatures via public keys containing
+crafted primary user ids.
 
-> On Aug 28, 2018, at 3:39 PM, Bryan Call <bcall@...che.org> wrote:
-> 
-> CVE-2018-8040: Apache Traffic Server vulnerability with header variable access in the ESI plugin
-> 
-> Reported By:
-> Louis Dion-Marcil
-> 
-> Vendor:
-> The Apache Software Foundation
-> 
-> Version Affected:
-> ATS 6.0.0 to 6.2.2
-> ATS 7.0.0 to 7.1.2
-> 
-> Description:
-> Pages that are rendered using the ESI plugin can have access to the cookie header when the plugin is configure not to allow access.
-> 
-> Mitigation:
-> 6.x users should upgrade to 6.2.3 or later versions
-> 7.x users should upgrade to 7.1.3 or later versions
-> 
-> References:
-> 	Downloads:
-> 		https://trafficserver.apache.org/downloads
-> 	Github Pull Request:
-> 		https://github.com/apache/trafficserver/pull/3926
-> 	CVE:
-> 		https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-8040
-> 
-> -Bryan
-> 
-> 
-> 
+https://neopg.io/blog/enigmail-signature-spoof/
+
+
+It would be prudent for developers of GnuPG-based applications to check
+for similar issues in their software. I did a lot of due diligence to
+check critical infrastructure, but there were several "near misses" that
+make me fear that there are still some affected products out there.
 
 
