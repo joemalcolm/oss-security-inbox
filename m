@@ -1,36 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/11/1
-Message-ID: <20180911060436.3mf55d74rtfpv6qt@suse.de>
-Date: Tue, 11 Sep 2018 08:04:36 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: Ghostscript 9.24 issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/13/5
+Message-ID: <32fa222e-64d0-0be5-a21f-55d6eea0f88c@cs.tcd.ie>
+Date: Wed, 13 Jun 2018 10:30:00 +0100
+From: Stephen Farrell <stephen.farrell@...tcd.ie>
+To: oss-security@...ts.openwall.com, Stiepan <stie@....swiss>, corsac@...ian.org, marcus.brinkmann@...r-uni-bochum.de
+Subject: Re: Re : Re: Re : Re:  CVE-2018-12020 in GnuPG
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Sep 09, 2018 at 12:26:01PM -0700, Tavis Ormandy wrote:
-> On Sat, Sep 8, 2018 at 3:42 AM Marius Bakke <mbakke@...tmail.com> wrote:
+
+Hiya,
+
+On 12/06/18 21:56, Stiepan wrote:
+> Hi Yves-Alexis,
 > 
-> > Tavis Ormandy <taviso@...gle.com> writes:
-> >
-> > > Quick update, this
-> > > <http://git.ghostscript.com/?p=ghostpdl.git&a=commitdiff&h=5812b1b78fc4>
-> > > commit fixes that problem, but I noticed that fix is incomplete and can
-> > be
-> > > bypassed, so filed another bug for that (the new bug is 699718).
-> >
-> > I see <https://bugs.chromium.org/p/project-zero/issues/detail?id=1640>
-> > is now closed.  As far as I can tell, these are the (only) commits
-> > necessary on top of 9.24[*]:
-> >
-> >
-> > https://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=5812b1b78fc4d36fdc293b7859de69241140d590
-> >
-> > https://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=3e5d316b72e3965b7968bb1d96baa137cd063ac6
-> >
-> > https://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=643b24dbd002fb9c131313253c307cf3951b3d47
-> >
-> > Which are all variations of CVE-2018-16509.  Is my understanding correct?
+> Any updates on this?
+> 
+> By the way, it might be the occasion to switch to more future-proof signatures, such as
+> https://datatracker.ietf.org/doc/rfc8391 , which are reputed as quantum-safe and do not depend on some hardness assumptions.
 
-Mitre has assigned CVE-2018-16802 to these 3 commits.
+XMSS (RFC8391) seems like a fine thing to me, but two
+notes:
 
-Ciao, Marcus
+1. There's another hash based scheme [1] that may or may
+not have more traction, depending whom you ask.
+
+2. IIUC these schemes have a finite number of signatures
+per private key, and when you've used them all you reveal
+the private key value, so different APIs are needed, and
+applications need to care about that. So I'm not sure that
+general adoption of these for gnu-pg would be simple. In
+this context though (s/w signing), applications could make
+use of 'em, if done carefully.
+
+The best list for discussing algorithm details is probably
+the CFRG list. (cfrg@...f.org)
+
+Cheers,
+S.
+
+[1] https://datatracker.ietf.org/doc/draft-mcgrew-hash-sigs/
+
+> We could help with an open-source implem. if needed.
+> Apparently, NIST is also moving into that direction for software signatures, according to information given now at ETSI's security week.
+> 
+> Best regards,
+> Stiepan A. Kovac
+> President
+> itk AVtobvS SARL
+> 
+> Envoyé depuis ProtonMail mobile
+> 
+> -------- Message d'origine --------
+> On 10 juin 2018 à 18:38, Yves-Alexis Perez a écrit :
+> 
+>> On Sun, 2018-06-10 at 10:58 -0400, Stiepan wrote:
+>>
+>> Hi Stepian,
+>>
+>>> This responsibility discussion is all well and fine, but now that this is
+>>> half-public, may we know for sure whether we are affected :
+>>> 1. as debian(-like) package consumers
+>>
+>> Not entirely sure what you mean here, but if you're talking about the apt
+>> package managers (which relies on gpgv for signature verification), it's
+>> currently investigated.
+>>
+>> Note that all supported suites have had their gnupg version updated: https://s
+>> ecurity-tracker.debian.org/tracker/CVE-2018-12020
+>>
+>> Regards,
+>> --
+>> Yves-Alexis
+
+Download attachment "0x5AB2FAF17B172BEA.asc" of type "application/pgp-keys" (6731 bytes)
