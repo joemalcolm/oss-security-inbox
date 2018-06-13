@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2517" "Friday" "20" "November" "2015" "13:26:53" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151120182653.E2A5734E0F9@smtpvbsrv1.mitre.org>" "54" "[oss-security] Re: LXDM X authentication issues" nil nil nil "11" "2015112018:26:53" "[oss-security] Re: LXDM X authentication issues" (number mark "U       cve-assign@m Nov 20   54/2517  " thread-indent "\"[oss-security] Re: LXDM X authentication issues\"\n") "<20151120140451.28635bdc@redhat.com>" ("<20151120140451.28635bdc@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["697" "Wednesday" "13" "June" "2018" "23:07:18" "+0400" "Loganaden Velvindron" "loganaden@gmail.com" "<CAOp4FwSb4wWUGL57msLTj1yNjzCtQP3zqKfLba8RME0L+4VWkg@mail.gmail.com>" "22" "[oss-security] Re: Intel FP security issue" "^Cc:" nil nil "6" "2018061319:07:18" "[oss-security] Re: Intel FP security issue" (number mark "        loganaden@gm Jun 13   22/697   " thread-indent "\"[oss-security] Re: Intel FP security issue\"\n") "<CAOp4FwSfmC=vLLSTxZYFbAbkh_j3eJJGqvwTg5R_bgzh9vyuEA@mail.gmail.com>" ("<CAOp4FwSfmC=vLLSTxZYFbAbkh_j3eJJGqvwTg5R_bgzh9vyuEA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 17971 invoked by uid 550); 20 Nov 2015 18:27:06 -0000
+Received: (qmail 15558 invoked by uid 550); 13 Jun 2018 19:10:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,67 +11,65 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 11382 invoked from network); 13 Jun 2018 19:07:31 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=7NUKPCc1AzYNtiyo7Sh23RBX31HT9kBxF0czfS6QPzY=;
+        b=BJFYKKjob+mgY61jm0IkKEVSwczAIbUwYay5uWMfHx12AycX+qcswBuLisua7/E4i8
+         VPfsBpuLpgBrt4bpAz2VIZiEWW34Wb/s1wBx8M8o+bhxPkBJft50ovxR9Nr//46iTMvR
+         lCAn8B9OFDe1Z10zHABsNrndAuPd0nrgKlb65KutCFaFJP3pzN0DZXgspuAkRWuGVsGR
+         fmcnuxxh8VDWC2MwVSxQoLDlqsViL3xapNHGclX29bE6TF6HUfjsNHwxqe5vObxqa8jd
+         Legdj82fzyfQMmvuNC+THDPyeMs7A5infwBSamtISkN3fVEbJNdwArwG8confH5oPh5P
+         sV+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=7NUKPCc1AzYNtiyo7Sh23RBX31HT9kBxF0czfS6QPzY=;
+        b=ONeKQqjsXMhy1V3g449sG2k0UuXtaaOaKaqn0zFNtUxbpYmcs6lWGck/iSJZqz/WND
+         5izPylYJhL4NbscGOGUdlSD2IXj8yOff2fL5CMJXdrdOpmFKYxhoPD6g+mQjunStP9JA
+         dZHnOGM4v+7MDl5QmbWGn7juejmsLsqpLzUXM1cwBINrnqtfONk8ByxFLI5DbKSi/6Ye
+         ADpaKiS/0t/47EZLghL7V82Zal1HK3tWzuC7SToKp2Dj2SF+rWx9n4mrefdFAQm2VKKd
+         EMEB5APW05Ov/vbwBG9M8IRPMctKpYQqAXf/0UtKQTWwhu5ux1UvHb647bTxRl3hzPKM
+         Cefg==
+X-Gm-Message-State: APt69E1uG6kbfNQhz3U3MK9fhr6asy9Ix3sxhYzk8q0fN8r3HSMItKsk
+	C6wyqAPE+LvZHA8Zte5isyr+4zh1QhBO4WaPOSUZcBGc
+X-Google-Smtp-Source: ADUXVKIQkWuSG+SqheMlwes5C5kQ2jreq2mRjBIHu8U3WfhDWt/x6r/FqyD+L78rSjTdvU0oBwWtKeAtkGaKuXH2S0E=
+X-Received: by 2002:a24:2bc1:: with SMTP id h184-v6mr5780455ita.84.1528916839079;
+ Wed, 13 Jun 2018 12:07:19 -0700 (PDT)
+MIME-Version: 1.0
+In-Reply-To: <CAOp4FwSfmC=vLLSTxZYFbAbkh_j3eJJGqvwTg5R_bgzh9vyuEA@mail.gmail.com>
+References: <CAOp4FwSfmC=vLLSTxZYFbAbkh_j3eJJGqvwTg5R_bgzh9vyuEA@mail.gmail.com>
+Message-ID: <CAOp4FwSb4wWUGL57msLTj1yNjzCtQP3zqKfLba8RME0L+4VWkg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Cc: secure@intel.com
+Date: Wed, 13 Jun 2018 23:07:18 +0400
+From: Loganaden Velvindron <loganaden@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17949 invoked from network); 20 Nov 2015 18:27:05 -0000
-From: cve-assign@mitre.org
-To: thoger@redhat.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <20151120140451.28635bdc@redhat.com>
-Message-Id: <20151120182653.E2A5734E0F9@smtpvbsrv1.mitre.org>
-Date: Fri, 20 Nov 2015 13:26:53 -0500 (EST)
-Subject: [oss-security] Re: LXDM X authentication issues
+Subject: [oss-security] Re: Intel FP security issue
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Wed, Jun 13, 2018 at 7:34 PM, Loganaden Velvindron
+<loganaden@gmail.com> wrote:
+> Hi All,
+>
+> Both OpenBSD and DragonflyBSD have gone ahead and committed fixes for
+> the rumored Intel FP issue:
+>
+> OpenBSD: https://marc.info/?l=openbsd-cvs&m=152818076013158&w=2
+> DragonflyBSD: http://lists.dragonflybsd.org/pipermail/commits/2018-June/672324.html
+>
+> I think that the cat is already out of the bag, and releasing details
+> of this security problem makes sense. Since this has gone public, Is
+> there a reason to keep this under embargo ?
+>
 
-> LXDM before 0.5.2 did not start X server with -auth parameter.
-> Therefore any user able to connect to it (typically all local users)
-> would have their X connections accepted.  The issue was fixed via:
-> 
-> http://git.lxde.org/gitweb/?p=lxde/lxdm.git;a=commit;h=e8f387089e241360bdc6955d3e479450722dcea3
-
->> pass xauth file to xserver command
-
-It appears that this is the major finding. Use CVE-2015-8308.
+FreeBSD appears to be moving in this direction too:
+https://svnweb.freebsd.org/base?view=revision&revision=335072
 
 
-> LXDM also defaults to not restarting X server between sessions, and
-> does not change authentication cookies or remove xhost authorizations.
-> This allows local user to be able to connect to the X server after they
-> logged out. The 'reset' option in lxdm.conf controls whether X server
-> is restarted on session user close.
-
-This possibly can be included in CVE but, if so, the CVE ID would be
-different. Is there any other information, e.g., why was there a
-decision to make reset an optional behavior rather than a required
-behavior? Is there a possible attack by a different local user, or is
-the relevant attack that someone could steal the computer and recover
-the authentication cookies (possibly violating an expectation of the
-legitimate user who believed they were safely logged out)? Is the
-behavior different from all major display managers?
-http://wiki.lxde.org/en/LXDM says "LXDM is the lightweight display
-manager ..." -- is the design tradeoff possibly different on a
-low-resource machine where it's very expensive to restart the X server?
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWT2WBAAoJEL54rhJi8gl50F8QAIGlLgPJfDdmpJy6jGd32eEd
-S20uQCZUpZY9OADmAm5TNJsXCuCxoypnPb6/RDNymiTl+Z22qtmwiXDQqMFWD5EN
-nwxJfVJHM2eWEpCo0ZF8Ocn7yZm/MQKGbPEMqKIXe3TjOEAn92is4bzOq2DFCRe3
-g9aKxKCOG0B6zv8T7z3pO/BF9HvkFskmEopMA6DCDCQVJjZ0eE7p/oF9U/XCoG1v
-4TQVsuPl2ojAYmowZ4kFGgMnWcA5QKL3bwlddCWVbaEFpj59uznWvcFpfzc7WEnW
-WVPFyqeTMaIsCC8APVRNXvKfi6xKxngofA5V0lFGOMvltCEIyJVOP1quHJuyyEMh
-7B3246JT0Gt7Z2rlKpfRuTIM5sas0GWdODCtVhE6+h2Ym2gcKmdnspgfBEsqoSAJ
-IgqVoO1Hhjv0ozoNOgcgw+JyBLS7yus6jHWrhzlCeKGN0RXpEQlrEzHLTGKJq7K3
-sd8sTwFFntIfpDDwUqeC+8JUhaLB7AGzVYJtfPeHRQAI5OxGSRxhVd51bDREfRtl
-BVVSVb9lYV81NQkAqHluT6MIHQWGGXdo/DocpbJsRUiWYqSUVXTLk3VcUnKRPtYY
-3pZHzWjzuU+/jSg123onftMond/HBqYEC9pRICbRQScv7QE/eOSuUHzP5FovW30N
-71swFR6kDua+AGm6F6rY
-=59AY
------END PGP SIGNATURE-----
+> Kind regards,
+> //Logan
+> C-x-C-c
