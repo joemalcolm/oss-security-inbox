@@ -1,86 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/25/1
-Message-Id: <E1fiN95-0005te-ML@xenbits.xenproject.org>
-Date: Wed, 25 Jul 2018 17:00:15 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 274 - Linux: Uninitialized state in PV syscall return path
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/13/1
+Message-ID: <820f3419-4347-8f37-adc1-498cea1fb17e@isc.org>
+Date: Tue, 12 Jun 2018 16:07:30 -0800
+From: ISC Security Officer <security-officer@....org>
+To: oss-security@...ts.openwall.com
+Subject: ISC has announced CVE-2018-5738, a defect in some versions of BIND
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Please be advised that ISC has publicly announced a vulnerability in
+some versions of BIND.
 
-                    Xen Security Advisory XSA-274
+CVE-2018-5738 is a medium severity vulnerability in which nameservers
+containing the previous change #4777 (from October 2017), if they
+are configured to permit recursive service to some clients, may because
+of this error improperly inherit the wrong default permission, causing
+the server to permit recursive service to ALL clients.  Several workarounds
+are documented in the official security advisory document, which can be
+found in ISC's knowledge base:
 
-         Linux: Uninitialized state in PV syscall return path
+   https://kb.isc.org/article/AA-01616/0/CVE-2018-5738
 
-ISSUE DESCRIPTION
-=================
 
-Linux has a `failsafe` callback, invoked by Xen under certain
-conditions.  Normally in this failsafe callback, error_entry is paired
-with error_exit; and error_entry uses %ebx to communicate to
-error_exit whether to use the user or kernel return path.
+Michael McNally
+ISC Security Officer
 
-Unfortunately, on 64-bit PV Xen on x86, error_exit is called without
-error_entry being called first, leaving %ebx with an invalid value.
 
-IMPACT
-======
-
-A rogue user-space program could crash a guest kernel.  Privilege
-escalation cannot be ruled out.
-
-VULNERABLE SYSTEMS
-==================
-
-Only 64-bit x86 PV Linux systems are vulnerable.
-
-All versions of Linux are vulnerable.
-
-MITIGATION
-==========
-
-Switching to HVM or PVH guests will mitigate this issue.
-
-CREDITS
-=======
-
-This issue was discovered by M. Vefa Bicakci, and recognized as a
-security issue by Andy Lutorminski.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-NB this patch has not been accepted into Linux upstream yet.  An
-updated advisory will be sent if the fix upstreamed looks
-significantly different.
-
-xsa274-linux-4.17.patch           Linux 4.17
-
-$ sha256sum xsa274*
-0c30cb13d1d573f446c8cb8d4824ffad8ef9149a7589a19ef9bcc83c07bddcf5  xsa274-linux-4.17.patch
-$
-
-NOTE ON THE LACK OF EMBARGO
-===========================
-
-The patch for this issue was published on linux-kernel without being
-first reported to the XenProject Security Team.
-
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAltYp7EMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZipwIAINGjP6d5vABI2CEdbromimlXiwGvTUBWOoIsvu1
-bfLyeab334UBIpmouz+UhgKXFdujIFNpWqGpCc68xoNSsJiY+95GykbkxfghxzkL
-GQXzGloJVrHSzRGT+wUlTg9qCpbj1YVr1YtnACa34eXJTGhUBnOl0L3gBRbrjILb
-esECY3/EAKcnB8z1d2AzCRamYVGvfMO8xcolYrP1DzlNYQPnfrKvZu/7vkiyhbrO
-M9nM6+9MdS63JPGp5dX8xRO3TzyRDpgpSpkoMY8Lqhrr5/oLC9dhtdm/yK2kNtJ/
-JluBn6q+EfZKoW/UcwTsehiTOOTKb/WYhC3e1jsRpm/+drU=
-=7MDt
------END PGP SIGNATURE-----
-
-Download attachment "xsa274-linux-4.17.patch" of type "application/octet-stream" (4131 bytes)
