@@ -1,31 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/14/2
-Message-ID: <20181214131542.GA24885@openwall.com>
-Date: Fri, 14 Dec 2018 14:15:42 +0100
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/13/9
+Message-Id: <F54052A4-CAAC-4E9A-BB5F-9EF3699E56B1@beckweb.net>
+Date: Wed, 13 Jun 2018 17:58:25 +0200
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Cc: Jann Horn <jannh@...gle.com>
-Subject: Re: Linux kernel: userfaultfd bypasses tmpfs file permissions (CVE-2018-18397; since 4.11; fixed in 4.14.87 and 4.19.7)
+Subject: Re: Multiple vulnerabilities in Jenkins and Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-Important correction:
 
-On Fri, Dec 14, 2018 at 02:07:55PM +0100, Solar Designer wrote:
-> > On Wed, 2018-12-12 at 15:24 +0100, Solar Designer wrote:
-> > > A question to ask may be: out of Linux kernel vulnerabilities being
-> > > patched, are there more high and critical overall severity (e.g., as
-> > > risk impact times risk probability) vulnerabilities found in "too
-> > > recent" kernels than there are high and critical severity untracked
-> > > vulnerabilities (also or instead) affecting "sufficiently old" kernels?
+> On 9. May 2018, at 11:45, Daniel Beck <ml@...kweb.net> wrote:
+> 
+> SECURITY-771
+> Users with Overall/Read permission were able use the list-plugins CLI
+> command and view the About Jenkins page to list all installed plugins.
 
-> [...] to answer my question above we need median and not average.
+CVE-2018-1000192
 
-Actually, that wouldn't answer this exact question - it'd answer a
-similar question about tracked vulnerabilities, and the answer would
-tell us how frequently a vulnerability would need to be patched on a
-system (apparently, 1/8 of the time for RHEL7 vs. latest mainline now).
+> SECURITY-786
+> The built-in Jenkins user database optionally allows user registration.
+> This feature did not properly sanitize user names, allowing registration of
+> user names containing control characters. This could be used to confuse
+> administrators (appearing to be a different user) while preventing deletion
+> of such users through the UI.
 
-We can't answer the question about untracked vulnerabilities from
-per-vulnerability data because untracked implies we lack such data.
+CVE-2018-1000193
 
-Alexander
+> SECURITY-788
+> The agent to master security subsystem ensures that the Jenkins master is
+> protected from maliciously configured agents. A path traversal vulnerability
+> allowed agents to escape whitelisted directories to read and write to files
+> they should not be able to access.
+
+CVE-2018-1000194
+
+> SECURITY-794
+> The form validation code for a tool installer improperly checked
+> permissions, allowing any user with Overall/Read permission to submit a
+> HTTP GET request to any user specified URL, and learn whether the response
+> was successful (HTTP 200) or not.
+> 
+> Additionally, this functionality did not require POST requests be used,
+> thereby allowing the above to be performed without direct access to Jenkins
+> via Cross-Site Request Forgery attacks.
+
+CVE-2018-1000195
+
+> SECURITY-263
+> Gitlab Hook Plugin does not encrypt the Gitlab API token used to access
+> Gitlab. This can be used by users with master file system access to obtain
+> GitHub credentials.
+> 
+> Additionally, the Gitlab API token round-trips in its plaintext form, and
+> is displayed in a regular text field to users with Overall/Administer
+> permission. This exposes the API token to people viewing a Jenkins
+> administrator’s screen, browser extensions, cross-site scripting
+> vulnerabilities, etc.
+
+CVE-2018-1000196
+
+> SECURITY-670
+> Black Duck Hub Plugin did not perform permission checks for its config.xml
+> API endpoint. This allowed any user with Overall/Read permission to both
+> read and write the plugin configuration XML.
+
+CVE-2018-1000197
+
+> SECURITY-671
+> Black Duck Hub Plugin config.xml API endpoint was affected by an XML
+> External Entity (XXE) processing vulnerability. This allowed an attacker
+> with Overall/Read access to have Jenkins parse a maliciously crafted file
+> that uses external entities for extraction of secrets from the Jenkins
+> master, server-side request forgery, or denial-of-service attacks.
+
+CVE-2018-1000198
+
+> SECURITY-821 / CVE pending
+> Groovy Postbuild Plugin did not properly escape badge content from user
+> input, resulting in a stored cross-site scripting vulnerability.
+
+CVE-2018-1000202
+
