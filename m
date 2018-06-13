@@ -1,64 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/26/3
-Message-Id: <EBCD031F-3A4D-4A3F-9E3E-ACC7A6C6A624@gridgain.com>
-Date: Wed, 26 Sep 2018 22:56:04 +0300
-From: Alexander Gerus <agerus@...dgain.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/13/8
+Message-ID: <CAAtL=4L-Cpcsgy8AZACFwytH0BHF32Fz2vVoZgvuSPjn0ihaNg@mail.gmail.com>
+Date: Wed, 13 Jun 2018 21:05:36 +0530
+From: Lets Secure <is3curi5@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Apache Ignite: CVE-2018-8018, CVE-2018-1273, CVE-2018-1274: Notification on available mitigation
+Subject: Third Party Code Signing Vulnerability in Squirrel & Sparkle
 Content-Type: text/plain; charset=utf-8
 
-[CVE-2018-8018] Possible Execution of Arbitrary Code via Apache Ignite GridClientJdkMarshaller
-Severity: Important
-Vendor: GridGain Systems
-Versions Affected:
-GridGain Professional Edition 2.4.7 or earlier
-GridGain Ultimate and Enterprise Editions 8.4.7 or earlier
-Impact:
-An attacker can execute arbitrary code on Ignite nodes via GridClientJdkMarshaller deserialization endpoint in the case when Ignite classpath contains arbitrary vulnerable classes. 
+Based on the recent disclosure at
+https://www.okta.com/security-blog/2018/06/issues-around-third-party-apple-code-signing-checks/
 
-Description:
-Apache Ignite serialization mechanism does not have a list of classes allowed for serialization/deserialization, which makes it possible to run arbitrary code when 3-rd party vulnerable classes are present in Ignite classpath. The vulnerability can be exploited if the one sends a specially prepared form of a serialized object to GridClientJdkMarshaller deserialization endpoint. 
+The Squirrel
+<https://github.com/Squirrel/Squirrel.Mac/blob/e9e2188cda3efb4bc08b1719bdef71880f9dc9b1/Squirrel/SQRLCodeSignature.m#L127>
+&
+Sparkle
+<https://github.com/sparkle-project/Sparkle/blob/d19c98a8771e6a38766199bb96654de5d8c3efb2/Sparkle/SUCodeSigningVerifier.m#L98>
+ framework also doesn't perform strict validation to check nested
+architecture and revocations & validity of the signer cert and can
+essentially result in bypassing the code sign validations.
 
-Mitigation:
-All GridGain versions: make sure there are no vulnerable classes among your custom code used in GridGain. 
-Ignite Professional Edition 2.4.7 or earlier users: upgrade to Ignite 2.4.8 or later version
-Ignite Ultimate and Enterprise Editions 8.4.7 or earlier users: upgrade to Ignite 8.4.8 or later version
-After version upgrade use IGNITE_MARSHALLER_WHITELIST and/or IGNITE_MARSHALLER_BLACKLIST system properties to define classes allowed for deserialization. Refer to documentation for more details: 
-https://apacheignite.readme.io/docs/securing-data-deserialization <https://apacheignite.readme.io/docs/securing-data-deserialization>
-Credit:
-The vulnerability was discovered by Man Yue Mo of lgtm.com
-Reference:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-8018 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-8018>
+*Squirrel*
+SQRLCodeSignature.m#L127
+result = SecStaticCodeCheckValidityWithErrors(staticCode,
+kSecCSCheckAllArchitectures, (__bridge SecRequirementRef)self.requirement,
+&validityError);
 
-[CVE-2018-1273] [CVE-2018-1274] Apache Ignite impacted by security vulnerability in Spring Data Commons
-Severity: Important
-Vendor: GridGain Systems
-Versions Affected:
-GridGain Professional Edition 2.4.7 or earlier
-GridGain Ultimate and Enterprise Editions 8.4.7 or earlier
+SecStaticCodeCheckValidityWithErros is called without flags -
+kSecCSDefaultFlags
+| kSecCSCheckNestedCode | kSecCSCheckAllArchitectures |
+kSecCSEnforceRevocationChecks
 
-Impact:
-	An unauthenticated remote malicious user (or attacker) can issue requests against Spring Data REST or Spring Data 
+Also, it lacks checks for chain of trust across nested binaries in Fat
+file.
+i.e. missing this code:
+SecRequirementCreateWithString(CFSTR("anchor apple"), kSecCSDefaultFlags,
+&requirementRef);
 
-Description:
-	Apache Ignite utilizes Spring Data Common library for some of its components. The vulnerability affects Apache Ignite users who us Spring Data REST for access an Ignite cluster via HTTP and Spring Data. Spring Data Commons, versions prior to 1.13 to 1.13.10, 2.0 to 2.0.5, and older unsupported versions, contain a property binder vulnerability caused by improper neutralization of special elements. An unauthenticated remote malicious user (or attacker) can supply specially crafted request parameters against 
-	Spring Data REST backed HTTP resources or using Spring Data’s projection-based request payload binding hat can lead to a remote code execution attack.
+*Sparkle*
+SUCodeSigningVerifier.m#L98
+SecCSFlags flags = (SecCSFlags) (kSecCSDefaultFlags |
+kSecCSCheckAllArchitectures);
+result = SecStaticCodeCheckValidityWithErrors(staticCode, flags, NULL,
+&cfError);
 
-Mitigation:
-Ignite Professional Edition 2.4.7 or earlier users: upgrade to Ignite 2.4.8 or later version
-Ignite Ultimate and Enterprise Editions 8.4.7 or earlier users: upgrade to Ignite 8.4.8 or later version
-Credit:
-Harendra Rai of NCR Corporation discovered the impact of the existing vulnerability on Apache Ignite. 
-Reference:
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-1273 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-1273>
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-1274 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-1274>
+The flags should have been set with:
+SecCSFlags flags = (SecCSFlags) (kSecCSDefaultFlags | kSecCSCheckNestedCode
+| kSecCSCheckAllArchitectures | kSecCSEnforceRevocationChecks)
 
---
-Alexander Gerus, On behalf of GridGain team.
-E agerus@...dgain.com
-gridgain.com
-Powered by Apache® Ignite™
+But, that's not the case with Sparkle.
 
-
-
+Best Regards!
 
