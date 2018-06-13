@@ -1,27 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/06/6
-Message-ID: <nycvar.YSQ.7.76.1811070031000.15644@xnncv>
-Date: Wed, 7 Nov 2018 00:33:03 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: moguofang@...wei.com
-Subject: CVE-2018-18954 QEMU: ppc64: Out-of-bounds r/w stack access in pnv_lpc_do_eccb
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/13/7
+Message-ID: <CAOp4FwSfmC=vLLSTxZYFbAbkh_j3eJJGqvwTg5R_bgzh9vyuEA@mail.gmail.com>
+Date: Wed, 13 Jun 2018 19:34:15 +0400
+From: Loganaden Velvindron <loganaden@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: secure@...el.com
+Subject: Intel FP security issue
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Hi All,
 
-An OOB r/w buffer access issue was found in the PowerPC PowerNV LPC controller 
-in 'pnv_lpc_do_eccb' routine. It could occur while performing a memory write 
-operation. A guest user/process could use this flaw to crash the QEMU process 
-resulting in DoS.
+Both OpenBSD and DragonflyBSD have gone ahead and committed fixes for
+the rumored Intel FP issue:
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2018-11/msg00446.html
+OpenBSD: https://marc.info/?l=openbsd-cvs&m=152818076013158&w=2
+DragonflyBSD: http://lists.dragonflybsd.org/pipermail/commits/2018-June/672324.html
 
-This issue was reported by Moguofang of Huawei.com.
+I think that the cat is already out of the bag, and releasing details
+of this security problem makes sense. Since this has gone public, Is
+there a reason to keep this under embargo ?
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Kind regards,
+//Logan
+C-x-C-c
