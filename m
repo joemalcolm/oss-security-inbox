@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3128" "Tuesday" "20" "October" "2020" "09:49:31" "-0700" "Alan Coopersmith" "alan.coopersmith@oracle.com" "<28f1351e-1176-153d-1fc3-6768d807397c@oracle.com>" "94" "[oss-security] CVE-2020-15999 fixed in FreeType 2.10.4" nil nil nil "10" "2020102016:49:31" "[oss-security] CVE-2020-15999 fixed in FreeType 2.10.4" (number mark "U       alan.coopers Oct 20   94/3128  " thread-indent "\"[oss-security] CVE-2020-15999 fixed in FreeType 2.10.4\"\n") "<20201020.074731.286155678758388099.wl@gnu.org>" ("<20201020.074731.286155678758388099.wl@gnu.org>") nil nil nil nil nil nil nil "[oss-security] CVE-2020-15999 fixed in FreeType 2.10.4" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5816" "Thursday" "14" "June" "2018" "09:48:50" "-0500" "Michael Catanzaro" "mcatanzaro@igalia.com" "<1528987730.4808.1@mail.igalia.com>" "141" "[oss-security] WebKitGTK+ and WPE WebKit Security Advisory WSA-2018-0005" nil nil nil "6" "2018061414:48:50" "[oss-security] WebKitGTK+ and WPE WebKit Security Advisory WSA-2018-0005" (number mark "U       mcatanzaro@i Jun 14  141/5816  " thread-indent "\"[oss-security] WebKitGTK+ and WPE WebKit Security Advisory WSA-2018-0005\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21893 invoked by uid 550); 20 Oct 2020 16:49:59 -0000
+Received: (qmail 23948 invoked by uid 550); 14 Jun 2018 15:01:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,134 +12,160 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21840 invoked from network); 20 Oct 2020 16:49:58 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=subject : references
- : to : cc : from : message-id : date : mime-version : in-reply-to :
- content-type : content-transfer-encoding; s=corp-2020-01-29;
- bh=zlN4CFjA2a8LvXMDti37QFKd4yib+uCKaqW4AwG3uEs=;
- b=Q2MKshxI05+GjD9LlLw0YsoQwg9qXX6jMTHXnJboTrefJ5ZoXIvILFIL+7fOhfx+4h8G
- dLkqd7dOHdX6BpLMcwwXYBaMIBsBxk7jtsa9QSkuF2JI725y5P7pW4+Zkn6tIvQOvNTI
- sqPd0x2zlUcgu38KZbC1cWj8PYnu70SbrjfbkCbxns4DhMJvH90Zh4bhxqpUa32pkRd9
- 5QpANH2XognyCNv8SMrxJao6Sl1/0Nw8vdOyQ9TZelC9uM21eS1+p66Mydm16LngmBHE
- d5/4zxmx+AqLULovxHS9lCanGOsA8a8GRpRlH4UTiWyuGHZf34huv6ExeL4AY9qDpXdG Ow== 
-References: <20201020.074731.286155678758388099.wl@gnu.org>
-To: oss-security@lists.openwall.com
-Cc: Werner LEMBERG <wl@gnu.org>
-From: Alan Coopersmith <alan.coopersmith@oracle.com>
-X-Forwarded-Message-Id: <20201020.074731.286155678758388099.wl@gnu.org>
-Message-ID: <28f1351e-1176-153d-1fc3-6768d807397c@oracle.com>
-Date: Tue, 20 Oct 2020 09:49:31 -0700
-User-Agent: Mozilla/5.0 (X11; SunOS i86pc; rv:78.0) Gecko/20100101
- Thunderbird/78.2.1
+Received: (qmail 13629 invoked from network); 14 Jun 2018 14:49:20 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com; s=20170329;
+	h=Content-Transfer-Encoding:Content-Type:MIME-Version:Message-Id:Cc:To:Subject:From:Date; bh=OzfEjZzXpU3xIXzUhzaNh4ckLJtScYdfasGNM6s8z+c=;
+	b=FM8DM5wU/39SPJZg02w3A+L7dSKG9SoMfMnm+ZuG4Hg2mwn7lTdbXj+8VncxgkOgUAY5GGiqVtlMZssaOIwQzBkmWjDYX1sGOtjg/Z449yk0xA5fnOmNTsjsMYl9SHXancTtbwckNpiBuzDHWjcDC/Q7f87RXTVZ+hLYdnQA51MCVTIcgr2msyrwDPKl1CZHJV+RK7MvOf0Jh+QHyM3MeJaACq0KGPL4nB9tG1A3LSmrqqbk8Eb0rYyRidpAILxVjAb2vjb+zahoTf3cmqjRzS0Pm6NDno0BQ8JJWzVg8J9523ps7NhSW4SqoDmuxzCGvkWqIEyGG3YhZXXwIAxXKg==;
+Date: Thu, 14 Jun 2018 09:48:50 -0500
+From: Michael Catanzaro <mcatanzaro@igalia.com>
+To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
+Cc: security@webkit.org, distributor-list@gnome.org,
+	oss-security@lists.openwall.com, bugtraq@securityfocus.com
+Message-Id: <1528987730.4808.1@mail.igalia.com>
+X-Mailer: geary/0.12.2
 MIME-Version: 1.0
-In-Reply-To: <20201020.074731.286155678758388099.wl@gnu.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9780 signatures=668682
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0 mlxscore=0 phishscore=0
- malwarescore=0 spamscore=0 suspectscore=0 bulkscore=0 mlxlogscore=999
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2009150000
- definitions=main-2010200114
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9780 signatures=668682
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0 lowpriorityscore=0
- priorityscore=1501 impostorscore=0 adultscore=0 bulkscore=0 malwarescore=0
- mlxlogscore=999 mlxscore=0 spamscore=0 suspectscore=0 clxscore=1034
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2009150000
- definitions=main-2010200112
-Subject: [oss-security] CVE-2020-15999 fixed in FreeType 2.10.4
+Content-Type: text/plain; charset=iso-8859-1; format=flowed
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] WebKitGTK+ and WPE WebKit Security Advisory WSA-2018-0005
 
-Before making this release, Werner said:
+------------------------------------------------------------------------
+WebKitGTK+ and WPE WebKit Security Advisory                WSA-2018-0005
+------------------------------------------------------------------------
 
-> I've just fixed a heap buffer overflow that can happen for some
-> malformed `.ttf` files with PNG sbit glyphs.  It seems that this
-> vulnerability gets already actively used in the wild, so I ask all
-> users to apply the corresponding commit as soon as possible.
+Date reported           : June 13, 2018
+Advisory ID             : WSA-2018-0005
+WebKitGTK+ Advisory URL :=20
+https://webkitgtk.org/security/WSA-2018-0005.html
+WPE WebKit Advisory URL :=20
+https://wpewebkit.org/security/WSA-2018-0005.html
+CVE identifiers         : CVE-2018-4190, CVE-2018-4192, CVE-2018-4199,
+                          CVE-2018-4201, CVE-2018-4214, CVE-2018-4218,
+                          CVE-2018-4222, CVE-2018-4232, CVE-2018-4233,
+                          CVE-2018-11646, CVE-2018-11712,
+                          CVE-2018-11713, CVE-2018-12293,
+                          CVE-2018-12294.
 
-But distros should be warned that 2.10.3 and later may break the build
-of ghostscript, due to ghostscript's use of a withdrawn macro that
-wasn't intended for external usage:
+Several vulnerabilities were discovered in WebKitGTK+ and WPE WebKit.
 
-https://bugs.ghostscript.com/show_bug.cgi?id=702985
-https://lists.nongnu.org/archive/html/freetype-devel/2020-10/msg00002.html
+CVE-2018-4190
+    Versions affected: WebKitGTK+ before 2.20.3 and WPE WebKit before
+    2.20.1.
+    Credit to Jun Kokatsu (@shhnjk).
+    Impact: Visiting a maliciously crafted website may leak sensitive
+    data. Description: Credentials were unexpectedly sent when fetching
+    CSS mask images. This was addressed by using a CORS-enabled fetch
+    method.
 
-Ghostscript's fix for that is at:
-https://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=41ef9a0bc36b
+CVE-2018-4192
+    Versions affected: WebKitGTK+ before 2.20.1.
+    Credit to Markus Gaasedelen, Nick Burnett, and Patrick Biernat of
+    Ret2 Systems, Inc working with Trend Micro's Zero Day Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A race condition was
+    addressed with improved locking.
 
-	-Alan Coopersmith-               alan.coopersmith@oracle.com
-	 Oracle Solaris Engineering - https://blogs.oracle.com/alanc
+CVE-2018-4199
+    Versions affected: WebKitGTK+ before 2.20.3 and WPE WebKit before
+    2.20.1.
+    Credit to Alex Plaskett, Georgi Geshev, Fabi Beterke, and Nils of
+    MWR Labs working with Trend Micro's Zero Day Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A buffer overflow issue was
+    addressed with improved memory handling.
 
--------- Forwarded Message --------
-Subject: [ft-announce] Announcing FreeType 2.10.4
-Date: Tue, 20 Oct 2020 07:47:31 +0200 (CEST)
-From: Werner LEMBERG <wl@gnu.org>
-To: freetype-announce@nongnu.org, freetype-devel@nongnu.org, freetype@nongnu.org
+CVE-2018-4201
+    Versions affected: WebKitGTK+ before 2.20.1.
+    Credit to an anonymous researcher.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2018-4214
+    Versions affected: WebKitGTK+ before 2.20.0.
+    Credit to OSS-Fuzz.
+    Impact: Processing maliciously crafted web content may lead to an
+    unexpected application crash. Description: A memory corruption issue
+    was addressed with improved input validation.
+
+CVE-2018-4218
+    Versions affected: WebKitGTK+ before 2.20.3 and WPE WebKit before
+    2.20.1.
+    Credit to Natalie Silvanovich of Google Project Zero.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2018-4222
+    Versions affected: WebKitGTK+ before 2.20.3 and WPE WebKit before
+    2.20.1.
+    Credit to Natalie Silvanovich of Google Project Zero.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: An out-of-bounds read was
+    addressed with improved input validation.
+
+CVE-2018-4232
+    Versions affected: WebKitGTK+ before 2.20.3 and WPE WebKit before
+    2.20.1.
+    Credit to Aymeric Chaib.
+    Impact: Visiting a maliciously crafted website may lead to cookies
+    being overwritten. Description: A permissions issue existed in the
+    handling of web browser cookies. This issue was addressed with
+    improved restrictions.
+
+CVE-2018-4233
+    Versions affected: WebKitGTK+ before 2.20.3 and WPE WebKit before
+    2.20.1.
+    Credit to Samuel Gro=DF (@5aelo) working with Trend Micro's Zero Day
+    Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2018-11646
+    Versions affected: WebKitGTK+ before 2.20.3 and WPE WebKit before
+    2.20.1.
+    Credit to Mishra Dhiraj.
+    Maliciously crafted web content could trigger an application crash
+    in WebKitFaviconDatabase, caused by mishandling unexpected input.
+
+CVE-2018-11712
+    Versions affected: WebKitGTK+ 2.20.0 and 2.20.1.
+    Credit to Metrological Group B.V.
+    The libsoup network backend of WebKit failed to perform TLS
+    certificate verification for WebSocket connections.
+
+CVE-2018-11713
+    Versions affected: WebKitGTK+ before 2.20.0 or without libsoup
+    2.62.0.
+    Credit to Dirkjan Ochtman.
+    The libsoup network backend of WebKit unexpectedly failed to use
+    system proxy settings for WebSocket connections. As a result, users
+    could be deanonymized by crafted web sites via a WebSocket
+    connection.
+
+CVE-2018-12293
+    Versions affected: WebKitGTK+ before 2.20.3 and WPE WebKit before
+    2.20.1.
+    Credit to ADlab of Venustech.
+    Maliciously crafted web content could achieve a heap buffer overflow
+    in ImageBufferCairo by exploiting multiple integer overflow issues.
+
+CVE-2018-12294
+    Versions affected: WebKitGTK+ before 2.20.2.
+    Credit to ADlab of Venustech.
+    Maliciously crafted web content could trigger a use-after-free of a
+    TextureMapperLayer object.
 
 
-FreeType 2.10.4 has been released.
+We recommend updating to the latest stable versions of WebKitGTK+ and
+WPE WebKit. It is the best way to ensure that you are running a safe
+version of WebKit. Please check our websites for information about the
+latest stable releases.
 
-It is available from
+Further information about WebKitGTK+ and WPE WebKit security advisories
+can be found at https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
 
-     http://savannah.nongnu.org/download/freetype/
+The WebKitGTK+ and WPE WebKit team,
+June 13, 2018
 
-or
-
-     http://sourceforge.net/projects/freetype/files/
-
-The latter site also holds older versions of the FreeType library.
-
-See below for the relevant snippet from the CHANGES file.
-
-Enjoy!
-
-
-    Werner
-
-
-PS: Downloads from  savannah.nongnu.org  will redirect to your nearest
-     mirror site.   Files on  mirrors may  be subject to  a replication
-     delay   of   up   to   24   hours.   In   case   of  problems  use
-     http://download-mirror.savannah.gnu.org/releases/
-
-
-----------------------------------------------------------------------
-
-
-http://www.freetype.org
-
-
-FreeType 2  is a software  font engine that  is designed to  be small,
-efficient,  highly   customizable,  and  portable   while  capable  of
-producing high-quality output (glyph images) of most vector and bitmap
-font formats.
-
-Note that  FreeType 2 is  a font service  and doesn't provide  APIs to
-perform higher-level features, like text layout or graphics processing
-(e.g.,  colored  text  rendering,  `hollowing',  etc.).   However,  it
-greatly simplifies these tasks by providing a simple, easy to use, and
-uniform interface to access the content of font files.
-
-FreeType  2  is  released  under  two open-source  licenses:  our  own
-BSD-like FreeType  License and the  GPL.  It can  thus be used  by any
-kind of projects, be they proprietary or not.
-
-
-----------------------------------------------------------------------
-
-
-CHANGES BETWEEN 2.10.3 and 2.10.4
-
-   I. IMPORTANT BUG FIXES
-
-   - A heap buffer overflow has been found  in the handling of embedded
-     PNG bitmaps, introduced in FreeType version 2.6.
-
-       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-15999
-
-     If you  use option  FT_CONFIG_OPTION_USE_PNG  you  should  upgrade
-     immediately.
-
-_______________________________________________
-Freetype-announce mailing list
-Freetype-announce@nongnu.org
-https://lists.nongnu.org/mailman/listinfo/freetype-announce
