@@ -1,37 +1,151 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/26/2
-Message-ID: <20180926083900.GA20977@openwall.com>
-Date: Wed, 26 Sep 2018 10:39:00 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: bounties
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/14/1
+Message-Id: <1528987730.4808.1@mail.igalia.com>
+Date: Thu, 14 Jun 2018 09:48:50 -0500
+From: Michael Catanzaro <mcatanzaro@...lia.com>
+To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
+Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: WebKitGTK+ and WPE WebKit Security Advisory WSA-2018-0005
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Sep 25, 2018 at 06:55:16PM -0700, Justin Ferguson wrote:
-> Thus I am asking in a larger context about other peoples experiences
-> with such things,
+------------------------------------------------------------------------
+WebKitGTK+ and WPE WebKit Security Advisory                WSA-2018-0005
+------------------------------------------------------------------------
 
-OK.  You already did that, and people are free to share their experience
-(if on-topic for this list).  You also shared your experience (which
-happens to be only partially on-topic for this list).  As a moderator, I
-think that's enough contribution from you to this thread.
+Date reported           : June 13, 2018
+Advisory ID             : WSA-2018-0005
+WebKitGTK+ Advisory URL : 
+https://webkitgtk.org/security/WSA-2018-0005.html
+WPE WebKit Advisory URL : 
+https://wpewebkit.org/security/WSA-2018-0005.html
+CVE identifiers         : CVE-2018-4190, CVE-2018-4192, CVE-2018-4199,
+                          CVE-2018-4201, CVE-2018-4214, CVE-2018-4218,
+                          CVE-2018-4222, CVE-2018-4232, CVE-2018-4233,
+                          CVE-2018-11646, CVE-2018-11712,
+                          CVE-2018-11713, CVE-2018-12293,
+                          CVE-2018-12294.
 
-> and while I would agree that this subject matter is
-> not particularly on-topic for the list, I would think that there
-> effectively are not unmoderated lists, no place to really ask this
-> question in a substantial manner despite the importance of it, and of
-> crowd-sourcing other peoples experiences would be concerning to an
-> industry as a whole.
+Several vulnerabilities were discovered in WebKitGTK+ and WPE WebKit.
 
-While I also regret that there's no longer an unmoderated
-full-disclosure list, I understand why there is not.  Besides needing to
-filter out all the automated spam (which already makes the list
-technically moderated), all sorts of semi-on-topic crap ends up being
-posted to truly unmoderated lists like that - personal attacks, doxing
-(and when you ask for removal of that content from archives later, you
-sort of engage in moderation too), conspiracy theories and dubious facts
-(and good luck figuring out what's real and what's not), etc.  That
-said, you may host a new list like that, and I'd be happy to be able to
-redirect discussions that are unsuitable in here to there.
+CVE-2018-4190
+    Versions affected: WebKitGTK+ before 2.20.3 and WPE WebKit before
+    2.20.1.
+    Credit to Jun Kokatsu (@shhnjk).
+    Impact: Visiting a maliciously crafted website may leak sensitive
+    data. Description: Credentials were unexpectedly sent when fetching
+    CSS mask images. This was addressed by using a CORS-enabled fetch
+    method.
 
-Alexander
+CVE-2018-4192
+    Versions affected: WebKitGTK+ before 2.20.1.
+    Credit to Markus Gaasedelen, Nick Burnett, and Patrick Biernat of
+    Ret2 Systems, Inc working with Trend Micro's Zero Day Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A race condition was
+    addressed with improved locking.
+
+CVE-2018-4199
+    Versions affected: WebKitGTK+ before 2.20.3 and WPE WebKit before
+    2.20.1.
+    Credit to Alex Plaskett, Georgi Geshev, Fabi Beterke, and Nils of
+    MWR Labs working with Trend Micro's Zero Day Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A buffer overflow issue was
+    addressed with improved memory handling.
+
+CVE-2018-4201
+    Versions affected: WebKitGTK+ before 2.20.1.
+    Credit to an anonymous researcher.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2018-4214
+    Versions affected: WebKitGTK+ before 2.20.0.
+    Credit to OSS-Fuzz.
+    Impact: Processing maliciously crafted web content may lead to an
+    unexpected application crash. Description: A memory corruption issue
+    was addressed with improved input validation.
+
+CVE-2018-4218
+    Versions affected: WebKitGTK+ before 2.20.3 and WPE WebKit before
+    2.20.1.
+    Credit to Natalie Silvanovich of Google Project Zero.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2018-4222
+    Versions affected: WebKitGTK+ before 2.20.3 and WPE WebKit before
+    2.20.1.
+    Credit to Natalie Silvanovich of Google Project Zero.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: An out-of-bounds read was
+    addressed with improved input validation.
+
+CVE-2018-4232
+    Versions affected: WebKitGTK+ before 2.20.3 and WPE WebKit before
+    2.20.1.
+    Credit to Aymeric Chaib.
+    Impact: Visiting a maliciously crafted website may lead to cookies
+    being overwritten. Description: A permissions issue existed in the
+    handling of web browser cookies. This issue was addressed with
+    improved restrictions.
+
+CVE-2018-4233
+    Versions affected: WebKitGTK+ before 2.20.3 and WPE WebKit before
+    2.20.1.
+    Credit to Samuel Groß (@5aelo) working with Trend Micro's Zero Day
+    Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2018-11646
+    Versions affected: WebKitGTK+ before 2.20.3 and WPE WebKit before
+    2.20.1.
+    Credit to Mishra Dhiraj.
+    Maliciously crafted web content could trigger an application crash
+    in WebKitFaviconDatabase, caused by mishandling unexpected input.
+
+CVE-2018-11712
+    Versions affected: WebKitGTK+ 2.20.0 and 2.20.1.
+    Credit to Metrological Group B.V.
+    The libsoup network backend of WebKit failed to perform TLS
+    certificate verification for WebSocket connections.
+
+CVE-2018-11713
+    Versions affected: WebKitGTK+ before 2.20.0 or without libsoup
+    2.62.0.
+    Credit to Dirkjan Ochtman.
+    The libsoup network backend of WebKit unexpectedly failed to use
+    system proxy settings for WebSocket connections. As a result, users
+    could be deanonymized by crafted web sites via a WebSocket
+    connection.
+
+CVE-2018-12293
+    Versions affected: WebKitGTK+ before 2.20.3 and WPE WebKit before
+    2.20.1.
+    Credit to ADlab of Venustech.
+    Maliciously crafted web content could achieve a heap buffer overflow
+    in ImageBufferCairo by exploiting multiple integer overflow issues.
+
+CVE-2018-12294
+    Versions affected: WebKitGTK+ before 2.20.2.
+    Credit to ADlab of Venustech.
+    Maliciously crafted web content could trigger a use-after-free of a
+    TextureMapperLayer object.
+
+
+We recommend updating to the latest stable versions of WebKitGTK+ and
+WPE WebKit. It is the best way to ensure that you are running a safe
+version of WebKit. Please check our websites for information about the
+latest stable releases.
+
+Further information about WebKitGTK+ and WPE WebKit security advisories
+can be found at https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
+
+The WebKitGTK+ and WPE WebKit team,
+June 13, 2018
+
