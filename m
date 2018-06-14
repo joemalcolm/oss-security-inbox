@@ -1,32 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/13/11
-Message-ID: <nycvar.YSQ.7.76.1812132245100.12493@xnncv>
-Date: Thu, 13 Dec 2018 22:48:11 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: public@...smi.ch
-Subject: CVE-2018-16872 Qemu: usb-mtp: path traversal by host filesystem manipulation in Media Transfer Protocol (MTP)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/14/4
+Message-ID: <20180614222021.6jguso4l7vqbjqyk@jwilk.net>
+Date: Fri, 15 Jun 2018 00:20:21 +0200
+From: Jakub Wilk <jwilk@...lk.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2018-12356 Breaking signature verification in pass (Simple Password Store)
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+* Marcus Brinkmann <marcus.brinkmann@...r-uni-bochum.de>, 2018-06-14, 23:46:
+>CVE-2018-12356: An issue was discovered in password-store.sh in pass in 
+>Simple Password Store 1.7 through 1.7.1. The signature verification 
+>routine parses the output of GnuPG with an incomplete regular 
+>expression, which allows remote attackers to spoof file signatures on 
+>configuration files and extensions scripts
+[...]
+>https://neopg.io/blog/pass-signature-spoof/
 
-A flaw was found in qemu Media Transfer Protocol (MTP). The code opening files 
-in usb_mtp_get_object and usb_mtp_get_partial_object and directories in 
-usb_mtp_object_readdir doesn't consider that the underlying filesystem may 
-have changed since the time lstat(2) was called in usb_mtp_object_alloc, a 
-classical TOCTTOU problem. An attacker with write access to the host 
-filesystem shared with a guest can use this property to navigate the host 
-filesystem in the context of the QEMU process and read any file the QEMU 
-process has access to. Access to the filesystem may be local or via a network 
-share protocol such as CIFS.
+In the blog post you write that the fixed regexp is "^[GNUPG:]", but 
+that would be really bad. :) I think you meant "^\[GNUPG:\]".
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2018-12/msg03135.html
+There's apparently more software that uses unachored "\[GNUPG:\]":
+https://codesearch.debian.net/search?q=%5B%5E%5E%5D%5C%5C%5C%5BGNUPG%3A%5C%5C%5C%5D
 
-This issue was reported by Michael Hanselmann.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+-- 
+Jakub Wilk
