@@ -1,119 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/05/2
-Message-ID: <2e0bd890-5c3b-9b03-f984-90b452a94c64@linux.com>
-Date: Thu, 5 Apr 2018 15:32:59 +0300
-From: Alexander Popov <alex.popov@...ux.com>
-To: Kees Cook <keescook@...omium.org>, Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, James Morris <jmorris@...ei.org>, "Serge E. Hallyn" <serge@...lyn.com>, Brad Spengler <spender@...ecurity.net>, PaX Team <pageexec@...email.hu>
-Subject: Re: Linux Kernel Defence Map
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/14/3
+Message-ID: <c0e1a287-f18b-252e-3509-131db823264c@ruhr-uni-bochum.de>
+Date: Thu, 14 Jun 2018 23:46:38 +0200
+From: Marcus Brinkmann <marcus.brinkmann@...r-uni-bochum.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2018-12356 Breaking signature verification in pass (Simple Password Store)
 Content-Type: text/plain; charset=utf-8
 
-On 05.04.2018 01:17, Kees Cook wrote:
-> On Wed, Apr 4, 2018 at 9:15 AM, Alexander Popov <alex.popov@...ux.com> wrote:
->> Linux kernel security is a very complex area. It would be nice to have some
->> graphical representation of its current state. So I've created a Linux Kernel
->> Defence Map showing the relations between:
->>  - vulnerability classes / exploitation techniques,
->>  - kernel defences,
->>  - bug detection means.
->>
->> Link:
->>    https://github.com/a13xp0p0v/linux-kernel-defence-map
->>
->> N.B. The node connections don't mean "full mitigation". These connections
->> represent some kind of relation. So ideally, this map should help to navigate in
->> documentation and Linux kernel sources.
->>
->> I wrote it in DOT language and generated the picture using GraphViz. So it is
->> very pleasant to maintain this map with git.
->>
->> I would be grateful for any feedback.
+This is the third (and for now last) in my series of GnuPG signature
+spoof exploits.
 
-Hello Kees,
+First, a cautious note:
 
-Thanks a lot for your reply!
+In the course of my 2 week investigation, I went through a lot of
+applications using gpg. There were a couple of "near misses" in critical
+infrastructure projects which were not vulnerable, but where I am not
+sure if that was due to conscious design choices or just by pure chance.
 
-> This is cool; thanks for starting it! There are many nuances, details,
-> and caveats for a lot of the defense details, but I do like showing
-> the general relationships. Having some much longer accompanying text
-> would be nice to dive more deeply into each bubble in the chart. I'd
-> like to capture as much of that as possible in upstream's
-> Documentation/security/self-protection.rst! :)
+It would be prudent for everybody who knows a script or package using
+gpg to have a look for issues with status-fd, regular expressions and/or
+"gpg -d | some-other-program" patterns.
 
-Yes, self-protection.rst is a really nice reading. There is a link to it in the
-References section below the map. Moved it before the map.
+Now, the details about CVE-2018-12356:
 
-> Some initial thoughts in looking at the chart:
-> 
-> 
-> Upstream's SLAB_FREELIST_HARDENED is based on an "unnamed" (always-on)
-> grsecurity defense (see commit 2482ddec670f), so that should have a
-> dashed line, but I'm not sure how to name the new bubble.
+I found a critical vulnerability in pass, the Simple Password Store:
 
-Ok. Added a "by default in grsecurity" node connected with
-SLAB_FREELIST_HARDENED. That will show the origin of the idea.
+CVE-2018-12356: An issue was discovered in password-store.sh in pass in
+Simple Password Store 1.7 through 1.7.1. The signature verification
+routine parses the output of GnuPG with an incomplete regular
+expression, which allows remote attackers to spoof file signatures on
+configuration files and extensions scripts. Modifying the configuration
+file allows the attacker to inject additional encryption keys under
+their control, thereby disclosing passwords to the attacker. Modifying
+the extension scripts allows the attacker arbitrary code execution.
 
-At the same time SLAB_FREELIST_HARDENED contains my "fasttop" check against
-double-free. So I've put SLAB_FREELIST_HARDENED and that origin node at the same
-level.
+I am also calling out the missing integrity protection in pass for
+password files, making pass users potentially vulnerable to a broad
+range of attacks.
 
-> KPTI defends against info leaks and "finding kernel objects" too, in a
-> way. Maybe just add a whole "side channels" bubble?
-
-Good idea. Added "Side Channels" and RETPOLINE.
-
-> (I think "info leaks" and "finding kernel objects" may need some kind
-> of clarifying language for how they're different)
-
-Info Exposure is a vulnerability (red node). STACKLEAK, PAGE_POISONING, etc
-mitigate this kind of bugs.
-
-Finding Kernel Objects is an exploitation technique (orange node). KASLR,
-RANDSTRUCT are statistical defences which make it harder for an adversary.
-
-Kees, Kurt, does it sound reasonable?
-
-> I didn't immediately parse that "Pointer Obfuscation" meant the %p
-> hashing, but I don't have a good suggestion about how to improve that
-> language. :)
-
-Yes, I've extracted this term from the patch discussion )
-
-> Upstream's /proc/sys/net/core/bpf_jit_harden (see commit 4f3446bb809f)
-
-Thanks, added.
-
-> and other JIT features (RO-setting, randomized offset, etc) are
-> designed to defend against JIT Abuse.
-
-Didn't manage to find config for them. Are they always enabled?
-
-> UDEREF and SMAP pointing at ret2usr+ROP is fine, but seems
-> "incomplete". Is there a good name for "reading user memory and
-> operating on a malicious structure"? It's a more narrow exploit
-> technique than ROP or executing userspace memory, but it's important
-> to cover.
-
-Yes, agree. That's what I did exploiting CVE-2017-2636: allocating struct
-skb_shared_info in the userspace memory with the destructor callback pointing to
-native_write_cr4() to disable SMEP. Is it what you mean?
-
-I've added "ret2usr + type confusion". Do you like it?
-
-Kurt, that is CWE-843: Access of Resource Using Incompatible Type ('Type
-Confusion').
-
-> I'd expect UDEREF to point at ret2usr, too.
-
-Thanks, fixed.
-
-> Maybe add CPU_SW_DOMAIN_PAN and ARM64_SW_TTBR0_PAN to point at both
-> ret2usr and the new "access userspace" bubble?
-
-Ok. I've added them pointing to SMAP/PAN with dotted line (since they emulate
-PAN in some manner).
-
-Kees, thanks again for such a cool feedback. The map is updated.
-
-Best regards,
-Alexander
+https://neopg.io/blog/pass-signature-spoof/
