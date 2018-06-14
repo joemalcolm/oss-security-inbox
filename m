@@ -1,27 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/23/4
-Message-ID: <20181123141630.dvpucbyue22ecqed@suse.de>
-Date: Fri, 23 Nov 2018 15:16:30 +0100
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/14/2
+Message-ID: <20180614181259.s2qbbdaeudg4h5pz@jwilk.net>
+Date: Thu, 14 Jun 2018 20:12:59 +0200
+From: Jakub Wilk <jwilk@...lk.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Crashes and memory safety bugs in dcraw
+Subject: Re: Are `su user' and/or `sudo -u user sh' considered dangerous?
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Nov 23, 2018 at 09:22:17AM +0100, Hanno Böck wrote:
-> Hi,
-> 
-> dcraw is a tool to process raw images from digital cameras.
-> It easily crashes with various issues (tested version 9.28.0). This was
-> very shallow testing (afl fuzzing with random inputs, not starting with
-> valid images), I assume there's much more. I reported those a long time
-> ago to its author, he didn't seem interested in fixing such issues.
-> 
-> Some applications use dcraw automatically to parse images (gthumb,
-> kphotoalbum, kde thumbnailers, gwenview).
-> 
-> Input samples are base64.
+* Georgi Guninski <guninski@...inski.com>, 2018-06-13, 12:54:
+>>Is there POC for relatively new distros?
+>debian 8 and 9 are vulnerable to su - hostile:
+>https://j.ludost.net/blog/archives/2018/06/13/ancient_su_-_hostile_vulnerability_in_debian_8_and_9/index.html
 
-One thing to look at replacement of dcraw is probably libraw, which is more
-active. (It used the dcraw sources originally.)
+(Please fix unescaped "<" and "&" characters on that page.)
 
-Ciao, Marcus
+For Debian this bug is tracked here:
+https://bugs.debian.org/628843
+
+>what about the second potential vulnerability: reading root's tty after 
+>the session is closed with something like tee(1) ?
+
+The list of nasty things you can do when you get your hands on the tty 
+fd is probably very long...
+
+>several sources suggest disabling TIOCSTI or using setsid(), are they 
+>enough?
+
+setsid() defeats TIOCSTI (while breaking other things like job 
+control...); it doesn't stop other attacks that don't require 
+controlling terminal.
+
+Until su is fixed to allocate new pty, I recommend running it under a 
+standalone terminal emulator, such as screen or tmux. This has also an 
+advantage that it's possible to tell that the invoked program actually 
+terminated, instead of just pretending to terminate and faking root 
+shell UI.
+
+-- 
+Jakub Wilk
