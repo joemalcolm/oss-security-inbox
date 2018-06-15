@@ -1,16 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/08/5
-Message-ID: <CACdnJuvnc9iwaK6n9T_+PO0CUz9HYErQQ6eY+sJZM_o_h9tfaw@mail.gmail.com>
-Date: Wed, 8 Aug 2018 08:44:28 -0700
-From: Matthew Garrett <mjg59@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/15/2
+Message-ID: <20180615132506.m2ks4ptiky4byayq@suse.de>
+Date: Fri, 15 Jun 2018 15:25:07 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Linux TCP implementation vulnerable to Denial of Service (CVE 2018-5390)
+Subject: Re: Re: Intel FP security issue
 Content-Type: text/plain; charset=utf-8
 
-CVE 2018-5390 is a remotely exploitable denial of service against Linux
-systems. It was patched in the public kernel tree on the 2018-07-23 and
-publicly disclosed on 2018-08-06. A public tweet linking to the commit was
-made on 2018-07-23, so awareness of the issue may have been high before
-official disclosure. All Linux distributions should now have released
-patches for the affected releases.
+Hi,
 
+On Wed, Jun 13, 2018 at 11:07:18PM +0400, Loganaden Velvindron wrote:
+> On Wed, Jun 13, 2018 at 7:34 PM, Loganaden Velvindron
+> <loganaden@...il.com> wrote:
+> > Hi All,
+> >
+> > Both OpenBSD and DragonflyBSD have gone ahead and committed fixes for
+> > the rumored Intel FP issue:
+> >
+> > OpenBSD: https://marc.info/?l=openbsd-cvs&m=152818076013158&w=2
+> > DragonflyBSD: http://lists.dragonflybsd.org/pipermail/commits/2018-June/672324.html
+> >
+> > I think that the cat is already out of the bag, and releasing details
+> > of this security problem makes sense. Since this has gone public, Is
+> > there a reason to keep this under embargo ?
+> >
+> 
+> FreeBSD appears to be moving in this direction too:
+> https://svnweb.freebsd.org/base?view=revision&revision=335072
+
+For the record, this is https://www.intel.com/content/www/us/en/security-center/advisory/intel-sa-00145.html
+aka CVE-2018-3665 with codename "Lazy FPU Save/Restore".
+
+XEN advisory https://xenbits.xen.org/xsa/advisory-267.html was posted here too, describing it a bit better.
+
+Full details are planned to be released June 27th.
+
+Ciao, Marcus
