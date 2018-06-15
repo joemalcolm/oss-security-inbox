@@ -1,55 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/07/1
-Message-Id: <1525704784.21704.0@mail.igalia.com>
-Date: Mon, 07 May 2018 09:53:04 -0500
-From: Michael Catanzaro <mcatanzaro@...lia.com>
-To: webkit-gtk@...ts.webkit.org
-Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: WebKitGTK+ Security Advisory WSA-2018-0004
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/15/7
+Message-ID: <e7583e33-54d9-6548-d55e-531f3fc4a040@ruhr-uni-bochum.de>
+Date: Fri, 15 Jun 2018 16:43:51 +0200
+From: Marcus Brinkmann <marcus.brinkmann@...r-uni-bochum.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2018-12356 Breaking signature verification in pass (Simple Password Store)
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK+ Security Advisory                               WSA-2018-0004
-------------------------------------------------------------------------
+On 06/15/2018 12:20 AM, Jakub Wilk wrote:
+> * Marcus Brinkmann <marcus.brinkmann@...r-uni-bochum.de>, 2018-06-14,
+> 23:46:
+>> CVE-2018-12356: An issue was discovered in password-store.sh in pass
+>> in Simple Password Store 1.7 through 1.7.1. The signature verification
+>> routine parses the output of GnuPG with an incomplete regular
+>> expression, which allows remote attackers to spoof file signatures on
+>> configuration files and extensions scripts
+> [...]
+>> https://neopg.io/blog/pass-signature-spoof/
+> 
+> In the blog post you write that the fixed regexp is "^[GNUPG:]", but
+> that would be really bad. :) I think you meant "^\[GNUPG:\]".
 
-Date reported      : May 07, 2018
-Advisory ID        : WSA-2018-0004
-Advisory URL       : https://webkitgtk.org/security/WSA-2018-0004.html
-CVE identifiers    : CVE-2018-4121, CVE-2018-4200, CVE-2018-4204.
+Thanks, fixed.
 
-Several vulnerabilities were discovered in WebKitGTK+.
+> There's apparently more software that uses unachored "\[GNUPG:\]":
+> https://codesearch.debian.net/search?q=%5B%5E%5E%5D%5C%5C%5C%5BGNUPG%3A%5C%5C%5C%5D
 
-CVE-2018-4121
-    Versions affected: WebKitGTK+ before 2.20.0.
-    Credit to Natalie Silvanovich of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+Yes. I did two weeks of due diligence on the important package managers,
+Git, and anything I could think of that is critical. But I am not saying
+what I looked at, because there might be something I missed, and I want
+everybody to join in and have a fresh look. It is too much for a single
+person.
 
-CVE-2018-4200
-    Versions affected: WebKitGTK+ before 2.20.2.
-    Credit to Ivan Fratric of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A memory corruption issue was
-    addressed with improved state management.
+I didn't know about Debian code search, so thanks for the tip.
 
-CVE-2018-4204
-    Versions affected: WebKitGTK+ before 2.20.1.
-    Credit to Richard Zhu (fluorescence) working with Trend Micro's Zero
-    Day Initiative, found by OSS-Fuzz.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A memory corruption issue was
-    addressed with improved memory handling.
-
-
-We recommend updating to the last stable version of WebKitGTK+. It is
-the best way of ensuring that you are running a safe version of
-WebKitGTK+. Please check our website for information about the last
-stable releases.
-
-Further information about WebKitGTK+ Security Advisories can be found
-at: https://webkitgtk.org/security.html
-
-The WebKitGTK+ team,
-May 07, 2018
-
+You reporting these? If not, I can do it.
