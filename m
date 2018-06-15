@@ -1,27 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/10/3
-Message-ID: <20180710133901.GC20816@kroah.com>
-Date: Tue, 10 Jul 2018 15:39:01 +0200
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com, zrlw@...a.com
-Cc: Solar Designer <solar@...nwall.com>
-Subject: Re: mmap vulnerability in motion eye video4linux driver for Sony Vaio PictureBook
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/15/1
+Message-ID: <20180615130807.GB1898@sivokote.iziade.m$>
+Date: Fri, 15 Jun 2018 16:08:07 +0300
+From: Georgi Guninski <guninski@...inski.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Are `su user' and/or `sudo -u user sh' considered dangerous?
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jul 07, 2018 at 12:09:37AM +0800, zrlw@...a.com wrote:
-> I  sent a email to the original authors which i found in the head of
-> meye.c, but i don't receive any response util now.
-
-Always use the scripts/get_maintainer.pl tool to find who to send stuff
-like this to.  It will include a public mailing list or two.
-
-> I don't think
-> commit be83bbf80682  will work on this case, this driver derived from
-> v4l2-core which not use inode,  maybe i'm wrong.  
-
-I think you are wrong, but it would be great if you could test to verify
-it or not.
-
-thanks,
-
-greg k-h
+On Thu, Jun 14, 2018 at 08:12:59PM +0200, Jakub Wilk wrote:
+> Until su is fixed to allocate new pty, I recommend running it under a
+> standalone terminal emulator, such as screen or tmux. This has also an
+> advantage that it's possible to tell that the invoked program actually
+> terminated, instead of just pretending to terminate and faking root shell
+> UI.
+>
+Looks like util-linux currently supports pty's:
+http://man7.org/linux/man-pages/man1/su.1.html
+-P, --pty
+              Create pseudo-terminal for the session.
+...
+This feature is EXPERIMENTAL for now and may be removed in the
+              next releases.
+ 
