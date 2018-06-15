@@ -1,4 +1,9 @@
-Received: (qmail 3189 invoked by uid 550); 10 May 2026 19:47:23 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4716" "Friday" "15" "June" "2018" "07:55:37" "-0700" "Anthony Liguori" "aliguori@amazon.com" "<cig332r2l8rtee.fsf@u44850075a5a8574dc8a1.ant.amazon.com>" "118" "[oss-security] CVE-2018-3665 Lazy FPU Context Switching Information Leak" "^CC:" nil nil "6" "2018061514:55:37" "[oss-security] CVE-2018-3665 Lazy FPU Context Switching Information Leak" (number mark "        aliguori@ama Jun 15  118/4716  " thread-indent "\"[oss-security] CVE-2018-3665 Lazy FPU Context Switching Information Leak\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 29967 invoked by uid 550); 15 Jun 2018 15:23:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,83 +11,144 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 28445 invoked from network); 10 May 2026 19:34:29 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
-	t=1778441660;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=EbihbQ+gWNZSk0pWureDBQ7orjn29+EMOaYL560Q5EA=;
-	b=SzITNbLNdWF933wE56BVNi+tNmj8+pa0FVgxt2xcf2NNXpK5G0XEpGsLMQpX+rEfnVsMPl
-	fUvC0M1fuEtw02uToGXEEVR1ThHGnVLLEeBUqFARHOQSJuRtE2DKnMAoiNfslwUetEE2L1
-	jbG5b/cAP06EETL1p/JydoqVZyRBe97kyMY9yovspI28V33DL8S/kKMSScQN1sJMZhPU92
-	Uy+sQnSRnKq2SHp/4zGRZuXXjwwIdJ7bcL26a1wRFbVudm+vpL/G7nRpZsdogKLXa4Ags5
-	VSNLb46Q2PygCTmaAbBkyUJRcsJUCCPh7JLA9XfuIRBkfv2JF0qrfzqJbBZC9Q==
-Message-ID: <0a1a190b-6dbe-4b41-872d-f2263eefac22@cpansec.org>
-Date: Sun, 10 May 2026 20:34:16 +0100
+Received: (qmail 9821 invoked from network); 15 Jun 2018 14:56:03 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+  t=1529074563; x=1560610563;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=c8XdVr4D27TBSbTHuNliqqYUqqV4CXTC9NfOCTwAc2U=;
+  b=cARSoN+Yp5oapghILFXeHcJPpi+CLJdQfJ4i+BG+OBgJTwdpm5EsXWGq
+   yEGXZ7cBVev1x4EXOCSFjibHajjJsFK/UCnZ9NVRE8kDpbK+GXLhBToZm
+   gliPwRxWd3fNEiYNTtstZC70RkHHK+4XwqphJ5L/KEjRb+0FMJQLueEpx
+   k=;
+X-IronPort-AV: E=Sophos;i="5.51,227,1526342400"; 
+   d="scan'208";a="746313281"
+User-Agent: Notmuch/0.17 (http://notmuchmail.org) Emacs/24.3.1 (x86_64-pc-linux-gnu)
+Message-ID: <cig332r2l8rtee.fsf@u44850075a5a8574dc8a1.ant.amazon.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Robert Rothenberg <rrwo@cpansec.org>
-Content-Language: en-GB, en-ZA
-To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-GND-Sasl: rrwo@cpansec.org
-X-GND-State: clean
-X-GND-Score: 0
-X-GND-Cause: dmFkZTEYYvulvCvgAEGwbr/esEN5fSF8Qst+v4k0TMIS+9GrwPyECEoXSEgklerCDgB2wqKfeJazP3wRFaX+oMyEht/vEjpXAKtRJ8gdABCoXk8B8JjexjP4u580DVqxhISDU0Bn9zAYDg18PVgbG5bxbvMbeqAmk42YmawFnoRXiT7CTibI/H3UF6Lyi7NuoIe5xX0q7x8RQv7trTCDZ7LGSpqJWy8eG0n996KTNJewE8Sqz5ZfsczGvWp+teS7rxiJEYdH2yALKdd0baFxcqSlbx6vQxGznRSg0E0kf/LgltPCJXOiiyKzap2/20WVQulihlNyvwatIRVTp8z9n3Sm5aLZVzZBEFSANoSEoI3FVBOX8SDD7FifSxS/5hUSoDw3nuajFgCQjm0kD1gIPgv8rawj6u7NTuOQ+7WaENqgstZ1SL1DsOSNAUat8lsvr9IQI+Og3HYo7ZvjreXnKi8gz5f38o8jajLOgsy0a11UKigxGskwQE45Ot/tGK6eyeJ9zujsEhzT4RcqUoYgRrd53HBD5EZejilFB+arAX+5xFL8lgK5sE8EoUwNFDhoKZU8vfEVH6dmKvnU2fAX/lNEWPktjtxyjQOF/JHg018bVUiYD1nd0O9UjINaz+JgvXkzC9kUyUQigfAHuqJOdxdW6PZMB2yDSyaTXgHYYHmNkLXH9Q
-Subject: [oss-security] CVE-2026-45179: Plack::Middleware::Statsd versions before 0.9.0 for
- Perl may leak user IP addresses
+Content-Type: text/plain
+CC: <thomas.prescher@cyberus-technology.de>, <jsteckli@amazon.de>
+Date: Fri, 15 Jun 2018 07:55:37 -0700
+From: Anthony Liguori <aliguori@amazon.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE-2018-3665 Lazy FPU Context Switching Information Leak
+To: <oss-security@lists.openwall.com>
 
-========================================================================
-CVE-2026-45179                                       CPAN Security Group
-========================================================================
+Affected Software / Hardware:
+All operating system kernels / hypervisors using Lazy FPU context switching
+running on Intel CPUs
+(more details below)
 
-         CVE ID:  CVE-2026-45179
-   Distribution:  Plack-Middleware-Statsd
-       Versions:  before 0.9.0
+Summary:
+The FPU register state (legacy/MMX/SSE/AVX/AVX-512 registers) can be
+leaked across process or virtual machine boundaries using speculative execution
+on Intel CPUs when the hypervisor or operating system kernel uses lazy FPU
+context switching.
 
-       MetaCPAN:  https://metacpan.org/dist/Plack-Middleware-Statsd
-       VCS Repo:  https://github.com/robrwo/Plack-Middleware-Statsd
+Impact:
+Any information in the above registers is accessible to a local attacker.
 
+Mitigation:
+Operating systems and hypervisor need to switch to eager FPU context switching
+or clear FPU register state on context switch. Relying on CR0.TS to protect
+FPU registers is insufficient.
 
-Plack::Middleware::Statsd versions before 0.9.0 for Perl may leak user
-IP addresses
+Credit:
+This issue was reported to Intel by Amazon and Cyberus Technology.  The issue
+was discovered by Julian Stecklina (jsteckli@amazon.de) and Thomas Prescher
+(thomas.prescher@cyberus-technology.de).
 
-Description
------------
-Plack::Middleware::Statsd versions before 0.9.0 for Perl may leak user
-IP addresses.
+This issue was also independently discovered by Zdenek Sojka - SYSGO AG
+(http://sysgo.com) and Colin Percival.
 
-If the communication channel to the statsd daemon is not secured (for
-example, by sending UDP packets to a host on another network), then
-users' IP addresses may be leaked.
+Detailed Description
+====================
 
-Since version 0.9.0, the IP address is no longer logged to statsd
-unless configured. When configured, an HMAC signature of the IP address
-is logged instead.
+Technical Description
+---------------------
 
-Problem types
--------------
-- CWE-319 Cleartext Transmission of Sensitive Information
+Lazy FPU context switching optimizes context switch times by lazily saving and
+restoring the content of legacy FPU/MMX/SSE/AVX/AVX-512 registers. When the
+kernel switches from task A to task B, task A's register content stays in the
+FPU, but the FPU is disabled via CR0.TS. If task B touches the FPU, a #NM
+exception is generated, the kernel switches the register content, and enables
+the FPU agan. From that point task B can use the FPU.
 
-Workarounds
------------
-Use a statsd daemon on the same host or through a secure communications
-channel.
+Between the context switch to task B and the #NM exception that would trigger
+the actual context switch, the FPU registers contain task A's register content
+and the FPU is disabled. 
 
+The attack works by speculatively reading the task A's FPU register contents
+from task B in this time frame and retrieving the contents via a cache
+side-channel. Let's call task A the victim and task B the attacker.
 
-Solutions
----------
-Upgrade to version 0.9.0 or later.
+The attacker loads XMM0 with 0 and installs a SIGSEGV handler. Then he gives the
+victim (task A) a chance to run by sleeping. Afterwards, the attacker flushes
+the cache line pointed to by mem + 64 (see below), runs the following code:
 
+; Cause a page fault and execute the below code speculatively until the
+; processor rolls-back execution and delivers the page fault.
+mov dword [0], 0
 
-References
+; Read xmm0. This would cause a #NM exception because the FPU is disabled, but
+; it is never delivered, because execution is rolled back to the page fault.
+movq rax, xmm0
+
+; Now mask a bit in the value we read and touch memory depending on the result.
+; If the bit contained 0, we touch [mem] otherwise we touch [mem + 64]. This cache
+; side-effect survives when the CPU discards this speculative execution flow!
+and rax, 1               ; mask bit 0
+shl rax, 6               ; align to cache line (64 bytes)
+mov dword [mem + rax], 0 ; access buffer with offset depending on xmm0 content
+
+After handling the SIGSEGV, the attacker probes the access latency of [mem +
+64]. If it's fast, the bit was 1, because the cache line was pulled in by the
+speculatively executed code. If it's slow, we read a 0.
+
+Because the kernel has not seen the #NM exception, the FPU registers still
+contain the victim's FPU register content. The attacker can continue leaking
+different bits from different registers.
+
+Working exploit code that leaks one XMM register for Linux and FreeBSD is
+attached to this email.
+
+Affected Hardware
+-----------------
+
+We have reproduced this issue on the Intel Core microarchitecture from Sandy
+Bridge to Skylake. Until there is a detailed list by Intel, it's reasonable to
+assume that all current Intel CPUs are affected.
+
+Other CPU architectures that allow similar lazy context switching mechanisms
+might be affected as well.
+
+Affected Software
+-----------------
+
+The following is an incomplete list of vulnerable system software.
+
+Affected operating systems:
+- Linux:
+ - kernel versions < 4.9 with non-default boot parameters (`eagerfpu=off`) are affected
+ - kernel versions < 4.6 running on affected Intel CPUs prior to Haswell [10] or with custom boot parameters (`eagerfpu=off` or `noxsave`)
+ - kernel versions < 3.7 on all affected CPUs
+- FreeBSD
+- ...
+
+Affected hypervisors:
+- KVM when run on affected Linux version
+- All Xen versions
+- ...
+
+Mitigation
 ----------
-https://github.com/robrwo/Plack-Middleware-Statsd/security/advisories/GHSA-9gwm-665p-w2xx
-https://metacpan.org/release/RRWO/Plack-Middleware-Statsd-v0.9.0/changes
 
+For Linux versions between 3.7 and 4.8, it is sufficient to add eagerfpu=on to
+the kernel command line. Linux starting from 4.9 has no lazy switching code
+anymore and are not affected.
 
+Linux 4.4.y releases up to 4.4.137 haves a bug present that does not respect
+the eagerfpu=on command line.  This is expected to be fixed in the 4.4.138
+release.
 
+Other operating systems and hypervisors need a source code fix.
