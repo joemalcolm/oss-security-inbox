@@ -1,62 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/17/6
-Message-ID: <20180817125244.illsqe3lckimtnms@suse.de>
-Date: Fri, 17 Aug 2018 14:52:44 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/15/8
+Message-ID: <20180615172836.7tlljvthvyzjxrma@jwilk.net>
+Date: Fri, 15 Jun 2018 19:28:36 +0200
+From: Jakub Wilk <jwilk@...lk.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Rule for releasing fixes for embargoed bugs
+Subject: Re: CVE-2018-12356 Breaking signature verification in pass (Simple Password Store)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+* Marcus Brinkmann <marcus.brinkmann@...r-uni-bochum.de>, 2018-06-15, 16:43:
+>>There's apparently more software that uses unachored "\[GNUPG:\]":
+>>https://codesearch.debian.net/search?q=%5B%5E%5E%5D%5C%5C%5C%5BGNUPG%3A%5C%5C%5C%5D
+>Yes. I did two weeks of due diligence on the important package 
+>managers, Git, and anything I could think of that is critical. But I am 
+>not saying what I looked at, because there might be something I missed, 
+>and I want everybody to join in and have a fresh look. It is too much 
+>for a single person.
 
-On Fri, Aug 17, 2018 at 01:45:16PM +0200, Dominique Martinet wrote:
-> Hi,
-> 
-> I tried asking this question in private and was told there is no clear
-> rule (and opinions vary) on the subject of releasing fixes for bugs
-> still under embargo; and to ask the list, so here we go:
-> 
->  When should vendors publish fixes for bugs that are under embargo ?
-> 
-> 
-> My opinion is that the point of security embargoes, and linux-distro in
-> particular, is to give vendors time to prepare a fix so that fixes can
-> be released almost immediately after the issue is made public.
-> 
-> Releasing a fix early pretty much leaks the issue to people monitoring
-> distro updates, especially if there is a clear changelog that states
-> there have been security fixes with a neat summary and sources are
-> available.
-> 
-> 
-> I'm asking because this happened today and some vendor released a kernel
-> with patches for CVE-2018-3690 (yet another speculation/side-channel
-> vulnerability), but their fix for it broke another component in the
-> kernel (RDMA networking) and people trying to fix that bug are now
-> wasting their's and everyone's/my time saying they cannot make the RDMA
-> issue public because it has been caused by a security fix still under
-> embargo.
-> At this point, I'm not sure what this is supposed to protect: I have a
-> pretty good idea of what the fixes are about and I'm not a security
-> researcher, so if I could figure this much I'm sure smarter people can
-> use it, and folks who are waiting for the embargo to end before actually
-> posting fixes (including upstream!) are now leaving their users in
-> trouble.
-> 
-> 
-> I don't really care about speculation/side channel attacks frankly but
-> there's no reason other bugs won't have the same issue, so I think
-> "waiting for the issue to be made public before releasing fixes" should
-> be made a rule if at all possible.
+Thanks for doing this. I didn't mean to imply that you were not diligent 
+enough.
 
-There seems to be some miscommunation here, which should be directly
-clarified with the security team of the affected distribution(s).
+>You reporting these?
 
-Rule of thumb is: when a vendor publishes updates for an issue, the issue
-is public and can be referenced publically. I do not understand why you
-would get push back unless there are communication problems.
+I was hoping somebody else would take care of this.
 
-Also FWIW CVE-2018-3690 is an older reference to "Bounds Check Bypass Store",
-which is now tracked as CVE-2018-3693 and is public.
+>If not, I can do it.
 
-Ciao, Marcus
+Please do! :-)
+
+-- 
+Jakub Wilk
