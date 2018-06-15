@@ -1,77 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/01/3
-Message-ID: <CAFRnB2XPoZgv-2Pah5DmKifD6s+sKJk9SoK28T_2j2zb+53RNw@mail.gmail.com>
-Date: Mon, 1 Oct 2018 08:50:10 -0400
-From: Alex Gaynor <alex.gaynor@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/15/6
+Message-ID: <CA+aC4kut+oE2UsWj0nro+_qpKgwvZqV-pfAKBP8y_xT2WMVjCA@mail.gmail.com>
+Date: Fri, 15 Jun 2018 07:57:21 -0700
+From: Anthony Liguori <anthony@...emonkey.ws>
 To: oss-security@...ts.openwall.com
-Cc: Carlton Gibson <carlton.gibson@...il.com>
-Subject: Re: Django security release issued: 2.1.2
+Subject: Re: Intel FP security issue
 Content-Type: text/plain; charset=utf-8
 
-FWIW, Django's default new-project template includes a password validator
-that denies the ability to use 20,000 common passwords:
-https://github.com/django/django/blob/master/django/conf/project_template/project_name/settings.py-tpl#L87-L100
+On Fri, Jun 15, 2018 at 7:12 AM, Solar Designer <solar@...nwall.com> wrote:
+> On Fri, Jun 15, 2018 at 01:36:05PM +0000, Liguori, Anthony wrote:
+>> The discover sent a post here but I suspect it's stuck in the moderation queue.  I'll repost later today.
+>
+> There's nothing like this in the moderation queue.  Also not in the spam
+> filter.  Please repost right away.
 
--- This will not be true for older projects with settings.py that upgraded
-Django versions, but did explicitly set PASSWORD_VALIDATORS, so that's a
-thing people should do :-)
+Hrm, I'll check with the reporter but I just sent it myself.  Should
+appear shortly.
 
-Alex
+> BTW, the above message of yours lacks an In-Reply-To header, even though
+> it appears to be a reply to Marcus' message.  So technically it started
+> a new thread.  There's probably something broken on your end.
 
-On Mon, Oct 1, 2018 at 8:47 AM Solar Designer <solar@...nwall.com> wrote:
+Yes, phone email client :-/
 
-> On Mon, Oct 01, 2018 at 11:33:47AM +0200, Carlton Gibson wrote:
-> > Today the Django team issued 2.1.2 as part of our security
-> > process. This release address a security issue, and we encourage all
-> > users to upgrade as soon as possible:
-> >
-> > https://www.djangoproject.com/weblog/2018/oct/01/security-release/
->
-> First of all, thank you for sharing this with oss-security.
->
-> Per oss-security list content guidelines, actual vulnerability detail
-> must be included in postings (message body or text/plain attachment).
-> The Subject could have easily been more descriptive for this list, too -
-> e.g., "CVE-2018-16984: Django: Password hash disclosure to "view only"
-> admin users".
->
-> Carlton, I'd appreciate it if you include such detail in your
-> oss-security postings (if any) on future occasions.  Including the links
-> as well is great (such as for easy access to updated revisions while
-> the links work); including only links is discouraged.
->
-> Here's the vulnerability detail from the above URL:
->
-> ---
-> CVE-2018-16984: Password hash disclosure to "view only" admin users
->
-> If an admin user has the change permission to the user model, only part
-> of the password hash is displayed in the change form. Admin users with
-> the view (but not change) permission to the user model were displayed
-> the entire hash. While it's typically infeasible to reverse a strong
-> password hash, if your site uses weaker password hashing algorithms such
-> as MD5 or SHA1, it could be a problem.
->
-> Thanks Phithon Gong for reporting this issue.
-> ---
->
-> BTW, the feasibility of "reversing" a password hash depends not only on
-> hash type, but also on how many guesses the attacker would need to make
-> before likely hitting the right password.  Without target user specific
-> information, that number depends on how common or not the password is.
->
-> Maybe the word "typically" allows for this exception for weak passwords.
-> However, unnecessarily revealing the password hash is a problem on its
-> own, not just "could be a problem" depending on hash type, although the
-> restriction to "admin users" and password hashing do mitigate the issue
-> to some extent.
->
-> Thanks,
->
+Regards,
+
+Anthony Liguori
+
 > Alexander
->
-
-
--- 
-All that is necessary for evil to succeed is for good people to do nothing.
-
