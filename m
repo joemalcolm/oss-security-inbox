@@ -1,30 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/23/5
-Message-ID: <b1b66680-c525-4bdd-0359-4162372ad073@apache.org>
-Date: Fri, 23 Feb 2018 09:25:55 +0000
-From: Mark Thomas <markt@...che.org>
-To: Doran Moppert <dmoppert@...hat.com>, oss-security@...ts.openwall.com
-Subject: Re: Fwd: [SECURITY] CVE-2018-1304 Security constraints mapped to context root are ignored
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/15/9
+Message-ID: <d06db3bb-d353-7b66-b627-a091acd2ceb3@oracle.com>
+Date: Fri, 15 Jun 2018 12:23:23 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: oss-security@...ts.openwall.com, Anthony Liguori <aliguori@...zon.com>
+Cc: thomas.prescher@...erus-technology.de, jsteckli@...zon.de
+Subject: Re: CVE-2018-3665 Lazy FPU Context Switching Information Leak
 Content-Type: text/plain; charset=utf-8
 
-On 23/02/18 04:29, Doran Moppert wrote:
-> On Feb 23 2018, Mark Thomas wrote:
->> CVE-2018-1304 Security constraints mapped to context root are ignored
->>
->> Mitigation:
->> Users of the affected versions should apply one of the following
->> mitigations:
->> - Review security constraints and confirm none use a URL patten of ""
->>   (the empty string)
-> 
-> Will a URL pattern of "/" correctly protect the context root of
-> vulnerable versions?  If so, this seems worth mentioning.
+On 06/15/18 07:55 AM, Anthony Liguori wrote:
+> Working exploit code that leaks one XMM register for Linux and FreeBSD is 
+> attached to this email.
 
-The problem typically occurs with security annotations on servlets. In
-this case the security annotations pick up the mappings from the servlet
-they are annotating. If you changed the servlet mapping from "" to "/"
-that would almost certainly significantly change the behaviour of the
-web application since you are changing the mapping from "exact match to
-context root" to "default servlet".
+Did the attachment get lost on the way to the list?  I didn't see any.
 
-Mark
+-- 
+	-Alan Coopersmith-               alan.coopersmith@...cle.com
+	 Oracle Solaris Engineering - https://blogs.oracle.com/alanc
