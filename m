@@ -1,80 +1,128 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/14/9
-Message-ID: <CA+ON-PGqthRuygz5OOxoerrmAXfAH063cF34LGYZ2KhnEvmGhg@mail.gmail.com>
-Date: Fri, 14 Dec 2018 13:06:44 -0500
-From: Dmitri Shuralyov <dmitshur@...ang.org>
-To: oss-security@...ts.openwall.com
-Cc: Security Officer <security@...ang.org>, Filippo Valsorda <filippo@...ang.org>
-Subject: Go security releases 1.11.3 and 1.10.6
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/15/5
+Message-ID: <cig332r2l8rtee.fsf@u44850075a5a8574dc8a1.ant.amazon.com>
+Date: Fri, 15 Jun 2018 07:55:37 -0700
+From: Anthony Liguori <aliguori@...zon.com>
+To: <oss-security@...ts.openwall.com>
+CC: <thomas.prescher@...erus-technology.de>, <jsteckli@...zon.de>
+Subject: CVE-2018-3665 Lazy FPU Context Switching Information Leak
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Affected Software / Hardware:
+All operating system kernels / hypervisors using Lazy FPU context switching
+running on Intel CPUs
+(more details below)
 
-We have released Go 1.11.3 and Go 1.10.6 to address three recently
-reported security issues. You can see an announcement at
-https://groups.google.com/d/msg/golang-announce/Kw31K8G7Fi0/z2olKn-QCAAJ.
+Summary:
+The FPU register state (legacy/MMX/SSE/AVX/AVX-512 registers) can be
+leaked across process or virtual machine boundaries using speculative execution
+on Intel CPUs when the hypervisor or operating system kernel uses lazy FPU
+context switching.
 
-We are making this posting to oss-security list now that the security
-issues are public to follow the policy described at
-https://oss-security.openwall.org/wiki/mailing-lists/distros. We
-recommend subscribing to the golang-announce list at
-https://groups.google.com/d/forum/golang-announce to guarantee
-receiving notifications about future Go security releases.
+Impact:
+Any information in the above registers is accessible to a local attacker.
 
-There are three vulnerabilities being addressed by the security release:
+Mitigation:
+Operating systems and hypervisor need to switch to eager FPU context switching
+or clear FPU register state on context switch. Relying on CR0.TS to protect
+FPU registers is insufficient.
 
-• cmd/go: remote command execution during "go get -u"
+Credit:
+This issue was reported to Intel by Amazon and Cyberus Technology.  The issue
+was discovered by Julian Stecklina (jsteckli@...zon.de) and Thomas Prescher
+(thomas.prescher@...erus-technology.de).
 
-The "go get" command is vulnerable to remote code execution when
-executed with the -u flag and the import path of a malicious Go
-package, or a package that imports it directly or indirectly.
-Specifically, it is only vulnerable in GOPATH mode, but not in module
-mode (the distinction is documented at
-https://golang.org/cmd/go/#hdr-Module_aware_go_get). Using custom
-domains, it’s possible to arrange things so that a Git repository is
-cloned to a folder named .git by using a vanity import path that ends
-with "/.git". If the Git repository root contains a HEAD file, a
-config file, an objects directory, a refs directory, with some work to
-ensure the proper ordering of operations, "go get -u" can be tricked
-into considering the parent directory as a repository root, and
-running Git commands on it. That will use the config file in the
-original Git repository root for its configuration, and if that config
-file contains malicious commands, they will execute on the system
-running "go get -u".
+This issue was also independently discovered by Zdenek Sojka - SYSGO AG
+(http://sysgo.com) and Colin Percival.
 
-The issue is CVE-2018-16873 and Go issue https://golang.org/issue/29230.
+Detailed Description
+====================
 
-Thanks to Etienne Stalmans from the Heroku platform security team for
-discovering and reporting this issue.
+Technical Description
+---------------------
 
-• cmd/go: directory traversal in "go get" via curly braces in import paths
+Lazy FPU context switching optimizes context switch times by lazily saving and
+restoring the content of legacy FPU/MMX/SSE/AVX/AVX-512 registers. When the
+kernel switches from task A to task B, task A's register content stays in the
+FPU, but the FPU is disabled via CR0.TS. If task B touches the FPU, a #NM
+exception is generated, the kernel switches the register content, and enables
+the FPU agan. From that point task B can use the FPU.
 
-The "go get" command is vulnerable to directory traversal when
-executed with the import path of a malicious Go package which contains
-curly braces (both '{' and '}' characters). Specifically, it is only
-vulnerable in GOPATH mode, but not in module mode (the distinction is
-documented at https://golang.org/cmd/go/#hdr-Module_aware_go_get). The
-attacker can cause an arbitrary filesystem write, which can lead to
-code execution.
+Between the context switch to task B and the #NM exception that would trigger
+the actual context switch, the FPU registers contain task A's register content
+and the FPU is disabled. 
 
-The issue is CVE-2018-16874 and Go issue https://golang.org/issue/29231.
+The attack works by speculatively reading the task A's FPU register contents
+from task B in this time frame and retrieving the contents via a cache
+side-channel. Let's call task A the victim and task B the attacker.
 
-Thanks to ztz of Tencent Security Platform for discovering and
-reporting this issue.
+The attacker loads XMM0 with 0 and installs a SIGSEGV handler. Then he gives the
+victim (task A) a chance to run by sleeping. Afterwards, the attacker flushes
+the cache line pointed to by mem + 64 (see below), runs the following code:
 
-• crypto/x509: CPU denial of service in chain validation
+; Cause a page fault and execute the below code speculatively until the
+; processor rolls-back execution and delivers the page fault.
+mov dword [0], 0
 
-The crypto/x509 package does not limit the amount of work performed
-for each chain verification, which might allow attackers to craft
-pathological inputs leading to a CPU denial of service. Go TLS servers
-accepting client certificates and TLS clients verifying certificates
-are affected.
+; Read xmm0. This would cause a #NM exception because the FPU is disabled, but
+; it is never delivered, because execution is rolled back to the page fault.
+movq rax, xmm0
 
-The issue is CVE-2018-16875 and Go issue https://golang.org/issue/29233.
+; Now mask a bit in the value we read and touch memory depending on the result.
+; If the bit contained 0, we touch [mem] otherwise we touch [mem + 64]. This cache
+; side-effect survives when the CPU discards this speculative execution flow!
+and rax, 1               ; mask bit 0
+shl rax, 6               ; align to cache line (64 bytes)
+mov dword [mem + rax], 0 ; access buffer with offset depending on xmm0 content
 
-Thanks to Netflix for discovering and reporting this issue.
+After handling the SIGSEGV, the attacker probes the access latency of [mem +
+64]. If it's fast, the bit was 1, because the cache line was pulled in by the
+speculatively executed code. If it's slow, we read a 0.
 
-All three vulnerabilities affect Go before 1.10.6, and 1.11.x before 1.11.3.
+Because the kernel has not seen the #NM exception, the FPU registers still
+contain the victim's FPU register content. The attacker can continue leaking
+different bits from different registers.
 
-Thank you,
-Dmitri on behalf of the Go team
+Working exploit code that leaks one XMM register for Linux and FreeBSD is
+attached to this email.
+
+Affected Hardware
+-----------------
+
+We have reproduced this issue on the Intel Core microarchitecture from Sandy
+Bridge to Skylake. Until there is a detailed list by Intel, it's reasonable to
+assume that all current Intel CPUs are affected.
+
+Other CPU architectures that allow similar lazy context switching mechanisms
+might be affected as well.
+
+Affected Software
+-----------------
+
+The following is an incomplete list of vulnerable system software.
+
+Affected operating systems:
+- Linux:
+ - kernel versions < 4.9 with non-default boot parameters (`eagerfpu=off`) are affected
+ - kernel versions < 4.6 running on affected Intel CPUs prior to Haswell [10] or with custom boot parameters (`eagerfpu=off` or `noxsave`)
+ - kernel versions < 3.7 on all affected CPUs
+- FreeBSD
+- ...
+
+Affected hypervisors:
+- KVM when run on affected Linux version
+- All Xen versions
+- ...
+
+Mitigation
+----------
+
+For Linux versions between 3.7 and 4.8, it is sufficient to add eagerfpu=on to
+the kernel command line. Linux starting from 4.9 has no lazy switching code
+anymore and are not affected.
+
+Linux 4.4.y releases up to 4.4.137 haves a bug present that does not respect
+the eagerfpu=on command line.  This is expected to be fixed in the 4.4.138
+release.
+
+Other operating systems and hypervisors need a source code fix.
