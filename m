@@ -1,36 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/06/2
-Message-ID: <20180406083533.GA3007@localhost>
-Date: Fri, 6 Apr 2018 10:35:33 +0200
-From: Sebastian Krahmer <half.linked.list@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/15/4
+Message-ID: <20180615141249.GA14370@openwall.com>
+Date: Fri, 15 Jun 2018 16:12:49 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Privsec vuln in beep / Code execution in GNU patch
+Subject: Re: Intel FP security issue
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On Fri, Jun 15, 2018 at 01:36:05PM +0000, Liguori, Anthony wrote:
+> The discover sent a post here but I suspect it's stuck in the moderation queue.  I'll repost later today.
 
- : 
-> 
-> If anyone knows the background of this please share it.
+There's nothing like this in the moderation queue.  Also not in the spam
+filter.  Please repost right away.
 
-lulz. There is indeed a double free of console_device,
-if a SIGINT is caught right before main() returns.
-(Looking at git dbf0b4). Besides the easter egg, the patch
-is still wrong. optarg may be reused via console_device, so the strdup()
-is OK, but the ressource-free and signal handling isnt.
+BTW, the above message of yours lacks an In-Reply-To header, even though
+it appears to be a reply to Marcus' message.  So technically it started
+a new thread.  There's probably something broken on your end.
 
-Shouts to the beep trolls. I strongly challenge the oppinion that security
-is better done without it ...
-
-Brave Knights who found issues in such small code base.
-
-lg
--s
-
-
--- 
-
-~
-~ perl <-> $_='print"\$_=\47$_\47;eval"';eval
-~ bash <-> $(curl stealth.openwall.net/null/nuts.txt)
-
+Alexander
