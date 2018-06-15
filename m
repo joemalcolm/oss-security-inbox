@@ -1,24 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/19/2
-Message-ID: <20180919082343.zumj3iknwpwmlbwv@lorien.valinor.li>
-Date: Wed, 19 Sep 2018 10:23:43 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: Davidlohr Bueso <dave@...olabs.net>
-Subject: Re: Linux kernel: potential local priviledge escalation bug in vmacache code
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/15/3
+Message-ID: <7ea0793c-b5c5-429c-adbe-96bb8437bd69@amazon.com>
+Date: Fri, 15 Jun 2018 13:36:05 +0000
+From: "Liguori, Anthony" <aliguori@...zon.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Re: Intel FP security issue
 Content-Type: text/plain; charset=utf-8
 
-Hi Vladis,
+On Jun 15, 2018 6:26 AM, Marcus Meissner <meissner@...e.de> wrote:
+>
+> Hi,
+>
+> On Wed, Jun 13, 2018 at 11:07:18PM +0400, Loganaden Velvindron wrote:
+> > On Wed, Jun 13, 2018 at 7:34 PM, Loganaden Velvindron
+> > <loganaden@...il.com> wrote:
+> > > Hi All,
+> > >
+> > > Both OpenBSD and DragonflyBSD have gone ahead and committed fixes for
+> > > the rumored Intel FP issue:
+> > >
+> > > OpenBSD: https://marc.info/?l=openbsd-cvs&m=152818076013158&w=2
+> > > DragonflyBSD: http://lists.dragonflybsd.org/pipermail/commits/2018-June/672324.html
+> > >
+> > > I think that the cat is already out of the bag, and releasing details
+> > > of this security problem makes sense. Since this has gone public, Is
+> > > there a reason to keep this under embargo ?
+> > >
+> >
+> > FreeBSD appears to be moving in this direction too:
+> > https://svnweb.freebsd.org/base?view=revision&revision=335072
+>
+> For the record, this is https://www.intel.com/content/www/us/en/security-center/advisory/intel-sa-00145.html
+> aka CVE-2018-3665 with codename "Lazy FPU Save/Restore".
+>
+> XEN advisory https://xenbits.xen.org/xsa/advisory-267.html was posted here too, describing it a bit better.
+>
+> Full details are planned to be released June 27th.
 
-On Wed, Sep 19, 2018 at 04:15:26AM -0400, Vladis Dronov wrote:
-> Hello, Davidlohr,
-> 
-> Thank you for reporting this. Was CVE-ID assigned or requested
-> for this flaw? If not, the Red Hat (as a CNA) could allocate one
-> and handle adding it to the MITRE's database.
-
-I requested earlier the day one from MITRE (via webform) but got no
-assignment yet.
+The discover sent a post here but I suspect it's stuck in the moderation queue.  I'll repost later today.
 
 Regards,
-Salvatore
+
+Anthony Liguori
+
+>
+> Ciao, Marcus
+
