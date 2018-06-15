@@ -1,49 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/10/1
-Message-ID: <20181010025517.GC7851@dmoppert.redhat.com>
-Date: Wed, 10 Oct 2018 02:55:17 +0000
-From: Doran Moppert <dmoppert@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
-Subject: Re: ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/15/10
+Message-ID: <cig332muvval9x.fsf@u44850075a5a8574dc8a1.ant.amazon.com>
+Date: Fri, 15 Jun 2018 12:43:06 -0700
+From: Anthony Liguori <aliguori@...zon.com>
+To: Alan Coopersmith <alan.coopersmith@...cle.com>, <oss-security@...ts.openwall.com>
+CC: <thomas.prescher@...erus-technology.de>, <jsteckli@...zon.de>
+Subject: Re: CVE-2018-3665 Lazy FPU Context Switching Information Leak
 Content-Type: text/plain; charset=utf-8
 
-Given the number of eyes & hours on these issues my question has to be 
-naive, so I apologise, but couldn't seccomp provide a safe "safe mode" 
-relatively easily?  What syscalls does legit ghostscript need once the 
-input and output streams are open?
+Alan Coopersmith <alan.coopersmith@...cle.com> writes:
 
-On Tue, Oct 09, 2018 at 06:34:23PM -0400, Alex Gaynor wrote:
->Would they consider making a build-time "safe PS only" flag that ensured it
->was compiled without things like shell-invocation? Then we could just try
->to convince Linux distros to package it that way :-)
+> On 06/15/18 07:55 AM, Anthony Liguori wrote:
+>> Working exploit code that leaks one XMM register for Linux and FreeBSD is 
+>> attached to this email.
 >
->Alex
->
->On Tue, Oct 9, 2018 at 6:33 PM Tavis Ormandy <taviso@...gle.com> wrote:
->
->> On Tue, Oct 9, 2018 at 3:27 PM Perry E. Metzger <perry@...rmont.com>
->> wrote:
->>
->> > I keep wondering if there isn't a way to fully remove the dangerous
->> > bits from a postscript interpreter so it can _only_ be used to view
->> > the document and literally has no file system access compiled in at
->> > all, so there's no way to touch the fs etc. regardless of what flags
->> > the interpreter is invoked with.
->> >
->> > (I, too, find removing the ability to look at historical postscript
->> > documents a bit more draconian than I like.)
->> >
->> >
->> I've discussed it with upstream, it's a hard no because they feel it would
->> make ghostscript non-conforming (i.e. non-conforming with the Adobe
->> PostScript Language Reference Manual)
->>
->> We probably have similar thoughts on this, but that is the final word from
->> upstream.
->>
->> Tavis.
+> Did the attachment get lost on the way to the list?  I didn't see any.
 
--- 
-Doran Moppert
-Red Hat Product Security
+I should have scrubbed that language.  We won't be sending that until
+later this month.
+
+Regards,
+
+Anthony Liguori
+
+>
+> -- 
+> 	-Alan Coopersmith-               alan.coopersmith@...cle.com
+> 	 Oracle Solaris Engineering - https://blogs.oracle.com/alanc
