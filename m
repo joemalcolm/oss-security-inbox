@@ -1,4 +1,9 @@
-Received: (qmail 23645 invoked by uid 550); 6 Sep 2022 11:50:25 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["536" "Friday" "15" "June" "2018" "12:43:06" "-0700" "Anthony Liguori" "aliguori@amazon.com" "<cig332muvval9x.fsf@u44850075a5a8574dc8a1.ant.amazon.com>" "19" "Re: [oss-security] CVE-2018-3665 Lazy FPU Context Switching Information Leak" "^CC:" nil nil "6" "2018061519:43:06" "[oss-security] CVE-2018-3665 Lazy FPU Context Switching Information Leak" (number mark "        aliguori@ama Jun 15   19/536   " thread-indent "\"Re: [oss-security] CVE-2018-3665 Lazy FPU Context Switching Information Leak\"\n") "<d06db3bb-d353-7b66-b627-a091acd2ceb3@oracle.com>" ("<cig332r2l8rtee.fsf@u44850075a5a8574dc8a1.ant.amazon.com>" "<d06db3bb-d353-7b66-b627-a091acd2ceb3@oracle.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 32700 invoked by uid 550); 15 Jun 2018 19:58:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,73 +11,50 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23622 invoked from network); 6 Sep 2022 11:50:24 -0000
-Date: Tue, 6 Sep 2022 11:50:10 +0000
-From: Jeremy Stanley <fungi@yuggoth.org>
-To: oss-security@lists.openwall.com
-Message-ID: <20220906115010.gs7kec3wkmayhmhf@yuggoth.org>
-References: <CAGUWgD9QR7mjyVnBV4NcyVv=RzLBjNoqvv=d02P-GGsdOV_VWg@mail.gmail.com>
+Received: (qmail 18153 invoked from network); 15 Jun 2018 19:43:26 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+  t=1529091806; x=1560627806;
+  h=from:to:cc:subject:in-reply-to:references:date:
+   message-id:mime-version;
+  bh=QINnEGkR34V2C3qotXN3Ahvf6+EonHeljtdWtSXaQL8=;
+  b=pzagvibpjfiJXKHr1RnlGI7rKhIBb7yVsDe5a0JAI6po2HEZaDxUClmG
+   GKDm29K3YCNsgZdaXCx1G5AMkEizec/D6zhRwEnXH2uFV78xYoGemHyNT
+   aO3d/+GHSQzpWV4i+FnhfoWoV1QMQ/rfmTRsgE6XgvMxw31YO6r+IN5EH
+   c=;
+X-IronPort-AV: E=Sophos;i="5.51,228,1526342400"; 
+   d="scan'208";a="683100671"
+In-Reply-To: <d06db3bb-d353-7b66-b627-a091acd2ceb3@oracle.com>
+References: <cig332r2l8rtee.fsf@u44850075a5a8574dc8a1.ant.amazon.com>
+ <d06db3bb-d353-7b66-b627-a091acd2ceb3@oracle.com>
+User-Agent: Notmuch/0.17 (http://notmuchmail.org) Emacs/24.3.1 (x86_64-pc-linux-gnu)
+Message-ID: <cig332muvval9x.fsf@u44850075a5a8574dc8a1.ant.amazon.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="szsnpwswdhffdiaj"
-Content-Disposition: inline
-In-Reply-To: <CAGUWgD9QR7mjyVnBV4NcyVv=RzLBjNoqvv=d02P-GGsdOV_VWg@mail.gmail.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-SA-Exim-Connect-IP: 2001:4802:7801:102:be76:4eff:fe20:63e0
-X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
-X-SA-Exim-Mail-From: fungi@yuggoth.org
-X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
-Subject: Re: [oss-security] sagemath denial of service with abort() in gmp:
- overflow in mpz type
+Content-Type: text/plain
+CC: <thomas.prescher@cyberus-technology.de>, <jsteckli@amazon.de>
+Date: Fri, 15 Jun 2018 12:43:06 -0700
+From: Anthony Liguori <aliguori@amazon.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE-2018-3665 Lazy FPU Context Switching Information Leak
+To: Alan Coopersmith <alan.coopersmith@oracle.com>,
+        <oss-security@lists.openwall.com>
 
---szsnpwswdhffdiaj
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Alan Coopersmith <alan.coopersmith@oracle.com> writes:
 
-On 2022-09-06 08:47:58 +0300 (+0300), Georgi Guninski wrote:
-[...]
-> sagemath gives access to the python interpreter, so code execution
-> is trivial.
-[...]
+> On 06/15/18 07:55 AM, Anthony Liguori wrote:
+>> Working exploit code that leaks one XMM register for Linux and FreeBSD is 
+>> attached to this email.
+>
+> Did the attachment get lost on the way to the list?  I didn't see any.
 
-I'm not familiar with sagemath, but is it intended to protect
-against such cases? Note that even if all it does is pass
-expressions into CPython's eval(), it's pretty much impossible to
-guard against misuse without completely sandboxing the underlying
-processes. Denial of service scenarios are really the least of
-worries in that case. Many articles have been written over the years
-about this, though one of the more recent and thorough ones is:
-https://netsec.expert/posts/breaking-python3-eval-protections/
+I should have scrubbed that language.  We won't be sending that until
+later this month.
 
-If it's not trying to prevent getting access to do all the things
-the interpreter can do outside sagemath as well, then I hardly see
-this as a vulnerability (any more than "CPython interpreter allows
-execution of arbitrary Python code" would be, at any rate).
---=20
-Jeremy Stanley
+Regards,
 
---szsnpwswdhffdiaj
-Content-Type: application/pgp-signature; name="signature.asc"
+Anthony Liguori
 
------BEGIN PGP SIGNATURE-----
-
-iQKTBAABCgB9FiEEl65Jb8At7J/DU7LnSPmWEUNJWCkFAmMXM+tfFIAAAAAALgAo
-aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDk3
-QUU0OTZGQzAyREVDOUZDMzUzQjJFNzQ4Rjk5NjExNDM0OTU4MjkACgkQSPmWEUNJ
-WClinw//cnycHb8C/M+FOsZDlxuyBCb6QltZvVUlw88S5BdaQxV6wc8hfqsh3sRR
-5ClFgk3FR/RaL6wzS/wAo+BdOwxu4Ft30MyBJRP4D9Y100lABucEAvJNLbUeGXMH
-lIwG3YsFwMfxB9hnW8rfImr39jGIdJMUIPb6I9Y6znuVmFkxQN3Munpn+w4aPWfJ
-/2yZuvDGtCNFlVXGJrcTUnwedSbQ0zuq1tLzGeWFs4MpkVytfDzcQ1GkurFyngZ9
-v/TwMZrRv0JzZ+eQGn/tZXvXaL5YCn0g0TtoZK5RUWY89FQ35EWGA4KzEDwwbtoP
-j/ebJEsYBgQuqG1l+sIlT4fIypP/GH+A9S6/kAoNfpBKtM5/BvebQE7jwJVsbbn6
-MbAP5sLysU3SWyBaKGS3ETdOKNlErYAz4YXGE7YT9nrnQSpVev198KVMQuCuAb2A
-hjSNLiIGJZA7lr6+Q70+Ui+Dn/KB9DhqGdiG779c1NT+oKyVFvswNxTVBJ7sNxsn
-FcyUpr/PumwK7QbZHzIk5wg+1d2/i6GKzMx0KKmKJEwGhjUEXO9+FxiHTVkK2dkK
-Wywq9awglpT0/JsmH1b+yFwpKEA9bbN+bUkLTuQGmKLLWkHzXdDkHJhork1LtY1j
-dxAUwjarD2cQC9uWtjCcNSXopqaLczV7H5/FDo7XpA/4i0Zf9vE=
-=WzSY
------END PGP SIGNATURE-----
-
---szsnpwswdhffdiaj--
+>
+> -- 
+> 	-Alan Coopersmith-               alan.coopersmith@oracle.com
+> 	 Oracle Solaris Engineering - https://blogs.oracle.com/alanc
