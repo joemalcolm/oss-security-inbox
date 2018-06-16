@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3013" "Thursday" "9" "November" "2017" "12:09:03" "-0500" "David A. Wheeler" "dwheeler@dwheeler.com" "<E1eCqK7-00047g-Kl@rmmprod07.runbox>" "64" "Re: [oss-security] CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver" nil nil nil "11" "2017110917:09:03" "[oss-security] CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver" (number mark "U       dwheeler@dwh Nov  9   64/3013  " thread-indent "\"Re: [oss-security] CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver\"\n") "<20171108091517.GA18656@kroah.com>" ("<20171108091517.GA18656@kroah.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["514" "Saturday" "16" "June" "2018" "12:42:37" "+0200" "Marcus Brinkmann" "marcus.brinkmann@ruhr-uni-bochum.de" "<3a80a443-a4a0-a8e0-15a1-26a75e39acbe@ruhr-uni-bochum.de>" "23" "Re: [oss-security] CVE-2018-12356 Breaking signature verification in pass (Simple Password Store)" "^Date:" nil nil "6" "2018061610:42:37" "[oss-security] CVE-2018-12356 Breaking signature verification in pass (Simple Password Store)" (number mark "        marcus.brink Jun 16   23/514   " thread-indent "\"Re: [oss-security] CVE-2018-12356 Breaking signature verification in pass (Simple Password Store)\"\n") "<20180615172836.7tlljvthvyzjxrma@jwilk.net>" ("<c0e1a287-f18b-252e-3509-131db823264c@ruhr-uni-bochum.de>" "<20180614222021.6jguso4l7vqbjqyk@jwilk.net>" "<e7583e33-54d9-6548-d55e-531f3fc4a040@ruhr-uni-bochum.de>" "<20180615172836.7tlljvthvyzjxrma@jwilk.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 32678 invoked by uid 550); 9 Nov 2017 17:36:50 -0000
+Received: (qmail 18075 invoked by uid 550); 16 Jun 2018 10:56:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,82 +11,58 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22131 invoked from network); 9 Nov 2017 17:09:15 -0000
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Received: (qmail 7203 invoked from network); 16 Jun 2018 10:42:49 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ruhr-uni-bochum.de;
+	s=mail-2017; t=1529145760;
+	bh=6dRksVsWAlmrP+3Ep5NjbRLRQ6W2cYLNTN4/siMfQT0=;
+	h=Subject:To:References:From:Date:In-Reply-To:From;
+	b=UNs1nBYLqGgq7eTqdSog5Ll/vVV6o9G6o36hXyTiUu4DCfpx6M/5LaWGfJ7VvSzEP
+	 INE+gR7mIhRv0MeU1F52K0iI3Wh+Pv0nT6zrs8kIZKxEgkjyL5353uw43cKSIqCLn2
+	 fgZ9/LNTR/Ov+DdmVH+ea43oML0W++xF2epCe3S0=
+X-Envelope-Sender: <marcus.brinkmann@ruhr-uni-bochum.de>
+X-RUB-Notes: Internal origin=134.147.42.227
+References: <c0e1a287-f18b-252e-3509-131db823264c@ruhr-uni-bochum.de>
+ <20180614222021.6jguso4l7vqbjqyk@jwilk.net>
+ <e7583e33-54d9-6548-d55e-531f3fc4a040@ruhr-uni-bochum.de>
+ <20180615172836.7tlljvthvyzjxrma@jwilk.net>
+Openpgp: preference=signencrypt
+Message-ID: <3a80a443-a4a0-a8e0-15a1-26a75e39acbe@ruhr-uni-bochum.de>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.8.0
 MIME-Version: 1.0
-From: "David A. Wheeler" <dwheeler@dwheeler.com>
-To: "oss-security" <oss-security@lists.openwall.com>
-Date: Thu, 09 Nov 2017 12:09:03 -0500 (EST)
-X-Mailer: RMM6
-In-Reply-To: <20171108091517.GA18656@kroah.com>
-Message-Id: <E1eCqK7-00047g-Kl@rmmprod07.runbox>
-Subject: Re: [oss-security] CVE-2017-15102: Linux kernel: usb: NULL-deref
- due to a race condition in [legousbtower] driver
+In-Reply-To: <20180615172836.7tlljvthvyzjxrma@jwilk.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Virus-Scanned: clamav-milter 0.99.4 at mail1.mail.ruhr-uni-bochum.de
+X-Virus-Status: Clean
+Date: Sat, 16 Jun 2018 12:42:37 +0200
+From: Marcus Brinkmann <marcus.brinkmann@ruhr-uni-bochum.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE-2018-12356 Breaking signature verification in
+ pass (Simple Password Store)
+To: oss-security@lists.openwall.com
 
-> > On Tue, 2017-11-07 at 21:22 +0100, Greg KH wrote:
-> > > I hate to ask, but why are you getting CVEs for bugs fixed over a
-> > > year ago, and are already in all stable kernel releases a year ago?=
-=C2=A0=C2=A0Why
-> > > does it matter?...
+Hi,
 
-> On Tue, Nov 07, 2017 at 08:30:05PM +0000, Maier, Kurt H wrote:
-> > Kernel maintainers' policy is clear, and nobody is asking for that to
-> > change, but please don't sandbag the process of keeping track of
-> > vulnerabilities.  The fraction of "products" (regardless of vendor)
-> > that run linux and never get updates approaches unity.  Being able to
-> > precisely catalog which linux releases suffer from which
-> > vulnerabilities is useful to many.
+On 06/15/2018 07:28 PM, Jakub Wilk wrote:
+> Thanks for doing this. I didn't mean to imply that you were not diligent> enough.
 
-On Wed, 8 Nov 2017 10:15:17 +0100, Greg KH <greg@kroah.com> wrote:
-> Well, I'm working on fixing the "devices do not get updates" issue
-> through other means, so don't just give up on that one just yet :)
+I didn't take it that way!
 
-I applaud your work!  I think getting CVE assignments may help, as I explai=
-n below.
+>> You reporting these?
+> 
+> I was hoping somebody else would take care of this.
 
-> As for the "keep track of vulnerabilities", is that what is really
-> happening here?  Why pick a random bug fix from over a year ago for a
-> CVE vs. the 100 other bugfixes in the past few weeks/months?
->=20
-> I'm really curious as to what triggered this specific CVE request that
-> somehow misses the hundreds/thousands of other fixes that land in newer
-> kernel releases?
+Hehe, everybody does. Luckily, we found some hackers in Mauritius taking
+care of it!
 
-Manufacturers & recipients often won't update unless there's a *reason* to =
-update.
-Documenting a number of *specific* CVEs in older kernel versions
-provides clear documented reasons that an update needs to occur,
-instead of a vague "you should upgrade" claim.
+First results:
 
-Perhaps most importantly, once a vulnerability has a CVE id,
-some laws and regulations can come into play. Manufacturers
-will (correctly) argue that no one can track all the mailing lists, but if a
-vulnerability has a CVE id, it's generally agreed that the
-vulnerability is a publicly known vulnerability.
-In the US, there has been recent proposed legislation that requires
-that "Internet of Things" devices sold to the federal government cannot have
-"known security vulnerabilities" ("Internet of Things Cybersecurity Improve=
-ment
-Act of 2017" proposed by Senators Mark Warner (R-Va.) and Cory Gardner (D-C=
-olo.)).
-I suspect many other countries have or will pass similiar laws,
-or will interpret their existing laws this way.
-It's easy to argue that known security vulnerabilities are known flaws
-that should be remediated by the manufacturer (at no cost to the consumer).
+bitcoin:
+https://github.com/bitcoin/bitcoin/commit/9e2e5626dabb7208dafedcc9904940b666be1c3b
 
-I agree that many vulnerabilities don't have CVE ids.
-You don't need to identify *all* vulnerabilities in old kernels... just eno=
-ugh to make
-it easier to update the kernel than try to back-patch everything.
-If manufacturers have to fix the CVEs to sell products, or to avoid massive=
- returns,
-that creates an *economic* reason for manufacturers to
-begin responsibly maintain their products.
+litecoin: https://github.com/litecoin-project/litecoin/pull/503
 
-There's no guarantee that this sequence of events will happen, but it's wor=
-th trying.
-
---- David A. Wheeler
+Thx,
+Marcus
