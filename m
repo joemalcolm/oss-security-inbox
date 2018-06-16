@@ -1,27 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/19/1
-Message-ID: <nycvar.YSQ.7.76.1801191547190.7816@wniryva>
-Date: Fri, 19 Jan 2018 15:56:51 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE-2017-18043 Qemu: integer overflow in ROUND_UP macro could result in DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/16/1
+Message-ID: <3a80a443-a4a0-a8e0-15a1-26a75e39acbe@ruhr-uni-bochum.de>
+Date: Sat, 16 Jun 2018 12:42:37 +0200
+From: Marcus Brinkmann <marcus.brinkmann@...r-uni-bochum.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2018-12356 Breaking signature verification in pass (Simple Password Store)
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Hi,
 
-Quick Emulator(Qemu) built with a macro ROUND_UP(n, d), used to promote number 
-'n' to the nearest multiple of 'd', is vulnerable to an integer overflow 
-issue. It could occur if 'd' is unsigned and smaller in type from 'n'.
+On 06/15/2018 07:28 PM, Jakub Wilk wrote:
+> Thanks for doing this. I didn't mean to imply that you were not diligent> enough.
 
-A user could use this flaw to crash the Qemu process resulting in DoS.
+I didn't take it that way!
 
-Upstream patch:
----------------
-   -> https://git.qemu.org/?p=qemu.git;a=commit;h=2098b073f398cd628c09c5a78537a6854
+>> You reporting these?
+> 
+> I was hoping somebody else would take care of this.
 
-CVE-2017-18043 assigned via - https://cveform.mitre.org.
+Hehe, everybody does. Luckily, we found some hackers in Mauritius taking
+care of it!
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+First results:
+
+bitcoin:
+https://github.com/bitcoin/bitcoin/commit/9e2e5626dabb7208dafedcc9904940b666be1c3b
+
+litecoin: https://github.com/litecoin-project/litecoin/pull/503
+
+Thx,
+Marcus
