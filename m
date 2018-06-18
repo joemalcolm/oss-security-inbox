@@ -1,35 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/28/1
-Message-ID: <c1946aa14addd525e5eb3f392eed26f119ad117a.camel@electronsweatshop.com>
-Date: Thu, 27 Sep 2018 22:39:17 -0400
-From: Randy Barlow <randy@...ctronsweatshop.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Using quilt on untrusted RPM spec files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/18/2
+Message-ID: <CAP3WMuQfUAc9pP95Et_aQN5ko+6EYe4nYD7zwNXp8+5KPsz8XQ@mail.gmail.com>
+Date: Mon, 18 Jun 2018 21:45:21 +0100
+From: Alex Rudyy <orudyy@...che.org>
+To: "users@...d.apache.org" <users@...d.apache.org>, "dev@...d.apache.org" <dev@...d.apache.org>,  Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com, announce@...che.org
+Subject: [SECURITY] [CVE-2018-8030] Apache Qpid Broker-J Denial of Service Vulnerability when AMQP 0-8...0-91 messages exceed maximum size limit
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 2018-09-27 at 17:59 +0200, Matthias Gerstner wrote:
-> Now we would be interested in discussing this topic with the
-> community. Do<br>
-> other distributions have similar workflows and therefore similar
-> attack<br>
-> surface as we do? What would be viable countermeasures?
+CVE-2018-8030: Apache Qpid Broker-J Denial of Service Vulnerability
+when AMQP 0-8...0-91 messages exceed maximum size limit
 
-Hey Matthias!
+Severity: Important
 
-In Fedora we have similar challenges. We've got a tool called fedora-
-review[0] that is maybe kinda similar to quilt. It uses mock[1] to
-build the source RPM (and mock does this in a chroot to help with the
-problems you described) and then it does some basic quality checks on
-the RPM afterwards.
+Vendor: The Apache Software Foundation
 
-I'm not sure how generic mock is, but maybe it would be helpful to you.
-Its wiki page describes it as being used by Mageia, so it might be
-extensible for SUSE as well.
+Versions Affected: Versions 7.0.0-7.0.4
 
-Happy coding!
+Description:
 
+A Denial of Service vulnerability [1] was found in Apache Qpid Broker-J
+versions 7.0.0-7.0.4 when AMQP protocols 0-8, 0-9 or 0-91 are used to
+publish messages with size greater than allowed maximum message size limit
+(100MB by default). The broker crashes due to the defect. AMQP protocols
+0-10 and 1.0 are not affected.
 
-[0] https://pagure.io/FedoraReview
-[1] https://github.com/rpm-software-management/mock
+Resolution:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Users of Broker-J versions 7.0.0-7.0.4 utilizing AMQP protocols 0-8, 0-9 or 0-91
+for message publishing must upgrade to version 7.0.5 [2] or later.
+
+Mitigation:
+
+If upgrade of the broker is not possible, the maximum message size limit can be
+disabled by setting context variable "qpid.max_message_size" to "0" or
+any negative value. The change can be made either directly in the broker
+configuration file, or by using management interfaces (for example,
+REST API [3])
+or by using JVM option -Dqpid.max_message_size=0. A broker restart is required
+for the change to take effect.
+Alternatively, the support for AMQP protocols 0-8...0-91 can be removed on
+AMQP ports. The change can be made either directly in the broker configuration
+file or by using management interfaces. An example of REST API call
+restricting AMQP port to support only AMQP 1.0 and AMQP 0-10 using curl utility
+is provided below:
+
+curl --user <user-name> -X POST  -d '{"protocols":["AMQP_1_0","AMQP_0_10"]}' \
+https://<broker host>:<broker port>/api/latest/port/<port name>
+
+Credit: This issue was found by the Qpid development team.
+
+References:
+
+[1] https://issues.apache.org/jira/browse/QPID-8203
+[2] https://qpid.apache.org/releases/qpid-broker-j-7.0.5/index.html
+[3] https://qpid.apache.org/releases/qpid-broker-j-7.0.5/book/Java-Broker-Management-Channel-REST-API.html
