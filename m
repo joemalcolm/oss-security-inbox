@@ -1,38 +1,102 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/19/2
-Message-ID: <CAPnWRTj6xGZuO7f5ASRKG81uis-kmgrJ2Pws4cyZRv58X38f_g@mail.gmail.com>
-Date: Thu, 19 Apr 2018 14:30:56 -0700
-From: Ed Cable <edcable@...os.org>
-To: user@...eract.apache.org, Dev <dev@...eract.apache.org>,  security <security@...che.org>, oss-security@...ts.openwall.com,  圆珠笔 <627963028@...com>
-Subject: [SECURITY] CVE-2018-1290: Apache Fineract SQL Injection Vulnerability - Single quotation escape caused by two continuous SQL parameters
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/18/1
+Message-ID: <20180618090836.GB8123@f195.suse.de>
+Date: Mon, 18 Jun 2018 11:08:36 +0200
+From: Matthias Gerstner <mgerstner@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: cantata: cantata-mounter D-Bus service local privilege escalation and other security issues
 Content-Type: text/plain; charset=utf-8
 
-Severity: Critical
+Hello list,
 
-Vendor:
-The Apache Software Foundation
+this is a report about local privilege and local denial of service
+issues found in cantata, a graphical client for MPD
+(<https://github.com/CDrummond/cantata/wiki/About-Cantata>).
 
-Versions Affected:
-Apache Fineract 1.0.0
-Apache Fineract 0.6.0-incubating
-Apache Fineract 0.5.0-incubating
-Apache Fineract 0.4.0-incubating
+cantata supports a D-Bus helper daemon "cantata-mounter" for mounting
+remote samba shares by calling `mount.cifs` on Linux systems. This
+daemon is configured for on-demand activation, running as root and its
+D-Bus interface is accessible by unprivileged users by default.
 
-Description:
+The daemon code is part of cantata since version 2.0.0 and it is built
+by default in versions 2.3.0 and 2.3.1. Before 2.3.0 it was only built
+if `-DENABLE_REMOTE_DEVICES=ON` was passed to the cmake invocation.
 
-Using a single quotation escape with two continuous SQL parameters can
-cause a SQL injection. This could be done in Methods like
-retrieveAuditEntries of AuditsApiResource Class
-retrieveCommands of MakercheckersApiResource Class
+Due to the issues explained below the upstream maintainer decided to
+drop the D-Bus service completely from future versions. This already
+happened through upstream commit afc4f8315d3e96574925fb530a7004cc9e6ce3d3.
+Therefore there are no fixes available except not building and shipping
+the D-Bus service in question.
 
-Credit:
-This issue was discovered by 圆珠笔 (627963028@...com)
+Following are four distinct security issues found in the
+cantata-mounter D-Bus service:
 
-References:
-http://fineract.apache.org/
-https://cwiki.apache.org/confluence/display/FINERACT/Apache+
-Fineract+Security+Report
+A) The mount target path check in mounter.cpp `mpOk()` is insufficient.
+  A regular user can this way mount a CIFS filesystem anywhere, and not
+  just beneath /home by passing relative path components. Example D-Bus
+  call:
 
-Regards,
-Apache Fineract Team
+  dbus-send --system --print-reply --dest=mpd.cantata.mounter /Mounter mpd.cantata.mounter.mount 'string:smb://workgroup\user:password@...t:port/path?domain=domain' string:/home/../usr/bin int32:$$ int32:0 int32:0
 
+  By replacing data in system paths like /usr/bin by data from an
+  attacker controlled samba share, a local attacker can cause root to
+  execute modified programs or to read modified configuration files.
+  Therefore it opens the avenue for a local root escalation.
+
+B) Arbitrary unmounts can be performed by regular users the same way.
+  For example this D-Bus call unmounts /sys/kernel/security:
+
+  dbus-send --system --print-reply --dest=mpd.cantata.mounter /Mounter mpd.cantata.mounter.umount string:/home/../sys/kernel/security int32:$$
+
+  This allows for a local denial of service and possible further
+  unspecified kinds of system manipulation.
+
+C) A regular user can inject additional mount options like file_mode= by
+  manipulating e.g. the domain parameter of the samba URL. This D-Bus
+  call injects the 'file_mode=777' parameter:
+
+  dbus-send --system --print-reply --dest=mpd.cantata.mounter /Mounter mpd.cantata.mounter.mount 'string:smb://workgroup\user@...t:port/path?domain=domain,file_mode=777' string:/home/user int32:$$ int32:0 int32:0
+
+  This way the user can use all options that mount.cifs offers to e.g.
+  produce files with arbitrary ownership and mode.
+
+D) The wrapper script 'mount.cifs.wrapper' uses the shell to forward the
+  arguments to the actual mount.cifs binary. The shell evaluates
+  wildcards which can also be injected like this:
+
+  dbus-send --system --print-reply --dest=mpd.cantata.mounter /Mounter mpd.cantata.mounter.mount 'string:smb://workgroup\user:password@...t:port/path?domain=domain' 'string:/home/../tmp/*' int32:$$ int32:0 int32:0
+
+  In this case all files in /tmp/* will be expanded and passed to
+  mount.cifs as parameters. This shouldn't allow further attack vectors,
+  because there are no additional arguments that mount.cifs supports.
+  But it still shouldn't happen.
+
+  The reason for "Calling mount.cifs directly from DBUS service seems to
+  mess things up?" which is stated in 'mount.cifs.wrapper' most probably
+  is that the D-Bus service has an empty PATH variable and can't find
+  mount.cifs. At least it is this way on openSUSE Tumbleweed where I
+  tested this.
+
+Furthermore the mount D-Bus method allows unprivileged users to specify
+the owner uid and gid of the mounted samba shared (passed as `uid=` and
+`gid=` mount.cifs parameters). The daemon should instead determine the
+callers uid and gid and use them, because this way the user can produce
+files with arbitrary user and group ownership, which is normally not
+possible.
+
+Cheers
+
+Matthias
+
+-- 
+Matthias Gerstner <matthias.gerstner@...e.de>
+Dipl.-Wirtsch.-Inf. (FH), Security Engineer
+https://www.suse.com/security
+Telefon: +49 911 740 53 290
+GPG Key ID: 0x14C405C971923553
+
+SUSE Linux GmbH
+GF: Felix Imendörffer, Jane Smithard, Graham Norton
+HRB 21284 (AG Nuernberg)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
