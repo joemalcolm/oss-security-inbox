@@ -1,34 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/03/3
-Message-ID: <20181003202140.GH25942@hunt>
-Date: Wed, 3 Oct 2018 13:21:40 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/19/4
+Message-ID: <CAOp4FwSEi=_bNCMoiK66r4Y2QQToJgZyBjUX74s0omQ+whCS-w@mail.gmail.com>
+Date: Wed, 20 Jun 2018 00:48:55 +0400
+From: Loganaden Velvindron <loganaden@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: arm64 Linux kernel: Privilege escalation by taking control of the KVM hypervisor
+Cc: secure@...el.com
+Subject: Intel hyper-threading security issues
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 03, 2018 at 08:57:05AM +0200, Florian Weimer wrote:
-> > On Tue, Oct 02, 2018 at 05:07:14PM +0100, Will Deacon wrote:
-> >> There has not yet been a CVE requested for this (mainly because I don't know
-> >> how to do it).
-> >
-> > Please use https://cveform.mitre.org/ thanks.
-> 
-> Would DFW work as well?
-> 
->   <https://github.com/distributedweaknessfiling/cvelist>
-> 
-> I'm asking because the Rust people tried to get an ID from there, but
-> apparently never got a reply.
+Hi all,
 
-In my experience the MITRE form is significantly more reliable and faster
-mechanism than the DWF form.
+OpenBSD has gone ahead and disabled Intel Hyper threading with a
+fairly detailed comment about the reasons behind:
 
-I realize this is perhaps a chicken-and-egg problem, where DWF might not
-be fast until they get enough traffic that they have to be fast, but MITRE
-is fast *today*, so any individual CVE requestor is probably better suited
-to use MITRE.
+https://www.mail-archive.com/source-changes@openbsd.org/msg99141.html
 
-Thanks
+As far as I can tell:
+-cache timing attacks are possible, and spectre-like problems are an
+issue again.
+-OSes will need to modify their schedulers to avoid scheduling domains
+in a dangerous way.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+When will the details be published so that OpenBSD users who buy Intel
+hardware can get more fined grained solutions against specific attack
+vectors ? Is it also scheduled for the 27th ?
+
+
+Kind regards,
+//Logan
+C-x-C-c
