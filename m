@@ -1,51 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/31/3
-Message-ID: <20180731105334.GB29194@f195.suse.de>
-Date: Tue, 31 Jul 2018 12:53:34 +0200
-From: Matthias Gerstner <mgerstner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/19/3
+Message-ID: <20180619180604.e7pwkjjgemwdpwm7@pali>
+Date: Tue, 19 Jun 2018 20:06:04 +0200
+From: Pali Rohár <pali.rohar@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: blueman before version 2.0.6 is not enforcing authorization for polkit action org.blueman.network.setup
+Subject: CVE-2018-12558: DOS in perl module Email::Address
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hello!
 
-blueman [1] is a graphical interface for dealing with bluetooth devices
-on Linux. It comes with a daemon running as root (blueman-mechanism)
-that performs privileged operations.
+Perl module Email::Address, also in the last version 1.909 is vulnerable
+to Algorithm Complexity problem and can cause Denial of Service when
+attacker prepares specially crafted input. Root of this problem is that
+parsing of email addresses in Email::Address module is done by regular
+expressions, which in perl can be exponential.
 
-During a code review [2] I noticed that blueman-mechanism in the stable
-version 2.0.5 of blueman does not enforce the polkit action
-'org.blueman.network.setup' for which a polkit policy is shipped. This
-means that any user with access to the D-Bus system bus is able to
-access the related API without authentication.
+The trivial input is 30 form-fields characters. You can test it with
+following oneliner:
 
-The result is an unspecified impact on the networking stack.
-blueman-mechanism for example sets up a bridge device, changes system
-wide IPv4 forwarding settings and runs a DHCP client like dnsmasq,
-dhclient or dhcpcd.
+$ perl -MEmail::Address -E 'Email::Address->parse("\f" x 30)'
 
-After I contacted upstream about this, they released an updated stable
-version blueman 2.0.6 containing a set of backported patches that
-address this issue. These patches have already been present in the alpha
-version branch of blueman for a longer time.
+Vulnerable are all applications which receive (untrusted) emails and
+parse address headers (From/To/Cc/...) by Email::Address module. Such
+application can be DOSed by sending email with 30 form-fields characters
+in From or To header.
 
-Regards
+Note that this is not the only one problematic input, due to way how is
+Email::Address implemented it should be possible to prepare more
+non-trivial inputs.
 
-Matthias
+This problem was already reported to Debian Security Team and they
+suggested to ask MITRE for assigning CVE identifier. MITRE now assigned
+CVE-2018-12558.
 
-[1]: https://github.com/blueman-project/blueman
-[2]: https://bugzilla.suse.com/show_bug.cgi?id=1083066
-[3]: https://github.com/blueman-project/blueman/releases/tag/2.0.6
+References:
+https://metacpan.org/pod/Email::Address
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=901873
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-12558
 
 -- 
-Matthias Gerstner <matthias.gerstner@...e.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Telefon: +49 911 740 53 290
-GPG Key ID: 0x14C405C971923553
+Pali Rohár
+pali.rohar@...il.com
 
-SUSE Linux GmbH
-GF: Felix Imendörffer, Jane Smithard, Graham Norton
-HRB 21284 (AG Nuernberg)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (196 bytes)
