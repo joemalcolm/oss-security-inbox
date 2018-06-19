@@ -1,4 +1,9 @@
-Received: (qmail 30224 invoked by uid 550); 20 Sep 2023 15:47:03 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1694" "Tuesday" "19" "June" "2018" "20:06:04" "+0200" "Pali =?utf-8?B?Um9ow6Fy?=" "pali.rohar@gmail.com" "<20180619180604.e7pwkjjgemwdpwm7@pali>" "51" "[oss-security] CVE-2018-12558: DOS in perl module Email::Address" "^Date:" nil nil "6" "2018061918:06:04" "[oss-security] CVE-2018-12558: DOS in perl module Email::Address" (number mark "        pali.rohar@g Jun 19   51/1694  " thread-indent "\"[oss-security] CVE-2018-12558: DOS in perl module Email::Address\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 8004 invoked by uid 550); 19 Jun 2018 18:06:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,135 +11,94 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 7986 invoked from network); 19 Jun 2018 18:06:17 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=Obq0+K/VJKRoAfpfLmtbKRW/AGaiKQ4t1vVr6CQC+EY=;
+        b=dLOT+PEhzb+xXH0Z4cQ4CwkFYJjaM/QcvNqwluJ0QhYetWAdgw31PfUruBtpdt8ad2
+         zB/aGKkX6eYeB0XwYk8YymIpsIviX+NLGebUmxkVUWpTnJaJ5v2uapUszL+L2QSR9byj
+         mT7wmu34muTpRARpqgDee8kLTWF3FrtAhTVeGqG3WDTBhPOpU6K063hOAoHO50Fe6u2k
+         yUv+DYi+ixBFX2xEJFogut3ItKC9N6XxQN7ob4KBCyg0aKG6v++wmoVIMPr3MMoJM6lr
+         TPwkvyL52LfQawob0ssTSX8MbUrtYuYTMxRHI1pOIXkRPXlDomTkqpDP97Fg8lxzgOSg
+         TqQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=Obq0+K/VJKRoAfpfLmtbKRW/AGaiKQ4t1vVr6CQC+EY=;
+        b=aVo+nMDlAGbF7Ii+upjCqwMRSrCBcMiT8Go4GbqUSN09YCXjsV6+e9nQmMizjs/Tp6
+         qL9aeDsLdie5UZZG3X56xjWK3V25z7N5n2p/RrU9uk0ktt30d0qgeTVNIfSerwzAGLNy
+         CCAJp6w8UoVZvjpZqB+BNmesFKWnxO0CP5iBTx6W6tK+JKrz3hMwvs67ZgL4gZrWKCyP
+         JVjfszg7eVCFPD+p8e84vIkZ0pBu2h4K5i2uesdVwA1Ut2HmxvlzYPONyHKCr2eLUTwW
+         15c4CG5oaRBPk1cGF+aWWQw5K7AzZnzBsAgKTimSbzORnNVy8ay5wOsaKKXu/n1kMyFr
+         krZg==
+X-Gm-Message-State: APt69E3L963n9b4hxXfALo/p6TbNebij7egeB5s0GKFCl/En0g9gpDsk
+	ygUmYd5SPRJZ3crfnGZR3YRDqg==
+X-Google-Smtp-Source: ADUXVKK2IKKpJ226+1PbYKZJabHO2AGjG0V25Wlq3qDz/TRcqnk7OnsymUO0IdYMldzUS6uBeiUhrA==
+X-Received: by 2002:a1c:928c:: with SMTP id u134-v6mr12293561wmd.106.1529431566267;
+        Tue, 19 Jun 2018 11:06:06 -0700 (PDT)
+Message-ID: <20180619180604.e7pwkjjgemwdpwm7@pali>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="h4dsucwqmliy6al5"
+Content-Disposition: inline
+User-Agent: NeoMutt/20170113 (1.7.2)
+Date: Tue, 19 Jun 2018 20:06:04 +0200
+From: Pali =?utf-8?B?Um9ow6Fy?= <pali.rohar@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30192 invoked from network); 20 Sep 2023 15:47:02 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.700.6\))
-Message-Id: <26FA0F7F-3AA3-467E-BBC5-142319CD6C28@beckweb.net>
-Date: Wed, 20 Sep 2023 17:46:40 +0200
+Subject: [oss-security] CVE-2018-12558: DOS in perl module Email::Address
 To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3731.700.6)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1695224822;179f46f5;
-X-HE-SMSGID: 1qizPf-0007N8-Bp
-Subject: [oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+--h4dsucwqmliy6al5
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The following releases contain fixes for security vulnerabilities:
+Hello!
 
-* Jenkins 2.424
-* Jenkins LTS 2.414.2
-* Build Failure Analyzer Plugin 2.4.2
+Perl module Email::Address, also in the last version 1.909 is vulnerable
+to Algorithm Complexity problem and can cause Denial of Service when
+attacker prepares specially crafted input. Root of this problem is that
+parsing of email addresses in Email::Address module is done by regular
+expressions, which in perl can be exponential.
 
+The trivial input is 30 form-fields characters. You can test it with
+following oneliner:
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2023-09-20/
+$ perl -MEmail::Address -E 'Email::Address->parse("\f" x 30)'
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+Vulnerable are all applications which receive (untrusted) emails and
+parse address headers (From/To/Cc/...) by Email::Address module. Such
+application can be DOSed by sending email with 30 form-fields characters
+in From or To header.
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
+Note that this is not the only one problematic input, due to way how is
+Email::Address implemented it should be possible to prepare more
+non-trivial inputs.
 
----
+This problem was already reported to Debian Security Team and they
+suggested to ask MITRE for assigning CVE identifier. MITRE now assigned
+CVE-2018-12558.
 
-SECURITY-3261 / CVE-2023-43494
-Jenkins allows filtering builds in the build history widget by specifying
-an expression that searches for matching builds by name, description,
-parameter values, etc.
+References:
+https://metacpan.org/pod/Email::Address
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=3D901873
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2018-12558
 
-Jenkins 2.50 through 2.423 (both inclusive), LTS 2.60.1 through 2.414.1
-(both inclusive) does not exclude sensitive build variables (e.g., password
-parameter values) from this search.
+--=20
+Pali Roh=C3=A1r
+pali.rohar@gmail.com
 
-This allows attackers with Item/Read permission to obtain values of
-sensitive variables used in builds by iteratively testing different
-characters until the correct sequence is discovered.
+--h4dsucwqmliy6al5
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
 
-SECURITY-3245 / CVE-2023-43495
-`ExpandableDetailsNote` allows annotating build log content with additional
-information that can be revealed when interacted with.
+iF0EABECAB0WIQS4VrIQdKium2krgIWL8Mk9A+RDUgUCWylGCgAKCRCL8Mk9A+RD
+Ul2TAKCnPQnzLtbhKInD17okR824G5jFhwCeKKzGoV2nplg3FVdTh3QmigJxzmc=
+=x9T8
+-----END PGP SIGNATURE-----
 
-Jenkins 2.423 and earlier, LTS 2.414.1 and earlier does not escape the
-value of the `caption` constructor parameter of `ExpandableDetailsNote`.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers able to provide `caption` parameter values.
-
-NOTE: As of publication, the related API is not used within Jenkins (core),
-and the Jenkins security team is not aware of any affected plugins.
-
-
-SECURITY-3072 / CVE-2023-43496
-Jenkins creates a temporary file when a plugin is deployed directly from a
-URL.
-
-Jenkins 2.423 and earlier, LTS 2.414.1 and earlier creates this temporary
-file in the system temporary directory with the default permissions for
-newly created files.
-
-If these permissions are overly permissive, they may allow attackers with
-access to the Jenkins controller file system to read and write the file
-before it is installed in Jenkins, potentially resulting in arbitrary code
-execution.
-
-IMPORTANT: This vulnerability only affects operating systems using a shared
-temporary directory for all users (typically Linux). Additionally, the
-default permissions for newly created files generally only allow attackers
-to read the temporary file, but not write to it.
-
-
-SECURITY-3073 / CVE-2023-43497 (Stapler) & CVE-2023-43498 (MultipartFormDat=
-aParser)
-In Jenkins 2.423 and earlier, LTS 2.414.1 and earlier, uploaded files
-processed via the Stapler web framework and the Jenkins API
-`MultipartFormDataParser` create temporary files in the system temporary
-directory with the default permissions for newly created files.
-
-If these permissions are overly permissive, attackers with access to the
-system temporary directory may be able to read and write the file before it
-is used.
-
-IMPORTANT: This vulnerability only affects operating systems using a shared
-temporary directory for all users (typically Linux). Additionally, the
-default permissions for newly created files generally only allow attackers
-to read the temporary file, but not write to it.
-
-
-SECURITY-3244 / CVE-2023-43499
-Build Failure Analyzer Plugin 2.4.1 and earlier does not escape Failure
-Cause names in build logs.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers able to create or update Failure Causes.
-
-
-SECURITY-3226 / CVE-2023-43500 (CSRF) & CVE-2023-43501 (missing permission =
-check)
-Build Failure Analyzer Plugin 2.4.1 and earlier does not perform a
-permission check in a connection test HTTP endpoint.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified hostname and port using attacker-specified username and
-password.
-
-Additionally, this HTTP endpoint does not require POST requests, resulting
-in a cross-site request forgery (CSRF) vulnerability.
-
-
-SECURITY-3239 / CVE-2023-43502
-Build Failure Analyzer Plugin 2.4.1 and earlier does not require POST
-requests for an HTTP endpoint, resulting in a cross-site request forgery
-(CSRF) vulnerability.
-
-This vulnerability allows attackers to delete Failure Causes.
-
-
-
+--h4dsucwqmliy6al5--
