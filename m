@@ -1,43 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/18/3
-Message-ID: <CAF2z-PPRVy+4CQkJ=Abm6__D0f3vTjGXcPH6OG0OiF-iBn0HAg@mail.gmail.com>
-Date: Tue, 18 Dec 2018 11:44:32 +0200
-From: saar amar <saaramar5@...il.com>
-To: P J P <ppandit@...hat.com>
-Cc: oss security list <oss-security@...ts.openwall.com>
-Subject: Re: CVE-2018-20124 QEMU: rdma: OOB access when building scatter-gather array
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/19/2
+Message-ID: <00b9d6f5-2296-4203-ab88-758f0ba54f63@Spark>
+Date: Tue, 19 Jun 2018 11:37:54 -0400
+From: Rafael Mendonça França <rafaelmfranca@...il.com>
+To: rubyonrails-security@...glegroups.com,  oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
+Subject: [CVE-2018-3760] Path Traversal in Sprockets
 Content-Type: text/plain; charset=utf-8
 
-Thanks all :) I'm happy it fixed, thanks for the response guys!
+There is an information leak vulnerability in Sprockets. This vulnerability
+has been assigned the CVE identifier CVE-2018-3760.
 
-I'm wondering why it says "DOS" and not "execute arbitrary code on the
-host, in the context of the QEMU process"? I have stack overflow, it pretty
-clear I could gain more than simple DOS:)
+Versions Affected: 4.0.0.beta7 and lower, 3.7.1 and lower, 2.12.4 and lower.
+Not affected: NONE
+Fixed Versions: 4.0.0.beta8, 3.7.2, 2.12.5
 
-What do your day?
+Impact
+------
+Specially crafted requests can be used to access files that exists on
+the filesystem that is outside an application's root directory, when the Sprockets server is
+used in production.
 
-On Tue, 18 Dec 2018, 10:53 P J P <ppandit@...hat.com wrote:
+All users running an affected release should either upgrade or use one of the work arounds immediately.
 
->    Hello,
->
-> An out-of-bound stack buffer r/w access issue was found in QEMU's generic
-> RDMA
-> back-end implementation. It could occur when a driver tries to build
-> scatter/gather element's array in build_host_sge_array() routine.
->
-> A guest user/process could use this flaw to crash the QEMU process
-> resulting
-> in DoS.
->
-> Upstream patch:
-> ---------------
->    -> https://lists.gnu.org/archive/html/qemu-devel/2018-12/msg02822.html
->
-> This issue was reported by Saar Amar.
->
-> Thank you.
-> --
-> Prasad J Pandit / Red Hat Product Security Team
-> 47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
->
+Releases
+--------
+The 4.0.0.beta8, 3.7.2 and 2.12.5 releases are available at the normal locations.
 
+Workarounds
+-----------
+In Rails applications, work around this issue, set `config.assets.compile = false` and
+`config.public_file_server.enabled = true` in an initializer and precompile the assets.
+
+This work around will not be possible in all hosting environments and upgrading is advised.
+
+Patches
+-------
+To aid users who aren't able to upgrade immediately we have provided patches for the three supported release series.
+They are in git-am format and consist of a single changeset.
+
+* 4-0-fix-path-traversal.patch - Patch for the 4.0.x release series
+* 3-7-fix-path-traversal.patch - Patch for the 3.7.x release series
+* 2-12-fix-path-traversal.patch - Patch for the 2.12.x release series
+
+Credits
+-------
+
+Thanks to Orange Tsai from DEVCORE for reporting this issue.
+
+Rafael França
+
+Content of type "text/html" skipped
+
+Download attachment "2-12-fix-path-traversal.patch" of type "application/octet-stream" (2282 bytes)
+
+Download attachment "3-7-fix-path-traversal.patch" of type "application/octet-stream" (2247 bytes)
+
+Download attachment "4-0-fix-path-traversal.patch" of type "application/octet-stream" (2243 bytes)
