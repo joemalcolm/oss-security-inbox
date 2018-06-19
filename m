@@ -1,29 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/17/4
-Message-ID: <nycvar.YSQ.7.76.1810171321310.14417@xnncv>
-Date: Wed, 17 Oct 2018 17:24:01 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Fakhri Zulkifli <mohdfakhrizulkifli@...il.com>
-Subject: CVE-2018-12617 Qemu: qemu-guest-agent: Integer overflow in qmp_guest_file_read may lead to crash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/19/1
+Message-ID: <20180619075953.GA8469@f195.suse.de>
+Date: Tue, 19 Jun 2018 09:59:53 +0200
+From: Matthias Gerstner <mgerstner@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: cantata: cantata-mounter D-Bus service local privilege escalation and other security issues
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+> A) The mount target path check in mounter.cpp `mpOk()` is insufficient.
+>   A regular user can this way mount a CIFS filesystem anywhere, and not
+>   just beneath /home by passing relative path components.
 
-The QEMU Guest Agent in QEMU is vulnerable to an integer overflow in the 
-qmp_guest_file_read(). An attacker could exploit this by sending a crafted QMP 
-command (including guest-file-read with a large count value) to the agent via 
-the listening socket to trigger a g_malloc() call with a large memory chunk 
-resulting in a segmentation fault.
+This was assigned CVE-2018-12559.
 
-A user could use this flaw to crash the Qemu-guest-agent resulting in DoS.
+> B) Arbitrary unmounts can be performed by regular users the same way.
 
-Upstream Patch:
-   -> https://git.qemu.org/?p=qemu.git;a=commit;h=141b197408ab398c4f474ac1a728ab316e921f2b
+This was assigned CVE-2018-12560.
 
-This issue was reported by Fakhri Zulkifli.
+> C) A regular user can inject additional mount options like file_mode= by
+>   manipulating e.g. the domain parameter of the samba URL.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+This was assigned CVE-2018-12561.
+
+> D) The wrapper script 'mount.cifs.wrapper' uses the shell to forward the
+>   arguments to the actual mount.cifs binary. The shell evaluates
+>   wildcards which can also be injected like this:
+
+This was assigned CVE-2018-12562.
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
