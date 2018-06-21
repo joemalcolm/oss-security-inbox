@@ -1,33 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/08/6
-Message-ID: <20180208212310.GA12669@openwall.com>
-Date: Thu, 8 Feb 2018 22:23:10 +0100
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/21/5
+Message-ID: <718d05e5-3057-7c32-da9a-70bc5a82e3f5@tao.at>
+Date: Thu, 21 Jun 2018 13:54:16 +0200
+From: Sven Schwedas <sven.schwedas@....at>
 To: oss-security@...ts.openwall.com
-Cc: SEC Consult Vulnerability Lab <research@...-consult.com>
-Subject: Re: SEC Consult SA-20180207-0 :: Multiple buffer overflow vulnerabilities in InfoZip UnZip
+Subject: Re: Intel hyper-threading security issues
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Feb 08, 2018 at 08:19:20AM +0100, SEC Consult Vulnerability Lab wrote:
-> 2018-01-17: Informing distros@...openwall.org about the upcoming advisory.
-> 2018-02-01: Received CVE numbers.
-> 2018-02-07: Publication of the advisory
+On 2018-06-21 12:28, Lukas Odzioba wrote:
+> 2018-06-21 12:22 GMT+02:00 Lukas Odzioba <lukas.odzioba@...il.com>:
+>> If you feel like you really need that, on Linux you can dump SRAT ACPI
+>> table decompile it, remove APICID entries of "ht processors", compile
+>> it back and put into initrd.
+>> https://www.kernel.org/doc/Documentation/acpi/initrd_table_override.txt
+> 
+> Or use cpu hotplug mechanism, which should be way more convenient:
+> https://www.kernel.org/doc/html/v4.17/core-api/cpu_hotplug.html
+> 
 
-Thanks for including the timeline.
+Hotplug doesn't seem differentiate between HT threads and physical
+cores, will setting maxcpus=2 on a 2 cores+HT machine reliably disable
+HT, or can it disable one core and keep HT active on the other?
 
-So this is a violation of the distros list policy on maximum embargo
-time.  Per list policy the reporter must have made the issue public in
-at most 14 days, and per the tasks the distros had volunteered for
-Gentoo (primary) and Amazon (backup) should have been posting reminders
-for this to happen.  Instead, other distros posted such reminders
-(thanks!) when it was already too late.
 
-As list admin, I apologize for allowing this delay.  Yet I am not going
-to watch the watchers all the time, which would be quite pointless (if I
-were to do that, I could as well be taking care of all the tasks myself,
-without asking the distros to volunteer for any).
 
-Gentoo have already acknowledged the omission, and are taking measures.
-I haven't heard from Amazon on this yet.
-
-Alexander
+Download attachment "signature.asc" of type "application/pgp-signature" (660 bytes)
