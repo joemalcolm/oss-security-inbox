@@ -1,60 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/17/8
-Message-ID: <20181017144837.GN5150@oevtugenva.nrevsny.pk>
-Date: Wed, 17 Oct 2018 10:48:37 -0400
-From: Rich Felker <dalias@...c.org>
-To: "Perry E. Metzger" <perry@...rmont.com>
-Cc: oss-security@...ts.openwall.com, Tavis Ormandy <taviso@...gle.com>, Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
-Subject: Re: ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/21/3
+Message-ID: <CABob6iqkc7x7awz-aMAb-yOHWKdWgnQF0rkPYdporiUmGCkc5Q@mail.gmail.com>
+Date: Thu, 21 Jun 2018 12:22:28 +0200
+From: Lukas Odzioba <lukas.odzioba@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: secure@...el.com
+Subject: Re: Intel hyper-threading security issues
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 17, 2018 at 09:21:54AM -0400, Perry E. Metzger wrote:
-> On Wed, 17 Oct 2018 02:09:28 -0400 Rich Felker <dalias@...c.org>
-> wrote:
-> > > > > I keep wondering if there isn't a way to fully remove the
-> > > > > dangerous bits from a postscript interpreter so it can _only_
-> > > > > be used to view the document and literally has no file system
-> > > > > access compiled in at all, so there's no way to touch the fs
-> > > > > etc. regardless of what flags the interpreter is invoked with.
-> > > > >
-> > > > > (I, too, find removing the ability to look at historical
-> > > > > postscript documents a bit more draconian than I like.)
-> > > > >
-> > > > >    
-> > > > I've discussed it with upstream, it's a hard no because they
-> > > > feel it would make ghostscript non-conforming (i.e.
-> > > > non-conforming with the Adobe PostScript Language Reference
-> > > > Manual)
-> > > > 
-> > > > We probably have similar thoughts on this, but that is the final
-> > > > word from upstream.  
-> > > 
-> > > They wouldn't even support a compilation mode where if you #define
-> > > the right thing those syscalls are cut out?
-> > > 
-> > > I don't care much about upstream's desires on this if they oppose
-> > > that. I'd be happy to have patches that simply cut out the
-> > > dangerous syscalls entirely. It's open source, that should be
-> > > feasible.  
-> > 
-> > This. It's utterly ridiculous that the interpreter even has bindings
-> > for accessing the filesystem and such. But I wonder if some of its
-> > library routines (e.g. font loading) are implemented in Postscript,
-> > using these bindings, rather than being implemented in C outside of
-> > the language interpreter. If so it might be harder to extricate.
-> > But I still think it's worthwhile to try. Once there are patches I
-> > would expect all reasonable distros to start shipping with them,
-> > and if upstream tries to make it hard, I would expect one of the
-> > big distros to just fork and abandon upstream.
-> 
-> Does anyone other than Tavis know their way around the inside of the
-> codebase? Perhaps we can collaborate on patches.
+2018-06-21 11:37 GMT+02:00 Stuart Henderson <stu@...cehopper.org>:
+> That isn't possible with some BIOS. For example, newer Lenovo machines
+> removed the option apparently due to perceived lack of demand...
 
-I don't, but one further idea that might appeal to upstream if they
-want the fs bindings for the sake of executing ancient programs
-written in postscript that operate on files: rather than binding to
-actual fs operations on the host, implement a virtual filesystem
-within the interpreter, and require explicit command line options to
-import/export files from/to the real filesystem at entry/exit.
+If you feel like you really need that, on Linux you can dump SRAT ACPI
+table decompile it, remove APICID entries of "ht processors", compile
+it back and put into initrd.
+https://www.kernel.org/doc/Documentation/acpi/initrd_table_override.txt
 
-Rich
+Thanks,
+Lukas
