@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3643" "Sunday" "1" "January" "2017" "16:46:12" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<1875168.fojZKPVITU@arcadia>" "113" "[oss-security] libtiff: multiple divide-by-zero" nil nil nil "1" "2017010115:46:12" "[oss-security] libtiff: multiple divide-by-zero" (number mark "U       ago@gentoo.o Jan  1  113/3643  " thread-indent "\"[oss-security] libtiff: multiple divide-by-zero\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["203" "Thursday" "21" "June" "2018" "14:58:56" "+0300" "Georgi Guninski" "guninski@guninski.com" "<20180621115856.5py2a5skjiogfgrc@sivokote.iziade.m$>" "8" "Re: [oss-security] Intel hyper-threading security issues" "^Date:" nil nil "6" "2018062111:58:56" "[oss-security] Intel hyper-threading security issues" (number mark "        guninski@gun Jun 21    8/203   " thread-indent "\"Re: [oss-security] Intel hyper-threading security issues\"\n") "<20180621045642.fy67joeaxu2n4j56@sivokote.iziade.m$>" ("<CAOp4FwSEi=_bNCMoiK66r4Y2QQToJgZyBjUX74s0omQ+whCS-w@mail.gmail.com>" "<20180621045642.fy67joeaxu2n4j56@sivokote.iziade.m$>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 22181 invoked by uid 550); 1 Jan 2017 15:44:44 -0000
+Received: (qmail 22136 invoked by uid 550); 21 Jun 2018 12:28:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,128 +11,26 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22143 invoked from network); 1 Jan 2017 15:44:42 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
-To: oss-security@lists.openwall.com
-Date: Sun, 01 Jan 2017 16:46:12 +0100
-Message-ID: <1875168.fojZKPVITU@arcadia>
-User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.24; x86_64; ; )
+Received: (qmail 1561 invoked from network); 21 Jun 2018 11:59:09 -0000
+Message-ID: <20180621115856.5py2a5skjiogfgrc@sivokote.iziade.m$>
+References: <CAOp4FwSEi=_bNCMoiK66r4Y2QQToJgZyBjUX74s0omQ+whCS-w@mail.gmail.com>
+ <20180621045642.fy67joeaxu2n4j56@sivokote.iziade.m$>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Subject: [oss-security] libtiff: multiple divide-by-zero
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180621045642.fy67joeaxu2n4j56@sivokote.iziade.m$>
+header: best read with a sniffer
+Date: Thu, 21 Jun 2018 14:58:56 +0300
+From: Georgi Guninski <guninski@guninski.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Intel hyper-threading security issues
+To: oss-security@lists.openwall.com
 
-Description:
-Libtiff is a software that provides support for the Tag Image File Format 
-(TIFF), a widely used format for storing image data.
+On Thu, Jun 21, 2018 at 07:56:42AM +0300, Georgi Guninski wrote:
+> V.   Solution
+> 
+> Disable Hyper-Threading Technology on processors that support it.
+>
 
-Some crafted images, through a fuzzing revealed multiple division by zero. 
-Since the number of the issues, I will post the relevant part of the 
-stacktrace.
-
-Affected version / Tested on:
-4.0.7
-Fixed version:
-N/A
-Commit fix:
-https://github.com/vadz/libtiff/commit/438274f938e046d33cb0e1230b41da32ffe223e1
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00064-libtiff-fpe-TIFFReadEncodedStrip
-Relevant part of the stacktrace:
-
-# tiffcp $FILE /tmp/foo
-==12079==ERROR: AddressSanitizer: FPE on unknown address 0x7fd319436251 (pc 
-0x7fd319436251 bp 0x7fff851e3d80 sp 0x7fff851e3d30 T0)
-    #0 0x7fd319436250 in TIFFReadEncodedStrip /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_read.c:351:22
-
-###############################################
-
-Affected version / Tested on:
-4.0.7
-Fixed version:
-N/A
-Commit fix:
-https://github.com/vadz/libtiff/commit/43bc256d8ae44b92d2734a3c5bc73957a4d7c1ec
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00083-libtiff-fpe-OJPEGDecodeRaw
-Relevant part of the stacktrace:
-
-# tiffmedia $FILE /tmp/foo
-==28106==ERROR: AddressSanitizer: FPE on unknown address 0x7faeae7f744e (pc 
-0x7faeae7f744e bp 0x7ffceab45e40 sp 0x7ffceab45ce0 T0)
-    #0 0x7faeae7f744d in OJPEGDecodeRaw /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_ojpeg.c:816:8
-
-###############################################
-
-Affected version / Tested on:
-4.0.7
-Fixed version:
-N/A
-Commit fix:
-https://github.com/vadz/libtiff/commit/d3c5426395dc53e3345712ac7246c29db9fed8fa
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00099-libtiff-fpe-readSeparateStripsIntoBuffer
-Relevant part of the stacktrace:
-
-# tiffcrop $FILE /tmp/foo
-==19098==ERROR: AddressSanitizer: FPE on unknown address 0x000000523acf (pc 
-0x000000523acf bp 0x7ffcb22ada30 sp 0x7ffcb22ad780 T0)
-    #0 0x523ace in readSeparateStripsIntoBuffer /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffcrop.c:4841:36
-
-###############################################
-
-Affected version / Tested on:
-4.0.7
-Fixed version:
-N/A
-Commit fix:
-https://github.com/vadz/libtiff/commit/a87eb62049f446204ed62c939f965eb76bd98001
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00065-libtiff-fpe-readSeparateTilesIntoBuffer
-Relevant part of the stacktrace:
-
-# tiffcp $FILE /tmp/foo
-==13262==ERROR: AddressSanitizer: FPE on unknown address 0x00000051c43b (pc 
-0x00000051c43b bp 0x7ffdc8d81d70 sp 0x7ffdc8d81b20 T0)
-    #0 0x51c43a in readSeparateTilesIntoBuffer /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffcp.c:1434:9
-
-###############################################
-
-Affected version / Tested on:
-4.0.7
-Fixed version:
-N/A
-Commit fix:
-https://github.com/vadz/libtiff/commit/296803e79542f5523be1009d64574507b9acc239
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00073-libtiff-fpe-writeBufferToSeparateTiles
-Relevant part of the stacktrace:
-
-# tiffcp -i $FILE /tmp/foo
-==3614==ERROR: AddressSanitizer: FPE on unknown address 0x00000051650a (pc 
-0x00000051650a bp 0x7fff41587d30 sp 0x7fff41587b00 T0)
-    #0 0x516509 in writeBufferToSeparateTiles /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffcp.c:1591:13
-
-
-Credit:
-These bugs were discovered by Agostino Sarubbo of Gentoo.
-
-Timeline:
-2016-11-20: started to post the issues to upstream
-2017-01-01: blog post about the issue
-
-Note:
-These bugs were found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/01/01/libtiff-multiple-divide-by-zero
-
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Is Freebsd safe from this or requires patch?
+  
