@@ -1,34 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/06/1
-Message-ID: <20180106103333.598967ca@pc1>
-Date: Sat, 6 Jan 2018 10:33:33 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: John Lightsey <jd@...nel.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/22/2
+Message-ID: <460649570.45004048.1529674363441.JavaMail.zimbra@redhat.com>
+Date: Fri, 22 Jun 2018 09:32:43 -0400 (EDT)
+From: Vladis Dronov <vdronov@...hat.com>
+To: Alexander Potapenko <glider@...gle.com>
 Cc: oss-security@...ts.openwall.com
-Subject: Re: Path traversal flaws in awstats 7.6 and earlier.
+Subject: Re: CVE-2018-1000204: Linux kernel 3.18 to 4.16 infoleak due to incorrect handling of SG_IO ioctl
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello, Alexander,
 
-On Wed, 27 Dec 2017 09:21:41 -0600
-John Lightsey <jd@...nel.net> wrote:
+Could you please, explain, why do you think CVE-2018-1000204 is a security
+flaw?
 
-> The cPanel Security Team discovered two path traversal flaws in
-> awstats that could be leveraged for unauthenticated remote code
-> execution.
+> The problem has limited scope, as users don't usually have permissions
+> to access SCSI devices. On the other hand, e.g. the Nero user manual
+> suggests doing `chmod o+r+w /dev/sg*` to make the devices accessible.
 
-On
-https://awstats.sourceforge.io/#DOWNLOAD
-the latest version is still 7.6
-On the github repo you linked the latest version is 7.5.
+There is a check in the kernel in sg_build_indirect() exactly for this
+situation:
 
-Are you in contact with the developers? It's not exactly ideal that
-there's a publicly known remote code execution and there is no new
-release containing the fix.
+        [drivers/scsi/sg.c]
+        if (!capable(CAP_SYS_ADMIN) || !capable(CAP_SYS_RAWIO))
+                gfp_mask |= __GFP_ZERO;
 
--- 
-Hanno Böck
-https://hboeck.de/
+This means non-root user will get zero-ed pages even if it has o+rw access
+to /dev/sg*. Tests of your reproducer on systems available to me confirm
+this, i.e. non-root user gets a zero-ed out buffer even if it is able to
+access /dev/sg*.
 
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+I may not got smth correctly, but for now I do not see CVE-2018-1000204
+as a security flaw and I believe a reject request to MITRE should be
+issued.
+
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
