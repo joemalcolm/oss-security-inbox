@@ -1,61 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/10/1
-Message-ID: <bzwjweLsc_IpouMt05ni4KMcd4XJPVuF1Bp42jMQhPiNaYdT-Cei_P1CYdQzwJWMYMdRtC0GwvgBM6A774c2_EGFE3onwBMEd5lHH2KBD0s=@itk.swiss>
-Date: Sun, 10 Jun 2018 10:58:38 -0400
-From: Stiepan <stie@....swiss>
-To: marcus.brinkmann@...r-uni-bochum.de, oss-security@...ts.openwall.com
-Cc: ProtonMail Security Team <security@...tonmail.ch>
-Subject: Re : Re: CVE-2018-12020 in GnuPG
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/22/1
+Message-ID: <87vaabea58.fsf@concordia.ellerman.id.au>
+Date: Fri, 22 Jun 2018 14:08:03 +1000
+From: Michael Ellerman <mpe@...erman.id.au>
+To: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
+Subject: Re: Intel hyper-threading security issues
 Content-Type: text/plain; charset=utf-8
 
-Hello to both,
+Solar Designer <solar@...nwall.com> writes:
+> On Thu, Jun 21, 2018 at 01:54:16PM +0200, Sven Schwedas wrote:
+>> On 2018-06-21 12:28, Lukas Odzioba wrote:
+>> > Or use cpu hotplug mechanism, which should be way more convenient:
+>> > https://www.kernel.org/doc/html/v4.17/core-api/cpu_hotplug.html
+>> 
+>> Hotplug doesn't seem differentiate between HT threads and physical
+>> cores,
+>
+> This isn't exactly the question to ask: first vs. second thread in a
+> core aren't any different, neither of them is "the physical core" unless
+> you choose not to use the other.
+>
+> And you can obtain the needed information from /proc/cpuinfo or
+> /sys/devices/system/cpu/cpu*/topology/* to choose which logical CPUs you
+> disable (so that you leave only one per physical core).
+>
+> On a related note, attached is a generic Linux /proc/cpuinfo parser I
 
-This responsibility discussion is all well and fine, but now that this is half-public, may we know for sure whether we are affected :
-1. as debian(-like) package consumers
-2. as users of GPG for other purposes, such as webmail (have CC-ed protonmail to that regard)
-and since when, so as to do proper rollbacks or other applicable mitigations (w.r.t packages) ?
-By the way, this is why I think disclosure of such issues and mitigations should be a matter discussed at an official international forum such as the ITU is, before everything gets out.
+I guess by "generic" you mean Intel & AMD? :)
 
-Enjoy your Sunday,
-Stiepan A. Kovac
-President
-itk AVtobvS SARL
+It won't work on powerpc, or arm, or arm64 ...
 
-Envoyé depuis ProtonMail mobile
+You should be able to determine all of the info you need from the sysfs
+topology files, which work across arches.
 
--------- Message d'origine --------
-On 9 juin 2018 à 2:02, Marcus Brinkmann a écrit :
+See the script below for example, which shows CPUs grouped by core.
 
-> Hi,
->
-> On 06/08/2018 09:36 PM, Yves-Alexis Perez wrote:
->> Hi everybody,
->>
->> just a heads up, since we weren't notified in advance and it's Friday evening
->> (in Europe at least).
->
-> Yes. I tried to disclose this responsibly with Werner Koch (and in
-> coordination with other affected projects), but within two hours he did
-> a unilateral full disclosure without getting back to me.
->
-> :(
->
->> There's a nasty vulnerability in GnuPG which can be apparently used to bypass
->> signature verification when a program calls gpg to verify a signature and
->> parses the output:
->>
->> https://lists.gnupg.org/pipermail/gnupg-announce/2018q2/000425.html
->> https://dev.gnupg.org/T4012
->>
->> It might be worth checking whether package managers signature verification is
->> affected.
->>
->> Apt doesn't seems affected at first sight (it uses gpgv) but we'll double
->> check.
->
-> I am still handling this under responsible disclosure. This is why I
-> have not spoken out yet, and the CVE is not public. But what you say is
-> important and correct.
->
-> Thanks,
-> Marcus
+cheers
+
+
+#!/usr/bin/python3
+
+import os
+import glob
+
+by_core = {}
+
+for path in glob.iglob('/sys/devices/system/cpu/cpu*/topology/core_id'):
+    num = int(path.split('/')[5].replace('cpu', ''))
+    core_id = int(open(path).read(), 10)
+    by_core.setdefault(core_id, []).append(num)
+
+for core in sorted(by_core.keys()):
+    print('%d: %s' % (core, ', '.join([str(s) for s in sorted(by_core[core])])))
