@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1289" "Wednesday" "22" "November" "2017" "17:42:53" "+0100" "Guido Vranken" "guidovranken@gmail.com" "<CAO5O-EKCmEgPqbtQnrJGuPf6_zXy-Kfo+ONvb6ohmPnfn25GRg@mail.gmail.com>" "35" "Re: [oss-security] Go programming language invalid modular exponentiation result (Exp() in math/big pkg)" nil nil nil "11" "2017112216:42:53" "[oss-security] Go programming language invalid modular exponentiation result (Exp() in math/big pkg)" (number mark "U       guidovranken Nov 22   35/1289  " thread-indent "\"Re: [oss-security] Go programming language invalid modular exponentiation result (Exp() in math/big pkg)\"\n") "<20171122081339.eacdjs5pewelvhod@scully.more-magic.net>" ("<CAO5O-ELaS6a9jPqxZeuEYX3nhT1k2X8hWkz2D6=1G+mBW14BPw@mail.gmail.com>" "<20171122081339.eacdjs5pewelvhod@scully.more-magic.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1680" "Friday" "22" "June" "2018" "12:26:07" "-0700" "Seth Arnold" "seth.arnold@canonical.com" "<20180622192607.GA27571@hunt>" "60" "Re: [oss-security] Intel hyper-threading security issues" "^Date:" nil nil "6" "2018062219:26:07" "[oss-security] Intel hyper-threading security issues" (number mark "        seth.arnold@ Jun 22   60/1680  " thread-indent "\"Re: [oss-security] Intel hyper-threading security issues\"\n") "<87vaabea58.fsf@concordia.ellerman.id.au>" ("<CAOp4FwSEi=_bNCMoiK66r4Y2QQToJgZyBjUX74s0omQ+whCS-w@mail.gmail.com>" "<20180621045642.fy67joeaxu2n4j56@sivokote.iziade.m$>" "<20180621093754.GY53290@symphytum.spacehopper.org>" "<CABob6iqkc7x7awz-aMAb-yOHWKdWgnQF0rkPYdporiUmGCkc5Q@mail.gmail.com>" "<CABob6iqHuN+tVuxf9ibUh6Xx=j4AChRNygMXzR0nHcr1ogUtmA@mail.gmail.com>" "<718d05e5-3057-7c32-da9a-70bc5a82e3f5@tao.at>" "<20180621125049.GA14978@openwall.com>" "<87vaabea58.fsf@concordia.ellerman.id.au>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 18256 invoked by uid 550); 22 Nov 2017 16:43:07 -0000
+Received: (qmail 9896 invoked by uid 550); 22 Jun 2018 19:26:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,78 +11,86 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18238 invoked from network); 22 Nov 2017 16:43:06 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=1pV5PX0+5CorepfHoBPkY1/9HLBkXF21vCeXHf016zA=;
-        b=gqWyW05lDciQL7SyCHNEuL8G1lxIa8vIj83BkLuAX4RU47EnbdQApJ/V8PWqHc/4N4
-         zIOIOdMdQ+6P/7A7JutD6jNwi4oUhKRHAt2trxZShDCUGQ18nwGGkeNlwO3xwOaizJMs
-         /5cG0hELZ1bKqaxuC2YgEnYOtAQmE4QOcTmVsy2y0CVdqiKXDfX/fm7g+U7OaEfBI3XS
-         yD8CvW4+JHN/6nhshSJiT2hvohHO5UAU4e0Sq4VQY+U8QQezqKRxCQU3VsUYLG5l1M/o
-         fvbHVMf2QlDRyvptZHiMvDW8mO94A1SNlZ2hQegKWS8YVzoUMQH4OST1y8+Qjc+fAq6x
-         G3Kg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=1pV5PX0+5CorepfHoBPkY1/9HLBkXF21vCeXHf016zA=;
-        b=hvrqvxpFWJwbERK4mm+zPgYDaPlZwVpaYZTYZjHzHTVvfi9IFkCJPe5nNqzwWPkma/
-         B71URREtgndXLEqWVfa9d9GzNLkEqwM/9CkRq9CDsRtvAMrGAouW+2AzV2YGqgNW4sl3
-         0v2zeXXK5FUXTOT2Zkql3UDDdrdkRpSivkx6faIhZa/s4NME2LJmnfvEi0Mst1Hx11IG
-         PMb7dmW1NHZerNq1c3lBCeWvxT2rSoDVS1FXTQ+pOO442sr9AKQZcMxiqA22scfRJJfK
-         gvkV0HGTu2adzzTJVgT72G2qKNVBpbFPpGai5b6aZxJcm+uP7r0PYP1kcsCXoBgATq4p
-         xBwA==
-X-Gm-Message-State: AJaThX5O6Tyu8KW06ekrOO+VWKhV8PD+UVA+HLvr+YC6oMbXr/9SfcOq
-	IfA1SFgjKNajLQh4iPjRiQULOzkboavPVLSZMRgh/3q/
-X-Google-Smtp-Source: AGs4zMb1nVMNOE2mAl63w03FYpkvJrNayCvCue1d2iKm8L0LFROrVlqHJCnv+tn72zPwtrHTC54A5mkGgLOPwgoWKn4=
-X-Received: by 10.84.130.6 with SMTP id 6mr22788032plc.402.1511368974314; Wed,
- 22 Nov 2017 08:42:54 -0800 (PST)
+Received: (qmail 9869 invoked from network); 22 Jun 2018 19:26:20 -0000
+Message-ID: <20180622192607.GA27571@hunt>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <CAOp4FwSEi=_bNCMoiK66r4Y2QQToJgZyBjUX74s0omQ+whCS-w@mail.gmail.com>
+ <20180621045642.fy67joeaxu2n4j56@sivokote.iziade.m$>
+ <20180621093754.GY53290@symphytum.spacehopper.org>
+ <CABob6iqkc7x7awz-aMAb-yOHWKdWgnQF0rkPYdporiUmGCkc5Q@mail.gmail.com>
+ <CABob6iqHuN+tVuxf9ibUh6Xx=j4AChRNygMXzR0nHcr1ogUtmA@mail.gmail.com>
+ <718d05e5-3057-7c32-da9a-70bc5a82e3f5@tao.at>
+ <20180621125049.GA14978@openwall.com>
+ <87vaabea58.fsf@concordia.ellerman.id.au>
 MIME-Version: 1.0
-In-Reply-To: <20171122081339.eacdjs5pewelvhod@scully.more-magic.net>
-References: <CAO5O-ELaS6a9jPqxZeuEYX3nhT1k2X8hWkz2D6=1G+mBW14BPw@mail.gmail.com>
- <20171122081339.eacdjs5pewelvhod@scully.more-magic.net>
-From: Guido Vranken <guidovranken@gmail.com>
-Date: Wed, 22 Nov 2017 17:42:53 +0100
-Message-ID: <CAO5O-EKCmEgPqbtQnrJGuPf6_zXy-Kfo+ONvb6ohmPnfn25GRg@mail.gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ReaqsoxgOBHFXBhH"
+Content-Disposition: inline
+In-Reply-To: <87vaabea58.fsf@concordia.ellerman.id.au>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+Date: Fri, 22 Jun 2018 12:26:07 -0700
+From: Seth Arnold <seth.arnold@canonical.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Intel hyper-threading security issues
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: Re: [oss-security] Go programming language invalid modular
- exponentiation result (Exp() in math/big pkg)
 
-Peter,
+--ReaqsoxgOBHFXBhH
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-It is available: https://github.com/guidovranken/bignum-fuzzer
+On Fri, Jun 22, 2018 at 02:08:03PM +1000, Michael Ellerman wrote:
+> See the script below for example, which shows CPUs grouped by core.
 
-It has a modular set-up, meaning individual bignum libraries can
-easily be added, removed, enabled or disabled.
-I'll write some documentation soon, but you can probably figure out
-the module layout from looking at the existing ones.
-Compiling your code must result in a static archive that can be linked
-to the other objects. If that really is not possible, you must come up
-with some sort of inter-process communication.
-Feel free to create a PR for your own module and I'll add it.
+> #!/usr/bin/python3
+>=20
+> import os
+> import glob
+>=20
+> by_core =3D {}
+>=20
+> for path in glob.iglob('/sys/devices/system/cpu/cpu*/topology/core_id'):
+>     num =3D int(path.split('/')[5].replace('cpu', ''))
+>     core_id =3D int(open(path).read(), 10)
+>     by_core.setdefault(core_id, []).append(num)
+>=20
+> for core in sorted(by_core.keys()):
+>     print('%d: %s' % (core, ', '.join([str(s) for s in sorted(by_core[cor=
+e])])))
+>=20
+
+Note that this gives misleading results on multi-socket systems:
+
+0: 0, 8, 16, 24
+1: 1, 9, 17, 25
+2: 2, 10, 18, 26
+3: 3, 11, 19, 27
+4: 4, 12, 20, 28
+5: 5, 13, 21, 29
+6: 6, 14, 22, 30
+7: 7, 15, 23, 31
+
+This system has two sockets, eight cores per socket, two threads per core.
+
+Solar's cpuinfo reports;
+$ ./cpuinfo
+Found 32 logical processors across 16 physical cores
 
 Thanks
 
-Guido
+--ReaqsoxgOBHFXBhH
+Content-Type: application/pgp-signature; name="signature.asc"
 
-On Wed, Nov 22, 2017 at 9:13 AM, Peter Bex <peter@more-magic.net> wrote:
-> On Wed, Nov 22, 2017 at 12:30:08AM +0100, Guido Vranken wrote:
->> Dear list,
->>
->> I've written a bignum fuzzer that compares the results of mathematical
->> operations (addtion, subtraction, multiplication, ...) across multiple
->> bignum libraries.
->
-> Hi there,
->
-> Is this fuzzer freely available?  I'd love to try it out on the bignum
-> support I added to the CHICKEN Scheme implementation for its upcoming
-> new major release (probably somewhere mid-2018).  Being able to release
-> it with a bit higher confidence in its correctness would be nice, as this
-> is almost all brand new code.
->
-> Cheers,
-> Peter Bex (CHICKEN core maintainer)
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEQVAQ8bojyMcg37H18yFyWZ2NLpcFAlstTUoACgkQ8yFyWZ2N
+LpdhHwf/b3IjdS/4VgG+ypXls8jwvFzAlZCynIYEOX/QOhlvJjOHgGpNXJsTGrkK
+vuxxmHMSZntma6qFm1lBVheKcYkQ+mHYtFCHaiVQ27NxancaSaSBeFE3Cltii3uo
+V7aJ5xsPNJGS/8sjpkWWaREpdqHl/AS0mj2GeZcZwfULtRibqbiBLtmC0BgzBbED
+Q3OLqWyz0I5R1cvnyoH9Euj2W/ms5DtS3NqKCvZ7d6sCyXvmaWovdvYjHUtgDA0X
+bSkVNuvhmcB/r3uktES2hy6GXIrKLls5v15L0EBrXcwRekKLtx3Uc4JFeMefr3Dt
+gmFouwm19wLhALXlWt20ckPncUpYPw==
+=Q+Bd
+-----END PGP SIGNATURE-----
+
+--ReaqsoxgOBHFXBhH--
