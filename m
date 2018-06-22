@@ -1,51 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/10/2
-Message-ID: <CAG8=FRhFGcy-oO8PEWUpv2nc=DL0YBNbjdHkq2jck4g+B73UHQ@mail.gmail.com>
-Date: Tue, 10 Jul 2018 11:41:08 +0200
-From: Emmanuel Lecharny <elecharny@...che.org>
-To: announce@...che.org,  Apache Directory Developers List <dev@...ectory.apache.org>,  "users@...ectory.apache.org" <users@...ectory.apache.org>, api@...ectory.apache.org, security@...che.org,  oss-security@...ts.openwall.com
-Cc: wei.deng@...astax.com, mike.adamson@...astax.com,  jeremiah.jordan@...astax.com, ben.coverston@...astax.com
-Subject: [Annoucement] CVE-2018-1337 Plaintext Password Disclosure in Secured Channel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/22/3
+Message-ID: <4701b1a6-1dc7-d95f-a68c-32df21e1e366@apache.org>
+Date: Fri, 22 Jun 2018 06:07:45 -0700
+From: Josh Elser <elserj@...che.org>
+To: dev <dev@...se.apache.org>
+Cc: user@...se.apache.org, oss-security@...ts.openwall.com
+Subject: CVE-2018-8025 on Apache HBase
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-1337: Plaintext Password Disclosure in Secured Channel
+CVE-2018-8025 describes an issue in Apache HBase that affects the 
+optional "Thrift 1" API server when running over HTTP. There is a 
+race-condition which could lead to authenticated sessions being 
+incorrectly applied to users, e.g. one authenticated user would be 
+considered a different user or an unauthenticated user would be treated 
+as an authenticated user.
 
-Severity: Critical
+https://issues.apache.org/jira/browse/HBASE-20664 implements a fix for 
+this issue, and this fix is contained in the following releases of 
+Apache HBase:
 
-Vendor: The Apache Software Foundation
+* 1.2.6.1
+* 1.3.2.1
+* 1.4.5
+* 2.0.1
 
-Versions Affected:
-Apache LDAP API 1.0.0
+This vulnerability affects all 1.x and 2.x release lines (except 1.0.0).
 
-Description:
-A bug in the way the SSL Filter was setup made it possible for
-another thread to use the connection before the TLS layer has been
-established, if the connection has already been used and put back
-in a pool of connections, leading to leaking any informations
-contained in this request (including the credentials when sending
-a BIND request)
-
-Mitigation:
-
-Users are urged to use this 1.0.2 version ASAP. There is no impact
-in their application, the API remains unchanged.
-
-The previous version (LDAP API 1.0.1) was a workaround for this
-problem.
-
-History:
-2018-05-15 Original advisory
-
-Credit:
-This issue has been reported by Wei Deng (Datastax), the initial
-workaround was proposed by Mike Adamson (Datastax) and the further
-investigations/tests/verification were conducted by Wei Deng,
-Mike Adamson, Jeremiah Kordan (Datastax) and Ben Coverston (Datastax).
-
-
--- 
-Regards,
-Cordialement,
-Emmanuel Lécharny
-www.iktek.com
-
+- The Apache HBase PMC
