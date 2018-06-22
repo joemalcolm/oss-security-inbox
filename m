@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["482" "Sunday" "5" "July" "2015" "18:51:37" "-0500" "Mark Felder" "feld@feld.me" "<1436140297.2777045.315833937.576534B9@webmail.messagingengine.com>" "13" "[oss-security] node.js out of band write" nil nil nil "7" "2015070523:51:37" "[oss-security] node.js out of band write" (number mark "        feld@feld.me Jul  5   13/482   " thread-indent "\"[oss-security] node.js out of band write\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1516" "Friday" "22" "June" "2018" "14:08:03" "+1000" "Michael Ellerman" "mpe@ellerman.id.au" "<87vaabea58.fsf@concordia.ellerman.id.au>" "45" "Re: [oss-security] Intel hyper-threading security issues" "^Date:" nil nil "6" "2018062204:08:03" "[oss-security] Intel hyper-threading security issues" (number mark "        mpe@ellerman Jun 22   45/1516  " thread-indent "\"Re: [oss-security] Intel hyper-threading security issues\"\n") "<20180621125049.GA14978@openwall.com>" ("<CAOp4FwSEi=_bNCMoiK66r4Y2QQToJgZyBjUX74s0omQ+whCS-w@mail.gmail.com>" "<20180621045642.fy67joeaxu2n4j56@sivokote.iziade.m$>" "<20180621093754.GY53290@symphytum.spacehopper.org>" "<CABob6iqkc7x7awz-aMAb-yOHWKdWgnQF0rkPYdporiUmGCkc5Q@mail.gmail.com>" "<CABob6iqHuN+tVuxf9ibUh6Xx=j4AChRNygMXzR0nHcr1ogUtmA@mail.gmail.com>" "<718d05e5-3057-7c32-da9a-70bc5a82e3f5@tao.at>" "<20180621125049.GA14978@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7779 invoked by uid 550); 5 Jul 2015 23:52:04 -0000
+Received: (qmail 27847 invoked by uid 550); 22 Jun 2018 10:20:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,43 +11,61 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7644 invoked from network); 5 Jul 2015 23:51:51 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=feld.me; h=
-	content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=/KV
-	Bi2oVH5yHYPLPDsMVaeINclo=; b=HFqcvJWDlAnddS3A+S3FB1P0QWFyZ6lMWzt
-	vuh3CnxhqyoExXfUaFedbB4gVVA9YXtI5IvG+AIwvF8Igitpt1g7PNKIkakA4DIO
-	laUlaW8FBaqrOOPwtpJTQH7YJ1l6qxVVVZACGxZxOavJIu2zaP0SfTa1ObNqlVr7
-	o+Ln4RkA=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-transfer-encoding:content-type
-	:date:from:message-id:mime-version:subject:to:x-sasl-enc
-	:x-sasl-enc; s=smtpout; bh=/KVBi2oVH5yHYPLPDsMVaeINclo=; b=ox3M6
-	9yWpsCr8rK9M3bRtz4vH6ND36P7F2MxjaqP3O42UkmlGE9fmsupzwrAEFj6rCPwf
-	rPcZ8UAk6f6RiQ4VtMbn5tEl1fHL3zP+2FpDTD/hRPse6TZmTvGnqO5v2M6nxW34
-	uRlkq5O2zdHriyrOLMNDKFZBNzL0qfzFO9lSTk=
-Message-Id: <1436140297.2777045.315833937.576534B9@webmail.messagingengine.com>
-X-Sasl-Enc: sCjPBl5MXeFypuWKsOaiyCoxSIjmME7vpn39AFg7B3W5 1436140297
+Received: (qmail 26361 invoked from network); 22 Jun 2018 04:08:19 -0000
+Authentication-Results: ozlabs.org; dmarc=none (p=none dis=none) header.from=ellerman.id.au
+In-Reply-To: <20180621125049.GA14978@openwall.com>
+References: <CAOp4FwSEi=_bNCMoiK66r4Y2QQToJgZyBjUX74s0omQ+whCS-w@mail.gmail.com> <20180621045642.fy67joeaxu2n4j56@sivokote.iziade.m$> <20180621093754.GY53290@symphytum.spacehopper.org> <CABob6iqkc7x7awz-aMAb-yOHWKdWgnQF0rkPYdporiUmGCkc5Q@mail.gmail.com> <CABob6iqHuN+tVuxf9ibUh6Xx=j4AChRNygMXzR0nHcr1ogUtmA@mail.gmail.com> <718d05e5-3057-7c32-da9a-70bc5a82e3f5@tao.at> <20180621125049.GA14978@openwall.com>
+Message-ID: <87vaabea58.fsf@concordia.ellerman.id.au>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Content-Type: text/plain
-X-Mailer: MessagingEngine.com Webmail Interface - ajax-eecef38c
-Date: Sun, 05 Jul 2015 18:51:37 -0500
-From: Mark Felder <feld@feld.me>
+Date: Fri, 22 Jun 2018 14:08:03 +1000
+From: Michael Ellerman <mpe@ellerman.id.au>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] node.js out of band write
-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Intel hyper-threading security issues
+To: Solar Designer <solar@openwall.com>, oss-security@lists.openwall.com
 
-Node has resolved a security vulnerability in their most recent release
-but do not appear to have requested a CVE ID.
+Solar Designer <solar@openwall.com> writes:
+> On Thu, Jun 21, 2018 at 01:54:16PM +0200, Sven Schwedas wrote:
+>> On 2018-06-21 12:28, Lukas Odzioba wrote:
+>> > Or use cpu hotplug mechanism, which should be way more convenient:
+>> > https://www.kernel.org/doc/html/v4.17/core-api/cpu_hotplug.html
+>> 
+>> Hotplug doesn't seem differentiate between HT threads and physical
+>> cores,
+>
+> This isn't exactly the question to ask: first vs. second thread in a
+> core aren't any different, neither of them is "the physical core" unless
+> you choose not to use the other.
+>
+> And you can obtain the needed information from /proc/cpuinfo or
+> /sys/devices/system/cpu/cpu*/topology/* to choose which logical CPUs you
+> disable (so that you leave only one per physical core).
+>
+> On a related note, attached is a generic Linux /proc/cpuinfo parser I
 
-http://blog.nodejs.org/2015/07/03/node-v0-12-6-stable/
+I guess by "generic" you mean Intel & AMD? :)
 
-Node v0.12.6 (Stable)
-Sat, 04 Jul 2015 02:34:23 UTC - release
+It won't work on powerpc, or arm, or arm64 ...
 
-This release of Node.js fixes a bug that triggers an out-of-band write
-in V8's utf-8 decoder. This bug impacts all Buffer to String
-conversions. This is an important security update as this bug can be
-used to cause a denial of service attack.
+You should be able to determine all of the info you need from the sysfs
+topology files, which work across arches.
 
+See the script below for example, which shows CPUs grouped by core.
+
+cheers
+
+
+#!/usr/bin/python3
+
+import os
+import glob
+
+by_core = {}
+
+for path in glob.iglob('/sys/devices/system/cpu/cpu*/topology/core_id'):
+    num = int(path.split('/')[5].replace('cpu', ''))
+    core_id = int(open(path).read(), 10)
+    by_core.setdefault(core_id, []).append(num)
+
+for core in sorted(by_core.keys()):
+    print('%d: %s' % (core, ', '.join([str(s) for s in sorted(by_core[core])])))
