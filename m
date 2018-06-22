@@ -1,56 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/18/2
-Message-ID: <CAP3WMuQfUAc9pP95Et_aQN5ko+6EYe4nYD7zwNXp8+5KPsz8XQ@mail.gmail.com>
-Date: Mon, 18 Jun 2018 21:45:21 +0100
-From: Alex Rudyy <orudyy@...che.org>
-To: "users@...d.apache.org" <users@...d.apache.org>, "dev@...d.apache.org" <dev@...d.apache.org>,  Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com, announce@...che.org
-Subject: [SECURITY] [CVE-2018-8030] Apache Qpid Broker-J Denial of Service Vulnerability when AMQP 0-8...0-91 messages exceed maximum size limit
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/22/5
+Message-ID: <20180622192607.GA27571@hunt>
+Date: Fri, 22 Jun 2018 12:26:07 -0700
+From: Seth Arnold <seth.arnold@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Intel hyper-threading security issues
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-8030: Apache Qpid Broker-J Denial of Service Vulnerability
-when AMQP 0-8...0-91 messages exceed maximum size limit
+On Fri, Jun 22, 2018 at 02:08:03PM +1000, Michael Ellerman wrote:
+> See the script below for example, which shows CPUs grouped by core.
 
-Severity: Important
+> #!/usr/bin/python3
+> 
+> import os
+> import glob
+> 
+> by_core = {}
+> 
+> for path in glob.iglob('/sys/devices/system/cpu/cpu*/topology/core_id'):
+>     num = int(path.split('/')[5].replace('cpu', ''))
+>     core_id = int(open(path).read(), 10)
+>     by_core.setdefault(core_id, []).append(num)
+> 
+> for core in sorted(by_core.keys()):
+>     print('%d: %s' % (core, ', '.join([str(s) for s in sorted(by_core[core])])))
+> 
 
-Vendor: The Apache Software Foundation
+Note that this gives misleading results on multi-socket systems:
 
-Versions Affected: Versions 7.0.0-7.0.4
+0: 0, 8, 16, 24
+1: 1, 9, 17, 25
+2: 2, 10, 18, 26
+3: 3, 11, 19, 27
+4: 4, 12, 20, 28
+5: 5, 13, 21, 29
+6: 6, 14, 22, 30
+7: 7, 15, 23, 31
 
-Description:
+This system has two sockets, eight cores per socket, two threads per core.
 
-A Denial of Service vulnerability [1] was found in Apache Qpid Broker-J
-versions 7.0.0-7.0.4 when AMQP protocols 0-8, 0-9 or 0-91 are used to
-publish messages with size greater than allowed maximum message size limit
-(100MB by default). The broker crashes due to the defect. AMQP protocols
-0-10 and 1.0 are not affected.
+Solar's cpuinfo reports;
+$ ./cpuinfo
+Found 32 logical processors across 16 physical cores
 
-Resolution:
+Thanks
 
-Users of Broker-J versions 7.0.0-7.0.4 utilizing AMQP protocols 0-8, 0-9 or 0-91
-for message publishing must upgrade to version 7.0.5 [2] or later.
-
-Mitigation:
-
-If upgrade of the broker is not possible, the maximum message size limit can be
-disabled by setting context variable "qpid.max_message_size" to "0" or
-any negative value. The change can be made either directly in the broker
-configuration file, or by using management interfaces (for example,
-REST API [3])
-or by using JVM option -Dqpid.max_message_size=0. A broker restart is required
-for the change to take effect.
-Alternatively, the support for AMQP protocols 0-8...0-91 can be removed on
-AMQP ports. The change can be made either directly in the broker configuration
-file or by using management interfaces. An example of REST API call
-restricting AMQP port to support only AMQP 1.0 and AMQP 0-10 using curl utility
-is provided below:
-
-curl --user <user-name> -X POST  -d '{"protocols":["AMQP_1_0","AMQP_0_10"]}' \
-https://<broker host>:<broker port>/api/latest/port/<port name>
-
-Credit: This issue was found by the Qpid development team.
-
-References:
-
-[1] https://issues.apache.org/jira/browse/QPID-8203
-[2] https://qpid.apache.org/releases/qpid-broker-j-7.0.5/index.html
-[3] https://qpid.apache.org/releases/qpid-broker-j-7.0.5/book/Java-Broker-Management-Channel-REST-API.html
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
