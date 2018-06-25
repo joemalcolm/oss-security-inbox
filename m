@@ -1,32 +1,172 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/06/3
-Message-ID: <20181006113958.GA29967@derpz>
-Date: Sat, 6 Oct 2018 13:40:04 +0200
-From: joernchen <joernchen@...noelit.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/25/4
+Message-Id: <E00DE545-C35C-4E5F-8AEF-022602DEB087@beckweb.net>
+Date: Mon, 25 Jun 2018 16:10:22 +0200
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2018-17456 Git RCE via .gitmodules
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-Hey,
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software. The following
+releases contain fixes for security vulnerabilities:
 
-just a short heads up to oss-sec:
+* AWS CodeBuild 0.27
+* AWS CodeDeploy 1.20
+* AWS CodePipeline 0.37
+* Badge 1.5
+* CollabNet 2.0.5
+* Configuration as Code 0.8-alpha
+* Fortify CloudScan 1.5.2
+* GitHub 1.29.2
+* IBM z/OS Connector 2.0.0
+* Openstack Cloud 2.36
+* SAML 1.0.7
+* SSH Credentials 1.14
+* URLTrigger 0.43
 
-Git has just [0] released Versions 2.14.5, 2.15.3, 2.16.5, 2.17.2,
-2.18.1, and 2.19.1 which mitigate CVE-2018-17456, an RCE issue I found
-within the handling of Git submodules.
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2018-06-25/
 
-More specifically this issue allows execution of arbitrary commands via
-a argument injection to subsequent `git clone` operations using the
-`url` parameter in the `.gitmodules` file. 
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-915
+A form action method in GitHub Plugin did not check the permission of the 
+user accessing it, allowing anyone with Overall/Read access to Jenkins to 
+cause Jenkins to send a GitHub API request to create an API token to a an 
+attacker specified URL.
+
+This allowed users with Overall/Read access to Jenkins to connect to an 
+attacker-specified URL using attacker-specified credentials IDs obtained 
+through another method, capturing credentials stored in Jenkins.
+
+Additionally, this form validation method did not require POST requests, 
+resulting in a CSRF vulnerability.
 
 
-Cheers,
+SECURITY-440
+SSH Credentials Plugin allowed the creation of SSH credentials with keys 
+"From a file on Jenkins master". Credentials Binding Plugin 1.13 and newer 
+allows binding SSH credentials to environment variables. In combination, 
+these two features allow users with the permission to configure a job to 
+read arbitrary files on the Jenkins master by creating an SSH credential 
+referencing an arbitrary file on the Jenkins master, and binding it to an 
+environment variable in a job.
 
-joernchen
 
-[0] https://marc.info/?l=git&m=153875888916397&w=2
+SECURITY-916
+SAML Plugin did not invalidate the previous session and create a new one 
+upon successful login, allowing attackers able to control or obtain 
+another user’s pre-login session ID to impersonate them.
 
---
-joernchen ~ Phenoelit
-<joernchen@...noelit.de> ~ C776 3F67 7B95 03BF 5344
-http://www.phenoelit.de  ~ A46A 7199 8B7B 756A F5AC
+
+SECURITY-808
+Openstack Cloud Plugin did not perform permission checks on methods 
+implementing form validation. This allowed users with Overall/Read access 
+to Jenkins to connect to an attacker-specified URL using attacker-
+specified credentials IDs obtained through another method, capturing 
+credentials stored in Jenkins, and to cause Jenkins to submit HTTP 
+requests to attacker-specified URLs.
+
+Additionally, these form validation methods did not require POST requests, 
+resulting in a CSRF vulnerability.
+
+
+SECURITY-825 / CVE-2018-1000402
+AWS CodeDeploy Plugin could persist environment variables from the last 
+run of any project with the post-build step configured in the job’s
+config.xml file.
+
+In some cases, this allowed users with file system access or Extended Read 
+permission to obtain those potentially sensitive environment variables by 
+accessing the project’s config.xml.
+
+
+SECURITY-833 / CVE-2018-1000403
+AWS CodeDeploy Plugin stored the AWS Secret Key in its configuration 
+unencrypted in jobs' config.xml files on the Jenkins master. This key 
+could be viewed by users with Extended Read permission, or access to the 
+master file system.
+
+While masked from view using a password form field, the AWS Secret Key was 
+transferred in plain text to users when accessing the job configuration 
+form.
+
+
+SECURITY-834 / CVE-2018-1000404
+AWS CodeBuild Plugin stored the AWS Secret Key in its configuration 
+unencrypted in jobs' config.xml files on the Jenkins master. This key 
+could be viewed by users with Extended Read permission, or access to the 
+master file system.
+
+While masked from view using a password form field, the AWS Secret Key was 
+transferred in plain text to users when accessing the job configuration 
+form.
+
+
+SECURITY-967 / CVE-2018-1000401
+AWS CodePipeline Plugin stored the AWS Secret Key in its configuration 
+unencrypted in jobs' config.xml files on the Jenkins master. This key 
+could be viewed by users with Extended Read permission, or access to the 
+master file system.
+
+While masked from view using a password form field, the AWS Secret Key was 
+transferred in plain text to users when accessing the job configuration 
+form.
+
+
+SECURITY-906
+Badge Plugin stored and displayed user-provided HTML for badges and 
+summaries unprocessed, allowing users with the ability to control badge 
+content to store malicious HTML to be displayed within Jenkins.
+
+
+SECURITY-941
+CollabNet Plugin disabled SSL/TLS certificate validation for the entire 
+Jenkins master JVM by default.
+
+
+SECURITY-819
+A form validation method in URLTrigger Plugin did not check the permission 
+of the user accessing them, allowing anyone with Overall/Read access to 
+Jenkins to cause Jenkins to send a GET request to a specified URL.
+
+Additionally, this form validation method did not require POST requests, 
+resulting in a CSRF vulnerability.
+
+
+SECURITY-870
+Fortify CloudScan Plugin did not validate file names in rulepack ZIP 
+archives it extracts, resulting in an arbitrary file write vulnerability.
+
+
+SECURITY-950
+IBM z/OS Connector Plugin did not encrypt password credentials stored in 
+its configuration. This could be used by users with master file system 
+access to obtain the password.
+
+While masked from view using a password form field, the AWS Secret Key was 
+transferred in plain text to administrators when accessing the global 
+configuration form.
+
+
+SECURITY-927
+Configuration as Code Plugin lacked a permission check in the method 
+handling the URL exporting the system configuration. This allows users 
+with Overall/Read access to Jenkins to obtain this YAML export.
+
+
+SECURITY-929
+Configuration as Code Plugin logged secrets set via its configuration to 
+the Jenkins master system log in plain text. This allowed users with 
+access to the Jenkins log files to obtain these passwords and similar 
+secrets.
+
