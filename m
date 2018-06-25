@@ -1,81 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/08/3
-Message-ID: <20180808142247.GB15601@w1.fi>
-Date: Wed, 8 Aug 2018 17:22:47 +0300
-From: Jouni Malinen <j@...fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/26/1
+Message-ID: <CABsaHTOiWdPU_ycw14=1Z0N47+BHL-WiiwZEeFSxbzzo+u1ZFw@mail.gmail.com>
+Date: Tue, 26 Jun 2018 10:11:50 +1200
+From: Nate McCall <zznate@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Unauthenticated EAPOL-Key decryption in wpa_supplicant
+Subject: CVE-2018-8016 on Apache Cassandra
 Content-Type: text/plain; charset=utf-8
 
-Published: August 8, 2018
-Identifiers:
-- CVE-2018-14526
-Latest version available from: https://w1.fi/security/2018-1/
+CVE-2018-8016 describes an issue with the default configuration of
+Apache Cassandra releases 3.8 through 3.11.1 which binds an
+unauthenticated JMX/RMI interface to all network interfaces allowing
+attackers to execute arbitrary Java code via an RMI request. This
+issue is a regression of the previously disclosed CVE-2015-0225.
 
-Vulnerability
+The regression was introduced in
+https://issues.apache.org/jira/browse/CASSANDRA-12109. The fix for the
+regression is implemented in
+https://issues.apache.org/jira/browse/CASSANDRA-14173. This fix is
+contained in the 3.11.2 release of Apache Cassandra.
 
-A vulnerability was found in how wpa_supplicant processes EAPOL-Key
-frames. It is possible for an attacker to modify the frame in a way that
-makes wpa_supplicant decrypt the Key Data field without requiring a
-valid MIC value in the frame, i.e., without the frame being
-authenticated. This has a potential issue in the case where WPA2/RSN
-style of EAPOL-Key construction is used with TKIP negotiated as the
-pairwise cipher. It should be noted that WPA2 is not supposed to be used
-with TKIP as the pairwise cipher. Instead, CCMP is expected to be used
-and with that pairwise cipher, this vulnerability is not applicable in
-practice.
-
-When TKIP is negotiated as the pairwise cipher, the EAPOL-Key Key Data
-field is encrypted using RC4. This vulnerability allows unauthenticated
-EAPOL-Key frames to be processed and due to the RC4 design, this makes
-it possible for an attacker to modify the plaintext version of the Key
-Data field with bitwise XOR operations without knowing the contents.
-This can be used to cause a denial of service attack by modifying
-GTK/IGTK on the station (without the attacker learning any of the keys)
-which would prevent the station from accepting received group-addressed
-frames. Furthermore, this might be abused by making wpa_supplicant act
-as a decryption oracle to try to recover some of the Key Data payload
-(GTK/IGTK) to get knowledge of the group encryption keys.
-
-Full recovery of the group encryption keys requires multiple attempts
-(128 connection attempts per octet) and each attempt results in
-disconnection due to a failure to complete the 4-way handshake. These
-failures can result in the AP/network getting disabled temporarily or
-even permanently (requiring user action to re-enable) which may make it
-impractical to perform the attack to recover the keys before the AP has
-already changes the group keys. By default, wpa_supplicant is enforcing
-at minimum a ten second wait time between each failed connection
-attempt, i.e., over 20 minutes waiting to recover each octet while
-hostapd AP implementation uses 10 minute default for GTK rekeying when
-using TKIP. With such timing behavior, practical attack would need large
-number of impacted stations to be trying to connect to the same AP to be
-able to recover sufficient information from the GTK to be able to
-determine the key before it gets changed.
-
-
-Vulnerable versions/configurations
-
-All wpa_supplicant versions.
-
-
-Acknowledgments
-
-Thanks to Mathy Vanhoef of the imec-DistriNet research group of KU
-Leuven for discovering and reporting this issue.
-
-
-Possible mitigation steps
-
-- Remove TKIP as an allowed pairwise cipher in RSN/WPA2 networks. This
-  can be done also on the AP side.
-
-- Merge the following commits to wpa_supplicant and rebuild:
-
-  WPA: Ignore unauthenticated encrypted EAPOL-Key data
-
-  This patch is available from https://w1.fi/security/2018-1/
-
-- Update to wpa_supplicant v2.7 or newer, once available
-
--- 
-Jouni Malinen                                            PGP id EFC895FA
+- The Apache Cassandra PMC
