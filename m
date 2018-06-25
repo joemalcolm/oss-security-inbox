@@ -1,28 +1,13 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/26/4
-Message-ID: <20180626160228.GA30329@kitenet.net>
-Date: Tue, 26 Jun 2018 12:02:28 -0400
-From: Joey Hess <id@...yh.name>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2018-10857 and CVE-2018-10859: git-annex private data exposure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/25/2
+Message-Id: <20180625063653.8536D16600D9@webmail.sinamail.sina.com.cn>
+Date: Mon, 25 Jun 2018 14:36:53 +0800
+From: <zrlw@...a.com>
+To: "oss-security" <oss-security@...ts.openwall.com>
+Subject: Libc Realpath Buffer Underflow CVE-2018-1000001  expolit source code for SuSE 12 SP2
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-10857: Some uses of git-annex were vulnerable to a private data
-exposure and exfiltration attack. It could expose the content of files
-located outside the git-annex repository, or content from a private web
-server on localhost or the LAN. Joey Hess discovered this attack.
+Hi, i wrote a exploit  base on  halfdog's RationalLove.c, and successfully tested on SuSE Enterprise Server 12 SP 2.I want send it back to halfdog, but it seemed that my email always be rejected(maybe because i'm in china), may you transfer it to halfdog? all the code belong to him. Thanks!LaoWei2018/6/25   
+Content of type "text/html" skipped
 
-CVE-2018-10859: A malicious server for a special remote could
-trick git-annex into decrypting a file that was encrypted to the user's gpg
-key. This attack could be used to expose encrypted data that was never
-stored in git-annex. Daniel Dent discovered this attack in collaboration
-with Joey Hess.
-
-git-annex version 6.20180626 fixes these problems.
-
-https://git-annex.branchable.com/security/CVE-2018-10857_and_CVE-2018-10859/
-
--- 
-see shy jo
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+View attachment "RationalLove_SuSE12SP2.c" of type "text/plain" (38304 bytes)
