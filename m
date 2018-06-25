@@ -1,26 +1,113 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/23/2
-Message-ID: <MWHPR0101MB29449166243291E394B17844C0F50@MWHPR0101MB2944.prod.exchangelabs.com>
-Date: Tue, 23 Oct 2018 00:22:28 +0000
-From: Ramon de C Valle <rcvalle@...e.com>
-To: Andrew Sandoval <ASandoval@...root.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: GCC Compiler Induced Vulnerability - affects programs compiled with GCC 7 and 8 containing nested functions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/25/5
+Message-Id: <ECE1726C-BB55-4159-9A7F-EA4A0F087CE5@beckweb.net>
+Date: Mon, 25 Jun 2018 20:21:20 +0200
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-> This is already public because oss-security is a public mailing list.
-> 
-> Most GNU/Linux distributions ensure that only very special binaries
-> (such as some versions of the Ada compiler) enable executable stacks.
-> In our experience, if the toolchain produces a binary that requests an
-> executable stack, it is more likely due to manually written assembler
-> files without the required stack executability markup section, and not
-> due to nested C functions whose address escapes.  Without scanning built
-> binaries for these discrepancies, such cases could easily be missed.
-> 
-> Please also note that an executable stack is not a vulnerability itself,
-> and it is not directly exploitable.  (The same applies to the lack of
-> Intel CET support in binaries.)
 
-While I agree with that I still think that this extension (or its name) is misleading, see https://lkml.org/lkml/2012/1/9/138. The PF_X flag set in the PT_GNU_STACK segment header or the absence of the PT_GNU_STACK segment header can result in an application unnoticeably having not only the stack, but also all readable virtual memory mappings also executable.
+> On 25. Jun 2018, at 16:10, Daniel Beck <ml@...kweb.net> wrote:
+> 
+> SECURITY-915
+> A form action method in GitHub Plugin did not check the permission of the 
+> user accessing it, allowing anyone with Overall/Read access to Jenkins to 
+> cause Jenkins to send a GitHub API request to create an API token to a an 
+> attacker specified URL.
+> 
+> This allowed users with Overall/Read access to Jenkins to connect to an 
+> attacker-specified URL using attacker-specified credentials IDs obtained 
+> through another method, capturing credentials stored in Jenkins.
+> 
+> Additionally, this form validation method did not require POST requests, 
+> resulting in a CSRF vulnerability.
 
-Ramon de C Valle
+CVE-2018-1000600
+
+> SECURITY-440
+> SSH Credentials Plugin allowed the creation of SSH credentials with keys 
+> "From a file on Jenkins master". Credentials Binding Plugin 1.13 and newer 
+> allows binding SSH credentials to environment variables. In combination, 
+> these two features allow users with the permission to configure a job to 
+> read arbitrary files on the Jenkins master by creating an SSH credential 
+> referencing an arbitrary file on the Jenkins master, and binding it to an 
+> environment variable in a job.
+
+CVE-2018-1000601
+
+> SECURITY-916
+> SAML Plugin did not invalidate the previous session and create a new one 
+> upon successful login, allowing attackers able to control or obtain 
+> another user’s pre-login session ID to impersonate them.
+
+CVE-2018-1000602
+
+> SECURITY-808
+> Openstack Cloud Plugin did not perform permission checks on methods 
+> implementing form validation. This allowed users with Overall/Read access 
+> to Jenkins to connect to an attacker-specified URL using attacker-
+> specified credentials IDs obtained through another method, capturing 
+> credentials stored in Jenkins, and to cause Jenkins to submit HTTP 
+> requests to attacker-specified URLs.
+> 
+> Additionally, these form validation methods did not require POST requests, 
+> resulting in a CSRF vulnerability.
+
+CVE-2018-1000603
+
+> SECURITY-906
+> Badge Plugin stored and displayed user-provided HTML for badges and 
+> summaries unprocessed, allowing users with the ability to control badge 
+> content to store malicious HTML to be displayed within Jenkins.
+
+CVE-2018-1000604
+
+> SECURITY-941
+> CollabNet Plugin disabled SSL/TLS certificate validation for the entire 
+> Jenkins master JVM by default.
+
+CVE-2018-1000605
+
+> SECURITY-819
+> A form validation method in URLTrigger Plugin did not check the permission 
+> of the user accessing them, allowing anyone with Overall/Read access to 
+> Jenkins to cause Jenkins to send a GET request to a specified URL.
+> 
+> Additionally, this form validation method did not require POST requests, 
+> resulting in a CSRF vulnerability.
+
+CVE-2018-1000606
+
+> SECURITY-870
+> Fortify CloudScan Plugin did not validate file names in rulepack ZIP 
+> archives it extracts, resulting in an arbitrary file write vulnerability.
+
+CVE-2018-1000607
+
+> SECURITY-950
+> IBM z/OS Connector Plugin did not encrypt password credentials stored in 
+> its configuration. This could be used by users with master file system 
+> access to obtain the password.
+> 
+> While masked from view using a password form field, the AWS Secret Key was 
+> transferred in plain text to administrators when accessing the global 
+> configuration form.
+
+CVE-2018-1000608
+
+> SECURITY-927
+> Configuration as Code Plugin lacked a permission check in the method 
+> handling the URL exporting the system configuration. This allows users 
+> with Overall/Read access to Jenkins to obtain this YAML export.
+
+CVE-2018-1000609
+
+> SECURITY-929
+> Configuration as Code Plugin logged secrets set via its configuration to 
+> the Jenkins master system log in plain text. This allowed users with 
+> access to the Jenkins log files to obtain these passwords and similar 
+> secrets.
+
+CVE-2018-1000610
+
