@@ -1,31 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/23/1
-Message-ID: <CAGRgoZhO_hrOg3OF8=hs6j5KsRR68mmQDk0rChQ+jPvEN95x3g@mail.gmail.com>
-Date: Mon, 23 Jul 2018 21:03:52 +0100
-From: Jonathan Gallimore <jgallimore@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/25/1
+Message-ID: <20180625051008.kx4kdv72lvvudalt@sivokote.iziade.m$>
+Date: Mon, 25 Jun 2018 08:10:08 +0300
+From: Georgi Guninski <guninski@...inski.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2018-8031 Apache TomEE Webapp XSS
+Subject: Re: Intel hyper-threading security issues
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-8031 Apache TomEE Webapp XSS
+On Wed, Jun 20, 2018 at 12:48:55AM +0400, Loganaden Velvindron wrote:
+> OpenBSD has gone ahead and disabled Intel Hyper threading with a
+> fairly detailed comment about the reasons behind:
+> 
+> https://www.mail-archive.com/source-changes@openbsd.org/msg99141.html
+>
+According to journos Intel won't patch this:
 
-Severity: Low
+https://www.theregister.co.uk/2018/06/22/intel_tlbleed_key_data_leak/
+Meet TLBleed: A crypto-key-leaking CPU attack that Intel reckons we
+shouldn't worry about
+How to extract 256-bit signing keys with 99.8% success
 
-Vendor: The Apache Software Foundation
-
-Description:
-The TomEE console (tomee-webapp) has a XSS vulnerability which could allow
-javascript to be executed if the user is given a malicious URL. This web
-application is typically used to add TomEE features to a Tomcat
-installation. The TomEE bundles do not ship with this application included.
-
-Mitigation:
-This issue can be mitigated by removing the application after TomEE is
-setup (if using the application to install TomEE), using one of the
-provided pre-configured bundles, or by upgrading to TomEE 7.0.5.
-
-This issue is resolve in this commit: b8bbf50c23ce97dd64f3a5d77f78f8
-4e47579863
-
-Credit: Many thanks to Man Yue Mo from Semmle for reporting this issue.
-
+Intel has, for now, no plans to specifically address a side-channel
+vulnerability in its processors that can be potentially exploited by
+malware to extract encryption keys and other sensitive info from
+applications.
+ 
