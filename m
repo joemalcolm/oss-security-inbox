@@ -1,36 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/25/5
-Message-ID: <CA+fCnZf1bGzpUUqUWamvLwP+x=pmMmojRsn9jRma9GsHnaZhFQ@mail.gmail.com>
-Date: Fri, 25 May 2018 17:07:08 +0200
-From: Andrey Konovalov <andreyknvl@...il.com>
-To: Evgenii Shatokhin <eshatokhin@...tuozzo.com>
-Cc: oss-security@...ts.openwall.com, Vladis Dronov <vdronov@...hat.com>
-Subject: Re: CVE-2018-1130: Linux kernel: dccp: a null pointer dereference in net/dccp/output.c:dccp_write_xmit
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/26/6
+Message-Id: <1093581530041612@web14o.yandex.ru>
+Date: Tue, 26 Jun 2018 22:33:32 +0300
+From: James Sirota <jsirota@...che.org>
+To: oss-security@...ts.openwall.com, security@...ron.apache.org, james sirota <jsirota@...tonworks.com>, dev <dev@...ron.apache.org>
+Subject: CVE-2018-1273 fixed in Metron 0.5.0
 Content-Type: text/plain; charset=utf-8
 
-On Fri, May 25, 2018 at 2:04 PM, Evgenii Shatokhin
-<eshatokhin@...tuozzo.com> wrote:
-> If I understand it correctly, Syzkaller programs run as root. Therefore, it
-> is still needed to check which of the bugs it has found are security flaws.
 
-No, syzkaller/syzbot runs programs in a user namespace, so any distro
-that allows unprivileged users to create user namespaces (e.g. Ubuntu)
-is vulnerable to most of the bugs syzbot finds.
+The following CVE was fixed in Metron 0.5.0:
 
-But nevertheless all those bugs need to be checked whether they
-actually are security flaws, and that requires quite a lot of effort.
+[CVEID]: CVE-2018-1273
+[PRODUCT]:Spring Data Commons
+[VERSION]: versions prior to 1.13 to 1.13.10, 2.0 to 2.0.5, and older
+[PROBLEMTYPE]:remote code execution attack
+[REFERENCES]: https://pivotal.io/security/cve-2018-1273
+[DESCRIPTION]:
 
-> As for this particular bug in dccp_write_xmit() - I stumbled upon that
-> Syzbot's report and checked that the bug was exploitable by an unprivileged
-> user if dccp modules were loaded. Then I reported the problem to RedHat, and
-> they desided to request a CVE for that. The problem is not critical for
-> RHEL, by the way, but still.
->
-> I don't know, if the process was the same for other bugs found by Syzkaller
-> they requested CVEs for.
+Spring Data Commons, versions prior to 1.13 to 1.13.10, 2.0 to 2.0.5, and older unsupported versions, contain a property binder vulnerability caused by improper neutralization of special elements. An unauthenticated remote malicious user (or attacker) can supply specially crafted request parameters against Spring Data REST backed HTTP resources or using Spring Data’s projection-based request payload binding hat can lead to a remote code execution attack.
 
-OK, if the process was like that for the rest of those bugs, that
-explains a somewhat random selection of syzbot bugs for which CVEs
-were assigned :)
-
-Thanks!
