@@ -1,37 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/13/14
-Message-ID: <54f8ab08-bb13-3b01-4f32-78d804ab95d7@uwalumni.com>
-Date: Thu, 13 Dec 2018 18:07:32 -0500
-From: Nicholas Luedtke <nicholas.luedtke@...lumni.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: userfaultfd bypasses tmpfs file
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/26/5
+Message-ID: <195286405.46114672.1530032082079.JavaMail.zimbra@redhat.com>
+Date: Tue, 26 Jun 2018 12:54:42 -0400 (EDT)
+From: Vladis Dronov <vdronov@...hat.com>
+To: Alexander Potapenko <glider@...gle.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2018-1000204: Linux kernel 3.18 to 4.16 infoleak due to incorrect handling of SG_IO ioctl
 Content-Type: text/plain; charset=utf-8
 
+Hello, Alexander,
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+> > I may not got smth correctly, but for now I do not see CVE-2018-1000204
+> > as a security flaw and I believe a reject request to MITRE should be
+> > issued.
+> How do I proceed with this?
 
-We have also been compiling and presenting the CVEs on a per stream
-basis at https://www.linuxkernelcves.com because the question of which
-upstream stable branch to choose has been asked on a enterprise level
-many times. Of course, once you choose once you still have to track the
-changes (or lack there of).
+I believe it is: https://cveform.mitre.org/ -> Request an update to an existing
+CVE Entry -> Rejection
 
-- -nsl
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEuBmjxk1e65HSx2v8v5sO3DqymUgFAlwS5jQACgkQv5sO3Dqy
-mUgMCRAApsDHQLfTisj7B4IQZ7oIvZCu1eW48nwTYTN+fSKOe6ocnS/hBAyPDCUk
-cyCRY95qJqNYR3Vqi2kBzreXbv+m7i+Qfi6uJaBQdPVwBe2nAtgNxMBbduT6dQcR
-oLwpPmZQ3deSgZG5z5BVtiDXVI93PWgqeH41oCS8Ui8ZQq1QfyGn1dmXGZUw6uK/
-tZcgdUkohc57Di46U+/NIeqLQv7dp/siifq+MSI+7zikF/+cPlXd70qOAFNMxM+6
-slYflxu41+LQELDepiQpRZq9HFZNrj7+9Evn3la1w8zYiuOWsKYsdb5xkOT5rkCU
-c6Vo+mjOVwmdWvt3ZxbGVmbU55o76EFy/KhB0mWyzDeSV73+1kat2RR4R6BMHZdg
-dvF3og5xnL+4mVeOIEoxO8EFD22051ORuyvoPvgJIk70M1uhboaGyYAA2Qs6kcI8
-gPJYTg389+couSXNd9CAJ3Hv6qyHTyk93NzBG1S/RF7kKRMtfOqBFQub4EHWoGMp
-xxJVgUSQUwtmTUowB9s8/W53CUeAR535dx8+tKatY3e1qOx81JzLoI+HouQ7K9XS
-c6zwQ15+K+IYsCsbHG7z7saDOjxJQTRBcTSqTtyHlrDiydOkh8rj/x1V28QILqvx
-C3v8LlYALivFVZXzSVe5aWbsOcCxhsfgAZEPMu+SqKTwdO1/3CA=
-=MALv
------END PGP SIGNATURE-----
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
 
