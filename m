@@ -1,60 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/19/4
-Message-ID: <CAL3XhzYp1A0UY8nDW_sQXR_B3NoOwEsakh0J=oma46HB9zFx=g@mail.gmail.com>
-Date: Mon, 19 Mar 2018 11:53:13 +0000
-From: Ricter Zheng <ricterzheng@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/26/4
+Message-ID: <20180626160228.GA30329@kitenet.net>
+Date: Tue, 26 Jun 2018 12:02:28 -0400
+From: Joey Hess <id@...yh.name>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: maliciously crafted notebook files in Jupyter
+Subject: CVE-2018-10857 and CVE-2018-10859: git-annex private data exposure
 Content-Type: text/plain; charset=utf-8
 
-Hi Thomas Klutver,
+CVE-2018-10857: Some uses of git-annex were vulnerable to a private data
+exposure and exfiltration attack. It could expose the content of files
+located outside the git-annex repository, or content from a private web
+server on localhost or the LAN. Joey Hess discovered this attack.
 
-I am a student from china major in information security, I'm very interest
-about the vulnerability. I tried to reproduction the vulnerability but
-failed, so can you provide some technology detail about it?
+CVE-2018-10859: A malicious server for a special remote could
+trick git-annex into decrypting a file that was encrypted to the user's gpg
+key. This attack could be used to expose encrypted data that was never
+stored in git-annex. Daniel Dent discovered this attack in collaboration
+with Joey Hess.
 
-Thank you.
---
-Ricter Zheng
+git-annex version 6.20180626 fixes these problems.
 
-Thomas Kluyver <thomas@...yver.me.uk>于2018年3月15日周四 下午10:27写道：
+https://git-annex.branchable.com/security/CVE-2018-10857_and_CVE-2018-10859/
 
-> Email address of requester: security@...thon.org, thomas@...yver.me.uk,
-> benjaminrk@...il.com, jkamens@...ntopian.com, ssanderson@...ntopian.com
->
-> Software name: Jupyter Notebook (formerly IPython Notebook)
-> Type of vulnerability: Maliciously forged file
-> Attack outcome: Possible remote execution
->
-> Vulnerability: A maliciously forged notebook file can bypass sanitization
-> to execute Javascript in the notebook context. Specifically, invalid HTML
-> is 'fixed' by jQuery after sanitization, making it dangerous.
->
-> Affected versions:
->
-> - notebook ≤ 5.4.0
->
-> URI with issues:
->
-> - GET /notebook/**
->
-> Patches:  not yet finalised
->
-> Mitigations:
->
-> Upgrade to Jupyter notebook 5.4.1 or 5.5 once available.
-> If using pip,
->
->     pip install --upgrade notebook
->
-> For conda:
->
->     conda update conda
->     conda update notebook
->
-> Vulnerability reported by vkgonka@...l.ru , via Jonathan Kamens at
-> Quantopian
->
-> --
-Ricter Z
+-- 
+see shy jo
 
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
