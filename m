@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1474" "Sunday" "18" "September" "2016" "15:23:32" "+0200" "=?UTF-8?B?Um9iZXJ0IMWad2nEmWNraQ==?=" "robert@swiecki.net" "<CAP145pg=8HG5oAJqBTY71pVCEBsqACFeN3DV35ANjckixNhyCA@mail.gmail.com>" "53" "Re: [oss-security] CVE request - openjpeg null ptr dereference" nil nil nil "9" "2016091813:23:32" "[oss-security] CVE request - openjpeg null ptr dereference" (number mark "U       robert@swiec Sep 18   53/1474  " thread-indent "\"Re: [oss-security] CVE request - openjpeg null ptr dereference\"\n") "<7c197fe9-19b4-6d6b-69a9-5504a9efbcb2@724safe.com>" ("<7c197fe9-19b4-6d6b-69a9-5504a9efbcb2@724safe.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1517" "Tuesday" "26" "June" "2018" "15:45:57" "+0200" "Alexander Potapenko" "glider@google.com" "<CAG_fn=UCp-bw7312gxmSP8d1ioYr1YBmOuSiSsJKCvJakzHS4A@mail.gmail.com>" "47" "Re: [oss-security] CVE-2018-1000204: Linux kernel 3.18 to 4.16 infoleak due to incorrect handling of SG_IO ioctl" nil nil nil "6" "2018062613:45:57" "[oss-security] CVE-2018-1000204: Linux kernel 3.18 to 4.16 infoleak due to incorrect handling of SG_IO ioctl" (number mark "U       glider@googl Jun 26   47/1517  " thread-indent "\"Re: [oss-security] CVE-2018-1000204: Linux kernel 3.18 to 4.16 infoleak due to incorrect handling of SG_IO ioctl\"\n") "<460649570.45004048.1529674363441.JavaMail.zimbra@redhat.com>" ("<CAG_fn=VEy8E4C4gTC2wZ-FSma5Lh5c5mtxTmhfdFKN_TSjvggQ@mail.gmail.com>" "<460649570.45004048.1529674363441.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26303 invoked by uid 550); 18 Sep 2016 13:23:46 -0000
+Received: (qmail 15686 invoked by uid 550); 26 Jun 2018 13:46:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,90 +12,92 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26284 invoked from network); 18 Sep 2016 13:23:45 -0000
+Received: (qmail 15662 invoked from network); 26 Jun 2018 13:46:20 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=swiecki.net; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=1NaFF45BMKZAJA3S3ZDDNM7BXv1tThFd9SoZKzO0mS0=;
-        b=BbwkzYYSDRpx4r+yMobsgDiummo3MqSxWqp6GDwZXqL6qblJzdN0RKRMUrfZAJbJPt
-         NeIfbuivBeKvNmArXPh+gEiSHTnP804EcSI8LH0yd+kmTnqqO9xD9GBBUcy+BiLQA8NZ
-         ho1gVcrBQtQPPGCSfV5Vrcitj4NHAL+3jgTeo=
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Aro17a7jtvuBCxLXcWjsV+prl1lERmlognR4uvkR3l8=;
+        b=qD0odOQGAGUoFG+Jkk4EMqvY73u7GjQETUJPkry5EpYd8DiPihysKm8RbksLLYIYwE
+         4SZNLsHJE2g+Kmh9fIF1SLdzysGJEB5cfLsxIC8IkkOyLzqdHWNo5mnJfBdly6yaPVh4
+         S4rgr+M9pKZr6UeV5xQfnNvvZ3I9Bur+rBFUACMnlxqm/C1J/oGMI7S9xyMCxzC0orAu
+         m84sS9pU/OSOfSEMLvpJWSe1oH5NSMK1IPuXLQ+V6BRSR9mEho8abbMV4rOwQPnFgWXw
+         ciw40apo+Cmp0cq9Wwwbjn6/XHYRSeMwUfEHxSdh7vkluQJ/k/WhmKG8/0V9p/eOMGHz
+         jD7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=1NaFF45BMKZAJA3S3ZDDNM7BXv1tThFd9SoZKzO0mS0=;
-        b=SW47/a/nS5FIrogCWWvc79iyMfRS3nZygnQGMbiUFkTdEECG/2RpRtWXHWDQnMLXMi
-         GaDtrlpT0j0IzxDxIuboipzsT2/xF/8pRf2D5k0fmthczFlv8mYFvb7zC15oqwQpNasb
-         J7DxoINT63cmDiDZXqwKH68p+yKLNiTMwzypq6r2ou+0yyAoc8dyZsng3NrtxKwAKhsB
-         r7pHykI+57yKhiVwdpN6mICI9mKoNYibBaW32cidyNWhZT3YFuJXnLUbDFy43p11I4lG
-         /TOJwfNETEFC4trH9zTzZKrqAnxRAW1MKzM9Q6xeKJtfTA+IX3AA/OmYA3RiY3CIGf3n
-         o+vQ==
-X-Gm-Message-State: AE9vXwOljNibdrUHm3te/eZo68pn9JgvfMYhYrNQyqAGof/giG9FjP/piGnO6ApCzzWbCJ4DWMwL5onU9sy8Vg==
-X-Received: by 10.55.141.5 with SMTP id p5mr25271771qkd.223.1474205012569;
- Sun, 18 Sep 2016 06:23:32 -0700 (PDT)
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Aro17a7jtvuBCxLXcWjsV+prl1lERmlognR4uvkR3l8=;
+        b=ctJyiLL2t0FRoa9mFdlYrrpzS95hOdoND/l97xQoDvDZmzmUeOLacemb4GpvycpnhF
+         G2CGuVsFdD630wXA4B+TSyCUt3i/YCkHz/0BBjNpDCPeCPkw3o8ZqYewBujXU47nRGCV
+         MFXR1Vkr+k0QFUtu94sTlwRUFUwnGFpUfp8ZOtcQd7DMyG0S7nfodEXSzS/Z4HXEC8wD
+         UYALbSDnmDB/8eI5drFBur1wvtIlc5K49N7Bpz2Fv/2Mx6CF//zSiE99K/UltCQIoIka
+         4IzZvJewE0WVGOZtlLs4VemK8Gy+4wIt7dc4VQQ/zCZoU3ZO3AOlAYhOsIGUTZoudUcE
+         2E3g==
+X-Gm-Message-State: APt69E2m5GyECCE24TX1TaInsBFAlKVlOY+rH329O4Ykvj4FQcum2WIZ
+	CvPfkP7DITg0wZ7GPwZNS3YL76JiOEScEtBh+VjlSg==
+X-Google-Smtp-Source: AAOMgpcdOwL3rt4CZfjxWVwNwvh7KvpevLbeV1Mix4MyOcRe9DAKPv3zHSD8EbFr2MeKJqDo4SCGDrvDYBj+0/rsdck=
+X-Received: by 2002:ab0:663:: with SMTP id f90-v6mr982442uaf.167.1530020768808;
+ Tue, 26 Jun 2018 06:46:08 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <7c197fe9-19b4-6d6b-69a9-5504a9efbcb2@724safe.com>
-References: <7c197fe9-19b4-6d6b-69a9-5504a9efbcb2@724safe.com>
-From: =?UTF-8?B?Um9iZXJ0IMWad2nEmWNraQ==?= <robert@swiecki.net>
-Date: Sun, 18 Sep 2016 15:23:32 +0200
-Message-ID: <CAP145pg=8HG5oAJqBTY71pVCEBsqACFeN3DV35ANjckixNhyCA@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8
+References: <CAG_fn=VEy8E4C4gTC2wZ-FSma5Lh5c5mtxTmhfdFKN_TSjvggQ@mail.gmail.com>
+ <460649570.45004048.1529674363441.JavaMail.zimbra@redhat.com>
+In-Reply-To: <460649570.45004048.1529674363441.JavaMail.zimbra@redhat.com>
+From: Alexander Potapenko <glider@google.com>
+Date: Tue, 26 Jun 2018 15:45:57 +0200
+Message-ID: <CAG_fn=UCp-bw7312gxmSP8d1ioYr1YBmOuSiSsJKCvJakzHS4A@mail.gmail.com>
+To: Vladis Dronov <vdronov@redhat.com>
+Cc: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] CVE request - openjpeg null ptr dereference
+Subject: Re: [oss-security] CVE-2018-1000204: Linux kernel 3.18 to 4.16
+ infoleak due to incorrect handling of SG_IO ioctl
 
-Hi,
+On Fri, Jun 22, 2018 at 3:32 PM Vladis Dronov <vdronov@redhat.com> wrote:
+>
+> Hello, Alexander,
+Hi Vladis,
+> Could you please, explain, why do you think CVE-2018-1000204 is a security
+> flaw?
+>
+> > The problem has limited scope, as users don't usually have permissions
+> > to access SCSI devices. On the other hand, e.g. the Nero user manual
+> > suggests doing `chmod o+r+w /dev/sg*` to make the devices accessible.
+>
+> There is a check in the kernel in sg_build_indirect() exactly for this
+> situation:
+>
+>         [drivers/scsi/sg.c]
+>         if (!capable(CAP_SYS_ADMIN) || !capable(CAP_SYS_RAWIO))
+>                 gfp_mask |=3D __GFP_ZERO;
+Yes, you're right. It appears unlikely that a user has both
+CAP_SYS_ADMIN and CAP_SYS_RAWIO.
 
-2016-09-18 14:41 GMT+02:00 vul@724safe <vul@724safe.com>:
-> # Vulnerability
+> This means non-root user will get zero-ed pages even if it has o+rw access
+> to /dev/sg*. Tests of your reproducer on systems available to me confirm
+> this, i.e. non-root user gets a zero-ed out buffer even if it is able to
+> access /dev/sg*.
+>
+> I may not got smth correctly, but for now I do not see CVE-2018-1000204
+> as a security flaw and I believe a reject request to MITRE should be
+> issued.
+How do I proceed with this?
+>
+> Best regards,
+> Vladis Dronov | Red Hat, Inc. | Product Security Engineer
 
-Would you have an idea who (and how) is exactly *vulnerable* to this
-specific vulnerability?
+Thank you,
 
-> openjpeg null ptr dereference in convert.c:1331
->
-> # Version
-> 2.1.1  ( http://www.openjpeg.org/ )
->
-> # Address Sanitizer Output
-> ASAN:SIGSEGV
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> =3D=3D7358=3D=3DERROR: AddressSanitizer: SEGV on unknown address 0x000000=
-00 (pc
-> 0x0815d204 bp 0xff846938 sp 0xff846380 T0)
->     #0 0x815d203 in skip_white
-> /home/starlab/fuzzing/openjpeg/src/bin/jp2/convert.c:1331
->     #1 0x8135d81 in main
-> /home/starlab/fuzzing/openjpeg/src/bin/jp2/opj_compress.c:1723
->     #2 0xf7343636 in __libc_start_main ??:?
->     #3 0x807a31b in _start ??:?
->
-> # PoC
-> See poc.ppm
->
-> # Analysis
-> In convert.c:1483 and convert.c:1485, variable s is uncheck after
-> skip_int is called.
-> A null ptr will be passed to skip_int again and will cause a null ptr
-> dereference.
->
-> # Report Timeline
-> 2016-09-16: FB3F15 of STARLAB discovered this issue
-> 2016-09-18:Patch released
->
-> # Credit
-> FB3F15 of STARLAB
->
-> # PoC
-> https://github.com/STARLABSEC/pocs/raw/master/openjpeg-nullptr-github-iss=
-ue-842.ppm
->
-> # External link
-> https://github.com/uclouvain/openjpeg/issues/843
 
 --=20
-Robert =C5=9Awi=C4=99cki
+Alexander Potapenko
+Software Engineer
+
+Google Germany GmbH
+Erika-Mann-Stra=C3=9Fe, 33
+80636 M=C3=BCnchen
+
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+Registergericht und -nummer: Hamburg, HRB 86891
+Sitz der Gesellschaft: Hamburg
