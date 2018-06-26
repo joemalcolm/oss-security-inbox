@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["457" "Wednesday" "7" "October" "2020" "21:00:35" "+0300" "Georgi Guninski" "gguninski@gmail.com" "<CAGUWgD_U_oDLPbhAGa=tAaUf3OFM9Ac9j19nwyY-tf7KkQipag@mail.gmail.com>" "17" "[oss-security] Debian FEATURE: /home/loser is with permissions 755, default umask 0022" "^Cc:" nil nil "10" "2020100718:00:35" "[oss-security] Debian FEATURE: /home/loser is with permissions 755, default umask 0022" (number mark "        gguninski@gm Oct  7   17/457   " thread-indent "\"[oss-security] Debian FEATURE: /home/loser is with permissions 755, default umask 0022\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Debian FEATURE: /home/loser is with permissions 755, default umask 0022" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["747" "Tuesday" "26" "June" "2018" "22:33:32" "+0300" "James Sirota" "jsirota@apache.org" "<1093581530041612@web14o.yandex.ru>" "12" "[oss-security] CVE-2018-1273 fixed in Metron 0.5.0" nil nil nil "6" "2018062619:33:32" "[oss-security] CVE-2018-1273 fixed in Metron 0.5.0" (number mark "U       jsirota@apac Jun 26   12/747   " thread-indent "\"[oss-security] CVE-2018-1273 fixed in Metron 0.5.0\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13640 invoked by uid 550); 7 Oct 2020 18:20:50 -0000
+Received: (qmail 30400 invoked by uid 550); 26 Jun 2018 19:37:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,56 +11,38 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5865 invoked from network); 7 Oct 2020 18:00:58 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=ulKLwLcLXmjuVt2me/YTWM8w2n+YQjYZuwTxZccO0tw=;
-        b=rijjayk+oMe5egtjAEBFmWiFHm8ErUzhDyKBiBIG9glX3C8cyQ/8vNAz9DAq09vDS1
-         jeNmPj18ZUOwWM/TxQCKD17SiIWxiViGEBXgSeP6ElKql+QgUvafjvA9wLtmr6U9WKfE
-         aqPGHttEhzk8qogU8LrqmfM0rdeETyWvWZ810cwD7n3s1JGwGKPLG0nE5teMQR9+Jncn
-         PAQ4MNdB5Nkwh7qNMtZ1Klyy9BdykpTqyYrPG8pSCWAf/i0p/Zo/8kPLkvySoY4Vvl+j
-         8Jdv1HjsJk2YXIAYzwxrzzX4qnsws+3WaCgd805sPgHkWi3jrqcH87UNAOei7Zi+450y
-         WRyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=ulKLwLcLXmjuVt2me/YTWM8w2n+YQjYZuwTxZccO0tw=;
-        b=jn8XmwTELakMQpEPwqLbBg/1V59uNkzxaIpDQlJnZNNy0ZwGm8hW8aLSiKrP2iHhdm
-         Mq90GAHPyYtufz0g3e6Lq8SgtUSIhfXU/8/qz9670oSlwFRKCO71j3QnrZcclo/pAujK
-         eMntYWrIRDDJepQ1NztUbC4LAf1LZtNGkjCr0bDuVDJoLfqGGTiw/hzVrCVRFSoZelDL
-         m7WH/ZQfUUtrcCPh0jVC4QhdNB0SWZNzBFwCDh+yvgweWCGwk1LgG30H1Op4Yhk6fSuG
-         ttDCL/hDT48ZZLe5HzvFYGbYXzfTs5oGEcy907eOcAtzNC645/+CuQG0dCKyH9oov+YK
-         5H5A==
-X-Gm-Message-State: AOAM531cYEgcKJNceJ/MDyXWBgvcnaQmjpWKSGjbk28R1IyIiz7fjmty
-	IWe/9MxH/hVvcMuVcuyLpeWFXJCW8SDK6oIhKCdVLrrjs40=
-X-Google-Smtp-Source: ABdhPJySasUr6lY9sMZ9Pn3Ay8oHexo+Fvs3wCu1NSAMkxG1+MM4eMRoq+d/0VWh0F7Za3Z1lXXhMlOWHegqUVwtLhY=
-X-Received: by 2002:adf:b1cb:: with SMTP id r11mr4885529wra.339.1602093647147;
- Wed, 07 Oct 2020 11:00:47 -0700 (PDT)
-MIME-Version: 1.0
-Message-ID: <CAGUWgD_U_oDLPbhAGa=tAaUf3OFM9Ac9j19nwyY-tf7KkQipag@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Cc: cate@debian.org
-Date: Wed, 7 Oct 2020 21:00:35 +0300
-From: Georgi Guninski <gguninski@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Debian FEATURE: /home/loser is with permissions 755, default umask 0022
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Received: (qmail 26583 invoked from network); 26 Jun 2018 19:33:45 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.com; s=mail; t=1530041612;
+	bh=CFwxfRosYJs5/NILBV7zz36LUmf3WIKS2OEbQrLgCtk=;
+	h=From:To:Subject:Date:Message-Id;
+	b=PcO4iUJPO6sKsHdf7Ra/oTLhpimpyGlCn3PJBWwsBEK7tXqKp67yg4WoV+W/aeb2+
+	 XBQHg0j5r4oLYHy/rhNoy5iF7ERu/hduvLkdmvIQJ1/wwwqwDj0kX30Fb6s+92PCS9
+	 ZaLSxp4cNs7j7XJVQjHA2sD7igPtrHPGRVWrFmP8=
+Authentication-Results: mxback7j.mail.yandex.net; dkim=pass header.i=@yandex.com
+From: James Sirota <jsirota@apache.org>
+Envelope-From: james-sirota@yandex.com
+To: oss-security@lists.openwall.com,
+	security@metron.apache.org,
+	james sirota <jsirota@hortonworks.com>,
+	dev <dev@metron.apache.org>
+MIME-Version: 1.0
+X-Mailer: Yamail [ http://yandex.ru ] 5.0
+Date: Tue, 26 Jun 2018 22:33:32 +0300
+Message-Id: <1093581530041612@web14o.yandex.ru>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Subject: [oss-security] CVE-2018-1273 fixed in Metron 0.5.0
 
-https://lists.debian.org/debian-security/2020/10/msg00000.html
 
-===
-/home/loser is with permissions 755, default umask 0022
+The following CVE was fixed in Metron 0.5.0:
 
-on multiuser machines this sucks much.
+[CVEID]: CVE-2018-1273
+[PRODUCT]:Spring Data Commons
+[VERSION]: versions prior to 1.13 to 1.13.10, 2.0 to 2.0.5, and older
+[PROBLEMTYPE]:remote code execution attack
+[REFERENCES]: https://pivotal.io/security/cve-2018-1273
+[DESCRIPTION]:
 
-on a multiuser debian mirror we found a lot of data,
-including the wordpress password of the admin.
-===
+Spring Data Commons, versions prior to 1.13 to 1.13.10, 2.0 to 2.0.5, and older unsupported versions, contain a property binder vulnerability caused by improper neutralization of special elements. An unauthenticated remote malicious user (or attacker) can supply specially crafted request parameters against Spring Data REST backed HTTP resources or using Spring Data’s projection-based request payload binding hat can lead to a remote code execution attack.
 
-Then in the thread someone with @debian.org email explains
-to me it is a feature, not a bug.
-
-In a addition, they suggest to tell them the mirror, lol.
-
-Are debian detached from reality?
