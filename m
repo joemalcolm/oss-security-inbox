@@ -1,39 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/12/6
-Message-ID: <87efjkntal.fsf@hope.eyrie.org>
-Date: Thu, 12 Apr 2018 12:01:06 -0700
-From: Russ Allbery <eagle@...ie.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/27/9
+Message-ID: <CAFRnB2VHcobRNJHiz_eKmf6qnrRvmvicjat21QXjwYWFY7wYZw@mail.gmail.com>
+Date: Wed, 27 Jun 2018 07:58:05 -0400
+From: Alex Gaynor <alex.gaynor@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: Terminal Control Chars
+Subject: Re: CVE for PyYAML RCE-factory API
 Content-Type: text/plain; charset=utf-8
 
-Ian Zimmerman <itz@...y.loosely.org> writes:
+Thanks -- this issue was assigned CVE-2017-18342.
 
-> The term "invisible character" has some obvious (if perhaps informal)
-> meaning.  But I don't really know what "control character" means.  Is a
-> page separator (^L) a control character, for example?  Is DEL one (ASCII
-> 127)?
+Alex
 
-I think a useful definition of "control character" in this context (and I
-realize this doesn't exactly match the ASCII definition) is a character
-that results in an action other than insertion being taken, as opposed to
-a glyph (possibly invisible) being inserted (and not counting contexts
-such as vi outside of insert mode where basically all characters are
-interpreted as actions).
+On Tue, Jun 26, 2018 at 11:32 PM Seth Arnold <seth.arnold@...onical.com>
+wrote:
 
-CR and LF would not be control characters in that definition, since they
-insert a newline and don't cause an action.  Similarly, TAB wouldn't be a
-control character in that definition.  DEL would be if it deleted a
-character as opposed to inserting a ^? sequence.  ESC would be if it
-changed terminal modes or colors or did all the other things escape
-sequences can do.  BEL would be if it rung the terminal bell.  And so
-forth.
+> On Tue, Jun 26, 2018 at 09:18:39PM -0400, Alex Gaynor wrote:
+> > Because of the degree to which this API presented a footgun, I would like
+> > to request a CVE for it.
+>
+> This makes sense to me. You can make CVE requests on:
+>
+> https://cveform.mitre.org/
+>
+> Thanks
+>
 
-I think it's reasonable to expect that pasting something into a terminal
-will cause insertion of text, including whitespace, but will not cause the
-terminal to take *actions* that are not the insertion of text.  Certainly,
-I think there are a lot of people in the world who do have that
-assumption.
 
 -- 
-Russ Allbery (eagle@...ie.org)              <http://www.eyrie.org/~eagle/>
+"I disapprove of what you say, but I will defend to the death your right to
+say it." -- Evelyn Beatrice Hall (summarizing Voltaire)
+"The people's good is the highest law." -- Cicero
+GPG Key fingerprint: D1B3 ADC0 E023 8CA6
+
