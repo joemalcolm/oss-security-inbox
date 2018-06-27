@@ -1,4 +1,9 @@
-Received: (qmail 11645 invoked by uid 550); 14 May 2023 20:26:59 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["15875" "Wednesday" "27" "June" "2018" "21:03:58" "+0000" "Xen.org security team" "security@xen.org" "<E1fYHba-0005FA-Vk@xenbits.xenproject.org>" "319" "[oss-security] Xen Security Advisory 265 (CVE-2018-12893) - x86: #DB exception safety check can be triggered by a guest" nil nil nil "6" "2018062721:03:58" "[oss-security] Xen Security Advisory 265 (CVE-2018-12893) - x86: #DB exception safety check can be triggered by a guest" (number mark "U       security@xen Jun 27  319/15875 " thread-indent "\"[oss-security] Xen Security Advisory 265 (CVE-2018-12893) - x86: #DB exception safety check can be triggered by a guest\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 28289 invoked by uid 550); 27 Jun 2018 21:04:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,108 +12,336 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 10111 invoked from network); 14 May 2023 20:24:34 -0000
-Date: Sun, 14 May 2023 22:24:09 +0200
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20230514202409.GA17111@openwall.com>
-References: <17f7ebb7-22ee-e68f-02ac-8e2740e7f015@canonical.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Received: (qmail 28139 invoked from network); 27 Jun 2018 21:04:22 -0000
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
+MIME-Version: 1.0
+X-Mailer: MIME-tools 5.508 (Entity 5.508)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1fYHba-0005FA-Vk@xenbits.xenproject.org>
+Date: Wed, 27 Jun 2018 21:03:58 +0000
+Subject: [oss-security] Xen Security Advisory 265 (CVE-2018-12893) - x86: #DB exception
+ safety check can be triggered by a guest
+
+--=separator
+Content-Type: text/plain; charset="utf-8"
 Content-Disposition: inline
-In-Reply-To: <17f7ebb7-22ee-e68f-02ac-8e2740e7f015@canonical.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Clarification on embargoed testing in a partner cloud
+Content-Transfer-Encoding: 7bit
 
-Hi Marc,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Thank you for bringing this up.  I'll share my current thoughts below.
-I do not have a conclusion nor a decision yet, but I hope we'll arrive
-at one in further discussion.
+            Xen Security Advisory CVE-2018-12893 / XSA-265
+                               version 3
 
-On Thu, May 11, 2023 at 07:36:44AM -0400, Marc Deslauriers wrote:
-> The Ubuntu security team shares and obtains information about embargoed 
-> issues from the distros and linux-distros mailing lists.
-> 
-> One of our large cloud partners has asked the Ubuntu security team to do 
-> automated testing of embargoed security updates on their public cloud 
-> before the CRD. While technically we would not be directly sharing details 
-> of embargoed issues with them as the tests will be run under accounts owned 
-> by the Ubuntu security team, they will be run on their infrastructure. As 
-> such, this may hinder our ability to conduct a comprehensive internal 
-> investigation of any leak that may occur.
-> 
-> I'm not exactly sure how this scenario fits within the policy of these 
-> lists, and would like to validate before we go ahead. ( Policy can be found 
-> here: https://oss-security.openwall.org/wiki/mailing-lists/distros )
-> 
-> Would testing embargoed updates obtained from the distros and linux-distros 
-> lists on an external cloud infrastructure violate the terms of those 
-> mailing lists?
+      x86: #DB exception safety check can be triggered by a guest
 
-I think this is a gray area.  The policy talks about not sharing beyond
-the need-to-know for getting the issue fixed for your distro's users.
-It also talks about not delivering or deploying.  However, usage of
-cloud resources under the distro's accounts is not exactly sharing, and
-testing in the target environment is relevant to getting the issue fixed
-for the distro's users.
+UPDATES IN VERSION 3
+====================
 
-Sure this adds risks.  However, realistically we probably already do
-have distros on the list that use a public cloud for some processing of
-embargoed information.  At least Amazon Linux probably uses AWS -
-probably dedicated instances with no other concurrent VMs on the same
-hardware, but still.  (I am just guessing here.  Maybe it's more
-separated from the public cloud.)
+Public release.
 
-Also, some use third-party e-mail servers, e.g. domains pointing to
-Gmail MX'es.  While mail relayed by (linux-)distros arrives encrypted
-(except for headers), I doubt all other e-mail communication within the
-distros' teams is - and if it is not, then they rely on a similar
-security and legal boundary already (the distro's accounts with a
-third-party provider).  If we don't consider sending e-mail through
-Google servers as sharing with Google, then I guess usage of Google's
-cloud is not sharing either.
+ISSUE DESCRIPTION
+=================
 
-Thus, it could be inconsistent to say that, no, Ubuntu cannot test in
-the cloud while some other distros might be exposing the information to
-similar cloud risks.  It would be wrong to penalize Ubuntu for asking.
+One of the fixes in XSA-260 added some safety checks to help prevent Xen
+livelocking with debug exceptions.  Unfortunately, due to an oversight, at
+least one of these safety checks can be triggered by a guest.
 
-Another angle is: what's the motivation for testing in the cloud?
-I guess it's about compatibility with the cloud environment
-(hypervisor?), so it is perhaps most relevant to testing of updates to
-low-level components - especially the Linux kernel?  Well, we've granted
-an exception allowing public commits of Linux kernel security fixes.
-Can we at the same time reasonably object to testing of a distro's Linux
-kernel updates under a public cloud account (thus, with more limited
-exposure than the public commits have)?  Well, kind of yes since updates
-can be more revealing than the public fixes - updates typically do
-mention security relevance in change logs.  Also, this exception is made
-use of only for a subset of Linux kernel issues handled on
-linux-distros, not for all.
+IMPACT
+======
 
-That said, maybe exposure of testing in the public cloud can be reduced
-by only doing such testing for low-level packages, not for typical
-userland packages that are not expected to be affected by whether they
-run on Ubuntu's own servers and VMs vs. the cloud?
+A malicious PV guest can crash Xen, leading to a Denial of Service.
 
-Yet another angle is where linux-distros itself is to be hosted.  So
-far, I insist on non-cloud hosting.  Arguably, allowing for processing
-of embargoed information in the cloud by the member distros is a reason
-for me to give in and accept a cloud hosting offer.  OTOH, a distro's
-usage of the cloud exposes somewhat different information to the risks
-than the list's hosting would.  Only issues being handled by that distro
-rather than all, sometimes only in processed form rather than original
-(e.g., binary update packages vs. list messages), with some delay rather
-than immediately, and no exposure of the list's long-term private key.
+VULNERABLE SYSTEMS
+==================
 
-> Would testing embargoed updates on an external cloud 
-> infrastructure be contrary to the expectations of the vendors posting 
-> embargoed issues to those lists?
+All Xen systems which have applied the XSA-260 fix are vulnerable.
 
-Not only "vendors" post embargoed issues to those lists.  I think we
-shouldn't violate any sender's reasonable expectations.  That said,
-vendor postings are an interesting subset.  Maybe other distro vendors
-can comment on this, please?  Marcus from SUSE has already commented
-(thanks!), but I think not yet on this specific aspect.
+Only x86 systems are vulnerable.  ARM systems are not vulnerable.
 
-Alexander
+Only x86 PV guests can exploit the vulnerability.  x86 HVM and PVH
+guests cannot exploit the vulnerability.
+
+An attacker needs to be able to control hardware debugging facilities to
+exploit the vulnerability, but such permissions are typically available
+to unprivileged users.
+
+MITIGATION
+==========
+
+Running only x86 HVM or PVH guests will avoid the vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Andrew Cooper of Citrix.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa265.patch           xen-unstable, Xen 4.10.x, 4.9.x, 4.8.x
+xsa265-4.7.patch       Xen 4.7.x, 4.6.x
+
+$ sha256sum xsa265*
+3eb66ed7251dcc4259eeffe608b2747857e269307d894a1cb950973420184aa7  xsa265.patch
+00faf2a4159698b6540565ece06de103c3547855e2084324ca44772b8a24aa18  xsa265-4.7.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJbM+5JAAoJEIP+FMlX6CvZtSgIAMF8d/3Jor6b0EbW55JSLh76
+56I8QfkqX4Xv/yWri3sXGJmPz7Af/qjDO+Ix5IScq54ugN5C8z7OBcbXFpX1WxNJ
+xCv6QjsbPmGCZHsT+NdWrl/ac6ZH3xlhE+S1awQ+9SkC+r6bRH/iROO+4DhpYQde
+CGoyYIwFq2VJoovh8lWHMsVl8VUXisyDk3bPK17VlAEFF1LuOkaan1UGEKRsciGX
+12IlNw/I6c8a85wWpFtph1AOVZfrodWdwyj8vgLY3MHnEs+86/cm5O4+GxKHezHf
+P5dJDZ38HBPRL1qC+yFRV2sLxLgrc7fYlSWr3/xtOGo23aDLjCvS+FsMfIpyjPQ=
+=sf+j
+-----END PGP SIGNATURE-----
+
+--=separator
+Content-Type: application/octet-stream; name="xsa265.patch"
+Content-Disposition: attachment; filename="xsa265.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNv
+bT4KU3ViamVjdDogeDg2OiBSZWZpbmUgY2hlY2tzIGluICNEQiBoYW5kbGVy
+IGZvciBmYXVsdGluZyBjb25kaXRpb25zCgpPbmUgb2YgdGhlIGZpeCBmb3Ig
+WFNBLTI2MCAoYy9zIDc1ZDY4MjhiYzIgIng4Ni90cmFwczogRml4IGhhbmRs
+aW5nIG9mICNEQgpleGNlcHRpb25zIGluIGh5cGVydmlzb3IgY29udGV4dCIp
+IGFkZGVkIHNvbWUgc2FmZXR5IGNoZWNrcyB0byBoZWxwIGF2b2lkCmxpdmVs
+b2NrcyBvZiAjREIgZmF1bHRzLgoKV2hpbGUgYSBHZW5lcmFsIERldGVjdCAj
+REIgZXhjZXB0aW9uIGRvZXMgaGF2ZSBmYXVsdCBzZW1hbnRpY3MsIGhhcmR3
+YXJlCmNsZWFycyAlZHI3LmdkIG9uIGVudHJ5IHRvIHRoZSBoYW5kbGVyLCBt
+ZWFuaW5nIHRoYXQgaXQgaXMgYWN0dWFsbHkgc2FmZSB0bwpyZXR1cm4gdG8u
+ICBGdXJ0aGVybW9yZSwgJWRyNi5nZCBpcyBndWVzdCBjb250cm9sbGVkIGFu
+ZCBzdGlja3kgKG5ldmVyIGNsZWFyZWQKYnkgaGFyZHdhcmUpLiAgQSBtYWxp
+Y2lvdXMgUFYgZ3Vlc3QgY2FuIHRoZXJlZm9yZSB0cmlnZ2VyIHRoZSBmYXRh
+bF90cmFwKCkgYW5kCmNyYXNoIFhlbi4KCkluc3RydWN0aW9uIGJyZWFrcG9p
+bnRzIGFyZSBtb3JlIHRyaWNreS4gIFRoZSBicmVha3BvaW50IG1hdGNoIGJp
+dHMgaW4gJWRyNgphcmUgbm90IHN0aWNreSwgYnV0IHRoZSBJbnRlbCBtYW51
+YWwgd2FybnMgdGhhdCB0aGV5IG1heSBiZSBzZXQgZm9yCm5vbi1lbmFibGVk
+IGJyZWFrcG9pbnRzLCBzbyBhZGQgYSBicmVha3BvaW50IGVuYWJsZWQgY2hl
+Y2suCgpCZXlvbmQgdGhhdCwgYmVjYXVzZSBvZiB0aGUgcmVzdHJpY3Rpb24g
+b24gdGhlIGxpbmVhciBhZGRyZXNzZXMgUFYgZ3Vlc3RzIGNhbgpzZXQsIGFu
+ZCB0aGUgZmF1bHQgKHJhdGhlciB0aGFuIHRyYXApIG5hdHVyZSBvZiBpbnN0
+cnVjdGlvbiBicmVha3BvaW50cwooaS5lLiBjYW4ndCBiZSBkZWZlcnJlZCBi
+eSBhIE1vdlNTIHNoYWRvdyksIHRoZXJlIHNob3VsZCBiZSBubyB3YXkgdG8K
+ZW5jb3VudGVyIGFuIGluc3RydWN0aW9uIGJyZWFrcG9pbnQgaW4gWGVuIGNv
+bnRleHQuICBIb3dldmVyLCBmb3IgZXh0cmEKcm9idXN0bmVzcywgZGVhbCB3
+aXRoIHRoaXMgc2l0dWF0aW9uIGJ5IGNsZWFyaW5nIHRoZSBicmVha3BvaW50
+IGNvbmZpZ3VyYXRpb24sCnJhdGhlciB0aGFuIGNyYXNoaW5nLgoKVGhpcyBp
+cyBYU0EtMjY1CgpTaWduZWQtb2ZmLWJ5OiBBbmRyZXcgQ29vcGVyIDxhbmRy
+ZXcuY29vcGVyM0BjaXRyaXguY29tPgpSZXZpZXdlZC1ieTogSmFuIEJldWxp
+Y2ggPGpiZXVsaWNoQHN1c2UuY29tPgoKZGlmZiAtLWdpdCBhL3hlbi9hcmNo
+L3g4Ni90cmFwcy5jIGIveGVuL2FyY2gveDg2L3RyYXBzLmMKaW5kZXggZTc5
+Y2E4OC4uM2UwNWNmMSAxMDA2NDQKLS0tIGEveGVuL2FyY2gveDg2L3RyYXBz
+LmMKKysrIGIveGVuL2FyY2gveDg2L3RyYXBzLmMKQEAgLTE4MDksNiArMTgw
+OSwxMyBAQCB2b2lkIGRvX2RlYnVnKHN0cnVjdCBjcHVfdXNlcl9yZWdzICpy
+ZWdzKQogCiAgICAgaWYgKCAhZ3Vlc3RfbW9kZShyZWdzKSApCiAgICAgewor
+ICAgICAgICAvKgorICAgICAgICAgKiAhISEgV0FSTklORyAhISEKKyAgICAg
+ICAgICoKKyAgICAgICAgICogJWRyNiBpcyBtb3N0bHkgZ3Vlc3QgY29udHJv
+bGxlZCBhdCB0aGlzIHBvaW50LiAgQW55IGRlY3Npb25zIGJhc2UKKyAgICAg
+ICAgICogb24gaXRzIHZhbHVlIG11c3QgYmUgY3Jvc3NjaGVja2VkIHdpdGgg
+bm9uLWd1ZXN0IGNvbnRyb2xsZWQgc3RhdGUuCisgICAgICAgICAqLworCiAg
+ICAgICAgIGlmICggcmVncy0+ZWZsYWdzICYgWDg2X0VGTEFHU19URiApCiAg
+ICAgICAgIHsKICAgICAgICAgICAgIC8qIEluIFNZU0VOVEVSIGVudHJ5IHBh
+dGggd2UgY2FuJ3QgemFwIFRGIHVudGlsIEVGTEFHUyBpcyBzYXZlZC4gKi8K
+QEAgLTE4MzAsMzMgKzE4MzcsNDQgQEAgdm9pZCBkb19kZWJ1ZyhzdHJ1Y3Qg
+Y3B1X3VzZXJfcmVncyAqcmVncykKICAgICAgICAgICogQ2hlY2sgZm9yIGZh
+dWx0IGNvbmRpdGlvbnMuICBHZW5lcmFsIERldGVjdCwgYW5kIGluc3RydWN0
+aW9uCiAgICAgICAgICAqIGJyZWFrcG9pbnRzIGFyZSBmYXVsdHMgcmF0aGVy
+IHRoYW4gdHJhcHMsIGF0IHdoaWNoIHBvaW50IGF0dGVtcHRpbmcKICAgICAg
+ICAgICogdG8gaWdub3JlIGFuZCBjb250aW51ZSB3aWxsIHJlc3VsdCBpbiBh
+IGxpdmVsb2NrLgorICAgICAgICAgKgorICAgICAgICAgKiBIb3dldmVyLCBv
+biBlbnRlcmluZyB0aGUgI0RCIGhhbmRsZXIsIGhhcmR3YXJlIGNsZWFycyAl
+ZHI3LmdkIGZvcgorICAgICAgICAgKiB1cyAoYXMgY29uZmlybWVkIGJ5IHRo
+ZSBlYXJsaWVyICVkcjYgYWNjZXNzZXMgc3VjY2VlZGluZyksIG1lYW5pbmcK
+KyAgICAgICAgICogdGhhdCBhIHJlYWwgR2VuZXJhbCBEZXRlY3QgZXhjZXB0
+aW9uIGlzIHJlc3RhcnRhYmxlLgorICAgICAgICAgKgorICAgICAgICAgKiBQ
+ViBndWVzdHMgYXJlIG5vdCBwZXJtaXR0ZWQgdG8gcG9pbnQgJWRyezAuLjN9
+IGF0IFhlbiBsaW5lYXIKKyAgICAgICAgICogYWRkcmVzc2VzLCBhbmQgSW5z
+dHJ1Y3Rpb24gQnJlYWtwb2ludHMgKGJlaW5nIGZhdWx0cykgZG9uJ3QgZ2V0
+CisgICAgICAgICAqIGRlbGF5ZWQgYnkgYSBNb3ZTUyBzaGFkb3csIHNvIHdl
+IHNob3VsZCBuZXZlciBlbmNvdW50ZXIgb25lIGluCisgICAgICAgICAqIGh5
+cGVydmlzb3IgY29udGV4dC4KKyAgICAgICAgICoKKyAgICAgICAgICogSWYg
+aG93ZXZlciB3ZSBkbywgc2FmZXR5IG1lYXN1cmVzIG5lZWQgdG8gYmUgZW5h
+Y3RlZC4gIFVzZSBhIGJpZworICAgICAgICAgKiBoYW1tZXIgYW5kIGNsZWFy
+IGFsbCBkZWJ1ZyBzZXR0aW5ncy4KICAgICAgICAgICovCi0gICAgICAgIGlm
+ICggZHI2ICYgRFJfR0VORVJBTF9ERVRFQ1QgKQotICAgICAgICB7Ci0gICAg
+ICAgICAgICBwcmludGsoWEVOTE9HX0VSUiAiSGl0IEdlbmVyYWwgRGV0ZWN0
+IGluIFhlbiBjb250ZXh0XG4iKTsKLSAgICAgICAgICAgIGZhdGFsX3RyYXAo
+cmVncywgMCk7Ci0gICAgICAgIH0KLQogICAgICAgICBpZiAoIGRyNiAmIChE
+Ul9UUkFQMyB8IERSX1RSQVAyIHwgRFJfVFJBUDEgfCBEUl9UUkFQMCkgKQog
+ICAgICAgICB7Ci0gICAgICAgICAgICB1bnNpZ25lZCBpbnQgYnAsIGRyNyA9
+IHJlYWRfZGVidWdyZWcoNykgPj4gRFJfQ09OVFJPTF9TSElGVDsKKyAgICAg
+ICAgICAgIHVuc2lnbmVkIGludCBicCwgZHI3ID0gcmVhZF9kZWJ1Z3JlZyg3
+KTsKIAogICAgICAgICAgICAgZm9yICggYnAgPSAwOyBicCA8IDQ7ICsrYnAg
+KQogICAgICAgICAgICAgewogICAgICAgICAgICAgICAgIGlmICggKGRyNiAm
+ICgxdSA8PCBicCkpICYmIC8qIEJyZWFrcG9pbnQgdHJpZ2dlcmVkPyAqLwot
+ICAgICAgICAgICAgICAgICAgICAgKChkcjcgJiAoM3UgPDwgKGJwICogRFJf
+Q09OVFJPTF9TSVpFKSkpID09IDApIC8qIEluc24/ICovICkKKyAgICAgICAg
+ICAgICAgICAgICAgIChkcjcgJiAoM3UgPDwgKGJwICogRFJfRU5BQkxFX1NJ
+WkUpKSkgJiYgLyogRW5hYmxlZD8gKi8KKyAgICAgICAgICAgICAgICAgICAg
+ICgoZHI3ICYgKDN1IDw8ICgoYnAgKiBEUl9DT05UUk9MX1NJWkUpICsgLyog
+SW5zbj8gKi8KKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICBEUl9DT05UUk9MX1NISUZUKSkpID09IERSX1JXX0VYRUNVVEUpICkKICAg
+ICAgICAgICAgICAgICB7CisgICAgICAgICAgICAgICAgICAgIEFTU0VSVF9V
+TlJFQUNIQUJMRSgpOworCiAgICAgICAgICAgICAgICAgICAgIHByaW50ayhY
+RU5MT0dfRVJSCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAiSGl0IGlu
+c3RydWN0aW9uIGJyZWFrcG9pbnQgaW4gWGVuIGNvbnRleHRcbiIpOwotICAg
+ICAgICAgICAgICAgICAgICBmYXRhbF90cmFwKHJlZ3MsIDApOworICAgICAg
+ICAgICAgICAgICAgICB3cml0ZV9kZWJ1Z3JlZyg3LCAwKTsKKyAgICAgICAg
+ICAgICAgICAgICAgYnJlYWs7CiAgICAgICAgICAgICAgICAgfQogICAgICAg
+ICAgICAgfQogICAgICAgICB9CiAKICAgICAgICAgLyoKLSAgICAgICAgICog
+V2hhdGV2ZXIgY2F1c2VkIHRoaXMgI0RCIHNob3VsZCBiZSBhIHRyYXAuICBO
+b3RlIGl0IGFuZCBjb250aW51ZS4KLSAgICAgICAgICogR3Vlc3RzIGNhbiB0
+cmlnZ2VyIHRoaXMgaW4gY2VydGFpbiBjb3JuZXIgY2FzZXMsIHNvIGVuc3Vy
+ZSB0aGUKLSAgICAgICAgICogbWVzc2FnZSBpcyByYXRlbGltaXRlZC4KKyAg
+ICAgICAgICogV2hhdGV2ZXIgY2F1c2VkIHRoaXMgI0RCIHNob3VsZCBiZSBy
+ZXN0YXJ0YWJsZSBieSB0aGlzIHBvaW50LiAgTm90ZQorICAgICAgICAgKiBp
+dCBhbmQgY29udGludWUuICBHdWVzdHMgY2FuIHRyaWdnZXIgdGhpcyBpbiBj
+ZXJ0YWluIGNvcm5lciBjYXNlcywKKyAgICAgICAgICogc28gZW5zdXJlIHRo
+ZSBtZXNzYWdlIGlzIHJhdGVsaW1pdGVkLgogICAgICAgICAgKi8KICAgICAg
+ICAgZ3ByaW50ayhYRU5MT0dfV0FSTklORywKICAgICAgICAgICAgICAgICAi
+SGl0ICNEQiBpbiBYZW4gY29udGV4dDogJTA0eDolcCBbJXBzXSwgc3RrICUw
+NHg6JXAsIGRyNiAlbHhcbiIsCg==
+
+--=separator
+Content-Type: application/octet-stream; name="xsa265-4.7.patch"
+Content-Disposition: attachment; filename="xsa265-4.7.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNv
+bT4KU3ViamVjdDogeDg2OiBSZWZpbmUgY2hlY2tzIGluICNEQiBoYW5kbGVy
+IGZvciBmYXVsdGluZyBjb25kaXRpb25zCgpPbmUgb2YgdGhlIGZpeCBmb3Ig
+WFNBLTI2MCAoYy9zIDc1ZDY4MjhiYzIgIng4Ni90cmFwczogRml4IGhhbmRs
+aW5nIG9mICNEQgpleGNlcHRpb25zIGluIGh5cGVydmlzb3IgY29udGV4dCIp
+IGFkZGVkIHNvbWUgc2FmZXR5IGNoZWNrcyB0byBoZWxwIGF2b2lkCmxpdmVs
+b2NrcyBvZiAjREIgZmF1bHRzLgoKV2hpbGUgYSBHZW5lcmFsIERldGVjdCAj
+REIgZXhjZXB0aW9uIGRvZXMgaGF2ZSBmYXVsdCBzZW1hbnRpY3MsIGhhcmR3
+YXJlCmNsZWFycyAlZHI3LmdkIG9uIGVudHJ5IHRvIHRoZSBoYW5kbGVyLCBt
+ZWFuaW5nIHRoYXQgaXQgaXMgYWN0dWFsbHkgc2FmZSB0bwpyZXR1cm4gdG8u
+ICBGdXJ0aGVybW9yZSwgJWRyNi5nZCBpcyBndWVzdCBjb250cm9sbGVkIGFu
+ZCBzdGlja3kgKG5ldmVyIGNsZWFyZWQKYnkgaGFyZHdhcmUpLiAgQSBtYWxp
+Y2lvdXMgUFYgZ3Vlc3QgY2FuIHRoZXJlZm9yZSB0cmlnZ2VyIHRoZSBmYXRh
+bF90cmFwKCkgYW5kCmNyYXNoIFhlbi4KCkluc3RydWN0aW9uIGJyZWFrcG9p
+bnRzIGFyZSBtb3JlIHRyaWNreS4gIFRoZSBicmVha3BvaW50IG1hdGNoIGJp
+dHMgaW4gJWRyNgphcmUgbm90IHN0aWNreSwgYnV0IHRoZSBJbnRlbCBtYW51
+YWwgd2FybnMgdGhhdCB0aGV5IG1heSBiZSBzZXQgZm9yCm5vbi1lbmFibGVk
+IGJyZWFrcG9pbnRzLCBzbyBhZGQgYSBicmVha3BvaW50IGVuYWJsZWQgY2hl
+Y2suCgpCZXlvbmQgdGhhdCwgYmVjYXVzZSBvZiB0aGUgcmVzdHJpY3Rpb24g
+b24gdGhlIGxpbmVhciBhZGRyZXNzZXMgUFYgZ3Vlc3RzIGNhbgpzZXQsIGFu
+ZCB0aGUgZmF1bHQgKHJhdGhlciB0aGFuIHRyYXApIG5hdHVyZSBvZiBpbnN0
+cnVjdGlvbiBicmVha3BvaW50cwooaS5lLiBjYW4ndCBiZSBkZWZlcnJlZCBi
+eSBhIE1vdlNTIHNoYWRvdyksIHRoZXJlIHNob3VsZCBiZSBubyB3YXkgdG8K
+ZW5jb3VudGVyIGFuIGluc3RydWN0aW9uIGJyZWFrcG9pbnQgaW4gWGVuIGNv
+bnRleHQuICBIb3dldmVyLCBmb3IgZXh0cmEKcm9idXN0bmVzcywgZGVhbCB3
+aXRoIHRoaXMgc2l0dWF0aW9uIGJ5IGNsZWFyaW5nIHRoZSBicmVha3BvaW50
+IGNvbmZpZ3VyYXRpb24sCnJhdGhlciB0aGFuIGNyYXNoaW5nLgoKVGhpcyBp
+cyBYU0EtMjY1CgpTaWduZWQtb2ZmLWJ5OiBBbmRyZXcgQ29vcGVyIDxhbmRy
+ZXcuY29vcGVyM0BjaXRyaXguY29tPgpSZXZpZXdlZC1ieTogSmFuIEJldWxp
+Y2ggPGpiZXVsaWNoQHN1c2UuY29tPgoKZGlmZiAtLWdpdCBhL3hlbi9hcmNo
+L3g4Ni90cmFwcy5jIGIveGVuL2FyY2gveDg2L3RyYXBzLmMKaW5kZXggNzMx
+ZDA1NC4uZDUyOGJlOSAxMDA2NDQKLS0tIGEveGVuL2FyY2gveDg2L3RyYXBz
+LmMKKysrIGIveGVuL2FyY2gveDg2L3RyYXBzLmMKQEAgLTM4NzIsNiArMzg3
+MiwxMyBAQCB2b2lkIGRvX2RlYnVnKHN0cnVjdCBjcHVfdXNlcl9yZWdzICpy
+ZWdzKQogCiAgICAgaWYgKCAhZ3Vlc3RfbW9kZShyZWdzKSApCiAgICAgewor
+ICAgICAgICAvKgorICAgICAgICAgKiAhISEgV0FSTklORyAhISEKKyAgICAg
+ICAgICoKKyAgICAgICAgICogJWRyNiBpcyBtb3N0bHkgZ3Vlc3QgY29udHJv
+bGxlZCBhdCB0aGlzIHBvaW50LiAgQW55IGRlY3Npb25zIGJhc2UKKyAgICAg
+ICAgICogb24gaXRzIHZhbHVlIG11c3QgYmUgY3Jvc3NjaGVja2VkIHdpdGgg
+bm9uLWd1ZXN0IGNvbnRyb2xsZWQgc3RhdGUuCisgICAgICAgICAqLworCiAg
+ICAgICAgIGlmICggcmVncy0+ZWZsYWdzICYgWDg2X0VGTEFHU19URiApCiAg
+ICAgICAgIHsKICAgICAgICAgICAgIC8qIEluIFNZU0VOVEVSIGVudHJ5IHBh
+dGggd2UgY2FuJ3QgemFwIFRGIHVudGlsIEVGTEFHUyBpcyBzYXZlZC4gKi8K
+QEAgLTM4OTMsMzMgKzM5MDAsNDQgQEAgdm9pZCBkb19kZWJ1ZyhzdHJ1Y3Qg
+Y3B1X3VzZXJfcmVncyAqcmVncykKICAgICAgICAgICogQ2hlY2sgZm9yIGZh
+dWx0IGNvbmRpdGlvbnMuICBHZW5lcmFsIERldGVjdCwgYW5kIGluc3RydWN0
+aW9uCiAgICAgICAgICAqIGJyZWFrcG9pbnRzIGFyZSBmYXVsdHMgcmF0aGVy
+IHRoYW4gdHJhcHMsIGF0IHdoaWNoIHBvaW50IGF0dGVtcHRpbmcKICAgICAg
+ICAgICogdG8gaWdub3JlIGFuZCBjb250aW51ZSB3aWxsIHJlc3VsdCBpbiBh
+IGxpdmVsb2NrLgorICAgICAgICAgKgorICAgICAgICAgKiBIb3dldmVyLCBv
+biBlbnRlcmluZyB0aGUgI0RCIGhhbmRsZXIsIGhhcmR3YXJlIGNsZWFycyAl
+ZHI3LmdkIGZvcgorICAgICAgICAgKiB1cyAoYXMgY29uZmlybWVkIGJ5IHRo
+ZSBlYXJsaWVyICVkcjYgYWNjZXNzZXMgc3VjY2VlZGluZyksIG1lYW5pbmcK
+KyAgICAgICAgICogdGhhdCBhIHJlYWwgR2VuZXJhbCBEZXRlY3QgZXhjZXB0
+aW9uIGlzIHJlc3RhcnRhYmxlLgorICAgICAgICAgKgorICAgICAgICAgKiBQ
+ViBndWVzdHMgYXJlIG5vdCBwZXJtaXR0ZWQgdG8gcG9pbnQgJWRyezAuLjN9
+IGF0IFhlbiBsaW5lYXIKKyAgICAgICAgICogYWRkcmVzc2VzLCBhbmQgSW5z
+dHJ1Y3Rpb24gQnJlYWtwb2ludHMgKGJlaW5nIGZhdWx0cykgZG9uJ3QgZ2V0
+CisgICAgICAgICAqIGRlbGF5ZWQgYnkgYSBNb3ZTUyBzaGFkb3csIHNvIHdl
+IHNob3VsZCBuZXZlciBlbmNvdW50ZXIgb25lIGluCisgICAgICAgICAqIGh5
+cGVydmlzb3IgY29udGV4dC4KKyAgICAgICAgICoKKyAgICAgICAgICogSWYg
+aG93ZXZlciB3ZSBkbywgc2FmZXR5IG1lYXN1cmVzIG5lZWQgdG8gYmUgZW5h
+Y3RlZC4gIFVzZSBhIGJpZworICAgICAgICAgKiBoYW1tZXIgYW5kIGNsZWFy
+IGFsbCBkZWJ1ZyBzZXR0aW5ncy4KICAgICAgICAgICovCi0gICAgICAgIGlm
+ICggZHI2ICYgRFJfR0VORVJBTF9ERVRFQ1QgKQotICAgICAgICB7Ci0gICAg
+ICAgICAgICBwcmludGsoWEVOTE9HX0VSUiAiSGl0IEdlbmVyYWwgRGV0ZWN0
+IGluIFhlbiBjb250ZXh0XG4iKTsKLSAgICAgICAgICAgIGZhdGFsX3RyYXAo
+cmVncyk7Ci0gICAgICAgIH0KLQogICAgICAgICBpZiAoIGRyNiAmIChEUl9U
+UkFQMyB8IERSX1RSQVAyIHwgRFJfVFJBUDEgfCBEUl9UUkFQMCkgKQogICAg
+ICAgICB7Ci0gICAgICAgICAgICB1bnNpZ25lZCBpbnQgYnAsIGRyNyA9IHJl
+YWRfZGVidWdyZWcoNykgPj4gRFJfQ09OVFJPTF9TSElGVDsKKyAgICAgICAg
+ICAgIHVuc2lnbmVkIGludCBicCwgZHI3ID0gcmVhZF9kZWJ1Z3JlZyg3KTsK
+IAogICAgICAgICAgICAgZm9yICggYnAgPSAwOyBicCA8IDQ7ICsrYnAgKQog
+ICAgICAgICAgICAgewogICAgICAgICAgICAgICAgIGlmICggKGRyNiAmICgx
+dSA8PCBicCkpICYmIC8qIEJyZWFrcG9pbnQgdHJpZ2dlcmVkPyAqLwotICAg
+ICAgICAgICAgICAgICAgICAgKChkcjcgJiAoM3UgPDwgKGJwICogRFJfQ09O
+VFJPTF9TSVpFKSkpID09IDApIC8qIEluc24/ICovICkKKyAgICAgICAgICAg
+ICAgICAgICAgIChkcjcgJiAoM3UgPDwgKGJwICogRFJfRU5BQkxFX1NJWkUp
+KSkgJiYgLyogRW5hYmxlZD8gKi8KKyAgICAgICAgICAgICAgICAgICAgICgo
+ZHI3ICYgKDN1IDw8ICgoYnAgKiBEUl9DT05UUk9MX1NJWkUpICsgLyogSW5z
+bj8gKi8KKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBE
+Ul9DT05UUk9MX1NISUZUKSkpID09IERSX1JXX0VYRUNVVEUpICkKICAgICAg
+ICAgICAgICAgICB7CisgICAgICAgICAgICAgICAgICAgIEFTU0VSVF9VTlJF
+QUNIQUJMRSgpOworCiAgICAgICAgICAgICAgICAgICAgIHByaW50ayhYRU5M
+T0dfRVJSCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAiSGl0IGluc3Ry
+dWN0aW9uIGJyZWFrcG9pbnQgaW4gWGVuIGNvbnRleHRcbiIpOwotICAgICAg
+ICAgICAgICAgICAgICBmYXRhbF90cmFwKHJlZ3MpOworICAgICAgICAgICAg
+ICAgICAgICB3cml0ZV9kZWJ1Z3JlZyg3LCAwKTsKKyAgICAgICAgICAgICAg
+ICAgICAgYnJlYWs7CiAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAg
+fQogICAgICAgICB9CiAKICAgICAgICAgLyoKLSAgICAgICAgICogV2hhdGV2
+ZXIgY2F1c2VkIHRoaXMgI0RCIHNob3VsZCBiZSBhIHRyYXAuICBOb3RlIGl0
+IGFuZCBjb250aW51ZS4KLSAgICAgICAgICogR3Vlc3RzIGNhbiB0cmlnZ2Vy
+IHRoaXMgaW4gY2VydGFpbiBjb3JuZXIgY2FzZXMsIHNvIGVuc3VyZSB0aGUK
+LSAgICAgICAgICogbWVzc2FnZSBpcyByYXRlbGltaXRlZC4KKyAgICAgICAg
+ICogV2hhdGV2ZXIgY2F1c2VkIHRoaXMgI0RCIHNob3VsZCBiZSByZXN0YXJ0
+YWJsZSBieSB0aGlzIHBvaW50LiAgTm90ZQorICAgICAgICAgKiBpdCBhbmQg
+Y29udGludWUuICBHdWVzdHMgY2FuIHRyaWdnZXIgdGhpcyBpbiBjZXJ0YWlu
+IGNvcm5lciBjYXNlcywKKyAgICAgICAgICogc28gZW5zdXJlIHRoZSBtZXNz
+YWdlIGlzIHJhdGVsaW1pdGVkLgogICAgICAgICAgKi8KICAgICAgICAgZ3By
+aW50ayhYRU5MT0dfV0FSTklORywKICAgICAgICAgICAgICAgICAiSGl0ICNE
+QiBpbiBYZW4gY29udGV4dDogJTA0eDolcCBbJXBzXSwgc3RrICUwNHg6JXAs
+IGRyNiAlbHhcbiIsCg==
+
+--=separator--
