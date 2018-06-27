@@ -1,39 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/23/1
-Message-ID: <000701d3f28f$d01860a0$704921e0$@gmail.com>
-Date: Wed, 23 May 2018 13:16:00 +0100
-From: "Simon Steiner" <simonsteiner1984@...il.com>
-To: <general@...graphics.apache.org>, <batik-dev@...graphics.apache.org>, <batik-users@...graphics.apache.org>, <oss-security@...ts.openwall.com>, <bugtraq@...urityfocus.com>, <security-reports@...mle.com>, <security@...che.org>
-Subject: [CVE-2018-8013] Apache Batik information disclosure vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/27/11
+Message-Id: <E1fYHba-0005FA-Vk@xenbits.xenproject.org>
+Date: Wed, 27 Jun 2018 21:03:58 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 265 (CVE-2018-12893) - x86: #DB exception safety check can be triggered by a guest
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-8013:
-        Apache Batik information disclosure vulnerability
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Severity:
-        Medium
+            Xen Security Advisory CVE-2018-12893 / XSA-265
+                               version 3
 
-Vendor:
-        The Apache Software Foundation
+      x86: #DB exception safety check can be triggered by a guest
 
-Versions Affected:
-        Batik 1.0 - 1.9.1
- 
-Description:
-        When deserializing subclass of `AbstractDocument`, the class takes a
-string from the inputStream as the class name which then use it to call the
-no-arg constructor of the class.
-        Fix was to check the class type before calling newInstance in
-deserialization.
+UPDATES IN VERSION 3
+====================
 
-Mitigation:
-        Users should upgrade to Batik 1.10+
+Public release.
 
-Credit:
-        This issue was independently reported by Man Yue Mo.
+ISSUE DESCRIPTION
+=================
 
-References:
-        http://xmlgraphics.apache.org/security.html
+One of the fixes in XSA-260 added some safety checks to help prevent Xen
+livelocking with debug exceptions.  Unfortunately, due to an oversight, at
+least one of these safety checks can be triggered by a guest.
 
-The Apache XML Graphics team.
+IMPACT
+======
 
+A malicious PV guest can crash Xen, leading to a Denial of Service.
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen systems which have applied the XSA-260 fix are vulnerable.
+
+Only x86 systems are vulnerable.  ARM systems are not vulnerable.
+
+Only x86 PV guests can exploit the vulnerability.  x86 HVM and PVH
+guests cannot exploit the vulnerability.
+
+An attacker needs to be able to control hardware debugging facilities to
+exploit the vulnerability, but such permissions are typically available
+to unprivileged users.
+
+MITIGATION
+==========
+
+Running only x86 HVM or PVH guests will avoid the vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Andrew Cooper of Citrix.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa265.patch           xen-unstable, Xen 4.10.x, 4.9.x, 4.8.x
+xsa265-4.7.patch       Xen 4.7.x, 4.6.x
+
+$ sha256sum xsa265*
+3eb66ed7251dcc4259eeffe608b2747857e269307d894a1cb950973420184aa7  xsa265.patch
+00faf2a4159698b6540565ece06de103c3547855e2084324ca44772b8a24aa18  xsa265-4.7.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJbM+5JAAoJEIP+FMlX6CvZtSgIAMF8d/3Jor6b0EbW55JSLh76
+56I8QfkqX4Xv/yWri3sXGJmPz7Af/qjDO+Ix5IScq54ugN5C8z7OBcbXFpX1WxNJ
+xCv6QjsbPmGCZHsT+NdWrl/ac6ZH3xlhE+S1awQ+9SkC+r6bRH/iROO+4DhpYQde
+CGoyYIwFq2VJoovh8lWHMsVl8VUXisyDk3bPK17VlAEFF1LuOkaan1UGEKRsciGX
+12IlNw/I6c8a85wWpFtph1AOVZfrodWdwyj8vgLY3MHnEs+86/cm5O4+GxKHezHf
+P5dJDZ38HBPRL1qC+yFRV2sLxLgrc7fYlSWr3/xtOGo23aDLjCvS+FsMfIpyjPQ=
+=sf+j
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa265.patch" of type "application/octet-stream" (4564 bytes)
+
+Download attachment "xsa265-4.7.patch" of type "application/octet-stream" (4558 bytes)
