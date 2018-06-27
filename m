@@ -1,4 +1,9 @@
-Received: (qmail 1790 invoked by uid 550); 23 Dec 2022 07:06:53 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["939" "Tuesday" "26" "June" "2018" "20:31:13" "-0700" "Seth Arnold" "seth.arnold@canonical.com" "<20180627033113.GC14157@hunt>" "30" "Re: [oss-security] CVE for PyYAML RCE-factory API" "^Date:" nil nil "6" "2018062703:31:13" "[oss-security] CVE for PyYAML RCE-factory API" (number mark "        seth.arnold@ Jun 26   30/939   " thread-indent "\"Re: [oss-security] CVE for PyYAML RCE-factory API\"\n") "<CAFRnB2U-tEMNDwXgY-_-VxA8A8anCF22YeJT_ELsGLjRUy-1xg@mail.gmail.com>" ("<CAFRnB2U-tEMNDwXgY-_-VxA8A8anCF22YeJT_ELsGLjRUy-1xg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 11922 invoked by uid 550); 27 Jun 2018 03:31:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,76 +11,49 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1766 invoked from network); 23 Dec 2022 07:06:52 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=cc
-	:content-type:date:date:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to; s=fm2; t=1671779191; x=1671865591; bh=orAroJ04PE
-	YU3XV9OKbILKHXm0YMifwHWeukhsjy4s8=; b=pGMB1bxbsCCXyz3tpqu+htnTPS
-	cvgMmIdKv7wvLrVjLJXYUMOGa8e1F5CBLZWewmvQS5DFiVpj/4+JvTVo7n6jZP61
-	LYFpkDbJ5+HBTQMi4tX387d5AYo/LLSqzZkW05U2duafm56DZUUwh4PPPxtXCGsW
-	+Ych2khwjXFcqIjoA/EdDUnU41LKgZ5Stj4iI9azpjaQfAFhr3543x+DEqqfJJ3A
-	IfVJxQlYtSN2rWjWcymyH9UNdMVGbFyOYlD0Vwqxs+8GYcErrovGUSgAAyWVxuaK
-	1y8KvS6rXdyKnWN55CFEVxOZX9VbUD6FBkDoxCpMtdc/Vwv/Tgvytf3/dHNw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:date:date:feedback-id
-	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:sender:subject:subject:to:to
-	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1671779191; x=1671865591; bh=orAroJ04PEYU3XV9OKbILKHXm0YM
-	ifwHWeukhsjy4s8=; b=tKb6pFt+R6Q3nkpWqKsPf9JISIVSvFv+1Vva2hR4gQGb
-	2SDxNAqF0btn59cyLFNxCmphETLlZUinqwn/CKC39ECgMW7P4FZn2l69PBTmMMGR
-	msO+nCXxhVqmKdpsGoUl+tUx8tZcwEEr6APwHAyVJJ5gW7XT5IzDvuFF9rQkQ9Pg
-	W3w3Hu13ONgf05VgJ61HhpJG1hEwSqLyyyoIB3NikCwaWdD9k33bcEN3YGGJBdjX
-	Kw39qheMtkvCpV3JXpyxlTjbhJSr3eEVdK6l+dBLm2yYgJuk5zTydJngmEyUQCzD
-	6RfWoYrq59cEBFXGn3YQkk6jWCaYVakGP6U3fBFGuA==
-X-ME-Sender: <xms:d1OlY1MVUzZtlNDXw7zf8bquQXzSqMcSWjqdoV0En7VSl_YQ9lOASA>
-    <xme:d1OlY3_CArHzj_E8jlip3opxI5QRPqCVBc-Nq0bo1JluCvqx7KEm4ywbtaH4fxzXs
-    9sLkvjphpWQ-A>
-X-ME-Received: <xmr:d1OlY0RCXz_L8G2Z-I_7u3yY375NA5E1wFp3H4EwgpFwjpVz3qWJfeegzjt1Qgnr16RgVa-8TzboyZdJNrktdcKQ-68DM8o5>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrhedugddutdeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesthdtre
-    dttddtvdenucfhrhhomhepifhrvghgucfmjfcuoehgrhgvgheskhhrohgrhhdrtghomheq
-    necuggftrfgrthhtvghrnhepteefgfevtefhheeuheejiefffffftdehvdekgeetieefje
-    ehudffffeihfevtdeknecuffhomhgrihhnpehglhhosggrlhhsvggtuhhrihhthigurght
-    rggsrghsvgdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
-    hlfhhrohhmpehgrhgvgheskhhrohgrhhdrtghomh
-X-ME-Proxy: <xmx:d1OlYxu7q-TALYs7QWf1XwkbhTS2fX8XnjESSuHCh2P5uYXVbYfVig>
-    <xmx:d1OlY9ewYMoZCXtyw0unTNFLbeq0B9VsJtD9S0iDLbzCGO3Np7KKCA>
-    <xmx:d1OlY90RJwOeQIJpWohNOsyzKzBcjjS2D42OIDq3YUkR5YIfaqS8kA>
-    <xmx:d1OlY9njkE3Ktdz6doSRqT_BDo2doGH7JczFpbWe2GbuHYtYRIx_yg>
-Feedback-ID: i787e41f1:Fastmail
-Date: Fri, 23 Dec 2022 08:06:28 +0100
-From: Greg KH <greg@kroah.com>
-To: oss-security@lists.openwall.com
-Message-ID: <Y6VTdO608VUE38Ke@kroah.com>
-References: <CAKoP-y-rbU=xEowJGp6my0khWMSbE05+ncDiE3wtXTOWwvyScA@mail.gmail.com>
- <Y6TQ0HyCJOMkKSDn@netmeister.org>
+Received: (qmail 11897 invoked from network); 27 Jun 2018 03:31:27 -0000
+Message-ID: <20180627033113.GC14157@hunt>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <CAFRnB2U-tEMNDwXgY-_-VxA8A8anCF22YeJT_ELsGLjRUy-1xg@mail.gmail.com>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="w7PDEPdKQumQfZlR"
+Content-Disposition: inline
+In-Reply-To: <CAFRnB2U-tEMNDwXgY-_-VxA8A8anCF22YeJT_ELsGLjRUy-1xg@mail.gmail.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+Date: Tue, 26 Jun 2018 20:31:13 -0700
+From: Seth Arnold <seth.arnold@canonical.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE for PyYAML RCE-factory API
+To: oss-security@lists.openwall.com
+
+--w7PDEPdKQumQfZlR
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Y6TQ0HyCJOMkKSDn@netmeister.org>
-Subject: Re: [oss-security] Details on this supposed Linux Kernel ksmbd RCE
 
-On Thu, Dec 22, 2022 at 04:49:04PM -0500, Jan Schaumann wrote:
-> Lastly, given that this is a coordinated disclosure,
-> I don't know why there are no CVE IDs reserved for
-> these.
+On Tue, Jun 26, 2018 at 09:18:39PM -0400, Alex Gaynor wrote:
+> Because of the degree to which this API presented a footgun, I would like
+> to request a CVE for it.
 
-The kernel developers do not work with CVEs at all as they are not all
-that relevant for the most part for kernel issues.  MITRE agrees with us
-will not even give them to us if we ask for them :)
+This makes sense to me. You can make CVE requests on:
 
-Some Linux companies still insist on assigning CVEs, but that's
-primarily to help enable their internal engineering processes more than
-anything else.
+https://cveform.mitre.org/
 
-As an alternative, please look at the GSD (Global Security Database,
-https://globalsecuritydatabase.org/) for which the kernel does get ids
-assigned for issues like this, and many many others.
+Thanks
 
-sorry,
+--w7PDEPdKQumQfZlR
+Content-Type: application/pgp-signature; name="signature.asc"
 
-greg k-h
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEQVAQ8bojyMcg37H18yFyWZ2NLpcFAlszBP0ACgkQ8yFyWZ2N
+LpccEgf6AgM1H8dh8oYRwL5/q2SETiqZ+4N5k9BQUVs7qJLhi0LPLfYVmGX5/JZc
+5rpOQr6USbrWi/ZgU3m2jE+FRxq9k3rkcoYkZxV3vO+6Ca9c41isMTSF/ibcexKz
+OJDZRc99DdyqXhDjRdOB7bOscg4LBYf6NXwi23iWjaoXZ0x1oEts5dQj00SdVUp1
+yC7dcwV4vxKrV/K/eFUyzvPBLhnpZ1duA+Wb1m7hcFiyY2gfRjMFmD4yvSOxdRI7
+A39Rudxeva25zbYyPEXIfF7PWKXo1hx4QxR2Ddus5+YnLkDJiOm2kO+/2GDNIzy8
+wWk7twaUQpLUDPDxtBuovLUqHJFUvw==
+=3Kio
+-----END PGP SIGNATURE-----
+
+--w7PDEPdKQumQfZlR--
