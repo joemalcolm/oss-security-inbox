@@ -1,72 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/18/1
-Message-ID: <CAOvn4qiRLkETd=3+5f0PJ1r47CmFQWk0_aFiR0mpdRH26LzRJA@mail.gmail.com>
-Date: Sun, 18 Mar 2018 07:59:06 +0000
-From: Thomas Kluyver <takowl@...il.com>
-To: Salvatore Bonaccorso <carnil@...ian.org>
-Cc: oss-security@...ts.openwall.com, security <security@...thon.org>,  MinRK <benjaminrk@...il.com>, jkamens@...ntopian.com, ssanderson@...ntopian.com
-Subject: Re: CVE request: maliciously crafted notebook files in Jupyter
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/27/7
+Message-ID: <20180627105607.kfnby2kf3arj3awc@suse.de>
+Date: Wed, 27 Jun 2018 12:56:07 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: KVM L1 guest escape - CVE-2018-12904
 Content-Type: text/plain; charset=utf-8
 
-Thanks Salvatore. Devdatta Akhawe filled in the form on my behalf, and
-we've now been assigned CVE-2018-8768.
+Hi,
 
-I'm going to merge the fix now and start the release process for 5.4.1.
+KVM in Linux Kernel between 4.12 and 4.18rc1 has a guest escape allowing
+privilege escalation, found by Felix Wilhelm of Google Project Zero.
 
-Thomas
+mitre entry:
 
-On 17 March 2018 at 14:05, Salvatore Bonaccorso <carnil@...ian.org> wrote:
+[Suggested description]
+In
+arch/x86/kvm/vmx.c in
+the Linux kernel before 4.17.2, when nested virtualization is used,
+local attackers could cause L1 KVM guests to VMEXIT, potentially
+allowing privilege escalations and denial of service attacks due to
+lack of checking of CPL.
 
-> Hi,
->
-> On Thu, Mar 15, 2018 at 01:55:59PM +0000, Thomas Kluyver wrote:
-> > Email address of requester: security@...thon.org, thomas@...yver.me.uk,
-> benjaminrk@...il.com, jkamens@...ntopian.com, ssanderson@...ntopian.com
-> >
-> > Software name: Jupyter Notebook (formerly IPython Notebook)
-> > Type of vulnerability: Maliciously forged file
-> > Attack outcome: Possible remote execution
-> >
-> > Vulnerability: A maliciously forged notebook file can bypass
-> sanitization to execute Javascript in the notebook context. Specifically,
-> invalid HTML is 'fixed' by jQuery after sanitization, making it dangerous.
-> >
-> > Affected versions:
-> >
-> > - notebook ≤ 5.4.0
-> >
-> > URI with issues:
-> >
-> > - GET /notebook/**
-> >
-> > Patches:  not yet finalised
-> >
-> > Mitigations:
-> >
-> > Upgrade to Jupyter notebook 5.4.1 or 5.5 once available.
-> > If using pip,
-> >
-> >     pip install --upgrade notebook
-> >
-> > For conda:
-> >
-> >     conda update conda
-> >     conda update notebook
-> >
-> > Vulnerability reported by vkgonka@...l.ru , via Jonathan Kamens at
-> Quantopian
->
-> Thanks for the headsup.
->
-> This reply is mainly for this other purpose: It looks you wanted to
-> have a CVE assigned trough this reply to the list. CVE's cannot
-> anymore be requested via the oss-security list. If you want to request
-> one please have a look at https://cveform.mitre.org/
->
-> Once you have the CVE assigned, can you please loop back the
-> assignement in this thread?
->
-> Regards,
-> Salvatore
->
+------------------------------------------
+
+[Vulnerability Type]
+Incorrect Access Control
+
+------------------------------------------
+
+[Vendor of Product]
+Linux
+
+------------------------------------------
+
+[Affected Product Code Base]
+Kernel - before 4.18.rc1
+
+------------------------------------------
+
+[Affected Component]
+KVM implementation in the Linux Kernel
+
+------------------------------------------
+
+[Attack Type]
+Local
+
+------------------------------------------
+
+[Impact Denial of Service]
+true
+
+------------------------------------------
+
+[Impact Escalation of Privileges]
+true
+
+------------------------------------------
+
+[Attack Vectors]
+local attacker able to execute code
+
+------------------------------------------
+
+[Reference]
+https://bugs.chromium.org/p/project-zero/issues/detail?id=1589
+https://github.com/torvalds/linux/commit/727ba748e110b4de50d142edca9d6a9b7e6111d8
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=727ba748e110b4de50d142edca9d6a9b7e6111d8
+https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.17.2
+
+------------------------------------------
+
+[Has vendor confirmed or acknowledged the vulnerability?]
+true
+
+------------------------------------------
+
+[Discoverer]
+Felix Wilhelm of Google Project Zero
 
