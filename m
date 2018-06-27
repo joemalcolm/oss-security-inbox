@@ -1,53 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/07/2
-Message-ID: <20181207154302.25666dc7@computer>
-Date: Fri, 7 Dec 2018 15:43:02 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/27/4
+Message-ID: <20180627094047.GA13011@openwall.com>
+Date: Wed, 27 Jun 2018 11:40:47 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Enigmail XSA issue with WKD and HTTP authentication
+Cc: oss-security-list@...tactdaniel.net
+Subject: Re: rclone data exflitration / unauthorized API use
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi Daniel,
 
-There's an issue in Enigmail that can potentially be abused for
-phishing attacks involving WKD and HTTP authentication.
+On Tue, Jun 26, 2018 at 05:56:18PM -0700, oss-security-list@...tactdaniel.net wrote:
+> Due to it's reliance on vulnerable upstream vendor SDKs & APIs, all 
+> current versions of 'rclone' are subject to a variety of attacks.
+> 
+> This vulnerability is an instance of a class of security vulnerabilities 
+> that affect a wide variety of software. Any API which has clients 
+> perform actions on arbitrary URLs chosen by the API server will lead to 
+> this class of attack becoming a concern.
+> 
+> Current Google Cloud Storage SDKs/APIs, Backblaze B2 APIs, and Yandex 
+> Disk APIs are affected.
+> 
+> No CVE is presently assigned.
+> 
+> Further details at: 
+> https://www.danieldent.com/blog/restless-vulnerability-non-browser-cross-domain-http-request-attacks/
 
-Web Key Directory or WKD [1] is a feature where OpenPGP keys can be
-fetched via a defined web address of the form
-https://example.org/.well-known/./openpgpkey/hu/[zbase32_sha1_hash_of_local_part]
+We have a policy here that while list postings may refer to external
+URLs, they must be complete on their own, and yours is not.  Please see:
 
-Enigmail automatically tries to fetch WKD keys already when writing a
-mail, so simply having a mail address in "To" will cause an HTTPS
-request.
+http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
 
-When the server answers with a HTTP authentication challenge (HTTP code
-401) then Enigmail/Thunderbird would open up an HTTP login window.
-While the login window will show the hostname, this can be very
-confusing for a user. If randomly a login window pops up within a mail
-client it's plausible that some users will enter their email
-credentials. Here's a video to illustrate the issue:
-https://www.youtube.com/watch?v=eFSMBX98XiE
+I'm attaching a text export of your blog post to this message.  Next
+time, please do something like this on your own.
 
-Similar attacks in browsers have previously been described as
-"Cross-Site-Authentication" or XSA [2].
+Thanks,
 
-I think it would be good if the WKD draft would be updated to clarify
-that a client should never answer to any 401 authentication requests
-from the server.
+Alexander
 
-
-I discovered this together with Moritz Tremmel (We discovered this by
-accident due to a server serving HTTP authentication requests for
-every path starting with a dot). After we reported this to Enigmail we
-learned that this was previously reported in the public bug tracker:
-https://sourceforge.net/p/enigmail/bugs/890/
-
-[1] https://tools.ietf.org/html/draft-koch-openpgp-webkey-service-07
-[2]
-http://www.joachim-breitner.de/blog/56-Like_XSS,_just_simpler_and_harder_to_prevent__The_Cross_Site_Auth_(XSA)_Attack
--- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+View attachment "restless-vuln.txt" of type "text/plain" (5799 bytes)
