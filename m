@@ -1,4 +1,9 @@
-Received: (qmail 3769 invoked by uid 550); 6 Apr 2026 10:38:37 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2257" "Wednesday" "27" "June" "2018" "12:26:09" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20180627122609.11940d53@computer>" "73" "[oss-security] squirrelmail XSS issues in bug tracker since 2016" "^Date:" nil nil "6" "2018062710:26:09" "[oss-security] squirrelmail XSS issues in bug tracker since 2016" (number mark "        hanno@hboeck Jun 27   73/2257  " thread-indent "\"[oss-security] squirrelmail XSS issues in bug tracker since 2016\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 11304 invoked by uid 550); 27 Jun 2018 10:26:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,77 +11,88 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 19492 invoked from network); 6 Apr 2026 06:20:38 -0000
-Date: Mon, 6 Apr 2026 16:20:19 +1000 (AEST)
-From: Damien Miller <djm@mindrot.org>
-To: Demi Marie Obenour <demiobenour@gmail.com>
-cc: oss-security@lists.openwall.com
-In-Reply-To: <43950a0c-60c3-479d-a18a-30238bda901e@gmail.com>
-Message-ID: <d671c5fa-eb18-448f-ac36-8f87f8bcf56a@mindrot.org>
-References: <8054b51fdf431307@cvs.openbsd.org> <43950a0c-60c3-479d-a18a-30238bda901e@gmail.com>
+Received: (qmail 11265 invoked from network); 27 Jun 2018 10:26:16 -0000
+Message-ID: <20180627122609.11940d53@computer>
+X-Mailer: Claws Mail 3.16.0 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="1876900708352-1490290924-1775456419=:9433"
-x-ms-reactions: disallow
-X-Scanned-By: MIMEDefang 2.75 on 130.102.60.17
-Subject: Re: [oss-security] Announce: OpenSSH 10.3 released
-
---1876900708352-1490290924-1775456419=:9433
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 27 Jun 2018 12:26:09 +0200
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] squirrelmail XSS issues in bug tracker since 2016
+To: oss-security@lists.openwall.com
 
-On Fri, 3 Apr 2026, Demi Marie Obenour wrote:
+Hi,
 
-> >  * ssh(1): validation of shell metacharacters in user names supplied
-> >    on the command-line was performed too late to prevent some
-> >    situations where they could be expanded from %-tokens in
-> >    ssh_config. For certain configurations, such as those that use a
-> >    "%u" token in a "Match exec" block, an attacker who can control
-> >    the user name passed to ssh(1) could potentially execute arbitrary
-> >    shell commands.  Reported by Florian Kohnhäuser.
-> > 
-> >    We continue to recommend against directly exposing ssh(1) and
-> >    other tools' command-lines to untrusted input. Mitigations such
-> >    as this can not be absolute given the variety of shells and user
-> >    configurations in use.
-> 
-> Is it safe (from a shell injection perspective) to pass inputs that are
-> sanitized for character set, but otherwise untrusted?  For instance,
-> is it sufficient to limit usernames to ^[A-Za-z][A-Za-z0-9_-]{0,31}$
-> and domain names to valid host names [1]?
+I found this in the squirrelmail bug tracker:
+https://sourceforge.net/p/squirrelmail/bugs/2831/
+I'll paste the content below to have it archived in oss-security.
 
-Probably, but this is the essence of the problem as we see it: we can't
-know for sure whether this is safe, because we don't can effectively
-reason about what shell is in use (and thus what its metacharacters
-are) and what the user is doing with these characters in their
-configuration file.
+Squirrelmail had reacted slowly to security issues in the past and has
+not released a new version for a long time, however security bugs (like
+one RCE in 2017 and one directory traversal in 2018) tended to be
+fixed within the SVN repo and snapshots, so running a snapshot seemed
+like a safe option.
 
-To make things harder, this isn't the full set of characters that
-appear in usernames. At least %, @, \ and / are relatively common
-too :(
+However it seems this bug report got ignored. It lists 4 possible
+scenarios / PoCs for XSS. From my quick judgement they are not all
+legit:
 
-> Can one assume that in situations where entries come from an
-> untrusted source (such as AuthorizedKeysCommand), OpenSSH _does_
-> do such checking?
+PoC1: I couldn't reproduce it (either it's fixed or the browser
+behavior changed, I haven't verified in-depth).
+PoC2: This is "XSS-via-data-uri", a data URI runs in its own origin,
+thus I don't see how this is a security risk. It's not really an XSS.
+PoC3/PoC4: Works in Firefox, seems legit.
 
-The *Command options in sshd_config require that the user exist
-in the system password database, otherwise they will not be
-executed.
+Preventing XSS in webmail is a hard problem, so I wouldn't be surprised
+if there's more to be found.
 
-It's still possible to shoot youself in the foot with these if you
-try hard enough though, e.g. if you've rigged NSS to allow arbitrary
-usernames with no character filtering, then there is the potential
-for shell injection if the admin has specified token expansion in
-a *Command directive.
+-------------------
 
-> [1]: No more than 254 bytes (plus optional trailing '.'), no leading '.',
->      each '.'-delimited component must start and end with [a-z0-9], not
->      be more than 63 bytes, and only have [a-z0-9-].
+There are multiple XSS vulnerabilities in the mail message display
+page(functions/mime.php),the function magicHTML can not filter some
+special tags.
 
-This too would block some hostnames that people use frequently.
-As a trivial example, '_' is common in hostnames despite being
-strictly invalid. IIRC there are other more esoteric ones too.
+The steps to reproduce are below:
 
--d
---1876900708352-1490290924-1775456419=:9433--
+Compose email content via HTML mode(use any other webmail client).The
+HTML content is below: PoC1 (triggered in Chrome,Firefox):
+
+<svg><a xlink:href=3D"javascript:alert(/XSS/)"><rect width=3D"1000"
+height=3D"1000" fill=3D"white"/></a></svg>
+
+PoC2 (triggered in Chrome,Firefox,safari):
+
+<form
+action=3D'data:text&sol;html,&lt;script&gt;alert(/XSS/)&lt/script&gt'><butt=
+on></form>
+
+PoC3 (triggered in Firefox):
+
+<math><maction actiontype=3D"" xlink:href=3D"javascript:alert(/XSS/)">
+Click here
+
+PoC4 (triggered in Firefox):
+
+<math xlink:href=3Djavascript:alert(/XSS/)> Click here
+
+Choose one of PoCs and send it to squirrelmail webmail system.
+
+Log in to squirrelmail webmail system and view the mail received(HTML
+Version is opened)
+
+Click the area in the content.The xss will be triggered
+
+Version:
+The testing squirrelmail webmail version is 1.4.23.Link is below:
+http://squirrelmail.org/download.php
+php:5.3.17
+apache:2.2.12
+
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
+
+mail/jabber: hanno@hboeck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
