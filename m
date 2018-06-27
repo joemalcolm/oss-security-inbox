@@ -1,46 +1,121 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/10/6
-Message-ID: <20181210154020.GA2063@openwall.com>
-Date: Mon, 10 Dec 2018 16:40:20 +0100
-From: Solar Designer <solar@...nwall.com>
-To: Pavel Cheremushkin <Pavel.Cheremushkin@...persky.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: libvnc and tightvnc vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/27/10
+Message-Id: <E1fYHbW-0005EC-T0@xenbits.xenproject.org>
+Date: Wed, 27 Jun 2018 21:03:54 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 264 (CVE-2018-12891) - preemption checks bypassed in x86 PV MM handling
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Dec 10, 2018 at 12:48:43PM +0000, Pavel Cheremushkin wrote:
-> 2. heap buffer overflow in rfbServerCutText handler
->     Heap buffer overflow in `rfbServerCutText` handler inside `HandleRFBServerMessage` happens due to the malloc argument unsigned integer overflow on line rfbproto.c:1220. Suppose msg.sct.length equals 0xffffffff, then `malloc(msg.sct.length+1);` = `malloc(0);` will allocate small heap chunk of size 0x10. But `msg.sct.length` = 0xffffffff bytes may be read in this chunk on line 1222 (`ReadFromRFBServer(serverCutText, msg.sct.length)`).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-This one is interesting in that related server-side code got some
-scrutiny before, yet apparently this similar issue in its client-side
-counterpart was overlooked.  (I assume this is in
-libvncclient/rfbproto.c, and you meant line 2220, not 1220.)
+            Xen Security Advisory CVE-2018-12891 / XSA-264
+                               version 3
 
-Specifically, the oCERT advisory from 2014 based on "vulnerability
-report received from Nicolas Ruff of Google Security Team":
+           preemption checks bypassed in x86 PV MM handling
 
-https://www.openwall.com/lists/oss-security/2014/09/25/11
-https://ocert.org/advisories/ocert-2014-007.html
+UPDATES IN VERSION 3
+====================
 
-"A malicious VNC client can trigger multiple DoS conditions on the VNC
-server by advertising a large [...] ClientCutText message length [...]"
+Public release.
 
-Per this wording, there was no integer overflow potential in the
-server-side code.  Just potentially maliciously large allocation.
+ISSUE DESCRIPTION
+=================
 
-This reminds us now: in the client-side code, we should also deal not
-only with the integer overflow potential, but also with potentially
-maliciously large allocation.
+Certain PV MMU operations may take a long time to process.  For that
+reason Xen explicitly checks for the need to preempt the current vCPU at
+certain points.  A few rarely taken code paths did bypass such checks.
+By suitably enforcing the conditions through its own page table
+contents, a malicious guest may cause such bypasses to be used for an
+unbounded number of iterations.
 
-The thread I started earlier this year:
+IMPACT
+======
 
-https://www.openwall.com/lists/oss-security/2018/02/18/1
+A malicious or buggy PV guest may cause a Denial of Service (DoS)
+affecting the entire host.  Specifically, it may prevent use of a
+physical CPU for an indeterminate period of time.
 
-"LibVNCServer rfbserver.c: rfbProcessClientNormalMessage() case
-rfbClientCutText doesn't sanitize msg.cct.length"
+VULNERABLE SYSTEMS
+==================
 
-I did not look at the VNC client code as it was not relevant to the
-security audit I was working on when I found the server-side issue.
+All Xen versions from 3.4 onwards are vulnerable.  Xen versions 3.3 and
+earlier are vulnerable to an even wider class of attacks, due to them
+lacking preemption checks altogether in the affected code paths.
 
-Alexander
+Only x86 systems are affected.  ARM systems are not affected.
+
+Only multi-vCPU x86 PV guests can leverage the vulnerability.  x86 HVM
+or PVH guests as well as x86 single-vCPU PV ones cannot leverage the
+vulnerability.
+
+MITIGATION
+==========
+
+Running only HVM, PVH, or single-vCPU PV guests will avoid this
+vulnerability.
+
+For PV guests, the vulnerability can be avoided if the guest kernel is
+controlled by the host rather than guest administrator, provided that
+further steps are taken to prevent the guest administrator from loading
+code into the kernel (e.g. by disabling loadable modules etc) or from
+using other mechanisms which allow them to run code at kernel privilege.
+
+CREDITS
+=======
+
+This issue was discovered by Jan Beulich of SUSE.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa264.patch           xen-unstable
+xsa264-4.10.patch      Xen 4.10.x ... 4.6.x
+
+$ sha256sum xsa264*
+a7d2edf219af3375ac0d49bff9e64628c70e704fcf131ea21684694517aa9210  xsa264.patch
+66aca234b168abc01f28fe131b7e07645a73fd5d0f1d141d68343f31914d96cc  xsa264-4.10.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJbM+5GAAoJEIP+FMlX6CvZy7cIALkEoEQnHw5O8vYC5KpDA24X
+P320Gh0OppT2qtQfKtAF7MaCc7VF9Tnhf3CrtNtolXMryM4vrh7KyOn8wk7jbRBy
+tp28e6ppO8ons9x1kBAmAZrno8LXwOa2t22hQpUv1mYksRkZotViAXS72t4HkOVl
+SEQVVLElWAIfPbGJwtu1/qgS8dCckA2MeLeN/dKHRm8gD63XsYt37nQnBa2iraKX
+yN5sdih+WLgXCf55mubFlQfE6+7qgn27khZpMeJAwGk6N+Rz/Q3q1zSFX9YB+P6d
+9ppgoRFVxYpekwtCrLkVLxSAoEwCKi6sdYFnvIngHIMlLiVHjNsLd5YKTAsZcEE=
+=zTq5
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa264.patch" of type "application/octet-stream" (2835 bytes)
+
+Download attachment "xsa264-4.10.patch" of type "application/octet-stream" (1967 bytes)
