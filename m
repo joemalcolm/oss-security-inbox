@@ -1,112 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/12/5
-Message-ID: <20181212163242.GA12693@openwall.com>
-Date: Wed, 12 Dec 2018 17:32:43 +0100
-From: Solar Designer <solar@...nwall.com>
-To: Salva Peir?? <speirofr@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: mini-httpd (<= v1.30) is affected by a response discrepancy information exposure (CWE-204)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/27/5
+Message-ID: <20180627122609.11940d53@computer>
+Date: Wed, 27 Jun 2018 12:26:09 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: squirrelmail XSS issues in bug tracker since 2016
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Dec 12, 2018 at 04:27:02PM +0100, Salva Peir?? wrote:
-> The mini-httpd daemon (version <= v1.30) shipped in Debian/Ubuntu from [1]
-> is affected by a response discrepancy information exposure (CWE-204) that
-> enables an attacker to remotely enumerate valid htpasswd usernames (RFC
-> 7617).
-> 
-> A more detailed advisory can be found at:
-> https://speirofr.appspot.com/files/advisory/SPADV-2018-01.md
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=916190
+Hi,
 
-The advisory SPADV-2018-01.md is in fact significantly more detailed
-than what you posted, so I've attached it to this message for archival.
+I found this in the squirrelmail bug tracker:
+https://sourceforge.net/p/squirrelmail/bugs/2831/
+I'll paste the content below to have it archived in oss-security.
 
-> Is there a CVE for this? If not, could one be assigned, please?
+Squirrelmail had reacted slowly to security issues in the past and has
+not released a new version for a long time, however security bugs (like
+one RCE in 2017 and one directory traversal in 2018) tended to be
+fixed within the SVN repo and snapshots, so running a snapshot seemed
+like a safe option.
 
-oss-security is no longer a place to request CVE IDs.  See:
+However it seems this bug report got ignored. It lists 4 possible
+scenarios / PoCs for XSS. From my quick judgement they are not all
+legit:
 
-https://oss-security.openwall.org/wiki/mailing-lists/oss-security#cve-requests
+PoC1: I couldn't reproduce it (either it's fixed or the browser
+behavior changed, I haven't verified in-depth).
+PoC2: This is "XSS-via-data-uri", a data URI runs in its own origin,
+thus I don't see how this is a security risk. It's not really an XSS.
+PoC3/PoC4: Works in Firefox, seems legit.
 
-"Previously, one could request CVE IDs for issues in Open Source
-software from oss-security.  This is no longer the case.  Instead,
-please start by posting about the (to be made) public issue to
-oss-security (without a CVE ID), request a CVE ID from MITRE directly,
-and finally "reply" to your own posting when you also have the CVE ID to
-add.  With the described approach you would only approach MITRE after
-the issue is already public, but if you choose to do things differently
-and contact MITRE about an issue that is not yet public, then please do
-not disclose to them more than the absolute minimum needed for them to
-assign a CVE ID."
+Preventing XSS in webmail is a hard problem, so I wouldn't be surprised
+if there's more to be found.
 
-You've already posted in here (great!) so all that's left is for you to
-request a CVE ID from MITRE and to post that CVE ID here as a "reply".
+-------------------
 
-However, I question the vulnerability finding or at least its
-completeness, so you might want to hold off on requesting a CVE ID for
-it.  Please see below:
+There are multiple XSS vulnerabilities in the mail message display
+page(functions/mime.php),the function magicHTML can not filter some
+special tags.
 
-> +++ b/mini_httpd.c
-> @@ -2404,7 +2404,8 @@ auth_check( char* dirname )
->          /* Yes. */
->          (void) fclose( fp );
->          /* So is the password right? */
-> -        if ( strcmp( crypt( authpass, cryp ), cryp ) == 0 )
-> +        char *cryptpass = crypt( authpass, cryp );
-> +        if ((cryptpass != NULL) && (strcmp(cryptpass, cryp ) == 0) )
+The steps to reproduce are below:
 
-While it's important to check the return from crypt(3) for non-NULL
-before using the string(*), if this were the issue triggering the
-vulnerability you describe that fix would be incomplete.
+Compose email content via HTML mode(use any other webmail client).The
+HTML content is below: PoC1 (triggered in Chrome,Firefox):
 
-(*) A general issue that was discussed in here some years ago, with
-opinions varying on whether crypt(3) should follow current POSIX and
-return NULL or retain historical behavior of never returning NULL not to
-upset programs written before the POSIX change.  In the end, many libc's
-went with the NULL returns on error.  Programs need to be fixed to
-support NULL returns from crypt(3) anyhow.
+<svg><a xlink:href="javascript:alert(/XSS/)"><rect width="1000"
+height="1000" fill="white"/></a></svg>
 
-In the advisory, you wrote:
+PoC2 (triggered in Chrome,Firefox,safari):
 
-> When the basic authentication string "user:pass" is composed only of the user
-> part without the password part, ie. "user:", then the authpass at
-> mini_httpd.c:2372 becomes the empty string "".
-> When the empty string is passed to the crypt(3) this returns the NULL string.
-> The NULL string is later dereferenced by the strcmp(3) call at mini_httpd.c:2407
-> causing an invalid memory access that triggers the SIGSEGV, and kills the forked process.
+<form
+action='data:text&sol;html,&lt;script&gt;alert(/XSS/)&lt/script&gt'><button></form>
 
-This isn't a complete explanation.  crypt(3) isn't supposed to return
-NULL when authpass is the empty string "".  Empty string is a valid
-password, and should result in a valid password hash string, as long as
-the salt or setting string provided in the second argument to crypt(3)
-is valid.
+PoC3 (triggered in Firefox):
 
-I can see how you'd trigger a NULL return from crypt(3) by having an
-empty or otherwise invalid password hash string in the .htpasswd file.
-So you'd be able to distinguish usernames corresponding to those lines
-with invalid hashes from usernames corresponding to lines with valid
-hashes.  A crash on an invalid .htpasswd line is indeed a robustness
-bug, but I'm not sure it constitutes a vulnerability.
+<math><maction actiontype="" xlink:href="javascript:alert(/XSS/)">
+Click here
 
-This is different from being able to distinguish existing vs.
-non-existent usernames.  (Besides, when fixing an issue of the kind you
-thought this one was, we should also remember that timing leaks will
-remain either way.  I don't suggest to leave worse-than-timing leaks
-intact, but rather not to provide wrong expectations and a false sense
-of security once we do.  And a next step may be to reduce timing leaks
-by performing dummy password hashing for non-existent usernames, again
-being careful to point out that smaller timing leaks will remain.)
+PoC4 (triggered in Firefox):
 
-If the behavior is in fact exactly as you observed it, then maybe your
-system's libc or libcrypt is vulnerable in that it's incapable of
-processing an empty password.  I almost wonder if someone thought it'd
-be OK to implement e.g. some security standardization compliance by
-having crypt(3) fail to process an empty password and return NULL.  If
-so, that would be an interesting case for us to discuss.
+<math xlink:href=javascript:alert(/XSS/)> Click here
 
-Please investigate this further.
+Choose one of PoCs and send it to squirrelmail webmail system.
 
-Thanks,
+Log in to squirrelmail webmail system and view the mail received(HTML
+Version is opened)
 
-Alexander
+Click the area in the content.The xss will be triggered
 
-View attachment "SPADV-2018-01.md" of type "text/plain" (5328 bytes)
+Version:
+The testing squirrelmail webmail version is 1.4.23.Link is below:
+http://squirrelmail.org/download.php
+php:5.3.17
+apache:2.2.12
+
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
