@@ -1,97 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/10/6
-Message-Id: <D95FAFFB-57B5-4D5A-BFF2-3A4F8F67320C@beckweb.net>
-Date: Wed, 10 Oct 2018 17:11:42 +0200
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/27/1
+Message-ID: <CAFRnB2U-tEMNDwXgY-_-VxA8A8anCF22YeJT_ELsGLjRUy-1xg@mail.gmail.com>
+Date: Tue, 26 Jun 2018 21:18:39 -0400
+From: Alex Gaynor <alex.gaynor@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins
+Subject: CVE for PyYAML RCE-factory API
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software. The following
-releases contain fixes for security vulnerabilities:
+In releases of PyYAML < 4.1 using the `yaml.load()` API on untrusted input
+could lead to arbitrary code execution. Instead, users were advised to use
+the `yaml.safe_load()` API.
 
-* Jenkins weekly 2.146
-* Jenkins LTS 2.138.2
+Starting with the PyYAML 4.1 release, the `yaml.load()` API has been made
+safe-by-default. Users wishing to opt into the old behavior and produce
+RCEs (or who trust their input) can use the `yaml.danger_load`.
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2018-10-10/
+Because of the degree to which this API presented a footgun, I would like
+to request a CVE for it.
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+Alex
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-867
-A path traversal vulnerability in Stapler allowed viewing routable objects 
-with views defined on any type. This could be used to access internal data 
-of routable objects, e.g. by showing their string representation (#toString).
-
-
-SECURITY-1074
-Users with Job/Configure permission could specify a relative path escaping 
-the base directory in the file name portion of a file parameter definition. 
-This path would be used to archive the uploaded file on the Jenkins master, 
-resulting in an arbitrary file write vulnerability.
-
-File parameters that escape the base directory are no longer accepted and 
-the build will fail.
-
-
-SECURITY-1129
-The wrapper query parameter for the XML variant of the Jenkins remote API 
-did not validate the specified tag name. This resulted in a reflected cross-
-site scripting vulnerability.
-
-Only legal XML tag names are now allowed for the wrapper query parameter.
-
-
-SECURITY-1162 / CVE-2018-1999043
-When attempting to authenticate using API token, an ephemeral user record 
-was created to validate the token in case an external security realm was 
-used, and the user record in Jenkins not previously saved, as (legacy) API 
-tokens could exist without a persisted user record.
-
-This behavior could be abused to create a large number of ephemeral user 
-records in memory.
-
-This is the same vulnerability as SECURITY-672. The fix for SECURITY-672 
-was previously incorrectly applied and therefore not effective. This has 
-been fixed.
-
-
-SECURITY-1128
-By accessing a specific crafted URL on Jenkins instances using Jenkins' own 
-user database, users without Overall/Read access could create ephemeral 
-user records.
-
-This behavior could be abused to create a large number of ephemeral user 
-records in memory.
-
-Accessing this URL now no longer results in a user record getting created.
-
-
-SECURITY-1158
-When signing up for a new user account on instances using Jenkins' own user 
-database, Jenkins did not invalidate the existing session and create a new 
-one. This allowed session fixation.
-
-Jenkins now invalidates the existing session and creates a new one when 
-logging in after user signup.
-
-
-SECURITY-765
-When Jenkins fails to process form submissions due to an internal error, 
-the error message shown to the user and written to the log typically 
-includes the serialized JSON form submission. Secrets, such as submitted 
-passwords, might be included with the JSON object, and shown or written to 
-disk in plain text.
-
-Jenkins now masks values in these error messages from view if they were 
-shown on the UI as password form fields.
+-- 
+"I disapprove of what you say, but I will defend to the death your right to
+say it." -- Evelyn Beatrice Hall (summarizing Voltaire)
+"The people's good is the highest law." -- Cicero
+GPG Key fingerprint: D1B3 ADC0 E023 8CA6
 
