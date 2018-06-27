@@ -1,28 +1,169 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/30/2
-Message-ID: <20180330162801.GB10289@openwall.com>
-Date: Fri, 30 Mar 2018 18:28:01 +0200
-From: Solar Designer <solar@...nwall.com>
-To: flanker017 <flankerhqd017@...il.com>
-Cc: oss-security@...ts.openwall.com, zhuozhuozhuozhuozhuo@...il.com, l.dmxcsnsbh@...il.com
-Subject: Re: Fwd: [scr485440] 5 Samsung CVEs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/27/12
+Message-Id: <E1fYHbf-0005MU-57@xenbits.xenproject.org>
+Date: Wed, 27 Jun 2018 21:04:03 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 266 (CVE-2018-12892) - libxl fails to honour readonly flag on HVM emulated SCSI disks
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Fri, Mar 30, 2018 at 11:08:02PM +0800, flanker017 wrote:
-> The following issues are addressed with corresponding CVEs assigned by
-> MITRE for Samsung Mobile Security February update 2018.
+            Xen Security Advisory CVE-2018-12892 / XSA-266
+                               version 3
 
-As a moderator for oss-security, I'd like open source relevance to be
-clear from the postings, like Idler did here for another Samsung issue:
+      libxl fails to honour readonly flag on HVM emulated SCSI disks
 
-http://www.openwall.com/lists/oss-security/2017/01/19/3
+UPDATES IN VERSION 3
+====================
 
-Also see the followups to that posting, via "thread-next" links.
+Public release.
 
-Please reply (to the list) with this sort of detail for these issues.
+ISSUE DESCRIPTION
+=================
 
-Thanks,
+libxl fails to pass the readonly flag to qemu when setting up a SCSI
+disk, due to what was probably an erroneous merge conflict resolution.
 
-Alexander
+IMPACT
+======
+
+Malicious guest administrators or (in some situations) users may be
+able to write to supposedly read-only disk images.
+
+VULNERABLE SYSTEMS
+==================
+
+Only emulated SCSI disks (specified as "sd" in the libxl disk
+configuration, or an equivalent) are affected.  IDE disks ("hd") are
+not affected (because attempts to make them readonly are rejected).
+
+Additionally, CDROM devices (that is, devices specified to be
+presented to the guest as CDROMs, regardless of the nature of the
+backing storage on the host) are not affected; they are always
+readonly.
+
+Only systems using qemu-xen (rather than qemu-xen-traditional) as the
+device model version are vulnerable.
+
+Only systems using libxl or libxl-based toolstacks are vulnerable.
+(This includes xl, and libvirt with the libxl driver.)
+
+The vulnerability is present in Xen versions 4.7 and later.
+(In earlier versions, provided that the patch for XSA-142 has been
+applied, attempts to create readonly disks are rejected.)
+
+If the host and guest together usually support PVHVM, the issue is
+exploitable only if the malicious guest administrator has control of
+the guest kernel or guest kernel command line.
+
+MITIGATION
+==========
+
+Switching to qemu-xen-traditional will avoid this vulnerability.
+This can be done with
+   device_model_version="qemu-xen-traditional"
+in the xl configuration file.
+
+Using stub domain device models (which necessarily involves switching
+to qemu-xen-traditional) will also avoid this vulnerability.
+This can be done with
+   device_model_stubdomain_override=true
+in the xl configuration file.
+
+All of these mitigations are liable to have other guest-visible
+effects or even regressions.
+
+It may be possible, depending on the configuration, to make the
+underlying storage object readonly, or to make it reject writes.
+
+CREDITS
+=======
+
+This issue was discovered by Andrew Reimers of OrionVM.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa266/*.patch           xen-unstable
+xsa266-4.10/*.patch      Xen 4.10.x
+xsa266-4.9/*.patch       Xen 4.9.x
+xsa266-4.8/*.patch       Xen 4.8.x
+xsa266-4.7/*.patch       Xen 4.7.x
+xsa266-4.6/*.patch       Xen 4.6.x
+
+$ sha256sum xsa266* xsa266*/*
+d0d998bb3c2f36b0795cdf86d52aa2da3eee72218f9073f398fc6fd2cf5719cd  xsa266.meta
+0e5634c9b730e2e022bfef9ded2bb81b7740d05911dae6499671db5cb90663c0  xsa266-4.7/0001-libxl-qemu_disk_scsi_drive_string-Break-out-common-p.patch
+e6dcef1bdd890a245cb9181266fc1378d77b08cf06c063f35a0835ab3b99cf91  xsa266-4.7/0002-libxl-restore-passing-readonly-to-qemu-for-SCSI-disk.patch
+19ce6f236702219eb4831ed597f82dc81122fd517131e826643cee95b53d9f1c  xsa266-4.8/0001-libxl-qemu_disk_scsi_drive_string-Break-out-common-p.patch
+e0a4c616218bc42abada75aa5fa0c3e35da6b6334fe50d6104a5892ffebcdb04  xsa266-4.8/0002-libxl-restore-passing-readonly-to-qemu-for-SCSI-disk.patch
+9fd48f20da140731bb71dde07035b938cf0966339449a0b6833787767c588c0a  xsa266-4.9/0001-libxl-qemu_disk_scsi_drive_string-Break-out-common-p.patch
+f23d0e76f15b1f6af487adc36a84cf2591197548ca7cab8ee84be72a87424cf7  xsa266-4.9/0002-libxl-restore-passing-readonly-to-qemu-for-SCSI-disk.patch
+3d857f38d11b5531a651a45c2f151ac1493260524d4f49ead6833b5f1d599e64  xsa266-4.10/0001-libxl-qemu_disk_scsi_drive_string-Break-out-common-p.patch
+e380976abd77b5b46d69c9564aca3acf9bf467b36645ac34e035aba89d081591  xsa266-4.10/0002-libxl-restore-passing-readonly-to-qemu-for-SCSI-disk.patch
+160dc8c8a918cae7259c252af098206f9eff357e52bdfc0b15553e9c31c587e6  xsa266/0001-libxl-qemu_disk_scsi_drive_string-Break-out-common-p.patch
+2b44fd6baac094c82145667a16d9b1530b97fa342d0e635c831425b53a336266  xsa266/0002-libxl-restore-passing-readonly-to-qemu-for-SCSI-disk.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of patches or mitigations is NOT permitted (except where
+all the affected systems and VMs are administered and used only by
+organisations which are members of the Xen Project Security Issues
+Predisclosure List).  Specifically, deployment on public cloud systems
+is NOT permitted.
+
+This is because all of the patches and mitigations make significant
+guest-visible changes.  In particular, applying the patch will cause
+the emulated SCSI disk object to be reported to the guest as readonly,
+when previously it was reported as writeable.
+
+Deployment is permitted only AFTER the embargo ends.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJbM+5LAAoJEIP+FMlX6CvZ60YH/i11vnbKl2aKf8e+xchv3Ouf
+9egSbsy9T8DfvQLZuXQJ4pXoIR8aRrpbZBK5G6HrK3N+eyVnOoRGR+c5nR4k6QFi
+kG+huw1xogN1TJyf1ln1zpy4sTJt7jmw5ZQEVqoHgsiwgifJiLKVMClQAsvNRkgq
+su+k4zii863l+2KJdrnsQUlSiO0rHxIgJOs6txSNKHuyJmasHata7O20fcbZ2eNY
+g+SMK3QinOTSGTK8gDJQcsBGm3XdmC3OOoXt3DjLvl2/NwAB51oSFr+wdDHl0k8s
+jVzRvBwauOelMyteH80lENJLVej52NVMhWDufWu7iGhoh9fZvD3xubO9zFeCtOY=
+=UpOb
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa266.meta" of type "application/octet-stream" (1523 bytes)
+
+Download attachment "xsa266-4.7/0001-libxl-qemu_disk_scsi_drive_string-Break-out-common-p.patch" of type "application/octet-stream" (3067 bytes)
+
+Download attachment "xsa266-4.7/0002-libxl-restore-passing-readonly-to-qemu-for-SCSI-disk.patch" of type "application/octet-stream" (2836 bytes)
+
+Download attachment "xsa266-4.8/0001-libxl-qemu_disk_scsi_drive_string-Break-out-common-p.patch" of type "application/octet-stream" (3067 bytes)
+
+Download attachment "xsa266-4.8/0002-libxl-restore-passing-readonly-to-qemu-for-SCSI-disk.patch" of type "application/octet-stream" (2836 bytes)
+
+Download attachment "xsa266-4.9/0001-libxl-qemu_disk_scsi_drive_string-Break-out-common-p.patch" of type "application/octet-stream" (3147 bytes)
+
+Download attachment "xsa266-4.9/0002-libxl-restore-passing-readonly-to-qemu-for-SCSI-disk.patch" of type "application/octet-stream" (2836 bytes)
+
+Download attachment "xsa266-4.10/0001-libxl-qemu_disk_scsi_drive_string-Break-out-common-p.patch" of type "application/octet-stream" (3147 bytes)
+
+Download attachment "xsa266-4.10/0002-libxl-restore-passing-readonly-to-qemu-for-SCSI-disk.patch" of type "application/octet-stream" (2836 bytes)
+
+Download attachment "xsa266/0001-libxl-qemu_disk_scsi_drive_string-Break-out-common-p.patch" of type "application/octet-stream" (2873 bytes)
+
+Download attachment "xsa266/0002-libxl-restore-passing-readonly-to-qemu-for-SCSI-disk.patch" of type "application/octet-stream" (2829 bytes)
