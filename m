@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2323" "Friday" "19" "August" "2016" "09:46:56" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160819134656.11C416C56A8@smtpvmsrv1.mitre.org>" "60" "[oss-security] Re: CVE request: MatrixSSL lack of RSA-CRT hardening" "^Cc:" nil nil "8" "2016081913:46:56" "[oss-security] Re: CVE request: MatrixSSL lack of RSA-CRT hardening" (number mark "        cve-assign@m Aug 19   60/2323  " thread-indent "\"[oss-security] Re: CVE request: MatrixSSL lack of RSA-CRT hardening\"\n") "<87oa6n9nap.fsf@mid.deneb.enyo.de>" ("<87oa6n9nap.fsf@mid.deneb.enyo.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1172" "Thursday" "28" "June" "2018" "15:57:13" "+0100" "Colm O hEigeartaigh" "coheigea@apache.org" "<CAB8XdGCXbiqd=BWa623OgeKtJzKpDM1H5umdANGi670hQUbSMQ@mail.gmail.com>" "36" "[oss-security] Apache CXF 3.2.6 and 3.1.16 are released" nil nil nil "6" "2018062814:57:13" "[oss-security] Apache CXF 3.2.6 and 3.1.16 are released" (number mark "U       coheigea@apa Jun 28   36/1172  " thread-indent "\"[oss-security] Apache CXF 3.2.6 and 3.1.16 are released\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 18017 invoked by uid 550); 19 Aug 2016 13:47:08 -0000
+Received: (qmail 17483 invoked by uid 550); 28 Jun 2018 15:52:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,73 +11,56 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17999 invoked from network); 19 Aug 2016 13:47:08 -0000
-In-Reply-To: <87oa6n9nap.fsf@mid.deneb.enyo.de>
-Message-Id: <20160819134656.11C416C56A8@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org
-Date: Fri, 19 Aug 2016 09:46:56 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request: MatrixSSL lack of RSA-CRT hardening
-To: oss-security@lists.openwall.com
+Received: (qmail 17517 invoked from network); 28 Jun 2018 14:57:28 -0000
+X-Gm-Message-State: APt69E2wkhrqBlVqrNmOhp7f9g/g0tk/NbcE4M+DzM62jwXrj43P6BnN
+	PU7WjmVIKM7aUN0ctscuB7NCrldX2mPBo7NTTP0=
+X-Google-Smtp-Source: ADUXVKI9S91v7VdBYj05szN/f1k9gFLQbjdtv1SHBIPotbOoESALukSNTRBySD2oy1JHsKlnyB5WVdsbUlzGFqk9WRU=
+X-Received: by 2002:a63:7e45:: with SMTP id o5-v6mr8914299pgn.400.1530197834348;
+ Thu, 28 Jun 2018 07:57:14 -0700 (PDT)
+MIME-Version: 1.0
+From: Colm O hEigeartaigh <coheigea@apache.org>
+Date: Thu, 28 Jun 2018 15:57:13 +0100
+X-Gmail-Original-Message-ID: <CAB8XdGCXbiqd=BWa623OgeKtJzKpDM1H5umdANGi670hQUbSMQ@mail.gmail.com>
+Message-ID: <CAB8XdGCXbiqd=BWa623OgeKtJzKpDM1H5umdANGi670hQUbSMQ@mail.gmail.com>
+To: users@cxf.apache.org, CXF Dev List <dev@cxf.apache.org>, announce@apache.org
+Cc: Apache Security Response Team <security@apache.org>, oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="0000000000005a4152056fb4f24a"
+Subject: [oss-security] Apache CXF 3.2.6 and 3.1.16 are released
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--0000000000005a4152056fb4f24a
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
->> Date: Mon, 27 Jun 2016 08:08:14 +0200
+Apache CXF=E2=84=A2 is an open source services framework. CXF helps you bui=
+ld and
+develop services using frontend programming APIs, like JAX-WS and JAX-RS.
+These services can speak a variety of protocols such as SOAP, XML/HTTP,
+RESTful HTTP, or CORBA and work over a variety of transports such as HTTP,
+JMS or JBI.
 
-> MatrixSSL 3.8.3 comes with this fix:
-> 
-> https://github.com/matrixssl/matrixssl/blob/master/CHANGES.md#validation-of-rsa-signature-creation
-> 
-> I think this warrants a CVE ID because RSA-CRT key leaks from
-> MatrixSSL have been observed in practice.
+The Apache CXF team is proud to announce the release of versions 3.2.6 and
+3.1.16. Over 50 JIRA issues were fixed for 3.2.5 and 25 JIRA items were
+resolved for 3.1.16.
 
->> Version 3.8.3 April 2016
->> 
->> BUG FIXES
->> 
->> Validation of RSA Signature Creation
+In addition, both of these releases contain a fix for a new security
+advisory:
 
->> An internal RSA validation of created signatures has been added to the
->> library in the psRsaEncryptPriv() function.
->> 
->> Security researcher Florian Weimer has shown it is possible for RSA
->> private key information to leak under some special failure
->> circumstances. Information on the exploit can be found here:
->> https://people.redhat.com/~fweimer/rsa-crt-leaks.pdf
->> 
->> The potential leak is only possible if a DHE_RSA based cipher suite is
->> supported on the server side. This is the only handshake combination
->> in which an RSA signature is sent over the wire (during the
->> SERVER_KEY_EXCHANGE message). The signature itself must have been
->> incorrectly generated for the exploit to be possible.
->> 
->> The additional signature validation test will now cause the TLS
->> handshake to fail prior to a faulty signature being sent to the
->> client.
+CVE-2018-8039: Apache CXF TLS hostname verification does not work correctly
+with com.sun.net.ssl.
 
-Use CVE-2016-6882.
+The advisory text is available at this location:
+http://cxf.apache.org/security-advisories.data/CVE-2018-8039.txt.asc?versio=
+n=3D1&modificationDate=3D1530184663000&api=3Dv2
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Please also refer to the CXF security advisories page:
+http://cxf.apache.org/security-advisories.html
 
-iQIcBAEBCAAGBQJXtwzoAAoJEHb/MwWLVhi2EvwQAJZXlmmNwy/iDHfzIPx4J2Ai
-CuAnQ5mrHIACk77z496F8yxyjocM455UuBEaofIACrPbEFzIwV3+6cLPWCY59OcJ
-0XJ18AgUVxEYJyKlrIae5O3wTnrPix939TJvhuPn+YnuK6fNXtAk5PVCMWNWMyUD
-gCd2c3A2qDVJ+6lLmuTGnitZ8t0m88kUclzCfKMHK5ciYjDa8JcRoE9r45Ue2At0
-sRqdJ4OWcvSbIiHWA5zN43GZ13z3fKw2ev1NvWn2pKIhVj9SBzm+6kxzz/jTm5ZW
-o4Koam6Y59lspk5yXHCeDWpXuylYwn55pHTBQvTKjRSWh3kMXEx8/RR70qx4Z5Ow
-Wok13h9/1U6cn8wrbsJiODtW2eSvY/N/FHdRWlPj5sDR64PntUhxTR3l4WvgT8Pe
-ogn9m14ij8uc3/pwXyXECLSqXp8WchMEsmacPEitTxRfsXbA7LoqcuZ6pxxKefVY
-yxxmQHDKaoOD4U92hTW8zG+nGn1rMCvmA0lI2irrCthdW5oD929WNYTKPnalZJTe
-XPi+TqxyZq1ATJxN2fMtZHoXgtXxepmEeXQK+ZXowT3J7x5eHJ8ij6RKYHK4mW5/
-1QGHW0LMrycUgFoggOLPXDFm3Sgh/dOmTngRqR3GXssRPsBpbtBuSBBttwLXYB4o
-xLUdsD1hJSQLZkV5232f
-=yjNZ
------END PGP SIGNATURE-----
+
+--=20
+Colm O hEigeartaigh
+
+Talend Community Coder
+http://coders.talend.com
+
+--0000000000005a4152056fb4f24a--
