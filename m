@@ -1,56 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/23/2
-Message-Id: <5E61C789-3F39-47CC-9E4C-A28978BDD3F4@apache.org>
-Date: Tue, 23 Jan 2018 11:39:32 -0800
-From: Andy LoPresto <alopresto@...che.org>
-To: security@...i.apache.org
-Cc: dev@...i.apache.org, users@...i.apache.org, oss-security@...ts.openwall.com
-Subject: [ANNOUNCE] CVE fixes in Apache NiFi 1.5.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/28/1
+Message-ID: <CAB8XdGCXbiqd=BWa623OgeKtJzKpDM1H5umdANGi670hQUbSMQ@mail.gmail.com>
+Date: Thu, 28 Jun 2018 15:57:13 +0100
+From: Colm O hEigeartaigh <coheigea@...che.org>
+To: users@....apache.org, CXF Dev List <dev@....apache.org>, announce@...che.org
+Cc: Apache Security Response Team <security@...che.org>, oss-security@...ts.openwall.com
+Subject: Apache CXF 3.2.6 and 3.1.16 are released
 Content-Type: text/plain; charset=utf-8
 
-The Apache NiFi PMC would like to announce the following CVE discoveries and resolutions in Apache NiFi 1.5.0, released January 12, 2018. NiFi is an easy to use, powerful, and reliable system to process and distribute data. It supports powerful and scalable directed graphs of data routing, transformation, and system mediation logic. For more information, see https://nifi.apache.org/security.html <https://nifi.apache.org/security.html>.
+Apache CXF™ is an open source services framework. CXF helps you build and
+develop services using frontend programming APIs, like JAX-WS and JAX-RS.
+These services can speak a variety of protocols such as SOAP, XML/HTTP,
+RESTful HTTP, or CORBA and work over a variety of transports such as HTTP,
+JMS or JBI.
 
-CVE-2017-12632 <https://nifi.apache.org/security.html#CVE-2017-12632>: Apache NiFi host header poisoning issue
+The Apache CXF team is proud to announce the release of versions 3.2.6 and
+3.1.16. Over 50 JIRA issues were fixed for 3.2.5 and 25 JIRA items were
+resolved for 3.1.16.
 
-Severity: Medium
+In addition, both of these releases contain a fix for a new security
+advisory:
 
-Versions Affected:
+CVE-2018-8039: Apache CXF TLS hostname verification does not work correctly
+with com.sun.net.ssl.
 
-Apache NiFi 0.1.0 - 1.4.0
+The advisory text is available at this location:
+http://cxf.apache.org/security-advisories.data/CVE-2018-8039.txt.asc?version=1&modificationDate=1530184663000&api=v2
 
-Description: A malicious host header in an incoming HTTP request could cause NiFi to load resources from an external server.
-
-Mitigation: The fix to sanitize host headers and compare to a controlled whitelist was applied on the Apache NiFi 1.5.0 release. Users running a prior 1.x release should upgrade to the appropriate release.
-
-Credit: This issue was discovered by Mike Cole.
-
-Released: January 12, 2018
-
-CVE-2017-15697 <https://nifi.apache.org/security.html#CVE-2017-15697>: Apache NiFi XSS issue in context path handling
-
-Severity: Medium
-
-Versions Affected:
-
-Apache NiFi 1.0.0 - 1.4.0
-
-Description: A malicious X-ProxyContextPath or X-Forwarded-Context header containing external resources or embedded code could cause remote code execution.
-
-Mitigation: The fix to properly handle these headers was applied on the Apache NiFi 1.5.0 release. Users running a prior 1.x release should upgrade to the appropriate release.
-
-Credit: This issue was discovered by Andy LoPresto.
-
-Released: January 12, 2018
+Please also refer to the CXF security advisories page:
+http://cxf.apache.org/security-advisories.html
 
 
+-- 
+Colm O hEigeartaigh
 
+Talend Community Coder
+http://coders.talend.com
 
-Andy LoPresto
-alopresto@...che.org
-alopresto.apache@...il.com
-PGP Fingerprint: 70EC B3E5 98A6 5A3F D3C4  BACE 3C6E F65B 2F7D EF69
-
-
-Content of type "text/html" skipped
-
-Download attachment "signature.asc" of type "application/pgp-signature" (843 bytes)
