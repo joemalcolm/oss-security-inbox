@@ -1,37 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/29/3
-Message-Id: <34DCD4E4-8427-4B0F-889A-75AEEAC76146@beckweb.net>
-Date: Mon, 29 Oct 2018 14:42:29 +0100
-From: Daniel Beck <ml@...kweb.net>
-To: oss-security@...ts.openwall.com
-Subject: Script sandbox bypass in multiple Jenkins plugins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/29/2
+Message-ID: <2e123ab7-5492-d35a-1c85-7b13dbd438ec@apache.org>
+Date: Fri, 29 Jun 2018 18:51:28 +0200
+From: Andreas Lehmkuehler <lehmi@...che.org>
+To: announce@...che.org, security@...che.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: [CVE-2018-8036] DoS (OOM) Vulnerability in Apache PDFBox's AFMParser
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software. The following
-releases contain fixes for security vulnerabilities:
+[CVE-2018-8036] DoS (OOM) Vulnerability in Apache PDFBox's AFMParser
 
-* Pipeline: Groovy 2.60
-* Script Security 1.48
+Severity: Important
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2018-10-29/
+Vendor:
+The Apache Software Foundation
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+Versions Affected:
+Apache PDFBox 1.8.0 to 1.8.14
+Apache PDFBox 2.0.0 to 2.0.10
+Earlier, unsupported Apache PDFBox versions may be affected as well
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
+Description:
+A carefully crafted (or fuzzed) file can trigger an infinite loop which leads to 
+an out of memory exception in Apache PDFBox's AFMParser.
 
----
+Mitigation:
+Upgrade to Apache PDFBox 1.8.15 respectively 2.0.11
 
-SECURITY-1186
-The Groovy Sandbox library used by Script Security Plugin and Pipeline Groovy
-Plugin did not apply sandbox restrictions to finalize methods. This could be
-used to invoke arbitrary constructors and methods, bypassing sandbox
-protection.
+Credit:
+This issue was discovered by Tobias Ospelt
 
-Finalize methods are now prohibited in classes subject to sandbox security.
+Website:
+https://pdfbox.apache.org/
 
+Download:
+https://pdfbox.apache.org/download.cgi
+https://www.apache.org/dist/pdfbox/2.0.11/RELEASE-NOTES.txt
+https://www.apache.org/dist/pdfbox/1.8.15/RELEASE-NOTES.txt
