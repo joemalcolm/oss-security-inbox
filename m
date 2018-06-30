@@ -1,23 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/29/1
-Message-ID: <1a3dc112-9207-cb87-5e69-4bcbd6be5457@treenet.co.nz>
-Date: Mon, 29 Jan 2018 16:24:10 +1300
-From: Amos Jeffries <squid3@...enet.co.nz>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/30/1
+Message-ID: <20180630062508.oynnfspfl3ak35b7@sivokote.iziade.m$>
+Date: Sat, 30 Jun 2018 09:25:08 +0300
+From: Georgi Guninski <guninski@...inski.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: SQUID-2018:1 Denial of Service issue in ESI Response processing
+Subject: BUG_ON() on mips linux kernels 4.17.2 and earlier (old but alive)
 Content-Type: text/plain; charset=utf-8
 
-On 22/01/18 22:41, Amos Jeffries wrote:
-> Notes for OSS-Security people:
-> 
-> * CVE has been requested through DWF, waiting on assignment.
+
+ From
+https://j.ludost.net/blog/archives/2018/06/30/bug_on_on_mips_kernels_4_17_2_and_earlier_old_but_alive/index.html
+
+This is old but alive.
+
+On mips linux kernel 4.17.2 and earlier unprivileged user can trigger
+BUG_ON() possibly causing denial of service on the whole machine.
+
+Suggested patches from 2013 are in the thread at:
+https://www.spinics.net/lists/mips/msg73398.html
 
 
-CVE-2018-1000024
+in 4.17.2 ./kernel/exit.c
 
-Amos Jeffries
-The Squid Software Foundation
+do_group_exit(int exit_code)
+{
+	struct signal_struct *sig = current->signal;
 
+	BUG_ON(exit_code & 0x80);
 
+|do_group_exit| is called from
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+./kernel/signal.c:2482:		do_group_exit(ksig->info.si_signo);
+
+Appears to me si_signo can be 0x80 (in decimal 128) because of:
+
+arch/mips/include/uapi/asm/signal.h:15:#define _NSIG		128
+
+Probably testcase will be:
+$kill -128 `pidof program`
+
