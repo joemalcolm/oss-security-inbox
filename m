@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1429" "Tuesday" "29" "August" "2017" "15:49:46" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<3051527.WuieGNAktk@wanheda>" "33" "Re: [oss-security] A bunch of duplicate CVEs requested for?? bho.." "^Date:" nil nil "8" "2017082913:49:46" "[oss-security] A bunch of duplicate CVEs requested for?? bho.." (number mark "        ago@gentoo.o Aug 29   33/1429  " thread-indent "\"Re: [oss-security] A bunch of duplicate CVEs requested for?? bho..\"\n") "<6609652.OIiHvm4qLd@wanheda>" ("<6609652.OIiHvm4qLd@wanheda>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["789" "Saturday" "30" "June" "2018" "09:25:08" "+0300" "Georgi Guninski" "guninski@guninski.com" "<20180630062508.oynnfspfl3ak35b7@sivokote.iziade.m$>" "32" "[oss-security] BUG_ON() on mips linux kernels 4.17.2 and earlier (old but alive)" "^Date:" nil nil "6" "2018063006:25:08" "[oss-security] BUG_ON() on mips linux kernels 4.17.2 and earlier (old but alive)" (number mark "        guninski@gun Jun 30   32/789   " thread-indent "\"[oss-security] BUG_ON() on mips linux kernels 4.17.2 and earlier (old but alive)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5390 invoked by uid 550); 29 Aug 2017 13:50:01 -0000
+Received: (qmail 17548 invoked by uid 550); 30 Jun 2018 09:53:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,49 +11,47 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5365 invoked from network); 29 Aug 2017 13:50:00 -0000
-Message-ID: <3051527.WuieGNAktk@wanheda>
-In-Reply-To: <6609652.OIiHvm4qLd@wanheda>
-References: <6609652.OIiHvm4qLd@wanheda>
+Received: (qmail 5419 invoked from network); 30 Jun 2018 06:25:21 -0000
+Message-ID: <20180630062508.oynnfspfl3ak35b7@sivokote.iziade.m$>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="UTF-8"
-Date: Tue, 29 Aug 2017 15:49:46 +0200
-From: Agostino Sarubbo <ago@gentoo.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+header: best read with a sniffer
+Date: Sat, 30 Jun 2018 09:25:08 +0300
+From: Georgi Guninski <guninski@guninski.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] A bunch of duplicate CVEs requested for?? bho..
+Subject: [oss-security] BUG_ON() on mips linux kernels 4.17.2 and earlier (old but alive)
 To: oss-security@lists.openwall.com
 
-Another recent example by owl337:
-https://nvd.nist.gov/vuln/detail/CVE-2017-13737 which points to:
-https://bugzilla.redhat.com/show_bug.cgi?id=1484196
-There is an invalid free in the MagickFree function in magick/memory.c in 
-GraphicsMagick 1.3.26 that will lead to a remote denial of service attack.
+
+ From
+https://j.ludost.net/blog/archives/2018/06/30/bug_on_on_mips_kernels_4_17_2_and_earlier_old_but_alive/index.html
+
+This is old but alive.
+
+On mips linux kernel 4.17.2 and earlier unprivileged user can trigger
+BUG_ON() possibly causing denial of service on the whole machine.
+
+Suggested patches from 2013 are in the thread at:
+https://www.spinics.net/lists/mips/msg73398.html
 
 
-The maintainer of Graphicsmagick, Mr Bob Friesenhahn said to me:
+in 4.17.2 ./kernel/exit.c
 
-"It looks like this problem is not a GM bug but it is already fixed in 
-libtiff.  Using latest libtiff CVS sources I see this in the GM traces 
-which are produced by libtiff:
+do_group_exit(int exit_code)
+{
+	struct signal_struct *sig = current->signal;
 
-08:41:48 0:01 0.000u 25164 tiff.c/unknown/2268/Coder:
-   Allocating scanline buffer of 104 bytes
-08:41:48 0:01 0.000u 25164 tiff.c/unknown/932/Coder:
-   TIFF Warning: Discarding 89 bytes to avoid buffer overrun.
-08:41:48 0:01 0.000u 25164 tiff.c/unknown/932/Coder:
-   TIFF Warning: Discarding 16 bytes to avoid buffer overrun.
-08:41:48 0:01 0.000u 25164 tiff.c/unknown/932/Coder:
-   TIFF Warning: Discarding 1 bytes to avoid buffer overrun.
-08:41:48 0:01 0.000u 25164 tiff.c/unknown/932/Coder:
-   TIFF Warning: Terminating PackBitsDecode due to lack of data..
-08:41:48 0:01 0.000u 25164 tiff.c/unknown/793/Coder:
-   Not enough data for scanline 3. (PackBitsDecode)
+	BUG_ON(exit_code & 0x80);
 
-I am not sure what libtiff Red Hat is using.  It may be that the 
-changes are since the latest libtiff release.  I could help with that 
-by making another libtiff release."
+|do_group_exit| is called from
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+./kernel/signal.c:2482:		do_group_exit(ksig->info.si_signo);
+
+Appears to me si_signo can be 0x80 (in decimal 128) because of:
+
+arch/mips/include/uapi/asm/signal.h:15:#define _NSIG		128
+
+Probably testcase will be:
+$kill -128 `pidof program`
+
