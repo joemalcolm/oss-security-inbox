@@ -1,49 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/15/1
-Message-ID: <87vabp5puz.fsf@silverfish.pri>
-Date: Tue, 15 May 2018 17:40:04 +1000
-From: Brian May <brian@...uxpenguins.xyz>
-To: Yves-Alexis Perez <corsac@...ian.org>, oss-security@...ts.openwall.com
-Subject: Re: PGP/MIME and S/MIME mail clients vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/02/1
+Message-ID: <CAGO7Ob0kKK_tjgGJzxeLYatscDM9aPzEC3+2yLdA88u7S_a22g@mail.gmail.com>
+Date: Mon, 2 Jul 2018 09:28:52 +0200
+From: David Karlsen <davidkarlsen@...il.com>
+To: dev@....apache.org, coheigea@...che.org
+Cc: users@....apache.org, announce@...che.org, security@...che.org,  oss-security@...ts.openwall.com
+Subject: Re: Apache CXF 3.2.6 and 3.1.16 are released
 Content-Type: text/plain; charset=utf-8
 
-Yves-Alexis Perez <corsac@...ian.org> writes:
+Should that read 3.2.5 instead of 3.2.6?
 
-> So, as far as I can tell, in that attack scenario (where the attacker has
-> read/write access to encrypted mails):
+Den tor. 28. jun. 2018 kl. 16:57 skrev Colm O hEigeartaigh <
+coheigea@...che.org>:
+
+> Apache CXF™ is an open source services framework. CXF helps you build and
+> develop services using frontend programming APIs, like JAX-WS and JAX-RS.
+> These services can speak a variety of protocols such as SOAP, XML/HTTP,
+> RESTful HTTP, or CORBA and work over a variety of transports such as HTTP,
+> JMS or JBI.
 >
-> - S/MIME is completely broken at the protocol level since it has no way to
-> defend against blind modification. Only mitigation for the clients are to
-> prevent HTML mails and/or prevent loading of external resources. There might
-> be other avenues to exploit the vulnerability in the future though.
+> The Apache CXF team is proud to announce the release of versions 3.2.6 and
+> 3.1.16. Over 50 JIRA issues were fixed for 3.2.5 and 25 JIRA items were
+> resolved for 3.1.16.
 >
-> - PGP/MIME is a bit safer because the OpenPGP format compresses plaintext
-> before encryption (which makes it harder for the attacker) and has some kind
-> of authenticated (symmetric) encryption (the MDC), which helps gnupg detects
-> modifications to the cyphertext. Most mail clients properly handle gnupg hints
-> when something went wrong but the external interface is a bit fragile (gnupg
-> will still output the cleartext, for example). One exception is apparently
-> Thunderbird with enigmail before 2.0.0, but this is now fixed (I didn't find
-> the proper commit yet). Again, not displaying HTML mails and not allowing
-> remote content loading can help, but other “backchannels” might be found in
-> the future.
+> In addition, both of these releases contain a fix for a new security
+> advisory:
+>
+> CVE-2018-8039: Apache CXF TLS hostname verification does not work correctly
+> with com.sun.net.ssl.
+>
+> The advisory text is available at this location:
+>
+> http://cxf.apache.org/security-advisories.data/CVE-2018-8039.txt.asc?version=1&modificationDate=1530184663000&api=v2
+>
+> Please also refer to the CXF security advisories page:
+> http://cxf.apache.org/security-advisories.html
+>
+>
+> --
+> Colm O hEigeartaigh
+>
+> Talend Community Coder
+> http://coders.talend.com
+>
 
-Have a look at some official statements on this:
 
-* https://lists.gnupg.org/pipermail/gnupg-users/2018-May/060334.html
-* https://protonmail.com/blog/pgp-vulnerability-efail/
-
-For the case of PGP it sounds like the only problems occur when mail
-clients ignore the GPG hints.
-
-For S/MIME, it does sound like the standard is broken and needs fixing.
-
-If I understand this correctly, the "Direct Exfiltration" is an attack
-that doesn't require modifying the encrypted data - so presumably the
-MDC in PGP won't help. To me this sounds like a email client problem
-(allowing mixing encrypted and encrypted data in the one HTML document
-seems like a very bad idea), but the https://efail.de/ page says the
-standards need to be updated to fix this.
 -- 
-Brian May <brian@...uxpenguins.xyz>
-https://linuxpenguins.xyz/brian/
+--
+David J. M. Karlsen - http://www.linkedin.com/in/davidkarlsen
+
