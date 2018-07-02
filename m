@@ -1,61 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/05/2
-Message-ID: <fad45546-af86-0293-9ea7-014553474b30@apache.org>
-Date: Fri, 5 Oct 2018 15:52:23 +0300
-From: Taher Alkhateeb <slidingfilaments@...il.com>
-To: user@...iz.apache.org, dev@...iz.apache.org, security@...iz.apache.org, security@...che.org, announce@...che.org, oss-security@...ts.openwall.com, jamesp@...dpointgroup.com
-Subject: [SECURITY] CVE-2011-3600 Apache OFBiz XML-RPC XXE Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/02/7
+Message-ID: <20180702173254.GC2555@espresso.pseudorandom.co.uk>
+Date: Mon, 2 Jul 2018 18:32:54 +0100
+From: Simon McVittie <smcv@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: accountsservice: insufficient path check in user_change_icon_file_authorized_cb()
 Content-Type: text/plain; charset=utf-8
 
-Severity:
-Important
+On Mon, 02 Jul 2018 at 16:10:24 +0200, Jakub Wilk wrote:
+> You patch uses g_file_get_path(), which AFIACT doesn't use any filesystem
+> I/O for canonicalisation, so that should be fine.
 
-Vendor:
-The Apache Software Foundation
+It's specifically documented not to do any blocking I/O, and might provide
+syntactic canonicalisation (the documentation doesn't specifically say
+either way) but does not provide filesystem-aware canonicalisation.
+The documentation also specifically says that the returned path "might
+contain symlinks".
 
-Versions Affected:
-OFBiz 16.11.01 to 16.11.04
+It might be a good idea to double-check that the result of
+g_file_get_path() starts with "/", doesn't contain "/../" and (just for
+completeness) doesn't end with "/..".
 
-Description:
-The OFBiz XML-RPC event handler 
-(org.apache.ofbiz.webapp.event.XmlRpcEventHandler.java)
-acts as a wrapper for any OFBiz service that provides XML-RPC web 
-services via
-the /webtools/control/xmlrpc endpoint. This endpoint is exposed to External
-Entity Injection by passing DOCTYPE declarations with executable 
-payloads that
-discloses the contents of files in the filesystem. In addition, it can 
-also be
-used to probe for open network ports, and figure out from returned error
-messages whether a file exists or not.
-
-Mitigation:
-Upgrade to 16.11.05
-or manually apply the following commits on branch 16
-r1833724
-r1833708
-r1836141
-
-Example:
-# Payload to find an exposed port
-<?xml version="1.0"?>
-<!DOCTYPE x SYSTEM "http://localhost:8080">
-<methodCall>
-     <methodName>ping</methodName>
-</methodCall>
-
-# Payload to display file contents
-<?xml version="1.0"?>
-<!DOCTYPE foo [
-<!ENTITY disclose SYSTEM "file:///etc/passwd">
-]>
-<methodCall>
-     <methodName>&disclose;</methodName>
-</methodCall>
-
-Credit:
-James Parfet <jamesp at mindpointgroup.com>
-
-References:
-http://ofbiz.apache.org/download.html#vulnerabilities
-
+    smcv
