@@ -1,4 +1,9 @@
-Received: (qmail 5344 invoked by uid 550); 20 Apr 2026 15:51:52 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["7170" "Monday" "2" "July" "2018" "15:37:09" "+0200" "Matthias Gerstner" "mgerstner@suse.de" "<20180702133709.GE8324@f195.suse.de>" "190" "[oss-security] cinnamon: possible symlink attack in cinnamon-settings-users.py" "^Date:" nil nil "7" "2018070213:37:09" "[oss-security] cinnamon: possible symlink attack in cinnamon-settings-users.py" (number mark "U       mgerstner@su Jul  2  190/7170  " thread-indent "\"[oss-security] cinnamon: possible symlink attack in cinnamon-settings-users.py\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 9470 invoked by uid 550); 2 Jul 2018 13:57:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,141 +11,207 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 5582 invoked from network); 20 Apr 2026 09:01:42 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1776675691;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type;
-	bh=o5gSLxB8jk/OL6/ApSL8kKT/wwy05qAhsSQPQT31f6g=;
-	b=L0UMsxeIOlSCGUfAu7r42KuDmBxAjft1WktugJ0rivfxv+okSqlW2EEMm2o8Qsv71gqCpr
-	ndhFb7+22exTKYskA84uMJXh1ewMubnSwgHbXem4y/EF/jjR7zcayMmynOtjgDM7TTkrcG
-	kUi8uvXDxVmabKEhMDXsvBIw2051gaM=
-X-MC-Unique: vHpsOOn9N56w1ohruYTKvw-1
-X-Mimecast-MFC-AGG-ID: vHpsOOn9N56w1ohruYTKvw_1776675687
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776675687; x=1777280487;
-        h=to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=o5gSLxB8jk/OL6/ApSL8kKT/wwy05qAhsSQPQT31f6g=;
-        b=PCV6ViBdBlfpJPyIWlXcv/04Jcg4FxUZzt/OQdTKqLHiqyBas2EWKdoCvKL0bR2BrM
-         w0TSQQecysjq3SbaZu9JeHd7pd5nESbztTO+EtZf951h7Ii3v/x4/sUEtlRBnlkNTMnW
-         0dHAnzXeKw6nLCuTAA3RPAHdb4dKxMxM4sedOfLk0zC93SEb8bye7xE4uu0r6ts1i/sA
-         cUyVzOdsgHtQhEOw1qMArW1cQkWgz1tjU4TohT7EwP9Lst4B1MRv5vdTkE00akmvlayq
-         YYJ8Fx5bz/FZhAo8gd4Px9ddZiSo08NoebVlmqMViTerKLkiPX8MJrbKr+lrJtvOlWwo
-         MR3g==
-X-Forwarded-Encrypted: i=1; AFNElJ8QDBvFBs6BridR+FuY/dBxbD+2BZYHDJ12HOg9p0dFktjmAbGV+9b+eegJ5XEO/qyIEWcJot/xagA/K9I=@lists.openwall.com
-X-Gm-Message-State: AOJu0YySs3MvetBWM8MSIuY5dhTD7af8/SHIiYLKY67BpFm9KFI7AhXM
-	5q2LaazZTHTOVxvmSo2ENODHc33F8BQcz04VZcoMvzFOCb6vW4KyzRyhTf3BrH53BB/4992htZd
-	rI3oH1zMNyYyOMx9cfPilzpDY+FzWDAHtvDSY5OszHwDVtnVH8/ljqkorRFHdP8kDMU4s6pO8Cd
-	4lnrHL9nwjqCeVpbRjoATWwX7ujKDxDFVr2JzmApXksMY3
-X-Gm-Gg: AeBDiesobyhci3GwmO6J562+1a53eC4OAra5SR+20MXcrQyWU3nxRAeU3smou0x6k/z
-	5ZgrG7JvMashXqCLK9RL7pTYRueq7UMFRIx6q1ffrg92oXzw48gdPEOmBBGlk9qjA60FEGi50Fz
-	uH1nU9aQF0wUvVXEfh8JVQJXkujR3/Ryve/Cf41AmG3BlSfYp97as/5O/aJd2dr7/hpTfiQl2yn
-	5P4/gJIRQlaJPCSaGwk6Eb6hH7g6t+Hu+2dw9GS4/pT2BB19IdGnn/1HHxNwiAzAK3zNEXZjhBS
-	BxdCvRaF5ig26T7kjK3Tg8VgKJ12FB5fz+Cuyfvit6Lxau9Ked7YGX/dCsf4FiRVrq5DBVuIu+Q
-	bBJvyPeGXFWeNK5jsObv1HUes0sM/QwKMGCMGzgPKDSeNmF5RZXaOKL+J
-X-Received: by 2002:a53:d748:0:b0:64c:9ec3:d71a with SMTP id 956f58d0204a3-65310a737b1mr8785308d50.48.1776675687261;
-        Mon, 20 Apr 2026 02:01:27 -0700 (PDT)
-X-Received: by 2002:a53:d748:0:b0:64c:9ec3:d71a with SMTP id
- 956f58d0204a3-65310a737b1mr8785282d50.48.1776675686705; Mon, 20 Apr 2026
- 02:01:26 -0700 (PDT)
+Received: (qmail 15430 invoked from network); 2 Jul 2018 13:37:22 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Message-ID: <20180702133709.GE8324@f195.suse.de>
 MIME-Version: 1.0
-From: Ales Musil <amusil@redhat.com>
-Date: Mon, 20 Apr 2026 11:01:15 +0200
-X-Gm-Features: AQROBzAxi0lW2ojvpXspAEOWlb19dyTuN8zTQrJ6pMFGB_tpAhjgCMx_j3Ib0n8
-Message-ID: <CALVEqe6a8yXmfG9R_v1rsBF0x_OSpJw_soxxk9-mSYUNHOMwjg@mail.gmail.com>
-To: ovs-announce@openvswitch.org, oss-security@lists.openwall.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: zelzXYV76tJTMK6zJVsRPaUiCBFygZmuH6e-ZokmjLc_1776675687
-X-Mimecast-Originator: redhat.com
-Content-Type: multipart/alternative; boundary="000000000000306b79064fe08b73"
-Subject: [oss-security] [ADVISORY] CVE-2026-5265: Heap Over-Read in ICMP Error Response Generation
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="GdbWtwDHkcXqP16f"
+Content-Disposition: inline
+User-Agent: Mutt/1.9.4 (2018-02-28)
+Date: Mon, 2 Jul 2018 15:37:09 +0200
+From: Matthias Gerstner <mgerstner@suse.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] cinnamon: possible symlink attack in cinnamon-settings-users.py
+To: oss-security@lists.openwall.com
 
---000000000000306b79064fe08b73
-Content-Type: text/plain; charset="UTF-8"
+--GdbWtwDHkcXqP16f
+Content-Type: multipart/mixed; boundary="m1UC1K4AOz1Ywdkx"
+Content-Disposition: inline
 
-Description
-===========
 
-Multiple versions of OVN (Open Virtual Network) are vulnerable to
-crafted IP packets that could potentially read out-of-bounds,
-leaking adjacent info stored on the heap.
+--m1UC1K4AOz1Ywdkx
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-OVN supports sending ICMP error messages in multiple scenarios, e.g.
-reject ACLs, PMTU discovery via Gateway MTU, Load Balancer without
-any backends that are configured to reject a packet. The ICMP error
-is generated in the userspace thread called pinctrl. The thread accesses
-user-controlled packet data and copies some of it in the process of
-creating a reply packet.
+Hello,
 
-When generating an ICMP Destination Unreachable or Packet Too
-Big response, the handler copies a portion of the original packet into
-the ICMP error body using the IP header's self-declared total length
-(ip_tot_len for IPv4, ip6_plen for IPv6) without validating it against
-the actual packet buffer size. A VM can send a short packet with an
-inflated IP length field that triggers an ICMP error (e.g., by hitting a
-reject ACL), causing ovn-controller to read heap memory beyond the valid
-packet data and include it in the ICMP response sent back to the workload.
+this is about an issue I found during a code review of Cinnamon
+<https://github.com/linuxmint/Cinnamon>:
 
-The Common Vulnerabilities and Exposures project (cve.mitre.org) has
-assigned the CVE-2026-5265 identifier to this issue.
-A way to determine if any reject ACL is configured:
+The script cinnamon-settings-users.py runs as root (via polkit's pkexec)=20
+and allows to configure e.g. other user's icon files. These icon files
+are written to the respective user's $HOME/.face location. If an
+unprivileged user prepares a symlink pointing to an arbitrary location
+then this location will be overwritten with the icon content. This
+vulnerability thus allows to corrupt the system or other user's files.
+The content is not attacker controlled, luckily. It may have further
+unspecified impact, however, by allowing to write to pseudo files in
+/proc or /sys or by creating state files that influence other system
+components like /etc/suid-debug.
 
-  $ ovn-nbctl --columns match,action find acl action=reject
+Affected Versions:
 
-If the command above returns at least one ACL, the Logical Switch
-configured with that ACL rejects packets matching the condition.
+=46rom the git history it looks like this vulnerability was contained for
+a long time in the cinnamon-settings-users.py script, dating back to
+version 1.9.2 up to and including current version 3.8.6.
 
-A way to determine if a Gateway MTU is configured:
+Suggested Fix:
 
-  $ ovn-nbctl --columns name,options list logical_router_port
+Dropping privileges to the target user while writing the $HOME/.face
+file should be a safe approach. A preliminary suggested patch is found
+in the pull request referenced below and is also attached to this mail.
 
-If the output from the command above returns at least one Logical
-Router Port with gateway_mtu in the options column, that port is
-configured to perform the MTU check.
+References:
 
-A way to determine if a Load Balancer has a reject action:
-    $ ovn-nbctl --columns name,options list load_balancer
+Upstream pull request: https://github.com/linuxmint/Cinnamon/pull/7683
+OpenSUSE bug: https://bugzilla.suse.com/show_bug.cgi?id=3D1083067
 
-If the output from the command above returns at least one Load
-Balancer with gateway_mtu in the options column, that Load Balancer
-is configured to reject the traffic if it lacks any backends.
+Timeline:
 
-Mitigation
-==========
+2018-06-28: I found the vulnerability during a code review
+2018-06-29: I privately contacted the upstream main developer
+2018-07-02: Upstream agreed to publish the issue and I created the
+            upstream PR
 
-The only potential mitigation is to remove or disable all affected ACLs,
-Load Balancers or Gateway MTU settings on Logical Router Ports.
+--=20
+Matthias Gerstner <matthias.gerstner@suse.de>
+Dipl.-Wirtsch.-Inf. (FH), Security Engineer
+https://www.suse.com/security
+Telefon: +49 911 740 53 290
+GPG Key ID: 0x14C405C971923553
 
-We do not recommend mitigating the vulnerability this way because it
-will also affect legitimate traffic going through the cluster.
+SUSE Linux GmbH
+GF: Felix Imend=F6rffer, Jane Smithard, Graham Norton
+HRB 21284 (AG Nuernberg)
 
-Fix
-===
+--m1UC1K4AOz1Ywdkx
+Content-Type: text/x-diff; charset=us-ascii
+Content-Disposition: attachment; filename="0001-cinnamon-settings-users.py-fix-symlink-attack-vulner.patch"
+Content-Transfer-Encoding: quoted-printable
 
-Patches to fix this vulnerability in OVN 24.03 and newer are
-applied to the appropriate branches.
+=46rom 928ecc461a665c336bf029f187b3516f540fdfe5 Mon Sep 17 00:00:00 2001
+From: Matthias Gerstner <matthias.gerstner@suse.de>
+Date: Thu, 28 Jun 2018 14:32:50 +0200
+Subject: [PATCH] cinnamon-settings-users.py: fix symlink attack vulnerabili=
+ty
 
-Recommendation
-==============
+This script runs as root and allows to configure e.g. other user's icon
+files. These icon files are written to the respective user's $HOME/.face
+location. If an unprivileged user prepares a symlink pointing to an
+arbitrary location then this location will be overwritten with the icon
+content. This vulnerability thus allows to corrupt the system or other
+user's files. The content is not attacker controlled, luckily.
 
-We recommend that users of OVN apply tthe patches, or upgrade to
-a known patched version of OVN.  These include:
+This change introduces temporary privilege drops to the target user's
+privileges before attempting to write the respective .face files. This
+way the kernel can decide if permissions are okay or not.
+---
+ .../cinnamon-settings-users.py                     | 41 ++++++++++++++++++=
+++--
+ 1 file changed, 39 insertions(+), 2 deletions(-)
 
- * v24.03.8
- * v24.09.4
- * v25.03.3
- * v25.09.3
- * v26.03.1
+diff --git a/files/usr/share/cinnamon/cinnamon-settings-users/cinnamon-sett=
+ings-users.py b/files/usr/share/cinnamon/cinnamon-settings-users/cinnamon-s=
+ettings-users.py
+index 31e2fe2d..d5af76be 100755
+--- a/files/usr/share/cinnamon/cinnamon-settings-users/cinnamon-settings-us=
+ers.py
++++ b/files/usr/share/cinnamon/cinnamon-settings-users/cinnamon-settings-us=
+ers.py
+@@ -19,6 +19,35 @@ from gi.repository import Gtk, GObject, Gio, GdkPixbuf, =
+AccountsService, GLib
+=20
+ gettext.install("cinnamon", "/usr/share/locale")
+=20
++class PrivHelper(object):
++    """A helper for performing temporary privilege drops. Necessary for
++    security when accessing user controlled files as root."""
++
++    def __init__(self):
++
++        self.orig_uid =3D os.getuid()
++        self.orig_gid =3D os.getgid()
++        self.orig_groups =3D os.getgroups()
++
++    def drop_privs(self, user):
++
++        uid =3D user.get_uid()
++        # the user's main group id
++        gid =3D pwd.getpwuid(uid).pw_gid
++
++        # initialize the user's supplemental groups and main group
++        os.initgroups(user.get_user_name(), gid)
++        os.setegid(gid)
++        os.seteuid(uid)
++
++    def restore_privs(self):
++
++        os.seteuid(self.orig_uid)
++        os.setegid(self.orig_gid)
++        os.setgroups(self.orig_groups)
++
++priv_helper =3D PrivHelper()
++
+ (INDEX_USER_OBJECT, INDEX_USER_PICTURE, INDEX_USER_DESCRIPTION) =3D range(=
+3)
+ (INDEX_GID, INDEX_GROUPNAME) =3D range(2)
+=20
+@@ -642,7 +671,11 @@ class Module:
+                 image =3D PIL.Image.open(path)
+                 image.thumbnail((96, 96), Image.ANTIALIAS)
+                 face_path =3D os.path.join(user.get_home_dir(), ".face")
+-                image.save(face_path, "png")
++                try:
++                    priv_helper.drop_privs(user)
++                    image.save(face_path, "png")
++                finally:
++                    priv_helper.restore_privs()
+                 user.set_icon_file(face_path)
+                 self.face_image.set_from_file(face_path)
+                 model.set_value(treeiter, INDEX_USER_PICTURE, GdkPixbuf.Pi=
+xbuf.new_from_file_at_size(face_path, 48, 48))
+@@ -675,7 +708,11 @@ class Module:
+                 user =3D model[treeiter][INDEX_USER_OBJECT]
+                 user.set_icon_file(path)
+                 self.face_image.set_from_file(path)
+-                shutil.copy(path, os.path.join(user.get_home_dir(), ".face=
+"))
++                try:
++                    priv_helper.drop_privs(user)
++                    shutil.copy(path, os.path.join(user.get_home_dir(), ".=
+face"))
++                finally:
++                    priv_helper.restore_privs()
+                 model.set_value(treeiter, INDEX_USER_PICTURE, GdkPixbuf.Pi=
+xbuf.new_from_file_at_size(path, 48, 48))
+                 model.row_changed(model.get_path(treeiter), treeiter)
+=20
+--=20
+2.16.4
 
-Acknowledgments
-===============
 
-The OVN team wishes to thank the reporter:
+--m1UC1K4AOz1Ywdkx--
 
-  Seiji Sakurai <Seiji.Sakurai@outlook.com>
+--GdbWtwDHkcXqP16f
+Content-Type: application/pgp-signature; name="signature.asc"
 
---000000000000306b79064fe08b73--
+-----BEGIN PGP SIGNATURE-----
 
+iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAls6KoUACgkQFMQFyXGS
+NVPoyxAAvsOe8PmnLc8I0Dhp69Et9CflN1U9hcLuX2aNcqsz4/RoAEoTlpsK8GVc
+I0EASUUl91PqQNmWoniUPv6AL09ccYsfEBLtf2gLliGu3W5luT4BUVt1xtf4gn5F
+ZRU3BsAAyjBrLJr9otEqS9dZEJY48fWmGsh1O1/pnK8AC3+7hIVPLLehr4EU4CWy
+lGTgCq07NlQaJsk8WMCrLxFcXMk1BlDANART1jPnEVwxcAmFhmeABn0oKP/nRHTL
+keUKdothdxH+vfBmqhAN1h6isy9ZwIAFj53AgntfhUrwot4CHCV8VjZMhc1bo3dW
+xtpGjCaa92rd9a9x5yy1W2xExo4FVSWLW/nUCeOv/82dRGySWUPyTx+DjclF8FpX
+TH0dCnmHXKXX3bGfWDWh8P1+o3wpbgiwuGCsaiGfRwC4XAvc+xF9RADhH1xBwlnJ
+ugrBkiaTVf6Faxv1t0NmHyXeDXyfCzZG40cF8MAieVpKAgjEwRIoVngVzEIlGoAu
+Wlvb+WFyrDny2uLjnD7GUULF7xmZTJjeyyKp0kx3JklAPEj0aXuW+zu9urjY4jzx
+0/LKwFeTbKT6Yd3XMTXw39vE53IOos/axEXyPxCvF8mVu2g8iFu0KyjXhJ+Iow+q
+HPZ2XBplSJHbuaIwPfXqGFC/cdJArWv+Gp1ryCqNNoixe7d6kEo=
+=4yGi
+-----END PGP SIGNATURE-----
+
+--GdbWtwDHkcXqP16f--
