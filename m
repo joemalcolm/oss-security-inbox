@@ -1,4 +1,9 @@
-Received: (qmail 30249 invoked by uid 550); 22 Jun 2023 12:45:30 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6713" "Monday" "2" "July" "2018" "14:21:22" "+0200" "Matthias Gerstner" "mgerstner@suse.de" "<20180702122122.GD8324@f195.suse.de>" "180" "[oss-security] accountsservice: insufficient path check in user_change_icon_file_authorized_cb()" "^Date:" nil nil "7" "2018070212:21:22" "[oss-security] accountsservice: insufficient path check in user_change_icon_file_authorized_cb()" (number mark "U       mgerstner@su Jul  2  180/6713  " thread-indent "\"[oss-security] accountsservice: insufficient path check in user_change_icon_file_authorized_cb()\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 17428 invoked by uid 550); 2 Jul 2018 12:33:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,99 +11,198 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23748 invoked from network); 22 Jun 2023 12:35:39 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1687437327; x=1690029327;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=mT9u1vO/DelgLzsyrF1aW++wi+vffCyV4FaYh7oO258=;
-        b=A7YnjbtCGcplgmb+GhOJTa+btH2K7K0oV8WgnbBfkg7C1sUFoAryvfTVq4UuLtpvMj
-         vxDbIHOyxeOMjp4k585/Z+y+GfWqTfrno54RtR0macFp4OfUY1y99Yvr7dA+2hnsd0Mo
-         XJ+wGNFEJ5yhtmO4XMrEtLeWIfn0DGRV7ZlvrvvADGQITXsCLVGCq+WRRlzFfPQSyB5o
-         4I2xg0BUqTyjmgYSqB2riplL2qiyM2wEMNGJFh33z4lQQxMc370DH4GNrkH5+Z22cZ0N
-         LWGAuczj95Z95aOlggeOU0BCugXek1aOi3dJVEiPjs5HnsABsk86T1T7gJoixxs1Qt04
-         2rdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687437327; x=1690029327;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=mT9u1vO/DelgLzsyrF1aW++wi+vffCyV4FaYh7oO258=;
-        b=ELpi1U4VIM1V/RnxQZjsGZeMqntb+iIApn4pG6WSMY7TsU1IH0Fxr0njSugJNT7Gbf
-         t0k0hCHNYeKaAXyZqF1sCXC0d1k6yNl27NUlRN8Pdd9gTLpiaBdSi9wtf1Gqb+ZsLLUu
-         eiSmQaVgOSIuK2Ju8rWQF0rIUWRgP4xLqFQPz5IPEm+7TF17Men/iCO4e8l7BEeoQx3e
-         SeX7p9o+q3rfB6GeMuI6+6/Yo0E6B/dHDs2ISBmdA1NTSrIjNuWNRuwYEpJA85eis8zV
-         mu7CkwbM7khVmM85Wdq/TOAVMdaaJxLZdpuWnnXhv4XCVb26VxVZGbp/JEWCOyVG7pv3
-         0Y8Q==
-X-Gm-Message-State: AC+VfDzDcpXzv1VeFwEtaK1+u8sAFV37H8+QH2e4IXkaaHK4NPphoOfl
-	eHOWKD41d5NOEoLsCdoTWyWm/c+WUwSWjg4xTt3qClkFBdA=
-X-Google-Smtp-Source: ACHHUZ7E93zYl7O4ePIm7JdwhB/DV3kYYOAA4JZ/TkMHuOrD7bR4ZEY3McJQYA/Rn13oDWIrKLdnYTRVHW4/WJRbEps=
-X-Received: by 2002:a05:6820:1018:b0:55d:cb99:1976 with SMTP id
- v24-20020a056820101800b0055dcb991976mr11706211oor.0.1687437326611; Thu, 22
- Jun 2023 05:35:26 -0700 (PDT)
+Received: (qmail 32353 invoked from network); 2 Jul 2018 12:21:35 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Message-ID: <20180702122122.GD8324@f195.suse.de>
 MIME-Version: 1.0
-From: Jyoti Raval <jenyraval@gmail.com>
-Date: Thu, 22 Jun 2023 18:05:14 +0530
-Message-ID: <CANo=s0ZesZj2nzHGxeG4CEjcB+dAxBF8pMDWB_mAMvgSm_gnSA@mail.gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="C94crkcyjafcjHxo"
+Content-Disposition: inline
+User-Agent: Mutt/1.9.4 (2018-02-28)
+Date: Mon, 2 Jul 2018 14:21:22 +0200
+From: Matthias Gerstner <mgerstner@suse.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] accountsservice: insufficient path check in
+ user_change_icon_file_authorized_cb()
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000006efb5705feb71ea4"
-Subject: [oss-security] Open Source Tool | MPT: Pentest In Action!
 
---0000000000006efb5705feb71ea4
-Content-Type: text/plain; charset="UTF-8"
+--C94crkcyjafcjHxo
+Content-Type: multipart/mixed; boundary="zS7rBR6csb6tI2e1"
+Content-Disposition: inline
+
+
+--zS7rBR6csb6tI2e1
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Managing Pentest (MPT: Pentest In Action) [image: HITBSecConf HITB2022SIN]
-<https://conference.hitb.org/hitbsecconf2022sin/session/mpt-pentest-in-acti=
-on/>
+Hello,
 
-MPT aims to provide one stop solution for managing all pentests that are
-running across organisation.
-<https://github.com/jenyraval/MPT#why>Why?
+during a code review the following issue was uncovered in
+accountsservice <https://www.freedesktop.org/wiki/Software/AccountsService/=
+>:
 
-Security penetration testing is more than necessary. If not all, most
-organisations either have their own penetration testing team in-house or
-they have third party pentesters. In any fast paced organisation with
-multiple product lines and development planning timelines, it becomes
-challenging for security teams to efficiently manage all these pentest
-activities and effectively produce security assessment reports and track
-them.
+I have found a weakness regarding the handling of the users' icon files.
+Regular users are by default allowed to change their own data as per
+polkit rule for action org.freedesktop.accounts.change-own-user-data.
 
-In order to solve above challenges I have developed a solution called
-=E2=80=98Managing Pentest (MPT: Pentest in Action)=E2=80=99
-<https://github.com/jenyraval/MPT#what>What?
+In function user_change_icon_file_authorized_cb() in src/user.c there is
+quite some effort for safely setting the icon file property. The logic
+wants to achieve the following:
 
-MPT helps us solve various problems:
+a) take over the provided path as is, if it points to a world-readable
+  file in /usr/share
+b) otherwise safely copy the file with user privileges into
+  /var/lib/AccountsService/icons, and use that path as the property
+  value
 
-   - Asset DB to know all organisation assets that are in pentest process.
-   You can=E2=80=99t secure what you are not aware of!
-   - Tracking each pentest
-   - Pentesting activity knowledge which comprises of what particular let
-   say application does, or the purpose of hardware that we are testing
-   - When next pentester takes over the testing, all they have to do is
-   view the asset and associated information which is already there.
-   - Time taken for each pentest
-   - Real time tracking of activity
-   - Issue status
-   - Common issues that are observed
+The following if clause tries to determine whether a) is the case:
 
-MPT also has security pentest analytics which helps us not only track and
-view everything in single pane of glass but also helps with:
+        if ((mode & S_IROTH) =3D=3D 0 ||
+            (!g_str_has_prefix (filename, DATADIR) &&
+             !g_str_has_prefix (filename, ICONDIR))) {
 
-   - Finding improvement areas to boost pen tester productivity
-   - Understand the current risk posture
-   - Understand recurring issues
-   - Average amount of time taken for each pentest vs asset size
-   - Average high/medium/low fixing time
-   - Most number of vulnerabilities fixed in a year
-   - Class of new vulnerabilities discovered
-   - Developer trends
-   - Open findings
-   - Critical assessments
-   - Asset health
-   - Top pentester reported findings
-   - Average busy time for each pentester
+However, the prefix check is insufficient. Passing ../ components in the
+user supplied path can circumvent the check like this:
 
-Github - https://github.com/jenyraval/MPT
+$ touch /tmp/test
+$ dbus-send --system --print-reply --dest=3Dorg.freedesktop.Accounts \
+	/org/freedesktop/Accounts/User1000 \
+	org.freedesktop.Accounts.User.SetIconFile \
+	string:/usr/share/../../tmp/test
+$ rm /tmp/test
+$ ln -s /root/.bash_history /tmp/test
 
---0000000000006efb5705feb71ea4--
+Now the accountsservice stores /usr/share/../../tmp/test as icon file
+path, which actually points to /root/.bash_history. A third party
+application that trusts this property can potentially read from this
+location as root and try to interpret it as an image file. This is for
+example the case for Cinnamon desktop in the cinnamon-settings-users GUI
+application. Luckily in this example it does not simply copy the file,
+but tries to read it into an image object first. There may be other
+clients of accountsservice where this leads to more severe consequences.
+
+Suggested Fix:
+
+I think the easiest way to fix this is to normalize the user supplied
+filename e.g. using realpath(), before making the test above. A
+preliminary patch that takes this approach is found in the upstream bug
+referenced below and also attached to this mail.
+
+References:
+
+OpenSUSE bug: https://bugzilla.suse.com/show_bug.cgi?id=3D1099699
+Upstream bug: https://bugs.freedesktop.org/show_bug.cgi?id=3D107085
+
+Timeline:
+
+- 2018-06-28: I found the issue during a code review
+- 2018-06-28: I privately disclosed the issue to the upstream developers
+- 2018-07-02: The upstream developers agreed to publish the details
+
+--=20
+Matthias Gerstner <matthias.gerstner@suse.de>
+Dipl.-Wirtsch.-Inf. (FH), Security Engineer
+https://www.suse.com/security
+Telefon: +49 911 740 53 290
+GPG Key ID: 0x14C405C971923553
+
+SUSE Linux GmbH
+GF: Felix Imend=F6rffer, Jane Smithard, Graham Norton
+HRB 21284 (AG Nuernberg)
+
+--zS7rBR6csb6tI2e1
+Content-Type: text/x-diff; charset=us-ascii
+Content-Disposition: attachment; filename="0001-user_change_icon_file_authorized_cb-fix-insufficient.patch"
+Content-Transfer-Encoding: quoted-printable
+
+=46rom 380f4cd7b80176549e91795808d875c1e6e58ccb Mon Sep 17 00:00:00 2001
+From: Matthias Gerstner <matthias.gerstner@suse.de>
+Date: Mon, 2 Jul 2018 12:06:58 +0200
+Subject: [PATCH] user_change_icon_file_authorized_cb: fix insufficient path
+ prefix check
+
+The path prefix check can be circumvented by regular users by passing
+relativ path component like so:
+
+$ dbus-send --system --print-reply --dest=3Dorg.freedesktop.Accounts \
+	/org/freedesktop/Accounts/User1000 \
+	org.freedesktop.Accounts.User.SetIconFile \
+	string:/usr/share/../../tmp/test
+
+This results in a user controlled path to be stored in the
+accountsservice. Clients of accountsservice may trust this path. The
+existing code actually invests quite some efforts to ensure this by
+copying the file away with dropped privileges.
+
+To fix this situation this commit canonicalized the input path for the
+prefix comparison.
+---
+ src/user.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
+
+diff --git a/src/user.c b/src/user.c
+index c8a2942..e1b9a6f 100644
+--- a/src/user.c
++++ b/src/user.c
+@@ -1306,6 +1306,7 @@ user_change_icon_file_authorized_cb (Daemon          =
+      *daemon,
+=20
+ {
+         g_autofree gchar *filename =3D NULL;
++        g_autofree gchar *canon_filename =3D NULL;
+         g_autoptr(GFile) file =3D NULL;
+         g_autoptr(GFileInfo) info =3D NULL;
+         guint32 mode;
+@@ -1355,9 +1356,19 @@ user_change_icon_file_authorized_cb (Daemon         =
+       *daemon,
+                 return;
+         }
+=20
++        /* This will not resolve symlinks. But we only want to check for a
++         * trusted prefix below, so this should be enough. The important b=
+it
++         * is that no user controlled path is stored in the user data. If
++         * canon_filename is not trusted then filename will be copied into=
+ a
++         * safe place and the path to the safe place will be stored in the
++         * user data.
++         */
++        canon_filename =3D g_file_get_path(file);
++
+         if ((mode & S_IROTH) =3D=3D 0 ||
+-            (!g_str_has_prefix (filename, DATADIR) &&
+-             !g_str_has_prefix (filename, ICONDIR))) {
++            !canon_filename ||
++            (!g_str_has_prefix (canon_filename, DATADIR) &&
++             !g_str_has_prefix (canon_filename, ICONDIR))) {
+                 g_autofree gchar *dest_path =3D NULL;
+                 g_autoptr(GFile) dest =3D NULL;
+                 const gchar *argv[3];
+--=20
+2.16.4
+
+
+--zS7rBR6csb6tI2e1--
+
+--C94crkcyjafcjHxo
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAls6GL0ACgkQFMQFyXGS
+NVM2BhAApvJA2PCAF7LJfA8k3+FoqsWEo94e/2y03HHlbSYT0GCgMkUs7SsQ0INN
+Ft1MseLWHEGYpVdRwrqAtiQq59Xwq+gVr6r2VO2BaK32xBKl/BGR9EjhvVrqInxm
+zJRB0PufEcnFHr6Ug7LIagSAkpXZcmJN/gzr/QfivxT2Ve3JZ1RddHn7ihCSUAjz
+F7AzzJ7l9lij2nxbYEnLdpGggG18iMe6vZJZNxQ17WWBahrkFERX6COQ9WQCAyNc
+yy2jnvPRYyr86EnbJFekTmjAY1jahvNnfOOudoqJ7T4/gIbgxrLRAiyxRxYxvYde
+MddKfLJcGFZRS9LZZ2ys3uS5UpSzoYJNc5Y7YI9HwQZ2VGsT3LQFS99Ix+Hu7OoU
+miCZ5eAgCfiplYLFqeyf12crqUPNcFjGDYV7w2v9XnryIKhFjTHObDO7osGBi/TL
+KCoVb7wbahPpnwiicvdft026Gh6ICTi22nV6XW3TGOCIraRaj4L+dH8Yv1Oe2V9Z
+IN///nus7WesYK5ueD20ifRZTR8WNIshk140nOmu6f7lj+UrdXyMj/yuD0aoKIzr
+n+dj+2VBgJLjrgCdUg9+041xdj8ElWaFB8TKfuQgPsHjfsveGYNTiW+3fTTyppHG
+1JUFr83MMYP3pLfvVJb+bYaMfOTRtZ4WREy1TjyWSDdkcsi4IrA=
+=FHL2
+-----END PGP SIGNATURE-----
+
+--C94crkcyjafcjHxo--
