@@ -1,21 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/10/11
-Message-ID: <20181010171341.GA1223@jasmine.lan>
-Date: Wed, 10 Oct 2018 13:13:41 -0400
-From: Leo Famulari <leo@...ulari.name>
-To: Tavis Ormandy <taviso@...gle.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/02/4
+Message-ID: <20180702141024.iudvf2tx7fsf3q66@jwilk.net>
+Date: Mon, 2 Jul 2018 16:10:24 +0200
+From: Jakub Wilk <jwilk@...lk.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: accountsservice: insufficient path check in user_change_icon_file_authorized_cb()
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 09, 2018 at 06:58:39AM -0700, Tavis Ormandy wrote:
-> The fix is public now, here are the necessary commit:
-> 
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=a54c9e61e7d0
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=a6807394bd94
+* Matthias Gerstner <mgerstner@...e.de>, 2018-07-02, 14:21:
+>I think the easiest way to fix this is to normalize the user supplied 
+>filename e.g. using realpath()
 
-Thanks. Does anyone have a patch or patch series that applies to a
-released version of Ghostscript? It's difficult to figure out how to
-safely adapt these patches to either Ghostscript 9.24 or 9.25.
+Using realpath(3) for access control is almost always a mistake: this 
+function expands symlinks, including attacker-controlled symlinks.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+You patch uses g_file_get_path(), which AFIACT doesn't use any 
+filesystem I/O for canonicalisation, so that should be fine.
+
+-- 
+Jakub Wilk
