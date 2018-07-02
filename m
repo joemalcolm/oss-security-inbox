@@ -1,19 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/13/4
-Message-ID: <20180613074043.GA1166@sivokote.iziade.m$>
-Date: Wed, 13 Jun 2018 10:40:43 +0300
-From: Georgi Guninski <guninski@...inski.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/02/3
+Message-ID: <20180702133709.GE8324@f195.suse.de>
+Date: Mon, 2 Jul 2018 15:37:09 +0200
+From: Matthias Gerstner <mgerstner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Are `su user' and/or `sudo -u user sh' considered dangerous?
+Subject: cinnamon: possible symlink attack in cinnamon-settings-users.py
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jun 12, 2018 at 01:38:36PM +0200, Jakub Wilk wrote:
-> https://bugzilla.redhat.com/show_bug.cgi?id=173008 (CVE-2005-4890)
-> 
-> It was last discussed on oss-security in 2017:
-> http://seclists.org/oss-sec/2017/q2/412
->
-Thanks. The readhat link is fixed in su in 2005.
-Is there POC for relatively new distros?
-I couldn't make TIOCSTI work at all in debian 8 and 9.
- 
+Hello,
+
+this is about an issue I found during a code review of Cinnamon
+<https://github.com/linuxmint/Cinnamon>:
+
+The script cinnamon-settings-users.py runs as root (via polkit's pkexec) 
+and allows to configure e.g. other user's icon files. These icon files
+are written to the respective user's $HOME/.face location. If an
+unprivileged user prepares a symlink pointing to an arbitrary location
+then this location will be overwritten with the icon content. This
+vulnerability thus allows to corrupt the system or other user's files.
+The content is not attacker controlled, luckily. It may have further
+unspecified impact, however, by allowing to write to pseudo files in
+/proc or /sys or by creating state files that influence other system
+components like /etc/suid-debug.
+
+Affected Versions:
+
+From the git history it looks like this vulnerability was contained for
+a long time in the cinnamon-settings-users.py script, dating back to
+version 1.9.2 up to and including current version 3.8.6.
+
+Suggested Fix:
+
+Dropping privileges to the target user while writing the $HOME/.face
+file should be a safe approach. A preliminary suggested patch is found
+in the pull request referenced below and is also attached to this mail.
+
+References:
+
+Upstream pull request: https://github.com/linuxmint/Cinnamon/pull/7683
+OpenSUSE bug: https://bugzilla.suse.com/show_bug.cgi?id=1083067
+
+Timeline:
+
+2018-06-28: I found the vulnerability during a code review
+2018-06-29: I privately contacted the upstream main developer
+2018-07-02: Upstream agreed to publish the issue and I created the
+            upstream PR
+
+-- 
+Matthias Gerstner <matthias.gerstner@...e.de>
+Dipl.-Wirtsch.-Inf. (FH), Security Engineer
+https://www.suse.com/security
+Telefon: +49 911 740 53 290
+GPG Key ID: 0x14C405C971923553
+
+SUSE Linux GmbH
+GF: Felix Imendörffer, Jane Smithard, Graham Norton
+HRB 21284 (AG Nuernberg)
+
+View attachment "0001-cinnamon-settings-users.py-fix-symlink-attack-vulner.patch" of type "text/x-diff" (3809 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
