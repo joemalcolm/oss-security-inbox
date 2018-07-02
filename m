@@ -1,26 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/18/4
-Message-ID: <3810169.hn6iprp2Ks@overwatch>
-Date: Tue, 18 Dec 2018 12:14:00 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/02/2
+Message-ID: <20180702122122.GD8324@f195.suse.de>
+Date: Mon, 2 Jul 2018 14:21:22 +0200
+From: Matthias Gerstner <mgerstner@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: saar amar <saaramar5@...il.com>, P J P <ppandit@...hat.com>
-Subject: Re: Re: CVE-2018-20124 QEMU: rdma: OOB access when building scatter-gather array
+Subject: accountsservice: insufficient path check in user_change_icon_file_authorized_cb()
 Content-Type: text/plain; charset=utf-8
 
-On martedì 18 dicembre 2018 10:44:32 CET saar amar wrote:
-> Thanks all  I'm happy it fixed, thanks for the response guys!
-> 
-> I'm wondering why it says "DOS" and not "execute arbitrary code on the
-> host, in the context of the QEMU process"? I have stack overflow, it pretty
-> clear I could gain more than simple DOS:)
-> 
-> What do your day?
+Hello,
 
-Maybe because of the -fstack-protector* flag used by default in the build process.
+during a code review the following issue was uncovered in
+accountsservice <https://www.freedesktop.org/wiki/Software/AccountsService/>:
 
+I have found a weakness regarding the handling of the users' icon files.
+Regular users are by default allowed to change their own data as per
+polkit rule for action org.freedesktop.accounts.change-own-user-data.
+
+In function user_change_icon_file_authorized_cb() in src/user.c there is
+quite some effort for safely setting the icon file property. The logic
+wants to achieve the following:
+
+a) take over the provided path as is, if it points to a world-readable
+  file in /usr/share
+b) otherwise safely copy the file with user privileges into
+  /var/lib/AccountsService/icons, and use that path as the property
+  value
+
+The following if clause tries to determine whether a) is the case:
+
+        if ((mode & S_IROTH) == 0 ||
+            (!g_str_has_prefix (filename, DATADIR) &&
+             !g_str_has_prefix (filename, ICONDIR))) {
+
+However, the prefix check is insufficient. Passing ../ components in the
+user supplied path can circumvent the check like this:
+
+$ touch /tmp/test
+$ dbus-send --system --print-reply --dest=org.freedesktop.Accounts \
+	/org/freedesktop/Accounts/User1000 \
+	org.freedesktop.Accounts.User.SetIconFile \
+	string:/usr/share/../../tmp/test
+$ rm /tmp/test
+$ ln -s /root/.bash_history /tmp/test
+
+Now the accountsservice stores /usr/share/../../tmp/test as icon file
+path, which actually points to /root/.bash_history. A third party
+application that trusts this property can potentially read from this
+location as root and try to interpret it as an image file. This is for
+example the case for Cinnamon desktop in the cinnamon-settings-users GUI
+application. Luckily in this example it does not simply copy the file,
+but tries to read it into an image object first. There may be other
+clients of accountsservice where this leads to more severe consequences.
+
+Suggested Fix:
+
+I think the easiest way to fix this is to normalize the user supplied
+filename e.g. using realpath(), before making the test above. A
+preliminary patch that takes this approach is found in the upstream bug
+referenced below and also attached to this mail.
+
+References:
+
+OpenSUSE bug: https://bugzilla.suse.com/show_bug.cgi?id=1099699
+Upstream bug: https://bugs.freedesktop.org/show_bug.cgi?id=107085
+
+Timeline:
+
+- 2018-06-28: I found the issue during a code review
+- 2018-06-28: I privately disclosed the issue to the upstream developers
+- 2018-07-02: The upstream developers agreed to publish the details
 
 -- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Matthias Gerstner <matthias.gerstner@...e.de>
+Dipl.-Wirtsch.-Inf. (FH), Security Engineer
+https://www.suse.com/security
+Telefon: +49 911 740 53 290
+GPG Key ID: 0x14C405C971923553
 
+SUSE Linux GmbH
+GF: Felix Imendörffer, Jane Smithard, Graham Norton
+HRB 21284 (AG Nuernberg)
+
+View attachment "0001-user_change_icon_file_authorized_cb-fix-insufficient.patch" of type "text/x-diff" (2413 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
