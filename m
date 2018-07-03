@@ -1,25 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/29/4
-Message-ID: <87efc8kj92.fsf@fifthhorseman.net>
-Date: Mon, 29 Oct 2018 08:52:25 -0400
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: Jakub Wilk <jwilk@...lk.net>, oss-security@...ts.openwall.com
-Subject: Re: Re: Travis CI MITM RCE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/03/3
+Message-ID: <CAG_fn=Vht4hg7MQFkhkzP7MQrM5Rj3DHp1dr+n3WknWo=vXQ0g@mail.gmail.com>
+Date: Tue, 3 Jul 2018 17:13:14 +0200
+From: Alexander Potapenko <glider@...gle.com>
+To: Vladis Dronov <vdronov@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2018-1000204: Linux kernel 3.18 to 4.16 infoleak due to incorrect handling of SG_IO ioctl
 Content-Type: text/plain; charset=utf-8
 
-On Sat 2018-10-27 16:54:46 +0200, Jakub Wilk wrote:
-> My proposed fix was to use "gpg --recv-key" with full fingerprint. But I 
-> now discovered that even this is not resistant against MitM attacks:
+On Tue, Jun 26, 2018 at 6:54 PM Vladis Dronov <vdronov@...hat.com> wrote:
 >
-> https://dev.gnupg.org/T3398
+> Hello, Alexander,
 >
-> "[...] modern gpg automatically applies an import screener that only 
-> accepts OpenPGP certificates that have the given fingerprint [...]
+> > > I may not got smth correctly, but for now I do not see CVE-2018-1000204
+> > > as a security flaw and I believe a reject request to MITRE should be
+> > > issued.
+> > How do I proceed with this?
+>
+> I believe it is: https://cveform.mitre.org/ -> Request an update to an existing
+> CVE Entry -> Rejection
+I've issued a reject request, but the CVE entry is currently marked as
+"Disputed" (http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-1000204)
+Not sure if that's the desired result.
+> Best regards,
+> Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+>
 
-It may be even worse than this, because the version of gpg used by
-default in travis is not "modern gpg", it's either gnupg2
-2.0.22-3ubuntu1.4 or gnupg 1.4.16-1ubuntu2.6.  I don't think either of
-these has the baseline "import screener" functionality, let alone a fix
-for T3398 :(
 
-    --dkg
+-- 
+Alexander Potapenko
+Software Engineer
+
+Google Germany GmbH
+Erika-Mann-Straße, 33
+80636 München
+
+Geschäftsführer: Paul Manicle, Halimah DeLaine Prado
+Registergericht und -nummer: Hamburg, HRB 86891
+Sitz der Gesellschaft: Hamburg
