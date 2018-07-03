@@ -1,53 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/12/2
-Message-ID: <CAFitrpQSV73Vz7rJYfLJK7gvEymZSCR5ooWUeU8j4jzRydk-eg@mail.gmail.com>
-Date: Mon, 12 Nov 2018 10:57:28 +0000
-From: Robbie Gemmell <robbie@...che.org>
-To: announce@...che.org, users@...d.apache.org, dev@...d.apache.org,  Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com
-Subject: [SECURITY] [CVE-2018-17187] Apache Qpid Proton-J transport TLS wrapper hostname verification mode not implemented
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/03/1
+Message-ID: <20180703081145.GA8116@f195.suse.de>
+Date: Tue, 3 Jul 2018 10:11:45 +0200
+From: Matthias Gerstner <mgerstner@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: accountsservice: insufficient path check in user_change_icon_file_authorized_cb()
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-17187: Apache Qpid Proton-J transport TLS wrapper hostname
-verification mode not implemented
+> It might be a good idea to double-check that the result of
+> g_file_get_path() starts with "/", doesn't contain "/../" and (just for
+> completeness) doesn't end with "/..".
 
-Severity: Important
+I tested the patch initially and and an isolated test case shows that it
+does cover all these cases. No system calls appear to be performed.
 
-Vendor: The Apache Software Foundation
+Regards
 
-Versions Affected: Versions 0.3 to 0.29.0
+Matthias
 
-Description:
-The Proton-J transport includes an optional wrapper layer to perform TLS,
-enabled by use of the 'transport.ssl(...)' methods. Unless a verification
-mode was explicitly configured, client and server modes previously defaulted
-as documented to not verifying a peer certificate, with options to
-configure this explicitly or select a certificate verification mode with or
-without hostname verification being performed.
-
-The latter hostname verifying mode was not previously implemented, with
-attempts to use it resulting in an exception. This left only the option to
-verify the certificate is trusted, leaving such a client vulnerable to
-Man In The Middle (MITM) attack.
-
-Uses of the Proton-J protocol engine which do not utilise the optional
-transport TLS wrapper are not impacted, e.g. usage within Qpid JMS.
-
-Resolution:
-Uses of Proton-J utilising the optional transport TLS wrapper layer that
-wish to enable hostname verification must be upgraded to version 0.30.0 or
-later and utilise the VerifyMode#VERIFY_PEER_NAME configuration, which is
-now the default for client mode usage unless configured otherwise.
-
-Mitigation:
-If upgrading is not currently possible then potential workarounds include
-providing a custom SSLContext which enables hostname verification, or
-omitting use of the 'transport.ssl(...)' methods and performing TLS through
-other means such as utilising existing IO framework support or supplying a
-custom transport wrapper layer.
-
-Credit:
-This issue was reported by Peter Stockli of Alphabot Security.
-
-References:
-[1] https://issues.apache.org/jira/browse/PROTON-1962
-[2] https://qpid.apache.org/cves/CVE-2018-17187.html
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
