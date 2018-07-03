@@ -1,99 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/06/3
-Message-id: <BFC07C08-D41E-4F1B-BB18-A08B640458E6@apple.com>
-Date: Mon, 05 Mar 2018 20:19:10 -0500
-From: Jesse Hertz <jesse_hertz@...le.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/03/2
+Message-ID: <20180703105342.zv2ibjvs5ylwjwz2@sivokote.iziade.m$>
+Date: Tue, 3 Jul 2018 13:53:42 +0300
+From: Georgi Guninski <guninski@...inski.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Terminal Control Chars
+Subject: coverity scan of qmail -- 53 potential defects (with false positives)
 Content-Type: text/plain; charset=utf-8
 
-I looked into this on OSX, and confirmed Terminal.app is vulnerable, but iTerm.app is not vulnerable.
+ From my blog:
+https://j.ludost.net/blog/archives/2018/07/01/coverity_scan_of_qmail_--_53_potential_defects_with_false_positives/index.html
 
-Cheers,
--jh
-
-*this is not an official apple email and is not representative of Apple prodsec. I just happened to be poking around*
-
-> On Mar 5, 2018, at 11:50 AM, up201407890@...nos.dcc.fc.up.pt wrote:
-> 
-> Hello,
-> 
-> When pasting characters into several terminal emulators, control characters are allowed.
-> This turns to be a security problem, due to the fact that when pasting these characters into terminal text editors, such as vi/vim, emacs, nano, etc., remote code execution is possible.
-> 
-> This is supposed to be fixed in recent versions of VTE [3], which means VTE-based terminal emulators should be safe, but the problem is that most distros are shipping older versions and remain vulnerable.
-> 
-> Here's a list of terminal emulators I tested this where it worked. Some came by default in my distro (debian), others were installed via apt-get. This should also work on other distros:
-> 
-> LXTerminal
-> rxvt
-> urxvt
-> putty
-> gnome-terminal
-> Konsole
-> Guake
-> Yakuake
-> tilda
-> Terminator
-> xfce4-terminal
-> Terminology
-> ROXTerm
-> sakura
-> lilyterm
-> Eterm
-> aterm
-> mrxvt
-> pterm
-> 
-> 
-> Please, update VTE and check if the below still works. For the others that aren't based on VTE, CVEs should be assigned to each of them. Can someone help me figure out which ones are based on VTE and those that aren't?
-> 
-> 
-> To reproduce using vi/vim, create an html with the following command:
-> 
-> $ printf '<html>something;&#27;:!id<br>a</html>' > poc.html
-> 
-> Open the poc.html in a browser, select and copy the text that is presented, and paste it into vi/vim in insert mode. The command "id" should then be executed.
-> 
-> This works because pasting "&#27;" is allowed, wich is the "escape". By pressing "escape" in insert mode, it is possible to go back to default mode, and by using the exclamation mark (!) it is possible to execute arbitrary commands.
-> 
-> 
-> To reproduce using nano, create an html with the following command:
-> 
-> $ printf '<html>something<br>something\x18y\b\b\b\bfile<br>y<br>a</html>' > poc.html
-> 
-> Open the poc.html in a browser, select and copy the text that is presented, start nano with "nano test", and paste the contents in nano. This should quit you from nano, but instead of saving the contents into the file "test", it saves them into "file".
-> 
-> This works because '\x18' is ^X (Control-X), which exits nano. On exit, it asks if you want to "Save modified buffer", so you press 'y'. This is why there's an 'y' after '\x18'. Once you press 'y', it asks the "File Name to Write". If you started nano with an argument, such as "nano test", then it will appear as the default "File Name to Write". In order to specify an arbitrary file name, and overwriting an existing one, we can use multiple '\b' to delete this file name, and then specify our target file name. To get remote command execution, an interesting target would be ".bashrc". However, as a PoC I used "file" as can be seen after the 4 '\b'. Since "test" is 4 characters, I used 4 \b. You should use "nano test" to try the above. As a remote attacker, you don't know how many characters your target used for the file name, but you can input an arbitrary number of \b. We could use 255 \b since that's the file name limit in most filesystems.
-> 
-> 
-> To reproduce using emacs, create an html with the following command:
-> 
-> $ printf '<html>something;&#27;!id<br>a</html>' > poc.html
-> 
-> Open the poc.html in a browser, select and copy the text that is presented, startemacs with "emacs -nw file", and paste the contents into it. This should execute the command "id".
-> 
-> This works because pasting "&#27;" is allowed, wich is the "escape". By pressing "escape" and then "!" (M-!) it is possible to execute arbitrary commands in emacs.
-> The command "id" will be executed, but you may not see the output in emacs.
-> Use something like "touch file" and see that "file" was created.
-> 
-> 
-> One could argue that an user could see that what is being copied from the browser
-> is malicious, but it is easy fool the user. [1]
-> 
-> The correct solution would be to disallow the pasting of certain control characters.
-> 
-> See:
-> [1] https://thejh.net/misc/website-terminal-copy-paste
-> [2] http://invisible-island.net/xterm/xterm.log.html#xterm_292
-> [3] https://bugzilla.gnome.org/show_bug.cgi?id=753197
-> 
-> Thanks,
-> Federico Bento.
-> 
-> ----------------------------------------------------------------
-> This message was sent using IMP, the Internet Messaging Program.
-> 
+https://scan.coverity.com/projects/qmail
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+coverity gave only 53 defects. Quick scan suggests that the non-false
+positives are logically dead code or file race conditions (might be
+wrong about this).
+
