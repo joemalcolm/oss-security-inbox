@@ -1,17 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/19/1
-Message-ID: <1470776078.14020763.1537344926470.JavaMail.zimbra@redhat.com>
-Date: Wed, 19 Sep 2018 04:15:26 -0400 (EDT)
-From: Vladis Dronov <vdronov@...hat.com>
-To: Davidlohr Bueso <dave@...olabs.net>, oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: potential local priviledge escalation bug in vmacache code
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/04/3
+Message-ID: <0158ab4d-34ba-a303-b606-63187968e168@gentoo.org>
+Date: Wed, 4 Jul 2018 22:49:26 +0200
+From: Kristian Fiskerstrand <k_f@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: Statistics for distros lists updated for Q2
 Content-Type: text/plain; charset=utf-8
 
-Hello, Davidlohr,
+Hi,
 
-Thank you for reporting this. Was CVE-ID assigned or requested
-for this flaw? If not, the Red Hat (as a CNA) could allocate one
-and handle adding it to the MITRE's database.
+Just a short notice that the statistics for the distros list have been
+updated for the 2nd Quarter at
+http://oss-security.openwall.org/wiki/mailing-lists/distros/stats
 
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+-- 
+Kristian Fiskerstrand
+OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
+fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
