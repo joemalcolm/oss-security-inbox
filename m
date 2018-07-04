@@ -1,20 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/02/3
-Message-ID: <20181002162549.rl7hytgtxkmhr7mm@tunkki.bugs.fi>
-Date: Tue, 2 Oct 2018 19:25:49 +0300
-From: Henri Salo <henri@...v.fi>
-To: marc.zyngier@....com
-Cc: oss-security@...ts.openwall.com
-Subject: Re: arm64 Linux kernel: Privilege escalation by taking control of the KVM hypervisor
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/04/1
+Message-ID: <CAB8XdGB5-PGmLzP=jpwxQmyD3JLintA-x7HrSNhTsLBGK5vinw@mail.gmail.com>
+Date: Wed, 4 Jul 2018 15:47:53 +0100
+From: Colm O hEigeartaigh <coheigea@...che.org>
+To: users@....apache.org, CXF Dev List <dev@....apache.org>, announce@...che.org,  oss-security@...ts.openwall.com,  Apache Security Response Team <security@...che.org>
+Subject: Apache CXF Fediz 1.4.4 is released
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 02, 2018 at 05:07:14PM +0100, Will Deacon wrote:
-> There has not yet been a CVE requested for this (mainly because I don't know
-> how to do it).
+Apache CXF Fediz (http://cxf.apache.org/fediz) is a subproject of Apache
+CXF. Fediz helps you to secure your web applications and delegates security
+enforcement to the underlying application server. With Fediz,
+authentication is externalized from your web application to an identity
+provider installed as a dedicated server component.
 
-Please use https://cveform.mitre.org/ thanks.
+The Apache CXF Fediz team is pleased to announce the release of version
+1.4.4, which is available for download here:
+http://cxf.apache.org/fediz-downloads.html
+
+This release contains a fix for a new security advisory:
+
+CVE-2018-8038: Apache CXF Fediz is vulnerable to DTD based XML attacks
+
+The advisory text is available at this location:
+http://cxf.apache.org/security-advisories.data/CVE-2018-8038.txt.asc
+
+Please also refer to the CXF security advisories page:
+http://cxf.apache.org/security-advisories.html
+
 
 -- 
-Henri Salo
+Colm O hEigeartaigh
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Talend Community Coder
+http://coders.talend.com
+
