@@ -1,84 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/12/3
-Message-ID: <20181212142415.GA11037@openwall.com>
-Date: Wed, 12 Dec 2018 15:24:15 +0100
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: Jann Horn <jannh@...gle.com>
-Subject: Re: Linux kernel: userfaultfd bypasses tmpfs file permissions (CVE-2018-18397; since 4.11; fixed in 4.14.87 and 4.19.7)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/04/4
+Message-ID: <CAK3kuDWdbaN_SKessVpbpu2eE-8D3Q2GmEW2bAy4-Pfvs6j0og@mail.gmail.com>
+Date: Wed, 4 Jul 2018 17:15:13 -0400
+From: will martin <wmartinusa@...il.com>
+To: general@...ene.apache.org
+Cc: announce@...che.org, dev@...ene.apache.org, solr-user@...ene.apache.org,  security <security@...che.org>, oss-security@...ts.openwall.com
+Subject: Re: [SECURITY] CVE-2018-8026: XXE vulnerability due to Apache Solr configset upload (exchange rate provider config / enum field config / TIKA parsecontext)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Dec 12, 2018 at 01:27:13AM +0100, Jann Horn wrote:
-> NOTE: I have requested a CVE identifier, and I'm sending this message,
-> to make tracking of the fix easier; however, to avoid missing security
-> fixes without CVE identifiers, you should *NOT* be cherry-picking a
-> specific patch in response to a notification about a kernel security
-> bug.
+The cve id was reserved in April. The jira ticket 1 mo ago. Is this the
+first notice to this list?
 
-(I resisted the urge to comment on this piece in previous postings.)
+Thx
 
-What should distros/users do, then?  Use latest mainline or upstream
-stable kernels?  That would expose them to the many recent bugs like
-this one, but which haven't yet been found (or not yet made public,
-which is worse).
+On Wed, Jul 4, 2018, 12:56 PM Uwe Schindler <uschindler@...che.org> wrote:
 
-As far as I can tell, by far most Linux kernel vulnerabilities (that are
-eventually found and made public) are in relatively recent (as of that
-time) kernel versions.  So a user or a distro would avoid most
-vulnerabilities (that are eventually found and made public) by staying
-sufficiently behind current versions, and relying on backports, even if
-at risk of missing untracked vulnerabilities.  Currently this can be
-achieved e.g. by using RHEL7'ish kernels forked by Red Hat off 3.10, but
-probably not anything newer than that yet.  (And when RHEL7 was just
-released, its kernels were not quite ready for such use.  It takes
-even RHEL kernels a few years and a few hundred revisions to mature and
-become a lower security risk.  Fortunately, there's a previous RHEL at a
-few years and a few hundred revisions old yet still maintained during
-that time.)
+> CVE-2018-8026: XXE vulnerability due to Apache Solr configset upload
+> (exchange rate provider config / enum field config / TIKA parsecontext)
+>
+> Severity: High
+>
+> Vendor:
+> The Apache Software Foundation
+>
+> Versions Affected:
+> Solr 6.0.0 to 6.6.4
+> Solr 7.0.0 to 7.3.1
+>
+> Description:
+> The details of this vulnerability were reported by mail to the Apache
+> security mailing list.
+> This vulnerability relates to an XML external entity expansion (XXE) in
+> Solr
+> config files (currency.xml, enumsConfig.xml referred from schema.xml,
+> TIKA parsecontext config file). In addition, Xinclude functionality
+> provided
+> in these config files is also affected in a similar way. The vulnerability
+> can
+> be used as XXE using file/ftp/http protocols in order to read arbitrary
+> local files from the Solr server or the internal network. The manipulated
+> files can be uploaded as configsets using Solr's API, allowing to exploit
+> that vulnerability. See [1] for more details.
+>
+> Mitigation:
+> Users are advised to upgrade to either Solr 6.6.5 or Solr 7.4.0 releases
+> both
+> of which address the vulnerability. Once upgrade is complete, no other
+> steps
+> are required. Those releases only allow external entities and Xincludes
+> that
+> refer to local files / zookeeper resources below the Solr instance
+> directory
+> (using Solr's ResourceLoader); usage of absolute URLs is denied. Keep in
+> mind, that external entities and XInclude are explicitly supported to
+> better
+> structure config files in large installations. Before Solr 6 this was no
+> problem, as config files were not accessible through the APIs.
+>
+> If users are unable to upgrade to Solr 6.6.5 or Solr 7.4.0 then they are
+> advised to make sure that Solr instances are only used locally without
+> access
+> to public internet, so the vulnerability cannot be exploited. In addition,
+> reverse proxies should be guarded to not allow end users to reach the
+> configset APIs. Please refer to [2] on how to correctly secure Solr
+> servers.
+>
+> Solr 5.x and earlier are not affected by this vulnerability; those versions
+> do not allow to upload configsets via the API. Nevertheless, users should
+> upgrade those versions as soon as possible, because there may be other ways
+> to inject config files through file upload functionality of the old web
+> interface. Those versions are no longer maintained, so no deep analysis was
+> done.
+>
+> Credit:
+> Yuyang Xiao, Ishan Chattopadhyaya
+>
+> References:
+> [1] https://issues.apache.org/jira/browse/SOLR-12450
+> [2] https://wiki.apache.org/solr/SolrSecurity
+>
+> -----
+> Uwe Schindler
+> uschindler@...che.org
+> ASF Member, Apache Lucene PMC / Committer
+> Bremen, Germany
+> http://lucene.apache.org/
+>
+>
+>
 
-A question to ask may be: out of Linux kernel vulnerabilities being
-patched, are there more high and critical overall severity (e.g., as
-risk impact times risk probability) vulnerabilities found in "too
-recent" kernels than there are high and critical severity untracked
-vulnerabilities (also or instead) affecting "sufficiently old" kernels?
-My gut feeling is there are many more such vulnerabilities in "too
-recent" kernels than there are those untracked vulnerabilities in
-"sufficiently old" kernels.  (BTW, a vulnerability being untracked
-likely correlates with it being a lower risk probability at least for
-non-targeted attacks.)  Hence optimal strategy for a distro and their
-users is to stay with "sufficiently old" base versions and backport
-whatever is known to be worthy of a backport.
-
-There are no maintained upstream stable branches started long enough ago
-for them to be as mature as e.g. RHEL7 kernels are now.  Besides,
-upstream stable branches also suffer from lack of backports of fixes for
-untracked vulnerabilities.
-
-The recommendation to use latest mainline or upstream stable kernels is
-safe to give (and in a way even the most responsible one to give), but
-not necessarily the best to follow.
-
-I do not have a suggestion on what to do about that as it relates to
-recommendations/disclaimers on postings such as Jann's.  Ideally, we
-wouldn't have so many new security vulnerabilities being introduced to
-new Linux kernels all the time, but that seems unrealistic given the
-pace of Linux kernel development and growth.
-
-> In Linux kernel versions since 4.11, userfaultfd can be used to write
-> arbitrary data into holes in sparse tmpfs files to which an attacker
-> has read-only access.
-> 
-> This is CVE-2018-18397.
-> 
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=29ec90660d68bbdd69507c1c8b4e33aa299278b1
-> https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.14.87
-> https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.19.7
-> https://bugs.chromium.org/p/project-zero/issues/detail?id=1700
-
-Interesting.  How did you find this?
-
-Alexander
-
-P.S. I guess Jann's message did not reach subscribers who are on Gmail
-and such because of google.com's DMARC policy.  So I made sure to quote
-all of it above.
