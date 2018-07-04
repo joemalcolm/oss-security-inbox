@@ -1,25 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/12/1
-Message-ID: <CAG48ez37UKxsRzpkxa8HbrWGAXWQ7H9OYjGzkaZgEmzY+QOF2Q@mail.gmail.com>
-Date: Wed, 12 Dec 2018 01:27:13 +0100
-From: Jann Horn <jannh@...gle.com>
-To: oss-security@...ts.openwall.com
-Subject: Linux kernel: userfaultfd bypasses tmpfs file permissions (CVE-2018-18397; since 4.11; fixed in 4.14.87 and 4.19.7)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/04/2
+Message-ID: <0cdc01d413b7$f97ba580$ec72f080$@apache.org>
+Date: Wed, 4 Jul 2018 18:56:35 +0200
+From: "Uwe Schindler" <uschindler@...che.org>
+To: <announce@...che.org>, <general@...ene.apache.org>, <dev@...ene.apache.org>, <solr-user@...ene.apache.org>
+Cc: "'security'" <security@...che.org>, <oss-security@...ts.openwall.com>
+Subject: [SECURITY] CVE-2018-8026: XXE vulnerability due to Apache Solr configset upload (exchange rate provider config / enum field config / TIKA parsecontext)
 Content-Type: text/plain; charset=utf-8
 
-NOTE: I have requested a CVE identifier, and I'm sending this message,
-to make tracking of the fix easier; however, to avoid missing security
-fixes without CVE identifiers, you should *NOT* be cherry-picking a
-specific patch in response to a notification about a kernel security
-bug.
+CVE-2018-8026: XXE vulnerability due to Apache Solr configset upload
+(exchange rate provider config / enum field config / TIKA parsecontext)
 
-In Linux kernel versions since 4.11, userfaultfd can be used to write
-arbitrary data into holes in sparse tmpfs files to which an attacker
-has read-only access.
+Severity: High
 
-This is CVE-2018-18397.
+Vendor:
+The Apache Software Foundation
 
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=29ec90660d68bbdd69507c1c8b4e33aa299278b1
-https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.14.87
-https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.19.7
-https://bugs.chromium.org/p/project-zero/issues/detail?id=1700
+Versions Affected:
+Solr 6.0.0 to 6.6.4
+Solr 7.0.0 to 7.3.1
+
+Description:
+The details of this vulnerability were reported by mail to the Apache
+security mailing list.
+This vulnerability relates to an XML external entity expansion (XXE) in Solr
+config files (currency.xml, enumsConfig.xml referred from schema.xml,
+TIKA parsecontext config file). In addition, Xinclude functionality provided
+in these config files is also affected in a similar way. The vulnerability can
+be used as XXE using file/ftp/http protocols in order to read arbitrary
+local files from the Solr server or the internal network. The manipulated
+files can be uploaded as configsets using Solr's API, allowing to exploit
+that vulnerability. See [1] for more details.
+
+Mitigation:
+Users are advised to upgrade to either Solr 6.6.5 or Solr 7.4.0 releases both
+of which address the vulnerability. Once upgrade is complete, no other steps
+are required. Those releases only allow external entities and Xincludes that
+refer to local files / zookeeper resources below the Solr instance directory
+(using Solr's ResourceLoader); usage of absolute URLs is denied. Keep in
+mind, that external entities and XInclude are explicitly supported to better
+structure config files in large installations. Before Solr 6 this was no
+problem, as config files were not accessible through the APIs.
+
+If users are unable to upgrade to Solr 6.6.5 or Solr 7.4.0 then they are
+advised to make sure that Solr instances are only used locally without access
+to public internet, so the vulnerability cannot be exploited. In addition,
+reverse proxies should be guarded to not allow end users to reach the
+configset APIs. Please refer to [2] on how to correctly secure Solr servers.
+
+Solr 5.x and earlier are not affected by this vulnerability; those versions
+do not allow to upload configsets via the API. Nevertheless, users should
+upgrade those versions as soon as possible, because there may be other ways
+to inject config files through file upload functionality of the old web
+interface. Those versions are no longer maintained, so no deep analysis was
+done.
+
+Credit:
+Yuyang Xiao, Ishan Chattopadhyaya
+
+References:
+[1] https://issues.apache.org/jira/browse/SOLR-12450
+[2] https://wiki.apache.org/solr/SolrSecurity
+
+-----
+Uwe Schindler
+uschindler@...che.org 
+ASF Member, Apache Lucene PMC / Committer
+Bremen, Germany
+http://lucene.apache.org/
+
+
