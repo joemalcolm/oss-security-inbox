@@ -1,67 +1,151 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/17/1
-Message-ID: <be5a8985-59e8-1b2a-174e-7309979b4bc1@orlitzky.com>
-Date: Tue, 16 Jan 2018 23:03:20 -0500
-From: Michael Orlitzky <michael@...itzky.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/05/1
+Message-ID: <d8b7ec52-6138-de35-d309-e8b776f247eb@isc.org>
+Date: Wed, 4 Jul 2018 17:50:09 -0800
+From: Michael McNally <mcnally@....org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2017-16933: Icinga2 root privilege escalation via init script and systemd service
+Cc: "security-officer@....org" <security-officer@....org>
+Subject: BIND Operational Notification: Extremely large zone transfers can result in corrupted journal files or server process termination
 Content-Type: text/plain; charset=utf-8
 
-Product: Icinga2 open source monitoring system
-Versions-affected: 2.8.0 and earlier (all current 2.x versions)
-Author: Michael Orlitzky
-Bug-report: https://github.com/Icinga/icinga2/issues/5793
+I believe this meets the criteria for submission to your list,
+apologies if it does not.  But since we generally publish BIND
+Security Advisories to this list, I thought we should also provide
+this Operational Notification (which is our term for an issue
+which does not rise to the level of a disclosable security vulnerability
+under our policy but which has enough potential operational impact that
+we feel operators and packagers should be made aware.)
+
+Sincerely,
+
+Michael McNally
+ISC Security Officer
+
+----
+
+BIND Operational Notification: Extremely large zone transfers can
+result in corrupted journal files or server process termination
+
+Summary:
+
+   In versions of BIND released prior to July 2018 (before BIND
+   9.9.13, 9.10.8, 9.11.4, 9.12.2, and BIND 9.13.1) it is possible
+   for extraordinarily large zone transfers to cause several related
+   problems, with possible outcomes including corrupted journal
+   files or server exit due to assertion failure.
+
+Posting date:        03 July 2018
+Program Impacted:    BIND
+Versions affected:   9.0.x -> 9.8.8, 9.9.0 -> 9.9.12, 9.10.0 -> 9.10.7,
+                     9.11.0 -> 9.11.3, 9.12.0 -> 9.12.1, and versions
+                     9.13.0 -> 9.13.1 of the 9.13 development branch
+
+Description:
+
+   A problem in named can potentially lead to corrupted journal
+   files when handling extraordinarily large zone transfers.
+
+Impact:
+
+   This problem potentially affects authoritative servers providing
+   slave service for zones if the server accepts zone data via
+   incremental zone transfer (IXFR) from a master source or if a
+   large zone transfer (AXFR) is received and ixfr-from-differences
+   is not set to "no" (the default setting is "yes", and possible
+   values are "yes", "no", "slave", and "master").
+
+   We warned of a similar class of problems in 2016 in this previous
+   Operational Notification "A party that is allowed control over
+   zone data can overwhelm a server by transferring huge quantities
+   of data." (https://kb.isc.org/article/AA-01390)
+
+Workarounds:
+
+   Like any unvalidated input, zone transfers are a potential source
+   of risk for servers under any circumstances.  BIND therefore
+   supports a variety of mechanisms to control zone transfer
+   permissions.  Permission to transfer can be restricted to trusted
+   servers using IP-address-based ACLs or shared secrets (TSIG keys)
+   or both.  Under most circumstances a slave server should not
+   encounter this defect when receiving data from a trusted server,
+   but it can be prevented entirely by forbidding incremental zone
+   transfer as a zone data transfer mechanism.  It may be preferable
+   to instead set a reasonable limit for the number of records which
+   may be in a zone (using the max-records parameter) which should
+   also prevent accidentally encountering this defect.
+
+   Servers which must accept zone data from untrusted sources (for
+   example, when seconding zones for other parties) are at slightly
+   higher risk if a party decides to deliberately feed a dangerously
+   large zone transfer.  Operators of servers which must accept
+   untrusted zone data should consider limiting zone size using
+   max-records, setting "ixfr-from-differences no;", or upgrading
+   to a version of BIND which will reject dangerously large transfers.
+
+Active exploits:
+
+   No known active exploits.
+
+Solution:
+
+   It is our opinion that most customers do not need to worry about
+   this issue unless they accept zone data via zone transfer from
+   untrusted sources, but we have included changes in upcoming
+   maintenance releases of BIND which will prevent the condition
+   from being reached.
+
+   Maintenance releases of BIND issued on or after 4 July 2018 will
+   contain change #4984, which will cause BIND to reject an
+   extraordinarily large IXFR if it is potentially large enough to
+   corrupt the journal file. These release candidates are available
+   now via https://www.isc.org/downloads and the change will be
+   included in future versions of BIND
+
+    BIND 9 version 9.9.13rc2
+    BIND 9 version 9.10.8rc2
+    BIND 9 version 9.11.4rc2
+    BIND 9 version 9.12.2rc2
 
 
-== Summary ==
+Do you still have questions?  Questions regarding this advisory
+should go to security-officer@....org.  To report a new issue,
+please encrypt your message using security-officer@....org's PGP
+key which can be found here:
 
-The icinga2 init script and systemd service file allow the unprivileged
-$ICINGA2_USER to gain root privileges by replacing the target of chown
-with a link.
+   https://www.isc.org/downloads/software-support-policy/openpgp-key/.
 
+If you are unable to use encrypted email, you may also report new
+issues at: https://www.isc.org/community/report-bug/.
 
-== Details ==
+Note:
 
-The "chown" command follows both symlinks and hard links by default on
-a vanilla Linux kernel. It is therefore unsafe to call "chown" on a
-path that is not wholly controlled by root; if the target path can be
-replaced with a link by a non-root user, then that user can do so to
-gain root when "chown" is called.
+   ISC patches only currently supported versions. When possible we
+   indicate EOL versions affected.  (For current information on
+   which versions are actively supported, please see
+   http://www.isc.org/downloads/).
 
-The "etc/initsystem/prepare-dirs" script that ships with icinga2 calls
-"chown" in that manner, leading to a root exploit for the $ICINGA2_USER.
-For example,
+ISC Security Vulnerability Disclosure Policy:
 
-  chown $ICINGA2_USER... $(dirname -- $ICINGA2_PID_FILE)
-  if [ -f $ICINGA2_PID_FILE ]; then
-    chown $ICINGA2_USER:$ICINGA2_GROUP $ICINGA2_PID_FILE
-  fi
+   Details of our current security advisory policy and practice can
+   be found here: https://kb.isc.org/article/AA-00861
 
-The first line gives away ownership of the directory containing the
-$ICINGA2_PID_FILE, and the next line calls chown on that file. The
-exploit is that, after the first line executes, the $ICINGA2_USER can
-simply replace $ICINGA2_PID_FILE with a link (sym or hard) to a
-root-owned file. The call to "chown" will then change ownership of the
-link's target. That is easily exploitable to gain root, by taking
-ownership of e.g. "/etc/passwd" or root's ".bashrc" file.
+This Knowledge Base article https://kb.isc.org/article/AA-01627
+is the complete and official security advisory document.
 
-The prepare-dirs script is used by both the SysV-style init script,
+Legal Disclaimer:
 
-  start() {
-    printf "Starting Icinga 2: "
-    @CMAKE_INSTALL_PREFIX@...b/icinga2/prepare-dirs $SYSCONFIGFILE
-    ...
+   Internet Systems Consortium (ISC) is providing this notice on
+   an "AS IS" basis. No warranty or guarantee of any kind is expressed
+   in this notice and none should be implied. ISC expressly excludes
+   and disclaims any warranties regarding this notice or materials
+   referred to in this notice, including, without limitation, any
+   implied warranty of merchantability, fitness for a particular
+   purpose, absence of hidden defects, or of non-infringement. Your
+   use or reliance on this notice or materials referred to in this
+   notice is at your own risk. ISC may change this notice at any
+   time.  A stand-alone copy or paraphrase of the text of this
+   document that omits the document URL is an uncontrolled copy.
+   Uncontrolled copies may lack important information, be out of
+   date, or contain factual errors.
 
-and the systemd service file,
-
-  ExecStartPre=.../prepare-dirs @ICINGA2_SYSCONFIGFILE@
-
-and so both are vulnerable to the problem in prepare-dirs.
-
-To exploit the "chown" calls the first time the service is started,
-you would need to take advantage of the race condition to create a
-link before the "-f" test is executed. However, there's a much easier
-scenario: if the service is started, stopped, and started again (even
-across reboots, for persistent directories), then the "-f" test will
-succeed, and call "chown" on a path that has been controlled by
-$ICINGA2_USER since the first time the service was started.
+(c) 2001-2018 Internet Systems Consortium
