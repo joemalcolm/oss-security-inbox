@@ -1,74 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/31/1
-Message-ID: <CAH8yC8m90KssanbHt+YmVt7iLOiwWHASDqRYW5TQGeNV2zWXDw@mail.gmail.com>
-Date: Mon, 31 Dec 2018 13:03:27 -0500
-From: Jeffrey Walton <noloader@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/06/3
+Message-ID: <20180706145422.GA29390@openwall.com>
+Date: Fri, 6 Jul 2018 16:54:22 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: gmp-bugs@...lib.org
-Subject: Asserts considered harmful (or GMP spills its sensitive information)
+Cc: zrlw@...a.com
+Subject: Re: mmap vulnerability in motion eye video4linux driver for Sony Vaio PictureBook
 Content-Type: text/plain; charset=utf-8
 
-The GMP library uses asserts to crash a program at runtime when
-presented with data it did not expect. The library also ignores user
-requests to remove asserts using Posix's -DNDEBUG. Posix asserts are a
-deugging aide intended for developement, and using them in production
-software ranges from questionable to insecure.
+On Fri, Jul 06, 2018 at 03:26:55PM +0200, Greg KH wrote:
+> On Fri, Jul 06, 2018 at 08:35:43PM +0800, zrlw@...a.com wrote:
+> > Hi all,i found a vulnerability in motion eye video4linux driver for Sony Vaio PictureBook,it desn't validate user-controlled parameter 'vma->vm_pgoff', a malicious process might access all of kernel memory from user space by trying pass different arbitrary address.
+> > /usr/src/linux-4.4.21-69/drivers/media/pci/meye/meye.c:
+> > static int meye_mmap(struct file *file, struct vm_area_struct *vma)
+> > ...        unsigned long offset = vma->vm_pgoff << PAGE_SHIFT;
+> > ...        pos = (unsigned long)meye.grab_fbuffer + offset;
+> >         while (size > 0) {
+> >                 page = vmalloc_to_pfn((void *)pos);
+> >                 if (remap_pfn_range(vma, start, page, PAGE_SIZE, PAGE_SHARED)) {...
+> 
+> Commit:
+> 	be83bbf80682 ("mmap: introduce sane default mmap limits")
+> which was backported to all stable kernels, should have resolved this
+> problem, correct?
+> 
+> If not, please notify the media driver maintainers and they will be glad
+> to fix the problem.
 
-Many programs can safely use assert to crash a program at runtime.
-However, the prequisite is, the program cannot handle sensitive
-information like user passwords, user keys or sensitive documents.
+I think zrlw@...a.com is not subscribed, so CC'ing.
 
-High integrity software, like GMP and Nettle, cannot safely use an
-assert to crash a program. To understand why the data flow must be
-examined. First, when an assert fires, a SIGABRT is eventually sent to
-the program on Unix and Linux
-(http://pubs.opengroup.org/onlinepubs/009695399/functions/assert.html).
+I wonder if it's also possible to cause integer overflow on "(unsigned
+long)meye.grab_fbuffer + offset", bringing pos below meye.grab_fbuffer,
+and what the impact of that would be.
 
-Second, the SIGABRT terminates the process and can write a core file.
-This is the first point of unwanted data egress. Sensitive information
-like user passwords and keys can be written to the filesystem
-unprotected.
-
-Third, the dump is sometimes sent to an error reporting service like
-Apple Crash Report, Android Crash Report, Ubuntu Apport, and Windows
-Error Reporting. This is the second point of unwanted data egress.
-Sensitive information can be sent to the error reporting service. The
-platform provider like Apple, Google, Microsoft and Ubuntu gain access
-to the sensitive information, in addition to the developer.
-
-In fact, when one popular security library used in Bitcoin wallets was
-apprised of the situation, they responded:
-
-    The standard abort() call also produces somewhat useful
-    error messages on Windows, so I can get an idea on what’s
-    going on when users report these.
-
-Another popular security library used for code signing remarked:
-
-    Please never ever define NDEBUG. This is a severe misfeature
-    of the assert macro.
-
-Wow, change your passwords and keys after an asert fires...
-
-Here's a small example of triggering an assert using the Nettle
-library. Nettle depends on GMP, and GMP is the root cause of the
-information leak. The result below can be reporduced on i686, x86_64,
-and Aarch64 using the attached script. ARM A-32 does not work at the
-moment due to GMP build errors.
-
-In the case below Nettle is using benign data and not maliciously
-crafted data. Notice GMP spilled the sensitive information during a
-sliding window modular exponentiation (also see
-https://gmplib.org/repo/gmp-6.1/file/tip/mpn/generic/sec_powm.c).
-
-# from Nettle 'make check'
-...
-PASS: rsa-keygen
-PASS: rsa-sec-decrypt
-sec_powm.c:293: GNU MP assertion failed: enb >= windowsize
-../run-tests: line 57: 24756 Aborted (core dumped) "$1" $testflags
-FAIL: rsa-compute-root
-PASS: dsa
-...
-
-View attachment "test-gmp.sh.txt" of type "text/plain" (971 bytes)
+Alexander
