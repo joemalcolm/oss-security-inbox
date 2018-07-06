@@ -1,39 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/27/7
-Message-Id: <8E450C60-66C7-4821-9147-DC4E032121A4@apache.org>
-Date: Tue, 27 Feb 2018 10:31:15 -0800
-From: Bryan Call <bcall@...che.org>
-To: dev <dev@...fficserver.apache.org>, users <users@...fficserver.apache.org>, announce@...fficserver.apache.org, security@...fficserver.apache.org, oss-security@...ts.openwall.com
-Subject: [ANNOUNCE] Apache Traffic Server vulnerability with TLS handshake - CVE-2017-7671
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/06/2
+Message-ID: <20180706132655.GA1466@kroah.com>
+Date: Fri, 6 Jul 2018 15:26:55 +0200
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: mmap vulnerability in motion eye video4linux driver for Sony Vaio PictureBook
 Content-Type: text/plain; charset=utf-8
 
-CVE-2017-7671: Apache Traffic Server vulnerability with TLS handshake
+On Fri, Jul 06, 2018 at 08:35:43PM +0800, zrlw@...a.com wrote:
+> Hi all,i found a vulnerability in motion eye video4linux driver for Sony Vaio PictureBook,it desn't validate user-controlled parameter 'vma->vm_pgoff', a malicious process might access all of kernel memory from user space by trying pass different arbitrary address.
+> /usr/src/linux-4.4.21-69/drivers/media/pci/meye/meye.c:
+> static int meye_mmap(struct file *file, struct vm_area_struct *vma)
+> ...        unsigned long offset = vma->vm_pgoff << PAGE_SHIFT;
+> ...        pos = (unsigned long)meye.grab_fbuffer + offset;
+>         while (size > 0) {
+>                 page = vmalloc_to_pfn((void *)pos);
+>                 if (remap_pfn_range(vma, start, page, PAGE_SIZE, PAGE_SHARED)) {...
 
-Vendor:
-The Apache Software Foundation
+Commit:
+	be83bbf80682 ("mmap: introduce sane default mmap limits")
+which was backported to all stable kernels, should have resolved this
+problem, correct?
 
-Version Affected:
-ATS 5.2.0 to 5.3.2
-ATS 6.0.0 to 6.2.0
-ATS 7.0.0
+If not, please notify the media driver maintainers and they will be glad
+to fix the problem.
 
-Description:
-There is a DOS attack vulnerability in ATS with the TLS handshake.  This issue can cause the server to coredump.
+thanks,
 
-Mitigation:
-5.x users should upgrade to 7.1.2 or later versions
-6.x users should upgrade to 6.2.2 or later versions
-7.x users should upgrade to 7.1.2 or later versions
-
-References:
-	Downloads:
-		https://trafficserver.apache.org/downloads
-	Github Pull Request:
-		https://github.com/apache/trafficserver/pull/1941
-	CVE:
-		https://cve.mitre.org/cgi-bin/cvename.cgi?name=2017-7671
-
--Bryan
-
-
-
+greg k-h
