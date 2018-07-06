@@ -1,30 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/29/5
-Message-ID: <87r2f3wlux.fsf@fifthhorseman.net>
-Date: Thu, 29 Nov 2018 17:38:14 -0500
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: Hanno Böck <hanno@...eck.de>, oss-security@...ts.openwall.com
-Subject: Re: memory safety bugs in bc
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/06/4
+Message-Id: <20180706160937.C94687200D7@webmail.sinamail.sina.com.cn>
+Date: Sat, 07 Jul 2018 00:09:37 +0800
+From: <zrlw@...a.com>
+To: "Solar Designer" <solar@...nwall.com>, "oss-security" <oss-security@...ts.openwall.com>,
+Subject: Re: mmap vulnerability in motion eye video4linux driver for Sony Vaio PictureBook
 Content-Type: text/plain; charset=utf-8
 
-On Thu 2018-11-29 23:12:55 +0100, Hanno Böck wrote:
-> The idea here is that "mild" memory safety violations (invalid reads,
-> nullptr) don't get security treatment if they're in a standalone tool,
-> yet they do if they're in a library, which may have larger implications
-> in more complex apps.
+I  sent a email to the original authors which i found in the head of meye.c, but i don't receive any response util now. I don't think   commit be83bbf80682  will work on this case, this driver derived from v4l2-core which not use inode,  maybe i'm wrong.  
+----- Original Message -----
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: zrlw@...a.com
+Subject: Re: [oss-security] mmap vulnerability in motion eye video4linux driver for Sony Vaio PictureBook
+Date: 2018-07-06 22:54
 
-Sure, i understand how memory errors in libraries offer a much larger
-"attack surface" than errors in code called across a process boundary.
 
-However, i am used to looking at a lot of code that calls across process
-boundaries (hello, GnuPG!) and i can tell you that there's a lot of
-software out there that doesn't cope well with (or, maybe worse, doesn't
-even notice) surprising terminations, surprising output on certain file
-descriptors, or surprising return codes.  sounds like two of your 5
-examples have at least surprising terminations and return codes.
-
-These oversights can lead to other failures or problems that we don't
-expect, so i'm reluctant to encourage people to ignore them, though i
-grant that these failures with full memory access is even worse :)
-
-         --dkg
+On Fri, Jul 06, 2018 at 03:26:55PM +0200, Greg KH wrote:
+> On Fri, Jul 06, 2018 at 08:35:43PM +0800, zrlw@...a.com wrote:
+> > Hi all,i found a vulnerability in motion eye video4linux driver for Sony Vaio PictureBook,it desn't validate user-controlled parameter 'vma->vm_pgoff', a malicious process might access all of kernel memory from user space by trying pass different arbitrary address.
+> > /usr/src/linux-4.4.21-69/drivers/media/pci/meye/meye.c:
+> > static int meye_mmap(struct file *file, struct vm_area_struct *vma)
+> > ...        unsigned long offset = vma->vm_pgoff << PAGE_SHIFT;
+> > ...        pos = (unsigned long)meye.grab_fbuffer + offset;
+> >         while (size > 0) {
+> >                 page = vmalloc_to_pfn((void *)pos);
+> >                 if (remap_pfn_range(vma, start, page, PAGE_SIZE, PAGE_SHARED)) {...
+> 
+> Commit:
+> 	be83bbf80682 ("mmap: introduce sane default mmap limits")
+> which was backported to all stable kernels, should have resolved this
+> problem, correct?
+> 
+> If not, please notify the media driver maintainers and they will be glad
+> to fix the problem.
+I think zrlw@...a.com is not subscribed, so CC'ing.
+I wonder if it's also possible to cause integer overflow on "(unsigned
+long)meye.grab_fbuffer + offset", bringing pos below meye.grab_fbuffer,
+and what the impact of that would be.
+Alexander
