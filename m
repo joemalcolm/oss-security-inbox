@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["381" "Sunday" "25" "October" "2015" "18:03:52" "+0900" "Mamoru TASAKA" "mtasaka@fedoraproject.org" "<562C9AF8.50501@fedoraproject.org>" "9" "[oss-security] Re: CVE request: xscreensaver aborts when unpluging second monitor cable when asking password" nil nil nil "10" "2015102509:03:52" "[oss-security] Re: CVE request: xscreensaver aborts when unpluging second monitor cable when asking password" (number mark "        mtasaka@fedo Oct 25    9/381   " thread-indent "\"[oss-security] Re: CVE request: xscreensaver aborts when unpluging second monitor cable when asking password\"\n") "<562B9FE6.605@fedoraproject.org>" ("<562B9FE6.605@fedoraproject.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1257" "Tuesday" "10" "July" "2018" "11:41:08" "+0200" "Emmanuel Lecharny" "elecharny@apache.org" "<CAG8=FRhFGcy-oO8PEWUpv2nc=DL0YBNbjdHkq2jck4g+B73UHQ@mail.gmail.com>" "46" "[oss-security] [Annoucement] CVE-2018-1337 Plaintext Password Disclosure in Secured Channel" nil nil nil "7" "2018071009:41:08" "[oss-security] [Annoucement] CVE-2018-1337 Plaintext Password Disclosure in Secured Channel" (number mark "U       elecharny@ap Jul 10   46/1257  " thread-indent "\"[oss-security] [Annoucement] CVE-2018-1337 Plaintext Password Disclosure in Secured Channel\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17419 invoked by uid 550); 25 Oct 2015 09:04:09 -0000
+Received: (qmail 7738 invoked by uid 550); 10 Jul 2018 09:43:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,29 +11,70 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 16377 invoked from network); 25 Oct 2015 09:04:08 -0000
-References: <562B9FE6.605@fedoraproject.org>
-Message-ID: <562C9AF8.50501@fedoraproject.org>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
-MIME-Version: 1.0
-In-Reply-To: <562B9FE6.605@fedoraproject.org>
-Content-Type: text/plain; charset=iso-2022-jp
-Content-Transfer-Encoding: 7bit
-Cc: secalert@redhat.com
-Date: Sun, 25 Oct 2015 18:03:52 +0900
-From: Mamoru TASAKA <mtasaka@fedoraproject.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request: xscreensaver aborts when unpluging second monitor
- cable when asking password
-To: oss-security@lists.openwall.com
+Received: (qmail 1555 invoked from network); 10 Jul 2018 09:41:24 -0000
+X-Gm-Message-State: AOUpUlH1M08uwIdlFYH5vBw1XZFrwynXjehrMUmhF7QdVdGdz8S35X8Y
+	+vudALwZikxhD0kIZSp+3HfA0eY5H9P4NEyMBiw=
+X-Google-Smtp-Source: AAOMgpdLlayG2N1CVCSC/AjpLgThe1TMtwyFmYU+gqPgQPTSExVOX6mcl8iqBggRFVR4MPviHmSij5K1/IB9m06nuAw=
+X-Received: by 2002:a24:c2c2:: with SMTP id i185-v6mr3385880itg.76.1531215669495;
+ Tue, 10 Jul 2018 02:41:09 -0700 (PDT)
+MIME-Version: 1.0
+From: Emmanuel Lecharny <elecharny@apache.org>
+Date: Tue, 10 Jul 2018 11:41:08 +0200
+X-Gmail-Original-Message-ID: <CAG8=FRhFGcy-oO8PEWUpv2nc=DL0YBNbjdHkq2jck4g+B73UHQ@mail.gmail.com>
+Message-ID: <CAG8=FRhFGcy-oO8PEWUpv2nc=DL0YBNbjdHkq2jck4g+B73UHQ@mail.gmail.com>
+To: announce@apache.org, 
+	Apache Directory Developers List <dev@directory.apache.org>, 
+	"users@directory.apache.org" <users@directory.apache.org>, api@directory.apache.org, security@apache.org, 
+	oss-security@lists.openwall.com
+Cc: wei.deng@datastax.com, mike.adamson@datastax.com, 
+	jeremiah.jordan@datastax.com, ben.coverston@datastax.com
+Content-Type: multipart/alternative; boundary="0000000000000e12f30570a1ee72"
+Subject: [oss-security] [Annoucement] CVE-2018-1337 Plaintext Password Disclosure in Secured Channel
 
-The upstream released 5.34, which should address this issue.
-Patch against 5.33 is
-http://pkgs.fedoraproject.org/cgit/xscreensaver.git/diff/xscreensaver-5.33-0002-Modify-sigchld_hander-in_signal_hander_p-mechanism.patch?id=b57f59f3482fedf70ce7a3541094e2512290139f
+--0000000000000e12f30570a1ee72
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-If some detailed explanation is needed, please let me know it.
+CVE-2018-1337: Plaintext Password Disclosure in Secured Channel
 
+Severity: Critical
+
+Vendor: The Apache Software Foundation
+
+Versions Affected:
+Apache LDAP API 1.0.0
+
+Description:
+A bug in the way the SSL Filter was setup made it possible for
+another thread to use the connection before the TLS layer has been
+established, if the connection has already been used and put back
+in a pool of connections, leading to leaking any informations
+contained in this request (including the credentials when sending
+a BIND request)
+
+Mitigation:
+
+Users are urged to use this 1.0.2 version ASAP. There is no impact
+in their application, the API remains unchanged.
+
+The previous version (LDAP API 1.0.1) was a workaround for this
+problem.
+
+History:
+2018-05-15 Original advisory
+
+Credit:
+This issue has been reported by Wei Deng (Datastax), the initial
+workaround was proposed by Mike Adamson (Datastax) and the further
+investigations/tests/verification were conducted by Wei Deng,
+Mike Adamson, Jeremiah Kordan (Datastax) and Ben Coverston (Datastax).
+
+
+--=20
 Regards,
-Mamoru TASAKA <mtasaka@fedoraproject.org>
+Cordialement,
+Emmanuel L=C3=A9charny
+www.iktek.com
 
+--0000000000000e12f30570a1ee72--
