@@ -1,35 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/09/7
-Message-ID: <CAEwge-FQAHe37U1zdM19NCj8NkAuyVUx7=ii5WHz_3=EY+BkLw@mail.gmail.com>
-Date: Tue, 9 Jan 2018 14:07:14 -0800
-From: Anthony Baker <abaker@...che.org>
-To: user@...de.apache.org, dev@...de.apache.org, announce@...che.org,  asf-security <security@...che.org>, oss-security@...ts.openwall.com
-Subject: [SECURITY] CVE-2017-12622 Apache Geode gfsh authorization vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/10/1
+Message-ID: <a2972f5b-b716-52f2-732f-093081865c65@redhat.com>
+Date: Tue, 10 Jul 2018 09:22:25 +0100
+From: Luke Hinds <lhinds@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: [OSSN-0084] Data retained after deletion of a ScaleIO volume
 Content-Type: text/plain; charset=utf-8
 
-CVE-2017-12622 Apache Geode gfsh authorization vulnerability
-
-Severity:  Important
-
-Vendor: The Apache Software Foundation
-
-Versions Affected:  Apache Geode 1.0.0 through 1.2.1
-
-Description:
-When an authenticated user connects to a Geode cluster using the gfsh
-tool with HTTP, the user is able to obtain status information and
-control cluster members even without CLUSTER:MANAGE privileges.
-
-Mitigation:
-Users of the affected versions should upgrade to Apache Geode 1.3.0 or later.
-
-Credit:
-This issue was reported responsibly to the Apache Geode Security Team
-by Patrick Rhomberg from Pivotal.
-
-References:
-[1] https://issues.apache.org/jira/browse/GEODE-3685
-[2] https://cwiki.apache.org/confluence/display/GEODE/Release+Notes#ReleaseNotes-SecurityVulnerabilities
-
+Data retained after deletion of a ScaleIO volume
 ---
-The Geode PMC
+
+### Summary ###
+Certain storage volume configurations allow newly created volumes to
+contain previous data. This could lead to leakage of sensitive
+information between tenants.
+
+### Affected Services / Software ###
+Cinder releases up to and including Queens with ScaleIO volumes
+using thin volumes and zero padding.
+
+### Discussion ###
+Using both thin volumes and zero padding does not ensure data contained
+in a volume is actually deleted. The default volume provisioning rule is
+set to thick so most installations are likely not affected. Operators
+can check their configuration in `cinder.conf` or check for zero padding
+with this command `scli --query_all`.
+
+#### Recommended Actions ####
+
+Operators can use the following two workarounds, until the release of
+Rocky (planned 30th August 2018) which resolves the issue.
+
+1. Swap to thin volumes
+
+2. Ensure ScaleIO storage pools use zero-padding with:
+
+`scli --modify_zero_padding_policy
+    (((--protection_domain_id <ID> |
+    --protection_domain_name <NAME>)
+    --storage_pool_name <NAME>) | --storage_pool_id <ID>)
+    (--enable_zero_padding | --disable_zero_padding)`
+
+### Contacts / References ###
+Author: Nick Tait
+This OSSN : https://wiki.openstack.org/wiki/OSSN/OSSN-0084
+Original LaunchPad Bug : https://bugs.launchpad.net/ossn/+bug/1699573
+Mailing List : [Security] tag on openstack-dev@...ts.openstack.org
+OpenStack Security Project : https://launchpad.net/~openstack-ossg
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
