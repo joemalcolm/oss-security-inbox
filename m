@@ -1,43 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/07/6
-Message-Id: <A0F9A5C4-B009-40D3-B3B7-CE1AB9B0B8FB@redhat.com>
-Date: Wed, 7 Mar 2018 07:20:47 -0700
-From: Kurt Seifried <kseifrie@...hat.com>
-To: Tomas Hoger <thoger@...hat.com>
-Cc: Kurt Seifried <kseifried@...hat.com>, oss-security@...ts.openwall.com
-Subject: Re: memcached UDP amplification attacks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/10/4
+Message-ID: <CAJ_hc2PY9TbWc6Ai0Hjjy1RW8foRapext65ypY0qmtsRu5zZqg@mail.gmail.com>
+Date: Tue, 10 Jul 2018 10:31:48 -0500
+From: Bobby Evans <bobby@...che.org>
+To: oss-security@...ts.openwall.com
+Cc: Apache Security Team <security@...che.org>,  "private@...rm.apache.org" <private@...rm.apache.org>
+Subject: CVE-2018-1331: Apache Storm remote code execution vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Actually the 50k was based on a private but trustworthy reporter (The 3 letter agency people), some people store very big things in memcached like cached web pages...
+[CVEID]:CVE-2018-1331
+[PRODUCT]:Apache Storm
+[VERSION]:Apache Storm 0.10.0 through 0.10.2, 1.0.0 through 1.0.6, 1.1.0
+through 1.1.2, 1.2.0 through 1.2.1
+[PROBLEMTYPE]:Remote Code Execution
+[REFERENCES]: http://storm.apache.org/2018/06/04/storm122-released.html
+http://storm.apache.org/2018/06/04/storm113-released.html
 
-> On Mar 7, 2018, at 3:09 AM, Tomas Hoger <thoger@...hat.com> wrote:
-> 
->> On Fri, 2 Mar 2018 21:42:30 -0700 Kurt Seifried wrote:
->> 
->> I have assigned CVE-2018-1000115 to this issue:
->> 
->> Memcached version 1.5.5 contains an Insufficient Control of Network
->> Message Volume (Network Amplification, CWE-406) vulnerability in the
->> UDP support of the memcached server that can result in denial of
->> service via network flood (traffic amplification of 1:50,000 has been
->> reported by reliable sources). This attack appear to be exploitable
->> via network connectivity to port 11211 UDP. This vulnerability
->> appears to have been fixed in 1.5.6 due to the disabling of the UDP
->> protocol by default.
-> 
-> Minor nitpick, the description mentions 1:50,000 ratio, apparently
-> based on the information in the following reference:
-> 
->> https://blogs.akamai.com/2018/03/memcached-fueled-13-tbps-attacks.html
-> 
-> where it's mentioned as:
-> 
-> """
-> Worse, memcached can have an amplification factor of over 50,000,
-> meaning a 203 byte request results in a 100 megabyte response.
-> """
-> 
-> However, 200 * 50k = 10m, not 100m.  Wonder if I'm doing my math wrong.
-> 
-> -- 
-> Tomas Hoger / Red Hat Product Security
+An attacker with access to a secure storm cluster in some cases could
+execute arbitrary code as a different user.
+
