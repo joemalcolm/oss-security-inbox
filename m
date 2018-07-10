@@ -1,25 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/19/1
-Message-ID: <878t1pjbrx.fsf@oldenburg.str.redhat.com>
-Date: Mon, 19 Nov 2018 17:02:42 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: REJECT request filed for CVE-2018-11210 against tinyxml2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/10/3
+Message-ID: <20180710133901.GC20816@kroah.com>
+Date: Tue, 10 Jul 2018 15:39:01 +0200
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com, zrlw@...a.com
+Cc: Solar Designer <solar@...nwall.com>
+Subject: Re: mmap vulnerability in motion eye video4linux driver for Sony Vaio PictureBook
 Content-Type: text/plain; charset=utf-8
 
-I filed a REJECT request for MITRE for this CVE identifier, with this
-rationale:
+On Sat, Jul 07, 2018 at 12:09:37AM +0800, zrlw@...a.com wrote:
+> I  sent a email to the original authors which i found in the head of
+> meye.c, but i don't receive any response util now.
 
-This is not a vulnerability. The fuzzer did not check that the
-precondition is satisfied. If XMLDocument::Parse is called in the
-one-argument-form (or with a (size_t)-1 argument), then it uses strlen
-on the input string, which must be null-terminated. This is clearly
-spelled out in the API documentation.
+Always use the scripts/get_maintainer.pl tool to find who to send stuff
+like this to.  It will include a public mailing list or two.
 
-<https://github.com/leethomason/tinyxml2/blob/8f4a9a8cc2a93709b97d0cf51d33ddd1ec33277d/tinyxml2.h#L1677>
+> I don't think
+> commit be83bbf80682  will work on this case, this driver derived from
+> v4l2-core which not use inode,  maybe i'm wrong.  
 
-This is just a courtesy notice in case you want to update your records
-before MITRE processes the rejection request (or rejects it altogether).
+I think you are wrong, but it would be great if you could test to verify
+it or not.
 
-Thanks,
-Florian
+thanks,
+
+greg k-h
