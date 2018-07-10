@@ -1,44 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/24/1
-Message-ID: <20180124030215.ugiofq23lmyurwsa@dojo.mi.org>
-Date: Tue, 23 Jan 2018 22:02:15 -0500
-From: "Mike O'Connor" <mjo@...o.mi.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: How to deal with reporters who don't want their bugs fixed?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/10/2
+Message-ID: <CAG8=FRhFGcy-oO8PEWUpv2nc=DL0YBNbjdHkq2jck4g+B73UHQ@mail.gmail.com>
+Date: Tue, 10 Jul 2018 11:41:08 +0200
+From: Emmanuel Lecharny <elecharny@...che.org>
+To: announce@...che.org,  Apache Directory Developers List <dev@...ectory.apache.org>,  "users@...ectory.apache.org" <users@...ectory.apache.org>, api@...ectory.apache.org, security@...che.org,  oss-security@...ts.openwall.com
+Cc: wei.deng@...astax.com, mike.adamson@...astax.com,  jeremiah.jordan@...astax.com, ben.coverston@...astax.com
+Subject: [Annoucement] CVE-2018-1337 Plaintext Password Disclosure in Secured Channel
 Content-Type: text/plain; charset=utf-8
 
-:Subject says it all: What do you do if you receive a vulnerability report,
-:and the reporter requests an embargo at some time in the future because
-:that's when their paper/conference presentation/patent submission is
-:scheduled?
-:
-:The obvious approach is to find a prior public report of essentially the same
-:bug and fix that (which will work surprisingly often), but let's assume that
-:this isn't the case.
+CVE-2018-1337: Plaintext Password Disclosure in Secured Channel
 
-Well, does the embargo add value for the consumers of the product?
-That had historically been my guideline, when I've had to make that
-call.  Will it improve the fix, documentation, delivery mechanisms,
-etc.  Sometimes, the answer is "yes".  Other times, not so much or
-it's fairly indeterminate.  You don't always know all the facts, or
-all the players, you're left with educated guessing.  
+Severity: Critical
 
-Sometimes, you can persuade researchers to a vendor-friendly point of
-view on disclosure by simply asking them if they think this is in the
-best interests of the users.  Other times, you work with someone who
-cares more about adding a CVE and|or bounty to their resume, or they
-are disingenuous or simply incapable of keeping secrets.
+Vendor: The Apache Software Foundation
 
-If there's evidence of open exploitation, all bets should be off and
-that should be stated up front.  At that point, of course, it ceases
-adding value.  An agreed disclosure date does not generally amount to
-an NDA or the like.
+Versions Affected:
+Apache LDAP API 1.0.0
 
--Mike
+Description:
+A bug in the way the SSL Filter was setup made it possible for
+another thread to use the connection before the TLS layer has been
+established, if the connection has already been used and put back
+in a pool of connections, leading to leaking any informations
+contained in this request (including the credentials when sending
+a BIND request)
+
+Mitigation:
+
+Users are urged to use this 1.0.2 version ASAP. There is no impact
+in their application, the API remains unchanged.
+
+The previous version (LDAP API 1.0.1) was a workaround for this
+problem.
+
+History:
+2018-05-15 Original advisory
+
+Credit:
+This issue has been reported by Wei Deng (Datastax), the initial
+workaround was proposed by Mike Adamson (Datastax) and the further
+investigations/tests/verification were conducted by Wei Deng,
+Mike Adamson, Jeremiah Kordan (Datastax) and Ben Coverston (Datastax).
+
 
 -- 
- Michael J. O'Connor                                          mjo@...o.mi.org
- =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
-"The defendant pleaded exterminating circumstances."       -Anguished English
+Regards,
+Cordialement,
+Emmanuel Lécharny
+www.iktek.com
 
-Download attachment "signature.asc" of type "application/pgp-signature" (188 bytes)
