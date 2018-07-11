@@ -1,31 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/19/1
-Message-ID: <20180619075953.GA8469@f195.suse.de>
-Date: Tue, 19 Jun 2018 09:59:53 +0200
-From: Matthias Gerstner <mgerstner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: cantata: cantata-mounter D-Bus service local privilege escalation and other security issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/11/5
+Message-ID: <20180711110417.GB18417@kroah.com>
+Date: Wed, 11 Jul 2018 13:04:17 +0200
+From: Greg KH <greg@...ah.com>
+To: zrlw@...a.com
+Cc: oss-security <oss-security@...ts.openwall.com>, Solar Designer <solar@...nwall.com>
+Subject: Re: Re: mmap vulnerability in motion eye video4linux driver for Sony Vaio PictureBook
 Content-Type: text/plain; charset=utf-8
 
-> A) The mount target path check in mounter.cpp `mpOk()` is insufficient.
->   A regular user can this way mount a CIFS filesystem anywhere, and not
->   just beneath /home by passing relative path components.
+On Wed, Jul 11, 2018 at 10:15:34AM +0800, zrlw@...a.com wrote:
+> i think commit be83bbf80682 maybe has a problem:
+>  if file_mmap_size_max return 0 (not regular, not block, fmode &
+> FMODE_UNSIGNED_OFFSET == true) , maxsize will be set to -len, correct? 
+> 
+> +static inline bool file_mmap_ok(struct file *file, struct inode *inode,
+> + unsigned long pgoff, unsigned long len)
+> +{
+> + u64 maxsize = file_mmap_size_max(file, inode);
+> +
+> + if (maxsize && len > maxsize)
+> + return false;
+> + maxsize -= len;                                         <==  maxsize = -len
+> when file_mmap_size_max return 0 
+> + if (pgoff > maxsize >> PAGE_SHIFT)
+> + return false;
+> + return true;
+> +}
 
-This was assigned CVE-2018-12559.
+Yes, that is correct, that means that the file size is very big and
+allowed to use unsigned values.  Very few device nodes allow this, but
+some need to.
 
-> B) Arbitrary unmounts can be performed by regular users the same way.
+Do you see a problem with this for the driver you are looking at?
 
-This was assigned CVE-2018-12560.
+thanks,
 
-> C) A regular user can inject additional mount options like file_mode= by
->   manipulating e.g. the domain parameter of the samba URL.
-
-This was assigned CVE-2018-12561.
-
-> D) The wrapper script 'mount.cifs.wrapper' uses the shell to forward the
->   arguments to the actual mount.cifs binary. The shell evaluates
->   wildcards which can also be injected like this:
-
-This was assigned CVE-2018-12562.
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+greg k-h
