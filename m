@@ -1,34 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/23/10
-Message-ID: <CALDAOtuLdurT759O0AxPovJ4ThgcrYrJkYsxJPR4EgWf2QG_+g@mail.gmail.com>
-Date: Thu, 23 Aug 2018 13:29:23 +0200
-From: Mateusz Lenik <mlen@...n.pl>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/12/2
+Message-ID: <CAEccTyxe6x3zqqV8nLtbdt6dVEB1=_GLvHsdgf-1JRmbMHpa2Q@mail.gmail.com>
+Date: Wed, 11 Jul 2018 15:18:59 -0500
+From: Sean Owen <srowen@...che.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2018-8024 Apache Spark XSS vulnerability in UI
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Severity: Medium
 
-On Thu, Aug 23, 2018 at 11:06 AM Leonardo Taccari <iamleot@...il.com> wrote:
+Vendor: The Apache Software Foundation
 
-> Bob Friesenhahn writes:
-> > The CERT advisory at https://www.kb.cert.org/vuls/id/332928 provides a
-> > policy.xml example which does not appear to block PS2 and PS3, which
-> > are also entry points for reading Postscript.
-> > [...]
->
-> If I am not missing something I think that ghostscript isn't used
-> for them though.
->
+Versions Affected:
+Spark versions through 2.1.2
+Spark 2.2.0 through 2.2.1
+Spark 2.3.0
 
-It seems to be possible to disable GhostScript in ImageMagick completely by
-the policy rule below. It's not possible to miss any format with it.
+Description:
+In Apache Spark up to and including 2.1.2, 2.2.0 to 2.2.1, and 2.3.0, it's
+possible for a malicious user to construct a URL pointing to a Spark
+cluster's UI's job and stage info pages, and if a user can be tricked into
+accessing the URL, can be used to cause script to execute and expose
+information from the user's view of the Spark UI. While some browsers like
+recent versions of Chrome and Safari are able to block this type of attack,
+current versions of Firefox (and possibly others) do not.
 
-<policy domain="delegate" rights="none" pattern="gs" />
+Mitigation:
+1.x, 2.0.x, and 2.1.x users should upgrade to 2.1.3 or newer
+2.2.x users should upgrade to 2.2.2 or newer
+2.3.x users should upgrade to 2.3.1 or newer
 
-I also found out that Amit's exploit works with lesspipe that ships with
-less by default -- it uses gs via ps2ascii wrapper
+Credit:
+Spencer Gietzen, Rhino Security Labs
 
-Best,
-Mateusz
+References:
+https://spark.apache.org/security.html
 
