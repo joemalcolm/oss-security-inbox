@@ -1,4 +1,9 @@
-Received: (qmail 16022 invoked by uid 550); 29 Apr 2026 06:01:19 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3731" "Wednesday" "11" "July" "2018" "08:06:01" "+0200" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1807110007350.29047@tvnag.unkk.fr>" "126" "[oss-security] [SECURITY ADVISORY] curl SMTP send heap buffer overflow" nil nil nil "7" "2018071106:06:01" "[oss-security] [SECURITY ADVISORY] curl SMTP send heap buffer overflow" (number mark "U       daniel@haxx. Jul 11  126/3731  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl SMTP send heap buffer overflow\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 27682 invoked by uid 550); 11 Jul 2018 06:06:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,76 +12,115 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 15995 invoked from network); 29 Apr 2026 06:01:19 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=haxx.se; s=silly;
-	t=1777442479; bh=mxbTvLuxMjMudi3k18pqSgS2N9Nq8ApjOG7lEKYHAoU=;
-	h=Date:From:To:Subject:From;
-	b=ZQmZOlQb8mlBoCzRDWVfKTi4MK4cKdHcC+HkmHJ2JcCXqKmRhtfnttGzJUN6hLVeA
-	 HZQmzQVDCPOTjCAObnUdr5oZq9b+J41Tc4dshR68qeqGNfWTSmrRr/HKS3o8Z8PBgG
-	 gWulhev0RM0omaC0mD0T3x78uoMRLJxBFYxDXuTDit2+Y/hjSArEHcyXjrliQnBEPJ
-	 8Z0U1OAAyzowP1YesBKUt7oaOs/ubCjk96FerxrTaelBL2kM8yzcGF1idw4hdBXTiA
-	 +iMHSB+PKkwkPpMkYESTlSffhISiSdBxxL7aIgdXc8STY+ozFmWF9w697HLyCNKHIv
-	 k/2rYRTkKqpHQ==
-Date: Wed, 29 Apr 2026 08:01:19 +0200 (CEST)
+Received: (qmail 27664 invoked from network); 11 Jul 2018 06:06:13 -0000
+X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
+Date: Wed, 11 Jul 2018 08:06:01 +0200 (CEST)
 From: Daniel Stenberg <daniel@haxx.se>
-To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
-    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
-    oss-security@lists.openwall.com
-Message-ID: <685315s4-3r44-sn64-5qsq-q62100341506@unkk.fr>
+X-X-Sender: dast@giant.haxx.se
+To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
+        curl-announce@cool.haxx.se,
+        libcurl hacking <curl-library@cool.haxx.se>,
+        oss-security@lists.openwall.com
+Message-ID: <alpine.DEB.2.20.1807110007350.29047@tvnag.unkk.fr>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 X-fromdanielhimself: yes
 MIME-Version: 1.0
 Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] [ADVISORY] curl: CVE-2026-6429: netrc credential leak with reused
- proxy connection
+Subject: [oss-security] [SECURITY ADVISORY] curl SMTP send heap buffer overflow
 
-netrc credential leak with reused proxy connection
-==================================================
+SMTP send heap buffer overflow
+==============================
 
-Project curl Security Advisory, April 29 2026
-[Permalink](https://curl.se/docs/CVE-2026-6429.html)
+Project curl Security Advisory, July 11th 2018 -
+[Permalink](https://curl.haxx.se/docs/adv_2018-70a2.html)
 
 VULNERABILITY
 -------------
 
-When asked to both use a `.netrc` file for credentials and to follow HTTP
-redirects, libcurl could leak the password used for the first host to the
-followed-to host under certain circumstances.
+curl might overflow a heap based memory buffer when sending data over SMTP and
+using a reduced read buffer.
+
+When sending data over SMTP, curl allocates a separate "scratch area" on the
+heap to be able to escape the uploaded data properly if the uploaded data
+contains data that requires it.
+
+The size of this temporary scratch area was mistakenly made to be `2 *
+sizeof(download_buffer)` when it should have been made `2 *
+sizeof(upload_buffer)`.
+
+The upload and the download buffer sizes are identically sized by default
+(16KB) but since version 7.54.1, curl can resize the download buffer into a
+smaller buffer (as well as larger). If the download buffer size is set to a
+value smaller than 10923, the `Curl_smtp_escape_eob()` function might overflow
+the scratch buffer when sending contents of sufficient size and contents.
+
+The curl command line tool lowers the buffer size when `--limit-rate` is set
+to a value smaller than 16KB.
+
+We are not aware of any exploit of this flaw.
+
+TEST CASES
+----------
+Here's a shell script
+
+     # Setup an SMTP end-point, make file, run curl
+     $ printf '220 Hi\n250 SIZE 10000\n250 OK\n250 OK\n354 send data\n' | nc -l -p 2525 >/dev/null &
+     $ printf '%5000s' > mail.txt
+     $ curl -v smtp://localhost:2525 --mail-from me --mail-rcpt root@localhost --upload-file mail.txt --limit-rate 1024
+
+PHP code:
+
+     <?php
+     $ch = curl_init();
+     curl_setopt($ch, CURLOPT_URL, "smtp://localhost:2525");
+     curl_setopt($ch, CURLOPT_BUFFERSIZE, 1024);
+     curl_setopt($ch, CURLOPT_UPLOAD, 1);
+     curl_setopt($ch, CURLOPT_MAIL_FROM, "me");
+     curl_setopt($ch, CURLOPT_MAIL_RCPT, ["root@localhost"]);
+     curl_setopt($ch, CURLOPT_VERBOSE, 1);
+     $eof = false;
+     curl_setopt($ch, CURLOPT_READFUNCTION, function($ch, $stream, $maxSize) {
+         global $eof;
+         echo "Max Size: [$maxSize]\n";
+         if ($eof) {
+             return "";
+         }
+         $eof = true;
+         return str_repeat(" ", $maxSize);
+     });
+     curl_exec($ch);
+     curl_close($ch);
 
 INFO
 ----
 
-To trigger, this flaw requires that both the original URL and the redirect URL
-are using clear text `http://` URLs, that both are performed over the same
-HTTP proxy and that the same connection is reused.
-
-Similar to [CVE-2024-11053](https://curl.se/docs/CVE-2024-11053.html)
+This bug was introduced in April 2017 in [this
+commit](https://github.com/curl/curl/commit/e40e9d7f0decc79) when we
+introduced support for buffer resize. The scratch buffer was mistakenly made
+to use the dynamic size when it should kept using the fixed upload buffer
+size.
 
 The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2026-6429 to this issue.
+CVE-2018-0500 to this issue.
 
-CWE-200: Exposure of Sensitive Information to an Unauthorized Actor
-
-Severity: Medium
+CWE-122: Heap-based Buffer Overflow
 
 AFFECTED VERSIONS
 -----------------
 
-- Affected versions: from curl 7.14.0 to and including 8.19.0
-- Not affected versions: curl < 7.14.0 and >= 8.20.0
-- Introduced-in: https://github.com/curl/curl/commit/01165e08e0d131b399fb
+- Affected versions: curl 7.54.1 to and including curl 7.60.0
+- Not affected versions: curl < 7.54.1 and curl >= 7.61.0
 
-libcurl is used by many applications, but not always advertised as such!
+libcurl is used by many applications, but not always advertised as such.
 
-This bug is not considered a *C mistake*. It is not likely to have been
-avoided had we not been using C.
+THE SOLUTION
+------------
 
-This flaw does **not** affect the curl command line tool.
+In curl version 7.61.0, curl will use the upload buffer size as base for the
+scratch area allocation.
 
-SOLUTION
---------
-
-- Fixed-in: https://github.com/curl/curl/commit/b4024bf808bd558026fdc6
+A [patch for CVE-2018-0500](https://github.com/curl/curl/commit/ba1dbd78e5f1e.patch) is
+available.
 
 RECOMMENDATIONS
 ---------------
@@ -84,29 +128,29 @@ RECOMMENDATIONS
 We suggest you take one of the following actions immediately, in order of
 preference:
 
-  A - Upgrade to curl and libcurl 8.20.0
+  A - Upgrade curl to version 7.61.0
 
-  B - Apply the patch and rebuild libcurl
+  B - Apply the patch to your version and rebuild
 
-  C - Avoid using the combination netrc, HTTP and HTTP proxy
+  C - Avoid using SMTP uploads with CURLOPT_BUFFERSIZE set below 10923
 
-TIMELINE
+TIME LINE
 ---------
 
-It was reported to the curl project on April 16th 2026. We contacted
-distros@openwall on April 23.
+It was reported to the curl project on June 11, 2018
 
-libcurl 8.20.0 was released on April 29th 2026, coordinated with the
-publication of this advisory.
+We contacted distros@openwall on July X, 2018.
+
+curl 7.61.0 was released on July 11 2018, coordinated with the publication of
+this advisory.
 
 CREDITS
 -------
 
-- Reported-by: Muhamad Arga Reksapati
-- Patched-by: Daniel Stenberg
+Detected and researched by Peter Wu. Patch by Daniel Stenberg.
 
 Thanks a lot!
 
 -- 
 
-  / daniel.haxx.se || https://rock-solid.curl.dev
+  / daniel.haxx.se
