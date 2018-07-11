@@ -1,54 +1,135 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/17/6
-Message-ID: <20181017092154.4e7bae56@jabberwock.cb.piermont.com>
-Date: Wed, 17 Oct 2018 09:21:54 -0400
-From: "Perry E. Metzger" <perry@...rmont.com>
-To: Rich Felker <dalias@...c.org>
-Cc: oss-security@...ts.openwall.com, Tavis Ormandy <taviso@...gle.com>, Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
-Subject: Re: ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/11/1
+Message-ID: <alpine.DEB.2.20.1807110007350.29047@tvnag.unkk.fr>
+Date: Wed, 11 Jul 2018 08:06:01 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl SMTP send heap buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 17 Oct 2018 02:09:28 -0400 Rich Felker <dalias@...c.org>
-wrote:
-> > > > I keep wondering if there isn't a way to fully remove the
-> > > > dangerous bits from a postscript interpreter so it can _only_
-> > > > be used to view the document and literally has no file system
-> > > > access compiled in at all, so there's no way to touch the fs
-> > > > etc. regardless of what flags the interpreter is invoked with.
-> > > >
-> > > > (I, too, find removing the ability to look at historical
-> > > > postscript documents a bit more draconian than I like.)
-> > > >
-> > > >    
-> > > I've discussed it with upstream, it's a hard no because they
-> > > feel it would make ghostscript non-conforming (i.e.
-> > > non-conforming with the Adobe PostScript Language Reference
-> > > Manual)
-> > > 
-> > > We probably have similar thoughts on this, but that is the final
-> > > word from upstream.  
-> > 
-> > They wouldn't even support a compilation mode where if you #define
-> > the right thing those syscalls are cut out?
-> > 
-> > I don't care much about upstream's desires on this if they oppose
-> > that. I'd be happy to have patches that simply cut out the
-> > dangerous syscalls entirely. It's open source, that should be
-> > feasible.  
-> 
-> This. It's utterly ridiculous that the interpreter even has bindings
-> for accessing the filesystem and such. But I wonder if some of its
-> library routines (e.g. font loading) are implemented in Postscript,
-> using these bindings, rather than being implemented in C outside of
-> the language interpreter. If so it might be harder to extricate.
-> But I still think it's worthwhile to try. Once there are patches I
-> would expect all reasonable distros to start shipping with them,
-> and if upstream tries to make it hard, I would expect one of the
-> big distros to just fork and abandon upstream.
+SMTP send heap buffer overflow
+==============================
 
-Does anyone other than Tavis know their way around the inside of the
-codebase? Perhaps we can collaborate on patches.
+Project curl Security Advisory, July 11th 2018 -
+[Permalink](https://curl.haxx.se/docs/adv_2018-70a2.html)
 
-Perry
+VULNERABILITY
+-------------
+
+curl might overflow a heap based memory buffer when sending data over SMTP and
+using a reduced read buffer.
+
+When sending data over SMTP, curl allocates a separate "scratch area" on the
+heap to be able to escape the uploaded data properly if the uploaded data
+contains data that requires it.
+
+The size of this temporary scratch area was mistakenly made to be `2 *
+sizeof(download_buffer)` when it should have been made `2 *
+sizeof(upload_buffer)`.
+
+The upload and the download buffer sizes are identically sized by default
+(16KB) but since version 7.54.1, curl can resize the download buffer into a
+smaller buffer (as well as larger). If the download buffer size is set to a
+value smaller than 10923, the `Curl_smtp_escape_eob()` function might overflow
+the scratch buffer when sending contents of sufficient size and contents.
+
+The curl command line tool lowers the buffer size when `--limit-rate` is set
+to a value smaller than 16KB.
+
+We are not aware of any exploit of this flaw.
+
+TEST CASES
+----------
+Here's a shell script
+
+     # Setup an SMTP end-point, make file, run curl
+     $ printf '220 Hi\n250 SIZE 10000\n250 OK\n250 OK\n354 send data\n' | nc -l -p 2525 >/dev/null &
+     $ printf '%5000s' > mail.txt
+     $ curl -v smtp://localhost:2525 --mail-from me --mail-rcpt root@...alhost --upload-file mail.txt --limit-rate 1024
+
+PHP code:
+
+     <?php
+     $ch = curl_init();
+     curl_setopt($ch, CURLOPT_URL, "smtp://localhost:2525");
+     curl_setopt($ch, CURLOPT_BUFFERSIZE, 1024);
+     curl_setopt($ch, CURLOPT_UPLOAD, 1);
+     curl_setopt($ch, CURLOPT_MAIL_FROM, "me");
+     curl_setopt($ch, CURLOPT_MAIL_RCPT, ["root@...alhost"]);
+     curl_setopt($ch, CURLOPT_VERBOSE, 1);
+     $eof = false;
+     curl_setopt($ch, CURLOPT_READFUNCTION, function($ch, $stream, $maxSize) {
+         global $eof;
+         echo "Max Size: [$maxSize]\n";
+         if ($eof) {
+             return "";
+         }
+         $eof = true;
+         return str_repeat(" ", $maxSize);
+     });
+     curl_exec($ch);
+     curl_close($ch);
+
+INFO
+----
+
+This bug was introduced in April 2017 in [this
+commit](https://github.com/curl/curl/commit/e40e9d7f0decc79) when we
+introduced support for buffer resize. The scratch buffer was mistakenly made
+to use the dynamic size when it should kept using the fixed upload buffer
+size.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2018-0500 to this issue.
+
+CWE-122: Heap-based Buffer Overflow
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 7.54.1 to and including curl 7.60.0
+- Not affected versions: curl < 7.54.1 and curl >= 7.61.0
+
+libcurl is used by many applications, but not always advertised as such.
+
+THE SOLUTION
+------------
+
+In curl version 7.61.0, curl will use the upload buffer size as base for the
+scratch area allocation.
+
+A [patch for CVE-2018-0500](https://github.com/curl/curl/commit/ba1dbd78e5f1e.patch) is
+available.
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl to version 7.61.0
+
+  B - Apply the patch to your version and rebuild
+
+  C - Avoid using SMTP uploads with CURLOPT_BUFFERSIZE set below 10923
+
+TIME LINE
+---------
+
+It was reported to the curl project on June 11, 2018
+
+We contacted distros@...nwall on July X, 2018.
+
+curl 7.61.0 was released on July 11 2018, coordinated with the publication of
+this advisory.
+
+CREDITS
+-------
+
+Detected and researched by Peter Wu. Patch by Daniel Stenberg.
+
+Thanks a lot!
+
 -- 
-Perry E. Metzger		perry@...rmont.com
+
+  / daniel.haxx.se
