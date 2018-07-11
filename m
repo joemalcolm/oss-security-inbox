@@ -1,85 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/31/2
-Message-ID: <alpine.DEB.2.20.1810310753500.4385@tvnag.unkk.fr>
-Date: Wed, 31 Oct 2018 07:55:42 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl - use-after-free in handle close
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/12/1
+Message-ID: <CAEccTyxFaNytQoP040QyL0hcPq11asuoMGjWx73vsvtpCkFzVg@mail.gmail.com>
+Date: Wed, 11 Jul 2018 15:18:36 -0500
+From: Sean Owen <srowen@...che.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2018-1334 Apache Spark local privilege escalation vulnerability
 Content-Type: text/plain; charset=utf-8
 
-use-after-free in handle close
-==============================
+Severity: High
 
-Project curl Security Advisory, October 31st 2018 -
-[Permalink](https://curl.haxx.se/docs/CVE-2018-16840.html)
+Vendor: The Apache Software Foundation
 
-VULNERABILITY
--------------
+Versions affected:
+Spark versions through 2.1.2
+Spark 2.2.0 to 2.2.1
+Spark 2.3.0
 
-libcurl contains a heap use-after-free flaw in code related to closing an easy
-handle.
+Description:
+In Apache Spark up to and including 2.1.2, 2.2.0 to 2.2.1, and 2.3.0, when
+using PySpark or SparkR, it's possible for a different local user to
+connect to the Spark application and impersonate the user running the Spark
+application.
 
-When closing and cleaning up an "easy" handle in the `Curl_close()` function,
-the library code first frees a struct (without nulling the pointer) and might
-then subsequently erroneously write to a struct field within that already
-freed struct.
+Mitigation:
+1.x, 2.0.x, and 2.1.x users should upgrade to 2.1.3 or newer
+2.2.x users should upgrade to 2.2.2 or newer
+2.3.x users should upgrade to 2.3.1 or newer
+Otherwise, affected users should avoid using PySpark and SparkR in
+multi-user environments.
 
-We are not aware of any exploit of this flaw.
+Credit:
+Nehmé Tohmé, Cloudera, Inc.
 
-INFO
-----
+References:
+https://spark.apache.org/security.html
 
-This bug was introduced in [commit
-b46cfbc068](https://github.com/curl/curl/commit/b46cfbc068), February 2018.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2018-16840 to this issue.
-
-CWE-416: Use After Free
-
-Severity: 2.3 (Low)
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: libcurl 7.59.0 to and including 7.61.1
-- Not affected versions: libcurl < 7.59.0 and >= 7.62.0
-
-curl is used by many applications, but not always advertised as such.
-
-THE SOLUTION
-------------
-
-A [patch for
-CVE-2018-16840](https://github.com/curl/curl/commit/81d135d67155c5295b1033679c606165d4e28f3f)
-is available.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl to version 7.62.0
-
-  B - Apply the patch to your version and rebuild
-
-TIME LINE
----------
-
-It was reported to the curl project on October 14, 2018.  We contacted
-distros@...nwall on October 22.
-
-curl 7.62.0 was released on October 31 2018, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-Reported by Brian Carpenter, Geeknik Labs. Patch by Daniel Stenberg.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
