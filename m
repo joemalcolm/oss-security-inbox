@@ -1,44 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/13/1
-Message-ID: <1055142734.297784.1536817708481@email.1and1.fr>
-Date: Thu, 13 Sep 2018 07:48:28 +0200 (CEST)
-From: Guillaume Quéré <guillaume@...re.eu>
-To: oss-security@...ts.openwall.com
-Subject: Cleartext passwords external services in Squash TM's web interface
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/11/3
+Message-Id: <20180711010252.526E84C8@webmail.sinamail.sina.com.cn>
+Date: Wed, 11 Jul 2018 09:02:52 +0800
+From: <zrlw@...a.com>
+To: "oss-security" <oss-security@...ts.openwall.com>
+Cc: "Solar Designer" <solar@...nwall.com>
+Subject: Re: mmap vulnerability in motion eye video4linux driver for Sony Vaio PictureBook
 Content-Type: text/plain; charset=utf-8
 
-SquashTM
---------
-Squash TM is a web interface used to manage test cases. More at: https://www.squashtest.org/en
+yes, i found the pl and  sent to the maintainer mchehab@...nel.org and linux-media mail list  linux-media@...r.kernel.org last week, the last one  boudanced me with something like 'Your address is not liked source for email' blah...
+i don't have Sony Vaio PictureBook, so i just check the souces and docs again. 
 
-Description
------------
-There is a vulnerability in SquashTM's administration panel, where external services (a.k.a. automation servers) are defined: each service's HTML page contains the cleartext password of the service's account. These external services could be anything but a popular example is a Jenkins server.
+/usr/src/packages/BUILD/kernel-default-4.4.21/linux-4.4/Documentation/video4linux/v4l2-framework.txt:
+'The v4l2_file_operations struct is a subset of file_operations. The main
+difference is that the inode argument is omitted since it is never used.'
+# ls /dev/video0crw-rw---- 1 root video 81, 0 Jul 11 08:14 /dev/video0
+commit be83bbf80682 file_mmap_size_max check conditions:1. S_ISREG(inode->i_mode) 2. S_ISBLK(inode->i_mode)3. file->f_mode & FMODE_UNSIGNED_OFFSET
+I doubt which one will be true.
 
-I believe there is no reason that a service should display the password of another service, as this gives an attacker the opportunity to spread laterally. If *anything*, the password should be hashed but then again I fail to see any reason this information should be provided at all in this context. This is somewhat even more exploitable given the fact that Squash's default credentials are admin:admin.
-
-Details
--------
-Here's an example URL: http://localhost:8080/squash/administration/test-automation-servers/1
-Here's an extract of the page's source code:
-      <label for="ta-server-password">Password</label>
-      <div id="ta-server-password" class="display-table-cell" style="font-weight: bold;">cleartext_password</div>
-
-Scoring
--------
-Attack vector: network
-Attack complexity: low 
-Authentication required: yes (admin)
-Impacts: confidentiality
-CVSS:3.0/AV:N/AC:L/PR:H/UI:N/S:C/C:L/I:N/A:N
-
-Timeline
---------
-2018-07-20: Vulnerability reported as a private security bug: https://ci.squashtest.org/mantis/view.php?id=7553
-2018-09-11: ACK required from editor
-2018-09-13: Disclosure to oss-sec
+----- Original Message -----
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com, zrlw@...a.com
+Cc: Solar Designer <solar@...nwall.com>
+Subject: Re: [oss-security] mmap vulnerability in motion eye video4linux driver for Sony Vaio PictureBook
+Date: 2018-07-10 21:41
 
 
-Unsure if I should request a CVE for this? Seems kinda trivial.
-
-Guillaume Quéré
+On Sat, Jul 07, 2018 at 12:09:37AM +0800, zrlw@...a.com wrote:
+> I  sent a email to the original authors which i found in the head of
+> meye.c, but i don't receive any response util now.
+Always use the scripts/get_maintainer.pl tool to find who to send stuff
+like this to.  It will include a public mailing list or two.
+> I don't think
+> commit be83bbf80682  will work on this case, this driver derived from
+> v4l2-core which not use inode,  maybe i'm wrong.  
+I think you are wrong, but it would be great if you could test to verify
+it or not.
+thanks,
+greg k-h
