@@ -1,43 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/20/5
-Message-ID: <CAAC1_d4geVGr-+Ok95Gq9C9P81BXUDT3d9N7-2r+qsiPrM5r3w@mail.gmail.com>
-Date: Fri, 20 Jul 2018 18:05:03 +0000
-From: Rodric Rabbah <rabbah@...che.org>
-To: Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com,  announce@...che.org, dev@...nwhisk.apache.org
-Cc: Ory Segal <ory@...esec.io>
-Subject: [CVE] CVE-2018-11756 PHP Runtime for Apache OpenWhisk
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/11/7
+Message-ID: <20180711153431.so6swm2x6bv7xogr@hooch.localdomain>
+Date: Wed, 11 Jul 2018 17:34:31 +0200
+From: Florian Bruhin <me@...-compiler.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2018-10895: Remote code execution due to CSRF in qutebrowser
 Content-Type: text/plain; charset=utf-8
 
-Who is Affected: Apache OpenWhisk users with an explicitly created Docker
-action, and the Docker image used for the action inherits from the affected
-Docker tags:
-- openwhisk/action-php-v7.2 < 1.0.1
-- openwhisk/action-php-v7.1 < 1.0.2
+Description
+-----------
 
-The PHP Runtime does not currently have any Apache releases.
+Due to a CSRF vulnerability affecting the `qute://settings` page, it was
+possible for websites to modify qutebrowser settings. Via settings like
+`editor.command`, this possibly allowed websites to execute arbitrary code.
 
-Description: A Docker action running as a serverless function (e.g., wsk
-action create <name> —docker <image>), where the Dockerfile used to create
-the Docker image inherits one of the affected tags, may allow a carefully
-crafted parameter to overwrite the serverless function running inside the
-container. This requires the user included function to be vulnerable in
-some way, for example via parameter hijacking, remote code execution, or
-unsafe use of “eval()”. Subsequent executions of the original function in
-the same container will use the replaced implementation if the function was
-successfully exploited.
+This issue has been assigned CVE-2018-10895:
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-10895
 
-Mitigation: Users that create their own Docker runtimes to run as Apache
-OpenWhisk Docker actions, and who pin their Docker runtime image (e.g.,
-Dockerfile starts with “FROM openwhisk/action-php-v7.2:1.0.0”) should
-upgrade their Docker tag to the latest available tag. Users who build from
-source, should use the latest commit Git tag [1]. Operators of an Apache
-OpenWhisk deployment should check their runtime manifest to determine if
-they are affected, and if so, upgrade the tags in their runtimes manifest
-to automatically patch all actions runtimes when updating their deployment.
+Affected versions
+-----------------
 
-Credit: This issue was discovered while investigating a related issue
-researched and reported by Yuri Shapira and Ory Segal of PureSec.
+The issue was introduced in v1.0.0, as part of commit ffc29ee.
+https://github.com/qutebrowser/qutebrowser/commit/ffc29ee
 
-[1]
-https://github.com/apache/incubator-openwhisk-runtime-php/commit/6caf902f527250ee4b7b695929b628d560e0dad1
+It was fixed in the v1.4.1 release, in commit 43e58ac.
+https://github.com/qutebrowser/qutebrowser/commit/43e58ac865ff862c2008c510fc5f7627e10b4660
 
+All releases between v1.0.0 and v1.4.0 (inclusive) are affected.
+Backported patches are available, but no additional releases are planned:
+
+v1.1.x: https://github.com/qutebrowser/qutebrowser/commit/ff686ff7f395d83e5ac48507ecfae0b0e97a61ef
+v1.2.x: https://github.com/qutebrowser/qutebrowser/commit/c3361c31b370140f323e481dd455450b1e74c099
+v1.3.x: https://github.com/qutebrowser/qutebrowser/commit/c2ff32d92ba9bf40ff53498ee04a4124d4993c85
+v1.4.x: https://github.com/qutebrowser/qutebrowser/commit/22148ce488da52e8a0e01ed937c0cfdb24d34775
+master: https://github.com/qutebrowser/qutebrowser/commit/43e58ac865ff862c2008c510fc5f7627e10b4660
+
+(add .patch to the URL to get patches)
+
+Timeline
+--------
+
+2018-07-09: I was made aware of the original issue privately (initially
+believed by the reporter to only be a DoS issue), developed a fix and contacted
+the distros Openwall mailinglist to organize a disclosure date to give
+distributions time to coordinate releasing of a fix.
+
+2018-07-10: Slightly updated patch sent to the distros mailinglist.
+
+2018-07-11: Public disclosure.
+
+Mitigation
+----------
+
+Please upgrade to v1.4.1 or apply the patches above.
+
+Note that disabling loading of `autoconfig.yml` is not a suitable remedy, since
+settings are still applied until the next restart.
+
+As a workaround, it's possible to patch out the vulnerable code via a
+`config.py` file:
+
+    from qutebrowser.browser import qutescheme
+    qutescheme._qute_settings_set = lambda url: ('text/html', '')
+
+While there is no known exploit for this in the wild, users are advised to
+check their `autoconfig.yml` file (located in the config folder shown in
+`:version`) for any unwanted modifications.
+
+Credits
+-------
+
+Thanks to:
+
+- toofar for reporting the initial issue.
+- Allan Sandfeld Jensen (carewolf) and Jüri Valdmann (juvaldma) of The Qt
+  Company for their assistance with triaging and fixing the issue.
+- toofar and Jay Kamat (jgkamat) for reviewing the patch.
+- Morten Linderud (Foxboron) for suggestions on how to disclose this
+  properly.
+
+Links
+-----
+
+- https://github.com/qutebrowser/qutebrowser/issues/4060
+- https://lists.schokokeks.org/pipermail/qutebrowser-announce/2018-July/000048.html
+
+-- 
+https://www.qutebrowser.org | me@...-compiler.org (Mail/XMPP)
+   GPG: 916E B0C8 FD55 A072 | https://the-compiler.org/pubkey.asc
+         I love long mails! | https://email.is-not-s.ms/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
