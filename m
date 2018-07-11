@@ -1,4 +1,9 @@
-Received: (qmail 3152 invoked by uid 550); 30 Mar 2024 12:52:24 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4136" "Wednesday" "11" "July" "2018" "17:34:31" "+0200" "Florian Bruhin" "me@the-compiler.org" "<20180711153431.so6swm2x6bv7xogr@hooch.localdomain>" "118" "[oss-security] CVE-2018-10895: Remote code execution due to CSRF in qutebrowser" nil nil nil "7" "2018071115:34:31" "[oss-security] CVE-2018-10895: Remote code execution due to CSRF in qutebrowser" (number mark "U       me@the-compi Jul 11  118/4136  " thread-indent "\"[oss-security] CVE-2018-10895: Remote code execution due to CSRF in qutebrowser\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 26279 invoked by uid 550); 11 Jul 2018 15:40:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,90 +12,133 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23685 invoked from network); 30 Mar 2024 09:23:08 -0000
-Date: Sat, 30 Mar 2024 10:23:49 +0100
-From: Matthias Weckbecker <matthias@weckbecker.name>
+Received: (qmail 22003 invoked from network); 11 Jul 2018 15:34:46 -0000
+Date: Wed, 11 Jul 2018 17:34:31 +0200
+From: Florian Bruhin <me@the-compiler.org>
 To: oss-security@lists.openwall.com
-Message-ID: <ZgfaJdGLATs99Ykn@weckbecker.name>
-References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
- <ZgcL9VUx6CQ5Wx/W@weckbecker.name>
- <20240329191926.rvyvzgtdpfwc256c@awork3.anarazel.de>
+Message-ID: <20180711153431.so6swm2x6bv7xogr@hooch.localdomain>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="V1EL+4PMxuXa9clO"
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="lhpynxw5gqqnh57e"
 Content-Disposition: inline
-In-Reply-To: <20240329191926.rvyvzgtdpfwc256c@awork3.anarazel.de>
-Subject: Re: [oss-security] backdoor in upstream xz/liblzma leading to ssh
- server compromise
+User-Agent: NeoMutt/20180622
+Subject: [oss-security] CVE-2018-10895: Remote code execution due to CSRF in qutebrowser
 
---V1EL+4PMxuXa9clO
-Content-Type: text/plain; charset=us-ascii
+--lhpynxw5gqqnh57e
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Mar 29, 2024 at 12:19:26PM -0700, Andres Freund wrote:
-> Hi,
->
+Description
+-----------
 
-Hi Andres,
+Due to a CSRF vulnerability affecting the `qute://settings` page, it was
+possible for websites to modify qutebrowser settings. Via settings like
+`editor.command`, this possibly allowed websites to execute arbitrary code.
 
-> On 2024-03-29 19:44:05 +0100, Matthias Weckbecker wrote:
-> > I've attached a yara rule to detect the *.o droplet you attached in the
-> > email (liblzma_la-crc64-fast.o.gz).
->
-> Unfortunately xz 5.61 added further obfuscations, making it harder to
-> detect. Should have made it clearer that the attached .o was from 5.60. Among
-> others 5.61 removed the two symbols you're checking against here.  That's why
-> Vegard's script looks for a specific instructions sequence, but obviously is
-> also more obscure :/
->
+This issue has been assigned CVE-2018-10895:
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2018-10895
 
-Yes, all correct. For this you'll have to match characteristic sequences
-of instructions. I've attached a yara rule for this as well.
+Affected versions
+-----------------
 
-> Regards,
->
-> Andres
+The issue was introduced in v1.0.0, as part of commit ffc29ee.
+https://github.com/qutebrowser/qutebrowser/commit/ffc29ee
 
-Thanks,
-Matthias
+It was fixed in the v1.4.1 release, in commit 43e58ac.
+https://github.com/qutebrowser/qutebrowser/commit/43e58ac865ff862c2008c510f=
+c5f7627e10b4660
 
---V1EL+4PMxuXa9clO
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename="CVE-2024-3094-p.yara"
+All releases between v1.0.0 and v1.4.0 (inclusive) are affected.
+Backported patches are available, but no additional releases are planned:
 
-import "elf"
+v1.1.x: https://github.com/qutebrowser/qutebrowser/commit/ff686ff7f395d83e5=
+ac48507ecfae0b0e97a61ef
+v1.2.x: https://github.com/qutebrowser/qutebrowser/commit/c3361c31b370140f3=
+23e481dd455450b1e74c099
+v1.3.x: https://github.com/qutebrowser/qutebrowser/commit/c2ff32d92ba9bf40f=
+f53498ee04a4124d4993c85
+v1.4.x: https://github.com/qutebrowser/qutebrowser/commit/22148ce488da52e8a=
+0e01ed937c0cfdb24d34775
+master: https://github.com/qutebrowser/qutebrowser/commit/43e58ac865ff862c2=
+008c510fc5f7627e10b4660
 
-rule ELF_Droplet_Object {
-    meta:
-        description = "Droplet object used during xz / liblzma incident"
-        reference   = "CVE-2024-3094"
-        author      = "Matthias Weckbecker"
+(add .patch to the URL to get patches)
 
-    strings:
-        $1 = { f30f1efa554889f54c89ce5389fb81e7000000804883ec28488954241848894c2410 }
+Timeline
+--------
 
-    condition:
-        elf.machine == elf.EM_X86_64
+2018-07-09: I was made aware of the original issue privately (initially
+believed by the reporter to only be a DoS issue), developed a fix and conta=
+cted
+the distros Openwall mailinglist to organize a disclosure date to give
+distributions time to coordinate releasing of a fix.
 
-        and
+2018-07-10: Slightly updated patch sent to the distros mailinglist.
 
-        (
-            (
-                elf.number_of_sections > 100 and elf.number_of_sections <= 242
+2018-07-11: Public disclosure.
 
-                and
+Mitigation
+----------
 
-                for any s in (".text.crc64_resolve", ".text._get_cpuid"): (
-                    for any i in (0 .. elf.number_of_sections): (
-                        ((elf.sections[i].name == s)
-                        and (elf.sections[i].type == elf.SHT_PROGBITS))
-                    )
-                )
-            )
+Please upgrade to v1.4.1 or apply the patches above.
 
-            or
+Note that disabling loading of `autoconfig.yml` is not a suitable remedy, s=
+ince
+settings are still applied until the next restart.
 
-            $1
-        )
-}
+As a workaround, it's possible to patch out the vulnerable code via a
+`config.py` file:
 
---V1EL+4PMxuXa9clO--
+    from qutebrowser.browser import qutescheme
+    qutescheme._qute_settings_set =3D lambda url: ('text/html', '')
+
+While there is no known exploit for this in the wild, users are advised to
+check their `autoconfig.yml` file (located in the config folder shown in
+`:version`) for any unwanted modifications.
+
+Credits
+-------
+
+Thanks to:
+
+- toofar for reporting the initial issue.
+- Allan Sandfeld Jensen (carewolf) and J=FCri Valdmann (juvaldma) of The Qt
+  Company for their assistance with triaging and fixing the issue.
+- toofar and Jay Kamat (jgkamat) for reviewing the patch.
+- Morten Linderud (Foxboron) for suggestions on how to disclose this
+  properly.
+
+Links
+-----
+
+- https://github.com/qutebrowser/qutebrowser/issues/4060
+- https://lists.schokokeks.org/pipermail/qutebrowser-announce/2018-July/000=
+048.html
+
+--=20
+https://www.qutebrowser.org | me@the-compiler.org (Mail/XMPP)
+   GPG: 916E B0C8 FD55 A072 | https://the-compiler.org/pubkey.asc
+         I love long mails! | https://email.is-not-s.ms/
+
+--lhpynxw5gqqnh57e
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEE4E5WAAJAG47w528KkW6wyP1VoHIFAltGI4cACgkQkW6wyP1V
+oHIDwhAArQokCfXInkcYab58PK8pTGE73k+peivdlPStRgfzTeqvRCzvK0JACvGp
+o94ZGEWDVcA2uWmNGyudtWHjxrF1D0Ert1F14Ucy1Wp7kAaj2KDz4x1Ge36GWkCQ
+1HzlaiIxaPvZLZ9nvKqsecA9K9nrO/9IRmSQVRYT5SHSBmGaL9nYDaTvc3PLmRlv
+O+kU4mjWVXlqWnqr7sDLjTX7wrZmYzUQCFsrNzO6f9cMaJ7z9gPQIgb0F/zdDQMy
+AomGz9xUXOfY6nvyyEQ7Jhz6niolytwhztqT73qYjt3cfSEDAIKd1htlPmBG53Bb
+GOCSnbiq8y7joSxYCXnlJSXknunjSG3BPIeqpXS28nR/TpG80jtgO5fAl7KqIhzu
+kjW+wog/EtVCqo66MPM+hekq06nCy7DLGV3KO1oqDxHzFHyvcNfCcVNY+NhD05R+
+K67ngcS52VX3Ne5q/FIEU18qPsyhkrl/Bpj1c1ARNz81GnGYvAWreY8LK1O0+qL4
+Crfmfi0wpOy2GSeNwpY9jxwkGrUBB1c5yfUCtQiQnUSJzEY0brvNw4nqgV3Sxd7c
+Ps2aazXkERhvChmbOJQhqxKKtBHRt6Zn0+m7vWa5kLxgTN7ImwwMOl95aY9cktCE
+/tA9lXBlqJvD3vaE1RQwFJJfvkfH2IfsIuIBlvdK+ZJ9izH9/kQ=
+=9P2u
+-----END PGP SIGNATURE-----
+
+--lhpynxw5gqqnh57e--
