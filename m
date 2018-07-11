@@ -1,21 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/10/4
-Message-ID: <CAJ_hc2PY9TbWc6Ai0Hjjy1RW8foRapext65ypY0qmtsRu5zZqg@mail.gmail.com>
-Date: Tue, 10 Jul 2018 10:31:48 -0500
-From: Bobby Evans <bobby@...che.org>
-To: oss-security@...ts.openwall.com
-Cc: Apache Security Team <security@...che.org>,  "private@...rm.apache.org" <private@...rm.apache.org>
-Subject: CVE-2018-1331: Apache Storm remote code execution vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/11/4
+Message-Id: <20180711021534.2C8121000DA@webmail.sinamail.sina.com.cn>
+Date: Wed, 11 Jul 2018 10:15:34 +0800
+From: <zrlw@...a.com>
+To: "Greg KH" <greg@...ah.com>, "oss-security" <oss-security@...ts.openwall.com>,
+Cc: "Solar Designer" <solar@...nwall.com>
+Subject: Re: mmap vulnerability in motion eye video4linux driver for Sony Vaio PictureBook
 Content-Type: text/plain; charset=utf-8
 
-[CVEID]:CVE-2018-1331
-[PRODUCT]:Apache Storm
-[VERSION]:Apache Storm 0.10.0 through 0.10.2, 1.0.0 through 1.0.6, 1.1.0
-through 1.1.2, 1.2.0 through 1.2.1
-[PROBLEMTYPE]:Remote Code Execution
-[REFERENCES]: http://storm.apache.org/2018/06/04/storm122-released.html
-http://storm.apache.org/2018/06/04/storm113-released.html
-
-An attacker with access to a secure storm cluster in some cases could
-execute arbitrary code as a different user.
-
+i think commit be83bbf80682 maybe has a problem: if file_mmap_size_max return 0 (not regular, not block, fmode & FMODE_UNSIGNED_OFFSET == true) , maxsize will be set to -len, correct? 
++static inline bool file_mmap_ok(struct file *file, struct inode *inode,
++               unsigned long pgoff, unsigned long len)
++{
++   u64 maxsize = file_mmap_size_max(file, inode);
++
++   if (maxsize && len > maxsize)
++       return false;
++   maxsize -= len;                                         <==  maxsize = -len when file_mmap_size_max return 0 
++   if (pgoff > maxsize >> PAGE_SHIFT)
++       return false;
++   return true;
++}
++
