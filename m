@@ -1,164 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/03/2
-Message-Id: <E1eWrXs-0007D0-Bg@xenbits.xenproject.org>
-Date: Wed, 03 Jan 2018 22:30:00 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 254 - Information leak via side effects of speculative execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/12/3
+Message-ID: <4519-1531427551.172578@CMoX.E0bU.Zyds>
+Date: Thu, 12 Jul 2018 20:32:31 +0000
+From: halfdog <me@...fdog.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Libc Realpath Buffer Underflow CVE-2018-1000001 expolit source code for SuSE 12 SP2
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello Lao,
 
-                    Xen Security Advisory XSA-254
+zrlw@...a.com wrote:
+> Hi, i wrote a exploit  base on  halfdog's RationalLove.c, and
+> successfully tested on SuSE Enterprise Server 12 SP 2.I want
+> send it back to halfdog, but it seemed that my email always
+> be rejected(maybe because i'm in china), ...
 
-        Information leak via side effects of speculative execution
+You message was received technically. I just did not find any
+motivation to fetch my messages for half a year. Sorry about that.
 
-ISSUE DESCRIPTION
-=================
+> ... may you transfer it
+> to halfdog? all the code belong to him. Thanks!LaoWei2018/6/25
 
-Processors give the illusion of a sequence of instructions executed
-one-by-one.  However, in order to most efficiently use cpu resources,
-modern superscalar processors actually begin executing many
-instructions in parallel.  In cases where instructions depend on the
-result of previous instructions or checks which have not yet
-completed, execution happens based on guesses about what the outcome
-will be.  If the guess is correct, execution has been sped up.  If the
-guess is incorrect, partially-executed instructions are cancelled and
-architectural state changes (to registers, memory, and so on)
-reverted; but the whole process is no slower than if no guess had been
-made at all.  This is sometimes called "speculative execution".
+Good work! I put it to [0] mentioning it in the text and timeline,
+so that it can be found. Send me a note if the text is appropriate
+for you. I can also add a link to your blog/additional explanations,
+how you managed to create a solution for SuSE.
 
-Unfortunately, although architectural state is rolled back, there are
-other side effects, such as changes to TLB or cache state, which are
-not rolled back.  These side effects can subsequently be detected by
-an attacker to determine information about what happened during the
-speculative execution phase.  If an attacker can cause speculative
-execution to access sensitive memory areas, they may be able to infer
-what that sensitive memory contained.
+hd
 
-Furthermore, these guesses can often be 'poisoned', such that attacker
-can cause logic to reliably 'guess' the way the attacker chooses.
-This advisory discusses three ways to cause speculative execution to
-access sensitive memory areas (named here according to the
-discoverer's naming scheme):
+[0] https://www.halfdog.net/Security/2017/LibcRealpathBufferUnderflow/RationalLove-SuSE12-SP2.c
 
-SP1, "Bounds-check bypass": Poison the branch predictor, such that
-operating system or hypervisor code is speculatively executed past
-boundary and security checks.  This would allow an attacker to, for
-instance, cause speculative code in the normal hypercall / emulation
-path to execute with wild array indexes.
-
-SP2, "Branch Target Injection": Poison the branch predictor.
-Well-abstracted code often involves calling function pointers via
-indirect branches; reading these function pointers may involve a
-(slow) memory access, so the CPU attempts to guess where indirect
-branches will lead.  Poisoning this enables an attacker to
-speculatively branch to any code that exists in the hypervisor.
-
-SP3, "Rogue Data Load": On some processors, certain pagetable
-permission checks only happen when the instruction is retired;
-effectively meaning that speculative execution is not subject to
-pagetable permission checks.  On such processors, an attacker can
-speculatively execute arbitrary code in userspace with, effectively,
-the highest privilege level.
-
-More information is available here:
-  https://meltdownattack.com/
-  https://spectreattack.com/
-
-Additional Xen-specific background:
-
-64-bit Xen hypervisors on systems with less than 5TiB of RAM map all
-of physical RAM, so code speculatively executed in a hypervisor
-context can read all of system RAM.
-
-When running PV guests, the guest and the hypervisor share the address
-space; guest kernels run in a lower privilege level, and Xen runs in
-the highest privilege level.  (HVM and PVH guests run in a separate
-address space to the hypervisor.)  However, only 64-bit PV guests can
-generate addresses large enough to point to hypervisor memory.
-
-IMPACT
-======
-
-Xen guests may be able to infer the contents of arbitrary host memory,
-including memory assigned to other guests.
-
-An attacker's choice of code to speculatively execute (and thus the
-ease of extracting useful information) goes up with the numbers.  For
-SP1, or SP2 on systems where SMEP (supervisor mode execute protection)
-is enabled: an attacker is limited to windows of code after bound
-checks of user-supplied indexes.  For SP2 without SMEP, or SP3, an
-attacker can write arbitrary code to speculatively execute.
-
-NOTE ON TIMING
-==============
-
-This vulnerability was originally scheduled to be made public on 9
-January.  It was accelerated at the request of the discloser due to
-one of the issues being made public.
-
-VULNERABLE SYSTEMS
-==================
-
-Systems running all versions of Xen are affected.
-
-For SP1 and SP2, both Intel and AMD are vulnerable.
-
-For SP3, only Intel processors are vulnerable. Furthermore, only
-64-bit PV guests can exploit SP3 against Xen.  PVH and 32-bit PV
-guests cannot exploit SP3.
-
-We believe that ARM is affected, but unfortunately due to the
-accelerated schedule, we haven't been able to get concrete input from
-ARM.  We are asking ARM and will publish more information when it is
-available.
-
-MITIGATION
-==========
-
-There is no mitigation for SP1 and SP2.
-
-SP3 can be mitigated by running guests in HVM or PVH mode.
-
-For guests with legacy PV kernels which cannot be run in HVM mode, we
-have developed a "shim" hypervisor that allows PV guests to run in PVH
-mode.  Unfortunately, due to the accelerated schedule, this is not yet
-ready to release.  We expect to have it ready for 4.10, as well as PVH
-backports to 4.9 and 4.8, available over the next few days.
-
-RESOLUTION
-==========
-
-There is no available resolution for SP1 or SP3.
-
-We are working on patches which mitigate SP2 but these are not
-currently available.  Given that the vulnerabilities are now public,
-these will be developed and published in public, initially via
-xen-devel.
-
-When we have useful information we will send an update.
-
-NOTE ON LACK OF EMBARGO
-=======================
-
-The timetable and process were set by the discloser.
-
-After the intensive initial response period for these vulnerabilities
-is over, we will prepare and publish a full timeline, as we have done
-in a handful of other cases of significant public interest where we
-saw opportunities for process improvement.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJaTVlQAAoJEIP+FMlX6CvZRIkH/3LGBnVPE6/4eBYwUTAZZ1bC
-+PLMLiUpSZuSwxbKrt80Tuu8hXBWPvf9bTL5gwEg0IGbypLmehoRc1Xj1Ra+9U2h
-PVcmyoP2rcgENSqGKqv8CKHI0xt1QqXK0hF2L7q370+3crgNAx79T+nJf11SAsnA
-m3MUvi7eDm1BUf4sIYlePkVcSbxcyjcejGKr/aAwo4Ku3aInO0lgapb8kjYiMKME
-wgQ9oOVLuSvkTwcOCTnJaMF3FkpFATq6VpmtbRDNkeSd8yrF3d9C/GAoPwoMt6oY
-zLNBs77T5LfrQtLJ62aOeXmPcu3vZOZlTH89+1IBLef4Gs5eqD5rTfKcTc8AaPE=
-=70SF
------END PGP SIGNATURE-----
 
