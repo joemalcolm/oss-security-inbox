@@ -1,86 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/31/5
-Message-ID: <20827340.HMuAYWp0fB@rem0te-expl0it>
-Date: Wed, 31 Oct 2018 18:18:10 +0530
-From: Siddharth Sharma <siddharth@...hat.com>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: glusterfs: multiple flaws
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/13/2
+Message-ID: <40516268.50353517.1531488348910.JavaMail.zimbra@redhat.com>
+Date: Fri, 13 Jul 2018 09:25:48 -0400 (EDT)
+From: Vladis Dronov <vdronov@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2018-13405: Linux kernel: fs/inode.c:inode_init_owner() function mishandled a file creation in setgid directories
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Heololo,
 
-We were informed about several security flaws affecting glusterfs.
-All of the following bugs were reported by Michael Hanselmann (hansmi.ch).
+The Linux kernel through version v4.18-rc4 has a vulnerability in the
+fs/inode.c:inode_init_owner() function logic that allows local users
+to create files with an unintended group ownership and with group
+execution and SGID permission bits set, in a scenario where a parent
+directory has SGID bit set and belongs to a certain group and is
+writable by a user who is not a member of this group.
 
+In such a case a directory group non-member user can create a plain file
+whose group ownership is of that group and with group execution and SGID
+permission bits set. This can lead to excessive permissions granted in
+case when they should not.
 
-CVE-2018-14651
-==============
-It was found that the fix for CVE-2018-10927, CVE-2018-10928, CVE-2018-10929, 
-CVE-2018-10930, and CVE-2018-10926 was incomplete. A remote, authenticated 
-attacker could use one of these flaws to execute arbitrary code, create 
-arbitrary files, or cause denial of service on glusterfs server nodes via 
-symlinks to relative paths.
+The intended behavior is that the non-member user can trigger creation of
+a directory with group execution and SGID permission bits set whose group
+ownership is of that group, but not a plain file.
 
+The XFS filesystem is a special case here, it does not use
+fs/inode.c:inode_init_owner() function from the VFS code, but uses its own
+fs/xfs/xfs_inode.c:xfs_ialloc() function. The XFS filesystem behavior in
+such situations is controlled by the fs.xfs.irix_sgid_inherit sysctl parameter,
+and so the XFS filesystem is not vulnerable to this flaw.
 
-CVE-2018-14652
-==============
-A buffer overflow was found in strncpy of the pl_getxattr() function. An 
-authenticated attacker could remotely overflow the buffer by sending a buffer 
-of larger length than the size of the key resulting in remote denial of 
-service.
+[https://www.kernel.org/doc/Documentation/filesystems/xfs.txt]
+fs.xfs.irix_sgid_inherit (Min: 0  Default: 0  Max: 1)
+  Controls files created in SGID directories.
+  If the group ID of the new file does not match the effective group
+  ID or one of the supplementary group IDs of the parent dir, the
+  ISGID bit is cleared if the irix_sgid_inherit compatibility sysctl
+  is set.
 
+References:
 
-CVE-2018-14653
-==============
-A buffer overflow on the heap was found in gf_getspec_req RPC request. A 
-remote, authenticated attacker could use this flaw to cause denial of service 
-and read arbitrary files on glusterfs server node.
+https://twitter.com/grsecurity/status/1015082951204327425
 
+https://bugzilla.redhat.com/show_bug.cgi?id=1599161
 
-CVE-2018-14654 
-==============
-A flaw was found in the way glusterfs server handles client requests. A 
-remote, authenticated attacker could set arbitrary values for the 
-GF_XATTROP_ENTRY_IN_KEY and GF_XATTROP_ENTRY_OUT_KEY during xattrop file 
-operation resulting in creation and deletion of arbitrary files on glusterfs 
-server node.
+https://bugzilla.suse.com/show_bug.cgi?id=1100416
 
+An upstream patch:
 
-CVE-2018-14659
-==============
-A flaw was found in glusterfs server which allowed clients to create io-stats 
-dumps on server node. A remote, authenticated attacker could use this flaw to 
-create io-stats dump on a server without any limitation and utilizing all 
-available inodes resulting in remote denial of service.
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=0fa3ecd87848c9c93c2c828ef4c3a8ca36ce46c7
 
-
-CVE-2018-14660 
-==============
-A flaw was found in glusterfs server which allowed repeated usage of 
-GF_META_LOCK_KEY xattr. A remote, authenticated attacker could use this flaw 
-to create multiple locks for single inode by using setxattr repetitively 
-resulting in memory exhaustion of glusterfs server node.
-
-
-CVE-2018-14661
-==============
-It was found that usage of snprintf function in feature/locks translator of 
-glusterfs server was vulnerable to a format string attack. A remote, 
-authenticated attacker could use this flaw to cause remote denial of service.
-
-
-https://www.redhat.com/security/data/cve/CVE-2018-14651.html
-https://www.redhat.com/security/data/cve/CVE-2018-14652.html
-https://www.redhat.com/security/data/cve/CVE-2018-14653.html
-https://www.redhat.com/security/data/cve/CVE-2018-14654.html
-https://www.redhat.com/security/data/cve/CVE-2018-14659.html
-https://www.redhat.com/security/data/cve/CVE-2018-14660.html
-https://www.redhat.com/security/data/cve/CVE-2018-14661.html
-
-
-Regards,
--- 
-Siddharth Sharma / Red Hat Product Security / Key ID : 0xD9F6489A      
-Fingerprint  :  6F04 C684 A49C E4CE 8148 E841 CD6F 8E55 D9F6 489A
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
