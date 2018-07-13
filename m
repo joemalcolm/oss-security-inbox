@@ -1,281 +1,139 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/25/3
-Message-Id: <2AB17EF3-293D-4D08-BA20-9452BE683E95@beckweb.net>
-Date: Tue, 25 Sep 2018 17:18:00 +0200
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/13/1
+Message-ID: <CAB6DpjU9+MN3j-asqGc7BxfLoVR=LLA+12hZvP8R9d8cg85+Yg@mail.gmail.com>
+Date: Fri, 13 Jul 2018 14:09:48 +0800
+From: Ruikai Liu <lrk700@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins plugins
+Subject: Fastbin double free in MP4v2 2.0.0
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software. The following
-releases contain fixes for security vulnerabilities:
+Hi,
+
+There's a double free issue in MP4v2 2.0.0, a legacy library dealing with
+MP4 media file.
+
+========= Details =========
+
+The buffer is first allocated during the construction of a
+`MP4Mp4vAtom::MP4Mp4vAtom` in src/atom_mp4v.cpp:
+
+ 46     MP4StringProperty* pProp =
+ 47         new MP4StringProperty(*this, "compressorName");
+ 48     pProp->SetFixedLength(32);
+ 49     pProp->SetCountedFormat(true);
+ 50     pProp->SetValue("");
+ 51     AddProperty(pProp); /* 6 */
+
+In which `SetValue` would allocate a buffer of 32 bytes for the default
+value(src/mp4property.cpp):
+
+ 534         if (m_values[index] == NULL) {
+ 535             m_values[index] = (uint8_t*)MP4Calloc(m_fixedValueSize);
+ 536             m_valueSizes[index] = m_fixedValueSize;
+ 537         }
+
+Later, when parsing the atom, a try-catch block is used(src/mp4atom.cpp):
+
+ 194     try {
+ 195         pAtom->Read();
+ 196     }
+ 197     catch (Exception* x) {
+ 198         // delete atom and rethrow so we don't leak memory.
+ 199         delete pAtom;
+ 200         throw x;
+ 201     }
+
+And calling the atom's `Read()` would then invoke reading its
+`MP4StringProperty` too, in which case the buffer allocated above would be
+freed and re-allocaed for the actual value(src/mp4property.cpp):
+
+ 390     for( uint32_t i = begin; i < max; i++ ) {
+ 391         char*& value = m_values[i];
+ 392
+ 393         // Generally a default atom setting, e.g. see atom_avc1.cpp,
+"JVT/AVC Coding"; we'll leak this string if
+ 394         // we don't free.  Note that MP4Free checks for null.
+ 395         MP4Free(value);
+ 396
+ 397         if( m_useCountedFormat ) {
+ 398             value = file.ReadCountedString( (m_useUnicode ? 2 : 1),
+m_useExpandedCount, m_fixedLength );
+ 399         }
+
+However, a crafted file could result in an exception in
+`ReadCountedString`(src/mp4file_io.cpp):
+
+ 93     if( file->read( buf, bufsiz, nin ))
+ 94         throw new PlatformException( "read failed",
+sys::getLastError(), __FILE__, __LINE__, __FUNCTION__ );
+ 95     if( nin != bufsiz )
+ 96         throw new Exception( "not enough bytes, reached end-of-file",
+__FILE__, __LINE__, __FUNCTION__ );
+
+So the exception handler would invoke the deconstructor of `pAtom`, which
+would delete its properties and free the dangling pointer for the second
+time.
+
+========= POC =========
+
+Here's a POC file:
+
+root@...ian:~# hexdump -Cv c1.mp4
+00000000  00 00 00 18 66 74 79 70  6d 70 34 32 01 2a 00 7e
+|....ftypmp42.*.~|
+00000010  6d 70 34 32 69 73 6f 6d  00 00 00 4a 6d 70 34 76
+|mp42isom...Jmp4v|
+00000020  6d 70 ff ff 00 01 33 a9  00 7f ff 63 00 05 00 65
+|mp....3....c...e|
+00000030  00 00 00 07 63 61 74 67  00 1b ff f0 64 78 74 40
+|....catg....dxt@|
+00000040  00 de ff 00 00 ff ff ff  ff 00 1a 00 0b 00 19 72
+|...............r|
+00000050  8b 00 00 00 10 23 11 64  61 74 60 00 00 00 ff 7f
+|.....#.dat`.....|
+00000060  ff ff                                             |..|
+00000062
+
+The `prev_inuse` flag is ignored for fastbin, and there are some other
+buffers freed during the double free. Some of them happened to be of the
+same size(32 bytes) and the double free check is passed for 64-bits MP4v2.
+Yet for 32-bits MP4v2 those buffers are of different size the program would
+abort.
+
+root@...ian:~/src/mp4v2-2.0.0-orig-x64# dpkg -s mp4v2-utils
+Package: mp4v2-utils
+Status: install ok installed
+Priority: optional
+Section: sound
+Installed-Size: 281
+Maintainer: Debian Multimedia Maintainers <
+pkg-multimedia-maintainers@...ts.alioth.debian.org>
+Architecture: i386
+Source: mp4v2 (2.0.0~dfsg0-5)
+Version: 2.0.0~dfsg0-5+b1
+Depends: libmp4v2-2 (= 2.0.0~dfsg0-5+b1), libc6 (>= 2.4), libgcc1 (>=
+1:4.2), libstdc++6 (>= 5.2)
+...
 
-* Arachni Scanner Plugin 1.0.0
-* Argus Notifier Plugin 1.0.2
-* Artifactory Plugin 2.16.2
-* Chatter Notifier Plugin 2.0.5
-* Config File Provider Plugin 3.2
-* Crowd 2 Integration Plugin 2.0.1
-* Dimensions Plugin 0.8.15
-* Email Extension Template Plugin 1.1
-* Git Changelog Plugin 2.7
-* HipChat Plugin 2.2.1
-* JIRA Plugin 3.0.2
-* Job Configuration History Plugin 2.18.1
-* JUnit Plugin 1.26
-* mesos Plugin 0.18
-* Monitoring Plugin 1.74.0
-* MQ Notifier Plugin 1.2.7
-* PAM Authentication Plugin 1.4
-* Publish Over Dropbox Plugin 1.2.5
-* Rebuilder Plugin 1.29
-* SonarQube Scanner Plugin 2.8.1
+root@...ian:~# mp4info c1.mp4
+mp4info version -r
+c1.mp4:
+*** Error in `mp4info': double free or corruption (fasttop): 0x56d883d0 ***
+...
 
-Additionally, these plugin have security vulnerabilities that have been made
-public, but have no releases containing a fix yet:
+========= Fix =========
 
-* Metadata Plugin
+One way to fix the bug is to clear the dangling pointer after the the first
+free.
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2018-09-25/
+========= Reference =========
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+https://code.google.com/archive/p/mp4v2/
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
 
----
 
-SECURITY-1101
-A URL used to allow setting the description of a test object in JUnit 
-Plugin did not require POST requests, resulting in a cross-site request 
-forgery vulnerability.
+-- 
+Best regards,
 
-
-SECURITY-1029
-Jira Plugin did not perform permission checks on a method implementing form 
-validation. This allowed users with Overall/Read access to Jenkins to 
-connect to an attacker-specified URL using attacker-specified credentials 
-IDs obtained through another method, capturing credentials stored in Jenkins.
-
-Additionally, this form validation method did not require POST requests, 
-resulting in a cross-site request forgery vulnerability.
-
-
-SECURITY-1080
-Config File Provider Plugin did not escape configuration file metadata, 
-resulting in a stored cross-site scripting (XSS) vulnerability.
-
-
-SECURITY-938
-A URL used to save configuration files based on form submissions in Config 
-File Provider Plugin did not require POST requests, resulting in a CSRF 
-vulnerability.
-
-
-SECURITY-130
-Rebuild Plugin did not escape parameter descriptions shown on the rebuild 
-form page, resulting in a stored Cross-Site Scripting (XSS) vulnerability 
-exploitable by users with the permission to configure jobs.
-
-
-SECURITY-1130
-Job Config History Plugin did not escape some query parameters shown on its 
-pages, resulting in a reflected cross-site scripting (XSS) vulnerability.
-
-
-SECURITY-1125
-Some URLs implementing form submission handling in Email Extension Template 
-Plugin did not require POST requests, resulting in a CSRF vulnerability 
-that allowed attackers to create or remove templates.
-
-
-SECURITY-984 (1)
-HipChat Plugin did not perform permission checks on a method that sends 
-test notifications. This allowed users with Overall/Read access to Jenkins 
-to connect to an attacker-specified HipChat server using attacker-specified 
-connection settings and credentials IDs obtained through another method, 
-capturing credentials stored in Jenkins, and submitting messages to HipChat.
-
-Additionally, this form validation method did not require POST requests, 
-resulting in a cross-site request forgery vulnerability.
-
-
-SECURITY-984 (2)
-HipChat Plugin provides a list of applicable credential IDs to allow 
-administrators configuring the plugin to select the one to use.
-
-This functionality did not check permissions, allowing any user with 
-Overall/Read permission to get a list of valid credentials IDs. Those could 
-be used as part of an attack to capture the credentials using another 
-vulnerability.
-
-
-SECURITY-1013 (1)
-Mesos Plugin provides a list of applicable credential IDs to allow 
-administrators configuring the Mesos cloud to select the one to use.
-
-This functionality did not check permissions, allowing any user with 
-Overall/Read permission to get a list of valid credentials IDs. Those could 
-be used as part of an attack to capture the credentials using another 
-vulnerability.
-
-
-SECURITY-1013 (2)
-A missing permission check in a form validation method in Mesos Plugin 
-allowed users with Overall/Read permission to initiate a connection test, 
-connecting to an attacker-specified URL.
-
-Additionally, this form validation method did not require POST requests, 
-resulting in a CSRF vulnerability.
-
-
-SECURITY-1067
-Crowd 2 Integration Plugin did not perform permission checks on a method 
-implementing form validation. This allowed users with Overall/Read access 
-to Jenkins to connect to an attacker-specified URL with attacker-specified 
-credentials and connection settings.
-
-Additionally, this form validation method did not require POST requests, 
-resulting in a CSRF vulnerability.
-
-
-SECURITY-1068
-Crowd 2 Integration Plugin stored the Crowd password unencrypted in its 
-global configuration file on the Jenkins master. This password could be 
-viewed by users with access to the master file system.
-
-
-SECURITY-972
-Users with Overall/Read permission were able to access MQ Notifier Plugin’s 
-form validation URL, having it connect to an attacker-specified MQ system 
-with attacker-specified credentials.
-
-Additionally, this form validation URL did not require POST requests, 
-resulting in a CSRF vulnerability.
-
-
-SECURITY-1075
-A stored cross-site scripting (XSS) vulnerability in Metadata Plugin allows 
-users with permission to change metadata definitions to insert arbitrary 
-HTML/Javascript into Jenkins pages.
-
-
-SECURITY-1135
-Metadata Plugin lacks a permission check that allows users with 
-Overall/Read access to Jenkins to change the plugin’s configuration.
-
-
-SECURITY-265
-Artifactory Plugin 2.4.0 introduced support for securely storing 
-credentials using the Credentials Plugin. Old, insecurely stored 
-credentials however were not removed when switching to this new system.
-
-
-SECURITY-813 / CVE-2017-12197
-The pam4j library bundled in PAM Authentication Plugin had a bug that 
-resulted in it not properly validating user accounts.
-
-
-SECURITY-1163
-SonarQube Scanner Plugin stored a server authentication token unencrypted 
-in its global configuration file on the Jenkins master. This token could be 
-viewed by users with access to the master file system.
-
-
-SECURITY-1122
-Git Changelog Plugin did not escape the Git commit messages it displayed 
-since version 1.48, resulting in a stored cross-site scripting (XSS) 
-vulnerability exploitable by users with commit access to specific Git 
-repositories.
-
-
-SECURITY-948
-Arachni Scanner Plugin stored its password unencrypted in its global 
-configuration file on the Jenkins master. This password could be viewed by 
-users with access to the master file system.
-
-
-SECURITY-1011 (1)
-Argus Notifier Plugin did not perform permission checks on a method 
-implementing form validation. This allowed users with Overall/Read access 
-to Jenkins to connect to an attacker-specified URL using attacker-specified 
-credentials IDs obtained through another method, capturing credentials 
-stored in Jenkins.
-
-Additionally, this form validation method did not require POST requests, 
-resulting in a cross-site request forgery vulnerability.
-
-
-SECURITY-1011 (2)
-Argus Notifier Plugin provides a list of applicable credential IDs to allow 
-administrators configuring the plugin to select the one to use.
-
-This functionality did not check permissions, allowing any user with 
-Overall/Read permission to get a list of valid credentials IDs. Those could 
-be used as part of an attack to capture the credentials using another 
-vulnerability.
-
-
-SECURITY-1050 (1)
-Chatter Notifier Plugin did not perform permission checks on a method 
-implementing form validation. This allowed users with Overall/Read access 
-to Jenkins to connect to an attacker-specified URL using attacker-specified 
-credentials IDs obtained through another method, capturing credentials 
-stored in Jenkins.
-
-Additionally, this form validation method did not require POST requests, 
-resulting in a cross-site request forgery vulnerability.
-
-
-SECURITY-1050 (2)
-Chatter Notifier Plugin provides a list of applicable credential IDs to 
-allow users configuring the plugin’s functionality to select the one to use.
-
-This functionality did not check permissions, allowing any user with 
-Overall/Read permission to get a list of valid credentials IDs. Those could 
-be used as part of an attack to capture the credentials using another 
-vulnerability.
-
-
-SECURITY-1065
-Dimensions Plugin stored a password unencrypted in its global configuration 
-file on the Jenkins master. This password could be viewed by users with 
-access to the master file system.
-
-
-SECURITY-1108
-Users with Overall/Read permission were able to access Dimensions Plugin’s 
-form validation URL, having it connect to an attacker-specified Dimensions 
-system with attacker-specified credentials.
-
-Additionally, this form validation URL did not require POST requests, 
-resulting in a CSRF vulnerability.
-
-
-SECURITY-845
-Publish Over Dropbox Plugin stored authorization code and access code 
-unencrypted in its global configuration file on the Jenkins master. These 
-secrets could be viewed by users with access to the master file system.
-
-Additionally, the authorization code was not masked from view using a 
-password form field.
-
-
-SECURITY-1156 / CVE-2018-15531
-The JavaMelody library bundled in Monitoring Plugin is affected by an XML 
-External Entity (XXE) processing vulnerability.
-
-This allows attacker to send crafted requests to a web application for 
-extraction of secrets from the file system, server-side request forgery, or 
-denial-of-service attacks.
-
-Monitoring plugin 1.74 updates its JavaMelody dependency to fix the issue.
-
-The Jenkins security team and the maintainer of Monitoring Plugin have been 
-unable to reproduce the issue in Jenkins, but we still recommend updating.
+Ruikai Liu
 
