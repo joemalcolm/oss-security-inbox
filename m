@@ -1,100 +1,168 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/08/7
-Message-ID: <CAP3WMuQ9dfe=3FCtqoZ1Q4xkFZZ+ogdqn6KVxyb_O4s5rLBwuw@mail.gmail.com>
-Date: Thu, 8 Feb 2018 22:39:29 +0000
-From: Alex Rudyy <orudyy@...che.org>
-To: "users@...d.apache.org" <users@...d.apache.org>, "dev@...d.apache.org" <dev@...d.apache.org>,  Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com, announce@...che.org
-Subject: [SECURITY][CVE-2018-1298] Apache Qpid Broker-J Denial of Service Vulnerability with PLAIN and XOAUTH2 SASL mechanisms
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/16/1
+Message-ID: <CAB6DpjW0BqVNJqBvSnKuA6bbAEpoEMvK6ef0ALEbhndYVubbCA@mail.gmail.com>
+Date: Mon, 16 Jul 2018 15:10:41 +0800
+From: Ruikai Liu <lrk700@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Integer underflow/overflow in MP4v2 2.0.0
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-1298: Apache Qpid Broker-J Denial of Service Vulnerability with
-PLAIN and XOAUTH2 SASL mechanisms
+Hi,
 
-Severity: Important
+Integer underflow and overflow are found in MP4v2 2.0.0, a legacy library
+dealing with MP4 media file.
 
-Vendor: The Apache Software Foundation
+========= Underflow =========
 
-Versions Affected: Versions 7.0.0
+Atom is the basic element of MP4. However there's an integer underflow when
+parsing an atom(src/mp4atom.cpp):
 
-Description:
+ 121     uint64_t dataSize = file.ReadUInt32();
+ ...
+ 146     dataSize -= hdrSize;
+ ...
+ 151     if (pos + hdrSize + dataSize > pParentAtom->GetEnd()) {
+ ...
+ 164         // skip to end of atom
+ 165         dataSize = pParentAtom->GetEnd() - pos - hdrSize;
+ 166     }
 
-A Denial of Service vulnerability [1] was found in Apache Qpid Broker-J
-7.0.0
-in functionality for authentication of connections for AMQP protocols 0-8,
-0-9,
-0-91 and 0-10 when PLAIN or XOAUTH2 SASL mechanism is used. The
-vulnerability
-allows unauthenticated attacker to crash the broker instance. AMQP 1.0 and
-HTTP connections are not affected.
+If `dataSize` read from file is less than `hdrSize`, then underflow happens
+and it becomes a very large unsigned integer at line 146. Yet the check at
+line 151 would still be passed, which results in an corrupted atom with
+extremely large size.
 
-An authentication of incoming AMQP connections in Apache Qpid Broker-J is
-performed by special entities called "Authentication Providers". Each
-Authentication Provider can support several SASL mechanisms
-which are offered to the connecting clients as part of SASL negotiation
-process.
-The client chooses the most appropriate SASL mechanism for authentication.
+========= Overflow =========
 
-Authentication Providers of following types supports PLAIN SASL mechanism:
-* Plain
-* PlainPasswordFile
-* SimpleLDAP
-* Base64MD5PasswordFile
-* MD5
-* SCRAM-SHA-256
-* SCRAM-SHA-1
+`ftyp` is an atom that describes the version info of the MP4 file. It will
+allocate memory for compatible brands according to the atom's size:
 
-XOAUTH2 SASL mechanism is supported by Authentication Providers of type
-OAuth2.
+ 54 void MP4FtypAtom::Read()
+ 55 {
+ 56     compatibleBrands.SetCount( (m_size - 8) / 4 ); // brands array
+fills rest of atom
+ 57     MP4Atom::Read();
+ 58 }
 
-If an AMQP port is configured with any of these Authentication Providers,
-the
-Broker may be vulnerable.
+ 342 void MP4StringProperty::SetCount(uint32_t count)
+ 343 {
+ 344     uint32_t oldCount = m_values.Size();
+ 345
+ 346     m_values.Resize(count);
+ 347
+ 348     for (uint32_t i = oldCount; i < count; i++) {
+ 349         m_values[i] = NULL;
+ 350     }
+ 351 }
 
-Resolution:
+`Resize` here is a wrapper of `realloc`:
 
-Users of Broker-J version 7.0.0 utilizing affected Authentication Providers
-on
-AMQP ports with support for AMQP 0-8, 0-9, 0-91 or 0-10 must upgrade to
-version
-7.0.1 or later.
+102         void Resize(MP4ArrayIndex newSize) { \
+103             m_numElements = newSize; \
+104             m_maxNumElements = newSize; \
+105             m_elements = (type*)MP4Realloc(m_elements, \
+106                 m_maxNumElements * sizeof(type)); \
+107         } \
 
-Mitigation:
+We notice that an integer overflow could happen when calculating
+`m_maxNumElements * sizeof(type)`. So the allocation may return a buffer
+smaller than needed, and later operations on the buffer could result in
+invalid memory reference, like setting values to be NULL in
+`MP4StringProperty::SetCount`. This is the case for 64-bits program which
+allows memory allocation for large(~4GB) size.
 
-If upgrade of the broker is not possible, the SimpleLDAP and OAuth2 must be
-replaced with an alternative provider. For the remaining affected types of
-Authentication Providers the PLAIN SASL mechanism must be disabled by
-including
-"PLAIN" in the "disabledMechanisms" attribute of the provider. The changes
-can
-be made either directly in the broker configuration file or via management
-interfaces (for example, REST API [2]). A broker restart is required for the
-changes to take effect. Here is a template for curl utility call to disable
-PLAIN mechanism using REST API:
+Things are a little different for 32-bits. In this case `realloc` would
+fail and throws an exception:
 
-curl --user <user-name> -X POST  -d '{"disabledMechanisms":["PLAIN"]}' \
-https://<broker host>:<broker https
-port>/api/latest/authenticationprovider/<provider name>
+ 74 inline void* MP4Realloc(void* p, uint32_t newSize) {
+ 75     // workaround library bug
+ 76     if (p == NULL && newSize == 0) {
+ 77         return NULL;
+ 78     }
+ 79
+ 80     void* temp = realloc(p, newSize);
+ 81     if (temp == NULL && newSize > 0) {
+ 82         throw new PlatformException("malloc
+failed",errno,__FILE__,__LINE__,__FUNCTION__);
+ 83     }
+ 84     return temp;
+ 85 }
 
-Alternatively, when only AMQP 1.0 protocol is used, the support for older
-AMQP
-protocols can be removed on the AMQP port. It can be done either from
-Broker-J
-Web Management Console or via management interfaces. A broker restart is
-required for the changes to take effect. Here is a template for curl REST
-API
-call to restrict port supported AMQP protocols to AMQP 1.0:
+And the destructor the `MP4StringProperty` would be invoked:
 
-curl --user <user-name> -X POST  -d '{"protocols":["AMQP_1_0"]}' \
-https://<broker host>:<broker https port>/api/latest/port/<port name>
+ 334 MP4StringProperty::~MP4StringProperty()
+ 335 {
+ 336     uint32_t count = GetCount();
+ 337     for (uint32_t i = 0; i < count; i++) {
+ 338         MP4Free(m_values[i]);
+ 339     }
+ 340 }
 
-References:
+But the count here is still the extremly large number we set before, and
+the for-loop would certainly have some invalid addresses been freed.
 
-[1] https://issues.apache.org/jira/browse/QPID-8046
-[2]
-https://qpid.apache.org/releases/qpid-broker-j-7.0.0/book/Java-Broker-Management-Channel-REST-API.html
-[3] http://qpid.apache.org/components/broker-j/index.html
+========= POC =========
 
----------------------------------------------------------------------
-To unsubscribe, e-mail: dev-unsubscribe@...d.apache.org
-For additional commands, e-mail: dev-help@...d.apache.org
+Here's a very simple POC file:
+
+root@...ian:~# hexdump -Cv c2.mp4
+00000000  00 00 00 07 66 74 79 70  6d 70 34 32 41 41 41 41
+|....ftypmp42AAAA|
+00000010  41 41 41 41 41 41 41 41                           |AAAAAAAA|
+00000018
+
+The size of the `ftyp` box is 7(the first 4 bytes), which is smalller than
+the header size(8 bytes). Therefore the `dataSize` for this atom would
+become -1=0xffffffffffffffff.
+
+This POC file crashes both 32-bits and 64-bits mp4info.
+
+========= Fix =========
+
+For the underflow, we could check if `dataSize >= hdrSize` satisfies:
+
+--- src/mp4atom.cpp     2018-07-16 14:54:33.513635593 +0800
++++ ../mp4v2-2.0.0-orig/src/mp4atom.cpp     2012-05-21 06:11:53.000000000
++0800
+@@ -143,9 +143,6 @@
+         dataSize = file.GetSize() - pos;
+     }
+
+-    if(dataSize < hdrSize) {
+-        throw new Exception( "invalid dataSize", __FILE__, __LINE__,
+__FUNCTION__ );
+-    }
+     dataSize -= hdrSize;
+
+     log.verbose1f("\"%s\": type = \"%s\" data-size = %" PRIu64 " (0x%"
+PRIx64 ") hdr %u",
+
+
+For the overflow, we could check the result of the integer multiplication:
+
+--- src/mp4array.h      2018-07-16 15:00:51.333620723 +0800
++++ ../mp4v2-2.0.0-orig-/src/mp4array.h      2012-05-21 06:11:53.000000000
++0800
+@@ -102,11 +102,8 @@
+         void Resize(MP4ArrayIndex newSize) { \
+             m_numElements = newSize; \
+             m_maxNumElements = newSize; \
+-            uint32_t mul = newSize * sizeof(type); \
+-            if(mul / newSize != sizeof(type)) \
+-                throw new Exception("multiplication overflow", __FILE__,
+__LINE__, __FUNCTION__);\
+             m_elements = (type*)MP4Realloc(m_elements, \
+-                mul); \
++                m_maxNumElements * sizeof(type)); \
+         } \
+
+
+========= Reference =========
+
+https://code.google.com/archive/p/mp4v2/
+
+-- 
+Best regards,
+
+Ruikai Liu
 
