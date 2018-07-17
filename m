@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1651" "Friday" "21" "August" "2015" "14:39:57" "+0200" "Alessandro Ghedini" "alessandro@ghedini.me" "<20150821123957.GA29111@kronk.local>" "46" "[oss-security] CVE Request: twig remote code execution" nil nil nil "8" "2015082112:39:57" "[oss-security] CVE Request: twig remote code execution" (number mark "        alessandro@g Aug 21   46/1651  " thread-indent "\"[oss-security] CVE Request: twig remote code execution\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2686" "Tuesday" "17" "July" "2018" "10:16:06" "-0400" "Justin Bull" "me@justinbull.ca" "<CAFB0D2SFn6Hc2NQcHrTc3d2Pmx0SgE37Y1LjxhGVEXhRprBr=g@mail.gmail.com>" "87" "[oss-security] [CVE-2018-1000211] Public apps can't revoke OAuth access & refresh tokens in Doorkeeper" nil nil nil "7" "2018071714:16:06" "[oss-security] [CVE-2018-1000211] Public apps can't revoke OAuth access & refresh tokens in Doorkeeper" (number mark "U       me@justinbul Jul 17   87/2686  " thread-indent "\"[oss-security] [CVE-2018-1000211] Public apps can't revoke OAuth access & refresh tokens in Doorkeeper\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 23675 invoked by uid 550); 21 Aug 2015 12:40:12 -0000
+Received: (qmail 23767 invoked by uid 550); 17 Jul 2018 14:34:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,77 +11,128 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 23637 invoked from network); 21 Aug 2015 12:40:10 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:mime-version
-         :content-type:content-disposition:user-agent;
-        bh=+n6dLBX3dumyXJJX1r4dcI2aTj5owDoL49L/CloBsos=;
-        b=LBakKNXzSt8l/Ld/zc0nbMuI4j5R+1zfTh5p2EpAk7jZzLR6uSxAlEFRdkhdFBqomD
-         9W3RauLjszQEo+2ImSMCwUA+2scvYUx9ur8WPqg/bWeki943PAo8dguONF8t6VpI6eff
-         yI8z+05an0PPGTVN+KZxZ2GQVmruHD3+PxjJF0fHbOa9iEXEhVeGhgWyyf+eKr0P0wFq
-         pZis/7IsWj2VBltghHBdYBcAa4bVLHp0FWBmbqKXOdERgpGGrWYH7Rlt5kV3OFDHABru
-         HiexHPJnSEf1pKCrrnLWei9VzDIswBBQrhsjGNCjbKub7k7T3IROzqm7Tu+1lplUI/XB
-         QLYA==
-X-Received: by 10.180.84.40 with SMTP id v8mr3154865wiy.77.1440160799080;
-        Fri, 21 Aug 2015 05:39:59 -0700 (PDT)
-Message-ID: <20150821123957.GA29111@kronk.local>
-Mail-Followup-To: oss-security@lists.openwall.com, cve-assign@mitre.org
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="vtzGhvizbBRQ85DL"
-Content-Disposition: inline
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Cc: cve-assign@mitre.org
-Date: Fri, 21 Aug 2015 14:39:57 +0200
-From: Alessandro Ghedini <alessandro@ghedini.me>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Request: twig remote code execution
-To: oss-security@lists.openwall.com
+Received: (qmail 13389 invoked from network); 17 Jul 2018 14:16:38 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=justinbull-ca.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=z5CC9DPjhhVGILda0OCNvbAh/TW2iB1+ljH7MGfs/PE=;
+        b=Zcp2JlP/8out2ZMAyx3oc1y0bUkTat9l1QQrNt4HYmR0b86inJVy+fr1vWqepaDq5j
+         4yBWuYoVoM0l7cfu8pdlucTf6ie5AIlaG5jXw6/tzOnhzQI8d2/frOnlZO2oAtO9aiSl
+         QJ5lW1355kXLY5Kw5H9S9twD8Jg9Dk1doDvmZe16QrlYxElKo2xhIcu6H67WrMixoBsi
+         bWS+BY9aQNksstQepU4cNfHLZ7FwHI7rn8duoMsNmNww4Zf43edoo627hQ6A7x52hifX
+         BpeXi17BvtNM6TAw6+KCL7e9gCxXQ9gFKHcmjeh4RKA6/P5oIJPlSnrpWHHWXrUEOjHk
+         V0SQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=z5CC9DPjhhVGILda0OCNvbAh/TW2iB1+ljH7MGfs/PE=;
+        b=teoLm1rUrNpgZBEPBSRp06TUrmovvh37OJ0448m2sjLYCg/RSkX0zelKZZ3z9biU3D
+         fbtdfTWZ9QPPAdfucMSI39bTyxwzZLZmk+eXSKo0d3NN9lMTAHWCeXi1ap+ADdTrjjDA
+         KNFurfbKN1v3f3W5zCKOqu4v9ih7irmz3YYi8iB5zcfIrLRk1rwcSXyO5/5JqywYkd5G
+         RlemdcpifshcXKdHn19FuU87ehTglb6EI1AZ5PMht2UybUnnCrDChgK48o3BQ+hkvHHL
+         mIcrkA6FKr2ELpFqQAZHO5oIJ7qRmp9fvf78crL63tySFLjPkFhlG0xJyYbKGA7NDCVm
+         4ZXw==
+X-Gm-Message-State: AOUpUlGmA15fosHlrTB5ehppCkLhqOpyZpriBVKsR16g1YdwCBUZaNNT
+	K0ZwYHtcNMF9U5gw0OPuVNKjY7g/zl3ESexQmx2FIyJjxA==
+X-Google-Smtp-Source: AAOMgpdLnhJf+RHTJX8rZWPUNrG9vfueItxWP9e5OdTrqf+ApRM/iASmGTjEVuQyTMTBzhaXd6KT1U24ZXZ6UDtXvJo=
+X-Received: by 2002:adf:a541:: with SMTP id j1-v6mr1672406wrb.155.1531836986582;
+ Tue, 17 Jul 2018 07:16:26 -0700 (PDT)
+MIME-Version: 1.0
+X-Originating-IP: [76.9.198.110]
+From: Justin Bull <me@justinbull.ca>
+Date: Tue, 17 Jul 2018 10:16:06 -0400
+Message-ID: <CAFB0D2SFn6Hc2NQcHrTc3d2Pmx0SgE37Y1LjxhGVEXhRprBr=g@mail.gmail.com>
+To: oss-security@lists.openwall.com, bugtraq@securityfocus.com, 
+	fulldisclosure@seclists.org
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] [CVE-2018-1000211] Public apps can't revoke OAuth access & refresh
+ tokens in Doorkeeper
 
---vtzGhvizbBRQ85DL
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Good morning everyone,
 
-Hello,
+A security bulletin for all of you.
 
-the symphony project released a security advisory for the Twig PHP library:
-http://symfony.com/blog/security-release-twig-1-20-0
+Software:
+--------
+Doorkeeper (https://github.com/doorkeeper-gem/doorkeeper)
 
-The linked GitHub pull requests provides the fixes:
-https://github.com/twigphp/Twig/pull/1759
+Description:
+----------
+Doorkeeper is an OAuth 2 provider for Rails written in Ruby.
 
-AFAICT there are least two issues: a remote code execution fixed by the "fixed
-sandbox security issue" patch, and at least another issue regarding access to
-"reserved macro names".
+Affected Versions:
+---------------
+4.2.0 - 4.3.2
+5.0.0.rc1
 
-The RCE deserves a CVE IMO, but I'm not sure about the other one (or if it is
-indeed only one issue).
+Fixed Versions:
+-------------
+4.4.0
+5.0.0.rc2
 
-Can CVE(s) be assigned for the above issue(s) as you deem appropriate?
+Problem:
+--------
 
-Thanks
+Any OAuth application that uses public/non-confidential authentication when
+interacting with Doorkeeper is unable to revoke its tokens when calling the
+revocation endpoint.
 
---vtzGhvizbBRQ85DL
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+A bug in the token revocation API causes it to try to authenticate the public
+OAuth client as if it was a confidential app. Because of this, the token is
+never revoked.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+If Doorkeeper is used to facilitate public OAuth apps and leverage token
+revocation functionality (RFC 7009[1]), upgrade to the patched versions
+immediately.
 
-iQIcBAEBCgAGBQJV1xwbAAoJEK+lG9bN5XPLJMwQAIfFxkdsBT9UN7FNMLqJtD4h
-rIyisAo/+Sjkmn919ILglF6+UrD6lZGtdA38BQa6G5M/5vCX0k7L7Yh3pfPfgOSa
-F2/b9yN8aJjFOVwM8U7ycsvbhU2T11UAkTjksk6Z7X8Fzr5xJPi75SpNpyTCWSq1
-82bK5TcU1G3nxg4YzzJ8M8YEsm9LcXwYscVwwyw3l1qyQmrz2seqwYW/g7AZLIUg
-WUbbE3A2otPKY2PS4NX1y2E8TOD2N1ZdriQCo8u6pfKu27tdz3GsrOwldAXFtBDI
-urbXhnMJU9BAqSXdpKu14s3D6K7GHIFfUDq+WVilWMtyhp5P6OUQGwZYlo/bZ2fh
-oUloE8eJGzZtbz+HIzRjSHJq5uYvET5EE+c3zmwVkPr6FhAqHkvopfOEc/HeL+Jj
-QwylXxoraXTqWfohk4ppFNZAKgXLDN/X2n6O7QiTTJAIOKf5HaHnbRdTUeHK4Gu3
-PXZxRXYWbENh86jme9iATp1/1TOqBN2Xj09bONLC2Tvw/hSSpcztbyvj5qULihmv
-NIC3jh7830TCxQeqG508guW6s9PA3dPif9lxpXf8ylZZ3U8BxaJRan2Zve6chhmO
-O+h4y2hpsmMgbPZk1UTNjba5W5fh/TKOaHxt2Iyvg9hEuHbs2bEFHJLa1Z32sOgV
-LwEEo6MchkCs5GrhdXA6
-=cchC
------END PGP SIGNATURE-----
+Impact:
+-------
 
---vtzGhvizbBRQ85DL--
+All public, non-confidential clients respecting the RFC will not have their
+access or refresh tokens revoked when sending a valid, well-formed &
+unauthenticated revocation request to doorkeeper.
+
+Any such clients relying on Doorkeeper's revocation functionality are
+susceptible to a session replay attack, even after the victim terminates their
+session via a revocation/log out.
+
+1. Attacker gains access token via any acceptable means (MiTM, physical
+   computer access, bug in client code, etc.)
+2. Victim logs out/attempts to revoke the access token
+3. Attacker is not affected, as the token is still valid for the duration of
+   its lifespan. Furthermore, the refresh token can be used to extend the
+   attacker's privileged access.
+
+This scenario is captured under the OWASP Top 10 (2013)'s A2: Broken
+Authentication and Session Management as a vulnerability[2].
+
+Solution:
+---------
+
+Doorkeeper needed a structural update so it is able to define which OAuth
+client application is intended to be public or confidential.
+
+With that now available, the tokens revocation API knows to either enforce
+authentication (as required for confidential clients) or accept just the client
+ID (as is the case for a public client)[1].
+
+See the following PRs for more info:
+
+* https://github.com/doorkeeper-gem/doorkeeper/pull/1119
+* https://github.com/doorkeeper-gem/doorkeeper/pull/1031
+* https://github.com/doorkeeper-gem/doorkeeper/issues/891
+
+Credit:
+-------
+All credit to Roberto Ostinelli[3] for discovery.
+
+Thanks to the Distributed Weakness Filing Project for a swift assignment of a
+CVE identifier (CVE-2018-1000211).
+
+References:
+-----------
+
+[1]: https://tools.ietf.org/html/rfc7009
+[2]: https://www.owasp.org/index.php/Top_10_2013-A2-Broken_Authentication_and_Session_Management
+[3]: https://github.com/ostinelli
