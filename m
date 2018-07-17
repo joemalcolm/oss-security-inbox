@@ -1,27 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/25/1
-Message-ID: <20180625051008.kx4kdv72lvvudalt@sivokote.iziade.m$>
-Date: Mon, 25 Jun 2018 08:10:08 +0300
-From: Georgi Guninski <guninski@...inski.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Intel hyper-threading security issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/17/2
+Message-ID: <CAFB0D2SFn6Hc2NQcHrTc3d2Pmx0SgE37Y1LjxhGVEXhRprBr=g@mail.gmail.com>
+Date: Tue, 17 Jul 2018 10:16:06 -0400
+From: Justin Bull <me@...tinbull.ca>
+To: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com,  fulldisclosure@...lists.org
+Subject: [CVE-2018-1000211] Public apps can't revoke OAuth access & refresh tokens in Doorkeeper
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 20, 2018 at 12:48:55AM +0400, Loganaden Velvindron wrote:
-> OpenBSD has gone ahead and disabled Intel Hyper threading with a
-> fairly detailed comment about the reasons behind:
-> 
-> https://www.mail-archive.com/source-changes@openbsd.org/msg99141.html
->
-According to journos Intel won't patch this:
+Good morning everyone,
 
-https://www.theregister.co.uk/2018/06/22/intel_tlbleed_key_data_leak/
-Meet TLBleed: A crypto-key-leaking CPU attack that Intel reckons we
-shouldn't worry about
-How to extract 256-bit signing keys with 99.8% success
+A security bulletin for all of you.
 
-Intel has, for now, no plans to specifically address a side-channel
-vulnerability in its processors that can be potentially exploited by
-malware to extract encryption keys and other sensitive info from
-applications.
- 
+Software:
+--------
+Doorkeeper (https://github.com/doorkeeper-gem/doorkeeper)
+
+Description:
+----------
+Doorkeeper is an OAuth 2 provider for Rails written in Ruby.
+
+Affected Versions:
+---------------
+4.2.0 - 4.3.2
+5.0.0.rc1
+
+Fixed Versions:
+-------------
+4.4.0
+5.0.0.rc2
+
+Problem:
+--------
+
+Any OAuth application that uses public/non-confidential authentication when
+interacting with Doorkeeper is unable to revoke its tokens when calling the
+revocation endpoint.
+
+A bug in the token revocation API causes it to try to authenticate the public
+OAuth client as if it was a confidential app. Because of this, the token is
+never revoked.
+
+If Doorkeeper is used to facilitate public OAuth apps and leverage token
+revocation functionality (RFC 7009[1]), upgrade to the patched versions
+immediately.
+
+Impact:
+-------
+
+All public, non-confidential clients respecting the RFC will not have their
+access or refresh tokens revoked when sending a valid, well-formed &
+unauthenticated revocation request to doorkeeper.
+
+Any such clients relying on Doorkeeper's revocation functionality are
+susceptible to a session replay attack, even after the victim terminates their
+session via a revocation/log out.
+
+1. Attacker gains access token via any acceptable means (MiTM, physical
+   computer access, bug in client code, etc.)
+2. Victim logs out/attempts to revoke the access token
+3. Attacker is not affected, as the token is still valid for the duration of
+   its lifespan. Furthermore, the refresh token can be used to extend the
+   attacker's privileged access.
+
+This scenario is captured under the OWASP Top 10 (2013)'s A2: Broken
+Authentication and Session Management as a vulnerability[2].
+
+Solution:
+---------
+
+Doorkeeper needed a structural update so it is able to define which OAuth
+client application is intended to be public or confidential.
+
+With that now available, the tokens revocation API knows to either enforce
+authentication (as required for confidential clients) or accept just the client
+ID (as is the case for a public client)[1].
+
+See the following PRs for more info:
+
+* https://github.com/doorkeeper-gem/doorkeeper/pull/1119
+* https://github.com/doorkeeper-gem/doorkeeper/pull/1031
+* https://github.com/doorkeeper-gem/doorkeeper/issues/891
+
+Credit:
+-------
+All credit to Roberto Ostinelli[3] for discovery.
+
+Thanks to the Distributed Weakness Filing Project for a swift assignment of a
+CVE identifier (CVE-2018-1000211).
+
+References:
+-----------
+
+[1]: https://tools.ietf.org/html/rfc7009
+[2]: https://www.owasp.org/index.php/Top_10_2013-A2-Broken_Authentication_and_Session_Management
+[3]: https://github.com/ostinelli
