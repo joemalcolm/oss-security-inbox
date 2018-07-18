@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["686" "Friday" "18" "May" "2018" "14:08:27" "-0800" "ISC Security Officer" "security-officer@isc.org" "<6688abb0-fbc5-4c60-5876-66cdf36bb8bf@isc.org>" "21" "[oss-security] ISC has disclosed two vulnerabilities in BIND 9.12 (CVE-2018-5736, CVE-2018-5737)" nil nil nil "5" "2018051822:08:27" "[oss-security] ISC has disclosed two vulnerabilities in BIND 9.12 (CVE-2018-5736, CVE-2018-5737)" (number mark "U       security-off May 18   21/686   " thread-indent "\"[oss-security] ISC has disclosed two vulnerabilities in BIND 9.12 (CVE-2018-5736, CVE-2018-5737)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2237" "Wednesday" "18" "July" "2018" "18:32:10" "+0200" "Daniel Beck" "ml@beckweb.net" "<D2FED7A8-F45F-403A-B474-A1B42B1A815F@beckweb.net>" "71" "Re: [oss-security] Multiple vulnerabilities in Jenkins" nil nil nil "7" "2018071816:32:10" "[oss-security] Multiple vulnerabilities in Jenkins" (number mark "U       ml@beckweb.n Jul 18   71/2237  " thread-indent "\"Re: [oss-security] Multiple vulnerabilities in Jenkins\"\n") "<2EA2CE8E-22FD-4098-89D4-A1A9ACB7F970@beckweb.net>" ("<2EA2CE8E-22FD-4098-89D4-A1A9ACB7F970@beckweb.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28121 invoked by uid 550); 18 May 2018 22:12:08 -0000
+Received: (qmail 31818 invoked by uid 550); 18 Jul 2018 16:32:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,63 +12,89 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24219 invoked from network); 18 May 2018 22:08:41 -0000
-To: oss-security@lists.openwall.com
-Cc: "security-officer@isc.org" <security-officer@isc.org>
-From: ISC Security Officer <security-officer@isc.org>
-Openpgp: preference=signencrypt
-Autocrypt: addr=security-officer@isc.org; prefer-encrypt=mutual; keydata=
- xsBNBEsnyOQBCAC+WKYHcaDGD9a2ztwdccmhnzo0YJ9SOPVIonqGxCa6o8TwfipyH9Wh5uFq
- c6Ne+I0+vWohQtBIeodQHgGGlbjdxMp3QxohvqCmZcoObH7kjI1lpKQ6TMvRvo79pq5WRIuE
- +Jbm6Rt9Hz3w9APrYzISzeCuHFK7vlZfaLdoI0SxzEuzMmyOvQpa6dgSKQF6G2Nsbz1RYujZ
- 6fE6GXtc+I9q44yJS4llYpUqYpPh5CsfbDx8HwMWPj9eYOwjf3/vniFeG9tHIB8E+p7UBTG7
- bTVRlEgmyC1Ry0OPO3UPKjL/Dja8IeeJamT0dlsRCD/O/WTyxQg9EceCgUvOz65puKkrABEB
- AAHNL0lTQyBTZWN1cml0eSBPZmZpY2VyIDxzZWN1cml0eS1vZmZpY2VyQGlzYy5vcmc+wsBx
- BBMBAgAbBQJLJ8jkAhsDBgsJCAcKAgQVCggCAh4BAheAAAoJEL2X3GOe6MR7gZYIAI4uSaX7
- HwU2ywaCO77q5O/Zzzp6M+Oi+z7G00GFpACMSDSjX8kbZoIIW7FXb9US/9XLwqDtjlrGOLbd
- zcZ/+EMsJM/HpT796YH8Y9gMpsH5SZq5gByeguT6KgjqF2w8yNX7/r0AM3psfVSv9l595CoJ
- WNbDBHqGpqMi55SqKLCQOJ8noDp4x+JVNcJ1AdK/QVSk+gEhLqrvoYNyG8B/C2LL1fBQC8sF
- kX/M1mKlkM83GnJlPWCrig69VlR+relppEuZ5G34z93c9NtCqdH6zLzzej2qmwLb/dYJYvhE
- EMDlgvlSWw6yaJTuuEfuqHonrgOTXgb3Ln8A7XJECuSgWrLOwE0ESyfI5AEIAKUsrY4AxF87
- HvBEqhCXIt1o8plzVoIT5kY/p2n48U+oNGl5v4qNiC4SQZIvsA+Fcew8BhAYbNFTOsK/NKVO
- yiLkLOqQnkuBlESzzvMcl0gSuX1t99V2SJpCKukCa+jkTcjJnURODJn5Wp9GLAWXutxJvJnT
- t4oxcnAKun6Zt1vyOQs2lI9zXCTi8AdDKTiA/Es66CPVCRcMFUS6l9ArN57gUP0KRj8N0OfO
- QPdzShnGrSdtM0D2Ei2pmUcgkvSIeNU5HRd2iMpWGO1L8yfGQvp7dzjWbG7i/2RTnZ+KR3a2
- OMmtXUNuWQF3AfohS0TRTAcAR7IgOLzyy2prT9XKtCcAEQEAAcLAXwQYAQIACQUCSyfI5AIb
- DAAKCRC9l9xjnujEeze1CAC4A+KZdRi08gBxG4hKuvpL0fHfwnVmrLR39c0mQR9tE+iUcOez
- qER3z2fn/Zm5nMTZcauzCXMmFXwKWlGufiDrXVqKCyEHkYyBnn3U9ksRigo8eG/X3+G3US9k
- 0c7FfWaIrOY2IdGWUQic0ENOu/94VAFaleI4BBQvnDIY6hr4Fm14qXgssF7YwcEreoUU+Ayh
- Yc52tlDssU9DUaX/vn7OD42FIzpUzgUyoZ97UtPX+m9P5YN2Teeq0iVkcxxmT9wuNYCCZb1W
- 03hvcA8uwvRkNDbdQ//dma2gXdUPoXfBJT4kLo1/KV5GimPHdn0h172E1RKLgKtrJ58TVTJ6 UV1r
-Message-ID: <6688abb0-fbc5-4c60-5876-66cdf36bb8bf@isc.org>
-Date: Fri, 18 May 2018 14:08:27 -0800
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:52.0)
- Gecko/20100101 Thunderbird/52.7.0
-MIME-Version: 1.0
+Received: (qmail 31800 invoked from network); 18 Jul 2018 16:32:22 -0000
+From: Daniel Beck <ml@beckweb.net>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] ISC has disclosed two vulnerabilities in BIND 9.12 (CVE-2018-5736,
- CVE-2018-5737)
+Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
+Date: Wed, 18 Jul 2018 18:32:10 +0200
+References: <2EA2CE8E-22FD-4098-89D4-A1A9ACB7F970@beckweb.net>
+To: oss-security@lists.openwall.com
+In-Reply-To: <2EA2CE8E-22FD-4098-89D4-A1A9ACB7F970@beckweb.net>
+Message-Id: <D2FED7A8-F45F-403A-B474-A1B42B1A815F@beckweb.net>
+X-Mailer: Apple Mail (2.3273)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1531931542;f0d26ada;
+X-HE-SMSGID: 1ffpN4-00024l-Kb
+Subject: Re: [oss-security] Multiple vulnerabilities in Jenkins
 
-ISC has disclosed two vulnerabilities today, CVE-2018-5736
-and CVE-2018-5736.  Both vulnerabilities affect only releases
-in the BIND 9.12 branch (that is:  9.12.0 and 9.12.1.)
-Releases in other branches (such as 9.9, 9.10, 9.11) are not affected.
 
-To address these issues a new security release of BIND, 9.12.1-P2,
-has been issued.
+> On 18. Jul 2018, at 16:38, Daniel Beck <ml@beckweb.net> wrote:
+>=20
+> SECURITY-897
+> Unauthenticated users could provide maliciously crafted login credentials=
+=20
+> that cause Jenkins to move the config.xml file from the Jenkins home=20
+> directory. This configuration file contains basic configuration of=20
+> Jenkins, including the selected security realm and authorization strategy=
+.=20
+> If Jenkins is started without this file present, it will revert to the=20
+> legacy defaults of granting administrator access to anonymous users.
 
-BIND 9.12.1-P2 can be found via the ISC software download page:
+CVE-2018-1999001
 
-   https://www.isc.org/downloads
+> SECURITY-914
+> An arbitrary file read vulnerability in the Stapler web framework used by=
+=20
+> Jenkins allowed unauthenticated users to send crafted HTTP requests=20
+> returning the contents of any file on the Jenkins master file system that=
+=20
+> the Jenkins master process has access to.
 
-Advisories with details about the two vulnerabilities are
-now published in the ISC Knowledge base at:
+CVE-2018-1999002
 
-   https://kb.isc.org/article/AA-01602/74/CVE-2018-5736
-   https://kb.isc.org/article/AA-01606/74/CVE-2018-5737
+> SECURITY-891
+> The URLs handling cancellation of queued builds did not perform a=20
+> permission check, allowing users with Overall/Read permission to cancel=20
+> queued builds.
 
-Michael McNally
-ISC Security Officer
+CVE-2018-1999003
+
+> SECURITY-892
+> The URL that initiates agent launches on the Jenkins master did not perfo=
+rm=20
+> a permission check, allowing users with Overall/Read permission to initia=
+te=20
+> agent launches.
+
+CVE-2018-1999004
+
+> SECURITY-944
+> The build timeline widget shown on URLs like /view/=E2=80=A6/builds did n=
+ot=20
+> properly escape display names of items. This resulted in a cross-site=20
+> scripting vulnerability exploitable by users able to control item display=
+=20
+> names.
+
+CVE-2018-1999005
+
+> SECURITY-925
+> Files indicating when a plugin JPI file was last extracted into a=20
+> subdirectory of plugins/ in the Jenkins home directory was accessible via=
+=20
+> HTTP by users with Overall/Read permission. This allowed unauthorized use=
+rs=20
+> to determine the likely install date of a given plugin.
+
+CVE-2018-1999006
+
+> SECURITY-390
+> Stapler is the web framework used by Jenkins to route HTTP requests. When=
+=20
+> its debug mode is enabled, HTTP 404 error pages display diagnostic=20
+> information. Those error pages did not escape parts of URLs they displaye=
+d,=20
+> in rare cases resulting in a cross-site scripting vulnerability.
+
+CVE-2018-1999007
 
