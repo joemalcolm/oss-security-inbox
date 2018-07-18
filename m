@@ -1,4 +1,9 @@
-Received: (qmail 5322 invoked by uid 550); 4 Jun 2026 16:29:31 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["649" "Wednesday" "18" "July" "2018" "09:01:20" "+0100" "Mark Cox" "mjc@apache.org" "<CANnUo4K3qXCFEeP_3K8z3VLVva==9e9LBzFad-DGSWupm8XScg@mail.gmail.com>" "27" "[oss-security] CVE-2018-1333: Apache HTTP Server HTTP/2 DoS" nil nil nil "7" "2018071808:01:20" "[oss-security] CVE-2018-1333: Apache HTTP Server HTTP/2 DoS" (number mark "U       mjc@apache.o Jul 18   27/649   " thread-indent "\"[oss-security] CVE-2018-1333: Apache HTTP Server HTTP/2 DoS\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 15742 invoked by uid 550); 18 Jul 2018 08:01:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,84 +12,46 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 26459 invoked from network); 4 Jun 2026 16:10:54 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
-	t=1780589445;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=3dl4f2G+OFW4A2b9YSPvrYc+JPq1IWC8bZzMfdXrg/E=;
-	b=eVr6Ysush1yDUbDi2oN8YBTPms19SjO5ePfFRs3naRUm4e0X0WWd50Or+3leZwTXuwfiQO
-	BJ+rJd0Nq5r2Tq4V5uFam7NyMigXgaovCZVAZeJIJRGkXjzo0p9PhUDCBEBX/n7ZG7SQWB
-	0TayxiRMqmniscgCvra4ObZdN2w1j3beYSXjkfGs1Qvl1baryK01u0HG9CodDoB0LRVpK5
-	cCG/Hi1i/wjNgXp10dlf6CMh2unrYjqDkN+gw7tUAv0paTWl/83C0BTHvEOB+C6Kvh3GsR
-	ux493yc0vvWBEReMevnHyKFuwPJQKaikqo9niSAm/Sa83X2pgPjKPsE7YuCq9A==
-Message-ID: <bc840dc9-fef9-4459-afca-3b5551ca30f2@cpansec.org>
-Date: Thu, 4 Jun 2026 17:10:44 +0100
+Received: (qmail 15718 invoked from network); 18 Jul 2018 08:01:35 -0000
+X-Gm-Message-State: AOUpUlGTAgAQhi6ZgIKg77RCyjCTsVby5KqwMCJdgddbXSnKxyetDR/j
+	btIfXEIdFmg4uwlrjV+cMpR44eHW8FxT5P+t6L4=
+X-Google-Smtp-Source: AAOMgpdfJinuQxZb0j7fwLEEI+gaFCAc9R3ot05P47IX5g1b0E65UuZCh3XkejiIn+tn5qdOu+LfzTp3sNv/TZAwHX0=
+X-Received: by 2002:a63:cd02:: with SMTP id i2-v6mr4689964pgg.93.1531900881071;
+ Wed, 18 Jul 2018 01:01:21 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Robert Rothenberg <rrwo@cpansec.org>
-Content-Language: en-GB
-To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-GND-Sasl: rrwo@cpansec.org
-X-GND-State: clean
-X-GND-Score: 0
-X-GND-Cause: dmFkZTEntoKqB+TLcXY6eGEyW5lnG+ZS0p9tn+0KZBxSjQM+yIDi+SjDvD3LCozDifpJw8TdqQb+WvS/ViLiCQXNLB9zvKQ28E+vI8Vk199yvK9YIVHUOJeU0XmPXixJS4Szsopcbk7yO7rWi6CFTPjA3ay65b4ichhVmA/FE82ouj1d0bj3dmM2BpKTiAQC5/mLk8+qG3aO0SyJrKKAJ+0XQ3V4CsGzPYzZ9HksoVPEK16xehwZTf+ogCyvxSy9xSh8YmlfRnfPDwL8dCRjJUmboeEaOJNEamQYf31Cj7WT0QEogrzGe3XOcu/+4apWpvG+Xg2gNeYdcoAN/rHd1V4+1KAutjVHWhicsBuswOiJECKTZVOxRnPaSWaXMUx0A8Dqo7xU8qnC7KF4U6Jh1N67dGOVaL+W7nuiUUWPQBjNYTXkA50xDJR9RtAjaMlh6aXzUujTCGXMqmqJYO/7Jnc0KlX/FNEnFyA5hOdGwTUJrLwr4gYT/biO/DQSJrSpgvmLJpJepwYJPujS7XPhiwBP1ZscOCs3Kzu7qZWvX4b9AvPJpLIMCPgBvX8jMX+lliZDkwetwyMqJxoeLB1SiVDQMhaGxB+eScvANUUi0NlodDTrdQ5qbOtoYJ+3IzpI/63084tI0dVkjLdQDZ0iCiiGjd4O52kybrhv1ie1Thh6L12fsQ
-Subject: [oss-security] CVE-2026-49941: Net::CIDR::Set versions through 0.20 for Perl did not
- validate IP addresses
+From: Mark Cox <mjc@apache.org>
+Date: Wed, 18 Jul 2018 09:01:20 +0100
+X-Gmail-Original-Message-ID: <CANnUo4K3qXCFEeP_3K8z3VLVva==9e9LBzFad-DGSWupm8XScg@mail.gmail.com>
+Message-ID: <CANnUo4K3qXCFEeP_3K8z3VLVva==9e9LBzFad-DGSWupm8XScg@mail.gmail.com>
+To: announce@httpd.apache.org, oss-security@lists.openwall.com
+Cc: Apache Software Foundation HTTP Server Project <security@httpd.apache.org>
+Content-Type: multipart/alternative; boundary="000000000000d8f23905714177a4"
+Subject: [oss-security] CVE-2018-1333: Apache HTTP Server HTTP/2 DoS
 
+--000000000000d8f23905714177a4
+Content-Type: text/plain; charset="UTF-8"
 
-========================================================================
-CVE-2026-49941                                       CPAN Security Group
-========================================================================
+CVE-2018-1333: DoS for HTTP/2 connections by crafted requests
 
-         CVE ID:  CVE-2026-49941
-   Distribution:  Net-CIDR-Set
-       Versions:  through 0.20
+Severity: Low
 
-       MetaCPAN:  https://metacpan.org/dist/Net-CIDR-Set
-       VCS Repo:  https://github.com/robrwo/perl-Net-CIDR-Set
+Vendor: The Apache Software Foundation
 
+Versions Affected:
+httpd 2.4.18-2.4.33
 
-Net::CIDR::Set versions through 0.20 for Perl did not validate IP
-addresses
+Description:
+By specially crafting HTTP/2 requests, workers would be
+allocated 60 seconds longer than necessary, leading to
+worker exhaustion and a denial of service.
 
-Description
------------
-Net::CIDR::Set versions through 0.20 for Perl did not validate IP
-addresses.
+Mitigation:
+All httpd users should upgrade to 2.4.34 or later.
 
-The add method called the _encode method to parse addresses. If the
-addresses did not look like netmasks or network ranges, then they were
-assumed to single IP addresses and passed back to itself as a 32-bit or
-128-bit netmask.
+Credit:
+The issue was discovered by Craig Young of Tripwire VERT.
 
-If the argument was not a well-formed IP address, then this would lead
-to indefinite recursion.
+References:
+https://httpd.apache.org/security/vulnerabilities_24.html#CVE-2018-1333
 
-An attacker could use this to cause a denial of service.
-
-Problem types
--------------
-- CWE-1287 Improper Validation of Specified Type of Input
-- CWE-674 Uncontrolled Recursion
-
-Solutions
----------
-Upgrade to version 0.21 of later.
-
-
-References
-----------
-https://metacpan.org/release/RRWO/Net-CIDR-Set-0.21/changes
-
-Timeline
---------
-- 2026-05-13: Issue reported to CPANSec
-- 2026-06-02: Net::CIDR::Set version 0.21 released with fix
-
-
-
+--000000000000d8f23905714177a4--
