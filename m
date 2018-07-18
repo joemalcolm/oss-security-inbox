@@ -1,27 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/21/5
-Message-ID: <718d05e5-3057-7c32-da9a-70bc5a82e3f5@tao.at>
-Date: Thu, 21 Jun 2018 13:54:16 +0200
-From: Sven Schwedas <sven.schwedas@....at>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/18/5
+Message-ID: <f1c32a4f-e1dc-fcab-fcde-bae9d1460b1a@asokolov.org>
+Date: Wed, 18 Jul 2018 08:30:18 +0100
+From: Alexey Sokolov <alexey+znc@...kolov.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Intel hyper-threading security issues
+Subject: CVE-2018-14056: path traversal in ZNC
 Content-Type: text/plain; charset=utf-8
 
-On 2018-06-21 12:28, Lukas Odzioba wrote:
-> 2018-06-21 12:22 GMT+02:00 Lukas Odzioba <lukas.odzioba@...il.com>:
->> If you feel like you really need that, on Linux you can dump SRAT ACPI
->> table decompile it, remove APICID entries of "ht processors", compile
->> it back and put into initrd.
->> https://www.kernel.org/doc/Documentation/acpi/initrd_table_override.txt
-> 
-> Or use cpu hotplug mechanism, which should be way more convenient:
-> https://www.kernel.org/doc/html/v4.17/core-api/cpu_hotplug.html
-> 
+Severity: medium
 
-Hotplug doesn't seem differentiate between HT threads and physical
-cores, will setting maxcpus=2 on a 2 cores+HT machine reliably disable
-HT, or can it disable one core and keep HT active on the other?
+Versions affected:
+0.045 through 1.7.0
 
+Mitigation:
+upgrade to 1.7.1, or disable HTTP via `/msg *status AddPort`, `/msg
+*status DelPort` commands.
 
+Description:
+ZNC before 1.7.1-rc1 is prone to a path traversal flaw. A non-admin user
+can set web skin name to ../ to access files outside of the intended
+skins directories and to cause DoS.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (660 bytes)
+Upstream patch:
+https://github.com/znc/znc/commit/a4a5aeeb17d32937d8c7d743dae9a4cc755ce773
+
+Reported by: Jeriko One <jeriko.one@....us>
+
+-- 
+Best regards,
+Alexey "DarthGandalf" Sokolov
