@@ -1,34 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/11/3
-Message-ID: <CAJ_zFk+yw7HcUtqg8cUTqwTx3F0F8atYY95=RCzkBz-zKwK0JQ@mail.gmail.com>
-Date: Thu, 11 Oct 2018 10:20:17 -0700
-From: Tavis Ormandy <taviso@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/18/7
+Message-Id: <2EA2CE8E-22FD-4098-89D4-A1A9ACB7F970@beckweb.net>
+Date: Wed, 18 Jul 2018 16:38:38 +0200
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)
+Subject: Multiple vulnerabilities in Jenkins
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 9, 2018 at 6:58 AM Tavis Ormandy <taviso@...gle.com> wrote:
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software. The following
+releases contain fixes for security vulnerabilities:
 
->
-> The fix is public now, here are the necessary commit:
->
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=a54c9e61e7d0
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=a6807394bd94
->
->
->
-A small update, one of these commits was to mark all procedures that use
-dangerous operators as operators themselves. The idea is that error
-handlers will only see the top-level operator and not any sub-operators (I
-know, this is getting complicated).
+* Jenkins (weekly) 2.133
+* Jenkins (LTS) 2.121.2
 
-I noticed a procedure upstream missed, .loadfontloop. Upstream have double
-checked if there were any others, and I did too - we think that is all of
-them.
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2018-07-18/
 
-So this commit is necessary as well:
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=a5a9bf8c6a63
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
 
-Thanks, Tavis.
+---
+
+SECURITY-897
+Unauthenticated users could provide maliciously crafted login credentials 
+that cause Jenkins to move the config.xml file from the Jenkins home 
+directory. This configuration file contains basic configuration of 
+Jenkins, including the selected security realm and authorization strategy. 
+If Jenkins is started without this file present, it will revert to the 
+legacy defaults of granting administrator access to anonymous users.
+
+
+SECURITY-914
+An arbitrary file read vulnerability in the Stapler web framework used by 
+Jenkins allowed unauthenticated users to send crafted HTTP requests 
+returning the contents of any file on the Jenkins master file system that 
+the Jenkins master process has access to.
+
+
+SECURITY-891
+The URLs handling cancellation of queued builds did not perform a 
+permission check, allowing users with Overall/Read permission to cancel 
+queued builds.
+
+
+SECURITY-892
+The URL that initiates agent launches on the Jenkins master did not perform 
+a permission check, allowing users with Overall/Read permission to initiate 
+agent launches.
+
+
+SECURITY-944
+The build timeline widget shown on URLs like /view/…/builds did not 
+properly escape display names of items. This resulted in a cross-site 
+scripting vulnerability exploitable by users able to control item display 
+names.
+
+
+SECURITY-925
+Files indicating when a plugin JPI file was last extracted into a 
+subdirectory of plugins/ in the Jenkins home directory was accessible via 
+HTTP by users with Overall/Read permission. This allowed unauthorized users 
+to determine the likely install date of a given plugin.
+
+
+SECURITY-390
+Stapler is the web framework used by Jenkins to route HTTP requests. When 
+its debug mode is enabled, HTTP 404 error pages display diagnostic 
+information. Those error pages did not escape parts of URLs they displayed, 
+in rare cases resulting in a cross-site scripting vulnerability.
 
