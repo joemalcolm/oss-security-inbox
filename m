@@ -1,4 +1,9 @@
-Received: (qmail 18086 invoked by uid 550); 11 Dec 2025 14:56:48 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["652" "Wednesday" "18" "July" "2018" "08:30:07" "+0100" "Alexey Sokolov" "alexey+znc@asokolov.org" "<0f1139f3-ffca-d277-5208-2c2ed5dcc3cf@asokolov.org>" "24" "[oss-security] CVE-2018-14055: privilege escalation in ZNC" nil nil nil "7" "2018071807:30:07" "[oss-security] CVE-2018-14055: privilege escalation in ZNC" (number mark "U       alexey+znc@a Jul 18   24/652   " thread-indent "\"[oss-security] CVE-2018-14055: privilege escalation in ZNC\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 21672 invoked by uid 550); 18 Jul 2018 09:22:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,98 +12,68 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 18016 invoked from network); 11 Dec 2025 14:56:48 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=nodmarc.schlittermann.de; s=2020-06-19; h=In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:To:From:Date:Cc:
-	Content-Description:Content-ID:Content-Transfer-Encoding:Resent-Cc:Resent-To;
-	bh=YWBXzwi3gCRuahNwqO6vHBoWmm4Nopp8uF49yWp3kcA=; b=vDzSQLmSkkYo/9hVC9LEyh5xcC
-	gxGxkwweHiH3dpNw6CLRfLwAF3gqn3LwyPWbux3wigT0LDINK0VIcatCYL3W0c7kEtJMbjUdVVCHT
-	gd+6rvYY46etK/e0alsSd0mEOwvBRP3etct2p2ynZGlDts7RhG+R067WK91ttE+gdIAG6Vl7wYdp3
-	OA2SCa2tgwALxN02x4XTzz1WAkhbJD2E+9n1g1cjDOHyc7Mfyz54bEDOWpsItsQmILPdCCIarAnZs
-	S43xK0N3iFmrKSIh/5ld5Q2sQYBRwTatf77UVYK6iWCWdXAMW4dWaM53K++p3ceNTyx72vMfVjL75
-	YmUYoxqw==;
-Date: Thu, 11 Dec 2025 15:56:37 +0100
-From: Heiko Schlittermann <hs@nodmarc.schlittermann.de>
-To: oss-security <oss-security@lists.openwall.com>
-Message-ID: <aTrbpVe2BkcRT6L9@jumper.schlittermann.de>
-Mail-Followup-To: oss-security <oss-security@lists.openwall.com>
-References: <aTlswbw7mu0DyFec@jumper.schlittermann.de>
+Received: (qmail 30052 invoked from network); 18 Jul 2018 07:30:20 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=asokolov-org.20150623.gappssmtp.com; s=20150623;
+        h=to:from:subject:openpgp:message-id:date:user-agent:mime-version
+         :content-language:content-transfer-encoding;
+        bh=p/266xGCKqIz5lLgiyWBIbKeWlnbN4ZBfTzMCudgi3I=;
+        b=HY3UMMwos/LzRHurMzCQf0IxU3uNJDTwa+rBTFwDJFZEpiWQfgCR9bDAGCNropFWoq
+         yjHYSl8zmM3FXIoxMaoLydsIRyHH0/bgPw6sJG2b7Yx+zPyMvmULyiuHUh2vFrPgJRB2
+         bImgpt9DqEwn6l0NLSYWU/9XZqCcHORoTRnl9QVDFUOf6sUMY8MWPuzHlZ6YHfbWb8Nq
+         Ey5NgVAvbSVxY+H5x2KhqKnJVkM/G7Z9lYxIOH09J4IQV1eZS2BE2DroHPrcFkgd16GU
+         HNnClYDf1uk/YojYrmMJlYj2fbsGyxetbwDNVCsrg1PH6zbB08weLNm8iZHYDBpDl9j7
+         H5jQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:to:from:subject:openpgp:message-id:date
+         :user-agent:mime-version:content-language:content-transfer-encoding;
+        bh=p/266xGCKqIz5lLgiyWBIbKeWlnbN4ZBfTzMCudgi3I=;
+        b=uMFmwn11KdWj8qv85l7w46gs451svZ4a75vpxTIhXV0DVu7Uxroifnor1DYlNwstqd
+         aOdRPljYgtKPnI0eNhxjdbwbowSskyvnYYi0y7jX+Z+3DDq2hRYQyEVUvZIn1ys/1QMG
+         pIdCZoPvuC8Mj36yTPyka4suUopnZhEoW/x2m/O4QwJgFoc8LqMqkJ+bTz7qg0/cH143
+         04/RYWFI1m10CqrbHjspMGgQkpNqoNvkzjLCgDTD03lcL0BwBgs63OOu/SFG/c5QG9hF
+         WeuCTir0Iyb9jiJeAkyw0dZ/pveXmL13hh3Xmukj8dqD2jxtDlRBZOx9AUPaK05LsOKg
+         LCyg==
+X-Gm-Message-State: AOUpUlEx8Ct/iDSRLiBHd0PgNKIiKkIsOjtEve6HKVfi88V2YtUmat5O
+	jSzuruQkm3lwkEyhFhuFWwTaXrRRbgMlnQ==
+X-Google-Smtp-Source: AAOMgpdZQKCPKBEIt8zoBRXZk5YHnecVK5c4I77/RkUv4uPcgJptqAqr3Vfd201naPL9oYTrbhtQvw==
+X-Received: by 2002:a50:fa82:: with SMTP id w2-v6mr5937965edr.256.1531899009084;
+        Wed, 18 Jul 2018 00:30:09 -0700 (PDT)
+To: oss-security@lists.openwall.com
+From: Alexey Sokolov <alexey+znc@asokolov.org>
+Openpgp: preference=signencrypt
+Message-ID: <0f1139f3-ffca-d277-5208-2c2ed5dcc3cf@asokolov.org>
+Date: Wed, 18 Jul 2018 08:30:07 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.8.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="A4hHPi0YDmf05M38"
-Content-Disposition: inline
-In-Reply-To: <aTlswbw7mu0DyFec@jumper.schlittermann.de>
-Organization: schlittermann -- internet & unix support
-X-Face: =y#&-VlCH8uT|8#-#JE_^c<:+qPbYxFD`}8`m)xjyA$93tpwm-vKsa(V,0?906(2VIVNQbU
- QzD%zhE+~-AA?\v-v.HY6]ebO4_$vY`l|||Q!EZT5*Xx/>Fj{8E_a.;;#<4S$>&T%n5()2Yt=R5FSC
- y:Na&@T{Rf`kPq^'ffPFA%`mP~>%-LU$d*]]{-%>j={&MsMND.">]H)&#AoSI~(U8Jk;v*;,Pf+l85
- X?H&`
-X-Telegram: @HeikoSchlittermann
-X-Threema: T5RPWMSS
-X-Signal: +49.172.7909055
-X-Phone: +49.172.7909055
-X-SMS: +49.172.7909055
-X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
-X-GPG-Key-ID: F69376CE
-Subject: [oss-security] Update: EXIM-Security-2025-12-09.1: Exim 4.99: Remote heap corruption
-
---A4hHPi0YDmf05M38
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE-2018-14055: privilege escalation in ZNC
 
-Update: Coordinated release date
+Severity: high
 
-Heiko Schlittermann <hs@nodmarc.schlittermann.de> (Mi 10 Dez 2025 13:51:13 =
-CET):
-=E2=80=A6
-> ~2025-12-15: publish the fix via the distros repo (accessible for the dis=
-tro packagers)
-> ~2025-12-18: publish the fix via the default repo (accessible for the pub=
-lic)
->=20
-> Once the fixes passed internal testing, we'll update the schedule and send
-> another notification about the coordinated release date(s) for distros and
-> the public.
+Versions affected:
+1.6.0 through 1.7.0
+Potentially, all earlier versions too, but there is no known way to
+trigger this before 1.6.0
 
-Coordinated Release Date: 2025-12-18 15:00 UTC.
-Repo-URL: https://code.exim.org/exim/exim
-Tag:      exim-4.99.1 (on branch exim-4.99+fixes)
+Mitigation:
+upgrade to 1.7.1
 
-To allow distros to prepare the packages: starting from 2025-12-15 15:00 UTC
-you can git-pull the 4.99.1 release via ssh://git@code.exim.org/exim/exim-d=
-istros
-(The repo is accessible already, so you can test whether you have
-access.)
+Description:
+ZNC before 1.7.1-rc1 does not properly validate untrusted lines coming
+from the network, allowing a non-admin user to escalate privilege,
+inject rogue values into znc.conf, and gain shell access.
 
-    Best regards from Dresden/Germany
-    Viele Gr=C3=BC=C3=9Fe aus Dresden
-    Heiko Schlittermann
---=20
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+Upstream patches:
+https://github.com/znc/znc/commit/a7bfbd93812950b7444841431e8e297e62cb524e
+https://github.com/znc/znc/commit/d22fef8620cdd87490754f607e7153979731c69d
 
---A4hHPi0YDmf05M38
-Content-Type: application/pgp-signature; name="signature.asc"
+Reported by: Jeriko One <jeriko.one@gmx.us>
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEE3ZjZI1nenjwmY/KRaX8O3WgJn28FAmk626QACgkQaX8O3WgJ
-n29u0xAAsLygpNHAc4KdNVG33PkluoHajV3tmMqf3bgq5f4arQfqUSsBE2tg2t0L
-h2DCVm5UrHqs2SVmxdFPF6bCjuhP6EaWfVPZO2EUc7nN32zs+WMVMpHT5Hibm6/s
-TgccfT5P7h4eBJwXsOWL6r92aS/auAtRoizYBoh3jo1QPaV3AMMqlbSJli2CLNGt
-M+cQDNLv4vzW9bzLjoLLjdDXucbA2EM7frGIhnfT7+FDQO6vxlJlBs/jRC4dK4Mi
-NU5VN5zncSXsaJg0HbqkNjhSM7fyscTvhyVWW8EGnLmkEKPIF6TODpUlHod3nMwN
-B7JvzXZDZuao8xTbZxdT3/1orbI3oUxVXAuqupexbOn8tvYQ3VYloIRYtnYWB77x
-seRmtZrzi0udXtm7gdhJtrMGZV7SEkydNMGBxMyWUK74jS3X7XLUAFJhYccZclw3
-JY0WCqdUMnJsKaaZOok/stj9HJnJXsSiQfpv1LzkaX259Pbw6Pq3HuFfomO+658T
-w+R3tqHYHxn03rc0bz+YawVKXYgYg7KS30Mq3wIqyoU7TlE84gQE4j29w/sxbnlK
-+nmIt3kP0tTVEjTuqVu0/cOe+HiG72lfHytqXkbvOxaAuPSBI2bX8nZHIEXFylF7
-rhM2nB9sSXNaXHZJu+Q4IGx9UQXv+Zrs3XKWqvg5WkW+s8vqTfc=
-=1/m8
------END PGP SIGNATURE-----
-
---A4hHPi0YDmf05M38--
+-- 
+Best regards,
+Alexey "DarthGandalf" Sokolov
