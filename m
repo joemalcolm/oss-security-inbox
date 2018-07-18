@@ -1,26 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/11/4
-Message-ID: <3b969e4e-2c02-9b18-c1a2-412b5b698548@linux.intel.com>
-Date: Thu, 11 Oct 2018 13:30:33 -0700
-From: Dave Hansen <dave.hansen@...ux.intel.com>
-To: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: "Meltdown leaks with Global kernel mapping"
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/18/4
+Message-ID: <0f1139f3-ffca-d277-5208-2c2ed5dcc3cf@asokolov.org>
+Date: Wed, 18 Jul 2018 08:30:07 +0100
+From: Alexey Sokolov <alexey+znc@...kolov.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2018-14055: privilege escalation in ZNC
 Content-Type: text/plain; charset=utf-8
 
-On 10/09/2018 04:41 AM, Solar Designer wrote:
-> There are mentions of "r/w kernel text issue" and "unused hole" issue -
-> is this why "two"?  But "r/w kernel text" feels irrelevant to Meltdown.
+Severity: high
 
-The description says:
+Versions affected:
+1.6.0 through 1.7.0
+Potentially, all earlier versions too, but there is no known way to
+trigger this before 1.6.0
 
-> The current PTI code leaves the entire area of the kernel binary
-> between '_text' and '_end' as Global (on non-PCID hardware).
-> However, that range contains both read-write kernel data, and two
-> "unused" holes in addition to text.
+Mitigation:
+upgrade to 1.7.1
 
-I said two issues because I saw two distinct problems:
+Description:
+ZNC before 1.7.1-rc1 does not properly validate untrusted lines coming
+from the network, allowing a non-admin user to escalate privilege,
+inject rogue values into znc.conf, and gain shell access.
 
-1. 'read-write kernel data'
-2. '"unused" holes'
+Upstream patches:
+https://github.com/znc/znc/commit/a7bfbd93812950b7444841431e8e297e62cb524e
+https://github.com/znc/znc/commit/d22fef8620cdd87490754f607e7153979731c69d
 
-Does that clear it up?
+Reported by: Jeriko One <jeriko.one@....us>
+
+-- 
+Best regards,
+Alexey "DarthGandalf" Sokolov
