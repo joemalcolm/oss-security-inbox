@@ -1,30 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/10/3
-Message-ID: <20180410102403.6gb45xp4kt75ybpj@jwilk.net>
-Date: Tue, 10 Apr 2018 12:24:03 +0200
-From: Jakub Wilk <jwilk@...lk.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/18/8
+Message-Id: <D2FED7A8-F45F-403A-B474-A1B42B1A815F@beckweb.net>
+Date: Wed, 18 Jul 2018 18:32:10 +0200
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: Terminal Control Chars
+Subject: Re: Multiple vulnerabilities in Jenkins
 Content-Type: text/plain; charset=utf-8
 
-* Not Real <theborland1@...il.com>, 2018-04-09, 13:35:
->This is posted here every few months.
 
-The thread subject is not as informative as it could be. The original 
-post was about pasting control characters. While the problem is not 
-new[0], I don't recall it being ever discussed on oss-security before.
+> On 18. Jul 2018, at 16:38, Daniel Beck <ml@...kweb.net> wrote:
+> 
+> SECURITY-897
+> Unauthenticated users could provide maliciously crafted login credentials 
+> that cause Jenkins to move the config.xml file from the Jenkins home 
+> directory. This configuration file contains basic configuration of 
+> Jenkins, including the selected security realm and authorization strategy. 
+> If Jenkins is started without this file present, it will revert to the 
+> legacy defaults of granting administrator access to anonymous users.
 
->https://turbochaos.blogspot.com/2014/08/journalctl-terminal-escape-injection.html
+CVE-2018-1999001
 
-OTOH, this is about terminal escape injection, an entirely different 
-problem, and a frequent topic on oss-security.
+> SECURITY-914
+> An arbitrary file read vulnerability in the Stapler web framework used by 
+> Jenkins allowed unauthenticated users to send crafted HTTP requests 
+> returning the contents of any file on the Jenkins master file system that 
+> the Jenkins master process has access to.
 
+CVE-2018-1999002
 
-[0] The original post links to 
-https://thejh.net/misc/website-terminal-copy-paste (from 2013?), 
-which links to 
-http://www.ush.it/team/ascii/hack-tricks_253C_CCC2008/wysinwyc/what_you_see_is_not_what_you_copy.txt 
-(from 2008).
+> SECURITY-891
+> The URLs handling cancellation of queued builds did not perform a 
+> permission check, allowing users with Overall/Read permission to cancel 
+> queued builds.
 
--- 
-Jakub Wilk
+CVE-2018-1999003
+
+> SECURITY-892
+> The URL that initiates agent launches on the Jenkins master did not perform 
+> a permission check, allowing users with Overall/Read permission to initiate 
+> agent launches.
+
+CVE-2018-1999004
+
+> SECURITY-944
+> The build timeline widget shown on URLs like /view/…/builds did not 
+> properly escape display names of items. This resulted in a cross-site 
+> scripting vulnerability exploitable by users able to control item display 
+> names.
+
+CVE-2018-1999005
+
+> SECURITY-925
+> Files indicating when a plugin JPI file was last extracted into a 
+> subdirectory of plugins/ in the Jenkins home directory was accessible via 
+> HTTP by users with Overall/Read permission. This allowed unauthorized users 
+> to determine the likely install date of a given plugin.
+
+CVE-2018-1999006
+
+> SECURITY-390
+> Stapler is the web framework used by Jenkins to route HTTP requests. When 
+> its debug mode is enabled, HTTP 404 error pages display diagnostic 
+> information. Those error pages did not escape parts of URLs they displayed, 
+> in rare cases resulting in a cross-site scripting vulnerability.
+
+CVE-2018-1999007
+
