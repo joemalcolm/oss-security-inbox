@@ -1,4 +1,9 @@
-Received: (qmail 10100 invoked by uid 550); 6 Aug 2022 18:47:46 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1444" "Thursday" "19" "July" "2018" "10:14:16" "-0700" "Denis Magda" "dmagda@apache.org" "<CAK0qHnrpBcaDc65bjdX1jEqr6L9a+OWcouC9P6JwEY1vh9gbhQ@mail.gmail.com>" "40" "[oss-security] [CVE-2018-8018] Possible Execution of Arbitrary Code via Apache Ignite GridClientJdkMarshaller" nil nil nil "7" "2018071917:14:16" "[oss-security] [CVE-2018-8018] Possible Execution of Arbitrary Code via Apache Ignite GridClientJdkMarshaller" (number mark "U       dmagda@apach Jul 19   40/1444  " thread-indent "\"[oss-security] [CVE-2018-8018] Possible Execution of Arbitrary Code via Apache Ignite GridClientJdkMarshaller\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 3451 invoked by uid 550); 19 Jul 2018 17:32:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,90 +12,61 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9913 invoked from network); 6 Aug 2022 18:47:25 -0000
-Date: Sat, 6 Aug 2022 20:47:21 +0200
-From: Solar Designer <solar@openwall.com>
-To: Evgeny Legerov <admin@vulndisco.cc>
-Cc: oss-security@lists.openwall.com
-Message-ID: <20220806184721.GA8594@openwall.com>
-References: <2007d258-97ab-fb3c-bfa8-0544c63ec1b8@vulndisco.cc> <Yu5+6SlKH6n6afZv@gentoo.org> <5f0712ff-44b4-cef2-1276-424c1cfa094e@vulndisco.cc>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <5f0712ff-44b4-cef2-1276-424c1cfa094e@vulndisco.cc>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Exim 4.95 invalid free
+Received: (qmail 23987 invoked from network); 19 Jul 2018 17:14:57 -0000
+X-Gm-Message-State: AOUpUlH94ntJIsg6pbs/90qWVuSm5rWjOIOYYSEJO4KCVLnyKsJxub1c
+	yr/IdKD7/eIh8bIi8AVWwMUK2a4XNyJ2VNCZYCLvog==
+X-Google-Smtp-Source: AAOMgpdgA72S559hsWZnLFUmrLfxGz9w+pYmjScMgb+5JQm5bZpJcj1VcGDogpVyCBr0g8Z1H9dXaE6YZFR9dJXAiTo=
+X-Received: by 2002:a2e:3c1a:: with SMTP id j26-v6mr8187144lja.149.1532020482489;
+ Thu, 19 Jul 2018 10:14:42 -0700 (PDT)
+MIME-Version: 1.0
+From: Denis Magda <dmagda@apache.org>
+Date: Thu, 19 Jul 2018 10:14:16 -0700
+X-Gmail-Original-Message-ID: <CAK0qHnrpBcaDc65bjdX1jEqr6L9a+OWcouC9P6JwEY1vh9gbhQ@mail.gmail.com>
+Message-ID: <CAK0qHnrpBcaDc65bjdX1jEqr6L9a+OWcouC9P6JwEY1vh9gbhQ@mail.gmail.com>
+To: announce@apache.org, security@ignite.apache.org, 
+	Apache Security Team <security@apache.org>, Man Yue Mo <mmo@semmle.com>, oss-security@lists.openwall.com
+Cc: user@ignite.apache.org, dev <dev@ignite.apache.org>
+Content-Type: multipart/alternative; boundary="000000000000a5d43505715d50d2"
+Subject: [oss-security] [CVE-2018-8018] Possible Execution of Arbitrary Code via Apache
+ Ignite GridClientJdkMarshaller
 
-Hi Evgeny,
+--000000000000a5d43505715d50d2
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Thank you for starting to bring relevant issues to oss-security!
+Severity: Important
 
-In that guideline John quoted, we really do mean that each "message
-should remain valuable even with all of the external resources gone."
-Adding a second link helps, but not enough to satisfy this requirement.
+Vendor: The Apache Software Foundation
 
-Yet I understand we cannot really ask you for more, and a brief
-link-only heads-up is better than none.
+Versions Affected: Apache Ignite 2.5 and earlier
 
-So maybe others in here can be filling in the gaps (in follow-up
-postings) in cases like this.  In fact, some had volunteered:
+Impact:
+An attacker can execute arbitrary code on Ignite nodes via
+GridClientJdkMarshaller deserialization endpoint in the case when Ignite
+classpath contains arbitrary vulnerable classes.
 
-https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+Description:
+Apache Ignite serialization mechanism does not have a list of classes
+allowed for serialization/deserialization, which makes it possible to run
+arbitrary code when 3-rd party vulnerable classes are present in Ignite
+classpath. The vulnerability can be exploited if the one sends a specially
+prepared form of a serialized object to GridClientJdkMarshaller
+deserialization endpoint.
 
-"Help ensure that each message posted to oss-security contains the most
-essential information (e.g., vulnerability detail and/or exploit)
-directly in the message itself (and in plain text) rather than only by
-reference to an external resource, and add the missing information
-(e.g., in your own words, by quoting with proper attribution, and/or by
-creating and attaching a properly attributed text/plain export of a
-previously referenced web page) and remind the original sender of this
-requirement (for further occasions) in a "reply" posting when necessary
-- primary: Oracle Solaris, backup: Container-Optimized OS"
+Mitigation:
+=E2=80=A2    All Ignite versions: make sure there are no vulnerable classes=
+ among
+your custom code used in Apache Ignite.
+=E2=80=A2    Ignite 2.5 or earlier users: upgrade to Ignite 2.6 and use
+IGNITE_MARSHALLER_WHITELIST and/or IGNITE_MARSHALLER_BLACKLIST system
+properties to define classes allowed for deserialization. Refer to this
+documentation for more details:
+https://apacheignite.readme.io/docs/securing-data-deserialization
 
-So maybe the Oracle Solaris and/or the Container-Optimized OS folks can
-be the ones to extract the vulnerability description and PoC from
-https://github.com/ivd38/exim_invalid_free and the patch from
-https://github.com/Exim/exim/commit/51be321b27825c01829dffd90f11bfff256f7e42
-and attach them to a "reply" in this thread?  And similar for the "zlib
-buffer overflow" thread nearby.
+Credit:
+* The vulnerability was discovered by Man Yue Mo of lgtm.com.
 
-Speaking of the actual issue/fix, I wonder if it's considered acceptable
-in Exim to use unchecked strdup() in general or in this specific place,
-with the possibility of the PAM response pointer being NULL on an
-out-of-memory condition.  Perhaps an oversight, as I'd expect at least a
-comment on this otherwise.
+References:
+* http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2018-8018
 
-Thanks,
-
-Alexander
-
-On Sat, Aug 06, 2022 at 07:40:49PM +0300, Evgeny Legerov wrote:
-> My bad.
-> 
-> Fix is here 
-> https://github.com/Exim/exim/commit/51be321b27825c01829dffd90f11bfff256f7e42
-> 
-> On 06.08.2022 17:47, John Helmert III wrote:
-> >Hi, please keep in mind the list content guidelines:
-> >
-> >"At least the most essential part of your message (e.g., vulnerability 
-> >detail and/or exploit) should be directly included in the message itself 
-> >(and in plain text), rather than only included by reference to an external 
-> >resource. Posting links to relevant external resources as well is 
-> >acceptable, but posting only links is not. Your message should remain 
-> >valuable even with all of the external resources gone."
-> >
-> >Do you have any upstream references or commits of the fix?
-> >
-> >On Sat, Aug 06, 2022 at 12:06:36PM +0300, Evgeny Legerov wrote:
-> >>Hi,
-> >>
-> >>
-> >>The issue has been silently fixed in Exim 4.96 -
-> >>https://github.com/ivd38/exim_invalid_free
-> >>
-> >>
-> >>
-> >>regards,
-> >>
-> >>-e
+--000000000000a5d43505715d50d2--
