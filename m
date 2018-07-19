@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2400" "Monday" "5" "December" "2016" "15:50:41" "-0600" "Steven M. Schweda" "sms@antinode.info" "<16120515504112_2020046C@antinode.info>" "71" "[oss-security] CVE Request: Info-Zip zipinfo buffer overflow" nil nil nil "12" "2016120521:50:41" "[oss-security] CVE Request: Info-Zip zipinfo buffer overflow" (number mark "U       sms@antinode Dec  5   71/2400  " thread-indent "\"[oss-security] CVE Request: Info-Zip zipinfo buffer overflow\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1412" "Thursday" "19" "July" "2018" "10:04:16" "-0700" "Denis Magda" "dmagda@apache.org" "<CAK0qHnqzfzmCDFFi6c5Jok19zNkVCz5Xb4sU=0f2J_1i4p46zQ@mail.gmail.com>" "46" "[oss-security] [CVE-2018-1273] Apache Ignite impacted by security vulnerability in Spring Data Commons" nil nil nil "7" "2018071917:04:16" "[oss-security] [CVE-2018-1273] Apache Ignite impacted by security vulnerability in Spring Data Commons" (number mark "U       dmagda@apach Jul 19   46/1412  " thread-indent "\"[oss-security] [CVE-2018-1273] Apache Ignite impacted by security vulnerability in Spring Data Commons\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 12257 invoked by uid 550); 5 Dec 2016 22:02:18 -0000
+Received: (qmail 3257 invoked by uid 550); 19 Jul 2018 17:32:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,84 +12,68 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 12018 invoked from network); 5 Dec 2016 22:01:33 -0000
-Date: Mon, 5 Dec 2016 15:50:41 -0600 (CST)
-Message-Id: <16120515504112_2020046C@antinode.info>
-From: "Steven M. Schweda" <sms@antinode.info>
-To: tyhicks@canonical.com, oss-security@lists.openwall.com
-Cc: security@ubuntu.com, Info-ZIP-Dev@goatley.com
-X-VMS-To: SMTP%"tyhicks@canonical.com" SMTP%"oss-security@lists.openwall.com"
-X-VMS-Cc: SMTP%"security@ubuntu.com" IZ,SMS
-Subject: [oss-security] CVE Request: Info-Zip zipinfo buffer overflow
+Received: (qmail 18045 invoked from network); 19 Jul 2018 17:04:59 -0000
+X-Gm-Message-State: AOUpUlFLhi1jdjMIs6H9N9mYLIelWRr44+argbVa6gWk7rDK4ao4yICJ
+	mQQzfLKevz+0yvH0akZ60MfZTuSTiQ00n81Fv1jhww==
+X-Google-Smtp-Source: AAOMgpcUvNfKezL/PvYE0C86qEddZMB6qiR4yYOhPdRL1PAqFUzNsyZ4RmpMmls2T8D+8bzDItcDHicitp/2qim9XvA=
+X-Received: by 2002:a2e:8185:: with SMTP id e5-v6mr8778089ljg.93.1532019882767;
+ Thu, 19 Jul 2018 10:04:42 -0700 (PDT)
+MIME-Version: 1.0
+From: Denis Magda <dmagda@apache.org>
+Date: Thu, 19 Jul 2018 10:04:16 -0700
+X-Gmail-Original-Message-ID: <CAK0qHnqzfzmCDFFi6c5Jok19zNkVCz5Xb4sU=0f2J_1i4p46zQ@mail.gmail.com>
+Message-ID: <CAK0qHnqzfzmCDFFi6c5Jok19zNkVCz5Xb4sU=0f2J_1i4p46zQ@mail.gmail.com>
+To: announce@apache.org, security@ignite.apache.org, 
+	Apache Security Team <security@apache.org>, "Rai, Harendra" <harendra.rai@ncr.com>, 
+	oss-security@lists.openwall.com
+Cc: user@ignite.apache.org, dev <dev@ignite.apache.org>
+Content-Type: multipart/alternative; boundary="000000000000e6cf8b05715d2ccb"
+Subject: [oss-security] [CVE-2018-1273] Apache Ignite impacted by security vulnerability in
+ Spring Data Commons
 
-From: Tyler Hicks <tyhicks@canonical.com>
+--000000000000e6cf8b05715d2ccb
+Content-Type: text/plain; charset="UTF-8"
 
-   Thanks for the (thorough, helpful) report.
+Severity: Important
 
-> Alexis Vanden Eijnde has discovered a zipinfo buffer overflow and
-> reported it here:
-> 
->   https://launchpad.net/bugs/1643750
-> 
-> It is very similar to, but different than, this `unzip -l` crasher:
-> 
->   http://www.openwall.com/lists/oss-security/2014/11/03/5
+Vendor: The Apache Software Foundation
 
-   It is.  And the easy fix is also very similar (and should appear in
-the next UnZip release, version 6.1e beta):
+Versions Affected:
 
-ALP $ gdiff zipinfo.c;39 zipinfo.c
-2568c2568,2579
-<         sprintf(&methbuf[1], "%03u", G.crec.compression_method);
----
->         /* 2016-12-05 SMS.
->          * https://launchpad.net/bugs/1643750
->          * Unexpectedly large compression methods overflow
->          * &methbuf[].  Use the old, three-digit decimal format
->          * for values which fit.  Otherwise, sacrifice the "u",
->          * and use four-digit hexadecimal.
->          */
->         if (G.crec.compression_method <= 999) {
->             sprintf( &methbuf[ 1], "%03u", G.crec.compression_method);
->         } else {
->             sprintf( &methbuf[ 0], "%04X", G.crec.compression_method);
->         }
+* Apache Ignite 1.0.0-RC3 to 2.5
 
-   Typical output (pre-release UnZip 6.1e beta, with some minor,
-unrelated report format changes from UnZip 6.0):
+Impact:
 
-   Old:
+An unauthenticated remote malicious user (or attacker) can issue requests
+against Spring Data REST or Spring Data
 
-ALP $ unzip6l -Z PoZ.zip
-Archive:  ALP$DKC0:[UTILITY.SOURCE.ZIP.test_mthd_ovflo]PoZ.zip;1
-Zip file size: 154 bytes, number of entries: 1
--rw-rw-r--  3.0 unx        2 tx u65535 16-Nov-21 19:07 a
-                                ^^^^^^
-1 file, 2 bytes uncompressed, 2 bytes compressed:  0.0%
+Description:
 
-   New/next:
+Apache Ignite utilizes Spring Data Common library for some of its
+components. The vulnerability affects Apache Ignite users who us Spring
+Data REST for
+access an Ignite cluster via HTTP and Spring Data. Spring Data Commons,
+versions prior to 1.13 to 1.13.10, 2.0 to 2.0.5, and older unsupported
+versions, contain a property binder vulnerability caused by improper
+neutralization of special elements. An unauthenticated remote malicious
+user (or attacker) can supply specially crafted request parameters against
+Spring Data REST backed HTTP resources or using Spring Data's
+projection-based request payload binding hat can lead to a remote code
+execution attack.
 
-ALP $ unzipx -Z PoZ.zip
-Archive:  ALP$DKC0:[UTILITY.SOURCE.ZIP.test_mthd_ovflo]PoZ.zip;1
-Archive size: 154 bytes; Members: 1
--rw-rw-r--  3.0 unx        2 tx FFFF 16-Nov-21 19:07 a
-                                ^^^^
-Members: 1; Bytes uncompressed: 2, compressed: 2, 0.0%
-Directories: 0, Files: 1, Links: 0
+Mitigation:
 
-> The zipinfo buffer overflow occurs due to a flaw in zipinfo.c's
-> zi_short() function:
-> [...]
+* Upgrade to Apache Ignite 2.6 or later that include Spring Data Commons
+versions not vulnerable to the disclosed issue.
 
-   Yeah.  We should have noticed this whan the "unzip -l" complaint was
-made.
+Credit:
+* Harendra Rai of NCR Corporation discovered the impact of the existing
+vulnerability on Apache Ignite.
 
-> Please assign a CVE. Also, consider assigning a CVE to the related
-> `unzip -l` issue from 2014. Thank you!
 
-   Is that something I should do?  (I normally get reports with CVEs; I
-have never created one.)
+References:
 
-------------------------------------------------------------------------
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-1273
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-1274
 
-   Steven M. Schweda               sms@antinode-info
+--000000000000e6cf8b05715d2ccb--
