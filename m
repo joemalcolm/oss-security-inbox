@@ -1,42 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/04/2
-Message-ID: <f97cfa42-1bb0-edd0-f254-ab0545be3b6a@canonical.com>
-Date: Tue, 4 Sep 2018 11:47:06 -0500
-From: Tyler Hicks <tyhicks@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2018-6554 and CVE-2018-6555: Linux kernel: irda memory leak and use after free
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/19/2
+Message-ID: <CAK0qHnrpBcaDc65bjdX1jEqr6L9a+OWcouC9P6JwEY1vh9gbhQ@mail.gmail.com>
+Date: Thu, 19 Jul 2018 10:14:16 -0700
+From: Denis Magda <dmagda@...che.org>
+To: announce@...che.org, security@...ite.apache.org,  Apache Security Team <security@...che.org>, Man Yue Mo <mmo@...mle.com>, oss-security@...ts.openwall.com
+Cc: user@...ite.apache.org, dev <dev@...ite.apache.org>
+Subject: [CVE-2018-8018] Possible Execution of Arbitrary Code via Apache Ignite GridClientJdkMarshaller
 Content-Type: text/plain; charset=utf-8
 
-Two issues were discovered in the irda subsystem within the Linux
-kernel.
+Severity: Important
 
-The irda subsystem has been removed from the upstream kernel starting in
-v4.17 but it is present in many distro kernels and the stable kernel tree.
+Vendor: The Apache Software Foundation
 
-Memory leak in the irda_bind function in net/irda/af_irda.c and later
-in drivers/staging/irda/net/af_irda.c in the Linux kernel before 4.17
-allows local users to cause a denial of service (memory consumption) by
-repeatedly binding an AF_IRDA socket. (CVE-2018-6554)
+Versions Affected: Apache Ignite 2.5 and earlier
 
-The irda_setsockopt function in net/irda/af_irda.c and later in
-drivers/staging/irda/net/af_irda.c in the Linux kernel before 4.17
-allows local users to cause a denial of service (ias_object
-use-after-free and system crash) or possibly have unspecified other
-impact via an AF_IRDA socket. (CVE-2018-6555)
+Impact:
+An attacker can execute arbitrary code on Ignite nodes via
+GridClientJdkMarshaller deserialization endpoint in the case when Ignite
+classpath contains arbitrary vulnerable classes.
 
-I've sent the fixes to the stable kernel list but I don't yet see my
-submissions in the list archive on Spinics. Here are the equivalent
-versions of the patches against the Ubuntu kernel:
+Description:
+Apache Ignite serialization mechanism does not have a list of classes
+allowed for serialization/deserialization, which makes it possible to run
+arbitrary code when 3-rd party vulnerable classes are present in Ignite
+classpath. The vulnerability can be exploited if the one sends a specially
+prepared form of a serialized object to GridClientJdkMarshaller
+deserialization endpoint.
 
-https://lists.ubuntu.com/archives/kernel-team/2018-September/095134.html
-(>= 4.14)
+Mitigation:
+•    All Ignite versions: make sure there are no vulnerable classes among
+your custom code used in Apache Ignite.
+•    Ignite 2.5 or earlier users: upgrade to Ignite 2.6 and use
+IGNITE_MARSHALLER_WHITELIST and/or IGNITE_MARSHALLER_BLACKLIST system
+properties to define classes allowed for deserialization. Refer to this
+documentation for more details:
+https://apacheignite.readme.io/docs/securing-data-deserialization
 
-https://lists.ubuntu.com/archives/kernel-team/2018-September/095137.html
-(< 4.14)
+Credit:
+* The vulnerability was discovered by Man Yue Mo of lgtm.com.
 
-Tyler
+References:
+* http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-8018
 
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
