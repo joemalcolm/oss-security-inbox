@@ -1,20 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/06/4
-Message-ID: <CAD-rxRC=Sra9eOmzTq1rbkSTzyFCAMALqChi5HdK8f1aaHOgZg@mail.gmail.com>
-Date: Tue, 6 Mar 2018 09:46:24 -0500
-From: Tim Graham <timograham@...il.com>
-To: django-announce@...glegroups.com
-Cc: "Django developers (Contributions to Django itself)" <django-developers@...glegroups.com>, django-users@...glegroups.com,  oss-security@...ts.openwall.com
-Subject: Django security releases issued: 2.0.3, 1.11.11, and 1.8.19
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/19/1
+Message-ID: <CAK0qHnqzfzmCDFFi6c5Jok19zNkVCz5Xb4sU=0f2J_1i4p46zQ@mail.gmail.com>
+Date: Thu, 19 Jul 2018 10:04:16 -0700
+From: Denis Magda <dmagda@...che.org>
+To: announce@...che.org, security@...ite.apache.org,  Apache Security Team <security@...che.org>, "Rai, Harendra" <harendra.rai@....com>,  oss-security@...ts.openwall.com
+Cc: user@...ite.apache.org, dev <dev@...ite.apache.org>
+Subject: [CVE-2018-1273] Apache Ignite impacted by security vulnerability in Spring Data Commons
 Content-Type: text/plain; charset=utf-8
 
-Today the Django team issued Django 2.0.3, 1.11.11, and 1.8.19 as part
-of our security process. These releases address two security issues,
-and we encourage all users to upgrade as soon as possible:
+Severity: Important
 
-https://www.djangoproject.com/weblog/2018/mar/06/security-releases/
+Vendor: The Apache Software Foundation
 
-As a reminder, we ask that potential security issues be reported via
-private email to security@...ngoproject.com and not via Django's Trac
-instance or the django-developers list. Please see
-https://www.djangoproject.com/security for further information.
+Versions Affected:
+
+* Apache Ignite 1.0.0-RC3 to 2.5
+
+Impact:
+
+An unauthenticated remote malicious user (or attacker) can issue requests
+against Spring Data REST or Spring Data
+
+Description:
+
+Apache Ignite utilizes Spring Data Common library for some of its
+components. The vulnerability affects Apache Ignite users who us Spring
+Data REST for
+access an Ignite cluster via HTTP and Spring Data. Spring Data Commons,
+versions prior to 1.13 to 1.13.10, 2.0 to 2.0.5, and older unsupported
+versions, contain a property binder vulnerability caused by improper
+neutralization of special elements. An unauthenticated remote malicious
+user (or attacker) can supply specially crafted request parameters against
+Spring Data REST backed HTTP resources or using Spring Data's
+projection-based request payload binding hat can lead to a remote code
+execution attack.
+
+Mitigation:
+
+* Upgrade to Apache Ignite 2.6 or later that include Spring Data Commons
+versions not vulnerable to the disclosed issue.
+
+Credit:
+* Harendra Rai of NCR Corporation discovered the impact of the existing
+vulnerability on Apache Ignite.
+
+
+References:
+
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-1273
+* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-1274
+
