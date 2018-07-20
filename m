@@ -1,39 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/08/1
-Message-ID: <20180408101147.505cd109@pc1>
-Date: Sun, 8 Apr 2018 10:11:47 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: beep infoleak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/20/6
+Message-ID: <CAAC1_d7x6buq1aREekk_Eh9SjevQLPLkXc+aidiFBMcNz7GGwQ@mail.gmail.com>
+Date: Fri, 20 Jul 2018 18:07:08 +0000
+From: Rodric Rabbah <rabbah@...che.org>
+To: Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com,  announce@...che.org, dev@...nwhisk.apache.org
+Cc: Ory Segal <ory@...esec.io>
+Subject: [CVE] CVE-2018-11757 Docker Skeleton Runtime for Apache OpenWhisk
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Who is Affected: Apache OpenWhisk users with an explicitly created Docker
+action, and the Docker image used for the action inherits from the affected
+Docker tag:
+- openwhisk/dockerskeleton < 1.3.1
 
-It's been found that beep - even after the fix for "holey beep" - can
-be used to create an infoleak and to see which files exist with root
-permissions:
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=895115
+The Docker Skeleton Runtime does not currently have any Apache releases.
 
-Also there are Integer Overflows:
-https://github.com/johnath/beep/issues/13
+Description: A Docker action running as a serverless function (e.g., wsk
+action create <name> —docker <image>), where the Dockerfile used to create
+the Docker image inherits one of the affected tags, may allow a carefully
+crafted parameter to overwrite the serverless function running inside the
+container. This requires the user included function to be vulnerable in
+some way, for example via parameter hijacking, remote code execution, or
+unsafe use of "eval()". Subsequent executions of the original function in
+the same container will use the replaced implementation if the function was
+successfully exploited.
 
-Also Sebastian Krahmer pointed out the fix is incomplete:
-http://seclists.org/oss-sec/2018/q2/17
+Mitigation: Users that create their own Docker runtimes to run as Apache
+OpenWhisk Docker actions, and who pin their Docker runtime image (e.g.,
+Dockerfile starts with "FROM openwhisk/dockerskeleton:1.0.0") should
+upgrade their Docker tag to the latest available tag. Users who build from
+source, should use the latest commit Git tag [1]. Operators of an Apache
+OpenWhisk deployment should check their runtime manifest to determine if
+they are affected, and if so, upgrade the tags in their runtimes manifest
+to automatically patch all actions runtimes when updating their deployment.
 
-All of that without an existing upstream.
+Credit: This issue was researched and reported by Yuri Shapira and Ory
+Segal of PureSec.
 
-I question whether beep should be saved. It would require someone
-carefully reviewing the code and effectively become the new upstream.
-And all that for a tool talking to the PC speaker, which doesn't exist
-in most modern systems anyway. Instead distros should consider not
-installing it as suid or just killing the package altogether.
-I heard some distros (suse) replace beep with a simple "printf '\a'"
-which seems also a safe solution. (although it obviously kills all
-frequency/length/etc features of original "beep").
+[1]
+https://github.com/apache/incubator-openwhisk-runtime-docker/commit/891896f25c39bc336ef6dda53f80f466ac4ca3c8
 
--- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
