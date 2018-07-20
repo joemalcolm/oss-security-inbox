@@ -1,20 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/05/2
-Message-ID: <176615811.10203974.1536137266179.JavaMail.zimbra@redhat.com>
-Date: Wed, 5 Sep 2018 04:47:46 -0400 (EDT)
-From: Vladis Dronov <vdronov@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2018-6554 and CVE-2018-6555: Linux kernel: irda memory leak and use after free
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/20/2
+Message-ID: <b700e851-08b0-003d-b428-58ebd1fefc21@gmail.com>
+Date: Fri, 20 Jul 2018 10:41:40 +0200
+From: Emilio Pozuelo Monfort <pochu27@...il.com>
+To: oss-security@...ts.openwall.com, Iris Morelle <shadowm2006@...il.com>
+Subject: Re: CVE request: Wesnoth arbitrary code execution/sandbox escape
 Content-Type: text/plain; charset=utf-8
 
-> I've sent the fixes to the stable kernel list but I don't yet see my
-> submissions in the list archive on Spinics.
+On 20/07/18 03:13, Iris Morelle wrote:
+> Hello,
+> 
+> We've found an issue in our software, "The Battle for Wesnoth", which allows 
+> arbitrary code execution by exploiting a vulnerability within the Lua 
+> scripting language engine which allows escaping existing sandbox measures in 
+> place and executing untrusted bytecode.
+> 
+> We would like to have a CVE id assigned to this issue if possible.
 
-For the sake of completeness:
+Please request one by filling https://cveform.mitre.org and let this list know
+the CVE id if/when you get one assigned.
 
-https://www.spinics.net/lists/stable/msg255033.html - [STABLE <= 4.13][PATCH 0/2] IRDA fixes
+Cheers,
+Emilio
 
-https://www.spinics.net/lists/stable/msg255029.html - [STABLE 4.14+][PATCH 0/2] IRDA fixes
+> 
+> 
+> Description:
+> 
+> The Wesnoth game engine uses the vanilla Lua programming language library to 
+> implement most of its game scripting capabilities. Lua is able to execute 
+> bytecode using its load(), loadfile(), loadstring(), dofile(), and require() 
+> functions. Wesnoth in particular exposes load(), loadstring(), and two 
+> wrappers for the former in the form of wesnoth.dofile() and wesnoth.require(), 
+> without making sure to disable the ability to load and execute bytecode.
+> 
+> It has been documented [1] that it is possible to exploit the Lua load 
+> functions to execute untrusted bytecode that can then bypass sandbox measures, 
+> or even gain and abuse special knowledge about the process' memory layout.
+> 
+>   [1] https://gist.github.com/corsix/6575486
+> 
+> Wesnoth executes Lua code from untrusted local files either written by players 
+> or downloaded through a player content distribution server, as well as from 
+> data sent over the network in multiplayer games; thus this vulnerability is 
+> rather severe as it can be exploited remotely by malicious parties without the 
+> user's knowledge.
+> 
+> This issue was found by Daniel Dräger, a Wesnoth developer, and author of an 
+> unmerged patch fixing it.
+> 
+> 
+> Affected versions:
+> 
+> All existing versions of Wesnoth with the Lua scripting capability, i.e. 
+> versions 1.7.0 through 1.14.3.
+> 
 
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
