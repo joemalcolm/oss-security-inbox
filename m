@@ -1,30 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/16/6
-Message-ID: <20181016175742.0d898390@jabberwock.cb.piermont.com>
-Date: Tue, 16 Oct 2018 17:57:42 -0400
-From: "Perry E. Metzger" <perry@...rmont.com>
-To: Hanno Böck <hanno@...eck.de>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: ghostscript: 1Policy operator gives access to .forceput CVE-2018-18284
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/20/4
+Message-ID: <20180720154723.5rgdhg2n5nj5bgce@jwilk.net>
+Date: Fri, 20 Jul 2018 17:47:24 +0200
+From: Jakub Wilk <jwilk@...lk.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: accountsservice: insufficient path check in user_change_icon_file_authorized_cb()
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 16 Oct 2018 22:50:24 +0200 Hanno Böck <hanno@...eck.de> wrote:
-> On Tue, 16 Oct 2018 15:57:22 -0400
-> "Perry E. Metzger" <perry@...rmont.com> wrote:
-> 
-> > Again, given that PostScript is an archival format for a lot of
-> > documents, wouldn't a version of ghostscript with all the ability
-> > to do anything dangerous removed from the interpreter at compile
-> > time be rational?  
-> 
-> I think nobody here will disagree with you that this would be good
-> to have.
-> The question is: Who's gonna do it? Will you?
+* Matthias Gerstner <mgerstner@...e.de>, 2018-07-02, 16:38:
+>>>I think the easiest way to fix this is to normalize the user supplied 
+>>>filename e.g. using realpath()
+>>
+>>Using realpath(3) for access control is almost always a mistake: this 
+>>function expands symlinks, including attacker-controlled symlinks.
+>
+>can you elaborate what your main worry of using realpath is in this 
+>context?
 
-Good question. One obstacle for me is a lack of familiarity with the
-codebase (which others here seem to have), but on the other hand, I
-appear to have more motivation.
+AIUI, in your original patch, canonicalized path was used for prefix 
+check, but then the orignal was stored. If you used realpath() for 
+canonicalization, the attacker could make a symlink that points to 
+/usr/share/icons/moo.png, so that the check passes, and then switch 
+the symlink to something else.
 
-Perry
+But in the patch that went upstream[0], it's the canonicalized path that 
+is stored, which is probably a good idea anyway.
+
+Another problem with realpath(), unrelated to symlinks, is that if it's 
+run as root, it could reveal to the attacker whether an 
+otherwise-inaccessible directory exists. For example, 
+realpath("/home/bob/foobar/../../../usr/share/icons/moo.png", ...) would 
+succeed iff /home/bob/foobar/ existed.
+
+
+[0] https://cgit.freedesktop.org/accountsservice/commit/?id=f9abd359f71a5bce421b9ae23432f539a067847a
+
 -- 
-Perry E. Metzger		perry@...rmont.com
+Jakub Wilk
