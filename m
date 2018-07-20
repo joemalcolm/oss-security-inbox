@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1691" "Thursday" "18" "June" "2015" "08:21:49" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150618122149.856587BC090@smtpvmsrv1.mitre.org>" "46" "[oss-security] Re: PHP 5.6.10 / 5.5.26 / 5.4.42 CVE request" nil nil nil "6" "2015061812:21:49" "[oss-security] Re: PHP 5.6.10 / 5.5.26 / 5.4.42 CVE request" (number mark "U       cve-assign@m Jun 18   46/1691  " thread-indent "\"[oss-security] Re: PHP 5.6.10 / 5.5.26 / 5.4.42 CVE request\"\n") "<20150618112238.783fdf4b@redhat.com>" ("<20150618112238.783fdf4b@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1841" "Friday" "20" "July" "2018" "18:07:08" "+0000" "Rodric Rabbah" "rabbah@apache.org" "<CAAC1_d7x6buq1aREekk_Eh9SjevQLPLkXc+aidiFBMcNz7GGwQ@mail.gmail.com>" "39" "[oss-security] [CVE] CVE-2018-11757 Docker Skeleton Runtime for Apache OpenWhisk" nil nil nil "7" "2018072018:07:08" "[oss-security] [CVE] CVE-2018-11757 Docker Skeleton Runtime for Apache OpenWhisk" (number mark "U       rabbah@apach Jul 20   39/1841  " thread-indent "\"[oss-security] [CVE] CVE-2018-11757 Docker Skeleton Runtime for Apache OpenWhisk\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13448 invoked by uid 550); 18 Jun 2015 12:22:01 -0000
+Received: (qmail 1572 invoked by uid 550); 20 Jul 2018 19:59:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,58 +12,59 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13415 invoked from network); 18 Jun 2015 12:22:01 -0000
-From: cve-assign@mitre.org
-To: thoger@redhat.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, security@php.net
-In-Reply-To: <20150618112238.783fdf4b@redhat.com>
-Message-Id: <20150618122149.856587BC090@smtpvmsrv1.mitre.org>
-Date: Thu, 18 Jun 2015 08:21:49 -0400 (EDT)
-Subject: [oss-security] Re: PHP 5.6.10 / 5.5.26 / 5.4.42 CVE request
+Received: (qmail 32166 invoked from network); 20 Jul 2018 18:08:08 -0000
+X-Gm-Message-State: AOUpUlENNGSaWKBnlGjlEpAw9PJ2GcVckWdt9xFSnrdcrZAgYAk2RbwT
+	HqWEohabOpNMwtOd1nUy0ewWI0T/tUbhVF40MgE=
+X-Google-Smtp-Source: AAOMgpciMH7V41r7kA6Mb4rFhrQIUBrEkXmtCUaRBdZAY+tnM5bGAgY/CZC0RkmOe2mWyxOuSeMSvrDCN9fjk50DMYc=
+X-Received: by 2002:a81:7d43:: with SMTP id y64-v6mr1503048ywc.371.1532110069395;
+ Fri, 20 Jul 2018 11:07:49 -0700 (PDT)
+MIME-Version: 1.0
+From: Rodric Rabbah <rabbah@apache.org>
+Date: Fri, 20 Jul 2018 18:07:08 +0000
+X-Gmail-Original-Message-ID: <CAAC1_d7x6buq1aREekk_Eh9SjevQLPLkXc+aidiFBMcNz7GGwQ@mail.gmail.com>
+Message-ID: <CAAC1_d7x6buq1aREekk_Eh9SjevQLPLkXc+aidiFBMcNz7GGwQ@mail.gmail.com>
+To: Apache Security Team <security@apache.org>, oss-security@lists.openwall.com, 
+	announce@apache.org, dev@openwhisk.apache.org
+Cc: Ory Segal <ory@puresec.io>
+Content-Type: multipart/alternative; boundary="00000000000071777e0571722cbc"
+Subject: [oss-security] [CVE] CVE-2018-11757 Docker Skeleton Runtime for Apache OpenWhisk
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+--00000000000071777e0571722cbc
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> Fixed bug #69646 (OS command injection vulnerability in escapeshellarg).
-> https://bugs.php.net/bug.php?id=69646
-> http://git.php.net/?p=php-src.git;a=commitdiff;h=d2ac264ffea5ca2e85640b6736e0c7cd4ee9a4a9
-> (Windows specific)
+Who is Affected: Apache OpenWhisk users with an explicitly created Docker
+action, and the Docker image used for the action inherits from the affected
+Docker tag:
+- openwhisk/dockerskeleton < 1.3.1
 
-Use CVE-2015-4642.
+The Docker Skeleton Runtime does not currently have any Apache releases.
 
+Description: A Docker action running as a serverless function (e.g., wsk
+action create <name> =E2=80=94docker <image>), where the Dockerfile used to=
+ create
+the Docker image inherits one of the affected tags, may allow a carefully
+crafted parameter to overwrite the serverless function running inside the
+container. This requires the user included function to be vulnerable in
+some way, for example via parameter hijacking, remote code execution, or
+unsafe use of "eval()". Subsequent executions of the original function in
+the same container will use the replaced implementation if the function was
+successfully exploited.
 
-> Improved fix for bug #69545 (Integer overflow in ftp_genlist() resulting
-> in heap overflow).
-> https://bugs.php.net/bug.php?id=69545#1431550655
-> http://git.php.net/?p=php-src.git;a=commitdiff;h=0765623d6991b62ffcd93ddb6be8a5203a2fa7e2
-> (#69545 was originally fixed in 5.4.41 / 5.5.25 / 5.6.9 and got
-> CVE-2015-4022, but the fix was found to be incomplete, as explained in
-> the upstream bug)
+Mitigation: Users that create their own Docker runtimes to run as Apache
+OpenWhisk Docker actions, and who pin their Docker runtime image (e.g.,
+Dockerfile starts with "FROM openwhisk/dockerskeleton:1.0.0") should
+upgrade their Docker tag to the latest available tag. Users who build from
+source, should use the latest commit Git tag [1]. Operators of an Apache
+OpenWhisk deployment should check their runtime manifest to determine if
+they are affected, and if so, upgrade the tags in their runtimes manifest
+to automatically patch all actions runtimes when updating their deployment.
 
-Use CVE-2015-4643.
+Credit: This issue was researched and reported by Yuri Shapira and Ory
+Segal of PureSec.
 
+[1]
+https://github.com/apache/incubator-openwhisk-runtime-docker/commit/891896f=
+25c39bc336ef6dda53f80f466ac4ca3c8
 
-> Fixed bug #69667 (segfault in php_pgsql_meta_data).
-> https://bugs.php.net/bug.php?id=69667
-> http://git.php.net/?p=php-src.git;a=commitdiff;h=2cc4e69cc6d8dbc4b3568ad3dd583324a7c11d64
-> (Not security bug upstream, but we found this when testing updates with
-> fixes for CVE-2015-1352.
-
-Use CVE-2015-4644.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJVgrXFAAoJEKllVAevmvmsEUsIAIXIyv/fO2N0LFHppGJBmVRI
-9POjQK6XdK8jlrfURws3KBKTs78LNNxTG54aUWekKoKHAx/nqtORadTg6I6+0qSr
-24ZsJOVYVpX8+9/r+J9OEELzTIqqmfe1sNKnxuarf61DtJGgg5bzlfqqVdK3vUxb
-yKEh0odHph+aiIjDVR390QzHFqXZKxaag3GLuPgGSAQxNoajWNTqwhlkV4tkMivK
-pc7mvVDPJrNh6ERFfnwV7aodQYSCb9qDQKLXe/Dy8mJSt6fiJ8lFpRUZ49mYiZFI
-ZwMy10I+isMePSmqjKoOqvITvSldogvUFlU58QOrX9ETvLew34YDGj+ywOr0AOA=
-=AtFH
------END PGP SIGNATURE-----
+--00000000000071777e0571722cbc--
