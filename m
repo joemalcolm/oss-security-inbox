@@ -1,51 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/05/3
-Message-ID: <MWHPR15MB1711FD389FCC54BF5F9FB74A99660@MWHPR15MB1711.namprd15.prod.outlook.com>
-Date: Tue, 5 Jun 2018 17:11:11 +0000
-From: "Rai, Harendra" <Harendra.Rai@....com>
-To: Denis Magda <dmagda@...che.org>, "announce@...che.org" <announce@...che.org>, dev <dev@...ite.apache.org>, "user@...ite.apache.org" <user@...ite.apache.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RE: [CVE-2014-0114]: Apache Ignite is vulnerable to existing CVE-2014-0114
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/20/1
+Message-ID: <2222700.WJvhPnAmYh@hanacore>
+Date: Thu, 19 Jul 2018 21:13:42 -0400
+From: Iris Morelle <shadowm2006@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: Wesnoth arbitrary code execution/sandbox escape
 Content-Type: text/plain; charset=utf-8
 
-I found other security issues and I have created a bug. https://issues.apache.org/jira/browse/IGNITE-8713
+Hello,
 
+We've found an issue in our software, "The Battle for Wesnoth", which allows 
+arbitrary code execution by exploiting a vulnerability within the Lua 
+scripting language engine which allows escaping existing sandbox measures in 
+place and executing untrusted bytecode.
 
-Harendra Rai
-Software Engineer
-NCR Corporation
-office: 770.495.2864
-mobile: 248.787.2876
-harendra.rai@....com<mailto:harendra.rai@....com>
-www.ncr.com<http://www.ncr.com>
-[cid:image003.png@...0405E.86F4AD70]
+We would like to have a CVE id assigned to this issue if possible.
 
-From: Denis Magda [mailto:dmagda@...che.org]
-Sent: Friday, June 01, 2018 1:17 PM
-To: announce@...che.org; dev <dev@...ite.apache.org>; user@...ite.apache.org; oss-security@...ts.openwall.com; Rai, Harendra <Harendra.Rai@....com>
-Subject: [CVE-2014-0114]: Apache Ignite is vulnerable to existing CVE-2014-0114
-
-[CVE-2014-0114]: Apache Ignite is vulnerable to existing CVE-2014-0114
-
-Severity: Important
-
-Vendor: The Apache Software Foundation
-
-Versions Affected: Apache Ignite 2.4 or earlier
-
-Impact:
-An attacker can execute arbitrary code on Ignite nodes in the case when Ignite classpath contains arbitrary vulnerable classes.
 
 Description:
-Apache Ignite used commons-beanutils-1.8.3.jar library which did not suppress the class property, which allowed remote attackers to "manipulate" the ClassLoader and execute arbitrary code via the class parameter, as demonstrated by the passing of this parameter to the getClass method of the ActionForm object in Struts 1.
 
-Mitigation:
-•    All Ignite versions: make sure there are no vulnerable classes among your custom code used in Apache Ignite.
-•    Upgrade to Apache Ignite 2.5 or later version
+The Wesnoth game engine uses the vanilla Lua programming language library to 
+implement most of its game scripting capabilities. Lua is able to execute 
+bytecode using its load(), loadfile(), loadstring(), dofile(), and require() 
+functions. Wesnoth in particular exposes load(), loadstring(), and two 
+wrappers for the former in the form of wesnoth.dofile() and wesnoth.require(), 
+without making sure to disable the ability to load and execute bytecode.
 
-Credit:
-Harendra Rai of NCR Corporation discovered the impact of the existing vulnerability on Apache Ignite.
+It has been documented [1] that it is possible to exploit the Lua load 
+functions to execute untrusted bytecode that can then bypass sandbox measures, 
+or even gain and abuse special knowledge about the process' memory layout.
 
-References:
-* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0114<https://urldefense.proofpoint.com/v2/url?u=https-3A__cve.mitre.org_cgi-2Dbin_cvename.cgi-3Fname-3DCVE-2D2014-2D0114&d=DwMFaQ&c=gJN2jf8AyP5Q6Np0yWY19w&r=9MqLDuI-YOHfnUsZj8zKAiE5cb4pd-EqZwfbefzAn18&m=O7V5T4VKtGxA1W7Dnp3dZmxv7FT2fy722704x0eAntk&s=shK2q4cumx70o8xqWHBcY19R-DVSgNIy32P-zTTbJNo&e=>
+  [1] https://gist.github.com/corsix/6575486
 
-Content of type "text/html" skipped
+Wesnoth executes Lua code from untrusted local files either written by players 
+or downloaded through a player content distribution server, as well as from 
+data sent over the network in multiplayer games; thus this vulnerability is 
+rather severe as it can be exploited remotely by malicious parties without the 
+user's knowledge.
+
+This issue was found by Daniel Dräger, a Wesnoth developer, and author of an 
+unmerged patch fixing it.
+
+
+Affected versions:
+
+All existing versions of Wesnoth with the Lua scripting capability, i.e. 
+versions 1.7.0 through 1.14.3.
+
+-- 
+Regards
+  Iris Morelle, Wesnoth developer
+
+
