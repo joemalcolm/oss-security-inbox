@@ -1,4 +1,9 @@
-Received: (qmail 24515 invoked by uid 550); 10 Nov 2023 12:13:01 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["874" "Monday" "23" "July" "2018" "21:03:52" "+0100" "Jonathan Gallimore" "jgallimore@apache.org" "<CAGRgoZhO_hrOg3OF8=hs6j5KsRR68mmQDk0rChQ+jPvEN95x3g@mail.gmail.com>" "26" "[oss-security] CVE-2018-8031 Apache TomEE Webapp XSS" nil nil nil "7" "2018072320:03:52" "[oss-security] CVE-2018-8031 Apache TomEE Webapp XSS" (number mark "U       jgallimore@a Jul 23   26/874   " thread-indent "\"[oss-security] CVE-2018-8031 Apache TomEE Webapp XSS\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 28107 invoked by uid 550); 23 Jul 2018 20:11:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,87 +12,66 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17776 invoked from network); 10 Nov 2023 11:15:55 -0000
-Message-ID: <225a8553-b59c-47ca-8483-a66b4c3b9ebb@notcve.org>
-Date: Fri, 10 Nov 2023 12:15:43 +0100
+Received: (qmail 21844 invoked from network); 23 Jul 2018 20:04:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:from:date:message-id:subject:to;
+        bh=yLgsKBWKSdwg/x8UrGMiNv4zcmIqLpBsrlJY00iisaA=;
+        b=otFu3kNq8a9Dg9TwaE+KjhaNgC4SrjEF9gktmS6n/HF/9ZvU93oaJ4GUvGY22eaYOu
+         ihd7bbWZmxdhVSsfnGgGlGIU1Pja5hoQ0kOv12DGv3tnJZoUyXSSDGNBufaNAVWQtnW1
+         rMitvaax5qgd8pD3m0APA4M1zPdaMEdcxC2hxJbPd/iGPC7DYWamWCjE17QREGFUniJZ
+         LeBT3W+wHNyqxiEXQZFpLE2NcriKNvd0/4V5u7LKQb0CfWLqj5n8wlXn36BMzUEp5ukb
+         ZZrgxl2goPvc3QgRQWJskYocJGn3dHXvu+RXoDNucPL3PXz883vhJSp2lePXrv/LDib8
+         kQug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to;
+        bh=yLgsKBWKSdwg/x8UrGMiNv4zcmIqLpBsrlJY00iisaA=;
+        b=k9njkqAE2Ctyp6FDMc3ONyb5F21IlEVmEyhFp0OundtVp5bZT+SSd3NnbMMzNUJfqr
+         C9soIZonxoKl8rkPLZPEPK+5hnU9/mQwpv8lqtXJqY/XljW/iko5w/xG19DiaABcGN9u
+         R5C7W1+vy4R2e3U50rzPy9vvCozM7fq/B2sdcGIAv10NOfWntpYyF0tHz2HqETiKFhAc
+         Dz4OM2GBX5tGnPampMfocVUE73u6HxYytUWD8C2PW9PpUFuu2q1zjkmkVWyWRlksmw0N
+         H3eqDT9yM5Mm5gbhP4ZmyLo6g4MdH16VGKub0w0YL87M5qLGMbp3ec02JaQ3QliKhnSL
+         a6hA==
+X-Gm-Message-State: AOUpUlECAe0vEvbDs+/HGZw+JnCzH9pgOmWOghLsAcNjdfBo6u3PigYA
+	LjuAWjYZKHmhO32jibRZbgZ3lEhRjE/S99CMNxqa3YLx
+X-Google-Smtp-Source: AAOMgpeeUovgj9OmMwfiL0CdkXZyNXY+cCDg5s1F2Fmtb7szxdocgrOoMs6gzoJJINKni377dq0vML2gd4Tz5aiA8NI=
+X-Received: by 2002:a2e:9645:: with SMTP id z5-v6mr9355368ljh.127.1532376233467;
+ Mon, 23 Jul 2018 13:03:53 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: Solar Designer <solar@openwall.com>, oss-security@lists.openwall.com
-References: <c01c1617-641d-4ec2-847f-2e85ea4676f7@notcve.org>
- <720a3438-0411-4f13-8531-7e6bcac83e77@oracle.com>
- <B2EE9540-85EA-4866-85A4-D4A23979995A@dwheeler.com>
- <CADxcaYWdf5tUAdLLMeBVm9pa64_LyWKZ-+GSFpx3DYyWYf3R9g@mail.gmail.com>
- <20231108231309.GA10833@openwall.com>
-From: !CVE Team <contact@notcve.org>
-In-Reply-To: <20231108231309.GA10833@openwall.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] !CVE: A new platform to track security issues not
- acknowledged by vendors
+Sender: jonathan.gallimore@gmail.com
+From: Jonathan Gallimore <jgallimore@apache.org>
+Date: Mon, 23 Jul 2018 21:03:52 +0100
+X-Google-Sender-Auth: KpFk2cOCkIl_FtQPX0zTnkIgOQo
+Message-ID: <CAGRgoZhO_hrOg3OF8=hs6j5KsRR68mmQDk0rChQ+jPvEN95x3g@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="0000000000000ee4830571b025fd"
+Subject: [oss-security] CVE-2018-8031 Apache TomEE Webapp XSS
 
-Hello all,
+--0000000000000ee4830571b025fd
+Content-Type: text/plain; charset="UTF-8"
 
-Thank you for your valuable feedback! We are always open to hear from 
-the community and happy to improve for the benefit of all of us.
+CVE-2018-8031 Apache TomEE Webapp XSS
 
-We agree with Alexander on the exclamation mark issue, it can be tedious 
-when searching in the mailing lists and other sites. Also with David 
-that when possible it would be good to clearly distinct names even when 
-it's not legally required.
+Severity: Low
 
-For those reasons, the !CVE team agreed to make the identifier more 
-distinctive. The IDs are now NotCVE-YYYY-XXX and they are completely 
-aligned to the notcve website name. So if someone is searching for 
-NotCVE in the mailing list, Google, etc, will find what they are looking 
-for.
+Vendor: The Apache Software Foundation
 
-Those updates are already applied and because some sites have included 
-the https://notcve.org/view.php?id=!CVE-2023-0001 link (@notCVE at X, 
-etc.) we are automatically redirecting only that URL to the new one 
-https://notcve.org/view.php?id=NotCVE-2023-0001
+Description:
+The TomEE console (tomee-webapp) has a XSS vulnerability which could allow
+javascript to be executed if the user is given a malicious URL. This web
+application is typically used to add TomEE features to a Tomcat
+installation. The TomEE bundles do not ship with this application included.
 
-Thank you all again for your feedback!
+Mitigation:
+This issue can be mitigated by removing the application after TomEE is
+setup (if using the application to install TomEE), using one of the
+provided pre-configured bundles, or by upgrading to TomEE 7.0.5.
 
-Kind regards,
-!CVE Team
+This issue is resolve in this commit: b8bbf50c23ce97dd64f3a5d77f78f8
+4e47579863
 
+Credit: Many thanks to Man Yue Mo from Semmle for reporting this issue.
 
-On 09/11/2023 00:13, Solar Designer wrote:
-> Hi,
-> 
-> I don't like to reject messages (and so far haven't rejected any in this
-> thread), but let's please only post when we have something valuable to
-> add, which also fits the topic of this list.  In this thread, when
-> you're not CC'ing the OP (which I've re-added here), they probably won't
-> even see your comments.
-> 
-> On Wed, Nov 08, 2023 at 12:46:13PM -0800, Jean Luc Picard wrote:
->> I have a number of natsec-ey google reports that went nowhere didnt't get
->> credit or a dime out of it.  Most are nullified by the current state of
->> affairs struck by xAI (ie how to cook crack) but others I still feel should
->> be looked at by the greater community.  Is this the apprapriate aggregate
->> platform now?
-> 
-> You write "natsec-ey".  That feels off-topic here.  So is your message
-> actually off-topic and should have been rejected?   No need to reply,
-> just please apply the "is my message on-topic" filter before you post.
-> 
-> In general, if you've found something valuable, just share it where
-> appropriate - if it's a vulnerability in Open Source software, please
-> post in here.  You don't need a CVE for this, nor any CVE alternative.
-> 
-> On Wed, Nov 08, 2023 at 03:55:53PM -0500, Brian Peters wrote:
->> What about NVID? NVID-2023-0001
->> Not (A) Vulnerability ID
-> 
-> Now that reads like pun on NIST's NVD.
-> 
-> We can come up with lots of other suggested names (and I had made some
-> suggestions too), but I think we don't need to continue much further.
-> 
-> So let's wind this thread down unless there's something truly new and
-> on-topic to add.  I'll start rejecting messages if I have to.
-> 
-> Alexander
-
+--0000000000000ee4830571b025fd--
