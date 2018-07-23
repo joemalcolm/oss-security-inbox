@@ -1,39 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/23/10
-Message-ID: <f19a3fee-a5f1-21be-9104-5b83ab3afc19@iogearbox.net>
-Date: Fri, 23 Nov 2018 21:40:28 +0100
-From: Daniel Borkmann <daniel@...earbox.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/23/1
+Message-ID: <CAGRgoZhO_hrOg3OF8=hs6j5KsRR68mmQDk0rChQ+jPvEN95x3g@mail.gmail.com>
+Date: Mon, 23 Jul 2018 21:03:52 +0100
+From: Jonathan Gallimore <jgallimore@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: greg@...ah.com, ww9210@...il.com
-Subject: Re: fwd: [vs-plain] Kernel heap overflow in bpf leading to LPE (exploit provided)
+Subject: CVE-2018-8031 Apache TomEE Webapp XSS
 Content-Type: text/plain; charset=utf-8
 
-On 11/23/2018 07:09 PM, Greg KH wrote:
-> On Fri, Nov 23, 2018 at 06:22:09PM +0100, Yves-Alexis Perez wrote:
->> Hi list,
->>
->> we were notified on the Linux distros list of a vulnerability in the bpf
->> subsystem of the Linux kernel.
->>
->> I asked the reported (Wei Wu) if security@k.o had been notified, and
->> this was done in the following mail, leading Eric Dumazet to suggest
->> posting this on netdev.
->>
->> In turn, this has been done just afterwards [1] so the issue is now
->> public. According to the linux-distros list policy, the original
->> reporter should also have made the issue public here, but failed to do
->> that.
->>
->> I'm posting this right now in order to raise awareness for the
->> distributions already including 4.19 in a supported release.
-> 
-> As was discussed further on one of the threads on this topic, it looks
-> like this is a 4.20-rc issue only, and that 4.19 does not have this
-> issue.  So it might not be relevant to any distro at all, but I suggest
-> that people test themselves to be sure.
+CVE-2018-8031 Apache TomEE Webapp XSS
 
-Yep, 4.19 does not have this map type, so there is no released kernel
-with this issue.
+Severity: Low
 
-Thanks,
-Daniel
+Vendor: The Apache Software Foundation
+
+Description:
+The TomEE console (tomee-webapp) has a XSS vulnerability which could allow
+javascript to be executed if the user is given a malicious URL. This web
+application is typically used to add TomEE features to a Tomcat
+installation. The TomEE bundles do not ship with this application included.
+
+Mitigation:
+This issue can be mitigated by removing the application after TomEE is
+setup (if using the application to install TomEE), using one of the
+provided pre-configured bundles, or by upgrading to TomEE 7.0.5.
+
+This issue is resolve in this commit: b8bbf50c23ce97dd64f3a5d77f78f8
+4e47579863
+
+Credit: Many thanks to Man Yue Mo from Semmle for reporting this issue.
+
