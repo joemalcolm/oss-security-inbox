@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4322" "Monday" "5" "February" "2018" "13:07:20" "+0100" "Simon McVittie" "smcv@debian.org" "<20180205120720.GB21315@perpetual.pseudorandom.co.uk>" "82" "Re: [oss-security] KDE Notification URI Loading Issues" nil nil nil "2" "2018020512:07:20" "[oss-security] KDE Notification URI Loading Issues" (number mark "U       smcv@debian. Feb  5   82/4322  " thread-indent "\"Re: [oss-security] KDE Notification URI Loading Issues\"\n") "<CAHmME9qztqkfFWeHJuaDviei2eqGW-AF+tSh7Su3ZBu6za5+kw@mail.gmail.com>" ("<CAHmME9qztqkfFWeHJuaDviei2eqGW-AF+tSh7Su3ZBu6za5+kw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["8026" "Wednesday" "25" "July" "2018" "17:00:15" "+0000" "Xen.org security team" "security@xen.org" "<E1fiN95-0005te-ML@xenbits.xenproject.org>" "179" "[oss-security] Xen Security Advisory 274 - Linux: Uninitialized state in PV syscall return path" nil nil nil "7" "2018072517:00:15" "[oss-security] Xen Security Advisory 274 - Linux: Uninitialized state in PV syscall return path" (number mark "U       security@xen Jul 25  179/8026  " thread-indent "\"[oss-security] Xen Security Advisory 274 - Linux: Uninitialized state in PV syscall return path\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 20467 invoked by uid 550); 5 Feb 2018 12:07:36 -0000
+Received: (qmail 32444 invoked by uid 550); 25 Jul 2018 17:00:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,98 +12,196 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20442 invoked from network); 5 Feb 2018 12:07:35 -0000
-Date: Mon, 5 Feb 2018 13:07:20 +0100
-From: Simon McVittie <smcv@debian.org>
-To: oss-security@lists.openwall.com
-Message-ID: <20180205120720.GB21315@perpetual.pseudorandom.co.uk>
-References: <CAHmME9qztqkfFWeHJuaDviei2eqGW-AF+tSh7Su3ZBu6za5+kw@mail.gmail.com>
+Received: (qmail 32408 invoked from network); 25 Jul 2018 17:00:37 -0000
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+X-Mailer: MIME-tools 5.508 (Entity 5.508)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1fiN95-0005te-ML@xenbits.xenproject.org>
+Date: Wed, 25 Jul 2018 17:00:15 +0000
+Subject: [oss-security] Xen Security Advisory 274 - Linux: Uninitialized state in PV
+ syscall return path
+
+--=separator
+Content-Type: text/plain; charset="utf-8"
 Content-Disposition: inline
-In-Reply-To: <CAHmME9qztqkfFWeHJuaDviei2eqGW-AF+tSh7Su3ZBu6za5+kw@mail.gmail.com>
-User-Agent: Mutt/1.9.3 (2018-01-21)
-Subject: Re: [oss-security] KDE Notification URI Loading Issues
+Content-Transfer-Encoding: 7bit
 
-On Mon, 05 Feb 2018 at 01:01:30 +0100, Jason A. Donenfeld wrote:
-> Essentially, chat programs or the like that render remote data into
-> notifications allow remote users to inject some limited subset of
-> HTML, which is then rendered by the KDE notification UI.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I think this is for the chat programs to fix, really: they're the
-boundary between untrusted and trusted content. The Notifications
-implementation can't be expected to know which applications generate
-notifications internally from trusted code, and which applications
-interpolate untrusted content into notifications.
+                    Xen Security Advisory XSA-274
 
-Arguably the chat programs should be parsing messages into an internal
-representation that is designed to be unable to represent anything
-potentially malicious, then re-serializing that internal representation
-to HTML for the notification.
+         Linux: Uninitialized state in PV syscall return path
 
-A minimal implementation would be to strip all HTML from the version of
-the chat message that goes to the notifications API, and only include
-the text content. That probably doesn't work for protocols whose users
-make extensive use of image-based "custom smilies" and pseudo-emoji, though.
+ISSUE DESCRIPTION
+=================
 
-> Aside from the fact that this places a great deal of faith in QUrl
+Linux has a `failsafe` callback, invoked by Xen under certain
+conditions.  Normally in this failsafe callback, error_entry is paired
+with error_exit; and error_entry uses %ebx to communicate to
+error_exit whether to use the user or kernel return path.
 
-Which other URL parser would you have used in Qt-based programs? If QUrl
-isn't correctly implemented, the solution would seem to be to fix it,
-not to implement a parallel URL parser with different bugs?
+Unfortunately, on 64-bit PV Xen on x86, error_exit is called without
+error_entry being called first, leaving %ebx with an invalid value.
 
-> it also very explicitly allows for
-> local files to be specified. I'm told that this is intended by the
-> spec, and changing the behavior would be a violation of the spec. Is
-> the spec then broken? The developers think not, and believe that
-> programs using the global notification mechanism should be responsible
-> for supplying their own whitelist sanitization.
+IMPACT
+======
 
-Presumably these global notifications are either an implementation of
-the freedesktop.org Notifications API, or something very similar. If so,
-they're intended for many uses, not just chat - for instance my GNOME
-desktop uses notifications for "low disk space on /home", "you have a
-meeting in 15 minutes" and "now playing: <song title>", among others.
-Chat clients are interesting because they process untrusted content,
-not because they are the only user of this API.
+A rogue user-space program could crash a guest kernel.  Privilege
+escalation cannot be ruled out.
 
-My understanding is that, if a local application that is not chat and
-does not process untrusted data wants to include an icon or image in
-its notifications, the intention of the spec is that it can do so;
-for instance media players that show "now playing:" notifications
-often include the album cover from the user's music library in the
-notification. Forbidding that would remove functionality from all
-notification clients, not just chat programs.
+VULNERABLE SYSTEMS
+==================
 
-Similarly, if a chat client translates ":-)" into an <img> that
-references an icon from the user's icon theme (for example it might be
-file:///usr/share/icons/Adwaita/48x48/emotes/face-smile.png on GNOME) then
-that's something we can trust not to be malicious (if there's malicious
-content in /usr/share we have much bigger problems). I personally don't
-want text smilies translated to images, but some people do.
+Only 64-bit x86 PV Linux systems are vulnerable.
 
-> - Should we audit all consumers of it and duplicate the whitelist
-> parsing situation and open various bug reports?
+All versions of Linux are vulnerable.
 
-The consumers that process untrusted data (chat clients etc.) and
-send HTML in their notifications, yes; all consumers of the same API,
-probably not, because many of them don't process untrusted data.
+MITIGATION
+==========
 
-If a chat client sends partially or fully attacker-supplied HTML in
-its notifications then it's almost certainly passing the same HTML to
-a WebKit WebView or a similar general-purpose HTML renderer to display
-the message in its own window, for which it will need to take very
-similar precautions anyway.
+Switching to HVM or PVH guests will mitigate this issue.
 
-> - Should we just live with IRC clients that allow remote users to load
-> arbitrary files into memory
+CREDITS
+=======
 
-If the text-only IRC protocol can do this then something has gone very
-wrong. There's a de facto standard for mIRC-compatible colours, bold
-and italic in IRC (which would be translated into very simple HTML for
-clients that use HTML notifications or a WebView to render messages),
-but I'm not aware of anything that would be translated into an <img>,
-except for possibly translating text smilies like ":-)" or emoji into
-a file:/// reference to a trusted, local icon from the icon theme.
+This issue was discovered by M. Vefa Bicakci, and recognized as a
+security issue by Andy Lutorminski.
 
-    smcv
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+NB this patch has not been accepted into Linux upstream yet.  An
+updated advisory will be sent if the fix upstreamed looks
+significantly different.
+
+xsa274-linux-4.17.patch           Linux 4.17
+
+$ sha256sum xsa274*
+0c30cb13d1d573f446c8cb8d4824ffad8ef9149a7589a19ef9bcc83c07bddcf5  xsa274-linux-4.17.patch
+$
+
+NOTE ON THE LACK OF EMBARGO
+===========================
+
+The patch for this issue was published on linux-kernel without being
+first reported to the XenProject Security Team.
+
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAltYp7EMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZipwIAINGjP6d5vABI2CEdbromimlXiwGvTUBWOoIsvu1
+bfLyeab334UBIpmouz+UhgKXFdujIFNpWqGpCc68xoNSsJiY+95GykbkxfghxzkL
+GQXzGloJVrHSzRGT+wUlTg9qCpbj1YVr1YtnACa34eXJTGhUBnOl0L3gBRbrjILb
+esECY3/EAKcnB8z1d2AzCRamYVGvfMO8xcolYrP1DzlNYQPnfrKvZu/7vkiyhbrO
+M9nM6+9MdS63JPGp5dX8xRO3TzyRDpgpSpkoMY8Lqhrr5/oLC9dhtdm/yK2kNtJ/
+JluBn6q+EfZKoW/UcwTsehiTOOTKb/WYhC3e1jsRpm/+drU=
+=7MDt
+-----END PGP SIGNATURE-----
+
+--=separator
+Content-Type: application/octet-stream; name="xsa274-linux-4.17.patch"
+Content-Disposition: attachment; filename="xsa274-linux-4.17.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbSA4ZGY2MzUwMDdlMDczNzg4NzUyMmVlYmVlODg2MTU1NjAyYjg4MDli
+IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBBbmR5IEx1dG9taXJz
+a2kgPGx1dG9Aa2VybmVsLm9yZz4KRGF0ZTogU3VuLCAyMiBKdWwgMjAxOCAx
+MTowNTowOSAtMDcwMApTdWJqZWN0OiBbUEFUQ0hdIHg4Ni9lbnRyeS82NDog
+UmVtb3ZlICVlYnggaGFuZGxpbmcgZnJvbSBlcnJvcl9lbnRyeS9leGl0Cgpl
+cnJvcl9lbnRyeSBhbmQgZXJyb3JfZXhpdCBjb21tdW5pY2F0ZSB0aGUgdXNl
+ciB2cyBrZXJuZWwgc3RhdHVzIG9mCnRoZSBmcmFtZSB1c2luZyAlZWJ4LiAg
+VGhpcyBpcyB1bm5lY2Vzc2FyeSAtLSB0aGUgaW5mb3JtYXRpb24gaXMgaW4K
+cmVncy0+Y3MuICBKdXN0IHVzZSByZWdzLT5jcy4KClRoaXMgbWFrZXMgZXJy
+b3JfZW50cnkgc2ltcGxlciBhbmQgbWFrZXMgZXJyb3JfZXhpdCBtb3JlIHJv
+YnVzdC4KCkl0IGFsc28gZml4ZXMgYSBuYXN0eSBidWcuICBCZWZvcmUgYWxs
+IHRoZSBTcGVjdHJlIG5vbnNlbnNlLCBUaGUKeGVuX2ZhaWxzYWZlX2NhbGxi
+YWNrIGVudHJ5IHBvaW50IHJldHVybmVkIGxpa2UgdGhpczoKCiAgICAgICAg
+QUxMT0NfUFRfR1BSRUdTX09OX1NUQUNLCiAgICAgICAgU0FWRV9DX1JFR1MK
+ICAgICAgICBTQVZFX0VYVFJBX1JFR1MKICAgICAgICBFTkNPREVfRlJBTUVf
+UE9JTlRFUgogICAgICAgIGptcCAgICAgZXJyb3JfZXhpdAoKQW5kIGl0IGRp
+ZCBub3QgZ28gdGhyb3VnaCBlcnJvcl9lbnRyeS4gIFRoaXMgd2FzIGJvZ3Vz
+OiBSQlgKY29udGFpbmVkIGdhcmJhZ2UsIGFuZCBlcnJvcl9leGl0IGV4cGVj
+dGVkIGEgZmxhZyBpbiBSQlguCkZvcnR1bmF0ZWx5LCBpdCBnZW5lcmFsbHkg
+Y29udGFpbmVkICpub256ZXJvKiBnYXJiYWdlLCBzbyB0aGUKY29ycmVjdCBj
+b2RlIHBhdGggd2FzIHVzZWQuICBBcyBwYXJ0IG9mIHRoZSBTcGVjdHJlIGZp
+eGVzLCBjb2RlIHdhcwphZGRlZCB0byBjbGVhciBSQlggdG8gbWl0aWdhdGUg
+Y2VydGFpbiBzcGVjdWxhdGlvbiBhdHRhY2tzLiAgTm93LApkZXBlbmRpbmcg
+b24ga2VybmVsIGNvbmZpZ3VyYXRpb24sIFJCWCBnb3QgemVyb2VkIGFuZCwg
+d2hlbiBydW5uaW5nCnNvbWUgV2luZSB3b3JrbG9hZHMsIHRoZSBrZXJuZWwg
+Y3Jhc2hlcy4gIFRoaXMgd2FzIGludHJvZHVjZWQgYnk6CgogICAgY29tbWl0
+IDNhYzZkOGM3ODdiOCAoIng4Ni9lbnRyeS82NDogQ2xlYXIgcmVnaXN0ZXJz
+IGZvcgogICAgZXhjZXB0aW9ucy9pbnRlcnJ1cHRzLCB0byByZWR1Y2Ugc3Bl
+Y3VsYXRpb24gYXR0YWNrIHN1cmZhY2UiKQoKV2l0aCB0aGlzIHBhdGNoIGFw
+cGxpZWQsIFJCWCBpcyBubyBsb25nZXIgbmVlZGVkIGFzIGEgZmxhZywgYW5k
+IHRoZQpwcm9ibGVtIGdvZXMgYXdheS4KCkkgc3VzcGVjdCB0aGF0IG1hbGlj
+aW91cyB1c2Vyc3BhY2UgY291bGQgdXNlIHRoaXMgYnVnIHRvIGNyYXNoIHRo
+ZQprZXJuZWwgZXZlbiB3aXRob3V0IHRoZSBvZmZlbmRpbmcgcGF0Y2ggYXBw
+bGllZCwgdGhvdWdoLgoKW0hpc3RvcmljYWwgbm90ZTogSSB3cm90ZSB0aGlz
+IHBhdGNoIGFzIGEgY2xlYW51cCBiZWZvcmUgSSB3YXMgYXdhcmUKIG9mIHRo
+ZSBidWcgaXQgZml4ZWQuXQoKW05vdGUgdG8gc3RhYmxlIG1haW50YWluZXJz
+OiB0aGlzIHNob3VsZCBwcm9iYWJseSBnZXQgYXBwbGllZCB0byBhbGwKIGtl
+cm5lbHMuICBJZiB5b3UncmUgbmVydm91cyBhYm91dCB0aGF0LCBhIG1vcmUg
+Y29uc2VydmF0aXZlIGZpeCB0bwogYWRkIHhvcmwgJWVieCwlZWJ4OyBpbmNs
+ICVlYnggYmVmb3JlIHRoZSBqdW1wIHRvIGVycm9yX2V4aXQgc2hvdWxkCiBh
+bHNvIGZpeCB0aGUgcHJvYmxlbS5dCgpDYzogQnJpYW4gR2Vyc3QgPGJyZ2Vy
+c3RAZ21haWwuY29tPgpDYzogQm9yaXNsYXYgUGV0a292IDxicEBhbGllbjgu
+ZGU+CkNjOiBEb21pbmlrIEJyb2Rvd3NraSA8bGludXhAZG9taW5pa2Jyb2Rv
+d3NraS5uZXQ+CkNjOiBJbmdvIE1vbG5hciA8bWluZ29AcmVkaGF0LmNvbT4K
+Q2M6ICJILiBQZXRlciBBbnZpbiIgPGhwYUB6eXRvci5jb20+CkNjOiBUaG9t
+YXMgR2xlaXhuZXIgPHRnbHhAbGludXRyb25peC5kZT4KQ2M6IEJvcmlzIE9z
+dHJvdnNreSA8Ym9yaXMub3N0cm92c2t5QG9yYWNsZS5jb20+CkNjOiBKdWVy
+Z2VuIEdyb3NzIDxqZ3Jvc3NAc3VzZS5jb20+CkNjOiB4ZW4tZGV2ZWxAbGlz
+dHMueGVucHJvamVjdC5vcmcKQ2M6IHg4NkBrZXJuZWwub3JnCkNjOiBzdGFi
+bGVAdmdlci5rZXJuZWwub3JnCkZpeGVzOiAzYWM2ZDhjNzg3YjggKCJ4ODYv
+ZW50cnkvNjQ6IENsZWFyIHJlZ2lzdGVycyBmb3IgZXhjZXB0aW9ucy9pbnRl
+cnJ1cHRzLCB0byByZWR1Y2Ugc3BlY3VsYXRpb24gYXR0YWNrIHN1cmZhY2Ui
+KQpSZXBvcnRlZC1hbmQtdGVzdGVkLWJ5OiAiTS4gVmVmYSBCaWNha2NpIiA8
+bS52LmJAcnVuYm94LmNvbT4KU2lnbmVkLW9mZi1ieTogQW5keSBMdXRvbWly
+c2tpIDxsdXRvQGtlcm5lbC5vcmc+Ci0tLQogYXJjaC94ODYvZW50cnkvZW50
+cnlfNjQuUyB8IDE4ICsrKystLS0tLS0tLS0tLS0tLQogMSBmaWxlIGNoYW5n
+ZWQsIDQgaW5zZXJ0aW9ucygrKSwgMTQgZGVsZXRpb25zKC0pCgpkaWZmIC0t
+Z2l0IGEvYXJjaC94ODYvZW50cnkvZW50cnlfNjQuUyBiL2FyY2gveDg2L2Vu
+dHJ5L2VudHJ5XzY0LlMKaW5kZXggNzNhNTIyZDUzYjUzLi44YWU3ZmZkYThm
+OTggMTAwNjQ0Ci0tLSBhL2FyY2gveDg2L2VudHJ5L2VudHJ5XzY0LlMKKysr
+IGIvYXJjaC94ODYvZW50cnkvZW50cnlfNjQuUwpAQCAtOTgxLDcgKzk4MSw3
+IEBAIEVOVFJZKFxzeW0pCiAKIAljYWxsCVxkb19zeW0KIAotCWptcAllcnJv
+cl9leGl0CQkJLyogJWVieDogbm8gc3dhcGdzIGZsYWcgKi8KKwlqbXAJZXJy
+b3JfZXhpdAogCS5lbmRpZgogRU5EKFxzeW0pCiAuZW5kbQpAQCAtMTIyMiw3
+ICsxMjIyLDYgQEAgRU5EKHBhcmFub2lkX2V4aXQpCiAKIC8qCiAgKiBTYXZl
+IGFsbCByZWdpc3RlcnMgaW4gcHRfcmVncywgYW5kIHN3aXRjaCBHUyBpZiBu
+ZWVkZWQuCi0gKiBSZXR1cm46IEVCWD0wOiBjYW1lIGZyb20gdXNlciBtb2Rl
+OyBFQlg9MTogb3RoZXJ3aXNlCiAgKi8KIEVOVFJZKGVycm9yX2VudHJ5KQog
+CVVOV0lORF9ISU5UX0ZVTkMKQEAgLTEyNjksNyArMTI2OCw2IEBAIEVOVFJZ
+KGVycm9yX2VudHJ5KQogCSAqIGZvciB0aGVzZSBoZXJlIHRvby4KIAkgKi8K
+IC5MZXJyb3Jfa2VybmVsc3BhY2U6Ci0JaW5jbAklZWJ4CiAJbGVhcQluYXRp
+dmVfaXJxX3JldHVybl9pcmV0KCVyaXApLCAlcmN4CiAJY21wcQklcmN4LCBS
+SVArOCglcnNwKQogCWplCS5MZXJyb3JfYmFkX2lyZXQKQEAgLTEzMDMsMjgg
+KzEzMDEsMjAgQEAgRU5UUlkoZXJyb3JfZW50cnkpCiAKIAkvKgogCSAqIFBy
+ZXRlbmQgdGhhdCB0aGUgZXhjZXB0aW9uIGNhbWUgZnJvbSB1c2VyIG1vZGU6
+IHNldCB1cCBwdF9yZWdzCi0JICogYXMgaWYgd2UgZmF1bHRlZCBpbW1lZGlh
+dGVseSBhZnRlciBJUkVUIGFuZCBjbGVhciBFQlggc28gdGhhdAotCSAqIGVy
+cm9yX2V4aXQga25vd3MgdGhhdCB3ZSB3aWxsIGJlIHJldHVybmluZyB0byB1
+c2VyIG1vZGUuCisJICogYXMgaWYgd2UgZmF1bHRlZCBpbW1lZGlhdGVseSBh
+ZnRlciBJUkVULgogCSAqLwogCW1vdgklcnNwLCAlcmRpCiAJY2FsbAlmaXh1
+cF9iYWRfaXJldAogCW1vdgklcmF4LCAlcnNwCi0JZGVjbAklZWJ4CiAJam1w
+CS5MZXJyb3JfZW50cnlfZnJvbV91c2VybW9kZV9hZnRlcl9zd2FwZ3MKIEVO
+RChlcnJvcl9lbnRyeSkKIAotCi0vKgotICogT24gZW50cnksIEVCWCBpcyBh
+ICJyZXR1cm4gdG8ga2VybmVsIG1vZGUiIGZsYWc6Ci0gKiAgIDE6IGFscmVh
+ZHkgaW4ga2VybmVsIG1vZGUsIGRvbid0IG5lZWQgU1dBUEdTCi0gKiAgIDA6
+IHVzZXIgZ3NiYXNlIGlzIGxvYWRlZCwgd2UgbmVlZCBTV0FQR1MgYW5kIHN0
+YW5kYXJkIHByZXBhcmF0aW9uIGZvciByZXR1cm4gdG8gdXNlcm1vZGUKLSAq
+LwogRU5UUlkoZXJyb3JfZXhpdCkKIAlVTldJTkRfSElOVF9SRUdTCiAJRElT
+QUJMRV9JTlRFUlJVUFRTKENMQlJfQU5ZKQogCVRSQUNFX0lSUVNfT0ZGCi0J
+dGVzdGwJJWVieCwgJWVieAotCWpueglyZXRpbnRfa2VybmVsCisJdGVzdGIJ
+JDMsIENTKCVyc3ApCisJanoJcmV0aW50X2tlcm5lbAogCWptcAlyZXRpbnRf
+dXNlcgogRU5EKGVycm9yX2V4aXQpCiAKLS0gCjIuMTguMAoK
+
+--=separator--
