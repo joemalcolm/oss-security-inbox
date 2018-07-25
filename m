@@ -1,46 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/16/1
-Message-ID: <20180416081500.4dnup7bk3g6vkkaa@jwilk.net>
-Date: Mon, 16 Apr 2018 10:15:00 +0200
-From: Jakub Wilk <jwilk@...lk.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/25/2
+Message-ID: <20180725180039.figvv6qq4ivqdnj5@gentoo.org>
+Date: Wed, 25 Jul 2018 13:00:39 -0500
+From: Matthew Thode <prometheanfire@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: Terminal Control Chars
+Subject: [OSSA-2018-002] GET /v3/OS-FEDERATION/projects leaks project information (CVE-2018-14432)
 Content-Type: text/plain; charset=utf-8
 
-* David A. Wheeler <dwheeler@...eeler.com>, 2018-04-12, 17:18:
->Russ Allbery:
->>I think a useful definition of "control character" in this context 
->>(and I realize this doesn't exactly match the ASCII definition) is a 
->>character that results in an action other than insertion being 
->>taken... CR and LF would not be control characters in that definition, 
->>since they insert a newline and don't cause an action. Similarly, TAB 
->>wouldn't be a control character in that definition.
->
->As you noted, that definition doesn't match the ASCII definition, but I 
->also think it's misleading.  If someone pastes a CR/LF into a shell 
->prompt, it certainly *DOES* cause an action,
+=======================================================================
+OSSA-2018-002: GET /v3/OS-FEDERATION/projects leaks project information
+=======================================================================
 
-Similarly, tab is an "active" character in most shells.
+:Date: July 25, 2018
+:CVE: CVE-2018-14432
 
-In the worst case (the victim uses bash with bash-completion installed, 
-and the attacker has write access to the victim's filesystem), pasting 
-tab can be as bad as pasting LF.
 
-Here's a proof of concept:
+Affects
+~~~~~~~
+- Keystone: <11.0.4, ==12.0.0, ==13.0.0
 
-   $ printf 'x := $(shell (echo; cowsay pwned)>/dev/tty)' > moo
-   $ make -f moo <tab>
-    _______
-   < pwned >
-    -------
-           \   ^__^
-            \  (oo)\_______
-               (__)\       )\/\
-                   ||----w |
-                   ||     ||
 
-Credit for discovering this goes to Dan Rosenberg:
-https://twitter.com/djrbliss/status/699363006946344963
+Description
+~~~~~~~~~~~
+Kristi Nikolla with Boston University reported a vulnerability in
+Keystone federation. By doing GET /v3/OS-FEDERATION/projects an
+authenticated user may discover projects they have no authority to
+access, leaking all projects in the deployment and their attributes.
+Only Keystone with the /v3/OS-FEDERATION endpoint enabled via
+policy.json is affected.
 
--- 
-Jakub Wilk
+
+Patches
+~~~~~~~
+- https://review.openstack.org/585802 (Ocata)
+- https://review.openstack.org/585792 (Pike)
+- https://review.openstack.org/585788 (Queens)
+- https://review.openstack.org/585782 (Rocky)
+
+
+Credits
+~~~~~~~
+- Kristi Nikolla from Boston University (CVE-2018-14432)
+
+
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/1779205
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-14432
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
