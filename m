@@ -1,163 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/22/3
-Message-ID: <3b60c584-07f9-2888-448e-854f0e793cf0@treenet.co.nz>
-Date: Mon, 22 Jan 2018 22:41:58 +1300
-From: Amos Jeffries <squid3@...enet.co.nz>
-To: oss-security@...ts.openwall.com
-Subject: SQUID-2018:1 Denial of Service issue in ESI Response processing
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/25/1
+Message-Id: <E1fiN95-0005te-ML@xenbits.xenproject.org>
+Date: Wed, 25 Jul 2018 17:00:15 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 274 - Linux: Uninitialized state in PV syscall return path
 Content-Type: text/plain; charset=utf-8
 
-Notes for OSS-Security people:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-* CVE has been requested through DWF, waiting on assignment.
+                    Xen Security Advisory XSA-274
 
-* The patch for Squid-3.5 should also be applicable for most other
-Squid-3.x releases.
+         Linux: Uninitialized state in PV syscall return path
 
-__________________________________________________________________
+ISSUE DESCRIPTION
+=================
 
-    Squid Proxy Cache Security Update Advisory SQUID-2018:1
-__________________________________________________________________
+Linux has a `failsafe` callback, invoked by Xen under certain
+conditions.  Normally in this failsafe callback, error_entry is paired
+with error_exit; and error_entry uses %ebx to communicate to
+error_exit whether to use the user or kernel return path.
 
-Advisory ID:        SQUID-2018:1
-Date:               Jan 19, 2018
-Summary:            Denial of Service issue
-                    in ESI Response processing.
-Affected versions:  Squid 3.x -> 3.5.27
-                    Squid 4.x -> 4.0.22
-Fixed in version:   Squid 4.0.23
-__________________________________________________________________
+Unfortunately, on 64-bit PV Xen on x86, error_exit is called without
+error_entry being called first, leaving %ebx with an invalid value.
 
-    http://www.squid-cache.org/Advisories/SQUID-2018_1.txt
-__________________________________________________________________
+IMPACT
+======
 
-Problem Description:
+A rogue user-space program could crash a guest kernel.  Privilege
+escalation cannot be ruled out.
 
- Due to incorrect pointer handling Squid is vulnerable to denial
- of service attack when processing ESI responses.
+VULNERABLE SYSTEMS
+==================
 
-__________________________________________________________________
+Only 64-bit x86 PV Linux systems are vulnerable.
 
-Severity:
+All versions of Linux are vulnerable.
 
- This problem allows a remote server delivering certain ESI
- response syntax to trigger a denial of service for all clients
- accessing the Squid service.
+MITIGATION
+==========
 
- This problem is limited to the Squid custom ESI parser.
- Squid built to use libxml2 or libexpat XML parsers do not have
- this problem.
+Switching to HVM or PVH guests will mitigate this issue.
 
-__________________________________________________________________
+CREDITS
+=======
 
-Updated Packages:
+This issue was discovered by M. Vefa Bicakci, and recognized as a
+security issue by Andy Lutorminski.
 
- This bug is fixed by Squid version 4.0.23.
+RESOLUTION
+==========
 
- In addition, patches addressing this problem for the stable
- releases can be found in our patch archives:
+Applying the appropriate attached patch resolves this issue.
 
-Squid 3.5:
- <http://www.squid-cache.org/Versions/v3/3.5/changesets/SQUID-2018_1.patch>
+NB this patch has not been accepted into Linux upstream yet.  An
+updated advisory will be sent if the fix upstreamed looks
+significantly different.
 
-Squid 4:
- <http://www.squid-cache.org/Versions/v4/changesets/SQUID-2018_1.patch>
+xsa274-linux-4.17.patch           Linux 4.17
 
- If you are using a prepackaged version of Squid then please refer
- to the package vendor for availability information on updated
- packages.
+$ sha256sum xsa274*
+0c30cb13d1d573f446c8cb8d4824ffad8ef9149a7589a19ef9bcc83c07bddcf5  xsa274-linux-4.17.patch
+$
 
-__________________________________________________________________
+NOTE ON THE LACK OF EMBARGO
+===========================
 
-Determining if your version is vulnerable:
+The patch for this issue was published on linux-kernel without being
+first reported to the XenProject Security Team.
 
- All Squid-2.x are not vulnerable.
+-----BEGIN PGP SIGNATURE-----
 
- All Squid built with --disable-esi are not vulnerable.
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAltYp7EMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZipwIAINGjP6d5vABI2CEdbromimlXiwGvTUBWOoIsvu1
+bfLyeab334UBIpmouz+UhgKXFdujIFNpWqGpCc68xoNSsJiY+95GykbkxfghxzkL
+GQXzGloJVrHSzRGT+wUlTg9qCpbj1YVr1YtnACa34eXJTGhUBnOl0L3gBRbrjILb
+esECY3/EAKcnB8z1d2AzCRamYVGvfMO8xcolYrP1DzlNYQPnfrKvZu/7vkiyhbrO
+M9nM6+9MdS63JPGp5dX8xRO3TzyRDpgpSpkoMY8Lqhrr5/oLC9dhtdm/yK2kNtJ/
+JluBn6q+EfZKoW/UcwTsehiTOOTKb/WYhC3e1jsRpm/+drU=
+=7MDt
+-----END PGP SIGNATURE-----
 
- All Squid configured with "esi_parser expat" are not vulnerable.
-
- All Squid configured with "esi_parser libxml2" are not
- vulnerable.
-
- All Squid-3.0 versions built without --enable-esi are not
- vulnerable.
-
- All Squid-3.0 versions built with --enable-esi and using
- custom ESI parser for reverse-proxy are vulnerable.
-
- All Squid-3.1 and later versions up to and including
- Squid-3.5.27 being used for reverse-proxy are vulnerable.
-
- All Squid-3.1 and later versions up to and including
- Squid-3.5.27 being used for TLS / HTTPS interception are
- vulnerable.
-
- All unpatched Squid-4 up to and including Squid-4.0.22 being
- used as reverse-proxy are vulnerable.
-
- All unpatched Squid-4 up to and including Squid-4.0.22 being
- used as TLS/HTTPS intercept proxy are vulnerable.
-
-__________________________________________________________________
-
-Workarounds:
-
-Either;
-
- Build Squid with --disable-esi
-
-Or,
-
- Build Squid with "--enable-esi --with-libxml2" and in squid.conf
- configure "esi_parser libxml2"
-
-Or,
-
- Build Squid with "--enable-esi --with-expat" and in squid.conf
- configure "esi_parser expat"
-
-__________________________________________________________________
-
-Contact details for the Squid project:
-
- For installation / upgrade support on binary packaged versions
- of Squid: Your first point of contact should be your binary
- package vendor.
-
- If your install and build Squid from the original Squid sources
- then the squid-users@...ts.squid-cache.org mailing list is your
- primary support point. For subscription details see
- <http://www.squid-cache.org/Support/mailing-lists.html>.
-
- For reporting of non-security bugs in the latest STABLE release
- the squid bugzilla database should be used
- <http://bugs.squid-cache.org/>.
-
- For reporting of security sensitive bugs send an email to the
- squid-bugs@...ts.squid-cache.org mailing list. It's a closed
- list (though anyone can post) and security related bug reports
- are treated in confidence until the impact has been established.
-
-__________________________________________________________________
-
-Credits:
-
- The initial issue was reported by Louis Dion-Marcil on behalf of
- GoSecure.
-
- Fixed by Amos Jeffries from Treehouse Networks Ltd.
-
-__________________________________________________________________
-
-Revision history:
-
- 2017-12-13 20:09:30 UTC Initial Report
- 2018-01-18 23:10:00 UTC Patches Released
- 2018-01-21 07:45:00 UTC Advisory and fixed packages released
-__________________________________________________________________
-END
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Download attachment "xsa274-linux-4.17.patch" of type "application/octet-stream" (4131 bytes)
