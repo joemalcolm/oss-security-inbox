@@ -1,37 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/12/1
-Message-ID: <CAEccTyxFaNytQoP040QyL0hcPq11asuoMGjWx73vsvtpCkFzVg@mail.gmail.com>
-Date: Wed, 11 Jul 2018 15:18:36 -0500
-From: Sean Owen <srowen@...che.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2018-1334 Apache Spark local privilege escalation vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/26/1
+Message-ID: <20180726090936.76ac1839@computer>
+Date: Thu, 26 Jul 2018 09:09:36 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Fw: New cabextract 1.7 and libmspack 0.7 release
 Content-Type: text/plain; charset=utf-8
 
-Severity: High
+Several memory safety bugs fixed, see below.
 
-Vendor: The Apache Software Foundation
+Begin forwarded message:
 
-Versions affected:
-Spark versions through 2.1.2
-Spark 2.2.0 to 2.2.1
-Spark 2.3.0
+Date: Thu, 26 Jul 2018 00:46:18 +0100
+From: Stuart Caie
+Subject: New cabextract 1.7 and libmspack 0.7 release
 
-Description:
-In Apache Spark up to and including 2.1.2, 2.2.0 to 2.2.1, and 2.3.0, when
-using PySpark or SparkR, it's possible for a different local user to
-connect to the Spark application and impersonate the user running the Spark
-application.
 
-Mitigation:
-1.x, 2.0.x, and 2.1.x users should upgrade to 2.1.3 or newer
-2.2.x users should upgrade to 2.2.2 or newer
-2.3.x users should upgrade to 2.3.1 or newer
-Otherwise, affected users should avoid using PySpark and SparkR in
-multi-user environments.
+Hello all,
 
-Credit:
-Nehmé Tohmé, Cloudera, Inc.
+cabextract 1.7 has been released.
 
-References:
-https://spark.apache.org/security.html
+It fixes a few bugs, an introduces a new "--encoding" option, which is 
+made available if the iconv() function and/or libiconv library are 
+available on your system. It also now tries calling setlocale() (if 
+present) with several possible locales that have a UTF-8 ctype, to
+allow towlower() (if present) to lowercase non-ASCII characters.
 
+cabextract can be downloaded from https://www.cabextract.org.uk/
+
+SHA256 sums:
+
+06d3cdded6519fccff1532f64ab54ce6cc3c7be51bcc6fff0f91092179a9bb26 
+cabextract-1.7-1.i386.rpm
+11570d7e5ba0f46f458b88d76d2f0bdcad3a1266055ea5c8229830be2023e16e 
+cabextract-1.7-1.src.rpm
+297203c826c004801ea1b17414f568e7bdf56c3ae9bbaca4d8514e8a56e506bd 
+cabextract-1.7.tar.gz
+
+libmspack 0.7alpha has also been released. It fixes several bugs:
+
+* bad KWAJ file header extensions could cause a one or two byte
+  overwrite
+* The character U+0100 in a CHM filename could cause a one-byte overread
+* libmspack now rejects blank CHM filenames.
+* Fixed off-by-one error in CHM PMGI/PMGL chunk number validity checks, 
+which could cause a crash by dereferencing uninitialised data beyond
+  the end of the fast_find() chunk cache.
+
+libmspack can be downloaded from
+https://www.cabextract.org.uk/libmspack/
+
+SHA256 sum:
+
+36e0516cdb60617871d396fb85464f440b4ab76942ce6bdd0438ca8d70f32772 
+libmspack-0.7alpha.tar.gz
+
+Regards
+Stuart
+
+
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
