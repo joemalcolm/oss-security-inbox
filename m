@@ -1,42 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/12/7
-Message-ID: <CAJ_zFkK-Wg5cvzQ_Om+=+pyddbyPvT8D07qL8wL8NYX6MNnnXg@mail.gmail.com>
-Date: Wed, 12 Dec 2018 09:06:19 -0800
-From: Tavis Ormandy <taviso@...gle.com>
-To: oss-security@...ts.openwall.com
-Cc: hackerfantastic@...glemail.com
-Subject: Re: Multiple telnet.c overflows
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/26/3
+Message-ID: <CAOJcB383nmC+pxBXoc2JcuD4TXgQrvgjCuovNavmt6sFs4+sBQ@mail.gmail.com>
+Date: Thu, 26 Jul 2018 10:19:45 +0100
+From: Rajini Sivaram <rsivaram@...che.org>
+To: security@...ka.apache.org, oss-security@...ts.openwall.com,  announce@...che.org, Users <users@...ka.apache.org>, dev <dev@...ka.apache.org>,  kafka-clients <kafka-clients@...glegroups.com>
+Subject: CVE-2017-12610: Authenticated Kafka clients may impersonate other users
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Dec 11, 2018 at 1:12 PM Alan Coopersmith <
-alan.coopersmith@...cle.com> wrote:
+CVE-2017-12610: Authenticated Kafka clients may impersonate other users
 
-> On 12/11/18 10:39 AM, Hacker Fantastic wrote:
-> > When a telnet server requests environment options the sprintf on line
-> 1002 will
-> > not perform bounds checking and causes an overflow of stack buffer
-> > temp[50] defined
-> > at line 990. This issue can be trivially fixed using a patch to add
-> > bounds checking
-> > to sprintf such as with a call to snprintf();
->
-> GNU inetutils telnet is a fork of the original BSD telnet code, but most of
-> the BSD's seem to have already switched to snprintf a while ago:
->
->
-To be clear, this is a bug in the (little used) GNU inetutils telnet
-*client*, not server. It's hard to imagine a real usage of this in a
-context that would be exploitable.
 
-If you can set DISPLAY, then you can probably also set LD_PRELOAD, and if
-you can interact with the command then you can use shell escapes.
+Severity: Moderate
 
-I asked on twitter, and was told that maybe someone is using untrusted
-telnet:// URIs with GNU inetutils, but there are no known examples. I was
-also told that "plenty" of embedded devices GNU inetutils in restricted
-shells. I'm told Mikrotik RouterOS is an example, but it's not clear to me
-if it's using it in a context that would make this a security issue, and if
-they did how they locked down the command to prevent trivial escapes.
 
-Tavis.
+
+Vendor: The Apache Software Foundation
+
+
+
+Versions Affected:
+
+Apache Kafka 0.10.0.0 to 0.10.2.1, 0.11.0.0 to 0.11.0.1
+
+
+
+Description:
+
+Authenticated Kafka clients may use impersonation via a manually crafted
+protocol message with SASL/PLAIN or SASL/SCRAM authentication when using
+the built-in PLAIN or SCRAM server implementations in Apache Kafka.
+
+
+
+Mitigation:
+
+Apache Kafka users should upgrade to one of the following versions where
+this vulnerability has been fixed:
+
+
+   - 0.10.2.2 or higher
+   - 0.11.0.2 or higher
+   - 1.0.0 or higher
+
+
+
+Acknowledgements:
+
+This issue was reported by Rajini Sivaram.
+
+
+
+Regards,
+
+
+Rajini
 
