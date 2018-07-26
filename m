@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1262" "Thursday" "1" "June" "2017" "08:47:43" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<3719551.uSXB2Z6hFG@wanheda>" "36" "Re: [oss-security] Information on recent sqlite3 issues?" "^Cc:" nil nil "6" "2017060106:47:43" "[oss-security] Information on recent sqlite3 issues?" (number mark "        ago@gentoo.o Jun  1   36/1262  " thread-indent "\"Re: [oss-security] Information on recent sqlite3 issues?\"\n") "<20170531203037.hxl4v36govklpenk@pisco.westfalen.local>" ("<20170531203037.hxl4v36govklpenk@pisco.westfalen.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["818" "Thursday" "26" "July" "2018" "09:50:57" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20180726095057.796664f1@computer>" "25" "[oss-security] Squirrelmail XSS security fix" nil nil nil "7" "2018072607:50:57" "[oss-security] Squirrelmail XSS security fix" (number mark "U       hanno@hboeck Jul 26   25/818   " thread-indent "\"[oss-security] Squirrelmail XSS security fix\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3512 invoked by uid 550); 1 Jun 2017 06:48:00 -0000
+Received: (qmail 30034 invoked by uid 550); 26 Jul 2018 07:51:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,54 +11,40 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3494 invoked from network); 1 Jun 2017 06:47:59 -0000
-Message-ID: <3719551.uSXB2Z6hFG@wanheda>
-User-Agent: KMail/4.14.10 (Linux/4.9.16-gentoo; KDE/4.14.32; x86_64; ; )
-In-Reply-To: <20170531203037.hxl4v36govklpenk@pisco.westfalen.local>
-References: <20170531203037.hxl4v36govklpenk@pisco.westfalen.local>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Cc: Moritz Muehlenhoff <jmm@debian.org>
-Date: Thu, 01 Jun 2017 08:47:43 +0200
-From: Agostino Sarubbo <ago@gentoo.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Information on recent sqlite3 issues?
+Received: (qmail 30000 invoked from network); 26 Jul 2018 07:51:03 -0000
+Date: Thu, 26 Jul 2018 09:50:57 +0200
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 To: oss-security@lists.openwall.com
+Message-ID: <20180726095057.796664f1@computer>
+X-Mailer: Claws Mail 3.16.0 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] Squirrelmail XSS security fix
 
-On Wednesday 31 May 2017 22:30:37 Moritz Muehlenhoff wrote:
-> Hi,
-> one of the latest Apple advisories mentions several vulnerabilities in
-> sqlite: https://support.apple.com/en-us/HT207798
-> 
-> CVE-2017-2513: found by OSS-Fuzz
-> CVE-2017-2518: found by OSS-Fuzz
-> CVE-2017-2520: found by OSS-Fuzz
-> CVE-2017-2519: found by OSS-Fuzz
-> CVE-2017-6983: Chaitin Security Research Lab (@ChaitinTech) working with
-> Trend Micro's Zero Day Initiative CVE-2017-6991: Chaitin Security Research
-> Lab (@ChaitinTech) working with Trend Micro's Zero Day Initiative
-> 
-> Does anyone have additional information on those and whether that
-> applies to the standard sqlite releases or Apple-specific changes?
-> 
-> Cheers,
->         Moritz
+Hi,
 
-Hi.
+I recently posted info about several XSS vulns in squirrelmail [1] to
+this list.
 
-I don't know about apple itself but in the clusterfuzz reports I see 4 public 
-bugs about sqlite.
-However they have a very small (2 days) range of regression, i.e. a commit 
-made in those two days causes the problem.
-I didn't check, but I suspect they didn't go in any release.
+Given its upstream state I considered forking squirrelmail, though I
+reached out to the maintainer and he claims he's still actively working
+on it. I sent him a couple of patches, but they're not applied yet.
 
-FTR, the time you are seeing in the regression range is UTC:
-https://github.com/google/oss-fuzz/issues/563
+For now I'm sharing the patches I use on my own installations:
+https://github.com/hannob/squirrelpatches
 
-At this point I don't know if apple referer to those issues or the mentioned 
-issues are not public.
+This contains a security fix for the known XSS issues and hopefully a
+few more (though I make no claims that this is safe from XSS now, I'd
+appreciate if others could check). It also contains patches for PHP
+warnings and issues with PHP 7.2.
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+[1] https://sourceforge.net/p/squirrelmail/bugs/2831/
+
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
+
+mail/jabber: hanno@hboeck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
