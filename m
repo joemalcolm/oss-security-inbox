@@ -1,4 +1,9 @@
-Received: (qmail 19962 invoked by uid 550); 29 Dec 2025 17:30:12 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1702" "Thursday" "26" "July" "2018" "09:09:36" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20180726090936.76ac1839@computer>" "58" "[oss-security] Fw: New cabextract 1.7 and libmspack 0.7 release" nil nil nil "7" "2018072607:09:36" "[oss-security] Fw: New cabextract 1.7 and libmspack 0.7 release" (number mark "U       hanno@hboeck Jul 26   58/1702  " thread-indent "\"[oss-security] Fw: New cabextract 1.7 and libmspack 0.7 release\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 26271 invoked by uid 550); 26 Jul 2018 07:09:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,78 +12,72 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 5555 invoked from network); 29 Dec 2025 17:21:40 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sdaoden.eu;
- s=citron; t=1767028890; x=1767695556; h=date:author:from:to:subject:
-  message-id:in-reply-to:references:mail-followup-to:openpgp:blahblahblah:
-  author:from:subject:date:to:cc:resent-author:resent-date:resent-from:
-  resent-sender:resent-to:resent-cc:resent-reply-to:resent-message-id:
-  in-reply-to:references:mime-version:content-type:
-  content-transfer-encoding:content-disposition:content-id:
-  content-description:message-id:mail-followup-to:openpgp:blahblahblah;
- bh=6EBkvVZEAT+Qr5jmpOsLB80oHpQsHo0l8sLewAWsBdg=;
- b=g/t5bgvwUkzLvCihLrizAaRHfRLIedpl8jXovtYISMtgAkHyYUAP7leyWsRUjjDko6RsPyQt
-  C/QWW0nHlsiZ4uwZhNkjMKiTkvxc7+VUjQh3/cZVa+8frx5c5qSbYCCDTiadcKaN1EK03Sp0K9
-  qLWyulnJJpXtdyu8Zj0tpoYid3660fgKCXk3FfAjycwPsAcCmZ0r7B/z171arrv65duldWJgFl
-  BgxnCCneenQxQdLTVtdHPIk/v+B9jFrNPh+N4CZ99dBYQuHvsDDNqn2wVNy5JJ2+yuq7Amr/xf
-  T7B8Y7A+AGzT7xgWwGyYKZk5yMK33I9GczMz44q+MYQu5Uzw==
-Date: Mon, 29 Dec 2025 18:21:29 +0100
-Author: Steffen Nurpmeso <steffen@sdaoden.eu>
-From: Steffen Nurpmeso <steffen@sdaoden.eu>
+Received: (qmail 26238 invoked from network); 26 Jul 2018 07:09:42 -0000
+Date: Thu, 26 Jul 2018 09:09:36 +0200
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 To: oss-security@lists.openwall.com
-Message-ID: <20251229172129.XftBSrA3@steffen%sdaoden.eu>
-In-Reply-To: <6F979157-91AD-4C55-8CCD-5CC5AA18BB50.1@smtp-inbound1.duck.com>
-References: <4bb0e4f7-a4f3-45cc-b519-2044b4b2871c@gmail.com>
- <928709EE-07AA-4995-B9D3-E83AC18353CC.1@smtp-inbound1.duck.com>
- <6F979157-91AD-4C55-8CCD-5CC5AA18BB50.1@smtp-inbound1.duck.com>
-Mail-Followup-To: oss-security@lists.openwall.com
-User-Agent: s-nail v14.9.25-743-g1489053f65-dirty
-OpenPGP: id=EE19E1C1F2F7054F8D3954D8308964B51883A0DD;
- url=https://ftp.sdaoden.eu/steffen.asc; preference=signencrypt
-BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
- the world can make no bugs.
-Subject: Re: [oss-security] Best practices for signature verifcation
+Message-ID: <20180726090936.76ac1839@computer>
+X-Mailer: Claws Mail 3.16.0 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] Fw: New cabextract 1.7 and libmspack 0.7 release
 
-kf503bla@duck.com wrote in
- <6F979157-91AD-4C55-8CCD-5CC5AA18BB50.1@smtp-inbound1.duck.com>:
- |> Demi Marie Obenour (she/her/hers)
+Several memory safety bugs fixed, see below.
 
- |> In light of the recent GnuPG vulnerabilities, I remembered that OpenPGP
- |> is almost never the right choice. CMS/PKCS#7 isn't any better, and
- |> X.509 is also bad except that its extremely wide deployment in TLS
- |> keeps it alive.
- |> 
- |> See https://www.latacora/com/blog/2019/07/16/the-pgp-problem/
- |> 
- |> and https://soatok.blog/2024/11/15/what-to-use-instead-of-pgp/.
+Begin forwarded message:
 
- |then what do you suggest to use? i hear it all the time "pgp sucks" \
- |but what's the alternative huh?
+Date: Thu, 26 Jul 2018 00:46:18 +0100
+From: Stuart Caie
+Subject: New cabextract 1.7 and libmspack 0.7 release
 
-I know a gentle and forgiving Russian who said (since "crypto
-saves the world" simply quoting all this shamelessly)
 
-  Years ago I started to recommend age
-  (https://age-encryption.org/) for file encryption and
-  "ssh-keygen -Y" for making ed25519 signatures. But both of them
-  do not support post-quantum cryptographic algorithms.  [.]
+Hello all,
 
-As well as
+cabextract 1.7 has been released.
 
- I have not tried it, but read very carefully the format/protocol
- specification of https://saltpack.org/ and it is definitely done
- right and pretty minimalistic.
+It fixes a few bugs, an introduces a new "--encoding" option, which is=20
+made available if the iconv() function and/or libiconv library are=20
+available on your system. It also now tries calling setlocale() (if=20
+present) with several possible locales that have a UTF-8 ctype, to
+allow towlower() (if present) to lowercase non-ASCII characters.
 
-Especially in favour of MessagePack instead of JSON/CBOR (as also
-used by saltpack).
+cabextract can be downloaded from https://www.cabextract.org.uk/
 
-Where this all would end when year++ long working group workoutss
-get simply bypassed by working implementations, one can wonder.
+SHA256 sums:
 
---steffen
-|
-|Der Kragenbaer,                The moon bear,
-|der holt sich munter           he cheerfully and one by one
-|einen nach dem anderen runter  wa.ks himself off
-|(By Robert Gernhardt)
+06d3cdded6519fccff1532f64ab54ce6cc3c7be51bcc6fff0f91092179a9bb26=20
+cabextract-1.7-1.i386.rpm
+11570d7e5ba0f46f458b88d76d2f0bdcad3a1266055ea5c8229830be2023e16e=20
+cabextract-1.7-1.src.rpm
+297203c826c004801ea1b17414f568e7bdf56c3ae9bbaca4d8514e8a56e506bd=20
+cabextract-1.7.tar.gz
+
+libmspack 0.7alpha has also been released. It fixes several bugs:
+
+* bad KWAJ file header extensions could cause a one or two byte
+  overwrite
+* The character U+0100 in a CHM filename could cause a one-byte overread
+* libmspack now rejects blank CHM filenames.
+* Fixed off-by-one error in CHM PMGI/PMGL chunk number validity checks,=20
+which could cause a crash by dereferencing uninitialised data beyond
+  the end of the fast_find() chunk cache.
+
+libmspack can be downloaded from
+https://www.cabextract.org.uk/libmspack/
+
+SHA256 sum:
+
+36e0516cdb60617871d396fb85464f440b4ab76942ce6bdd0438ca8d70f32772=20
+libmspack-0.7alpha.tar.gz
+
+Regards
+Stuart
+
+
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
+
+mail/jabber: hanno@hboeck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
