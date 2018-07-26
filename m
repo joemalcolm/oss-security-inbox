@@ -1,32 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/28/9
-Message-ID: <63a8aed5-d44a-a975-a2a3-932374b57a6c@redhat.com>
-Date: Tue, 28 Aug 2018 15:08:18 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com, Greg KH <greg@...ah.com>
-Subject: Re: Linux kernel: CVE-2018-14619 kernel: crash (possible privesc) in kernel crypto subsystem.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/26/4
+Message-ID: <CAOJcB3_j1XqXK3TnJaqZrga0d13=taYOVoG9cGG0og5Zf+=L5w@mail.gmail.com>
+Date: Thu, 26 Jul 2018 10:25:22 +0100
+From: Rajini Sivaram <rajinisivaram@...il.com>
+To: security@...ka.apache.org, oss-security@...ts.openwall.com,  announce@...che.org, Users <users@...ka.apache.org>, dev <dev@...ka.apache.org>,  kafka-clients <kafka-clients@...glegroups.com>
+Subject: CVE-2018-1288: Authenticated Kafka clients may interfere with data replication
 Content-Type: text/plain; charset=utf-8
 
-On 08/28/2018 02:51 PM, Greg KH wrote:
-> On Tue, Aug 28, 2018 at 04:49:14PM +1000, Wade Mealing wrote:
->> Gday,
->>
->> Syzkaller/syzbot found a use-after-free bug in the cryptographic
->> subsystem of the Linux kernel [1], that can be used to panic the
->> system and possibly escalate privileges.
-> 
-> Are we seriously now going to be assigning cves to everything that
-> syzbot finds?  If so, great, this is going to be fun!
-> 
-> If not, why this specific patch?  What makes it specia from the hundreds
-> of other syzbot finds that have been fixed (and not fixed yet)?
+CVE-2018-1288: Authenticated Kafka clients may interfere with data
+replication
 
-> If RHEL is not exposed, why does Red Hat care about this?
 
-We have shipped supported kernels with this vulnerability.
 
-But the real reason why I want this fixed is that the Python 3 test 
-suite triggers this bug and panics some of our RPM builders. 8-/
+Severity: Moderate
 
-Thanks,
-Florian
+
+
+Vendor: The Apache Software Foundation
+
+
+
+Versions Affected:
+
+Apache Kafka 0.9.0.0 to 0.9.0.1, 0.10.0.0 to 0.10.2.1, 0.11.0.0 to
+0.11.0.2, 1.0.0
+
+
+
+Description:
+
+Authenticated Kafka users may perform action reserved for the Broker via a
+manually created fetch request interfering with data replication, resulting
+in data loss.
+
+
+
+Mitigation:
+
+Apache Kafka users should upgrade to one of the following versions where
+this vulnerability has been fixed.
+
+
+   - 0.10.2.2 or higher
+   - 0.11.0.3 or higher
+   - 1.0.1 or higher
+   - 1.1.0 or higher
+
+
+
+Acknowledgements:
+
+We would like to thank Edoardo Comar and Mickael Maison for reporting this
+issue and providing a resolution.
+
+
+
+Regards,
+
+
+Rajini
+
