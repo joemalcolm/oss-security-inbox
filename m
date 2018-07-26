@@ -1,36 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/06/2
-Message-ID: <20180905233220.GK1664@takahe.colorado.edu>
-Date: Wed, 5 Sep 2018 17:32:20 -0600
-From: Leonid Isaev <leonid.isaev@...a.colorado.edu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/26/2
+Message-ID: <20180726095057.796664f1@computer>
+Date: Thu, 26 Jul 2018 09:50:57 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
+Subject: Squirrelmail XSS security fix
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Sep 05, 2018 at 03:13:53PM -0400, Stuart Gathman wrote:
-> Postscript is a general purpose programming language.  It can do
-> anything to your system that a C or Python program could.  The SAFER
-> sandbox was supposed to be able to prevent untrusted postscript code
-> from doing serious damage.  But this series of bugs shows that the
-> sandbox is very flawed, and running untrusted postscript relying only on
-> the SAFER sandbox is a very bad idea.
-> 
-> What I need to study, is whether random PDF files from the internet (as
-> opposed to general postscript) are therefore malware vectors.  I thought
-> that PDF used a restricted subset of operations that "rendered" it not a
-> general purpose language and therefore "safe".   But if SAFER was the
-> implementation of that restricted subset, then all internet PDFs are
-> suspect.
+Hi,
 
-In addition to that, pdf files can contains things like javascript... There are
-some python tools to analyze them and detect (even obfuscated JS) -- see [1]
-and links therein. But yes, unless you generate a pdf/ps file yourself (e.g.
-with pdflatex or a graphics program), you should consider it untrusted.
+I recently posted info about several XSS vulns in squirrelmail [1] to
+this list.
 
-Cheers,
-L.
+Given its upstream state I considered forking squirrelmail, though I
+reached out to the maintainer and he claims he's still actively working
+on it. I sent him a couple of patches, but they're not applied yet.
 
-[1] https://stackoverflow.com/questions/29342542/how-can-i-extract-a-javascript-from-a-pdf-file-with-a-command-line-tool
+For now I'm sharing the patches I use on my own installations:
+https://github.com/hannob/squirrelpatches
+
+This contains a security fix for the known XSS issues and hopefully a
+few more (though I make no claims that this is safe from XSS now, I'd
+appreciate if others could check). It also contains patches for PHP
+warnings and issues with PHP 7.2.
+
+[1] https://sourceforge.net/p/squirrelmail/bugs/2831/
 
 -- 
-Leonid Isaev
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
