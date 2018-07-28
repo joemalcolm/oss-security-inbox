@@ -1,108 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/20/4
-Message-Id: <E1gP62s-0000dz-Ff@xenbits.xenproject.org>
-Date: Tue, 20 Nov 2018 13:26:26 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 277 v2 - x86: incorrect error handling for guest p2m page removals
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/28/1
+Message-ID: <20180728212357.GA1623@eldamar.local>
+Date: Sat, 28 Jul 2018 23:23:57 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Fw: New cabextract 1.7 and libmspack 0.7 release
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-                    Xen Security Advisory XSA-277
-                              version 2
+On Thu, Jul 26, 2018 at 09:09:36AM +0200, Hanno Böck wrote:
+> Several memory safety bugs fixed, see below.
+> 
+> Begin forwarded message:
+> 
+> Date: Thu, 26 Jul 2018 00:46:18 +0100
+> From: Stuart Caie
+> Subject: New cabextract 1.7 and libmspack 0.7 release
+> 
+> 
+> Hello all,
+> 
+> cabextract 1.7 has been released.
+> 
+> It fixes a few bugs, an introduces a new "--encoding" option, which is 
+> made available if the iconv() function and/or libiconv library are 
+> available on your system. It also now tries calling setlocale() (if 
+> present) with several possible locales that have a UTF-8 ctype, to
+> allow towlower() (if present) to lowercase non-ASCII characters.
+> 
+> cabextract can be downloaded from https://www.cabextract.org.uk/
+> 
+> SHA256 sums:
+> 
+> 06d3cdded6519fccff1532f64ab54ce6cc3c7be51bcc6fff0f91092179a9bb26 
+> cabextract-1.7-1.i386.rpm
+> 11570d7e5ba0f46f458b88d76d2f0bdcad3a1266055ea5c8229830be2023e16e 
+> cabextract-1.7-1.src.rpm
+> 297203c826c004801ea1b17414f568e7bdf56c3ae9bbaca4d8514e8a56e506bd 
+> cabextract-1.7.tar.gz
+> 
+> libmspack 0.7alpha has also been released. It fixes several bugs:
+> 
+> * bad KWAJ file header extensions could cause a one or two byte
+>   overwrite
+> * The character U+0100 in a CHM filename could cause a one-byte overread
+> * libmspack now rejects blank CHM filenames.
+> * Fixed off-by-one error in CHM PMGI/PMGL chunk number validity checks, 
+> which could cause a crash by dereferencing uninitialised data beyond
+>   the end of the fast_find() chunk cache.
 
-       x86: incorrect error handling for guest p2m page removals
+MITRE has assigned four CVEs as follows
 
-UPDATES IN VERSION 2
-====================
+CVE-2018-14679:
+https://github.com/kyz/libmspack/commit/72e70a921f0f07fee748aec2274b30784e1d312a
+(for the off-by-one error in CHM PMGI/PMGL chunk number validity
+checks part).
 
-Public release.
+CVE-2018-14680:
+https://github.com/kyz/libmspack/commit/72e70a921f0f07fee748aec2274b30784e1d312a
+(for not-rejecting blank CHM filenames part).
 
-ISSUE DESCRIPTION
-=================
+CVE-2018-14681:
+https://github.com/kyz/libmspack/commit/0b0ef9344255ff5acfac6b7af09198ac9c9756c8
 
-The internal function querying a domain's p2m table grabs the p2m lock
-by default, so that the answer to the query remains true until the
-caller can act on that information; it is up to the caller then to
-release the lock.  Unfortunately, certain failure paths don't release
-the lock.
+CVE-2018-14682:
+https://github.com/kyz/libmspack/commit/4fd9ccaa54e1aebde1e4b95fb0163b699fd7bcc8
 
-IMPACT
-======
-
-A malicious or buggy guest may cause a deadlock, resulting in a DoS
-(Denial of Service) affecting the entire host.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen 4.11 and onward are vulnerable.
-
-Only x86 systems are vulnerable.  ARM systems are not vulnerable.
-
-Only systems running untrusted HVM or PVH guests are vulnerable.
-Systems running only PV guests are not vulnerable.
-
-MITIGATION
-==========
-
-Running only PV guests will avoid this vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Paul Durrant of Citrix.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa277.patch           xen-unstable, Xen 4.11.x
-
-$ sha256sum xsa277*
-576cdc05975e43698624b88f7290119dd702b3db8f30f3219754d992d7fef0c6  xsa277.meta
-c9025e1daaec4081a61f1ed7b96e69cfe8e35bdd5b4fcc0fadc98f71c2e243e2  xsa277.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAlv0C2kMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZ3W4H/0lfQ3hxNjmYa9soWCkXCFWrRHEt5G11dtL3GE1B
-E4GbiAWdownHQjhA3okO9yQKDzwY68+hvVZ7YOUNSQ00tZ8j/RWldDZLhbp9JrjI
-QMriPefk8X6ZVnF6velUZI2dpOIX6NFBZHxPXUKV8A+e9/+OS7e9CEWrSaprHcbt
-MTHv5evulxl8sPXyVa8e2m2YSdEFU6ylfVyH3m5u3cKBpvbSLFKyQN+MNX8rTmAn
-+ga3Vj9zehIlDl22nTXCcQHbj75JK0RsDCcH1Glicqm3LZlZ2GXYNe/OiPdLTmwP
-8UN8HJhDB2d6w8x4/TV2ad8UGqCJghkxJkqs2RJJdtz8VSo=
-=CFtL
------END PGP SIGNATURE-----
-
-Download attachment "xsa277.meta" of type "application/octet-stream" (666 bytes)
-
-Download attachment "xsa277.patch" of type "application/octet-stream" (1835 bytes)
+Regards,
+Salvatore
