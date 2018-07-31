@@ -1,64 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/03/2
-Message-ID: <20180503180348.GA3185@gremlin.ru>
-Date: Thu, 3 May 2018 21:03:48 +0300
-From: gremlin@...mlin.ru
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/31/3
+Message-ID: <20180731105334.GB29194@f195.suse.de>
+Date: Tue, 31 Jul 2018 12:53:34 +0200
+From: Matthias Gerstner <mgerstner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Singularity's Linux kernel vulnerability claim
+Subject: blueman before version 2.0.6 is not enforcing authorization for polkit action org.blueman.network.setup
 Content-Type: text/plain; charset=utf-8
 
-On 2018-05-03 17:12:06 +0000, Priedhorsky, Reid wrote:
+Hello,
 
- > Singularity is a container runtime targeting the high-performance
- > computing market. It appears to be the sole product of Sylabs,
- > Inc. [1] and has both 'community' (open source) and
- > 'pro' (closed source) versions.
- > Recently, the Singularity team announced on their blog [2],
- > following up an earlier mailing list post [3], that they've
- > found:
- >> an exploit vector to all container runtimes, that allows a
- >> malicious user to gain additional privileges within a container on
- >> hosts running kernels that do not support the PR_SET_NO_NEW_PRIVS
- >> feature
+blueman [1] is a graphical interface for dealing with bluetooth devices
+on Linux. It comes with a daemon running as root (blueman-mechanism)
+that performs privileged operations.
 
-That's normal: the container runtimes (except OpenVZ VPSes) are
-designed to be just a resource-limiting solution. Even the (quite
-trivial) "undock" exploit (developed for Docker, works everywhere
-except OpenVZ) allows escaping the container and getting into the
-host system once you have got root access inside of the container.
+During a code review [2] I noticed that blueman-mechanism in the stable
+version 2.0.5 of blueman does not enforce the polkit action
+'org.blueman.network.setup' for which a polkit policy is shipped. This
+means that any user with access to the D-Bus system bus is able to
+access the related API without authentication.
 
- > No technical details are publically available:
- >> Sylabs has not provided details about this exploit because there
- >> is no workaround short of upgrading the kernel or uninstalling
- >> Singularity. So giving more information will only help malicious
- >> parties.
- > We understand that details have been offered by Sylabs to at
- > least one third party under NDA. This third party declined,
- > but others may have accepted.
+The result is an unspecified impact on the networking stack.
+blueman-mechanism for example sets up a bridge device, changes system
+wide IPv4 forwarding settings and runs a DHCP client like dnsmasq,
+dhclient or dhcpcd.
 
-That's their right. However, publishing the zero-day exploit could
-be much more funny...
+After I contacted upstream about this, they released an updated stable
+version blueman 2.0.6 containing a set of backported patches that
+address this issue. These patches have already been present in the alpha
+version branch of blueman for a longer time.
 
- > Sylabs does not plan to request a CVE (link in original):
- >> As of now, Sylabs will not request a CVE for this issue
- >> because it only affects old kernels and CVE's associated with
- >> PR_SET_NO_NEW_PRIVS have already been provided and resolved [4].
- > My questions:
- > 1. Does anyone know what is going on with this alleged
- > vulnerability?
+Regards
 
-That's not actually a vulnerability, but just a misuse of kernel
-containerization features. Or would you put an elephant in a car
-instead of getting a truck?
+Matthias
 
- > 2. Has anything been independently corroborated?
- > 3. Would a CVE request be appropriate?
-
-My guess: unlikely.
-
+[1]: https://github.com/blueman-project/blueman
+[2]: https://bugzilla.suse.com/show_bug.cgi?id=1083066
+[3]: https://github.com/blueman-project/blueman/releases/tag/2.0.6
 
 -- 
-Alexey V. Vissarionov aka Gremlin from Kremlin
-GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8
+Matthias Gerstner <matthias.gerstner@...e.de>
+Dipl.-Wirtsch.-Inf. (FH), Security Engineer
+https://www.suse.com/security
+Telefon: +49 911 740 53 290
+GPG Key ID: 0x14C405C971923553
 
-Content of type "application/pgp-signature" skipped
+SUSE Linux GmbH
+GF: Felix Imendörffer, Jane Smithard, Graham Norton
+HRB 21284 (AG Nuernberg)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
