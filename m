@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["531" "Wednesday" "18" "January" "2017" "23:05:36" "+0100" "Jelle van der Waa" "jelle@vdwaa.nl" "<20170118220535.GA21362@gmail.com>" "16" "[oss-security] CVE request Weblate: information disclosure in password reset form" nil nil nil "1" "2017011822:05:36" "[oss-security] CVE request Weblate: information disclosure in password reset form" (number mark "U       jelle@vdwaa. Jan 18   16/531   " thread-indent "\"[oss-security] CVE request Weblate: information disclosure in password reset form\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1318" "Tuesday" "31" "July" "2018" "07:10:59" "+0000" "Andrea Cosentino" "ancosen1985@yahoo.com" "<695060699.77400.1533021059750@mail.yahoo.com>" "43" "[oss-security] [SECURITY] New security advisory CVE-2018-8027 released for Apache Camel" nil nil nil "7" "2018073107:10:59" "[oss-security] [SECURITY] New security advisory CVE-2018-8027 released for Apache Camel" (number mark "U       ancosen1985@ Jul 31   43/1318  " thread-indent "\"[oss-security] [SECURITY] New security advisory CVE-2018-8027 released for Apache Camel\"\n") "<695060699.77400.1533021059750.ref@mail.yahoo.com>" ("<695060699.77400.1533021059750.ref@mail.yahoo.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9886 invoked by uid 550); 18 Jan 2017 22:17:24 -0000
+Received: (qmail 28646 invoked by uid 550); 31 Jul 2018 08:38:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,55 +12,77 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29712 invoked from network); 18 Jan 2017 22:05:50 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=vdwaa-nl.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=Fxl1G66fN4e+ZXGxjGivsiy/qPXZxkwGFmmAbWHRb3c=;
-        b=WBg9H1fEDXck/pAQnyB5g9jvCezU+9VzNUiHBg+v+WH1EEL/JYF6uxBfFaDhIgpu6h
-         Sv6hCH8MzQR883qNUmvS+ZOev+8XmP/19qGi8pToa7LNdLGurt/oLsom3xn7tk14r9P7
-         dB+j6cqqQo9hlUuYeFsGXgQH/4+1wgd/8SLnA+6b2oOaBa3MR0Y4J4XK+CigA4ClVehE
-         NYi+JxTRhmymDBuEoZM8D7+zdf93gYsM6G5ieG4dlFyn2xoINvwG3u2UFX5bVmROza9n
-         +yMrUQgstnA8izZu8oW8qSpqahEe7MjARN9gBWWOBtFJyrFtXdpSTtZLI6B9Sy5g5GpC
-         o/Gw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=Fxl1G66fN4e+ZXGxjGivsiy/qPXZxkwGFmmAbWHRb3c=;
-        b=HwoVY6tZJHRVE65CwflFIA892fIMymt6ThQnOEq5RgRBwVy0N6M+5wufqM/npYg2Yr
-         uud0i7UWw2D2+tbxxdomgcCqjNeCvqr0K4HYAJVE1ipGhu5vE2iI6IYmpuHiPeARqrjU
-         YYL7bdMy2sMyoSt59GoUqDYi2JuJNfwbnhAdzbyVACowfq2RqMBZaBdXDewcSQDD8XwA
-         MykDmidsRlqUDDn5FmQolybU0zt7kJNbiqFml1m2lh8cH2yXByJZu66GsSQPuEE0ECsl
-         3Dc7agmq8sy5iyMQ6sS7Ago4Cz3AMKhsZu/jp/pkjDsnMs5Chss95JZXJt7Z0F+AyP6B
-         MJHQ==
-X-Gm-Message-State: AIkVDXJogAu/5g6K9KYRIaj6jiBazV2UD5J2ikvl/C7bmOvI47cJSYTBiUWP6RPii3dsCQ==
-X-Received: by 10.28.130.212 with SMTP id e203mr4305229wmd.104.1484777138606;
-        Wed, 18 Jan 2017 14:05:38 -0800 (PST)
-Date: Wed, 18 Jan 2017 23:05:36 +0100
-From: Jelle van der Waa <jelle@vdwaa.nl>
-To: oss-security@lists.openwall.com
-Message-ID: <20170118220535.GA21362@gmail.com>
+Received: (qmail 5456 invoked from network); 31 Jul 2018 07:11:13 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1533021061; bh=U6szcBf7K/csJCXnjW1eFOMSlr49+UhnP2FvY++yIH8=; h=Date:From:Reply-To:To:Subject:References:From:Subject; b=TRrkEnLksDgPAyOvjZKqwQFB553HZHKii5mXbX8y7I8apcqLJaHjMV5Oyz1ZX/xNBLtbyN6JOoZige0cM7Ik2i2hndS+MPVfyDz0OfYIVISdalJrq4+SVx0mLmTDWqTQvwbJey41x0I1sJl83RzJ4Zu+MuxkO6pRM7hhYqXbL40xE53K+40t6TSKHZoAJ631ZFuKmgiNWdDDEHalCHNLztmDvZYU60v6JM1LsmTS8aP4hn5RGEqU4i5PPGaPyMutJbLovmsEg5NvGRHIdlnTaDtNqtoHVT81cD1U4bN18ZXHD8jgaSwLjxqkCaK9aM5ViBNC5O2VPrpK1pMlCq3Gzw==
+X-YMail-OSG: BTeOMWwVM1nzZ7QniodlTGUwvUMoEs264ISU3qfqRiFsm1A5yqdHTytl.D1nZMg
+ l_cirFswZOoBFa1iCN9u.6weI6.zuIgakheYZoxuh1xh14mLv3lqgEwFJFqASawY5beX3neRVNrS
+ AbGu7yVLOuvIBwwHZQQmA5g783y2t8N0od2qJWYA.skcQGlIR3Ov.EqmBQtINfSw.2jlmGQWSzvQ
+ qRFYgM8G._WD9NYw2zZ7TU.kTgXQ.aEvf9tWUm4p3q5vQXFtGklBSOkmEarJtboBeEaRuKlTl0l9
+ cZgDYnUwPY72Rvm5Ed.k3W3p59Rds5f8vgaXIPavgVBDT0V3RScjms9_XGgpkyP.YaYRvn0tOSWS
+ NcRxcTTCrQmPnfgULxbuvOdjX7RkCkru2svYuAUeyYy3miMtn1YUb1HEoDXoXcNbYuBkQhK9n.o_
+ 31A0H9rfHORerOi4nXpnDJQHbQaK62c65XCKs.4du0LUon4K.pakDdzJL0Ai0Y1mL2XusZeJQsIZ
+ AHpkiRHLHWpAwm5iMA0sb74WA3tK0PVQrjVK4nac0zqnFxbK_0nYcyy8ttijXro9jEy_sYk2Eo1B
+ NwQBGzz0A7.5cnZUpDMez5gZIMSY..7HecY9HrW9lKFESEkQ0ES5rGgmgDWwXDfuob7gqOHgKWwc
+ 0wW7n3E0mKu8dPoM4cFuVnxzmMpBeVon8Ct8Q51cDBHT_quBVApEaCKWTBexdpENmC1TlXoQeP14
+ M6tCkVBdXVR.gDgV.jK.IimkDiifLexCpxuDDv8qmytj7yKewhSKX6W5Pwm8oERgL2xwREQnvhi4
+ .O9AodqPNHjghMF5gSEPqfnYOPXfQcrgMWlf.fIC8DAaBymbMuXBbEWmjOc67lZDgkkzxGHBR8js
+ F6_rifTPujjdj6b2fcyNcgzNQcuVonefw_6Im9m_731rlzso9eQFqT9bevxDG3KTlRWisBiyOCWI
+ e614x81ouGqxj7QZrlQkyT9.6Mqy16glxBpBexzq42p7sJkafHQ--
+Date: Tue, 31 Jul 2018 07:10:59 +0000 (UTC)
+From: Andrea Cosentino <ancosen1985@yahoo.com>
+To: Dev <dev@camel.apache.org>, Users <users@camel.apache.org>, 
+	Apache Security Team <security@apache.org>, 
+	"oss-security@lists.openwall.com" <oss-security@lists.openwall.com>, 
+	"karel.jelinek@unicorm.com" <karel.jelinek@unicorm.com>
+Message-ID: <695060699.77400.1533021059750@mail.yahoo.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.7.2 (2016-11-26)
-Subject: [oss-security] CVE request Weblate: information disclosure in password reset form
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+References: <695060699.77400.1533021059750.ref@mail.yahoo.com>
+X-Mailer: WebService/1.1.12206 YMailNorrin Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.162 Safari/537.36
+Subject: [oss-security] [SECURITY] New security advisory CVE-2018-8027 released for Apache
+ Camel
 
-Weblate contains an information disclosure issue in it's password reset
-form. When entering an arbitrary email address in the password reset
-form Weblate will report back "User with this email address was not
-found." this makes it possible to figure out which user accounts exist
-on the weblate instance.
+A new security advisory has been released for Apache Camel, that is fixed in
+the recent 2.20.4 and 2.21.1 releases:
 
-Affected: weblate 2.10 and earlier.
+CVE-2018-8027: Apache Camel's Core is vulnerable to XXE in XSD validation p=
+rocessor
 
-Upstream patch:
-https://github.com/WeblateOrg/weblate/commit/abe0d2a29a1d8e896bfe829c8461bf8b391f1079
+The full text of the advisory is the following:
 
-Bug report:
-https://github.com/WeblateOrg/weblate/issues/1317
+CVE-2018-8027: Apache Camel's Core is vulnerable to XXE in XSD validation p=
+rocessor
 
--- 
-Jelle van der Waa
+Severity: MEDIUM
+
+Vendor: The Apache Software Foundation
+
+Versions Affected: Camel 2.20.0 to 2.20.3 and Camel 2.21.0
+The unsupported Camel 2.x (2.19 and earlier) versions may be also affected.
+
+Description: Apache Camel's Core is vulnerable to XXE External Entity vulne=
+rability XSD validation processor.
+
+Mitigation: 2.20.x users should upgrade to 2.20.4, 2.21.0 users should upgr=
+ade to 2.21.1.=C2=A0
+
+The JIRA tickets: https://issues.apache.org/jira/browse/CAMEL-12444 and htt=
+ps://issues.apache.org/jira/browse/CAMEL-10894 (partial fix)
+refer to the various commits that resovoled the issue, and have more detail=
+s.
+
+Credit: This issue was discovered by Karel Jel=C3=ADnek <karel dot jelinek =
+at unicorn dot com> from Unicorn Systems.
+
+On behalf of the Apache Camel PMC
+
+--
+Andrea Cosentino=C2=A0
+----------------------------------
+Apache Camel PMC Chair
+Apache Karaf Committer
+Apache Servicemix PMC Member
+Email: ancosen1985@yahoo.com
+Twitter: @oscerd2
+Github: oscerd
