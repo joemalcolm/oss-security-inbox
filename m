@@ -1,22 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/14/2
-Message-ID: <20180514082952.nf64klmaqvjjqyt6@jwilk.net>
-Date: Mon, 14 May 2018 10:29:52 +0200
-From: Jakub Wilk <jwilk@...lk.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: PGP/MIME and S/MIME mail clients vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/31/1
+Message-ID: <695060699.77400.1533021059750@mail.yahoo.com>
+Date: Tue, 31 Jul 2018 07:10:59 +0000 (UTC)
+From: Andrea Cosentino <ancosen1985@...oo.com>
+To: Dev <dev@...el.apache.org>, Users <users@...el.apache.org>,  Apache Security Team <security@...che.org>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>,  "karel.jelinek@...corm.com" <karel.jelinek@...corm.com>
+Subject: [SECURITY] New security advisory CVE-2018-8027 released for Apache Camel
 Content-Type: text/plain; charset=utf-8
 
-https://lists.gnupg.org/pipermail/gnupg-users/2018-May/060315.html has 
-more details:
+A new security advisory has been released for Apache Camel, that is fixed in
+the recent 2.20.4 and 2.21.1 releases:
 
-"[...] HTML is used as a back channel to create an oracle for modified 
-encrypted mails.  It is long known that HTML mails and in particular 
-external links like <img href="tla.org/TAG"/> are evil if the MUA 
-actually honors them (which many meanwhile seem to do again; see all 
-these newsletters).  Due to broken MIME parsers a bunch of MUAs seem to 
-concatenate decrypted HTML mime parts which makes it easy to plant such 
-HTML snippets."
+CVE-2018-8027: Apache Camel's Core is vulnerable to XXE in XSD validation processor
 
--- 
-Jakub Wilk
+The full text of the advisory is the following:
+
+CVE-2018-8027: Apache Camel's Core is vulnerable to XXE in XSD validation processor
+
+Severity: MEDIUM
+
+Vendor: The Apache Software Foundation
+
+Versions Affected: Camel 2.20.0 to 2.20.3 and Camel 2.21.0
+The unsupported Camel 2.x (2.19 and earlier) versions may be also affected.
+
+Description: Apache Camel's Core is vulnerable to XXE External Entity vulnerability XSD validation processor.
+
+Mitigation: 2.20.x users should upgrade to 2.20.4, 2.21.0 users should upgrade to 2.21.1. 
+
+The JIRA tickets: https://issues.apache.org/jira/browse/CAMEL-12444 and https://issues.apache.org/jira/browse/CAMEL-10894 (partial fix)
+refer to the various commits that resovoled the issue, and have more details.
+
+Credit: This issue was discovered by Karel Jelínek <karel dot jelinek at unicorn dot com> from Unicorn Systems.
+
+On behalf of the Apache Camel PMC
+
+--
+Andrea Cosentino 
+----------------------------------
+Apache Camel PMC Chair
+Apache Karaf Committer
+Apache Servicemix PMC Member
+Email: ancosen1985@...oo.com
+Twitter: @oscerd2
+Github: oscerd
