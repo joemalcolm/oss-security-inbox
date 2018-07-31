@@ -1,61 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/27/2
-Message-ID: <9-jL1EFZob81hdKZAE8646fR5VeNxFQIxfAtnfzyRYZpvcVvb52EgIzPiJrAZ9gnM88j8xNjQK5eirL1bslyzdywhfGdEHDJcLmdR6Zx3DE=@itk.swiss>
-Date: Sat, 27 Jan 2018 10:02:03 -0500
-From: Stiepan <stie@....swiss>
-To: oss-security@...ts.openwall.com
-Subject: Re: How to deal with reporters who don't want their bugs fixed?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/31/2
+Message-Id: <E1fkRfI-0004FB-Ek@xenbits.xenproject.org>
+Date: Tue, 31 Jul 2018 10:14:04 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 274 v2 (CVE-2018-14678) - Linux: Uninitialized state in x86 PV failsafe callback path
 Content-Type: text/plain; charset=utf-8
 
-I will try responding to both here: well, however flawed it might be and oftentimes is in practice, there is the universal Hyppocrate's oath in the case of medicine and it sort of works. That is what I meant, using possibly inadequate words.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-If boilerplate agreement sounds better than an universal code of ethics for our profession (and I think this is attainable, not "universal ethics" taken out of context, making it an oxymoron), as long as the effects are with it, I don't think that wording should be the main issue at hand.
+            Xen Security Advisory CVE-2018-14678 / XSA-274
+                              version 2
 
-As for the register's article, it gives this image -
-https://www.theregister.co.uk/Design/graphics/icons/404_img.jpg - in guise of a 404 error, so I cannot make a proper opinion for the moment. Without reading it though, I cannot but see the parallel between Intel deactivating some CPU feature to make it secure and surgical ablation! There are (less mediatized) precedents of the like: see for instance how Apple had to remove Apple Pay history in a rush because it exposed an otherwise (provably?) secure enclave. What I do see in common here is that the end user's interests were sacrificed and some sold feature removed, to remedy a design flaw affecting the security of their information. If you remove the ICT Security professional glasses and take the more generic context of planned obsolescence into account, this becomes very interesting, and there are quite a few other examples of the like.
-Hence, a need probably arises to have an oath for ICT in general and not security in particular, sec. being what surgery is to general medicine, when not done preventively / by design, as we (CEuniX.world) and hopefully others are making every effort to do, instead of the "accept defeat" approach we hear so often from many vendors and even certification bodies, which is itself a reason to begin worrying about the status quo.
+      Linux: Uninitialized state in x86 PV failsafe callback path
 
--------- Mensaje original --------
-On 26 ene. 2018 18:48, Mikhail Utin escribió:
+UPDATES IN VERSION 2
+====================
 
-> I 100% agree with Solar's response. We should not limit our freedom to choose how we will handle our intellectual property. That is how I read the original statements below.
->
-> Not to cause more discussion, but here is the example of how "universal ethics" work:
->
-> https://www.theregister.co.uk/2018/01/25/intel_spectre_disclosed_flaws_november/
->
-> Mikhail Utin, CISSP
->
-> ________________________________
-> From: Solar Designer
-> Sent: Friday, January 26, 2018 12:16
-> To: oss-security@...ts.openwall.com
-> Subject: Re: [oss-security] How to deal with reporters who don't want their bugs fixed?
->
-> On Fri, Jan 26, 2018 at 10:23:49AM -0500, Stiepan wrote:
->> I think that clear rules might be welcome:
->
-> I agree (specifically, I had suggested explicit maximum embargo times),
-> but such rules must not be one and only industry standard. Anyone or
-> any project may propose rules, and other projects are welcome to reuse
-> those rules, but they must not have to - they could as well use
-> different rules, or none. At best, a relatively non-controversial
-> and brief boilerplate could end up being reused by many projects.
->
->> We as a profession should have a clear code of ethics
->
-> No. Let's not use the word ethics. That word, except when explicitly
-> referring to a particular person's or group's ethics, implies that when
-> we (dis)agree or are judging others, we claim to be necessarily right -
-> but in reality we're necessarily subjective.
->
-> This would be just as flawed a concept/term as "responsible disclosure".
-> (I refrain from using that term as well, except when pointing out just
-> how unnecessarily judgemental it is - implying that other kinds of
-> disclosure would have been "irresponsible" - but we're subjective.)
->
->> universal ethics' code
->
-> That's an oxymoron. No such thing can possibly exist.
->
-> Alexander @openwall.com>
+CVE assigned.  Fix the title to refer to the failsafe callback path.
+
+ISSUE DESCRIPTION
+=================
+
+Linux has a `failsafe` callback, invoked by Xen under certain
+conditions.  Normally in this failsafe callback, error_entry is paired
+with error_exit; and error_entry uses %ebx to communicate to
+error_exit whether to use the user or kernel return path.
+
+Unfortunately, on 64-bit PV Xen on x86, error_exit is called without
+error_entry being called first, leaving %ebx with an invalid value.
+
+IMPACT
+======
+
+A rogue user-space program could crash a guest kernel.  Privilege
+escalation cannot be ruled out.
+
+VULNERABLE SYSTEMS
+==================
+
+Only 64-bit x86 PV Linux systems are vulnerable.
+
+All versions of Linux are vulnerable.
+
+MITIGATION
+==========
+
+Switching to HVM or PVH guests will mitigate this issue.
+
+CREDITS
+=======
+
+This issue was discovered by M. Vefa Bicakci, and recognized as a
+security issue by Andy Lutorminski.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+NB this patch has not been accepted into Linux upstream yet.  An
+updated advisory will be sent if the fix upstreamed looks
+significantly different.
+
+xsa274-linux-4.17.patch           Linux 4.17
+
+$ sha256sum xsa274*
+0c30cb13d1d573f446c8cb8d4824ffad8ef9149a7589a19ef9bcc83c07bddcf5  xsa274-linux-4.17.patch
+$
+
+NOTE ON THE LACK OF EMBARGO
+===========================
+
+The patch for this issue was published on linux-kernel without being
+first reported to the XenProject Security Team.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJbYDYRAAoJEIP+FMlX6CvZo1gH/3+9TpyHsjwGIqIrK8wndAQ6
+bth9m0e/Zq4alZflWRsQlJ64toE23dlZmFF9juHLPNEV/4jPm4CA1oRVLQQkJ3am
+6kh4SQMNU5kDa/3S7sCnpYnM+IRg3JO9oDjKfz9PiDImKApzbE/NnGbQLP766BUD
+dCNKLdJlX+i3mRnKeqehFZKSPY43zOMU19hgfuKGEXwRCqlbLraL1+X5xGN11J51
+iXHOJxK9fRBhi2d8jiCKAISqw0OMcROfrCgOFdabxYpw2/H49bjyADd0s9QV5piG
+In1b7S4AFEZfEzEQ0wlXs4wvhqmBZGdMyXxAL7BP4hTGXAJovLrfsL/nX/DXprQ=
+=H+Zn
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa274-linux-4.17.patch" of type "application/octet-stream" (4131 bytes)
