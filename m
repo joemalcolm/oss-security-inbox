@@ -1,55 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/06/4
-Message-ID: <20180806162703.GB6609@castiana>
-Date: Mon, 6 Aug 2018 12:27:03 -0400
-From: Stéphane Graber <stgraber@...ntu.com>
-To: lxc-devel@...ts.linuxcontainers.org, lxc-users@...ts.linuxcontainers.org
-Cc: oss-security@...ts.openwall.com, Matthias Gerstner <mgerstner@...e.de>
-Subject: CVE-2018-6556: lxc-user-nic allows for open() of arbitrary paths
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/01/2
+Message-ID: <CAD-rxRD5+AiEA_qgNh0AWuz7VU8ALGgL2Quowz5sfVzvP6FhjA@mail.gmail.com>
+Date: Wed, 1 Aug 2018 10:38:34 -0400
+From: Tim Graham <timograham@...il.com>
+To: django-announce@...glegroups.com
+Cc: django-users@...glegroups.com,  "Django developers (Contributions to Django itself)" <django-developers@...glegroups.com>, oss-security@...ts.openwall.com
+Subject: Django security releases issued: 1.11.15 and 2.0.8
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Today the Django team issued 1.11.15 and 2.0.8 as part of our security
+process. These releases address a security issue, and we encourage all
+users to upgrade as soon as possible:
 
-This is a notice for a security issue affecting the following LXC versions:
- - 2.0.9 and higher
- - 3.0.0 and higher
+https://www.djangoproject.com/weblog/2018/aug/01/security-releases/
 
-
-Description of the issue:
-  lxc-user-nic (setuid) when asked to delete a network interface will
-  unconditionally open a user provided path.
-
-  This code path may be used by an unprivileged user to check for
-  the existence of a path which they wouldn't otherwise be able to reach.
-
-  It may also be used to trigger side effects by causing a (read-only) open
-  of special kernel files (ptmx, proc, sys).
-
-This was reported to us by Matthias Gerstner from SUSE and Christian
-Brauner on the LXC team took care of finding a workable solution and
-preparing the needed updates.
-
-
-Fixes:
- - stable-2.0: https://github.com/lxc/lxc/commit/5eb45428b312e978fb9e294dde16efb14dd9fa4d
- - stable-3.0: https://github.com/lxc/lxc/commit/c1cf54ebf251fdbad1e971679614e81649f1c032
- - master: https://github.com/lxc/lxc/commit/f26dc127bf5d66e8c29f8584c64bd97c9bbbc574
-
-Linux distributions were privately notified with about a week notice and
-so should have security updates ready for this already, or will shortly.
-
-We will not be issuing emergency release tarballs for this issue so if
-you're maintaining your own build, you should be cherry-picking one of
-the fixes above. We do however intend to release LXC 3.0.2 very shortly
-which will include this fix among other traditional bugfixes.
-
-References:
- - https://bugs.launchpad.net/ubuntu/+source/lxc/+bug/1783591
- - https://bugzilla.suse.com/show_bug.cgi?id=988348
-
--- 
-Stéphane Graber
-Ubuntu developer
-http://www.ubuntu.com
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+As a reminder, we ask that potential security issues be reported via
+private email to security@...ngoproject.com and not via Django's Trac
+instance or the django-developers list. Please see
+https://www.djangoproject.com/security for further information.
