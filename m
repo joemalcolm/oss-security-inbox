@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3334" "Sunday" "20" "September" "2015" "06:26:31" "+0300" "Solar Designer" "solar@openwall.com" "<20150920032631.GA2301@openwall.com>" "94" "Re: [oss-security] s/party/hack like it's 1999" nil nil nil "9" "2015092003:26:31" "[oss-security] s/party/hack like it's 1999" (number mark "        solar@openwa Sep 20   94/3334  " thread-indent "\"Re: [oss-security] s/party/hack like it's 1999\"\n") "<20150920022811.GJ17773@brightrain.aerifal.cx>" ("<20150917180319.1933609esmj3aaw4@webmail.alunos.dcc.fc.up.pt>" "<CAJWnFaP4QGvJxsJes7fmud787xG=vuh+AFiYPh79kiSLOe-rOA@mail.gmail.com>" "<20150919233415.GA31305@openwall.com>" "<20150920022811.GJ17773@brightrain.aerifal.cx>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["504" "Wednesday" "1" "August" "2018" "10:38:34" "-0400" "Tim Graham" "timograham@gmail.com" "<CAD-rxRD5+AiEA_qgNh0AWuz7VU8ALGgL2Quowz5sfVzvP6FhjA@mail.gmail.com>" "10" "[oss-security] Django security releases issued: 1.11.15 and 2.0.8" nil nil nil "8" "2018080114:38:34" "[oss-security] Django security releases issued: 1.11.15 and 2.0.8" (number mark "U       timograham@g Aug  1   10/504   " thread-indent "\"[oss-security] Django security releases issued: 1.11.15 and 2.0.8\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17438 invoked by uid 550); 20 Sep 2015 03:26:48 -0000
+Received: (qmail 7760 invoked by uid 550); 1 Aug 2018 14:38:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,111 +11,50 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17412 invoked from network); 20 Sep 2015 03:26:47 -0000
-Message-ID: <20150920032631.GA2301@openwall.com>
-References: <20150917180319.1933609esmj3aaw4@webmail.alunos.dcc.fc.up.pt> <CAJWnFaP4QGvJxsJes7fmud787xG=vuh+AFiYPh79kiSLOe-rOA@mail.gmail.com> <20150919233415.GA31305@openwall.com> <20150920022811.GJ17773@brightrain.aerifal.cx>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20150920022811.GJ17773@brightrain.aerifal.cx>
-User-Agent: Mutt/1.4.2.3i
-Date: Sun, 20 Sep 2015 06:26:31 +0300
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] s/party/hack like it's 1999
-To: oss-security@lists.openwall.com
+Received: (qmail 7725 invoked from network); 1 Aug 2018 14:38:58 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=s1v2E27AiC7Ns6Q9ti/dlSTIRWu9rzCaiCZIQ0AFleI=;
+        b=On3gDw3Z8rM6VJQdzOnoz6yGLTJb/fdTcrJs3gfAsxxaTOAoEsgOI0IpIoPV0dyr7w
+         gcj2mleF5mPYl+WV322rhcWVX+NcwOhrGz8ReGFiqcINtBd/i1PtAW84r0E/DDpAsstH
+         /SqbI2FnCBG+UeWApxdkYNpxKlbbK/GH+GuuXsYN+fPTM3hQAA5udaa0y2CtxuEaHycX
+         Uz7CM+SYjgnQMA6B5bDw5Dutq6o3KCUHogMi29qh9RELy9dLgV1i7/s1XDH5K7sc4Qb0
+         VTfIiMCUZc/Zcol7vC+/mXgNE6KLuAf0UWSLHKqsKyP9kK3Gqe3fFV+62Pf+/zGxxgKJ
+         I4mg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=s1v2E27AiC7Ns6Q9ti/dlSTIRWu9rzCaiCZIQ0AFleI=;
+        b=Grlz9IEDZAvLPDhTyaLsxI3iRgFnvReXSfqCCU/+7sBQdYGAm1FFIzn28Vb87OxJ7C
+         yODBqZCsjO3gIJgSHQgdnYv3RoYY6BNwEoWZFY/+CFwkghjj6q/Jouip4jeLg7lbAKxW
+         1FQQglbkxBoV6q7QXOnSnB2PvFmyQivpMmX6aOqa/+t+yrDivim1+wrJkajR7JLpdO07
+         ZO2jq6QjrDm5QCQXVEFvnIMjoXIlxuaaSgHZ7Gbpll22Pz5mxs01cF95R0LP5GZ0dPG9
+         hvg5LZuGFGLK7RE8+VLsAc7Z/4AEqs+NPgkm2pez+1/bs9sifGsQ5saBhNyhaOwQVpj+
+         4yAw==
+X-Gm-Message-State: AOUpUlH0c3By1wiX/bbNk1sL2QzMfrp/wUcBqJib8DGRedOuAXaGjuLH
+	N5jnLuuxcXOeq9SC2ip6fCWzfU1s0MsM5EkGPJM=
+X-Google-Smtp-Source: AAOMgpfFtzWMS16iEpU5mTD3qDjev3iekqjWx+2JWPtOXj/zdi3Ucp2I+ILKFlRcQAgtJAdo1Esxaj+mQyrbss9T6kc=
+X-Received: by 2002:a6b:c693:: with SMTP id w141-v6mr3538351iof.79.1533134326451;
+ Wed, 01 Aug 2018 07:38:46 -0700 (PDT)
+MIME-Version: 1.0
+From: Tim Graham <timograham@gmail.com>
+Date: Wed, 1 Aug 2018 10:38:34 -0400
+Message-ID: <CAD-rxRD5+AiEA_qgNh0AWuz7VU8ALGgL2Quowz5sfVzvP6FhjA@mail.gmail.com>
+To: django-announce@googlegroups.com
+Cc: django-users@googlegroups.com, 
+	"Django developers (Contributions to Django itself)" <django-developers@googlegroups.com>, oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] Django security releases issued: 1.11.15 and 2.0.8
 
-Thank you for posting this, Rich!
+Today the Django team issued 1.11.15 and 2.0.8 as part of our security
+process. These releases address a security issue, and we encourage all
+users to upgrade as soon as possible:
 
-On Sat, Sep 19, 2015 at 10:28:11PM -0400, Rich Felker wrote:
-> Writer 1: C2 A9
-> Writer 2: C3 9B 31 6D
-> 
-> One possible interleaving (writes to terminals have _no_ atomicity at
-> all) is:
-> 
-> C3 C2 9B 31 6D A9
-> 
-> This of course contails illegal sequences. The standard practice for
-> processing the above sequence of bytes is to drop or replace truncated
-> or illegal sequences. The exact manner in which this is done varies,
-> but since most software tries to minimize data loss in the case of
-> dropped or corrupt bytes, the usual interpretation is:
-> 
-> [illegal C3] [valid C2 9B] [valid 31] [valid 6D] [illegal A9]
+https://www.djangoproject.com/weblog/2018/aug/01/security-releases/
 
-And in case a terminal assumes the next byte after C3 is corrupt rather
-than lost, so would treat [illegal C3 C2] for the example above, this
-can still be bypassed with a third writer happening to insert any byte
-after the C3, so we'd have e.g.:
-
-Writer 1: C2 A9
-Writer 2: C3 9B 31 6D
-Writer 3: 41
-
-and the attacker's desired interleaving would be:
-
-C3 41 C2 9B 31 6D A9
-
-So:
-
-[illegal C3 41] [valid C2 9B] [valid 31] [valid 6D] [illegal A9]
-
-> Regardless of how the illegal sequences are dropped/replaced, then,
-> the characters in the middle are:
-> 
-> U+009B U+0031 U+006D
-> 
-> or:
-> 
-> CSI '1' 'm'
-> 
-> If C1 characters are processed, that put your terminal in bold mode.
-> 
-> Note that all that was needed for this to happen was for a stray C2
-> byte from one writer to get injected just before the character-final
-> 9B byte of a multibyte character from another writer. I specifically
-> chose my example so that both writers output data which is well-formed
-> and printable UTF-8, but that was not necessary.
-> 
-> Since I see no reasonable application-side mitigation for this, I
-
-Yeah.  A user's mitigation may be to avoid running multiple programs at
-a time on a UTF-8 terminal.  E.g. running "ps &" appears unsafe
-(although is indeed unlikely to actually be used in a successful
-attack), even if "ps" replaces control characters with question marks.
-
-> think the right recommendation should be disabling C1 control codes in
-> terminal emulators, at least in UTF-8 mode, but preferably just across
-> the board. AFAIK nothing is using them. They don't even work reliably
-> across all terminal emulators; many users have C1 disabled from the
-> old days where that was the right way to use certain legacy 8-bit
-> encodings, and some UTF-8 terminal emulators probably don't even
-> support them at all.
-
-I still have:
-
-XTerm*allowC1Printable: true
-XTerm*allowFontOps: false
-XTerm*allowTcapOps: false
-XTerm*allowTitleOps: false
-XTerm*allowSendEvents: false
-XTerm*allowWindowOps: false
-
-Non-security, but also useful (if anyone is still using classic xterm):
-
-XTerm*saveLines: 10000
-
-> Note that when considering disabling C1 controls in screen or tmux,
-> it's important that the attaching terminal also has them disabled.
-> Otherwise screen/tmux will treat them as printable and pass them
-> through to be interpreted by the attaching terminal, which is
-> potentially even more dangerous. It would be nice to see an option in
-> screen/tmux not to treat C1 as printable but rather filter out these
-> characters, so that users running everything in screen/tmux don't have
-> to worry about potentially dangerous settings on the terminal they
-> attach from.
-
-I agree.
-
-Alexander
+As a reminder, we ask that potential security issues be reported via
+private email to security@djangoproject.com and not via Django's Trac
+instance or the django-developers list. Please see
+https://www.djangoproject.com/security for further information.
