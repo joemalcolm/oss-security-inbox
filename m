@@ -1,61 +1,171 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/01/1
-Message-ID: <DC701A09-7FAD-4064-8B6F-89D8202B65F9@osu.edu>
-Date: Thu, 1 Mar 2018 02:26:43 +0000
-From: "Cantor, Scott" <cantor.2@....edu>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Apache Xerces-C Security Advisory for versions < 3.2.1 [CVE-2017-12627]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/01/1
+Message-Id: <D8D17B58-54E2-4C33-97F1-AFDBB21D8878@beckweb.net>
+Date: Wed, 1 Aug 2018 04:38:37 +0200
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
 
+> On 30. Jul 2018, at 16:10, Daniel Beck <ml@...kweb.net> wrote:
+> 
+> SECURITY-704
+> When using the `sshagent` step inside a `withDockerContainer` block in 
+> Pipeline, the resulting logging of the `ssh-add` command included the SSH 
+> key passphrase in plain text.
 
-CVE-2017-12627: Apache Xerces-C DTD vulnerability processing external paths
+CVE-2018-1999036
 
-Severity: Medium
+> SECURITY-997
+> Resource Disposer Plugin did not perform permission checks on an API 
+> endpoint. This allowed users with Overall/Read access to Jenkins to stop 
+> tracking a specified resource.
+> 
+> Additionally, this API endpoint did not require POST requests, resulting 
+> in a CSRF vulnerability.
 
-Vendor: The Apache Software Foundation
+CVE-2018-1999037
 
-Versions Affected: Apache Xerces-C XML Parser library versions
-prior to V3.2.1
+> SECURITY-975
+> Publish Over CIFS Plugin did not perform permission checks on a method 
+> implementing form validation. This allowed users with Overall/Read access 
+> to Jenkins to initiate CIFS connections to an attacker specified host.
+> 
+> Additionally, this form validation method did not require POST requests, 
+> resulting in a CSRF vulnerability.
 
-Description: The Xerces-C XML parser mishandles certain kinds of external
-DTD references, resulting in dereference of a NULL pointer while processing
-the path to the DTD. The bug allows for a denial of service attack in
-applications that allow DTD processing and do not prevent external DTD
-usage, and could conceivably result in remote code execution.
+CVE-2018-1999038
 
-Mitigation: Applications that are using library versions older than
-V3.2.1 should upgrade as soon as possible. Distributors of older versions
-should apply the patch from this subversion revision:
+> SECURITY-982
+> Confluence Publisher Plugin did not perform permission checks on a method 
+> implementing form validation. This allowed users with Overall/Read access 
+> to Jenkins to submit login requests to Confluence using attacker-
+> specified credentials.
+> 
+> Additionally, this form validation method did not require POST requests, 
+> resulting in a CSRF vulnerability.
 
-http://svn.apache.org/viewvc?view=revision&revision=1819998
+CVE-2018-1999039
 
-Applications should strongly consider blocking remote entity resolution
-and/or outright disabling of DTD processing in light of the continued
-identification of bugs in this area of the library.
+> SECURITY-1016
+> Kubernetes Plugin did not perform permission checks on a method 
+> implementing form validation. This allowed users with Overall/Read access 
+> to Jenkins to connect to an attacker-specified Kubernetes cluster using 
+> attacker-specified credentials IDs obtained through another method, 
+> capturing credentials stored in Jenkins.
+> 
+> Additionally, this form validation method did not require POST requests, 
+> resulting in a CSRF vulnerability.
 
-Credit: This issue was reported by Alberto Garcia, Francisco Oca,
-and Suleman Ali of Offensive Research at Salesforce.com.
+CVE-2018-1999040
 
-References:
-http://xerces.apache.org/xerces-c/secadv/CVE-2017-12627.txt
+> SECURITY-840
+> Tinfoil Security Plugin stored the API Secret Key in its configuration 
+> unencrypted in its global configuration file on the Jenkins master. This 
+> key could be viewed by users with access to the master file system.
 
------BEGIN PGP SIGNATURE-----
+CVE-2018-1999041
 
-iQIzBAEBCgAdFiEE3KoVAHvtneaQzZUjN4uEVAIneWIFAlqXX9QACgkQN4uEVAIn
-eWIQaBAAikR87i0rxicryFO8xVkhEnrneWn4AM1h55HZNlIdYXzkzfcQqeLbtVSO
-bJey5xZIiL6lo+ybMKXyoIrqjtkD1LjqnHcyFPNCFZMD59vS+B47c86U2JU7jEPI
-N+Q33U8g8H0fAPhdop0XnhUiXBBvfpWIflunUWefLE+ybd8J5/B7CK54feC0/8CK
-Q47Lmj0aMKDtCM37gADbd6gI6PMJ7Kqjf5yb45okp2qhUZFp+8zrbczVmk/W9Opt
-JcuoxJFx+yfquMvs+yEelOr0m8vGtVJSFEJILZYEpbiMjMFvvBbXNCSQsPp7c7B9
-idLSect9ZDh5f/r3vEWKWq63dILxNBVm3D6K9PyEsYMk3rOTLeYin4KM5RRsmRV6
-8QUC0LS5y7q8ZsE8ou3XoFnBNwckHY3yixZ99kplM7SnzAN7N1EHBlQsGYOsEoQ+
-rqIWSPrbRE6Axdbrqo8FMjwq+kBB3zu4/AVl9VbUrV9o1dQGppWxqpRthUAIz6hS
-7abqQXrdrpXwVOx/dPN9/VK8EwmiBLcvgGIGmloABkPrzt7DqgqQfUUeNSUbQlBD
-exhckp4ivJre/F2lbdNcYq4ETSBybB++RCJF74DKhp6EwuFddCQfV5bqjeioCu9K
-cYjTbzLboz8jVrXTiavqY1Rpazv2agp+bv1jTU+nV0WQVaoSd0c=
-=4BQ4
------END PGP SIGNATURE-----
+> SECURITY-932
+> TraceTronic ECU-TEST Plugin unconditionally disabled SSL/TLS certificate 
+> validation for the entire Jenkins master JVM.
+
+CVE-2018-1999025
+
+> SECURITY-994
+> TraceTronic ECU-TEST Plugin did not perform permission checks on a method 
+> implementing form validation. This allowed users with Overall/Read access 
+> to Jenkins to connect to an attacker-specified URL, with the path suffix
+> `/app-version-info` appended.
+> 
+> Additionally, this form validation method did not require POST requests, 
+> resulting in a CSRF vulnerability.
+
+CVE-2018-1999026
+
+> SECURITY-1009
+> SaltStack Plugin did not perform permission checks on methods implementing 
+> form validation. This allowed users with Overall/Read access to Jenkins to 
+> connect to an attacker-specified URL using attacker-specified credentials 
+> IDs obtained through another method, capturing credentials stored in 
+> Jenkins, and to cause Jenkins to submit HTTP requests to attacker-
+> specified URLs.
+> 
+> Additionally, these form validation methods did not require POST requests, 
+> resulting in a CSRF vulnerability.
+
+CVE-2018-1999027
+
+> SECURITY-1021
+> Accurev Plugin did not perform permission checks on a method implementing 
+> form validation. This allowed users with Overall/Read access to Jenkins to 
+> connect to an attacker-specified Accurev server using attacker-specified 
+> credentials IDs obtained through another method, capturing credentials 
+> stored in Jenkins.
+> 
+> Additionally, these form validation methods did not require POST requests, 
+> resulting in a CSRF vulnerability.
+
+CVE-2018-1999028
+
+> SECURITY-1001
+> Shelve Project Plugin did not escape the names of shelved projects on the 
+> UI, potentially resulting in a stored XSS vulnerability.
+
+CVE-2018-1999029
+
+> SECURITY-1022
+> Maven Artifact ChoiceListProvider (Nexus) Plugin did not perform 
+> permission checks on a method implementing form validation. This allowed 
+> users with Overall/Read access to Jenkins to connect to an attacker-
+> specified Nexus or Artifactory server using attacker-specified credentials 
+> IDs obtained through another method, capturing credentials stored in 
+> Jenkins.
+> 
+> Additionally, this form validation method did not require POST requests, 
+> resulting in a CSRF vulnerability.
+
+CVE-2018-1999030
+
+> SECURITY-847
+> meliora-testlab Plugin stored the API Key in its configuration unencrypted 
+> in its global configuration file on the Jenkins master. This key could be 
+> viewed by users with access to the master file system.
+> 
+> Additionally, the API key was not masked from view using a password form 
+> field.
+
+CVE-2018-1999031
+
+> SECURITY-995
+> Agiletestware Pangolin Connector for TestRail Plugin did not perform 
+> permission checks on an API endpoint used to validate and save the plugin 
+> configuration. This allowed users with Overall/Read access to Jenkins to 
+> override the plugin configuration.
+> 
+> Additionally, the API endpoint did not require POST requests, resulting in 
+> a CSRF vulnerability.
+
+CVE-2018-1999032
+
+> SECURITY-1039
+> Anchore Container Image Scanner Plugin stored the password in its 
+> configuration unencrypted in its global configuration file on the Jenkins 
+> master. This password could be viewed by users with access to the master 
+> file system.
+
+CVE-2018-1999033
+
+> SECURITY-933
+> Inedo ProGet Plugin unconditionally disabled SSL/TLS certificate 
+> validation for the entire Jenkins master JVM.
+
+CVE-2018-1999034
+
+> SECURITY-935
+> Inedo ProGet Plugin unconditionally disabled SSL/TLS certificate validation 
+> for the entire Jenkins master JVM.
+
+CVE-2018-1999035
 
