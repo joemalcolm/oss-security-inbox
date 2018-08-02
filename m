@@ -1,35 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/26/2
-Message-ID: <alpine.BSO.2.21.1808261758080.76507@haru.mindrot.org>
-Date: Sun, 26 Aug 2018 18:04:50 +1000 (AEST)
-From: Damien Miller <djm@...drot.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/02/1
+Message-ID: <f4f9c27d-aac3-0310-77f4-0013df738242@chbi.eu>
+Date: Thu, 2 Aug 2018 19:45:38 +0200
+From: chbi@...i.eu
 To: oss-security@...ts.openwall.com
-Subject: Re: About OpenSSH "user enumeration" / CVE-2018-15473
+Subject: Stored XSS vulnerabilities in Tiki <= 18.1
 Content-Type: text/plain; charset=utf-8
 
-On Sat, 25 Aug 2018, Solar Designer wrote:
+Hi,
 
-> This could mean an extra getpwnam(3) call, which is a slightly greater
-> timing leak than what's present in one call. That may be further
-> mitigated by always doing two calls. Of course, this won't be anywhere
-> near timing-safe anyway.
->
-> Now, it can be tricky to pick a specific fallback username in
-> OpenSSH-portable that we'd be OK with all non-existent usernames to
-> behave similarly to. "root" may somewhat likely have unusual password
-> hash (like it historically did on OpenBSD); "nobody" likely has its
-> password locked (but maybe that's OK - it is in fact common for SSH
-> users to have only public keys setup, and no passwords). Maybe there
-> should be a way to override this dummy username in sshd_config.
+I've discovered four security issues in Tiki <= 18.1 (https://tiki.org)
 
-That sounds like a fair amount of complexity in return for scant
-benefit: at best you dodge a few (IMO uninteresting) bugs, but now you
-are guaranteed to have all your authz code exposed to a the attacker.
 
-Moreover, using a "real fake" account gives a timing / system behaviour
-baseline too. It might be harder to discern, but techniques for making
-remote observations of subtle system side-channels are scarily well-
-developed, and I'm sure that it would be pretty easy to spot if people
-applied them.
+Four stored XSS vulnerabilities allow an authenticated user injecting
+JavaScript to gain administrator privileges if an administrator opens a
+wiki page and moves the mouse pointer over a modified link or thumb image.
 
--d
+
+The issues are fixed in Tiki 18.2 and the fixes are backported to 12.14
+and 15.7.
+
+Fixes:
+https://sourceforge.net/p/tikiwiki/code/66809
+https://sourceforge.net/p/tikiwiki/code/66990
+
+
+Timeline:
+2018-06-15: Issues discovered and reported
+2018-06-25: 3 of 4 issues fixed
+2018-07-12: All 4 issues confirmed
+2018-07-20: 4 of 4 issues fixed
+2018-07-31: Tiki 18.2, 15.7 and 12.14 released
+
+
+I've requested a CVE ID (MITRE).
+
+-- 
+chbi
+https://chbi.eu
+
+GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
+     https://chbi.eu/chbi.asc
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
