@@ -1,82 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/13/9
-Message-Id: <F54052A4-CAAC-4E9A-BB5F-9EF3699E56B1@beckweb.net>
-Date: Wed, 13 Jun 2018 17:58:25 +0200
-From: Daniel Beck <ml@...kweb.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Multiple vulnerabilities in Jenkins and Jenkins plugins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/05/1
+Message-ID: <e099b2d21c5febadcb4de930cd5cffacbd08f41a.camel@decadent.org.uk>
+Date: Sun, 05 Aug 2018 21:36:09 +0800
+From: Ben Hutchings <ben@...adent.org.uk>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: Antonio Diaz Diaz <antonio@....org>
+Subject: Heap-based buffer overflow in zutils zcat
 Content-Type: text/plain; charset=utf-8
 
+A heap-based buffer overflow (CWE-122) was discovered in the zutils
+implementation of zcat.  It is apparently possible only if the -v
+option, or one of the other options that implies -v, is used.
 
-> On 9. May 2018, at 11:45, Daniel Beck <ml@...kweb.net> wrote:
-> 
-> SECURITY-771
-> Users with Overall/Read permission were able use the list-plugins CLI
-> command and view the About Jenkins page to list all installed plugins.
+This seems to have been first discovered in 2016 as a result of
+interaction between initramfs-tools and zutils, but was initially
+thought to be a bug in the gzip implementation of zcat:
+https://bugs.launchpad.net/ubuntu/+source/intel-microcode/+bug/1507443
+https://bugs.debian.org/815915
 
-CVE-2018-1000192
+It was eventually reported to the zutils upstream developer (Antonio
+Diaz Diaz, cc'd) in the last few weeks and was fixed in version
+1.8-pre2.  This was announced in:
+https://lists.nongnu.org/archive/html/zutils-bug/2018-08/msg00000.html
 
-> SECURITY-786
-> The built-in Jenkins user database optionally allows user registration.
-> This feature did not properly sanitize user names, allowing registration of
-> user names containing control characters. This could be used to confuse
-> administrators (appearing to be a different user) while preventing deletion
-> of such users through the UI.
+I will request a CVE ID for this.
 
-CVE-2018-1000193
+Ben.
 
-> SECURITY-788
-> The agent to master security subsystem ensures that the Jenkins master is
-> protected from maliciously configured agents. A path traversal vulnerability
-> allowed agents to escape whitelisted directories to read and write to files
-> they should not be able to access.
+-- 
+Ben Hutchings
+One of the nice things about standards is that
+there are so many of them.
 
-CVE-2018-1000194
-
-> SECURITY-794
-> The form validation code for a tool installer improperly checked
-> permissions, allowing any user with Overall/Read permission to submit a
-> HTTP GET request to any user specified URL, and learn whether the response
-> was successful (HTTP 200) or not.
-> 
-> Additionally, this functionality did not require POST requests be used,
-> thereby allowing the above to be performed without direct access to Jenkins
-> via Cross-Site Request Forgery attacks.
-
-CVE-2018-1000195
-
-> SECURITY-263
-> Gitlab Hook Plugin does not encrypt the Gitlab API token used to access
-> Gitlab. This can be used by users with master file system access to obtain
-> GitHub credentials.
-> 
-> Additionally, the Gitlab API token round-trips in its plaintext form, and
-> is displayed in a regular text field to users with Overall/Administer
-> permission. This exposes the API token to people viewing a Jenkins
-> administrator’s screen, browser extensions, cross-site scripting
-> vulnerabilities, etc.
-
-CVE-2018-1000196
-
-> SECURITY-670
-> Black Duck Hub Plugin did not perform permission checks for its config.xml
-> API endpoint. This allowed any user with Overall/Read permission to both
-> read and write the plugin configuration XML.
-
-CVE-2018-1000197
-
-> SECURITY-671
-> Black Duck Hub Plugin config.xml API endpoint was affected by an XML
-> External Entity (XXE) processing vulnerability. This allowed an attacker
-> with Overall/Read access to have Jenkins parse a maliciously crafted file
-> that uses external entities for extraction of secrets from the Jenkins
-> master, server-side request forgery, or denial-of-service attacks.
-
-CVE-2018-1000198
-
-> SECURITY-821 / CVE pending
-> Groovy Postbuild Plugin did not properly escape badge content from user
-> input, resulting in a stored cross-site scripting vulnerability.
-
-CVE-2018-1000202
-
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
