@@ -1,98 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/05/1
-Message-ID: <alpine.DEB.2.20.1809041916060.14115@tvnag.unkk.fr>
-Date: Wed, 5 Sep 2018 07:55:21 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: NTLM password overflow via integer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/06/4
+Message-ID: <20180806162703.GB6609@castiana>
+Date: Mon, 6 Aug 2018 12:27:03 -0400
+From: Stéphane Graber <stgraber@...ntu.com>
+To: lxc-devel@...ts.linuxcontainers.org, lxc-users@...ts.linuxcontainers.org
+Cc: oss-security@...ts.openwall.com, Matthias Gerstner <mgerstner@...e.de>
+Subject: CVE-2018-6556: lxc-user-nic allows for open() of arbitrary paths
 Content-Type: text/plain; charset=utf-8
 
-NTLM password overflow via integer overflow
-===========================================
+Hello,
 
-Project curl Security Advisory, September 5th 2018 -
-[Permalink](https://curl.haxx.se/docs/CVE-2018-14618.html)
+This is a notice for a security issue affecting the following LXC versions:
+ - 2.0.9 and higher
+ - 3.0.0 and higher
 
-VULNERABILITY
--------------
 
-libcurl contains a buffer overrun in the NTLM authentication code.
+Description of the issue:
+  lxc-user-nic (setuid) when asked to delete a network interface will
+  unconditionally open a user provided path.
 
-The internal function `Curl_ntlm_core_mk_nt_hash` multiplies the `length` of
-the password by two (SUM) to figure out how large temporary storage area to
-allocate from the heap.
+  This code path may be used by an unprivileged user to check for
+  the existence of a path which they wouldn't otherwise be able to reach.
 
-The `length` value is then subsequently used to iterate over the password and
-generate output into the allocated storage buffer. On systems with a 32 bit
-`size_t`, the math to calculate SUM triggers an integer overflow when the
-password length exceeds 2GB (2^31 bytes). This integer overflow usually causes
-a very small buffer to actually get allocated instead of the intended very
-huge one, making the use of that buffer end up in a heap buffer overflow.
+  It may also be used to trigger side effects by causing a (read-only) open
+  of special kernel files (ptmx, proc, sys).
 
-(This bug is almost identical to
-[CVE-2017-8816](https://curl.haxx.se/docs/CVE-2017-8816.html).)
+This was reported to us by Matthias Gerstner from SUSE and Christian
+Brauner on the LXC team took care of finding a workable solution and
+preparing the needed updates.
 
-We are not aware of any exploit of this flaw.
 
-INFO
-----
+Fixes:
+ - stable-2.0: https://github.com/lxc/lxc/commit/5eb45428b312e978fb9e294dde16efb14dd9fa4d
+ - stable-3.0: https://github.com/lxc/lxc/commit/c1cf54ebf251fdbad1e971679614e81649f1c032
+ - master: https://github.com/lxc/lxc/commit/f26dc127bf5d66e8c29f8584c64bd97c9bbbc574
 
-This bug was introduced in commit
-[be285cde3f](https://github.com/curl/curl/commit/be285cde3f), April 2006.
+Linux distributions were privately notified with about a week notice and
+so should have security updates ready for this already, or will shortly.
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2018-14618 to this issue.
+We will not be issuing emergency release tarballs for this issue so if
+you're maintaining your own build, you should be cherry-picking one of
+the fixes above. We do however intend to release LXC 3.0.2 very shortly
+which will include this fix among other traditional bugfixes.
 
-CWE-131: Incorrect Calculation of Buffer Size
-
-AFFECTED VERSIONS
------------------
-
-This issue is only present on 32 bit systems. It also requires the password
-field to use more than 2GB of memory, which should be rare.
-
-- Affected versions: libcurl 7.15.4 to and including 7.61.0
-- Not affected versions: libcurl < 7.15.4 and >= 7.61.1
-
-curl is used by many applications, but not always advertised as such.
-
-THE SOLUTION
-------------
-
-In libcurl version 7.61.1, the integer overflow is avoided.
-
-A [patch for
-CVE-2018-14618](https://github.com/curl/curl/commit/57d299a499155d4b327e341c6024e293b0418243.patch)
-is available.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl to version 7.61.1
-
-  B - Apply the patch to your version and rebuild
-
-  C - Put length restrictions on the password you can pass to libcurl
-
-TIME LINE
----------
-
-It was [publicly reported](https://github.com/curl/curl/issues/2756) to the
-curl project on July 18, 2018.  We contacted distros@...nwall on August 27.
-
-curl 7.61.1 was released on September 5 2018, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-Reported by Zhaoyang Wu. Patch by Daniel Stenberg.
-
-Thanks a lot!
+References:
+ - https://bugs.launchpad.net/ubuntu/+source/lxc/+bug/1783591
+ - https://bugzilla.suse.com/show_bug.cgi?id=988348
 
 -- 
+Stéphane Graber
+Ubuntu developer
+http://www.ubuntu.com
 
-  / daniel.haxx.se
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
