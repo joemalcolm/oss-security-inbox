@@ -1,30 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/28/6
-Message-ID: <nycvar.YSQ.7.76.1808281620230.4708@xnncv>
-Date: Tue, 28 Aug 2018 16:22:34 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Jann Horn <jannh@...gle.com>
-Subject: CVE-2018-15746 Qemu: seccomp: blacklist is not applied to all threads
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/06/3
+Message-ID: <20180806111819.kc3o3vd266qdjich@tunkki.bugs.fi>
+Date: Mon, 6 Aug 2018 14:18:19 +0300
+From: Henri Salo <henri@...v.fi>
+To: Thiago Macieira <thiago@...ieira.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Requesting CVE number for Qt Creator / Botan issue
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+On Sun, Aug 05, 2018 at 11:21:00AM -0700, Thiago Macieira wrote:
+> I would like to request a CVE number for an advisory about Qt Creator
+> shipping old Botan (and potentially vulnerable) sources.
 
-An issue was found in the way QEMU implements Seccomp sandboxing. In that, all 
-QEMU threads are not bound by the sandbox. A guest user/process maybe be able 
-to use this flaw to crash a guest resulting in DoS.
+https://cveform.mitre.org/
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2018-08/msg04892.html
+-- 
+Henri Salo
 
-Reference:
-----------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2018-08/msg02289.html
-
-'CVE-2018-15746' assigned via -> https://cveform.mitre.org/
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
