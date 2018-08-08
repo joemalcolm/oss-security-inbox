@@ -1,63 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/25/1
-Message-ID: <CABejAM+hhgCipLzUycSV-RszcF6un45CncGFT9w0Yc69qNcbjQ@mail.gmail.com>
-Date: Fri, 21 Sep 2018 21:12:15 -0700
-From: Justin Ferguson <justin@...c.co>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/08/3
+Message-ID: <20180808142247.GB15601@w1.fi>
+Date: Wed, 8 Aug 2018 17:22:47 +0300
+From: Jouni Malinen <j@...fi>
 To: oss-security@...ts.openwall.com
-Cc: fulldisclosure@...lists.org
-Subject: bounties
+Subject: Unauthenticated EAPOL-Key decryption in wpa_supplicant
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Published: August 8, 2018
+Identifiers:
+- CVE-2018-14526
+Latest version available from: https://w1.fi/security/2018-1/
 
-I was curious about peoples experiences with bug bounties particularly
-those through the prominent clearing houses for them. My experience is
-that I have been either ripped off or extremely slow-walked in payment
-that was substantially below the listed payout in every single
-instance. I'm curious how accurately that reflects other peoples
-experiences.
+Vulnerability
 
-In the first series of findings, the vendor, a popular open source
-component simply patched the bugs and refused to close the tickets
-triggering payout for over a year. Attempts at resolving this through
-the clearing houses support produced an endless series of excuses
-mostly revolving around their not having any insight into their own
-database (which is probably true). After a year or so, the ticket was
-finally closed and the pay out several hundred dollars less than the
-enumerated payout. I refused the bounty citing these complications and
-insisted that the finding as a work for hire that was rejected and
-requested that the patch be reverted as a result, which was just
-ignored.
+A vulnerability was found in how wpa_supplicant processes EAPOL-Key
+frames. It is possible for an attacker to modify the frame in a way that
+makes wpa_supplicant decrypt the Key Data field without requiring a
+valid MIC value in the frame, i.e., without the frame being
+authenticated. This has a potential issue in the case where WPA2/RSN
+style of EAPOL-Key construction is used with TKIP negotiated as the
+pairwise cipher. It should be noted that WPA2 is not supposed to be used
+with TKIP as the pairwise cipher. Instead, CCMP is expected to be used
+and with that pairwise cipher, this vulnerability is not applicable in
+practice.
 
-In the second series, the vendor, a prominent hardware company, stated
-that a one line fix with no usability impact (the patch is to move the
-line up one line so that it is included in the mutex lock) was found
-and "partly fixed" over a month prior and that a full patch should be
-released soon. That was several months ago and looking through their
-reports, their public repositories, et cetera it appears to be totally
-and entirely something they made up as the bug still exists. This
-meshes with my thoughts that there even was such a thing as a partial
-fix for x() mutex.lock() vs mutex.lock() x();.
+When TKIP is negotiated as the pairwise cipher, the EAPOL-Key Key Data
+field is encrypted using RC4. This vulnerability allows unauthenticated
+EAPOL-Key frames to be processed and due to the RC4 design, this makes
+it possible for an attacker to modify the plaintext version of the Key
+Data field with bitwise XOR operations without knowing the contents.
+This can be used to cause a denial of service attack by modifying
+GTK/IGTK on the station (without the attacker learning any of the keys)
+which would prevent the station from accepting received group-addressed
+frames. Furthermore, this might be abused by making wpa_supplicant act
+as a decryption oracle to try to recover some of the Key Data payload
+(GTK/IGTK) to get knowledge of the group encryption keys.
 
-In the third instance, the vendor, an anti-virus vendor in Europe,
-stated that they were not able to reproduce the issue and didn't see
-any issue. There were multiple things reported to them and their
-circumstances were different as a context switch meant I was turning
-in incomplete work just to attempt to get the issues patched. After
-months of them coming back and asking the same question repeatedly,
-being told the same answer repeatedly and continually ignoring very
-basic questions about their attempts to reproduce, they closed the
-matter as not reproducible. Upon further review, they could not have
-possibly reviewed anything as the issue is blatantly clear and obvious
-implying that they must not have even looked at the matter. In
-additional findings reported to them, they've outright ignored the
-matter entirely.
+Full recovery of the group encryption keys requires multiple attempts
+(128 connection attempts per octet) and each attempt results in
+disconnection due to a failure to complete the 4-way handshake. These
+failures can result in the AP/network getting disabled temporarily or
+even permanently (requiring user action to re-enable) which may make it
+impractical to perform the attack to recover the keys before the AP has
+already changes the group keys. By default, wpa_supplicant is enforcing
+at minimum a ten second wait time between each failed connection
+attempt, i.e., over 20 minutes waiting to recover each octet while
+hostapd AP implementation uses 10 minute default for GTK rekeying when
+using TKIP. With such timing behavior, practical attack would need large
+number of impacted stations to be trying to connect to the same AP to be
+able to recover sufficient information from the GTK to be able to
+determine the key before it gets changed.
 
-Thus, my experience has thus far been that bounties, particularly
-those through the clearing houses are basically enabling a 1990s
-pre-full-disclosure series of processes under the pretense of the
-opposite, but in practice mostly just ripping works for hire off. This
-clearly isn't the case across the board, but its been true in every
-instance of my participation.
 
--me
+Vulnerable versions/configurations
+
+All wpa_supplicant versions.
+
+
+Acknowledgments
+
+Thanks to Mathy Vanhoef of the imec-DistriNet research group of KU
+Leuven for discovering and reporting this issue.
+
+
+Possible mitigation steps
+
+- Remove TKIP as an allowed pairwise cipher in RSN/WPA2 networks. This
+  can be done also on the AP side.
+
+- Merge the following commits to wpa_supplicant and rebuild:
+
+  WPA: Ignore unauthenticated encrypted EAPOL-Key data
+
+  This patch is available from https://w1.fi/security/2018-1/
+
+- Update to wpa_supplicant v2.7 or newer, once available
+
+-- 
+Jouni Malinen                                            PGP id EFC895FA
