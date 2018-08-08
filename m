@@ -1,99 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/15/1
-Message-ID: <1518721454.9434.0.camel@gmail.com>
-Date: Thu, 15 Feb 2018 20:04:14 +0100
-From: Ailin Nemui <ailin.nemui@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/08/5
+Message-ID: <CACdnJuvnc9iwaK6n9T_+PO0CUz9HYErQQ6eY+sJZM_o_h9tfaw@mail.gmail.com>
+Date: Wed, 8 Aug 2018 08:44:28 -0700
+From: Matthew Garrett <mjg59@...gle.com>
 To: oss-security@...ts.openwall.com
-Subject: Irssi 1.1.1&1.0.7: CVE-2018-7054, CVE-2018-7053, CVE-2018-7050, CVE-2018-7052, CVE-2018-7051
+Subject: Linux TCP implementation vulnerable to Denial of Service (CVE 2018-5390)
 Content-Type: text/plain; charset=utf-8
 
-IRSSI-SA-2018-02 Irssi Security Advisory [1]
-============================================
-CVE-2018-7054, CVE-2018-7053, CVE-2018-7050, CVE-2018-7052, CVE-2018-
-7051
-
-Description
------------
-
-Multiple vulnerabilities have been located in Irssi.
-
-(a) Use after free when server is disconnected during netsplits. Found
-    by Joseph Bisch. (CWE-416, CWE-825)
-
-    CVE-2018-7054 [2] was assigned to this issue.
-
-(b) Use after free when SASL messages are received in unexpected order.
-    Found by Joseph Bisch. (CWE-416, CWE-691)
-
-    CVE-2018-7053 [3] was assigned to this issue.
-
-(c) Null pointer dereference when an "empty" nick has been observed by
-    Irssi. Found by Joseph Bisch. (CWE-476, CWE-475)
-
-    CVE-2018-7050 [4] was assigned to this issue.
-
-(d) When the number of windows exceed the available space, Irssi would
-    crash due to Null pointer dereference. Found by Joseph Bisch.
-    (CWE-690)
-
-    CVE-2018-7052 [5] was assigned to this issue.
-
-(e) Certain nick names could result in out of bounds access when
-    printing theme strings. Found by Oss-Fuzz. (CWE-126)
-
-    CVE-2018-7051 [6] was assigned to this issue.
-
-
-Affected versions
------------------
-
-(a) Irssi 1.0.0 and later
-
-(b) Irssi 0.8.18 and later
-
-(c) All Irssi versions that we observed
-
-(d) All Irssi versions that we observed
-
-(e) Irssi 0.8.7 and later
-
-
-Fixed in
---------
-
-Irssi 1.0.7, 1.1.1
-
-
-Recommended action
-------------------
-
-Upgrade to the latest stable Irssi version. Irssi 1.0.7 and 1.1.1 are
-maintenance release in the 1.0 and 1.1 series, without any new
-features.
-
-After installing the updated packages, one can issue the /upgrade
-command to load the new binary. TLS connections will require
-/reconnect.
-
-
-Mitigating facts
-----------------
-
-(b) requires a non-conforming ircd
-
-(c) requires a broken ircd or control over the ircd
-
-(d) depends on non-default configuration
-
-
-
-References
-----------
-
-[1] https://irssi.org/security/irssi_sa_2018_02.txt
-[2] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-7054
-[3] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-7053
-[4] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-7050
-[5] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-7052
-[6] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-7051
+CVE 2018-5390 is a remotely exploitable denial of service against Linux
+systems. It was patched in the public kernel tree on the 2018-07-23 and
+publicly disclosed on 2018-08-06. A public tweet linking to the commit was
+made on 2018-07-23, so awareness of the issue may have been high before
+official disclosure. All Linux distributions should now have released
+patches for the affected releases.
 
