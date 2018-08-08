@@ -1,58 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/23/1
-Message-ID: <0650ff91-3841-9773-14d9-58ba9b97698a@apache.org>
-Date: Fri, 23 Feb 2018 00:33:34 +0000
-From: Mark Thomas <markt@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: Fwd: [SECURITY] CVE-2018-1305 Security constraint annotations applied too late
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/08/2
+Message-ID: <84053823.699.1533736923955.JavaMail.Joan@BRAIN>
+Date: Wed, 8 Aug 2018 10:02:02 -0400 (EDT)
+From: Joan Touzet <wohali@...che.org>
+To: CouchDB Users <user@...chdb.apache.org>
+Cc: "announce " <announce@...chdb.apache.org>,  CouchDB Developers <dev@...chdb.apache.org>,  marketing@...chdb.apache.org, security@...chdb.apache.org,  oss-security@...ts.openwall.com
+Subject: CVE-2018-11769: Apache CouchDB Remote Code Execution (affects versions 1.x and ≤2.1.2)
 Content-Type: text/plain; charset=utf-8
 
--------- Forwarded Message --------
-Subject: [SECURITY] CVE-2018-1305 Security constraint annotations
-applied too late
-Date: Fri, 23 Feb 2018 00:27:36 +0000
-From: Mark Thomas <markt@...che.org>
-Reply-To: announce@...cat.apache.org, announce@...cat.apache.org
-To: Tomcat Users List <users@...cat.apache.org>
-CC: Tomcat Developers List <dev@...cat.apache.org>, announce@...che.org,
-announce@...cat.apache.org <announce@...cat.apache.org>
+Date: 	        08.08.2018
+Affected:	Apache CouchDB 1.x and ≤2.1.2
+Severity:	Low
+Vendor:	        The Apache Software Foundation
 
-CVE-2018-1305 Security constraint annotations applied too late
 
-Severity: High
+Description
+===========
 
-Vendor: The Apache Software Foundation
+CouchDB administrative users can configure the database server via HTTP(S). Due to insufficient validation of administrator-supplied configuration settings via the HTTP API, it is possible for a CouchDB administrator user to escalate their privileges to that of the operating system’s user under which CouchDB runs, by bypassing the blacklist of configuration settings that are not allowed to be modified via the HTTP API.
 
-Versions Affected:
-Apache Tomcat 9.0.0.M1 to 9.0.4
-Apache Tomcat 8.5.0 to 8.5.27
-Apache Tomcat 8.0.0.RC1 to 8.0.49
-Apache Tomcat 7.0.0 to 7.0.84
+This privilege escalation effectively allows a CouchDB admin user to gain arbitrary remote code execution, bypassing mitigations for CVE-2017-12636 and CVE-2018-8007.
 
-Description:
-Security constraints defined by annotations of Servlets were only
-applied once a Servlet had been loaded. Because security constraints
-defined in this way apply to the URL pattern and any URLs below that
-point, it was possible - depending on the order Servlets were loaded -
-for some security constraints not to be applied. This could have exposed
-resources to users who were not authorised to access them.
 
-Mitigation:
-Users of the affected versions should apply one of the following
-mitigations. Upgrade to:
-- Apache Tomcat 9.0.5 or later
-- Apache Tomcat 8.5.28 or later
-- Apache Tomcat 8.0.50 or later
-- Apache Tomcat 7.0.85 or later
+Mitigation
+==========
 
-Credit:
-This issue was identified by the Apache Tomcat Security Team.
+All users should upgrade to CouchDB 2.2.0.
 
-History:
-2018-02-23 Original advisory
+Upgrades from previous 2.x versions in the same series should be seamless.
 
-References:
-[1] http://tomcat.apache.org/security-9.html
-[2] http://tomcat.apache.org/security-8.html
-[3] http://tomcat.apache.org/security-7.html
+Users still on CouchDB 1.x should be advised that the Apache CouchDB team no longer support 1.x.
 
+In-place mitigation (on any 1.x release, or 2.x prior to 2.2.0) is possible by removing the _config route from the default.ini file, as follows:
+
+    [httpd_global_handlers]
+    ;_config = {couch_httpd_misc_handlers, handle_config_req}
+
+or by blocking access to the /_config (1.x) or /_node/*/_config routes at a reverse proxy in front of the service.
