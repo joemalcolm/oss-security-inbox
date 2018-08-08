@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["497" "Wednesday" "5" "January" "2022" "18:30:38" "-0500" "Neil Griffin" "asfgriff@apache.org" nil "22" "[oss-security] CVE-2021-36737: Apache Portals: XSS in V3 Demo Portlet" nil nil nil "1" nil nil (number mark "U       asfgriff@apa Jan  5   22/497   " thread-indent "\"[oss-security] CVE-2021-36737: Apache Portals: XSS in V3 Demo Portlet\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-36737: Apache Portals: XSS in V3 Demo Portlet" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3131" "Wednesday" "8" "August" "2018" "17:22:47" "+0300" "Jouni Malinen" "j@w1.fi" "<20180808142247.GB15601@w1.fi>" "72" "[oss-security] Unauthenticated EAPOL-Key decryption in wpa_supplicant" nil nil nil "8" "2018080814:22:47" "[oss-security] Unauthenticated EAPOL-Key decryption in wpa_supplicant" (number mark "U       j@w1.fi      Aug  8   72/3131  " thread-indent "\"[oss-security] Unauthenticated EAPOL-Key decryption in wpa_supplicant\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7387 invoked by uid 550); 5 Jan 2022 23:41:31 -0000
+Received: (qmail 29770 invoked by uid 550); 8 Aug 2018 14:31:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,42 +12,86 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3492 invoked from network); 5 Jan 2022 23:31:42 -0000
-X-Gm-Message-State: AOAM532sILT0LMXXWM2DExaiWO047+7wuRo4UZCD1QdGdpwV1wB7LjkV
-	17W9722AnBny/PEbvyH1HCmZDWnrXOC0j/hfSPo=
-X-Google-Smtp-Source: ABdhPJy88RhYrDrQmdEA14lPSdW8AeDdTc7hmwFEO4f2dZ0sGd6eSUzeV+QXZl8f2ITfX79mN0ZTnmk7ed0+1bHRPMc=
-X-Received: by 2002:a05:6808:30a0:: with SMTP id bl32mr4292580oib.77.1641425449537;
- Wed, 05 Jan 2022 15:30:49 -0800 (PST)
+Received: (qmail 21718 invoked from network); 8 Aug 2018 14:23:02 -0000
+X-Virus-Scanned: Debian amavisd-new at w1.fi
+Date: Wed, 8 Aug 2018 17:22:47 +0300
+From: Jouni Malinen <j@w1.fi>
+To: oss-security@lists.openwall.com
+Message-ID: <20180808142247.GB15601@w1.fi>
 MIME-Version: 1.0
-From: Neil Griffin <asfgriff@apache.org>
-Date: Wed, 5 Jan 2022 18:30:38 -0500
-X-Gmail-Original-Message-ID: <CAAqbB_dr90dmdxrVpG-cznaPrtPEQwtViaYgB2EA43efhRgRiA@mail.gmail.com>
-Message-ID: <CAAqbB_dr90dmdxrVpG-cznaPrtPEQwtViaYgB2EA43efhRgRiA@mail.gmail.com>
-To: general@portals.apache.org, pluto-user@portals.apache.org, 
-	announce@apache.org, jetspeed-user@portals.apache.org, security@apache.org, 
-	oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000d8550205d4de24fa"
-Subject: [oss-security] CVE-2021-36737: Apache Portals: XSS in V3 Demo Portlet
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Subject: [oss-security] Unauthenticated EAPOL-Key decryption in wpa_supplicant
 
---000000000000d8550205d4de24fa
-Content-Type: text/plain; charset="UTF-8"
+Published: August 8, 2018
+Identifiers:
+- CVE-2018-14526
+Latest version available from: https://w1.fi/security/2018-1/
 
-Severity: low
+Vulnerability
 
-Description:
+A vulnerability was found in how wpa_supplicant processes EAPOL-Key
+frames. It is possible for an attacker to modify the frame in a way that
+makes wpa_supplicant decrypt the Key Data field without requiring a
+valid MIC value in the frame, i.e., without the frame being
+authenticated. This has a potential issue in the case where WPA2/RSN
+style of EAPOL-Key construction is used with TKIP negotiated as the
+pairwise cipher. It should be noted that WPA2 is not supposed to be used
+with TKIP as the pairwise cipher. Instead, CCMP is expected to be used
+and with that pairwise cipher, this vulnerability is not applicable in
+practice.
 
-The input fields of the Apache Pluto UrlTestPortlet are vulnerable to
-Cross-Site Scripting (XSS) attacks.  Users should migrate to version 3.1.1
-of the v3-demo-portlet.war artifact
+When TKIP is negotiated as the pairwise cipher, the EAPOL-Key Key Data
+field is encrypted using RC4. This vulnerability allows unauthenticated
+EAPOL-Key frames to be processed and due to the RC4 design, this makes
+it possible for an attacker to modify the plaintext version of the Key
+Data field with bitwise XOR operations without knowing the contents.
+This can be used to cause a denial of service attack by modifying
+GTK/IGTK on the station (without the attacker learning any of the keys)
+which would prevent the station from accepting received group-addressed
+frames. Furthermore, this might be abused by making wpa_supplicant act
+as a decryption oracle to try to recover some of the Key Data payload
+(GTK/IGTK) to get knowledge of the group encryption keys.
 
-Mitigation:
+Full recovery of the group encryption keys requires multiple attempts
+(128 connection attempts per octet) and each attempt results in
+disconnection due to a failure to complete the 4-way handshake. These
+failures can result in the AP/network getting disabled temporarily or
+even permanently (requiring user action to re-enable) which may make it
+impractical to perform the attack to recover the keys before the AP has
+already changes the group keys. By default, wpa_supplicant is enforcing
+at minimum a ten second wait time between each failed connection
+attempt, i.e., over 20 minutes waiting to recover each octet while
+hostapd AP implementation uses 10 minute default for GTK rekeying when
+using TKIP. With such timing behavior, practical attack would need large
+number of impacted stations to be trying to connect to the same AP to be
+able to recover sufficient information from the GTK to be able to
+determine the key before it gets changed.
 
-* Uninstall the v3-demo-portlet.war artifact
-   -or-
-* Migrate to version 3.1.1 of the v3-demo-portlet.war artifact
 
-Credit:
+Vulnerable versions/configurations
 
-Thanks to Dhiraj Mishra for reporting.
+All wpa_supplicant versions.
 
---000000000000d8550205d4de24fa--
+
+Acknowledgments
+
+Thanks to Mathy Vanhoef of the imec-DistriNet research group of KU
+Leuven for discovering and reporting this issue.
+
+
+Possible mitigation steps
+
+- Remove TKIP as an allowed pairwise cipher in RSN/WPA2 networks. This
+  can be done also on the AP side.
+
+- Merge the following commits to wpa_supplicant and rebuild:
+
+  WPA: Ignore unauthenticated encrypted EAPOL-Key data
+
+  This patch is available from https://w1.fi/security/2018-1/
+
+- Update to wpa_supplicant v2.7 or newer, once available
+
+-- 
+Jouni Malinen                                            PGP id EFC895FA
