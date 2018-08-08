@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["723" "Saturday" "21" "May" "2016" "19:21:56" "+0800" "Baozeng Ding" "sploving1@gmail.com" "<a55a2a8b-31c4-d454-376a-fe85302c9b29@gmail.com>" "21" "[oss-security] CVE request: -- Linux kernel: Null pointer dereference in tipc_nl_publ_dump" "^Cc:" nil nil "5" "2016052111:21:56" "[oss-security] CVE request: -- Linux kernel: Null pointer dereference in tipc_nl_publ_dump" (number mark "        sploving1@gm May 21   21/723   " thread-indent "\"[oss-security] CVE request: -- Linux kernel: Null pointer dereference in tipc_nl_publ_dump\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["535" "Wednesday" "8" "August" "2018" "23:35:19" "+0300" "Jouni Malinen" "jkmalinen@gmail.com" "<CANe27jJDj8xhe4KeUiPwxLE2Uqp-JXahC_JtvR4O_JabEhdtow@mail.gmail.com>" "19" "Re: [oss-security] Unauthenticated EAPOL-Key decryption in wpa_supplicant" nil nil nil "8" "2018080820:35:19" "[oss-security] Unauthenticated EAPOL-Key decryption in wpa_supplicant" (number mark "U       jkmalinen@gm Aug  8   19/535   " thread-indent "\"Re: [oss-security] Unauthenticated EAPOL-Key decryption in wpa_supplicant\"\n") "<CACVwi=KLCbDhMvzSmrBU7vi=zexSn-EfoHszYHzmt8VWLXD9Fg@mail.gmail.com>" ("<20180808142247.GB15601@w1.fi>" "<CACVwi=KLCbDhMvzSmrBU7vi=zexSn-EfoHszYHzmt8VWLXD9Fg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 20395 invoked by uid 550); 21 May 2016 11:22:19 -0000
+Received: (qmail 14304 invoked by uid 550); 8 Aug 2018 21:57:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,64 +11,60 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 20377 invoked from network); 21 May 2016 11:22:18 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=to:cc:from:subject:message-id:date:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=cw2Ahi3ROjXRTNJkIQPMnVGfIWMDEvD4IvIz2LkX9U8=;
-        b=WpLgUUyylBnqBi9hx80Rllws7xZOqxEsoLbs5O5pW0YHUu2Of41/Ovy8l7L9OJhNVT
-         +eovdoZS6M0dnlDYmjbKpiWwui87gUY2Ldc/d+6FRqdRRzbWZrzzJUw/gm7h1BVBFIDD
-         7N1OopIO7W2A1NnqSTjfZL58Wrx7dQwaxbE86CWXn6gvJi8Cvlyy3iErYHS7S93D73jK
-         lBBlZS/79Dcs/BSREi9rQZeZRAOSsuxlFAWsY03rKobC/Kq+IABAIkYE30qUoH7SJ25v
-         FhHHrVvDPZ/tztNWfrrcAU0l70SxUkUj+x02GNlLUT2INkTAy+7GJwxvtv4lXH5p+DZg
-         0Kxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:to:cc:from:subject:message-id:date:user-agent
-         :mime-version:content-transfer-encoding;
-        bh=cw2Ahi3ROjXRTNJkIQPMnVGfIWMDEvD4IvIz2LkX9U8=;
-        b=m5I7vtj+jMzu7KsO1kVq9ybqBwOVrHrj1KkM1e65xLavdp9I+UP1wOGqiUNnNYSY53
-         rS6bM2AGgxEo5LHzWfDwX9CxcHQwIODAeWOwoR6EViiBk2EJ9gXhTcB5tdi60tryQDpp
-         JQQYceOwg9WvBiNYD+nZuqTURT5HC7QXGi3IoaaCIV+8eTe8dvZdEruiI0VrVoxeTjkI
-         RSOfWsW5Jgo6dBbnkXrexE3aZN01RMepCv6yCg4weDaFaGcgYJ+OslQ8OhbIWZ1U8WvB
-         7tN95lFxdPCPR19XRPbemZbBib43kls3e9nyg9JfT/Wo7IFpArnQj3EYXjl14pU1NBX2
-         H8Cw==
-X-Gm-Message-State: AOPr4FXaW9LDSXF04c4HjWRmJnjK9B0QtlVLPUnvnLPgeiskGzHHuv50M9W8kCdbRtVILg==
-X-Received: by 10.66.164.133 with SMTP id yq5mr12032197pab.107.1463829726342;
-        Sat, 21 May 2016 04:22:06 -0700 (PDT)
-Message-ID: <a55a2a8b-31c4-d454-376a-fe85302c9b29@gmail.com>
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.1.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: richard.alpe@ericsson.com
-Date: Sat, 21 May 2016 19:21:56 +0800
-From: Baozeng Ding <sploving1@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request: -- Linux kernel: Null pointer dereference in
- tipc_nl_publ_dump
-To: oss-security@lists.openwall.com, cve-assign@mitre.org
+Received: (qmail 11354 invoked from network); 8 Aug 2018 20:35:32 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=Za5Oxv+SYgRJk5NPkfebr2XusPoyTV3uSyHAMStpXC4=;
+        b=ae4ukgDe2wuyVm3ScxtrIyK/Dqj8TPAnOHcudynbPrxDD2nrGo2WVYyVA9Jv84rid8
+         J4g7DMoCxgBa3/Ea7c2gWJdWNPLmNxt9gCwYVsc/DXANFu3SY+N4qs0JSuYrBCi/okIx
+         9w/pIOp3wxB8gNAIOL5UlcPny6cH+W/OrGAdC34sM/RKzizL5DrWMr5QdES9YLymgAKp
+         zkAVR++fuJk8rGv/S5EsRzCVfDZijUbT3gZRLBA4VH5tlNbvH1w+3utgl28QeIH7XzlT
+         pp3N02n3BIFNjXcaS1IaTcxduFlAKZ8l5dpIdF9BmzuQxQSxB+OZl2xV2QT1NC1uKfDS
+         ro7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=Za5Oxv+SYgRJk5NPkfebr2XusPoyTV3uSyHAMStpXC4=;
+        b=RoTCOZlZU8yMsPYYuRNzTNMCrcj6kN7Bri1SugwO0R0uyaFj5iiVT/qzjtE5yFnjCo
+         YvcKo6ExeY1ZP7UPEpcqB8jx/fxaquLcCw0u5c6WxTTBCWcUuZKTc+DeiF2ymJlBBEFc
+         fWUsvGq5Acs/VvvQWGiUau4JKA5SoLTJ8e8wohoPwene3O/KZGK1Ke42RcGaWtrGxd0Q
+         RDyWuhqVKoeGoATgnMpRhgPpjqnrp5ZaISTt9obn3HRdTgi4Tjk1egUrJj7kuzifsXLc
+         mtHzoyCL1YELneE7qfk6Fl8lPKI+uJ/huFdnB+flw00uA0QhXadLbaE/cmqxH1HWkote
+         Tlew==
+X-Gm-Message-State: AOUpUlH+8qzT5c85FA1hhBwHw6eAnyC0EJr9cbhTXiqh/BBBG/9U0rbb
+	uoefRiIRVvhII4MKJx72qKSHm2eYJKDD0L9PJB0MoA==
+X-Google-Smtp-Source: AA+uWPxo1mJMFpZ9HRPPp7caNTW9pWoTs7yPuE4ckwU1MnQ4vafKCC2rLb4OMlEVjpXk0TiV0h8TPvnaVJ18dZM41TA=
+X-Received: by 2002:a1c:2dc8:: with SMTP id t191-v6mr2947547wmt.94.1533760520377;
+ Wed, 08 Aug 2018 13:35:20 -0700 (PDT)
+MIME-Version: 1.0
+In-Reply-To: <CACVwi=KLCbDhMvzSmrBU7vi=zexSn-EfoHszYHzmt8VWLXD9Fg@mail.gmail.com>
+References: <20180808142247.GB15601@w1.fi> <CACVwi=KLCbDhMvzSmrBU7vi=zexSn-EfoHszYHzmt8VWLXD9Fg@mail.gmail.com>
+From: Jouni Malinen <jkmalinen@gmail.com>
+Date: Wed, 8 Aug 2018 23:35:19 +0300
+Message-ID: <CANe27jJDj8xhe4KeUiPwxLE2Uqp-JXahC_JtvR4O_JabEhdtow@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000fcda460572f272d2"
+Subject: Re: [oss-security] Unauthenticated EAPOL-Key decryption in wpa_supplicant
 
-Hello,
-Without checking the pointer to the netlink socket attribute, it could 
-cause a null pointer dereference when parsing the nested attributes in 
-function tipc_nl_publ_dump. It allows local users to cause a denial of 
-service. This vulnerability affects Linux kernel versions from 3.19 to 4.6.
+--000000000000fcda460572f272d2
+Content-Type: text/plain; charset="UTF-8"
 
-References:
-http://lists.openwall.net/netdev/2016/05/14/28
-http://lists.openwall.net/netdev/2016/05/16/26
+On Wed, Aug 8, 2018 at 6:33 PM, Jens Timmerman <jens.timmerman@gmail.com>
+wrote:
 
-Fixed via:
-https://github.com/torvalds/linux/commit/45e093ae2830cd1264677d47ff9a95a71f5d9f9c
+> I have to ask since this was only published 4 days ago and also describes
+> an attack on the EAPOL frames
+> Is this in any way related to atom's new attack on WPA/WPA2 using PMKID,
+> https://hashcat.net/forum/thread-7717.html
+>
+> As far as I can see these are 2 different attacks?
+>
 
-Introduce by:
-https://github.com/torvalds/linux/commit/1a1a143daf84db95dd7212086042004a3abb7bc2
+Correct. These are completely independent issues.
 
-Could you please assign a CVE for this vulnerability? Thank you.
+- Jouni
 
-Best Regards,
-Baozeng Ding,  Alibaba Mobile Security Team
-
+--000000000000fcda460572f272d2--
