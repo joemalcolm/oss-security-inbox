@@ -1,49 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/29/2
-Message-ID: <CAEKGoSFCgf+FYfsegq2Z3TDQMT3TgG94Ma_ARL99co8Gx0O0yA@mail.gmail.com>
-Date: Mon, 29 Oct 2018 08:35:17 +0900
-From: 面和毅 <ka-omo@...s.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/10/1
+Message-ID: <A-KuB66J_8Cu-IEWQYhXaGDkxeCWvpzEdJ9HoM4m40Vi0dOrT8nbvRudua3ErLlqgO8n3lGjUWUilRYDXRVCCCAtsrXJEl8bSRm0LQ3kcMo=@protonmail.ch>
+Date: Thu, 09 Aug 2018 21:34:48 +0000
+From: Stiepan <stie@...tonmail.ch>
 To: oss-security@...ts.openwall.com
-Cc: squid3@...enet.co.nz
-Subject: Re: Squid Proxy multiple vulnerabilities
+Subject: Re: Linux TCP implementation vulnerable to Denial of Service (CVE 2018-5390)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Regarding your last question and this comment, I think that funding would help getting more issues fixed more quickly, independently of particular club member interests. That would match the level of general, or public interest in the broadest definition of the term, Linux has come to attain... Hence my suggestion to the ITU to get involved into that. They have some level of representativeness and thus, legitimity, that, however imperfect, is hard to attain by any "certain kind of selective disclosure". And they charge membership fees that could for sure improve the status quo.
 
-It looks like links are working fine now.
+Best,
+Stiepan A. Kovac
+President
+itk AVtobvS SARL
 
-http://www.squid-cache.org/Advisories/SQUID-2018_4.txt
-http://www.squid-cache.org/Advisories/SQUID-2018_5.txt
+Envoyé depuis ProtonMail mobile
 
-OMO
-2018年10月29日(月) 2:22 Hanno Böck <hanno@...eck.de>:
+-------- Message d'origine --------
+On 9 août 2018 à 19:22, Solar Designer a écrit :
+
+> On Thu, Aug 09, 2018 at 10:11:38AM -0700, Kurt H Maier wrote:
+>> On Thu, Aug 09, 2018 at 06:17:54PM +0200, Solar Designer wrote:
+>> >
+>> > If you're an [...] you can now apply to join
+>>
+>> This is generally how clubs work.
 >
-> On Mon, 29 Oct 2018 05:13:40 +1300
-> Amos Jeffries <squid3@...enet.co.nz> wrote:
+> Sure. What's your point?
 >
-> > <http://www.squid-cache.org/Advisories/SQUID-2018_4.txt>
+> Like I said, what we're supporting with (linux-)distros is a certain
+> kind of "selective disclosure".
 >
-> That gives a 404.
->
-> Also there's another yet unfixed vulnerability: The webpage and the
-> downloads are not using HTTPS, which makes them vulnerable to
-> man-in-the-middle attacks ;-)
->
-> --
-> Hanno Böck
-> https://hboeck.de/
->
-> mail/jabber: hanno@...eck.de
-> GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
-
-
-
--- 
-Kazuki Omo: ka-omo@...s.com
-
-OSS&Security Evangelist
-Senior Architect
-Vice President & Deputy Group Manager
-Research and Development Dept. 2
-CISSP #366942
-Tel: +819026581386
+> Alexander
