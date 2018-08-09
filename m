@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1645" "Saturday" "16" "July" "2016" "10:30:58" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160716143058.3247F6C0D94@smtpvmsrv1.mitre.org>" "41" "[oss-security] Re: CVE Request: Zend Framework: Potential SQL injection in ORDER and GROUP statements of Zend_Db_Select" nil nil nil "7" "2016071614:30:58" "[oss-security] Re: CVE Request: Zend Framework: Potential SQL injection in ORDER and GROUP statements of Zend_Db_Select" (number mark "U       cve-assign@m Jul 16   41/1645  " thread-indent "\"[oss-security] Re: CVE Request: Zend Framework: Potential SQL injection in ORDER and GROUP statements of Zend_Db_Select\"\n") "<20160716034337.GA10235@eldamar.local>" ("<20160716034337.GA10235@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["7963" "Thursday" "9" "August" "2018" "15:34:42" "+0000" "Stiepan" "stie@itk.swiss" "<PGJFXqAeINIwWp-evlCTv9UYslwbmEx7Zrx7iVEZVT7FAif-Sel-jlRui94dl7psSkIlLm9jE1GC_MTeXyBg6q6B3F9QWK_r4ej55qx1Y0s=@itk.swiss>" "135" "Re: [oss-security] Linux TCP implementation vulnerable to Denial of Service (CVE 2018-5390)" "^Date:" nil nil "8" "2018080915:34:42" "[oss-security] Linux TCP implementation vulnerable to Denial of Service (CVE 2018-5390)" (number mark "        stie@itk.swi Aug  9  135/7963  " thread-indent "\"Re: [oss-security] Linux TCP implementation vulnerable to Denial of Service (CVE 2018-5390)\"\n") "<20180809125120.GA2475@openwall.com>" ("<CACdnJuvnc9iwaK6n9T_+PO0CUz9HYErQQ6eY+sJZM_o_h9tfaw@mail.gmail.com>" "<zNUITbiErWCUUDg_EPIWn8eZBFHlC7rwJsZ8XinnBTSFr6OydsAZUvPs8nXHKBxi0DJFw8K2KmePb8dysPMxfPcOURSJ6QR2HcKgaVRmmTs=@itk.swiss>" "<20180809125120.GA2475@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 13783 invoked by uid 550); 16 Jul 2016 14:31:10 -0000
+Received: (qmail 2015 invoked by uid 550); 9 Aug 2018 15:37:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,54 +11,155 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 32007 invoked from network); 9 Aug 2018 15:34:59 -0000
+Authentication-Results: mail-40132.protonmail.ch; dkim=none
+Message-ID: <PGJFXqAeINIwWp-evlCTv9UYslwbmEx7Zrx7iVEZVT7FAif-Sel-jlRui94dl7psSkIlLm9jE1GC_MTeXyBg6q6B3F9QWK_r4ej55qx1Y0s=@itk.swiss>
+In-Reply-To: <20180809125120.GA2475@openwall.com>
+References: <CACdnJuvnc9iwaK6n9T_+PO0CUz9HYErQQ6eY+sJZM_o_h9tfaw@mail.gmail.com>
+ <zNUITbiErWCUUDg_EPIWn8eZBFHlC7rwJsZ8XinnBTSFr6OydsAZUvPs8nXHKBxi0DJFw8K2KmePb8dysPMxfPcOURSJ6QR2HcKgaVRmmTs=@itk.swiss>
+ <20180809125120.GA2475@openwall.com>
+Feedback-ID: wnsnnc8Us3MVqt1IALGduDJl-d16B_hEkg50pF7qo11mpeysEHmUOGy-yvw8MEApAPX3TXcPDHQwu7hti-kzSw==:Ext:ProtonMail
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+	boundary="b1_d888eaa38c14cf9e447ef151f1698565"
+Date: Thu, 09 Aug 2018 15:34:42 +0000
+From: Stiepan <stie@itk.swiss>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13765 invoked from network); 16 Jul 2016 14:31:09 -0000
-From: cve-assign@mitre.org
-To: carnil@debian.org
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, taffit@debian.org
-In-Reply-To: <20160716034337.GA10235@eldamar.local>
-Message-Id: <20160716143058.3247F6C0D94@smtpvmsrv1.mitre.org>
-Date: Sat, 16 Jul 2016 10:30:58 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request: Zend Framework: Potential SQL injection in ORDER and GROUP statements of Zend_Db_Select
+Subject: Re: [oss-security] Linux TCP implementation vulnerable to Denial of Service (CVE 2018-5390)
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--b1_d888eaa38c14cf9e447ef151f1698565
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-> The Zend Framework project released security advisory ZF2016-02 to
-> address a potential SQL injection in ORDER and GROUP statements of
-> Zend_Db_Select.
+SGksCgpUaGFuayB5b3UgZm9yIGZpZ2h0aW5nIGNlbnNvcnNoaXAgb24gd2hh
+dCBpcyBzdXBwb3NlZCB0byBiZSBhIGxpc3QgZm9yIG1hbmFnaW5nIHNlY3Vy
+aXR5IGlzc3VlcyBvZiBvcGVuIHNvZnR3YXJlLiBUaGUgaXNzdWUgaXMgdGhh
+dCBpdCBoYXMgZ29uZSBzbyBmYXIgZnJvbSBpdHMgb3JpZ2luYWwgaWRlYSwg
+d2l0aCB0aGUgZW1iYXJnb2VzIGFuZCByZW1vdmFsIG9mIGRpcmVjdCBDVkUg
+cmVxdWVzdHMsIHRoYXQgbGVnYWwgYWN0aW9uIHJlbWFpbnMgdGhlIG9ubHkg
+bG9naWNhbCBvbmUsIGZvciBhbnlvbmUgbm90IHBhcnQgb2YgdGhlICJjbHVi
+Ii4gQXMgdG8gZ2V0dGluZyBzb21lIGZ1bmRpbmcgdG8gcnVuIGl0IHByb3Bl
+cmx5LCBJIGNvbnRpbnVlIHRvIGRvIHRoaW5rIGl0IHdvdWxkIG1ha2Ugc2Vu
+c2UsIGlmIHlvdSBjYW4gZW5zdXJlIGluZGVwZW5kZW5jZSBmcm9tIGEgc3Bl
+Y2lmaWMgb3JnYW5pemF0aW9uIG9yIGdvdmVybm1lbnQncyBpbnRlcmVzdCAo
+Y2MtaW5nIEdvb2dsZSwgbm90IElUVSBvciBQcm90b25tYWlsLCBhcmJpdHJh
+cmlseSwgc2F5cyBsb25nIG9uIHRoaXMgdmVyeSBpc3N1ZSBhbmQgdGhlIG9u
+ZSBvZiBMaW51eCBnb3Zlcm5hbmNlIG92ZXJhbGwpLgoKQmVzdCwKU3RpZXBh
+biBBLiBLb3ZhYwpQcmVzaWRlbnQKaXRrIEFWdG9idlMgU0FSTAoKRW52b3nD
+qSBkZXB1aXMgUHJvdG9uTWFpbCBtb2JpbGUKCi0tLS0tLS0tIE1lc3NhZ2Ug
+ZCdvcmlnaW5lIC0tLS0tLS0tCk9uIDkgYW/Du3QgMjAxOCDDoCAxNDo1MSwg
+U29sYXIgRGVzaWduZXIgYSDDqWNyaXQgOgoKPiBIaSwKPgo+IEEgY28tbW9k
+ZXJhdG9yIGhhZCByZWplY3RlZCBTdGllcGFuJ3MgbWVzc2FnZSBzaW5jZSBp
+dCAiZG9lcyBub3QgcHJvdmlkZQo+IGFueSBhZGRpdGlvbmFsIGNvbnRlbnQg
+dG8gb3NzLXNlY3VyaXR5IHJlYWRlcnMiLiBJJ20gYWxzbyB1bmhhcHB5IGFi
+b3V0Cj4gdGhhdCwgYXMgd2VsbCBhcyBhYm91dCB0aGUgZm9jdXMgb24gbGVn
+YWwgYXNwZWN0cyBpbiBTdGllcGFuJ3MgcG9zdGluZ3MKPiBpbiBoZXJlIGlu
+IGdlbmVyYWwuIEhvd2V2ZXIsIHRoZSBtZXNzYWdlIHJhaXNlcyBhbiBvbi10
+b3BpYyBxdWVzdGlvbgo+ICh0aGUgcmVxdWVzdCBmb3IgbW9yZSBkZXRhaWwp
+IGFuZCBicmluZ3MgdXAgYW4gb24tdG9waWMgaXNzdWUgKHRoZQo+IHNlbWkt
+ZW1iYXJnbyBwb3RlbnRpYWxseSBjYXVzaW5nIGhhcm0pLiBJIGZlZWwgc3Ry
+b25nbHkgYWJvdXQgdXMgbm90Cj4gZ2V0dGluZyBpbnRvIGNlbnNvcnNoaXAs
+IGFuZCBJIGZlZWwgdGhhdCByZWplY3RpbmcgdGhpcyBtZXNzYWdlIHdvdWxk
+IGJlCj4gaXQuIFNvIEkgd2VudCBmb3IgdGhlIGVmZm9ydCBvZiBtYW51YWxs
+eSByZXN0b3JpbmcgdGhlIGFscmVhZHktcmVqZWN0ZWQKPiBtZXNzYWdlIGlu
+dG8gdGhlIG1vZGVyYXRpb24gcXVldWUsIHRoZW4gYXBwcm92ZWQgaXQuCj4K
+PiBPbiBUaHUsIEF1ZyAwOSwgMjAxOCBhdCAwNzoxMjoyN0FNICswMDAwLCBT
+dGllcGFuIHdyb3RlOgo+PiBDb3VsZCB5b3UgcGxlYXNlIHByb3ZpZGUgc29t
+ZSBtb3JlIGRldGFpbHMgb24gdGhlIGlzc3VlPwo+Cj4gSSBhZ3JlZSB0aGF0
+IG1vcmUgZGV0YWlsIG11c3QgaGF2ZSBiZWVuIHBvc3RlZCBpbiBoZXJlLCBl
+c3BlY2lhbGx5IGdpdmVuCj4gdGhhdCBzdWNoIGRldGFpbCB3YXMgb24gbGlu
+dXgtZGlzdHJvcy4KPgo+IFRoZSBpc3N1ZSBpcyBub3cgYWxzbyBwdWJsaWMg
+dmlhIENFUlQ6Cj4KPiBodHRwczovL3d3dy5rYi5jZXJ0Lm9yZy92dWxzL2lk
+Lzk2MjQ1OQo+Cj4gd2hpY2ggbGlua3MgdG86Cj4KPiBodHRwczovL2dpdC5r
+ZXJuZWwub3JnL3B1Yi9zY20vbGludXgva2VybmVsL2dpdC9kYXZlbS9uZXQu
+Z2l0L2NvbW1pdC8/aWQ9MWE0ZjE0YmFiMTg2OGI0NDNmMGRkM2M1NWI2ODlh
+NDc4ZjgyZTcyZQo+Cj4gd2hpY2ggaW5jbHVkZXMgdGhlIGZvbGxvd2luZyBk
+ZXRhaWw6Cj4KPiAtLS0KPiBKdWhhLU1hdHRpIFRpbGxpIHJlcG9ydGVkIHRo
+YXQgbWFsaWNpb3VzIHBlZXJzIGNvdWxkIGluamVjdCB0aW55Cj4gcGFja2V0
+cyBpbiBvdXRfb2Zfb3JkZXJfcXVldWUsIGZvcmNpbmcgdmVyeSBleHBlbnNp
+dmUgY2FsbHMKPiB0byB0Y3BfY29sbGFwc2Vfb2ZvX3F1ZXVlKCkgYW5kIHRj
+cF9wcnVuZV9vZm9fcXVldWUoKSBmb3IKPiBldmVyeSBpbmNvbWluZyBwYWNr
+ZXQuCj4KPiBXaXRoIHRjcF9ybWVtWzJdIGRlZmF1bHQgb2YgNk1CLCB0aGUg
+b29vIHF1ZXVlIGNvdWxkCj4gY29udGFpbiB+NzAwMCBub2Rlcy4KPgo+IFRo
+aXMgcGF0Y2ggc2VyaWVzIG1ha2VzIHN1cmUgd2UgY3V0IGNwdSBjeWNsZXMg
+ZW5vdWdoIHRvCj4gcmVuZGVyIHRoZSBhdHRhY2sgbm90IGNyaXRpY2FsLgo+
+Cj4gV2UgbWlnaHQgaW4gdGhlIGZ1dHVyZSBnbyBmdXJ0aGVyLCBsaWtlIGRp
+c2Nvbm5lY3RpbmcKPiBvciBibGFjay1ob2xpbmcgcHJvdmVuIG1hbGljaW91
+cyBmbG93cy4KPiAtLS0KPgo+IFRoZSBDRVJUIFZ1bG5lcmFiaWxpdHkgTm90
+ZSBhbHNvIHRhbGtzIGFib3V0IGEgcmVsYXRlZCBpc3N1ZSBpbiBGcmVlQlNE
+Lgo+Cj4gUGFydGlhbCB0aW1lbGluZSBmb3IgdGhpcyBpc3N1ZSBhcyBJIGJl
+Y2FtZSBhd2FyZSBvZiBpdCBpcyBhcyBmb2xsb3dzOgo+Cj4gMjAxOC8wNy8y
+MyAtIHRoZSBjb21taXQgcmVmZXJlbmNlZCBhYm92ZQo+IDIwMTgvMDcvMjMg
+LSBub3RpZmljYXRpb24gZnJvbSBDRVJUIHRvIHNvbWUgZGlzdHJvcwo+IDIw
+MTgvMDcvMjMgLSBncnNlY3VyaXR5IHR3ZWV0IGxpbmtpbmcgdG8gdGhlIGNv
+bW1pdAo+IDIwMTgvMDcvMjcgLSBwb3N0aW5nIHRvIGxpbnV4LWRpc3Ryb3MK
+PiAyMDE4LzA4LzA2IC0gQ0VSVCBWdWxuZXJhYmlsaXR5IE5vdGUgcHVibGlz
+aGVkCj4gMjAxOC8wOC8wOCAtIHBvc3RpbmcgdG8gb3NzLXNlY3VyaXR5Cj4K
+PiBPZiBjb3Vyc2UsIEkgYW0gdW5oYXBweSBhYm91dCB0aGlzIHNlbWktZW1i
+YXJnbywgYW5kIGV2ZW4gbW9yZSB1bmhhcHB5Cj4gYWJvdXQgdGhlIHNlbWkt
+dmlvbGF0aW9uIG9mIGxpbnV4LWRpc3Ryb3MgbGlzdCBwb2xpY3kgb24gb25s
+eSBoYXZpbmcKPiBub24tcHVibGljIGlzc3VlcyBpbiB0aGVyZS4gSG93ZXZl
+ciwgd2l0aCBDRVJUIGludm9sdmVkIGFuZCB3aXRoCj4gcmVsYXRlZCBpc3N1
+ZXMgYWZmZWN0aW5nIG1vcmUgdGhhbiBqdXN0IExpbnV4LCB0aGVyZSB3YXMg
+bGl0dGxlIEkgY291bGQKPiBkbywgc2hvcnQgb2YgcGxheWluZyBmdWxsIEJP
+RkggYW5kIGJyZWFraW5nIHRoZSBzZW1pLWVtYmFyZ28gZm9yCj4gZXZlcnlv
+bmUuIFdoaWxlIEkgdGhpbmsgdGhhdCB3b3VsZCBoYXZlIGJlZW4gZm9yIHRo
+ZSBnZW5lcmFsIHB1YmxpYydzCj4gYmVuZWZpdCBvdmVyYWxsLCBJIGRpZG4n
+dCBmZWVsIGFib3V0IGl0IHN0cm9uZ2x5IGVub3VnaCB0byBhY3R1YWxseSBk
+bwo+IGl0IHRoaXMgdGltZS4gSSBhcG9sb2dpemUgZm9yIGxldHRpbmcgdGhp
+cyBoYXBwZW4uIChBdCB0aGUgc2FtZSB0aW1lLAo+IEkgZGlkIGZvcmNlIGFu
+b3RoZXIgc2VtaS1wdWJsaWMgaXNzdWUgdG8gb3NzLXNlY3VyaXR5IHJpZ2h0
+IGF3YXkgc2luY2UKPiB0aGF0IG9uZSBkaWRuJ3QgaW52b2x2ZSBjb29yZGlu
+YXRpb24gd2l0aCBzbyBtYW55IHBhcnRpZXMuKQo+Cj4gSXQgYXBwZWFycyB0
+aGF0IGV2ZXJ5b25lIGludm9sdmVkLCBpbmNsdWRpbmcgdGhlIENFUlQgcGVv
+cGxlLCBNYXR0aGV3LAo+IGFuZCBvdGhlcnMgY29tbWVudGluZyBvbiB0aGUg
+bGludXgtZGlzdHJvcyB0aHJlYWQsIHdlcmUgdW5oYXBweSBhYm91dAo+IHRo
+ZSBwdWJsaWNhdGlvbiBkZWxheS4gTm8gb25lIEkgc2F3IHNhaWQgdGhhdCB0
+aGV5IHdhbnRlZCB0aGUgZGVsYXkuCj4gWWV0IHNvbWVob3cgQ0VSVCBkaWRu
+J3QgcHVsbCB0aGUgdHJpZ2dlciBzb29uZXIuIEkgZ3Vlc3MgdHdvIHdlZWtz
+Cj4gZmVlbHMgdmVyeSBzb29uIGZvciBDRVJUIGFzIGl0IGlzLCBldmVuIGlm
+IGl0IGlzIGEgdmVyeSBsb25nIGVtYmFyZ28gZm9yCj4gbGludXgtZGlzdHJv
+cy4gQWxzbywgSSBndWVzcyB0aGUgZGlzY292ZXJlci9yZXBvcnRlciBvZiB0
+aGUgaXNzdWUgaGFkIGEKPiBzYXkgb24gaXQgYmVoaW5kIHRoZSBzY2VuZXMs
+IGFuZCBvdGhlciByZWxhdGVkIGlzc3VlcyBhbmQgbm9uLUxpbnV4IHdlcmUK
+PiBjb25zaWRlcmVkIGluIENFUlQncyBkZWNpc2lvbi1tYWtpbmcuCj4KPiBJ
+IGFtIGFsc28gdW5oYXBweSBhYm91dCB0aGUgdHdvLWRheSBkZWxheSBiZXR3
+ZWVuIHB1YmxpY2F0aW9uIG9mIHRoZQo+IENFUlQgVnVsbmVyYWJpbGl0eSBO
+b3RlIGFuZCB0aGUgbWFuZGF0b3J5IHBvc3RpbmcgdG8gb3NzLXNlY3VyaXR5
+IChpdCdzCj4gbWFuZGF0b3J5IHNpbmNlIHRoZSBpc3N1ZSB3YXMgb24gbGlu
+dXgtZGlzdHJvcykuIEkndmUgYmVlbiBwaW5naW5nCj4gb2ZmLWxpc3QgdG8g
+bWFrZSB0aGlzIGhhcHBlbiBhdCBhbGwsIGFuZCB3b3VsZCBoYXZlIHByb2Jh
+Ymx5IG1hZGUgdGhlCj4gcG9zdGluZyBteXNlbGYgaWYgaXQgZGlkbid0IGhh
+cHBlbiBmb3IgYW5vdGhlciBkYXkuCj4KPj4gQWJvdXQgdGhlIHNhbWUgcGVy
+aW9kLCBvdXIgc2VjdXJlIGUtbWFpbCBwcm92aWRlciBzdWZmZXJlZCBhbiB1
+bnByZWNlZGVudGVkIEREb1Mgd2l0aCBzb21lIGUtbWFpbCBtZXNzYWdlcyBu
+ZXZlciByZWFjaGluZyB1cy4KPj4gU2luY2UgdGhpcyBoYXMgYnVzaW5lc3Mg
+aW1wYWN0LAo+Cj4gVGhpcyBpcyBhbG1vc3QgY2VydGFpbmx5IHVucmVsYXRl
+ZC4gKEFuZCBJIGRyb3BwZWQgdGhlIENDJ3MgdG8KPiBQcm90b25NYWlsIGFu
+ZCBJVFUgb24gdGhpcyByZXBseSwgbm90IHRvIHNwYW0gdGhlbSB3aXRoIGZ1
+cnRoZXIKPiBkaXNjdXNzaW9uIG9mIHRoZSB1bnJlbGF0ZWQgaXNzdWUuKQo+
+Cj4+IHdlIGNvbnNpZGVyIGxlZ2FsIGFjdGlvbiBhZ2FpbnN0IHRoZSBvcGFx
+dWUgTGludXgtZGlzdHJvcyB2dWxuZXJhYmlsaXR5LWRpc2Nsb3N1cmUtYW1v
+bmctZnJpZW5kcy1mb3ItZnVuLWFuZC1wcm9maXQgc2NoZW1lLCB0aGF0IHdl
+IGV4cG9zZWQgYXQgdGhlIElUVSBlYXJsaWVyIHRoaXMgeWVhci4gVGhpcyBp
+cyBkaWdpdGFsIGRpdmlkZSBpbiB0aGUgd29ya3MsIHdpdGggcmVhbCBpbXBh
+Y3QgZm9yIG5vbi1jbHViLW1lbWJlcnMuCj4KPiBQZXJzb25hbGx5LCBJIHN0
+cm9uZ2x5IG9wcG9zZSBsZWdhbCB0aHJlYXRzIChsZXQgYWxvbmUgYWN0aW9u
+KSBpbiBvdXIKPiBjb21tdW5pdHkuIFRoZSB3YXkgSSBzZWUgaXQsIHdoYXQg
+d2UgaGF2ZSBpcyBwcmltYXJpbHkgYSBtYXR0ZXIgb2YKPiBkaWZmZXJlbnQg
+b3BpbmlvbnMgb24gaG93IHRvIGhhbmRsZSBzZWN1cml0eSBpc3N1ZXMgYmVz
+dCwgYW5kIG1vc3QKPiBwZW9wbGUgYXJlIGdlbnVpbmVseSBhY3RpbmcgdGhl
+IHdheSB0aGV5IHRoaW5rIHdvcmtzIGJlc3QgZm9yIGV2ZXJ5b25lCj4gYWZm
+ZWN0ZWQuIFdpdGggbWFueSBwYXJ0aWVzIGludm9sdmVkIGluIGNvb3JkaW5h
+dGluZyBhIGRpc2Nsb3N1cmUsIGl0Cj4gdXN1YWxseSBiZWNvbWVzIGRpZmZp
+Y3VsdC4gVGhlcmUgaXNuJ3QgbmVjZXNzYXJpbHkgYSByaWdodCBvciB3cm9u
+Zwo+IGhlcmUuIEJ1dCB3aG9ldmVyIGJyaW5ncyBsZWdhbCBhY3Rpb24gaXMg
+ZGVmaW5pdGVseSB3cm9uZy4KPgo+IElyb25pY2FsbHksIFN0aWVwYW4gaGFk
+IGFsc28gc3VnZ2VzdGVkIChoZXJlIG9uIG9zcy1zZWN1cml0eSBhIHdoaWxl
+Cj4gYWdvKSB0aGF0IHdlIGFwcGx5IGZvciBmdW5kaW5nIGZvciBydW5uaW5n
+IHRoZSAobGludXgtKWRpc3Ryb3MgbGlzdCAoYW5kCj4gSSBleHBsYWluZWQg
+aW4gYSByZXBseSB3aHkgd2Ugc2hvdWxkbid0KS4KPgo+IEFsZXhhbmRlcg==
 
-> https://github.com/zendframework/zf1/commit/bf3f40605be3d8f136a07ae991079a7dcb34d967
-> https://framework.zend.com/security/advisory/ZF2016-02
+--b1_d888eaa38c14cf9e447ef151f1698565--
 
->> This security fix can be considered as an improvement of the previous
->> ZF2014-04.
-
-Use CVE-2016-6233.
-
-This vulnerability exists because of an incomplete fix for
-CVE-2014-4914. (The CVE ID assignment for ZF2014-04 was in the
-http://www.openwall.com/lists/oss-security/2014/07/11/4 post.)
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXikTFAAoJEHb/MwWLVhi2eLUP/2dZUfNgmcqUgI0D7zGFOjAC
-AZfk2kVe0S6dvMtcga6G+O+XEib8cgZldvak7uCC0UH3XGuUc9HWPnaVvTX8SBKE
-w+CMG7jWqSNNdWOF05m+yh7xlci2I/RV+Tu5Gm6jmLcpMbCnlHoibQsbAiWmGRgJ
-KCv1ktT/yMx9LPHPZVOR1MtJUBbv8adJzOkywJYiEYzDf7H61CUNEHi51hR/8mCu
-2NcOLAi4rIlWYvHuUiNOtnd8ZKYk56QwLVo7HZ9XaMDlvBf1XDxm8VrAX3kZmLKv
-4WHKnk37H7W2XHw4KBksBNsZ/KANFk0wjsvWz3etsiUdm2JNvOKOjyURNraEEa4q
-VtwYCNB7CuB9tnuykO1qRm+dI5iGLUja5xRkSXzz/DHbnFpVp/4+kS3JRwWyGk8J
-ESzifKuJLNMIwS1/LWKwjP0kIbfpoP7CixtBHIcayJIF8VRAQZJrVBPzHZHXbDnQ
-TzeAOTRaXqrxcsY1YhKJVgmN0IdQ8RcIWsrvKnZMY+whBd21/lghOFi2Ony6ycVf
-ZvCKSAIWpufGA7y+ZHlDacyp3z1At0FdjU2b1Uqkp6CaX2h7V06nMlJhgMxWvOll
-4x32KeSL6YaNIgYMx/PgrMbzqUbZH3442myXFM5BA1AmD3HkDtGNsxcbBbF06ii2
-DpO/xTBvwbInmtUy/sWA
-=p31W
------END PGP SIGNATURE-----
