@@ -1,85 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/12/4
-Message-ID: <CA+NXwpT9J40mJe_=h-R==qJBc=9PA+-80b8p4gdaJ=uy_JhMJg@mail.gmail.com>
-Date: Wed, 12 Dec 2018 16:27:02 +0100
-From: Salva Peiró <speirofr@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/09/9
+Message-ID: <CAKG8Do5TnCQtc=o7Z1mkk94_gM9LbFywkrt218a0NpeL1a=9wA@mail.gmail.com>
+Date: Thu, 9 Aug 2018 17:42:39 +0200
+From: Cedric Buissart <cbuissar@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: security@...ian.org
-Subject: CVE Request: mini-httpd (<= v1.30) is affected by a response discrepancy information exposure (CWE-204)
+Subject: cobbler CVE-2018-10931: CobblerXMLRPCInterface exports internal only functions over XMLRPC
 Content-Type: text/plain; charset=utf-8
 
-Hi everyone,
+Cobbler is a Linux installation server that allows for rapid setup of
+network
+installation environments. It is used in products like Red Hat Enterprise
+Satellite 5 and Spacewalk.  Upstream project is at :
+https://cobbler.github.io/
 
-The mini-httpd daemon (version <= v1.30) shipped in Debian/Ubuntu from [1]
-is affected by a response discrepancy information exposure (CWE-204) that
-enables an attacker to remotely enumerate valid htpasswd usernames (RFC
-7617).
 
-A more detailed advisory can be found at:
-https://speirofr.appspot.com/files/advisory/SPADV-2018-01.md
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=916190
+While diagnosing the following 2 flaws :
+https://movermeyer.com/2018-08-02-privilege-escalation-exploits-in-cobblers-api/
 
-Is there a CVE for this? If not, could one be assigned, please?
+Another flaw has been found: cobbler exposes all functions from its
+CobblerXMLRPCInterface class over XMLRPC. However, python renames the __*
+function with _<classname>__<functionname>.  A remote, unauthenticated
+attacker
+could use this flaw by calling the real name of any __* function and gain
+high
+privileges within cobbler or upload files to arbitrary location in the
+context
+of the daemon.  This is identified as CVE-2018-10931
 
-[1] http://www.acme.com/software/mini_httpd/
+All versions of cobbler (at least since 2.0.7) are affected.
 
-Best Regards,
---
-Salva Peiró. Software Engineer
-https://speirofr.appspot.com
+To reproduce the issue: use the reproducers from the report above and call
+any
+__<name> function as _CobblerXMLRPCInterface__<name>
 
-##  Description
-
-Requesting an .htpasswd protected URL with a valid username part without
-providing the corresponding password eg, "user:" per (RFC 7617)
-causes the mini-httpd to unexpectedly terminate.
-
-~~~
-user@box $ curl http://user:@127.0.0.1:8000/auth/
-curl: (52) Empty reply from server
-~~~
-
-The problem is that the mini_httpd.c:2407 contains a NULL pointer
-dereference bug
-that allows a remote attacker to enumerate valid htpasswd usernames (RFC
-7617).
-
-## Proposed Fix
-
-~~~
->From 62eff179b34cd1435017438ab99ed1906b6cc6c8 Mon Sep 17 00:00:00 2001
-From: =?UTF-8?q?Salva=20Peir=C3=B3?= <speirofr@...il.com>
-Date: Wed, 5 Dec 2018 18:46:46 +0100
-Subject: [PATCH] Fix NULL pointer dereference at mini_httpd.c:2407
-(SPADV-2018-01)
+The patch for this specific vulnerability (i.e.: it does *not* fix the
+vulnerability reported by movermeyer.com) :
 
 ---
- mini_httpd.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ cobbler/remote.py | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/mini_httpd.c b/mini_httpd.c
-index 03d0cdd..77f030f 100644
---- a/mini_httpd.c
-+++ b/mini_httpd.c
-@@ -2404,7 +2404,8 @@ auth_check( char* dirname )
-         /* Yes. */
-         (void) fclose( fp );
-         /* So is the password right? */
--        if ( strcmp( crypt( authpass, cryp ), cryp ) == 0 )
-+        char *cryptpass = crypt( authpass, cryp );
-+        if ((cryptpass != NULL) && (strcmp(cryptpass, cryp ) == 0) )
-         {
-         /* Ok! */
-         remoteuser = line;
---
-2.11.0
-~~~
+diff --git a/cobbler/remote.py b/cobbler/remote.py
+index 94a18e7..ea0e354 100644
+--- a/cobbler/remote.py
++++ b/cobbler/remote.py
+@@ -1752,6 +1752,9 @@ class ProxiedXMLRPCInterface:
 
-## Versions affected
+     def _dispatch(self, method, params, **rest):
 
-All versions of mini-httpd below <= v1.30.
-    http://www.acme.com/software/mini_httpd/
++        if method.startswith('_'):
++            raise CX("forbidden method")
++
+         if not hasattr(self.proxied, method):
+             raise CX("unknown remote method")
 
-Debian: https://packages.debian.org/stretch/mini-httpd
-Ubuntu: https://launchpad.net/ubuntu/+source/mini-httpd
+---
+
+
+Best regards,
+
+-- 
+Cedric Buissart,
+Product Security
 
