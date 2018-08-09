@@ -1,158 +1,173 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/06/7
-Message-ID: <20181106192131.GA14967@openwall.com>
-Date: Tue, 6 Nov 2018 20:21:31 +0100
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/09/6
+Message-ID: <CA+fCnZfFwCd3icBUzH__C7XaCV-We8AaXzGw12zZ-OsuFckGWA@mail.gmail.com>
+Date: Thu, 9 Aug 2018 16:21:03 +0200
+From: Andrey Konovalov <andreyknvl@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2018-5407: new side-channel vulnerability on SMT/Hyper-Threading architectures
+Cc: Kostya Serebryany <kcc@...gle.com>, Dmitry Vyukov <dvyukov@...gle.com>,  Alexander Potapenko <glider@...gle.com>, Kees Cook <keescook@...gle.com>
+Subject: Re: Linux kernel: CVE-2017-18344: arbitrary-read vulnerability in the timer subsystem
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Nov 02, 2018 at 04:42:33PM +0200, Billy Brumley wrote:
-> It's coming -- I promise. I submitted it as an IACR eprint yesterday
-> ("Port Contention for Fun and Profit") -- currently under moderation,
-> but will eventually pop out here:
-> 
-> https://eprint.iacr.org/
-> 
-> (Side note: I have raised this issue several times with IACR. I can't
-> get a permalink from them until I submit and it clears the mod queue.
-> But I can't submit stuff that's still under embargo. It's a catch 22.
-> Ofc there are technical solutions from IACR side but they won't
-> address it. Share your opinion: @IACR_News current co-editor is
-> @Leptan.)
+On Thu, Aug 2, 2018 at 8:57 PM, Andrey Konovalov <andreyknvl@...il.com> wrote:
+> Hi!
+>
+> Syzkaller/syzbot found a global-out-of-bounds bug in the timer
+> subsystem of the Linux kernel [1], that is exploitable and can be used
+> to gain an arbitrary-read primitive. This allows to access kernel
+> memory and leak keys, credentials or other sensitive information that
+> is stored there (so the bug has a similar impact to Meltdown). I'll
+> share a PoC exploit in a week.
+>
+> The bug was introduced in commit 57b8015e ("posix-timers: Show
+> sigevent info in proc file") [2] in 3.10 and fixed by commit cef31d9a
+> ("posix-timer: Properly check sigevent->sigev_notify") [3] in
+> 4.15-rc4. The bug only affects kernels that have CONFIG_POSIX_TIMERS
+> and CONFIG_CHECKPOINT_RESTORE enabled, which is done by a lot of
+> modern distros.
+>
+> This bug has been fixed in Ubuntu 16.04 [7], but still affects at
+> least CentOS 7 at this moment (at least 3.10.0-862.9.1.el7.x86_64 that
+> I've checked). I haven't checked the other distros.
+>
+> I've contacted linux-distros@ today and was asked to post to
+> oss-security@ right away, since the issue is already public (and has
+> been for the last 8 months, see the timeline below).
+>
+> ======
+>
+> Description from MITRE [4]:
+>
+> The timer_create syscall implementation in kernel/time/posix-timers.c
+> in the Linux kernel before 4.14.8 doesn't properly validate the
+> sigevent->sigev_notify field, which leads to out-of-bounds access in
+> the show_timer function (called when /proc/$PID/timers is read). This
+> allows userspace applications to read arbitrary kernel memory (on a
+> kernel built with CONFIG_POSIX_TIMERS and CONFIG_CHECKPOINT_RESTORE).
+>
+> ======
+>
+> I thought it would be quite interesting to see when some Linux distros
+> fixed this bug, since there was no CVE requested and assigned until
+> recently.
+>
+> Initially I was only looking at Ubuntu 16.04, here's the related timeline:
+>
+> * Nov 30, 2017 - the bug reported by syzbot [5]
+> * Dec 15, 2017 - the fix committed upstream [3]
+> * Feb 17, 2018 - the fix backported to the 4.4 stable kernel branch [6]
+> * Mar 15, 2018 - the fix added to the Ubuntu Xenial 4.4 kernel branch [7]
+> * Jul 25, 2018 - CVE requested
+> * Aug 2, 2018 - notified linux-distros@
+> * Aug 2, 2018 - announcement on oss-security@
+>
+> In this particular case of a somewhat "scary" bug there was a window
+> of 3.5 months between the bug being reported and the fixing commit
+> reaching the Ubuntu Xenial 4.4 kernel branch. This gives some insight
+> into how much time it usually takes for a fix to travel from upstream
+> through stable into a distro kernel when there's no CVE. Compared to
+> the 14 days, that distros are usually given to fix a security bug
+> reported through linux-distros@, that seems rather long.
+>
+> Then I decided to take a look at the CentOS kernel. I was quite
+> surprised to find out that this bug hasn't been fixed there at all. I
+> was under the impression that most Linux distros either follow stable
+> kernel branches or monitor upstream commits for security related fixes
+> themselves. It seems that this is not the case. Perhaps this fix was
+> missed because CentOS 7 kernel is based on the 3.10 kernel version,
+> and the 3.10 stable kernel release stopped being supported in November
+> 2017.
+>
+> This is just one bug though. Right now there are 700+ fixed bugs
+> reported by syzbot [8] and 200+ more, which are still not fixed [9].
+> Almost none of them have CVEs (if anybody want to practice requesting
+> CVEs, go for it). There are also ~9000 fixes backported to 4.4 stable
+> kernel. Some of them are security relevant and don't have CVEs. On top
+> of that apparently there are ~700 fixes that are missing in the 4.4
+> stable kernel [10].
+>
+> It seems that a CVE is required for a particular security related fix
+> to end up in distro kernels, but there are no CVEs requested for most
+> of the bugs that are being fixed. So there's this inconsistency
+> between the Linux kernel community that just fixes the bugs without
+> bothering about CVEs and the distros, which require CVEs to apply
+> fixes to their kernels.
+>
+> Just some thoughts :)
+>
+> Thanks!
+>
+> ======
+>
+> [1] https://syzkaller.appspot.com/bug?id=e4cd90db60c4517094c0ffcb9468de1bf86809e7
+>
+> [2] https://github.com/torvalds/linux/commit/57b8015e07a70301e9ec9f324db1a8b73b5a1e2b
+>
+> [3] https://github.com/torvalds/linux/commit/cef31d9af908243421258f1df35a4a644604efbe
+>
+> [4] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-18344
+>
+> [5] https://groups.google.com/d/msg/syzkaller-bugs/9mUyHIix2ys/bTLPoT-kAgAJ
+>
+> [6] https://lkml.org/lkml/2018/2/17/139
+>
+> [7] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1756121
+>
+> [8] https://syzkaller.appspot.com/
+>
+> [9] https://syzkaller.appspot.com/?fixed=upstream
+>
+> [10] https://twitter.com/grsecurity/status/1022599945604526087
 
-I pinged @Leptan on Twitter earlier today with:
+I've uploaded the exploit:
+https://github.com/xairy/kernel-exploits/blob/master/CVE-2017-18344/poc.c
 
-"@Leptan Any chance you could push "Port Contention for Fun and Profit"
-through @IACR_News moderation? It's in mainstream news since Friday, but
-the paper is still not public. I think moderation should be quick (one
-day) at least in cases like this. Thanks!"
+The exploit allows to read arbitrary virtual or physical (within the
+physmap) memory, to dump virtual memory that belongs to a particular
+process by its pid and to search the physical memory for a pattern
+(only the start of each page though, but that's enough to locate at
+least /etc/shadow). See the comment in the exploit source code for a
+usage example that shows how to read /etc/shadow on Ubuntu xenial
+4.13.0-38-generic. The exploit bypasses KASLR and SMEP, but doesn't
+bypass SMAP.
 
-And promptly heard back with:
+The bug is that the timer_create syscall doesn't validate the
+sigevent->sigev_notify value and then uses it to address a global
+array of strings in show_timer() when /proc/PID/timers is read. By
+providing a large sigev_notify value we can cause a
+global-out-of-bounds access that results in nstr[notify &
+~SIGEV_THREAD_ID] overflowing 8 bytes and ending up in the userspace.
+We can then mmap the accessed userspace page and put an arbitrary
+address there, which allows us to read arbitrary kernel memory. Since
+the kernel accesses the userspace here, the exploit attempt would be
+caught by SMAP.
 
-"Done. Special cases where publication should be timed with the
-mainstream news requires to let us know because we cannot guess..."
+Since kernel image location is randomized due to KASLR we can't know
+in advance which page exactly we should mmap. However since the kernel
+usually lies in a known address range [0xffffffff81000000, ...), we
+can mmap a huge chunk of userspace memory that would catch the access
+wherever the kernel image is placed. We can then bisect the exact
+location by filling half of the mapped memory with one pointer and the
+other half with another and reading /proc/PID/timers to see which one
+got accessed. At this point we know the exact address in the userspace
+where we can place a pointer to read kernel data.
 
-Cesar Pereida Garcia already posted the link to oss-security (thanks!),
-but unfortunately not (reliably) to this thread (no In-Reply-To header),
-so here it is again for those browsing the thread in archives:
+We could now calculate the kernel location based on this userspace
+address, but instead for whatever reason I leak the first IDT entry
+(which is divide_error) and calculate kernel image address based on
+that. The location of physmap is also randomized due to KASLR on some
+kernels (where CONFIG_RANDOMIZE_MEMORY=y), so we read the
+page_offset_base global variable value to find out the physmap
+location. It should be possible to find the location of all required
+kernel symbols heuristically instead of hard coding offsets, but I
+haven't really explored this.
 
-https://eprint.iacr.org/2018/1060
+Now we can read arbitrary physical memory through physmap. The
+/etc/shadow content always seems to be page aligned, so we can search
+the beginning of each page for something like 'root:!:' and locate it
+in the physical memory. We can also walk the list of running tasks
+starting with init_task and dump memory that belongs to a particular
+tasks by walking the page tables that belong to it. Dumping and
+inspecting memory for gnome-keyring-daemon for example allows us to
+find out user password.
 
-> The code in question certainly had lots of SCA issues :) I was the
-> first to show it vulnerable with an L1 dcache SMT attack (ASIACRYPT
-> 2009). OpenSSL didn't respond during disclosure. Side note:
-> openssl-security is so much better since HeartBleed. They're really on
-> top of things, and being GitHub-based now the code is constantly
-> improving. If you're reading, go contribute to the project!
-> 
-> If there's something good about a vulnerability being unpatched for
-> almost a decade: that code path sparked quite a lot of academic work
-> in microarchitecture attacks.
-
-> For the 1.1.0 branch, at
-> 
-> https://github.com/openssl/openssl/commits/OpenSSL_1_1_0-stable/crypto/ec/ec_mult.c
-> 
-> everything starting from aab7c770353b1dc4ba045938c8fb446dd1c4531e
-
-https://github.com/openssl/openssl/commit/aab7c770353b1dc4ba045938c8fb446dd1c4531e
-
-Per my reading, this introduces a closer-to-constant-time implementation
-and invokes it in some special cases ("the common cases where the scalar
-is secret") at the start of ec_wNAF_mul, letting that function fall
-through to its old presumably non-constant-time code in other cases.
-Further commits don't change that.  For someone like me not familiar
-with ECC nor with this codebase it's tricky to figure out which
-side-channel leaks and where exactly were in the old/generic
-implementation (but I tried, below) and whether it's somehow safe to use
-in cases where it's still reachable.
-
-The paper says:
-
-"In OpenSSL 1.1.0h and below, P-384 calls ecdsa_sign_setup @
-crypto/ec/ecdsa_ossl.c when generating an ECDSA signature.  There, the
-underlying ec_wNAF_mul function gets called to perform scalar
-multiplications, where r = [k]G is the relevant computation for this
-work.  That function first transforms the scalar representation, the
-actual scalar multiplication algorithm executes a series of double and
-add operations.  To perform double and add operations, OpenSSL calls
-ec_GFp_simple_dbl and ec_GFp_simple_add respectively.  There, these
-methods have several function calls to simpler and lower level
-Montgomery arithmetic, e.g. shift, add, subtract, multiply, and square
-operations.  A single ECC double (or add) operation performs several
-calls to these arithmetic functions."
-
-I assume ec_GFp_simple_dbl and ec_GFp_simple_add are in fact called via
-EC_POINT_dbl and EC_POINT_add (via function pointer indirection inside
-them, which I didn't follow), respectively.  This code skips the call to
-EC_POINT_add when digit is 0, and the setting and handling of is_neg is
-also potentially leaky:
-
-    for (k = max_len - 1; k >= 0; k--) {
-        if (!r_is_at_infinity) {
-            if (!EC_POINT_dbl(group, r, r, ctx))
-                goto err;
-        }
-
-        for (i = 0; i < totalnum; i++) {
-            if (wNAF_len[i] > (size_t)k) {
-                int digit = wNAF[i][k];
-                int is_neg;
-
-                if (digit) {
-                    is_neg = digit < 0;
-
-                    if (is_neg)
-                        digit = -digit;
-
-                    if (is_neg != r_is_inverted) {
-                        if (!r_is_at_infinity) {
-                            if (!EC_POINT_invert(group, r, ctx))
-                                goto err;
-                        }
-                        r_is_inverted = !r_is_inverted;
-                    }
-
-                    /* digit > 0 */
-
-                    if (r_is_at_infinity) {
-                        if (!EC_POINT_copy(r, val_sub[i][digit >> 1]))
-                            goto err;
-                        r_is_at_infinity = 0;
-                    } else {
-                        if (!EC_POINT_add
-                            (group, r, r, val_sub[i][digit >> 1], ctx))
-                            goto err;
-                    }
-                }
-            }
-        }
-    }
-
-Wikipedia confirms that this is a known issue in double-and-add, and
-Montgomery ladder is a way to avoid it:
-
-https://en.wikipedia.org/wiki/Elliptic_curve_point_multiplication#Point_multiplication
-
-Also, while the newly introduced implementation is still called
-ec_mul_consttime in OpenSSL_1_1_0-stable, it's renamed to
-ec_scalar_mul_ladder in OpenSSL_1_1_1-stable and has this comment on it:
-
- * NB: This says nothing about the constant-timeness of the ladder step
- * implementation (i.e., the default implementation is based on EC_POINT_add and
- * EC_POINT_dbl, which of course are not constant time themselves) or the
- * underlying multiprecision arithmetic.
-
-Is this still an issue needing fixing, or is it e.g. believed to be
-sufficiently mitigated by blinding?
-
-Thanks,
-
-Alexander
-
-P.S. Congrats on receiving the grant for "SCARE: Side-Channel Aware
-Engineering", and I hope we'll see more excellent research from your
-team in the next 5 years:
-
-https://pervasive.cs.tut.fi/?p=2747
+Thanks!
