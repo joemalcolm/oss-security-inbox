@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2566" "Wednesday" "15" "August" "2018" "09:05:58" "-0700" "Qualys Security Advisory" "qsa@qualys.com" "<20180815160558.GA23020@localhost.localdomain>" "63" "[oss-security] OpenSSH Username Enumeration" "^Date:" nil nil "8" "2018081516:05:58" "[oss-security] OpenSSH Username Enumeration" (number mark "        qsa@qualys.c Aug 15   63/2566  " thread-indent "\"[oss-security] OpenSSH Username Enumeration\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1584" "Thursday" "9" "August" "2018" "07:12:27" "+0000" "Stiepan" "stie@itk.swiss" "<zNUITbiErWCUUDg_EPIWn8eZBFHlC7rwJsZ8XinnBTSFr6OydsAZUvPs8nXHKBxi0DJFw8K2KmePb8dysPMxfPcOURSJ6QR2HcKgaVRmmTs=@itk.swiss>" "32" "Re: [oss-security] Linux TCP implementation vulnerable to Denial of Service (CVE 2018-5390)" "^Cc:" nil nil "8" "2018080907:12:27" "[oss-security] Linux TCP implementation vulnerable to Denial of Service (CVE 2018-5390)" (number mark "        stie@itk.swi Aug  9   32/1584  " thread-indent "\"Re: [oss-security] Linux TCP implementation vulnerable to Denial of Service (CVE 2018-5390)\"\n") "<CACdnJuvnc9iwaK6n9T_+PO0CUz9HYErQQ6eY+sJZM_o_h9tfaw@mail.gmail.com>" ("<CACdnJuvnc9iwaK6n9T_+PO0CUz9HYErQQ6eY+sJZM_o_h9tfaw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3767 invoked by uid 550); 15 Aug 2018 16:27:44 -0000
+Received: (qmail 9450 invoked by uid 550); 9 Aug 2018 11:05:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,103 +11,51 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 18011 invoked from network); 15 Aug 2018 16:10:59 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=qualys.com; s=google;
-        h=date:from:to:subject:message-id:mime-version:content-disposition;
-        bh=1q0IZxm97CdWji5d1BnwOMzHmXrjzABlupQ0l+myZvM=;
-        b=GdP+gUBrTrhQ2UTB4NLPXqFZYH01Uy/aaVXNXL1JesgEKrTzQZrEZlVdUIkEzL/3A/
-         qKyShdiAw5cZcCsqAVlD2M6XnSmt/GDEs07wpu2+eCpik9clCAvLKnevy3Ve5QjMVN6V
-         OEBNSEj1aXUw/0D8xputeT44yp/eyQrhMFnvFmI2+pa9jRWfWwr8IDnoNL9q0GL89p1h
-         XxVngE1yfXULfWDsHYTbsb4kmi0IdVw5q0p21cniVcRCA4+Hio9Oi8jDmzU7qIRE4nhz
-         qJvZ9Q3ECy413D7Kb1qvScCmcT96Gt1TzrtMSxJ9VxFtWJMJiucmNBLYSJdxTqxkG9lz
-         eoSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition;
-        bh=1q0IZxm97CdWji5d1BnwOMzHmXrjzABlupQ0l+myZvM=;
-        b=LaoL4sYKiQGM6YGEzLogcyXNjdb4FWcJ9AjrwGwgW93cFDPZfNmReMMqbBECYEG3jk
-         KZLGj5u6A0x1933eBZfvs925h3nfAYxhT46XWviiVwlOCNZ3bNCtH/dYIqlAApXe/L88
-         EB9eALEcNw3xtwkXAzKNiLwXomRSHeJE0uAiHhycZ7+xSMg9UWDT0cOnF3BDI1fSE1x/
-         L3JZMPeqA0ZaOV4Mm/NaPCmpqpWE3/antwMVhz6xQBNq8Owprd4R7bBY5rqtyReb/Dxw
-         67jez7aFZeDD7YBUmB0UU9odoPmMMUhu5nBd6S+y1soL9cpyReIZ9+br2qQjdrJHJvpF
-         GV1Q==
-X-Gm-Message-State: AOUpUlHq38yT4nnmx05VR3D4t6qDGsLwTOQH0ShDgUTGMVWvjT3zkRJS
-	CrMAKB03XvGOWPk7zLc+qfpdw85Kz1Cq0Q==
-X-Google-Smtp-Source: AA+uWPy4Vl2tcU0MjvwaEs2EoNw3PLH1+/ohYGL7Amvcciaew3RjfuEXfSSieY8A/MgQLGt4Fi/4DQ==
-X-Received: by 2002:a17:902:7683:: with SMTP id m3-v6mr24580955pll.255.1534349447735;
-        Wed, 15 Aug 2018 09:10:47 -0700 (PDT)
-Message-ID: <20180815160558.GA23020@localhost.localdomain>
+Received: (qmail 15597 invoked from network); 9 Aug 2018 07:12:42 -0000
+Authentication-Results: mail-40132.protonmail.ch; dkim=none
+Message-ID: <zNUITbiErWCUUDg_EPIWn8eZBFHlC7rwJsZ8XinnBTSFr6OydsAZUvPs8nXHKBxi0DJFw8K2KmePb8dysPMxfPcOURSJ6QR2HcKgaVRmmTs=@itk.swiss>
+In-Reply-To: <CACdnJuvnc9iwaK6n9T_+PO0CUz9HYErQQ6eY+sJZM_o_h9tfaw@mail.gmail.com>
+References: <CACdnJuvnc9iwaK6n9T_+PO0CUz9HYErQQ6eY+sJZM_o_h9tfaw@mail.gmail.com>
+Feedback-ID: wnsnnc8Us3MVqt1IALGduDJl-d16B_hEkg50pF7qo11mpeysEHmUOGy-yvw8MEApAPX3TXcPDHQwu7hti-kzSw==:Ext:ProtonMail
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Date: Wed, 15 Aug 2018 09:05:58 -0700
-From: Qualys Security Advisory <qsa@qualys.com>
+Content-Type: multipart/alternative;
+	boundary="b1_7b7a3a0cc87ca8795efab682de89b371"
+Cc: ProtonMail Security Team <security@protonmail.ch>, "xiaoya.yang" <xiaoya.yang@itu.int>
+Date: Thu, 09 Aug 2018 07:12:27 +0000
+From: Stiepan <stie@itk.swiss>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] OpenSSH Username Enumeration
+Subject: Re: [oss-security] Linux TCP implementation vulnerable to Denial of Service (CVE 2018-5390)
 To: oss-security@lists.openwall.com
 
-Hi all,
+--b1_7b7a3a0cc87ca8795efab682de89b371
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-We sent the following email to openssh@openssh.com and
-distros@vs.openwall.org about an hour ago, and it was decided that we
-should send it to oss-security@lists.openwall.com right away (as far as
-we know, no CVE has been assigned to this issue yet):
+SGksCgpDb3VsZCB5b3UgcGxlYXNlIHByb3ZpZGUgc29tZSBtb3JlIGRldGFp
+bHMgb24gdGhlIGlzc3VlPyBBYm91dCB0aGUgc2FtZSBwZXJpb2QsIG91ciBz
+ZWN1cmUgZS1tYWlsIHByb3ZpZGVyIHN1ZmZlcmVkIGFuIHVucHJlY2VkZW50
+ZWQgRERvUyB3aXRoIHNvbWUgZS1tYWlsIG1lc3NhZ2VzIG5ldmVyIHJlYWNo
+aW5nIHVzLgpTaW5jZSB0aGlzIGhhcyBidXNpbmVzcyBpbXBhY3QsIHdlIGNv
+bnNpZGVyIGxlZ2FsIGFjdGlvbiBhZ2FpbnN0IHRoZSBvcGFxdWUgTGludXgt
+ZGlzdHJvcyB2dWxuZXJhYmlsaXR5LWRpc2Nsb3N1cmUtYW1vbmctZnJpZW5k
+cy1mb3ItZnVuLWFuZC1wcm9maXQgc2NoZW1lLCB0aGF0IHdlIGV4cG9zZWQg
+YXQgdGhlIElUVSBlYXJsaWVyIHRoaXMgeWVhci4gVGhpcyBpcyBkaWdpdGFs
+IGRpdmlkZSBpbiB0aGUgd29ya3MsIHdpdGggcmVhbCBpbXBhY3QgZm9yIG5v
+bi1jbHViLW1lbWJlcnMuCgpSZWdhcmRzLApTdGllcGFuIEEuIEtvdmFjClBy
+ZXNpZGVudAppdGsgQVZ0b2J2UyBTQVJMCgpFbnZvecOpIGRlcHVpcyBQcm90
+b25NYWlsIG1vYmlsZQoKLS0tLS0tLS0gTWVzc2FnZSBkJ29yaWdpbmUgLS0t
+LS0tLS0KT24gOCBhb8O7dCAyMDE4IMOgIDE3OjQ0LCBNYXR0aGV3IEdhcnJl
+dHQgYSDDqWNyaXQgOgoKPiBDVkUgMjAxOC01MzkwIGlzIGEgcmVtb3RlbHkg
+ZXhwbG9pdGFibGUgZGVuaWFsIG9mIHNlcnZpY2UgYWdhaW5zdCBMaW51eAo+
+IHN5c3RlbXMuIEl0IHdhcyBwYXRjaGVkIGluIHRoZSBwdWJsaWMga2VybmVs
+IHRyZWUgb24gdGhlIDIwMTgtMDctMjMgYW5kCj4gcHVibGljbHkgZGlzY2xv
+c2VkIG9uIDIwMTgtMDgtMDYuIEEgcHVibGljIHR3ZWV0IGxpbmtpbmcgdG8g
+dGhlIGNvbW1pdCB3YXMKPiBtYWRlIG9uIDIwMTgtMDctMjMsIHNvIGF3YXJl
+bmVzcyBvZiB0aGUgaXNzdWUgbWF5IGhhdmUgYmVlbiBoaWdoIGJlZm9yZQo+
+IG9mZmljaWFsIGRpc2Nsb3N1cmUuIEFsbCBMaW51eCBkaXN0cmlidXRpb25z
+IHNob3VsZCBub3cgaGF2ZSByZWxlYXNlZAo+IHBhdGNoZXMgZm9yIHRoZSBh
+ZmZlY3RlZCByZWxlYXNlcy4=
 
-========================================================================
+--b1_7b7a3a0cc87ca8795efab682de89b371--
 
-While reviewing the latest OpenSSH commits, we stumbled across:
 
-https://github.com/openbsd/src/commit/779974d35b4859c07bc3cb8a12c74b43b0a7d1e0
-
-Date:   Tue Jul 31 03:10:27 2018 +0000
-    delay bailout for invalid authenticating user until after the packet
-    containing the request has been fully parsed. Reported by Dariusz Tytko
-    and Michal Sajdak; ok deraadt
-
-We realized that without this patch, a remote attacker can easily test
-whether a certain user exists or not (username enumeration) on a target
-OpenSSH server:
-
-  87 static int
-  88 userauth_pubkey(struct ssh *ssh)
-  89 {
- ...
- 101         if (!authctxt->valid) {
- 102                 debug2("%s: disabled because of invalid user", __func__);
- 103                 return 0;
- 104         }
- 105         if ((r = sshpkt_get_u8(ssh, &have_sig)) != 0 ||
- 106             (r = sshpkt_get_cstring(ssh, &pkalg, NULL)) != 0 ||
- 107             (r = sshpkt_get_string(ssh, &pkblob, &blen)) != 0)
- 108                 fatal("%s: parse request failed: %s", __func__, ssh_err(r));
-
-The attacker can try to authenticate a user with a malformed packet (for
-example, a truncated packet), and:
-
-- if the user is invalid (it does not exist), then userauth_pubkey()
-  returns immediately, and the server sends an SSH2_MSG_USERAUTH_FAILURE
-  to the attacker;
-
-- if the user is valid (it exists), then sshpkt_get_u8() fails, and the
-  server calls fatal() and closes its connection to the attacker.
-
-We believe that this issue warrants a CVE; it affects all operating
-systems, all OpenSSH versions (we went back as far as OpenSSH 2.3.0,
-released in November 2000), and is easier to exploit than previous
-OpenSSH username enumerations (which were all timing attacks):
-
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2003-0190
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-5229
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-6210
-
-We also believe that this should be posted to oss-security right away:
-the issue (commit) is already public, and if we spotted it, then others
-(not so well intentioned) did too. We are at your disposal for
-questions, comments, and further discussions.
-
-Thank you very much! With best regards,
-
--- 
-the Qualys Security Advisory team
