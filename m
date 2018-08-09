@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2374" "Monday" "1" "August" "2016" "19:49:02" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160801234902.577386C4E23@smtpvmsrv1.mitre.org>" "50" "[oss-security] Re: CVE Request: Linux >= 4.5 double fetch leading to heap overflow" nil nil nil "8" "2016080123:49:02" "[oss-security] Re: CVE Request: Linux >= 4.5 double fetch leading to heap overflow" (number mark "U       cve-assign@m Aug  1   50/2374  " thread-indent "\"[oss-security] Re: CVE Request: Linux >= 4.5 double fetch leading to heap overflow\"\n") "<579E6CC0.2020509@plzdonthack.me>" ("<579E6CC0.2020509@plzdonthack.me>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4806" "Thursday" "9" "August" "2018" "14:51:20" "+0200" "Solar Designer" "solar@openwall.com" "<20180809125120.GA2475@openwall.com>" "103" "Re: [oss-security] Linux TCP implementation vulnerable to Denial of Service (CVE 2018-5390)" "^Cc:" nil nil "8" "2018080912:51:20" "[oss-security] Linux TCP implementation vulnerable to Denial of Service (CVE 2018-5390)" (number mark "        solar@openwa Aug  9  103/4806  " thread-indent "\"Re: [oss-security] Linux TCP implementation vulnerable to Denial of Service (CVE 2018-5390)\"\n") "<zNUITbiErWCUUDg_EPIWn8eZBFHlC7rwJsZ8XinnBTSFr6OydsAZUvPs8nXHKBxi0DJFw8K2KmePb8dysPMxfPcOURSJ6QR2HcKgaVRmmTs=@itk.swiss>" ("<CACdnJuvnc9iwaK6n9T_+PO0CUz9HYErQQ6eY+sJZM_o_h9tfaw@mail.gmail.com>" "<zNUITbiErWCUUDg_EPIWn8eZBFHlC7rwJsZ8XinnBTSFr6OydsAZUvPs8nXHKBxi0DJFw8K2KmePb8dysPMxfPcOURSJ6QR2HcKgaVRmmTs=@itk.swiss>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1816 invoked by uid 550); 1 Aug 2016 23:49:15 -0000
+Received: (qmail 9983 invoked by uid 550); 9 Aug 2018 12:53:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,63 +11,121 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 7562 invoked from network); 9 Aug 2018 12:51:39 -0000
+Message-ID: <20180809125120.GA2475@openwall.com>
+References: <CACdnJuvnc9iwaK6n9T_+PO0CUz9HYErQQ6eY+sJZM_o_h9tfaw@mail.gmail.com> <zNUITbiErWCUUDg_EPIWn8eZBFHlC7rwJsZ8XinnBTSFr6OydsAZUvPs8nXHKBxi0DJFw8K2KmePb8dysPMxfPcOURSJ6QR2HcKgaVRmmTs=@itk.swiss>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <zNUITbiErWCUUDg_EPIWn8eZBFHlC7rwJsZ8XinnBTSFr6OydsAZUvPs8nXHKBxi0DJFw8K2KmePb8dysPMxfPcOURSJ6QR2HcKgaVRmmTs=@itk.swiss>
+User-Agent: Mutt/1.4.2.3i
+Cc: Matthew Garrett <mjg59@google.com>
+Date: Thu, 9 Aug 2018 14:51:20 +0200
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1792 invoked from network); 1 Aug 2016 23:49:14 -0000
-From: cve-assign@mitre.org
-To: sbauer@plzdonthack.me
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <579E6CC0.2020509@plzdonthack.me>
-Message-Id: <20160801234902.577386C4E23@smtpvmsrv1.mitre.org>
-Date: Mon,  1 Aug 2016 19:49:02 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request: Linux >= 4.5 double fetch leading to heap overflow
+Subject: Re: [oss-security] Linux TCP implementation vulnerable to Denial of Service (CVE 2018-5390)
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> Some code was moved from btrfs to the generic vfs ioctl:
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/fs/ioctl.c?h=v4.5&id=54dbc15172375641ef03399e8f911d7165eb90fb
-> 
-> During the port a double fetch with userland was introduced which can lead to an undersized allocation and subsequent heap overflow
-> with potentially controlled data. It has been patched in upstream here:
-> 
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=10eec60ce79187686e052092e5383c99b4420a20
+A co-moderator had rejected Stiepan's message since it "does not provide
+any additional content to oss-security readers".  I'm also unhappy about
+that, as well as about the focus on legal aspects in Stiepan's postings
+in here in general.  However, the message raises an on-topic question
+(the request for more detail) and brings up an on-topic issue (the
+semi-embargo potentially causing harm).  I feel strongly about us not
+getting into censorship, and I feel that rejecting this message would be
+it.  So I went for the effort of manually restoring the already-rejected
+message into the moderation queue, then approved it.
 
->> vfs: ioctl: prevent double-fetch in dedupe ioctl
->> 
->> This prevents a double-fetch from user space that can lead to to an
->> undersized allocation and heap overflow.
+On Thu, Aug 09, 2018 at 07:12:27AM +0000, Stiepan wrote:
+> Could you please provide some more details on the issue?
 
-> I attempted to write an exploit for this but that's not really my forte. I feel like this bug
-> has the potential for a workable user->root exploit but I couldn't do it.
-> 
-> 1: You can control which cache the overflow happens on. I picked the same cache as the File struct.
-> 2: the code writes 2 different width zeros past the allocation, one 32 bit and the other 64 bit.
-> 3: I attempted to overflow and write the 32 bit 0 to the top half of a pointer so it would point to userland,
-> but I couldn't find a suitable structure to overflow into.
+I agree that more detail must have been posted in here, especially given
+that such detail was on linux-distros.
 
-> pthread_create(&race_car, NULL, size_change, range);
+The issue is now also public via CERT:
 
-Use CVE-2016-6516.
+https://www.kb.cert.org/vuls/id/962459
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+which links to:
 
-iQIcBAEBCAAGBQJXn97QAAoJEHb/MwWLVhi2cCAP/2C+AHkxRISZ5YCq50+Vvj5d
-iLeqbqdcrdI8yfdPNL6k9QpH8VL1SOtiofxXaySHU7Fde1eh2IRTtLq2jbYpPhhP
-YOqkc2kaZvkboRrVVacm4nUko1WfMlzfGUsd48GALKvlzHRPxlxhAIx3we/2+YwD
-gZWUDITE5zQiN4ShbsUGdTMVkQYUzIYEhYD7w0o4kFmVKwTuq1w0GZQsvq56df3x
-IL2rhmEq7YtK3uCMQrFFZKlvUcDWke5ri9pu9D7YoDkOVM2aMLivA/FMN1y2Blbt
-FdDUaqerMVZFgJl0PB1YIsnpdFpUliptCDsXcbRGOC2xsXAPSbNoAsoRlyZ7WrNJ
-wAX2F7e+WIj7MdArNaNeIUt5ltXh5KPVwpgjzV2Z+UwU6ySt/iRAy1eyONrqvJz0
-hVxIYw2uGUu6hvHp/VslmLx9jeASZogESxlZYytUrgNFUnbRJFVeJHOPMf9kKcEk
-8vg2mmwlOdC47AWsh3vWqTs5ap/lRYuK9urR1OvtJxY9sUbm1Fwv31O4BuySjQHy
-N0ScMNUXGvXkU2+v6CYOGq1eKojAXUN8pQRRpwmJvk/PmLZ0SNKaW/EdStDxTu4d
-Jd/Dqk8z6HpqbbdCQpPGBSPfMiAmGYMSPQbxyoYTgTZbC40u+4C+hJXJvC3iVvZ8
-rXIC5MKykZB1QuBz5ecG
-=UAFW
------END PGP SIGNATURE-----
+https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=1a4f14bab1868b443f0dd3c55b689a478f82e72e
+
+which includes the following detail:
+
+---
+Juha-Matti Tilli reported that malicious peers could inject tiny
+packets in out_of_order_queue, forcing very expensive calls
+to tcp_collapse_ofo_queue() and tcp_prune_ofo_queue() for
+every incoming packet.
+
+With tcp_rmem[2] default of 6MB, the ooo queue could
+contain ~7000 nodes.
+
+This patch series makes sure we cut cpu cycles enough to
+render the attack not critical.
+
+We might in the future go further, like disconnecting
+or black-holing proven malicious flows.
+---
+
+The CERT Vulnerability Note also talks about a related issue in FreeBSD.
+
+Partial timeline for this issue as I became aware of it is as follows:
+
+2018/07/23 - the commit referenced above
+2018/07/23 - notification from CERT to some distros
+2018/07/23 - grsecurity tweet linking to the commit
+2018/07/27 - posting to linux-distros
+2018/08/06 - CERT Vulnerability Note published
+2018/08/08 - posting to oss-security
+
+Of course, I am unhappy about this semi-embargo, and even more unhappy
+about the semi-violation of linux-distros list policy on only having
+non-public issues in there.  However, with CERT involved and with
+related issues affecting more than just Linux, there was little I could
+do, short of playing full BOFH and breaking the semi-embargo for
+everyone.  While I think that would have been for the general public's
+benefit overall, I didn't feel about it strongly enough to actually do
+it this time.  I apologize for letting this happen.  (At the same time,
+I did force another semi-public issue to oss-security right away since
+that one didn't involve coordination with so many parties.)
+
+It appears that everyone involved, including the CERT people, Matthew,
+and others commenting on the linux-distros thread, were unhappy about
+the publication delay.  No one I saw said that they wanted the delay.
+Yet somehow CERT didn't pull the trigger sooner.  I guess two weeks
+feels very soon for CERT as it is, even if it is a very long embargo for
+linux-distros.  Also, I guess the discoverer/reporter of the issue had a
+say on it behind the scenes, and other related issues and non-Linux were
+considered in CERT's decision-making.
+
+I am also unhappy about the two-day delay between publication of the
+CERT Vulnerability Note and the mandatory posting to oss-security (it's
+mandatory since the issue was on linux-distros).  I've been pinging
+off-list to make this happen at all, and would have probably made the
+posting myself if it didn't happen for another day.
+
+> About the same period, our secure e-mail provider suffered an unprecedented DDoS with some e-mail messages never reaching us.
+> Since this has business impact,
+
+This is almost certainly unrelated.  (And I dropped the CC's to
+ProtonMail and ITU on this reply, not to spam them with further
+discussion of the unrelated issue.)
+
+> we consider legal action against the opaque Linux-distros vulnerability-disclosure-among-friends-for-fun-and-profit scheme, that we exposed at the ITU earlier this year. This is digital divide in the works, with real impact for non-club-members.
+
+Personally, I strongly oppose legal threats (let alone action) in our
+community.  The way I see it, what we have is primarily a matter of
+different opinions on how to handle security issues best, and most
+people are genuinely acting the way they think works best for everyone
+affected.  With many parties involved in coordinating a disclosure, it
+usually becomes difficult.  There isn't necessarily a right or wrong
+here.  But whoever brings legal action is definitely wrong.
+
+Ironically, Stiepan had also suggested (here on oss-security a while
+ago) that we apply for funding for running the (linux-)distros list (and
+I explained in a reply why we shouldn't).
+
+Alexander
