@@ -1,42 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/09/10
-Message-ID: <20181009182643.5d601a06@jabberwock.cb.piermont.com>
-Date: Tue, 9 Oct 2018 18:26:43 -0400
-From: "Perry E. Metzger" <perry@...rmont.com>
-To: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/09/11
+Message-ID: <20180809161754.GA4649@openwall.com>
+Date: Thu, 9 Aug 2018 18:17:54 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux TCP implementation vulnerable to Denial of Service (CVE 2018-5390)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 9 Oct 2018 17:14:45 -0500 (CDT) Bob Friesenhahn
-<bfriesen@...ple.dallas.tx.us> wrote:
-> On Tue, 9 Oct 2018, Tavis Ormandy wrote:
-> >
-> > I think we should encourage switching to other document formats
-> > that we have a better handle on securing. If you do need
-> > untrusted ps, I think treating it the same as shell script file
-> > you downloaded from the internet.  
-> 
-> Due to its valuable current usages (e.g. printing and format 
-> conversion) and its long legacy, Postscript is still a vital format
-> to support in open source software.
-> 
-> How can software consuming Postscript be aware of its origin unless
-> it is known to be produced directly by another application?
-> 
-> Edge applications such as web browsers may be able to help by
-> adding warning dialogs when knowingly downloading Postscript
-> content.
+On Thu, Aug 09, 2018 at 03:34:42PM +0000, Stiepan wrote:
+> Thank you for fighting censorship
 
-I keep wondering if there isn't a way to fully remove the dangerous
-bits from a postscript interpreter so it can _only_ be used to view
-the document and literally has no file system access compiled in at
-all, so there's no way to touch the fs etc. regardless of what flags
-the interpreter is invoked with.
+Perhaps I was not clear enough.  Obviously (to me), there was no
+deliberate attempt at censorship here.  I am sure the co-moderator
+simply didn't realize that rejecting your message could be construed as
+censorship.  I did realize that, and made the correction.  That's team
+work, not fighting.
 
-(I, too, find removing the ability to look at historical postscript
-documents a bit more draconian than I like.)
+> on what is supposed to be a list for managing security issues of open software.
 
-Perry
--- 
-Perry E. Metzger		perry@...rmont.com
+It is.
+
+> The issue is that it has gone so far from its original idea,
+
+Has it?  That's not my impression.  The oss-security list is still
+similar to what it was when we started it 10 years ago.
+
+> with the embargoes
+
+Embargoes existed way before oss-security, and will continue to exist.
+When we started oss-security (in 2008), embargoes related to Linux
+distros (and more) were handled mostly on vendor-sec (IIRC, since 1998)
+and they could last arbitrarily long.  In 2011, we replaced vendor-sec
+with the (linux-)distros lists, which I think are better managed: we
+have a specific policy on max embargo duration (now 14 days max), etc.
+If CERT somehow didn't publicize this specific issue fully by now, we'd
+have made it public about now per the linux-distros list policy anyway,
+ignoring CERT (the sender to linux-distros accepted that responsibility).
+That's an improvement (even if a minor one) compared to the situation we
+had with CERT and vendor-sec at the time we just started running the
+oss-security list.
+
+> and removal of direct CVE requests,
+
+While the acceptance of CVE requests provided an incentive for people
+who are into collecting CVEs to report issues in here, it also resulted
+in "noise" in the sense that oss-security was too much of a CVE request
+list, unintentionally discouraging discussion on other desirable topics.
+With this noise gone, it is clearer to potential senders that this list
+is a place for such discussions.
+
+> that legal action remains the only logical one,
+
+Since you're thinking in such terms anyway, please consider that someone
+could also threaten legal action against someone disclosing a security
+issue without giving all vendors time to develop a fix.  There's no way
+to satisfy everyone's preferences at once, and legal action is no
+solution.
+
+> for anyone not part of the "club".
+
+Which "club"?  If you're an Open Source operating system distro, you can
+now apply to join (linux-)distros under our published criteria.
+Otherwise, yes, you're out of luck joining that "club".  This is
+"selective disclosure", and it has drawbacks.  There's no perfect
+alternative.
+
+> As to getting some funding to run it properly
+
+To run what properly?  Just the public list?  Previously, you suggested
+we get funding to run the "club", which you're now speaking against.
+
+Alexander
