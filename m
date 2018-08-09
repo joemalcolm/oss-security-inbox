@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["690" "Tuesday" "28" "February" "2017" "17:20:34" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20170228162034.qlety2rdz2skpomr@eldamar.local>" "22" "[oss-security] Linux: irda: Fix lockdep annotations in hashbin_delete() (CVE-2017-6348)" nil nil nil "2" "2017022816:20:34" "[oss-security] Linux: irda: Fix lockdep annotations in hashbin_delete() (CVE-2017-6348)" (number mark "U       carnil@debia Feb 28   22/690   " thread-indent "\"[oss-security] Linux: irda: Fix lockdep annotations in hashbin_delete() (CVE-2017-6348)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1742" "Thursday" "9" "August" "2018" "17:42:39" "+0200" "Cedric Buissart" "cbuissar@redhat.com" "<CAKG8Do5TnCQtc=o7Z1mkk94_gM9LbFywkrt218a0NpeL1a=9wA@mail.gmail.com>" "60" "[oss-security] cobbler CVE-2018-10931: CobblerXMLRPCInterface exports internal only functions over XMLRPC" nil nil nil "8" "2018080915:42:39" "[oss-security] cobbler CVE-2018-10931: CobblerXMLRPCInterface exports internal only functions over XMLRPC" (number mark "U       cbuissar@red Aug  9   60/1742  " thread-indent "\"[oss-security] cobbler CVE-2018-10931: CobblerXMLRPCInterface exports internal only functions over XMLRPC\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 20055 invoked by uid 550); 28 Feb 2017 16:20:49 -0000
+Received: (qmail 18302 invoked by uid 550); 9 Aug 2018 15:43:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,63 +12,88 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20018 invoked from network); 28 Feb 2017 16:20:47 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=alXLOBaxsWKC0A9H+XIpAyhDDtRvk1HCIBwRK7RmZx0=;
-        b=RfTPeHQI+d/fT12NGBINBA5N66cGl5VxTYbEPF8n5EJwJBnlmJXyY+PK0ObuUvhcQl
-         PlqR75GaLK4wFuzKCve8QRKYGxrhnWAfOChMJ/ua3HrcDavZbrJpxQL94cBra2FYqwdW
-         ReN/yh9i2GJ1UghxcdfNRE4ihx3pwLTa1pRSgRUKuJCn8nhqgE7qMeg3gUl076hVDc0P
-         Xufe/p0rPP8P1PVrkbEp6E0VXVbNU+oiBVWjox4Mj4Ro+XKPtBBPK8I2uv9jVEHDuE3n
-         v8cHnKehoithlZTfwTF6ilcXA0rsfSDwuwk8TGs6SNdevm5PrcKFnQIEGYm8+yYDxtD6
-         ftDA==
+Received: (qmail 18277 invoked from network); 9 Aug 2018 15:43:12 -0000
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:subject:message-id
-         :mime-version:content-disposition:user-agent;
-        bh=alXLOBaxsWKC0A9H+XIpAyhDDtRvk1HCIBwRK7RmZx0=;
-        b=pq/uRDuyjrwlt2pELjDITqtuKNIH7fhnXHW5PPm7R3k4OHO9xOwmT+LS+Z4/xR8Lgq
-         VEdNGeU8+xk4DU4RZP9YsvHttSQ0jmX2KQ8tKJXjG0sY82joZPavUbul70CXpzIUjNBY
-         DfeeCI9wPpsb36vuQiB5+0+8hgp9Y/EWClM4mvD/UVTf80lEhSr8NmzQMOxaxd2H3LJ3
-         irgxzUtxlim3kCXAqem34s+hjkM+Se6HPFgT7VwTyFDsotPERqntUEmr1ysZyky1UmMT
-         L5ErhWjV37kdKLZFhs3lyZNXfxOK+7ri/uu8gp2Vs9EeSIJrvDPzSyIHJpc/bpgPq0q9
-         GJPw==
-X-Gm-Message-State: AMke39k5+oUtwDxJrGzE3EUYwcnXMM3fN8YLBru0U4UJ/mDdy3/y23RRO9LpVqY0waPaPw==
-X-Received: by 10.223.138.134 with SMTP id y6mr3078546wry.118.1488298835944;
-        Tue, 28 Feb 2017 08:20:35 -0800 (PST)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Tue, 28 Feb 2017 17:20:34 +0100
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: OSS Security Mailinglist <oss-security@lists.openwall.com>
-Message-ID: <20170228162034.qlety2rdz2skpomr@eldamar.local>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=2ea/6kVAqBwmRn8TkgWG3lpLV8tknJPCgNfIqZxcuzk=;
+        b=m5Og5X0jJDhqBpbcddIcRfgFaIVkUca7xjbeRurbEZ2qHYkh6Sw1alEOvlJH9cbXx2
+         C8V3g5b4lULut3k5UbXPqm4pokjmdGWAQu7hv1ISaGlco9duRbLX1FxP+bRYWFTEDP8m
+         BAsgM8kWaJmOoGd0JtJZxLsKZ9tVNTLBpeMbEO7JVcjF/giXJXhbZWlh6QQL7kYD+rZj
+         6NEpBB1RJE5xIFG3qRKDtcVbqX5Xbect/D91AKJv2YGBW00sORLjkmlZ0cy/Tu8pzV4S
+         5cVRUuzCRpFAK5J+do1I4+bbqZd1t4mZksQ/PXY4hLt9UpQS6Z5X3+f8ActCXuZjPAKY
+         aihw==
+X-Gm-Message-State: AOUpUlGbeRQdmd54W1nwPAnaSvLRjp/Cv3SQiSLsfgszua/OTLnNavaa
+	oq+UBclH4nU+fMd4cXAQ7eyEqciBh4Fobo8its/8c+7AuF9fYQ==
+X-Google-Smtp-Source: AA+uWPx6Mknr5U1GY3rPR/f5CeFf9QWGVIVJMCDOxwf5/YmdWZ7zIO2/0x3r7+VT1lQ/KrCw4a+LBPStNxXNFc0vcq8=
+X-Received: by 2002:a6b:9554:: with SMTP id x81-v6mr2273936iod.93.1533829380282;
+ Thu, 09 Aug 2018 08:43:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: NeoMutt/20170113 (1.7.2)
-Subject: [oss-security] Linux: irda: Fix lockdep annotations in hashbin_delete()
- (CVE-2017-6348)
+From: Cedric Buissart <cbuissar@redhat.com>
+Date: Thu, 9 Aug 2018 17:42:39 +0200
+Message-ID: <CAKG8Do5TnCQtc=o7Z1mkk94_gM9LbFywkrt218a0NpeL1a=9wA@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="0000000000005bb1fb0573027bc1"
+Subject: [oss-security] cobbler CVE-2018-10931: CobblerXMLRPCInterface exports internal only
+ functions over XMLRPC
 
-Hi
+--0000000000005bb1fb0573027bc1
+Content-Type: text/plain; charset="UTF-8"
 
-CVE-2017-6348 was assigned by MITRE to the following (via
-https://cveform.mitre.org/):
+Cobbler is a Linux installation server that allows for rapid setup of
+network
+installation environments. It is used in products like Red Hat Enterprise
+Satellite 5 and Spacewalk.  Upstream project is at :
+https://cobbler.github.io/
 
-https://git.kernel.org/linus/4c03b862b12f980456f9de92db6d508a4999b788
 
-> irda: Fix lockdep annotations in hashbin_delete().
-> 
-> A nested lock depth was added to the hasbin_delete() code but it
-> doesn't actually work some well and results in tons of lockdep splats.
-> 
-> Fix the code instead to properly drop the lock around the operation
-> and just keep peeking the head of the hashbin queue.
+While diagnosing the following 2 flaws :
+https://movermeyer.com/2018-08-02-privilege-escalation-exploits-in-cobblers-api/
 
-Quoting a note from Ben Hutchins: "This actually changes locking, not just
-lockdep annotations. So I think it fixes a potential deadlock."
+Another flaw has been found: cobbler exposes all functions from its
+CobblerXMLRPCInterface class over XMLRPC. However, python renames the __*
+function with _<classname>__<functionname>.  A remote, unauthenticated
+attacker
+could use this flaw by calling the real name of any __* function and gain
+high
+privileges within cobbler or upload files to arbitrary location in the
+context
+of the daemon.  This is identified as CVE-2018-10931
 
-The fix was as well backported to 4.9.13.
+All versions of cobbler (at least since 2.0.7) are affected.
 
-Regards,
-Salvatore
+To reproduce the issue: use the reproducers from the report above and call
+any
+__<name> function as _CobblerXMLRPCInterface__<name>
+
+The patch for this specific vulnerability (i.e.: it does *not* fix the
+vulnerability reported by movermeyer.com) :
+
+---
+ cobbler/remote.py | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/cobbler/remote.py b/cobbler/remote.py
+index 94a18e7..ea0e354 100644
+--- a/cobbler/remote.py
++++ b/cobbler/remote.py
+@@ -1752,6 +1752,9 @@ class ProxiedXMLRPCInterface:
+
+     def _dispatch(self, method, params, **rest):
+
++        if method.startswith('_'):
++            raise CX("forbidden method")
++
+         if not hasattr(self.proxied, method):
+             raise CX("unknown remote method")
+
+---
+
+
+Best regards,
+
+-- 
+Cedric Buissart,
+Product Security
+
+--0000000000005bb1fb0573027bc1--
