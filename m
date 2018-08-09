@@ -1,4 +1,9 @@
-Received: (qmail 15601 invoked by uid 550); 10 Apr 2024 11:58:52 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1697" "Thursday" "9" "August" "2018" "21:34:48" "+0000" "Stiepan" "stie@protonmail.ch" "<A-KuB66J_8Cu-IEWQYhXaGDkxeCWvpzEdJ9HoM4m40Vi0dOrT8nbvRudua3ErLlqgO8n3lGjUWUilRYDXRVCCCAtsrXJEl8bSRm0LQ3kcMo=@protonmail.ch>" "33" "Re: [oss-security] Linux TCP implementation vulnerable to Denial of Service (CVE 2018-5390)" "^Date:" nil nil "8" "2018080921:34:48" "[oss-security] Linux TCP implementation vulnerable to Denial of Service (CVE 2018-5390)" (number mark "        stie@protonm Aug  9   33/1697  " thread-indent "\"Re: [oss-security] Linux TCP implementation vulnerable to Denial of Service (CVE 2018-5390)\"\n") "<20180809172251.GA6289@openwall.com>" ("<CACdnJuvnc9iwaK6n9T_+PO0CUz9HYErQQ6eY+sJZM_o_h9tfaw@mail.gmail.com>" "<zNUITbiErWCUUDg_EPIWn8eZBFHlC7rwJsZ8XinnBTSFr6OydsAZUvPs8nXHKBxi0DJFw8K2KmePb8dysPMxfPcOURSJ6QR2HcKgaVRmmTs=@itk.swiss>" "<20180809125120.GA2475@openwall.com>" "<PGJFXqAeINIwWp-evlCTv9UYslwbmEx7Zrx7iVEZVT7FAif-Sel-jlRui94dl7psSkIlLm9jE1GC_MTeXyBg6q6B3F9QWK_r4ej55qx1Y0s=@itk.swiss>" "<20180809161754.GA4649@openwall.com>" "<20180809171138.GA88843@wopr>" "<20180809172251.GA6289@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 3768 invoked by uid 550); 10 Aug 2018 06:24:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,105 +11,64 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5845 invoked from network); 10 Apr 2024 11:57:25 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=spwhitton.name;
-	 h=cc:cc:content-type:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm1; t=1712750234; x=
-	1712836634; bh=B63DFjaCgNNvHZZOHLQd+yZyw28l8z97xH+hlDrLEps=; b=X
-	xIq6NJKWB/1hVMmwY6HBXregyupK0pWrXcxn4J03hceVMr09nui4kwxyVCan3mTK
-	wnzo0m8J83r2i1kQpU88GTsPtzXLqf7Jx4Ec97LhRexJM1eTi6+DE9Q0DlMtiKZm
-	JT8e3+InuIo3ye9jPXphRD24FZb0T6kWM1PAriMb6wOoShv2WtiiyzCTeOOXgltM
-	7/+CZmG1RkDWjMYB9jVZrdRatK/TRfPhPLyKjM78e0kGs76wRrugCjgLisEV8eE9
-	BDjdNI3Cm0OF9Fn/7qSWZMejYDfcGSHibhJGyRjz5hVHSCoBvAyBfVpwQ/kOVnQK
-	TWUJIO/uOlXiOAq9D+RJA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1712750234; x=1712836634; bh=B63DFjaCgNNvHZZOHLQd+yZyw28l
-	8z97xH+hlDrLEps=; b=JGIhtCdzYOYMlDKcc/RBn/sVr/94CQycyRzmnpUmKRRj
-	4NvUs3kEyS+wrnMb3GZp55HZR9K5mtWaWYcOT5jRsMvoJ68AR++VP6xf9pqAtjtJ
-	soCM2LQLDPsJ134gMKXt2oap1z2mFRQJszVWsrGz5Qv6HRoPTuYr8hTHoo3lGbIt
-	xvt0LRHrRyqF7CHqjaXwGppJL6MYmgZUbDSWloUhrybUBbsnkQW0OUA2GnfIcnzN
-	Nti8okeBnmv1ZBV6HJsbCdZ168EK0ULYSZlzpSqqcEWSivSgMy/COlIpT8WT6/lL
-	TuK58VL5EIMzEXsrsPYlrNGhH0DByc9tboRQ9S4qOQ==
-X-ME-Sender: <xms:mn4WZg6sLCpQ2g_Z6LINWrn5OrhA374JhfQ6X11lRdYY4W-mwjzBtA>
-    <xme:mn4WZh7ydyBa9FMCyOU4EmET8jVOCNX3nVlzamwpeWT-I6qFHNA5JRpaDxLlP5J1G
-    vCPym9oUOT_Lpl4Hw>
-X-ME-Received: <xmr:mn4WZvdiocXOyMsxaZnVKTiOJLUx4yS9AGEthxOBTYyFWCjGQ-XIfmcJ8lAe59GtEsIbB0Ev2-vSiA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudehiedggeegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhgffffkgggtsehttd
-    dttddtredtnecuhfhrohhmpefuvggrnhcuhghhihhtthhonhcuoehsphifhhhithhtohhn
-    sehsphifhhhithhtohhnrdhnrghmvgeqnecuggftrfgrthhtvghrnhepvdejtedtieetje
-    egjeekgffghedtkeeltdeftdetkefgueekfedtudfhteeljeeknecuvehluhhsthgvrhfu
-    ihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepshhpfihhihhtthhonhesshhpfi
-    hhihhtthhonhdrnhgrmhgv
-X-ME-Proxy: <xmx:mn4WZlJ5ONe3k6Sh-Rq6c9haNvNF3xUHk8op5NlDJYqCGUmBCp5zLw>
-    <xmx:mn4WZkIY549VRWNBSMgk73FQ5cCOchcLrKLyZG_rABKGebeZoVXIwA>
-    <xmx:mn4WZmw87_7UlwrhAoW9yjrkA0kq7ApPPgFy5SVaXg2K0YRL2he1wg>
-    <xmx:mn4WZoJTU0qCs89S3B4eVjVWwnAAd-exU1NFUXLUvaUVNCRfwdPgdg>
-    <xmx:mn4WZpEQV3q7bGTM_JIlT6lPZjoTf0YolEKMOH_yLZwZ9XbkM7YXVHsN>
-Feedback-ID: i23c04076:Fastmail
-From: Sean Whitton <spwhitton@spwhitton.name>
-To: Ihor Radchenko <yantar92@posteo.net>
-Cc: emacs@packages.debian.org,  emacs-devel@gnu.org,
-  oss-security@lists.openwall.com
-In-Reply-To: <87y19nu22i.fsf@localhost> (Ihor Radchenko's message of "Mon, 08
-	Apr 2024 18:44:21 +0000")
-References: <874jccjpvy.fsf@melete.silentflame.com> <87y19nu22i.fsf@localhost>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-Date: Wed, 10 Apr 2024 19:57:11 +0800
-Message-ID: <87bk6he8h4.fsf_-_@melete.silentflame.com>
+Received: (qmail 11921 invoked from network); 9 Aug 2018 21:35:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.ch;
+	s=default; t=1533850494;
+	bh=kgAvI5QpHbo5A9UgWhluYxfbBdgIu8Md7erTsQb+TBw=;
+	h=Date:To:From:Reply-To:Subject:In-Reply-To:References:Feedback-ID:
+	 From;
+	b=q2C5fzlW5/O8shH6CeRDORoCT5XPlKpWxhAO+wo6r8YcfGh5i+S61ZD4M+lyE9JUx
+	 83B0JfDACEaJFguEAX8gqvMV3kWL+SGc4i9xF4YoklaRbnXQQDu+Wz/BWnYUsMP/lh
+	 8c1HhhSyGhwtyBtMMOZYCuYj/JljpA52ZEptbo9o=
+Message-ID: <A-KuB66J_8Cu-IEWQYhXaGDkxeCWvpzEdJ9HoM4m40Vi0dOrT8nbvRudua3ErLlqgO8n3lGjUWUilRYDXRVCCCAtsrXJEl8bSRm0LQ3kcMo=@protonmail.ch>
+In-Reply-To: <20180809172251.GA6289@openwall.com>
+References: <CACdnJuvnc9iwaK6n9T_+PO0CUz9HYErQQ6eY+sJZM_o_h9tfaw@mail.gmail.com>
+ <zNUITbiErWCUUDg_EPIWn8eZBFHlC7rwJsZ8XinnBTSFr6OydsAZUvPs8nXHKBxi0DJFw8K2KmePb8dysPMxfPcOURSJ6QR2HcKgaVRmmTs=@itk.swiss>
+ <20180809125120.GA2475@openwall.com>
+ <PGJFXqAeINIwWp-evlCTv9UYslwbmEx7Zrx7iVEZVT7FAif-Sel-jlRui94dl7psSkIlLm9jE1GC_MTeXyBg6q6B3F9QWK_r4ej55qx1Y0s=@itk.swiss>
+ <20180809161754.GA4649@openwall.com>
+ <20180809171138.GA88843@wopr>
+ <20180809172251.GA6289@openwall.com>
+Feedback-ID: wnsnnc8Us3MVqt1IALGduDJl-d16B_hEkg50pF7qo11mpeysEHmUOGy-yvw8MEApAPX3TXcPDHQwu7hti-kzSw==:Ext:ProtonMail
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: Is CVE-2024-30203 bogus? (Emacs)
+Content-Type: multipart/alternative;
+	boundary="b1_ae3cb419365e38eb90b08476c8353112"
+Date: Thu, 09 Aug 2018 21:34:48 +0000
+From: Stiepan <stie@protonmail.ch>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Linux TCP implementation vulnerable to Denial of Service (CVE 2018-5390)
+To: oss-security@lists.openwall.com
 
-Hello,
+--b1_ae3cb419365e38eb90b08476c8353112
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-On Mon 08 Apr 2024 at 06:44pm GMT, Ihor Radchenko wrote:
+UmVnYXJkaW5nIHlvdXIgbGFzdCBxdWVzdGlvbiBhbmQgdGhpcyBjb21tZW50
+LCBJIHRoaW5rIHRoYXQgZnVuZGluZyB3b3VsZCBoZWxwIGdldHRpbmcgbW9y
+ZSBpc3N1ZXMgZml4ZWQgbW9yZSBxdWlja2x5LCBpbmRlcGVuZGVudGx5IG9m
+IHBhcnRpY3VsYXIgY2x1YiBtZW1iZXIgaW50ZXJlc3RzLiBUaGF0IHdvdWxk
+IG1hdGNoIHRoZSBsZXZlbCBvZiBnZW5lcmFsLCBvciBwdWJsaWMgaW50ZXJl
+c3QgaW4gdGhlIGJyb2FkZXN0IGRlZmluaXRpb24gb2YgdGhlIHRlcm0sIExp
+bnV4IGhhcyBjb21lIHRvIGF0dGFpbi4uLiBIZW5jZSBteSBzdWdnZXN0aW9u
+IHRvIHRoZSBJVFUgdG8gZ2V0IGludm9sdmVkIGludG8gdGhhdC4gVGhleSBo
+YXZlIHNvbWUgbGV2ZWwgb2YgcmVwcmVzZW50YXRpdmVuZXNzIGFuZCB0aHVz
+LCBsZWdpdGltaXR5LCB0aGF0LCBob3dldmVyIGltcGVyZmVjdCwgaXMgaGFy
+ZCB0byBhdHRhaW4gYnkgYW55ICJjZXJ0YWluIGtpbmQgb2Ygc2VsZWN0aXZl
+IGRpc2Nsb3N1cmUiLiBBbmQgdGhleSBjaGFyZ2UgbWVtYmVyc2hpcCBmZWVz
+IHRoYXQgY291bGQgZm9yIHN1cmUgaW1wcm92ZSB0aGUgc3RhdHVzIHF1by4K
+CkJlc3QsClN0aWVwYW4gQS4gS292YWMKUHJlc2lkZW50Cml0ayBBVnRvYnZT
+IFNBUkwKCkVudm95w6kgZGVwdWlzIFByb3Rvbk1haWwgbW9iaWxlCgotLS0t
+LS0tLSBNZXNzYWdlIGQnb3JpZ2luZSAtLS0tLS0tLQpPbiA5IGFvw7t0IDIw
+MTggw6AgMTk6MjIsIFNvbGFyIERlc2lnbmVyIGEgw6ljcml0IDoKCj4gT24g
+VGh1LCBBdWcgMDksIDIwMTggYXQgMTA6MTE6MzhBTSAtMDcwMCwgS3VydCBI
+IE1haWVyIHdyb3RlOgo+PiBPbiBUaHUsIEF1ZyAwOSwgMjAxOCBhdCAwNjox
+Nzo1NFBNICswMjAwLCBTb2xhciBEZXNpZ25lciB3cm90ZToKPj4gPgo+PiA+
+IElmIHlvdSdyZSBhbiBbLi4uXSB5b3UgY2FuIG5vdyBhcHBseSB0byBqb2lu
+Cj4+Cj4+IFRoaXMgaXMgZ2VuZXJhbGx5IGhvdyBjbHVicyB3b3JrLgo+Cj4g
+U3VyZS4gV2hhdCdzIHlvdXIgcG9pbnQ/Cj4KPiBMaWtlIEkgc2FpZCwgd2hh
+dCB3ZSdyZSBzdXBwb3J0aW5nIHdpdGggKGxpbnV4LSlkaXN0cm9zIGlzIGEg
+Y2VydGFpbgo+IGtpbmQgb2YgInNlbGVjdGl2ZSBkaXNjbG9zdXJlIi4KPgo+
+IEFsZXhhbmRlcg==
 
-> Sean Whitton <spwhitton@spwhitton.name> writes:
->
->> The description for CVE-2024-30203 is
->>
->>     In Emacs before 29.3, Gnus treats inline MIME contents as trusted.
->
-> Before Emacs 29.3, there was no concept of trusted or untrusted content
-> in Emacs. We introduced it specifically to control whether we allow
-> running LaTeX on the contents of a given buffer. (And even in Emacs
-> 29.3, the concept of untrusted contents is not yet official) So, at least
-> the title is misleading.
+--b1_ae3cb419365e38eb90b08476c8353112--
 
-Right, it's a purely preliminary change, not fixing any holes in itself.
-
->> and for CVE-2024-30204 is
->>
->>     In Emacs before 29.3, LaTeX preview is enabled by default for e-mail
->>     attachments.
->
-> This is closer to what was happening.
-> Note that LaTeX preview itself was not a problem. The problem was that we
-> executed actual latex program without user query with input taken from
-> buffer text to generate the previews (using the default settings). LaTeX
-> input can be specifically constructed to cause DOS when using LaTeX
-> compiler, which is especially dangerous when the input is coming from
-> emails.
->
-> Also, only GNUS and MUA clients re-using gnus libs (at least, notmuch
-> and mu4e) were affected. Not rmail, AFAIK.
->
->> ...
->> I think it's the first one -- can you confirm?
->
-> I hope that the above clarified things.
-
-Hmm, thank you, but let me ask a follow-up question: do you agree with
-me that there is only one security flaw covered by these two CVEs, and
-CVE-2024-30203 is the superfluous one?
-
--- 
-Sean Whitton
