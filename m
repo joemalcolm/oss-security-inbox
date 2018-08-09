@@ -1,42 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/09/1
-Message-ID: <20180109134207.GI869@sivokote.iziade.m$>
-Date: Tue, 9 Jan 2018 15:42:07 +0200
-From: Georgi Guninski <guninski@...inski.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/09/13
+Message-ID: <20180809171138.GA88843@wopr>
+Date: Thu, 9 Aug 2018 10:11:38 -0700
+From: Kurt H Maier <khm@...ops.net>
 To: oss-security@...ts.openwall.com
-Subject: Own on install. How grave it is?
+Subject: Re: Linux TCP implementation vulnerable to Denial of Service (CVE 2018-5390)
 Content-Type: text/plain; charset=utf-8
 
-[don't know if this is ontopic. Not on the list so CC me].
+On Thu, Aug 09, 2018 at 06:17:54PM +0200, Solar Designer wrote:
+> 
+> If you're an [...] you can now apply to join
 
-This is well known, haven't seen it discussed.
+This is generally how clubs work.
 
-In short doing clean install (factory defaults) has a window of
-opportunity when the device is vulnerable to a known network attack.
-
-It used to be common sense to reinstall after compromise (probably
-doesn't apply to the windows world where the antivirus takes care).
-
-All versions of windoze are affected by the SMB bug to my knowledge.
-Debian jessie (old stable) is vulnerable to malicious mirror attack.
-
-More of interest to me are devices where the installation media is
-fixed and can't be changed.
-
-This includes smartphones and wireless routers.
-
-Some smartphones might be vulnerable to wifi RCE (found by google?).
-Some wireless routers might be vulnerable to wifi RCE or
-default admin password attack over wifi.
-
-Internet of Things will make things worse (some NAS devices are
-affected).
-
-Shielding the device might not be solution since updates must be
-applied.
-
-Are the above concerns real?
-
-Have this been studied systematically?
-
-
+khm
