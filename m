@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1992" "Saturday" "8" "August" "2020" "17:21:44" "+0200" "Bastian Blank" "bblank@thinkmo.de" "<20200808152144.j5fatn23s6tgncsb@shell.thinkmo.de>" "48" "Re: [oss-security] Voiding CVE-2020-16248" "^Cc:" nil nil "8" "2020080815:21:44" "[oss-security] Voiding CVE-2020-16248" (number mark "        bblank@think Aug  8   48/1992  " thread-indent "\"Re: [oss-security] Voiding CVE-2020-16248\"\n") "<CAD77+gR7G5zBc4pwQ86H-UuMk6QOgPcuK8R-hmmHqv8+8_+dbw@mail.gmail.com>" ("<CAD77+gR7G5zBc4pwQ86H-UuMk6QOgPcuK8R-hmmHqv8+8_+dbw@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Voiding CVE-2020-16248" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1967" "Monday" "13" "August" "2018" "09:24:46" "-0500" "Sean Owen" "srowen@apache.org" "<CAEccTyy0JwT+1B4qHVhMB3SRYw-g2x6gmwWUZbd5dcVDk0H0tw@mail.gmail.com>" "46" "[oss-security] CVE-2018-11770: Apache Spark standalone master, Mesos REST APIs not controlled by authentication" "^Date:" nil nil "8" "2018081314:24:46" "[oss-security] CVE-2018-11770: Apache Spark standalone master, Mesos REST APIs not controlled by authentication" (number mark "        srowen@apach Aug 13   46/1967  " thread-indent "\"[oss-security] CVE-2018-11770: Apache Spark standalone master, Mesos REST APIs not controlled by authentication\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7973 invoked by uid 550); 8 Aug 2020 17:45:01 -0000
+Received: (qmail 32033 invoked by uid 550); 13 Aug 2018 14:29:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,69 +11,66 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 20326 invoked from network); 8 Aug 2020 15:21:56 -0000
-Message-ID: <20200808152144.j5fatn23s6tgncsb@shell.thinkmo.de>
-Mail-Followup-To: Bastian Blank <bblank@thinkmo.de>,
-	Richard Hartmann <richih.mailinglist@gmail.com>,
-	oss-security@lists.openwall.com
-References: <CAD77+gR7G5zBc4pwQ86H-UuMk6QOgPcuK8R-hmmHqv8+8_+dbw@mail.gmail.com>
+Received: (qmail 28441 invoked from network); 13 Aug 2018 14:25:12 -0000
+X-Gm-Message-State: AOUpUlGCb1KqBW2dGf/otDVxn1HvI+a6zt7f1YHfVB4J46OP0BLeZgXM
+	BgeUKKXEm5EFB0fQzGoJ77Gj0kD9AMS3y0Ri8n4=
+X-Google-Smtp-Source: AA+uWPwiTLjcwo5VgRfTZbM+EMYpXZx/e2/Zo+a+Ir1MAFf9Jn7PjiNU6WXcc6eq7Gg1XPH8mIq0bQ2QJUnb/eePaA0=
+X-Received: by 2002:a2e:4401:: with SMTP id r1-v6mr13193848lja.21.1534170297909;
+ Mon, 13 Aug 2018 07:24:57 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAD77+gR7G5zBc4pwQ86H-UuMk6QOgPcuK8R-hmmHqv8+8_+dbw@mail.gmail.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-Cc: oss-security@lists.openwall.com
-Date: Sat, 8 Aug 2020 17:21:44 +0200
-From: Bastian Blank <bblank@thinkmo.de>
+X-Gmail-Original-Message-ID: <CAEccTyy0JwT+1B4qHVhMB3SRYw-g2x6gmwWUZbd5dcVDk0H0tw@mail.gmail.com>
+Message-ID: <CAEccTyy0JwT+1B4qHVhMB3SRYw-g2x6gmwWUZbd5dcVDk0H0tw@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="000000000000a1c9d8057351db92"
+Date: Mon, 13 Aug 2018 09:24:46 -0500
+From: Sean Owen <srowen@apache.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Voiding CVE-2020-16248
-To: Richard Hartmann <richih.mailinglist@gmail.com>
+Subject: [oss-security] CVE-2018-11770: Apache Spark standalone master, Mesos REST APIs not
+ controlled by authentication
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
-Hi Richard
+--000000000000a1c9d8057351db92
+Content-Type: text/plain; charset="UTF-8"
 
-On Sat, Aug 08, 2020 at 10:49:14AM +0200, Richard Hartmann wrote:
-> the Prometheus project[1] has received a public "vulnerability"
-> report[2] against what the reporter called SSRF, but what is the core
-> functionality of blackbox_exporter[3]: The ability to trigger network
-> probes over the network to monitor a target's availability.
+Severity: Medium
 
-Could you please explain yourself why you think this is not a
-vulnerability?  Even wanted functuality can constitute a vulnerability
-if looked on closer.
+Vendor: The Apache Software Foundation
 
-The software allows to send pre-defined requests to arbitrary targets
-and extract at least parts of the response.  This is a typical SSRF.
-Would you require to specify the allowed targets, noone would ask.
+Versions Affected:
+Spark versions from 1.3.0, running standalone master with REST API enabled,
+or running Mesos master with cluster mode enabled
 
->                                                        From context,
-> it seems to be a paid assessment of our software for an unnamed client
-> which increases motivation to get "results", in particular CVEs for
-> "zero days" - which are then promptly reported publicly with an
-> embargoed CVE.
+Description:
+>From version 1.3.0 onward, Spark's standalone master exposes a REST API for
+job submission, in addition to the submission mechanism used by
+spark-submit. In standalone, the config property
+'spark.authenticate.secret' establishes a shared secret for authenticating
+requests to submit jobs via spark-submit. However, the REST API does not
+use this or any other authentication mechanism, and this is not adequately
+documented. In this case, a user would be able to run a driver program
+without authenticating, but not launch executors, using the REST API. This
+REST API is also used by Mesos, when set up to run in cluster mode (i.e.,
+when also running MesosClusterDispatcher), for job submission. Future
+versions of Spark will improve documentation on these points, and prohibit
+setting 'spark.authenticate.secret' when running the REST APIs, to make
+this clear. Future versions will also disable the REST API by default in
+the standalone master by changing the default value of
+'spark.master.rest.enabled' to 'false'.
 
-Please don't.  You just accused the reporter of malpractice on a public
-forum.  JFYI, this is punishable in your jurisdiction.
+Mitigation:
+For standalone masters, disable the REST API by setting
+'spark.master.rest.enabled' to 'false' if it is unused, and/or ensure that
+all network access to the REST API (port 6066 by default) is restricted to
+hosts that are trusted to submit jobs. Mesos users can stop the
+MesosClusterDispatcher, though that will prevent them from running jobs in
+cluster mode. Alternatively, they can ensure access to the
+MesosRestSubmissionServer (port 7077 by default) is restricted to trusted
+hosts.
 
-Also embargo and posting a public issue on GitHub don't really mix.
+Credit:
+Imran Rashid, Cloudera
+Fengwei Zhang, Alibaba Cloud Security Team
 
-> The reporter has not replied to our statement that this behaviour is
-> core functionality. I could not find out which organization has
-> reserved CVE-2020-16248 so I decided to send email to this list to
-> inform the organization, enabling them to update their records.
+Reference:
+https://spark.apache.org/security.html
 
-You did not address the reporter at all.  The reporter is also not a
-regular user of GitHub, where this issue was raised.
-
-> Sorry for using this list for that purpose, I could not find a less
-> wrong place to inform the (hopefully) interested parties.
-
-As others already told you, Mitre provides a form to request updates to
-CVE entries at https://cve.mitre.org/cve/update_cve_entries.html.
-
-Regards,
-Bastian
-
--- 
-Our way is peace.
-		-- Septimus, the Son Worshiper, "Bread and Circuses",
-		   stardate 4040.7.
+--000000000000a1c9d8057351db92--
