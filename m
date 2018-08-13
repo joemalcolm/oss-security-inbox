@@ -1,32 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/17/2
-Message-ID: <a53a29d0-183a-490b-561b-f2ce4033c2ba@redhat.com>
-Date: Fri, 17 Aug 2018 10:03:40 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: Doran Moppert <dmoppert@...hat.com>
-Cc: oss-security@...ts.openwall.com, Frediano Ziglio <fziglio@...hat.com>
-Subject: Re: spice CVE-2018-10873: post-auth crash or potential heap corruption when demarshalling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/13/1
+Message-ID: <CAEccTyy0JwT+1B4qHVhMB3SRYw-g2x6gmwWUZbd5dcVDk0H0tw@mail.gmail.com>
+Date: Mon, 13 Aug 2018 09:24:46 -0500
+From: Sean Owen <srowen@...che.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2018-11770: Apache Spark standalone master, Mesos REST APIs not controlled by authentication
 Content-Type: text/plain; charset=utf-8
 
-On 08/17/2018 02:51 AM, Doran Moppert wrote:
->      +        if (SPICE_UNLIKELY((start + 2) > message_end)) {
->      +            goto error;
->      +        }
+Severity: Medium
 
-These checks are still technically invalid because start + 2 is not a 
-valid pointer if it points past the allocated object.
+Vendor: The Apache Software Foundation
 
-This is more problematic here:
+Versions Affected:
+Spark versions from 1.3.0, running standalone master with REST API enabled,
+or running Mesos master with cluster mode enabled
 
->     +            if (SPICE_UNLIKELY((start2 + 2 + cursor_u__nw_size) > message_end)) {
->     +                goto error;
->     +            }
+Description:
+>From version 1.3.0 onward, Spark's standalone master exposes a REST API for
+job submission, in addition to the submission mechanism used by
+spark-submit. In standalone, the config property
+'spark.authenticate.secret' establishes a shared secret for authenticating
+requests to submit jobs via spark-submit. However, the REST API does not
+use this or any other authentication mechanism, and this is not adequately
+documented. In this case, a user would be able to run a driver program
+without authenticating, but not launch executors, using the REST API. This
+REST API is also used by Mesos, when set up to run in cluster mode (i.e.,
+when also running MesosClusterDispatcher), for job submission. Future
+versions of Spark will improve documentation on these points, and prohibit
+setting 'spark.authenticate.secret' when running the REST APIs, to make
+this clear. Future versions will also disable the REST API by default in
+the standalone master by changing the default value of
+'spark.master.rest.enabled' to 'false'.
 
-If cursor_u__nw_size results in pointer wraparound, the check might fail 
-incorrectly.
+Mitigation:
+For standalone masters, disable the REST API by setting
+'spark.master.rest.enabled' to 'false' if it is unused, and/or ensure that
+all network access to the REST API (port 6066 by default) is restricted to
+hosts that are trusted to submit jobs. Mesos users can stop the
+MesosClusterDispatcher, though that will prevent them from running jobs in
+cluster mode. Alternatively, they can ensure access to the
+MesosRestSubmissionServer (port 7077 by default) is restricted to trusted
+hosts.
 
-The commit message quotes the right pattern, nw_size > (uintptr_t) 
-(message_end - start), but it is not used in the actual code AFAICS.
+Credit:
+Imran Rashid, Cloudera
+Fengwei Zhang, Alibaba Cloud Security Team
 
-Thanks,
-Florian
+Reference:
+https://spark.apache.org/security.html
+
