@@ -1,64 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/25/1
-Message-ID: <CA+fCnZf2Dpv9BB4E3VUsZpeKkeqO6EDq5qJOz5tSsXru89POVA@mail.gmail.com>
-Date: Fri, 25 May 2018 12:48:59 +0200
-From: Andrey Konovalov <andreyknvl@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/15/1
+Message-ID: <CAPdG+L40W-nprsiRV_bw68HP-eJ9u6F=sfXS39UJgJAd2TkuNg@mail.gmail.com>
+Date: Tue, 14 Aug 2018 17:09:38 -0400
+From: "David T." <davidmthomsen@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Vladis Dronov <vdronov@...hat.com>
-Subject: Re: CVE-2018-1130: Linux kernel: dccp: a null pointer dereference in net/dccp/output.c:dccp_write_xmit
+Subject: Re: CVE-2018-5391: Linux kernel: IP fragments with random offsets allow a remote denial of service (FragmentSmack)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, May 23, 2018 at 4:57 PM, Kurt Seifried <kseifried@...hat.com> wrote:
-> On Wed, May 23, 2018 at 8:49 AM, Andrey Konovalov <andreyknvl@...il.com>
-> wrote:
->
->> On Thu, May 10, 2018 at 2:05 PM, Vladis Dronov <vdronov@...hat.com> wrote:
->> > Hello,
->> >
->> > A null pointer dereference in dccp_write_xmit() function in
->> net/dccp/output.c
->> > in the Linux kernel before v4.16-rc7 allows a local user to cause a
->> denial of
->> > service by a number of certain crafted system calls.
->>
->
->
-> So the classic CVE statement for this is "does it cross/violate a trust
-> boundary". Yeah I know, not super helpful.
->
-> In general when I look at something and need to decide whether or not it
-> deserves/needs a CVE the fundamentals are:
->
-> 1) Can an attacker use this vulnerability to gain access, additional
-> privileges, basically is there an impact to
-> Confidentiality/Availability/Integrity? This is really two tests: is there
-> an impact, and is there a way for the attacker to trigger or exploit it?
-> That's a CVE.
->
-> 2) Does the software/system make a specific security claim that they then
-> fail to meet? E.g. "we include a firewall that blocks access to everything
-> inbound except for port 22", if they were to then also allow port 80,
-> that'd be a CVE.
->
-> So for the syzbot stuff mostly what you need to determine is:
->
-> a) is there a security related impact?
-> AND
-> b) can an attacker trigger it?
->
-> If both are yes, then a CVE is warranted.
+Is this the same as "SegmentSmack" that came out last week, CVE-2018-5390?
+Or, what is the difference?
 
-Hi Kurt,
+On Tue, Aug 14, 2018 at 16:31 Vladis Dronov <vdronov@...hat.com> wrote:
 
-Perhaps I should've been more clear. I wasn't asking "what qualifies
-for a CVE?", but rather "There are a 100 bugs that qualify for CVEs,
-how do single out 10 of them to actually request CVEs for?".
+> Heololo,
+>
+> A flaw named FragmentSmack was found in the way the Linux kernel handled
+> reassembly of fragmented IPv4 and IPv6 packets. A remote attacker could
+> use this flaw to trigger time and calculation expensive fragment reassembly
+> algorithms by sending specially crafted packets which could lead to a CPU
+> saturation and hence a denial of service on the system.
+>
+> External References:
+>
+> https://www.kb.cert.org/vuls/id/641765
+>
+> https://access.redhat.com/articles/3553061
+>
+> https://bugzilla.redhat.com/show_bug.cgi?id=1609664
+>
+> Best regards,
+> Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+>
+-- 
+Very respectfully,
 
-In particular, the 100 bugs that I'm referring to are the bugs
-reported by syzbot (perhaps there's even more:
-https://syzkaller.appspot.com/?fixed=upstream) and the 10 bugs (or so)
-are the ones Vladis announced on oss-security over the last few
-months. I'm just curious how did he choose those 10 bugs out of that
-100+.
+David M Thomsen
 
-Thanks!
