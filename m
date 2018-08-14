@@ -1,191 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/16/1
-Message-ID: <2b14701d.790b.160fdd7fea8.Coremail.a4651386@163.com>
-Date: Tue, 16 Jan 2018 15:21:19 +0800 (CST)
-From: luo <a4651386@....com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/14/1
+Message-ID: <31e2919a-bcc5-bd87-8df2-5d14054ec65b@canonical.com>
+Date: Tue, 14 Aug 2018 09:16:03 +0100
+From: Chris Coulson <chris.coulson@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: sound driver Conditional competition
+Subject: CVE-2018-14424: Use-after-free in GDM
 Content-Type: text/plain; charset=utf-8
 
-PRODUCT： linux kernel
-VERSION：   Most versions.some deadlock ,some uaf.2.6。I tested 2.6 versions, 3.10 versions, and 4.12
-PROBLEMTYPE:  deadlock  or uaf
-REFERENCES：https://github.com/torvalds/linux/commit/b3defb791b26ea0683a93a4f49c77ec45ec96f10
-DESCRIPTION：
-This vulnerability, which belong to UAF caused by race conditions,
-can impact the majority of linux distribution(audio system).
+Hi,
 
+I recently discovered a use-after-free in the GDM daemon, which is
+possible to trigger via a specially crafted sequence of D-Bus method
+calls as an unprivileged user.
 
-In file seq_clientmgr.c, function snd_seq_write and
-snd_seq_ioctl_set_client_pool can cause conditional competition problems
-when multi-thread is used.
+Details from https://gitlab.gnome.org/GNOME/gdm/issues/401 follow:
 
-snd_seq_write calls snd_seq_cell_alloc to allocate memories for cell from
-client->pool. When pool is exhausted, schedule is called to switch current
-thread to another thread, and add current thread to a queue for waiting.
+----
+When GdmDisplayStore (daemon/gdm-display-store.c) emits the
+"display-removed" signal, the GdmDisplay being removed has already been
+removed from the store. Subsequent calls to gdm_display_store_lookup
+from signal handlers using the display ID associated with the signal
+then fail to look up the removed display. In on_display_removed
+(daemon/gdm-manager.c), this results in the display object not being
+correctly unexported from the system bus. Subsequent D-Bus calls to the
+stale object trigger a use-after-free.
 
-snd_seq_ioctl_set_client_pool calls snd_seq_pool_mark_closing to set
-client->pool->closeing to 1, in order to prevent re-entrant. It also
-calls snd_seq_queue_client_leave_cells to release cell. And it then calls
-snd_seq_pool_done, first to release pool and allocate new pool and second
-to set client->pool->closeing to 0. Function wake_up is both called in
-snd_seq_queue_client_leave_cells and snd_seq_pool_done, to wake up the
-thread in the waiting queue mentioned above, avoiding the use of any
-wild pointer.
+An unprivileged user can trigger this by creating a transient display,
+waiting a short time and then making D-Bus requests to it.
+----
 
-All is seemed to be well designed , but there is a trick:
+A fix for this can be found in the upstream git repository: https://gitlab.gnome.org/GNOME/gdm/commit/1ac1697b3b019f50729a6e992065959586e170da.
 
-
--- Thread A --
-step 1:
-A calls snd_seq_write to exhaust pool.
-
-step 2:
-snd_seq_write calls func schedule to schedule threads, now go to Thread B.
+Many thanks,
+- Chris
 
 
 
--- Thread B --
-step 1:
-B calls snd_seq_ioctl_set_client_pool.
 
-step 2:
-snd_seq_ioctl_set_client_pool calls snd_seq_pool_mark_closing.
-snd_seq_pool_mark_closing sets client->pool->closeing to 1.
-
-step 3: 
-Then snd_seq_ioctl_set_client_pool calls snd_seq_queue_client_leave_cells.
-snd_seq_queue_client_leave_cells release the memories of cells.
-snd_seq_queue_client_leave_cells calls wake_up, now back to Thread A.
-
-
-
--- Back To Thread A -- 
-step 1:
-A will find out that client->pool->closeing is 1, so snd_seq_cell_alloc fails.
-
-step 2:
-Returning from snd_seq_cell_alloc to snd_seq_write. snd_seq_write also fails.
-
-step 3:
-A now call snd_seq_ioctl_set_client_pool.
-
-step 4:
-snd_seq_ioctl_set_client_pool calls snd_seq_pool_mark_closing.
-snd_seq_pool_mark_closing sets client->pool->closeing to 1 again.
-
-step 5:
-Then snd_seq_ioctl_set_client_pool calls snd_seq_queue_client_leave_cells.
-cell is already release by B.
-And because no thread is in waiting queue, so wake_up will not be called.
-
-step 6:
-Then snd_seq_ioctl_set_client_pool calls snd_seq_pool_done.
-snd_seq_pool_done release pool and allocate new pool.
-snd_seq_pool_done sets client->pool->closeing to 0.
-Now it's become reentrant.
-
-step 8:
-So after a call to snd_seq_ioctl_set_client_pool, pool is new.
-Thread A can call snd_seq_write many times to exhaust the memories of pool.
-Then A go to sleep, now switch to thread B.
-
-
-
--- Back To Thread B --
-step 1:
-Back to snd_seq_queue_client_leave_cells, after previous call to wake_up.
-
-step 2:
-Return to snd_seq_ioctl_set_client_pool.
-snd_seq_ioctl_set_client_pool call snd_seq_pool_done.
-snd_seq_pool_done release and allocate new pool.
-now client->pool->closeing is already 0, and pool is new.
-
-
---------------------------------------------------------------------
-
-Now you see, the pool allocated by thread A is now released by thread B.
-And thread B allocate new pool, which is the 3rd pool.
-
-But in thread A, in snd_seq_cell_alloc called by snd_seq_write, the pool is 
-actually the 2cd pool, and meet a dead loop:
-
-while (pool->free == NULL && ! nonblock && ! pool->closing)
-
-Note the 2cd pool is released by thread B in B's snd_seq_ioctl_set_client_pool.
-
-Further more, if serveral threads switch between sechedule and wake_up, there will be more obvious sequelae.
-
-----------------------------------------------------
-
-call stack:
-
-thread a:
--> snd_seq_write
-   -> snd_seq_client_enqueue_event 
-      -> snd_seq_event_dup
-         -> snd_seq_cell_alloc
-            -> schedule -> thread b
-
-thread b:
--> snd_seq_ioctl_set_client_pool
-   -> snd_seq_pool_mark_closing    (set closeing to 1)
-   -> snd_seq_queue_client_leave_cells  (release cell)
-      -> wake_up -> thread a
-
-thread a:
--> snd_seq_ioctl_set_client_pool
-   -> snd_seq_pool_mark_closing    (set closeing to 1 again)
-   -> snd_seq_queue_client_leave_cells  (already release cell by thread b)
-   -> snd_seq_pool_done    (release pool and allocate new pool, 2cd pool;
-		            set closeing to 0)
--> snd_seq_write
-   -> snd_seq_client_enqueue_event 
-      -> snd_seq_event_dup
-         -> snd_seq_cell_alloc
-            -> schedule -> thread b
-
-thread b:
-   back to snd_seq_queue_client_leave_cells, after func wake_up
-   -> snd_seq_queue_client_leave_cells
-   -> snd_seq_pool_done    (release pool and allocate new pool, 3rd pool;
-		   	    set closeing to 0)
-      (leave 2cd pool's cell unhandled)
-      -> wake_up -> thread a:
-
-thread a:
--> snd_seq_cell_alloc:
-   while (pool->free == NULL && ! nonblock && ! pool->closing)
-   meet dead loop, now pool in thread a is the 2cd pool, has been released,
-   now is a wild pointer.
-
-
----EOF---
-
-At 2018-01-12 09:24:58, "kseifried@...hat.com" <kseifried@...hat.com> wrote:
->I'll need some details:
->
->[PRODUCT]:
->[VERSION]:
->[PROBLEMTYPE]:
->[REFERENCES]:
->[DESCRIPTION]:
->
->problemtype ideally the CWE identifier (http://cwe.mitre.org) and
->description includes product, version affected, description of problem,
->affected component, impact, etc. The references needs to be a public URL
->with details on the issue, if it's embargoed I'll need a URL where you
->plan to publish, thanks. No key found so sending plaintext.
->
->
->On 2018-01-11 06:19 PM, luo wrote:
->
->-- 
->
->Kurt Seifried -- Red Hat -- Product Security -- Cloud
->PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->Red Hat Product Security contact: secalert@...hat.com
-Content of type "text/html" skipped
-
-View attachment "competition.c" of type "text/plain" (8367 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
