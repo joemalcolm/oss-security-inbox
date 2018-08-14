@@ -1,4 +1,9 @@
-Received: (qmail 20076 invoked by uid 550); 4 Jun 2026 14:33:43 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5768" "Tuesday" "14" "August" "2018" "17:17:59" "+0000" "Xen.org security team" "security@xen.org" "<E1fpcxD-00079t-UA@xenbits.xenproject.org>" "148" "[oss-security] Xen Security Advisory 270 v2 - Linux netback driver OOB access in hash handling" nil nil nil "8" "2018081417:17:59" "[oss-security] Xen Security Advisory 270 v2 - Linux netback driver OOB access in hash handling" (number mark "U       security@xen Aug 14  148/5768  " thread-indent "\"[oss-security] Xen Security Advisory 270 v2 - Linux netback driver OOB access in hash handling\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 13406 invoked by uid 550); 14 Aug 2018 17:18:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,131 +12,165 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 7520 invoked from network); 4 Jun 2026 10:12:32 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=who-t.net; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm3;
-	 t=1780567942; x=1780654342; bh=yL9JdWlZPLMNlb5GJMluDvLy0zQfTnIH
-	15gzlxRPiuA=; b=u/naCwnWMH+kmcGr689Ni7x8VavQfWxXBSPMWR/YY1WwY4m+
-	ftK1q6vvfby6wGYS2Uvexf6RyXFIVWgzDLne1JDbgQAp86zrBH4jzeEO/l+0cBAH
-	lHb1Ll5HZrw5NcwL+zgK1Qs1TkZdLVs8y4CVLNRqg+OSFMQX7TlbqWI0Rs0N0Hl5
-	z87AtaNPXcjCfgNgNLIULVPk91FS+ZbFqFSWBHzeqTlzM7lu+q8btBeJC3dE8BDr
-	4/hSObvEVzpBvQ8afSXbIMP+y9lGJgDrB3AC83AXY5oz8RyLazM/1WDLXR92TsNA
-	ImbXQvgqrSDWcHB76J5HSpc9NKXR1C0GOPeZ6g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1780567942; x=
-	1780654342; bh=yL9JdWlZPLMNlb5GJMluDvLy0zQfTnIH15gzlxRPiuA=; b=W
-	LUqTKDExLIK+aQMg2/PlqrAbBe44MBsahryO1JwYQuPYoVI+pdIlqpfT1B5ZEKxC
-	hgn6r9Iae9slkwcU/9Z43+r/O9O13jWnrjs8rNo9X45o1lSV1NdirJioocuk1qsr
-	SxVZnhzQ+XcaZ6EnhOr9gVEbs8s+2hi7sXRU1K35l3UjGwnjYwaLhrf3gquAi2gP
-	rTWGPVaSHUZyzgZVwXr9DtavJyHdVl8xMnZha33fQkiNmqwDD1zEV1doPRdaYwnw
-	W7a4P1O9kd2cTNPzQpZ/mC8Ev8yhAMpH1D+5D9OcKA/IJfWu9nXfolD/AyKe2Ebj
-	8/mBZ8cIQI9Ee8yoSgg7Q==
-X-ME-Sender: <xms:hU8hahsAbgyv31JBa9hvMrrKHkS30IxXmGt22Yuzes9imDOeF42-nA>
-    <xme:hU8hahZickiurgHiZ9NfUCiyD44aCYnS5gUwIX8vnTD_ZiCenkC_mCnPqezpjfHeG
-    ioG7FEwP0KAOQ-fi_bivn5Aq1OXLwPAZPEJYI-6DV-pIIGK4ooGObzh>
-X-ME-Received: <xmr:hU8haqbyPZkGpFlIiq7muVi3oYlLr9D1XJk3o-q8Rl7nMsy4rZA8Ae_dgXPA2mPg0zk1fmB6bD1G6dO8yBbzql277LwDtVtR0qmV>
-X-ME-Proxy-Cause: dmFkZTGRazVuKbhocPvDqQvI373/hxVdDVeELL3V1YCBMVNMONpEyNrGSfLdTOs2lPipqs
-    Iup2s6ZAvuDYNT5cMQyPlWNsIPnr/nAdC5NkZGZm1fzwrFgj9YqdcVsDSvwdzR+artNkWs
-    t4e205Ze7090NfgPBwrERo8Pp5QwSQUvLT3Owijnhf7hma+oI4UOR5TC+v7xw+yhnuHwHZ
-    v6mq/TKa/AeSvOUenkkjwJO7Sn4lyCY7PAIQX9A2hw8P+IPPcCwvQvJCgboKa038HOPQFm
-    g5jhZqs2YpehtUDvIBFiSOmG+mjG26EUNLrRJLDBRYrNff3cQ0xX0YOQ+Hehx4Kx9ErXCG
-    V7dN3xPzkdn3BEKYY7Wu29akbT+OsH8HpCX1N9Lmk0esQbVeBnrwIXGy9jyJx4IAYCP2TJ
-    xeYI72sakt3fI4+IBiGY0Bl4qxCBy8m43KVr6u28wqfKXNNUg3ONCNwMBCnSF6RGYykV21
-    3WKk8PkmK7E2G7zVE5Z3Rx4WkAODQBgU772w5TKRTTDwuxp2d1+1665V+QM+KC7a91K2ie
-    BttxUtOQgdjuFXXJNevb8YMAO34oo76Mlsoi1ymRP8Uu7NhWTEjJV3DiwCiLFZ32ClhZVR
-    Ss7aRHjKxYe/vZ9o1hXptSu53Z63uggHiUMCvJeRVcBDnm5wC7u+iKaohYrg
-X-ME-Proxy: <xmx:hU8hatX13vSnZSmDH8ujJcb-hoV4E_G7IA136-u3t9LEtvU3o_iq5g>
-    <xmx:hU8hah3_TItr09AKPWe5Zgy4jgRCabijWoJiWKJ7OiqOnGnqA7a_UA>
-    <xmx:hU8hakaaY5MPQv5tDNvURgx-4PMZzzcrHJ-eiHEtELuO5S4Xaqf0xQ>
-    <xmx:hU8hakqdijm0NAa2G7vTADXX7R_1wXCIBjwdxXfQ9RJy8aCbpCNOrg>
-    <xmx:hk8haim9r_LstYh6AxaGZdMwBG2f7xlZGtnBUlb8ikQFRyrT3snZrMwr>
-Feedback-ID: i7ce144cd:Fastmail
-Date: Thu, 4 Jun 2026 20:12:15 +1000
-From: Peter Hutterer <peter.hutterer@who-t.net>
-To: oss-security@lists.openwall.com
-Message-ID: <aiFPPUkZ63aDOdzD@quokka>
+Received: (qmail 13357 invoked from network); 14 Aug 2018 17:18:17 -0000
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="77wog6nuulspj5qz"
+X-Mailer: MIME-tools 5.508 (Entity 5.508)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1fpcxD-00079t-UA@xenbits.xenproject.org>
+Date: Tue, 14 Aug 2018 17:17:59 +0000
+Subject: [oss-security] Xen Security Advisory 270 v2 - Linux netback driver OOB access in
+ hash handling
+
+--=separator
+Content-Type: text/plain; charset="utf-8"
 Content-Disposition: inline
-Subject: [oss-security] libinput: libinput-device-group unescaped phys output can inject udev properties
+Content-Transfer-Encoding: 7bit
 
---77wog6nuulspj5qz
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: FW: libinput Security Advisory: security issue in libinput
-MIME-Version: 1.0
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-libinput Security Advisory: June 4, 2026
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+                    Xen Security Advisory XSA-270
+                              version 2
 
-An issue has been found in libinput:
+           Linux netback driver OOB access in hash handling
 
-1) libinput-device-group unescaped phys output can inject udev properties
-   leading to arbitrary root code execution
+UPDATES IN VERSION 2
+====================
 
-libinput uses a udev helper called libinput-device-group. This helper uses a
-device's phys sysattr as one element of a udev property value which is prin=
-ted
-as a KEY=3DVALUE pair and imported as ENV by udev.
+Public release.
 
-A malicious uinput or uhid device that sets a phys sysattr containing \n ca=
-used
-the output to be interpreted as two separate KEY=3DVALUE pairs by udev. Thi=
-s could
-cause arbitrary execution as root (e.g. by setting the REMOVE_CMD property).
+ISSUE DESCRIPTION
+=================
 
-A CVE has been requested for this issue but did not get assigned in time for
-this disclosure.
+Linux's netback driver allows frontends to control mapping of requests
+to request queues.  When processing a request to set or change this
+mapping, some input validation was missing or flawed.
 
-Upstream issue: https://gitlab.freedesktop.org/libinput/libinput/-/work_ite=
-ms/1296
-Upstream fix: https://gitlab.freedesktop.org/libinput/libinput/-/commit/76f=
-0d8a7f57e2868882864b4611281f12f704b55
-Versions affected: libinput <=3D 1.31.2 and <=3D 1.30.3
-Fixed versions: libinput 1.31.3, 1.30.4
+IMPACT
+======
 
-Affected distributions/compositors:
------------------------------------
+A malicious or buggy frontend may cause the (usually privileged)
+backend to make out of bounds memory accesses, potentially resulting
+in one or more of privilege escalation, Denial of Service (DoS), or
+information leaks.
 
-Affected are libinput versions 1.31.2 and 1.30.3 and all earlier versions.
+VULNERABLE SYSTEMS
+==================
 
-To exploit this vulnerability an attacker needs to create a malicious uinpu=
-t or
-uhid device.=20
+Linux kernel versions from 4.7 onwards are affected.
 
-uinput is typically restricted to root but may be tagged with uaccess by cu=
-stom
-udev rules. On Fedora, the following packages ship such a rule: steam-devic=
-es,
-antimicrox and kdeconnectd. If any of these packages are *installed*, uinput
-devices can be created by the user logged into a seat.
+MITIGATION
+==========
 
-uhid is typically restricted to root. I am not aware of packages shipping
-udev rules that provide uaccess to /dev/uhid.
+There is no known mitigation.
 
-Acknowledgements
-----------------
+CREDITS
+=======
 
-Many thanks to Csome for reporting this issue.
+This issue was discovered by Felix Wilhelm of Google Project Zero.
 
---77wog6nuulspj5qz
-Content-Type: application/pgp-signature; name="signature.asc"
+RESOLUTION
+==========
 
+Applying the attached patch resolves this issue.
+
+xsa270.patch           Linux 4.7 ... 4.17
+
+$ sha256sum xsa270*
+392868c37c1fe0d16c36086208fd0fc045c1baf8ab9b207995bce72681cb8c54  xsa270.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-iF0EABECAB0WIQQ8LEPZRH1ZOO9FUeviO35wtGfwvwUCaiFPewAKCRDiO35wtGfw
-v24NAJ9rYbC2FIrY6LR9ZFFifPpVmktVVgCdFJaGsNr3gR01W/6ccDdeYDy6FWA=
-=1spG
+iQEcBAEBCAAGBQJbcw6uAAoJEIP+FMlX6CvZjxgH/iUkqOm+3T+Mr51itOmeOThy
+J10GbMvqyI8kb7oTVsfHRTMU/zCm01FSCb94B9WXxrKyr3J2RCWygZpS5D5+ujkK
+w8Ec3tqfRiJ6wXm+SUh+cFeiJBc4BUbTrSgc6VdtNqXO+uGB65CGVqFXTOZfSGMH
+AJKXQYOYe0gLtGU+H1TrCut6IC5RQKkdbI+gCEgahgc9HnPJnOrJZYoDaXsYCt1l
+gFPkd1UcVvtGbn+SUjNpXJlpWH8dY2tPeueqgu9LicGZ8jZkGI8FMCfOQ0g9dFMz
+t0Q8op8N3UAVXsPws+WvbGMuZ9mF71y9y8JUZYKRdg2iLND3CRO+asaMfN+3LSk=
+=gqkS
 -----END PGP SIGNATURE-----
 
---77wog6nuulspj5qz--
+--=separator
+Content-Type: application/octet-stream; name="xsa270.patch"
+Content-Disposition: attachment; filename="xsa270.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0
+OiB4ZW4tbmV0YmFjazogZml4IGlucHV0IHZhbGlkYXRpb24gaW4geGVudmlm
+X3NldF9oYXNoX21hcHBpbmcoKQoKQm90aCBsZW4gYW5kIG9mZiBhcmUgZnJv
+bnRlbmQgc3BlY2lmaWVkIHZhbHVlcywgc28gd2UgbmVlZCB0byBtYWtlCnN1
+cmUgdGhlcmUncyBubyBvdmVyZmxvdyB3aGVuIGFkZGluZyB0aGUgdHdvIGZv
+ciB0aGUgYm91bmRzIGNoZWNrLiBXZQphbHNvIHdhbnQgdG8gYXZvaWQgdW5k
+ZWZpbmVkIGJlaGF2aW9yIGFuZCBoZW5jZSB1c2Ugb2ZmIHRvIGluZGV4IGlu
+dG8KLT5oYXNoLm1hcHBpbmdbXSBvbmx5IGFmdGVyIGJvdW5kcyBjaGVja2lu
+Zy4gVGhpcyBhdCB0aGUgc2FtZSB0aW1lCmFsbG93cyB0byB0YWtlIGNhcmUg
+b2Ygbm90IGFwcGx5aW5nIG9mZiB0d2ljZSBmb3IgdGhlIGJvdW5kcyBjaGVj
+a2luZwphZ2FpbnN0IHZpZi0+bnVtX3F1ZXVlcy4KCkl0IGlzIGFsc28gaW5z
+dWZmaWNpZW50IHRvIGJvdW5kcyBjaGVjayBjb3B5X29wLmxlbiwgYXMgdGhp
+cyBpcyBsZW4KdHJ1bmNhdGVkIHRvIDE2IGJpdHMuCgpUaGlzIGlzIFhTQS0y
+NzAuCgpSZXBvcnRlZC1ieTogRmVsaXggV2lsaGVsbSA8ZndpbGhlbG1AZ29v
+Z2xlLmNvbT4KU2lnbmVkLW9mZi1ieTogSmFuIEJldWxpY2ggPGpiZXVsaWNo
+QHN1c2UuY29tPgpSZXZpZXdlZC1ieTogUGF1bCBEdXJyYW50IDxwYXVsLmR1
+cnJhbnRAY2l0cml4LmNvbT4KVGVzdGVkLWJ5OiBQYXVsIER1cnJhbnQgPHBh
+dWwuZHVycmFudEBjaXRyaXguY29tPgotLS0KVGhlIGJvdW5kcyBjaGVja2lu
+ZyBhZ2FpbnN0IHZpZi0+bnVtX3F1ZXVlcyBhbHNvIG9jY3VycyB0b28gZWFy
+bHkgYWZhaWN0CihpdCBzaG91bGQgYmUgZG9uZSBhZnRlciB0aGUgZ3JhbnQg
+Y29weSkuIEkgaGF2ZSBwYXRjaGVzIHJlYWR5IGFzIHB1YmxpYwpmb2xsb3ct
+dXBzIGZvciBib3RoIHRoaXMgYW5kIHRoZSAoYXQgbGVhc3QgbGF0ZW50KSBp
+c3N1ZSBvZiB0aGUgbWFwcGluZwphcnJheSBjcm9zc2luZyBhIHBhZ2UgYm91
+bmRhcnkuCgotLS0gYS9kcml2ZXJzL25ldC94ZW4tbmV0YmFjay9oYXNoLmMK
+KysrIGIvZHJpdmVycy9uZXQveGVuLW5ldGJhY2svaGFzaC5jCkBAIC0zMzIs
+MjAgKzMzMiwyMiBAQCB1MzIgeGVudmlmX3NldF9oYXNoX21hcHBpbmdfc2l6
+ZShzdHJ1Y3QKIHUzMiB4ZW52aWZfc2V0X2hhc2hfbWFwcGluZyhzdHJ1Y3Qg
+eGVudmlmICp2aWYsIHUzMiBncmVmLCB1MzIgbGVuLAogCQkJICAgIHUzMiBv
+ZmYpCiB7Ci0JdTMyICptYXBwaW5nID0gJnZpZi0+aGFzaC5tYXBwaW5nW29m
+Zl07CisJdTMyICptYXBwaW5nID0gdmlmLT5oYXNoLm1hcHBpbmc7CiAJc3Ry
+dWN0IGdudHRhYl9jb3B5IGNvcHlfb3AgPSB7CiAJCS5zb3VyY2UudS5yZWYg
+PSBncmVmLAogCQkuc291cmNlLmRvbWlkID0gdmlmLT5kb21pZCwKLQkJLmRl
+c3QudS5nbWZuID0gdmlydF90b19nZm4obWFwcGluZyksCiAJCS5kZXN0LmRv
+bWlkID0gRE9NSURfU0VMRiwKLQkJLmRlc3Qub2Zmc2V0ID0geGVuX29mZnNl
+dF9pbl9wYWdlKG1hcHBpbmcpLAotCQkubGVuID0gbGVuICogc2l6ZW9mKHUz
+MiksCisJCS5sZW4gPSBsZW4gKiBzaXplb2YoKm1hcHBpbmcpLAogCQkuZmxh
+Z3MgPSBHTlRDT1BZX3NvdXJjZV9ncmVmCiAJfTsKIAotCWlmICgob2ZmICsg
+bGVuID4gdmlmLT5oYXNoLnNpemUpIHx8IGNvcHlfb3AubGVuID4gWEVOX1BB
+R0VfU0laRSkKKwlpZiAoKG9mZiArIGxlbiA8IG9mZikgfHwgKG9mZiArIGxl
+biA+IHZpZi0+aGFzaC5zaXplKSB8fAorCSAgICBsZW4gPiBYRU5fUEFHRV9T
+SVpFIC8gc2l6ZW9mKCptYXBwaW5nKSkKIAkJcmV0dXJuIFhFTl9ORVRJRl9D
+VFJMX1NUQVRVU19JTlZBTElEX1BBUkFNRVRFUjsKIAorCWNvcHlfb3AuZGVz
+dC51LmdtZm4gPSB2aXJ0X3RvX2dmbihtYXBwaW5nICsgb2ZmKTsKKwljb3B5
+X29wLmRlc3Qub2Zmc2V0ID0geGVuX29mZnNldF9pbl9wYWdlKG1hcHBpbmcg
+KyBvZmYpOworCiAJd2hpbGUgKGxlbi0tICE9IDApCiAJCWlmIChtYXBwaW5n
+W29mZisrXSA+PSB2aWYtPm51bV9xdWV1ZXMpCiAJCQlyZXR1cm4gWEVOX05F
+VElGX0NUUkxfU1RBVFVTX0lOVkFMSURfUEFSQU1FVEVSOwo=
+
+--=separator--
