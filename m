@@ -1,102 +1,137 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/18/1
-Message-ID: <20180618090836.GB8123@f195.suse.de>
-Date: Mon, 18 Jun 2018 11:08:36 +0200
-From: Matthias Gerstner <mgerstner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: cantata: cantata-mounter D-Bus service local privilege escalation and other security issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/14/5
+Message-ID: <216def59-1b29-709d-536c-9ffba14be4b4@x41-dsec.de>
+Date: Tue, 14 Aug 2018 15:45:23 +0200
+From: X41 D-Sec GmbH Advisories <advisories@...-dsec.de>
+To: bugtraq@...urityfocus.com, fulldisclosure@...lists.org, oss-security@...ts.openwall.com
+Subject: X41 D-Sec GmbH Security Advisory X41-2018-004: Multiple Vulnerabilities in Yubico libykneomgr
 Content-Type: text/plain; charset=utf-8
 
-Hello list,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-this is a report about local privilege and local denial of service
-issues found in cantata, a graphical client for MPD
-(<https://github.com/CDrummond/cantata/wiki/About-Cantata>).
+X41 D-Sec GmbH Security Advisory: X41-2018-004
 
-cantata supports a D-Bus helper daemon "cantata-mounter" for mounting
-remote samba shares by calling `mount.cifs` on Linux systems. This
-daemon is configured for on-demand activation, running as root and its
-D-Bus interface is accessible by unprivileged users by default.
+Multiple Vulnerabilities in Yubico libykneomgr
+==============================================
 
-The daemon code is part of cantata since version 2.0.0 and it is built
-by default in versions 2.3.0 and 2.3.1. Before 2.3.0 it was only built
-if `-DENABLE_REMOTE_DEVICES=ON` was passed to the cmake invocation.
 
-Due to the issues explained below the upstream maintainer decided to
-drop the D-Bus service completely from future versions. This already
-happened through upstream commit afc4f8315d3e96574925fb530a7004cc9e6ce3d3.
-Therefore there are no fixes available except not building and shipping
-the D-Bus service in question.
+Overview
+- --------
+Confirmed Affected Versions: 0.1.9
+Confirmed Patched Versions: -
+Vendor: Yubico / Depreciated
+Vendor URL: https://www.yubico.com/
+Credit: X41 D-Sec GmbH, Eric Sesterhenn
+Status: Public
+Advisory-URL:
+https://www.x41-dsec.de/lab/advisories/x41-2018-004-libykneomgr/
 
-Following are four distinct security issues found in the
-cantata-mounter D-Bus service:
 
-A) The mount target path check in mounter.cpp `mpOk()` is insufficient.
-  A regular user can this way mount a CIFS filesystem anywhere, and not
-  just beneath /home by passing relative path components. Example D-Bus
-  call:
+Summary and Impact
+- ------------------
+An out of bounds write and read was discovered when malicious
+responses from a smartcard are received. These might lead to memory
+corruptions. We assume that these are not easily exploitable.
+X41 did not perform a full test or audit on the software.
+Please note that the library is deprecated for more than a year and no
+update
+will be published by the vendor.
 
-  dbus-send --system --print-reply --dest=mpd.cantata.mounter /Mounter mpd.cantata.mounter.mount 'string:smb://workgroup\user:password@...t:port/path?domain=domain' string:/home/../usr/bin int32:$$ int32:0 int32:0
 
-  By replacing data in system paths like /usr/bin by data from an
-  attacker controlled samba share, a local attacker can cause root to
-  execute modified programs or to read modified configuration files.
-  Therefore it opens the avenue for a local root escalation.
+Product Description
+- -------------------
+This is a C library to interact with the CCID-part of the YubiKey NEO.
+There is a command line tool "ykneomgr" for interactive use.  It
+supports querying the YubiKey NEO for firmware version, operation mode
+(OTP/CCID) and serial number.  You may also mode switch the device and
+manage applets (list, delete and install).
 
-B) Arbitrary unmounts can be performed by regular users the same way.
-  For example this D-Bus call unmounts /sys/kernel/security:
+Out of Bounds Read/Writes
+=========================
+Severity Rating: Medium
+Vector: APDU Response
+CVE:
+CWE: 120
+CVSS Score: 7.1 (High)
+CVSS Vector: CVSS:3.0/AV:P/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:H
 
-  dbus-send --system --print-reply --dest=mpd.cantata.mounter /Mounter mpd.cantata.mounter.umount string:/home/../sys/kernel/security int32:$$
 
-  This allows for a local denial of service and possible further
-  unspecified kinds of system manipulation.
+Summary and Impact
+- ------------------
+File lib/backendpcsc.c contains the following code in function
+`backendappletlist()`
 
-C) A regular user can inject additional mount options like file_mode= by
-  manipulating e.g. the domain parameter of the samba URL. This D-Bus
-  call injects the 'file_mode=777' parameter:
+{% highlight c %}
+     {
+       sizet i;
+       sizet thislen = recv[length++];
+       for (i = 0; i < thislen; i++)
+        {
+          if (appletstr)
+            {
+             if (reallen + 2 > *len)
+                {
+                  return YKNEOMGRBACKENDERROR;
+                }
+              sprintf (p, "%02x", recv[length]);
+              p += 2;
+            }
+          reallen += 2;
+          length++;
+        }
+      if (appletstr)
+        {
+          if (reallen + 1 > *len)
+            {
+              return YKNEOMGRBACKENDERROR;
+            }
+          *p = '\0';
+          p++;
+        }
+      reallen++;
+      length += 2;
+    }
+{% endhighlight %}
 
-  dbus-send --system --print-reply --dest=mpd.cantata.mounter /Mounter mpd.cantata.mounter.mount 'string:smb://workgroup\user@...t:port/path?domain=domain,file_mode=777' string:/home/user int32:$$ int32:0 int32:0
+There is an off-by-one write of a '\x00' when the sprintf() is called,
+since it terminates the string with a trailing null-byte. Additionally
+reads are performed based on thislen, which is retrieved from the data
+without further safety checks.
 
-  This way the user can use all options that mount.cifs offers to e.g.
-  produce files with arbitrary ownership and mode.
 
-D) The wrapper script 'mount.cifs.wrapper' uses the shell to forward the
-  arguments to the actual mount.cifs binary. The shell evaluates
-  wildcards which can also be injected like this:
+Workarounds
+- -----------
+It is advised to migrate to YubiKey Manager since the vendor does not
+support the library anymore and will not issue a patch.
 
-  dbus-send --system --print-reply --dest=mpd.cantata.mounter /Mounter mpd.cantata.mounter.mount 'string:smb://workgroup\user:password@...t:port/path?domain=domain' 'string:/home/../tmp/*' int32:$$ int32:0 int32:0
+Timeline
+========
+2018-02-03 Issues found
+2018-05-22 Vendor contacted
+2018-05-22 Vendor reply
+2018-06-05 Requesting technical feedback from the vendor
+2018-06-06 Vendor confirms bug, but states that library is
+depreciated, will not be fixed
+2018-08-11 Advisory released
+- -- 
+X41 D-SEC GmbH, Dennewartstr. 25-27, D-52068 Aachen
+T: +49 241 9809418-0, Fax: -9
+Unternehmenssitz: Aachen, Amtsgericht Aachen: HRB19989
+Geschäftsführer: Markus Vervier
+-----BEGIN PGP SIGNATURE-----
 
-  In this case all files in /tmp/* will be expanded and passed to
-  mount.cifs as parameters. This shouldn't allow further attack vectors,
-  because there are no additional arguments that mount.cifs supports.
-  But it still shouldn't happen.
-
-  The reason for "Calling mount.cifs directly from DBUS service seems to
-  mess things up?" which is stated in 'mount.cifs.wrapper' most probably
-  is that the D-Bus service has an empty PATH variable and can't find
-  mount.cifs. At least it is this way on openSUSE Tumbleweed where I
-  tested this.
-
-Furthermore the mount D-Bus method allows unprivileged users to specify
-the owner uid and gid of the mounted samba shared (passed as `uid=` and
-`gid=` mount.cifs parameters). The daemon should instead determine the
-callers uid and gid and use them, because this way the user can produce
-files with arbitrary user and group ownership, which is normally not
-possible.
-
-Cheers
-
-Matthias
-
--- 
-Matthias Gerstner <matthias.gerstner@...e.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Telefon: +49 911 740 53 290
-GPG Key ID: 0x14C405C971923553
-
-SUSE Linux GmbH
-GF: Felix Imendörffer, Jane Smithard, Graham Norton
-HRB 21284 (AG Nuernberg)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+iQIzBAEBCAAdFiEEpwxVTgxAIcUvTugIo5Klpg50CxAFAlty3PMACgkQo5Klpg50
+CxCvvA//RdQkadlV9yD1IFM7+lqkfMYCyeRyjEg19NWY7QL3Y6C0BeMNiMv/q74i
+TUw3G30X6ehgsaef5VWzpC7IibUC2DbltIZV3tYpNHePvc4GeMAl9dytqAy4MGnM
+EIxC7RrT4w85EDnaK9NvEXdo2QOlSuzt1MtePYhmoa23wZFH328w1WVhxgAYffna
+Cu7LCJIgWkh1y5jqc66553g34SRH3jiuVYSwTgIzC2MhVnXrjktbIwgddJLkV5Zr
+eRktqby13iWZns/oGE4GYjsmryoXaoDfGS5wuro7CNua+JqiEPwsH0bURvJDUxGi
+MvEEMl5TwoCeTzDqsofLBou1RNLVyI6W19MnYhNC6RCSUuFRXFF3nHqO7vQ5Gpft
+JS6URDUKWd/reh0Xwy3dlaEaXEIUPEHBcLwd0wmKqVgMTjUrOvgIAED8woS+Rzn9
+qI+NbooNGt1OzlXR4RojKjRMJtWcwya8bhlNLk/ZFl/pokAEh6bZ1jcMg/U0NG9Q
+R4AI2u2NX3lE39ku/dcTQQCJpTTcr0DdGUw6kux0dkJXEhEc6YixgFzrHH1CPS/y
+2sYLICX3iWjAtd81CO0PL4QXte2ekh8YWaf/1qV2BusOxwlHQjODO8o3kLueU2DC
+Uy4ftml35nu+qVS+vYA85N4+4/Fri6UkbjkgbI2fODgE3pImc+A=
+=dyfA
+-----END PGP SIGNATURE-----
