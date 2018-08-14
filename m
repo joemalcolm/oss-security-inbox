@@ -1,4 +1,9 @@
-Received: (qmail 28133 invoked by uid 550); 12 Mar 2024 11:39:58 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2319" "Tuesday" "14" "August" "2018" "09:16:03" "+0100" "Chris Coulson" "chris.coulson@canonical.com" "<31e2919a-bcc5-bd87-8df2-5d14054ec65b@canonical.com>" "63" "[oss-security] CVE-2018-14424: Use-after-free in GDM" nil nil nil "8" "2018081408:16:03" "[oss-security] CVE-2018-14424: Use-after-free in GDM" (number mark "U       chris.coulso Aug 14   63/2319  " thread-indent "\"[oss-security] CVE-2018-14424: Use-after-free in GDM\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 23865 invoked by uid 550); 14 Aug 2018 09:13:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,155 +12,104 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5223 invoked from network); 12 Mar 2024 04:24:55 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	invisiblethingslab.com; h=cc:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1710217734;
-	 x=1710304134; bh=MtCpduV9NBjMdq2Dajzdy+1pHQENkuOOONrNb5XfFHo=; b=
-	MInXpIpAqCwo9+PpCMtvmLEDbcr2ZwZYvD+izHYciDw54BEB9P16oLmfe+yFzUic
-	KZpuWuCOXNV/QzoOlVXTGTo17KMzd6zdhIFwHlkCYeyOT8UMg1xZk0ORlkdprdgr
-	tuwOiwpzao6AbFJfxu8E+cuIutpuhkL8Usga6WDCOY2CjboAy6cmE1IV+IvM/PyY
-	fTsjhRxlxXH4K4N072DwsTzpipmVdneRWQM9uon3Vhf0mUlHP8slHTVE6Lw6wdcr
-	jOSHq4b11y2hXD9BvMrtKE9besupS0MqokejSGOo/pwTaouwg3wsq96SofNspHhY
-	NNXM5V6zODG2Gq1OACP50Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1710217734; x=1710304134; bh=MtCpduV9NBjMdq2Dajzdy+1pHQEN
-	kuOOONrNb5XfFHo=; b=nyscNMjZknfmzC6QtUZtiBfhDVMCm96GyKRyvFRaZC7s
-	F0ivEAa3mL6xC+1tfeJtBnDUPMrzk8Ohj/LkfNpDOWDtcpi5RwshV+UKtfcNH30h
-	Hvys7pSyrN1iNamgzLo0TrjfYnW2XJYnV6T3CfVGpYCGzFpfZ4qTlqXfar/0ZwOD
-	DSKGBvviumy+I0ESdcrFBGMEoIY7LCf1dcz/ctrhM41klIuv2N3jvWNKOJ99UHB1
-	AEyCu/SRuWPwKfUPGmzdGvyAK5sESri4wQPEbhB+m02OnjAhH2CG+qeF187/PTJ3
-	d30ILb22pY19y/xtRYH7oFext6jFSqPmqh7UK8rBDA==
-X-ME-Sender: <xms:BdrvZQdHTERuNiKeh31r2yGEtSnzlB_yW-DLa1vA0X_Q9pNtvLnrqQ>
-    <xme:BdrvZSOktHDEIjs8VoPpdQ6ppSJmO9QQNjhs-t_zW-LZ-fJYdvG86mFHzHPfTf9-t
-    zESEBZWWjk1yP4>
-X-ME-Received: <xmr:BdrvZRitBeotGtUmXaHwFDNdFUGAgI4Lts-bEE7wodgmhDHjnvq-xg1RNDjNqarp6LjNOdZBR1HVi8FytwSsMAlW892CcYDxswV6enb6129QDyzX>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrjedvgdejfecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtderre
-    dttdejnecuhfhrohhmpeffvghmihcuofgrrhhivgcuqfgsvghnohhurhcuoeguvghmihes
-    ihhnvhhishhisghlvghthhhinhhgshhlrggsrdgtohhmqeenucggtffrrghtthgvrhhnpe
-    fggeelvdfhgefhjeegveffteegudffhfeltdejhfeukedviefgledttdejteeludenucff
-    ohhmrghinheptggrsghfohhruhhmrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenuc
-    frrghrrghmpehmrghilhhfrhhomhepuggvmhhisehinhhvihhsihgslhgvthhhihhnghhs
-    lhgrsgdrtghomh
-X-ME-Proxy: <xmx:BdrvZV-v8WRUGI_uRaPhOgfCwqx02xTREp0B4T2alLj2tPdlX6h7TA>
-    <xmx:BdrvZcvJTmjVlYxP5uCsEaGpihDrUGgYVB2SgJUl9zGz8XHvQquQoA>
-    <xmx:BdrvZcHp4sTdw0ZKGquZdEwKlD026vz16fPOPMbyNfyS9MO_l5mDug>
-    <xmx:BdrvZbN-KgEL6S9CSXaaNAeROIZ3x2LpGKvpNlHufOPhcPQ7WJatlQ>
-    <xmx:BtrvZZWnJZQ-BgsJBU7XVRxEzYq_MYEwSM07xt2SRv5AfkfSnADPkQ>
-Feedback-ID: iac594737:Fastmail
-Date: Tue, 12 Mar 2024 00:28:49 -0400
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
+Received: (qmail 23585 invoked from network); 14 Aug 2018 08:16:15 -0000
 To: oss-security@lists.openwall.com
-Message-ID: <Ze_aAzVya8RMGDDZ@itl-email>
-References: <gb6h5yblly7xer6jg6sgn7syzrze3jviotrmfsp3ifgy6rg2jr@igvcqdasmnof>
+From: Chris Coulson <chris.coulson@canonical.com>
+Openpgp: preference=signencrypt
+Autocrypt: addr=chris.coulson@canonical.com; prefer-encrypt=mutual; keydata=
+ xsBNBEuL91wBCACynuMd5O98B8r0Gcip7vIJndjl8Gs4Ov+fIRsfiIxIgSXMQ+BES2a0iOfz
+ kDGMCYn2DxgltNMsXHsiD2COahwiwKLBPfWiTHojmnSgWrPBR3MbDM/UUivojYfOX/MKRSh2
+ ZeQX8SCuuEJuDWfz74G3aS7ygalkkPaRAjQCXDTDxYqokQKzadikxaIEZMK8p14IDYAqG5ho
+ BGaa7Qsb2gl9XahjMkP5pbED1OJG7NLgN7V2/K+9gH9aZrxuFfeAAS9DntLe1B6/CVt4VBDJ
+ lZH0O5HV9mmqMgTG/bF1KGWh0T3GurOhIjXUjKOPuvsQ61t1xye7jjHg9BP7AO4fbnh/ABEB
+ AAHNK0NocmlzIENvdWxzb24gPGNocmlzLmNvdWxzb25AY2Fub25pY2FsLmNvbT7CwHsEEwEC
+ ACUCGwMGCwkIBwMCBhUIAgkKCwQWAgMBAh4BAheABQJOwCXKAhkBAAoJEGEfvezVlG4P9JoH
+ /j0eStEoYrJ6d/68siZKP+SJPukQmtbnHBT8PCUt7N791aqJgUT8K/N0wUM/HXAIOX0uz7L0
+ dnW4iFtMxeLk2ZwqiDYiWCmWm/JdPXnNglqJKSPi9NKXdi6DweMBeTQaAPMVkHborL4wtLoj
+ ZocMkvJVO3t9wY4Vl7Li7tbCBIO3e9gVhmQ9/Q/Zi1kIkHZOcom88iaU4620q8KHYsmtyxrG
+ 2Fua8Ndm06agivz8UGj8SRQLuDxCtA3ioJJSCDVUEuuTRn+uCTi2dhRoS9BybfPcAGNGAn+U
+ JMdcfky/U6zLpDz9PZ8ZRmBQxWaxxWN9vqyG4LWDm0kBJwmxCjwEG17OwE0ES4v3XAEIAMpB
+ Q+DhexjmfqEACSWZ/DF37qLqUcGOStLNuKwB2mLATvzZsDPZpf8wZfQy8VmazJFwf9+SoZzu
+ B/1axQXaOPNkANoCUlOaPzDbW5pQCT7ljkhC/C7EZPwhJiyM3G1dj+HEywON4IErTRmPlhtY
+ dlUUUDisvkkhFC++yEotCq36t7nb8wFdDGci6J71Je7hxT8vnaLuflTbEScOli7XPBPCNqgK
+ ewWK7tbr5DTB3JIuSvtzZ9zSgGIgPti2cBvQpUxZd/RsWH5pEJ98uUQIAA155JG/rVIRvJBC
+ theXH3J0ru3towcuCIkzrBU2xRv3EiMKaFekew2Vr59LksrpEZUAEQEAAcLAXwQYAQIACQUC
+ S4v3XAIbDAAKCRBhH73s1ZRuD49ECACgaP8KV8yXTSfW7z3qfz4wsRwkEwR8Ieor7o0r3Heh
+ AM6O5RECUPArK5J7S0jbV7oIflCfY+2dPb8IXa/CVXpRhYCJHZM7DT6q/ZXorP4WHFm9hjWW
+ /SJuSvIPzCztRnhxqzZFLipZ1a1hV2qAAOnPJK3LN4m4B7Zne7aDfdlt6NniwecwHWBesHFT
+ MXSwrCewTP8bUuSItUIPuYwcTdmZqb5BIGnrgsn6glSVI6V+16eRf18TI9Uz6sP/uLVsxycA
+ qhV0trE/hxie3obQ2WYg8ulLmVfy9XN9g8B9dXGe6352FWuQL/+mPFxsxxa2dSCL+bnEePox
+ 9WcHa0JdnWzU
+Message-ID: <31e2919a-bcc5-bd87-8df2-5d14054ec65b@canonical.com>
+Date: Tue, 14 Aug 2018 09:16:03 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="bh6wai0/4TrgZNp/"
-Content-Disposition: inline
-In-Reply-To: <gb6h5yblly7xer6jg6sgn7syzrze3jviotrmfsp3ifgy6rg2jr@igvcqdasmnof>
-Subject: Re: [oss-security] Certificate policy: OCSP becomes optional and
- CRLs mandatory for public CAs on Friday
+ protocol="application/pgp-signature";
+ boundary="ppptBcfoFyElA9zvNgGovxP0e3JCfXRya"
+Subject: [oss-security] CVE-2018-14424: Use-after-free in GDM
 
---bh6wai0/4TrgZNp/
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 12 Mar 2024 00:28:49 -0400
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
+--ppptBcfoFyElA9zvNgGovxP0e3JCfXRya
+Content-Type: multipart/mixed; boundary="bNwIMs0Qcwq5gTQBMPZMqeJ04v2WmVXgk";
+ protected-headers="v1"
+From: Chris Coulson <chris.coulson@canonical.com>
 To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Certificate policy: OCSP becomes optional and
- CRLs mandatory for public CAs on Friday
+Message-ID: <31e2919a-bcc5-bd87-8df2-5d14054ec65b@canonical.com>
+Subject: CVE-2018-14424: Use-after-free in GDM
 
-On Tue, Mar 12, 2024 at 05:33:46AM +0900, Valtteri Vuorikoski wrote:
-> This is more of a meta-security issue, but posting it since I expect
-> that this change will affect development priorities of
-> certificate and TLS-related OSS projects to some degree.
->=20
-> Last July, the CA/Browser Forum approved ballot SC-063
-> <https://cabforum.org/2023/07/14/ballot-sc-063-v4-make-ocsp-optional-requ=
-ire-crls-and-incentivize-automation/>.
-> The central changes to existing policy are:
->=20
->   * Makes providing OCSP services optional for CA/B-approved CAs,
->   i.e. those which ship in most browser and OS trust stores.
->=20
->   * Requires CAs to provide CRLs that are updated in a timely manner.
->=20
->   * (New policies related to short-lived certificates, not discussed
->   further in this post.)
->=20
-> The first two changes come into effect on 2024-03-15 which is this
-> Friday. CAs that provide OCSP services are free to continue doing so
-> under prior guidelines.
->=20
-> The proposal provides the following rationale for these changes (slightly
-> edited for brevity):
->=20
->   OCSP requests reveal details of individuals=E2=80=99 browsing history t=
-o the
->   operator of the OCSP responder. These can be exposed accidentally
->   (e.g., via data breach of logs) or intentionally (e.g., via
->   subpoena). Due to privacy concerns, several certificate consumer
->   products represented in the CA/Browser Forum do not perform online
->   OCSP checks by default - or have signaled interest in transitioning to
->   privacy-preserving methods of communicating revocation status. [=E2=80=
-=A6]
->   Concern surrounding OCSP is further elevated considering the
->   disproportionately high cost of offering these services reliably at
->   the global scale of the Web PKI.
->=20
->   Given this ballot makes operating OCSP services optional
->   for CAs, allow relying party software applications and certificate
->   consumer user agents to consistently and reliably evaluate certificate
->   revocation status using a privacy-preserving check [using CRLs].
->=20
-> Personal opinion: It seems unlikely that most CAs will stop offering
-> OCSP now or even in the short-to-medium term. However OCSP support
-> (including OCSP stapling support) in open-source software has overall
-> been limited outside of HTTPS-related projects with a lot of developer
-> resources, and I suppose could have even less resources dedicated to
-> it in the future as a result of this change. Meanwhile some projects
-> may need to implement updates to handle large and relatively
-> rapidly-updating CRLs efficiently. In addition, I guess that OS level
-> mechanisms similar to root certificate stores may be needed to
-> centralize CRL updates; having each application pull down potentially
-> large CRL updates once a week seems inefficient.
+--bNwIMs0Qcwq5gTQBMPZMqeJ04v2WmVXgk
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
 
-macOS, iOS, Windows, and possibly Android have system certificate
-verifiers that can handle this easily.  For desktop and server Linux,
-should a CRLite package be included in system package managers?  Would
-it be feasible for WebPKI and {Open,Boring,Libre}SSL to handle CRLite,
-or does this mean that NSS should be used for certificate verification?
---=20
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+Hi,
 
---bh6wai0/4TrgZNp/
+I recently discovered a use-after-free in the GDM daemon, which is
+possible to trigger via a specially crafted sequence of D-Bus method
+calls as an unprivileged user.
+
+Details from https://gitlab.gnome.org/GNOME/gdm/issues/401 follow:
+
+----
+When GdmDisplayStore (daemon/gdm-display-store.c) emits the
+"display-removed" signal, the GdmDisplay being removed has already been
+removed from the store. Subsequent calls to gdm_display_store_lookup
+from signal handlers using the display ID associated with the signal
+then fail to look up the removed display. In on_display_removed
+(daemon/gdm-manager.c), this results in the display object not being
+correctly unexported from the system bus. Subsequent D-Bus calls to the
+stale object trigger a use-after-free.
+
+An unprivileged user can trigger this by creating a transient display,
+waiting a short time and then making D-Bus requests to it.
+----
+
+A fix for this can be found in the upstream git repository: https://gitlab.=
+gnome.org/GNOME/gdm/commit/1ac1697b3b019f50729a6e992065959586e170da.
+
+Many thanks,
+- Chris
+
+
+
+--bNwIMs0Qcwq5gTQBMPZMqeJ04v2WmVXgk--
+
+--ppptBcfoFyElA9zvNgGovxP0e3JCfXRya
 Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEdodNnxM2uiJZBxxxsoi1X/+cIsEFAmXv2gMACgkQsoi1X/+c
-IsG6cxAA02O9fKEvuM58oiDcD/eJ9QbR49D6jPDftYSUmJxgGE+CmvDowM+fa7cO
-k1rSVYdQoauzglv1l7P9BdlJiw2qN4wuv2Nmsqf6rkSkJu+xCIAww+6b3NrDzwFr
-x/1Ct1g/H1+wawcFvDjrpCsIGOIfTtoBmLCwvS5FWJ2QbvDLikIlVeis0C8dgaIC
-3Lz9fodT547cJISqdXp+4yC5IY2fy63ri2Ws9SqhG7maTnV6vbJ/TLsUDHpU65gb
-Ne6m8Xb2sPT/vhOB81B5+EcNq+Vka17HPTXeaNbxNZLl1oBdS30CAZ0JZucbaSsz
-awsBOsD5X20WZdBZscDPeATInZyViJ5/7x951ZrTa8heNS0wKGU1sBZRVVJtDiym
-T0W+F/HWK1k3qXzUwbknubWNqk5Ob4LY1GxjxbKxRGsL3+aksjW4cf22C3HFz454
-kQvme/TgtchAJ+x2/+vj+6q0NXRaj5vKGQvcRWxItCOO8Ui2NzOkCB9SqxVS9DoR
-JRtCDRnBRQy9FXcxBienhYeSUFapdgTYMx65BnlS88DKWKFlUExNr9FeeXziabFH
-/n/O3/spyHT87VakUGtZiTVBVBzMugmgWKLpKDHV+9Pf4sVlHuFWV7sJ+Y5jgejs
-uazz9CP/CCV0rEz32vnU/3wlHhPw10K5r95DoU9fFE2H17Q2p0g=
-=1KG6
+iQEzBAEBCgAdFiEERN//5MGgCOgyKeIFYR+97NWUbg8FAltyj8MACgkQYR+97NWU
+bg9aAAf8Dj7ZhYd6gnY1cTmRSTgEnez/cp/YTnoBZ/Xfb+UH0yeGqFZJQuBQosag
+Zswl7w9HwvMw58q8omW930/QL80EPBdt+dLE1Xwedys+bwHQYxygqwMrOdKVNJXT
+Ab8zg1Wdotjn9B6+mzutYyQtFQwWLkql/XtMJv4b8wN53a2X/DFkd8Y/oy75igGa
+6xTGyuP/K4X4j7libcrn2KuaRXGO0F9Z8fOIzmF3Q9WBaOmpNsdtOQhUzWR7dkqg
+nSkF1JI7/h/3hRYG5UYyjkZoCiKpSsHaYxN36DSvd8TD1WBCW4WqpSh+7w5sWaYH
+wCw8biuns61k+PHaxhHZiSwNG6+mWQ==
+=u4Rg
 -----END PGP SIGNATURE-----
 
---bh6wai0/4TrgZNp/--
+--ppptBcfoFyElA9zvNgGovxP0e3JCfXRya--
