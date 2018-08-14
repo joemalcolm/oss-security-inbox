@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4671" "Wednesday" "20" "May" "2015" "14:29:39" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150520182939.388A76C0029@smtpvmsrv1.mitre.org>" "99" "[oss-security] CVE-2015-4000 - TLS does not properly convey server's ciphersuite choice" nil nil nil "5" "2015052018:29:39" "[oss-security] CVE-2015-4000 - TLS does not properly convey server's ciphersuite choice" (number mark "        cve-assign@m May 20   99/4671  " thread-indent "\"[oss-security] CVE-2015-4000 - TLS does not properly convey server's ciphersuite choice\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["9347" "Tuesday" "14" "August" "2018" "17:19:35" "+0000" "Xen.org security team" "security@xen.org" "<E1fpcyl-0001qx-Dd@xenbits.xenproject.org>" "239" "[oss-security] Xen Security Advisory 272 v2 - oxenstored does not apply quota-maxentity" nil nil nil "8" "2018081417:19:35" "[oss-security] Xen Security Advisory 272 v2 - oxenstored does not apply quota-maxentity" (number mark "U       security@xen Aug 14  239/9347  " thread-indent "\"[oss-security] Xen Security Advisory 272 v2 - oxenstored does not apply quota-maxentity\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 18088 invoked by uid 550); 20 May 2015 18:29:59 -0000
+Received: (qmail 23956 invoked by uid 550); 14 Aug 2018 17:19:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,111 +11,257 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 18044 invoked from network); 20 May 2015 18:29:51 -0000
-Message-Id: <20150520182939.388A76C0029@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org
-Date: Wed, 20 May 2015 14:29:39 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2015-4000 - TLS does not properly convey server's ciphersuite choice
-To: oss-security@lists.openwall.com
+Received: (qmail 23850 invoked from network); 14 Aug 2018 17:19:54 -0000
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
+MIME-Version: 1.0
+X-Mailer: MIME-tools 5.508 (Entity 5.508)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1fpcyl-0001qx-Dd@xenbits.xenproject.org>
+Date: Tue, 14 Aug 2018 17:19:35 +0000
+Subject: [oss-security] Xen Security Advisory 272 v2 - oxenstored does not apply
+ quota-maxentity
+
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA256
 
-CVE-2015-4000 has been assigned to this vulnerability in the TLS
-protocol that was disclosed in section 3.2 of the
-https://weakdh.org/imperfect-forward-secrecy.pdf paper:
+                    Xen Security Advisory XSA-272
+                              version 2
 
-   "a flaw in the way TLS composes DHE and DHE_EXPORT. When a
-   server selects DHE_EXPORT for a handshake, it proceeds by
-   issuing a signed ServerKeyExchange message containing a
-   512-bit p512, but the structure of this message is identical
-   to the message sent during standard DHE ciphersuites.
-   Critically, the signed portion of the server's message fails
-   to include any indication of the specific ciphersuite that
-   the server has chosen."
+               oxenstored does not apply quota-maxentity
 
-(This is the TLS protocol problem associated with the Logjam attack.)
+UPDATES IN VERSION 2
+====================
 
-There are some other vulnerabilities mentioned on the weakdh.org web
-site that can have individual CVE IDs for each affected codebase, if
-any researcher (or a vendor) identifies a specific available codebase
-(i.e., not one organization's in-house code). Also, there are security
-issues mentioned on the weakdh.org web site that can have individual
-CVE IDs for each affected codebase, if the author of the code requires
-a CVE ID for announcing the issue to customers. Finally, there are
-other issues mentioned on the weakdh.org web site that should not have
-CVE IDs, but for which it is possible that someone is considering
-using CVE IDs. Here are some examples of this distinction.
+Ammend patch to reference XSA-272 in the commit message.
+
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+The logic in oxenstored for handling writes depended on the order of
+evaluation of expressions making up a tuple.
+
+As indicated in section 7.7.3 "Operations on data structures" of the
+OCaml manual:
+
+  http://caml.inria.fr/pub/docs/manual-ocaml/expr.html
+
+the order of evaluation of subexpressions is not specified.  In
+practice, different implementations behave differently.
+
+IMPACT
+======
+
+oxenstored may not enforce the configured quota-maxentity.
+
+This allows a malicious or buggy guest to write as many xenstore entries
+as it wishes, causing unbounded memory usage in oxenstored.  This can
+lead to a system-wide DoS.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen 4.1 and later are potentially vulnerable.
+
+Only systems using the OCaml xenstored implementation are potentially
+vulnerable.  Systems using the C xenstored implementation are not
+vulnerable.
+
+Whether the compiled oxenstored binary is vulnerable depends on which
+compiler was used.  OCaml can be compiled either as bytecode (with
+ocamlc) or as a native binary (with ocamlopt).
+
+The following OCaml program demonstrates the issue, and identifies
+whether the resulting oxenstored binary will skip the quota enforcement.
+
+  $ cat order.ml
+  let check () =
+    let flag = ref false in
+    let update _ = flag := true; () in
+    List.iter update [1;2;3], !flag
+
+  let main () =
+    let _, flag = check () in
+    if flag then
+    print_endline "This code is not vulnerable!"
+    else
+    print_endline "This code is vulnerable!"
+
+  let () = main ()
+
+  $ ocamlc order.ml -o order.bytecode
+  $ ./order.bytecode
+  This code is vulnerable!
+  $ ocamlopt order.ml -o order.native
+  $ ./order.native
+  This code is not vulnerable!
+
+To confirm whether an OCaml binary is bytecode or native, use file.
+
+  $ file order.bytecode
+  order.bytecode: a /usr/bin/ocamlrun script executable (binary data)
+  $ file order.native
+  order.native: ELF 64-bit LSB executable, ...
+
+NOTE: These results are applicable to OCaml 4.01.0-5 as distributed in
+Debian Jessie.  These results are not representative of other versions
+of OCaml, or of other OS distributions.
+
+MITIGATION
+==========
+
+There are no mitigations available.
+
+CREDITS
+=======
+
+This issue was discovered by Christian Lindig of Citrix.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa272.patch           All versions of Xen
+
+$ sha256sum xsa272*
+0da953ca48d0cf0688ecff6a074304a9d2217871809a76ef26b9addeb66ecb3e  xsa272.meta
+6e0359d89bf65794f16d39198cc90f5c3137bce4eb850e54625ab00e2c568c2c  xsa272.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
 
 
-section 3.5 - "some servers in our scans used Java's DSA primes as p,
-but mistakenly used the DSA group order q in the place of the
-generator g ... This substitution of q for g is likely due to a
-usability problem: the canonical ASN.1 representation of
-Diffie-Hellman key exchange parameters (coming from PKCS#3) is a
-sequence (p, g), while that of DSA parameters (coming from PKIX) is
-(p, q, g); we conjecture that the confusion between these formats led
-to a simple programming error."
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
 
-[ So, for example, if someone identifies a specific open-source
-product that has this programming error, a CVE ID can be assigned,
-even if the vendor's perspective is unknown. ]
-
-
-section 3.2 footnote - "Safari allowed groups as small as 16 bits"
-
-[ It seems that there's a high probability that this was unintentional
-behavior, and thus a CVE ID from Apple may be forthcoming. ]
-
-
-section 3 - "for both normal and export-grade Diffie-Hellman, the vast
-majority of servers use a handful of common groups"
-
-[ This is a type of issue that typically does not have a CVE ID
-because it is associated with the concept of third-party configuration
-data. Although we don't currently have complete documentation on what
-"third-party configuration data" means within CVE, the important
-points in this situation are:
-
-1. Use of a common group obtained from a third party was not a
-choice that would have been anticipated to be unreasonable.
-
-2. Avoiding use of a common group is not really equivalent to
-correcting a software mistake; it could typically involve improving a
-software product by adding new functionality or documentation, such as
-adding a call to "openssl dhparam" at installation time.
-
-3. Existence of a common group across different customers' deployments
-of a product is not independently exploitable; there is no attack that
-depends exclusively on knowing the group used by a victim.
-
-For example, it seems likely and appropriate that multiple vendors
-from the https://weakdh.org/sysadmin.html Common Server Products list,
-and a large number of other vendors, will adjust their own
-documentation (or installation process) to incorporate the general
-concept of "generate a new, unique Diffie-Hellman group." However, we
-don't feel that there should be CVE IDs to, in effect, track each
-vendor's progress toward this, or to criticize a vendor's choices
-(e.g., putting it only in documentation, with no new installation
-functionality). Instead, it can probably be treated as another
-important security improvement that becomes available to persons who
-pick up newer versions. ]
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1
 
-iQEcBAEBAgAGBQJVXNGiAAoJEKllVAevmvmsDlMH/3UC62GsmkO9BL7neAr9AkbX
-sh/MtvC99+HOdIdiMKPAcQiojR4MazFCaQNr6qQ+UCV7lXfa1iHeJ4xi95U1Gdf3
-EC5SQfwKSfbvIv7dROHIa43MaS6MSSvshLcRfivpbyeYHfAU7Kj3AptIZ2LGsPTW
-YMeZX0aEduNTE4QQJfk0xXsS5gW6mPNaqQm4MSggbzejR1B/wdcALjT2xOhhAxwQ
-rjsx/xoMz6SWHx+J6gyOSIsTQ4B1ZwFszC22/3iXABJ/ZkYSuV/hQTa4AGXE/oKL
-Qa11zenkraRvYmMLVynZWQkXsPrWUQ9A1gCjEllu0yDuNUBh2Y8+q3WA9oshhMM=
-=2qz6
+iQEcBAEBCAAGBQJbcw8fAAoJEIP+FMlX6CvZ1VYIALce26h9Sf0P0joLd/fhUwf4
+JcCIaTWvHsy0ucJgpi7i+SCMa7Iz60CriK6dSYlwIuPvka8XU5MDmZ56gbENApDZ
+ibWMwvyCrgb0BH3VIwJZfk7eaKM7OwKeEnnIrIWaVGsT2StwoZOHgdLRLCTSFJ/K
+iss3ALSzZ8z7/WqEkBE3JeJ7skrh5nmNp428fJXWYhOyYbqkqyggn6XzBQg/EzGD
+vabxz4CdYCr1ox7sq42Q/UFeLoWB6CKCLgRgqOGyCrm7K324ymBzRXtXpPUrLEaq
+ugR27W/zr09e8N/fOhH4dBNCzkktuqclwrfMlFr1WUfiltSDmVwNZkURkvVGeu0=
+=TPZD
 -----END PGP SIGNATURE-----
+
+--=separator
+Content-Type: application/octet-stream; name="xsa272.meta"
+Content-Disposition: attachment; filename="xsa272.meta"
+Content-Transfer-Encoding: base64
+
+ewogICJYU0EiOiAyNzIsCiAgIlN1cHBvcnRlZFZlcnNpb25zIjogWwogICAg
+Im1hc3RlciIsCiAgICAiNC4xMSIsCiAgICAiNC4xMCIsCiAgICAiNC45IiwK
+ICAgICI0LjgiLAogICAgIjQuNyIsCiAgICAiNC42IgogIF0sCiAgIlRyZWVz
+IjogWwogICAgInhlbiIKICBdLAogICJSZWNpcGVzIjogewogICAgIjQuMTAi
+OiB7CiAgICAgICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4iOiB7CiAgICAg
+ICAgICAiU3RhYmxlUmVmIjogIjg3YzgzYWYzMzNlMDI0OGFkYTJlNjU2MDk2
+NWFjYTYwOTZlYzdmMmIiLAogICAgICAgICAgIlByZXJlcXMiOiBbCiAgICAg
+ICAgICAgIDI2OCwKICAgICAgICAgICAgMjY5CiAgICAgICAgICBdLAogICAg
+ICAgICAgIlBhdGNoZXMiOiBbCiAgICAgICAgICAgICJ4c2EyNzIucGF0Y2gi
+CiAgICAgICAgICBdCiAgICAgICAgfQogICAgICB9CiAgICB9LAogICAgIjQu
+MTEiOiB7CiAgICAgICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4iOiB7CiAg
+ICAgICAgICAiU3RhYmxlUmVmIjogIjMzY2VkNzI1ZTExYWY0ZWFiZDMzMzRk
+MTJmNTNlZDgwN2U5ZTI1ODYiLAogICAgICAgICAgIlByZXJlcXMiOiBbCiAg
+ICAgICAgICAgIDI2OCwKICAgICAgICAgICAgMjY5CiAgICAgICAgICBdLAog
+ICAgICAgICAgIlBhdGNoZXMiOiBbCiAgICAgICAgICAgICJ4c2EyNzIucGF0
+Y2giCiAgICAgICAgICBdCiAgICAgICAgfQogICAgICB9CiAgICB9LAogICAg
+IjQuNiI6IHsKICAgICAgIlJlY2lwZXMiOiB7CiAgICAgICAgInhlbiI6IHsK
+ICAgICAgICAgICJTdGFibGVSZWYiOiAiOThkNzk0OGI1MGI0ZTkxZWM0ZWZh
+ODYwZGEzMmQ5YWM0ZmU2OTMwMCIsCiAgICAgICAgICAiUHJlcmVxcyI6IFsK
+ICAgICAgICAgICAgMjY4LAogICAgICAgICAgICAyNjkKICAgICAgICAgIF0s
+CiAgICAgICAgICAiUGF0Y2hlcyI6IFsKICAgICAgICAgICAgInhzYTI3Mi5w
+YXRjaCIKICAgICAgICAgIF0KICAgICAgICB9CiAgICAgIH0KICAgIH0sCiAg
+ICAiNC43IjogewogICAgICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjog
+ewogICAgICAgICAgIlN0YWJsZVJlZiI6ICI5MWNhODRjODYyYjE1ZmU3NGFi
+OWI1ODcwZTY2OTAzYWVjNGY4NmRkIiwKICAgICAgICAgICJQcmVyZXFzIjog
+WwogICAgICAgICAgICAyNjgsCiAgICAgICAgICAgIDI2OQogICAgICAgICAg
+XSwKICAgICAgICAgICJQYXRjaGVzIjogWwogICAgICAgICAgICAieHNhMjcy
+LnBhdGNoIgogICAgICAgICAgXQogICAgICAgIH0KICAgICAgfQogICAgfSwK
+ICAgICI0LjgiOiB7CiAgICAgICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4i
+OiB7CiAgICAgICAgICAiU3RhYmxlUmVmIjogImFhNDUwMTUzZjJkOTYwYzIx
+NzE0OWIzMWI2OGE4YjU3YzVhOGU1OTUiLAogICAgICAgICAgIlByZXJlcXMi
+OiBbCiAgICAgICAgICAgIDI2OCwKICAgICAgICAgICAgMjY5CiAgICAgICAg
+ICBdLAogICAgICAgICAgIlBhdGNoZXMiOiBbCiAgICAgICAgICAgICJ4c2Ey
+NzIucGF0Y2giCiAgICAgICAgICBdCiAgICAgICAgfQogICAgICB9CiAgICB9
+LAogICAgIjQuOSI6IHsKICAgICAgIlJlY2lwZXMiOiB7CiAgICAgICAgInhl
+biI6IHsKICAgICAgICAgICJTdGFibGVSZWYiOiAiYTFiMjIzYjc1NmYzNTQ4
+OTU1MjUwNjBiZDNmOWYxZjA3ODk5YTA4MiIsCiAgICAgICAgICAiUHJlcmVx
+cyI6IFsKICAgICAgICAgICAgMjY4LAogICAgICAgICAgICAyNjkKICAgICAg
+ICAgIF0sCiAgICAgICAgICAiUGF0Y2hlcyI6IFsKICAgICAgICAgICAgInhz
+YTI3Mi5wYXRjaCIKICAgICAgICAgIF0KICAgICAgICB9CiAgICAgIH0KICAg
+IH0sCiAgICAibWFzdGVyIjogewogICAgICAiUmVjaXBlcyI6IHsKICAgICAg
+ICAieGVuIjogewogICAgICAgICAgIlN0YWJsZVJlZiI6ICJhY2QwMGEzMDMz
+NzhjZTQ4YmQ2YmJkOGE1NzlmMWZlMmYxYjIxYTdkIiwKICAgICAgICAgICJQ
+cmVyZXFzIjogWwogICAgICAgICAgICAyNjgsCiAgICAgICAgICAgIDI2OQog
+ICAgICAgICAgXSwKICAgICAgICAgICJQYXRjaGVzIjogWwogICAgICAgICAg
+ICAieHNhMjcyLnBhdGNoIgogICAgICAgICAgXQogICAgICAgIH0KICAgICAg
+fQogICAgfQogIH0KfQ==
+
+--=separator
+Content-Type: application/octet-stream; name="xsa272.patch"
+Content-Disposition: attachment; filename="xsa272.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogQ2hyaXN0aWFuIExpbmRpZyA8Y2hyaXN0aWFuLmxpbmRpZ0BjaXRy
+aXguY29tPgpTdWJqZWN0OiB0b29scy9veGVuc3RvcmVkOiBNYWtlIGV2YWx1
+YXRpb24gb3JkZXIgZXhwbGljaXQKCkluIFN0b3JlLnBhdGhfd3JpdGUoKSwg
+UGF0aC5hcHBseV9tb2RpZnkoKSB1cGRhdGVzIHRoZSBub2RlX2NyZWF0ZWQK
+cmVmZXJlbmNlIGFuZCBib3RoIHRoZSB2YWx1ZSBvZiBhcHBseV9tb2RpZnko
+KSBhbmQgbm9kZV9jcmVhdGVkIGFyZQpyZXR1cm5lZCBieSBwYXRoX3dyaXRl
+KCkuCgpBdCBsZWFzdCB3aXRoIE9DYW1sIDQuMDYuMSB0aGlzIGxlYWRzIHRv
+IHRoZSB2YWx1ZSBvZiBub2RlX2NyZWF0ZWQgYmVpbmcKcmV0dXJuZWQgKmJl
+Zm9yZSogaXQgaXMgdXBkYXRlZCBieSBhcHBseV9tb2RpZnkoKS4gIFRoaXMg
+aW4gdHVybiBsZWFkcwp0byB0aGUgcXVvdGEgZm9yIGEgZG9tYWluIG5vdCBi
+ZWluZyB1cGRhdGVkIGluIFN0b3JlLndyaXRlKCkuICBIZW5jZSwgYQpndWVz
+dCBjYW4gY3JlYXRlIGFuIHVubGltaXRlZCBudW1iZXIgb2YgZW50cmllcyBp
+biB4ZW5zdG9yZS4KClRoZSBmaXggaXMgdG8gbWFrZSBldmFsdWF0aW9uIG9y
+ZGVyIGV4cGxpY2l0LgoKVGhpcyBpcyBYU0EtMjcyLgoKU2lnbmVkLW9mZi1i
+eTogQ2hyaXN0aWFuIExpbmRpZyA8Y2hyaXN0aWFuLmxpbmRpZ0BjaXRyaXgu
+Y29tPgpSZXZpZXdlZC1ieTogUm9iIEhvZXMgPHJvYi5ob2VzQGNpdHJpeC5j
+b20+CgpkaWZmIC0tZ2l0IGEvdG9vbHMvb2NhbWwveGVuc3RvcmVkL3N0b3Jl
+Lm1sIGIvdG9vbHMvb2NhbWwveGVuc3RvcmVkL3N0b3JlLm1sCmluZGV4IDlm
+NjE5YjhmZDUuLjhiMDcyN2Y4YTggMTAwNjQ0Ci0tLSBhL3Rvb2xzL29jYW1s
+L3hlbnN0b3JlZC9zdG9yZS5tbAorKysgYi90b29scy9vY2FtbC94ZW5zdG9y
+ZWQvc3RvcmUubWwKQEAgLTI1Nyw3ICsyNTcsOCBAQCBsZXQgcGF0aF93cml0
+ZSBzdG9yZSBwZXJtIHBhdGggdmFsdWUgPQogCQlOb2RlLmNoZWNrX3Blcm0g
+c3RvcmUucm9vdCBwZXJtIFBlcm1zLldSSVRFOwogCQlOb2RlLnNldF92YWx1
+ZSBzdG9yZS5yb290IHZhbHVlLCBmYWxzZQogCSkgZWxzZQotCQlQYXRoLmFw
+cGx5X21vZGlmeSBzdG9yZS5yb290IHBhdGggZG9fd3JpdGUsICFub2RlX2Ny
+ZWF0ZWQKKwkJbGV0IHJvb3QgPSBQYXRoLmFwcGx5X21vZGlmeSBzdG9yZS5y
+b290IHBhdGggZG9fd3JpdGUgaW4KKwkJcm9vdCwgIW5vZGVfY3JlYXRlZAog
+CiBsZXQgcGF0aF9ybSBzdG9yZSBwZXJtIHBhdGggPQogCWxldCBkb19ybSBu
+b2RlIG5hbWUgPQo=
+
+--=separator--
