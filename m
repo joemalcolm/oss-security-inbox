@@ -1,34 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/21/1
-Message-ID: <20181221214706.GA21869@eldamar.local>
-Date: Fri, 21 Dec 2018 22:47:06 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: sqlite: CVE-2018-20346: integer overflow (resulting in buffer overflow) for FTS3 queries
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/14/14
+Message-ID: <334572023.2548916.1534278651965.JavaMail.zimbra@redhat.com>
+Date: Tue, 14 Aug 2018 16:30:51 -0400 (EDT)
+From: Vladis Dronov <vdronov@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2018-5391: Linux kernel: IP fragments with random offsets allow a remote denial of service (FragmentSmack)
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Heololo,
 
-MITRE has assigned CVE-2018-20346 for the "Magellan" called vulnerabilities.
-The description in the CVE database reads as:
+A flaw named FragmentSmack was found in the way the Linux kernel handled
+reassembly of fragmented IPv4 and IPv6 packets. A remote attacker could
+use this flaw to trigger time and calculation expensive fragment reassembly
+algorithms by sending specially crafted packets which could lead to a CPU
+saturation and hence a denial of service on the system.
 
-> SQLite before 3.25.3, when the FTS3 extension is enabled, encounters
-> an integer overflow (and resultant buffer overflow) for FTS3 queries
-> that occur after crafted changes to FTS3 shadow tables, allowing
-> remote attackers to execute arbitrary code by leveraging the ability
-> to run arbitrary SQL statements (such as in certain WebSQL use cases),
-> aka Magellan.
+External References:
 
-below some references for the issue:
+https://www.kb.cert.org/vuls/id/641765
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1659379
-https://bugzilla.redhat.com/show_bug.cgi?id=1659677
-https://www.mail-archive.com/sqlite-users@mailinglists.sqlite.org/msg113218.html
-https://blade.tencent.com/magellan/index_en.html
-https://chromereleases.googleblog.com/2018/12/stable-channel-update-for-desktop.html
-https://crbug.com/900910
-https://chromium.googlesource.com/chromium/src/+/c368e30ae55600a1c3c9cb1710a54f9c55de786e
-https://www.sqlite.org/releaselog/3_25_3.html
-https://access.redhat.com/articles/3758321
+https://access.redhat.com/articles/3553061
 
-Salvatore
+https://bugzilla.redhat.com/show_bug.cgi?id=1609664
+
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
