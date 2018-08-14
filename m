@@ -1,4 +1,9 @@
-Received: (qmail 15798 invoked by uid 550); 3 Apr 2024 00:03:27 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3915" "Tuesday" "14" "August" "2018" "15:45:23" "+0200" "X41 D-Sec GmbH Advisories" "advisories@x41-dsec.de" "<216def59-1b29-709d-536c-9ffba14be4b4@x41-dsec.de>" "128" "[oss-security] X41 D-Sec GmbH Security Advisory X41-2018-004: Multiple Vulnerabilities in Yubico libykneomgr" nil nil nil "8" "2018081413:45:23" "[oss-security] X41 D-Sec GmbH Security Advisory X41-2018-004: Multiple Vulnerabilities in Yubico libykneomgr" (number mark "U       advisories@x Aug 14  128/3915  " thread-indent "\"[oss-security] X41 D-Sec GmbH Security Advisory X41-2018-004: Multiple Vulnerabilities in Yubico libykneomgr\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 11686 invoked by uid 550); 14 Aug 2018 13:46:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,86 +12,190 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15758 invoked from network); 3 Apr 2024 00:03:27 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712102599; x=1712707399; darn=lists.openwall.com;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=D75znOwHKQFKDfARwdxDeVS1cc+QjxUtYOQhlCqScPI=;
-        b=Lu13OOGcB5Oxhwzop2V2BPLXu6GdF6DQiq/th4Tps7XfJK8auoY+NPgvBD4VXnrJQe
-         e4xRNPH4pon+xKTAJhfhd0dgL7sUdcab/aqcuPkVFHKJSlfUSR/7Me/YtKRUyKDbQjF5
-         5vtCxD/zuXsy+raXbaFfsNNsLk7QieQj6mRF/v2xVkbjKh29LIgaJTARPOfCVSwDrmtd
-         L18iFNTIcBt+E+d8eBhAUENd9PcinInaOevUvcQpJQ93IV33VfoiFN321/36Cn9crQGP
-         ABbzjI7rIKbCWRknWvBGTHRt67u0F8CX8dGpLpteq6e0z03znG+Zp119qAzSGOnFJH3M
-         e6vQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712102599; x=1712707399;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=D75znOwHKQFKDfARwdxDeVS1cc+QjxUtYOQhlCqScPI=;
-        b=CRUT7Mal/csirtvper0jmOXUntBDzhw69qrF5Ynf72G/rbJw0Mb2F6bVc4caqCqBI9
-         C6AQ+vLq3tupunox84scpaZXpxY8G/CxOC104siGPkEY/T/6W77Jr/9+f5k5JHvdpUwR
-         2xWUrsc+ZKTMoMlGRtfPprSq/OIKi6DtU2a5uL9DPN4/DblHzT8URyKPy7nVmDZkYQjq
-         B27sSy5uQ3kZAZSrE1AAAcIdnO/9Ym/E/MAKW0Cq1MkYtkCY+4xrYn9EXuLr5SRMu1VU
-         WcE7I6nT8C7c81Rflaqm7jQorfKG/SsNDv00ikL9V8vLxJyp4YJ3ld4o+IfNcCIQJTna
-         2hXQ==
-X-Gm-Message-State: AOJu0Yzj+Q9N9vEij5W3IZt3odxp8SVAjCdYEUpdjsMUUzXqnCQKcORo
-	qtR79nYvlPmWLX91NBqHHGLpCDysUKVhol/24JnWzgUjkQkamY22OKOFzgs+
-X-Google-Smtp-Source: AGHT+IH5CEwEsmCMwKwkeBU+lYr4x+Ybppn2EPrH50rJaUG83W1ALAc/eIq1eJXgeG9Qf1ia85aHgA==
-X-Received: by 2002:a17:902:654d:b0:1e2:3150:512c with SMTP id d13-20020a170902654d00b001e23150512cmr1170796pln.56.1712102598698;
-        Tue, 02 Apr 2024 17:03:18 -0700 (PDT)
-Message-ID: <cd985494-7e02-ab46-785d-78ba6eabae4d@gmail.com>
-Date: Wed, 3 Apr 2024 11:03:17 +1100
+Received: (qmail 5276 invoked from network); 14 Aug 2018 13:45:43 -0000
+To: bugtraq@securityfocus.com, fulldisclosure@seclists.org,
+ oss-security@lists.openwall.com
+From: X41 D-Sec GmbH Advisories <advisories@x41-dsec.de>
+Openpgp: preference=signencrypt
+Autocrypt: addr=advisories@x41-dsec.de; prefer-encrypt=mutual; keydata=
+ xsFNBFbgY/IBEAC8DfGNhWkI4GO4ktf+5sIV/qr2iDLMCYF9aRpK3mWzqx8Xp+pmP/nN5AXB
+ B86HfMtQzVChu7miZshudh6Hg2DKTGFynJ6UoRxjq6/jhaD45tlYCn6kBoVmOHaE8AbjAdPt
+ fYgspq+OVUZdEM6K3a6Ns9KtmMf7nqfRHFD1IyNC0BkZ0PN6EIZVKabtj36oVYslVkOutynC
+ OROGvCf3dmW9s54EFfB0/LIZ34XMuhn0HBZjNFJKCOyRyiJTc7enYtiCMTckBH6MXMnOQqbM
+ p3+bd0Q3iJZBdCrcf+KbIu4cFOKSU+lYkmtU6oSDlyh07jrH+ZYKKkxZ0Qdt18vOng7w3zOE
+ CQKmO5UB7bUZ2ghnZgI8MqaEdKbiyrTDWcLVTM5+QjJmTecDxhXmN3L6yNNqzxgKlwTp3AtX
+ +nPMeSNoPcpxO1Z/1k8tS9lB9BeuOEh3HhSJjxKMvPKcoXwSMd7kGZ4Zd7LD03jvW+ow9uqi
+ +A5dBgIIaO55AwpegrY0PCNgwkbPZYDSUQJVBPsxkMN/GNL5i599gA4K+7y+nJAV4CylEc/p
+ pe7I9CZMNOMHVQmQpuwJH5rPGMkfZJFiofvW6O7N3v4nwDGX5S0Kkkl8cbBUWs3d2YQpeC/O
+ LswS2QH+bumhfX7mFPgoHPx0ZOzI/zJ99VU2x33t/CWDxO/e6wARAQABzTJYNDEgRC1TZWMg
+ R21iSCBBZHZpc29yaWVzIDxhZHZpc29yaWVzQHg0MS1kc2VjLmRlPsLBfQQTAQgAJwUCVuBj
+ 8gIbIwUJCWYBgAULCQgHAgYVCAkKCwIEFgIDAQIeAQIXgAAKCRCjkqWmDnQLEMZ7D/95Cqt8
+ hm8KBW2uxmZGXsRKuSGaY8WPQlZXdH4X7MtBCZhYXQmvfPIB9waQPRoB3sMCgjfj2caqI2Gd
+ RnNAcrqWQyH5Nbcnc5OnSlaNMjsNLCi1Q/gnnBX83nHpZJooByVKMZJ5jJ+zYU/GRV4ELCX5
+ lQuWCdBBJzfPwQcVpYknNCx/2Qb93PtMLz0zeHW5GhS50zbj25TAouYCKsZ0GB0HRsMfxMLv
+ n7WbcwxMvRODw1SnhcKlCd6JdfAZpMlKYP+tRjtt7iJDFo5xx9E2xSTxjgXHAQbXqlCmCVnj
+ /07oVquFLDvdDi/vAotg6M95dgX5luyAlSRUYIfshTiLdrzsv+hbc8O4T0Pthmaq7BPTSECE
+ hbHZoms1p4S3zKDALEkleGdQlzOEwV3tOrDytAi3ZVR1xfhzSb3TRrCaTOmJ+PQBuoaFlWC/
+ FfSJopcZC6QQDlstRI7WTmUB0Bx3x4qZ+2ZlRTrSzvBeMS09TegGNIdnB4obZ05JC4ODCz4t
+ kbT8I1zgWSK3TVIZVCeWT6a0Wz54PXKDr02SyeGayv7CnlRzX5QYgXBELdOmY67JWf0ktLP/
+ RWQHLfbG2ld2r3OMAPY5JPVoPyUludZ+kKnyN8H+AF5IHKN6F10a1tQfj+iNNGqgKcOkJfWe
+ m/3V5fEnG0fFwFQSU1ni0ebJwpxypc7BTQRW4GPyARAA3cqxupZ8hegZxK7/sd59DUQSIyn0
+ FwgSOmvQ2qejCNNMYCFXJ95kiLb3m6+knwiJN7vNrG1B0dxRkCDnN2L+4P433RGRUir04Ita
+ NrHtlnlp6ReU8FQFcM9BwJcMZQlOVgu0hdv1Gp9jMaBJfMe06dVvX7fhkEkzj/HImdd13oEy
+ +M5UksVO5leBXLcLw+BdySv9UwKqyRMMXkkCfkkXktGAbbQKs55VbES94FIW6/HpFV6VYB1V
+ CZKgJp1QZPVlbMpF2Mn1R+D/RkkE/oUx8fWCsT4quKhRT41sKl+M4EB/kwDtjLWwnkg7dNjc
+ r72Brx0PbTbIxAdxVw30WsW7kA8zd8gZYjwI8W7bz7y8AZ82XM5UZXdmZovD8B2ApBrwE4iE
+ ytR+aEGvibbOAkZlAAtoXLCDg3EdP5rU0CUM33+wFhqtlsHZrh3WFtuxQF1PFqvQfOlgbIEl
+ zRDerwffqhgtCWZrWCHxcUDXRCVKjviuYj02mxYFlLn2tjkqwj6km/KwvNVDa7zT55LuwtvU
+ fO7QGhM0GccMvrgjQ7bdrDhyY8Imw8RgxiDUSkCa5So29Za/UXwVPxhhMo7jHrFKw+qVcm9O
+ +KB4ZFhgnHft0XtcCGuDYWhg63D2r8PDw9shXpawXyXRK0GGUC83moEuC2dDtiD4+o1mOM1W
+ Tdp0F+sAEQEAAcLBZQQYAQgADwUCVuBj8gIbDAUJCWYBgAAKCRCjkqWmDnQLENSnD/9xtraC
+ 52R9rzA2opQV/u8WQ3JgZZmyoiLlwoDtzDiW5caoAgsEKDwHhtvFqEJlVC2QWz2w1LPVyOp4
+ lkAlixTIiZAGkybkdqPdlZ0NBNwgpvjcGl3iAbpKFBVv9zNlQkA8uqsgJZvVp1Gbd3bxJUra
+ eJ6LFdmY61JBdZv8HPVIQ1KRKQMd/iHiqsxhobf+daQe9m+GXxJASJ51FMjNXawvFhMxyvPi
+ wJcAHnVIoL1ouT1ZcL3XANF7nxSZnAcihjvHhRrswTo8AI1xujhxsclXxkRtHaLRlsJnDOeo
+ TvmwkxXYpCoMZ7oZyY/W55DR6TaVd7GTjR2BcuMOR+evLlfEKjqxdluGHXsn+IZtjbPeiQd2
+ 3mFTk+wsoi8afwhAMGzTXnJdjR/GMsn/y/DdJUCbPeFEsd9I0wFFQkE5eQlryZcOf4pdYBTr
+ X4nYrXagto6+HFVStABdHh0xw5t3l3JTz9szAszmebrtgXwksEHt52RvSuvc2IQHLDQepq2Y
+ 2FqTgAsyG2rofcmMqTwbd401bPxG7vgSHOo3Jg6/1ootAmM2qaozvL4Ir6UY7JhgiF90aWPk
+ EKKbizdUc4ihYv0mALQU/kevR68o0lSUWVzIKxsL5tI3dJm6piNH5I/AvkNOV4v2/kXDET8+
+ S5yAdSfAS//MdarwnFJC6O/YHWYwRw==
+Message-ID: <216def59-1b29-709d-536c-9ffba14be4b4@x41-dsec.de>
+Date: Tue, 14 Aug 2018 15:45:23 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Content-Language: en-US
-To: oss-security@lists.openwall.com
-References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
- <ZgcOVnk5hCVkDUt/@ycc.fr> <uu9f4s$oga$2@ciao.gmane.io>
- <20240331213023.GA22787@openwall.com>
-From: Matthew Fernandez <matthew.fernandez@gmail.com>
-In-Reply-To: <20240331213023.GA22787@openwall.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US-large
 Content-Transfer-Encoding: 8bit
-Subject: [oss-security] escaping terminal control characters (was Re: backdoor in upstream
- xz/liblzma leading to ssh server compromise)
+Subject: [oss-security] X41 D-Sec GmbH Security Advisory X41-2018-004: Multiple
+ Vulnerabilities in Yubico libykneomgr
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+X41 D-Sec GmbH Security Advisory: X41-2018-004
+
+Multiple Vulnerabilities in Yubico libykneomgr
+==============================================
 
 
+Overview
+- --------
+Confirmed Affected Versions: 0.1.9
+Confirmed Patched Versions: -
+Vendor: Yubico / Depreciated
+Vendor URL: https://www.yubico.com/
+Credit: X41 D-Sec GmbH, Eric Sesterhenn
+Status: Public
+Advisory-URL:
+https://www.x41-dsec.de/lab/advisories/x41-2018-004-libykneomgr/
 
-On 4/1/24 08:30, Solar Designer wrote:
-> On Sat, Mar 30, 2024 at 04:37:48PM -0000, Tavis Ormandy wrote:
->> It was also pointed out they submitted an odd PR to libarchive:
->>
->> https://github.com/libarchive/libarchive/pull/1609
->>
->> In summary, they replaced calls to safe_fprintf() with fprintf() --
->> meaning control characters are no longer filtered from errors. That
->> seems pretty minor, but now that we know they were in the business of
->> obfuscating the presence of backdoors -- seems a bit suspicious.
->>
->> Regardless, that change has now been reverted:
->>
->> https://github.com/libarchive/libarchive/pull/2101
-> 
-> This does look minor indeed - not usable for large-scale attacks, and
-> libarchive is quite unique in that it even bothered to filter control
-> characters, whereas most command-line tools outputting filenames don't
-> bother.  My guess is it could have been an early experiment to see
-> whether the project would accept PRs degrading security.
-> 
-> That said, here's an excellent write-up by David Leadbeater on specific
-> ways that specific terminal emulators may be usefully attacked with
-> control sequences:
-> 
-> https://dgl.cx/2023/09/ansi-terminal-security#vulnerabilities-using-known-replies
 
-Is the currently accepted wisdom that any application printing to 
-stdout/stderr should take steps to avoid control characters in the 
-output? This is one of those situations where, if my terminal is 
-manipulated this way, I’m not quite sure who is to blame. Intuitively it 
-does not seem to scale, to require every (even non-security minded) 
-application to mitigate this. But on the other hand, maybe it’s not 
-possible for terminal emulators to solve without false positives.
+Summary and Impact
+- ------------------
+An out of bounds write and read was discovered when malicious
+responses from a smartcard are received. These might lead to memory
+corruptions. We assume that these are not easily exploitable.
+X41 did not perform a full test or audit on the software.
+Please note that the library is deprecated for more than a year and no
+update
+will be published by the vendor.
+
+
+Product Description
+- -------------------
+This is a C library to interact with the CCID-part of the YubiKey NEO.
+There is a command line tool "ykneomgr" for interactive use.  It
+supports querying the YubiKey NEO for firmware version, operation mode
+(OTP/CCID) and serial number.  You may also mode switch the device and
+manage applets (list, delete and install).
+
+Out of Bounds Read/Writes
+=========================
+Severity Rating: Medium
+Vector: APDU Response
+CVE:
+CWE: 120
+CVSS Score: 7.1 (High)
+CVSS Vector: CVSS:3.0/AV:P/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:H
+
+
+Summary and Impact
+- ------------------
+File lib/backendpcsc.c contains the following code in function
+`backendappletlist()`
+
+{% highlight c %}
+     {
+       sizet i;
+       sizet thislen = recv[length++];
+       for (i = 0; i < thislen; i++)
+        {
+          if (appletstr)
+            {
+             if (reallen + 2 > *len)
+                {
+                  return YKNEOMGRBACKENDERROR;
+                }
+              sprintf (p, "%02x", recv[length]);
+              p += 2;
+            }
+          reallen += 2;
+          length++;
+        }
+      if (appletstr)
+        {
+          if (reallen + 1 > *len)
+            {
+              return YKNEOMGRBACKENDERROR;
+            }
+          *p = '\0';
+          p++;
+        }
+      reallen++;
+      length += 2;
+    }
+{% endhighlight %}
+
+There is an off-by-one write of a '\x00' when the sprintf() is called,
+since it terminates the string with a trailing null-byte. Additionally
+reads are performed based on thislen, which is retrieved from the data
+without further safety checks.
+
+
+Workarounds
+- -----------
+It is advised to migrate to YubiKey Manager since the vendor does not
+support the library anymore and will not issue a patch.
+
+Timeline
+========
+2018-02-03 Issues found
+2018-05-22 Vendor contacted
+2018-05-22 Vendor reply
+2018-06-05 Requesting technical feedback from the vendor
+2018-06-06 Vendor confirms bug, but states that library is
+depreciated, will not be fixed
+2018-08-11 Advisory released
+- -- 
+X41 D-SEC GmbH, Dennewartstr. 25-27, D-52068 Aachen
+T: +49 241 9809418-0, Fax: -9
+Unternehmenssitz: Aachen, Amtsgericht Aachen: HRB19989
+Geschäftsführer: Markus Vervier
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEpwxVTgxAIcUvTugIo5Klpg50CxAFAlty3PMACgkQo5Klpg50
+CxCvvA//RdQkadlV9yD1IFM7+lqkfMYCyeRyjEg19NWY7QL3Y6C0BeMNiMv/q74i
+TUw3G30X6ehgsaef5VWzpC7IibUC2DbltIZV3tYpNHePvc4GeMAl9dytqAy4MGnM
+EIxC7RrT4w85EDnaK9NvEXdo2QOlSuzt1MtePYhmoa23wZFH328w1WVhxgAYffna
+Cu7LCJIgWkh1y5jqc66553g34SRH3jiuVYSwTgIzC2MhVnXrjktbIwgddJLkV5Zr
+eRktqby13iWZns/oGE4GYjsmryoXaoDfGS5wuro7CNua+JqiEPwsH0bURvJDUxGi
+MvEEMl5TwoCeTzDqsofLBou1RNLVyI6W19MnYhNC6RCSUuFRXFF3nHqO7vQ5Gpft
+JS6URDUKWd/reh0Xwy3dlaEaXEIUPEHBcLwd0wmKqVgMTjUrOvgIAED8woS+Rzn9
+qI+NbooNGt1OzlXR4RojKjRMJtWcwya8bhlNLk/ZFl/pokAEh6bZ1jcMg/U0NG9Q
+R4AI2u2NX3lE39ku/dcTQQCJpTTcr0DdGUw6kux0dkJXEhEc6YixgFzrHH1CPS/y
+2sYLICX3iWjAtd81CO0PL4QXte2ekh8YWaf/1qV2BusOxwlHQjODO8o3kLueU2DC
+Uy4ftml35nu+qVS+vYA85N4+4/Fri6UkbjkgbI2fODgE3pImc+A=
+=dyfA
+-----END PGP SIGNATURE-----
