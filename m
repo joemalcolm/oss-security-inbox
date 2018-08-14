@@ -1,32 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/27/3
-Message-ID: <87tvk29qqo.fsf@oldenburg.str.redhat.com>
-Date: Tue, 27 Nov 2018 22:04:31 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2018-19591: glibc if_nametoindex may not close descriptor
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/14/7
+Message-ID: <20180814155718.3gcvbcs7am4xrpy5@suse.de>
+Date: Tue, 14 Aug 2018 17:57:18 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE-2018-14722: btrfsmaintenance: Code execution
 Content-Type: text/plain; charset=utf-8
 
-Guido Vranken reported that the glibc implementation of if_nametoindex
-would not close an internal descriptor when processing a long interface
-name.  This error condition can be triggered via the getaddrinfo
-function (and at least one HTTP client library).
+Hi,
 
-  <https://sourceware.org/bugzilla/show_bug.cgi?id=23927>
+SUSE employee Fabian Vogt has found a shell code injection issue in the "btrfsmaintenance" tools.
 
-Fixed with this upstream commit:
+https://bugzilla.suse.com/show_bug.cgi?id=1102721
 
-commit d527c860f5a3f0ed687bd03f0cb464612dc23408
-Author: Florian Weimer <fweimer@...hat.com>
-Date:   Tue Nov 27 16:12:43 2018 +0100
+Mounting btrfs images with a label including shell injection characters could cause
+the cron jobs (running as root) to execute the include shellcode.
 
-    CVE-2018-19591: if_nametoindex: Fix descriptor for overlong name [BZ #23927]
+Our proposed fix attached to this email.
 
-The vulnerability was introduced in commit
-2180fee114b778515b3f560e5ff1e795282e60b0 ("Check length of ifname before
-copying it into to ifreq structure."), fixing bug 22442 for glibc 2.27.
-Since this addressed a compiler warning with GCC 8, this commit was
-backported to quite a few release branches.
+bad image can be created with:
+	mkfs.btrfs --label "`/evil/command`' /dev/sdx
 
-Thanks,
-Florian
+Ciao, Marcus
+
+View attachment "btrfsmaintenance-CVE-2018-14722.patch" of type "text/x-patch" (3121 bytes)
