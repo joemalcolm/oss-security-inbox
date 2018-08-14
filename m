@@ -1,110 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/11/2
-Message-Id: <E1fH538-0003a6-AA@xenbits.xenproject.org>
-Date: Fri, 11 May 2018 10:13:18 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/14/11
+Message-Id: <E1fpcxD-00079t-UA@xenbits.xenproject.org>
+Date: Tue, 14 Aug 2018 17:17:59 +0000
 From: Xen.org security team <security@....org>
 To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
 CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 261 (CVE-2018-10982) - x86 vHPET interrupt injection errors
+Subject: Xen Security Advisory 270 v2 - Linux netback driver OOB access in hash handling
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-            Xen Security Advisory CVE-2018-10982 / XSA-261
-                              version 3
+                    Xen Security Advisory XSA-270
+                              version 2
 
-                 x86 vHPET interrupt injection errors
+           Linux netback driver OOB access in hash handling
 
-UPDATES IN VERSION 3
+UPDATES IN VERSION 2
 ====================
 
-CVE assigned.
+Public release.
 
 ISSUE DESCRIPTION
 =================
 
-The High Precision Event Timer (HPET) can be configured to deliver
-interrupts in one of three different modes - through legacy interrupts;
-through the IO-APIC; or optionally via a method similar to PCI MSI.  The
-last mode is optional and not implemented by Xen.  However, of the first
-two modes, only the legacy variant was properly implemented.
-
-If a guest set up an HPET timer in IO-APIC mode, Xen would still
-handle this using the code for the legacy mode.  Unfortunately, the
-available IO-APIC mode interrupt numbers are higher than legacy mode
-interrupts.  The result was array overruns.
+Linux's netback driver allows frontends to control mapping of requests
+to request queues.  When processing a request to set or change this
+mapping, some input validation was missing or flawed.
 
 IMPACT
 ======
 
-A malicious or buggy HVM guest may cause a hypervisor crash, resulting
-in a Denial of Service (DoS) affecting the entire host.  Privilege
-escalation, or information leaks, cannot be excluded.
+A malicious or buggy frontend may cause the (usually privileged)
+backend to make out of bounds memory accesses, potentially resulting
+in one or more of privilege escalation, Denial of Service (DoS), or
+information leaks.
 
 VULNERABLE SYSTEMS
 ==================
 
-Xen versions 3.4 and later are vulnerable.
-
-Only x86 systems are vulnerable.  ARM systems are not vulnerable.
-
-Only x86 HVM guests can exploit the vulnerability.  x86 PV and PVH
-guests cannot exploit the vulnerability.
-
-Only x86 HVM guests provided with hypervisor-side HPET emulation can
-exploit the vulnerability.  That is the default configuration.  x86
-HVM guests whose configuration explicitly disables this emulation (via
-"hpet=0") cannot exploit the vulnerability.
+Linux kernel versions from 4.7 onwards are affected.
 
 MITIGATION
 ==========
 
-Running only PV or PVH guests avoids the vulnerability.
-
-Not exposing the hypervisor based HPET emulation to HVM guests, by
-adding "hpet=0" to the guest configuration, also avoids the
-vulnerability.
+There is no known mitigation.
 
 CREDITS
 =======
 
-This issue was discovered by Roger Pau Monné of Citrix.
+This issue was discovered by Felix Wilhelm of Google Project Zero.
 
 RESOLUTION
 ==========
 
-Applying the appropriate attached patch resolves this issue.
+Applying the attached patch resolves this issue.
 
-xsa261.patch           xen-unstable, Xen 4.10.x
-xsa261-4.9.patch       Xen 4.9.x
-xsa261-4.8.patch       Xen 4.8.x
-xsa261-4.7.patch       Xen 4.7.x, Xen 4.6.x
+xsa270.patch           Linux 4.7 ... 4.17
 
-$ sha256sum xsa261*
-7b7bbf0fb497491911816e522902f72d3b41355ba71455ab82ebf980160d1a1f  xsa261.meta
-175501977204db84d08a6fd81d9fd4b69f97f70cbf6f65e6ce0abfeab03eae95  xsa261.patch
-98fb28bac871aae7c2f897a5506a2b03f340bf122a3a7f65aa65f3b3c9a525b4  xsa261-4.7.patch
-503f1476813e6572dc37b5a0df65b5390567230d9cc006752bf72bf57bbd754d  xsa261-4.8.patch
-f1aac841327d3b5b1e2007b4ebe56223de488e1eb2fa636653725d7d7cd5f82a  xsa261-4.9.patch
+$ sha256sum xsa270*
+392868c37c1fe0d16c36086208fd0fc045c1baf8ab9b207995bce72681cb8c54  xsa270.patch
 $
 
 DEPLOYMENT DURING EMBARGO
 =========================
 
-Deployment of the patches described above (or others which are
-substantially similar) and the PV/PVH guest mitigation are permitted
-during the embargo, even on public-facing systems with untrusted guest
-users and administrators.
-
-HOWEVER deployment of the "hpet=0" guest config mitigation described
-above is NOT permitted (except where all the affected systems and VMs
-are administered and used only by organisations which are members of
-the Xen Project Security Issues Predisclosure List).  Specifically,
-deployment on public cloud systems is NOT permitted.
-
-This is because in that case the configuration change is visible to the
-guest, which could lead to the rediscovery of the vulnerability.
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
 
 But: Distribution of updated software is prohibited (except to other
 members of the predisclosure list).
@@ -124,21 +88,13 @@ consult the Xen Project community's agreed Security Policy:
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQEcBAEBCAAGBQJa9Wy1AAoJEIP+FMlX6CvZaxkIALwHLRw4JlORTplsS9bwnioh
-kuNausNp1pU9IqfcUKEI17n5+HekiXfLNennHEWYgYfdpNlWAbjUW5GaczII0KmS
-IJa8UvptnYydhg73Q8WWlYOx3i8nS15+ioIH8RIa1Vtvv0p7vbHf8C9BmjmYf1oa
-5WH9Ut4Sx5wwALuCh/gO71ja5vgAAIpgQTf5R4KL0x9sJiCLTw2A4yxVmVd24bES
-1fNoH3/qdbjgMjl7sLPCdsXLOqg9Xi77i5f5XnJMZgWQRQyh0XLeo5itiDIuMF/k
-tEMuEpKQ5+t4GNg92B67dFVWxeX1VIRrQ9a18WfXcwttM3xLFNcqt3BpSV9K8Tg=
-=KeNf
+iQEcBAEBCAAGBQJbcw6uAAoJEIP+FMlX6CvZjxgH/iUkqOm+3T+Mr51itOmeOThy
+J10GbMvqyI8kb7oTVsfHRTMU/zCm01FSCb94B9WXxrKyr3J2RCWygZpS5D5+ujkK
+w8Ec3tqfRiJ6wXm+SUh+cFeiJBc4BUbTrSgc6VdtNqXO+uGB65CGVqFXTOZfSGMH
+AJKXQYOYe0gLtGU+H1TrCut6IC5RQKkdbI+gCEgahgc9HnPJnOrJZYoDaXsYCt1l
+gFPkd1UcVvtGbn+SUjNpXJlpWH8dY2tPeueqgu9LicGZ8jZkGI8FMCfOQ0g9dFMz
+t0Q8op8N3UAVXsPws+WvbGMuZ9mF71y9y8JUZYKRdg2iLND3CRO+asaMfN+3LSk=
+=gqkS
 -----END PGP SIGNATURE-----
 
-Download attachment "xsa261.meta" of type "application/octet-stream" (1712 bytes)
-
-Download attachment "xsa261.patch" of type "application/octet-stream" (9249 bytes)
-
-Download attachment "xsa261-4.7.patch" of type "application/octet-stream" (9253 bytes)
-
-Download attachment "xsa261-4.8.patch" of type "application/octet-stream" (8223 bytes)
-
-Download attachment "xsa261-4.9.patch" of type "application/octet-stream" (9046 bytes)
+Download attachment "xsa270.patch" of type "application/octet-stream" (2105 bytes)
