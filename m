@@ -1,117 +1,142 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/15/3
-Message-ID: <CANi-yg8cdZzBMZRv_siCMwt8gfLWrtPvyO_vGNgGvzcAC-QngA@mail.gmail.com>
-Date: Mon, 14 May 2018 21:04:58 -0700
-From: Bryan Pendleton <bpendleton.derby@...il.com>
-To: Tomas Hoger <thoger@...hat.com>
-Cc: oss-security@...ts.openwall.com, security <security@...che.org>,  gregory draperi <gregory.draperi@...il.com>
-Subject: Re: [ANNOUNCE] CVE-2018-1313: Apache Derby externally-controlled input vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/14/12
+Message-Id: <E1fpcxH-0007Gh-9J@xenbits.xenproject.org>
+Date: Tue, 14 Aug 2018 17:18:03 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 271 v2 (CVE-2018-14007) - XAPI HTTP directory traversal
 Content-Type: text/plain; charset=utf-8
 
-Hi Tomas, thank you for getting in touch, and for the excellent questions.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I think the problem here is primarily my lack of skill in clearly writing
-disclosure information about vulnerabilities, so let me try to do my best
-to clarify.
+            Xen Security Advisory CVE-2018-14007 / XSA-271
+                               version 2
 
-Indeed, allowing the Derby server to open an untrusted database is
-of serious concern, and, due to Derby's rich extensibility features, can
-allow the execution of arbitrary *Java* code directly in Derby. So this
-is an important concern.
+                     XAPI HTTP directory traversal
 
-And yes, you are correct that the selection of 10.3.1.4 as the first
-affected release is because the default security policy dates from
-that release, and you are also correct that the "ping with arguments"
-pre-dates that. We certainly hope that nobody is running such 11-year-old
-software any more; if possible, we would really like them to upgrade.
+UPDATES IN VERSION 2
+====================
 
-Regarding the question of which fix is the "actual security fix," I find
-this a challenging question. In order to exploit the vulnerability, the
-ping command must allow the specially crafted request packet, *and*
-the security policy must allow the access to the untrusted database.
-Closing *either* of those holes is enough to prevent that exploit; we chose
-to close *both* of them with the 10.14.2.0 release.
+Public release.
 
-The Derby development team's primary recommendation is that
-any Derby Network Server deployed in a production environment
-should use an explicitly-developed custom security policy, and not
-depend on the default policy; still, the new security policy that is
-installed by default by 10.14.2.0 is considerably more secure than
-the policy that was previously in place.
+ISSUE DESCRIPTION
+=================
 
-I hope this helps. If I have misunderstood the intent of any of your
-questions, please let me know.
+XAPI has an unauthenticated HTTP endpoint update/ which exports the
+contents of /var/update for other hosts to use.
 
-thanks,
+However, the resolution of . and .. in paths is performed before url
+unquoting is performed.  This allows an attacker to traverse out of the
+web root.
 
-bryan
+IMPACT
+======
+
+An unauthenticated user with access to the management network can read
+arbitrary files from the dom0 filesystem.  This includes the pool secret
+/etc/xensource/ptoken which grants the attacker full administrator
+access.
+
+VULNERABLE SYSTEMS
+==================
+
+All versions of XAPI since v1.13.0 are vulnerable.
+
+If the directory /var/update doesn't exist, the vulnerability is not
+exposed.
+
+MITIGATION
+==========
+
+In the recommended configuration, the management network is isolated and
+isn't reachable from untrusted hosts, or by general network traffic.
+
+CREDITS
+=======
+
+This issue was discovered by Ronald Volgers of Computest
+https://www.computest.nl/en/
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa271-xapi.patch
+
+$ sha256sum xsa271*
+ffefb71cd328e0ee5654c135bf9b08f48abedd013f1c68d5589132e2a03a01f8  xsa271-xapi.patch
+$
+
+REGENERATION OF POOL SECRET
+===========================
+
+There are no known exploits in the wild.  If there is a risk that
+credentials could have been stolen, they should be reset.
+
+Most credentials can be reset via normal administrative means, but the
+pool secret doesn't have any mechanism to reset.  The following
+instructions should be used:
+
+ 1) On all pool members, stop Xapi:
+    # service xapi stop
+
+ 2) On the pool master:
+    # rm /etc/xensource/ptoken
+    # /opt/xensource/libexec/genptoken -f -o /etc/xensource/ptoken
+
+ 3) Copy /etc/xensource/ptoken to all pool slaves
+
+ 4) On the pool master, restart the toolstack:
+    # xe-toolstack-restart
+
+ 5) On all pool slaves, restart the toolstack:
+    # xe-toolstack-restart
+
+Once the pool secret has been regenerated, the root password can be
+changed with:
+    # xe user-password-change
+
+Furthermore, consideration should be given to other credentials, such as
+(but not limited to) SSL keys, Storage SAN/iSCSI/NFS details, as well as
+secrets contained within VMs disks/snapshots/etc.
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
 
 
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
 
-On Mon, May 14, 2018 at 5:52 AM, Tomas Hoger <thoger@...hat.com> wrote:
-> Hi Bryan!
->
-> On Sat, 5 May 2018 07:52:08 -0700 Bryan Pendleton wrote:
->
->> CVE-2018-1313: Apache Derby externally-controlled input vulnerability
->>
->> Severity: Important
->>
->> Vendor:
->> The Apache Software Foundation
->>
->> Versions Affected:
->> Derby 10.3.1.4 to 10.14.1.0
->>
->> Description:
->> A specially-crafted network packet can be used to request the Derby
->> Network Server to boot a database whose location and contents are under
->> the user's control. If the Derby Network Server is not running with a
->> Java Security Manager policy file, the attack is successful. If the
->> server is using a policy file, the policy file must permit the
->> database location to be read for the attack to work. The default
->> Derby Network Server policy file distributed with the affected releases
->> includes a permissive policy as the default Network Server policy, which
->> allows the attack to work.
->>
->> Mitigation:
->> Users should specify an explicit security policy file, as described here:
->> http://db.apache.org/derby/docs/10.14/security/csecjavasecurity.html
->>
->> Derby release 10.14.2.0 disallows the specially-crafted network packet,
->> and also modifies the default Derby Network Server policy file to be
->> significantly less permissive (the default file access policy is now
->> limited to the derby.system.home directory and the directory from
->> which the Derby jar files were loaded). It is still recommended that
->> production installations of the Derby Network Server should specify
->> an explicit security policy file.
->>
->> Credit:
->> This issue was discovered by Grégory Draperi
->
-> Can you clarify what upstream considers to be the fix for this issue?
-> Some sources such as:
->
-> http://www.systemtek.co.uk/2018/05/apache-derby-externally-controlled-input-vulnerability-cve-2018-1313/
->
-> indicate that the fix is the change to the default security policy,
-> i.e. DERBY-6987.  However, the wording above seems to consider that as
-> more of an additional hardening fix, and the actual security fix is
-> change to handling of the ping command to disallow additional
-> arguments, i.e. DERBY-6986.
->
-> Related to the above is the question regarding the list of affected
-> versions.  Version 10.3.1.4 is listed as the first affected, however
-> the "ping with arguments" should pre-date that version, and even
-> DERBY-6986 indicates it's old code.  However, 10.3.1.4 seems to be the
-> first version to include the default security policy, which may be the
-> reason why it's listed as the first affected.
->
-> And one more clarification for those of us not familiar with Derby:
-> What is the known impact of opening some untrusted database?  Is it
-> known to e.g. allow arbitrary code execution directly in Derby?
->
-> Thank you!
->
-> --
-> Tomas Hoger / Red Hat Product Security
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJbcw6vAAoJEIP+FMlX6CvZx6cH/0qaq4PDDHSrIONP7v35ZYWe
+nZEoA+IWk0u35t4MwSRA8qcXZ9m+d7icHdE0c5Jwdh2sBOSFKzoehCuZOFXVpYTv
+SHdr/J3ilZRN1KV7Zo/agZJFYClV5QxR118PnVYFqsAHVGjxh6RzazyBNPUTkoIa
+qw/FBQwsib4Wkj5/RPympYscxetzAUoYiFeVtTgtqknXlt3UbXqzwg/lXTrMZwtG
+nBSjFEW+EURlkKR0HF85mtFBmqA1I3xsKgJDaob5KWl+HmlIj0SY9knQ2le3lgxn
+7zXiPSwOARg2E+vl3GB1Xd1fgcRGykBtjVWPX9uAgdb/C7qx6DN2PYEdyz1xZtI=
+=5lIm
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa271-xapi.patch" of type "application/octet-stream" (1199 bytes)
