@@ -1,72 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/16/2
-Message-ID: <fd739193-ade8-6f8d-3831-58b8e752eaba@redhat.com>
-Date: Tue, 16 Jan 2018 15:12:37 +0000
-From: Luke Hinds <lhinds@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: opendaylight-advisory: Multiple "expired" flows consume the memory resource of CONFIG DS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/15/3
+Message-Id: <A2C87D38-1E04-47A1-93FE-8FB4770AEA89@beckweb.net>
+Date: Wed, 15 Aug 2018 17:10:32 +0200
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Multiple vulnerabilities in Jenkins
 Content-Type: text/plain; charset=utf-8
 
-Issue
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software. The following
+releases contain fixes for security vulnerabilities:
 
-Multiple "expired" flows consume memory resources of CONFIG DS which
-leads to Controller shutdown.
+* Jenkins weekly 2.138
+* Jenkins LTS 2.121.3
 
-The following issue was discovered and reported by Vaibhav Hemant Dixit.
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2018-08-15/
 
-Summary
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-Multiple "expired" flows take up the memory resource of CONFIG DATASTORE
-which leads to CONTROLLER shutdown.
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
 
-Affected Services / Software
+---
 
-OpenFlow Plugin and OpenDayLight Controller.
+SECURITY-637
+Jenkins allowed deserialization of URL objects via Remoting (agent 
+communication) and XStream.
 
-Versions: Nitrogen, Carbon, Boron   Robert Varga, Anil Vishnoi -< please
-verify versions affected (back to depreciated releases).
-
-Discussion
-
-If multiple different flows with "idle-timeout" and "hard-timeout" are
-sent to the Openflow Plugin REST API, the expired flows will eventually
-crash the controller once its resource allocations set with the JVM size
-are exceeded.
-
-Although the installed flows(with timeout set) are removed from network
-(an thus also from controller's operations DS), the expired entries are
-still present in CONFIG DS.
-
-The attack can originate both from NORTH or SOUTH. The above description
-is for a north bound attack. A south bound attack can originate when an
-attacker attempts a flow flooding attack and since flows come with
-timeouts, the attack is not successful. However, the attacker will now
-be successful in CONTROLLER overflow attack (resource consumption).
-
-Although, the network(actual flow tables) and operational DS are only
-(~)1% occupied, the controller requests for resource consumption. This
-happens because the installed flows get removed from the network upon
-timeout.
-
-Proposed patch
-
-No patches have been made available, as this issue is mitigated by means
-of a secure architecture (See Recommended Actions below).
-
-Recommended Actions
-
-Management API’s within OpenDayLight should only ever be deployed within
-a segregated private network and never exposed to public networks, this
-includes the OpenFlowPlugin. Further protections can be implemented by
-deploying a rate limiting proxy (such as OpenRepose, HAProxy, nginx,
-mod_ratelimit etc) or web application firewall.
-
-CVE: CVE-2017-1000411
-
-Regards,
-
-Luke Hinds (OpenDayLight Security Manager)
+This could in rare cases be used by attackers to have Jenkins look up 
+specified hosts' DNS records.
 
 
+SECURITY-672
+When attempting to authenticate using API token, an ephemeral user record 
+was created to validate the token in case an external security realm was 
+used, and the user record in Jenkins not previously saved, as (legacy) API 
+tokens could exist without a persisted user record.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+This behavior could be abused to create a large number of ephemeral user 
+records in memory.
+
+
+SECURITY-790
+The form validation for cron expressions (e.g. "Poll SCM", "Build 
+periodically") could enter infinite loops when cron expressions only 
+matching certain rare dates were entered, blocking request handling 
+threads indefinitely.
+
+
+SECURITY-996
+The "Remember me" feature can be disabled in the Jenkins security 
+configuration.
+
+This did not disable the processing of previously set "Remember me" 
+cookies, so they still allowed users to be logged in.
+
+
+SECURITY-1071
+Users with Overall/Read permission were able to access the URL serving 
+agent logs on the UI due to a lack of permission checks.
+
+
+SECURITY-1076
+Users with Overall/Read permission were able to access the URL used to 
+cancel scheduled restart jobs initiated via the update center ("Restart 
+Jenkins when installation is complete and no jobs are running") due to a 
+lack of permission checks.
+
