@@ -1,4 +1,9 @@
-Received: (qmail 32678 invoked by uid 550); 18 Aug 2025 00:29:01 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2157" "Wednesday" "15" "August" "2018" "17:10:32" "+0200" "Daniel Beck" "ml@beckweb.net" "<A2C87D38-1E04-47A1-93FE-8FB4770AEA89@beckweb.net>" "64" "[oss-security] Multiple vulnerabilities in Jenkins" nil nil nil "8" "2018081515:10:32" "[oss-security] Multiple vulnerabilities in Jenkins" (number mark "U       ml@beckweb.n Aug 15   64/2157  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 27977 invoked by uid 550); 15 Aug 2018 15:10:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,73 +12,80 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 23991 invoked from network); 18 Aug 2025 00:17:41 -0000
-Date: Mon, 18 Aug 2025 02:17:32 +0200
-From: Vincent Lefevre <vincent@vinc17.net>
-To: Erik Auerswald <auerswal@unix-ag.uni-kl.de>
-Cc: oss-security@lists.openwall.com
-Message-ID: <20250818001732.GK607521@qaa.vinc17.org>
-Mail-Followup-To: Erik Auerswald <auerswal@unix-ag.uni-kl.de>,
-	oss-security@lists.openwall.com
-References: <20250813203857.GA11693@unix-ag.uni-kl.de>
- <87a53zyugg.fsf@gmail.com>
- <20250817010958.GA607521@qaa.vinc17.org>
- <20250817140937.GA16226@unix-ag.uni-kl.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250817140937.GA16226@unix-ag.uni-kl.de>
-X-Mailer-Info: https://www.vinc17.net/mutt/
-User-Agent: Mutt/2.2.13+86 (bb2064ae) vl-169878 (2025-02-08)
-Subject: Re: [oss-security] xterm terminal crash due to malicious character
- sequences in file name
+Received: (qmail 27958 invoked from network); 15 Aug 2018 15:10:44 -0000
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
+Message-Id: <A2C87D38-1E04-47A1-93FE-8FB4770AEA89@beckweb.net>
+Date: Wed, 15 Aug 2018 17:10:32 +0200
+To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3273)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1534345844;b1153009;
+X-HE-SMSGID: 1fpxRQ-0008F3-Jx
+Subject: [oss-security] Multiple vulnerabilities in Jenkins
 
-Hi Erik,
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software. The following
+releases contain fixes for security vulnerabilities:
 
-On 2025-08-17 16:09:37 +0200, Erik Auerswald wrote:
-> On Sun, Aug 17, 2025 at 03:09:58AM +0200, Vincent Lefevre wrote:
-> > I see this more than a feature, at least in the case the output
-> > is done to a terminal. As a general rule, programs are expected
-> > to sanitize output data in such as a case.
-> 
-> I'd expect most programs to not change the filename printed in their
-> output.  POSIX does not even expect "ls" to sanitize its output without
-> "-q", but it does allow it[0].
+* Jenkins weekly 2.138
+* Jenkins LTS 2.121.3
 
-Probably because of historical behavior. But nowadays, one should be
-stricter concerning security.
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2018-08-15/
 
-> Two more example programs that do not sanitize filenames in their
-> output would be "file", at least version "5.41",
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-file 5.46 sanitizes filenames:
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
 
-$ file --version
-file-5.46
-magic file from /etc/magic:/usr/share/misc/magic
-$ file file*
-file\033[H\033[c\012\010: empty
+---
 
-> and "dash", at least the version[1] included in Ubuntu GNU/Linux
-> 22.04.5 LTS.
+SECURITY-637
+Jenkins allowed deserialization of URL objects via Remoting (agent 
+communication) and XStream.
 
-Ditto for dash 0.5.12-12 (with "chmod 0 file*" then "dash file*").
+This could in rare cases be used by attackers to have Jenkins look up 
+specified hosts' DNS records.
 
-> I'd expect that you can find many more examples. Getting every
-> program changed to follow your expectation seems like a Sisyphean
-> task to me.
 
-This is less an issue for dash, because the user will probably not
-run a script that he hasn't written or controled in some other way.
+SECURITY-672
+When attempting to authenticate using API token, an ephemeral user record 
+was created to validate the token in case an external security realm was 
+used, and the user record in Jenkins not previously saved, as (legacy) API 
+tokens could exist without a persisted user record.
 
-> I am quite sure that there are many more such programs.
+This behavior could be abused to create a large number of ephemeral user 
+records in memory.
 
-GNU ed too. It outputs the file name unsanitized in its error message
-saying that control characters 1-31 are not allowed in file name!
 
--- 
-Vincent Lefèvre <vincent@vinc17.net> - Web: <https://www.vinc17.net/>
-100% accessible validated (X)HTML - Blog: <https://www.vinc17.net/blog/>
-Work: CR INRIA - computer arithmetic / Pascaline project (LIP, ENS-Lyon)
+SECURITY-790
+The form validation for cron expressions (e.g. "Poll SCM", "Build 
+periodically") could enter infinite loops when cron expressions only 
+matching certain rare dates were entered, blocking request handling 
+threads indefinitely.
+
+
+SECURITY-996
+The "Remember me" feature can be disabled in the Jenkins security 
+configuration.
+
+This did not disable the processing of previously set "Remember me" 
+cookies, so they still allowed users to be logged in.
+
+
+SECURITY-1071
+Users with Overall/Read permission were able to access the URL serving 
+agent logs on the UI due to a lack of permission checks.
+
+
+SECURITY-1076
+Users with Overall/Read permission were able to access the URL used to 
+cancel scheduled restart jobs initiated via the update center ("Restart 
+Jenkins when installation is complete and no jobs are running") due to a 
+lack of permission checks.
+
