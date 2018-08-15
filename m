@@ -1,29 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/18/6
-Message-Id: <19E83075-9152-4DEB-8630-F442C7D737A4@apache.org>
-Date: Wed, 18 Jul 2018 09:57:37 -0400
-From: Robert Levas <rlevas@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/15/2
+Message-ID: <20180815100654.vr67od6epctljw7v@suse.de>
+Date: Wed, 15 Aug 2018 12:06:54 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: private@...ari.apache.org
-Subject: CVE-2018-8042: Passwords for Hadoop credential stores are visible in Ambari Agent standard out in Apache Ambari
+Subject: Re: CVE-2018-5391: Linux kernel: IP fragments with random offsets allow a remote denial of service (FragmentSmack)
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-8042: Passwords for Hadoop credential stores are visible in Ambari Agent standard out 
+Hi,
 
-Severity: Important
+no.
 
-Vendor: Hortonworks
+SegmentSmack affects TCP segments,
+FragmentSmack affects IP fragments (lower protocol level).
 
-Versions Affected: Ambari 2.5.x, Ambari 2.6.x
+Ciao, Marcus
+On Tue, Aug 14, 2018 at 05:09:38PM -0400, David T. wrote:
+> Is this the same as "SegmentSmack" that came out last week, CVE-2018-5390?
+> Or, what is the difference?
+> 
+> On Tue, Aug 14, 2018 at 16:31 Vladis Dronov <vdronov@...hat.com> wrote:
+> 
+> > Heololo,
+> >
+> > A flaw named FragmentSmack was found in the way the Linux kernel handled
+> > reassembly of fragmented IPv4 and IPv6 packets. A remote attacker could
+> > use this flaw to trigger time and calculation expensive fragment reassembly
+> > algorithms by sending specially crafted packets which could lead to a CPU
+> > saturation and hence a denial of service on the system.
+> >
+> > External References:
+> >
+> > https://www.kb.cert.org/vuls/id/641765
+> >
+> > https://access.redhat.com/articles/3553061
+> >
+> > https://bugzilla.redhat.com/show_bug.cgi?id=1609664
+> >
+> > Best regards,
+> > Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+> >
+> -- 
+> Very respectfully,
+> 
+> David M Thomsen
 
-Versions Fixed: Ambari 2.7.0
-
-Description:
-Passwords for Hadoop credential stores are exposed in Ambari Agent informational log messages when the credential store feature is enabled for eligible services. For example, Hive and Oozie.
-
-Mitigation:
-Ambari 2.5.x installations should be upgraded to Ambari 2.7.0
-Ambari 2.6.x installations should be upgraded to Ambari 2.7.0
-
-Credit:
-This issue was discovered by Hortonworks.
+-- 
+Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@...e.de>
