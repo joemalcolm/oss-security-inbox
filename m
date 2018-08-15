@@ -1,29 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/13/4
-Message-ID: <nycvar.YSQ.7.76.1812131459590.12493@xnncv>
-Date: Thu, 13 Dec 2018 15:02:30 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liq3ea@....com>
-Subject: CVE-2018-20123 QEMU: pvrdma: memory leakage in device hotplug
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/15/5
+Message-ID: <20180815160558.GA23020@localhost.localdomain>
+Date: Wed, 15 Aug 2018 09:05:58 -0700
+From: Qualys Security Advisory <qsa@...lys.com>
+To: oss-security@...ts.openwall.com
+Subject: OpenSSH Username Enumeration
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Hi all,
 
-A memory leakage issue was found in the way QEMU initialised its VMWare's 
-paravirtual RDMA device. In pvrdma_realize() routine, if an error occurred, it 
-did not release memory resources allocated to various objects.
+We sent the following email to openssh@...nssh.com and
+distros@...openwall.org about an hour ago, and it was decided that we
+should send it to oss-security@...ts.openwall.com right away (as far as
+we know, no CVE has been assigned to this issue yet):
 
-A guest user/process could use this flaw to leak host memory, resulting in DoS 
-for host.
+========================================================================
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2018-12/msg02817.html
+While reviewing the latest OpenSSH commits, we stumbled across:
 
-This issue was reported by Li Qiang of 163.com.
+https://github.com/openbsd/src/commit/779974d35b4859c07bc3cb8a12c74b43b0a7d1e0
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Date:   Tue Jul 31 03:10:27 2018 +0000
+    delay bailout for invalid authenticating user until after the packet
+    containing the request has been fully parsed. Reported by Dariusz Tytko
+    and Michal Sajdak; ok deraadt
+
+We realized that without this patch, a remote attacker can easily test
+whether a certain user exists or not (username enumeration) on a target
+OpenSSH server:
+
+  87 static int
+  88 userauth_pubkey(struct ssh *ssh)
+  89 {
+ ...
+ 101         if (!authctxt->valid) {
+ 102                 debug2("%s: disabled because of invalid user", __func__);
+ 103                 return 0;
+ 104         }
+ 105         if ((r = sshpkt_get_u8(ssh, &have_sig)) != 0 ||
+ 106             (r = sshpkt_get_cstring(ssh, &pkalg, NULL)) != 0 ||
+ 107             (r = sshpkt_get_string(ssh, &pkblob, &blen)) != 0)
+ 108                 fatal("%s: parse request failed: %s", __func__, ssh_err(r));
+
+The attacker can try to authenticate a user with a malformed packet (for
+example, a truncated packet), and:
+
+- if the user is invalid (it does not exist), then userauth_pubkey()
+  returns immediately, and the server sends an SSH2_MSG_USERAUTH_FAILURE
+  to the attacker;
+
+- if the user is valid (it exists), then sshpkt_get_u8() fails, and the
+  server calls fatal() and closes its connection to the attacker.
+
+We believe that this issue warrants a CVE; it affects all operating
+systems, all OpenSSH versions (we went back as far as OpenSSH 2.3.0,
+released in November 2000), and is easier to exploit than previous
+OpenSSH username enumerations (which were all timing attacks):
+
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2003-0190
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-5229
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-6210
+
+We also believe that this should be posted to oss-security right away:
+the issue (commit) is already public, and if we spotted it, then others
+(not so well intentioned) did too. We are at your disposal for
+questions, comments, and further discussions.
+
+Thank you very much! With best regards,
+
+-- 
+the Qualys Security Advisory team
