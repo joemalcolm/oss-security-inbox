@@ -1,162 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/08/1
-Message-Id: <1533693619.3820.0@mail.igalia.com>
-Date: Tue, 07 Aug 2018 21:00:19 -0500
-From: Michael Catanzaro <mcatanzaro@...lia.com>
-To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
-Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: WebKitGTK+ and WPE WebKit Security Advisory WSA-2018-0006
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/15/4
+Message-Id: <E1fpyMp-0006mM-Vn@xenbits.xenproject.org>
+Date: Wed, 15 Aug 2018 16:09:51 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 274 v3 (CVE-2018-14678) - Linux: Uninitialized state in x86 PV failsafe callback path
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK+ and WPE WebKit Security Advisory                WSA-2018-0006
-------------------------------------------------------------------------
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Date reported           : August 07, 2018
-Advisory ID             : WSA-2018-0006
-WebKitGTK+ Advisory URL : 
-https://webkitgtk.org/security/WSA-2018-0006.html
-WPE WebKit Advisory URL : 
-https://wpewebkit.org/security/WSA-2018-0006.html
-CVE identifiers         : CVE-2018-4246, CVE-2018-4261, CVE-2018-4262,
-                          CVE-2018-4263, CVE-2018-4264, CVE-2018-4265,
-                          CVE-2018-4266, CVE-2018-4267, CVE-2018-4270,
-                          CVE-2018-4271, CVE-2018-4272, CVE-2018-4273,
-                          CVE-2018-4278, CVE-2018-4284, CVE-2018-12911.
+            Xen Security Advisory CVE-2018-14678 / XSA-274
+                               version 3
 
-Several vulnerabilities were discovered in WebKitGTK+ and WPE WebKit.
+      Linux: Uninitialized state in x86 PV failsafe callback path
 
-CVE-2018-4246
-    Versions affected: WebKitGTK+ before 2.20.4 and WPE WebKit before
-    2.20.1.
-    Credit to OSS-Fuzz.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. A type confusion issue was addressed with improved
-    memory handling.
+UPDATES IN VERSION 3
+====================
 
-CVE-2018-4261
-    Versions affected: WebKitGTK+ before 2.20.4 and WPE WebKit before
-    2.20.2.
-    Credit to Omair working with Trend Micro's Zero Day Initiative.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. A memory corruption issue was addressed with
-    improved memory handling.
+Fix spelling in CREDITS.
 
-CVE-2018-4262
-    Versions affected: WebKitGTK+ before 2.20.4 and WPE WebKit before
-    2.20.2.
-    Credit to Mateusz Krzywicki working with Trend Micro's Zero Day
-    Initiative.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. A memory corruption issue was addressed with
-    improved memory handling.
+ISSUE DESCRIPTION
+=================
 
-CVE-2018-4263
-    Versions affected: WebKitGTK+ before 2.20.4 and WPE WebKit before
-    2.20.2.
-    Credit to Arayz working with Trend Micro's Zero Day Initiative.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. A memory corruption issue was addressed with
-    improved memory handling.
+Linux has a `failsafe` callback, invoked by Xen under certain
+conditions.  Normally in this failsafe callback, error_entry is paired
+with error_exit; and error_entry uses %ebx to communicate to
+error_exit whether to use the user or kernel return path.
 
-CVE-2018-4264
-    Versions affected: WebKitGTK+ before 2.20.4 and WPE WebKit before
-    2.20.2.
-    Credit to OSS-Fuzz, Yu Zhou and Jundong Xie of Ant-financial Light-
-    Year Security Lab.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. A memory corruption issue was addressed with
-    improved memory handling.
+Unfortunately, on 64-bit PV Xen on x86, error_exit is called without
+error_entry being called first, leaving %ebx with an invalid value.
 
-CVE-2018-4265
-    Versions affected: WebKitGTK+ before 2.20.4 and WPE WebKit before
-    2.20.2.
-    Credit to cc working with Trend Micro's Zero Day Initiative.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. A memory corruption issue was addressed with
-    improved memory handling.
+IMPACT
+======
 
-CVE-2018-4266
-    Versions affected: WebKitGTK+ before 2.20.4 and WPE WebKit before
-    2.20.2.
-    Credit to OSS-Fuzz.
-    A malicious website may be able to cause a denial of service. A race
-    condition was addressed with additional validation.
+A rogue user-space program could crash a guest kernel.  Privilege
+escalation cannot be ruled out.
 
-CVE-2018-4267
-    Versions affected: WebKitGTK+ before 2.20.4 and WPE WebKit before
-    2.20.2.
-    Credit to Arayz of Pangu team working with Trend Micro's Zero Day
-    Initiative.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. A memory corruption issue was addressed with
-    improved memory handling.
+VULNERABLE SYSTEMS
+==================
 
-CVE-2018-4270
-    Versions affected: WebKitGTK+ before 2.20.4 and WPE WebKit before
-    2.20.2.
-    Credit to OSS-Fuzz.
-    Processing maliciously crafted web content may lead to an unexpected
-    application crash. A memory corruption issue was addressed with
-    improved memory handling.
+Only 64-bit x86 PV Linux systems are vulnerable.
 
-CVE-2018-4271
-    Versions affected: WebKitGTK+ before 2.20.2.
-    Credit to OSS-Fuzz.
-    Processing maliciously crafted web content may lead to an unexpected
-    application crash. A memory corruption issue was addressed with
-    improved input validation.
+All versions of Linux are vulnerable.
 
-CVE-2018-4272
-    Versions affected: WebKitGTK+ before 2.20.4 and WPE WebKit before
-    2.20.2.
-    Credit to OSS-Fuzz.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. A memory corruption issue was addressed with
-    improved memory handling.
+MITIGATION
+==========
 
-CVE-2018-4273
-    Versions affected: WebKitGTK+ before 2.20.4 and WPE WebKit before
-    2.20.2.
-    Credit to OSS-Fuzz.
-    Processing maliciously crafted web content may lead to an unexpected
-    application crash. A memory corruption issue was addressed with
-    improved input validation.
+Switching to HVM or PVH guests will mitigate this issue.
 
-CVE-2018-4278
-    Versions affected: WebKitGTK+ before 2.20.4 and WPE WebKit before
-    2.20.2.
-    Credit to Jun Kokatsu (@shhnjk).
-    A malicious website may exfiltrate audio data cross-origin. Sound
-    fetched through audio elements may be exfiltrated cross-origin. This
-    issue was addressed with improved audio taint tracking.
+CREDITS
+=======
 
-CVE-2018-4284
-    Versions affected: WebKitGTK+ before 2.20.4 and WPE WebKit before
-    2.20.2.
-    Credit to OSS-Fuzz.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. A type confusion issue was addressed with improved
-    memory handling.
+This issue was discovered by M. Vefa Bicakci, and recognized as a
+security issue by Andy Lutomirski.
 
-CVE-2018-12911
-    Versions affected: WebKitGTK+ before 2.20.4 and WPE WebKit before
-    2.20.2.
-    Credit to Yu Haiwan.
-    Processing maliciously crafted web content may lead to arbitrary
-    code execution. A buffer overflow issue was addressed with improved
-    memory handling.
+RESOLUTION
+==========
 
+Applying the appropriate attached patch resolves this issue.
 
-We recommend updating to the latest stable versions of WebKitGTK+ and
-WPE WebKit. It is the best way to ensure that you are running safe
-versions of WebKit. Please check our websites for information about the
-latest stable releases.
+NB this patch has not been accepted into Linux upstream yet.  An
+updated advisory will be sent if the fix upstreamed looks
+significantly different.
 
-Further information about WebKitGTK+ and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
+xsa274-linux-4.17.patch           Linux 4.17
 
-The WebKitGTK+ and WPE WebKit team,
-August 07, 2018
+$ sha256sum xsa274*
+0c30cb13d1d573f446c8cb8d4824ffad8ef9149a7589a19ef9bcc83c07bddcf5  xsa274-linux-4.17.patch
+$
 
+NOTE ON THE LACK OF EMBARGO
+===========================
+
+The patch for this issue was published on linux-kernel without being
+first reported to the XenProject Security Team.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJbdFA5AAoJEIP+FMlX6CvZWQQIAIxMK2w6CsH2aNQRDiDrgcBc
+2FkBbroS5I1XHEhWVyO19aPhp1R3mYNU+pTUUFOevQuKvTP0nuZ0csgk5LUj9UP7
+EE/3vM3jkAfmIIuXCAegOcznnEl6Wi9aMKGVXcxMkRu9qjKStGr4We5qvmdPncUj
+DkTdD6VbmM/Q665b0jU4j2aZPDMsH63qrsbz1rsnPAlYUi1R+yKw56Q5UdRJK17j
+Jc74v+elyqOkFq7QwH1usfnko+DQziLyLqEBQOztTSps2qYM+VwHLAZkhxNyuLsu
+2x9/1D8XoZ+BHvVsVe50QmoNcJViMMunnHNhWYHmtXLYFErwUOt48N1vl+3xFpo=
+=k4Ak
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa274-linux-4.17.patch" of type "application/octet-stream" (4131 bytes)
