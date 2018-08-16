@@ -1,84 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/05/1
-Message-Id: <0DBFE9A5-170A-437C-B42C-AF5088CFB14D@beckweb.net>
-Date: Wed, 5 Dec 2018 10:18:04 +0100
-From: Daniel Beck <ml@...kweb.net>
-To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/16/2
+Message-ID: <87in4apjvv.fsf@v45346.1blu.de>
+Date: Thu, 16 Aug 2018 14:37:40 +0200
+From: Stefan Bodewig <bodewig@...che.org>
+To: Commons Developers List <dev@...mons.apache.org>, user@...mons.apache.org, announce@...che.org
+CC: security@...mons.apache.org, oss-security@...ts.openwall.com, Tobias Ospelt <tobias@...zero.ch>
+Subject: [CVE-2018-11771] Apache Commons Compress 1.7 to 1.17 denial of service vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software. The following
-releases contain fixes for security vulnerabilities:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-* Jenkins weekly 2.154
-* Jenkins LTS 2.138.4
-* Jenkins LTS 2.150.1
+CVE-2018-11771: Apache Commons Compress 1.7 to 1.17 denial of service vulnerability
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2018-12-05/
+Severity: Low
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+Vendor:
+The Apache Software Foundation
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
+Versions Affected:
+Apache Commons Compress 1.7 to 1.17
 
----
+Description:
+When reading a specially crafted ZIP archive, the read method of
+ZipArchiveInputStream can fail to return the correct EOF indication
+after the end of the stream has been reached.  When combined with a
+java.io.InputStreamReader this can lead to an infinite stream, which
+can be used to mount a denial of service attack against services that
+use Compress' zip package.
 
-SECURITY-595
-Jenkins uses the Stapler web framework for HTTP request handling. 
-Stapler’s basic premise is that it uses reflective access to code 
-elements matching its naming conventions. For example, any public method 
-whose name starts with get, and that has a String, int, long, or no 
-argument can be invoked this way on objects that are reachable through 
-these means. As these naming conventions closely match common code 
-patterns in Java, accessing crafted URLs could invoke methods never 
-intended to be invoked this way.
+Mitigation:
+Commons Compress users should upgrade to 1.18 or later
 
-The Stapler web framework has been extended with a Service Provider 
-Interface (SPI) that allows methods and fields to be excluded from routing.
-The implementation of that SPI in Jenkins now restricts which getter 
-methods, do* action methods, and fields can be invoked reflectively by 
-Stapler.
+Credit:
+This issue was discovered by Tobias Ospelt of modzero AG.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-
-SECURITY-1072
-The fix for SECURITY-499 introduced a mechanism that renamed user 
-directories on disk as a user with an unsafe user name (user ID) is loaded.
-Insufficient input validation allowed attackers to rename such user 
-directories even for users with a safe user name by submitting a crafted 
-user name when attempting to log in, even with an invalid password. Doing 
-so prevented users from logging in successfully afterwards.
-
-Jenkins no longer uses directory names as a reference for user names, 
-making the on-load migration of user records unnecessary. Instead, the 
-new file users/users.xml is used to map user names to the directories 
-containing the user metadata.
-
-
-SECURITY-904
-The file browser used for workspaces, archived artifacts, and 
-$JENKINS_HOME/userContent/ followed symbolic links to locations outside 
-the directory being browsed.
-
-While builds typically have access to the file system outside the 
-workspace allocated by Jenkins, this should not extend to beyond the 
-execution of a build on that agent. Notably, the configuration may have 
-been changed to not allow a build to run on a given agent, but the 
-workspace used during the previous execution still exists, and could 
-allow browsing the file system outside the workspace.
-
-Neither browsing through the UI nor downloading directory content as a 
-ZIP file allow accessing directories and files outside the workspace 
-anymore.
-
-
-SECURITY-1193
-The form validation for cron expressions (e.g. "Poll SCM", "Build 
-periodically") could enter infinite loops when cron expressions only 
-matching certain rare dates were entered, blocking request handling 
-threads indefinitely.
-
+iEYEARECAAYFAlt1cA4ACgkQohFa4V9ri3It3QCglg6G3XdMsD2+Nsp3dsgR3ynJ
+GVAAn0suNJKf0Zz4FD/vYM1zvpOI6+a0
+=Zpos
+-----END PGP SIGNATURE-----
