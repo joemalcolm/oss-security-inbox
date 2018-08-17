@@ -1,93 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/11/7
-Message-ID: <20180711153431.so6swm2x6bv7xogr@hooch.localdomain>
-Date: Wed, 11 Jul 2018 17:34:31 +0200
-From: Florian Bruhin <me@...-compiler.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/17/7
+Message-ID: <20180817131401.GA28952@nautica>
+Date: Fri, 17 Aug 2018 15:14:01 +0200
+From: Dominique Martinet <asmadeus@...ewreck.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2018-10895: Remote code execution due to CSRF in qutebrowser
+Subject: Re: Rule for releasing fixes for embargoed bugs
 Content-Type: text/plain; charset=utf-8
 
-Description
------------
+Marcus Meissner wrote on Fri, Aug 17, 2018:
+> There seems to be some miscommunation here, which should be directly
+> clarified with the security team of the affected distribution(s).
 
-Due to a CSRF vulnerability affecting the `qute://settings` page, it was
-possible for websites to modify qutebrowser settings. Via settings like
-`editor.command`, this possibly allowed websites to execute arbitrary code.
+You are correct, I will also send them an email.
 
-This issue has been assigned CVE-2018-10895:
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-10895
+> Rule of thumb is: when a vendor publishes updates for an issue, the issue
+> is public and can be referenced publically. I do not understand why you
+> would get push back unless there are communication problems.
+> 
+> Also FWIW CVE-2018-3690 is an older reference to "Bounds Check Bypass Store",
+> which is now tracked as CVE-2018-3693 and is public.
 
-Affected versions
------------------
+Thank you for the reference to the new CVE, I only had what was in the
+package changelog to go with and none of the trackers I know about
+reference CVE-2018-3690 as a duplicate/old name of CVE-2018-3693, so it
+was confusing.
+This is actually pretty reassuring that the rule is then appropriately
+respected.
 
-The issue was introduced in v1.0.0, as part of commit ffc29ee.
-https://github.com/qutebrowser/qutebrowser/commit/ffc29ee
+That being said, if CVE-2018-3693 is public there really is no reason to
+say what they said in the discussions I have had with the RDMA folks, so
+I will work to clear that up.
 
-It was fixed in the v1.4.1 release, in commit 43e58ac.
-https://github.com/qutebrowser/qutebrowser/commit/43e58ac865ff862c2008c510fc5f7627e10b4660
 
-All releases between v1.0.0 and v1.4.0 (inclusive) are affected.
-Backported patches are available, but no additional releases are planned:
-
-v1.1.x: https://github.com/qutebrowser/qutebrowser/commit/ff686ff7f395d83e5ac48507ecfae0b0e97a61ef
-v1.2.x: https://github.com/qutebrowser/qutebrowser/commit/c3361c31b370140f323e481dd455450b1e74c099
-v1.3.x: https://github.com/qutebrowser/qutebrowser/commit/c2ff32d92ba9bf40ff53498ee04a4124d4993c85
-v1.4.x: https://github.com/qutebrowser/qutebrowser/commit/22148ce488da52e8a0e01ed937c0cfdb24d34775
-master: https://github.com/qutebrowser/qutebrowser/commit/43e58ac865ff862c2008c510fc5f7627e10b4660
-
-(add .patch to the URL to get patches)
-
-Timeline
---------
-
-2018-07-09: I was made aware of the original issue privately (initially
-believed by the reporter to only be a DoS issue), developed a fix and contacted
-the distros Openwall mailinglist to organize a disclosure date to give
-distributions time to coordinate releasing of a fix.
-
-2018-07-10: Slightly updated patch sent to the distros mailinglist.
-
-2018-07-11: Public disclosure.
-
-Mitigation
-----------
-
-Please upgrade to v1.4.1 or apply the patches above.
-
-Note that disabling loading of `autoconfig.yml` is not a suitable remedy, since
-settings are still applied until the next restart.
-
-As a workaround, it's possible to patch out the vulnerable code via a
-`config.py` file:
-
-    from qutebrowser.browser import qutescheme
-    qutescheme._qute_settings_set = lambda url: ('text/html', '')
-
-While there is no known exploit for this in the wild, users are advised to
-check their `autoconfig.yml` file (located in the config folder shown in
-`:version`) for any unwanted modifications.
-
-Credits
--------
-
-Thanks to:
-
-- toofar for reporting the initial issue.
-- Allan Sandfeld Jensen (carewolf) and Jüri Valdmann (juvaldma) of The Qt
-  Company for their assistance with triaging and fixing the issue.
-- toofar and Jay Kamat (jgkamat) for reviewing the patch.
-- Morten Linderud (Foxboron) for suggestions on how to disclose this
-  properly.
-
-Links
------
-
-- https://github.com/qutebrowser/qutebrowser/issues/4060
-- https://lists.schokokeks.org/pipermail/qutebrowser-announce/2018-July/000048.html
-
+Thanks,
 -- 
-https://www.qutebrowser.org | me@...-compiler.org (Mail/XMPP)
-   GPG: 916E B0C8 FD55 A072 | https://the-compiler.org/pubkey.asc
-         I love long mails! | https://email.is-not-s.ms/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Dominique Martinet
