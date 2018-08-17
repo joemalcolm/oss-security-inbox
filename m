@@ -1,22 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/19/9
-Message-ID: <alpine.LRH.2.21.1809191500450.16496@fairfax.gathman.org>
-Date: Wed, 19 Sep 2018 15:02:28 -0400 (EDT)
-From: "Stuart D. Gathman" <stuart@...hman.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/17/9
+Message-ID: <44612677-8d7c-80b9-919f-705f8b3d0cb4@treenet.co.nz>
+Date: Sat, 18 Aug 2018 07:51:58 +1200
+From: Amos Jeffries <squid3@...enet.co.nz>
 To: oss-security@...ts.openwall.com
-Subject: Re: tdesktop 1.3.14: index out of range
+Subject: Re: Rule for releasing fixes for embargoed bugs
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 19 Sep 2018, Dhiraj Mishra wrote:
+[I'm responding to this since I feel that the question has not clearly
+been answered and it deserves to be. If the below is wrong I welcome the
+education and this would be why it needs clarfying. ]
 
-> Affected Product: tdesktop-1.3.14 tested on Ubuntu 18.04 LTS x64
-> ...
-> Crashes, ASSERT failure in QVector<T>::operator[]: "index out of range",
 
-How does this affect security?  Does it improve over-all security by 
-discouraging the use of centralized services like telegram?
+On 17/08/18 23:45, Dominique Martinet wrote:>
+>  When should vendors publish fixes for bugs that are under embargo ?
+> 
+...
+> 
+> I'm asking because this happened today and some vendor released a kernel
+> with patches for ...
 
--- 
- 	      Stuart D. Gathman <stuart@...hman.org>
-"Confutatis maledictis, flamis acribus addictis" - background song for
-a Microsoft sponsored "Where do you want to go from here?" commercial.
+As I understand the process this "released" is the point where the
+embargo ceases.
+
+If the agreed embargo time was not already over the vendor is
+responsible for having "broken" the embargo. So this release should not
+have happened prior to the agreed embargo time.
+
+Broken or not it is over now.
+
+
+CVE-2018-3690 (yet another speculation/side-channel
+> vulnerability), but their fix for it broke another component in the
+> kernel (RDMA networking) and people trying to fix that bug are now
+> wasting their's and everyone's/my time saying they cannot make the RDMA
+> issue public because it has been caused by a security fix still under
+> embargo.
+
+As the embargo was ended as per above, these types of thing are not blocked.
+
+Secondary patches are only affected if found while waiting to release
+the embargoed changes. In which case there is either nothing released to
+clients needing it, or it is an independent bug that should be able to
+publish a fix without reference to the embargoed issue.
+
+AYJ
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
