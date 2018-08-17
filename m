@@ -1,135 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/08/3
-Message-Id: <E1fG5yQ-0000dZ-JE@xenbits.xenproject.org>
-Date: Tue, 08 May 2018 17:00:22 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 262 - qemu may drive Xen into unbounded loop
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/17/5
+Message-ID: <20180817114516.GA27667@nautica>
+Date: Fri, 17 Aug 2018 13:45:16 +0200
+From: Dominique Martinet <asmadeus@...ewreck.org>
+To: oss-security@...ts.openwall.com
+Subject: Rule for releasing fixes for embargoed bugs
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-                    Xen Security Advisory XSA-262
-                              version 2
+I tried asking this question in private and was told there is no clear
+rule (and opinions vary) on the subject of releasing fixes for bugs
+still under embargo; and to ask the list, so here we go:
 
-                qemu may drive Xen into unbounded loop
+ When should vendors publish fixes for bugs that are under embargo ?
 
-UPDATES IN VERSION 2
-====================
 
-Public release.
+My opinion is that the point of security embargoes, and linux-distro in
+particular, is to give vendors time to prepare a fix so that fixes can
+be released almost immediately after the issue is made public.
 
-Updated .meta file
+Releasing a fix early pretty much leaks the issue to people monitoring
+distro updates, especially if there is a clear changelog that states
+there have been security fixes with a neat summary and sources are
+available.
 
-ISSUE DESCRIPTION
-=================
 
-When Xen sends requests to a device model, the next expected action
-inside Xen is tracked using a state field.  The requests themselves
-are placed in a memory page shared with the device model, so that the
-device model can communicate to Xen its progress on the request.  The
-state field is in the request itself, where the device model may write
-to it.  Xen correctly rejects invalid state values, but failed to reject
-invalid transitions between states.  As a result, a device model which
-switches a request between two states at the right times can drive Xen
-into an unbounded loop.
+I'm asking because this happened today and some vendor released a kernel
+with patches for CVE-2018-3690 (yet another speculation/side-channel
+vulnerability), but their fix for it broke another component in the
+kernel (RDMA networking) and people trying to fix that bug are now
+wasting their's and everyone's/my time saying they cannot make the RDMA
+issue public because it has been caused by a security fix still under
+embargo.
+At this point, I'm not sure what this is supposed to protect: I have a
+pretty good idea of what the fixes are about and I'm not a security
+researcher, so if I could figure this much I'm sure smarter people can
+use it, and folks who are waiting for the embargo to end before actually
+posting fixes (including upstream!) are now leaving their users in
+trouble.
 
-IMPACT
-======
 
-A malicious unprivileged device model can cause a Denial of Service
-(DoS) affecting the entire host.  Specifically, it may prevent use of a
-physical CPU for an indeterminate period of time.
+I don't really care about speculation/side channel attacks frankly but
+there's no reason other bugs won't have the same issue, so I think
+"waiting for the issue to be made public before releasing fixes" should
+be made a rule if at all possible.
 
-VULNERABLE SYSTEMS
-==================
 
-All Xen versions are vulnerable.
-
-Only x86 systems are affected.  ARM systems are not affected.
-
-Only HVM guests can expose this vulnerability.  PV and PVH guests cannot
-expose this vulnerability, but note that the domains being able to
-leverage the vulnerability are PV or PVH ones, running the device model.
-
-This vulnerability is only applicable to Xen systems using stub domains.
-
-MITIGATION
-==========
-
-Running only PV or PVH guests will avoid this issue.
-
-(The security of a Xen system using stub domains is still better than
-with a qemu-dm running as an unrestricted dom0 process.  Therefore
-users with these configurations should not switch to an unrestricted
-dom0 qemu-dm.)
-
-CREDITS
-=======
-
-This issue was discovered by Jan Beulich of SUSE.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa262.patch           xen-unstable
-xsa262-4.10.patch      Xen 4.10.x
-xsa262-4.9.patch       Xen 4.9.x, Xen 4.8.x, Xen 4.7.x
-xsa262-4.6.patch       Xen 4.6.x
-
-$ sha256sum xsa262*
-a5a3458c5efdad282bd769fcab2b94ebfe0a979befae3b4703201fcbf0970cc7  xsa262.meta
-5aa73753d3eec8ae391b1364c430df7517bf4bdb3e65a8e6e8431898348f4ad9  xsa262.patch
-7196b468b916bf956f8dc0cab20a5c29f8a1bfa4de4e4fa982b7b9c8494e4c0d  xsa262-4.6.patch
-ec2b6ba9ed1d5e97fed4b54767160a75fe19d67e4519f716739bebdb78816191  xsa262-4.9.patch
-91d3b329131b6d434b268c0c55fd4900033fce8b2582bd9278ae967efc980fb0  xsa262-4.10.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJa8dQhAAoJEIP+FMlX6CvZyCUH/1eCZrElPEOUySjMRbix0EJ8
-TW5pWx76PX27Hek4fk+tFxsfDWEqWN4AP9YgjSQKNyXUWEr1oiyq83Vq/JXM6bHt
-HSWbrh7sjkkziEGqlOXpryS8/RIE3CZC5nQOTAsPX65tB+2nXkOY5zwuxXM8Ivn6
-9p0yitSWd3Ve68PLAhthb/7BDdsAgITtgtxuTDHmDB6h32Fo8m990nD1jbAcP9WR
-q32gqXUMdlCf161/viPkSnrRqsnmdzPbXDsAzqtnUeVGNtqb5mI8jqox9Z6JGedG
-qMwlZVWO7TzcpO/18KbI8qYypL2/ensEo4bPbvRN7qzA6y8QGwMrLsygtZuBVkw=
-=D72A
------END PGP SIGNATURE-----
-
-Download attachment "xsa262.meta" of type "application/octet-stream" (1819 bytes)
-
-Download attachment "xsa262.patch" of type "application/octet-stream" (2986 bytes)
-
-Download attachment "xsa262-4.6.patch" of type "application/octet-stream" (2736 bytes)
-
-Download attachment "xsa262-4.9.patch" of type "application/octet-stream" (2738 bytes)
-
-Download attachment "xsa262-4.10.patch" of type "application/octet-stream" (2748 bytes)
+Thanks,
+-- 
+Dominique Martinet | Asmadeus
