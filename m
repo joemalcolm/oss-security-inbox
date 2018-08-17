@@ -1,41 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/10/9
-Message-ID: <20181010154935.lwpdsekv7wsbscqe@matica.foolinux.mooo.com>
-Date: Wed, 10 Oct 2018 08:49:35 -0700
-From: Ian Zimmerman <itz@...y.loosely.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/17/6
+Message-ID: <20180817125244.illsqe3lckimtnms@suse.de>
+Date: Fri, 17 Aug 2018 14:52:44 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)
+Subject: Re: Rule for releasing fixes for embargoed bugs
 Content-Type: text/plain; charset=utf-8
 
-On 2018-10-10 14:53, Hanno Böck wrote:
+Hi,
 
-> evince installs a thumbnail entry to
-> /usr/share/thumbnailers
+On Fri, Aug 17, 2018 at 01:45:16PM +0200, Dominique Martinet wrote:
+> Hi,
 > 
-> This is a generic location where applications can install files (I
-> believe they follow the .desktop specification, which is an ini-based
-> format). This is thus not nautilus-specific, but every filemanager that
-> uses this format will be affected. A quick googling tells me e.g.
-> pcmanfm is also affected. I'm not sure if dolphin uses them as well.
+> I tried asking this question in private and was told there is no clear
+> rule (and opinions vary) on the subject of releasing fixes for bugs
+> still under embargo; and to ask the list, so here we go:
+> 
+>  When should vendors publish fixes for bugs that are under embargo ?
+> 
+> 
+> My opinion is that the point of security embargoes, and linux-distro in
+> particular, is to give vendors time to prepare a fix so that fixes can
+> be released almost immediately after the issue is made public.
+> 
+> Releasing a fix early pretty much leaks the issue to people monitoring
+> distro updates, especially if there is a clear changelog that states
+> there have been security fixes with a neat summary and sources are
+> available.
+> 
+> 
+> I'm asking because this happened today and some vendor released a kernel
+> with patches for CVE-2018-3690 (yet another speculation/side-channel
+> vulnerability), but their fix for it broke another component in the
+> kernel (RDMA networking) and people trying to fix that bug are now
+> wasting their's and everyone's/my time saying they cannot make the RDMA
+> issue public because it has been caused by a security fix still under
+> embargo.
+> At this point, I'm not sure what this is supposed to protect: I have a
+> pretty good idea of what the fixes are about and I'm not a security
+> researcher, so if I could figure this much I'm sure smarter people can
+> use it, and folks who are waiting for the embargo to end before actually
+> posting fixes (including upstream!) are now leaving their users in
+> trouble.
+> 
+> 
+> I don't really care about speculation/side channel attacks frankly but
+> there's no reason other bugs won't have the same issue, so I think
+> "waiting for the issue to be made public before releasing fixes" should
+> be made a rule if at all possible.
 
-It seems to be a bug that this directory is under /usr/share, and not
-under /etc where admins could modify it to selectively disable things.  I
-checked and there is no parallel /etc/thumbnailers directory to drop
-overriding entries into - though maybe ~/.local/share/thumbnailers would
-work?  But already the fact that I have to guess is a bug :-(
+There seems to be some miscommunation here, which should be directly
+clarified with the security team of the affected distribution(s).
 
-By the way, on fedora the /usr/share/thumbnailers entry indeed does
-belong to the evince package, but there is a separate evince-nautilus
-package and its description says:
+Rule of thumb is: when a vendor publishes updates for an issue, the issue
+is public and can be referenced publically. I do not understand why you
+would get push back unless there are communication problems.
 
-: This package contains the evince extension for the nautilus file manager.
-: It adds an additional tab called "Document" to the file properties dialog.
+Also FWIW CVE-2018-3690 is an older reference to "Bounds Check Bypass Store",
+which is now tracked as CVE-2018-3693 and is public.
 
-Do you think that removing evince-nautilus would eliminate the nautilus
-attack vector at least?
-
--- 
-Please don't Cc: me privately on mailing lists and Usenet,
-if you also post the followup to the list or newsgroup.
-To reply privately _only_ on Usenet and on broken lists
-which rewrite From, fetch the TXT record for no-use.mooo.com.
+Ciao, Marcus
