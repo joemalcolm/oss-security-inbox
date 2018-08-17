@@ -1,38 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/23/1
-Message-ID: <20181223085704.20c253af@computer>
-Date: Sun, 23 Dec 2018 08:57:04 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Use after free in syslog-ng / affile_dw_reap()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/17/2
+Message-ID: <a53a29d0-183a-490b-561b-f2ce4033c2ba@redhat.com>
+Date: Fri, 17 Aug 2018 10:03:40 +0200
+From: Florian Weimer <fweimer@...hat.com>
+To: Doran Moppert <dmoppert@...hat.com>
+Cc: oss-security@...ts.openwall.com, Frediano Ziglio <fziglio@...hat.com>
+Subject: Re: spice CVE-2018-10873: post-auth crash or potential heap corruption when demarshalling
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 08/17/2018 02:51 AM, Doran Moppert wrote:
+>      +        if (SPICE_UNLIKELY((start + 2) > message_end)) {
+>      +            goto error;
+>      +        }
 
-The recently released syslog-ng 3.19.1 fixes a use after free bug.
+These checks are still technically invalid because start + 2 is not a 
+valid pointer if it points past the allocated object.
 
-ASAN error:
-==7538==ERROR: AddressSanitizer: heap-use-after-free on address 0x612000007770 at pc 0x7fc3a89069c8 bp 0x7ffd8099afd0 sp 0x7ffd8099afc0
-READ of size 8 at 0x612000007770 thread T0
-    #0 0x7fc3a89069c7 in affile_dw_reap modules/affile/affile-dest.c:140
-    #1 0x7fc3ac21f563 in iv_run_timers /var/tmp/portage/dev-libs/ivykis-0.42.3-r1/work/ivykis-0.42.3/src/iv_timer.c:119
-    #2 0x7fc3ac22703f in iv_main /var/tmp/portage/dev-libs/ivykis-0.42.3-r1/work/ivykis-0.42.3/src/iv_main_posix.c:98
-    #3 0x7fc3adf1e6d4 in main_loop_run lib/mainloop.c:580
-    #4 0x401ef7 in main syslog-ng/main.c:307
-    #5 0x7fc3ad45fb9d in __libc_start_main (/lib64/libc.so.6+0x21b9d)
-    #6 0x4021b9 in _start (/usr/sbin/syslog-ng+0x4021b9)
+This is more problematic here:
 
+>     +            if (SPICE_UNLIKELY((start2 + 2 + cursor_u__nw_size) > message_end)) {
+>     +                goto error;
+>     +            }
 
-I reported this a while ago [1] and learned that this was already known
-and fixed, but not released yet [2].
+If cursor_u__nw_size results in pointer wraparound, the check might fail 
+incorrectly.
 
+The commit message quotes the right pattern, nw_size > (uintptr_t) 
+(message_end - start), but it is not used in the actual code AFAICS.
 
-[1] https://github.com/balabit/syslog-ng/issues/2454
-[2] https://github.com/balabit/syslog-ng/pull/2418
-
--- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+Thanks,
+Florian
