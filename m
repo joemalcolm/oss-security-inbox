@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["398" "Saturday" "25" "July" "2015" "08:30:38" "+0000" "Nitin Venkatesh" "venkatesh.nitin@gmail.com" "<CAARZ5vqWcJshwF6cGnT3ee2wD6Z8RJ+AhdX0qw2yMuK+J8L22w@mail.gmail.com>" "18" "[oss-security] CVE Request - Open Redirect Vulnerability in Music Store Wordpress Plugin v1.0.14" nil nil nil "7" "2015072508:30:38" "[oss-security] CVE Request - Open Redirect Vulnerability in Music Store Wordpress Plugin v1.0.14" (number mark "U       venkatesh.ni Jul 25   18/398   " thread-indent "\"[oss-security] CVE Request - Open Redirect Vulnerability in Music Store Wordpress Plugin v1.0.14\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1390" "Friday" "17" "August" "2018" "05:43:58" "-0400" "Frediano Ziglio" "fziglio@redhat.com" "<691585808.22602192.1534499038268.JavaMail.zimbra@redhat.com>" "43" "Re: [oss-security] spice CVE-2018-10873: post-auth crash or potential heap corruption when demarshalling" nil nil nil "8" "2018081709:43:58" "[oss-security] spice CVE-2018-10873: post-auth crash or potential heap corruption when demarshalling" (number mark "U       fziglio@redh Aug 17   43/1390  " thread-indent "\"Re: [oss-security] spice CVE-2018-10873: post-auth crash or potential heap corruption when demarshalling\"\n") "<a53a29d0-183a-490b-561b-f2ce4033c2ba@redhat.com>" ("<20180817005105.GB3712@sin.redhat.com>" "<a53a29d0-183a-490b-561b-f2ce4033c2ba@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32582 invoked by uid 550); 25 Jul 2015 08:31:00 -0000
+Received: (qmail 10046 invoked by uid 550); 17 Aug 2018 10:00:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,44 +11,67 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32555 invoked from network); 25 Jul 2015 08:30:59 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=c5bRW8mo9KExUb/tHJzBRQSamFZ2C5RgVBHJV6NjV6Y=;
-        b=zvbky4AtsaZjES7J1ic4xENRGT+DmqFhdYu4y+TYQ5lpjJLxEqie8d0uPDtGUwJvKx
-         OP2PQgqZU6OckTP2mkgyX7cqRC3rZwJ+NNZlLJrFtLPBqWKFRApVrjfYUXS9HuwUp2Lo
-         yWf+E8ghw1TWv138H0q3ndGjIzxltWmxI1NXJeqlbdk2mlXI9mVJ+46ED76zI/wholoD
-         8Sf2iJBKT0nMq/XRpqr/HaS0zD1DkVfr02TGTBZHeuCz0xQXsfEIqI/vCbBq6k2BJEy+
-         KQKaaVNY0WZiDksFEWvWA3wpOVNIGp43D6g0c9czf5O3hSVGbkQu0BTPtYdj+4c3SPNa
-         hhyw==
-X-Received: by 10.107.29.209 with SMTP id d200mr29328771iod.94.1437813048050;
- Sat, 25 Jul 2015 01:30:48 -0700 (PDT)
-MIME-Version: 1.0
-Message-ID: <CAARZ5vqWcJshwF6cGnT3ee2wD6Z8RJ+AhdX0qw2yMuK+J8L22w@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a11408e9efb8dcf051baeef8e
-Date: Sat, 25 Jul 2015 08:30:38 +0000
-From: Nitin Venkatesh <venkatesh.nitin@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Request - Open Redirect Vulnerability in Music Store Wordpress
- Plugin v1.0.14
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Received: (qmail 31926 invoked from network); 17 Aug 2018 09:44:10 -0000
+Date: Fri, 17 Aug 2018 05:43:58 -0400 (EDT)
+From: Frediano Ziglio <fziglio@redhat.com>
+To: Florian Weimer <fweimer@redhat.com>
+Cc: Doran Moppert <dmoppert@redhat.com>, oss-security@lists.openwall.com, 
+	Christophe Fergeau <cfergeau@redhat.com>
+Message-ID: <691585808.22602192.1534499038268.JavaMail.zimbra@redhat.com>
+In-Reply-To: <a53a29d0-183a-490b-561b-f2ce4033c2ba@redhat.com>
+References: <20180817005105.GB3712@sin.redhat.com> <a53a29d0-183a-490b-561b-f2ce4033c2ba@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.33.32.10, 10.4.195.12]
+Thread-Topic: spice CVE-2018-10873: post-auth crash or potential heap corruption when demarshalling
+Thread-Index: U9ov7En8o9iLm6vPEzvxkCZZBEeidg==
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.15
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.49]); Fri, 17 Aug 2018 09:43:58 +0000 (UTC)
+Subject: Re: [oss-security] spice CVE-2018-10873: post-auth crash or
+ potential heap corruption when demarshalling
 
---001a11408e9efb8dcf051baeef8e
-Content-Type: text/plain; charset=UTF-8
+> On 08/17/2018 02:51 AM, Doran Moppert wrote:
+> >      +        if (SPICE_UNLIKELY((start + 2) > message_end)) {
+> >      +            goto error;
+> >      +        }
+> 
+> These checks are still technically invalid because start + 2 is not a
+> valid pointer if it points past the allocated object.
+>
 
-Hi,
+Technical but not real. Unless it wraps is correct. To wrap the memory
+layout would have to have the kernel before the userspace and the
+memory buffer at the very end of memory. Neither Linux nor Windows which
+we support have these characteristics.
 
-I discovered Open Redirect Vulnerability in Music Store Wordpress Plugin
-v1.0.14 which was responsibly disclosed to the vendor who fixed the issues
-in v1.0.15.
+> This is more problematic here:
+> 
+> >     +            if (SPICE_UNLIKELY((start2 + 2 + cursor_u__nw_size) >
+> >     message_end)) {
+> >     +                goto error;
+> >     +            }
+> 
+> If cursor_u__nw_size results in pointer wraparound, the check might fail
+> incorrectly.
+> 
 
-I request a CVE for the same.
+cursor_u__nw_size is either 0 or 17, very hard to wrap, impossible in currently
+supported systems as stated earlier.
 
-References:
-http://seclists.org/fulldisclosure/2015/Jul/113
+> The commit message quotes the right pattern, nw_size > (uintptr_t)
+> (message_end - start), but it is not used in the actual code AFAICS.
+> 
 
-Thanks & regards,
-Nitin Venkatesh
+Yes, check is not perfect and can be modified to support any possible
+technical systems. The check uses already present helpers, I think for the
+fix is better to stick to the current code, I'll see if I can support
+all cases as an improve.
 
---001a11408e9efb8dcf051baeef8e--
+> Thanks,
+> Florian
+> 
+
+Thanks,
+  Frediano
