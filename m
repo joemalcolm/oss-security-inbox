@@ -1,78 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/08/1
-Message-ID: <CALoRt7TAYGsPRWqtDqJ4dyKfV1O634qYfbq9pDU_X1K=A9ONgQ@mail.gmail.com>
-Date: Fri, 7 Dec 2018 22:16:59 -0500
-From: Ren Kimura <rkx1209dev@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: mpg321: Out-of-bounds Write
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/17/3
+Message-ID: <691585808.22602192.1534499038268.JavaMail.zimbra@redhat.com>
+Date: Fri, 17 Aug 2018 05:43:58 -0400 (EDT)
+From: Frediano Ziglio <fziglio@...hat.com>
+To: Florian Weimer <fweimer@...hat.com>
+Cc: Doran Moppert <dmoppert@...hat.com>, oss-security@...ts.openwall.com,  Christophe Fergeau <cfergeau@...hat.com>
+Subject: Re: spice CVE-2018-10873: post-auth crash or potential heap corruption when demarshalling
 Content-Type: text/plain; charset=utf-8
 
-Hi.
-mpg321 is a free command-line mp3 player that is commonly available on
-many Linux distributions.
-For example, in ubuntu you can download the latest mpg321 by "apt-get
-install mpg321."
+> On 08/17/2018 02:51 AM, Doran Moppert wrote:
+> >      +        if (SPICE_UNLIKELY((start + 2) > message_end)) {
+> >      +            goto error;
+> >      +        }
+> 
+> These checks are still technically invalid because start + 2 is not a
+> valid pointer if it points past the allocated object.
+>
 
-latest mpg321 0.3.2, in scan() in mad.c calculate the number of frames
-using bit rate.
-If crafted mp3 whose bit rate equal 0 is taken, sampling time become
-INF value due to floating point division by 0.
-As a result, the frame number become a very large (1<<63), leading out
-of bounds write, memory corruption at mad.c:285.
-note. frames buffer have been allocated only 8-byte at mpg321.c:990.
+Technical but not real. Unless it wraps is correct. To wrap the memory
+layout would have to have the kernel before the userspace and the
+memory buffer at the very end of memory. Neither Linux nor Windows which
+we support have these characteristics.
 
-I'll request a CVE ID from MITRE.
+> This is more problematic here:
+> 
+> >     +            if (SPICE_UNLIKELY((start2 + 2 + cursor_u__nw_size) >
+> >     message_end)) {
+> >     +                goto error;
+> >     +            }
+> 
+> If cursor_u__nw_size results in pointer wraparound, the check might fail
+> incorrectly.
+> 
 
-ASAN crash traces:
+cursor_u__nw_size is either 0 or 17, very hard to wrap, impossible in currently
+supported systems as stated earlier.
 
-Playing MPEG stream from mpg321_0.3.2_memory_corruption.mp3 ...
-=================================================================
-==18648==ERROR: AddressSanitizer: heap-buffer-overflow on address
-0x6020000000d8 at pc 0x555555566c18 bp 0x7fffffffb3$
-0 sp 0x7fffffffb3c0
-WRITE of size 8 at 0x6020000000d8 thread T0
-    #0 0x555555566c17 in read_header
-/home/rkx/Programming/OSS/research/results/2/mpg321-0.3.2/mad.c:285
-    #1 0x7ffff64c0594  (/usr/lib/x86_64-linux-gnu/libmad.so.0+0x5594)
-    #2 0x7ffff64c0b82 in mad_decoder_run
-(/usr/lib/x86_64-linux-gnu/libmad.so.0+0x5b82)
-    #3 0x5555555607fb in main
-/home/rkx/Programming/OSS/research/results/2/mpg321-0.3.2/mpg321.c:1092
-    #4 0x7ffff5b43b96 in __libc_start_main
-(/lib/x86_64-linux-gnu/libc.so.6+0x21b96)
-    #5 0x555555562779 in _start
-(/home/rkx/Programming/OSS/research/results/2/mpg321-0.3.2/mpg321-asan+0xe779)
+> The commit message quotes the right pattern, nw_size > (uintptr_t)
+> (message_end - start), but it is not used in the actual code AFAICS.
+> 
 
-0x6020000000d8 is located 0 bytes to
+Yes, check is not perfect and can be modified to support any possible
+technical systems. The check uses already present helpers, I think for the
+fix is better to stick to the current code, I'll see if I can support
+all cases as an improve.
 
-0x6020000000d8 is located 0 bytes to the right of 8-byte region
-[0x6020000000d0,0x6020000000d8)
-allocated by thread T0 here:
-    #0 0x7ffff6ef8b50 in __interceptor_malloc
-(/usr/lib/x86_64-linux-gnu/libasan.so.4+0xdeb50)
-    #1 0x555555561b51 in main
-/home/rkx/Programming/OSS/research/results/2/mpg321-0.3.2/mpg321.c:990
+> Thanks,
+> Florian
+> 
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow
-/home/rkx/Programming/OSS/research/results/2/mpg321-0.3.2/mad.c:285 in
- read_header
-Shadow bytes around the buggy address:
-  0x0c047fff7fc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c047fff7fd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c047fff7fe0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c047fff7ff0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c047fff8000: fa fa 06 fa fa fa 06 fa fa fa 01 fa fa fa 00 00
-=>0x0c047fff8010: fa fa 00 00 fa fa 06 fa fa fa 00[fa]fa fa 00 00
-  0x0c047fff8020: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff8030: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff8040: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff8050: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff8060: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07
-  Heap left redzone:       fa
-
-Ren Kimura
-
-Download attachment "mpg321_0.3.2_memory_corruption.mp3" of type "audio/mp3" (4317 bytes)
+Thanks,
+  Frediano
