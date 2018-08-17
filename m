@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2613" "Thursday" "23" "April" "2020" "20:12:34" "+0200" "Solar Designer" "solar@openwall.com" "<20200423181234.GA23035@openwall.com>" "57" "Re: [oss-security] spoofing of local email sender via a homoglyph attack" "^Cc:" nil nil "4" "2020042318:12:34" "[oss-security] spoofing of local email sender via a homoglyph attack" (number mark "        solar@openwa Apr 23   57/2613  " thread-indent "\"Re: [oss-security] spoofing of local email sender via a homoglyph attack\"\n") "<8c73ccfed18df9cf7c01e9be05710a5e@promiselabs.net>" ("<20200422152047.3196780D981@smtprhmv1.mitre.org>" "<2843537f5deb3a7987c8485bcc56a260@promiselabs.net>" "<ef4d2b65970d80e81fc0294aca5a6a30@promiselabs.net>" "<20200423133148.GA19214@openwall.com>" "<2236ad47936a87f144248f9ab6c7340f@promiselabs.net>" "<20200423151430.GA21258@openwall.com>" "<8c73ccfed18df9cf7c01e9be05710a5e@promiselabs.net>") nil nil nil nil nil nil nil "Re: [oss-security] spoofing of local email sender via a homoglyph attack" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["14131" "Friday" "17" "August" "2018" "10:21:42" "+0930" "Doran Moppert" "dmoppert@redhat.com" "<20180817005105.GB3712@sin.redhat.com>" "442" "[oss-security] spice CVE-2018-10873: post-auth crash or potential heap corruption when demarshalling" "^Date:" nil nil "8" "2018081700:51:42" "[oss-security] spice CVE-2018-10873: post-auth crash or potential heap corruption when demarshalling" (number mark "U       dmoppert@red Aug 17  442/14131 " thread-indent "\"[oss-security] spice CVE-2018-10873: post-auth crash or potential heap corruption when demarshalling\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1611 invoked by uid 550); 23 Apr 2020 18:13:32 -0000
+Received: (qmail 13368 invoked by uid 550); 17 Aug 2018 00:52:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,75 +11,461 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1157 invoked from network); 23 Apr 2020 18:12:39 -0000
-Message-ID: <20200423181234.GA23035@openwall.com>
-References: <20200422152047.3196780D981@smtprhmv1.mitre.org> <2843537f5deb3a7987c8485bcc56a260@promiselabs.net> <ef4d2b65970d80e81fc0294aca5a6a30@promiselabs.net> <20200423133148.GA19214@openwall.com> <2236ad47936a87f144248f9ab6c7340f@promiselabs.net> <20200423151430.GA21258@openwall.com> <8c73ccfed18df9cf7c01e9be05710a5e@promiselabs.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Received: (qmail 13346 invoked from network); 17 Aug 2018 00:52:00 -0000
+Message-ID: <20180817005105.GB3712@sin.redhat.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="PPYy/fEw/8QCHSq3"
 Content-Disposition: inline
-In-Reply-To: <8c73ccfed18df9cf7c01e9be05710a5e@promiselabs.net>
-User-Agent: Mutt/1.4.2.3i
-Cc: Wietse Venema <wietse@porcupine.org>
-Date: Thu, 23 Apr 2020 20:12:34 +0200
-From: Solar Designer <solar@openwall.com>
+X-Scanned-By: MIMEDefang 2.79 on 10.11.54.5
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.11.55.6]); Fri, 17 Aug 2018 00:51:48 +0000 (UTC)
+X-Greylist: inspected by milter-greylist-4.5.16 (mx1.redhat.com [10.11.55.6]); Fri, 17 Aug 2018 00:51:48 +0000 (UTC) for IP:'10.11.54.5' DOMAIN:'int-mx05.intmail.prod.int.rdu2.redhat.com' HELO:'smtp.corp.redhat.com' FROM:'dmoppert@redhat.com' RCPT:''
+Date: Fri, 17 Aug 2018 10:21:42 +0930
+From: Doran Moppert <dmoppert@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] spoofing of local email sender via a homoglyph attack
+Subject: [oss-security] spice CVE-2018-10873: post-auth crash or potential heap corruption
+ when demarshalling
 To: oss-security@lists.openwall.com
 
-On Thu, Apr 23, 2020 at 07:03:14PM +0300, PromiseLabs Pentest Research wrote:
-> I am not sure that the "from" header applies to user probing, as the 
+--PPYy/fEw/8QCHSq3
+Content-Type: multipart/mixed; boundary="gE7i1rD7pdK0Ng3j"
+Content-Disposition: inline
 
-You mean the MAIL FROM aka envelope-from.
 
-> actual mail server configuration on which I'm testing would accept any 
-> user as a sender:
-> 
-> # nc -v *** OMITTED *** 25
-> Connection to *** OMITTED *** 25 port [tcp/smtp] succeeded!
-> 220 *** OMITTED *** ESMTP Postfix
-> mail from: userdoesnotexists@target.com
-> 250 2.1.0 Ok
-> rcpt to: test@target.com
-> 550 5.1.1 <test@target.com>: Recipient address rejected: User unknown in 
-> local recipient table
-> rcpt to: j??hn.doe@target.com
-> 550 5.1.1 <j??hn.doe@target.com>: Recipient address rejected: User 
-> unknown in local recipient table
-> rcpt to: existing.user@target.com
-> 250 2.1.5 Ok
-> 
-> However, a non-existing user would not be accepted in the "rcpt-to" 
-> header, so this is another possible vector. This was discovered while 
-> doing a black box test on one of our clients, and it should be noted 
-> that the VRFY command has been enabled on the server, hence there was no 
-> reason to look for another way. However I'm unaware whether disabling 
-> VRFY would alter this behaviour. As you can see, the reported issue 
-> itself is may be actually due to the possibility of relaying a local 
-> email from a non-existing user.
-> 
-> Having said this, if not then I assume then you are correct, in case we 
-> take the "to" header into consideration in relation to user probing, 
-> unless I'm missing your logic.
+--gE7i1rD7pdK0Ng3j
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I actually meant probing via the "Sender address rejected: not logged
-in" messages, which while delivered in response to a RCPT TO depend on
-the MAIL FROM address.  However, as Wietse tells us this merely probes
-the smtpd_sender_login_maps table, so is very limited and
-configuration-specific.  Besides, as Wietse and you correctly remind us,
-the possibility to probe for valid addresses via RCPT TO is in practice
-unavoidable on modern Internet.  So the point of blocking probing of
-which sender addresses can vs. can not (do not need to) authenticate is
-moot given that in typical setups those addresses are also potential
-recipient addresses and thus could also be probed via RCPT TO.
+Frediano Ziglio reported a missing check in the code generated by
+spice-common/python_modules/demarshal.py, which could be exploited to
+cause integer overflow leading to a crash and/or heap OOB read/writes.
 
-What you reported originally, where you bypass something that just
-happens that way in some configurations and wasn't meant to provide any
-security against sender address spoofing, looks like even less of an
-issue to me.
+The generated code is used in both client and server, so both are
+vulnerable.  The most obvious outcome is a crash (since the overflowed
+integers are very large), but it's possible a crafty attacker could
+leverage this into worse, even RCE.  Demarshalling code is only used
+post-authentication, so attacking a server would require valid
+credentials.
 
-Does anyone see any reasonable action on these (non-)issues?  If not, I
-think the CVE should be rejected.  It's a case of "works as intended."
+The attached patch fixes both demarshal.py and the generated code.  This
+is planned to be included in forthcoming releases spice 0.14.1 and
+spice-gtk 0.36.
 
-> >>>>> Use CVE-2020-12063.
+https://bugzilla.redhat.com/show_bug.cgi?id=3D1596008
 
-Alexander
+--=20
+Doran Moppert
+Red Hat Product Security
+
+--gE7i1rD7pdK0Ng3j
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: attachment; filename="0001-Fix-flexible-array-buffer-overflow.patch"
+Content-Transfer-Encoding: quoted-printable
+
+=46rom 88be6e8cbd92f1aa66546a1cf2ea3950083ae840 Mon Sep 17 00:00:00 2001
+From: Frediano Ziglio <fziglio@redhat.com>
+Date: Fri, 18 May 2018 11:41:57 +0100
+Subject: [PATCH spice-common] Fix flexible array buffer overflow
+
+This is kind of a DoS, possibly flexible array in the protocol
+causes the network size check to be ignored due to integer overflows.
+
+The size of flexible array is computed as (message_end - position),
+then this size is added to the number of bytes before the array and
+this number is used to check if we overflow initial message.
+
+An example is:
+
+    message {
+        uint32 dummy[2];
+        uint8 data[] @end;
+    } LenMessage;
+
+which generated this (simplified remove useless code) code:
+
+    { /* data */
+        data__nelements =3D message_end - (start + 8);
+
+        data__nw_size =3D data__nelements;
+    }
+
+    nw_size =3D 8 + data__nw_size;
+
+    /* Check if message fits in reported side */
+    if (nw_size > (uintptr_t) (message_end - start)) {
+        return NULL;
+    }
+
+Following code:
+- data__nelements =3D=3D message_end - (start + 8)
+- data__nw_size =3D=3D data__nelements =3D=3D message_end - (start + 8)
+- nw_size =3D=3D 8 + data__nw_size =3D=3D 8 + message_end - (start + 8) =3D=
+=3D
+  8 + message_end - start - 8 =3D=3D message_end -start
+- the check for overflow is (nw_size > (message_end - start)) but
+  nw_size =3D=3D message_end - start so the check is doing
+  ((message_end - start) > (message_end - start)) which is always false.
+
+If message_end - start < 8 then data__nelements (number of element
+on the array above) computation generate an integer underflow that
+later create a buffer overflow.
+
+Add a check to make sure that the array starts before the message ends
+to avoid the overflow.
+
+Difference is:
+    diff -u save/generated_client_demarshallers1.c common/generated_client_=
+demarshallers1.c
+    --- save/generated_client_demarshallers1.c	2018-06-22 22:13:48.62679391=
+9 +0100
+    +++ common/generated_client_demarshallers1.c	2018-06-22 22:14:03.408163=
+291 +0100
+    @@ -225,6 +225,9 @@
+         uint64_t data__nelements;
+
+         { /* data */
+    +        if (SPICE_UNLIKELY((start + 0) > message_end)) {
+    +            goto error;
+    +        }
+             data__nelements =3D message_end - (start + 0);
+
+             data__nw_size =3D data__nelements;
+    @@ -243,6 +246,9 @@
+         *free_message =3D nofree;
+         return data;
+
+    +   error:
+    +    free(data);
+    +    return NULL;
+     }
+
+     static uint8_t * parse_msg_set_ack(uint8_t *message_start, uint8_t *me=
+ssage_end, SPICE_GNUC_UNUSED int minor, size_t *size, message_destructor_t =
+*free_message)
+    @@ -301,6 +307,9 @@
+         SpiceMsgPing *out;
+
+         { /* data */
+    +        if (SPICE_UNLIKELY((start + 12) > message_end)) {
+    +            goto error;
+    +        }
+             data__nelements =3D message_end - (start + 12);
+
+             data__nw_size =3D data__nelements;
+    @@ -5226,6 +5235,9 @@
+             uint64_t cursor_data__nw_size;
+             uint64_t cursor_data__nelements;
+             { /* data */
+    +            if (SPICE_UNLIKELY((start2 + 22) > message_end)) {
+    +                goto error;
+    +            }
+                 cursor_data__nelements =3D message_end - (start2 + 22);
+
+                 cursor_data__nw_size =3D cursor_data__nelements;
+    @@ -5305,6 +5317,9 @@
+             uint64_t cursor_data__nw_size;
+             uint64_t cursor_data__nelements;
+             { /* data */
+    +            if (SPICE_UNLIKELY((start2 + 22) > message_end)) {
+    +                goto error;
+    +            }
+                 cursor_data__nelements =3D message_end - (start2 + 22);
+
+                 cursor_data__nw_size =3D cursor_data__nelements;
+    @@ -5540,6 +5555,9 @@
+         SpiceMsgPlaybackPacket *out;
+
+         { /* data */
+    +        if (SPICE_UNLIKELY((start + 4) > message_end)) {
+    +            goto error;
+    +        }
+             data__nelements =3D message_end - (start + 4);
+
+             data__nw_size =3D data__nelements;
+    @@ -5594,6 +5612,9 @@
+         SpiceMsgPlaybackMode *out;
+
+         { /* data */
+    +        if (SPICE_UNLIKELY((start + 8) > message_end)) {
+    +            goto error;
+    +        }
+             data__nelements =3D message_end - (start + 8);
+
+             data__nw_size =3D data__nelements;
+    diff -u save/generated_client_demarshallers.c common/generated_client_d=
+emarshallers.c
+    --- save/generated_client_demarshallers.c	2018-06-22 22:13:48.626793919=
+ +0100
+    +++ common/generated_client_demarshallers.c	2018-06-22 22:14:03.0041531=
+95 +0100
+    @@ -225,6 +225,9 @@
+         uint64_t data__nelements;
+
+         { /* data */
+    +        if (SPICE_UNLIKELY((start + 0) > message_end)) {
+    +            goto error;
+    +        }
+             data__nelements =3D message_end - (start + 0);
+
+             data__nw_size =3D data__nelements;
+    @@ -243,6 +246,9 @@
+         *free_message =3D nofree;
+         return data;
+
+    +   error:
+    +    free(data);
+    +    return NULL;
+     }
+
+     static uint8_t * parse_msg_set_ack(uint8_t *message_start, uint8_t *me=
+ssage_end, SPICE_GNUC_UNUSED int minor, size_t *size, message_destructor_t =
+*free_message)
+    @@ -301,6 +307,9 @@
+         SpiceMsgPing *out;
+
+         { /* data */
+    +        if (SPICE_UNLIKELY((start + 12) > message_end)) {
+    +            goto error;
+    +        }
+             data__nelements =3D message_end - (start + 12);
+
+             data__nw_size =3D data__nelements;
+    @@ -6574,6 +6583,9 @@
+             }
+
+             { /* data */
+    +            if (SPICE_UNLIKELY((start2 + 2 + cursor_u__nw_size) > mess=
+age_end)) {
+    +                goto error;
+    +            }
+                 cursor_data__nelements =3D message_end - (start2 + 2 + cur=
+sor_u__nw_size);
+
+                 cursor_data__nw_size =3D cursor_data__nelements;
+    @@ -6670,6 +6682,9 @@
+             }
+
+             { /* data */
+    +            if (SPICE_UNLIKELY((start2 + 2 + cursor_u__nw_size) > mess=
+age_end)) {
+    +                goto error;
+    +            }
+                 cursor_data__nelements =3D message_end - (start2 + 2 + cur=
+sor_u__nw_size);
+
+                 cursor_data__nw_size =3D cursor_data__nelements;
+    @@ -6907,6 +6922,9 @@
+         SpiceMsgPlaybackPacket *out;
+
+         { /* data */
+    +        if (SPICE_UNLIKELY((start + 4) > message_end)) {
+    +            goto error;
+    +        }
+             data__nelements =3D message_end - (start + 4);
+
+             data__nw_size =3D data__nelements;
+    @@ -6961,6 +6979,9 @@
+         SpiceMsgPlaybackMode *out;
+
+         { /* data */
+    +        if (SPICE_UNLIKELY((start + 6) > message_end)) {
+    +            goto error;
+    +        }
+             data__nelements =3D message_end - (start + 6);
+
+             data__nw_size =3D data__nelements;
+    @@ -7559,6 +7580,9 @@
+         SpiceMsgTunnelSocketData *out;
+
+         { /* data */
+    +        if (SPICE_UNLIKELY((start + 2) > message_end)) {
+    +            goto error;
+    +        }
+             data__nelements =3D message_end - (start + 2);
+
+             data__nw_size =3D data__nelements;
+    @@ -7840,6 +7864,9 @@
+         }
+
+         { /* compressed_data */
+    +        if (SPICE_UNLIKELY((start + 1 + u__nw_size) > message_end)) {
+    +            goto error;
+    +        }
+             compressed_data__nelements =3D message_end - (start + 1 + u__n=
+w_size);
+
+             compressed_data__nw_size =3D compressed_data__nelements;
+    diff -u save/generated_server_demarshallers.c common/generated_server_d=
+emarshallers.c
+    --- save/generated_server_demarshallers.c	2018-06-22 22:13:48.627793944=
+ +0100
+    +++ common/generated_server_demarshallers.c	2018-06-22 22:14:05.2312088=
+47 +0100
+    @@ -306,6 +306,9 @@
+         uint64_t data__nelements;
+
+         { /* data */
+    +        if (SPICE_UNLIKELY((start + 0) > message_end)) {
+    +            goto error;
+    +        }
+             data__nelements =3D message_end - (start + 0);
+
+             data__nw_size =3D data__nelements;
+    @@ -324,6 +327,9 @@
+         *free_message =3D nofree;
+         return data;
+
+    +   error:
+    +    free(data);
+    +    return NULL;
+     }
+
+     static uint8_t * parse_msgc_disconnecting(uint8_t *message_start, uint=
+8_t *message_end, SPICE_GNUC_UNUSED int minor, size_t *size, message_destru=
+ctor_t *free_message)
+    @@ -1259,6 +1265,9 @@
+         SpiceMsgcRecordPacket *out;
+
+         { /* data */
+    +        if (SPICE_UNLIKELY((start + 4) > message_end)) {
+    +            goto error;
+    +        }
+             data__nelements =3D message_end - (start + 4);
+
+             data__nw_size =3D data__nelements;
+    @@ -1313,6 +1322,9 @@
+         SpiceMsgcRecordMode *out;
+
+         { /* data */
+    +        if (SPICE_UNLIKELY((start + 6) > message_end)) {
+    +            goto error;
+    +        }
+             data__nelements =3D message_end - (start + 6);
+
+             data__nw_size =3D data__nelements;
+    @@ -1841,6 +1853,9 @@
+         SpiceMsgcTunnelSocketData *out;
+
+         { /* data */
+    +        if (SPICE_UNLIKELY((start + 2) > message_end)) {
+    +            goto error;
+    +        }
+             data__nelements =3D message_end - (start + 2);
+
+             data__nw_size =3D data__nelements;
+    @@ -2057,6 +2072,9 @@
+         }
+
+         { /* compressed_data */
+    +        if (SPICE_UNLIKELY((start + 1 + u__nw_size) > message_end)) {
+    +            goto error;
+    +        }
+             compressed_data__nelements =3D message_end - (start + 1 + u__n=
+w_size);
+
+             compressed_data__nw_size =3D compressed_data__nelements;
+
+Signed-off-by: Frediano Ziglio <fziglio@redhat.com>
+---
+ python_modules/demarshal.py  | 1 +
+ tests/test-marshallers.c     | 8 ++++++++
+ tests/test-marshallers.h     | 5 +++++
+ tests/test-marshallers.proto | 5 +++++
+ 4 files changed, 19 insertions(+)
+
+diff --git a/python_modules/demarshal.py b/python_modules/demarshal.py
+index 7b53361..5a237a6 100644
+--- a/python_modules/demarshal.py
++++ b/python_modules/demarshal.py
+@@ -331,6 +331,7 @@ def write_validate_array_item(writer, container, item, =
+scope, parent_scope, star
+         writer.assign(nelements, array.size)
+     elif array.is_remaining_length():
+         if element_type.is_fixed_nw_size():
++            writer.error_check("%s > message_end" % item.get_position())
+             if element_type.get_fixed_nw_size() =3D=3D 1:
+                 writer.assign(nelements, "message_end - %s" % item.get_pos=
+ition())
+             else:
+diff --git a/tests/test-marshallers.c b/tests/test-marshallers.c
+index ae90770..af2e4e9 100644
+--- a/tests/test-marshallers.c
++++ b/tests/test-marshallers.c
+@@ -62,6 +62,14 @@ int main(int argc G_GNUC_UNUSED, char **argv G_GNUC_UNUS=
+ED)
+     if (free_res) {
+         free(data);
+     }
++
++    len =3D 4;
++    data =3D g_new0(uint8_t, len);
++    memset(data, 0, len);
++    msg =3D (SpiceMsgMainShortDataSubMarshall *) spice_parse_msg(data, dat=
+a + len, 1, 3, 0,
++                                                               &msg_len, &=
+free_message);
++    g_assert_null(msg);
++
+     spice_marshaller_destroy(marshaller);
+=20
+     return 0;
+diff --git a/tests/test-marshallers.h b/tests/test-marshallers.h
+index 7b9f6c5..4267f8c 100644
+--- a/tests/test-marshallers.h
++++ b/tests/test-marshallers.h
+@@ -12,5 +12,10 @@ typedef struct {
+     int8_t *name;
+ } SpiceMsgMainArrayMessage;
+=20
++typedef struct {
++    uint32_t dummy[2];
++    uint8_t data[0];
++} SpiceMsgMainLenMessage;
++
+ #endif /* _H_TEST_MARSHALLERS */
+=20
+diff --git a/tests/test-marshallers.proto b/tests/test-marshallers.proto
+index 95d086c..2b11ee8 100644
+--- a/tests/test-marshallers.proto
++++ b/tests/test-marshallers.proto
+@@ -8,6 +8,11 @@ channel TestChannel {
+    message {
+       int8 name[];
+    } ArrayMessage;
++
++    message {
++        uint32 dummy[2];
++        uint8 data[] @end;
++    } LenMessage;
+ };
+=20
+ protocol Spice {
+--=20
+2.17.1
+
+
+--gE7i1rD7pdK0Ng3j--
+
+--PPYy/fEw/8QCHSq3
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
+
+iQIcBAEBCgAGBQJbdhwdAAoJEGohqWcZR7qpM/kP/1eRA5iXtBEwbbq0cBZBdWg0
+KFCbEkOz1VFBcdROwJgNuKIK4mr0jWt8/VFfTzAJEq7sHZiickfbJ8VfnQMh9Y7H
+cHoS46EkC0IVfakS9NSipr1T5w/V/Wg+WECJLCK6ATtUqpnpIz2oNm8aHigOTHO0
+Kw1bplblGqACaKJseG+crPRugt0HlM80+YzniMH/g2v/5Zg+Lz/ZE8PoXOHstJJd
+A6qHtIUUtiTVPcSYW5tz36sQtopPFoUxO/jbW7GAsA1hnAlHisk4kvKo7xzOPw5q
+FKJMduFHLUXmHGegZd1QCwgMNUiubS0ShzRLKly8k7kTXEcvHVvjBHeGuMzzxFQB
+mpxeZNMEzbuB1hLpyYGldhtMUYJ1CKs70Oj3vz+MbLG3+/wiCa7gncqbZTdFKuHy
+10h+iYUqyywmQMiyVnbfCSPglubQ2d6m3jReyJQ4BbwXimpO8rkhJ2oeFTldp4P6
+GJbhzbHCu+w4OfjD5XS/NwJrvGQ5lx99SU5qWcgXtNoaHJ0IX+W/JOJuPIbpuV/R
+DTTg748GP6JONpyVNj5+9kQI/YUzyFipeXEZI4IvnaUdBHUAjAeFXsNdTEZmhDzA
+/ulqkNCCI1Q0+trb7fpL/O56ve+KQRpBgX912Q5h7/k1uWhWS02Z5D6GUlZ8C6h1
+5shtcsjCuOMHwTC+lPpZ
+=T2eP
+-----END PGP SIGNATURE-----
+
+--PPYy/fEw/8QCHSq3--
