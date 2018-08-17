@@ -1,97 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/24/3
-Message-ID: <alpine.DEB.2.20.1801240021400.4042@tvnag.unkk.fr>
-Date: Wed, 24 Jan 2018 08:11:30 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: HTTP/2 trailer out-of-bounds read
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/17/10
+Message-ID: <17fa2b2d-93c6-4153-5d7d-835a65ecc047@securitum.pl>
+Date: Fri, 17 Aug 2018 23:02:08 +0200
+From: Dariusz Tytko <dariusz.tytko@...uritum.pl>
+To: oss-security@...ts.openwall.com
+Subject: Re: OpenSSH Username Enumeration
 Content-Type: text/plain; charset=utf-8
 
-HTTP/2 trailer out-of-bounds read
-=================================
+Hi,
 
-Project curl Security Advisory, January 24th 2018 -
-[Permalink](https://curl.haxx.se/docs/adv_2018-824a.html)
+We have reported this bug on 16th July 2018. Publication of the write-up
+is waiting for the official patch.
 
-VULNERABILITY
--------------
-
-libcurl contains an out bounds read in code handling HTTP/2 trailers.
-
-It was [reported](https://github.com/curl/curl/pull/2231) that reading an
-HTTP/2 trailer could mess up future trailers since the stored size was one
-byte less than required.
-
-The problem is that the code that creates HTTP/1-like headers from the HTTP/2
-trailer data once appended a string like `":"` to the target buffer, while
-this was recently changed to `": "` (a space was added after the colon) but
-the associated math wasn't updated correspondingly.
-
-When accessed, the data is read out of bounds and causes either a crash or
-that the (too large) data gets passed to the libcurl callback. This might lead
-to a denial-of-service situation or an information disclosure if someone has a
-service that echoes back or uses the trailers for something.
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-This bug was introduced in commit
-[0761a51ee0551ad9e5](https://github.com/curl/curl/commit/0761a51ee0551ad9e5),
-May 11 2016.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2018-1000005 to this issue.
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: libcurl 7.49.0 to and including 7.57.0
-- Not affected versions: libcurl < 7.49.0 and >= 7.58.0
-
-libcurl is used by many applications, but not always advertised as such.
-
-THE SOLUTION
-------------
-
-In libcurl version 7.58.0, the allocation size is corrected.
-
-A [patch for
-CVE-2018-1000005](https://github.com/curl/curl/commit/fa3dbb9a147488a294.patch)
-is available.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl to version 7.58.0
-
-  B - Apply the patch to your version and rebuild
-
-TIME LINE
----------
-
-It was publicly [reported to the curl
-project](https://github.com/curl/curl/issues/2231) on January 10, 2018.
-
-The security impact was realized and assessed on January 11. The fix was
-merged publicly in git on the same day, not mentioning the security impact.
-
-We contacted distros@...nwall on January 17.
-
-curl 7.58.0 was released on January 24 2018, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-Reported and patched by Zhouyihai Ding. Researched by Ray Satiro.
-
-Thanks a lot!
+W dniu 17.08.2018 o 20:31, Salvatore Bonaccorso pisze:
+> Hi,
+>
+> On Wed, Aug 15, 2018 at 09:05:58AM -0700, Qualys Security Advisory wrote:
+>> Hi all,
+>>
+>> We sent the following email to openssh@...nssh.com and
+>> distros@...openwall.org about an hour ago, and it was decided that we
+>> should send it to oss-security@...ts.openwall.com right away (as far as
+>> we know, no CVE has been assigned to this issue yet):
+>>
+>> ========================================================================
+>>
+>> While reviewing the latest OpenSSH commits, we stumbled across:
+>>
+>> https://github.com/openbsd/src/commit/779974d35b4859c07bc3cb8a12c74b43b0a7d1e0
+>>
+>> Date:   Tue Jul 31 03:10:27 2018 +0000
+>>     delay bailout for invalid authenticating user until after the packet
+>>     containing the request has been fully parsed. Reported by Dariusz Tytko
+>>     and Michal Sajdak; ok deraadt
+>>
+>> We realized that without this patch, a remote attacker can easily test
+>> whether a certain user exists or not (username enumeration) on a target
+>> OpenSSH server:
+>>
+>>   87 static int
+>>   88 userauth_pubkey(struct ssh *ssh)
+>>   89 {
+>>  ...
+>>  101         if (!authctxt->valid) {
+>>  102                 debug2("%s: disabled because of invalid user", __func__);
+>>  103                 return 0;
+>>  104         }
+>>  105         if ((r = sshpkt_get_u8(ssh, &have_sig)) != 0 ||
+>>  106             (r = sshpkt_get_cstring(ssh, &pkalg, NULL)) != 0 ||
+>>  107             (r = sshpkt_get_string(ssh, &pkblob, &blen)) != 0)
+>>  108                 fatal("%s: parse request failed: %s", __func__, ssh_err(r));
+>>
+>> The attacker can try to authenticate a user with a malformed packet (for
+>> example, a truncated packet), and:
+>>
+>> - if the user is invalid (it does not exist), then userauth_pubkey()
+>>   returns immediately, and the server sends an SSH2_MSG_USERAUTH_FAILURE
+>>   to the attacker;
+>>
+>> - if the user is valid (it exists), then sshpkt_get_u8() fails, and the
+>>   server calls fatal() and closes its connection to the attacker.
+>>
+>> We believe that this issue warrants a CVE; it affects all operating
+>> systems, all OpenSSH versions (we went back as far as OpenSSH 2.3.0,
+>> released in November 2000), and is easier to exploit than previous
+>> OpenSSH username enumerations (which were all timing attacks):
+>>
+>> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2003-0190
+>> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-5229
+>> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-6210
+> This new issue got assigned CVE-2018-15473 by MITRE.
+>
+> Regards,
+> Salvatore
 
 -- 
+Dariusz Tytko
 
-  / daniel.haxx.se
+securitum.pl - bezpieczeństwo systemów IT.
+sekurak.pl   - piszemy o bezpieczeństwie.
+
+
