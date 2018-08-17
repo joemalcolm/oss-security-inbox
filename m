@@ -1,155 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/05/1
-Message-Id: <8E8091B7-344D-458B-A6C5-D3E0F71666AA@beckweb.net>
-Date: Thu, 5 Apr 2018 12:37:58 +0200
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/17/4
+Message-ID: <CAH8yC8mk=9pj20AUcDuCgJ7aabf+2chHhknS5=pjQF5LSq7Ptw@mail.gmail.com>
+Date: Fri, 17 Aug 2018 06:33:12 -0400
+From: Jeffrey Walton <noloader@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Multiple vulnerabilities in Jenkins plugins
+Cc: Florian Weimer <fweimer@...hat.com>, Doran Moppert <dmoppert@...hat.com>,  Christophe Fergeau <cfergeau@...hat.com>
+Subject: Re: spice CVE-2018-10873: post-auth crash or potential heap corruption when demarshalling
 Content-Type: text/plain; charset=utf-8
 
+On Fri, Aug 17, 2018 at 5:43 AM, Frediano Ziglio <fziglio@...hat.com> wrote:
+>> On 08/17/2018 02:51 AM, Doran Moppert wrote:
+>> >      +        if (SPICE_UNLIKELY((start + 2) > message_end)) {
+>> >      +            goto error;
+>> >      +        }
+>>
+>> These checks are still technically invalid because start + 2 is not a
+>> valid pointer if it points past the allocated object.
+>>
+> Technical but not real. Unless it wraps is correct...
 
-> On 26. Mar 2018, at 13:22, Daniel Beck <ml@...kweb.net> wrote:
-> 
-> SECURITY-261
-> GitHub Pull Request Builder Plugin stored serialized objects in `build.xml` 
-> files that contained the credential used to poll Jenkins. This can be used 
-> by users with master file system access to obtain GitHub credentials.
-> 
-> Since 1.40.0, the plugin no longer stores serialized objects containing the 
-> credential on disk.
-> 
-> Builds started before the plugin was updated to 1.40.0 will retain the 
-> encoded credentials on disk. We strongly recommend revoking old GitHub 
-> credentials used in Jenkins.
+I believe Florian is correct. I think the most freedom you are allowed
+is to access one beyond the "end" of the array; otherwise it is
+undefined behavior. The compiler is free to remove the code or dragons
+can fly out your nose.
 
-CVE-2018-1000142
-
-
-> SECURITY-262
-> GitHub Pull Request Builder Plugin stored the webhook secret shared between 
-> Jenkins and GitHub in plain text.
-> 
-> This allowed users with Jenkins master local file system access and Jenkins 
-> administrators to retrieve the stored password. The latter could result in 
-> exposure of the passwords through browser extensions, cross-site scripting 
-> vulnerabilities, and similar situations.
-> 
-> GitHub Pull Request Builder Plugin 1.32.1 and newer stores the webhook 
-> secret encrypted on disk.
-
-CVE-2018-1000143
-
-
-> SECURITY-308
-> Cucumber Living Documentation Plugin disabled the 'Content-Security-Policy' 
-> HTTP header XSS protection for files served by Jenkins until Jenkins was 
-> restarted whenever a Cucumber peport was viewed by any user.
-> 
-> This has been addressed in version 1.1.0 of the plugin, and it will now 
-> request that users manually change the Content-Security-Policy option in 
-> Jenkins.
-
-CVE-2018-1000144
-
-
-> SECURITY-373
-> Perforce Plugin encrypts its credentials using DES and a public key stored 
-> in its public source code, so it only serves as basic obfuscation. This 
-> allowed users with Jenkins master local file system access and Jenkins 
-> administrators to retrieve the stored password. The latter could result in 
-> exposure of the passwords through browser extensions, cross-site scripting 
-> vulnerabilities, and similar situations.
-> 
-> As of publication of this advisory, there is no fix. The plugin has been 
-> removed from publication at the request of its former maintainers.
-
-CVE-2018-1000145
-
-
-> SECURITY-504
-> vSphere Plugin disabled SSL/TLS certificate validation unconditionally,
-> allowing potential man-in-the-middle attacks.
-> 
-> vSphere Plugin 2.17 now has SSL/TLS certificate validation enabled by
-> default.
-
-CVE-2018-1000151
-
-
-> SECURITY-519
-> Liquibase Runner Plugin allows users with Job/Configure permission to 
-> configure its build step in a way that loads arbitrary class files into the 
-> Jenkins master JVM, resulting in arbitrary code execution.
-> 
-> As of publication of this advisory, there is no fix.
-
-CVE-2018-1000146
-
-
-> SECURITY-536
-> Perforce Plugin implements its own credential encryption using DES and an 
-> encryption key stored in its public source code. This is not considered a 
-> secret by Jenkins, resulting in potential exposure of Perforce credentials 
-> stored in job configurations to users with Extended Read permission.
-> While these are encrypted, this can only be considered basic obfuscation 
-> due to the hard-coded public encryption key used.
-> 
-> As of publication of this advisory, there is no fix.
-
-CVE-2018-1000147
-
-
-> SECURITY-545
-> Copy To Slave Plugin allows users with Job/Configure permissions to 
-> configure it in such a way that it allows obtaining arbitrary files 
-> accessible to the Jenkins master process from the Jenkins master file
-> system.
-> 
-> As of publication of this advisory, there is no fix.
-
-CVE-2018-1000148
-
-
-> SECURITY-630
-> Ansible Plugin disabled host key verification by default, having it only as 
-> an opt-in option.
-> 
-> Ansible Plugin 1.0 now enables host key verification by default, adding 
-> options allowing users to opt out.
-> 
-> Existing configurations that previously did not opt into host key 
-> verification will have host key verification enabled after update, possibly 
-> resulting in failures.
-
-CVE-2018-1000149
-
-
-> SECURITY-736
-> Reverse Proxy Auth Plugin persisted a cache of granted authorities (group 
-> memberships) on disk.
-> 
-> This could allow users with local Jenkins master file system access to 
-> obtain group membership information of Jenkins users.
-
-CVE-2018-1000150
-
-
-> SECURITY-745
-> vSphere Plugin did not perform permission checks on methods implementing 
-> form validation. This allowed users with Overall/Read access to Jenkins to 
-> perform various actions such as:
-> 
-> * Connect to an attacker-specified vSphere server using attacker-specified 
->  credentials IDs obtained through another method, capturing credentials 
->  stored in Jenkins
-> * Connect to configured vSphere servers and looking up information, 
->  potentially resulting in denial of service
-> 
-> Additionally, these form validation methods did not require POST requests, 
-> resulting in a CSRF vulnerability.
-> 
-> These form validation methods now require POST requests and appropriate 
-> user permissions.
-
-CVE-2018-1000152 (improper authorization) and CVE-2018-1000153 (CSRF)
-
+Jeff
