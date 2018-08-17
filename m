@@ -1,34 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/23/15
-Message-ID: <alpine.GSO.2.20.1808230958120.3639@scrappy.simplesystems.org>
-Date: Thu, 23 Aug 2018 10:03:40 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/17/8
+Message-ID: <20180817183154.GA18661@eldamar.local>
+Date: Fri, 17 Aug 2018 20:31:54 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
+Subject: Re: OpenSSH Username Enumeration
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 23 Aug 2018, Leonardo Taccari wrote:
->
-> (Regarding the `file.ps2' and `file.ps3' examples without `PS2:' or
-> `PS3:' prefixes according `convert -debug Policy -log "%e"' it seems
-> that they ends up as:
->
-> Domain: Coder; rights=Read; pattern="PS" ...
->
-> ...so should be blocked by the workaround described in
-> VU#332928. But please correct me if I'm wrong.)
+Hi,
 
-This is likely due to header magic detection (e.g. "%!PS-Adobe").  It 
-is possible that a different path will be taken if the common 
-Postscript header is not detected.  The file extension may then be 
-used as a hint.  Also, there are a wide varieties of ImageMagick 
-versions in use, with a wide variety of behaviors.
+On Wed, Aug 15, 2018 at 09:05:58AM -0700, Qualys Security Advisory wrote:
+> Hi all,
+> 
+> We sent the following email to openssh@...nssh.com and
+> distros@...openwall.org about an hour ago, and it was decided that we
+> should send it to oss-security@...ts.openwall.com right away (as far as
+> we know, no CVE has been assigned to this issue yet):
+> 
+> ========================================================================
+> 
+> While reviewing the latest OpenSSH commits, we stumbled across:
+> 
+> https://github.com/openbsd/src/commit/779974d35b4859c07bc3cb8a12c74b43b0a7d1e0
+> 
+> Date:   Tue Jul 31 03:10:27 2018 +0000
+>     delay bailout for invalid authenticating user until after the packet
+>     containing the request has been fully parsed. Reported by Dariusz Tytko
+>     and Michal Sajdak; ok deraadt
+> 
+> We realized that without this patch, a remote attacker can easily test
+> whether a certain user exists or not (username enumeration) on a target
+> OpenSSH server:
+> 
+>   87 static int
+>   88 userauth_pubkey(struct ssh *ssh)
+>   89 {
+>  ...
+>  101         if (!authctxt->valid) {
+>  102                 debug2("%s: disabled because of invalid user", __func__);
+>  103                 return 0;
+>  104         }
+>  105         if ((r = sshpkt_get_u8(ssh, &have_sig)) != 0 ||
+>  106             (r = sshpkt_get_cstring(ssh, &pkalg, NULL)) != 0 ||
+>  107             (r = sshpkt_get_string(ssh, &pkblob, &blen)) != 0)
+>  108                 fatal("%s: parse request failed: %s", __func__, ssh_err(r));
+> 
+> The attacker can try to authenticate a user with a malformed packet (for
+> example, a truncated packet), and:
+> 
+> - if the user is invalid (it does not exist), then userauth_pubkey()
+>   returns immediately, and the server sends an SSH2_MSG_USERAUTH_FAILURE
+>   to the attacker;
+> 
+> - if the user is valid (it exists), then sshpkt_get_u8() fails, and the
+>   server calls fatal() and closes its connection to the attacker.
+> 
+> We believe that this issue warrants a CVE; it affects all operating
+> systems, all OpenSSH versions (we went back as far as OpenSSH 2.3.0,
+> released in November 2000), and is easier to exploit than previous
+> OpenSSH username enumerations (which were all timing attacks):
+> 
+> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2003-0190
+> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-5229
+> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-6210
 
-The version of ImageMagick provided by the Ubuntu Linux I am using at 
-this moment dates from 2012!
+This new issue got assigned CVE-2018-15473 by MITRE.
 
-Bob
--- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+Regards,
+Salvatore
