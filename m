@@ -1,119 +1,100 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/11/2
-Message-ID: <20180711082156.GA8145@f195.suse.de>
-Date: Wed, 11 Jul 2018 10:21:56 +0200
-From: Matthias Gerstner <mgerstner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: polkit: CVE-2018-1116: polkitd trusting client-supplied UID allows spoofed authentication dialogs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/20/4
+Message-Id: <E1frgmo-0003i7-Bf@xenbits.xenproject.org>
+Date: Mon, 20 Aug 2018 09:47:46 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 270 v3 (CVE-2018-15471) - Linux netback driver OOB access in hash handling
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-during a code reviewing related to polkit
-<https://www.freedesktop.org/wiki/Software/polkit/> I found a spoofed
-authentication vulnerability in the implementation of the polkitd
-daemon. It allows a local attacker to trigger authentication dialogs for
-other users' processes. This way the attacker can obtain certain
-information about the polkit rules configuration of other users, confuse
-other users or DoS other users by infinitely triggering authentication
-dialogs.
+            Xen Security Advisory CVE-2018-15471 / XSA-270
+                              version 3
 
-Basically the issue is that an attacker is able to specify
-arbitrary target process UIDs when talking to polkitd via D-Bus like
-this:
+           Linux netback driver OOB access in hash handling
 
-$ gdbus call --system --dest org.freedesktop.PolicyKit1 \
-	--object-path /org/freedesktop/PolicyKit1/Authority \
-	--method org.freedesktop.PolicyKit1.Authority.CheckAuthorization \
-	'("unix-process", {"pid": <uint32 ${PID}>, "start-time": <uint64 0>, "uid": <${UID}>})' \
-	org.freedesktop.timedate1.set-time '[]' 1 ''
+UPDATES IN VERSION 3
+====================
 
-Where ${PID} needs to be the process ID of the target process and ${UID}
-the user ID of the calling process i.e. `id -u`.
+CVE assigned.
 
-Upstream just released version 0.115 of polkit that addresses this issue
-by way of commit bc7ffad53643a9c80231fc41f5582d6a8931c32c. The issue was
-introduced with a fix for CVE-2013-4288 in polkit version 0.112.
+ISSUE DESCRIPTION
+=================
 
-Further below you can find the upstream commit message with a more
-detailed explanation of the issue and its fix. I want to thank the
-upstream developers for the constructive communication and quick
-handling of the issue.
+Linux's netback driver allows frontends to control mapping of requests
+to request queues.  When processing a request to set or change this
+mapping, some input validation was missing or flawed.
 
-Best regards
+IMPACT
+======
 
-Matthias
+A malicious or buggy frontend may cause the (usually privileged)
+backend to make out of bounds memory accesses, potentially resulting
+in one or more of privilege escalation, Denial of Service (DoS), or
+information leaks.
 
-Timeline:
+VULNERABLE SYSTEMS
+==================
 
-2018-06-21: I discovered and analyzed the issue
-2018-06-22: I reported the issue privately to upstream via
-    dbus-security@...ts.freedesktop.org. In the following days upstream
-    devised a patch that was discussed and reviewed on the mailing list.
-    Publication has been scheduled for 2018-07-10 together with the
-    release of the fixed polkit version.
-2018-07-10: The upstream release was published as scheduled.
+Linux kernel versions from 4.7 onwards are affected.
 
-References:
+MITIGATION
+==========
 
-- Upstream Release Notice: https://lists.freedesktop.org/archives/polkit-devel/2018-July/000583.html
-- Upstream Fix: https://cgit.freedesktop.org/polkit/commit/?id=bc7ffad53643a9c80231fc41f5582d6a8931c32c
-- SUSE Bug for the issue: https://bugzilla.suse.com/show_bug.cgi?id=1099031
+There is no known mitigation.
 
-Upstream Commit Message:
+CREDITS
+=======
 
-     Fix CVE-2018-1116: Trusting client-supplied UID
-      
-     As part of CVE-2013-4288, the D-Bus clients were allowed (and
-     encouraged) to submit the UID of the subject of authorization checks
-     to avoid races against UID changes (notably using executables
-     set-UID to root).
-     
-     However, that also allowed any client to submit an arbitrary UID, and
-     that could be used to bypass "can only ask about / affect the same UID"
-     checks in CheckAuthorization / RegisterAuthenticationAgent /
-     UnregisterAuthenticationAgent.  This allowed an attacker:
-     
-     - With CheckAuthorization, to cause the registered authentication
-       agent in victim's session to pop up a dialog, or to determine whether
-       the victim currently has a temporary authorization to perform an
-       operation.
-     
-       (In principle, the attacker can also determine whether JavaScript
-       rules allow the victim process to perform an operation; however,
-       usually rules base their decisions on information determined from
-       the supplied UID, so the attacker usually won't learn anything new.)
-     
-     - With RegisterAuthenticationAgent, to prevent the victim's
-       authentication agent to work (for a specific victim process),
-       or to learn about which operations requiring authorization
-       the victim is attempting.
-     
-     To fix this, expose internal _polkit_unix_process_get_owner() /
-     obsolete polkit_unix_process_get_owner() as a private
-     polkit_unix_process_get_racy_uid__() (being more explicit about the
-     dangers on relying on it), and use it in
-     polkit_backend_session_monitor_get_user_for_subject() to return
-     a boolean indicating whether the subject UID may be caller-chosen.
-     
-     Then, in the permission checks that require the subject to be
-     equal to the caller, fail on caller-chosen UIDs (and continue
-     through the pre-existing code paths which allow root, or root-designated
-     server processes, to ask about arbitrary subjects.)
-     
-     Signed-off-by: Miloslav Trmač <mitr@...hat.com>
+This issue was discovered by Felix Wilhelm of Google Project Zero.
 
+RESOLUTION
+==========
 
--- 
-Matthias Gerstner <matthias.gerstner@...e.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Telefon: +49 911 740 53 290
-GPG Key ID: 0x14C405C971923553
+Applying the attached patch resolves this issue.
 
-SUSE Linux GmbH
-GF: Felix Imendörffer, Jane Smithard, Graham Norton
-HRB 21284 (AG Nuernberg)
+xsa270.patch           Linux 4.7 ... 4.17
 
+$ sha256sum xsa270*
+392868c37c1fe0d16c36086208fd0fc045c1baf8ab9b207995bce72681cb8c54  xsa270.patch
+$
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJbeo4MAAoJEIP+FMlX6CvZOpsH/34RpIZaTTVsZWCVyNotieFf
+yLfCqu+9bbRVNEqYDq6NViFrj9I6WwvLpp8s7HZheJvdXlyIO1cYCen4QX8VSPqI
+VaRD7Jcu99drK1hy/t80AbicS+t9qvew97SzjG+MIIJZK7dnxG/Q0nbHLCg0zdCg
+5G+pOTl17DK+4eM7Z1duo2BK1sxCms6I/YJVFfkGjC99vXKYAj2GAWGxVbiEwDWT
+4jvf3R3w5athJNR4Lf6FxDz6MzvHaYNFQKikc0AMaTcO5HubumGXQQn5JQelAAno
+O6ujB25kF1j29A2PwYvBSxBDTD4uWQeWiv9kWML1YmzsQv1cy6Un0vwXtNhhb6s=
+=SC+y
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa270.patch" of type "application/octet-stream" (2105 bytes)
