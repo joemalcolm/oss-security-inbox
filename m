@@ -1,76 +1,125 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/14/4
-Message-ID: <20180514145244.64c73b08@redhat.com>
-Date: Mon, 14 May 2018 14:52:44 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: Bryan Pendleton <bpendleton.derby@...il.com>
-Cc: oss-security@...ts.openwall.com, security <security@...che.org>, gregory draperi <gregory.draperi@...il.com>
-Subject: Re: [ANNOUNCE] CVE-2018-1313: Apache Derby externally-controlled input vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/20/1
+Message-Id: <E1frgmY-0003e7-W2@xenbits.xenproject.org>
+Date: Mon, 20 Aug 2018 09:47:30 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 269 v3 (CVE-2018-15468) - x86: Incorrect MSR_DEBUGCTL handling lets guests enable BTS
 Content-Type: text/plain; charset=utf-8
 
-Hi Bryan!
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Sat, 5 May 2018 07:52:08 -0700 Bryan Pendleton wrote:
+            Xen Security Advisory CVE-2018-15468 / XSA-269
+                              version 3
 
-> CVE-2018-1313: Apache Derby externally-controlled input vulnerability
-> 
-> Severity: Important
-> 
-> Vendor:
-> The Apache Software Foundation
-> 
-> Versions Affected:
-> Derby 10.3.1.4 to 10.14.1.0
-> 
-> Description:
-> A specially-crafted network packet can be used to request the Derby
-> Network Server to boot a database whose location and contents are under
-> the user's control. If the Derby Network Server is not running with a
-> Java Security Manager policy file, the attack is successful. If the
-> server is using a policy file, the policy file must permit the
-> database location to be read for the attack to work. The default
-> Derby Network Server policy file distributed with the affected releases
-> includes a permissive policy as the default Network Server policy, which
-> allows the attack to work.
-> 
-> Mitigation:
-> Users should specify an explicit security policy file, as described here:
-> http://db.apache.org/derby/docs/10.14/security/csecjavasecurity.html
-> 
-> Derby release 10.14.2.0 disallows the specially-crafted network packet,
-> and also modifies the default Derby Network Server policy file to be
-> significantly less permissive (the default file access policy is now
-> limited to the derby.system.home directory and the directory from
-> which the Derby jar files were loaded). It is still recommended that
-> production installations of the Derby Network Server should specify
-> an explicit security policy file.
-> 
-> Credit:
-> This issue was discovered by Grégory Draperi
+      x86: Incorrect MSR_DEBUGCTL handling lets guests enable BTS
 
-Can you clarify what upstream considers to be the fix for this issue?
-Some sources such as:
+UPDATES IN VERSION 3
+====================
 
-http://www.systemtek.co.uk/2018/05/apache-derby-externally-controlled-input-vulnerability-cve-2018-1313/
+CVE assigned.
 
-indicate that the fix is the change to the default security policy,
-i.e. DERBY-6987.  However, the wording above seems to consider that as
-more of an additional hardening fix, and the actual security fix is
-change to handling of the ping command to disallow additional
-arguments, i.e. DERBY-6986.
+ISSUE DESCRIPTION
+=================
 
-Related to the above is the question regarding the list of affected
-versions.  Version 10.3.1.4 is listed as the first affected, however
-the "ping with arguments" should pre-date that version, and even
-DERBY-6986 indicates it's old code.  However, 10.3.1.4 seems to be the
-first version to include the default security policy, which may be the
-reason why it's listed as the first affected.
+The DEBUGCTL MSR contains several debugging features, some of which virtualise
+cleanly, but some do not.  In particular, Branch Trace Store is not
+virtualised by the processor, and software has to be careful to configure it
+suitably not to lock up the core.  As a result, it must only be available to
+fully trusted guests.
 
-And one more clarification for those of us not familiar with Derby:
-What is the known impact of opening some untrusted database?  Is it
-known to e.g. allow arbitrary code execution directly in Derby?
+Unfortunately, in the case that vPMU is disabled, all value checking was
+skipped, allowing the guest to chose any MSR_DEBUGCTL setting it likes.
 
-Thank you!
+IMPACT
+======
 
--- 
-Tomas Hoger / Red Hat Product Security
+A malicious or buggy guest administrator can lock up the entire host, causing
+a Denial of Service.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen versions 4.6 and later are vulnerable.
+
+Only systems using Intel CPUs are affected. ARM and AMD systems are
+unaffected.
+
+Only x86 HVM or PVH guests can exploit the vulnerability.  x86 PV guests
+cannot exploit the vulnerability.
+
+MITIGATION
+==========
+
+Running only x86 PV guests avoids the vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Andrew Cooper of Citrix.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa269.patch           xen-unstable
+xsa269-4.11.patch      Xen 4.11
+xsa269-4.10.patch      4.10, 4.9
+xsa269-4.8.patch       Xen 4.8, 4.7, 4.6
+
+$ sha256sum xsa269*
+4733d09bb63523744ca2ee172e2fade0c39082c15d9a746144f279cf1359b723  xsa269.meta
+5a5fe36f1f876a5029493e7fa191436fd021929aaba2d820636df17f4ed20113  xsa269.patch
+ea11cef818050bca13d4eb89294627c97e4cdb830124f679e77d37a44a370286  xsa269-4.8.patch
+45ba1823530f329dd73088b77098e686b32f5daac0bc5177b2afea09f8c3593a  xsa269-4.10.patch
+e0ca060311fb9ba3247e2fe65bca4806a131644f8894fd08be374904904b1944  xsa269-4.11.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJbeo4KAAoJEIP+FMlX6CvZfakIAJRgw9LWW7fnr0WX11dt/Rm1
+GgBxMWS7DrnBPBjE7GqhtqgFyvIVHBnWEEj1WW1WvHWIV/XIbV8GKOi6ecfF5p3o
+vK/a/8S0qOSOtOPZZJkZGuZn6pNd9V0Ynx296Hn6DKildBBEkGSXoWo67ViaxrP2
+iPzhYukDRYlqjF5pYfPr7Zek+RodtB+rxJEKMpDDIW8aeA3hnsOZNXAmr5n+Q465
+rNojqJDV5Zwuli+L0SVzmtkY6dbeXyhMWn3zAj8a5Pq+/VkK3PdcEBVNADLXbh3a
+lnDmjwsY9ZX64HhXbamFMV1Wykhbjb+Jprj6CJjuz4wcGArKW+lsTV86p8Q5Kzk=
+=uYjg
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa269.meta" of type "application/octet-stream" (1991 bytes)
+
+Download attachment "xsa269.patch" of type "application/octet-stream" (4733 bytes)
+
+Download attachment "xsa269-4.8.patch" of type "application/octet-stream" (5351 bytes)
+
+Download attachment "xsa269-4.10.patch" of type "application/octet-stream" (4662 bytes)
+
+Download attachment "xsa269-4.11.patch" of type "application/octet-stream" (4329 bytes)
