@@ -1,39 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/08/2
-Message-ID: <84053823.699.1533736923955.JavaMail.Joan@BRAIN>
-Date: Wed, 8 Aug 2018 10:02:02 -0400 (EDT)
-From: Joan Touzet <wohali@...che.org>
-To: CouchDB Users <user@...chdb.apache.org>
-Cc: "announce " <announce@...chdb.apache.org>,  CouchDB Developers <dev@...chdb.apache.org>,  marketing@...chdb.apache.org, security@...chdb.apache.org,  oss-security@...ts.openwall.com
-Subject: CVE-2018-11769: Apache CouchDB Remote Code Execution (affects versions 1.x and ≤2.1.2)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/21/5
+Message-ID: <CAFRnB2U+QMGmAMoZqbCgTjEx_o_NA+Y9eBE6eDBgJJ0hZdQ4GQ@mail.gmail.com>
+Date: Tue, 21 Aug 2018 11:21:15 -0400
+From: Alex Gaynor <alex.gaynor@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
 Content-Type: text/plain; charset=utf-8
 
-Date: 	        08.08.2018
-Affected:	Apache CouchDB 1.x and ≤2.1.2
-Severity:	Low
-Vendor:	        The Apache Software Foundation
+A small note. Both ImageMagick and GraphicsMagick process various file
+formats that can nest a different image file inside of them. These are very
+frequently implemented with a call to ReadImage(), with no checking that
+it's the expected file format. (As a result, the fuzzer finds various
+impressive chains, with sometimes 3 different image formats nested inside
+of each other).
+
+The conclusion of this is that people _must not_ attempt to do their own
+format detection and then pass the data to IM/GM, because this can be
+bypassed with nested formats. It's imperative that GS truly be disabled
+with either policy.xml or by uninstall GS.
+
+Alex
+
+On Tue, Aug 21, 2018 at 11:01 AM Bob Friesenhahn <
+bfriesen@...ple.dallas.tx.us> wrote:
+
+> On Tue, 21 Aug 2018, Tavis Ormandy wrote:
+> >
+> > I think those thumbnails should be disabled, but you've probably noticed
+> I
+> > think everything related to untrusted ghostscript should be disabled :-)
+>
+> I have posted to the GraphicsMagick Announcements mailing list
+> regarding your findings (with a link to this list) and suggested that
+> a fool-proof solution is that Ghostscript should be uninstalled.
+>
+> Uninstalling Ghostscript entirely might cause software using libgs to
+> not execute at all unless a stub library is put in its place.
+>
+> Dependencies on Ghostscript are much larger than one would initially
+> think due to Postscript being the traditional output from Unix
+> software for "printing" and thus it is used as an intermediate format
+> in order to convert between formats.  EPS content is also embedded in
+> some other formats.
+>
+> Bob
+> --
+> Bob Friesenhahn
+> bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+> GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+>
 
 
-Description
-===========
+-- 
+All that is necessary for evil to succeed is for good people to do nothing.
 
-CouchDB administrative users can configure the database server via HTTP(S). Due to insufficient validation of administrator-supplied configuration settings via the HTTP API, it is possible for a CouchDB administrator user to escalate their privileges to that of the operating system’s user under which CouchDB runs, by bypassing the blacklist of configuration settings that are not allowed to be modified via the HTTP API.
-
-This privilege escalation effectively allows a CouchDB admin user to gain arbitrary remote code execution, bypassing mitigations for CVE-2017-12636 and CVE-2018-8007.
-
-
-Mitigation
-==========
-
-All users should upgrade to CouchDB 2.2.0.
-
-Upgrades from previous 2.x versions in the same series should be seamless.
-
-Users still on CouchDB 1.x should be advised that the Apache CouchDB team no longer support 1.x.
-
-In-place mitigation (on any 1.x release, or 2.x prior to 2.2.0) is possible by removing the _config route from the default.ini file, as follows:
-
-    [httpd_global_handlers]
-    ;_config = {couch_httpd_misc_handlers, handle_config_req}
-
-or by blocking access to the /_config (1.x) or /_node/*/_config routes at a reverse proxy in front of the service.
