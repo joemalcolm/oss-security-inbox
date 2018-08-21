@@ -1,4 +1,9 @@
-Received: (qmail 3810 invoked by uid 550); 3 Oct 2023 21:44:38 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1952" "Tuesday" "21" "August" "2018" "11:21:15" "-0400" "Alex Gaynor" "alex.gaynor@gmail.com" "<CAFRnB2U+QMGmAMoZqbCgTjEx_o_NA+Y9eBE6eDBgJJ0hZdQ4GQ@mail.gmail.com>" "51" "Re: [oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?" "^Date:" nil nil "8" "2018082115:21:15" "[oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?" (number mark "        alex.gaynor@ Aug 21   51/1952  " thread-indent "\"Re: [oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?\"\n") "<alpine.GSO.2.20.1808210951110.18862@scrappy.simplesystems.org>" ("<CAJ_zFk+ZNi8r8TKTZuaYgSBUz4mxCO7C5SC=B8Ktc_CZQW6Dsw@mail.gmail.com>" "<CAJ_zFk+RtYrqWQ4Mj1SLVJ7BTZBHLjo_M9t-gDVS_uDEPhuCrg@mail.gmail.com>" "<alpine.GSO.2.20.1808210951110.18862@scrappy.simplesystems.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 23786 invoked by uid 550); 21 Aug 2018 15:21:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,66 +11,94 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3783 invoked from network); 3 Oct 2023 21:44:38 -0000
-Date: Tue, 3 Oct 2023 21:44:24 +0000
-From: Jeremy Stanley <fungi@yuggoth.org>
-To: oss-security@lists.openwall.com
-Message-ID: <20231003214424.prarc3aboi3ar7zk@yuggoth.org>
-References: <E1qko5Z-0003cF-KD@xenbits.xenproject.org>
- <ZROMd1GCpD8uDtbE@itl-email>
- <20231003201212.GA24599@openwall.com>
- <1786f020-2af8-4adb-bb4c-5dc87c545dcd@citrix.com>
+Received: (qmail 23768 invoked from network); 21 Aug 2018 15:21:40 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=lx98kdIktbDVoqOnBqDciLHtEClgo81deoUMVhG4Tbc=;
+        b=EiPvD9Y7QKaIrV7A6h+H9PPYham0HAMITJoh9xuM1nuXfyg7Dem0IciWBQqYlLg49Q
+         XNn/ZTrYfWs3a/fVWZp14pm8D+xuZF5jcnTtX1kMqtY9V2tkMh04fuCfXTxv2rESOEtU
+         iTzPxLefQ4SVSH6H7HsBE2T6auV+v/tLKLzUGlNgGB40WGK2JBo7iHkgVxv7vYAZrzVh
+         GZvzkqf6vqoi5ZK6Whm/dBlNzi/6V20sfvDcJBnT+U/jUlHAFxxOp4SqeHOJQW/zGY+9
+         lQGQ62AF+Qw8+ks7p2OeZyDX1upS5TVLLcdWQczvHtvMU+xzCXxbH/zKh7d3Q3hLGN3d
+         Gu7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=lx98kdIktbDVoqOnBqDciLHtEClgo81deoUMVhG4Tbc=;
+        b=g3nv/+Usul7PlADj95SosPeFc7xpiNwp365cSsl+ZTlQxRWX4R1tWXmkI/LEzmPFX3
+         PE6p/tdJlMuahKlh863vm3xq2pFNIhuNmSnDUp97/JhQbFbJC30uhA5WeC6DF8qp/edm
+         ZsOC/ZwCPJ7SUw6kVUZfFM19l39IVG6SiE7maCEll/7ftCXJuTTPhmZXiOhpwSaRpXN3
+         8c5X0R+Zb6kdkVcaKy5CXoXgPUEMMiH5EL6K5oXNhQFJZ5WF76m0AnHhDj+VjzDONcGX
+         VvO91fH1Yv9WWRt11SGwWaTDr61Txjs68Tl5NbD+YGLI1rXReMZVPLrRLNnIVTTx6fvz
+         iy4Q==
+X-Gm-Message-State: AOUpUlFeZcOfgBwp1rvtYvLz1NeuEv+QryHZYSFxn+fXWfbVsRsQchqL
+	jZQnovOY4h63dzUUYUhutGp2NxUTXkq1CrnwuanMjw==
+X-Google-Smtp-Source: AA+uWPzLMWfypHyoV6t9dvrktpCy65Y/veymKPuYjNVyJCqSstTWdGJYIQz5Us+cmxPowYuPd7TOyAI38Hx/lv+2psQ=
+X-Received: by 2002:a2e:9e17:: with SMTP id e23-v6mr33605493ljk.14.1534864888385;
+ Tue, 21 Aug 2018 08:21:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="lgk3s2nvcv7xr6ql"
-Content-Disposition: inline
-In-Reply-To: <1786f020-2af8-4adb-bb4c-5dc87c545dcd@citrix.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-SA-Exim-Connect-IP: 2001:4802:7801:102:be76:4eff:fe20:63e0
-X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
-X-SA-Exim-Mail-From: fungi@yuggoth.org
-X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
-Subject: Re: [oss-security] Xen Security Advisory 439 v1 (CVE-2023-20588) -
- x86/AMD: Divide speculative information leak
+References: <CAJ_zFk+ZNi8r8TKTZuaYgSBUz4mxCO7C5SC=B8Ktc_CZQW6Dsw@mail.gmail.com>
+ <CAJ_zFk+RtYrqWQ4Mj1SLVJ7BTZBHLjo_M9t-gDVS_uDEPhuCrg@mail.gmail.com> <alpine.GSO.2.20.1808210951110.18862@scrappy.simplesystems.org>
+In-Reply-To: <alpine.GSO.2.20.1808210951110.18862@scrappy.simplesystems.org>
+Message-ID: <CAFRnB2U+QMGmAMoZqbCgTjEx_o_NA+Y9eBE6eDBgJJ0hZdQ4GQ@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="000000000000735dea0573f3949e"
+Date: Tue, 21 Aug 2018 11:21:15 -0400
+From: Alex Gaynor <alex.gaynor@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: More Ghostscript Issues: Should we disable PS
+ coders in policy.xml by default?
+To: oss-security@lists.openwall.com
 
---lgk3s2nvcv7xr6ql
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+--000000000000735dea0573f3949e
+Content-Type: text/plain; charset="UTF-8"
 
-On 2023-10-03 22:37:08 +0100 (+0100), Andrew Cooper wrote:
-[...]
-> If you have a proposal for how you'd prefer it to be done, I'll see what
-> I can do.  Perhaps BCC oss-security, or just send out a second mail?
+A small note. Both ImageMagick and GraphicsMagick process various file
+formats that can nest a different image file inside of them. These are very
+frequently implemented with a call to ReadImage(), with no checking that
+it's the expected file format. (As a result, the fuzzer finds various
+impressive chains, with sometimes 3 different image formats nested inside
+of each other).
 
-When I send advisories, I prepare two basically identical E-mail
-messages: one to the project's announcement list and one to
-oss-security (signing both of them). It seems like this is the most
-common approach to avoiding cross-posting between lists.
---=20
-Jeremy Stanley
+The conclusion of this is that people _must not_ attempt to do their own
+format detection and then pass the data to IM/GM, because this can be
+bypassed with nested formats. It's imperative that GS truly be disabled
+with either policy.xml or by uninstall GS.
 
---lgk3s2nvcv7xr6ql
-Content-Type: application/pgp-signature; name="signature.asc"
+Alex
 
------BEGIN PGP SIGNATURE-----
+On Tue, Aug 21, 2018 at 11:01 AM Bob Friesenhahn <
+bfriesen@simple.dallas.tx.us> wrote:
 
-iQKTBAABCgB9FiEEl65Jb8At7J/DU7LnSPmWEUNJWCkFAmUcizJfFIAAAAAALgAo
-aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDk3
-QUU0OTZGQzAyREVDOUZDMzUzQjJFNzQ4Rjk5NjExNDM0OTU4MjkACgkQSPmWEUNJ
-WCntARAAjntV3rWV6kJjuu3FATC9JbyPtELf8bLij+eAttKRhoG544M0fVG/nycV
-4ggtkwAD6KP6WFEswL6GCsgZWeP/o6AzJ6m3M0oL+ANvfac30WzHBUYEcVHdjO40
-5C7VmpWMLkUm/w8mIkezzmRVELJWDX/hE2bxFkU2SYUEJxAeW5kC5NC6TZxxJmov
-SIBz+9D5fUewkr4oGoC6pScHCW+0NYYOW8Sv/KjGxqR/2+ITrpJDjpn2qvc0tEvs
-G+kY6LjhAScUTC0+s4BB+pO3Dk8jq131vo1yvGyFSN11Eg+OQJffqzC0no8exEAi
-c1YO+9YXtgj4YZFYuEUZHoavimAkTHiUo2da8tN/thp3RouA0NwhKHy0YmacscAh
-NxicbCZEFjLRXeeKzYBspxEUZqw0ED99TWUXnA69nBkph4E13s/0zzAtL4xoEvvQ
-zplDZpiQj9muCSkrEj0FhwhGHfKrkx3ElUJJWU5NJ0KULY4jIHpb5x6I6VCh+MBl
-9ylDeCyIBeCd+q88uw1/lzFOeZYPrTKqJ3wGUBj9ynj8CyljY74kv5P9K+W2J7nD
-3J82CDbv9ujHNIB3nfFGI/0U+BXWpH/w36uw9WPs9/a2IUGtGEvojILBSPeDtTZA
-jjeJQ4o5tdDXt6K4788jFAaG0MsgI7Z8bJIP+B3Ry15EbedCAwY=
-=rT6F
------END PGP SIGNATURE-----
+> On Tue, 21 Aug 2018, Tavis Ormandy wrote:
+> >
+> > I think those thumbnails should be disabled, but you've probably noticed
+> I
+> > think everything related to untrusted ghostscript should be disabled :-)
+>
+> I have posted to the GraphicsMagick Announcements mailing list
+> regarding your findings (with a link to this list) and suggested that
+> a fool-proof solution is that Ghostscript should be uninstalled.
+>
+> Uninstalling Ghostscript entirely might cause software using libgs to
+> not execute at all unless a stub library is put in its place.
+>
+> Dependencies on Ghostscript are much larger than one would initially
+> think due to Postscript being the traditional output from Unix
+> software for "printing" and thus it is used as an intermediate format
+> in order to convert between formats.  EPS content is also embedded in
+> some other formats.
+>
+> Bob
+> --
+> Bob Friesenhahn
+> bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+> GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+>
 
---lgk3s2nvcv7xr6ql--
+
+-- 
+All that is necessary for evil to succeed is for good people to do nothing.
+
+--000000000000735dea0573f3949e--
