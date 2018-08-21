@@ -1,28 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/06/1
-Message-ID: <nycvar.YSQ.7.76.1812061436130.30939@xnncv>
-Date: Thu, 6 Dec 2018 14:38:32 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Michael Hanselmann <public@...smi.ch>
-Subject: CVE-2018-16867 QEMU: dev-mtp: path traversal in usb_mtp_write_data of the Media Transfer Protocol (MTP)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/21/6
+Message-ID: <20180821155022.GG25380@timmy.laas.fr>
+Date: Tue, 21 Aug 2018 17:50:22 +0200
+From: Matthieu Herrb <matthieu@...rb.eu>
+To: oss-security@...ts.openwall.com
+Subject: X.Org security advisory: August 21, 2018
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
 
-A flaw was found in qemu Media Transfer Protocol (MTP). A path traversal in 
-the in usb_mtp_write_data function in hw/usb/dev-mtp.c due to an improper 
-filename sanitization. When the guest device is mounted in read-write mode, 
-this allows to read/write arbitrary files which may lead do DoS scenario OR 
-possibly lead to code execution on the host.
+X.Org security advisory: August 21, 2018
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2018-12/msg00390.html
+Multiple issues in libX11
+=========================
 
-This issue was reported by Michael Hanselmann of hansmi.ch.
+The functions XGetFontPath, XListExtensions and XListFonts from libX11
+are vulnerable to three different issues:
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Off-by-one writes (CVE-2018-14599).
+-----------------------------------
+
+The functions XGetFontPath, XListExtensions, and XListFonts are
+vulnerable to an off-by-one override on malicious server responses.
+
+The server replies consist of chunks consisting of a length byte
+followed by actual string, which is not NUL-terminated.
+
+While parsing the response, the length byte is overridden with '\0',
+thus the memory area can be used as storage of C strings later on. To
+be able to NUL-terminate the last string, the buffer is reserved with
+an additional byte of space.
+
+For a boundary check, the variable chend (end of ch) was introduced,
+pointing at the end of the buffer which ch initially points to.
+Unfortunately there is a difference in handling "the end of ch".
+
+While chend points at the first byte that must not be written to,
+the for-loop uses chend as the last byte that can be written to.
+
+Therefore, an off-by-one can occur.
+
+
+Out of boundary write (CVE-2018-14600).
+---------------------------------------
+
+The length value is interpreted as signed char on many systems
+(depending on default signedness of char), which can lead to an out of
+boundary write up to 128 bytes in front of the allocated storage, but
+limited to NUL byte(s).
+
+Casting the length value to unsigned char fixes the problem and allows
+string values with up to 255 characters.
+
+Crash on invalid reply (CVE-2018-14598).
+----------------------------------------
+
+If the server sends a reply in which even the first string would
+overflow the transmitted bytes, list[0] (or flist[0]) will be set to
+NULL and a count of 0 is returned.
+
+If the resulting list is freed with XFreeExtensionList or
+XFreeFontPath later on, the first Xfree call:
+
+    Xfree (list[0]-1)
+ turns into
+    Xfree (NULL-1)
+
+which will most likely trigger a segmentation fault.
+
+Patches
+=======
+
+Patches for these issues have been commited to the libX11 git repository.
+libX11 1.6.6 will be released shortly and will include those patches.
+
+https://gitlab.freedesktop.org/xorg/lib/libx11
+
+b469da1430cdcee06e31c6251b83aede072a1ff0  CVE-2018-14599
+dbf72805fd9d7b1846fe9a11b46f3994bfc27fea  CVE-2018-14600
+e83722768fd5c467ef61fa159e8c6278770b45c2  CVE-2018-14598
+
+Thanks
+======
+
+X.Org thanks Tobias Stoeckmann for reporting these issues to our
+security team and assisting them in understanding them and evaluating
+our fixes.
