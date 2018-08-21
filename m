@@ -1,72 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/15/5
-Message-ID: <20180815160558.GA23020@localhost.localdomain>
-Date: Wed, 15 Aug 2018 09:05:58 -0700
-From: Qualys Security Advisory <qsa@...lys.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/21/7
+Message-ID: <CAJ_zFkJpnGtG6D3JZVaC5KJiNzsJ6vjJK0oXRfirR8QsdFbZVQ@mail.gmail.com>
+Date: Tue, 21 Aug 2018 13:12:43 -0700
+From: Tavis Ormandy <taviso@...gle.com>
 To: oss-security@...ts.openwall.com
-Subject: OpenSSH Username Enumeration
+Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Thanks Alex.
 
-We sent the following email to openssh@...nssh.com and
-distros@...openwall.org about an hour ago, and it was decided that we
-should send it to oss-security@...ts.openwall.com right away (as far as
-we know, no CVE has been assigned to this issue yet):
+FWIW, not all of these are visible, but I've started filing bugs, I'll file
+a few more today and then let the developers work through the most serious
+ones.
 
-========================================================================
+699654 /invalidaccess checks stop working after a failed restore
+699655 missing type checking in setcolor
+699656 LockDistillerParams boolean missing type checks
+699659 missing type check in type checker (!)
+699657 .tempfile SAFER restrictions seem to be broken
+699658 Bypassing PermitFileReading by handling undefinedfilename error
+699660 shading_param incomplete type checking
+699661 pdf14 garbage collection memory corruption
+699662 calling .bindnow causes sideeffects
+699663 .setdistillerkeys memory corruption
+699664 corrupt device object after error in job
 
-While reviewing the latest OpenSSH commits, we stumbled across:
+I'm working on getting reproducers working for the developers for all bugs.
 
-https://github.com/openbsd/src/commit/779974d35b4859c07bc3cb8a12c74b43b0a7d1e0
+On Tue, Aug 21, 2018 at 8:22 AM Alex Gaynor <alex.gaynor@...il.com> wrote:
 
-Date:   Tue Jul 31 03:10:27 2018 +0000
-    delay bailout for invalid authenticating user until after the packet
-    containing the request has been fully parsed. Reported by Dariusz Tytko
-    and Michal Sajdak; ok deraadt
+> A small note. Both ImageMagick and GraphicsMagick process various file
+> formats that can nest a different image file inside of them. These are very
+> frequently implemented with a call to ReadImage(), with no checking that
+> it's the expected file format. (As a result, the fuzzer finds various
+> impressive chains, with sometimes 3 different image formats nested inside
+> of each other).
+>
+> The conclusion of this is that people _must not_ attempt to do their own
+> format detection and then pass the data to IM/GM, because this can be
+> bypassed with nested formats. It's imperative that GS truly be disabled
+> with either policy.xml or by uninstall GS.
+>
+> Alex
+>
+> On Tue, Aug 21, 2018 at 11:01 AM Bob Friesenhahn <
+> bfriesen@...ple.dallas.tx.us> wrote:
+>
+> > On Tue, 21 Aug 2018, Tavis Ormandy wrote:
+> > >
+> > > I think those thumbnails should be disabled, but you've probably
+> noticed
+> > I
+> > > think everything related to untrusted ghostscript should be disabled
+> :-)
+> >
+> > I have posted to the GraphicsMagick Announcements mailing list
+> > regarding your findings (with a link to this list) and suggested that
+> > a fool-proof solution is that Ghostscript should be uninstalled.
+> >
+> > Uninstalling Ghostscript entirely might cause software using libgs to
+> > not execute at all unless a stub library is put in its place.
+> >
+> > Dependencies on Ghostscript are much larger than one would initially
+> > think due to Postscript being the traditional output from Unix
+> > software for "printing" and thus it is used as an intermediate format
+> > in order to convert between formats.  EPS content is also embedded in
+> > some other formats.
+> >
+> > Bob
+> > --
+> > Bob Friesenhahn
+> > bfriesen@...ple.dallas.tx.us,
+> http://www.simplesystems.org/users/bfriesen/
+> > GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+> >
+>
+>
+> --
+> All that is necessary for evil to succeed is for good people to do nothing.
+>
 
-We realized that without this patch, a remote attacker can easily test
-whether a certain user exists or not (username enumeration) on a target
-OpenSSH server:
-
-  87 static int
-  88 userauth_pubkey(struct ssh *ssh)
-  89 {
- ...
- 101         if (!authctxt->valid) {
- 102                 debug2("%s: disabled because of invalid user", __func__);
- 103                 return 0;
- 104         }
- 105         if ((r = sshpkt_get_u8(ssh, &have_sig)) != 0 ||
- 106             (r = sshpkt_get_cstring(ssh, &pkalg, NULL)) != 0 ||
- 107             (r = sshpkt_get_string(ssh, &pkblob, &blen)) != 0)
- 108                 fatal("%s: parse request failed: %s", __func__, ssh_err(r));
-
-The attacker can try to authenticate a user with a malformed packet (for
-example, a truncated packet), and:
-
-- if the user is invalid (it does not exist), then userauth_pubkey()
-  returns immediately, and the server sends an SSH2_MSG_USERAUTH_FAILURE
-  to the attacker;
-
-- if the user is valid (it exists), then sshpkt_get_u8() fails, and the
-  server calls fatal() and closes its connection to the attacker.
-
-We believe that this issue warrants a CVE; it affects all operating
-systems, all OpenSSH versions (we went back as far as OpenSSH 2.3.0,
-released in November 2000), and is easier to exploit than previous
-OpenSSH username enumerations (which were all timing attacks):
-
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2003-0190
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-5229
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-6210
-
-We also believe that this should be posted to oss-security right away:
-the issue (commit) is already public, and if we spotted it, then others
-(not so well intentioned) did too. We are at your disposal for
-questions, comments, and further discussions.
-
-Thank you very much! With best regards,
-
--- 
-the Qualys Security Advisory team
