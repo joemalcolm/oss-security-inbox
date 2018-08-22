@@ -1,4 +1,9 @@
-Received: (qmail 22035 invoked by uid 550); 30 May 2024 11:44:27 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2103" "Wednesday" "22" "August" "2018" "20:11:00" "+0100" "Ben Hutchings" "ben@decadent.org.uk" "<713d7e651cd8e9eda903f26392d30c8cb45afc38.camel@decadent.org.uk>" "53" "[oss-security] Re: Heap-based buffer overflow in zutils zcat" nil nil nil "8" "2018082219:11:00" "[oss-security] Re: Heap-based buffer overflow in zutils zcat" (number mark "U       ben@decadent Aug 22   53/2103  " thread-indent "\"[oss-security] Re: Heap-based buffer overflow in zutils zcat\"\n") "<e099b2d21c5febadcb4de930cd5cffacbd08f41a.camel@decadent.org.uk>" ("<e099b2d21c5febadcb4de930cd5cffacbd08f41a.camel@decadent.org.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 14005 invoked by uid 550); 22 Aug 2018 19:27:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,184 +12,73 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23958 invoked from network); 30 May 2024 04:46:10 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org;
-	s=2; t=1717044360;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=oNYFnptrhHFc+E35DIpNV0Gef2d7lcueib81/cy4H/s=;
-	b=YzkFqjHdXcRsqjXTfevkAu5W2siNKYocyDfrR0OMm+NqioB8bXRMpKbKqzzs9gpKLKiSYR
-	sXLVsswpGw3abWtmkSyn51MrC+yBqJlh24RRbZFZJcYm+9Ou6JtHJzXyF8TCXlimPxDpdz
-	DSquStnLXvXnIHNF82a9RcE0qkm+2N90vSGiryrARLWYHY0XWR5DzWHH7mJN3Z9gtL7Kh+
-	fVTV3STLB8iFY/mGGVWinVUjqPn59yr6ShFbJ+JvVvhC4hNId5/kNZ2SU3Cj9B3IgDdDeY
-	EIr7QQ2ieYTqd9Vc/8Nu40pJgEWp31NWu2JpoJO6ATJe7heeMNmoi0A8XPuHzQ==
-Date: Thu, 30 May 2024 13:45:39 +0900
-From: Dominique Martinet <asmadeus@codewreck.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: oss-security@lists.openwall.com
-Message-ID: <ZlgEcxzxXXqh2bVt@codewreck.org>
-References: <ZlZ8nCsZUZxhKwCf@codewreck.org>
- <2024052926-moneyless-applause-a95b@gregkh>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <2024052926-moneyless-applause-a95b@gregkh>
-Subject: Re: [oss-security] List linux CVEs for a given stable release?
+Received: (qmail 32480 invoked from network); 22 Aug 2018 19:11:20 -0000
+Message-ID: <713d7e651cd8e9eda903f26392d30c8cb45afc38.camel@decadent.org.uk>
+From: Ben Hutchings <ben@decadent.org.uk>
+To: oss-security <oss-security@lists.openwall.com>
+Cc: Antonio Diaz Diaz <antonio@gnu.org>
+Date: Wed, 22 Aug 2018 20:11:00 +0100
+In-Reply-To: <e099b2d21c5febadcb4de930cd5cffacbd08f41a.camel@decadent.org.uk>
+References: <e099b2d21c5febadcb4de930cd5cffacbd08f41a.camel@decadent.org.uk>
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-X3BOCUM2mPxD/G/uqh4N"
+X-Mailer: Evolution 3.28.5-1 
+Mime-Version: 1.0
+X-SA-Exim-Connect-IP: 148.252.241.226
+X-SA-Exim-Mail-From: ben@decadent.org.uk
+X-SA-Exim-Scanned: No (on shadbolt.decadent.org.uk); SAEximRunCond expanded to false
+Subject: [oss-security] Re: Heap-based buffer overflow in zutils zcat
 
-Greg Kroah-Hartman wrote on Wed, May 29, 2024 at 09:23:50PM +0200:
-> > The information is there in the json files, so it's just a matter of
-> > writing some scripts to check them, but I can't believe there's none so
-> > I probably have missed something.
-> > 
-> > Does someone have such a script that'd list the latest CVEs for a given
-> > tree?
-> 
-> How about something as simple as the following to see what is in
-> 5.10.101:
-> 
-> 	for id in $(git log --format="%H" v5.10.100..v5.10.101); do
-> 		cve=$(cve_search ${id})
-> 		cve_found=$?
-> 		if [[ "${cve_found}" == "0" ]]; then
-(pedantic: `if cve=$(cve_search "$id"); then` is a bit simpler/failproof)
-> 			echo "${cve} is in range"
-> 		fi
-> 	done
+--=-X3BOCUM2mPxD/G/uqh4N
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-That's roughly what I had done earlier this week (handpicking the
-commits that could impact our users), but this doesn't address my second
-point as it won't catch any new CVE introduced before that tree that
-wasn't fixed.
-(also probably a bit more efficient to go by version tag since we have
-the info in the json, more below)
+On Sun, 2018-08-05 at 21:36 +0800, Ben Hutchings wrote:
+> A heap-based buffer overflow (CWE-122) was discovered in the zutils
+> implementation of zcat.  It is apparently possible only if the -v
+> option, or one of the other options that implies -v, is used.
+>=20
+> This seems to have been first discovered in 2016 as a result of
+> interaction between initramfs-tools and zutils, but was initially
+> thought to be a bug in the gzip implementation of zcat:
+> https://bugs.launchpad.net/ubuntu/+source/intel-microcode/+bug/1507443
+> https://bugs.debian.org/815915
+>=20
+> It was eventually reported to the zutils upstream developer (Antonio
+> Diaz Diaz, cc'd) in the last few weeks and was fixed in version
+> 1.8-pre2.  This was announced in:
+> https://lists.nongnu.org/archive/html/zutils-bug/2018-08/msg00000.html
+>=20
+> I will request a CVE ID for this.
 
-> > My motivation here is double:
-> > - We notify our users of notable CVEs fixed on every update to encourage
-> > them to upgrade every time (it's sad, but in the embedded world not
-> > updating is still the norm despite our efforts to make upgrades as
-> > painless as possible... New regulations are coming so hopefully that
-> > will slowly improve, but as of now such motivations help)
-> 
-> The issue is, CVEs are assigned usually long _AFTER_ the stable release
-> has happened.  So if you want to do this type of report for the latest
-> stable release, it will look like there are no CVEs.  But if you wait a
-> few weeks, suddenly that old release will have many CVEs assigned to
-> them.
-> 
-> This is just due to the process we currently have where we review each
-> commit in the stable releases to determine if a CVE should be assigned
-> or not.  Obviously this takes time and we are running a few weeks behind
-> the current releases.
-> 
-> So you would have to run the script a lot, to keep it up to date, which
-> is why a "how many CVEs are listed in the latest release" isn't really
-> going to be all that valuable to your users.
+This has been designated as CVE-2018-1000637.
 
-Right; I don't need this to be 100% complete -- as long as a couple of
-issues turn up it's probably good enough motivation.
+Ben.
 
-In practice just listing a bunch of numbers probably won't change the
-way people think, so I'm taking the time to briefly describe potential
-impacts (what component, very broad trigger conditions e.g. network
-packet or local access, likely risk if exploited e.g. RCE, memory
-leak...); so ultimately it requires looking at things in more details
-than I have time to check for all CVEs and will likely keep checking a
-few "juicy" ones...
-But it's a very good point, we should check again regularly and update
-that list if some new bad thing stands out.
-
-> > - I'm currently not watching patches entering newer stable branches as
-> > closely, so if there are any new CVEs not fixed in the latest 5.10 I'd
-> > like to check if some impact us and will help with backports as possible
-> > (we're a small company so my time is limited, but might as well give
-> > back when I can)
-> 
-> That would be great, for where we know, we list when a vulnerability was
-> added to the tree, and where it was fixed.  That can leave many branches
-> still vulnerable where we have not fixed the issue yet.  One example
-> would be CVE-2024-26629.
-> 
-> You can see these in our repo by just doing:
-> 	git grep "5\.10" | grep introduced | grep -v fixed
-
-I didn't think of checking the mails, that's certainly easier to grep
-than json as it's line-oriented.
-It's going to take a bit more of processing to check not just bugs that
-were backported in the stable trees, but things introduced in earlier
-kernels... Someting like this?
-
-  rg -l 'Issue introduced in ([234]\.[0-9]* |5\.[0-9] |5\.10\.[0-9]* )' | sort > introduced_before_5.10
-  xargs rg -l 'fixed in 5\.10' < introduced_before_5.10 | sort > fixed_in_5.10
-  comm -3 introduced_before_5.10 fixed_in_5.10 |tail
-cve/published/2024/CVE-2024-35844.mbox
-cve/published/2024/CVE-2024-35904.mbox
-cve/published/2024/CVE-2024-35951.mbox
-cve/published/2024/CVE-2024-35971.mbox
-cve/published/2024/CVE-2024-36009.mbox
-cve/published/2024/CVE-2024-36013.mbox
-   grep 'Issue introdu' cve/published/2024/CVE-2024-35971.mbox
-Issue introduced in 5.8 with commit 797047f875b5 and fixed in 6.1.87 with commit 492337a4fbd1
-Issue introduced in 5.8 with commit 797047f875b5 and fixed in 6.6.28 with commit cba376eb036c
-Issue introduced in 5.8 with commit 797047f875b5 and fixed in 6.8.7 with commit 49d5d70538b6
-Issue introduced in 5.8 with commit 797047f875b5 and fixed in 6.9 with commit be0384bf599c
+--=20
+Ben Hutchings
+You can't have everything.  Where would you put it?
 
 
-The regex is a bit too manual to make a generic search script, and that
-feels very kludgy (at least mbox files do look like they get updated
-together with json), but that can be enough for my local needs for now.
+--=-X3BOCUM2mPxD/G/uqh4N
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
 
-I was thinking something more along the line of parsing all the json
-files for containers.cna.affected by release version item (versionType
-!= git);
-It should be possible for a given stable tag to check if a given CVE
-applies or not immediately so it would be a matter of making this a bit
-more searchable -- probably make a reverse index with all the edges for
-faster search and keep appending new CVEs as they pop up.
+-----BEGIN PGP SIGNATURE-----
 
-But it's a bit more work, so I'll gratefully take the grep mailboxes
-version for now :)
+iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAlt9tUQACgkQ57/I7JWG
+EQkloBAAoYbqDmQecvi+QA/iQoUyzCykxFbW+dDxJJcpbrdpyrpubOFD9163iHuM
+/xxAdJyjNtyMIasrPrQZ1iFw9oUt+BYoTBiPQv1eVv7PCBOWaylnEVRI8jWr3mNk
+x6TyDq76czXVJzkCV8OkLspHdhexWOuLmoGzpjosbiAJ3PRQJKMGREGx70stVlVS
+RX0LTudGMNiOIMQhpJEJWmZTk0maECVGte+zgpHsML1OUn9r/EjgTGNd+KNhXHLy
+XZQFDT8LQ35tZZAcwoXcfzIgU7k5f9yNPt5pci4w4Ph3asmHVHKcRDjMd3B2uJHL
+ThPNxKNPkzE90TN4DM1VcVgoHpwjc9gxHG07I9/rFkxyakb4SvvuIzqz9pmU1ftk
+eG/KbyuUaodAuikGqU4g5GQpcG4DOgpzqpo49frFjwnBuoSkqXPJOCOzhMWm74Au
+d7mc3y5795J0k/3cOgq/+OukWkMrfBL2npIKbkoU/QLuwbpujuVsyzUPFyBRAGkv
+70fDARHMKpvwDU0itFUXDNosuJwzFpg52hRAtQAfZBuNFvReJQJckuVhvttFzq0n
+Q6MZjflgLOLwpIv36AeyMC+t9Sry+3PuFFKQM3b6eseRBr/AzldkZqQ3TwV3npLl
+XXAndyKkrImX/UpsddBQ70nYPMJSOIXcan7T4CWjhlxu7Q/ebII=
+=mAA5
+-----END PGP SIGNATURE-----
 
-> But note that for some issues, we don't have the information for when
-> they are introduced, so if they are not fixed in the 5.10 branch, does
-> that mean the branch _is_ vulnerable, or is not?  One example of a "is
-> not" might be CVE-2024-35867 as we think the code isn't present in 5.10,
-> but we don't have an automated way of determining that.  So that would
-> take more work than just a simple grep of the tree.
-
-Yes, these (basically patches without a Fixes:) will always be
-problematic; basically would need to also check all mails with "Fixed in
-[newer versions]" without the "Issue introduced in" text.
-
-Capitalization on Fixed can differentiate this so something like this?
-
-  rg -l 'Issue introduced in ([234]\.[0-9]* |5\.[0-9] |5\.10\.[0-9]* )|Fixed in' 
-
-This is bringing up the list of candidates from 101 to 543 so the
-initial check is going to be "fun"; I'll probably stick to the first
-variant for now...
-
-
-Also, in this case the json properly defaults to affected so a search by
-json as suggested above would also turn them up for further inspection.
-
-
-Well, either way we won't get around the problem that much manual work
-is still required; as said in my first mail my time is quite limited but
-I'll try to check a few from time to time.
-
-Ideally we'll want to limit duplicating this work for other
-downstreams... So:
- - get more people to look at these
-   - if unaffected (e.g. CVE-2024-35867 you singled out above as not
-     affecting 5.10), report it so the reference files can be updated
-   - if affected backport patch, so it can be fixed and the refernece
-     file can also be updated.
- - less work for everyone else!
-
-But finding volunteers for that kind of work might not be quite as easy
-as I make it sound like :)
-
-Cheers,
--- 
-Dominique Martinet | Asmadeus
+--=-X3BOCUM2mPxD/G/uqh4N--
