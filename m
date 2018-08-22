@@ -1,41 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/28/1
-Message-ID: <e0737f7c-7572-b3ac-bdd2-39ec72fd78c4@isc.org>
-Date: Wed, 28 Feb 2018 15:29:55 -0500
-From: Michael McNally <mcnally@....org>
-To: oss-security@...ts.openwall.com, isc-os-security@...ts.isc.org
-Cc: "security-officer@....org" <security-officer@....org>
-Subject: Multiple CVEs announced by ISC (ISC DHCP: CVE-2018-5732 & CVE-2018-5733, BIND CVE-2018-5734)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/23/6
+Message-ID: <5b7dd771.1c69fb81.a6d8.6521@mx.google.com>
+Date: Wed, 22 Aug 2018 23:36:44 +0200
+From: Leonardo Taccari <iamleot@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
 Content-Type: text/plain; charset=utf-8
 
-Today ISC publicly disclosed three CVEs, two in ISC DHCP and a third
-in BIND Supported Preview Edition [which is a customer-only non-public
-version of BIND, but since the disclosure is public we wish to be
-clear about it here so as not to confuse those who are following the
-public open source version of the product.]
+Hello Bob,
 
-All three vulnerabilities are now public.  Thank you, to those who were
-informed in advance, for cooperating with our disclosure schedule.
+Bob Friesenhahn writes:
+> The CERT advisory at https://www.kb.cert.org/vuls/id/332928 provides a 
+> policy.xml example which does not appear to block PS2 and PS3, which 
+> are also entry points for reading Postscript.
+> [...]
 
-The two DHCP vulnerabilities are:
-
-   CVE-2018-5732: A specially constructed response from a
-   malicious server can cause a buffer overflow in dhclient
-   https://kb.isc.org/article/AA-01565/75/CVE-2018-5732
-
-   CVE-2018-5733: A malicious client can overflow a
-   reference counter in ISC dhcpd
-   https://kb.isc.org/article/AA-01567/75/CVE-2018-5733
-
-And the (Supported Preview Edition-only) BIND vulnerability is:
-
-   CVE-2018-5734: A malformed request can trigger an
-   assertion failure in badcache.c
-   https://kb.isc.org/article/AA-01562/74/CVE-2018-5734
-
-If you have questions about these announcements please direct
-them to security-officer@....org
-
-
-Michael McNally
-ISC Security Officer
+If I am not missing something I think that ghostscript isn't used
+for them though.
