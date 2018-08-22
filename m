@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1350" "Tuesday" "7" "February" "2017" "01:54:17" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<01c737d94fde43458d9fe0850eedd23b@imshyb02.MITRE.ORG>" "35" "[oss-security] Re: CVE Request: Linux: ip6_gre: invalid reads in ip6gre_err()" nil nil nil "2" "2017020706:54:17" "[oss-security] Re: CVE Request: Linux: ip6_gre: invalid reads in ip6gre_err()" (number mark "U       cve-assign@m Feb  7   35/1350  " thread-indent "\"[oss-security] Re: CVE Request: Linux: ip6_gre: invalid reads in ip6gre_err()\"\n") "<CAAeHK+xqSzMxjrs=DX9RVxiJrRKkWq22tLybcKMmFs4ZQZz=Ag@mail.gmail.com>" ("<CAAeHK+xqSzMxjrs=DX9RVxiJrRKkWq22tLybcKMmFs4ZQZz=Ag@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1287" "Wednesday" "22" "August" "2018" "15:15:20" "-0700" "Alan Coopersmith" "alan.coopersmith@oracle.com" "<9c3c4663-71c6-b0bd-05b1-55fb02d22da7@oracle.com>" "36" "[oss-security] Fwd: X.Org security advisory: August 22, 2018" "^Date:" nil nil "8" "2018082222:15:20" "[oss-security] Fwd: X.Org security advisory: August 22, 2018" (number mark "        alan.coopers Aug 22   36/1287  " thread-indent "\"[oss-security] Fwd: X.Org security advisory: August 22, 2018\"\n") "<20180822220655.GA23506@also.us.oracle.com>" ("<20180822220655.GA23506@also.us.oracle.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 19863 invoked by uid 550); 7 Feb 2017 06:54:30 -0000
+Received: (qmail 30610 invoked by uid 550); 22 Aug 2018 22:15:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,51 +11,70 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19842 invoked from network); 7 Feb 2017 06:54:29 -0000
-From: <cve-assign@mitre.org>
-To: <andreyknvl@google.com>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>,
-	<dvyukov@google.com>, <edumazet@google.com>, <kcc@google.com>
-In-Reply-To: <CAAeHK+xqSzMxjrs=DX9RVxiJrRKkWq22tLybcKMmFs4ZQZz=Ag@mail.gmail.com>
-Message-ID: <01c737d94fde43458d9fe0850eedd23b@imshyb02.MITRE.ORG>
-Date: Tue, 7 Feb 2017 01:54:17 -0500
+Received: (qmail 30575 invoked from network); 22 Aug 2018 22:15:35 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=subject : references
+ : to : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=corp-2018-07-02;
+ bh=oYaVNeXn6gEiuqXTRcqMGWCjpPmp88KuhjOM0m01Z1g=;
+ b=f9BYRoSbrXGfOASbTTCkmDYi2RB8J09jvcCgvhLBEtW7F2Yw6Vz/WLhwlloN5fmbMflr
+ ajdWt15mAiWph3LOFt9VU4xSIP4TD9xz+cCtdiF5awt0ioCSv9Wpgpuu/NYUMHvFIwIj
+ pDZIuTJ5TQKqbdhl6ipryFVNdOYIFcb3EUJ91RMZz2FbaCADO1QDi1Al+lgFI3tds3Pg
+ /7iGI5bzTQlKD5jxREmwIHN90b+vYWaIXFfK8dZaOf9fWGB8zXSFlQGYd2LQY/mjGm4c
+ idnC1kSwTziUt3YO5w82CogZdMBYrS5FItfxJS28X9mATPOj7+jXDVxvtA2uqLIfRbtt ng== 
+References: <20180822220655.GA23506@also.us.oracle.com>
+X-Forwarded-Message-Id: <20180822220655.GA23506@also.us.oracle.com>
+Message-ID: <9c3c4663-71c6-b0bd-05b1-55fb02d22da7@oracle.com>
+User-Agent: Mozilla/5.0 (X11; SunOS i86pc; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: CVE Request: Linux: ip6_gre: invalid reads in ip6gre_err()
+In-Reply-To: <20180822220655.GA23506@also.us.oracle.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Virus-Version: vendor=nai engine=5900 definitions=8993 signatures=668707
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=1 malwarescore=0
+ phishscore=0 bulkscore=0 spamscore=0 mlxscore=0 mlxlogscore=999
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.0.1-1807170000 definitions=main-1808220219
+Date: Wed, 22 Aug 2018 15:15:20 -0700
+From: Alan Coopersmith <alan.coopersmith@oracle.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Fwd: X.Org security advisory: August 22, 2018
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+-------- Forwarded Message --------
+Subject: X.Org security advisory: August 22, 2018
+Date: Wed, 22 Aug 2018 15:06:55 -0700
+From: Alan Coopersmith <alan.coopersmith@oracle.com>
+To: xorg-announce@lists.x.org
+CC: xorg-devel@lists.x.org
 
-> There's a bug in the Linux kernel ipv6 implementation which allows a
-> remote attacker to trigger an out-of-bounds access.
-> 
-> Upstream fix:
-> https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=7892032cfe67f4bde6fc2ee967e45a8fbaf33756
+X.Org security advisory: August 22, 2018
 
->> net/ipv6/ip6_gre.c
+Out-of-bounds write in libXcursor prior to 1.1.15
+=================================================
 
-Use CVE-2017-5897.
+libXcursor could write one byte out of bounds when processing Xcursor
+theme files.  In certain cases, such as when used in the Firefox web
+browser, this could be used as part of an exploit chain to allow
+further attacks on an X client process, as reported via Mozilla's
+ASan Nightly project.   This issue has been assigned CVE-2015-9262.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Patches
+=======
 
-iQIcBAEBCAAGBQJYmW4FAAoJEHb/MwWLVhi2uhYP/2pSKh6yFBK9CK6Jw2o653a8
-d7ye2bn4LW0eJhGCU/00ivQ3tZeQXBKxDis6AtTGlDIFdf6GWoITttPAYRDzkhka
-CYvzuca1hn2jv2euRaDWzICwaFIe0YFAO2iinJz18UPns4ufHnO2gQIrZ04HoR2b
-Rje1k/kVaQu7ppqrqZA260ONyAYerRYQzUipDGlBOVBsOf+Suu/ld4z+ehvo8p7x
-rINrW14YpOi44g5i+mArD0337X82Yq+VHq/t03jkCluceiIJf1lHaojjv8wsOV2v
-CS1K49EEZiK9RcwN61ZJSU5oGo0IrHU5WcJDW+tx45nshmcbUHDkQd2i4+xFTeGW
-BrO/qBlQlj0GVz0FbprWv4GzgteJ7RM5cQZqJx6xVoZXszFALcYoDc+mLrjjgaYT
-xIJjOgcyMYcPfR+GGDwMBvovV4QjsiWYccRADIBBH9TQ2mqfs9CAOaZxo6/dIouA
-R8z6PlpXE5WYu4iUacgQe8U/Mli4VQrOIpe8kU42ZgLjGZJTvIHclO7uvK4FwIYS
-njPf4Gkq+ozrNnZ2lyfvtpRlAXMz58skCI3FgzajeE3CjFW2T7re8aovSb2CwsB8
-OzCdWzJZbhWI5/2v+SXndQEtKf4tUQBI4ed0I0UJc6uADTMz6j+QnD+opUFrslCH
-B2rYgdMDYarkGw3Dv9zo
-=k7MF
------END PGP SIGNATURE-----
+A patch for this issue was committed to the libXcursor git repository
+in 2015, and included in the libXcursor 1.1.15 release.
+
+https://gitlab.freedesktop.org/xorg/lib/libxcursor/commit/897213f36baf6926daf6d192c709cf627aa5fd05
+
+Thanks
+======
+
+X.Org thanks Shubham Shrivastav of Samsung for reporting this issue to X.Org
+originally, and Alex Gaynor of Mozilla for helping us understand how this
+could be exploited by an attacker.
+
+--
+	-Alan Coopersmith-              alan.coopersmith@oracle.com
+	  X.Org Security Response Team - xorg-security@lists.x.org
