@@ -1,58 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/15/1
-Message-ID: <20180915160758.70024031@computer>
-Date: Sat, 15 Sep 2018 16:07:58 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/22/6
+Message-ID: <9c3c4663-71c6-b0bd-05b1-55fb02d22da7@oracle.com>
+Date: Wed, 22 Aug 2018 15:15:20 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: haskell-tls: Inconsistencies in answers to RSA errors (possiby Bleichenbacher/ROBOT attack)
+Subject: Fwd: X.Org security advisory: August 22, 2018
 Content-Type: text/plain; charset=utf-8
 
-One of the leftovers of our ROBOT/Bleichenbacher research was that we
-discovered some inconsistencies in haskell-tls, however they only
-appear in special situations (AES256-CBC modes) and not reliably.
-I've been asked by the haskell-tls author to report it to the public
-bug tracker, so I believe it's no longer secret.
+-------- Forwarded Message --------
+Subject: X.Org security advisory: August 22, 2018
+Date: Wed, 22 Aug 2018 15:06:55 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: xorg-announce@...ts.x.org
+CC: xorg-devel@...ts.x.org
 
-https://github.com/vincenthz/hs-tls/issues/285
+X.Org security advisory: August 22, 2018
 
-----------------------
+Out-of-bounds write in libXcursor prior to 1.1.15
+=================================================
 
-Last year we published research that several TLS implementations were
-still vulnerable to the classic "Bleichenbacher" attack from 1998 and
-named it the ROBOT attack [1].
+libXcursor could write one byte out of bounds when processing Xcursor
+theme files.  In certain cases, such as when used in the Firefox web
+browser, this could be used as part of an exploit chain to allow
+further attacks on an X client process, as reported via Mozilla's
+ASan Nightly project.   This issue has been assigned CVE-2015-9262.
 
-While analyzing several implementations we also figured out
-inconsistencies with haskell-tls, but as we couldn't really make sense
-of them we haven't analyzed them in more detail.
+Patches
+=======
 
-We observe that in some situations as a response to faulty RSA
-encryption packages a haskell tls server will answer with an internal
-server error instead of a bad_record_mac error. The behavior is
-inconsistent, so we're not sure this can be turned into a practical
-attack. Yet it's still definitely a bug and potentially a vulnerability.
+A patch for this issue was committed to the libXcursor git repository
+in 2015, and included in the libXcursor 1.1.15 release.
 
-This only happens with ciphers with AES256 and CBC mode. (Which is also
-why our detection script and many other detection tools that are based
-on it will not see it, as they often will just test with AES128.)
+https://gitlab.freedesktop.org/xorg/lib/libxcursor/commit/897213f36baf6926daf6d192c709cf627aa5fd05
 
-It was originally pointed out to us by Hubert Kario (he's the developer
-of tls-fuzzer, which will show errors if you run its bleichenbacher
-check [2] against a haskell tls server). Another tool that's capable of
-detecting the error is TLS-Attacker, which is by one of ROBOT's
-co-authors [3].
+Thanks
+======
 
-A test run would be something like this:
-java -jar Attacks.jar -loglevel DEBUG bleichenbacher -connect [host]
--cipher TLS_RSA_WITH_AES_256_CBC_SHA
+X.Org thanks Shubham Shrivastav of Samsung for reporting this issue to X.Org
+originally, and Alex Gaynor of Mozilla for helping us understand how this
+could be exploited by an attacker.
 
-[1] https://robotattack.org/
-[2]
-https://github.com/tomato42/tlsfuzzer/blob/master/scripts/test-bleichenbacher-workaround.py
-[3] https://github.com/RUB-NDS/TLS-Attacker
-
--- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+--
+	-Alan Coopersmith-              alan.coopersmith@...cle.com
+	  X.Org Security Response Team - xorg-security@...ts.x.org
