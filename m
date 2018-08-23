@@ -1,48 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/07/2
-Message-ID: <CAKG8Do7DJOj05DgTnztiM7O780z3kXmKRoeNy6yB5_Yr1Uahwg@mail.gmail.com>
-Date: Mon, 7 May 2018 17:30:57 +0200
-From: Cedric Buissart <cbuissar@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/23/9
+Message-ID: <20180823103552.GA23085@openwall.com>
+Date: Thu, 23 Aug 2018 12:35:52 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2018-1089 389-ds-base: unauthenticated ns-slapd crash via large filter value in ldapsearch
+Cc: Dariusz Tytko <dariusz.tytko@...uritum.pl>
+Subject: Re: OpenSSH Username Enumeration
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+On Thu, Aug 23, 2018 at 09:50:08AM +0200, Dariusz Tytko wrote:
+> We have published our writeup
+> https://sekurak.pl/openssh-users-enumeration-cve-2018-15473/, hope it
+> helps to better understanding the problem.
 
-This is to disclose the following flaw, CVE-2018-1089 :
+Thanks.  We have a policy here that the actual content must be in the
+message, not only included by reference.  Luckily, Qualys already
+brought some detail in here, but nevertheless I'm also attaching a text
+export of your blog post.  Next time you post, please take care of this
+on your own (if relevant).
 
-389-ds-base, a.k.a 389 Directory Server, https://pagure.io/389-ds-base/,
-is a highly usable, fully featured, reliable and secure LDAP server
-implementation. It handles many of the largest LDAP deployments in the
-world.
+https://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
 
-389-ds server did not properly handle characters needed to be escaped in
-its query filter. This could result in buffer overflows, from the heap
-or the stack, on larger filters.  An unauthenticated attacker could send
-a specially crafted LDAP request and crash the server. RCE has not been
-demonstrated at this time.
+"At least the most essential part of your message (e.g., vulnerability
+detail and/or exploit) should be directly included in the message itself
+(and in plain text), rather than only included by reference to an
+external resource.  Posting links to relevant external resources as well
+is acceptable, but posting only links is not.  Your message should
+remain valuable even with all of the external resources gone."
 
-Red Hat would like to thank Greg Kubok for alerting us of the issue.
+As it relates to the actual issue (and past issues, which had to do with
+the password hashing step being skipped or done differently), I'd like
+to note that username enumeration will generally remain possible via
+finer and more numerous timing measurements, primarily because user
+lookup with getpwnam(3) and such is generally not timing-safe.  Fixing
+some of these issues, we're just making username enumeration harder,
+slower, and less reliable.  These are fine goals and it's great that
+specific fixable issues are getting fixed, but I do see why the OpenSSH
+team wouldn't formally treat this as a vulnerability.  OTOH, easy
+username enumeration issues were treated as vulnerabilities (although
+maybe not by upstreams, I just don't recall) at least for proftpd and
+vsftpd (these got CVE IDs for such issues in 2004), and probably more.
 
+Alexander
 
-Reproducer1 :
-[root@...ver1 ~]# payload=$(printf '.*$%.0s' {1..1000})
-[root@...ver1 ~]# ldapsearch -h localhost -p 389 -x -b "dc=blah"
-"(&(|(telephoneNumber=*${payload}*)(uid=*${payload}*)(title=*${payload}*)(sn=*${payload}*)(ou=*${payload}*)(givenName=*${payload}*))(objectClass=posixaccount))"
-"telephoneNumber sshpubkeyfp ipaSshPubKey uid krbCanonicalName title
-loginShell uidNumber gidNumber sn homeDirectory mail krbPrincipalName
-givenName nsAccountLock"
-
-Reproducer2:
-[root@...ver1 ~]# perl -e 'print ".*\$" x (1400)' | ldapsearch -x -f-
-"(&(uid=%s)(objectClass=posixaccount))"
-
-
-Patch attached for versions 1.3.7 & 1.2.11
-
-Thanks!
-
--- 
-Cedric Buissart,
-Product Security
-
+View attachment "OpenSSH-users-enumeration-CVE-2018-15473.txt" of type "text/plain" (10588 bytes)
