@@ -1,4 +1,9 @@
-Received: (qmail 16172 invoked by uid 550); 11 Dec 2025 15:33:42 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["754" "Thursday" "23" "August" "2018" "14:44:40" "+0200" "Leonardo Taccari" "iamleot@gmail.com" "<5b7eac3c.1c69fb81.6a504.6766@mx.google.com>" "23" "Re: [oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?" "^Date:" nil nil "8" "2018082312:44:40" "[oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?" (number mark "        iamleot@gmai Aug 23   23/754   " thread-indent "\"Re: [oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?\"\n") "<CALDAOtuLdurT759O0AxPovJ4ThgcrYrJkYsxJPR4EgWf2QG_+g@mail.gmail.com>" ("<CAJ_zFk+ZNi8r8TKTZuaYgSBUz4mxCO7C5SC=B8Ktc_CZQW6Dsw@mail.gmail.com>" "<CAJ_zFk+RtYrqWQ4Mj1SLVJ7BTZBHLjo_M9t-gDVS_uDEPhuCrg@mail.gmail.com>" "<alpine.GSO.2.20.1808210951110.18862@scrappy.simplesystems.org>" "<CAFRnB2U+QMGmAMoZqbCgTjEx_o_NA+Y9eBE6eDBgJJ0hZdQ4GQ@mail.gmail.com>" "<CAJ_zFkJpnGtG6D3JZVaC5KJiNzsJ6vjJK0oXRfirR8QsdFbZVQ@mail.gmail.com>" "<CAOVKCF0Qehz2q3m2vPSAr3vKRAxdHrTbnyk71ApFYnVXuZ-P6Q@mail.gmail.com>" "<alpine.GSO.2.20.1808221612460.22335@scrappy.simplesystems.org>" "<5b7dd771.1c69fb81.a6d8.6521@mx.google.com>" "<CALDAOtuLdurT759O0AxPovJ4ThgcrYrJkYsxJPR4EgWf2QG_+g@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 16159 invoked by uid 550); 23 Aug 2018 12:51:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,42 +11,68 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 16145 invoked from network); 11 Dec 2025 15:33:42 -0000
-Authentication-Results:garm.ovh; auth=pass (GARM-101G00477ac7859-5077-41b5-8a8c-aa9fecb684f9,
-                    E437B5EF12B3DDB834D7FF5FDE2488817C1DCF35) smtp.auth=jwilk@jwilk.net
-X-OVh-ClientIp:37.248.227.115
-Date: Thu, 11 Dec 2025 16:33:29 +0100
-From: Jakub Wilk <jwilk@jwilk.net>
-To: oss-security@lists.openwall.com
-Message-ID: <20251211153329.ovj6y3sr6udd3c5x@jwilk.net>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <7ae55330-061d-41d6-a2c0-e83b2ba16235@oracle.com>
+Received: (qmail 11292 invoked from network); 23 Aug 2018 12:44:57 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:to:subject:in-reply-to:references:comments
+         :mime-version:content-id:date;
+        bh=ozCXUD6ZTPeFuRLL29yU4Pd5WdPrmEcghjEGFBBJ+Zw=;
+        b=DmmbOBIBIlOtQvaTm2NC8wQb7Vjh5yREdiLuJdPgUdyA0PU5iQCUABK5VfMUN9ZSkp
+         dWonAiFXJDv7ZQdn9s/+bWI1x7z1oN19rFy8su8kzmZotNMIb0eqCjI9P0vZeaFX0LdL
+         MWU9rTpjuyvSU3lifMMPzzGtvMkpAw+r0DCXXNOBvw9hoaVT6/WAz6jn6wKxTK8lfDK8
+         266GBlgwNVINmTYoLtvLwY6HDOCgYBlgXgyHDeYl+5dinPI2u0Nx9i1UhCAXCIT5vA7F
+         8lZCOlu+YSsnXU6aYYdyjcvv02wxgj/rqDDFyDflI6OR+qaDCkwWTjuJ6ZXkm89gstbj
+         VPKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:from:to:subject:in-reply-to
+         :references:comments:mime-version:content-id:date;
+        bh=ozCXUD6ZTPeFuRLL29yU4Pd5WdPrmEcghjEGFBBJ+Zw=;
+        b=gn9HxFSHJAUwym6s6Wn3ChRGiBBtIg++3/uHf34rBC9Ekqu1e8prf7D82tDT05R3H5
+         xb2pGXNgjtyp97B83wEJQPgeE8rBDjwXNzUfc0dYbTfDrK9/OYmQCQbzKtG2Johac/wx
+         bu4BYDV8psZDhC621nt6DMg8wQqRWP/rrqPznHmI9mFkUd/jmWR5t7JbbogYuY2ooFLf
+         xW9H/PRBXlmqr674RNxxRUsdZdoyaovf4LIxBiPw6NxlS6EZwWCiuNRw8WzvI87KkfGj
+         14ZE8idBCosBc62Ldb8wKhPSFO4TiBTtQ9Ygeojb4TlECeZt2+1qguevuLryk7nn5Hss
+         sd/Q==
+X-Gm-Message-State: APzg51ATT82HRUUo+ih9o49jv8MThaeRsM1WmShs/s3P5t+gkRcIVQzw
+	zYnP7y6fhioVmqvGOuih02OFDtaa
+X-Google-Smtp-Source: ANB0VdZQKHcJTka61Hr2pe6D/DjwEpA7DSt/zrgf7xjWWrGdOXrwCjmaQZadiTB2Ae2BUXAkhLpXXA==
+X-Received: by 2002:a5d:6604:: with SMTP id n4-v6mr2247491wru.281.1535028285836;
+        Thu, 23 Aug 2018 05:44:45 -0700 (PDT)
+Message-ID: <5b7eac3c.1c69fb81.6a504.6766@mx.google.com>
+In-reply-to: <CALDAOtuLdurT759O0AxPovJ4ThgcrYrJkYsxJPR4EgWf2QG_+g@mail.gmail.com>
+References: <CAJ_zFk+ZNi8r8TKTZuaYgSBUz4mxCO7C5SC=B8Ktc_CZQW6Dsw@mail.gmail.com> <CAJ_zFk+RtYrqWQ4Mj1SLVJ7BTZBHLjo_M9t-gDVS_uDEPhuCrg@mail.gmail.com> <alpine.GSO.2.20.1808210951110.18862@scrappy.simplesystems.org> <CAFRnB2U+QMGmAMoZqbCgTjEx_o_NA+Y9eBE6eDBgJJ0hZdQ4GQ@mail.gmail.com> <CAJ_zFkJpnGtG6D3JZVaC5KJiNzsJ6vjJK0oXRfirR8QsdFbZVQ@mail.gmail.com> <CAOVKCF0Qehz2q3m2vPSAr3vKRAxdHrTbnyk71ApFYnVXuZ-P6Q@mail.gmail.com> <alpine.GSO.2.20.1808221612460.22335@scrappy.simplesystems.org> <5b7dd771.1c69fb81.a6d8.6521@mx.google.com> <CALDAOtuLdurT759O0AxPovJ4ThgcrYrJkYsxJPR4EgWf2QG_+g@mail.gmail.com>
+Comments: In-reply-to Mateusz Lenik <mlen@mlen.pl>
+   message dated "Thu, 23 Aug 2018 13:29:23 +0200."
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <7ae55330-061d-41d6-a2c0-e83b2ba16235@oracle.com>
-X-Ovh-Tracer-Id: 16450523539492318417
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: dmFkZTGK01L0vqCJznngruQ4YsLH7jSuDC/XNCzbJcpt7lT+P9b4KiY1s4lSmuJu3GBy39atQVGQ3m1rsofTf6bDzv0+Nqp8sn4gULxeCe7WwJeYrCcHg5G1D+dwdPoK04ilMn2chyxxn6JtmMdWjre696p8a9lzMKdwyxooHpRNycpuXgbomnkIZT/CDrTy4fJKSYKhDmLI8ml1Bx3UvV2asZ/jleH2JG7bWLunw6OmjDRGY2ARSr4QfC/t/8kxnltaty0HIaA7PA0U+lAANFAfmvXi7szH1qoiAs+uLeGD5aC/DOG6o7UId4HQuYSIXFZyUiuxD/v0oYxtKM2MJABk82tNtF8reG7YKDpcMcVhmGmCRH0yFMBQPaqa5ewSPwJb1yJ2xJUPy6syrWR9qBEcihlP3kmysUO/W1qCFb0oZ0IRoYXtqUsYPxXlrqqq26zaD2Jpzv0NnKn0yD5bzhluNrcJZ2052R9KgUrqAYFuJWCBmuBAtQwBkRLipzLUjICfTJyoKiTmt6Jfwc2LtPvu3JqzXH7rfxMcs7lTZHquRabGdNqRqn604Pq3djuFx7zVunyq4lYbsqcY52uSivPng/4160KABwL7UIdzF5bW/M+Y+ZZ+FaFKm5wzdtFHKj872gyveZ5d4eUCj4IZWbFVQplyEehOHZarDHNOdD52oKGwpg
-DKIM-Signature: a=rsa-sha256; bh=N+lFw10sfbcx/qPN7aL92U16yxbNIKct22VljmKqf+E=;
- c=relaxed/relaxed; d=jwilk.net; h=From; s=ovhmo917968-selector1;
- t=1765467212; v=1;
- b=ZAarOg9grVbvCwrlIFZyVCxZVqlfeEEidzzfUImfCdM/Xz3VA5+TavOfnWQM8dwF3QkeCBhh
- Rp0ICeX5wVKB5J+V+eG7STwXOtiGxUnPlp3eY4HjXY9OYm/NTLF2JpS3t1z2YQXgfvXKQncKZrd
- u21sH7Sg3mViSg9uX/3ImHqBes4HzIsh3dGmA5QtpaqMeCap6g6w5EerPi0M2E9+va0WPOqrRQI
- HPS2oKn0n3m4gk7uY95PpWpS8a4l4OrYvREueCuxYFtNvo8PAjQ2IzmE9VMByAccjwWTuEKWPmf
- idO/0puV7LyIN/7HZyr+cdCY0AYlbq1HoWTa1lyUrl2xw==
-Subject: Re: [oss-security] CVE-2025-8110 in Gogs self-hosted git service
+Content-Type: text/plain; charset="us-ascii"
+Content-ID: <9685.1535028280.1@boh>
+Date: Thu, 23 Aug 2018 14:44:40 +0200
+From: Leonardo Taccari <iamleot@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
+To: oss-security@lists.openwall.com
 
-* Alan Coopersmith <alan.coopersmith@oracle.com>, 2025-12-10 15:18:
->https://github.com/gogs/gogs offers a MIT-licensed self-hosted git 
->service.
+Hello Mateusz,
 
-Gogs has a couple of notable forks: Gitea, Forgejo.
-Does anyone know if they are affected?
+Mateusz Lenik writes:
+> [...]
+> It seems to be possible to disable GhostScript in ImageMagick completely by
+> the policy rule below. It's not possible to miss any format with it.
+>
+> <policy domain="delegate" rights="none" pattern="gs" />
+>
+> [...]
 
--- 
-Jakub Wilk
+Please note that this will work *only* when ImageMagick is built
+with `--without-gslib'. In that case ImageMagick is not linked
+against gslib and ghostscript is directly invoked via `gs' or
+similar.
+
+If ImageMagick was built `--with-gslib' then no `gs' is invoked
+and there is no delegation, so the problems described by Tavis can
+be reproduced with that delegate policy rule as well.
+
+
+It is probably safer to follow the workaround described in:
+<https://www.kb.cert.org/vuls/id/332928>
