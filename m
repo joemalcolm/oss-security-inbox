@@ -1,50 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/31/1
-Message-ID: <77B308CE34E747C3AE00239F60DBAEE4@W340>
-Date: Thu, 31 May 2018 18:05:19 +0200
-From: "Stefan Kanthak" <stefan.kanthak@...go.de>
-To: <oss-security@...ts.openwall.com>
-Cc: <pete@...o.ie>
-Subject: CVE request: rufus
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/23/14
+Message-ID: <5b7eb7b2.1c69fb81.6b98e.519f@mx.google.com>
+Date: Thu, 23 Aug 2018 15:33:33 +0200
+From: Leonardo Taccari <iamleot@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
 Content-Type: text/plain; charset=utf-8
 
-Hi @ll,
+Hello Bob,
 
-like its predecessors, the recently (2018-05-29) published version
-3.0 of "Rufus" (<https://rufus.akeo.ie/downloads/rufus-3.0.exe> and
-<https://rufus.akeo.ie/downloads/rufus-3.0p.exe>) is riddled with
-bloody beginners errors, which allow arbitrary code execution WITH
-escalation of privilege.
+Bob Friesenhahn writes:
+> You are missing something.  While they are unlikely to be triggered by 
+> default (but still could be triggered by an attacker with sufficient 
+> control), testing shows that
+>
+>    convert -verbose PS2:file.ps outfile.png
+>    convert -verbose file.ps2 outfile.png
+>    convert -verbose PS3:file.ps outfile.png
+>    convert -verbose file.ps3 outfile.png
+>
+> does in fact invoke Ghostscript.
 
-Vulnerability #1
-~~~~~~~~~~~~~~~~
+Whoops, I stand corrected, sorry for the incorrect information!
+(at least when invoking them with the `PS2:' or `PS3:' prefixes,
+anyway, yes, both PS2 and PS3 policy rules are worth to be added
+as well).
 
-See <https://cwe.mitre.org/data/definitions/426.html>
-and <https://cwe.mitre.org/data/definitions/427.html>
-plus <https://capec.mitre.org/data/definitions/471.html>.
+(Regarding the `file.ps2' and `file.ps3' examples without `PS2:' or
+`PS3:' prefixes according `convert -debug Policy -log "%e"' it seems
+that they ends up as:
 
-Additionally see Microsoft's developer guidance
-<https://technet.microsoft.com/en-us/library/2269637.aspx>,
-<https://msdn.microsoft.com/en-us/library/ff919712.aspx>,
-<https://msdn.microsoft.com/en-us/library/ms682586.aspx> und
-<http://blogs.technet.com/b/srd/archive/2014/05/13/load-library-safely.aspx>
-for avoiding this bloody beginner's error.
+ Domain: Coder; rights=Read; pattern="PS" ...
 
-Also see
-<https://insights.sei.cmu.edu/cert/2008/09/carpet-bombing-and-directory-poisoning.html>
-and
-<http://blog.acrossecurity.com/2012/02/downloads-folder-binary-planting.html>
-plus
-<https://insights.sei.cmu.edu/cert/2016/06/bypassing-application-whitelisting.html>
-for "prior art".
+...so should be blocked by the workaround described in
+VU#332928. But please correct me if I'm wrong.)
+
+JFTR, not related to PS2 and PS3 but also a possible ghostcript
+consumer: EPT seems to ends up as `pattern="PS"' too (unlike PS2
+and PS3).
 
 
-Vulnerability #2
-~~~~~~~~~~~~~~~~
-
-See <https://cwe.mitre.org/data/definitions/377.html>
-and <https://cwe.mitre.org/data/definitions/379.html>
-plus <https://capec.mitre.org/data/definitions/29.html>
-
-stay tuned
-Stefan Kanthak
+Thank you!
