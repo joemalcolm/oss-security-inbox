@@ -1,58 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/19/2
-Message-ID: <00b9d6f5-2296-4203-ab88-758f0ba54f63@Spark>
-Date: Tue, 19 Jun 2018 11:37:54 -0400
-From: Rafael Mendonça França <rafaelmfranca@...il.com>
-To: rubyonrails-security@...glegroups.com,  oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
-Subject: [CVE-2018-3760] Path Traversal in Sprockets
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/23/12
+Message-ID: <5b7eac3c.1c69fb81.6a504.6766@mx.google.com>
+Date: Thu, 23 Aug 2018 14:44:40 +0200
+From: Leonardo Taccari <iamleot@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
 Content-Type: text/plain; charset=utf-8
 
-There is an information leak vulnerability in Sprockets. This vulnerability
-has been assigned the CVE identifier CVE-2018-3760.
+Hello Mateusz,
 
-Versions Affected: 4.0.0.beta7 and lower, 3.7.1 and lower, 2.12.4 and lower.
-Not affected: NONE
-Fixed Versions: 4.0.0.beta8, 3.7.2, 2.12.5
+Mateusz Lenik writes:
+> [...]
+> It seems to be possible to disable GhostScript in ImageMagick completely by
+> the policy rule below. It's not possible to miss any format with it.
+>
+> <policy domain="delegate" rights="none" pattern="gs" />
+>
+> [...]
 
-Impact
-------
-Specially crafted requests can be used to access files that exists on
-the filesystem that is outside an application's root directory, when the Sprockets server is
-used in production.
+Please note that this will work *only* when ImageMagick is built
+with `--without-gslib'. In that case ImageMagick is not linked
+against gslib and ghostscript is directly invoked via `gs' or
+similar.
 
-All users running an affected release should either upgrade or use one of the work arounds immediately.
+If ImageMagick was built `--with-gslib' then no `gs' is invoked
+and there is no delegation, so the problems described by Tavis can
+be reproduced with that delegate policy rule as well.
 
-Releases
---------
-The 4.0.0.beta8, 3.7.2 and 2.12.5 releases are available at the normal locations.
 
-Workarounds
------------
-In Rails applications, work around this issue, set `config.assets.compile = false` and
-`config.public_file_server.enabled = true` in an initializer and precompile the assets.
-
-This work around will not be possible in all hosting environments and upgrading is advised.
-
-Patches
--------
-To aid users who aren't able to upgrade immediately we have provided patches for the three supported release series.
-They are in git-am format and consist of a single changeset.
-
-* 4-0-fix-path-traversal.patch - Patch for the 4.0.x release series
-* 3-7-fix-path-traversal.patch - Patch for the 3.7.x release series
-* 2-12-fix-path-traversal.patch - Patch for the 2.12.x release series
-
-Credits
--------
-
-Thanks to Orange Tsai from DEVCORE for reporting this issue.
-
-Rafael França
-
-Content of type "text/html" skipped
-
-Download attachment "2-12-fix-path-traversal.patch" of type "application/octet-stream" (2282 bytes)
-
-Download attachment "3-7-fix-path-traversal.patch" of type "application/octet-stream" (2247 bytes)
-
-Download attachment "4-0-fix-path-traversal.patch" of type "application/octet-stream" (2243 bytes)
+It is probably safer to follow the workaround described in:
+<https://www.kb.cert.org/vuls/id/332928>
