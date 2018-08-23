@@ -1,193 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/11/2
-Message-Id: <E1eZj9z-0007m9-Rz@xenbits.xenproject.org>
-Date: Thu, 11 Jan 2018 20:09:11 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 254 (CVE-2017-5753,CVE-2017-5715,CVE-2017-5754) - Information leak via side effects of speculative execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/23/8
+Message-ID: <b175ea89-96b7-8645-4d82-1d8be96fc78e@securitum.pl>
+Date: Thu, 23 Aug 2018 09:50:08 +0200
+From: Dariusz Tytko <dariusz.tytko@...uritum.pl>
+To: oss-security@...ts.openwall.com
+Subject: Re: OpenSSH Username Enumeration
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
- Xen Security Advisory CVE-2017-5753,CVE-2017-5715,CVE-2017-5754 / XSA-254
-                                 version 4
+We have published our writeup
+https://sekurak.pl/openssh-users-enumeration-cve-2018-15473/, hope it
+helps to better understanding the problem.
 
-        Information leak via side effects of speculative execution
-
-UPDATES IN VERSION 4
-====================
-
-Added README for determining which shim to use, as well as
-instructions for using "Vixen" (HVM shim) and the required
-conversion script
-
-ISSUE DESCRIPTION
-=================
-
-Processors give the illusion of a sequence of instructions executed
-one-by-one.  However, in order to most efficiently use cpu resources,
-modern superscalar processors actually begin executing many
-instructions in parallel.  In cases where instructions depend on the
-result of previous instructions or checks which have not yet
-completed, execution happens based on guesses about what the outcome
-will be.  If the guess is correct, execution has been sped up.  If the
-guess is incorrect, partially-executed instructions are cancelled and
-architectural state changes (to registers, memory, and so on)
-reverted; but the whole process is no slower than if no guess had been
-made at all.  This is sometimes called "speculative execution".
-
-Unfortunately, although architectural state is rolled back, there are
-other side effects, such as changes to TLB or cache state, which are
-not rolled back.  These side effects can subsequently be detected by
-an attacker to determine information about what happened during the
-speculative execution phase.  If an attacker can cause speculative
-execution to access sensitive memory areas, they may be able to infer
-what that sensitive memory contained.
-
-Furthermore, these guesses can often be 'poisoned', such that attacker
-can cause logic to reliably 'guess' the way the attacker chooses.
-This advisory discusses three ways to cause speculative execution to
-access sensitive memory areas (named here according to the
-discoverer's naming scheme):
-
-"Bounds-check bypass" (aka SP1, "Variant 1", Spectre CVE-2017-5753):
-Poison the branch predictor, such that victim code is speculatively
-executed past boundary and security checks.  This would allow an
-attacker to, for instance, cause speculative code in the normal
-hypercall / emulation path to execute with wild array indexes.
-
-"Branch Target Injection" (aka SP2, "Variant 2", Spectre CVE-2017-5715):
-Poison the branch predictor.  Well-abstracted code often involves
-calling function pointers via indirect branches; reading these
-function pointers may involve a (slow) memory access, so the CPU
-attempts to guess where indirect branches will lead.  Poisoning this
-enables an attacker to speculatively branch to any code that is
-executable by the victim (eg, anywhere in the hypervisor).
-
-"Rogue Data Load" (aka SP3, "Variant 3", Meltdown, CVE-2017-5754):
-On some processors, certain pagetable permission checks only happen
-when the instruction is retired; effectively meaning that speculative
-execution is not subject to pagetable permission checks.  On such
-processors, an attacker can speculatively execute arbitrary code in
-userspace with, effectively, the highest privilege level.
-
-More information is available here:
-  https://meltdownattack.com/
-  https://spectreattack.com/
-  https://googleprojectzero.blogspot.co.uk/2018/01/reading-privileged-memory-with-side.html
-
-Additional Xen-specific background:
-
-Xen hypervisors on most systems map all of physical RAM, so code
-speculatively executed in a hypervisor context can read all of system
-RAM.
-
-When running PV guests, the guest and the hypervisor share the address
-space; guest kernels run in a lower privilege level, and Xen runs in
-the highest privilege level.  (x86 HVM and PVH guests, and ARM guests,
-run in a separate address space to the hypervisor.)  However, only
-64-bit PV guests can generate addresses large enough to point to
-hypervisor memory.
-
-IMPACT
-======
-
-Xen guests may be able to infer the contents of arbitrary host memory,
-including memory assigned to other guests.
-
-An attacker's choice of code to speculatively execute (and thus the
-ease of extracting useful information) goes up with the numbers.  For
-SP1, an attacker is limited to windows of code after bound checks of
-user-supplied indexes.  For SP2, the attacker will in many cases will
-be limited to executing arbitrary pre-existing code inside of Xen.
-For SP3 (and other cases for SP2), an attacker can write arbitrary
-code to speculatively execute.
-
-Additionally, in general, attacks within a guest (from guest user to
-guest kernel) will be the same as on real hardware.  Consult your
-operating system provider for more information.
-
-NOTE ON TIMING
-==============
-
-This vulnerability was originally scheduled to be made public on 9
-January.  It was accelerated at the request of the discloser due to
-one of the issues being made public.
-
-VULNERABLE SYSTEMS
-==================
-
-Systems running all versions of Xen are affected.
-
-For SP1 and SP2, both Intel and AMD are vulnerable.  Vulnerability of
-ARM processors to SP1 and SP2 varies by model and manufacturer.  ARM
-has information on affected models on the following website:
-   https://developer.arm.com/support/security-update
-
-For SP3, only Intel processors are vulnerable.  (The hypervisor cannot
-be attacked using SP3 on any ARM processors, even those that are
-listed as affected by SP3.)
-
-Furthermore, only 64-bit PV guests can exploit SP3 against Xen.  PVH,
-HVM, and 32-bit PV guests cannot exploit SP3.
-
-MITIGATION
-==========
-
-There is no mitigation for SP1 and SP2.
-
-SP3 can be mitigated by running guests in HVM or PVH mode.
-
-RESOLUTION
-==========
-
-There is no available resolution for SP1.  A solution may be available
-in the future.
-
-We are working on patches which mitigate SP2 but these are not
-currently available.  Given that the vulnerabilities are now public,
-these will be developed and published in public, initially via
-xen-devel.
-
-For guests with legacy PV kernels which cannot be run in HVM or PVH
-mode directly, we have developed two "shim" hypervisors that allow PV
-guests to run in HVM mode or PVH mode.  The HVM shim (codenamed
-"Vixen") is available now.  We expect to have the PVH shim (codenamed
-"Comet") available within a few days.  Please read README.which-shim
-to determine which shim is suitable for you.
-
-$ sha256sum xsa254*/*
-2df6b811ec7a377a9cc717f7a8ed497f3a90928c21cba81182eb4a802e32ecd7  xsa254/README.vixen
-bc04385fd3ec899e1b8c1c001b6169587a8a8b20d5d0d584ff749b7ed67d7e70  xsa254/README.which-shim
-36e825118fa8fca30158e50607580ddf64f6c62e5c5127d87d0042fbe2ff37b2  xsa254/pvshim-converter.pl
-$
+Best regards,
+Dariusz Tytko
 
 
-NOTE ON LACK OF EMBARGO
-=======================
+W dniu 17.08.2018 o 20:31, Salvatore Bonaccorso pisze:
+> Hi,
+>
+> On Wed, Aug 15, 2018 at 09:05:58AM -0700, Qualys Security Advisory wrote:
+>> Hi all,
+>>
+>> We sent the following email to openssh@...nssh.com and
+>> distros@...openwall.org about an hour ago, and it was decided that we
+>> should send it to oss-security@...ts.openwall.com right away (as far as
+>> we know, no CVE has been assigned to this issue yet):
+>>
+>> ========================================================================
+>>
+>> While reviewing the latest OpenSSH commits, we stumbled across:
+>>
+>> https://github.com/openbsd/src/commit/779974d35b4859c07bc3cb8a12c74b43b0a7d1e0
+>>
+>> Date:   Tue Jul 31 03:10:27 2018 +0000
+>>     delay bailout for invalid authenticating user until after the packet
+>>     containing the request has been fully parsed. Reported by Dariusz Tytko
+>>     and Michal Sajdak; ok deraadt
+>>
+>> We realized that without this patch, a remote attacker can easily test
+>> whether a certain user exists or not (username enumeration) on a target
+>> OpenSSH server:
+>>
+>>   87 static int
+>>   88 userauth_pubkey(struct ssh *ssh)
+>>   89 {
+>>  ...
+>>  101         if (!authctxt->valid) {
+>>  102                 debug2("%s: disabled because of invalid user", __func__);
+>>  103                 return 0;
+>>  104         }
+>>  105         if ((r = sshpkt_get_u8(ssh, &have_sig)) != 0 ||
+>>  106             (r = sshpkt_get_cstring(ssh, &pkalg, NULL)) != 0 ||
+>>  107             (r = sshpkt_get_string(ssh, &pkblob, &blen)) != 0)
+>>  108                 fatal("%s: parse request failed: %s", __func__, ssh_err(r));
+>>
+>> The attacker can try to authenticate a user with a malformed packet (for
+>> example, a truncated packet), and:
+>>
+>> - if the user is invalid (it does not exist), then userauth_pubkey()
+>>   returns immediately, and the server sends an SSH2_MSG_USERAUTH_FAILURE
+>>   to the attacker;
+>>
+>> - if the user is valid (it exists), then sshpkt_get_u8() fails, and the
+>>   server calls fatal() and closes its connection to the attacker.
+>>
+>> We believe that this issue warrants a CVE; it affects all operating
+>> systems, all OpenSSH versions (we went back as far as OpenSSH 2.3.0,
+>> released in November 2000), and is easier to exploit than previous
+>> OpenSSH username enumerations (which were all timing attacks):
+>>
+>> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2003-0190
+>> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-5229
+>> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-6210
+> This new issue got assigned CVE-2018-15473 by MITRE.
+>
+> Regards,
+> Salvatore
 
-The timetable and process were set by the discloser.
+-- 
+Dariusz Tytko
 
-After the intensive initial response period for these vulnerabilities
-is over, we will prepare and publish a full timeline, as we have done
-in a handful of other cases of significant public interest where we
-saw opportunities for process improvement.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+securitum.pl - bezpieczeństwo systemów IT.
+sekurak.pl   - piszemy o bezpieczeństwie.
 
-iQEcBAEBCAAGBQJaV8ReAAoJEIP+FMlX6CvZWoUH/joZJ3sMPCs5EHlDcKMcoWXx
-YMsZuypqVyotc9WbvBdh3QfdfCEOqouJatHUBkl3Me8bzkJY1IEzcE4BlG0Ku1Bv
-s2DKEcUDbEtA7zuJuQukeuYdx4QaqfVr93fnW48P2Ax2X7kBl1cvr5isxjBaPqC2
-dHVMqXgwPGPwOzPW7GZjmzDikyPAHgsNxdH/rXdAHSJ8hLVUeQv3zhMaoUmvQiNb
-xq7+mSIoVAZr82fXKGKApX2XTxmwq7SgyzAVVfGySID9GGjnGGoSpirpMtkD+7io
-rpe0W+KD/muukgzvRd5+eHbx+dIq5MN0VnQiFbc2WmM8HNoJF/R8k/kvLtQfiZ4=
-=2xGF
------END PGP SIGNATURE-----
-
-Download attachment "xsa254/README.vixen" of type "application/octet-stream" (2499 bytes)
-
-Download attachment "xsa254/README.which-shim" of type "application/octet-stream" (3423 bytes)
-
-Download attachment "xsa254/pvshim-converter.pl" of type "application/octet-stream" (6402 bytes)
