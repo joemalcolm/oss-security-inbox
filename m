@@ -1,28 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/08/4
-Message-ID: <20180208201604.rfilwmwbjow5braq@matica.foolinux.mooo.com>
-Date: Thu, 8 Feb 2018 12:16:04 -0800
-From: Ian Zimmerman <itz@...y.loosely.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/23/3
+Message-ID: <CAJ_zFkL5wLrabBXB6JSUhxwG6UVmYrCYOJYhw1rBeC=3dAdF=g@mail.gmail.com>
+Date: Wed, 22 Aug 2018 20:33:37 -0700
+From: Tavis Ormandy <taviso@...gle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2018-6789 Exim 4.90 and earlier: buffer overflow
+Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
 Content-Type: text/plain; charset=utf-8
 
-On 2018-02-07 11:39, Heiko Schlittermann wrote:
+On Wed, Aug 22, 2018 at 2:17 PM Bob Friesenhahn <
+bfriesen@...ple.dallas.tx.us> wrote:
 
-> Updates will follow. Here and on https://exim.org/security/CVE-2018-6789.txt
+> The CERT advisory at https://www.kb.cert.org/vuls/id/332928 provides a
+> policy.xml example which does not appear to block PS2 and PS3, which
+> are also entry points for reading Postscript.
+>
+>
+I think (luckily) there's no magic that will invoke those, but I think
+you're right, for completeness they should be disabled by default as well.
 
- ahiker!3 ~$ curl -L https://exim.org/security/CVE-2018-6789.txt
-<html>
-<head><title>404 Not Found</title></head>
-<body bgcolor="white">
-<center><h1>404 Not Found</h1></center>
-<hr><center>nginx</center>
-</body>
-</html>
+Tavis.
 
-?
-
--- 
-Please don't Cc: me privately on mailing lists and Usenet,
-if you also post the followup to the list or newsgroup.
-To reply privately _only_ on Usenet, fetch the TXT record for the domain.
