@@ -1,40 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/18/10
-Message-ID: <519d9522-0531-a553-5bf3-de6d4e712a35@hpe.com>
-Date: Thu, 18 Jan 2018 16:38:41 -0500
-From: "Luedtke, Nicholas (Cyber Security)" <nicholas.luedtke@....com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/23/10
+Message-ID: <CALDAOtuLdurT759O0AxPovJ4ThgcrYrJkYsxJPR4EgWf2QG_+g@mail.gmail.com>
+Date: Thu, 23 Aug 2018 13:29:23 +0200
+From: Mateusz Lenik <mlen@...n.pl>
 To: oss-security@...ts.openwall.com
-Subject: Re: How to deal with reporters who don't want their bugs fixed?
+Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
 Content-Type: text/plain; charset=utf-8
 
+Hello,
 
-On 1/18/2018 4:21 PM, Solar Designer wrote:
-> I think it's best for your project (I guess glibc?) to prominently
-> publish near the security contact address a maximum embargo time you'd
-> (be likely to) agree to.  That's what security at kernel.org does
-> (7 days) and what we do with (linux-)distros (14 days).  That way, it's
-> less important for you to judge whether the reason for embargo is
-> valid/altruistic or bogus/selfish - a sane maximum embargo time
-> minimizes the damage to all parties either way.  When someone requests a
-> longer embargo for whatever reason, just decline and insist on your
-> previously published maximum.  Those who want to have their issue
-> disclosure timed with some other event will then be expected to delay
-> reporting the issue to your project until it's close enough to that
-> other event.  That's not ideal, but I think it's better than having no
-> maximum embargo time specified.
+On Thu, Aug 23, 2018 at 11:06 AM Leonardo Taccari <iamleot@...il.com> wrote:
 
-I generally agree with this, but it also creates the risk that reporters 
-will simply wait till the maximum time frame fits within their desired 
-reporting time.  Which of course delays the reporting of the bug to the 
-vendor/project. What I have seen in the past is a negotiated partial 
-disclosure where the patch is released with minimum details with the 
-line that says "Full details with be released by XXX at YYY conference." 
-That way if ego is the factor then the reporter also gets a slight 
-teaser for his/her talk. Of course one could just use the patch to get 
-the details depending on the issue.
+> Bob Friesenhahn writes:
+> > The CERT advisory at https://www.kb.cert.org/vuls/id/332928 provides a
+> > policy.xml example which does not appear to block PS2 and PS3, which
+> > are also entry points for reading Postscript.
+> > [...]
+>
+> If I am not missing something I think that ghostscript isn't used
+> for them though.
+>
 
---Nicholas Luedtke HPE Cyber Security
+It seems to be possible to disable GhostScript in ImageMagick completely by
+the policy rule below. It's not possible to miss any format with it.
 
+<policy domain="delegate" rights="none" pattern="gs" />
 
+I also found out that Amit's exploit works with lesspipe that ships with
+less by default -- it uses gs via ps2ascii wrapper
 
+Best,
+Mateusz
 
