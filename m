@@ -1,29 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/10/1
-Message-Id: <1523346797.16686.6@smtp.gmail.com>
-Date: Tue, 10 Apr 2018 03:53:17 -0400
-From: Gordo Lowrey <gordo@...eval.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/23/11
+Message-ID: <20180823113605.GA3397@localhost.localdomain>
+Date: Thu, 23 Aug 2018 04:36:05 -0700
+From: Qualys Security Advisory <qsa@...lys.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Terminal Control Chars
+Cc: Dariusz Tytko <dariusz.tytko@...uritum.pl>
+Subject: Re: OpenSSH Username Enumeration
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Mar 5, 2018 at 11:50 AM, up201407890@...nos.dcc.fc.up.pt wrote:
-> The correct solution would be to disallow the pasting of certain 
-> control characters.
+Hi all,
 
-I'm just gonna go out on a limb here, and say this is an unfounded 
-assertion.
+On Thu, Aug 23, 2018 at 09:50:08AM +0200, Dariusz Tytko wrote:
+> We have published our writeup
+> https://sekurak.pl/openssh-users-enumeration-cve-2018-15473/
 
-Perhaps the correct solution would be to prevent the browser from 
-copying invisible characters.
+Great job, and thank you very much for reporting this to the OpenSSH
+team in the first place!
 
-If you're going to break some basic mechanic of human computer 
-interaction, at least don't break my damn terminal (not that I use VTE, 
-it doesn't support OSC 52, among others), but the principle stands... 
-Instead of worrying about sanitizing what is pasted, why not worry 
-about sanitizing what is copied instead?
+Here is our (rough) timeline:
 
-Thanks.
+- On July 31,
+  https://github.com/openbsd/src/commit/779974d35b4859c07bc3cb8a12c74b43b0a7d1e0
+  is committed publicly, but does not explain the reasons for this
+  change, and does not flag it as a security fix.
 
+- We read this commit about two weeks later, and realize its security
+  implications; we do not know whether distros@...openwall.org have been
+  contacted about this or not.
 
+- We therefore send our findings to openssh@...nssh.com and
+  distros@...openwall.org, on August 15.
 
+- About 20 minutes later (!), Solar Designer confirms that we should
+  post this to oss-security@...ts.openwall.com right away (as per
+  https://oss-security.openwall.org/wiki/mailing-lists/distros): indeed,
+  the issue is already public (if we spotted this commit, then others
+  did, too).
+
+- About one hour later, we post our findings to oss-security.
+
+Again, we thank Dariusz Tytko for reporting this issue,
+distros@...openwall.org for their quick response, and the OpenSSH team
+for all their hard and inspiring work. With best regards,
+
+-- 
+the Qualys Security Advisory team
