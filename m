@@ -1,4 +1,9 @@
-Received: (qmail 24034 invoked by uid 550); 8 Aug 2024 21:02:42 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["12729" "Thursday" "23" "August" "2018" "12:35:52" "+0200" "Solar Designer" "solar@openwall.com" "<20180823103552.GA23085@openwall.com>" "327" "Re: [oss-security] OpenSSH Username Enumeration" "^Cc:" nil nil "8" "2018082310:35:52" "[oss-security] OpenSSH Username Enumeration" (number mark "        solar@openwa Aug 23  327/12729 " thread-indent "\"Re: [oss-security] OpenSSH Username Enumeration\"\n") "<b175ea89-96b7-8645-4d82-1d8be96fc78e@securitum.pl>" ("<20180815160558.GA23020@localhost.localdomain>" "<20180817183154.GA18661@eldamar.local>" "<b175ea89-96b7-8645-4d82-1d8be96fc78e@securitum.pl>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 18381 invoked by uid 550); 23 Aug 2018 10:37:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,128 +11,345 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 17599 invoked from network); 23 Aug 2018 10:36:49 -0000
+Message-ID: <20180823103552.GA23085@openwall.com>
+References: <20180815160558.GA23020@localhost.localdomain> <20180817183154.GA18661@eldamar.local> <b175ea89-96b7-8645-4d82-1d8be96fc78e@securitum.pl>
+Mime-Version: 1.0
+Content-Type: multipart/mixed; boundary="nFreZHaLTZJo0R7j"
+Content-Disposition: inline
+In-Reply-To: <b175ea89-96b7-8645-4d82-1d8be96fc78e@securitum.pl>
+User-Agent: Mutt/1.4.2.3i
+Cc: Dariusz Tytko <dariusz.tytko@securitum.pl>
+Date: Thu, 23 Aug 2018 12:35:52 +0200
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1438 invoked from network); 8 Aug 2024 20:55:50 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sdaoden.eu;
- s=citron; t=1723150543; x=1723817209; h=date:to:subject:in-reply-to:
-  references:mail-followup-to:mime-version:content-type:
-  content-transfer-encoding:message-id:from:author:from:subject:date:to:cc:
-  resent-author:resent-date:resent-from:resent-sender:resent-to:resent-cc:
-  resent-reply-to:resent-message-id:in-reply-to:references:mime-version:
-  content-type:content-transfer-encoding:content-disposition:content-id:
-  content-description:message-id:mail-followup-to:openpgp:blahblahblah;
- bh=YGldUqCULRFZTHHFwhpEjBGQceV3v8a71pNxwlGG4WM=;
- b=ZYc/lKrFZmfGmiGBFempfPNU4e+GM1/ILYCP3pQQbS3dnbGaU8095SS0PLk/N11XzG+Mq03u
-  ze/0rhZI4BfPPyKobJi4FBelgXBk6FXbP469gbrFZT4HW/j64ZhxiYHJr6hl8lqN84FSte3GaL
-  0iv5gjUTi2+5K4cCQIQ8fS6RI49ne5gDll02w3zeWFFt+DsdKD0/WtidvUzYcWuIZlT9o48fnR
-  RfhReYDCvmVuBYdTGXd893FxuDKZSkuQ8mbF+Q6zNXaWuzpFAfx5C4yVelMWuQ2MGNFNub1uN8
-  PFyDZpJFQMAU0D+/CuTrsJHle4wd6DUWZMQlvLnh6sjF6wHw==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=sdaoden.eu;
- s=orange; t=1723150543; x=1723817209; h=date:to:subject:in-reply-to:
-  references:mail-followup-to:mime-version:content-type:
-  content-transfer-encoding:message-id:from:author:from:subject:date:to:cc:
-  resent-author:resent-date:resent-from:resent-sender:resent-to:resent-cc:
-  resent-reply-to:resent-message-id:in-reply-to:references:mime-version:
-  content-type:content-transfer-encoding:content-disposition:content-id:
-  content-description:message-id:mail-followup-to:openpgp:blahblahblah;
- bh=YGldUqCULRFZTHHFwhpEjBGQceV3v8a71pNxwlGG4WM=;
- b=BkrzEqz3UBrJUFODnTcZj1jai7mxkz7RDpD/7XbNAtFwuTL7B1ABbFNwaOMpXAtebTqQQ0Iw
-  bPOkG5Ou995PDw==
-Date: Thu, 08 Aug 2024 22:55:40 +0200
+Subject: Re: [oss-security] OpenSSH Username Enumeration
 To: oss-security@lists.openwall.com
-In-Reply-To: <20240808190532.Uwg8_Ylc@steffen%sdaoden.eu>
-References: <CAJbOq16ebWS21u439bcV764HhaeQHF+eO64LdMAAKFgjdDLrMg@mail.gmail.com>
- <20240806171232.6bd08942@zbook> <ZrJv8PDeCxQQJVxH@itl-email>
- <20240807144047.GA12108@test> <20240807174807.GA4206@openwall.com>
- <CADz+4x8wo6KaCU9b2s_+VkB08X7U4WWJHj66UfyvRU1qKUUd-A@mail.gmail.com>
- <20240807201640.1RD27ogN@steffen%sdaoden.eu>
- <E3810E68-25CC-456F-9DC4-A03752C43E79@redhat.com>
- <20240808190532.Uwg8_Ylc@steffen%sdaoden.eu>
-Mail-Followup-To: oss-security@lists.openwall.com
-User-Agent: s-nail v14.9.24-621-g0d1e55f367
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <20240808205540.267A1153AD7@kent.sdaoden.eu>
-From: steffen <steffen@sdaoden.eu>
-Subject: Re: [oss-security] feedback requested regarding deprecation
- of TLS 1.0/1.1
 
-Steffen Nurpmeso wrote in
- <20240808190532.Uwg8_Ylc@steffen%sdaoden.eu>:
- |Clemens Lang wrote in
- | <E3810E68-25CC-456F-9DC4-A03752C43E79@redhat.com>:
- ||> On 7. Aug 2024, at 22:16, Steffen Nurpmeso <steffen@sdaoden.eu> wrote:
- ...
- ||> To reiterate that SSL/TLS are standards, they had version
- ||> iterations, which possibly got around some real protocol problem.
- ||> These offer standardized sets of ciphersuites, some of those, of
- ||> the elder versions, are "no longer secure".  (I am no
- ...
- ||> as i understand it, even TLSv1 supported forward-secrecy stuff, ie
- ||>=20
- ||>  # openssl ciphers -v EECDH+AESGCM:EECDH+AES256:CHACHA20:!DHE
- ||>=20
- ||> gives two members, and except for the SHA-1 MAC this looks pretty
- ||> modern.  But again: i am far from being an expert.
- ||
- ||TLS < 1.2 only supports a single signature algorithm, which uses SHA1-MD=
-5 \
- ||\
- ||as digest.
- ||Only TLS >=3D 1.2 supports the signature_algorithms extension to negotia=
-te \
- ||modern digests.
- ||
- ||MD-5 is fully broken. SHA-1 is questionable. Their combination may \
- ||withstand attacks a little bit longer, but probably not by much.
- ||
- ||The MAC is actually fine, since it=E2=80=99s HMAC with SHA-1, which isn=
-=E2=80=99t as \
- ||affected by a SHA-1 collision attack [1].
- ||
- ||  [1]: https://security.stackexchange.com/questions/187866/why-aren-t-co=
-ll\
- ||  \
- ||  isions-important-with-hmac
- |
- |Ok, here you got me.  I would have to (actually a little bit of
- |re-) read the entire TLS specification 1.1 (2246) in order to give
- |some useful answer.  Ie, whether the non-HMAC usage of MD5/SHA-1
- |in TLSv1.1 is used in a way that is truly problematic, or whether
- |they exist in data blocks that are protected by other means,
- |protected by the stream cipher or signed by a key that anyway has
- |to be verified via private/public key cryptography.
+--nFreZHaLTZJo0R7j
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-That is: whether "vulnerability" thus means to create a fake
-packet with identical MD-5 and SHA-1 hashes (it seems TLSv1.1
-always uses both concurrently, at least for RSA) as the
-cryptographically verifiable one that ships with the packet.
+On Thu, Aug 23, 2018 at 09:50:08AM +0200, Dariusz Tytko wrote:
+> We have published our writeup
+> https://sekurak.pl/openssh-users-enumeration-cve-2018-15473/, hope it
+> helps to better understanding the problem.
 
-It seems to me this is hard stuff, especially for "the occasional
-attack".  *But*, if the protocol is resistant against downgrading
-it would be used only for those connections which cannot use
-anything else.
+Thanks.  We have a policy here that the actual content must be in the
+message, not only included by reference.  Luckily, Qualys already
+brought some detail in here, but nevertheless I'm also attaching a text
+export of your blog post.  Next time you post, please take care of this
+on your own (if relevant).
 
-The real question for me (who cannot help possible remote stations
-that cannot do any better) is how applications can deal with being
-specific.  For example openssl-s_client(1) allows per-connection
-cipher suite configuration, the MUA i maintain does so per
-destination server if you want to, for example.  The postfix MTA
-supports policy maps for at least the client side like this
+https://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
 
-       /etc/postfix/tls_policy:
-           example.edu                 none
-           example.mil                 may
-           example.gov                 encrypt protocols=3DTLSv1
-           example.com                 verify ciphers=3Dhigh
+"At least the most essential part of your message (e.g., vulnerability
+detail and/or exploit) should be directly included in the message itself
+(and in plain text), rather than only included by reference to an
+external resource.  Posting links to relevant external resources as well
+is acceptable, but posting only links is not.  Your message should
+remain valuable even with all of the external resources gone."
 
-This narrows the necessary case of less modern support down to
-(possibly falsely announced) host names, or fixed IP numbers.
+As it relates to the actual issue (and past issues, which had to do with
+the password hashing step being skipped or done differently), I'd like
+to note that username enumeration will generally remain possible via
+finer and more numerous timing measurements, primarily because user
+lookup with getpwnam(3) and such is generally not timing-safe.  Fixing
+some of these issues, we're just making username enumeration harder,
+slower, and less reliable.  These are fine goals and it's great that
+specific fixable issues are getting fixed, but I do see why the OpenSSH
+team wouldn't formally treat this as a vulnerability.  OTOH, easy
+username enumeration issues were treated as vulnerabilities (although
+maybe not by upstreams, I just don't recall) at least for proftpd and
+vsftpd (these got CVE IDs for such issues in 2004), and probably more.
 
-I, as a non-cryptographer, would wonder whether some of the cipher
-suites that are by default possible do not impose greater risks
-than that.
+Alexander
 
- |I never read 5246, just downloaded it an hour ago to read the
- |referenced appendix.  (Not a network expert etc.)
+--nFreZHaLTZJo0R7j
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="OpenSSH-users-enumeration-CVE-2018-15473.txt"
+
+                  OpenSSH - users enumeration - CVE-2018-15473
+
+   22 sierpnia 2018, 17:57
+
+   --------------------------------------------------------------------------
+
+   We planned to publish the following article after release fixed OpenSSH
+   version. However, due to the fact that technical details with working
+   exploit were published on the Internet, we decided to publish our
+   research.
+
+Introduction
+
+   When testing infrastructure security, we often face the task of testing
+   the security of the SSH server. One of the basic tests is to check the
+   resistance to brute-force attacks. When performing such a type of attacks,
+   knowledge of correct user names significantly increases the probability of
+   success - instead of checking all possible combinations of potential
+   usernames and passwords, we check the validity of passwords only for
+   existing users. One way to obtain a list of correct usernames is
+   enumeration, which, in simple terms, boils down to using the
+   authentication server error to verify that the username is correct. If the
+   authentication server allows to enumerate user names, the brute-force
+   attack can be divided into two stages:
+
+    1. We filter the list of potential user names by querying the server for
+       the correctness of the given name
+    2. We use the list of existing user names to perform the main brute-force
+       attack
+
+   Due to the popularity of the OpenSSH server, I decided to analyze the
+   server code for the vulnerability to enumerating user names. The result of
+   the analysis is presented below.
+
+Technical details
+
+   The latest version (as of 2018.07.16) of the OpenSSH server has been
+   analyzed.
+
+   The auth2-pubkey.c file contains the code implementing the key
+   authentication:
+
+   _____________________
+
+   87  static int
+   88  userauth_pubkey(struct ssh *ssh)
+   89  {
+   90      Authctxt *authctxt = ssh->authctxt;
+   91      struct passwd *pw = authctxt->pw;
+   92      struct sshbuf *b;
+   93      struct sshkey *key = NULL;
+   94      char *pkalg, *userstyle = NULL, *key_s = NULL, *ca_s = NULL;
+   95      u_char *pkblob, *sig, have_sig;
+   96      size_t blen, slen;
+   97      int r, pktype;
+   98      int authenticated = 0;
+   99      struct sshauthopt *authopts = NULL;
+   100
+   101     if (!authctxt->valid) {
+   102         debug2("%s: disabled because of invalid user", __func__);
+   103         return 0;
+   104     }
+   105     if ((r = sshpkt_get_u8(ssh, &have_sig)) != 0 ||
+   106         (r = sshpkt_get_cstring(ssh, &pkalg, NULL)) != 0 ||
+   107         (r = sshpkt_get_string(ssh, &pkblob, &blen)) != 0)
+   108         fatal("%s: parse request failed: %s", __func__, ssh_err(r));
+   109     pktype = sshkey_type_from_name(pkalg);
+
+   In the case when the authentication attempt takes place for a non-existent
+   user, the condition checked at line 101 is satisfied, as a result the
+   server completes the authentication process (line 103). Otherwise, when
+   the username is correct, the authentication process continues.
+
+   Lines 105-107 contain the code responsible for parsing the SSH packet. If
+   a parsing error occurs, the process ends in an error (calling the "fatal"
+   function on line 108). At this stage of the analysis, we can assume that
+   "gentle" (line 103) and emergency (line 108) ending of the authentication
+   process should be clearly distinguishable from the SSH client's
+   perspective.
+
+   In order to develop a method for the emergency completion of the process,
+   let's analyze the function "sshpkt_get_string" (packet.c):
+
+   _____________________
+
+   2518 int
+   2519 sshpkt_get_string(struct ssh *ssh, u_char **valp, size_t *lenp)
+   2520 {
+   2521   return sshbuf_get_string(ssh->state->incoming_packet, valp, lenp);
+   2522 }
+
+   At line 2521, the "sshbuf_get_string" function is called
+   (sshbuf-getput-basic.c):
+
+   _____________________
+
+   96  int
+   97  sshbuf_get_string(struct sshbuf *buf, u_char **valp, size_t *lenp)
+   98  {
+   99     const u_char *val;
+   100    size_t len;
+   101    int r;
+   102
+   103    if (valp != NULL)
+   104        *valp = NULL;
+   105    if (lenp != NULL)
+   106        *lenp = 0;
+   107    if ((r = sshbuf_get_string_direct(buf, &val, &len)) < 0)
+   108        return r;
+
+   At line 107, the "sshbuf_get_string_direct" function is called
+   (sshbuf-getput-basic.c):
+
+   _____________________
+
+   123 int
+   124 sshbuf_get_string_direct(struct sshbuf *buf, const u_char **valp, size_t *lenp)
+   125 {
+   126    size_t len;
+   127    const u_char *p;
+   128    int r;
+   129
+   130    if (valp != NULL)
+   131        *valp = NULL;
+   132    if (lenp != NULL)
+   133        *lenp = 0;
+   134    if ((r = sshbuf_peek_string_direct(buf, &p, &len)) < 0)
+   135        return r;
+   136    if (valp != NULL)
+
+   At line 134, the "sshbuf_peek_string_direct" function is called
+   (sshbuf-getput-basic.c):
+
+   _____________________
+
+   149 int
+   150 sshbuf_peek_string_direct(const struct sshbuf *buf, const u_char **valp,
+   151    size_t *lenp)
+   152 {
+   153    u_int32_t len;
+   154    const u_char *p = sshbuf_ptr(buf);
+   155
+   156    if (valp != NULL)
+   157        *valp = NULL;
+   158    if (lenp != NULL)
+   159        *lenp = 0;
+   160    if (sshbuf_len(buf) < 4) {
+   161        SSHBUF_DBG(("SSH_ERR_MESSAGE_INCOMPLETE"));
+   162        return SSH_ERR_MESSAGE_INCOMPLETE;
+   163    }
+   164    len = PEEK_U32(p);
+   165    if (len > SSHBUF_SIZE_MAX - 4) {
+   166        SSHBUF_DBG(("SSH_ERR_STRING_TOO_LARGE"));
+   167        return SSH_ERR_STRING_TOO_LARGE;
+   168    }
+   169    if (sshbuf_len(buf) - 4 < len) {
+   170        SSHBUF_DBG(("SSH_ERR_MESSAGE_INCOMPLETE"));
+   171        return SSH_ERR_MESSAGE_INCOMPLETE;
+   172    }
+
+   The function performs validation of the "string" value, among other things
+   the data length is checked (line 165) - the length cannot be greater than
+   SSHBUF_SIZE_MAX - 4.
+
+   The constant SSHBUF_SIZE_MAX is defined in the sshbuf.h file:
+
+   _____________________
+
+   1 #define SSHBUF_SIZE_MAX     0x8000000 /* Hard maximum size */
+
+   At this point, we obtained a way to force the "sshpkt_get_string" function
+   to return an error - sending a "string" value with a length greater than
+   0x8000000 - 4.
+
+   Let's go back to the analysis of the function "userauth_pubkey"
+   (auth2-pubkey.c):
+
+   _____________________
+
+   87  static int
+   88  userauth_pubkey(struct ssh *ssh)
+   89  {
+   90     Authctxt *authctxt = ssh->authctxt;
+   91     struct passwd *pw = authctxt->pw;
+   92     struct sshbuf *b;
+   93     struct sshkey *key = NULL;
+   94     char *pkalg, *userstyle = NULL, *key_s = NULL, *ca_s = NULL;
+   95     u_char *pkblob, *sig, have_sig;
+   96     size_t blen, slen;
+   97     int r, pktype;
+   98     int authenticated = 0;
+   99     struct sshauthopt *authopts = NULL;
+   100
+   101    if (!authctxt->valid) {
+   102        debug2("%s: disabled because of invalid user", __func__);
+   103        return 0;
+   104    }
+   105    if ((r = sshpkt_get_u8(ssh, &have_sig)) != 0 ||
+   106        (r = sshpkt_get_cstring(ssh, &pkalg, NULL)) != 0 ||
+   107        (r = sshpkt_get_string(ssh, &pkblob, &blen)) != 0)
+   108        fatal("%s: parse request failed: %s", __func__, ssh_err(r));
+   109    pktype = sshkey_type_from_name(pkalg);
+
+   There is an attempt to read the "string" value at line 107. Sending a
+   value greater than 0x8000000 - 4 should cause the "sshpkt_get_string"
+   function to return an error and result in an emergency termination of the
+   process (line 108). It is worth to mention that the data sent does not
+   have to have a length greater than 0x8000000 - 4, only the declared size
+   (sent in a separate field) must exceed the allowed value.
+
+   In order to send a crafted SSH packet that contains a "string" with the
+   appropriate length, I will modify the paramiko library. Paramiko is an
+   implementation of SSHv2 protocol written in Python
+   (https://github.com/paramiko/paramiko). I encourage you to modify the
+   library on your own.
+
+   Based on the modified paramiko library, let's write a simple script to
+   verify the correctness of the user's name:
+
+   _____________________
+
+   1 import paramiko
+   2 import sys
+   3
+   4 ssh = paramiko.SSHClient()
+   5 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+   6 ssh.connect(hostname=sys.argv[1], port=int(sys.argv[2]), username=sys.argv[3], key_filename='./conf/id_rsa', password='', look_for_keys=False)
+   7 ssh.close()
+
+   Running the script for the name of an existing user (user) ends with the
+   error "No existing session":
+
+   _____________________
+
+   1 python2 test.py debian 22 user
+   2 [...]
+   3 paramiko.ssh_exception.SSHException: No existing session
+
+   Running the script for the name of a non-existent user (asdf) ends with
+   the error "Authentication failed.":
+
+   _____________________
+
+   1 python2 test.py debian 22 asdf
+   2 [...]
+   3 paramiko.ssh_exception.AuthenticationException: Authentication failed.
+
+   The difference in the server response allows to unambiguously determine
+   whether a user with a given name exists in the tested system.
+
+   At the end it is worth mentioning that the presented enumeration error, in
+   addition to the obvious use in the first phase of the brute-force attack,
+   can also be used to detect software installed on the tested server, e.g.
+   detection of the user "postgres" suggests that the PostgreSQL database is
+   used. Going forward, the existence or absence of certain names may suggest
+   the use of a given operating system.
+
+Summary
+
+   Issue was reported to OpenSSH team. Due to the fact that fixed OpenSSH
+   version has not been published yet, while on the Internet it is possible
+   to find a working exploit, we recommend the following mitigations to
+   protect against brute-force attacks:
+
+     * if possible use key-based authentication instead a password-based one
+     * secure the accounts with strong passwords
+     * use mechanisms that help to block brute-force attacks, eg fail2ban
+
+Timeline
+
+   16.07.2018 - bug was reported to OpenSSH team
+   18.07.2018 - bug was confirmed by OpenSSH team
+
+   31.07.2018 - fix was published on github
+   (https://github.com/openbsd/src/commit/779974d35b4859c07bc3cb8a12c74b43b0a7d1e0)
+   15.08.2018 - technical details, based on publicly available fix, were
+   published by independent researcher
+   (http://seclists.org/oss-sec/2018/q3/124)
+   17.08.2018 - CVE-2018-15473 was assigned
+   22.08.2018 - our publication
+
+                                        Dariusz Tytko, Pentester in Securitum
+
+--nFreZHaLTZJo0R7j--
