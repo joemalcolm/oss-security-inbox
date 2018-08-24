@@ -1,22 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/26/1
-Message-ID: <CABsaHTOiWdPU_ycw14=1Z0N47+BHL-WiiwZEeFSxbzzo+u1ZFw@mail.gmail.com>
-Date: Tue, 26 Jun 2018 10:11:50 +1200
-From: Nate McCall <zznate@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/24/2
+Message-ID: <20180824182942.GA932@openwall.com>
+Date: Fri, 24 Aug 2018 20:29:42 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2018-8016 on Apache Cassandra
+Cc: openssh-unix-dev@...drot.org
+Subject: Re: About OpenSSH "user enumeration" / CVE-2018-15473
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-8016 describes an issue with the default configuration of
-Apache Cassandra releases 3.8 through 3.11.1 which binds an
-unauthenticated JMX/RMI interface to all network interfaces allowing
-attackers to execute arbitrary Java code via an RMI request. This
-issue is a regression of the previously disclosed CVE-2015-0225.
+Hi Damien,
 
-The regression was introduced in
-https://issues.apache.org/jira/browse/CASSANDRA-12109. The fix for the
-regression is implemented in
-https://issues.apache.org/jira/browse/CASSANDRA-14173. This fix is
-contained in the 3.11.2 release of Apache Cassandra.
+Thank you for sharing these thoughts with the community.
 
-- The Apache Cassandra PMC
+On Fri, Aug 24, 2018 at 10:58:20AM +1000, Damien Miller wrote:
+> Finally, and perhaps most importantly: there's a fundamental tradeoff
+> between attack surface and fixing this class of bug. As a concrete
+> example, fixing this one added about 150 lines of code to our
+> pre-authentication attack surface. In this case, we were willing to do
+> this because we had confidence in the additional parsing, mostly because
+> it's been reviewed several times and we've conducted a decent amount of
+> fuzzing on it. But, given the choice between leaving a known account
+> validity oracle or exposing something we don't trust, we'll choose the
+> former every time.
+
+Can you summarize for us all (on these mailing lists) the commits
+leading to OpenSSH 7.8 that deal with this issue and add "about 150
+lines of code", please?  The commit originally referenced by Qualys
+doesn't.  I guess this has to do with you fixing not only the yes/no
+kind of oracle, but also mitigating some timing oracle(s), as per the
+change log:
+
+ * sshd(8): add some countermeasures against timing attacks used for
+   account validation/enumeration. sshd will enforce a minimum time
+   or each failed authentication attempt consisting of a global 5ms
+   minimum plus an additional per-user 0-4ms delay derived from a
+   host secret.
+
+ * sshd(8): avoid observable differences in request parsing that could
+   be used to determine whether a target user is valid.
+
+Thanks again,
+
+Alexander
