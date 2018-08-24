@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2434" "Monday" "29" "August" "2016" "16:31:50" "-0700" "Reed Loden" "reed@reedloden.com" "<CALPTtNXUdK88B7J1SwsFpjDQeu5UJAnUiTd98UmiUEWQOmey7g@mail.gmail.com>" "66" "Re: [oss-security] Re: MantisBT weakened CSP when using bundled Gravatar plugin" nil nil nil "8" "2016082923:31:50" "[oss-security] Re: MantisBT weakened CSP when using bundled Gravatar plugin" (number mark "U       reed@reedlod Aug 29   66/2434  " thread-indent "\"Re: [oss-security] Re: MantisBT weakened CSP when using bundled Gravatar plugin\"\n") "<20160829215135.463377BC071@smtpvmsrv1.mitre.org>" ("<ea35113c-d493-4bf7-ca47-9df7891dde67@mantisbt.org>" "<20160829215135.463377BC071@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2831" "Friday" "24" "August" "2018" "10:58:20" "+1000" "Damien Miller" "djm@mindrot.org" "<alpine.BSO.2.21.1808241046220.67512@haru.mindrot.org>" "54" "[oss-security] About OpenSSH \"user enumeration\" / CVE-2018-15473" "^cc:" nil nil "8" "2018082400:58:20" "[oss-security] About OpenSSH \"user enumeration\" / CVE-2018-15473" (number mark "        djm@mindrot. Aug 24   54/2831  " thread-indent "\"[oss-security] About OpenSSH \"user enumeration\" / CVE-2018-15473\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 19748 invoked by uid 550); 29 Aug 2016 23:32:23 -0000
+Received: (qmail 3407 invoked by uid 550); 24 Aug 2018 09:23:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,105 +11,72 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19730 invoked from network); 29 Aug 2016 23:32:22 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=reedloden.com; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=fhKWAeh+XrTmcjllmWkKN5lU7z5+lEJoKtw3B3cYN4Y=;
-        b=De51v/oyatwaCbcCPECOPzifCvXYxEh6HSeZON0m9YHm/FLRDduJ30IY/83Im2fWQO
-         7vnCxtNzFKEEn2pPVKuR6ZBlZj+pRvPHY0qb5xryZXpdKFMB2Q9s1ue/3W1ETXFCI6Ec
-         ay6MfKaGO63TlicsaLnL00hWXLr8I4VscSw/4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=fhKWAeh+XrTmcjllmWkKN5lU7z5+lEJoKtw3B3cYN4Y=;
-        b=fgI56T6hPOojCgi5NEJBrv2NlHN7dhPZ5adOFbLs2siuiM4WpFi52c0WMOZmCmMZfU
-         ffPRQOdFdYxQfJLdWLOl0RLs3oZFLZBD5pKaRn0f6AYJDbuHZeNWlvuuLseJZDzALifC
-         QzA+B649yI5To7AuUj0rCSbSASVoPfN//amHC5f4e+LAQLJ29Jcl1a8rwSt1Eq8Wyj85
-         PIFQhQ4RX9LbucpRj2Ag7RvGgRNr2TMu2Zmn27wE88+I3VPvVsmpnHhShXP7SLeN+qXm
-         CIlnFkdvyH+zWHxpch1oLdrT1UyCJaANGEjf4b4NN8OXHoGIfLj+fK2kS1S9u8YYu/iz
-         vGWA==
-X-Gm-Message-State: AE9vXwPacT8R235hGbgFoIatao0sP8zskj5MgT9MqywEwNNty1trUNAdLSTg5LVL4Acdi+CP+2ICHEKqgxW/Ha8G
-X-Received: by 10.36.85.3 with SMTP id e3mr1855561itb.8.1472513530954; Mon, 29
- Aug 2016 16:32:10 -0700 (PDT)
+Received: (qmail 27679 invoked from network); 24 Aug 2018 00:58:38 -0000
+Message-ID: <alpine.BSO.2.21.1808241046220.67512@haru.mindrot.org>
+User-Agent: Alpine 2.21 (BSO 202 2017-01-01)
 MIME-Version: 1.0
-In-Reply-To: <20160829215135.463377BC071@smtpvmsrv1.mitre.org>
-References: <ea35113c-d493-4bf7-ca47-9df7891dde67@mantisbt.org> <20160829215135.463377BC071@smtpvmsrv1.mitre.org>
-From: Reed Loden <reed@reedloden.com>
-Date: Mon, 29 Aug 2016 16:31:50 -0700
-Message-ID: <CALPTtNXUdK88B7J1SwsFpjDQeu5UJAnUiTd98UmiUEWQOmey7g@mail.gmail.com>
-To: dregad@mantisbt.org
-Cc: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=001a1144953ef09dd6053b3e4517
-Subject: Re: [oss-security] Re: MantisBT weakened CSP when using bundled
- Gravatar plugin
+Content-Type: text/plain; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.73 on UQ Mailhub
+X-Scanned-By: MIMEDefang 2.75 on 130.102.60.17
+X-UQ-FilterTime: 1535072304
+cc: oss-security@lists.openwall.com
+Date: Fri, 24 Aug 2018 10:58:20 +1000 (AEST)
+From: Damien Miller <djm@mindrot.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] About OpenSSH "user enumeration" / CVE-2018-15473
+To: openssh-unix-dev@mindrot.org
 
---001a1144953ef09dd6053b3e4517
-Content-Type: text/plain; charset=UTF-8
+Hi,
 
-Any reason why you don't just always use the https:// version for Gravatar
-here? Why ever use http://? Even if the MantisBT install is on HTTP, best
-to always load any third-party resources over TLS to better protect against
-MITM.
+Regarding CVE-2018-15473: a few people have asked why we just committed
+a fix for this without any secrecy or treating it as a security
+problem. The reason is that I and the other OpenSSH developers don't
+consider this class of bug a significant vulnerability - it's a partial
+disclosure of non-sensitive information.
 
-Just surprised me to see this:
-https://github.com/mantisbt/mantisbt/blob/b3511d2feb47eaee41feb5f69cf3c8a2c9acd229/plugins/Gravatar/Gravatar.php#L165-L169
+We have and will continue to fix bugs like this when we are made aware
+of them and when the costs of doing so aren't too high, but we aren't
+going to get excited about them enough to apply for CVEs or do security
+releases to fix them. The following explains our reasoning.
 
-~reed
+First, this isn't "user enumeration" because it doesn't yield the
+ability to enumerate or list accounts. It's an oracle; allowing an
+attacker to make brute-force guesses of account names and verify whether
+they exist on the target system. Each guess is moderately expensive,
+requiring 1 x TCP connection and a cryptographic key exchange, limited
+in concurrency by sshd's MaxStartups limit.
 
-On Mon, Aug 29, 2016 at 2:51 PM, <cve-assign@mitre.org> wrote:
+Second, very little else in the Unix ecosystem tries to prevent this
+style of information disclosure. Many network daemons will still happily
+return "user not found" style messages, but more importantly: system
+libraries are simply not designed to consider this as a threat. They
+don't consider it a threat because usernames have long been considered
+the non-secret part of user identity, of limited use without actual
+authentication credentials.
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
->
-> > MantisBT 1.3.0-rc.2 introduced a new bundled plugin to handle display of
-> > users' avatars using Gravatar.
-> >
-> > Instead of adding the Gravatar web site to the list of allowed image
-> > sources in MantisBT's Content Security Policy, the plugin was replacing
-> > the whole policy by:
-> >
-> >    img-src 'self' http://www.gravatar.com/
-> >
-> > instead of the more strict default one of:
-> >
-> >    default-src 'self'; frame-ancestors 'none'; style-src 'self';
-> >    script-src 'self'
-> >
-> > Relaxed policy allows execution of remote and inline scripts, e.g.
-> > potentially enabling XSS attacks.
-> >
-> > https://github.com/mantisbt/mantisbt/commit/
-> b3511d2feb47eaee41feb5f69cf3c8a2c9acd229
-> > https://mantisbt.org/bugs/view.php?id=21263
->
-> Use CVE-2016-7111.
->
-> - --
-> CVE Assignment Team
-> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-> [ A PGP key is available for encrypted communications at
->   http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1
->
-> iQIcBAEBCAAGBQJXxK4MAAoJEHb/MwWLVhi2p3EQAKULs3JDc49mBXeyVZ24IUoE
-> 6iWcUGjwiE5cHXnAxcNKZZp7/xsFo9tgdLbLZ37x48kU1cwp/B/rnQQCWJHfUJxJ
-> gR0qIutmEWCAq3nIVC0IR+tBm//0iiJuTuRhH/NjE9W4+EBPPjIHkkHxvnWLqyJo
-> SWBP/JJDYbB8sQ366+WLrNHTdxK+keVcu406KrbagWhPaMG1C9QAkTeHRxovI/me
-> JkbA3cVjfmO9BjHrAkbEYEJRU6Qxn8XsXUNW8bGoHBUt4WFON8BOGpt6Yyn1iDCs
-> APOou4yZqMPM8jSnS8MOCM9POuuK8QNXMTLPgnMkxLcFntz79ogVmzJYfl6jyQ6V
-> PW2dNtFU03QTI4nvL2UbVi1+oEbZycQbRnU0If7wHjedXIekFEX2uik0fAnJRwAk
-> LDgT/+g6g02RJZPmteQFrT0ZtXav2rFiznHicL93mRLt1sOiE32ULJrQ8DLBP5SA
-> EYitfKS09oBLDdSC5k+wogX22UgoFm4xZLrauVbRMKUApZNvKVSAADNewmRopXKR
-> Fm2lDPJKmmb+oOWVBj7MDz7J9u1SvnyVieX+53E8Bt0tnr9KD5R61XNfjnKJtvZg
-> +2l+S8HEUN3FdDz2WINbs9z1Sd5Fok9jc+TQXeIXR07jPC+MKE26zywhIiMYIfl/
-> 2Rs4hh+EhmuT20OUq14x
-> =U1Gg
-> -----END PGP SIGNATURE-----
->
+In the absence of the underlying system stack being designed with this
+in mind, the best applications like sshd can do is try to paper over
+the most obvious differences by avoiding behaviour divergences in our
+own code and adding some prophylactic timing delays, but it's a losing
+battle.
 
---001a1144953ef09dd6053b3e4517--
+Does getpwnam() offer invariant behaviour? How about libpam? And all the
+modules PAM invokes? How about libgssapi? (etc. ad nauseam). AFAIK few,
+if any of these, have been engineered to avoid behaviour differences
+between existing and non-existing users. I'm not just talking about
+gross timing differences, but any access patterns that can be discerned
+at a distance, including CPU usage or filesystem access. If someone
+brought the cryptanalyist's arsenal to bear against username validity
+then all these are on the table.
+
+Finally, and perhaps most importantly: there's a fundamental tradeoff
+between attack surface and fixing this class of bug. As a concrete
+example, fixing this one added about 150 lines of code to our
+pre-authentication attack surface. In this case, we were willing to do
+this because we had confidence in the additional parsing, mostly because
+it's been reviewed several times and we've conducted a decent amount of
+fuzzing on it. But, given the choice between leaving a known account
+validity oracle or exposing something we don't trust, we'll choose the
+former every time.
+
+-d
