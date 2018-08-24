@@ -1,50 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/09/2
-Message-ID: <CAKG8Do5EX36W3Bz_fzs5i0kTb6h7RSp5McOLu0-TagTX23mEAA@mail.gmail.com>
-Date: Mon, 9 Apr 2018 13:28:08 +0200
-From: Cedric Buissart <cbuissar@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: pcs: disclosure of CVE-2018-1079 and CVE-2018-1086
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/24/1
+Message-ID: <alpine.BSO.2.21.1808241046220.67512@haru.mindrot.org>
+Date: Fri, 24 Aug 2018 10:58:20 +1000 (AEST)
+From: Damien Miller <djm@...drot.org>
+To: openssh-unix-dev@...drot.org
+cc: oss-security@...ts.openwall.com
+Subject: About OpenSSH "user enumeration" / CVE-2018-15473
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Hi,
 
-This is to publicly disclose the following CVEs, rated as Medium and High.
-Affected product is pcs (Pacemaker command line interface and GUI,
-https://github.com/ClusterLabs/pcs)
+Regarding CVE-2018-15473: a few people have asked why we just committed
+a fix for this without any secrecy or treating it as a security
+problem. The reason is that I and the other OpenSSH developers don't
+consider this class of bug a significant vulnerability - it's a partial
+disclosure of non-sensitive information.
 
-* [high] CVE-2018-1079 pcs: Privilege escalation via authorized user
-malicious REST call
+We have and will continue to fix bugs like this when we are made aware
+of them and when the costs of doing so aren't too high, but we aren't
+going to get excited about them enough to apply for CVEs or do security
+releases to fix them. The following explains our reasoning.
 
-It was found that the REST interface of the pcsd service did not properly
-sanitize the file name from the /remote/put_file query. If the /etc/booth
-directory exists, an authenticated attacker with write permissions could
-create or overwrite arbitrary files with arbitrary data outside of the
-/etc/booth directory, in the context of the pcsd process.
+First, this isn't "user enumeration" because it doesn't yield the
+ability to enumerate or list accounts. It's an oracle; allowing an
+attacker to make brute-force guesses of account names and verify whether
+they exist on the target system. Each guess is moderately expensive,
+requiring 1 x TCP connection and a cryptographic key exchange, limited
+in concurrency by sshd's MaxStartups limit.
 
-vulnerable since: support for booth file transfer was added (commit
-dc7089b1, v. 0.9.157)
+Second, very little else in the Unix ecosystem tries to prevent this
+style of information disclosure. Many network daemons will still happily
+return "user not found" style messages, but more importantly: system
+libraries are simply not designed to consider this as a threat. They
+don't consider it a threat because usernames have long been considered
+the non-secret part of user identity, of limited use without actual
+authentication credentials.
 
-Patch attached
+In the absence of the underlying system stack being designed with this
+in mind, the best applications like sshd can do is try to paper over
+the most obvious differences by avoiding behaviour divergences in our
+own code and adding some prophylactic timing delays, but it's a losing
+battle.
 
-* [medium] CVE-2018-1086 pcs: Debug parameter removal bypass, allowing
-information disclosure:
+Does getpwnam() offer invariant behaviour? How about libpam? And all the
+modules PAM invokes? How about libgssapi? (etc. ad nauseam). AFAIK few,
+if any of these, have been engineered to avoid behaviour differences
+between existing and non-existing users. I'm not just talking about
+gross timing differences, but any access patterns that can be discerned
+at a distance, including CPU usage or filesystem access. If someone
+brought the cryptanalyist's arsenal to bear against username validity
+then all these are on the table.
 
-To prevent some information disclosure, pcsd actively removes '--debug'
-from command requested over the REST interface, but this can be bypassed.
-The information gained could then be used to gain higher privileges.
+Finally, and perhaps most importantly: there's a fundamental tradeoff
+between attack surface and fixing this class of bug. As a concrete
+example, fixing this one added about 150 lines of code to our
+pre-authentication attack surface. In this case, we were willing to do
+this because we had confidence in the additional parsing, mostly because
+it's been reviewed several times and we've conducted a decent amount of
+fuzzing on it. But, given the choice between leaving a known account
+validity oracle or exposing something we don't trust, we'll choose the
+former every time.
 
-Patch attached
-
-The CVE-2018-1079 issue was discovered by Ondrej Mular (Red Hat) and the
-CVE-2018-1086 issue was discovered by Cedric Buissart (Red Hat).
-
--- 
-Cedric Buissart,
-Product Security
-
-Content of type "text/html" skipped
-
-View attachment "CVE-2018-1079.patch" of type "text/x-patch" (479 bytes)
-
-View attachment "CVE-2018-1086.patch" of type "text/x-patch" (1744 bytes)
+-d
