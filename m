@@ -1,4 +1,9 @@
-Received: (qmail 20260 invoked by uid 550); 29 Apr 2026 06:01:40 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3704" "Saturday" "25" "August" "2018" "23:49:23" "+0200" "Jakub Wilk" "jwilk@jwilk.net" "<20180825214923.ppes3ivrw73mbmrm@jwilk.net>" "87" "[oss-security] Travis CI MITM RCE" "^Date:" nil nil "8" "2018082521:49:23" "[oss-security] Travis CI MITM RCE" (number mark "        jwilk@jwilk. Aug 25   87/3704  " thread-indent "\"[oss-security] Travis CI MITM RCE\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 13791 invoked by uid 550); 25 Aug 2018 21:49:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,108 +11,108 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 20234 invoked from network); 29 Apr 2026 06:01:40 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=haxx.se; s=silly;
-	t=1777442489; bh=c2qo+/dd8CQ0ByHsegHGjxhSMPUT9nXF7Tr5vjGL5Q0=;
-	h=Date:From:To:Subject:From;
-	b=HlgZHjH9B04s5m8sA1DV+RID0Kj3AODhOwkzeLOoxdJbclX7pMZOCk1qUrxwBhmV7
-	 5etK/rHh0qqaZVY9hGQLIKsxsty/4ur8E436RvCDWahjQGR95FbISZ29Sf+fE0x8IV
-	 URGu3DDISPjzxy4yHz0TjeY8mYQEssn16q79G2JWV1T+3k7uf8oQqeqBP23+XrAZ6k
-	 1ubaqK43ZQ0MTmA26X3cvAXUPvYK+v0Dh1fW2+vitfAbhq6fiFI7lNFkwXTlkttCF9
-	 dFJ29fTLd7Jk+8yDTwPWyKgyW6NckcXXqtE8sWO+2p1dF4ZPhbpqICZhpuOI/kpr1c
-	 k3KmeSGa3gMAQ==
-Date: Wed, 29 Apr 2026 08:01:29 +0200 (CEST)
-From: Daniel Stenberg <daniel@haxx.se>
-To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
-    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
-    oss-security@lists.openwall.com
-Message-ID: <or178791-s8s7-8427-3935-on0p07p13477@unkk.fr>
-X-fromdanielhimself: yes
+Received: (qmail 13752 invoked from network); 25 Aug 2018 21:49:37 -0000
+Message-ID: <20180825214923.ppes3ivrw73mbmrm@jwilk.net>
+Mail-Followup-To: oss-security@lists.openwall.com
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] [ADVISORY] curl: CVE-2026-7168: cross-proxy Digest auth state leak
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+User-Agent: NeoMutt/20180716
+X-Ovh-Tracer-Id: 14908603617908021158
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedtjedrfeejgdduieefucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecufedttdenuc
+Date: Sat, 25 Aug 2018 23:49:23 +0200
+From: Jakub Wilk <jwilk@jwilk.net>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Travis CI MITM RCE
+To: oss-security@lists.openwall.com
 
-cross-proxy Digest auth state leak
-==================================
+Travis CI <https://travis-ci.org/> is a popular continuous integration 
+service used to build and test software projects hosted at GitHub. 
+(Travis itself is free software, but the primary reason I'm writing this 
+is mail is that the service is used by many free software projects.)
 
-Project curl Security Advisory, April 29 2026
-[Permalink](https://curl.se/docs/CVE-2026-7168.html)
+I discovered multiple bugs in the way Travis CI uses APT and GnuPG that 
+defeat the package authentication mechanism. As a consequence, the bugs 
+allow man-in-the-middle attackers to execute arbitrary code in the 
+context of a Travis build that uses the APT add-on.
 
-VULNERABILITY
--------------
+This is probably not a big deal if use Travis CI only for running tests.  
+But Travis also supports deployment (grep for “Deployments and Uploads” 
+on <https://docs.travis-ci.com/>); if you entrust Travis with any 
+secrets, this is bad news for you.
 
-Successfully using libcurl to do a transfer over a specific HTTP proxy
-(`proxyA`) with **Digest** authentication and then changing the proxy host to
-a second one (`proxyB`) for a second transfer, reusing the same handle, makes
-libcurl wrongly pass on the `Proxy-Authorization:` header field meant for
-`proxyA`, to `proxyB`.
+Here are the bugs details:
 
-INFO
-----
+------------------------------------------------------------------------
 
-An evil `proxyB` could use this incoming request header field to impersonate
-the client in communicating with `proxyA`, as the header contains the
-authenticated state.
+1) On 2015-04-13, the “--force-yes” option was added to apt-get 
+invocations: https://github.com/travis-ci/travis-build/pull/424
 
-There is nothing in the request details passed to `proxyB` that reveal the
-name or the address of `proxyA`, which mitigates this problem.
+This option name doesn't sound very dangerous, but it makes APT assume 
+the “yes” answer to all questions, including the question about 
+installing packages that couldn't be authenticated…
 
-This bug is **not** considered a *C mistake* (likely to have been avoided had
-we not been using C).
+On 2017-10-12, I reported this bug to the Travis CI security team.
 
-This flaw does not affect the curl command line tool.
+On 2018-07-05, --force-yes was replaced with --allow-downgrades 
+--allow-remove-essential --allow-change-held-packages: 
+https://github.com/travis-ci/travis-build/pull/1422
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2026-7168 to this issue.
+I'm not sure how could this change possibly work, because APT in the 
+Ubuntu versions Travis CI supports (precise, trusty) doesn't have these 
+options… So a few days later --force-yes was added back: 
+https://github.com/travis-ci/travis-build/pull/1433
 
-CWE-294: Authentication Bypass by Capture-replay
+------------------------------------------------------------------------
 
-Severity: Medium
+2) On 2017-10-12, code was added to refresh an expired signing key: 
+https://github.com/travis-ci/travis-build/pull/1192
 
-AFFECTED VERSIONS
------------------
+The code used 32-bit key ID to retrieve the key from the keyserver. 
+I reported this on 2017-12-06: 
+https://github.com/travis-ci/travis-build/pull/1269
 
-- Affected versions: curl 7.12.0 to and including 8.19.0
-- Not affected versions: curl < 7.12.0 and >= 8.20.0
-- Introduced-in: https://github.com/curl/curl/commit/fc6eff13b5414caf6edf
+My patch was not accepted. Instead, more generic code to refresh expired 
+keys was added: https://github.com/travis-ci/travis-build/pull/1290
 
-libcurl is used by many applications, but not always advertised as such!
+The new code looks like this:
 
-SOLUTION
-------------
+    apt-key list | awk -F'[ /]+' '/expired:/{printf "apt-key adv --recv-keys --keyserver keys.gnupg.net %s\\n", $3}' | sudo sh
 
-- Fixed-in: https://github.com/curl/curl/commit/c1cfdf59acbaf9504c45
+The “apt-key list” format varies with GnuPG version, but on Ubuntus 
+Travis supports, it uses… 32-bit key IDs.
 
-RECOMMENDATIONS
----------------
+(For extra fun, this code happily executes code embedded in user IDs. 
+I don't believe this is exploitable on Travis CI, though.)
 
-We suggest you take one of the following actions immediately, in order of
-preference:
+Apparently some joker already exploited this bug to add their own key to 
+the APT keyring <https://travis-ci.org/jwilk/testbed/jobs/420519943>:
 
-  A - Upgrade curl and libcurl to version 8.20.0
+   $ apt-key list | grep -A1 -w A15703C6
+   pub   4096R/A15703C6 2016-01-11 [expires: 2020-01-05]
+   uid                  MongoDB 3.4 Release Signing Key <packaging@mongodb.com>
+   --
+   pub   1024R/A15703C6 2016-06-25
+   uid                  Totally Legit Signing Key <mallory@example.org>
 
-  B - Apply the patch to your version and rebuild
+I can neither confirm nor deny that it was me. It might be a mere 
+coincidence that I wrote a tool to brute-force 32-bit key IDs:
+https://github.com/jwilk/stopgp32
 
-  C - Avoid reusing handles when changing proxies
+------------------------------------------------------------------------
 
-TIMELINE
----------
+3) For many repositories in the APT source whitelist 
+<https://github.com/travis-ci/apt-source-whitelist>, the signing key is 
+downloaded over HTTP. For example:
 
-This issue was reported to the curl project on April 27, 2026.
-
-curl 8.20.0 was released on April 29 2026, coordinated with the publication of
-this advisory.
-
-CREDITS
--------
-
-- Reported-by: Muhamad Arga Reksapati
-- Patched-by: Daniel Stenberg
-
-Thanks a lot!
+  {
+    "alias": "cassandra",
+    "sourceline": "deb \"http://www.apache.org/dist/cassandra/debian\" 39x main",
+    "key_url": "http://ha.pool.sks-keyservers.net/pks/lookup?search=0xA278B781FE4B2BDA&op=get"
+  },
 
 -- 
-
-  / daniel.haxx.se || https://rock-solid.curl.dev
+Jakub Wilk
