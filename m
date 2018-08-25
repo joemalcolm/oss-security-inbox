@@ -1,30 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/09/9
-Message-ID: <alpine.GSO.2.20.1810091703270.29158@scrappy.simplesystems.org>
-Date: Tue, 9 Oct 2018 17:14:45 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/25/1
+Message-ID: <alpine.BSO.2.21.1808251030060.32421@haru.mindrot.org>
+Date: Sat, 25 Aug 2018 10:32:12 +1000 (AEST)
+From: Damien Miller <djm@...drot.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)
+cc: openssh-unix-dev@...drot.org
+Subject: Re: Re: About OpenSSH "user enumeration" / CVE-2018-15473
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 9 Oct 2018, Tavis Ormandy wrote:
->
-> I think we should encourage switching to other document formats that we
-> have a better handle on securing. If you do need untrusted ps, I think
-> treating it the same as shell script file you downloaded from the internet.
+On Fri, 24 Aug 2018, Solar Designer wrote:
 
-Due to its valuable current usages (e.g. printing and format 
-conversion) and its long legacy, Postscript is still a vital format to 
-support in open source software.
+> Hi Damien,
+> 
+> Thank you for sharing these thoughts with the community.
+> 
+> On Fri, Aug 24, 2018 at 10:58:20AM +1000, Damien Miller wrote:
+> > Finally, and perhaps most importantly: there's a fundamental tradeoff
+> > between attack surface and fixing this class of bug. As a concrete
+> > example, fixing this one added about 150 lines of code to our
+> > pre-authentication attack surface. In this case, we were willing to do
+> > this because we had confidence in the additional parsing, mostly because
+> > it's been reviewed several times and we've conducted a decent amount of
+> > fuzzing on it. But, given the choice between leaving a known account
+> > validity oracle or exposing something we don't trust, we'll choose the
+> > former every time.
+> 
+> Can you summarize for us all (on these mailing lists) the commits
+> leading to OpenSSH 7.8 that deal with this issue and add "about 150
+> lines of code", please? 
 
-How can software consuming Postscript be aware of its origin unless it 
-is known to be produced directly by another application?
+It's this one:
 
-Edge applications such as web browsers may be able to help by adding 
-warning dialogs when knowingly downloading Postscript content.
+>  * sshd(8): avoid observable differences in request parsing that could
+>    be used to determine whether a target user is valid.
 
-Bob
--- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+(Commit 74287f5df9)
+
+Note that there's no new code added, but delaying the checks means more
+code is exposed before the authentication handler bails out.
+
+-d
