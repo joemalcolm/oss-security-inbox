@@ -1,31 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/20/1
-Message-ID: <CAJ_zFkK7P5TynG1CbrAgbudb2whsqcP+BDoxB9ABGQgcvanyBA@mail.gmail.com>
-Date: Sat, 20 Jan 2018 10:57:27 -0800
-From: Tavis Ormandy <taviso@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/25/2
+Message-ID: <20180825100149.GA2596@openwall.com>
+Date: Sat, 25 Aug 2018 12:01:49 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: How to deal with reporters who don't want their bugs fixed?
+Subject: Re: About OpenSSH "user enumeration" / CVE-2018-15473
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jan 19, 2018 at 6:04 AM, Igor Seletskiy <i@...udlinux.com> wrote:
-> Hi Greg,
->
-> I am sure you are right, as you were in the epicenter of it and saw things
-> happening. More than that -- I am really thankful to a group of people who
-> worked on fixing it for months to get us where we are. Don't get me wrong -
-> in no way, I am blaming anyone.
->
-> Yet, KAISER patch & especially patch from AMD to the mailing list created a
-> lot of rumors, that I believe forced earlier disclosure -- because things
-> got into 'semi-public' state.
-> I might be wrong, I don't have all the info, and I am sure that people who
-> were at the center of it have a better understanding of what & why happened.
->
+On Sat, Aug 25, 2018 at 10:32:12AM +1000, Damien Miller wrote:
+> On Fri, 24 Aug 2018, Solar Designer wrote:
+> > On Fri, Aug 24, 2018 at 10:58:20AM +1000, Damien Miller wrote:
+> > > Finally, and perhaps most importantly: there's a fundamental tradeoff
+> > > between attack surface and fixing this class of bug. As a concrete
+> > > example, fixing this one added about 150 lines of code to our
+> > > pre-authentication attack surface. In this case, we were willing to do
+> > > this because we had confidence in the additional parsing, mostly because
+> > > it's been reviewed several times and we've conducted a decent amount of
+> > > fuzzing on it. But, given the choice between leaving a known account
+> > > validity oracle or exposing something we don't trust, we'll choose the
+> > > former every time.
+> > 
+> > Can you summarize for us all (on these mailing lists) the commits
+> > leading to OpenSSH 7.8 that deal with this issue and add "about 150
+> > lines of code", please? 
+> 
+> It's this one:
+> 
+> >  * sshd(8): avoid observable differences in request parsing that could
+> >    be used to determine whether a target user is valid.
+> 
+> (Commit 74287f5df9)
 
-A better example would be shellshock, a patch was developed in private
-under embargo, but as soon as the details were public it was obvious
-the patch was incomplete. When it was finally public, we were able to
-analyze the problem and develop a real solution - the embargo did
-nothing but needlessly delay that process.
+This is the same commit that Qualys referenced, but in a different tree:
 
-Tavis.
+https://github.com/openssh/openssh-portable/commit/74287f5df9966a0648b4a68417451dd18f079ab8
+
+> Note that there's no new code added, but delaying the checks means more
+> code is exposed before the authentication handler bails out.
+
+Oh, right.  Thanks.  However, exposing more code before one specific
+authentication attempt bails out isn't necessarily as bad as adding that
+code to the attack surface: some or all of this code might have already
+been exposed under different usernames.
+
+To be confident we're only reaching code that's already exposed under a
+different username, we may replace the tested-non-existent username with
+that existing username and also set a flag to force authentication to
+fail later.  Yes, more checks would then be run when authenticating with
+an unknown username, but those wouldn't add to attack surface as they
+were reachable with that other username anyway.
+
+This doesn't have to be literally all conditions and checks - it may be
+sufficient to match behavior for one certain existing username.
+
+This could mean an extra getpwnam(3) call, which is a slightly greater
+timing leak than what's present in one call.  That may be further
+mitigated by always doing two calls.  Of course, this won't be anywhere
+near timing-safe anyway.
+
+Now, it can be tricky to pick a specific fallback username in
+OpenSSH-portable that we'd be OK with all non-existent usernames to
+behave similarly to.  "root" may somewhat likely have unusual password
+hash (like it historically did on OpenBSD); "nobody" likely has its
+password locked (but maybe that's OK - it is in fact common for SSH
+users to have only public keys setup, and no passwords).  Maybe there
+should be a way to override this dummy username in sshd_config.
+
+Alexander
