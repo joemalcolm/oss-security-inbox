@@ -1,53 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/11/1
-Message-ID: <07c253db-bcc4-4be6-3bbc-159f8b6e85ef@gmail.com>
-Date: Thu, 11 Oct 2018 10:42:54 +0200
-From: Emilio Pozuelo Monfort <pochu27@...il.com>
-To: oss-security@...ts.openwall.com, Hanno Böck <hanno@...eck.de>, Eddie Chapman <eddie@...k.net>
-Subject: Re: ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/25/3
+Message-ID: <20180825214923.ppes3ivrw73mbmrm@jwilk.net>
+Date: Sat, 25 Aug 2018 23:49:23 +0200
+From: Jakub Wilk <jwilk@...lk.net>
+To: oss-security@...ts.openwall.com
+Subject: Travis CI MITM RCE
 Content-Type: text/plain; charset=utf-8
 
-On 10/10/2018 17:04, Hanno Böck wrote:
-> On Wed, 10 Oct 2018 15:36:52 +0100
-> Eddie Chapman <eddie@...k.net> wrote:
-> 
->> But I'm still unclear how "just browsing a website is enough to
->> trigger the vulnerability in some common configurations." Are we
->> talking about the user looking in their web browser cache directory
->> on the filesystem using Nautilus, and hence running malicious code
->> embedded in a cached file via the evince thumbnailer on opening that
->> directory? Or maybe Nautilus/Gnome automatically runs the thumbnailer
->> on every new file created in the user's home directory (via
->> inotify?), including whatever the browser saves in the background
->> (hopefully not)? Or is it just a case of the user opening a
->> downloaded file with evince and becoming a victim that way? Though
->> that is not exactly automatic, most browsers show a prompt asking
->> what to do with a downloaded file.
-> 
-> I don't know what exactly Tavis was referring to, but a scenario that
-> has been discussed in the past and likely is still possible in many
-> configurations is this:
-> Some browsers (notably chrome) will download files without asking in
-> their default configuration. So a site can make you download a file and
-> it ends up in your ~/Downloads dir.
-> 
-> Desktop search tools will automatically index that (tracker from gnome,
-> baloo from kde). So voila - you can fire up an exploit if you can
-> exploit anything that tracker or baloo support.
+Travis CI <https://travis-ci.org/> is a popular continuous integration 
+service used to build and test software projects hosted at GitHub. 
+(Travis itself is free software, but the primary reason I'm writing this 
+is mail is that the service is used by many free software projects.)
 
-tracker-extract / miners run in a sandbox these days. No idea about baloo.
+I discovered multiple bugs in the way Travis CI uses APT and GnuPG that 
+defeat the package authentication mechanism. As a consequence, the bugs 
+allow man-in-the-middle attackers to execute arbitrary code in the 
+context of a Travis build that uses the APT add-on.
 
-https://bugzilla.gnome.org/show_bug.cgi?id=764786
+This is probably not a big deal if use Travis CI only for running tests.  
+But Travis also supports deployment (grep for “Deployments and Uploads” 
+on <https://docs.travis-ci.com/>); if you entrust Travis with any 
+secrets, this is bad news for you.
 
-Cheers,
-Emilio
+Here are the bugs details:
 
-> https://scarybeastsecurity.blogspot.com/2016/11/0day-poc-risky-design-decisions-in.html
-> 
-> Though I'm not sure if either of them uses ghostscript, a quick check
-> it seems that not. You still have the automatic download issue in
-> chrome, but you'd need to convince your user to open up ~/Downloads in
-> a file manager. That's a minor not-fully-automatic part, but I guess
-> it's plausible enough that users will eventually do that at some point.
-> 
+------------------------------------------------------------------------
 
+1) On 2015-04-13, the “--force-yes” option was added to apt-get 
+invocations: https://github.com/travis-ci/travis-build/pull/424
+
+This option name doesn't sound very dangerous, but it makes APT assume 
+the “yes” answer to all questions, including the question about 
+installing packages that couldn't be authenticated…
+
+On 2017-10-12, I reported this bug to the Travis CI security team.
+
+On 2018-07-05, --force-yes was replaced with --allow-downgrades 
+--allow-remove-essential --allow-change-held-packages: 
+https://github.com/travis-ci/travis-build/pull/1422
+
+I'm not sure how could this change possibly work, because APT in the 
+Ubuntu versions Travis CI supports (precise, trusty) doesn't have these 
+options… So a few days later --force-yes was added back: 
+https://github.com/travis-ci/travis-build/pull/1433
+
+------------------------------------------------------------------------
+
+2) On 2017-10-12, code was added to refresh an expired signing key: 
+https://github.com/travis-ci/travis-build/pull/1192
+
+The code used 32-bit key ID to retrieve the key from the keyserver. 
+I reported this on 2017-12-06: 
+https://github.com/travis-ci/travis-build/pull/1269
+
+My patch was not accepted. Instead, more generic code to refresh expired 
+keys was added: https://github.com/travis-ci/travis-build/pull/1290
+
+The new code looks like this:
+
+    apt-key list | awk -F'[ /]+' '/expired:/{printf "apt-key adv --recv-keys --keyserver keys.gnupg.net %s\\n", $3}' | sudo sh
+
+The “apt-key list” format varies with GnuPG version, but on Ubuntus 
+Travis supports, it uses… 32-bit key IDs.
+
+(For extra fun, this code happily executes code embedded in user IDs. 
+I don't believe this is exploitable on Travis CI, though.)
+
+Apparently some joker already exploited this bug to add their own key to 
+the APT keyring <https://travis-ci.org/jwilk/testbed/jobs/420519943>:
+
+   $ apt-key list | grep -A1 -w A15703C6
+   pub   4096R/A15703C6 2016-01-11 [expires: 2020-01-05]
+   uid                  MongoDB 3.4 Release Signing Key <packaging@...godb.com>
+   --
+   pub   1024R/A15703C6 2016-06-25
+   uid                  Totally Legit Signing Key <mallory@...mple.org>
+
+I can neither confirm nor deny that it was me. It might be a mere 
+coincidence that I wrote a tool to brute-force 32-bit key IDs:
+https://github.com/jwilk/stopgp32
+
+------------------------------------------------------------------------
+
+3) For many repositories in the APT source whitelist 
+<https://github.com/travis-ci/apt-source-whitelist>, the signing key is 
+downloaded over HTTP. For example:
+
+  {
+    "alias": "cassandra",
+    "sourceline": "deb \"http://www.apache.org/dist/cassandra/debian\" 39x main",
+    "key_url": "http://ha.pool.sks-keyservers.net/pks/lookup?search=0xA278B781FE4B2BDA&op=get"
+  },
+
+-- 
+Jakub Wilk
