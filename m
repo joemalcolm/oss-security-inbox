@@ -1,35 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/23/1
-Message-ID: <b3a0e1f9-d0d8-5441-33b1-84d748347021@kkoenig.net>
-Date: Mon, 23 Apr 2018 06:41:09 +0200
-From: Karsten König <mail@...enig.net>
-To: oss-security@...ts.openwall.com, fulldisclosure@...lists.org
-Subject: Authorization bypass in PHPLiteAdmin since 1.9.5
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/26/2
+Message-ID: <alpine.BSO.2.21.1808261758080.76507@haru.mindrot.org>
+Date: Sun, 26 Aug 2018 18:04:50 +1000 (AEST)
+From: Damien Miller <djm@...drot.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: About OpenSSH "user enumeration" / CVE-2018-15473
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Sat, 25 Aug 2018, Solar Designer wrote:
 
-I found a small issue in PHPLiteAdmin. It's an authorization bypass
-which works since version 1.9.5 from 2014 (current is 1.9.7.1) because
-PLA uses '==' instead of '===' for the password comparison in
-'attemptGrant' of the 'Authorization' class. If the password is set to
-one which correspondends to a number in scientific notation, one could
-easier bruteforce the password or bypass it completely, e.g.:
+> This could mean an extra getpwnam(3) call, which is a slightly greater
+> timing leak than what's present in one call. That may be further
+> mitigated by always doing two calls. Of course, this won't be anywhere
+> near timing-safe anyway.
+>
+> Now, it can be tricky to pick a specific fallback username in
+> OpenSSH-portable that we'd be OK with all non-existent usernames to
+> behave similarly to. "root" may somewhat likely have unusual password
+> hash (like it historically did on OpenBSD); "nobody" likely has its
+> password locked (but maybe that's OK - it is in fact common for SSH
+> users to have only public keys setup, and no passwords). Maybe there
+> should be a way to override this dummy username in sshd_config.
 
-php > var_dump('200' == '2e2');
-bool(true)
-php > var_dump('0' == '0e2');
-bool(true)
-php > var_dump('0' == '0e2342');
-bool(true)
+That sounds like a fair amount of complexity in return for scant
+benefit: at best you dodge a few (IMO uninteresting) bugs, but now you
+are guaranteed to have all your authz code exposed to a the attacker.
 
-I opened an issue at GitHub for this[0] and have written about it[1]
-(section 2 is the interesting one for this issue).
+Moreover, using a "real fake" account gives a timing / system behaviour
+baseline too. It might be harder to discern, but techniques for making
+remote observations of subtle system side-channels are scarily well-
+developed, and I'm sure that it would be pretty easy to spot if people
+applied them.
 
-Best,
-
-Karsten
-
-[0] https://github.com/phpLiteAdmin/pla/issues/11
-[1]
-http://k3research.outerhaven.de/posts/small-mistakes-lead-to-big-problems.html
+-d
