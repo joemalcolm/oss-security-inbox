@@ -1,4 +1,9 @@
-Received: (qmail 3075 invoked by uid 550); 30 Dec 2025 19:10:36 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3534" "Sunday" "26" "August" "2018" "14:00:58" "+0200" "Solar Designer" "solar@openwall.com" "<20180826120058.GA7071@openwall.com>" "70" "Re: [oss-security] About OpenSSH \"user enumeration\" / CVE-2018-15473" "^Date:" nil nil "8" "2018082612:00:58" "[oss-security] About OpenSSH \"user enumeration\" / CVE-2018-15473" (number mark "        solar@openwa Aug 26   70/3534  " thread-indent "\"Re: [oss-security] About OpenSSH \"user enumeration\" / CVE-2018-15473\"\n") "<alpine.BSO.2.21.1808261758080.76507@haru.mindrot.org>" ("<alpine.BSO.2.21.1808241046220.67512@haru.mindrot.org>" "<20180824182942.GA932@openwall.com>" "<alpine.BSO.2.21.1808251030060.32421@haru.mindrot.org>" "<20180825100149.GA2596@openwall.com>" "<alpine.BSO.2.21.1808261758080.76507@haru.mindrot.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 9605 invoked by uid 550); 26 Aug 2018 12:03:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,85 +11,87 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 5319 invoked from network); 26 Aug 2018 12:01:09 -0000
+Message-ID: <20180826120058.GA7071@openwall.com>
+References: <alpine.BSO.2.21.1808241046220.67512@haru.mindrot.org> <20180824182942.GA932@openwall.com> <alpine.BSO.2.21.1808251030060.32421@haru.mindrot.org> <20180825100149.GA2596@openwall.com> <alpine.BSO.2.21.1808261758080.76507@haru.mindrot.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <alpine.BSO.2.21.1808261758080.76507@haru.mindrot.org>
+User-Agent: Mutt/1.4.2.3i
+Date: Sun, 26 Aug 2018 14:00:58 +0200
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 30528 invoked from network); 30 Dec 2025 06:34:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767076453; x=1767681253; darn=lists.openwall.com;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=hUSdtYP96P/y8PEmyZSABticIRZmN/4YyXmJf0jdqRI=;
-        b=gAq63iO3pIoKFBXU2EC2abuAqCQRYSgQKQjGBjtLYhd/kfSQLN0Gl349A+VMqAC9Tb
-         LFboiSsYitU6bwGw/gwbCOliachR+jFndsxP+vzfDCp7E+ldd8jr9IIXEeq9CO109V8o
-         bszhe9Yk5TJB4z++Ye+kDksUWDN0imoMZMcOHktMO4Y0V42GcdLXqeRU6SdhFa6S+jHt
-         M4UdAMezbnwh+DOKjGGW4j3YfscvF24tl/aQWvmDUMpPC/BlDlfzSUWwmOwtsE8ZipIq
-         UTbc4qBBPsh+DI0LJhC0doPRoLRjO9rD56/EeNAwLFAixiVx7y2D94/F0C8xgs8RUEbQ
-         kW2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767076453; x=1767681253;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hUSdtYP96P/y8PEmyZSABticIRZmN/4YyXmJf0jdqRI=;
-        b=fRqQb59VWKhgMijXhPcoL6U+l+0JEhCMpWutwxqtAiX9JCyCzgV5GHXRTfqc6MHVNs
-         vQD5mxqyy+my4m4Om4ChRwTw3ohKNGtvwiukPtNDnc7ueOCSfhliZHb4M9eTCJdny87Z
-         9EqWXYpBOxLf7zzOUpuuC1lECn8e2cJy7+RozGxfrh+fZsvMOPjw82MUdqbkGiIAnXN+
-         VIrjl7llh2gWqt/D3M4UaT5NQDOFNzywVN/W4RVMe/i40oD0vklGy//KYQ3jp5B6oHJd
-         LROvTWQRbopMd1nS27CQSCKMPUV7JEyPALgo2xwC5vc1GNIFYkvrh/IMfmJDszYUlzQG
-         0nUg==
-X-Gm-Message-State: AOJu0YwXk34F59oJuYnfOnbPW7cxTWPMr8pl7zw/B7TVWot3g7xnV1YH
-	pkyOfbD8Wn0x13e30xgC7v38tcIl+S4iJPDY55XvXxXdDfDUdsP3CsOTt275+vh7
-X-Gm-Gg: AY/fxX7mL8rby8V7qyJUDebKZ+qoJfLft6te66tWiFCOhnHjl88tH/8yk04wtB9WeLq
-	K9pMi8g4UNX7oc/r5arXwJYGxMI7Q1FDH+JMvt0SZIhe53PD7xpT6uM2Pa/2lZMH15UsLKgj6w0
-	JcIAZXhD62oS3r3zk8TRU7BQxm+X+qGzAp/f3A+g3yuWjq5SiYPViNadrBjJJmNmPynwatmYloD
-	z8bjnHajVSlfpppKCmIenxEpjH2ly2aq48QuQUBA8OQMgS4mpDnDv/dYJoTJklvYCT0BxqVA52L
-	BCfWD8M1Vdzp3evT/90c0CMXETmydeLsxGAVv4vMkx8OEVFaBZJWyDhqKWEBZeU8wc1PgIkK+cC
-	jo2+cmCG8bX783qAmCgJv+4Y18gTBlEotnP+eWCOZzbpMSBDiZN6d8rFhSJqYDhvxKVTkvAVmBC
-	HH+r7XFnczVpgPmy66LLYSXbnkvr4x
-X-Google-Smtp-Source: AGHT+IFOq/g0CQnP5wkp6yudFMCCqu3CWQSaeVgjFZOLNUEPfInrOuE3pAxL2yG3iwwuL+2E905JlA==
-X-Received: by 2002:a05:6830:34a7:b0:7ca:c842:fe2 with SMTP id 46e09a7af769-7cc668a4bc8mr21914816a34.8.1767076453550;
-        Mon, 29 Dec 2025 22:34:13 -0800 (PST)
-Message-ID: <f1811ded-6a8c-4eca-a8fc-4f9c77e4db5a@gmail.com>
-Date: Tue, 30 Dec 2025 00:34:04 -0600
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Werner Koch <wk@gnupg.org>
-Cc: oss-security@lists.openwall.com, Solar Designer <solar@openwall.com>,
- contact@gpg.fail
-References: <3318308d-70b1-4ab3-9cca-ab4ea67dd27d@gmail.com>
- <20251228042744.GA629@openwall.com>
- <0009d6cc-143e-41e6-b240-eb526a9cb306@gmail.com>
- <87zf71pqe9.fsf@jacob.g10code.de>
-Content-Language: en-US
-From: Jacob Bachmeyer <jcb62281@gmail.com>
-In-Reply-To: <87zf71pqe9.fsf@jacob.g10code.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] safe use of cleartext signatures? (was: Many
- vulnerabilities in GnuPG)
+Subject: Re: [oss-security] About OpenSSH "user enumeration" / CVE-2018-15473
+To: oss-security@lists.openwall.com
 
-On 12/29/25 03:51, Werner Koch wrote:
-> Hi!
->
-> Jacob was so kind to comment on the reported bugs.  I agree with most of
-> his comments.  [...]
-Thank you.
-> [...] At that time I also drafted an article to explain the well known
-> prblem of hard-to-correct-use of cleartext signatures including a bit of
-> history: https://gnupg.org/blog/20251226-cleartext-signatures.html
+On Sun, Aug 26, 2018 at 06:04:50PM +1000, Damien Miller wrote:
+> On Sat, 25 Aug 2018, Solar Designer wrote:
+> 
+> > This could mean an extra getpwnam(3) call, which is a slightly greater
+> > timing leak than what's present in one call. That may be further
+> > mitigated by always doing two calls. Of course, this won't be anywhere
+> > near timing-safe anyway.
+> >
+> > Now, it can be tricky to pick a specific fallback username in
+> > OpenSSH-portable that we'd be OK with all non-existent usernames to
+> > behave similarly to. "root" may somewhat likely have unusual password
+> > hash (like it historically did on OpenBSD); "nobody" likely has its
+> > password locked (but maybe that's OK - it is in fact common for SSH
+> > users to have only public keys setup, and no passwords). Maybe there
+> > should be a way to override this dummy username in sshd_config.
+> 
+> That sounds like a fair amount of complexity in return for scant
+> benefit:
 
-This is also the most important point to me, because cleartext 
-signatures have their uses, for example, signing a list of file digests, 
-which is also the use case attacked in item 10.
+Thank you for sharing your opinion.
 
-Is there a safe (but presumably less convenient) way to use cleartext 
-signatures, perhaps by strictly validating the overall message 
-structure, or is this basically an unfixable problem? Could GPG perform 
-such validation steps and emit a warning if a clearsigned message does 
-not strictly conform?
+To me, it sounds like greater complexity of the resulting code, but it's
+also a simpler change (higher level, easier to reason about) than your
+previously discussed commit.  (And it avoids the need for further
+reviews/changes dealing with maybe remaining worse-than-timing behavior
+differences for existing vs. non-existent usernames, except for users
+with non-default authentication settings - e.g., with authorized_keys
+files or on DenyUsers.)
 
+> at best you dodge a few (IMO uninteresting) bugs, but now you
+> are guaranteed to have all your authz code exposed to a the attacker.
 
--- Jacob
+This sounds like a misunderstanding.  With the approach I suggested,
+no extra pre-existing code would be exposed to any attacker (only very
+few newly added lines of code would be), because all of that code would
+have been reachable under the fallback username anyway.
 
+> Moreover, using a "real fake" account gives a timing / system behaviour
+> baseline too.
+
+I'm not sure if that's what you meant, but yes it could be possible to
+see that the response time for non-existent users is nearly the same,
+whereas for other usernames it would vary slightly.  This is similar to
+other (currently possible) attacks on getpwnam(3) not being timing-safe.
+
+Your recent "global 5ms minimum plus an additional per-user 0-4ms delay
+derived from a host secret" time for failed authentication should help
+mitigate this.  [A further (yet still imperfect) mitigation would be to
+replace the nanosleep() with a busy wait (which would be a closer match
+to a system function taking longer to do its work, but still not exactly
+the same in terms of effect e.g. on concurrent authentication attempts).
+I am not sure if this further imperfect improvement is a good trade-off.
+With nanosleep(), we conserve server resources and energy.]
+
+> It might be harder to discern, but techniques for making
+> remote observations of subtle system side-channels are scarily well-
+> developed, and I'm sure that it would be pretty easy to spot if people
+> applied them.
+
+Right.  It's unrealistic to fully prevent such attacks given the
+existing non-timing-safe system interfaces.
+
+Anyway, I don't insist on any specific approach (nor would my preference
+matter all that much), especially now that you've already made relevant
+changes in the way you did.  I merely wanted to point out that the
+attack surface increase was not certain (maybe that code was already
+exposed under other usernames, also pre-authentication) and could have
+been avoided with greater confidence using that other approach.
+
+Alexander
