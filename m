@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1114" "Wednesday" "9" "December" "2015" "16:12:01" "+0000" "Dominic Cleal" "dominic@cleal.org" "<566852D1.7000504@cleal.org>" "37" "[oss-security] CVE-2015-7518: Foreman stored XSS in parameter information popup" nil nil nil "12" "2015120916:12:01" "[oss-security] CVE-2015-7518: Foreman stored XSS in parameter information popup" (number mark "U       dominic@clea Dec  9   37/1114  " thread-indent "\"[oss-security] CVE-2015-7518: Foreman stored XSS in parameter information popup\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1278" "Sunday" "26" "August" "2018" "18:04:50" "+1000" "Damien Miller" "djm@mindrot.org" "<alpine.BSO.2.21.1808261758080.76507@haru.mindrot.org>" "26" "Re: [oss-security] About OpenSSH \"user enumeration\" / CVE-2018-15473" "^Date:" nil nil "8" "2018082608:04:50" "[oss-security] About OpenSSH \"user enumeration\" / CVE-2018-15473" (number mark "        djm@mindrot. Aug 26   26/1278  " thread-indent "\"Re: [oss-security] About OpenSSH \"user enumeration\" / CVE-2018-15473\"\n") "<20180825100149.GA2596@openwall.com>" ("<alpine.BSO.2.21.1808241046220.67512@haru.mindrot.org>" "<20180824182942.GA932@openwall.com>" "<alpine.BSO.2.21.1808251030060.32421@haru.mindrot.org>" "<20180825100149.GA2596@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5344 invoked by uid 550); 9 Dec 2015 16:12:28 -0000
+Received: (qmail 20420 invoked by uid 550); 26 Aug 2018 10:33:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,55 +11,46 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5249 invoked from network); 9 Dec 2015 16:12:15 -0000
-From: Dominic Cleal <dominic@cleal.org>
-X-Enigmail-Draft-Status: N1110
-To: oss-security@lists.openwall.com
-Cc: foreman-security@googlegroups.com
-Message-ID: <566852D1.7000504@cleal.org>
-Date: Wed, 9 Dec 2015 16:12:01 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.2.0
+Received: (qmail 16192 invoked from network); 26 Aug 2018 08:05:05 -0000
+In-Reply-To: <20180825100149.GA2596@openwall.com>
+Message-ID: <alpine.BSO.2.21.1808261758080.76507@haru.mindrot.org>
+References: <alpine.BSO.2.21.1808241046220.67512@haru.mindrot.org> <20180824182942.GA932@openwall.com> <alpine.BSO.2.21.1808251030060.32421@haru.mindrot.org> <20180825100149.GA2596@openwall.com>
+User-Agent: Alpine 2.21 (BSO 202 2017-01-01)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] CVE-2015-7518: Foreman stored XSS in parameter information popup
+Content-Type: text/plain; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.73 on UQ Mailhub
+X-Scanned-By: MIMEDefang 2.75 on 130.102.60.17
+X-UQ-FilterTime: 1535270693
+Date: Sun, 26 Aug 2018 18:04:50 +1000 (AEST)
+From: Damien Miller <djm@mindrot.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] About OpenSSH "user enumeration" /
+ CVE-2018-15473
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Sat, 25 Aug 2018, Solar Designer wrote:
 
-CVE-2015-7518: Foreman is affected by a stored XSS vulnerability in
-parameter information popups in the web UI.
+> This could mean an extra getpwnam(3) call, which is a slightly greater
+> timing leak than what's present in one call. That may be further
+> mitigated by always doing two calls. Of course, this won't be anywhere
+> near timing-safe anyway.
+>
+> Now, it can be tricky to pick a specific fallback username in
+> OpenSSH-portable that we'd be OK with all non-existent usernames to
+> behave similarly to. "root" may somewhat likely have unusual password
+> hash (like it historically did on OpenBSD); "nobody" likely has its
+> password locked (but maybe that's OK - it is in fact common for SSH
+> users to have only public keys setup, and no passwords). Maybe there
+> should be a way to override this dummy username in sshd_config.
 
-Extra information stored on parameters inherited by hosts in Foreman
-is shown in the web UI, in a popup for users.  The user-editable parts
-of this information, such as a description, matcher and source name
-can allow stored HTML/JS to be evaluated when a user opens the
-information popup for a parameter.
+That sounds like a fair amount of complexity in return for scant
+benefit: at best you dodge a few (IMO uninteresting) bugs, but now you
+are guaranteed to have all your authz code exposed to a the attacker.
 
-Thanks to Tomer Brisker for reporting it to the foreman-security team,
-and for fixing the issue.
+Moreover, using a "real fake" account gives a timing / system behaviour
+baseline too. It might be harder to discern, but techniques for making
+remote observations of subtle system side-channels are scarily well-
+developed, and I'm sure that it would be pretty easy to spot if people
+applied them.
 
-Affects: at least Foreman 1.2.0 and higher (all modern versions)
-Fix to be released in Foreman 1.10.0
-
-Patch:
-https://github.com/theforeman/foreman/commit/32468bce938067b1bbde1c20257
-71b5b83ce88ec
-
-More information:
-http://theforeman.org/security.html#2015-7518
-http://projects.theforeman.org/issues/12611
-http://theforeman.org/
-
-- -- 
-Dominic Cleal
-dominic@cleal.org
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iEYEARECAAYFAlZoUsoACgkQfH0ybywrcszGbACgxVFqMU6/fevuwG8zmxLAHGbU
-HzEAn1Rkf4J0rt/GuBGCHC61HX9R+auy
-=SfOR
------END PGP SIGNATURE-----
+-d
