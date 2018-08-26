@@ -1,52 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/05/4
-Message-Id: <1E76A6EF-1593-4183-A222-CDDA8A32296E@beckweb.net>
-Date: Tue, 5 Jun 2018 21:04:43 +0200
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/26/4
+Message-ID: <20180826145405.3ynuaq5efx4zq33p@yuggoth.org>
+Date: Sun, 26 Aug 2018 14:54:06 +0000
+From: Jeremy Stanley <fungi@...goth.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Multiple vulnerabilities in Jenkins plugins
+Subject: Re: Travis CI MITM RCE
 Content-Type: text/plain; charset=utf-8
 
+On 2018-08-25 20:56:59 -0400 (-0400), Phil Pennock wrote:
+> On 2018-08-25 at 23:49 +0200, Jakub Wilk wrote:
+> > The new code looks like this:
+> > 
+> >    apt-key list | awk -F'[ /]+' '/expired:/{printf "apt-key adv --recv-keys --keyserver keys.gnupg.net %s\\n", $3}' | sudo sh
+> ...
+> >   $ apt-key list | grep -A1 -w A15703C6
+> >   pub   4096R/A15703C6 2016-01-11 [expires: 2020-01-05]
+> >   uid                  MongoDB 3.4 Release Signing Key <packaging@...godb.com>
+[...]
+> If you're building infrastructure which needs to get data from off-site,
+> then consider whether or not you can provide template directives which
+> people can include in their command lists, and you then populate the
+> template with the correct current commands for that directive.  Eg, if
+> I'm talking to Docker inside Circle CI, I don't set a bunch of variables
+> myself, I just say `setup_remote_docker` and let Circle CI figure out
+> which commands should be run.  For "everything is a shell command"
+> setup, then perhaps `$CICMD_APT_KEYS_UPDATE` could be made available.
+> Or `"${CICMD_APT_KEYS_UPDATE[@]}"` if even more constrained.
 
-> On 4. Jun 2018, at 14:37, Daniel Beck <ml@...kweb.net> wrote:
-> 
-> SECURITY-810
+Indeed, as someone who helps design and run very large CI systems, I
+can say with certainty that every extra request you make in your
+jobs to retrieve something over a network connection is one more
+false negative failure waiting to happen. The Internet is _not_
+reliable, and it becomes obvious when you start looking at
+connection failures and random API errors at scale from lots of
+different places on the planet. If there's basically static data
+that your job needs (especially public keys/certs) just bake it
+directly into the job itself, and for things that change more often
+than that cache as much of it as you can local to (or even directly
+on the filesystems of) the systems which run those jobs.
 
-CVE-2018-1000182
+Unfortunately a lot of this sort of silliness comes about because
+people write CI jobs by translating their own developer environment
+configuration documentation or user guides into scripts and don't
+think about (or perhaps don't even understand in many cases) how
+technologies like OpenPGP work.
+-- 
+Jeremy Stanley
 
-> SECURITY-799
-
-CVE-2018-1000184
-
-> SECURITY-804
-
-CVE-2018-1000183
-
-> SECURITY-806
-
-CVE-2018-1000185
-
-> SECURITY-805
-
-CVE-2018-1000186
-
-> SECURITY-883
-
-CVE-2018-1000187
-
-> SECURITY-809
-
-CVE-2018-1000188
-
-> SECURITY-807
-
-CVE-2018-1000189
-
-> SECURITY-865
-
-CVE-2018-1000190
-
-> SECURITY-866
-
-CVE-2018-1000191
-
+Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
