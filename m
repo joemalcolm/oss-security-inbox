@@ -1,25 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/26/6
-Message-ID: <20180126191503.GA10433@openwall.com>
-Date: Fri, 26 Jan 2018 20:15:03 +0100
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: How to deal with reporters who don't want their bugs fixed?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/27/5
+Message-ID: <20180827194351.76ac39c6@jabberwock.cb.piermont.com>
+Date: Mon, 27 Aug 2018 19:43:51 -0400
+From: "Perry E. Metzger" <perry@...rmont.com>
+To: Tavis Ormandy <taviso@...gle.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jan 26, 2018 at 05:48:14PM +0000, Mikhail Utin wrote:
-> I 100% agree with Solar's response. We should not limit our freedom to choose how we will handle our intellectual property. That is how I read the original statements below.
+On Mon, 27 Aug 2018 16:02:46 -0700 Tavis Ormandy <taviso@...gle.com>
+wrote:
+> Here is an update, Artifex made a press release
+> <https://www.darkreading.com/prnewswire2.asp?rkey=20180824UN89145&filter=3930>
+> listing
+> some necessary commits, but the list was incomplete.
 
-Oh, so-called "intellectual property".  I'm not thinking in such terms.
+They also claimed "Artifex Software is pleased to report that the
+recently disclosed security vulnerabilities in Ghostscript have been
+resolved.", which, even if they were all patched in their git
+repository, which they don't seem to all be, would still not really
+be true given the lack of an actual release.
 
-What I meant is that projects expecting to receive vulnerability reports
-are not to be obliged by some industry standard to impose any specific
-rules on the reporters.  This does mean that, among other things, those
-projects do not have to insist on a maximum embargo time (even though I
-advocate that they do), and as a side-effect this might assist someone
-probably selfish with monetization of so-called "intellectual property".
+> Here is a list of relevant commits I'm aware of so far, some issues
+> are still open with working exploits available. It's my
+> understanding that no new release is planned until late September,
+> and vendors need to either ship a git snapshot when all issues are
+> resolved, or apply patches. I have testcases for each problem, but
+> I think the bugs will be visible eventually so I'm not posting them
+> here.
 
-Basically, you saw what you wanted to see.  Yes, it's kind of there, but
-it wasn't in focus.
+If someone would put a git repo onto GitHub with all the available
+patches applied on a branch, I'm sure a bunch of people would be
+grateful.
 
-Alexander
+Perry
+-- 
+Perry E. Metzger		perry@...rmont.com
