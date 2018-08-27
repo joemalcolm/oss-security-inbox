@@ -1,73 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/15/3
-Message-Id: <A2C87D38-1E04-47A1-93FE-8FB4770AEA89@beckweb.net>
-Date: Wed, 15 Aug 2018 17:10:32 +0200
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/27/3
+Message-ID: <b703ec3c-504b-3273-6b4d-3526d07aa4c9@gmx.ch>
+Date: Mon, 27 Aug 2018 21:10:55 +0200
+From: sjw@....ch
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins
+Subject: Another "user enumeration" in Dropbear
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software. The following
-releases contain fixes for security vulnerabilities:
+Hi
 
-* Jenkins weekly 2.138
-* Jenkins LTS 2.121.3
+Due the high interests in CVE-2018-15473 ("user enumeration" in
+OpenSSH), people may also notice CVE-2018-15599 [1] in Dropbear (popular
+on IoT/initramfs).
+The issue seems to be very similar. A patch [2] is already available,
+but no new releases so far.
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2018-08-15/
+Best regards
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-637
-Jenkins allowed deserialization of URL objects via Remoting (agent 
-communication) and XStream.
-
-This could in rare cases be used by attackers to have Jenkins look up 
-specified hosts' DNS records.
+[1] http://lists.ucc.gu.uwa.edu.au/pipermail/dropbear/2018q3/002108.html
+[2] https://secure.ucc.asn.au/hg/dropbear/rev/5d2d1021ca00
 
 
-SECURITY-672
-When attempting to authenticate using API token, an ephemeral user record 
-was created to validate the token in case an external security realm was 
-used, and the user record in Jenkins not previously saved, as (legacy) API 
-tokens could exist without a persisted user record.
 
-This behavior could be abused to create a large number of ephemeral user 
-records in memory.
-
-
-SECURITY-790
-The form validation for cron expressions (e.g. "Poll SCM", "Build 
-periodically") could enter infinite loops when cron expressions only 
-matching certain rare dates were entered, blocking request handling 
-threads indefinitely.
-
-
-SECURITY-996
-The "Remember me" feature can be disabled in the Jenkins security 
-configuration.
-
-This did not disable the processing of previously set "Remember me" 
-cookies, so they still allowed users to be logged in.
-
-
-SECURITY-1071
-Users with Overall/Read permission were able to access the URL serving 
-agent logs on the UI due to a lack of permission checks.
-
-
-SECURITY-1076
-Users with Overall/Read permission were able to access the URL used to 
-cancel scheduled restart jobs initiated via the update center ("Restart 
-Jenkins when installation is complete and no jobs are running") due to a 
-lack of permission checks.
-
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
