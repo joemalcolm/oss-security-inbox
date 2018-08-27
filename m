@@ -1,91 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/04/4
-Message-ID: <CAK3kuDWdbaN_SKessVpbpu2eE-8D3Q2GmEW2bAy4-Pfvs6j0og@mail.gmail.com>
-Date: Wed, 4 Jul 2018 17:15:13 -0400
-From: will martin <wmartinusa@...il.com>
-To: general@...ene.apache.org
-Cc: announce@...che.org, dev@...ene.apache.org, solr-user@...ene.apache.org,  security <security@...che.org>, oss-security@...ts.openwall.com
-Subject: Re: [SECURITY] CVE-2018-8026: XXE vulnerability due to Apache Solr configset upload (exchange rate provider config / enum field config / TIKA parsecontext)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/27/4
+Message-ID: <CAJ_zFk+yb9zEXSqs2fdANvKkipg2yQAU89xKr1HMv-EJG2-vxg@mail.gmail.com>
+Date: Mon, 27 Aug 2018 16:02:46 -0700
+From: Tavis Ormandy <taviso@...gle.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
 Content-Type: text/plain; charset=utf-8
 
-The cve id was reserved in April. The jira ticket 1 mo ago. Is this the
-first notice to this list?
+Here is an update, Artifex made a press release
+<https://www.darkreading.com/prnewswire2.asp?rkey=20180824UN89145&filter=3930>
+listing
+some necessary commits, but the list was incomplete.
 
-Thx
+Here is a list of relevant commits I'm aware of so far, some issues are
+still open with working exploits available. It's my understanding that no
+new release is planned until late September, and vendors need to either
+ship a git snapshot when all issues are resolved, or apply patches. I have
+testcases for each problem, but I think the bugs will be visible eventually
+so I'm not posting them here.
 
-On Wed, Jul 4, 2018, 12:56 PM Uwe Schindler <uschindler@...che.org> wrote:
+http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=ea735ba37dc0fd5f5622d031830b9a559dec1cc9
+# 699671
+handling /undefined results in SEGV
+http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=0edd3d6c63
+# 699659 missing type check in ztype
+http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=78911a01b6 #
+699654 A /invalidaccess checks stop working after a failed restore
+http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=5516c614dc33 #
+699654 B /invalidaccess checks stop working after a failed restore
+http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=79cccf641486 #
+699654 C /invalidaccess checks stop working after a failed restore
+http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=b326a716 # 699655
+- missing type checking in setcolor
+http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=c3476dde # 699656
+- LockDistillerParams boolean missing type checks
+http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=a054156d42
+# 699658 - Bypassing PermitFileReading by handling undefinedfilename errors
+http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=0b6cd1918e1ec4ffd087400a754a845180a4522b
+# 699660 - shading_param incomplete type checking
+http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=e01e77a36cbb2e0277bc3a63852244bec41be0f6
+# 699660 - shading_param incomplete type checking
+http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=c432131c3f
+# 699661 - pdf14 garbage collection memory corruption
+http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=971472c83a345a16dac9f90f91258bb22dd77f22
+# 699663 - .setdistillerkeys memory corruption
+http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=241d911127
+# 699664 - corrupt device object after error in job
+http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=0d3901189f
+# 699657 - .tempfile SAFER restrictions seem to be broken
+http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=8e9ce5016db968b40e4ec255a3005f2786cce45f
+# 699665 - memory corruption in aesdecode
+http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=b575e1ec42
+# 699668 - .definemodifiedfont memory corruption if /typecheck is handled
 
-> CVE-2018-8026: XXE vulnerability due to Apache Solr configset upload
-> (exchange rate provider config / enum field config / TIKA parsecontext)
+Tavis
+
+On Thu, Aug 23, 2018 at 8:05 AM Bob Friesenhahn <
+bfriesen@...ple.dallas.tx.us> wrote:
+
+> On Thu, 23 Aug 2018, Leonardo Taccari wrote:
+> >
+> > (Regarding the `file.ps2' and `file.ps3' examples without `PS2:' or
+> > `PS3:' prefixes according `convert -debug Policy -log "%e"' it seems
+> > that they ends up as:
+> >
+> > Domain: Coder; rights=Read; pattern="PS" ...
+> >
+> > ...so should be blocked by the workaround described in
+> > VU#332928. But please correct me if I'm wrong.)
 >
-> Severity: High
+> This is likely due to header magic detection (e.g. "%!PS-Adobe").  It
+> is possible that a different path will be taken if the common
+> Postscript header is not detected.  The file extension may then be
+> used as a hint.  Also, there are a wide varieties of ImageMagick
+> versions in use, with a wide variety of behaviors.
 >
-> Vendor:
-> The Apache Software Foundation
+> The version of ImageMagick provided by the Ubuntu Linux I am using at
+> this moment dates from 2012!
 >
-> Versions Affected:
-> Solr 6.0.0 to 6.6.4
-> Solr 7.0.0 to 7.3.1
->
-> Description:
-> The details of this vulnerability were reported by mail to the Apache
-> security mailing list.
-> This vulnerability relates to an XML external entity expansion (XXE) in
-> Solr
-> config files (currency.xml, enumsConfig.xml referred from schema.xml,
-> TIKA parsecontext config file). In addition, Xinclude functionality
-> provided
-> in these config files is also affected in a similar way. The vulnerability
-> can
-> be used as XXE using file/ftp/http protocols in order to read arbitrary
-> local files from the Solr server or the internal network. The manipulated
-> files can be uploaded as configsets using Solr's API, allowing to exploit
-> that vulnerability. See [1] for more details.
->
-> Mitigation:
-> Users are advised to upgrade to either Solr 6.6.5 or Solr 7.4.0 releases
-> both
-> of which address the vulnerability. Once upgrade is complete, no other
-> steps
-> are required. Those releases only allow external entities and Xincludes
-> that
-> refer to local files / zookeeper resources below the Solr instance
-> directory
-> (using Solr's ResourceLoader); usage of absolute URLs is denied. Keep in
-> mind, that external entities and XInclude are explicitly supported to
-> better
-> structure config files in large installations. Before Solr 6 this was no
-> problem, as config files were not accessible through the APIs.
->
-> If users are unable to upgrade to Solr 6.6.5 or Solr 7.4.0 then they are
-> advised to make sure that Solr instances are only used locally without
-> access
-> to public internet, so the vulnerability cannot be exploited. In addition,
-> reverse proxies should be guarded to not allow end users to reach the
-> configset APIs. Please refer to [2] on how to correctly secure Solr
-> servers.
->
-> Solr 5.x and earlier are not affected by this vulnerability; those versions
-> do not allow to upload configsets via the API. Nevertheless, users should
-> upgrade those versions as soon as possible, because there may be other ways
-> to inject config files through file upload functionality of the old web
-> interface. Those versions are no longer maintained, so no deep analysis was
-> done.
->
-> Credit:
-> Yuyang Xiao, Ishan Chattopadhyaya
->
-> References:
-> [1] https://issues.apache.org/jira/browse/SOLR-12450
-> [2] https://wiki.apache.org/solr/SolrSecurity
->
-> -----
-> Uwe Schindler
-> uschindler@...che.org
-> ASF Member, Apache Lucene PMC / Committer
-> Bremen, Germany
-> http://lucene.apache.org/
->
->
+> Bob
+> --
+> Bob Friesenhahn
+> bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+> GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
 >
 
