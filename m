@@ -1,21 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/26/6
-Message-Id: <1093581530041612@web14o.yandex.ru>
-Date: Tue, 26 Jun 2018 22:33:32 +0300
-From: James Sirota <jsirota@...che.org>
-To: oss-security@...ts.openwall.com, security@...ron.apache.org, james sirota <jsirota@...tonworks.com>, dev <dev@...ron.apache.org>
-Subject: CVE-2018-1273 fixed in Metron 0.5.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/28/8
+Message-ID: <20180828125530.GB14413@kroah.com>
+Date: Tue, 28 Aug 2018 14:55:30 +0200
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2018-10938: Linux kernel: net: infinite loop in net/ipv4/cipso_ipv4.c:cipso_v4_optptr() allows a remote DoS
 Content-Type: text/plain; charset=utf-8
 
+On Mon, Aug 27, 2018 at 05:25:15AM -0400, Vladis Dronov wrote:
+> Heololo,
+> 
+> A flaw was found in the Linux kernel present since v4.0-rc1 and through v4.13-rc4.
+> A crafted network packet sent remotely by an attacker may force the kernel to enter
+> an infinite loop in the cipso_v4_optptr() function in net/ipv4/cipso_ipv4.c leading
+> to a denial-of-service.
+> 
+> All the kernels with the cipso_v4_optptr() function which have not backported
+> the upstream commit 40413955ee26 are vulnerable.
+> 
+> Thanks to Yves Younan from Cisco for mentioning this.
+> 
+> References:
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=1622404
+> 
+> Upstream Patch introduced the flaw:
+> 
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=04f81f0154e4bf002be6f4d85668ce1257efa4d9
+> 
+> Upstream Patch fixed the flaw:
+> 
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=40413955ee265a5e42f710940ec78f5450d49149
 
-The following CVE was fixed in Metron 0.5.0:
+To be more specific here (as I complained about the other CVE report for
+the kernel a minute ago), this means currently the 3.18.y, 4.4.y, and
+4.9.y kernels are vulnerable to this problem.  I'll go backport the
+patch above now to those trees and it will be included in the next
+releases of these kernel trees later this week.
 
-[CVEID]: CVE-2018-1273
-[PRODUCT]:Spring Data Commons
-[VERSION]: versions prior to 1.13 to 1.13.10, 2.0 to 2.0.5, and older
-[PROBLEMTYPE]:remote code execution attack
-[REFERENCES]: https://pivotal.io/security/cve-2018-1273
-[DESCRIPTION]:
+Thanks for posting this here, it is helpful, and I appreciate it.
 
-Spring Data Commons, versions prior to 1.13 to 1.13.10, 2.0 to 2.0.5, and older unsupported versions, contain a property binder vulnerability caused by improper neutralization of special elements. An unauthenticated remote malicious user (or attacker) can supply specially crafted request parameters against Spring Data REST backed HTTP resources or using Spring Data’s projection-based request payload binding hat can lead to a remote code execution attack.
-
+greg k-h
