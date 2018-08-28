@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["277" "Thursday" "29" "September" "2016" "12:32:10" "+0200" "Jakub Wilk" "jwilk@jwilk.net" "<20160929103210.bm5itc2cu4a672ws@jwilk.net>" "9" "Re: [oss-security] CVE-2016-7545 -- SELinux sandbox escape" "^Date:" nil nil "9" "2016092910:32:10" "[oss-security] CVE-2016-7545 -- SELinux sandbox escape" (number mark "        jwilk@jwilk. Sep 29    9/277   " thread-indent "\"Re: [oss-security] CVE-2016-7545 -- SELinux sandbox escape\"\n") "<20160926175302.D6C8417FDAB@rebar.astron.com>" ("<20160926165409.ekk6dztdpttnnf67@jwilk.net>" "<20160926175302.D6C8417FDAB@rebar.astron.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["747" "Tuesday" "28" "August" "2018" "15:39:43" "-0700" "Bryan Call" "bcall@apache.org" "<8A23CEFE-CFC4-4A8A-B9C0-997DCEA27A8A@apache.org>" "31" "[oss-security] [ANNOUNCE] Apache Traffic Server vulnerability with multi-range requests - CVE-2018-8005 " nil nil nil "8" "2018082822:39:43" "[oss-security] [ANNOUNCE] Apache Traffic Server vulnerability with multi-range requests - CVE-2018-8005" (number mark "U       bcall@apache Aug 28   31/747   " thread-indent "\"[oss-security] [ANNOUNCE] Apache Traffic Server vulnerability with multi-range requests - CVE-2018-8005 \"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 22449 invoked by uid 550); 29 Sep 2016 10:32:25 -0000
+Received: (qmail 21905 invoked by uid 550); 29 Aug 2018 07:53:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,32 +11,52 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 22431 invoked from network); 29 Sep 2016 10:32:24 -0000
-Message-ID: <20160929103210.bm5itc2cu4a672ws@jwilk.net>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <20160926165409.ekk6dztdpttnnf67@jwilk.net>
- <20160926175302.D6C8417FDAB@rebar.astron.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20160926175302.D6C8417FDAB@rebar.astron.com>
-User-Agent: NeoMutt/20160916 (1.7.0)
-X-Ovh-Tracer-Id: 17126344958604466086
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeelvddrudelgddvhecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecu
-Date: Thu, 29 Sep 2016 12:32:10 +0200
-From: Jakub Wilk <jwilk@jwilk.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2016-7545 -- SELinux sandbox escape
-To: oss-security@lists.openwall.com
+Received: (qmail 23875 invoked from network); 28 Aug 2018 22:40:02 -0000
+From: Bryan Call <bcall@apache.org>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 11.5 \(3445.9.1\))
+Message-Id: <8A23CEFE-CFC4-4A8A-B9C0-997DCEA27A8A@apache.org>
+Date: Tue, 28 Aug 2018 15:39:43 -0700
+To: announce@trafficserver.apache.org,
+ dev <dev@trafficserver.apache.org>,
+ users <users@trafficserver.apache.org>,
+ security@trafficserver.apache.org,
+ oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3445.9.1)
+Subject: [oss-security] [ANNOUNCE] Apache Traffic Server vulnerability with multi-range
+ requests - CVE-2018-8005 
 
-* Christos Zoulas <christos@zoulas.com>, 2016-09-26, 13:53:
->On the BSDs TIOCSTI has been limited to the superuser since the 4.4BSD Lite 2 
->release in 1995 (IIRC).
+CVE-2018-8005: Apache Traffic Server vulnerability with multi-range requests
 
-Hmm. I've just tried OpenBSD 5.7 and FreeBSD 10.3, and TIOCSTI works fine for 
-non-root users.
+Vendor:
+The Apache Software Foundation
 
--- 
-Jakub Wilk
+Version Affected:
+ATS 6.0.0 to 6.2.2
+ATS 7.0.0 to 7.1.3
+
+Description:
+When the there are multiple ranges in a range request ATS will read the ent=
+ire object from cache.  This can cause performance problems with large obje=
+cts in cache.
+
+Mitigation:
+6.x users should upgrade to 6.2.3 or later versions
+7.x users should upgrade to 7.1.4 or later versions
+
+References:
+	Downloads:
+		https://trafficserver.apache.org/downloads
+	Github Pull Request:
+		https://github.com/apache/trafficserver/pull/3106
+		https://github.com/apache/trafficserver/pull/3124
+	CVE:
+		https://cve.mitre.org/cgi-bin/cvename.cgi?name=3D2018-8005
+
+-Bryan
+
+
+
