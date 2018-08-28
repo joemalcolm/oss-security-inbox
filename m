@@ -1,39 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/06/1
-Message-ID: <20180905203719.6c512646@jabberwock.cb.piermont.com>
-Date: Wed, 5 Sep 2018 20:37:19 -0400
-From: "Perry E. Metzger" <perry@...rmont.com>
-To: Stuart Gathman <stuart@...hman.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/28/10
+Message-ID: <20180828131800.GA14585@kroah.com>
+Date: Tue, 28 Aug 2018 15:18:00 +0200
+From: Greg KH <greg@...ah.com>
+To: Florian Weimer <fweimer@...hat.com>
 Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
+Subject: Re: Linux kernel: CVE-2018-14619 kernel: crash (possible privesc) in kernel crypto subsystem.
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 5 Sep 2018 15:13:53 -0400 Stuart Gathman <stuart@...hman.org>
-wrote:
-> On 09/05/2018 03:01 PM, Perry E. Metzger wrote:
-> > I haven't been following the bugs in depth (just noticing the
-> > continuous stream of them arriving), but is the issue security
-> > flaws in just -dSAFER or is it overall security bugs? If it's the
-> > former, given how few things actually need any of the features
-> > past what -dSAFER offers, perhaps compiling the code by default
-> > without any such capabilities would work well? You can't run what
-> > isn't there.
->
-> Postscript is a general purpose programming language.  It can do
-> anything to your system that a C or Python program could.  The SAFER
-> sandbox was supposed to be able to prevent untrusted postscript code
-> from doing serious damage.  But this series of bugs shows that the
-> sandbox is very flawed, and running untrusted postscript relying
-> only on the SAFER sandbox is a very bad idea.
+On Tue, Aug 28, 2018 at 03:08:18PM +0200, Florian Weimer wrote:
+> On 08/28/2018 02:51 PM, Greg KH wrote:
+> > On Tue, Aug 28, 2018 at 04:49:14PM +1000, Wade Mealing wrote:
+> > > Gday,
+> > > 
+> > > Syzkaller/syzbot found a use-after-free bug in the cryptographic
+> > > subsystem of the Linux kernel [1], that can be used to panic the
+> > > system and possibly escalate privileges.
+> > 
+> > Are we seriously now going to be assigning cves to everything that
+> > syzbot finds?  If so, great, this is going to be fun!
+> > 
+> > If not, why this specific patch?  What makes it specia from the hundreds
+> > of other syzbot finds that have been fixed (and not fixed yet)?
+> 
+> > If RHEL is not exposed, why does Red Hat care about this?
+> 
+> We have shipped supported kernels with this vulnerability.
+> 
+> But the real reason why I want this fixed is that the Python 3 test suite
+> triggers this bug and panics some of our RPM builders. 8-/
 
-I know it's a general purpose language, but if you ifdef out *all* the
-IO (except to the page) and all system calls and the like from the
-implementation, there's limits to what it can do. As it stands the
-implementation has all those capabilities in the code, but does
-anything anyone cares about actually need any of them under any
-normal circumstances? If not, they can just be removed, which is a
-lot easier to audit than a sandbox.
+Heh, ok, fair enough, thanks for being honest :)
 
-Perry
--- 
-Perry E. Metzger		perry@...rmont.com
+greg k-h
