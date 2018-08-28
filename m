@@ -1,4 +1,9 @@
-Received: (qmail 3630 invoked by uid 550); 29 Apr 2024 22:00:01 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1687" "Tuesday" "28" "August" "2018" "14:51:40" "+0200" "Greg KH" "greg@kroah.com" "<20180828125140.GA14413@kroah.com>" "38" "Re: [oss-security] Linux kernel: CVE-2018-14619 kernel: crash (possible privesc) in kernel crypto subsystem." "^Date:" nil nil "8" "2018082812:51:40" "[oss-security] Linux kernel: CVE-2018-14619 kernel: crash (possible privesc) in kernel crypto subsystem." (number mark "        greg@kroah.c Aug 28   38/1687  " thread-indent "\"Re: [oss-security] Linux kernel: CVE-2018-14619 kernel: crash (possible privesc) in kernel crypto subsystem.\"\n") "<CALJHwhQyQQjyWxczrjtBgt8GSmHHarzfSDPPFKt3xY0Sk0Sd_g@mail.gmail.com>" ("<CALJHwhQyQQjyWxczrjtBgt8GSmHHarzfSDPPFKt3xY0Sk0Sd_g@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 32099 invoked by uid 550); 28 Aug 2018 12:52:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,146 +11,83 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20220 invoked from network); 29 Apr 2024 19:57:21 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714420633; x=1715025433; darn=lists.openwall.com;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=J9OIWHUM3QHPa31wxNQ9BImPriiNArBZjBkRgxydbxs=;
-        b=aMELzHhpeNkiGCSEEMVdPlmj4Wj+rDRX1dvcZwqewZ8+6IgTxUxN5gvaw7C8WH1j50
-         e5dRLPnrkIFlKYO3rbaLclrZeQdl/MwiHZezS5YyXD4NensaesUXh2kF66cxxJQUnTmj
-         cqpaTbSFggnbcAnTVbq+q2zajVi6f7YR70ulReTLIAhtflQr/jw1cYzO+0hs5mJXL/4I
-         FCz656ysYXKCVZiGGkE8rhSzYrzqi8jWK03kq0MRbggtU0RC+S4dU04F88bs8W03yVlc
-         tIh1PeAn4sPkrE7BHWI3fSXLfu5k3lwhXLoy6TZQXhK2yaYnOP7S279yP49d8IZbapEC
-         607g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714420633; x=1715025433;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=J9OIWHUM3QHPa31wxNQ9BImPriiNArBZjBkRgxydbxs=;
-        b=U48xMg8eJY1x3y+Fd2ACYAN/HXsZmemj/e/DaKe08JMLdpxROPlkrozxmFkhuKtKmi
-         C2i1+8x013/lhPpEGSfbuhmts+h5UpLPFnLuQ5bA0rPbNqEUTWUNgqzwuOitZBvk90F2
-         CXMMji9Xnu7+07g4IiBGPee3QV8NAF6XYkw5ovkKS3CMxsTOe91coq2U6D7bwnwKWWcV
-         r5X5QrboLGrsIiFlXT7UQuv+qLh0sq5OwJ4GKqEyLYxFE5hW8Sam6yVk75fohkgYVZpt
-         3dC4LHi3WvlNEY3hJZNfxo7spGBycSKM4uC7FnYQ+kaEPPpiqb91zLnrmjEU2ETZIJxI
-         weLQ==
-X-Gm-Message-State: AOJu0Yx2nS6h1237W9/Y9eWNkpk3GkshZ1VLQNupUlRW6g9lUGZ7qxpD
-	yXP6SgKqF004ngXBJ2oYEpWAP3AkwHnAFdm+w2unK2x5rbrYcd7C7RQfnoLw
-X-Google-Smtp-Source: AGHT+IEx72TpiSSJK/OTZvKDa2ur7ueTrlcBZx/L4GOqTvAieXlYEzhcbvrJ3bP20FPlORy3nGfk4Q==
-X-Received: by 2002:a2e:92c5:0:b0:2de:c16f:4236 with SMTP id k5-20020a2e92c5000000b002dec16f4236mr5765446ljh.28.1714420633046;
-        Mon, 29 Apr 2024 12:57:13 -0700 (PDT)
-Message-ID: <bcf98949-17b2-4260-9471-5a312e82aa0e@gmail.com>
-Date: Mon, 29 Apr 2024 20:57:10 +0100
+Received: (qmail 32077 invoked from network); 28 Aug 2018 12:52:08 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=
+	content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; bh=/RN6Ya+NcujGwq84Lo9wdeY75szaNH8bpK03juov40o=; b=iIDEGFmM
+	GVE5L4h6/CZjOoWvZDH5yOBd7/oZrgKQzMk1a1TrU1Tr5MVietKmAYEYi1JIe2y5
+	zUnadJkMP5e2x6qt9wrF1lPRQIsELP9wxQvPLLu8p7ysEFu/G87S/Gb5kpmAJhNc
+	N0glZrGrGREqktLwU67NsF8htovztjt5Yp+oiSj4Mz5MYChwSAhSBMIDiAIsqZUj
+	X4tAu26ieWCZ7z/3k+nEawwbyj4McfKTJpVih5DWmC61DojQvE1aWOZKUdKORHkq
+	dtP0t9BWni/39OSB5M8Cw1LlU7GX/SH8HZHpgTVEqNVf/EifHTwTF4ivrbcPnFGr
+	bBg/saJazyB85A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm3; bh=/RN6Ya+NcujGwq84Lo9wdeY75szaN
+	H8bpK03juov40o=; b=sEg7ieQ2/oMJHtJhPXCRKmkegpu7klKkAX7uuh9X6wbFI
+	40FkDnDRU500P9c0ArBJd7wcyAEd3g8z+qkx/r3yN8cTWvDqGuOPouzgcOAcXp6E
+	KIpOJqJ34YFFgHyRyGjv1JPc/K+auMLXg9dhE5hP8NXL4dP0OjhlDezuTGkXrsGT
+	WMpKjLuy8icAG1X/F+Px7+4t1OomnOyNZqTN6lm9Nz70Vl1n76ygmBtTR/j5dYHz
+	qz6QcXo1NP6wIDRkGMILAxFqo9vVRAPO8As/Qf1nAJHkDaB4BTGrOQmclKYiwqmE
+	PYP1DhSfsCdsZrIVTiWfymSLobkHuEdyzvk9cAYgQ==
+X-ME-Proxy: <xmx:aUWFW1IVGEMHCJNQIcd5z6imqqDqUefYochKCzN2HM7JTWSn5pDi_Q>
+    <xmx:aUWFWxA_4xgBkTByZFfnqVrLN0ebBYqZMrWnlkdfXAg1PNuOW0Lw_A>
+    <xmx:aUWFW7BAAh28tHkSFLy8SMObqucCBNvF_Vz-Y_nbFA70yruBQ-dUkQ>
+    <xmx:aUWFWyliBIoQyNxrFe6v3NBrVvwVkqpL_Yn798NXfTalZgS0GQCAVQ>
+    <xmx:aUWFW5h2YvZJD87cMeJaRg7evMJHl9rl3bHyVbMI6wOqbnURKRwxGA>
+    <xmx:aUWFW2wYbEnMkT0TKEghI40jNYnuVdZA2lhG9fGYJBGQ5Vk5PyMfQw>
+X-ME-Sender: <xms:aUWFWxhtk5xqCn8APDmNsJ2CZg7SFuk9_NXkCYAx0WCW6qbvNCCj5g>
+Message-ID: <20180828125140.GA14413@kroah.com>
+References: <CALJHwhQyQQjyWxczrjtBgt8GSmHHarzfSDPPFKt3xY0Sk0Sd_g@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: oss-security@lists.openwall.com, Vegard Nossum <vegard.nossum@oracle.com>
-Cc: Hank Leininger <hlein@korelogic.com>, Jacob Bachmeyer <jcb62281@gmail.com>
-References: <20240427234834.c0219029-fe37-49ef-a563-4d24eea118c2@korelogic.com>
- <a0e871ca-468e-4239-89cd-61b35f935c2b@oracle.com>
-Content-Language: en-US
-From: Gabriel Ravier <gabravier@gmail.com>
-In-Reply-To: <a0e871ca-468e-4239-89cd-61b35f935c2b@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Subject: Re: [oss-security] Update on the distro-backdoor-scanner effort
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CALJHwhQyQQjyWxczrjtBgt8GSmHHarzfSDPPFKt3xY0Sk0Sd_g@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Date: Tue, 28 Aug 2018 14:51:40 +0200
+From: Greg KH <greg@kroah.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Linux kernel: CVE-2018-14619 kernel: crash
+ (possible privesc) in kernel crypto subsystem.
+To: oss-security@lists.openwall.com
 
-On 4/29/24 10:46, Vegard Nossum wrote:
->
-> On 28/04/2024 08:34, Hank Leininger wrote:
->> On 2024-04-27, Jacob Bachmeyer wrote:
->>>> - Check for irregular contents in .pc files, inspired by Vegard 
->>>> Nossum's oss-security post
->>
->>> Much easier:  look for pkg-config descriptions containing text
->>> other than a variable definition.  The pkg-config tool itself
->>> should probably enforce "cleanliness" on this matter and refuse to
->>> process files containing other text.  (It also should complain
->>> about and reject an *-uninstalled.pc file found in the system
->>> directories, which was another logic error exploited in that sample
->>> backdoor.)
->>
->> Really, doing this seems a more robust approach anyway, because
->> allowing only known-good > rejecting known-bad. I was mostly driven
->> by "hang on, how many of the things Nossum's example does are
->> actually used by real files?" and the answer from my initial sample
->> size was zero, so it'd be trivial to extend that check to every .pc
->> file shipped by every current distro's packages.
->>
->> I think Sam looked into existing pkg-config verifiers and found they
->> do not complain about things we thought they should complain about
->> (this could just mean we misunderstand their purpose). A strict
->> lint-checker for such files would be better than just checking for
->> specific suspicious patterns. But, I don't yet know how strict a
->> format we could insist on (would it turn out 10% of files in fact
->> break what we initially think are reasonable rules?). Even still, I
->> think you could embed badness in legit variables, although I haven't
->> dug in enough to know that for sure.
->
-> Hi,
->
-> Masquerading a shell command as a pkg-config variable definition is
-> trivial (but probably still detectable) since you can just do:
->
-> foobar=/usr echo hi
->
-> which AFAIK is a valid pkg-config variable definition but also a valid
-> shell command.
->
-> Also remember that in my particular example I reused the same file but
-> it would also be trivial to use a different file in the $(...) expansion
-> so that the payload actually lives somewhere else. The payload doesn't
-> even have to be a shell script, it could also be a small ELF binary or
-> something where you wouldn't necessarily be able to tell at a glance
-> that it does something malicious.
->
-> So probably the real thing to look for would be $(...) in pkg-config
-> files -- Hank, you mentioned in the GitHub issue that you did fine this
-> in one file; out of curiosity, could you share it?
+On Tue, Aug 28, 2018 at 04:49:14PM +1000, Wade Mealing wrote:
+> Gday,
+> 
+> Syzkaller/syzbot found a use-after-free bug in the cryptographic
+> subsystem of the Linux kernel [1], that can be used to panic the
+> system and possibly escalate privileges.
 
-I am not Hank, but having done a search myself, the one example I found 
-appears to be a typo in a GTK pkgconfig package, which I found in my 
-/usr/lib64/pkgconfig folder:
+Are we seriously now going to be assigning cves to everything that
+syzbot finds?  If so, great, this is going to be fun!
 
-$ grep -r '\$(' /usr/lib64/pkgconfig
-/usr/lib64/pkgconfig/gtk-sharp-beans-2.0.pc:Cflags: 
--I:${gapidir}/gtk-api.xml -I:$(gapidir)/gtkbeans-api.xml
+If not, why this specific patch?  What makes it specia from the hundreds
+of other syzbot finds that have been fixed (and not fixed yet)?  This
+seems like an odd choice, given:
 
+> The bug was introduced in commit 72548b093ee3, and has been addressed
+> in b32a7dc8aef1882fbf983eb354837488cc9d54dc, a reproducer is available
+> on the tail end of  syzbots email to kernel list (
+> https://lkml.org/lkml/2017/11/27/866 ).  Most RHEL kernels are not
+> affected as they do not have the feature, but it does affect the
+> kernel-alt package (the 4.11 based kernel for 64-bit ARM , IBM POWER9
+> (little endian ) and IBM z Systems ).
 
+So this was introduced in 4.14 which was released Nov 12, 2017, and
+fixed in 4.14.8 which was released on Dec 20, 2017.  A very small
+window, don't you think.  And one that happened almost a year ago.
 
->
-> I tried this on my system and didn't find anything:
->
-> $ grep -R '\$(' /usr/share/pkgconfig /usr/lib/x86_64-linux-gnu/pkgconfig
->
-> It's also worth asking if there are other ways to encode that $() that
-> bypasses the very simple '\$(' pattern -- e.g. something like "$\(" or
-> maybe an expansion of a variable that itself contains the $ character:
->
-> $ cat test.pc
-> foo=\$
->
-> Name: test
-> Version: 0
-> Description:
-> Cflags: ${foo}(echo hi)
->
-> $ PKG_CONFIG_PATH=. pkg-config --cflags test
-> $(echo hi)
->
-> There are also other ways to achieve the same effect.
->
-> I should also add that I found out-of-bounds memory accesses in both the
-> original pkg-config and pkgconf (used on Debian and RedHat derivatives,
-> respectively, AFAIK) when using long variable names -- it doesn't look
-> exploitable to me but I've submitted some patches for both packages just
-> in case.
->
-> Thanks,
->
->
-> Vegard
+If RHEL is not exposed, why does Red Hat care about this?  Who cares
+about it?  Anyone running a 4.14.y kernel has had this fixed for a very
+long time ago, and anyone not running a 4.14.y kernel is not affected.
 
+Again, I'm really confused why this was chosen for a CVE here.  Care to
+explain it a bit better?  Is it because you have to have a CVE for every
+bugfix in the RHEL kernel-alt package (something that I would love to
+see happen for various other reasons...)
 
+thanks,
+
+greg k-h
