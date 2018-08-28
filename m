@@ -1,37 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/11/6
-Message-Id: <1531309205.1550229.1437139664.5E02F186@webmail.messagingengine.com>
-Date: Wed, 11 Jul 2018 13:40:05 +0200
-From: Dave Cottlehuber <dch@...che.org>
-To: oss-security@...ts.openwall.com
-Cc: security@...chdb.apache.org, security@...che.org
-Subject: CVE-2018-8007: Apache CouchDB administrative privilege escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/28/9
+Message-ID: <63a8aed5-d44a-a975-a2a3-932374b57a6c@redhat.com>
+Date: Tue, 28 Aug 2018 15:08:18 +0200
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com, Greg KH <greg@...ah.com>
+Subject: Re: Linux kernel: CVE-2018-14619 kernel: crash (possible privesc) in kernel crypto subsystem.
 Content-Type: text/plain; charset=utf-8
 
+On 08/28/2018 02:51 PM, Greg KH wrote:
+> On Tue, Aug 28, 2018 at 04:49:14PM +1000, Wade Mealing wrote:
+>> Gday,
+>>
+>> Syzkaller/syzbot found a use-after-free bug in the cryptographic
+>> subsystem of the Linux kernel [1], that can be used to panic the
+>> system and possibly escalate privileges.
+> 
+> Are we seriously now going to be assigning cves to everything that
+> syzbot finds?  If so, great, this is going to be fun!
+> 
+> If not, why this specific patch?  What makes it specia from the hundreds
+> of other syzbot finds that have been fixed (and not fixed yet)?
 
-[CVEID]: CVE-2018-8007
-[PRODUCT]: Apache CouchDB
-[VERSION]: Apache CouchDB versions up to and including 1.7.1, and 2.1.1
-[PROBLEMTYPE]: Administrative Privilege Escalation
-[REFERENCES]: https://blog.couchdb.org/2018/07/10/cve-2018-8007/ http://mail-archives.apache.org/mod_mbox/couchdb-announce/201807.mbox/%3C1699016538.6219.1531246785603.JavaMail.Joan%40RITA%3E http://mail-archives.apache.org/mod_mbox/couchdb-announce/201807.mbox/%3c1439409216.6221.1531246856676.JavaMail.Joan@RITA%3e
-[DESCRIPTION]: CouchDB administrative users can configure the database server via HTTP(S). Due to insufficient validation of administrator-supplied configuration settings via the HTTP API, it is possible for a CouchDB administrator user to escalate their privileges to that of the operating system’s user that CouchDB runs under, by bypassing the blacklist of configuration settings that are not allowed to be modified via the HTTP API.
+> If RHEL is not exposed, why does Red Hat care about this?
 
-This privilege escalation effectively allows an existing CouchDB admin user to gain arbitrary remote code execution, bypassing already disclosed CVE-2017-12636.
+We have shipped supported kernels with this vulnerability.
 
-Mitigation:
+But the real reason why I want this fixed is that the Python 3 test 
+suite triggers this bug and panics some of our RPM builders. 8-/
 
-All users should upgrade to CouchDB releases 1.7.2 or 2.1.2.
-
-Upgrades from previous 1.x and 2.x versions in the same series should be
-seamless.
-
-Users on earlier versions, or users upgrading from 1.x to 2.x should consult
-with upgrade notes.
-Credit
-
-This issue was discovered by Francesco Oddo of MDSec Labs. The CouchDB PMC gratefully acknowledges their support in responsibly disclosing this vulnerability.
-
-—
-  Dave Cottlehuber
-  dch@...che.org
-  Sent from my Couch
+Thanks,
+Florian
