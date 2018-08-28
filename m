@@ -1,44 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/18/2
-Message-ID: <20180218214431.GA23494@openwall.com>
-Date: Sun, 18 Feb 2018 22:44:31 +0100
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: LibVNCServer rfbserver.c: rfbProcessClientNormalMessage() case rfbClientCutText doesn't sanitize msg.cct.length
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/28/11
+Message-ID: <87sh2y5tnf.fsf@fifthhorseman.net>
+Date: Tue, 28 Aug 2018 12:43:16 -0400
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: Phil Pennock <oss-security-phil@...dhuis.org>, oss-security@...ts.openwall.com
+Cc: Jakub Wilk <jwilk@...lk.net>
+Subject: Re: Travis CI MITM RCE
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Feb 18, 2018 at 07:09:45PM +0100, Solar Designer wrote:
-> vcSetXCutTextProc() came from LibVNCServer-0.9.9/vncterm/VNConsole.c, so its
-> shortcomings also need to be reported to LibVNCServer upstream.
+On Sat 2018-08-25 20:56:59 -0400, Phil Pennock wrote:
+> The keyservers are a swamp; if you want to include one key, then include
+> the key as static data in your builds/CI configuration, so that it's
+> coming from a trusted source each time: your own data.
 
-> vncterm exists as a separate repo,
-> so I might report its issues in there: https://github.com/LibVNC/vncterm
+This is great advice, and not just for builds/CI configuration.
 
-Reported vncterm: VNConsole.c: vcSetXCutTextProc() integer overflow and
-unchecked malloc():
+I made a similar suggestion recently to clean up the starttls-everywhere
+datafile updater:
 
-https://github.com/LibVNC/vncterm/issues/6
+    https://github.com/EFForg/starttls-everywhere/pull/65/commits/eb0a28e3fa141d4fb445c00df3ab7f3765ded859
 
-vncterm's implementation of the callback is:
+In some ways, the keyserver network has done the OpenPGP community a
+disservice, by encouraging OpenPGP users to refer to keys by
+fingerprints (or even worse, by key IDs).  While this is a useful
+shorthand in some contexts, it's really a security/reliability
+anti-pattern when it comes to secure programming.
 
-void vcSetXCutTextProc(char* str,int len, struct _rfbClientRec* cl)
-{
-  vncConsolePtr c=(vncConsolePtr)cl->screen->screenData;
+      --dkg
 
-  if(c->selection) free(c->selection);
-  c->selection=(char*)malloc(len+1);
-  memcpy(c->selection,str,len);
-  c->selection[len]=0;
-}
-
-Besides the conversion to signed int during the call (a LibVNCServer API
-issue), there's also len+1 in the implementation, which may cause an
-integer overflow resulting in e.g. malloc(0) (which succeeds) followed
-by memcpy(..., ..., -1) (which writes beyond the allocated memory).  And
-there's no check for malloc() possibly returning NULL.
-
-I did not request CVE ID(s) for this, and I don't intend to do so.  If
-you need to, please feel free to track the vncterm vcSetXCutTextProc()
-issues above as OVE-20180218-0002.
-
-Alexander
+Download attachment "signature.asc" of type "application/pgp-signature" (228 bytes)
