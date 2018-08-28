@@ -1,34 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/20/1
-Message-ID: <d737b430-2343-b5a7-d47a-0598b1cd225f@johannes-bauer.com>
-Date: Fri, 19 Oct 2018 20:17:54 +0200
-From: zugtprgfwprz@...rnkuller.de
-To: oss-security@...ts.openwall.com
-Subject: Re: Travis CI MITM RCE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/29/1
+Message-Id: <DE6B4C1E-5C1C-49FB-903D-9013F433AAEB@apache.org>
+Date: Tue, 28 Aug 2018 15:39:46 -0700
+From: Bryan Call <bcall@...che.org>
+To: announce@...fficserver.apache.org, dev <dev@...fficserver.apache.org>, users <users@...fficserver.apache.org>, security@...fficserver.apache.org, oss-security@...ts.openwall.com
+Subject: [ANNOUNCE] Apache Traffic Server vulnerability with an invalid TLS handshake - CVE-2018-8022
 Content-Type: text/plain; charset=utf-8
 
-Hey Jakub,
+CVE-2018-8022: Apache Traffic Server vulnerability with an invalid TLS handshake
 
-On 18.10.2018 17:10, Jakub Wilk wrote:
+Reported By:
+Shigeki Otsu
 
-> Nitpicking, but for an ideal n-bit hash function, on avergage you need
-> 2ⁿ (not 2ⁿ⁻¹) evalutations of the function to find the preimage.
+Vendor:
+The Apache Software Foundation
 
-Huh, wow! I would also have had the gut-feeling of 2^(n-1) and had to
-code a little program to verify the facts:
+Version Affected:
+ATS 6.2.2
 
-import hashlib
-ps = [ ]
-for q in range(20000):
-	for p in range(10000):
-		z = q | (p << 32)
-		z = int.to_bytes(z, length = 8, byteorder = "little")
-		if hashlib.md5(z).digest()[0] == 0:
-			break
-	ps.append(p)
-print(sum(ps) / len(ps))
+Description:
+An carefully crafted invalid TLS handshake can cause ATS to segfault.
 
-And indeed, you're absolutely correct. Thanks for the comment!
+Mitigation:
+6.x users should upgrade to 6.2.3 or later versions
 
-Have a great weekend,
-Joe
+References:
+	Downloads:
+		https://trafficserver.apache.org/downloads
+	Github Pull Request:
+		https://github.com/apache/trafficserver/pull/2147
+	CVE:
+		https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-8022
+
+-Bryan
+
+
+
