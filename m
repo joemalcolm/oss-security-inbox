@@ -1,102 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/26/5
-Message-ID: <CAJmbs8gqAfP0QPTSggDLSHwXzpv3H1rsuuo9wE024MzwhTSXTg@mail.gmail.com>
-Date: Mon, 26 Feb 2018 12:18:58 +0700
-From: Maxim Solodovnik <solomax666@...il.com>
-To: Sahil Dhar <sdhar@...urityinnovation.com>
-Cc: security@...nmeetings.apache.org,  Openmeetings user-list <user@...nmeetings.apache.org>, dev <dev@...nmeetings.apache.org>,  user-russian@...nmeetings.apache.org, oss-security@...ts.openwall.com
-Subject: Re: [ANNOUNCE] CVE-2018-1286 - Apache OpenMeetings - Insufficient Access Controls
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/28/1
+Message-ID: <CALJHwhQyQQjyWxczrjtBgt8GSmHHarzfSDPPFKt3xY0Sk0Sd_g@mail.gmail.com>
+Date: Tue, 28 Aug 2018 16:49:14 +1000
+From: Wade Mealing <wmealing@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Linux kernel: CVE-2018-14619 kernel: crash (possible privesc) in kernel crypto subsystem.
 Content-Type: text/plain; charset=utf-8
 
-Make sense,
-I'll change it in a moment :)
+Gday,
 
-On Mon, Feb 26, 2018 at 12:17 PM, Sahil Dhar
-<sdhar@...urityinnovation.com> wrote:
-> Hi Maxim,
->
-> I got your point, however, the description seems to be stating that only
-> version 3.0.0 is affected instead of <=4.0.1.
->
->
-> CVE-2018-1286 - Apache OpenMeetings - Insufficient Access Controls
-> Severity: Medium
->
-> Vendor: The Apache Software Foundation
->
-> Versions Affected: Apache OpenMeetings 3.0.0
-> Versions Affected: <= 4.0.1  (Corrected)
->
-> Description: CRUD operations on privileged users are not password protected
-> allowing an authenticated attacker to deny service for privileged users.
-> CVE-2018-1286
->
-> The issue was fixed in 4.0.2
-> All users are recommended to upgrade to Apache OpenMeetings 4.0.2
->
->
-> Thanks,
-> ~ Sahil
->
-> On Mon, Feb 26, 2018 at 10:43 AM, Maxim Solodovnik <solomax666@...il.com>
-> wrote:
->>
->> I have analyzed the code
->> Wysiwyg editor was introduced in 3.0.0
->> and it was vulnerable from the very beginning
->> So all versions are affected :(
->>
->> On Mon, Feb 26, 2018 at 12:10 PM, Sahil Dhar
->> <sdhar@...urityinnovation.com> wrote:
->> > Hi Maxim,
->> >
->> >
->> > I just noticed that there is a typo in the CVE-2018-1286 description, as
->> > it
->> > states that the affected version is 3.0.0. However, the vulnerability
->> > was
->> > reported for 4.0.1 release. Can you please update it?
->> >
->> > Thanks,
->> > ~ Sahil
->> >
->> >
->> >
->> >
->> >
->> >
->> > On Sun, Feb 25, 2018 at 5:20 PM, Maxim Solodovnik <solomax@...che.org>
->> > wrote:
->> >>
->> >> Severity: Medium
->> >>
->> >> Vendor: The Apache Software Foundation
->> >>
->> >> Versions Affected: Apache OpenMeetings 3.0.0
->> >>
->> >> Description: CRUD operations on privileged users are not password
->> >> protected allowing an authenticated attacker to deny service for
->> >> privileged users.
->> >>
->> >>
->> >> The issue was fixed in 4.0.2
->> >> All users are recommended to upgrade to Apache OpenMeetings 4.0.2
->> >>
->> >> Credit: This issue was identified by Sahil Dhar of Security Innovation
->> >> Inc
->> >
->> >
->>
->>
->>
->> --
->> WBR
->> Maxim aka solomax
->
->
+Syzkaller/syzbot found a use-after-free bug in the cryptographic
+subsystem of the Linux kernel [1], that can be used to panic the
+system and possibly escalate privileges.
 
+The bug was introduced in commit 72548b093ee3, and has been addressed
+in b32a7dc8aef1882fbf983eb354837488cc9d54dc, a reproducer is available
+on the tail end of  syzbots email to kernel list (
+https://lkml.org/lkml/2017/11/27/866 ).  Most RHEL kernels are not
+affected as they do not have the feature, but it does affect the
+kernel-alt package (the 4.11 based kernel for 64-bit ARM , IBM POWER9
+(little endian ) and IBM z Systems ).
 
+Upstream fix:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=b32a7dc8aef1882fbf983eb354837488cc9d54dc
+
+Reproducer:
+https://lkml.org/lkml/2017/11/27/866
+
+Thanks.
 
 -- 
-WBR
-Maxim aka solomax
+Wade Mealing
+
+Product Security - Kernel
+
+Red Hat
