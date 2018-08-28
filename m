@@ -1,47 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/28/7
-Message-ID: <20180828125140.GA14413@kroah.com>
-Date: Tue, 28 Aug 2018 14:51:40 +0200
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: CVE-2018-14619 kernel: crash (possible privesc) in kernel crypto subsystem.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/29/3
+Message-Id: <6371D290-EB1B-44E6-97D0-DCBF27ACAFA1@apache.org>
+Date: Tue, 28 Aug 2018 15:39:48 -0700
+From: Bryan Call <bcall@...che.org>
+To: announce@...fficserver.apache.org, dev <dev@...fficserver.apache.org>, users <users@...fficserver.apache.org>, security@...fficserver.apache.org, oss-security@...ts.openwall.com
+Subject: [ANNOUNCE] Apache Traffic Server vulnerability with method ACLs - CVE-2018-1318 
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Aug 28, 2018 at 04:49:14PM +1000, Wade Mealing wrote:
-> Gday,
-> 
-> Syzkaller/syzbot found a use-after-free bug in the cryptographic
-> subsystem of the Linux kernel [1], that can be used to panic the
-> system and possibly escalate privileges.
+CVE-2018-1318: Apache Traffic Server vulnerability with method ACLs
 
-Are we seriously now going to be assigning cves to everything that
-syzbot finds?  If so, great, this is going to be fun!
+Reported By:
+Leif Hedstrom
 
-If not, why this specific patch?  What makes it specia from the hundreds
-of other syzbot finds that have been fixed (and not fixed yet)?  This
-seems like an odd choice, given:
+Vendor:
+The Apache Software Foundation
 
-> The bug was introduced in commit 72548b093ee3, and has been addressed
-> in b32a7dc8aef1882fbf983eb354837488cc9d54dc, a reproducer is available
-> on the tail end of  syzbots email to kernel list (
-> https://lkml.org/lkml/2017/11/27/866 ).  Most RHEL kernels are not
-> affected as they do not have the feature, but it does affect the
-> kernel-alt package (the 4.11 based kernel for 64-bit ARM , IBM POWER9
-> (little endian ) and IBM z Systems ).
+Version Affected:
+ATS 6.0.0 to 6.2.2
+ATS 7.0.0 to 7.1.3
 
-So this was introduced in 4.14 which was released Nov 12, 2017, and
-fixed in 4.14.8 which was released on Dec 20, 2017.  A very small
-window, don't you think.  And one that happened almost a year ago.
+Description:
+Adding method ACLs in remap.config can cause a segfault when the user makes a carefully crafted request. 
 
-If RHEL is not exposed, why does Red Hat care about this?  Who cares
-about it?  Anyone running a 4.14.y kernel has had this fixed for a very
-long time ago, and anyone not running a 4.14.y kernel is not affected.
+Mitigation:
+6.x users should upgrade to 6.2.3 or later versions
+7.x users should upgrade to 7.1.4 or later versions
 
-Again, I'm really confused why this was chosen for a CVE here.  Care to
-explain it a bit better?  Is it because you have to have a CVE for every
-bugfix in the RHEL kernel-alt package (something that I would love to
-see happen for various other reasons...)
 
-thanks,
+References:
+	Downloads:
+		https://trafficserver.apache.org/downloads
+	Github Pull Request:
+		https://github.com/apache/trafficserver/pull/3195
+	CVE:
+		https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-1318
 
-greg k-h
+-Bryan
+
+
+
