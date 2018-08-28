@@ -1,4 +1,9 @@
-Received: (qmail 1024 invoked by uid 550); 15 Jun 2025 01:54:20 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["600" "Tuesday" "28" "August" "2018" "16:22:34" "+0530" "P J P" "ppandit@redhat.com" "<nycvar.YSQ.7.76.1808281620230.4708@xnncv>" "20" "[oss-security] CVE-2018-15746 Qemu: seccomp: blacklist is not applied to all threads" "^cc:" nil nil "8" "2018082810:52:34" "[oss-security] CVE-2018-15746 Qemu: seccomp: blacklist is not applied to all threads" (number mark "U       ppandit@redh Aug 28   20/600   " thread-indent "\"[oss-security] CVE-2018-15746 Qemu: seccomp: blacklist is not applied to all threads\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 11987 invoked by uid 550); 28 Aug 2018 10:52:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,60 +11,39 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 11969 invoked from network); 28 Aug 2018 10:52:55 -0000
+X-X-Sender: pjp@kaapi
+Message-ID: <nycvar.YSQ.7.76.1808281620230.4708@xnncv>
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.78 on 10.11.54.6
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.11.55.2]); Tue, 28 Aug 2018 10:52:43 +0000 (UTC)
+X-Greylist: inspected by milter-greylist-4.5.16 (mx1.redhat.com [10.11.55.2]); Tue, 28 Aug 2018 10:52:43 +0000 (UTC) for IP:'10.11.54.6' DOMAIN:'int-mx06.intmail.prod.int.rdu2.redhat.com' HELO:'smtp.corp.redhat.com' FROM:'ppandit@redhat.com' RCPT:''
+cc: Jann Horn <jannh@google.com>
+Date: Tue, 28 Aug 2018 16:22:34 +0530 (IST)
+From: P J P <ppandit@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 31817 invoked from network); 15 Jun 2025 01:54:10 -0000
-Date: Sun, 15 Jun 2025 03:54:05 +0200
-From: Solar Designer <solar@openwall.com>
-To: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
-Cc: oss-security@lists.openwall.com,
-	Qualys Security Advisory <qsa@qualys.com>
-Message-ID: <20250615015405.GA29260@openwall.com>
-References: <20250529171556.GA9260@localhost.localdomain> <20250606012027.GA31670@openwall.com> <aEfZkqA92Jxx0SBW@kawka3.in.waw.pl>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aEfZkqA92Jxx0SBW@kawka3.in.waw.pl>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Local information disclosure in apport and systemd-coredump
+Subject: [oss-security] CVE-2018-15746 Qemu: seccomp: blacklist is not applied to all
+ threads
+To: oss security list <oss-security@lists.openwall.com>
 
-Hi,
+   Hello,
 
-Regarding the missing patch:
+An issue was found in the way QEMU implements Seccomp sandboxing. In that, all 
+QEMU threads are not bound by the sandbox. A guest user/process maybe be able 
+to use this flaw to crash a guest resulting in DoS.
 
-On Tue, Jun 10, 2025 at 07:06:58AM +0000, Zbigniew Jędrzejewski-Szmek wrote:
-> On Fri, Jun 06, 2025 at 03:20:27AM +0200, Solar Designer wrote:
-> > In your message to linux-distros, you shared these two patches:
-> > 
-> > 0001-coredump-get-rid-of-_META_MANDATORY_MAX.patch
-> > 0003-coredump-also-stop-forwarding-non-dumpable-processes.patch
-> > 
-> > So it looks like you omitted patch number 2.  Yet to me that omitted
-> > patch would have been the most important part of the fix.  Was this
-> > omission inadvertent, or am I missing some reason to skip that patch?
-> 
-> Hmmm, the mail I see here in my mail folder has the middle patch too
-> (Message-ID: <aDRxuOl3_j0infhz@kawka3.in.waw.pl>). I'm not subscribed
-> to linux-distros so I didn't see the message as it was received on
-> the mailing list.
-> 
-> > I think it's these 3 commits (as they appear in the main branch, and I
-> > see equivalent ones are also in v257-stable and v256-stable):
-> > commit 8fc7b2a211eb13ef1a94250b28e1c79cab8bdcb9
-> > commit 0c49e0049b7665bb7769a13ef346fef92e1ad4d6
-> > commit 49f1f2d4a7612bbed5211a73d11d6a94fbe3bb69
-> 
-> Yep, that's correct.
-> 
-> As you can see, we made a bunch of follow-up later on. But those
-> three patches are enough to resolve the issue.
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2018-08/msg04892.html
 
-Thank you!
+Reference:
+----------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2018-08/msg02289.html
 
-I tried investigating what may have happened, and while I do now suspect
-it was incorrect processing on the list server, I couldn't identify a
-specific cause nor confirm this guess based on the logs.  Re-encrypting
-a MIME message is unfortunately non-trivial.
+'CVE-2018-15746' assigned via -> https://cveform.mitre.org/
 
-Alexander
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
