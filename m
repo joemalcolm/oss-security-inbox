@@ -1,81 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/22/1
-Message-ID: <CAFB0D2Qx9-vK+EUh1sTV7Wfj1LJt3r7qZGZxQdmReWsOTwOnoQ@mail.gmail.com>
-Date: Wed, 21 Feb 2018 17:17:13 -0500
-From: Justin Bull <me@...tinbull.ca>
-To: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com,  fulldisclosure@...lists.org
-Subject: [CVE-2018-1000088] Stored XSS vulnerability in Doorkeeper gem v2.1.0 - v4.2.5
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/28/7
+Message-ID: <20180828125140.GA14413@kroah.com>
+Date: Tue, 28 Aug 2018 14:51:40 +0200
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel: CVE-2018-14619 kernel: crash (possible privesc) in kernel crypto subsystem.
 Content-Type: text/plain; charset=utf-8
 
-Hey everyone,
+On Tue, Aug 28, 2018 at 04:49:14PM +1000, Wade Mealing wrote:
+> Gday,
+> 
+> Syzkaller/syzbot found a use-after-free bug in the cryptographic
+> subsystem of the Linux kernel [1], that can be used to panic the
+> system and possibly escalate privileges.
 
-A security bulletin for you.
+Are we seriously now going to be assigning cves to everything that
+syzbot finds?  If so, great, this is going to be fun!
 
-Software:
----------
-Doorkeeper (https://github.com/doorkeeper-gem/doorkeeper)
+If not, why this specific patch?  What makes it specia from the hundreds
+of other syzbot finds that have been fixed (and not fixed yet)?  This
+seems like an odd choice, given:
 
-Description:
-------------
-Doorkeeper is an OAuth 2 provider for Rails written in Ruby.
+> The bug was introduced in commit 72548b093ee3, and has been addressed
+> in b32a7dc8aef1882fbf983eb354837488cc9d54dc, a reproducer is available
+> on the tail end of  syzbots email to kernel list (
+> https://lkml.org/lkml/2017/11/27/866 ).  Most RHEL kernels are not
+> affected as they do not have the feature, but it does affect the
+> kernel-alt package (the 4.11 based kernel for 64-bit ARM , IBM POWER9
+> (little endian ) and IBM z Systems ).
 
-Affected Versions:
-------------------
-2.1.0 - 4.2.5
+So this was introduced in 4.14 which was released Nov 12, 2017, and
+fixed in 4.14.8 which was released on Dec 20, 2017.  A very small
+window, don't you think.  And one that happened almost a year ago.
 
-Fixed Versions:
----------------
-4.2.6 or later
+If RHEL is not exposed, why does Red Hat care about this?  Who cares
+about it?  Anyone running a 4.14.y kernel has had this fixed for a very
+long time ago, and anyone not running a 4.14.y kernel is not affected.
 
-Problem:
---------
-Stored XSS on the OAuth Client's name will cause users being prompted
-for consent via the "implicit" grant type to execute the XSS payload.
+Again, I'm really confused why this was chosen for a CVE here.  Care to
+explain it a bit better?  Is it because you have to have a CVE for every
+bugfix in the RHEL kernel-alt package (something that I would love to
+see happen for various other reasons...)
 
-The XSS attack could gain access to the user's active session,
-resulting in account compromise.
+thanks,
 
-Any user is susceptible if they click the authorization link for the
-malicious OAuth client. Because of how the links work, a user cannot
-tell if a link is malicious or not without first visiting the page
-with the XSS payload.
-
-The requirement for this attack to be dangerous in the wild is the
-software using Doorkeeper must allow regular users to create or edit
-OAuth client applications.
-
-If 3rd parties are allowed to create OAuth clients in the app using
-Doorkeeper, upgrade to the patched versions immediately.
-
-Additionally there is stored XSS in the native_redirect_uri form element.
-
-DWF has assigned CVE-2018-1000088.
-
-Solution:
----------
-Upgrade to Doorkeeper v4.2.6 or later
-
-Timeline:
----------
-2017-05-25: Discovered by Gauthier Monserand[0]
-2017-05:25: Fix prepared by Gauthier Monserand[1]
-2017-05-26: Maintainer released patched version
-2018-02-17: CVE requested
-2018-02-20: CVE assigned via DWF
-2018-02-21: Bulletin published[2]
-
-Acknowledgements:
------------------
-Credit to Gauthier Monserand (https://github.com/simkim) for finding
-and fixing this vulnerability.
-
-References:
------------
-[0]: https://github.com/doorkeeper-gem/doorkeeper/issues/969
-[1]: https://github.com/doorkeeper-gem/doorkeeper/pull/970
-[2]: https://blog.justinbull.ca/cve-2018-1000088-stored-xss-in-doorkeeper/
-
--- 
-Best Regards,
-Justin Bull
-PGP Fingerprint: E09D 38DE 8FB7 5745 2044 A0F4 1A2B DEAA 68FD B34C
+greg k-h
