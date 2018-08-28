@@ -1,29 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/15/10
-Message-ID: <cig332muvval9x.fsf@u44850075a5a8574dc8a1.ant.amazon.com>
-Date: Fri, 15 Jun 2018 12:43:06 -0700
-From: Anthony Liguori <aliguori@...zon.com>
-To: Alan Coopersmith <alan.coopersmith@...cle.com>, <oss-security@...ts.openwall.com>
-CC: <thomas.prescher@...erus-technology.de>, <jsteckli@...zon.de>
-Subject: Re: CVE-2018-3665 Lazy FPU Context Switching Information Leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/29/2
+Message-Id: <B78D2067-1658-4D7F-804C-FC6CE9A99680@apache.org>
+Date: Tue, 28 Aug 2018 15:39:51 -0700
+From: Bryan Call <bcall@...che.org>
+To: announce@...fficserver.apache.org, dev <dev@...fficserver.apache.org>, users <users@...fficserver.apache.org>, security@...fficserver.apache.org, oss-security@...ts.openwall.com
+Subject: [ANNOUNCE] Apache Traffic Server vulnerability with header variable access in the ESI plugin - CVE-2018-8040
 Content-Type: text/plain; charset=utf-8
 
-Alan Coopersmith <alan.coopersmith@...cle.com> writes:
+CVE-2018-8040: Apache Traffic Server vulnerability with header variable access in the ESI plugin
 
-> On 06/15/18 07:55 AM, Anthony Liguori wrote:
->> Working exploit code that leaks one XMM register for Linux and FreeBSD is 
->> attached to this email.
->
-> Did the attachment get lost on the way to the list?  I didn't see any.
+Reported By:
+Louis Dion-Marcil
 
-I should have scrubbed that language.  We won't be sending that until
-later this month.
+Vendor:
+The Apache Software Foundation
 
-Regards,
+Version Affected:
+ATS 6.0.0 to 6.2.2
+ATS 7.0.0 to 7.1.2
 
-Anthony Liguori
+Description:
+Pages that are rendered using the ESI plugin can have access to the cookie header when the plugin is configure not to allow access.
 
->
-> -- 
-> 	-Alan Coopersmith-               alan.coopersmith@...cle.com
-> 	 Oracle Solaris Engineering - https://blogs.oracle.com/alanc
+Mitigation:
+6.x users should upgrade to 6.2.3 or later versions
+7.x users should upgrade to 7.1.3 or later versions
+
+References:
+	Downloads:
+		https://trafficserver.apache.org/downloads
+	Github Pull Request:
+		https://github.com/apache/trafficserver/pull/3926
+	CVE:
+		https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-8040
+
+-Bryan
+
+
+
