@@ -1,51 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/11/3
-Message-ID: <1052-1515706382.849134@g0OE.W9FL.fhCU>
-Date: Thu, 11 Jan 2018 21:33:02 +0000
-From: halfdog <me@...fdog.net>
-To: oss-security@...ts.openwall.com
-Subject: util-linux mount/unmount ASLR bypass via environment variable
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/29/6
+Message-Id: <A9E2B7B3-FCD2-4439-8B86-21C3B1BD5339@apache.org>
+Date: Tue, 28 Aug 2018 17:17:01 -0700
+From: Bryan Call <bcall@...che.org>
+To: users <users@...fficserver.apache.org>
+Cc: announce@...fficserver.apache.org, dev <dev@...fficserver.apache.org>, security@...fficserver.apache.org, oss-security@...ts.openwall.com
+Subject: Re: [ANNOUNCE] Apache Traffic Server vulnerability with header variable access in the ESI plugin - CVE-2018-8040
 Content-Type: text/plain; charset=utf-8
 
-Hello list,
+There was an error in the Version Affected section.  This also effects version 7.1.3 and users running 7.x should upgrade to 7.1.4 or later versions.
 
-Just FYI. The issue was not rated important, hence reported in
-public mailing list, see [0]. Copy of message:
+Thank you,
+
+-Bryan
 
 
-Cleaning up another issue, I noticed that I haven't reported this
-one yet. Debugging of libmount can be activated, also in SUID
-binaries, thus spilling out the heap addresses. Note that "CXT"
-structure contains function pointers to overwrite.
 
-Test:
-
-LIBMOUNT_DEBUG=all /bin/umount /
-
-Output:
-
-2401: libmount:      CXT: [0x562d3abb0760]: ----> allocate [RESTRICTED]
-2401: libmount:      CXT: [0x562d3abb0760]: umount: /
-2401: libmount:      CXT: [0x562d3abb0760]: umount: lookup FS for '/'
-2401: libmount:      CXT: [0x562d3abb0760]: checking for writable tab files
-2401: libmount:    UTILS: utab: /run/mount/utab
-2401: libmount:    CACHE: [0x562d3abb1950]: alloc
-2401: libmount:    CACHE: [0x562d3abb1950]: canonicalize path /
-2401: libmount:    CACHE: [0x562d3abb1950]: add entry [ 1] (path): /: /
-2401: libmount:      CXT: [0x562d3abb0760]: tabfilter ENABLED!
-2401: libmount:      TAB: [0x562d3abb35b0]: alloc
-...
-
-The output can easily be used by creating a local domain socket
-with only 4k buffer size, filling it up until writes are blocking
-and then start umount with that socket as stdout. This allows
-race-free reading of the address output before umount accesses
-other user-controlled resource. Thus any error during the downstream
-procedure creating some kind of write-where vulnerability will
-always find the correct target.
-
-hd
-
-[0] https://www.spinics.net/lists/util-linux-ng/msg14978.html
+> On Aug 28, 2018, at 3:39 PM, Bryan Call <bcall@...che.org> wrote:
+> 
+> CVE-2018-8040: Apache Traffic Server vulnerability with header variable access in the ESI plugin
+> 
+> Reported By:
+> Louis Dion-Marcil
+> 
+> Vendor:
+> The Apache Software Foundation
+> 
+> Version Affected:
+> ATS 6.0.0 to 6.2.2
+> ATS 7.0.0 to 7.1.2
+> 
+> Description:
+> Pages that are rendered using the ESI plugin can have access to the cookie header when the plugin is configure not to allow access.
+> 
+> Mitigation:
+> 6.x users should upgrade to 6.2.3 or later versions
+> 7.x users should upgrade to 7.1.3 or later versions
+> 
+> References:
+> 	Downloads:
+> 		https://trafficserver.apache.org/downloads
+> 	Github Pull Request:
+> 		https://github.com/apache/trafficserver/pull/3926
+> 	CVE:
+> 		https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-8040
+> 
+> -Bryan
+> 
+> 
+> 
 
 
