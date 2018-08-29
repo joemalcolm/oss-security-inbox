@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2633" "Thursday" "25" "April" "2019" "15:02:19" "+0200" "Solar Designer" "solar@openwall.com" "<20190425130218.GA10866@openwall.com>" "67" "Re: [oss-security] Linux kernel: no permission check during open() time of /proc/[pid]/maps in kernels < 3.18" nil nil nil "4" "2019042513:02:19" "[oss-security] Linux kernel: no permission check during open() time of /proc/[pid]/maps in kernels < 3.18" (number mark "U       solar@openwa Apr 25   67/2633  " thread-indent "\"Re: [oss-security] Linux kernel: no permission check during open() time of /proc/[pid]/maps in kernels < 3.18\"\n") "<20190425121236.GB9152@f195.suse.de>" ("<20190425121236.GB9152@f195.suse.de>") nil nil nil nil nil nil nil "Re: [oss-security] Linux kernel: no permission check during open() time of /proc/[pid]/maps in kernels < 3.18" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1244" "Tuesday" "28" "August" "2018" "17:17:01" "-0700" "Bryan Call" "bcall@apache.org" "<A9E2B7B3-FCD2-4439-8B86-21C3B1BD5339@apache.org>" "52" "[oss-security] Re: [ANNOUNCE] Apache Traffic Server vulnerability with header variable access in the ESI plugin - CVE-2018-8040" nil nil nil "8" "2018082900:17:01" "[oss-security] Re: [ANNOUNCE] Apache Traffic Server vulnerability with header variable access in the ESI plugin - CVE-2018-8040" (number mark "U       bcall@apache Aug 28   52/1244  " thread-indent "\"[oss-security] Re: [ANNOUNCE] Apache Traffic Server vulnerability with header variable access in the ESI plugin - CVE-2018-8040\"\n") "<B78D2067-1658-4D7F-804C-FC6CE9A99680@apache.org>" ("<B78D2067-1658-4D7F-804C-FC6CE9A99680@apache.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15867 invoked by uid 550); 25 Apr 2019 13:04:27 -0000
+Received: (qmail 23994 invoked by uid 550); 29 Aug 2018 07:54:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,83 +12,73 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13867 invoked from network); 25 Apr 2019 13:02:33 -0000
-Date: Thu, 25 Apr 2019 15:02:19 +0200
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20190425130218.GA10866@openwall.com>
-References: <20190425121236.GB9152@f195.suse.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190425121236.GB9152@f195.suse.de>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Linux kernel: no permission check during open() time of /proc/[pid]/maps in kernels < 3.18
+Received: (qmail 19592 invoked from network); 29 Aug 2018 00:17:25 -0000
+From: Bryan Call <bcall@apache.org>
+Message-Id: <A9E2B7B3-FCD2-4439-8B86-21C3B1BD5339@apache.org>
+Content-Type: multipart/alternative;
+	boundary="Apple-Mail=_E2F3D798-0469-47C1-8090-6FF4DF844652"
+Mime-Version: 1.0 (Mac OS X Mail 11.5 \(3445.9.1\))
+Date: Tue, 28 Aug 2018 17:17:01 -0700
+In-Reply-To: <B78D2067-1658-4D7F-804C-FC6CE9A99680@apache.org>
+Cc: announce@trafficserver.apache.org,
+ dev <dev@trafficserver.apache.org>,
+ security@trafficserver.apache.org,
+ oss-security@lists.openwall.com
+To: users <users@trafficserver.apache.org>
+References: <B78D2067-1658-4D7F-804C-FC6CE9A99680@apache.org>
+X-Mailer: Apple Mail (2.3445.9.1)
+Subject: [oss-security] Re: [ANNOUNCE] Apache Traffic Server vulnerability with header
+ variable access in the ESI plugin - CVE-2018-8040
 
-On Thu, Apr 25, 2019 at 02:12:36PM +0200, Matthias Gerstner wrote:
-> I stumbled over a leak of memory mappings for arbitrary processes in
-> kernels older than version 3.18.
-> 
-> As it turns out the permissions check for the pseudo file in
-> /proc/[pid]/maps in affected kernels is performed not during open() time
-> but during read() time. This allows an unprivileged user to open a valid
-> file descriptor for these maps files and pass it to privileged programs
-> like setuid root binaries or D-Bus services running as root that support
-> file descriptor passing in their interface.
-> 
-> The privileged program needs behave in a way that the passed file
-> descriptor is read() with root premissions and the content is passed
-> back to the unprivileged user in some way.
+--Apple-Mail=_E2F3D798-0469-47C1-8090-6FF4DF844652
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=us-ascii
 
-Looks like mostly a rediscovery of what was brought up in here by
-Jason A. Donenfeld and further discussed with Djalal Harouni in 2012:
+There was an error in the Version Affected section.  This also effects vers=
+ion 7.1.3 and users running 7.x should upgrade to 7.1.4 or later versions.
 
-https://www.openwall.com/lists/oss-security/2012/02/08/2
+Thank you,
 
-and had already been fixed in grsecurity, given that I fixed it with:
+-Bryan
 
-* Sat Feb 25 2012 Solar Designer <solar-at-owl.openwall.com> 2.6.18-274.18.1.el5.028stab098.1.owl1
-[...]
-- Introduced protection against unintended self-read by a SUID/SGID program of
-/proc/<pid>/mem and /proc/<pid>/*maps files, based on approaches taken in
-recent grsecurity patches.
 
-+++ linux-2.6.18-431.el5.028stab123.1-owl/fs/proc/task_mmu.c	2018-05-20 16:37:29 +0000
-@@ -166,7 +166,7 @@ static int show_map_internal(struct seq_
- 	struct proc_maps_private *priv = m->private;
- 	struct task_struct *task = priv->task;
- #ifdef __i386__
--	struct mm_struct *tmm = get_task_mm(task);
-+	struct mm_struct *tmm;
- #endif
- 	struct vm_area_struct *vma = v;
- 	struct mm_struct *mm = vma->vm_mm;
-@@ -177,6 +177,13 @@ static int show_map_internal(struct seq_
- 	dev_t dev = 0;
- 	int len;
- 
-+	if (current->exec_id != m->exec_id)
-+		return 0;
-+
-+#ifdef __i386__
-+	tmm = get_task_mm(task);
-+#endif
-+
- 	if (file) {
- 		struct inode *inode = vma->vm_file->f_dentry->d_inode;
- 		dev = inode->i_sb->s_dev;
 
-Was this not fixed upstream until the permissions check on open() was
-added in 2014?  I guess it also wasn't fixed in RHEL, since I carried
-the above patch hunk into 2018+ as you can see (or maybe it became
-redundant with RHEL's different fix for the issue - I don't recall).
+> On Aug 28, 2018, at 3:39 PM, Bryan Call <bcall@apache.org> wrote:
+>=20
+> CVE-2018-8040: Apache Traffic Server vulnerability with header variable a=
+ccess in the ESI plugin
+>=20
+> Reported By:
+> Louis Dion-Marcil
+>=20
+> Vendor:
+> The Apache Software Foundation
+>=20
+> Version Affected:
+> ATS 6.0.0 to 6.2.2
+> ATS 7.0.0 to 7.1.2
+>=20
+> Description:
+> Pages that are rendered using the ESI plugin can have access to the cooki=
+e header when the plugin is configure not to allow access.
+>=20
+> Mitigation:
+> 6.x users should upgrade to 6.2.3 or later versions
+> 7.x users should upgrade to 7.1.3 or later versions
+>=20
+> References:
+> 	Downloads:
+> 		https://trafficserver.apache.org/downloads
+> 	Github Pull Request:
+> 		https://github.com/apache/trafficserver/pull/3926
+> 	CVE:
+> 		https://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2018-8040
+>=20
+> -Bryan
+>=20
+>=20
+>=20
 
-The idea of passing the fd to D-Bus services, etc. might be a new one,
-but the fix above should be sufficient against that as well due to the
-exec_id's being globally unique (except between fork-without-exec
-sibling processes):
 
- 		/* execve success */
-+		current->exec_id = atomic64_inc_return(&global_exec_counter);
-
-Alexander
+--Apple-Mail=_E2F3D798-0469-47C1-8090-6FF4DF844652--
