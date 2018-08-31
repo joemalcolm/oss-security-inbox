@@ -1,16 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/25/2
-Message-ID: <20180425085700.kepnvaabam4tno52@f195.suse.de>
-Date: Wed, 25 Apr 2018 10:57:01 +0200
-From: Matthias Gerstner <mgerstner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/01/1
+Message-ID: <a52da3a0-e371-66ca-acc6-72b4fc922381@johannes-bauer.com>
+Date: Fri, 31 Aug 2018 22:25:50 +0200
+From: zugtprgfwprz@...rnkuller.de
 To: oss-security@...ts.openwall.com
-Subject: Re: ktexteditor / Kate local privilege escalation (CVE-2018-10361)
+Subject: Re: Travis CI MITM RCE
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Apr 24, 2018 at 01:11:09PM +0200, Matthias Gerstner wrote:
+On 31.08.2018 14:18, vines@...eup.net wrote:
+>>
+>> I agree about the "key ID" part, but not about the "fingerprint" part.
+>> Pinning a cryptographic hash over a public key isn't a security
+>> antipattern by any strech of the imagination. Sure, you could argue that
+>> the SHA-1 used by GPG isn't state-of-the-art anymore, but we're not
+>> talking about collision attacks, but second preimage attacks. Far worse
+>> for the attacker.
+>>
+> True, yes, harder to brute-force a identical private key, than a key with an identical fingerprint.
 
-> I just informed upstream about it and will obtain a CVE soon.
+Hmm, not so sure. Let's say we're talking about RSA-4096, then we have a
+security level of around 144 bit. Bruteforcing a second preimage SHA-1
+(pretending it's an ideal hash function for a second) would have
+complexity of around 159 bit. I.e., even for RSA-4096, it would be
+easier to create the *identical* private key by factoring the modulus
+(thus obviously creating a keypair with the identical fingerprint) than
+just randomly generating keypairs and checking their private key hash.
 
-This was assigned CVE-2018-10361.
+I.e., my point was that for a given key that's uploaded with a fixed
+fingerprint, we're not talking about 2^(b/2) collision complexity, but
+2^(b-1) second preimage complexity.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+> However, if someone hadn't considered the possibility of a SHA1 collision attack, and a signature verification fails, despite the fingerprint they see matching, what % of GPG users would skip signature verification?
+> Perhaps due to confusion/self-doubt/inexperience/other.
+> Admittedly, this could be stepping into the realm of social engineering.
+
+I think the attacker model that Daniel referred to was that someone
+states "my key's fingerprint is XYZ" and someone downloading a forged,
+same-fingerprint key from the keyserver.
+
+Cheers,
+Joe
+
+-- 
+"A PC without Windows is like a chocolate cake without mustard."
