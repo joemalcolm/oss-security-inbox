@@ -1,21 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/03/1
-Message-ID: <20180703081145.GA8116@f195.suse.de>
-Date: Tue, 3 Jul 2018 10:11:45 +0200
-From: Matthias Gerstner <mgerstner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: accountsservice: insufficient path check in user_change_icon_file_authorized_cb()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/31/2
+Message-ID: <87d0ty355b.fsf@fifthhorseman.net>
+Date: Fri, 31 Aug 2018 11:52:16 -0400
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: zugtprgfwprz@...rnkuller.de, oss-security@...ts.openwall.com
+Subject: Re: Travis CI MITM RCE
 Content-Type: text/plain; charset=utf-8
 
-> It might be a good idea to double-check that the result of
-> g_file_get_path() starts with "/", doesn't contain "/../" and (just for
-> completeness) doesn't end with "/..".
+On Thu 2018-08-30 18:13:34 +0200, zugtprgfwprz@...rnkuller.de wrote:
+> I agree about the "key ID" part, but not about the "fingerprint" part.
+> Pinning a cryptographic hash over a public key isn't a security
+> antipattern by any strech of the imagination. Sure, you could argue that
+> the SHA-1 used by GPG isn't state-of-the-art anymore, but we're not
+> talking about collision attacks, but second preimage attacks. Far worse
+> for the attacker.
+>
+> The way you phrased it, however, all applications of fingerprints/hashes
+> would be broken (SSH fingerprints, HPKP, etc.), regardless of the hash
+> function they use.
 
-I tested the patch initially and and an isolated test case shows that it
-does cover all these cases. No system calls appear to be performed.
+sorry, i think i wasn't clear enough about my complaint.  I'm not
+claiming that fingerprints are broken, or that second preimage attacks
+against sha-1 are possible today.  I'm saying that they're ill-suited to
+many of the specific use cases where they show up.
 
-Regards
+If all i send you is a fingerprint, you *still* need to get the public
+key somewhere.  This is a point of potential failure.
 
-Matthias
+In nearly every case where we're talking about automated signature
+checking, the cost of shipping the public key instead of (or in addition
+to) the fingerprint is negligible.  and shipping just the fingerprint
+introduces robustness and reliability problems for the signature
+verification.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+This is not to say that these sorts of things shouldn't consider looking
+for updates to the keys that they have -- revocation checks, new
+subkeys, etc all might be useful in some contexts.  But there's no good
+reason to ship a sophisticated, signature-verifying package with just a
+fingerprint in it, when you could ship the whole key instead.
+
+so, where are fingerprints useful?  they're useful in *extremely
+bandwidth-limited* cases, such as situations dealing with human
+attention spans (e.g. fingerprint verification) or technically or
+socially constrained channels like twitter, visible e-mail .signatures,
+or SMS.  They're also useful internally in programs that deal with many
+keys, as concise references to known keys, or placeholders for unknown
+keys.
+
+Fingerprints are even arguably too long for most human attention spans,
+so we need additional user research to look into better ways to do
+verification that involves humans.
+
+     --dkg
+
+Download attachment "signature.asc" of type "application/pgp-signature" (228 bytes)
