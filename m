@@ -1,24 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/23/5
-Message-ID: <f1f21888-b738-306f-a064-9c3fc6cc764b@redhat.com>
-Date: Thu, 23 Aug 2018 08:12:52 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com, Tavis Ormandy <taviso@...gle.com>
-Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/02/1
+Message-ID: <nycvar.YSQ.7.76.1809030005140.14426@xnncv>
+Date: Mon, 3 Sep 2018 00:10:05 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Andy Lutomirski <luto@...nel.org>,  Mika Penttilä <mika.penttila@...tfour.com>
+Subject: CVE-2018-10853 kernel: kvm: guest userspace to guest kernel write
 Content-Type: text/plain; charset=utf-8
 
-On 08/23/2018 06:24 AM, Tavis Ormandy wrote:
-> I think we should kill (or at least trim the mime types)
-> in /usr/share/thumbnailers/evince.thumbnailer.
+   Hello,
 
-Note that this may or may not work, depending on whether the MIME type 
-detection is identical between the selection of the evince and the 
-selection of the Ghostscript backend in evince itself.
+A flaw was found in the way Linux kernel KVM hypervisor emulated instructions 
+such as sgdt/sidt/fxsave/fxrstor. It did not check current privilege(CPL) 
+level while emulating unprivileged instructions.
 
-I remember a case from several years ago where an ImageMagick bug was 
-still exploitable via mail user agents even though the problematic image 
-format was not listed in /etc/mailcap.  ImageMagick did its own format 
-detection back then, so all you had to do was to change the file extension.
+An unprivileged guest user/process could use this flaw to potentially escalate 
+privileges inside guest.
 
-Thanks,
-Florian
+Upstream patch:
+   -> https://git.kernel.org/linus/3c9fa24ca7c9c47605672916491f79e8ccacb9e6
+
+Issue introduced in: (kernel v4.10+)
+   -> https://git.kernel.org/linus/129a72a0d3c8e139a04512325384fe5ac119e74
+
+This issue was reported by Andy Lutomirski and Mika Penttilä. CVE-2018-10853 
+assigned by Red Hat Inc.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
