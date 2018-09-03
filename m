@@ -1,34 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/26/2
-Message-ID: <20180726095057.796664f1@computer>
-Date: Thu, 26 Jul 2018 09:50:57 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/03/1
+Message-ID: <CALJHwhTNDC+Mnj9Rhg5CeTUBgXgc2v83hdMUAXjDH9Uh3g=MeA@mail.gmail.com>
+Date: Mon, 3 Sep 2018 19:26:53 +1000
+From: Wade Mealing <wmealing@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Squirrelmail XSS security fix
+Subject: Re: Linux kernel: CVE-2018-14619 kernel: crash (possible privesc) in kernel crypto subsystem.
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+> Are we seriously now going to be assigning cves to everything that
+> syzbot finds?
 
-I recently posted info about several XSS vulns in squirrelmail [1] to
-this list.
+It sure is, lets hope it drives up the quality of the code and ensures
+that higher
+quality code is accepted upstream. A man can dream right ?
 
-Given its upstream state I considered forking squirrelmail, though I
-reached out to the maintainer and he claims he's still actively working
-on it. I sent him a couple of patches, but they're not applied yet.
+You've had questions about why I bring up flaws regarding older code,
+such as that tty
+(http://seclists.org/oss-sec/2015/q2/560) exploit so I'm glad  to have
+this chance to spend
+some time explaining you why I work in this way.
 
-For now I'm sharing the patches I use on my own installations:
-https://github.com/hannob/squirrelpatches
+> If not, why this specific patch?  What makes it special from the hundreds
+> of other syzbot finds that have been fixed (and not fixed yet)?  This
+> seems like an odd choice, given:
 
-This contains a security fix for the known XSS issues and hopefully a
-few more (though I make no claims that this is safe from XSS now, I'd
-appreciate if others could check). It also contains patches for PHP
-warnings and issues with PHP 7.2.
+This flaw does crash the system, its easy for the user to do so, and
+it did crash
+our build-servers during testing.
 
-[1] https://sourceforge.net/p/squirrelmail/bugs/2831/
+So, its not necessarily _this patch_ its patches that either affect
+Red Hat as a product
+or customers demand. I don't get a choice in what is a security flaw
+and what is not, local denial of service
+is something that admins care about.  If it comes across my plate and
+it fits the definition of a flaw then
+it is something that I need to consider.
 
--- 
-Hanno Böck
-https://hboeck.de/
+It would be easier for me if when patches were applied that the
+developer would go through the security-flaw process
+of getting a CVE number, posting to the relevant security list, etc,
+maybe oss-security wont
+Unfortunately its not fun, its not glorious and  I end up explaining
+why I'm fixing older code to you, all
+of these justifications I'm sure you're aware of.
 
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+Having those who create the patches do some of the leg-work would make my job
+easier and correctly reflect the state of the developers security
+posture, changing other peoples process
+and asking them to do additional work of classifying a flaw/problem is
+likely not going to happen,
+which is why we are in the state we are in.
+
+> If RHEL is not exposed, why does Red Hat care about this?  Who cares
+> about it?  Anyone running a 4.14.y kernel has had this fixed for a very
+> long time ago, and anyone not running a 4.14.y kernel is not affected.
+
+The kernel-alt is an alternative kernel based on 4.14 which Red Hat ships for
+certain architectures (See
+https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html-single/7.5_release_notes/index#chap-Red_Hat_Enterprise_Linux-7.5_Release_Notes-Architectures
+).   Its a very similar (but not identical) build config to standard
+Red Hat Enterprise
+Linux based on 4.14.
+
+While not many customers do run this kernel it is something that Red
+Hat ships.  While the flaw/problem no longer affects
+your kernel, that is okay! I often investigate upstream bugs that
+don't affect the the Red Hat kernels and move on with my life.
+
+These older releases though, is something that some users do care
+about.  I think it is worse if I silently ignore a local DOS.
+Upstream maintainers may have no obligation or interest in doing the
+legwork for requesting and classifying this but it is my job.
+
+> Again, I'm really confused why this was chosen for a CVE here.
+> Care to explain it a bit better?
+
+I'd love to see upstream classify and get CVE's for their patches, we
+both gotta work within reality though ;)
+
+The obvious technical reason is because it allows a local user to
+panic the system,
+when a known security fix goes into a product it requires a CVE as
+part of our process.
+
+> Is it because you have to have a CVE for every
+> bugfix in the RHEL kernel-alt package (something that I would love to
+> see happen for various other reasons...)
+
+CVE's are assigned for bugs that have an security impact (DOS,
+information leak or privesc).  Not every bug
+is a security bug but it is clear that some bugs have a larger
+financial or stability concern than others.  I  can only work
+on issues that I'm made aware of, this is one of them.
+
+Previous responses to my mails show that you dislike posts made by me
+about older code
+(beware as more are coming!, redirect to /dev/null if its too
+upsetting), there is nothing that I can do about that.
+The responsibility that I have is to customers and not to kernel
+maintainers. The day that the kernel stops
+having these classes of flaws is the day that I won't have a job and
+you wont need to worry.
+
+I'd be happy to talk about this further, my job requirements however
+are not flexible.
+
+Thanks,
+
+Wade Mealing
