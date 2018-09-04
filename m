@@ -1,64 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/18/1
-Message-ID: <4fada0db-0ec8-087e-e44f-14accbc7ac6a@redhat.com>
-Date: Fri, 18 May 2018 14:04:23 +0100
-From: Luke Hinds <lhinds@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: [opendaylight-security-note]: SDNInterfaceapp SQL injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/04/6
+Message-ID: <CAJ_zFkLmua6XK9iRV-TRQsXKXo=s9Y32FQjOM5UB_UPrrNsAxw@mail.gmail.com>
+Date: Tue, 4 Sep 2018 13:08:57 -0700
+From: Tavis Ormandy <taviso@...gle.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
 Content-Type: text/plain; charset=utf-8
 
-OpenDayLight Security Note
+On Tue, Sep 4, 2018 at 1:03 PM Brandon Perry <bperry.volatile@...il.com>
+wrote:
 
-cve: CVE-2018-1132
+>
+>
+> > On Sep 4, 2018, at 2:59 PM, Tavis Ormandy <taviso@...gle.com> wrote:
+> >
+> > OK, well, the fixes missed 9.24 so vendors will have to either ship
+> patches
+> > once they land or wait for 9.25.
+> >
+> > $ ./gs -v
+> > GPL Ghostscript 9.24 (2018-09-03)
+> > Copyright (C) 2018 Artifex Software, Inc.  All rights reserved.
+> > $ ./gs -q -dSAFER -sDEVICE=ppmraw -f testcase.ps
+> > uid=1000(taviso) gid=1000(taviso)
+> >
+> > Let me know if anyone wants that testcase.
+>
+> Hey Tavis, could I have a copy of the test case please? Thanks so much.
+>
 
-jira: https://jira.opendaylight.org/browse/SDNINTRFAC-14
+Sure, here it is.
 
-advisory-date: 18/05/18
+Thanks, Tavis.
 
-Summary
--------
+Content of type "text/html" skipped
 
-SQL injection in the component database(SQLite) without authenticating
-to the controller or SDNInterfaceapp.
-
-Discussion
-----------
-
-Feng Xiao and Jianwei Huang from Wuhan University discovered a
-vulnerability in SDNInterfaceapp (SDNI).
-
-Attackers can SQL inject the component's database(SQLite) without
-authenticating to the controller or SDNInterfaceapp.
-
-The bug can be found in
-/impl/src/main/java/org/opendaylight/sdninterfaceapp/impl/database/SdniDataBase.java
-(line 373~391)
-
-The SDNI concats port information to build an insert SQL query, and it
-executes the query in SQLite.
-
-However, in line 386, the portName is a string that can be customized by
-switches. Since SQLite supports multiple sql queries in one run,
-attackers can customize the port name to inject another SQL if they
-compromise or forge a switch.
-
-For example, set portName as:
-");drop table NAME;//
-
-Recommended Actions
--------------------
-
-The SDNI project is no longer maintained nor developed since the Carbon
-release of OpenDayLight and as the aforementioned vulnerability was
-reported after Carbons last service release (SR4) was shipped, the
-decision was made to not release a patch.
-
-The security team instead recommends that users upgrade to a later release.
-
-Luke Hinds
-OpenDayLight Security Manager
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+View attachment "bug699714.txt" of type "text/plain" (363 bytes)
