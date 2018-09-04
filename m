@@ -1,34 +1,126 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/23/9
-Message-ID: <87va5su4lk.fsf@oldenburg.str.redhat.com>
-Date: Tue, 23 Oct 2018 16:20:39 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com,  Andrew Sandoval <ASandoval@...root.com>
-Subject: Re: GCC Compiler Induced Vulnerability - affects programs compiled with GCC 7 and 8 containing nested functions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/04/1
+Message-ID: <1340116763.28074569.1536049871778.JavaMail.zimbra@redhat.com>
+Date: Tue, 4 Sep 2018 04:31:11 -0400 (EDT)
+From: Siddharth Sharma <siddharth@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: glusterfs: multiple flaws
 Content-Type: text/plain; charset=utf-8
 
-* Solar Designer:
+Hello,
 
-> 3. Andrew writes: "Most if not all C++ compilers are able to produce
-> code from lambdas (similar to nested functions) without compromising the
-> call stack."  It'd be helpful to explore this more and see whether
-> there's any fundamental difference preventing reuse of the same approach
-> (whatever it is) for nested functions as well.  I'd appreciate
-> discussion of this on oss-security.  My guess is this probably doesn't
-> fit in the existing ABI for C, but I might be wrong.
+We were informed about several security flaws affecting glusterfs.
+All of the following bugs were reported by Michael Hanselmann (hansmi.ch).
 
-std::function in C++ isn't just a code pointer.  It's more like a
-function descriptor on some architectures, so you don't need to generate
-a trampoline because the called code can load ancilarry information
-(such as the static chain pointer or other information to access
-captured variables), without having to encode this in the pointer
-itself.
+CVE count: 12
 
-There are other ways to produce trampolines which do not need an
-executable stack, and even ways that avoid code generation at run time
-(such as pre-cooked array of trampoline code that gets mapped multiple
-times as needed).
 
-Thanks,
-Florian
+CVE-2018-10904
+==============
+
+It was found that glusterfs server does not properly sanitize file paths in the 
+"trusted.io-stats-dump" extended attribute which is used by the 
+"debug/io-stats" translator. An attacker can use this flaw to create files and 
+execute arbitrary code. To exploit this, the attacker would require sufficient 
+access to modify the extended attributes of files on a gluster volume.
+
+
+CVE-2018-10907
+==============
+
+It was found that glusterfs server is vulnerable to mulitple stack based buffer 
+overflows due to functions in server-rpc-fopc.c allocating fixed size buffers 
+using 'alloca(3)'. An authenticated attacker could exploit this by mounting a 
+gluster volume and sending a string longer that the fixed buffer size to cause 
+crash or potential code execution.
+
+
+CVE-2018-10911
+==============
+
+A flaw was found in dict.c:dict_unserialize function of glusterfs, 
+dic_unserialize function does not handle negative key length values. An attacker 
+could use this flaw to read memory from other locations into the stored dict 
+value.
+
+
+CVE-2018-10913
+==============
+An information disclosure vulnerability was discovered in glusterfs server. An 
+attacker could issue a xattr request via glusterfs FUSE to determine the 
+existence of any file.
+
+
+CVE-2018-10914
+==============
+
+It was found that an attacker could issue a xattr request via glusterfs FUSE to 
+cause gluster brick process to crash which will result in a remote denial of 
+service. If gluster multiplexing is enabled this will result in a crash of 
+multiple bricks and gluster volumes.
+
+
+CVE-2018-10923
+==============
+
+It was found that the "mknod" call derived from mknod(2) can create files 
+pointing to devices on a glusterfs server node. An authenticated attacker could 
+use this to create an arbitrary device and read data from any device attached 
+to the glusterfs server node.
+
+
+CVE-2018-10924
+==============
+
+It was discovered that fsync(2) system call in glusterfs client code leaks 
+memory. An authenticated attacker could use this flaw to launch a denial of 
+service attack by making gluster clients consume memory of the host machine.
+
+
+CVE-2018-10926
+==============
+
+A flaw was found in RPC request using gfs3_mknod_req supported by glusterfs 
+server. An authenticated attacker could use this flaw to write files to an 
+arbitrary location via path traversal and execute arbitrary code on a glusterfs 
+server node.
+
+
+CVE-2018-10927
+==============
+
+A flaw was found in RPC request using gfs3_lookup_req in glusterfs server. An 
+authenticated attacker could use this flaw to leak information and execute 
+remote denial of service by crashing gluster brick process.
+
+
+CVE-2018-10928
+==============
+
+A flaw was found in RPC request using gfs3_symlink_req in glusterfs server 
+which allows symlink destinations to point to file paths outside of the gluster 
+volume. An authenticated attacker could use this flaw to create arbitrary 
+symlinks pointing anywhere on the server and execute arbitrary code on 
+glusterfs server nodes.
+
+
+CVE-2018-10929
+==============
+
+A flaw was found in RPC request using gfs2_create_req in glusterfs server. An 
+authenticated attacker could use this flaw to create arbitrary files and 
+execute arbitrary code on glusterfs server nodes.
+
+
+CVE-2018-10930
+==============
+
+A flaw was found in RPC request using gfs3_rename_req in glusterfs server. An 
+authenticated attacker could use this flaw to write to a destination outside 
+the gluster volume.
+
+
+Respectfully,
+-----------------------------------------------------------------
+Siddharth Sharma / Red Hat Product Security / Key ID : 0xD9F6489A      
+Fingerprint  :  6F04 C684 A49C E4CE 8148 E841 CD6F 8E55 D9F6 489A
