@@ -1,64 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/24/1
-Message-ID: <CAGqxZSVqxSd27nWYFgicNVVMD8z=WXGZohsyX5xJ-Hh8p1643g@mail.gmail.com>
-Date: Mon, 24 Sep 2018 09:36:51 +0800
-From: Terry Chia <terrycwk1994@...il.com>
-To: Ariel Zelivansky <ariel.zelivans@...il.com>
-Cc: oss-security@...ts.openwall.com, Alex R <alexr@...che.org>
-Subject: Re: CVE-2018-8023: A remote attacker can exploit a vulnerability in the JWT implementation to gain unauthenticated access to Mesos Executor HTTP API.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/05/4
+Message-ID: <20180905150128.5f9430f4@jabberwock.cb.piermont.com>
+Date: Wed, 5 Sep 2018 15:01:28 -0400
+From: "Perry E. Metzger" <perry@...rmont.com>
+To: Tavis Ormandy <taviso@...gle.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
 Content-Type: text/plain; charset=utf-8
 
-Hi Ariel,
-
-I believe the following commit contains the fix:
-https://github.com/apache/mesos/commit/2c282f19755ea7518caf6f43e729524b1c6bdb23
-
-Cheers,
-Terry
-
-On Sun, Sep 23, 2018 at 12:46 AM Ariel Zelivansky <ariel.zelivans@...il.com>
+On Wed, 5 Sep 2018 11:02:48 -0700 Tavis Ormandy <taviso@...gle.com>
 wrote:
+> I would like to re-emphasize that while Ghostscript is very capable
+> and mature software, I consider the -dSAFER sandbox to be a fragile
+> security boundary and that we should consider deprecating (or
+> minimizing the use of) untrusted postscript.
 
-> Hi,
->
-> I couldn't find the fix for this in the mesos repository and it is not
-> documented in the CHANGELOG, could someone direct me to the fixing
-> commit/patch?
->
-> Thanks
-> Ariel
->
-> On Fri, Sep 21, 2018 at 1:50 PM, Alex R <alexr@...che.org> wrote:
-> >
-> > Severity: Important
-> >
-> > Vendor:
-> > The Apache Software Foundation
-> >
-> > Versions Affected:
-> > Apache Mesos 1.4.0 to 1.6.0
-> > The unsupported Apache Mesos pre-1.4.0 releases may be also affected.
-> >
-> > Description:
-> > Apache Mesos can be configured to require authentication to call the
-> > Executor HTTP API using JSON Web Token (JWT). The comparison of the
-> > generated HMAC value against the provided signature in the JWT
-> > implementation used is vulnerable to a timing attack because instead
-> > of a constant-time string comparison routine a standard `==` operator
-> > has been used. A malicious actor can therefore abuse the timing
-> > difference of when the JWT validation function returns to reveal the
-> > correct HMAC value.
-> >
-> > Mitigation:
-> > pre-1.4.x users should upgrade to at least 1.4.2
-> > 1.4.x users should upgrade to 1.4.2
-> > 1.5.x users should upgrade to 1.5.2
-> > 1.6.0 users should upgrade to 1.6.1
-> > 1.7.0-dev users should obtain Mesos 1.7.0
-> >
-> > Credit:
-> > This issue was discovered by Terry Chia (Ayrx).
-> >
-> > Alex on behalf of Mesos PMC
->
+I haven't been following the bugs in depth (just noticing the
+continuous stream of them arriving), but is the issue security flaws
+in just -dSAFER or is it overall security bugs? If it's the former,
+given how few things actually need any of the features past what
+-dSAFER offers, perhaps compiling the code by default without any such
+capabilities would work well? You can't run what isn't there.
 
+Perry
+-- 
+Perry E. Metzger		perry@...rmont.com
