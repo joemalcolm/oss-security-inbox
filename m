@@ -1,40 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/03/3
-Message-ID: <CAG_fn=Vht4hg7MQFkhkzP7MQrM5Rj3DHp1dr+n3WknWo=vXQ0g@mail.gmail.com>
-Date: Tue, 3 Jul 2018 17:13:14 +0200
-From: Alexander Potapenko <glider@...gle.com>
-To: Vladis Dronov <vdronov@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2018-1000204: Linux kernel 3.18 to 4.16 infoleak due to incorrect handling of SG_IO ioctl
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/06/2
+Message-ID: <20180905233220.GK1664@takahe.colorado.edu>
+Date: Wed, 5 Sep 2018 17:32:20 -0600
+From: Leonid Isaev <leonid.isaev@...a.colorado.edu>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jun 26, 2018 at 6:54 PM Vladis Dronov <vdronov@...hat.com> wrote:
->
-> Hello, Alexander,
->
-> > > I may not got smth correctly, but for now I do not see CVE-2018-1000204
-> > > as a security flaw and I believe a reject request to MITRE should be
-> > > issued.
-> > How do I proceed with this?
->
-> I believe it is: https://cveform.mitre.org/ -> Request an update to an existing
-> CVE Entry -> Rejection
-I've issued a reject request, but the CVE entry is currently marked as
-"Disputed" (http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-1000204)
-Not sure if that's the desired result.
-> Best regards,
-> Vladis Dronov | Red Hat, Inc. | Product Security Engineer
->
+On Wed, Sep 05, 2018 at 03:13:53PM -0400, Stuart Gathman wrote:
+> Postscript is a general purpose programming language.  It can do
+> anything to your system that a C or Python program could.  The SAFER
+> sandbox was supposed to be able to prevent untrusted postscript code
+> from doing serious damage.  But this series of bugs shows that the
+> sandbox is very flawed, and running untrusted postscript relying only on
+> the SAFER sandbox is a very bad idea.
+> 
+> What I need to study, is whether random PDF files from the internet (as
+> opposed to general postscript) are therefore malware vectors.  I thought
+> that PDF used a restricted subset of operations that "rendered" it not a
+> general purpose language and therefore "safe".   But if SAFER was the
+> implementation of that restricted subset, then all internet PDFs are
+> suspect.
 
+In addition to that, pdf files can contains things like javascript... There are
+some python tools to analyze them and detect (even obfuscated JS) -- see [1]
+and links therein. But yes, unless you generate a pdf/ps file yourself (e.g.
+with pdflatex or a graphics program), you should consider it untrusted.
+
+Cheers,
+L.
+
+[1] https://stackoverflow.com/questions/29342542/how-can-i-extract-a-javascript-from-a-pdf-file-with-a-command-line-tool
 
 -- 
-Alexander Potapenko
-Software Engineer
-
-Google Germany GmbH
-Erika-Mann-Straße, 33
-80636 München
-
-Geschäftsführer: Paul Manicle, Halimah DeLaine Prado
-Registergericht und -nummer: Hamburg, HRB 86891
-Sitz der Gesellschaft: Hamburg
+Leonid Isaev
