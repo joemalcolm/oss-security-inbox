@@ -1,34 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/24/7
-Message-Id: <E1ezZFo-00031p-ID@romulus.home.bitnebula.com>
-Date: Fri, 23 Mar 2018 21:50:00 -0500
-From: Daniel Ruggeri <druggeri@...che.org>
-To: announce@...pd.apache.org, oss-security@...ts.openwall.com, security@...pd.apache.org
-Subject: CVE-2018-1312: Weak Digest auth nonce generation in mod_auth_digest
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/05/2
+Message-ID: <176615811.10203974.1536137266179.JavaMail.zimbra@redhat.com>
+Date: Wed, 5 Sep 2018 04:47:46 -0400 (EDT)
+From: Vladis Dronov <vdronov@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2018-6554 and CVE-2018-6555: Linux kernel: irda memory leak and use after free
 Content-Type: text/plain; charset=utf-8
 
+> I've sent the fixes to the stable kernel list but I don't yet see my
+> submissions in the list archive on Spinics.
 
-CVE-2018-1312: Weak Digest auth nonce generation in mod_auth_digest
+For the sake of completeness:
 
-Severity: Low
+https://www.spinics.net/lists/stable/msg255033.html - [STABLE <= 4.13][PATCH 0/2] IRDA fixes
 
-Vendor: The Apache Software Foundation
+https://www.spinics.net/lists/stable/msg255029.html - [STABLE 4.14+][PATCH 0/2] IRDA fixes
 
-Versions Affected:
-httpd 2.2.0 to 2.4.29
-
-Description:
-When generating an HTTP Digest authentication challenge, the nonce
-sent to prevent reply attacks was not correctly generated using a
-pseudo-random seed.  In a cluster of servers using a common Digest
-authentication configuration, HTTP requests could be replayed across
-servers by an attacker without detection.
-               
-Mitigation:
-All httpd users should upgrade to 2.4.30 or later.
-
-Credit:
-The issue was discovered by Nicolas Daniels.
-
-References:
-https://httpd.apache.org/security/vulnerabilities_24.html
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
