@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5737" "Tuesday" "18" "August" "2015" "12:30:14" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<Pine.LNX.4.64.1508181228030.30440@beijing.mitre.org>" "204" "Re: [oss-security] CVE requests for Drupal contributed modules (from SA-CONTRIB-2015-100 to SA-CONTRIB-2015-131)" nil nil nil "8" "2015081816:30:14" "[oss-security] CVE requests for Drupal contributed modules (from SA-CONTRIB-2015-100 to SA-CONTRIB-2015-131)" (number mark "        cve-assign@m Aug 18  204/5737  " thread-indent "\"Re: [oss-security] CVE requests for Drupal contributed modules (from SA-CONTRIB-2015-100 to SA-CONTRIB-2015-131)\"\n") "<CAMYtjAoKVQONvGAAR57C7gWyzgy3VsdUdCt=Ezv7C3=xc8LWXg@mail.gmail.com>" ("<CAMYtjAoKVQONvGAAR57C7gWyzgy3VsdUdCt=Ezv7C3=xc8LWXg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["772" "Wednesday" "5" "September" "2018" "15:01:28" "-0400" "Perry E. Metzger" "perry@piermont.com" "<20180905150128.5f9430f4@jabberwock.cb.piermont.com>" "17" "Re: [oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?" "^Cc:" nil nil "9" "2018090519:01:28" "[oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?" (number mark "        perry@piermo Sep  5   17/772   " thread-indent "\"Re: [oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?\"\n") "<CAJ_zFkLvLBnn8OO6Q3JuqyvpRKoo=63wE1meqsT_jR4USir4DQ@mail.gmail.com>" ("<CAOVKCF0Qehz2q3m2vPSAr3vKRAxdHrTbnyk71ApFYnVXuZ-P6Q@mail.gmail.com>" "<alpine.GSO.2.20.1808221612460.22335@scrappy.simplesystems.org>" "<5b7dd771.1c69fb81.a6d8.6521@mx.google.com>" "<alpine.GSO.2.20.1808230753470.3841@freddy.simplesystems.org>" "<5b7eb7b2.1c69fb81.6b98e.519f@mx.google.com>" "<alpine.GSO.2.20.1808230958120.3639@scrappy.simplesystems.org>" "<CAJ_zFk+yb9zEXSqs2fdANvKkipg2yQAU89xKr1HMv-EJG2-vxg@mail.gmail.com>" "<20180828092517.eteuy4vzcpdpr62p@suse.de>" "<CAJ_zFk+dpXH453R0Hy5iHzYO2DkZjrBK3Sqh00Aie1z4=VDQOQ@mail.gmail.com>" "<CAJ_zFkLXTpjCijqNsHs0ZR4NdVwM+16ojUmxjYu0aZAgW=QhKQ@mail.gmail.com>" "<20180903105747.dihmczuqhl4kcnx5@suse.de>" "<CAJ_zFkLOkSWe8x5N9Mf9bx1J9+oLnzNtHzTfEDXg0JGPj7N7DA@mail.gmail.com>" "<CAJ_zFk++=BcFw0mU1NefSCkGqo3RzRjePQwPo0mCUzL=QeGBiA@mail.gmail.com>" "<F21BEEA3-4932-472D-9FEA-A318F543861D@gmail.com>" "<CAJ_zFkLmua6XK9iRV-TRQsXKXo=s9Y32FQjOM5UB_UPrrNsAxw@mail.gmail.com>" "<CAJ_zFkLvLBnn8OO6Q3JuqyvpRKoo=63wE1meqsT_jR4USir4DQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 17934 invoked by uid 550); 18 Aug 2015 16:30:28 -0000
+Received: (qmail 9241 invoked by uid 550); 5 Sep 2018 19:01:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,223 +11,50 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17906 invoked from network); 18 Aug 2015 16:30:27 -0000
-X-Authentication-Warning: beijing.mitre.org: coley owned process doing -bs
-X-X-Sender: coley@beijing.mitre.org
-In-Reply-To: <CAMYtjAoKVQONvGAAR57C7gWyzgy3VsdUdCt=Ezv7C3=xc8LWXg@mail.gmail.com>
-Message-ID: <Pine.LNX.4.64.1508181228030.30440@beijing.mitre.org>
-References: <CAMYtjAoKVQONvGAAR57C7gWyzgy3VsdUdCt=Ezv7C3=xc8LWXg@mail.gmail.com>
+Received: (qmail 9223 invoked from network); 5 Sep 2018 19:01:40 -0000
+Message-ID: <20180905150128.5f9430f4@jabberwock.cb.piermont.com>
+In-Reply-To: <CAJ_zFkLvLBnn8OO6Q3JuqyvpRKoo=63wE1meqsT_jR4USir4DQ@mail.gmail.com>
+References: <CAOVKCF0Qehz2q3m2vPSAr3vKRAxdHrTbnyk71ApFYnVXuZ-P6Q@mail.gmail.com>
+	<alpine.GSO.2.20.1808221612460.22335@scrappy.simplesystems.org>
+	<5b7dd771.1c69fb81.a6d8.6521@mx.google.com>
+	<alpine.GSO.2.20.1808230753470.3841@freddy.simplesystems.org>
+	<5b7eb7b2.1c69fb81.6b98e.519f@mx.google.com>
+	<alpine.GSO.2.20.1808230958120.3639@scrappy.simplesystems.org>
+	<CAJ_zFk+yb9zEXSqs2fdANvKkipg2yQAU89xKr1HMv-EJG2-vxg@mail.gmail.com>
+	<20180828092517.eteuy4vzcpdpr62p@suse.de>
+	<CAJ_zFk+dpXH453R0Hy5iHzYO2DkZjrBK3Sqh00Aie1z4=VDQOQ@mail.gmail.com>
+	<CAJ_zFkLXTpjCijqNsHs0ZR4NdVwM+16ojUmxjYu0aZAgW=QhKQ@mail.gmail.com>
+	<20180903105747.dihmczuqhl4kcnx5@suse.de>
+	<CAJ_zFkLOkSWe8x5N9Mf9bx1J9+oLnzNtHzTfEDXg0JGPj7N7DA@mail.gmail.com>
+	<CAJ_zFk++=BcFw0mU1NefSCkGqo3RzRjePQwPo0mCUzL=QeGBiA@mail.gmail.com>
+	<F21BEEA3-4932-472D-9FEA-A318F543861D@gmail.com>
+	<CAJ_zFkLmua6XK9iRV-TRQsXKXo=s9Y32FQjOM5UB_UPrrNsAxw@mail.gmail.com>
+	<CAJ_zFkLvLBnn8OO6Q3JuqyvpRKoo=63wE1meqsT_jR4USir4DQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-cc: Security Team <security@drupal.org>, cve-assign@mitre.org
-Date: Tue, 18 Aug 2015 12:30:14 -0400 (EDT)
-From: cve-assign@mitre.org
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: oss-security@lists.openwall.com
+Date: Wed, 5 Sep 2018 15:01:28 -0400
+From: "Perry E. Metzger" <perry@piermont.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE requests for Drupal contributed modules (from
- SA-CONTRIB-2015-100 to SA-CONTRIB-2015-131)
-To: oss-security@lists.openwall.com
-
-
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-
->Camtasia Relay - Cross Site Scripting (XSS) - SA-CONTRIB-2015-100
->https://www.drupal.org/node/2480241
-
-Use CVE-2015-5487.
-
->MailChimp - Cross Site Scripting (XSS) - SA-CONTRIB-2015-101
->https://www.drupal.org/node/2480253
-
-Use CVE-2015-5488.
-
->Smart Trim - Cross Site Scripting (XSS) - SA-CONTRIB-2015-102
->https://www.drupal.org/node/2480321
-
-Use CVE-2015-5489.
-
->Views - Access Bypass - SA-CONTRIB-2015-103
->https://www.drupal.org/node/2480327
-
-Use CVE-2015-5490.
-
->Dynamic display block - Access bypass - SA-CONTRIB-2015-104
->https://www.drupal.org/node/2484157
-
-Use CVE-2015-5491.
-
->Video Consultation - Cross Site Scripting (XSS) - SA-CONTRIB-2015-105
->https://www.drupal.org/node/2484195
-
-Use CVE-2015-5492.
-
->Entityform Block - Access Bypass - SA-CONTRIB-2015-106
->https://www.drupal.org/node/2484169
-
-Use CVE-2015-5493.
-
->Webform Matrix Component - Cross Site Scripting (XSS) - SA-CONTRIB-2015-107
->https://www.drupal.org/node/2484231
-
-Use CVE-2015-5494.
-
->Mobile sliding menu - Cross Site Scripting (XSS) - SA-CONTRIB-2015-108
->https://www.drupal.org/node/2484233
-
-Use CVE-2015-5495.
-
->pass2pdf - Information Disclosure - SA-CONTRIB-2015-109
->https://www.drupal.org/node/2492205
-
-Use CVE-2015-5496.
-
->Web Links - Cross Site Scripting (XSS) - SA-CONTRIB-2015-110
->https://www.drupal.org/node/2492209
-
-Use CVE-2015-5497.
-
->Shipwire - Cross Site Scripting (XSS) - SA-CONTRIB-2015-111
->https://www.drupal.org/node/2492243
-
-Use CVE-2015-5498.
-
->Navigate - Access Bypass - SA-CONTRIB-2015-112
-
-Use CVE-2015-5499.
-
->Navigate - Cross-site scripting - SA-CONTRIB-2015-112
->https://www.drupal.org/node/2492245
-
-Use CVE-2015-5500.
-
->Aegir - Code Execution Prevention - SA-CONTRIB-2015-113
->https://www.drupal.org/node/2492317
-
-Use CVE-2015-5501.
-
->Storage API - Access Bypass - SA-CONTRIB-2015-114
->https://www.drupal.org/node/2495903
-
-Use CVE-2015-5502.
-
->Chamilo integration - Open Redirect - SA-CONTRIB-2015-115
->https://www.drupal.org/node/2495931
-
-Use CVE-2015-5503.
-
->Novalnet Payment Module Ubercart - SQL Injection - SA-CONTRIB-2015-116
->https://www.drupal.org/node/2499787
-
->The module fails to sanitize a database query by not using the database
->API properly, thereby leading to a SQL Injection vulnerability.
-
-Use CVE-2015-5504.
-
->Since the affected path is not protected against CSRF, a malicious user can
->exploit this vulnerability by triggering a request to a specially-crafted URL.
-
-It is not clear to us if this CSRF issue is exploitable.  The attack
-seems to be against a Novalnet employee, but it is not known if
-Novalnet employees have access to the specific IP in a way that would
-make the exploit feasible.
-
->Novalnet Payment Module Drupal Commerce - SQL Injection - SA-CONTRIB-2015-117
->https://www.drupal.org/node/2499791
-
-We believe that the Novalnet Payment Module Drupal Commerce module may
-share a codebase with the Novalnet Payment Module Ubercart module in
-SA-CONTRIB-2015-116.
-
-If you can confirm that the vulnerable code in SA-CONTRIB-2015-117 is
-different from the code in SA-CONTRIB-2015-116, then we will issue a
-separate CVE ID.  Otherwise, use CVE-2015-5504 for this vulnerability.
-
->HTTP Strict Transport Security - Logical Error - SA-CONTRIB-2015-118
->https://www.drupal.org/node/2507563
-
-Use CVE-2015-5505.
-
->Apache Solr Real-Time - Access Bypass - SA-CONTRIB-2015-119
->https://www.drupal.org/node/2507581
-
-Use CVE-2015-5506.
-
->Inline Entity Form - Cross Site Scripting (XSS) - SA-CONTRIB-2015-120
->https://www.drupal.org/node/2507605
-
-Use CVE-2015-5507.
-
->The eXtensible Catalog (XC) Drupal Toolkit - Cross Site Request
->Forgery (CSRF) - SA-CONTRIB-2015-121
->https://www.drupal.org/node/2507619
-
-Use CVE-2015-5508.
-
->Administration Views - Access Bypass - SA-CONTRIB-2015-122
->https://www.drupal.org/node/250764
-
-Use CVE-2015-5509.
-
->jQuery Update - Open Redirect - SA-CONTRIB-2015-123
->https://www.drupal.org/node/2507729
->
->LABjs - Open Redirect - SA-CONTRIB-2015-124
->https://www.drupal.org/node/2507735
->
->Acquia Cloud Site Factory Connector - Open Redirect - SA-CONTRIB-2015-125
->https://www.drupal.org/node/2507741
-
-A new CVE might not be necessary.
-
-We believe that SA-CONTRIB-2015-123, SA-CONTRIB-2015-124, and
-SA-CONTRIB-2015-125 share the same codebase (Overlay JavaScript file)
-as the Overlay module in SA-CORE-2015-002, which has been issued
-CVE-2015-3233.
-
->Content Construction Kit (CCK) - Open Redirect - SA-CONTRIB-2015-126
->https://www.drupal.org/node/2507753
-
-Use CVE-2015-5510.
-
->HybridAuth Social Login - Access bypass - SA-CONTRIB-2015-127
->https://www.drupal.org/node/2511410
-
-Use CVE-2015-5511.
-
->me aliases - Access Bypass - SA-CONTRIB-2015-128
->https://www.drupal.org/node/2511424
-
-Use CVE-2015-5512.
-
->Shibboleth authentication - Cross Site Scripting (XSS) - SA-CONTRIB-2015-129
->https://www.drupal.org/node/2511518
-
-Use CVE-2015-5513.
-
->Migrate - Cross Site Scripting (XSS) - SA-CONTRIB-2015-130
->https://www.drupal.org/node/2516678
-
-Use CVE-2015-5514.
-
->Views Bulk Operations - Access Bypass - SA-CONTRIB-2015-131
->https://www.drupal.org/node/2516688
-
-Use CVE-2015-5515.
-
-- ---
-
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEVAwUBVdNcpKllVAevmvmsAQJK2Af9EPXhYRtkAtE4Pmm/YiRLnv4ogjkylGZ6
-BRaLS6xZ++A6XpzsUrmUuH8iTisC6KqW8s2JV2NyFTc4snLvIYv3lvBkZTpVP5f7
-sB7njM4e97tbCScCwy2ZwzEf6kzKEVEOBIM3WBY0u+D4i5/afcTyI5x+S3jkEZfZ
-Jksyfq70H7WZgBQNO23pitYl3YstJ+1tY8iKkSsDnSFHXNKvAJ0CsXRF7Ow5g11G
-sanB8viFt9ASOrUoqkOQvTEPY8iwzNGRQoOMhOI9TETvlSLb0tausNdAcHkDEeYA
-u27FNVQLs11FZ7XAulU3NxxuivFtG3jHEjrkgpGCtULhhlPaDxsuEw==
-=L9ro
------END PGP SIGNATURE-----
+Subject: Re: [oss-security] Re: More Ghostscript Issues: Should we disable
+ PS coders in policy.xml by default?
+To: Tavis Ormandy <taviso@google.com>
+
+On Wed, 5 Sep 2018 11:02:48 -0700 Tavis Ormandy <taviso@google.com>
+wrote:
+> I would like to re-emphasize that while Ghostscript is very capable
+> and mature software, I consider the -dSAFER sandbox to be a fragile
+> security boundary and that we should consider deprecating (or
+> minimizing the use of) untrusted postscript.
+
+I haven't been following the bugs in depth (just noticing the
+continuous stream of them arriving), but is the issue security flaws
+in just -dSAFER or is it overall security bugs? If it's the former,
+given how few things actually need any of the features past what
+-dSAFER offers, perhaps compiling the code by default without any such
+capabilities would work well? You can't run what isn't there.
+
+Perry
+-- 
+Perry E. Metzger		perry@piermont.com
