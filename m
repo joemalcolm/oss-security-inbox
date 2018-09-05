@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2185" "Tuesday" "25" "April" "2017" "15:40:02" "+0000" "Tristan Cacqueray" "tdecacqu@redhat.com" "<1493134410.v5lp2nuxd8.tristanC@fedora>" "70" "[oss-security] [OSSA-2017-004] federated user gets wrong role (CVE-2017-2673)" nil nil nil "4" "2017042515:40:02" "[oss-security] [OSSA-2017-004] federated user gets wrong role (CVE-2017-2673)" (number mark "U       tdecacqu@red Apr 25   70/2185  " thread-indent "\"[oss-security] [OSSA-2017-004] federated user gets wrong role (CVE-2017-2673)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1297" "Wednesday" "5" "September" "2018" "17:32:20" "-0600" "Leonid Isaev" "leonid.isaev@jila.colorado.edu" "<20180905233220.GK1664@takahe.colorado.edu>" "27" "Re: [oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?" "^Date:" nil nil "9" "2018090523:32:20" "[oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?" (number mark "        leonid.isaev Sep  5   27/1297  " thread-indent "\"Re: [oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?\"\n") "<74d8474f-f18b-7543-a8a8-6072a416aca6@gathman.org>" ("<CAJ_zFk+dpXH453R0Hy5iHzYO2DkZjrBK3Sqh00Aie1z4=VDQOQ@mail.gmail.com>" "<CAJ_zFkLXTpjCijqNsHs0ZR4NdVwM+16ojUmxjYu0aZAgW=QhKQ@mail.gmail.com>" "<20180903105747.dihmczuqhl4kcnx5@suse.de>" "<CAJ_zFkLOkSWe8x5N9Mf9bx1J9+oLnzNtHzTfEDXg0JGPj7N7DA@mail.gmail.com>" "<CAJ_zFk++=BcFw0mU1NefSCkGqo3RzRjePQwPo0mCUzL=QeGBiA@mail.gmail.com>" "<F21BEEA3-4932-472D-9FEA-A318F543861D@gmail.com>" "<CAJ_zFkLmua6XK9iRV-TRQsXKXo=s9Y32FQjOM5UB_UPrrNsAxw@mail.gmail.com>" "<CAJ_zFkLvLBnn8OO6Q3JuqyvpRKoo=63wE1meqsT_jR4USir4DQ@mail.gmail.com>" "<20180905150128.5f9430f4@jabberwock.cb.piermont.com>" "<74d8474f-f18b-7543-a8a8-6072a416aca6@gathman.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7677 invoked by uid 550); 25 Apr 2017 15:39:49 -0000
+Received: (qmail 18054 invoked by uid 550); 6 Sep 2018 10:34:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,90 +11,58 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7658 invoked from network); 25 Apr 2017 15:39:48 -0000
-DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com B92C780044
-Authentication-Results: ext-mx03.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
-Authentication-Results: ext-mx03.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=tdecacqu@redhat.com
-DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com B92C780044
-Date: Tue, 25 Apr 2017 15:40:02 +0000
-From: Tristan Cacqueray <tdecacqu@redhat.com>
-To: oss-security@lists.openwall.com
-Message-Id: <1493134410.v5lp2nuxd8.tristanC@fedora>
+Received: (qmail 22374 invoked from network); 5 Sep 2018 23:32:35 -0000
+X-Virus-Status: Clean
+X-Virus-Scanned: clamav-milter 0.99.2 at jilau1.colorado.edu
+Message-ID: <20180905233220.GK1664@takahe.colorado.edu>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <CAJ_zFk+dpXH453R0Hy5iHzYO2DkZjrBK3Sqh00Aie1z4=VDQOQ@mail.gmail.com>
+ <CAJ_zFkLXTpjCijqNsHs0ZR4NdVwM+16ojUmxjYu0aZAgW=QhKQ@mail.gmail.com>
+ <20180903105747.dihmczuqhl4kcnx5@suse.de>
+ <CAJ_zFkLOkSWe8x5N9Mf9bx1J9+oLnzNtHzTfEDXg0JGPj7N7DA@mail.gmail.com>
+ <CAJ_zFk++=BcFw0mU1NefSCkGqo3RzRjePQwPo0mCUzL=QeGBiA@mail.gmail.com>
+ <F21BEEA3-4932-472D-9FEA-A318F543861D@gmail.com>
+ <CAJ_zFkLmua6XK9iRV-TRQsXKXo=s9Y32FQjOM5UB_UPrrNsAxw@mail.gmail.com>
+ <CAJ_zFkLvLBnn8OO6Q3JuqyvpRKoo=63wE1meqsT_jR4USir4DQ@mail.gmail.com>
+ <20180905150128.5f9430f4@jabberwock.cb.piermont.com>
+ <74d8474f-f18b-7543-a8a8-6072a416aca6@gathman.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature";
-	micalg=pgp-sha256; boundary="=-/ozAJPH3PIRMZNZa0jfM"
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.27]); Tue, 25 Apr 2017 15:39:36 +0000 (UTC)
-Subject: [oss-security] [OSSA-2017-004] federated user gets wrong role (CVE-2017-2673)
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <74d8474f-f18b-7543-a8a8-6072a416aca6@gathman.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Date: Wed, 5 Sep 2018 17:32:20 -0600
+From: Leonid Isaev <leonid.isaev@jila.colorado.edu>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: More Ghostscript Issues: Should we disable PS
+ coders in policy.xml by default?
+To: oss-security@lists.openwall.com
 
---=-/ozAJPH3PIRMZNZa0jfM
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
+On Wed, Sep 05, 2018 at 03:13:53PM -0400, Stuart Gathman wrote:
+> Postscript is a general purpose programming language.  It can do
+> anything to your system that a C or Python program could.  The SAFER
+> sandbox was supposed to be able to prevent untrusted postscript code
+> from doing serious damage.  But this series of bugs shows that the
+> sandbox is very flawed, and running untrusted postscript relying only on
+> the SAFER sandbox is a very bad idea.
+> 
+> What I need to study, is whether random PDF files from the internet (as
+> opposed to general postscript) are therefore malware vectors.  I thought
+> that PDF used a restricted subset of operations that "rendered" it not a
+> general purpose language and therefore "safe".   But if SAFER was the
+> implementation of that restricted subset, then all internet PDFs are
+> suspect.
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-OSSA-2017-004: Incorrect role assignment with federated Keystone
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+In addition to that, pdf files can contains things like javascript... There are
+some python tools to analyze them and detect (even obfuscated JS) -- see [1]
+and links therein. But yes, unless you generate a pdf/ps file yourself (e.g.
+with pdflatex or a graphics program), you should consider it untrusted.
 
-:Date: April 25, 2017
-:CVE: CVE-2017-2673
+Cheers,
+L.
 
+[1] https://stackoverflow.com/questions/29342542/how-can-i-extract-a-javascript-from-a-pdf-file-with-a-command-line-tool
 
-Affects
-~~~~~~~
-- Keystone: >=3D10.0.0 <=3D10.0.1, =3D=3D11.0.0
-
-
-Description
-~~~~~~~~~~~
-Boris Bobrov from Mail.Ru reported a vulnerability in Keystone
-Federation. An authenticated user may receive all the roles assigned
-to the user's project regardless of the federation mapping when there
-are rules in which group-based assignments are not used. For example,
-by requesting an admin user to get a role in their project, the user
-may be granted the admin privileges for new scoped tokens. All setups
-using the Keystone federation without group based assignments rules
-are affected.
-
-
-Patches
-~~~~~~~
-- https://review.openstack.org/459713 (Newton)
-- https://review.openstack.org/459732 (Ocata)
-- https://review.openstack.org/459705 (Pike)
-
-
-Credits
-~~~~~~~
-- Boris Bobrov from Mail.Ru (CVE-2017-2673)
-
-
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/1677723
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2017-2673
-
---
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
---=-/ozAJPH3PIRMZNZa0jfM
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQEcBAABCAAGBQJY/23SAAoJECK5oFySXMXYZ4IH/AxVa3IutpHD5IfhkMAAltni
-PpAqxYP/N7SnJv7dw+8wkTKz36i579ToPCM7U/BrIxApXk0JGfG5b/cHcUwf6tyl
-KbCvqU6BHHzSZYN+Osrv+vKb6mIBVEwdj1KGFFx1tSS6HVMWrUi2Tt/WOgtENQG9
-4Jmmxh0OtFxIj/mjTWuxlveSULYj79UZv5UWdNI2jWOD/QzmWVmMZrAs1XRUHnxd
-WD/cq8JXMx/sW103nZPFiUM1kHqOdWmzJXbQJOO9b7JDbh/oRr0kTcjJMDCv1ddr
-koED8QQaVtukMuUVvNqnY8vkuK1zzEaOom3vI393Ww0saOIyZt3pVy+d2fh10mU=
-=6cJM
------END PGP SIGNATURE-----
-
---=-/ozAJPH3PIRMZNZa0jfM--
+-- 
+Leonid Isaev
