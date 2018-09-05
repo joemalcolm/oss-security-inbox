@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2613" "Friday" "3" "April" "2015" "18:22:23" "+0100" "Iain R. Learmonth" "irl@fsfe.org" "<20150403172223.GA5593@shiftout.net>" "70" "[oss-security] Request CVE for LinuxNode - DoS vulnerability" nil nil nil "4" "2015040317:22:23" "[oss-security] Request CVE for LinuxNode - DoS vulnerability" (number mark "        irl@fsfe.org Apr  3   70/2613  " thread-indent "\"[oss-security] Request CVE for LinuxNode - DoS vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2592" "Wednesday" "5" "September" "2018" "07:55:21" "+0200" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1809041916060.14115@tvnag.unkk.fr>" "89" "[oss-security] [SECURITY ADVISORY] curl: NTLM password overflow via integer overflow" "^Date:" nil nil "9" "2018090505:55:21" "[oss-security] [SECURITY ADVISORY] curl: NTLM password overflow via integer overflow" (number mark "        daniel@haxx. Sep  5   89/2592  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl: NTLM password overflow via integer overflow\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 15716 invoked by uid 550); 3 Apr 2015 17:32:20 -0000
+Received: (qmail 15726 invoked by uid 550); 5 Sep 2018 05:55:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,89 +11,110 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11475 invoked from network); 3 Apr 2015 17:22:41 -0000
-X-Virus-Scanned: Debian amavisd-new at cavendish
-Message-ID: <20150403172223.GA5593@shiftout.net>
+Received: (qmail 15708 invoked from network); 5 Sep 2018 05:55:34 -0000
+X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
+X-X-Sender: dast@giant.haxx.se
+Message-ID: <alpine.DEB.2.20.1809041916060.14115@tvnag.unkk.fr>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-fromdanielhimself: yes
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="EVF5PPMfhYS0aIcm"
-Content-Disposition: inline
-X-PGP-Key: http://irl.sdf.org/Iain_R_Learmonth.gpg
-Hackerspace: 57North Hacklab <http://57north.co/>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Date: Fri, 3 Apr 2015 18:22:23 +0100
-From: "Iain R. Learmonth" <irl@fsfe.org>
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Date: Wed, 5 Sep 2018 07:55:21 +0200 (CEST)
+From: Daniel Stenberg <daniel@haxx.se>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Request CVE for LinuxNode - DoS vulnerability
-To: oss-security@lists.openwall.com
+Subject: [oss-security] [SECURITY ADVISORY] curl: NTLM password overflow via integer
+ overflow
+To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
+        curl-announce@cool.haxx.se,
+        libcurl hacking <curl-library@cool.haxx.se>,
+        oss-security@lists.openwall.com
 
---EVF5PPMfhYS0aIcm
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+NTLM password overflow via integer overflow
+===========================================
 
-Hi,
+Project curl Security Advisory, September 5th 2018 -
+[Permalink](https://curl.haxx.se/docs/CVE-2018-14618.html)
 
-I'm a member of the Debian Hamradio Maintainer's team and a
-denial-of-service bug has been reported on our package ax25-node. (Debian
-bug: https://bugs.debian.org/777013) I would like to request a CVE for this
-vulnerability.
+VULNERABILITY
+-------------
 
-The software in this package is identified as LinuxNode in the README
-contained in the source package. The author is identified as Tomi Manninen
-OH2BNS, <tomi.manninen@hut.fi> although attempts have been made to contact
-the author and have been unsuccessful, as mentioned in the Debian bug
-report.
+libcurl contains a buffer overrun in the NTLM authentication code.
 
-https://sources.debian.net/src/node/0.3.2-7.4/README/
+The internal function `Curl_ntlm_core_mk_nt_hash` multiplies the `length` of
+the password by two (SUM) to figure out how large temporary storage area to
+allocate from the heap.
 
-=46rom the bug report:
+The `length` value is then subsequently used to iterate over the password and
+generate output into the allocated storage buffer. On systems with a 32 bit
+`size_t`, the math to calculate SUM triggers an integer overflow when the
+password length exceeds 2GB (2^31 bytes). This integer overflow usually causes
+a very small buffer to actually get allocated instead of the intended very
+huge one, making the use of that buffer end up in a heap buffer overflow.
 
-"The SIGQUIT routine fails to close the app leaving the IP sockets open and
-in some cases DDOS the remote site if a user "ctrl-]+q" out of a telnet
-session.  Also the app fails to close and more can be spawned by a crafty
-malicious user thus bringing the system to a point of no memory available."
+(This bug is almost identical to
+[CVE-2017-8816](https://curl.haxx.se/docs/CVE-2017-8816.html).)
 
-Brian N1URO on the bug report maintains a replacement node package and I am
-confident that his report is accurate. He found this vulnerability in 2005,
-but due to an unresponsive upstream this got lost. This is the first request
-for a CVE for this vulnerability.
+We are not aware of any exploit of this flaw.
 
-This appears to be an issue affecting multiple versions, although I can only
-say that it is present in 0.3.2.
+INFO
+----
 
-I am happy to provide more information if needed and I can be contacted at:
+This bug was introduced in commit
+[be285cde3f](https://github.com/curl/curl/commit/be285cde3f), April 2006.
 
-  irl@fsfe.org
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2018-14618 to this issue.
 
-Thanks,
-Iain.
+CWE-131: Incorrect Calculation of Buffer Size
 
---=20
-e: irl@fsfe.org            w: iain.learmonth.me
-x: irl@jabber.fsfe.org     t: EPVPN 2105
-c: 2M0STB                  g: IO87we
-p: 1F72 607C 5FF2 CCD5 3F01 600D 56FF 9EA4 E984 6C49
+AFFECTED VERSIONS
+-----------------
 
---EVF5PPMfhYS0aIcm
-Content-Type: application/pgp-signature
+This issue is only present on 32 bit systems. It also requires the password
+field to use more than 2GB of memory, which should be rare.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+- Affected versions: libcurl 7.15.4 to and including 7.61.0
+- Not affected versions: libcurl < 7.15.4 and >= 7.61.1
 
-iQIcBAABCgAGBQJVHsxPAAoJEAdZWpwDjyGuacsP/RuLmic3ErSZMlGbNRSaoGQH
-6Y+Qc9OZqIPUVILiPLs+RPjGDwFdlbplWnJK99uJIlX5jPJQKihdVtSHyI+Y65wa
-34YQKXrj4TQPdmyO7lTQpfp1Fh8wN6O5Uh2Dsad6gWgvO8mE6vZIlaOlcqKAYLF7
-WU6X4pcNCFB+YXBkzjr4STPj713W+8V+M+isFQg1T/37GrsPA78fZkWH2xIFH5PQ
-TaIBKGkQ2s6Z5AxaltzS4mVfpOxVSVevf7G61ZEn2nZX2JFKcBt212IgBd6pWyYO
-+P1xCEPplAPSo2mWx5ZvyxuiElnNhaCnyPBzY6u+ACf39TGxLzvPNqMK7nuHZaF7
-zNoOy40WtgU6YnEvzdhfrs/Uy/gRMF/5yfUqrn+72KvOJ8zIKcYpjvdzBvBsZnob
-vv2ARQB7t9BVEsWD4Gs56SdTwn46njs+3VjTi9Ti3uIxXOHQ3i51TdKi2Vil43LF
-/V/fJcVXhSf6HydPcWuJ+XZqTu6Vf8cs427ZDmsRJfxXY5HgrAAfz4s2H3fN0GEo
-e7jfDeI+1AsKwos5P10xOlV9qv48qbQNzUr5HgQwwUehuZrIEZlvif3vJ4JOEGUB
-yF255p9AxYBSdpW0E+pukpxM66TyW16emE4uW54ae8RaVxx2/PSmS0HZ4YHkevdf
-3kVVNcxEi9SHxXSNev8J
-=7DWU
------END PGP SIGNATURE-----
+curl is used by many applications, but not always advertised as such.
 
---EVF5PPMfhYS0aIcm--
+THE SOLUTION
+------------
+
+In libcurl version 7.61.1, the integer overflow is avoided.
+
+A [patch for
+CVE-2018-14618](https://github.com/curl/curl/commit/57d299a499155d4b327e341c6024e293b0418243.patch)
+is available.
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl to version 7.61.1
+
+  B - Apply the patch to your version and rebuild
+
+  C - Put length restrictions on the password you can pass to libcurl
+
+TIME LINE
+---------
+
+It was [publicly reported](https://github.com/curl/curl/issues/2756) to the
+curl project on July 18, 2018.  We contacted distros@openwall on August 27.
+
+curl 7.61.1 was released on September 5 2018, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+Reported by Zhaoyang Wu. Patch by Daniel Stenberg.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
