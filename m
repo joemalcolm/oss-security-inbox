@@ -1,66 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/09/2
-Message-ID: <6a293bd2-77f7-4ce0-a5ba-f9fb32985086@powerdns.com>
-Date: Wed, 9 May 2018 10:15:31 +0200
-From: Remi Gacogne <remi.gacogne@...erdns.com>
-To: oss-security@...ts.openwall.com
-Subject: PowerDNS Security Advisory 2018-02
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/06/1
+Message-ID: <20180905203719.6c512646@jabberwock.cb.piermont.com>
+Date: Wed, 5 Sep 2018 20:37:19 -0400
+From: "Perry E. Metzger" <perry@...rmont.com>
+To: Stuart Gathman <stuart@...hman.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
 Content-Type: text/plain; charset=utf-8
 
-Hello everybody,
+On Wed, 5 Sep 2018 15:13:53 -0400 Stuart Gathman <stuart@...hman.org>
+wrote:
+> On 09/05/2018 03:01 PM, Perry E. Metzger wrote:
+> > I haven't been following the bugs in depth (just noticing the
+> > continuous stream of them arriving), but is the issue security
+> > flaws in just -dSAFER or is it overall security bugs? If it's the
+> > former, given how few things actually need any of the features
+> > past what -dSAFER offers, perhaps compiling the code by default
+> > without any such capabilities would work well? You can't run what
+> > isn't there.
+>
+> Postscript is a general purpose programming language.  It can do
+> anything to your system that a C or Python program could.  The SAFER
+> sandbox was supposed to be able to prevent untrusted postscript code
+> from doing serious damage.  But this series of bugs shows that the
+> sandbox is very flawed, and running untrusted postscript relying
+> only on the SAFER sandbox is a very bad idea.
 
-We released PowerDNS Authoritative 4.1.2 yesterday, fixing a security
-issue (CVE-2018-1046) affecting the dnsreplay tool included with it.
-Versions of dnsreplay from 4.0.0 up to and including 4.1.1 are
-vulnerable. The full security advisory can be found below and at
-https://doc.powerdns.com/authoritative/security-advisories/powerdns-advisory-2018-02.html
+I know it's a general purpose language, but if you ifdef out *all* the
+IO (except to the page) and all system calls and the like from the
+implementation, there's limits to what it can do. As it stands the
+implementation has all those capabilities in the code, but does
+anything anyone cares about actually need any of them under any
+normal circumstances? If not, they can just be removed, which is a
+lot easier to audit than a sandbox.
 
-The issue is a stack-based buffer overflow occurring when replaying a
-specially crafted PCAP file with the `--ecs-stamp` option enabled,
-leading to a denial of service or potentially arbitrary code execution.
-Regardless of this issue, we do not advise the use of dnsreplay with
-untrusted PCAP files.
-
-The commit fixing the issue can be found here:
-https://github.com/PowerDNS/pdns/commit/f9c57c98da1b1007a51680629b667d57d9b702b8
-
-We would like to thank Wei Hao for finding and subsequently reporting
-this issue.
-
-Please feel free to contact me directly if you have any question.
-
-Best regards,
-
-Remi and the PowerDNS team
-
-
-PowerDNS Security Advisory 2018-02: Buffer overflow in dnsreplay
-================================================================
-
--  CVE: CVE-2018-1046
--  Date: May 8th 2018
--  Credit: Wei Hao
--  Affects: dnsreplay from 4.0.0 up to and including 4.1.1
--  Not affected: dnsreplay 3.4.11, 4.1.2
--  Severity: High
--  Impact: Arbitrary code execution
--  Exploit: This problem can be triggered via a crafted PCAP file
--  Risk of system compromise: Yes
--  Solution: Upgrade to a non-affected version
-
-An issue has been found in the dnsreplay tool provided with PowerDNS
-Authoritative, where replaying a specially crafted PCAP file can trigger
-a stack-based buffer overflow, leading to a crash and potentially
-arbitrary code execution. This buffer overflow only occurs when the
-`--ecs-stamp` option of dnsreplay is used. Regardless of this issue, the
-use of dnsreplay with untrusted PCAP files is not advised.
-This issue has been assigned CVE-2018-1046 by Red Hat.
-
-PowerDNS Authoritative from 4.0.0 up to and including 4.1.1 is affected.
-
-We would like to thank Wei Hao for finding and subsequently reporting
-this issue.
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Perry
+-- 
+Perry E. Metzger		perry@...rmont.com
