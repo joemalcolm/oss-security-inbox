@@ -1,4 +1,9 @@
-Received: (qmail 11492 invoked by uid 550); 8 Apr 2026 15:44:24 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1449" "Wednesday" "5" "September" "2018" "20:37:19" "-0400" "Perry E. Metzger" "perry@piermont.com" "<20180905203719.6c512646@jabberwock.cb.piermont.com>" "29" "Re: [oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?" "^Cc:" nil nil "9" "2018090600:37:19" "[oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?" (number mark "        perry@piermo Sep  5   29/1449  " thread-indent "\"Re: [oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?\"\n") "<74d8474f-f18b-7543-a8a8-6072a416aca6@gathman.org>" ("<CAOVKCF0Qehz2q3m2vPSAr3vKRAxdHrTbnyk71ApFYnVXuZ-P6Q@mail.gmail.com>" "<alpine.GSO.2.20.1808230753470.3841@freddy.simplesystems.org>" "<5b7eb7b2.1c69fb81.6b98e.519f@mx.google.com>" "<alpine.GSO.2.20.1808230958120.3639@scrappy.simplesystems.org>" "<CAJ_zFk+yb9zEXSqs2fdANvKkipg2yQAU89xKr1HMv-EJG2-vxg@mail.gmail.com>" "<20180828092517.eteuy4vzcpdpr62p@suse.de>" "<CAJ_zFk+dpXH453R0Hy5iHzYO2DkZjrBK3Sqh00Aie1z4=VDQOQ@mail.gmail.com>" "<CAJ_zFkLXTpjCijqNsHs0ZR4NdVwM+16ojUmxjYu0aZAgW=QhKQ@mail.gmail.com>" "<20180903105747.dihmczuqhl4kcnx5@suse.de>" "<CAJ_zFkLOkSWe8x5N9Mf9bx1J9+oLnzNtHzTfEDXg0JGPj7N7DA@mail.gmail.com>" "<CAJ_zFk++=BcFw0mU1NefSCkGqo3RzRjePQwPo0mCUzL=QeGBiA@mail.gmail.com>" "<F21BEEA3-4932-472D-9FEA-A318F543861D@gmail.com>" "<CAJ_zFkLmua6XK9iRV-TRQsXKXo=s9Y32FQjOM5UB_UPrrNsAxw@mail.gmail.com>" "<CAJ_zFkLvLBnn8OO6Q3JuqyvpRKoo=63wE1meqsT_jR4USir4DQ@mail.gmail.com>" "<20180905150128.5f9430f4@jabberwock.cb.piermont.com>" "<74d8474f-f18b-7543-a8a8-6072a416aca6@gathman.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 15741 invoked by uid 550); 6 Sep 2018 00:37:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,83 +11,62 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 11881 invoked from network); 8 Apr 2026 05:56:40 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
-	t=1775627790;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=8hQNjkv5kjXB4Re9N2Vltq822zG0DKbiW4eG90odp2w=;
-	b=exWtFavfTu0uVA+poOdhbPtmL6iqzygi+/znqHPGA36IOM164YdPqEiOuc6OmuaLVlAtvQ
-	a7mnaqyFDlxvZFnsOTB0hk8dhgYLAHpxWO0LPLtppFnrkk2JWW+C2NzL9ftKaIELzVUasA
-	ARSdjT1zGWV9fDB8yYlxIJkZVWKJQ9iZvemOuJ4pisKnqp9e5RJ4FQopTAmnElM6MWfubc
-	ZUFrEIiSW8eeBi/fbQOZbuG88/3KMHWxiks77HTsmAeQIeQvoBNAALKxr1PNEo/46PEgZn
-	wAiCC2RMZ/WMymmVQBgoZvnPFqYlPYxgMfILrMsm//V9brXMNzVLGgPUoPmqPA==
-Message-ID: <987708f9-b499-43e3-97be-e290c722b9cd@cpansec.org>
-Date: Wed, 8 Apr 2026 06:56:29 +0100
+Received: (qmail 15720 invoked from network); 6 Sep 2018 00:37:31 -0000
+Message-ID: <20180905203719.6c512646@jabberwock.cb.piermont.com>
+In-Reply-To: <74d8474f-f18b-7543-a8a8-6072a416aca6@gathman.org>
+References: <CAOVKCF0Qehz2q3m2vPSAr3vKRAxdHrTbnyk71ApFYnVXuZ-P6Q@mail.gmail.com>
+	<alpine.GSO.2.20.1808230753470.3841@freddy.simplesystems.org>
+	<5b7eb7b2.1c69fb81.6b98e.519f@mx.google.com>
+	<alpine.GSO.2.20.1808230958120.3639@scrappy.simplesystems.org>
+	<CAJ_zFk+yb9zEXSqs2fdANvKkipg2yQAU89xKr1HMv-EJG2-vxg@mail.gmail.com>
+	<20180828092517.eteuy4vzcpdpr62p@suse.de>
+	<CAJ_zFk+dpXH453R0Hy5iHzYO2DkZjrBK3Sqh00Aie1z4=VDQOQ@mail.gmail.com>
+	<CAJ_zFkLXTpjCijqNsHs0ZR4NdVwM+16ojUmxjYu0aZAgW=QhKQ@mail.gmail.com>
+	<20180903105747.dihmczuqhl4kcnx5@suse.de>
+	<CAJ_zFkLOkSWe8x5N9Mf9bx1J9+oLnzNtHzTfEDXg0JGPj7N7DA@mail.gmail.com>
+	<CAJ_zFk++=BcFw0mU1NefSCkGqo3RzRjePQwPo0mCUzL=QeGBiA@mail.gmail.com>
+	<F21BEEA3-4932-472D-9FEA-A318F543861D@gmail.com>
+	<CAJ_zFkLmua6XK9iRV-TRQsXKXo=s9Y32FQjOM5UB_UPrrNsAxw@mail.gmail.com>
+	<CAJ_zFkLvLBnn8OO6Q3JuqyvpRKoo=63wE1meqsT_jR4USir4DQ@mail.gmail.com>
+	<20180905150128.5f9430f4@jabberwock.cb.piermont.com>
+	<74d8474f-f18b-7543-a8a8-6072a416aca6@gathman.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Robert Rothenberg <rrwo@cpansec.org>
-Content-Language: en-GB, en-ZA
-To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-GND-Sasl: rrwo@cpansec.org
-X-GND-Cause: dmFkZTEBSqca8+QiMbnSI8h/g2Usa2daB4x2dfzQcUPkCf6+LeAy3vGUJXi5ni86XkJSRmngUF4wI8eFWA6d8a2GRiLfFrEZprrpV/CYk5J9yvFrgBHEU12W10tbAyhaxP5OCh2jMqdXhPFrL/HwtZXLYkd8cO8alMVrKH76JqxGCwJaP4ZW3St2aX9JaeN/p+koxfT6hlzW4sgOnqBD/vu1mARWyCa3W7usA6xAiWSF4kdvkk0Wxossit2AXraxINvhvbjxMc/Cf5JodhtkdUNqX3q9F+n5jPTh1vG3v3HkhY+WrXMrhaSJLvWa2O1mpgKwi1R4CLN5QTigRlPU8O790VD+S0OLpGTP/0pvkpF8Vz16oEG6p9vZrYohAwIwo0Cj8tG8DAMmQKR/zTxVr2VJwat+jxg+jnbbv/4DIhzgOJ5AaWnJqlt9u1xkIN7MsjdUutgeipf/bI7VO4igRu43LKeWIHDgRH6coRag+nuqayIWL+kCQfSGxKqfu4etYkkuRBD6r/Ik6xZysJDuiU8oFMGvAfLGAOprpaWLMzFdVL1zPxSe9La0A/FdLwNSIyVUVRnqes+bUlK/i3n+pBvFxmbTui5rh1SomRvvyByht9t4tL5me8dcfjdyENDy8vVmHGyCw/86zET1tIRnl2rFxHLslew6BF2oTbFJc4sDlqryJQ
-X-GND-State: clean
-X-GND-Score: 0
-Subject: [oss-security] CVE-2026-5083: Ado::Sessions versions through 0.935 for Perl
- generates insecure session ids
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Cc: oss-security@lists.openwall.com
+Date: Wed, 5 Sep 2018 20:37:19 -0400
+From: "Perry E. Metzger" <perry@piermont.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: More Ghostscript Issues: Should we disable
+ PS coders in policy.xml by default?
+To: Stuart Gathman <stuart@gathman.org>
 
-========================================================================
-CVE-2026-5083                                        CPAN Security Group
-========================================================================
+On Wed, 5 Sep 2018 15:13:53 -0400 Stuart Gathman <stuart@gathman.org>
+wrote:
+> On 09/05/2018 03:01 PM, Perry E. Metzger wrote:
+> > I haven't been following the bugs in depth (just noticing the
+> > continuous stream of them arriving), but is the issue security
+> > flaws in just -dSAFER or is it overall security bugs? If it's the
+> > former, given how few things actually need any of the features
+> > past what -dSAFER offers, perhaps compiling the code by default
+> > without any such capabilities would work well? You can't run what
+> > isn't there.
+>
+> Postscript is a general purpose programming language.=C2=A0 It can do
+> anything to your system that a C or Python program could.=C2=A0 The SAFER
+> sandbox was supposed to be able to prevent untrusted postscript code
+> from doing serious damage.=C2=A0 But this series of bugs shows that the
+> sandbox is very flawed, and running untrusted postscript relying
+> only on the SAFER sandbox is a very bad idea.
 
-         CVE ID:  CVE-2026-5083
-   Distribution:  Ado
-       Versions:  through 0.935
+I know it's a general purpose language, but if you ifdef out *all* the
+IO (except to the page) and all system calls and the like from the
+implementation, there's limits to what it can do. As it stands the
+implementation has all those capabilities in the code, but does
+anything anyone cares about actually need any of them under any
+normal circumstances? If not, they can just be removed, which is a
+lot easier to audit than a sandbox.
 
-       MetaCPAN:  https://metacpan.org/dist/Ado
-       VCS Repo:  https://github.com/kberov/Ado
-
-
-Ado::Sessions versions through 0.935 for Perl generates insecure
-session ids
-
-Description
------------
-Ado::Sessions versions through 0.935 for Perl generates insecure
-session ids.
-
-The session id is generated from a SHA-1 hash seeded with the built-in
-rand function, the epoch time, and the PID. The PID will come from a
-small set of numbers, and the epoch time may be guessed, if it is not
-leaked from the HTTP Date header. The built-in rand function is
-unsuitable for cryptographic usage.
-
-Predicable session ids could allow an attacker to gain access to
-systems.
-
-Note that Ado is no longer maintained, and has been removed from the
-CPAN index. It is still available on BackPAN.
-
-Problem types
--------------
-- CWE-340 Generation of Predictable Numbers or Identifiers
-- CWE-338 Use of Cryptographically Weak Pseudo-Random Number Generator
-
-References
-----------
-https://github.com/kberov/Ado/issues/112
-https://backpan.perl.org/authors/id/B/BE/BEROV/Ado-0.935.tar.gz
-https://security.metacpan.org/docs/guides/random-data-for-security.html
-
-Timeline
---------
-- 2017-09-02: Last version of Ado was released on CPAN.
-- 2018-09-24: Announcement that Ado will not be updated anymore.
-
-
-
+Perry
+--=20
+Perry E. Metzger		perry@piermont.com
