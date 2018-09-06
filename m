@@ -1,54 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/19/10
-Message-ID: <20180919192018.GA6402@openwall.com>
-Date: Wed, 19 Sep 2018 21:20:18 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/06/4
+Message-ID: <20180906131725.5dyq5xjweg5ljet4@jwilk.net>
+Date: Thu, 6 Sep 2018 15:17:25 +0200
+From: Jakub Wilk <jwilk@...lk.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: tdesktop 1.3.14: index out of range
+Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+* Leonid Isaev <leonid.isaev@...a.colorado.edu>, 2018-09-05, 17:32:
+>pdf files can contains things like javascript...
 
-I'm posting this primarily to clarify why something as wrong-looking as
-this report got through moderation, and secondarily to ask that postings
-to oss-security should clearly describe security impact rather than
-leave people (even moderators) guessing why they're seeing this in here.
+Do any open-source PDF browsers actually execute embedded JS?
 
-On Wed, Sep 19, 2018 at 11:47:00PM +0530, Dhiraj Mishra wrote:
-> Affected Product: tdesktop-1.3.14 tested on Ubuntu 18.04 LTS x64
-> 
-> *Steps to reproduce:*
-> 1. Open Telegram
-> 2. Launch theme editor
-> 3. Save the file in some location
-> 4. The tdesktop then open "Edit color palette"
-> 5. Type "Hello World" in search <press enter>
-> 6. The tdesktop gets crash
-> 
-> Crashes, ASSERT failure in QVector<T>::operator[]: "index out of range",
-> file /usr/local/tdesktop/Qt-5.6.2/include/QtCore/qvector.h, line 431
-> Aborted (core dumped)
-
-FWIW, this doesn't look like a security issue to me, but I'm not
-familiar with tdesktop and don't consider it list moderators' job to
-distinguish security from non-security issues except in even more
-obvious cases.  In this case, I'm just 99% sure it's non-security.
-
-Maybe someone will see a way to make this cross a privilege boundary,
-which the above example doesn't appear to do.  Even with distribution of
-a malicious theme file (just guessing here as the example above is
-unclear on what file is involved nor on what exactly causes the crash)
-from one user to others, this doesn't appear to be a security issue as
-the impact would have been a mere crash (since the out of range index is
-properly detected), which looks irrelevant as a security attack in that
-scenario.
-
-For this to be a security issue, a privilege boundary would need to be
-crossed _and_ either the impact needs to be worse than a mere crash or
-the attack would need to be performed without target user's interaction.
-
-If someone finds a way to _avoid_ the detected "index out of range"
-condition yet have the program misbehave differently, that will be more
-valuable as a potential attack.
-
-Alexander
+-- 
+Jakub Wilk
