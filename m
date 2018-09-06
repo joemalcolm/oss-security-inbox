@@ -1,21 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/13/1
-Message-ID: <CAJ_zFk+Dhd0buWMW7p4sRDZ_0KEDnOiKp4nV35XUgCUnFc5q-w@mail.gmail.com>
-Date: Wed, 12 Dec 2018 22:13:11 -0800
-From: Tavis Ormandy <taviso@...gle.com>
-To: hackerfantastic@...glemail.com
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Multiple telnet.c overflows
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/06/5
+Message-ID: <20180906162109.GB19583@takahe.colorado.edu>
+Date: Thu, 6 Sep 2018 10:21:09 -0600
+From: Leonid Isaev <leonid.isaev@...a.colorado.edu>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Dec 12, 2018 at 5:21 PM Hacker Fantastic
-<hackerfantastic@...glemail.com> wrote:
->
-> Please see the below proof of concept in triggering the heap overflow using the IAC SB TELQUAL_IS environment option variable assignment. As per my original advisory, which did not fully indicate the details but gave the overview of how to trigger the condition.
+On Thu, Sep 06, 2018 at 03:17:25PM +0200, Jakub Wilk wrote:
+> * Leonid Isaev <leonid.isaev@...a.colorado.edu>, 2018-09-05, 17:32:
+> > pdf files can contains things like javascript...
+> 
+> Do any open-source PDF browsers actually execute embedded JS?
 
-Cool, but I think this is a different bug (AFAICT, it's CVE-2005-0469,
-it was fixed in netkit, but far fewer distros use inetutils). I agree
-this was a real vulnerability, It's a pretty good sign inetutils
-should be deprecated imho.
+Currently, evince, okular and gv don't. The same goes for zathura with its
+poppler backend (haven't checked this, but pretty sure). But then there is also
+Artifex Mupdf which, AFAIR, supports JS in pdf files (by extension, so does
+zathura when viewing a pdf file using the mupdf plugin). I don't know how
+complete that support is. Most importantly, many Android pdf/ebook readers
+probably include JS support.
 
-Tavis.
+CHeers,
+L.
+
+-- 
+Leonid Isaev
