@@ -1,4 +1,9 @@
-Received: (qmail 27876 invoked by uid 550); 27 Aug 2025 19:34:17 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["197" "Thursday" "6" "September" "2018" "15:17:25" "+0200" "Jakub Wilk" "jwilk@jwilk.net" "<20180906131725.5dyq5xjweg5ljet4@jwilk.net>" "7" "Re: [oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?" "^Date:" nil nil "9" "2018090613:17:25" "[oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?" (number mark "        jwilk@jwilk. Sep  6    7/197   " thread-indent "\"Re: [oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?\"\n") "<20180905233220.GK1664@takahe.colorado.edu>" ("<CAJ_zFkLXTpjCijqNsHs0ZR4NdVwM+16ojUmxjYu0aZAgW=QhKQ@mail.gmail.com>" "<20180903105747.dihmczuqhl4kcnx5@suse.de>" "<CAJ_zFkLOkSWe8x5N9Mf9bx1J9+oLnzNtHzTfEDXg0JGPj7N7DA@mail.gmail.com>" "<CAJ_zFk++=BcFw0mU1NefSCkGqo3RzRjePQwPo0mCUzL=QeGBiA@mail.gmail.com>" "<F21BEEA3-4932-472D-9FEA-A318F543861D@gmail.com>" "<CAJ_zFkLmua6XK9iRV-TRQsXKXo=s9Y32FQjOM5UB_UPrrNsAxw@mail.gmail.com>" "<CAJ_zFkLvLBnn8OO6Q3JuqyvpRKoo=63wE1meqsT_jR4USir4DQ@mail.gmail.com>" "<20180905150128.5f9430f4@jabberwock.cb.piermont.com>" "<74d8474f-f18b-7543-a8a8-6072a416aca6@gathman.org>" "<20180905233220.GK1664@takahe.colorado.edu>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 9257 invoked by uid 550); 6 Sep 2018 13:17:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,62 +11,39 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 3992 invoked from network); 27 Aug 2025 19:31:03 -0000
-ARC-Filter: OpenARC Filter v1.0.0 mx.pao1.isc.org BA7D14D1660
-Authentication-Results: mx.pao1.isc.org; arc=none smtp.remote-ip=149.20.2.90
-ARC-Seal: i=1; a=rsa-sha256; d=isc.org; s=ostpay; t=1756323053; cv=none; b=cI68Zrl+lk6YXnQh/ygPGxfr3rEnkrUq0s/yGBXNTx13cBGxtyxbvT0vAlPJZjnBo3uzhdlJOOVM09wluTOJkHKwGVkHf2NR/NIZc/wHwW1g+1Zu2tKNIhGy96HTJnsugubKy+Zr9mgNxxMLVF/Abu7Uy+w+pt3bnsh/m5cL5zE=
-ARC-Message-Signature: i=1; a=rsa-sha256; d=isc.org; s=ostpay; t=1756323053;
-	c=relaxed/relaxed; bh=ZYNBoZdU6254RarQ+vJYI6vU/JALB54qW13GOZabxhY=;
-	h=DKIM-Signature:DKIM-Signature:Message-ID:Date:MIME-Version:From:
-	 Subject:To; b=f1f/zsux9mZt9SFhsUt/BA3e3WSnronBBDuFTur1nSglIe1U6oCmhXz6NG4ubMQv5l+NZCmvYArMPTUKM0RV/q6s7/tTRdb104kkJmmYbTSP4l06bvuwzL2a2m7Rj5JXzCXLy+N8K4LHFecI/EP7Tr5epIL921PBzKveQ5PlwuU=
-ARC-Authentication-Results: i=1; mx.pao1.isc.org
-DKIM-Filter: OpenDKIM Filter v2.10.3 mx.pao1.isc.org BA7D14D1660
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=isc.org; s=ostpay;
-	t=1756323053; bh=Pt/v8w77N9cKnSNskUjn6A6G+S3klbPzBO8f8K1R9SY=;
-	h=Date:From:Subject:To:Cc;
-	b=gKrls2+l312gc/uKkworC4lTbhTsixPifm/EId8mnN+RzE1bM/2U1u5eEdIudlo9G
-	 idXapxOuXsOsCxxd64vNul7E62dfCBbHaGYWpRC+0pdJSk2Hz6kiMax5xcbL62bQul
-	 pI/ctnBdgqP93zzM930W+kr/QZPfi2yO9pefnRYc=
-DKIM-Filter: OpenDKIM Filter v2.10.3 zimbra10.isc.org A2B942E60129
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=isc.org;
-	s=05DFB016-56A2-11EB-AEC0-15368D323330; t=1756323053;
-	bh=ZYNBoZdU6254RarQ+vJYI6vU/JALB54qW13GOZabxhY=;
-	h=Message-ID:Date:MIME-Version:From:To;
-	b=XXzQfe/mXSFEp43SP+gyBsVrlwqvFIKffZ1dM7WMtXmpLfe9puZsZ0XVQ0oMYLvei
-	 V1mNfL6PRKMz7hEwxv8lINCqkGqRK5PQywTgMjzAXWqvozoJPDO17HMsPlSY2aaTNJ
-	 x4uCxOFEtc0ahGHMndYxP6JXAONhCUiWmO4DX32I=
-Message-ID: <e969cce7-9c38-4b6e-85be-2046be464452@isc.org>
-Date: Wed, 27 Aug 2025 15:30:52 -0400
+Received: (qmail 9226 invoked from network); 6 Sep 2018 13:17:43 -0000
+Message-ID: <20180906131725.5dyq5xjweg5ljet4@jwilk.net>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <CAJ_zFkLXTpjCijqNsHs0ZR4NdVwM+16ojUmxjYu0aZAgW=QhKQ@mail.gmail.com>
+ <20180903105747.dihmczuqhl4kcnx5@suse.de>
+ <CAJ_zFkLOkSWe8x5N9Mf9bx1J9+oLnzNtHzTfEDXg0JGPj7N7DA@mail.gmail.com>
+ <CAJ_zFk++=BcFw0mU1NefSCkGqo3RzRjePQwPo0mCUzL=QeGBiA@mail.gmail.com>
+ <F21BEEA3-4932-472D-9FEA-A318F543861D@gmail.com>
+ <CAJ_zFkLmua6XK9iRV-TRQsXKXo=s9Y32FQjOM5UB_UPrrNsAxw@mail.gmail.com>
+ <CAJ_zFkLvLBnn8OO6Q3JuqyvpRKoo=63wE1meqsT_jR4USir4DQ@mail.gmail.com>
+ <20180905150128.5f9430f4@jabberwock.cb.piermont.com>
+ <74d8474f-f18b-7543-a8a8-6072a416aca6@gathman.org>
+ <20180905233220.GK1664@takahe.colorado.edu>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-From: Ben Scott <bscott@isc.org>
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20180905233220.GK1664@takahe.colorado.edu>
+User-Agent: NeoMutt/20180716
+X-Ovh-Tracer-Id: 2947887431339857830
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedtjedriedvgdeifecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemuceftddtnecu
+Date: Thu, 6 Sep 2018 15:17:25 +0200
+From: Jakub Wilk <jwilk@jwilk.net>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: More Ghostscript Issues: Should we disable PS
+ coders in policy.xml by default?
 To: oss-security@lists.openwall.com
-Cc: security-officer@isc.org
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] ISC has disclosed one vulnerability in Kea (CVE-2025-40779)
 
+* Leonid Isaev <leonid.isaev@jila.colorado.edu>, 2018-09-05, 17:32:
+>pdf files can contains things like javascript...
 
-On 27 August 2025 we (Internet Systems Consortium) disclosed one 
-vulnerability affecting our Kea software:
-
-- CVE-2025-40779: Kea crash upon interaction between specific client 
-options and subnet selection https://kb.isc.org/docs/cve-2025-40779
-
-New versions of Kea are available at the following URLs:
-
-Stable: https://downloads.isc.org/isc/kea/3.0.1/
-
-Development: https://downloads.isc.org/isc/kea/3.1.1/
-
-With the public announcement of these vulnerabilities, the embargo 
-period is ended and any updated software packages that have been 
-prepared may be released.
+Do any open-source PDF browsers actually execute embedded JS?
 
 -- 
-Ben Scott <bscott@isc.org>
-Support Engineer
-Internet Systems Consortium
+Jakub Wilk
