@@ -1,46 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/26/1
-Message-ID: <20180826005658.GA5795@osmium.pennocktech.home.arpa>
-Date: Sat, 25 Aug 2018 20:56:59 -0400
-From: Phil Pennock <oss-security-phil@...dhuis.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/07/1
+Message-ID: <CADDhp-LME6id-2V0UhF2OaVFZkna2exQfkARkORrNVgJ4-Pu0A@mail.gmail.com>
+Date: Fri, 7 Sep 2018 09:54:02 +1000
+From: Jeremy Choi <jechoi@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Jakub Wilk <jwilk@...lk.net>
-Subject: Re: Travis CI MITM RCE
+Subject: perl Crypt::JWT vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 2018-08-25 at 23:49 +0200, Jakub Wilk wrote:
-> The new code looks like this:
-> 
->    apt-key list | awk -F'[ /]+' '/expired:/{printf "apt-key adv --recv-keys --keyserver keys.gnupg.net %s\\n", $3}' | sudo sh
+A vulnerability that might be able to cause bypass authentication was
+discovered by myself in Perl Crypt::JWT package prior to 0.023(fix -
+https://github.com/DCIT/perl-Crypt-JWT/commit/b98a59b42ded9f9e51b2560410106207c2152d6c
+).
+## Details
+
+(JWT.pm)
+606 # key
+607 my $key = defined $args{keypass} ? [$args{key}, $args{keypass}] :
+$args{key};
+608 my $kid = exists $header->{kid} ? $header->{kid} :
+$unprotected_header->{kid};
+609 if (!defined $key && defined $kid && $args{kid_keys}) {
+610 my $k = _kid_lookup($kid, $args{kid_keys}, $alg);
+611 $key = $k if defined $k;
+612 }
+613 # if no key given, try to use 'jwk' value from header
+614 $key = $header->{jwk} if !$key && $header->{jwk};
+
+The vulnerability comes from line 614. If no 'kid' is given, 'jwk' will be
+used instead. Where 'RS256' is set as alg, it's okay as _prepare_rsa_key()
+will be failed. However, if 'HS256' is set, the key from the 'jwk' header
+is used for decoding.
+
 ...
->   $ apt-key list | grep -A1 -w A15703C6
->   pub   4096R/A15703C6 2016-01-11 [expires: 2020-01-05]
->   uid                  MongoDB 3.4 Release Signing Key <packaging@...godb.com>
 
-As a security/scalability aside which might amuse and/or cause
-face-palming: I used to run an SKS keyserver in the pool; one time, when
-debugging, I enabled request logging ...
+537 elsif ($alg =~ /^HS(256|384|512)$/) { # HMAC integrity
+538 $key = _prepare_oct_key($key);
+539 return 1 if $sig eq hmac("SHA$1", $key, $data);
+540 }
 
-Well over 50% of all requests were for that one key.
+...
 
-I'm not the only one to have noticed and I know that I was not alone
-amongst keyserver operators in being annoyed that a free service to the
-community was suddenly being hammered by one actor.  I recall discussing
-with at least one person either blacklisting the key or the IP addresses
-used frequently for that key.
+65 sub _prepare_oct_key {
+66 my ($key) = @_;
+67 croak "JWT: undefined oct key" unless defined $key;
+68 if (ref $key eq 'HASH' && $key->{k} && $key->{kty} && $key->{kty} eq
+'oct') {
+69 return decode_b64u($key->{k});
+70 }
+71 elsif (!ref $key) {
+72 return $key;
+73 }
 
-The keyservers are a swamp; if you want to include one key, then include
-the key as static data in your builds/CI configuration, so that it's
-coming from a trusted source each time: your own data.
+Since the jwk key is a string, it reaches line 72 and then 539 above.
 
-If you're building infrastructure which needs to get data from off-site,
-then consider whether or not you can provide template directives which
-people can include in their command lists, and you then populate the
-template with the correct current commands for that directive.  Eg, if
-I'm talking to Docker inside Circle CI, I don't set a bunch of variables
-myself, I just say `setup_remote_docker` and let Circle CI figure out
-which commands should be run.  For "everything is a shell command"
-setup, then perhaps `$CICMD_APT_KEYS_UPDATE` could be made available.
-Or `"${CICMD_APT_KEYS_UPDATE[@]}"` if even more constrained.
+If a project uses Crypt::JWT for its authentication without additional
+mitigation, it may allow attackers to bypass authentication by providing a
+token by crafting with hmac() with 'HS(256|384|512)'
 
--Phil
+I'm requesting a CVE ID through DWF.
+
+Thanks
+--
+Jeremy Choi / Red Hat Product Security
+
