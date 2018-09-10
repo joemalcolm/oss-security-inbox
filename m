@@ -1,31 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/28/3
-Message-ID: <20180228230951.37205826@pc1>
-Date: Wed, 28 Feb 2018 23:09:51 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Information on file, sqlite, libarchive, pcre issues for CVE IDs assigned by Apple?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/10/2
+Message-ID: <CACHnxzxipvde-bzy=9ssjMJQMj8ipRmSf2Uowif_MgEZvCxSxg@mail.gmail.com>
+Date: Mon, 10 Sep 2018 14:45:56 -0400
+From: Christopher Shannon <christopher.l.shannon@...il.com>
+To: dev@...ivemq.apache.org, users@...ivemq.apache.org
+Cc: The Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com
+Subject: Re: [ANNOUNCE] CVE-2018-11775: ActiveMQ Client - Missing TLS Hostname Verification
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 28 Feb 2018 21:24:10 +0100
-Moritz Muehlenhoff <jmm@...ian.org> wrote:
+I just realized I had a typo in the announcement, the versions
+affected should be:
+Apache ActiveMQ 5.0.0 - 5.15.5
 
-> Of the IDs mentioned above, only CVE-2017-10989 refers to specific,
-> identifiable information. Does anyone on the list have additional
-> information on any of these bugs; allowing to map them to upstream
-> bug reports/patches?
-
-This only partly answers your question, but the oss-fuzz issues are
-handled in a public bug tracker (public as in "they become public once
-they're fixed or a deadline has passed" I believe):
-https://bugs.chromium.org/p/oss-fuzz/issues/list
-
-You'll find issues in sqlite, file and libarchive there, but of course
-that doesn't give you a mapping to the CVEs assigned.
-
--- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+The file will be updated shortly.
+On Mon, Sep 10, 2018 at 2:40 PM Christopher Shannon
+<christopher.l.shannon@...il.com> wrote:
+>
+> The following security vulnerability was reported against Apache
+> ActiveMQ 5.15.5 and older versions.
+>
+> Please check the following document and see if you’re affected by the issue.
+>
+> http://activemq.apache.org/security-advisories.data/CVE-2018-11775-announcement.txt
+>
+> Apache ActiveMQ 5.15.6 has been released with appropriate fixes and is
+> available for upgrade.
