@@ -1,34 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/09/7
-Message-ID: <CAC1dCwUfCG9Vo8UhBzE1U7EgedjaVuDqQ3qYpXn0mFv8DXYT0Q@mail.gmail.com>
-Date: Tue, 9 Oct 2018 16:05:18 -0400
-From: Tim Allison <tallison@...che.org>
-To: announce@...che.org, dev@...a.apache.org, user@...a.apache.org,  Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com
-Subject: [CVE-2018-11796] Apache Tika Denial of Service via XML Entity Expansion Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/10/3
+Message-ID: <20180910190717.GA29060@openwall.com>
+Date: Mon, 10 Sep 2018 21:07:17 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: The Apache Security Team <security@...che.org>
+Subject: Re: [ANNOUNCE] CVE-2018-11775: ActiveMQ Client - Missing TLS Hostname Verification
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-11796: Apache Tika Denial of Service via XML Entity Expansion
-Vulnerability
+Christopher,
 
-Severity: Medium
+On Mon, Sep 10, 2018 at 02:40:05PM -0400, Christopher Shannon wrote:
+> Please check the following document and see if you're affected by the issue.
+> 
+> http://activemq.apache.org/security-advisories.data/CVE-2018-11775-announcement.txt
 
-Vendor:
-The Apache Software Foundation
+Thank you for bringing this to oss-security.  However, please be aware
+that including essential information only by reference is against list
+content guidelines here:
 
-Versions Affected:
-Apache Tika 0.1 to 1.19
+https://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
 
-Description:
-In Apache Tika 1.19 (CVE-2018-11761), we added an entity expansion
-limit for XML parsing.  However, Tika reuses SAXParsers and calls
-reset() after each parse, which, for Xerces2 parsers, as per the
-documentation, removes the user-specified SecurityManager and
-thus removes entity expansion limits after the first parse.
-Apache Tika 1.19 is therefore still vulnerable to entity
-expansions which can lead to a denial of service attack.
+which include:
 
-Mitigation:
-Apache Tika users should upgrade to 1.19.1 or later
+"At least the most essential part of your message (e.g., vulnerability
+detail and/or exploit) should be directly included in the message itself
+(and in plain text), rather than only included by reference to an
+external resource.  Posting links to relevant external resources as well
+is acceptable, but posting only links is not.  Your message should
+remain valuable even with all of the external resources gone."
 
-Credit:
-This issue was discovered by Slava Gorelik of CloudAlly.
+To correct this, I've attached the entire text file from the URL above,
+with the typo corrected as you mentioned in your follow-up message.
+
+Alexander
+
+View attachment "CVE-2018-11775-announcement.txt" of type "text/plain" (560 bytes)
