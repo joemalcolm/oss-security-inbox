@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1652" "Tuesday" "31" "October" "2017" "19:57:14" "+0100" "Steffen Nurpmeso" "steffen@sdaoden.eu" "<20171031185714.Z6cNT%steffen@sdaoden.eu>" "28" "Re: [oss-security] Fw: Security risk of vim swap files" "^Date:" nil nil "10" "2017103118:57:14" "[oss-security] Fw: Security risk of vim swap files" (number mark "        steffen@sdao Oct 31   28/1652  " thread-indent "\"Re: [oss-security] Fw: Security risk of vim swap files\"\n") "<20171031175407.jcniviupwyab6qcl@sentinelchicken.org>" ("<20171031132352.2df6d2ad@pc1>" "<20171031175407.jcniviupwyab6qcl@sentinelchicken.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1932" "Monday" "10" "September" "2018" "21:07:17" "+0200" "Solar Designer" "solar@openwall.com" "<20180910190717.GA29060@openwall.com>" "59" "Re: [oss-security] [ANNOUNCE] CVE-2018-11775: ActiveMQ Client - Missing TLS Hostname Verification" nil nil nil "9" "2018091019:07:17" "[oss-security] [ANNOUNCE] CVE-2018-11775: ActiveMQ Client - Missing TLS Hostname Verification" (number mark "U       solar@openwa Sep 10   59/1932  " thread-indent "\"Re: [oss-security] [ANNOUNCE] CVE-2018-11775: ActiveMQ Client - Missing TLS Hostname Verification\"\n") "<CACHnxzys9=nsLrTd9CHOM9Um0UQPQV50PHoy906iqQ=3wDV6vg@mail.gmail.com>" ("<CACHnxzys9=nsLrTd9CHOM9Um0UQPQV50PHoy906iqQ=3wDV6vg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26098 invoked by uid 550); 31 Oct 2017 19:12:35 -0000
+Received: (qmail 19551 invoked by uid 550); 10 Sep 2018 19:08:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,51 +11,78 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 31749 invoked from network); 31 Oct 2017 18:57:26 -0000
-Message-ID: <20171031185714.Z6cNT%steffen@sdaoden.eu>
-References: <20171031132352.2df6d2ad@pc1>
- <20171031175407.jcniviupwyab6qcl@sentinelchicken.org>
-In-Reply-To: <20171031175407.jcniviupwyab6qcl@sentinelchicken.org>
-Mail-Followup-To: oss-security@lists.openwall.com
-User-Agent: s-nail v14.9.5-8-g3dc1d4ee
-OpenPGP: id=232C220BCB5690A37BD22FFDEB66022795F382CE;
- url=https://www.sdaoden.eu/downloads/steffen.asc
-BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
- the world can make no bugs.
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: base64
-Date: Tue, 31 Oct 2017 19:57:14 +0100
-From: Steffen Nurpmeso <steffen@sdaoden.eu>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Fw: Security risk of vim swap files
+Received: (qmail 18424 invoked from network); 10 Sep 2018 19:08:02 -0000
+Date: Mon, 10 Sep 2018 21:07:17 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
+Cc: The Apache Security Team <security@apache.org>
+Message-ID: <20180910190717.GA29060@openwall.com>
+References: <CACHnxzys9=nsLrTd9CHOM9Um0UQPQV50PHoy906iqQ=3wDV6vg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: multipart/mixed; boundary="n8g4imXOkfNTN/H1"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACHnxzys9=nsLrTd9CHOM9Um0UQPQV50PHoy906iqQ=3wDV6vg@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] [ANNOUNCE] CVE-2018-11775: ActiveMQ Client - Missing TLS Hostname Verification
 
-VGltIDx0aW0tc2VjdXJpdHlAc2VudGluZWxjaGlja2VuLm9yZz4gd3JvdGU6
-CiB8T24gVHVlLCBPY3QgMzEsIDIwMTcgYXQgMDE6MjM6NTJQTSArMDEwMCwg
-SGFubm8gQvZjayB3cm90ZToKIHw+IEkganVzdCBzZW50IHRoaXMgdG8gdGhl
-IHZpbSBkZXYgbGlzdCwgYnV0IEkgZ3Vlc3MgaXQncyBpbnRlcmVzdGluZyBm
-b3IKIHw+IG9zcy1zZWN1cml0eSwgdG9vLgogfD4gLi4uCiAuLi4KIHxTdXJl
-LCB5b3UgY2FuIGFyZ3VlIHRoYXQgbWF5YmUgc29tZSBzeXN0ZW1zIHNob3Vs
-ZCBpZ25vcmUgdGhlc2UgZmlsZXMsCiB8YmxvY2sgYWNjZXNzLCBldGMsIGJ1
-dCBpdCBpcyBwcmV0dHkgYWJzdXJkIHRvIGV4cGVjdCBldmVyeSBvdGhlciBw
-aWVjZQogfG9mIHNvZnR3YXJlIGluIHRoZSB1bml2ZXJzZSB0byB3b3JrIGFy
-b3VuZCB2ZXJ5IHVuc2FmZSBkZWZhdWx0cyBvZiB0ZXh0CiB8ZWRpdG9ycy4g
-IAogfAogfEFsc28sIGl0IGFsbW9zdCBuZXZlciBtYWtlcyBzZW5zZSB0byBw
-dXQgdGhpbmdzIGluIC90bXAsIGZvciBzZXZlcmFsCiB8cmVhc29ucyBwb2lu
-dGVkIG91dCBieSBvdGhlcnMuICBNYWtpbmcgfi8udmltLy4uLiB0aGUgZGVm
-YXVsdCBsb2NhdGlvbgogfGNsZWFybHkgaXMgdGhlIGJlc3Qgc29sdXRpb24u
-CgpJIGZvciBvbmUgcmVhbGx5IGRpc2xpa2UgdGhhdCBmb3IgbWFueSB5ZWFy
-cyAoaSB0aGluayAuZ2NvbmYgYW5kCmFsbCBhcm91bmQgdGhhdCB3YXMgdGhl
-IGZpcnN0IHRpbWUgaSByZWNvZ25pemVkIHRoZSBwcm9ibGVtKSB0aGF0Cm1v
-cmUgYW5kIG1vcmUgcHJvZ3JhbXMgdGhpbmsgdGhleSBjYW4gc2ltcGx5IGNy
-ZWF0ZSBhIGRvdApkaXJlY3RvcnkgaW4gbXkgJEhPTUUuICBJbmRlZWQgaSBo
-YXZlIHN0YXJ0ZWQgdXNpbmcgdW1hc2sgMDA3NyBkdWUKdG8gdGhpcy4gIEkg
-dXNlICJzZXQgZGlyPX4vdHJhZmZpYyIgYW5kICJzZXQgYmFja3VwZGlyPX4v
-dHJhZmZpYyIKYW5kIHRoYXQgaGFzIGEgbW9kZSBvZiAwNzAwLiAgTXkgdmlt
-KHMpIGhhcy92ZSBuZXZlciBuZWVkZWQgfi8udmltLgoKLS1zdGVmZmVuCnwK
-fERlciBLcmFnZW5iYWVyLCAgICAgICAgICAgICAgICBUaGUgbW9vbiBiZWFy
-LAp8ZGVyIGhvbHQgc2ljaCBtdW50ZXIgICAgICAgICAgIGhlIGNoZWVyZnVs
-bHkgYW5kIG9uZSBieSBvbmUKfGVpbmVuIG5hY2ggZGVtIGFuZGVyZW4gcnVu
-dGVyICB3YS5rcyBoaW1zZWxmIG9mZgp8KEJ5IFJvYmVydCBHZXJuaGFyZHQp
-Cg==
+--n8g4imXOkfNTN/H1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+
+Christopher,
+
+On Mon, Sep 10, 2018 at 02:40:05PM -0400, Christopher Shannon wrote:
+> Please check the following document and see if you're affected by the issue.
+> 
+> http://activemq.apache.org/security-advisories.data/CVE-2018-11775-announcement.txt
+
+Thank you for bringing this to oss-security.  However, please be aware
+that including essential information only by reference is against list
+content guidelines here:
+
+https://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
+
+which include:
+
+"At least the most essential part of your message (e.g., vulnerability
+detail and/or exploit) should be directly included in the message itself
+(and in plain text), rather than only included by reference to an
+external resource.  Posting links to relevant external resources as well
+is acceptable, but posting only links is not.  Your message should
+remain valuable even with all of the external resources gone."
+
+To correct this, I've attached the entire text file from the URL above,
+with the typo corrected as you mentioned in your follow-up message.
+
+Alexander
+
+--n8g4imXOkfNTN/H1
+Content-Type: text/plain; charset=utf8
+Content-Disposition: attachment; filename="CVE-2018-11775-announcement.txt"
+Content-Transfer-Encoding: 8bit
+
+
+CVE-2018-11775: ActiveMQ Client - Missing TLS Hostname Verification
+
+Severity: Important
+
+Vendor:
+The Apache Software Foundation
+
+Versions Affected:
+Apache ActiveMQ 5.0.0 - 5.15.5
+
+Description:
+
+TLS hostname verification when using the Apache ActiveMQ Client was missing which could make the client vulnerable to a MITM attack between a Java application using the ActiveMQ client and the ActiveMQ server. This is now enabled by default.
+
+Mitigation:
+
+Upgrade to Apache ActiveMQ 5.15.6
+
+Credit:
+This issue was discovered by Peter Stöckli (Alphabot Security)
+
+--n8g4imXOkfNTN/H1--
