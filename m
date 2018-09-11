@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2013" "Wednesday" "13" "April" "2016" "09:46:14" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160413134614.8D19C332076@smtpvbsrv1.mitre.org>" "48" "[oss-security] Re: Infinite loops parsing malicious DER certificates in libtasn1 4.7" "^Cc:" nil nil "4" "2016041313:46:14" "[oss-security] Re: Infinite loops parsing malicious DER certificates in libtasn1 4.7" (number mark "        cve-assign@m Apr 13   48/2013  " thread-indent "\"[oss-security] Re: Infinite loops parsing malicious DER certificates in libtasn1 4.7\"\n") "<CFA7B491-4950-4B93-A00D-AD33B7EDD420@trust-in-soft.com>" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1073" "Tuesday" "11" "September" "2018" "17:25:47" "+0530" "Dhiraj Mishra" "mishra.dhiraj95@gmail.com" "<CAG8b5tSvm1nZ=Q=3L=YGnbjmnD1i8Le4xC3y=n=N+P4O1wYW-A@mail.gmail.com>" "32" "[oss-security] tdesktop leaks user IP address" nil nil nil "9" "2018091111:55:47" "[oss-security] tdesktop leaks user IP address" (number mark "U       mishra.dhira Sep 11   32/1073  " thread-indent "\"[oss-security] tdesktop leaks user IP address\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 22294 invoked by uid 550); 13 Apr 2016 13:46:35 -0000
+Received: (qmail 21537 invoked by uid 550); 11 Sep 2018 12:50:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,61 +11,70 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 22190 invoked from network); 13 Apr 2016 13:46:26 -0000
-In-Reply-To: <CFA7B491-4950-4B93-A00D-AD33B7EDD420@trust-in-soft.com>
-Message-Id: <20160413134614.8D19C332076@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Wed, 13 Apr 2016 09:46:14 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Infinite loops parsing malicious DER certificates in libtasn1 4.7
-To: cuoq@trust-in-soft.com
+Received: (qmail 16046 invoked from network); 11 Sep 2018 11:56:10 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=IeKnfAGXKneTdbmsMzGDbFmP9ZLSFZiO7Ou0HG65tBQ=;
+        b=CuvqQnRuw0PxNi3npYgNe3WREy4A0GOWtDT0V0IsEtjClI5FPQEYDQLqoKe1b8dnCT
+         y9EexWHEulOaBANrA0EzJKkReTcPoYZF488SsL7hX5In/swC8q59fJ4GO4iw9bFUjmWz
+         HBtroyU8hVxEPjqBLpnB6rqwk9kScyPkSVU9rcK4LOTc3+xv09sOk+shVKkLBfr9GZ6D
+         t9qq/ZwJY1OAz94sZrB3CHatoiYHFYUuWOKs1DkK5FV4Z9+SvI/r5N45J4+u0qNZiYaS
+         Xh/l9l1UzHGIpEeY7h/4zqzykXQ/wPITiPu1MF3yYSZdwjZsnqJxFpHb8mBPStdWcTP6
+         EMLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=IeKnfAGXKneTdbmsMzGDbFmP9ZLSFZiO7Ou0HG65tBQ=;
+        b=P9gJGlOPkUl2KUuGmQZ37xx5JVPu7eamilmKe2/C/S5+SNbYhTIo3hTkeaHwNzqzjJ
+         8hK67TEYk1uGChlYPEq2ZhNM0doqhHQwjv0OilQVCuddvk24Hl0L3d+JFaPCWHAatvgg
+         TKaVYJrDd+bSGWsmAROT827D/EAPDEs0UX6BQ3Jxw5+14SVtdLY+SCbEi/NfHeMs5Nen
+         eyp9ldNTqDGssdFm1liboRAL7Cu/+GcAXWkXlHkMXwD4Exj1zYVW9hpvY6znz3ZOkS80
+         Cpoc93JjMBDbbYnePaZVEnyzyKirh41bIo6E1LxxqGI1qEMTh+kyGPQa2p3huxwNBDuh
+         4A4g==
+X-Gm-Message-State: APzg51B3BXaK2SE3d12za5LAO/f9KBF6Ob4xMzbSih8TbDK9sF1Sv+UA
+	Jzrt6R6nIYHc04beDNTimpkw88BMP2taIvoroE5jID8X
+X-Google-Smtp-Source: ANB0VdYgYj5p5R7IYqd73U8HsBrm0rM3OwcASJDVXBAAY3RMywyBgaWWPV2loAtupngp7VrzgQ7nBVEkFr3SeqcCPbA=
+X-Received: by 2002:a17:902:68:: with SMTP id 95-v6mr26521124pla.248.1536666958444;
+ Tue, 11 Sep 2018 04:55:58 -0700 (PDT)
+MIME-Version: 1.0
+From: Dhiraj Mishra <mishra.dhiraj95@gmail.com>
+Date: Tue, 11 Sep 2018 17:25:47 +0530
+Message-ID: <CAG8b5tSvm1nZ=Q=3L=YGnbjmnD1i8Le4xC3y=n=N+P4O1wYW-A@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000323c71057597288c"
+Subject: [oss-security] tdesktop leaks user IP address
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--000000000000323c71057597288c
+Content-Type: text/plain; charset="UTF-8"
 
-> The libtasn1 library, in its 4.7 version, can loop for a long time or
-> indefinitely when it is used to parse DER representations of X509
-> certificates, leading to a denial of service. Some of these loops may
-> in addition increase heap or stack usage, leading to more issues.
-> 
-> These issues were found by Pascal Cuoq and Miod Vallat using american
-> fuzzy lop. They are fixed in libtasn1 version 4.8. ...
-> http://ftp.gnu.org/gnu/libtasn1/libtasn1-4.8.tar.gz
+This is still not fix in telegram desktop  team says their is nothing to
+fix here and this is working has intended.
 
-We can assign a CVE ID for this entry in the libtasn1-4.8.tar.gz NEWS
-file:
+tdesktop: https://github.com/telegramdesktop/tdesktop
 
-  Noteworthy changes in release 4.8 (released 2016-04-11) [stable]
+*Steps to reproduce:*
+1. ./Telegram
+2. Call end user
+3. The access log on CLI reveals the end user public IP address.
 
-  Fixes to avoid an infinite recursion when decoding without
-  the ASN1_DECODE_FLAG_STRICT_DER flag. Reported by Pascal Cuoq.
+By default in tdesktop p2p is enable, which open a direct communication
+when calling to the other user, potentially seeing his/her IP. Telegram is
+supposedly is a secure messaging application but while calling another user
+leaks his/her public IP address in access log. However, by navigating to
+Settings and Privacy  > Calls > and set P2P to `nobody` in telegram apps in
+(iOS and android) will not allow others to view public IP of end user, but
+this option is still not available in tdesktop, which makes tdesktop
+vulnerable to this issue.
 
-Use CVE-2016-4008.
 
-If there were unrelated problems that needed to be resolved with a
-different solution approach (e.g., an infinite "while" loop within one
-function) and require any additional CVE IDs, please let us know.
+Thank you
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+-- 
+Regards
 
-iQIcBAEBCAAGBQJXDk1DAAoJEL54rhJi8gl5wEsP/i8eqMazPJysJYMWPBXtBGtG
-SnJ1GT00Dm44hRCxq9S+zgn5H8Eb+jQ5rmqv6BLxos3ZbZzLODBD3Z3qh/NJpKhJ
-E7eBHOKo/+3PdDAZoulYMZCOrdPel/Ro0R2dM1EsvY30nYsGr8MHZGt+mpi6tBww
-cnseL43mxodK37cOa2UtERoLZ80VEjg8zcJOuXN8P8rLBVSxOhEo/4QxNkUZ58UX
-dwB/VikBnbyYwlVBd0Z736/snSZC0mFC/QeQhTw5eO5b93g2zPsJAkhyCwNwcEXe
-KdbyAJB//x4SUJR7UyAzXnI6VQT0AHUMSkHpd3tQPtJY9DdVmxOOBBG53kApg/My
-cfAVn/yEIJtpLRdCaeooyKdE6RgzbS8UMP1Bh7Aki1kbr+tyXU1bA6sUwkYcXL0C
-973xz5f3g1hNdfcUGzLTjUNxsVmD1bjUy13HAikfUAh4G12kDVjJZRpV2Uug/yMQ
-t+tHTAho5VRnYOxz/Jt8hYHCoy47gX4e/l4E2z63TJO3uARlgvx84H51VO13irRf
-ust0bks3yrY60GXStuIXEIwL6sRiS3vJhQLOHY3uRF/piDuVIlUMfYmEVtcJ0TAW
-HpXQeeGNrkUoGhpLJTSywU1ahnADbRYgr524OB1ClE0aPIKhADNj6+oeDaofREJ/
-w1qcvLfEUel2zWryIKeg
-=cjc1
------END PGP SIGNATURE-----
+*Dhiraj Mishra.*GPG ID :  51720F56   |  Finger Print : 1F6A FC7B 05AA CF29
+8C1C  ED65 3233 4D18 5172 0F56
+
+--000000000000323c71057597288c--
