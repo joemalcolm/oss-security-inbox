@@ -1,24 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/08/1
-Message-ID: <CABDpyChoSC+O_whkL_7Zh4ZMiXf7qmWpKoa-hep0dS6MTnJYJA@mail.gmail.com>
-Date: Wed, 7 Nov 2018 13:24:03 -0800
-From: Daniel Dai <daijy@...che.org>
-To: user@...e.apache.org, dev@...e.apache.org, announce@...che.org,  security <security@...e.apache.org>, oss-security@...ts.openwall.com
-Subject: [SECURITY] CVE-2018-1314: Hive explain query not being authorized
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/11/1
+Message-ID: <20180911060436.3mf55d74rtfpv6qt@suse.de>
+Date: Tue, 11 Sep 2018 08:04:36 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: Ghostscript 9.24 issues
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-1314: Hive explain query not being authorized
+On Sun, Sep 09, 2018 at 12:26:01PM -0700, Tavis Ormandy wrote:
+> On Sat, Sep 8, 2018 at 3:42 AM Marius Bakke <mbakke@...tmail.com> wrote:
+> 
+> > Tavis Ormandy <taviso@...gle.com> writes:
+> >
+> > > Quick update, this
+> > > <http://git.ghostscript.com/?p=ghostpdl.git&a=commitdiff&h=5812b1b78fc4>
+> > > commit fixes that problem, but I noticed that fix is incomplete and can
+> > be
+> > > bypassed, so filed another bug for that (the new bug is 699718).
+> >
+> > I see <https://bugs.chromium.org/p/project-zero/issues/detail?id=1640>
+> > is now closed.  As far as I can tell, these are the (only) commits
+> > necessary on top of 9.24[*]:
+> >
+> >
+> > https://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=5812b1b78fc4d36fdc293b7859de69241140d590
+> >
+> > https://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=3e5d316b72e3965b7968bb1d96baa137cd063ac6
+> >
+> > https://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=643b24dbd002fb9c131313253c307cf3951b3d47
+> >
+> > Which are all variations of CVE-2018-16509.  Is my understanding correct?
 
-Severity: Important
+Mitre has assigned CVE-2018-16802 to these 3 commits.
 
-Vendor: The Apache Software Foundation
-
-Versions Affected: This vulnerability affects all versions of Hive,
-including 2.3.3, 3.1.0 and earlier
-
-Description: Hive "EXPLAIN" operation does not check for necessary
-authorization of involved entities in a query. An unauthorized user
-can do "EXPLAIN" on arbitrary table or view and expose table metadata
-and statistics.
-
-Mitigation: all Hive users shall upgrade to 2.3.4 or 3.1.1 or later
+Ciao, Marcus
