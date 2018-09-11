@@ -1,37 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/22/2
-Message-ID: <460649570.45004048.1529674363441.JavaMail.zimbra@redhat.com>
-Date: Fri, 22 Jun 2018 09:32:43 -0400 (EDT)
-From: Vladis Dronov <vdronov@...hat.com>
-To: Alexander Potapenko <glider@...gle.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2018-1000204: Linux kernel 3.18 to 4.16 infoleak due to incorrect handling of SG_IO ioctl
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/11/3
+Message-ID: <CAG8b5tSvm1nZ=Q=3L=YGnbjmnD1i8Le4xC3y=n=N+P4O1wYW-A@mail.gmail.com>
+Date: Tue, 11 Sep 2018 17:25:47 +0530
+From: Dhiraj Mishra <mishra.dhiraj95@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: tdesktop leaks user IP address
 Content-Type: text/plain; charset=utf-8
 
-Hello, Alexander,
+This is still not fix in telegram desktop  team says their is nothing to
+fix here and this is working has intended.
 
-Could you please, explain, why do you think CVE-2018-1000204 is a security
-flaw?
+tdesktop: https://github.com/telegramdesktop/tdesktop
 
-> The problem has limited scope, as users don't usually have permissions
-> to access SCSI devices. On the other hand, e.g. the Nero user manual
-> suggests doing `chmod o+r+w /dev/sg*` to make the devices accessible.
+*Steps to reproduce:*
+1. ./Telegram
+2. Call end user
+3. The access log on CLI reveals the end user public IP address.
 
-There is a check in the kernel in sg_build_indirect() exactly for this
-situation:
+By default in tdesktop p2p is enable, which open a direct communication
+when calling to the other user, potentially seeing his/her IP. Telegram is
+supposedly is a secure messaging application but while calling another user
+leaks his/her public IP address in access log. However, by navigating to
+Settings and Privacy  > Calls > and set P2P to `nobody` in telegram apps in
+(iOS and android) will not allow others to view public IP of end user, but
+this option is still not available in tdesktop, which makes tdesktop
+vulnerable to this issue.
 
-        [drivers/scsi/sg.c]
-        if (!capable(CAP_SYS_ADMIN) || !capable(CAP_SYS_RAWIO))
-                gfp_mask |= __GFP_ZERO;
 
-This means non-root user will get zero-ed pages even if it has o+rw access
-to /dev/sg*. Tests of your reproducer on systems available to me confirm
-this, i.e. non-root user gets a zero-ed out buffer even if it is able to
-access /dev/sg*.
+Thank you
 
-I may not got smth correctly, but for now I do not see CVE-2018-1000204
-as a security flaw and I believe a reject request to MITRE should be
-issued.
+-- 
+Regards
 
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+*Dhiraj Mishra.*GPG ID :  51720F56   |  Finger Print : 1F6A FC7B 05AA CF29
+8C1C  ED65 3233 4D18 5172 0F56
+
