@@ -1,79 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/26/3
-Message-ID: <20180826120058.GA7071@openwall.com>
-Date: Sun, 26 Aug 2018 14:00:58 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: About OpenSSH "user enumeration" / CVE-2018-15473
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/12/2
+Message-ID: <874leu7sdc.fsf@fifthhorseman.net>
+Date: Wed, 12 Sep 2018 09:33:19 -0400
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: Dhiraj Mishra <mishra.dhiraj95@...il.com>, oss-security@...ts.openwall.com
+Subject: Re: tdesktop leaks user IP address
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Aug 26, 2018 at 06:04:50PM +1000, Damien Miller wrote:
-> On Sat, 25 Aug 2018, Solar Designer wrote:
+Hi Dhiraj--
+
+On Tue 2018-09-11 17:25:47 +0530, Dhiraj Mishra wrote:
+> tdesktop leaks user IP address
 > 
-> > This could mean an extra getpwnam(3) call, which is a slightly greater
-> > timing leak than what's present in one call. That may be further
-> > mitigated by always doing two calls. Of course, this won't be anywhere
-> > near timing-safe anyway.
-> >
-> > Now, it can be tricky to pick a specific fallback username in
-> > OpenSSH-portable that we'd be OK with all non-existent usernames to
-> > behave similarly to. "root" may somewhat likely have unusual password
-> > hash (like it historically did on OpenBSD); "nobody" likely has its
-> > password locked (but maybe that's OK - it is in fact common for SSH
-> > users to have only public keys setup, and no passwords). Maybe there
-> > should be a way to override this dummy username in sshd_config.
-> 
-> That sounds like a fair amount of complexity in return for scant
-> benefit:
+> This is still not fix in telegram desktop  team says their is nothing to
+> fix here and this is working has intended.
 
-Thank you for sharing your opinion.
+Thanks for this report -- it's good to have people looking at metadata
+leakage and considering it as a security concern.  It is.
 
-To me, it sounds like greater complexity of the resulting code, but it's
-also a simpler change (higher level, easier to reason about) than your
-previously discussed commit.  (And it avoids the need for further
-reviews/changes dealing with maybe remaining worse-than-timing behavior
-differences for existing vs. non-existent usernames, except for users
-with non-default authentication settings - e.g., with authorized_keys
-files or on DenyUsers.)
+However, i'm not convinced that you've described the problem you're
+seeing well enough to be actionable yet.  In particular, it's not clear
+to me *whose IP address* you are concerned about leaking, and *where*
+you are concerned about it leaking.  It's also not clear to me that
+you've evaluated the impact/consequences of your proposed mitigation.
 
-> at best you dodge a few (IMO uninteresting) bugs, but now you
-> are guaranteed to have all your authz code exposed to a the attacker.
+I've written out several questions below in the hopes of helping clarify
+the concern, and figuring out what makes sense to do about it.  Please
+take these questions in the spirit of constructive engagement!
 
-This sounds like a misunderstanding.  With the approach I suggested,
-no extra pre-existing code would be exposed to any attacker (only very
-few newly added lines of code would be), because all of that code would
-have been reachable under the fallback username anyway.
+> tdesktop: https://github.com/telegramdesktop/tdesktop
+>
+> *Steps to reproduce:*
+> 1. ./Telegram
+> 2. Call end user
+> 3. The access log on CLI reveals the end user public IP address.
 
-> Moreover, using a "real fake" account gives a timing / system behaviour
-> baseline too.
+let's give the parties involved in this names so that it's easier to
+reason about.  Let's say that the call Initiator is Inigo, and that the
+call recipient is Rebecca.  So Inigo takes steps 1 and 2.  Whose public
+IP address (Inigo's?  Rebecca's?) leaks into which access log
+(Inigo's?  Rebecca's?  both?)?
 
-I'm not sure if that's what you meant, but yes it could be possible to
-see that the response time for non-existent users is nearly the same,
-whereas for other usernames it would vary slightly.  This is similar to
-other (currently possible) attacks on getpwnam(3) not being timing-safe.
+Is the concern really the inclusion of the IP address in the access log,
+or is it the fact that Rebecca's public IP address is visible to Inigo,
+and vice versa?  To whom else is this IP address visible?  Another way
+of asking this is: who is the adversary you're concerned about learning
+this IP address information?
 
-Your recent "global 5ms minimum plus an additional per-user 0-4ms delay
-derived from a host secret" time for failed authentication should help
-mitigate this.  [A further (yet still imperfect) mitigation would be to
-replace the nanosleep() with a busy wait (which would be a closer match
-to a system function taking longer to do its work, but still not exactly
-the same in terms of effect e.g. on concurrent authentication attempts).
-I am not sure if this further imperfect improvement is a good trade-off.
-With nanosleep(), we conserve server resources and energy.]
+ * someone looking at some specific logfile in the future?
 
-> It might be harder to discern, but techniques for making
-> remote observations of subtle system side-channels are scarily well-
-> developed, and I'm sure that it would be pretty easy to spot if people
-> applied them.
+ * the other party on the call during the call? (i.e. Inigo is Rebecca's
+   adversary, and vice versa)
 
-Right.  It's unrealistic to fully prevent such attacks given the
-existing non-timing-safe system interfaces.
+ * the Telegram server operator?
 
-Anyway, I don't insist on any specific approach (nor would my preference
-matter all that much), especially now that you've already made relevant
-changes in the way you did.  I merely wanted to point out that the
-attack surface increase was not certain (maybe that code was already
-exposed under other usernames, also pre-authentication) and could have
-been avoided with greater confidence using that other approach.
+ * a network monitor inspecting traffic?
 
-Alexander
+ * …
+
+> By default in tdesktop p2p is enable, which open a direct communication
+> when calling to the other user, potentially seeing his/her IP. Telegram is
+> supposedly is a secure messaging application but while calling another user
+> leaks his/her public IP address in access log. However, by navigating to
+> Settings and Privacy  > Calls > and set P2P to `nobody` in telegram apps in
+> (iOS and android) will not allow others to view public IP of end user, but
+> this option is still not available in tdesktop, which makes tdesktop
+> vulnerable to this issue.
+
+Who needs to set P2P to "nobody" to have this change?  If either party
+makes this choice is it sufficient for a given call?
+
+Presumably turning off P2P means routing the calls through a central
+server (perhaps via STUN/TURN or some other relay/proxy equivalent).  If
+that's not the case, how are calls completed when P2P is disabled?  Who
+operates that central server?
+
+What is the performance impact (on rates of successful connections, on
+latency during calls) of such a change?
+
+Is the central server operator already in a position to be able to force
+this shift from P2P to a centralized fallback?  What cost(s) would they
+pay if they force this shift?
+
+How does the potential for centralized mass surveillance of call traffic
+change if all calls are routed through the central server by default?
+
+Regards,
+
+       --dkg
+
+Download attachment "signature.asc" of type "application/pgp-signature" (228 bytes)
