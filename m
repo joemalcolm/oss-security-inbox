@@ -1,62 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/14/5
-Message-ID: <20181214152125.GA25196@openwall.com>
-Date: Fri, 14 Dec 2018 16:21:25 +0100
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: Jann Horn <jannh@...gle.com>
-Subject: Re: Linux kernel: userfaultfd bypasses tmpfs file permissions (CVE-2018-18397; since 4.11; fixed in 4.14.87 and 4.19.7)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/12/1
+Message-ID: <77328247.2610677.1536746725418@mail.yahoo.com>
+Date: Wed, 12 Sep 2018 10:05:25 +0000 (UTC)
+From: Andrea Cosentino <ancosen1985@...oo.com>
+To: Dev <dev@...el.apache.org>, Users <users@...el.apache.org>,  Apache Security Team <security@...che.org>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>,  "Shapira Eedo (GE Digital)" <eedo.shapira@...com>
+Subject: [SECURITY] New security advisory CVE-2018-8041 released for Apache Camel
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Dec 14, 2018 at 08:27:24AM -0500, Brad Spengler wrote:
-> I really wish such statistics would stop being cited as evidence of anything,
-> since the ingrained bias of CVE allocation (which is generally not done by
-> upstream itself, and is instead mostly done by the distros for issues that
-> affect their older kernels) inherently changes the range of conclusions that
-> can be reached.  These statistics and the "5 year lifetime" of Linux kernel
-> bugs are simply myths.  The original "5 year lifetime" analysis was wrong
-> from the start and already pointed out back then
-> (https://lwn.net/Articles/410674/), but people continue to cite it.
-> 
-> Garbage in, garbage out -- can we please stop feeding this pseudo-science?
+A new security advisory has been released for Apache Camel, that is fixed in
+the recent 2.20.4, 2.21.2 and 2.22.1 releases:
 
-I thought you'd say something like this.  Thanks.  What I did here is
-try and show that even using this biased data we see that sufficiently
-old kernels aren't affected by most vulnerabilities that are found and
-fixed in latest mainline kernels.
+CVE-2018-8041: Apache Camel's Mail is vulnerable to path traversal
 
-As I understand, you think that overall the data is biased towards more
-CVEs for old and long-living bugs than for newer and short-living bugs.
-Correct?  If so, and if this assumption is in fact correct, then my use
-of the biased data is also correct.
+Severity: MEDIUM
 
-But then, I just realized that Kees put the 3 critical issues separately
-on that illustration, and we can't tell from it whether or not any of
-those would fall in the 67 to 82 time range that I used to focus on most
-recently found issues.  Also, I chose the start of this range at 67
-specifically based on visible reduction in issues affecting 3.10.  In
-practice, if one were to decide on using a certain base kernel version
-at a given moment, they wouldn't have the hindsight that we have now.
-So my 1/8 figure is probably an underestimate (of what would be inferred
-from this biased data in an unbiased manner, ouch), but even with these
-corrections it does appear even from this data that older kernels are
-affected only by a minority of issues that are assigned CVEs, and need
-less frequent security patches.
+Vendor: The Apache Software Foundation
 
-Are we in agreement on this conclusion?
+Versions Affected: Camel 2.20.0 to 2.20.3, Camel 2.21.0 to 2.21.1 and Camel 2.22.0 
 
-> On Fri, Dec 14, 2018 at 02:07:55PM +0100, Solar Designer wrote:
-> > Slide 5 is in fact more relevant: it's an illustration showing
-> > "critical & high CVE lifetimes" against kernel versions.  Per this
-> > illustration, we can see that my example of 3.10 (as RHEL7's base
-> > kernel) is hit by many low-numbered issues, but is hit by only two in
-> > the 67 to 82 range, which is 1/8 or 12.5% of issues found that recently.
-> > This is consistent with what I said about it having needed to mature
-> > "for a few years and a few hundred revisions" after RHEL7 was first
-> > released.  I think it became mature enough just recently.  It didn't
-> > feel mature enough to me when I ran Trinity for a few days (with many
-> > restarts) on a RHEL7-derived system two years ago.  I hope those crashes
-> > have since been rediscovered with superior fuzzers allowing for easy
-> > reproduction, and patched.  We've seen major improvement in fuzzing.
+The unsupported Camel 2.x (2.19 and earlier) versions may be also affected.
 
-Alexander
+Description: Apache Camel's Mail is vulnerable to path traversal
+
+Mitigation: 2.20.x users should upgrade to 2.20.4, 2.21.0 users should upgrade to 2.21.2 and Camel 2.22.x users should upgrade to 2.22.1
+
+The JIRA tickets: https://issues.apache.org/jira/browse/CAMEL-12630 
+refers to the various commits that resovoled the issue, and have more details.
+
+Credit: This issue was discovered by Eedo Shapira <eedo dot shapira at ge dot com> from GE .
+
+On behalf of the Apache Camel PMC
+
+
+--
+Andrea Cosentino 
+----------------------------------
+Apache Camel PMC Chair
+Apache Karaf Committer
+Apache Servicemix PMC Member
+Email: ancosen1985@...oo.com
+Twitter: @oscerd2
+Github: oscerd
