@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1986" "Thursday" "19" "December" "2019" "00:33:59" "+0500" "Alexander E. Patrakov" "patrakov@gmail.com" nil "47" nil "^Date:" nil nil "12" nil nil (number mark "        patrakov@gma Dec 19   47/1986  " thread-indent "\"Re: [oss-security] [CVE-2019-16782] Possible Information Leak / Session Hijack Vulnerability in Rack\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] [CVE-2019-16782] Possible Information Leak / Session Hijack Vulnerability in Rack" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1112" "Wednesday" "12" "September" "2018" "10:05:25" "+0000" "Andrea Cosentino" "ancosen1985@yahoo.com" "<77328247.2610677.1536746725418@mail.yahoo.com>" "38" "[oss-security] [SECURITY] New security advisory CVE-2018-8041 released for Apache Camel" nil nil nil "9" "2018091210:05:25" "[oss-security] [SECURITY] New security advisory CVE-2018-8041 released for Apache Camel" (number mark "U       ancosen1985@ Sep 12   38/1112  " thread-indent "\"[oss-security] [SECURITY] New security advisory CVE-2018-8041 released for Apache Camel\"\n") "<77328247.2610677.1536746725418.ref@mail.yahoo.com>" ("<77328247.2610677.1536746725418.ref@mail.yahoo.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 12081 invoked by uid 550); 18 Dec 2019 19:34:22 -0000
+Received: (qmail 26604 invoked by uid 550); 12 Sep 2018 11:17:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,89 +11,73 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 12063 invoked from network); 18 Dec 2019 19:34:22 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=EwsEEjIqMDSvi7A5xUJe8G9lrxIUQC2T7V4dQWsrdXY=;
-        b=I9br3F11op70oMmyCPSl6URo/n7W0EuveJhD9jn3lsJkTaUTGlFbd2SMii+ONG+va4
-         U1DbGMmcPYaxSp1GWUTu3VftiZGqLjsL4HBR9HiwD4gG/r39gJnxxaoB5lk9I8GborFe
-         JJv9rYFN0p9+dBMtOnSfMuK5/fw7JRr7tRwaXA8BwHIdDw4NLiB3lZ73dOYNnR8X4Eei
-         IjMfVjxnbo+zx79GF2psb5j5zeBhvFu1ZrJB3flSLEnb5K4nCW7ZCfGLpgWF0d7RWKBD
-         GoRgWPizaLNaJpIbpRiR8p1tQlUJH6FdlkfjkzVa+OtyTi6KqkiSvg6a9mN6SJLil0Cb
-         92vQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=EwsEEjIqMDSvi7A5xUJe8G9lrxIUQC2T7V4dQWsrdXY=;
-        b=sr3aBAjNndlmI5CuMjoLFZeEpZt7ikOkHE3z2t2h9A9orjdeOG8q9+h7fIksknECNC
-         /s98pLwtYTbdh1hePZRN9jiOU/M/iH4OZJR4cpfTFBGRTuUnENSspp3OwnUWowF8sblo
-         isGmt+nBEWTt6s3sGlU2aFBfD6Jc3hZvnc1BIGddypZ1WNXB5+PkkGyEHKM7K6FV/Yfz
-         HztZXTbSjsYespQPi5wiohtxwP3ouuQ7zToyVHe+jlmX5s4+lR5nd5SaMIB9P8/YAuaF
-         2Y9TKCYe3d4ci5u8qubpZluWZY64sQ35t3bvDIGhGF69P6M73CR604FDlW/sbhk5c3Wc
-         2bhQ==
-X-Gm-Message-State: APjAAAVOSYtKKWac2QmpkX/chptftXf/aW/Jg7YWezIWCtfMkjgwjvJZ
-	EygUIeF8L4LR0LNo9DWrJKOKx4RSy7yQRSq6m16XGOR/B+k=
-X-Google-Smtp-Source: APXvYqyTwyGA3UZTGYrPeP/PhcWs0pFARC6IUJ2JmfIr3/HjlvWhIJKdK2G2Q/SxRuZaZ5jO4gBIr8Un6spvcPshfVY=
-X-Received: by 2002:a37:9f41:: with SMTP id i62mr4341763qke.272.1576697650092;
- Wed, 18 Dec 2019 11:34:10 -0800 (PST)
-MIME-Version: 1.0
-References: <20191218181602.GA62521@tc-lan-adapter.local>
-In-Reply-To: <20191218181602.GA62521@tc-lan-adapter.local>
-Message-ID: <CAN_LGv17OG6JB-dm+t62WbDJajEAdik+fncnownEvrv+NUSvoQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Date: Thu, 19 Dec 2019 00:33:59 +0500
-From: "Alexander E. Patrakov" <patrakov@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] [CVE-2019-16782] Possible Information Leak /
- Session Hijack Vulnerability in Rack
-To: oss-security@lists.openwall.com
+Received: (qmail 9931 invoked from network); 12 Sep 2018 10:05:38 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1536746726; bh=Kh2/y3E0jZ0/8xnb8tzKBFQeDKx7qUGksoQ9VTriZME=; h=Date:From:Reply-To:To:Subject:References:From:Subject; b=Nfgn+uHpU5XGqdeTDs6U/YHaj8qyt/WKn11z/riz0KwEDKoFpPB/umxw5h40bcd21LI6pFjbUPmKIs0sKCotn6ojxxWYjy9a/gTJ3jZhy1lDNXQiKA4DepTe2pBOCUwN3/yBNcwp3DeQoeflS4uNPOoOeY6UD7lBRsSkKqAihrcylaxqzgfocHZELSmmUpFlr+l4Kv5BtTGdoiBui9nqrV+D2lwfgG/HwX8rGNylmxwacxmbH/5/XEX6stg7m4IFsP06aVNmtYVkqCgQ+9kK6dWcteS4m/2kEWz1wHYrvQH/0jisKPKtgiwthU/mD54hj3Usz+asX7xknLa7B1/qtw==
+X-YMail-OSG: 4kWe7XkVM1mheR3CbDBHC0L585R2h9.wLIrh4Ky_SCdNcuCTLXGGondb50oNj40
+ 7j6ZJ.n3JbBRMAx4KNUQdqMhLL7s2sdYtUe6QX2jOGqYAQQYIgvXBINzaAC3j6sKxAzim1TqsD1U
+ r3sXjNquo5dlJA9W2ue_VoIiLk3.feLVY0haeQX3r563kxh45fOxLkKVm_EVWtIa.OhgNp.OoLyh
+ .bEG9j2uT6S5FNTBel_Shftz6dCg2ihW84UEXVO0LgRk9wkpShkNAFUY83yEDfoOYFpIJLAPbPAU
+ oXEQEljOGlYrLo.NPPgKVSqefe9uzLJdLmd6WYz4w26sUxSC0vwA_rdAWLR4Ml_UReLl.VoxVWWT
+ TcqiidYvt5G.FQyNgx3hWkiGhOm8KiwtsZUL8CyH0N.Cccd1UkaYim1Jc4b8gQheKBM_5MDHDqxD
+ UBRIHK9g47tDU_5LVx4vRBzc3Va3PpmHA1JsgupWZF_6_ng2bP4JWjXEAVUsjDHKgNljzwVeIj._
+ r9GWr9PnpOUtlXa7Ve1hy7.zGxj.Tal3uAttZpET8TKi4viXqVGtNJ_QqFio885mzm1CVEUc0oh2
+ TLlkPSkUz0l0tDwHFOKm5bpObFCXNzXhLfgQvxblUp5xLYUKihe2mgP.BHU0zGCuFuOR7uVeolGn
+ gtt4TsaM8_S9bOL96fAPZ06jBBd9G.kIlkTjZ6KRxGAuR5lHftte0IGeQO.mSVBkGgKagNMnttQh
+ yVxsmmM0e0mHHeTxskP1N56k3tUQPpV5SiCXSOQcE5SOR7U1tDIuVGAJMwabCmOh5r3mKsCWksOw
+ imviyjfjoNWLKmubZClBvGNituLgnYmDc3rA3.u4LEE0vaF1QYalbquKS183s_jfD9FZpnmqbEy9
+ BYd_iAHu.PQR_gCsGgsdqDKzAPL2AyyLaeKnCg56a6AoEtQFBfyl3ZMJgY9VIEnzYLrIhO4wP.Ri
+ OVDklA04w7PiRYD6jpH.Mbvlv_BMOdM6EdxvHueHtV16RFPH9fQ--
+Date: Wed, 12 Sep 2018 10:05:25 +0000 (UTC)
+From: Andrea Cosentino <ancosen1985@yahoo.com>
+To: Dev <dev@camel.apache.org>, Users <users@camel.apache.org>, 
+	Apache Security Team <security@apache.org>, 
+	"oss-security@lists.openwall.com" <oss-security@lists.openwall.com>, 
+	"Shapira Eedo (GE Digital)" <eedo.shapira@ge.com>
+Message-ID: <77328247.2610677.1536746725418@mail.yahoo.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+References: <77328247.2610677.1536746725418.ref@mail.yahoo.com>
+X-Mailer: WebService/1.1.12406 YMailNorrin Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.162 Safari/537.36
+Subject: [oss-security] [SECURITY] New security advisory CVE-2018-8041 released for Apache
+ Camel
 
-On Wed, Dec 18, 2019 at 11:17 PM Aaron Patterson
-<aaron.patterson@gmail.com> wrote:
->
-> There is a possible information leak / session hijacking vulnerability
-> in Rack. This vulnerability has been assigned the CVE identifier
-> CVE-2019-16782.
->
-> Versions Affected:  All.
-> Not affected:       None.
-> Fixed Versions:     1.6.12, 2.0.8
->
-> There's a possible information leak / session hijack vulnerability in
-> Rack. Attackers may be able to find and hijack sessions by using timing
-> attacks targeting the session id. Session ids are usually stored and
-> indexed in a database that uses some kind of scheme for speeding up
-> lookups of that session id. By carefully measuring the amount of time it
-> takes to look up a session, an attacker may be able to find a valid
-> session id and hijack the session.
->
-> The session id itself may be generated randomly, but the way the session
-> is indexed by the backing store does not use a secure comparison.
+A new security advisory has been released for Apache Camel, that is fixed in
+the recent 2.20.4, 2.21.2 and 2.22.1 releases:
 
-I don't understand why this is reported as something Rack-specific.
+CVE-2018-8041: Apache Camel's Mail is vulnerable to path traversal
 
-If I read the patch correctly (which is improbable, as I don't know
-Ruby at all), the idea is:
+Severity: MEDIUM
 
-1. The attacker could send various bogus session ids, starting with
-all possible valid bytes. The database, if it uses a trie (yes,
-strawman example - is it used by any real-world database?) as a data
-structure to speed up looking up sessions, will terminate the
-comparison early on invalid bytes, thus disclosing them.
-2. Given one valid byte of a session id, the attacker tries to extend
-it using the same procedure.
-3. At the end, the attacker will get a full session ID.
+Vendor: The Apache Software Foundation
 
-The patch works by making the thing stored in the database as a key
-not the session ID in the cookie, but a hash of it. Therefore, step 2
-fails, as it is computationally hard to find something with a given
-prefix.
+Versions Affected: Camel 2.20.0 to 2.20.3, Camel 2.21.0 to 2.21.1 and Camel=
+ 2.22.0=C2=A0
 
-On the other hand, I don't see how a timing attack would be possible
-on the most common data structures (B-Tree and Hash) used for database
-indexes.
+The unsupported Camel 2.x (2.19 and earlier) versions may be also affected.
 
--- 
-Alexander E. Patrakov
+Description: Apache Camel's Mail is vulnerable to path traversal
+
+Mitigation: 2.20.x users should upgrade to 2.20.4, 2.21.0 users should upgr=
+ade to 2.21.2 and Camel 2.22.x users should upgrade to 2.22.1
+
+The JIRA tickets: https://issues.apache.org/jira/browse/CAMEL-12630=C2=A0
+refers to the various commits that resovoled the issue, and have more detai=
+ls.
+
+Credit: This issue was discovered by Eedo Shapira <eedo dot shapira at ge d=
+ot com> from GE .
+
+On behalf of the Apache Camel PMC
+
+
+--
+Andrea Cosentino=C2=A0
+----------------------------------
+Apache Camel PMC Chair
+Apache Karaf Committer
+Apache Servicemix PMC Member
+Email: ancosen1985@yahoo.com
+Twitter: @oscerd2
+Github: oscerd
