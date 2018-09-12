@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2359" "Tuesday" "18" "August" "2015" "19:24:48" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150818232448.386636C005E@smtpvmsrv1.mitre.org>" "50" "[oss-security] Re: CVE Request: ippusbxd" nil nil nil "8" "2015081823:24:48" "[oss-security] Re: CVE Request: ippusbxd" (number mark "        cve-assign@m Aug 18   50/2359  " thread-indent "\"[oss-security] Re: CVE Request: ippusbxd\"\n") "<20150811025532.GB23539@hunt>" ("<20150811025532.GB23539@hunt>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3769" "Wednesday" "12" "September" "2018" "09:33:19" "-0400" "Daniel Kahn Gillmor" "dkg@fifthhorseman.net" "<874leu7sdc.fsf@fifthhorseman.net>" "99" "Re: [oss-security] tdesktop leaks user IP address" nil nil nil "9" "2018091213:33:19" "[oss-security] tdesktop leaks user IP address" (number mark "U       dkg@fifthhor Sep 12   99/3769  " thread-indent "\"Re: [oss-security] tdesktop leaks user IP address\"\n") "<CAG8b5tSvm1nZ=Q=3L=YGnbjmnD1i8Le4xC3y=n=N+P4O1wYW-A@mail.gmail.com>" ("<CAG8b5tSvm1nZ=Q=3L=YGnbjmnD1i8Le4xC3y=n=N+P4O1wYW-A@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 16175 invoked by uid 550); 18 Aug 2015 23:25:08 -0000
+Received: (qmail 1247 invoked by uid 550); 12 Sep 2018 13:33:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,63 +11,115 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 16154 invoked from network); 18 Aug 2015 23:25:07 -0000
-In-Reply-To: <20150811025532.GB23539@hunt>
-Message-Id: <20150818232448.386636C005E@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, security@ubuntu.com
-Date: Tue, 18 Aug 2015 19:24:48 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: ippusbxd
-To: seth.arnold@canonical.com
+Received: (qmail 1221 invoked from network); 12 Sep 2018 13:33:38 -0000
+From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+To: Dhiraj Mishra <mishra.dhiraj95@gmail.com>, oss-security@lists.openwall.com
+In-Reply-To: <CAG8b5tSvm1nZ=Q=3L=YGnbjmnD1i8Le4xC3y=n=N+P4O1wYW-A@mail.gmail.com>
+References: <CAG8b5tSvm1nZ=Q=3L=YGnbjmnD1i8Le4xC3y=n=N+P4O1wYW-A@mail.gmail.com>
+Date: Wed, 12 Sep 2018 09:33:19 -0400
+Message-ID: <874leu7sdc.fsf@fifthhorseman.net>
+MIME-Version: 1.0
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha512; protocol="application/pgp-signature"
+Subject: Re: [oss-security] tdesktop leaks user IP address
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--=-=-=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-> Till Kamppeter has provided the following patches to address the issue:
-> https://github.com/tillkamppeter/ippusbxd/commit/46844402bca7a38fc224483ba6f0a93c4613203f
-> https://github.com/tillkamppeter/ippusbxd/commit/a632841f8e65d402e13e81921515f5a1e2736c82
-> 
-> The first patch switches to using two sockets and binds them explicitly
-> to the IPv6 and the IPv4 loopback addresses; the second patch simplifies
-> the use of select(). Both patches are recommended.
+Hi Dhiraj--
 
-As far as we can tell, the message was written this way because you
-are addressing multiple audiences: one audience is interested in what
-aspects of the commits are security-related so that they can be mapped
-to individual CVE IDs, and another audience is much less concerned
-about these mapping details but wants to fix the security problem
-without adding a new problem in its place. Specifically, our
-understanding is that there is no expectation that anyone has a
-production copy of the code with
-46844402bca7a38fc224483ba6f0a93c4613203f but not
-a632841f8e65d402e13e81921515f5a1e2736c82. If anyone had such a copy,
-they possibly might find that an attacker could cause a performance
-degradation via a crafted client that intentionally triggers the
-"select() call repeated in a loop if the timeout expired without
-incoming data" issue. In other words, there is no CVE ID for a
-"repeated in a loop" problem, and probably for two reasons: nobody is
-using that code, and the performance degradation is too small.
+On Tue 2018-09-11 17:25:47 +0530, Dhiraj Mishra wrote:
+> tdesktop leaks user IP address
+>=20
+> This is still not fix in telegram desktop  team says their is nothing to
+> fix here and this is working has intended.
 
+Thanks for this report -- it's good to have people looking at metadata
+leakage and considering it as a security concern.  It is.
 
-> https://bugs.launchpad.net/ubuntu/+source/ippusbxd/+bug/1455644
+However, i'm not convinced that you've described the problem you're
+seeing well enough to be actionable yet.  In particular, it's not clear
+to me *whose IP address* you are concerned about leaking, and *where*
+you are concerned about it leaking.  It's also not clear to me that
+you've evaluated the impact/consequences of your proposed mitigation.
 
-The only CVE ID is for the presence of "addr.sin6_addr = in6addr_any"
-in the original code. Use CVE-2015-6520.
+I've written out several questions below in the hopes of helping clarify
+the concern, and figuring out what makes sense to do about it.  Please
+take these questions in the spirit of constructive engagement!
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+> tdesktop: https://github.com/telegramdesktop/tdesktop
+>
+> *Steps to reproduce:*
+> 1. ./Telegram
+> 2. Call end user
+> 3. The access log on CLI reveals the end user public IP address.
+
+let's give the parties involved in this names so that it's easier to
+reason about.  Let's say that the call Initiator is Inigo, and that the
+call recipient is Rebecca.  So Inigo takes steps 1 and 2.  Whose public
+IP address (Inigo's?  Rebecca's?) leaks into which access log
+(Inigo's?  Rebecca's?  both?)?
+
+Is the concern really the inclusion of the IP address in the access log,
+or is it the fact that Rebecca's public IP address is visible to Inigo,
+and vice versa?  To whom else is this IP address visible?  Another way
+of asking this is: who is the adversary you're concerned about learning
+this IP address information?
+
+ * someone looking at some specific logfile in the future?
+
+ * the other party on the call during the call? (i.e. Inigo is Rebecca's
+   adversary, and vice versa)
+
+ * the Telegram server operator?
+
+ * a network monitor inspecting traffic?
+
+ * =E2=80=A6
+
+> By default in tdesktop p2p is enable, which open a direct communication
+> when calling to the other user, potentially seeing his/her IP. Telegram is
+> supposedly is a secure messaging application but while calling another us=
+er
+> leaks his/her public IP address in access log. However, by navigating to
+> Settings and Privacy  > Calls > and set P2P to `nobody` in telegram apps =
+in
+> (iOS and android) will not allow others to view public IP of end user, but
+> this option is still not available in tdesktop, which makes tdesktop
+> vulnerable to this issue.
+
+Who needs to set P2P to "nobody" to have this change?  If either party
+makes this choice is it sufficient for a given call?
+
+Presumably turning off P2P means routing the calls through a central
+server (perhaps via STUN/TURN or some other relay/proxy equivalent).  If
+that's not the case, how are calls completed when P2P is disabled?  Who
+operates that central server?
+
+What is the performance impact (on rates of successful connections, on
+latency during calls) of such a change?
+
+Is the central server operator already in a position to be able to force
+this shift from P2P to a centralized fallback?  What cost(s) would they
+pay if they force this shift?
+
+How does the potential for centralized mass surveillance of call traffic
+change if all calls are routed through the central server by default?
+
+Regards,
+
+       --dkg
+
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQEcBAEBCAAGBQJV071DAAoJEKllVAevmvmsaF0IAIwQQu5Le3ygNRS0luytSxf8
-tdqQ19YXjCdlQVSyXbqlRsSul3BMskti3KvsUwLo5zxJZfIwb/npdekT2pkp1g5Y
-GbJ3jbL70iXf9oSX6G/7arSZWPmrGDpDbeU02pvCxQtLmS5ApqS9OMNOAzp51i5m
-u9o7yEqnWUMuB0NnIQITonCiAZHuFBruhQ3j3yksKLz0SUl8AevefzBxCurDwaBV
-vBnEpqc9qvgQIHhvNZ3CfMthTI2tJbDB2oOCqckFxtnsMIS6QcYdBS5X0mla7ilf
-7WDzZKFCCAgUAjTZ9Mukhno1cmSLeBNTuEMK6lmoumK0SOlxUgV+weeXTBQHttI=
-=MhM/
+iHUEARYKAB0WIQTTaP514aqS9uSbmdJsHx7ezFD6UwUCW5kVoAAKCRBsHx7ezFD6
+U1rjAQC4OFrGx2WPXXQsDEh22zV3gFHbfsWkerw7mCF5xj31+gEAhu6nkeKxUuNx
+Y7SMn5PNwXoO3SlpqPrKcSG4j8y0Rws=
+=cC1t
 -----END PGP SIGNATURE-----
+--=-=-=--
