@@ -1,30 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/23/11
-Message-ID: <20181023180945.GA13330@lorien.valinor.li>
-Date: Tue, 23 Oct 2018 20:09:45 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Buffer overflow in cabextract/libmspack (Fwd: New cabextract 1.8 and libmspack 0.8 release)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/13/3
+Message-ID: <CAPNiXbG8-Z7BC=pts=EigRo0yNnvFU+GV6pBNQhKt9HpxFfu2g@mail.gmail.com>
+Date: Thu, 13 Sep 2018 16:52:53 +0200
+From: Alex R <alexr@...che.org>
+To: dev <dev@...os.apache.org>, user <user@...os.apache.org>,  Amon Flair <amon@...dynarwhals.org>, Lyon Yang <lyon.yang.s@...il.com>,  security <security@...che.org>, oss-security@...ts.openwall.com,  Yeo Quan Yang <quanyang@...e.com>
+Subject: CVE-2018-1330: Libprocess might crash when decoding malformed HTTP requests or malformed JSON payload.
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Severity: Important
 
-FTR, three CVEs were assigned by MITRE, whereeas one is explicitly
-marked as DISPUTED, because upstream makes clear in the changelog
-entry, that the chmextract utility is more an example code how to use
-the library rather than "productised" binaries. Still a CVE was
-assigned for downstreams using it as such.
+Vendor:
+The Apache Software Foundation
 
-Here are the assignments:
+Versions Affected:
+Apache Mesos 1.4.0 to 1.5.0
+The unsupported Apache Mesos pre-1.4.0 releases may be also affected.
 
-CVE-2018-18584:
-https://github.com/kyz/libmspack/commit/40ef1b4093d77ad3a5cfcee1f5cb6108b3a3bcc2
+Description:
+When parsing a malformed JSON payload, libprocess might crash due to
+an uncaught exception. Parsing chunked HTTP requests with trailers
+can lead to a libprocess crash too because of the mistakenly planted
+assertion. A malicious actor can therefore cause a denial of service
+of Mesos masters rendering the Mesos-controlled cluster inoperable.
 
-CVE-2018-18585:
-https://github.com/kyz/libmspack/commit/8759da8db6ec9e866cb8eb143313f397f925bb4f
+Mitigation:
+pre-1.4.x users should upgrade to at least 1.4.2
+1.4.x users should upgrade to 1.4.2
+1.5.0 users should upgrade to 1.5.1
+1.6.0-dev users should obtain Mesos 1.6.0 or later
 
-CVE-2018-18586:
-https://github.com/kyz/libmspack/commit/7cadd489698be117c47efcadd742651594429e6d
+Credit:
+This issue was discovered by Lyon Yang (@l0Op3r), Jeremy Heng
+(@nn\_amon) and Quan Yang (@quanyang).
 
-Regards,
-Salvatore
+Alex on behalf of Mesos PMC.
+
