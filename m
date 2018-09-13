@@ -1,81 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/19/3
-Message-ID: <0cbfa06b-ffd9-9b08-c16c-2e28d2cb768e@nlnetlabs.nl>
-Date: Fri, 19 Jan 2018 11:47:21 +0100
-From: Ralph Dolmans <ralph@...etlabs.nl>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2017-15105 Unbound: NSEC processing vulnerability (DNSSEC)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/13/2
+Message-ID: <CAO8bUyka=0g1xJmCH5_DkKc-JsWnCDGmsPUUTbbeKpkaC4=pvg@mail.gmail.com>
+Date: Thu, 13 Sep 2018 15:12:01 +0200
+From: Frank Morgner <frankmorgner@...il.com>
+To: opensc-announce@...ts.sourceforge.net,  OpenSC Development <opensc-devel@...ts.sourceforge.net>
+Cc: oss-security@...ts.openwall.com
+Subject: OpenSC release 0.19.0
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi all!
 
-Below is a copy of Unbound's CVE description that can be found at
-https://unbound.net/downloads/CVE-2017-15105.txt
+I'm happy to announce the new OpenSC release 0.19.0, which be found here
+https://github.com/OpenSC/OpenSC/releases/tag/0.19.0 including the full
+list of changes.
 
-Regards,
-Ralph
+Most notably, this release contains fixes for mutliple issues, ranging from
+stack based buffer overflows to out of bounds reads and writes on the heap.
+They can be triggered by malicious smartcards sending malformed responses
+to APDU commands. A detailed description can be found at X41-2018-002
+<https://www.x41-dsec.de/lab/advisories/x41-2018-002-OpenSC/>. The issues
+are tracked as CVE-2018-16391
+<http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-16391> CVE
+-2018-16392 <http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-16392>
+CVE-2018-16393
+<http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-16393> CVE
+-2018-16418 <http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-16418>
+CVE-2018-16419
+<http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-16419> CVE
+-2018-16420 <http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-16420>
+CVE-2018-16421
+<http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-16421> CVE
+-2018-16422 <http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-16422>
+CVE-2018-16423
+<http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-16423> CVE
+-2018-16424 <http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-16424>
+CVE-2018-16425
+<http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-16425> CVE
+-2018-16426 <http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-16426>
+CVE-2018-16427
+<http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-16427>. Thanks to
+Eric Sesterhenn from X41 D-Sec GmbH for reporting and helping fixing the
+problems.
 
-==
+Regards, Frank
 
-The CVE number for this vulnerability is CVE-2017-15105.
-
-== Summary
-We discovered a vulnerability in the processing of wildcard synthesized
-NSEC records. While synthesis of NSEC records is allowed by RFC4592,
-these synthesized owner names should not be used in the NSEC processing.
-This does, however, happen in Unbound 1.6.7 and earlier versions.
-
-== Description
-NSEC records are used to prove the non-existence of records between its
-owner name and its next owner, and for the proof that the queried for
-type does not exist when the queried for name matches the owner of the
-NSEC. It is therefore important that the owner name of the NSEC record
-can not be changed, this is enforced using a DNSSEC signature (RRSIG).
-
-Because wildcard synthesis on NSEC records is allowed, it is possible to
-have DNSSEC valid NSEC records for which the owner name must not be used
-for non-existence proofs. A validator can determine that it is a
-wildcard record using the label count in the NSEC signature and must in
-that case use the non-synthesized wildcard name as NSEC owner.
-
-Unbound validates these NSEC records (using the label count), and then
-uses the owner of the NSEC it received for the non-existence proof.
-
-Unbound is only vulnerable for zones that contain a wildcard record and
-use NSEC records for the non-existence proof. NSEC3 records do not work
-for this attack.
-
-== Impact
-The wildcard NSEC record can be used to proof the non-existence
-(NXDOMAIN answer) of an existing wildcard record. This can be done by
-changing the owner of the wildcard NSEC into a label that will be sorted
-before the wildcard label.
-
-The wildcard NSEC record can also be used to trick Unbound into
-accepting a NODATA proof. This can be done by changing the owner name of
-the NSEC wildcard record into the queried for name. This is only
-possible when the queried for type is not in the type bitmap of the NSEC
-wildcard record.
-
-This vulnerability can not be used to trick Unbound into accepting an
-insecure delegation proof (proof of no DS). The NS bit must be set in
-the NSEC type bitmap when proving an insecure delegation, this is never
-the case for wildcard records.
-
-== Solution
-Download patched version of Unbound, or apply the patch manually.
-
-+ Downloading patched version
-Unbound 1.6.8 is released with the patch
-https://unbound.net/downloads/unbound-1.6.8.tar.gz
-
-+ Applying the Patch manually
-For Unbound version 1.6.7 the patch is:
-https://unbound.net/downloads/patch_cve_2017_15105.diff
-
-Apply the patch on Unbound source directory with 'patch -p0 < filename'
-then run 'make install' to install Unbound.
-
-== Acknowledgements
-Ralph Dolmans (NLnet Labs)
-Karst Koymans (University of Amsterdam)
