@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1758" "Thursday" "28" "May" "2015" "09:35:40" "+0300" "Henri Salo" "henri@nerv.fi" "<20150528063540.GD27861@lakka.kapsi.fi>" "42" "Re: [oss-security] CVE Request, multiple WordPress plugins and themes" nil nil nil "5" "2015052806:35:40" "[oss-security] CVE Request, multiple WordPress plugins and themes" (number mark "        henri@nerv.f May 28   42/1758  " thread-indent "\"Re: [oss-security] CVE Request, multiple WordPress plugins and themes\"\n") "<1432752795980.1810@akamai.com>" ("<1432752795980.1810@akamai.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2025" "Saturday" "15" "September" "2018" "16:07:58" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20180915160758.70024031@computer>" "50" "[oss-security] haskell-tls: Inconsistencies in answers to RSA errors (possiby Bleichenbacher/ROBOT attack)" nil nil nil "9" "2018091514:07:58" "[oss-security] haskell-tls: Inconsistencies in answers to RSA errors (possiby Bleichenbacher/ROBOT attack)" (number mark "U       hanno@hboeck Sep 15   50/2025  " thread-indent "\"[oss-security] haskell-tls: Inconsistencies in answers to RSA errors (possiby Bleichenbacher/ROBOT attack)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15370 invoked by uid 550); 28 May 2015 06:35:56 -0000
+Received: (qmail 17589 invoked by uid 550); 15 Sep 2018 14:08:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,62 +11,66 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 14328 invoked from network); 28 May 2015 06:35:56 -0000
-Message-ID: <20150528063540.GD27861@lakka.kapsi.fi>
-References: <1432752795980.1810@akamai.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; x-action=pgp-signed
-In-Reply-To: <1432752795980.1810@akamai.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-SA-Exim-Connect-IP: 2001:1bc8:1004::1
-X-SA-Exim-Mail-From: fgeek@kapsi.fi
-X-SA-Exim-Scanned: No (on mail.kapsi.fi); SAEximRunCond expanded to false
-Cc: oss-security@lists.openwall.com
-Date: Thu, 28 May 2015 09:35:40 +0300
-From: Henri Salo <henri@nerv.fi>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE Request, multiple WordPress plugins and themes
-To: "Seaman, Chad" <cseaman@akamai.com>
+Received: (qmail 17551 invoked from network); 15 Sep 2018 14:08:08 -0000
+Date: Sat, 15 Sep 2018 16:07:58 +0200
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
+To: oss-security@lists.openwall.com
+Message-ID: <20180915160758.70024031@computer>
+X-Mailer: Claws Mail 3.17.1 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] haskell-tls: Inconsistencies in answers to RSA errors (possiby
+ Bleichenbacher/ROBOT attack)
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+One of the leftovers of our ROBOT/Bleichenbacher research was that we
+discovered some inconsistencies in haskell-tls, however they only
+appear in special situations (AES256-CBC modes) and not reliably.
+I've been asked by the haskell-tls author to report it to the public
+bug tracker, so I believe it's no longer secret.
 
-On Wed, May 27, 2015 at 06:53:16PM +0000, Seaman, Chad wrote:
-> I'm not sure if these should be broken down by individual vulnerability or
-> lumped per plugin/theme, there are 21 plugins/themes affected in total.
+https://github.com/vincenthz/hs-tls/issues/285
 
-Hard to read and does not have enough information for CVE request. One email
-with all needed details for CVE request per plugin is better way to get these
-assigned.
+----------------------
 
-https://github.com/RedHatProductSecurity/CVE-HOWTO#how-to-write-a-cve-request
+Last year we published research that several TLS implementations were
+still vulnerable to the classic "Bleichenbacher" attack from 1998 and
+named it the ROBOT attack [1].
 
-Could you list affected versions?
-Could you provide proof-of-concept code or what file and parameter/function is
-affected?
-Have you reported these issues to plugins@wordpress.org?
+While analyzing several implementations we also figured out
+inconsistencies with haskell-tls, but as we couldn't really make sense
+of them we haven't analyzed them in more detail.
 
-There are plenty of good CVE requests for WordPress plugins in list archive. For
-example: http://www.openwall.com/lists/oss-security/2014/08/19/3
+We observe that in some situations as a response to faulty RSA
+encryption packages a haskell tls server will answer with an internal
+server error instead of a bad_record_mac error. The behavior is
+inconsistent, so we're not sure this can be turned into a practical
+attack. Yet it's still definitely a bug and potentially a vulnerability.
 
-If you need any help please reply or contact me off-list for support.
+This only happens with ciphers with AES256 and CBC mode. (Which is also
+why our detection script and many other detection tools that are based
+on it will not see it, as they often will just test with AES128.)
 
-- -- 
-Henri Salo
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+It was originally pointed out to us by Hubert Kario (he's the developer
+of tls-fuzzer, which will show errors if you run its bleichenbacher
+check [2] against a haskell tls server). Another tool that's capable of
+detecting the error is TLS-Attacker, which is by one of ROBOT's
+co-authors [3].
 
-iQIcBAEBAgAGBQJVZrc7AAoJECet96ROqnV0jMsP/2QfWuxz5XMQsAmM5VPB93DN
-GYAtxIauKT1vGBSFC7Zx+CfKW+SAIVwCsdmy51lBTFtm83idfnD+v3R6Mc670nR0
-WZrETrIYuKlrqoc0XUwTNmZp4nfyPPgOjCB3ulPIr2mQD5uFP9aoPukP+Z48SdN5
-GQXgUJu3ppiUX83saEYYe9i5r4nC3Hdu4/a3vF2+4hI1muhVtwSXAvmbQFJd+i64
-xy7vH1nMTbfCt0ccnCmoUSS+z9lZJalZcIqB92XMpl11GtgtNJmYJJ0Hpt/lVbpi
-w37nrm22oXfbOvQmEiYL6MNyANjPyMS8atq8ktmP2NL/yr8bC+lxCbY1aK37aCrM
-gGXPipBdRkYrZde6rC6oCt5bR3m1KRBAljGTjTMA6UiGcjyvRHMv0UrlXKDWxAH3
-9SUyCmjL6Z74+VPxODH/lle5/jMFeVaVELMYuMy2s7SB/zDbiiDcq00cMmGdloKR
-r10bf1GdkXvg7+PJIZxfwD4IKR4k0F8GPF93AQ8tYfD8NFJgjwqSLWVAqGs5KVNu
-tVwExTS4bnXNEEsM57rZDydqp7mMbldMK7qrZi5ZelkU0WuqDmBxtTlX0P1hsmgd
-rE46egFDO3cgYG/Kwt81srXqeO77TOT4RxUdaW6+3rTLuvXox2cLCFybQILOUPK4
-6jDYXRBLxyVAF0ECb1K5
-=w2CS
------END PGP SIGNATURE-----
+A test run would be something like this:
+java -jar Attacks.jar -loglevel DEBUG bleichenbacher -connect [host]
+-cipher TLS_RSA_WITH_AES_256_CBC_SHA
+
+[1] https://robotattack.org/
+[2]
+https://github.com/tomato42/tlsfuzzer/blob/master/scripts/test-bleichenbach=
+er-workaround.py
+[3] https://github.com/RUB-NDS/TLS-Attacker
+
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
+
+mail/jabber: hanno@hboeck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
