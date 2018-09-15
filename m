@@ -1,28 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/27/4
-Message-ID: <1140246180.13859318.1522172259182.JavaMail.zimbra@redhat.com>
-Date: Tue, 27 Mar 2018 13:37:39 -0400 (EDT)
-From: Vladis Dronov <vdronov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/15/1
+Message-ID: <20180915160758.70024031@computer>
+Date: Sat, 15 Sep 2018 16:07:58 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2018-1091: Linux kernel: a KVM guest kernel crash during core dump on POWER9 host
+Subject: haskell-tls: Inconsistencies in answers to RSA errors (possiby Bleichenbacher/ROBOT attack)
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+One of the leftovers of our ROBOT/Bleichenbacher research was that we
+discovered some inconsistencies in haskell-tls, however they only
+appear in special situations (AES256-CBC modes) and not reliably.
+I've been asked by the haskell-tls author to report it to the public
+bug tracker, so I believe it's no longer secret.
 
-A guest kernel crash can be triggered from unprivileged userspace during core
-dump on POWER host due to a missing processor feature check and an erroneous
-use of transactional memory (TM) instructions in the core dump path leading to
-a denial of service.
+https://github.com/vincenthz/hs-tls/issues/285
 
-References:
+----------------------
 
-https://marc.info/?l=linuxppc-embedded&m=150535531910494&w=2
+Last year we published research that several TLS implementations were
+still vulnerable to the classic "Bleichenbacher" attack from 1998 and
+named it the ROBOT attack [1].
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1558149
+While analyzing several implementations we also figured out
+inconsistencies with haskell-tls, but as we couldn't really make sense
+of them we haven't analyzed them in more detail.
 
-An upstream fix:
+We observe that in some situations as a response to faulty RSA
+encryption packages a haskell tls server will answer with an internal
+server error instead of a bad_record_mac error. The behavior is
+inconsistent, so we're not sure this can be turned into a practical
+attack. Yet it's still definitely a bug and potentially a vulnerability.
 
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c1fa0768a8713b135848f78fd43ffc208d8ded70
+This only happens with ciphers with AES256 and CBC mode. (Which is also
+why our detection script and many other detection tools that are based
+on it will not see it, as they often will just test with AES128.)
 
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+It was originally pointed out to us by Hubert Kario (he's the developer
+of tls-fuzzer, which will show errors if you run its bleichenbacher
+check [2] against a haskell tls server). Another tool that's capable of
+detecting the error is TLS-Attacker, which is by one of ROBOT's
+co-authors [3].
+
+A test run would be something like this:
+java -jar Attacks.jar -loglevel DEBUG bleichenbacher -connect [host]
+-cipher TLS_RSA_WITH_AES_256_CBC_SHA
+
+[1] https://robotattack.org/
+[2]
+https://github.com/tomato42/tlsfuzzer/blob/master/scripts/test-bleichenbacher-workaround.py
+[3] https://github.com/RUB-NDS/TLS-Attacker
+
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
