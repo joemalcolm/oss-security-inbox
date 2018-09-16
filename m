@@ -1,104 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/02/4
-Message-ID: <CAFeDd5bLk0N4g3LP0FUgX+XH2QMaV+=d3ybagBE4K6pAHQAxHA@mail.gmail.com>
-Date: Fri, 2 Nov 2018 16:42:33 +0200
-From: Billy Brumley <bbrumley@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2018-5407: new side-channel vulnerability on SMT/Hyper-Threading architectures
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/16/1
+Message-ID: <c57c0f41-742c-3c3e-249c-ae2614bf0d7d@apache.org>
+Date: Sun, 16 Sep 2018 12:59:12 -0400
+From: "Kevin A. McGrail" <kmcgrail@...che.org>
+To: Spamassassin <users@...mAssassin.apache.org>, SpamAssassin Devel List <dev@...massassin.apache.org>, announce@...massassin.apache.org, announce@...che.org
+Cc: security@...massassin.apache.org, oss-security@...ts.openwall.com
+Subject: [SECURITY] Apache SpamAssassin 3.4.2 resolves CVE-2017-15705, CVE-2016-1238, CVE-2018-11780 & CVE-2018-11781
 Content-Type: text/plain; charset=utf-8
 
-> However, I feel the blame might be misplaced here.  I think the
-> existence of this side-channel in SMT should be obvious to the extent
-> that it's not considered a vulnerability, but a fully expected by-design
-> property.  Maybe the problem is it wasn't documented as such.  Maybe we
-> should have put more effort into making it more obvious to everyone in
-> 2005, like it's finally done now.
+Apache SpamAssassin 3.4.2 was recently released [1], and fixes several
+issues of security note.
 
-It's a fair comment.
+First, a denial of service vulnerability that exists in all modern versions.
 
-I've been doing SCA a while now; L1 dcache timings (SMT), L1 icache
-timings (SMT), remote timings, bug attacks, Flush+Reload, etc. Outside
-of bug attacks (which are deterministic), this is the most
-reproducible vector I've ever seen. I feel like that's one reason
-holding back disabling SMT, because they are not trivial to reproduce.
+The vulnerability arises with certain unclosed tags in emails that cause
+markup to be handled incorrectly leading to scan timeouts.
 
-If you have the setup I described:
+In Apache SpamAssassin, using HTML::Parser, we setup an object and hook
+into the begin and end tag event handlers  In both cases, the "open"
+event is immediately followed by a "close" event - even if the tag *does
+not* close in the HTML being parsed.
 
-https://github.com/bbbrumley/portsmash
+Because of this, we are missing the "text" event to deal with the object
+normally.  This can cause carefully crafted emails that might take more
+scan time than expected leading to a Denial of Service.
 
-Pull the code, follow the instructions. You'll see the signals we used
-in the attack. No address dependencies, adapting to cache geometry,
-etc -- it just works out of the box.
+The issue is possibly a bug or design decision in HTML::Parser that
+specifically impacts the way Apache SpamAssassin uses the module with
+poorly formed html.
 
-> Are you also releasing manuscript.pdf you had attached to your distros
-> list posting?  You must be.
+The exploit has been seen in the wild but not believe to have been
+purposefully part of a Denial of Service attempt.  We are concerned that
+there may be attempts to abuse the vulnerability in the future. 
+Therefore, we strongly recommend all users of these versions upgrade to
+Apache SpamAssassin 3.4.2 as soon as possible.
 
-It's coming -- I promise. I submitted it as an IACR eprint yesterday
-("Port Contention for Fun and Profit") -- currently under moderation,
-but will eventually pop out here:
+This issue has been assigned CVE id CVE-2017-15705 [2].
 
-https://eprint.iacr.org/
 
-(Side note: I have raised this issue several times with IACR. I can't
-get a permalink from them until I submit and it clears the mod queue.
-But I can't submit stuff that's still under embargo. It's a catch 22.
-Ofc there are technical solutions from IACR side but they won't
-address it. Share your opinion: @IACR_News current co-editor is
-@Leptan.)
+Second, this release also fixes a reliance on "." in @INC in one
+configuration script.  Whether this can be exploited in any way is
+uncertain.
 
-> I only skimmed it, but as I understand the OpenSSL code in question
-> is branching upon a secret.  This is generally considered high-risk
-> even without SMT.  While it'd be harder and less practical to exploit
-> without SMT, the state of instruction cache changes in a way visible to
-> other processes that might be scheduled to run on the same core.
-> Perhaps it'd take orders of magnitude more observations since the OS
-> scheduler won't kick in very frequently, but eventually the secret
-> should be obtainable.
+This issue has been assigned CVE id CVE-2016-1238 [3].
 
-The code in question certainly had lots of SCA issues :) I was the
-first to show it vulnerable with an L1 dcache SMT attack (ASIACRYPT
-2009). OpenSSL didn't respond during disclosure. Side note:
-openssl-security is so much better since HeartBleed. They're really on
-top of things, and being GitHub-based now the code is constantly
-improving. If you're reading, go contribute to the project!
 
-If there's something good about a vulnerability being unpatched for
-almost a decade: that code path sparked quite a lot of academic work
-in microarchitecture attacks.
+Third, this release fixes a potential Remote Code Execution bug with the
+PDFInfo plugin.  Thanks to cPanel Security Team for their report of this
+issue.
 
-> I guess this commit is (part of?) the fix:
->
-> https://github.com/openssl/openssl/commit/5d92b853f6b875ba8d1a1b51b305f14df5adb8aa
+This issue has been assigned CVE id CVE-2018-11780 [4].
 
-For the 1.1.0 branch, at
 
-https://github.com/openssl/openssl/commits/OpenSSL_1_1_0-stable/crypto/ec/ec_mult.c
+Fourth, this release fixes a local user code injection in the meta rule
+syntax. Thanks again to cPanel Security Team for their report of this issue.
 
-everything starting from aab7c770353b1dc4ba045938c8fb446dd1c4531e
+This issue has been assigned CVE id CVE-2018-11781 [5].
 
-> In there, we see a ladder of function calls separated by "||", which in
-> C guarantees short-circuit evaluation.  This is data-dependent
-> branching, and it remains such after that commit.  Being unfamiliar with
-> ECC and with this code, I don't know whether the branching is (still) by
-> secret or not (anymore).  I'd appreciate your comments on this.
 
-Those branches are actually public; that is unofficial OpenSSL style
-guide to avoid lots of if / else if / goto statements to detect return
-errors from function calls.
+To contact the Apache SpamAssassin security team, please e-mail
+security at spamassassin.apache.org.  For more information about Apache
+SpamAssassin, visit the http://spamassassin.apache.org/ web site.
 
-> > Upgrade to OpenSSL 1.1.1 (or >= 1.1.0i if you are looking for patches)
->
-> OpenSSL recently issued two security advisories suggesting a further
-> upgrade to 1.1.1a or 1.1.0j, but then mentioning that "a new side
-> channel attack was created" and listing commits with even further fixes
-> (not releases):
-...
-> Timing vulnerability in ECDSA signature generation (CVE-2018-0735)
-...
-> Timing vulnerability in DSA signature generation (CVE-2018-0734)
-...
-> I don't know to what extent this is related or not.
+Apache SpamAssassin Security Team
 
-These are unrelated, but you're certainly not the first to ask ;)
+[1]:
+https://lists.apache.org/thread.html/1ac11532235b5459aa16c4e9d636bf4aa0b141d347d1361e40cc1b78@%3Cannounce.apache.org%3E
 
-BBB
+[2]: https://cve.mitre.org/cgi-bin/cvename.cgi?name=2017-15705
+
+[3]: https://cve.mitre.org/cgi-bin/cvename.cgi?name=2016-1238
+
+[4]: https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-11780
+
+[5]: https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-11781
+
+-- 
+Kevin A. McGrail
+VP Fundraising, Apache Software Foundation
+Chair Emeritus Apache SpamAssassin Project
+https://www.linkedin.com/in/kmcgrail - 703.798.0171
+
