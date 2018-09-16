@@ -1,32 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/13/11
-Message-ID: <CAOp4FwSb4wWUGL57msLTj1yNjzCtQP3zqKfLba8RME0L+4VWkg@mail.gmail.com>
-Date: Wed, 13 Jun 2018 23:07:18 +0400
-From: Loganaden Velvindron <loganaden@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: secure@...el.com
-Subject: Re: Intel FP security issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/17/3
+Message-ID: <baedf150-30b4-9039-6488-f5c7b479bb50@thelounge.net>
+Date: Sun, 16 Sep 2018 23:29:27 +0200
+From: Reindl Harald <h.reindl@...lounge.net>
+To: "Kevin A. McGrail" <kmcgrail@...che.org>
+Cc: SA Mailing list <users@...massassin.apache.org>, Spamassassin Devel List <dev@...massassin.apache.org>, announce@...massassin.apache.org, announce@...che.org, security@...massassin.apache.org, oss-security@...ts.openwall.com
+Subject: Re: [SECURITY] Apache SpamAssassin 3.4.2 resolves CVE-2017-15705, CVE-2016-1238, CVE-2018-11780 & CVE-2018-11781
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 13, 2018 at 7:34 PM, Loganaden Velvindron
-<loganaden@...il.com> wrote:
-> Hi All,
->
-> Both OpenBSD and DragonflyBSD have gone ahead and committed fixes for
-> the rumored Intel FP issue:
->
-> OpenBSD: https://marc.info/?l=openbsd-cvs&m=152818076013158&w=2
-> DragonflyBSD: http://lists.dragonflybsd.org/pipermail/commits/2018-June/672324.html
->
-> I think that the cat is already out of the bag, and releasing details
-> of this security problem makes sense. Since this has gone public, Is
-> there a reason to keep this under embargo ?
->
-
-FreeBSD appears to be moving in this direction too:
-https://svnweb.freebsd.org/base?view=revision&revision=335072
 
 
-> Kind regards,
-> //Logan
-> C-x-C-c
+Am 16.09.18 um 23:11 schrieb Kevin A. McGrail:
+> Per the asf security team, mitre considers the public rc1 from a few
+> days ago as the start of the clock for the publishing so we were already
+> way past the 24 hour windiw.
+
+again: i doubt that distributions push updates *NOW* because most
+maintainers are not ware of the release nor do the expecit it at all
+given how long we hear about 3.4.2 with no other official bugfix
+releases for years
+
+bad guys typically watch better than anyone else
+
+> Hopefully, the announcements and reports are obfuscated and bugzilla ia
+> private so it'll be contained.
+> 
+> On Sun, Sep 16, 2018, 16:59 Reindl Harald <h.reindl@...lounge.net
+> <mailto:h.reindl@...lounge.net>> wrote:
+> 
+>     i doubt that it is wiese to blwo out security notes *that short* after
+>     release and *that long* after the last release
