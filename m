@@ -1,131 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/31/6
-Message-ID: <4fbe30e1-0bcd-f0f3-f0b1-0801ca9b7ab9@akeo.ie>
-Date: Thu, 31 May 2018 19:57:02 +0100
-From: Pete Batard <pete@...o.ie>
-To: Stefan Kanthak <stefan.kanthak@...go.de>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: rufus
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/17/2
+Message-ID: <CAMMMAUH38nTHLyjMkZQdhLHh6trT+Ezd=MGhS=+=bTuGWcYJSA@mail.gmail.com>
+Date: Sun, 16 Sep 2018 17:11:48 -0400
+From: "Kevin A. McGrail" <kmcgrail@...che.org>
+To: Reindl Harald <h.reindl@...lounge.net>
+Cc: SA Mailing list <users@...massassin.apache.org>,  Spamassassin Devel List <dev@...massassin.apache.org>, announce@...massassin.apache.org,  announce@...che.org, security@...massassin.apache.org,  oss-security@...ts.openwall.com
+Subject: Re: [SECURITY] Apache SpamAssassin 3.4.2 resolves CVE-2017-15705, CVE-2016-1238, CVE-2018-11780 & CVE-2018-11781
 Content-Type: text/plain; charset=utf-8
 
-On 2018.05.31 19:04, Stefan Kanthak wrote:
-> As always, your poor reading skills perfectly match your poor programming
-> skills.
+Per the asf security team, mitre considers the public rc1 from a few days
+ago as the start of the clock for the publishing so we were already way
+past the 24 hour windiw.
 
-Ad hominem.
+Hopefully, the announcements and reports are obfuscated and bugzilla ia
+private so it'll be contained.
 
-> "We" wait until the requested CVEs are assigned for both well-known
-> vulnerabilities.
+On Sun, Sep 16, 2018, 16:59 Reindl Harald <h.reindl@...lounge.net> wrote:
 
-Again, what happened to responsible disclosure?
+> i doubt that it is wiese to blwo out security notes *that short* after
+> release and *that long* after the last release
+>
+> Am 16.09.18 um 18:59 schrieb Kevin A. McGrail:
+> > Apache SpamAssassin 3.4.2 was recently released [1], and fixes several
+> > issues of security note.
+> >
+> > First, a denial of service vulnerability that exists in all modern
+> versions.
+> >
+> > The vulnerability arises with certain unclosed tags in emails that cause
+> > markup to be handled incorrectly leading to scan timeouts.
+> >
+> > In Apache SpamAssassin, using HTML::Parser, we setup an object and hook
+> > into the begin and end tag event handlers  In both cases, the "open"
+> > event is immediately followed by a "close" event - even if the tag *does
+> > not* close in the HTML being parsed.
+> >
+> > Because of this, we are missing the "text" event to deal with the object
+> > normally.  This can cause carefully crafted emails that might take more
+> > scan time than expected leading to a Denial of Service.
+> >
+> > The issue is possibly a bug or design decision in HTML::Parser that
+> > specifically impacts the way Apache SpamAssassin uses the module with
+> > poorly formed html.
+> >
+> > The exploit has been seen in the wild but not believe to have been
+> > purposefully part of a Denial of Service attempt.  We are concerned that
+> > there may be attempts to abuse the vulnerability in the future.
+> > Therefore, we strongly recommend all users of these versions upgrade to
+> > Apache SpamAssassin 3.4.2 as soon as possible.
+> >
+> > This issue has been assigned CVE id CVE-2017-15705 [2].
+> >
+> >
+> > Second, this release also fixes a reliance on "." in @INC in one
+> > configuration script.  Whether this can be exploited in any way is
+> > uncertain.
+> >
+> > This issue has been assigned CVE id CVE-2016-1238 [3].
+> >
+> >
+> > Third, this release fixes a potential Remote Code Execution bug with the
+> > PDFInfo plugin.  Thanks to cPanel Security Team for their report of this
+> > issue.
+> >
+> > This issue has been assigned CVE id CVE-2018-11780 [4].
+> >
+> >
+> > Fourth, this release fixes a local user code injection in the meta rule
+> > syntax. Thanks again to cPanel Security Team for their report of this
+> issue.
+> >
+> > This issue has been assigned CVE id CVE-2018-11781 [5].
+> >
+> >
+> > To contact the Apache SpamAssassin security team, please e-mail
+> > security at spamassassin.apache.org.  For more information about Apache
+> > SpamAssassin, visit the http://spamassassin.apache.org/ web site.
+> >
+> > Apache SpamAssassin Security Team
+> >
+> > [1]:
+> >
+> https://lists.apache.org/thread.html/1ac11532235b5459aa16c4e9d636bf4aa0b141d347d1361e40cc1b78@%3Cannounce.apache.org%3E
+> >
+> > [2]: https://cve.mitre.org/cgi-bin/cvename.cgi?name=2017-15705
+> >
+> > [3]: https://cve.mitre.org/cgi-bin/cvename.cgi?name=2016-1238
+> >
+> > [4]: https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-11780
+> >
+> > [5]: https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-11781
+>
 
-> DLL spoofing was VERY well known long before 2016, and it is neither restricted
-> to the CWD nor to runtime linking:
-
-You are deliberately misinterpreting what I said.
-
-In 2016 there was a new DLL side loading vulnerability that made the 
-rounds, and that we mitigated against.
-
-Your interpretation that our response means that we believe that no 
-other DLL spoofing vulnerabilities can exist, or that a "mitigation" 
-step is a last stop is incorrect, especially was we clearly mentioned 
-applying "some mitigation" factors (emphasis on "some").
-
-But considering that you have clearly chosen to (mis)interpret anything 
-we might say in the manner that will fit your pre-planned narrative, I'm 
-not going to ask you to re-read what I wrote, because your judgement 
-appears to be irremediably clouded.
-
-> Until then, to protect your users, remove Rufus from the net!
-
-I will only say this once: Unless you stop acting like an asshole, and 
-act in a professional manner by treating the people you are dealing with 
-with courtesy and respect (regardless of your *personal* views of 
-whether they deserve it or not), I have exactly zero interest on 
-following up with you.
-
-I've long been trying to deal with people behaving in a disparaging and 
-less than courteous manner to know that it is simply not worth anybody's 
-time to try to humour them with maintaining communication.
-
-So either you start behaving in the professional manner one is entitled 
-to expect when developer and security people interact when trying to 
-improve on software security, or this is the very last communication you 
-will receive from me.
-
->> And of course, with proper non disparaging involvement of security
->> researchers, who subscribe to the established responsible disclosure
->> policy of their profession, we are always eager to improve on our
->> mitigation fixes, if it turns out they aren't adequate.
->>
->> However, we would appreciate if you refrained from jumping to erroneous
->> conclusion about Rufus development being conducted by "bloody
->> beginners", when it is clear that some of the "beginner's"
->> vulnerabilities you list have long had some mitigation factors applied.
-> 
-> I recommend to read the advice other people gave you on
-> <https://github.com/pbatard/rufus/issues/1009>: SOME mitigations are
-> clearly NOT sufficient, especially if you choose to apply the WRONG
-> and IMPROPER mitigations.
-
-Ah, yes, good old #1009.
-
-The same one where, if you do your research, you'll find that a 
-reputable security researcher did not apply responsible disclosure, but 
-instead opened a super generic issue about not using SSL, and then, 
-because they were dissatisfied with the initial response they got, did 
-the very unprofessional thing of not following up by demonstrating the 
-vulnerability (which they had allegedly uncovered *before* they created 
-the issue tracker report, but curiously chose not to report then), but 
-instead took to twitter to show a pseudo-vulnerability (where a clear 
-message was issued by Windows that the payload they were trying to 
-execute should not be trusted), to rally a bunch of followers, and, 
-because of a position they could abuse, created a CVE request just to 
-show this puny developers that we are how they should not try to mess 
-with security people... Yup, another prime example of professional 
-behaviour if I may say so.
-
-But of course, once the mob is leaning one way, inconsistencies with the 
-original narrative of one of the parties is a lot more difficult to put 
-into light...
-
-I really have to to wonder what the heck happened to responsible 
-disclosure. Or are security researchers no longer interested in helping 
-developers fix their applications in a professional manner, if they can 
-demonstrate a vulnerability, but only in publicly pointing the finger at 
-someone to boost their ego?
-
-Oh, and all of #1009 had to do with the update mechanism (not DLLs or 
-tmp files vulns), for which we applied proper mitigation as soon as they 
-were disclosed to us (rather than a blanket "We'll just switch to SSL, 
-that'll fix everything", which is the wrong approach). So your 
-hyperboling its limited scope to try to fit your narrative falls a bit 
-flat. But nice try in using WRONG and IMPROPER in all caps, without 
-providing factual information to back these claims up.
-
-> PS: I might even show you that pasting the string "rufus.com" to the
->      window which has the focus yields interesting effects.
-
-You might do whatever you want. But until you are prepared to cooperate 
-in a professional and courteous manner, I am not interested with 
-anything further you have to say. So either you get off your high horse, 
-stop this ego trip, and agree to collaborate in a responsible manner in 
-the issues you think you have uncovered, or you hand them over to 
-someone who will, because, as much as I care about Rufus users having 
-the most secure application I can produce, I genuinely have no interest 
-in trying to pursue further communication with you.
-
-So, at this stage then, the ball on demonstrating that you truly care 
-about protecting the security of application users is entirely in your camp.
-
-And for those who may disagree with that last statement, and think that 
-I should just ignore the abuse and look into the technical aspects 
-(still none of which have been provided in a *specific* attack scenario 
-against Rufus that can be both investigated and analysed), please be 
-mindful that all I am asking here is common professionalism, courtesy 
-and respect.
-
-Regards,
-
-/Pete
