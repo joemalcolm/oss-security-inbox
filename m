@@ -1,40 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/22/4
-Message-Id: <88FF8C3C-25BF-4A80-823D-9803E8394AE8@apache.org>
-Date: Wed, 22 Aug 2018 20:11:51 +0300
-From: Andrus Adamchik <aadamchik@...che.org>
-To: user@...enne.apache.org, dev@...enne.apache.org, oss-security@...ts.openwall.com, Apache Security Team <security@...che.org>
-Subject: CVE-2018-11758: Apache Cayenne XXE Vulnerability in CayenneModeler GUI tool 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/18/4
+Message-ID: <20180918145457.GM3902@linux-r8p5>
+Date: Tue, 18 Sep 2018 07:54:57 -0700
+From: Davidlohr Bueso <dave@...olabs.net>
+To: oss-security@...ts.openwall.com
+Subject: Linux kernel: potential local priviledge escalation bug in vmacache code
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-11758: Apache Cayenne XXE Vulnerability in CayenneModeler GUI tool 
+Hi,
 
-Severity: Low
+A potential local priviledge escalation bug was reported in the vmacache code dealing with 32-bit sequence number overflows, introduced in v3.16 by 6b4ebc3a9078 (mm,vmacache: optimize overflow system-wide flushing). The change introduces a "fastpath" which skips the invalidation on overflows for single threads (mm_users == 1), which can lead to a use-after-free. As reported:
+`
+ [A starts as a singlethreaded process]
+A: create mappings X and Y (in separate memory areas far away from other allocations)
+A: perform repeated invalidations until current->mm->vmacache_seqnum==0xffffffff and current->vmacache.seqnum==0xfffffffe
+A: dereference an address in mapping Y that is not paged in (thereby populating A's VMA cache with Y at seqnum 0xffffffff)
+A: unmap mapping X (thereby bumping current->mm->vmacache_seqnum to 0)
+A: without any more find_vma() calls (which could happen e.g. via pagefaults), create a thread B
+B: perform repeated invalidations until current->mm->vmacache_seqnum==0xfffffffe
+B: unmap mapping Y (thereby bumping  current->mm->vmacache_seqnum to 0xffffffff)
+A: dereference an address in the freed mapping Y (or any address that isn't present in the pagetables and doesn't correspond to a valid VMA cache entry)
 
-Vendor: The Apache Software Foundation
+This is fixed in 7a9cdebdcc17 (mm: get rid of vmacache_flush_all() entirely), by converting it to a 64-bit counter and not dealing with overflows anymore; which also makes the code simpler and removes rarely-run code in core kernel paths.
 
-Versions Affected:
-Cayenne 4.1.M1
-Cayenne 3.2.M1, 4.0.M2 to 4.0.M5, 4.0.B1, 4.0.B2, 4.0.RC1
-Cayenne 3.1, 3.1.1, 3.1.2
-The unsupported Cayenne 2.0.x, 3.0.x versions may be also affected
+So a win-win altogether.
 
-Description:
-CayenneModeler is a desktop GUI tool for working with Cayenne ORM models stored as XML files.
-If an attacker tricks a user of CayenneModeler into opening a malicious XML file, the attacker
-will be able to instruct the XML parser built into CayenneModeler to transfer files from a local
-machine to a remote machine controlled by the attacker. The cause of the issue is XML 
-parser processing XML External Entity (XXE) declarations included in XML. The vulnerability is
-addressed in Cayenne by disabling XXE processing in all operations that require XML parsing.
-
-Mitigation:
-4.1.x users should upgrade to 4.1.M2 or newer.
-4.0.x users should upgrade to 4.0 (GA release).
-3.1.x users should upgrade to 3.1.3.
-
-References: 
-https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Processing
-
----
-Andrus Adamchik
-Apache Cayenne PMC
+Thanks,
+Davidlohr
