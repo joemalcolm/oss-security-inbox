@@ -1,54 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/22/1
-Message-ID: <87vaabea58.fsf@concordia.ellerman.id.au>
-Date: Fri, 22 Jun 2018 14:08:03 +1000
-From: Michael Ellerman <mpe@...erman.id.au>
-To: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
-Subject: Re: Intel hyper-threading security issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/18/1
+Message-ID: <854523480.13779866.1537264949483.JavaMail.zimbra@redhat.com>
+Date: Tue, 18 Sep 2018 06:02:29 -0400 (EDT)
+From: Vladis Dronov <vdronov@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2018-14641: Linux kernel: a security flaw in the ip_frag_reasm()
 Content-Type: text/plain; charset=utf-8
 
-Solar Designer <solar@...nwall.com> writes:
-> On Thu, Jun 21, 2018 at 01:54:16PM +0200, Sven Schwedas wrote:
->> On 2018-06-21 12:28, Lukas Odzioba wrote:
->> > Or use cpu hotplug mechanism, which should be way more convenient:
->> > https://www.kernel.org/doc/html/v4.17/core-api/cpu_hotplug.html
->> 
->> Hotplug doesn't seem differentiate between HT threads and physical
->> cores,
->
-> This isn't exactly the question to ask: first vs. second thread in a
-> core aren't any different, neither of them is "the physical core" unless
-> you choose not to use the other.
->
-> And you can obtain the needed information from /proc/cpuinfo or
-> /sys/devices/system/cpu/cpu*/topology/* to choose which logical CPUs you
-> disable (so that you leave only one per physical core).
->
-> On a related note, attached is a generic Linux /proc/cpuinfo parser I
+Heololo,
 
-I guess by "generic" you mean Intel & AMD? :)
+A security flaw was found in the ip_frag_reasm() function in
+net/ipv4/ip_fragment.c in the Linux kernel which can cause a later system crash
+in ip_do_fragment(). With certain non-default but non-rare configuration of
+a victim host an attacker can trigger this crash remotely, thus leading to a
+remote denial-of-service.
 
-It won't work on powerpc, or arm, or arm64 ...
+The CVE-ID CVE-2018-14641 was assigned to this flaw and we would suggest to use
+it in the public communications.
 
-You should be able to determine all of the info you need from the sysfs
-topology files, which work across arches.
+Reference: https://bugzilla.redhat.com/show_bug.cgi?id=1629636
 
-See the script below for example, which shows CPUs grouped by core.
+The flaw was introduced in:
 
-cheers
+$ git tag --contain fa0f527358bd
+v4.19-rc1
 
+and fixed in:
 
-#!/usr/bin/python3
+$ git tag --contain 5d407b071dc3
+v4.19-rc4
 
-import os
-import glob
+The fix is the upstream commit 5d407b071dc3 ("ip: frags: fix crash in
+ip_do_fragment()") and it is fixing fa0f527358bd ("ip: use rb trees for IP frag
+queue."). Namely, the following part of fa0f527358bd which unions sk and
+ip_defrag_offset fields of struct sk_buff has introduced the vulnerability:
 
-by_core = {}
++++ b/include/linux/skbuff.h
+@@ -676,13 +676,16 @@ struct sk_buff {
++
++       union {
++               struct sock             *sk;
++               int                     ip_defrag_offset;
++       };
 
-for path in glob.iglob('/sys/devices/system/cpu/cpu*/topology/core_id'):
-    num = int(path.split('/')[5].replace('cpu', ''))
-    core_id = int(open(path).read(), 10)
-    by_core.setdefault(core_id, []).append(num)
+Distributions which has backported this part of fa0f527358bd (which in turn is
+a part of the fix of the CVE-2018-5391/FragmentSmack) are vulnerable.
 
-for core in sorted(by_core.keys()):
-    print('%d: %s' % (core, ', '.join([str(s) for s in sorted(by_core[core])])))
+For the remote attack masquerading and forwarding should be configured on a
+victim host. Then an attacker can ping an external host from inside a
+masqueraded zone, so that the malicious ping is masqueraded and forwarded by a
+victim host. This is not default but (we believe) not rare configuration, so
+for example, a VM hosting provider could be vulnerable.
+
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
