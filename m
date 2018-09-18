@@ -1,39 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/13/12
-Message-ID: <da9e29c39fae03caa21b6fa915009b4f7f2ec0cf.camel@debian.org>
-Date: Thu, 13 Dec 2018 21:02:12 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: Jann Horn <jannh@...gle.com>
-Subject: Re: Linux kernel: userfaultfd bypasses tmpfs file permissions (CVE-2018-18397; since 4.11; fixed in 4.14.87 and 4.19.7)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/18/2
+Message-ID: <234fcf46-0b7e-1055-de68-ca30adcd6e5b@nanthrax.net>
+Date: Tue, 18 Sep 2018 14:36:56 +0200
+From: Jean-Baptiste Onofré <jb@...thrax.net>
+To: Karaf Dev <dev@...af.apache.org>, user@...af.apache.org, Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com, coyotesqrl@...il.com
+Subject: [SECURITY] New security advisory for CVE-2018-11786 released for Apache Karaf
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+A new security advisory has been released for Apache Karaf, that is
+fixed in recent 4.2.0 release.
 
-On Wed, 2018-12-12 at 15:24 +0100, Solar Designer wrote:
-> A question to ask may be: out of Linux kernel vulnerabilities being
-> patched, are there more high and critical overall severity (e.g., as
-> risk impact times risk probability) vulnerabilities found in "too
-> recent" kernels than there are high and critical severity untracked
-> vulnerabilities (also or instead) affecting "sufficiently old" kernels?
+CVS-2018-11786: Apache Karaf SSH RBAC security enforcement
 
-Data collected by Kees and regularly updated might help here. See 
-https://events.linuxfoundation.org/wp-content/uploads/2017/12/Overview-and-Recent-Developments-Kernel-Self-Protection-Project_Kees-Cook.pdf#%5B%7B%22num%22%3A22%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C0%2C446.4%2C0%5D
-for the last edition (sorry for the weird anchor, in case it breaks it's on
-slide 5)
+Severity: Moderate
 
-Regards,
-- -- 
-Yves-Alexis
------BEGIN PGP SIGNATURE-----
+Vendor: The Apache Software Foundation
 
-iQEzBAEBCAAdFiEE8vi34Qgfo83x35gF3rYcyPpXRFsFAlwSusQACgkQ3rYcyPpX
-RFvdUwf+J6G9ACV35269DdJSWO27c/LuAhuxxCHbSjEf3EeGamBcEksV6+OysAiv
-9oy/iwnk37ksv7ZlRDiJbhIRZQyKWv8vTHx+X0ntgi5MIs31Yby3Q3agL1irW+b+
-2DnUoeoZH+RIXk9Tm97XfJTDm9hJere7hwI8jQAUuNf/a2vu9oDlCYnvh5ZRz537
-4Q4w2lR03dsRCm8gvDFtbLjYzTu3xoscEkHafxoSbU/7RLkqYAmbU6FhqfZ4MQ9m
-Q/oNIDIw/Lh28kByTII98Af6P03td1pS1aPre8KYw62BuJrZ87+z22ehjP7j5srm
-l0Qx1W3g6fudzwY4RVTkqtQMyAZ5/w==
-=O/RN
------END PGP SIGNATURE-----
+Versions Affected: all versions of Apache Karaf prior to 4.2.0.M1
+
+Description:
+
+If the sshd service in Karaf is left on so an administrator can manage
+the running instance, any user with rights to the Karaf console can
+pivot and read/write any file on the file system to which the Karaf
+process user has access. This can be locked down a bit by using chroot
+to change the root directory to protect files outside of the Karaf
+install directory; it can be further locked down by defining a
+security manager policy that limits file system access to those
+directories beneath the Karaf home that are necessary for the system
+to run. However, this still allows anyone with ssh access to the Karaf
+process to read and write a large number of files as the Karaf process
+user.
+
+
+This has been fixed in revision:
+
+https://gitbox.apache.org/repos/asf?p=karaf.git;h=24fb477
+https://gitbox.apache.org/repos/asf?p=karaf.git;h=7ad0da3
+
+Mitigation: Apache Karaf users should upgrade to 4.2.0.M1 or later as
+soon as possible.
+
+JIRA Tickets: https://issues.apache.org/jira/browse/KARAF-5427
+
+Credit: This issue was reported by R.A. Porter
