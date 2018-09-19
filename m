@@ -1,29 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/19/6
-Message-ID: <CAC1dCwVOEYsB1c4s2DYkhsafT8q3Fupt_OFugXj9J1RCZuf3UQ@mail.gmail.com>
-Date: Wed, 19 Sep 2018 08:49:50 -0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/19/5
+Message-ID: <CAC1dCwV2-kTJKjNO1rV65bQrekkur7OWAu1x+pPRToRRYk=GPA@mail.gmail.com>
+Date: Wed, 19 Sep 2018 08:47:28 -0400
 From: Tim Allison <tallison@...che.org>
 To: announce@...che.org, dev@...a.apache.org, user@...a.apache.org,  Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com
-Subject: [CVE-2018-8017] Apache Tika Denial of Service Vulnerability -- Potential Infinite Loop in IptcAnpaParser
+Subject: [CVE-2018-11762] Zip Slip Vulnerability in Apache Tika's tika-app
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-8017: Apache Tika Denial of Service Vulnerability --
-Potential Infinite Loop in IptcAnpaParser
+CVE-2018-11762: Zip Slip Vulnerability in Apache Tika's tika-app
 
-Severity: Medium
+Severity: Low
 
 Vendor:
 The Apache Software Foundation
 
 Versions Affected:
-Apache Tika 1.2 to 1.18
+Apache Tika 0.9 to 1.18
 
 Description:
-A carefully crafted file can trigger an infinite loop in Apache Tika's
-IptcAnpaParser.
+In a rare edge case where a user does not specify an extract directory on
+the commandline (--extract-dir=) and the input file has an embedded file
+with an absolute path, such as "C:/evil.bat", tika-app would overwrite
+that file.
 
 Mitigation:
-Apache Tika users should upgrade to 1.19 or later.
+Apache Tika users should upgrade to 1.19 or later
 
 Credit:
-This issue was discovered by Tobias Ospelt of modzero AG.
+This issue was discovered by Tim Allison on the Apache Tika team.
