@@ -1,47 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/31/5
-Message-ID: <20180531185528.GA29608@openwall.com>
-Date: Thu, 31 May 2018 20:55:28 +0200
-From: Solar Designer <solar@...nwall.com>
-To: Stefan Kanthak <stefan.kanthak@...go.de>
-Cc: Pete Batard <pete@...o.ie>, oss-security@...ts.openwall.com
-Subject: Re: CVE request: rufus
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/19/3
+Message-ID: <20180919090513.aatf3ezevweolyld@lorien.valinor.li>
+Date: Wed, 19 Sep 2018 11:05:18 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: Davidlohr Bueso <dave@...olabs.net>
+Subject: Re: Linux kernel: potential local priviledge escalation bug in vmacache code
 Content-Type: text/plain; charset=utf-8
 
-Stefan, Pete -
+Hi,
 
-As a moderator for oss-security, I approved these messages for their
-technical substance, but I don't appreciate the personal
-(counter-)attacks.  Let's please refrain from discussing people's
-experience, behavior, etc. and focus solely on the technical issues.
+On Wed, Sep 19, 2018 at 10:23:43AM +0200, Salvatore Bonaccorso wrote:
+> Hi Vladis,
+> 
+> On Wed, Sep 19, 2018 at 04:15:26AM -0400, Vladis Dronov wrote:
+> > Hello, Davidlohr,
+> > 
+> > Thank you for reporting this. Was CVE-ID assigned or requested
+> > for this flaw? If not, the Red Hat (as a CNA) could allocate one
+> > and handle adding it to the MITRE's database.
+> 
+> I requested earlier the day one from MITRE (via webform) but got no
+> assignment yet.
 
-(Unfortunately, when I say this I do point out an issue with behavior,
-but only as it relates to what I'd like not to see on this list.  I don't
-judge what's appropriate or not in general; I only set the policy here.)
+It got assigned CVE-2018-17182.
 
-On Thu, May 31, 2018 at 08:04:52PM +0200, Stefan Kanthak wrote:
-> READ THE SUBJECT!
-> Hint: it reads "CVE request".
-
-oss-security is no longer a place to make CVE requests.  Please see:
-
-http://oss-security.openwall.org/wiki/mailing-lists/oss-security#cve-requests
-
-"Previously, one could request CVE IDs for issues in Open Source
-software from oss-security.  This is no longer the case.  Instead, please
-start by posting about the (to be made) public issue to oss-security
-(without a CVE ID), request a CVE ID from MITRE directly, and finally
-"reply" to your own posting when you also have the CVE ID to add.  With
-the described approach you would only approach MITRE after the issue is
-already public, but if you choose to do things differently and contact
-MITRE about an issue that is not yet public, then please do not disclose
-to them more than the absolute minimum needed for them to assign a CVE ID."
-
-When the occasional CVE request messages that still arrive in here are
-otherwise on topic, like this time, we approve those anyway for their
-content.  If a CVE ID is desired, the sender is then expected to follow
-the above procedure.
-
-Thanks,
-
-Alexander
+Regards,
+Salvatore
