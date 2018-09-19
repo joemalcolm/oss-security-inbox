@@ -1,27 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/18/8
-Message-ID: <20180118205843.GR1627@oevtugenva.nrevsny.pk>
-Date: Thu, 18 Jan 2018 15:58:43 -0500
-From: Rich Felker <dalias@...c.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: How to deal with reporters who don't want their bugs fixed?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/19/6
+Message-ID: <CAC1dCwVOEYsB1c4s2DYkhsafT8q3Fupt_OFugXj9J1RCZuf3UQ@mail.gmail.com>
+Date: Wed, 19 Sep 2018 08:49:50 -0400
+From: Tim Allison <tallison@...che.org>
+To: announce@...che.org, dev@...a.apache.org, user@...a.apache.org,  Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com
+Subject: [CVE-2018-8017] Apache Tika Denial of Service Vulnerability -- Potential Infinite Loop in IptcAnpaParser
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jan 18, 2018 at 05:10:05PM +0100, Florian Weimer wrote:
-> Subject says it all: What do you do if you receive a vulnerability
-> report, and the reporter requests an embargo at some time in the
-> future because that's when their paper/conference
-> presentation/patent submission is scheduled?
-> 
-> The obvious approach is to find a prior public report of essentially
-> the same bug and fix that (which will work surprisingly often), but
-> let's assume that this isn't the case.
+CVE-2018-8017: Apache Tika Denial of Service Vulnerability --
+Potential Infinite Loop in IptcAnpaParser
 
-Assuming there is no good reason for the embargo (like coordination
-with other affected parties), ignore the embargo, fix the bug, and
-report the behavior to the conference. Conferences should adopt
-policies not to host speakers who request that users be left
-unprotected for any extended period for the sake of their own ego
-trip.
+Severity: Medium
 
-Rich
+Vendor:
+The Apache Software Foundation
+
+Versions Affected:
+Apache Tika 1.2 to 1.18
+
+Description:
+A carefully crafted file can trigger an infinite loop in Apache Tika's
+IptcAnpaParser.
+
+Mitigation:
+Apache Tika users should upgrade to 1.19 or later.
+
+Credit:
+This issue was discovered by Tobias Ospelt of modzero AG.
