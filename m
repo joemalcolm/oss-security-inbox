@@ -1,60 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/23/16
-Message-ID: <CAFbRtroTd0NqpWrCUunEBNgL6WGiTyz+eyBvDquy9oxa3zki=Q@mail.gmail.com>
-Date: Thu, 23 Aug 2018 11:38:32 -0500
-From: Sergio Peña <spena82@...il.com>
-To: security@...try.apache.org, biglauer@...udera.com,  oss-security@...ts.openwall.com
-Cc: dev@...try.apache.org
-Subject: [SECURITY] CVE-2018-8028: Bypass ALTER TABLE EXCHANGE PARTITIONS authorization for Hive
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/19/4
+Message-ID: <CAC1dCwVx2Z1haCnvYBhH7nQRN4kYKjwkLfjsCbeFHv2tRcBonA@mail.gmail.com>
+Date: Wed, 19 Sep 2018 08:44:41 -0400
+From: Tim Allison <tallison@...che.org>
+To: dev@...a.apache.org, user@...a.apache.org, announce@...che.org,  Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com
+Subject: [CVE-2018-11761] Apache Tika DoS XML Entity Expansion Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-[SECURITY] CVE-2018-8028: Bypass ALTER TABLE EXCHANGE PARTITIONS
-authorization for Hive
+CVE-2018-11761: Apache Tika Denial of Service via XML Entity Expansion
+Vulnerability
 
-Severity:
-Major
+Severity: Medium
 
 Vendor:
 The Apache Software Foundation
 
 Versions Affected:
-This vulnerability affects only the version of Apache Sentry 2.0.0 due to
-the introduction of
-Hive 2.x.
+Apache Tika 0.1 to 1.18
 
 Description:
-An authenticated user can execute ALTER TABLE EXCHANGE PARTITIONS without
-being authorized by Sentry.
-This can allow an attacker unauthorized access to the partitioned data of a
-Sentry protected table and can allow
-an attacker to remove data from a Sentry protected table.
+Apache Tika's XML parsers were not configured to limit entity expansion.
+They were therefore vulnerable to an entity expansion vulnerability which
+can lead to a denial of service attack.
 
 Mitigation:
-Apache Sentry users using 2.0.0 should upgrade to 2.0.1 or later.
-
-Example:
-The admin has created the following table in a database that the attacker
-doesn't have access to:
-> CREATE TABLE target_database1.aliens (name string) PARTITIONED BY
-(home_planet string, diet string);
-> ALTER TABLE target_database1.aliens ADD PARTITION (home_planet='earth',
-diet='milk shakes');
-> ALTER TABLE target_database1.aliens ADD PARTITION
-(home_planet='trapis-4', diet='sentient lifeforms with cheese');
-
-The attacker has a database attacker_database, created as follows:
-> CREATE TABLE attacker_database.data_stealer (name string) PARTITIONED BY
-(home_planet string, diet string);
-> ALTER TABLE attacker_database.data_stealer EXCHANGE PARTITION
-(home_planet='earth', diet='milk shakes')
-   WITH TABLE target_database1.aliens;
-
-The attacker now has access to all of the data in the target partitions
-with the privileges available to them on attacker_database.
+Apache Tika users should upgrade to 1.19 or later
 
 Credit:
-This issue was discovered by Benjamin Iglauer of Cloudera.
-
-References:
-https://cwiki.apache.org/confluence/display/SENTRY/Vulnerabilities+found+in+Apache+Sentry
-
+This issue was discovered by Renfei (Brian) Wang of Amazon.
