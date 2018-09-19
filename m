@@ -1,171 +1,150 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/01/1
-Message-Id: <D8D17B58-54E2-4C33-97F1-AFDBB21D8878@beckweb.net>
-Date: Wed, 1 Aug 2018 04:38:37 +0200
-From: Daniel Beck <ml@...kweb.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Multiple vulnerabilities in Jenkins plugins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/20/1
+Message-ID: <ba9fc226-3691-7852-46c5-6b81846e8822@x41-dsec.de>
+Date: Thu, 20 Sep 2018 01:57:26 +0200
+From: X41 D-Sec GmbH Advisories <advisories@...-dsec.de>
+To: bugtraq@...urityfocus.com, fulldisclosure@...lists.org, oss-security@...ts.openwall.com
+Subject: X41 D-Sec GmbH Security Advisory X41-2018-008: Multiple Vulnerabilities in HylaFAX
 Content-Type: text/plain; charset=utf-8
 
+X41 D-SEC GmbH Security Advisory: X41-2018-008
 
-> On 30. Jul 2018, at 16:10, Daniel Beck <ml@...kweb.net> wrote:
-> 
-> SECURITY-704
-> When using the `sshagent` step inside a `withDockerContainer` block in 
-> Pipeline, the resulting logging of the `ssh-add` command included the SSH 
-> key passphrase in plain text.
+Multiple Vulnerabilities in HylaFAX
+===================================
 
-CVE-2018-1999036
 
-> SECURITY-997
-> Resource Disposer Plugin did not perform permission checks on an API 
-> endpoint. This allowed users with Overall/Read access to Jenkins to stop 
-> tracking a specified resource.
-> 
-> Additionally, this API endpoint did not require POST requests, resulting 
-> in a CSRF vulnerability.
+Overview
+--------
+Confirmed Affected Versions: HylaFAX 6.0.6, HylaFAX+ 5.6.0
+Confirmed Patched Versions: HylaFAX 6.0.7, HylaFAX+ 5.6.1
+Vendor: Hylafax, Hylafax+
+Vendor URL: https://www.hylafax.org/, http://hylafax.sourceforge.net/
+Credit: X41 D-SEC GmbH, Luis Merino, Eric Sesterhenn, Markus Vervier
+Status: Public
+Advisory-URL: https://www.x41-dsec.de/lab/advisories/x41-2018-008-Hylafax/
 
-CVE-2018-1999037
 
-> SECURITY-975
-> Publish Over CIFS Plugin did not perform permission checks on a method 
-> implementing form validation. This allowed users with Overall/Read access 
-> to Jenkins to initiate CIFS connections to an attacker specified host.
-> 
-> Additionally, this form validation method did not require POST requests, 
-> resulting in a CSRF vulnerability.
+Summary and Impact
+------------------
+Severity Rating: Critical
+Vector: Incoming fax call
+CVE: CVE-2018-17141
+CWE: 122, 457
+CVSS Score: 9.0
+CVSS Vector: CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:H
+Multiple bugs were found in the code handling fax page reception in JPEG
+format that allow arbitrary writes to an uninitialized pointer by remote
+parties dialing in. When processing an specially crafted input, the issue
+could lead to remote code execution.
+Although JPEG reception is not announced as an available capability
+by HylaFAX and is explicitly disabled during capabilities announcement,
+there is code for JPEG support in HylaFAX that can be reached by a remote
+party when setting certain flags during session negotiation.
+X41 did not perform a full test or audit on the software.
 
-CVE-2018-1999038
 
-> SECURITY-982
-> Confluence Publisher Plugin did not perform permission checks on a method 
-> implementing form validation. This allowed users with Overall/Read access 
-> to Jenkins to submit login requests to Confluence using attacker-
-> specified credentials.
-> 
-> Additionally, this form validation method did not require POST requests, 
-> resulting in a CSRF vulnerability.
+Product Description
+-------------------
+HylaFAX is an open-source system for sending and receiving faxes using
+one or multiple fax modems.
 
-CVE-2018-1999039
+Analysis
+========
+X41 discovered several vulnerabilities in HylaFAX that are exploitable
+by local or remote attackers.
 
-> SECURITY-1016
-> Kubernetes Plugin did not perform permission checks on a method 
-> implementing form validation. This allowed users with Overall/Read access 
-> to Jenkins to connect to an attacker-specified Kubernetes cluster using 
-> attacker-specified credentials IDs obtained through another method, 
-> capturing credentials stored in Jenkins.
-> 
-> Additionally, this form validation method did not require POST requests, 
-> resulting in a CSRF vulnerability.
 
-CVE-2018-1999040
+Uninitialized pointer write in FaxModem::writeECMData()
+-------------------------------------------------------
+In CopyQuality.c++:990 recvRow is initialized only when params.jp is
+exactly JP_GREY or JP_COLOR and also params.df is exactly zero.
 
-> SECURITY-840
-> Tinfoil Security Plugin stored the API Secret Key in its configuration 
-> unencrypted in its global configuration file on the Jenkins master. This 
-> key could be viewed by users with access to the master file system.
+{% highlight c %}
+uint dataform = params.df + (params.jp ? params.jp + 4 : 0);
+//...
+switch (dataform) {
+//...
+case JPGREY+4:
+case JPCOLOR+4:
+    recvEOLCount = 0;
+    recvRow = (uchar) malloc(10241000); // 1M should do it?
+{% endhighlight %}
+However, later in the same function recvRow is used as a target for
+memcpy() when params.jp is JP_GREY or JP_COLOR, irrespective of
+params.df.  Consequently, if a sender crafts a DCS signal that leads to
+params.df being non-zero while params.jp is JP_GREY or JP_COLOR, then
+recvRow will be uninitialized when it is used as a target for memcpy().
+{% highlight c %}
+if (params.jp != JPGREY && params.jp != JPCOLOR) {
+    flushRawData(tif, 0, (const u_char) buf, cc);
+} else {
+    memcpy(recvRow, (const char) buf, cc);
+    recvRow += cc;
+}
+{% endhighlight %}
 
-CVE-2018-1999041
 
-> SECURITY-932
-> TraceTronic ECU-TEST Plugin unconditionally disabled SSL/TLS certificate 
-> validation for the entire Jenkins master JVM.
+Out of bounds write in FaxModem::writeECMData()
+-----------------------------------------------
+The same piece of code for memcpy at CopyQuality.c++:1045 can be
+abused to perform an out of bounds write to recvRow, as there is no
+bounds check before writing to and incrementing recvRow. This can
+lead to remote code execution when an attacker sends an specially
+crafted input.
 
-CVE-2018-1999025
 
-> SECURITY-994
-> TraceTronic ECU-TEST Plugin did not perform permission checks on a method 
-> implementing form validation. This allowed users with Overall/Read access 
-> to Jenkins to connect to an attacker-specified URL, with the path suffix
-> `/app-version-info` appended.
-> 
-> Additionally, this form validation method did not require POST requests, 
-> resulting in a CSRF vulnerability.
+Out of bounds write in FaxModem::recvPageDLEData()
+--------------------------------------------------
+CopyQuality:c++:446 presents another unbounded memcpy that can be
+abused to perform an out of bounds write to recvRow.
 
-CVE-2018-1999026
+{% highlight c %}
+if (n >= RCVBUFSIZ)
+    flushRawData(tif, 0, (const u_char) raw, n);
+else {
+    memcpy(recvRow, (const char) raw, n);
+    recvRow += n;
+}
+{% endhighlight %}
 
-> SECURITY-1009
-> SaltStack Plugin did not perform permission checks on methods implementing 
-> form validation. This allowed users with Overall/Read access to Jenkins to 
-> connect to an attacker-specified URL using attacker-specified credentials 
-> IDs obtained through another method, capturing credentials stored in 
-> Jenkins, and to cause Jenkins to submit HTTP requests to attacker-
-> specified URLs.
-> 
-> Additionally, these form validation methods did not require POST requests, 
-> resulting in a CSRF vulnerability.
+The code doesn't seem to be reachable, as JPEG flag forces ECM
+reception.
 
-CVE-2018-1999027
 
-> SECURITY-1021
-> Accurev Plugin did not perform permission checks on a method implementing 
-> form validation. This allowed users with Overall/Read access to Jenkins to 
-> connect to an attacker-specified Accurev server using attacker-specified 
-> credentials IDs obtained through another method, capturing credentials 
-> stored in Jenkins.
-> 
-> Additionally, these form validation methods did not require POST requests, 
-> resulting in a CSRF vulnerability.
+Workaround
+----------
+None.
 
-CVE-2018-1999028
+Timeline
+========
+2018-06-07 Issues found
+2018-08-24 Issue reported to vendor
+2018-09-02 Vendor sends patches
+2018-09-17 CVE ID assigned
+2018-09-18 Patches released
+2018-09-19 Advisory released
 
-> SECURITY-1001
-> Shelve Project Plugin did not escape the names of shelved projects on the 
-> UI, potentially resulting in a stored XSS vulnerability.
+External links
+==============
+See https://www.x41-dsec.de/lab/blog/fax/ for a blog post related to this
+advisory.
 
-CVE-2018-1999029
+About X41 D-SEC GmbH
+====================
+X41 is an expert provider for application security services.
+Having extensive industry experience and expertise in the area of
+information security, a strong core security team of world class
+security experts enables X41 to perform premium security services.
+Fields of expertise in the area of application security are security
+centered code reviews, binary reverse engineering and vulnerability
+discovery.
+Custom research and a IT security consulting and support services are
+core competencies of X41.
 
-> SECURITY-1022
-> Maven Artifact ChoiceListProvider (Nexus) Plugin did not perform 
-> permission checks on a method implementing form validation. This allowed 
-> users with Overall/Read access to Jenkins to connect to an attacker-
-> specified Nexus or Artifactory server using attacker-specified credentials 
-> IDs obtained through another method, capturing credentials stored in 
-> Jenkins.
-> 
-> Additionally, this form validation method did not require POST requests, 
-> resulting in a CSRF vulnerability.
+- -- 
+X41 D-SEC GmbH, Dennewartstr. 25-27, D-52068 Aachen
+T: +49 241 9809418-0, Fax: -9
+Unternehmenssitz: Aachen, Amtsgericht Aachen: HRB19989
+Geschäftsführer: Markus Vervier
 
-CVE-2018-1999030
-
-> SECURITY-847
-> meliora-testlab Plugin stored the API Key in its configuration unencrypted 
-> in its global configuration file on the Jenkins master. This key could be 
-> viewed by users with access to the master file system.
-> 
-> Additionally, the API key was not masked from view using a password form 
-> field.
-
-CVE-2018-1999031
-
-> SECURITY-995
-> Agiletestware Pangolin Connector for TestRail Plugin did not perform 
-> permission checks on an API endpoint used to validate and save the plugin 
-> configuration. This allowed users with Overall/Read access to Jenkins to 
-> override the plugin configuration.
-> 
-> Additionally, the API endpoint did not require POST requests, resulting in 
-> a CSRF vulnerability.
-
-CVE-2018-1999032
-
-> SECURITY-1039
-> Anchore Container Image Scanner Plugin stored the password in its 
-> configuration unencrypted in its global configuration file on the Jenkins 
-> master. This password could be viewed by users with access to the master 
-> file system.
-
-CVE-2018-1999033
-
-> SECURITY-933
-> Inedo ProGet Plugin unconditionally disabled SSL/TLS certificate 
-> validation for the entire Jenkins master JVM.
-
-CVE-2018-1999034
-
-> SECURITY-935
-> Inedo ProGet Plugin unconditionally disabled SSL/TLS certificate validation 
-> for the entire Jenkins master JVM.
-
-CVE-2018-1999035
 
