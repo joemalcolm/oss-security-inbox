@@ -1,29 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/22/3
-Message-ID: <4701b1a6-1dc7-d95f-a68c-32df21e1e366@apache.org>
-Date: Fri, 22 Jun 2018 06:07:45 -0700
-From: Josh Elser <elserj@...che.org>
-To: dev <dev@...se.apache.org>
-Cc: user@...se.apache.org, oss-security@...ts.openwall.com
-Subject: CVE-2018-8025 on Apache HBase
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/19/7
+Message-ID: <ebbf80ff-6a12-b851-e771-a6d94905918e@chbi.eu>
+Date: Wed, 19 Sep 2018 19:36:40 +0200
+From: chbi@...i.eu
+To: oss-security@...ts.openwall.com
+Subject: CVE-2018-12642: Incorrect Access Control of tickets in Froxlor <= 0.9.39.5
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-8025 describes an issue in Apache HBase that affects the 
-optional "Thrift 1" API server when running over HTTP. There is a 
-race-condition which could lead to authenticated sessions being 
-incorrectly applied to users, e.g. one authenticated user would be 
-considered a different user or an unauthenticated user would be treated 
-as an authenticated user.
+Hi,
 
-https://issues.apache.org/jira/browse/HBASE-20664 implements a fix for 
-this issue, and this fix is contained in the following releases of 
-Apache HBase:
+I've discovered security issues in Froxlor <= 0.9.39.5
+(https://www.froxlor.org)
 
-* 1.2.6.1
-* 1.3.2.1
-* 1.4.5
-* 2.0.1
+An authenticated customer can read all messages of all support tickets
+of every user by simply changing the "id".
 
-This vulnerability affects all 1.x and 2.x release lines (except 1.0.0).
+It is also possible to add a new message, change the priority, close and
+reopen a support ticket as another customer than the owner of the
+support ticket.
 
-- The Apache HBase PMC
+
+Until now there is no corrected version of Froxlor available, because
+the main developer has no spare time to release a new version nor to
+inform users about the fixes for three months. It's also not foreseeable
+when a corrected version will be released.
+
+But Froxlor users can manually patch these issues by replacing
+customer_tickets.php and lib/classes/ticket/class.ticket.php with the
+corrected ones from
+https://github.com/Froxlor/Froxlor/blob/436d141bd1c6f06a66b6d6e593d359afc3c2a80e/customer_tickets.php
+and
+https://github.com/Froxlor/Froxlor/blob/436d141bd1c6f06a66b6d6e593d359afc3c2a80e/lib/classes/ticket/class.ticket.php
+
+
+I've decided to post about these security issues, because I think it is
+better that Froxlor users know that fixes for security issues are
+available, even if there is no corrected version released yet.
+
+
+Fixes:
+https://github.com/Froxlor/Froxlor/commit/aa881560cc996c38cbf8c20ee62854e27f72c73c
+https://github.com/Froxlor/Froxlor/commit/436d141bd1c6f06a66b6d6e593d359afc3c2a80e
+
+
+Timeline:
+2018-06-19: Issues discovered and reported
+2018-06-19: Issues confirmed and partial fixed
+2018-06-21: Issues fixed; Response summarized: Developer needs a few
+days for a new release
+2018-07-12: Asked when developer plan to release a new version
+2018-07-12: Response summarized: Developer wait until package builder is
+available again
+2018-08-20: Notified the developer about posting on 2018-09-19 to inform
+Froxlor users
+2018-08-21: Response summarized: Lack of understanding regarding a
+posting. I should give users a chance to update. Developer has no spare
+time to release a new version.
+
+
+-- 
+chbi
+https://chbi.eu
+
+GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
+     https://chbi.eu/chbi.asc
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
