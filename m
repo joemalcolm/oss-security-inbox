@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5359" "Tuesday" "18" "April" "2017" "08:37:13" "-0400" "Brad Spengler" "spender@grsecurity.net" "<20170418123713.GA5756@grsecurity.net>" "129" "Re: [oss-security] Silently (or obliviously) partially-fixed CONFIG_STRICT_DEVMEM bypass" "^Date:" nil nil "4" "2017041812:37:13" "[oss-security] Silently (or obliviously) partially-fixed CONFIG_STRICT_DEVMEM bypass" (number mark "        spender@grse Apr 18  129/5359  " thread-indent "\"Re: [oss-security] Silently (or obliviously) partially-fixed CONFIG_STRICT_DEVMEM bypass\"\n") "<20170417070929.GB23282@kroah.com>" ("<20170416202538.GA12165@grsecurity.net>" "<20170417070929.GB23282@kroah.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4529" "Thursday" "20" "September" "2018" "01:57:26" "+0200" "X41 D-Sec GmbH Advisories" "advisories@x41-dsec.de" "<ba9fc226-3691-7852-46c5-6b81846e8822@x41-dsec.de>" "141" "[oss-security] X41 D-Sec GmbH Security Advisory X41-2018-008: Multiple Vulnerabilities in HylaFAX" nil nil nil "9" "2018091923:57:26" "[oss-security] X41 D-Sec GmbH Security Advisory X41-2018-008: Multiple Vulnerabilities in HylaFAX" (number mark "U       advisories@x Sep 20  141/4529  " thread-indent "\"[oss-security] X41 D-Sec GmbH Security Advisory X41-2018-008: Multiple Vulnerabilities in HylaFAX\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 12087 invoked by uid 550); 18 Apr 2017 13:06:46 -0000
+Received: (qmail 23700 invoked by uid 550); 20 Sep 2018 05:49:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,149 +11,160 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 29806 invoked from network); 18 Apr 2017 12:37:25 -0000
-Message-ID: <20170418123713.GA5756@grsecurity.net>
-References: <20170416202538.GA12165@grsecurity.net>
- <20170417070929.GB23282@kroah.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="YiEDa0DAkWCtVeE4"
-Content-Disposition: inline
-In-Reply-To: <20170417070929.GB23282@kroah.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Date: Tue, 18 Apr 2017 08:37:13 -0400
-From: Brad Spengler <spender@grsecurity.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Silently (or obliviously) partially-fixed
- CONFIG_STRICT_DEVMEM bypass
-To: oss-security@lists.openwall.com
+Received: (qmail 20447 invoked from network); 19 Sep 2018 23:58:00 -0000
+From: X41 D-Sec GmbH Advisories <advisories@x41-dsec.de>
+To: bugtraq@securityfocus.com, fulldisclosure@seclists.org,
+ oss-security@lists.openwall.com
+Message-ID: <ba9fc226-3691-7852-46c5-6b81846e8822@x41-dsec.de>
+Date: Thu, 20 Sep 2018 01:57:26 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+Subject: [oss-security] X41 D-Sec GmbH Security Advisory X41-2018-008: Multiple
+ Vulnerabilities in HylaFAX
 
---YiEDa0DAkWCtVeE4
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+X41 D-SEC GmbH Security Advisory: X41-2018-008
 
-BTW, forgot I had posted this 8 years ago:
+Multiple Vulnerabilities in HylaFAX
+===================================
 
-https://lwn.net/Articles/330488/
 
-Since I always reveal hashes at the proper time:
+Overview
+--------
+Confirmed Affected Versions: HylaFAX 6.0.6, HylaFAX+ 5.6.0
+Confirmed Patched Versions: HylaFAX 6.0.7, HylaFAX+ 5.6.1
+Vendor: Hylafax, Hylafax+
+Vendor URL: https://www.hylafax.org/, http://hylafax.sourceforge.net/
+Credit: X41 D-SEC GmbH, Luis Merino, Eric Sesterhenn, Markus Vervier
+Status: Public
+Advisory-URL: https://www.x41-dsec.de/lab/advisories/x41-2018-008-Hylafax/
 
-spender@www:~$ ls -al devmem
--rw-r--r-- 1 spender spender 161 Apr 27  2009 devmem
-spender@www:~$ cat devmem
-there exist paging structures within the first 1MB of /dev/mem which can
-be modified to thereby modify arbitrary memory and bypass any
-restrictions on /dev/mem
-spender@www:~$ md5sum ./devmem
-6c8eb1e89e3e1a8c3bb207eecc517a20  ./devmem
-spender@www:~$ sha1sum ./devmem
-570b82139714e6640b9b1af02060e51de0558a9c  ./devmem
 
-Of course, it's unlikely anyone upstream figured out the above so I'm being
-overly generous here.  Enjoy it while it lasts Greg ;)
+Summary and Impact
+------------------
+Severity Rating: Critical
+Vector: Incoming fax call
+CVE: CVE-2018-17141
+CWE: 122, 457
+CVSS Score: 9.0
+CVSS Vector: CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:H
+Multiple bugs were found in the code handling fax page reception in JPEG
+format that allow arbitrary writes to an uninitialized pointer by remote
+parties dialing in. When processing an specially crafted input, the issue
+could lead to remote code execution.
+Although JPEG reception is not announced as an available capability
+by HylaFAX and is explicitly disabled during capabilities announcement,
+there is code for JPEG support in HylaFAX that can be reached by a remote
+party when setting certain flags during session negotiation.
+X41 did not perform a full test or audit on the software.
 
--Brad
 
-On Mon, Apr 17, 2017 at 09:09:29AM +0200, Greg KH wrote:
-> On Sun, Apr 16, 2017 at 04:25:38PM -0400, Brad Spengler wrote:
-> > Hi all,
-> >=20
-> > I wanted to provide some small notice of upstream kernel developers sil=
-ently
-> > or obliviously partially fixing a CONFIG_STRICT_DEVMEM bypass which exp=
-licitly has
-> > never been possible in grsecurity in the past 15 years.  I say this bec=
-ause the commit
-> > message makes no mention of this partially fixing a CONFIG_STRICT_DEVME=
-M bypass (and I
-> > suppose a Secure Boot bypass, but what isn't these days?), and similarl=
-y makes no
-> > mentions of the modifications it makes to the write side.  CONFIG_STRIC=
-T_DEVMEM exists
-> > to prevent userland from directly modifying kernel memory, yet the kern=
-el will happily
-> > make slab allocations in allowed regions below 1MB.  CONFIG_STRICT_DEVM=
-EM explicitly
-> > allowed both reads and writes to these allocations.  As noted, the comm=
-it below doesn't
-> > fix the mmap side.
-> >=20
-> > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/comm=
-it/?id=3Da4866aa812518ed1a37d8ea0c881dc946409de94
-> >=20
-> > Feel free to look at GRKERNSEC_KMEM code going back to 2002 in our 2.4.=
-20
-> > patch, or when it changed in 2003 for 2.4.21, or this explicit hunk, co=
-mment and
-> > all, that's been around ever since CONFIG_STRICT_DEVMEM was added in 20=
-08:
-> >=20
-> > +#ifdef CONFIG_GRKERNSEC_KMEM
-> > +       /* throw out everything else below 1MB */
-> > +       if (pagenr <=3D 256)
-> > +               return 0;
-> > +#endif
-> >=20
-> > <additional comments/details removed: b76e178e7b24f238ba0dd70104336298f=
-493f0142056a1e5f35c27897369adc6>
-> >=20
-> > While I'm here, some more VMAP_STACK fallout (DoS/potential memory corr=
-uption,
-> > adding to the dozen or so posted earlier):
-> > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/comm=
-it/?id=3D67b0503db9c29b04eadfeede6bebbfe5ddad94ef
-> > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/comm=
-it/?id=3D606142af57dad981b78707234cfbd15f9f7b7125
-> > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/comm=
-it/?id=3D3f190e3aec212fc8c61e202c51400afa7384d4bc
-> > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/comm=
-it/?id=3D005145378c9ad7575a01b6ce1ba118fb427f583a
-> > https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?i=
-d=3D3b30460c5b0ed762be75a004e924ec3f8711e032
-> > https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?i=
-d=3Dc919a3069c775c1c876bec55e00b2305d5125caa
-> > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/comm=
-it/?id=3Dc4baad50297d84bde1a7ad45e50c73adae4a2192
-> > https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?i=
-d=3D5593523f968bc86d42a035c6df47d5e0979b5ace
-> > https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?i=
-d=3D7926aff5c57b577ab0f43364ff0c59d968f6a414
-> > https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?i=
-d=3D2d6a0e9de03ee658a9adc3bfb2f0ca55dff1e478
-> > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/comm=
-it/?id=3D7a7b5df84b6b4e5d599c7289526eed96541a0654
-> > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/comm=
-it/?id=3D8e9faa15469ed7c7467423db4c62aeed3ff4cae3
->=20
-> Thanks a lot for the heads up, I'll work on queueing up the first commit
-> you posted here for the next stable releases, and go through this list
-> to ensure I caught all of these as well.
->=20
-> Many thanks for letting us all know!
->=20
-> greg k-h
+Product Description
+-------------------
+HylaFAX is an open-source system for sending and receiving faxes using
+one or multiple fax modems.
 
---YiEDa0DAkWCtVeE4
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+Analysis
+========
+X41 discovered several vulnerabilities in HylaFAX that are exploitable
+by local or remote attackers.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQIcBAEBCgAGBQJY9ghxAAoJEETRwPglJf5J6U0QAJZ8+GDdl9853r4jJA29SMxT
-nAXlZfJ3tO51MSAHlYQs1HEENkJOs+7OAojWVjp/sTfxHBk6siesk/wtWJMiqsVj
-QQDrdF3wJiXqmzmeElYx3t+cgEzl6dobufEEQtsy0J/eZ8+u+08Wtq00tgP3Yl+Z
-rEUGJk7iWPE7FXH0nZCPPnys9aWZl4BgXhqfUC7vfmvDDdjt4djnQlHlEuQGczcD
-WgP1e/nIW7+v5E0yzXnrI6nY4EsGh7iGV1alqwhn2zs+C8kT27GRdfiU6P9tAinJ
-Zh5wNH9043Uc/Gb28Ct1WrYbsRufXgfVNOWlVZT2QL/QRP+A88UIDQ6RH9h69pkh
-t+RBW8kz9M4jus3+ub2Q+DNULFsTOMIAXPLfFrj1z21aalstvVv6d3wUJ5aPJD25
-ZLIJ4eD5fGaw45RfIqiiWFpMtiTV4XY3a9Uo4J6tLYw6U/hSwSHa7uY6sO0yGLfS
-1XjNMDlHwcUXKfSIH7TzDAc9vuXmQeS0y2J4n+cNgg+Zf9/kpwa4O6Bo82bGiY76
-e3XVHUjdRXUkgkeCO1JLaLfhfE9cfZiuIrqlZhTh1X5Nj0VZfBVEWVjf4tfcuZ6/
-G3TobdZA02rQuJr/pCKFhWj9enLWaWWOD3RfTRvE0kZtlYBW3fihzMJZB4P2Q+Yn
-+3eyiaSdXw526ct6mQLG
-=HHZX
------END PGP SIGNATURE-----
+Uninitialized pointer write in FaxModem::writeECMData()
+-------------------------------------------------------
+In CopyQuality.c++:990 recvRow is initialized only when params.jp is
+exactly JP_GREY or JP_COLOR and also params.df is exactly zero.
 
---YiEDa0DAkWCtVeE4--
+{% highlight c %}
+uint dataform = params.df + (params.jp ? params.jp + 4 : 0);
+//...
+switch (dataform) {
+//...
+case JPGREY+4:
+case JPCOLOR+4:
+    recvEOLCount = 0;
+    recvRow = (uchar) malloc(10241000); // 1M should do it?
+{% endhighlight %}
+However, later in the same function recvRow is used as a target for
+memcpy() when params.jp is JP_GREY or JP_COLOR, irrespective of
+params.df.  Consequently, if a sender crafts a DCS signal that leads to
+params.df being non-zero while params.jp is JP_GREY or JP_COLOR, then
+recvRow will be uninitialized when it is used as a target for memcpy().
+{% highlight c %}
+if (params.jp != JPGREY && params.jp != JPCOLOR) {
+    flushRawData(tif, 0, (const u_char) buf, cc);
+} else {
+    memcpy(recvRow, (const char) buf, cc);
+    recvRow += cc;
+}
+{% endhighlight %}
+
+
+Out of bounds write in FaxModem::writeECMData()
+-----------------------------------------------
+The same piece of code for memcpy at CopyQuality.c++:1045 can be
+abused to perform an out of bounds write to recvRow, as there is no
+bounds check before writing to and incrementing recvRow. This can
+lead to remote code execution when an attacker sends an specially
+crafted input.
+
+
+Out of bounds write in FaxModem::recvPageDLEData()
+--------------------------------------------------
+CopyQuality:c++:446 presents another unbounded memcpy that can be
+abused to perform an out of bounds write to recvRow.
+
+{% highlight c %}
+if (n >= RCVBUFSIZ)
+    flushRawData(tif, 0, (const u_char) raw, n);
+else {
+    memcpy(recvRow, (const char) raw, n);
+    recvRow += n;
+}
+{% endhighlight %}
+
+The code doesn't seem to be reachable, as JPEG flag forces ECM
+reception.
+
+
+Workaround
+----------
+None.
+
+Timeline
+========
+2018-06-07 Issues found
+2018-08-24 Issue reported to vendor
+2018-09-02 Vendor sends patches
+2018-09-17 CVE ID assigned
+2018-09-18 Patches released
+2018-09-19 Advisory released
+
+External links
+==============
+See https://www.x41-dsec.de/lab/blog/fax/ for a blog post related to this
+advisory.
+
+About X41 D-SEC GmbH
+====================
+X41 is an expert provider for application security services.
+Having extensive industry experience and expertise in the area of
+information security, a strong core security team of world class
+security experts enables X41 to perform premium security services.
+Fields of expertise in the area of application security are security
+centered code reviews, binary reverse engineering and vulnerability
+discovery.
+Custom research and a IT security consulting and support services are
+core competencies of X41.
+
+- -- 
+X41 D-SEC GmbH, Dennewartstr. 25-27, D-52068 Aachen
+T: +49 241 9809418-0, Fax: -9
+Unternehmenssitz: Aachen, Amtsgericht Aachen: HRB19989
+Geschäftsführer: Markus Vervier
+
+
