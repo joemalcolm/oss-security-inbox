@@ -1,4 +1,9 @@
-Received: (qmail 20073 invoked by uid 550); 26 Oct 2022 15:27:59 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["696" "Wednesday" "19" "September" "2018" "15:16:25" "-0800" "Michael McNally" "mcnally@isc.org" "<266a9bf2-2733-054b-6ce8-bc3eb5721a8d@isc.org>" "23" "[oss-security] ISC has issued new patch releases of BIND" nil nil nil "9" "2018091923:16:25" "[oss-security] ISC has issued new patch releases of BIND" (number mark "U       mcnally@isc. Sep 19   23/696   " thread-indent "\"[oss-security] ISC has issued new patch releases of BIND\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 7861 invoked by uid 550); 19 Sep 2018 23:16:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,105 +12,69 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5406 invoked from network); 26 Oct 2022 15:17:51 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=hardenedbsd.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=QCzgKBVdrz8jVLWjrKSCHJaD4yul+E2SLE919cT7H3w=;
-        b=iYuTfAzwd1FtsK+BZohTmq1ZvmMsaroXlkPagXEKlZ0M06Kv0YxwoM5AuchW4yxla/
-         lyqdOF4SMFh4yU81hvy/VKehJ74dqHwM+70nBY3wsG72ltX32RbSUE2GSWCe8qN3/clK
-         TLOH4IBtDPBpHZeqfWisebncsWe7IqpoHQiDIq/n7Vvqgmw80f4IGY8XD8JLaqS2BmJE
-         2ohqFjnDfhxVDqu8ssW2xi4lJJx+PsDWVLfW+ptcB5h3K7QXl5HxHnSkXAJTjYi7wFGd
-         s1npxA3e01Akn7Dj2SHK9uJrrauq6IzIvDUD/DNKyWfJe+UI3xY4AsUvk+C6N/4lEydF
-         nV0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QCzgKBVdrz8jVLWjrKSCHJaD4yul+E2SLE919cT7H3w=;
-        b=ZhlAfhl/gCJn0HSH7wsH7s3EiB2OHlXGXc2qbdEu+9U7BJWqUxX4koanGrPJUO4PrA
-         BKFI4ov1kB+Mte4poR/P/LzW+OLbCHdS7oS8zHrEtYbwFcG8PpBAncQkUFTy+ImqVrNo
-         n1SOOBWJMwsKZoRwTl4RIiLinkbqhQUHuzXNiR12KSliV/NwPRvnnfJhHLnMPHdEjw7B
-         JcWxgtPm2uzYgWx0ipuR8SIWZVX6VLY0kSXFmFWjzqz9WqVJFfsuKMketEJoU4rcpnO9
-         nuseXtlhZfby36wps8wwVQrcxE31MmxcHGX0DNMWDVnTMQIKLri7NV5qGhQIQvdjD2ZC
-         paWA==
-X-Gm-Message-State: ACrzQf1599CF/xfylrCyiRMw0w5AHrvko1MDtGB/MwG0+HPNWIBJzkMZ
-	N40OAiIhk1N5HQOrgoxdQQtm7YweBpzh3sQ3OEYhSUHQ4597zVC4mIaRpAf3pz7jKOvcBNjnhXa
-	UeifKRIiTwswzvXNjpQzhaRyOwp46vAzrHpRHaea27faOF4fRPLwFVLJl3ARh8iXEpFwsmuR8hq
-	+eOVH0M/12Z24Y7x0=
-X-Google-Smtp-Source: AMsMyM7F/pri88o9bBndKxiykKuzi4m6niQUwfIPhTVkGMt0RcVZ3KIPl3TvSvL63tkia4JbwAOtPg==
-X-Received: by 2002:a05:6214:768:b0:4b3:cb4e:2d1d with SMTP id f8-20020a056214076800b004b3cb4e2d1dmr37675375qvz.50.1666797458944;
-        Wed, 26 Oct 2022 08:17:38 -0700 (PDT)
-Date: Wed, 26 Oct 2022 11:17:37 -0400
-From: Shawn Webb <shawn.webb@hardenedbsd.org>
+Received: (qmail 7825 invoked from network); 19 Sep 2018 23:16:39 -0000
 To: oss-security@lists.openwall.com
-Cc: openssl-announce@openssl.org, openssl-users@openssl.org,
-	openssl-project@openssl.org
-Message-ID: <20221026151737.rtmp5eatjf5uqgnb@mutt-hbsd>
-X-Operating-System: FreeBSD mutt-hbsd 14.0-CURRENT-HBSD FreeBSD
- 14.0-CURRENT-HBSD 
-X-PGP-Key: https://git.hardenedbsd.org/hardenedbsd/pubkeys/-/blob/master/Shawn_Webb/03A4CBEBB82EA5A67D9F3853FF2E67A277F8E1FA.pub.asc
-References: <db0d3f4e-ea16-83f0-2a2c-8186f42af180@openssl.org>
+From: Michael McNally <mcnally@isc.org>
+Openpgp: preference=signencrypt
+Autocrypt: addr=mcnally@isc.org; prefer-encrypt=mutual; keydata=
+ xsBNBE4I0bcBCACzmGY5YZuAL8eArSrHAIn2Y6Io7ZddCw5AKYLzCA+Ydcy4DEmBuQGVB8HY
+ ZW8WQxkh9AYiCevuLtT9TOswtIrWquuTNkgG/ZfnD15feH4XDAK+l6FwqHP0MNBQHgxIFYNz
+ Kheg3Y+X89e8DdEzkTGWKy9wEGH2/9p620ZD+7fT4Nh5m7MKEvP3glJdLMm/pU6X3LucJqnC
+ ZdCkTnzZwhgPnUg8zw8ZhFruWcyCPA/+OJWZtAVJNKWyWIOselm3bG/mqSV9Py2ku3JlelBQ
+ 9tGbzeW+li8gidp7lZdNvR3L/HvEwkxMw1/FdouXfvBNqKo84HlSQ5dR4NvGXPlMuMqTABEB
+ AAHNIU1pY2hhZWwgTWNOYWxseSA8bWNuYWxseUBpc2Mub3JnPsLAeAQTAQIAIgUCTgjRtwIb
+ LwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQlumWUDlMmawMMAf/YWPFtyqpgUtrPlkT
+ tA/j9DxI/0iD9zU5Xw7JwsO4A9Y3N1Es4+MGLkJdEcO/zq9fELmp+WFtR3GJ0xmg3Wd2vMRl
+ Qz8nJnZpue0kK7CuSk3HaIuiTBqpp2SO/02fwQNfaIZb6TNzjGSYPdFx7Ws+Wo6acV6cvrtG
+ jLBbcW/kRwwUB+Jx+E/swPNljBMGv3CSnLMxdqfOhrSAuZZZtylZcT33cTI+pCy3a4HPweXL
+ C8p2vxI9lpU7ceDt6xJsv4dOC27jl5ZbC9CrhfkNl6UA7mZLtODy6t53VteOoUYPugUrOLr7
+ MmCnOCQ87Djr0xLCON956d1lin2XwhAfQLmhtc7ATQROCNG3AQgAx2Yb/WoYxmtBoTp77U1L
+ QbcGIJFIVDG59wWgR4pFhVQO/4bhR64VV05w6m4OpmkFBGxcjAy3mKy7b2J4OEyrwGImzX+C
+ 9iXpuXBckW03Afp+F7N7gYjPzEENMeS/6bGU4OofUl2KbJZ0y5g0EDPN+ScTDisLqn1UWE3e
+ dKW5Ua3i6LBVS0FrbjZmv1rrn4lX2bsbVGnO376akxYmmujPxJauiP3pVc6UZ4zKH/pt/kUs
+ mh+y3aSmRSQCVNVh3PXWIoGyCowUEQPeufbtm6YG1DkI9foHlEsUEo+vS1XPSNovmahVU+4B
+ ZmlLdk3PDLuvkJa2dvRCpdicdEKbOUYDsQARAQABwsF+BBgBAgAJBQJOCNG3AhsuASkJEJbp
+ llA5TJmswF0gBBkBAgAGBQJOCNG3AAoJEDsbHdIEoEIy3WoH/RyMNtHL5jrCHMXY85YtaPH4
+ DtA9bzuIRStPaoxxPtn7ar85pI/qvQ6gsPHfG3XifFoB1nhFC4b575+KMvFe+0HTdv8GoVNd
+ y6y/tM8xV2zDas6f47uwq62EQE+VuOMx/0FqKHf1QiVv7qeIUxrouftho//iYSAYoiom44NB
+ 8eNzzN3FUDYeEDZ/5it31TUFCAiYZV8qlB16fLetZ/w2Q5WM1GT8L5NRHHO89RTExNmn+7su
+ S2aUJa/VcXbzZclyuvMv3jI/oYT1FL4ahYvV0P+QJn3vV5HjgptLoV0G5Q+JdtfsrmkI8Azz
+ u3z1TeZ2Ud7bS5tDmEE5dwt/urRIYCKaeQgAoE0jUs6y5yXbITifkMAIApw/Su7Ez+vfS/al
+ +58SmuR36zgpxBYRd0v3jXBqtofH/hwPkognm5suSUCjnBRxGS4mAx739eB1M+vQKWXvnKo/
+ 3LU51Sybvz8VTMDuF50Vg7XhSQ0CBR652zn7A60owGgYQ0vy42veK4zyimg1WT034HNloxvq
+ 886NBz0PpBbiaMMZquoOKbEt6w3iilFEbwDo6BeBit6zrox04tuKKHnCVnH0xJ2LPN34H+z0
+ 2RZJUh91/QiwAeuc3Z+Dvk/FYgSzcCTZuMP7irBtH+mNEfsnDW48jCIfqzIlnh6lTPLqMdAW
+ ORJz9bl+BiRdRg2YZg==
+Message-ID: <266a9bf2-2733-054b-6ce8-bc3eb5721a8d@isc.org>
+Date: Wed, 19 Sep 2018 15:16:25 -0800
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:52.0)
+ Gecko/20100101 Thunderbird/52.9.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="ldoforgxgjbeq7vz"
-Content-Disposition: inline
-In-Reply-To: <db0d3f4e-ea16-83f0-2a2c-8186f42af180@openssl.org>
-Subject: Re: [oss-security] Forthcoming OpenSSL Releases
-
---ldoforgxgjbeq7vz
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] ISC has issued new patch releases of BIND
 
-On Tue, Oct 25, 2022 at 02:54:15PM +0200, Ing. Martin Koci, MBA wrote:
-> Hello,
->=20
-> The OpenSSL project team would like to announce the forthcoming release of
-> OpenSSL version 3.0.7.
->=20
-> This release will be made available on Tuesday 1st November 2022 between
-> 1300-1700 UTC.
->=20
-> OpenSSL 3.0.7 is a security-fix release. The highest severity issue fixed=
- in
-> this release is CRITICAL:
+To the packagers and redistributors of BIND:
 
-Hey there,
+Today ISC announced one CVE (which does not come with a code fix)
+and two operational notifications for issues in BIND (which do.)
 
-I don't see anything on the CERT Vince site. Is there any way we could
-coordinate a response via CERT?
+The new releases for BIND 9.11.4-P2 and BIND 9.12.2-P2 can be found
+at http://www.isc.org/downloads
 
-Thanks,
+Details on the security vulnerability and the two operational
+notifications can be found via the following links:
 
---=20
-Shawn Webb
-Cofounder / Security Engineer
-HardenedBSD
+   https://kb.isc.org/docs/cve-2018-5741
 
-https://git.hardenedbsd.org/hardenedbsd/pubkeys/-/raw/master/Shawn_Webb/03A=
-4CBEBB82EA5A67D9F3853FF2E67A277F8E1FA.pub.asc
 
---ldoforgxgjbeq7vz
-Content-Type: application/pgp-signature; name="signature.asc"
+https://kb.isc.org/docs/change-4892-exposed-multiple-problems-affecting-dns=
+sec-inline-signing
 
------BEGIN PGP SIGNATURE-----
+https://kb.isc.org/docs/some-releases-of-bind-9-12-are-too-strict-when-hand=
+ling-referrals-with-non-empty-answer-sections
 
-iQIzBAABCAAdFiEEA6TL67gupaZ9nzhT/y5nonf44foFAmNZT4sACgkQ/y5nonf4
-4foStw//ZMX4CtAuElni/LemmFVX5ZhoOtS0e3dkiI7kJ/uIA7KC0LNoD6bt1eOv
-6UNXH1YtS79h6D/kk4VkYIxj1MYOtcDSMTBJ0bD8ETUpCSHguFyaZDyvKvk5j4zq
-VV0vdolyhB8VuPdn3cwzURcN1Vsa88dOSNElSy9OXLpyOHAmIqSyNIIFGzzd5g3c
-E/CeaOUcnSI9wQj9lLsmXzh/DA0Cf4eo7eYtDaWb5CsH1ajpvh/LXPNYeuF3OMIj
-5ddwVHr3Xjgw22B4M0RiyUWPY/hUPPR4cffb96UaHRyTqIYSEYoNsSW7pLa2BPok
-dGenH551Pi7H9WPfoSWP/AdoRhmaGgM3Jdb+/K8W/DmsnUTMClVt5QjerjxKbEoL
-16z4t2oxGIFqDPYAREOpte8COeR903XkBgX9+LhSn0keE1zjQALfgWDt+iDZ768o
-cfA3wH2MRuflp/JzBt94+9X/NGGYQgeuK92nGRcU1GposVQHYjeUbqG3gsnDnWwO
-Qce4APyoQbQATC7sinjFF3+9l60om4mwrJsaLYp3/wETkgLQZgfjUX9URYkDqqPk
-ZvZ/Go45ale9in6lRmXCLYaBA40fxnjdYOSW0yezLm55iMwMVGypGqKWAcZK5Rpg
-QcPbqR5UDFryNQnf2ZJnXrTJ9mnRHadAkuKrk9Yqw9J1AM697uY=
-=kQCQ
------END PGP SIGNATURE-----
 
---ldoforgxgjbeq7vz--
+Michael McNally
+ISC Security Officer
