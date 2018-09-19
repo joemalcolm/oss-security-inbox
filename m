@@ -1,144 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/05/5
-Message-ID: <3a997e85.7dd9.16644e8508d.Coremail.a4651386@163.com>
-Date: Fri, 5 Oct 2018 23:46:07 +0800 (CST)
-From: luo  <a4651386@....com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/19/10
+Message-ID: <20180919192018.GA6402@openwall.com>
+Date: Wed, 19 Sep 2018 21:20:18 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2018-17977: CentOS ipsec remote denial of service vulnerability
+Subject: Re: tdesktop 1.3.14: index out of range
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
+I'm posting this primarily to clarify why something as wrong-looking as
+this report got through moderation, and secondarily to ask that postings
+to oss-security should clearly describe security impact rather than
+leave people (even moderators) guessing why they're seeing this in here.
 
-I just applied for the cve number at https://cveform.mitre.org/. I don't know if it is correct to publish the complete information. Please check the community. This vulnerability is very different. Almost all versions of the kernel will work with the centos desktop version. Memory remote accumulation leads to secure remote denial of service
+On Wed, Sep 19, 2018 at 11:47:00PM +0530, Dhiraj Mishra wrote:
+> Affected Product: tdesktop-1.3.14 tested on Ubuntu 18.04 LTS x64
+> 
+> *Steps to reproduce:*
+> 1. Open Telegram
+> 2. Launch theme editor
+> 3. Save the file in some location
+> 4. The tdesktop then open "Edit color palette"
+> 5. Type "Hello World" in search <press enter>
+> 6. The tdesktop gets crash
+> 
+> Crashes, ASSERT failure in QVector<T>::operator[]: "index out of range",
+> file /usr/local/tdesktop/Qt-5.6.2/include/QtCore/qvector.h, line 431
+> Aborted (core dumped)
 
+FWIW, this doesn't look like a security issue to me, but I'm not
+familiar with tdesktop and don't consider it list moderators' job to
+distinguish security from non-security issues except in even more
+obvious cases.  In this case, I'm just 99% sure it's non-security.
 
+Maybe someone will see a way to make this cross a privilege boundary,
+which the above example doesn't appear to do.  Even with distribution of
+a malicious theme file (just guessing here as the example above is
+unclear on what file is involved nor on what exactly causes the crash)
+from one user to others, this doesn't appear to be a security issue as
+the impact would have been a mere crash (since the out of range index is
+properly detected), which looks irrelevant as a security attack in that
+scenario.
 
--------- Forwarding messages --------
-From: cve-request@...re.org
-Date: 2018-10-04 11:31:06
-To:  a4651386@....com
-Cc:  cve-request@...re.org
-Subject: Re: [scr579986] CentOS and IPSec
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+For this to be a security issue, a privilege boundary would need to be
+crossed _and_ either the impact needs to be worse than a mere crash or
+the attack would need to be performed without target user's interaction.
 
-> [Suggested description]
-> The Linux kernel 4.14.67 mishandles certain interaction among XFRM
-> Netlink messages, IPPROTO_AH packets, and IPPROTO_IP packets, which
-> allows local users to cause a denial of service (memory consumption
-> and system hang) by leveraging root access to execute crafted
-> applications, as demonstrated on CentOS 7.
-> 
-> ------------------------------------------
-> 
-> [Additional Information]
-> ipsec Can cause the
-> remote memory of the centos desktop version to run out, I tested this
-> problem with centos6.10 centos7.10 , but the minimal installation
-> version is not very obvious
-> 
-> 1.Compile the kernel and start compiling options
->  <*> IP:AH transformation
->   <*> IP:ESP transformation
->   <*> IP:IPComp transformation
->   <*> IP:IPsec transport mode
->   <*> IP:IPsec tunnel mode
->   <*> IP:IPsec BEET mode
-> 
-> 2.Modify the firewall or turn off the firewall to allow the ah
-> protocol or the esp protocol to pass through the firewall. 3.Run
-> ah_add on the target machine with root privileges, you need to modify
-> the inet_addr("127.0.0.1") of line 101 of ah_add.c; it refers to the
-> local address (the address of the target machine)
-> https://drive.google.com/file/d/15aIxj_yupCcs7i14AIlE8U2ySfOyovnk/view
-> 
-> 4,.Run ipip as an attacker with root privileges,Need to modify the
-> source address and destination address in the main function, the
-> destination address refers to the IP address of the target machine
-> https://drive.google.com/file/d/1_dh_KX0JpJdoWQopN1KWORwJsQlah7Nv/view
-> 
-> 5.Running the free command can obviously see the decline in the amount
-> of memory remaining space.Finally, it may lead to deadlock, shutdown
-> may be, the centos7 desktop version may be more obvious
-> 
-> Can cause the remote memory of the centos desktop version to run out,
-> I tested this problem with centos6.10 centos7.10, but the minimal
-> installation version is not very obvious
-> 
-> And the strange thing is that when I tested ubuntu, there was no such
-> problem. Basically, most kernel versions can cause this effect.
-> 
-> ------------------------------------------
-> 
-> [VulnerabilityType Other]
-> Memory accumulation, memory application speed exceeds release speed, causing denial of service
-> 
-> ------------------------------------------
-> 
-> [Vendor of Product]
-> CentOS desktop remote denial of service about ipsec
-> 
-> ------------------------------------------
-> 
-> [Affected Product Code Base]
-> CentOS desktop - CentOS desktop6 CentOS desktop7
-> 
-> ------------------------------------------
-> 
-> [Affected Component]
-> Can cause the remote memory of the centos desktop version to run out, I tested this problem with centos6.10 centos7.10, 
-> https://drive.google.com/file/d/1TmOuAV56JiLP_bTnCQIAFVemN9OoDlIa/view?usp=sharing
-> 
-> ------------------------------------------
-> 
-> [Attack Type]
-> Remote
-> 
-> ------------------------------------------
-> 
-> [Impact Denial of Service]
-> true
-> 
-> ------------------------------------------
-> 
-> [Attack Vectors]
-> A packet attack opens a secure server that can cause a remote denial of service
-> 
-> ------------------------------------------
-> 
-> [Reference]
-> https://drive.google.com/file/d/1TmOuAV56JiLP_bTnCQIAFVemN9OoDlIa/view?usp=sharing
-> https://drive.google.com/file/d/1Mjr9Pu_dAjet2Bq_iWCEUIQkUtSTIBVK/view?usp=sharing
-> https://drive.google.com/file/d/15aIxj_yupCcs7i14AIlE8U2ySfOyovnk/view
-> https://drive.google.com/file/d/1_dh_KX0JpJdoWQopN1KWORwJsQlah7Nv/view
-> 
-> ------------------------------------------
-> 
-> [Discoverer]
-> 360 ESG Codesafe Team luo quan
+If someone finds a way to _avoid_ the detected "index out of range"
+condition yet have the program misbehave differently, that will be more
+valuable as a potential attack.
 
-Use CVE-2018-17977.
-
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJbtYkBAAoJEA2h+fVryJLoQQ8P/0q04KVv+s5Wg+FxY1TSm8Be
-IWbLbWkQfk9PFC2CW6kheM0lEuC4TESEUQP6tLETLrFzPJOf2wQc2YJuUA2kFgil
-18NMXDNKZ/x6w/qAPupID807oRKxlxTXs78X9aFNx6FonkdQAJGpf2OWTN/xIkkv
-HWNhOXKWlsh799BQYBDl8haWGmJXv/6lPsDCLN2M/ZRhQKbK4Dbo6CZ+eXEbclGu
-oSnsmAkK3w3J95rLD8/Y3p2eFnuOSPpBF7h4JC9ITU2nyCQvtjXpT7R2GVRsfv6G
-2wFZIOUCsYVZA6dI9DZ+yOP7o22to/jws5cls4J89RdQqmf2ZzrgpMwQq9qVZDfh
-b1Tr8iAtlCN8f1lvRbMziDLVDUnAPkG7xrcsQbR9pkPW6Ao3gG2hybGyB3sbkJKk
-n8e/Q+t/2j5CfWjB5FnRRqcyJMqEiNTp5maslquoAPj2h8/+QxH4mc6ptjERGsQF
-vGnkApEMdW1i9EjdceGcSE18rHashd6RCSsYG6Y2KqC033nGC2Pm9gU+z8EJhkLM
-gxNHXKTF8KzqHgjFedLzZlEWqDP0FGfXZa2QTU5t/IZquEE9Vl0ROnQI+aYh8Il8
-Rdzqy+FCvtcff5ArZs8yRRe9xqOUJjdkZ+IUgGTDWcd8utp1SvyynTVG0GBlqzgi
-NPq6gDUCzVZad2D4iVq7
-=xnI/
------END PGP SIGNATURE-----
+Alexander
