@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["467" "Monday" "15" "August" "2016" "09:54:53" "+0200" "Greg KH" "greg@kroah.com" "<20160815075453.GE6359@kroah.com>" "14" "Re: [oss-security] Linux tcp_xmit_retransmit_queue use after free on 4.8-rc1 / master" "^Cc:" nil nil "8" "2016081507:54:53" "[oss-security] Linux tcp_xmit_retransmit_queue use after free on 4.8-rc1 / master" (number mark "        greg@kroah.c Aug 15   14/467   " thread-indent "\"Re: [oss-security] Linux tcp_xmit_retransmit_queue use after free on 4.8-rc1 / master\"\n") "<CAFkTriL_5WgBrDLLujB=83-RXNYFW3bhNxi6Dr99vKnob_M3Rg@mail.gmail.com>" ("<CAFkTriL_5WgBrDLLujB=83-RXNYFW3bhNxi6Dr99vKnob_M3Rg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2004" "Wednesday" "19" "September" "2018" "21:20:18" "+0200" "Solar Designer" "solar@openwall.com" "<20180919192018.GA6402@openwall.com>" "45" "Re: [oss-security] tdesktop 1.3.14: index out of range" nil nil nil "9" "2018091919:20:18" "[oss-security] tdesktop 1.3.14: index out of range" (number mark "U       solar@openwa Sep 19   45/2004  " thread-indent "\"Re: [oss-security] tdesktop 1.3.14: index out of range\"\n") "<CAG8b5tQvMF46=bzGDZR6OGzrMqMx7=ktZR1iOX=DJTpZzdi83w@mail.gmail.com>" ("<CAG8b5tQvMF46=bzGDZR6OGzrMqMx7=ktZR1iOX=DJTpZzdi83w@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5449 invoked by uid 550); 15 Aug 2016 07:54:52 -0000
+Received: (qmail 23571 invoked by uid 550); 19 Sep 2018 19:20:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,41 +11,62 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5431 invoked from network); 15 Aug 2016 07:54:52 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=smtpout; bh=ja5LKSMd8w2Z8t+2oBV0MPKHzQM=; b=VMw4j
-	JqHDQoDp3iAuYWsK1xscSGhcV7UkePmiJxHN9DPLoJy1I7keS6/bD5xJOXrQhRCb
-	gtvPgXvd2LTiejdJitTtEhI85HENWke9OK66K4FSSTzhHtxkguy3wsgdRt0TroW5
-	NZTGIbqUQ6XmFsIJqtcld8uhdZy0cWvXct2mSE=
-X-Sasl-enc: jvDG8bfDxTt2kSi0S9LnWJ7DlELpIc6OWjeaxOa0F8MO 1471247680
-Message-ID: <20160815075453.GE6359@kroah.com>
-References: <CAFkTriL_5WgBrDLLujB=83-RXNYFW3bhNxi6Dr99vKnob_M3Rg@mail.gmail.com>
-MIME-Version: 1.0
+Reply-To: oss-security@lists.openwall.com
+Received: (qmail 19901 invoked from network); 19 Sep 2018 19:20:20 -0000
+Date: Wed, 19 Sep 2018 21:20:18 +0200
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20180919192018.GA6402@openwall.com>
+References: <CAG8b5tQvMF46=bzGDZR6OGzrMqMx7=ktZR1iOX=DJTpZzdi83w@mail.gmail.com>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAFkTriL_5WgBrDLLujB=83-RXNYFW3bhNxi6Dr99vKnob_M3Rg@mail.gmail.com>
-User-Agent: Mutt/1.6.2 (2016-07-01)
-Cc: cve-assign@mitre.org
-Date: Mon, 15 Aug 2016 09:54:53 +0200
-From: Greg KH <greg@kroah.com>
-Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Linux tcp_xmit_retransmit_queue use after free on
- 4.8-rc1 / master
-To: oss-security@lists.openwall.com
+In-Reply-To: <CAG8b5tQvMF46=bzGDZR6OGzrMqMx7=ktZR1iOX=DJTpZzdi83w@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] tdesktop 1.3.14: index out of range
 
-On Mon, Aug 15, 2016 at 09:20:17AM +0800, Marco Grassi wrote:
-> Hello, this program will cause a use after free of read 4 in
-> tcp_xmit_retransmit_queue or other tcp_ functions, often in another totally
-> unrelated process.
+Hi,
+
+I'm posting this primarily to clarify why something as wrong-looking as
+this report got through moderation, and secondarily to ask that postings
+to oss-security should clearly describe security impact rather than
+leave people (even moderators) guessing why they're seeing this in here.
+
+On Wed, Sep 19, 2018 at 11:47:00PM +0530, Dhiraj Mishra wrote:
+> Affected Product: tdesktop-1.3.14 tested on Ubuntu 18.04 LTS x64
 > 
-> reproducer + KASAN report is provided, tested on master available at the
-> time of writing and on 4.8 rc1
+> *Steps to reproduce:*
+> 1. Open Telegram
+> 2. Launch theme editor
+> 3. Save the file in some location
+> 4. The tdesktop then open "Edit color palette"
+> 5. Type "Hello World" in search <press enter>
+> 6. The tdesktop gets crash
+> 
+> Crashes, ASSERT failure in QVector<T>::operator[]: "index out of range",
+> file /usr/local/tdesktop/Qt-5.6.2/include/QtCore/qvector.h, line 431
+> Aborted (core dumped)
 
-Did you send this to the netdev@vger.kernel.org mailing list so that it
-can get fixed?  I don't see it there :(
+FWIW, this doesn't look like a security issue to me, but I'm not
+familiar with tdesktop and don't consider it list moderators' job to
+distinguish security from non-security issues except in even more
+obvious cases.  In this case, I'm just 99% sure it's non-security.
 
-thanks,
+Maybe someone will see a way to make this cross a privilege boundary,
+which the above example doesn't appear to do.  Even with distribution of
+a malicious theme file (just guessing here as the example above is
+unclear on what file is involved nor on what exactly causes the crash)
+from one user to others, this doesn't appear to be a security issue as
+the impact would have been a mere crash (since the out of range index is
+properly detected), which looks irrelevant as a security attack in that
+scenario.
 
-greg k-h
+For this to be a security issue, a privilege boundary would need to be
+crossed _and_ either the impact needs to be worse than a mere crash or
+the attack would need to be performed without target user's interaction.
+
+If someone finds a way to _avoid_ the detected "index out of range"
+condition yet have the program misbehave differently, that will be more
+valuable as a potential attack.
+
+Alexander
