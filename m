@@ -1,132 +1,125 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/20/2
-Message-ID: <CAP8jf_AP5Pesoa96fjSOvUcWy74Oc6ryBK9EtQ9g53wQUYOsZg@mail.gmail.com>
-Date: Tue, 20 Feb 2018 12:19:13 +0000
-From: Mohamed Ghannam <simo.ghannam@...il.com>
-To: alex.popov@...ux.com
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-17712 net/ipv4/raw.c: raw_sendmsg() race condition
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/19/8
+Message-ID: <CAG8b5tQvMF46=bzGDZR6OGzrMqMx7=ktZR1iOX=DJTpZzdi83w@mail.gmail.com>
+Date: Wed, 19 Sep 2018 23:47:00 +0530
+From: Dhiraj Mishra <mishra.dhiraj95@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: tdesktop 1.3.14: index out of range
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Affected Product: tdesktop-1.3.14 tested on Ubuntu 18.04 LTS x64
 
-It looks great!, awesome work
+*Steps to reproduce:*
+1. Open Telegram
+2. Launch theme editor
+3. Save the file in some location
+4. The tdesktop then open "Edit color palette"
+5. Type "Hello World" in search <press enter>
+6. The tdesktop gets crash
 
-Cheers,
-Mohamed
+Crashes, ASSERT failure in QVector<T>::operator[]: "index out of range",
+file /usr/local/tdesktop/Qt-5.6.2/include/QtCore/qvector.h, line 431
+Aborted (core dumped)
 
-2018-02-20 9:45 GMT+00:00 Alexander Popov <alex.popov@...ux.com>:
+*Backtrace:*
+$ gdb ./Telegram
+GNU gdb (Ubuntu 8.1-0ubuntu3) 8.1.0.20180409-git
+Copyright (C) 2018 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html
+>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from ./Telegram...(no debugging symbols found)...done.
+(gdb) r
+Starting program: /home/input0/Desktop/Telegram/Telegram
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+[New Thread 0x7ffff40e5700 (LWP 8743)]
+[New Thread 0x7ffff32ca700 (LWP 8744)]
+[New Thread 0x7ffff2ac9700 (LWP 8746)]
+[New Thread 0x7ffff19fa700 (LWP 8747)]
+[New Thread 0x7ffff11f9700 (LWP 8748)]
+[Thread 0x7ffff19fa700 (LWP 8747) exited]
+[New Thread 0x7ffff19fa700 (LWP 8749)]
+[New Thread 0x7fffd4da1700 (LWP 8750)]
+[New Thread 0x7fffcb25c700 (LWP 8751)]
+[Thread 0x7fffcb25c700 (LWP 8751) exited]
+[New Thread 0x7fffcb25c700 (LWP 8752)]
+[New Thread 0x7fffcb25c700 (LWP 8753)]
+[Thread 0x7fffcb25c700 (LWP 8752) exited]
+[New Thread 0x7fffcaa5b700 (LWP 8754)]
+[New Thread 0x7fffca25a700 (LWP 8755)]
+[New Thread 0x7fffc9a59700 (LWP 8756)]
+[Thread 0x7fffc9a59700 (LWP 8756) exited]
+(Telegram:8739): libappindicator-CRITICAL **: 13:18:28.549:
+app_indicator_set_icon_full: assertion 'IS_APP_INDICATOR (self)' failed
+[New Thread 0x7fffc9a59700 (LWP 8757)]
+[New Thread 0x7fffc9258700 (LWP 8758)]
+[New Thread 0x7fffc8a57700 (LWP 8759)]
+[New Thread 0x7fffb3fff700 (LWP 8760)]
+[New Thread 0x7fffb37fe700 (LWP 8761)]
+[Thread 0x7fffb3fff700 (LWP 8760) exited]
+[New Thread 0x7fffb3fff700 (LWP 8762)]
+[New Thread 0x7fffb2ffd700 (LWP 8763)]
+[Thread 0x7fffb37fe700 (LWP 8761) exited]
+[Thread 0x7fffc9258700 (LWP 8758) exited]
+[Thread 0x7fffc8a57700 (LWP 8759) exited]
+[New Thread 0x7fffc8a57700 (LWP 8764)]
+[New Thread 0x7fffc9258700 (LWP 8765)]
+[New Thread 0x7fffb37fe700 (LWP 8766)]
+[Thread 0x7fffc9258700 (LWP 8765) exited]
+[Thread 0x7fffb37fe700 (LWP 8766) exited]
+[Thread 0x7fffc8a57700 (LWP 8764) exited]
+[New Thread 0x7fffc8a57700 (LWP 8767)]
+[Thread 0x7fffb3fff700 (LWP 8762) exited]
+[Thread 0x7fffc8a57700 (LWP 8767) exited]
+[New Thread 0x7fffc8a57700 (LWP 8769)]
+[New Thread 0x7fffb3fff700 (LWP 8770)]
+Gtk-Message: 13:18:41.228: GtkDialog mapped without a transient parent.
+This is discouraged.
+[New Thread 0x7fffb37fe700 (LWP 8772)]
+[Thread 0x7fffc8a57700 (LWP 8769) exited]
+[Thread 0x7fffb2ffd700 (LWP 8763) exited]
+ASSERT failure in QVector<T>::operator[]: "index out of range", file
+/usr/local/tdesktop/Qt-5.6.2/include/QtCore/qvector.h, line 431
 
-> Hello Mohamed,
->
-> On 16.12.2017 03:29, Mohamed Ghannam wrote:
-> > Hi,
-> >
-> > This is an announcement for CVE-2017-17712 which is a race condition
-> leads to
-> > uninitialized stack variable, this might be used to gain code execution.
-> >
-> > The bug was introduced  here
-> > : https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/
-> linux.git/commit/?id=c008ba5bdc9fa830e1a349b20b0be5a137bdef7a
-> >
-> > And fixed here :
-> > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/
-> linux.git/commit/?id=8f659a03a0ba9289b9aeb9b4470e6fb263d6f483
->
-> Thanks a lot for your report, PoC and patch fixing the issue. Really great!
->
-> The exploitation of this kind of vulnerabilities should be blocked by
-> STACKLEAK.
->
-> STACKLEAK is a Linux kernel hardening feature initially developed by
-> Grsecurity/PaX. I'm doing my best to introduce it to the mainline kernel:
-> http://www.openwall.com/lists/kernel-hardening/2018/02/16/2
->
-> > By spraying the stack with controlled user data , we can take control of
-> msg
-> > pointer which is used later in ip_append_data().
->
-> I've tested your PoC against the kernel with STACKLEAK. The msg pointer is
-> now
-> initialized with STACKLEAK_POISON (-0xBEEF), which points to the unused
-> hole in
-> the virtual memory map.
->
-> So the access to msg->msg_iter gives the following:
->
-> [    8.806868] BUG: unable to handle kernel paging request at
-> ffffffffffff4121
-> [    8.807738] IP: csum_and_copy_from_iter_full+0x2d/0x400
-> [    8.807738] PGD 220c067 P4D 220c067 PUD 220e067 PMD 0
-> [    8.807738] Oops: 0000 [#1] SMP PTI
-> [    8.807738] Dumping ftrace buffer:
-> [    8.807738]    (ftrace buffer empty)
-> [    8.807738] Modules linked in:
-> [    8.807738] CPU: 0 PID: 2893 Comm: poc Not tainted 4.16.0-rc1+ #4
-> [    8.807738] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
-> Ubuntu-1.8.2-1ubuntu1 04/01/2014
-> [    8.807738] RIP: 0010:csum_and_copy_from_iter_full+0x2d/0x400
-> [    8.807738] RSP: 0018:ffffc900015679c0 EFLAGS: 00010246
-> [    8.807738] RAX: 0000000000000000 RBX: 0000000000006400 RCX:
-> ffffffffffff4121
-> [    8.807738] RDX: ffffc90001567a44 RSI: 0000000000006400 RDI:
-> ffff88003d398024
-> [    8.807738] RBP: ffffffffffff4111 R08: 0000000000000000 R09:
-> ffff88003d0291c0
-> [    8.807738] R10: 0000000000000000 R11: 0000000000000001 R12:
-> 0000000000000000
-> [    8.807738] R13: ffffffffffff4121 R14: 0000000000006400 R15:
-> ffff88003d2e6b10
-> [    8.807738] FS:  00007f671dff4700(0000) GS:ffff88003ec00000(0000)
-> knlGS:0000000000000000
-> [    8.807738] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-> [    8.807738] CR2: ffffffffffff4121 CR3: 000000003e044000 CR4:
-> 00000000000006f0
-> [    8.807738] Call Trace:
-> [    8.807738]  ? __kmalloc_reserve.isra.41+0x32/0x80
-> [    8.807738]  ip_generic_getfrag+0x84/0xc0
-> [    8.807738]  __ip_append_data.isra.48+0x69c/0x8a0
-> [    8.807738]  ? raw_destroy+0x20/0x20
-> [    8.807738]  ? raw_destroy+0x20/0x20
-> [    8.807738]  ip_append_data.part.50+0x6f/0xd0
-> [    8.807738]  raw_sendmsg+0x432/0xa30
-> [    8.807738]  ? _copy_from_user+0x44/0x70
-> [    8.807738]  ? rw_copy_check_uvector+0x5b/0x110
-> [    8.807738]  sock_sendmsg+0x37/0x40
-> [    8.807738]  ___sys_sendmsg+0x269/0x2c0
-> [    8.807738]  ? __sys_sendmsg+0x55/0x90
-> [    8.807738]  __sys_sendmsg+0x55/0x90
-> [    8.807738]  do_syscall_64+0x63/0x120
-> [    8.807738]  entry_SYSCALL_64_after_hwframe+0x21/0x86
-> [    8.807738] RIP: 0033:0x7f6780c68e90
-> [    8.807738] RSP: 002b:00007f671dff3f00 EFLAGS: 00000293 ORIG_RAX:
-> 000000000000002e
-> [    8.807738] RAX: ffffffffffffffda RBX: 0000000000000003 RCX:
-> 00007f6780c68e90
-> [    8.807738] RDX: 0000000000000000 RSI: 0000000001ec6010 RDI:
-> 0000000000000003
-> [    8.807738] RBP: 0000000001ec6010 R08: 0000000000000000 R09:
-> 00007f671dff4700
-> [    8.807738] R10: 00007f671dff3f40 R11: 0000000000000293 R12:
-> 0000000000000000
-> [    8.807738] R13: 00007ffcbe8d1c9f R14: 0000000000000000 R15:
-> 00007f6781099040
-> [    8.807738] Code: 41 56 49 89 f6 41 55 41 54 49 89 cd 55 53 48 83 ec 48
-> 65 48
-> 8b 04 25 28 00 00 00 48 89 44 24 40 31 c0 48 89 7c 24 08 48 89 14 24 <41>
-> 8b 45
-> 00 a8 08 0f 85 58 01 00 00 4d 39 75 10 72 79 48 8b 3c
-> [    8.807738] RIP: csum_and_copy_from_iter_full+0x2d/0x400 RSP:
-> ffffc900015679c0
-> [    8.807738] CR2: ffffffffffff4121
-> [    8.807738] ---[ end trace d60ea40e033c90b3 ]---
->
->
-> Do you think the attacker is able to bypass it?
-> Thanks a lot again!
->
-> Best regards,
-> Alexander
->
+Thread 1 "Telegram" received signal SIGABRT, Aborted.
+__GI_raise (sig=sig@...ry=6) at ../sysdeps/unix/sysv/linux/raise.c:51
+51    ../sysdeps/unix/sysv/linux/raise.c: No such file or directory.
+(gdb) bt
+#0  0x00007ffff5f7ae97 in __GI_raise (sig=sig@...ry=6) at
+../sysdeps/unix/sysv/linux/raise.c:51
+#1  0x00007ffff5f7c801 in __GI_abort () at abort.c:79
+#2  0x00000000022944a1 in  ()
+#3  0x0000000003c183a0 in  ()
+#4  0x0000003000000030 in  ()
+#5  0x00007fffffffcdc0 in  ()
+#6  0x00007fffffffcd00 in  ()
+#7  0x000000000000006c in  ()
+#8  0x00007ffff74696f0 in  () at /lib/x86_64-linux-gnu/libdbus-1.so.3
+#9  0x000000000291c5b1 in  ()
+#10 0x0000000003be003d in  ()
+#11 0x000000000291b440 in  ()
+#12 0x00000000000001af in  ()
+#13 0x0000000000000000 in  ()
+(gdb)
+
+PS: No CVE is assigned yet to this issue.
+
+
+Thank you
+-- 
+Regards
+
+*Dhiraj Mishra.*GPG ID :  51720F56   |  Finger Print : 1F6A FC7B 05AA CF29
+8C1C  ED65 3233 4D18 5172 0F56
 
