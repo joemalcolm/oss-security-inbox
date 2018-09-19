@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5221" "Thursday" "15" "December" "2016" "14:38:19" "+0000" "Agustin Mista" "mista.agustin@gmail.com" "<CAFR3uCNRc4SvGrUbQLjZEqAdLWj90tewpUt9c4Qv_+RRo_k6SQ@mail.gmail.com>" "116" "[oss-security] CVE-2016-9584: heap use-after-free on libical" nil nil nil "12" "2016121514:38:19" "[oss-security] CVE-2016-9584: heap use-after-free on libical" (number mark "U       mista.agusti Dec 15  116/5221  " thread-indent "\"[oss-security] CVE-2016-9584: heap use-after-free on libical\"\n") "<CAFR3uCN6=QS2FN0yAWA_T61sVzYgrPd6FsqLd43mhPYGS=CUZA@mail.gmail.com>" ("<CAFR3uCN6=QS2FN0yAWA_T61sVzYgrPd6FsqLd43mhPYGS=CUZA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4557" "Wednesday" "19" "September" "2018" "23:47:00" "+0530" "Dhiraj Mishra" "mishra.dhiraj95@gmail.com" "<CAG8b5tQvMF46=bzGDZR6OGzrMqMx7=ktZR1iOX=DJTpZzdi83w@mail.gmail.com>" "120" "[oss-security] tdesktop 1.3.14: index out of range" nil nil nil "9" "2018091918:17:00" "[oss-security] tdesktop 1.3.14: index out of range" (number mark "U       mishra.dhira Sep 19  120/4557  " thread-indent "\"[oss-security] tdesktop 1.3.14: index out of range\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 12115 invoked by uid 550); 15 Dec 2016 16:01:44 -0000
+Received: (qmail 10111 invoked by uid 550); 19 Sep 2018 18:51:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,154 +12,157 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30065 invoked from network); 15 Dec 2016 14:38:42 -0000
+Received: (qmail 9363 invoked from network); 19 Sep 2018 18:17:24 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=eHE84Wm/Tn3hibFEgZw4k+J6g2qhpItd9w4zL6smILY=;
-        b=jm60v+8s957YI9RYkDmlXYrybThhvuUqPTxgtwxUyRA/Q8LeFmU+CyMGFbbplnE+3a
-         u8OCIJDkvUgFqRpufBYNrJpBGwGG+7AWKL4kqKEy0YZsP985IAYxdTBNnXtQP1FQLYWh
-         ZdeO62ml+vQ9KFLq+Y0CvzRs3oWeKmJxJo8ZW0NkWkNbo76Ai4MrWnZQ/H9IwygH9eAo
-         MuLR/DpIrojh8GYn9sJXdFKav88oGLOpFasfCe5pLXCfhCrt+7RQMA08U/tW/o/AtKBF
-         tZhsD4Nc/SE5vKT5mGugT8UjhPd5cDgTpQbE4d1DXHkMqPtoxl5uaVBJIatK8c8XhljH
-         ls7g==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=rkQCz3zzmaa5IwKKKicWnAlOk9IgZ3psoUOFIs5lcoo=;
+        b=bAsZfbZ2trs6N138YeoTLhrbMgQ3baRf0xrARfr3Sg+q6AcHNyisPhUaCBOQpjEzls
+         5iAaQmBp4Wh2iHTrDebcRuZHLkJAecp68WQw4XN+2wfLG9OU6qW1MXJgIGKdG8hWRZ+G
+         lIweaBqzX3foEyDBlir7FTb1cXOB5cOrM6yo+q50A+cWxBPX7ieRZoc3YOrPGNPROxM6
+         weXPjCCAPFUwCafinKGVXzphSoyoINQu0zOXFAhow2VZ1xBlf/whuX/v1rANk7mkjU7o
+         Yl9nq3D+1m4iGCgIL1m6CrUPZmth9p77gqJD4K6c04Nevq5rQCPWhLnWVyff4Nnsd4QI
+         yTOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=eHE84Wm/Tn3hibFEgZw4k+J6g2qhpItd9w4zL6smILY=;
-        b=kQzWHjfMsiYlT8rk+QbFI8YNtpumBYPOKaRVoomdEJZWIFIAkn2Xo8Z+Hrz1IASfDo
-         Lg5augJtUY7NT3lLP3D3Umoc0yvFcTWn7PJBH3ZjhETYbPviGnfqhFPurC65IEtGlZeb
-         P+AA8xQAIYs3rhIxPs+fh++Yzglv28V4Py7GgDaX1Fmd83RRkYr2ubhrm5I7t+JeW7av
-         E+UfA8yn9+I1a0lqwBCnUgXWvQtwI6nUy8kbPyu11Vdp5Z1Gqnb3h14WK/+1pnd+0Hv0
-         1wz52wS7KU47yNnIVo6+023SG2W1On4OK0/tDvqhZRur133wOs3HZzCaGSm8/LdRcEnD
-         M3kw==
-X-Gm-Message-State: AKaTC03DJaDqdYGVKbyoQgco0aRUNzq58ikjQocrtr9WXpow1dZxtiJBJdByzjsOTTTaUKAb1IHyHOg1TE+/vw==
-X-Received: by 10.176.64.4 with SMTP id h4mr1399456uad.18.1481812710357; Thu,
- 15 Dec 2016 06:38:30 -0800 (PST)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=rkQCz3zzmaa5IwKKKicWnAlOk9IgZ3psoUOFIs5lcoo=;
+        b=G0EcQVTFJXvvUNewLNabYC+SNG68A3ajhnUob0Pcmghx4t3QDCF8FCqrCdkXFFNOVB
+         STKvGUr3E5k+MrMulIa9Tee6FJgP//YyXESzxhivfoyWF38DAdSDRjJMR0qlhEwnMgEQ
+         NgVe3qLLSm1+lZQuI7IpoB/nBYTfg88B4iuzz2QTp1oZ29eqSD82myWbq+s7GpieiYem
+         R3DF7ZgevToHFPTJpCDTmBBQ500kNU5Kj2zwrGYamElQP1Oi3Ay0sFev0dIDEqhceiFL
+         V9lv+eoi0B/Gfv/CXFwDxHoRL9otl3oVHuGf9TrlE9DqxJIBKm+tXdlwYRV3ErQDqujh
+         eWdQ==
+X-Gm-Message-State: APzg51DCX8uvMLQZFYWVv7yTLuqSOrQzU3QdyrwgIiACVf02QFhp6Ebu
+	MTzkIE/28XcRZ0lr4Wbmk9wbR9itrc13VG+CUnDwVROm
+X-Google-Smtp-Source: ANB0VdabPXh8CMNLUSXVT3NEL3JvH5nFrRM3Yi1vZrfHbCkdhj47vZVTD7cgx2vp0b/RWrv9o5CIK7ExOv+8LovMIlM=
+X-Received: by 2002:a62:2f84:: with SMTP id v126-v6mr37361081pfv.115.1537381032343;
+ Wed, 19 Sep 2018 11:17:12 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAFR3uCN6=QS2FN0yAWA_T61sVzYgrPd6FsqLd43mhPYGS=CUZA@mail.gmail.com>
-In-Reply-To: <CAFR3uCN6=QS2FN0yAWA_T61sVzYgrPd6FsqLd43mhPYGS=CUZA@mail.gmail.com>
-From: Agustin Mista <mista.agustin@gmail.com>
-Date: Thu, 15 Dec 2016 14:38:19 +0000
-Message-ID: <CAFR3uCNRc4SvGrUbQLjZEqAdLWj90tewpUt9c4Qv_+RRo_k6SQ@mail.gmail.com>
+From: Dhiraj Mishra <mishra.dhiraj95@gmail.com>
+Date: Wed, 19 Sep 2018 23:47:00 +0530
+Message-ID: <CAG8b5tQvMF46=bzGDZR6OGzrMqMx7=ktZR1iOX=DJTpZzdi83w@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=94eb2c0b91e63981a90543b3682a
-Subject: [oss-security] CVE-2016-9584: heap use-after-free on libical
+Content-Type: multipart/alternative; boundary="000000000000513bbc05763d6aa6"
+Subject: [oss-security] tdesktop 1.3.14: index out of range
 
---94eb2c0b91e63981a90543b3682a
-Content-Type: text/plain; charset=UTF-8
+--000000000000513bbc05763d6aa6
+Content-Type: text/plain; charset="UTF-8"
 
-We found a heap use-after-free in a recent revision of libical (
-f3688b444f820cecf51b1539b0856a392c0fdb0f),
-using a specially crafted ics file. This bugs looks particularly dangerous
-since it allows to read a big chunk of the heap memory.
+Affected Product: tdesktop-1.3.14 tested on Ubuntu 18.04 LTS x64
 
-The address sanitizer report is as follows:
+*Steps to reproduce:*
+1. Open Telegram
+2. Launch theme editor
+3. Save the file in some location
+4. The tdesktop then open "Edit color palette"
+5. Type "Hello World" in search <press enter>
+6. The tdesktop gets crash
 
-==14573==ERROR: AddressSanitizer: heap-use-after-free on address
-0x60700001e394 at pc 0x00000044478e bp 0x7fffffffc4a0 sp 0x7fffffffbc28
-READ of size 62 at 0x60700001e394 thread T0
-#0 0x44478d (/home/agustin/Code/libical/build/src/test/parser+0x44478d)
-#1 0x444eb3 (/home/agustin/Code/libical/build/src/test/parser+0x444eb3)
-#2 0x4461f0 (/home/agustin/Code/libical/build/src/test/parser+0x4461f0)
-#3 0x7ffff7b519e8 (/home/agustin/Code/libical/build/lib/libical.so.2+
-0x19a9e8)
-#4 0x7ffff7b5a40f (/home/agustin/Code/libical/build/lib/libical.so.2+
-0x1a340f)
-#5 0x7ffff7add113 (/home/agustin/Code/libical/build/lib/libical.so.2+
-0x126113)
-#6 0x7ffff7a978ec (/home/agustin/Code/libical/build/lib/libical.so.2+
-0xe08ec)
-#7 0x7ffff7a97b4a (/home/agustin/Code/libical/build/lib/libical.so.2+
-0xe0b4a)
-#8 0x7ffff7a96f11 (/home/agustin/Code/libical/build/lib/libical.so.2+
-0xdff11)
-#9 0x4b8db7 (/home/agustin/Code/libical/build/src/test/parser+0x4b8db7)
-#10 0x7ffff61baf44 (/lib/x86_64-linux-gnu/libc.so.6+0x21f44)
-#11 0x4b829c (/home/agustin/Code/libical/build/src/test/parser+0x4b829c)
+Crashes, ASSERT failure in QVector<T>::operator[]: "index out of range",
+file /usr/local/tdesktop/Qt-5.6.2/include/QtCore/qvector.h, line 431
+Aborted (core dumped)
 
-0x60700001e394 is located 4 bytes inside of 66-byte region [0x60700001e390,
-0x60700001e3d2)
-freed by thread T0 here:
-#0 0x49a99b (/home/agustin/Code/libical/build/src/test/parser+0x49a99b)
-#1 0x7ffff7abab48 (/home/agustin/Code/libical/build/lib/libical.so.2+
-0x103b48)
-#2 0x7ffff7ad0da1 (/home/agustin/Code/libical/build/lib/libical.so.2+
-0x119da1)
-#3 0x4b8cde (/home/agustin/Code/libical/build/src/test/parser+0x4b8cde)
-#4 0x7ffff61baf44 (/lib/x86_64-linux-gnu/libc.so.6+0x21f44)
+*Backtrace:*
+$ gdb ./Telegram
+GNU gdb (Ubuntu 8.1-0ubuntu3) 8.1.0.20180409-git
+Copyright (C) 2018 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html
+>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from ./Telegram...(no debugging symbols found)...done.
+(gdb) r
+Starting program: /home/input0/Desktop/Telegram/Telegram
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+[New Thread 0x7ffff40e5700 (LWP 8743)]
+[New Thread 0x7ffff32ca700 (LWP 8744)]
+[New Thread 0x7ffff2ac9700 (LWP 8746)]
+[New Thread 0x7ffff19fa700 (LWP 8747)]
+[New Thread 0x7ffff11f9700 (LWP 8748)]
+[Thread 0x7ffff19fa700 (LWP 8747) exited]
+[New Thread 0x7ffff19fa700 (LWP 8749)]
+[New Thread 0x7fffd4da1700 (LWP 8750)]
+[New Thread 0x7fffcb25c700 (LWP 8751)]
+[Thread 0x7fffcb25c700 (LWP 8751) exited]
+[New Thread 0x7fffcb25c700 (LWP 8752)]
+[New Thread 0x7fffcb25c700 (LWP 8753)]
+[Thread 0x7fffcb25c700 (LWP 8752) exited]
+[New Thread 0x7fffcaa5b700 (LWP 8754)]
+[New Thread 0x7fffca25a700 (LWP 8755)]
+[New Thread 0x7fffc9a59700 (LWP 8756)]
+[Thread 0x7fffc9a59700 (LWP 8756) exited]
+(Telegram:8739): libappindicator-CRITICAL **: 13:18:28.549:
+app_indicator_set_icon_full: assertion 'IS_APP_INDICATOR (self)' failed
+[New Thread 0x7fffc9a59700 (LWP 8757)]
+[New Thread 0x7fffc9258700 (LWP 8758)]
+[New Thread 0x7fffc8a57700 (LWP 8759)]
+[New Thread 0x7fffb3fff700 (LWP 8760)]
+[New Thread 0x7fffb37fe700 (LWP 8761)]
+[Thread 0x7fffb3fff700 (LWP 8760) exited]
+[New Thread 0x7fffb3fff700 (LWP 8762)]
+[New Thread 0x7fffb2ffd700 (LWP 8763)]
+[Thread 0x7fffb37fe700 (LWP 8761) exited]
+[Thread 0x7fffc9258700 (LWP 8758) exited]
+[Thread 0x7fffc8a57700 (LWP 8759) exited]
+[New Thread 0x7fffc8a57700 (LWP 8764)]
+[New Thread 0x7fffc9258700 (LWP 8765)]
+[New Thread 0x7fffb37fe700 (LWP 8766)]
+[Thread 0x7fffc9258700 (LWP 8765) exited]
+[Thread 0x7fffb37fe700 (LWP 8766) exited]
+[Thread 0x7fffc8a57700 (LWP 8764) exited]
+[New Thread 0x7fffc8a57700 (LWP 8767)]
+[Thread 0x7fffb3fff700 (LWP 8762) exited]
+[Thread 0x7fffc8a57700 (LWP 8767) exited]
+[New Thread 0x7fffc8a57700 (LWP 8769)]
+[New Thread 0x7fffb3fff700 (LWP 8770)]
+Gtk-Message: 13:18:41.228: GtkDialog mapped without a transient parent.
+This is discouraged.
+[New Thread 0x7fffb37fe700 (LWP 8772)]
+[Thread 0x7fffc8a57700 (LWP 8769) exited]
+[Thread 0x7fffb2ffd700 (LWP 8763) exited]
+ASSERT failure in QVector<T>::operator[]: "index out of range", file
+/usr/local/tdesktop/Qt-5.6.2/include/QtCore/qvector.h, line 431
 
-previously allocated by thread T0 here:
-#0 0x49ac1b (/home/agustin/Code/libical/build/src/test/parser+0x49ac1b)
-#1 0x7ffff7aba55a (/home/agustin/Code/libical/build/lib/libical.so.2+
-0x10355a)
-#2 0x7ffff7ad7777 (/home/agustin/Code/libical/build/lib/libical.so.2+
-0x120777)
-#3 0x7ffff7ad808a (/home/agustin/Code/libical/build/lib/libical.so.2+
-0x12108a)
-#4 0x7ffff7ad0220 (/home/agustin/Code/libical/build/lib/libical.so.2+
-0x119220)
-#5 0x4b8cde (/home/agustin/Code/libical/build/src/test/parser+0x4b8cde)
-#6 0x7ffff61baf44 (/lib/x86_64-linux-gnu/libc.so.6+0x21f44)
+Thread 1 "Telegram" received signal SIGABRT, Aborted.
+__GI_raise (sig=sig@entry=6) at ../sysdeps/unix/sysv/linux/raise.c:51
+51    ../sysdeps/unix/sysv/linux/raise.c: No such file or directory.
+(gdb) bt
+#0  0x00007ffff5f7ae97 in __GI_raise (sig=sig@entry=6) at
+../sysdeps/unix/sysv/linux/raise.c:51
+#1  0x00007ffff5f7c801 in __GI_abort () at abort.c:79
+#2  0x00000000022944a1 in  ()
+#3  0x0000000003c183a0 in  ()
+#4  0x0000003000000030 in  ()
+#5  0x00007fffffffcdc0 in  ()
+#6  0x00007fffffffcd00 in  ()
+#7  0x000000000000006c in  ()
+#8  0x00007ffff74696f0 in  () at /lib/x86_64-linux-gnu/libdbus-1.so.3
+#9  0x000000000291c5b1 in  ()
+#10 0x0000000003be003d in  ()
+#11 0x000000000291b440 in  ()
+#12 0x00000000000001af in  ()
+#13 0x0000000000000000 in  ()
+(gdb)
 
-SUMMARY: AddressSanitizer: heap-use-after-free ??:0 ??
-Shadow bytes around the buggy address:
-0x0c0e7fffbc20: fd fd fd fd fd fd fd fd fa fa fa fa fd fd fd fd
-0x0c0e7fffbc30: fd fd fd fd fd fd fa fa fa fa fd fd fd fd fd fd
-0x0c0e7fffbc40: fd fd fd fd fa fa fa fa fd fd fd fd fd fd fd fd
-0x0c0e7fffbc50: fd fd fa fa fa fa fd fd fd fd fd fd fd fd fd fd
-0x0c0e7fffbc60: fa fa fa fa fd fd fd fd fd fd fd fd fd fd fa fa
-=>0x0c0e7fffbc70: fa fa[fd]fd fd fd fd fd fd fd fd fa fa fa fa fa
-0x0c0e7fffbc80: fd fd fd fd fd fd fd fd fd fd fa fa fa fa 00 00
-0x0c0e7fffbc90: 00 00 00 00 00 00 03 fa fa fa fa fa fd fd fd fd
-0x0c0e7fffbca0: fd fd fd fd fd fa fa fa fa fa fd fd fd fd fd fd
-0x0c0e7fffbcb0: fd fd fd fd fa fa fa fa fd fd fd fd fd fd fd fd
-0x0c0e7fffbcc0: fd fd fa fa fa fa fd fd fd fd fd fd fd fd fd fd
+PS: No CVE is assigned yet to this issue.
 
 
-And the backtrace is available here:
+Thank you
+-- 
+Regards
 
-#0 0x00007ffff61cfc37 in __GI_raise (sig=sig@entry=6)
-at ../nptl/sysdeps/unix/sysv/linux/raise.c:56
-#1 0x00007ffff61d3028 in __GI_abort () at abort.c:89
-#2 0x00000000004b1356 in __sanitizer::Abort() ()
-#3 0x00000000004a2037 in __asan::AsanDie() ()
-#4 0x00000000004a8a6f in __sanitizer::Die() ()
-#5 0x00000000004a06cb in __asan::ScopedInErrorReport::~ScopedInErrorReport()
-()
-#6 0x00000000004a0211 in __asan_report_error ()
-#7 0x00000000004447a9 in printf_common(void*, char const*, __va_list_tag*)
-()
-#8 0x0000000000444eb4 in vsnprintf ()
-#9 0x00000000004461f1 in snprintf ()
-#10 0x00007ffff7b519e9 in icalreqstattype_as_string_r (stat=...)
-at /home/agustin/Code/libical/src/libical/icaltypes.c:171
-#11 0x00007ffff7b5a410 in icalvalue_as_ical_string_r (value=0x60e0000280c0)
-at /home/agustin/Code/libical/src/libical/icalvalue.c:1208
-#12 0x00007ffff7add114 in icalproperty_as_ical_string_r
-(prop=0x6060000010a0)
-at /home/agustin/Code/libical/src/libical/icalproperty.c:442
-#13 0x00007ffff7a978ed in icalcomponent_as_ical_string_r
-(impl=0x60700001e7f0)
-at /home/agustin/Code/libical/src/libical/icalcomponent.c:291
-#14 0x00007ffff7a97b4b in icalcomponent_as_ical_string_r
-(impl=0x60700000ded0)
-at /home/agustin/Code/libical/src/libical/icalcomponent.c:300
-#15 0x00007ffff7a96f12 in icalcomponent_as_ical_string (impl=0x60700000ded0)
-at /home/agustin/Code/libical/src/libical/icalcomponent.c:247
-#16 0x00000000004b8db8 in main (argc=2, argv=0x7fffffffdf08)
-at /home/agustin/Code/libical/src/test/icaltestparser.c:109
+*Dhiraj Mishra.*GPG ID :  51720F56   |  Finger Print : 1F6A FC7B 05AA CF29
+8C1C  ED65 3233 4D18 5172 0F56
 
-It is worth to mention there is a very similar bug found (CVE-2016-5824) on
-the libical version used by
-Thunderbird but we think is *not* the same as this one. In fact, we've
-tested it on Thunderbird and it does *not* crash.
-
-The reproducer is available upon request.
-
-Unfortunately, there is no fix yet, but upstream is working on it.
-
-Regards.
-
---94eb2c0b91e63981a90543b3682a--
+--000000000000513bbc05763d6aa6--
