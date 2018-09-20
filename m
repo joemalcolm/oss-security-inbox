@@ -1,41 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/24/2
-Message-ID: <CAEccTyzwkSJ-2ebKLsxTfu7A60ut5rv8eRoWe7LM7oFv1GXEuQ@mail.gmail.com>
-Date: Wed, 24 Oct 2018 11:30:21 -0500
-From: Sean Owen <srowen@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2018-11804: Apache Spark build/mvn runs zinc, and can expose information from build machines
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/20/3
+Message-ID: <20180920093210.GA8763@openwall.com>
+Date: Thu, 20 Sep 2018 11:32:10 +0200
+From: Solar Designer <solar@...nwall.com>
+To: Michael McNally <mcnally@....org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: ISC has issued new patch releases of BIND
 Content-Type: text/plain; charset=utf-8
 
-Severity: Low
+On Wed, Sep 19, 2018 at 03:16:25PM -0800, Michael McNally wrote:
+> Details on the security vulnerability and the two operational
+> notifications can be found via the following links:
+> 
+>    https://kb.isc.org/docs/cve-2018-5741
 
-Vendor: The Apache Software Foundation
+Per oss-security list content guidelines, actual vulnerability detail
+must be included in postings (message body or text/plain attachment).
 
-Versions Affected:
-1.3.x release branch and later, including master
+I've attached a text export of the above web page to this message.
+(I did not bother doing the same for the operational notifications.)
 
-Description:
-Spark's Apache Maven-based build includes a convenience script, 'build/mvn',
-that downloads and runs a zinc server to speed up compilation. This server
-will accept connections from external hosts by default. A specially-crafted
-request to the zinc server could cause it to reveal information in files
-readable to the developer account running the build. Note that this issue
-does not affect end users of Spark, only developers building Spark from
-source code.
+Michael, I'd appreciate it if you start including such detail in your
+oss-security postings.  Including the links as well is great (such as
+for easy access to updated revisions while the links work); including
+only links is discouraged.
 
-Mitigation:
-Spark users are not affected, as zinc is only a part of the build process.
-Spark developers may simply use a local Maven installation's 'mvn' command
-to build, and avoid running build/mvn and zinc.
-Spark developers building actively-developed branches (2.2.x, 2.3.x, 2.4.x,
-master) may update their branches to receive mitigations already patched
-onto the build/mvn script.
-Spark developers running zinc separately may include "-server 127.0.0.1" in
-its command line, and consider additional flags like "-idle-timeout 30m" to
-achieve similar mitigation.
+Thanks,
 
-Credit:
-Andre Protas, Apple Information Security
+Alexander
 
-References:
-https://spark.apache.org/security.html
+View attachment "CVE-2018-5741_BIND_Update_policies_krb5-subdomain_and_ms-subdomain.txt" of type "text/plain" (7563 bytes)
