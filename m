@@ -1,45 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/19/3
-Message-ID: <CAPnWRTg33J=jQSU6E02creHzNvC_oVk+hgbC1y-V07m9ATXY6Q@mail.gmail.com>
-Date: Thu, 19 Apr 2018 14:30:59 -0700
-From: Ed Cable <edcable@...os.org>
-To: user@...eract.apache.org, Dev <dev@...eract.apache.org>,  security <security@...che.org>, oss-security@...ts.openwall.com,  圆珠笔 <627963028@...com>
-Subject: [SECURITY] CVE-2018-1291: Apache Fineract SQL Injection Vulnerability - Order by injection via Order Param
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/20/4
+Message-ID: <20180920115228.GB31416@stiletto.tun>
+Date: Thu, 20 Sep 2018 12:52:28 +0100
+From: scrumpyjack@...ilet.to
+To: oss-security@...ts.openwall.com
+Subject: CVE-2018-5740 BIND (named vuln) and bad OVAL dict file maintenance
 Content-Type: text/plain; charset=utf-8
 
-Severity: Critical
+hi there, and apologies if this isn't the correct place to turn to, but 
+the OVAL boards have been inactive since 2015 and perhaps the people who 
+maintain these files lurk here and will notice.
 
-Vendor:
-The Apache Software Foundation
+In short:
 
-Versions Affected:
-Apache Fineract 1.0.0
-Apache Fineract 0.6.0-incubating
-Apache Fineract 0.5.0-incubating
-Apache Fineract 0.4.0-incubating
+CVE-2018-5740 Applies to named, when running, with a specific option set 
+[1]
 
-Description:
+The OVAL [2] dictionaries (which are consumed by vulnerability scanners) 
+for RedHat (and derivatives) [3],[4] lists the following packages as 
+affected
 
-Apache Fineract exposes different REST end points to query domain specific
-entities with a Query Parameter 'orderBy' which
-are appended directly with SQL statements. A hacker/user can inject/draft
-the  'orderBy'  query parameter by way of the "order" param  in such a way
-to
-to read/update the data for which he doesn't have authorization.
+bind
+bind-chroot
+bind-devel
+bind-libs
+bind-libs-lite
+bind-license
+bind-lite-devel
+bind-pkcs11
+bind-pkcs11-devel
+bind-pkcs11-libs
+bind-pkcs11-utils
+bind-sdb
+bind-sdb-chroot
+bind-utils
 
-Mitigation:
-All users should migrate to Apache Fineract 1.1.0 version
-https://github.com/apache/fineract/tree/1.1.0
+named is only contained in the bind package, and this list is causing no 
+end of problems on hosts that, for example, only want bind-utils and 
+dependencies (of which bind -containing named- is not).
 
+Could whoever maintains these take a look?
 
-Credit:
-This issue was discovered by 圆珠笔 (627963028@...com)
+thank you for you time
 
-References:
-http://fineract.apache.org/
-https://cwiki.apache.org/confluence/display/FINERACT/Apache+
-Fineract+Security+Report
-
-Regards,
-Apache Fineract Team
-
+[1] https://kb.isc.org/docs/aa-01639
+[2] https://oval.mitre.org
+[3] https://www.redhat.com/security/data/oval/
+[4] https://linux.oracle.com/security/oval/
