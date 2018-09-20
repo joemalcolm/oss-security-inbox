@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2132" "Wednesday" "15" "December" "2021" "06:39:13" "-0500" "Jeffrey Walton" "noloader@gmail.com" nil "50" "Re: [oss-security] CVE-2021-45046: Apache Log4j2 Thread Context Message Pattern and Context Lookup Pattern vulnerable to a denial of service attack" nil nil nil "12" nil nil (number mark "U       noloader@gma Dec 15   50/2132  " thread-indent "\"Re: [oss-security] CVE-2021-45046: Apache Log4j2 Thread Context Message Pattern and Context Lookup Pattern vulnerable to a denial of service attack\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] CVE-2021-45046: Apache Log4j2 Thread Context Message Pattern and Context Lookup Pattern vulnerable to a denial of service attack" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["7843" "Thursday" "20" "September" "2018" "02:01:10" "+0200" "X41 D-Sec GmbH Advisories" "advisories@x41-dsec.de" "<4bd9dcef-f7d6-d266-6c05-b9749fa8ae31@x41-dsec.de>" "244" "[oss-security] X41 D-Sec GmbH Security Advisory X41-2018-007: Multiple Vulnerabilities in mgetty" nil nil nil "9" "2018092000:01:10" "[oss-security] X41 D-Sec GmbH Security Advisory X41-2018-007: Multiple Vulnerabilities in mgetty" (number mark "U       advisories@x Sep 20  244/7843  " thread-indent "\"[oss-security] X41 D-Sec GmbH Security Advisory X41-2018-007: Multiple Vulnerabilities in mgetty\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 22469 invoked by uid 550); 15 Dec 2021 11:47:42 -0000
+Received: (qmail 24015 invoked by uid 550); 20 Sep 2018 05:50:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,94 +12,262 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19883 invoked from network); 15 Dec 2021 11:39:37 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:reply-to:from:date:message-id
-         :subject:to:content-transfer-encoding;
-        bh=WOHujkt4wLpL/VtsCb6yELjmY8BNPBjcDXz4cWQVXgI=;
-        b=IWl7vwhGk3VdZwL27rb+c+0SjlSHG0vX/jbSTu5bL956kDCvMZV2zKSjS+7ZFi9Vbm
-         N4BqorLZY+4lr/wy+XUzvXaR1At3nK7kH0QSw+buz0aY5BFy6h+K2QkoiupyqUW4RdJZ
-         spwHg7tMrfQgmwFtDHJKlSLCkhWmkmb0aBGuCwggqWKoJ/sUAvNRAryvVnXWsahYBiOQ
-         dVqI7nxCiu0ssaTXJOW0MKhS7mtDfTMwwHBQbQWFXyeXSJHfPtV5bEEKloxtRp3iRY6c
-         25/1Qld2zqHot6674j6SK0WnMPCilOk1QmW1WFpfSZ0ID7ULKNVwibXUhGu3R/5T73nG
-         /kUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
-         :from:date:message-id:subject:to:content-transfer-encoding;
-        bh=WOHujkt4wLpL/VtsCb6yELjmY8BNPBjcDXz4cWQVXgI=;
-        b=sV+ONwI8HvyqwEeidOG+2kW5J/+HLPMft2iZN1nNUktibqNT80EzyrXngS5VoXW8gE
-         5va8bTabKsgB+58gbqvLSnUjoOCXFZ/AYtPfMsbgoi66f/ELaG9pb/jjx5QMlp2RIWzm
-         udS7EdvMXKcETyE72qDSgRBhqbu0nlbITlfqzASBmx16v3lyKfhvxoJUbkPBTIzQ5cXx
-         AofjeknYT7of8LqhFn4OZTJU+Wpj9MIIF03707bQAMpwjEE6M24y6TT/+d+6Dp9Elv+Q
-         bKGg0nuo270yBn/Hh/BJj3VujSuymzb86UEcDo++hBLR5kz5KM+rGwQtRdnbNWtA1esd
-         prNA==
-X-Gm-Message-State: AOAM5309rWzHgTdyg1/3+MbLTatQqHuShkqccSaiXIPea/9QBoFxK471
-	z77JGXf4d8q4QE9jyAeMEfzQL/Iy/48sb+GOHRy4pK7cSk+3ZA==
-X-Google-Smtp-Source: ABdhPJxllJqh/+06t3F2qC2FzUXKvrI4wRaOOtMv6lxWnYmdcSKsBmbiXdRt8uk2eCCzkL4vcmeKsfznTv4pn5vlOg0=
-X-Received: by 2002:a05:6a00:21c9:b0:4a7:f071:eb73 with SMTP id
- t9-20020a056a0021c900b004a7f071eb73mr8684119pfj.23.1639568365151; Wed, 15 Dec
- 2021 03:39:25 -0800 (PST)
+Received: (qmail 23729 invoked from network); 20 Sep 2018 00:01:44 -0000
+From: X41 D-Sec GmbH Advisories <advisories@x41-dsec.de>
+To: bugtraq@securityfocus.com, fulldisclosure@seclists.org,
+ oss-security@lists.openwall.com
+Message-ID: <4bd9dcef-f7d6-d266-6c05-b9749fa8ae31@x41-dsec.de>
+Date: Thu, 20 Sep 2018 02:01:10 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-References: <b1b3fb6f-a394-ede3-0c3c-ea2c11018062@apache.org>
-In-Reply-To: <b1b3fb6f-a394-ede3-0c3c-ea2c11018062@apache.org>
-From: Jeffrey Walton <noloader@gmail.com>
-Date: Wed, 15 Dec 2021 06:39:13 -0500
-Message-ID: <CAH8yC8=R7+DwZ19C0c3D_r=BL2Bde7rVQd11RcLKGSkdn0EVqw@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] CVE-2021-45046: Apache Log4j2 Thread Context
- Message Pattern and Context Lookup Pattern vulnerable to a denial of service attack
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+Subject: [oss-security] X41 D-Sec GmbH Security Advisory X41-2018-007: Multiple
+ Vulnerabilities in mgetty
 
-Hi Ron,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> It was found that the fix to address CVE-2021-44228 in
-> Apache Log4j 2.15.0 was incomplete in certain non-default
-> configurations. This could allows [DoS]...
+X41 D-Sec GmbH Security Advisory: X41-2018-007
 
-Is there any information on the non-default configuration that triggers the=
- DoS?
+Multiple Vulnerabilities in mgetty
+==================================
 
-What I am trying to understand is, if we clear the first CVE through,
-say, envar LOG4J_FORMAT_MSG_NO_LOOKUPS=3Dtrue or
--Dlog4j2.formatMsgNoLookups=3Dtrue, then where does the vulnerability
-lie for the second CVE? What configuration change needs to be done to
-reduce risk on the second CVE after the first CVE has been mitigated?
 
-The reason I ask is, we don't have the option of updating to v2.16 (or
-v2.15) on some machines and programs, so we are trying to reduce and
-manage the risk.
+Overview
+- --------
+Confirmed Affected Versions: 1.2.0
+Patched Versions: 1.2.1
+Vendor: mgetty
+Vendor URL: http://mgetty.greenie.net
+Credit: X41 D-Sec GmbH, Eric Sesterhenn
+Status: Public
+Advisory-URL: https://www.x41-dsec.de/lab/advisories/x41-2018-007-mgetty
 
-Jeff
 
-On Tue, Dec 14, 2021 at 12:10 PM Ron Grabowski <rgrabowski@apache.org> wrot=
-e:
->
-> Severity: moderate (CVSS: 3.7 AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L)
->
-> Description:
->
-> It was found that the fix to address CVE-2021-44228 in Apache Log4j 2.15.=
-0 was incomplete in certain non-default configurations. This could allows a=
-ttackers with control over Thread Context Map (MDC) input data when the log=
-ging configuration uses a non-default Pattern Layout with either a Context =
-Lookup (for example, $${ctx:loginId}) or a Thread Context Map pattern (%X, =
-%mdc, or %MDC) to craft malicious input data using a JNDI Lookup pattern re=
-sulting in a denial of service (DOS) attack. Log4j 2.15.0 restricts JNDI LD=
-AP lookups to localhost by default. Note that previous mitigations involvin=
-g configuration such as to set the system property `log4j2.noFormatMsgLooku=
-p` to `true` do NOT mitigate this specific vulnerability.
->
-> Log4j 2.16.0 fixes this issue by removing support for message lookup patt=
-erns and disabling JNDI functionality by default.
->
-> This issue can be mitigated in prior releases (<2.16.0) by removing the J=
-ndiLookup class from the classpath (example: zip -q -d log4j-core-*.jar org=
-/apache/logging/log4j/core/lookup/JndiLookup.class).
->
-> References:
->
-> https://logging.apache.org/log4j/2.x/security.html
-> https://www.cve.org/CVERecord?id=3DCVE-2021-44228
+Summary and Impact
+- ------------------
+Multiple issues have been identified in the mgetty fax software. These
+might be used by local users to elevate their privileges.
+X41 did not perform a full test or audit on the software.
+
+
+Product Description
+- -------------------
+- From the vendor: For those of you that do not know mgetty+sendfax yet:
+it's a reliable and proven fax send and receive solution for unix and
+Linux. But it can do much more... so read the docs and be surprised.
+
+Shell injection via faxq-helper
+===============================
+Severity Rating: Medium
+Vector: Fax Job
+CVE: CVE-2018-16741
+CWE: 78
+CVSS Score: 6.1
+CVSS Vector: CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:U/C:L/I:H/A:N
+In fax/faxq-helper.c function do_activate(), not all characters are
+properly sanitized to prevent command injection. It is possible to use
+||, && or > to change the control flow.
+
+{% highlight c %}
+        /* replace all quote characters, backslash and ';' by '' */
+        for( q = buf; *q != '\0'; q++ )
+        {
+            if ( *q == '\'' || *q == '"' || *q == '`' ||
+                 *q == '\' || *q == ';' )
+                                    { *q = ''; }
+        }
+{% endhighlight %}
+
+A job file containing malicious input can be constructed using
+faxq-helper activate <jobid>. One faxrunq is started, the code is
+executed as the user running the command.
+
+{% highlight bash %}
+        /* replace all quote characters, backslash and ';' by '' */
+    #               "   '    \    $   ;
+    command=tr -d '\042\047\140\134\044\073' <JOB | \
+             $AWK 'BEGIN { phone="-"; flags=""; pages="" }
+                  $1=="phone" { phone=$2 }
+                  $1=="header"     { flags=flags" -h "$2 }
+                  $1=="poll"       { flags=flags" -p" }
+                  $1=="normalres" { flags=flags" -n" }
+                  $1=="accthandle" { flags=flags" -A
+\""substr($0,13)"\"" }
+                  $1=="pages" { for( i=2; i<=NF; i++) pages=pages$i" " }
+                  END { printf "'"$FAXSENDER"' -v%s %s %s", \
+                               flags, phone, pages }' -`
+
+
+execute faxsend command
+=======================
+$echo "$command"
+
+eval $command
+{% endhighlight %}
+
+
+Stack Based Buffer Overflow With Long Username in
+contrib/next-login/login.c
+============================================================================
+Severity Rating: Low
+Vector: Command Line Parameter
+CVE: CVE-2018-16743
+CWE: 121
+CVSS Score: 2.9
+CVSS Vector: CVSS:3.0/AV:L/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N
+In file contrib/next-login/login.c the command line parameter username
+is passed unsanitized to strcpy(), which causes a stack based buffer
+overflow if too long.
+
+{% highlight c %}
+        char tbuf[MAXPATHLEN + 2], tname[sizeof(PATHTTY) + 10];
+...
+        if (*argv) {
+                username = *argv;
+                ask = 0;
+...
+                if (failures && strcmp(tbuf, username)) {
+                        if (failures > (pwd ? 0 : 1))
+                                badlogin(tbuf);
+                        failures = 0;
+                }
+                (void)strcpy(tbuf, username);
+{% endhighlight %}
+
+
+Stack Based Buffer Overflow With Long Argument in contrib/scrts.c
+=================================================================
+Severity Rating: Low
+Vector: Command Line Parameter
+CVE: CVE-2018-16742
+CWE: 121
+CVSS Score: 2.9
+CVSS Vector: CVSS:3.0/AV:L/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N
+In file contrib/scrts.c a stack buffer overflow can be triggered via
+command line parameter.
+
+{% highlight c %}
+int main( int argc, char ** argv )
+{
+int i, fd;
+struct termios tio;
+char device[1000];
+
+for ( i=1; i<argc; i++ )
+
+{
+
+    if ( strchr( argv[i], '/' ) == NULL )
+
+        sprintf( device, "/dev/%s", argv[i] );
+
+    else
+
+        strcpy( device, argv[i] );
+{% endhighlight %}
+
+
+Stack Based Buffer Overflow and Command injection in faxrec.c
+=============================================================
+Severity Rating: Low
+Vector: Command Line Parameter
+CVE: CVE-2018-16744 (for command injection), CVE-2018-16745 (for overflow)
+CWE: 121
+CVSS Score: 2.9
+CVSS Vector: CVSS:3.0/AV:L/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N
+In file faxrec.c function fax_notify_mail(), the mail_to parameter is
+not sanitized. It could allow for command injection or a buffer
+overflow if it is too long. If is called from facrec() which in turn
+is called from main() in mgetty.c. Since the notify_mail parameter is
+a configuration parameter, it should only be possible to set it from
+trusted source. If mgetty would be used with e.g. a webfront end, this
+might be abused for a privilege escalation.
+
+{% highlight c %}
+void faxnotifymail P3( (pagenum, ppagenum, mailto),
+                          int pagenum, int ppagenum, char * mailto )
+{
+FILE  * pipefp;
+char  * filename, * p;
+char    buf[256];
+int     r;
+timet  ti;
+    lprintf( LNOISE, "faxnotifymail: sending mail to: %s", mailto );
+    sprintf( buf, "%s %s >/dev/null 2>&1", MAILER, mailto );
+    pipefp = popen( buf, "w" );
+{% endhighlight %}
+
+
+Endless loop in g3/g32pbm.c
+===========================
+When converting g32 files using g3/g32pbm.c, an endless loop can be
+triggered by malformed input file. Example can be found at
+files/g32pmbinfiniteloop.
+
+Out Of Bounds Access in g3/pbm2g3.c
+===================================
+When converting pbm files using g3/pbm2g3.c, out of bounds accesses
+can occur with malformed input files in putwhitespan(). An example can
+be found with files/pbm2g2oobaccess.
+
+{% highlight c %}
+     putcode( twhite[l].bitcode, twhite[l].bitlength );
+{% endhighlight %}
+
+
+Workaround
+- ----------
+None.
+
+
+Timeline
+- --------
+2018-06-07 Issues found
+2018-08-27 Issue reported to vendor
+2018-08-28 Vendor reply
+2018-09-08 Vendors sends patches
+2018-09-08 CVE IDs requested
+2018-09-09 CVE IDs assigned
+2018-09-11 Patched Version released
+2018-09-11 Advisory released
+
+About X41 D-SEC GmbH
+====================
+X41 is an expert provider for application security services.
+Having extensive industry experience and expertise in the area of
+information security, a strong core security team of world class
+security experts enables X41 to perform premium security services.
+Fields of expertise in the area of application security are security
+centered code reviews, binary reverse engineering and vulnerability
+discovery.
+Custom research and a IT security consulting and support services are
+core competencies of X41.
+
+- -- 
+X41 D-SEC GmbH, Dennewartstr. 25-27, D-52068 Aachen
+T: +49 241 9809418-0, Fax: -9
+Unternehmenssitz: Aachen, Amtsgericht Aachen: HRB19989
+Geschäftsführer: Markus Vervier
+
+
+-----BEGIN PGP SIGNATURE-----
+
+iQJLBAEBCAA1FiEEpwxVTgxAIcUvTugIo5Klpg50CxAFAlui40AXHGFkdmlzb3Jp
+ZXNAeDQxLWRzZWMuZGUACgkQo5Klpg50CxDAKg/6AmXcOmQnCDVgORX9xbmLvCXc
+EcfNX7MNKlvegdm4D0TWb9WZKbWC0ubv1vSMB35qtYKMtdIwh/lYReb01/+WmRwV
+alZTSnoPZmy3Wt0e1mzkSEjJqauawbVAZfi9bfgUmX1faWDkntkoOhfJVcGy2Tia
+g0eiang5lg1v4m5yjiE4EHyzBKy+DqEYf6VNCje7cIQG/tFhuvatmd1HulZpFgK5
+D/VBRCctKXaLNuoe5cIRmRD2tJZ4O7NmhudBVxJSrShTtv4cO0M6xPD0ddzhSHtn
+JnuNdqYY0+sdVO+uf9kOF8qHG6iW1fLKiQAuyYZCTCZELDOUzby1x0IN2XwNxiX4
+b2sl1vp/XoPvlIloZehTOtaYZimUjoSo65nMZb5Dlnc5zjkWHitD8CSSnuTJbuUQ
+NL9b4IYJjGqjuTl9UAbdi4dXLUEgiXe4gTr399LqFKyRwYj1CJ5LKR+C6F1YW6FG
+y8BoT4JGUd269HcQMUhO286XuEB3yGdEiEpY4M2iakyi880GNUf5bWi3dxC3LDIG
+l7yHqLFZku3Aa7PZMCsfIr9NVG0gkEido8lm3LPnxnl5NbBEyZZh8IAwSKRrdKIZ
+MXzuedk1J6i0K2pwy6xMDkLz+VeMmOzn2HuCVh4cD5Z/Bq0wmrpBB76hdKOdxfVV
+c+Rqt+7zn4K6wFi28S0=
+=g4wJ
+-----END PGP SIGNATURE-----
