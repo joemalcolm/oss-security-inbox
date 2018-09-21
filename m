@@ -1,47 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/02/1
-Message-ID: <f4f9c27d-aac3-0310-77f4-0013df738242@chbi.eu>
-Date: Thu, 2 Aug 2018 19:45:38 +0200
-From: chbi@...i.eu
-To: oss-security@...ts.openwall.com
-Subject: Stored XSS vulnerabilities in Tiki <= 18.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/21/1
+Message-ID: <CAPNiXbEAF=Se=QxAumYgog+4ZCoVpoPCUsfONszrNDqkNmzYaw@mail.gmail.com>
+Date: Fri, 21 Sep 2018 12:50:31 +0200
+From: Alex R <alexr@...che.org>
+To: dev <dev@...os.apache.org>, user <user@...os.apache.org>,  Terry Chia <terrycwk1994@...il.com>, security <security@...che.org>,  oss-security@...ts.openwall.com, Alexander Rojas <alexander@...osphere.io>
+Subject: CVE-2018-8023: A remote attacker can exploit a vulnerability in the JWT implementation to gain unauthenticated access to Mesos Executor HTTP API.
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Severity: Important
 
-I've discovered four security issues in Tiki <= 18.1 (https://tiki.org)
+Vendor:
+The Apache Software Foundation
 
+Versions Affected:
+Apache Mesos 1.4.0 to 1.6.0
+The unsupported Apache Mesos pre-1.4.0 releases may be also affected.
 
-Four stored XSS vulnerabilities allow an authenticated user injecting
-JavaScript to gain administrator privileges if an administrator opens a
-wiki page and moves the mouse pointer over a modified link or thumb image.
+Description:
+Apache Mesos can be configured to require authentication to call the
+Executor HTTP API using JSON Web Token (JWT). The comparison of the
+generated HMAC value against the provided signature in the JWT
+implementation used is vulnerable to a timing attack because instead
+of a constant-time string comparison routine a standard `==` operator
+has been used. A malicious actor can therefore abuse the timing
+difference of when the JWT validation function returns to reveal the
+correct HMAC value.
 
+Mitigation:
+pre-1.4.x users should upgrade to at least 1.4.2
+1.4.x users should upgrade to 1.4.2
+1.5.x users should upgrade to 1.5.2
+1.6.0 users should upgrade to 1.6.1
+1.7.0-dev users should obtain Mesos 1.7.0
 
-The issues are fixed in Tiki 18.2 and the fixes are backported to 12.14
-and 15.7.
+Credit:
+This issue was discovered by Terry Chia (Ayrx).
 
-Fixes:
-https://sourceforge.net/p/tikiwiki/code/66809
-https://sourceforge.net/p/tikiwiki/code/66990
+Alex on behalf of Mesos PMC
 
-
-Timeline:
-2018-06-15: Issues discovered and reported
-2018-06-25: 3 of 4 issues fixed
-2018-07-12: All 4 issues confirmed
-2018-07-20: 4 of 4 issues fixed
-2018-07-31: Tiki 18.2, 15.7 and 12.14 released
-
-
-I've requested a CVE ID (MITRE).
-
--- 
-chbi
-https://chbi.eu
-
-GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
-     https://chbi.eu/chbi.asc
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
