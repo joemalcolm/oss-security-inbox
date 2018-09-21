@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["509" "Saturday" "28" "March" "2015" "15:40:18" "+1300" "Matthew Daley" "mattd@bugfuzz.com" "<CAD3CancpLUSbzSyPWH7M8oHUbph1LoN5HXsuAZcxty34ygQkiA@mail.gmail.com>" "13" "[oss-security] Advisory: CVE-2014-9708: Appweb Web Server" nil nil nil "3" "2015032802:40:18" "[oss-security] Advisory: CVE-2014-9708: Appweb Web Server" (number mark "        mattd@bugfuz Mar 28   13/509   " thread-indent "\"[oss-security] Advisory: CVE-2014-9708: Appweb Web Server\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1090" "Friday" "21" "September" "2018" "12:50:31" "+0200" "Alex R" "alexr@apache.org" "<CAPNiXbEAF=Se=QxAumYgog+4ZCoVpoPCUsfONszrNDqkNmzYaw@mail.gmail.com>" "35" "[oss-security] CVE-2018-8023: A remote attacker can exploit a vulnerability in the JWT implementation to gain unauthenticated access to Mesos Executor HTTP API." "^Date:" nil nil "9" "2018092110:50:31" "[oss-security] CVE-2018-8023: A remote attacker can exploit a vulnerability in the JWT implementation to gain unauthenticated access to Mesos Executor HTTP API." (number mark "        alexr@apache Sep 21   35/1090  " thread-indent "\"[oss-security] CVE-2018-8023: A remote attacker can exploit a vulnerability in the JWT implementation to gain unauthenticated access to Mesos Executor HTTP API.\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 32531 invoked by uid 550); 28 Mar 2015 02:40:35 -0000
+Received: (qmail 15727 invoked by uid 550); 21 Sep 2018 11:14:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,41 +11,57 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32490 invoked from network); 28 Mar 2015 02:40:29 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=lruRHid1o9wZQrthIg+Q7iai4g/y7oHuYzHtZ05pyk4=;
-        b=Wwo0skhRDEaDAXczA0FzaTvDUDXttdPZ+erYtesyRtbgPVtEtNTK39B53emL13YtyR
-         rtXbfGGBcXcd7bwxJUpLdBOOXAkqc/cM4jJ2NcDnUxT3cldt3Nxti6CzeQWQfNHQe3rX
-         9LPCUsMmVRAuL6XR8vhcuPWlEa34cree+/vitTTiGDlqBOLUFf+hV+EOBO3lU7r/KfhP
-         ytY+fZgS/eiDVYtX4JDXDoL+K29bE8T3St7x/n2zoSmDdAONK8Zh/jO9ZOz9a9JDeLzz
-         qDV7NOGPMwMgyTwSrZJYHbf66fI9n6Ia+piRj66l4HhS3zlzojcDFnPBtr2UhDT8j5Bu
-         IFvA==
-X-Gm-Message-State: ALoCoQn7j6OwbGLE6dM+152psXm+LgovK8H2pM2WvpA89ik0mqFe8qLW7j7Ddg20Go09z0PUsR3X
+Received: (qmail 19515 invoked from network); 21 Sep 2018 10:50:57 -0000
+X-Gm-Message-State: APzg51DzRWUd2+53kem/0gtnSnwjVoKMxzkUEr7Ofy+NH4LRNeJzVx2+
+	x5pQkxpUHypAVU28gVoTHEHj9+rdBwT1vApyJEE=
+X-Google-Smtp-Source: ANB0VdZhGW7aA5voKo1fSq7AlpH2cYfpHh/P/9o6jMyzGA0kn3HV/V6SJelpC6bM808EbfRgMUP1UHhF1fmD1jjxXD0=
+X-Received: by 2002:a67:5dc6:: with SMTP id r189-v6mr1117105vsb.172.1537527042700;
+ Fri, 21 Sep 2018 03:50:42 -0700 (PDT)
 MIME-Version: 1.0
-X-Received: by 10.180.87.66 with SMTP id v2mr2608990wiz.51.1427510418426; Fri,
- 27 Mar 2015 19:40:18 -0700 (PDT)
-Message-ID: <CAD3CancpLUSbzSyPWH7M8oHUbph1LoN5HXsuAZcxty34ygQkiA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Date: Sat, 28 Mar 2015 15:40:18 +1300
-From: Matthew Daley <mattd@bugfuzz.com>
+X-Gmail-Original-Message-ID: <CAPNiXbEAF=Se=QxAumYgog+4ZCoVpoPCUsfONszrNDqkNmzYaw@mail.gmail.com>
+Message-ID: <CAPNiXbEAF=Se=QxAumYgog+4ZCoVpoPCUsfONszrNDqkNmzYaw@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="000000000000367dcb05765f69d3"
+Date: Fri, 21 Sep 2018 12:50:31 +0200
+From: Alex R <alexr@apache.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Advisory: CVE-2014-9708: Appweb Web Server
-To: fulldisclosure@seclists.org, oss-security@lists.openwall.com, 
-	bugtraq@securityfocus.com
+Subject: [oss-security] CVE-2018-8023: A remote attacker can exploit a vulnerability in the
+ JWT implementation to gain unauthenticated access to Mesos Executor HTTP API.
+To: dev <dev@mesos.apache.org>, user <user@mesos.apache.org>, 
+	Terry Chia <terrycwk1994@gmail.com>, security <security@apache.org>, 
+	oss-security@lists.openwall.com, Alexander Rojas <alexander@mesosphere.io>
 
-Affected software: Appweb Web Server
-CVE ID: CVE-2014-9708
+--000000000000367dcb05765f69d3
+Content-Type: text/plain; charset="UTF-8"
 
-Description: An HTTP request with a Range header of the form "Range:
-x=," (ie. with an empty range value) will cause a null pointer
-dereference, leading to a remotely-triggerable DoS.
+Severity: Important
 
-Fixed versions: 4.6.6, 5.2.1
-Bug entry: https://github.com/embedthis/appweb/issues/413
-Fix: https://github.com/embedthis/appweb/commit/7e6a925f5e86a19a7934a94bbd6959101d0b84eb#diff-7ca4d62c70220e0e226e7beac90c95d9L17348
-Reported by: Matthew Daley
+Vendor:
+The Apache Software Foundation
 
-- Matthew Daley
+Versions Affected:
+Apache Mesos 1.4.0 to 1.6.0
+The unsupported Apache Mesos pre-1.4.0 releases may be also affected.
+
+Description:
+Apache Mesos can be configured to require authentication to call the
+Executor HTTP API using JSON Web Token (JWT). The comparison of the
+generated HMAC value against the provided signature in the JWT
+implementation used is vulnerable to a timing attack because instead
+of a constant-time string comparison routine a standard `==` operator
+has been used. A malicious actor can therefore abuse the timing
+difference of when the JWT validation function returns to reveal the
+correct HMAC value.
+
+Mitigation:
+pre-1.4.x users should upgrade to at least 1.4.2
+1.4.x users should upgrade to 1.4.2
+1.5.x users should upgrade to 1.5.2
+1.6.0 users should upgrade to 1.6.1
+1.7.0-dev users should obtain Mesos 1.7.0
+
+Credit:
+This issue was discovered by Terry Chia (Ayrx).
+
+Alex on behalf of Mesos PMC
+
+--000000000000367dcb05765f69d3--
