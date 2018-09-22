@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["961" "Tuesday" "19" "January" "2021" "21:00:46" "+0530" "Utkarsh Gupta" "utkarsh@debian.org" "<CAPP0f96WPsiSAzNkmPrPiPcFQ7g7NGG8yfVjPH85U2GOCtExJQ@mail.gmail.com>" "25" "Re: [oss-security] mutt recipient parsing memory leak" nil nil nil "1" "2021011915:30:46" "[oss-security] mutt recipient parsing memory leak" (number mark "U       utkarsh@debi Jan 19   25/961   " thread-indent "\"Re: [oss-security] mutt recipient parsing memory leak\"\n") "<ru239p$147u$1@ciao.gmane.io>" ("<ru239p$147u$1@ciao.gmane.io>") nil nil nil nil nil nil nil "Re: [oss-security] mutt recipient parsing memory leak" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2858" "Friday" "21" "September" "2018" "21:12:15" "-0700" "Justin Ferguson" "justin@asac.co" "<CABejAM+hhgCipLzUycSV-RszcF6un45CncGFT9w0Yc69qNcbjQ@mail.gmail.com>" "53" "[oss-security] bounties" "^Cc:" nil nil "9" "2018092204:12:15" "[oss-security] bounties" (number mark "        justin@asac. Sep 21   53/2858  " thread-indent "\"[oss-security] bounties\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 24171 invoked by uid 550); 19 Jan 2021 17:04:16 -0000
+Received: (qmail 15579 invoked by uid 550); 25 Sep 2018 12:58:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,60 +11,92 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20293 invoked from network); 19 Jan 2021 15:31:35 -0000
+Received: (qmail 25826 invoked from network); 22 Sep 2018 04:12:38 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=asac-co.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=56p5NhdWwB2gcNXTzTNYNRpMfVJQwWtQVavVuiEAJcg=;
+        b=NZJ6ZqplIfDj3E/267PazN8NEDfePKwtqw+MhtNvBGx9qpJC6TGKX+Q7FpGPGmcoQu
+         QN8C0Lwyi9f29oPp5p7Esvw7vTwjx1A2SQUN7GNGK+0cFXzLerpIvX8Cf/59IJ3Pqhdr
+         Xq/21WipMU0iI89BY6aePKBclnjfOfc+AZckxcYWM6RHnXCNtbt8rnoyg+tCC3R0BmE2
+         Qd2Akb3BC+vKdgBmk3yN7ypeD2TDPuk0ARpM+4j02FD+I3MuE1+otxXXZSkvPTnU+CjR
+         Ux/0W3ETZ5LCgx1owD/UZL2znYXJbTRO4z1nQCmbkGtTirKa4NRm3GmrjAa7gSqaKUZ6
+         /iPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=5dTNMIaxhSe96Gg0eGxrqVv3+yRPjP9oUVFWFR+x1Fs=;
-        b=Qupy8MPYuPdZ9kuJkkkjW3sDJ/l8bOuz9EFt29m6dUdB42NvyoxPZsKBjTlTfJSAsa
-         kbHTvWPj9EcVFLgzwGDH1ACVqQQZ9Ct+tTVlr9kO1UmqCYZ+n1IH82k92Wxmbsp2BChZ
-         JBJ7RJh19pqSQFPEZpAHOaQfLC6pekFrHe7CX+Avm+awS1PcKl/fipt8j35knzMAE4vV
-         yYjLpogv3MnhhYjT9sGtWWwEQok9yzWbvuOaLRxPaDnqb4BymjKZMuEX50olm8muauN6
-         1utJtZ2pEu419/gmXVnCqV00xTScA54BdreTy/ByAcvl11YRUuufHiMCCJKRNigSbrw0
-         Kr0w==
-X-Gm-Message-State: AOAM533SyFyg+FFKhwkug7RmiVrYsx8Hl7iFagilWlOyPVBO6zUhS6M9
-	f7ojLAtLpHUmHqWD14ydeBmLkObzZOVjJg==
-X-Google-Smtp-Source: ABdhPJwpm9Erb1yVq9Eu7wZToyfGOFCcf8d/osL232HvUJdwZMzJPpUt0RuvEtWV5kQbarqSRjj9jQ==
-X-Received: by 2002:a5e:c00e:: with SMTP id u14mr3275685iol.194.1611070283025;
-        Tue, 19 Jan 2021 07:31:23 -0800 (PST)
-X-Received: by 2002:a02:a02:: with SMTP id 2mr3915318jaw.27.1611070282199;
- Tue, 19 Jan 2021 07:31:22 -0800 (PST)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=56p5NhdWwB2gcNXTzTNYNRpMfVJQwWtQVavVuiEAJcg=;
+        b=UtBigs9Er5YIlYS+vb2xm58Xn1NdhGwmuXnxuBJYc5UNd67AeeijrB/JLWyXjNgjnj
+         dSOJwBqA2QFtgxAwEAQtr3S0fXllG/fx4ZuaJaIuyxfik4AqyQzrMWENDR8rt6aYLthz
+         x0oLK94LC4H/U61pDPiwL3xY9FzDb7PgARiLlhAKc3fCo4UB9XvKUo4XczSPhnI6Zn7h
+         G93C4Tos+Z88ADrkWExO2FQM5o/tEy+y8t2WOup1GFfdmj9nN0N6B0zkOL2qXG0p8fV6
+         yR+7gdTW4sfxwlE0OhrIXLYI89DGqhl+nilunSzvDkSg9LSxczZ3Ux3aSykgXqd2G1UX
+         p4lA==
+X-Gm-Message-State: ABuFfog1nDK7JBeW9/oWuh4Aafs/pe4wv7UxuiB5bN+EcTgFGZ3wX7yp
+	T/6WNd0PxmIHUhhq0kFDynBvMAZpeVBoHOq41L9Nkxtv
+X-Google-Smtp-Source: ACcGV62Np5GWkVES2FsNitdpH/7ea/EfrqIHvAyiROPGMm+9pXg9hjkMrbZoX7/4vWj14mYaMVaV9LUEdSfixaqQcbM=
+X-Received: by 2002:a0c:8441:: with SMTP id l59-v6mr429791qva.5.1537589546415;
+ Fri, 21 Sep 2018 21:12:26 -0700 (PDT)
 MIME-Version: 1.0
-References: <ru239p$147u$1@ciao.gmane.io>
-In-Reply-To: <ru239p$147u$1@ciao.gmane.io>
-From: Utkarsh Gupta <utkarsh@debian.org>
-Date: Tue, 19 Jan 2021 21:00:46 +0530
-X-Gmail-Original-Message-ID: <CAPP0f96WPsiSAzNkmPrPiPcFQ7g7NGG8yfVjPH85U2GOCtExJQ@mail.gmail.com>
-Message-ID: <CAPP0f96WPsiSAzNkmPrPiPcFQ7g7NGG8yfVjPH85U2GOCtExJQ@mail.gmail.com>
-To: taviso@gmail.com
-Cc: oss-security@lists.openwall.com
+Message-ID: <CABejAM+hhgCipLzUycSV-RszcF6un45CncGFT9w0Yc69qNcbjQ@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Subject: Re: [oss-security] mutt recipient parsing memory leak
+Cc: fulldisclosure@seclists.org
+Date: Fri, 21 Sep 2018 21:12:15 -0700
+From: Justin Ferguson <justin@asac.co>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] bounties
+To: oss-security@lists.openwall.com
 
-Hi Tavis,
+Hello,
 
-On Mon, Jan 18, 2021 at 1:11 AM Tavis Ormandy <taviso@gmail.com> wrote:
-> Hello, I noticed mutt was leaking memory whenever I opened a particular
-> mailbox. I tracked down the problem: Using rfc822 groups without the madatory
-> labels wasn't being parsed properly.
->
-> https://tools.ietf.org/html/rfc822#section-6.2.6
->
-> (A spammer had just put some junk in there, they weren't deliberately using
-> exotic addressing schemes.. haha).
->
-> It turns out that you can send a small message that leaks a *lot* of memory. A
-> small message can leak GBs of memory, effectively preventing you from opening
-> your mailbox. You would need to use a different mail client to clean up the
-> malformed message before you can use mutt again.
->
-> I sent this upstream as a DoS, but they don't want to treat it as a security
-> isssue. I though I'd just send a FYI here instead in case anyone wants to
-> backport the patch.
+I was curious about peoples experiences with bug bounties particularly
+those through the prominent clearing houses for them. My experience is
+that I have been either ripped off or extremely slow-walked in payment
+that was substantially below the listed payout in every single
+instance. I'm curious how accurately that reflects other peoples
+experiences.
 
-Got CVE-2021-3181 assigned for this!
+In the first series of findings, the vendor, a popular open source
+component simply patched the bugs and refused to close the tickets
+triggering payout for over a year. Attempts at resolving this through
+the clearing houses support produced an endless series of excuses
+mostly revolving around their not having any insight into their own
+database (which is probably true). After a year or so, the ticket was
+finally closed and the pay out several hundred dollars less than the
+enumerated payout. I refused the bounty citing these complications and
+insisted that the finding as a work for hire that was rejected and
+requested that the patch be reverted as a result, which was just
+ignored.
 
+In the second series, the vendor, a prominent hardware company, stated
+that a one line fix with no usability impact (the patch is to move the
+line up one line so that it is included in the mutex lock) was found
+and "partly fixed" over a month prior and that a full patch should be
+released soon. That was several months ago and looking through their
+reports, their public repositories, et cetera it appears to be totally
+and entirely something they made up as the bug still exists. This
+meshes with my thoughts that there even was such a thing as a partial
+fix for x() mutex.lock() vs mutex.lock() x();.
 
-- u
+In the third instance, the vendor, an anti-virus vendor in Europe,
+stated that they were not able to reproduce the issue and didn't see
+any issue. There were multiple things reported to them and their
+circumstances were different as a context switch meant I was turning
+in incomplete work just to attempt to get the issues patched. After
+months of them coming back and asking the same question repeatedly,
+being told the same answer repeatedly and continually ignoring very
+basic questions about their attempts to reproduce, they closed the
+matter as not reproducible. Upon further review, they could not have
+possibly reviewed anything as the issue is blatantly clear and obvious
+implying that they must not have even looked at the matter. In
+additional findings reported to them, they've outright ignored the
+matter entirely.
+
+Thus, my experience has thus far been that bounties, particularly
+those through the clearing houses are basically enabling a 1990s
+pre-full-disclosure series of processes under the pretense of the
+opposite, but in practice mostly just ripping works for hire off. This
+clearly isn't the case across the board, but its been true in every
+instance of my participation.
+
+-me
