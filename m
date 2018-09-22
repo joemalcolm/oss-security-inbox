@@ -1,55 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/18/3
-Message-ID: <CAAnPYQ4Ck7uzf7FFOJX-H1GDOtnHDbXyZ_mzYztSK8O6DF4y7Q@mail.gmail.com>
-Date: Thu, 18 Jan 2018 17:06:04 +0000
-From: Gynvael Coldwind <gynvael@...dwind.pl>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/25/1
+Message-ID: <CABejAM+hhgCipLzUycSV-RszcF6un45CncGFT9w0Yc69qNcbjQ@mail.gmail.com>
+Date: Fri, 21 Sep 2018 21:12:15 -0700
+From: Justin Ferguson <justin@...c.co>
 To: oss-security@...ts.openwall.com
-Subject: Re: How to deal with reporters who don't want their bugs fixed?
+Cc: fulldisclosure@...lists.org
+Subject: bounties
 Content-Type: text/plain; charset=utf-8
 
-Hi there,
+Hello,
 
-Speaking for myself from a security researcher's perspective, I would say
-it depends on the reason for embargo, and what ends up protecting users
-better.
+I was curious about peoples experiences with bug bounties particularly
+those through the prominent clearing houses for them. My experience is
+that I have been either ripped off or extremely slow-walked in payment
+that was substantially below the listed payout in every single
+instance. I'm curious how accurately that reflects other peoples
+experiences.
 
-There might be valid reasons for embargoes - one example (but not the only
-one) is when a given bug affects multiple similar products, and a
-disclosure on the side of one product would 0-day users using other
-products. It sounds logical to wait until fixes are available before
-disclosure (keeping in mind at the same time that a certain sane deadline
-must be met too).
+In the first series of findings, the vendor, a popular open source
+component simply patched the bugs and refused to close the tickets
+triggering payout for over a year. Attempts at resolving this through
+the clearing houses support produced an endless series of excuses
+mostly revolving around their not having any insight into their own
+database (which is probably true). After a year or so, the ticket was
+finally closed and the pay out several hundred dollars less than the
+enumerated payout. I refused the bounty citing these complications and
+insisted that the finding as a work for hire that was rejected and
+requested that the patch be reverted as a result, which was just
+ignored.
 
-On the other hand there are reasons for embargoes which I don't find valid,
-where the examples you've given ("paper/conference presentation/patent
-submission") fall into this category.
-They don't sound as something that would benefit users' security (please
-correct me if I'm wrong) and I'm not a big fan of sitting on already
-discovered unpatched security bugs (in the end bug discovery might be a
-function of time for all we know).
+In the second series, the vendor, a prominent hardware company, stated
+that a one line fix with no usability impact (the patch is to move the
+line up one line so that it is included in the mutex lock) was found
+and "partly fixed" over a month prior and that a full patch should be
+released soon. That was several months ago and looking through their
+reports, their public repositories, et cetera it appears to be totally
+and entirely something they made up as the bug still exists. This
+meshes with my thoughts that there even was such a thing as a partial
+fix for x() mutex.lock() vs mutex.lock() x();.
 
-In this case I would consider explaining this to the researcher and
-proceeding with patching.
-In the end if this causes a given person to report a known-to-them bug just
-before a conference/etc it changes little vs. actually waiting for the
-proposed just-before-conference/etc deadline anyway (if accepting the
-embargo agreement that is).
+In the third instance, the vendor, an anti-virus vendor in Europe,
+stated that they were not able to reproduce the issue and didn't see
+any issue. There were multiple things reported to them and their
+circumstances were different as a context switch meant I was turning
+in incomplete work just to attempt to get the issues patched. After
+months of them coming back and asking the same question repeatedly,
+being told the same answer repeatedly and continually ignoring very
+basic questions about their attempts to reproduce, they closed the
+matter as not reproducible. Upon further review, they could not have
+possibly reviewed anything as the issue is blatantly clear and obvious
+implying that they must not have even looked at the matter. In
+additional findings reported to them, they've outright ignored the
+matter entirely.
 
-Cheers,
-Gynvael
+Thus, my experience has thus far been that bounties, particularly
+those through the clearing houses are basically enabling a 1990s
+pre-full-disclosure series of processes under the pretense of the
+opposite, but in practice mostly just ripping works for hire off. This
+clearly isn't the case across the board, but its been true in every
+instance of my participation.
 
-On Thu, Jan 18, 2018 at 5:11 PM Florian Weimer <fweimer@...hat.com> wrote:
-
-> Subject says it all: What do you do if you receive a vulnerability
-> report, and the reporter requests an embargo at some time in the future
-> because that's when their paper/conference presentation/patent
-> submission is scheduled?
->
-> The obvious approach is to find a prior public report of essentially the
-> same bug and fix that (which will work surprisingly often), but let's
-> assume that this isn't the case.
->
-> Thanks,
-> Florian
->
-
+-me
