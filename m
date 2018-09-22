@@ -1,85 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/25/2
-Message-ID: <7c124869-2387-dac5-2a26-deda05e18ede@virtuozzo.com>
-Date: Fri, 25 May 2018 15:04:15 +0300
-From: Evgenii Shatokhin <eshatokhin@...tuozzo.com>
-To: oss-security@...ts.openwall.com, Andrey Konovalov <andreyknvl@...il.com>
-Cc: Vladis Dronov <vdronov@...hat.com>
-Subject: Re: CVE-2018-1130: Linux kernel: dccp: a null pointer dereference in net/dccp/output.c:dccp_write_xmit
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/22/1
+Message-ID: <CAE-_4r2P-=PaJC7SFVawyKi3Y+X8raPnmddjmXC36pS6DLfEjw@mail.gmail.com>
+Date: Sat, 22 Sep 2018 19:46:45 +0300
+From: Ariel Zelivansky <ariel.zelivans@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: Terry Chia <terrycwk1994@...il.com>
+Subject: Re: CVE-2018-8023: A remote attacker can exploit a vulnerability in the JWT implementation to gain unauthenticated access to Mesos Executor HTTP API.
 Content-Type: text/plain; charset=utf-8
 
-On 25.05.2018 13:48, Andrey Konovalov wrote:
-> On Wed, May 23, 2018 at 4:57 PM, Kurt Seifried <kseifried@...hat.com> wrote:
->> On Wed, May 23, 2018 at 8:49 AM, Andrey Konovalov <andreyknvl@...il.com>
->> wrote:
->>
->>> On Thu, May 10, 2018 at 2:05 PM, Vladis Dronov <vdronov@...hat.com> wrote:
->>>> Hello,
->>>>
->>>> A null pointer dereference in dccp_write_xmit() function in
->>> net/dccp/output.c
->>>> in the Linux kernel before v4.16-rc7 allows a local user to cause a
->>> denial of
->>>> service by a number of certain crafted system calls.
->>>
->>
->>
->> So the classic CVE statement for this is "does it cross/violate a trust
->> boundary". Yeah I know, not super helpful.
->>
->> In general when I look at something and need to decide whether or not it
->> deserves/needs a CVE the fundamentals are:
->>
->> 1) Can an attacker use this vulnerability to gain access, additional
->> privileges, basically is there an impact to
->> Confidentiality/Availability/Integrity? This is really two tests: is there
->> an impact, and is there a way for the attacker to trigger or exploit it?
->> That's a CVE.
->>
->> 2) Does the software/system make a specific security claim that they then
->> fail to meet? E.g. "we include a firewall that blocks access to everything
->> inbound except for port 22", if they were to then also allow port 80,
->> that'd be a CVE.
->>
->> So for the syzbot stuff mostly what you need to determine is:
->>
->> a) is there a security related impact?
->> AND
->> b) can an attacker trigger it?
->>
->> If both are yes, then a CVE is warranted.
-> 
-> Hi Kurt,
-> 
-> Perhaps I should've been more clear. I wasn't asking "what qualifies
-> for a CVE?", but rather "There are a 100 bugs that qualify for CVEs,
-> how do single out 10 of them to actually request CVEs for?".
-> 
-> In particular, the 100 bugs that I'm referring to are the bugs
-> reported by syzbot (perhaps there's even more:
-> https://syzkaller.appspot.com/?fixed=upstream) and the 10 bugs (or so)
-> are the ones Vladis announced on oss-security over the last few
-> months. I'm just curious how did he choose those 10 bugs out of that
-> 100+.
+Hi,
 
-If I understand it correctly, Syzkaller programs run as root. Therefore, 
-it is still needed to check which of the bugs it has found are security 
-flaws.
+I couldn't find the fix for this in the mesos repository and it is not
+documented in the CHANGELOG, could someone direct me to the fixing
+commit/patch?
 
-As for this particular bug in dccp_write_xmit() - I stumbled upon that 
-Syzbot's report and checked that the bug was exploitable by an 
-unprivileged user if dccp modules were loaded. Then I reported the 
-problem to RedHat, and they desided to request a CVE for that. The 
-problem is not critical for RHEL, by the way, but still.
+Thanks
+Ariel
 
-I don't know, if the process was the same for other bugs found by 
-Syzkaller they requested CVEs for.
-
-Regards,
-Evgenii
-
-> 
-> Thanks!
-> .
-> 
-
+On Fri, Sep 21, 2018 at 1:50 PM, Alex R <alexr@...che.org> wrote:
+>
+> Severity: Important
+>
+> Vendor:
+> The Apache Software Foundation
+>
+> Versions Affected:
+> Apache Mesos 1.4.0 to 1.6.0
+> The unsupported Apache Mesos pre-1.4.0 releases may be also affected.
+>
+> Description:
+> Apache Mesos can be configured to require authentication to call the
+> Executor HTTP API using JSON Web Token (JWT). The comparison of the
+> generated HMAC value against the provided signature in the JWT
+> implementation used is vulnerable to a timing attack because instead
+> of a constant-time string comparison routine a standard `==` operator
+> has been used. A malicious actor can therefore abuse the timing
+> difference of when the JWT validation function returns to reveal the
+> correct HMAC value.
+>
+> Mitigation:
+> pre-1.4.x users should upgrade to at least 1.4.2
+> 1.4.x users should upgrade to 1.4.2
+> 1.5.x users should upgrade to 1.5.2
+> 1.6.0 users should upgrade to 1.6.1
+> 1.7.0-dev users should obtain Mesos 1.7.0
+>
+> Credit:
+> This issue was discovered by Terry Chia (Ayrx).
+>
+> Alex on behalf of Mesos PMC
