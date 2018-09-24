@@ -1,79 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/05/4
-Message-Id: <8B6190B4-46B5-45D1-B079-BD6AABEDDC64@beckweb.net>
-Date: Mon, 5 Feb 2018 13:17:40 +0100
-From: Daniel Beck <ml@...kweb.net>
-To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins plugins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/24/1
+Message-ID: <CAGqxZSVqxSd27nWYFgicNVVMD8z=WXGZohsyX5xJ-Hh8p1643g@mail.gmail.com>
+Date: Mon, 24 Sep 2018 09:36:51 +0800
+From: Terry Chia <terrycwk1994@...il.com>
+To: Ariel Zelivansky <ariel.zelivans@...il.com>
+Cc: oss-security@...ts.openwall.com, Alex R <alexr@...che.org>
+Subject: Re: CVE-2018-8023: A remote attacker can exploit a vulnerability in the JWT implementation to gain unauthenticated access to Mesos Executor HTTP API.
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around 
-the world to reliably build, test, and deploy their software. The following 
-plugin releases contain fixes for security vulnerabilities:
+Hi Ariel,
 
-* Android Lint 2.6
-* CCM 3.2
-* Credentials Binding 1.15
-* JUnit 1.24
-* Pipeline: Supporting APIs 2.18
+I believe the following commit contains the fix:
+https://github.com/apache/mesos/commit/2c282f19755ea7518caf6f43e729524b1c6bdb23
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2018-02-05/
+Cheers,
+Terry
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+On Sun, Sep 23, 2018 at 12:46 AM Ariel Zelivansky <ariel.zelivans@...il.com>
+wrote:
 
-If you find security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
+> Hi,
+>
+> I couldn't find the fix for this in the mesos repository and it is not
+> documented in the CHANGELOG, could someone direct me to the fixing
+> commit/patch?
+>
+> Thanks
+> Ariel
+>
+> On Fri, Sep 21, 2018 at 1:50 PM, Alex R <alexr@...che.org> wrote:
+> >
+> > Severity: Important
+> >
+> > Vendor:
+> > The Apache Software Foundation
+> >
+> > Versions Affected:
+> > Apache Mesos 1.4.0 to 1.6.0
+> > The unsupported Apache Mesos pre-1.4.0 releases may be also affected.
+> >
+> > Description:
+> > Apache Mesos can be configured to require authentication to call the
+> > Executor HTTP API using JSON Web Token (JWT). The comparison of the
+> > generated HMAC value against the provided signature in the JWT
+> > implementation used is vulnerable to a timing attack because instead
+> > of a constant-time string comparison routine a standard `==` operator
+> > has been used. A malicious actor can therefore abuse the timing
+> > difference of when the JWT validation function returns to reveal the
+> > correct HMAC value.
+> >
+> > Mitigation:
+> > pre-1.4.x users should upgrade to at least 1.4.2
+> > 1.4.x users should upgrade to 1.4.2
+> > 1.5.x users should upgrade to 1.5.2
+> > 1.6.0 users should upgrade to 1.6.1
+> > 1.7.0-dev users should obtain Mesos 1.7.0
+> >
+> > Credit:
+> > This issue was discovered by Terry Chia (Ayrx).
+> >
+> > Alex on behalf of Mesos PMC
+>
 
----
-
-SECURITY-521
-JUnit plugin is affected by an XML External Entity (XXE) processing 
-vulnerability. This allows an attacker to configure build processes such 
-that JUnit plugin parses a maliciously crafted file that uses external 
-entities for extraction of secrets from the Jenkins master, server-side 
-request forgery, or denial-of-service attacks.
-
-
-SECURITY-659 (CCM)
-SECURITY-660 (Android Lint)
-Multiple plugins based on Static Analysis Utilities plugin are affected
-by an XML External Entity (XXE) processing vulnerability. This allows an
-attacker to configure build processes such that one of these plugins
-parses a maliciously crafted file that uses external entities for
-extraction of secrets from the Jenkins master, server-side request
-forgery, or denial-of-service attacks.
-
-
-SECURITY-698
-Credentials Binding plugin allows specifying passwords and other secrets as
-environment variables, and will hide them from console output in builds.
-
-However, since Jenkins will try to resolve references to other environment 
-variables in environment variables passed to a build, this can result in 
-other values than the one specified being provided to a build. For 
-example, the value p4$$w0rd would result in Jenkins passing on p4$w0rd, as 
-$$ is the escape sequence for a single $.
-
-Credentials Binding plugin does not prevent such a transformed value (e.g. 
-p4$w0rd) from being shown on the build log, allowing users to reconstruct 
-the actual password value from the transformed one.
-
-Credentials Binding plugin will now escape any $ characters in password 
-values so they are correctly passed to the build.
-
-
-SECURITY-699
-Arbitrary code execution due to incomplete sandbox protection in Pipeline: 
-Supporting APIs Plugin: Methods related to Java deserialization like 
-readResolve implemented in Pipeline scripts were not subject to sandbox 
-protection, and could therefore execute arbitrary code. This could be 
-exploited e.g. by regular Jenkins users with the permission to configure 
-Pipelines in Jenkins, or by trusted committers to repositories containing 
-Jenkinsfiles.
-
-Deserialization of objects in Pipeline is now also subject to sandbox 
-protection.
