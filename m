@@ -1,33 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/22/4
-Message-ID: <87zhv5znqn.fsf@oldenburg.str.redhat.com>
-Date: Mon, 22 Oct 2018 23:16:00 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: Andrew Sandoval <ASandoval@...root.com>
-Cc: "oss-security\@lists.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: GCC Compiler Induced Vulnerability - affects programs compiled with GCC 7 and 8 containing nested functions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/24/2
+Message-ID: <1159723764.15583680.1537783424023.JavaMail.zimbra@redhat.com>
+Date: Mon, 24 Sep 2018 06:03:44 -0400 (EDT)
+From: Vladis Dronov <vdronov@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2018-14633: Linux kernel: security flaw in iscsi target code
 Content-Type: text/plain; charset=utf-8
 
-* Andrew Sandoval:
+Heololo,
 
-> Will Webroot communicate this to the public?
-> Webroot believes in responsible disclosure and will work with third parties to
-> ensure that the vulnerability is addressed before a public announcement. We
-> are happy to work with your communications team on announcement timing.
+"Vincent Pelletier" <plr.vincent@...il.com> has found a security flaw in the
+chap_server_compute_md5() function in the ISCSI target code in the Linux kernel
+in a way an authentication request from an ISCSI initiator is processed. An
+unauthenticated remote attacker can cause a stack buffer overflow and smash up
+to 17 bytes of the stack. The attack requires the iSCSI target to be enabled on
+the victim host.
 
-This is already public because oss-security is a public mailing list.
+This flaw was assigned a CVE-ID of CVE-2018-14633 and I would suggest to use it
+in the future communications re: this:
 
-Most GNU/Linux distributions ensure that only very special binaries
-(such as some versions of the Ada compiler) enable executable stacks.
-In our experience, if the toolchain produces a binary that requests an
-executable stack, it is more likely due to manually written assembler
-files without the required stack executability markup section, and not
-due to nested C functions whose address escapes.  Without scanning built
-binaries for these discrepancies, such cases could easily be missed.
+https://bugzilla.redhat.com/show_bug.cgi?id=1626035
 
-Please also note that an executable stack is not a vulnerability itself,
-and it is not directly exploitable.  (The same applies to the lack of
-Intel CET support in binaries.)
+The suggested patches:
 
-Thanks,
-Florian
+https://git.kernel.org/pub/scm/linux/kernel/git/mkp/scsi.git/commit/?h=4.19/scsi-fixes&id=1816494330a83f2a064499d8ed2797045641f92c
+
+https://git.kernel.org/pub/scm/linux/kernel/git/mkp/scsi.git/commit/?h=4.19/scsi-fixes&id=8c39e2699f8acb2e29782a834e56306da24937fe
+
+The impact analysis follows. The flaw resides in this code:
+
+[drivers/target/iscsi/iscsi_target_auth.h]
+#define CHAP_CHALLENGE_LENGTH  16
+#define MD5_SIGNATURE_SIZE     16      /* 16 bytes in a MD5 message digest */
+#define MAX_RESPONSE_LENGTH    64      /* sufficient for MD5 */
+#define MAX_CHAP_N_SIZE        512
+
+[drivers/target/iscsi/iscsi_target_auth.c]
+static int chap_server_compute_md5( ... char *nr_in_ptr, char *nr_out_ptr, ... )
+{       ...
+        unsigned char client_digest[MD5_SIGNATURE_SIZE];
+        unsigned char server_digest[MD5_SIGNATURE_SIZE];
+        unsigned char chap_r[MAX_RESPONSE_LENGTH];
+        ...
+        if (extract_param(nr_in_ptr, "CHAP_R", MAX_RESPONSE_LENGTH, chap_r,
+            &type) < 0) { ...exit... }
+        ...
+        chap_string_to_hex(client_digest, chap_r, strlen(chap_r));
+        ...
+        // int crypto_shash_finup(struct shash_desc *desc, const u8 *data,
+        //     unsigned int len, u8 *out)
+        // note, server_digest is *out
+        ret = crypto_shash_finup(desc, chap->challenge, CHAP_CHALLENGE_LENGTH, server_digest);
+        ...
+        chap_binaryhex_to_asciihex(response, server_digest, MD5_SIGNATURE_SIZE);
+
+Here chap_string_to_hex() (which basically does hex2bin()) can have max 64-bytes
+input string, then it converts the input to a 32-bytes binary string and writes
+it plus the trailing \0 to the 16-bytes on-stack buffer client_digest[], making
+this a classical buffer overflow.
+
+chap_r is attacker-controlled, the question is what an attack can overwrite.
+The overwrite can be 16 bytes + zero byte. Checking what is where on the stack
+in, for example, RHEL-7/x86_64, server_digest[] and the 1st byte of response[]
+can be overwritten. According to the code, server_digest[] and response[] are
+not used after the overwrite and are filled with correct values later by the
+crypto_shash_finup() and the chap_binaryhex_to_asciihex().
+
+This means the flaw has no impact on the RHEL-7/x86_64 systems.
+
+Depending on how the other distriutions' kernel is built (i.e. depending on a
+compiler, compiler flags and hardware architecture) a compiler may put other
+local variables or function arguments on the stack after the client_digest. This
+may lead to different outcomes, like chap_server_compute_md5() may erroneously
+return with a result of a successful authentication by rewriting auth_ret, and
+so expose all the target's content to an attacker. Or, if nr_out_ptr is
+overwritten, this can damage other kernel memory content via later sprintf() and
+thus lead to a system crash.
+
+At last, with distribution kernels where stack canary is disabled the overwrite
+may corrupt a return pointer, saved registers and other function's stack frame.
+Due to this, privilege escalation cannot be fully ruled out, although we believe
+this is highly unlikely.
+
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
