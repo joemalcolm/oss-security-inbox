@@ -1,4 +1,9 @@
-Received: (qmail 1051 invoked by uid 550); 26 Sep 2023 11:19:22 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3768" "Monday" "24" "September" "2018" "06:03:44" "-0400" "Vladis Dronov" "vdronov@redhat.com" "<1159723764.15583680.1537783424023.JavaMail.zimbra@redhat.com>" "77" "[oss-security] CVE-2018-14633: Linux kernel: security flaw in iscsi target code" nil nil nil "9" "2018092410:03:44" "[oss-security] CVE-2018-14633: Linux kernel: security flaw in iscsi target code" (number mark "U       vdronov@redh Sep 24   77/3768  " thread-indent "\"[oss-security] CVE-2018-14633: Linux kernel: security flaw in iscsi target code\"\n") "<1995049383.15582351.1537783007417.JavaMail.zimbra@redhat.com>" ("<1995049383.15582351.1537783007417.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 11294 invoked by uid 550); 24 Sep 2018 10:03:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,171 +12,96 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9752 invoked from network); 26 Sep 2023 00:16:08 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=citrix.com; s=google; t=1695687357; x=1696292157; darn=lists.openwall.com;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=LJuYvScINI23AbBeKnl2Ob9ScqyHSu9v5Ru0s3OzqPE=;
-        b=T7xjAktqDvaiQ4L595Db9rosUp9rqNGJ9Wo/60xuPacBl5YgWSHCr4NGDvGilg0OMx
-         oINwRZKieUpdJdRSMVTTnIH1A1hodiFUTbjtg+dvhT4vlR3w3wBhs/i5pgRBobhUxn4d
-         jGJAY5LptFiRYAE+fM2AI/KVL5okA3V64Rx8o=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695687357; x=1696292157;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:from:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=LJuYvScINI23AbBeKnl2Ob9ScqyHSu9v5Ru0s3OzqPE=;
-        b=L5JvwKGPVZYAY+fQYNI0UQIaHAPTOlngiEq/zYuBCn1hNbLtyHZrhQhuhceasHdE9c
-         6GGJsAS1MpEEjvPdz5gDdgXZeVeXYtCKYDOsfgX370+t9Ce8LGpkX1Xv6W7kbKzP1m2V
-         4h42m4sN9bGQlUopS3/0n2np7Y8Hjyve85ZKoVayaeA73wGwT6TgB+0MBTG/ua/zKxiG
-         zYKgZSSWLsDnB/YAPjFDQK/4wt+UJl7Mv9Ng2N/+cPdT4h/QV09Pw5PZYvZThUe43Ja+
-         wkvK9OcQ2/utvk+ReH6XNKfbPv7hRdSX38vorNCjoWEdm2dVnZSg+zZCsmB4+YbQYJI/
-         jLwQ==
-X-Gm-Message-State: AOJu0Yx7soyN4Cw7GPbGf86c9Ca5TQbBY6JMWJtFsMM/ZrDZY6gRoVHW
-	vtNZS0OXsMkPq+a9LXwCzDxzlmq744CmkQIb2YY=
-X-Google-Smtp-Source: AGHT+IHekJECg+gTHjp4wOXwh862AzsQgICw4AUvvFY72O/iHDrU//S8KewYSuY1nalJcX5XTxHj5A==
-X-Received: by 2002:a05:6402:1c01:b0:530:c34b:8277 with SMTP id ck1-20020a0564021c0100b00530c34b8277mr6388491edb.6.1695687356959;
-        Mon, 25 Sep 2023 17:15:56 -0700 (PDT)
-Message-ID: <3241bf87-b01b-4b65-e972-f0cede9e1855@citrix.com>
-Date: Tue, 26 Sep 2023 01:15:55 +0100
+Received: (qmail 11273 invoked from network); 24 Sep 2018 10:03:56 -0000
+Date: Mon, 24 Sep 2018 06:03:44 -0400 (EDT)
+From: Vladis Dronov <vdronov@redhat.com>
+To: oss-security@lists.openwall.com
+Message-ID: <1159723764.15583680.1537783424023.JavaMail.zimbra@redhat.com>
+In-Reply-To: <1995049383.15582351.1537783007417.JavaMail.zimbra@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-From: Andrew Cooper <andrew.cooper3@citrix.com>
-Content-Language: en-GB
-To: Solar Designer <solar@openwall.com>
-Cc: oss-security@lists.openwall.com,
- "Xen. org security team" <security-team-members@xen.org>
-References: <E1qko5Z-0003cF-KD@xenbits.xenproject.org>
- <20230925163652.GA6750@openwall.com>
- <70e568d7-9e09-a1a9-030f-40473447a619@citrix.com>
- <20230925182834.GA8247@openwall.com>
-In-Reply-To: <20230925182834.GA8247@openwall.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Subject: Re: [oss-security] Xen Security Advisory 439 v1 (CVE-2023-20588) -
- x86/AMD: Divide speculative information leak
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.40.5.28, 10.4.195.17]
+Thread-Topic: CVE-2018-14633: Linux kernel: security flaw in iscsi target code
+Thread-Index: szXzdpck14J0Oq/6YzcJhR/ZVrr9LQ==
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.13
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.30]); Mon, 24 Sep 2018 10:03:44 +0000 (UTC)
+Subject: [oss-security] CVE-2018-14633: Linux kernel: security flaw in iscsi target code
 
-On 25/09/2023 7:28 pm, Solar Designer wrote:
-> On Mon, Sep 25, 2023 at 06:10:05PM +0100, Andrew Cooper wrote:
->> On 25/09/2023 5:36 pm, Solar Designer wrote:
->>> While I am at it, here's the corresponding mitigation in Linux kernel:
->>>
->>> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=77245f1c3c6495521f6a3af082696ee2f8ce3921
->> Not really.  That patch entirely misunderstood the vulnerability.  I
->> went through several rounds of getting AMD to better-understand their bug.
->>
->> Linux's fix was rewritten in
->> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=f58d6fbcb7c848b7f2469be339bc571f2e9d245b
->> and this implements the same logic as I implemented in Xen.
-> Oh wow.  Thank you for correcting me (and correcting AMD first?)
+Heololo,
 
-Yeah, "don't divide secret data" was not a good starting point.
+"Vincent Pelletier" <plr.vincent@gmail.com> has found a security flaw in the
+chap_server_compute_md5() function in the ISCSI target code in the Linux kernel
+in a way an authentication request from an ISCSI initiator is processed. An
+unauthenticated remote attacker can cause a stack buffer overflow and smash up
+to 17 bytes of the stack. The attack requires the iSCSI target to be enabled on
+the victim host.
 
-Not least because the transmitter and receiver of the covert channel can
-be entirely in transient execution which fails to retire.
+This flaw was assigned a CVE-ID of CVE-2018-14633 and I would suggest to use it
+in the future communications re: this:
 
-Recovery of data from a fault with checks delayed until retirement is an
-art that some got very proficient at while exploiting Meltdown.
+https://bugzilla.redhat.com/show_bug.cgi?id=1626035
 
-For transmitting data, remember that Zen1 is vulnerable to Branch Type
-Confusion (AMD Retbleed), and any arbitrary instruction boundary can be
-poisoned to speculate for a "short" window, where short is long enough
-for one load, but not long enough for two dependent loads...
+The suggested patches:
 
-... except for a corner case where the other thread happens to cause a
-full pipeline flush on just the right cycle, at which point a dependent
-load can initiate a cacheline fill. [1]
+https://git.kernel.org/pub/scm/linux/kernel/git/mkp/scsi.git/commit/?h=4.19/scsi-fixes&id=1816494330a83f2a064499d8ed2797045641f92c
 
-Combining the known attacks on the Zen1 microarchitecture, an
-unprivileged userspace attacker can poison any arbitrary instruction
-boundary (e.g. the early entry path prior to pushing user GPRs) to
-speculate to an arbitrary destination (in kernel code) and at least
-initiate a load and a dependent div (subject to gadget availability).
+https://git.kernel.org/pub/scm/linux/kernel/git/mkp/scsi.git/commit/?h=4.19/scsi-fixes&id=8c39e2699f8acb2e29782a834e56306da24937fe
 
-I have not had time to investigate the effects of a pipeline flush on an
-in-progress DIV uop.  A division ought to be longer than initiating a
-memory access, so ought not to complete within the window.  If anyone
-does investigate, I'd be interested in any findings.
+The impact analysis follows. The flaw resides in this code:
 
-[1] noted in the updated BTC guidance[2], published Nov 2022.
-[2]
-https://www.amd.com/system/files/documents/technical-guidance-for-mitigating-branch-type-confusion.pdf
-page 5.
+[drivers/target/iscsi/iscsi_target_auth.h]
+#define CHAP_CHALLENGE_LENGTH  16
+#define MD5_SIGNATURE_SIZE     16      /* 16 bytes in a MD5 message digest */
+#define MAX_RESPONSE_LENGTH    64      /* sufficient for MD5 */
+#define MAX_CHAP_N_SIZE        512
 
->> It's worth noting that because AMD did not allocate a $FOO_NO CPUID bit,
->> there's no ability for a VM to figure out that it might move to
->> vulnerable hardware and therefore should engage the workaround.  The
->> best a VM can do is best-effort based on whether it looks like it's
->> booting on a Zen1 system.
-> Maybe directly probing for the bug is an option?  Perhaps can be done
-> within one thread (where the bug doesn't have security impact, but is
-> detectable anyway, no)?
+[drivers/target/iscsi/iscsi_target_auth.c]
+static int chap_server_compute_md5( ... char *nr_in_ptr, char *nr_out_ptr, ... )
+{       ...
+        unsigned char client_digest[MD5_SIGNATURE_SIZE];
+        unsigned char server_digest[MD5_SIGNATURE_SIZE];
+        unsigned char chap_r[MAX_RESPONSE_LENGTH];
+        ...
+        if (extract_param(nr_in_ptr, "CHAP_R", MAX_RESPONSE_LENGTH, chap_r,
+            &type) < 0) { ...exit... }
+        ...
+        chap_string_to_hex(client_digest, chap_r, strlen(chap_r));
+        ...
+        // int crypto_shash_finup(struct shash_desc *desc, const u8 *data,
+        //     unsigned int len, u8 *out)
+        // note, server_digest is *out
+        ret = crypto_shash_finup(desc, chap->challenge, CHAP_CHALLENGE_LENGTH, server_digest);
+        ...
+        chap_binaryhex_to_asciihex(response, server_digest, MD5_SIGNATURE_SIZE);
 
-Unfortunately, direct probing is usually the wrong thing to rely on.
+Here chap_string_to_hex() (which basically does hex2bin()) can have max 64-bytes
+input string, then it converts the input to a 32-bytes binary string and writes
+it plus the trailing \0 to the 16-bytes on-stack buffer client_digest[], making
+this a classical buffer overflow.
 
-Under virt, one common scenario is that you boot on one system, then get
-migrated to a different one.  Obviously, it's up to the hypervisor to
-ensure that the architectural feature still match, but the
-microarchitecture really does change.
+chap_r is attacker-controlled, the question is what an attack can overwrite.
+The overwrite can be 16 bytes + zero byte. Checking what is where on the stack
+in, for example, RHEL-7/x86_64, server_digest[] and the 1st byte of response[]
+can be overwritten. According to the code, server_digest[] and response[] are
+not used after the overwrite and are filled with correct values later by the
+crypto_shash_finup() and the chap_binaryhex_to_asciihex().
 
-If you probe at boot and positively identify an issue to work around,
-great.  But as a VM you may not get a heads up that you changed
-microarchitecture, and even if you do, you don't rescan for everything
-you ran at boot.
+This means the flaw has no impact on the RHEL-7/x86_64 systems.
 
-The CPUID bits allow microarchitectural details to be expressed as
-architectural, and allow a hypervisor to state "here or someone you
-might move to, the following safety property does not hold."
+Depending on how the other distriutions' kernel is built (i.e. depending on a
+compiler, compiler flags and hardware architecture) a compiler may put other
+local variables or function arguments on the stack after the client_digest. This
+may lead to different outcomes, like chap_server_compute_md5() may erroneously
+return with a result of a successful authentication by rewriting auth_ret, and
+so expose all the target's content to an attacker. Or, if nr_out_ptr is
+overwritten, this can damage other kernel memory content via later sprintf() and
+thus lead to a system crash.
 
->> Also the cross-thread nature is also poorly reported in public.
-> Right, I couldn't find it mentioned anywhere other than your advisory.
->
-> Do you know if only the quotient leaks, or also the remainder?  In the
-> below, I assume the remainder leaks as well.
+At last, with distribution kernels where stack canary is disabled the overwrite
+may corrupt a return pointer, saved registers and other function's stack frame.
+Due to this, privilege escalation cannot be fully ruled out, although we believe
+this is highly unlikely.
 
-I'm afraid I don't know.  The original paper says just the quotient, but
-it also says there are no leaks across privilege boundaries.
-
-Synthetic testing shows that a latched value in the divider does survive
-across a privilege boundary.  What I expect this means is that a normal
-user->user context switch has a divide somewhere in it.
-
-> I'm concerned it could affect some cryptographic code, in particular
-> (but in a very minor way) typical implementations of Argon2.  There's a
-> 3-year-pending pull request to the upstream/reference Argon2
-> implementation that I think would avoid the issue there (by optimizing
-> out the divides):
->
-> https://github.com/P-H-C/phc-winner-argon2/pull/306
->
-> but there are many other implementations and I guess (almost?) all use
-> the programming language's modulo division operation as-is.  Luckily,
-> the severity is minor - this would only affect the cache-timing unsafe
-> flavors, providing an extra (more direct and maybe more reliable?)
-> side-channel, and this only matters when the attacker has a copy of or
-> has guessed the salts (the same as for other cache-timing unsafe
-> password hashes/KDFs).  So in terms of threat models and attack vectors,
-> no change at all, but real-world (in)feasibility of otherwise-similar
-> attacks can vary.  No big deal, just something to improve where we can.
-
-Getting rid of architectural divides is a good thing (for performance if
-nothing else), but it's not the only thing you need to worry about.
-
-DIV uops are not serialising, so will execute speculatively.
-
-Transient execution can pick up any arbitrary value in the current
-address space, and dividing it by UINT_MAX will cause it to be latched
-in the quotient.  This can either be picked up on the next cycle by the
-other thread deliberately triggering a #DE, or at a later point on the
-same thread assuming that no other DIV uop has executed.
-
-Overall, this is minor in the grand scheme of speculation bugs, but I
-have to approach every issue from the point of view of the attacker
-being able to time everything perfectly.  Researchers have a habit of
-repeatedly disproving people who handwave otherwise...
-
-~Andrew
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
