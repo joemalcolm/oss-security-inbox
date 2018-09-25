@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1406" "Tuesday" "12" "May" "2015" "08:44:06" "+0200" "Philipp Kern" "pkern@debian.org" "<20150512064406.GA4254@home.philkern.de>" "41" "[oss-security] CVE request: libinfinity did not correctly check certificates for validity" nil nil nil "5" "2015051206:44:06" "[oss-security] CVE request: libinfinity did not correctly check certificates for validity" (number mark "        pkern@debian May 12   41/1406  " thread-indent "\"[oss-security] CVE request: libinfinity did not correctly check certificates for validity\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3357" "Tuesday" "25" "September" "2018" "15:57:44" "+0200" "Solar Designer" "solar@openwall.com" "<20180925135744.GA16717@openwall.com>" "64" "Re: [oss-security] bounties" "^Date:" nil nil "9" "2018092513:57:44" "[oss-security] bounties" (number mark "        solar@openwa Sep 25   64/3357  " thread-indent "\"Re: [oss-security] bounties\"\n") "<CABejAM+hhgCipLzUycSV-RszcF6un45CncGFT9w0Yc69qNcbjQ@mail.gmail.com>" ("<CABejAM+hhgCipLzUycSV-RszcF6un45CncGFT9w0Yc69qNcbjQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 18042 invoked by uid 550); 12 May 2015 06:59:55 -0000
+Received: (qmail 30499 invoked by uid 550); 25 Sep 2018 13:58:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,61 +11,81 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9710 invoked from network); 12 May 2015 06:44:19 -0000
-Message-ID: <20150512064406.GA4254@home.philkern.de>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="r5Pyd7+fXNt84Ff3"
-Content-Disposition: inline
-Organization: The Debian Project (http://www.debian.org)
-X-Debbugs-No-Ack: yes
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Cc: armin@arbur.net
-Date: Tue, 12 May 2015 08:44:06 +0200
-From: Philipp Kern <pkern@debian.org>
-Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request: libinfinity did not correctly check certificates for
- validity
-To: oss-security@lists.openwall.com
-
---r5Pyd7+fXNt84Ff3
+Received: (qmail 30358 invoked from network); 25 Sep 2018 13:57:59 -0000
+Message-ID: <20180925135744.GA16717@openwall.com>
+References: <CABejAM+hhgCipLzUycSV-RszcF6un45CncGFT9w0Yc69qNcbjQ@mail.gmail.com>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <CABejAM+hhgCipLzUycSV-RszcF6un45CncGFT9w0Yc69qNcbjQ@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Date: Tue, 25 Sep 2018 15:57:44 +0200
+From: Solar Designer <solar@openwall.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] bounties
+To: oss-security@lists.openwall.com
 
 Hi,
 
-Debian bug #783601[1] reported that Gobby - a collaborative text editor
-- silently accepted expired certificates. The upstream bug report is
-[2]. The bug is actually in libinfinity and the fix is available on [2].
+Moderator hat on:
 
-libinfinity does support certificate pinning and hence contains the
-ability to disable some checks like trusted issuer and hostname
-verification. However the catch-all validity check was in the wrong
-location.
+I'm sorry for the delay in the moderation decision on this one message.
+We overlooked it at first for its spam-like Subject, only noticing what
+it actually was when follow-ups started arriving today.
 
-Please assign a CVE ID for this.
+I am unhappy about the cross-post (this is against the published
+oss-security guidelines, but it sometimes happens anyway), even though
+this is what ultimately enabled the non-spam detection in this case.
 
-Kind regards and thanks
-Philipp Kern
+I am also unhappy about the lack of focus on Open Source (but not total
+lack of relation to Open Source, which is why the message is approved)
+in this message and in follow-ups we might receive via full-disclosure.
 
-[1] https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=783601
-[2] https://github.com/gobby/gobby/issues/61
-[3] https://github.com/gobby/libinfinity/commit/c97f870f5ae13112988d9f8ad464b4f679903706
+While the original message looks like something we'd need to approve
+despite of the above issues (so I did), I currently have no plans to
+approve any follow-ups we might receive via full-disclosure.  Currently
+in the moderation queue, and not expected to be approved, are a very
+brief reply by another person confirming Justin's criticism and giving a
+link to the person's Medium blog post (at first look, only tangentially
+related to Open Source - pertaining to proprietary products that use
+Open Source components), Justin's reply to the reply (a rant and no
+longer a question/request for other people's experience; also no mention
+of Open Source nor any specific software nor vendor at all), and
+Justin's out-of-context copying of a reply (repeatedly mentioning "rip
+off") to a who-knows-what vendor about a who-knows-what product (these
+things are not immediately clear from the message).  Even though not
+approved here, there's a chance we'll see those messages on
+full-disclosure, depending on that other list's moderators' decisions.
 
---r5Pyd7+fXNt84Ff3
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+So quite possibly the thread on oss-security will end here, unless
+someone will post something of greater relevance and/or higher quality
+than what's in those follow-ups I mentioned above.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Personal hat on:
 
-iQEcBAEBCAAGBQJVUaE2AAoJEERuJUU10FbsBT4IALhWuZX6INkidamxE3wzknYV
-oetuEEAzpMXD98hy+6pry0UGQuY5QbPo1wAXK5IziEgoptcSxI9Z0EKhpIeJx6Jq
-2c1DbN0OKgd0FxCkmsAT9+e27A5+p0qA+xZ7K7L46f6riYUzoa0fcXKrhrgq5Rix
-nCAMZcS8Sv/U1PaEMGOLqP78lxUxvDo9GyBiLaMfhQ6dmLDoBj66SzYYDafUIqHc
-4GWw2HOLJZS3rczPO1iyE0my0BLZU5zS5SSq5ECTjKTu8/wqXEkUdiWdMz3zwVck
-03DwynLxVE/018f7GrslHDScz/nNQNpxZLCR97Hs4fD6F8/v5/1+kjDSa5pSmXA=
-=Sw5C
------END PGP SIGNATURE-----
+On Fri, Sep 21, 2018 at 09:12:15PM -0700, Justin Ferguson wrote:
+> I was curious about peoples experiences with bug bounties particularly
+> those through the prominent clearing houses for them. My experience is
+> that I have been either ripped off or extremely slow-walked in payment
+> that was substantially below the listed payout in every single
+> instance. I'm curious how accurately that reflects other peoples
+> experiences.
 
---r5Pyd7+fXNt84Ff3--
+I have very little experience, in part because I've never been hunting
+for bug bounties.  I only recall receiving a bug bounty three times so
+far, from three different vendors.  In the first case, I didn't know the
+vendor had a bug bounty program (which was very uncommon at the time -
+1999).  In other two cases (in 2010s), I was aware of the bug bounty
+programs (and in one case went via HackerOne, as a test of that
+platform, which worked perfectly) but the issues I was submitting were
+clearly beyond scope, yet I was paid the bounties anyway.  The amounts
+were moderate, but it was very kind of those vendors to offer anything
+at all.  So no complaints from me.
+
+I do hear that others have all sorts of different experience.  There's
+also criticism from many vendors about the behavior of bug reporters.
+Once a vendor offers a bug bounty, they commonly receive lots of crappy
+reports, accusations, etc.  Unfortunately.  (Yet by saying this I don't
+mean to defend any vendor not honoring their bug bounty terms.)
+
+Alexander
