@@ -1,22 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/29/3
-Message-ID: <87ftvjygyx.fsf@fifthhorseman.net>
-Date: Thu, 29 Nov 2018 11:40:54 -0500
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: Marcus Meissner <meissner@...e.de>, oss-security@...ts.openwall.com
-Subject: Re: memory safety bugs in bc
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/25/6
+Message-ID: <20180925191022.bqfadai7rfsu46nf@yuggoth.org>
+Date: Tue, 25 Sep 2018 19:10:23 +0000
+From: Jeremy Stanley <fungi@...goth.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: bounties
 Content-Type: text/plain; charset=utf-8
 
-On Thu 2018-11-29 10:18:18 +0100, Marcus Meissner wrote:
+[Full Disclosure ML dropped from followup]
 
-> Given Mitres guidance on "dcraw", as this is a standalone tool
-> and only denial of service attacks I do not see a need for CVEs.
+On 2018-09-21 21:12:15 -0700 (-0700), Justin Ferguson wrote:
+> I was curious about peoples experiences with bug bounties
+> particularly those through the prominent clearing houses for them.
+> My experience is that I have been either ripped off or extremely
+> slow-walked in payment that was substantially below the listed
+> payout in every single instance. I'm curious how accurately that
+> reflects other peoples experiences.
+[...]
 
-On my debian unstable system, i see 45 packages that depend on bc.
+As someone handling intake of suspected vulnerability reports for a
+large community of free/libre open source software projects, I've
+seen another side of it. The projects I work on have been
+incorrectly added and re-added to lists of supposed bug bounty
+targets over the years, and it's caused us to deal with floods of
+useless reports from everyone who can figure out how to run a static
+code analyzer, fuzzer or vulnerability scanner (and also people who
+can't even figure out the difference between the projects and the
+code which powers their community Web sites).
 
-I haven't evaluated how many of those systems might pass untrusted input
-to bc (maybe none!), but this is hardly "standalone".
+Convincing the people who maintain those clearing house lists to
+de-list your projects can be a challenge, as they're just as likely
+to ignore you, or even simply be abandoned Web sites with nobody at
+the helm. If this is the sort of experience other projects endure, I
+can't imagine why any would willingly put themselves on such bounty
+registries. I have much more interest in dealing with reports of
+suspected vulnerabilities from engaged users of the software than
+from people out to make a quick buck, disinterested in even
+following up enough on the bugs they think they've found to
+determine they're unreachable cruft or even intentional features of
+the software.
+-- 
+Jeremy Stanley
 
-Hanno, thanks for finding and reporting these problems!
-
-     --dkg
+Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
