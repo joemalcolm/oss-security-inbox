@@ -1,20 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/12/4
-Message-Id: <40b16e14fcb3e3bf@sudo.ws>
-Date: Tue, 12 Jun 2018 09:47:10 -0600
-From: "Todd C. Miller" <Todd.Miller@...o.ws>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/26/2
+Message-ID: <20180926083900.GA20977@openwall.com>
+Date: Wed, 26 Sep 2018 10:39:00 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Are `su user' and/or `sudo -u user sh' considered dangerous?
+Subject: Re: bounties
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 12 Jun 2018 11:25:45 -0400, Jordan Glover wrote:
+On Tue, Sep 25, 2018 at 06:55:16PM -0700, Justin Ferguson wrote:
+> Thus I am asking in a larger context about other peoples experiences
+> with such things,
 
-> > For sudo, there's the "use_pty" flag. (It's not enabled by default.)
->
-> Why this isn't default? Where's the catch?
+OK.  You already did that, and people are free to share their experience
+(if on-topic for this list).  You also shared your experience (which
+happens to be only partially on-topic for this list).  As a moderator, I
+think that's enough contribution from you to this thread.
 
-Up until recently there were issues with background processes being
-killed when the pty went away.  Using a pty will become the default
-in a future release.
+> and while I would agree that this subject matter is
+> not particularly on-topic for the list, I would think that there
+> effectively are not unmoderated lists, no place to really ask this
+> question in a substantial manner despite the importance of it, and of
+> crowd-sourcing other peoples experiences would be concerning to an
+> industry as a whole.
 
- - todd
+While I also regret that there's no longer an unmoderated
+full-disclosure list, I understand why there is not.  Besides needing to
+filter out all the automated spam (which already makes the list
+technically moderated), all sorts of semi-on-topic crap ends up being
+posted to truly unmoderated lists like that - personal attacks, doxing
+(and when you ask for removal of that content from archives later, you
+sort of engage in moderation too), conspiracy theories and dubious facts
+(and good luck figuring out what's real and what's not), etc.  That
+said, you may host a new list like that, and I'd be happy to be able to
+redirect discussions that are unsuitable in here to there.
+
+Alexander
