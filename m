@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["366" "Wednesday" "25" "May" "2016" "15:52:28" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20160525135228.GA13576@eldamar.local>" "18" "[oss-security] CVE Request: roundcube: XSS vulnerability in mail content page" nil nil nil "5" "2016052513:52:28" "[oss-security] CVE Request: roundcube: XSS vulnerability in mail content page" (number mark "U       carnil@debia May 25   18/366   " thread-indent "\"[oss-security] CVE Request: roundcube: XSS vulnerability in mail content page\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1476" "Wednesday" "26" "September" "2018" "10:39:00" "+0200" "Solar Designer" "solar@openwall.com" "<20180926083900.GA20977@openwall.com>" "28" "Re: [oss-security] bounties" nil nil nil "9" "2018092608:39:00" "[oss-security] bounties" (number mark "U       solar@openwa Sep 26   28/1476  " thread-indent "\"Re: [oss-security] bounties\"\n") "<CADCX+3Wsh6uMUsHgbfqwUYh7HjVac1TC7KsSK88nspxkBmXvJg@mail.gmail.com>" ("<CABejAM+hhgCipLzUycSV-RszcF6un45CncGFT9w0Yc69qNcbjQ@mail.gmail.com>" "<20180925191022.bqfadai7rfsu46nf@yuggoth.org>" "<CADCX+3Wsh6uMUsHgbfqwUYh7HjVac1TC7KsSK88nspxkBmXvJg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15452 invoked by uid 550); 25 May 2016 13:52:43 -0000
+Received: (qmail 13478 invoked by uid 550); 26 Sep 2018 08:39:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,58 +12,44 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15428 invoked from network); 25 May 2016 13:52:42 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=QTC2WDf/XsQlvEfH+KH2l2sKmR0JjOR9es8PZctjQ80=;
-        b=tZtnpj3p9mvlqh0VltpdsZm4uZ71qxtNqKC+1tpeB8a7pjI4fkEmySuWEfKUhlcb7R
-         yqOkXbSlXAxDEEZ1kPEBXZexXr3hETgvCSmgyxBDPmNluAIY6pJ5jjzGF9eUWuK0BbAd
-         7vkMi+aoYSMMeo2AAqciu1Va5MqPAslLWOMuUPw1VEoPvBCzyLUkZ7d0v9lVBc8TmrGW
-         dgQSAUX4MKdPugcGzpw3/ZvAe/vGacPJvskQw0UpMb26uvnXYKyenenMy2HRLgxatQI5
-         owV4h9k2ie3gV+sMddaYUcmD3Rgk0M0GsxC8779K17GHiDWbhR2gh98lGpv2AAxxHaXy
-         N2RQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:date:from:to:subject:message-id
-         :mime-version:content-disposition:user-agent;
-        bh=QTC2WDf/XsQlvEfH+KH2l2sKmR0JjOR9es8PZctjQ80=;
-        b=Ac2GF741rlb4X5pqYhEwMf2q0uRrY0XRx8jJFfMBVFVLX1eGdOD1bueWtHnLkuyojC
-         /WDw3EvEj2ZKyRKgA3uUzh+jARiKJ6X8oxAFvZFKmQzk9k5KICXnDAQSRSn/hGoKalQ9
-         HVIIJvrE5THdOHdaYdXpNHbaO3xSIJHQSmXm+p04KUg9+QNUBi+cc3eUEKvAoSjB4Q3I
-         KGzd7ZOZ9oDbzcOkwYQsKy4wu4q99/Iek8NWXfk8q8KrSniuyYihHEpRTpsZ+nqv9fTa
-         fUyCe17JT87k5nNxa+fHnZdYnrRO6+7hcyeq8OsOeeppPsG7Xkoou8yr5CeNWnuG1Auc
-         9Kaw==
-X-Gm-Message-State: ALyK8tJRKgfiavyPJ1KbBDR+VMM/RDLYFScWCJ/Jtyv2Mzry27wE709e31LN+5PuGyfmRg==
-X-Received: by 10.28.35.194 with SMTP id j185mr3557144wmj.17.1464184351204;
-        Wed, 25 May 2016 06:52:31 -0700 (PDT)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Wed, 25 May 2016 15:52:28 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: OSS Security Mailinglist <oss-security@lists.openwall.com>
-Message-ID: <20160525135228.GA13576@eldamar.local>
-MIME-Version: 1.0
+Received: (qmail 13320 invoked from network); 26 Sep 2018 08:39:14 -0000
+Date: Wed, 26 Sep 2018 10:39:00 +0200
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20180926083900.GA20977@openwall.com>
+References: <CABejAM+hhgCipLzUycSV-RszcF6un45CncGFT9w0Yc69qNcbjQ@mail.gmail.com> <20180925191022.bqfadai7rfsu46nf@yuggoth.org> <CADCX+3Wsh6uMUsHgbfqwUYh7HjVac1TC7KsSK88nspxkBmXvJg@mail.gmail.com>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-User-Agent: Mutt/1.6.0 (2016-04-01)
-Subject: [oss-security] CVE Request: roundcube: XSS vulnerability in mail content page
+In-Reply-To: <CADCX+3Wsh6uMUsHgbfqwUYh7HjVac1TC7KsSK88nspxkBmXvJg@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] bounties
 
-Hi
+On Tue, Sep 25, 2018 at 06:55:16PM -0700, Justin Ferguson wrote:
+> Thus I am asking in a larger context about other peoples experiences
+> with such things,
 
-Can you please assign a CVE for the following XSS vulnerability in
-roundcube fixed with the recent 1.2 release:
+OK.  You already did that, and people are free to share their experience
+(if on-topic for this list).  You also shared your experience (which
+happens to be only partially on-topic for this list).  As a moderator, I
+think that's enough contribution from you to this thread.
 
-RELEASE 1.2.0
--------------
-[...]
-- Fix XSS issue in href attribute on area tag (#5240)
+> and while I would agree that this subject matter is
+> not particularly on-topic for the list, I would think that there
+> effectively are not unmoderated lists, no place to really ask this
+> question in a substantial manner despite the importance of it, and of
+> crowd-sourcing other peoples experiences would be concerning to an
+> industry as a whole.
 
-References:
-https://github.com/roundcube/roundcubemail/issues/5240
-https://github.com/roundcube/roundcubemail/pull/5241
+While I also regret that there's no longer an unmoderated
+full-disclosure list, I understand why there is not.  Besides needing to
+filter out all the automated spam (which already makes the list
+technically moderated), all sorts of semi-on-topic crap ends up being
+posted to truly unmoderated lists like that - personal attacks, doxing
+(and when you ask for removal of that content from archives later, you
+sort of engage in moderation too), conspiracy theories and dubious facts
+(and good luck figuring out what's real and what's not), etc.  That
+said, you may host a new list like that, and I'd be happy to be able to
+redirect discussions that are unsuitable in here to there.
 
-Thanks in advance,
-
-Regards,
-Salvatore
+Alexander
