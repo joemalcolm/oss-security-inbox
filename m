@@ -1,123 +1,197 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/12/3
-Message-ID: <9bb78f82-8eb4-80c0-2c61-5f3ffd7771e2@canonical.com>
-Date: Mon, 12 Nov 2018 07:24:46 -0500
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/26/1
+Message-ID: <CADCX+3Wsh6uMUsHgbfqwUYh7HjVac1TC7KsSK88nspxkBmXvJg@mail.gmail.com>
+Date: Tue, 25 Sep 2018 18:55:16 -0700
+From: Justin Ferguson <jnferguson@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2018-5407: new side-channel vulnerability on SMT/Hyper-Threading architectures
+Subject: Re: bounties
 Content-Type: text/plain; charset=utf-8
 
-On 2018-11-12 4:34 a.m., Billy Brumley wrote:
->>> If you are a package maintainer, and are putting together a patch set
->>> for this, please reach out to me. My team can help test.
->>>
->> <snip>
->>
->> Could you please confirm the following commits are sufficient to fix CVE-2018-5407?
-> 
-> Some more technical advice below. Hope it helps!
-> 
-> BBB
-> 
-> # 1.0.1
-> 
-> That is EOL. Try your luck with porting the 1.0.2 solution.
-> 
-> Shameless self plug: read Section 2
-> 
-> https://eprint.iacr.org/2018/354
-> 
-> for a related discussion about EOL issues and security in the context
-> of OpenSSL.
-> 
-> # 1.0.2
-> 
-> Wait until this gets merged into OpenSSL_1_0_2-stable :
-> 
-> https://github.com/openssl/openssl/pull/7593
-> 
-> # 1.1.0 up to and including 1.1.0h
-> 
-> So I went through the process to patch this myself:
-> 
-> https://github.com/bbbrumley/openssl/tree/bbb_ecc_fix_110h
-> 
-> Ofc I have no idea what 1.1.0 version you started with, or what
-> patches you're applying. So take this as more of a HOWTO build and
-> test your own patchset.
-> 
-> ## CVE-2018-5407
-> 
-> git checkout OpenSSL_1_1_0h -b bbb_ecc_fix_110h
-> git cherry-pick aab7c770353b1dc4ba045938c8fb446dd1c4531e
-> git cherry-pick f06437c751d6f6ec7f4176518e2897f44dd58eb0
-> git cherry-pick 33588c930d39d67d1128794dc7c85bae71af24ad
-> git cherry-pick f916a735bcdce496cebc7653a8ad2e72b333405a
-> git cherry-pick b43ad53119c0ac2ecfa6e4356210ccda57e0d16b
-> git cherry-pick 2172133d0dc58256bf776da074c0d1944fef15cb
-> git cherry-pick cc39f9250957dfe6e9f1b62a4eca1863e8451483
-> git cherry-pick 7b3e775a6a78650bbd3e8e19a5aa12981880402b
-> git cherry-pick 5eee95a54de6854e60886c8e662a902184b12d04
-> git cherry-pick 875ba8b21ecc65ad9a6bdc66971e50461660fcbb
-> git checkout --theirs CHANGES
-> git add CHANGES
-> git cherry-pick --continue
-> git checkout OpenSSL_1_1_0h -- CHANGES
-> git add CHANGES
-> git commit -m "revert changelog diffs"
-> git rebase -i OpenSSL_1_1_0h
-> 
-> (I skipped 926b21117df939241f1cd63f2f9e3ab87819f0ed because it is not
-> related to CVE-2018-5407. See
-> 
-> https://github.com/openssl/openssl/issues/6302
-> 
-> For a lengthy discussion. I'm not familiar enough with the issue to
-> give advice if you need to pick it up or not.)
-> 
-> All of them cherry pick cleanly except for the last one, but it's only
-> a trivial conflict with the changelog.
-> 
-> I checked the scalar multiplication code paths in ecdsatest with gdb
-> (break ec_mult.c:423), and indeed they are early exiting to the new
-> function when signing.
-> 
-> A lot of new regression testing went into 1.1.1. Some of it was
-> backported 1.1.0:
-> 
-> https://github.com/openssl/openssl/commits/OpenSSL_1_1_0-stable/test
-> 
-> So I fetched these KATs:
-> 
-> https://raw.githubusercontent.com/openssl/openssl/23fe5c582a83bce394a3cdf0bc8f6f4f2eb71ebb/test/recipes/30-test_evp_data/evppkey_ecc.txt
-> 
-> To run those tests, you also need to pick up this bug fix for
-> evp_test.c (this is for testing, not part of the CVE-2018-5407 fix) :
-> 
-> git cherry-pick e35e5941e0b2f7af1cd56f07ee8d4eaf2b445132
-> 
-> Then rebuilt, and ran
-> 
-> $ test/evp_test /path/to/evppkey_ecc.txt
-> 484 tests completed with 0 errors, 0 skipped
-> 
-> All of those (positive and negative) tests pass; they are for ECC
-> keygen and ECDH. I checked the scalar multiplication code paths with
-> gdb (break ec_mult.c:423), and indeed they all early exit to the new
-> function.
-> 
-> ## CVE-2018-0735
-> 
-> Apply this small fix on top:
-> 
-> git cherry-pick 56fb454d281a023b3f950d969693553d3f3ceea1
-> git cherry-pick 003f1bfd185267cc67ac9dc521a27d7a2af0d0ee
-> git rebase -i HEAD~2
-> 
-> Then ofc rerun all the regression testing ("make test", as well as the
-> custom EVP tests described above.)
-> 
+note to moderator: the last paragraph is likely what you'd like to
+read first, then the remainder of the exchange
 
-Thank you very much for the info!
+> As someone handling intake of suspected vulnerability reports for a
+> large community of free/libre open source software projects, I've
+> seen another side of it. The projects I work on have been
+> incorrectly added and re-added to lists of supposed bug bounty
+> targets over the years, and it's caused us to deal with floods of
+> useless reports from everyone who can figure out how to run a static
+> code analyzer, fuzzer or vulnerability scanner (and also people who
+> can't even figure out the difference between the projects and the
+> code which powers their community Web sites).
 
-Marc.
+Well this is a different situation overall, but what I would say is
+that when you engage in one of the clearing houses that you are
+engaging in a business transaction. A lot of companies do this so that
+they don't have to pay for a full local security team and bill it as a
+cheaper alternative. That they then have to deal with a lot of cruft
+doesn't really alleviate their responsibilities-- so the vendor wants
+their cake and to eat it to essentially.
+
+In all of my years, I've actually only had a single entity do really
+what they were supposed to do when receiving a submission: OpenBSD.
+While looking for something else I ran across a vulnerability in their
+IKEd implementation that was an issue with a return value checked
+incorrectly on a cryptographic hash verification. I wasn't soliciting
+money or even a CVE, I was just reporting an issue to them. Under such
+conditions, most vendors seem to want to brow beat you into doing
+their work for them despite the obviousness of the issue. The OpenBSD
+team just said "oh you're right" and patched their issue.
+
+> I have much more interest in dealing with reports of
+> suspected vulnerabilities from engaged users of the software than
+> from people out to make a quick buck, disinterested in even
+> following up enough on the bugs they think they've found to
+> determine they're unreachable cruft or even intentional features of
+> the software.
+
+Well your circumstances are different, and this is where Alexander was
+entirely spot on in his commentary about OSS. One of the things
+removed outlined that I've had some fair amount of issues in
+traditional employment as a byproduct of what's been termed as a
+"distributed denial of service" attack (there's a lot of political
+context that I am leaving out, I've never participated in a DDoS or
+anything of the sort but as we all know from our own industry there's
+a lot of budget in security and so sometimes things don't necessarily
+have to have much to do with a particular/person).
+
+As a result, I've dabbled in augmenting my income through bounties--
+it seems reasonable, it's something I should be able to do, I'm not
+submitting ASAN output or running AFL and handing a bunch of cruft
+over. In the most recent instance, when I task switched to something
+more pressing, I handed over data from things I wasn't even looking
+for but noticed while I was trying to find the parsers in a myriad of
+DLLs and similar as a courtesy to the vendor and their customers. For
+instance, while trying to discern an aspect about the usage of
+UNICODE_STRING structures as part of trying to discern whether there
+was a basic buffer overflow in command line processing accessible only
+via a pipe that exchanges JSON (privsep essentially), I triggered a
+null pointer dereference in the kernel. I briefly looked at it,
+discerned that it was a null pointer dereference and put it away while
+continuing to sort through the binaries towards what I was attempting
+to focus on.
+
+When I changed tasks, I submitted a couple IDA screenshots, the
+program that at the time was triggering a BSoD consistently, a brief
+explanation of each, excerpts of the crash dump and explained that I
+didn't necessarily expect to be paid money and was submitting partial
+work as a courtesy to their customers.
+
+Over the next two months, I would intermittently receive "are you
+going to do my job for me?" type responses while the vendor ignored my
+basic questions-- "does the PoC not trigger a BSoD for you?"
+continually solicited commentary that was carefully worded and avoided
+answering the question "We don't see any reason why this section of
+code would have that problem" essentially.
+
+Eventually I suggested after being poked repeatedly on the matter,
+something I clearly had moved on from and repeatedly stated as such,
+that moving forward I should probably just post anything I find of
+theirs on FD, which not only solicited commentary about my being
+'unethical', but then follow-ups about my ethics from the clearing
+house. For the record, this clearing house maintains a director of
+security that I used to be employed with at a company that once tried
+to sell an OpenSSL bug to the CIA and wanted to do so without any sort
+of customer notification-- they equally put into my contract after
+telling me that they were a small company that couldn't afford a
+pay-rate over $70k a year (they absolutely can) that I needed to find
+and write and sell to the United States Government 12 exploits a year,
+in order to qualify for the pay rate that they were giving everyone
+else-- so I find being told I am unethical a little annoying.
+
+After this point, I reviewed the finding that they couldn't find a
+reason why the null pointer dereference would occur and found pretty
+quickly essentially the following code construct:
+
+bool
+function afunction(T** ptr) {
+    if (ptr)
+        if (!
+doComplexActionThatIsHighlyDependentUponOverallSystemState(ptr))
+            return false;
+    if (! *ptr)
+        return true;
+    if (!
+doComplexActionThatIsHighlyDependentUponOverallSystemState(*ptr))
+        return false;
+...
+if (! afunction(ptr))
+    return false;
+if (*ptr == 0x22) <- null pointer dereference here
+
+Thus, they pretty clearly didn't even look at their code, and because
+of EULAs and ToS, I cannot really discuss that I've had this and
+similar issues in almost/100% of bounty submissions, so they're sort
+of just acting as inhibitors to security sometimes.
+
+Because of my industry experience, I have a hinting suspicion, and I
+don't think this finding is an example of it, but I have a hinting
+suspicion that they're being used to some extent by my governments
+intelligence community-- when I worked as part of a JTF that included
+NSA personnel, Microsoft was providing them with a "beta patch" that
+provided them verified exploitable bugs reported to them with
+reproduction instructions under the pretext of beta testing patches
+before release-- "-Xday" if you will (as opposed to 0day). As noted
+above, I've had other security vendors explicitly sell or attempt to
+sell vulnerabilities to our intelligence services, an IPS vendor I
+previously worked for had some amount of issues reported to vendors
+that would sort of just vanish and I specifically enumerated a
+particular Active Directory report.
+
+I noticed another entity, OSTIF (https://ostif.org) previously claimed
+that they were having issues with Google Mail servers that appeared to
+be server side, I noticed it because I've experienced similar myself.
+Moreover, I had problems when researching breaking of Google
+recaptcha's that twice over an extensive period of time that when I
+started working on breaking the that Google then made minor tweaks and
+variations that broke or impacted the research. In review, other
+researchers have had similar experiences and while there is nothing
+conclusive, I was at the time conversing with a private party over
+Google email about the subject.
+
+Thus I am asking in a larger context about other peoples experiences
+with such things, and while I would agree that this subject matter is
+not particularly on-topic for the list, I would think that there
+effectively are not unmoderated lists, no place to really ask this
+question in a substantial manner despite the importance of it, and of
+crowd-sourcing other peoples experiences would be concerning to an
+industry as a whole.
+
+
+
+On Tue, Sep 25, 2018 at 12:12 PM Jeremy Stanley <fungi@...goth.org> wrote:
+>
+> [Full Disclosure ML dropped from followup]
+>
+> On 2018-09-21 21:12:15 -0700 (-0700), Justin Ferguson wrote:
+> > I was curious about peoples experiences with bug bounties
+> > particularly those through the prominent clearing houses for them.
+> > My experience is that I have been either ripped off or extremely
+> > slow-walked in payment that was substantially below the listed
+> > payout in every single instance. I'm curious how accurately that
+> > reflects other peoples experiences.
+> [...]
+>
+> As someone handling intake of suspected vulnerability reports for a
+> large community of free/libre open source software projects, I've
+> seen another side of it. The projects I work on have been
+> incorrectly added and re-added to lists of supposed bug bounty
+> targets over the years, and it's caused us to deal with floods of
+> useless reports from everyone who can figure out how to run a static
+> code analyzer, fuzzer or vulnerability scanner (and also people who
+> can't even figure out the difference between the projects and the
+> code which powers their community Web sites).
+>
+> Convincing the people who maintain those clearing house lists to
+> de-list your projects can be a challenge, as they're just as likely
+> to ignore you, or even simply be abandoned Web sites with nobody at
+> the helm. If this is the sort of experience other projects endure, I
+> can't imagine why any would willingly put themselves on such bounty
+> registries. I have much more interest in dealing with reports of
+> suspected vulnerabilities from engaged users of the software than
+> from people out to make a quick buck, disinterested in even
+> following up enough on the bugs they think they've found to
+> determine they're unreachable cruft or even intentional features of
+> the software.
+> --
+> Jeremy Stanley
