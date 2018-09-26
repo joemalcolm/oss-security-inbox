@@ -1,72 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/05/3
-Message-ID: <CAGXu5jL8x8TTwgJpRJUjM3erfrv7-49YHEKm_Lo3F46FumdWzw@mail.gmail.com>
-Date: Thu, 5 Apr 2018 12:20:24 -0700
-From: Kees Cook <keescook@...omium.org>
-To: Alexander Popov <alex.popov@...ux.com>
-Cc: Kurt Seifried <kseifried@...hat.com>, oss-security@...ts.openwall.com,  James Morris <jmorris@...ei.org>, "Serge E. Hallyn" <serge@...lyn.com>,  Brad Spengler <spender@...ecurity.net>, PaX Team <pageexec@...email.hu>,  "Reshetova, Elena" <elena.reshetova@...el.com>
-Subject: Re: Linux Kernel Defence Map
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/26/3
+Message-Id: <EBCD031F-3A4D-4A3F-9E3E-ACC7A6C6A624@gridgain.com>
+Date: Wed, 26 Sep 2018 22:56:04 +0300
+From: Alexander Gerus <agerus@...dgain.com>
+To: oss-security@...ts.openwall.com
+Subject: Apache Ignite: CVE-2018-8018, CVE-2018-1273, CVE-2018-1274: Notification on available mitigation
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Apr 5, 2018 at 5:32 AM, Alexander Popov <alex.popov@...ux.com> wrote:
-> On 05.04.2018 01:17, Kees Cook wrote:
->> (I think "info leaks" and "finding kernel objects" may need some kind
->> of clarifying language for how they're different)
->
-> Info Exposure is a vulnerability (red node). STACKLEAK, PAGE_POISONING, etc
-> mitigate this kind of bugs.
->
-> Finding Kernel Objects is an exploitation technique (orange node). KASLR,
-> RANDSTRUCT are statistical defences which make it harder for an adversary.
->
-> Kees, Kurt, does it sound reasonable?
+[CVE-2018-8018] Possible Execution of Arbitrary Code via Apache Ignite GridClientJdkMarshaller
+Severity: Important
+Vendor: GridGain Systems
+Versions Affected:
+GridGain Professional Edition 2.4.7 or earlier
+GridGain Ultimate and Enterprise Editions 8.4.7 or earlier
+Impact:
+An attacker can execute arbitrary code on Ignite nodes via GridClientJdkMarshaller deserialization endpoint in the case when Ignite classpath contains arbitrary vulnerable classes. 
 
-Yeah, that makes sense.
+Description:
+Apache Ignite serialization mechanism does not have a list of classes allowed for serialization/deserialization, which makes it possible to run arbitrary code when 3-rd party vulnerable classes are present in Ignite classpath. The vulnerability can be exploited if the one sends a specially prepared form of a serialized object to GridClientJdkMarshaller deserialization endpoint. 
 
->> Upstream's /proc/sys/net/core/bpf_jit_harden (see commit 4f3446bb809f)
->
-> Thanks, added.
->
->> and other JIT features (RO-setting, randomized offset, etc) are
->> designed to defend against JIT Abuse.
->
-> Didn't manage to find config for them. Are they always enabled?
+Mitigation:
+All GridGain versions: make sure there are no vulnerable classes among your custom code used in GridGain. 
+Ignite Professional Edition 2.4.7 or earlier users: upgrade to Ignite 2.4.8 or later version
+Ignite Ultimate and Enterprise Editions 8.4.7 or earlier users: upgrade to Ignite 8.4.8 or later version
+After version upgrade use IGNITE_MARSHALLER_WHITELIST and/or IGNITE_MARSHALLER_BLACKLIST system properties to define classes allowed for deserialization. Refer to documentation for more details: 
+https://apacheignite.readme.io/docs/securing-data-deserialization <https://apacheignite.readme.io/docs/securing-data-deserialization>
+Credit:
+The vulnerability was discovered by Man Yue Mo of lgtm.com
+Reference:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-8018 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-8018>
 
-Yes. Per-arch inplementations of bpf_int_jit_compile() make calls to
-bpf_jit_binary_alloc() which does the randomized page offset with trap
-instructions, and calls bpf_jit_binary_lock_ro() to make the memory
-read-only at the end.
+[CVE-2018-1273] [CVE-2018-1274] Apache Ignite impacted by security vulnerability in Spring Data Commons
+Severity: Important
+Vendor: GridGain Systems
+Versions Affected:
+GridGain Professional Edition 2.4.7 or earlier
+GridGain Ultimate and Enterprise Editions 8.4.7 or earlier
 
->> UDEREF and SMAP pointing at ret2usr+ROP is fine, but seems
->> "incomplete". Is there a good name for "reading user memory and
->> operating on a malicious structure"? It's a more narrow exploit
->> technique than ROP or executing userspace memory, but it's important
->> to cover.
->
-> Yes, agree. That's what I did exploiting CVE-2017-2636: allocating struct
-> skb_shared_info in the userspace memory with the destructor callback pointing to
-> native_write_cr4() to disable SMEP. Is it what you mean?
+Impact:
+	An unauthenticated remote malicious user (or attacker) can issue requests against Spring Data REST or Spring Data 
 
-Yup. Function pointers are the traditional target.
+Description:
+	Apache Ignite utilizes Spring Data Common library for some of its components. The vulnerability affects Apache Ignite users who us Spring Data REST for access an Ignite cluster via HTTP and Spring Data. Spring Data Commons, versions prior to 1.13 to 1.13.10, 2.0 to 2.0.5, and older unsupported versions, contain a property binder vulnerability caused by improper neutralization of special elements. An unauthenticated remote malicious user (or attacker) can supply specially crafted request parameters against 
+	Spring Data REST backed HTTP resources or using Spring Data’s projection-based request payload binding hat can lead to a remote code execution attack.
 
-> I've added "ret2usr + type confusion". Do you like it?
->
-> Kurt, that is CWE-843: Access of Resource Using Incompatible Type ('Type
-> Confusion').
+Mitigation:
+Ignite Professional Edition 2.4.7 or earlier users: upgrade to Ignite 2.4.8 or later version
+Ignite Ultimate and Enterprise Editions 8.4.7 or earlier users: upgrade to Ignite 8.4.8 or later version
+Credit:
+Harendra Rai of NCR Corporation discovered the impact of the existing vulnerability on Apache Ignite. 
+Reference:
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-1273 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-1273>
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-1274 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-1274>
 
-"type confusion" seems weird to me, but I haven't spent a lot of time
-weighing the options of the naming of these things. "Overwriting a
-function pointer" is the method, and the bug is "unexpectedly
-accessing userspace memory from the kernel" (which is usually
-"something overwrite a pointer").
+--
+Alexander Gerus, On behalf of GridGain team.
+E agerus@...dgain.com
+gridgain.com
+Powered by Apache® Ignite™
 
-> Kees, thanks again for such a cool feedback. The map is updated.
 
-Very cool! Maybe also add an out-of-tree bubble for "Clang CFI", which
-gives forward-edge protection for code-reuse...
 
--Kees
 
--- 
-Kees Cook
-Pixel Security
