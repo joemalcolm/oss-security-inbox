@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3496" "Tuesday" "8" "September" "2015" "13:44:17" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150908174417.E871A6C0066@smtpvmsrv1.mitre.org>" "80" "[oss-security] Re: CVE Request: more php unserializing issues" nil nil nil "9" "2015090817:44:17" "[oss-security] Re: CVE Request: more php unserializing issues" (number mark "        cve-assign@m Sep  8   80/3496  " thread-indent "\"[oss-security] Re: CVE Request: more php unserializing issues\"\n") "<20150819094945.GD6584@suse.de>" ("<20150819094945.GD6584@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["9931" "Tuesday" "25" "September" "2018" "18:55:16" "-0700" "Justin Ferguson" "jnferguson@gmail.com" "<CADCX+3Wsh6uMUsHgbfqwUYh7HjVac1TC7KsSK88nspxkBmXvJg@mail.gmail.com>" "188" "Re: [oss-security] bounties" "^Date:" nil nil "9" "2018092601:55:16" "[oss-security] bounties" (number mark "        jnferguson@g Sep 25  188/9931  " thread-indent "\"Re: [oss-security] bounties\"\n") "<20180925191022.bqfadai7rfsu46nf@yuggoth.org>" ("<CABejAM+hhgCipLzUycSV-RszcF6un45CncGFT9w0Yc69qNcbjQ@mail.gmail.com>" "<20180925191022.bqfadai7rfsu46nf@yuggoth.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 30588 invoked by uid 550); 8 Sep 2015 17:44:30 -0000
+Received: (qmail 18422 invoked by uid 550); 26 Sep 2018 07:13:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,93 +11,230 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30567 invoked from network); 8 Sep 2015 17:44:30 -0000
-In-Reply-To: <20150819094945.GD6584@suse.de>
-Message-Id: <20150908174417.E871A6C0066@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Tue,  8 Sep 2015 13:44:17 -0400 (EDT)
-From: cve-assign@mitre.org
+Received: (qmail 1975 invoked from network); 26 Sep 2018 01:55:44 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=ohlbWxU3VJ0B5/iNBBPoQkYvsCpa8kys7sG+/ISYtzo=;
+        b=Wz7b7DpogHP3OSG7qeDbpmH1SOt1+CRBOI4UaonNX7uYOWRAujIi7aanJggN9jEu8I
+         ceNKW67wVwkFf2y6UVMin8/0GmJYPRv/9XG1V3d6GWcgYke6TGsNsnanPXN/CxzXMqpv
+         hU2VF0Zwp1e+V/GNwQQC0P/jjoNMt8RF0uILRRnfvoacsFtncLigJcGDx6jhgbJEEjg/
+         zW220poWeeJT/KFsbJL9v80qXHfRK72dejH1FjUOUUS4nEz/xXeikPRJNbW3ytZluO/v
+         PMh6nqo8PO6lUOoJ2pGrV3sbF3R2w0LrOZVjJMsVzoabn+DK7Eys0bDz8NeNlSej1blP
+         s4UQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=ohlbWxU3VJ0B5/iNBBPoQkYvsCpa8kys7sG+/ISYtzo=;
+        b=gp8ec99rhHt+gkGJH/T1lQqsHmhyDlY1PuF64EH8TeMdXkm4V6DuCZui+eZLsNqQDz
+         ZYTaljCPPTyRjxT8Xk11/9NkB/fAvXiF2YNSlM4cvpoSeyQJH9ZE2rceiYs3uXVZcnrY
+         M3PCbZkbVrwjwwl+rZ779zInntstgNnzTZN60CaurakbcRWsFaaCj2BLpcSZ/G6BNB2l
+         eyAyanoOXpMjAfvCdqoFDIT1X+CogQd3FOCkobEIcUWIae7SrkYjSAoaMma9hcUJjwKe
+         kJ59d0r8qRLlejG97bt/R/3+FlI9aXaO+U2Jnn7VJrucIVE0QKjqhncWedjK865oC7eX
+         RnVA==
+X-Gm-Message-State: ABuFfojuprG/AijBQpyVWMyhFNM4rEtD/qAeWES+cRYywetRmztibqWk
+	TmwT+YjVsVeTJWuKrqurfib1RD2C7vwxx/Dy44H/0fEq
+X-Google-Smtp-Source: ACcGV621dVhdoVqbx1/cxm7zM/2Thb56ax0JoeNmREC+7aAMnfCNuH8NVsq0UVNzd7jXXgjBFUjqeuXKJ4P0gK6knao=
+X-Received: by 2002:adf:e98d:: with SMTP id h13-v6mr3203113wrm.238.1537926932280;
+ Tue, 25 Sep 2018 18:55:32 -0700 (PDT)
+MIME-Version: 1.0
+References: <CABejAM+hhgCipLzUycSV-RszcF6un45CncGFT9w0Yc69qNcbjQ@mail.gmail.com>
+ <20180925191022.bqfadai7rfsu46nf@yuggoth.org>
+In-Reply-To: <20180925191022.bqfadai7rfsu46nf@yuggoth.org>
+Message-ID: <CADCX+3Wsh6uMUsHgbfqwUYh7HjVac1TC7KsSK88nspxkBmXvJg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Date: Tue, 25 Sep 2018 18:55:16 -0700
+From: Justin Ferguson <jnferguson@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: more php unserializing issues
-To: meissner@suse.de
+Subject: Re: [oss-security] bounties
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+note to moderator: the last paragraph is likely what you'd like to
+read first, then the remainder of the exchange
 
-The CVE IDs in this message apply to PHP before 5.4.44, 5.5.x before
-5.5.28, and 5.6.x before 5.6.12.
+> As someone handling intake of suspected vulnerability reports for a
+> large community of free/libre open source software projects, I've
+> seen another side of it. The projects I work on have been
+> incorrectly added and re-added to lists of supposed bug bounty
+> targets over the years, and it's caused us to deal with floods of
+> useless reports from everyone who can figure out how to run a static
+> code analyzer, fuzzer or vulnerability scanner (and also people who
+> can't even figure out the difference between the projects and the
+> code which powers their community Web sites).
 
-> These look like they can be exploited for code execution.
+Well this is a different situation overall, but what I would say is
+that when you engage in one of the clearing houses that you are
+engaging in a business transaction. A lot of companies do this so that
+they don't have to pay for a full local security team and bill it as a
+cheaper alternative. That they then have to deal with a lot of cruft
+doesn't really alleviate their responsibilities-- so the vendor wants
+their cake and to eat it to essentially.
 
-There is related discussion in the
-http://www.openwall.com/lists/oss-security/2015/02/05/5 post. The
-essential question is whether there should be a new CVE ID for every
-report where exploitation depends on the attacker's ability to control
-the argument to unserialize. We think these reports are important to
-relatively few people, i.e., either because their applications don't
-allow arbitrary input to unserialize, or because their applications do
-allow arbitrary input to unserialize and there's already a much
-simpler attack approach available. In other words, in practice, no
-privilege boundary is crossed. However, it's conceivable for an
-application to have constraints on how unserialize is used, such that
-many attacks are blocked, but these remote-code-execution attacks
-involving use-after-free bugs aren't blocked. For example, see some of
-the discussion linked from the
-https://wiki.php.net/rfc/secure_unserialize page.
+In all of my years, I've actually only had a single entity do really
+what they were supposed to do when receiving a submission: OpenBSD.
+While looking for something else I ran across a vulnerability in their
+IKEd implementation that was an issue with a return value checked
+incorrectly on a cryptographic hash verification. I wasn't soliciting
+money or even a CVE, I was just reporting an issue to them. Under such
+conditions, most vendors seem to want to brow beat you into doing
+their work for them despite the obviousness of the issue. The OpenBSD
+team just said "oh you're right" and patched their issue.
+
+> I have much more interest in dealing with reports of
+> suspected vulnerabilities from engaged users of the software than
+> from people out to make a quick buck, disinterested in even
+> following up enough on the bugs they think they've found to
+> determine they're unreachable cruft or even intentional features of
+> the software.
+
+Well your circumstances are different, and this is where Alexander was
+entirely spot on in his commentary about OSS. One of the things
+removed outlined that I've had some fair amount of issues in
+traditional employment as a byproduct of what's been termed as a
+"distributed denial of service" attack (there's a lot of political
+context that I am leaving out, I've never participated in a DDoS or
+anything of the sort but as we all know from our own industry there's
+a lot of budget in security and so sometimes things don't necessarily
+have to have much to do with a particular/person).
+
+As a result, I've dabbled in augmenting my income through bounties--
+it seems reasonable, it's something I should be able to do, I'm not
+submitting ASAN output or running AFL and handing a bunch of cruft
+over. In the most recent instance, when I task switched to something
+more pressing, I handed over data from things I wasn't even looking
+for but noticed while I was trying to find the parsers in a myriad of
+DLLs and similar as a courtesy to the vendor and their customers. For
+instance, while trying to discern an aspect about the usage of
+UNICODE_STRING structures as part of trying to discern whether there
+was a basic buffer overflow in command line processing accessible only
+via a pipe that exchanges JSON (privsep essentially), I triggered a
+null pointer dereference in the kernel. I briefly looked at it,
+discerned that it was a null pointer dereference and put it away while
+continuing to sort through the binaries towards what I was attempting
+to focus on.
+
+When I changed tasks, I submitted a couple IDA screenshots, the
+program that at the time was triggering a BSoD consistently, a brief
+explanation of each, excerpts of the crash dump and explained that I
+didn't necessarily expect to be paid money and was submitting partial
+work as a courtesy to their customers.
+
+Over the next two months, I would intermittently receive "are you
+going to do my job for me?" type responses while the vendor ignored my
+basic questions-- "does the PoC not trigger a BSoD for you?"
+continually solicited commentary that was carefully worded and avoided
+answering the question "We don't see any reason why this section of
+code would have that problem" essentially.
+
+Eventually I suggested after being poked repeatedly on the matter,
+something I clearly had moved on from and repeatedly stated as such,
+that moving forward I should probably just post anything I find of
+theirs on FD, which not only solicited commentary about my being
+'unethical', but then follow-ups about my ethics from the clearing
+house. For the record, this clearing house maintains a director of
+security that I used to be employed with at a company that once tried
+to sell an OpenSSL bug to the CIA and wanted to do so without any sort
+of customer notification-- they equally put into my contract after
+telling me that they were a small company that couldn't afford a
+pay-rate over $70k a year (they absolutely can) that I needed to find
+and write and sell to the United States Government 12 exploits a year,
+in order to qualify for the pay rate that they were giving everyone
+else-- so I find being told I am unethical a little annoying.
+
+After this point, I reviewed the finding that they couldn't find a
+reason why the null pointer dereference would occur and found pretty
+quickly essentially the following code construct:
+
+bool
+function afunction(T** ptr) {
+    if (ptr)
+        if (!
+doComplexActionThatIsHighlyDependentUponOverallSystemState(ptr))
+            return false;
+    if (! *ptr)
+        return true;
+    if (!
+doComplexActionThatIsHighlyDependentUponOverallSystemState(*ptr))
+        return false;
+...
+if (! afunction(ptr))
+    return false;
+if (*ptr == 0x22) <- null pointer dereference here
+
+Thus, they pretty clearly didn't even look at their code, and because
+of EULAs and ToS, I cannot really discuss that I've had this and
+similar issues in almost/100% of bounty submissions, so they're sort
+of just acting as inhibitors to security sometimes.
+
+Because of my industry experience, I have a hinting suspicion, and I
+don't think this finding is an example of it, but I have a hinting
+suspicion that they're being used to some extent by my governments
+intelligence community-- when I worked as part of a JTF that included
+NSA personnel, Microsoft was providing them with a "beta patch" that
+provided them verified exploitable bugs reported to them with
+reproduction instructions under the pretext of beta testing patches
+before release-- "-Xday" if you will (as opposed to 0day). As noted
+above, I've had other security vendors explicitly sell or attempt to
+sell vulnerabilities to our intelligence services, an IPS vendor I
+previously worked for had some amount of issues reported to vendors
+that would sort of just vanish and I specifically enumerated a
+particular Active Directory report.
+
+I noticed another entity, OSTIF (https://ostif.org) previously claimed
+that they were having issues with Google Mail servers that appeared to
+be server side, I noticed it because I've experienced similar myself.
+Moreover, I had problems when researching breaking of Google
+recaptcha's that twice over an extensive period of time that when I
+started working on breaking the that Google then made minor tweaks and
+variations that broke or impacted the research. In review, other
+researchers have had similar experiences and while there is nothing
+conclusive, I was at the time conversing with a private party over
+Google email about the subject.
+
+Thus I am asking in a larger context about other peoples experiences
+with such things, and while I would agree that this subject matter is
+not particularly on-topic for the list, I would think that there
+effectively are not unmoderated lists, no place to really ask this
+question in a substantial manner despite the importance of it, and of
+crowd-sourcing other peoples experiences would be concerning to an
+industry as a whole.
 
 
-> https://bugs.php.net/bug.php?id=70166
-> https://bugs.php.net/bug.php?id=70155 (dup)
-> Use After Free Vulnerability in unserialize() with SPLArrayObject
-> 
-> https://bugs.php.net/bug.php?id=70168
-> Use After Free Vulnerability in unserialize() with SplObjectStorage
-> 
-> https://bugs.php.net/bug.php?id=70169
-> Use After Free Vulnerability in unserialize() with SplDoublyLinkedList
 
-In the current case, we feel it is best to combine a number of
-taoguangchen@icloud.com discoveries into one CVE. Use CVE-2015-6831
-for 70155/70166/70168/70169.
-
-
-> https://bugs.php.net/bug.php?id=70068
-> Dangling pointer in the unserialization of ArrayObject items
->         impact: remote code execution
-
-Use CVE-2015-6832 for this sean.heelan@gmail.com discovery.
-
-
-> https://bugs.php.net/bug.php?id=70019
-> Files extracted from archive may be placed outside of destination directory
-
-Use CVE-2015-6833. This seems to be a marginal case in which the issue
-can be interpreted as a security enhancement because the vendor
-(2015-07-08 14:30) states that the behavior was intended. However, for
-most people, "Extract the contents of a phar archive to a directory"
-(see the http://php.net/manual/en/phar.extractto.php page) probably
-doesn't suggest that an arbitrary set of directories can be chosen by
-the author of the archive. Also, we already have CVE-2008-5658.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJV7xyyAAoJEL54rhJi8gl5JmQQAK6PYuPa3hQJQLwPzyvjhmIa
-5mpVQFRiLm+A/uY7uYOtGTUgqfCS5W0nJGkqlzf9djt4wLeY5vYC+4ihfHyKZLfN
-2TY0jTEYNP2aLKPm5yBDZftI725R63MmC89MTzuAsylom4Zz192gqlQQtFIP/xQj
-xt00diyJpagCX86wLi/DaIdmdDaRwK6UIbjcMmfcwLGxTq9UUJsNlm9qVqrXOJFc
-WwhtqNsnh8WUZgAvA8GlyGaXgiHzfszNE+n+mz0KKxYNyDUKaVQkfpaekM904WjG
-f0yQNBvJk33t6AjAxzmBIamltUpipRg1joKS/afQV/cot8wzEtCMloE6XJgTXZm0
-MIKbzC1iYe7HqXR5KFHPDSU2x3y4J1sRGu0Wx6tFZ++2Icgz0eqm9emgxvuUzPqD
-r9YnKSQy7cvPA3gXUwwp++3PNvTbuJLJGZt6fKBkM2uFcd/Mh6+RoEc62QuhvJ6/
-75ixk8s7yfTzDt7IHxBfqQ9hEtq455vligCt8m55n4GXJ/uAN5Pqs6tdnFvp1bwa
-rAky6ucUoma/cb1Z25vCh4b9zLS+w5A1+BrZ1uaAI4U2BlUPOhepZg8YDhGLiv6o
-JMRxReO6Slfa2qdT1x4aGL2T4lnacCumMbPlrsED/qLOdIgBv9IjX0lUXKGu30yT
-TRCdGfALD7wzyv/cUAoQ
-=hXh2
------END PGP SIGNATURE-----
+On Tue, Sep 25, 2018 at 12:12 PM Jeremy Stanley <fungi@yuggoth.org> wrote:
+>
+> [Full Disclosure ML dropped from followup]
+>
+> On 2018-09-21 21:12:15 -0700 (-0700), Justin Ferguson wrote:
+> > I was curious about peoples experiences with bug bounties
+> > particularly those through the prominent clearing houses for them.
+> > My experience is that I have been either ripped off or extremely
+> > slow-walked in payment that was substantially below the listed
+> > payout in every single instance. I'm curious how accurately that
+> > reflects other peoples experiences.
+> [...]
+>
+> As someone handling intake of suspected vulnerability reports for a
+> large community of free/libre open source software projects, I've
+> seen another side of it. The projects I work on have been
+> incorrectly added and re-added to lists of supposed bug bounty
+> targets over the years, and it's caused us to deal with floods of
+> useless reports from everyone who can figure out how to run a static
+> code analyzer, fuzzer or vulnerability scanner (and also people who
+> can't even figure out the difference between the projects and the
+> code which powers their community Web sites).
+>
+> Convincing the people who maintain those clearing house lists to
+> de-list your projects can be a challenge, as they're just as likely
+> to ignore you, or even simply be abandoned Web sites with nobody at
+> the helm. If this is the sort of experience other projects endure, I
+> can't imagine why any would willingly put themselves on such bounty
+> registries. I have much more interest in dealing with reports of
+> suspected vulnerabilities from engaged users of the software than
+> from people out to make a quick buck, disinterested in even
+> following up enough on the bugs they think they've found to
+> determine they're unreachable cruft or even intentional features of
+> the software.
+> --
+> Jeremy Stanley
