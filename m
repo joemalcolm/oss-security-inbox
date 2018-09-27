@@ -1,4 +1,9 @@
-Received: (qmail 7747 invoked by uid 550); 3 Nov 2025 17:59:04 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1740" "Thursday" "27" "September" "2018" "13:08:10" "+0530" "Dhiraj Mishra" "mishra.dhiraj95@gmail.com" "<CAG8b5tSQ-AqxMZdmV6yvzQvSJ=11jrP_GfJfbcDWpXT3Jv3aKQ@mail.gmail.com>" "44" "[oss-security] Telegram uses SOCKS5 to share user/creds" nil nil nil "9" "2018092707:38:10" "[oss-security] Telegram uses SOCKS5 to share user/creds" (number mark "U       mishra.dhira Sep 27   44/1740  " thread-indent "\"[oss-security] Telegram uses SOCKS5 to share user/creds\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 7941 invoked by uid 550); 27 Sep 2018 11:13:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,93 +12,81 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 7723 invoked from network); 3 Nov 2025 17:59:03 -0000
-From: Russ Allbery <eagle@eyrie.org>
-To: Peter Gutmann <pgut001@cs.auckland.ac.nz>
-Cc: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-In-Reply-To: <ME0P300MB071302891271CE8EBFA6BBAAEEC7A@ME0P300MB0713.AUSP300.PROD.OUTLOOK.COM>
-	(Peter Gutmann's message of "Mon, 3 Nov 2025 12:53:31 +0000")
-Organization: The Eyrie
-References: <aP_msOoiyHJ_M4Yx@mertle>
-	<20251027163220.8c7ede47-6b3a-4190-ad4b-e52761b341de@korelogic.com>
-	<20251028014909.GA6430@openwall.com>
-	<76f8e74c-d9cc-4f20-8061-488598f85fe7@protonmail.com>
-	<20251101030054.GA3031@openwall.com> <875xbtlf4z.fsf@hope.eyrie.org>
-	<ME0P300MB071302891271CE8EBFA6BBAAEEC7A@ME0P300MB0713.AUSP300.PROD.OUTLOOK.COM>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-Date: Mon, 03 Nov 2025 09:58:52 -0800
-Message-ID: <87fravyp43.fsf@hope.eyrie.org>
+Received: (qmail 29697 invoked from network); 27 Sep 2018 07:38:34 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=XOw+fo/hXQ3NNyU95cEX6ejjx6wNKKZO+oMcC3ssH/0=;
+        b=JCG9J0EvUsbRJwCVkXmjMUiXCjnP7+8mQDR0irkMHMukZBWEr4KNcrGzablzrZSbnZ
+         I5whE7CNRurK0PjYWfFZ63njkdxq/6fsbTzZ5zLAoVHfpm1Gtr1poAkE+qL3RqUuVkuJ
+         d0trhylrVyrHgE36YPTBkTeC3kQ4MRLYcH7xrvThQt97b5avzGQ7H+JEYmIfTiuAQPHc
+         aAVV/AVXKKZcniKnl1kVjkzvuvTltSk5UtJ5tJ9VALYI5BiQg0YjdJBtD9bjKv7L3wkw
+         1ygE4Rfdw38Ud6iTw33Ecrv8qM3+oDMTgC4QGAvkQ64F4+BKHDsfNMutgyxtomH2M1tU
+         3utA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=XOw+fo/hXQ3NNyU95cEX6ejjx6wNKKZO+oMcC3ssH/0=;
+        b=uRrroTdewhoGTxn65HEKwW8jb5pR7EHzg5sbGpRA4Mw5fEyYzIGzzfgx8vobPAVyeT
+         Lw5tBog3uyUY+xXZcR1xHNS/eVUuveS4r6vcvL6dXSVlOlMqHuKVPIXwj37J8oi5vBgS
+         OpVPmw0ql/cjVYVP3j9cnS24RB0Iy6NvP7orWXNWBhqxalKbBMGpMLXfrrwtj0/OHYXy
+         sD8KU+ZXf7rc8hlpnluNK3+hcCneFgRTIzAQ5+UvnXRc50TtiV5ya6LMPstTaABuDavA
+         SpAYBDfxATunjH2KlgInooy3scIa4X5b+vEu5onKHHuMNivCdaHXGqza9uH7VUU6U6O1
+         ml3w==
+X-Gm-Message-State: ABuFfog95y6yC2HMquH+yBnoDNzHJMNIKuNi0CM5Odu9s8rjllBeyh0N
+	U9ZuUTVEDmA+AxEoDfv19oJFC5XtgMqh9r89MmowUAjR
+X-Google-Smtp-Source: ACcGV61HQ7igAanXon+JuudA4R1PK4ltZi/aDo7t+dGmr0m4U4sWe0mfLFxOsOj+LzM/GJBT0PGYY+A+5e9Q36+8krs=
+X-Received: by 2002:a63:6b05:: with SMTP id g5-v6mr8865172pgc.344.1538033901791;
+ Thu, 27 Sep 2018 00:38:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: Re: [oss-security] Questionable CVE's reported against dnsmasq
+From: Dhiraj Mishra <mishra.dhiraj95@gmail.com>
+Date: Thu, 27 Sep 2018 13:08:10 +0530
+Message-ID: <CAG8b5tSQ-AqxMZdmV6yvzQvSJ=11jrP_GfJfbcDWpXT3Jv3aKQ@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="0000000000005e71200576d56c7c"
+Subject: [oss-security] Telegram uses SOCKS5 to share user/creds
 
-Peter Gutmann <pgut001@cs.auckland.ac.nz> writes:
+--0000000000005e71200576d56c7c
+Content-Type: text/plain; charset="UTF-8"
 
-> Even before getting into that, how do you document that people shouldn't
-> do certain things with their config files, or by extension which bits
-> are inside and outside the security boundary? "If an unauthorised party
-> can modify your config files then bad things can happen" seems
-> redundant, "We take no responsibility for what happens if you fail to
-> take unspecified steps to secure your config files" might be correct but
-> will be perceived as blame-the- victim... how do you document this for
-> users?
+Telegram is supposedly is a secure messaging application but it uses SOCKS5
+to transmit user credential's, neither traffic nor credentials are
+encrypted in the SOCKS5 protocol, but this is how the SOCKS protocol works
+(see https://tools.ietf.org/html/rfc1929). SOCKS5 carries passwords in
+cleartext.
 
-This is true. Helping users understand trust boundaries is probably the
-hardest part of writing effective security documentation. They can be very
-complicated and even many security people struggle with security boundary
-analysis.
+Product affected: tdesktop 1.3.16 alpha
+Browser Info: Firefox 62.0 (64 bit)
+Tested on: Ubuntu 18.04 LTS x64
 
-My personal opinion is that a common failure mode here is to make the
-security boundaries too complicated, often through a series of small
-feature decisions to solve other problems.
+Steps to reproduce the issue:
+1. Open tdesktop
+2. Go to Settings > Advanced Settings > Connection type
+3. Open "Proxy Settings" check "Use proxy"
+4. Put some random Hostname, Port, Username and Password
+5. tdesktop tries to connect it, while it connects click on that line which
+is made of 3 small spots (On right hand side)
+6. Click share, the link gets copied.
 
-One starts with a policy of "the configuration should only be modified by
-a trusted source," which is fairly simple. But then some automatic
-configuration use case comes up where it would be incredibly useful to
-inject just a couple of values from some untrusted source. And at the
-time, you're pretty sure that's safe due to how the program works, so you
-say yes, this is supported. If that happens three or four times over the
-course of ten years, now you have a very complicated security model in
-which it's supposedly safe to use untrusted data for some settings and not
-for others, the documentation of what operations are safe and what
-operations are not safe is unclear, and subsequent apparently-unrelated
-code changes may undermine security guarantees that you didn't realize you
-were making.
+Example Link:
+https://t.me/socks?server=inputzero.io&port=22&user=dhiraj&pass=MystrongPassw0rd
+The link which gets generated have the password in plaintext, SOCKS5 is a
+transport protocol and by itself it is not encrypted. Requests transmit the
+credentials in plain text which is considered a bad security practice.
 
-This kind of complexity is the enemy of security, which everyone knows,
-but everyone hates applying that rule in practice because you can solve so
-many real, useful problems by relaxing the boundary just a little.
+URI producers should not provide a URI that contains a username or password
+that is intended to be secret.  URIs are frequently displayed by browsers,
+stored in clear text bookmarks, and logged by user agent history and
+intermediary applications (proxies).
 
-I think this is a hard problem without a good solution, but the discussion
-of the merits of CVEs about configuration file handling made me realize
-that, at least for some of my projects, I would like to opt out. I would
-like to declare somewhere a very simple security policy that says that
-there is no security boundary between configuration (config files,
-command-line arguments, etc.) and the software, and therefore it is not
-safe to use any data or allow any modifications from a source less trusted
-than the security domain in which the program will be running. Even if you
-think this operation should obviously be safe, if it involves untrusted
-data, it is completely unsupported.
+Since the request carries the password in cleartext, this subnegotiation is
+not recommended for environments where "sniffing" is possible and practical.
 
-The implication is that if you want to generate a configuration from some
-untrusted source, ensuring that configuration is fully trusted and vetted
-and will parse correctly and will not trigger any bugs in the software is
-100% your problem, not my problem as the software maintainer, and any
-security issues that result will not be accepted as CVEs because this is
-not a feature the software provides.
-
-This is not a particularly *friendly* policy, because that sort of
-verification is hard (and is very likely to break in insecure ways with
-future software releases), but I think it's a fairly *realistic* policy
-for a lot of single-maintainer free software projects that gets one out of
-the rather terrifying world of attempting to reason about a complex and
-porous security boundary.
-
-I'm probably overcomplicating this problem by combining it with the
-problem of how to describe a more complicated security boundary, and my
-problem can probably be addressed by relatively simple declarations in the
-documentation and SECURITY.md. :)
-
+Thank you
 -- 
-Russ Allbery (eagle@eyrie.org)             <https://www.eyrie.org/~eagle/>
+Regards
+
+*Dhiraj Mishra.*GPG ID :  51720F56   |  Finger Print : 1F6A FC7B 05AA CF29
+8C1C  ED65 3233 4D18 5172 0F56
+
+--0000000000005e71200576d56c7c--
