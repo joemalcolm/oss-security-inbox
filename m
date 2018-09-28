@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3133" "Thursday" "17" "September" "2015" "13:34:48" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty2vmRG42pMr0aWxgEWXiZiPP8gMmH9pT+uOqO1FhLo6Tw@mail.gmail.com>" "77" "Re: [oss-security] Re: CVE Request: remote triggerable use-after-free in rpcbind" nil nil nil "9" "2015091719:34:48" "[oss-security] Re: CVE Request: remote triggerable use-after-free in rpcbind" (number mark "        kseifried@re Sep 17   77/3133  " thread-indent "\"Re: [oss-security] Re: CVE Request: remote triggerable use-after-free in rpcbind\"\n") "<20150917190047.GC26219@suse.de>" ("<20150917162046.2F4C16C0044@smtpvmsrv1.mitre.org>" "<55FB0BAE.8070101@RedHat.com>" "<20150917185420.GB26219@suse.de>" "<55FB0D43.6070105@RedHat.com>" "<20150917190047.GC26219@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2023" "Thursday" "27" "September" "2018" "22:39:17" "-0400" "Randy Barlow" "randy@electronsweatshop.com" "<c1946aa14addd525e5eb3f392eed26f119ad117a.camel@electronsweatshop.com>" "53" "Re: [oss-security] Using quilt on untrusted RPM spec files" "^Date:" nil nil "9" "2018092802:39:17" "[oss-security] Using quilt on untrusted RPM spec files" (number mark "        randy@electr Sep 27   53/2023  " thread-indent "\"Re: [oss-security] Using quilt on untrusted RPM spec files\"\n") "<20180927155934.GB8696@f195.suse.de>" ("<20180927155934.GB8696@f195.suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 27796 invoked by uid 550); 17 Sep 2015 19:35:01 -0000
+Received: (qmail 31874 invoked by uid 550); 28 Sep 2018 07:08:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,112 +11,73 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 27778 invoked from network); 17 Sep 2015 19:35:00 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=ojhV4W6voMt4ZBPMCgfMsK25zyZdnyPGREZm+hwqKz0=;
-        b=LKVzkjjoD5AzlfsIovAPIIp0L/8Am8xMCjSmtOg5S4pCObYgEVsx+JIgpPGYemzb5g
-         ziLyJeYVdMyvPjW3P9o3FXSIKAOJjZ9k0MzAlpHCEsbqqMBDMhYsr1a35BcEry03IP9A
-         LoOmRaCfLpy83566hv5eEV7piRH9trB+shPhEftreaBXB4YkcHQ5u99EHIcMDB4ywvpS
-         mnArOQHO1DZJ5m6rLwDNlW6M4RCt1wMdFoVPjWlMT4cgPRpnCfmR1y19O3/Cgc/spb0s
-         NiFzE8+9IPBSS5YlcDDNLO6YnG5RoD0UZgSseT6Fj8noLzcaKh1RbNgbzwTTYIsarwHW
-         muFQ==
-X-Gm-Message-State: ALoCoQmyQ14JGw5ieKyh4Yq8NKY1PzIdKNOJsGqo+1o3pblj2zrp/A6P/Jz4t8/IuidzNZb/oVa8
-MIME-Version: 1.0
-X-Received: by 10.129.39.129 with SMTP id n123mr1083779ywn.36.1442518488643;
- Thu, 17 Sep 2015 12:34:48 -0700 (PDT)
-In-Reply-To: <20150917190047.GC26219@suse.de>
-References: <20150917162046.2F4C16C0044@smtpvmsrv1.mitre.org>
-	<55FB0BAE.8070101@RedHat.com>
-	<20150917185420.GB26219@suse.de>
-	<55FB0D43.6070105@RedHat.com>
-	<20150917190047.GC26219@suse.de>
-Message-ID: <CANO=Ty2vmRG42pMr0aWxgEWXiZiPP8gMmH9pT+uOqO1FhLo6Tw@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a11408574193ab5051ff682b3
-Cc: Steve Dickson <SteveD@redhat.com>, cve-assign@mitre.org, Olaf Kirch <okir@suse.de>
-Date: Thu, 17 Sep 2015 13:34:48 -0600
-From: Kurt Seifried <kseifried@redhat.com>
+Received: (qmail 30611 invoked from network); 28 Sep 2018 02:39:41 -0000
+Message-ID: <c1946aa14addd525e5eb3f392eed26f119ad117a.camel@electronsweatshop.com>
+In-Reply-To: <20180927155934.GB8696@f195.suse.de>
+References: <20180927155934.GB8696@f195.suse.de>
+Organization: electronsweatshop.com
+Content-Type: multipart/signed; micalg="pgp-sha256";
+	protocol="application/pgp-signature"; boundary="=-+f979vcRShTe68RDmhvG"
+X-Mailer: Evolution 3.28.5 (3.28.5-1.fc28) 
+Mime-Version: 1.0
+X-CMAE-Envelope: MS4wfKQg8rTbyJQOvfc6PVU2UxP0b65bkN1zSFECV/zkvRB9f4JTCPPFZv2wuGrkZE4LO9idpQkG/gFEM9yFd58fXoX0T+iTrdJcmPq4DdTKJq/KClehrsP+
+ 6iUSIfCcHJl6QFBRQWA2pyKKkFRiAmOra6RYQKX5T2/Us/tduy59GZrR2G2un8SQIINSkdpt7YVcTAbC2qVyasZ8zEjb3B6l3N8=
+Date: Thu, 27 Sep 2018 22:39:17 -0400
+From: Randy Barlow <randy@electronsweatshop.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: CVE Request: remote triggerable use-after-free
- in rpcbind
-To: oss-security <oss-security@lists.openwall.com>
+Subject: Re: [oss-security] Using quilt on untrusted RPM spec files
+To: oss-security@lists.openwall.com
 
---001a11408574193ab5051ff682b3
-Content-Type: text/plain; charset=UTF-8
+--=-+f979vcRShTe68RDmhvG
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Sep 17, 2015 at 1:00 PM, Marcus Meissner <meissner@suse.de> wrote:
+On Thu, 2018-09-27 at 17:59 +0200, Matthias Gerstner wrote:
+> Now we would be interested in discussing this topic with the
+> community. Do<br>
+> other distributions have similar workflows and therefore similar
+> attack<br>
+> surface as we do? What would be viable countermeasures?
 
-> On Thu, Sep 17, 2015 at 02:58:11PM -0400, Steve Dickson wrote:
-> > > Where should I open it? kernel.org?
-> > IDK... Aren't CVE suppose to be keep under wrap until
-> > they are fixed... I know there are some rules around CVEs...
->
-> Security issues can be either predisclosed in a smaller circle (the term
-> is "responsible disclosure"), or published directly.
->
-> As Olaf mailed the issue to the linux-nfs list a while ago, and SUSE
-> evaluated
-> and found the security impact only afterwards, the issue is considered
-> already
-> "public" and so gets no embargo.
->
-> If the impact would be more obvious before it might have get a
-> predisclosure.
->
-> There are no strict rules though, just common understanding.
->
-> Ciao, Marcus
->
+Hey Matthias!
+
+In Fedora we have similar challenges. We've got a tool called fedora-
+review[0] that is maybe kinda similar to quilt. It uses mock[1] to
+build the source RPM (and mock does this in a chroot to help with the
+problems you described) and then it does some basic quality checks on
+the RPM afterwards.
+
+I'm not sure how generic mock is, but maybe it would be helpful to you.
+Its wiki page describes it as being used by Mageia, so it might be
+extensible for SUSE as well.
+
+Happy coding!
 
 
-To make it more complicated:
+[0] https://pagure.io/FedoraReview
+[1] https://github.com/rpm-software-management/mock
 
-1) There are no strict rules
-2) There are some strict rules
-3) There are some wibbly-wobbly rules as well
+--=-+f979vcRShTe68RDmhvG
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
 
-There is no central governing body/law that controls security
-vulnerabilities and how they are treated (well there is.. sort of, but not
-really).
+-----BEGIN PGP SIGNATURE-----
 
-There are however economic and social forces at work, e.g. at Red Hat we do
-our best to play nice with other vendors and reporters, why? So they keep
-working with us and reporting stuff to us.
+iQIzBAABCAAdFiEEtaW+t5vwm7qNSBIDeETMuDvdJGIFAlutlFUACgkQeETMuDvd
+JGJsoRAAnAtRbAlUt8/ESKqCTN9U6jVO7FQBLM5PtlAxr5e3gQ2mnfDzrcaNnmTv
+NZghz3SPvhhVXIk+vFJBxlm0dsIqhxF8t6N2UCP3U3k+Yjek7N5jSdoTuo9tst0p
+z/ogy8Ok01xXDn1V6WysPpOK5ExK5ECJkv8CWx4/7mcmp4/3xZ5zsPPT0B+f9u/n
+IjSoScp59AtuLSskZKzG5QOHM4hE/yRJL4dhd8fw1FbCzJqqCW6NhJW74nGuA/tS
+H8RtDAoRhO8sfd+TRvWi2zn3WoUBilbtR9OONL/Bc+eP9P3c9SEJfm3xCZgFEfPv
+Zo1PgNehh5AoTe13DYxCJH7SgxMZOqt5V6KHAJkAK3j0C6nt1bhkoz/KthcleU/Z
+oNmwDl/BblgTMTTjNWQ/fWFXiv3YblueD//D2MMqn8sY+VhXlAshNGpWW08KemMB
+pQH1eYp8QHmgYmr8+a7nD5PZZN1BTZYTg0Vz64F6WjrUAs3fBDxGLUTqdQG87c18
+osqvi2zX7nAE9eZI6GYDV6nAU2IUB5sTCFKUuwST3waRX1gUES8RVgwg8MyYWK4Y
+bSTalyjaXTklJoydJVCcr8Pl1NLk+rL9PgpVYUXSHjNjQTzeUNYwyxN604HxnQGV
+JRm03BKxjXPPeQM6EYTJ4k1vfKZldWU3HgfYuMRXh/YsVx3usqs=
+=AqzV
+-----END PGP SIGNATURE-----
 
-SuSE is a great example, there is a piece of software that both SuSE and
-Red Hat ship called "SpaceWalk", SuSE handles quite a lot of the dev work
-(thanks!), so for example when a security vuln for Spacewalk comes in we
-(Red Hat) notify SuSE pretty much immediately, and they also get access to
-the Bugzilla entry (so I don't have to play email games, they can just look
-at the info directly). So for both SuSE and Red Hat this relationship with
-respect to SpaceWalk is hugely beneficial to both of us (in economic terms
-a net gain).
+--=-+f979vcRShTe68RDmhvG--
 
-Companies that play less nice with reporters/other companies tend to be
-excluded from information sharing, while not a strict rule, it is pretty
-fundamental to human nature (who wants to play with mean people?). So while
-not a strict rule, it is pretty common.
-
-As for the wibbly-wobbly rules, well for example a commit may inadvertently
-fix a security issue, one that nobody realizes exists. This happens all the
-time. Sometimes post commit reviews/backports/etc cause someone to examine
-it and realize it is a security issue. Some people consider this to be
-"public" info, others do not, some (like myself) would say "it depends"
-(but then I would also say "embargo only the things that matter").
-
-Should we have agreed upon rules and standards? Hahahaha, not going to
-happen. Should we have a rough framework/matrix (e.g. more embargo/less
-embargo, more coordinated/less coordinated, etc.) so we at least know where
-people are coming from and what their expectations are when we want to work
-with them? Not a terrible idea I think.
-
-
-
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
-
---001a11408574193ab5051ff682b3--
