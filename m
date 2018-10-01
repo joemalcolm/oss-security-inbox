@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1786" "Tuesday" "30" "June" "2015" "18:29:07" "+0200" "0pc0deFR" "0pc0defr@gmail.com" "<CAN6thH5sEEkEL4Y7npWs1z+K1wOHRTW7YuuHwr1VCm0rh5BUkw@mail.gmail.com>" "51" "Re: [oss-security] Google Chrome Address Spoofing (Request For Comment)" nil nil nil "6" "2015063016:29:07" "[oss-security] Google Chrome Address Spoofing (Request For Comment)" (number mark "        0pc0defr@gma Jun 30   51/1786  " thread-indent "\"Re: [oss-security] Google Chrome Address Spoofing (Request For Comment)\"\n") "<5592A1DB.1000409@gmail.com>" ("<55923253.8020902@deusen.co.uk>" "<55929D7F.3050805@gmail.com>" "<55929F2D.3020802@redhat.com>" "<5592A1DB.1000409@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2890" "Monday" "1" "October" "2018" "08:50:10" "-0400" "Alex Gaynor" "alex.gaynor@gmail.com" "<CAFRnB2XPoZgv-2Pah5DmKifD6s+sKJk9SoK28T_2j2zb+53RNw@mail.gmail.com>" "71" "Re: [oss-security] Django security release issued: 2.1.2" "^Cc:" nil nil "10" "2018100112:50:10" "[oss-security] Django security release issued: 2.1.2" (number mark "        alex.gaynor@ Oct  1   71/2890  " thread-indent "\"Re: [oss-security] Django security release issued: 2.1.2\"\n") "<20181001124547.GA6845@openwall.com>" ("<D256F892-8344-4273-A676-93D62E0CC984@gmail.com>" "<20181001124547.GA6845@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 32682 invoked by uid 550); 1 Jul 2015 07:51:01 -0000
+Received: (qmail 24103 invoked by uid 550); 1 Oct 2018 12:50:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,82 +11,114 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 22044 invoked from network); 30 Jun 2015 16:29:19 -0000
+Received: (qmail 24079 invoked from network); 1 Oct 2018 12:50:34 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        bh=WJMQ5Jy9pcfw6IejlvXfgcXtsyygk6dFHzs1Jzg2WrI=;
-        b=qCoOVNVvm+LmPgpEahmWyorVnS3oy7WZ+ny8zUMEBwkf1X364T5Cn1w6wG7hYeXLli
-         P+/Bl33Swl5jASXb6bapysU68YQSKtrYeCuf8Soj8Qumin9OuMtESEX+piJ9DkVt9Bvp
-         FlD3gLyj+EWokUbJRlmMijOUqU1/Md1EH20as26npqt9Lb8bO1qcNeifcg0vxYca7hkF
-         n1aowfs1aH/TxE8rchOLUh3UL16QIBaGLEBhdv/FMuUPClJVKFvBTYrZ4668tTSWJHHL
-         q73pwt1PwUPS4SRNPRz2gtWrv2JtzyudL7UbEZ5F8xU0YyS0uYXNzmMjTEXeUo7MWYCx
-         7RZA==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=WIPMc48T/qb+mKFPWuC0hNxhCdaSj2F3YYYodDVrhl4=;
+        b=MMQc/8UzU/yn87f0AMSE8rICQGhnkpfaRA76V3XUI9/GVkSY2Iieopat9vAHyQ+Z0k
+         IaxBTjSlx9qjTsyyESVPBkNe2AWBWWyCMNPkSKL/7lL3TFoKWFgZGSoyFn8sVNxP7mXV
+         K9OyBTBlL2YEYA820R8gsVI6sx1uyzvo7DcjhyFPGAy/s9MMafZ1op6KhNcckJFqEwb6
+         CHQWYpc4WdQfAFmQqxUadhB1cHZM91V316KR0SLF3f3Nv+ER8SgXmMGfYOCJu+SxG+hw
+         zDJ3jtCW2qZ2blY4hn84XYRTkF50e+h0SwxEPEqIJE9cbzCPJiaQ9Ygj4Oo8vf+nWEYj
+         y3Lw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=WIPMc48T/qb+mKFPWuC0hNxhCdaSj2F3YYYodDVrhl4=;
+        b=V3dJRqBApTXNqW6YikqtDGyVa3AgbkXFyChAFotwLSpDpYD9MiAevsq8E8nA1ynUOe
+         BCLyrBcgXlZ+X5M2IOuc6bqouI0nArobALmJ2opdZeMZJD4T5A4zQwP4cuuvO4wF7W6+
+         rBjOK7Iry27n6IC8qFUc/ssYZDuz4OgzovjhcBe/Aksvix3HM3AJRUuNwwz3Wi3n9Ab+
+         lbtZI6LWwy4ZBxHDTLs72q2sDMnoPx7JIpuEC44JQdbOs3EY2rjG6CSLTBBbqHy86v82
+         EinCwepxFKY5kylFOogUjVuQV1K0x6MK7GdRh9Sol51T3+hcOI+yeaZ76mcE90+O9HUc
+         i7sg==
+X-Gm-Message-State: ABuFfogCf8r8W8GmOof/Dkyv99O35ajUUcbsxrpWLXL6a901YA63uFTA
+	vAta7+b2fs2gmZgDxHbZX/BWuHtaOsT27uQPUlMTE5L7
+X-Google-Smtp-Source: ACcGV638ixBqK8hYKLatJ3sWc2jr736RnVHb0onF2zPakZlpd28kVPcEH+BePnTUShepdGbTUYyVTEqxl0rVrw2u5Gs=
+X-Received: by 2002:a2e:99d3:: with SMTP id l19-v6mr6010679ljj.132.1538398222440;
+ Mon, 01 Oct 2018 05:50:22 -0700 (PDT)
 MIME-Version: 1.0
-X-Received: by 10.152.8.102 with SMTP id q6mr20343843laa.27.1435681747608;
- Tue, 30 Jun 2015 09:29:07 -0700 (PDT)
-In-Reply-To: <5592A1DB.1000409@gmail.com>
-References: <55923253.8020902@deusen.co.uk>
-	<55929D7F.3050805@gmail.com>
-	<55929F2D.3020802@redhat.com>
-	<5592A1DB.1000409@gmail.com>
-Message-ID: <CAN6thH5sEEkEL4Y7npWs1z+K1wOHRTW7YuuHwr1VCm0rh5BUkw@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a11c3658293aaf10519beb422
-Date: Tue, 30 Jun 2015 18:29:07 +0200
-From: 0pc0deFR <0pc0defr@gmail.com>
+References: <D256F892-8344-4273-A676-93D62E0CC984@gmail.com> <20181001124547.GA6845@openwall.com>
+In-Reply-To: <20181001124547.GA6845@openwall.com>
+Message-ID: <CAFRnB2XPoZgv-2Pah5DmKifD6s+sKJk9SoK28T_2j2zb+53RNw@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="000000000000925bcd05772a3f9e"
+Cc: Carlton Gibson <carlton.gibson@gmail.com>
+Date: Mon, 1 Oct 2018 08:50:10 -0400
+From: Alex Gaynor <alex.gaynor@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Google Chrome Address Spoofing (Request For Comment)
-To: OSS Securty <oss-security@lists.openwall.com>
+Subject: Re: [oss-security] Django security release issued: 2.1.2
+To: oss-security@lists.openwall.com
 
---001a11c3658293aaf10519beb422
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+--000000000000925bcd05772a3f9e
+Content-Type: text/plain; charset="UTF-8"
 
-Work on Google Chrome Ubuntu.
+FWIW, Django's default new-project template includes a password validator
+that denies the ability to use 20,000 common passwords:
+https://github.com/django/django/blob/master/django/conf/project_template/project_name/settings.py-tpl#L87-L100
 
---
-Cordialement,
+-- This will not be true for older projects with settings.py that upgraded
+Django versions, but did explicitly set PASSWORD_VALIDATORS, so that's a
+thing people should do :-)
 
-K=C3=A9vin FALCOZ alias 0pc0deFR - Consultant Expert WordPress -
-http://wordpress-expertise.fr
+Alex
 
---
-Regards,
+On Mon, Oct 1, 2018 at 8:47 AM Solar Designer <solar@openwall.com> wrote:
 
-K=C3=A9vin FALCOZ aka 0pc0deFR - WordPress Expert Consultant -
-http://wordpress-expertise.fr
-
-2015-06-30 16:04 GMT+02:00 Daniel Micay <danielmicay@gmail.com>:
-
-> On 30/06/15 09:52 AM, Florian Weimer wrote:
-> > On 06/30/2015 03:45 PM, Daniel Micay wrote:
-> >> It does display a window with the oracle.com address, but I don't
-> >> understand why you've got an ever increasing number of setTimeout even=
-ts
-> >> built in here. It's also unclear what you mean about click-to-verify. =
-Is
-> >> this bypassing a warning prompt by breaking it with a flood of request=
-s?
+> On Mon, Oct 01, 2018 at 11:33:47AM +0200, Carlton Gibson wrote:
+> > Today the Django team issued 2.1.2 as part of our security
+> > process. This release address a security issue, and we encourage all
+> > users to upgrade as soon as possible:
 > >
-> > I have not tried this, but here's some context:
-> >
-> > Most browsers have issues where they do not update the URL bar when
-> > content from a different is shown (i.e., the update happens to late), or
-> > they show the new URL while still displaying old content (update too
-> > late).  I've seen such discrepancies with Firefox, but I don't know if
-> > it's still present in current versions.
-> >
-> > If such bugs are present, freezing browsers while they are showing
-> > inconsistent content (hence the DoS attempt) could lead the user to
-> > attribute content to the incorrect site.
+> > https://www.djangoproject.com/weblog/2018/oct/01/security-release/
 >
-> Ah, that makes sense. It seems to depend on a race condition so it makes
-> sense that it can't always be replicated. I've tried it a few times and
-> it fails about as often as it works. I have a feeling that the proof of
-> concept was the whole issue report and it just happened to fail for
-> whoever tested it.
+> First of all, thank you for sharing this with oss-security.
 >
+> Per oss-security list content guidelines, actual vulnerability detail
+> must be included in postings (message body or text/plain attachment).
+> The Subject could have easily been more descriptive for this list, too -
+> e.g., "CVE-2018-16984: Django: Password hash disclosure to "view only"
+> admin users".
+>
+> Carlton, I'd appreciate it if you include such detail in your
+> oss-security postings (if any) on future occasions.  Including the links
+> as well is great (such as for easy access to updated revisions while
+> the links work); including only links is discouraged.
+>
+> Here's the vulnerability detail from the above URL:
+>
+> ---
+> CVE-2018-16984: Password hash disclosure to "view only" admin users
+>
+> If an admin user has the change permission to the user model, only part
+> of the password hash is displayed in the change form. Admin users with
+> the view (but not change) permission to the user model were displayed
+> the entire hash. While it's typically infeasible to reverse a strong
+> password hash, if your site uses weaker password hashing algorithms such
+> as MD5 or SHA1, it could be a problem.
+>
+> Thanks Phithon Gong for reporting this issue.
+> ---
+>
+> BTW, the feasibility of "reversing" a password hash depends not only on
+> hash type, but also on how many guesses the attacker would need to make
+> before likely hitting the right password.  Without target user specific
+> information, that number depends on how common or not the password is.
+>
+> Maybe the word "typically" allows for this exception for weak passwords.
+> However, unnecessarily revealing the password hash is a problem on its
+> own, not just "could be a problem" depending on hash type, although the
+> restriction to "admin users" and password hashing do mitigate the issue
+> to some extent.
+>
+> Thanks,
+>
+> Alexander
 >
 
---001a11c3658293aaf10519beb422--
+
+-- 
+All that is necessary for evil to succeed is for good people to do nothing.
+
+--000000000000925bcd05772a3f9e--
