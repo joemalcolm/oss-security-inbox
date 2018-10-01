@@ -1,96 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/06/5
-Message-Id: <E1gK6Hg-0002Qd-P3@xenbits.xenproject.org>
-Date: Tue, 06 Nov 2018 18:41:04 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 282 v1 - guest use of HLE constructs may lock up host
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/01/2
+Message-ID: <20181001124547.GA6845@openwall.com>
+Date: Mon, 1 Oct 2018 14:45:47 +0200
+From: Solar Designer <solar@...nwall.com>
+To: Carlton Gibson <carlton.gibson@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Django security release issued: 2.1.2
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Mon, Oct 01, 2018 at 11:33:47AM +0200, Carlton Gibson wrote:
+> Today the Django team issued 2.1.2 as part of our security 
+> process. This release address a security issue, and we encourage all 
+> users to upgrade as soon as possible: 
+> 
+> https://www.djangoproject.com/weblog/2018/oct/01/security-release/
 
-                    Xen Security Advisory XSA-282
+First of all, thank you for sharing this with oss-security.
 
-             guest use of HLE constructs may lock up host
+Per oss-security list content guidelines, actual vulnerability detail
+must be included in postings (message body or text/plain attachment).
+The Subject could have easily been more descriptive for this list, too -
+e.g., "CVE-2018-16984: Django: Password hash disclosure to "view only"
+admin users".
 
-ISSUE DESCRIPTION
-=================
+Carlton, I'd appreciate it if you include such detail in your
+oss-security postings (if any) on future occasions.  Including the links
+as well is great (such as for easy access to updated revisions while
+the links work); including only links is discouraged.
 
-Various Intel CPU models have an erratum listed under the title
-"Processor May Hang When Executing Code In an HLE Transaction".  It
-describes a potential hang when using instructions with the XACQUIRE
-prefix on the host physical memory range covering the first 4 MiB
-starting at the 1GiB boundary.
+Here's the vulnerability detail from the above URL:
 
-IMPACT
-======
+---
+CVE-2018-16984: Password hash disclosure to "view only" admin users
 
-A malicious or buggy guest may cause a CPU to hang, resulting in a DoS
-(Denial of Service) affecting the entire host.
+If an admin user has the change permission to the user model, only part
+of the password hash is displayed in the change form. Admin users with
+the view (but not change) permission to the user model were displayed
+the entire hash. While it's typically infeasible to reverse a strong
+password hash, if your site uses weaker password hashing algorithms such
+as MD5 or SHA1, it could be a problem.
 
-VULNERABLE SYSTEMS
-==================
+Thanks Phithon Gong for reporting this issue.
+---
 
-All Xen versions are affected.
+BTW, the feasibility of "reversing" a password hash depends not only on
+hash type, but also on how many guesses the attacker would need to make
+before likely hitting the right password.  Without target user specific
+information, that number depends on how common or not the password is.
 
-Only Intel based x86 systems are affected.  Please refer to Intel
-documentation as to which specific CPU models are affected.
+Maybe the word "typically" allows for this exception for weak passwords.
+However, unnecessarily revealing the password hash is a problem on its
+own, not just "could be a problem" depending on hash type, although the
+restriction to "admin users" and password hashing do mitigate the issue
+to some extent.
 
-AMD x86 systems as well as Arm ones are not affected.
+Thanks,
 
-MITIGATION
-==========
-
-There is no known mitigation.  A BIOS update may be available for some
-systems, working around the issue at the firmware level.
-
-RESOLUTION
-==========
-
-Applying the appropriate pair of attached patches works around this issue
-for the CPU models known to be affected at the time of writing.
-
-xsa282-?.patch                              xen-unstable
-xsa282-4.11-1.patch + xsa282-2.patch        Xen 4.11.x, Xen 4.10.x
-xsa282-4.9-1.patch + xsa282-2.patch         Xen 4.9.x
-xsa282-4.9-1.patch + xsa282-4.8-2.patch     Xen 4.8.x, Xen 4.7.x
-
-$ sha256sum xsa282*
-6ef64ca920a58ed9185e81fad3dfa9ca5f6316f1e72ddd4f411f3e79eaf79903  xsa282.meta
-ad7093e00b3d6650530c95427ef0e68880883f0cec7229b5f41c9e2dc497ffd5  xsa282-1.patch
-7ce7fa105026b189500a31bd3978ec0c6fd9d7c95f688463c25ecce76366be35  xsa282-2.patch
-fbff734d678700864563f8214361f391c0cbda9b67ed7256535ed3db388c8feb  xsa282-4.8-2.patch
-df833cbe9b8798104a65d44b737c46f97399b86b0ffd03c99fda4c8ecf5a353c  xsa282-4.9-1.patch
-68eab296a7124662cbe3c6df8835aff9b4a26160fdbe970e206a7a6ef8d27ec7  xsa282-4.11-1.patch
-$
-
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-The issue has been documented publicly in Specification Updates for at
-least some of the affected processors for quite some time.
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAlvh3+0MHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZ48QIALQ1hLMewraf+URzsd36EUJNPP+1C8Dg35PavdJ1
-mrqBljy/bIYCiLvLm1RwinUPL5vrvkB97/6AjmnpZM83AA3/PLTbh3tpP8fiLUcF
-YL7wJogvjv51Q3N8mYHjxGGl5YYVdrgxwxbQIuzRnw2gi/ikd0oAoNce/QIF6iFz
-P2I8VjKuQZ6qEzdKXTTiPNQQzL+OfVGQ+RcsthQieWce53p+n1pI1QqbPOwdYtca
-/cOhP+vGRzh+4QP50JuN5ikdC/C9KpyjEo5mZVlrZQYPIqzI+vomueCJLPGN3cSY
-LBcJc/lT/w/LRgygpbUB/OO8RwK5XB9T4Jm/ssXGpCOTs3Y=
-=Ipfd
------END PGP SIGNATURE-----
-
-Download attachment "xsa282.meta" of type "application/octet-stream" (1794 bytes)
-
-Download attachment "xsa282-1.patch" of type "application/octet-stream" (5054 bytes)
-
-Download attachment "xsa282-2.patch" of type "application/octet-stream" (1592 bytes)
-
-Download attachment "xsa282-4.8-2.patch" of type "application/octet-stream" (1613 bytes)
-
-Download attachment "xsa282-4.9-1.patch" of type "application/octet-stream" (2730 bytes)
-
-Download attachment "xsa282-4.11-1.patch" of type "application/octet-stream" (5050 bytes)
+Alexander
