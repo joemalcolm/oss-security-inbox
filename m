@@ -1,86 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/02/2
-Message-ID: <20180702122122.GD8324@f195.suse.de>
-Date: Mon, 2 Jul 2018 14:21:22 +0200
-From: Matthias Gerstner <mgerstner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/01/1
+Message-Id: <D256F892-8344-4273-A676-93D62E0CC984@gmail.com>
+Date: Mon, 1 Oct 2018 11:33:47 +0200
+From: Carlton Gibson <carlton.gibson@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: accountsservice: insufficient path check in user_change_icon_file_authorized_cb()
+Subject: Django security release issued: 2.1.2
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Today the Django team issued 2.1.2 as part of our security 
+process. This release address a security issue, and we encourage all 
+users to upgrade as soon as possible: 
 
-during a code review the following issue was uncovered in
-accountsservice <https://www.freedesktop.org/wiki/Software/AccountsService/>:
+https://www.djangoproject.com/weblog/2018/oct/01/security-release/ <https://www.djangoproject.com/weblog/2018/oct/01/security-release/>
 
-I have found a weakness regarding the handling of the users' icon files.
-Regular users are by default allowed to change their own data as per
-polkit rule for action org.freedesktop.accounts.change-own-user-data.
-
-In function user_change_icon_file_authorized_cb() in src/user.c there is
-quite some effort for safely setting the icon file property. The logic
-wants to achieve the following:
-
-a) take over the provided path as is, if it points to a world-readable
-  file in /usr/share
-b) otherwise safely copy the file with user privileges into
-  /var/lib/AccountsService/icons, and use that path as the property
-  value
-
-The following if clause tries to determine whether a) is the case:
-
-        if ((mode & S_IROTH) == 0 ||
-            (!g_str_has_prefix (filename, DATADIR) &&
-             !g_str_has_prefix (filename, ICONDIR))) {
-
-However, the prefix check is insufficient. Passing ../ components in the
-user supplied path can circumvent the check like this:
-
-$ touch /tmp/test
-$ dbus-send --system --print-reply --dest=org.freedesktop.Accounts \
-	/org/freedesktop/Accounts/User1000 \
-	org.freedesktop.Accounts.User.SetIconFile \
-	string:/usr/share/../../tmp/test
-$ rm /tmp/test
-$ ln -s /root/.bash_history /tmp/test
-
-Now the accountsservice stores /usr/share/../../tmp/test as icon file
-path, which actually points to /root/.bash_history. A third party
-application that trusts this property can potentially read from this
-location as root and try to interpret it as an image file. This is for
-example the case for Cinnamon desktop in the cinnamon-settings-users GUI
-application. Luckily in this example it does not simply copy the file,
-but tries to read it into an image object first. There may be other
-clients of accountsservice where this leads to more severe consequences.
-
-Suggested Fix:
-
-I think the easiest way to fix this is to normalize the user supplied
-filename e.g. using realpath(), before making the test above. A
-preliminary patch that takes this approach is found in the upstream bug
-referenced below and also attached to this mail.
-
-References:
-
-OpenSUSE bug: https://bugzilla.suse.com/show_bug.cgi?id=1099699
-Upstream bug: https://bugs.freedesktop.org/show_bug.cgi?id=107085
-
-Timeline:
-
-- 2018-06-28: I found the issue during a code review
-- 2018-06-28: I privately disclosed the issue to the upstream developers
-- 2018-07-02: The upstream developers agreed to publish the details
-
--- 
-Matthias Gerstner <matthias.gerstner@...e.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Telefon: +49 911 740 53 290
-GPG Key ID: 0x14C405C971923553
-
-SUSE Linux GmbH
-GF: Felix Imendörffer, Jane Smithard, Graham Norton
-HRB 21284 (AG Nuernberg)
-
-View attachment "0001-user_change_icon_file_authorized_cb-fix-insufficient.patch" of type "text/x-diff" (2413 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+As a reminder, we ask that potential security issues be reported via 
+private email to security@...ngoproject.com <mailto:security@...ngoproject.com> and not via Django's Trac 
+instance or the django-developers list. Please see 
+https://www.djangoproject.com/security <https://www.djangoproject.com/security> for further information. 
