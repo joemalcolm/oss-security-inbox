@@ -1,16 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/09/13
-Message-ID: <20180809171138.GA88843@wopr>
-Date: Thu, 9 Aug 2018 10:11:38 -0700
-From: Kurt H Maier <khm@...ops.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/01/3
+Message-ID: <CAFRnB2XPoZgv-2Pah5DmKifD6s+sKJk9SoK28T_2j2zb+53RNw@mail.gmail.com>
+Date: Mon, 1 Oct 2018 08:50:10 -0400
+From: Alex Gaynor <alex.gaynor@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux TCP implementation vulnerable to Denial of Service (CVE 2018-5390)
+Cc: Carlton Gibson <carlton.gibson@...il.com>
+Subject: Re: Django security release issued: 2.1.2
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Aug 09, 2018 at 06:17:54PM +0200, Solar Designer wrote:
-> 
-> If you're an [...] you can now apply to join
+FWIW, Django's default new-project template includes a password validator
+that denies the ability to use 20,000 common passwords:
+https://github.com/django/django/blob/master/django/conf/project_template/project_name/settings.py-tpl#L87-L100
 
-This is generally how clubs work.
+-- This will not be true for older projects with settings.py that upgraded
+Django versions, but did explicitly set PASSWORD_VALIDATORS, so that's a
+thing people should do :-)
 
-khm
+Alex
+
+On Mon, Oct 1, 2018 at 8:47 AM Solar Designer <solar@...nwall.com> wrote:
+
+> On Mon, Oct 01, 2018 at 11:33:47AM +0200, Carlton Gibson wrote:
+> > Today the Django team issued 2.1.2 as part of our security
+> > process. This release address a security issue, and we encourage all
+> > users to upgrade as soon as possible:
+> >
+> > https://www.djangoproject.com/weblog/2018/oct/01/security-release/
+>
+> First of all, thank you for sharing this with oss-security.
+>
+> Per oss-security list content guidelines, actual vulnerability detail
+> must be included in postings (message body or text/plain attachment).
+> The Subject could have easily been more descriptive for this list, too -
+> e.g., "CVE-2018-16984: Django: Password hash disclosure to "view only"
+> admin users".
+>
+> Carlton, I'd appreciate it if you include such detail in your
+> oss-security postings (if any) on future occasions.  Including the links
+> as well is great (such as for easy access to updated revisions while
+> the links work); including only links is discouraged.
+>
+> Here's the vulnerability detail from the above URL:
+>
+> ---
+> CVE-2018-16984: Password hash disclosure to "view only" admin users
+>
+> If an admin user has the change permission to the user model, only part
+> of the password hash is displayed in the change form. Admin users with
+> the view (but not change) permission to the user model were displayed
+> the entire hash. While it's typically infeasible to reverse a strong
+> password hash, if your site uses weaker password hashing algorithms such
+> as MD5 or SHA1, it could be a problem.
+>
+> Thanks Phithon Gong for reporting this issue.
+> ---
+>
+> BTW, the feasibility of "reversing" a password hash depends not only on
+> hash type, but also on how many guesses the attacker would need to make
+> before likely hitting the right password.  Without target user specific
+> information, that number depends on how common or not the password is.
+>
+> Maybe the word "typically" allows for this exception for weak passwords.
+> However, unnecessarily revealing the password hash is a problem on its
+> own, not just "could be a problem" depending on hash type, although the
+> restriction to "admin users" and password hashing do mitigate the issue
+> to some extent.
+>
+> Thanks,
+>
+> Alexander
+>
+
+
+-- 
+All that is necessary for evil to succeed is for good people to do nothing.
+
