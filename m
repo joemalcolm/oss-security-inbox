@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2535" "Wednesday" "12" "October" "2016" "00:11:04" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161012041104.D4A0552E014@smtpvbsrv1.mitre.org>" "58" "[oss-security] Re: CVE request: GNU Guile <= 2.0.12: REPL server vulnerable to HTTP inter-protocol attacks" nil nil nil "10" "2016101204:11:04" "[oss-security] Re: CVE request: GNU Guile <= 2.0.12: REPL server vulnerable to HTTP inter-protocol attacks" (number mark "U       cve-assign@m Oct 12   58/2535  " thread-indent "\"[oss-security] Re: CVE request: GNU Guile <= 2.0.12: REPL server vulnerable to HTTP inter-protocol attacks\"\n") "<87pon7t2f8.fsf@gnu.org>" ("<87pon7t2f8.fsf@gnu.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2115" "Monday" "1" "October" "2018" "14:45:47" "+0200" "Solar Designer" "solar@openwall.com" "<20181001124547.GA6845@openwall.com>" "49" "Re: [oss-security] Django security release issued: 2.1.2" "^Cc:" nil nil "10" "2018100112:45:47" "[oss-security] Django security release issued: 2.1.2" (number mark "        solar@openwa Oct  1   49/2115  " thread-indent "\"Re: [oss-security] Django security release issued: 2.1.2\"\n") "<D256F892-8344-4273-A676-93D62E0CC984@gmail.com>" ("<D256F892-8344-4273-A676-93D62E0CC984@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 25704 invoked by uid 550); 12 Oct 2016 04:11:16 -0000
+Received: (qmail 9358 invoked by uid 550); 1 Oct 2018 12:46:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,71 +11,67 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 8128 invoked from network); 1 Oct 2018 12:45:52 -0000
+Message-ID: <20181001124547.GA6845@openwall.com>
+References: <D256F892-8344-4273-A676-93D62E0CC984@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <D256F892-8344-4273-A676-93D62E0CC984@gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Cc: oss-security@lists.openwall.com
+Date: Mon, 1 Oct 2018 14:45:47 +0200
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25683 invoked from network); 12 Oct 2016 04:11:16 -0000
-From: cve-assign@mitre.org
-To: ludo@gnu.org
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, cwebber@dustycloud.org, wingo@pobox.com, mhw@netris.org
-In-Reply-To: <87pon7t2f8.fsf@gnu.org>
-Message-Id: <20161012041104.D4A0552E014@smtpvbsrv1.mitre.org>
-Date: Wed, 12 Oct 2016 00:11:04 -0400 (EDT)
-Subject: [oss-security] Re: CVE request: GNU Guile <= 2.0.12: REPL server vulnerable to HTTP inter-protocol attacks
+Subject: Re: [oss-security] Django security release issued: 2.1.2
+To: Carlton Gibson <carlton.gibson@gmail.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Mon, Oct 01, 2018 at 11:33:47AM +0200, Carlton Gibson wrote:
+> Today the Django team issued 2.1.2 as part of our security 
+> process. This release address a security issue, and we encourage all 
+> users to upgrade as soon as possible: 
+> 
+> https://www.djangoproject.com/weblog/2018/oct/01/security-release/
 
-> GNU Guile, an implementation of the Scheme language, provides a "REPL
-> server" which is a command prompt that developers can connect to for
-> live coding and debugging purposes. The REPL server is started by the
-> '--listen' command-line option or equivalent API.
-> 
-> Christopher Allan Webber reported that the REPL server is vulnerable to
-> the HTTP inter-protocol attack as described at
-> <https://en.wikipedia.org/wiki/Inter-protocol_exploitation>, notably the
-> HTML form protocol attack described at
-> <https://www.jochentopf.com/hfpa/hfpa.pdf>.
-> 
-> This constitutes a remote code execution vulnerability for developers
-> running a REPL server that listens on a loopback device or private
-> network. Applications that do not run a REPL server, as is usually the
-> case, are unaffected.
-> 
-> Developers can work around this vulnerability by binding the REPL server
-> to a Unix-domain socket, for instance by running:
-> 
->   guile --listen=/some/file
-> 
-> A modification to the REPL server that detects attempts to exploit this
-> vulnerability is available upstream and will be part of Guile 2.0.13, to
-> be released shortly.
-> 
-> Patch: http://git.savannah.gnu.org/cgit/guile.git/commit/?h=stable-2.0&id=08c021916dbd3a235a9f9cc33df4c418c0724e03
+First of all, thank you for sharing this with oss-security.
 
->> +;;; Here we add a procedure to 'before-read-hook' that looks for a possible
->> +;;; HTTP request-line in the first line of input from the client socket. If
->> +;;; present, the socket is drained and closed
+Per oss-security list content guidelines, actual vulnerability detail
+must be included in postings (message body or text/plain attachment).
+The Subject could have easily been more descriptive for this list, too -
+e.g., "CVE-2018-16984: Django: Password hash disclosure to "view only"
+admin users".
 
-Use CVE-2016-8606.
+Carlton, I'd appreciate it if you include such detail in your
+oss-security postings (if any) on future occasions.  Including the links
+as well is great (such as for easy access to updated revisions while
+the links work); including only links is discouraged.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Here's the vulnerability detail from the above URL:
 
-iQIcBAEBCAAGBQJX/bZEAAoJEHb/MwWLVhi2ENkQAIyMUaLq9mwR5hvyeoP+4GF0
-p5rA477BYUM3KhnHqk7kNmuGb4OjP/mCc+6POvYqwyJOCt3vsYnBfp77dL0VgKgV
-Zoabg0kfNFXJFvhWeIE3qwAnI9zMVV/H2S63C9c3KuHsxy8a/6/q5PpznwhcjG+L
-AqWlHvSYhNmTtanR8nyRwcchEavatZh8eTXP9ITpFRZ+xuu6XoHwhmlmKE9srIBq
-Fun81jQGTN+dPCYcrviqJjW4258328oua0he4gCxKsM/JRLCWxTNtwgmh0EH8hro
-uJyb76LNk9RgA64po2qrr3Q2LUN2lpSILci8V9mQhWMvLBtyxSKzrgq0FKuJoxjr
-oFauy+LbwXUD0pHjfy9SiOjxEpwP5/jt9tpVoaMdRVjigJ86sm8zOx5d4BmgyPuA
-98uYtuCvB+AHblQJh5i9M3rln56rkgopDjR2suKJVSN0t3kHxEPDe1rdgDOGXrxz
-5kG/g/a5E92omW9J+4e+GiTj+NMSocrHKPOZGUHSlZl68EL8Fe4wqRHA+I9081dq
-XDmtF1mzHQ3tSY+jxhVckFb1IKvReR7JeCKKpsdkQDMIG7BfJsbQoB6IQEsASRtD
-PbXFvubj7LHEuTikLQc3qWXSAgzLpioyNVDxcxANdf0mirKXchysbpuv1uviC7Oa
-zHs39ZEyvoopDQP8s6ef
-=YKYq
------END PGP SIGNATURE-----
+---
+CVE-2018-16984: Password hash disclosure to "view only" admin users
+
+If an admin user has the change permission to the user model, only part
+of the password hash is displayed in the change form. Admin users with
+the view (but not change) permission to the user model were displayed
+the entire hash. While it's typically infeasible to reverse a strong
+password hash, if your site uses weaker password hashing algorithms such
+as MD5 or SHA1, it could be a problem.
+
+Thanks Phithon Gong for reporting this issue.
+---
+
+BTW, the feasibility of "reversing" a password hash depends not only on
+hash type, but also on how many guesses the attacker would need to make
+before likely hitting the right password.  Without target user specific
+information, that number depends on how common or not the password is.
+
+Maybe the word "typically" allows for this exception for weak passwords.
+However, unnecessarily revealing the password hash is a problem on its
+own, not just "could be a problem" depending on hash type, although the
+restriction to "admin users" and password hashing do mitigate the issue
+to some extent.
+
+Thanks,
+
+Alexander
