@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["595" "Friday" "3" "November" "2017" "21:26:59" "+0100" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20171103212659.378593da@pc1>" "19" "[oss-security] nvi crash recovery (was Re: [oss-security] Re: Security risk of server side text editing in general and vim.tiny specifically)" "^Date:" nil nil "11" "2017110320:26:59" "[oss-security] nvi crash recovery (was Re: [oss-security] Re: Security risk of server side text editing in general and vim.tiny specifically)" (number mark "        hanno@hboeck Nov  3   19/595   " thread-indent "\"[oss-security] nvi crash recovery (was Re: [oss-security] Re: Security risk of server side text editing in general and vim.tiny specifically)\"\n") "<20171103181243.lwtf3a5f4zjr4pzi@matica.foolinux.mooo.com>" ("<2ECE9D9EEF1F524185270138AE23265955B0B9CE@S0MSMAIL112.arc.local>" "<20171103181243.lwtf3a5f4zjr4pzi@matica.foolinux.mooo.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1703" "Tuesday" "2" "October" "2018" "13:07:14" "+0300" "Henri Salo" "henri@nerv.fi" "<20181002100714.vjc6guekvqkcp3j3@tunkki.bugs.fi>" "46" "Re: [oss-security] CVE Request - Information Exposure Vulnerability in WordPress Mobile Pack Wordpress Plugin v2.1.2 (and certain versions of v2.1.3 - prior to June 3, 2015)" "^Cc:" nil nil "10" "2018100210:07:14" "[oss-security] CVE Request - Information Exposure Vulnerability in WordPress Mobile Pack Wordpress Plugin v2.1.2 (and certain versions of v2.1.3 - prior to June 3, 2015)" (number mark "        henri@nerv.f Oct  2   46/1703  " thread-indent "\"Re: [oss-security] CVE Request - Information Exposure Vulnerability in WordPress Mobile Pack Wordpress Plugin v2.1.2 (and certain versions of v2.1.3 - prior to June 3, 2015)\"\n") "<CAARZ5vrpA1sgTmi_g=A520FkKsb19BX9eKHM8vvox-5MpY-1jA@mail.gmail.com>" ("<CAARZ5vrpA1sgTmi_g=A520FkKsb19BX9eKHM8vvox-5MpY-1jA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 11434 invoked by uid 550); 3 Nov 2017 20:27:13 -0000
+Received: (qmail 30487 invoked by uid 550); 2 Oct 2018 10:07:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,38 +11,68 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11416 invoked from network); 3 Nov 2017 20:27:13 -0000
-Message-ID: <20171103212659.378593da@pc1>
-In-Reply-To: <20171103181243.lwtf3a5f4zjr4pzi@matica.foolinux.mooo.com>
-References: <2ECE9D9EEF1F524185270138AE23265955B0B9CE@S0MSMAIL112.arc.local>
-	<20171103181243.lwtf3a5f4zjr4pzi@matica.foolinux.mooo.com>
-X-Mailer: Claws Mail 3.15.1-dirty (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+Received: (qmail 30468 invoked from network); 2 Oct 2018 10:07:29 -0000
+X-Virus-Scanned: Debian amavisd-new at coconut.nerv.fi
+Message-ID: <20181002100714.vjc6guekvqkcp3j3@tunkki.bugs.fi>
+References: <CAARZ5vrpA1sgTmi_g=A520FkKsb19BX9eKHM8vvox-5MpY-1jA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 3 Nov 2017 21:26:59 +0100
-From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="6mzmrsws3udunlzc"
+Content-Disposition: inline
+In-Reply-To: <CAARZ5vrpA1sgTmi_g=A520FkKsb19BX9eKHM8vvox-5MpY-1jA@mail.gmail.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
+Cc: oss-security@lists.openwall.com
+Date: Tue, 2 Oct 2018 13:07:14 +0300
+From: Henri Salo <henri@nerv.fi>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] nvi crash recovery (was Re: [oss-security] Re: Security risk of
- server side text editing in general and vim.tiny specifically)
-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE Request - Information Exposure Vulnerability
+ in WordPress Mobile Pack Wordpress Plugin v2.1.2 (and certain versions of
+ v2.1.3 - prior to June 3, 2015)
+To: Nitin Venkatesh <venkatesh.nitin@gmail.com>
 
-On Fri, 3 Nov 2017 11:12:43 -0700
-Ian Zimmerman <itz@very.loosely.org> wrote:
+--6mzmrsws3udunlzc
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> How much of this (and the parallel thread of course) applies to nvi?
+On Sun, Jul 19, 2015 at 11:19:08AM +0000, Nitin Venkatesh wrote:
+> I discovered Information Exposure Vulnerability in WordPress Mobile Pack
+> Wordpress Plugin v2.1.2 which was responsibly disclosed to the vendor who
+> fixed the issues in v2.1.3. The vulnerability is also present in certain
+> versions of v2.1.3 (prior to June 3, 2015), hence users who have those
+> versions also need to upgrade/reinstall.
+>=20
+> I request a CVE for the same.
+>=20
+> References:
+> http://seclists.org/fulldisclosure/2015/Jul/97
+>=20
+> Thanks & regards,
+> Nitin Venkatesh
 
-This is actually interesting:
-nvi saves recovery files to /var/tmp/vi.recover and creates them with
-600 permissions.
-So all the problems discussed don't really apply here.
-However the dir itself gets created by the first user using nvi. Not
-sure if that causes any other problems (permissions are rwx for all and
-sticky bit).
+CVE-2015-9269 has been assigned for this vulnerability.
 
 --=20
-Hanno B=C3=B6ck
-https://hboeck.de/
+Henri Salo
 
-mail/jabber: hanno@hboeck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+--6mzmrsws3udunlzc
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEE/aVSDznAZReWTkxKJ633pE6qdXQFAluzQ1IACgkQJ633pE6q
+dXQw8w//VrmWMsBXzHdv2pgWw0fkuU9jCn64QDmR9W4XAMlgQiCgQ5Sj+d4xlHdI
+r9HAptxPrRyVujGzy+o+CIrq9EHr0iKvhYZ2WI0niEnqqifwd45cVOx3Bi9DtRAX
+Pt3aVuXgXdkYl3EREZuuPhgz0Z8dr4pkCn/cBECXU+6X9NRtAMF4/JdcwVyu+756
+ysdUMjLBj61FXz6mRuGDYdHCwupd6Jxrx8HzkQRv8hWpBg+yRD4rFSRPLV5ZRK7/
+lQXtaeaDuyuBP8O0NCpB7qOsuO5C6lG/j3xEAgPGJMljyBTROYeyPicFdlTEYa7L
+EqoXwC1QwSN7A/lb8+BEvrULlDIuYpdtZ8MKFvDJG0412hEb4DfDkv9Y1UJAe7u/
+RuO32ddcDkaf8aQ7xPsE0JVVTJB5NfWdt5UX/U3CFyiK8woPrglcRo0l3l6sILY4
+Ir4OZDVCaPXQ+kU9FVm5ulrmjPsXHolrNeKtwWfavq9qkXFtkd36xNcJ9Iu9sTQK
+kywrfMx/83NwxG9x0qjnE8k/V33Xz4XJ31fkOvsJKqsDEWf9LtebUuWTj7VGQ5cm
+1BX3PhxwD6PETISEmSfvXnnpiRZuT9MrbirhzEkOBKnjsPqTIzNh/ZBAa9dwQIQK
+ePIM+VlTxNNxkNyQXPLr9AVs6rUZ25cW5gL3pEmqtbq3/yaFV/U=
+=0koV
+-----END PGP SIGNATURE-----
+
+--6mzmrsws3udunlzc--
