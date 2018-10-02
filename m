@@ -1,43 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/21/1
-Message-ID: <20181021010450.GB4751@milliways.localdomain>
-Date: Sun, 21 Oct 2018 02:04:50 +0100
-From: Ken Moffat <zarniwhoop@...world.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Attempting to patch ghostscript-9.25
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/02/1
+Message-ID: <20181002100714.vjc6guekvqkcp3j3@tunkki.bugs.fi>
+Date: Tue, 2 Oct 2018 13:07:14 +0300
+From: Henri Salo <henri@...v.fi>
+To: Nitin Venkatesh <venkatesh.nitin@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request - Information Exposure Vulnerability in WordPress Mobile Pack Wordpress Plugin v2.1.2 (and certain versions of v2.1.3 - prior to June 3, 2015)
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Oct 20, 2018 at 11:42:20AM +0000, Jordan Glover wrote:
-> ‐‐‐‐‐‐‐ Original Message ‐‐‐‐‐‐‐
-> On Saturday, October 20, 2018 3:47 AM, Ken Moffat <zarniwhoop@...world.com> wrote:
+On Sun, Jul 19, 2015 at 11:19:08AM +0000, Nitin Venkatesh wrote:
+> I discovered Information Exposure Vulnerability in WordPress Mobile Pack
+> Wordpress Plugin v2.1.2 which was responsibly disclosed to the vendor who
+> fixed the issues in v2.1.3. The vulnerability is also present in certain
+> versions of v2.1.3 (prior to June 3, 2015), hence users who have those
+> versions also need to upgrade/reinstall.
 > 
-> >
-> > The patch is a bit big, so I've uploaded it to
-> > http://www.linuxfromscratch.org/~ken/provisional/ as
-> > ghostscript-9.25-security_fixes-2.patch
-> >
-> > 'provisional' until I find out if it protects adequately. If there
-> > turn out ot be problems, I suppose I'll need to renumber later
-> > versions.
-> >
-I've now been given an exploit, in a PDF (I was not subscribed here
-until Friday, missed some of the earleir stuff).  That -2 patch fixes
-it.
-
-Tested with evince (which now loops trying to rended an empty page,
-same as with the .ps exploit), so I've committed it in BLFS.  Will
-take down the 'provisional' copy in a few days.
-
-> I think the easiest way is to build on upstream git snapshot.
-> All of its contents will be included in future release anyway.
+> I request a CVE for the same.
 > 
-> Jordan
+> References:
+> http://seclists.org/fulldisclosure/2015/Jul/97
+> 
+> Thanks & regards,
+> Nitin Venkatesh
 
-If upstream are like anywhere else, some changes get backed out or
-modified so they might not be there when 9.26 is released.  OTOH,
-one of the changes I ignored might stop evince looping on a
-'damaged' PDF.  Swings and roundabouts.
+CVE-2015-9269 has been assigned for this vulnerability.
 
-ĸen
 -- 
-                        Is it about a bicycle ?
+Henri Salo
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
