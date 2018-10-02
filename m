@@ -1,32 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/22/2
-Message-ID: <CAFB0D2QndLM--WJEGQFSpEcFp0ts_r0b-vHD-WL+tFH+uiX7SQ@mail.gmail.com>
-Date: Thu, 22 Feb 2018 16:46:55 +0000
-From: Justin Bull <me@...tinbull.ca>
-To: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com,  fulldisclosure@...lists.org
-Subject: Re: [CVE-2018-1000088] Stored XSS vulnerability in Doorkeeper gem v2.1.0 - v4.2.5
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/02/2
+Message-ID: <20181002160713.GE23872@arm.com>
+Date: Tue, 2 Oct 2018 17:07:14 +0100
+From: Will Deacon <will.deacon@....com>
+To: oss-security@...ts.openwall.com
+Cc: marc.zyngier@....com
+Subject: arm64 Linux kernel: Privilege escalation by taking control of the KVM hypervisor
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Feb 21, 2018 at 5:17 PM Justin Bull <me@...tinbull.ca> wrote:
+Hi all,
 
->
-> Solution:
-> ---------
-> Upgrade to Doorkeeper v4.2.6 or later
->
->
-Apologies. This fails to account for a non-trivial scenario.
+Whilst reviewing some proposed arm64 KVM changes, it became apparent that
+the sanity checking for the KVM_SET_ON_REG ioctl() on arm64 does not
+correctly handle a number of cases:
 
-Any software using Doorkeeper that has generated its own custom views[0]
-requires manual work to verify there's no explicit HTML in the
-`client_name` and `native_redirect_uri` field values.
+	- Unaligned register accesses and accesses that span multiple
+	  registers can bypass PSTATE sanity checking
 
-This has been updated in the bulletin's Fix section[1].
+	- The PSTATE sanity checking fails to take into account the
+	  capabilities of the physical CPU, or the configuration of
+	  the virtual CPU
 
-[0]: https://github.com/doorkeeper-gem/doorkeeper/wiki/Customizing-views
-[1]:
-https://blog.justinbull.ca/cve-2018-1000088-stored-xss-in-doorkeeper/#fix
--- 
-Justin Bull
-PGP Fingerprint: E09D 38DE 8FB7 5745 2044 A0F4 1A2B DEAA 68FD B34C
+This allows an attacker with permission to create KVM-based virtual machines
+to both panic the hypervisor by triggering an illegal exception return
+(resulting in a DoS) and to redirect execution elsewhere within the
+hypervisor with full register control, instead of causing a return to the
+guest.
 
+This has been fixed by upstream commits:
+
+d26c25a9d19b ("arm64: KVM: Tighten guest core register access from userspace")
+2a3f93459d68 ("arm64: KVM: Sanitize PSTATE.M when being set from userspace")
+
+which are being backported and applied to all active -stable kernels.
+
+32-bit Arm is unaffected by this issue.
+
+There has not yet been a CVE requested for this (mainly because I don't know
+how to do it).
+
+Thanks,
+
+Will
