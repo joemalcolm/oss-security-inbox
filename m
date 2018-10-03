@@ -1,36 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/23/10
-Message-ID: <CAEwge-HwkgJoAUiCKj1S43OfcaU+47ZQkw+wkNmm0=JSH_Y5TA@mail.gmail.com>
-Date: Fri, 23 Feb 2018 14:19:09 -0800
-From: Anthony Baker <abaker@...che.org>
-To: user@...de.apache.org, dev@...de.apache.org, announce@...che.org,  asf-security <security@...che.org>, oss-security@...ts.openwall.com, mmo@...mle.com
-Subject: [SECURITY] CVE-2017-15693 Apache Geode unsafe deserialization of application objects
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/03/2
+Message-ID: <20181003150024.ifequdhobocn53lz@suse.de>
+Date: Wed, 3 Oct 2018 17:00:26 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com
+Cc: Henri Salo <henri@...v.fi>, marc.zyngier@....com
+Subject: Re: arm64 Linux kernel: Privilege escalation by taking control of the KVM hypervisor
 Content-Type: text/plain; charset=utf-8
 
-CVE-2017-15693 Apache Geode unsafe deserialization of application objects
+On Wed, Oct 03, 2018 at 08:57:05AM +0200, Florian Weimer wrote:
+> * Henri Salo:
+> 
+> > On Tue, Oct 02, 2018 at 05:07:14PM +0100, Will Deacon wrote:
+> >> There has not yet been a CVE requested for this (mainly because I don't know
+> >> how to do it).
+> >
+> > Please use https://cveform.mitre.org/ thanks.
+> 
+> Would DFW work as well?
+> 
+>   <https://github.com/distributedweaknessfiling/cvelist>
+> 
+> I'm asking because the Rust people tried to get an ID from there, but
+> apparently never got a reply.
 
-Severity:  Important
+DFW is very slow to assign CVEs, Mitre is same or next-day.
 
-Vendor: The Apache Software Foundation
-
-Versions Affected:  Apache Geode 1.0.0 through 1.3.0
-
-Description:
-The Geode server stores application objects in serialized form.
-Certain cluster operations and API invocations cause these objects to
-be deserialized.  An user with DATA:WRITE access to the cluster may be
-able to cause remote code execution if certain classes are present on
-the classpath.
-
-Mitigation:
-Users of the affected versions should upgrade to Apache Geode 1.4.0 or
-later.  In addition, users should set the flags
-validate-serializable-objects and serializable-object-filter.
-
-Credit:
-This issue was reported responsibly to the Apache Geode Security Team
-by Man Yue Mo from Semmle.
-
-References:
-[1] https://issues.apache.org/jira/browse/GEODE-3923
-[2] https://cwiki.apache.org/confluence/display/GEODE/Release+Notes#ReleaseNotes-SecurityVulnerabilities
+Ciao, Marcus
