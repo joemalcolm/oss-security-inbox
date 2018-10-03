@@ -1,43 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/29/5
-Message-Id: <13C54619-BA67-4F58-A340-DECA0E9848DB@apache.org>
-Date: Tue, 28 Aug 2018 15:39:49 -0700
-From: Bryan Call <bcall@...che.org>
-To: announce@...fficserver.apache.org, dev <dev@...fficserver.apache.org>, users <users@...fficserver.apache.org>, security@...fficserver.apache.org, oss-security@...ts.openwall.com
-Subject: [ANNOUNCE] Apache Traffic Server vulnerability with multiple HTTP smuggling and cache poisoning attacks - CVE-2018-8004
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/03/1
+Message-ID: <87y3bf1pry.fsf@mid.deneb.enyo.de>
+Date: Wed, 03 Oct 2018 08:57:05 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
+To: Henri Salo <henri@...v.fi>
+Cc: marc.zyngier@....com,  oss-security@...ts.openwall.com
+Subject: Re: arm64 Linux kernel: Privilege escalation by taking control of the KVM hypervisor
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-8004: Apache Traffic Server vulnerability with multiple HTTP smuggling and cache poisoning attacks
+* Henri Salo:
 
-Reported By:
-Régis Leroy
+> On Tue, Oct 02, 2018 at 05:07:14PM +0100, Will Deacon wrote:
+>> There has not yet been a CVE requested for this (mainly because I don't know
+>> how to do it).
+>
+> Please use https://cveform.mitre.org/ thanks.
 
-Vendor:
-The Apache Software Foundation
+Would DFW work as well?
 
-Version Affected:
-ATS 6.0.0 to 6.2.2
-ATS 7.0.0 to 7.1.3
+  <https://github.com/distributedweaknessfiling/cvelist>
 
-Description:
-There are multiple HTTP smuggling and cache poisoning issues when clients making malicious requests interact with ATS.
-
-Mitigation:
-6.x users should upgrade to 6.2.3 or later versions
-7.x users should upgrade to 7.1.4 or later versions
-
-References:
-	Downloads:
-		https://trafficserver.apache.org/downloads
-	Github Pull Request:
-		https://github.com/apache/trafficserver/pull/3192
-		https://github.com/apache/trafficserver/pull/3201
-		https://github.com/apache/trafficserver/pull/3231
-		https://github.com/apache/trafficserver/pull/3251
-	CVE:
-		https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-8004
-
--Bryan
-
-
-
+I'm asking because the Rust people tried to get an ID from there, but
+apparently never got a reply.
