@@ -1,25 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/26/1
-Message-ID: <1522050905.3114.4.camel@debian.org>
-Date: Mon, 26 Mar 2018 09:55:05 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: oss-security@...ts.openwall.com, Hanno Böck <hanno@...eck.de>
-Subject: Re: Stack buffer overflow in WolfSSL before 3.13.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/03/3
+Message-ID: <20181003202140.GH25942@hunt>
+Date: Wed, 3 Oct 2018 13:21:40 -0700
+From: Seth Arnold <seth.arnold@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: arm64 Linux kernel: Privilege escalation by taking control of the KVM hypervisor
 Content-Type: text/plain; charset=utf-8
 
-On Sat, 2018-03-24 at 23:48 +0100, Hanno Böck wrote:
-> https://blog.fuzzing-project.org/63-Stack-buffer-overflow-in-WolfSSL-before-3.13.0.html
+On Wed, Oct 03, 2018 at 08:57:05AM +0200, Florian Weimer wrote:
+> > On Tue, Oct 02, 2018 at 05:07:14PM +0100, Will Deacon wrote:
+> >> There has not yet been a CVE requested for this (mainly because I don't know
+> >> how to do it).
+> >
+> > Please use https://cveform.mitre.org/ thanks.
 > 
-> During some tests of TLS libraries I found a stack buffer overflow
-> vulnerability in the WolfSSL library. Finding this one was surprisingly
-> simple: I had a wolfssl server that was compiled with address sanitizer
-> and ran the SSL Labs test against it.
+> Would DFW work as well?
+> 
+>   <https://github.com/distributedweaknessfiling/cvelist>
+> 
+> I'm asking because the Rust people tried to get an ID from there, but
+> apparently never got a reply.
 
-Hi,
+In my experience the MITRE form is significantly more reliable and faster
+mechanism than the DWF form.
 
-was a CVE requested/assigned for this issue?
+I realize this is perhaps a chicken-and-egg problem, where DWF might not
+be fast until they get enough traffic that they have to be fast, but MITRE
+is fast *today*, so any individual CVE requestor is probably better suited
+to use MITRE.
 
-Regards,
--- 
-Yves-Alexis
+Thanks
+
 Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
