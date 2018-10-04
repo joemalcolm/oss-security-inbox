@@ -1,31 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/16/6
-Message-ID: <c6a80b3d-e325-d09d-32f2-aa3ccb21be7a@isc.org>
-Date: Tue, 16 Jan 2018 16:38:07 -0500
-From: Michael McNally <mcnally@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/04/1
+Message-ID: <1528769066.17980286.1538644482689.JavaMail.zimbra@redhat.com>
+Date: Thu, 4 Oct 2018 05:14:42 -0400 (EDT)
+From: Vladis Dronov <vdronov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: ISC has announced CVE-2017-3144, a defect in ISC DHCP
+Subject: CVE-2018-14656: Linux kernel: arbitrary kernel memory dump into the dmesg log
 Content-Type: text/plain; charset=utf-8
 
-Please be advised that ISC has publicly announced a vulnerability in
-ISC DHCP.
+Heololo,
 
-CVE-2017-3144 is a partial denial-of-service vector which can be used
-to exhaust the server's pool of socket descriptors if an attacker can
-open connections to the server's OMAPI control port.  If successfully
-exploited the attacker can prevent the operator from being able to
-connect to the server, for example to change server state or to add
-lease reservations without restarting the server.
+A missing address check in the callers of the show_opcodes() in the Linux kernel
+allows an attacker to dump the kernel memory at an arbitrary kernel address into
+the dmesg log. This affects the upstream Linux kernel as it was introduced by
+ba54d856a9d8 and 7cccf0725cf7, both since v4.18-rc1 and fixed by 342db04ae712
+since v4.19-rc2.
 
-Since an unauthorized client should not be permitted access to this
-port under normal circumstances, we are recommending that most operators
-should simply secure access to the control port; however a patch which
-properly cleans up the hung socket descriptors is available upon request
-(and will be included in future maintenance releases.)
+The CVE-2018-14656 was assigned to this flaw, I would suggest to use it in public
+communications regarding this flaw.
 
-Our full CVE text can be found at https://kb.isc.org/article/AA-01541
+References:
 
---
-Michael McNally
-ISC Security Officer
+https://bugzilla.redhat.com/show_bug.cgi?id=1629940
 
+https://bugs.chromium.org/p/project-zero/issues/detail?id=1650
+
+https://lore.kernel.org/lkml/20180828154901.112726-1-jannh@google.com/T/
+
+An upstream patch:
+
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=342db04ae71273322f0011384a9ed414df8bdae4
+
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
