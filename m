@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2174" "Wednesday" "23" "September" "2015" "11:54:42" "-0700" "Greg KH" "greg@kroah.com" "<20150923185442.GA4974@kroah.com>" "47" "Re: [oss-security] Vulnerability in WhiteHEAT Linux Driver-CVE-2015-5257" nil nil nil "9" "2015092318:54:42" "[oss-security] Vulnerability in WhiteHEAT Linux Driver-CVE-2015-5257" (number mark "        greg@kroah.c Sep 23   47/2174  " thread-indent "\"Re: [oss-security] Vulnerability in WhiteHEAT Linux Driver-CVE-2015-5257\"\n") "<20150923031706.GB18670@kroah.com>" ("<56019762.70002@istuary.com>" "<5601F731.3090409@istuary.com>" "<20150923031706.GB18670@kroah.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["7189" "Friday" "5" "October" "2018" "23:46:07" "+0800" "luo" "a4651386@163.com" "<3a997e85.7dd9.16644e8508d.Coremail.a4651386@163.com>" "123" "[oss-security] CVE-2018-17977: CentOS ipsec remote denial of service vulnerability" "^Date:" nil nil "10" "2018100515:46:07" "[oss-security] CVE-2018-17977: CentOS ipsec remote denial of service vulnerability" (number mark "        a4651386@163 Oct  5  123/7189  " thread-indent "\"[oss-security] CVE-2018-17977: CentOS ipsec remote denial of service vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 19472 invoked by uid 550); 23 Sep 2015 18:55:33 -0000
+Received: (qmail 30149 invoked by uid 550); 5 Oct 2018 16:44:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,76 +11,153 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 18419 invoked from network); 23 Sep 2015 18:55:32 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-transfer-encoding:content-type
-	:date:from:in-reply-to:message-id:mime-version:references
-	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=mBpd22xWPt2KPCF
-	gl7VTHlilpC8=; b=mMaUmfh86txIb8PMJItsbmbz2oEfOMs0Jwso2pjkRVWo7Ss
-	GcpRD0lglC68dGf4RraN7x5lbJ67vUgNtoqo5cMgWYTEJmbHmws+7f1h5WJHV+qv
-	CyyvrbrDiFzY2lW7LAX2QdV61lZlYnSEs/wN3dngrxcrFcZ9qg0BYeHNPnUc=
-X-Sasl-enc: VXzST0gSdyRElm470unJH9XIgF68FQ1nSyjeZAGsLusb 1443034521
-Message-ID: <20150923185442.GA4974@kroah.com>
-References: <56019762.70002@istuary.com>
- <5601F731.3090409@istuary.com>
- <20150923031706.GB18670@kroah.com>
+Received: (qmail 23667 invoked from network); 5 Oct 2018 15:46:23 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=+LXFP
+	i9xn+/9GnNzAKU1vuPsuC4CtCwAEPMMgSQRN0s=; b=OfpS1v8KeCJoaMjVhIQUl
+	GD58YTqWVaWGqj1RCxQRo9fMladfqRtG0aWE7chXXP4vdeBu0IGk2k2DWnEH/YVi
+	hmDw73CXns/m7M7T0mDz+f/aJ5LDOH9AHygedfj+mt3QGHMjafJOSbM8r1anz/1z
+	BR+4f+MBmVLiyjK2RdyJmw=
+X-Originating-IP: [221.15.235.75]
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version SP_ntes V3.5 build
+ 20160729(86883.8884) Copyright (c) 2002-2018 www.mailtech.cn 163com
+X-CM-CTRLDATA: p+itR2Zvb3Rlcl9odG09NTcxODo1Ng==
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_124031_284156360.1538754367629"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20150923031706.GB18670@kroah.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Date: Wed, 23 Sep 2015 11:54:42 -0700
-From: Greg KH <greg@kroah.com>
+Message-ID: <3a997e85.7dd9.16644e8508d.Coremail.a4651386@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID:PsGowAD3_ws_h7dbwt2sAA--.2572W
+X-CM-SenderInfo: zduwkiqtywqiywtou0bp/1tbiMwvWpFXlslPS7wABsn
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Date: Fri, 5 Oct 2018 23:46:07 +0800 (CST)
+From: luo  <a4651386@163.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Vulnerability in WhiteHEAT Linux
- Driver-CVE-2015-5257
+Subject: [oss-security] CVE-2018-17977: CentOS
+ ipsec remote denial of service vulnerability
 To: oss-security@lists.openwall.com
 
-On Tue, Sep 22, 2015 at 08:17:06PM -0700, Greg KH wrote:
-> On Tue, Sep 22, 2015 at 05:49:53PM -0700, Moein Ghasemzadeh wrote:
-> > Hello,
-> > 
-> > We have discovered a vulnerability in a linux kernel module and would
-> > like to inform you so that required actions could be taken.
-> > 
-> > Assigned CVE ID : CVE-2015-5257.
-> > 
-> > Below is the description of the vulnerability.
-> > 
-> > 1. Software name and vendor name:
-> > USB WhiteHEAT serial driver by ConnecTech in the Linux kernel
-> > v3.19.0-28, but likely to exist in all kernel versions.
-> > 
-> > 2. Type of vulnerability or attack outcome:
-> > 
-> > The vulnerability triggers a kernel NULL pointer dereference. It causes
-> > the OS to freeze on many machines and requires a cold reboot, causing
-> > denial of service.
-> > 
-> > 3. A description of the affected code (e.g. the function name, the
-> > vulnerable web page, link to the affected code, a bug entry, etc.):
-> > 
-> > The flaw exists in the "whiteheat_attach" function in
-> > drivers/usb/serial/whiteheat.c in the Whiteheat USB Serial Driver in the
-> > Linux kernel.
-> > (http://lxr.free-electrons.com/source/drivers/usb/serial/whiteheat.c?v=3.19)
-> > 
-> > 
-> > In the driver, the “COMMAND_PORT” variable is hard coded and is set to
-> > “4” (5th element). So, the driver assumes that the number of ports
-> > always will be 5 and takes the port number 5 as the command port. But,
-> > using a specially made USB device in which the number of ports was set
-> > to a number less than 5 (e.g. 3) we were able to perform Denial of
-> > Service on the system due to a kernel NULL pointer dereference. The
-> > system froze and requires a reboot.
-> > 
-> > You may find more information regarding the bug from the logs attached
-> > to this email. Please let us know if you have any questions or concerns.
-> 
-> FWIW, the USB serial subsystem maintainer was just told about this an
-> hour or so ago, and is working on a patch for this, which should be
-> merged into Linus's tree by the end of the week or so.
+------=_Part_124031_284156360.1538754367629
+Content-Type: text/plain; charset=GBK
+Content-Transfer-Encoding: base64
 
-And here's a patch if distros care to pick it up earlier than "normal":
-	https://lkml.kernel.org/r/<1443033702-29600-1-git-send-email-johan@kernel.org>
+CgpJIGp1c3QgYXBwbGllZCBmb3IgdGhlIGN2ZSBudW1iZXIgYXQgaHR0cHM6
+Ly9jdmVmb3JtLm1pdHJlLm9yZy8uIEkgZG9uJ3Qga25vdyBpZiBpdCBpcyBj
+b3JyZWN0IHRvIHB1Ymxpc2ggdGhlIGNvbXBsZXRlIGluZm9ybWF0aW9uLiBQ
+bGVhc2UgY2hlY2sgdGhlIGNvbW11bml0eS4gVGhpcyB2dWxuZXJhYmlsaXR5
+IGlzIHZlcnkgZGlmZmVyZW50LiBBbG1vc3QgYWxsIHZlcnNpb25zIG9mIHRo
+ZSBrZXJuZWwgd2lsbCB3b3JrIHdpdGggdGhlIGNlbnRvcyBkZXNrdG9wIHZl
+cnNpb24uIE1lbW9yeSByZW1vdGUgYWNjdW11bGF0aW9uIGxlYWRzIHRvIHNl
+Y3VyZSByZW1vdGUgZGVuaWFsIG9mIHNlcnZpY2UKCgoKLS0tLS0tLS0gRm9y
+d2FyZGluZyBtZXNzYWdlcyAtLS0tLS0tLQpGcm9tOiBjdmUtcmVxdWVzdEBt
+aXRyZS5vcmcKRGF0ZTogMjAxOC0xMC0wNCAxMTozMTowNgpUbzogIGE0NjUx
+Mzg2QDE2My5jb20KQ2M6ICBjdmUtcmVxdWVzdEBtaXRyZS5vcmcKU3ViamVj
+dDogUmU6IFtzY3I1Nzk5ODZdIENlbnRPUyBhbmQgSVBTZWMKLS0tLS1CRUdJ
+TiBQR1AgU0lHTkVEIE1FU1NBR0UtLS0tLQpIYXNoOiBTSEEyNTYKCj4gW1N1
+Z2dlc3RlZCBkZXNjcmlwdGlvbl0KPiBUaGUgTGludXgga2VybmVsIDQuMTQu
+NjcgbWlzaGFuZGxlcyBjZXJ0YWluIGludGVyYWN0aW9uIGFtb25nIFhGUk0K
+PiBOZXRsaW5rIG1lc3NhZ2VzLCBJUFBST1RPX0FIIHBhY2tldHMsIGFuZCBJ
+UFBST1RPX0lQIHBhY2tldHMsIHdoaWNoCj4gYWxsb3dzIGxvY2FsIHVzZXJz
+IHRvIGNhdXNlIGEgZGVuaWFsIG9mIHNlcnZpY2UgKG1lbW9yeSBjb25zdW1w
+dGlvbgo+IGFuZCBzeXN0ZW0gaGFuZykgYnkgbGV2ZXJhZ2luZyByb290IGFj
+Y2VzcyB0byBleGVjdXRlIGNyYWZ0ZWQKPiBhcHBsaWNhdGlvbnMsIGFzIGRl
+bW9uc3RyYXRlZCBvbiBDZW50T1MgNy4KPiAKPiAtLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KPiAKPiBbQWRkaXRpb25hbCBJ
+bmZvcm1hdGlvbl0KPiBpcHNlYyBDYW4gY2F1c2UgdGhlCj4gcmVtb3RlIG1l
+bW9yeSBvZiB0aGUgY2VudG9zIGRlc2t0b3AgdmVyc2lvbiB0byBydW4gb3V0
+LCBJIHRlc3RlZCB0aGlzCj4gcHJvYmxlbSB3aXRoIGNlbnRvczYuMTAgY2Vu
+dG9zNy4xMCAsIGJ1dCB0aGUgbWluaW1hbCBpbnN0YWxsYXRpb24KPiB2ZXJz
+aW9uIGlzIG5vdCB2ZXJ5IG9idmlvdXMKPiAKPiAxLkNvbXBpbGUgdGhlIGtl
+cm5lbCBhbmQgc3RhcnQgY29tcGlsaW5nIG9wdGlvbnMKPiAgPCo+IElQOkFI
+IHRyYW5zZm9ybWF0aW9uCj4gICA8Kj4gSVA6RVNQIHRyYW5zZm9ybWF0aW9u
+Cj4gICA8Kj4gSVA6SVBDb21wIHRyYW5zZm9ybWF0aW9uCj4gICA8Kj4gSVA6
+SVBzZWMgdHJhbnNwb3J0IG1vZGUKPiAgIDwqPiBJUDpJUHNlYyB0dW5uZWwg
+bW9kZQo+ICAgPCo+IElQOklQc2VjIEJFRVQgbW9kZQo+IAo+IDIuTW9kaWZ5
+IHRoZSBmaXJld2FsbCBvciB0dXJuIG9mZiB0aGUgZmlyZXdhbGwgdG8gYWxs
+b3cgdGhlIGFoCj4gcHJvdG9jb2wgb3IgdGhlIGVzcCBwcm90b2NvbCB0byBw
+YXNzIHRocm91Z2ggdGhlIGZpcmV3YWxsLiAzLlJ1bgo+IGFoX2FkZCBvbiB0
+aGUgdGFyZ2V0IG1hY2hpbmUgd2l0aCByb290IHByaXZpbGVnZXMsIHlvdSBu
+ZWVkIHRvIG1vZGlmeQo+IHRoZSBpbmV0X2FkZHIoIjEyNy4wLjAuMSIpIG9m
+IGxpbmUgMTAxIG9mIGFoX2FkZC5jOyBpdCByZWZlcnMgdG8gdGhlCj4gbG9j
+YWwgYWRkcmVzcyAodGhlIGFkZHJlc3Mgb2YgdGhlIHRhcmdldCBtYWNoaW5l
+KQo+IGh0dHBzOi8vZHJpdmUuZ29vZ2xlLmNvbS9maWxlL2QvMTVhSXhqX3l1
+cENjczdpMTRBSWxFOFUyeVNmT3lvdm5rL3ZpZXcKPiAKPiA0LC5SdW4gaXBp
+cCBhcyBhbiBhdHRhY2tlciB3aXRoIHJvb3QgcHJpdmlsZWdlcyxOZWVkIHRv
+IG1vZGlmeSB0aGUKPiBzb3VyY2UgYWRkcmVzcyBhbmQgZGVzdGluYXRpb24g
+YWRkcmVzcyBpbiB0aGUgbWFpbiBmdW5jdGlvbiwgdGhlCj4gZGVzdGluYXRp
+b24gYWRkcmVzcyByZWZlcnMgdG8gdGhlIElQIGFkZHJlc3Mgb2YgdGhlIHRh
+cmdldCBtYWNoaW5lCj4gaHR0cHM6Ly9kcml2ZS5nb29nbGUuY29tL2ZpbGUv
+ZC8xX2RoX0tYMEpwSmRvV1FvcE4xS1dPUndKc1FsYWg3TnYvdmlldwo+IAo+
+IDUuUnVubmluZyB0aGUgZnJlZSBjb21tYW5kIGNhbiBvYnZpb3VzbHkgc2Vl
+IHRoZSBkZWNsaW5lIGluIHRoZSBhbW91bnQKPiBvZiBtZW1vcnkgcmVtYWlu
+aW5nIHNwYWNlLkZpbmFsbHksIGl0IG1heSBsZWFkIHRvIGRlYWRsb2NrLCBz
+aHV0ZG93bgo+IG1heSBiZSwgdGhlIGNlbnRvczcgZGVza3RvcCB2ZXJzaW9u
+IG1heSBiZSBtb3JlIG9idmlvdXMKPiAKPiBDYW4gY2F1c2UgdGhlIHJlbW90
+ZSBtZW1vcnkgb2YgdGhlIGNlbnRvcyBkZXNrdG9wIHZlcnNpb24gdG8gcnVu
+IG91dCwKPiBJIHRlc3RlZCB0aGlzIHByb2JsZW0gd2l0aCBjZW50b3M2LjEw
+IGNlbnRvczcuMTAsIGJ1dCB0aGUgbWluaW1hbAo+IGluc3RhbGxhdGlvbiB2
+ZXJzaW9uIGlzIG5vdCB2ZXJ5IG9idmlvdXMKPiAKPiBBbmQgdGhlIHN0cmFu
+Z2UgdGhpbmcgaXMgdGhhdCB3aGVuIEkgdGVzdGVkIHVidW50dSwgdGhlcmUg
+d2FzIG5vIHN1Y2gKPiBwcm9ibGVtLiBCYXNpY2FsbHksIG1vc3Qga2VybmVs
+IHZlcnNpb25zIGNhbiBjYXVzZSB0aGlzIGVmZmVjdC4KPiAKPiAtLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KPiAKPiBbVnVs
+bmVyYWJpbGl0eVR5cGUgT3RoZXJdCj4gTWVtb3J5IGFjY3VtdWxhdGlvbiwg
+bWVtb3J5IGFwcGxpY2F0aW9uIHNwZWVkIGV4Y2VlZHMgcmVsZWFzZSBzcGVl
+ZCwgY2F1c2luZyBkZW5pYWwgb2Ygc2VydmljZQo+IAo+IC0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQo+IAo+IFtWZW5kb3Ig
+b2YgUHJvZHVjdF0KPiBDZW50T1MgZGVza3RvcCByZW1vdGUgZGVuaWFsIG9m
+IHNlcnZpY2UgYWJvdXQgaXBzZWMKPiAKPiAtLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KPiAKPiBbQWZmZWN0ZWQgUHJvZHVj
+dCBDb2RlIEJhc2VdCj4gQ2VudE9TIGRlc2t0b3AgLSBDZW50T1MgZGVza3Rv
+cDYgQ2VudE9TIGRlc2t0b3A3Cj4gCj4gLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tCj4gCj4gW0FmZmVjdGVkIENvbXBvbmVu
+dF0KPiBDYW4gY2F1c2UgdGhlIHJlbW90ZSBtZW1vcnkgb2YgdGhlIGNlbnRv
+cyBkZXNrdG9wIHZlcnNpb24gdG8gcnVuIG91dCwgSSB0ZXN0ZWQgdGhpcyBw
+cm9ibGVtIHdpdGggY2VudG9zNi4xMCBjZW50b3M3LjEwLCAKPiBodHRwczov
+L2RyaXZlLmdvb2dsZS5jb20vZmlsZS9kLzFUbU91QVY1NkppTFBfYlRuQ1FJ
+QUZWZW1OOU9vRGxJYS92aWV3P3VzcD1zaGFyaW5nCj4gCj4gLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCj4gCj4gW0F0dGFj
+ayBUeXBlXQo+IFJlbW90ZQo+IAo+IC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLQo+IAo+IFtJbXBhY3QgRGVuaWFsIG9mIFNl
+cnZpY2VdCj4gdHJ1ZQo+IAo+IC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLQo+IAo+IFtBdHRhY2sgVmVjdG9yc10KPiBBIHBh
+Y2tldCBhdHRhY2sgb3BlbnMgYSBzZWN1cmUgc2VydmVyIHRoYXQgY2FuIGNh
+dXNlIGEgcmVtb3RlIGRlbmlhbCBvZiBzZXJ2aWNlCj4gCj4gLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCj4gCj4gW1JlZmVy
+ZW5jZV0KPiBodHRwczovL2RyaXZlLmdvb2dsZS5jb20vZmlsZS9kLzFUbU91
+QVY1NkppTFBfYlRuQ1FJQUZWZW1OOU9vRGxJYS92aWV3P3VzcD1zaGFyaW5n
+Cj4gaHR0cHM6Ly9kcml2ZS5nb29nbGUuY29tL2ZpbGUvZC8xTWpyOVB1X2RB
+amV0MkJxX2lXQ0VVSVFrVXRTVElCVksvdmlldz91c3A9c2hhcmluZwo+IGh0
+dHBzOi8vZHJpdmUuZ29vZ2xlLmNvbS9maWxlL2QvMTVhSXhqX3l1cENjczdp
+MTRBSWxFOFUyeVNmT3lvdm5rL3ZpZXcKPiBodHRwczovL2RyaXZlLmdvb2ds
+ZS5jb20vZmlsZS9kLzFfZGhfS1gwSnBKZG9XUW9wTjFLV09Sd0pzUWxhaDdO
+di92aWV3Cj4gCj4gLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tCj4gCj4gW0Rpc2NvdmVyZXJdCj4gMzYwIEVTRyBDb2Rlc2Fm
+ZSBUZWFtIGx1byBxdWFuCgpVc2UgQ1ZFLTIwMTgtMTc5NzcuCgoKLSAtLSAK
+Q1ZFIEFzc2lnbm1lbnQgVGVhbQpNL1MgTTMwMCwgMjAyIEJ1cmxpbmd0b24g
+Um9hZCwgQmVkZm9yZCwgTUEgMDE3MzAgVVNBClsgQSBQR1Aga2V5IGlzIGF2
+YWlsYWJsZSBmb3IgZW5jcnlwdGVkIGNvbW11bmljYXRpb25zIGF0CiAgaHR0
+cDovL2N2ZS5taXRyZS5vcmcvY3ZlL3JlcXVlc3RfaWQuaHRtbCBdCi0tLS0t
+QkVHSU4gUEdQIFNJR05BVFVSRS0tLS0tClZlcnNpb246IEdudVBHIHYxCgpp
+UUljQkFFQkNBQUdCUUpidFlrQkFBb0pFQTJoK2ZWcnlKTG9RUThQLzBxMDRL
+VnYrczVXZytGeFkxVFNtOEJlCklXYkxiV2tRZms5UEZDMkNXNmtoZU0wbEV1
+QzRURVNFVVFQNnRMRVRMckZ6UEpPZjJ3UWMyWUp1VUEya0ZnaWwKMThOTVhE
+TktaL3g2dy9xQVB1cElEODA3b1JLeGx4VFhzNzhYOWFGTng2Rm9ua2RRQUpH
+cGYyT1dUTi94SWtrdgpIV05oT1hLV2xzaDc5OUJRWUJEbDhoYVdHbUpYdi82
+bFBzRENMTjJNL1pSaFFLYks0RGJvNkNaK2VYRWJjbEd1Cm9TbnNtQWtLM3cz
+Sjk1ckxEOC9ZM3AyZUZudU9TUHBCRjdoNEpDOUlUVTJueUNRdnRqWHBUN1Iy
+R1ZSc2Z2NkcKMndGWklPVUNzWVZaQTZkSTlEWit5T1A3bzIydG8vandzNWNs
+czRKODlSZFFxbWYyWnpyZ3BNd1FxOXFWWkRmaApiMVRyOGlBdGxDTjhmMWx2
+UmJNemlETFZEVW5BUGtHN3hyY3NRYlI5cGtQVzZBbzNnRzJoeWJHeUIzc2Jr
+SktrCm44ZS9RK3QvMmo1Q2ZXakI1Rm5SUnFjeUpNcUVpTlRwNW1hc2xxdW9B
+UGoyaDgvK1F4SDRtYzZwdGpFUkdzUUYKdkdua0FwRU1kVzFpOUVqZGNlR2NT
+RTE4ckhhc2hkNlJDU3NZRzZZMktxQzAzM25HQzJQbTlnVSt6OEVKaGtMTQpn
+eE5IWEtURjhLenFIZ2pGZWRMelpsRVdxRFAwRkdmWFphMlFUVTV0L0lacXVF
+RTlWbDBST25RSSthWWg4SWw4ClJkenF5K0ZDdnRjZmY1QXJaczh5UlJlOXhx
+T1VKamRrWitJVWdHVERXY2Q4dXRwMVN2eXluVFZHMEdCbHF6Z2kKTlBxNmdE
+VUN6VlphZDJENGlWcTcKPXhuSS8KLS0tLS1FTkQgUEdQIFNJR05BVFVSRS0t
+LS0tCg==
+
+------=_Part_124031_284156360.1538754367629--
+
