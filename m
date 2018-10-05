@@ -1,82 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/25/3
-Message-ID: <20180325172614.GA26989@openwall.com>
-Date: Sun, 25 Mar 2018 19:26:15 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: LibVNCServer rfbserver.c: rfbProcessClientNormalMessage() case rfbClientCutText doesn't sanitize msg.cct.length
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/05/1
+Message-Id: <5A8CF0F7-6FD9-4534-884A-A8AE71777270@apache.org>
+Date: Thu, 4 Oct 2018 22:28:16 -0400
+From: Velmurugan Periasamy <vel@...che.org>
+To: security <security@...che.org>, oss-security@...ts.openwall.com
+Cc: private@...ger.apache.org, dev@...ger.apache.org, user@...ger.apache.org
+Subject: CVE update - fixed in Apache Ranger 1.2.0
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Feb 22, 2018 at 06:23:29PM +0100, Solar Designer wrote:
-> On Sun, Feb 18, 2018 at 07:09:45PM +0100, Solar Designer wrote:
-> > https://github.com/LibVNC/libvncserver/issues/218
-> 
-> > libvncserver/rfbserver.c: rfbProcessClientNormalMessage() contains the
-> > following code:
-> > 
-> >     case rfbClientCutText:
-> > 
-> >         if ((n = rfbReadExact(cl, ((char *)&msg) + 1,
-> >                            sz_rfbClientCutTextMsg - 1)) <= 0) {
-> >             if (n != 0)
-> >                 rfbLogPerror("rfbProcessClientNormalMessage: read");
-> >             rfbCloseClient(cl);
-> >             return;
-> >         }
-> > 
-> >         msg.cct.length = Swap32IfLE(msg.cct.length);
-> > 
-> >         str = (char *)malloc(msg.cct.length);
-> >         if (str == NULL) {
-> >                 rfbLogPerror("rfbProcessClientNormalMessage: not enough memory");
-> >                 rfbCloseClient(cl);
-> >                 return;
-> >         }
-> > 
-> >         if ((n = rfbReadExact(cl, str, msg.cct.length)) <= 0) {
-> 
-> As I just wrote in a comment to the GitHub issue above:
-> 
-> There's another issue I had missed: the first rfbReadExact() reading the
-> msg header is only checked for <= 0, but that doesn't catch a partial
-> read e.g. on a prematurely closed connection.  The same issue is present
-> all over the codebase.  I guess "Exact" in the name was understood
-> literally, but the function doesn't guarantee that when a lower-level
-> read() or the like returns 0, such as when there's no more data to read.
-> Maybe the function itself should be adjusted to match the semantics the
-> callers expects from it (set errno to a value of its choosing and return
-> -1 on a partial read? it already does that on a timeout, so this change
-> wouldn't make it more inconsistent).
+Hello:
 
-As Petr Pisar pointed out on the GitHub issue, I was wrong about that
-"another issue" above.  rfbReadExact() returns 0 on a partial read, so
-the "<= 0" checks do correctly detect this failure mode.  So, no,
-luckily the issue is not "present all over the codebase."
+Please find below details on CVE fixed in Ranger 1.2.0 release. Release details can be found at https://cwiki.apache.org/confluence/display/RANGER/1.2.0+Release+-+Apache+Ranger
 
-The cause of the behavior I had observed, where rfbReadExact() was not
-"<= 0" on a partial read in my original test case, was different: it was
-implicit conversion of msg.cct.length to int (resulting in a negative
-value) when making the call to rfbReadExact().  In that case,
-rfbReadExactTimeout() and thus rfbReadExact() return 1:
+————————————————————————————————————————————————————————————————————————————————————————————————————————
+CVE-2018-11778: Apache Ranger Stack based buffer overflow
+Severity: Critical
+Vendor: The Apache Software Foundation
+Versions Affected: Apache Ranger versions prior to 1.2.0
+Users affected: Unix Authentication Service users 
+Description: Apache Ranger UnixAuthenticationService should properly handle user input to avoid Stack-based buffer overflow.
+Fix detail: UnixAuthenticationService was updated to correctly handle user input.
+Mitigation: Users should upgrade to 1.2.0 or later version of Apache Ranger with the fix.
+Credit: Alexander Klink.
+————————————————————————————————————————————————————————————————————————————————————————————————————————
 
-int
-rfbReadExactTimeout(rfbClientPtr cl, char* buf, int len, int timeout)
-{
-[...]
-    while (len > 0) {
-[...]
-    }
-[...]
-    return 1;
-}
-
-As I wrote in a comment to the GitHub issue, as a hardening measure
-"maybe rfbReadExactTimeout() semantics should be adjusted so that it'd
-return failure when called with negative len."
-
-Meanwhile, Petr fixed the original issue I had reported, by limiting the
-cut text length to 1 MiB (the same limit that QEMU uses):
-
-https://github.com/LibVNC/libvncserver/commit/b0c77391e6bd0a2305bbc9b37a2499af74ddd9ee
-
-Alexander
+Thank you,
+Velmurugan Periasamy
