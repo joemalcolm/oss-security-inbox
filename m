@@ -1,44 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/24/2
-Message-ID: <20180824182942.GA932@openwall.com>
-Date: Fri, 24 Aug 2018 20:29:42 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/05/6
+Message-ID: <20181005165406.GA22722@openwall.com>
+Date: Fri, 5 Oct 2018 18:54:06 +0200
 From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: openssh-unix-dev@...drot.org
-Subject: Re: About OpenSSH "user enumeration" / CVE-2018-15473
+To: luo <a4651386@....com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2018-17977: CentOS ipsec remote denial of service vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi Damien,
+On Fri, Oct 05, 2018 at 11:46:07PM +0800, luo wrote:
+> I don't know if it is correct to publish the complete information.
 
-Thank you for sharing these thoughts with the community.
+It is.  Linking to temporary resources like Google Drive isn't great,
+but luckily your message itself includes some detail.
 
-On Fri, Aug 24, 2018 at 10:58:20AM +1000, Damien Miller wrote:
-> Finally, and perhaps most importantly: there's a fundamental tradeoff
-> between attack surface and fixing this class of bug. As a concrete
-> example, fixing this one added about 150 lines of code to our
-> pre-authentication attack surface. In this case, we were willing to do
-> this because we had confidence in the additional parsing, mostly because
-> it's been reviewed several times and we've conducted a decent amount of
-> fuzzing on it. But, given the choice between leaving a known account
-> validity oracle or exposing something we don't trust, we'll choose the
-> former every time.
+> > The Linux kernel 4.14.67 mishandles certain interaction among XFRM
+> > Netlink messages, IPPROTO_AH packets, and IPPROTO_IP packets, which
+> > allows local users to cause a denial of service (memory consumption
+> > and system hang) by leveraging root access to execute crafted
+> > applications, as demonstrated on CentOS 7.
 
-Can you summarize for us all (on these mailing lists) the commits
-leading to OpenSSH 7.8 that deal with this issue and add "about 150
-lines of code", please?  The commit originally referenced by Qualys
-doesn't.  I guess this has to do with you fixing not only the yes/no
-kind of oracle, but also mitigating some timing oracle(s), as per the
-change log:
+Since you say that "leveraging root access to execute crafted
+applications" is required, how is this a security issue?  Also, since
+this setup has to be prepared locally, how is the attack "remote"?
 
- * sshd(8): add some countermeasures against timing attacks used for
-   account validation/enumeration. sshd will enforce a minimum time
-   or each failed authentication attempt consisting of a global 5ms
-   minimum plus an additional per-user 0-4ms delay derived from a
-   host secret.
-
- * sshd(8): avoid observable differences in request parsing that could
-   be used to determine whether a target user is valid.
-
-Thanks again,
+In other words, would a sysadmin plausibly make this kind of custom
+local setup, and why?  If the answer is no, then I think there's no
+security issue here.
 
 Alexander
