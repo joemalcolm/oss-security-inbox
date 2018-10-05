@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["606" "Tuesday" "24" "May" "2016" "16:01:42" "+0800" "Yue Liu" "liuyue0310@gmail.com" "<CANK7Sy-z=M=S+SPfy1x4Mkz4rUb5aFUtquhJujQnm+60DQr4ng@mail.gmail.com>" "21" "[oss-security] CVE request: Multiple vunerabilities in libdwarf & dwarfdump" nil nil nil "5" "2016052408:01:42" "[oss-security] CVE request: Multiple vunerabilities in libdwarf & dwarfdump" (number mark "U       liuyue0310@g May 24   21/606   " thread-indent "\"[oss-security] CVE request: Multiple vunerabilities in libdwarf & dwarfdump\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1242" "Friday" "5" "October" "2018" "15:52:23" "+0300" "Taher Alkhateeb" "slidingfilaments@gmail.com" "<fad45546-af86-0293-9ea7-014553474b30@apache.org>" "52" "[oss-security] [SECURITY] CVE-2011-3600 Apache OFBiz XML-RPC XXE Vulnerability" "^Date:" nil nil "10" "2018100512:52:23" "[oss-security] [SECURITY] CVE-2011-3600 Apache OFBiz XML-RPC XXE Vulnerability" (number mark "U       slidingfilam Oct  5   52/1242  " thread-indent "\"[oss-security] [SECURITY] CVE-2011-3600 Apache OFBiz XML-RPC XXE Vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11806 invoked by uid 550); 24 May 2016 08:05:53 -0000
+Received: (qmail 20413 invoked by uid 550); 5 Oct 2018 13:13:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,58 +11,99 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9584 invoked from network); 24 May 2016 08:01:54 -0000
+Received: (qmail 7806 invoked from network); 5 Oct 2018 12:52:38 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc;
-        bh=r6KvgegW1+sqg9UYzgu2/+yH3u99qCrj6aLIZDOsqDY=;
-        b=wlqPqDK+TXzTc+DkwW0ttdcm3WTJBTF2sppeDcFg10Z82ZEeggtbS54zgaOZ5VLSXF
-         Rrf5s0vSoiaOAsTUVCoklFYJ7E04daMW/eLBrMI3fnHOkA+b/0oawA3ER+L5bdJYKRKt
-         2ynjZqguqj0wgvXflf8ZTvK0/I9SMyUHa3su3lzjEmXest2rDRYrPrd2mk1k+d9inWRl
-         UTGhHWcGaGtg9P1wnW1qgXmVjhUVZDGaxK1FHwcEvpbSYToRWNEFve+QCJQgIzpr9qg8
-         3rjh+/bUCh+Cx4O5RiDM5HnQTYHCaKz4xJfVBvCfWYfe7pUGsGtBhqdDbhuQ3VND08DW
-         Aq2g==
+        d=gmail.com; s=20161025;
+        h=from:to:subject:message-id:date:user-agent:mime-version
+         :content-transfer-encoding:content-language;
+        bh=tvQgUBJKPwIF+E/lYkbgo0wguYLP14xtwBgl5hr4hn4=;
+        b=vcZZzE7yrcVvo6hRiVVZg7ZhifP3s8bpmCDn20EPwMemPnk7MN5SXDxSxjI3brgFOl
+         Mug7McyMS7cEuIXMEbzdA0GMAfz1jTMkEYp2/1T3qqlUTjWb048iyl+X2w0+agzCDQgu
+         blIQIFNNUToJWqY25PI0kspLGK+PaEe4HOx7kNSoDuLly2/M7tUN5myQkUNZqGAwNN7t
+         7mRKubHIABA/O19ZE42YTHL1ck/U+fo9SaVktOzBHzgWZ+w1WYcDXsMTiWlUdxRsoeb6
+         wqFdqUu2yPjPhIrI+W/wOmtktXxNRIDMp7zrkJ9sdKLxvmx2gahKcfDc3O1hBrkHDq6c
+         RfaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc;
-        bh=r6KvgegW1+sqg9UYzgu2/+yH3u99qCrj6aLIZDOsqDY=;
-        b=YrpMqsoPwz4Zpz99757GKWgRaqbDOxdpot/7kZyOqCMpq2tlAHNYMfP2VknLJUaj1t
-         /ynLYI53saRyFWiRhDlobOi/ecyc5RLTYD3/S4Jx3SrxHCIOQFz7nSd9R9fKFZswMPbW
-         ktKlNR6HJE/A+ZqdZoZEK4fQ4A8MMIKl/Dw54QgVaY2rJrD+6bevaxCW+750CEMrXnpm
-         DVyGLz5U9VDxl2+TjzsIhr7q7b9LkEpyvb0dsXTVYv8oDgHC4HVxYFB0La1P/8J4C3kM
-         KaukZ9605jcYRnYg0wdsadgVktYoWHO4Nt7iirOoyaysfo4p1irtVAV6HTf5q9bQBoqy
-         gCEw==
-X-Gm-Message-State: ALyK8tJwztsC36v0NJHtPzNXNK9mi/V9TmbrMeMwApfT6yw5Riuf9vlcMpUBOJS3Aatv04aGMQeJTONWX6W3Dw==
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:subject:message-id:date:user-agent
+         :mime-version:content-transfer-encoding:content-language;
+        bh=tvQgUBJKPwIF+E/lYkbgo0wguYLP14xtwBgl5hr4hn4=;
+        b=OsnhG3C7kCZJTsqCtAVKB9DteTFUNK4pBTKMnXtH5jJLF09ir/+MVKajYztUg+++0k
+         Qr50zwV03p3hq1GWuZ+9gxs2lprnEcKAxDVwHQDVFmKgpDAm6vCQq+/Wut2avfnH6w1Q
+         ABS/AUVtE949+XywjSCYPRzF+GtssV27AMkZm1EiarxrjuZ/V5JU3NQWegMiA/fCBGX2
+         ELryvuB68fU9YZioQo8VXtgBGg3R10UaTDrvKG6I8gBInwrrK4PLdRfp3gQ+CvVrN0QT
+         aCoZqNWzFF5IKwQrNMprEhrF0gXj+kpBk0YEAMY9y32W/yEjW5SfbaOoYBqat/PVgMs0
+         VAcA==
+X-Gm-Message-State: ABuFfojhl8R8A3Cw8MS12ugkXmXn0d/3t2wVUduV3gov804XPwaR7+CF
+	ugq0rtBKxQjA8/kjADNEoF4qyqw986z8Ng==
+X-Google-Smtp-Source: ACcGV60QMglSo2rfzVxjnghXQAQQoplw/TZc9f9Gy/gHOQDMSUofTcmylyHP17X/YEpiuJHUAQ+mQA==
+X-Received: by 2002:a1c:91cd:: with SMTP id t196-v6mr7354745wmd.63.1538743947146;
+        Fri, 05 Oct 2018 05:52:27 -0700 (PDT)
+X-Google-Original-From: Taher Alkhateeb <taher@apache.org>
+Message-ID: <fad45546-af86-0293-9ea7-014553474b30@apache.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-X-Received: by 10.37.15.10 with SMTP id 10mr1597033ybp.51.1464076902509; Tue,
- 24 May 2016 01:01:42 -0700 (PDT)
-Date: Tue, 24 May 2016 16:01:42 +0800
-Message-ID: <CANK7Sy-z=M=S+SPfy1x4Mkz4rUb5aFUtquhJujQnm+60DQr4ng@mail.gmail.com>
-From: Yue Liu <liuyue0310@gmail.com>
-To: oss-security@lists.openwall.com
-Cc: David Anderson <davea42@linuxmail.org>
-Content-Type: multipart/alternative; boundary=001a1138f474b2b624053391f78b
-Subject: [oss-security] CVE request: Multiple vunerabilities in libdwarf & dwarfdump
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+Date: Fri, 5 Oct 2018 15:52:23 +0300
+From: Taher Alkhateeb <slidingfilaments@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] [SECURITY] CVE-2011-3600 Apache OFBiz XML-RPC XXE Vulnerability
+To: user@ofbiz.apache.org, dev@ofbiz.apache.org, security@ofbiz.apache.org,
+ security@apache.org, announce@apache.org, oss-security@lists.openwall.com,
+ jamesp@mindpointgroup.com
 
---001a1138f474b2b624053391f78b
-Content-Type: text/plain; charset=UTF-8
+Severity:
+Important
 
-Hi,
+Vendor:
+The Apache Software Foundation
 
-There are multiple vunerabilities in libdwarf&dwarfdump which were
-discovered by Yue Liu(lieanu <liuyue0310@gmail.com>) and Qixue Xiao.
+Versions Affected:
+OFBiz 16.11.01 to 16.11.04
 
-Vulnerabilities DW201605-001 to DW201605-019 in
-https://www.prevanders.net/dwarfbug.html
-And anther one https://bugzilla.redhat.com/show_bug.cgi?id=1330237
-All vulnerabilities have been fixed in upstream.
+Description:
+The OFBiz XML-RPC event handler 
+(org.apache.ofbiz.webapp.event.XmlRpcEventHandler.java)
+acts as a wrapper for any OFBiz service that provides XML-RPC web 
+services via
+the /webtools/control/xmlrpc endpoint. This endpoint is exposed to External
+Entity Injection by passing DOCTYPE declarations with executable 
+payloads that
+discloses the contents of files in the filesystem. In addition, it can 
+also be
+used to probe for open network ports, and figure out from returned error
+messages whether a file exists or not.
 
-POC: https://sourceforge.net/p/libdwarf/regressiontests/ci/master/tree/liu/
+Mitigation:
+Upgrade to 16.11.05
+or manually apply the following commits on branch 16
+r1833724
+r1833708
+r1836141
 
-Could you please assign CVE ids for these issue? Thanks.
+Example:
+# Payload to find an exposed port
+<?xml version="1.0"?>
+<!DOCTYPE x SYSTEM "http://localhost:8080">
+<methodCall>
+     <methodName>ping</methodName>
+</methodCall>
 
-Regards,
-Yue Liu
+# Payload to display file contents
+<?xml version="1.0"?>
+<!DOCTYPE foo [
+<!ENTITY disclose SYSTEM "file:///etc/passwd">
+]>
+<methodCall>
+     <methodName>&disclose;</methodName>
+</methodCall>
 
---001a1138f474b2b624053391f78b--
+Credit:
+James Parfet <jamesp at mindpointgroup.com>
+
+References:
+http://ofbiz.apache.org/download.html#vulnerabilities
+
