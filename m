@@ -1,100 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/20/4
-Message-Id: <E1frgmo-0003i7-Bf@xenbits.xenproject.org>
-Date: Mon, 20 Aug 2018 09:47:46 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 270 v3 (CVE-2018-15471) - Linux netback driver OOB access in hash handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/05/4
+Message-ID: <61f3f180-f1a2-40d6-db4f-bd50d5e48789@apache.org>
+Date: Fri, 5 Oct 2018 16:10:49 +0200
+From: Andreas Lehmkuehler <lehmi@...che.org>
+To: announce@...che.org, security@...che.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: [CVE-2018-11797] DoS vulnerability in Apache PDFBox parser
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+[CVE-2018-11797] DoS vulnerability in Apache PDFBox parser
 
-            Xen Security Advisory CVE-2018-15471 / XSA-270
-                              version 3
+Severity: Important
 
-           Linux netback driver OOB access in hash handling
+Vendor:
+The Apache Software Foundation
 
-UPDATES IN VERSION 3
-====================
+Versions Affected:
+Apache PDFBox <= 1.8.15
+Apache PDFBox <= 2.0.11
+Earlier, unsupported Apache PDFBox versions may be affected as well
 
-CVE assigned.
+Description:
+A carefully crafted PDF file can trigger an extremely long
+running computation when parsing the page tree.
 
-ISSUE DESCRIPTION
-=================
+Mitigation:
+Upgrade to Apache PDFBox 1.8.16 respectively 2.0.12
 
-Linux's netback driver allows frontends to control mapping of requests
-to request queues.  When processing a request to set or change this
-mapping, some input validation was missing or flawed.
+Credit:
+This issue was discovered by Shawn Rasheed
 
-IMPACT
-======
+Website:
+https://pdfbox.apache.org/
 
-A malicious or buggy frontend may cause the (usually privileged)
-backend to make out of bounds memory accesses, potentially resulting
-in one or more of privilege escalation, Denial of Service (DoS), or
-information leaks.
-
-VULNERABLE SYSTEMS
-==================
-
-Linux kernel versions from 4.7 onwards are affected.
-
-MITIGATION
-==========
-
-There is no known mitigation.
-
-CREDITS
-=======
-
-This issue was discovered by Felix Wilhelm of Google Project Zero.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa270.patch           Linux 4.7 ... 4.17
-
-$ sha256sum xsa270*
-392868c37c1fe0d16c36086208fd0fc045c1baf8ab9b207995bce72681cb8c54  xsa270.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJbeo4MAAoJEIP+FMlX6CvZOpsH/34RpIZaTTVsZWCVyNotieFf
-yLfCqu+9bbRVNEqYDq6NViFrj9I6WwvLpp8s7HZheJvdXlyIO1cYCen4QX8VSPqI
-VaRD7Jcu99drK1hy/t80AbicS+t9qvew97SzjG+MIIJZK7dnxG/Q0nbHLCg0zdCg
-5G+pOTl17DK+4eM7Z1duo2BK1sxCms6I/YJVFfkGjC99vXKYAj2GAWGxVbiEwDWT
-4jvf3R3w5athJNR4Lf6FxDz6MzvHaYNFQKikc0AMaTcO5HubumGXQQn5JQelAAno
-O6ujB25kF1j29A2PwYvBSxBDTD4uWQeWiv9kWML1YmzsQv1cy6Un0vwXtNhhb6s=
-=SC+y
------END PGP SIGNATURE-----
-
-Download attachment "xsa270.patch" of type "application/octet-stream" (2105 bytes)
+Download:
+https://pdfbox.apache.org/download.cgi
+https://www.apache.org/dist/pdfbox/2.0.12/RELEASE-NOTES.txt
+https://www.apache.org/dist/pdfbox/1.8.16/RELEASE-NOTES.txt
