@@ -1,36 +1,144 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/06/3
-Message-ID: <20180706145422.GA29390@openwall.com>
-Date: Fri, 6 Jul 2018 16:54:22 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/05/5
+Message-ID: <3a997e85.7dd9.16644e8508d.Coremail.a4651386@163.com>
+Date: Fri, 5 Oct 2018 23:46:07 +0800 (CST)
+From: luo  <a4651386@....com>
 To: oss-security@...ts.openwall.com
-Cc: zrlw@...a.com
-Subject: Re: mmap vulnerability in motion eye video4linux driver for Sony Vaio PictureBook
+Subject: CVE-2018-17977: CentOS ipsec remote denial of service vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jul 06, 2018 at 03:26:55PM +0200, Greg KH wrote:
-> On Fri, Jul 06, 2018 at 08:35:43PM +0800, zrlw@...a.com wrote:
-> > Hi all,i found a vulnerability in motion eye video4linux driver for Sony Vaio PictureBook,it desn't validate user-controlled parameter 'vma->vm_pgoff', a malicious process might access all of kernel memory from user space by trying pass different arbitrary address.
-> > /usr/src/linux-4.4.21-69/drivers/media/pci/meye/meye.c:
-> > static int meye_mmap(struct file *file, struct vm_area_struct *vma)
-> > ...        unsigned long offset = vma->vm_pgoff << PAGE_SHIFT;
-> > ...        pos = (unsigned long)meye.grab_fbuffer + offset;
-> >         while (size > 0) {
-> >                 page = vmalloc_to_pfn((void *)pos);
-> >                 if (remap_pfn_range(vma, start, page, PAGE_SIZE, PAGE_SHARED)) {...
+
+
+I just applied for the cve number at https://cveform.mitre.org/. I don't know if it is correct to publish the complete information. Please check the community. This vulnerability is very different. Almost all versions of the kernel will work with the centos desktop version. Memory remote accumulation leads to secure remote denial of service
+
+
+
+-------- Forwarding messages --------
+From: cve-request@...re.org
+Date: 2018-10-04 11:31:06
+To:  a4651386@....com
+Cc:  cve-request@...re.org
+Subject: Re: [scr579986] CentOS and IPSec
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+> [Suggested description]
+> The Linux kernel 4.14.67 mishandles certain interaction among XFRM
+> Netlink messages, IPPROTO_AH packets, and IPPROTO_IP packets, which
+> allows local users to cause a denial of service (memory consumption
+> and system hang) by leveraging root access to execute crafted
+> applications, as demonstrated on CentOS 7.
 > 
-> Commit:
-> 	be83bbf80682 ("mmap: introduce sane default mmap limits")
-> which was backported to all stable kernels, should have resolved this
-> problem, correct?
+> ------------------------------------------
 > 
-> If not, please notify the media driver maintainers and they will be glad
-> to fix the problem.
+> [Additional Information]
+> ipsec Can cause the
+> remote memory of the centos desktop version to run out, I tested this
+> problem with centos6.10 centos7.10 , but the minimal installation
+> version is not very obvious
+> 
+> 1.Compile the kernel and start compiling options
+>  <*> IP:AH transformation
+>   <*> IP:ESP transformation
+>   <*> IP:IPComp transformation
+>   <*> IP:IPsec transport mode
+>   <*> IP:IPsec tunnel mode
+>   <*> IP:IPsec BEET mode
+> 
+> 2.Modify the firewall or turn off the firewall to allow the ah
+> protocol or the esp protocol to pass through the firewall. 3.Run
+> ah_add on the target machine with root privileges, you need to modify
+> the inet_addr("127.0.0.1") of line 101 of ah_add.c; it refers to the
+> local address (the address of the target machine)
+> https://drive.google.com/file/d/15aIxj_yupCcs7i14AIlE8U2ySfOyovnk/view
+> 
+> 4,.Run ipip as an attacker with root privileges,Need to modify the
+> source address and destination address in the main function, the
+> destination address refers to the IP address of the target machine
+> https://drive.google.com/file/d/1_dh_KX0JpJdoWQopN1KWORwJsQlah7Nv/view
+> 
+> 5.Running the free command can obviously see the decline in the amount
+> of memory remaining space.Finally, it may lead to deadlock, shutdown
+> may be, the centos7 desktop version may be more obvious
+> 
+> Can cause the remote memory of the centos desktop version to run out,
+> I tested this problem with centos6.10 centos7.10, but the minimal
+> installation version is not very obvious
+> 
+> And the strange thing is that when I tested ubuntu, there was no such
+> problem. Basically, most kernel versions can cause this effect.
+> 
+> ------------------------------------------
+> 
+> [VulnerabilityType Other]
+> Memory accumulation, memory application speed exceeds release speed, causing denial of service
+> 
+> ------------------------------------------
+> 
+> [Vendor of Product]
+> CentOS desktop remote denial of service about ipsec
+> 
+> ------------------------------------------
+> 
+> [Affected Product Code Base]
+> CentOS desktop - CentOS desktop6 CentOS desktop7
+> 
+> ------------------------------------------
+> 
+> [Affected Component]
+> Can cause the remote memory of the centos desktop version to run out, I tested this problem with centos6.10 centos7.10, 
+> https://drive.google.com/file/d/1TmOuAV56JiLP_bTnCQIAFVemN9OoDlIa/view?usp=sharing
+> 
+> ------------------------------------------
+> 
+> [Attack Type]
+> Remote
+> 
+> ------------------------------------------
+> 
+> [Impact Denial of Service]
+> true
+> 
+> ------------------------------------------
+> 
+> [Attack Vectors]
+> A packet attack opens a secure server that can cause a remote denial of service
+> 
+> ------------------------------------------
+> 
+> [Reference]
+> https://drive.google.com/file/d/1TmOuAV56JiLP_bTnCQIAFVemN9OoDlIa/view?usp=sharing
+> https://drive.google.com/file/d/1Mjr9Pu_dAjet2Bq_iWCEUIQkUtSTIBVK/view?usp=sharing
+> https://drive.google.com/file/d/15aIxj_yupCcs7i14AIlE8U2ySfOyovnk/view
+> https://drive.google.com/file/d/1_dh_KX0JpJdoWQopN1KWORwJsQlah7Nv/view
+> 
+> ------------------------------------------
+> 
+> [Discoverer]
+> 360 ESG Codesafe Team luo quan
 
-I think zrlw@...a.com is not subscribed, so CC'ing.
+Use CVE-2018-17977.
 
-I wonder if it's also possible to cause integer overflow on "(unsigned
-long)meye.grab_fbuffer + offset", bringing pos below meye.grab_fbuffer,
-and what the impact of that would be.
 
-Alexander
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJbtYkBAAoJEA2h+fVryJLoQQ8P/0q04KVv+s5Wg+FxY1TSm8Be
+IWbLbWkQfk9PFC2CW6kheM0lEuC4TESEUQP6tLETLrFzPJOf2wQc2YJuUA2kFgil
+18NMXDNKZ/x6w/qAPupID807oRKxlxTXs78X9aFNx6FonkdQAJGpf2OWTN/xIkkv
+HWNhOXKWlsh799BQYBDl8haWGmJXv/6lPsDCLN2M/ZRhQKbK4Dbo6CZ+eXEbclGu
+oSnsmAkK3w3J95rLD8/Y3p2eFnuOSPpBF7h4JC9ITU2nyCQvtjXpT7R2GVRsfv6G
+2wFZIOUCsYVZA6dI9DZ+yOP7o22to/jws5cls4J89RdQqmf2ZzrgpMwQq9qVZDfh
+b1Tr8iAtlCN8f1lvRbMziDLVDUnAPkG7xrcsQbR9pkPW6Ao3gG2hybGyB3sbkJKk
+n8e/Q+t/2j5CfWjB5FnRRqcyJMqEiNTp5maslquoAPj2h8/+QxH4mc6ptjERGsQF
+vGnkApEMdW1i9EjdceGcSE18rHashd6RCSsYG6Y2KqC033nGC2Pm9gU+z8EJhkLM
+gxNHXKTF8KzqHgjFedLzZlEWqDP0FGfXZa2QTU5t/IZquEE9Vl0ROnQI+aYh8Il8
+Rdzqy+FCvtcff5ArZs8yRRe9xqOUJjdkZ+IUgGTDWcd8utp1SvyynTVG0GBlqzgi
+NPq6gDUCzVZad2D4iVq7
+=xnI/
+-----END PGP SIGNATURE-----
