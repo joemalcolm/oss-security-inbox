@@ -1,4 +1,9 @@
-Received: (qmail 26531 invoked by uid 550); 14 Aug 2024 21:45:19 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2700" "Thursday" "4" "October" "2018" "22:28:16" "-0400" "Velmurugan Periasamy" "vel@apache.org" "<5A8CF0F7-6FD9-4534-884A-A8AE71777270@apache.org>" "47" "[oss-security] CVE update - fixed in Apache Ranger 1.2.0" "^Cc:" nil nil "10" "2018100502:28:16" "[oss-security] CVE update - fixed in Apache Ranger 1.2.0" (number mark "U       vel@apache.o Oct  4   47/2700  " thread-indent "\"[oss-security] CVE update - fixed in Apache Ranger 1.2.0\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 18224 invoked by uid 550); 5 Oct 2018 02:28:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,43 +11,66 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26506 invoked from network); 14 Aug 2024 21:45:18 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=orlitzky.com; s=mail2;
-	t=1723671909; bh=WpvCl7FAT4UZQy9mhI1/UqcWZw9qx3eiB++4ie5iQvA=;
-	h=Subject:From:To:Date:In-Reply-To:References;
-	b=qspxUMkaBh7hNgMAIGoj8jFLILSf3Aim0PvhD5chPFNQm2gvAgs7kKQPh54IhmbsY
-	 vi+Y+Tl2qEkFUSHtgCKLC39a2a9ykFRbmRDryT2Dxo9B1cmWWf9dJPx40S5SlS1hu7
-	 4APIWiebHcH+M4AvUTFyD3/6c0T5qLvqHaEsnBaU=
-Message-ID: <d3992a258f5cf32230b873f133879054173e928c.camel@orlitzky.com>
-From: Michael Orlitzky <michael@orlitzky.com>
-To: oss-security@lists.openwall.com
-Date: Wed, 14 Aug 2024 17:45:04 -0400
-In-Reply-To: <Zr0Z0vSW19REOqVD@aeon>
-References: <c4c734f10429230cd935943fd025597b223e027c.camel@orlitzky.com>
-	 <Zr0Z0vSW19REOqVD@aeon>
-Autocrypt: addr=michael@orlitzky.com; prefer-encrypt=mutual;
- keydata=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
-Content-Type: text/plain; charset="UTF-8"
+Received: (qmail 18167 invoked from network); 5 Oct 2018 02:28:31 -0000
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.50.2 
-MIME-Version: 1.0
-Subject: Re: [oss-security] Tracking down a lost CVE request (MITRE)
+Message-Id: <5A8CF0F7-6FD9-4534-884A-A8AE71777270@apache.org>
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+X-Mailer: Apple Mail (2.3124)
+Cc: private@ranger.apache.org,
+ dev@ranger.apache.org,
+ user@ranger.apache.org
+Date: Thu, 4 Oct 2018 22:28:16 -0400
+From: Velmurugan Periasamy <vel@apache.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE update - fixed in Apache Ranger 1.2.0
+To: security <security@apache.org>,
+ oss-security@lists.openwall.com
 
-On Wed, 2024-08-14 at 15:55 -0500, Mark Esler wrote:
-> MITRE is not required to assign CVEs.
->=20
-> It is always best to work with upstream (if possible). MITRE is more
-> likely to respond if upstream replies to your email ticket ACKing the
-> CVE request. Otherwise, you may want to ask Red Hat's CNA to assign a
-> CVE [0].
+Hello:
 
-Thanks, with some off-list help from Red Hat and MITRE I was able to
-get this resolved and CVE-2024-43199 has been published.
+Please find below details on CVE fixed in Ranger 1.2.0 release. Release det=
+ails can be found at https://cwiki.apache.org/confluence/display/RANGER/1.2=
+.0+Release+-+Apache+Ranger
 
+=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=
+=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=
+=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=
+=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=
+=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=
+=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=
+=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=
+=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=
+=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=
+=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=
+=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=
+=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=
+=E2=80=94=E2=80=94=E2=80=94=E2=80=94
+CVE-2018-11778: Apache Ranger Stack based buffer overflow
+Severity: Critical
+Vendor: The Apache Software Foundation
+Versions Affected: Apache Ranger versions prior to 1.2.0
+Users affected: Unix Authentication Service users=20
+Description: Apache Ranger UnixAuthenticationService should properly handle=
+ user input to avoid Stack-based buffer overflow.
+Fix detail: UnixAuthenticationService was updated to correctly handle user =
+input.
+Mitigation: Users should upgrade to 1.2.0 or later version of Apache Ranger=
+ with the fix.
+Credit: Alexander Klink.
+=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=
+=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=
+=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=
+=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=
+=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=
+=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=
+=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=
+=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=
+=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=
+=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=
+=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=
+=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=
+=E2=80=94=E2=80=94=E2=80=94=E2=80=94
+
+Thank you,
+Velmurugan Periasamy=
