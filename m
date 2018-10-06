@@ -1,68 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/12/3
-Message-ID: <20180412171327.vc5epogdi7ryc3te@jwilk.net>
-Date: Thu, 12 Apr 2018 19:13:27 +0200
-From: Jakub Wilk <jwilk@...lk.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Terminal Control Chars
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/06/2
+Message-ID: <12424b12-53c8-d4e4-4b93-8bcbc83488ec@apache.org>
+Date: Sat, 6 Oct 2018 11:00:28 +0200
+From: Andreas Lehmkuehler <lehmi@...che.org>
+To: announce@...che.org, security@...che.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: [UPDATE][CVE-2018-11797] DoS vulnerability in Apache PDFBox parser
 Content-Type: text/plain; charset=utf-8
 
-* Gordo Lowrey <gordo@...eval.com>, 2018-04-10, 03:53:
->>The correct solution would be to disallow the pasting of certain 
->>control characters.
->
->I'm just gonna go out on a limb here, and say this is an unfounded 
->assertion.
->
->Perhaps the correct solution would be to prevent the browser from 
->copying invisible characters.
+[CVE-2018-11797] DoS vulnerability in Apache PDFBox parser
 
-Do you mean control characters, or something else?
+Severity: Important
 
->If you're going to break some basic mechanic of human computer 
->interaction,
+Vendor:
+The Apache Software Foundation
 
-Huh? Most users don't interact with their terminal-based software by 
-pasting control characters. I bet most people don't even realize that 
-it's even possible to do that. I've been using terminal emulators for 15 
-years, and the only time I willingly did such pastes was to test 
-exploits for this very problem.
+Versions Affected:
+Apache PDFBox <= 1.8.15
+Apache PDFBox <= 2.0.11
+Earlier, unsupported Apache PDFBox versions may be affected as well
 
-If you have a practical use case for such interaction, please tell us 
-what is. I, for one, have no idea what this might be.
+Description:
+A carefully crafted PDF file can trigger an extremely long
+running computation when parsing the page tree.
 
->Instead of worrying about sanitizing what is pasted, why not worry 
->about sanitizing what is copied instead?
+Mitigation:
+Upgrade to Apache PDFBox 1.8.16 respectively 2.0.12
 
-Why? Is it the browser fault that terminal emulators interpret some 
-characters in a funny way?
+Credit:
+This issue was discovered by Shawn Rasheed and Jens Dietrich
 
-Besides, paste consumers have much better idea what needs to be 
-sanitized than paste producers.
+Website:
+https://pdfbox.apache.org/
 
-* For software that access the clipboard directly, no sanitization is 
-needed. Yay!
-
-* On some systems, if terminal is a cooked mode, control characters can 
-be escaped, usually with ^V. (But a paste producer can't possibly know 
-what the terminal mode or the escape character is going to be!)
-
-* In bracketed paste mode, the only sequence that needs to be 
-neutralized is the one that leaves the mode.
-
-From egoistical point of view, I'd also prefer if this was fixed in my 
-terminal. On my system, I have multiple paste producers potentially 
-affected by this (web browser, two PDF readers, office suite, ...), but 
-only one terminal emulator installed. It's much easier for me to verify 
-that the terminal emulator behaves (it doesn't) than to check the rest 
-of the software involved in this mess.
-
-BTW, a recent LWN article about terminal emulators briefly mentioned the 
-problem of pasting security:
-https://lwn.net/Articles/749992/
-(The article incorrectly states that urxvt's confirm-paste plugin 
-protects against this attack. Read the article comments to see why this 
-is not the case.)
-
--- 
-Jakub Wilk
+Download:
+https://pdfbox.apache.org/download.cgi
+https://www.apache.org/dist/pdfbox/2.0.12/RELEASE-NOTES.txt
+https://www.apache.org/dist/pdfbox/1.8.16/RELEASE-NOTES.txt
