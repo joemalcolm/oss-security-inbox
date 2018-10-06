@@ -1,53 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/19/6
-Message-ID: <CA+-XxSHrxf42PbHDpcNfjiwp2f4tTtruke30bOwK9xCG1-r-fQ@mail.gmail.com>
-Date: Fri, 19 Jan 2018 06:04:11 -0800
-From: Igor Seletskiy <i@...udlinux.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/06/3
+Message-ID: <20181006113958.GA29967@derpz>
+Date: Sat, 6 Oct 2018 13:40:04 +0200
+From: joernchen <joernchen@...noelit.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: How to deal with reporters who don't want their bugs fixed?
+Subject: CVE-2018-17456 Git RCE via .gitmodules
 Content-Type: text/plain; charset=utf-8
 
-Hi Greg,
+Hey,
 
-I am sure you are right, as you were in the epicenter of it and saw things
-happening. More than that -- I am really thankful to a group of people who
-worked on fixing it for months to get us where we are. Don't get me wrong -
-in no way, I am blaming anyone.
+just a short heads up to oss-sec:
 
-Yet, KAISER patch & especially patch from AMD to the mailing list created a
-lot of rumors, that I believe forced earlier disclosure -- because things
-got into 'semi-public' state.
-I might be wrong, I don't have all the info, and I am sure that people who
-were at the center of it have a better understanding of what & why happened.
+Git has just [0] released Versions 2.14.5, 2.15.3, 2.16.5, 2.17.2,
+2.18.1, and 2.19.1 which mitigate CVE-2018-17456, an RCE issue I found
+within the handling of Git submodules.
+
+More specifically this issue allows execution of arbitrary commands via
+a argument injection to subsequent `git clone` operations using the
+`url` parameter in the `.gitmodules` file. 
 
 
-Regards,
-Igor Seletskiy |  CEO
-CloudLinux OS <https://cloudlinux.com/cloudlinuxos>   |   KernelCare
-<https://www.cloudlinux.com/kernelcare>   |   Imunify360
-<http://imunify360.com/>
+Cheers,
 
-Get 24/7 free, exceptionally good support at cloudlinux.zendesk.com
-Follow us on twitter for technical updates: @CloudLinuxOS
-<https://twitter.com/cloudlinuxos>
+joernchen
 
-On Fri, Jan 19, 2018 at 5:58 AM, Greg KH <greg@...ah.com> wrote:
+[0] https://marc.info/?l=git&m=153875888916397&w=2
 
-> On Fri, Jan 19, 2018 at 05:22:58AM -0800, i@...udlinux.com wrote:
-> > We have seen "semi-public" with Meltdown -- I think it was dreadful. I
-> > would prefer private to "semi-public" any day.
->
-> Meltdown was not semi-public, it was private and siloed and a whole
-> bunch of other horrible things.  If it were semi-public, we would have
-> had it fixed sooner :)
->
-> And yes, a number of us involved are probably going to be writing up a
-> post-mortum of that whole horrid affair, feel free to let me know if
-> anyone wants to help out with it.  I think it's a great example of what
-> not to ever do in the future...
->
-> thanks,
->
-> greg k-h
->
-
+--
+joernchen ~ Phenoelit
+<joernchen@...noelit.de> ~ C776 3F67 7B95 03BF 5344
+http://www.phenoelit.de  ~ A46A 7199 8B7B 756A F5AC
