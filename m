@@ -1,35 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/23/1
-Message-ID: <20181022203059.mjg5hfb6hprfmfrm@nuc>
-Date: Mon, 22 Oct 2018 20:31:02 +0000
-From: Mikhail Klementev <jollheef@...eup.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: GCC Compiler Induced Vulnerability - affects programs compiled with GCC 7 and 8 containing nested functions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/07/1
+Message-ID: <20181007060451.GA28781@eldamar.local>
+Date: Sun, 7 Oct 2018 08:04:51 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: Will Deacon <will.deacon@....com>, marc.zyngier@....com
+Subject: Re: arm64 Linux kernel: Privilege escalation by taking control of the KVM hypervisor
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi,
 
-It was described in GCC documentation even from 2003:
+On Tue, Oct 02, 2018 at 05:07:14PM +0100, Will Deacon wrote:
+> Hi all,
+> 
+> Whilst reviewing some proposed arm64 KVM changes, it became apparent that
+> the sanity checking for the KVM_SET_ON_REG ioctl() on arm64 does not
+> correctly handle a number of cases:
+> 
+> 	- Unaligned register accesses and accesses that span multiple
+> 	  registers can bypass PSTATE sanity checking
+> 
+> 	- The PSTATE sanity checking fails to take into account the
+> 	  capabilities of the physical CPU, or the configuration of
+> 	  the virtual CPU
+> 
+> This allows an attacker with permission to create KVM-based virtual machines
+> to both panic the hypervisor by triggering an illegal exception return
+> (resulting in a DoS) and to redirect execution elsewhere within the
+> hypervisor with full register control, instead of causing a return to the
+> guest.
+> 
+> This has been fixed by upstream commits:
+> 
+> d26c25a9d19b ("arm64: KVM: Tighten guest core register access from userspace")
+> 2a3f93459d68 ("arm64: KVM: Sanitize PSTATE.M when being set from userspace")
+> 
+> which are being backported and applied to all active -stable kernels.
+> 
+> 32-bit Arm is unaffected by this issue.
+> 
+> There has not yet been a CVE requested for this (mainly because I don't know
+> how to do it).
 
-https://web.archive.org/web/20030207183940/http://gcc.gnu.org:80/onlinedocs/gccint/Trampolines.html
+This issue got CVE-2018-18021 assigned.
 
-What's difference between vulnerability you found and behavior that
-was described in the documentation?
-
-On Mon, Oct 22, 2018 at 03:07:55PM +0000, Andrew Sandoval wrote:
-> ...
-> Technical Description of the vulnerability
-> When nested C functions are compiled by GCC, code is generated which causes the
-> call stack of the currently executing thread to be made executable prior to the
-> call to a nested function and for the duration of the thread's lifetime.  This
-> is essentially the equivalent of disabling Data Execution Prevention (DEP).
-> A stack overflow, etc., that is able to place instructions on the page(s) of
-> memory made executable has the potential of gaining execution and running
-> malware, etc.  This places the process at substantial risk of being exploited.
-> ...
-
--- 
-With eval and apply,
-Mikhail Klementev.
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Regards,
+Salvatore
