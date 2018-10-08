@@ -1,51 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/18/11
-Message-ID: <20180118220124.GA9185@openwall.com>
-Date: Thu, 18 Jan 2018 23:01:24 +0100
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: How to deal with reporters who don't want their bugs fixed?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/08/1
+Message-ID: <nycvar.YSQ.7.76.1810081020570.6766@xnncv>
+Date: Mon, 8 Oct 2018 10:35:19 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Arash TC <tohidi.arash@...il.com>, Daniel Shapira <daniel@...stlock.com>
+Subject: Qemu: integer overflow issues
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jan 18, 2018 at 04:38:41PM -0500, Luedtke, Nicholas (Cyber Security) wrote:
-> On 1/18/2018 4:21 PM, Solar Designer wrote:
-> >I think it's best for your project (I guess glibc?) to prominently
-> >publish near the security contact address a maximum embargo time you'd
-> >(be likely to) agree to.  That's what security at kernel.org does
-> >(7 days) and what we do with (linux-)distros (14 days).  That way, it's
-> >less important for you to judge whether the reason for embargo is
-> >valid/altruistic or bogus/selfish - a sane maximum embargo time
-> >minimizes the damage to all parties either way.  When someone requests a
-> >longer embargo for whatever reason, just decline and insist on your
-> >previously published maximum.  Those who want to have their issue
-> >disclosure timed with some other event will then be expected to delay
-> >reporting the issue to your project until it's close enough to that
-> >other event.  That's not ideal, but I think it's better than having no
-> >maximum embargo time specified.
-> 
-> I generally agree with this, but it also creates the risk that reporters 
-> will simply wait till the maximum time frame fits within their desired 
-> reporting time.  Which of course delays the reporting of the bug to the 
-> vendor/project.
+   Hello,
 
-That's precisely what I wrote above, and I think it's not as bad as the
-original situation Florian described.  The project gets less time, but
-does it need more time when it can't release a fix anyway?  The reduced
-exposure - even if to people and infrastructure of the project itself -
-reduces risk of leaks.
+Multiple integer overflow issues were found and reported in various NIC 
+emulations in QEMU. These integer overflow could occur while receiving packets 
+and could lead to OOB stack buffer access, resulting in DoS scenario.
 
-Terms like this will also serve as a reminder to the reporter that
-they're indeed being selfish and would have wanted an unreasonably long
-embargo.  Some, but not all, will change their mind.
 
-> What I have seen in the past is a negotiated partial 
-> disclosure where the patch is released with minimum details with the 
-> line that says "Full details with be released by XXX at YYY conference." 
-> That way if ego is the factor then the reporter also gets a slight 
-> teaser for his/her talk. Of course one could just use the patch to get 
-> the details depending on the issue.
+* CVE-2018-10839 Qemu: ne2000: integer overflow leads to buffer overflow issue
 
-I think "semi-public" is the worst state an issue can be in, making the
-above suggestion the worst of those mentioned in this thread so far.
+Upstream fix:
+   -> https://lists.gnu.org/archive/html/qemu-devel/2018-09/msg03273.html
 
-Alexander
+* CVE-2018-17958 Qemu: rtl8139: integer overflow leads to buffer overflow
+
+Upstream fix:
+   -> https://lists.gnu.org/archive/html/qemu-devel/2018-09/msg03269.html
+
+* CVE-2018-17962 Qemu: pcnet: integer overflow leads to buffer overflow
+
+Upstream fix:
+   -> https://lists.gnu.org/archive/html/qemu-devel/2018-09/msg03268.html
+
+* CVE-2018-17963 Qemu: net: ignore packets with large size
+
+Upstream fix:
+   -> https://lists.gnu.org/archive/html/qemu-devel/2018-09/msg03267.html
+
+
+These issues were independently reported by Arash TC and Daniel Shapira.
+
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
