@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1278" "Sunday" "13" "September" "2015" "02:14:29" "+0900" "mala" "mala@ma.la" "<CAD8wLziqkz9NrTOO+Pxo9YchDJa3BkNvcgMnkXm8fRt7jDF81Q@mail.gmail.com>" "39" "[oss-security] CVE request: Flash based XSS in FileAPI.flash.swf" nil nil nil "9" "2015091217:14:29" "[oss-security] CVE request: Flash based XSS in FileAPI.flash.swf" (number mark "        mala@ma.la   Sep 13   39/1278  " thread-indent "\"[oss-security] CVE request: Flash based XSS in FileAPI.flash.swf\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["550" "Monday" "8" "October" "2018" "12:54:34" "-0400" "Nick Roessler" "nicholas.e.roessler@gmail.com" "<e6e0b960-faf3-175a-3730-46823ee69d3f@gmail.com>" "16" "[oss-security] CVE-2018-17407: Tex-Live buffer overflow in handling of Type 1 fonts" nil nil nil "10" "2018100816:54:34" "[oss-security] CVE-2018-17407: Tex-Live buffer overflow in handling of Type 1 fonts" (number mark "U       nicholas.e.r Oct  8   16/550   " thread-indent "\"[oss-security] CVE-2018-17407: Tex-Live buffer overflow in handling of Type 1 fonts\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 14107 invoked by uid 550); 12 Sep 2015 17:19:22 -0000
+Received: (qmail 19964 invoked by uid 550); 8 Oct 2018 17:37:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,66 +11,60 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11619 invoked from network); 12 Sep 2015 17:14:41 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:date:message-id:subject:from:to:content-type;
-        bh=rCqAfeMoKGYsG0C7Gn8bQkHO0//Y6jqsVHtVBEh+gwU=;
-        b=pzsMVl5pInt9iljlb2nXjr/JMoTwnGvqpI6zUrnmeLWK08uP+DDmyQhXszT3gbqFdQ
-         qeN6n0XQ4EQMwjXpCxc9Z7sabU2FbOxZYrwDqpMbwN3PKnaJkA4IgLPo626vDle5TIcC
-         wQQgfskpyNuI4EM6A5KqwFSyAZSL72nujWa+Vs7CwbPHh7VoRdgsbyvVbCGG1mic1u3p
-         zUGmeMSf/0f2kiTNWEXfIBJm9/dL2BFPH97j8S0OJGtnbXAbSqm2NiIJJj9zGNi2gK3I
-         6A26A+GO1EhFrRuMC6AVmBWJ0ZxUNUmni9BPY0Fi7W77TYWqZao4xYM8tt6Yx0rxNiLN
-         mwIA==
-MIME-Version: 1.0
-X-Received: by 10.60.58.4 with SMTP id m4mr4184866oeq.74.1442078069412; Sat,
- 12 Sep 2015 10:14:29 -0700 (PDT)
-X-Google-Sender-Auth: _naF5ZaQkzvzlhdsWzTqp0zy2Lo
-Message-ID: <CAD8wLziqkz9NrTOO+Pxo9YchDJa3BkNvcgMnkXm8fRt7jDF81Q@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Date: Sun, 13 Sep 2015 02:14:29 +0900
-From: mala <mala@ma.la>
 Reply-To: oss-security@lists.openwall.com
-Sender: bulkneets@gmail.com
-Subject: [oss-security] CVE request: Flash based XSS in FileAPI.flash.swf
-To: oss-security@lists.openwall.com
+Received: (qmail 11810 invoked from network); 8 Oct 2018 16:54:49 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=to:from:subject:message-id:date:user-agent:mime-version
+         :content-transfer-encoding:content-language;
+        bh=uXwXF+WRgB07PxW7y5RZazueSExTPpHx47SREwVsRqQ=;
+        b=mGGZEsVY1HqnBJQKPslR3AzoxjhUKaBFmQh6J7PH4FqVWlkqDOUzLyoW2ojfIt7fBB
+         t7XokZoTLzrtcT6Z66SPAAMvTa4DETAPUaKe5tSlN5HloxsFJtMH+EwA2S64if9lY6iK
+         n7CNjEyPQY5ngBoNA6xLsWErOI41wuNKrf6exc3t39YEfUcW/mCBtNNbe1IcGmqkJEen
+         B9X3EnOHL7UroUoBXjbVGsX9H05rRNd2Vx+30YD7N18icOug0dlnUhBIMqH6zAJN5XVF
+         Jrz9i744MAunxhlurUnqq4q1zyCF6AGsXETejnMZmGC0+QLI9/mNaalWiHWdmGwFylCi
+         PNCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
+         :mime-version:content-transfer-encoding:content-language;
+        bh=uXwXF+WRgB07PxW7y5RZazueSExTPpHx47SREwVsRqQ=;
+        b=H30XS5JRjwfae97m2H15463ICnDLI3Ko6qOanJ/P63YFhZHauFD7IDygFcBayzitdS
+         D7U5P/mw2Hot1CoDK1btLa6/d6L+fW1ebP7uDzPbqUlFYPHPVtwr9nRUW156E2NL+PFU
+         5XJ2gGr7hC2PC2o+xe5brQEruOAHeka8dIHOqrHkNm3zaSOlFngZWNpoUHqgv+jkxtYH
+         cn9vRIa2n4xAfxDYB+Lc4voeOfDkR8srs8KP6dn6wHjcZpfk3Ni6vsiOpVnarRknlNe9
+         S2Ta2sKbhZeed2YbeXhlzakaT2Dk/6Lq19sgN0YwQQvwpIw/dTejzBHamRWsHD43q0BT
+         pGzA==
+X-Gm-Message-State: ABuFfog/balWiJcKBdF758P2mmlALQ9z9yYETP2xNF/s9YzoGlLoofKR
+	Juk9qjD3RvigGm7NI4fFXCfeB44=
+X-Google-Smtp-Source: ACcGV62EIZIKUQDh1EBD6cCLK4EP3jegFDAX4D9oEHRJ7VtTONO674nGKYjk0vNYu/xzKy+abXADSg==
+X-Received: by 2002:a37:6cc3:: with SMTP id h186-v6mr7284812qkc.49.1539017677109;
+        Mon, 08 Oct 2018 09:54:37 -0700 (PDT)
+To: oss security list <oss-security@lists.openwall.com>
+From: Nick Roessler <nicholas.e.roessler@gmail.com>
+Message-ID: <e6e0b960-faf3-175a-3730-46823ee69d3f@gmail.com>
+Date: Mon, 8 Oct 2018 12:54:34 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+Subject: [oss-security] CVE-2018-17407: Tex-Live buffer overflow in handling of Type 1 fonts
 
-Hello,
+Hey all,
 
-Please assign a CVE ID to this.
+     I wanted to make everyone aware of a security update for TeX Live, 
+a distribution of the TeX document preparation software. A buffer 
+overflow in the handling of Type 1 fonts (.pfb files) allows arbitrary 
+local code execution without privilege escalation when a malicious font 
+is loaded by one of the vulnerable tools (pdflatex, pdftex, luatex, dvips).
 
-FileAPI https://github.com/mailru/FileAPI
-- fixed in 2.0.15 https://github.com/mailru/FileAPI/releases/tag/2.0.15
-- https://github.com/mailru/FileAPI/pull/342
+     The patch was rolled out on Sept 21.  See:
 
-summary:
-Cross-site scripting (XSS) vulnerability in FileAPI.flash.swf related
-to the "ExternalInterface.call" function.
-Arbitrary javascript code execution is possible on the domain hosting swf file.
+https://www.debian.org/security/2018/dsa-4299
+https://security-tracker.debian.org/tracker/CVE-2018-17407
 
-This is similar to http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-8992
-https://github.com/mailru/FileAPI/pull/228
-
-but another attack vector.
-Probably, all older versions are affected by XSS.
-At least mailru/FileAPI version 1.1.0 contains vulnerable code.
-
-references:
-
-major library that include FileAPI.flash.swf
-
-jquery.fileapi https://github.com/RubaXa/jquery.fileapi
-- fixed in 0.4.11 https://github.com/RubaXa/jquery.fileapi/releases/tag/0.4.11
-
-ng-file-upload https://github.com/danialfarid/ng-file-upload
-- fixed in 7.1.0
-https://github.com/danialfarid/ng-file-upload/releases/tag/7.1.0
-- https://github.com/danialfarid/ng-file-upload/issues/997
-
-and CMS/Web framework that uses jquery.fileapi, ng-file-upload
-
-https://github.com/search?l=json&q=jquery.fileapi&ref=searchresults&type=Code
-https://github.com/search?l=json&q=ng-file-upload&type=Code
-
+Thanks,
 --
-ma.la
+Nick
