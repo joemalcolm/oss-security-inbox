@@ -1,31 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/04/6
-Message-ID: <CABDpyChmEOPSBAxb+ipyGVfhuS4Zq+w0CFn-EANy+_TD0o-8+w@mail.gmail.com>
-Date: Wed, 4 Apr 2018 15:06:09 -0700
-From: Daniel Dai <daijy@...che.org>
-To: user@...e.apache.org, dev@...e.apache.org, announce@...che.org,  security <security@...e.apache.org>, oss-security@...ts.openwall.com
-Subject: [SECURITY] CVE-2018-1284: Hive UDF series UDFXPathXXXX allow users to pass carefully crafted XML to access arbitrary files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/08/3
+Message-ID: <e6e0b960-faf3-175a-3730-46823ee69d3f@gmail.com>
+Date: Mon, 8 Oct 2018 12:54:34 -0400
+From: Nick Roessler <nicholas.e.roessler@...il.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE-2018-17407: Tex-Live buffer overflow in handling of Type 1 fonts
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-1284: Hive UDF series UDFXPathXXXX allow users to pass
-carefully crafted XML to access arbitrary files
+Hey all,
 
-Severity: Important
+     I wanted to make everyone aware of a security update for TeX Live, 
+a distribution of the TeX document preparation software. A buffer 
+overflow in the handling of Type 1 fonts (.pfb files) allows arbitrary 
+local code execution without privilege escalation when a malicious font 
+is loaded by one of the vulnerable tools (pdflatex, pdftex, luatex, dvips).
 
-Vendor: The Apache Software Foundation
+     The patch was rolled out on Sept 21.  See:
 
-Versions Affected: This vulnerability affects all versions from 0.6.0
+https://www.debian.org/security/2018/dsa-4299
+https://security-tracker.debian.org/tracker/CVE-2018-17407
 
-Description: Malicious user might use any xpath UDFs
-(xpath/xpath_string/xpath_boolean/xpath_number/xpath_double/xpath_float/xpath_long/xpath_int/xpath_short)
-to expose the content of a file on the machine running HiveServer2
-owned by HiveServer2 user (usually hive) if
-hive.server2.enable.doAs=false.
-
-Mitigation: Users who use xpath UDFs in HiveServer2 and
-hive.server2.enable.doAs=false are recommended to upgrade to 2.3.3, or
-update UDFXPathUtil.java to the head of branch-2.3 and rebuild
-hive-exec.jar: https://git1-us-west.apache.org/repos/asf?p=hive.git;a=blob;f=ql/src/java/org/apache/hadoop/hive/ql/udf/xml/UDFXPathUtil.java;hb=refs/heads/branch-2.3.
-If these functions are not being used at present, you can also
-disable its use by adding them to the value of the config
-hive.server2.builtin.udf.blacklist.
+Thanks,
+--
+Nick
