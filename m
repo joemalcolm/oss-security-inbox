@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["569" "Friday" "8" "January" "2016" "15:07:15" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20160108140715.GA25718@eldamar.local>" "19" "[oss-security] CVE Request: WordPress: cross-site scripting vulnerability fixed in new 4.4.1 release" nil nil nil "1" "2016010814:07:15" "[oss-security] CVE Request: WordPress: cross-site scripting vulnerability fixed in new 4.4.1 release" (number mark "U       carnil@debia Jan  8   19/569   " thread-indent "\"[oss-security] CVE Request: WordPress: cross-site scripting vulnerability fixed in new 4.4.1 release\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1068" "Monday" "8" "October" "2018" "10:35:19" "+0530" "P J P" "ppandit@redhat.com" "<nycvar.YSQ.7.76.1810081020570.6766@xnncv>" "35" "[oss-security] Qemu: integer overflow issues" nil nil nil "10" "2018100805:05:19" "[oss-security] Qemu: integer overflow issues" (number mark "U       ppandit@redh Oct  8   35/1068  " thread-indent "\"[oss-security] Qemu: integer overflow issues\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 18078 invoked by uid 550); 8 Jan 2016 14:07:29 -0000
+Received: (qmail 25884 invoked by uid 550); 8 Oct 2018 05:05:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,48 +12,51 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18060 invoked from network); 8 Jan 2016 14:07:29 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        bh=+TneQ6TsGwhz5T6BMYt5r+KWYDmSAq/lD6DBH8TmNlA=;
-        b=zx+caz8xdwuIPR7eNxJCMRKh4pBgek3OT5wpYhdXyZNZf1Rg8iW0GSQZClGd+lRH08
-         XqxuD3KRidsQ2rOhJgjVIPcmkr1DI6r+LdRdX/kP1LJamdOh0aS2rdpLXiSQV4koAjam
-         kutfoXWZNL8GuUXz75BNoO1PWKbo+y5aVSgOzWc4SnMBoqVhZpV04KWVAaSIAzYVc76U
-         61BHlzJoOzqXVaQSpyTlzwRLSiKhD9EfM1NNDpAlrkacPu8hUkO+CE0GWJmYf8fTkSwY
-         KjU4L7sr4MwAdknvSY44ErRsC7TX6SsxbRdUh5Kd/Mmy+JScPcTPbyiel4PvBW/AmW7s
-         83Ww==
-X-Received: by 10.28.102.5 with SMTP id a5mr22291135wmc.85.1452262037741;
-        Fri, 08 Jan 2016 06:07:17 -0800 (PST)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Fri, 8 Jan 2016 15:07:15 +0100
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: OSS Security Mailinglist <oss-security@lists.openwall.com>
-Message-ID: <20160108140715.GA25718@eldamar.local>
+Received: (qmail 25866 invoked from network); 8 Oct 2018 05:05:37 -0000
+Date: Mon, 8 Oct 2018 10:35:19 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@kaapi
+To: oss security list <oss-security@lists.openwall.com>
+cc: Arash TC <tohidi.arash@gmail.com>, Daniel Shapira <daniel@twistlock.com>
+Message-ID: <nycvar.YSQ.7.76.1810081020570.6766@xnncv>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Subject: [oss-security] CVE Request: WordPress: cross-site scripting vulnerability fixed in
- new 4.4.1 release
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.84 on 10.5.11.25
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.28]); Mon, 08 Oct 2018 05:05:26 +0000 (UTC)
+Subject: [oss-security] Qemu: integer overflow issues
 
-Hi
+   Hello,
 
-On 6th of January 2016, a new release of WordPress was posted,
-https://wordpress.org/news/2016/01/wordpress-4-4-1-security-and-maintenance-release/
+Multiple integer overflow issues were found and reported in various NIC 
+emulations in QEMU. These integer overflow could occur while receiving packets 
+and could lead to OOB stack buffer access, resulting in DoS scenario.
 
-> WordPress versions 4.4 and earlier are affected by a cross-site
-> scripting vulnerability that could allow a site to be compromised.
-> This was reported by Crtc4L.
 
-There is no reference to the fix, but the change seems to be
+* CVE-2018-10839 Qemu: ne2000: integer overflow leads to buffer overflow issue
 
-https://core.trac.wordpress.org/changeset/36185
+Upstream fix:
+   -> https://lists.gnu.org/archive/html/qemu-devel/2018-09/msg03273.html
 
-Cf. as well https://twitter.com/brutelogic/status/685105483397619713
+* CVE-2018-17958 Qemu: rtl8139: integer overflow leads to buffer overflow
 
-Can a CVE be assigned for this WordPress issue?
+Upstream fix:
+   -> https://lists.gnu.org/archive/html/qemu-devel/2018-09/msg03269.html
 
-Regards,
-Salvatore
+* CVE-2018-17962 Qemu: pcnet: integer overflow leads to buffer overflow
+
+Upstream fix:
+   -> https://lists.gnu.org/archive/html/qemu-devel/2018-09/msg03268.html
+
+* CVE-2018-17963 Qemu: net: ignore packets with large size
+
+Upstream fix:
+   -> https://lists.gnu.org/archive/html/qemu-devel/2018-09/msg03267.html
+
+
+These issues were independently reported by Arash TC and Daniel Shapira.
+
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
