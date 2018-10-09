@@ -1,25 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/13/7
-Message-ID: <CAOp4FwSfmC=vLLSTxZYFbAbkh_j3eJJGqvwTg5R_bgzh9vyuEA@mail.gmail.com>
-Date: Wed, 13 Jun 2018 19:34:15 +0400
-From: Loganaden Velvindron <loganaden@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/09/2
+Message-ID: <20181009092102.oyyogeqoocjm6xmi@lorien.valinor.li>
+Date: Tue, 9 Oct 2018 11:21:02 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: secure@...el.com
-Subject: Intel FP security issue
+Subject: Re: net-snmp 5.7.3 unauthenticated remote Denial of Service (exploit available)
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
+Hi,
 
-Both OpenBSD and DragonflyBSD have gone ahead and committed fixes for
-the rumored Intel FP issue:
+On Tue, Oct 09, 2018 at 12:31:32AM +0200, Alexander Bergmann wrote:
+> Hi Magnus,
+> 
+> thanks for your report. I can reproduce VULN#2 (CVE-2018-18065) with our
+> net-snmp-5.7.3 version (sle12/sle15). Our net-snmp-5.4.2.1 version seams
+> to be unaffected.
+> 
+> Regarding your VULN#1 (CVE-2018-18066) I noticed that the patch was
+> already applied to our code base and CVE-2015-5621 was assigned. The
+> issue was already mentioned here at oss-security.
+> 
+> https://www.openwall.com/lists/oss-security/2015/07/31/1
+> 
+> I didn't check the details yet, but if the new CVE is a duplicate,
+> please contact NIST about it.
 
-OpenBSD: https://marc.info/?l=openbsd-cvs&m=152818076013158&w=2
-DragonflyBSD: http://lists.dragonflybsd.org/pipermail/commits/2018-June/672324.html
+Is it actually the same issue? I'm asking because for instance, there
+was indeed earlier CVE-2015-5621 and CVE-2018-1000116, which both were
+adressed with this same commit, but are considered two separate
+issues. So if CVE-2018-18066 is different from CVE-2015-5621 or
+CVE-2018-1000116, the assignment would not be a duplicate.
 
-I think that the cat is already out of the bag, and releasing details
-of this security problem makes sense. Since this has gone public, Is
-there a reason to keep this under embargo ?
-
-Kind regards,
-//Logan
-C-x-C-c
+Regards,
+Salvatore
