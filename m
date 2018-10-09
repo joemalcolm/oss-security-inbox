@@ -1,33 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/22/5
-Message-ID: <CAEwge-GQLV_9Y56psCejkhA-B3jx4amnQP5AoVwURbzn=DCZOw@mail.gmail.com>
-Date: Thu, 22 Feb 2018 13:46:43 -0800
-From: Anthony Baker <abaker@...che.org>
-To: user@...de.apache.org, dev@...de.apache.org,  asf-security <security@...che.org>, announce@...che.org, oss-security@...ts.openwall.com
-Subject: [SECURITY] CVE-2017-15696 Apache Geode configuration request authorization vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/09/6
+Message-ID: <CAJ_zFkJZ1E-Wsrp92mvHL6TFmChPECbRsN+JGngqENKHCmALAA@mail.gmail.com>
+Date: Tue, 9 Oct 2018 10:11:34 -0700
+From: Tavis Ormandy <taviso@...gle.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)
 Content-Type: text/plain; charset=utf-8
 
-CVE-2017-15696 Apache Geode configuration request authorization vulnerability
+On Tue, Oct 9, 2018 at 9:53 AM Leonid Isaev <leonid.isaev@...a.colorado.edu>
+wrote:
 
-Severity:  Important
+> On Tue, Oct 09, 2018 at 06:58:39AM -0700, Tavis Ormandy wrote:
+> > Full working exploit that works in the last few versions is attached,
+> > viewing it in evince, imagemagick, gimp, okular, etc should add a line to
+> > ~/.bashrc.
+>
+> Add zathura to the above list :)
+>
+> > p.s. plz can we deprecate untrusted postscript :(
+>
+> Which means any postscript file downloaded from the internet... Then how
+> should
+> people read arXiv.org, for example?
 
-Vendor: The Apache Software Foundation
 
-Versions Affected:  Apache Geode 1.0.0 through 1.3.0
+I think we should encourage switching to other document formats that we
+have a better handle on securing. If you do need untrusted ps, I think
+treating it the same as shell script file you downloaded from the internet.
 
-Description:
-The Geode configuration service does not properly authorize
-configuration requests.  This allows an unprivileged user who gains
-access to the Geode locator to extract configuration data and
-previously deployed application code.
+I mean, technically there's a bash restricted mode and python rexec, but
+you probably wouldn't run it on random things you just downloaded.
 
-Mitigation:
-Users of the affected versions should upgrade to Apache Geode 1.4.0 or later.
+gs -dSAFER and bash -r are useful features, but I think ever invoking them
+automatically without prompts about trust, etc, is just asking for trouble.
 
-Credit:
-This issue was reported responsibly to the Apache Geode Security Team
-by Dan Smith from Pivotal.
+Tavis.
 
-References:
-[1] https://issues.apache.org/jira/browse/GEODE-3962
-[2] https://cwiki.apache.org/confluence/display/GEODE/Release+Notes#ReleaseNotes-SecurityVulnerabilities
