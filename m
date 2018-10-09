@@ -1,28 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/24/2
-Message-ID: <CAFeDd5YC9dheyHq5xSmtvW5dDO+2v5AOuSEgq=7QuO2NDBzRbQ@mail.gmail.com>
-Date: Tue, 24 Apr 2018 18:48:38 +0300
-From: Billy Brumley <bbrumley@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2018-0737 OpenSSL: RSA key generation follows several non constant time code paths
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/09/11
+Message-ID: <CAJ_zFkJ=n=xriGFHYLG5LdySg_BdLioG_wA1p8NV71_DzvBdPA@mail.gmail.com>
+Date: Tue, 9 Oct 2018 15:32:02 -0700
+From: Tavis Ormandy <taviso@...gle.com>
+To: oss-security@...ts.openwall.com
+Cc: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+Subject: Re: ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)
 Content-Type: text/plain; charset=utf-8
 
->> Look for our preprint on http://eprint.iacr.org/ soon -- working title
->> is "One Shot, One Trace, One Key: Cache-Timing Attacks on RSA Key
->> Generation". We'll update the list with the full URL once it's posted.
->>
+On Tue, Oct 9, 2018 at 3:27 PM Perry E. Metzger <perry@...rmont.com> wrote:
+
+> I keep wondering if there isn't a way to fully remove the dangerous
+> bits from a postscript interpreter so it can _only_ be used to view
+> the document and literally has no file system access compiled in at
+> all, so there's no way to touch the fs etc. regardless of what flags
+> the interpreter is invoked with.
+>
+> (I, too, find removing the ability to look at historical postscript
+> documents a bit more draconian than I like.)
 >
 >
-> Can you post a link to the draft here please?
+I've discussed it with upstream, it's a hard no because they feel it would
+make ghostscript non-conforming (i.e. non-conforming with the Adobe
+PostScript Language Reference Manual)
 
-The preprint is now up: https://eprint.iacr.org/2018/367
+We probably have similar thoughts on this, but that is the final word from
+upstream.
 
-> The attack vector is not clear, does the attacker need to be on the same
-> physical machine or is this a cross-vm attack?
+Tavis.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2018-0737
-
-Your statement is pretty accurate. (Although I fail to see the
-difference between physical machine and cross-vm.)
-
-BBB
