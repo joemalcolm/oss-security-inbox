@@ -1,4 +1,9 @@
-Received: (qmail 11478 invoked by uid 550); 6 Sep 2022 14:51:14 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["970" "Tuesday" "9" "October" "2018" "11:21:02" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20181009092102.oyyogeqoocjm6xmi@lorien.valinor.li>" "26" "Re: [oss-security] net-snmp 5.7.3 unauthenticated remote Denial of Service (exploit available)" nil nil nil "10" "2018100909:21:02" "[oss-security] net-snmp 5.7.3 unauthenticated remote Denial of Service (exploit available)" (number mark "U       carnil@debia Oct  9   26/970   " thread-indent "\"Re: [oss-security] net-snmp 5.7.3 unauthenticated remote Denial of Service (exploit available)\"\n") "<20181008223132.bmjr3z5agaq224et@intrepid>" ("<EC9F9CC1-4943-4CD5-8463-F40DF6BCA886@stubman.eu>" "<20181008223132.bmjr3z5agaq224et@intrepid>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 3498 invoked by uid 550); 9 Oct 2018 09:21:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,67 +12,72 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11460 invoked from network); 6 Sep 2022 14:51:14 -0000
-Date: Tue, 6 Sep 2022 14:51:01 +0000
-From: Jeremy Stanley <fungi@yuggoth.org>
+Received: (qmail 3461 invoked from network); 9 Oct 2018 09:21:18 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=aLOrIvUlxi4KRmtRqiTKrFQty1rV0/8R0yGO46BZyKU=;
+        b=tvRI4AHMJrjV5pn208BE2X1DMXER4TXhb094bgkf/BLSteEifeszFrLPNm0hn1MdVk
+         hHldBbLBrUgdOspJkYoSBVXjyNNaZVtR0qelmfgPpMOMiCpzCAaAYfxA2zIJmlQjx1dP
+         fpTqRkC8r9gNjj6bK1GtzffSf7Q+ByxZ0w5gQ/rveFPvgq4XG/4p7pG73MQKfyb8R3xT
+         zOwx9yuIbYB9hZakh/+BiY4NUQ2RQyDDnV7nlgg4Z+pJlq2QUgX1LENAU9jFHuODj7Qx
+         Oqy63uhNtSCQSOL5RPtuFB6Jq+t9bDlrZ8pm7kKWSIhvuqtg+sxS/jGMjCWUZXJVFGDq
+         36bA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=aLOrIvUlxi4KRmtRqiTKrFQty1rV0/8R0yGO46BZyKU=;
+        b=WH4xsj7PUGAmpb0xvVOZsebcAhJxx3eig0r2tXEjiDMRhO6nDHeASzpIe+K/j7HVVa
+         7oYUTvNXi/Vw064U9hbR+U/6h8afPSJ0hjozpX9my9OlH+PiOF07oFuN70Nl0XqSJBna
+         CD5G2QaEQEhhHvLsMkr3nUmT8qtaNV74es3UHEkI5jiH89WwfBFClgcWrqfvn+YrUG7T
+         YVmfZUQmMySUj3AZb4MfMeSmYAKNuW3km9WpnZNrON57xivkgUv7bJHnmlPcYfxRXIKl
+         vZheas3Kh2H+mtn3+qSu98JN57perzdVN1Mzbh7K7Q4lCDQRs2InFV08qJKTyvReNtQU
+         bFBw==
+X-Gm-Message-State: ABuFfojIDTrCCk7zjQXv1yMiRrlb4wQowUS+Yvdltc8Hjwgjpl+O/y2R
+	k0TmSP6AYyBWHSuoEVPLr2qKSJNFAWU=
+X-Google-Smtp-Source: ACcGV62T8GVfRrAv8NZ3wsolsJpFF+osSaiH4lSUzlBnL9RZFxRVwD2zpEsT31f/bXBU0aQZ3jy6Hg==
+X-Received: by 2002:adf:e5c7:: with SMTP id a7-v6mr868414wrn.178.1539076866646;
+        Tue, 09 Oct 2018 02:21:06 -0700 (PDT)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Tue, 9 Oct 2018 11:21:02 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
 To: oss-security@lists.openwall.com
-Message-ID: <20220906145100.kmnuhcj4slmbrokz@yuggoth.org>
-References: <CAGUWgD9QR7mjyVnBV4NcyVv=RzLBjNoqvv=d02P-GGsdOV_VWg@mail.gmail.com>
- <20220906115010.gs7kec3wkmayhmhf@yuggoth.org>
- <CAGUWgD9x1RJdYcr9NCUOjaVNYdnhrPkSjNoh_NaLGu99q65W-w@mail.gmail.com>
+Message-ID: <20181009092102.oyyogeqoocjm6xmi@lorien.valinor.li>
+References: <EC9F9CC1-4943-4CD5-8463-F40DF6BCA886@stubman.eu>
+ <20181008223132.bmjr3z5agaq224et@intrepid>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="n7tpc3xvl6l6r3ng"
-Content-Disposition: inline
-In-Reply-To: <CAGUWgD9x1RJdYcr9NCUOjaVNYdnhrPkSjNoh_NaLGu99q65W-w@mail.gmail.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-SA-Exim-Connect-IP: 2001:4802:7801:102:be76:4eff:fe20:63e0
-X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
-X-SA-Exim-Mail-From: fungi@yuggoth.org
-X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
-Subject: Re: [oss-security] sagemath denial of service with abort() in gmp:
- overflow in mpz type
-
---n7tpc3xvl6l6r3ng
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20181008223132.bmjr3z5agaq224et@intrepid>
+User-Agent: NeoMutt/20170113 (1.7.2)
+Subject: Re: [oss-security] net-snmp 5.7.3 unauthenticated remote Denial of
+ Service (exploit available)
 
-On 2022-09-06 16:26:58 +0300 (+0300), Georgi Guninski wrote:
-> If you can crash the python interpreter without syscalls and
-> without the kernel killing it for OOM, would you call this DoS?
+Hi,
 
-I didn't say it wasn't a denial of service, but you can trivially
-create all manner of "denials of service" (and far, far worse things
-too) of the CPython interpreter and anything running in it by asking
-it to execute arbitrary Python code. It's more a question of whether
-that's something that can or even should be "fixed." If a program's
-author chooses to intentionally pass user-supplied code to CPython,
-hopefully they do so knowing all the risks and informing their users
-of the same.
---=20
-Jeremy Stanley
+On Tue, Oct 09, 2018 at 12:31:32AM +0200, Alexander Bergmann wrote:
+> Hi Magnus,
+> 
+> thanks for your report. I can reproduce VULN#2 (CVE-2018-18065) with our
+> net-snmp-5.7.3 version (sle12/sle15). Our net-snmp-5.4.2.1 version seams
+> to be unaffected.
+> 
+> Regarding your VULN#1 (CVE-2018-18066) I noticed that the patch was
+> already applied to our code base and CVE-2015-5621 was assigned. The
+> issue was already mentioned here at oss-security.
+> 
+> https://www.openwall.com/lists/oss-security/2015/07/31/1
+> 
+> I didn't check the details yet, but if the new CVE is a duplicate,
+> please contact NIST about it.
 
---n7tpc3xvl6l6r3ng
-Content-Type: application/pgp-signature; name="signature.asc"
+Is it actually the same issue? I'm asking because for instance, there
+was indeed earlier CVE-2015-5621 and CVE-2018-1000116, which both were
+adressed with this same commit, but are considered two separate
+issues. So if CVE-2018-18066 is different from CVE-2015-5621 or
+CVE-2018-1000116, the assignment would not be a duplicate.
 
------BEGIN PGP SIGNATURE-----
-
-iQKTBAABCgB9FiEEl65Jb8At7J/DU7LnSPmWEUNJWCkFAmMXXk9fFIAAAAAALgAo
-aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDk3
-QUU0OTZGQzAyREVDOUZDMzUzQjJFNzQ4Rjk5NjExNDM0OTU4MjkACgkQSPmWEUNJ
-WCkBdA/9FAN0ya01wo65C1gtJInPjw0nMrYfr9VJhPZp62uNSBBEYXwCKtgUW/AF
-xWQUU93kjQU8qf+797jezxVTM7S77RldVHWu9aEei3mvm6c/EhbWK1N3rX0xdPAt
-Mg722UdJ1Dz7n5i/Uoxk2Nr765cu4UWYiHtNdEBK6sPnsk9vwiiXfBBh6d6wgTl6
-nFHRTwh/9zDds2q/VccLOxdJB64T53rjccku6H2Xz9GGFba1duvaqYbYhWWrJfmD
-Qm3z2hqxSAfoop/t/Ga+0Jc7J7WDX08/eIC+xw+q4/R1yMu4bSfuc93z9eLsBrUJ
-kfxn04uFoFRFqSg/iDPSYlAD674Y/rIyD//j25bKqQwxyKI5nzjED4BumLFYtruh
-3jIur6D9cKbgntY/B/wD01gFoFd1QcmYc2lmEZ4ZuFIlTCIoUdkoeAGtsxH45xn3
-7TrPLj+j2TceHbDLGV3NmSgP+YdOPsibidZxYh0OBlpgZ5tHwgO5vm0sLFNb1x1T
-xK4UP/YtsGGhEJnGODZ4h+GFswXEbS2lJh9MTQVGg95JcrbYhFO7aM3u+LhrX79M
-JGaR36L9iF9GKyloxLQww2E9V/xYFE63ktRa3YYTGdk8Uz7cyasI+AMtRG2+09ht
-sf6IqQhWrVxT1hEtJR9KMU136TQuJHBc0T51d5qn+RcFxhss85s=
-=pYxs
------END PGP SIGNATURE-----
-
---n7tpc3xvl6l6r3ng--
+Regards,
+Salvatore
