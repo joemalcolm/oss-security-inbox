@@ -1,53 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/17/2
-Message-ID: <20180117135945.0d3fd93a@redhat.com>
-Date: Wed, 17 Jan 2018 13:59:45 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: MySQL sha256_password authentication plugin DoS issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/09/10
+Message-ID: <20181009182643.5d601a06@jabberwock.cb.piermont.com>
+Date: Tue, 9 Oct 2018 18:26:43 -0400
+From: "Perry E. Metzger" <perry@...rmont.com>
+To: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+On Tue, 9 Oct 2018 17:14:45 -0500 (CDT) Bob Friesenhahn
+<bfriesen@...ple.dallas.tx.us> wrote:
+> On Tue, 9 Oct 2018, Tavis Ormandy wrote:
+> >
+> > I think we should encourage switching to other document formats
+> > that we have a better handle on securing. If you do need
+> > untrusted ps, I think treating it the same as shell script file
+> > you downloaded from the internet.  
+> 
+> Due to its valuable current usages (e.g. printing and format 
+> conversion) and its long legacy, Postscript is still a vital format
+> to support in open source software.
+> 
+> How can software consuming Postscript be aware of its origin unless
+> it is known to be produced directly by another application?
+> 
+> Edge applications such as web browsers may be able to help by
+> adding warning dialogs when knowingly downloading Postscript
+> content.
 
-As Oracle does not share any information about the CVEs they assign,
-here's info about two CVEs fixed in MySQL 5.6.39 and 5.7.21 and listed
-in Oracle CPU Jan 2018.  Both flaws affect sha256_password
-authentication plugin, which uses SHA256 crypt algorithm to hash
-passwords, and was affected by the known algorithm issues.
+I keep wondering if there isn't a way to fully remove the dangerous
+bits from a postscript interpreter so it can _only_ be used to view
+the document and literally has no file system access compiled in at
+all, so there's no way to touch the fs etc. regardless of what flags
+the interpreter is invoked with.
 
-MySQL did not set any explicit limit on the length of the password that
-can be provided during the authentication phase.  Long passwords
-trigger DoS - high CPU usage and even server crash (because of use of
-alloca()).  This was assigned CVE-2018-2696 and fixed by enforcing
-maximum password length limit:
+(I, too, find removing the ability to look at historical postscript
+documents a bit more draconian than I like.)
 
-https://github.com/mysql/mysql-server/commit/475dcde2c7856dd0050b967099a86c087d94f32f
-
-SHA256 crypt makes it possible to adjust the cost of computing password
-hash by changing the number of "rounds".  This is only a problem if
-user can directly specify their password hash and hence manipulate the
-rounds setting.  That is possible in MySQL 5.6 (via SET PASSWORD =
-'hash_string';), but no longer possible in MySQL 5.7.  This isn't very
-exciting issue, as SQL access is a precondition.  Impact is that
-sha256_password can be made to use excessive amount of CPU even if
-short password is provided.  This was assigned CVE-2018-2703 and fixed
-by limiting the maximum rounds value:
-
-https://github.com/mysql/mysql-server/commit/efb4087cfe12134e1541b39ee9a4305f7cd225f5
-
-References:
-
-http://www.oracle.com/technetwork/security-advisory/cpujan2018-3236628.html#AppendixMSQL
-https://dev.mysql.com/doc/relnotes/mysql/5.6/en/news-5-6-39.html
-https://dev.mysql.com/doc/relnotes/mysql/5.7/en/news-5-7-21.html
-
-Note that these issues were found while researching a related fix from
-Oct 2017 CPU:
-
-https://github.com/mysql/mysql-server/commit/f4e4405ebe319a840eb720db52c0e28b4fef5062
-
-I believe that's CVE-2017-10155, wonder if any Oracle subscribers on
-this list are going to speak up to confirm.
-
+Perry
 -- 
-Tomas Hoger / Red Hat Product Security
+Perry E. Metzger		perry@...rmont.com
