@@ -1,34 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/24/5
-Message-Id: <E1ezZFo-00031d-BB@romulus.home.bitnebula.com>
-Date: Fri, 23 Mar 2018 21:50:00 -0500
-From: Daniel Ruggeri <druggeri@...che.org>
-To: announce@...pd.apache.org, oss-security@...ts.openwall.com, security@...pd.apache.org
-Subject: CVE-2018-1302: Possible write of after free on HTTP/2 stream shutdown
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/09/7
+Message-ID: <CAC1dCwUfCG9Vo8UhBzE1U7EgedjaVuDqQ3qYpXn0mFv8DXYT0Q@mail.gmail.com>
+Date: Tue, 9 Oct 2018 16:05:18 -0400
+From: Tim Allison <tallison@...che.org>
+To: announce@...che.org, dev@...a.apache.org, user@...a.apache.org,  Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com
+Subject: [CVE-2018-11796] Apache Tika Denial of Service via XML Entity Expansion Vulnerability
 Content-Type: text/plain; charset=utf-8
 
+CVE-2018-11796: Apache Tika Denial of Service via XML Entity Expansion
+Vulnerability
 
-CVE-2018-1302: Possible write of after free on HTTP/2 stream shutdown
+Severity: Medium
 
-Severity: Low
-
-Vendor: The Apache Software Foundation
+Vendor:
+The Apache Software Foundation
 
 Versions Affected:
-httpd 2.4.17 to 2.4.29
+Apache Tika 0.1 to 1.19
 
 Description:
-When an HTTP/2 stream was destroyed after being handled, the Apache HTTP Server
-prior to version 2.4.30 could have written a NULL pointer potentially to an
-already freed memory. The memory pools maintained by the server make this
-vulnerabilty hard to trigger in usual configurations, the reporter and the team
-could not reproduce it outside debug builds, so it is classified as low risk.
+In Apache Tika 1.19 (CVE-2018-11761), we added an entity expansion
+limit for XML parsing.  However, Tika reuses SAXParsers and calls
+reset() after each parse, which, for Xerces2 parsers, as per the
+documentation, removes the user-specified SecurityManager and
+thus removes entity expansion limits after the first parse.
+Apache Tika 1.19 is therefore still vulnerable to entity
+expansions which can lead to a denial of service attack.
 
 Mitigation:
-All httpd users should upgrade to 2.4.30 or later.
+Apache Tika users should upgrade to 1.19.1 or later
 
 Credit:
-The issue was discovered by Robert Swiecki, bug found by honggfuzz
-
-References:
-https://httpd.apache.org/security/vulnerabilities_24.html
+This issue was discovered by Slava Gorelik of CloudAlly.
