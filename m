@@ -1,31 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/18/2
-Message-ID: <6688abb0-fbc5-4c60-5876-66cdf36bb8bf@isc.org>
-Date: Fri, 18 May 2018 14:08:27 -0800
-From: ISC Security Officer <security-officer@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/09/12
+Message-ID: <CAFRnB2XFut-kOS4Zt=1-roq-CAzxwK7Gsc9kNGZg4motFWWm4g@mail.gmail.com>
+Date: Tue, 9 Oct 2018 18:34:23 -0400
+From: Alex Gaynor <alex.gaynor@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: "security-officer@....org" <security-officer@....org>
-Subject: ISC has disclosed two vulnerabilities in BIND 9.12 (CVE-2018-5736, CVE-2018-5737)
+Cc: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+Subject: Re: ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)
 Content-Type: text/plain; charset=utf-8
 
-ISC has disclosed two vulnerabilities today, CVE-2018-5736
-and CVE-2018-5736.  Both vulnerabilities affect only releases
-in the BIND 9.12 branch (that is:  9.12.0 and 9.12.1.)
-Releases in other branches (such as 9.9, 9.10, 9.11) are not affected.
+Would they consider making a build-time "safe PS only" flag that ensured it
+was compiled without things like shell-invocation? Then we could just try
+to convince Linux distros to package it that way :-)
 
-To address these issues a new security release of BIND, 9.12.1-P2,
-has been issued.
+Alex
 
-BIND 9.12.1-P2 can be found via the ISC software download page:
+On Tue, Oct 9, 2018 at 6:33 PM Tavis Ormandy <taviso@...gle.com> wrote:
 
-   https://www.isc.org/downloads
+> On Tue, Oct 9, 2018 at 3:27 PM Perry E. Metzger <perry@...rmont.com>
+> wrote:
+>
+> > I keep wondering if there isn't a way to fully remove the dangerous
+> > bits from a postscript interpreter so it can _only_ be used to view
+> > the document and literally has no file system access compiled in at
+> > all, so there's no way to touch the fs etc. regardless of what flags
+> > the interpreter is invoked with.
+> >
+> > (I, too, find removing the ability to look at historical postscript
+> > documents a bit more draconian than I like.)
+> >
+> >
+> I've discussed it with upstream, it's a hard no because they feel it would
+> make ghostscript non-conforming (i.e. non-conforming with the Adobe
+> PostScript Language Reference Manual)
+>
+> We probably have similar thoughts on this, but that is the final word from
+> upstream.
+>
+> Tavis.
+>
 
-Advisories with details about the two vulnerabilities are
-now published in the ISC Knowledge base at:
 
-   https://kb.isc.org/article/AA-01602/74/CVE-2018-5736
-   https://kb.isc.org/article/AA-01606/74/CVE-2018-5737
-
-Michael McNally
-ISC Security Officer
+-- 
+All that is necessary for evil to succeed is for good people to do nothing.
 
