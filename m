@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["515" "Thursday" "15" "December" "2016" "06:33:48" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20161215053348.5sioflbygm3ba3h5@lorien.valinor.li>" "19" "[oss-security] CVE Request: Game Music Emulators: incorrect emulation of the SPC700 audio co-processor of SNES: arbitrary code execution via malformed SPC music file" nil nil nil "12" "2016121505:33:48" "[oss-security] CVE Request: Game Music Emulators: incorrect emulation of the SPC700 audio co-processor of SNES: arbitrary code execution via malformed SPC music file" (number mark "U       carnil@debia Dec 15   19/515   " thread-indent "\"[oss-security] CVE Request: Game Music Emulators: incorrect emulation of the SPC700 audio co-processor of SNES: arbitrary code execution via malformed SPC music file\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1164" "Tuesday" "9" "October" "2018" "10:11:34" "-0700" "Tavis Ormandy" "taviso@google.com" "<CAJ_zFkJZ1E-Wsrp92mvHL6TFmChPECbRsN+JGngqENKHCmALAA@mail.gmail.com>" "33" "Re: [oss-security] ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)" "^Date:" nil nil "10" "2018100917:11:34" "[oss-security] ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)" (number mark "        taviso@googl Oct  9   33/1164  " thread-indent "\"Re: [oss-security] ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)\"\n") "<20181009153006.GF21509@takahe.colorado.edu>" ("<CAJ_zFk+nnBgWaDNKgvLnVjp4rz3SttBQvjCCXjiqC71rV6bBrA@mail.gmail.com>" "<20181009153006.GF21509@takahe.colorado.edu>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 24137 invoked by uid 550); 15 Dec 2016 05:34:04 -0000
+Received: (qmail 11793 invoked by uid 550); 9 Oct 2018 17:12:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,62 +11,76 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24119 invoked from network); 15 Dec 2016 05:34:03 -0000
+Received: (qmail 11771 invoked from network); 9 Oct 2018 17:11:59 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=1v4J+mjndQjq3RohprWYAZyAvWjuqiBWy/cIb7EQltw=;
-        b=Ul0gU4OIU6qGmoQIYavVB7zEGKMg7T0PWOpglAgDLSjxbb7sBW5vnm4i9/ImwlVIQT
-         6C/qMLuYJsGH0cYGQbqOdWAQcR/ELCAq71SiKr7hT2s58PRKb7LcI58GdxyaGednNDzT
-         jL4Pg+rJKUooLxDuLdUNpxtavHmW/DJ1QpAgkhzENy0KUt6yDS6KxvxZy16As7s49VPt
-         L4Nilnapdbf0oWVjLF7bx8f+9sygeJcRyx8UcTtNvPmtQDlD7/3aqsqw8uwYEs8MQrdq
-         vQkcEjSvykkOn1rOIDrzeDglILEPRjvhyTHh0yVJw6O5DP/YvmHovnbtJd8QItAQY7Gm
-         Zd1g==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=SxJketB6JRzfd7hiyJxVdZpoxo2Lyb9OAHgnGuuq1fE=;
+        b=twmR60mJErlMLz1/36oLsVuqBDzvB4MMrGPP5EAuDIpTzYWTuRn3C4Dxl76Jcmq0nQ
+         5/xrZ+BuO7znKzQL3Gb+ylOw8YIctykGY4Hh3xMLwUVGpwiWE5+LdQsbgESbXo2lY6Nf
+         zeL7K3rVi21xN1ehOVikaCyaiSToUzeTl4Ti4HxByeDBnofHRkREHpYWWhju+qTa1qWM
+         fFrogSu1k4FL+dsM1kEeLQe9exO22MRGO+M+PzbUGWLqv4Y1/JlWi2lMGBC+vbfMghI0
+         kJnxmDnSXvPSCRK6kf2ufOCgLUKKgzAK+iW0+velKNScjLN09hpahZhtAcw38vyB3gVX
+         1dDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:subject:message-id
-         :mime-version:content-disposition:user-agent;
-        bh=1v4J+mjndQjq3RohprWYAZyAvWjuqiBWy/cIb7EQltw=;
-        b=i/r89uU8ZDUnG/KYKpaX4VFdGXgKWpJoZsEDI/GIZRaFgwLT6A0x0AMgEVQrp6If5v
-         RNtej7RAcqle+Mzqa90XbJEZuOruvxVIfj3khURnZfQgHxJ/+GtSNYJ5L54IgTAGZdLJ
-         0VaGLBzdVNLJKf2to6uqbSm+75INPGya+SPDCJGTfsFjIyZTd5kjfneWv2C7p4jMvs+m
-         fkH6WgvI1Ql4EJGUyD+6/FFUclBm2vppPgYvWhgqy7+uXNcOE9MnMhLDOGkBT4yBN6fa
-         zleLODivrAHWdLRwuS2g9I31T3lloCYn0xyQipkpRrKc18UmlY1ksrRjNDFFZD8M0MyY
-         TTwg==
-X-Gm-Message-State: AIkVDXKumtyc4RlJN5ZgA/wb2FWslvuNgooj4w6uYgLvUU2CbB9ym/nVacsBpeXzpzY/jw==
-X-Received: by 10.55.135.197 with SMTP id j188mr429015qkd.71.1481780031304;
-        Wed, 14 Dec 2016 21:33:51 -0800 (PST)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Thu, 15 Dec 2016 06:33:48 +0100
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: OSS Security Mailinglist <oss-security@lists.openwall.com>
-Message-ID: <20161215053348.5sioflbygm3ba3h5@lorien.valinor.li>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=SxJketB6JRzfd7hiyJxVdZpoxo2Lyb9OAHgnGuuq1fE=;
+        b=HyWxr+N8t4oMaoA79yDnXCTfbWE+F0J7kCoxH3Wz7X1UJO1cVh5ENxyygBEA+3ysLp
+         PFynZONTMxlusk4+Rn/I2qQuupvqSN5meAbqtMGR9fff9XdEEF+qsIQLYbA2CAfKuiNT
+         vQK/VEwb4lNy35hk/Hiuy4brgbMmo94PB58R3dJv2WvJc+ZRr9trzjHg24wc0iIAoBrG
+         BSH68cEPCGub2qm6zW2PACW1axExtARtyoPedUIqhbOZwmgflc1uz4OA99Q6isxiZKIW
+         bRIS+tZDymrmkUPXRevcKe+k7e/aVlQXYZmn8gfvmE8RAN3gQ84ul3iwm5wI5uky2c7u
+         a3aQ==
+X-Gm-Message-State: ABuFfohPCnzzNoPbtA3V5bGKtwCAfztE8dGF5rD3pQ1XEalCklEYeRKP
+	x0C/gKjjPtprK3adXv2ryS+sokq4NkF5hIfDujjJ1BTj
+X-Google-Smtp-Source: ACcGV60sinTYy0zYjGi7lXl+IxHP84Qh+AxNPdPPQrtFEFdMtZHo3c2LAOnv5EMoSLYjm74BvPt5lf5UkFeaBHXe3A0=
+X-Received: by 2002:a0c:c506:: with SMTP id x6-v6mr23274877qvi.154.1539105107158;
+ Tue, 09 Oct 2018 10:11:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: NeoMutt/20161126 (1.7.1)
-Subject: [oss-security] CVE Request: Game Music Emulators: incorrect emulation of the SPC700
- audio co-processor of SNES: arbitrary code execution via malformed SPC music
- file
+References: <CAJ_zFk+nnBgWaDNKgvLnVjp4rz3SttBQvjCCXjiqC71rV6bBrA@mail.gmail.com>
+ <20181009153006.GF21509@takahe.colorado.edu>
+In-Reply-To: <20181009153006.GF21509@takahe.colorado.edu>
+Message-ID: <CAJ_zFkJZ1E-Wsrp92mvHL6TFmChPECbRsN+JGngqENKHCmALAA@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="0000000000002fa9700577ced5bb"
+Date: Tue, 9 Oct 2018 10:11:34 -0700
+From: Tavis Ormandy <taviso@google.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] ghostscript: bypassing executeonly to escape
+ -dSAFER sandbox (CVE-2018-17961)
+To: oss-security@lists.openwall.com
 
-Hi
+--0000000000002fa9700577ced5bb
+Content-Type: text/plain; charset="UTF-8"
 
-As reported by Chris Evans via
+On Tue, Oct 9, 2018 at 9:53 AM Leonid Isaev <leonid.isaev@jila.colorado.edu>
+wrote:
 
-http://scarybeastsecurity.blogspot.de/2016/12/redux-compromising-linux-using-snes.html
+> On Tue, Oct 09, 2018 at 06:58:39AM -0700, Tavis Ormandy wrote:
+> > Full working exploit that works in the last few versions is attached,
+> > viewing it in evince, imagemagick, gimp, okular, etc should add a line to
+> > ~/.bashrc.
+>
+> Add zathura to the above list :)
+>
+> > p.s. plz can we deprecate untrusted postscript :(
+>
+> Which means any postscript file downloaded from the internet... Then how
+> should
+> people read arXiv.org, for example?
 
-Incorrect emulation of the SPC700 audio co-processor of the Super
-Nintendo Entertainment System allows the execution of arbitrary code
-if a malformed SPC music file is opened.
 
-Debian released a DSA for this issue (in the qemu-music-emu source
-package):
+I think we should encourage switching to other document formats that we
+have a better handle on securing. If you do need untrusted ps, I think
+treating it the same as shell script file you downloaded from the internet.
 
-https://lists.debian.org/debian-security-announce/2016/msg00318.html
+I mean, technically there's a bash restricted mode and python rexec, but
+you probably wouldn't run it on random things you just downloaded.
 
-Could you please assign a CVE for this issue.
+gs -dSAFER and bash -r are useful features, but I think ever invoking them
+automatically without prompts about trust, etc, is just asking for trouble.
 
-Regards,
-Salvatore
+Tavis.
+
+--0000000000002fa9700577ced5bb--
