@@ -1,4 +1,9 @@
-Received: (qmail 7492 invoked by uid 550); 25 Feb 2026 16:55:39 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["766" "Tuesday" "9" "October" "2018" "16:05:18" "-0400" "Tim Allison" "tallison@apache.org" "<CAC1dCwUfCG9Vo8UhBzE1U7EgedjaVuDqQ3qYpXn0mFv8DXYT0Q@mail.gmail.com>" "25" "[oss-security] [CVE-2018-11796] Apache Tika Denial of Service via XML Entity Expansion Vulnerability" nil nil nil "10" "2018100920:05:18" "[oss-security] [CVE-2018-11796] Apache Tika Denial of Service via XML Entity Expansion Vulnerability" (number mark "U       tallison@apa Oct  9   25/766   " thread-indent "\"[oss-security] [CVE-2018-11796] Apache Tika Denial of Service via XML Entity Expansion Vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 30388 invoked by uid 550); 9 Oct 2018 20:05:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,37 +12,45 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 1167 invoked from network); 25 Feb 2026 16:54:51 -0000
-Date: Wed, 25 Feb 2026 17:54:49 +0100
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Cc: kf503bla@duck.com, "bug-inetutils@gnu.org" <bug-inetutils@gnu.org>,
-	"ron.benyizhak@safebreach.com" <ron.benyizhak@safebreach.com>,
-	"simon@josefsson.org" <simon@josefsson.org>,
-	"auerswal@unix-ag.uni-kl.de" <auerswal@unix-ag.uni-kl.de>,
-	"justin.swartz@risingedge.co.za" <justin.swartz@risingedge.co.za>
-Message-ID: <20260225165449.GA23380@openwall.com>
-References: <CAB1hGqQwnSzEqtrefwqAxD+rWGu_EXVDmu-btMrNYqMzkzc9Kw@mail.gmail.com> <20260206172730.GA12303@unix-ag.uni-kl.de> <877bso8mhf.fsf@josefsson.org> <20260224011702.27987-1-justin.swartz@risingedge.co.za> <B72B4221-75D0-4C28-840F-9CF7B1A53E66.1@smtp-inbound1.duck.com> <27E138FE-A205-4EDD-9A9B-1F84BFAEC100.1@smtp-inbound1.duck.com> <20260224203337.GA17345@openwall.com> <a0bad9ebbf4507c4@orthanc.ca> <CAA748E8-86CC-4C46-AD03-319F6690252B.1@smtp-inbound1.duck.com> <4A24F620-6FA6-4F2B-A1F9-B4781E391989.1@smtp-inbound1.duck.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4A24F620-6FA6-4F2B-A1F9-B4781E391989.1@smtp-inbound1.duck.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Telnetd Vulnerability Report
+Received: (qmail 30364 invoked from network); 9 Oct 2018 20:05:43 -0000
+X-Gm-Message-State: ABuFfogt+fVstqsKDicwbce8JQS79dq4rxFTV11TGE0SdXVv99G1j6sU
+	lTEAATeH7BodNu/2xaQS7j3jHpFQrX5+siVvorU=
+X-Google-Smtp-Source: ACcGV63EzjAt8WtS5hr7MFIOyaPIHpimnv7SBVsVMu5GJFBFYIFg9W+GA/yS8FRm4kMPIUiYV67W0wL14MMeeHzsbwI=
+X-Received: by 2002:a81:cb08:: with SMTP id q8-v6mr16984220ywi.49.1539115529679;
+ Tue, 09 Oct 2018 13:05:29 -0700 (PDT)
+MIME-Version: 1.0
+From: Tim Allison <tallison@apache.org>
+Date: Tue, 9 Oct 2018 16:05:18 -0400
+X-Gmail-Original-Message-ID: <CAC1dCwUfCG9Vo8UhBzE1U7EgedjaVuDqQ3qYpXn0mFv8DXYT0Q@mail.gmail.com>
+Message-ID: <CAC1dCwUfCG9Vo8UhBzE1U7EgedjaVuDqQ3qYpXn0mFv8DXYT0Q@mail.gmail.com>
+To: announce@apache.org, dev@tika.apache.org, user@tika.apache.org, 
+	Apache Security Team <security@apache.org>, oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] [CVE-2018-11796] Apache Tika Denial of Service via XML Entity
+ Expansion Vulnerability
 
-On Wed, Feb 25, 2026 at 07:46:07AM -0500, kf503bla@duck.com wrote:
-> telnet is extremely old and just because there is still widespread use of telnet or the daemon, doesn't provide a valid reason to keep using it. these trivial vulnerabilities keep popping up and if you still insist of using telnet, you deserve getting pwned
+CVE-2018-11796: Apache Tika Denial of Service via XML Entity Expansion
+Vulnerability
 
-I mostly let these messages through so far (rejecting only one, which
-had even less value), but as a moderator I declare end of sub-thread
-now.  Further messages on "Who uses telnet anyway?" will be rejected by
-default, unless they truly add something new.
+Severity: Medium
 
-Messages on actual security issues/fixes in telnet are still desirable.
+Vendor:
+The Apache Software Foundation
 
-Alexander
+Versions Affected:
+Apache Tika 0.1 to 1.19
 
-P.S. I first wrote the above in a confusing manner, not clarifying it's
-only end of sub-thread started by kf503bla, not the entire thread.
-Corrected now, and I'll only let this corrected message to oss-security.
+Description:
+In Apache Tika 1.19 (CVE-2018-11761), we added an entity expansion
+limit for XML parsing.  However, Tika reuses SAXParsers and calls
+reset() after each parse, which, for Xerces2 parsers, as per the
+documentation, removes the user-specified SecurityManager and
+thus removes entity expansion limits after the first parse.
+Apache Tika 1.19 is therefore still vulnerable to entity
+expansions which can lead to a denial of service attack.
+
+Mitigation:
+Apache Tika users should upgrade to 1.19.1 or later
+
+Credit:
+This issue was discovered by Slava Gorelik of CloudAlly.
