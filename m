@@ -1,102 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/06/3
-Message-ID: <20180906125252.tfsfzfp2af3ztl3j@suse.de>
-Date: Thu, 6 Sep 2018 14:52:52 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com, taviso@...gle.com
-Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/09/3
+Message-ID: <20181009114126.GA7166@openwall.com>
+Date: Tue, 9 Oct 2018 13:41:26 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: Dave Hansen <dave.hansen@...ux.intel.com>
+Subject: Linux kernel: "Meltdown leaks with Global kernel mapping"
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-Following CVEs have been assigned by Mitre:
+I didn't look into this closely, but I think it needs to be brought in
+here.  Back in August, Dave Hansen reported what may be ways to bypass
+PTI protection in the Linux kernel in some cases.  Dave's fixes got into
+Linux 4.18.5, but maybe not into any other releases nor into distros,
+except for those that updated to 4.18.5 (apparently, some SUSE branch
+and some Yocto branch?)
 
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=ea735ba37dc0fd5f5622d031830b9a559dec1cc9
-> # 699671
-> handling /undefined results in SEGV
+Start of a relevant thread:
 
-	CVE-2018-16510
+https://lists.openwall.net/linux-kernel/2018/08/02/976
 
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=0edd3d6c63
-> # 699659 missing type check in ztype
+The Subject says "close two Meltdown leaks with Global kernel mapping",
+but it isn't immediately clear to me what "two" leaks there are.  Only
+one appears to be clearly described:
 
-	CVE-2018-16511
+https://lists.openwall.net/linux-kernel/2018/08/02/979
 
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=78911a01b6 #
-> 699654 A /invalidaccess checks stop working after a failed restore
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=5516c614dc33 #
-> 699654 B /invalidaccess checks stop working after a failed restore
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=79cccf641486 #
-> 699654 C /invalidaccess checks stop working after a failed restore
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=520bb0ea7519aa3e79db78aaf0589dae02103764
-> 699654 D /invalidaccess checks stop working after a failed restore
+The corresponding commit:
 
-	CVE-2018-16509
+https://git.kernel.org/pub/scm/linux/kernel/git/tip/tip.git/commit/?h=x86/pti-urgent&id=c40a56a7818cfe735fc93a69e1875f8bba834483
 
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=b326a716
-> # 699655 - missing type checking in setcolor
+There are mentions of "r/w kernel text issue" and "unused hole" issue -
+is this why "two"?  But "r/w kernel text" feels irrelevant to Meltdown.
 
-	CVE-2018-16513
+I've attached the two LKML postings above for archival on oss-security
+as well.
 
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=c3476dde
-> # 699656 - LockDistillerParams boolean missing type checks
+Alexander
 
-	CVE-2018-15910
+View attachment "lkml-close-two-meltdown-leaks.txt" of type "text/plain" (3099 bytes)
 
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=a054156d42
-> # 699658 - Bypassing PermitFileReading by handling undefinedfilename errors
-
-	CVE-2018-16539
-
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=0b6cd1918e1ec4ffd087400a754a845180a4522b
-> # 699660 - shading_param incomplete type checking
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=e01e77a36cbb2e0277bc3a63852244bec41be0f6
-> # 699660 - shading_param incomplete type checking
-
-	CVE-2018-15909
-
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=c432131c3f
-> # 699661 - pdf14 garbage collection memory corruption
-
-	CVE-2018-16540
-
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=971472c83a345a16dac9f90f91258bb22dd77f22
-> # 699663 - .setdistillerkeys memory corruption
-
-	CVE Requested (this morning, will be assigned in some hours I expect)
-
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=241d911127
-> # 699664 - corrupt device object after error in job
-
-	CVE-2018-16541
-
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=0d3901189f
-> # 699657 - .tempfile SAFER restrictions seem to be broken
-
-	CVE-2018-15908
-
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=8e9ce5016db968b40e4ec255a3005f2786cce45f
-> # 699665 - memory corruption in aesdecode
-
-	CVE-2018-15911
-
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=b575e1ec42
-> # 699668 - .definemodifiedfont memory corruption if /typecheck is handled
-
-	CVE-2018-16542
-
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=5b5536fa88a9e885032bc0df3852c3439399a5c0
-> # 699670 gssetresolution memory corruption
-
-	CVE-2018-16543
-
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=ea735ba37dc0fd5f5622d031830b9a559dec1cc9
-> # 699671 handling /undefined results in SEGV
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=ea735ba37dc0fd5f5622d031830b9a559dec1cc9
-> # 699676 PDF interpreter can leave dangerous operators available
-
-	As its the same commit, I assume it is also covered by CVE-2018-16510 from bug 699671?
-
-I have not yet requested the current issue(s) you spotted.
-
-Ciao, Marcus
+View attachment "lkml-remove-freed-kernel-image-areas.txt" of type "text/plain" (10579 bytes)
