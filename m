@@ -1,4 +1,9 @@
-Received: (qmail 24072 invoked by uid 550); 12 Feb 2025 15:18:35 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3270" "Wednesday" "10" "October" "2018" "17:11:42" "+0200" "Daniel Beck" "ml@beckweb.net" "<D95FAFFB-57B5-4D5A-BFF2-3A4F8F67320C@beckweb.net>" "88" "[oss-security] Multiple vulnerabilities in Jenkins" nil nil nil "10" "2018101015:11:42" "[oss-security] Multiple vulnerabilities in Jenkins" (number mark "U       ml@beckweb.n Oct 10   88/3270  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 12129 invoked by uid 550); 10 Oct 2018 15:11:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,44 +12,105 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 7577 invoked from network); 12 Feb 2025 09:40:59 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Arnout Engelen <engelen@apache.org>
+Received: (qmail 12108 invoked from network); 10 Oct 2018 15:11:55 -0000
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 11.5 \(3445.9.1\))
+Message-Id: <D95FAFFB-57B5-4D5A-BFF2-3A4F8F67320C@beckweb.net>
+Date: Wed, 10 Oct 2018 17:11:42 +0200
 To: oss-security@lists.openwall.com
-Message-ID: <e231282b-8429-69ef-ca1c-0ee127a1409b@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 12 Feb 2025 09:40:12 +0000
-MIME-Version: 1.0
-Subject: [oss-security] CVE-2024-32838: Apache Fineract: SQL injection vulnerabilities in
- offices API endpoint 
+X-Mailer: Apple Mail (2.3445.9.1)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1539184315;195d846b;
+X-HE-SMSGID: 1gAG9H-0005oz-SU
+Subject: [oss-security] Multiple vulnerabilities in Jenkins
 
-Severity: important
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software. The following
+releases contain fixes for security vulnerabilities:
 
-Affected versions:
+* Jenkins weekly 2.146
+* Jenkins LTS 2.138.2
 
-- Apache Fineract 1.4 through 1.9
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2018-10-10/
 
-Description:
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-SQL Injection vulnerability in various API endpoints - offices, dashboards,=
- etc. Apache Fineract versions 1.9 and before have a vulnerability that all=
-ows an authenticated attacker to inject malicious data into some of the RES=
-T API endpoints' query parameter.=C2=A0
-Users are recommended to upgrade to version 1.10.1, which fixes this issue.
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
 
-A SQL Validator has been implemented which allows us to configure a series =
-of tests and checks against our SQL queries that will allow us to validate =
-and protect against nearly all potential SQL injection attacks.
+---
 
-Credit:
+SECURITY-867
+A path traversal vulnerability in Stapler allowed viewing routable objects 
+with views defined on any type. This could be used to access internal data 
+of routable objects, e.g. by showing their string representation (#toString).
 
-Kabilan S - Security engineer at Zoho (finder)
-Aleksandar Vidakovic (remediation developer)
 
-References:
+SECURITY-1074
+Users with Job/Configure permission could specify a relative path escaping 
+the base directory in the file name portion of a file parameter definition. 
+This path would be used to archive the uploaded file on the Jenkins master, 
+resulting in an arbitrary file write vulnerability.
 
-https://fineract.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2024-32838
+File parameters that escape the base directory are no longer accepted and 
+the build will fail.
+
+
+SECURITY-1129
+The wrapper query parameter for the XML variant of the Jenkins remote API 
+did not validate the specified tag name. This resulted in a reflected cross-
+site scripting vulnerability.
+
+Only legal XML tag names are now allowed for the wrapper query parameter.
+
+
+SECURITY-1162 / CVE-2018-1999043
+When attempting to authenticate using API token, an ephemeral user record 
+was created to validate the token in case an external security realm was 
+used, and the user record in Jenkins not previously saved, as (legacy) API 
+tokens could exist without a persisted user record.
+
+This behavior could be abused to create a large number of ephemeral user 
+records in memory.
+
+This is the same vulnerability as SECURITY-672. The fix for SECURITY-672 
+was previously incorrectly applied and therefore not effective. This has 
+been fixed.
+
+
+SECURITY-1128
+By accessing a specific crafted URL on Jenkins instances using Jenkins' own 
+user database, users without Overall/Read access could create ephemeral 
+user records.
+
+This behavior could be abused to create a large number of ephemeral user 
+records in memory.
+
+Accessing this URL now no longer results in a user record getting created.
+
+
+SECURITY-1158
+When signing up for a new user account on instances using Jenkins' own user 
+database, Jenkins did not invalidate the existing session and create a new 
+one. This allowed session fixation.
+
+Jenkins now invalidates the existing session and creates a new one when 
+logging in after user signup.
+
+
+SECURITY-765
+When Jenkins fails to process form submissions due to an internal error, 
+the error message shown to the user and written to the log typically 
+includes the serialized JSON form submission. Secrets, such as submitted 
+passwords, might be included with the JSON object, and shown or written to 
+disk in plain text.
+
+Jenkins now masks values in these error messages from view if they were 
+shown on the UI as password form fields.
 
