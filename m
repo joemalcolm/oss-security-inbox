@@ -1,43 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/21/6
-Message-ID: <CANLc_9LvCcPaG9zZzKH8MFEcaaGgUjLyJrgA+7xVqNK6MJQZKA@mail.gmail.com>
-Date: Mon, 21 May 2018 09:51:42 -0700
-From: Patrick Hunt <phunt@...che.org>
-To: announce@...che.org, DevZooKeeper <dev@...keeper.apache.org>,  UserZooKeeper <user@...keeper.apache.org>, security@...keeper.apache.org,  oss-security@...ts.openwall.com
-Subject: [CVE-2018-8012] Apache ZooKeeper Quorum Peer mutual authentication
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/10/5
+Message-ID: <20181010170418.7bd2dcc0@computer>
+Date: Wed, 10 Oct 2018 17:04:18 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: Eddie Chapman <eddie@...k.net>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-8012: Apache ZooKeeper Quorum Peer mutual authentication
+On Wed, 10 Oct 2018 15:36:52 +0100
+Eddie Chapman <eddie@...k.net> wrote:
 
-Severity: Critical
+> But I'm still unclear how "just browsing a website is enough to
+> trigger the vulnerability in some common configurations." Are we
+> talking about the user looking in their web browser cache directory
+> on the filesystem using Nautilus, and hence running malicious code
+> embedded in a cached file via the evince thumbnailer on opening that
+> directory? Or maybe Nautilus/Gnome automatically runs the thumbnailer
+> on every new file created in the user's home directory (via
+> inotify?), including whatever the browser saves in the background
+> (hopefully not)? Or is it just a case of the user opening a
+> downloaded file with evince and becoming a victim that way? Though
+> that is not exactly automatic, most browsers show a prompt asking
+> what to do with a downloaded file.
 
-Vendor:
-The Apache Software Foundation
+I don't know what exactly Tavis was referring to, but a scenario that
+has been discussed in the past and likely is still possible in many
+configurations is this:
+Some browsers (notably chrome) will download files without asking in
+their default configuration. So a site can make you download a file and
+it ends up in your ~/Downloads dir.
 
-Versions Affected:
-ZooKeeper prior to 3.4.10
-ZooKeeper 3.5.0-alpha through 3.5.3-beta
-The unsupported ZooKeeper 1.x through 3.3.x versions may be also affected
+Desktop search tools will automatically index that (tracker from gnome,
+baloo from kde). So voila - you can fire up an exploit if you can
+exploit anything that tracker or baloo support.
 
-Description:
-No authentication/authorization is enforced when a server attempts to join
-a quorum. As a result an arbitrary end point could join the cluster and
-begin propagating counterfeit changes to the leader.
+https://scarybeastsecurity.blogspot.com/2016/11/0day-poc-risky-design-decisions-in.html
 
-Mitigation:
-Upgrade to 3.4.10 or later (3.5.4-beta or later if on the 3.5 branch) and
-enable Quorum Peer mutual authentication.
+Though I'm not sure if either of them uses ghostscript, a quick check
+it seems that not. You still have the automatic download issue in
+chrome, but you'd need to convince your user to open up ~/Downloads in
+a file manager. That's a minor not-fully-automatic part, but I guess
+it's plausible enough that users will eventually do that at some point.
 
-Alternately ensure the ensemble election/quorum communication is protected
-by a firewall as this will mitigate the issue.
+-- 
+Hanno Böck
+https://hboeck.de/
 
-See the documentation for more details on correct cluster administration.
-
-Credit:
-This issue was identified by Földi Tamás and Eugene Koontz
-
-References:
-https://issues.apache.org/jira/browse/ZOOKEEPER-1045
-https://cwiki.apache.org/confluence/display/ZOOKEEPER/Server-Server+mutual+authentication
-http://zookeeper.apache.org/doc/current/zookeeperAdmin.html
-
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
