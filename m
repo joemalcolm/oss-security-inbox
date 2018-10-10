@@ -1,30 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/02/6
-Message-ID: <20180702143801.GG8324@f195.suse.de>
-Date: Mon, 2 Jul 2018 16:38:01 +0200
-From: Matthias Gerstner <mgerstner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: accountsservice: insufficient path check in user_change_icon_file_authorized_cb()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/10/3
+Message-ID: <e9f76ebb-869e-69c5-7623-bae8553636ab@ehuk.net>
+Date: Wed, 10 Oct 2018 10:10:58 +0100
+From: Eddie Chapman <eddie@...k.net>
+To: oss-security@...ts.openwall.com, Tavis Ormandy <taviso@...gle.com>
+Subject: Re: ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 09/10/18 14:58, Tavis Ormandy wrote:
+>  Because nautilus will automatically invoke
+> evince-thumbnailer without any user-interaction, just browsing a website 
+> is enough to trigger the vulnerability in some common configurations.
 
-> >I think the easiest way to fix this is to normalize the user supplied 
-> >filename e.g. using realpath()
-> 
-> Using realpath(3) for access control is almost always a mistake: this 
-> function expands symlinks, including attacker-controlled symlinks.
+While the vulnerability in ghostscript itself is clear in this thread, 
+does anyone have any more info on the above aspect of this? i.e is the 
+above scenario (inadvertently running postscript, perhaps contained in 
+an image, through ghostscript by just browsing a malicious site) limited 
+to just nautilus in gnome environments? Do other browsers/environments 
+handle this better or do they do similar? It seems that, strictly 
+speaking, the "critical" nature of this vulnerability hinges on the 
+behaviour of the browser/desktop environment. Otherwise the scope is 
+limited to an individual manually downloading a postscript file and 
+opening it outside of the browser.
 
-can you elaborate what your main worry of using realpath is in this
-context?
-
-It surely is better not to expand attacker controlled symlinks or
-perform and system calls if it is not necessary. But I fail to see the
-security issue of just calling realpath(3) on an attacker controlled
-path.
-
-Regards
-
-Matthias
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Apologies if I'm missing anything obvious or if this has been covered 
+elsewhere online.
