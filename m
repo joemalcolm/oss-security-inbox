@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2161" "Wednesday" "8" "February" "2017" "17:13:08" "-0600" "ISC Security Officer" "security-officer@isc.org" "<dbd58642-9905-4cb8-9540-0c4817265215@isc.org>" "62" "[oss-security] BIND9 CVE-2017-3135: Combination of DNS64 and RPZ Can Lead to Crash" nil nil nil "2" "2017020823:13:08" "[oss-security] BIND9 CVE-2017-3135: Combination of DNS64 and RPZ Can Lead to Crash" (number mark "U       security-off Feb  8   62/2161  " thread-indent "\"[oss-security] BIND9 CVE-2017-3135: Combination of DNS64 and RPZ Can Lead to Crash\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["638" "Wednesday" "10" "October" "2018" "08:46:05" "-0700" "Alan Coopersmith" "alan.coopersmith@oracle.com" "<11222d94-037d-b88a-846a-24f08ee334ef@oracle.com>" "13" "Re: [oss-security] ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)" "^Date:" nil nil "10" "2018101015:46:05" "[oss-security] ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)" (number mark "        alan.coopers Oct 10   13/638   " thread-indent "\"Re: [oss-security] ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)\"\n") "<20181010145330.63e183d8@computer>" ("<CAJ_zFk+nnBgWaDNKgvLnVjp4rz3SttBQvjCCXjiqC71rV6bBrA@mail.gmail.com>" "<e9f76ebb-869e-69c5-7623-bae8553636ab@ehuk.net>" "<20181010145330.63e183d8@computer>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 24312 invoked by uid 550); 8 Feb 2017 23:15:21 -0000
+Received: (qmail 7835 invoked by uid 550); 10 Oct 2018 15:46:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,80 +11,51 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23654 invoked from network); 8 Feb 2017 23:13:31 -0000
-From: ISC Security Officer <security-officer@isc.org>
-To: oss-security@lists.openwall.com
-Cc: ISC Security Officer <security-officer@isc.org>
-Message-ID: <dbd58642-9905-4cb8-9540-0c4817265215@isc.org>
-Date: Wed, 8 Feb 2017 17:13:08 -0600
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:45.0)
- Gecko/20100101 Thunderbird/45.7.0
+Received: (qmail 7803 invoked from network); 10 Oct 2018 15:46:23 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=subject : to :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=corp-2018-07-02;
+ bh=6CjRu0aUJ9df4NOH6xGP10OHwo4kgJzx6h1E8PnAJ5Y=;
+ b=uB7Z+e1EXeOB9hoJlbWJ00/Z+OyTEce38dh4JZMeENZAoYRrnZqwt9waBJTIO/y4m1Cr
+ b8GYZxcKd/2LS/rjlacv3lz/Ik+HpHB0Xv3Cr9i/QFaR81f5wwTnxW2u7nYqN3+KLJfM
+ WfuchzO4c3h1+YTsZIeVzc9S2c6NFQvY2aAoOqI3YgTeBOwPZD+VJxFuudwNosOEOwxR
+ prpbEs8Qa5yhySS4eohZ56b8+EOW75Tjur/1O02TJWbnFvsYRiMdiW5rwS9OZ7GuOz5E
+ C4CGYacwEIiP57tvYIQ5W1joG2nPjxpRmRbRXjb/hGcz1zZ2GHQNtnphiwk1q2h0LSHB PQ== 
+References: <CAJ_zFk+nnBgWaDNKgvLnVjp4rz3SttBQvjCCXjiqC71rV6bBrA@mail.gmail.com>
+ <e9f76ebb-869e-69c5-7623-bae8553636ab@ehuk.net>
+ <20181010145330.63e183d8@computer>
+Message-ID: <11222d94-037d-b88a-846a-24f08ee334ef@oracle.com>
+User-Agent: Mozilla/5.0 (X11; SunOS i86pc; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="qQ7i9g9j2Kk7MrpcrkFJjHKqhnB4WFxEE"
-Subject: [oss-security] BIND9 CVE-2017-3135: Combination of DNS64 and RPZ Can Lead to Crash
+In-Reply-To: <20181010145330.63e183d8@computer>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Virus-Version: vendor=nai engine=5900 definitions=9041 signatures=668706
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 malwarescore=0
+ phishscore=0 bulkscore=0 spamscore=0 mlxscore=0 mlxlogscore=458
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.0.1-1807170000 definitions=main-1810100153
+Date: Wed, 10 Oct 2018 08:46:05 -0700
+From: Alan Coopersmith <alan.coopersmith@oracle.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] ghostscript: bypassing executeonly to escape
+ -dSAFER sandbox (CVE-2018-17961)
+To: oss-security@lists.openwall.com,
+        =?UTF-8?Q?Hanno_B=c3=b6ck?=
+ <hanno@hboeck.de>
 
---qQ7i9g9j2Kk7MrpcrkFJjHKqhnB4WFxEE
-Content-Type: multipart/mixed; boundary="Gbs5CB9ve4I0fKcag8mgLuNCTJm5Rw2C2";
- protected-headers="v1"
-From: ISC Security Officer <security-officer@isc.org>
-Reply-To: security-officer@isc.org
-To: oss-security@lists.openwall.com
-Cc: ISC Security Officer <security-officer@isc.org>
-Message-ID: <dbd58642-9905-4cb8-9540-0c4817265215@isc.org>
-Subject: BIND9 CVE-2017-3135: Combination of DNS64 and RPZ Can Lead to Crash
+On 10/10/18 05:53 AM, Hanno Böck wrote:
+> Nautilus is trying to solve this by sandboxing the thumbnailers.
+> However this depends on bubblewrap and is currently fail-open, i.e. if
+> bubblewrap is not available it will not disable the thumbnailing, it
+> will just not sandbox it. In practice this means it's often not
+> sandboxed. I doubt this will change any time soon.
 
---Gbs5CB9ve4I0fKcag8mgLuNCTJm5Rw2C2
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+And bubblewrap is very specific to running on a Linux kernel, so users
+of GNOME on top of other kernels are also left unprotected by it.
 
-Today ISC announced CVE-2017-3135, a denial-of-service vulnerability
-that can affect resolvers using both DNS64 and RPZ to rewrite responses
-for the same view.
-
-This affects all BIND 9.9 releases since 9.9.3, all BIND 9.10 releases,
-and all BIND 9.11 releases, including the 9.9.10b1, 9.10.5b1, and
-9.11.1b1 releases.
-
-Our full CVE text can be found at https://kb.isc.org/article/AA-01453
-
-New releases of BIND, including security fixes for this vulnerability,
-are available at: www.isc.org/downloads/
-
-Release notes can be obtained using the following links:
-
-ftp://ftp.isc.org/isc/bind9/9.9.9-P6/
-ftp://ftp.isc.org/isc/bind9/9.10.4-P6/
-ftp://ftp.isc.org/isc/bind9/9.11.0-P3/
-ftp://ftp.isc.org/isc/bind9/9.9.10rc1/
-ftp://ftp.isc.org/isc/bind9/9.10.5rc1/
-ftp://ftp.isc.org/isc/bind9/9.11.1rc1/
-
---=20
-Brian Conry
-ISC Support
-Acting Security Officer
-
-
-
---Gbs5CB9ve4I0fKcag8mgLuNCTJm5Rw2C2--
-
---qQ7i9g9j2Kk7MrpcrkFJjHKqhnB4WFxEE
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEcBAEBCAAGBQJYm6YMAAoJEL2X3GOe6MR74qMIAK4J2w8VvsyCLRE23F/3pafd
-QMZHKky3myq1HjafU6ueB78IKweGhXP38QPSCUxlCwJ5jyjli1n0LFfX3118Z34p
-ZfnBGRblusZLuWDWhPyj7eMr7JG/5iedieusH0bkS1AQFxgWW1t38+hlkd/HlgwU
-2Qp7eIE01fjsy8Zlm+WpYCQC0wo8MtWh1SlG3OHAU+F2fRrBDuks+93QXZSRefQC
-/vKD8akCEZesZ0GHLvPMXfvYpjGVXxmPWm+JxNl/fHAxhTfQhUNMS4mAmNcJrnPv
-G2CbR/3zNH+c6ytRN8QEvFy3bVAhcHfK/aUkYYo4AtE4q5O4Vn8XYM1GnVL6Sak=
-=0U0x
------END PGP SIGNATURE-----
-
---qQ7i9g9j2Kk7MrpcrkFJjHKqhnB4WFxEE--
+-- 
+	-Alan Coopersmith-               alan.coopersmith@oracle.com
+	 Oracle Solaris Engineering - https://blogs.oracle.com/alanc
