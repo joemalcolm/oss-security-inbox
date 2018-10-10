@@ -1,61 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/23/2
-Message-ID: <119799b0-8d2a-c235-fcb2-7662f02024e2@apache.org>
-Date: Fri, 23 Feb 2018 00:33:21 +0000
-From: Mark Thomas <markt@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: Fwd: [SECURITY] CVE-2018-1304 Security constraints mapped to context root are ignored
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/10/2
+Message-Id: <D2FFFDDC-6092-409E-B535-561A53B8763F@stubman.eu>
+Date: Wed, 10 Oct 2018 08:38:50 +0200
+From: Magnus Klaaborg Stubman <magnus@...bman.eu>
+To: carnil@...ian.org, abergmann@...e.com
+Cc: oss-security@...ts.openwall.com
+Subject: Re: net-snmp 5.7.3 unauthenticated remote Denial of Service (exploit available)
 Content-Type: text/plain; charset=utf-8
 
--------- Forwarded Message --------
-Subject: [SECURITY] CVE-2018-1304 Security constraints mapped to context
-root are ignored
-Date: Fri, 23 Feb 2018 00:27:30 +0000
-From: Mark Thomas <markt@...che.org>
-Reply-To: announce@...cat.apache.org, announce@...cat.apache.org
-To: Tomcat Users List <users@...cat.apache.org>
-CC: Tomcat Developers List <dev@...cat.apache.org>, announce@...che.org,
-announce@...cat.apache.org <announce@...cat.apache.org>
+Hi guys,
 
-CVE-2018-1304 Security constraints mapped to context root are ignored
+Yesterday I submitted a change request asking MITRE to mark CVE-2018-18066 as a duplicate of CVE-2015-5621.
+Thank you for bringing the issue to my attention!
 
-Severity: High
+Magnus
 
-Vendor: The Apache Software Foundation
+> On 9 Oct 2018, at 11.21, Salvatore Bonaccorso <carnil@...ian.org> wrote:
+> 
+> Hi,
+> 
+> On Tue, Oct 09, 2018 at 12:31:32AM +0200, Alexander Bergmann wrote:
+>> Hi Magnus,
+>> 
+>> thanks for your report. I can reproduce VULN#2 (CVE-2018-18065) with our
+>> net-snmp-5.7.3 version (sle12/sle15). Our net-snmp-5.4.2.1 version seams
+>> to be unaffected.
+>> 
+>> Regarding your VULN#1 (CVE-2018-18066) I noticed that the patch was
+>> already applied to our code base and CVE-2015-5621 was assigned. The
+>> issue was already mentioned here at oss-security.
+>> 
+>> https://www.openwall.com/lists/oss-security/2015/07/31/1
+>> 
+>> I didn't check the details yet, but if the new CVE is a duplicate,
+>> please contact NIST about it.
+> 
+> Is it actually the same issue? I'm asking because for instance, there
+> was indeed earlier CVE-2015-5621 and CVE-2018-1000116, which both were
+> adressed with this same commit, but are considered two separate
+> issues. So if CVE-2018-18066 is different from CVE-2015-5621 or
+> CVE-2018-1000116, the assignment would not be a duplicate.
+> 
+> Regards,
+> Salvatore
 
-Versions Affected:
-Apache Tomcat 9.0.0.M1 to 9.0.4
-Apache Tomcat 8.5.0 to 8.5.27
-Apache Tomcat 8.0.0.RC1 to 8.0.49
-Apache Tomcat 7.0.0 to 7.0.84
-
-Description:
-The URL pattern of "" (the empty string) which exactly maps to the
-context root was not correctly handled when used as part of a security
-constraint definition. This caused the constraint to be ignored. It was,
-therefore, possible for unauthorised users to gain access to web
-application resources that should have been protected. Only security
-constraints with a URL pattern of the empty string were affected.
-
-Mitigation:
-Users of the affected versions should apply one of the following
-mitigations:
-- Review security constraints and confirm none use a URL patten of ""
-  (the empty string)
-- Upgrade to Apache Tomcat 9.0.5 or later
-- Upgrade to Apache Tomcat 8.5.28 or later
-- Upgrade to Apache Tomcat 8.0.50 or later
-- Upgrade to Apache Tomcat 7.0.85 or later
-
-Credit:
-This issue was reported publicly as bug 62067 and the security
-implications identified by the Apache Tomcat Security Team.
-
-History:
-2018-02-23 Original advisory
-
-References:
-[1] http://tomcat.apache.org/security-9.html
-[2] http://tomcat.apache.org/security-8.html
-[3] http://tomcat.apache.org/security-7.html
 
