@@ -1,23 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/16/5
-Message-ID: <20181016225024.746f423d@computer>
-Date: Tue, 16 Oct 2018 22:50:24 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/10/4
+Message-ID: <20181010145330.63e183d8@computer>
+Date: Wed, 10 Oct 2018 14:53:30 +0200
 From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: ghostscript: 1Policy operator gives access to .forceput CVE-2018-18284
+Subject: Re: ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 16 Oct 2018 15:57:22 -0400
-"Perry E. Metzger" <perry@...rmont.com> wrote:
+On Wed, 10 Oct 2018 10:10:58 +0100
+Eddie Chapman <eddie@...k.net> wrote:
 
-> Again, given that PostScript is an archival format for a lot of
-> documents, wouldn't a version of ghostscript with all the ability to
-> do anything dangerous removed from the interpreter at compile time be
-> rational?
+> While the vulnerability in ghostscript itself is clear in this
+> thread, does anyone have any more info on the above aspect of this?
+> i.e is the above scenario (inadvertently running postscript, perhaps
+> contained in an image, through ghostscript by just browsing a
+> malicious site) limited to just nautilus in gnome environments? Do
+> other browsers/environments handle this better or do they do similar?
+> It seems that, strictly speaking, the "critical" nature of this
+> vulnerability hinges on the behaviour of the browser/desktop
+> environment. Otherwise the scope is limited to an individual manually
+> downloading a postscript file and opening it outside of the browser.
 
-I think nobody here will disagree with you that this would be good to
-have.
-The question is: Who's gonna do it? Will you?
+evince installs a thumbnail entry to
+/usr/share/thumbnailers
+
+This is a generic location where applications can install files (I
+believe they follow the .desktop specification, which is an ini-based
+format). This is thus not nautilus-specific, but every filemanager that
+uses this format will be affected. A quick googling tells me e.g.
+pcmanfm is also affected. I'm not sure if dolphin uses them as well.
+
+Nautilus is trying to solve this by sandboxing the thumbnailers.
+However this depends on bubblewrap and is currently fail-open, i.e. if
+bubblewrap is not available it will not disable the thumbnailing, it
+will just not sandbox it. In practice this means it's often not
+sandboxed. I doubt this will change any time soon.
+
+Very similar problems show up with desktop search tools.
+
+I think this whole concept is questionable and should be reviewed. I
+think it's not desirable to have thumbnailers for all kinds of formats,
+instead a more reasonable approach would be to limit thumbnailing to a
+few widely used formats that have well-reviewed libraries (e.g. I don't
+think that libjpeg or libpng will have any vulnerabilities left that are
+even remotely as severe as the things tavis found in ghostscript).
 
 -- 
 Hanno Böck
