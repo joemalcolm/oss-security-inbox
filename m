@@ -1,39 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/10/1
-Message-ID: <20180210102549.fpeskg2rxvxwjitd@jumper.schlittermann.de>
-Date: Sat, 10 Feb 2018 11:25:49 +0100
-From: Heiko Schlittermann <hs@...marc.schlittermann.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2018-6789 Exim 4.90 and earlier: buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/10/7
+Message-ID: <5782b494-5dba-71ee-d3f9-9f07814f715a@ehuk.net>
+Date: Wed, 10 Oct 2018 15:36:52 +0100
+From: Eddie Chapman <eddie@...k.net>
+To: oss-security@...ts.openwall.com, Hanno Böck <hanno@...eck.de>
+Subject: Re: ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)
 Content-Type: text/plain; charset=utf-8
 
-Heiko Schlittermann <hs@...littermann.de> (Mi 07 Feb 2018 11:39:43 CET):
-> CVE-2018-6789 Exim 4.90 and earlier
-> ===================================
-….
-> Next steps:
+On 10/10/18 13:53, Hanno Böck wrote:
+> On Wed, 10 Oct 2018 10:10:58 +0100
+> Eddie Chapman <eddie@...k.net> wrote:
 > 
-> * t0:     Distros will get access to our "security" non-public git repo
->           (based on the SSH keys known to us)
-> * t0 +7d: Patch will be published on the official public git repo
- 
- t0 was 2018-02-08 17:00 UTC
+>> While the vulnerability in ghostscript itself is clear in this
+>> thread, does anyone have any more info on the above aspect of this?
+>> i.e is the above scenario (inadvertently running postscript, perhaps
+>> contained in an image, through ghostscript by just browsing a
+>> malicious site) limited to just nautilus in gnome environments? Do
+>> other browsers/environments handle this better or do they do similar?
+>> It seems that, strictly speaking, the "critical" nature of this
+>> vulnerability hinges on the behaviour of the browser/desktop
+>> environment. Otherwise the scope is limited to an individual manually
+>> downloading a postscript file and opening it outside of the browser.
+> 
+> evince installs a thumbnail entry to
+> /usr/share/thumbnailers
+> 
+> This is a generic location where applications can install files (I
+> believe they follow the .desktop specification, which is an ini-based
+> format). This is thus not nautilus-specific, but every filemanager that
+> uses this format will be affected. A quick googling tells me e.g.
+> pcmanfm is also affected. I'm not sure if dolphin uses them as well.
+> 
+> Nautilus is trying to solve this by sandboxing the thumbnailers.
+> However this depends on bubblewrap and is currently fail-open, i.e. if
+> bubblewrap is not available it will not disable the thumbnailing, it
+> will just not sandbox it. In practice this means it's often not
+> sandboxed. I doubt this will change any time soon.
+> 
+> Very similar problems show up with desktop search tools.
+> 
+> I think this whole concept is questionable and should be reviewed. I
+> think it's not desirable to have thumbnailers for all kinds of formats,
+> instead a more reasonable approach would be to limit thumbnailing to a
+> few widely used formats that have well-reviewed libraries (e.g. I don't
+> think that libjpeg or libpng will have any vulnerabilities left that are
+> even remotely as severe as the things tavis found in ghostscript).
 
-As one distro failed to keep the embargo we need to cut the time
-for the distros and we'll release the patch to the public today.
+Ah OK, I got confused (having not used gnome or nautilus for a long 
+time) of what exactly Nautilus' role is here. Because Tavis mentioned 
+web browsing and nautilus together in my mind I was thinking nautilus 
+was the web browser here forgot it's a file manager :-)
 
-    2018-02-10 18:00 UTC
+But I'm still unclear how "just browsing a website is enough to trigger 
+the vulnerability in some common configurations." Are we talking about 
+the user looking in their web browser cache directory on the filesystem 
+using Nautilus, and hence running malicious code embedded in a cached 
+file via the evince thumbnailer on opening that directory? Or maybe 
+Nautilus/Gnome automatically runs the thumbnailer on every new file 
+created in the user's home directory (via inotify?), including whatever 
+the browser saves in the background (hopefully not)? Or is it just a 
+case of the user opening a downloaded file with evince and becoming a 
+victim that way? Though that is not exactly automatic, most browsers 
+show a prompt asking what to do with a downloaded file.
 
-Sorry for the inconvenience, thank you for understanding and for using
-Exim.
-
-    Best regards from Dresden/Germany
-    Viele Grüße aus Dresden
-    Heiko Schlittermann
--- 
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
- ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+So, still slightly confused, how one can become a victim here just 
+browsing a website. It's probably obvious to everyone but I'm not 
+getting it having always run a quite minimal desktop for years 
+(currently a mixture of Awesome window manager + some Mate elements, 
+caja file manager) .... Or maybe no-one wants to spell it out so as not 
+to give the bad guys any free tips. So feel free to ignore me if it's 
+either of those :-)
