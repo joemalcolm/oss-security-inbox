@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4845" "Wednesday" "3" "June" "2020" "14:33:18" "+0200" "Daniel Beck" "ml@beckweb.net" "<BC62CA7E-C08B-4762-AD58-5E0751CC4334@beckweb.net>" "132" "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil "6" "2020060312:33:18" "[oss-security] Multiple vulnerabilities in Jenkins plugins" (number mark "U       ml@beckweb.n Jun  3  132/4845  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["583" "Thursday" "11" "October" "2018" "13:30:33" "-0700" "Dave Hansen" "dave.hansen@linux.intel.com" "<3b969e4e-2c02-9b18-c1a2-412b5b698548@linux.intel.com>" "17" "Re: [oss-security] Linux kernel: \"Meltdown leaks with Global kernel mapping\"" nil nil nil "10" "2018101120:30:33" "[oss-security] Linux kernel: \"Meltdown leaks with Global kernel mapping\"" (number mark "U       dave.hansen@ Oct 11   17/583   " thread-indent "\"Re: [oss-security] Linux kernel: \"Meltdown leaks with Global kernel mapping\"\"\n") "<20181009114126.GA7166@openwall.com>" ("<20181009114126.GA7166@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13595 invoked by uid 550); 3 Jun 2020 12:33:30 -0000
+Received: (qmail 25864 invoked by uid 550); 11 Oct 2018 20:59:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,149 +12,85 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13571 invoked from network); 3 Jun 2020 12:33:30 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.14\))
-Message-Id: <BC62CA7E-C08B-4762-AD58-5E0751CC4334@beckweb.net>
-Date: Wed, 3 Jun 2020 14:33:18 +0200
-To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3445.104.14)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1591187610;fe0d2a73;
-X-HE-SMSGID: 1jgSa6-0008JD-Mq
-Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
+Received: (qmail 4021 invoked from network); 11 Oct 2018 20:33:17 -0000
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.54,369,1534834800"; 
+   d="scan'208";a="96746796"
+To: Solar Designer <solar@openwall.com>, oss-security@lists.openwall.com
+References: <20181009114126.GA7166@openwall.com>
+From: Dave Hansen <dave.hansen@linux.intel.com>
+Openpgp: preference=signencrypt
+Autocrypt: addr=dave.hansen@linux.intel.com; keydata=
+ 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
+ z5cecg==
+Message-ID: <3b969e4e-2c02-9b18-c1a2-412b5b698548@linux.intel.com>
+Date: Thu, 11 Oct 2018 13:30:33 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
+MIME-Version: 1.0
+In-Reply-To: <20181009114126.GA7166@openwall.com>
+Content-Type: text/plain; charset=windows-1252
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+Subject: Re: [oss-security] Linux kernel: "Meltdown leaks with Global kernel
+ mapping"
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+On 10/09/2018 04:41 AM, Solar Designer wrote:
+> There are mentions of "r/w kernel text issue" and "unused hole" issue -
+> is this why "two"?  But "r/w kernel text" feels irrelevant to Meltdown.
 
-The following releases contain fixes for security vulnerabilities:
+The description says:
 
-* Compact Columns Plugin 1.12
-* ECharts API Plugin 4.7.0-4
-* Script Security Plugin 1.73
-* Self-Organizing Swarm Plug-in Modules Plugin 3.21
+> The current PTI code leaves the entire area of the kernel binary
+> between '_text' and '_end' as Global (on non-PCID hardware).
+> However, that range contains both read-write kernel data, and two
+> "unused" holes in addition to text.
 
-Additionally, we announce unresolved security issues in the following
-plugins:
+I said two issues because I saw two distinct problems:
 
-* Play Framework Plugin
-* Project Inheritance Plugin
-* Selenium Plugin
-* Subversion Partial Release Manager Plugin
+1. 'read-write kernel data'
+2. '"unused" holes'
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2020-06-03/
-
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-1866 / CVE-2020-2190
-Script Security Plugin 1.72 and earlier does not correctly escape pending
-or approved classpath entries on the In-process Script Approval page.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by users able to configure sandboxed scripts.
-
-
-SECURITY-1200 / CVE-2020-2191 (permission checks) & CVE-2020-2192 (CSRF)
-Self-Organizing Swarm Plug-in Modules Plugin adds API endpoints to add or
-remove agent labels. In Self-Organizing Swarm Plug-in Modules Plugin 3.20
-and earlier these only require a global Swarm secret to use, and no regular
-permission check is performed. This allows users with Agent/Create
-permission to add or remove labels of any agent.
-
-Additionally, these API endpoints do not require POST requests, resulting
-in a cross-site request forgery (CSRF) vulnerability.
-
-
-SECURITY-1841 / CVE-2020-2193
-ECharts API Plugin 4.7.0-3 and earlier does not escape the parser
-identifier when rendering charts.
-
-This results in a stored cross-site scripting (XSS) vulnerability that can
-be exploited by users with Job/Configure permission.
-
-
-SECURITY-1842 / CVE-2020-2194
-ECharts API Plugin 4.7.0-3 and earlier does not escape the display name of
-the builds in the trend chart.
-
-This results in a stored cross-site scripting (XSS) vulnerability that can
-be exploited by users with Run/Update permission.
-
-
-SECURITY-1837 / CVE-2020-2195
-Compact Columns Plugin 1.11 and earlier displays the unprocessed job
-description in tooltips.
-
-This results in a stored cross-site scripting vulnerability that can be
-exploited by users with Job/Configure permission.
-
-
-SECURITY-1766 / CVE-2020-2196
-Selenium Plugin 3.141.59 and earlier has no CSRF protection for its HTTP
-endpoints.
-
-This allows attackers to perform the following actions:
-
-* Restart the Selenium Grid hub.
-* Delete or replace the plugin configuration.
-* Start, stop, or restart Selenium configurations on specific nodes.
-
-Through carefully chosen configuration parameters, these actions can result
-in OS command injection on the Jenkins master.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1582 / CVE-2020-2197 (permission check) & CVE-2020-2198 (unredacte=
-d encrypted secrets)
-Jenkins limits access to job configuration XML data (`config.xml`) to users
-with Job/ExtendedRead permission, typically implied by Job/Configure
-permission. Project Inheritance Plugin has several job inspection features,
-including the API URL `/job/.../getConfigAsXML` for its Inheritance Project
-job type that does something similar.
-
-Project Inheritance Plugin 19.08.02 and earlier does not check permissions
-for this new endpoint, granting access to job configuration XML data to
-every user with Job/Read permission.
-
-Additionally, the encrypted values of secrets stored in the job
-configuration are not redacted, as they would be by the `config.xml` API
-for users without Job/Configure permission.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1726 / CVE-2020-2199
-Subversion Partial Release Manager Plugin 1.0.1 and earlier does not escape
-the error message for the repository URL field form validation.
-
-This results in a reflected cross-site scripting (XSS) vulnerability that
-can also be exploited similar to a stored cross-site scripting
-vulnerability by users with Job/Configure permission.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1879 / CVE-2020-2200
-A form validation endpoint in Play Framework Plugin executes the `play`
-command to validate a given input file.
-
-Play Framework Plugin 1.0.2 and earlier lets users specify the path to the
-`play` command on the Jenkins master. This results in an OS command
-injection vulnerability exploitable by users able to store such a file on
-the Jenkins master (e.g. through archiving artifacts).
-
-As of publication of this advisory, there is no fix.
-
-
+Does that clear it up?
