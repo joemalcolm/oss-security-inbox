@@ -1,52 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/21/1
-Message-ID: <CALJHwhSzACBrrvU83O+ZOhqSHCFOFekPMU=5dYPY=2vTeD4PGQ@mail.gmail.com>
-Date: Tue, 21 Aug 2018 13:29:34 +1000
-From: Wade Mealing <wmealing@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/11/3
+Message-ID: <CAJ_zFk+yw7HcUtqg8cUTqwTx3F0F8atYY95=RCzkBz-zKwK0JQ@mail.gmail.com>
+Date: Thu, 11 Oct 2018 10:20:17 -0700
+From: Tavis Ormandy <taviso@...gle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2018-10902 - linux kernel - double free in midi subsystem
+Subject: Re: ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)
 Content-Type: text/plain; charset=utf-8
 
-Gday,
+On Tue, Oct 9, 2018 at 6:58 AM Tavis Ormandy <taviso@...gle.com> wrote:
 
-The linux midi subsystem has a possible memory corruption flaw
-accessing midi devices.
+>
+> The fix is public now, here are the necessary commit:
+>
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=a54c9e61e7d0
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=a6807394bd94
+>
+>
+>
+A small update, one of these commits was to mark all procedures that use
+dangerous operators as operators themselves. The idea is that error
+handlers will only see the top-level operator and not any sub-operators (I
+know, this is getting complicated).
 
-This was fixes upstream in commit
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=39675f7a7c7e7702f7d5341f1e0d01db746543a0
-(4.18 and newer not affected). Red hat has assigned CVE-2018-10902 for
-this issue.
+I noticed a procedure upstream missed, .loadfontloop. Upstream have double
+checked if there were any others, and I did too - we think that is all of
+them.
 
-The raw midi kernel driver does not protect against concurrent access
-which leads to a double-realloc (double free) in
-snd_rawmidi_input_params() and snd_rawmidi_output_status() which are
-part of snd_rawmidi_ioctl() handler in rawmidi.c file. Here is an
-excerpt of the concerned code:
+So this commit is necessary as well:
 
-```
-    if (params->buffer_size != runtime->buffer_size) {
-        newbuf = krealloc(runtime->buffer, params->buffer_size,
-                  GFP_KERNEL);
-        if (!newbuf)
-            return -ENOMEM;
-        runtime->buffer = newbuf;
-        runtime->buffer_size = params->buffer_size;
-        runtime->avail = runtime->buffer_size;
-    }
-```
+http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=a5a9bf8c6a63
 
-If a midi device is plugged in or emulated (which is the case under a
-default VMware instance), then this device driver is reachable via
-/dev/snd/midiC0D* interfaces.  This can lead to memory corruption and
-all the fun that follows if abused correctly.
+Thanks, Tavis.
 
-Thanks to ZDI has done the reporting to Red Hat,
-
-https://bugzilla.redhat.com/show_bug.cgi?id=1590720
-
--- 
-Wade Mealing
-
-Product Security - Kernel, RHCE
-
-Red Hat
