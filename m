@@ -1,34 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/24/2
-Message-Id: <E1ezZFo-00031W-7i@romulus.home.bitnebula.com>
-Date: Fri, 23 Mar 2018 21:50:00 -0500
-From: Daniel Ruggeri <druggeri@...che.org>
-To: announce@...pd.apache.org, oss-security@...ts.openwall.com, security@...pd.apache.org
-Subject: CVE-2018-1301: Possible out of bound access after failure in reading the HTTP request
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/11/1
+Message-ID: <07c253db-bcc4-4be6-3bbc-159f8b6e85ef@gmail.com>
+Date: Thu, 11 Oct 2018 10:42:54 +0200
+From: Emilio Pozuelo Monfort <pochu27@...il.com>
+To: oss-security@...ts.openwall.com, Hanno Böck <hanno@...eck.de>, Eddie Chapman <eddie@...k.net>
+Subject: Re: ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)
 Content-Type: text/plain; charset=utf-8
 
+On 10/10/2018 17:04, Hanno Böck wrote:
+> On Wed, 10 Oct 2018 15:36:52 +0100
+> Eddie Chapman <eddie@...k.net> wrote:
+> 
+>> But I'm still unclear how "just browsing a website is enough to
+>> trigger the vulnerability in some common configurations." Are we
+>> talking about the user looking in their web browser cache directory
+>> on the filesystem using Nautilus, and hence running malicious code
+>> embedded in a cached file via the evince thumbnailer on opening that
+>> directory? Or maybe Nautilus/Gnome automatically runs the thumbnailer
+>> on every new file created in the user's home directory (via
+>> inotify?), including whatever the browser saves in the background
+>> (hopefully not)? Or is it just a case of the user opening a
+>> downloaded file with evince and becoming a victim that way? Though
+>> that is not exactly automatic, most browsers show a prompt asking
+>> what to do with a downloaded file.
+> 
+> I don't know what exactly Tavis was referring to, but a scenario that
+> has been discussed in the past and likely is still possible in many
+> configurations is this:
+> Some browsers (notably chrome) will download files without asking in
+> their default configuration. So a site can make you download a file and
+> it ends up in your ~/Downloads dir.
+> 
+> Desktop search tools will automatically index that (tracker from gnome,
+> baloo from kde). So voila - you can fire up an exploit if you can
+> exploit anything that tracker or baloo support.
 
-CVE-2018-1301: Possible out of bound access after failure in reading the HTTP request
+tracker-extract / miners run in a sandbox these days. No idea about baloo.
 
-Severity: Low
+https://bugzilla.gnome.org/show_bug.cgi?id=764786
 
-Vendor: The Apache Software Foundation
+Cheers,
+Emilio
 
-Versions Affected:
-httpd 2.0.1 to 2.4.29
+> https://scarybeastsecurity.blogspot.com/2016/11/0day-poc-risky-design-decisions-in.html
+> 
+> Though I'm not sure if either of them uses ghostscript, a quick check
+> it seems that not. You still have the automatic download issue in
+> chrome, but you'd need to convince your user to open up ~/Downloads in
+> a file manager. That's a minor not-fully-automatic part, but I guess
+> it's plausible enough that users will eventually do that at some point.
+> 
 
-Description:
-A specially crafted request could have crashed the Apache HTTP Server prior to
-version 2.4.30, due to an out of bound access after a size limit is reached by
-reading the HTTP header. This vulnerability is considered very hard if not
-impossible to trigger in non-debug mode (both log and build level), so it is
-classified as low risk for common server usage.
-
-Mitigation:
-All httpd users should upgrade to 2.4.30 or later.
-
-Credit:
-The issue was discovered by Robert Swiecki, bug found by honggfuzz
-
-References:
-https://httpd.apache.org/security/vulnerabilities_24.html
