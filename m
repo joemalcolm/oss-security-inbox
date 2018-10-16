@@ -1,38 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/13/5
-Message-ID: <CAO30oQd=Uw5ovTGPX-NNEeMdrURYsxceXoHcULoJF4rToi6BMA@mail.gmail.com>
-Date: Tue, 13 Feb 2018 15:09:57 -0500
-From: Ganesh Murthy <gmurthy@...che.org>
-To: announce@...che.org, users@...d.apache.org, dev@...d.apache.org,  security@...che.org, oss-security@...ts.openwall.com
-Subject: [SECURITY] CVE-2017-15699: Apache Qpid Dispatch Router Denial of Service Vulnerability when specially crafted frame is sent to the Router
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/16/1
+Message-ID: <20181016122143.o7bwrhh3chhmhguk@suse.de>
+Date: Tue, 16 Oct 2018 14:21:43 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE-2018-10933: libssh: authentication bypass in server code
 Content-Type: text/plain; charset=utf-8
 
-CVE-2017-15699: Apache Qpid Dispatch Router Denial of Service
-Vulnerability when specially crafted frame is sent to the Router
+Hi,
 
-Severity: Important
+https://www.libssh.org/2018/10/16/libssh-0-8-4-and-0-7-6-security-and-bugfix-release/
 
-Vendor: The Apache Software Foundation
+-----
+libssh 0.8.4 and 0.7.6 security and bugfix release
 
-Versions Affected: Versions 0.7.0 and 0.8.0
+This is an important security and maintenance release in order to address CVE-2018-10933.
 
-Description: A Denial of Service vulnerability was found in Apache
-Qpid Dispatch Router 0.7.0 and 0.8.0. To exploit this vulnerability, a
-remote user must be able to establish an AMQP connection to the Qpid
-Dispatch Router and send a specifically crafted AMQP frame which will
-cause it to segfault and shut down.
+libssh versions 0.6 and above have an authentication bypass vulnerability in the server code. By presenting the server an SSH2_MSG_USERAUTH_SUCCESS message in place of the SSH2_MSG_USERAUTH_REQUEST message which the server would expect to initiate authentication, the attacker could successfully authentciate without any credentials.
 
-Resolution:
-Users of Qpid Dispatch Router versions 0.7.0 and 0.8.0 must upgrade to
-version 0.8.1 or 1.0.0 and later.
+The bug was discovered by Peter Winter-Smith of NCC Group.
+-----
 
-Mitigation:
-Any user who is able to connect to the Router may exploit the
-vulnerability. If anonymous authentication is enabled then any remote
-user with network access the Router is a possible attacker. The number
-of possible attackers is reduced if the Router is configured to
-require authentication. Then an attacker needs to have authentic
-credentials which are used to create a connection to the Router before
-proceeding to exploit this vulnerability.
+This only affects libssh operating in _server_ mode, but not the usual used client mode.
 
-[1] - https://issues.apache.org/jira/browse/DISPATCH-924
+Ciao, Marcus
