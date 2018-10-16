@@ -1,24 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/22/2
-Message-ID: <OF76307389.CF3EA523-ONC125821D.0037F12D-C125821D.003B74CE@avm.de>
-Date: Mon, 22 Jan 2018 11:49:25 +0100
-From: r.hering@....de
-To: oss-security@...ts.openwall.com
-Subject: Re: How to deal with reporters who don't want their bugs fixed?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/16/6
+Message-ID: <20181016175742.0d898390@jabberwock.cb.piermont.com>
+Date: Tue, 16 Oct 2018 17:57:42 -0400
+From: "Perry E. Metzger" <perry@...rmont.com>
+To: Hanno Böck <hanno@...eck.de>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: ghostscript: 1Policy operator gives access to .forceput CVE-2018-18284
 Content-Type: text/plain; charset=utf-8
 
-Point is, many "security researchers" overly pretend to work for security 
-hiding intention for fame / paper publications / product selling.
+On Tue, 16 Oct 2018 22:50:24 +0200 Hanno Böck <hanno@...eck.de> wrote:
+> On Tue, 16 Oct 2018 15:57:22 -0400
+> "Perry E. Metzger" <perry@...rmont.com> wrote:
+> 
+> > Again, given that PostScript is an archival format for a lot of
+> > documents, wouldn't a version of ghostscript with all the ability
+> > to do anything dangerous removed from the interpreter at compile
+> > time be rational?  
+> 
+> I think nobody here will disagree with you that this would be good
+> to have.
+> The question is: Who's gonna do it? Will you?
 
-Accept unnecessary long embargoes then you support this behaviour but 
-might provide patches faster after public release.
-Reject unnecessary long embargoes then you discourage this behaviour but 
-might provide patches slower after public release next time.
+Good question. One obstacle for me is a lack of familiarity with the
+codebase (which others here seem to have), but on the other hand, I
+appear to have more motivation.
 
-I think the decision is always individual per vulnerability weighting how 
-grave/easy to find/abuse it is vs. how interested you are in future early 
-reports.
-Keeping it individual without public announced maximum embargo time would 
-also help prevent folks from jumping to 0daying everything per default:)
-
-(°X|
+Perry
+-- 
+Perry E. Metzger		perry@...rmont.com
