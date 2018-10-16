@@ -1,33 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/24/3
-Message-Id: <E1ezZFo-00031j-Ew@romulus.home.bitnebula.com>
-Date: Fri, 23 Mar 2018 21:50:00 -0500
-From: Daniel Ruggeri <druggeri@...che.org>
-To: announce@...pd.apache.org, oss-security@...ts.openwall.com, security@...pd.apache.org
-Subject: CVE-2018-1303: Possible out of bound read in mod_cache_socache
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/16/5
+Message-ID: <20181016225024.746f423d@computer>
+Date: Tue, 16 Oct 2018 22:50:24 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: ghostscript: 1Policy operator gives access to .forceput CVE-2018-18284
 Content-Type: text/plain; charset=utf-8
 
+On Tue, 16 Oct 2018 15:57:22 -0400
+"Perry E. Metzger" <perry@...rmont.com> wrote:
 
-CVE-2018-1303: Possible out of bound read in mod_cache_socache
+> Again, given that PostScript is an archival format for a lot of
+> documents, wouldn't a version of ghostscript with all the ability to
+> do anything dangerous removed from the interpreter at compile time be
+> rational?
 
-Severity: Low
+I think nobody here will disagree with you that this would be good to
+have.
+The question is: Who's gonna do it? Will you?
 
-Vendor: The Apache Software Foundation
+-- 
+Hanno Böck
+https://hboeck.de/
 
-Versions Affected:
-httpd 2.4.5 to 2.4.29
-
-Description:
-A specially crafted HTTP request header could have crashed the Apache HTTP
-Server prior to version 2.4.30 due to an out of bound read while preparing data
-to be cached in shared memory. It could be used as a Denial of Service attack
-against users of mod_cache_socache.
-
-Mitigation:
-All httpd users should upgrade to 2.4.30 or later.
-
-Credit:
-The issue was discovered by Robert Swiecki, bug found by honggfuzz
-
-References:
-https://httpd.apache.org/security/vulnerabilities_24.html
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
