@@ -1,25 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/08/3
-Message-ID: <e6e0b960-faf3-175a-3730-46823ee69d3f@gmail.com>
-Date: Mon, 8 Oct 2018 12:54:34 -0400
-From: Nick Roessler <nicholas.e.roessler@...il.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE-2018-17407: Tex-Live buffer overflow in handling of Type 1 fonts
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/16/3
+Message-ID: <20181016155722.32978ab2@jabberwock.cb.piermont.com>
+Date: Tue, 16 Oct 2018 15:57:22 -0400
+From: "Perry E. Metzger" <perry@...rmont.com>
+To: Tavis Ormandy <taviso@...gle.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: ghostscript: 1Policy operator gives access to .forceput CVE-2018-18284
 Content-Type: text/plain; charset=utf-8
 
-Hey all,
+On Tue, 16 Oct 2018 11:06:14 -0700 Tavis Ormandy <taviso@...gle.com>
+wrote:
+> Side note: I'm done looking at ghostscript for now, but still
+> *strongly* recommend that we deprecate untrusted postscript and
+> disable ghostscript coders by default in policy.xml.
 
-     I wanted to make everyone aware of a security update for TeX Live, 
-a distribution of the TeX document preparation software. A buffer 
-overflow in the handling of Type 1 fonts (.pfb files) allows arbitrary 
-local code execution without privilege escalation when a malicious font 
-is loaded by one of the vulnerable tools (pdflatex, pdftex, luatex, dvips).
+Again, given that PostScript is an archival format for a lot of
+documents, wouldn't a version of ghostscript with all the ability to
+do anything dangerous removed from the interpreter at compile time be
+rational?
 
-     The patch was rolled out on Sept 21.  See:
+(And yes, it wouldn't be "standard" but I don't know that I
+care much about that, and it would mean it would be safe to look at
+30 year old PS documents that are often the only way to look at
+some old academic paper. I look at such things at least a couple of
+times a month. If Artifex isn't willing to do this, it's open
+source, someone else should.)
 
-https://www.debian.org/security/2018/dsa-4299
-https://security-tracker.debian.org/tracker/CVE-2018-17407
-
-Thanks,
---
-Nick
+Perry
+-- 
+Perry E. Metzger		perry@...rmont.com
