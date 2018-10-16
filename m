@@ -1,49 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/27/1
-Message-ID: <CAG8b5tSQ-AqxMZdmV6yvzQvSJ=11jrP_GfJfbcDWpXT3Jv3aKQ@mail.gmail.com>
-Date: Thu, 27 Sep 2018 13:08:10 +0530
-From: Dhiraj Mishra <mishra.dhiraj95@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Telegram uses SOCKS5 to share user/creds
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/16/4
+Message-ID: <CAJ_zFkJog41qbQ6DgP=jcEts-pDo+z1AKhcnYC7kJCri=+5qSQ@mail.gmail.com>
+Date: Tue, 16 Oct 2018 13:33:32 -0700
+From: Tavis Ormandy <taviso@...gle.com>
+To: Perry Metzger <perry@...rmont.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: ghostscript: 1Policy operator gives access to .forceput CVE-2018-18284
 Content-Type: text/plain; charset=utf-8
 
-Telegram is supposedly is a secure messaging application but it uses SOCKS5
-to transmit user credential's, neither traffic nor credentials are
-encrypted in the SOCKS5 protocol, but this is how the SOCKS protocol works
-(see https://tools.ietf.org/html/rfc1929). SOCKS5 carries passwords in
-cleartext.
+On Tue, Oct 16, 2018 at 12:57 PM Perry E. Metzger <perry@...rmont.com>
+wrote:
 
-Product affected: tdesktop 1.3.16 alpha
-Browser Info: Firefox 62.0 (64 bit)
-Tested on: Ubuntu 18.04 LTS x64
+> On Tue, 16 Oct 2018 11:06:14 -0700 Tavis Ormandy <taviso@...gle.com>
+> wrote:
+> > Side note: I'm done looking at ghostscript for now, but still
+> > *strongly* recommend that we deprecate untrusted postscript and
+> > disable ghostscript coders by default in policy.xml.
+>
+> Again, given that PostScript is an archival format for a lot of
+> documents, wouldn't a version of ghostscript with all the ability to
+> do anything dangerous removed from the interpreter at compile time be
+> rational?
+>
+>
+We have to work with what we've got.
 
-Steps to reproduce the issue:
-1. Open tdesktop
-2. Go to Settings > Advanced Settings > Connection type
-3. Open "Proxy Settings" check "Use proxy"
-4. Put some random Hostname, Port, Username and Password
-5. tdesktop tries to connect it, while it connects click on that line which
-is made of 3 small spots (On right hand side)
-6. Click share, the link gets copied.
+Even with the easy to exploit stuff compiled out (which upstream do not
+support), I haven't been bothering to get CVE's for all the memory
+corruption or UaF I've been reporting, because nobody can keep up with
+these operator leaks anyway.
 
-Example Link:
-https://t.me/socks?server=inputzero.io&port=22&user=dhiraj&pass=MystrongPassw0rd
-The link which gets generated have the password in plaintext, SOCKS5 is a
-transport protocol and by itself it is not encrypted. Requests transmit the
-credentials in plain text which is considered a bad security practice.
-
-URI producers should not provide a URI that contains a username or password
-that is intended to be secret.  URIs are frequently displayed by browsers,
-stored in clear text bookmarks, and logged by user agent history and
-intermediary applications (proxies).
-
-Since the request carries the password in cleartext, this subnegotiation is
-not recommended for environments where "sniffing" is possible and practical.
-
-Thank you
--- 
-Regards
-
-*Dhiraj Mishra.*GPG ID :  51720F56   |  Finger Print : 1F6A FC7B 05AA CF29
-8C1C  ED65 3233 4D18 5172 0F56
+Tavis.
 
