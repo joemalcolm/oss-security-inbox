@@ -1,76 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/27/2
-Message-ID: <20180927155934.GB8696@f195.suse.de>
-Date: Thu, 27 Sep 2018 17:59:34 +0200
-From: Matthias Gerstner <mgerstner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/17/7
+Message-ID: <alpine.GSO.2.20.1810170816290.3841@freddy.simplesystems.org>
+Date: Wed, 17 Oct 2018 08:30:43 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
 To: oss-security@...ts.openwall.com
-Subject: Using quilt on untrusted RPM spec files
+Subject: Re: ghostscript: 1Policy operator gives access to .forceput CVE-2018-18284
 Content-Type: text/plain; charset=utf-8
 
-Hello list,
+On Wed, 17 Oct 2018, Rich Felker wrote:
+>>
+>> Even with the easy to exploit stuff compiled out (which upstream do not
+>> support), I haven't been bothering to get CVE's for all the memory
+>> corruption or UaF I've been reporting, because nobody can keep up with
+>> these operator leaks anyway.
+>
+> An obvious fix for UaF's would be just removing the frees. Use of gs
+> as an interactive program where leaks would matter is a historical
+> curiosity; the only meaningful modern use is as a converter.
 
-in the SUSE security team we have been recently looking into the security of
-using quilt on untrusted RPM spec files and patches. The openSUSE distribution
-is RPM based and uses the open build service (OBS) [1] for collaboration with
-the community. Packagers, contributors and interested people can host their
-packages in personal home projects and can become maintainers of development
-packages that are targeted for inclusion in SUSE distributions.
+Memory allocations would build to extremely large values across 
+hundreds of rendered pages.  Use of Ghostscript in interactive 
+programs is still surely common.  Programs using libgs will inherit 
+any leaks.  These leaks and other issues should be fixed.
 
-Once packages are submitted into an actual SUSE distribution like openSUSE
-Tumbleweed human and automated reviews of the package contents will take
-place for quality assurance and security. One of the typical workflows for
-many people concerned with managing the openSUSE distribution is to checkout
-a (possible not yet reviewed) OBS package and run `quilt setup` on the RPM
-spec file for extracting the package sources and applying any specified
-patches. When building an RPM package on server or client side then this
-happens in an isolated environment (e.g. a chroot [2] or in a virtual
-machine). The `quilt setup` invocation, however, typically happens
-interactively on client machines without special security measures.
+Keep in mind that Ghostscript is also used to render/view PDF files. 
+When interactively viewing it is common to do just-in-time rendering. 
+Even for bulk conversions, conversion on a page-by-page basis will 
+save resources when dealing with many pages.
 
-It turns out that running `quilt setup` on untrusted sources is not a good
-idea:
+Alternatives do exist now for PDF due to Xpdf and the derived Poppler 
+project and Poppler has become heavily used.
 
-- The statements in the `%prep` section of the RPM spec file are
-  plainly executed in the context of the calling user.
-- Arbitrary flags can be passed to `patch` via `%define _default_patch_flags
-  ...` in the spec file. By embedding semicolons into the flags also arbitrary
-  commands can be injected this way.
-- By combining the available vectors, difficult to spot malicious code can be
-  hidden in RPM spec files. For example patch can be caused to follow
-  symlinks, thereby "patching" files in a user's home directory as demonstrated
-  in [3].
+Ghostscript is still more competent at rendering PDF than Poppler is. 
+Ghostscript is able to deal with CMYK color spaces, per-object 
+colorspaces, and transparency, and it is able to render to various 
+quality levels (bilevel, grayscale, RGB, RGBA, CMYK) depending on the 
+output driver selected.
 
-Now we would be interested in discussing this topic with the community. Do
-other distributions have similar workflows and therefore similar attack
-surface as we do? What would be viable countermeasures?
-
-Our current assessment is that most people that use quilt this way are
-probably not aware of the potential dangers involved. Furthermore we think
-that in order to fix this a simple to use default protection mechanism
-would be required. While running `quilt setup` e.g. in a docker
-container would provide fair security against such scenarios it would
-introduce quite some dependencies and complexities that make it not well
-suited for a default approach.
-
-We are currently testing isolation of quilt with nsjail [4]. A first result,
-the wrapper "squilt" [5], can confine quilt's execution to a package
-directory, thereby reducing the attack surface significantly.
-
-[1]: https://openbuildservice.org
-[2]: https://build.opensuse.org/package/show/openSUSE:Tools/build
-[3]: https://build.opensuse.org/package/show/home:mgerstner/surprise
-[4]: http://nsjail.com
-[5]: https://github.com/jsegitz/squilt
-
+Bob
 -- 
-Matthias Gerstner <matthias.gerstner@...e.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Telefon: +49 911 740 53 290
-GPG Key ID: 0x14C405C971923553
-
-SUSE Linux GmbH
-GF: Felix Imendörffer, Jane Smithard, Graham Norton
-HRB 21284 (AG Nuernberg)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
