@@ -1,35 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/06/3
-Message-ID: <20180406095140.qhrrbwmwrir4nxhb@jwilk.net>
-Date: Fri, 6 Apr 2018 11:51:40 +0200
-From: Jakub Wilk <jwilk@...lk.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Privsec vuln in beep / Code execution in GNU patch
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/17/6
+Message-ID: <20181017092154.4e7bae56@jabberwock.cb.piermont.com>
+Date: Wed, 17 Oct 2018 09:21:54 -0400
+From: "Perry E. Metzger" <perry@...rmont.com>
+To: Rich Felker <dalias@...c.org>
+Cc: oss-security@...ts.openwall.com, Tavis Ormandy <taviso@...gle.com>, Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+Subject: Re: ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)
 Content-Type: text/plain; charset=utf-8
 
-* Hanno Böck <hanno@...eck.de>, 2018-04-06, 08:52:
->There was a joke webpage about a vulnerability in beep a few days ago:
->http://holeybeep.ninja/
->There's also a corresponding Debian Advisory:
->https://lists.debian.org/debian-security-announce/2018/msg00089.html
->Neither have any technical details. CVE is CVE-2018-0492.
->
->If anyone knows the background of this please share it.
+On Wed, 17 Oct 2018 02:09:28 -0400 Rich Felker <dalias@...c.org>
+wrote:
+> > > > I keep wondering if there isn't a way to fully remove the
+> > > > dangerous bits from a postscript interpreter so it can _only_
+> > > > be used to view the document and literally has no file system
+> > > > access compiled in at all, so there's no way to touch the fs
+> > > > etc. regardless of what flags the interpreter is invoked with.
+> > > >
+> > > > (I, too, find removing the ability to look at historical
+> > > > postscript documents a bit more draconian than I like.)
+> > > >
+> > > >    
+> > > I've discussed it with upstream, it's a hard no because they
+> > > feel it would make ghostscript non-conforming (i.e.
+> > > non-conforming with the Adobe PostScript Language Reference
+> > > Manual)
+> > > 
+> > > We probably have similar thoughts on this, but that is the final
+> > > word from upstream.  
+> > 
+> > They wouldn't even support a compilation mode where if you #define
+> > the right thing those syscalls are cut out?
+> > 
+> > I don't care much about upstream's desires on this if they oppose
+> > that. I'd be happy to have patches that simply cut out the
+> > dangerous syscalls entirely. It's open source, that should be
+> > feasible.  
+> 
+> This. It's utterly ridiculous that the interpreter even has bindings
+> for accessing the filesystem and such. But I wonder if some of its
+> library routines (e.g. font loading) are implemented in Postscript,
+> using these bindings, rather than being implemented in C outside of
+> the language interpreter. If so it might be harder to extricate.
+> But I still think it's worthwhile to try. Once there are patches I
+> would expect all reasonable distros to start shipping with them,
+> and if upstream tries to make it hard, I would expect one of the
+> big distros to just fork and abandon upstream.
 
-Upstream bug report:
-https://github.com/johnath/beep/issues/11
+Does anyone other than Tavis know their way around the inside of the
+codebase? Perhaps we can collaborate on patches.
 
->GNU patch supports a legacy "ed" format for patches and that allows 
->executing external commands.
-[...]
->--- a	2018-13-37 13:37:37.000000000 +0100
->+++ b	2018-13-37 13:38:38.000000000 +0100
->1337a
->1,112d
->!id>~/pwn.lol
-
-This bug triggers even with -u (which is supposed to disable patch type 
-detection). :-/
-
+Perry
 -- 
-Jakub Wilk
+Perry E. Metzger		perry@...rmont.com
