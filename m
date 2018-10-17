@@ -1,61 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/05/3
-Message-ID: <CAJ_zFkLvLBnn8OO6Q3JuqyvpRKoo=63wE1meqsT_jR4USir4DQ@mail.gmail.com>
-Date: Wed, 5 Sep 2018 11:02:48 -0700
-From: Tavis Ormandy <taviso@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/17/2
+Message-ID: <20181017061446.GM5150@oevtugenva.nrevsny.pk>
+Date: Wed, 17 Oct 2018 02:14:46 -0400
+From: Rich Felker <dalias@...c.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
+Cc: Perry Metzger <perry@...rmont.com>
+Subject: Re: ghostscript: 1Policy operator gives access to .forceput CVE-2018-18284
 Content-Type: text/plain; charset=utf-8
 
-Quick update, this
-<http://git.ghostscript.com/?p=ghostpdl.git&a=commitdiff&h=5812b1b78fc4>
-commit fixes that problem, but I noticed that fix is incomplete and can be
-bypassed, so filed another bug for that (the new bug is 699718).
-
-$ ./gs -dSAFER bug699718.txt
-GPL Ghostscript GIT PRERELEASE 9.25 (2018-09-03)
-Copyright (C) 2018 Artifex Software, Inc.  All rights reserved.
-This software comes with NO WARRANTY: see the file PUBLIC for details.
-uid=1000(taviso) gid=1000(primarygroup)
-
-
-I would like to re-emphasize that while Ghostscript is very capable and
-mature software, I consider the -dSAFER sandbox to be a fragile security
-boundary and that we should consider deprecating (or minimizing the use of)
-untrusted postscript.
-
-Tavis.
-
-
-On Tue, Sep 4, 2018 at 1:08 PM Tavis Ormandy <taviso@...gle.com> wrote:
-
->
->
-> On Tue, Sep 4, 2018 at 1:03 PM Brandon Perry <bperry.volatile@...il.com>
+On Tue, Oct 16, 2018 at 01:33:32PM -0700, Tavis Ormandy wrote:
+> On Tue, Oct 16, 2018 at 12:57 PM Perry E. Metzger <perry@...rmont.com>
 > wrote:
->
->>
->>
->> > On Sep 4, 2018, at 2:59 PM, Tavis Ormandy <taviso@...gle.com> wrote:
->> >
->> > OK, well, the fixes missed 9.24 so vendors will have to either ship
->> patches
->> > once they land or wait for 9.25.
->> >
->> > $ ./gs -v
->> > GPL Ghostscript 9.24 (2018-09-03)
->> > Copyright (C) 2018 Artifex Software, Inc.  All rights reserved.
->> > $ ./gs -q -dSAFER -sDEVICE=ppmraw -f testcase.ps
->> > uid=1000(taviso) gid=1000(taviso)
->> >
->> > Let me know if anyone wants that testcase.
->>
->> Hey Tavis, could I have a copy of the test case please? Thanks so much.
->>
->
-> Sure, here it is.
->
-> Thanks, Tavis.
->
->
+> 
+> > On Tue, 16 Oct 2018 11:06:14 -0700 Tavis Ormandy <taviso@...gle.com>
+> > wrote:
+> > > Side note: I'm done looking at ghostscript for now, but still
+> > > *strongly* recommend that we deprecate untrusted postscript and
+> > > disable ghostscript coders by default in policy.xml.
+> >
+> > Again, given that PostScript is an archival format for a lot of
+> > documents, wouldn't a version of ghostscript with all the ability to
+> > do anything dangerous removed from the interpreter at compile time be
+> > rational?
+> >
+> >
+> We have to work with what we've got.
+> 
+> Even with the easy to exploit stuff compiled out (which upstream do not
+> support), I haven't been bothering to get CVE's for all the memory
+> corruption or UaF I've been reporting, because nobody can keep up with
+> these operator leaks anyway.
 
+An obvious fix for UaF's would be just removing the frees. Use of gs
+as an interactive program where leaks would matter is a historical
+curiosity; the only meaningful modern use is as a converter.
+
+If someone insists there are still uses where freeing matters,
+something like talloc may be a reasonable solution, removing all the
+internal frees and only performing frees of the whole context.
+
+Rich
