@@ -1,20 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/10/2
-Message-ID: <alpine.BSF.2.21.9999.1808100926020.19950@aneurin.horsfall.org>
-Date: Fri, 10 Aug 2018 09:29:05 +1000 (EST)
-From: Dave Horsfall <dave@...sfall.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/17/1
+Message-ID: <20181017060928.GL5150@oevtugenva.nrevsny.pk>
+Date: Wed, 17 Oct 2018 02:09:28 -0400
+From: Rich Felker <dalias@...c.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux TCP implementation vulnerable to Denial of Service (CVE 2018-5390)
+Cc: Tavis Ormandy <taviso@...gle.com>, Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+Subject: Re: ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 9 Aug 2018, Stiepan wrote:
+On Wed, Oct 10, 2018 at 03:26:05PM -0400, Perry E. Metzger wrote:
+> On Tue, 9 Oct 2018 15:32:02 -0700 Tavis Ormandy <taviso@...gle.com>
+> wrote:
+> > On Tue, Oct 9, 2018 at 3:27 PM Perry E. Metzger
+> > <perry@...rmont.com> wrote:
+> > 
+> > > I keep wondering if there isn't a way to fully remove the
+> > > dangerous bits from a postscript interpreter so it can _only_ be
+> > > used to view the document and literally has no file system access
+> > > compiled in at all, so there's no way to touch the fs etc.
+> > > regardless of what flags the interpreter is invoked with.
+> > >
+> > > (I, too, find removing the ability to look at historical
+> > > postscript documents a bit more draconian than I like.)
+> > >
+> > >  
+> > I've discussed it with upstream, it's a hard no because they feel
+> > it would make ghostscript non-conforming (i.e. non-conforming with
+> > the Adobe PostScript Language Reference Manual)
+> > 
+> > We probably have similar thoughts on this, but that is the final
+> > word from upstream.
+> 
+> They wouldn't even support a compilation mode where if you #define
+> the right thing those syscalls are cut out?
+> 
+> I don't care much about upstream's desires on this if they oppose
+> that. I'd be happy to have patches that simply cut out the dangerous
+> syscalls entirely. It's open source, that should be feasible.
 
-> Could you please provide some more details on the issue? About the same 
-> period, our secure e-mail provider suffered an unprecedented DDoS with 
-> some e-mail messages never reaching us.
+This. It's utterly ridiculous that the interpreter even has bindings
+for accessing the filesystem and such. But I wonder if some of its
+library routines (e.g. font loading) are implemented in Postscript,
+using these bindings, rather than being implemented in C outside of
+the language interpreter. If so it might be harder to extricate. But I
+still think it's worthwhile to try. Once there are patches I would
+expect all reasonable distros to start shipping with them, and if
+upstream tries to make it hard, I would expect one of the big distros
+to just fork and abandon upstream.
 
-Would this be the well-known TCP re-assembly bug?  Send lots of small 
-packets (say out of order), and the CPU spends most of its time in glueing 
-them back together.
-
--- Dave
+Rich
