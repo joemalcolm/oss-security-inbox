@@ -1,35 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/19/8
-Message-ID: <1505981632.2048745.1516380009804.JavaMail.zimbra@redhat.com>
-Date: Fri, 19 Jan 2018 11:40:09 -0500 (EST)
-From: Vladis Dronov <vdronov@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2018-1049: systemd: automount: access to automounted volumes can lock up
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/17/3
+Message-ID: <nycvar.YSQ.7.76.1810171256410.14417@xnncv>
+Date: Wed, 17 Oct 2018 12:59:01 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Arash TC <tohidi.arash@...il.com>
+Subject: CVE-2018-18438 Qemu: Integer overflow in ccid_card_vscard_read() allows memory corruption
 Content-Type: text/plain; charset=utf-8
 
-Heololo,
+   Hello,
 
-In systemd prior to v234 a race exists between .mount and .automount units such
-that automount requests from kernel may not be serviced by systemd resulting in
-kernel holding the mountpoint and any processes that try to use said mount will
-hang. A race like this may lead to denial of service, until mount points are
-unmounted. This race is easily reproducible.
+An integer overflow issue was found in the CCID Passthru card device 
+emulation, while reading card data in ccid_card_vscard_read() function. The 
+ccid_card_vscard_read() function accepts a signed integer 'size' argument, 
+which is subsequently used as unsigned size_t value in memcpy(), copying large 
+amounts of memory.
 
-References:
+A user inside guest could use this flaw to crash the Qemu process resulting in 
+DoS.
 
-https://bugs.launchpad.net/ubuntu/+source/systemd/+bug/1709649
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2018-10/msg02396.html
+   -> https://lists.gnu.org/archive/html/qemu-devel/2018-10/msg02402.html
 
-https://github.com/coreos/bugs/issues/1630
+This issue was reported by Arash Tohidi. CVE requested via -> https://cveform.mitre.org/
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1534701
 
-An upstream issue:
-
-https://github.com/systemd/systemd/pull/5916
-
-An upstream patch:
-
-https://github.com/systemd/systemd/commit/e7d54bf58789545a9eb0b3964233defa0b007318
-
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
