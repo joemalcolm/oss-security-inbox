@@ -1,18 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/18/3
-Message-ID: <CA+aC4kuHFrc=WYKTA9Bb0hha+MMQoM98-izspvQqGekPd5Gm5Q@mail.gmail.com>
-Date: Sun, 18 Feb 2018 14:26:02 -0800
-From: Anthony Liguori <anthony@...emonkey.ws>
-To: oss-security@...ts.openwall.com
-Subject: Re: LibVNCServer rfbserver.c: rfbProcessClientNormalMessage() case rfbClientCutText doesn't sanitize msg.cct.length
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/17/4
+Message-ID: <nycvar.YSQ.7.76.1810171321310.14417@xnncv>
+Date: Wed, 17 Oct 2018 17:24:01 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Fakhri Zulkifli <mohdfakhrizulkifli@...il.com>
+Subject: CVE-2018-12617 Qemu: qemu-guest-agent: Integer overflow in qmp_guest_file_read may lead to crash
 Content-Type: text/plain; charset=utf-8
 
-FWIW, QEMU had a similar issue a few years ago.  There's no shared code,
-but I bet your test case would have worked there too.
+   Hello,
 
-https://access.redhat.com/security/cve/cve-2015-5239
+The QEMU Guest Agent in QEMU is vulnerable to an integer overflow in the 
+qmp_guest_file_read(). An attacker could exploit this by sending a crafted QMP 
+command (including guest-file-read with a large count value) to the agent via 
+the listening socket to trigger a g_malloc() call with a large memory chunk 
+resulting in a segmentation fault.
 
-Regards,
+A user could use this flaw to crash the Qemu-guest-agent resulting in DoS.
 
-Anthony Liguori
+Upstream Patch:
+   -> https://git.qemu.org/?p=qemu.git;a=commit;h=141b197408ab398c4f474ac1a728ab316e921f2b
 
+This issue was reported by Fakhri Zulkifli.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
