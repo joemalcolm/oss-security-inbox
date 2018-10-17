@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3062" "Monday" "9" "May" "2016" "18:20:46" "+0100" "Simon McVittie" "smcv@debian.org" "<20160509172045.GC9754@perpetual.pseudorandom.co.uk>" "67" "Re: [oss-security] GraphicsMagick Response To \"ImageTragick\"" "^Cc:" nil nil "5" "2016050917:20:46" "[oss-security] GraphicsMagick Response To \"ImageTragick\"" (number mark "        smcv@debian. May  9   67/3062  " thread-indent "\"Re: [oss-security] GraphicsMagick Response To \"ImageTragick\"\"\n") "<alpine.GSO.2.20.1605090828220.23612@freddy.simplesystems.org>" ("<alpine.GSO.2.20.1605090828220.23612@freddy.simplesystems.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1588" "Wednesday" "17" "October" "2018" "08:30:43" "-0500" "Bob Friesenhahn" "bfriesen@simple.dallas.tx.us" "<alpine.GSO.2.20.1810170816290.3841@freddy.simplesystems.org>" "35" "Re: [oss-security] ghostscript: 1Policy operator gives access to .forceput CVE-2018-18284" "^Date:" nil nil "10" "2018101713:30:43" "[oss-security] ghostscript: 1Policy operator gives access to .forceput CVE-2018-18284" (number mark "        bfriesen@sim Oct 17   35/1588  " thread-indent "\"Re: [oss-security] ghostscript: 1Policy operator gives access to .forceput CVE-2018-18284\"\n") "<20181017061446.GM5150@brightrain.aerifal.cx>" ("<CAJ_zFk+P0WurjfHK3bQZ7fSuiFRYeAz+GrpQCn2F3SJPx3z=Cw@mail.gmail.com>" "<20181016155722.32978ab2@jabberwock.cb.piermont.com>" "<CAJ_zFkJog41qbQ6DgP=jcEts-pDo+z1AKhcnYC7kJCri=+5qSQ@mail.gmail.com>" "<20181017061446.GM5150@brightrain.aerifal.cx>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5924 invoked by uid 550); 9 May 2016 17:20:58 -0000
+Received: (qmail 5450 invoked by uid 550); 17 Oct 2018 13:30:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,85 +11,54 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5900 invoked from network); 9 May 2016 17:20:58 -0000
-Message-ID: <20160509172045.GC9754@perpetual.pseudorandom.co.uk>
-References: <alpine.GSO.2.20.1605090828220.23612@freddy.simplesystems.org>
+Received: (qmail 5419 invoked from network); 17 Oct 2018 13:30:56 -0000
+X-X-Sender: bfriesen@freddy.simplesystems.org
+In-Reply-To: <20181017061446.GM5150@brightrain.aerifal.cx>
+Message-ID: <alpine.GSO.2.20.1810170816290.3841@freddy.simplesystems.org>
+References: <CAJ_zFk+P0WurjfHK3bQZ7fSuiFRYeAz+GrpQCn2F3SJPx3z=Cw@mail.gmail.com> <20181016155722.32978ab2@jabberwock.cb.piermont.com> <CAJ_zFkJog41qbQ6DgP=jcEts-pDo+z1AKhcnYC7kJCri=+5qSQ@mail.gmail.com> <20181017061446.GM5150@brightrain.aerifal.cx>
+User-Agent: Alpine 2.20 (GSO 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <alpine.GSO.2.20.1605090828220.23612@freddy.simplesystems.org>
-User-Agent: Mutt/1.6.0 (2016-04-01)
-Cc: cve-assign@mitre.org
-Date: Mon, 9 May 2016 18:20:46 +0100
-From: Simon McVittie <smcv@debian.org>
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (smtp.simplesystems.org [65.66.246.90]); Wed, 17 Oct 2018 08:30:43 -0500 (CDT)
+Date: Wed, 17 Oct 2018 08:30:43 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] GraphicsMagick Response To "ImageTragick"
+Subject: Re: [oss-security] ghostscript: 1Policy operator gives access to
+ .forceput CVE-2018-18284
 To: oss-security@lists.openwall.com
 
-On Mon, 09 May 2016 at 08:29:40 -0500, Bob Friesenhahn wrote:
-> 1. CVE-2016-3714 - Insufficient shell characters filtering
-> 
->    GraphicsMagick is not susceptible to remote code execution except
->    if gnuplot is installed (because gnuplot executes shell commands).
->    Gnuplot-shell based shell exploits are possible without a gnuplot
->    file being involved although gnuplot invokes the shell.  To fix
->    this, the "gplt" entry in the delegates.mgk file must be removed.
+On Wed, 17 Oct 2018, Rich Felker wrote:
+>>
+>> Even with the easy to exploit stuff compiled out (which upstream do not
+>> support), I haven't been bothering to get CVE's for all the memory
+>> corruption or UaF I've been reporting, because nobody can keep up with
+>> these operator leaks anyway.
+>
+> An obvious fix for UaF's would be just removing the frees. Use of gs
+> as an interactive program where leaks would matter is a historical
+> curiosity; the only meaningful modern use is as a converter.
 
-I think this should perhaps have a separate CVE ID assigned: it's the
-same impact (arbitrary code execution) and was discovered at around
-the same time, but the mechanism is not similar to the
-missing/insufficient quoting/escaping for ImageMagick's %M placeholder,
-which was the root cause of (the original incarnation of) CVE-2016-3714.
+Memory allocations would build to extremely large values across 
+hundreds of rendered pages.  Use of Ghostscript in interactive 
+programs is still surely common.  Programs using libgs will inherit 
+any leaks.  These leaks and other issues should be fixed.
 
-In GraphicsMagick this was the "GPLT" format, removed in hg commit
-"Gnuplot files are inherently insecure. Remove delegates support for
-reading them."
-https://sourceforge.net/p/graphicsmagick/code/ci/45998a25992d1142df201d8cf024b6c948b40748/
+Keep in mind that Ghostscript is also used to render/view PDF files. 
+When interactively viewing it is common to do just-in-time rendering. 
+Even for bulk conversions, conversion on a page-by-page basis will 
+save resources when dealing with many pages.
 
-In ImageMagick this was the "PLT" format, removed in this git commit with
-the misleading commit message "Update to the latest autoconf/automake":
-https://github.com/ImageMagick/ImageMagick/commit/e87116ab2bd070c47943d4118a18c8f3a47461e2
+Alternatives do exist now for PDF due to Xpdf and the derived Poppler 
+project and Poppler has become heavily used.
 
-MITRE, do you consider this to be:
+Ghostscript is still more competent at rendering PDF than Poppler is. 
+Ghostscript is able to deal with CMYK color spaces, per-object 
+colorspaces, and transparency, and it is able to render to various 
+quality levels (bilevel, grayscale, RGB, RGBA, CMYK) depending on the 
+output driver selected.
 
-* part of CVE-2016-3714,
-* a single separate vulnerability to which both GraphicsMagick and ImageMagick
-  were vulnerable, or
-* two separate vulnerabilities, one in each package?
-
-> 2. CVE-2016-3718 - SSRF
-> 
->    GraphicsMagick has always supported HTTP and FTP URL requests from
->    the context of the executing process if it is linked with libxml2.
->    There is no sandboxing or policy to determine which HTTP and FTP
->    URLs should be allowed/denied because they should only be available
->    from outside the system, or in the public space outside
->    a "firewall".
-
-I'm not sure whether I'm understanding "because they should..."
-correctly.
-
-To be clear, are you saying that running GraphicsMagick code on a host
-that is whitelisted in someone's IP address ACL, has access to a LAN
-where the wider Internet does not, or has private services on the
-loopback interface is not a supported situation?
-
-Is there a subset of "safe" image formats that is known not to induce
-these requests, and where they *would* be considered to be a bug?  I would
-be surprised if this happened when resizing or manipulating common bitmap
-formats like JPEG, PNG, GIF, BMP, and one of the mitigations recommended
-on imagetragick.com has been to limit the formats that will be accepted.
-
-> 4. CVE-2016-3716 - File moving
-> 
->     This is a two-factor attack and is actually file copying.  It is
->     not successful using GraphicsMagick.  MSL is an XML-based "script"
->     format which should never be allowed to be submitted and invoked
->     by an untrusted party.
-
-Is there any situation where GraphicsMagick will interpret a file of
-unspecified format as MSL, for instance recognizing it by extension or
-magic number?
-
-Thanks,
-    S
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
