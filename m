@@ -1,40 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/14/5
-Message-ID: <e4671df7733e6783cb7dd9ecce3062f4964fbf71.camel@debian.org>
-Date: Mon, 14 May 2018 16:01:42 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/17/9
+Message-ID: <CAG48ez1iae91RJsQ5ix4icycV+e-7YkUFf2ZpLnWQsMzR=h5Og@mail.gmail.com>
+Date: Wed, 17 Oct 2018 20:36:24 +0200
+From: Jann Horn <jannh@...gle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: PGP/MIME and S/MIME mail clients vulnerabilities
+Subject: Linux kernel: BPF verifier bug leads to out-of-bounds access (CVE-2018-18445; 4.14.9-4.14.74; 4.15-4.18.12)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 2018-05-14 at 12:29 +0200, Christian Brabandt wrote:
-> Looks like details have just been published:
-> https://efail.de/
+NOTE: I have requested a CVE identifier, and I'm sending this message,
+to make tracking of the fix easier; however, to avoid missing security
+fixes without CVE identifiers, you should *NOT* be cherry-picking a
+specific patch in response to a notification about a kernel security
+bug.
 
-So, as far as I can tell, in that attack scenario (where the attacker has
-read/write access to encrypted mails):
+In Linux kernel versions 4.14.9-4.14.74 and 4.15-4.18.12, faulty
+computation of numeric bounds in the BPF verifier permits
+out-of-bounds memory accesses because adjust_scalar_min_max_vals in
+kernel/bpf/verifier.c mishandles 32-bit right shifts. 4.18.13 and
+4.14.75 are fixed.
 
-- S/MIME is completely broken at the protocol level since it has no way to
-defend against blind modification. Only mitigation for the clients are to
-prevent HTML mails and/or prevent loading of external resources. There might
-be other avenues to exploit the vulnerability in the future though.
+This is CVE-2018-18445.
 
-- PGP/MIME is a bit safer because the OpenPGP format compresses plaintext
-before encryption (which makes it harder for the attacker) and has some kind
-of authenticated (symmetric) encryption (the MDC), which helps gnupg detects
-modifications to the cyphertext. Most mail clients properly handle gnupg hints
-when something went wrong but the external interface is a bit fragile (gnupg
-will still output the cleartext, for example). One exception is apparently
-Thunderbird with enigmail before 2.0.0, but this is now fixed (I didn't find
-the proper commit yet). Again, not displaying HTML mails and not allowing
-remote content loading can help, but other “backchannels” might be found in
-the future.
-
-I hope this can help other people. I'm no cryptographer so I didn't look
-thoroughly to the crypto part of the paper, rather to the mail client
-integration. Feel free to correct me if there's anything wrong.
-
-Regards,
--- 
-Yves-Alexis
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=b799207e1e1816b09e7a5920fbb2d5fcf6edd681
+https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.18.13
+https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.14.75
+https://bugs.chromium.org/p/project-zero/issues/detail?id=1686
