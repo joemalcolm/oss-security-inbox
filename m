@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["460" "Wednesday" "17" "May" "2017" "02:25:52" "+0200" "=?UTF-8?B?Um9iZXJ0IMWad2nEmWNraQ==?=" "robert@swiecki.net" "<CAP145pjmwx27VXaT8-njOL9DG205yjhLUrwWkbD0NthYOZQvfA@mail.gmail.com>" "26" "Re: [oss-security] terminal emulators' processing of escape sequences" "^Date:" nil nil "5" "2017051700:25:52" "[oss-security] terminal emulators' processing of escape sequences" (number mark "        robert@swiec May 17   26/460   " thread-indent "\"Re: [oss-security] terminal emulators' processing of escape sequences\"\n") "<20170516220345.GA10874@openwall.com>" ("<20170501164428.GA12322@openwall.com>" "<CALx_OUDauCKOg20Lp5wumy_JUiu7Cj3=-d-HJSci+nROrK8BRw@mail.gmail.com>" "<CAP145pgb85EujmBuvCnFq-W9RRmK8NxsoJ3327JSy03gcU-F6w@mail.gmail.com>" "<20170516220345.GA10874@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["896" "Thursday" "18" "October" "2018" "10:51:25" "+0000" "Jordan Glover" "Golden_Miller83@protonmail.ch" "<9Oh6Q_oGBdLOE2SpGuy67o4P_ytW1KG0urBaQPvPOskA6d6uwyU_et3aIaNCb0M6mSWw8T90Lb2OQIXkE38PlXk5eSCsQqS3Dr0QZ_2Q2ns=@protonmail.ch>" "20" "Re: [oss-security] Re: ghostscript: 1Policy operator gives access to .forceput CVE-2018-18284" "^Date:" nil nil "10" "2018101810:51:25" "[oss-security] Re: ghostscript: 1Policy operator gives access to .forceput CVE-2018-18284" (number mark "        Golden_Mille Oct 18   20/896   " thread-indent "\"Re: [oss-security] Re: ghostscript: 1Policy operator gives access to .forceput CVE-2018-18284\"\n") "<CAJ_zFk+Db=VQi14vEfA8AeRbqEfROwApCbgVqPQny7qbhj7nhw@mail.gmail.com>" ("<CAJ_zFk+P0WurjfHK3bQZ7fSuiFRYeAz+GrpQCn2F3SJPx3z=Cw@mail.gmail.com>" "<CAJ_zFk+Db=VQi14vEfA8AeRbqEfROwApCbgVqPQny7qbhj7nhw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5639 invoked by uid 550); 17 May 2017 00:26:07 -0000
+Received: (qmail 19990 invoked by uid 550); 18 Oct 2018 12:02:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,66 +11,46 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5619 invoked from network); 17 May 2017 00:26:06 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=swiecki.net; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=1qsG22ODwYK0EcxjDIX/Yp8yGajd3qQ9mIanTGU6U98=;
-        b=eAhg4FujoT3TEPYHRwIV0hkpUU7O0+DGCb7CCMwyFGhFQc42yhutwCOLUR9c0sOj3z
-         uK5uSAztMXB+bQCVimq/qirOghyPPfmVWHs6/o9lPEVWmichuCirH/oDmZF1ndL8uoV0
-         xsPtr/lVqDXqONXxyKmc5GZq+yijnWL37t1z0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=1qsG22ODwYK0EcxjDIX/Yp8yGajd3qQ9mIanTGU6U98=;
-        b=Mj2ciToqz67pgCx7FRYS14lGmSzIc4QVsPRCtRTI/YE9miMwZpU1N+v+C4ZRNzNXs6
-         pGHc33xbw82hHQrXn+7iHYu90X9BPQXSu6cj6YEUtCWAIObvd5eaa7Mg52iJXWDpoPEQ
-         ELHCuQCsrOxWTb4ftZIdKlS4KQuGocMVEVqOIPx6AOcpm5rYRY5NtHTDXTWo9hRiCenQ
-         oF+fE9VYy0RLD6wBx7QSNiQ/f7XkU4VDHjnRevLhYkRFio4cjl5FOMZzfAw7GrseT9rC
-         FcUUjzLTVSc9SgmzOFwwpr3fLFeBPEk75uEdzAZOPJz99DqMNRKo+sIxkZM9QGFAGzGO
-         CzBg==
-X-Gm-Message-State: AODbwcAyKfP25X0Y5pqVFieb8mld/zfsPdXgySvgPFwYi6iComPT5ktr
-	UAylJOtVYr8Yxr2yjhvUd2yYzdybp3v6gNcTLw==
-X-Received: by 10.98.32.132 with SMTP id m4mr737536pfj.131.1494980753670; Tue,
- 16 May 2017 17:25:53 -0700 (PDT)
+Received: (qmail 11316 invoked from network); 18 Oct 2018 10:51:44 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.ch;
+	s=default; t=1539859893;
+	bh=VPFxSHmZ6vitpy3ft/BK9Wj9IjUjgQlnGV+uG7KFPCA=;
+	h=Date:To:From:Reply-To:Subject:In-Reply-To:References:Feedback-ID:
+	 From;
+	b=b3OFotfgS1PGe8Zuh1JRB9xAz6JqwzHY/9azAsS9ZjRbqpcsRRaMv3onwSKAMCjoi
+	 jbvKrA6P+GnTs/4DBt3NrVNkxojuDCORj52nUeaKW/ubum64CA+2sZfZG+uA2v8xZq
+	 /Vs6VZhNkdHBg1UhW/GVzTjAPhZGn+py1StFjirQ=
+Message-ID: <9Oh6Q_oGBdLOE2SpGuy67o4P_ytW1KG0urBaQPvPOskA6d6uwyU_et3aIaNCb0M6mSWw8T90Lb2OQIXkE38PlXk5eSCsQqS3Dr0QZ_2Q2ns=@protonmail.ch>
+In-Reply-To: <CAJ_zFk+Db=VQi14vEfA8AeRbqEfROwApCbgVqPQny7qbhj7nhw@mail.gmail.com>
+References: <CAJ_zFk+P0WurjfHK3bQZ7fSuiFRYeAz+GrpQCn2F3SJPx3z=Cw@mail.gmail.com>
+ <CAJ_zFk+Db=VQi14vEfA8AeRbqEfROwApCbgVqPQny7qbhj7nhw@mail.gmail.com>
+Feedback-ID: QEdvdaLhFJaqnofhWA-dldGwsuoeDdDw7vz0UPs8r8sanA3bIt8zJdf4aDqYKSy4gJuZ0WvFYJtvq21y6ge_uQ==:Ext:ProtonMail
 MIME-Version: 1.0
-In-Reply-To: <20170516220345.GA10874@openwall.com>
-References: <20170501164428.GA12322@openwall.com> <CALx_OUDauCKOg20Lp5wumy_JUiu7Cj3=-d-HJSci+nROrK8BRw@mail.gmail.com>
- <CAP145pgb85EujmBuvCnFq-W9RRmK8NxsoJ3327JSy03gcU-F6w@mail.gmail.com> <20170516220345.GA10874@openwall.com>
-Message-ID: <CAP145pjmwx27VXaT8-njOL9DG205yjhLUrwWkbD0NthYOZQvfA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 17 May 2017 02:25:52 +0200
-From: =?UTF-8?B?Um9iZXJ0IMWad2nEmWNraQ==?= <robert@swiecki.net>
+Content-Type: multipart/alternative;
+	boundary="b1_098359f574e4da31f62d8fa2fb9bcd59"
+Date: Thu, 18 Oct 2018 10:51:25 +0000
+From: Jordan Glover <Golden_Miller83@protonmail.ch>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] terminal emulators' processing of escape sequences
-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: ghostscript: 1Policy operator gives access to .forceput CVE-2018-18284
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>, "taviso@google.com" <taviso@google.com>
 
-Hi,
+--b1_098359f574e4da31f62d8fa2fb9bcd59
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-2017-05-17 0:03 GMT+02:00 Solar Designer <solar@openwall.com>:
->
-> Jason, Robert -
->
-> On Tue, May 02, 2017 at 12:05:27AM +0200, Robert ??wi??cki wrote:
-> > A harmless example from rxvt - pushing back the new-line character:
-> >
-> > $ echo -ne "\eGQ;"
-> > ;$ 0
-> > bash: 0: command not found
->
-> Does this also affect rxvt-unicode?
+4oCQ4oCQ4oCQ4oCQ4oCQ4oCQ4oCQIE9yaWdpbmFsIE1lc3NhZ2Ug4oCQ4oCQ
+4oCQ4oCQ4oCQ4oCQ4oCQCk9uIFdlZG5lc2RheSwgT2N0b2JlciAxNywgMjAx
+OCAxMDo0OCBQTSwgVGF2aXMgT3JtYW5keSA8dGF2aXNvQGdvb2dsZS5jb20+
+IHdyb3RlOgoKPiBBcHBhcmVudGx5IGl0IHdhc24ndCBjbGVhciB0aGF0IHRo
+aXMgYWxsb3dlZCByZWFkaW5nIGFuZCB3cml0aW5nIG9mIGFyYml0cmFyeSBm
+aWxlcywgaGVyZSBpcyBhIGZ1bGwgZXhwbG9pdCAoSSBqdXN0IG1vZGlmaWVk
+IHRoZSBDVkUtMjAxOC0xNzk2MSBleHBsb2l0KS4KPgo+ICQgY29udmVydCBl
+eGVjdXRlb25seS1ieXBhc3MucGRmIGV4cGxvaXQuanBnCj4gJCB0YWlsIC0x
+IH4vLmJhc2hyYwo+IGVjaG8gcHduZWQgYnkgcG9zdHNjcmlwdAo+Cj4gVGhh
+bmtzLCBUYXZpcy4KCkRvIHlvdSBrbm93IGlmIHVwc3RyZWFtIGlzIGdvaW5n
+IHRvIG1ha2UgbmV3IHJlbGVhc2Ugc29vbiBvciBkaXN0cm9zIHNob3VsZCB0
+YWtlIHRoZQpwYWluIGFuZCBiYWNrcG9ydCBhbGwgb2YgdGhvc2UgdGhlbXNl
+bHZlcz8=
 
-Yes,
+--b1_098359f574e4da31f62d8fa2fb9bcd59--
 
-Tested with rxvt-unicode-9.22
-
-$ echo -ne "\eGQ;"
-;$ 0
-bash: 0: command not found
-$
-
---=20
-Robert =C5=9Awi=C4=99cki
