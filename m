@@ -1,23 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/20/1
-Message-ID: <1864620726.13471147.1529524690040.JavaMail.zimbra@redhat.com>
-Date: Wed, 20 Jun 2018 15:58:10 -0400 (EDT)
-From: Siddharth Sharma <siddharth@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/18/3
+Message-ID: <20181018145729.dlq7sljlhevxa4xo@jwilk.net>
+Date: Thu, 18 Oct 2018 16:57:29 +0200
+From: Jakub Wilk <jwilk@...lk.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2018-10841 glusterfs: access trusted peer group via remote-host command
+Subject: Re: Using quilt on untrusted RPM spec files
 Content-Type: text/plain; charset=utf-8
 
-A flaw was found in glusterfs which can lead to privilege escalation on
-gluster server nodes.
+* Randy Barlow <randy@...ctronsweatshop.com>, 2018-09-27, 22:39:
+>In Fedora we have similar challenges. We've got a tool called 
+>fedora-review[0] that is maybe kinda similar to quilt.
 
-It was found that any gluster client authenticated via TLS could use
-gluster cli with --remote-host command to add itself to gluster trusted
-pool and perform all gluster operations like peer probe itself or other
-machines, start, stop, delete volumes etc.
+Quilt is a tool to manage patch series, so maybe not that similar. :-)
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1582043
+>It uses mock[1] to build the source RPM (and mock does this in a chroot 
+>to help with the problems you described)
 
-Respectfully,
-Siddharth Sharma / Red Hat Product Security / Key ID : 0xD9F6489A      
-Fingerprint  :  6F04 C684 A49C E4CE 8148 E841 CD6F 8E55 D9F6 489A
+If it's really just chroot, then I'm afraid that's not a sufficient 
+protection. One can easily escape the chroot with ptrace(2).
 
+-- 
+Jakub Wilk
