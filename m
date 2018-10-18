@@ -1,36 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/04/1
-Message-ID: <CAB8XdGB5-PGmLzP=jpwxQmyD3JLintA-x7HrSNhTsLBGK5vinw@mail.gmail.com>
-Date: Wed, 4 Jul 2018 15:47:53 +0100
-From: Colm O hEigeartaigh <coheigea@...che.org>
-To: users@....apache.org, CXF Dev List <dev@....apache.org>, announce@...che.org,  oss-security@...ts.openwall.com,  Apache Security Response Team <security@...che.org>
-Subject: Apache CXF Fediz 1.4.4 is released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/18/2
+Message-ID: <CAJ_zFkJgSzTV8WKRL7OW6ueFibVGvNY-P6sBNBrDeagLrbPfWw@mail.gmail.com>
+Date: Thu, 18 Oct 2018 05:32:18 -0700
+From: Tavis Ormandy <taviso@...gle.com>
+To: Golden_Miller83@...tonmail.ch
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Re: ghostscript: 1Policy operator gives access to .forceput CVE-2018-18284
 Content-Type: text/plain; charset=utf-8
 
-Apache CXF Fediz (http://cxf.apache.org/fediz) is a subproject of Apache
-CXF. Fediz helps you to secure your web applications and delegates security
-enforcement to the underlying application server. With Fediz,
-authentication is externalized from your web application to an identity
-provider installed as a dedicated server component.
+On Thu, Oct 18, 2018 at 3:51 AM Jordan Glover <Golden_Miller83@...tonmail.ch>
+wrote:
 
-The Apache CXF Fediz team is pleased to announce the release of version
-1.4.4, which is available for download here:
-http://cxf.apache.org/fediz-downloads.html
+> Do you know if upstream is going to make new release soon or distros
+> should take the
+> pain and backport all of those themselves?
+>
 
-This release contains a fix for a new security advisory:
+AFAIK upstream only makes quarterly releases, so I think you need to
+backport.
 
-CVE-2018-8038: Apache CXF Fediz is vulnerable to DTD based XML attacks
-
-The advisory text is available at this location:
-http://cxf.apache.org/security-advisories.data/CVE-2018-8038.txt.asc
-
-Please also refer to the CXF security advisories page:
-http://cxf.apache.org/security-advisories.html
-
-
--- 
-Colm O hEigeartaigh
-
-Talend Community Coder
-http://coders.talend.com
+Tavis.
 
