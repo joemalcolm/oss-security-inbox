@@ -1,35 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/16/3
-Message-ID: <CALf+9VTETE6Xm3vfDtZQdJ=52n67wdtHsdusMBcOG8TbZ+QmBA@mail.gmail.com>
-Date: Fri, 16 Mar 2018 18:12:23 +0100
-From: Julien Cristau <jcristau@...illa.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/20/2
+Message-ID: <20181020014701.GB3366@milliways.localdomain>
+Date: Sat, 20 Oct 2018 02:47:01 +0100
+From: Ken Moffat <zarniwhoop@...world.com>
 To: oss-security@...ts.openwall.com
-Subject: Fwd: Firefox 52.7.2 (Fwd: Linux ARM ESR-52 builds need additional patch!)
+Subject: Attempting to patch ghostscript-9.25
 Content-Type: text/plain; charset=utf-8
 
-Forwarding this heads-up from Dan for distros shipping Firefox on ARM
+Hi,
 
----------- Forwarded message ----------
-From: Daniel Veditz
-Date: Fri, Mar 16, 2018 at 5:58 PM
-Subject: Linux ARM ESR-52 builds need additional patch!
-To: Security Group
+I hope people can read this - I know that google marks my mails as
+spam (so no point Cc'ing Tavis) and also that Suse discard my mails.
+Probably many other places also do that.  Anyway:
 
+When the first set of vulnerabilities in 9.25 came out there was a
+nice 'mostly harmless' example, and I patched BLFS for that (needed
+one extra commit beyond the two Tavis specified, so that I could
+make sense of where to apply part of it).
 
-To those of you who build Linux-ARM distributions it's important to note
-that you'll need one patch past the ESR 52.7.2 release tag to pick up
-the libtremor fix.
+For the later vulnerabilities, working out what to apply has been
+much harder.  Either everyone else thinks that other mitigations
+against untrusted ps files will suffice, or else it's on everybody's
+ToDo lists.
 
-On 59.0.1 this patch is included in the _BUILD2 and _RELEASE tags, but
-because we didn't have an ARM build for ESR there was no _BUILD2
-tagging. You will want to build with
-https://hg.mozilla.org/releases/mozilla-esr52/rev/5cd5586a2f48
+So, here is a first attempt to fix all this month's vulnerabilities.
+For the latest exploit(s) I do not have an example, so I don't know
+whether or not this works.  But it prevents the earlier
+vulnerability, and usage of real ps (and eps - I only have the gs
+examples, and only gs seems able to use them) seems to work
+correctly.  Unlike my first attempt to fix this, which turned out
+to fail to display any ps, eps files.
 
-Please spread the word amongst the linux distro community.
+The patch is a bit big, so I've uploaded it to
+http://www.linuxfromscratch.org/~ken/provisional/ as
+ghostscript-9.25-security_fixes-2.patch
 
--Dan Veditz
-_______________________________________________
+'provisional' until I find out if it protects adequately.  If there
+turn out ot be problems, I suppose I'll need to renumber later
+versions.
 
-Cheers,
-Julien
+Built in BLFS using the same instructions as for the earlier -1
+patch [ http://www.linuxfromscratch.org/blfs/view/svn/pst/gs.html ]
+but that doesn't mean it will work for everyone else's ways of
+building.  Note tht I _do_ build the shared library.
 
+The patch lists which upstream commits I pulled in.  I was mostly
+concentrating on changes to gs_init which would maybe help me apply
+the needed patches.  As I've noted in the patch's introduction,
+several commits had negative offsets (I guess hunks of code were
+removed in some of the unrelated commits that I ignored).
+
+Comments welcome.
+
+One final thought - apart from 9.25, upstream seem to have an
+approximately 6-monthly release schedule, so probably the only thing
+likely to speed up 9.26 is everybody patching ;)
+
+ĸen
+-- 
+                        Is it about a bicycle ?
