@@ -1,51 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/22/1
-Message-ID: <CAE-_4r2P-=PaJC7SFVawyKi3Y+X8raPnmddjmXC36pS6DLfEjw@mail.gmail.com>
-Date: Sat, 22 Sep 2018 19:46:45 +0300
-From: Ariel Zelivansky <ariel.zelivans@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: Terry Chia <terrycwk1994@...il.com>
-Subject: Re: CVE-2018-8023: A remote attacker can exploit a vulnerability in the JWT implementation to gain unauthenticated access to Mesos Executor HTTP API.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/20/3
+Message-ID: <OgcnF5Js29vkskb2jEXrUQDCCyFPkPS44JdOSJ-scVB2WymKAmNWpE3qxCcY4u32snE5_lcl5VTQQQ0dyIfA-yN2N-ZGcXubRunexuQgxNQ=@protonmail.ch>
+Date: Sat, 20 Oct 2018 11:42:20 +0000
+From: Jordan Glover <Golden_Miller83@...tonmail.ch>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Attempting to patch ghostscript-9.25
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+‐‐‐‐‐‐‐ Original Message ‐‐‐‐‐‐‐
+On Saturday, October 20, 2018 3:47 AM, Ken Moffat <zarniwhoop@...world.com> wrote:
 
-I couldn't find the fix for this in the mesos repository and it is not
-documented in the CHANGELOG, could someone direct me to the fixing
-commit/patch?
+> Hi,
+>
+> I hope people can read this - I know that google marks my mails as
+> spam (so no point Cc'ing Tavis) and also that Suse discard my mails.
+> Probably many other places also do that. Anyway:
+>
+> When the first set of vulnerabilities in 9.25 came out there was a
+> nice 'mostly harmless' example, and I patched BLFS for that (needed
+> one extra commit beyond the two Tavis specified, so that I could
+> make sense of where to apply part of it).
+>
+> For the later vulnerabilities, working out what to apply has been
+> much harder. Either everyone else thinks that other mitigations
+> against untrusted ps files will suffice, or else it's on everybody's
+> ToDo lists.
+>
+> So, here is a first attempt to fix all this month's vulnerabilities.
+> For the latest exploit(s) I do not have an example, so I don't know
+> whether or not this works. But it prevents the earlier
+> vulnerability, and usage of real ps (and eps - I only have the gs
+> examples, and only gs seems able to use them) seems to work
+> correctly. Unlike my first attempt to fix this, which turned out
+> to fail to display any ps, eps files.
+>
+> The patch is a bit big, so I've uploaded it to
+> http://www.linuxfromscratch.org/~ken/provisional/ as
+> ghostscript-9.25-security_fixes-2.patch
+>
+> 'provisional' until I find out if it protects adequately. If there
+> turn out ot be problems, I suppose I'll need to renumber later
+> versions.
+>
+> Built in BLFS using the same instructions as for the earlier -1
+> patch [ http://www.linuxfromscratch.org/blfs/view/svn/pst/gs.html ]
+> but that doesn't mean it will work for everyone else's ways of
+> building. Note tht I do build the shared library.
+>
+> The patch lists which upstream commits I pulled in. I was mostly
+> concentrating on changes to gs_init which would maybe help me apply
+> the needed patches. As I've noted in the patch's introduction,
+> several commits had negative offsets (I guess hunks of code were
+> removed in some of the unrelated commits that I ignored).
+>
+> Comments welcome.
+>
+> One final thought - apart from 9.25, upstream seem to have an
+> approximately 6-monthly release schedule, so probably the only thing
+> likely to speed up 9.26 is everybody patching ;)
+>
+> ĸen
 
-Thanks
-Ariel
+I think the easiest way is to build on upstream git snapshot.
+All of its contents will be included in future release anyway.
 
-On Fri, Sep 21, 2018 at 1:50 PM, Alex R <alexr@...che.org> wrote:
->
-> Severity: Important
->
-> Vendor:
-> The Apache Software Foundation
->
-> Versions Affected:
-> Apache Mesos 1.4.0 to 1.6.0
-> The unsupported Apache Mesos pre-1.4.0 releases may be also affected.
->
-> Description:
-> Apache Mesos can be configured to require authentication to call the
-> Executor HTTP API using JSON Web Token (JWT). The comparison of the
-> generated HMAC value against the provided signature in the JWT
-> implementation used is vulnerable to a timing attack because instead
-> of a constant-time string comparison routine a standard `==` operator
-> has been used. A malicious actor can therefore abuse the timing
-> difference of when the JWT validation function returns to reveal the
-> correct HMAC value.
->
-> Mitigation:
-> pre-1.4.x users should upgrade to at least 1.4.2
-> 1.4.x users should upgrade to 1.4.2
-> 1.5.x users should upgrade to 1.5.2
-> 1.6.0 users should upgrade to 1.6.1
-> 1.7.0-dev users should obtain Mesos 1.7.0
->
-> Credit:
-> This issue was discovered by Terry Chia (Ayrx).
->
-> Alex on behalf of Mesos PMC
+Jordan
+
