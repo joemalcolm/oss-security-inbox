@@ -1,31 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/19/7
-Message-ID: <CAMqJVeOJ6D5qgreA6ZiN3u30iQx2_1s3h+dns-60voG6H1fxNQ@mail.gmail.com>
-Date: Fri, 19 Jan 2018 08:46:40 -0600
-From: Jason Lowe <jlowe@...che.org>
-To: general@...oop.apache.org, user@...oop.apache.org,  Hadoop Common <common-dev@...oop.apache.org>,  "<security@...oop.apache.org>" <security@...oop.apache.org>, full-disclosure@...ts.grok.org.uk,  bugtraq@...urityfocus.com, oss-security@...ts.openwall.com
-Subject: CVE-2017-15713: Apache Hadoop MapReduce job history server vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/21/1
+Message-ID: <20181021010450.GB4751@milliways.localdomain>
+Date: Sun, 21 Oct 2018 02:04:50 +0100
+From: Ken Moffat <zarniwhoop@...world.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Attempting to patch ghostscript-9.25
 Content-Type: text/plain; charset=utf-8
 
-CVE-2017-15713: Apache Hadoop MapReduce job history server vulnerability
+On Sat, Oct 20, 2018 at 11:42:20AM +0000, Jordan Glover wrote:
+> ‐‐‐‐‐‐‐ Original Message ‐‐‐‐‐‐‐
+> On Saturday, October 20, 2018 3:47 AM, Ken Moffat <zarniwhoop@...world.com> wrote:
+> 
+> >
+> > The patch is a bit big, so I've uploaded it to
+> > http://www.linuxfromscratch.org/~ken/provisional/ as
+> > ghostscript-9.25-security_fixes-2.patch
+> >
+> > 'provisional' until I find out if it protects adequately. If there
+> > turn out ot be problems, I suppose I'll need to renumber later
+> > versions.
+> >
+I've now been given an exploit, in a PDF (I was not subscribed here
+until Friday, missed some of the earleir stuff).  That -2 patch fixes
+it.
 
-Severity: Severe
+Tested with evince (which now loops trying to rended an empty page,
+same as with the .ps exploit), so I've committed it in BLFS.  Will
+take down the 'provisional' copy in a few days.
 
-Vendor: The Apache Software Foundation
+> I think the easiest way is to build on upstream git snapshot.
+> All of its contents will be included in future release anyway.
+> 
+> Jordan
 
-Versions Affected:
-  Hadoop 0.23.0 to 0.23.11
-  Hadoop 2.0.0-alpha to 2.8.2
-  Hadoop 3.0.0-alpha to 3.0.0-beta1
+If upstream are like anywhere else, some changes get backed out or
+modified so they might not be there when 9.26 is released.  OTOH,
+one of the changes I ignored might stop evince looping on a
+'damaged' PDF.  Swings and roundabouts.
 
-Users affected: Users running the MapReduce job history server daemon
-
-Impact:  Vulnerability allows a cluster user to expose private files
-owned by the user running the MapReduce job history server process.
-The malicious user can construct a configuration file containing XML
-directives that reference sensitive files on the MapReduce job history
-server host.
-
-Mitigation: Users should upgrade to Apache Hadoop 2.7.5, 2.8.3, 2.9.0, or 3.0.0.
-
-Credit: This issue was discovered by Man Yue Mo of lgtm.com
+ĸen
+-- 
+                        Is it about a bicycle ?
