@@ -1,35 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/23/8
-Message-ID: <20181123180914.GA10084@kroah.com>
-Date: Fri, 23 Nov 2018 19:09:14 +0100
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com, Wei Wu <ww9210@...il.com>
-Subject: Re: fwd: [vs-plain] Kernel heap overflow in bpf leading to LPE (exploit provided)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/22/2
+Message-ID: <20181022182638.uja7q6jhxn5md36n@jwilk.net>
+Date: Mon, 22 Oct 2018 20:26:38 +0200
+From: Jakub Wilk <jwilk@...lk.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Using quilt on untrusted RPM spec files
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Nov 23, 2018 at 06:22:09PM +0100, Yves-Alexis Perez wrote:
-> Hi list,
-> 
-> we were notified on the Linux distros list of a vulnerability in the bpf
-> subsystem of the Linux kernel.
-> 
-> I asked the reported (Wei Wu) if security@k.o had been notified, and
-> this was done in the following mail, leading Eric Dumazet to suggest
-> posting this on netdev.
-> 
-> In turn, this has been done just afterwards [1] so the issue is now
-> public. According to the linux-distros list policy, the original
-> reporter should also have made the issue public here, but failed to do
-> that.
-> 
-> I'm posting this right now in order to raise awareness for the
-> distributions already including 4.19 in a supported release.
+* Matthias Gerstner <mgerstner@...e.de>, 2018-09-27, 17:59:
+>It turns out that running `quilt setup` on untrusted sources is not a 
+>good idea:
 
-As was discussed further on one of the threads on this topic, it looks
-like this is a 4.20-rc issue only, and that 4.19 does not have this
-issue.  So it might not be relevant to any distro at all, but I suggest
-that people test themselves to be sure.
+Debian largely avoids this problem by having a source package format 
+with built-in patch system[0]. Most of the time the unpacked source 
+package will have patches applied, so there's no need for the reviewer 
+to run untrusted code to prepare the source.
 
-thanks,
+(That said, dpkg-source had quite a few path traversal bugs in the 
+past[1] and I have a hunch there's more to be found...)
 
-greg k-h
+While debian/rules can have optional "patch" target[2] (which is a bit 
+like RPM's %prep), it felt to disuse these days. A developer wouldn't 
+call "debian/rules patch" against a random not-yet-reviewed package, 
+because it would be unusual to have this target implemented.
+
+[0] https://manpages.debian.org/stretch/dpkg-dev/dpkg-source.1.en.html#Format:_3.0_%28quilt%29
+[1] https://security-tracker.debian.org/tracker/source-package/dpkg
+[2] https://www.debian.org/doc/debian-policy/ch-source.html#main-building-script-debian-rules
+
+-- 
+Jakub Wilk
