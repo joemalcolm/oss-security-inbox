@@ -1,39 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/27/6
-Message-Id: <0328E5ED-8D75-4C17-99A6-5D65B3AF4E5E@apache.org>
-Date: Tue, 27 Feb 2018 09:38:23 -0800
-From: Bryan Call <bcall@...che.org>
-To: dev <dev@...fficserver.apache.org>, users <users@...fficserver.apache.org>, announce@...fficserver.apache.org, security@...fficserver.apache.org, oss-security@...ts.openwall.com
-Subject: [ANNOUNCE] Apache Traffic Server host header and line folding - CVE-2017-5660
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/22/4
+Message-ID: <87zhv5znqn.fsf@oldenburg.str.redhat.com>
+Date: Mon, 22 Oct 2018 23:16:00 +0200
+From: Florian Weimer <fweimer@...hat.com>
+To: Andrew Sandoval <ASandoval@...root.com>
+Cc: "oss-security\@lists.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: GCC Compiler Induced Vulnerability - affects programs compiled with GCC 7 and 8 containing nested functions
 Content-Type: text/plain; charset=utf-8
 
-CVE-2017-5660: Apache Traffic Server host header and line folding
+* Andrew Sandoval:
 
-Vendor:
-The Apache Software Foundation
+> Will Webroot communicate this to the public?
+> Webroot believes in responsible disclosure and will work with third parties to
+> ensure that the vulnerability is addressed before a public announcement. We
+> are happy to work with your communications team on announcement timing.
 
-Version Affected:
-ATS 6.2.0 and prior
-ATS 7.0.0 and prior
+This is already public because oss-security is a public mailing list.
 
-Description:
-There is a vulnerability in ATS with the Host header and line folding.  This can have issues when interacting with upstream proxies and the wrong host being used.
+Most GNU/Linux distributions ensure that only very special binaries
+(such as some versions of the Ada compiler) enable executable stacks.
+In our experience, if the toolchain produces a binary that requests an
+executable stack, it is more likely due to manually written assembler
+files without the required stack executability markup section, and not
+due to nested C functions whose address escapes.  Without scanning built
+binaries for these discrepancies, such cases could easily be missed.
 
-Mitigation:
-6.2.x users should upgrade to 6.2.2 or later versions
-7.x users should upgrade to 7.1.2 or later versions
+Please also note that an executable stack is not a vulnerability itself,
+and it is not directly exploitable.  (The same applies to the lack of
+Intel CET support in binaries.)
 
-References:
-	Downloads:
-		https://trafficserver.apache.org/downloads
-
-	Github Pull Request:
-		https://github.com/apache/trafficserver/pull/1657
-
-	CVE:
-		https://cve.mitre.org/cgi-bin/cvename.cgi?name=2017-5660
-
--Bryan
-
-
-
+Thanks,
+Florian
