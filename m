@@ -1,29 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/18/4
-Message-ID: <20180918145457.GM3902@linux-r8p5>
-Date: Tue, 18 Sep 2018 07:54:57 -0700
-From: Davidlohr Bueso <dave@...olabs.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/22/1
+Message-ID: <20181022081735.1d940b71@computer>
+Date: Mon, 22 Oct 2018 08:17:35 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Linux kernel: potential local priviledge escalation bug in vmacache code
+Subject: Buffer overflow in cabextract/libmspack (Fwd: New cabextract 1.8 and libmspack 0.8 release)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+New cabextract and libmspack fix a buffer overflow.
+Notably libmspack is also used in clamav.
 
-A potential local priviledge escalation bug was reported in the vmacache code dealing with 32-bit sequence number overflows, introduced in v3.16 by 6b4ebc3a9078 (mm,vmacache: optimize overflow system-wide flushing). The change introduces a "fastpath" which skips the invalidation on overflows for single threads (mm_users == 1), which can lead to a use-after-free. As reported:
-`
- [A starts as a singlethreaded process]
-A: create mappings X and Y (in separate memory areas far away from other allocations)
-A: perform repeated invalidations until current->mm->vmacache_seqnum==0xffffffff and current->vmacache.seqnum==0xfffffffe
-A: dereference an address in mapping Y that is not paged in (thereby populating A's VMA cache with Y at seqnum 0xffffffff)
-A: unmap mapping X (thereby bumping current->mm->vmacache_seqnum to 0)
-A: without any more find_vma() calls (which could happen e.g. via pagefaults), create a thread B
-B: perform repeated invalidations until current->mm->vmacache_seqnum==0xfffffffe
-B: unmap mapping Y (thereby bumping  current->mm->vmacache_seqnum to 0xffffffff)
-A: dereference an address in the freed mapping Y (or any address that isn't present in the pagetables and doesn't correspond to a valid VMA cache entry)
+Forwarding the release notes here:
 
-This is fixed in 7a9cdebdcc17 (mm: get rid of vmacache_flush_all() entirely), by converting it to a 64-bit counter and not dealing with overflows anymore; which also makes the code simpler and removes rarely-run code in core kernel paths.
+--------------------------
 
-So a win-win altogether.
+Hello all,
 
-Thanks,
-Davidlohr
+cabextract 1.8 has been released. It greatly improves its ability to 
+extract damaged files with the "-f" option, and the cabinfo command has 
+been rewritten.
+
+It also fixes this bug:
+
+* if a CAB file has a Quantum-compressed datablock with exactly 38912 
+compressed bytes, cabextract will write exactly one byte beyond its 
+input buffer.
+
+cabextract can be downloaded from https://www.cabextract.org.uk/
+
+SHA256 sums:
+
+2d9b5ba24239ba6eac02bdee6f2fa208bb4d0a14c84ed81792fc35c213140f38 
+cabextract-1.8-1.i386.rpm
+54138e652fa0fa39e021d66b6315994f906cda965ddb786117f28276f135664e 
+cabextract-1.8-1.src.rpm
+082b8ec149babc9ae10b5d6568eb764c67e75c3cfc379b1211b88b980febebd7 
+cabextract-1.8.tar.gz
+
+libmspack 0.8alpha has also been released.
+
+It adds the new parameter MSCABD_PARAM_SALVAGE which permits salvaging 
+badly damaged files rather than rejecting them outright.
+
+It fixes several bugs:
+
+* the above 38912-byte Quantum CAB block bug
+* libmspack now also rejects blank CHM filenames that are blank because 
+they have embedded null bytes, not just because they are zero-length
+* chmextract now protects you from absolute/relative pathnames in CHM
+  files
+
+libmspack can be downloaded from
+https://www.cabextract.org.uk/libmspack/
+
+SHA256 sum:
+
+0533792e9561375a5fce1bc96bbc65ec778af486e0daa3803b226da9244addaf 
+libmspack-0.8alpha.tar.gz
+
+If you wish to patch an older version, please look at commits |8759da8, 
+||7cadd48 and ||40ef1b4 in the git repository.|
+
+Regards
+Stuart
+
+
+
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
