@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1304" "Thursday" "15" "August" "2019" "13:37:57" "+1000" "Wade Mealing" "wmealing@redhat.com" "<CALJHwhSEmNwChg-TCRYpyUGZWOM37zofntrsMk_WSEBbeZW3Vg@mail.gmail.com>" "36" "[oss-security] CVE-2019-10140 - linux kernel - system panic in overlayfs directory creation." nil nil nil "8" "2019081503:37:57" "[oss-security] CVE-2019-10140 - linux kernel - system panic in overlayfs directory creation." (number mark "U       wmealing@red Aug 15   36/1304  " thread-indent "\"[oss-security] CVE-2019-10140 - linux kernel - system panic in overlayfs directory creation.\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2019-10140 - linux kernel - system panic in overlayfs directory creation." nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1092" "Tuesday" "23" "October" "2018" "16:20:39" "+0200" "Florian Weimer" "fweimer@redhat.com" "<87va5su4lk.fsf@oldenburg.str.redhat.com>" "24" "Re: [oss-security] GCC Compiler Induced Vulnerability - affects programs compiled with GCC 7 and 8 containing nested functions" "^Cc:" nil nil "10" "2018102314:20:39" "[oss-security] GCC Compiler Induced Vulnerability - affects programs compiled with GCC 7 and 8 containing nested functions" (number mark "        fweimer@redh Oct 23   24/1092  " thread-indent "\"Re: [oss-security] GCC Compiler Induced Vulnerability - affects programs compiled with GCC 7 and 8 containing nested functions\"\n") "<20181023133502.GA22933@openwall.com>" ("<DM5PR13MB14208A0909CAD197E6D1BADEAEF40@DM5PR13MB1420.namprd13.prod.outlook.com>" "<87zhv5znqn.fsf@oldenburg.str.redhat.com>" "<20181023133502.GA22933@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7301 invoked by uid 550); 15 Aug 2019 03:38:21 -0000
+Received: (qmail 3763 invoked by uid 550); 23 Oct 2018 14:20:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,64 +11,46 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7283 invoked from network); 15 Aug 2019 03:38:20 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=PA779+gQVFPaSY4KvM8/tTqgx/iIMzSny5zSOhRe3AI=;
-        b=UMVr1+M6DBxgibszMk+8qwNy9AP7f5/uBr5fP9oINOXz7Ao0rdeJ1mrkr+b80FFawJ
-         WrKR2wa4bBVfBC1WnpgnyCFVj6YA0b32KNJatKFwfAGUjK79v6yTWczVGMfbiD1ZakD9
-         +snJ1izpv9BmvrB5tvAobSEhjWqcx4fwJfW5HKagYEkz+JsyXSGu8spzHWws3WnD2g87
-         bXp47k3FFXLnhUFXic6Q6DJKMHUulusezsdawryPjxW2qrBIjEA+UTdRPbjsFg+OXg0A
-         1RIWknAmTmqGsVv8gUp9ddJO6PV0O+kES2F2Ged9Rc+08NBDEipEuh3MZflp3Qmw6hK9
-         Vjaw==
-X-Gm-Message-State: APjAAAU2hYNNY4o4IA6jZwHLiXTSfiZBLmicnzAjfrEl6LwQVa4KyzDg
-	IJt+aco07ln4ADu0avfFmuFEOM4PanigG+unH9a5VvR9ay8=
-X-Google-Smtp-Source: APXvYqz/hmQ3Pfa1wmZQ1Lo8NNenpf36APF9O0cLRO7tU4knrs09+HksxP0MVP6EaqFfYIw2SoXs26JRPc8WWVNePEs=
-X-Received: by 2002:a02:9981:: with SMTP id a1mr2936872jal.17.1565840288699;
- Wed, 14 Aug 2019 20:38:08 -0700 (PDT)
+Received: (qmail 3742 invoked from network); 23 Oct 2018 14:20:53 -0000
+References: <DM5PR13MB14208A0909CAD197E6D1BADEAEF40@DM5PR13MB1420.namprd13.prod.outlook.com>
+	<87zhv5znqn.fsf@oldenburg.str.redhat.com>
+	<20181023133502.GA22933@openwall.com>
+In-Reply-To: <20181023133502.GA22933@openwall.com> (Solar Designer's message
+	of "Tue, 23 Oct 2018 15:35:02 +0200")
+Message-ID: <87va5su4lk.fsf@oldenburg.str.redhat.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.3 (gnu/linux)
 MIME-Version: 1.0
-From: Wade Mealing <wmealing@redhat.com>
-Date: Thu, 15 Aug 2019 13:37:57 +1000
-Message-ID: <CALJHwhSEmNwChg-TCRYpyUGZWOM37zofntrsMk_WSEBbeZW3Vg@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000002f19b005901f9a12"
-Subject: [oss-security] CVE-2019-10140 - linux kernel - system panic in overlayfs directory creation.
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 2.84 on 10.5.11.23
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.47]); Tue, 23 Oct 2018 14:20:41 +0000 (UTC)
+Cc: oss-security@lists.openwall.com,  Andrew Sandoval <ASandoval@webroot.com>
+Date: Tue, 23 Oct 2018 16:20:39 +0200
+From: Florian Weimer <fweimer@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] GCC Compiler Induced Vulnerability - affects programs compiled with GCC 7 and 8 containing nested functions
+To: Solar Designer <solar@openwall.com>
 
---0000000000002f19b005901f9a12
-Content-Type: text/plain; charset="UTF-8"
+* Solar Designer:
 
-Red Hats kernel has a flaw in overlayfs which can cause a kernel panic and
-possibly memory corruption.
+> 3. Andrew writes: "Most if not all C++ compilers are able to produce
+> code from lambdas (similar to nested functions) without compromising the
+> call stack."  It'd be helpful to explore this more and see whether
+> there's any fundamental difference preventing reuse of the same approach
+> (whatever it is) for nested functions as well.  I'd appreciate
+> discussion of this on oss-security.  My guess is this probably doesn't
+> fit in the existing ABI for C, but I might be wrong.
 
-An attacker with local access can create a denial of service situation via
-NULL pointer dereference in ovl_posix_acl_create function in
-fs/overlayfs/dir.c. The ovl_create function can return a positive number
-leading to a null pointer derference of path in may_open. This can allow
-attackers with ability to create directories on overlayfs to crash the
-kernel creating a Denial Of Service (DOS) and possibly other memory
-corruption.
+std::function in C++ isn't just a code pointer.  It's more like a
+function descriptor on some architectures, so you don't need to generate
+a trampoline because the called code can load ancilarry information
+(such as the static chain pointer or other information to access
+captured variables), without having to encode this in the pointer
+itself.
 
-The memory corruption claim may be a bit of a stretch, but it could be
-possible that an attacker could pre-groom the memory where the null pointer
-dereference exists, but I couldn't get this to work in practice, YMMV.
-
-This flaw likely only affects Red Hat Enterprise Linux 7 based products as
-this issue was created by by human-error in the back-porting process.  It
-is very unlikely that non Red Hat Enterprise Linux derived distributions
-contain this flaw.
+There are other ways to produce trampolines which do not need an
+executable stack, and even ways that avoid code generation at run time
+(such as pre-cooked array of trampoline code that gets mapped multiple
+times as needed).
 
 Thanks,
-
-Wade Mealing
-Red Hat Product Security
-
-
-Red Hat bugzilla:
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2019-10140
-
-Proposed patch:
-https://bugzilla.redhat.com/attachment.cgi?id=1535840
-
---0000000000002f19b005901f9a12--
+Florian
