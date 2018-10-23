@@ -1,22 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/25/1
-Message-Id: <59BE1921-4A41-4927-86AF-78C8A74C6EDB@beckweb.net>
-Date: Thu, 25 Jan 2018 09:58:09 +0100
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/23/5
+Message-ID: <1540266401.7250.22.camel@tecnocode.co.uk>
+Date: Tue, 23 Oct 2018 16:46:41 +1300
+From: Philip Withnall <philip@...nocode.co.uk>
 To: oss-security@...ts.openwall.com
-Subject: Re: Jenkins EC2 Plugin 1.37 and earlier arbitrary shell command execution
+Subject: GLib (2.20.0+): GVariant, GDBus and GMarkup out of bounds reads, DoS and unbounded recursion
 Content-Type: text/plain; charset=utf-8
 
+Hello,
 
-> On 6. Dec 2017, at 14:37, Daniel Beck <ml@...kweb.net> wrote:
-> 
-> SECURITY-643
-> Users with permission to create or configure agents in Jenkins could
-> configure an EC2 agent to run arbitrary shell commands on the master node
-> whenever the agent was supposed to be launched.
-> 
-> Configuration of these agents now requires the 'Run Scripts' permission
-> typically only granted to administrators.
+Various fixes to GVariant, GDBus and GMarkup have just been pushed to
+GLib, to deal with several problems kindly found in them by the oss-
+fuzz project.
 
-CVE-2017-1000502
+The fixes are here, with an explanation of each problem in the commit
+messages:
 
+https://gitlab.gnome.org/GNOME/glib/merge_requests/411
+
+We are looking at doing backports to the glib-2-58 and glib-2-56
+branches. They will be linked from the above merge request when
+available, but will differ due to not being able to introduce new APIs.
+
+We do not plan to make new tarball releases purely to include these
+fixes. If you need to package the fixes, please pick them from the
+merge request above.
+
+It’s likely that the GVariant and GDBus implementations shipped in all
+prior versions of GLib are affected. GVariant first shipped in GLib
+2.20.0; GDBus in GLib 2.26.0. It’s also likely that the GMarkup code
+has always been vulnerable. We have not verified the minimum bound of
+the vulnerable versions, though.
+
+In brief, the problems fixed are:
+ • Arithmetic underflow when calculating GVariant tuple element ends
+resulting from missing validation of the offset table. This can result
+in an out of bound read. Fixed by adding validation.
+ • Unbounded call recursion when handling highly recursive GVariant
+types. This can result in a call stack overflow. Fixed by limiting
+GVariant type recursion with static and dynamic types in untrusted
+GVariant instances.
+ • Infinite loop when getting a child from a serialised variable array,
+due to missing validation that the child offset does not point into the
+offset table itself. Fixed by adding validation.
+ • Similarly for serialised tuples.
+ • nul bytes could pass through UTF-8 validation for long GVariant
+strings due to a signed/unsigned mismatch. Fix: add a new validation
+function which operates on an unsigned string length.
+ • Critical warning when parsing a D-Bus message with the wrong type
+for its signature field in its message header. Fix: validate the type
+before unwrapping that field.
+ • Critical warning when parsing a D-Bus message with a header field
+containing a variant with an empty type signature, due to a mismatch
+between validation of D-Bus type signatures and validation of GVariant
+type strings. Fix: validate that the field is a valid type string too.
+
+Philip
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
