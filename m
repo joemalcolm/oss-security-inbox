@@ -1,43 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/22/3
-Message-ID: <20181122210214.240912af@computer>
-Date: Thu, 22 Nov 2018 21:02:14 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: PHP imap_open() script injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/23/10
+Message-ID: <152c345e-b785-ca80-7791-c007a03ac9e1@redhat.com>
+Date: Tue, 23 Oct 2018 10:28:46 -0600
+From: Jeff Law <law@...hat.com>
+To: oss-security@...ts.openwall.com, Florian Weimer <fweimer@...hat.com>, Solar Designer <solar@...nwall.com>
+Cc: Andrew Sandoval <ASandoval@...root.com>
+Subject: Re: GCC Compiler Induced Vulnerability - affects programs compiled with GCC 7 and 8 containing nested functions
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 10/23/18 8:20 AM, Florian Weimer wrote:
+> * Solar Designer:
+> 
+>> 3. Andrew writes: "Most if not all C++ compilers are able to produce
+>> code from lambdas (similar to nested functions) without compromising the
+>> call stack."  It'd be helpful to explore this more and see whether
+>> there's any fundamental difference preventing reuse of the same approach
+>> (whatever it is) for nested functions as well.  I'd appreciate
+>> discussion of this on oss-security.  My guess is this probably doesn't
+>> fit in the existing ABI for C, but I might be wrong.
+> 
+> std::function in C++ isn't just a code pointer.  It's more like a
+> function descriptor on some architectures, so you don't need to generate
+> a trampoline because the called code can load ancilarry information
+> (such as the static chain pointer or other information to access
+> captured variables), without having to encode this in the pointer
+> itself.
+> 
+> There are other ways to produce trampolines which do not need an
+> executable stack, and even ways that avoid code generation at run time
+> (such as pre-cooked array of trampoline code that gets mapped multiple
+> times as needed).
+True.  GCC in fact even has some capabilities to use alternate sequences
+for trampolines (used for Ada on some targets, ultimately looks like
+procedure descriptors).  Those alternate approaches do require
+generating alternate code sequences at the call site, so it's "mass
+rebuild" kind of change to make.
 
-This was apparently posted on some russian forum recently and then
-re-posted to github:
-https://antichat.com/threads/463395/#post-4254681
-https://github.com/Bo0oM/PHP_imap_open_exploit/blob/master/exploit.php
+In the end, stack based trampolines (and by extension C/C++ nested
+functions in GCC) are generally a bad idea.  But to call it a GCC
+Compiler Induced Vulnerability is a bit of a stretch.
 
-PoC code:
-$server = "x -oProxyCommand=echo\tZWNobyAnMTIzNDU2Nzg5MCc+L3RtcC90ZXN0MDAwMQo=|base64\t-d|sh}";
-imap_open('{'.$server.':143/imap}INBOX', '', '') or die("\n\nError: ".imap_last_error());
-
-It's pretty self explaining, it seems imap_open() will pass things to
-ssh and this is vulnerable to a shell injection.
-
-Impact would be mostly relevant if someone has some imap functionality
-where a user can define a custom imap server. (Though it might also be
-used as a bypass for environments where exec() and similar functions
-are restricted.)
-
-I reported it to upstream PHP a few days ago, it was closed as a
-duplicate, so it seems they already knew about it. It's unfixed in
-current versions.
-
-There seems to be some speculation that this might've been involved in a
-hack of a .onion hoster:
-https://danwin1210.me/
-
-
--- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+Jeff
