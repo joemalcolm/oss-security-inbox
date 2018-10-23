@@ -1,45 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/25/8
-Message-ID: <CAC1dCwVhrPRyFJMS5BbY02+495CUODrAzndqZkvKacJnXUSm+w@mail.gmail.com>
-Date: Wed, 25 Apr 2018 13:06:53 -0400
-From: Tim Allison <tallison@...che.org>
-To: announce@...che.org, dev@...a.apache.org, user@...a.apache.org,  oss-security@...ts.openwall.com
-Subject: [CVE-2018-1335] Command Injection Vulnerability in Apache Tika’s tika-server module
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/23/11
+Message-ID: <20181023180945.GA13330@lorien.valinor.li>
+Date: Tue, 23 Oct 2018 20:09:45 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Buffer overflow in cabextract/libmspack (Fwd: New cabextract 1.8 and libmspack 0.8 release)
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-1335 – Command Injection Vulnerability in Apache Tika’s tika-server
-module
+Hi
 
+FTR, three CVEs were assigned by MITRE, whereeas one is explicitly
+marked as DISPUTED, because upstream makes clear in the changelog
+entry, that the chmextract utility is more an example code how to use
+the library rather than "productised" binaries. Still a CVE was
+assigned for downstreams using it as such.
 
-Severity: High
+Here are the assignments:
 
+CVE-2018-18584:
+https://github.com/kyz/libmspack/commit/40ef1b4093d77ad3a5cfcee1f5cb6108b3a3bcc2
 
+CVE-2018-18585:
+https://github.com/kyz/libmspack/commit/8759da8db6ec9e866cb8eb143313f397f925bb4f
 
-Vendor: The Apache Software Foundation
+CVE-2018-18586:
+https://github.com/kyz/libmspack/commit/7cadd489698be117c47efcadd742651594429e6d
 
-
-
-Versions Affected: <1.18
-
-
-
-Description: Before Tika 1.18, clients could send carefully crafted
-
-headers to tika-server that could be used to inject commands into the
-
-command line of the server running tika-server.  This vulnerability
-
-only affects those running tika-server on a server that is open to
-
- untrusted clients.
-
-
-
-Mitigation: Ensure that untrusted users don't have access to
-
-tika-server and/or upgrade to Apache Tika >=1.18.
-
-
-
-Credit: Tim Allison, a member of the Apache Tika team, discovered this.
-
+Regards,
+Salvatore
