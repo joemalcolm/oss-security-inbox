@@ -1,51 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/10/5
-Message-ID: <20181010170418.7bd2dcc0@computer>
-Date: Wed, 10 Oct 2018 17:04:18 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: Eddie Chapman <eddie@...k.net>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/23/9
+Message-ID: <87va5su4lk.fsf@oldenburg.str.redhat.com>
+Date: Tue, 23 Oct 2018 16:20:39 +0200
+From: Florian Weimer <fweimer@...hat.com>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com,  Andrew Sandoval <ASandoval@...root.com>
+Subject: Re: GCC Compiler Induced Vulnerability - affects programs compiled with GCC 7 and 8 containing nested functions
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 10 Oct 2018 15:36:52 +0100
-Eddie Chapman <eddie@...k.net> wrote:
+* Solar Designer:
 
-> But I'm still unclear how "just browsing a website is enough to
-> trigger the vulnerability in some common configurations." Are we
-> talking about the user looking in their web browser cache directory
-> on the filesystem using Nautilus, and hence running malicious code
-> embedded in a cached file via the evince thumbnailer on opening that
-> directory? Or maybe Nautilus/Gnome automatically runs the thumbnailer
-> on every new file created in the user's home directory (via
-> inotify?), including whatever the browser saves in the background
-> (hopefully not)? Or is it just a case of the user opening a
-> downloaded file with evince and becoming a victim that way? Though
-> that is not exactly automatic, most browsers show a prompt asking
-> what to do with a downloaded file.
+> 3. Andrew writes: "Most if not all C++ compilers are able to produce
+> code from lambdas (similar to nested functions) without compromising the
+> call stack."  It'd be helpful to explore this more and see whether
+> there's any fundamental difference preventing reuse of the same approach
+> (whatever it is) for nested functions as well.  I'd appreciate
+> discussion of this on oss-security.  My guess is this probably doesn't
+> fit in the existing ABI for C, but I might be wrong.
 
-I don't know what exactly Tavis was referring to, but a scenario that
-has been discussed in the past and likely is still possible in many
-configurations is this:
-Some browsers (notably chrome) will download files without asking in
-their default configuration. So a site can make you download a file and
-it ends up in your ~/Downloads dir.
+std::function in C++ isn't just a code pointer.  It's more like a
+function descriptor on some architectures, so you don't need to generate
+a trampoline because the called code can load ancilarry information
+(such as the static chain pointer or other information to access
+captured variables), without having to encode this in the pointer
+itself.
 
-Desktop search tools will automatically index that (tracker from gnome,
-baloo from kde). So voila - you can fire up an exploit if you can
-exploit anything that tracker or baloo support.
+There are other ways to produce trampolines which do not need an
+executable stack, and even ways that avoid code generation at run time
+(such as pre-cooked array of trampoline code that gets mapped multiple
+times as needed).
 
-https://scarybeastsecurity.blogspot.com/2016/11/0day-poc-risky-design-decisions-in.html
-
-Though I'm not sure if either of them uses ghostscript, a quick check
-it seems that not. You still have the automatic download issue in
-chrome, but you'd need to convince your user to open up ~/Downloads in
-a file manager. That's a minor not-fully-automatic part, but I guess
-it's plausible enough that users will eventually do that at some point.
-
--- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+Thanks,
+Florian
