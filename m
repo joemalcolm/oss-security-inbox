@@ -1,30 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/19/11
-Message-ID: <266a9bf2-2733-054b-6ce8-bc3eb5721a8d@isc.org>
-Date: Wed, 19 Sep 2018 15:16:25 -0800
-From: Michael McNally <mcnally@....org>
-To: oss-security@...ts.openwall.com
-Subject: ISC has issued new patch releases of BIND
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/23/2
+Message-ID: <MWHPR0101MB29449166243291E394B17844C0F50@MWHPR0101MB2944.prod.exchangelabs.com>
+Date: Tue, 23 Oct 2018 00:22:28 +0000
+From: Ramon de C Valle <rcvalle@...e.com>
+To: Andrew Sandoval <ASandoval@...root.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: GCC Compiler Induced Vulnerability - affects programs compiled with GCC 7 and 8 containing nested functions
 Content-Type: text/plain; charset=utf-8
 
-To the packagers and redistributors of BIND:
+> This is already public because oss-security is a public mailing list.
+> 
+> Most GNU/Linux distributions ensure that only very special binaries
+> (such as some versions of the Ada compiler) enable executable stacks.
+> In our experience, if the toolchain produces a binary that requests an
+> executable stack, it is more likely due to manually written assembler
+> files without the required stack executability markup section, and not
+> due to nested C functions whose address escapes.  Without scanning built
+> binaries for these discrepancies, such cases could easily be missed.
+> 
+> Please also note that an executable stack is not a vulnerability itself,
+> and it is not directly exploitable.  (The same applies to the lack of
+> Intel CET support in binaries.)
 
-Today ISC announced one CVE (which does not come with a code fix)
-and two operational notifications for issues in BIND (which do.)
+While I agree with that I still think that this extension (or its name) is misleading, see https://lkml.org/lkml/2012/1/9/138. The PF_X flag set in the PT_GNU_STACK segment header or the absence of the PT_GNU_STACK segment header can result in an application unnoticeably having not only the stack, but also all readable virtual memory mappings also executable.
 
-The new releases for BIND 9.11.4-P2 and BIND 9.12.2-P2 can be found
-at http://www.isc.org/downloads
-
-Details on the security vulnerability and the two operational
-notifications can be found via the following links:
-
-   https://kb.isc.org/docs/cve-2018-5741
-
-
-https://kb.isc.org/docs/change-4892-exposed-multiple-problems-affecting-dnssec-inline-signing
-
-https://kb.isc.org/docs/some-releases-of-bind-9-12-are-too-strict-when-handling-referrals-with-non-empty-answer-sections
-
-
-Michael McNally
-ISC Security Officer
+Ramon de C Valle
