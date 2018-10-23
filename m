@@ -1,82 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/21/7
-Message-ID: <CAJ_zFkJpnGtG6D3JZVaC5KJiNzsJ6vjJK0oXRfirR8QsdFbZVQ@mail.gmail.com>
-Date: Tue, 21 Aug 2018 13:12:43 -0700
-From: Tavis Ormandy <taviso@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/23/3
+Message-ID: <79e2949f37a6495a19888772953b410e035e2f9c.camel@opteya.com>
+Date: Tue, 23 Oct 2018 11:41:13 +0200
+From: Yann Droneaud <ydroneaud@...eya.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
+Subject: Re: GCC Compiler Induced Vulnerability - affects programs compiled with GCC 7 and 8 containing nested functions
 Content-Type: text/plain; charset=utf-8
 
-Thanks Alex.
+Hi,
 
-FWIW, not all of these are visible, but I've started filing bugs, I'll file
-a few more today and then let the developers work through the most serious
-ones.
+Use -Werror=trampoline to prevent GCC from generating code that require
+executable stack:
 
-699654 /invalidaccess checks stop working after a failed restore
-699655 missing type checking in setcolor
-699656 LockDistillerParams boolean missing type checks
-699659 missing type check in type checker (!)
-699657 .tempfile SAFER restrictions seem to be broken
-699658 Bypassing PermitFileReading by handling undefinedfilename error
-699660 shading_param incomplete type checking
-699661 pdf14 garbage collection memory corruption
-699662 calling .bindnow causes sideeffects
-699663 .setdistillerkeys memory corruption
-699664 corrupt device object after error in job
 
-I'm working on getting reproducers working for the developers for all bugs.
+https://gcc.gnu.org/onlinedocs/gcc-8.2.0/gcc/Warning-Options.html#index-Wtrampolines
 
-On Tue, Aug 21, 2018 at 8:22 AM Alex Gaynor <alex.gaynor@...il.com> wrote:
+It's a recommanded warning from OWASP:
 
-> A small note. Both ImageMagick and GraphicsMagick process various file
-> formats that can nest a different image file inside of them. These are very
-> frequently implemented with a call to ReadImage(), with no checking that
-> it's the expected file format. (As a result, the fuzzer finds various
-> impressive chains, with sometimes 3 different image formats nested inside
-> of each other).
->
-> The conclusion of this is that people _must not_ attempt to do their own
-> format detection and then pass the data to IM/GM, because this can be
-> bypassed with nested formats. It's imperative that GS truly be disabled
-> with either policy.xml or by uninstall GS.
->
-> Alex
->
-> On Tue, Aug 21, 2018 at 11:01 AM Bob Friesenhahn <
-> bfriesen@...ple.dallas.tx.us> wrote:
->
-> > On Tue, 21 Aug 2018, Tavis Ormandy wrote:
-> > >
-> > > I think those thumbnails should be disabled, but you've probably
-> noticed
-> > I
-> > > think everything related to untrusted ghostscript should be disabled
-> :-)
-> >
-> > I have posted to the GraphicsMagick Announcements mailing list
-> > regarding your findings (with a link to this list) and suggested that
-> > a fool-proof solution is that Ghostscript should be uninstalled.
-> >
-> > Uninstalling Ghostscript entirely might cause software using libgs to
-> > not execute at all unless a stub library is put in its place.
-> >
-> > Dependencies on Ghostscript are much larger than one would initially
-> > think due to Postscript being the traditional output from Unix
-> > software for "printing" and thus it is used as an intermediate format
-> > in order to convert between formats.  EPS content is also embedded in
-> > some other formats.
-> >
-> > Bob
-> > --
-> > Bob Friesenhahn
-> > bfriesen@...ple.dallas.tx.us,
-> http://www.simplesystems.org/users/bfriesen/
-> > GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
-> >
->
->
-> --
-> All that is necessary for evil to succeed is for good people to do nothing.
->
+
+https://www.owasp.org/index.php/C-Based_Toolchain_Hardening#GCC.2FBinutils
+
+-- 
+Yann Droneaud
+OPTEYA
+
 
