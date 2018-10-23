@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3237" "Sunday" "22" "November" "2015" "13:40:00" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151122184000.74C196C06B6@smtpvmsrv1.mitre.org>" "79" "[oss-security] Re: Libxml2: Several out of bounds reads" nil nil nil "11" "2015112218:40:00" "[oss-security] Re: Libxml2: Several out of bounds reads" (number mark "U       cve-assign@m Nov 22   79/3237  " thread-indent "\"[oss-security] Re: Libxml2: Several out of bounds reads\"\n") "<20151121101253.20323cd3@pc1>" ("<20151121101253.20323cd3@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4660" "Tuesday" "23" "October" "2018" "15:35:02" "+0200" "Solar Designer" "solar@openwall.com" "<20181023133502.GA22933@openwall.com>" "91" "Re: [oss-security] GCC Compiler Induced Vulnerability - affects programs compiled with GCC 7 and 8 containing nested functions" "^Cc:" nil nil "10" "2018102313:35:02" "[oss-security] GCC Compiler Induced Vulnerability - affects programs compiled with GCC 7 and 8 containing nested functions" (number mark "        solar@openwa Oct 23   91/4660  " thread-indent "\"Re: [oss-security] GCC Compiler Induced Vulnerability - affects programs compiled with GCC 7 and 8 containing nested functions\"\n") "<87zhv5znqn.fsf@oldenburg.str.redhat.com>" ("<DM5PR13MB14208A0909CAD197E6D1BADEAEF40@DM5PR13MB1420.namprd13.prod.outlook.com>" "<87zhv5znqn.fsf@oldenburg.str.redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 12113 invoked by uid 550); 22 Nov 2015 18:40:36 -0000
+Received: (qmail 3678 invoked by uid 550); 23 Oct 2018 13:38:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,92 +11,109 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 1544 invoked from network); 23 Oct 2018 13:35:24 -0000
+Message-ID: <20181023133502.GA22933@openwall.com>
+References: <DM5PR13MB14208A0909CAD197E6D1BADEAEF40@DM5PR13MB1420.namprd13.prod.outlook.com> <87zhv5znqn.fsf@oldenburg.str.redhat.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87zhv5znqn.fsf@oldenburg.str.redhat.com>
+User-Agent: Mutt/1.4.2.3i
+Cc: Andrew Sandoval <ASandoval@webroot.com>
+Date: Tue, 23 Oct 2018 15:35:02 +0200
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11930 invoked from network); 22 Nov 2015 18:40:12 -0000
-From: cve-assign@mitre.org
-To: hanno@hboeck.de
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <20151121101253.20323cd3@pc1>
-Message-Id: <20151122184000.74C196C06B6@smtpvmsrv1.mitre.org>
-Date: Sun, 22 Nov 2015 13:40:00 -0500 (EST)
-Subject: [oss-security] Re: Libxml2: Several out of bounds reads
+Subject: Re: [oss-security] GCC Compiler Induced Vulnerability - affects programs compiled with GCC 7 and 8 containing nested functions
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Mon, Oct 22, 2018 at 11:16:00PM +0200, Florian Weimer wrote:
+> * Andrew Sandoval:
+> 
+> > Will Webroot communicate this to the public?
+> > Webroot believes in responsible disclosure and will work with third parties to
+> > ensure that the vulnerability is addressed before a public announcement. We
+> > are happy to work with your communications team on announcement timing.
+> 
+> This is already public because oss-security is a public mailing list.
 
-> https://blog.fuzzing-project.org/28-Libxml2-Several-out-of-bounds-reads.html
+This was brought to the distros list a few days ago, and I asked Andrew
+to repost the same text to oss-security, which is why the stale mention
+of private communications.
 
-As far as we can tell, what you mean is that:
+> Most GNU/Linux distributions ensure that only very special binaries
+> (such as some versions of the Ada compiler) enable executable stacks.
+> In our experience, if the toolchain produces a binary that requests an
+> executable stack, it is more likely due to manually written assembler
+> files without the required stack executability markup section, and not
+> due to nested C functions whose address escapes.  Without scanning built
+> binaries for these discrepancies, such cases could easily be missed.
 
-  - http://www.xmlsoft.org/news.html mentions 10 CVE IDs
+Some distros check for this at package build time - I think Gentoo might
+have been first to start doing that over a decade ago.
 
-  - the descriptions of those CVE IDs seem largely unrelated to
-    either 751603 or 751631
+Here's a list of maybe-actionable items I came up with in response to
+Webroot's findings/reminder:
 
-  - also, there is discussion in 751631 about possibly not having
-    a CVE ID
+1. More distros should start checking for executable stacks in program
+binaries at package build time, and error out when this is unexpected.
 
-  - the cve-assign@mitre.org address was on your Cc line
+2. On Linux, we might want to have an enforcing mode (or several
+sub-modes) in the kernel, where it'd keep the stack non-executable (and
+possibly enforce W^X for other mappings as well), ignoring any flags in
+the program binaries.  I encouraged Vasiliy Kulikov to implement that
+when he worked with us under GSoC 2011 on Linux kernel hardening tasks.
+Here's the relevant thread, including a kernel patch:
 
-and thus your own preference is for your research to have a CVE mapping
-when possible.
+https://www.openwall.com/lists/kernel-hardening/2011/07/18/8
 
-> A malformed XML file can cause a heap out of bounds read access in the
-> function xmlParseXMLDecl.
+For GCC trampolines to continue working, we can implement emulation of
+the trampoline instructions like I introduced in -ow patches for 2.2.x
+and like it's done in PaX/grsecurity.  Vasiliy's patch includes that
+(using code from PaX).
 
-> xmlParseXMLDecl: out of bounds heap access if versionencoding="es and any UTF-8 got
+IIRC, we never actually submitted this upstream.  Maybe the current
+kernel hardening project (KSPP) should take and complete this effort.
 
-> https://bugzilla.gnome.org/show_bug.cgi?id=751603
-> https://git.gnome.org/browse/libxml2/commit/?id=9aa37588ee78a06ca1379a9d9356eab16686099c
+3. Andrew writes: "Most if not all C++ compilers are able to produce
+code from lambdas (similar to nested functions) without compromising the
+call stack."  It'd be helpful to explore this more and see whether
+there's any fundamental difference preventing reuse of the same approach
+(whatever it is) for nested functions as well.  I'd appreciate
+discussion of this on oss-security.  My guess is this probably doesn't
+fit in the existing ABI for C, but I might be wrong.
 
+4. The Webroot report lists several commonly used Open Source programs
+for Windows where GCC's behavior results in the stack made executable:
 
-> A second, very similar issue in the same function xmlParseXMLDecl.
+> > * Git for Windows Installer
+> > * Cygwin Installer
+> > * MinTTY
+> > * Git Bash Shell
+> > * ...and other similar tools
 
-> xmlParseXMLDecl: out of bounds heap read on 0xff char in xml declaration
+The maintainers of these programs, or distros/contributors, could want
+to look into removing the uses of nested functions from there.  For
+those projects where issue trackers (e.g., GitHub issues) or bug
+reporting mailing lists exist, the issues should be reported to there.
+These issues are not strictly bugs, but they may be tracked similarly.
+If you (anyone reading this) do anything on this (e.g., report one of
+those issues), please post a follow-up to this thread saying so.
 
-> https://bugzilla.gnome.org/show_bug.cgi?id=751631
-> https://git.gnome.org/browse/libxml2/commit/?id=709a952110e98621c9b78c4f26462a9d8333102e
+5. On Linux, we're unlucky to have the stack marked executable from the
+start, but at least we're lucky to have this easily detectable from
+automated analysis of the program binary.  As I understand, this isn't
+the case on Windows, where the binary would appear to have DEP enabled
+yet each thread would switch to executable stack upon having the address
+of a nested function taken and would stay with executable stack until
+terminating.  Perhaps there's room for improvement here (e.g., an
+enforcing more like what I suggest for Linux), but with Windows not
+being an Open Source operating system there's little we can do and
+discuss in here, short of suggesting that Open Source tools for security
+analysis of Windows programs should learn to detect existence of code
+inside the programs that would (partially) circumvent DEP.  I guess they
+could detect this GCC-specific pattern or/and uses of VirtualProtect()
+in general, although not all of those uses are relevant (some might
+actually be improving security - e.g., explicitly setting something to
+read-only and/or non-executable).
 
-Use CVE-2015-8317 for both 751603 and 751631.
-
-
-> A malformed XML file can cause a global out of bounds read access in
-> the function xmlNextChar. This only affected the git code and was never
-> an issue in any release version. Upstream bug #751643
-
-In the case of a widely used library, a vulnerability in git code,
-without an affected upstream release, can sometimes have a CVE ID.
-However, it would be necessary to establish that a product used the
-vulnerable code. For example, at least in the past, one of the
-principal libxml2 users was Chrome. At present, it seems that Chromium
-is using parserInternals.c from 2.9.2, not from unreleased git code
-(download
-https://chromium.googlesource.com/chromium/src/+/master/third_party/libxml/src/parserInternals.c?format=TEXT
-and then base64 decode that and compare it to the 2.9.2 file). Our
-guess is that it is unlikely that this specific xmlNextChar
-vulnerability affected a product; we are not planning to research
-this, but other people can research it if they wish. There is
-currently no CVE ID for 751643.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWUgt2AAoJEL54rhJi8gl52L8P/2RdsX8z7Nhp2S3GVWWZddNL
-2YVKRFdxwqHfa1oMiqL8vVXnHTsBCdpjTdhsX6ORK5LhZQFLaqUsBSe8NRkoUoYq
-B34M2GYVTH6HLAPzij5018F03g/EWwQCwJcBSThwqViIAZ0zSmIhY6AHZEk9jfsd
-rdvepctBbIMIqLArKCopnEmsHqtaEHWqHRHjgQ/8is7PbCms2rpXZz5UbSCw1yMu
-L5970e+8qCtoe/Enrvt27UX01LinZixqEKnSXl9muP+dDiHknefWgAtdIQwTtuAQ
-5uuxUPznirOn0zmUsRUlf4jSgVwY1bIX2hWwsOGYp2ZYE70MrRZnlKM4GOWJr4NE
-bhLgR2VCvLE53o+1YgJpa/yUEiOs9Ha/h+OqulrmmXvWM9fprfuHypqKyduQO7EX
-Ry4CwyiM88Ua3CLq4vFr8nlQ03wdOkmbQ7ZeCYKeCLZcuCMwpSg4ZxR06to1K98z
-+cps1tAWLl7/jzBDt6nGRsNx8vh6yqVPC02Slygbvy31/0lDcTjcNvRDf19ZEJ4w
-d0lKwbj640HFwXNdGLWnDTmr0ARjLwSetHlj3ypwYkPulyrukGrIvGFjxcgFNYue
-6uQSKsNa5zLr3q9eVshVcR02MYDsLlWBZEiATZXjZdxjotGacwXH3cLaCm31M9JN
-LlN6eSzFCq0Q+TXc0t9b
-=pJGl
------END PGP SIGNATURE-----
+Alexander
