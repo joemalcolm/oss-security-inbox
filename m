@@ -1,33 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/10/2
-Message-ID: <1627665717.17705240.1523351738464.JavaMail.zimbra@redhat.com>
-Date: Tue, 10 Apr 2018 05:15:38 -0400 (EDT)
-From: Vladis Dronov <vdronov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/23/7
+Message-Id: <1540266141.431.3@mail.gathman.org>
+Date: Mon, 22 Oct 2018 23:42:21 -0400
+From: "Stuart D. Gathman" <stuart@...hman.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2017-13220 / Android A-63527053: Linux kernel: Possible out-of-bound access in Bluetooth subsystem
+Subject: Re: Using quilt on untrusted RPM spec files
 Content-Type: text/plain; charset=utf-8
 
-Hello,
 
-There was a flaw CVE-2017-13220 / Android A-63527053 reported in Android
-security bulletin with not much of public details:
 
-https://source.android.com/security/bulletin/pixel/2018-01-01#kernel-components
+On Thu, Oct 18, 2018 at 10:57 AM, Jakub Wilk <jwilk@...lk.net> wrote:
+> * Randy Barlow <randy@...ctronsweatshop.com>, 2018-09-27, 22:39:
+>> In Fedora we have similar challenges. We've got a tool called 
+>> fedora-review[0] that is maybe kinda similar to quilt.
+> 
+> Quilt is a tool to manage patch series, so maybe not that similar. :-)
 
-Per discussion with Android security developer this flaw is related to
-an upstream commit 51bda2bca53b ("Bluetooth: hidp_connection_add() unsafe
-use of l2cap_pi()").
+mock can run quilt also
 
-Red Hat is handling this flaw in:
+> 
+>> It uses mock[1] to build the source RPM (and mock does this in a 
+>> chroot to help with the problems you described)
+> 
+> If it's really just chroot, then I'm afraid that's not a sufficient 
+> protection. One can easily escape the chroot with ptrace(2).
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1536155
+Doesn't that escape require root?  Or at least a ptraceable process 
+(i.e. with the same uid) outside the chroot?
 
-I believe the other distributions may want to update the related bug pages
-with the info above:
+Not that I'd stake anything really important on current container 
+security...  (And even VMs are vulnerable to the latest round of 
+hardware bugs.)
 
-https://bugzilla.suse.com/show_bug.cgi?id=1076537
-https://security-tracker.debian.org/tracker/CVE-2017-13220
-https://people.canonical.com/~ubuntu-security/cve/2017/CVE-2017-13220.html
-
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
