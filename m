@@ -1,44 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/08/2
-Message-ID: <167bc7e898d02f7bd13c43d272d64178f00e7e23.camel@debian.org>
-Date: Fri, 08 Jun 2018 21:36:09 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2018-12020 in GnuPG
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/24/1
+Message-ID: <_lXuZCbn1AUuAYLpnbHITcY5b0mgsoqJta02ouknD8HstX2Za0vbMyKjB2nITSFXexg24EvqT_VHJPXxsUzae2-k91KKs4dB_7bN7JGV1bs=@protonmail.ch>
+Date: Wed, 24 Oct 2018 14:30:36 +0000
+From: Jordan Glover <Golden_Miller83@...tonmail.ch>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Cc: Andrew Sandoval <ASandoval@...root.com>, "solar@...nwall.com" <solar@...nwall.com>
+Subject: Re: GCC Compiler Induced Vulnerability - affects programs compiled with GCC 7 and 8 containing nested functions
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+‐‐‐‐‐‐‐ Original Message ‐‐‐‐‐‐‐
+On Tuesday, October 23, 2018 3:35 PM, Solar Designer <solar@...nwall.com> wrote:
 
-Hi everybody,
+>
+> Here's a list of maybe-actionable items I came up with in response to
+> Webroot's findings/reminder:
+>
+> 1.  More distros should start checking for executable stacks in program
+>     binaries at package build time, and error out when this is unexpected.
+>
+> 2.  On Linux, we might want to have an enforcing mode (or several
+>     sub-modes) in the kernel, where it'd keep the stack non-executable (and
+>     possibly enforce W^X for other mappings as well), ignoring any flags in
+>     the program binaries. I encouraged Vasiliy Kulikov to implement that
+>     when he worked with us under GSoC 2011 on Linux kernel hardening tasks.
+>     Here's the relevant thread, including a kernel patch:
+>
+>     https://www.openwall.com/lists/kernel-hardening/2011/07/18/8
+>
+>     For GCC trampolines to continue working, we can implement emulation of
+>     the trampoline instructions like I introduced in -ow patches for 2.2.x
+>     and like it's done in PaX/grsecurity. Vasiliy's patch includes that
+>     (using code from PaX).
+>
+>     IIRC, we never actually submitted this upstream. Maybe the current
+>     kernel hardening project (KSPP) should take and complete this effort.
+>
 
-just a heads up, since we weren't notified in advance and it's Friday evening
-(in Europe at least).
+There is S.A.R.A LSM[0] proposed by Salvatore Mesoraca with the aim to upstream
+it to mainline kernel when needed infrastructure for it will be ready.
 
-There's a nasty vulnerability in GnuPG which can be apparently used to bypass
-signature verification when a program calls gpg to verify a signature and
-parses the output:
+[0] https://sara.smeso.it/en/latest/
 
-https://lists.gnupg.org/pipermail/gnupg-announce/2018q2/000425.html
-https://dev.gnupg.org/T4012
+Jordan
 
-It might be worth checking whether package managers signature verification is
-affected.
-
-Apt doesn't seems affected at first sight (it uses gpgv) but we'll double
-check.
-
-Regards,
-- -- 
-Yves-Alexis
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEE8vi34Qgfo83x35gF3rYcyPpXRFsFAlsa2qkACgkQ3rYcyPpX
-RFv/vAf+MVxGn1N+UT1W6HLMnR2BJLcRI0emIAdYOW+HNoXGgAnRckQa2vbLv645
-bKdrpjGR8vsMMiCNmk2vUUOuV5lhfX4XN7ik9wyLpJhJWrxTZ+OdfIPwWE7dOj3x
-bsw+8gYi2gK6v274nUtFXbU2XcTCkgAlqcIfeJlhh8MLDqJ7Fka8YJO02EsW+pRa
-Bu2fblFm5P4TcTMOBjoX4zRHob4S2po57vCIgbA0GKLAzzjB8vWzPbo73waozvQR
-OAL69guzAFKIdVNZ4x4WOcgNoZt6/sx1DWs1+oYfhWC5TNlrK5HcfUmmZ5bq1ov3
-S8SJhFB1Q7c5xyCcmza8mQSwkBrpfA==
-=AI6O
------END PGP SIGNATURE-----
