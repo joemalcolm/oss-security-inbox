@@ -1,19 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/09/12
-Message-ID: <CACdnJusWjOs65_8MYmFqHiEqrmkOMugu02K=U1fM3eTvjiMw+g@mail.gmail.com>
-Date: Thu, 9 Aug 2018 09:38:28 -0700
-From: Matthew Garrett <mjg59@...gle.com>
-To: solar@...nwall.com
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Linux TCP implementation vulnerable to Denial of Service (CVE 2018-5390)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/24/3
+Message-ID: <CAC-pSX1Lv8iv1ZKbi0++WtG-WaJSPZj-7r+o6pYBryMKxxqMNQ@mail.gmail.com>
+Date: Wed, 24 Oct 2018 12:11:35 -0700
+From: Jim Apple <jbapple@...udera.com>
+To: oss-security@...ts.openwall.com
+Subject: Fwd: CVE-2018-11785 and CVE-2018-11792, was "[ANNOUNCE] Apache Impala 3.0.1 release"
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Aug 9, 2018 at 5:51 AM Solar Designer <solar@...nwall.com> wrote:
+Apache Impala just released version 3.0.1 to fix CVE-2018-11785 and
+CVE-2018-11792
 
-> I agree that more detail must have been posted in here, especially given
-> that such detail was on linux-distros.
+---------- Forwarded message ---------
+From: Jim Apple <jbapple@...udera.com>
+Date: Wed, Oct 24, 2018 at 12:09 PM
+Subject: CVE-2018-11785 and CVE-2018-11792, was "[ANNOUNCE] Apache Impala
+3.0.1 release"
+To: <user@...ala.apache.org>, dev@...ala <dev@...ala.apache.org>, Michael
+Ho <kwho@...udera.com>, Fredy Wijaya <fwijaya@...udera.com>, <
+security@...che.org>
+
+
+Additionally, this release was mainly to pick up two security fixes:
+
+CVE-2018-11785:
+- Missing authorization check in Apache Impala allows a
+Kerberos-authenticated but unauthorized user to inject random data into a
+running query, leading to wrong results for a query
+
+CVE-2018-11792 (IMPALA-7502):
+- ALTER TABLE/VIEW RENAME required ALTER on the old
+table. This may pose a potential security risk, such as having ALTER on a
+table and ALL on a particular database allows a user to move the table to a
+database with ALL, which will automatically grant that user with ALL
+privilege on that table due to the privilege inherited from the database
+
+
+On Wed, Oct 24, 2018 at 12:05 PM Jim Apple <jbapple@...udera.com> wrote:
+
+> The Apache Impala PMC is announcing the release of Impala 3.0.1.
 >
-
-This is a completely reasonable objection, and also apologies regarding the
-length of time between CERT disclosure and my posting.
+> Impala is a high-performance distributed SQL engine.
+>
+> The release is available at https://impala.apache.org/downloads.html
+>
+> Thanks,
+> Jim Apple on behalf of the Apache Impala PMC
+>
+>
 
