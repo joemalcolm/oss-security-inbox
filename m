@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["813" "Thursday" "22" "June" "2017" "16:34:02" "+0200" "Marcus Meissner" "meissner@suse.de" "<20170622143402.GN32005@suse.de>" "21" "Re: [oss-security] stackguard fix in Red Hat and Ubuntu kernels" nil nil nil "6" "2017062214:34:02" "[oss-security] stackguard fix in Red Hat and Ubuntu kernels" (number mark "U       meissner@sus Jun 22   21/813   " thread-indent "\"Re: [oss-security] stackguard fix in Red Hat and Ubuntu kernels\"\n") "<20170622133812.GA1672@kroah.com>" ("<20170622121330.GA18550@openwall.com>" "<20170622121833.GI32005@suse.de>" "<20170622133812.GA1672@kroah.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1266" "Wednesday" "24" "October" "2018" "11:30:21" "-0500" "Sean Owen" "srowen@apache.org" "<CAEccTyzwkSJ-2ebKLsxTfu7A60ut5rv8eRoWe7LM7oFv1GXEuQ@mail.gmail.com>" "32" "[oss-security] CVE-2018-11804: Apache Spark build/mvn runs zinc, and can expose information from build machines" nil nil nil "10" "2018102416:30:21" "[oss-security] CVE-2018-11804: Apache Spark build/mvn runs zinc, and can expose information from build machines" (number mark "U       srowen@apach Oct 24   32/1266  " thread-indent "\"[oss-security] CVE-2018-11804: Apache Spark build/mvn runs zinc, and can expose information from build machines\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17828 invoked by uid 550); 22 Jun 2017 14:34:15 -0000
+Received: (qmail 12168 invoked by uid 550); 24 Oct 2018 19:25:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,46 +11,52 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17806 invoked from network); 22 Jun 2017 14:34:14 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Thu, 22 Jun 2017 16:34:02 +0200
-From: Marcus Meissner <meissner@suse.de>
-To: oss-security@lists.openwall.com
-Cc: Vasily Averin <vvs@virtuozzo.com>,
-	Konstantin Khorenko <khorenko@virtuozzo.com>
-Message-ID: <20170622143402.GN32005@suse.de>
-References: <20170622121330.GA18550@openwall.com>
- <20170622121833.GI32005@suse.de>
- <20170622133812.GA1672@kroah.com>
+Received: (qmail 15408 invoked from network); 24 Oct 2018 16:30:47 -0000
+X-Gm-Message-State: ABuFfoiXw5gEvaj6ltJhgPHHlA8+G2DyPpBcD2d2H9Ngi2g+cNy+NY86
+	apQ4U4Qbcm/oDtOxsLm/R2wCoYvQHaYqcHMgwaA=
+X-Google-Smtp-Source: ACcGV61cSnsmmgU1i6N3EHH0d4AWiZ5BOKN1u/vQRvicwFBE9CkY9Jly+mbD+nirsZQH7IfmnH3EwATGARgyLcYbVDU=
+X-Received: by 2002:a19:5510:: with SMTP id n16mr9306405lfe.68.1540398632663;
+ Wed, 24 Oct 2018 09:30:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170622133812.GA1672@kroah.com>
-Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
- =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
- =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Subject: Re: [oss-security] stackguard fix in Red Hat and Ubuntu kernels
+X-Gmail-Original-Message-ID: <CAEccTyzwkSJ-2ebKLsxTfu7A60ut5rv8eRoWe7LM7oFv1GXEuQ@mail.gmail.com>
+Message-ID: <CAEccTyzwkSJ-2ebKLsxTfu7A60ut5rv8eRoWe7LM7oFv1GXEuQ@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Date: Wed, 24 Oct 2018 11:30:21 -0500
+From: Sean Owen <srowen@apache.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE-2018-11804: Apache Spark build/mvn runs zinc, and can expose
+ information from build machines
+To: oss-security@lists.openwall.com
 
-On Thu, Jun 22, 2017 at 09:38:13PM +0800, Greg KH wrote:
-> On Thu, Jun 22, 2017 at 02:18:33PM +0200, Marcus Meissner wrote:
-> > Hi,
-> > 
-> > Yes, we at SUSE are seeing similar crashes. Thanks for the reproducer!
-> 
-> The patches upstream in Linus's tree should resolve these crashes,
-> correct?  If not, please let the kernel developers know, as we ended up
-> going with a different set of changes than the distros shipped, and are
-> still working on getting these backported to older stable kernels at the
-> moment.
+Severity: Low
 
-For a bit of history...
+Vendor: The Apache Software Foundation
 
-We used the patch developed by Michal Hocko, which was apparently adjusted/rewritten
-by Hugh Dickins for upstream inclusion.
+Versions Affected:
+1.3.x release branch and later, including master
 
-We are working on the improvements on those for our 3.0 kernel, but take
-a backport of the mainline fix for 3.12 and 4.4 kernels.
+Description:
+Spark's Apache Maven-based build includes a convenience script, 'build/mvn',
+that downloads and runs a zinc server to speed up compilation. This server
+will accept connections from external hosts by default. A specially-crafted
+request to the zinc server could cause it to reveal information in files
+readable to the developer account running the build. Note that this issue
+does not affect end users of Spark, only developers building Spark from
+source code.
 
-Ciao, Marcus
+Mitigation:
+Spark users are not affected, as zinc is only a part of the build process.
+Spark developers may simply use a local Maven installation's 'mvn' command
+to build, and avoid running build/mvn and zinc.
+Spark developers building actively-developed branches (2.2.x, 2.3.x, 2.4.x,
+master) may update their branches to receive mitigations already patched
+onto the build/mvn script.
+Spark developers running zinc separately may include "-server 127.0.0.1" in
+its command line, and consider additional flags like "-idle-timeout 30m" to
+achieve similar mitigation.
+
+Credit:
+Andre Protas, Apple Information Security
+
+References:
+https://spark.apache.org/security.html
