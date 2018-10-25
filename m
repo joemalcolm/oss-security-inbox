@@ -1,83 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/16/1
-Message-ID: <c57c0f41-742c-3c3e-249c-ae2614bf0d7d@apache.org>
-Date: Sun, 16 Sep 2018 12:59:12 -0400
-From: "Kevin A. McGrail" <kmcgrail@...che.org>
-To: Spamassassin <users@...mAssassin.apache.org>, SpamAssassin Devel List <dev@...massassin.apache.org>, announce@...massassin.apache.org, announce@...che.org
-Cc: security@...massassin.apache.org, oss-security@...ts.openwall.com
-Subject: [SECURITY] Apache SpamAssassin 3.4.2 resolves CVE-2017-15705, CVE-2016-1238, CVE-2018-11780 & CVE-2018-11781
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/25/1
+Message-ID: <20181025142539.GD9126@timmy.laas.fr>
+Date: Thu, 25 Oct 2018 16:25:39 +0200
+From: Matthieu Herrb <matthieu@...rb.eu>
+To: oss-security@...ts.openwall.com
+Subject: X.Org security advisory: October 25, 2018
 Content-Type: text/plain; charset=utf-8
 
-Apache SpamAssassin 3.4.2 was recently released [1], and fixes several
-issues of security note.
+X.Org security advisory: October 25, 2018
 
-First, a denial of service vulnerability that exists in all modern versions.
+Privilege escalation and file overwrite in X.Org X server 1.19 and later
+========================================================================
 
-The vulnerability arises with certain unclosed tags in emails that cause
-markup to be handled incorrectly leading to scan timeouts.
+Incorrect command-line parameter validation in the Xorg X server can
+lead to privilege elevation and/or arbitrary files overwrite, when the
+X server is running with elevated privileges (ie when Xorg is
+installed with the setuid bit set and started by a non-root user).
 
-In Apache SpamAssassin, using HTML::Parser, we setup an object and hook
-into the begin and end tag event handlers  In both cases, the "open"
-event is immediately followed by a "close" event - even if the tag *does
-not* close in the HTML being parsed.
+The -modulepath argument can be used to specify an insecure path to
+modules that are going to be loaded in the X server, allowing to
+execute unprivileged code in the privileged process.
 
-Because of this, we are missing the "text" event to deal with the object
-normally.  This can cause carefully crafted emails that might take more
-scan time than expected leading to a Denial of Service.
+The -logfile argument can be used to overwrite arbitrary files in the
+file system, due to incorrect checks in the parsing of the option.
 
-The issue is possibly a bug or design decision in HTML::Parser that
-specifically impacts the way Apache SpamAssassin uses the module with
-poorly formed html.
+This issue has been assigned CVE-2018-14665
 
-The exploit has been seen in the wild but not believe to have been
-purposefully part of a Denial of Service attempt.  We are concerned that
-there may be attempts to abuse the vulnerability in the future. 
-Therefore, we strongly recommend all users of these versions upgrade to
-Apache SpamAssassin 3.4.2 as soon as possible.
+Background
+==========
 
-This issue has been assigned CVE id CVE-2017-15705 [2].
+The commit
+https://gitlab.freedesktop.org/xorg/xserver/commit/032b1d79b7 which
+first appeared in xorg-server 1.19.0 introduced a regression in the
+security checks performed for potentially dangerous options, enabling
+the vulnerabilities listed above.
 
+Overwriting /etc/shadow with -logfile can also lead to privilege
+elevation since it's possible to control some part of the written log
+file, for example using the -fp option to set the font search path
+(which is logged) and thus inject a line that will be considered as
+valid by some systems.
 
-Second, this release also fixes a reliance on "." in @INC in one
-configuration script.  Whether this can be exploited in any way is
-uncertain.
+Patches
+=======
 
-This issue has been assigned CVE id CVE-2016-1238 [3].
+A patch for the issue was added to the xserver repository on
+October 25, 2018.
 
+https://gitlab.freedesktop.org/xorg/xserver/commit/50c0cf885a6e91c0ea71fb49fa8f1b7c86fe330e
 
-Third, this release fixes a potential Remote Code Execution bug with the
-PDFInfo plugin.  Thanks to cPanel Security Team for their report of this
-issue.
+Workaround
+==========
 
-This issue has been assigned CVE id CVE-2018-11780 [4].
+If a patched version of the X server is not available, X.Org
+recommends to remove the setuid bit (ie chmod 755) of the installed
+Xorg binary.  Note that this can cause issues if people are starting
+the X window system using the 'startx', 'xinit' commands or variations
+thereof.
 
+X.Org recommends the use of a display manager to start X sessions,
+which does not require Xorg to be installed setuid.
 
-Fourth, this release fixes a local user code injection in the meta rule
-syntax. Thanks again to cPanel Security Team for their report of this issue.
+Thanks
+======
 
-This issue has been assigned CVE id CVE-2018-11781 [5].
-
-
-To contact the Apache SpamAssassin security team, please e-mail
-security at spamassassin.apache.org.  For more information about Apache
-SpamAssassin, visit the http://spamassassin.apache.org/ web site.
-
-Apache SpamAssassin Security Team
-
-[1]:
-https://lists.apache.org/thread.html/1ac11532235b5459aa16c4e9d636bf4aa0b141d347d1361e40cc1b78@%3Cannounce.apache.org%3E
-
-[2]: https://cve.mitre.org/cgi-bin/cvename.cgi?name=2017-15705
-
-[3]: https://cve.mitre.org/cgi-bin/cvename.cgi?name=2016-1238
-
-[4]: https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-11780
-
-[5]: https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-11781
+X.Org thanks Narendra Shinde who discovered and reported the issue,
+and the Red Hat Product Security Team who helped understand all
+impacts.
 
 -- 
-Kevin A. McGrail
-VP Fundraising, Apache Software Foundation
-Chair Emeritus Apache SpamAssassin Project
-https://www.linkedin.com/in/kmcgrail - 703.798.0171
+Matthieu Herrb
 
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
