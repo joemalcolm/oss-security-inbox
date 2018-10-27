@@ -1,48 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/10/12
-Message-ID: <CAJ_zFk+W_v0K2UuOF-Oi1a9GB5dDt4K4T_X=hhJycDcE7n=yLA@mail.gmail.com>
-Date: Wed, 10 Oct 2018 11:01:47 -0700
-From: Tavis Ormandy <taviso@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/27/1
+Message-ID: <20181027145446.xmvhpq6ttyvcme3m@jwilk.net>
+Date: Sat, 27 Oct 2018 16:54:46 +0200
+From: Jakub Wilk <jwilk@...lk.net>
 To: oss-security@...ts.openwall.com
-Subject: ghostscript: saved execution stacks can leak operator arrays (CVE-2018-18073)
+Subject: Re: Travis CI MITM RCE
 Content-Type: text/plain; charset=utf-8
 
-Hello, this <https://bugs.chromium.org/p/project-zero/issues/detail?id=1690>
-is another (different from CVE-2018-17961) -dSAFER sandbox escape.
+Response from Travis CI:
+https://blog.travis-ci.com/2018-08-29-addressing-reported-mitm-rce
 
-There are a whole bunch of different stacks in postscript, there's the
-operand stack, the dict stack, the execution stack, and so on.
+Some clarifications:
 
-When the error handler is invoked in postscript, part of the execution
-context is passed to the handler so that it can examine what went wrong.
-That context is called `$error`, and could have included parts of
-executeonly routines, and therefore could leak references to system
-operators.
+* Jakub Wilk <jwilk@...lk.net>, 2018-08-25, 23:49:
+>On 2018-07-05, --force-yes was replaced with --allow-downgrades 
+>--allow-remove-essential --allow-change-held-packages: 
+>https://github.com/travis-ci/travis-build/pull/1422
+>
+>I'm not sure how could this change possibly work, because APT in the 
+>Ubuntu versions Travis CI supports (precise, trusty) doesn't have 
+>these options…
 
-$ gs -dSAFER -sDEVICE=ppmraw
-GS>{ null .setglobal } stopped clear
-GS>$error /estack get ==
-[...  {-dict- /FontDirectory --.currentglobal-- {-dict-}
-{/LocalFontDirectory --.systemvar--} --ifelse-- --.forceput-- --pop--}]
+It did work, because Travis CI folks installed backported APT 1.2.X, 
+with support for these options...
 
-Notice the .forceput in there...
+>So a few days later --force-yes was added back: 
+>https://github.com/travis-ci/travis-build/pull/1433
 
-GS>$error /estack get 29 get ==
-{-dict- /FontDirectory --.currentglobal-- {-dict-} {/LocalFontDirectory
---.systemvar--} --ifelse-- --.forceput-- --pop--}
-GS>$error /estack get 29 get 6 get ==
---.forceput--
-GS>
+...but this fix had an off-by-one bug in version check, which made APT 
+1.2.X still use --force-yes. The bug was fixed soon after my advisory:
+https://github.com/travis-ci/travis-build/commit/1ee43f25e45cad99c283b8fe53145617fd115dbb
 
-Once you have a reference to forceput, you can do anything you like, see
-the exploit for CVE-2018-18073 as an example of abusing forceput to get
-arbitrary filesystem access.
+>2) On 2017-10-12, code was added to refresh an expired signing key: 
+>https://github.com/travis-ci/travis-build/pull/1192
+>
+>The code used 32-bit key ID to retrieve the key from the keyserver. I 
+>reported this on 2017-12-06: 
+>https://github.com/travis-ci/travis-build/pull/1269
 
-The fix is public now, this is the commit to fix it:
+My proposed fix was to use "gpg --recv-key" with full fingerprint. But I 
+now discovered that even this is not resistant against MitM attacks:
 
-http://git.ghostscript.com/?p=ghostpdl.git;a=commit;h=34cc326eb2c5695833361887fe0b32e8d987741c
+https://dev.gnupg.org/T3398
 
-This was ghostscript bug 699927.
+"[...] modern gpg automatically applies an import screener that only 
+accepts OpenPGP certificates that have the given fingerprint [...]
 
-Thanks, Tavis.
+However, it's possible for someone else to make a new OpenPGP 
+certificate that includes the key in question without knowledge of the 
+secret key (e.g. as a non-cross-signed subkey).
 
+As a result, an attacker can bypass the import screener and inject new 
+primary keys into the keyring. [...]"
+
+-- 
+Jakub Wilk
