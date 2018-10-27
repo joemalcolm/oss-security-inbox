@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1497" "Tuesday" "28" "March" "2017" "09:49:04" "-0500" "Serge E. Hallyn" "serge@hallyn.com" "<20170328144904.GA12627@mail.hallyn.com>" "12" "Re: [oss-security] LXC: CVE-2017-5985: lxc-user-nic didn't verify network namespace ownership" nil nil nil "3" "2017032814:49:04" "[oss-security] LXC: CVE-2017-5985: lxc-user-nic didn't verify network namespace ownership" (number mark "U       serge@hallyn Mar 28   12/1497  " thread-indent "\"Re: [oss-security] LXC: CVE-2017-5985: lxc-user-nic didn't verify network namespace ownership\"\n") "<DJvRoKIuVbRyh3w6YppaTZqH1Dcid84FuuKxC6GKQeaXXt2iBfmnPlSvpDlx-wu52iIHxc6-aq7Hpa5PkpetzfBwyuo6NXmTzADSPd9LdG4=@itk.swiss>" ("<8919f274-0c56-2c12-649f-2561d6cd59d8@canonical.com>" "<Ya92X4yQVrEDADDRD-xy-FeIBfDkxTwkyuxI1ATPJl5YbwqpJDwGpa-5HQzKiS09u8o1yNNyHK9G-fzxNDU5NqURXqe49zTp4--EQYjHh8g=@itk.swiss>" "<831d5907-bf61-70c2-9501-f57923e5ae07@canonical.com>" "<9C8Q126sS901vkG8mMxgQPigkx5gBFpDrXBZJqzB9mfVVKvASCmxDOcSAiq9IjkGPjKbAm7r44vrPcqypgDoadrQ2Wuo4wYXFHdQ8amAvwk=@itk.swiss>" "<yEw48KeZXecR-EKWWbAiNN-28xRPMYmv5qRYVlLwbDs4oH3fwjTstCNrpqptLwzG1mqIHxjMk-hiWRreJGC1WJmbY-daelcKJWMJdrb77z0=@itk.swiss>" "<DJvRoKIuVbRyh3w6YppaTZqH1Dcid84FuuKxC6GKQeaXXt2iBfmnPlSvpDlx-wu52iIHxc6-aq7Hpa5PkpetzfBwyuo6NXmTzADSPd9LdG4=@itk.swiss>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1848" "Saturday" "27" "October" "2018" "16:54:46" "+0200" "Jakub Wilk" "jwilk@jwilk.net" "<20181027145446.xmvhpq6ttyvcme3m@jwilk.net>" "48" "[oss-security] Re: Travis CI MITM RCE" nil nil nil "10" "2018102714:54:46" "[oss-security] Re: Travis CI MITM RCE" (number mark "U       jwilk@jwilk. Oct 27   48/1848  " thread-indent "\"[oss-security] Re: Travis CI MITM RCE\"\n") "<20180825214923.ppes3ivrw73mbmrm@jwilk.net>" ("<20180825214923.ppes3ivrw73mbmrm@jwilk.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 22231 invoked by uid 550); 28 Mar 2017 17:18:28 -0000
+Received: (qmail 27730 invoked by uid 550); 27 Oct 2018 14:55:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,37 +12,70 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22087 invoked from network); 28 Mar 2017 14:49:15 -0000
-Date: Tue, 28 Mar 2017 09:49:04 -0500
-From: "Serge E. Hallyn" <serge@hallyn.com>
+Received: (qmail 27698 invoked from network); 27 Oct 2018 14:55:12 -0000
+Date: Sat, 27 Oct 2018 16:54:46 +0200
+From: Jakub Wilk <jwilk@jwilk.net>
 To: oss-security@lists.openwall.com
-Cc: "857295@bugs.debian.org" <857295@bugs.debian.org>,
-	=?iso-8859-1?Q?St=E9phane?= Graber <stgraber@ubuntu.com>,
-	serge.hallyn@ubuntu.com
-Message-ID: <20170328144904.GA12627@mail.hallyn.com>
-References: <8919f274-0c56-2c12-649f-2561d6cd59d8@canonical.com>
- <Ya92X4yQVrEDADDRD-xy-FeIBfDkxTwkyuxI1ATPJl5YbwqpJDwGpa-5HQzKiS09u8o1yNNyHK9G-fzxNDU5NqURXqe49zTp4--EQYjHh8g=@itk.swiss>
- <831d5907-bf61-70c2-9501-f57923e5ae07@canonical.com>
- <9C8Q126sS901vkG8mMxgQPigkx5gBFpDrXBZJqzB9mfVVKvASCmxDOcSAiq9IjkGPjKbAm7r44vrPcqypgDoadrQ2Wuo4wYXFHdQ8amAvwk=@itk.swiss>
- <yEw48KeZXecR-EKWWbAiNN-28xRPMYmv5qRYVlLwbDs4oH3fwjTstCNrpqptLwzG1mqIHxjMk-hiWRreJGC1WJmbY-daelcKJWMJdrb77z0=@itk.swiss>
- <DJvRoKIuVbRyh3w6YppaTZqH1Dcid84FuuKxC6GKQeaXXt2iBfmnPlSvpDlx-wu52iIHxc6-aq7Hpa5PkpetzfBwyuo6NXmTzADSPd9LdG4=@itk.swiss>
+Message-ID: <20181027145446.xmvhpq6ttyvcme3m@jwilk.net>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <20180825214923.ppes3ivrw73mbmrm@jwilk.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Disposition: inline
-In-Reply-To: <DJvRoKIuVbRyh3w6YppaTZqH1Dcid84FuuKxC6GKQeaXXt2iBfmnPlSvpDlx-wu52iIHxc6-aq7Hpa5PkpetzfBwyuo6NXmTzADSPd9LdG4=@itk.swiss>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Subject: Re: [oss-security] LXC: CVE-2017-5985: lxc-user-nic didn't verify
- network namespace ownership
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180825214923.ppes3ivrw73mbmrm@jwilk.net>
+User-Agent: NeoMutt/20180716
+X-Ovh-Tracer-Id: 8954281961565444006
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedtkedrheeggdekgecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecu
+Subject: [oss-security] Re: Travis CI MITM RCE
 
-On Tue, Mar 28, 2017 at 06:45:34AM -0400, Stiepan wrote:
-> Thanks to the 2.0.7-2 update by Evgeni Golov and his crystal-clear instructions on how to use lxcbr0 with this version, I could confirm that the issue with the host's routing table being affected by changes in the containers' routing tables is not there anymore when using that version (lxc 2.0.7-2 from jessie-backports), which includes the fixes to CVE-2017-5985 which were brought in LXC 2.0.7 (upstream).
-> 
-> This was thus basically a variation of said CVE, which probably doesn't need to be separately numbered as such, the core problem at stake being the same:
-> network namespace ownership was not respected by a setuid-root program enabling the user to configure networks as non-root, which is now solved.
-> This leads me to a suggestion to the upstream developers: couldn't the same be achieved using specific network-related capabilities, instead of setuid-root, thereby further reducing the risk of lxc-user-nic being exploited and hence, reducing overall attack surface (in unprivileged mode)?
-> I have read in https://wiki.ubuntu.com/UserNamespace that the approach of using "targeted capabilities" was then considered. This is probably the closest to what I am suggesting (specifically for lxc-user-nic - the current approach with 1-1 uid mappings seems fine for network-unrelated things).
+Response from Travis CI:
+https://blog.travis-ci.com/2018-08-29-addressing-reported-mitm-rce
 
-The targeted capabilities wouldn't help here, because in fact
-lxc-user-nic requires privilege against the parent namespace.
+Some clarifications:
 
--serge
+* Jakub Wilk <jwilk@jwilk.net>, 2018-08-25, 23:49:
+>On 2018-07-05, --force-yes was replaced with --allow-downgrades 
+>--allow-remove-essential --allow-change-held-packages: 
+>https://github.com/travis-ci/travis-build/pull/1422
+>
+>I'm not sure how could this change possibly work, because APT in the 
+>Ubuntu versions Travis CI supports (precise, trusty) doesn't have 
+>these options…
+
+It did work, because Travis CI folks installed backported APT 1.2.X, 
+with support for these options...
+
+>So a few days later --force-yes was added back: 
+>https://github.com/travis-ci/travis-build/pull/1433
+
+...but this fix had an off-by-one bug in version check, which made APT 
+1.2.X still use --force-yes. The bug was fixed soon after my advisory:
+https://github.com/travis-ci/travis-build/commit/1ee43f25e45cad99c283b8fe53145617fd115dbb
+
+>2) On 2017-10-12, code was added to refresh an expired signing key: 
+>https://github.com/travis-ci/travis-build/pull/1192
+>
+>The code used 32-bit key ID to retrieve the key from the keyserver. I 
+>reported this on 2017-12-06: 
+>https://github.com/travis-ci/travis-build/pull/1269
+
+My proposed fix was to use "gpg --recv-key" with full fingerprint. But I 
+now discovered that even this is not resistant against MitM attacks:
+
+https://dev.gnupg.org/T3398
+
+"[...] modern gpg automatically applies an import screener that only 
+accepts OpenPGP certificates that have the given fingerprint [...]
+
+However, it's possible for someone else to make a new OpenPGP 
+certificate that includes the key in question without knowledge of the 
+secret key (e.g. as a non-cross-signed subkey).
+
+As a result, an attacker can bypass the import screener and inject new 
+primary keys into the keyring. [...]"
+
+-- 
+Jakub Wilk
