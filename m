@@ -1,45 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/12/2
-Message-ID: <CAMOY_4kbeNpOpWp_VvM+WuCeu8hP-nJmsD+SwVABB8EgoSEuwA@mail.gmail.com>
-Date: Thu, 12 Apr 2018 14:16:48 +0200
-From: Raphael Sanchez Prudencio <rasanche@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/29/2
+Message-ID: <CAEKGoSFCgf+FYfsegq2Z3TDQMT3TgG94Ma_ARL99co8Gx0O0yA@mail.gmail.com>
+Date: Mon, 29 Oct 2018 08:35:17 +0900
+From: 面和毅 <ka-omo@...s.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2018-1084 corosync: Integer overflow in exec/totemcrypto.c:authenticate_nss_2_3() function
+Cc: squid3@...enet.co.nz
+Subject: Re: Squid Proxy multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Description
-===========
+Hi,
 
-An integer overflow leading to an out-of-bound read was found in
-authenticate_nss_2_3() in Corosync. An attacker could craft a malicious
-packet that would lead to a denial of service.
+It looks like links are working fine now.
+
+http://www.squid-cache.org/Advisories/SQUID-2018_4.txt
+http://www.squid-cache.org/Advisories/SQUID-2018_5.txt
+
+OMO
+2018年10月29日(月) 2:22 Hanno Böck <hanno@...eck.de>:
+>
+> On Mon, 29 Oct 2018 05:13:40 +1300
+> Amos Jeffries <squid3@...enet.co.nz> wrote:
+>
+> > <http://www.squid-cache.org/Advisories/SQUID-2018_4.txt>
+>
+> That gives a 404.
+>
+> Also there's another yet unfixed vulnerability: The webpage and the
+> downloads are not using HTTPS, which makes them vulnerable to
+> man-in-the-middle attacks ;-)
+>
+> --
+> Hanno Böck
+> https://hboeck.de/
+>
+> mail/jabber: hanno@...eck.de
+> GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
 
 
-Affected versions
-=================
-
-All versions of Corosync from 2.0.0 to 2.4.3 are vulnerable.
-
-
-Patched versions
-================
-
-Corosync 2.4.4 includes the patch that fixes this vulnerability.
-
-
-Credits
-=======
-
-This issue was discovered by Citrix Security Response Team.
-
-
-Reference
-==========
-
-https://github.com/corosync/corosync/commit/fc1d5418533c1faf21616b282c2559bed7d361c4
-https://bugzilla.redhat.com/show_bug.cgi?id=1552830
 
 -- 
-Raphael Sanchez Prudencio
-Red Hat Product Security
+Kazuki Omo: ka-omo@...s.com
 
+OSS&Security Evangelist
+Senior Architect
+Vice President & Deputy Group Manager
+Research and Development Dept. 2
+CISSP #366942
+Tel: +819026581386
