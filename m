@@ -1,4 +1,9 @@
-Received: (qmail 26178 invoked by uid 550); 29 Mar 2024 22:19:48 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1626" "Sunday" "28" "October" "2018" "18:21:53" "+0100" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20181028182153.156c7434@computer>" "45" "Re: [oss-security] Squid Proxy multiple vulnerabilities" "^Cc:" nil nil "10" "2018102817:21:53" "[oss-security] Squid Proxy multiple vulnerabilities" (number mark "        hanno@hboeck Oct 28   45/1626  " thread-indent "\"Re: [oss-security] Squid Proxy multiple vulnerabilities\"\n") "<ffa9731a-99c9-f60c-2454-25609835ac93@treenet.co.nz>" ("<ffa9731a-99c9-f60c-2454-25609835ac93@treenet.co.nz>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 5446 invoked by uid 550); 28 Oct 2018 17:21:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,98 +11,62 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 5425 invoked from network); 28 Oct 2018 17:21:41 -0000
+Message-ID: <20181028182153.156c7434@computer>
+In-Reply-To: <ffa9731a-99c9-f60c-2454-25609835ac93@treenet.co.nz>
+References: <ffa9731a-99c9-f60c-2454-25609835ac93@treenet.co.nz>
+X-Mailer: Claws Mail 3.17.1 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-5178-1540747290-0001-2"
+Cc: Amos Jeffries <squid3@treenet.co.nz>
+Date: Sun, 28 Oct 2018 18:21:53 +0100
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26108 invoked from network); 29 Mar 2024 22:19:48 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=anarazel.de; h=
-	cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1711750779; x=1711837179; bh=GO8HQyQvsd
-	EOPxMK8XJJAQFGvCo4AvfTkMmJeJE72/0=; b=krsBNZHl/4KdG26brrdqADlWJ1
-	KyBhxBiJY93dPpLEv7czsJfZfeLp432m/uw99sa4luVPnDoPNibPo1Sd6bmPo6rY
-	g/R/ics5ki5gd8tGRqzMBdRBlvGJnHfZ8uHZLOJMIPEhRY/X9cNSf2JY3xZOsaEY
-	TBb+oEwHMTkPx+ZJU4Qe6htsqPMCx/01b9tkdFazsyG4b0SjQpu8ke5g4+ARD7Gl
-	jRDtNXbK2CCX0jdk0bLcgifpM//RcOF6Mk/JgROmvwIq7GOke1rYK2PJ3HXUg99k
-	C/uvYBpcDhymXVFec5hkkS2Ap8j+q+olnJAbp9uxF/c+72YHuAT1vQ8j2kBA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1711750779; x=1711837179; bh=GO8HQyQvsdEOPxMK8XJJAQFGvCo4
-	AvfTkMmJeJE72/0=; b=ZewWCU8FpmGjK8T2zaWU3utZv5MwZMO3liMUHcPu8tre
-	2FUHbmnVij8i21dHqBPwvNxCM+veRrPxP30VxLqzAkCZ6C+agPoatQTb11Yq5yDz
-	Q4ucg2CISRBXC5UZs6XWAAkp+NJWwStOHn6ohq8BQ/8fieDFkO+Uo+1Jd7pf5zGI
-	ZdQ62rFPpyVjY5d1EacnVcIzcNXzmKq9cYH3fMeITDNcFO0Anb0POdEZ8fRrB9zN
-	sMV9GPDXdT0Lex1CMD9TgmvK/j/NkLVMcGHfrKU8qjd+hkOeBHQaL8rPrcUb7P0K
-	MrPH73uTrGxA1AcGf4v43vUxUNDUlZCzRh3ZR50Zgg==
-X-ME-Sender: <xms:ez4HZl3AZC1QQMxIX1CIJ074Q1lrujait1rfp7Pe0saaM2qhwygHPw>
-    <xme:ez4HZsGRaxwsF9N8XgwyZ3oj3i-9GZbJGuFTnlIQOXCEgMGJXABfTZh522vUw_9Pn
-    yQjcR81N0SR57Gttw>
-X-ME-Received: <xmr:ez4HZl7NDHKhu1H_j5haf2V0GLaKbLtgszMscV3HeZhQBmsPK-EPTqwpUB33zUESEviTjPtny_NTyi7OgXCBpADxCTdcyYa637XP4TLjXrqiCb5UjWg04iCUhlxW>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddvvddgudeivdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehttd
-    ertddttddvnecuhfhrohhmpeetnhgurhgvshcuhfhrvghunhguuceorghnughrvghssegr
-    nhgrrhgriigvlhdruggvqeenucggtffrrghtthgvrhhnpedukefhkeelueegveetheelff
-    ffjeegleeuudelfeefuedtleffueejfffhueffudenucevlhhushhtvghrufhiiigvpedt
-    necurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvshesrghnrghrrgiivghlrdguvg
-X-ME-Proxy: <xmx:ez4HZi1RgStvT_Ov924L3lLWJ90CFpjB1HO05nj816uPTQwI9J3zlQ>
-    <xmx:ez4HZoHCvcxtA8SwTpplZ1r65R8fDUu7WzW0mO0RIRntdgzaxv4aZA>
-    <xmx:ez4HZj9TXlcfsu3LbIs747FU0I3HSPfdUS5hA23VBzAyBw0Ra-pDFA>
-    <xmx:ez4HZlmdpcRJDJ6lei2Fvf6IWiZBdVPnzBB29-_eHj3YsRWL7MyHJg>
-    <xmx:ez4HZjP4FuCZiZo9VwLhcW835r6S29lOLICEBM7w4TJltfIQaCLeiQ>
-Feedback-ID: id4a34324:Fastmail
-Date: Fri, 29 Mar 2024 15:19:38 -0700
-From: Andres Freund <andres@anarazel.de>
+Subject: Re: [oss-security] Squid Proxy multiple vulnerabilities
 To: oss-security@lists.openwall.com
-Message-ID: <20240329221938.dqit6xuh4es2v6gc@awork3.anarazel.de>
-References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
- <uu76c4$u7g$1@ciao.gmane.io>
- <20240329211052.GA2470@openwall.com>
- <uu7da3$87n$1@ciao.gmane.io>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <uu7da3$87n$1@ciao.gmane.io>
-Subject: Re: [oss-security] Re: backdoor in upstream xz/liblzma leading to
- ssh server compromise
 
-Hi,
+--=_zucker.schokokeks.org-5178-1540747290-0001-2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-On 2024-03-29 21:54:11 -0000, Tavis Ormandy wrote:
-> On 2024-03-29, Solar Designer wrote:
-> >> I have a minor procedural question for Solar though, shouldn't this
-> >> have been redirected to oss-security immediately from distros? What's
-> >> the rationale for an embargo here?
-> >
-> > We don't have a clear policy for such case.  Some distros list members
-> > have indeed suggested making this public ASAP.  We ended up delaying
-> > publication by one day per my suggestion (as a compromise between ASAP
-> > and having no specific CRD), and I think these are some reasons why:
->
-> Thanks, a compromise is better than nothing :) I think I would have
-> argued for immediately discussing this in the open.
+On Mon, 29 Oct 2018 05:13:40 +1300
+Amos Jeffries <squid3@treenet.co.nz> wrote:
 
-FWIW, I don't know much of the tradeoffs in this space. With that caveat:
+> <http://www.squid-cache.org/Advisories/SQUID-2018_4.txt>
 
-Personally I would have felt quite hesitant to post to distros@ if I knew that
-distros wouldn't get a reasonable, small, amount of time to prepare, so they
-have fixed packages available at the time of the public posting.
+That gives a 404.
 
+Also there's another yet unfixed vulnerability: The webpage and the
+downloads are not using HTTPS, which makes them vulnerable to
+man-in-the-middle attacks ;-)
 
-> > 2. We didn't know how the culprit (or group) would react when they
-> > learned of the full extent of the community's awareness.
->
-> This is true with any vulnerability, there is always the possibility an
-> attacker is already aware of it. They could respond to a patch being
-> released by trying to extract as much value from their exploit before
-> it's worthless.
->
-> I'm not convinced that's a good argument to delay making the patch
-> available?
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
 
-What patch? You mean going back to an older version?
+mail/jabber: hanno@hboeck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
 
-Greetings,
+--=_zucker.schokokeks.org-5178-1540747290-0001-2
+Content-Type: application/pgp-signature
+Content-Transfer-Encoding: 7bit
+Content-Description: OpenPGP digital signature
 
-Andres Freund
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEn3wfQCCb9MicJwD8dkhfABMwL8oFAlvV8DEACgkQdkhfABMw
+L8rOaQ/7Bze+PXZgvXz5/ziSvPuoM4DyRa5lQuAX+xxkNcgLxWpwgESaEedy4PgB
+kXJKcSmsNuoI2b+AwM7p3q1ATf0L+NBxvl99dceuNxTdpfEtGJk3IKCgSbFD7zFn
+oJEEcpsq7nHB2YS0tLU3UQB7p/itg2rOVIlFeJmxrrZKWtodV8iYcbeR4ougCL06
+mLs/HMKKYdMW+qLzd93rG0C4inXApmSv9qY7dwzQfQ39O4yAkrERHGahkBayxSMk
+dHKUaP6vVBYESv9r8PnPFXd0VQDfgiL6RVx8SiO69CiDqrGbWvRr6wD3lFX7j2y9
+2ye0pSRzXb9mfka3LQ2qyzIw09b/9pAoL9ccc4uNvn6DTnVolsyhNt92EIL+hPZa
+NZvhMtBHsM1lS72uJv6oB10qb9Mlw4xbipaswuYPfAimlr1HEFozAO8x4LTFz4KO
+IoGQ84gcBMkY0x2awEe7NgsvcCPs2PZ5ldrJS4Gb7u/9kvY2U6s/lJxnJC5cBk4a
+dqpj60WmtXur5+ttcpefB8XcDF4rhq5MKr3rA8xQEWrAsMdGX1l5U2bz3aUOifdb
+OJ/VkPVa2iOE1h2IrX6CMf9FfKwuKnldTYyvHppV/3LforZrTN/qYPNjGhRlC0H2
+qYoK7cjKbwyIDg30GI1ZbN8WmjzT//BvWWJeCurOvCXvxJM+XBo=
+=Fa2r
+-----END PGP SIGNATURE-----
+
+--=_zucker.schokokeks.org-5178-1540747290-0001-2--
