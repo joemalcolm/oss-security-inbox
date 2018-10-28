@@ -1,29 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/21/9
-Message-ID: <CAKghNw0_qr10=pAkKbn1hhnVxiPuHGEo2rBscNqnh59E9qXzcw@mail.gmail.com>
-Date: Thu, 21 Jun 2018 08:11:42 -0700
-From: Gordon Tetlow <gordon@...lows.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/28/3
+Message-ID: <20181028182153.156c7434@computer>
+Date: Sun, 28 Oct 2018 18:21:53 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Intel hyper-threading security issues
+Cc: Amos Jeffries <squid3@...enet.co.nz>
+Subject: Re: Squid Proxy multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jun 21, 2018 at 4:58 AM, Georgi Guninski <guninski@...inski.com> wrote:
-> On Thu, Jun 21, 2018 at 07:56:42AM +0300, Georgi Guninski wrote:
->> V.   Solution
->>
->> Disable Hyper-Threading Technology on processors that support it.
->>
->
-> Is Freebsd safe from this or requires patch?
+On Mon, 29 Oct 2018 05:13:40 +1300
+Amos Jeffries <squid3@...enet.co.nz> wrote:
 
-FreeBSD allows disabling of HT processors if the user decides to do so.
+> <http://www.squid-cache.org/Advisories/SQUID-2018_4.txt>
 
-Add to /boot/loader.conf:
-machdep.hyperthreading_allowed=0
+That gives a 404.
 
-And reboot the host.
+Also there's another yet unfixed vulnerability: The webpage and the
+downloads are not using HTTPS, which makes them vulnerable to
+man-in-the-middle attacks ;-)
 
-Please note this isn't an endorsement of disabling HT, just an
-explanation of how to do so on FreeBSD.
+-- 
+Hanno Böck
+https://hboeck.de/
 
-Gordon
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+
+Content of type "application/pgp-signature" skipped
