@@ -1,43 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/04/9
-Message-ID: <CANO=Ty1HYwBfpij97h9a=OhM9_SqncP7HjS_q9BPYv7yH-SQww@mail.gmail.com>
-Date: Wed, 4 Apr 2018 17:55:07 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: Alexander Popov <alex.popov@...ux.com>, James Morris <jmorris@...ei.org>,  "Serge E. Hallyn" <serge@...lyn.com>, Brad Spengler <spender@...ecurity.net>,  PaX Team <pageexec@...email.hu>
-Subject: Re: Re: Linux Kernel Defence Map
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/29/1
+Message-ID: <c90cd62c-7f5a-89dd-073b-200f93e97af7@treenet.co.nz>
+Date: Mon, 29 Oct 2018 07:43:50 +1300
+From: Amos Jeffries <squid3@...enet.co.nz>
+To: oss-security@...ts.openwall.com
+Subject: Re: Squid Proxy multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 4, 2018 at 4:17 PM, Kees Cook <keescook@...omium.org> wrote:
+On 29/10/18 6:21 AM, Hanno Böck wrote:
+> On Mon, 29 Oct 2018 05:13:40 +1300
+> Amos Jeffries wrote:
+> 
+>> <http://www.squid-cache.org/Advisories/SQUID-2018_4.txt>
+> 
+> That gives a 404.
 
->
->
-> KPTI defends against info leaks and "finding kernel objects" too, in a
-> way. Maybe just add a whole "side channels" bubble?
->
-> (I think "info leaks" and "finding kernel objects" may need some kind
-> of clarifying language for how they're different)
->
+YMMV as third-party mirrors are still updating in some parts.
 
-Please use a CWE identifier if one exists (https://cwe.mitre.org/), if one
-doesn't exist perhaps we should have one (email me and I'm happy to help
-get that ball rolling). Having a CWE not only helps categorize things
-correctly but gives us something to point developers at for resources
-around flaws and how they can be avoided/dealt with/etc.
+> 
+> Also there's another yet unfixed vulnerability: The webpage and the
+> downloads are not using HTTPS, which makes them vulnerable to
+> man-in-the-middle attacks ;-)
+> 
 
+This is intentional. We do not restrict to those able to access HTTPS.
 
-> -Kees
->
-> --
-> Kees Cook
-> Pixel Security
->
+Also, notice that issue is most relevant to installations routinely
+MITM'ing the HTTPS protocol.
 
 
+AYJ
 
--- 
 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
 
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
