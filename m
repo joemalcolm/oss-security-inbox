@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2851" "Wednesday" "3" "May" "2017" "18:23:09" "+0200" "Pali =?utf-8?B?Um9ow6Fy?=" "pali.rohar@gmail.com" "<201705031823.09198@pali>" "74" "[oss-security] MySQL - Again Riddle vulnerability (public disclosure)" nil nil nil "5" "2017050316:23:09" "[oss-security] MySQL - Again Riddle vulnerability (public disclosure)" (number mark "U       pali.rohar@g May  3   74/2851  " thread-indent "\"[oss-security] MySQL - Again Riddle vulnerability (public disclosure)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1131" "Monday" "29" "October" "2018" "16:11:34" "+0100" "Jann Horn" "jannh@google.com" "<CAG48ez2OYD-9P-YSozYs08Xx0TdmWjwYB0GEm=ztLnEfL8dmow@mail.gmail.com>" "26" "[oss-security] Linux kernel: TLB flush happens too late on mremap (CVE-2018-18281; fixed in 4.9.135, 4.14.78, 4.18.16, 4.19)" nil nil nil "10" "2018102915:11:34" "[oss-security] Linux kernel: TLB flush happens too late on mremap (CVE-2018-18281; fixed in 4.9.135, 4.14.78, 4.18.16, 4.19)" (number mark "U       jannh@google Oct 29   26/1131  " thread-indent "\"[oss-security] Linux kernel: TLB flush happens too late on mremap (CVE-2018-18281; fixed in 4.9.135, 4.14.78, 4.18.16, 4.19)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32762 invoked by uid 550); 3 May 2017 16:32:38 -0000
+Received: (qmail 1186 invoked by uid 550); 29 Oct 2018 15:27:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,117 +12,64 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18258 invoked from network); 3 May 2017 16:23:24 -0000
+Received: (qmail 19949 invoked from network); 29 Oct 2018 15:12:13 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:subject:date:user-agent:mime-version
-         :content-transfer-encoding:message-id;
-        bh=hP8qr7W6el281Hd/OeyHdrW6C/vKKUoys8aiXgPT7PY=;
-        b=MDCtjhbXbJ38Gkg+BZVTM1tumVqiZ1g9iME8xVkj3FFH6mz1J2PLkig61nB35G/L3O
-         IZ7ztM9wB8akxysQGQceW+/zlEn7VjXYZp1dc9GJgVtioqYcKnIrsFOHVmdWxEhf8WIq
-         2D39v5ZHnkUFzZznFUuFEJ9DwzaMn+FWgxhqKoIlg8goilARrHmugcUlEEQpteBQAmxW
-         LiPpfH6ryF+w1dqNGxn7J7HxHC3BSHU4AI41OkTHwB+u/x+BkSrYo4fk0zf0qF1bhPBy
-         V9exrplJEnymIN2M9AKjc05JQKbj93LcQ16o6XXet+mYSMw4Volw8tp7IgebodNms5C0
-         lHsA==
+        d=google.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=lf6ot9CvMmtdele3rd3RVaapyFQsx9XmfS5PxnLTx24=;
+        b=koQCQ1p/KAGWNK/5/6RUna1FviCgcZHSfdEIglq6deQSJfIXH9lGh6m1rUo+2Eqh94
+         IgrwbYNETsU+Bl5ZkqH91cmy9fo7S2ZgbTAFRro04DUMJ55RoqwoDn+RwIi9yIITca7Z
+         Q8jxDYWkWFJr1tbzc0eBV6ftjH34mwPqdnd/E/sYtYU9lJLgFN4tkYsORIeGPapsBWV9
+         Dt3ut0YFs9BMgKoiXwihkQZO0j8gZIRiQRolTaB0n1qEZdioLgnj8vnOwx9oT1eyuqGx
+         hWWMftOSGxGnVby6XlsQmLaYJmO52/brno0auLmPCAclYAwn3fUIagJN/kOx1hVED3Pq
+         DmNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:user-agent:mime-version
-         :content-transfer-encoding:message-id;
-        bh=hP8qr7W6el281Hd/OeyHdrW6C/vKKUoys8aiXgPT7PY=;
-        b=hLi6Z2lZbZ9TBiFox28paHyjzfZ4zhV74FllhhUZ+VWmwms2y6r6rzptVX352W3cjp
-         OE4d27SKI/XyvLju2aB9vt+k7iqyMrCX3kNhqXE92NfWbK1ZPxyQ1BbzvTMGAK1YMdxk
-         5jVTbNkOQULjS6mu3PCcDj+LPQ+vlA8LPfpy72IpSdN0Qb5luZ3sBkKFv/S9AYAhIiiU
-         W/uoqxkhEO1snozzwJ71y1gw/apFJRr21AtPD0BwnMzbUxtZy2qtxDFnMyPIZPSWCPI0
-         2NJDGEpwv88Eo7guNlyWd24eWmh5f4wAYA2W/atsh02uyU5TFAs3RMQ2064tqKm77heI
-         sWuQ==
-X-Gm-Message-State: AN3rC/4RIwWnbHRBBw+w/CKr3Chhqd2s/onIfBzI01yihrYr8fEudMOn
-	7sIQ/mfpJVrU78vJ
-X-Received: by 10.223.177.140 with SMTP id q12mr23213305wra.68.1493828592439;
-        Wed, 03 May 2017 09:23:12 -0700 (PDT)
-From: Pali =?utf-8?q?Roh=C3=A1r?= <pali.rohar@gmail.com>
-To: oss-security@lists.openwall.com
-Date: Wed, 3 May 2017 18:23:09 +0200
-User-Agent: KMail/1.13.7 (Linux/3.13.0-117-generic; KDE/4.14.2; x86_64; ; )
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=lf6ot9CvMmtdele3rd3RVaapyFQsx9XmfS5PxnLTx24=;
+        b=VjvudiSKjQfFyaUY00OzMwbdZ/LM/OQqc+atsXu6d0FiSU1+l7+6DNLsPvpjvgcb7M
+         gYRTpBKj54SaO57cAIuGbtZv/XDyrvJUP57JPoK+ms4q+SxssGh8Onp5ZNy4AU5tkRGV
+         /KziH4cjT+V0RHLZXn3E5qro/Nb99l3/hJoncyvxz+PXOzS+cc9QqpP4cX/HpxQnbotn
+         UoyFWRUXXycs3vo3OzrBMS2SXFVXwerhcrOFtUw6J8r8y3FwLboVDDjTbrW0nbWfBZ/Z
+         iJP/uuu4H52W6BQVzjMuQn3d/qOTeoKOKTdiTUBPg3+Ziu1YelJAESMuPxW95xtkX9/V
+         7tnA==
+X-Gm-Message-State: AGRZ1gKnkLpkp0PtaxS8eBsumTsH7sIIxoTelduGuAIF/cIThqSUMXl8
+	ivhvWAo71G23iWqqj+rZnii3s7Mtf3dBm13ax2YlXIf01JZjaA==
+X-Google-Smtp-Source: AJdET5dHVQ1eg1chM62jMShKvTbf6T99xsCxgWo1iJ0izx3ZhufLZ1ICT/+puJaaCRIeXZg7gd3j1wPImsam7wl1i1o=
+X-Received: by 2002:a9d:2117:: with SMTP id i23mr8433202otb.230.1540825920528;
+ Mon, 29 Oct 2018 08:12:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart2136690.LTKrQyNayS";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Message-Id: <201705031823.09198@pali>
-Subject: [oss-security] MySQL - Again Riddle vulnerability (public disclosure)
+From: Jann Horn <jannh@google.com>
+Date: Mon, 29 Oct 2018 16:11:34 +0100
+Message-ID: <CAG48ez2OYD-9P-YSozYs08Xx0TdmWjwYB0GEm=ztLnEfL8dmow@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] Linux kernel: TLB flush happens too late on mremap (CVE-2018-18281;
+ fixed in 4.9.135, 4.14.78, 4.18.16, 4.19)
 
---nextPart2136690.LTKrQyNayS
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+NOTE: I have requested a CVE identifier, and I'm sending this message,
+to make tracking of the fix easier; however, to avoid missing security
+fixes without CVE identifiers, you should *NOT* be cherry-picking a
+specific patch in response to a notification about a kernel security
+bug.
 
-Hi!
+Since Linux kernel version 3.2, the mremap() syscall performs TLB
+flushes after dropping pagetable locks. If a syscall such as
+ftruncate() removes entries from the pagetables of a task that is in
+the middle of mremap(), a stale TLB entry can remain for a short time
+that permits access to a physical page after it has been released back
+to the page allocator and reused.
 
-The Riddle vulnerability (CVE-2017-3305) we have it there again.=20
+This is CVE-2018-18281.
 
-So what happened?
+This is fixed in the following kernel versions:
+4.9.135
+4.14.78
+4.18.16
+4.19
 
-In 2015 was discovered BACKRONYM vulnerability (CVE-2015-3152) which=20
-allowed an attacker to downgrade and snoop on the SSL encrypted=20
-connection between MySQL client and server. Oracle claimed it was fixed=20
-in MySQL 5.5.49. Later in February 2017 I discovered The Riddle=20
-vulnerability (CVE-2017-3305) which allowed an attacker to do man in the=20
-middle attack. Oracle claimed it was fixed in MySQL 5.5.55.
-
-And now in April 2017 I found out that it is still not fixed in MySQL=20
-5.5.55 properly and I named this defect Again Riddle. Basically fix for=20
-The Riddle in 5.5.55 introduced Again Riddle.
-
-And what is the problem?
-
-If MySQL client library libmysqlclient.so is compiled from source code=20
-without SSL support via cmake switch -DWITH_SSL=3DOFF, then all SSL=20
-related functions from libmysqlclient.so return success (non-error)=20
-value. And function mysql_real_connect() from libmysqlclient.so connects=20
-to MySQL server via plain text protocol, even if client enforced SSL=20
-mode with certificate verification. Which means that function for=20
-enforcing SSL mode does nothing if libmysqlclient.so is compiled without=20
-SSL support. So attacker can do exactly same what for The Riddle=20
-vulnerability.
-
-So every application which links to libmysqlclient.so and require SSL=20
-encryption of MySQL protocol is affected.
-
-I contacted Oracle, MariaDB and Percona security teams about this=20
-problem and after discussion we scheduled public disclosure to May 3.
-
-Oracle decided that this Again Riddle vulnerability would not have CVE=20
-identifier and would be part of original The Riddle vulnerability=20
-CVE-2017-3305.
-
-I'm not sure if this is correct decision, as MariaDB 5.5 was not=20
-affected by The Riddle vulnerability, but is affected by Again Riddle.
-
-I was told that prebuild binaries are not affected as they are compiled=20
-with SSL support, but lot of distributions compile libraries from source=20
-code by their own which means they could be affected.
-
-I prepared POC program written in C to verify if system installed=20
-libmysqlclient.so library is vulnerable or not. You can find it on the=20
-new Again Riddle website together with some Q&A:
-
-http://again.riddle.link/
-
---=20
-Pali Roh=C3=A1r
-pali.rohar@gmail.com
-
---nextPart2136690.LTKrQyNayS
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iEYEABECAAYFAlkKA+0ACgkQi/DJPQPkQ1KWogCaAhi994ppX3HEQKx6frV2Kje+
-qj0AnRUK8HN6MEtXiG3t6197OGHJhK77
-=YCep
------END PGP SIGNATURE-----
-
---nextPart2136690.LTKrQyNayS--
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=eb66ae030829605d61fbef1909ce310e29f78821
+https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.9.135
+https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.14.78
+https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.18.16
+https://bugs.chromium.org/p/project-zero/issues/detail?id=1695
