@@ -1,25 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/27/3
-Message-ID: <b703ec3c-504b-3273-6b4d-3526d07aa4c9@gmx.ch>
-Date: Mon, 27 Aug 2018 21:10:55 +0200
-From: sjw@....ch
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/29/3
+Message-Id: <34DCD4E4-8427-4B0F-889A-75AEEAC76146@beckweb.net>
+Date: Mon, 29 Oct 2018 14:42:29 +0100
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: Another "user enumeration" in Dropbear
+Subject: Script sandbox bypass in multiple Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software. The following
+releases contain fixes for security vulnerabilities:
 
-Due the high interests in CVE-2018-15473 ("user enumeration" in
-OpenSSH), people may also notice CVE-2018-15599 [1] in Dropbear (popular
-on IoT/initramfs).
-The issue seems to be very similar. A patch [2] is already available,
-but no new releases so far.
+* Pipeline: Groovy 2.60
+* Script Security 1.48
 
-Best regards
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2018-10-29/
 
-[1] http://lists.ucc.gu.uwa.edu.au/pipermail/dropbear/2018q3/002108.html
-[2] https://secure.ucc.asn.au/hg/dropbear/rev/5d2d1021ca00
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
 
+---
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+SECURITY-1186
+The Groovy Sandbox library used by Script Security Plugin and Pipeline Groovy
+Plugin did not apply sandbox restrictions to finalize methods. This could be
+used to invoke arbitrary constructors and methods, bypassing sandbox
+protection.
+
+Finalize methods are now prohibited in classes subject to sandbox security.
+
