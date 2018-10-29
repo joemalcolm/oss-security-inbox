@@ -1,51 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/12/3
-Message-ID: <CAFHm6iuD6BpN8JZeF9qhjWQFpUKar7fiumszdWwCBtE03m9N+g@mail.gmail.com>
-Date: Fri, 12 Jan 2018 15:10:23 +0100
-From: Daniël van Eeden <daniel.vaneeden@...king.com>
-To: dbi-dev@...l.org, oss-security@...ts.openwall.com
-Subject: DBD::mysql and SSL/TLS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/29/4
+Message-ID: <87efc8kj92.fsf@fifthhorseman.net>
+Date: Mon, 29 Oct 2018 08:52:25 -0400
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: Jakub Wilk <jwilk@...lk.net>, oss-security@...ts.openwall.com
+Subject: Re: Re: Travis CI MITM RCE
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Sat 2018-10-27 16:54:46 +0200, Jakub Wilk wrote:
+> My proposed fix was to use "gpg --recv-key" with full fingerprint. But I 
+> now discovered that even this is not resistant against MitM attacks:
+>
+> https://dev.gnupg.org/T3398
+>
+> "[...] modern gpg automatically applies an import screener that only 
+> accepts OpenPGP certificates that have the given fingerprint [...]
 
-I have some serious concerns about the state of SSL/TLS in DBD::mysql.
+It may be even worse than this, because the version of gpg used by
+default in travis is not "modern gpg", it's either gnupg2
+2.0.22-3ubuntu1.4 or gnupg 1.4.16-1ubuntu2.6.  I don't think either of
+these has the baseline "import screener" functionality, let alone a fix
+for T3398 :(
 
-Issue 1: CVE-2017-10789 isn't fixed
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-10789
-
-Issue 2: Using DBD::mysql with MariaDB 10.0 or higher or MySQL 8.0 or
-higher provides a false sense of security
-
-SSL_LAST_VERIFY_VERSION is set to 50799.
-Any version higher than that silently ignores mysql_ssl_verify_server_cert
-
-This can lead to unencrypted connections even with strict SSL settings.
-
-Issue 3: If SSL support is unavailable but ssl options are set then these
-options are silently ignored.
-
-issue 4: If compiled against MySQL 5.7 then SSL/TLS is used when available,
-but can't be disabled. (mysql_ssl=0 is ignored).
-
-This makes upgrading to 5.7 more difficult. And 5.7 is needed to get
-support for TLSv1.1 and TLSv1.2.
-
-There is a patch available for this:
-https://github.com/perl5-dbi/DBD-mysql/pull/114
-
-
--- 
-Daniël van Eeden
-Database Administrator
-
-Booking.com B.V.
-Vijzelstraat 66-80 Amsterdam 1017HL Netherlands
-Direct +31207033812
-[image: Booking.com] <http://www.booking.com/>
-The world's #1 accommodation site
-43 languages, 187+ offices worldwide, 96,000+ global destinations,
-1,200,000+ room nights booked every day
-No booking fees, best price always guaranteed
-Subsidiary of the Priceline Group (NASDAQ: PCLN)
-
+    --dkg
