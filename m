@@ -1,38 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/08/1
-Message-ID: <CAG_fn=VEy8E4C4gTC2wZ-FSma5Lh5c5mtxTmhfdFKN_TSjvggQ@mail.gmail.com>
-Date: Fri, 8 Jun 2018 19:38:27 +0200
-From: Alexander Potapenko <glider@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/29/5
+Message-ID: <CAG48ez2OYD-9P-YSozYs08Xx0TdmWjwYB0GEm=ztLnEfL8dmow@mail.gmail.com>
+Date: Mon, 29 Oct 2018 16:11:34 +0100
+From: Jann Horn <jannh@...gle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2018-1000204: Linux kernel 3.18 to 4.16 infoleak due to incorrect handling of SG_IO ioctl
+Subject: Linux kernel: TLB flush happens too late on mremap (CVE-2018-18281; fixed in 4.9.135, 4.14.78, 4.18.16, 4.19)
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+NOTE: I have requested a CVE identifier, and I'm sending this message,
+to make tracking of the fix easier; however, to avoid missing security
+fixes without CVE identifiers, you should *NOT* be cherry-picking a
+specific patch in response to a notification about a kernel security
+bug.
 
-Linux Kernel version 3.18 to 4.16 incorrectly handles an SG_IO ioctl
-on /dev/sg0 (or any other SCSI device) with
-dxfer_direction=SG_DXFER_FROM_DEV and an empty 6-byte cmdp.
-This may lead to copying up to 1000 kernel heap pages to the userspace.
-See the PoC exploit attached.
+Since Linux kernel version 3.2, the mremap() syscall performs TLB
+flushes after dropping pagetable locks. If a syscall such as
+ftruncate() removes entries from the pagetables of a task that is in
+the middle of mremap(), a stale TLB entry can remain for a short time
+that permits access to a physical page after it has been released back
+to the page allocator and reused.
 
-This bug has been fixed in the upstream kernel already:
-https://github.com/torvalds/linux/commit/a45b599ad808c3c982fdcdc12b0b8611c2f92824,
-and CVE-2018-1000204 has been assigned to it.
+This is CVE-2018-18281.
 
-The problem has limited scope, as users don't usually have permissions
-to access SCSI devices. On the other hand, e.g. the Nero user manual
-suggests doing `chmod o+r+w /dev/sg*` to make the devices accessible.
+This is fixed in the following kernel versions:
+4.9.135
+4.14.78
+4.18.16
+4.19
 
--- 
-Alexander Potapenko
-Software Engineer
-
-Google Germany GmbH
-Erika-Mann-Straße, 33
-80636 München
-
-Geschäftsführer: Paul Manicle, Halimah DeLaine Prado
-Registergericht und -nummer: Hamburg, HRB 86891
-Sitz der Gesellschaft: Hamburg
-
-View attachment "sg_io_leak.c" of type "text/x-csrc" (1832 bytes)
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=eb66ae030829605d61fbef1909ce310e29f78821
+https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.9.135
+https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.14.78
+https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.18.16
+https://bugs.chromium.org/p/project-zero/issues/detail?id=1695
