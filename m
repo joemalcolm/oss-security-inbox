@@ -1,40 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/29/2
-Message-Id: <B78D2067-1658-4D7F-804C-FC6CE9A99680@apache.org>
-Date: Tue, 28 Aug 2018 15:39:51 -0700
-From: Bryan Call <bcall@...che.org>
-To: announce@...fficserver.apache.org, dev <dev@...fficserver.apache.org>, users <users@...fficserver.apache.org>, security@...fficserver.apache.org, oss-security@...ts.openwall.com
-Subject: [ANNOUNCE] Apache Traffic Server vulnerability with header variable access in the ESI plugin - CVE-2018-8040
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/30/1
+Message-ID: <CAGJbjKb8Ccxyv-JYrvXxeiyq4BvFesM4PEdgwndDxYA7KTQPiA@mail.gmail.com>
+Date: Tue, 30 Oct 2018 09:14:52 -0400
+From: Mike Dalessio <mike.dalessio@...il.com>
+To: ruby-security-ann@...glegroups.com, rubyonrails-security@...glegroups.com,  oss-security@...ts.openwall.com, loofah-talk@...glegroups.com
+Subject: [CVE-2018-16468] Loofah XSS Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-8040: Apache Traffic Server vulnerability with header variable access in the ESI plugin
+Hello all,
 
-Reported By:
-Louis Dion-Marcil
+A *medium* severity vulnerability has been identified and patched in Loofah
+v2.2.3, which is a dependency of `rails-html-sanitizer`. This issue has
+been assigned CVE-2018-16468.
 
-Vendor:
-The Apache Software Foundation
+The public notice can be found here:
 
-Version Affected:
-ATS 6.0.0 to 6.2.2
-ATS 7.0.0 to 7.1.2
+    https://github.com/flavorjones/loofah/issues/154
 
-Description:
-Pages that are rendered using the ESI plugin can have access to the cookie header when the plugin is configure not to allow access.
+To save you a click, I've reproduced the contents of the announcement here.
 
-Mitigation:
-6.x users should upgrade to 6.2.3 or later versions
-7.x users should upgrade to 7.1.3 or later versions
+-----
 
-References:
-	Downloads:
-		https://trafficserver.apache.org/downloads
-	Github Pull Request:
-		https://github.com/apache/trafficserver/pull/3926
-	CVE:
-		https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-8040
+*# CVE-2018-16468 - Loofah XSS Vulnerability*
 
--Bryan
+This issue has been created for public disclosure of an XSS vulnerability
+that was responsibly reported (independently) by [Shubham Pathak](
+https://hackerone.com/hackedbrain) and @yasinS (Yasin Soliman).
+
+I'd like to thank [HackerOne](https://hackerone.com/loofah) for providing a
+secure, responsible mechanism for reporting, and for providing their
+fantastic service to the Loofah maintainers.
 
 
+*## Severity*
+
+Loofah maintainers have evaluated this as [Medium (CVSS3 6.4)](
+https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:C/C:N/I:L/A:L
+).
+
+
+*## Description*
+
+In the Loofah gem, through v2.2.2, unsanitized JavaScript may occur in
+sanitized output when a crafted SVG element is republished.
+
+
+*## Affected Versions*
+
+Loofah < v2.2.3.
+
+
+*## Mitigation*
+
+Upgrade to Loofah v2.2.3.
+
+
+*## References*
+
+* [HackerOne report](https://hackerone.com/reports/429267)
+
+
+*## History of this public disclosure*
+
+2018-10-27: disclosure created, all information is embargoed
+2018-10-30: embargo ends, full information made available
 
