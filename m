@@ -1,89 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/14/3
-Message-ID: <alpine.DEB.2.20.1803132310150.29869@tvnag.unkk.fr>
-Date: Wed, 14 Mar 2018 07:55:11 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: RTSP RTP buffer over-read
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/31/8
+Message-ID: <445139b3-a2af-f2d2-77d3-ba8fbcbee69c@apache.org>
+Date: Wed, 31 Oct 2018 18:21:48 +0000
+From: Mark Thomas <markt@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2018-11759 Apache Tomcat JK (mod_jk) Connector path traversal
 Content-Type: text/plain; charset=utf-8
 
-RTSP RTP buffer over-read
-=========================
+CVE-2018-11759 Apache Tomcat JK (mod_jk) Connector path traversal
 
-Project curl Security Advisory, March 14th 2018 -
-[Permalink](https://curl.haxx.se/docs/adv_2018-b047.html)
+Severity: Important
 
-VULNERABILITY
--------------
+Vendor: The Apache Software Foundation
 
-curl can be tricked into copying data beyond end of its heap based buffer.
+Versions Affected:
+- Apache Tomcat JK mod_jk Connector 1.2.0 to 1.2.44
 
-When asked to transfer an RTSP URL, curl could calculate a wrong data length
-to copy from the read buffer. The memcpy call would copy data from the heap
-following the buffer to a storage area that would subsequently be delivered to
-the application (if it didn't cause a crash). We've managed to get it to reach
-several hundreds bytes out of range.
+Description:
+The Apache Web Server (httpd) specific code that normalised the
+requested path before matching it to the URI-worker map did not handle
+some edge cases correctly. If only a sub-set of the URLs supported by
+Tomcat were exposed via httpd, then it was possible for a specially
+constructed request to expose application functionality through the
+reverse proxy that was not intended for clients accessing the
+application via the reverse proxy. It was also possible in some
+configurations for a specially constructed request to bypass the access
+controls configured in httpd.
+While there is some overlap between this issue and CVE-2018-1323, they
+are not identical.
 
-This could lead to information leakage or a denial of service for the
-application if the server offering the RTSP data can trigger this.
+Mitigation:
+Users of affected versions should apply one of the following mitigations:
+- Upgrade to Apache Tomcat JK ISAPI Connector 1.2.46 or later.
+- Use alternative measures (e.g. the remote address filter) to restrict
+  access to trusted users.
 
-We are not aware of any exploit of this flaw.
+Credit:
+This issue was first discovered by Alphan YAVAS from Biznet Bilisim A.S.
+and reported responsibly to the Apache Tomcat Security Team. Additional
+attack vectors were identified by Raphaël Arrouas (Xel) and Jean Lejeune
+(Nitrax) from immunIT.
 
-INFO
-----
 
-This bug was introduced in January 2010 in [this
-commit](https://github.com/curl/curl/commit/bc4582b68a673d3) when RTSP support
-was first added.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2018-1000122 to this issue.
-
-CWE-126: Buffer Over-read
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.20.0 to and including curl 7.58.0
-- Not affected versions: curl < 7.20.0 and curl >= 7.59.0
-
-libcurl is used by many applications, but not always advertised as such.
-
-THE SOLUTION
-------------
-
-In curl version 7.59.0, curl makes sure that this code never gets told to copy
-more data than it is allowed to read from the buffer.
-
-A [patch for CVE-2018-1000122](https://curl.haxx.se/CVE-2018-1000122.patch) is available.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl to version 7.59.0
-
-  B - Apply the patch to your version and rebuild
-
-TIME LINE
----------
-
-It was reported to the curl project on February 20, 2018
-
-We contacted distros@...nwall on March 8, 2018.
-
-curl 7.59.0 was released on March 14 2018, coordinated with the publication of
-this advisory.
-
-CREDITS
--------
-
-Detected by OSS-fuzz. Assisted by Max Dymond. Patch by Daniel Stenberg.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
+References:
+[1] http://tomcat.apache.org/security-jk.html
