@@ -1,58 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/26/3
-Message-ID: <CAJmbs8iN5uwxxs3wWvJGkBsbe026yiyeGup1w=UrmtxnV-Orfg@mail.gmail.com>
-Date: Mon, 26 Feb 2018 12:13:48 +0700
-From: Maxim Solodovnik <solomax666@...il.com>
-To: security@...nmeetings.apache.org
-Cc: Openmeetings user-list <user@...nmeetings.apache.org>, dev <dev@...nmeetings.apache.org>,  user-russian@...nmeetings.apache.org, Sahil <sdhar@...urityinnovation.com>,  oss-security@...ts.openwall.com
-Subject: Re: [ANNOUNCE] CVE-2018-1286 - Apache OpenMeetings - Insufficient Access Controls
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/31/9
+Message-ID: <20181031210023.GF4132@kroah.com>
+Date: Wed, 31 Oct 2018 22:00:23 +0100
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux 4.19.0-rc3 Bluetooth out-of-bounds-read and use-after-free
 Content-Type: text/plain; charset=utf-8
 
-I have analyzed the code
-Wysiwyg editor was introduced in 3.0.0
-and it was vulnerable from the very beginning
-So all versions are affected :(
+On Wed, Oct 31, 2018 at 03:11:38PM +0100, Solar Designer wrote:
+> As you can see below, in one message the sender offered to coordinate
+> with security@k.o and asked for a CVE ID.  However, this was in response
+> to my questions about those aspects as it relates to the sender's other
+> message, and I don't know whether the sender actually proceeded to
+> coordinate with security@k.o (I tried asking the sender and got no
+> response) and no CVE ID was assigned by distros (since the sender also
+> didn't respond to my inquiry about security relevance).
 
-On Mon, Feb 26, 2018 at 12:10 PM, Sahil Dhar
-<sdhar@...urityinnovation.com> wrote:
-> Hi Maxim,
->
->
-> I just noticed that there is a typo in the CVE-2018-1286 description, as it
-> states that the affected version is 3.0.0. However, the vulnerability was
-> reported for 4.0.1 release. Can you please update it?
->
-> Thanks,
-> ~ Sahil
->
->
->
->
->
->
-> On Sun, Feb 25, 2018 at 5:20 PM, Maxim Solodovnik <solomax@...che.org>
-> wrote:
->>
->> Severity: Medium
->>
->> Vendor: The Apache Software Foundation
->>
->> Versions Affected: Apache OpenMeetings 3.0.0
->>
->> Description: CRUD operations on privileged users are not password
->> protected allowing an authenticated attacker to deny service for
->> privileged users.
->>
->>
->> The issue was fixed in 4.0.2
->> All users are recommended to upgrade to Apache OpenMeetings 4.0.2
->>
->> Credit: This issue was identified by Sahil Dhar of Security Innovation Inc
->
->
+security@k.o generally tells all people who submit syzbot reports to
+just contact the upstream developers on their mailing list for issues
+reported by that tool, as that is what the tool's team does.
 
+And I think we did that for this report as well, but never heard
+anything back :(
 
+thanks,
 
--- 
-WBR
-Maxim aka solomax
+greg k-h
