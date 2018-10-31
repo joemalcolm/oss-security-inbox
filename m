@@ -1,41 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/18/2
-Message-ID: <CANO=Ty3XSnvLXmXuVmpKahoToTdYrMegKs6HeQSco3m9fK1udQ@mail.gmail.com>
-Date: Thu, 18 Jan 2018 09:51:37 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: How to deal with reporters who don't want their bugs fixed?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/31/2
+Message-ID: <alpine.DEB.2.20.1810310753500.4385@tvnag.unkk.fr>
+Date: Wed, 31 Oct 2018 07:55:42 +0100 (CET)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl - use-after-free in handle close
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jan 18, 2018 at 9:10 AM, Florian Weimer <fweimer@...hat.com> wrote:
-> Subject says it all: What do you do if you receive a vulnerability report,
-> and the reporter requests an embargo at some time in the future because
-> that's when their paper/conference presentation/patent submission is
-> scheduled?
+use-after-free in handle close
+==============================
 
-We (Red Hat) respect the embargo request (although we will often try
-to negotiate something a bit more sensible if they make a really
-awkward request), but ultimately we want the researchers to come to
-us, if we annoy them to much they might stop coming to us and just
-drop their results as a 0day at the conference with no heads up.
+Project curl Security Advisory, October 31st 2018 -
+[Permalink](https://curl.haxx.se/docs/CVE-2018-16840.html)
 
-> The obvious approach is to find a prior public report of essentially the
-> same bug and fix that (which will work surprisingly often), but let's assume
-> that this isn't the case.
+VULNERABILITY
+-------------
 
-I'm not sure this is a sustainable approach as researchers who want to
-make a name for themselves are faced with the "well if I tell them,
-they'll try to ignore my embargo request" which incentivizes them to
-not do a coordinated disclosure.
+libcurl contains a heap use-after-free flaw in code related to closing an easy
+handle.
 
->
-> Thanks,
-> Florian
+When closing and cleaning up an "easy" handle in the `Curl_close()` function,
+the library code first frees a struct (without nulling the pointer) and might
+then subsequently erroneously write to a struct field within that already
+freed struct.
 
+We are not aware of any exploit of this flaw.
 
+INFO
+----
+
+This bug was introduced in [commit
+b46cfbc068](https://github.com/curl/curl/commit/b46cfbc068), February 2018.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2018-16840 to this issue.
+
+CWE-416: Use After Free
+
+Severity: 2.3 (Low)
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: libcurl 7.59.0 to and including 7.61.1
+- Not affected versions: libcurl < 7.59.0 and >= 7.62.0
+
+curl is used by many applications, but not always advertised as such.
+
+THE SOLUTION
+------------
+
+A [patch for
+CVE-2018-16840](https://github.com/curl/curl/commit/81d135d67155c5295b1033679c606165d4e28f3f)
+is available.
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl to version 7.62.0
+
+  B - Apply the patch to your version and rebuild
+
+TIME LINE
+---------
+
+It was reported to the curl project on October 14, 2018.  We contacted
+distros@...nwall on October 22.
+
+curl 7.62.0 was released on October 31 2018, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+Reported by Brian Carpenter, Geeknik Labs. Patch by Daniel Stenberg.
+
+Thanks a lot!
 
 -- 
 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
+  / daniel.haxx.se
