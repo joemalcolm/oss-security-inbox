@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1602" "Wednesday" "20" "May" "2015" "22:02:39" "+0200" "Yves-Alexis Perez" "corsac@debian.org" "<1432152159.5007.10.camel@debian.org>" "40" "Re: [oss-security] CVE-2015-4000 - TLS does not properly convey server's ciphersuite choice" nil nil nil "5" "2015052020:02:39" "[oss-security] CVE-2015-4000 - TLS does not properly convey server's ciphersuite choice" (number mark "        corsac@debia May 20   40/1602  " thread-indent "\"Re: [oss-security] CVE-2015-4000 - TLS does not properly convey server's ciphersuite choice\"\n") "<20150520182939.388A76C0029@smtpvmsrv1.mitre.org>" ("<20150520182939.388A76C0029@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2219" "Wednesday" "31" "October" "2018" "11:37:23" "+0100" "Karol Babioch" "kbabioch@suse.de" "<a25ed246-3326-c643-076e-b0d90afc692c@suse.de>" "62" "[oss-security] Re: Squid Proxy multiple vulnerabilities" "^Date:" nil nil "10" "2018103110:37:23" "[oss-security] Re: Squid Proxy multiple vulnerabilities" (number mark "        kbabioch@sus Oct 31   62/2219  " thread-indent "\"[oss-security] Re: Squid Proxy multiple vulnerabilities\"\n") "<ffa9731a-99c9-f60c-2454-25609835ac93@treenet.co.nz>" ("<ffa9731a-99c9-f60c-2454-25609835ac93@treenet.co.nz>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 21881 invoked by uid 550); 20 May 2015 20:03:04 -0000
+Received: (qmail 1344 invoked by uid 550); 31 Oct 2018 11:54:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,59 +11,83 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 21860 invoked from network); 20 May 2015 20:03:03 -0000
-Message-ID: <1432152159.5007.10.camel@debian.org>
-In-Reply-To: <20150520182939.388A76C0029@smtpvmsrv1.mitre.org>
-References: <20150520182939.388A76C0029@smtpvmsrv1.mitre.org>
-Content-Type: multipart/signed; micalg="pgp-sha256";
-	protocol="application/pgp-signature"; boundary="=-127TrEmkfNL5ACBoc2Oa"
-X-Mailer: Evolution 3.12.9-1+b1 
-Mime-Version: 1.0
-Cc: cve-assign@mitre.org
-Date: Wed, 20 May 2015 22:02:39 +0200
-From: Yves-Alexis Perez <corsac@debian.org>
+Received: (qmail 27802 invoked from network); 31 Oct 2018 10:37:36 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+References: <ffa9731a-99c9-f60c-2454-25609835ac93@treenet.co.nz>
+Openpgp: preference=signencrypt
+Message-ID: <a25ed246-3326-c643-076e-b0d90afc692c@suse.de>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.2.1
+MIME-Version: 1.0
+In-Reply-To: <ffa9731a-99c9-f60c-2454-25609835ac93@treenet.co.nz>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="gjcqK0cTfUr5UXKFzkrH9XgLYXfY4oVPh"
+Date: Wed, 31 Oct 2018 11:37:23 +0100
+From: Karol Babioch <kbabioch@suse.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2015-4000 - TLS does not properly convey
- server's ciphersuite choice
+Subject: [oss-security] Re: Squid Proxy multiple vulnerabilities
 To: oss-security@lists.openwall.com
 
---=-127TrEmkfNL5ACBoc2Oa
-Content-Type: text/plain; charset="UTF-8"
+--gjcqK0cTfUr5UXKFzkrH9XgLYXfY4oVPh
+Content-Type: multipart/mixed; boundary="9z3p7emrt9pjz66F51A9gitFcIzbhyYH7";
+ protected-headers="v1"
+From: Karol Babioch <kbabioch@suse.de>
+To: oss-security@lists.openwall.com
+Message-ID: <a25ed246-3326-c643-076e-b0d90afc692c@suse.de>
+Subject: Re: Squid Proxy multiple vulnerabilities
+References: <ffa9731a-99c9-f60c-2454-25609835ac93@treenet.co.nz>
+In-Reply-To: <ffa9731a-99c9-f60c-2454-25609835ac93@treenet.co.nz>
+
+--9z3p7emrt9pjz66F51A9gitFcIzbhyYH7
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
 
-On mer., 2015-05-20 at 14:29 -0400, cve-assign@mitre.org wrote:
-> 1. Use of a common group obtained from a third party was not a
-> choice that would have been anticipated to be unreasonable.
->=20
-> 2. Avoiding use of a common group is not really equivalent to
-> correcting a software mistake; it could typically involve improving a
-> software product by adding new functionality or documentation, such as
-> adding a call to "openssl dhparam" at installation time.
->=20
-> 3. Existence of a common group across different customers' deployments
-> of a product is not independently exploitable; there is no attack that
-> depends exclusively on knowing the group used by a victim.
+Hi,
 
-In some cases (IKEv2 for example), using different parameters is not
-possible (or really unpractical): standards groups are defined in
-RFC3526.
+Am 28.10.18 um 17:13 schrieb Amos Jeffries:
+> Several vulnerabilities have recently been found in Squid HTTP proxy.
+
+Thank you very much for your announcement and the attached patches.
+
+> CVE have been requested and awaiting assignment by the DWF project.
+
+Is there any update and/or ETA on this ;-)?
+
+Best regards,
+Karol Babioch
+
 --=20
-Yves-Alexis
+OpenPGP: 4687 CA1E A0F7 3B1E BB7D E179 DF49 418F 6267 267B
 
---=-127TrEmkfNL5ACBoc2Oa
+SUSE Linux GmbH
+GF: Felix Imend=C3=B6rffer, Jane Smithard, Graham Norton
+HRB 21284 (AG N=C3=BCrnberg)
+
+
+--9z3p7emrt9pjz66F51A9gitFcIzbhyYH7--
+
+--gjcqK0cTfUr5UXKFzkrH9XgLYXfY4oVPh
 Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
 
-iQEcBAABCAAGBQJVXOhgAAoJEG3bU/KmdcClGeMH/jwwTIX2FBEtIaB8xsOR568G
-UJYxQGLBLdR95Qo6l9qt5XNkFkt75ka+lZHlYlgi4VjtGFWo8OCbE6s5YKafpmU2
-GiC8tK51Jd4ARmsgE2mxQHteLTvkQnxlBV+E223HkhoN+Gywvf56eO9Gb7DlYGW8
-hVmSDLr4JCfcQoHJK8ZzaULY2pkTsqbOvSR+UWoQrkuBlps0E3PrkN2GCT27I+HL
-KACDoyZjy+DkNZZ/KAB0mWBQvZRBlFTj7nWZZ08eV+aRp7K9opG0BfCv+ImDyyc/
-ayQ9au8auamH3+kXVYIVPedGFCzYMpu3Kf8hEbOeOuRvy72Ay/kGiuNAqFpinqc=
-=mhqs
+iQIzBAEBCAAdFiEEnUhp7WLQVtMYEQ0oVBnvwITBRQIFAlvZheMACgkQVBnvwITB
+RQLmCg/7BVTQLFJQuHdBQp9P6o5YnRU2z++5onoibZGLrVf1N+DYP+YHt8saG1yY
+qwtRhbIULPWTO6A3CJqHaKosn6xBL2aVKY4I5fagcQ91FOWhq3MKZioAjrxI7fHV
+DuqoUhM0JKg0LS9llxqwyvKPf9Lvh8kxizTLQB/g3cEvP9I6mfkHtpSnXlpvXYi/
+3bMPMdaDlwDw2sFV0BE9PQQE4Ayghs/lmUdSd3DFp8cFJWZeshjMnFou7guQkiA+
+YLpHmhkyj5juWpups13XA9rbwM7JawnOY8PIm8itzcyx/fxJMnD+MRCpm7yEG/iV
++1+C7hnDz4hCuNRYLSXvSVI3HNnH5fXpZHu+6DOoWcsGw1jAoYzdiI2hFuDBy8cJ
+Lvu4qkTk40CQsJzJ6S0HbVjyAjawc3E8LT+BURotGsyMsUyVUoSzIqLIpGDIujpH
+qlFJuDOKETI3VPnE6k7yeNFNvBC+0YudSEoXHGCWRWqUgXajLpmZ4eHP2NbtZaza
+4UBL6reD7ATyLoUV4vucMXUQOg/JiZkHfaNemQ57e51iFfj/ElS9BqrN6JK5BX4G
+3qRtRMZNCWXhgfh8+BlNpO8s2hoxMwXVmqBdoHhfZnG3ICd9LaadigxJFE5rbalr
+g0EJ1y7CQwbk1va2vWwneSyYf71ZEP/tDe1lq9XovopGsc/+RtU=
+=Hf+T
 -----END PGP SIGNATURE-----
 
---=-127TrEmkfNL5ACBoc2Oa--
+--gjcqK0cTfUr5UXKFzkrH9XgLYXfY4oVPh--
