@@ -1,34 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/11/4
-Message-ID: <1068-1515706439.624909@uP7q.LsC9.WmNw>
-Date: Thu, 11 Jan 2018 21:33:59 +0000
-From: halfdog <me@...fdog.net>
-To: oss-security@...ts.openwall.com
-Subject: OpenSSH sftp remote code execution in chroot mode in VERY RARE cases
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/31/5
+Message-ID: <20827340.HMuAYWp0fB@rem0te-expl0it>
+Date: Wed, 31 Oct 2018 18:18:10 +0530
+From: Siddharth Sharma <siddharth@...hat.com>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: glusterfs: multiple flaws
 Content-Type: text/plain; charset=utf-8
 
-Hello list,
+Hi,
 
-This sounds worse, but it is not. And it is public anyway, so FYI:
-
-With internal-sftp and chroot, sftp still attempts to execute
-code from /etc/ssh/sshrc. See [0] for more information on testing
-the issue. It will only affect you when using a writable chroot
-(which is already documented in man-pages to be insecure) but
-also some strange configuration settings, e.g. when using
-
-ChrootDirectory /home
-
-as recommended in [1] and having a user named "etc" and "bin"
-created.
-
-When creating a user "proc" that way, another issue prohibits
-closing of inherited file descriptors, that then again may leak
-to the two other users.
-
-hd
-
-[0] https://www.halfdog.net/Security/2018/OpensshSftpChrootCodeExecution/
-[1] https://www.tecmint.com/restrict-sftp-user-home-directories-using-chroot/
+We were informed about several security flaws affecting glusterfs.
+All of the following bugs were reported by Michael Hanselmann (hansmi.ch).
 
 
+CVE-2018-14651
+==============
+It was found that the fix for CVE-2018-10927, CVE-2018-10928, CVE-2018-10929, 
+CVE-2018-10930, and CVE-2018-10926 was incomplete. A remote, authenticated 
+attacker could use one of these flaws to execute arbitrary code, create 
+arbitrary files, or cause denial of service on glusterfs server nodes via 
+symlinks to relative paths.
+
+
+CVE-2018-14652
+==============
+A buffer overflow was found in strncpy of the pl_getxattr() function. An 
+authenticated attacker could remotely overflow the buffer by sending a buffer 
+of larger length than the size of the key resulting in remote denial of 
+service.
+
+
+CVE-2018-14653
+==============
+A buffer overflow on the heap was found in gf_getspec_req RPC request. A 
+remote, authenticated attacker could use this flaw to cause denial of service 
+and read arbitrary files on glusterfs server node.
+
+
+CVE-2018-14654 
+==============
+A flaw was found in the way glusterfs server handles client requests. A 
+remote, authenticated attacker could set arbitrary values for the 
+GF_XATTROP_ENTRY_IN_KEY and GF_XATTROP_ENTRY_OUT_KEY during xattrop file 
+operation resulting in creation and deletion of arbitrary files on glusterfs 
+server node.
+
+
+CVE-2018-14659
+==============
+A flaw was found in glusterfs server which allowed clients to create io-stats 
+dumps on server node. A remote, authenticated attacker could use this flaw to 
+create io-stats dump on a server without any limitation and utilizing all 
+available inodes resulting in remote denial of service.
+
+
+CVE-2018-14660 
+==============
+A flaw was found in glusterfs server which allowed repeated usage of 
+GF_META_LOCK_KEY xattr. A remote, authenticated attacker could use this flaw 
+to create multiple locks for single inode by using setxattr repetitively 
+resulting in memory exhaustion of glusterfs server node.
+
+
+CVE-2018-14661
+==============
+It was found that usage of snprintf function in feature/locks translator of 
+glusterfs server was vulnerable to a format string attack. A remote, 
+authenticated attacker could use this flaw to cause remote denial of service.
+
+
+https://www.redhat.com/security/data/cve/CVE-2018-14651.html
+https://www.redhat.com/security/data/cve/CVE-2018-14652.html
+https://www.redhat.com/security/data/cve/CVE-2018-14653.html
+https://www.redhat.com/security/data/cve/CVE-2018-14654.html
+https://www.redhat.com/security/data/cve/CVE-2018-14659.html
+https://www.redhat.com/security/data/cve/CVE-2018-14660.html
+https://www.redhat.com/security/data/cve/CVE-2018-14661.html
+
+
+Regards,
+-- 
+Siddharth Sharma / Red Hat Product Security / Key ID : 0xD9F6489A      
+Fingerprint  :  6F04 C684 A49C E4CE 8148 E841 CD6F 8E55 D9F6 489A
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
