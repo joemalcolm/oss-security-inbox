@@ -1,50 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/17/9
-Message-ID: <44612677-8d7c-80b9-919f-705f8b3d0cb4@treenet.co.nz>
-Date: Sat, 18 Aug 2018 07:51:58 +1200
-From: Amos Jeffries <squid3@...enet.co.nz>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/31/4
+Message-ID: <a25ed246-3326-c643-076e-b0d90afc692c@suse.de>
+Date: Wed, 31 Oct 2018 11:37:23 +0100
+From: Karol Babioch <kbabioch@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Rule for releasing fixes for embargoed bugs
+Subject: Re: Squid Proxy multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-[I'm responding to this since I feel that the question has not clearly
-been answered and it deserves to be. If the below is wrong I welcome the
-education and this would be why it needs clarfying. ]
+Hi,
 
+Am 28.10.18 um 17:13 schrieb Amos Jeffries:
+> Several vulnerabilities have recently been found in Squid HTTP proxy.
 
-On 17/08/18 23:45, Dominique Martinet wrote:>
->  When should vendors publish fixes for bugs that are under embargo ?
-> 
-...
-> 
-> I'm asking because this happened today and some vendor released a kernel
-> with patches for ...
+Thank you very much for your announcement and the attached patches.
 
-As I understand the process this "released" is the point where the
-embargo ceases.
+> CVE have been requested and awaiting assignment by the DWF project.
 
-If the agreed embargo time was not already over the vendor is
-responsible for having "broken" the embargo. So this release should not
-have happened prior to the agreed embargo time.
+Is there any update and/or ETA on this ;-)?
 
-Broken or not it is over now.
+Best regards,
+Karol Babioch
 
+-- 
+OpenPGP: 4687 CA1E A0F7 3B1E BB7D E179 DF49 418F 6267 267B
 
-CVE-2018-3690 (yet another speculation/side-channel
-> vulnerability), but their fix for it broke another component in the
-> kernel (RDMA networking) and people trying to fix that bug are now
-> wasting their's and everyone's/my time saying they cannot make the RDMA
-> issue public because it has been caused by a security fix still under
-> embargo.
-
-As the embargo was ended as per above, these types of thing are not blocked.
-
-Secondary patches are only affected if found while waiting to release
-the embargoed changes. In which case there is either nothing released to
-clients needing it, or it is an independent bug that should be able to
-publish a fix without reference to the embargoed issue.
-
-AYJ
+SUSE Linux GmbH
+GF: Felix Imendörffer, Jane Smithard, Graham Norton
+HRB 21284 (AG Nürnberg)
 
 
 
