@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil t nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1643" "Thursday" "3" "December" "2015" "17:39:58" "+0200" "Igor Smolyar" "igors@cs.technion.ac.il" "<5660624E.50205@cs.technion.ac.il>" "49" "[oss-security] CVE request -- Ethernet flow control vulnerability in SRIOV devices" "^Date:" nil nil "12" "2015120315:39:58" "[oss-security] CVE request -- Ethernet flow control vulnerability in SRIOV devices" (number mark "  z     igors@cs.tec Dec  3   49/1643  " thread-indent "\"[oss-security] CVE request -- Ethernet flow control vulnerability in SRIOV devices\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2625" "Wednesday" "31" "October" "2018" "07:55:37" "+0100" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1810310753080.4385@tvnag.unkk.fr>" "95" "[oss-security] [SECURITY ADVISORY] curl - SASL password overflow via integer overflow" nil nil nil "10" "2018103106:55:37" "[oss-security] [SECURITY ADVISORY] curl - SASL password overflow via integer overflow" (number mark "U       daniel@haxx. Oct 31   95/2625  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl - SASL password overflow via integer overflow\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 1001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9507 invoked by uid 550); 3 Dec 2015 16:06:18 -0000
+Received: (qmail 22305 invoked by uid 550); 31 Oct 2018 06:55:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,83 +11,116 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15936 invoked from network); 3 Dec 2015 15:40:12 -0000
-IronPort-PHdr: =?us-ascii?q?9a23=3ARFBjDhSU6KcgDK8GwS0D+8si9Npsv+yvbD5Q0YIu?=
- =?us-ascii?q?jvd0So/mwa64YBON2/xhgRfzUJnB7Loc0qyN4/6mATRIyK3CmU5BWaQEbwUCh8?=
- =?us-ascii?q?QSkl5oK+++Imq/EsTXaTcnFt9JTl5v8iLzG0FUHMHjew+a+SXqvnYsExnyfTB4?=
- =?us-ascii?q?Ov7yUtaLyZ/niabqo9X6WEZhunmUWftKNhK4rAHc5IE9oLBJDeIP8CbPuWZCYO?=
- =?us-ascii?q?9MxGlldhq5lhf44dqsrtY4q3wD86Fpy8kVVr7hOr81RqFCDSg3G2Q0/9Hw8x7b?=
- =?us-ascii?q?QA2Q738YFG4Rl0lmGQ/AuTD1WY25iS79svt0wmHOPMLxV6scUi/k86pgSBnpjy?=
- =?us-ascii?q?FBPjV/8WWB2Z84t75SvB/0/083+IXTeozAbPc=3D?=
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: =?us-ascii?q?A2DoAAB6YWBWjAEgRIReGQEBAQEPAQEBA?=
- =?us-ascii?q?YNdbqwQkTIBDYFiDBcMhzU4FAEBAQEBAQEBEAEBASdPgi2CCgEBAwIPEQ8BNUY?=
- =?us-ascii?q?CBSECEQIXQggBAR6IDQQJoUqBbo4CjQqEK4EBhVOKJIJQgUQFlmGFLYUjhEdJg?=
- =?us-ascii?q?3qDA5NMHwEBglMWB4FYcAGFbgEBAQ?=
-X-IPAS-Result: =?us-ascii?q?A2DoAAB6YWBWjAEgRIReGQEBAQEPAQEBAYNdbqwQkTIBDYF?=
- =?us-ascii?q?iDBcMhzU4FAEBAQEBAQEBEAEBASdPgi2CCgEBAwIPEQ8BNUYCBSECEQIXQggBA?=
- =?us-ascii?q?R6IDQQJoUqBbo4CjQqEK4EBhVOKJIJQgUQFlmGFLYUjhEdJg3qDA5NMHwEBglM?=
- =?us-ascii?q?WB4FYcAGFbgEBAQ?=
-X-IronPort-AV: E=Sophos;i="5.20,378,1444683600"; 
-   d="scan'208";a="43482001"
-Message-ID: <5660624E.50205@cs.technion.ac.il>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.4.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Date: Thu, 3 Dec 2015 17:39:58 +0200
-From: Igor Smolyar <igors@cs.technion.ac.il>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request -- Ethernet flow control vulnerability in SRIOV devices
-To: oss-security@lists.openwall.com
+Received: (qmail 22284 invoked from network); 31 Oct 2018 06:55:51 -0000
+X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
+Date: Wed, 31 Oct 2018 07:55:37 +0100 (CET)
+From: Daniel Stenberg <daniel@haxx.se>
+X-X-Sender: dast@giant.haxx.se
+To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
+        curl-announce@cool.haxx.se,
+        libcurl hacking <curl-library@cool.haxx.se>,
+        oss-security@lists.openwall.com
+Message-ID: <alpine.DEB.2.20.1810310753080.4385@tvnag.unkk.fr>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-fromdanielhimself: yes
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [SECURITY ADVISORY] curl - SASL password overflow via integer
+ overflow
 
-Hello,
+SASL password overflow via integer overflow
+===========================================
 
-a design flaw found in current Ethernet SRIOV NIC deployments 
-that enables untrusted malicious VMs to completely control 
-the throughput and latency of other, unrelated VMs. The attack 
-exploits Ethernet ”pause” frames, which enable network flow 
-control functionality. 
+Project curl Security Advisory, October 31st 2018 -
+[Permalink](https://curl.haxx.se/docs/CVE-2018-16839.html)
 
-Link to the paper published on USENIX Security 2015:
-https://www.usenix.org/system/files/conference/usenixsecurity15/sec15-paper-smolyar.pdf
+VULNERABILITY
+-------------
 
-Intel published a security advisory INTEL-SA-00046 on that issue:
-https://security-center.intel.com/advisory.aspx?intelid=INTEL-SA-00046&languageid=en-fr
+libcurl contains a buffer overrun in the SASL authentication code.
 
-Could you please allocate a CVE id for this?
-Below are fixes from major SRIOV vendors. 
+The internal function `Curl_auth_create_plain_message` fails to correctly
+verify that the passed in lengths for name and password aren't too long, then
+calculates a buffer size to allocate.
 
+On systems with a 32 bit `size_t`, the math to calculate the buffer size
+triggers an integer overflow when the user name length exceeds 2GB (2^31
+bytes). This integer overflow usually causes a very small buffer to actually
+get allocated instead of the intended very huge one, making the use of that
+buffer end up in a heap buffer overflow.
 
-Intel published fixed drivers on kernel.org:
-ixgbe: add flow control ethertype to the anti-spoofing filter
-commit f079fa005aae08ee0e1bc32699874ff4f02e11c1
+(This bug is very similar to
+[CVE-2017-14618](https://curl.haxx.se/docs/CVE-2018-14618.html).)
 
-i40e/i40evf: Add a workaround to drop all flow control frames
-commit e7358f54a3954df16d4f87e3cad35063f1c17de5
+We are not aware of any exploit of this flaw.
 
+INFO
+----
 
+The affected function can only be invoked when using POP3(S), IMAP(S) or
+SMTP(S).
 
-Qlogic(ex Broadcom controllers) recently pushed the fix upstream.
-There is patch which pushed the new FW:
-http://lists.openwall.net/netdev/2015/11/19/73
-And another which changed the driver to employ it:
-https://patchwork.ozlabs.org/patch/547321/
+This bug was introduced in [commit
+c56f9797e7feb7c2dc](https://github.com/curl/curl/commit/c56f9797e7feb7c2dc),
+August 2013.
 
-This is the header of the driver patch:
-Commit 46e8a249423ff "bnx2x: Add FW 7.13.1.0" added said .bin FW to
-linux-firmware; This patch incorporates the FW in the bnx2x driver.
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2018-16839 to this issue.
 
- - Prevent VFs from sending MAC control frames; FW would treat a VF
-sending such a packet as malicious and block any further communication
-done by the VF.
+CWE-131: Incorrect Calculation of Buffer Size
 
+Severity: 3.2 (Low)
 
+AFFECTED VERSIONS
+-----------------
 
-Mellanox also provided fix in firmware for ConnectX-3 devices.
-Fixed firmware version 2.35.5000
+This issue is only present on 32 bit systems. It also requires the username
+field to use more than 2GB of memory, which should be rare.
 
+- Affected versions: libcurl 7.33.0 to and including 7.61.1
+- Not affected versions: libcurl < 7.33.0 and >= 7.62.0
 
-Thanks,
-Igor Smolyar
+curl is used by many applications, but not always advertised as such.
+
+THE SOLUTION
+------------
+
+In libcurl version 7.62.0, the integer overflow is avoided. An error will be
+returned if a too long user name is attempted.
+
+A [patch for
+CVE-2018-16839](https://github.com/curl/curl/commit/f3a24d7916b9173c69a3e0ee790102993833d6c5)
+is available.
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl to version 7.62.0
+
+  B - Apply the patch to your version and rebuild
+
+  C - Put length restrictions on the username field you can pass to libcurl
+
+TIME LINE
+---------
+
+It was reported to the curl project on September 6, 2018.  We contacted
+distros@openwall on October 22.
+
+curl 7.62.0 was released on October 31 2018, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+Reported by Harry Sintonen. Patch by Daniel Stenberg.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
