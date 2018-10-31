@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2383" "Tuesday" "9" "June" "2015" "23:24:44" "+0200" "Marcus Meissner" "meissner@suse.de" "<20150609212444.GR20859@suse.de>" "62" "Re: [oss-security] Re: MITRE delays persist" nil nil nil "6" "2015060921:24:44" "[oss-security] Re: MITRE delays persist" (number mark "        meissner@sus Jun  9   62/2383  " thread-indent "\"Re: [oss-security] Re: MITRE delays persist\"\n") "<1433879942074.87636@akamai.com>" ("<25011_1433195303_556CD326_25011_1363_1_20150601214754.GA3491@zoho.com>" "<Pine.LNX.4.64.1506091305340.22006@beijing.mitre.org>" "<1433879942074.87636@akamai.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2556" "Wednesday" "31" "October" "2018" "07:55:47" "+0100" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1810310754160.4385@tvnag.unkk.fr>" "90" "[oss-security] [SECURITY ADVISORY] curl - warning message out-of-buffer read" nil nil nil "10" "2018103106:55:47" "[oss-security] [SECURITY ADVISORY] curl - warning message out-of-buffer read" (number mark "U       daniel@haxx. Oct 31   90/2556  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl - warning message out-of-buffer read\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 14124 invoked by uid 550); 9 Jun 2015 21:24:57 -0000
+Received: (qmail 24328 invoked by uid 550); 31 Oct 2018 06:56:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,88 +11,110 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 14106 invoked from network); 9 Jun 2015 21:24:56 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Message-ID: <20150609212444.GR20859@suse.de>
-References: <25011_1433195303_556CD326_25011_1363_1_20150601214754.GA3491@zoho.com>
- <Pine.LNX.4.64.1506091305340.22006@beijing.mitre.org>
- <1433879942074.87636@akamai.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <1433879942074.87636@akamai.com>
-Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
- =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Dilip_Upmanyu=2C_Graham_?=
- =?iso-8859-1?Q?Norton=2C_HRB_21284_=28AG_N=FCrnberg=29?=
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Cc: mancha <mancha1@zoho.com>,
-	"cve-assign@mitre.org" <cve-assign@mitre.org>
-Date: Tue, 9 Jun 2015 23:24:44 +0200
-From: Marcus Meissner <meissner@suse.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: MITRE delays persist
-To: oss-security@lists.openwall.com
+Received: (qmail 24235 invoked from network); 31 Oct 2018 06:56:02 -0000
+X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
+Date: Wed, 31 Oct 2018 07:55:47 +0100 (CET)
+From: Daniel Stenberg <daniel@haxx.se>
+X-X-Sender: dast@giant.haxx.se
+To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
+        curl-announce@cool.haxx.se,
+        libcurl hacking <curl-library@cool.haxx.se>,
+        oss-security@lists.openwall.com
+Message-ID: <alpine.DEB.2.20.1810310754160.4385@tvnag.unkk.fr>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-fromdanielhimself: yes
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [SECURITY ADVISORY] curl - warning message out-of-buffer read
 
-Hi,
+warning message out-of-buffer read
+==================================
 
-FWIW, you can publish when you want and a CVE can be assigned
-later on.
+Project curl Security Advisory, October 31st 2018 -
+[Permalink](https://curl.haxx.se/docs/CVE-2018-16842.html)
 
-CVE is just an identifier, not a mandatory precondition for
-disclosure.
+VULNERABILITY
+-------------
 
-Ciao, Marcus
-On Tue, Jun 09, 2015 at 07:59:01PM +0000, Seaman, Chad wrote:
-> 2 weeks since disclosure/request, zero feedback, and one of my discovered vulnerabilities was submitted by a peer almost 1 week after my initial request was sent... he was given a CVE within 24 hours, I still haven't heard a peep back.
-> 
-> 
-> 
-> 
-> ¯\_(ツ)_/¯
-> 
-> 
-> 
-> ________________________________________
-> From: Steven M. Christey <coley@mitre.org>
-> Sent: Tuesday, June 9, 2015 1:08 PM
-> To: mancha
-> Cc: oss-security@lists.openwall.com; cve-assign@mitre.org
-> Subject: [oss-security] Re: MITRE delays persist
-> 
-> > Back in mid-March you wrote an email addressing the CVE assignment
-> > delays people had been experiencing. [1]
-> >
-> > I was relieved when I received your email because I had several
-> > outstanding requests and was wondering why they were being held up.
-> >
-> > Unfortunately, almost 11 weeks has passed since your email and my
-> > pending requests have yet to be addressed.
-> >
-> > Would you please provide an update on the steps MITRE is taking to
-> > become more responsive and provide a hard timeline on clearing of the
-> > existing backlog?
-> >
-> > For example, I have pending requests dating back to mid-February.
-> >
-> > Thank you.
-> >
-> > [1] http://marc.info/?l=oss-security&m=142679274522902&w=2
-> 
-> Some requests are delayed because of complexity in deciding how
-> vulnerability information can be best represented in CVE. If there is a
-> vulnerability-research category, aspect, or approach that we feel may have
-> unexpected concerns that are specific to CVE, we prefer to resolve that
-> within our team, rather than follow a piecemeal approach to the related
-> individual requests. Accordingly, we do not designate a timeline that
-> applies globally to every request. If anyone needs additional confirmation
-> that a request has indeed been received and read, and that we are aware of
-> it remaining unanswered, sending directly to the cve-assign@mitre.org
-> address is the best option.
-> 
-> 
-> ---
-> CVE Assignment Team, MITRE CVE Numbering Authority
+curl contains a heap out of buffer read vulnerability.
+
+The command line tool has a generic function for displaying warning and
+informational messages to stderr for various situations. For example if an
+unknown command line argument is used, or passed to it in a "config" file.
+
+This display function formats the output to wrap at 80 columns. The wrap logic
+is however flawed, so if a single word in the message is itself longer than 80
+bytes the buffer arithmetic calculates the remainder wrong and will end up
+reading behind the end of the buffer. This could lead to information
+disclosure or crash.
+
+This vulnerability could lead to a security issue if used in this or similar
+situations:
+
+  1. a server somewhere uses the curl command line to run something
+  2. if it fails, it shows stderr to the user
+  3. the server takes user input for parts of its command line input
+  4. user provides something overly long that triggers this crash
+  5. the stderr output may now contain user memory contents that wasn't meant
+     to be available
+
+We are not aware of any exploit of this flaw.
+
+INFO
+----
+
+This flaw exists in the command line tool only, not in libcurl.
+
+This bug was introduced in [commit
+d9ca9154d1](https://github.com/curl/curl/commit/d9ca9154d1), August 2005.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2018-16842 to this issue.
+
+CWE-125: Out-of-bounds Read
+
+Severity: 3.3 (Low)
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 7.14.1 to and including 7.61.1
+- Not affected versions: curl < 7.14.1 and >= 7.62.0
+
+curl is used by many applications, but not always advertised as such.
+
+THE SOLUTION
+------------
+
+A [patch for CVE-2018-16842](https://github.com/curl/curl/commit/d530e92f59ae9bb2d47066c3c460b25d2ffeb211)
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl to version 7.62.0
+
+  B - Apply the patch to your version and rebuild
+
+TIME LINE
+---------
+
+It was reported to the curl project on October 27, 2018.  We contacted
+distros@openwall on October 28.
+
+curl 7.62.0 was released on October 31 2018, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+Reported by Brian Carpenter, Geeknik Labs. Patch by Daniel Stenberg.
+
+Thanks a lot!
 
 -- 
-Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@suse.de>
+
+  / daniel.haxx.se
