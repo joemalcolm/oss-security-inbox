@@ -1,99 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/31/2
-Message-ID: <CAJt9-x4hcHPjWShOPMrZDQRoUvhJ7ZDo5ntANoTvR-m5ma2w6w@mail.gmail.com>
-Date: Thu, 31 May 2018 19:31:02 +0100
-From: Matthew Wild <mwild1@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/31/7
+Message-ID: <20181031141705.qqvfb6t4huufu4e7@jwilk.net>
+Date: Wed, 31 Oct 2018 15:29:15 +0100
+From: Jakub Wilk <jwilk@...lk.net>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2018-10847] prosody: insufficient stream header validation
+Subject: Re: Re: Travis CI MITM RCE
 Content-Type: text/plain; charset=utf-8
 
-Prosody security advisory 2018-05-31
-====================================
+* Daniel Kahn Gillmor <dkg@...thhorseman.net>, 2018-10-29, 08:52:
+>>My proposed fix was to use "gpg --recv-key" with full fingerprint. But 
+>>I now discovered that even this is not resistant against MitM attacks:
+>>
+>>https://dev.gnupg.org/T3398
+>>
+>>"[...] modern gpg automatically applies an import screener that only 
+>>accepts OpenPGP certificates that have the given fingerprint [...]
+>
+>It may be even worse than this, because the version of gpg used by 
+>default in travis is not "modern gpg", it's either gnupg2 
+>2.0.22-3ubuntu1.4 or gnupg 1.4.16-1ubuntu2.6.  I don't think either of 
+>these has the baseline "import screener" functionality
 
-CVE-2018-10847
-------------
+Ubuntu Precise and later releases have the import screener backported to 
+gnupg(2) packages:
+https://bugs.launchpad.net/ubuntu/+source/gnupg2/+bug/1409117
 
-Project
-:   Prosody XMPP server
-
-URL
-:   https://prosody.im/
-
-CVE
-:   CVE-2018-10847
-
-Date
-:   2018-05-31
-
-Affected versions
-:   0.9.x prior to 0.9.14, 0.10.x prior to 0.10.2. All prior series affected.
-
-Fixed versions
-:   0.9.14, 0.10.2
-
-Description
------------
-
-Due to insufficient validation of client-provided parameters during XMPP
-stream restarts, authenticated users may override the realm associated
-with their session, potentially bypassing security policies and allowing
-impersonation.
-
-Details
--------
-
-Prosody did not verify that the virtual host associated with a user
-session remained the same across stream restarts.
-
-In practice this means that a user may authenticate to XMPP host A
-and migrate their authenticated session to XMPP host B of the same
-Prosody instance.
-
-Note that successful authentication to host A is required to initiate
-the attack. This includes SASL ANONYMOUS.
-
-Overriding the authenticated username is not possible via this exploit,
-and this limits impersonation to usernames on host B that the attacker
-also has access to on host A. In the case of ANONYMOUS authentication,
-the username is random and enforced by the server.
-
-If a user has the account user1@...ta.example, they may impersonate
-user1@...tb.example, with security policies of host B applied.
-
-Affected configurations
------------------------
-
-Prosody deployments configured with multiple virtual hosts are
-vulnerable.
-
-Standard TCP connections and websocket connections are affected,
-but BOSH connections are not affected - i.e. deployments where
-the only access to Prosody is via BOSH are not vulnerable.
-
-Temporary mitigation
---------------------
-
-Patch available.
-
--  stable 0.10 branch:
-https://prosody.im/security/advisory_20180531/issue1147-0.10.1.patch
-- old stable 0.9 branc:
-https://prosody.im/security/advisory_20180531/issue1147-0.9.patch
-
-Advice
-------
-
-All users should upgrade to at least 0.9.14, 0.10.2 or check their OS
-distribution for security updates. Users of development branches (0.10,
-trunk) should upgrade to the latest nightly builds.
-
-Credits
--------
-
-Reported by Princess Pepperoni from nonfree.pizza
-
-Links
------
-
-  - https://issues.prosody.im/1147
-  - https://blog.prosody.im/prosody-0-10-2-security-release/
+-- 
+Jakub Wilk
