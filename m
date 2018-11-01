@@ -1,54 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/10/2
-Message-ID: <CAPcZBq6kE2r-_-XKy22dNsbcKjjds=d2b=kBpMprN84oV63r_Q@mail.gmail.com>
-Date: Thu, 10 May 2018 23:56:15 +0800
-From: Qinghao Tang <luodalongde@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: erc20 contract KoreaShow bug
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/01/1
+Message-ID: <nycvar.YSQ.7.76.1811011151230.336@xnncv>
+Date: Thu, 1 Nov 2018 11:56:28 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: ameya.more@...cle.com
+Subject: CVE-2018-18849 Qemu: lsi53c895a: OOB msg buffer access leads to DoS
 Content-Type: text/plain; charset=utf-8
 
-An integer overflow in the transferMulti function of a smart contract
-implementation for KoreaShow, an Ethereum ERC20 token, allows attackers to
-accomplish an unauthorized increase of digital assets via crafted _value
-parameters.
+   Hello,
 
-------------------------------------------------------------
-Let`s see where this issue is:
+An out of bounds memory access issue was found in the LSI53C895A SCSI Host Bus 
+Adapter emulation while writing a message in lsi_do_msgin. It could occur 
+during migration if the 'msg_len' field has an invalid value.  A user/process 
+could use this flaw to crash the Qemu process resulting in DoS.
 
-function transferMulti(address[] _to, uint256[] _value) public returns
-(uint256 amount){
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2018-10/msg06682.html
 
-        require(_to.length == _value.length);
+This issue was discovered by dejavusecurity.com and reported by Oracle.com.
 
-        uint8 len = uint8(_to.length);
+CVE assigned via -> https://cveform.mitre.org/
 
-        for(uint8 j; j<len; j++){
-
-            amount += _value[j]; <------here, crafted _value can make
-amount overflow
-
-        }
-
-        require(balanceOf[msg.sender] >= amount);
-
-        for(uint8 i; i<len; i++){
-
-            address _toI = _to[i];
-
-            uint256 _valueI = _value[i];
-
-            balanceOf[_toI] += _valueI;
-
-            balanceOf[msg.sender] -= _valueI;
-
-            Transfer(msg.sender, _toI, _valueI);
-
-        }
-
-    }
-
----------------------------------------------------------------
-If you can  reproduce the issues , please give it a cve id ,and disclosure
-this vulneralbility officially claiming that " Qinghao Tang " is the
-discoverer .
-
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
