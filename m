@@ -1,37 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/11/3
-Message-ID: <CAG8b5tSvm1nZ=Q=3L=YGnbjmnD1i8Le4xC3y=n=N+P4O1wYW-A@mail.gmail.com>
-Date: Tue, 11 Sep 2018 17:25:47 +0530
-From: Dhiraj Mishra <mishra.dhiraj95@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/01/3
+Message-ID: <c1ac7903-8147-b8f9-4683-d03af14d1567@ruecker.fi>
+Date: Thu, 1 Nov 2018 16:21:32 +0000
+From: Thomas B. Rücker <thomas@...cker.fi>
 To: oss-security@...ts.openwall.com
-Subject: tdesktop leaks user IP address
+Subject: Icecast 2.4.4 - CVE-2018-18820 - buffer overflow in url-auth
 Content-Type: text/plain; charset=utf-8
 
-This is still not fix in telegram desktop  team says their is nothing to
-fix here and this is working has intended.
+We released a new version of Icecast.
+It is a security release and we recommend to update all
+Icecast installations of versions below 2.4.4 to it.
 
-tdesktop: https://github.com/telegramdesktop/tdesktop
+-   Fix buffer overflows in URL auth code, [CVE-2018-18820]. [#2342]
+    * This security issue affects all Icecast servers running version
+      2.4.0, 2.4.1, 2.4.2 or 2.4.3 if there is a "mount" definition
+      that enables URL authentication.
+    * A malicious client could send long HTTP headers, leading to
+      a buffer overflow and potential remote code execution.
+    * The problematic code was introduced in version 2.4.0 and
+      was now brought to our attention by Nick Rolfe of
+      Semmle Security Research Team https://lgtm.com/security
 
-*Steps to reproduce:*
-1. ./Telegram
-2. Call end user
-3. The access log on CLI reveals the end user public IP address.
+https://gitlab.xiph.org/xiph/icecast-server/commit/b21a7283bd1598c5af0bbb250a041ba8198f98f2
 
-By default in tdesktop p2p is enable, which open a direct communication
-when calling to the other user, potentially seeing his/her IP. Telegram is
-supposedly is a secure messaging application but while calling another user
-leaks his/her public IP address in access log. However, by navigating to
-Settings and Privacy  > Calls > and set P2P to `nobody` in telegram apps in
-(iOS and android) will not allow others to view public IP of end user, but
-this option is still not available in tdesktop, which makes tdesktop
-vulnerable to this issue.
+-   Worked around buffer overflows in URL auth's cURL interface.
+    * We currently do not believe that this issue is exploitable.
+      It would require a malicious URL authentication back end server
+      to send a crafted payload and make it through libcURL.
+    * If someone manages, please let us know.
+
+https://gitlab.xiph.org/xiph/icecast-server/commit/03ea74c04a5966114c2fe66e4e6892d11a68181e
+
+Source: http://downloads.xiph.org/releases/icecast/icecast-2.4.4.tar.gz
+
+[#2342]: https://gitlab.xiph.org/xiph/icecast-server/issues/2342
 
 
-Thank you
+Thomas B. Ruecker
+Icecast maintainer
 
--- 
-Regards
+PS: Default installations are not affected. This is an advanced feature.
 
-*Dhiraj Mishra.*GPG ID :  51720F56   |  Finger Print : 1F6A FC7B 05AA CF29
-8C1C  ED65 3233 4D18 5172 0F56
 
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (196 bytes)
