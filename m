@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2425" "Wednesday" "31" "July" "2019" "17:26:22" "+0200" "Cedric Buissart" "cbuissar@redhat.com" "<20190731152622.GA24743@cbuissar-ltop.localdomain>" "70" "[oss-security] icedtea-web: CVE-2019-10181 CVE-2019-10182 CVE-2019-10185" nil nil nil "7" "2019073115:26:22" "[oss-security] icedtea-web: CVE-2019-10181 CVE-2019-10182 CVE-2019-10185" (number mark "U       cbuissar@red Jul 31   70/2425  " thread-indent "\"[oss-security] icedtea-web: CVE-2019-10181 CVE-2019-10182 CVE-2019-10185\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] icedtea-web: CVE-2019-10181 CVE-2019-10182 CVE-2019-10185" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2555" "Thursday" "1" "November" "2018" "16:21:32" "+0000" "=?UTF-8?B?VGhvbWFzIEIuIFLDvGNrZXI=?=" "thomas@ruecker.fi" "<c1ac7903-8147-b8f9-4683-d03af14d1567@ruecker.fi>" "72" "[oss-security] Icecast 2.4.4 - CVE-2018-18820 - buffer overflow in url-auth" nil nil nil "11" "2018110116:21:32" "[oss-security] Icecast 2.4.4 - CVE-2018-18820 - buffer overflow in url-auth" (number mark "U       thomas@rueck Nov  1   72/2555  " thread-indent "\"[oss-security] Icecast 2.4.4 - CVE-2018-18820 - buffer overflow in url-auth\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32220 invoked by uid 550); 31 Jul 2019 15:26:38 -0000
+Received: (qmail 10226 invoked by uid 550); 1 Nov 2018 16:22:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,87 +12,112 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32196 invoked from network); 31 Jul 2019 15:26:37 -0000
-Date: Wed, 31 Jul 2019 17:26:22 +0200
-From: Cedric Buissart <cbuissar@redhat.com>
+Received: (qmail 9798 invoked from network); 1 Nov 2018 16:21:48 -0000
+From: =?UTF-8?Q?Thomas_B._R=c3=bccker?= <thomas@ruecker.fi>
 To: oss-security@lists.openwall.com
-Message-ID: <20190731152622.GA24743@cbuissar-ltop.localdomain>
+Openpgp: preference=signencrypt
+Autocrypt: addr=thomas@ruecker.fi; prefer-encrypt=mutual; keydata=
+ xsDiBEHJem8RBACfdTlXCqbWwOgxBvO3NzOTMZXF/G5gTRE1nUOCfrXa7BeM44xramZfzN7N
+ KEET8BHkhV/e8vBseLY58mRQpXVspYADK6M3evG1qeOZsPvKyAcvI+ymVBdhgzIZp0oGnb11
+ qejXuXdzTNyJQ/OaoRW5oUinMHIZaKkIgzRkIJdEzwCgh48Mq/dJqLuYXwLwq10vEfqNGD0D
+ /RjsRNseqi5dRGqq8fFKr4ZLQCgohpdSovED8qmSqKWC8Ejb9QcazWd9ogQCHvERc+rWAVOs
+ QmD8toCIozFHwPzZbYg9GLN0THpmUAJsTzVmMwqQNXChrX+dMWtmYRSD+fRxiQ69W3lKap2V
+ S7DkeOOvtqODzP9M9BwFXJZtCxJnA/0a1dz6ypDvJyTjw37LA+h4LAb0Tl36Z/pr3zHEMRgp
+ UQGuJf+H+888XlUl/ugDlTArqI5aUOZnIZkIhuirMLIkHsDj3QeB+jrVQE3RuHMIvyb+at0l
+ Jp8Vj5PYvNunLEMqKTwOawicnwqC8DKvjdt03Y22vYPdsVqIkgE7dJIxWs07VGhvbWFzIEIu
+ IFJ1ZWNrZXIgKG5ldyBwcmltYXJ5IGFkZHJlc3MpIDx0aG9tYXNAcnVlY2tlci5maT7CZQQT
+ EQIAJQIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AFAlF2GzICGQEACgkQfkVKO9VkYGnI
+ 0gCdE7F4ZM35xIuL8biBPZwlYskNfCcAoIHzw/UgkHmm5bnTm1gjbmoqEE5mzsFNBEHJenQQ
+ CADD5MmmtPSY2N/oposavI2xV0+MgnkS1t91iNquc8SrTxaJoB693LNdewiXAsTmAKu8VrHv
+ CYZGSNImHIOquF3Gt1KIUKNNcaBxR+fSL6qG971bEHG3FDkfMbo19mFFmovV1do4zt61uB5E
+ Euxwe5yk9VKfBOAoJHcr4xv8zRVAENBua3G/sqeojuqG4eHQzJ3++JYGYerzB0z7/GoZVVs6
+ Hc9D1JpCu2vLsiFIsMBVAQSQSFyRNbR/+JYB68Qp/xhAR09ttYp+GyB/czTwlRz+wLa90vNf
+ lNB7tQ3MegiJuN9gtofiuh+7w/UHK3zm/vppkipKRJlnLEmU8NdGvSq/AAMFB/4vWZrpCyWD
+ LRqSd9wh3sj8PD30Nc172J365mjZzBonxq4LP0NUtowRgzl+DANTeFeK6+mJoDkxCVIjQGf2
+ SWWRhtRANAGpbod9CPOWpKIIMUETXcHH49HzmguCe5p1MIZhSTSViY2uP+d1FCZkTpgBUfxw
+ ucbdRKLdD9wx34loksPZ2X0KXiVwoPi+9f6vwf4ONl8QPEn1/AYSCo7jlTws9f+BQONfxaVJ
+ aEQq296nRc7hCRf3ybhUkzwWYzlb13TDhP0k1OLxZioytLH21LG3wdhHzP+WOI0Z1r5ISd/U
+ Y90gUKNTRBLCFAsQYUIjwl2M34GstL+pKD7hifcrJEzcwkYEGBECAAYFAkHJenQACgkQfkVK
+ O9VkYGmMZACdHmHYuYfNPW1RqgbzX5/jHPIud6EAn2AqHTi0Wso0cPafLrZEtesI9jOh
+Message-ID: <c1ac7903-8147-b8f9-4683-d03af14d1567@ruecker.fi>
+Date: Thu, 1 Nov 2018 16:21:32 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ZPt4rx8FFjLCG7dd"
-Content-Disposition: inline
-User-Agent: Mutt/1.12.0 (2019-05-25)
-X-Scanned-By: MIMEDefang 2.84 on 10.5.11.23
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.48]); Wed, 31 Jul 2019 15:26:25 +0000 (UTC)
-Subject: [oss-security] icedtea-web: CVE-2019-10181 CVE-2019-10182 CVE-2019-10185
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="UEJ74zovIlaOuqldayvFbouhRms3grwDd"
+Subject: [oss-security] Icecast 2.4.4 - CVE-2018-18820 - buffer overflow in url-auth
 
---ZPt4rx8FFjLCG7dd
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--UEJ74zovIlaOuqldayvFbouhRms3grwDd
+Content-Type: multipart/mixed; boundary="7xvIw8d79gW99cXinPc7bgxq3fX8jaa2X";
+ protected-headers="v1"
+From: =?UTF-8?Q?Thomas_B._R=c3=bccker?= <thomas@ruecker.fi>
+To: oss-security@lists.openwall.com
+Message-ID: <c1ac7903-8147-b8f9-4683-d03af14d1567@ruecker.fi>
+Subject: Icecast 2.4.4 - CVE-2018-18820 - buffer overflow in url-auth
 
-Hello,
+--7xvIw8d79gW99cXinPc7bgxq3fX8jaa2X
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
 
-The IcedTea-Web project provides a Java web browser plug-in and an
-implementation of Java Web Start, which is based on the Netx project.
+We released a new version of Icecast.
+It is a security release and we recommend to update all
+Icecast installations of versions below 2.4.4 to it.
 
-Upstream URL : http://icedtea.classpath.org/wiki/IcedTea-Web
+-=C2=A0=C2=A0 Fix buffer overflows in URL auth code, [CVE-2018-18820]. [#23=
+42]
+=C2=A0=C2=A0=C2=A0 * This security issue affects all Icecast servers runnin=
+g version
+      2.4.0, 2.4.1, 2.4.2 or 2.4.3 if there is a "mount" definition
+      that enables URL authentication.
+=C2=A0=C2=A0=C2=A0 * A malicious client could send long HTTP headers, leadi=
+ng to
+      a buffer overflow and potential remote code execution.
+=C2=A0=C2=A0=C2=A0 * The problematic code was introduced in version 2.4.0 a=
+nd
+      was now brought to our attention by Nick Rolfe of
+      Semmle Security Research Team https://lgtm.com/security
 
-This is to disclose the following 3 vulnerabilities :
+https://gitlab.xiph.org/xiph/icecast-server/commit/b21a7283bd1598c5af0bbb25=
+0a041ba8198f98f2
 
-CVE-2019-10182 and CVE-2019-10185 are considered High, since they can
-easily be used to take over the client before checking signatures.
+-=C2=A0=C2=A0 Worked around buffer overflows in URL auth's cURL interface.
+=C2=A0=C2=A0=C2=A0 * We currently do not believe that this issue is exploit=
+able.
+      It would require a malicious URL authentication back end server
+     =C2=A0to send a crafted payload and make it through libcURL.
+=C2=A0=C2=A0=C2=A0 * If someone manages, please let us know.
 
-All versions of icedtea-web are believed to be vulnerable.
+https://gitlab.xiph.org/xiph/icecast-server/commit/03ea74c04a5966114c2fe66e=
+4e6892d11a68181e
 
-See the following pull request for the proposed fixes :
-https://github.com/AdoptOpenJDK/IcedTea-Web/pull/344
+Source: http://downloads.xiph.org/releases/icecast/icecast-2.4.4.tar.gz
 
-
-* CVE-2019-10182 icedtea-web: path traversal while processing <jar/>
-elements of JNLP files results in arbitrary file overwrite
-
-It was found that icedtea-web did not properly sanitize paths from
-<jar/> elements in JNLP files. An attacker could trick a victim into
-running a specially crafted application and use this flaw to upload
-arbitrary files to arbitrary locations in the context of the user.
-
-
-* CVE-2019-10185 icedtea-web: directory traversal in the nested jar
-auto-extraction leading to arbitrary file overwrite
-
-It was found that icedtea-web was vulnerable to a zip-slip attack during
-auto-extraction of a JAR file. An attacker could use this flaw to write
-files to arbitrary locations. This could also be used to replace the
-main running application and, possibly, break out of the sandbox.
-
-
-* CVE-2019-10181 icedtea-web: unsigned code injection in a signed JAR
-file
-
-It was found that executable code could be injected in a JAR file
-without compromising the signature verification. An attacker could use
-this flaw to inject code in a trusted JAR. The code would be executed
-inside the sandbox.
+[#2342]: https://gitlab.xiph.org/xiph/icecast-server/issues/2342
 
 
-Red Hat would like to thank Imre Rad for reporting all the
-vulnerabilities above.
+Thomas B. Ruecker
+Icecast maintainer
+
+PS: Default installations are not affected. This is an advanced feature.
 
 
-Thanks!
 
---ZPt4rx8FFjLCG7dd
+
+--7xvIw8d79gW99cXinPc7bgxq3fX8jaa2X--
+
+--UEJ74zovIlaOuqldayvFbouhRms3grwDd
 Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEcBAEBCgAGBQJdQbMRAAoJECISsYvaK7kIbvgH/1uIrenXmOCKlmdhYJbBm94L
-3dsge26LPK8Mi5Wkr6aC/nD7irusZrkGomchv7COtux8bgd0uF58Kwzyt2kuAydD
-QNsMu9GOBIRwGWAWfAxomZyqhH9NGQPJgyXwHA2TRw3cc9MYxOjVHJqZjx2U95bx
-k3Kzfmi989RPDNuYVOy1/430jFFK9l5v/UOHs3Ir97g94FqzvVZQAkqx6u7Vk1PE
-z0/+NsTlq9zFOVfKsT6Je3u87taEBop6WP781NP77eReRvGq5mYujlfpABsU/5qQ
-kXdrV1MeQUGuqMDf/Uj440mZS271sYVjijaU3WUS6eZxHC68Y69o/36mjGG5bCw=
-=g6jF
+iF0EARECAB0WIQT0TgDJ5IylVoShek1+RUo71WRgaQUCW9soDAAKCRB+RUo71WRg
+aQSkAJ9i9DnU9BcoxsI/H92B7EB/YEvobwCcDrt+ouFFVFIVP1O1BQEqHFpyBL0=
+=2SJb
 -----END PGP SIGNATURE-----
 
---ZPt4rx8FFjLCG7dd--
+--UEJ74zovIlaOuqldayvFbouhRms3grwDd--
