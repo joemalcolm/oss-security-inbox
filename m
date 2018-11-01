@@ -1,4 +1,9 @@
-Received: (qmail 21613 invoked by uid 550); 25 Mar 2026 05:21:41 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["654" "Thursday" "1" "November" "2018" "11:56:28" "+0530" "P J P" "ppandit@redhat.com" "<nycvar.YSQ.7.76.1811011151230.336@xnncv>" "19" "[oss-security] CVE-2018-18849 Qemu: lsi53c895a: OOB msg buffer access leads to DoS" nil nil nil "11" "2018110106:26:28" "[oss-security] CVE-2018-18849 Qemu: lsi53c895a: OOB msg buffer access leads to DoS" (number mark "U       ppandit@redh Nov  1   19/654   " thread-indent "\"[oss-security] CVE-2018-18849 Qemu: lsi53c895a: OOB msg buffer access leads to DoS\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 18202 invoked by uid 550); 1 Nov 2018 06:26:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,146 +12,36 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 20338 invoked from network); 25 Mar 2026 04:25:21 -0000
-Message-ID: <9791e9d9-a77e-44c2-9e43-5ede3fb8c40c@treenet.co.nz>
-Date: Wed, 25 Mar 2026 17:20:11 +1300
+Received: (qmail 18184 invoked from network); 1 Nov 2018 06:26:47 -0000
+Date: Thu, 1 Nov 2018 11:56:28 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@kaapi
+To: oss security list <oss-security@lists.openwall.com>
+cc: ameya.more@oracle.com
+Message-ID: <nycvar.YSQ.7.76.1811011151230.336@xnncv>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: oss-security@lists.openwall.com
-From: Amos Jeffries <squid3@treenet.co.nz>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] [ADVISORY] SQUID-2026:1 Denial of Service in ICP Request handling
- (CVE-2026-33526)
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.30]); Thu, 01 Nov 2018 06:26:35 +0000 (UTC)
+Subject: [oss-security] CVE-2018-18849 Qemu: lsi53c895a: OOB msg buffer access leads to
+ DoS
 
-__________________________________________________________________
+   Hello,
 
-     Squid Proxy Cache Security Update Advisory SQUID-2026:1
-__________________________________________________________________
+An out of bounds memory access issue was found in the LSI53C895A SCSI Host Bus 
+Adapter emulation while writing a message in lsi_do_msgin. It could occur 
+during migration if the 'msg_len' field has an invalid value.  A user/process 
+could use this flaw to crash the Qemu process resulting in DoS.
 
-Advisory ID:       | SQUID-2026:1 (CVE-2026-33526)
-Date:              | March 25, 2026
-Summary:           | Denial of Service in ICP Request handling
-Affected versions: | Squid 3.x -> 3.5.28
-                    | Squid 4.x -> 4.17
-                    | Squid 5.x -> 5.9
-                    | Squid 6.x -> 6.14
-                    | Squid 7.x -> 7.4
-Fixed in version:  | Squid 7.5
-__________________________________________________________________
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2018-10/msg06682.html
 
-Problem Description:
+This issue was discovered by dejavusecurity.com and reported by Oracle.com.
 
-  Due to a heap Use-After-Free bug Squid is vulnerable to Denial
-  of Service when handling ICP traffic.
+CVE assigned via -> https://cveform.mitre.org/
 
-__________________________________________________________________
-
-Severity:
-
-  This problem allows a remote attacker to perform
-  a reliable and repeatable Denial of Service attack against the
-  Squid service using ICP protocol.
-
-  This attack is limited to Squid deployments that explicitly
-  enable ICP support (i.e. configure non-zero icp_port).
-
-  This problem _cannot_ be mitigated by denying ICP queries
-  using icp_access rules.
-
-__________________________________________________________________
-
-Updated Packages
-
-  These bugs were fixed in Squid version 7.5.
-
-  In addition, patches addressing this problem for the stable
-  releases can be found in our patch archives:
-
-Squid 7:
-  <https://github.com/squid-cache/squid/commit/8a7d42f9d44befb8fcbbb619505587c8de6a1e91>
-
-  If you are using a prepackaged version of Squid then please
-  refer to the package vendor for availability information on
-  updated packages.
-
-__________________________________________________________________
-
-  Determining if your version is vulnerable
-
-  Run the following command to identify whether your Squid
-  has been configured with ICP enabled:
-
-   squid -k parse 2>&1 | grep -E "(icp|udp)_port" | tail -n1
-
-  All Squid configured with port 0 are not vulnerable.
-
-  All Squid-3.0 up to and including 7.4 configured with
-  a non-zero port should be assumed to be vulnerable.
-
-  All Squid-3.2 up to and including 7.4 configured without
-  any port value can be assumed to be not vulnerable.
-
-__________________________________________________________________
-
-Workaround
-
-Either,
-
-   * Do not enable ICP support,
-
-Or,
-
-  * explicitly disable ICP using "icp_port 0".
-
-
-  Warning: These problems _cannot_ be mitigated by denying ICP
-           queries using icp_access rules.
-
-__________________________________________________________________
-
-Contact details for the Squid project:
-
-  For installation / upgrade support on binary packaged versions
-  of Squid: Your first point of contact should be your binary
-  package vendor.
-
-  If you install and build Squid from the original Squid sources
-  then the <squid-users@lists.squid-cache.org> mailing list is
-  your primary support point. For subscription details see
-  <https://www.squid-cache.org/Support/mailing-lists.html>.
-
-  For reporting of non-security bugs in the latest STABLE release
-  the squid bugzilla database should be used
-  <https://bugs.squid-cache.org/>.
-
-  For reporting of security sensitive bugs send an email to the
-  <squid-bugs@lists.squid-cache.org> mailing list. It's a closed
-  list (though anyone can post) and security related bug reports
-  are treated in confidence until the impact has been established.
-
-__________________________________________________________________
-
-Credits
-
-  Discovered by:
-
-   * Joshua Rogers with ZeroPath
-   * Asim Viladi Oglu Manizada
-
-  Fixed by:
-
-   * Joshua Rogers with ZeroPath
-
-__________________________________________________________________
-
-Revision history:
-
-2025-09-07 20:22:00 EDT Report of the first set of vulnerabilities
-2026-01-26 08:48:00 EDT Report of additional vulnerabilities
-2026-02-10 19:58:49 UTC official fixes in master branch
-
-__________________________________________________________________
-END
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
