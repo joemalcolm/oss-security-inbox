@@ -1,42 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/24/9
-Message-ID: <20180324234829.01cc3edb@pc1>
-Date: Sat, 24 Mar 2018 23:48:29 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/01/4
+Message-ID: <CAFeDd5Ya=q28T2b0v9Z2guTGjwccaq8AU_5OnybvuEVABWnFJA@mail.gmail.com>
+Date: Fri, 2 Nov 2018 00:12:27 +0200
+From: Billy Brumley <bbrumley@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Stack buffer overflow in WolfSSL before 3.13.0
+Subject: CVE-2018-5407: new side-channel vulnerability on SMT/Hyper-Threading architectures
 Content-Type: text/plain; charset=utf-8
 
-https://blog.fuzzing-project.org/63-Stack-buffer-overflow-in-WolfSSL-before-3.13.0.html
+Howdy Folks,
 
-During some tests of TLS libraries I found a stack buffer overflow
-vulnerability in the WolfSSL library. Finding this one was surprisingly
-simple: I had a wolfssl server that was compiled with address sanitizer
-and ran the SSL Labs test against it.
+We recently discovered a new CPU microarchitecture attack vector. The
+nature of the leakage is due to execution engine sharing on SMT (e.g.
+Hyper-Threading) architectures. More specifically, we detect port
+contention to construct a timing side channel to exfiltrate
+information from processes running in parallel on the same physical
+core. Report is below.
 
-The bug happens in the parsing of the signature hash algorithm list
-that is sent in a ClientHello and is basically a textbook stack buffer
-overflow. WolfSSL simply tries to store that in an array with 32
-elements. If one sends more than 32 hash algorithms it overflows.
+Thanks for reading!
 
-With the SSL Labs scan the bug only causes WolfSSL to terminate if it's
-compiled with address sanitizer, but if one sends a very large list of
-hash algorithms it also crashes in a normal compile. In situations
-where WolfSSL is used without ASLR this bug is probably trivially
-exploitable.
+BBB
 
-I have created a simple bash proof of concept [1] (using netcat and xxd)
-that crashes a WolfSSL server.
+# Report
 
-The bug was fixed in this commit [2] and in version 3.13.0 of WolfSSL.
+We steal an OpenSSL (<= 1.1.0h) P-384 private key from a TLS server
+using this new side-channel vector. It is a local attack in the sense
+that the malicious process must be running on the same physical core
+as the victim (an OpenSSL-powered TLS server in this case).
 
-[1] https://github.com/hannob/wolfoverflow
-[2]
-https://github.com/wolfSSL/wolfssl/pull/1231/commits/9f7e40ad5c8097ff38d7caff4a9989db260981cc
+## Affected hardware
 
--- 
-Hanno Böck
-https://hboeck.de/
+SMT/Hyper-Threading architectures (verified on Skylake and Kaby Lake)
 
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+## Affected software
+
+OpenSSL <= 1.1.0h (but in general, software that has secret dependent
+control flow at any granularity; this particular application is a
+known vulnerability since 2009 only recently fixed)
+
+Ubuntu 18.04 (again, it is really a hardware issue, but anyway this
+distro is where we ran our experiments)
+
+## Classification and rating
+
+Tracked by CVE-2018-5407.
+
+CWE wise, I would label it like
+
+CWE-208: Information Exposure Through Timing Discrepancy
+
+At a very high level (e.g. CVSS string), it is similar to this CVE:
+
+https://nvd.nist.gov/vuln/detail/CVE-2005-0109
+
+But the underlying uarch component is totally different. Our attack
+has nothing to do with the memory subsystem or caching, and that CVE
+is specifically for data caching (e.g. some fixes for CVE-2005-0109 do
+not address this new attack vector at all).
+
+## Disclosure timeline
+
+01 Oct 2018: Notified Intel Security
+26 Oct 2018: Notified openssl-security
+26 Oct 2018: Notified CERT-FI
+26 Oct 2018: Notified oss-security distros list
+01 Nov 2018: Embargo expired
+
+## Fix
+
+Disable SMT/Hyper-Threading in the bios
+
+Upgrade to OpenSSL 1.1.1 (or >= 1.1.0i if you are looking for patches)
+
+## Credit
+
+Billy Bob Brumley, Cesar Pereida Garcia, Sohaib ul Hassan, Nicola
+Tuveri (Tampere University of Technology, Finland)
+Alejandro Cabrera Aldaya (Universidad Tecnologica de la Habana CUJAE, Cuba)
+
+## Refs
+
+https://marc.info/?l=openbsd-cvs&m=152943660103446
+https://marc.info/?l=openbsd-tech&m=153504937925732
+
+## Exploit
+
+Attached exploit code (password "infected") should work out of the box
+for Skylake and Kaby Lake. Said code, soon to be followed by a
+preprint with all the nitty-gritty details, is also here:
+
+https://github.com/bbbrumley/portsmash
+
+Download attachment "spy.zip" of type "application/zip" (76765 bytes)
