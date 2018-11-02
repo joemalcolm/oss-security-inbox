@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["10648" "Monday" "27" "November" "2017" "17:32:29" "+0100" "Remi Gacogne" "remi.gacogne@powerdns.com" "<126e9802-e0aa-77b4-f87d-1fa469b8d79b@powerdns.com>" "263" "[oss-security] PowerDNS Security Advisories 2017-03, 2017-04, 2017-05, 2017-06 and 2017-07" nil nil nil "11" "2017112716:32:29" "[oss-security] PowerDNS Security Advisories 2017-03, 2017-04, 2017-05, 2017-06 and 2017-07" (number mark "U       remi.gacogne Nov 27  263/10648 " thread-indent "\"[oss-security] PowerDNS Security Advisories 2017-03, 2017-04, 2017-05, 2017-06 and 2017-07\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["11383" "Friday" "2" "November" "2018" "05:30:02" "+0100" "Andrea Barisani" "andrea.barisani@f-secure.com" "<20181102043002.GC2786@lambda.inversepath.com>" "321" "[oss-security] CVE-2018-18439, CVE-2018-18440 - U-Boot verified boot bypass vulnerabilities" nil nil nil "11" "2018110204:30:02" "[oss-security] CVE-2018-18439, CVE-2018-18440 - U-Boot verified boot bypass vulnerabilities" (number mark "U       andrea.baris Nov  2  321/11383 " thread-indent "\"[oss-security] CVE-2018-18439, CVE-2018-18440 - U-Boot verified boot bypass vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28199 invoked by uid 550); 27 Nov 2017 16:32:43 -0000
+Received: (qmail 17461 invoked by uid 550); 2 Nov 2018 10:04:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,278 +12,341 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28165 invoked from network); 27 Nov 2017 16:32:43 -0000
-To: oss-security@lists.openwall.com
-From: Remi Gacogne <remi.gacogne@powerdns.com>
-Message-ID: <126e9802-e0aa-77b4-f87d-1fa469b8d79b@powerdns.com>
-Date: Mon, 27 Nov 2017 17:32:29 +0100
+Received: (qmail 1686 invoked from network); 2 Nov 2018 04:30:24 -0000
+Date: Fri, 2 Nov 2018 05:30:02 +0100
+From: Andrea Barisani <andrea.barisani@f-secure.com>
+To: <oss-security@lists.openwall.com>
+Message-ID: <20181102043002.GC2786@lambda.inversepath.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="b9g6i2uruvSNhqcbsb4vWDEdMcmQ7pJNj"
-Subject: [oss-security] PowerDNS Security Advisories 2017-03, 2017-04, 2017-05, 2017-06 and
- 2017-07
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+X-GPG-Key: 0x864C9B9E
+X-GPG-Fingerprint: 0A76 074A 02CD E989 CE7F  AC3F DA47 578E 864C 9B9E
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Originating-IP: [10.191.8.98]
+X-ClientProxiedBy: helex01.FI.F-Secure.com (10.190.48.70) To
+ helex01.FI.F-Secure.com (10.190.48.70)
+Subject: [oss-security] CVE-2018-18439, CVE-2018-18440 - U-Boot verified boot bypass
+ vulnerabilities
 
---b9g6i2uruvSNhqcbsb4vWDEdMcmQ7pJNj
-Content-Type: multipart/mixed; boundary="ftXwKcDAWEdhSEJWKlRhOptSgwStogOfX";
- protected-headers="v1"
-From: Remi Gacogne <remi.gacogne@powerdns.com>
-To: oss-security@lists.openwall.com
-Message-ID: <126e9802-e0aa-77b4-f87d-1fa469b8d79b@powerdns.com>
-Subject: PowerDNS Security Advisories 2017-03, 2017-04, 2017-05, 2017-06 and
- 2017-07
+Security advisory: U-Boot verified boot bypass
+==============================================
 
---ftXwKcDAWEdhSEJWKlRhOptSgwStogOfX
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: quoted-printable
+The Universal Boot Loader - U-Boot [1] verified boot feature allows
+cryptographic authentication of signed kernel images, before their execution.
 
-Hello everybody,
+This feature is essential in maintaining a full chain of trust on systems which
+are secure booted by means of an hardware anchor.
 
-We just released PowerDNS Authoritative 4.0.5 and Recursor 4.0.7, fixing
-security issues that have recently been reported to us:
+Multiple techniques have been identified that allow to execute arbitrary code,
+within a running U-Boot instance, by means of externally provided
+unauthenticated data.
 
-- 2017-03: Insufficient validation of DNSSEC signatures
-(CVE-2017-15090, Recursor >=3D 4.0.0)
-- 2017-04: Missing check on API operations (CVE-2017-15091, Authoritative)
-- 2017-05: Cross-Site Scripting in the web interface (CVE-2017-15092,
-Recursor >=3D 4.0.0)
-- 2017-06: Configuration file injection in the API (CVE-2017-15093,
-Recursor)
-- 2017-07: Memory leak in DNSSEC parsing (CVE-2017-15094, Recursor >=3D
-4.0.0)
+All such techniques spawn from the lack of memory allocation protection within
+the U-Boot architecture, which results in several means of providing
+excessively large images during the boot process.
 
-The full security advisories can be found below, and also at:
+Some implementers might find the following issues as an intrinsic
+characteristic of the U-Boot memory model, and consequently a mere aspect of
+correct U-Boot configuration and command restrictions.
 
--
-https://doc.powerdns.com/authoritative/security-advisories/powerdns-advisor=
-y-2017-04.html
--
-https://doc.powerdns.com/recursor/security-advisories/powerdns-advisory-201=
-7-03.html
--
-https://doc.powerdns.com/recursor/security-advisories/powerdns-advisory-201=
-7-05.html
--
-https://doc.powerdns.com/recursor/security-advisories/powerdns-advisory-201=
-7-06.html
--
-https://doc.powerdns.com/recursor/security-advisories/powerdns-advisory-201=
-7-07.html
+However in our opinion the inability of U-Boot to protect itself when loading
+binaries is an unexpected result of non trivial understanding, particularly
+important to emphasize in trusted boot scenarios.
 
-All of the issues require a specific configuration that is not enabled
-by default: 2017-03 and 2017-07 issues only exist if DNSSEC validation
-is enabled, 2017-04 requires authenticated access to the Authoritative
-server API, 2017-05 only exists if the webserver is enabled and 2017-06
-if the API is enabled and allowed to alter the configuration.
+This advisory details two specific techniques that allow to exploit U-Boot lack
+of memory allocation restrictions, with the most severe case also detailing a
+workaround to mitigate the issue.
 
-We also provide minimal patches for the 3.4.11 and 3.7.4 releases:
+It must be emphasized that cases detailed in the next sections only represent
+two possible occurrences of such architectural limitation, other U-Boot image
+loading functions are extremely likely to suffer from the same validation
+issues.
 
-- https://downloads.powerdns.com/patches/2017-03/
-- https://downloads.powerdns.com/patches/2017-04/
-- https://downloads.powerdns.com/patches/2017-05/
-- https://downloads.powerdns.com/patches/2017-06/
-- https://downloads.powerdns.com/patches/2017-07/
+To a certain extent the identified issues are similar to one of the findings
+reported as CVE-2018-1000205 [2], however they concern different functions
+which in some cases are at a lower level, therefore earlier in the boot image
+loading stage.
 
-We urge all users of these versions to migrate to the 4.X release trains.
+Again all such issues are a symptom of the same core architectural limitation,
+being the lack of memory allocation constraints for received images.
 
-Please feel free to contact me directly if you have any question.
+It is highly recommended, for implementers of trusted boot schemes, to review
+use of all U-Boot booting/loading commands, and not merely the two specific
+ones involved in the findings below, to apply limitations (where
+applicable/possible) to the size of loaded images in relation to the available
+RAM.
 
-Best regards,
-
-PowerDNS Security Advisory 2017-03: Insufficient validation of DNSSEC
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-signatures
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
--  CVE: CVE-2017-15090
--  Date: November 27th 2017
--  Credit: Kees Monshouwer
--  Affects: PowerDNS Recursor from 4.0.0 and up to and including 4.0.6
--  Not affected: PowerDNS Recursor < 4.0.0, 4.0.7
--  Severity: Medium
--  Impact: Records manipulation
--  Exploit: This problem can be triggered by an attacker in position of
-   man-in-the-middle
--  Risk of system compromise: No
--  Solution: Upgrade to a non-affected version
-
-An issue has been found in the DNSSEC validation component of PowerDNS
-Recursor, where the signatures might have been accepted as valid even if
-the signed data was not in bailiwick of the DNSKEY used to sign it. This
-allows an attacker in position of man-in-the-middle to alter the content
-of records by issuing a valid signature for the crafted records. This
-issue has been assigned CVE-2017-15090.
-
-PowerDNS Recursor from 4.0.0 up to and including 4.0.6 are affected.
-
-For those unable to upgrade to a new version, a minimal patch is
-available: https://downloads.powerdns.com/patches/2017-03
-
-We would like to thank Kees Monshouwer for finding and subsequently
-reporting this issue.
-
-PowerDNS Security Advisory 2017-04: Missing check on API operations
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
--  CVE: CVE-2017-15091
--  Date: November 27th 2017
--  Credit: everyman
--  Affects: PowerDNS Authoritative up to and including 4.0.4, 3.4.11
--  Not affected: PowerDNS Authoritative 4.0.5
--  Severity: Low
--  Impact:  Denial of service
--  Exploit: This problem can be triggered by an attacker with valid
-   API credentials
--  Risk of system compromise: No
--  Solution: Upgrade to a non-affected version
-
-An issue has been found in the API component of PowerDNS Authoritative,
-where some operations that have an impact on the state of the server
-are still allowed even though the API has been configured as read-only
-via the `api-readonly` keyword.
-This missing check allows an attacker with valid API credentials could
-flush the cache, trigger a zone transfer or send a NOTIFY. This issue
-has been assigned CVE-2017-15091.
-
-PowerDNS Authoritative up to and including 4.0.4 and 3.4.11 are affected.
-
-For those unable to upgrade to a new version, a minimal patch is
-available: https://downloads.powerdns.com/patches/2017-04
-
-We would like to thank everyman for finding and subsequently reporting
-this issue.
-
-PowerDNS Security Advisory 2017-05: Cross-Site Scripting in the web
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-interface
-=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
--  CVE: CVE-2017-15092
--  Date: November 27th 2017
--  Credit: Nixu, Chris Navarrete of Fortinet's Fortiguard Labs
--  Affects: PowerDNS Recursor from 4.0.0 up to and including 4.0.6
--  Not affected: PowerDNS Recursor 4.0.7, 3.7.x
--  Severity: Medium
--  Impact: Alteration and denial of service of the web interface
--  Exploit: This problem can be triggered by an attacker sending DNS queries
-   to the server
--  Risk of system compromise: No
--  Solution: Upgrade to a non-affected version
-
-An issue has been found in the web interface of PowerDNS Recursor, where
-the qname of DNS queries was displayed without any escaping, allowing a
-remote attacker to inject HTML and Javascript code into the web
-interface, altering the content. This issue has been assigned
-CVE-2017-15092.
-
-PowerDNS Recursor from 4.0.0 up to and including 4.0.6 are affected.
-
-For those unable to upgrade to a new version, a minimal patch is
-available: https://downloads.powerdns.com/patches/2017-05
-
-We would like to thank Nixu and Chris Navarrete of Fortinet's Fortiguard
-Labs for independently finding and reporting this issue.
-
-PowerDNS Security Advisory 2017-06: Configuration file injection in the
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D API
-=3D=3D=3D
-
--  CVE: CVE-2017-15093
--  Date: November 27th 2017
--  Credit: Nixu
--  Affects: PowerDNS Recursor up to and including 4.0.6, 3.7.4
--  Not affected: PowerDNS Recursor 4.0.7
--  Severity: Medium
--  Impact: Alteration of configuration by an API user
--  Exploit: This problem can be triggered by an attacker with valid API
-   credentials
--  Risk of system compromise: No
--  Solution: Upgrade to a non-affected version
--  Workaround: Disable the ability to alter the configuration via the
-API by setting `api-config-dir` to an empty value (default), or set the
-API read-only via the `api-readonly` setting.
-
-An issue has been found in the API of PowerDNS Recursor during a source
-code audit by Nixu. When `api-config-dir` is set to a non-empty value,
-which is not the case by default, the API allows an authorized user to
-update the Recursor's ACL by adding and removing netmasks, and to
-configure forward zones. It was discovered that the new netmask and IP
-addresses of forwarded zones were not sufficiently validated, allowing
-an authenticated user to inject new configuration directives into the
-Recursor's configuration. This issue has been assigned CVE-2017-15093.
-
-PowerDNS Recursor up to and including 4.0.6 and 3.7.4 are affected.
-
-For those unable to upgrade to a new version, a minimal patch is
-available: https://downloads.powerdns.com/patches/2017-06
-
-We would like to thank Nixu for finding and subsequently reporting this
-issue.
-
-PowerDNS Security Advisory 2017-07: Memory leak in DNSSEC parsing
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
--  CVE: CVE-2017-15094
--  Date: November 27th 2017
--  Credit: Nixu
--  Affects: PowerDNS Recursor from 4.0.0 up to and including 4.0.6
--  Not affected: PowerDNS Recursor 4.0.7
--  Severity: Medium
--  Impact:  Denial of service
--  Exploit: This problem can be triggered by an authoritative server
-   sending crafted ECDSA DNSSEC keys to the Recursor.
--  Risk of system compromise: No
--  Solution: Upgrade to a non-affected version
--  Workaround: Disable DNSSEC validation by setting the `dnssec`
-parameter to `off` or `process-no-validate` (default).
-
-An issue has been found in the DNSSEC parsing code of PowerDNS Recursor
-during a code audit by Nixu, leading to a memory leak when parsing
-specially crafted DNSSEC ECDSA keys. These keys are only parsed when
-validation is enabled by setting `dnssec` to a value other than `off` or
-`process-no-validate` (default).
-This issue has been assigned CVE-2017-15094.
-
-PowerDNS Recursor from 4.0.0 up to and including 4.0.6 are affected.
-
-For those unable to upgrade to a new version, a minimal patch is
-available: https://downloads.powerdns.com/patches/2017-07
-
-We would like to thank Nixu for finding and subsequently reporting
-this issue.
-
---=20
-Remi and the PowerDNS team
+It should also be emphasized that any trusted boot scheme must also rely on an
+appropriate lockdown of all possibilities for interactive consoles, by boot
+process interruption or failure, to ever be prompted.
 
 
---ftXwKcDAWEdhSEJWKlRhOptSgwStogOfX--
+U-Boot insufficient boundary checks in filesystem image load
+------------------------------------------------------------
 
---b9g6i2uruvSNhqcbsb4vWDEdMcmQ7pJNj
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+The U-Boot bootloader supports kernel loading from a variety of filesystem
+formats, through the `load` command or its filesystem specific equivalents
+(e.g. `ext2load`, `ext4load`, `fatload`, etc.)
 
------BEGIN PGP SIGNATURE-----
+These commands do not protect system memory from being overwritten when loading
+files of a length that exceeds the boundaries of the relocated U-Boot memory
+region, filled with the loaded file starting from the passed `addr` variable.
 
-iQEzBAEBCgAdFiEE1jAMq8v0abvjkuUDogjtT4r1hEYFAlocPh4ACgkQogjtT4r1
-hEYl6wf/WcinEvZap5K2ERM1iEfHU6BufSFhYt4M84OaMouURZfl1gv7WLviqMWT
-PiOwj/sqFA25XosDdxwXlsCCb4BT0SbEhbPQPOJtfwBxmHBOmP/SRd+5rFZPNHid
-HWGT/GhJsxrQTEDM0u1/LVZU4Q0HlnvCfBLaGZEG0cKh8xtYxK5jFtW2uFkL5TUy
-duo4UDySp3D5dkLyxqFwPD1OmLlQB1zgPjE7SO4yRYJbBjPIu3Q+TLwI+0PrC9e/
-uoughCQodmB1WD0celbF4B9UydFAp+LysFGEMQCL4spTa/pQDWls/WqBI5Expn5h
-iBQAhzsYUduCLCkS873XsXT2PT0m8A==
-=90ZO
------END PGP SIGNATURE-----
+Therefore an excessively large boot image, saved on the filesystem, can be
+crafted to overwrite all U-Boot static and runtime memory segments, and in
+general all device addressable memory starting from the `addr` load address
+argument.
 
---b9g6i2uruvSNhqcbsb4vWDEdMcmQ7pJNj--
+The memory overwrite can directly lead to arbitrary code execution, fully
+controlled by the contents of the loaded image.
+
+When verified boot is implemented, the issue allows to bypass its intended
+validation as the memory overwrite happens before any validation can take
+place.
+
+The following example illustrates the issue, triggered with a 129MB file on a
+machine with 128MB or RAM:
+
+```
+U-Boot 2018.09-rc1 (Oct 10 2018 - 10:52:54 +0200)
+
+DRAM:  128 MiB
+Flash: 128 MiB
+MMC:   MMC: 0
+
+# print memory information
+=> bdinfo
+arch_number = 0x000008E0
+boot_params = 0x60002000
+DRAM bank   = 0x00000000
+-> start    = 0x60000000
+-> size     = 0x08000000
+DRAM bank   = 0x00000001
+-> start    = 0x80000000
+-> size     = 0x00000004
+eth0name    = smc911x-0
+ethaddr     = 52:54:00:12:34:56
+current eth = smc911x-0
+ip_addr     = <NULL>
+baudrate    = 38400 bps
+TLB addr    = 0x67FF0000
+relocaddr   = 0x67F96000
+reloc off   = 0x07796000
+irq_sp      = 0x67EF5EE0
+sp start    = 0x67EF5ED0
+
+# load large file
+=> ext2load mmc 0 0x60000000 fitimage.itb
+
+# In this specific example U-Boot falls in an infinite loop, results vary
+# depending on the test case and filesystem/device driver used. A debugging
+# session demonstrates memory being overwritten:
+(gdb) p gd
+$28 = (volatile gd_t *) 0x67ef5ef8
+(gdb) p *gd
+$27 = {bd = 0x7f7f7f7f, flags = 2139062143, baudrate = 2139062143, ... }
+(gdb) x/300x 0x67ef5ef8
+0x67ef5ef8:	0x7f7f7f7f	0x7f7f7f7f	0x7f7f7f7f	0x7f7f7f7f
+```
+
+It can be seen that memory address belonging to U-Boot data segments, in this
+specific case the global data structure `gd`, is overwritten with payload
+originating from `fitimage.itb` (filled with `0x7f7f7f7f`).
+
+### Impact
+
+Arbitrary code execution can be achieved within a U-Boot instance by means of
+unauthenticated binary images, loaded through the `load` command or its
+filesystem specific equivalents.
+
+It should be emphasized that all load commands are likely to be affected by the
+same underlying root cause of this vulnerability.
+
+### Workaround
+
+The optional `bytes` argument can be passed to all load commands to restrict
+the maximum size of the retrieved data.
+
+The issue can be therefore mitigated by passing a `bytes` argument with a value
+consistent with the U-Boot memory regions mapping and size.
+
+
+U-Boot insufficient boundary checks in network image boot
+---------------------------------------------------------
+
+The U-Boot bootloader supports kernel loading from a variety of network
+sources, such as TFTP via the `tftpboot` command.
+
+This command does not protect system memory from being overwritten when loading
+files of a length that exceeds the boundaries of the relocated U-Boot memory
+region, filled with the loaded file starting from the passed `loadAddr`
+variable.
+
+Therefore an excessively large boot image, served over TFTP, can be crafted to
+overwrite all U-Boot static and runtime memory segments, and in general all
+device addressable memory starting from the `loadAddr` load address argument.
+
+The memory overwrite can directly lead to arbitrary code execution, fully
+controlled by the contents of the loaded image.
+
+When verified boot is implemented, the issue allows to bypass its intended
+validation as the memory overwrite happens before any validation can take
+place.
+
+The issue can be exploited by several means:
+
+  - An excessively large crafted boot image file is parsed by the
+    `tftp_handler` function which lacks any size checks, allowing the memory
+    overwrite.
+
+  - A malicious server can manipulate TFTP packet sequence numbers to store
+    downloaded file chunks at arbitrary memory locations, given that the
+    sequence number is directly used by the `tftp_handler` function to calculate
+    the destination address for downloaded file chunks.
+
+    Additionally the `store_block` function, used to store downloaded file
+    chunks in memory, when invoked by `tftp_handler` with a `tftp_cur_block`
+    value of 0, triggers an unchecked integer underflow.
+
+    This allows to potentially erase memory located before the `loadAddr` when
+    a packet is sent with a null, following at least one valid packet.
+
+The following example illustrates the issue, triggered with a 129MB file on a
+machine with 128MB or RAM:
+
+```
+U-Boot 2018.09-rc1 (Oct 10 2018 - 10:52:54 +0200)
+
+DRAM:  128 MiB
+Flash: 128 MiB
+MMC:   MMC: 0
+
+# print memory information
+=> bdinfo
+arch_number = 0x000008E0
+boot_params = 0x60002000
+DRAM bank   = 0x00000000
+-> start    = 0x60000000
+-> size     = 0x08000000
+DRAM bank   = 0x00000001
+-> start    = 0x80000000
+-> size     = 0x00000004
+eth0name    = smc911x-0
+ethaddr     = 52:54:00:12:34:56
+current eth = smc911x-0
+ip_addr     = <NULL>
+baudrate    = 38400 bps
+TLB addr    = 0x67FF0000
+relocaddr   = 0x67F96000
+reloc off   = 0x07796000
+irq_sp      = 0x67EF5EE0
+sp start    = 0x67EF5ED0
+
+# configure environment
+=> setenv loadaddr 0x60000000
+=> dhcp
+smc911x: MAC 52:54:00:12:34:56
+smc911x: detected LAN9118 controller
+smc911x: phy initialized
+smc911x: MAC 52:54:00:12:34:56
+BOOTP broadcast 1
+DHCP client bound to address 10.0.0.20 (1022 ms)
+Using smc911x-0 device
+TFTP from server 10.0.0.1; our IP address is 10.0.0.20
+Filename 'fitimage.bin'.
+Load address: 0x60000000
+Loading: #################################################################
+...
+         ####################################
+
+R00=7f7f7f7f R01=67fedf6e R02=00000000 R03=7f7f7f7f
+R04=7f7f7f7f R05=7f7f7f7f R06=7f7f7f7f R07=7f7f7f7f
+R08=7f7f7f7f R09=7f7f7f7f R10=0000d677 R11=67fef670
+R12=00000000 R13=67ef5cd0 R14=02427f7f R15=7f7f7f7e
+PSR=400001f3 -Z-- T S svc32
+```
+
+It can be seen that the program counter (PC, r15) is set to an address
+originating from `fitimage.itb` (filled with `0x7f7f7f7f`), as the result of
+the U-Boot memory overwrite.
+
+### Impact
+
+Arbitrary code execution can be achieved within a U-Boot instance by means of
+unauthenticated binary images, passed through TFTP and loaded through the
+`tftpboot` command, or by a malicious TFTP server capable of sending arbitrary
+response packets.
+
+It should be emphasized that all network boot commands are likely to be
+affected by the same underlying root cause of this vulnerability.
+
+### Workaround
+
+The `tftpboot` command lacks any optional argument to restrict the maximum size
+of downloaded images, therefore the only workaround at this time is to avoid
+using this command on environments that require trusted boot.
+
+
+Affected version
+----------------
+
+All released U-Boot versions, at the time of this advisory release, are
+believed to be vulnerable.
+
+All tests have been performed against U-Boot version 2018.09-rc1.
+
+
+Credit
+------
+
+Vulnerabilities discovered and reported by the Inverse Path team at F-Secure,
+in collaboration with Quarkslab.
+
+
+CVE
+---
+
+CVE-2018-18440: U-Boot insufficient boundary checks in filesystem image load
+CVE-2018-18439: U-Boot insufficient boundary checks in network image boot
+
+
+Timeline
+--------
+
+2018-10-05: network boot finding identified during internal security audit
+            by Inverse Path team at F-Secure in collaboration with Quarkslab.
+
+2018-10-10: filesystem load finding identified during internal security audit
+            by Inverse Path team at F-Secure.
+
+2018-10-12: vulnerability reported by Inverse Path team at F-Secure to U-Boot
+            core maintainer and Google security, embargo set to 2018-11-02.
+
+2018-10-16: Google closes ticket reporting that ChromeOS is not affected due
+            to their specific environment customizations.
+
+2018-10-17: CVE IDs requested to MITRE and assigned.
+
+2018-11-02: advisory release.
+
+
+References
+----------
+
+[1] https://www.denx.de/wiki/U-Boot
+[2] https://lists.denx.de/pipermail/u-boot/2018-June/330487.html
+
+
+Permalink
+---------
+
+https://github.com/inversepath/usbarmory/blob/master/software/secure_boot/Security_Advisory-Ref_IPVR2018-0001.txt
+
+-- 
+Andrea Barisani     Head of Hardware Security |     F-Secure
+                                      Founder | Inverse Path
+
+https://www.f-secure.com             https://inversepath.com
+0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+       "Pluralitas non est ponenda sine necessitate"
