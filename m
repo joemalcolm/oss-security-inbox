@@ -1,153 +1,330 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/01/6
-Message-Id: <E1erO3J-0007Cl-Ez@xenbits.xenproject.org>
-Date: Thu, 01 Mar 2018 13:15:17 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 255 (CVE-2018-7541) - grant table v2 -> v1 transition may crash Xen
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/02/2
+Message-ID: <20181102043002.GC2786@lambda.inversepath.com>
+Date: Fri, 2 Nov 2018 05:30:02 +0100
+From: Andrea Barisani <andrea.barisani@...ecure.com>
+To: <oss-security@...ts.openwall.com>
+Subject: CVE-2018-18439, CVE-2018-18440 - U-Boot verified boot bypass vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Security advisory: U-Boot verified boot bypass
+==============================================
 
-            Xen Security Advisory CVE-2018-7541 / XSA-255
-                              version 4
+The Universal Boot Loader - U-Boot [1] verified boot feature allows
+cryptographic authentication of signed kernel images, before their execution.
 
-             grant table v2 -> v1 transition may crash Xen
+This feature is essential in maintaining a full chain of trust on systems which
+are secure booted by means of an hardware anchor.
 
-UPDATES IN VERSION 4
-====================
+Multiple techniques have been identified that allow to execute arbitrary code,
+within a running U-Boot instance, by means of externally provided
+unauthenticated data.
 
-CVE assigned.
+All such techniques spawn from the lack of memory allocation protection within
+the U-Boot architecture, which results in several means of providing
+excessively large images during the boot process.
 
-ISSUE DESCRIPTION
-=================
+Some implementers might find the following issues as an intrinsic
+characteristic of the U-Boot memory model, and consequently a mere aspect of
+correct U-Boot configuration and command restrictions.
 
-Grant tables come in two flavors (versions), and domains are permitted
-to freely change between them (subject to certain constraints).  For
-the guest to use the facility, both the "normal" shared pages
-(applicable to v1 and v2) and the "status" pages (applicable to v2
-only) need to be mapped by the guest into its address space.
+However in our opinion the inability of U-Boot to protect itself when loading
+binaries is an unexpected result of non trivial understanding, particularly
+important to emphasize in trusted boot scenarios.
 
-When transitioning from v2 to v1, the status pages become unnecessary
-and are therefore freed by Xen.  That means Xen needs to check that
-there are no mappings of those pages by the domain.  However, that
-check was mistakenly implemented as a bug check, rather than returning
-an error to the guest.
+This advisory details two specific techniques that allow to exploit U-Boot lack
+of memory allocation restrictions, with the most severe case also detailing a
+workaround to mitigate the issue.
 
-IMPACT
-======
+It must be emphasized that cases detailed in the next sections only represent
+two possible occurrences of such architectural limitation, other U-Boot image
+loading functions are extremely likely to suffer from the same validation
+issues.
 
-A malicious or buggy guest may cause a hypervisor crash, resulting in
-a Denial of Service (DoS) affecting the entire host.  Privilege
-escalation as well as information leaks cannot be ruled out for HVM,
-PVH (both x86), and ARM guests.
+To a certain extent the identified issues are similar to one of the findings
+reported as CVE-2018-1000205 [2], however they concern different functions
+which in some cases are at a lower level, therefore earlier in the boot image
+loading stage.
 
-The impact is more severe for Xen versions 4.0.x, 4.1.0 ... 4.1.3, and
-4.2 in that the pages are freed without any checking, thus allowing
-their re-use for another domain, or by Xen itself, while there still
-are active mappings (see XSA-26).
+Again all such issues are a symptom of the same core architectural limitation,
+being the lack of memory allocation constraints for received images.
 
-VULNERABLE SYSTEMS
-==================
+It is highly recommended, for implementers of trusted boot schemes, to review
+use of all U-Boot booting/loading commands, and not merely the two specific
+ones involved in the findings below, to apply limitations (where
+applicable/possible) to the size of loaded images in relation to the available
+RAM.
 
-Xen versions 4.0 and newer are vulnerable.
+It should also be emphasized that any trusted boot scheme must also rely on an
+appropriate lockdown of all possibilities for interactive consoles, by boot
+process interruption or failure, to ever be prompted.
 
-Both x86 and ARM systems are vulnerable.
 
-MITIGATION
-==========
+U-Boot insufficient boundary checks in filesystem image load
+------------------------------------------------------------
 
-Using the "gnttab=max_ver:1" hypervisor command line option, where
-available, to disable use of v2 grant tables allows to avoid the
-vulnerability.  Use of this option will, however, break any guests which
-require to make use of v2 functionality.  The patch introducing this
-option was not merged so far, but is available (in its current form) at
-https://lists.xenproject.org/archives/html/xen-devel/2018-02/msg00059.html
-("common/gnttab: Introduce command line feature controls").
+The U-Boot bootloader supports kernel loading from a variety of filesystem
+formats, through the `load` command or its filesystem specific equivalents
+(e.g. `ext2load`, `ext4load`, `fatload`, etc.)
 
-There is no other known mitigation.
+These commands do not protect system memory from being overwritten when loading
+files of a length that exceeds the boundaries of the relocated U-Boot memory
+region, filled with the loaded file starting from the passed `addr` variable.
 
-CREDITS
-=======
+Therefore an excessively large boot image, saved on the filesystem, can be
+crafted to overwrite all U-Boot static and runtime memory segments, and in
+general all device addressable memory starting from the `addr` load address
+argument.
 
-This issue was discovered by Jan Beulich of SUSE.
+The memory overwrite can directly lead to arbitrary code execution, fully
+controlled by the contents of the loaded image.
 
-RESOLUTION
-==========
+When verified boot is implemented, the issue allows to bypass its intended
+validation as the memory overwrite happens before any validation can take
+place.
 
-Applying the appropriate attached patch resolves this issue.
+The following example illustrates the issue, triggered with a 129MB file on a
+machine with 128MB or RAM:
 
-xsa255-?.patch         xen-unstable, Xen 4.10.x
-xsa255-4.9-?.patch     Xen 4.9.x, Xen 4.8.x
-xsa255-4.7-?.patch     Xen 4.7.x
-xsa255-4.6-?.patch     Xen 4.6.x
+```
+U-Boot 2018.09-rc1 (Oct 10 2018 - 10:52:54 +0200)
 
-$ sha256sum xsa255*
-05a5570ecf4354f7aad35bb77a4c2f5f556bcabf3555829a98c94dcfb6dd4696  xsa255-1.patch
-df43a147f1e1a2b7d59588bc91cdaac05d4e45bcfc4e2c8cb5e8de840d44b43d  xsa255-2.patch
-be62d81583df10a6be275427d5cfa02084c8717473b3694cd2a9bbdc10cbadcb  xsa255-4.6-1.patch
-3dd58114c5ce68fd8dd43f8f92eaafdcec1fd9add37eb41faed1cf818058539a  xsa255-4.6-2.patch
-9bfc4a33a0faeb36aec8449ea940cef52d523cc3d13529b4eeaae64bf5a7b644  xsa255-4.7-1.patch
-6d95ceb54298de7863dc7133c0f3adf85f7da9b8d326146ff46e641194a47fc0  xsa255-4.7-2.patch
-0b4706f0d2d21d4f6414ae9c0205e553bfb792c23d44e129b3a0f90be557d13f  xsa255-4.9-1.patch
-9c6b2d2183ffa484182ca75e1a048d0713c4d150e750ccf58be5a24991a3e1de  xsa255-4.9-2.patch
-$
+DRAM:  128 MiB
+Flash: 128 MiB
+MMC:   MMC: 0
 
-DEPLOYMENT DURING EMBARGO
-=========================
+# print memory information
+=> bdinfo
+arch_number = 0x000008E0
+boot_params = 0x60002000
+DRAM bank   = 0x00000000
+-> start    = 0x60000000
+-> size     = 0x08000000
+DRAM bank   = 0x00000001
+-> start    = 0x80000000
+-> size     = 0x00000004
+eth0name    = smc911x-0
+ethaddr     = 52:54:00:12:34:56
+current eth = smc911x-0
+ip_addr     = <NULL>
+baudrate    = 38400 bps
+TLB addr    = 0x67FF0000
+relocaddr   = 0x67F96000
+reloc off   = 0x07796000
+irq_sp      = 0x67EF5EE0
+sp start    = 0x67EF5ED0
 
-Deployment of the patches described above (or others which are
-substantially similar) is permitted during the embargo, even on
-public-facing systems with untrusted guest users and administrators.
+# load large file
+=> ext2load mmc 0 0x60000000 fitimage.itb
 
-However, deployment of the mitigation is NOT permitted (except where
-all the affected systems and VMs are administered and used only by
-organisations which are members of the Xen Project Security Issues
-Predisclosure List).  Specifically, deployment on public cloud systems
-is NOT permitted.  This is because this produces a guest-visible
-change which will indicate which component contains the vulnerability.
+# In this specific example U-Boot falls in an infinite loop, results vary
+# depending on the test case and filesystem/device driver used. A debugging
+# session demonstrates memory being overwritten:
+(gdb) p gd
+$28 = (volatile gd_t *) 0x67ef5ef8
+(gdb) p *gd
+$27 = {bd = 0x7f7f7f7f, flags = 2139062143, baudrate = 2139062143, ... }
+(gdb) x/300x 0x67ef5ef8
+0x67ef5ef8:	0x7f7f7f7f	0x7f7f7f7f	0x7f7f7f7f	0x7f7f7f7f
+```
 
-Additionally, distribution of updated software is prohibited (except to
-other members of the predisclosure list).
+It can be seen that memory address belonging to U-Boot data segments, in this
+specific case the global data structure `gd`, is overwritten with payload
+originating from `fitimage.itb` (filled with `0x7f7f7f7f`).
 
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
+### Impact
 
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
+Arbitrary code execution can be achieved within a U-Boot instance by means of
+unauthenticated binary images, loaded through the `load` command or its
+filesystem specific equivalents.
 
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+It should be emphasized that all load commands are likely to be affected by the
+same underlying root cause of this vulnerability.
 
-iQEcBAEBCAAGBQJal/zSAAoJEIP+FMlX6CvZT6EH/1V/ZKiEzRRz7zdQtP29RKFJ
-vlqhVO76d1jerdS19crtthQIP9y0hXBBZqLOcbkzH1JrSA9Zt6GrsvOBB/YTczzr
-8pEBEapnlUbTr6zk0V6+maXtmIzmmMhUjy6qvdZIE3qs9gxS2ZQkAAFRJNP/mPNY
-3saNnh1h66ojWmGZYq6Corb3bNbOEX51uKNsUP8f5jbPSNPV6iwgQ5ogM3HsI+LV
-vibg2VVnlDlHP5Wf2Bzz7KQOUR+FH+4fyJoUJIK7nwWQikBp5Px7uvGBiNcwwUG6
-fpEKB1QnrW1FVl9CkrqzcFJs2ChjFW9mORTflth5Ai7g86ZyEtVdhfJNav4mLmk=
-=+53n
------END PGP SIGNATURE-----
+### Workaround
 
-Download attachment "xsa255-1.patch" of type "application/octet-stream" (5980 bytes)
+The optional `bytes` argument can be passed to all load commands to restrict
+the maximum size of the retrieved data.
 
-Download attachment "xsa255-2.patch" of type "application/octet-stream" (6100 bytes)
+The issue can be therefore mitigated by passing a `bytes` argument with a value
+consistent with the U-Boot memory regions mapping and size.
 
-Download attachment "xsa255-4.6-1.patch" of type "application/octet-stream" (4249 bytes)
 
-Download attachment "xsa255-4.6-2.patch" of type "application/octet-stream" (6773 bytes)
+U-Boot insufficient boundary checks in network image boot
+---------------------------------------------------------
 
-Download attachment "xsa255-4.7-1.patch" of type "application/octet-stream" (4186 bytes)
+The U-Boot bootloader supports kernel loading from a variety of network
+sources, such as TFTP via the `tftpboot` command.
 
-Download attachment "xsa255-4.7-2.patch" of type "application/octet-stream" (6772 bytes)
+This command does not protect system memory from being overwritten when loading
+files of a length that exceeds the boundaries of the relocated U-Boot memory
+region, filled with the loaded file starting from the passed `loadAddr`
+variable.
 
-Download attachment "xsa255-4.9-1.patch" of type "application/octet-stream" (4169 bytes)
+Therefore an excessively large boot image, served over TFTP, can be crafted to
+overwrite all U-Boot static and runtime memory segments, and in general all
+device addressable memory starting from the `loadAddr` load address argument.
 
-Download attachment "xsa255-4.9-2.patch" of type "application/octet-stream" (6690 bytes)
+The memory overwrite can directly lead to arbitrary code execution, fully
+controlled by the contents of the loaded image.
+
+When verified boot is implemented, the issue allows to bypass its intended
+validation as the memory overwrite happens before any validation can take
+place.
+
+The issue can be exploited by several means:
+
+  - An excessively large crafted boot image file is parsed by the
+    `tftp_handler` function which lacks any size checks, allowing the memory
+    overwrite.
+
+  - A malicious server can manipulate TFTP packet sequence numbers to store
+    downloaded file chunks at arbitrary memory locations, given that the
+    sequence number is directly used by the `tftp_handler` function to calculate
+    the destination address for downloaded file chunks.
+
+    Additionally the `store_block` function, used to store downloaded file
+    chunks in memory, when invoked by `tftp_handler` with a `tftp_cur_block`
+    value of 0, triggers an unchecked integer underflow.
+
+    This allows to potentially erase memory located before the `loadAddr` when
+    a packet is sent with a null, following at least one valid packet.
+
+The following example illustrates the issue, triggered with a 129MB file on a
+machine with 128MB or RAM:
+
+```
+U-Boot 2018.09-rc1 (Oct 10 2018 - 10:52:54 +0200)
+
+DRAM:  128 MiB
+Flash: 128 MiB
+MMC:   MMC: 0
+
+# print memory information
+=> bdinfo
+arch_number = 0x000008E0
+boot_params = 0x60002000
+DRAM bank   = 0x00000000
+-> start    = 0x60000000
+-> size     = 0x08000000
+DRAM bank   = 0x00000001
+-> start    = 0x80000000
+-> size     = 0x00000004
+eth0name    = smc911x-0
+ethaddr     = 52:54:00:12:34:56
+current eth = smc911x-0
+ip_addr     = <NULL>
+baudrate    = 38400 bps
+TLB addr    = 0x67FF0000
+relocaddr   = 0x67F96000
+reloc off   = 0x07796000
+irq_sp      = 0x67EF5EE0
+sp start    = 0x67EF5ED0
+
+# configure environment
+=> setenv loadaddr 0x60000000
+=> dhcp
+smc911x: MAC 52:54:00:12:34:56
+smc911x: detected LAN9118 controller
+smc911x: phy initialized
+smc911x: MAC 52:54:00:12:34:56
+BOOTP broadcast 1
+DHCP client bound to address 10.0.0.20 (1022 ms)
+Using smc911x-0 device
+TFTP from server 10.0.0.1; our IP address is 10.0.0.20
+Filename 'fitimage.bin'.
+Load address: 0x60000000
+Loading: #################################################################
+...
+         ####################################
+
+R00=7f7f7f7f R01=67fedf6e R02=00000000 R03=7f7f7f7f
+R04=7f7f7f7f R05=7f7f7f7f R06=7f7f7f7f R07=7f7f7f7f
+R08=7f7f7f7f R09=7f7f7f7f R10=0000d677 R11=67fef670
+R12=00000000 R13=67ef5cd0 R14=02427f7f R15=7f7f7f7e
+PSR=400001f3 -Z-- T S svc32
+```
+
+It can be seen that the program counter (PC, r15) is set to an address
+originating from `fitimage.itb` (filled with `0x7f7f7f7f`), as the result of
+the U-Boot memory overwrite.
+
+### Impact
+
+Arbitrary code execution can be achieved within a U-Boot instance by means of
+unauthenticated binary images, passed through TFTP and loaded through the
+`tftpboot` command, or by a malicious TFTP server capable of sending arbitrary
+response packets.
+
+It should be emphasized that all network boot commands are likely to be
+affected by the same underlying root cause of this vulnerability.
+
+### Workaround
+
+The `tftpboot` command lacks any optional argument to restrict the maximum size
+of downloaded images, therefore the only workaround at this time is to avoid
+using this command on environments that require trusted boot.
+
+
+Affected version
+----------------
+
+All released U-Boot versions, at the time of this advisory release, are
+believed to be vulnerable.
+
+All tests have been performed against U-Boot version 2018.09-rc1.
+
+
+Credit
+------
+
+Vulnerabilities discovered and reported by the Inverse Path team at F-Secure,
+in collaboration with Quarkslab.
+
+
+CVE
+---
+
+CVE-2018-18440: U-Boot insufficient boundary checks in filesystem image load
+CVE-2018-18439: U-Boot insufficient boundary checks in network image boot
+
+
+Timeline
+--------
+
+2018-10-05: network boot finding identified during internal security audit
+            by Inverse Path team at F-Secure in collaboration with Quarkslab.
+
+2018-10-10: filesystem load finding identified during internal security audit
+            by Inverse Path team at F-Secure.
+
+2018-10-12: vulnerability reported by Inverse Path team at F-Secure to U-Boot
+            core maintainer and Google security, embargo set to 2018-11-02.
+
+2018-10-16: Google closes ticket reporting that ChromeOS is not affected due
+            to their specific environment customizations.
+
+2018-10-17: CVE IDs requested to MITRE and assigned.
+
+2018-11-02: advisory release.
+
+
+References
+----------
+
+[1] https://www.denx.de/wiki/U-Boot
+[2] https://lists.denx.de/pipermail/u-boot/2018-June/330487.html
+
+
+Permalink
+---------
+
+https://github.com/inversepath/usbarmory/blob/master/software/secure_boot/Security_Advisory-Ref_IPVR2018-0001.txt
+
+-- 
+Andrea Barisani     Head of Hardware Security |     F-Secure
+                                      Founder | Inverse Path
+
+https://www.f-secure.com             https://inversepath.com
+0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+       "Pluralitas non est ponenda sine necessitate"
