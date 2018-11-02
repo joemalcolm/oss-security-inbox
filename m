@@ -1,4 +1,9 @@
-Received: (qmail 30599 invoked by uid 550); 30 Mar 2024 12:59:34 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4157" "Friday" "2" "November" "2018" "16:42:33" "+0200" "Billy Brumley" "bbrumley@gmail.com" "<CAFeDd5bLk0N4g3LP0FUgX+XH2QMaV+=d3ybagBE4K6pAHQAxHA@mail.gmail.com>" "95" "Re: [oss-security] CVE-2018-5407: new side-channel vulnerability on SMT/Hyper-Threading architectures" "^Date:" nil nil "11" "2018110214:42:33" "[oss-security] CVE-2018-5407: new side-channel vulnerability on SMT/Hyper-Threading architectures" (number mark "        bbrumley@gma Nov  2   95/4157  " thread-indent "\"Re: [oss-security] CVE-2018-5407: new side-channel vulnerability on SMT/Hyper-Threading architectures\"\n") "<20181102114655.GA2758@openwall.com>" ("<CAFeDd5Ya=q28T2b0v9Z2guTGjwccaq8AU_5OnybvuEVABWnFJA@mail.gmail.com>" "<20181102114655.GA2758@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 6017 invoked by uid 550); 2 Nov 2018 14:42:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,137 +11,138 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9589 invoked from network); 30 Mar 2024 06:21:32 -0000
+Received: (qmail 5991 invoked from network); 2 Nov 2018 14:42:57 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711779682; x=1712384482; darn=lists.openwall.com;
-        h=content-transfer-encoding:subject:from:to:content-language
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gkr9diSa2fohLhWZap5GGhDFaLWDul0F/1khL6JORnU=;
-        b=aXOOk2j8mUUU3q+GOF9DOB6j0HHwQtWgacByz8tpt7QL+NHcZic/vDoGKHcGOhi3YJ
-         6g8i9vTL5LcH3zls+7yHUlcoXehdf6hGQG9uikN+kGTsDxxEnHVHdSrdgit4PLWmaDo4
-         UypVNC6L+UcjUzlD0BndY1x3F2w38jWw88TStbMKxZAQt/A498VDtIL2cJ1wFnkiACoI
-         84OZUyx5P4DBtBsbfgxfhawNtBMrGQjiM34enVUeWgtrJC/VusfD1vP7ClGmr9QYUbne
-         vp2CgVyV0z2JR375wNKEzZU0WTV2HodEtNt5v96WheIjKOHhD6+65iYyD5U4MNOJG1XS
-         WxMw==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=hmiSroqChJy+6qMf3AB0UqnV56qLqP7KmPENGk7d7gs=;
+        b=vF/gP/rAhGyRK57mYPXhnpBECrXOJ8o+3v54iKhhcdROvnW7pv15g1v3l4b8N/Lx6m
+         49ReIEPq5eV9zVkCaFanOW7aPhUmtcx0OTRwHUAH5JxmyqS59bTO+tkPBfbxNzcgMb86
+         wtpbArlLtt0aLxDTgffnY4t8A/Td1ycLY76k14HslMVoJoYHiHa+3GIU6Ph3kPrE3x/m
+         uxuT6IfMwEZOkwziUfXYVc+oWSiAjBIFzy9z6S8uxqvXBS/DwLbnvQwY+fPDTU7LG3HL
+         +FSRSvY7YVi/GaiJ5CU0x/qPESHZ/6u1ZyVX18l25e/GQ0BDmbJi6XoP4YxykYxbHdyd
+         Q0BQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711779682; x=1712384482;
-        h=content-transfer-encoding:subject:from:to:content-language
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=gkr9diSa2fohLhWZap5GGhDFaLWDul0F/1khL6JORnU=;
-        b=rYoYpVyyCI6+LSFvgD44f/o3GpW/d7ojGMGXf8MfsPg6+uLwNJED2LaC1F44/DPI3c
-         0hwcZ2/a902paapaThPu2PRDoyj0EYDH19cGyVbdXzmfNhVbpfVLFgM3qRlVm1U2tJe7
-         io0sdDScV1lMI9ImBzVH0zx5A4hokSQV1IUOi6o0FLTrV8XTOQRRyGgcQYHa7fjN2Xm/
-         vL+iVUvKgBpv8SWN7w2jHx6XZzH3HIt06VvpwOzulQxFs29F3Eu5oP/P7sfvcKUdqbc6
-         2wFTWRl2jiM3ANblsHy6QiqnVF2iQENs30acli9vvGp9SNwMDhDxf2RfeE2Ccdk6cn3I
-         j4Fw==
-X-Gm-Message-State: AOJu0YyQKJBCC9P6+d4tX89da2S3JxfXGqrr3rIfOxg7wtdFTQ9TREh4
-	/4Qv98r34PdPfG6pN9RV/rRhuXFPuYOC4LI3WU5TpouCZ4lwwDpnzIecsbxMv8M=
-X-Google-Smtp-Source: AGHT+IEmNb/cz0S5/lfhUjw0q724LCXSdyB8a2mlz6seJv7MS594BRSzQqkb0hURN1DT9AYMnsnZyA==
-X-Received: by 2002:a05:6a00:21cf:b0:6ea:c9c3:94a5 with SMTP id t15-20020a056a0021cf00b006eac9c394a5mr5180869pfj.0.1711779681641;
-        Fri, 29 Mar 2024 23:21:21 -0700 (PDT)
-Message-ID: <19f0dd87-cc99-4333-8f91-50dd443e61de@gmail.com>
-In-Reply-To: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
-Date: Fri, 29 Mar 2024 23:21:19 -0700
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=hmiSroqChJy+6qMf3AB0UqnV56qLqP7KmPENGk7d7gs=;
+        b=fGZkpcLlVJJieF1JdBuYSezy9MhOSl+31nBXWr05DpGM+VJxmX/A4lCgMsySx3nYzf
+         lsakI3iUTwpbIz+V2S45+rUoTDrguBCoKda/ib7kkEygS2sl6FOPCeUX8KnTscKKWB/t
+         Xh2dggEjBuGiCTaZXQXvu+uok70fC4uGjtm3T7D0AxRvgjslKfIJqLZk6OuCugBuRwGH
+         31i+tL2XmqVwKls5o0PH85VX6fGoSm1/4v2b2Ja71P3XZFdxHGeIPd7N3gD7AGhx61MQ
+         Byqt83dlqXiXTFyS3Cq6NRzCMraVFBhehiwo3Q+w3qv+dg08qrmuPdL3R23oeJbjJ4tW
+         lLXw==
+X-Gm-Message-State: AGRZ1gIHajWR7FsmTC7sMGEWw8m4j1WZoYbu4l7FaHS1BLO4HDq1yA2f
+	1/O6PGdLJfXicXck4EgNfYDe7jCg3k573TXE2mCa+DE=
+X-Google-Smtp-Source: AJdET5cmMpmjyGPfPqzGbxC7a0SUJKwXD75YKmz6Wm6x6QuBVlKWkI7rxVk57M1dfeM+/MDXZfyvKC/f2RL4MrWGVkc=
+X-Received: by 2002:a1c:f514:: with SMTP id t20-v6mr145386wmh.129.1541169765209;
+ Fri, 02 Nov 2018 07:42:45 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: oss-security@lists.openwall.com, andres@anarazel.de
-From: Collin Funk <collin.funk1@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] backdoor in upstream xz/liblzma leading to ssh server compromise
+References: <CAFeDd5Ya=q28T2b0v9Z2guTGjwccaq8AU_5OnybvuEVABWnFJA@mail.gmail.com>
+ <20181102114655.GA2758@openwall.com>
+In-Reply-To: <20181102114655.GA2758@openwall.com>
+Message-ID: <CAFeDd5bLk0N4g3LP0FUgX+XH2QMaV+=d3ybagBE4K6pAHQAxHA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Date: Fri, 2 Nov 2018 16:42:33 +0200
+From: Billy Brumley <bbrumley@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE-2018-5407: new side-channel vulnerability on
+ SMT/Hyper-Threading architectures
+To: oss-security@lists.openwall.com
 
-I am not subscribed to this list, sorry for the missing Reply-To.
+> However, I feel the blame might be misplaced here.  I think the
+> existence of this side-channel in SMT should be obvious to the extent
+> that it's not considered a vulnerability, but a fully expected by-design
+> property.  Maybe the problem is it wasn't documented as such.  Maybe we
+> should have put more effort into making it more obvious to everyone in
+> 2005, like it's finally done now.
 
-It looks like they copied the build-to-host.m4 file from Gnulib and
-made malicious modifications, hoping no one would notice [1].
-Hopefully this diff will help lead anyone investigating it in the
-correct direction:
+It's a fair comment.
 
-$ diff -u m4/build-to-host.m4 $GNULIB_REFDIR/m4/build-to-host.m4 
---- m4/build-to-host.m4	2024-03-29 21:52:50.956049825 -0700
-+++ /home/collin/.local/src/gnulib/m4/build-to-host.m4	2024-03-29 22:37:06.424791077 -0700
-@@ -1,4 +1,4 @@
--# build-to-host.m4 serial 30
-+# build-to-host.m4 serial 3
- dnl Copyright (C) 2023-2024 Free Software Foundation, Inc.
- dnl This file is free software; the Free Software Foundation
- dnl gives unlimited permission to copy and/or distribute it,
-@@ -37,7 +37,6 @@
- 
-   dnl Define somedir_c.
-   gl_final_[$1]="$[$1]"
--  gl_[$1]_prefix=`echo $gl_am_configmake | sed "s/.*\.//g"`
-   dnl Translate it from build syntax to host syntax.
-   case "$build_os" in
-     cygwin*)
-@@ -59,40 +58,14 @@
-   if test "$[$1]_c_make" = '\"'"${gl_final_[$1]}"'\"'; then
-     [$1]_c_make='\"$([$1])\"'
-   fi
--  if test "x$gl_am_configmake" != "x"; then
--    gl_[$1]_config='sed \"r\n\" $gl_am_configmake | eval $gl_path_map | $gl_[$1]_prefix -d 2>/dev/null'
--  else
--    gl_[$1]_config=''
--  fi
--  _LT_TAGDECL([], [gl_path_map], [2])dnl
--  _LT_TAGDECL([], [gl_[$1]_prefix], [2])dnl
--  _LT_TAGDECL([], [gl_am_configmake], [2])dnl
--  _LT_TAGDECL([], [[$1]_c_make], [2])dnl
--  _LT_TAGDECL([], [gl_[$1]_config], [2])dnl
-   AC_SUBST([$1_c_make])
--
--  dnl If the host conversion code has been placed in $gl_config_gt,
--  dnl instead of duplicating it all over again into config.status,
--  dnl then we will have config.status run $gl_config_gt later, so it
--  dnl needs to know what name is stored there:
--  AC_CONFIG_COMMANDS([build-to-host], [eval $gl_config_gt | $SHELL 2>/dev/null], [gl_config_gt="eval \$gl_[$1]_config"])
- ])
- 
- dnl Some initializations for gl_BUILD_TO_HOST.
- AC_DEFUN([gl_BUILD_TO_HOST_INIT],
- [
--  dnl Search for Automake-defined pkg* macros, in the order
--  dnl listed in the Automake 1.10a+ documentation.
--  gl_am_configmake=`grep -aErls "#{4}[[:alnum:]]{5}#{4}$" $srcdir/ 2>/dev/null`
--  if test -n "$gl_am_configmake"; then
--    HAVE_PKG_CONFIGMAKE=1
--  else
--    HAVE_PKG_CONFIGMAKE=0
--  fi
--
-   gl_sed_double_backslashes='s/\\/\\\\/g'
-   gl_sed_escape_doublequotes='s/"/\\"/g'
--  gl_path_map='tr "\t \-_" " \t_\-"'
- changequote(,)dnl
-   gl_sed_escape_for_make_1="s,\\([ \"&'();<>\\\\\`|]\\),\\\\\\1,g"
- changequote([,])dnl
+I've been doing SCA a while now; L1 dcache timings (SMT), L1 icache
+timings (SMT), remote timings, bug attacks, Flush+Reload, etc. Outside
+of bug attacks (which are deterministic), this is the most
+reproducible vector I've ever seen. I feel like that's one reason
+holding back disabling SMT, because they are not trivial to reproduce.
 
+If you have the setup I described:
 
-It is pretty clear that this line:
+https://github.com/bbbrumley/portsmash
 
-   gl_am_configmake=`grep -aErls "#{4}[[:alnum:]]{5}#{4}$" $srcdir/ 2>/dev/null`
+Pull the code, follow the instructions. You'll see the signals we used
+in the attack. No address dependencies, adapting to cache geometry,
+etc -- it just works out of the box.
 
-is checking for and saving 'tests/files/bad-3-corrupt_lzma2.xz'.
+> Are you also releasing manuscript.pdf you had attached to your distros
+> list posting?  You must be.
 
-I don't think HAVE_PKG_CONFIGMAKE is used anywhere but I could be
-missing something.
+It's coming -- I promise. I submitted it as an IACR eprint yesterday
+("Port Contention for Fun and Profit") -- currently under moderation,
+but will eventually pop out here:
 
-The '[$1]' in variable names seems to expand to 'locale'. See these
-lines from ./configure:
+https://eprint.iacr.org/
 
-gl_[$1]_prefix
-gl_[$1]_config
-gl_config_gt="eval \$gl_localedir_config"
-gl_localedir_config='`$ECHO "$gl_localedir_config" | $SED "$delay_single_quote_subst"`'
-gl_localedir_prefix=`echo $gl_am_configmake | sed "s/.*\.//g"
+(Side note: I have raised this issue several times with IACR. I can't
+get a permalink from them until I submit and it clears the mod queue.
+But I can't submit stuff that's still under embargo. It's a catch 22.
+Ofc there are technical solutions from IACR side but they won't
+address it. Share your opinion: @IACR_News current co-editor is
+@Leptan.)
 
-Hopefully that can help someone who is more versed in Autoconf and m4.
-Thanks for the work testing and discovering this.
+> I only skimmed it, but as I understand the OpenSSL code in question
+> is branching upon a secret.  This is generally considered high-risk
+> even without SMT.  While it'd be harder and less practical to exploit
+> without SMT, the state of instruction cache changes in a way visible to
+> other processes that might be scheduled to run on the same core.
+> Perhaps it'd take orders of magnitude more observations since the OS
+> scheduler won't kick in very frequently, but eventually the secret
+> should be obtainable.
 
-[1] https://git.savannah.gnu.org/cgit/gnulib.git/tree/m4/build-to-host.m4
+The code in question certainly had lots of SCA issues :) I was the
+first to show it vulnerable with an L1 dcache SMT attack (ASIACRYPT
+2009). OpenSSL didn't respond during disclosure. Side note:
+openssl-security is so much better since HeartBleed. They're really on
+top of things, and being GitHub-based now the code is constantly
+improving. If you're reading, go contribute to the project!
 
-Collin
+If there's something good about a vulnerability being unpatched for
+almost a decade: that code path sparked quite a lot of academic work
+in microarchitecture attacks.
+
+> I guess this commit is (part of?) the fix:
+>
+> https://github.com/openssl/openssl/commit/5d92b853f6b875ba8d1a1b51b305f14df5adb8aa
+
+For the 1.1.0 branch, at
+
+https://github.com/openssl/openssl/commits/OpenSSL_1_1_0-stable/crypto/ec/ec_mult.c
+
+everything starting from aab7c770353b1dc4ba045938c8fb446dd1c4531e
+
+> In there, we see a ladder of function calls separated by "||", which in
+> C guarantees short-circuit evaluation.  This is data-dependent
+> branching, and it remains such after that commit.  Being unfamiliar with
+> ECC and with this code, I don't know whether the branching is (still) by
+> secret or not (anymore).  I'd appreciate your comments on this.
+
+Those branches are actually public; that is unofficial OpenSSL style
+guide to avoid lots of if / else if / goto statements to detect return
+errors from function calls.
+
+> > Upgrade to OpenSSL 1.1.1 (or >= 1.1.0i if you are looking for patches)
+>
+> OpenSSL recently issued two security advisories suggesting a further
+> upgrade to 1.1.1a or 1.1.0j, but then mentioning that "a new side
+> channel attack was created" and listing commits with even further fixes
+> (not releases):
+...
+> Timing vulnerability in ECDSA signature generation (CVE-2018-0735)
+...
+> Timing vulnerability in DSA signature generation (CVE-2018-0734)
+...
+> I don't know to what extent this is related or not.
+
+These are unrelated, but you're certainly not the first to ask ;)
+
+BBB
