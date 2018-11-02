@@ -1,45 +1,104 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/24/1
-Message-ID: <_lXuZCbn1AUuAYLpnbHITcY5b0mgsoqJta02ouknD8HstX2Za0vbMyKjB2nITSFXexg24EvqT_VHJPXxsUzae2-k91KKs4dB_7bN7JGV1bs=@protonmail.ch>
-Date: Wed, 24 Oct 2018 14:30:36 +0000
-From: Jordan Glover <Golden_Miller83@...tonmail.ch>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Cc: Andrew Sandoval <ASandoval@...root.com>, "solar@...nwall.com" <solar@...nwall.com>
-Subject: Re: GCC Compiler Induced Vulnerability - affects programs compiled with GCC 7 and 8 containing nested functions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/02/4
+Message-ID: <CAFeDd5bLk0N4g3LP0FUgX+XH2QMaV+=d3ybagBE4K6pAHQAxHA@mail.gmail.com>
+Date: Fri, 2 Nov 2018 16:42:33 +0200
+From: Billy Brumley <bbrumley@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2018-5407: new side-channel vulnerability on SMT/Hyper-Threading architectures
 Content-Type: text/plain; charset=utf-8
 
-‐‐‐‐‐‐‐ Original Message ‐‐‐‐‐‐‐
-On Tuesday, October 23, 2018 3:35 PM, Solar Designer <solar@...nwall.com> wrote:
+> However, I feel the blame might be misplaced here.  I think the
+> existence of this side-channel in SMT should be obvious to the extent
+> that it's not considered a vulnerability, but a fully expected by-design
+> property.  Maybe the problem is it wasn't documented as such.  Maybe we
+> should have put more effort into making it more obvious to everyone in
+> 2005, like it's finally done now.
 
->
-> Here's a list of maybe-actionable items I came up with in response to
-> Webroot's findings/reminder:
->
-> 1.  More distros should start checking for executable stacks in program
->     binaries at package build time, and error out when this is unexpected.
->
-> 2.  On Linux, we might want to have an enforcing mode (or several
->     sub-modes) in the kernel, where it'd keep the stack non-executable (and
->     possibly enforce W^X for other mappings as well), ignoring any flags in
->     the program binaries. I encouraged Vasiliy Kulikov to implement that
->     when he worked with us under GSoC 2011 on Linux kernel hardening tasks.
->     Here's the relevant thread, including a kernel patch:
->
->     https://www.openwall.com/lists/kernel-hardening/2011/07/18/8
->
->     For GCC trampolines to continue working, we can implement emulation of
->     the trampoline instructions like I introduced in -ow patches for 2.2.x
->     and like it's done in PaX/grsecurity. Vasiliy's patch includes that
->     (using code from PaX).
->
->     IIRC, we never actually submitted this upstream. Maybe the current
->     kernel hardening project (KSPP) should take and complete this effort.
->
+It's a fair comment.
 
-There is S.A.R.A LSM[0] proposed by Salvatore Mesoraca with the aim to upstream
-it to mainline kernel when needed infrastructure for it will be ready.
+I've been doing SCA a while now; L1 dcache timings (SMT), L1 icache
+timings (SMT), remote timings, bug attacks, Flush+Reload, etc. Outside
+of bug attacks (which are deterministic), this is the most
+reproducible vector I've ever seen. I feel like that's one reason
+holding back disabling SMT, because they are not trivial to reproduce.
 
-[0] https://sara.smeso.it/en/latest/
+If you have the setup I described:
 
-Jordan
+https://github.com/bbbrumley/portsmash
 
+Pull the code, follow the instructions. You'll see the signals we used
+in the attack. No address dependencies, adapting to cache geometry,
+etc -- it just works out of the box.
+
+> Are you also releasing manuscript.pdf you had attached to your distros
+> list posting?  You must be.
+
+It's coming -- I promise. I submitted it as an IACR eprint yesterday
+("Port Contention for Fun and Profit") -- currently under moderation,
+but will eventually pop out here:
+
+https://eprint.iacr.org/
+
+(Side note: I have raised this issue several times with IACR. I can't
+get a permalink from them until I submit and it clears the mod queue.
+But I can't submit stuff that's still under embargo. It's a catch 22.
+Ofc there are technical solutions from IACR side but they won't
+address it. Share your opinion: @IACR_News current co-editor is
+@Leptan.)
+
+> I only skimmed it, but as I understand the OpenSSL code in question
+> is branching upon a secret.  This is generally considered high-risk
+> even without SMT.  While it'd be harder and less practical to exploit
+> without SMT, the state of instruction cache changes in a way visible to
+> other processes that might be scheduled to run on the same core.
+> Perhaps it'd take orders of magnitude more observations since the OS
+> scheduler won't kick in very frequently, but eventually the secret
+> should be obtainable.
+
+The code in question certainly had lots of SCA issues :) I was the
+first to show it vulnerable with an L1 dcache SMT attack (ASIACRYPT
+2009). OpenSSL didn't respond during disclosure. Side note:
+openssl-security is so much better since HeartBleed. They're really on
+top of things, and being GitHub-based now the code is constantly
+improving. If you're reading, go contribute to the project!
+
+If there's something good about a vulnerability being unpatched for
+almost a decade: that code path sparked quite a lot of academic work
+in microarchitecture attacks.
+
+> I guess this commit is (part of?) the fix:
+>
+> https://github.com/openssl/openssl/commit/5d92b853f6b875ba8d1a1b51b305f14df5adb8aa
+
+For the 1.1.0 branch, at
+
+https://github.com/openssl/openssl/commits/OpenSSL_1_1_0-stable/crypto/ec/ec_mult.c
+
+everything starting from aab7c770353b1dc4ba045938c8fb446dd1c4531e
+
+> In there, we see a ladder of function calls separated by "||", which in
+> C guarantees short-circuit evaluation.  This is data-dependent
+> branching, and it remains such after that commit.  Being unfamiliar with
+> ECC and with this code, I don't know whether the branching is (still) by
+> secret or not (anymore).  I'd appreciate your comments on this.
+
+Those branches are actually public; that is unofficial OpenSSL style
+guide to avoid lots of if / else if / goto statements to detect return
+errors from function calls.
+
+> > Upgrade to OpenSSL 1.1.1 (or >= 1.1.0i if you are looking for patches)
+>
+> OpenSSL recently issued two security advisories suggesting a further
+> upgrade to 1.1.1a or 1.1.0j, but then mentioning that "a new side
+> channel attack was created" and listing commits with even further fixes
+> (not releases):
+...
+> Timing vulnerability in ECDSA signature generation (CVE-2018-0735)
+...
+> Timing vulnerability in DSA signature generation (CVE-2018-0734)
+...
+> I don't know to what extent this is related or not.
+
+These are unrelated, but you're certainly not the first to ask ;)
+
+BBB
