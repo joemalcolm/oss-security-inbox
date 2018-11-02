@@ -1,75 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/04/5
-Message-ID: <CAGXu5jJD0X7okv9=Dm00YP6UjtCSV21gj30Orc_VrYO+94dMzQ@mail.gmail.com>
-Date: Wed, 4 Apr 2018 15:17:11 -0700
-From: Kees Cook <keescook@...omium.org>
-To: Alexander Popov <alex.popov@...ux.com>
-Cc: oss-security@...ts.openwall.com, James Morris <jmorris@...ei.org>,  "Serge E. Hallyn" <serge@...lyn.com>, Brad Spengler <spender@...ecurity.net>,  PaX Team <pageexec@...email.hu>
-Subject: Re: Linux Kernel Defence Map
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/02/1
+Message-ID: <nycvar.YSQ.7.76.1811021424410.17672@xnncv>
+Date: Fri, 2 Nov 2018 14:27:05 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liq3ea@...il.com>
+Subject: CVE-2018-16847 QEMU: nvme: Out-of-bounds r/w buffer access in cmb operations
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 4, 2018 at 9:15 AM, Alexander Popov <alex.popov@...ux.com> wrote:
-> Linux kernel security is a very complex area. It would be nice to have some
-> graphical representation of its current state. So I've created a Linux Kernel
-> Defence Map showing the relations between:
->  - vulnerability classes / exploitation techniques,
->  - kernel defences,
->  - bug detection means.
->
-> Link:
->    https://github.com/a13xp0p0v/linux-kernel-defence-map
->
-> N.B. The node connections don't mean "full mitigation". These connections
-> represent some kind of relation. So ideally, this map should help to navigate in
-> documentation and Linux kernel sources.
->
-> I wrote it in DOT language and generated the picture using GraphViz. So it is
-> very pleasant to maintain this map with git.
->
-> I would be grateful for any feedback.
+   Hello,
 
-This is cool; thanks for starting it! There are many nuances, details,
-and caveats for a lot of the defense details, but I do like showing
-the general relationships. Having some much longer accompanying text
-would be nice to dive more deeply into each bubble in the chart. I'd
-like to capture as much of that as possible in upstream's
-Documentation/security/self-protection.rst! :)
+An OOB heap buffer r/w access issue was found in the NVM Express Controller 
+emulation in QEMU.  It could occur in nvme_cmb_ops routines in nvme devices. A 
+guest user/process could use this flaw to crash the QEMU process resulting in 
+DoS or potentially run arbitrary code with privileges of the QEMU process.
 
-Some initial thoughts in looking at the chart:
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2018-11/msg00200.html
 
+This issue was found and reported by Li Qiang. 'CVE-2018-16847' assigned by 
+Red Hat Inc.
 
-Upstream's SLAB_FREELIST_HARDENED is based on an "unnamed" (always-on)
-grsecurity defense (see commit 2482ddec670f), so that should have a
-dashed line, but I'm not sure how to name the new bubble.
-
-KPTI defends against info leaks and "finding kernel objects" too, in a
-way. Maybe just add a whole "side channels" bubble?
-
-(I think "info leaks" and "finding kernel objects" may need some kind
-of clarifying language for how they're different)
-
-I didn't immediately parse that "Pointer Obfuscation" meant the %p
-hashing, but I don't have a good suggestion about how to improve that
-language. :)
-
-Upstream's /proc/sys/net/core/bpf_jit_harden (see commit 4f3446bb809f)
-and other JIT features (RO-setting, randomized offset, etc) are
-designed to defend against JIT Abuse.
-
-UDEREF and SMAP pointing at ret2usr+ROP is fine, but seems
-"incomplete". Is there a good name for "reading user memory and
-operating on a malicious structure"? It's a more narrow exploit
-technique than ROP or executing userspace memory, but it's important
-to cover.
-
-I'd expect UDEREF to point at ret2usr, too.
-
-Maybe add CPU_SW_DOMAIN_PAN and ARM64_SW_TTBR0_PAN to point at both
-ret2usr and the new "access userspace" bubble?
-
-
--Kees
-
--- 
-Kees Cook
-Pixel Security
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
