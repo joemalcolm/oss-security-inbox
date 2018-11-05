@@ -1,67 +1,108 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/29/1
-Message-ID: <2142970777.14264014.1522310169467.JavaMail.zimbra@redhat.com>
-Date: Thu, 29 Mar 2018 03:56:09 -0400 (EDT)
-From: Vladis Dronov <vdronov@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: a number of CVEs for issues in the filesystem's code in the Linux kernel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/05/2
+Message-ID: <20181105200854.GC25817@TC-275.local>
+Date: Mon, 5 Nov 2018 12:08:54 -0800
+From: Aaron Patterson <tenderlove@...y-lang.org>
+To: security@...e.de, rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
+Subject: [CVE-2018-16471] Possible XSS vulnerability in Rack
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+There is a possible vulnerability in Rack. This vulnerability has been
+assigned the CVE identifier CVE-2018-16471.
 
-A number of CVEs were assigned to recently found issues in the filesystem's code in the Linux kernel:
+Versions Affected:  All.
+Not affected:       None.
+Fixed Versions:     2.0.6, 1.6.11
 
-====
+Impact
+------
+There is a possible XSS vulnerability in Rack.  Carefully crafted requests can
+impact the data returned by the `scheme` method on `Rack::Request`.
+Applications that expect the scheme to be limited to "http" or "https" and do
+not escape the return value could be vulnerable to an XSS attack.
 
-CVE-2018-1092 kernel: NULL pointer dereference in ext4/mballoc.c:ext4_process_freed_data() when mounting crafted ext4 image
+Vulnerable code looks something like this:
 
-The Linux kernel through version 4.15 is vulnerable to a NULL pointer dereference
-in the ext4/mballoc.c:ext4_process_freed_data() function. An attacker with
-privileged access could exploit this by mounting a crafted ext4 image to cause a kernel panic.
+```
+  <%= request.scheme.html_safe %>
+```
 
-References:
-https://bugzilla.kernel.org/show_bug.cgi?id=199179
-https://bugzilla.redhat.com/show_bug.cgi?id=1560777
+Note that applications using the normal escaping mechanisms provided by Rails
+may not impacted, but applications that bypass the escaping mechanisms, or do
+not use them may be vulnerable.
 
-=====
+All users running an affected release should either upgrade or use one of the
+workarounds immediately.
 
-CVE-2018-1093 kernel: Out of bounds read in ext4/balloc.c:ext4_valid_block_bitmap() causes crash with crafted ext4 image
+Releases
+--------
+The 2.0.6 and 1.6.11 releases are available at the normal locations.
 
-The Linux kernel through version 4.15 is vulnerable to an out-of-bounds
-read in ext4/balloc.c:ext4_valid_block_bitmap() function. An privileged
-attacker could exploit this by mounting a crafted ext4 image to cause a crash.
+Workarounds
+-----------
+The following monkey patch can be applied to work around this issue:
 
-References:
-https://bugzilla.kernel.org/show_bug.cgi?id=199181
-https://bugzilla.redhat.com/show_bug.cgi?id=1560782
+```
+require "rack"
+require "rack/request"
 
-=====
+class Rack::Request
+  SCHEME_WHITELIST = %w(https http).freeze
 
-CVE-2018-1094 kernel: NULL pointer dereference in ext4/xattr.c:ext4_xattr_inode_hash() causes crash with crafted ext4 image
+  def scheme
+    if get_header(Rack::HTTPS) == 'on'
+      'https'
+    elsif get_header(HTTP_X_FORWARDED_SSL) == 'on'
+      'https'
+    elsif forwarded_scheme
+      forwarded_scheme
+    else
+      get_header(Rack::RACK_URL_SCHEME)
+    end
+  end
 
-The Linux kernel through version 4.15 is vulnerable to a NULL pointer dereference
-in the ext4/xattr.c:ext4_xattr_inode_hash() function. A privileged attacker could
-exploit this to cause a NULL pointer dereference with a crafted ext4 image.
+  def forwarded_scheme
+    scheme_headers = [
+      get_header(HTTP_X_FORWARDED_SCHEME),
+      get_header(HTTP_X_FORWARDED_PROTO).to_s.split(',')[0]
+    ]
 
-References:
-https://bugzilla.kernel.org/show_bug.cgi?id=199183
-https://bugzilla.redhat.com/show_bug.cgi?id=1560788
+    scheme_headers.each do |header|
+      return header if SCHEME_WHITELIST.include?(header)
+    end
 
-=====
+    nil
+  end
+end
+```
 
-CVE-2018-1095 kernel: NULL pointer dereference in fs/posix_acl.c:get_acl() causes crash with crafted ext4 image
+Patches
+-------
+To aid users who aren't able to upgrade immediately we have provided patches for
+the supported release series. They are in git-am format and consist of a
+single changeset.
 
-The Linux kernel through version 4.15 is vulnerable to a NULL pointer
-dereference in the  fs/posix_acl.c:get_acl()function. A privileged attacker
-could exploit this to cause a NULL pointer dereference with a crafted ext4
-image.
+* 2-0-scheme-xss.patch - Patch for 2.0 series
+* 1-6-scheme-xss.patch - Patch for 1.6 series
 
-References:
+Please note that only the 1.6.x and 2.0.x series are supported at present. Users
+of earlier unsupported releases are advised to upgrade as soon as possible as we
+cannot guarantee the continued availability of security fixes for unsupported
+releases.
 
-https://bugzilla.kernel.org/show_bug.cgi?id=199185
-https://bugzilla.redhat.com/show_bug.cgi?id=1560793
+Credits
+-------
 
-=====
+* Patrick Tulskie <patricktulskie@...il.com>
 
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+Thank you!
+
+-- 
+Aaron Patterson
+http://tenderlovemaking.com/
+
+View attachment "1-6-scheme-xss.patch" of type "text/plain" (2087 bytes)
+
+View attachment "2-0-scheme-xss.patch" of type "text/plain" (2230 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
