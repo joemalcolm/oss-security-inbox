@@ -1,104 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/31/1
-Message-ID: <alpine.DEB.2.20.1810310753080.4385@tvnag.unkk.fr>
-Date: Wed, 31 Oct 2018 07:55:37 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl - SASL password overflow via integer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/05/1
+Message-ID: <20181105200739.GB25817@TC-275.local>
+Date: Mon, 5 Nov 2018 12:07:39 -0800
+From: Aaron Patterson <tenderlove@...y-lang.org>
+To: security@...e.de, rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
+Subject: [CVE-2018-16470] Possible DoS vulnerability in Rack
 Content-Type: text/plain; charset=utf-8
 
-SASL password overflow via integer overflow
-===========================================
+There is a possible DoS vulnerability in the multipart parser in Rack. This
+vulnerability has been assigned the CVE identifier CVE-2018-16470.
 
-Project curl Security Advisory, October 31st 2018 -
-[Permalink](https://curl.haxx.se/docs/CVE-2018-16839.html)
+Versions Affected:  2.0.4, 2.0.5
+Not affected:       <= 2.0.3
+Fixed Versions:     2.0.6
 
-VULNERABILITY
--------------
+Impact
+------
+There is a possible DoS vulnerability in the multipart parser in Rack.
+Carefully crafted requests can cause the multipart parser to enter a
+pathological state, causing the parser to use CPU resources disproportionate to
+the request size.
 
-libcurl contains a buffer overrun in the SASL authentication code.
+Impacted code can look something like this:
 
-The internal function `Curl_auth_create_plain_message` fails to correctly
-verify that the passed in lengths for name and password aren't too long, then
-calculates a buffer size to allocate.
+```
+  Rack::Request.new(env).params
+```
 
-On systems with a 32 bit `size_t`, the math to calculate the buffer size
-triggers an integer overflow when the user name length exceeds 2GB (2^31
-bytes). This integer overflow usually causes a very small buffer to actually
-get allocated instead of the intended very huge one, making the use of that
-buffer end up in a heap buffer overflow.
+But any code that uses the multi-part parser may be vulnerable.
 
-(This bug is very similar to
-[CVE-2017-14618](https://curl.haxx.se/docs/CVE-2018-14618.html).)
+Rack users that have manually adjusted the buffer size in the multipart parser
+may be vulnerable as well.
 
-We are not aware of any exploit of this flaw.
+All users running an affected release should either upgrade or use one of the
+workarounds immediately.
 
-INFO
-----
+Releases
+--------
+The 2.0.6 release is available at the normal locations.
 
-The affected function can only be invoked when using POP3(S), IMAP(S) or
-SMTP(S).
+Workarounds
+-----------
+To work around this issue, the following code can be used:
 
-This bug was introduced in [commit
-c56f9797e7feb7c2dc](https://github.com/curl/curl/commit/c56f9797e7feb7c2dc),
-August 2013.
+```
+require "rack/multipart/parser"
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2018-16839 to this issue.
+Rack::Multipart::Parser.send :remove_const, :BUFSIZE
+Rack::Multipart::Parser.const_set :BUFSIZE, 16384
+```
 
-CWE-131: Incorrect Calculation of Buffer Size
-
-Severity: 3.2 (Low)
-
-AFFECTED VERSIONS
------------------
-
-This issue is only present on 32 bit systems. It also requires the username
-field to use more than 2GB of memory, which should be rare.
-
-- Affected versions: libcurl 7.33.0 to and including 7.61.1
-- Not affected versions: libcurl < 7.33.0 and >= 7.62.0
-
-curl is used by many applications, but not always advertised as such.
-
-THE SOLUTION
-------------
-
-In libcurl version 7.62.0, the integer overflow is avoided. An error will be
-returned if a too long user name is attempted.
-
-A [patch for
-CVE-2018-16839](https://github.com/curl/curl/commit/f3a24d7916b9173c69a3e0ee790102993833d6c5)
-is available.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl to version 7.62.0
-
-  B - Apply the patch to your version and rebuild
-
-  C - Put length restrictions on the username field you can pass to libcurl
-
-TIME LINE
----------
-
-It was reported to the curl project on September 6, 2018.  We contacted
-distros@...nwall on October 22.
-
-curl 7.62.0 was released on October 31 2018, coordinated with the publication
-of this advisory.
-
-CREDITS
+Patches
 -------
+To aid users who aren't able to upgrade immediately we have provided patches for
+the supported release series. They are in git-am format and consist of a
+single changeset.
 
-Reported by Harry Sintonen. Patch by Daniel Stenberg.
+* 2-0-multipart-dos.patch - Patch for 2.0 series
 
-Thanks a lot!
+Please note that only the 1.6.x and 2.0.x series are supported at present. Users
+of earlier unsupported releases are advised to upgrade as soon as possible as we
+cannot guarantee the continued availability of security fixes for unsupported
+releases.
+
+Credits
+-------
+Thanks to the following people for reporting this issue!
+
+* Bo Jeanes <me@...anes.com>
+* Jack "chendo" Chen <me@...n.do>
 
 -- 
+Aaron Patterson
+http://tenderlovemaking.com/
 
-  / daniel.haxx.se
+View attachment "2-0-multipart-dos.patch" of type "text/plain" (981 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
