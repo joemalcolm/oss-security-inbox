@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4838" "Monday" "10" "April" "2017" "07:34:33" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<200458.336013497-sendEmail@localhost>" "108" "[oss-security] elfutils: heap-based buffer overflow in check_group (elflint.c)" nil nil nil "4" "2017041007:34:33" "[oss-security] elfutils: heap-based buffer overflow in check_group (elflint.c)" (number mark "U       ago@gentoo.o Apr 10  108/4838  " thread-indent "\"[oss-security] elfutils: heap-based buffer overflow in check_group (elflint.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["539" "Wednesday" "7" "November" "2018" "00:33:03" "+0530" "P J P" "ppandit@redhat.com" "<nycvar.YSQ.7.76.1811070031000.15644@xnncv>" "17" "[oss-security] CVE-2018-18954 QEMU: ppc64: Out-of-bounds r/w stack access in pnv_lpc_do_eccb" nil nil nil "11" "2018110619:03:03" "[oss-security] CVE-2018-18954 QEMU: ppc64: Out-of-bounds r/w stack access in pnv_lpc_do_eccb" (number mark "U       ppandit@redh Nov  7   17/539   " thread-indent "\"[oss-security] CVE-2018-18954 QEMU: ppc64: Out-of-bounds r/w stack access in pnv_lpc_do_eccb\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7614 invoked by uid 550); 10 Apr 2017 07:34:51 -0000
+Received: (qmail 14328 invoked by uid 550); 6 Nov 2018 19:03:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,120 +12,34 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7596 invoked from network); 10 Apr 2017 07:34:50 -0000
-Message-ID: <200458.336013497-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Mon, 10 Apr 2017 07:34:33 +0000
+Received: (qmail 14307 invoked from network); 6 Nov 2018 19:03:20 -0000
+Date: Wed, 7 Nov 2018 00:33:03 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@kaapi
+To: oss security list <oss-security@lists.openwall.com>
+cc: moguofang@huawei.com
+Message-ID: <nycvar.YSQ.7.76.1811070031000.15644@xnncv>
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-445889.582931162"
-Subject: [oss-security] elfutils: heap-based buffer overflow in check_group (elflint.c)
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.12
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.41]); Tue, 06 Nov 2018 19:03:07 +0000 (UTC)
+Subject: [oss-security] CVE-2018-18954 QEMU: ppc64: Out-of-bounds r/w stack access in
+ pnv_lpc_do_eccb
 
-------MIME delimiter for sendEmail-445889.582931162
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+   Hello,
 
-Description:
-elfutils is a set of libraries/utilities to handle ELF objects (drop in replacement for libelf).
+An OOB r/w buffer access issue was found in the PowerPC PowerNV LPC controller 
+in 'pnv_lpc_do_eccb' routine. It could occur while performing a memory write 
+operation. A guest user/process could use this flaw to crash the QEMU process 
+resulting in DoS.
 
-A fuzz on eu-elflint showed an heap overflow.
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2018-11/msg00446.html
 
-The complete ASan output:
+This issue was reported by Moguofang of Huawei.com.
 
-# eu-elflint -d $FILE
-==12804==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x60200000efd0 at pc 0x00000041a39f bp 0x7ffee6a331d0 sp 0x7ffee6a331c8
-READ of size 4 at 0x60200000efd0 thread T0
-    #0 0x41a39e in check_group /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:2664
-    #1 0x420787 in check_sections /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:4132
-    #2 0x42961f in process_elf_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:4697
-    #3 0x42961f in process_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:242
-    #4 0x402d33 in main /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:175
-    #5 0x7ff00282678f in __libc_start_main (/lib64/libc.so.6+0x2078f)
-    #6 0x403498 in _start (/usr/bin/eu-elflint+0x403498)
-
-0x60200000efd1 is located 0 bytes to the right of 1-byte region [0x60200000efd0,0x60200000efd1)
-allocated by thread T0 here:
-    #0 0x7ff003f13288 in malloc (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0xc2288)
-    #1 0x7ff003b6fb46 in convert_data /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:166
-    #2 0x7ff003b6fb46 in __libelf_set_data_list_rdlock /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:434
-    #3 0x7ff003b70662 in __elf_getdata_rdlock /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:541
-    #4 0x7ff003b70776 in elf_getdata /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:559
-    #5 0x420935 in check_scn_group /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:544
-    #6 0x420935 in check_sections /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:3940
-    #7 0x42961f in process_elf_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:4697
-    #8 0x42961f in process_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:242
-    #9 0x402d33 in main /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:175
-    #10 0x7ff00282678f in __libc_start_main (/lib64/libc.so.6+0x2078f)
-
-SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:2664 in check_group
-Shadow bytes around the buggy address:
-  0x0c047fff9da0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9db0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9dc0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9dd0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9de0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-=>0x0c047fff9df0: fa fa fa fa fa fa 04 fa fa fa[01]fa fa fa 00 01
-  0x0c047fff9e00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9e10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9e20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9e30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9e40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==12804==ABORTING
-Affected version:
-0.168
-
-Fixed version:
-0.169 (not released atm)
-
-Commit fix:
-https://sourceware.org/ml/elfutils-devel/2017-q1/msg00137.html
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-7610
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00247-elfutils-heapoverflow-check_group
-
-Timeline:
-2017-03-28: bug discovered and reported to upstream
-2017-04-04: blog post about the issue
-2017-04-09: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/04/03/elfutils-heap-based-buffer-overflow-in-check_group-elflint-c
-
+Thank you.
 --
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
-------MIME delimiter for sendEmail-445889.582931162--
-
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
