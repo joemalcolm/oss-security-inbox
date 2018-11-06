@@ -1,30 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/12/6
-Message-ID: <20181212163640.GA22617@eldamar.local>
-Date: Wed, 12 Dec 2018 17:36:40 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: Salva Peiró <speirofr@...il.com>
-Cc: oss-security@...ts.openwall.com, security@...ian.org
-Subject: Re: CVE Request: mini-httpd (<= v1.30) is affected by a response discrepancy information exposure (CWE-204)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/06/6
+Message-ID: <nycvar.YSQ.7.76.1811070031000.15644@xnncv>
+Date: Wed, 7 Nov 2018 00:33:03 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: moguofang@...wei.com
+Subject: CVE-2018-18954 QEMU: ppc64: Out-of-bounds r/w stack access in pnv_lpc_do_eccb
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+   Hello,
 
-On Wed, Dec 12, 2018 at 04:27:02PM +0100, Salva Peiró wrote:
-> Hi everyone,
-> 
-> The mini-httpd daemon (version <= v1.30) shipped in Debian/Ubuntu from [1]
-> is affected by a response discrepancy information exposure (CWE-204) that
-> enables an attacker to remotely enumerate valid htpasswd usernames (RFC
-> 7617).
-> 
-> A more detailed advisory can be found at:
-> https://speirofr.appspot.com/files/advisory/SPADV-2018-01.md
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=916190
-> 
-> Is there a CVE for this? If not, could one be assigned, please?
+An OOB r/w buffer access issue was found in the PowerPC PowerNV LPC controller 
+in 'pnv_lpc_do_eccb' routine. It could occur while performing a memory write 
+operation. A guest user/process could use this flaw to crash the QEMU process 
+resulting in DoS.
 
-Can you request a CVE directly via https://cveform.mitre.org/ ?
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2018-11/msg00446.html
 
-Regards,
-Salvatore
+This issue was reported by Moguofang of Huawei.com.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
