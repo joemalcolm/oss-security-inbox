@@ -1,87 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/27/4
-Message-ID: <CAJ_zFk+yb9zEXSqs2fdANvKkipg2yQAU89xKr1HMv-EJG2-vxg@mail.gmail.com>
-Date: Mon, 27 Aug 2018 16:02:46 -0700
-From: Tavis Ormandy <taviso@...gle.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/06/5
+Message-Id: <E1gK6Hg-0002Qd-P3@xenbits.xenproject.org>
+Date: Tue, 06 Nov 2018 18:41:04 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 282 v1 - guest use of HLE constructs may lock up host
 Content-Type: text/plain; charset=utf-8
 
-Here is an update, Artifex made a press release
-<https://www.darkreading.com/prnewswire2.asp?rkey=20180824UN89145&filter=3930>
-listing
-some necessary commits, but the list was incomplete.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Here is a list of relevant commits I'm aware of so far, some issues are
-still open with working exploits available. It's my understanding that no
-new release is planned until late September, and vendors need to either
-ship a git snapshot when all issues are resolved, or apply patches. I have
-testcases for each problem, but I think the bugs will be visible eventually
-so I'm not posting them here.
+                    Xen Security Advisory XSA-282
 
-http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=ea735ba37dc0fd5f5622d031830b9a559dec1cc9
-# 699671
-handling /undefined results in SEGV
-http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=0edd3d6c63
-# 699659 missing type check in ztype
-http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=78911a01b6 #
-699654 A /invalidaccess checks stop working after a failed restore
-http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=5516c614dc33 #
-699654 B /invalidaccess checks stop working after a failed restore
-http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=79cccf641486 #
-699654 C /invalidaccess checks stop working after a failed restore
-http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=b326a716 # 699655
-- missing type checking in setcolor
-http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=c3476dde # 699656
-- LockDistillerParams boolean missing type checks
-http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=a054156d42
-# 699658 - Bypassing PermitFileReading by handling undefinedfilename errors
-http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=0b6cd1918e1ec4ffd087400a754a845180a4522b
-# 699660 - shading_param incomplete type checking
-http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=e01e77a36cbb2e0277bc3a63852244bec41be0f6
-# 699660 - shading_param incomplete type checking
-http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=c432131c3f
-# 699661 - pdf14 garbage collection memory corruption
-http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=971472c83a345a16dac9f90f91258bb22dd77f22
-# 699663 - .setdistillerkeys memory corruption
-http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=241d911127
-# 699664 - corrupt device object after error in job
-http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=0d3901189f
-# 699657 - .tempfile SAFER restrictions seem to be broken
-http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=8e9ce5016db968b40e4ec255a3005f2786cce45f
-# 699665 - memory corruption in aesdecode
-http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=b575e1ec42
-# 699668 - .definemodifiedfont memory corruption if /typecheck is handled
+             guest use of HLE constructs may lock up host
 
-Tavis
+ISSUE DESCRIPTION
+=================
 
-On Thu, Aug 23, 2018 at 8:05 AM Bob Friesenhahn <
-bfriesen@...ple.dallas.tx.us> wrote:
+Various Intel CPU models have an erratum listed under the title
+"Processor May Hang When Executing Code In an HLE Transaction".  It
+describes a potential hang when using instructions with the XACQUIRE
+prefix on the host physical memory range covering the first 4 MiB
+starting at the 1GiB boundary.
 
-> On Thu, 23 Aug 2018, Leonardo Taccari wrote:
-> >
-> > (Regarding the `file.ps2' and `file.ps3' examples without `PS2:' or
-> > `PS3:' prefixes according `convert -debug Policy -log "%e"' it seems
-> > that they ends up as:
-> >
-> > Domain: Coder; rights=Read; pattern="PS" ...
-> >
-> > ...so should be blocked by the workaround described in
-> > VU#332928. But please correct me if I'm wrong.)
->
-> This is likely due to header magic detection (e.g. "%!PS-Adobe").  It
-> is possible that a different path will be taken if the common
-> Postscript header is not detected.  The file extension may then be
-> used as a hint.  Also, there are a wide varieties of ImageMagick
-> versions in use, with a wide variety of behaviors.
->
-> The version of ImageMagick provided by the Ubuntu Linux I am using at
-> this moment dates from 2012!
->
-> Bob
-> --
-> Bob Friesenhahn
-> bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-> GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
->
+IMPACT
+======
 
+A malicious or buggy guest may cause a CPU to hang, resulting in a DoS
+(Denial of Service) affecting the entire host.
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen versions are affected.
+
+Only Intel based x86 systems are affected.  Please refer to Intel
+documentation as to which specific CPU models are affected.
+
+AMD x86 systems as well as Arm ones are not affected.
+
+MITIGATION
+==========
+
+There is no known mitigation.  A BIOS update may be available for some
+systems, working around the issue at the firmware level.
+
+RESOLUTION
+==========
+
+Applying the appropriate pair of attached patches works around this issue
+for the CPU models known to be affected at the time of writing.
+
+xsa282-?.patch                              xen-unstable
+xsa282-4.11-1.patch + xsa282-2.patch        Xen 4.11.x, Xen 4.10.x
+xsa282-4.9-1.patch + xsa282-2.patch         Xen 4.9.x
+xsa282-4.9-1.patch + xsa282-4.8-2.patch     Xen 4.8.x, Xen 4.7.x
+
+$ sha256sum xsa282*
+6ef64ca920a58ed9185e81fad3dfa9ca5f6316f1e72ddd4f411f3e79eaf79903  xsa282.meta
+ad7093e00b3d6650530c95427ef0e68880883f0cec7229b5f41c9e2dc497ffd5  xsa282-1.patch
+7ce7fa105026b189500a31bd3978ec0c6fd9d7c95f688463c25ecce76366be35  xsa282-2.patch
+fbff734d678700864563f8214361f391c0cbda9b67ed7256535ed3db388c8feb  xsa282-4.8-2.patch
+df833cbe9b8798104a65d44b737c46f97399b86b0ffd03c99fda4c8ecf5a353c  xsa282-4.9-1.patch
+68eab296a7124662cbe3c6df8835aff9b4a26160fdbe970e206a7a6ef8d27ec7  xsa282-4.11-1.patch
+$
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+The issue has been documented publicly in Specification Updates for at
+least some of the affected processors for quite some time.
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAlvh3+0MHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZ48QIALQ1hLMewraf+URzsd36EUJNPP+1C8Dg35PavdJ1
+mrqBljy/bIYCiLvLm1RwinUPL5vrvkB97/6AjmnpZM83AA3/PLTbh3tpP8fiLUcF
+YL7wJogvjv51Q3N8mYHjxGGl5YYVdrgxwxbQIuzRnw2gi/ikd0oAoNce/QIF6iFz
+P2I8VjKuQZ6qEzdKXTTiPNQQzL+OfVGQ+RcsthQieWce53p+n1pI1QqbPOwdYtca
+/cOhP+vGRzh+4QP50JuN5ikdC/C9KpyjEo5mZVlrZQYPIqzI+vomueCJLPGN3cSY
+LBcJc/lT/w/LRgygpbUB/OO8RwK5XB9T4Jm/ssXGpCOTs3Y=
+=Ipfd
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa282.meta" of type "application/octet-stream" (1794 bytes)
+
+Download attachment "xsa282-1.patch" of type "application/octet-stream" (5054 bytes)
+
+Download attachment "xsa282-2.patch" of type "application/octet-stream" (1592 bytes)
+
+Download attachment "xsa282-4.8-2.patch" of type "application/octet-stream" (1613 bytes)
+
+Download attachment "xsa282-4.9-1.patch" of type "application/octet-stream" (2730 bytes)
+
+Download attachment "xsa282-4.11-1.patch" of type "application/octet-stream" (5050 bytes)
