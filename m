@@ -1,76 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/24/3
-Message-ID: <alpine.DEB.2.21.1804241538200.28739@chino.kir.corp.google.com>
-Date: Tue, 24 Apr 2018 15:48:02 -0700 (PDT)
-From: David Rientjes <rientjes@...gle.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2018-1000200 (Linux): Bad memory access on oom kill of large mlocked process
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/06/4
+Message-ID: <c061b9ac-7b8e-4ecc-87ac-98e5b4ce9e40@email.android.com>
+Date: Tue, 6 Nov 2018 17:26:08 +0000
+From: Cesar Pereida Garcia <cesar.pereidagarcia@....fi>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CVE-2018-5407: new side-channel vulnerability on SMT/Hyper-Threading architectures
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
 
-Out of memory (oom) killing a process that has large spans of mlocked 
-memory can result in a bad memory access or a NULL pointer dereference due 
-to concurrent memory unmapping by the oom reaper kernel thread.
+It's coming -- I promise. I submitted it as an IACR eprint yesterday
+("Port Contention for Fun and Profit") -- currently under moderation,
+but will eventually pop out here:
 
-This affects Linux 4.14, 4.15, and 4.16.
+https://eprint.iacr.org/
 
-It is much more likely on PowerPC where clearing a huge pmd results in
-serialize_against_pte_lookup(), which forces all cpus out of idle.  All
-architectures are vulnerable, however.
+The paper has cleared the queue and is now public at
 
-An example dereference:
+https://eprint.iacr.org/2018/1060
 
-Unable to handle kernel paging request for data at address 0x00000018
-Faulting instruction address: 0xc000000000167ac0
-Oops: Kernel access of bad area, sig: 11 [#1]
-SMP NR_CPUS=256 NUMA PowerNV
-NIP __lock_acquire
-LR lock_acquire
-Call Trace:
-lock_acquire
-_raw_spin_lock
-follow_page_pte
-munlock_vma_pages_range
-exit_mmap
-mmput
-do_exit
-do_group_exit
-get_signal
-do_signal
-do_notify_resume
 
-The issue arises from an oom killed process's final thread calling
-exit_mmap(), which calls munlock_vma_pages_all() for mlocked vmas.  This
-can happen synchronously with the oom reaper's unmap_page_range() since
-the vma's VM_LOCKED bit is cleared before munlocking (to determine if any
-other vmas share the memory and are mlocked).
-
-The simple exploit is provided inline, below.  The amount of memory to be 
-mlocked, MEM_LENGTH, must be large enough to trigger an oom kill.  There 
-are two common ways to do that: (1) MEM_LENGTH exceeds all memory on the 
-system, or (2) the exploit is attached to a memory control group (cgroup) 
-that is limited to less than MEM_LENGTH.  Note that this has only been 
-reproduced on PowerPC so far, due to the pmd clearing mentioned above but 
-all platforms should be equally as vulnerable since the oom reaper kernel 
-thread can race with munlock.
-
-The proposed fix is https://marc.info/?l=linux-kernel&m=152460926619256.  
-(Please note that key maintainers are currently at a conference, so review 
-and merge may be delayed longer than normal.)
-
-Thanks for your time.
----
-#include <sys/mman.h>
-
-#define MEM_LENGTH	(1UL << 30)
-
-int main(void)
-{
-	void *ptr = mmap(0, MEM_LENGTH, PROT_WRITE,
-		MAP_PRIVATE | MAP_ANONYMOUS, 0, 0);
-	if (ptr == MAP_FAILED)
-		return -1;
-
-	return mlock(ptr, MEM_LENGTH);
-}
+Cesar Pereida Garcia
+Doctoral Student
+Tampere University of Technology
