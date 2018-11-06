@@ -1,61 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/25/1
-Message-ID: <20181125095737.5f7e726d@computer>
-Date: Sun, 25 Nov 2018 09:57:37 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: catdoc: out of bounds heap read and nullpointer / segfault
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/06/3
+Message-ID: <b1bdfd0b-2151-cafd-d5c9-425de23311f4@apache.org>
+Date: Tue, 6 Nov 2018 10:05:59 +0100
+From: Francesco Chicchiriccò <ilgrosso@...che.org>
+To: dev@...cope.apache.org, "user@...cope.apache.org" <user@...cope.apache.org>, announce@...che.org, Joan Bono <joanet17@...il.com>, oss-security@...ts.openwall.com, "security@...che.org" <security@...che.org>, Joan Bono <joanet17@...il.com>
+Subject: [SECURITY] CVE-2018-17186 Apache Syncope
 Content-Type: text/plain; charset=utf-8
 
-I reported two memory safety bugs in the command line tool catdoc.
-However the mails to the developer bounced.
+CVE-2018-17186: XXE on BPMN definitions
 
-The first is an out of bounds heap read, to detect it catdoc needs to
-be compiled with address sanitizer (test it with -fsanitize=address in
-CFLAGS).
+Description:
+An administrator with workflow definition entitlements can use DTD to 
+perform malicious operations, including but not limited to file read, 
+file write, and code execution.
 
-The second is a null pointer and will just crash catdoc.
+Severity: Medium
 
+Vendor: The Apache Software Foundation
 
-ASAN crash traces:
+Affects:
+Releases prior to 2.1.2
+Releases prior to 2.0.11
 
-==4036==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x6020000015d1 at pc 0x00000050560c bp 0x7ffe3d0b7d40 sp 0x7ffe3d0b7d38
-READ of size 1 at 0x6020000015d1 thread T0
-    #0 0x50560b in getlong /f/catdoc/catdoc-0.95/src/numutils.c:22:37
-    #1 0x506c7d in ole_init /f/catdoc/catdoc-0.95/src/ole.c:254:18
-    #2 0x4fa2df in analyze_format /f/catdoc/catdoc-0.95/src/analyze.c:58:17
-    #3 0x4f6bec in main /f/catdoc/catdoc-0.95/src/catdoc.c:180:6
-    #4 0x7fa1362ae4ea in __libc_start_main (/lib64/libc.so.6+0x244ea)
-    #5 0x41b489 in _start (/r/catdoc/catdoc+0x41b489)
+The unsupported Releases 1.2.x may be also affected.
 
-0x6020000015d1 is located 0 bytes to the right of 1-byte region [0x6020000015d0,0x6020000015d1)
-allocated by thread T0 here:
-    #0 0x4c5973 in malloc (/r/catdoc/catdoc+0x4c5973)
-    #1 0x505e70 in ole_init /f/catdoc/catdoc-0.95/src/ole.c:119:10
-    #2 0x4fa2df in analyze_format /f/catdoc/catdoc-0.95/src/analyze.c:58:17
-    #3 0x4f6bec in main /f/catdoc/catdoc-0.95/src/catdoc.c:180:6
-    #4 0x7fa1362ae4ea in __libc_start_main (/lib64/libc.so.6+0x244ea)
+Solution:
+2.0.X users should upgrade to 2.0.11
+2.1.X users should upgrade to 2.1.2
 
+Mitigation:
+Do not assign workflow definition entitlements to any administrator.
 
+Credit:
+This issue was discovered by ﻿Kevin Borras Soler and Joan Bono.
 
-And:
-
-==6151==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000020 (pc 0x000000509f93 bp 0x0c18000000d1 sp 0x7fff4819ed80 T0)
-==6151==The signal is caused by a READ memory access.
-==6151==Hint: address points to the zero page.
-    #0 0x509f92 in calcFileBlockOffset /f/catdoc/catdoc-0.95/src/ole.c
-    #1 0x509f92 in ole_read /f/catdoc/catdoc-0.95/src/ole.c:493
-    #2 0x4fa3ec in analyze_format /f/catdoc/catdoc-0.95/src/analyze.c:64:14
-    #3 0x4f6bec in main /f/catdoc/catdoc-0.95/src/catdoc.c:180:6
-    #4 0x7f70645a64ea in __libc_start_main (/lib64/libc.so.6+0x244ea)
-    #5 0x41b489 in _start (/r/catdoc/catdoc+0x41b489)
+References:
+https://syncope.apache.org/security
 
 
--- 
-Hanno Böck
-https://hboeck.de/
 
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
 
-Download attachment "catdoc-bug-samples.zip" of type "application/zip" (1855 bytes)
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
