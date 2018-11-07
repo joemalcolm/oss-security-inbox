@@ -1,29 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/28/3
-Message-ID: <20181028182153.156c7434@computer>
-Date: Sun, 28 Oct 2018 18:21:53 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Cc: Amos Jeffries <squid3@...enet.co.nz>
-Subject: Re: Squid Proxy multiple vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/08/1
+Message-ID: <CABDpyChoSC+O_whkL_7Zh4ZMiXf7qmWpKoa-hep0dS6MTnJYJA@mail.gmail.com>
+Date: Wed, 7 Nov 2018 13:24:03 -0800
+From: Daniel Dai <daijy@...che.org>
+To: user@...e.apache.org, dev@...e.apache.org, announce@...che.org,  security <security@...e.apache.org>, oss-security@...ts.openwall.com
+Subject: [SECURITY] CVE-2018-1314: Hive explain query not being authorized
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 29 Oct 2018 05:13:40 +1300
-Amos Jeffries <squid3@...enet.co.nz> wrote:
+CVE-2018-1314: Hive explain query not being authorized
 
-> <http://www.squid-cache.org/Advisories/SQUID-2018_4.txt>
+Severity: Important
 
-That gives a 404.
+Vendor: The Apache Software Foundation
 
-Also there's another yet unfixed vulnerability: The webpage and the
-downloads are not using HTTPS, which makes them vulnerable to
-man-in-the-middle attacks ;-)
+Versions Affected: This vulnerability affects all versions of Hive,
+including 2.3.3, 3.1.0 and earlier
 
--- 
-Hanno Böck
-https://hboeck.de/
+Description: Hive "EXPLAIN" operation does not check for necessary
+authorization of involved entities in a query. An unauthorized user
+can do "EXPLAIN" on arbitrary table or view and expose table metadata
+and statistics.
 
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
-
-Content of type "application/pgp-signature" skipped
+Mitigation: all Hive users shall upgrade to 2.3.4 or 3.1.1 or later
