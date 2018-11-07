@@ -1,30 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/15/6
-Message-ID: <CA+aC4kut+oE2UsWj0nro+_qpKgwvZqV-pfAKBP8y_xT2WMVjCA@mail.gmail.com>
-Date: Fri, 15 Jun 2018 07:57:21 -0700
-From: Anthony Liguori <anthony@...emonkey.ws>
-To: oss-security@...ts.openwall.com
-Subject: Re: Intel FP security issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/08/2
+Message-ID: <CABDpyCjx+GpPvEW1mreZPnqCmqBYmAVk3s5NUx4ZGnQKcj7aGg@mail.gmail.com>
+Date: Wed, 7 Nov 2018 13:29:04 -0800
+From: Daniel Dai <daijy@...che.org>
+To: user@...e.apache.org, dev@...e.apache.org, announce@...che.org,  security <security@...e.apache.org>, oss-security@...ts.openwall.com,  Mithun Radhakrishnan <mithunr@...h.com>
+Subject: [SECURITY] CVE-2018-11777: Blocking local resource access in HiveServer2
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jun 15, 2018 at 7:12 AM, Solar Designer <solar@...nwall.com> wrote:
-> On Fri, Jun 15, 2018 at 01:36:05PM +0000, Liguori, Anthony wrote:
->> The discover sent a post here but I suspect it's stuck in the moderation queue.  I'll repost later today.
->
-> There's nothing like this in the moderation queue.  Also not in the spam
-> filter.  Please repost right away.
+CVE-2018-11777: Blocking local resource access in HiveServer2
 
-Hrm, I'll check with the reporter but I just sent it myself.  Should
-appear shortly.
+Severity: Important
 
-> BTW, the above message of yours lacks an In-Reply-To header, even though
-> it appears to be a reply to Marcus' message.  So technically it started
-> a new thread.  There's probably something broken on your end.
+Vendor: The Apache Software Foundation
 
-Yes, phone email client :-/
+Versions Affected: This vulnerability affects all versions of Hive,
+including 2.3.3, 3.1.0 and earlier
 
-Regards,
+Description: Local resources on HiveServer2 machines are not properly
+protected against malicious user if ranger, sentry or sql standard
+authorizer is not in use.
 
-Anthony Liguori
+Mitigation: It is recommended to upgrade to 2.3.4 or 3.1.1 or later if
+HiveServer2 is used, and ranger, sentry or sql standard authorizer
+is not in use. Admin needs to specify the following entries in
+hiveserver2-site.xml:
 
-> Alexander
+<property>
+  <name>hive.security.authorization.enabled</name>
+  <value>true</value>
+</property>
+<property>
+  <name>hive.security.authorization.manager</name>
+  <value>org.apache.hadoop.hive.ql.security.authorization.plugin.fallback.FallbackHiveAuthorizerFactory</value>
+</property>
+
+FallbackHiveAuthorizerFactory will do the following to mitigate above
+mentioned threat:
+1. Disallow local file location in sql statements except for admin
+2. Allow "set" only selected whitelist parameters
+3. Disallow dfs commands except for admin
+4. Disallow "ADD JAR" statement
+5. Disallow "COMPILE" statement
+6. Disallow "TRANSFORM" statement
+
+Credit: This issue was discovered by Mithun Radhakrishnan of Oath Inc
