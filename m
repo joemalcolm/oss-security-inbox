@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2254" "Tuesday" "22" "March" "2016" "17:05:54" "-0500" "Tyler Hicks" "tyhicks@canonical.com" "<20160322220554.GA4736@boyd>" "67" "Re: [oss-security] Re: CVE Request: PHP last release security issues" "^Cc:" nil nil "3" "2016032222:05:54" "[oss-security] Re: CVE Request: PHP last release security issues" (number mark "        tyhicks@cano Mar 22   67/2254  " thread-indent "\"Re: [oss-security] Re: CVE Request: PHP last release security issues\"\n") "<20160316204230.64F63B2E03F@smtpvbsrv1.mitre.org>" ("<20160310094228.GD4470@suse.de>" "<20160316204230.64F63B2E03F@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1315" "Wednesday" "7" "November" "2018" "13:29:04" "-0800" "Daniel Dai" "daijy@apache.org" "<CABDpyCjx+GpPvEW1mreZPnqCmqBYmAVk3s5NUx4ZGnQKcj7aGg@mail.gmail.com>" "37" "[oss-security] [SECURITY] CVE-2018-11777: Blocking local resource access in HiveServer2" nil nil nil "11" "2018110721:29:04" "[oss-security] [SECURITY] CVE-2018-11777: Blocking local resource access in HiveServer2" (number mark "U       daijy@apache Nov  7   37/1315  " thread-indent "\"[oss-security] [SECURITY] CVE-2018-11777: Blocking local resource access in HiveServer2\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 20208 invoked by uid 550); 22 Mar 2016 22:06:10 -0000
+Received: (qmail 8011 invoked by uid 550); 8 Nov 2018 11:05:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,87 +11,58 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 20187 invoked from network); 22 Mar 2016 22:06:09 -0000
-Message-ID: <20160322220554.GA4736@boyd>
-References: <20160310094228.GD4470@suse.de>
- <20160316204230.64F63B2E03F@smtpvbsrv1.mitre.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="J2SCkAp4GZ/dPZZf"
-Content-Disposition: inline
-In-Reply-To: <20160316204230.64F63B2E03F@smtpvbsrv1.mitre.org>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Cc: meissner@suse.de, cve-assign@mitre.org, security@php.net
-Date: Tue, 22 Mar 2016 17:05:54 -0500
-From: Tyler Hicks <tyhicks@canonical.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: CVE Request: PHP last release security issues
-To: oss-security@lists.openwall.com
+Received: (qmail 23732 invoked from network); 7 Nov 2018 21:29:29 -0000
+X-Gm-Message-State: AGRZ1gKmADUgokNY+BLO2HHJTawZ0egDHNTqBDA8dR6Dpz1eBsLq2qcx
+	sKhSjkCxw7AWHzIlvcJOt/yhmTzk3740fA8TQ3o=
+X-Google-Smtp-Source: AJdET5fLbITQMKjpFSew2Shk1lC1lUAsLCPU5cWXjsIcMM43STsUopYDn5wmwMIIh7g3x0fG2sUWJVwJMtye10ecOAA=
+X-Received: by 2002:a05:660c:8c2:: with SMTP id g2mr1702883itl.22.1541626156603;
+ Wed, 07 Nov 2018 13:29:16 -0800 (PST)
+MIME-Version: 1.0
+From: Daniel Dai <daijy@apache.org>
+Date: Wed, 7 Nov 2018 13:29:04 -0800
+X-Gmail-Original-Message-ID: <CABDpyCjx+GpPvEW1mreZPnqCmqBYmAVk3s5NUx4ZGnQKcj7aGg@mail.gmail.com>
+Message-ID: <CABDpyCjx+GpPvEW1mreZPnqCmqBYmAVk3s5NUx4ZGnQKcj7aGg@mail.gmail.com>
+To: user@hive.apache.org, dev@hive.apache.org, announce@apache.org, 
+	security <security@hive.apache.org>, oss-security@lists.openwall.com, 
+	Mithun Radhakrishnan <mithunr@oath.com>
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] [SECURITY] CVE-2018-11777: Blocking local resource access in HiveServer2
 
---J2SCkAp4GZ/dPZZf
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+CVE-2018-11777: Blocking local resource access in HiveServer2
 
-On 2016-03-16 16:42:30, cve-assign@mitre.org wrote:
-> > https://bugs.php.net/bug.php?id=3D71610
->=20
-> >> Type Confusion Vulnerability - SOAP / make_http_soap_request()
->=20
-> >> Due to an insufficient validation of the cookies field when making SOA=
-P http request
->=20
-> >> https://github.com/php/php-src/blob/master/ext/soap/php_http.c
->=20
-> >> There is lack of validation of 2nd/3rd elements in cookies array.
-> >>
-> >> and a type confusion occurs when they are no longer string.
->=20
-> >> [2016-02-22 07:48 UTC] stas@php.net
-> >> Fix added to security repo as eaf4e77190d402ea014207e9a7d5da1a4f3727ba
->=20
-> > https://git.php.net/?p=3Dphp-src.git;a=3Dcommit;h=3Deaf4e77190d402ea014=
-207e9a7d5da1a4f3727ba
->=20
-> >> + Z_TYPE_P(tmp) !=3D IS_STRING ||
->=20
-> >> + Z_TYPE_P(tmp) !=3D IS_STRING ||
->=20
-> Use CVE-2016-3185.
+Severity: Important
 
-I see a similar bug and fix in the PHP 5.x branch:
+Vendor: The Apache Software Foundation
 
-  https://bugs.php.net/bug.php?id=3D70081
-  https://git.php.net/?p=3Dphp-src.git;a=3Dcommitdiff;h=3Dc96d08b27226193dd=
-51f2b50e84272235c6aaa69
+Versions Affected: This vulnerability affects all versions of Hive,
+including 2.3.3, 3.1.0 and earlier
 
-Note that the bug was filed in 2015. It was fixed in 5.6.12:
+Description: Local resources on HiveServer2 machines are not properly
+protected against malicious user if ranger, sentry or sql standard
+authorizer is not in use.
 
-  https://secure.php.net/ChangeLog-5.php#5.6.12
+Mitigation: It is recommended to upgrade to 2.3.4 or 3.1.1 or later if
+HiveServer2 is used, and ranger, sentry or sql standard authorizer
+is not in use. Admin needs to specify the following entries in
+hiveserver2-site.xml:
 
-Does CVE-2016-3185 cover the issue in 5.x, as well?
+<property>
+  <name>hive.security.authorization.enabled</name>
+  <value>true</value>
+</property>
+<property>
+  <name>hive.security.authorization.manager</name>
+  <value>org.apache.hadoop.hive.ql.security.authorization.plugin.fallback.FallbackHiveAuthorizerFactory</value>
+</property>
 
-Tyler=20
+FallbackHiveAuthorizerFactory will do the following to mitigate above
+mentioned threat:
+1. Disallow local file location in sql statements except for admin
+2. Allow "set" only selected whitelist parameters
+3. Disallow dfs commands except for admin
+4. Disallow "ADD JAR" statement
+5. Disallow "COMPILE" statement
+6. Disallow "TRANSFORM" statement
 
---J2SCkAp4GZ/dPZZf
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCgAGBQJW8cHCAAoJENaSAD2qAscKYOMQALTTShQPoJjGJy2nIWzw0PxY
-wG/pfkCKh1o8QQEkNK+poCvA+0toDvvBlNWdrjoYhWG2/d8Cgun4dQwtKMnWNB/p
-U5KB5oPZQUPuC8hC/C4QKjc8sxESACD2ExVWEg9G9GNKf9vbQUh8hGC2VFZYeWpe
-UWvdchagsRkqal4B7scrwh1tBkcYmHIw1Za3Z5LYVf9FvkHvzUbkoxrbNhh8yW51
-3UTwBhwWZxvnahzACAbiJ8WlqNEIuWkVFkH9Wwik/Zf9BUoWQkhptl7qVDiupR8U
-+PgiH7jw3vAIwZW/nAIvvRIooi42khBqJrfbFVBqQFYPV9wCO0qv/N7OKl7tDLQD
-cN6UsN/uKRStw8qjdtwy+AE/oGH9G635zZLzNbnvv4yviaNdpTbAP/LQj9ezPqaR
-GECKbiYXaOR32/djbgwbplYaPTlYAoRS5rfOS6PAL+tRb6JqMXKNYsuIYCBAUiwC
-OLmq+mYfW9xtDkK3MeX2WU+Dq6XbdvIuAv5t1S79DOW9e6LB4qOnR826lgN9Iz9F
-Roj9VJ/49Mv7aFeVmH/BUpXJYsJ80sJzcyd8sPJabHcyl+S47ggM/n01SA8w2nNR
-jabKM/Ao7ijQaRsagRhEK0VDT7lefS0/WsP06pQCL/kdYL24U3zXGoON/TuHINQb
-GvbS/4HcoQwlqg3CeCO+
-=1EBj
------END PGP SIGNATURE-----
-
---J2SCkAp4GZ/dPZZf--
+Credit: This issue was discovered by Mithun Radhakrishnan of Oath Inc
