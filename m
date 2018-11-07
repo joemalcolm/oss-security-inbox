@@ -1,68 +1,103 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/02/2
-Message-ID: <CANO=Ty09HPfSbp8QsZHU24EnEyzOw1H1C-Zr+7mqwDhOG6=HYg@mail.gmail.com>
-Date: Fri, 2 Mar 2018 04:58:50 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: memcached UDP amplification attacks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/07/1
+Message-ID: <CAFeDd5aqTomuwP=zf0EOVqWks819r5S+cr2mVkZGW0EuqttkGA@mail.gmail.com>
+Date: Wed, 7 Nov 2018 09:42:46 +0200
+From: Billy Brumley <bbrumley@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2018-5407: new side-channel vulnerability on SMT/Hyper-Threading architectures
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 2, 2018 at 4:44 AM, Hanno Böck <hanno@...eck.de> wrote:
+> > For the 1.1.0 branch, at
+> >
+> > https://github.com/openssl/openssl/commits/OpenSSL_1_1_0-stable/crypto/ec/ec_mult.c
+> >
+> > everything starting from aab7c770353b1dc4ba045938c8fb446dd1c4531e
 
-> Hi,
->
-> In the past days there have been reports about some DDoS attacks
-> abusing the memcached UDP protocol:
-> https://blog.cloudflare.com/memcrashed-major-amplification-attacks-from-
-> port-11211/
-> https://www.wired.com/story/github-ddos-memcached/
->
->
-> The issue: memcached has an UDP protocol that allows getting a much
-> larger reply than the query sent, thus allowing amplification attacks
-> with forged sender IPs.
->
->
-> Upstream memcached reacted by disabling the UDP-based protocol by
-> default:
-> https://github.com/memcached/memcached/wiki/ReleaseNotes156
-> This is good, however one could argue that they should also default to
-> localhost only.
->
->
-> Most distros I checked right now default to enabling UDP, but
-> restricting connections to 127.0.0.1. While this is not directly
-> vulnerable it's only a minor change away from being so. The memcached
-> announcement sounds like the UDP protocol is rarely used and should be
-> considered deprecated and replaced by the TCP-based one.
->
-> I recommend all distributions consider changing their defaults to
-> disabling the UDP-based memcached protocol by default.
->
->
-I think in general ALL network applications that support UDP need to think
-about hardening their default configurations due to the potential for
-amplification attacks.
+This was not very responsible of me, since the changes are across
+several files. I reckon the best source is checking the diff between
+1.1.0h and 1.1.0i releases.
 
-While it is not yet CVE worthy I can see the bar moving (much like it has
-for default passwords, and crypto) in the near future as this is clearly
-becoming a problem. Please note that this problem is already covered by
-CWE-406 (to some degree) which makes the case for CVE assignment stronger.
+If you are a package maintainer, and are putting together a patch set
+for this, please reach out to me. My team can help test.
 
+> I assume ec_GFp_simple_dbl and ec_GFp_simple_add are in fact called via
+> EC_POINT_dbl and EC_POINT_add (via function pointer indirection inside
+> them, which I didn't follow), respectively.  This code skips the call to
+> EC_POINT_add when digit is 0, and the setting and handling of is_neg is
+> also potentially leaky:
 
-> --
-> Hanno Böck
-> https://hboeck.de/
+The skipping when digit is 0: yea that's basically it, and what
+researchers have been targeting since 2009 (Section 3.2):
+
+https://www.iacr.org/archive/asiacrypt2009/59120664/59120664.pdf
+
+The setting and handling of is_neg: yea that leaks too (Section 6.4):
+
+https://eprint.iacr.org/2015/1141
+
+> Also, while the newly introduced implementation is still called
+> ec_mul_consttime in OpenSSL_1_1_0-stable, it's renamed to
+> ec_scalar_mul_ladder in OpenSSL_1_1_1-stable and has this comment on it:
 >
-> mail/jabber: hanno@...eck.de
-> GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+>  * NB: This says nothing about the constant-timeness of the ladder step
+>  * implementation (i.e., the default implementation is based on EC_POINT_add and
+>  * EC_POINT_dbl, which of course are not constant time themselves) or the
+>  * underlying multiprecision arithmetic.
 >
+> Is this still an issue needing fixing, or is it e.g. believed to be
+> sufficiently mitigated by blinding?
 
+Does it still leak? Yes. For example, browse this PR:
 
+https://github.com/openssl/openssl/pull/6116
 
--- 
+Where David Benjamin (BoringSSL) states: "Note BN_mod_mul is itself
+not constant-time ..."
 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
+So if a library's basic arithmetic function that takes two numbers,
+multiplies them, and returns the remainder after division is not
+constant time, that potentially affects quite a lot of public key
+cryptography across the board
 
+In the context of OpenSSL ECC, should people worry about it? Not
+immediately. But don't take my word -- look at the data:
+
+https://eprint.iacr.org/2018/651
+
+(You can safely ignore the crazy Chinese crypto stuff -- that was just
+a way to academically sell the ECC improvements in OpenSSL.)
+
+That paper shows a concrete, measurable improvement in side-channel
+security with the changes that went into 1.1.1 and 1.1.0i.
+
+openssl-security reached out to me recently for some disclosure
+assistance -- here is a quote from me in that discussion:
+
+"In the future, you're going to see more and more SCA attacks drilling
+down into the BN module (where it's harder to exploit). It's a good
+trend, as lower hanging fruit is drying up!"
+
+OpenSSL knows that constant time crypto is important. At the same
+time, there is no quick fix because the set of crypto that OpenSSL
+must support is significantly larger than you'll find in other
+libraries that lack flexibility (and market share).
+
+For OpenSSL, it's windy at the top! You will see steady improvements
+in OpenSSL side-channel security moving forward.
+
+> P.S. Congrats on receiving the grant for "SCARE: Side-Channel Aware
+> Engineering", and I hope we'll see more excellent research from your
+> team in the next 5 years:
+>
+> https://pervasive.cs.tut.fi/?p=2747
+
+Thanks :) If you're still reading, here at the end a call to action
+for researchers.
+
+If you are a side-channel researcher: Don't just approach
+openssl-security pointing at a line of code that you think might leak.
+At a bare minimum, accompany that with patches. Even better, bring
+them empirical data. They are not side-channel experts, and you are --
+so act like it.
+
+BBB
