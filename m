@@ -1,120 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/23/6
-Message-ID: <20181123172208.GA16585@scapa.corsac.net>
-Date: Fri, 23 Nov 2018 18:22:09 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/08/3
+Message-ID: <6d1f2bf1-ded9-c3b5-f58d-356bbbb20ffd@powerdns.com>
+Date: Thu, 8 Nov 2018 15:22:09 +0100
+From: Remi Gacogne <remi.gacogne@...erdns.com>
 To: oss-security@...ts.openwall.com
-Cc: Wei Wu <ww9210@...il.com>
-Subject: fwd: [vs-plain] Kernel heap overflow in bpf leading to LPE (exploit provided)
+Subject: PowerDNS Security Advisories for dnsdist 2018-08
 Content-Type: text/plain; charset=utf-8
 
-Hi list,
+Hi all,
 
-we were notified on the Linux distros list of a vulnerability in the bpf
-subsystem of the Linux kernel.
+We just released dnsdist 1.3.3, fixing a security issue that was
+reported to us, allowing a remote attacker to craft a DNS query with
+trailing data such that the addition of a record by dnsdist, for example
+an OPT record when adding EDNS Client Subnet, might result in the
+trailing data being smuggled to the backend as a valid record while not
+seen by dnsdist.
 
-I asked the reported (Wei Wu) if security@k.o had been notified, and
-this was done in the following mail, leading Eric Dumazet to suggest
-posting this on netdev.
+This is an issue when dnsdist is deployed as a DNS Firewall and used to
+filter some records that should not be received by the backend.
+This issue occurs only when either the 'useClientSubnet' or the
+experimental 'addXPF' parameters are used when declaring a new backend.
 
-In turn, this has been done just afterwards [1] so the issue is now
-public. According to the linux-distros list policy, the original
-reporter should also have made the issue public here, but failed to do
-that.
+The full security advisory is provided below, and can also be
+found at
+https://dnsdist.org/security-advisories/powerdns-advisory-for-dnsdist-2018-08.html
 
-I'm posting this right now in order to raise awareness for the
-distributions already including 4.19 in a supported release.
+Please feel free to contact me directly if you have any question.
 
-As the original mail indicates, an exploit code had been provided by the
-reporter, but I intend to wait until a 4.19 kernel including the patch
-is released (but not after next Thursday) to publish it as a followup.
+Best regards,
 
-Regards,
--- 
-Yves-Alexis
+Remi Gacogne
+PowerDNS.COM BV - https://www.powerdns.com/
 
-[1] https://marc.info/?l=linux-netdev&m=154290236228315&w=2
+PowerDNS Security Advisory for dnsdist 2018-08: Record smuggling when
+adding ECS or XPF
+=======================================================================================
 
------ Forwarded message from Wei Wu <ww9210@...il.com> -----
+-  CVE: CVE-2018-14663
+-  Date: November 8th 2018
+-  Affects: PowerDNS DNSDist up to and including 1.3.2
+-  Not affected: 1.3.3
+-  Severity: Low
+-  Impact: Insufficient validation
+-  Exploit: This problem can be triggered via crafted queries
+-  Risk of system compromise: No
+-  Solution: Upgrade to a non-affected version
 
-Date: Thu, 22 Nov 2018 21:45:11 +0800
-From: Wei Wu <ww9210@...il.com>
-To: linux-distros@...openwall.org
-Subject: [vs-plain] Kernel heap overflow in bpf leading to LPE (exploit provided)
-X-Mailer: MIME-tools 5.501 (Entity 5.501)
-Message-ID: <CACmwppyMMd+T87DytX=X_KzmK+b3Dpx8zBp5GXrPaywKAzN-Gg@...l.gmail.com>
+An issue has been found in PowerDNS DNSDist allowing a remote attacker
+to craft a DNS query with trailing data such that the addition of a
+record by dnsdist, for example an OPT record when adding EDNS Client
+Subnet, might result in the trailing data being smuggled to the backend
+as a valid record while not seen by dnsdist.
 
-Hello,
+This is an issue when dnsdist is deployed as a DNS Firewall and used to
+filter some records that should not be received by the backend.
 
-I am writing to report a heap overflow vulnerability in kernel bpf module
-There is an integer-overflow-to-buffer-overflow vulnerability in the
-bpf functions introduced in 4.19 and affect up to 4.20-rc3, attached
-is an LPE exploit which is able to spawn a root shell.
-I will first introduce the root cause vulnerability and then discuss
-how to fix this vulnerability.
+This issue occurs only when either the 'useClientSubnet' or the
+experimental 'addXPF' parameters are used when declaring a new backend.
 
-In the following code shows a integer overflow when calculating size =
-attr->max_entries + 1;
-size is used to calculate queue_size in line 72, and queue size is
-used to malloc,
-if  attr->max_entries is 0xffffffff, then size will be zero, which
-result in a smaller buffer allocated.
+This issue has been assigned CVE-2018-14663 by Red Hat.
 
-static struct bpf_map *queue_stack_map_alloc(union bpf_attr *attr)
-63 {
-64 int ret, numa_node = bpf_map_attr_numa_node(attr);
-65 struct bpf_queue_stack *qs;
-66 u32 size, value_size;
-67 u64 queue_size, cost;
-68
-69 size = attr->max_entries + 1;
-70 value_size = attr->value_size;
-71
-72 queue_size = sizeof(*qs) + (u64) value_size * size;
-73
-74 cost = queue_size;
-75 if (cost >= U32_MAX - PAGE_SIZE)
-76 return ERR_PTR(-E2BIG);
-77
-78 cost = round_up(cost, PAGE_SIZE) >> PAGE_SHIFT;
-79
-80 ret = bpf_map_precharge_memlock(cost);
-81 if (ret < 0)
-82 return ERR_PTR(ret);
-83
-84 qs = bpf_map_area_alloc(queue_size, numa_node);
+PowerDNS DNSDist up to and including 1.3.2 is affected.
+
+We would like to thank Richard Gibson for finding and subsequently
+reporting this issue.
 
 
 
-later in function queue_stack_map_push_elem we can overflow this
-buffer with arbitrary length with user-controllable content.
 
-229 dst = &qs->elements[qs->head * qs->map.value_size];
-230 memcpy(dst, value, qs->map.value_size);
-
-
-running the exploit gives me a root shell in a custom compiled 4.20-rc3 system:
-
-user@...t:~$ ./exp
-rop_payload_initialized
-uid=0(root) gid=0(root) groups=0(root) context=system_u:system_r:kernel_t:s0
-# uname -a
-Linux syzkaller 4.20.0-rc3 #1 SMP Thu Nov 22 15:12:38 CST 2018 x86_64 GNU/Linux
-#
-
-
-To fix this vulnerability, we should add check prevent the integer overflow.
-
-Luckily it does not affect any distributions now, hope it get fixed soon : )
-
---
-Wei Wu (ww9210)
-University of Chinese Academy of Sciences
-
-
------ End forwarded message -----
-
--- 
-Yves-Alexis Perez
 
 Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
