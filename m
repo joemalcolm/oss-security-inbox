@@ -1,28 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/24/2
-Message-ID: <a40aa855b2656ce82d611ea22fb6fb0c76c86353.camel@debian.org>
-Date: Sat, 24 Nov 2018 10:08:15 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: oss-security@...ts.openwall.com, Wei Wu <ww9210@...il.com>
-Subject: Re: fwd: [vs-plain] Kernel heap overflow in bpf leading to LPE (exploit provided)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/09/3
+Message-ID: <CAFeDd5ZLjM4edCvtr646TnZ2or5AOcmiQ10HVi8m_k=xd9t37Q@mail.gmail.com>
+Date: Fri, 9 Nov 2018 18:41:23 +0200
+From: Billy Brumley <bbrumley@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2018-5407: new side-channel vulnerability on SMT/Hyper-Threading architectures
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 2018-11-23 at 21:45 +0100, Yves-Alexis Perez wrote:
-> On Fri, 2018-11-23 at 19:09 +0100, Greg KH wrote:
-> > As was discussed further on one of the threads on this topic, it looks
-> > like this is a 4.20-rc issue only, and that 4.19 does not have this
-> > issue.  So it might not be relevant to any distro at all, but I suggest
-> > that people test themselves to be sure.
-> 
-> Hi Greg, thanks for the precision.
+> Could you please confirm the following commits are sufficient to fix CVE-2018-5407?
+>
+>
+> Elliptic curve scalar multiplication with timing attack defenses (CVE-2018-5407)
+> https://git.openssl.org/?p=openssl.git;a=commit;h=aab7c770353b1dc4ba045938c8fb446dd1c4531e
+>
+> Address code style comments
+> https://git.openssl.org/?p=openssl.git;a=commit;h=f06437c751d6f6ec7f4176518e2897f44dd58eb0
+>
+> ladder description: why it works
+> https://git.openssl.org/?p=openssl.git;a=commit;h=33588c930d39d67d1128794dc7c85bae71af24ad
+>
+> Pass through
+> https://git.openssl.org/?p=openssl.git;a=commit;h=f916a735bcdce496cebc7653a8ad2e72b333405a
+>
+> Move up check for EC_R_INCOMPATIBLE_OBJECTS and for the point at infinity case
+> https://git.openssl.org/?p=openssl.git;a=commit;h=b43ad53119c0ac2ecfa6e4356210ccda57e0d16b
+>
+> Remove superfluous NULL checks. Add Andy's BN_FLG comment.
+> https://git.openssl.org/?p=openssl.git;a=commit;h=2172133d0dc58256bf776da074c0d1944fef15cb
 
-And considering no released kernel is vulnerable, here is the proof of concept
-code provided initially.
+It's a good start! But it's more than that. But it's Friday night so
+it'll have to wait until Monday.
 
-Regards,
--- 
-Yves-Alexis
-
-View attachment "exp.c" of type "text/x-csrc" (6113 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+BBB
