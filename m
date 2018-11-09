@@ -1,89 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/12/8
-Message-ID: <CAG-OieODDwrDfoci2ehVUbHg13Ehz66VB50KERZ01qCdrgCLBw@mail.gmail.com>
-Date: Wed, 12 Dec 2018 10:08:41 -0800
-From: Hacker Fantastic <hackerfantastic@...glemail.com>
-To: Tavis Ormandy <taviso@...gle.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Multiple telnet.c overflows
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/09/1
+Message-ID: <314613aa-0068-e4b3-f892-a1fd2d7ce5b0@suse.de>
+Date: Fri, 9 Nov 2018 13:45:01 +0100
+From: Karol Babioch <kbabioch@...e.de>
+To: oss-security@...ts.openwall.com
+Cc: Amos Jeffries <squid3@...enet.co.nz>
+Subject: Re: Squid Proxy multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hi Tavis, thanks for the input - I referenced Mikrotik as a vendor using a
-vulnerable implementation that can be used to escape restricted shells.
-This is just one example of a instance where a restricted shell could be
-escaped when using inetutils, or when the vulnerable code path reached
-unexpected systems (like NetBSD). As Mikrotik case is not an oss security
-issue I did not post the advisory here, but as I shared to you already on
-social media:
+Hi all,
 
-https://hacker.house/releasez/expl0itz/mikrotik-jailbreak.txt
+Am 31.10.18 um 11:37 schrieb Karol Babioch:
+> Am 28.10.18 um 17:13 schrieb Amos Jeffries:
+>> CVE have been requested and awaiting assignment by the DWF project.
+> Is there any update and/or ETA on this ;-)?
 
-(The overflows are present in those devices as well, several million of
-them, in case this isn't clear in our advisory)
+Since the assignment from DWF hasn't happened yet, I've requested CVEs
+via Mitre in the mean time. They have assigned CVE-2018-19131 and
+CVE-2018-19132 for this.
 
-The heap overflow occurs in ANY environment variables (an example instead
-of DISPLAY, use USER which maybe reachable via telnet://user@ip), yes the
-stack sprintf might not be remotely reachable which is why the advisory
-states "multiple overflows". If instances of telnet being called with a
-username via a URI handler the this would reach the heap overflow code path
-as described in the advisory. Thankfully, most modern browsers no longer
-implement telnet URI handlers anymore.
+Best regards,
+Karol Babioch
 
-I cannot account for every system configuration or use case of telnet
-clients. I lack those relevant clairevoyancy skills.
+-- 
+OpenPGP: 4687 CA1E A0F7 3B1E BB7D E179 DF49 418F 6267 267B
 
-You are welcome to dismiss client side environment handling vulnerabilities
-as none-security issues or feel free to patch the referenced
-vulnerabilities as stated in the advisory. Thanks for your input I hope the
-comments above with the referenced advisory are clear enough and that the
-issue can be addressed by projects still using inetutils.
-
-Kind Regards,
-Hacker Fantastic
+SUSE Linux GmbH
+GF: Felix Imendörffer, Jane Smithard, Graham Norton
+HRB 21284 (AG Nürnberg)
 
 
 
-
-
-
-On Wed, Dec 12, 2018, 9:06 AM Tavis Ormandy <taviso@...gle.com wrote:
-
->
->
-> On Tue, Dec 11, 2018 at 1:12 PM Alan Coopersmith <
-> alan.coopersmith@...cle.com> wrote:
->
->> On 12/11/18 10:39 AM, Hacker Fantastic wrote:
->> > When a telnet server requests environment options the sprintf on line
->> 1002 will
->> > not perform bounds checking and causes an overflow of stack buffer
->> > temp[50] defined
->> > at line 990. This issue can be trivially fixed using a patch to add
->> > bounds checking
->> > to sprintf such as with a call to snprintf();
->>
->> GNU inetutils telnet is a fork of the original BSD telnet code, but most
->> of
->> the BSD's seem to have already switched to snprintf a while ago:
->>
->>
-> To be clear, this is a bug in the (little used) GNU inetutils telnet
-> *client*, not server. It's hard to imagine a real usage of this in a
-> context that would be exploitable.
->
-> If you can set DISPLAY, then you can probably also set LD_PRELOAD, and if
-> you can interact with the command then you can use shell escapes.
->
-> I asked on twitter, and was told that maybe someone is using untrusted
-> telnet:// URIs with GNU inetutils, but there are no known examples. I was
-> also told that "plenty" of embedded devices GNU inetutils in restricted
-> shells. I'm told Mikrotik RouterOS is an example, but it's not clear to me
-> if it's using it in a context that would make this a security issue, and if
-> they did how they locked down the command to prevent trivial escapes.
->
-> Tavis.
->
->
->
->
-
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
