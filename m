@@ -1,28 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/15/3
-Message-ID: <nycvar.YSQ.7.76.1801152337380.28933@wniryva>
-Date: Mon, 15 Jan 2018 23:40:26 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: jiangxin1@...wei.com
-Subject: CVE-2017-18030 Qemu: Out-of-bounds access in cirrus_invalidate_region routine
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/09/2
+Message-ID: <9dab0b73-3bc4-a942-bb9e-6c0b243784c2@canonical.com>
+Date: Fri, 9 Nov 2018 08:03:46 -0500
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2018-5407: new side-channel vulnerability on SMT/Hyper-Threading architectures
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Hi,
 
-Quick emulator(Qemu) built with the Cirrus CLGD 54xx VGA Emulator support is 
-vulnerable to an out-of-bounds access issue. It could occur while refreshing 
-vnc surface area, in case the initial pitch was negative in 
-cirrus_invalidate_region.
+On 2018-11-07 2:42 a.m., Billy Brumley wrote:
+>>> For the 1.1.0 branch, at
+>>>
+>>> https://github.com/openssl/openssl/commits/OpenSSL_1_1_0-stable/crypto/ec/ec_mult.c
+>>>
+>>> everything starting from aab7c770353b1dc4ba045938c8fb446dd1c4531e
+> 
+> This was not very responsible of me, since the changes are across
+> several files. I reckon the best source is checking the diff between
+> 1.1.0h and 1.1.0i releases.
+> 
+> If you are a package maintainer, and are putting together a patch set
+> for this, please reach out to me. My team can help test.
+> 
+<snip>
 
-A privileged user inside guest could use this flaw to crash the Qemu process 
-resulting in DoS.
+Could you please confirm the following commits are sufficient to fix CVE-2018-5407?
 
-Upstream patch:
----------------
-   -> https://git.qemu.org/?p=qemu.git;a=commitdiff;h=f153b563f8cf121aebf5a2fff5f0110faf58ccb3
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Elliptic curve scalar multiplication with timing attack defenses (CVE-2018-5407)
+https://git.openssl.org/?p=openssl.git;a=commit;h=aab7c770353b1dc4ba045938c8fb446dd1c4531e
+
+Address code style comments
+https://git.openssl.org/?p=openssl.git;a=commit;h=f06437c751d6f6ec7f4176518e2897f44dd58eb0
+
+ladder description: why it works
+https://git.openssl.org/?p=openssl.git;a=commit;h=33588c930d39d67d1128794dc7c85bae71af24ad
+
+Pass through
+https://git.openssl.org/?p=openssl.git;a=commit;h=f916a735bcdce496cebc7653a8ad2e72b333405a
+
+Move up check for EC_R_INCOMPATIBLE_OBJECTS and for the point at infinity case
+https://git.openssl.org/?p=openssl.git;a=commit;h=b43ad53119c0ac2ecfa6e4356210ccda57e0d16b
+
+Remove superfluous NULL checks. Add Andy's BN_FLG comment.
+https://git.openssl.org/?p=openssl.git;a=commit;h=2172133d0dc58256bf776da074c0d1944fef15cb
+
+
+Thanks!
+
+Marc.
+
+-- 
+Marc Deslauriers
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
