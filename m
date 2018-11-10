@@ -1,41 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/14/3
-Message-ID: <c0e1a287-f18b-252e-3509-131db823264c@ruhr-uni-bochum.de>
-Date: Thu, 14 Jun 2018 23:46:38 +0200
-From: Marcus Brinkmann <marcus.brinkmann@...r-uni-bochum.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/10/1
+Message-ID: <CAG8b5tT5Ob5b1CD=nMFWkJTfVfwvREW3vGw=rpHruB6Tj+NJtw@mail.gmail.com>
+Date: Sat, 10 Nov 2018 16:22:53 +0530
+From: Dhiraj Mishra <mishra.dhiraj95@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2018-12356 Breaking signature verification in pass (Simple Password Store)
+Subject: null-pointer dereference in poppler library
 Content-Type: text/plain; charset=utf-8
 
-This is the third (and for now last) in my series of GnuPG signature
-spoof exploits.
+## Summary
 
-First, a cautious note:
+While fuzzing evince v3.28.4, on linux 4.15.0-38-generic (Ubuntu 18.04
+LTS), a null-pointer dereference was observed, initially this was reported
+to evince but the evince team advised that the issue is in poppler, the
+library used by evince to render PDF. Poppler version: 0.62.0-2ubuntu2.2 is
+vulnerable to null-pointer dereference, however the issue is already fixed
+in poppler 0.70, but this will still crash your evince v3.28.4 if poppler
+is not updated to v.0.70.
 
-In the course of my 2 week investigation, I went through a lot of
-applications using gpg. There were a couple of "near misses" in critical
-infrastructure projects which were not vulnerable, but where I am not
-sure if that was due to conscious design choices or just by pure chance.
+## Debug
 
-It would be prudent for everybody who knows a script or package using
-gpg to have a look for issues with status-fd, regular expressions and/or
-"gpg -d | some-other-program" patterns.
+(gdb) run NullPointerDeference.h_134
+Starting program: /usr/bin/evince NullPointerDeference.h_134
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+[New Thread 0x7fd84d3cf700 (LWP 17587)]
+[New Thread 0x7fd84cbce700 (LWP 17588)]
+[New Thread 0x7fd84718c700 (LWP 17589)]
+[New Thread 0x7fd84651c700 (LWP 17594)]
+[New Thread 0x7fd845b0e700 (LWP 17596)]
+[New Thread 0x7fd83223e700 (LWP 17597)]
 
-Now, the details about CVE-2018-12356:
+Thread 7 "EvJobScheduler" received signal SIGSEGV, Segmentation fault.
+[Switching to Thread 0x7fd83223e700 (LWP 17597)]
+0x00007fd8315f629a in _poppler_attachment_new(FileSpec*) () from
+/usr/lib/x86_64-linux-gnu/libpoppler-glib.so.8
+(gdb) bt
+#0  0x00007fd8315f629a in _poppler_attachment_new(FileSpec*) () at
+/usr/lib/x86_64-linux-gnu/libpoppler-glib.so.8
+#1  0x00007fd8315fa14a in poppler_annot_file_attachment_get_attachment ()
+at /usr/lib/x86_64-linux-gnu/libpoppler-glib.so.8
+#2  0x00007fd83183673d in  () at
+/usr/lib/x86_64-linux-gnu/evince/4/backends/libpdfdocument.so
+#3  0x00007fd8592c3bfa in  () at /usr/lib/x86_64-linux-gnu/libevview3.so.3
+#4  0x00007fd8592c5c02 in  () at /usr/lib/x86_64-linux-gnu/libevview3.so.3
+#5  0x00007fd856bbee85 in  () at /usr/lib/x86_64-linux-gnu/libglib-2.0.so.0
+#6  0x00007fd8565956db in start_thread (arg=0x7fd83223e700) at
+pthread_create.c:463
+#7  0x00007fd8562be88f in clone () at
+../sysdeps/unix/sysv/linux/x86_64/clone.S:95
+(gdb) i r
+rax            0x0    0
+rbx            0x0    0
+rcx            0x0    0
+rdx            0x0    0
+rsi            0x7fd82c0587c0    140566428223424
+rdi            0x55720784c640    93948240774720
+rbp            0x7fd834004a90    0x7fd834004a90
+rsp            0x7fd83223d9e0    0x7fd83223d9e0
+r8             0xffffffffffffffb0    -80
+r9             0x10    16
+r10            0x7fd82c0008d0    140566427863248
+r11            0x1    1
+r12            0x7fd82c0587c0    140566428223424
+r13            0x7fd834004a80    140566562097792
+r14            0x5572072f5a60    93948235176544
+r15            0x0    0
+rip            0x7fd8315f629a    0x7fd8315f629a
+<_poppler_attachment_new(FileSpec*)+122>
+eflags         0x10206    [ PF IF RF ]
+cs             0x33    51
+ss             0x2b    43
+ds             0x0    0
+es             0x0    0
+fs             0x0    0
+gs             0x0    0
+(gdb) info reg ebp rip
+ebp            0x34004a90    872434320
+rip            0x7fd8315f629a    0x7fd8315f629a
+<_poppler_attachment_new(FileSpec*)+122>
+(gdb)
 
-I found a critical vulnerability in pass, the Simple Password Store:
-
-CVE-2018-12356: An issue was discovered in password-store.sh in pass in
-Simple Password Store 1.7 through 1.7.1. The signature verification
-routine parses the output of GnuPG with an incomplete regular
-expression, which allows remote attackers to spoof file signatures on
-configuration files and extensions scripts. Modifying the configuration
-file allows the attacker to inject additional encryption keys under
-their control, thereby disclosing passwords to the attacker. Modifying
-the extension scripts allows the attacker arbitrary code execution.
-
-I am also calling out the missing integrity protection in pass for
-password files, making pass users potentially vulnerable to a broad
-range of attacks.
-
-https://neopg.io/blog/pass-signature-spoof/
