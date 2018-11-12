@@ -1,34 +1,123 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/10/1
-Message-ID: <A-KuB66J_8Cu-IEWQYhXaGDkxeCWvpzEdJ9HoM4m40Vi0dOrT8nbvRudua3ErLlqgO8n3lGjUWUilRYDXRVCCCAtsrXJEl8bSRm0LQ3kcMo=@protonmail.ch>
-Date: Thu, 09 Aug 2018 21:34:48 +0000
-From: Stiepan <stie@...tonmail.ch>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/12/3
+Message-ID: <9bb78f82-8eb4-80c0-2c61-5f3ffd7771e2@canonical.com>
+Date: Mon, 12 Nov 2018 07:24:46 -0500
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux TCP implementation vulnerable to Denial of Service (CVE 2018-5390)
+Subject: Re: CVE-2018-5407: new side-channel vulnerability on SMT/Hyper-Threading architectures
 Content-Type: text/plain; charset=utf-8
 
-Regarding your last question and this comment, I think that funding would help getting more issues fixed more quickly, independently of particular club member interests. That would match the level of general, or public interest in the broadest definition of the term, Linux has come to attain... Hence my suggestion to the ITU to get involved into that. They have some level of representativeness and thus, legitimity, that, however imperfect, is hard to attain by any "certain kind of selective disclosure". And they charge membership fees that could for sure improve the status quo.
-
-Best,
-Stiepan A. Kovac
-President
-itk AVtobvS SARL
-
-Envoyé depuis ProtonMail mobile
-
--------- Message d'origine --------
-On 9 août 2018 à 19:22, Solar Designer a écrit :
-
-> On Thu, Aug 09, 2018 at 10:11:38AM -0700, Kurt H Maier wrote:
->> On Thu, Aug 09, 2018 at 06:17:54PM +0200, Solar Designer wrote:
->> >
->> > If you're an [...] you can now apply to join
+On 2018-11-12 4:34 a.m., Billy Brumley wrote:
+>>> If you are a package maintainer, and are putting together a patch set
+>>> for this, please reach out to me. My team can help test.
+>>>
+>> <snip>
 >>
->> This is generally how clubs work.
->
-> Sure. What's your point?
->
-> Like I said, what we're supporting with (linux-)distros is a certain
-> kind of "selective disclosure".
->
-> Alexander
+>> Could you please confirm the following commits are sufficient to fix CVE-2018-5407?
+> 
+> Some more technical advice below. Hope it helps!
+> 
+> BBB
+> 
+> # 1.0.1
+> 
+> That is EOL. Try your luck with porting the 1.0.2 solution.
+> 
+> Shameless self plug: read Section 2
+> 
+> https://eprint.iacr.org/2018/354
+> 
+> for a related discussion about EOL issues and security in the context
+> of OpenSSL.
+> 
+> # 1.0.2
+> 
+> Wait until this gets merged into OpenSSL_1_0_2-stable :
+> 
+> https://github.com/openssl/openssl/pull/7593
+> 
+> # 1.1.0 up to and including 1.1.0h
+> 
+> So I went through the process to patch this myself:
+> 
+> https://github.com/bbbrumley/openssl/tree/bbb_ecc_fix_110h
+> 
+> Ofc I have no idea what 1.1.0 version you started with, or what
+> patches you're applying. So take this as more of a HOWTO build and
+> test your own patchset.
+> 
+> ## CVE-2018-5407
+> 
+> git checkout OpenSSL_1_1_0h -b bbb_ecc_fix_110h
+> git cherry-pick aab7c770353b1dc4ba045938c8fb446dd1c4531e
+> git cherry-pick f06437c751d6f6ec7f4176518e2897f44dd58eb0
+> git cherry-pick 33588c930d39d67d1128794dc7c85bae71af24ad
+> git cherry-pick f916a735bcdce496cebc7653a8ad2e72b333405a
+> git cherry-pick b43ad53119c0ac2ecfa6e4356210ccda57e0d16b
+> git cherry-pick 2172133d0dc58256bf776da074c0d1944fef15cb
+> git cherry-pick cc39f9250957dfe6e9f1b62a4eca1863e8451483
+> git cherry-pick 7b3e775a6a78650bbd3e8e19a5aa12981880402b
+> git cherry-pick 5eee95a54de6854e60886c8e662a902184b12d04
+> git cherry-pick 875ba8b21ecc65ad9a6bdc66971e50461660fcbb
+> git checkout --theirs CHANGES
+> git add CHANGES
+> git cherry-pick --continue
+> git checkout OpenSSL_1_1_0h -- CHANGES
+> git add CHANGES
+> git commit -m "revert changelog diffs"
+> git rebase -i OpenSSL_1_1_0h
+> 
+> (I skipped 926b21117df939241f1cd63f2f9e3ab87819f0ed because it is not
+> related to CVE-2018-5407. See
+> 
+> https://github.com/openssl/openssl/issues/6302
+> 
+> For a lengthy discussion. I'm not familiar enough with the issue to
+> give advice if you need to pick it up or not.)
+> 
+> All of them cherry pick cleanly except for the last one, but it's only
+> a trivial conflict with the changelog.
+> 
+> I checked the scalar multiplication code paths in ecdsatest with gdb
+> (break ec_mult.c:423), and indeed they are early exiting to the new
+> function when signing.
+> 
+> A lot of new regression testing went into 1.1.1. Some of it was
+> backported 1.1.0:
+> 
+> https://github.com/openssl/openssl/commits/OpenSSL_1_1_0-stable/test
+> 
+> So I fetched these KATs:
+> 
+> https://raw.githubusercontent.com/openssl/openssl/23fe5c582a83bce394a3cdf0bc8f6f4f2eb71ebb/test/recipes/30-test_evp_data/evppkey_ecc.txt
+> 
+> To run those tests, you also need to pick up this bug fix for
+> evp_test.c (this is for testing, not part of the CVE-2018-5407 fix) :
+> 
+> git cherry-pick e35e5941e0b2f7af1cd56f07ee8d4eaf2b445132
+> 
+> Then rebuilt, and ran
+> 
+> $ test/evp_test /path/to/evppkey_ecc.txt
+> 484 tests completed with 0 errors, 0 skipped
+> 
+> All of those (positive and negative) tests pass; they are for ECC
+> keygen and ECDH. I checked the scalar multiplication code paths with
+> gdb (break ec_mult.c:423), and indeed they all early exit to the new
+> function.
+> 
+> ## CVE-2018-0735
+> 
+> Apply this small fix on top:
+> 
+> git cherry-pick 56fb454d281a023b3f950d969693553d3f3ceea1
+> git cherry-pick 003f1bfd185267cc67ac9dc521a27d7a2af0d0ee
+> git rebase -i HEAD~2
+> 
+> Then ofc rerun all the regression testing ("make test", as well as the
+> custom EVP tests described above.)
+> 
+
+Thank you very much for the info!
+
+Marc.
