@@ -1,44 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/05/2
-Message-Id: <7ACF84EA-55E8-419D-B4B7-BE43C60070A5@apache.org>
-Date: Tue, 5 Jun 2018 10:36:05 -0400
-From: "P. Taylor Goetz" <ptgoetz@...che.org>
-To: user@...rm.apache.org, dev@...rm.apache.org, announce@...che.org, Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com
-Subject: [CVE-2018-8008] Apache Storm arbitrary file write vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/12/2
+Message-ID: <CAFitrpQSV73Vz7rJYfLJK7gvEymZSCR5ooWUeU8j4jzRydk-eg@mail.gmail.com>
+Date: Mon, 12 Nov 2018 10:57:28 +0000
+From: Robbie Gemmell <robbie@...che.org>
+To: announce@...che.org, users@...d.apache.org, dev@...d.apache.org,  Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com
+Subject: [SECURITY] [CVE-2018-17187] Apache Qpid Proton-J transport TLS wrapper hostname verification mode not implemented
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-8008: Apache Storm arbitrary file write vulnerability
+CVE-2018-17187: Apache Qpid Proton-J transport TLS wrapper hostname
+verification mode not implemented
 
 Severity: Important
 
-Vendor:
-The Apache Software Foundation
+Vendor: The Apache Software Foundation
 
-Versions Affected:
-Apache Storm 1.2.1
-Apache Storm 1.1.2
+Versions Affected: Versions 0.3 to 0.29.0
 
 Description:
-Apache Storm version 1.0.6 and earlier, 1.2.1 and earlier, and version 1.1.2 and earlier expose an arbitrary file write vulnerability, that can be achieved using a specially crafted zip archive (affects other archives as well, bzip2, tar, xz, war, cpio, 7z), that holds path traversal filenames. So when the filename gets concatenated to the target extraction directory, the final path ends up outside of the target folder.
+The Proton-J transport includes an optional wrapper layer to perform TLS,
+enabled by use of the 'transport.ssl(...)' methods. Unless a verification
+mode was explicitly configured, client and server modes previously defaulted
+as documented to not verifying a peer certificate, with options to
+configure this explicitly or select a certificate verification mode with or
+without hostname verification being performed.
+
+The latter hostname verifying mode was not previously implemented, with
+attempts to use it resulting in an exception. This left only the option to
+verify the certificate is trusted, leaving such a client vulnerable to
+Man In The Middle (MITM) attack.
+
+Uses of the Proton-J protocol engine which do not utilise the optional
+transport TLS wrapper are not impacted, e.g. usage within Qpid JMS.
+
+Resolution:
+Uses of Proton-J utilising the optional transport TLS wrapper layer that
+wish to enable hostname verification must be upgraded to version 0.30.0 or
+later and utilise the VerifyMode#VERIFY_PEER_NAME configuration, which is
+now the default for client mode usage unless configured otherwise.
 
 Mitigation:
-1.2.1 users should upgrade to version 1.2.2.
-1.1.2 users should upgrade to version 1.1.3.
-1.0.6 users should upgrade to version 1.1.3.
-
-Apache Storm 1.2.2 artifacts are available for immediate download here:
-
-http://www.us.apache.org/dist/storm/apache-storm-1.2.2/
-
-Apache Storm 1.1.3 artifacts are available for immediate download here:
-
-http://www.us.apache.org/dist/storm/apache-storm-1.1.3/
+If upgrading is not currently possible then potential workarounds include
+providing a custom SSLContext which enables hostname verification, or
+omitting use of the 'transport.ssl(...)' methods and performing TLS through
+other means such as utilising existing IO framework support or supplying a
+custom transport wrapper layer.
 
 Credit:
-This issue was discovered by Snyk Security Research Team
+This issue was reported by Peter Stockli of Alphabot Security.
 
 References:
-http://storm.apache.org/2018/06/04/storm122-released.html
-http://storm.apache.org/2018/06/04/storm113-released.html
-
-P. Taylor Goetz
+[1] https://issues.apache.org/jira/browse/PROTON-1962
+[2] https://qpid.apache.org/cves/CVE-2018-17187.html
