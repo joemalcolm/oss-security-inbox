@@ -1,38 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/25/2
-Message-ID: <2296bb0c-ea7e-427b-10f0-43c48e80325c@apache.org>
-Date: Sun, 25 Mar 2018 15:11:21 +0200
-From: Yann Ylavic <ylavic@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/16/1
+Message-ID: <CAG48ez3sBak6JSO6p=qZ8S3mo8kARevAmUOY2TtFawaxXBk3wA@mail.gmail.com>
+Date: Fri, 16 Nov 2018 00:38:18 +0100
+From: Jann Horn <jannh@...gle.com>
 To: oss-security@...ts.openwall.com
-Cc: Marius Bakke <mbakke@...tmail.com>, Daniel Ruggeri <druggeri@...che.org>, security@...pd.apache.org
-Subject: Re: CVE-2017-15710: Out of bound write in mod_authnz_ldap when using too small Accept-Language values
+Subject: Linux kernel: broken uid/gid mapping for nested user namespaces with >5 ranges (CVE-2018-18955; since 4.15; fixed in 4.18.19 and 4.19.2)
 Content-Type: text/plain; charset=utf-8
 
-On 03/25/2018 12:52 PM, Marius Bakke wrote:
-> Daniel Ruggeri <druggeri@...che.org> writes:
->> References:
->> https://httpd.apache.org/security/vulnerabilities_24.html
->
-> Perhaps I'm hitting an outdated mirror (195.154.151.36), but this
-> page lists "OptionsBleed" as the most recent CVE, and the download
-> page shows 2.4.29 as the latest release.
+NOTE: I have requested a CVE identifier, and I'm sending this message,
+to make tracking of the fix easier; however, to avoid missing security
+fixes without CVE identifiers, you should *NOT* be cherry-picking a
+specific patch in response to a notification about a kernel security
+bug.
 
-The httpd website is missing some synchronization still, we are
-currently looking into it.
+In Linux kernel versions since 4.15, map_write() in
+kernel/user_namespace.c handles nested user namespaces with more than
+5 UID or GID ranges incorrectly. This can allow a user who has
+CAP_SYS_ADMIN in a user namespace which maps at least 6 UIDs or GIDs
+to bypass access controls on resources outside the namespace.
 
->
-> I found 2.4.33 by browsing my suggested mirror "manually", but it
-> does not have the PGP signatures.
->
-> https://apache.uib.no/httpd/
->
-> I had to go to <https://www-eu.apache.org/dist/httpd/> in order to
-> verify the integrity.
+This is CVE-2018-18955.
 
-The website should be updated soon too, in the meantime the tarballs
-(and signatures) are available here: https://archive.apache.org/dist/httpd/
-
-Thanks for noticing and letting us now.
-
-Regards,
-Yann.
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=d2f007dbe7e4c9583eea6eb04d60001e85c6f1bd
+https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.18.19
+https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.19.2
+https://bugs.chromium.org/p/project-zero/issues/detail?id=1712
