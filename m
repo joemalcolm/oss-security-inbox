@@ -1,4 +1,9 @@
-Received: (qmail 14056 invoked by uid 550); 23 Jul 2022 18:07:23 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["934" "Friday" "16" "November" "2018" "00:38:18" "+0100" "Jann Horn" "jannh@google.com" "<CAG48ez3sBak6JSO6p=qZ8S3mo8kARevAmUOY2TtFawaxXBk3wA@mail.gmail.com>" "18" "[oss-security] Linux kernel: broken uid/gid mapping for nested user namespaces with >5 ranges (CVE-2018-18955; since 4.15; fixed in 4.18.19 and 4.19.2)" "^Date:" nil nil "11" "2018111523:38:18" "[oss-security] Linux kernel: broken uid/gid mapping for nested user namespaces with >5 ranges (CVE-2018-18955; since 4.15; fixed in 4.18.19 and 4.19.2)" (number mark "        jannh@google Nov 16   18/934   " thread-indent "\"[oss-security] Linux kernel: broken uid/gid mapping for nested user namespaces with >5 ranges (CVE-2018-18955; since 4.15; fixed in 4.18.19 and 4.19.2)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 5527 invoked by uid 550); 16 Nov 2018 07:33:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,72 +11,57 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18363 invoked from network); 23 Jul 2022 16:52:08 -0000
-Date: Sat, 23 Jul 2022 11:51:53 -0500
-From: John Helmert III <ajak@gentoo.org>
-To: oss-security@lists.openwall.com
-Message-ID: <YtwnKUHaS9nL/F/F@gentoo.org>
-References: <6ae481de-39c2-c4a9-5274-59c2bcdb2dd6@gmail.com>
+Received: (qmail 3454 invoked from network); 15 Nov 2018 23:38:56 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=+WrXXGQt3gR4nJSIfTyrltMwJEAy9y3bP9SNGyc+7to=;
+        b=KuImK3aUSx2SuFcPr4zk4mUdPcWPxMaXAMQZzDRLk0Nbj0y7USQDTPSbI6BFpRo6Oe
+         oFm+WdNObshrRmq2+DOIhTnezBcVBrVcj5TlST2cUs/DtafM6lAu7PcdF79qgU+raR1L
+         TkzwE7m4XTBm+2vWpOnQtxqe63ZxFGJnbuZw6/pI/AJJBlqWZYFHCL9bKc0CUxk18nWh
+         qXRgFNm14CIcr9vnZbgnC9QGGMBwpIFjVqxuDme+qSZTT7gngwHe3bbtEN/pa469kXQE
+         BrWXQLY7w4tf6yxai/tRZpuYXWpidBR/YP2uyynNNz7XN++dZWr5pZi0EZd0Znl/rP8V
+         vleg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=+WrXXGQt3gR4nJSIfTyrltMwJEAy9y3bP9SNGyc+7to=;
+        b=tdQSwbYR+bxcwgFn3kn4d5LmAQakED96cr3+kOOQc49IFfzv69S1UCE+zjhoAPCHDP
+         /ke9ARloJNtCJ8RsTVOL/diGO8Svw2+0Xokp6LWHAEoVrey2mfHEYthCghcc3inWt3N7
+         l+1rp1Srxx8LZo70Wtv4uqMUYnnqbhp3eez4nJtISWMPJjW+A/WleRMShQawtPUOyIgV
+         boy5aHZ04zYX9ncdyWaq+gXKkN9jrsyFZwMyN66sCG8tSA40ORtoFEGZpzVtruUGwtav
+         rbJrj3Bw+F17//bLLUWKWhwRrby1NCcH33MoA1vNUu/nM5EzpdB/dqlaU7/hnJjNAmQi
+         QEmw==
+X-Gm-Message-State: AGRZ1gKHwVc8YNx8A52v+Ljafqiz3xyGQ7Fz2vRmcjn0+VJB5U33PeTu
+	JtamC/axEwEMBi9keSyZEFq+dyLIdyaijGk0BY0olmzxEwpYUw==
+X-Google-Smtp-Source: AJdET5c+REz8Uie1uiNvv7zkpW+yFumD14B15OggiiYBDaWVO41NoCtEsd82C+iThfGchBt25Ihfkh4gIN/VpKHVyJg=
+X-Received: by 2002:a9d:3a44:: with SMTP id j62mr4597621otc.292.1542325124324;
+ Thu, 15 Nov 2018 15:38:44 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="dA1dbJzk1TKwtetN"
-Content-Disposition: inline
-In-Reply-To: <6ae481de-39c2-c4a9-5274-59c2bcdb2dd6@gmail.com>
-Subject: Re: [oss-security] CVE Request: heap buffer overflow in gdk-pixbuf
+Message-ID: <CAG48ez3sBak6JSO6p=qZ8S3mo8kARevAmUOY2TtFawaxXBk3wA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Date: Fri, 16 Nov 2018 00:38:18 +0100
+From: Jann Horn <jannh@google.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Linux kernel: broken uid/gid mapping for nested user namespaces with
+ >5 ranges (CVE-2018-18955; since 4.15; fixed in 4.18.19 and 4.19.2)
+To: oss-security@lists.openwall.com
 
---dA1dbJzk1TKwtetN
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+NOTE: I have requested a CVE identifier, and I'm sending this message,
+to make tracking of the fix easier; however, to avoid missing security
+fixes without CVE identifiers, you should *NOT* be cherry-picking a
+specific patch in response to a notification about a kernel security
+bug.
 
-On Sat, Jul 23, 2022 at 07:35:42PM +0700, Pedro Ribeiro wrote:
-> Hi,
->=20
-> A year ago I found and submitted a vulnerability to the gdk-pixbuf tracke=
-r:
-> https://gitlab.gnome.org/GNOME/gdk-pixbuf/-/issues/190
->=20
-> It's a heap buffer overflow using a crafted GIF, which is likely=20
-> exploitable in 32 bit systems. Full details are in the link above in the=
-=20
-> bug tracker.
->=20
-> This was patched and the fix was merged 8 months ago as seen here:
-> https://gitlab.gnome.org/GNOME/gdk-pixbuf/-/merge_requests/121
->=20
-> The issue is now public, but since no CVE was attributed, it probably is=
-=20
-> not being considered as a problem for downstream users of the package.
->=20
-> As of today, the latest Debian stable package is affected by this=20
-> vulnerability. Using a GNOME file system browser and browsing to that=20
-> folder will cause a crash, as will opening it up in a GNOME image viewer=
-=20
-> and even attempting to load it in Chromium (should have submitted to=20
-> them for a bounty :D).
->=20
-> Hence I'd like to get a CVE to raise awareness for this issue, so that=20
-> downstream users of the package can get patched.
->=20
-> Thanks and regards,
-> Pedro Ribeiro
+In Linux kernel versions since 4.15, map_write() in
+kernel/user_namespace.c handles nested user namespaces with more than
+5 UID or GID ranges incorrectly. This can allow a user who has
+CAP_SYS_ADMIN in a user namespace which maps at least 6 UIDs or GIDs
+to bypass access controls on resources outside the namespace.
 
-Hi, according to the oss-security Openwall wiki page [1], CVEs need to
-be requested via MITRE's web form [2].
+This is CVE-2018-18955.
 
-[1] https://oss-security.openwall.org/wiki/mailing-lists/oss-security
-[2] https://cveform.mitre.org/=
-
---dA1dbJzk1TKwtetN
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQQyG9yfCrmO0LPSdG2gXq2+aa/JtQUCYtwnJwAKCRCgXq2+aa/J
-tW3fAQCQzkIe8opGcVBld8aPY5ALtRrJSUEothhnA8bfYgN3pAEA4n6m3jLECFdV
-Y9YdxUFhGzBMJ72JLBbzHSJf7YSDQAo=
-=q4ta
------END PGP SIGNATURE-----
-
---dA1dbJzk1TKwtetN--
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=d2f007dbe7e4c9583eea6eb04d60001e85c6f1bd
+https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.18.19
+https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.19.2
+https://bugs.chromium.org/p/project-zero/issues/detail?id=1712
