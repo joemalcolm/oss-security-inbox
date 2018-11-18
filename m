@@ -1,34 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/20/9
-Message-id: <0680DF2A-87F0-48B8-93F3-0163F6CF2340@me.com>
-Date: Tue, 20 Nov 2018 17:08:59 -0500
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Security <oss-security@...ts.openwall.com>
-Subject: Arbitrary File Upload File Upload Vulnerability in php-traditional-server v1.2.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/18/1
+Message-ID: <CAEccTyxgEHqpH3a5fa+Yj+AptwyATbau8T24b8JjU41mP_d01w@mail.gmail.com>
+Date: Sun, 18 Nov 2018 09:37:02 -0600
+From: Sean Owen <srowen@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2018-17190: Unsecured Apache Spark standalone executes user code
 Content-Type: text/plain; charset=utf-8
 
-Title: Arbitrary File Upload File Upload Vulnerability in php-traditional-server v1.2.2
-Author: Larry W. Cashdollar, @_larry0
-Date: 2018-11-15
-CVE-ID:[CVE-2018-9209]
-CWE: CWE-434 Arbitrary File Upload
-Download Site: N/A
-Vendor: FineUploader
-Vendor Notified: 2018-11-15, software discontinued. 
+Severity: Low
 
-Advisory: http://www.vapidlabs.com/advisory.php?v=208
+Vendor: The Apache Software Foundation
 
-Description: PHP-based server-side example for handling traditional endpoint requests from Fine Uploader
+Versions Affected:
+All versions of Apache Spark
 
-Vulnerability:
-The code in endpoint.php allows file uploads and doesn't check if the users authenticated or the file type.  This allows for executable files to be uploaded and therefore remote code execution. 
+Description:
+Spark's standalone resource manager accepts code to execute on a 'master' host,
+that then runs that code on 'worker' hosts. The master itself does not, by
+design, execute user code. A specially-crafted request to the master can,
+however, cause the master to execute code too. Note that this does not affect
+standalone clusters with authentication enabled. While the master host
+typically has less outbound access to other resources than a worker, the
+execution of code on the master is nevertheless unexpected.
 
-Lines 37-38 from endpoint.php:
+Mitigation:
+Enable authentication on any Spark standalone cluster that is not otherwise
+secured from unwanted access, for example by network-level restrictions. Use
+spark.authenticate and related security properties described at
+https://spark.apache.org/docs/latest/security.html
 
-37: // Specify the list of valid extensions, ex. array("jpeg", "xml", "bmp")
-38: $uploader->allowedExtensions = array(); // all files types allowed by default
+Credit:
+Andre Protas, Apple Information Security
 
-Exploit Code:
-https://github.com/lcashdol/Exploits/tree/master/CVE-2018-9209
-
-
+References:
+https://spark.apache.org/security.html
