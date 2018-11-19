@@ -1,76 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/09/2
-Message-ID: <CAJ_zFkLHvDnU2=USrZm2Dtjt0WPfdnqHC2K5q52xCR+qQ7MEpw@mail.gmail.com>
-Date: Sun, 9 Sep 2018 12:27:26 -0700
-From: Tavis Ormandy <taviso@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/19/1
+Message-ID: <878t1pjbrx.fsf@oldenburg.str.redhat.com>
+Date: Mon, 19 Nov 2018 17:02:42 +0100
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
+Subject: REJECT request filed for CVE-2018-11210 against tinyxml2
 Content-Type: text/plain; charset=utf-8
 
-[resending post that bounced]
+I filed a REJECT request for MITRE for this CVE identifier, with this
+rationale:
 
-Another update, that bypass is now fixed with these commits:
+This is not a vulnerability. The fuzzer did not check that the
+precondition is satisfied. If XMLDocument::Parse is called in the
+one-argument-form (or with a (size_t)-1 argument), then it uses strlen
+on the input string, which must be null-terminated. This is clearly
+spelled out in the API documentation.
 
-http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=3e5d316b72e3965b7968bb1d96baa137cd063ac6
-http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=643b24dbd002
+<https://github.com/leethomason/tinyxml2/blob/8f4a9a8cc2a93709b97d0cf51d33ddd1ec33277d/tinyxml2.h#L1677>
 
-The problem was that the previous
-<http://git.ghostscript.com/?p=ghostpdl.git&a=commitdiff&h=5812b1b78fc4> commit
-relied on catching any errors, then restoring a sane state in the error
-handler. That won't work, because the trusted code shares the same operand
-stack with untrusted code, so you can (for example) just fill it up with
-junk and cause a stack overflow. That causes the stopped proc to stop,
-leaving the page device in insecure state ("stopped" is the PostScript
-equivalent of "threw an exception").
+This is just a courtesy notice in case you want to update your records
+before MITRE processes the rejection request (or rejects it altogether).
 
-Here is a test case:
-
-%!PS
-% This is bug 699718, trysetparams stopped proc can itself stop, leaving
-page device in insecure state
-currentpagedevice /PageSize get 0 (foobar) put
-a0
-% fill up the stack with junk, so the error handler generates a
-/stackoverflow
-0 1 300360 {} for
-{ grestore } stopped clear
-(ppmraw) selectdevice
-mark /OutputFile (%pipe%id) currentdevice putdeviceprops
-showpage
-
-$ ./gs -dSAFER bug699718.txt
-GPL Ghostscript GIT PRERELEASE 9.25 (2018-09-03)
-Copyright (C) 2018 Artifex Software, Inc.  All rights reserved.
-This software comes with NO WARRANTY: see the file PUBLIC for details.
-uid=1000(taviso) gid=1000(primarygroup)
-
-I dunno if I believe there are no other ways to make that fail, I'll think
-about it. I can see there are bunch more security related commits in git
-that are not from my reports, so I guess there are more on the way anyway.
-
-Tavis.
-
-On Thu, Sep 6, 2018 at 9:27 AM Leonid Isaev <leonid.isaev@...a.colorado.edu>
-wrote:
-
-> On Thu, Sep 06, 2018 at 03:17:25PM +0200, Jakub Wilk wrote:
-> > * Leonid Isaev <leonid.isaev@...a.colorado.edu>, 2018-09-05, 17:32:
-> > > pdf files can contains things like javascript...
-> >
-> > Do any open-source PDF browsers actually execute embedded JS?
->
-> Currently, evince, okular and gv don't. The same goes for zathura with its
-> poppler backend (haven't checked this, but pretty sure). But then there is
-> also
-> Artifex Mupdf which, AFAIR, supports JS in pdf files (by extension, so does
-> zathura when viewing a pdf file using the mupdf plugin). I don't know how
-> complete that support is. Most importantly, many Android pdf/ebook readers
-> probably include JS support.
->
-> CHeers,
-> L.
->
-> --
-> Leonid Isaev
->
-
+Thanks,
+Florian
