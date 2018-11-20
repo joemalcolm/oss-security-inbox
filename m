@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1350" "Saturday" "5" "August" "2017" "01:15:23" "+0200" "Damien Regad" "dregad@mantisbt.org" "<om2v65$asp$1@blaine.gmane.org>" "30" "[oss-security] CVE-2017-12419: Arbitrary File Read in MantisBT install.php script" "^Date:" nil nil "8" "2017080423:15:23" "[oss-security] CVE-2017-12419: Arbitrary File Read in MantisBT install.php script" (number mark "U       dregad@manti Aug  5   30/1350  " thread-indent "\"[oss-security] CVE-2017-12419: Arbitrary File Read in MantisBT install.php script\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["705" "Tuesday" "20" "November" "2018" "16:51:28" "+0530" "P J P" "ppandit@redhat.com" "<nycvar.YSQ.7.76.1811201647270.17923@xnncv>" "21" "[oss-security] CVE-2018-19364 Qemu: 9pfs: Use-after-free due to race condition while updating fid path" "^cc:" nil nil "11" "2018112011:21:28" "[oss-security] CVE-2018-19364 Qemu: 9pfs: Use-after-free due to race condition while updating fid path" (number mark "        ppandit@redh Nov 20   21/705   " thread-indent "\"[oss-security] CVE-2018-19364 Qemu: 9pfs: Use-after-free due to race condition while updating fid path\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 27721 invoked by uid 550); 4 Aug 2017 23:59:33 -0000
+Received: (qmail 3294 invoked by uid 550); 20 Nov 2018 11:21:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,50 +11,39 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32044 invoked from network); 4 Aug 2017 23:15:44 -0000
-X-Injected-Via-Gmane: http://gmane.org/
-Message-ID: <om2v65$asp$1@blaine.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Complaints-To: usenet@blaine.gmane.org
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
-X-Mozilla-News-Host: news://news.gmane.org:119
-Content-Language: en-US
-Date: Sat, 5 Aug 2017 01:15:23 +0200
-From: Damien Regad <dregad@mantisbt.org>
+Received: (qmail 3269 invoked from network); 20 Nov 2018 11:21:44 -0000
+X-X-Sender: pjp@kaapi
+Message-ID: <nycvar.YSQ.7.76.1811201647270.17923@xnncv>
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.84 on 10.5.11.23
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.29]); Tue, 20 Nov 2018 11:21:33 +0000 (UTC)
+cc: Greg Kurz <groug@kaod.org>, zhibin hu <noirfate@gmail.com>
+Date: Tue, 20 Nov 2018 16:51:28 +0530 (IST)
+From: P J P <ppandit@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2017-12419: Arbitrary File Read in MantisBT install.php script
-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE-2018-19364 Qemu: 9pfs: Use-after-free due to race condition
+ while updating fid path
+To: oss security list <oss-security@lists.openwall.com>
 
-If, after a successful installation of MantisBT on MySQL/MariaDB the
-administrator does not remove the 'admin' directory (as recommended in
-the "Post-installation and upgrade tasks" section of the MantisBT Admin
-Guide [1]), and the MySQL client has a local_infile setting enabled (in
-php.ini mysqli.allow_local_infile, or the MySQL client config file,
-depending on the PHP setup), an attacker may take advantage of MySQL's
-"connect file read" feature [2] to remotely access files on the MantisBT
-server.
+   Hello,
 
-Affected versions: All 1.x and 2.x
-Fixed in versions: N/A
+A use-after-free flaw was found in the VirtFS, host directory sharing via Plan 
+9 File System(9pfs) support in QEMU. It could occur due to a race condition in 
+updating fid path in worker threads via v9fs_path_copy(), while accessing 
+files on a shared host directory.
 
-At the moment, we do not have a way to patch this vulnerability from
-the code, so we advise administrators to secure their installations
-following our recommendation (i.e. deleting the 'admin' directory,
-disabling mysqli.allow_local_infile in php.ini). As a stopgap measure,
-we have improved documentation and added warnings in several places to
-better inform administrators of the risks they incur.
+A user inside guest could use this flaw to crash the QEMU process resulting in 
+DoS issue.
 
-Credits:
-- Reported by aLLy from ONSEC (https://twitter.com/IamSecurity)
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2018-11/msg01139.html
+   -> https://lists.gnu.org/archive/html/qemu-devel/2018-11/msg02795.html
 
-References:
-- MantisBT issue tracker https://mantisbt.org/bugs/view.php?id=23173
+This issue was reported by Zhibin hu.
 
-[1]
-http://mantisbt.org/docs/master/en-US/Admin_Guide/html-desktop/#admin.install.postcommon
-[2] http://russiansecurity.expert/2016/04/20/mysql-connect-file-read/
-    https://dev.mysql.com/doc/refman/5.7/en/load-data-local.html
-
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
