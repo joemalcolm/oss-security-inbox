@@ -1,59 +1,135 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/22/4
-Message-ID: <20180622141604.GA20634@openwall.com>
-Date: Fri, 22 Jun 2018 16:16:05 +0200
-From: Solar Designer <solar@...nwall.com>
-To: Michael Ellerman <mpe@...erman.id.au>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Intel hyper-threading security issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/20/2
+Message-Id: <E1gP62p-0000ba-Bx@xenbits.xenproject.org>
+Date: Tue, 20 Nov 2018 13:26:23 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 275 v2 - insufficient TLB flushing / improper large page mappings with AMD IOMMUs
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jun 22, 2018 at 02:08:03PM +1000, Michael Ellerman wrote:
-> Solar Designer <solar@...nwall.com> writes:
-> > you can obtain the needed information from /proc/cpuinfo or
-> > /sys/devices/system/cpu/cpu*/topology/* to choose which logical CPUs you
-> > disable (so that you leave only one per physical core).
-> >
-> > On a related note, attached is a generic Linux /proc/cpuinfo parser
-> 
-> I guess by "generic" you mean Intel & AMD? :)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Actually, I meant not making any assumptions about the ordering of
-logical CPUs, which I saw vary even between similar systems.  But you're
-right - this is x86-specific - should work on Linux kernels built for
-i686, x86_64, k1om (aka MIC), tested starting with RHEL5'ish systems.
-The sysfs approach is probably preferable.
+                    Xen Security Advisory XSA-275
+                              version 2
 
-> It won't work on powerpc, or arm, or arm64 ...
-> 
-> You should be able to determine all of the info you need from the sysfs
-> topology files, which work across arches.
-> 
-> See the script below for example, which shows CPUs grouped by core.
+  insufficient TLB flushing / improper large page mappings with AMD IOMMUs
 
-Thanks.  FWIW, your script does indeed work fine on GCC Compile Farm's
-POWER7 box running CentOS 7.4:
+UPDATES IN VERSION 2
+====================
 
-[solar@...1-power7 ~]$ ./cpu.py
-0: 0, 1, 2, 3
-4: 4, 5, 6, 7
-8: 8, 9, 10, 11
-12: 12, 13, 14, 15
-16: 16, 17, 18, 19
-20: 20, 21, 22, 23
-24: 24, 25, 26, 27
-28: 28, 29, 30, 31
-32: 32, 33, 34, 35
-36: 36, 37, 38, 39
-40: 40, 41, 42, 43
-44: 44, 45, 46, 47
-48: 48, 49, 50, 51
-52: 52, 53, 54, 55
-56: 56, 57, 58, 59
-60: 60, 61, 62, 63
+Public release.
 
-This is consistent with my benchmarks of different thread affinity
-settings on that box (e.g., "GOMP_CPU_AFFINITY=0-63:4
-OMP_NUM_THREADS=16" to use one thread per core in OpenMP).
+ISSUE DESCRIPTION
+=================
 
-Alexander
+In order to be certain that no undue access to memory is possible
+anymore after IOMMU mappings of this memory have been removed,
+Translation Lookaside Buffers (TLBs) need to be flushed after most
+changes to such mappings.  Xen bypassed certain IOMMU flushes on AMD
+x86 hardware.
+
+Furthermore logic exists Xen to re-combine small page mappings
+into larger ones.  Such re-combination could have occured in cases
+when it was not really safe/correct to do so.
+
+IMPACT
+======
+
+A malicious or buggy guest may be able to escalate its privileges, may
+cause a Denial of Service (DoS) affecting the entire host, or may be
+able to access data it is not supposed to access (information leak).
+
+VULNERABLE SYSTEMS
+==================
+
+Xen versions from at least 3.2 onwards are affected.  Note that the
+situation is worse in 4.1 and earlier, in that there's no flushing of
+the TLB at all.
+
+Only systems with AMD x86 hardware with enabled IOMMU are affected.
+
+ARM and Intel x86 systems, and AMD x86 systems without enabled IOMMU,
+are not affected.
+
+Only systems where physical PCI devices are assigned to untrusted guests
+are vulnerable.
+
+MITIGATION
+==========
+
+There is no known mitigation for affected system/guest combinations.
+
+CREDITS
+=======
+
+This issue was discovered by Paul Durrant of Citrix.
+
+RESOLUTION
+==========
+
+Applying the appropriate set of attached patches resolves this issue.
+
+xsa275-?.patch           xen-unstable
+xsa275-4.11-?.patch      Xen 4.11.x ... Xen 4.8.x
+xsa275-4.7-?.patch       Xen 4.7.x
+
+$ sha256sum xsa275*
+b5a02598cd2cffcc2cb59c724eeabb50220fa55f2cbe571726a5228909bf7bfe  xsa275.meta
+7a3360e61fbb088f7d9f2b92921c9dceb08a1e01563c42ba4cf4a9999fe42fc4  xsa275-1.patch
+4783a3abd2d87386ce9a7b790666ad398c5e027a6a146fce6424f0bcbfd8a7c6  xsa275-2.patch
+49844d06f24ea129f1a501b4b0d5cb6ec3b288f3a2b41377ce793cc6fc81a788  xsa275-4.7-1.patch
+7ea8bf2ff2c8c92cb064a70959a1148229c4577109015bd5aab72603ccb8f7e3  xsa275-4.7-2.patch
+15d1aa7528368ed92caf8ea9baf77a406e1de26d0697dafd8a85da0d66eb95dc  xsa275-4.11-1.patch
+0806e8c904ac9e8eb89404dffd227fcd56da84b7eb0150ee1e9b4bee54a05b4e  xsa275-4.11-2.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAlv0C2kMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZEmUIAJh8KKnerBI188shqJlCI2yr3qXG75xsnwQSR4Xd
+5lIRLQepG92cPkJa6RPWelJY0rHmPTlFj+apO7k4ZOG4WsZkp8vK16pkOiCGP8wI
+J7UXfdxj9twOEbvLUE+Xe4bJI7/GQ9UbHefZ5LMdive6jYkq20ZUD7nZOBsXDX7r
+znb6plF62VzhoGvvL2yLyZRnRJfs91bNfnqPZG54tHDPXFTntVZghrIYKW8kboNF
+LZNi8fMrk0URy6uUkF2YpzLZ+JoMlPMVPEX3c+bx5xFm7xZc37rGmbHaj+L/5ViY
+8e+2EEhzIGYI7liTSgKOzlkxolJ08bd/xolVAAo8vNeHjHo=
+=noV1
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa275.meta" of type "application/octet-stream" (1572 bytes)
+
+Download attachment "xsa275-1.patch" of type "application/octet-stream" (4463 bytes)
+
+Download attachment "xsa275-2.patch" of type "application/octet-stream" (2441 bytes)
+
+Download attachment "xsa275-4.7-1.patch" of type "application/octet-stream" (4214 bytes)
+
+Download attachment "xsa275-4.7-2.patch" of type "application/octet-stream" (3680 bytes)
+
+Download attachment "xsa275-4.11-1.patch" of type "application/octet-stream" (4217 bytes)
+
+Download attachment "xsa275-4.11-2.patch" of type "application/octet-stream" (2420 bytes)
