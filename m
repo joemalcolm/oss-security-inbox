@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["928" "Tuesday" "19" "January" "2016" "15:33:09" "-0300" "Gustavo Grieco" "gustavo.grieco@gmail.com" "<CACn5sdSaCfkaGyHKG3NkTMRg3bRzu2Zd5NVH8i15xG_skthTkQ@mail.gmail.com>" "41" "Re: [oss-security] CVE request: out-of-bounds write with cpio 2.11" "^Date:" nil nil "1" "2016011918:33:09" "[oss-security] CVE request: out-of-bounds write with cpio 2.11" (number mark "        gustavo.grie Jan 19   41/928   " thread-indent "\"Re: [oss-security] CVE request: out-of-bounds write with cpio 2.11\"\n") "<20160119192412.1a96c226@pc1>" ("<CACn5sdTx4m+mrn6i59Cz4iiAzpbxg=3Qrp6yHxyoaZp8YrS=ZA@mail.gmail.com>" "<20160119192412.1a96c226@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["938" "Tuesday" "20" "November" "2018" "17:08:59" "-0500" "Larry W. Cashdollar" "larry0@me.com" "<0680DF2A-87F0-48B8-93F3-0163F6CF2340@me.com>" "25" "[oss-security] Arbitrary File Upload File Upload Vulnerability in php-traditional-server v1.2.2" nil nil nil "11" "2018112022:08:59" "[oss-security] Arbitrary File Upload File Upload Vulnerability in php-traditional-server v1.2.2" (number mark "U       larry0@me.co Nov 20   25/938   " thread-indent "\"[oss-security] Arbitrary File Upload File Upload Vulnerability in php-traditional-server v1.2.2\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30089 invoked by uid 550); 19 Jan 2016 18:33:21 -0000
+Received: (qmail 32711 invoked by uid 550); 20 Nov 2018 22:09:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,82 +11,58 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30071 invoked from network); 19 Jan 2016 18:33:20 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        bh=ke9Hk5H5L90RgyMDrZ30+mX9BzLHzdu7liBK+TeIOi4=;
-        b=Xz95ii05aYlJBHlqrFSHFlhG8LAg9H2yb4kNcLdzfTn1aRdH3Zh4CfyxkuhZJQ4nb8
-         /CYgwQluKtGqchAXGii4QBw9gaLK/GAw04wAmoJU6WlyFnVvRO6jsuLwgUcBTv6KyiIY
-         vl4+/qn+baU0J5xNwKu2cFaHVZtrTkLHonW2ffSZFLGuj/afei+D2DBCMom0XWSSYHYO
-         0pMaCkbYQIBH6rviay3rlcBo7KkuU+Dr1hOgXYIOO+hO2N/XwY4KK5NJlr9UVWSBjpZz
-         I1WDxCQ7npBNDt+vbcPT7ZLlCqDMaQ+2ykadKeAdl35wbSfedZ6mekysl7rWiY5/vsvG
-         hAWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:content-type;
-        bh=ke9Hk5H5L90RgyMDrZ30+mX9BzLHzdu7liBK+TeIOi4=;
-        b=I5jnwmBlQU4NSTXnfQcwHJNhHIxzcyMJb9Qs4LTWE20YPQOmXRFqg2sKogR9r5pzoO
-         OXEcZ0HN6X8h50WUjVaV3D0uDrp5Wuu3MXCgJeb/oOdrr7JNyAXSiVbKmssCP43XIci/
-         fr9YN/DlbgOfagNRCJLpyvbU0yAr3Uot15y5uhU+ca5BftaU5TqdSmzdf+KBAwV/NKjy
-         m1tD7mPGbIljJq/uY0rpwM2/IhkWk8sNxj4Dh0v/tB+TjSUZGo6PwGAwEBiy9tW+xBVQ
-         Kjr/52rjTxndHVsM7JNT7hcHfB2FJ0YQ3OmAWXQtRPrhnLrR9r83q/6x1aHOLK7fUEPq
-         vh5Q==
-X-Gm-Message-State: ALoCoQlxTsbc8uPlIcCMO9PcKgRS8QAzaqQspSbenySDs85jI9kuTDTuBTrDwDdDg50PYuSmSaOehkmSZzAHm/3PEj13v6yiwQ==
-MIME-Version: 1.0
-X-Received: by 10.112.184.133 with SMTP id eu5mr9023127lbc.99.1453228389495;
- Tue, 19 Jan 2016 10:33:09 -0800 (PST)
-In-Reply-To: <20160119192412.1a96c226@pc1>
-References: <CACn5sdTx4m+mrn6i59Cz4iiAzpbxg=3Qrp6yHxyoaZp8YrS=ZA@mail.gmail.com>
-	<20160119192412.1a96c226@pc1>
-Message-ID: <CACn5sdSaCfkaGyHKG3NkTMRg3bRzu2Zd5NVH8i15xG_skthTkQ@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a11c3cb34eefe170529b41983
-Date: Tue, 19 Jan 2016 15:33:09 -0300
-From: Gustavo Grieco <gustavo.grieco@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE request: out-of-bounds write with cpio 2.11
-To: oss-security@lists.openwall.com
+Received: (qmail 32671 invoked from network); 20 Nov 2018 22:09:16 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=04042017;
+	t=1542751744; bh=/R/miJwhf2B57z4faoq6lHt4hNT+iLWoHoe4tbd/qAo=;
+	h=Date:Subject:From:To:Message-id:MIME-version:Content-type;
+	b=m+BktunyNnIyXd98T6qT7o4XdlA4QKuTQYI88xd+OSl7L/DpBzsPj/VSNF2l8vaRF
+ n6AL5Ytixmmv7Oul9bWZuRa95xBikXi8n6O9L/hBX5stXkbSxgPBCmW2xMsOZ6i2f4
+ 2EByWS3Doh9d/3joTYY3BsNdNUwY3BFFB4CQ1FXbvFlTJH8W0M/CBdBMUGofUftgfP
+ 0PHDOAlv91oJWp0cNRGs3wOf/xE1tKDEsYy3YYAQLPBHcevgdJ8Kejgaxl7qqztSh5
+ FXQ1PJnSMCWhzC83wfGD7pSYDNJpVe1bFK0nmpysrp0R8twS+NypoXiy4ARM5IzgBE
+ YvbzPrxE26w4A==
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
+ malwarescore=0 phishscore=0 bulkscore=0 spamscore=0 clxscore=1015 mlxscore=0
+ mlxlogscore=626 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.0.1-1807170000 definitions=main-1811200194
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,,
+ definitions=2018-11-20_10:,, signatures=0
+User-Agent: Microsoft-MacOutlook/10.13.0.181109
+Date: Tue, 20 Nov 2018 17:08:59 -0500
+From: "Larry W. Cashdollar" <larry0@me.com>
+To: Open Security <oss-security@lists.openwall.com>
+Message-id: <0680DF2A-87F0-48B8-93F3-0163F6CF2340@me.com>
+Thread-topic: Arbitrary File Upload File Upload Vulnerability in
+ php-traditional-server v1.2.2
+MIME-version: 1.0
+Content-type: text/plain; charset=UTF-8
+Content-transfer-encoding: 7bit
+Subject: [oss-security] Arbitrary File Upload File Upload Vulnerability in
+ php-traditional-server v1.2.2
 
---001a11c3cb34eefe170529b41983
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Title: Arbitrary File Upload File Upload Vulnerability in php-traditional-server v1.2.2
+Author: Larry W. Cashdollar, @_larry0
+Date: 2018-11-15
+CVE-ID:[CVE-2018-9209]
+CWE: CWE-434 Arbitrary File Upload
+Download Site: N/A
+Vendor: FineUploader
+Vendor Notified: 2018-11-15, software discontinued. 
 
-2016-01-19 15:24 GMT-03:00 Hanno B=C3=B6ck <hanno@hboeck.de>:
+Advisory: http://www.vapidlabs.com/advisory.php?v=208
 
-> On Tue, 19 Jan 2016 13:45:05 -0300
-> Gustavo Grieco <gustavo.grieco@gmail.com> wrote:
->
-> > An out-of-bounds write in cpio 2.11 was found in the parsing of cpio
-> > files (other version are probably affected).  Find attached a test
-> > case to reproduce it. The ASAN report is here:
->
-> Is this a duplicate of CVE-2014-9112?
-> https://lists.gnu.org/archive/html/bug-cpio/2014-11/msg00007.html
+Description: PHP-based server-side example for handling traditional endpoint requests from Fine Uploader
 
+Vulnerability:
+The code in endpoint.php allows file uploads and doesn't check if the users authenticated or the file type.  This allows for executable files to be uploaded and therefore remote code execution. 
 
-I think it is not. I'm testing in Ubuntu 14.04 and CVE-2014-9112 seems to
-be fixed:
+Lines 37-38 from endpoint.php:
 
-http://people.canonical.com/~ubuntu-security/cve/2014/CVE-2014-9112.html
+37: // Specify the list of valid extensions, ex. array("jpeg", "xml", "bmp")
+38: $uploader->allowedExtensions = array(); // all files types allowed by default
 
-
->
->
-> cpio is esentially unmaintained upstream.
->
-
-I agree.
+Exploit Code:
+https://github.com/lcashdol/Exploits/tree/master/CVE-2018-9209
 
 
->
-> --
-> Hanno B=C3=B6ck
-> http://hboeck.de/
->
-> mail/jabber: hanno@hboeck.de
-> GPG: BBB51E42
->
-
---001a11c3cb34eefe170529b41983--
