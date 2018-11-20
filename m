@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2453" "Tuesday" "7" "March" "2017" "10:45:35" "-0700" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty0eb=oUz+F5o3jxt=RxXD4WSiDJeGm_m3MmUw0sfdzg_g@mail.gmail.com>" "74" "Re: [oss-security] CVE Request: Wordpress: 6 security issues in Wordpress 4.7 2" nil nil nil "3" "2017030717:45:35" "[oss-security] CVE Request: Wordpress: 6 security issues in Wordpress 4.7 2" (number mark "U       kseifried@re Mar  7   74/2453  " thread-indent "\"Re: [oss-security] CVE Request: Wordpress: 6 security issues in Wordpress 4.7 2\"\n") "<8d300c59-47af-f2ad-2d75-2d38c611491d@gmail.com>" ("<CALy8Cw6nxZkzoodbfrdWJzj15GtyE8P08cDhP95bzHKGah4spQ@mail.gmail.com>" "<8d300c59-47af-f2ad-2d75-2d38c611491d@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["10129" "Tuesday" "20" "November" "2018" "13:26:28" "+0000" "Xen.org security team" "security@xen.org" "<E1gP62u-0000f9-0t@xenbits.xenproject.org>" "227" "[oss-security] Xen Security Advisory 279 v2 - x86: DoS from attempting to use INVPCID with a non-canonical addresses" nil nil nil "11" "2018112013:26:28" "[oss-security] Xen Security Advisory 279 v2 - x86: DoS from attempting to use INVPCID with a non-canonical addresses" (number mark "U       security@xen Nov 20  227/10129 " thread-indent "\"[oss-security] Xen Security Advisory 279 v2 - x86: DoS from attempting to use INVPCID with a non-canonical addresses\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 27848 invoked by uid 550); 7 Mar 2017 17:45:49 -0000
+Received: (qmail 26548 invoked by uid 550); 20 Nov 2018 13:26:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,105 +12,244 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27803 invoked from network); 7 Mar 2017 17:45:48 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=O8n45N5EKqsmJ2aCdCKoeu3GnAm+w346fwS5/DHYyMQ=;
-        b=okipvksnVQDAB6TE+/8EbfOMIE+65cFaAm+G0jGu2N/guK4IhkwH2G8wgPm7Zsg6ry
-         POabxinjbkygGpq1Yt6CwnoW2E6wxITx3GaPTYmF3g8TMA1RXrguQHffLZkm98T6c1ER
-         68j/TIaNo0UpaMQgtfG4ELEfhbQ9Zsbxcwe4WH8k9k/NIIv3722H/UfETY5SfywWQy6q
-         OiGj71NpFHdG5TTaSOU40QVzdhm5utR51DfOaknCXf65qz0TC22/7n1821Oc9Xf0lEvc
-         7E7SLDaYzDZe6AJ50wELgEfxdYpr4MM3Iyl9ZKplxKtKr6p1prI63MSqi62Mj1AgfiZm
-         ordw==
-X-Gm-Message-State: AMke39mMCIAqzdm7atfKPWW4In67z8P4qO3qqCT6LEj4m9yvp5P7prKwuwkOgTJf9rAvyrbciKNmhxjiEqOOVBa3
-X-Received: by 10.202.218.214 with SMTP id r205mr830663oig.20.1488908736420;
- Tue, 07 Mar 2017 09:45:36 -0800 (PST)
+Received: (qmail 26443 invoked from network); 20 Nov 2018 13:26:47 -0000
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
 MIME-Version: 1.0
-In-Reply-To: <8d300c59-47af-f2ad-2d75-2d38c611491d@gmail.com>
-References: <CALy8Cw6nxZkzoodbfrdWJzj15GtyE8P08cDhP95bzHKGah4spQ@mail.gmail.com>
- <8d300c59-47af-f2ad-2d75-2d38c611491d@gmail.com>
-From: Kurt Seifried <kseifried@redhat.com>
-Date: Tue, 7 Mar 2017 10:45:35 -0700
-Message-ID: <CANO=Ty0eb=oUz+F5o3jxt=RxXD4WSiDJeGm_m3MmUw0sfdzg_g@mail.gmail.com>
-To: oss-security <oss-security@lists.openwall.com>
-Cc: Craig Small <csmall@enc.com.au>
-Content-Type: multipart/alternative; boundary=001a113d2c065678a8054a2794b6
-Subject: Re: [oss-security] CVE Request: Wordpress: 6 security issues in
- Wordpress 4.7 2
+X-Mailer: MIME-tools 5.508 (Entity 5.508)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1gP62u-0000f9-0t@xenbits.xenproject.org>
+Date: Tue, 20 Nov 2018 13:26:28 +0000
+Subject: [oss-security] Xen Security Advisory 279 v2 - x86: DoS from attempting to use
+ INVPCID with a non-canonical addresses
 
---001a113d2c065678a8054a2794b6
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
-So this CVE request raises a good example:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Wordpress needs CVEs for its security flaws. This is a simple fact.
+                    Xen Security Advisory XSA-279
+                              version 2
 
-Now ideally the Wordpress team would become a CVE Numbering Authority (CNA)
-and cover it themselves, if they would like to do this then they need to
-reach out to me as the DWF guy and I can make that happen.
+ x86: DoS from attempting to use INVPCID with a non-canonical addresses
 
-If that doesn't happen then the good news is we have another option now.
-Someone can become a CVEMentor and CNA and take over the Wordpress
-assignments (well until Wordpress becomes a CNA). So if someone wants to
-step up and do this, please contact me as the DWF guy and I can make that
-happen.
+UPDATES IN VERSION 2
+====================
 
-This is also true for other projects/open source products. We need better
-CVE coverage. Ideally these projects/products step up and become CNA's, but
-if they cannot (lack of resources/time/etc) that's ok, because now people
-with an interest can come forwards and do it.
+Public release.
 
-On Tue, Mar 7, 2017 at 4:16 AM, Emilio Pozuelo Monfort <pochu27@gmail.com>
-wrote:
+ISSUE DESCRIPTION
+=================
 
-> On 07/03/17 11:44, Craig Small wrote:
-> > Hello again,
-> >  Wordpress 4.7.3 fixes 6 security issues.  Summer of Pwnage has reported
-> 2
-> > here yesterday but here is the list from the wordpress site.
-> >
-> > Cross-site scripting (XSS) via media file metadata. Reported by Chris
-> Andr=C3=A8
-> > Dale, Yorick Koster, and Simon P. Briggs.
-> >
-> > Control characters can trick redirect URL validation. Reported by Daniel
-> > Chatfield.
-> >
-> > Unintended files can be deleted by administrators using the plugin
-> deletion
-> > functionality. Reported by xuliang.
-> >
-> > Cross-site scripting (XSS) via video URL in YouTube embeds. Reported by
-> > Marc Montpas.
-> >
-> > Cross-site scripting (XSS) via taxonomy term names. Reported by Delta.
-> >
-> > Cross-site request forgery (CSRF) in Press This leading to excessive use
-> of
-> > server resources. Reported by Sipke Mellema.
-> >
-> >
-> > Reference:
-> > https://wordpress.org/news/2017/03/wordpress-4-7-3-
-> security-and-maintenance-release/
->
-> Please report these through http://cveform.mitre.org/ to get CVEs
-> assigned, and
-> follow up here with the CVE identifiers after that's done.
->
-> Thanks,
-> Emilio
->
+The INVPCID instruction raises #GP[0] if an attempt is made to
+invalidate a non-canonical address.  Older flushing mechanisms such as
+INVLPG tolerate this without error, and perform no action.
+
+There is one guest accessible path in Xen where a non-canonical
+address was passed into the TLB flushing code.  This previously had no
+ill effect, but became vulnerable with the introduction of PCID to
+reduce the performance hit from the Meltdown mitigations.
+
+IMPACT
+======
+
+A buggy or malicious PV guest can crash the host.
+
+VULNERABLE SYSTEMS
+==================
+
+Only hardware which supports the INVPCID instruction is vulnerable.  This is
+available on Intel Haswell processors and later.  AMD x86 processors are not
+known to support this instruction, and ARM processors are entirely unaffected.
+
+Only versions of Xen with PCID support are vulnerable.  Support first appeared
+in Xen 4.11 but was backported to the stable trees as part of the Meltdown
+(XSA-254 / CVE-2017-5754) fixes.  Xen 4.10.2, 4.9.3, 4.8.4 as well as the
+stable-4.7 and 4.6 branches are vulnerable.
+
+The vulnerability is only exposed to 64-bit PV guests.  32-bit PV guests, as
+well as HVM/PVH guests cannot exploit the vulnerability.
+
+MITIGATION
+==========
+
+Booting Xen with `pcid=0` or `invpcid=0` on the command line will work around
+the issue.  Alternatively, running untrusted 64bit PV guests inside xen-shim
+will work around the issue.
+
+CREDITS
+=======
+
+This issue was discovered by Matthew Daley.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa279.patch             xen-unstable, Xen 4.11.x, Xen 4.10.x
+xsa279-4.9.patch         Xen 4.9.x ... 4.7.x
+
+$ sha256sum xsa279*
+40319fcf33348176eb14d7fc7c68c255cc7291013242ea444de6d00602024a11  xsa279.meta
+0c1d50effe6645051a15dd83af57088dd4a055e26a23b1fa9e6c3722a7973f5d  xsa279.patch
+fd34f29bc7e53359585135408cbbd12e12a003f59b135e81cc44186c5cddd40d  xsa279-4.9.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
 
 
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
 
---=20
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAlv0C2oMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZKtwH/iNT0SP+by+n+HfWJfl4hZgJ4ZU3ZJDXyxuMchHv
+ZXYxW9FEab34qjOtRKToIYaPybjULbCNf2EeSmdwuHS55BP+GlnGT27gCU0FSECJ
+bfCkXFAJh04SjjzInOQxyfMUPmCztnwQvzADPJkxp1+nc++9P66Y44AwzUrRHsT1
+A/dryLbZP/WiFyfYBnBPeh8Ib2eaAA1cxWLVbHwYlrrzgwf8pLHtKObW1TiSS/gr
+inPqwvcU3dwj3OnsB2KuWodgP7cN/YyE/pdCiSiR7xZqcWN5/bdodwARhGTc2XY3
+2OLodVSz962xjmCku7YN0ntiuU1C/c7w2dT5KsF9H/mPwl4=
+=f39b
+-----END PGP SIGNATURE-----
 
---001a113d2c065678a8054a2794b6--
+--=separator
+Content-Type: application/octet-stream; name="xsa279.meta"
+Content-Disposition: attachment; filename="xsa279.meta"
+Content-Transfer-Encoding: base64
+
+ewogICJYU0EiOiAyNzksCiAgIlN1cHBvcnRlZFZlcnNpb25zIjogWwogICAg
+Im1hc3RlciIsCiAgICAiNC4xMSIsCiAgICAiNC4xMCIsCiAgICAiNC45IiwK
+ICAgICI0LjgiLAogICAgIjQuNyIKICBdLAogICJUcmVlcyI6IFsKICAgICJ4
+ZW4iCiAgXSwKICAiUmVjaXBlcyI6IHsKICAgICI0LjEwIjogewogICAgICAi
+UmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0YWJs
+ZVJlZiI6ICJlOTA3NDYwZmQ2MWMzNTA0ODdmZmVlNWQ4YWEzNzViZWY1NmJj
+ODFjIiwKICAgICAgICAgICJQcmVyZXFzIjogWwogICAgICAgICAgICAyNzUK
+ICAgICAgICAgIF0sCiAgICAgICAgICAiUGF0Y2hlcyI6IFsKICAgICAgICAg
+ICAgInhzYTI3OS5wYXRjaCIKICAgICAgICAgIF0KICAgICAgICB9CiAgICAg
+IH0KICAgIH0sCiAgICAiNC4xMSI6IHsKICAgICAgIlJlY2lwZXMiOiB7CiAg
+ICAgICAgInhlbiI6IHsKICAgICAgICAgICJTdGFibGVSZWYiOiAiZGVhOWZj
+MGUwMmQ5MmY1ZTZkNDY2ODBhYTBhNTJmYTc1OGVjYTljNCIsCiAgICAgICAg
+ICAiUHJlcmVxcyI6IFsKICAgICAgICAgICAgMjc1LAogICAgICAgICAgICAy
+NzYsCiAgICAgICAgICAgIDI3NwogICAgICAgICAgXSwKICAgICAgICAgICJQ
+YXRjaGVzIjogWwogICAgICAgICAgICAieHNhMjc5LnBhdGNoIgogICAgICAg
+ICAgXQogICAgICAgIH0KICAgICAgfQogICAgfSwKICAgICI0LjciOiB7CiAg
+ICAgICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4iOiB7CiAgICAgICAgICAi
+U3RhYmxlUmVmIjogIjljODI3NTk0NDgyOWM1NWFmM2RjNzA4NzEyY2E1YzEy
+MGIxYmIzMjgiLAogICAgICAgICAgIlByZXJlcXMiOiBbCiAgICAgICAgICAg
+IDI3NQogICAgICAgICAgXSwKICAgICAgICAgICJQYXRjaGVzIjogWwogICAg
+ICAgICAgICAieHNhMjc5LTQuOS5wYXRjaCIKICAgICAgICAgIF0KICAgICAg
+ICB9CiAgICAgIH0KICAgIH0sCiAgICAiNC44IjogewogICAgICAiUmVjaXBl
+cyI6IHsKICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0YWJsZVJlZiI6
+ICJkNjc5OGNlMzU3MDdhNDg1ZDljMTMyMzE5ZDcwZGQ2NTQ2MjBlNWU1IiwK
+ICAgICAgICAgICJQcmVyZXFzIjogWwogICAgICAgICAgICAyNzUKICAgICAg
+ICAgIF0sCiAgICAgICAgICAiUGF0Y2hlcyI6IFsKICAgICAgICAgICAgInhz
+YTI3OS00LjkucGF0Y2giCiAgICAgICAgICBdCiAgICAgICAgfQogICAgICB9
+CiAgICB9LAogICAgIjQuOSI6IHsKICAgICAgIlJlY2lwZXMiOiB7CiAgICAg
+ICAgInhlbiI6IHsKICAgICAgICAgICJTdGFibGVSZWYiOiAiZjEzOTgzZGIx
+MjBmNWU1NmRmZWZiZWU1ZDU2Njc4ZDJkNDNlMjkxNCIsCiAgICAgICAgICAi
+UHJlcmVxcyI6IFsKICAgICAgICAgICAgMjc1CiAgICAgICAgICBdLAogICAg
+ICAgICAgIlBhdGNoZXMiOiBbCiAgICAgICAgICAgICJ4c2EyNzktNC45LnBh
+dGNoIgogICAgICAgICAgXQogICAgICAgIH0KICAgICAgfQogICAgfSwKICAg
+ICJtYXN0ZXIiOiB7CiAgICAgICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4i
+OiB7CiAgICAgICAgICAiU3RhYmxlUmVmIjogIjFkZTM0NTllMDk2MWZmMzIz
+MzM5MmNmMjFhNjljYWZlOTAwNmRlNTkiLAogICAgICAgICAgIlByZXJlcXMi
+OiBbCiAgICAgICAgICAgIDI3NSwKICAgICAgICAgICAgMjc2LAogICAgICAg
+ICAgICAyNzcKICAgICAgICAgIF0sCiAgICAgICAgICAiUGF0Y2hlcyI6IFsK
+ICAgICAgICAgICAgInhzYTI3OS5wYXRjaCIKICAgICAgICAgIF0KICAgICAg
+ICB9CiAgICAgIH0KICAgIH0KICB9Cn0=
+
+--=separator
+Content-Type: application/octet-stream; name="xsa279.patch"
+Content-Disposition: attachment; filename="xsa279.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNv
+bT4KU3ViamVjdDogeDg2L21tOiBEb24ndCBwZXJmb3JtIGZsdXNoIGFmdGVy
+IGZhaWxpbmcgdG8gdXBkYXRlIGEgZ3Vlc3RzIEwxZQoKSWYgdGhlIEwxZSB1
+cGRhdGUgaGFzbid0IG9jY3VyZWQsIHRoZSBmbHVzaCBjYW5ub3QgZG8gYW55
+dGhpbmcgdXNlZnVsLiAgVGhpcwpza2lwcyB0aGUgcG90ZW50aWFsbHkgZXhw
+ZW5zaXZlIHZjcHVtYXNrX3RvX3BjcHVtYXNrKCkgY29udmVyc2lvbiwgYW5k
+CmJyb2FkY2FzdCBUTEIgc2hvb3Rkb3duLgoKTW9yZSBpbXBvcnRhbnRseSBo
+b3dldmVyLCB3ZSBtaWdodCBiZSBpbiB0aGUgZXJyb3IgcGF0aCBkdWUgdG8g
+YSBiYWQgdmEKcGFyYW1ldGVyIGZyb20gdGhlIGd1ZXN0LCBhbmQgdGhpcyBz
+aG91bGQgbm90IHByb3BhZ2F0ZSBpbnRvIHRoZSBUTEIgZmx1c2hpbmcKbG9n
+aWMuICBUaGUgSU5WUENJRCBpbnN0cnVjdGlvbiBmb3IgZXhhbXBsZSByYWlz
+ZXMgI0dQIGZvciBhIG5vbi1jYW5vbmljYWwKYWRkcmVzcy4KClRoaXMgaXMg
+WFNBLTI3OS4KClJlcG9ydGVkLWJ5OiBNYXR0aGV3IERhbGV5IDxtYXR0ZEBi
+dWdmdXp6LmNvbT4KU2lnbmVkLW9mZi1ieTogQW5kcmV3IENvb3BlciA8YW5k
+cmV3LmNvb3BlcjNAY2l0cml4LmNvbT4KUmV2aWV3ZWQtYnk6IEphbiBCZXVs
+aWNoIDxqYmV1bGljaEBzdXNlLmNvbT4KCmRpZmYgLS1naXQgYS94ZW4vYXJj
+aC94ODYvbW0uYyBiL3hlbi9hcmNoL3g4Ni9tbS5jCmluZGV4IDcwM2YzMzAu
+Ljc1NjYzYzYgMTAwNjQ0Ci0tLSBhL3hlbi9hcmNoL3g4Ni9tbS5jCisrKyBi
+L3hlbi9hcmNoL3g4Ni9tbS5jCkBAIC00MTU1LDYgKzQxNTUsMTQgQEAgc3Rh
+dGljIGludCBfX2RvX3VwZGF0ZV92YV9tYXBwaW5nKAogICAgIGlmICggcGwx
+ZSApCiAgICAgICAgIHVubWFwX2RvbWFpbl9wYWdlKHBsMWUpOwogCisgICAg
+LyoKKyAgICAgKiBBbnkgZXJyb3IgYXQgdGhpcyBwb2ludCBtZWFucyB0aGF0
+IHdlIGhhdmVuJ3QgY2hhbmdlIHRoZSBMMWUuICBTa2lwIHRoZQorICAgICAq
+IGZsdXNoLCBhcyBpdCB3b24ndCBkbyBhbnl0aGluZyB1c2VmdWwuICBGdXJ0
+aGVybW9yZSwgdmEgaXMgZ3Vlc3QKKyAgICAgKiBjb250cm9sbGVkIGFuZCBu
+b3QgbmVjZXNzZXJpbHkgYXVkaXRlZCBieSB0aGlzIHBvaW50LgorICAgICAq
+LworICAgIGlmICggcmMgKQorICAgICAgICByZXR1cm4gcmM7CisKICAgICBz
+d2l0Y2ggKCBmbGFncyAmIFVWTUZfRkxVU0hUWVBFX01BU0sgKQogICAgIHsK
+ICAgICBjYXNlIFVWTUZfVExCX0ZMVVNIOgo=
+
+--=separator
+Content-Type: application/octet-stream; name="xsa279-4.9.patch"
+Content-Disposition: attachment; filename="xsa279-4.9.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNv
+bT4KU3ViamVjdDogeDg2L21tOiBEb24ndCBwZXJmb3JtIGZsdXNoIGFmdGVy
+IGZhaWxpbmcgdG8gdXBkYXRlIGEgZ3Vlc3RzIEwxZQoKSWYgdGhlIEwxZSB1
+cGRhdGUgaGFzbid0IG9jY3VyZWQsIHRoZSBmbHVzaCBjYW5ub3QgZG8gYW55
+dGhpbmcgdXNlZnVsLiAgVGhpcwpza2lwcyB0aGUgcG90ZW50aWFsbHkgZXhw
+ZW5zaXZlIHZjcHVtYXNrX3RvX3BjcHVtYXNrKCkgY29udmVyc2lvbiwgYW5k
+CmJyb2FkY2FzdCBUTEIgc2hvb3Rkb3duLgoKTW9yZSBpbXBvcnRhbnRseSBo
+b3dldmVyLCB3ZSBtaWdodCBiZSBpbiB0aGUgZXJyb3IgcGF0aCBkdWUgdG8g
+YSBiYWQgdmEKcGFyYW1ldGVyIGZyb20gdGhlIGd1ZXN0LCBhbmQgdGhpcyBz
+aG91bGQgbm90IHByb3BhZ2F0ZSBpbnRvIHRoZSBUTEIgZmx1c2hpbmcKbG9n
+aWMuICBUaGUgSU5WUENJRCBpbnN0cnVjdGlvbiBmb3IgZXhhbXBsZSByYWlz
+ZXMgI0dQIGZvciBhIG5vbi1jYW5vbmljYWwKYWRkcmVzcy4KClRoaXMgaXMg
+WFNBLTI3OS4KClJlcG9ydGVkLWJ5OiBNYXR0aGV3IERhbGV5IDxtYXR0ZEBi
+dWdmdXp6LmNvbT4KU2lnbmVkLW9mZi1ieTogQW5kcmV3IENvb3BlciA8YW5k
+cmV3LmNvb3BlcjNAY2l0cml4LmNvbT4KUmV2aWV3ZWQtYnk6IEphbiBCZXVs
+aWNoIDxqYmV1bGljaEBzdXNlLmNvbT4KCi0tLSBhL3hlbi9hcmNoL3g4Ni9t
+bS5jCisrKyBiL3hlbi9hcmNoL3g4Ni9tbS5jCkBAIC00ODk0LDYgKzQ4OTQs
+MTQgQEAgc3RhdGljIGludCBfX2RvX3VwZGF0ZV92YV9tYXBwaW5nKAogICAg
+IGlmICggcGwxZSApCiAgICAgICAgIGd1ZXN0X3VubWFwX2wxZShwbDFlKTsK
+IAorICAgIC8qCisgICAgICogQW55IGVycm9yIGF0IHRoaXMgcG9pbnQgbWVh
+bnMgdGhhdCB3ZSBoYXZlbid0IGNoYW5nZSB0aGUgbDFlLiAgU2tpcCB0aGUK
+KyAgICAgKiBmbHVzaCwgYXMgaXQgd29uJ3QgZG8gYW55dGhpbmcgdXNlZnVs
+LiAgRnVydGhlcm1vcmUsIHZhIGlzIGd1ZXN0CisgICAgICogY29udHJvbGxl
+ZCBhbmQgbm90IG5lY2Vzc2VyaWx5IGF1ZGl0ZWQgYnkgdGhpcyBwb2ludC4K
+KyAgICAgKi8KKyAgICBpZiAoIHJjICkKKyAgICAgICAgcmV0dXJuIHJjOwor
+CiAgICAgc3dpdGNoICggZmxhZ3MgJiBVVk1GX0ZMVVNIVFlQRV9NQVNLICkK
+ICAgICB7CiAgICAgY2FzZSBVVk1GX1RMQl9GTFVTSDoK
+
+--=separator--
