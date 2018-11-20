@@ -1,31 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/09/3
-Message-ID: <zNUITbiErWCUUDg_EPIWn8eZBFHlC7rwJsZ8XinnBTSFr6OydsAZUvPs8nXHKBxi0DJFw8K2KmePb8dysPMxfPcOURSJ6QR2HcKgaVRmmTs=@itk.swiss>
-Date: Thu, 09 Aug 2018 07:12:27 +0000
-From: Stiepan <stie@....swiss>
-To: oss-security@...ts.openwall.com
-Cc: ProtonMail Security Team <security@...tonmail.ch>, "xiaoya.yang" <xiaoya.yang@....int>
-Subject: Re: Linux TCP implementation vulnerable to Denial of Service (CVE 2018-5390)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/20/9
+Message-id: <0680DF2A-87F0-48B8-93F3-0163F6CF2340@me.com>
+Date: Tue, 20 Nov 2018 17:08:59 -0500
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Security <oss-security@...ts.openwall.com>
+Subject: Arbitrary File Upload File Upload Vulnerability in php-traditional-server v1.2.2
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Title: Arbitrary File Upload File Upload Vulnerability in php-traditional-server v1.2.2
+Author: Larry W. Cashdollar, @_larry0
+Date: 2018-11-15
+CVE-ID:[CVE-2018-9209]
+CWE: CWE-434 Arbitrary File Upload
+Download Site: N/A
+Vendor: FineUploader
+Vendor Notified: 2018-11-15, software discontinued. 
 
-Could you please provide some more details on the issue? About the same period, our secure e-mail provider suffered an unprecedented DDoS with some e-mail messages never reaching us.
-Since this has business impact, we consider legal action against the opaque Linux-distros vulnerability-disclosure-among-friends-for-fun-and-profit scheme, that we exposed at the ITU earlier this year. This is digital divide in the works, with real impact for non-club-members.
+Advisory: http://www.vapidlabs.com/advisory.php?v=208
 
-Regards,
-Stiepan A. Kovac
-President
-itk AVtobvS SARL
+Description: PHP-based server-side example for handling traditional endpoint requests from Fine Uploader
 
-Envoyé depuis ProtonMail mobile
+Vulnerability:
+The code in endpoint.php allows file uploads and doesn't check if the users authenticated or the file type.  This allows for executable files to be uploaded and therefore remote code execution. 
 
--------- Message d'origine --------
-On 8 août 2018 à 17:44, Matthew Garrett a écrit :
+Lines 37-38 from endpoint.php:
 
-> CVE 2018-5390 is a remotely exploitable denial of service against Linux
-> systems. It was patched in the public kernel tree on the 2018-07-23 and
-> publicly disclosed on 2018-08-06. A public tweet linking to the commit was
-> made on 2018-07-23, so awareness of the issue may have been high before
-> official disclosure. All Linux distributions should now have released
-> patches for the affected releases.
+37: // Specify the list of valid extensions, ex. array("jpeg", "xml", "bmp")
+38: $uploader->allowedExtensions = array(); // all files types allowed by default
+
+Exploit Code:
+https://github.com/lcashdol/Exploits/tree/master/CVE-2018-9209
+
+
