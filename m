@@ -1,61 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/20/2
-Message-ID: <20181020014701.GB3366@milliways.localdomain>
-Date: Sat, 20 Oct 2018 02:47:01 +0100
-From: Ken Moffat <zarniwhoop@...world.com>
-To: oss-security@...ts.openwall.com
-Subject: Attempting to patch ghostscript-9.25
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/20/1
+Message-ID: <nycvar.YSQ.7.76.1811201647270.17923@xnncv>
+Date: Tue, 20 Nov 2018 16:51:28 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Greg Kurz <groug@...d.org>, zhibin hu <noirfate@...il.com>
+Subject: CVE-2018-19364 Qemu: 9pfs: Use-after-free due to race condition while updating fid path
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+   Hello,
 
-I hope people can read this - I know that google marks my mails as
-spam (so no point Cc'ing Tavis) and also that Suse discard my mails.
-Probably many other places also do that.  Anyway:
+A use-after-free flaw was found in the VirtFS, host directory sharing via Plan 
+9 File System(9pfs) support in QEMU. It could occur due to a race condition in 
+updating fid path in worker threads via v9fs_path_copy(), while accessing 
+files on a shared host directory.
 
-When the first set of vulnerabilities in 9.25 came out there was a
-nice 'mostly harmless' example, and I patched BLFS for that (needed
-one extra commit beyond the two Tavis specified, so that I could
-make sense of where to apply part of it).
+A user inside guest could use this flaw to crash the QEMU process resulting in 
+DoS issue.
 
-For the later vulnerabilities, working out what to apply has been
-much harder.  Either everyone else thinks that other mitigations
-against untrusted ps files will suffice, or else it's on everybody's
-ToDo lists.
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2018-11/msg01139.html
+   -> https://lists.gnu.org/archive/html/qemu-devel/2018-11/msg02795.html
 
-So, here is a first attempt to fix all this month's vulnerabilities.
-For the latest exploit(s) I do not have an example, so I don't know
-whether or not this works.  But it prevents the earlier
-vulnerability, and usage of real ps (and eps - I only have the gs
-examples, and only gs seems able to use them) seems to work
-correctly.  Unlike my first attempt to fix this, which turned out
-to fail to display any ps, eps files.
+This issue was reported by Zhibin hu.
 
-The patch is a bit big, so I've uploaded it to
-http://www.linuxfromscratch.org/~ken/provisional/ as
-ghostscript-9.25-security_fixes-2.patch
-
-'provisional' until I find out if it protects adequately.  If there
-turn out ot be problems, I suppose I'll need to renumber later
-versions.
-
-Built in BLFS using the same instructions as for the earlier -1
-patch [ http://www.linuxfromscratch.org/blfs/view/svn/pst/gs.html ]
-but that doesn't mean it will work for everyone else's ways of
-building.  Note tht I _do_ build the shared library.
-
-The patch lists which upstream commits I pulled in.  I was mostly
-concentrating on changes to gs_init which would maybe help me apply
-the needed patches.  As I've noted in the patch's introduction,
-several commits had negative offsets (I guess hunks of code were
-removed in some of the unrelated commits that I ignored).
-
-Comments welcome.
-
-One final thought - apart from 9.25, upstream seem to have an
-approximately 6-monthly release schedule, so probably the only thing
-likely to speed up 9.26 is everybody patching ;)
-
-ĸen
--- 
-                        Is it about a bicycle ?
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
