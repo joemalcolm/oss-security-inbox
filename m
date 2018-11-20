@@ -1,34 +1,158 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/16/4
-Message-ID: <CAJ_zFkJog41qbQ6DgP=jcEts-pDo+z1AKhcnYC7kJCri=+5qSQ@mail.gmail.com>
-Date: Tue, 16 Oct 2018 13:33:32 -0700
-From: Tavis Ormandy <taviso@...gle.com>
-To: Perry Metzger <perry@...rmont.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: ghostscript: 1Policy operator gives access to .forceput CVE-2018-18284
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/20/6
+Message-Id: <E1gP677-00025q-7n@xenbits.xenproject.org>
+Date: Tue, 20 Nov 2018 13:30:49 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 280 v2 - Fix for XSA-240 conflicts with shadow paging
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 16, 2018 at 12:57 PM Perry E. Metzger <perry@...rmont.com>
-wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> On Tue, 16 Oct 2018 11:06:14 -0700 Tavis Ormandy <taviso@...gle.com>
-> wrote:
-> > Side note: I'm done looking at ghostscript for now, but still
-> > *strongly* recommend that we deprecate untrusted postscript and
-> > disable ghostscript coders by default in policy.xml.
->
-> Again, given that PostScript is an archival format for a lot of
-> documents, wouldn't a version of ghostscript with all the ability to
-> do anything dangerous removed from the interpreter at compile time be
-> rational?
->
->
-We have to work with what we've got.
+                    Xen Security Advisory XSA-280
+                              version 2
 
-Even with the easy to exploit stuff compiled out (which upstream do not
-support), I haven't been bothering to get CVE's for all the memory
-corruption or UaF I've been reporting, because nobody can keep up with
-these operator leaks anyway.
+              Fix for XSA-240 conflicts with shadow paging
 
-Tavis.
+UPDATES IN VERSION 2
+====================
 
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+The fix for XSA-240 introduced a new field into the control structure
+associated with each page of RAM.  This field was added to a union,
+another member of which is used when Xen uses shadow paging for the
+guest.  During migration, or with the L1TF (XSA-273) mitigation for
+PV guests in effect, the two uses conflict.
+
+IMPACT
+======
+
+A malicious or buggy x86 PV guest may cause Xen to crash, resulting in
+a DoS (Denial of Service) affecting the entire host.  Privilege
+escalation as well as information leaks cannot be ruled out.
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen versions from at least 3.2 onwards are vulnerable.  Earlier
+versions have not been checked.
+
+Only x86 systems are affected.  ARM systems are not affected.
+
+Only Xen versions with the XSA-240 fixes applied are vulnerable.
+
+Only Xen versions which permit linear page table use by PV guests are
+vulnerable.
+
+Only x86 PV guests can leverage this vulnerability.  x86 HVM guests
+cannot leverage this vulnerability.
+
+MITIGATION
+==========
+
+Not permitting linear page table use by PV guests avoids the
+vulnerability.  This can be done both at build time, by turning off the
+PV_LINEAR_PT configure option, or at runtime, by passing specifying
+"pv-linear-pt=0" on the hypervisor command line.
+
+On systems where the guest kernel is controlled by the host rather than
+guest administrator, running only kernels which have themselves been
+hardened against L1TF _and_ avoiding live migrating or snapshotting PV
+guests will generally prevent this issue being triggered.  However
+untrusted guest administrators can still trigger it unless further
+steps are taken to prevent them from loading code into the kernel
+(e.g. by disabling loadable modules etc) or from using other
+mechanisms which allow them to run code at kernel privilege.
+
+Running only HVM guests will avoid this vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by the security team of Prgmr.com.
+
+RESOLUTION
+==========
+
+Applying the appropriate pair of attached patches resolves this issue.
+
+xsa280-?.patch                                xen-unstable
+xsa280-1.patch + xsa280-4.11-2.patch          Xen 4.11.x
+xsa280-1.patch + xsa280-4.10-2.patch          Xen 4.10.x
+xsa280-4.9-1.patch + xsa280-4.10-2.patch      Xen 4.9.x, Xen 4.8.x
+xsa280-4.9-1.patch + xsa280-4.7-2.patch       Xen 4.7.x
+
+$ sha256sum xsa280*
+ff0b376b9e2ec16f7c15b144d4d38375d6f6b4019aa9c17f6b80f9dfe40319ef  xsa280.meta
+41b2b91dbabbf2048c790c5934ab696ef53932ff98d1069eb7c7ae52e61cd44b  xsa280-1.patch
+d46e46a6e706e0d3416d40ed12227223f7e8f825dfc63ed203c1df115976e8a1  xsa280-2.patch
+163eaf2e16d5cc314a81fa1254eb2809674001b2329c41556a078b7f94e72ced  xsa280-4.7-2.patch
+22e9d29f316356341db40c743ca59f9bb9d783a58fb6429d5badf57a77b5f34a  xsa280-4.9-1.patch
+ff0a839dbd9347ec88aaeb7ef1145d0cd9029a19c6a478088c63c0959ba0e740  xsa280-4.10-2.patch
+87940f3b84d0adfd89e1b2bc1a872ae2948e1621e4994e7879b77e327b0136b5  xsa280-4.11-2.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) EXCEPT the linear page table
+disabling one is permitted during the embargo, even on public-facing
+systems with untrusted guest users and administrators.
+
+However deployment of the linear page table disabling mitigation is NOT
+PERMITTED (except where all the affected systems and VMs are
+administered and used only by organisations which are members of the
+Xen Project Security Issues Predisclosure List).  Specifically,
+deployment on public cloud systems is NOT permitted.
+
+This is because altering the set of features usable in a guest in
+connection with a security issue would be a user-visible change which
+could lead to the rediscovery of the vulnerability.
+
+Also: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAlv0DEsMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZnkQH/iyCga79/YRwqCHB5nrTlQhY0g6E5zA2debKtfxS
+MPosJQZy7/PzkvbBPnHBYEve8UyvQuVQXs+WOhCL7625HbadgrUOD3LJzbhmduI0
+AT5lbLTmM5ac9iBeLQeqkERDJOi8RSx4AtH5NhVvnSWFD/KXQvB1zow1bOIS5drz
+5YMr4nA1xX0mmzx//bWRHiUbi72dvrWAeFEPj5wcxNlsGnTqTSyTvMehlJevMfC2
+Rthft7e7WZQWy5z5TdbErJbDNuS9beiEvTkuO6oC3QVo5CIXDsuwCk20Q5T5Z9gg
+SkoyXO1OO+MIeBpBzrIRvJrrtFpfR7s8weKcrKM8GukyMsM=
+=drCg
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa280.meta" of type "application/octet-stream" (2066 bytes)
+
+Download attachment "xsa280-1.patch" of type "application/octet-stream" (4436 bytes)
+
+Download attachment "xsa280-2.patch" of type "application/octet-stream" (5597 bytes)
+
+Download attachment "xsa280-4.7-2.patch" of type "application/octet-stream" (5496 bytes)
+
+Download attachment "xsa280-4.9-1.patch" of type "application/octet-stream" (4402 bytes)
+
+Download attachment "xsa280-4.10-2.patch" of type "application/octet-stream" (5507 bytes)
+
+Download attachment "xsa280-4.11-2.patch" of type "application/octet-stream" (5504 bytes)
