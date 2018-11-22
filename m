@@ -1,38 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/29/2
-Message-ID: <2e123ab7-5492-d35a-1c85-7b13dbd438ec@apache.org>
-Date: Fri, 29 Jun 2018 18:51:28 +0200
-From: Andreas Lehmkuehler <lehmi@...che.org>
-To: announce@...che.org, security@...che.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: [CVE-2018-8036] DoS (OOM) Vulnerability in Apache PDFBox's AFMParser
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/22/2
+Message-ID: <CAP+3qq5GcGNU-gdn0BW7fxaXr8_F2v6MuUgRx+Ho1pN=p1U6qA@mail.gmail.com>
+Date: Thu, 22 Nov 2018 10:25:00 +0900
+From: Akira Ajisaka <aajisaka@...che.org>
+To: general@...oop.apache.org, user@...oop.apache.org,  security@...oop.apache.org, oss-security@...ts.openwall.com, security@...k.io
+Subject: CVE-2018-8009: Apache Hadoop distributed cache archive vulnerability
 Content-Type: text/plain; charset=utf-8
 
-[CVE-2018-8036] DoS (OOM) Vulnerability in Apache PDFBox's AFMParser
+CVE-2018-8009: Apache Hadoop distributed cache archive vulnerability
 
-Severity: Important
+Severity: Severe
 
-Vendor:
-The Apache Software Foundation
+Vendor: The Apache Software Foundation
 
 Versions Affected:
-Apache PDFBox 1.8.0 to 1.8.14
-Apache PDFBox 2.0.0 to 2.0.10
-Earlier, unsupported Apache PDFBox versions may be affected as well
+  Hadoop 0.23.0 to 0.23.11
+  Hadoop 2.0.0-alpha to 2.7.6
+  Hadoop 2.8.0 to 2.8.4
+  Hadoop 2.9.0 to 2.9.1
+  Hadoop 3.0.0-alpha to 3.0.2
+  Hadoop 3.1.0
 
-Description:
-A carefully crafted (or fuzzed) file can trigger an infinite loop which leads to 
-an out of memory exception in Apache PDFBox's AFMParser.
+Users affected: User running the YARN NodeManager daemon and YARN
+users that leverage public archives in the distributed cache
 
-Mitigation:
-Upgrade to Apache PDFBox 1.8.15 respectively 2.0.11
+Impact: Vulnerability allows a cluster user to publish a public
+archive that can affect other files owned by the user running the YARN
+NodeManager daemon. If the impacted files belong to another already
+localized, public archive on the node then code can be injected into
+the jobs of other cluster users using the public archive.
 
-Credit:
-This issue was discovered by Tobias Ospelt
+Mitigation: Users should upgrade to Apache Hadoop 2.7.7, 2.8.5, 2.9.2,
+3.0.3, or 3.1.1.
 
-Website:
-https://pdfbox.apache.org/
-
-Download:
-https://pdfbox.apache.org/download.cgi
-https://www.apache.org/dist/pdfbox/2.0.11/RELEASE-NOTES.txt
-https://www.apache.org/dist/pdfbox/1.8.15/RELEASE-NOTES.txt
+Credit: This issue was discovered by Snyk Security Research Team
+https://snyk.io/research/zip-slip-vulnerability
