@@ -1,121 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/27/10
-Message-Id: <E1fYHbW-0005EC-T0@xenbits.xenproject.org>
-Date: Wed, 27 Jun 2018 21:03:54 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 264 (CVE-2018-12891) - preemption checks bypassed in x86 PV MM handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/22/3
+Message-ID: <20181122210214.240912af@computer>
+Date: Thu, 22 Nov 2018 21:02:14 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: PHP imap_open() script injection
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-            Xen Security Advisory CVE-2018-12891 / XSA-264
-                               version 3
+This was apparently posted on some russian forum recently and then
+re-posted to github:
+https://antichat.com/threads/463395/#post-4254681
+https://github.com/Bo0oM/PHP_imap_open_exploit/blob/master/exploit.php
 
-           preemption checks bypassed in x86 PV MM handling
+PoC code:
+$server = "x -oProxyCommand=echo\tZWNobyAnMTIzNDU2Nzg5MCc+L3RtcC90ZXN0MDAwMQo=|base64\t-d|sh}";
+imap_open('{'.$server.':143/imap}INBOX', '', '') or die("\n\nError: ".imap_last_error());
 
-UPDATES IN VERSION 3
-====================
+It's pretty self explaining, it seems imap_open() will pass things to
+ssh and this is vulnerable to a shell injection.
 
-Public release.
+Impact would be mostly relevant if someone has some imap functionality
+where a user can define a custom imap server. (Though it might also be
+used as a bypass for environments where exec() and similar functions
+are restricted.)
 
-ISSUE DESCRIPTION
-=================
+I reported it to upstream PHP a few days ago, it was closed as a
+duplicate, so it seems they already knew about it. It's unfixed in
+current versions.
 
-Certain PV MMU operations may take a long time to process.  For that
-reason Xen explicitly checks for the need to preempt the current vCPU at
-certain points.  A few rarely taken code paths did bypass such checks.
-By suitably enforcing the conditions through its own page table
-contents, a malicious guest may cause such bypasses to be used for an
-unbounded number of iterations.
+There seems to be some speculation that this might've been involved in a
+hack of a .onion hoster:
+https://danwin1210.me/
 
-IMPACT
-======
 
-A malicious or buggy PV guest may cause a Denial of Service (DoS)
-affecting the entire host.  Specifically, it may prevent use of a
-physical CPU for an indeterminate period of time.
+-- 
+Hanno Böck
+https://hboeck.de/
 
-VULNERABLE SYSTEMS
-==================
-
-All Xen versions from 3.4 onwards are vulnerable.  Xen versions 3.3 and
-earlier are vulnerable to an even wider class of attacks, due to them
-lacking preemption checks altogether in the affected code paths.
-
-Only x86 systems are affected.  ARM systems are not affected.
-
-Only multi-vCPU x86 PV guests can leverage the vulnerability.  x86 HVM
-or PVH guests as well as x86 single-vCPU PV ones cannot leverage the
-vulnerability.
-
-MITIGATION
-==========
-
-Running only HVM, PVH, or single-vCPU PV guests will avoid this
-vulnerability.
-
-For PV guests, the vulnerability can be avoided if the guest kernel is
-controlled by the host rather than guest administrator, provided that
-further steps are taken to prevent the guest administrator from loading
-code into the kernel (e.g. by disabling loadable modules etc) or from
-using other mechanisms which allow them to run code at kernel privilege.
-
-CREDITS
-=======
-
-This issue was discovered by Jan Beulich of SUSE.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa264.patch           xen-unstable
-xsa264-4.10.patch      Xen 4.10.x ... 4.6.x
-
-$ sha256sum xsa264*
-a7d2edf219af3375ac0d49bff9e64628c70e704fcf131ea21684694517aa9210  xsa264.patch
-66aca234b168abc01f28fe131b7e07645a73fd5d0f1d141d68343f31914d96cc  xsa264-4.10.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJbM+5GAAoJEIP+FMlX6CvZy7cIALkEoEQnHw5O8vYC5KpDA24X
-P320Gh0OppT2qtQfKtAF7MaCc7VF9Tnhf3CrtNtolXMryM4vrh7KyOn8wk7jbRBy
-tp28e6ppO8ons9x1kBAmAZrno8LXwOa2t22hQpUv1mYksRkZotViAXS72t4HkOVl
-SEQVVLElWAIfPbGJwtu1/qgS8dCckA2MeLeN/dKHRm8gD63XsYt37nQnBa2iraKX
-yN5sdih+WLgXCf55mubFlQfE6+7qgn27khZpMeJAwGk6N+Rz/Q3q1zSFX9YB+P6d
-9ppgoRFVxYpekwtCrLkVLxSAoEwCKi6sdYFnvIngHIMlLiVHjNsLd5YKTAsZcEE=
-=zTq5
------END PGP SIGNATURE-----
-
-Download attachment "xsa264.patch" of type "application/octet-stream" (2835 bytes)
-
-Download attachment "xsa264-4.10.patch" of type "application/octet-stream" (1967 bytes)
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
