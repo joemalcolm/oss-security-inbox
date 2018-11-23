@@ -1,53 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/20/2
-Message-ID: <d777592f-f00c-6b12-64c2-ac762f7b8b38@redhat.com>
-Date: Sat, 20 Jan 2018 21:18:25 +0100
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/23/10
+Message-ID: <f19a3fee-a5f1-21be-9104-5b83ab3afc19@iogearbox.net>
+Date: Fri, 23 Nov 2018 21:40:28 +0100
+From: Daniel Borkmann <daniel@...earbox.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: How to deal with reporters who don't want their bugs fixed?
+Cc: greg@...ah.com, ww9210@...il.com
+Subject: Re: fwd: [vs-plain] Kernel heap overflow in bpf leading to LPE (exploit provided)
 Content-Type: text/plain; charset=utf-8
 
-On 01/18/2018 10:21 PM, Solar Designer wrote:
-> On Thu, Jan 18, 2018 at 05:10:05PM +0100, Florian Weimer wrote:
->> Subject says it all: What do you do if you receive a vulnerability
->> report, and the reporter requests an embargo at some time in the future
->> because that's when their paper/conference presentation/patent
->> submission is scheduled?
+On 11/23/2018 07:09 PM, Greg KH wrote:
+> On Fri, Nov 23, 2018 at 06:22:09PM +0100, Yves-Alexis Perez wrote:
+>> Hi list,
+>>
+>> we were notified on the Linux distros list of a vulnerability in the bpf
+>> subsystem of the Linux kernel.
+>>
+>> I asked the reported (Wei Wu) if security@k.o had been notified, and
+>> this was done in the following mail, leading Eric Dumazet to suggest
+>> posting this on netdev.
+>>
+>> In turn, this has been done just afterwards [1] so the issue is now
+>> public. According to the linux-distros list policy, the original
+>> reporter should also have made the issue public here, but failed to do
+>> that.
+>>
+>> I'm posting this right now in order to raise awareness for the
+>> distributions already including 4.19 in a supported release.
 > 
-> I think it's best for your project (I guess glibc?) to prominently
-> publish near the security contact address a maximum embargo time you'd
-> (be likely to) agree to.  That's what security at kernel.org does
-> (7 days) and what we do with (linux-)distros (14 days).
+> As was discussed further on one of the threads on this topic, it looks
+> like this is a 4.20-rc issue only, and that 4.19 does not have this
+> issue.  So it might not be relevant to any distro at all, but I suggest
+> that people test themselves to be sure.
 
-I would prefer to be flexible in case something truly awful happens.
-
-Your perspective is skewed because people know that you have a 
-preference for short embargoes, so at least I tell people to make sure 
-that they have a final patch before contacting the distros list.  Then a 
-week or two is probably enough in most cases.  Without a patch, not so much.
-
-On the other hand, it is near impossible to develop quality solutions 
-under long embargoes.  We tried that in 2008 and largely failed.  The 
-GCC stack checking improvements wouldn't be available today if there had 
-been an indefinite, multi-party embargo (we have an aarch64 
-implementation which still hasn't been merged upstream).  And a more 
-recent attempt yielded few durable results as well.
-
-It also looks like that some reporters see embargoes as a kind of 
-validation for their work.  Everyone loves their first embargoes.
-
-> That way, it's
-> less important for you to judge whether the reason for embargo is
-> valid/altruistic or bogus/selfish - a sane maximum embargo time
-> minimizes the damage to all parties either way.
-
-That's not really true.  Depending on the nature of the vulnerability, 
-there can be a lot of work before we're confident that we can ship an 
-update.  We have some rather bad code out there, with very little or no 
-test coverage, and if we modify such code, we really need to make sure 
-that users receive a net improvement.  (For example, we thought we had 
-the final patch for a DNS stub resolver issue, but it turned out very 
-late that it had a crippling memory leak.)
+Yep, 4.19 does not have this map type, so there is no released kernel
+with this issue.
 
 Thanks,
-Florian
+Daniel
