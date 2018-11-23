@@ -1,110 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/04/1
-Message-Id: <E1eX5AX-0003nj-R9@xenbits.xenproject.org>
-Date: Thu, 04 Jan 2018 13:02:49 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 253 - x86: memory leak with MSR emulation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/23/3
+Message-ID: <20181123094709.2e493b23@computer>
+Date: Fri, 23 Nov 2018 09:47:09 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Crashes and memory safety bugs in dcraw
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Fri, 23 Nov 2018 09:34:51 +0100
+Agostino Sarubbo <ago@...too.org> wrote:
 
-                    Xen Security Advisory XSA-253
-                              version 2
+> are the first and the third similar or I'm missing something?
 
-                  x86: memory leak with MSR emulation
+That looks like the same, sorry, my mistake.
+Ignore the second one :-)
 
-UPDATES IN VERSION 2
-====================
+Somewhere in the "minify crashing inputs, sort them" I must have
+missed that.
 
-Public release.
+-- 
+Hanno Böck
+https://hboeck.de/
 
-ISSUE DESCRIPTION
-=================
-
-In Xen 4.10, new infrastructure was introduced as part of an overhaul to
-how MSR emulation happens for guests.  Unfortunately, one tracking
-structure isn't freed when a vcpu is destroyed.
-
-IMPACT
-======
-
-A memory allocation of 8 bytes is leaked each time a vcpu is destroyed.
-
-A malicious guest may, by frequently rebooting over extended periods of
-time, run the system out of memory, resulting in a Denial of Service
-(DoS).
-
-VULNERABLE SYSTEMS
-==================
-
-Xen versions 4.10 and later are affected.  Xen 4.9 and earlier are not
-affected.
-
-Only x86 systems are affected.  ARM systems are not.
-
-All guest kinds can exploit this vulnerability.
-
-MITIGATION
-==========
-
-Limiting the frequency with which a guest is able to reboot, will
-limit the memory leak.
-
-Rebooting each host (after migrating its guests) periodically will
-reclaim the leaked space.
-
-CREDITS
-=======
-
-This issue was discovered by Andrew Cooper of Citrix.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa253.patch           Xen 4.10, xen-unstable
-
-$ sha256sum xsa253*
-bba1abb5e4368421de29385e37f8477bf3534d3ba3ff7e2aae9c9d3da53f1393  xsa253.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJaTiXyAAoJEIP+FMlX6CvZ/CIH/3LEbyAmWUSs4C2Rt0EENDLO
-JnnAGXWIy3DsffGiG9zOhfYiItn2iD+J+EcO+WC5lGPBSkX1KiXdsWVla/dJuy0F
-frx5pdqJNSHFihK/6fGU0WnSBFz6o2gkn2hOnzWfpxNLiJMrHCI6GEOcdMx6xtOQ
-9QZAa7rCN1aRx0Lx1LjuvaqPwy4rJ294zLnwarMoN10KZ3oRVbQ8mf4kN+/X+hlK
-9MxUj99WYZWcJhcRLGiQALPdRQeabh72/ZTFsfIAwPxaEgT6YhwFrFDG526iNcM0
-MkruO8HeD+byrQrni/qgB5EAIyPsFuBfvzddHzPA+9sSrf4QDjQWPFihQ3ti+xg=
-=sQVC
------END PGP SIGNATURE-----
-
-Download attachment "xsa253.patch" of type "application/octet-stream" (739 bytes)
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
