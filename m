@@ -1,33 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/13/3
-Message-ID: <20180213120450.29f126cf@pc1>
-Date: Tue, 13 Feb 2018 12:04:50 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/23/4
+Message-ID: <20181123141630.dvpucbyue22ecqed@suse.de>
+Date: Fri, 23 Nov 2018 15:16:30 +0100
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: GNU patch out of bounds read, null pointer crash and double free
+Subject: Re: Crashes and memory safety bugs in dcraw
 Content-Type: text/plain; charset=utf-8
 
-The recent release of GNU patch 2.7.6 fixed an old out of bounds read I
-had reported in 2015:
+On Fri, Nov 23, 2018 at 09:22:17AM +0100, Hanno Böck wrote:
+> Hi,
+> 
+> dcraw is a tool to process raw images from digital cameras.
+> It easily crashes with various issues (tested version 9.28.0). This was
+> very shallow testing (afl fuzzing with random inputs, not starting with
+> valid images), I assume there's much more. I reported those a long time
+> ago to its author, he didn't seem interested in fixing such issues.
+> 
+> Some applications use dcraw automatically to parse images (gthumb,
+> kphotoalbum, kde thumbnailers, gwenview).
+> 
+> Input samples are base64.
 
-out of bounds read with malformed patch in pch_write_line
-https://savannah.gnu.org/bugs/index.php?45990
+One thing to look at replacement of dcraw is probably libraw, which is more
+active. (It used the dcraw sources originally.)
 
-Commit:
-https://git.savannah.gnu.org/cgit/patch.git/commit/src/pch.c?id=a0d7fe4589651c64bd16ddaaa634030bb0455866
-
-I re-checked patch now and found a few more issues:
-
-segfault / null pointer (probably crash only)
-https://savannah.gnu.org/bugs/index.php?53132
-https://git.savannah.gnu.org/cgit/patch.git/commit/?id=f290f48a621867084884bfff87f8093c15195e6a
-
-double free in function another_hunk()
-https://savannah.gnu.org/bugs/index.php?53133
-
--- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+Ciao, Marcus
