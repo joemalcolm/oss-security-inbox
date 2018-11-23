@@ -1,32 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/18/1
-Message-ID: <2086549779.1418796.1524054250024.JavaMail.zimbra@redhat.com>
-Date: Wed, 18 Apr 2018 08:24:10 -0400 (EDT)
-From: Siddharth Sharma <siddharth@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/23/2
+Message-ID: <8770596.Fmibit0Khg@overwatch>
+Date: Fri, 23 Nov 2018 09:34:51 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2018-1088 glusterfs: Privilege escalation via gluster_shared_storage when snapshot scheduling is enabled
+Subject: Re: Crashes and memory safety bugs in dcraw
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On venerdì 23 novembre 2018 09:22:17 CET Hanno Böck wrote:
+> Segfault / memory read on invalid address in crop_masked_pixels
+> ==6511==ERROR: AddressSanitizer: SEGV on unknown address 0x7fa0aa2ad79e (pc
+> 0x0000005992fe bp 0x7ffdd236bb50 sp 0x7ffdd236b9e0 T0) ==6511==The signal
+> is caused by a READ memory access.
+>     #0 0x5992fd in crop_masked_pixels /mnt/ram/dcraw/dcraw.c:3775:20
+>     #1 0x668a33 in main /mnt/ram/dcraw/dcraw.c:10406:7
+>     #2 0x7fa05f3264ca in __libc_start_main (/lib64/libc.so.6+0x234ca)
+>     #3 0x41c629 in _start (/mnt/ram/dcraw/a.out+0x41c629)
+> 
+> Invalid memory read in crop_masked_pixels
+> ==6893==ERROR: AddressSanitizer: SEGV on unknown address 0x7f5514dad79e (pc
+> 0x0000005992fe bp 0x7ffc83994ad0 sp 0x7ffc83994960 T0) ==6893==The signal
+> is caused by a READ memory access.
+>     #0 0x5992fd in crop_masked_pixels /mnt/ram/dcraw/dcraw.c:3775:20
+>     #1 0x668a33 in main /mnt/ram/dcraw/dcraw.c:10406:7
+>     #2 0x7f54c9df64ca in __libc_start_main (/lib64/libc.so.6+0x234ca)
+>     #3 0x41c629 in _start (/mnt/ram/dcraw/a.out+0x41c629)
 
-A flaw was found in glusterfs which can lead to privilege escalation on 
-gluster server nodes.
+Hi Hanno,
 
-This flaw is based on symlink attack. Any glusterfs unauthenticated client 
-having access to gluster nodes can mount gluster_shared_storage volume which 
-contains file symlink to /etc/cron.d which is owned by root. After mounting
-this shared volume client can schedule malicious cronjob which would run as 
-root. This would lead to privilege escalation. Symlink is created when gluster
-snapshot scheduling is enabled. This requires gluster administrator to run 
-command "snap_scheduler.py init", this is shipped with glusterfs-server 
-package.
+are the first and the third similar or I'm missing something?
+TIA
 
-This flaw was discovered by John Strunk (Red Hat)
-
-
-Respectfully,
------------------------------------------------------------------
-Siddharth Sharma / Red Hat Product Security / Key ID : 0xD9F6489A      
-Fingerprint  :  6F04 C684 A49C E4CE 8148 E841 CD6F 8E55 D9F6 489A
-
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
 
