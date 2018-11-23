@@ -1,45 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/09/12
-Message-ID: <CAFRnB2XFut-kOS4Zt=1-roq-CAzxwK7Gsc9kNGZg4motFWWm4g@mail.gmail.com>
-Date: Tue, 9 Oct 2018 18:34:23 -0400
-From: Alex Gaynor <alex.gaynor@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/23/5
+Message-ID: <2136822182.35841294.1542986449992.JavaMail.zimbra@redhat.com>
+Date: Fri, 23 Nov 2018 10:20:49 -0500 (EST)
+From: Vladis Dronov <vdronov@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
-Subject: Re: ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)
+Subject: CVE-2018-16862: Linux kernel: cleancache: deleted files infoleak
 Content-Type: text/plain; charset=utf-8
 
-Would they consider making a build-time "safe PS only" flag that ensured it
-was compiled without things like shell-invocation? Then we could just try
-to convince Linux distros to package it that way :-)
+Heololo,
 
-Alex
+Vasily Averin and Pavel Tikhomirov from Virtuozzo Kernel Team
+found way for an unprivileged user to access a content of a deleted file
+of any other users on a file systems with enabled cleancache.
 
-On Tue, Oct 9, 2018 at 6:33 PM Tavis Ormandy <taviso@...gle.com> wrote:
+Under certain conditions it may not drop a content of a deleted
+file on its last iput(). When a newly created file gets an inode number
+of the previously deleted file its read can get the content of the deleted
+file saved in cleancache.
 
-> On Tue, Oct 9, 2018 at 3:27 PM Perry E. Metzger <perry@...rmont.com>
-> wrote:
->
-> > I keep wondering if there isn't a way to fully remove the dangerous
-> > bits from a postscript interpreter so it can _only_ be used to view
-> > the document and literally has no file system access compiled in at
-> > all, so there's no way to touch the fs etc. regardless of what flags
-> > the interpreter is invoked with.
-> >
-> > (I, too, find removing the ability to look at historical postscript
-> > documents a bit more draconian than I like.)
-> >
-> >
-> I've discussed it with upstream, it's a hard no because they feel it would
-> make ghostscript non-conforming (i.e. non-conforming with the Adobe
-> PostScript Language Reference Manual)
->
-> We probably have similar thoughts on this, but that is the final word from
-> upstream.
->
-> Tavis.
->
+For now only Xen's tmem driver registers itself as a backend for cleancache:
 
+$ git grep cleancache_register_ops
+...
+drivers/xen/tmem.c:             err = cleancache_register_ops(&tmem_cleancache_ops);
+mm/cleancache.c:int cleancache_register_ops(const struct cleancache_ops *ops)
 
--- 
-All that is necessary for evil to succeed is for good people to do nothing.
+This means only Xen's guests with tmem driver active are vulnerable.
 
+References:
+
+https://lore.kernel.org/patchwork/patch/1011367/
+
+https://bugzilla.redhat.com/show_bug.cgi?id=1649017
+
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
