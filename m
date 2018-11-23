@@ -1,49 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/12/7
-Message-Id: <E1f6jcD-0002pc-T3@rmmprod07.runbox>
-Date: Thu, 12 Apr 2018 17:18:45 -0400 (EDT)
-From: "David A. Wheeler" <dwheeler@...eeler.com>
-To: "oss-security" <oss-security@...ts.openwall.com>
-CC: "oss-security" <oss-security@...ts.openwall.com>
-Subject: Re: Re: Terminal Control Chars
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/23/7
+Message-ID: <20181123171743.vcwfvbfds7ozhmse@matica.foolinux.mooo.com>
+Date: Fri, 23 Nov 2018 09:17:43 -0800
+From: Ian Zimmerman <itz@...y.loosely.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Crashes and memory safety bugs in dcraw
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 12 Apr 2018 11:07:20 -0700, Ian Zimmerman <itz@...y.loosely.org> wrote:
-> The term "invisible character" has some obvious (if perhaps informal)
-> meaning.  But I don't really know what "control character" means.  Is a
-> page separator (^L) a control character, for example?  Is DEL one (ASCII
-> 127)?
+On 2018-11-23 09:22, Hanno Böck wrote:
 
-The term "control character" has a standard definition for every encoding
-I'm familiar with.  ASCII defined a set of control characters, and
-Unicode built on them.
+> dcraw is a tool to process raw images from digital cameras.
+> It easily crashes with various issues (tested version 9.28.0). This was
+> very shallow testing (afl fuzzing with random inputs, not starting with
+> valid images), I assume there's much more. I reported those a long time
+> ago to its author, he didn't seem interested in fixing such issues.
+> 
+> Some applications use dcraw automatically to parse images (gthumb,
+> kphotoalbum, kde thumbnailers, gwenview).
 
-The Unicode list of control characters is here:
-https://www.fileformat.info/info/unicode/category/Cc/list.htm
-You'll see it includes:
-U+0007 	BELL
-U+0008 	BACKSPACE
-U+0009 	CHARACTER TABULATION
-U+000A 	LINE FEED (LF)
-U+000C 	FORM FEED (FF) (aka ^L)
-U+000D 	CARRIAGE RETURN (CR)
-U+007F 	DELETE
+An important side note: because dcraw intentionally doesn't provide a
+library, only an executable, code from it is bundled in at least some
+applications that use it; thus updating the dcraw package in a distro
+will not by itself be the end of this problem for the distro.  One such
+application : RawTherapee
 
-According to Wikipedia <https://en.wikipedia.org/wiki/ASCII>,
-the set of control characters in US-ASCII is 00..1F and 7F (hex).
-
-Russ Allbery:
-> I think a useful definition of "control character" in this context (and I
-> realize this doesn't exactly match the ASCII definition) is a character
-> that results in an action other than insertion being taken...
-> CR and LF would not be control characters in that definition, since they
-> insert a newline and don't cause an action. Similarly, TAB wouldn't be a
-> control character in that definition.
-
-As you noted, that definition doesn't match the ASCII definition, but
-I also think it's misleading.  If someone pastes a CR/LF into a shell prompt,
-it certainly *DOES* cause an action, namely, execution of that line.
-That's probably not what you meant by "action", but from a security
-point-of-view, causing a script to execute is rather important :-).
-
---- David A. Wheeler
+-- 
+Please don't Cc: me privately on mailing lists and Usenet,
+if you also post the followup to the list or newsgroup.
+To reply privately _only_ on Usenet and on broken lists
+which rewrite From, fetch the TXT record for no-use.mooo.com.
