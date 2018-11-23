@@ -1,4 +1,9 @@
-Received: (qmail 27711 invoked by uid 550); 3 Dec 2025 20:58:26 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4733" "Friday" "23" "November" "2018" "09:22:17" "+0100" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20181123092217.7e4a0f84@computer>" "111" "[oss-security] Crashes and memory safety bugs in dcraw" "^Date:" nil nil "11" "2018112308:22:17" "[oss-security] Crashes and memory safety bugs in dcraw" (number mark "        hanno@hboeck Nov 23  111/4733  " thread-indent "\"[oss-security] Crashes and memory safety bugs in dcraw\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 8071 invoked by uid 550); 23 Nov 2018 08:22:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,102 +11,126 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 26426 invoked from network); 3 Dec 2025 20:51:28 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764795079; x=1765399879; darn=lists.openwall.com;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=sAE5zmiPW9qvVm0BPLDz0wsvfFfukWH7cOp6ympL+E8=;
-        b=GJYzYWIiJ0dD2/d9Dx2Zcs4fg+3i0rLm8jvQvqyuSrlPbHR2zqsMexkdufS0mCxTHP
-         fGYONp8Ek8w0c6yqZhYxE0pI0W6aB3tS/Kk8peRYKSZHPInJR+9o4GRYpCP+pffxzNFa
-         jH2mN8FBxSoLf3cqSB/3eFaOfyrR0D3TOUHr1oDiDSmoBmAixEeZ9ggxP0y4Wk4z0WVb
-         53yFLHaPryUJIvf6sAoimPi4g4XS/WCMc5nA3EEBxUnifCu+lMm+Cob6AzRU9UYxk+Nl
-         BsYVGDdvSOgJFyRpf1fyJVcJRCHRHOp75IxH2QRdTjMgITilm6Qg4+Oz1SdDg1eyKHPM
-         BY3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764795079; x=1765399879;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sAE5zmiPW9qvVm0BPLDz0wsvfFfukWH7cOp6ympL+E8=;
-        b=Mwjxs7jtbwvvsz8L6OiMhacZ+uXOVEIvTdB+QnaS1FsPD2+M13HseWcxIhHHS23yba
-         VnbxgchG8rtOfIyX7ozyfQCRRDsTLdDcQ37MyLeHZKdsnJjk8SOLyiG/nGeUqYqvyiIJ
-         nw8jsEhvCamQe+gNOa9tZkBKIpJFQaNYZGsVzyTmb39wfp/QU+cGTA7FxgADTKpNXiek
-         lh270qKTIcZxazbNz/0AHCwWPD+4rSHNbAtkicFjNjD8JyS3M1vlWp3JmDIIB/ciDf5p
-         C9D9UvXeFjPSbFQwikbMnCypHCU1EbJm+1+5IgG2UdE6IvcHgwcbrfhVw/5ifX21t8P2
-         1QIg==
-X-Gm-Message-State: AOJu0YwpYDPrGmthw0Ym/IQHvp9siDH14Xtmr97j0JgtgqWDCKAdshAq
-	sYGtReUsWJCHBZGXd926hZJlhMq3hNkG4fANVpu1HJBtrj+8tTrPDTzU+uI8OYb9E8+BNh2ekzw
-	XZ+olhC29bapzXB5qgSpmkvF4xPm6IJgZc81U
-X-Gm-Gg: ASbGncvGPw6I3Xbs6uSqSzA4TPFJ+jaUy3NcrOKBom6xJp4XhU6JJpRMFJjpwMAwFf9
-	iL8okwSzod8Vfh2/jMEtJdt3ZbPFcik059GcC+h6CQjhY4MDuEeL0MxMqSVyqJ4eLkr9QuvffWv
-	844nR0d7zJph8J0+5LmV4nCkwb4m/xPK/m1qyGPC4OHIVaKRyQI57V0aaallr+/9cbeupVwDxlN
-	qgJChdiZCRbszDf2il0nAPMJ5diGJQwzLJ2RIYyRecFPISk122in6M8AzPw1It+JLMomcjtgE3B
-	UTZzCcQcVC7U+qjzqABv8qz/cAuJ3fLo/wY/o+kN+dW33RGrfyHJtYs=
-X-Google-Smtp-Source: AGHT+IEXH8p4p+jWUkV4GYp+UZ7dnmjcVR/sdJokzLkJkAPbDsa0N0SD9lwfWPvpQwhsuubNH1yAEOT6gfjQ8cg5pZU=
-X-Received: by 2002:a05:6808:1507:b0:44f:6d6d:5266 with SMTP id
- 5614622812f47-4536e5baa7fmr1890172b6e.63.1764795078873; Wed, 03 Dec 2025
- 12:51:18 -0800 (PST)
+Received: (qmail 8039 invoked from network); 23 Nov 2018 08:22:22 -0000
+Message-ID: <20181123092217.7e4a0f84@computer>
+X-Mailer: Claws Mail 3.17.1 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-From: Cosmin Truta <ctruta@gmail.com>
-Date: Wed, 3 Dec 2025 22:51:08 +0200
-X-Gm-Features: AWmQ_bkN1ppZGnH3qwWwC2dYQ9di-l46rTYmU3Z6JnQyCCiPW0UymZeZ_GeJFGE
-Message-ID: <CAAoVtZwksfG-MFfhdamHt2SazD-n-_1HuZwXcRpRAJe_g3NDKg@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] libpng 1.6.52: Out-of-bounds vulnerability fixed: CVE-2025-66293
+Date: Fri, 23 Nov 2018 09:22:17 +0100
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Crashes and memory safety bugs in dcraw
+To: oss-security@lists.openwall.com
 
-Hello, everyone,
+Hi,
 
-libpng 1.6.52 has been released to address an out-of-bounds read
-vulnerability in the simplified API. This release fixes one
-high-severity CVE affecting libpng 1.6.0 through 1.6.51.
+dcraw is a tool to process raw images from digital cameras.
+It easily crashes with various issues (tested version 9.28.0). This was
+very shallow testing (afl fuzzing with random inputs, not starting with
+valid images), I assume there's much more. I reported those a long time
+ago to its author, he didn't seem interested in fixing such issues.
 
-CVE-2025-66293 (CVSS 7.1, High): Out-of-bounds read in
-png_image_read_composite when processing palette PNG images with
-partial transparency and gamma correction.
+Some applications use dcraw automatically to parse images (gthumb,
+kphotoalbum, kde thumbnailers, gwenview).
 
-Note: Unlike typical image parsing vulnerabilities, this bug is
-triggered by *valid* PNG files that conform to the PNG specification.
-Any palette image with a tRNS chunk containing partial alpha values
-(1=E2=80=93254) and a gAMA chunk will trigger the vulnerability when proces=
-sed
-through the simplified API with an output format without alpha and
-no explicit background color. The bug is in libpng's internal flag
-synchronization, not in the image data.
+Input samples are base64.
 
-A flag synchronization bug causes the compositing code to assume
-linear premultiplied data when the data is actually sRGB, resulting
-in reads up to 1012 bytes past the png_sRGB_base array. This can
-result in information disclosure and/or denial of service.
 
-To the best of my knowledge, web browsers use the low-level libpng
-API rather than the simplified API, and are not affected by this
-vulnerability.
+Segfault / memory read on invalid address in crop_masked_pixels
+---------------------------------------------------------------
 
-This is distinct from CVE-2025-64720 (fixed in 1.6.51), which also
-involved png_sRGB_base but occurred in a different code path and
-required a maliciously crafted PNG file to trigger.
+TU0wMIEwMDAAMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAw
+MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMIX/MDAwMDAw
+MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMLTCMDAw
+MDAwAAAAMDAwMDAwMDAwMDAwMMaN
 
-GitHub Security Advisory:
-- CVE-2025-66293:
-https://github.com/pnggroup/libpng/security/advisories/GHSA-9mpm-9pxh-mg4f
+=3D=3D6511=3D=3DERROR: AddressSanitizer: SEGV on unknown address 0x7fa0aa2a=
+d79e (pc 0x0000005992fe bp 0x7ffdd236bb50 sp 0x7ffdd236b9e0 T0)
+=3D=3D6511=3D=3DThe signal is caused by a READ memory access.
+    #0 0x5992fd in crop_masked_pixels /mnt/ram/dcraw/dcraw.c:3775:20
+    #1 0x668a33 in main /mnt/ram/dcraw/dcraw.c:10406:7
+    #2 0x7fa05f3264ca in __libc_start_main (/lib64/libc.so.6+0x234ca)
+    #3 0x41c629 in _start (/mnt/ram/dcraw/a.out+0x41c629)
 
-Fixes:
-- https://github.com/pnggroup/libpng/commit/788a624d7387a758ffd5c7ab010f187=
-0dea753a1
-- https://github.com/pnggroup/libpng/commit/a05a48b756de63e3234ea6b3b938b8f=
-5f862484a
 
-Release: https://github.com/pnggroup/libpng/releases/tag/v1.6.52
+Heap out of bounds read in parse_tiff_ifd
+-----------------------------------------
 
-Credit: flyfish101
+TU0wMIAwMDAAMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMMUWMDAAAAA=3D
 
-Users should upgrade to libpng 1.6.52 immediately.
 
----
-Cosmin Truta
-libpng maintainer
+=3D=3D6729=3D=3DERROR: AddressSanitizer: heap-buffer-overflow on address 0x=
+61100000013f at pc 0x00000043690d bp 0x7ffeaaba2270 sp 0x7ffeaaba1a18
+READ of size 256 at 0x61100000013f thread T0
+    #0 0x43690c in __interceptor_index (/mnt/ram/dcraw/a.out+0x43690c)
+    #1 0x5ec1d1 in parse_tiff_ifd /mnt/ram/dcraw/dcraw.c:6014:46
+    #2 0x60cc64 in parse_tiff /mnt/ram/dcraw/dcraw.c:6193:9
+    #3 0x63d0d6 in identify /mnt/ram/dcraw/dcraw.c:8674:16
+    #4 0x666eab in main /mnt/ram/dcraw/dcraw.c:10252:15
+    #5 0x7f1ec0bfc4ca in __libc_start_main (/lib64/libc.so.6+0x234ca)
+    #6 0x41c629 in _start (/mnt/ram/dcraw/a.out+0x41c629)
+
+0x61100000013f is located 0 bytes to the right of 255-byte region [0x611000=
+000040,0x61100000013f)
+allocated by thread T0 here:
+    #0 0x4c6b23 in malloc (/mnt/ram/dcraw/a.out+0x4c6b23)
+    #1 0x5ec070 in parse_tiff_ifd /mnt/ram/dcraw/dcraw.c:6012:24
+    #2 0x60cc64 in parse_tiff /mnt/ram/dcraw/dcraw.c:6193:9
+    #3 0x63d0d6 in identify /mnt/ram/dcraw/dcraw.c:8674:16
+    #4 0x666eab in main /mnt/ram/dcraw/dcraw.c:10252:15
+    #5 0x7f1ec0bfc4ca in __libc_start_main (/lib64/libc.so.6+0x234ca)
+
+
+Invalid memory read in crop_masked_pixels
+-----------------------------------------
+
+TU0wMIEwMDAAMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAw
+MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMIX/MDAwMDAw
+MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMLTCMDAw
+MDAwAAAAMDAwMDAwMDAwMDAwMMaN
+
+=3D=3D6893=3D=3DERROR: AddressSanitizer: SEGV on unknown address 0x7f5514da=
+d79e (pc 0x0000005992fe bp 0x7ffc83994ad0 sp 0x7ffc83994960 T0)
+=3D=3D6893=3D=3DThe signal is caused by a READ memory access.
+    #0 0x5992fd in crop_masked_pixels /mnt/ram/dcraw/dcraw.c:3775:20
+    #1 0x668a33 in main /mnt/ram/dcraw/dcraw.c:10406:7
+    #2 0x7f54c9df64ca in __libc_start_main (/lib64/libc.so.6+0x234ca)
+    #3 0x41c629 in _start (/mnt/ram/dcraw/a.out+0x41c629)
+
+
+floating point exception / segfault in parse_tiff_ifd
+-----------------------------------------------------
+
+TU0wMIAwMDAAMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMP0JMDAAAAAA
+
+=3D=3D6910=3D=3DERROR: AddressSanitizer: FPE on unknown address 0x0000005f7=
+0ee (pc 0x0000005f70ee bp 0x7ffc259155f0 sp 0x7ffc259142a0 T0)
+    #0 0x5f70ed in parse_tiff_ifd /mnt/ram/dcraw/dcraw.c:6055:43
+    #1 0x60cc64 in parse_tiff /mnt/ram/dcraw/dcraw.c:6193:9
+    #2 0x63d0d6 in identify /mnt/ram/dcraw/dcraw.c:8674:16
+    #3 0x666eab in main /mnt/ram/dcraw/dcraw.c:10252:15
+    #4 0x7fc98bd024ca in __libc_start_main (/lib64/libc.so.6+0x234ca)
+    #5 0x41c629 in _start (/mnt/ram/dcraw/a.out+0x41c629)
+
+
+floating point exception in kodac_radc_load_raw
+-----------------------------------------------
+
+UFhOAA=3D=3D
+
+=3D=3D6919=3D=3DERROR: AddressSanitizer: FPE on unknown address 0x00000054e=
+85e (pc 0x00000054e85e bp 0x7fffc0b15150 sp 0x7fffc0b10be0 T0)
+    #0 0x54e85d in kodak_radc_load_raw /mnt/ram/dcraw/dcraw.c:2272:34
+    #1 0x6687ad in main /mnt/ram/dcraw/dcraw.c:10395:10
+    #2 0x7f8f61ecf4ca in __libc_start_main (/lib64/libc.so.6+0x234ca)
+    #3 0x41c629 in _start (/mnt/ram/dcraw/a.out+0x41c629)
+
+
+
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
+
+mail/jabber: hanno@hboeck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
