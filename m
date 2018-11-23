@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3873" "Wednesday" "9" "November" "2016" "15:44:26" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<5253979.W8Yu5ZOxEb@blackgate>" "103" "[oss-security] libdwarf: heap-based buffer overflow in dwarf_get_aranges_list (dwarf_arange.c)" nil nil nil "11" "2016110914:44:26" "[oss-security] libdwarf: heap-based buffer overflow in dwarf_get_aranges_list (dwarf_arange.c)" (number mark "U       ago@gentoo.o Nov  9  103/3873  " thread-indent "\"[oss-security] libdwarf: heap-based buffer overflow in dwarf_get_aranges_list (dwarf_arange.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["410" "Friday" "23" "November" "2018" "09:47:09" "+0100" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20181123094709.2e493b23@computer>" "17" "Re: [oss-security] Crashes and memory safety bugs in dcraw" "^Date:" nil nil "11" "2018112308:47:09" "[oss-security] Crashes and memory safety bugs in dcraw" (number mark "        hanno@hboeck Nov 23   17/410   " thread-indent "\"Re: [oss-security] Crashes and memory safety bugs in dcraw\"\n") "<8770596.Fmibit0Khg@overwatch>" ("<20181123092217.7e4a0f84@computer>" "<8770596.Fmibit0Khg@overwatch>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 10017 invoked by uid 550); 9 Nov 2016 14:44:45 -0000
+Received: (qmail 19636 invoked by uid 550); 23 Nov 2018 08:47:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,119 +11,35 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9953 invoked from network); 9 Nov 2016 14:44:44 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
-To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Date: Wed, 09 Nov 2016 15:44:26 +0100
-Message-ID: <5253979.W8Yu5ZOxEb@blackgate>
-User-Agent: KMail/4.14.10 (Linux/4.4.26-gentoo; KDE/4.14.24; x86_64; ; )
+Received: (qmail 19618 invoked from network); 23 Nov 2018 08:47:14 -0000
+Message-ID: <20181123094709.2e493b23@computer>
+In-Reply-To: <8770596.Fmibit0Khg@overwatch>
+References: <20181123092217.7e4a0f84@computer>
+	<8770596.Fmibit0Khg@overwatch>
+X-Mailer: Claws Mail 3.17.1 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Subject: [oss-security] libdwarf: heap-based buffer overflow in dwarf_get_aranges_list (dwarf_arange.c)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 23 Nov 2018 09:47:09 +0100
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Crashes and memory safety bugs in dcraw
+To: oss-security@lists.openwall.com
 
-If it is suitable for a CVE please assign one. Thanks.
+On Fri, 23 Nov 2018 09:34:51 +0100
+Agostino Sarubbo <ago@gentoo.org> wrote:
 
-Description:
-libdwarf is a library to consume and produce DWARF debug information.
+> are the first and the third similar or I'm missing something?
 
-A fuzz on an updated version revealed a buffer overflow.
+That looks like the same, sorry, my mistake.
+Ignore the second one :-)
 
-The complete ASan output:
+Somewhere in the "minify crashing inputs, sort them" I must have
+missed that.
 
-# dwarfdump $FILE
-==27460==ERROR: AddressSanitizer: heap-buffer-overflow on address 
-0x60600000eff4 at pc 0x00000047349b bp 0x7ffd9feadaf0 sp 0x7ffd9fead2a0
-READ of size 2 at 0x60600000eff4 thread T0
-    #0 0x47349a in memcpy /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:438
-    #1 0x56cbe0 in dwarf_get_aranges_list 
-/tmp/dwarf-20161021/libdwarf/dwarf_arange.c:118:9
-    #2 0x56c0dc in dwarf_get_aranges 
-/tmp/dwarf-20161021/libdwarf/dwarf_arange.c:318:11
-    #3 0x50f103 in print_aranges 
-/tmp/dwarf-20161021/dwarfdump/print_aranges.c:145:12
-    #4 0x4fb2bf in process_one_file 
-/tmp/dwarf-20161021/dwarfdump/dwarfdump.c:1420:9
-    #5 0x4fb2bf in main /tmp/dwarf-20161021/dwarfdump/dwarfdump.c:654
-    #6 0x7f2b42a4461f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #7 0x419588 in _start (/usr/bin/dwarfdump-asan+0x419588)
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
 
-0x60600000eff4 is located 0 bytes to the right of 52-byte region 
-[0x60600000efc0,0x60600000eff4)
-allocated by thread T0 here:
-    #0 0x4c0ad8 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:52
-    #1 0x7f2b43b1e206 in __libelf_set_rawdata_wrlock /tmp/portage/dev-
-libs/elfutils-0.166/work/elfutils-0.166/libelf/elf_getdata.c:318
-
-SUMMARY: AddressSanitizer: heap-buffer-overflow 
-/var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:438 
-in memcpy
-Shadow bytes around the buggy address:
-  0x0c0c7fff9da0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c0c7fff9db0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c0c7fff9dc0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c0c7fff9dd0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c0c7fff9de0: 00 00 00 00 00 00 00 00 fa fa fa fa 00 00 00 00
-=>0x0c0c7fff9df0: 00 00 00 00 fa fa fa fa 00 00 00 00 00 00[04]fa
-  0x0c0c7fff9e00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c0c7fff9e10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c0c7fff9e20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c0c7fff9e30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c0c7fff9e40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==27460==ABORTING
-
-Affected version:
-20161021
-
-Fixed version:
-N/A
-
-Commit fix:
-https://sourceforge.net/p/libdwarf/code/ci/583f8834083b5ef834c497f5b47797e16101a9a6/
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00026-libdwarf-heapoverflow-dwarf_get_aranges_list
-
-Timeline:
-2016-11-02: bug discovered and reported to upstream
-2016-11-05: upstream released a patch
-2016-11-07: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/11/07/libdwarf-heap-based-buffer-overflow-in-dwarf_get_aranges_list-dwarf_arange-c
+mail/jabber: hanno@hboeck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
