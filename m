@@ -1,60 +1,120 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/19/5
-Message-ID: <CAGJbjKaR+G7r8DnrXmvf0hXgtSYh8VAU7cJRmt+7iqn1fzwizw@mail.gmail.com>
-Date: Mon, 19 Mar 2018 17:08:14 -0400
-From: Mike Dalessio <mike.dalessio@...il.com>
-To: ruby-security-ann@...glegroups.com, rubyonrails-security@...glegroups.com,  oss-security@...ts.openwall.com,  nokogiri-talk <nokogiri-talk@...glegroups.com>
-Subject: [CVE-2018-8048] Loofah XSS Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/23/6
+Message-ID: <20181123172208.GA16585@scapa.corsac.net>
+Date: Fri, 23 Nov 2018 18:22:09 +0100
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: Wei Wu <ww9210@...il.com>
+Subject: fwd: [vs-plain] Kernel heap overflow in bpf leading to LPE (exploit provided)
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
+Hi list,
 
-A *medium* severity vulnerability has been identified and patched in
-Loofah, which is a library used by `rails-html-sanitizer`. This issue has
-been assigned CVE-2018-8048.
+we were notified on the Linux distros list of a vulnerability in the bpf
+subsystem of the Linux kernel.
 
-The public notice can be found here:
+I asked the reported (Wei Wu) if security@k.o had been notified, and
+this was done in the following mail, leading Eric Dumazet to suggest
+posting this on netdev.
 
-    https://github.com/flavorjones/loofah/issues/144
+In turn, this has been done just afterwards [1] so the issue is now
+public. According to the linux-distros list policy, the original
+reporter should also have made the issue public here, but failed to do
+that.
 
-To save you a click, I've reproduced the contents of the initial
-announcement here.
+I'm posting this right now in order to raise awareness for the
+distributions already including 4.19 in a supported release.
 
------
+As the original mail indicates, an exploit code had been provided by the
+reporter, but I intend to wait until a 4.19 kernel including the patch
+is released (but not after next Thursday) to publish it as a followup.
 
-*# CVE-2018-8048 - Loofah XSS Vulnerability*
+Regards,
+-- 
+Yves-Alexis
 
-This issue has been created for public disclosure of an XSS / code
-injection vulnerability that was responsibly reported by the Shopify
-Application Security Team.
+[1] https://marc.info/?l=linux-netdev&m=154290236228315&w=2
 
-*## Severity*
+----- Forwarded message from Wei Wu <ww9210@...il.com> -----
 
-Medium (6.7)
+Date: Thu, 22 Nov 2018 21:45:11 +0800
+From: Wei Wu <ww9210@...il.com>
+To: linux-distros@...openwall.org
+Subject: [vs-plain] Kernel heap overflow in bpf leading to LPE (exploit provided)
+X-Mailer: MIME-tools 5.501 (Entity 5.501)
+Message-ID: <CACmwppyMMd+T87DytX=X_KzmK+b3Dpx8zBp5GXrPaywKAzN-Gg@...l.gmail.com>
+
+Hello,
+
+I am writing to report a heap overflow vulnerability in kernel bpf module
+There is an integer-overflow-to-buffer-overflow vulnerability in the
+bpf functions introduced in 4.19 and affect up to 4.20-rc3, attached
+is an LPE exploit which is able to spawn a root shell.
+I will first introduce the root cause vulnerability and then discuss
+how to fix this vulnerability.
+
+In the following code shows a integer overflow when calculating size =
+attr->max_entries + 1;
+size is used to calculate queue_size in line 72, and queue size is
+used to malloc,
+if  attr->max_entries is 0xffffffff, then size will be zero, which
+result in a smaller buffer allocated.
+
+static struct bpf_map *queue_stack_map_alloc(union bpf_attr *attr)
+63 {
+64 int ret, numa_node = bpf_map_attr_numa_node(attr);
+65 struct bpf_queue_stack *qs;
+66 u32 size, value_size;
+67 u64 queue_size, cost;
+68
+69 size = attr->max_entries + 1;
+70 value_size = attr->value_size;
+71
+72 queue_size = sizeof(*qs) + (u64) value_size * size;
+73
+74 cost = queue_size;
+75 if (cost >= U32_MAX - PAGE_SIZE)
+76 return ERR_PTR(-E2BIG);
+77
+78 cost = round_up(cost, PAGE_SIZE) >> PAGE_SHIFT;
+79
+80 ret = bpf_map_precharge_memlock(cost);
+81 if (ret < 0)
+82 return ERR_PTR(ret);
+83
+84 qs = bpf_map_area_alloc(queue_size, numa_node);
 
 
-*## Description*
 
-Loofah allows non-whitelisted attributes to be present in sanitized output
-when input with specially-crafted HTML fragments.
+later in function queue_stack_map_push_elem we can overflow this
+buffer with arbitrary length with user-controllable content.
 
-
-*## Affected Versions*
-
-Loofah < 2.2.1, but only:
-
-* when running on MRI or RBX,
-* in combination with libxml2 >= 2.9.2.
-
-Please note: JRuby users are not affected.
+229 dst = &qs->elements[qs->head * qs->map.value_size];
+230 memcpy(dst, value, qs->map.value_size);
 
 
-*## Mitigation*
+running the exploit gives me a root shell in a custom compiled 4.20-rc3 system:
 
-Upgrade to Loofah 2.2.1.
+user@...t:~$ ./exp
+rop_payload_initialized
+uid=0(root) gid=0(root) groups=0(root) context=system_u:system_r:kernel_t:s0
+# uname -a
+Linux syzkaller 4.20.0-rc3 #1 SMP Thu Nov 22 15:12:38 CST 2018 x86_64 GNU/Linux
+#
 
 
-*## History of this public disclosure*
+To fix this vulnerability, we should add check prevent the integer overflow.
 
-2018-03-19: Initial vulnerability report published
+Luckily it does not affect any distributions now, hope it get fixed soon : )
 
+--
+Wei Wu (ww9210)
+University of Chinese Academy of Sciences
+
+
+----- End forwarded message -----
+
+-- 
+Yves-Alexis Perez
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
