@@ -1,45 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/06/3
-Message-ID: <b1bdfd0b-2151-cafd-d5c9-425de23311f4@apache.org>
-Date: Tue, 6 Nov 2018 10:05:59 +0100
-From: Francesco Chicchiriccò <ilgrosso@...che.org>
-To: dev@...cope.apache.org, "user@...cope.apache.org" <user@...cope.apache.org>, announce@...che.org, Joan Bono <joanet17@...il.com>, oss-security@...ts.openwall.com, "security@...che.org" <security@...che.org>, Joan Bono <joanet17@...il.com>
-Subject: [SECURITY] CVE-2018-17186 Apache Syncope
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/23/9
+Message-ID: <e34d421111a59b59ab7a09fc954ea71d701936f5.camel@debian.org>
+Date: Fri, 23 Nov 2018 21:45:24 +0100
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: oss-security@...ts.openwall.com, Wei Wu <ww9210@...il.com>
+Subject: Re: fwd: [vs-plain] Kernel heap overflow in bpf leading to LPE (exploit provided)
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-17186: XXE on BPMN definitions
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Description:
-An administrator with workflow definition entitlements can use DTD to 
-perform malicious operations, including but not limited to file read, 
-file write, and code execution.
+On Fri, 2018-11-23 at 19:09 +0100, Greg KH wrote:
+> As was discussed further on one of the threads on this topic, it looks
+> like this is a 4.20-rc issue only, and that 4.19 does not have this
+> issue.  So it might not be relevant to any distro at all, but I suggest
+> that people test themselves to be sure.
 
-Severity: Medium
+Hi Greg, thanks for the precision.
+- -- 
+Yves-Alexis
+-----BEGIN PGP SIGNATURE-----
 
-Vendor: The Apache Software Foundation
-
-Affects:
-Releases prior to 2.1.2
-Releases prior to 2.0.11
-
-The unsupported Releases 1.2.x may be also affected.
-
-Solution:
-2.0.X users should upgrade to 2.0.11
-2.1.X users should upgrade to 2.1.2
-
-Mitigation:
-Do not assign workflow definition entitlements to any administrator.
-
-Credit:
-This issue was discovered by ﻿Kevin Borras Soler and Joan Bono.
-
-References:
-https://syncope.apache.org/security
-
-
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+iQEzBAEBCAAdFiEE8vi34Qgfo83x35gF3rYcyPpXRFsFAlv4ZuQACgkQ3rYcyPpX
+RFsM4Qf/UJMELgODThyPFvcKYaiS150t4UPiBDhTTnT/8awV6zQRiB4cGjtefMe2
+sO4zHIx1lIAWVDQN3xx0zGxVgdut3TfJdtc0ARUAM5uEtB7ovhq3Z9ILaT1OHnGY
+D7l4qSaKMUKhWMiNU2VJlayIMFPC6rJhqz/lB8mV2qp2QbG9UHoqFrHQLEJH3/Hq
+NWevdEo9t4+amv6EycLLrb8WDhF2wGeD/usH0Smu4Ty0aJcPVn1E65ax8hgF1xDw
+FdHIO3Iz4hmOn2fx7KDtRx5MN0rfAF/fLtRNEjNKQnEUPcADDwTw3x7fZuhzv+AF
+/UWcjKAsldGzWklbv4XVNBClNABpFQ==
+=eZhE
+-----END PGP SIGNATURE-----
