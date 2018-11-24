@@ -1,31 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/23/7
-Message-ID: <20181123171743.vcwfvbfds7ozhmse@matica.foolinux.mooo.com>
-Date: Fri, 23 Nov 2018 09:17:43 -0800
-From: Ian Zimmerman <itz@...y.loosely.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/24/1
+Message-ID: <alpine.GSO.2.20.1811231930580.16715@scrappy.simplesystems.org>
+Date: Fri, 23 Nov 2018 19:33:55 -0600 (CST)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
 To: oss-security@...ts.openwall.com
-Subject: Re: Crashes and memory safety bugs in dcraw
+Subject: Re: Re: Crashes and memory safety bugs in dcraw
 Content-Type: text/plain; charset=utf-8
 
-On 2018-11-23 09:22, Hanno Böck wrote:
+On Fri, 23 Nov 2018, Ian Zimmerman wrote:
+> An important side note: because dcraw intentionally doesn't provide a
+> library, only an executable, code from it is bundled in at least some
+> applications that use it; thus updating the dcraw package in a distro
+> will not by itself be the end of this problem for the distro.  One such
+> application : RawTherapee
 
-> dcraw is a tool to process raw images from digital cameras.
-> It easily crashes with various issues (tested version 9.28.0). This was
-> very shallow testing (afl fuzzing with random inputs, not starting with
-> valid images), I assume there's much more. I reported those a long time
-> ago to its author, he didn't seem interested in fixing such issues.
-> 
-> Some applications use dcraw automatically to parse images (gthumb,
-> kphotoalbum, kde thumbnailers, gwenview).
+GraphicsMagick also bundles some version of dcraw for its Microsoft 
+Windows builds.  It is executed as an external program so if it 
+becomes corrupted, it will not corrupt the invoking application.
 
-An important side note: because dcraw intentionally doesn't provide a
-library, only an executable, code from it is bundled in at least some
-applications that use it; thus updating the dcraw package in a distro
-will not by itself be the end of this problem for the distro.  One such
-application : RawTherapee
+Another consideration is that the dcraw author has huge sample image 
+archive that he is only willing to sell for private use.  This means 
+that other projects (including those which derived code from dcraw) 
+might not work correctly with as many input files since they have not 
+done as much validation.
 
+Bob
 -- 
-Please don't Cc: me privately on mailing lists and Usenet,
-if you also post the followup to the list or newsgroup.
-To reply privately _only_ on Usenet and on broken lists
-which rewrite From, fetch the TXT record for no-use.mooo.com.
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
