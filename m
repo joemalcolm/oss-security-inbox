@@ -1,111 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/01/2
-Message-Id: <E1gIAsA-0005QG-UG@xenbits.xenproject.org>
-Date: Thu, 01 Nov 2018 11:10:46 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 278 v2 (CVE-2018-18883) - x86: Nested VT-x usable even when disabled
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/25/2
+Message-ID: <1690836.rk9JpRbEkN@wanheda>
+Date: Sun, 25 Nov 2018 13:09:12 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: catdoc: out of bounds heap read and nullpointer / segfault
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On domenica 25 novembre 2018 09:57:37 CET Hanno Böck wrote:
+> I reported two memory safety bugs in the command line tool catdoc.
+> However the mails to the developer bounced.
+> 
+> The first is an out of bounds heap read, to detect it catdoc needs to
+> be compiled with address sanitizer (test it with -fsanitize=address in
+> CFLAGS).
+> 
+> The second is a null pointer and will just crash catdoc.
 
-            Xen Security Advisory CVE-2018-18883 / XSA-278
-                              version 2
+Hi Hanno,
 
-               x86: Nested VT-x usable even when disabled
+something about catdoc was already reported time ago:
+https://marc.info/?l=oss-security&m=142627461816744&w=2
 
-UPDATES IN VERSION 2
-====================
+I don't know atm if your findings are duplicate or not.
 
-CVE assigned.
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
 
-ISSUE DESCRIPTION
-=================
 
-When running HVM guests, virtual extensions are enabled in hardware because
-Xen is using them.  As a result, a guest can blindly execute the
-virtualisation instructions, and will exit to Xen for processing.
-
-In the case that the guest hasn't followed the correct (virtual) configuration
-procedure, it shouldn't be able to use the instructions, and Xen should
-respond with #UD exception.  When nested virtualisation is disabled for the
-guest, it is not permitted to complete the configuration procedure.
-
-Unfortunately, when nested virtualisation is intended to be disabled for the
-guest, an incorrect default value leads Xen to believe that the configuration
-procedure has already been completed.
-
-IMPACT
-======
-
-Guest software which blindly plays with the VT-x instructions can cause Xen to
-operate on uninitialised data.  As the backing memory is zeroed, this causes
-Xen to suffer a NULL pointer dereference, causing a host Denial of Service.
-
-Other behaviours such as memory corruption or privilege escalation have not
-been ruled out.
-
-VULNERABLE SYSTEMS
-==================
-
-Systems running Xen 4.9 or later are vulnerable.  Systems running Xen 4.8 or
-earlier are not vulnerable.
-
-Only Intel x86 systems are vulnerable.  Systems from other x86 vendors, and
-other hardware vendors are not vulnerable.
-
-Only x86 HVM and PVH guests can leverage this vulnerability.  x86 PV guests
-cannot leverage this vulnerability.
-
-MITIGATION
-==========
-
-Running only x86 PV guests will avoid the issue.
-
-For x86 HVM guests, while enabling nested virtualisation for affected guests
-does work around this particular DoS, it is not a security supported
-configuration and has other know DoS and suspected privilege escalation
-vulnerabilities.  Therefore, it is not a mitigation.
-
-CREDITS
-=======
-
-This issue was discovered by Sergey Dyasli of Citrix.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa278.patch           xen-unstable
-xsa278-4.11.patch      Xen 4.11, 4.10, 4.9
-
-$ sha256sum xsa278*
-d94c59ee170f96af14f0cf696221ba8b9447b86820fe99fba1815ab93cc89cd7  xsa278.patch
-22686a9bbfbd38bb74292a28a452012d263875c9064815d4afd3fd6c62df0c3a  xsa278-4.11.patch
-$
-
-NOTE CONCERNING LACK OF EMBARGO
-===============================
-
-This issue was first reported in private and was in the usual XSA process.
-
-It was later independently reported in public with enough detail for the issue
-to be considered fully public.
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAlva3xQMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZ2DUIAKIKRyJ9tb1+t8FVECYVR6L5JjhVjyiC1HKnmmGO
-o+Fl1glQZqK1b5oKkV58jNf32wUOjhlHut1iXJmuE7VGrBsSzj4ew3wIwFcAeTyL
-nykIFtS8YBlodQfcd7XRyh030bQ5f5JtJYTyJTpAwor8JQrVJH+lYdv+zddPfVbp
-sUMXFrSxAmnzhrYKuUHNZ438O6+PwunPROTng6VRmreutqnxjnvxtmLqJLk23gvI
-jfg8THSawEREg9R6cjpO8ZmfouukTJp7t5mmte1g8kJm/UJ4iRWAS67tYF6m4V+K
-1H7Sc0E4yV8I/PL46V+53r43NcCtPFP+GM/AaIzggov2Hn0=
-=el52
------END PGP SIGNATURE-----
-
-Download attachment "xsa278.patch" of type "application/octet-stream" (10641 bytes)
-
-Download attachment "xsa278-4.11.patch" of type "application/octet-stream" (10615 bytes)
