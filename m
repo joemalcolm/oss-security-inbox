@@ -1,170 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/03/3
-Message-Id: <E1eWrcQ-0000Bf-HN@xenbits.xenproject.org>
-Date: Wed, 03 Jan 2018 22:34:42 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 254 (CVE-2017-5753,CVE-2017-5715,CVE-2017-5754) - Information leak via side effects of speculative execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/25/3
+Message-ID: <20181125133006.GA3680@eldamar.local>
+Date: Sun, 25 Nov 2018 14:30:06 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: PHP imap_open() script injection
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
- Xen Security Advisory CVE-2017-5753,CVE-2017-5715,CVE-2017-5754 / XSA-254
-                              version 2
+On Thu, Nov 22, 2018 at 09:02:14PM +0100, Hanno Böck wrote:
+> Hi,
+> 
+> This was apparently posted on some russian forum recently and then
+> re-posted to github:
+> https://antichat.com/threads/463395/#post-4254681
+> https://github.com/Bo0oM/PHP_imap_open_exploit/blob/master/exploit.php
+> 
+> PoC code:
+> $server = "x -oProxyCommand=echo\tZWNobyAnMTIzNDU2Nzg5MCc+L3RtcC90ZXN0MDAwMQo=|base64\t-d|sh}";
+> imap_open('{'.$server.':143/imap}INBOX', '', '') or die("\n\nError: ".imap_last_error());
+> 
+> It's pretty self explaining, it seems imap_open() will pass things to
+> ssh and this is vulnerable to a shell injection.
+> 
+> Impact would be mostly relevant if someone has some imap functionality
+> where a user can define a custom imap server. (Though it might also be
+> used as a bypass for environments where exec() and similar functions
+> are restricted.)
+> 
+> I reported it to upstream PHP a few days ago, it was closed as a
+> duplicate, so it seems they already knew about it. It's unfixed in
+> current versions.
 
-        Information leak via side effects of speculative execution
+CVE-2018-19518 has been assigned by MITRE for this issue.
 
-UPDATES IN VERSION 2
-====================
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-19518
 
-Added CVEs.
-
-ISSUE DESCRIPTION
-=================
-
-Processors give the illusion of a sequence of instructions executed
-one-by-one.  However, in order to most efficiently use cpu resources,
-modern superscalar processors actually begin executing many
-instructions in parallel.  In cases where instructions depend on the
-result of previous instructions or checks which have not yet
-completed, execution happens based on guesses about what the outcome
-will be.  If the guess is correct, execution has been sped up.  If the
-guess is incorrect, partially-executed instructions are cancelled and
-architectural state changes (to registers, memory, and so on)
-reverted; but the whole process is no slower than if no guess had been
-made at all.  This is sometimes called "speculative execution".
-
-Unfortunately, although architectural state is rolled back, there are
-other side effects, such as changes to TLB or cache state, which are
-not rolled back.  These side effects can subsequently be detected by
-an attacker to determine information about what happened during the
-speculative execution phase.  If an attacker can cause speculative
-execution to access sensitive memory areas, they may be able to infer
-what that sensitive memory contained.
-
-Furthermore, these guesses can often be 'poisoned', such that attacker
-can cause logic to reliably 'guess' the way the attacker chooses.
-This advisory discusses three ways to cause speculative execution to
-access sensitive memory areas (named here according to the
-discoverer's naming scheme):
-
-SP1, "Bounds-check bypass": Poison the branch predictor, such that
-operating system or hypervisor code is speculatively executed past
-boundary and security checks.  This would allow an attacker to, for
-instance, cause speculative code in the normal hypercall / emulation
-path to execute with wild array indexes.
-
-SP2, "Branch Target Injection": Poison the branch predictor.
-Well-abstracted code often involves calling function pointers via
-indirect branches; reading these function pointers may involve a
-(slow) memory access, so the CPU attempts to guess where indirect
-branches will lead.  Poisoning this enables an attacker to
-speculatively branch to any code that exists in the hypervisor.
-
-SP3, "Rogue Data Load": On some processors, certain pagetable
-permission checks only happen when the instruction is retired;
-effectively meaning that speculative execution is not subject to
-pagetable permission checks.  On such processors, an attacker can
-speculatively execute arbitrary code in userspace with, effectively,
-the highest privilege level.
-
-More information is available here:
-  https://meltdownattack.com/
-  https://spectreattack.com/
-
-Additional Xen-specific background:
-
-64-bit Xen hypervisors on systems with less than 5TiB of RAM map all
-of physical RAM, so code speculatively executed in a hypervisor
-context can read all of system RAM.
-
-When running PV guests, the guest and the hypervisor share the address
-space; guest kernels run in a lower privilege level, and Xen runs in
-the highest privilege level.  (HVM and PVH guests run in a separate
-address space to the hypervisor.)  However, only 64-bit PV guests can
-generate addresses large enough to point to hypervisor memory.
-
-IMPACT
-======
-
-Xen guests may be able to infer the contents of arbitrary host memory,
-including memory assigned to other guests.
-
-An attacker's choice of code to speculatively execute (and thus the
-ease of extracting useful information) goes up with the numbers.  For
-SP1, or SP2 on systems where SMEP (supervisor mode execute protection)
-is enabled: an attacker is limited to windows of code after bound
-checks of user-supplied indexes.  For SP2 without SMEP, or SP3, an
-attacker can write arbitrary code to speculatively execute.
-
-NOTE ON TIMING
-==============
-
-This vulnerability was originally scheduled to be made public on 9
-January.  It was accelerated at the request of the discloser due to
-one of the issues being made public.
-
-VULNERABLE SYSTEMS
-==================
-
-Systems running all versions of Xen are affected.
-
-For SP1 and SP2, both Intel and AMD are vulnerable.
-
-For SP3, only Intel processors are vulnerable. Furthermore, only
-64-bit PV guests can exploit SP3 against Xen.  PVH and 32-bit PV
-guests cannot exploit SP3.
-
-We believe that ARM is affected, but unfortunately due to the
-accelerated schedule, we haven't been able to get concrete input from
-ARM.  We are asking ARM and will publish more information when it is
-available.
-
-MITIGATION
-==========
-
-There is no mitigation for SP1 and SP2.
-
-SP3 can be mitigated by running guests in HVM or PVH mode.
-
-For guests with legacy PV kernels which cannot be run in HVM mode, we
-have developed a "shim" hypervisor that allows PV guests to run in PVH
-mode.  Unfortunately, due to the accelerated schedule, this is not yet
-ready to release.  We expect to have it ready for 4.10, as well as PVH
-backports to 4.9 and 4.8, available over the next few days.
-
-RESOLUTION
-==========
-
-There is no available resolution for SP1 or SP3.
-
-We are working on patches which mitigate SP2 but these are not
-currently available.  Given that the vulnerabilities are now public,
-these will be developed and published in public, initially via
-xen-devel.
-
-When we have useful information we will send an update.
-
-NOTE ON LACK OF EMBARGO
-=======================
-
-The timetable and process were set by the discloser.
-
-After the intensive initial response period for these vulnerabilities
-is over, we will prepare and publish a full timeline, as we have done
-in a handful of other cases of significant public interest where we
-saw opportunities for process improvement.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJaTVp4AAoJEIP+FMlX6CvZTcwH/2DpfLGwINA0C3V0zy6WcJAu
-zxj7oqjorODWMIZbyR+gdSJHX82PKEJVgAdH/wtzb/GSdFJ+D3Q+zwZQSq1hxCZr
-g9Otd+u6PyACsrQRK8mIoahYKUgPjTQdK2mzkKTO8SF9dQB5MSFht1vLdjXXGaWn
-ifMfzNXgr3UCs5fOhQga/f2UdkbLal/qi0H2mxPyXCgalb6MGpMWEgMcmoAlFqnM
-7aRmgYWrGaPKRHw4wwePWty+KEoryzPdF1vtURw8k/wdEDjzWYGZbhyBcHTd1BG7
-or/J7mIsfs8SO7vua/6+msTfHnsmyWgZPweM4dzcO1AUEHDN0dYz6TOqaFwJuew=
-=pwaX
------END PGP SIGNATURE-----
-
+Regards,
+Salvatore
