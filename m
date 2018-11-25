@@ -1,26 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/21/8
-Message-ID: <CABob6iojdbTt-cawnEg=rAmVME89mUTtRVxESiQ4_iiezBkwSA@mail.gmail.com>
-Date: Thu, 21 Jun 2018 14:51:51 +0200
-From: Lukas Odzioba <lukas.odzioba@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/25/1
+Message-ID: <20181125095737.5f7e726d@computer>
+Date: Sun, 25 Nov 2018 09:57:37 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Intel hyper-threading security issues
+Subject: catdoc: out of bounds heap read and nullpointer / segfault
 Content-Type: text/plain; charset=utf-8
 
-2018-06-21 13:54 GMT+02:00 Sven Schwedas <sven.schwedas@....at>:
-> Hotplug doesn't seem differentiate between HT threads and physical
-> cores, will setting maxcpus=2 on a 2 cores+HT machine reliably disable
-> HT, or can it disable one core and keep HT active on the other?
+I reported two memory safety bugs in the command line tool catdoc.
+However the mails to the developer bounced.
 
-It depends on machine/BIOS. IIRC usually "non ht" logical cpus are
-enumerated in in SRAT before ht siblings (kernel goes over this table
-and boots cpus untill maxcpus is reached), so it will work fine, but I
-don't think it is standardized in any way.
-In /proc/cpuinfo among other things you have 1) Linux processor
-number, 2) apicid 3) core id and the task is to disable minimal number
-of cpus to make core id unique among those which are online.
-Of course it doesn't disable HT in any way, just removes certain
-logical cpus from scheduler.
+The first is an out of bounds heap read, to detect it catdoc needs to
+be compiled with address sanitizer (test it with -fsanitize=address in
+CFLAGS).
 
-Thanks,
-Lukas
+The second is a null pointer and will just crash catdoc.
+
+
+ASAN crash traces:
+
+==4036==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x6020000015d1 at pc 0x00000050560c bp 0x7ffe3d0b7d40 sp 0x7ffe3d0b7d38
+READ of size 1 at 0x6020000015d1 thread T0
+    #0 0x50560b in getlong /f/catdoc/catdoc-0.95/src/numutils.c:22:37
+    #1 0x506c7d in ole_init /f/catdoc/catdoc-0.95/src/ole.c:254:18
+    #2 0x4fa2df in analyze_format /f/catdoc/catdoc-0.95/src/analyze.c:58:17
+    #3 0x4f6bec in main /f/catdoc/catdoc-0.95/src/catdoc.c:180:6
+    #4 0x7fa1362ae4ea in __libc_start_main (/lib64/libc.so.6+0x244ea)
+    #5 0x41b489 in _start (/r/catdoc/catdoc+0x41b489)
+
+0x6020000015d1 is located 0 bytes to the right of 1-byte region [0x6020000015d0,0x6020000015d1)
+allocated by thread T0 here:
+    #0 0x4c5973 in malloc (/r/catdoc/catdoc+0x4c5973)
+    #1 0x505e70 in ole_init /f/catdoc/catdoc-0.95/src/ole.c:119:10
+    #2 0x4fa2df in analyze_format /f/catdoc/catdoc-0.95/src/analyze.c:58:17
+    #3 0x4f6bec in main /f/catdoc/catdoc-0.95/src/catdoc.c:180:6
+    #4 0x7fa1362ae4ea in __libc_start_main (/lib64/libc.so.6+0x244ea)
+
+
+
+And:
+
+==6151==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000020 (pc 0x000000509f93 bp 0x0c18000000d1 sp 0x7fff4819ed80 T0)
+==6151==The signal is caused by a READ memory access.
+==6151==Hint: address points to the zero page.
+    #0 0x509f92 in calcFileBlockOffset /f/catdoc/catdoc-0.95/src/ole.c
+    #1 0x509f92 in ole_read /f/catdoc/catdoc-0.95/src/ole.c:493
+    #2 0x4fa3ec in analyze_format /f/catdoc/catdoc-0.95/src/analyze.c:64:14
+    #3 0x4f6bec in main /f/catdoc/catdoc-0.95/src/catdoc.c:180:6
+    #4 0x7f70645a64ea in __libc_start_main (/lib64/libc.so.6+0x244ea)
+    #5 0x41b489 in _start (/r/catdoc/catdoc+0x41b489)
+
+
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+
+Download attachment "catdoc-bug-samples.zip" of type "application/zip" (1855 bytes)
