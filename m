@@ -1,21 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/21/3
-Message-ID: <CABob6iqkc7x7awz-aMAb-yOHWKdWgnQF0rkPYdporiUmGCkc5Q@mail.gmail.com>
-Date: Thu, 21 Jun 2018 12:22:28 +0200
-From: Lukas Odzioba <lukas.odzioba@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/26/2
+Message-ID: <781fff1e-455c-ab4f-16bb-f58b7e915488@powerdns.com>
+Date: Mon, 26 Nov 2018 17:14:58 +0100
+From: Remi Gacogne <remi.gacogne@...erdns.com>
 To: oss-security@...ts.openwall.com
-Cc: secure@...el.com
-Subject: Re: Intel hyper-threading security issues
+Subject: PowerDNS Security Advisory 2018-09
 Content-Type: text/plain; charset=utf-8
 
-2018-06-21 11:37 GMT+02:00 Stuart Henderson <stu@...cehopper.org>:
-> That isn't possible with some BIOS. For example, newer Lenovo machines
-> removed the option apparently due to perceived lack of demand...
+Hi all,
 
-If you feel like you really need that, on Linux you can dump SRAT ACPI
-table decompile it, remove APICID entries of "ht processors", compile
-it back and put into initrd.
-https://www.kernel.org/doc/Documentation/acpi/initrd_table_override.txt
+We just released PowerDNS Recursor 4.1.8, fixing a minor security issue
+that we recently discovered, affecting PowerDNS Recursor from 4.1.0 up
+to and including 4.1.7.
 
-Thanks,
-Lukas
+The issue is that a remote attacker can trigger an out-of-bounds memory
+read via a crafted query, while computing the hash of the query for a
+packet cache lookup, possibly leading to a crash.
+
+When the PowerDNS Recursor is run inside a supervisor like supervisord
+or systemd, a crash will lead to an automatic restart,
+limiting the impact to a somewhat degraded service.
+
+This issue has been assigned CVE-2018-16855 by Red Hat.
+
+The full security advisory is provided below, and can also be
+found at
+https://docs.powerdns.com/recursor/security-advisories/powerdns-advisory-2018-09.html
+
+A minimal patch can also be found here:
+https://downloads.powerdns.com/patches/2018-09/
+
+Please feel free to contact me directly if you have any question.
+
+Best regards,
+
+Remi Gacogne
+PowerDNS.COM BV - https://www.powerdns.com/
+
+PowerDNS Security Advisory 2018-09: Crafted query can cause a denial of
+service
+===============================================================================
+
+-  CVE: CVE-2018-16855
+-  Date: 26th of November 2018
+-  Affects: PowerDNS Recursor from 4.1.0 up to and including 4.1.7
+-  Not affected: 4.0.x, 4.1.8
+-  Severity: Medium
+-  Impact: Denial of service
+-  Exploit: This problem can be triggered via crafted queries
+-  Risk of system compromise: No
+-  Solution: Upgrade to a non-affected version
+
+An issue has been found in PowerDNS Recursor where a remote attacker
+sending a DNS query can trigger an out-of-bounds memory read while
+computing the hash of the query for a packet cache lookup, possibly
+leading to a crash.
+
+This issue has been assigned CVE-2018-16855 by Red Hat.
+
+When the PowerDNS Recursor is run inside a supervisor like supervisord
+or systemd, a crash will lead to an automatic restart, limiting the
+impact to a somewhat degraded service.
+
+PowerDNS Recursor from 4.1.0 up to and including 4.1.7 is affected.
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
