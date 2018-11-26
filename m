@@ -1,41 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/06/4
-Message-Id: <20180706160937.C94687200D7@webmail.sinamail.sina.com.cn>
-Date: Sat, 07 Jul 2018 00:09:37 +0800
-From: <zrlw@...a.com>
-To: "Solar Designer" <solar@...nwall.com>, "oss-security" <oss-security@...ts.openwall.com>,
-Subject: Re: mmap vulnerability in motion eye video4linux driver for Sony Vaio PictureBook
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/26/1
+Message-ID: <nycvar.YSQ.7.76.1811261113490.30027@xnncv>
+Date: Mon, 26 Nov 2018 11:19:29 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Greg Kurz <groug@...d.org>, zhibin hu <noirfate@...il.com>
+Subject: CVE-2018-19489 QEMU: 9pfs: crash due to race condition in renaming files
 Content-Type: text/plain; charset=utf-8
 
-I  sent a email to the original authors which i found in the head of meye.c, but i don't receive any response util now. I don't think   commit be83bbf80682  will work on this case, this driver derived from v4l2-core which not use inode,  maybe i'm wrong.  
------ Original Message -----
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: zrlw@...a.com
-Subject: Re: [oss-security] mmap vulnerability in motion eye video4linux driver for Sony Vaio PictureBook
-Date: 2018-07-06 22:54
+   Hello,
 
+A use-after-free flaw was found in the VirtFS, host directory sharing via Plan 
+9 File System(9pfs) support in QEMU. It could occur due to a race condition 
+while renaming files on a shared host directory.
 
-On Fri, Jul 06, 2018 at 03:26:55PM +0200, Greg KH wrote:
-> On Fri, Jul 06, 2018 at 08:35:43PM +0800, zrlw@...a.com wrote:
-> > Hi all,i found a vulnerability in motion eye video4linux driver for Sony Vaio PictureBook,it desn't validate user-controlled parameter 'vma->vm_pgoff', a malicious process might access all of kernel memory from user space by trying pass different arbitrary address.
-> > /usr/src/linux-4.4.21-69/drivers/media/pci/meye/meye.c:
-> > static int meye_mmap(struct file *file, struct vm_area_struct *vma)
-> > ...        unsigned long offset = vma->vm_pgoff << PAGE_SHIFT;
-> > ...        pos = (unsigned long)meye.grab_fbuffer + offset;
-> >         while (size > 0) {
-> >                 page = vmalloc_to_pfn((void *)pos);
-> >                 if (remap_pfn_range(vma, start, page, PAGE_SIZE, PAGE_SHARED)) {...
-> 
-> Commit:
-> 	be83bbf80682 ("mmap: introduce sane default mmap limits")
-> which was backported to all stable kernels, should have resolved this
-> problem, correct?
-> 
-> If not, please notify the media driver maintainers and they will be glad
-> to fix the problem.
-I think zrlw@...a.com is not subscribed, so CC'ing.
-I wonder if it's also possible to cause integer overflow on "(unsigned
-long)meye.grab_fbuffer + offset", bringing pos below meye.grab_fbuffer,
-and what the impact of that would be.
-Alexander
+A user inside guest could use this flaw to crash the QEMU process resulting in 
+DoS issue.
+
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2018-11/msg04489.html
+
+This issue was reported by Zhibin Hu.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
