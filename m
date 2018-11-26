@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["427" "Thursday" "1" "October" "2015" "09:59:12" "-0300" "Gustavo Grieco" "gustavo.grieco@gmail.com" "<CACn5sdR_PnnzeTT921B2mu2o1ceaC5qzKsKCuqHpK0FVp5OKng@mail.gmail.com>" "16" "[oss-security] CVE request: Heap overflow and DoS with a tga file in gdk-pixbuf < 2.32.1" nil nil nil "10" "2015100112:59:12" "[oss-security] CVE request: Heap overflow and DoS with a tga file in gdk-pixbuf < 2.32.1" (number mark "        gustavo.grie Oct  1   16/427   " thread-indent "\"[oss-security] CVE request: Heap overflow and DoS with a tga file in gdk-pixbuf < 2.32.1\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["568" "Monday" "26" "November" "2018" "11:19:29" "+0530" "P J P" "ppandit@redhat.com" "<nycvar.YSQ.7.76.1811261113490.30027@xnncv>" "19" "[oss-security] CVE-2018-19489 QEMU: 9pfs: crash due to race condition in renaming files" "^cc:" nil nil "11" "2018112605:49:29" "[oss-security] CVE-2018-19489 QEMU: 9pfs: crash due to race condition in renaming files" (number mark "U       ppandit@redh Nov 26   19/568   " thread-indent "\"[oss-security] CVE-2018-19489 QEMU: 9pfs: crash due to race condition in renaming files\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3149 invoked by uid 550); 1 Oct 2015 12:59:24 -0000
+Received: (qmail 30599 invoked by uid 550); 26 Nov 2018 05:49:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,41 +11,37 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3131 invoked from network); 1 Oct 2015 12:59:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=ayKJ2+ugWjzwECAZabqSp8D1ZIEQK7p1iGoGMU+nzZ4=;
-        b=CC/3OobFuVg0kI6mKd8JoZrTY6ZMbEnlr6bG1sAbu/+JLqbFWjo1DOA+AGhWS+b36L
-         NAv1p7ocnIG+zOW/G2cQ1aLrr3eT8OkLWrQR6I6ggJQK/TgJhP2ZCBoq0/ztlvz6XTUg
-         FA2R5YCrjCIhDdnyQiV4LlaZJnx7mwm3kyt2EwRHl2I8srZAJv4vo3/gXGY45EAGyloH
-         WN0QrRXJPbg4jfVMJv8hzCzEJP/jdQrXck3PMAB/qDo0eVbrqhiFmNwXGdzkJ59xAlS5
-         mjoFuNCWDDDQvHjY7iH4jRf/7lFHCPbqvHOIhnxvHJCZvLUop/k0k9UDq2NHRNAqGj5h
-         5fhQ==
+Received: (qmail 30578 invoked from network); 26 Nov 2018 05:49:46 -0000
+X-X-Sender: pjp@kaapi
+Message-ID: <nycvar.YSQ.7.76.1811261113490.30027@xnncv>
 MIME-Version: 1.0
-X-Received: by 10.112.150.97 with SMTP id uh1mr2281299lbb.53.1443704353058;
- Thu, 01 Oct 2015 05:59:13 -0700 (PDT)
-Message-ID: <CACn5sdR_PnnzeTT921B2mu2o1ceaC5qzKsKCuqHpK0FVp5OKng@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=047d7b342d4a20006905210a9de0
-Date: Thu, 1 Oct 2015 09:59:12 -0300
-From: Gustavo Grieco <gustavo.grieco@gmail.com>
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.26]); Mon, 26 Nov 2018 05:49:34 +0000 (UTC)
+cc: Greg Kurz <groug@kaod.org>, zhibin hu <noirfate@gmail.com>
+Date: Mon, 26 Nov 2018 11:19:29 +0530 (IST)
+From: P J P <ppandit@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request: Heap overflow and DoS with a tga file in gdk-pixbuf < 2.32.1
-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE-2018-19489 QEMU: 9pfs: crash due to race condition in renaming
+ files
+To: oss security list <oss-security@lists.openwall.com>
 
---047d7b342d4a20006905210a9de0
-Content-Type: text/plain; charset=UTF-8
+   Hello,
 
-Hello,
+A use-after-free flaw was found in the VirtFS, host directory sharing via Plan 
+9 File System(9pfs) support in QEMU. It could occur due to a race condition 
+while renaming files on a shared host directory.
 
-We found a heap overflow and a DoS in the gdk-pixbuf implementation
-triggered by the scaling of tga file. These issues are only fixed in the
-recent release of gdk-pixbuf 2.32.1 but affects older versions (we tested
-it in a fully updated Ubuntu 14.04).
+A user inside guest could use this flaw to crash the QEMU process resulting in 
+DoS issue.
 
-These issues were found using QuickFuzz.
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2018-11/msg04489.html
 
-Regards,
-Gustavo.
+This issue was reported by Zhibin Hu.
 
---047d7b342d4a20006905210a9de0--
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
