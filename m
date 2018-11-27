@@ -1,31 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/15/8
-Message-ID: <20180615172836.7tlljvthvyzjxrma@jwilk.net>
-Date: Fri, 15 Jun 2018 19:28:36 +0200
-From: Jakub Wilk <jwilk@...lk.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2018-12356 Breaking signature verification in pass (Simple Password Store)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/27/4
+Message-ID: <bf67ba8b-e03f-424b-92ba-c32b01ab1c08@Spark>
+Date: Tue, 27 Nov 2018 16:06:36 -0500
+From: Rafael Mendonça França <rafaelmfranca@...il.com>
+To: Rubyonrails-Security  <rubyonrails-security@...glegroups.com>,  Ruby-Security-Ann  <ruby-security-ann@...glegroups.com>, Oss-Security  <oss-security@...ts.openwall.com>
+Subject: [CVE-2018-16476] Broken Access Control vulnerability in Active Job
 Content-Type: text/plain; charset=utf-8
 
-* Marcus Brinkmann <marcus.brinkmann@...r-uni-bochum.de>, 2018-06-15, 16:43:
->>There's apparently more software that uses unachored "\[GNUPG:\]":
->>https://codesearch.debian.net/search?q=%5B%5E%5E%5D%5C%5C%5C%5BGNUPG%3A%5C%5C%5C%5D
->Yes. I did two weeks of due diligence on the important package 
->managers, Git, and anything I could think of that is critical. But I am 
->not saying what I looked at, because there might be something I missed, 
->and I want everybody to join in and have a fresh look. It is too much 
->for a single person.
+There is a vulnerability in Active Job. This vulnerability has been
+assigned the CVE identifier CVE-2018-16476.
 
-Thanks for doing this. I didn't mean to imply that you were not diligent 
-enough.
+Versions Affected: >= 4.2.0
+Not affected: < 4.2.0
+Fixed Versions: 4.2.11, 5.0.7.1, 5.1.6.1, 5.2.1.1
 
->You reporting these?
+Impact
+------
+Carefully crafted user input can cause Active Job to deserialize it using GlobalId
+and allow an attacker to have access to information that they should not have.
 
-I was hoping somebody else would take care of this.
+Vulnerable code will look something like this:
 
->If not, I can do it.
+    MyJob.perform_later(user_input)
 
-Please do! :-)
+All users running an affected release should either upgrade or use one of the
+workarounds immediately.
 
--- 
-Jakub Wilk
+Releases
+--------
+The FIXED releases are available at the normal locations.
+
+Workarounds
+-----------
+Putting the following monkey patch in an intializer can help to mitigate the issue:
+
+```
+require 'active_job'
+require 'active_job/arguments'
+
+module ArgumentsNotDeserializingGlobalId
+  def deserialize_argument(argument)
+    case argument
+    when String
+      argument
+    else
+      super
+    end
+  end
+end
+
+ActiveJob::Arguments.singleton_class.prepend(ArgumentsNotDeserializingGlobalId)
+```
+
+Patches
+-------
+To aid users who aren't able to upgrade immediately we have provided patches for
+the two supported release series. They are in git-am format and consist of a
+single changeset.
+
+* 4-2-activejob-direct-access.patch - Patch for 4.2 series
+* 5-0-activejob-direct-access.patch - Patch for 5.0 series
+* 5-1-activejob-direct-access.patch - Patch for 5.1 series
+* 5-2-activejob-direct-access.patch - Patch for 5.2 series
+
+Please note that only the 5.x and 4.2.x series are supported at present. Users
+of earlier unsupported releases are advised to upgrade as soon as possible as we
+cannot guarantee the continued availability of security fixes for unsupported
+releases.
+
+Rafael França
+
+Content of type "text/html" skipped
+
+Download attachment "4-2-activejob-direct-access.patch" of type "application/octet-stream" (1780 bytes)
+
+Download attachment "5-0-activejob-direct-access.patch" of type "application/octet-stream" (1796 bytes)
+
+Download attachment "5-1-activejob-direct-access.patch" of type "application/octet-stream" (1796 bytes)
+
+Download attachment "5-2-activejob-direct-access.patch" of type "application/octet-stream" (1796 bytes)
