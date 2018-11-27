@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3947" "Wednesday" "17" "February" "2016" "23:19:21" "+0100" "Szabolcs Nagy" "nsz@port70.net" "<20160217221921.GB24130@port70.net>" "99" "[oss-security] Address Sanitizer local root" "^Date:" nil nil "2" "2016021722:19:21" "[oss-security] Address Sanitizer local root" (number mark "        nsz@port70.n Feb 17   99/3947  " thread-indent "\"[oss-security] Address Sanitizer local root\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["687" "Tuesday" "27" "November" "2018" "09:49:16" "+0900" "Akira Ajisaka" "aajisaka@apache.org" "<CAP+3qq7S4BcPrSiCS4zoNU3E+g5=FWeB2GCK9zW7tMNHPrNumw@mail.gmail.com>" "23" "[oss-security] CVE-2018-11766: Apache Hadoop privilege escalation vulnerability" nil nil nil "11" "2018112700:49:16" "[oss-security] CVE-2018-11766: Apache Hadoop privilege escalation vulnerability" (number mark "U       aajisaka@apa Nov 27   23/687   " thread-indent "\"[oss-security] CVE-2018-11766: Apache Hadoop privilege escalation vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17590 invoked by uid 550); 17 Feb 2016 22:23:06 -0000
+Received: (qmail 8104 invoked by uid 550); 27 Nov 2018 11:08:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,115 +11,43 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15374 invoked from network); 17 Feb 2016 22:19:33 -0000
-Message-ID: <20160217221921.GB24130@port70.net>
-Mail-Followup-To: oss-security@lists.openwall.com
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Date: Wed, 17 Feb 2016 23:19:21 +0100
-From: Szabolcs Nagy <nsz@port70.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Address Sanitizer local root
-To: oss-security@lists.openwall.com
+Received: (qmail 30516 invoked from network); 27 Nov 2018 00:49:42 -0000
+X-Gm-Message-State: AA+aEWZu9b/ejHKAR02LuAqg0ZdSlzgh2LGViTXrL6YSLWWw12Y3JyhN
+	NgDZ1ZN24fb2hBLVNKdRK6DRz00aWGr2K5OgX3w=
+X-Google-Smtp-Source: AFSGD/Vv7dBz1zcGHXJLo6bb+EoiW8+WqiJGfJZzBX460LJu1YDEPQAhRPU0skwT04fRHq+FpqjWsO9UKaywziHs1rk=
+X-Received: by 2002:a2e:8156:: with SMTP id t22-v6mr17358238ljg.32.1543279767294;
+ Mon, 26 Nov 2018 16:49:27 -0800 (PST)
+MIME-Version: 1.0
+From: Akira Ajisaka <aajisaka@apache.org>
+Date: Tue, 27 Nov 2018 09:49:16 +0900
+X-Gmail-Original-Message-ID: <CAP+3qq7S4BcPrSiCS4zoNU3E+g5=FWeB2GCK9zW7tMNHPrNumw@mail.gmail.com>
+Message-ID: <CAP+3qq7S4BcPrSiCS4zoNU3E+g5=FWeB2GCK9zW7tMNHPrNumw@mail.gmail.com>
+To: general@hadoop.apache.org, user@hadoop.apache.org, 
+	security@hadoop.apache.org, oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CVE-2018-11766: Apache Hadoop privilege escalation vulnerability
 
-There is an alarming trend that Address Sanitizer and related
-compiler instrumentations from compiler-rt are used as a hardening
-solution and run in production.
+CVE-2018-11766: Apache Hadoop privilege escalation vulnerability
 
-Even though these are debugging and testing tools, there is
-no clear warning against production use in their documentation:
-http://clang.llvm.org/docs/
-And it's obvious how a tool that catches UB can be misunderstood
-as a hardening tool:
+Severity: Critical
 
-This analysis concluded that ASan can be used for protection
-to stop certain attacks:
-http://scarybeastsecurity.blogspot.dk/2014/09/using-asan-as-protection.html
-The Tor project distributes ASan "hardened" binaries:
-https://blog.torproject.org/blog/tor-browser-55a4-hardened-released
-And there are various projects for full Linux distro instrumentation:
-http://balintreczey.hu/blog/progress-report-on-hardened1-linux-amd64-a-potential-debian-port-with-pie-asan-ubsan-and-more/
-https://blog.hboeck.de/archives/879-Safer-use-of-C-code-running-Gentoo-with-Address-Sanitizer.html
-(the later was presented at FOSDEM 2016: https://fosdem.org/2016/schedule/event/csafecode/ )
+Vendor: The Apache Software Foundation
 
-While these are interesting projects, ASan should not be
-used for hardening in production systems in its current form,
-so at least the language ("hardening", "protection", "safe")
-should be fixed.
+Versions Affected:
+Apache Hadoop versions from 2.7.4 to 2.7.6
 
-My simple local root exploit is that ASan uses a lot
-of environment variables without checking for secure
-execution of setuid binaries:
+Description:
+In Apache Hadoop 2.7.4 to 2.7.6, the security fix for CVE-2016-6811 is
+incomplete.
+A user who can escalate to yarn user can possibly run arbitrary
+commands as root user.
 
-ASAN_OPTIONS='verbosity=2 log_path=foo' ./suid.exe
+Mitigation:
+Users should upgrade to 2.7.7 or upper.
+If you are using the affected version of Apache Hadoop and there are
+any users who can escalate to yarn user and cannot escalate to root user,
+remove the permission to escalate to yarn user from them.
 
-will write to foo.$PID using escalated priviledge, so a
-normal user may be able to clobber arbitrary root owned files
-(by creating foo.{1,2,3,..} symlinks to it) which can lead
-to local root on an "ASan hardened" Linux distribution:
-
-ASAN_OPTIONS='suppressions="/foo
-root:passwdhash:12345:0:::::
-bar" log_path=foo' ./suid.exe
-
-can easily clobber /etc/shadow with
-
-AddressSanitizer: failed to read suppressions file '/foo
-root:passwdhash:12345:0:::::
-bar'
-
-if there is any setuid root executable built with ASan.
-
-(This is not a problem for testing where the env var based
-configuration is convenient and I haven't checked if any
-of the current ASan distro efforts have setuid executables
-with instrumentation, but I still find it a security bug
-given the improper advertisment of the sanitizer tools:
-this can lead to problems if the documentation is not fixed.)
-
-Beyond this trivial issue there are plenty reliability
-problems in the sanitizer runtimes that i think deserve
-at least a warning. It can crash conforming applications
-because
-
-- the shadow map overlaps with something
-- ulimit -v
-- overcommit is turned off
-- it allocates memory but aborts on failure
-- it interposes __tls_get_addr with non-as-safe code.
-- it uses initial-exec TLS.
-- it handles "deadly" signals like SIGBUS
-  (often used by applications using mmaped files).
-- the c runtime is updated and incompatible
-  (with the various interposition hacks)
-- does not handle c11 thread creation
-
-some of the features reduce security:
-
-- heuristic introspective unwind
-- nice diagnositc messages at undefined behaviour
-- interpositions in general (UB according to POSIX)
-
-other limitations:
-
-- static linking is not supported
-
-(This is for ASan only, I briefly looked at thread
-sanitizer, which seemed even worse for reliability
-and safe stack that is in fact advertised for hardening
-but it has plenty reliability problems, needs further
-analysis.)
-
-I believe some of the problems can be fixed by
-implementing the runtimes in the libc instead of
-second guessing libc behaviour with fragile
-heuristics from a compiler runtime.   This would solve
-most of the runtime aborts.  I can see an easy way to do
-this with musl libc (because a non-host musl is easy to
-distribute and link against), but non-trivial with glibc.
-In either case I don't see a solution to the shadow map
-commit charge unless the kernel is modified.  So I cannot
-recommend even a careful reimplementation in libc for
-production use for reliable systems.
+Credit:
+This issue was discovered by Wilfred Spiegelenburg.
