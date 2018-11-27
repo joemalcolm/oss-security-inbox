@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["467" "Tuesday" "5" "July" "2016" "20:25:22" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20160705182522.GA26179@eldamar.local>" "17" "[oss-security] CVE Request: libgd: global out of bounds read when encoding gif from malformed input with gd2togif" nil nil nil "7" "2016070518:25:22" "[oss-security] CVE Request: libgd: global out of bounds read when encoding gif from malformed input with gd2togif" (number mark "U       carnil@debia Jul  5   17/467   " thread-indent "\"[oss-security] CVE Request: libgd: global out of bounds read when encoding gif from malformed input with gd2togif\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["7369" "Tuesday" "27" "November" "2018" "11:29:35" "+0100" "Marcus Meissner" "meissner@suse.de" "<20181127102935.lsb4epjnzf4zkmru@suse.de>" "305" "Re: [oss-security] Crashes and memory safety bugs in dcraw" nil nil nil "11" "2018112710:29:35" "[oss-security] Crashes and memory safety bugs in dcraw" (number mark "U       meissner@sus Nov 27  305/7369  " thread-indent "\"Re: [oss-security] Crashes and memory safety bugs in dcraw\"\n") "<20181123092217.7e4a0f84@computer>" ("<20181123092217.7e4a0f84@computer>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 22480 invoked by uid 550); 5 Jul 2016 18:25:24 -0000
+Received: (qmail 1381 invoked by uid 550); 27 Nov 2018 10:29:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,58 +12,326 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22462 invoked from network); 5 Jul 2016 18:25:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=7Tu3Ev7zW7jG2tglHPUWWvMGyg0ZiDxZoiOlpsf5SLg=;
-        b=b5eGjdEn59ThIbg7h1dijbAporzKaykmK5HECjW84RCqsqtHrN7Os2RRFtJr3mOubc
-         4b9kUW3gdQsbySx0ScAQK7jWvqBKz4thlPdf42VEOB0JFw3WRQjfq8OyOEEDHn0lVgHT
-         pQ7U+HJPa8qH8W0APkafDshBjSAY5k2jTRXtRKiTI0j/yBknVnPzDHLwQC0kMJCszIns
-         aolAX5QO8I9oBrUo9b7rSkVRr7fNaA5dyjpbaJtxh+0dVSeD63FWk0feZk+T6oboJDTR
-         rXFToRKqoycijwCIkvr4khChU5XrC9xImelzb6aF7du2VECrSPdYlrSI45SKlQbk9svf
-         3KBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:date:from:to:subject:message-id
-         :mime-version:content-disposition:user-agent;
-        bh=7Tu3Ev7zW7jG2tglHPUWWvMGyg0ZiDxZoiOlpsf5SLg=;
-        b=b4e9SgFCRJQoZd+dWEab9bJMSYIjy+MhonfDEH648ZfAshs77YPe77siNyPewr2yqw
-         uvCniSbI66d+sEPx6eJOLXrhxumRftuE3w4/ieBtlkypFn8aIxJFsSk3IhAo8YZeJSh4
-         FH1SE5JEhO6ERtFd3TaaJUVHmM3IWz8Q/4Q+ZpxUFp5PqzDGDZ/8Vh6ukpRgIHLqMP7U
-         shRwJzT/ZpiphepsiBAnBEpMFPWVZpRoeuDP28oIKQL0uIw9IE1TO7apUetBnlGp6AOL
-         8Kq9shVv8sG3n9mHUgrUKb4JtUyn5+5dJH4NudUuEnr29rNVGUjfhYmBSU8pVvtOljxS
-         +YOQ==
-X-Gm-Message-State: ALyK8tI7OQJWUpc0GdK38QElv3AHgJsnI9paLdT+aDG0/H0hJ8ZebbuwPVvUZKLxMlkyHQ==
-X-Received: by 10.194.88.65 with SMTP id be1mr16935538wjb.46.1467743112764;
-        Tue, 05 Jul 2016 11:25:12 -0700 (PDT)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Tue, 5 Jul 2016 20:25:22 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: OSS Security Mailinglist <oss-security@lists.openwall.com>
-Message-ID: <20160705182522.GA26179@eldamar.local>
+Received: (qmail 1360 invoked from network); 27 Nov 2018 10:29:48 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Date: Tue, 27 Nov 2018 11:29:35 +0100
+From: Marcus Meissner <meissner@suse.de>
+To: oss-security@lists.openwall.com
+Message-ID: <20181127102935.lsb4epjnzf4zkmru@suse.de>
+References: <20181123092217.7e4a0f84@computer>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-User-Agent: Mutt/1.6.0 (2016-04-01)
-Subject: [oss-security] CVE Request: libgd: global out of bounds read when encoding gif from
- malformed input with gd2togif
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20181123092217.7e4a0f84@computer>
+Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
+ =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
+ =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
+User-Agent: NeoMutt/20170421 (1.8.2)
+Subject: Re: [oss-security] Crashes and memory safety bugs in dcraw
 
-Hi
+On Fri, Nov 23, 2018 at 09:22:17AM +0100, Hanno Böck wrote:
+> Hi,
+> 
+> dcraw is a tool to process raw images from digital cameras.
+> It easily crashes with various issues (tested version 9.28.0). This was
+> very shallow testing (afl fuzzing with random inputs, not starting with
+> valid images), I assume there's much more. I reported those a long time
+> ago to its author, he didn't seem interested in fixing such issues.
+> 
+> Some applications use dcraw automatically to parse images (gthumb,
+> kphotoalbum, kde thumbnailers, gwenview).
 
-The following (older) issue in libgd's issue tracker can be found,
-with possible security impact for applications using the libgd
-library. If I see it correctly this is not an issue in the gd2togif
-utility but in the library. It was reported upstream as:
+I have requested and received CVEs from Mitre for those.
 
-https://github.com/libgd/libgd/issues/209
+Ciao, Marcus
 
-with the fix
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-https://github.com/libgd/libgd/commit/82b80dcb70a7ca8986125ff412bceddafc896842 (gd-2.2.0)
+The 4 CVE IDs are below.
 
-Could you assign a CVE for this issue?
+We would not ordinarily have CVE IDs for these types of crash issues.
+However, https://seclists.org/oss-sec/2018/q4/171 says "because dcraw
+intentionally doesn't provide a library, only an executable, code from
+it is bundled in at least some applications."
 
-Regards,
-Salvatore
+For example, an FPE (such as a divide-by-zero) in the dcraw executable
+isn't a security issue because it is only a way for the local user to
+attack himself. However, it is plausible that someone has bundled the
+dcraw code in an application that is supposed to continue running
+forever to accept a continuous series of raw images from a camera over
+Wi-Fi.
+
+In https://seclists.org/oss-sec/2018/q4/165, "kodac_radc_load_raw" has
+a typo in the fifth letter.
+
+
+> [Suggested description]
+> A buffer over-read in crop_masked_pixels in dcraw through 9.28 could be
+> used by attackers able to supply malicious files to crash an application that bundles the dcraw code or leak
+> private information.
+> 
+> ------------------------------------------
+> 
+> [Additional Information]
+> issue 1 listed
+> 
+> ------------------------------------------
+> 
+> [VulnerabilityType Other]
+> CWE-126
+> 
+> ------------------------------------------
+> 
+> [Vendor of Product]
+> Dave Coffin
+> 
+> ------------------------------------------
+> 
+> [Affected Product Code Base]
+> dcraw - 9.28
+> 
+> ------------------------------------------
+> 
+> [Affected Component]
+> dcraw
+> 
+> ------------------------------------------
+> 
+> [Attack Type]
+> Local
+> 
+> ------------------------------------------
+> 
+> [Impact Information Disclosure]
+> true
+> 
+> ------------------------------------------
+> 
+> [CVE Impact Other]
+> crash
+> 
+> ------------------------------------------
+> 
+> [Attack Vectors]
+> processing raw files
+> 
+> ------------------------------------------
+> 
+> [Reference]
+> https://seclists.org/oss-sec/2018/q4/165
+> https://seclists.org/oss-sec/2018/q4/171
+> 
+> ------------------------------------------
+> 
+> [Discoverer]
+> Hanno Boeck
+
+Use CVE-2018-19565.
+
+
+> [Suggested description]
+> A heap buffer over-read in parse_tiff_ifd in dcraw through 9.28 could be
+> used by attackers able to supply malicious files to crash an application that bundles the dcraw code or leak
+> private information.
+> 
+> ------------------------------------------
+> 
+> [Additional Information]
+> second issue in posting
+> 
+> ------------------------------------------
+> 
+> [Vulnerability Type]
+> Buffer Overflow
+> 
+> ------------------------------------------
+> 
+> [Vendor of Product]
+> Dave Coffin
+> 
+> ------------------------------------------
+> 
+> [Affected Product Code Base]
+> dcraw - 9.28
+> 
+> ------------------------------------------
+> 
+> [Affected Component]
+> dcraw
+> 
+> ------------------------------------------
+> 
+> [Attack Type]
+> Local
+> 
+> ------------------------------------------
+> 
+> [Impact Information Disclosure]
+> true
+> 
+> ------------------------------------------
+> 
+> [CVE Impact Other]
+> crash
+> 
+> ------------------------------------------
+> 
+> [Attack Vectors]
+> processing supplied raw files
+> 
+> ------------------------------------------
+> 
+> [Reference]
+> https://seclists.org/oss-sec/2018/q4/165
+> https://seclists.org/oss-sec/2018/q4/171
+> 
+> ------------------------------------------
+> 
+> [Discoverer]
+> Hanno Boeck
+
+Use CVE-2018-19566.
+
+
+> [Suggested description]
+> A floating point exception in parse_tiff_ifd in dcraw through 9.28 could
+> be used by attackers able to supply malicious files to crash an application that bundles the dcraw code.
+> 
+> ------------------------------------------
+> 
+> [Additional Information]
+> fourth issue in list
+> 
+> ------------------------------------------
+> 
+> [VulnerabilityType Other]
+> crash
+> 
+> ------------------------------------------
+> 
+> [Vendor of Product]
+> Dave Coffin
+> 
+> ------------------------------------------
+> 
+> [Affected Product Code Base]
+> dcraw - 9.28
+> 
+> ------------------------------------------
+> 
+> [Affected Component]
+> dcraw
+> 
+> ------------------------------------------
+> 
+> [Attack Type]
+> Local
+> 
+> ------------------------------------------
+> 
+> [Impact Denial of Service]
+> true
+> 
+> ------------------------------------------
+> 
+> [Attack Vectors]
+> attackers able to supply crafted files
+> 
+> ------------------------------------------
+> 
+> [Reference]
+> https://seclists.org/oss-sec/2018/q4/165
+> https://seclists.org/oss-sec/2018/q4/171
+> 
+> ------------------------------------------
+> 
+> [Discoverer]
+> Hanno Boeck
+
+Use CVE-2018-19567.
+
+
+> [Suggested description]
+> A floating point exception in kodak_radc_load_raw in dcraw through 9.28
+> could be used by attackers able to supply malicious files to crash
+> an application that bundles the dcraw code.
+> 
+> ------------------------------------------
+> 
+> [Additional Information]
+> last issue in post
+> 
+> ------------------------------------------
+> 
+> [VulnerabilityType Other]
+> crash
+> 
+> ------------------------------------------
+> 
+> [Vendor of Product]
+> Dave Coffin
+> 
+> ------------------------------------------
+> 
+> [Affected Product Code Base]
+> dcraw - 9.28
+> 
+> ------------------------------------------
+> 
+> [Affected Component]
+> dcraw
+> 
+> ------------------------------------------
+> 
+> [Attack Type]
+> Local
+> 
+> ------------------------------------------
+> 
+> [Impact Denial of Service]
+> true
+> 
+> ------------------------------------------
+> 
+> [Attack Vectors]
+> attackers able to supply crafted raw images
+> 
+> ------------------------------------------
+> 
+> [Reference]
+> https://seclists.org/oss-sec/2018/q4/165
+> https://seclists.org/oss-sec/2018/q4/171
+> 
+> ------------------------------------------
+> 
+> [Discoverer]
+> Hanno Boeck
+
+Use CVE-2018-19568.
+
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJb/E9MAAoJEA2h+fVryJLo3uIP/3Vb9oOJKgQfo2R2DgLcvMeN
+G87/1iAGgkvVSQk7vB5bUeockwHtcIRfy/yN6FwPKe893ec80o9R4dixDUp9mr+P
+R2hJFYAsnGGuSbz1h25HOMQDmkg6jk2WWBtXuB7nVoWo9sabzTthqq5ykjdN8lLm
+JFrvRQxTh2+FKSEZUP3UqaYngMktbOec+F8dEu7KlOeR+kBtrG2OoMU4RED/oAIW
+HX2rdTs1tlEC2Awqa0gM4BbGB1Zrp/OvuRescV8BPDo/qHrLZbRmYuNR2JP0Rz9X
+mxq26CZO29y5Vsghsg+Y/ytpBGwQUGYWo475Nt/YXbAOowammPCX/2zrEeoW+lSM
+6J1mkuRC4dXOf3zZBX1GQaUJHS3ixMNJ5mtcURVo+2vQRyCMrAdMvWabhruzndTQ
+4aCc+B3/UvxW+zzBrf0CSOt1An8XDrk/XCN/YlKsbJRJ7cSqKDtzlKtHmQHxxktQ
+hTFGr4KKP6pgPHhLhMS6U2JL2LzOAyliT33uRJyE35dALs+WNSu5GKtpPHrxwf0L
+4+lXhbi+6sjEBhVXQx7Lo7vStBQetEEVHJnQKfqSZZX6bJ65RstY3iaJ8aQDxi+C
+f2PZcnxV49OU2bTR/zdlpMCT+5xrhivtKCuweiw9R04aGjztA6EErwTH0141v5RJ
+9SfuauD6zHzlImz0/Uw5
+=AUEp
+-----END PGP SIGNATURE-----
+
