@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1699" "Wednesday" "1" "November" "2017" "07:49:27" "-0700" "Tim" "tim-security@sentinelchicken.org" "<20171101144927.srk7stiwoia4qt57@sentinelchicken.org>" "41" "Re: [oss-security] Fw: Security risk of vim swap files" "^Date:" nil nil "11" "2017110114:49:27" "[oss-security] Fw: Security risk of vim swap files" (number mark "        tim-security Nov  1   41/1699  " thread-indent "\"Re: [oss-security] Fw: Security risk of vim swap files\"\n") "<20171101023330.GK30551@takahe.colorado.edu>" ("<20171031132352.2df6d2ad@pc1>" "<20171031175407.jcniviupwyab6qcl@sentinelchicken.org>" "<20171101023330.GK30551@takahe.colorado.edu>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["882" "Tuesday" "27" "November" "2018" "22:04:31" "+0100" "Florian Weimer" "fweimer@redhat.com" "<87tvk29qqo.fsf@oldenburg.str.redhat.com>" "23" "[oss-security] CVE-2018-19591: glibc if_nametoindex may not close descriptor" nil nil nil "11" "2018112721:04:31" "[oss-security] CVE-2018-19591: glibc if_nametoindex may not close descriptor" (number mark "U       fweimer@redh Nov 27   23/882   " thread-indent "\"[oss-security] CVE-2018-19591: glibc if_nametoindex may not close descriptor\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 8087 invoked by uid 550); 1 Nov 2017 14:49:47 -0000
+Received: (qmail 15920 invoked by uid 550); 27 Nov 2018 21:04:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,60 +11,39 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 8063 invoked from network); 1 Nov 2017 14:49:46 -0000
-Message-ID: <20171101144927.srk7stiwoia4qt57@sentinelchicken.org>
-References: <20171031132352.2df6d2ad@pc1>
- <20171031175407.jcniviupwyab6qcl@sentinelchicken.org>
- <20171101023330.GK30551@takahe.colorado.edu>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20171101023330.GK30551@takahe.colorado.edu>
-User-Agent: NeoMutt/20170609 (1.8.3)
-Date: Wed, 1 Nov 2017 07:49:27 -0700
-From: Tim <tim-security@sentinelchicken.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Fw: Security risk of vim swap files
+Received: (qmail 15902 invoked from network); 27 Nov 2018 21:04:53 -0000
+From: Florian Weimer <fweimer@redhat.com>
 To: oss-security@lists.openwall.com
+Date: Tue, 27 Nov 2018 22:04:31 +0100
+Message-ID: <87tvk29qqo.fsf@oldenburg.str.redhat.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.31]); Tue, 27 Nov 2018 21:04:41 +0000 (UTC)
+Subject: [oss-security] CVE-2018-19591: glibc if_nametoindex may not close descriptor
 
-> > Also, it almost never makes sense to put things in /tmp, for several
-> > reasons pointed out by others.  Making ~/.vim/... the default location
-> > clearly is the best solution.
-> 
-> And all those reasons make no sense. /tmp has a sticky bit precisely so that
-> people could put stuff there, as opposed to /run.
+Guido Vranken reported that the glibc implementation of if_nametoindex
+would not close an internal descriptor when processing a long interface
+name.  This error condition can be triggered via the getaddrinfo
+function (and at least one HTTP client library).
 
-We've been spending decades fixing filesystem races that arise from
-cases where people use temporary files in world-writable directories.
-You have to get a half dozen things exactly correct in order to use
-/tmp.  Why take the risk?  Doesn't every normal (human) user account
-have a home directory that is already protected?
+  <https://sourceware.org/bugzilla/show_bug.cgi?id=23927>
 
+Fixed with this upstream commit:
 
-> Just to clarify:
-> 1. vim creates a swap file applying user's umask.
->    Tested with vim on ArchLinux and vi on Fedora, if your vim doesn't do that,
->    the corresponding package is broken.
+commit d527c860f5a3f0ed687bd03f0cb464612dc23408
+Author: Florian Weimer <fweimer@redhat.com>
+Date:   Tue Nov 27 16:12:43 2018 +0100
 
-Glad to hear at least some implementations are safe.  But that is just
-one of several potential issues.
+    CVE-2018-19591: if_nametoindex: Fix descriptor for overlong name [BZ #23927]
 
+The vulnerability was introduced in commit
+2180fee114b778515b3f560e5ff1e795282e60b0 ("Check length of ifname before
+copying it into to ifreq structure."), fixing bug 22442 for glibc 2.27.
+Since this addressed a compiler warning with GCC 8, this commit was
+backported to quite a few release branches.
 
-> 2. It is totally OK to edit files in /tmp or /dev/shm or /var/tmp.
->    The described "attack" when someone plants a /tmp/file.swp before another
->    user edits /tmp/file is not going to work because vim will complain that the
->    swap file already exists.
-
-I hope they got the TOCTOU correct...
-
-And as Alexander pointed out, /tmp is a bad place to put recovery
-files because everything is often wiped from /tmp at reboot.  
-
-
-What's wrong with ~/.vim/ ??  You've argued that /tmp is OK, but
-haven't given a reason why ~/.vim/ is bad.  I suppose you could argue
-that ~/.vim/{full-system-path-of-file} could get too long for the
-underlying filesystem.  Fine, then store these files as
-~/.vim/{hmac-sha-256-of-full-system-path} and call it a day.
-
-tim
+Thanks,
+Florian
