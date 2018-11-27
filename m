@@ -1,28 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/13/6
-Message-ID: <2FE8FA7E-BFB0-4E4B-BCAB-FAC6FD8D9975@vmware.com>
-Date: Tue, 13 Feb 2018 20:39:25 +0000
-From: VMware Security Response Center <security@...are.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: VMware Security Response Center <security@...are.com>
-Subject: Authentication Bypass Vulnerability in VMware Xenon (CVE-2017-4952)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/27/3
+Message-ID: <87tvk29qqo.fsf@oldenburg.str.redhat.com>
+Date: Tue, 27 Nov 2018 22:04:31 +0100
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2018-19591: glibc if_nametoindex may not close descriptor
 Content-Type: text/plain; charset=utf-8
 
-VMware Xenon contains an authentication bypass vulnerability (CVE-2017-4952) due to insufficient access controls for utility endpoints. Successful exploitation of this issue may result in information disclosure.
-Fixes/References
---------------
-master: https://github.com/vmware/xenon/commit/c23964eb57e846126daef98ef7ed15400313e977
-1.5.4-CR7_1: https://github.com/vmware/xenon/commit/5682ef8d40569afd00fb9a5933e7706bb5b66713
-1.5.7_7: https://github.com/vmware/xenon/commit/06b9947cf603ba40fd8b03bfeb2e84528a7ab592
-1.5.4-CR6_2: https://github.com/vmware/xenon/commit/30ae41bccf418d88b52b35a81efb3c1304b798f8
-1.3.7-CR1_2: https://github.com/vmware/xenon/commit/7a747d82b80cd38d2c11a0d9cdedb71c722a2c75
-1.1.0-CR0-3: https://github.com/vmware/xenon/commit/756d893573414eec8635c2aba2345c4dcf10b21c
-1.1.0-CR3_1: https://github.com/vmware/xenon/commit/055ae13603f0cc3cd7cf59f20ce314bf8db583e1
-1.4.2-CR4_1: https://github.com/vmware/xenon/commit/ec30db9afada9cb52852082ce4d7d0095524f3b3
-1.5.4_8: https://github.com/vmware/xenon/commit/ec30db9afada9cb52852082ce4d7d0095524f3b3
-We would like to thank George Chrysanthakopoulos of for reporting this issue.
+Guido Vranken reported that the glibc implementation of if_nametoindex
+would not close an internal descriptor when processing a long interface
+name.  This error condition can be triggered via the getaddrinfo
+function (and at least one HTTP client library).
 
---------------
-Edward Hawkins
-Senior Program Manager, Security Response
-security@...are.com
+  <https://sourceware.org/bugzilla/show_bug.cgi?id=23927>
+
+Fixed with this upstream commit:
+
+commit d527c860f5a3f0ed687bd03f0cb464612dc23408
+Author: Florian Weimer <fweimer@...hat.com>
+Date:   Tue Nov 27 16:12:43 2018 +0100
+
+    CVE-2018-19591: if_nametoindex: Fix descriptor for overlong name [BZ #23927]
+
+The vulnerability was introduced in commit
+2180fee114b778515b3f560e5ff1e795282e60b0 ("Check length of ifname before
+copying it into to ifreq structure."), fixing bug 22442 for glibc 2.27.
+Since this addressed a compiler warning with GCC 8, this commit was
+backported to quite a few release branches.
+
+Thanks,
+Florian
