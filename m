@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["569" "Wednesday" "18" "March" "2020" "12:01:41" "-0400" "Tim Allison" "tallison@apache.org" "<CAC1dCwX+=L_m_da_kANnvcO1HyvsPdy5E4XhiXc2t0WqWwVSbw@mail.gmail.com>" "26" "[oss-security] [CVE-2020-1950] Excessive memory usage (DoS) vulnerability in Apache Tika's PSDParser" nil nil nil "3" "2020031816:01:41" "[oss-security] [CVE-2020-1950] Excessive memory usage (DoS) vulnerability in Apache Tika's PSDParser" (number mark "U       tallison@apa Mar 18   26/569   " thread-indent "\"[oss-security] [CVE-2020-1950] Excessive memory usage (DoS) vulnerability in Apache Tika's PSDParser\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2020-1950] Excessive memory usage (DoS) vulnerability in Apache Tika's PSDParser" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6413" "Thursday" "29" "November" "2018" "10:18:18" "+0100" "Marcus Meissner" "meissner@suse.de" "<20181129091818.unk7zap2xiznptfc@suse.de>" "137" "Re: [oss-security] memory safety bugs in bc" "^Date:" nil nil "11" "2018112909:18:18" "[oss-security] memory safety bugs in bc" (number mark "        meissner@sus Nov 29  137/6413  " thread-indent "\"Re: [oss-security] memory safety bugs in bc\"\n") "<20181128133145.2f53802b@computer>" ("<20181128133145.2f53802b@computer>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9614 invoked by uid 550); 18 Mar 2020 16:02:06 -0000
+Received: (qmail 28419 invoked by uid 550); 29 Nov 2018 09:18:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,47 +11,159 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9588 invoked from network); 18 Mar 2020 16:02:05 -0000
-X-Gm-Message-State: ANhLgQ0wP5HKSi557Nv7pIyqFN/uzRvBmaa+WoiTcAfq3Mu64LW9UwTs
-	OHNJorIMIuUNOsViOnoW0rZoy6aaRRSDQJVak5E=
-X-Google-Smtp-Source: ADFU+vupKXAOwprjOV6EMAXi2iAJeQmw4e2ZmPzemPZE+nI3JXRBA6KM1dWvcOWqIgEB+nBqzfJ2v0kYhkSYGSimSBg=
-X-Received: by 2002:a17:90b:2390:: with SMTP id mr16mr5306953pjb.149.1584547312262;
- Wed, 18 Mar 2020 09:01:52 -0700 (PDT)
+Received: (qmail 28400 invoked from network); 29 Nov 2018 09:18:31 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Message-ID: <20181129091818.unk7zap2xiznptfc@suse.de>
+References: <20181128133145.2f53802b@computer>
 MIME-Version: 1.0
-From: Tim Allison <tallison@apache.org>
-Date: Wed, 18 Mar 2020 12:01:41 -0400
-X-Gmail-Original-Message-ID: <CAC1dCwX+=L_m_da_kANnvcO1HyvsPdy5E4XhiXc2t0WqWwVSbw@mail.gmail.com>
-Message-ID: <CAC1dCwX+=L_m_da_kANnvcO1HyvsPdy5E4XhiXc2t0WqWwVSbw@mail.gmail.com>
-To: user@tika.apache.org, "<dev@tika.apache.org>" <dev@tika.apache.org>, 
-	Apache Security Team <security@apache.org>, announce@apache.org, oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000ad654c05a1232b49"
-Subject: [oss-security] [CVE-2020-1950] Excessive memory usage (DoS) vulnerability in Apache
- Tika's PSDParser
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20181128133145.2f53802b@computer>
+Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
+ =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
+ =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
+User-Agent: NeoMutt/20170421 (1.8.2)
+Date: Thu, 29 Nov 2018 10:18:18 +0100
+From: Marcus Meissner <meissner@suse.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] memory safety bugs in bc
+To: oss-security@lists.openwall.com
 
---000000000000ad654c05a1232b49
-Content-Type: text/plain; charset="UTF-8"
+Hi Hanno,
 
-Title: [CVE-2020-1950] Excessive memory usage (DoS) vulnerability in Apache
-Tika's PSDParser
+(FWIW)
 
-Severity: Medium
+Given Mitres guidance on "dcraw", as this is a standalone tool
+and only denial of service attacks I do not see a need for CVEs.
 
-Vendor: The Apache Software Foundation
+Ciao, Marcus
 
-Versions Affected: Apache Tika  1.0 to 1.23
+On Wed, Nov 28, 2018 at 01:31:45PM +0100, Hanno Böck wrote:
+> Hi,
+> 
+> bc is a command line calculator that is commonly available on Linux
+> systems.
+> 
+> I reported various memory safety bugs and crashes a long time ago, some
+> got also fixed but some more got ignored.
+> 
+> (I'm aware it's debatable whether a tool like bc should be considered
+> attack surface, as there are probably not many situations where it's fed
+> attacker controlled input.)
+> 
+> 
+> -----------------------------
+> 
+> echo 'define p(a[],u){}p(a[],0,0)'|./bc
+> 
+> Causes a heap out of bounds read, also segfaults without asan.
+> 
+> ASAN stack trace:
+> 
+> ==2068==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x6020000001e8 at pc 0x5593e5e43b32 bp 0x7fffa5908ed0 sp 0x7fffa5908ec0
+> READ of size 8 at 0x6020000001e8 thread T0
+>     #0 0x5593e5e43b31 in process_params /mnt/ram/bc-1.07.1/bc/storage.c:1061
+>     #1 0x5593e5e39718 in execute /mnt/ram/bc-1.07.1/bc/execute.c:157
+>     #2 0x5593e5e44d26 in run_code /mnt/ram/bc-1.07.1/bc/util.c:295
+>     #3 0x5593e5e2df52 in yyparse ../../bc/bc.y:134
+>     #4 0x5593e5e2d0ea in main /mnt/ram/bc-1.07.1/bc/main.c:260
+>     #5 0x7f2b653a24ca in __libc_start_main (/lib64/libc.so.6+0x234ca)
+>     #6 0x5593e5e2c419 in _start (/mnt/ram/bc-1.07.1/bc/bc+0x9419)
+> 
+> 0x6020000001e8 is located 8 bytes to the left of 16-byte region [0x6020000001f0,0x602000000200)
+> allocated by thread T0 here:
+>     #0 0x7f2b65636b10 in malloc (/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/libasan.so.5+0xedb10)
+>     #1 0x5593e5e46ac2 in bc_malloc /mnt/ram/bc-1.07.1/bc/util.c:652
+>     #2 0x5593e5e43c01 in nextarg /mnt/ram/bc-1.07.1/bc/util.c:58
+>     #3 0x5593e5e3e83a in load_code /mnt/ram/bc-1.07.1/bc/load.c:261
+>     #4 0x5593e5e44bf6 in generate /mnt/ram/bc-1.07.1/bc/util.c:277
+>     #5 0x5593e5e2fed8 in yyparse ../../bc/bc.y:352
+>     #6 0x5593e5e2d0ea in main /mnt/ram/bc-1.07.1/bc/main.c:260
+>     #7 0x7f2b653a24ca in __libc_start_main (/lib64/libc.so.6+0x234ca)
+> 
+> -----------------------------
+> 
+> echo -e 'define a(s,t){if(0)0}for(s=0;;){j(a(),0)}\ns'|./bc
+> 
+> Causes a null pointer deref, also crashes without asan.
+> 
+> ASAN trace:
+> ==2091==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x56201e2aafc8 bp 0x7fffb04d6d60 sp 0x7fffb04d6d40 T0)
+> ==2091==The signal is caused by a READ memory access.
+> ==2091==Hint: address points to the zero page.
+>     #0 0x56201e2aafc7 in load_var /mnt/ram/bc-1.07.1/bc/storage.c:653
+>     #1 0x56201e2a37c7 in execute /mnt/ram/bc-1.07.1/bc/execute.c:324
+>     #2 0x56201e2add26 in run_code /mnt/ram/bc-1.07.1/bc/util.c:295
+>     #3 0x56201e296f52 in yyparse ../../bc/bc.y:134
+>     #4 0x56201e2960ea in main /mnt/ram/bc-1.07.1/bc/main.c:260
+>     #5 0x7fbdbe7124ca in __libc_start_main (/lib64/libc.so.6+0x234ca)
+>     #6 0x56201e295419 in _start (/mnt/ram/bc-1.07.1/bc/bc+0x9419)
+> 
+> -----------------------------
+> 
+> echo -e 'define t(x,y,d,s){f()}\ndefine f(){t()}\nfor(s=0;;){f()}\nfor(s=0;;){}' | ./bc
+> 
+> null pointer read, but doesn't crash without asan.
+> 
+> ==6340==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x55fdb8a43d49 bp 0x7fffae7307e0 sp 0x7fffae7307d0 T0)
+> ==6340==The signal is caused by a READ memory access.
+> ==6340==Hint: address points to the zero page.
+>     #0 0x55fdb8a43d48 in bc_free_num /mnt/ram/bc-1.07.1/lib/number.c:92
+>     #1 0x55fdb8a3d32a in store_var /mnt/ram/bc-1.07.1/bc/storage.c:461
+>     #2 0x55fdb8a368cf in execute /mnt/ram/bc-1.07.1/bc/execute.c:339
+>     #3 0x55fdb8a40d26 in run_code /mnt/ram/bc-1.07.1/bc/util.c:295
+>     #4 0x55fdb8a29f52 in yyparse ../../bc/bc.y:134
+>     #5 0x55fdb8a290ea in main /mnt/ram/bc-1.07.1/bc/main.c:260
+>     #6 0x7f763973b4ca in __libc_start_main (/lib64/libc.so.6+0x234ca)
+>     #7 0x55fdb8a28419 in _start (/mnt/ram/bc-1.07.1/bc/bc+0x9419)
+> 
+> -----------------------------
+> 
+> echo -e 'define t(x,y,d,s,t){if(0){}\nfor(;0<y;)f(0)}define f(x){(t())}for(s=0;;){t(0,1,0,0,0)}\nt()'|./bc
+> 
+> null pointer read, but doesn't crash without asan.
+> 
+> ==6365==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x55d4e78cfd9c bp 0x7ffc83b7d590 sp 0x7ffc83b7d560 T0)
+> ==6365==The signal is caused by a READ memory access.
+> ==6365==Hint: address points to the zero page.
+>     #0 0x55d4e78cfd9b in pop_vars /mnt/ram/bc-1.07.1/bc/storage.c:921
+>     #1 0x55d4e78c91e8 in execute /mnt/ram/bc-1.07.1/bc/execute.c:538
+>     #2 0x55d4e78d1d26 in run_code /mnt/ram/bc-1.07.1/bc/util.c:295
+>     #3 0x55d4e78baf52 in yyparse ../../bc/bc.y:134
+>     #4 0x55d4e78ba0ea in main /mnt/ram/bc-1.07.1/bc/main.c:260
+>     #5 0x7f9c3f6bb4ca in __libc_start_main (/lib64/libc.so.6+0x234ca)
+>     #6 0x55d4e78b9419 in _start (/mnt/ram/bc-1.07.1/bc/bc+0x9419)
+> 
+> -----------------------------
+> 
+> echo 'define m(x){for(;;)0}m(b[])'|./bc
+> 
+> null pointer read, but doesn't crash without asan.
+> 
+> ==6373==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x7f7fd8cdaec2 bp 0x7ffd4d86c230 sp 0x7ffd4d86b958 T0)
+> ==6373==The signal is caused by a READ memory access.
+> ==6373==Hint: address points to the zero page.
+>     #0 0x7f7fd8cdaec1  (/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/libasan.so.5+0x108ec1)
+>     #1 0x7f7fd8c1f76c  (/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/libasan.so.5+0x4d76c)
+>     #2 0x7f7fd8c200a4 in __interceptor_vfprintf (/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/libasan.so.5+0x4e0a4)
+>     #3 0x561fe31fc5e6 in rt_error /mnt/ram/bc-1.07.1/bc/util.c:788
+>     #4 0x561fe31f8aed in process_params /mnt/ram/bc-1.07.1/bc/storage.c:1050
+>     #5 0x561fe31ee718 in execute /mnt/ram/bc-1.07.1/bc/execute.c:157
+>     #6 0x561fe31f9d26 in run_code /mnt/ram/bc-1.07.1/bc/util.c:295
+>     #7 0x561fe31e2f52 in yyparse ../../bc/bc.y:134
+>     #8 0x561fe31e20ea in main /mnt/ram/bc-1.07.1/bc/main.c:260
+>     #9 0x7f7fd8a2b4ca in __libc_start_main (/lib64/libc.so.6+0x234ca)
+>     #10 0x561fe31e1419 in _start (/mnt/ram/bc-1.07.1/bc/bc+0x9419)
+> 
+> 
+> -- 
+> Hanno Böck
+> https://hboeck.de/
+> 
+> mail/jabber: hanno@hboeck.de
+> GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+> 
 
-Description:
-A carefully crafted or corrupt PSD file can cause excessive memory usage in
-Apache
-Tika's PSDParser in versions 1.0-1.23.
-
-
-Mitigation:
-Apache Tika users should upgrade to 1.24 or later.
-
-
-Credit:
-This issue was discovered by Pierre Ernst at Elastic.
-
---000000000000ad654c05a1232b49--
+-- 
+Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@suse.de>
