@@ -1,37 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/09/1
-Message-ID: <CALJHwhRC-+DmnUY-xvOx0uyynp7T2jfarnAcnJbxNqAFesefjw@mail.gmail.com>
-Date: Wed, 9 May 2018 15:20:03 +1000
-From: Wade Mealing <wmealing@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2018-1118 linux kernel: vhost: Information disclosure in vhost/vhost.c:vhost_new_msg()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/29/5
+Message-ID: <87r2f3wlux.fsf@fifthhorseman.net>
+Date: Thu, 29 Nov 2018 17:38:14 -0500
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: Hanno Böck <hanno@...eck.de>, oss-security@...ts.openwall.com
+Subject: Re: memory safety bugs in bc
 Content-Type: text/plain; charset=utf-8
 
-Gday,
+On Thu 2018-11-29 23:12:55 +0100, Hanno Böck wrote:
+> The idea here is that "mild" memory safety violations (invalid reads,
+> nullptr) don't get security treatment if they're in a standalone tool,
+> yet they do if they're in a library, which may have larger implications
+> in more complex apps.
 
-A flaw was found in the vhost_new_msg() function which does not
-properly initialize memory in messages passed between virtual guests
-and the host operating system. This can allow local privileged users
-to read previously set kernel memory contents when reading from the
-/dev/vhost-net device file.  This would be classified as an
-information leak that could be used to defeat other protection
-mechanisms.
+Sure, i understand how memory errors in libraries offer a much larger
+"attack surface" than errors in code called across a process boundary.
 
-As far as I can tell this information doesn't flow to guests, only to
-the parent system which is hosting the virtual machines.
+However, i am used to looking at a lot of code that calls across process
+boundaries (hello, GnuPG!) and i can tell you that there's a lot of
+software out there that doesn't cope well with (or, maybe worse, doesn't
+even notice) surprising terminations, surprising output on certain file
+descriptors, or surprising return codes.  sounds like two of your 5
+examples have at least surprising terminations and return codes.
 
+These oversights can lead to other failures or problems that we don't
+expect, so i'm reluctant to encourage people to ignore them, though i
+grant that these failures with full memory access is even worse :)
 
-
-Upstream post:
-
-https://lkml.org/lkml/2018/4/27/833
-
-https://bugzilla.redhat.com/show_bug.cgi?id=1573699
-
-Thanks
--- 
-Wade Mealing
-
-Product Security - Kernel, RHCE
-
-Red Hat
+         --dkg
