@@ -1,37 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/04/2
-Message-ID: <CAFqjAi0Zjfy1h1VZa3s-OKm2=oZPkD2jULV6Rpm_k=uBXCnwMg@mail.gmail.com>
-Date: Thu, 4 Jan 2018 14:19:59 +0300
-From: Taher Alkhateeb <slidingfilaments@...il.com>
-To: OFBIZ Development Mailing List <dev@...iz.apache.org>, user@...iz.apache.org, announce@...che.org,  oss-security@...ts.openwall.com, Niels Heinen <heinenn@...gle.com>
-Subject: "[SECURITY] CVE-2017-15714 Apache OFBiz BIRT code vulnerability"
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/29/1
+Message-ID: <nycvar.YSQ.7.76.1811291443100.21164@xnncv>
+Date: Thu, 29 Nov 2018 14:45:05 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Arash TC <tohidi.arash@...il.com>
+Subject: CVE-2018-19665 Qemu: bt: integer overflow in Bluetooth routines allows memory corruption
 Content-Type: text/plain; charset=utf-8
 
-Severity:
-Important
+   Hello,
 
-Vendor:
-The Apache Software Foundation
+An integer overflow resulting in memory corruption issue was found in various 
+Bluetooth functions. It could occur in routines wherein 'len' parameter is a 
+'signed int' which subsequently converts to an unsigned integer resulting in 
+memcpy() copying large amounts of memory.
 
-Versions Affected:
-OFBiz 16.11.01 to 16.11.03
+A user inside guest could use this flaw to crash the Qemu process resulting in 
+DoS.
 
-Description:
-The BIRT plugin in Apache OFBiz does not escape user input property passed.
-This allows for code injection by passing that code through the URL. For
-example by appending this code "__format=%27;alert(%27xss%27)" to the URL
-an alert window would execute.
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2018-11/msg03570.html
 
-Mitigation:
-Upgrade to 16.11.04
+This issue was reported by Arash TC
 
-Credit:
-Niels Heinen
-
-References:
-http://ofbiz.apache.org/download.html#vulnerabilities
-
-This is a security announcement on behalf of the Apache OFBiz security
-team. All affected users are advised to upgrade OFBiz as per the below
-mitigation strategy. Apology for the repetition to some mailing lists
-because I'm resending to _all_ relevant emails.
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
