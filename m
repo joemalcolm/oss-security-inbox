@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["668" "Thursday" "14" "September" "2017" "20:14:03" "+0000" "Armis Security" "security@armis.com" "<CA++9HO8FVAQw-oPFzqQUdOX6MnyP0s681grArPSPusGHAmChQA@mail.gmail.com>" "26" "Re: [oss-security] Linux BlueBorne vulnerabilities" "^Date:" nil nil "9" "2017091420:14:03" "[oss-security] Linux BlueBorne vulnerabilities" (number mark "        security@arm Sep 14   26/668   " thread-indent "\"Re: [oss-security] Linux BlueBorne vulnerabilities\"\n") "<20170914121219.GW11536@dhcp-25-225.brq.redhat.com>" ("<CA++9HO8J91=AAqH6cUkYOi=AWpw=FXD7sajp2mQkdD66AO3WBw@mail.gmail.com>" "<20170914121219.GW11536@dhcp-25-225.brq.redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["864" "Thursday" "29" "November" "2018" "23:12:55" "+0100" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20181129231255.25fe8a92@computer>" "24" "Re: [oss-security] memory safety bugs in bc" "^Date:" nil nil "11" "2018112922:12:55" "[oss-security] memory safety bugs in bc" (number mark "        hanno@hboeck Nov 29   24/864   " thread-indent "\"Re: [oss-security] memory safety bugs in bc\"\n") "<87ftvjygyx.fsf@fifthhorseman.net>" ("<20181128133145.2f53802b@computer>" "<20181129091818.unk7zap2xiznptfc@suse.de>" "<87ftvjygyx.fsf@fifthhorseman.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 15392 invoked by uid 550); 14 Sep 2017 21:18:44 -0000
+Received: (qmail 1458 invoked by uid 550); 29 Nov 2018 22:13:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,65 +11,43 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24199 invoked from network); 14 Sep 2017 20:14:25 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=armis.com; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=FEAUNPoiHIq+4UKbddbLTJqBINwEeAB9hmVRjD12nZ4=;
-        b=YXpPS7fCyiwVRyEIZ+2C7jRk+OTbEMsHpM+xo/zbQeGcynIcZnidQt0TG7NuwUL9iq
-         pEdSGjqfljvObi/lTRoGFJfCTs1dB8YDFnvDNUJkRrbmn9E/pnzVbTDQm0/+vtlFXrlG
-         llsF1meW43LvuE/4E9m1NpVgQ+tEDBqBdAFq4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=FEAUNPoiHIq+4UKbddbLTJqBINwEeAB9hmVRjD12nZ4=;
-        b=CUb0UAMt2LjLdHLasTI/UAw61giXa74acquNTZS3RJo8wwcUa82vWaEzHOMS5YSgDR
-         MC9RyrBHl6iggvq5IzDJ17DMmFUDa/Tcgxx98K8WCdcD5MHSic6ulNEm/vzxxBX/52Ra
-         ZtibRaLa2zWsrU8zsOhmMlAa9Bld+MmH5FwjG8obKXnkBXceNGvcSZsWCHA+Y6rTu6AR
-         OLfJctQfPlTR7yV31aomGtxB731Q7ytpbnnCyixW6p3LQlXk7eVWTTLMD1JhZ8KaN0Q1
-         CKM0btaCzwAYYBRoDcVa7+1eYV75siCkczqYEi9jkwRqh2Q/4JadaaLicwf2rFItr8HG
-         TzGg==
-X-Gm-Message-State: AHPjjUjryYCeUI4NvoRot6o3vkzt7SHpZkiw41rEOsTN1/Zkgd1Tljo2
-	AEa48uV1Brx0HBNkjOX7nRvT6kofmBdtZZwpYZ4eew==
-X-Google-Smtp-Source: ADKCNb6Cn9vDzdRnyWsjJRzt9nEsVt1EbZQ8ucFiocUVvt54VbJUajjNX0Myzfbgyyycv3PwVbrZnMWyTDTnKGYmr0k=
-X-Received: by 10.80.204.10 with SMTP id m10mr11524327edi.73.1505420054195;
- Thu, 14 Sep 2017 13:14:14 -0700 (PDT)
+Received: (qmail 1437 invoked from network); 29 Nov 2018 22:13:04 -0000
+Message-ID: <20181129231255.25fe8a92@computer>
+In-Reply-To: <87ftvjygyx.fsf@fifthhorseman.net>
+References: <20181128133145.2f53802b@computer>
+	<20181129091818.unk7zap2xiznptfc@suse.de>
+	<87ftvjygyx.fsf@fifthhorseman.net>
+X-Mailer: Claws Mail 3.17.1 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-References: <CA++9HO8J91=AAqH6cUkYOi=AWpw=FXD7sajp2mQkdD66AO3WBw@mail.gmail.com>
- <20170914121219.GW11536@dhcp-25-225.brq.redhat.com>
-In-Reply-To: <20170914121219.GW11536@dhcp-25-225.brq.redhat.com>
-Message-ID: <CA++9HO8FVAQw-oPFzqQUdOX6MnyP0s681grArPSPusGHAmChQA@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="f40304392f0491828705592beb27"
-Date: Thu, 14 Sep 2017 20:14:03 +0000
-From: Armis Security <security@armis.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 29 Nov 2018 23:12:55 +0100
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Linux BlueBorne vulnerabilities
-To: Petr Matousek <pmatouse@redhat.com>, oss-security@lists.openwall.com
+Subject: Re: [oss-security] memory safety bugs in bc
+To: oss-security@lists.openwall.com
 
---f40304392f0491828705592beb27
-Content-Type: text/plain; charset="UTF-8"
+On Thu, 29 Nov 2018 11:40:54 -0500
+Daniel Kahn Gillmor <dkg@fifthhorseman.net> wrote:
 
-Hi Petr.
+> I haven't evaluated how many of those systems might pass untrusted
+> input to bc (maybe none!), but this is hardly "standalone".
 
-On August 15th we have contacted one of the senior maintiners of BlueZ and
-attempted to establish a longer embargo period with him. Unfortunatelly his
-suggestion was to post our findings to linux-bluetooth@vger.kernel.org,
-which is a public mailing list.
+I think that's not what Marcus meant.
 
-So we decided to disclose our findings to the secure mailing list that
-unfortunatelly only have a maximum of 7 days embargo periods.
+These packages on debian likely call bc via the commandline.
 
-I am happy to hear the red hat security team allows for longer embargo
-periods, and we will contact you directly in the future.
+The idea here is that "mild" memory safety violations (invalid reads,
+nullptr) don't get security treatment if they're in a standalone tool,
+yet they do if they're in a library, which may have larger implications
+in more complex apps.
+I can somewhat understand that. (And decided for myself not to care
+too much about CVEs anyway. Relevant for me is primarily that I shared
+the info, so others can decide how they act on it.)
 
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
 
-Thank you,
-
-Armis Labs.
-
-
->
->
-
---f40304392f0491828705592beb27--
+mail/jabber: hanno@hboeck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
