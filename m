@@ -1,119 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/28/4
-Message-ID: <20180828092517.eteuy4vzcpdpr62p@suse.de>
-Date: Tue, 28 Aug 2018 11:25:17 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/02/2
+Message-ID: <CACmwppyNt6+YffPyGZer-4ztW9RxxYKZ-y8RRiZLfvP04PGaXQ@mail.gmail.com>
+Date: Sun, 2 Dec 2018 15:50:22 +0800
+From: Wei Wu <ww9210@...il.com>
+To: Dhiraj Mishra <mishra.dhiraj95@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: fwd: [vs-plain] Kernel heap overflow in bpf leading to LPE (exploit provided)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+hi,
 
-I had 4 CVEs assigned yesterday afternoon already working from CERTs list,
-see inline comments below. Please adjust if something is incorrect in them.
+there is none because it did not affect any release version.
 
-CERT has mailed overnight that they will take care of the CVE assignment, so
-I am defering the rest to them.
+wei
 
-Ciao, Marcus
+On Sun, Dec 2, 2018 at 15:01 Dhiraj Mishra <mishra.dhiraj95@...il.com>
+wrote:
 
-On Mon, Aug 27, 2018 at 04:02:46PM -0700, Tavis Ormandy wrote:
-> Here is an update, Artifex made a press release
-> <https://www.darkreading.com/prnewswire2.asp?rkey=20180824UN89145&filter=3930>
-> listing
-> some necessary commits, but the list was incomplete.
-> 
-> Here is a list of relevant commits I'm aware of so far, some issues are
-> still open with working exploits available. It's my understanding that no
-> new release is planned until late September, and vendors need to either
-> ship a git snapshot when all issues are resolved, or apply patches. I have
-> testcases for each problem, but I think the bugs will be visible eventually
-> so I'm not posting them here.
-> 
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=ea735ba37dc0fd5f5622d031830b9a559dec1cc9
-> # 699671
-> handling /undefined results in SEGV
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=0edd3d6c63
-> # 699659 missing type check in ztype
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=78911a01b6 #
-> 699654 A /invalidaccess checks stop working after a failed restore
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=5516c614dc33 #
-> 699654 B /invalidaccess checks stop working after a failed restore
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=79cccf641486 #
-> 699654 C /invalidaccess checks stop working after a failed restore
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=b326a716 # 699655
-> - missing type checking in setcolor
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=c3476dde # 699656
+> Hey,
+>
+> Just wanted to know is there any CVE assigned to this issue?
+>
+>
+>
+> Thanks
+>
+> On Sat, Nov 24, 2018 at 2:39 PM Yves-Alexis Perez <corsac@...ian.org>
+> wrote:
+>
+>> On Fri, 2018-11-23 at 21:45 +0100, Yves-Alexis Perez wrote:
+>> > On Fri, 2018-11-23 at 19:09 +0100, Greg KH wrote:
+>> > > As was discussed further on one of the threads on this topic, it looks
+>> > > like this is a 4.20-rc issue only, and that 4.19 does not have this
+>> > > issue.  So it might not be relevant to any distro at all, but I
+>> suggest
+>> > > that people test themselves to be sure.
+>> >
+>> > Hi Greg, thanks for the precision.
+>>
+>> And considering no released kernel is vulnerable, here is the proof of
+>> concept
+>> code provided initially.
+>>
+>> Regards,
+>> --
+>> Yves-Alexis
+>>
+>
+>
+> --
+> Regards
+>
+> *Dhiraj Mishra.*GPG ID :  51720F56   |  Finger Print : 1F6A FC7B 05AA
+> CF29 8C1C  ED65 3233 4D18 5172 0F56
+>
 
-
-> - LockDistillerParams boolean missing type checks
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=a054156d42
-	CVE-2018-15910
-
-
-> # 699658 - Bypassing PermitFileReading by handling undefinedfilename errors
-
-
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=0b6cd1918e1ec4ffd087400a754a845180a4522b
-> # 699660 - shading_param incomplete type checking
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=e01e77a36cbb2e0277bc3a63852244bec41be0f6
-> # 699660 - shading_param incomplete type checking
-	CVE-2018-15909
-
-
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=c432131c3f
-> # 699661 - pdf14 garbage collection memory corruption
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=971472c83a345a16dac9f90f91258bb22dd77f22
-> # 699663 - .setdistillerkeys memory corruption
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=241d911127
-> # 699664 - corrupt device object after error in job
-
-
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=0d3901189f
-> # 699657 - .tempfile SAFER restrictions seem to be broken
-	CVE-2018-15908
-
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=8e9ce5016db968b40e4ec255a3005f2786cce45f
-
-
-> # 699665 - memory corruption in aesdecode
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=b575e1ec42
-
-	CVE-2018-15911
-
-> # 699668 - .definemodifiedfont memory corruption if /typecheck is handled
-> 
-> Tavis
-> 
-> On Thu, Aug 23, 2018 at 8:05 AM Bob Friesenhahn <
-> bfriesen@...ple.dallas.tx.us> wrote:
-> 
-> > On Thu, 23 Aug 2018, Leonardo Taccari wrote:
-> > >
-> > > (Regarding the `file.ps2' and `file.ps3' examples without `PS2:' or
-> > > `PS3:' prefixes according `convert -debug Policy -log "%e"' it seems
-> > > that they ends up as:
-> > >
-> > > Domain: Coder; rights=Read; pattern="PS" ...
-> > >
-> > > ...so should be blocked by the workaround described in
-> > > VU#332928. But please correct me if I'm wrong.)
-> >
-> > This is likely due to header magic detection (e.g. "%!PS-Adobe").  It
-> > is possible that a different path will be taken if the common
-> > Postscript header is not detected.  The file extension may then be
-> > used as a hint.  Also, there are a wide varieties of ImageMagick
-> > versions in use, with a wide variety of behaviors.
-> >
-> > The version of ImageMagick provided by the Ubuntu Linux I am using at
-> > this moment dates from 2012!
-> >
-> > Bob
-> > --
-> > Bob Friesenhahn
-> > bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-> > GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
-> >
-
--- 
-Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@...e.de>
