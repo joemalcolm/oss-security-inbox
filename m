@@ -1,33 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/19/4
-Message-ID: <CA+-XxSE1d+8b7cbfs7BknJQ9yy7w4sw=0EVwf=gpz43JAVWyhQ@mail.gmail.com>
-Date: Fri, 19 Jan 2018 05:22:58 -0800
-From: i@...udlinux.com
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/02/1
+Message-ID: <CAG8b5tQFCzHRn5WY_DHN9prhKSqG2qVDQxbssTyfoBm3rZmH8A@mail.gmail.com>
+Date: Sun, 2 Dec 2018 12:30:51 +0530
+From: Dhiraj Mishra <mishra.dhiraj95@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: How to deal with reporters who don't want their bugs fixed?
+Cc: ww9210@...il.com
+Subject: Re: fwd: [vs-plain] Kernel heap overflow in bpf leading to LPE (exploit provided)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hey,
 
-We have seen "semi-public" with Meltdown -- I think it was dreadful. I
-would prefer private to "semi-public" any day.
------BEGIN PGP SIGNATURE-----
-Version: FlowCrypt 5.1.8 Gmail Encryption flowcrypt.com
-Comment: Seamlessly send, receive and search encrypted email
+Just wanted to know is there any CVE assigned to this issue?
 
-wsFcBAEBCAAQBQJaYfEwCRDNe7NtZrd+DQAA/i4P/jjhkbmnFTDXU+ksSwYS
-x0pyAPKj0Qzbn/fS2QVMcmRnZl2U3oYDpwRIJbRnLV+NGwFeqBMHVqx+kFMB
-DeNMxqtlt6N15RbyjphLLK20QwdqD7RuqXh9xhV2eCm0SRk2hnzIw/z/u8Hq
-CnQRXgsT6eiscvT+/uHzI628lGz7N5J+c7h4RoNbbtNVx64BDDEvsrWZgbKJ
-9iW65HQ6S+lu6UiDXaGcbRJ5bYbbAumg0E/5KZMBlvc7ADQddiFg/nM2M+zW
-JQX8ZqHOkMmOMvtuR6QkkkQqibWKEyRjwyTSexocdfU1azeZYS4BGk/t0m4o
-cjCgEwbguLgfCoye1y9jIuNIMFyMSq9scoU84PqFlRWTjDkjsaR+Sjtp/0sf
-S07vlRXAe2t9ZuBOU8/H5Vf9GNQKg9oV3OfKvAu5QGAGos/rjkSLSIgqZl/n
-815jHyM63IDBB+cYBCNxoRhxdzklrxi5smjtm25vD58SZxtyND0e2oXXnrnH
-B60dT9tH4PPfyFigSfNU34R8yJC8cvOOaSvFu3dV0MUexMs0vVayyHzVccwe
-sZsfeTBI/8VyfRChcF9vshrBn2MdGhOG8rYxvm0wqBU0ISQPf8Cv9P7c6jPq
-2mmjBDdH2hckos3VbyYgdqFbo7A0OMTN0a06mPgjreLL8eQZ33CTAk3DBo1A
-r8lx
-=Crf/
------END PGP SIGNATURE-----
+
+
+Thanks
+
+On Sat, Nov 24, 2018 at 2:39 PM Yves-Alexis Perez <corsac@...ian.org> wrote:
+
+> On Fri, 2018-11-23 at 21:45 +0100, Yves-Alexis Perez wrote:
+> > On Fri, 2018-11-23 at 19:09 +0100, Greg KH wrote:
+> > > As was discussed further on one of the threads on this topic, it looks
+> > > like this is a 4.20-rc issue only, and that 4.19 does not have this
+> > > issue.  So it might not be relevant to any distro at all, but I suggest
+> > > that people test themselves to be sure.
+> >
+> > Hi Greg, thanks for the precision.
+>
+> And considering no released kernel is vulnerable, here is the proof of
+> concept
+> code provided initially.
+>
+> Regards,
+> --
+> Yves-Alexis
+>
+
+
+-- 
+Regards
+
+*Dhiraj Mishra.*GPG ID :  51720F56   |  Finger Print : 1F6A FC7B 05AA CF29
+8C1C  ED65 3233 4D18 5172 0F56
+
