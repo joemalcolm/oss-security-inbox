@@ -1,29 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/19/3
-Message-ID: <20180919090513.aatf3ezevweolyld@lorien.valinor.li>
-Date: Wed, 19 Sep 2018 11:05:18 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/03/1
+Message-ID: <d20eaeb9-c8ce-1806-6359-8e22f53b9994@nebelwelt.net>
+Date: Mon, 3 Dec 2018 17:45:30 +0100
+From: Mathias Payer <mathias.payer@...elwelt.net>
 To: oss-security@...ts.openwall.com
-Cc: Davidlohr Bueso <dave@...olabs.net>
-Subject: Re: Linux kernel: potential local priviledge escalation bug in vmacache code
+Subject: UAF write in usb_audio_probe
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi there,
 
-On Wed, Sep 19, 2018 at 10:23:43AM +0200, Salvatore Bonaccorso wrote:
-> Hi Vladis,
-> 
-> On Wed, Sep 19, 2018 at 04:15:26AM -0400, Vladis Dronov wrote:
-> > Hello, Davidlohr,
-> > 
-> > Thank you for reporting this. Was CVE-ID assigned or requested
-> > for this flaw? If not, the Red Hat (as a CNA) could allocate one
-> > and handle adding it to the MITRE's database.
-> 
-> I requested earlier the day one from MITRE (via webform) but got no
-> assignment yet.
+We reported a security bug to security@...nel.org we discovered in the Linux
+kernel when fuzzing the hardware/software interface, targeting malicious USB
+peripherals. We have developed a fuzzing infrastructure that emulates malicious
+USB peripherals, allowing a fuzzer to feed test input into a virtualized kernel.
+We have tested 8 different recent kernel versions and have found new 37 bugs (so
+far). A first glimpse at all discovered vulnerabilities shows that they contain
+a set of arbitrary reads and arbitrary writes.
 
-It got assigned CVE-2018-17182.
+The attacker needs local access to plug in a malicious USB device that replays
+the trace (e.g., through FaceDancer) to get read/write primitives in the kernel.
+For, e.g., Android or locked Desktops this becomes security critical. This turns
+these bugs into local "pop the box" opportunities, e.g., to disable screen locks
+or gain root.
 
-Regards,
-Salvatore
+We can provide input USB seeds/traces for all discovered bugs/vulnerabilities
+and will report the other bugs as we triage them. Note that we submitted the
+paper that presents the technique to the Dec 01 IEEE Security and Privacy deadline.
+
+So far, we have submitted one bug (and patch) to alsa-devel@...a-project.org
+(after discussing both with the security@...nel.org list). This bug is likely
+exploitable, allowing a local user (not logged in) to gain a write primitive in
+the kernel by simply plugging in a malicious USB device.
+The patch is at:
+https://git.kernel.org/pub/scm/linux/kernel/git/tiwai/sound.git/commit/?id=5f8cf712582617d523120df67d392059eaf2fc4b
+
+Thanks,
+Mathias Payer
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
