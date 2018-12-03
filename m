@@ -1,19 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/01/1
-Message-Id: <D256F892-8344-4273-A676-93D62E0CC984@gmail.com>
-Date: Mon, 1 Oct 2018 11:33:47 +0200
-From: Carlton Gibson <carlton.gibson@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Django security release issued: 2.1.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/03/2
+Message-ID: <20181203212212.GA30174@eldamar.local>
+Date: Mon, 3 Dec 2018 22:22:12 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: PolicyKit: CVE-2018-19788: Improper handling of user with uid > INT_MAX leading to authentication bypass
 Content-Type: text/plain; charset=utf-8
 
-Today the Django team issued 2.1.2 as part of our security 
-process. This release address a security issue, and we encourage all 
-users to upgrade as soon as possible: 
+Hi
 
-https://www.djangoproject.com/weblog/2018/oct/01/security-release/ <https://www.djangoproject.com/weblog/2018/oct/01/security-release/>
+In https://gitlab.freedesktop.org/polkit/polkit/issues/74 (which got
+assigned CVE-2018-19788 by MITRE) it was reported that a user with uid
+> INT_MAX could successfully execute any systemctl command (but the
+issue is broader than that).
 
-As a reminder, we ask that potential security issues be reported via 
-private email to security@...ngoproject.com <mailto:security@...ngoproject.com> and not via Django's Trac 
-instance or the django-developers list. Please see 
-https://www.djangoproject.com/security <https://www.djangoproject.com/security> for further information. 
+There is a proposed commit: https://gitlab.freedesktop.org/zbyszek/polkit/commit/fbaab32cb4ed9ed5f1e3eea6cd317d443aa427dc
+
+> From fbaab32cb4ed9ed5f1e3eea6cd317d443aa427dc Mon Sep 17 00:00:00 2001
+> From: =?UTF-8?q?Zbigniew=20J=C4=99drzejewski-Szmek?= <zbyszek@...waw.pl>
+> Date: Mon, 3 Dec 2018 12:51:26 +0100
+> Subject: [PATCH] Check gid and uid initalization in PolkitUnixUser and Group
+>  objects
+> 
+> When a user or group above INT32_MAX is created, the numeric uid or
+> gid wraps around to negative when the value is assigned to gint, and
+> polkit gets confused. Let's refuse such uids and gids.
+> 
+> This patch just refuses to initialize uid and gid values to negative.
+> A nicer fix is to change the underlying type to e.g. gint64 to allow
+> the full range of values in uid_t and gid_t to be represented. But
+> this cannot be done without breaking the API, so likely new functions
+> will have to be added (a polkit_unix_user_new variant that takes a
+> gint64, and the same for _group_new, _set_uid, _get_uid, _set_gid,
+> _get_gid, etc.). This will require a bigger patch.
+> 
+> Fixes https://gitlab.freedesktop.org/polkit/polkit/issues/74.
+> 
+> Example sessions from uid=4000000000:
+> 
+> Dec 03 14:35:08 krowka polkitd[21432]: system-bus-name::1.41869 is inquiring whether system-bus-name::1.79432 is authorized for org.freedesktop.systemd1.manage-units
+> Dec 03 14:35:08 krowka polkitd[21432]:  user of caller is unix-user:root
+> Dec 03 14:35:08 krowka polkitd[21432]: polkit_unix_user_new: assertion 'uid >= 0' failed
+> Dec 03 14:35:08 krowka polkitd[21432]: polkit_identity_to_string: assertion 'POLKIT_IS_IDENTITY (identity)' failed
+> Dec 03 14:35:08 krowka polkitd[21432]:  user of subject is (null)
+> Dec 03 14:35:08 krowka polkitd[21432]: polkit_identity_equal: assertion 'POLKIT_IS_IDENTITY (b)' failed
+> Dec 03 14:35:08 krowka polkitd[21432]: checking whether system-bus-name::1.79432 is authorized for org.freedesktop.systemd1.manage-units
+> Dec 03 14:35:08 krowka polkitd[21432]: polkit_unix_user_new: assertion 'uid >= 0' failed
+> Dec 03 14:35:08 krowka polkitd[21432]:
+> Dec 03 14:35:08 krowka polkitd[21432]: polkit_authorization_result_get_is_challenge: assertion 'POLKIT_IS_AUTHORIZATION_RESULT (result)' failed
+> Dec 03 14:35:08 krowka polkitd[21432]: g_object_ref: assertion 'G_IS_OBJECT (object)' failed
+> Dec 03 14:35:08 krowka polkitd[21432]: g_object_ref: assertion 'G_IS_OBJECT (object)' failed
+> Dec 03 14:35:08 krowka polkitd[21432]: polkit_authorization_result_get_details: assertion 'POLKIT_IS_AUTHORIZATION_RESULT (result)' failed
+> Dec 03 14:35:08 krowka polkitd[21432]: polkit_authorization_result_get_is_challenge: assertion 'POLKIT_IS_AUTHORIZATION_RESULT (result)' failed
+> Dec 03 14:35:08 krowka polkitd[21432]: polkit_authorization_result_get_is_authorized: assertion 'POLKIT_IS_AUTHORIZATION_RESULT (result)' failed
+> Dec 03 14:35:08 krowka polkitd[21432]: g_object_unref: assertion 'G_IS_OBJECT (object)' failed
+> Dec 03 14:35:08 krowka polkitd[21432]: g_object_unref: assertion 'G_IS_OBJECT (object)' failed
+
+Regards,
+Salvatore
