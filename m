@@ -1,45 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/26/2
-Message-ID: <CA+=eHdTkJv3e+=M_oUEhiQk8tXxrNJohHMytNTskvkcbG9tieA@mail.gmail.com>
-Date: Mon, 26 Feb 2018 10:40:54 +0530
-From: Sahil Dhar <sdhar@...urityinnovation.com>
-To: Maxim Solodovnik <solomax@...che.org>
-Cc: security@...nmeetings.apache.org,  Openmeetings user-list <user@...nmeetings.apache.org>, dev <dev@...nmeetings.apache.org>,  user-russian@...nmeetings.apache.org, Sahil <sdhar@...urityinnovation.com>,  oss-security@...ts.openwall.com
-Subject: Re: [ANNOUNCE] CVE-2018-1286 - Apache OpenMeetings - Insufficient Access Controls
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/04/1
+Message-ID: <20181204114819.phtdqpy32q3vxu4t@suse.de>
+Date: Tue, 4 Dec 2018 12:48:20 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: UAF write in usb_audio_probe
 Content-Type: text/plain; charset=utf-8
 
-Hi Maxim,
+Hi
+
+Mitre assigned CVE-2018-19824.
+On Mon, Dec 03, 2018 at 05:45:30PM +0100, Mathias Payer wrote:
+> Hi there,
+> 
+> We reported a security bug to security@...nel.org we discovered in the Linux
+> kernel when fuzzing the hardware/software interface, targeting malicious USB
+> peripherals. We have developed a fuzzing infrastructure that emulates malicious
+> USB peripherals, allowing a fuzzer to feed test input into a virtualized kernel.
+> We have tested 8 different recent kernel versions and have found new 37 bugs (so
+> far). A first glimpse at all discovered vulnerabilities shows that they contain
+> a set of arbitrary reads and arbitrary writes.
+> 
+> The attacker needs local access to plug in a malicious USB device that replays
+> the trace (e.g., through FaceDancer) to get read/write primitives in the kernel.
+> For, e.g., Android or locked Desktops this becomes security critical. This turns
+> these bugs into local "pop the box" opportunities, e.g., to disable screen locks
+> or gain root.
+> 
+> We can provide input USB seeds/traces for all discovered bugs/vulnerabilities
+> and will report the other bugs as we triage them. Note that we submitted the
+> paper that presents the technique to the Dec 01 IEEE Security and Privacy deadline.
+> 
+> So far, we have submitted one bug (and patch) to alsa-devel@...a-project.org
+> (after discussing both with the security@...nel.org list). This bug is likely
+> exploitable, allowing a local user (not logged in) to gain a write primitive in
+> the kernel by simply plugging in a malicious USB device.
+> The patch is at:
+> https://git.kernel.org/pub/scm/linux/kernel/git/tiwai/sound.git/commit/?id=5f8cf712582617d523120df67d392059eaf2fc4b
+> 
+> Thanks,
+> Mathias Payer
+> 
 
 
-I just noticed that there is a typo in the CVE-2018-1286 description, as it
-states that the affected version is 3.0.0. However, the vulnerability was
-reported for 4.0.1 release. Can you please update it?
-
-Thanks,
-~ Sahil
 
 
-
-
-
-
-On Sun, Feb 25, 2018 at 5:20 PM, Maxim Solodovnik <solomax@...che.org>
-wrote:
-
-> Severity: Medium
->
-> Vendor: The Apache Software Foundation
->
-> Versions Affected: Apache OpenMeetings 3.0.0
->
-> Description: CRUD operations on privileged users are not password
-> protected allowing an authenticated attacker to deny service for
-> privileged users.
->
->
-> The issue was fixed in 4.0.2
-> All users are recommended to upgrade to Apache OpenMeetings 4.0.2
->
-> Credit: This issue was identified by Sahil Dhar of Security Innovation Inc
->
-
+-- 
+Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@...e.de>
