@@ -1,39 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/28/1
-Message-ID: <CAB8XdGCXbiqd=BWa623OgeKtJzKpDM1H5umdANGi670hQUbSMQ@mail.gmail.com>
-Date: Thu, 28 Jun 2018 15:57:13 +0100
-From: Colm O hEigeartaigh <coheigea@...che.org>
-To: users@....apache.org, CXF Dev List <dev@....apache.org>, announce@...che.org
-Cc: Apache Security Response Team <security@...che.org>, oss-security@...ts.openwall.com
-Subject: Apache CXF 3.2.6 and 3.1.16 are released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/05/2
+Message-ID: <086671aa-726c-8f27-0a6d-fd38461df00b@gmx.ch>
+Date: Wed, 5 Dec 2018 20:44:20 +0100
+From: sjw@....ch
+To: oss-security@...ts.openwall.com
+Subject: Re: PHP imap_open() script injection
 Content-Type: text/plain; charset=utf-8
 
-Apache CXF™ is an open source services framework. CXF helps you build and
-develop services using frontend programming APIs, like JAX-WS and JAX-RS.
-These services can speak a variety of protocols such as SOAP, XML/HTTP,
-RESTful HTTP, or CORBA and work over a variety of transports such as HTTP,
-JMS or JBI.
+Hi
 
-The Apache CXF team is proud to announce the release of versions 3.2.6 and
-3.1.16. Over 50 JIRA issues were fixed for 3.2.5 and 25 JIRA items were
-resolved for 3.1.16.
+New releases to fix this have been scheduled for tomorrow:
 
-In addition, both of these releases contain a fix for a new security
-advisory:
+https://github.com/php/php-src/blob/php-5.6.39/NEWS#L11
+https://github.com/php/php-src/blob/php-7.0.33/NEWS#L11
+https://github.com/php/php-src/blob/php-7.1.25/NEWS#L21
+https://github.com/php/php-src/blob/php-7.2.13/NEWS#L25
+https://github.com/php/php-src/blob/php-7.3.0/NEWS#L162
 
-CVE-2018-8039: Apache CXF TLS hostname verification does not work correctly
-with com.sun.net.ssl.
+Note: support for PHP 7.0 has officially ended two days ago, but the
+patch is included in 7.0.33.
 
-The advisory text is available at this location:
-http://cxf.apache.org/security-advisories.data/CVE-2018-8039.txt.asc?version=1&modificationDate=1530184663000&api=v2
+Quoting from UPGRADING:
+"rsh/ssh logins are disabled by default. Use imap.enable_insecure_rsh if
+you want to enable them. Note that the IMAP
+library does not filter mailbox names before passing them to rsh/ssh
+command, thus passing untrusted data to this function with rsh/ssh
+enabled is insecure."
 
-Please also refer to the CXF security advisories page:
-http://cxf.apache.org/security-advisories.html
+The relevant commit can be found on
+https://github.com/php/php-src/commit/3a144d3f7f6bad308e2bf112ebf16829eb298f20
+
+The assigned CVE-2018-19158 in https://bugs.php.net/bug.php?id=77153
+seems to be a typo of CVE-2018-19518.
 
 
--- 
-Colm O hEigeartaigh
 
-Talend Community Coder
-http://coders.talend.com
 
+
+Am 25.11.18 um 14:30 schrieb Salvatore Bonaccorso:
+> Hi,
+> 
+> On Thu, Nov 22, 2018 at 09:02:14PM +0100, Hanno Böck wrote:
+>> Hi,
+>>
+>> This was apparently posted on some russian forum recently and then
+>> re-posted to github:
+>> https://antichat.com/threads/463395/#post-4254681
+>> https://github.com/Bo0oM/PHP_imap_open_exploit/blob/master/exploit.php
+>>
+>> PoC code:
+>> $server = "x -oProxyCommand=echo\tZWNobyAnMTIzNDU2Nzg5MCc+L3RtcC90ZXN0MDAwMQo=|base64\t-d|sh}";
+>> imap_open('{'.$server.':143/imap}INBOX', '', '') or die("\n\nError: ".imap_last_error());
+>>
+>> It's pretty self explaining, it seems imap_open() will pass things to
+>> ssh and this is vulnerable to a shell injection.
+>>
+>> Impact would be mostly relevant if someone has some imap functionality
+>> where a user can define a custom imap server. (Though it might also be
+>> used as a bypass for environments where exec() and similar functions
+>> are restricted.)
+>>
+>> I reported it to upstream PHP a few days ago, it was closed as a
+>> duplicate, so it seems they already knew about it. It's unfixed in
+>> current versions.
+> 
+> CVE-2018-19518 has been assigned by MITRE for this issue.
+> 
+> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-19518
+> 
+> Regards,
+> Salvatore
+> 
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
