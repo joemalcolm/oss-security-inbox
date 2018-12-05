@@ -1,54 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/08/3
-Message-ID: <20180208165700.i7j2n7avv6bebqo2@jumper.schlittermann.de>
-Date: Thu, 8 Feb 2018 17:57:00 +0100
-From: Heiko Schlittermann <hs@...littermann.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/05/1
+Message-Id: <0DBFE9A5-170A-437C-B42C-AF5088CFB14D@beckweb.net>
+Date: Wed, 5 Dec 2018 10:18:04 +0100
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2018-6789 Exim 4.90 and earlier: buffer overflow
+Subject: Multiple vulnerabilities in Jenkins
 Content-Type: text/plain; charset=utf-8
 
-Heiko Schlittermann <hs@...littermann.de> (Mi 07 Feb 2018 11:39:43 CET):
-> CVE-2018-6789 Exim 4.90 and earlier
-> ===================================
-> 
-> There is a buffer overflow in an utility function, if some pre-conditions
-> are met.  Using a handcrafted message, remote code execution seems to be
-> possible.
-> 
-> Next steps:
-> 
-> * t0:     Distros will get access to our "security" non-public git repo
->           (based on the SSH keys known to us)
-> * t0 +7d: Patch will be published on the official public git repo
-> 
-> t0 will be around 2018-02-08.
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software. The following
+releases contain fixes for security vulnerabilities:
 
-t0 is now. Distro maintainers please use the following repo URLs:
+* Jenkins weekly 2.154
+* Jenkins LTS 2.138.4
+* Jenkins LTS 2.150.1
 
-The full git repo:
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2018-12-05/
 
-    ssh://git@...m.org/exim.git     
-    tag: exim-4_90_1
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-The tarballs git repo:
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
 
-    ssh://git@...m.org/exim-packages.git
-    tag: exim-4_90_1
+---
 
-The tags are signed with my key¹, as are the tarballs and my own
-commits.
+SECURITY-595
+Jenkins uses the Stapler web framework for HTTP request handling. 
+Stapler’s basic premise is that it uses reflective access to code 
+elements matching its naming conventions. For example, any public method 
+whose name starts with get, and that has a String, int, long, or no 
+argument can be invoked this way on objects that are reachable through 
+these means. As these naming conventions closely match common code 
+patterns in Java, accessing crafted URLs could invoke methods never 
+intended to be invoked this way.
 
-¹) If you get a warning about my key being expired, please refresh it
-from the keyservers or from
-https://ssl.schlittermann.de/keys/gpg/hs@schlittermann.de/F69376CE.asc
+The Stapler web framework has been extended with a Service Provider 
+Interface (SPI) that allows methods and fields to be excluded from routing.
+The implementation of that SPI in Jenkins now restricts which getter 
+methods, do* action methods, and fields can be invoked reflectively by 
+Stapler.
 
-    Best regards from Dresden/Germany
-    Viele Grüße aus Dresden
-    Heiko Schlittermann
--- 
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
- ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+SECURITY-1072
+The fix for SECURITY-499 introduced a mechanism that renamed user 
+directories on disk as a user with an unsafe user name (user ID) is loaded.
+Insufficient input validation allowed attackers to rename such user 
+directories even for users with a safe user name by submitting a crafted 
+user name when attempting to log in, even with an invalid password. Doing 
+so prevented users from logging in successfully afterwards.
+
+Jenkins no longer uses directory names as a reference for user names, 
+making the on-load migration of user records unnecessary. Instead, the 
+new file users/users.xml is used to map user names to the directories 
+containing the user metadata.
+
+
+SECURITY-904
+The file browser used for workspaces, archived artifacts, and 
+$JENKINS_HOME/userContent/ followed symbolic links to locations outside 
+the directory being browsed.
+
+While builds typically have access to the file system outside the 
+workspace allocated by Jenkins, this should not extend to beyond the 
+execution of a build on that agent. Notably, the configuration may have 
+been changed to not allow a build to run on a given agent, but the 
+workspace used during the previous execution still exists, and could 
+allow browsing the file system outside the workspace.
+
+Neither browsing through the UI nor downloading directory content as a 
+ZIP file allow accessing directories and files outside the workspace 
+anymore.
+
+
+SECURITY-1193
+The form validation for cron expressions (e.g. "Poll SCM", "Build 
+periodically") could enter infinite loops when cron expressions only 
+matching certain rare dates were entered, blocking request handling 
+threads indefinitely.
+
