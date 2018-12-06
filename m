@@ -1,16 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/06/4
-Message-ID: <20180906131725.5dyq5xjweg5ljet4@jwilk.net>
-Date: Thu, 6 Sep 2018 15:17:25 +0200
-From: Jakub Wilk <jwilk@...lk.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/06/1
+Message-ID: <nycvar.YSQ.7.76.1812061436130.30939@xnncv>
+Date: Thu, 6 Dec 2018 14:38:32 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Michael Hanselmann <public@...smi.ch>
+Subject: CVE-2018-16867 QEMU: dev-mtp: path traversal in usb_mtp_write_data of the Media Transfer Protocol (MTP)
 Content-Type: text/plain; charset=utf-8
 
-* Leonid Isaev <leonid.isaev@...a.colorado.edu>, 2018-09-05, 17:32:
->pdf files can contains things like javascript...
+   Hello,
 
-Do any open-source PDF browsers actually execute embedded JS?
+A flaw was found in qemu Media Transfer Protocol (MTP). A path traversal in 
+the in usb_mtp_write_data function in hw/usb/dev-mtp.c due to an improper 
+filename sanitization. When the guest device is mounted in read-write mode, 
+this allows to read/write arbitrary files which may lead do DoS scenario OR 
+possibly lead to code execution on the host.
 
--- 
-Jakub Wilk
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2018-12/msg00390.html
+
+This issue was reported by Michael Hanselmann of hansmi.ch.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
