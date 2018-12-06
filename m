@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2831" "Wednesday" "29" "July" "2020" "14:58:39" "+0200" "Solar Designer" "solar@openwall.com" nil "59" nil "^Cc:" nil nil "7" nil nil (number mark "        solar@openwa Jul 29   59/2831  " thread-indent "\"Re: [oss-security] [CVE-2020-14331] Linux Kernel: buffer over write in vgacon_scrollback_update\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] [CVE-2020-14331] Linux Kernel: buffer over write in vgacon_scrollback_update" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["643" "Thursday" "6" "December" "2018" "14:38:32" "+0530" "P J P" "ppandit@redhat.com" "<nycvar.YSQ.7.76.1812061436130.30939@xnncv>" "18" "[oss-security] CVE-2018-16867 QEMU: dev-mtp: path traversal in usb_mtp_write_data of the Media Transfer Protocol (MTP)" "^cc:" nil nil "12" "2018120609:08:32" "[oss-security] CVE-2018-16867 QEMU: dev-mtp: path traversal in usb_mtp_write_data of the Media Transfer Protocol (MTP)" (number mark "        ppandit@redh Dec  6   18/643   " thread-indent "\"[oss-security] CVE-2018-16867 QEMU: dev-mtp: path traversal in usb_mtp_write_data of the Media Transfer Protocol (MTP)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7991 invoked by uid 550); 29 Jul 2020 12:59:35 -0000
+Received: (qmail 32670 invoked by uid 550); 6 Dec 2018 09:08:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,77 +11,36 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7770 invoked from network); 29 Jul 2020 12:58:45 -0000
-Message-ID: <20200729125839.GA14359@openwall.com>
-References: <c5e79bc3-3ca4-2e01-c7f0-2561ec7db4b2@nsfocus.com> <20200728185914.GE4053562@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200728185914.GE4053562@gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Cc: Yunhai Zhang <zhangyunhai@nsfocus.com>, Jiri Slaby <jslaby@suse.cz>
-Date: Wed, 29 Jul 2020 14:58:39 +0200
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 32649 invoked from network); 6 Dec 2018 09:08:48 -0000
+X-X-Sender: pjp@kaapi
+Message-ID: <nycvar.YSQ.7.76.1812061436130.30939@xnncv>
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.15
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.46]); Thu, 06 Dec 2018 09:08:36 +0000 (UTC)
+cc: Michael Hanselmann <public@hansmi.ch>
+Date: Thu, 6 Dec 2018 14:38:32 +0530 (IST)
+From: P J P <ppandit@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] [CVE-2020-14331] Linux Kernel: buffer over write in vgacon_scrollback_update
-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE-2018-16867 QEMU: dev-mtp: path traversal in usb_mtp_write_data
+ of the Media Transfer Protocol (MTP)
+To: oss security list <oss-security@lists.openwall.com>
 
-On Tue, Jul 28, 2020 at 11:59:14AM -0700, Eric Biggers wrote:
-> On Tue, Jul 28, 2020 at 11:16:55AM +0800, ????????? wrote:
-> > There is a buffer over write in drivers/video/console/vgacon.c in
-> > vgacon_scrollback_update.
-> > 
-> > The issue is reported by Yunhai Zhang / NSFOCUS Security Team
-> > <zhangyunhai@nsfocus.com>, CVE-2020-14331 assigned via Red Hat.
-> > 
-> > # Affected Versions
-> > The issue is found and tested on 5.7.0-rc6.
-> > The issue is introduced in commit:
-> > 15bdab959c9bb909c0317480dd9b35748a8f7887 ([PATCH] vgacon: Add support
-> > for soft scrollback)
+   Hello,
 
-That was in 2006.
+A flaw was found in qemu Media Transfer Protocol (MTP). A path traversal in 
+the in usb_mtp_write_data function in hw/usb/dev-mtp.c due to an improper 
+filename sanitization. When the guest device is mounted in read-write mode, 
+this allows to read/write arbitrary files which may lead do DoS scenario OR 
+possibly lead to code execution on the host.
 
-> > According to code review, all versions older than
-> > 92ed301919932f777713b9172e525674157e983d (v5.8-rc7) are affected.
-> 
-> Thanks for the writeup.  Note that there are many open syzbot reports in the
-> fbdev, vt, and vgacon kernel subsystems.  These subsystems aren't actively
-> maintained (receiving drive-by fixes only), and the kernel developers recommend
-> to not enable these subsystems if you care about security
-> (https://lkml.kernel.org/lkml/CAKMK7uF5zZH3CaHueWsLR96-AzT==wP8=MpymTqx-T+SRsXWHA@mail.gmail.com/).
-> 
-> This particular bug, for example, appears to have been already found by someone
-> running syzkaller and publicly reported over 2 years ago, with a C reproducer:
-> (https://lkml.kernel.org/lkml/CAEAjamsJnG-=TSOwgRbbb3B9Z-PA63oWmNPoKYWQ=Z=+X49akg@mail.gmail.com/).
-> No one did anything.
-> 
-> I suggest that people relying on the security of these kernel subsystems
-> contribute resources to fixing the many known fuzzing bugs in them.
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2018-12/msg00390.html
 
-Wow.  I suppose the biggest risk here is services that just happen to
-run on the console (or able to access it if they re-open /dev/tty) as a
-result of normal system startup.  Since an ioctl() is required at least
-to trigger CVE-2020-14331, at least this one is limited to attacks by
-someone who already got code execution within one of such services, but
-I suppose it could in some cases be used to gain ring 0 access from a
-non-root pseudo-user that the service (or even merely its privsep child)
-might run as.  If any other related issues are triggerable purely by
-terminal escapes codes, it's much worse - could even allow for remote
-attacks without a prior compromise of any service.
+This issue was reported by Michael Hanselmann of hansmi.ch.
 
-Do others see this same threat model or something different?  I think
-non-root users with intentional console access mounting attacks is less
-of a concern.
-
-Meanwhile, Jiri Slaby brought the discussion around fixing vgacon
-properly to LKML:
-
-https://lists.openwall.net/linux-kernel/2020/07/29/234
-
-The patch posted in this very first LKML message (with the added check
-before the loop) is already known to be insufficient - see the
-follow-ups.  The patch posted by Yunhai Zhang here on oss-security
-(with the added check in the loop) is still considered sufficient.
-
-Alexander
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
