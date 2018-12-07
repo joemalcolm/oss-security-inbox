@@ -1,4 +1,9 @@
-Received: (qmail 31962 invoked by uid 550); 10 Apr 2024 19:57:32 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2825" "Friday" "7" "December" "2018" "17:06:27" "+0300" "Dmitriy Pavlov" "dpavlov@apache.org" "<CALUCNEsCwE0fC2XCHi996=OdUCZZLK8WzF2KOdaLPYkZzWE_8A@mail.gmail.com>" "137" "[oss-security] [ANNOUNCE] Apache Ignite 2.7.0 Vulnerable Dependecies Updates" "^Date:" nil nil "12" "2018120714:06:27" "[oss-security] [ANNOUNCE] Apache Ignite 2.7.0 Vulnerable Dependecies Updates" (number mark "        dpavlov@apac Dec  7  137/2825  " thread-indent "\"[oss-security] [ANNOUNCE] Apache Ignite 2.7.0 Vulnerable Dependecies Updates\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 30037 invoked by uid 550); 7 Dec 2018 14:23:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,75 +11,158 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28358 invoked from network); 10 Apr 2024 19:56:43 -0000
-Authentication-Results: mail.absynth.de;
-	auth=pass smtp.auth=info@christopher-kunz.de smtp.mailfrom=info@christopher-kunz.de
-Message-ID: <607d5716-128f-44c5-ab52-6dde4ca6e8a4@christopher-kunz.de>
-Date: Wed, 10 Apr 2024 21:56:33 +0200
+Received: (qmail 19956 invoked from network); 7 Dec 2018 14:06:52 -0000
+X-Gm-Message-State: AA+aEWbVmYroopOBxTR6ibd1IzhMqfA+wmat0NyzmDixW7r7o0SchgZi
+	UnkPgHVkTCqo2+sRHRaviAWkX1m6eElCSXU60cQ=
+X-Google-Smtp-Source: AFSGD/UW6H4JEXxhG0lbm58NsCwpzIxDLYlbh4t1LOodiSKOH0G/fIg57lWLtDfuCWH7uJJ0aSfhaL3J+ZQfIUJmwkQ=
+X-Received: by 2002:aca:da84:: with SMTP id r126mr1399162oig.219.1544191597767;
+ Fri, 07 Dec 2018 06:06:37 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: "Dr. Christopher Kunz" <info@christopher-kunz.de>
-To: oss-security@lists.openwall.com
-Autocrypt: addr=info@christopher-kunz.de; keydata=
- xsDiBD3U55kRBADKaqmPY/RBZ0luAFvOsa2lqQN8qXEimlCrbe0+WWywWDYNO/0c5B1FhUt2
- heF12OV9u1ldDdynB/awdV3NYaoizce86XQzQGcPpIOlEgI9iTTc1FSP9zDkkljLMrMB8WGK
- Q8WH6yLT+BOTIoK/rMs9DEN0hcsxOZY1wTEzhOfewwCg/7fHkook6P1/O/iOG3k/r90Um98D
- /AvzlFtPaRn5qiCWjeopDW1RAJNLvWwKs1HHv8m1UOtMNisqObD3SuHn9lp4FfGAu7gaJoqI
- /l6Rk02dgmBq+gyV+qg8PYXMlhh0xEfEO/TPPjx+nZnDRvO59tOj0pg2GLpIvQtdlwow1Iq4
- r2XfHUk1b827GZGAg1+ckkkNSG24A/9l238stiojp+GYwpuYkGrxROSYX+0slzRc40DHjtrb
- Jidz2Usmilyvt5WA1iBmAKw3L2TLQKpLtxAkGWSrDfdnl38VrYGMEM6WVctY6TxrqzrQLhaw
- W+17goNN73S3uP3C0YrdVjZc5jl0xlfli4zP7HmxL1YyRlLQ22aVcdDmS80rQ2hyaXN0b3Bo
- ZXIgS3VueiA8aW5mb0BjaHJpc3RvcGhlci1rdW56LmRlPsJ4BBMRAgA4AhsDBgsJCAcDAgMV
- AgMDFgIBAh4BAheAFiEEyIKO0X3RkBHAiOpQXPou6zl6ysEFAmWdKLICGQEACgkQXPou6zl6
- ysEHsQCfeqMRH0HyzVzl6XyNrxXdi0kSacYAnjXCcViWthCxB04fgluoiFw7b02TzsFNBD3U
- 55kQCAD2Qle3CH8IF3KiutapQvMF6PlTETlPtvFuuUs4INoBp1ajFOmPQFXz0AfGy0OplK33
- TGSGSfgMg71l6RfUodNQ+PVZX9x2Uk89PY3bzpnhV5JZzf24rnRPxfx2vIPFRzBhznzJZv8V
- +bv9kV7HAarTW56NoKVyOtQa8L9GAFgr5fSI/VhOSdvNILSd5JEHNmszbDgNRR0PfIizHHxb
- LY7288kjwEPwpVsYjY67VYy4XTjTNP18F1dDox0YbN4zISy1Kv884bEpQBgRjXyEpwpy1obE
- AxnIByl6ypUM2Zafq9AKUJsCRtMIPWakXUGfnHy9iUsiGSa6q6Jew1XpMgs7AAICB/97dSwj
- NNOvwX1CYynQFaXrajIBF9fSZcOJNZ5vh/+ejkl2nobkQicbI97dKYttanBaF4O//lPjNcbO
- iXkiqEI8FQPyp5I+KIkVy6MiNM09zd0qHVwlihok2JG5wSGXfUsXjk3iPsxIVhWZSrB2q0By
- Av95xcvUtxQl5cCGGqTxBIsGjiN4wkDS0FNXFH2hOuH5pCl+cbDdZmYTc1O+aeSygvLN76gs
- tBgDODp8p2Fiu7RL99SRLTIHdniSvOr/bm4BDRYY0D6P/MoZQydZPMmZAOv3qnOkPox/9e5/
- zP8cmLm08gbez8wjfl6Rl5OjngTIatupEWXZK022C2+LJBeFwkwEGBECAAwFAj3U55kFGwwA
- AAAACgkQXPou6zl6ysHXxgCgw8C3Y9WTlhK6j3KgyciAF6X+odsAnja8RhnAa3HRM8YZbeaW
- DC6HBdDe
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] New Linux LPE via GSMIOC_SETCONF_DLCI?
+X-Gmail-Original-Message-ID: <CALUCNEsCwE0fC2XCHi996=OdUCZZLK8WzF2KOdaLPYkZzWE_8A@mail.gmail.com>
+Message-ID: <CALUCNEsCwE0fC2XCHi996=OdUCZZLK8WzF2KOdaLPYkZzWE_8A@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="000000000000a66f5d057c6f1f73"
+Date: Fri, 7 Dec 2018 17:06:27 +0300
+From: Dmitriy Pavlov <dpavlov@apache.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] [ANNOUNCE] Apache Ignite 2.7.0 Vulnerable Dependecies Updates
+To: user <user@ignite.apache.org>, dev <dev@ignite.apache.org>, 
+	"security@ignite.apache.org" <security@ignite.apache.org>, announce@apache.org, 
+	oss-security@lists.openwall.com
 
-Hello all,
+--000000000000a66f5d057c6f1f73
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-it seems that a new LPE (or two) in the Linux kernel has been dropped. The situation is a bit confusing and after discussing with Alexander off-list, I decided to post the various versions of the bug and the corresponding PoCs.
+The Apache Ignite Community is pleased to announce that recently released
+Apache Ignite 2.7.0 replaces some vulnerable dependencies to versions with
+fixes.
 
-Maybe we can clear this up together.
 
-1. YuriiCrimson's version (April 6-ish)
 
-It seems to use GSMIOC_SETCONF_DLCI, PoC supposedly works on current Ubuntu and Debians, but is stopped by LKRG.
+Apache Ignite https://ignite.apache.org/  is a memory-centric distributed
+database, caching, and processing platform for transactional, analytical,
+and streaming workloads delivering in-memory speeds at petabyte scale.
 
-PoC and writeup are here: https://github.com/YuriiCrimson/ExploitGSM/tree/main
 
-2. jmpeaux' version (March 21)
 
-This seems similar, also using GSMIOC_SETCONF_DLCI. In the screen shots, even the working dir for the PoC is identical to 1). Yurii claims jmpeaux stole his work.
+Apache Ignite 2.7 replaced following dependencies in to avoid usage of
+vulnerable 3rd party software by end users:
 
-Writeup: https://jmpeax.dev/The-tale-of-a-GSM-Kernel-LPE.html
 
-PoC: https://github.com/jmpe4x/GSM_Linux_Kernel_LPE_Nday_Exploit/tree/main
 
-And then there's
+Apache Log4j
+https://nvd.nist.gov/vuln/detail/CVE-2017-5645
 
-3. ZDI-24-020 / CVE-2023-6546 (January)
+FasterXML jackson-databind
+https://nvd.nist.gov/vuln/detail/CVE-2017-15095 ,
 
-This also exploits a race condition resulting UAF in the gsm_dlci struct. It's a little older.
+https://nvd.nist.gov/vuln/detail/CVE-2017-17485 ,
 
-Writeup and PoC: https://github.com/Nassim-Asrir/ZDI-24-020/
+https://nvd.nist.gov/vuln/detail/CVE-2017-7525 ,
 
-What do you make of this?
+https://nvd.nist.gov/vuln/detail/CVE-2018-5968 ,
 
-Best regards,
+https://nvd.nist.gov/vuln/detail/CVE-2018-7489
 
---cku
 
+
+Scala
+https://nvd.nist.gov/vuln/detail/CVE-2017-15288
+
+Apache Commons
+https://nvd.nist.gov/vuln/detail/CVE-2015-6420 ,
+
+https://nvd.nist.gov/vuln/detail/CVE-2015-7501 ,
+
+https://nvd.nist.gov/vuln/detail/CVE-2017-15708
+
+
+
+Netty Project
+
+https://nvd.nist.gov/vuln/detail/CVE-2016-4970
+
+JCraft
+
+https://nvd.nist.gov/vuln/detail/CVE-2016-5725
+
+
+
+Apache Tomcat
+https://nvd.nist.gov/vuln/detail/CVE-2016-3092 ,
+
+https://nvd.nist.gov/vuln/detail/CVE-2016-8735 ,
+
+https://nvd.nist.gov/vuln/detail/CVE-2018-8014
+
+
+Guava
+https://nvd.nist.gov/vuln/detail/CVE-2018-10237
+
+Apache Camel
+https://nvd.nist.gov/vuln/detail/CVE-2015-5344 ,
+
+https://nvd.nist.gov/vuln/detail/CVE-2015-5348 ,
+
+https://nvd.nist.gov/vuln/detail/CVE-2016-8749 ,
+
+https://nvd.nist.gov/vuln/detail/CVE-2017-12633 ,
+
+https://nvd.nist.gov/vuln/detail/CVE-2017-12634  ,
+
+https://nvd.nist.gov/vuln/detail/CVE-2017-3159 ,
+
+https://nvd.nist.gov/vuln/detail/CVE-2017-5643
+
+Spring Framework
+
+https://nvd.nist.gov/vuln/detail/CVE-2018-1257 ,
+
+https://nvd.nist.gov/vuln/detail/CVE-2018-1258
+
+
+
+Spring Data Commons
+
+https://nvd.nist.gov/vuln/detail/CVE-2018-1259 ,
+
+https://nvd.nist.gov/vuln/detail/CVE-2018-1273
+
+
+
+Jetty
+
+https://nvd.nist.gov/vuln/detail/CVE-2016-4800 ,
+
+https://nvd.nist.gov/vuln/detail/CVE-2017-9735 ,
+
+https://nvd.nist.gov/vuln/detail/CVE-2016-4800 ,
+
+https://nvd.nist.gov/vuln/detail/CVE-2017-9735 ,
+
+https://nvd.nist.gov/vuln/detail/CVE-2016-4800 ,
+
+https://nvd.nist.gov/vuln/detail/CVE-2017-7658
+
+
+
+Lucene
+https://nvd.nist.gov/vuln/detail/CVE-2017-12629
+
+Mitigation:
+=E2=80=A2    Upgrade to Apache Ignite 2.7 or later version
+
+
+
+Credit:
+Segu Riluvan discovered the usage of vulnerable modules in dependencies of
+Apache Ignite.
+
+
+Thanks for everyone who was involved into dependencies migration.
+
+Best Regards,
+
+Dmitriy Pavlov on behalf of Apache Ignite community
+
+--000000000000a66f5d057c6f1f73--
