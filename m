@@ -1,17 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/29/5
-Message-ID: <8e45c60c-44db-c9ba-c804-bb45bd0a3b0a@redhat.com>
-Date: Mon, 29 Jan 2018 17:13:49 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com, Michael Orlitzky <michael@...itzky.com>
-Subject: Re: CVE-2017-18078: systemd-tmpfiles root privilege escalation with fs.protected_hardlinks=0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/07/3
+Message-Id: <1544203183.3826.2@mail.igalia.com>
+Date: Fri, 07 Dec 2018 11:19:43 -0600
+From: Michael Catanzaro <mcatanzaro@...lia.com>
+To: oss-security@...ts.openwall.com
+Subject: Invalid free in cairo_ft_apply_variations
 Content-Type: text/plain; charset=utf-8
 
-On 01/29/2018 05:09 PM, Michael Orlitzky wrote:
-> Correction to the CVE-ID: it's 2017, not 2018. So CVE-2017-18078.
+Hi,
 
-Isn't it a duplicate of CVE-2013-4392?
+cairo 1.16.0, in cairo_ft_apply_variations() in cairo-ft-font.c frees 
+memory using the wrong free function, leading to memory corruption. 
+Because cairo is used by WebKitGTK+, WPE WebKit, and the WinCairo port 
+of WebKit, this issue can be triggered by web content. CVE-2018-19876 
+has been allocated by MITRE. For details, see:
 
-Thanks,
-Florian
+https://gitlab.freedesktop.org/cairo/cairo/merge_requests/5
+
+We recommend Linux distros should patch cairo because the fix has not 
+yet been integrated into the upstream source code repository:
+
+https://gitlab.freedesktop.org/cairo/cairo/merge_requests/5.patch
+(warning: link provided for convenience, it is not a stable link)
+
+Michael
 
