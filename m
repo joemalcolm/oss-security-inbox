@@ -1,202 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/12/7
-Message-Id: <E1ea3Pq-0002Nf-RK@xenbits.xenproject.org>
-Date: Fri, 12 Jan 2018 17:46:54 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 254 (CVE-2017-5753,CVE-2017-5715,CVE-2017-5754) - Information leak via side effects of speculative execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/07/2
+Message-ID: <20181207154302.25666dc7@computer>
+Date: Fri, 7 Dec 2018 15:43:02 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Enigmail XSA issue with WKD and HTTP authentication
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
- Xen Security Advisory CVE-2017-5753,CVE-2017-5715,CVE-2017-5754 / XSA-254
-                                 version 7
+There's an issue in Enigmail that can potentially be abused for
+phishing attacks involving WKD and HTTP authentication.
 
-        Information leak via side effects of speculative execution
+Web Key Directory or WKD [1] is a feature where OpenPGP keys can be
+fetched via a defined web address of the form
+https://example.org/.well-known/./openpgpkey/hu/[zbase32_sha1_hash_of_local_part]
 
-UPDATES IN VERSION 7
-====================
+Enigmail automatically tries to fetch WKD keys already when writing a
+mail, so simply having a mail address in "To" will cause an HTTPS
+request.
 
-PVH shim ("Comet") for 4.10 tag correction: please use tag
-4.10.0-shim-comet-1.1.
+When the server answers with a HTTP authentication challenge (HTTP code
+401) then Enigmail/Thunderbird would open up an HTTP login window.
+While the login window will show the hostname, this can be very
+confusing for a user. If randomly a login window pops up within a mail
+client it's plausible that some users will enter their email
+credentials. Here's a video to illustrate the issue:
+https://www.youtube.com/watch?v=eFSMBX98XiE
 
-ISSUE DESCRIPTION
-=================
+Similar attacks in browsers have previously been described as
+"Cross-Site-Authentication" or XSA [2].
 
-Processors give the illusion of a sequence of instructions executed
-one-by-one.  However, in order to most efficiently use cpu resources,
-modern superscalar processors actually begin executing many
-instructions in parallel.  In cases where instructions depend on the
-result of previous instructions or checks which have not yet
-completed, execution happens based on guesses about what the outcome
-will be.  If the guess is correct, execution has been sped up.  If the
-guess is incorrect, partially-executed instructions are cancelled and
-architectural state changes (to registers, memory, and so on)
-reverted; but the whole process is no slower than if no guess had been
-made at all.  This is sometimes called "speculative execution".
-
-Unfortunately, although architectural state is rolled back, there are
-other side effects, such as changes to TLB or cache state, which are
-not rolled back.  These side effects can subsequently be detected by
-an attacker to determine information about what happened during the
-speculative execution phase.  If an attacker can cause speculative
-execution to access sensitive memory areas, they may be able to infer
-what that sensitive memory contained.
-
-Furthermore, these guesses can often be 'poisoned', such that attacker
-can cause logic to reliably 'guess' the way the attacker chooses.
-This advisory discusses three ways to cause speculative execution to
-access sensitive memory areas (named here according to the
-discoverer's naming scheme):
-
-"Bounds-check bypass" (aka SP1, "Variant 1", Spectre CVE-2017-5753):
-Poison the branch predictor, such that victim code is speculatively
-executed past boundary and security checks.  This would allow an
-attacker to, for instance, cause speculative code in the normal
-hypercall / emulation path to execute with wild array indexes.
-
-"Branch Target Injection" (aka SP2, "Variant 2", Spectre CVE-2017-5715):
-Poison the branch predictor.  Well-abstracted code often involves
-calling function pointers via indirect branches; reading these
-function pointers may involve a (slow) memory access, so the CPU
-attempts to guess where indirect branches will lead.  Poisoning this
-enables an attacker to speculatively branch to any code that is
-executable by the victim (eg, anywhere in the hypervisor).
-
-"Rogue Data Load" (aka SP3, "Variant 3", Meltdown, CVE-2017-5754):
-On some processors, certain pagetable permission checks only happen
-when the instruction is retired; effectively meaning that speculative
-execution is not subject to pagetable permission checks.  On such
-processors, an attacker can speculatively execute arbitrary code in
-userspace with, effectively, the highest privilege level.
-
-More information is available here:
-  https://meltdownattack.com/
-  https://spectreattack.com/
-  https://googleprojectzero.blogspot.co.uk/2018/01/reading-privileged-memory-with-side.html
-
-Additional Xen-specific background:
-
-Xen hypervisors on most systems map all of physical RAM, so code
-speculatively executed in a hypervisor context can read all of system
-RAM.
-
-When running PV guests, the guest and the hypervisor share the address
-space; guest kernels run in a lower privilege level, and Xen runs in
-the highest privilege level.  (x86 HVM and PVH guests, and ARM guests,
-run in a separate address space to the hypervisor.)  However, only
-64-bit PV guests can generate addresses large enough to point to
-hypervisor memory.
-
-IMPACT
-======
-
-Xen guests may be able to infer the contents of arbitrary host memory,
-including memory assigned to other guests.
-
-An attacker's choice of code to speculatively execute (and thus the
-ease of extracting useful information) goes up with the numbers.  For
-SP1, an attacker is limited to windows of code after bound checks of
-user-supplied indexes.  For SP2, the attacker will in many cases will
-be limited to executing arbitrary pre-existing code inside of Xen.
-For SP3 (and other cases for SP2), an attacker can write arbitrary
-code to speculatively execute.
-
-Additionally, in general, attacks within a guest (from guest user to
-guest kernel) will be the same as on real hardware.  Consult your
-operating system provider for more information.
-
-NOTE ON TIMING
-==============
-
-This vulnerability was originally scheduled to be made public on 9
-January.  It was accelerated at the request of the discloser due to
-one of the issues being made public.
-
-VULNERABLE SYSTEMS
-==================
-
-Systems running all versions of Xen are affected.
-
-For SP1 and SP2, both Intel and AMD are vulnerable.  Vulnerability of
-ARM processors to SP1 and SP2 varies by model and manufacturer.  ARM
-has information on affected models on the following website:
-   https://developer.arm.com/support/security-update
-
-For SP3, only Intel processors are vulnerable.  (The hypervisor cannot
-be attacked using SP3 on any ARM processors, even those that are
-listed as affected by SP3.)
-
-Furthermore, only 64-bit PV guests can exploit SP3 against Xen.  PVH,
-HVM, and 32-bit PV guests cannot exploit SP3.
-
-MITIGATION
-==========
-
-There is no mitigation for SP1 and SP2.
-
-SP3 can be mitigated by running guests in HVM or PVH mode.
-(Within-guest attacks are still possible unless the guest OS has also
-been updated with an SP3 mitigation series such as KPTI/Kaiser.)
-
-For guests with legacy PV kernels which cannot be run in HVM or PVH
-mode directly, we have developed two "shim" hypervisors that allow PV
-guests to run in HVM mode or PVH mode.  This prevents attacks on the
-host, but it leaves the guest vulnerable to Meltdown attacks by its
-own unprivileged processes, even if the guest OS has KPTI or similar
-Meltdown mitigation.
-
-The HVM shim (codenamed "Vixen") is available now, as is the PVH shim
-(codenamed "Comet") for Xen 4.10.  We expect to have Comet for 4.8 and
-4.9 within a few days.  Please read README.which-shim to determine
-which shim is suitable for you.
-
-$ sha256sum xsa254*/*
-34749c1169c5c8a1c0f7457184998e17ae54d5b262984150286db74ac1a82d22  xsa254/README.comet
-1c594822dbd95998951203f6094bc77586d5720788de15897784d20bacb2ef08  xsa254/README.vixen
-7e816160c1c1d1cd93ec3c3dd9753c8f3957fefe86b7aa967e9e77833828f849  xsa254/README.which-shim
-1d2098ad3890a5be49444560406f8f271c716e9f80e7dfe11ff5c818277f33f8  xsa254/pvshim-converter.pl
-$
-
-RESOLUTION
-==========
-
-There is no available resolution for SP1.  A solution may be available
-in the future.
-
-We are working on patches which mitigate SP2 but these are not
-currently available.  Given that the vulnerabilities are now public,
-these will be developed and published in public, initially via
-xen-devel.
+I think it would be good if the WKD draft would be updated to clarify
+that a client should never answer to any 401 authentication requests
+from the server.
 
 
-NOTE ON LACK OF EMBARGO
-=======================
+I discovered this together with Moritz Tremmel (We discovered this by
+accident due to a server serving HTTP authentication requests for
+every path starting with a dot). After we reported this to Enigmail we
+learned that this was previously reported in the public bug tracker:
+https://sourceforge.net/p/enigmail/bugs/890/
 
-The timetable and process were set by the discloser.
+[1] https://tools.ietf.org/html/draft-koch-openpgp-webkey-service-07
+[2]
+http://www.joachim-breitner.de/blog/56-Like_XSS,_just_simpler_and_harder_to_prevent__The_Cross_Site_Auth_(XSA)_Attack
+-- 
+Hanno Böck
+https://hboeck.de/
 
-After the intensive initial response period for these vulnerabilities
-is over, we will prepare and publish a full timeline, as we have done
-in a handful of other cases of significant public interest where we
-saw opportunities for process improvement.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJaWPSKAAoJEIP+FMlX6CvZkicH/2H/Nn8eN90XeK6cXXTnz4Nx
-OhDM1Rr9K0Sdnw84T5azKbtpEjPhiM762oRMRgO6uAYHs4cbCHemDLvruqS65Se5
-0+Gs6V0b7nqXPremlulqe81A2rTBlmqtFTCQf2VWg2uLLHXwMVtbqCtCCdzmMA+w
-XyiVQUO/MfgEOjbgM2XJSfmA0TcZfTClDW3FCvb9LhYLgdOGioxpGQ+SGsSNiZOL
-0acn2eocI+Lihr0o/bX6tkhePTzThVOniah/AfIOcKD6WqEeN0NXdHZQUOOXCMMq
-Js8tlwCu1ixrg8IFngUxFAKrD3Ge0pEmtCw90yWdhY/vsS6eE80Ixj+ZqaKUATE=
-=FHIM
------END PGP SIGNATURE-----
-
-Download attachment "xsa254/README.comet" of type "application/octet-stream" (1830 bytes)
-
-Download attachment "xsa254/README.vixen" of type "application/octet-stream" (2736 bytes)
-
-Download attachment "xsa254/README.which-shim" of type "application/octet-stream" (4010 bytes)
-
-Download attachment "xsa254/pvshim-converter.pl" of type "application/octet-stream" (6762 bytes)
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
