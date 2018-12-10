@@ -1,40 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/04/7
-Message-ID: <CABDpyCjSKaT9bVNajr0L52b_abuxHL0xWLB=5++ytUzD_JyCRg@mail.gmail.com>
-Date: Wed, 4 Apr 2018 15:04:17 -0700
-From: Daniel Dai <daijy@...che.org>
-To: user@...e.apache.org, dev@...e.apache.org, announce@...che.org,  security <security@...e.apache.org>, oss-security@...ts.openwall.com,  The bear in Boulder <bgiles@...otesong.com>
-Subject: [SECURITY] CVE-2018-1282 JDBC driver is susceptible to SQL injection attack if the input parameters are not properly cleaned
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/10/6
+Message-ID: <20181210154020.GA2063@openwall.com>
+Date: Mon, 10 Dec 2018 16:40:20 +0100
+From: Solar Designer <solar@...nwall.com>
+To: Pavel Cheremushkin <Pavel.Cheremushkin@...persky.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: libvnc and tightvnc vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-1282: JDBC driver is susceptible to SQL injection attack if
-the input parameters are not properly cleaned
+On Mon, Dec 10, 2018 at 12:48:43PM +0000, Pavel Cheremushkin wrote:
+> 2. heap buffer overflow in rfbServerCutText handler
+>     Heap buffer overflow in `rfbServerCutText` handler inside `HandleRFBServerMessage` happens due to the malloc argument unsigned integer overflow on line rfbproto.c:1220. Suppose msg.sct.length equals 0xffffffff, then `malloc(msg.sct.length+1);` = `malloc(0);` will allocate small heap chunk of size 0x10. But `msg.sct.length` = 0xffffffff bytes may be read in this chunk on line 1222 (`ReadFromRFBServer(serverCutText, msg.sct.length)`).
 
-Severity: Important
+This one is interesting in that related server-side code got some
+scrutiny before, yet apparently this similar issue in its client-side
+counterpart was overlooked.  (I assume this is in
+libvncclient/rfbproto.c, and you meant line 2220, not 1220.)
 
-Vendor: The Apache Software Foundation
+Specifically, the oCERT advisory from 2014 based on "vulnerability
+report received from Nicolas Ruff of Google Security Team":
 
-Versions Affected: This vulnerability affects all versions of Hive
-JDBC driver from 0.7.1
+https://www.openwall.com/lists/oss-security/2014/09/25/11
+https://ocert.org/advisories/ocert-2014-007.html
 
-Description: This vulnerability in Hive allows carefully crafted arguments to be
-used to bypass the argument escaping/cleanup that JDBC driver does in
-PreparedStatement implementation.
+"A malicious VNC client can trigger multiple DoS conditions on the VNC
+server by advertising a large [...] ClientCutText message length [...]"
 
-Mitigation: It is recommended to upgrade prior version of Hive JDBC
-driver to 2.3.3.
-Note Hive JDBC driver is not backward compatible with HiveServer2,
-which means newer version of Hive JDBC driver may not talk to older version
-of HiveServer2. In particular, Hive JDBC driver 2.3.3 won't talk
-to HiveServer2 2.1.1 or prior. If user is using Hive code 2.1.1 or below
-they might need to upgrade all the Hive instances to 2.3.3.
+Per this wording, there was no integer overflow potential in the
+server-side code.  Just potentially maliciously large allocation.
 
+This reminds us now: in the client-side code, we should also deal not
+only with the integer overflow potential, but also with potentially
+maliciously large allocation.
 
-Alternative to the upgrade, is to take the follow two actions in your
-Hive JDBC client code/application when dealing with user provided
-input in PreparedStatement:
-1. Avoid passing user input PreparedStatement.setBinaryStream
-2. Sanitize the user input for PreparedStatement.setString, by
-replacing all occurrences of \' to '
+The thread I started earlier this year:
 
-Credit: This issue was discovered by Bear Giles of SnapLogic
+https://www.openwall.com/lists/oss-security/2018/02/18/1
+
+"LibVNCServer rfbserver.c: rfbProcessClientNormalMessage() case
+rfbClientCutText doesn't sanitize msg.cct.length"
+
+I did not look at the VNC client code as it was not relevant to the
+security audit I was working on when I found the server-side issue.
+
+Alexander
