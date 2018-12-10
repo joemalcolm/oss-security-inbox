@@ -1,135 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/11/1
-Message-ID: <alpine.DEB.2.20.1807110007350.29047@tvnag.unkk.fr>
-Date: Wed, 11 Jul 2018 08:06:01 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl SMTP send heap buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/10/5
+Message-ID: <9396dbd0a417440abe9bbb830e7b612f@kaspersky.com>
+Date: Mon, 10 Dec 2018 12:48:43 +0000
+From: Pavel Cheremushkin <Pavel.Cheremushkin@...persky.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: libvnc and tightvnc vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-SMTP send heap buffer overflow
-==============================
+Hello,
 
-Project curl Security Advisory, July 11th 2018 -
-[Permalink](https://curl.haxx.se/docs/adv_2018-70a2.html)
+LibVNC is a cross-platform library to implement programs that use RFB (remote frame buffer protocol). Although, on its Github page (https://github.com/LibVNC/libvncserver) it is stated that libvnc is designed to implement server-side software, it also has functionality to implement a VNC client. Due to the fact that many ICS vendors use open source VNC products I would like to drag some attention to the VNC products because they have some problems that should be fixed asap.
 
-VULNERABILITY
--------------
+During recent research of libvnc I managed to discover few vulnerabilities (11 in total) which affect products that are using libvncserver and libvncclient (https://github.com/LibVNC/libvncserver/issues?utf8=%E2%9C%93&q=is%3Aissue+author%3Apaulcher). There are a couple of issues left to the next release of libvnc (https://github.com/LibVNC/libvncserver/milestone/4), but the packages, that I have recently reviewed still didn't patch vulnerabilities that were found quite some time ago. Meanwhile, an issue that has been found by @ateska (https://github.com/LibVNC/libvncserver/issues/211) is critical, affects VirtualBox and probably every multithreading VNC server that is based on libvnc and it is still not patched after almost a year.
 
-curl might overflow a heap based memory buffer when sending data over SMTP and
-using a reduced read buffer.
+At first, I thought that these issues were inside the code that was written by libvnc developers, by this wasn't exactly the case. Some of them (i.e. buffer overflow inside heap structure in CoRRE handler https://github.com/LibVNC/libvncserver/issues/250) were inside vulnerable code written by AT&T Laboratories in 1999 and got copy-pasted by many software developers (you can see it by trying to find HandleCoRREBPP function in Github search), as well by LibVNC and TightVNC  developers. LibVNC contributors managed to fix all security issues that I have reported to them so far. Also I tried to report these vulnerabilities in TightVNC software version 1.3.10 (which is used, for example, in latest Ubuntu "xtightvncviewer" package) to GlavSoft company, who are authors of the TightVNC software:
 
-When sending data over SMTP, curl allocates a separate "scratch area" on the
-heap to be able to escape the uploaded data properly if the uploaded data
-contains data that requires it.
+```
+1. global buffer overflow in corre.c
+    In `vnc_unixsrc/vncviewer/corre.c` inside the `HandleCoRREBPP` function global buffer overflow occurs due to the lack of size check.
+    `buffer` is defined in rfbproto.c:96 as ```char buffer[640*480];```. Inside `HandleCoRREBPP` function data is being read to the buffer `ReadFromRFBServer(buffer, hdr.nSubrects * (4 + (BPP / 8))` where `hdr.nSubrects` is 32-bit unsigned integer controlled by remote user.
 
-The size of this temporary scratch area was mistakenly made to be `2 *
-sizeof(download_buffer)` when it should have been made `2 *
-sizeof(upload_buffer)`.
+2. heap buffer overflow in rfbServerCutText handler
+    Heap buffer overflow in `rfbServerCutText` handler inside `HandleRFBServerMessage` happens due to the malloc argument unsigned integer overflow on line rfbproto.c:1220. Suppose msg.sct.length equals 0xffffffff, then `malloc(msg.sct.length+1);` = `malloc(0);` will allocate small heap chunk of size 0x10. But `msg.sct.length` = 0xffffffff bytes may be read in this chunk on line 1222 (`ReadFromRFBServer(serverCutText, msg.sct.length)`).
 
-The upload and the download buffer sizes are identically sized by default
-(16KB) but since version 7.54.1, curl can resize the download buffer into a
-smaller buffer (as well as larger). If the download buffer size is set to a
-value smaller than 10923, the `Curl_smtp_escape_eob()` function might overflow
-the scratch buffer when sending contents of sufficient size and contents.
+3. heap buffer overflow in InitialiseRFBConnection function
+    Heap buffer overflow `InitialiseRFBConnection` function happens due to the malloc argument unsigned integer overflow on line rfbproto.c:307. Because of the integer overflow `malloc` function will allocate small heap chunk of size 0x10 and 0xffffffff bytes will be read into the chunk by ReadFromRFBServer function.
 
-The curl command line tool lowers the buffer size when `--limit-rate` is set
-to a value smaller than 16KB.
+4. null-ptr dereference in `zlib.c`
+    Because malloc result is not checked after allocation on line zlib.c:56 null pointer dereference is possible if malloc argument is too big and malloc fill fail to allocate memory Allocation of raw buffer : `raw_buffer = (char*) malloc( raw_buffer_size );`, next usage of raw_buffer is on line 68
+```
 
-We are not aware of any exploit of this flaw.
+But GlavSoft representative politely declined to patch the 1.X version of TightVNC software, because it doesn't bring any income to the company. They are currently developing TightVNC 2.X, which is not affected by GPL licenses in third-party code. This is the exact answer of the GlavSoft representative (in Russian):
 
-TEST CASES
-----------
-Here's a shell script
 
-     # Setup an SMTP end-point, make file, run curl
-     $ printf '220 Hi\n250 SIZE 10000\n250 OK\n250 OK\n354 send data\n' | nc -l -p 2525 >/dev/null &
-     $ printf '%5000s' > mail.txt
-     $ curl -v smtp://localhost:2525 --mail-from me --mail-rcpt root@...alhost --upload-file mail.txt --limit-rate 1024
 
-PHP code:
+К сожалению, как коммерческой организации, нам совершенно нерентабельно заниматься TightVNC 1.x, т.к. оно содержит чужой GPL-код и поэтому мы не имеем возможность предлагать этот код под другими лицензиями. А техподдержка в случае с TightVNC никогда не приносила нам сколь-нибудь существенного дохода. Поэтому, увы, версии 1.x нам совсем неинтересны.
 
-     <?php
-     $ch = curl_init();
-     curl_setopt($ch, CURLOPT_URL, "smtp://localhost:2525");
-     curl_setopt($ch, CURLOPT_BUFFERSIZE, 1024);
-     curl_setopt($ch, CURLOPT_UPLOAD, 1);
-     curl_setopt($ch, CURLOPT_MAIL_FROM, "me");
-     curl_setopt($ch, CURLOPT_MAIL_RCPT, ["root@...alhost"]);
-     curl_setopt($ch, CURLOPT_VERBOSE, 1);
-     $eof = false;
-     curl_setopt($ch, CURLOPT_READFUNCTION, function($ch, $stream, $maxSize) {
-         global $eof;
-         echo "Max Size: [$maxSize]\n";
-         if ($eof) {
-             return "";
-         }
-         $eof = true;
-         return str_repeat(" ", $maxSize);
-     });
-     curl_exec($ch);
-     curl_close($ch);
+That being said, package maintainers should probably patch these vulnerabilities by themselves if they want to continue supporting TightVNC 1.X packages in their repositories.
 
-INFO
-----
+These bugs are so obvious and I still cannot believe that they haven't been already found by anyone else. So please tell me if these issues have been already discovered before, but remained unpatched for some reason.
 
-This bug was introduced in April 2017 in [this
-commit](https://github.com/curl/curl/commit/e40e9d7f0decc79) when we
-introduced support for buffer resize. The scratch buffer was mistakenly made
-to use the dynamic size when it should kept using the fixed upload buffer
-size.
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2018-0500 to this issue.
+Best Regards,
+Pavel Cheremushkin
+Security Researcher| ICS CERT Vulnerability Research Group | Kaspersky Lab
+39A bld.2 Leningradskoye Highway, Moscow 125212, Russia | www.kaspersky.com<http://www.kaspersky.com/>,www.securelist.com<http://www.securelist.com/>
 
-CWE-122: Heap-based Buffer Overflow
 
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.54.1 to and including curl 7.60.0
-- Not affected versions: curl < 7.54.1 and curl >= 7.61.0
-
-libcurl is used by many applications, but not always advertised as such.
-
-THE SOLUTION
-------------
-
-In curl version 7.61.0, curl will use the upload buffer size as base for the
-scratch area allocation.
-
-A [patch for CVE-2018-0500](https://github.com/curl/curl/commit/ba1dbd78e5f1e.patch) is
-available.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl to version 7.61.0
-
-  B - Apply the patch to your version and rebuild
-
-  C - Avoid using SMTP uploads with CURLOPT_BUFFERSIZE set below 10923
-
-TIME LINE
----------
-
-It was reported to the curl project on June 11, 2018
-
-We contacted distros@...nwall on July X, 2018.
-
-curl 7.61.0 was released on July 11 2018, coordinated with the publication of
-this advisory.
-
-CREDITS
--------
-
-Detected and researched by Peter Wu. Patch by Daniel Stenberg.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
