@@ -1,31 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/09/11
-Message-ID: <CAJ_zFkJ=n=xriGFHYLG5LdySg_BdLioG_wA1p8NV71_DzvBdPA@mail.gmail.com>
-Date: Tue, 9 Oct 2018 15:32:02 -0700
-From: Tavis Ormandy <taviso@...gle.com>
-To: oss-security@...ts.openwall.com
-Cc: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
-Subject: Re: ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/10/8
+Message-ID: <20181210185721.GA4259@openwall.com>
+Date: Mon, 10 Dec 2018 19:57:21 +0100
+From: Solar Designer <solar@...nwall.com>
+To: Pavel Cheremushkin <Pavel.Cheremushkin@...persky.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: libvnc and tightvnc vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 9, 2018 at 3:27 PM Perry E. Metzger <perry@...rmont.com> wrote:
+On Mon, Dec 10, 2018 at 04:08:00PM +0000, Pavel Cheremushkin wrote:
+> These particular issues I was describing in my previous letter are located in source code of TightVNC vncviewer. Source code of TightVNC 1.3.10 vncviewer can be acquired though this link https://www.tightvnc.com/download/1.3.10/tightvnc-1.3.10_unixsrc.tar.gz and integer overflow that leads to a heap-buffer-overflow I was speaking about is located on the line 1220 inside file `vnc_unixsrc/vncviewer/rfbproto.c`. It is a fun fact that inside `libvncclient/rfbproto.c` the same code is located on line 2220, but all bugs connected with LibVNC I described in Github issues inside LibVNC repository.
 
-> I keep wondering if there isn't a way to fully remove the dangerous
-> bits from a postscript interpreter so it can _only_ be used to view
-> the document and literally has no file system access compiled in at
-> all, so there's no way to touch the fs etc. regardless of what flags
-> the interpreter is invoked with.
->
-> (I, too, find removing the ability to look at historical postscript
-> documents a bit more draconian than I like.)
->
->
-I've discussed it with upstream, it's a hard no because they feel it would
-make ghostscript non-conforming (i.e. non-conforming with the Adobe
-PostScript Language Reference Manual)
+Oh.  So you reported the instance of that one issue in LibVNC here:
 
-We probably have similar thoughts on this, but that is the final word from
-upstream.
+https://github.com/LibVNC/libvncserver/issues/247
 
-Tavis.
+Upstream's fix appears to be to add casts to (uint64_t) before adding 1
+in those many malloc() calls.  On platforms with larger than 32-bit
+size_t, this should be sufficient against integer overflows since the
+sizes are read from 32-bit protocol fields, but it isn't sufficient to
+prevent maliciously large memory allocation on the client by a rogue
+server.  On a platform with 32-bit size_t, this isn't even sufficient to
+prevent the integer overflows.  If I haven't missed anything, it'd be
+great if you open a new issue suggesting introduction of safety limits
+prior to those malloc() lines.
 
+The current code is:
+
+  case rfbServerCutText:
+  {
+    char *buffer;
+
+    if (!ReadFromRFBServer(client, ((char *)&msg) + 1,
+			   sz_rfbServerCutTextMsg - 1))
+      return FALSE;
+
+    msg.sct.length = rfbClientSwap32IfLE(msg.sct.length);
+
+    buffer = malloc((uint64_t)msg.sct.length+1);
+
+    if (!ReadFromRFBServer(client, buffer, msg.sct.length)) {
+      free(buffer);
+      return FALSE;
+    }
+
+    buffer[msg.sct.length] = 0;
+
+    if (client->GotXCutText)
+      client->GotXCutText(client, buffer, msg.sct.length);
+
+    free(buffer);
+
+    break;
+}
+
+but per the commits referenced in issue #247 above, there are many more
+instances of the "malloc(... + 1)" pattern, which were patched similarly
+incompletely.
+
+Thanks,
+
+Alexander
