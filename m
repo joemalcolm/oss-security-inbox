@@ -1,79 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/05/1
-Message-ID: <20181105200739.GB25817@TC-275.local>
-Date: Mon, 5 Nov 2018 12:07:39 -0800
-From: Aaron Patterson <tenderlove@...y-lang.org>
-To: security@...e.de, rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
-Subject: [CVE-2018-16470] Possible DoS vulnerability in Rack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/10/2
+Message-Id: <DEF7ECE9-A4B6-46B2-8485-481FCE9D138D@beckweb.net>
+Date: Mon, 10 Dec 2018 01:50:37 +0100
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Script sandbox bypass in multiple Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-There is a possible DoS vulnerability in the multipart parser in Rack. This
-vulnerability has been assigned the CVE identifier CVE-2018-16470.
 
-Versions Affected:  2.0.4, 2.0.5
-Not affected:       <= 2.0.3
-Fixed Versions:     2.0.6
 
-Impact
-------
-There is a possible DoS vulnerability in the multipart parser in Rack.
-Carefully crafted requests can cause the multipart parser to enter a
-pathological state, causing the parser to use CPU resources disproportionate to
-the request size.
+> On 29. Oct 2018, at 14:42, Daniel Beck <ml@...kweb.net> wrote:
+> 
+> SECURITY-1186
+> The Groovy Sandbox library used by Script Security Plugin and Pipeline Groovy
+> Plugin did not apply sandbox restrictions to finalize methods. This could be
+> used to invoke arbitrary constructors and methods, bypassing sandbox
+> protection.
+> 
+> Finalize methods are now prohibited in classes subject to sandbox security.
 
-Impacted code can look something like this:
+CVE-2018-1000865 (Script Security Plugin) and CVE-2018-1000866 (Pipeline: Groovy Plugin)
 
-```
-  Rack::Request.new(env).params
-```
-
-But any code that uses the multi-part parser may be vulnerable.
-
-Rack users that have manually adjusted the buffer size in the multipart parser
-may be vulnerable as well.
-
-All users running an affected release should either upgrade or use one of the
-workarounds immediately.
-
-Releases
---------
-The 2.0.6 release is available at the normal locations.
-
-Workarounds
------------
-To work around this issue, the following code can be used:
-
-```
-require "rack/multipart/parser"
-
-Rack::Multipart::Parser.send :remove_const, :BUFSIZE
-Rack::Multipart::Parser.const_set :BUFSIZE, 16384
-```
-
-Patches
--------
-To aid users who aren't able to upgrade immediately we have provided patches for
-the supported release series. They are in git-am format and consist of a
-single changeset.
-
-* 2-0-multipart-dos.patch - Patch for 2.0 series
-
-Please note that only the 1.6.x and 2.0.x series are supported at present. Users
-of earlier unsupported releases are advised to upgrade as soon as possible as we
-cannot guarantee the continued availability of security fixes for unsupported
-releases.
-
-Credits
--------
-Thanks to the following people for reporting this issue!
-
-* Bo Jeanes <me@...anes.com>
-* Jack "chendo" Chen <me@...n.do>
-
--- 
-Aaron Patterson
-http://tenderlovemaking.com/
-
-View attachment "2-0-multipart-dos.patch" of type "text/plain" (981 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
