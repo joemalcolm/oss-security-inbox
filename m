@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4504" "Friday" "4" "August" "2017" "19:36:58" "+0200" "Solar Designer" "solar@openwall.com" "<20170804173658.GA31208@openwall.com>" "90" "Re: [oss-security] Reporting and disclosing Linux kernel vulnerabilities" "^Cc:" nil nil "8" "2017080417:36:58" "[oss-security] Reporting and disclosing Linux kernel vulnerabilities" (number mark "        solar@openwa Aug  4   90/4504  " thread-indent "\"Re: [oss-security] Reporting and disclosing Linux kernel vulnerabilities\"\n") "<CA+fCnZe3QtwBGRTsL=p9ju-NUkXeQp_1osz0mmZtKFaKUBvY_A@mail.gmail.com>" ("<CA+fCnZe3QtwBGRTsL=p9ju-NUkXeQp_1osz0mmZtKFaKUBvY_A@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5889" "Monday" "10" "December" "2018" "12:48:43" "+0000" "Pavel Cheremushkin" "Pavel.Cheremushkin@kaspersky.com" "<9396dbd0a417440abe9bbb830e7b612f@kaspersky.com>" "106" "[oss-security] libvnc and tightvnc vulnerabilities" "^Date:" nil nil "12" "2018121012:48:43" "[oss-security] libvnc and tightvnc vulnerabilities" (number mark "        Pavel.Cherem Dec 10  106/5889  " thread-indent "\"[oss-security] libvnc and tightvnc vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 17516 invoked by uid 550); 4 Aug 2017 17:40:05 -0000
+Received: (qmail 22243 invoked by uid 550); 10 Dec 2018 13:00:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,110 +11,147 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 16328 invoked from network); 4 Aug 2017 17:39:57 -0000
-Message-ID: <20170804173658.GA31208@openwall.com>
-References: <CA+fCnZe3QtwBGRTsL=p9ju-NUkXeQp_1osz0mmZtKFaKUBvY_A@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CA+fCnZe3QtwBGRTsL=p9ju-NUkXeQp_1osz0mmZtKFaKUBvY_A@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Cc: oss-security@lists.openwall.com, willemdebruijn.kernel@gmail.com,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Kostya Serebryany <kcc@google.com>
-Date: Fri, 4 Aug 2017 19:36:58 +0200
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 7463 invoked from network); 10 Dec 2018 12:49:04 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kaspersky.com;
+	s=mail; t=1544446133;
+	bh=Fqqqr9H0pZEHXjw2uWU2H3Y2/Mb2p9myto28Gw2oo4U=;
+	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version;
+	b=LKM+5OJ+MXQn6OYxRB+nntHuQaJZ5AE3agQMDO0VwvsWqjT0xuTktND2ptl78mLkY
+	 5qip2+G4WWYrWrHeFMGBCo+l6HHsOi8yRPYyFWotnLU2RO+NsxMcFuM9D+k/ldJCmL
+	 nbURFmF5P9AZFTCcw+l8Ij9Yq5eBTbBZlU0qrhps=
+Thread-Topic: libvnc and tightvnc vulnerabilities
+Thread-Index: AdSQfEQTGmJAaaQTQKO5Um5RBEacMw==
+Message-ID: <9396dbd0a417440abe9bbb830e7b612f@kaspersky.com>
+Accept-Language: en-US, ru-RU
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.64.68.128]
+x-kse-serverinfo: hqmailmbx1.avp.ru, 9
+x-kse-attachmentfiltering-interceptor-info: no applicable attachment filtering
+ rules found
+x-kse-antivirus-interceptor-info: scan successful
+x-kse-antivirus-info: Clean, bases: 10.12.2018 9:58:00
+x-kse-bulkmessagesfiltering-scan-result: InTheLimit
+Content-Type: multipart/alternative;
+	boundary="_000_9396dbd0a417440abe9bbb830e7b612fkasperskycom_"
+MIME-Version: 1.0
+X-KLMS-Rule-ID: 52
+X-KLMS-Message-Action: clean
+X-KLMS-AntiSpam-Status: not scanned, disabled by settings
+X-KLMS-AntiSpam-Interceptor-Info: not scanned
+X-KLMS-AntiPhishing: Clean, bases: 2018/12/10 12:15:00
+X-KLMS-AntiVirus: Kaspersky Security for Linux Mail Server, version 8.0.3.16, bases: 2018/12/10 08:18:00 #12726851
+X-KLMS-AntiVirus-Status: Clean, skipped
+Date: Mon, 10 Dec 2018 12:48:43 +0000
+From: Pavel Cheremushkin <Pavel.Cheremushkin@kaspersky.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Reporting and disclosing Linux kernel vulnerabilities
-To: Andrey Konovalov <andreyknvl@gmail.com>
+Subject: [oss-security] libvnc and tightvnc vulnerabilities
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
-On Fri, Aug 04, 2017 at 06:59:15PM +0200, Andrey Konovalov wrote:
-> It's not completely clear to me how to properly report and disclose
-> Linux kernel security issues. There are a few different parties [1, 2,
-> 3] that need to be informed and coordinated. I couldn't find a
-> publicly available actionable list of steps, so I've outlined it as I
-> see it here:
-> 
-> https://github.com/google/syzkaller/blob/master/docs/linux_kernel_reporting_bugs.md#reporting-security-bugs
+--_000_9396dbd0a417440abe9bbb830e7b612fkasperskycom_
+Content-Type: text/plain; charset="koi8-r"
+Content-Transfer-Encoding: quoted-printable
 
-Thank you!  I'm afraid the reality is that preferences vary, including
-even between different upstream developers.  That said, we should in
-fact probably try to come up with guidelines similar to what you made a
-start at.
+Hello,
 
-Here are some assorted comments from me:
+LibVNC is a cross-platform library to implement programs that use RFB (remo=
+te frame buffer protocol). Although, on its Github page (https://github.com=
+/LibVNC/libvncserver) it is stated that libvnc is designed to implement ser=
+ver-side software, it also has functionality to implement a VNC client. Due=
+ to the fact that many ICS vendors use open source VNC products I would lik=
+e to drag some attention to the VNC products because they have some problem=
+s that should be fixed asap.
 
-Please inform oss-security as soon as the issue is made public,
-anywhere.  There's no need to wait for a CVE, patch, nor anything to do
-that.  If the issue is public, it must be on oss-security right away.
-You should add CVE, patch, etc. by "replying" to your own message later.
-This especially makes a difference in your "Reporting minor security
-bugs", where making the issue public is currently listed as step 1, and
-posting it to oss-security as step 3, with a potentially time-consuming
-step 2 inbetween (waiting for a CVE).  Both must be part of step 1, or
-for clarity they may be steps 1 and 2 if there's expected to be no delay
-between them.
+During recent research of libvnc I managed to discover few vulnerabilities =
+(11 in total) which affect products that are using libvncserver and libvncc=
+lient (https://github.com/LibVNC/libvncserver/issues?utf8=3D%E2%9C%93&q=3Di=
+s%3Aissue+author%3Apaulcher). There are a couple of issues left to the next=
+ release of libvnc (https://github.com/LibVNC/libvncserver/milestone/4), bu=
+t the packages, that I have recently reviewed still didn't patch vulnerabil=
+ities that were found quite some time ago. Meanwhile, an issue that has bee=
+n found by @ateska (https://github.com/LibVNC/libvncserver/issues/211) is c=
+ritical, affects VirtualBox and probably every multithreading VNC server th=
+at is based on libvnc and it is still not patched after almost a year.
 
-In "Reporting major security bugs", you could make it clearer that
-there's no or little delay between notification to security@k.o and to
-linux-distros.  As currently written, it is unclear whether you
-recommend to wait for security@k.o to come up with a patch before
-informing linux-distros.
+At first, I thought that these issues were inside the code that was written=
+ by libvnc developers, by this wasn't exactly the case. Some of them (i.e. =
+buffer overflow inside heap structure in CoRRE handler https://github.com/L=
+ibVNC/libvncserver/issues/250) were inside vulnerable code written by AT&T =
+Laboratories in 1999 and got copy-pasted by many software developers (you c=
+an see it by trying to find HandleCoRREBPP function in Github search), as w=
+ell by LibVNC and TightVNC  developers. LibVNC contributors managed to fix =
+all security issues that I have reported to them so far. Also I tried to re=
+port these vulnerabilities in TightVNC software version 1.3.10 (which is us=
+ed, for example, in latest Ubuntu "xtightvncviewer" package) to GlavSoft co=
+mpany, who are authors of the TightVNC software:
 
-I hear that for netdev bugs, security@k.o is likely to ask you to post
-such bugs to the public netdev list right away, without any embargo.
-You could want to see whether this is in fact the case, and adjust your
-instructions if so.
+```
+1. global buffer overflow in corre.c
+    In `vnc_unixsrc/vncviewer/corre.c` inside the `HandleCoRREBPP` function=
+ global buffer overflow occurs due to the lack of size check.
+    `buffer` is defined in rfbproto.c:96 as ```char buffer[640*480];```. In=
+side `HandleCoRREBPP` function data is being read to the buffer `ReadFromRF=
+BServer(buffer, hdr.nSubrects * (4 + (BPP / 8))` where `hdr.nSubrects` is 3=
+2-bit unsigned integer controlled by remote user.
 
-I don't know whether the CNAs on linux-distros have control to "make the
-CVE description public" as you suggest as one of the steps.  This is a
-question to them - can they?  I assume this means the description isn't
-available to MITRE nor anyone outside of linux-distros (and the distros'
-people with need-to-know) before that step.
+2. heap buffer overflow in rfbServerCutText handler
+    Heap buffer overflow in `rfbServerCutText` handler inside `HandleRFBSer=
+verMessage` happens due to the malloc argument unsigned integer overflow on=
+ line rfbproto.c:1220. Suppose msg.sct.length equals 0xffffffff, then `mall=
+oc(msg.sct.length+1);` =3D `malloc(0);` will allocate small heap chunk of s=
+ize 0x10. But `msg.sct.length` =3D 0xffffffff bytes may be read in this chu=
+nk on line 1222 (`ReadFromRFBServer(serverCutText, msg.sct.length)`).
 
-Just like in "Reporting minor security bugs", there should be almost no
-delays between the different public disclosure steps - CVE description,
-distros' updates, upstream commit, notification to oss-security.  All of
-these should be on the same day, at worst.  Perhaps clarify this.
+3. heap buffer overflow in InitialiseRFBConnection function
+    Heap buffer overflow `InitialiseRFBConnection` function happens due to =
+the malloc argument unsigned integer overflow on line rfbproto.c:307. Becau=
+se of the integer overflow `malloc` function will allocate small heap chunk=
+ of size 0x10 and 0xffffffff bytes will be read into the chunk by ReadFromR=
+FBServer function.
 
-When you refer to linux-distros, please ask people to carefully read the
-distros list wiki page before sending anything to the list.  They must
-be aware of list policy, and they must learn of the magic string to
-include in the Subject from there (do not list this magic string in your
-own instructions, though - just like you correctly don't do it now).
+4. null-ptr dereference in `zlib.c`
+    Because malloc result is not checked after allocation on line zlib.c:56=
+ null pointer dereference is possible if malloc argument is too big and mal=
+loc fill fail to allocate memory Allocation of raw buffer : `raw_buffer =3D=
+ (char*) malloc( raw_buffer_size );`, next usage of raw_buffer is on line 68
+```
 
-The "good example" of oss-security posting that you refer to does in
-fact demonstrate a good oss-security posting, but it also demonstrates
-problematic handling of the issue before that point.  Here's the
-timeline found in that message:
+But GlavSoft representative politely declined to patch the 1.X version of T=
+ightVNC software, because it doesn't bring any income to the company. They =
+are currently developing TightVNC 2.X, which is not affected by GPL license=
+s in third-party code. This is the exact answer of the GlavSoft representat=
+ive (in Russian):
 
-2016-11-28: Bug reported to security () kernel org
-2016-11-30: Patch submitted to netdev, notification sent to linux-distros
-2016-12-02: Patch committed to mainline kernel
-2016-12-06: Public announcement
 
-"2016-11-30: Patch submitted to netdev" essentially means making the
-issue public.  (I guess this is an instance of what I had meant above
-regarding netdev issues being forced to the public from security@k.o.)
-After that time, there was no point in "notification sent to
-linux-distros" (which is for private issues only), and instead
-"2016-12-06: Public announcement" should have occurred on oss-security
-right away on 2016-11-30 (all linux-distros members are supposed to
-monitor oss-security).  Keeping the issue "semi-"public like that is
-generally wrong.
 
-(I don't recall the details of why we let it happen the way it did for
-that one issue last year.  My comments above are in general.)
+=EB =D3=CF=D6=C1=CC=C5=CE=C9=C0, =CB=C1=CB =CB=CF=CD=CD=C5=D2=DE=C5=D3=CB=
+=CF=CA =CF=D2=C7=C1=CE=C9=DA=C1=C3=C9=C9, =CE=C1=CD =D3=CF=D7=C5=D2=DB=C5=
+=CE=CE=CF =CE=C5=D2=C5=CE=D4=C1=C2=C5=CC=D8=CE=CF =DA=C1=CE=C9=CD=C1=D4=D8=
+=D3=D1 TightVNC 1.x, =D4.=CB. =CF=CE=CF =D3=CF=C4=C5=D2=D6=C9=D4 =DE=D5=D6=
+=CF=CA GPL-=CB=CF=C4 =C9 =D0=CF=DC=D4=CF=CD=D5 =CD=D9 =CE=C5 =C9=CD=C5=C5=
+=CD =D7=CF=DA=CD=CF=D6=CE=CF=D3=D4=D8 =D0=D2=C5=C4=CC=C1=C7=C1=D4=D8 =DC=D4=
+=CF=D4 =CB=CF=C4 =D0=CF=C4 =C4=D2=D5=C7=C9=CD=C9 =CC=C9=C3=C5=CE=DA=C9=D1=
+=CD=C9. =E1 =D4=C5=C8=D0=CF=C4=C4=C5=D2=D6=CB=C1 =D7 =D3=CC=D5=DE=C1=C5 =D3=
+ TightVNC =CE=C9=CB=CF=C7=C4=C1 =CE=C5 =D0=D2=C9=CE=CF=D3=C9=CC=C1 =CE=C1=
+=CD =D3=CB=CF=CC=D8-=CE=C9=C2=D5=C4=D8 =D3=D5=DD=C5=D3=D4=D7=C5=CE=CE=CF=C7=
+=CF =C4=CF=C8=CF=C4=C1. =F0=CF=DC=D4=CF=CD=D5, =D5=D7=D9, =D7=C5=D2=D3=C9=
+=C9 1.x =CE=C1=CD =D3=CF=D7=D3=C5=CD =CE=C5=C9=CE=D4=C5=D2=C5=D3=CE=D9.
 
-That's it for now.  I'm sorry for not having a set of clear and simple
-edits to your current proposal, but I do hope this thread will result in
-a better "publicly available actionable list of steps", as you suggest.
-Thank you for working on it!
+That being said, package maintainers should probably patch these vulnerabil=
+ities by themselves if they want to continue supporting TightVNC 1.X packag=
+es in their repositories.
 
-> [1] https://www.kernel.org/doc/html/latest/admin-guide/security-bugs.html
-> 
-> [2] http://oss-security.openwall.org/wiki/mailing-lists/distros
-> 
-> [3] http://oss-security.openwall.org/wiki/mailing-lists/oss-security
+These bugs are so obvious and I still cannot believe that they haven't been=
+ already found by anyone else. So please tell me if these issues have been =
+already discovered before, but remained unpatched for some reason.
 
-Alexander
+
+Best Regards,
+Pavel Cheremushkin
+Security Researcher| ICS CERT Vulnerability Research Group | Kaspersky Lab
+39A bld.2 Leningradskoye Highway, Moscow 125212, Russia | www.kaspersky.com=
+<http://www.kaspersky.com/>,www.securelist.com<http://www.securelist.com/>
+
+
+--_000_9396dbd0a417440abe9bbb830e7b612fkasperskycom_--
