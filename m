@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3019" "Wednesday" "8" "April" "2015" "14:19:28" "+0200" "Yann Droneaud" "ydroneaud@opteya.com" "<1428495568.22575.172.camel@opteya.com>" "74" "[oss-security] Re: CVE-2014-8159 kernel: infiniband: uverbs: unprotected physical memory access" nil nil nil "4" "2015040812:19:28" "[oss-security] Re: CVE-2014-8159 kernel: infiniband: uverbs: unprotected physical memory access" (number mark "        ydroneaud@op Apr  8   74/3019  " thread-indent "\"[oss-security] Re: CVE-2014-8159 kernel: infiniband: uverbs: unprotected physical memory access\"\n") "<AM2PR05MB0929EDC60BBE5DAAAD4AB1B4DCF20@AM2PR05MB0929.eurprd05.prod.outlook.com>" ("<AM3PR05MB0935AABF569F15EA846B8E72DC000@AM3PR05MB0935.eurprd05.prod.outlook.com>" "<1427969085.17020.5.camel@opteya.com>" "<AM3PR05MB0935AA4898B4B519D2DAA3C4DCF20@AM3PR05MB0935.eurprd05.prod.outlook.com>" "<1427987752.22575.65.camel@opteya.com>" "<AM2PR05MB0929EDC60BBE5DAAAD4AB1B4DCF20@AM2PR05MB0929.eurprd05.prod.outlook.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3570" "Monday" "10" "December" "2018" "15:45:14" "-0500" "Ren Kimura" "rkx1209dev@gmail.com" "<CALoRt7T8LLCCU5svHOuPfr9dZ+UV_B4WaQZruByMnkjkcLDypg@mail.gmail.com>" "86" "[oss-security] Re: mpg321: Out-of-bounds Write" "^Cc:" nil nil "12" "2018121020:45:14" "[oss-security] Re: mpg321: Out-of-bounds Write" (number mark "U       rkx1209dev@g Dec 10   86/3570  " thread-indent "\"[oss-security] Re: mpg321: Out-of-bounds Write\"\n") "<CAON6N-X1hLhsrS8_v12UGkuuYLhYeoNT3TAFeN3hw99_M5B0yw@mail.gmail.com>" ("<CALoRt7TAYGsPRWqtDqJ4dyKfV1O634qYfbq9pDU_X1K=A9ONgQ@mail.gmail.com>" "<CALoRt7RdH+PYW9TDmzX1bSZhiPqEbQdCgGEJ9VWZnKLrBftCLA@mail.gmail.com>" "<CAON6N-X1hLhsrS8_v12UGkuuYLhYeoNT3TAFeN3hw99_M5B0yw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28116 invoked by uid 550); 8 Apr 2015 12:24:33 -0000
+Received: (qmail 5594 invoked by uid 550); 10 Dec 2018 20:54:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,107 +11,131 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 25625 invoked from network); 8 Apr 2015 12:19:48 -0000
-Message-ID: <1428495568.22575.172.camel@opteya.com>
-In-Reply-To: <AM2PR05MB0929EDC60BBE5DAAAD4AB1B4DCF20@AM2PR05MB0929.eurprd05.prod.outlook.com>
-References: 
-	<AM3PR05MB0935AABF569F15EA846B8E72DC000@AM3PR05MB0935.eurprd05.prod.outlook.com>
-	 <1427969085.17020.5.camel@opteya.com>
-	 <AM3PR05MB0935AA4898B4B519D2DAA3C4DCF20@AM3PR05MB0935.eurprd05.prod.outlook.com>
-	 <1427987752.22575.65.camel@opteya.com>
-	 <AM2PR05MB0929EDC60BBE5DAAAD4AB1B4DCF20@AM2PR05MB0929.eurprd05.prod.outlook.com>
-Organization: OPTEYA
+Received: (qmail 32078 invoked from network); 10 Dec 2018 20:45:38 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=nPxtDY2N1veQqPiaYRERi233iLxoQJKe9GZVMYXaBYo=;
+        b=AAIXe4sab8bwNKcIKUD7uXykn//4F7atbp/6Ru4sSDs7HRemnuiX/7hm708dPwYuUj
+         75v6x+fi1gHlSYxXzXQqpGK58u6aC5sfo/3diPljQuoBRp4pP1FL7+O8rpbddK7LENQx
+         qdrjxLOtYjarJm1/0ruFxsQcOc9kRPmeVxBZ/RYu84sdxW2wRmDXdQKB28ns3F1UZarb
+         Pns8WviQCyaXr9TWBUWxKB4EPYLrDxrDeOtQUL4cvpRVV/I9Q+igQ4hnsdBs1+Pl7ptf
+         AS4h39gwbsUiQveez1e3RdFMn7JHcSwbcNrvlHRJMwxo5saoVooILMBngflUEwVVqJyg
+         14mw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=nPxtDY2N1veQqPiaYRERi233iLxoQJKe9GZVMYXaBYo=;
+        b=WBjlMzsS/khDuOCC2n7agO3yOxNcK2MaOWtB3+YlN04/TYCKkAVgZGcHnxW56xaeq/
+         V3zibWaLW6HR+raL0z7Bq29NTb2XknhYljZzvnHk8YLWQRYI7n7tP4yKSwHJvAO89gOE
+         wYV4RxAqlqLzLICIRgARfhWbvkH6mQ1R0FPIvUY6bxmzVSeYRprQeUjJIoh+o5zdrppS
+         T/b1fyaM1dxZ+CH5H13879gXGrSN8/19WEEFTsEwxktSoGcrjXQX7JJx6GeFhnIZ//TP
+         Xr/uRsSr7lGTciwAq1ii2POtjpOiGH1nlhe4bggXyjoZx0C3lL1gi+Hlpw4VLrUCF0Qm
+         EvLg==
+X-Gm-Message-State: AA+aEWa6o4FRJIrVAW3iraSdYFvA5aKrRjBXvyFihmGhNa9JydivyScx
+	fJVpXDRoQW0vl1ncq9Wdld6B6BhNaVIakyldLIU=
+X-Google-Smtp-Source: AFSGD/VHrVqGjRwrHV5k4mm9Q59g5tlOONJB9xgxxUFKi/QV1rUq2Iug2nS4N1WWi87btQ95AT/izK7xxKHtRQ3h5Bs=
+X-Received: by 2002:a67:2a83:: with SMTP id q125mr6018478vsq.230.1544474726153;
+ Mon, 10 Dec 2018 12:45:26 -0800 (PST)
+MIME-Version: 1.0
+References: <CALoRt7TAYGsPRWqtDqJ4dyKfV1O634qYfbq9pDU_X1K=A9ONgQ@mail.gmail.com>
+ <CALoRt7RdH+PYW9TDmzX1bSZhiPqEbQdCgGEJ9VWZnKLrBftCLA@mail.gmail.com> <CAON6N-X1hLhsrS8_v12UGkuuYLhYeoNT3TAFeN3hw99_M5B0yw@mail.gmail.com>
+In-Reply-To: <CALoRt7RdH+PYW9TDmzX1bSZhiPqEbQdCgGEJ9VWZnKLrBftCLA@mail.gmail.com>
+Message-ID: <CALoRt7T8LLCCU5svHOuPfr9dZ+UV_B4WaQZruByMnkjkcLDypg@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.12.11 (3.12.11-1.fc21) 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 37.163.236.228
-X-SA-Exim-Mail-From: ydroneaud@opteya.com
-X-SA-Exim-Version: 4.2.1 (built Mon, 26 Dec 2011 16:24:06 +0000)
-X-SA-Exim-Scanned: Yes (on ou.quest-ce.net)
-Cc: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>, 
-	"<linux-rdma@vger.kernel.org> (linux-rdma@vger.kernel.org)"
-	 <linux-rdma@vger.kernel.org>, "linux-kernel@vger.kernel.org"
-	 <linux-kernel@vger.kernel.org>, "stable@vger.kernel.org"
-	 <stable@vger.kernel.org>
-Date: Wed, 08 Apr 2015 14:19:28 +0200
-From: Yann Droneaud <ydroneaud@opteya.com>
+Content-Transfer-Encoding: quoted-printable
+Cc: oss-security@lists.openwall.com
+Date: Mon, 10 Dec 2018 15:45:14 -0500
+From: Ren Kimura <rkx1209dev@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE-2014-8159 kernel: infiniband: uverbs: unprotected physical
- memory access
-To: Shachar Raindel <raindel@mellanox.com>
+Subject: [oss-security] Re: mpg321: Out-of-bounds Write
+To: Matthew Fernandez <matthew.fernandez@gmail.com>
 
-Hi,
+2018=E5=B9=B412=E6=9C=8810=E6=97=A5(=E6=9C=88) 12:44 Matthew Fernandez <mat=
+thew.fernandez@gmail.com>:
+>
+>
+>
+> On Sun, 9 Dec 2018 at 15:11, Ren Kimura <rkx1209dev@gmail.com> wrote:
+>>
+>> > Did you report this one upstream? In trying to understand this, it loo=
+ks to me like the problem isn=E2=80=99t that mpg321 fails
+>> > to check the bitrate is positive, but rather that there=E2=80=99s an u=
+nchecked malloc elsewhere.
+>> >
+>> > The point where the OOB write occurs (mad.c:285) looks like the follow=
+ing:
+>> >
+>> >    282     /* update cached table of frames & times */
+>> >    283     if (current_frame <=3D playbuf->num_frames) /* we only allo=
+cate enough for our estimate. */
+>> >    284     {
+>> >    285         playbuf->frames[current_frame] =3D playbuf->frames[curr=
+ent_frame-1] + (header->bitrate / 8 / 1000)
+>> >    286             * mad_timer_count(header->duration, MAD_UNITS_MILLI=
+SECONDS);
+>> >    287         playbuf->times[current_frame] =3D current_time;
+>> >
+>> > At this point, header->bitrate is 0 and playbuf->num_frames is the cor=
+rect limit to check against for this buffer. The
+>> > problem seems to stem from the point at which playbuf->frames was allo=
+cated (mpg321.c:990):
+>>
+>> >    985             if ((options.maxframes !=3D -1) && (options.maxfram=
+es <=3D playbuf.num_frames))
+>> >    986             {
+>> >    987                 playbuf.max_frames =3D options.maxframes;
+>> >    988             }
+>> >    989
+>> >    990             playbuf.frames =3D malloc((playbuf.num_frames + 1) =
+* sizeof(void*));
+>> >    991             playbuf.times =3D malloc((playbuf.num_frames + 1) *=
+ sizeof(mad_timer_t));
+>> >    992 #ifdef __uClinux__
+>> >    993       if((playbuf.buf =3D mmap(0, playbuf.length, PROT_READ, MA=
+P_PRIVATE, fd, 0)) =3D=3D MAP_FAILED)
+>> >    994 #else
+>> >    995       if((playbuf.buf =3D mmap(0, playbuf.length, PROT_READ, MA=
+P_SHARED, fd, 0)) =3D=3D MAP_FAILED)
+>> >    996 #endif
+>> >
+>> > At this point, playbuf.num_frames is whatever the your platform happen=
+s to yield when =E2=88=9E is cast to a long (undefined
+>> > behavior in C). AFAICT there is no check that malloc succeeded before =
+the code later writes to the frames array (the
+>> > same applies to playbuf.times). Poking around a bit more, this (unchec=
+ked malloc) seems common in the code.
+>>
+>> checking malloc status is not enough, because playbuf.num_frames can
+>> be very large value, in my environment Ubuntu 18.04, gcc 7.03,
+>> it becomes 0x8000000000000000.
+>> 990             playbuf.frames =3D malloc((playbuf.num_frames + 1) *
+>> sizeof(void*));
+>> So at this point it try to calculate (0x8000000000000000 + 1) * 8 =3D
+>> 0x8 (INTEGER OVERFLOW).
+>> As a result malloc succeed but it only allocate 0x8 byte buffer, lead
+>> OOB write at following points.
+>>
+>> 283     if (current_frame <=3D playbuf->num_frames) /* we only allocate
+>> enough for our estimate. */
+>> 285         playbuf->frames[current_frame] =3D
+>> playbuf->frames[current_frame-1] + (header->bitrate / 8 / 1000)
+>> 286             * mad_timer_count(header->duration, MAD_UNITS_MILLISECON=
+DS);
+>> 287         playbuf->times[current_frame] =3D current_time;
+>>
+>> The value of playbuf.num_frames may depend on platform because it's
+>> calculated from INF value. (undefined behavior)
+>> I only tried to Ubuntu package of mpg321 (may be compiled by gcc?). At
+>> least on ubuntu, OOB write always happen due to above reason.
+>>
+>> Ren Kimura
+>
+> Did you report this upstream?
 
-Le jeudi 02 avril 2015 à 16:34 +0000, Shachar Raindel a écrit :
-> > -----Original Message-----
-> > From: Yann Droneaud [mailto:ydroneaud@opteya.com]
-> > Sent: Thursday, April 02, 2015 6:16 PM
-> > Le jeudi 02 avril 2015 à 10:52 +0000, Shachar Raindel a écrit :
-> > > > -----Original Message-----
-> > > > From: Yann Droneaud [mailto:ydroneaud@opteya.com]
-> > > > Sent: Thursday, April 02, 2015 1:05 PM
-> > > > Le mercredi 18 mars 2015 à 17:39 +0000, Shachar Raindel a écrit :
-> > ...
-> > > > > +	/*
-> > > > > +	 * If the combination of the addr and size requested for this
-> > > > memory
-> > > > > +	 * region causes an integer overflow, return error.
-> > > > > +	 */
-> > > > > +	if ((PAGE_ALIGN(addr + size) <= size) ||
-> > > > > +	    (PAGE_ALIGN(addr + size) <= addr))
-> > > > > +		return ERR_PTR(-EINVAL);
-> > > > > +
-> > > >
-> > > > Can access_ok() be used here ?
-> > > >
-> > > >          if (!access_ok(writable ? VERIFY_WRITE : VERIFY_READ,
-> > > >                         addr, size))
-> > > >                   return ERR_PTR(-EINVAL);
-> > > >
-> > >
-> > > No, this will break the current ODP semantics.
-> > >
-> > > ODP allows the user to register memory that is not accessible yet.
-> > > This is a critical design feature, as it allows avoiding holding
-> > > a registration cache. Adding this check will break the behavior,
-> > > forcing memory to be all accessible when registering an ODP MR.
-> > >
-> > 
-> > Failed to notice previously, but since this would break ODP, and ODP is
-> > only available starting v3.19-rc1, my proposed fix might be applicable
-> > for older kernel (if not better).
-> > 
-> 
-> Can you explain how this proposed fix is better than the existing patch?
-> Why do we want to push to the stable tree a patch that is not in the
-> upstream? There is an existing, tested, patch that is going to the tip
-> of the development. It even applies cleanly on every kernel version around.
-> 
+Yes. I've reported it to Ubuntu security team.
+But there is no response yet.
 
-access_ok() check for overflow *and* that the region is the memory range
-for the current process. The later check is not done in your proposed 
-fix (but it should not be needed as get_user_pages() will be called 
-to validate the whole region for non-ODP memory registration).
-
-Anyway, AFAIK access_ok() won't check for address being not NULL and
-size not being 0, and I've noticed your proposed fix also ensure address
-is not equal to NULL and, more important, that size is not equal to 0:
-before v3.15-rc1 and commit eeb8461e36c9 ("IB: Refactor umem to use
-linear SG table"), calling ib_umem_get() with size equal to 0 would 
-succeed with any arbitrary address ... who knows what might happen in 
-the lowlevel drivers (aka. providers) if they got an umem for a 0-sized
-memory region.
-This part of the changes was not detailled in your commit message: it's
-an issue not related to overflow which is addressed by your patch.
-
-So I agree my proposed patch is no better than yours: I've missed the
-0-sized memory region issue and didn't take care of NULL address.
-
-Regards.
-
--- 
-Yann Droneaud
-OPTEYA
-
-
+Ren Kimura
