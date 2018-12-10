@@ -1,27 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/06/5
-Message-ID: <20180906162109.GB19583@takahe.colorado.edu>
-Date: Thu, 6 Sep 2018 10:21:09 -0600
-From: Leonid Isaev <leonid.isaev@...a.colorado.edu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/10/1
+Message-Id: <E8407ACC-FD18-4EB6-AE20-F7C2187F0DDF@beckweb.net>
+Date: Mon, 10 Dec 2018 01:50:16 +0100
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?
+Subject: Re: Multiple vulnerabilities in Jenkins
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 06, 2018 at 03:17:25PM +0200, Jakub Wilk wrote:
-> * Leonid Isaev <leonid.isaev@...a.colorado.edu>, 2018-09-05, 17:32:
-> > pdf files can contains things like javascript...
+
+
+> On 5. Dec 2018, at 10:18, Daniel Beck <ml@...kweb.net> wrote:
 > 
-> Do any open-source PDF browsers actually execute embedded JS?
+> SECURITY-595
+> Jenkins uses the Stapler web framework for HTTP request handling. 
+> Stapler’s basic premise is that it uses reflective access to code 
+> elements matching its naming conventions. For example, any public method 
+> whose name starts with get, and that has a String, int, long, or no 
+> argument can be invoked this way on objects that are reachable through 
+> these means. As these naming conventions closely match common code 
+> patterns in Java, accessing crafted URLs could invoke methods never 
+> intended to be invoked this way.
+> 
+> The Stapler web framework has been extended with a Service Provider 
+> Interface (SPI) that allows methods and fields to be excluded from routing.
+> The implementation of that SPI in Jenkins now restricts which getter 
+> methods, do* action methods, and fields can be invoked reflectively by 
+> Stapler.
 
-Currently, evince, okular and gv don't. The same goes for zathura with its
-poppler backend (haven't checked this, but pretty sure). But then there is also
-Artifex Mupdf which, AFAIR, supports JS in pdf files (by extension, so does
-zathura when viewing a pdf file using the mupdf plugin). I don't know how
-complete that support is. Most importantly, many Android pdf/ebook readers
-probably include JS support.
+CVE-2018-1000861
 
-CHeers,
-L.
+> SECURITY-1072
+> The fix for SECURITY-499 introduced a mechanism that renamed user 
+> directories on disk as a user with an unsafe user name (user ID) is loaded.
+> Insufficient input validation allowed attackers to rename such user 
+> directories even for users with a safe user name by submitting a crafted 
+> user name when attempting to log in, even with an invalid password. Doing 
+> so prevented users from logging in successfully afterwards.
+> 
+> Jenkins no longer uses directory names as a reference for user names, 
+> making the on-load migration of user records unnecessary. Instead, the 
+> new file users/users.xml is used to map user names to the directories 
+> containing the user metadata.
 
--- 
-Leonid Isaev
+CVE-2018-1000863
+
+> SECURITY-904
+> The file browser used for workspaces, archived artifacts, and 
+> $JENKINS_HOME/userContent/ followed symbolic links to locations outside 
+> the directory being browsed.
+> 
+> While builds typically have access to the file system outside the 
+> workspace allocated by Jenkins, this should not extend to beyond the 
+> execution of a build on that agent. Notably, the configuration may have 
+> been changed to not allow a build to run on a given agent, but the 
+> workspace used during the previous execution still exists, and could 
+> allow browsing the file system outside the workspace.
+> 
+> Neither browsing through the UI nor downloading directory content as a 
+> ZIP file allow accessing directories and files outside the workspace 
+> anymore.
+
+CVE-2018-1000862
+
+> SECURITY-1193
+> The form validation for cron expressions (e.g. "Poll SCM", "Build 
+> periodically") could enter infinite loops when cron expressions only 
+> matching certain rare dates were entered, blocking request handling 
+> threads indefinitely.
+
+CVE-2018-1000864
+
