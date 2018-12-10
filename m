@@ -1,70 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/17/8
-Message-ID: <20180817183154.GA18661@eldamar.local>
-Date: Fri, 17 Aug 2018 20:31:54 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/10/3
+Message-Id: <B8A19B32-67C8-4FEE-BBC3-7729176CC70C@beckweb.net>
+Date: Mon, 10 Dec 2018 01:52:09 +0100
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSH Username Enumeration
+Subject: Re: Multiple vulnerabilities in Jenkins
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-On Wed, Aug 15, 2018 at 09:05:58AM -0700, Qualys Security Advisory wrote:
-> Hi all,
-> 
-> We sent the following email to openssh@...nssh.com and
-> distros@...openwall.org about an hour ago, and it was decided that we
-> should send it to oss-security@...ts.openwall.com right away (as far as
-> we know, no CVE has been assigned to this issue yet):
-> 
-> ========================================================================
-> 
-> While reviewing the latest OpenSSH commits, we stumbled across:
-> 
-> https://github.com/openbsd/src/commit/779974d35b4859c07bc3cb8a12c74b43b0a7d1e0
-> 
-> Date:   Tue Jul 31 03:10:27 2018 +0000
->     delay bailout for invalid authenticating user until after the packet
->     containing the request has been fully parsed. Reported by Dariusz Tytko
->     and Michal Sajdak; ok deraadt
-> 
-> We realized that without this patch, a remote attacker can easily test
-> whether a certain user exists or not (username enumeration) on a target
-> OpenSSH server:
-> 
->   87 static int
->   88 userauth_pubkey(struct ssh *ssh)
->   89 {
->  ...
->  101         if (!authctxt->valid) {
->  102                 debug2("%s: disabled because of invalid user", __func__);
->  103                 return 0;
->  104         }
->  105         if ((r = sshpkt_get_u8(ssh, &have_sig)) != 0 ||
->  106             (r = sshpkt_get_cstring(ssh, &pkalg, NULL)) != 0 ||
->  107             (r = sshpkt_get_string(ssh, &pkblob, &blen)) != 0)
->  108                 fatal("%s: parse request failed: %s", __func__, ssh_err(r));
-> 
-> The attacker can try to authenticate a user with a malformed packet (for
-> example, a truncated packet), and:
-> 
-> - if the user is invalid (it does not exist), then userauth_pubkey()
->   returns immediately, and the server sends an SSH2_MSG_USERAUTH_FAILURE
->   to the attacker;
-> 
-> - if the user is valid (it exists), then sshpkt_get_u8() fails, and the
->   server calls fatal() and closes its connection to the attacker.
-> 
-> We believe that this issue warrants a CVE; it affects all operating
-> systems, all OpenSSH versions (we went back as far as OpenSSH 2.3.0,
-> released in November 2000), and is easier to exploit than previous
-> OpenSSH username enumerations (which were all timing attacks):
-> 
-> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2003-0190
-> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-5229
-> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-6210
 
-This new issue got assigned CVE-2018-15473 by MITRE.
+> On 15. Aug 2018, at 17:10, Daniel Beck <ml@...kweb.net> wrote:
+> 
+> 
+> SECURITY-637
+> Jenkins allowed deserialization of URL objects via Remoting (agent 
+> communication) and XStream.
+> 
+> This could in rare cases be used by attackers to have Jenkins look up 
+> specified hosts' DNS records.
 
-Regards,
-Salvatore
+CVE-2018-1999042
+
+> SECURITY-672
+> When attempting to authenticate using API token, an ephemeral user record 
+> was created to validate the token in case an external security realm was 
+> used, and the user record in Jenkins not previously saved, as (legacy) API 
+> tokens could exist without a persisted user record.
+> 
+> This behavior could be abused to create a large number of ephemeral user 
+> records in memory.
+
+CVE-2018-1999043
+
+> SECURITY-790
+> The form validation for cron expressions (e.g. "Poll SCM", "Build 
+> periodically") could enter infinite loops when cron expressions only 
+> matching certain rare dates were entered, blocking request handling 
+> threads indefinitely.
+
+CVE-2018-1999044
+
+> SECURITY-996
+> The "Remember me" feature can be disabled in the Jenkins security 
+> configuration.
+> 
+> This did not disable the processing of previously set "Remember me" 
+> cookies, so they still allowed users to be logged in.
+
+CVE-2018-1999045
+
+> SECURITY-1071
+> Users with Overall/Read permission were able to access the URL serving 
+> agent logs on the UI due to a lack of permission checks.
+
+CVE-2018-1999046
+
+> SECURITY-1076
+> Users with Overall/Read permission were able to access the URL used to 
+> cancel scheduled restart jobs initiated via the update center ("Restart 
+> Jenkins when installation is complete and no jobs are running") due to a 
+> lack of permission checks.
+
+CVE-2018-1999047
+
