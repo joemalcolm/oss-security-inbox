@@ -1,135 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/06/4
-Message-Id: <E1eXr8R-0004f1-Ce@xenbits.xenproject.org>
-Date: Sat, 06 Jan 2018 16:15:51 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 248 (CVE-2017-17566) - x86 PV guests may gain access to internally used pages
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/10/9
+Message-ID: <CALoRt7T8LLCCU5svHOuPfr9dZ+UV_B4WaQZruByMnkjkcLDypg@mail.gmail.com>
+Date: Mon, 10 Dec 2018 15:45:14 -0500
+From: Ren Kimura <rkx1209dev@...il.com>
+To: Matthew Fernandez <matthew.fernandez@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: mpg321: Out-of-bounds Write
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+2018年12月10日(月) 12:44 Matthew Fernandez <matthew.fernandez@...il.com>:
+>
+>
+>
+> On Sun, 9 Dec 2018 at 15:11, Ren Kimura <rkx1209dev@...il.com> wrote:
+>>
+>> > Did you report this one upstream? In trying to understand this, it looks to me like the problem isn’t that mpg321 fails
+>> > to check the bitrate is positive, but rather that there’s an unchecked malloc elsewhere.
+>> >
+>> > The point where the OOB write occurs (mad.c:285) looks like the following:
+>> >
+>> >    282     /* update cached table of frames & times */
+>> >    283     if (current_frame <= playbuf->num_frames) /* we only allocate enough for our estimate. */
+>> >    284     {
+>> >    285         playbuf->frames[current_frame] = playbuf->frames[current_frame-1] + (header->bitrate / 8 / 1000)
+>> >    286             * mad_timer_count(header->duration, MAD_UNITS_MILLISECONDS);
+>> >    287         playbuf->times[current_frame] = current_time;
+>> >
+>> > At this point, header->bitrate is 0 and playbuf->num_frames is the correct limit to check against for this buffer. The
+>> > problem seems to stem from the point at which playbuf->frames was allocated (mpg321.c:990):
+>>
+>> >    985             if ((options.maxframes != -1) && (options.maxframes <= playbuf.num_frames))
+>> >    986             {
+>> >    987                 playbuf.max_frames = options.maxframes;
+>> >    988             }
+>> >    989
+>> >    990             playbuf.frames = malloc((playbuf.num_frames + 1) * sizeof(void*));
+>> >    991             playbuf.times = malloc((playbuf.num_frames + 1) * sizeof(mad_timer_t));
+>> >    992 #ifdef __uClinux__
+>> >    993       if((playbuf.buf = mmap(0, playbuf.length, PROT_READ, MAP_PRIVATE, fd, 0)) == MAP_FAILED)
+>> >    994 #else
+>> >    995       if((playbuf.buf = mmap(0, playbuf.length, PROT_READ, MAP_SHARED, fd, 0)) == MAP_FAILED)
+>> >    996 #endif
+>> >
+>> > At this point, playbuf.num_frames is whatever the your platform happens to yield when ∞ is cast to a long (undefined
+>> > behavior in C). AFAICT there is no check that malloc succeeded before the code later writes to the frames array (the
+>> > same applies to playbuf.times). Poking around a bit more, this (unchecked malloc) seems common in the code.
+>>
+>> checking malloc status is not enough, because playbuf.num_frames can
+>> be very large value, in my environment Ubuntu 18.04, gcc 7.03,
+>> it becomes 0x8000000000000000.
+>> 990             playbuf.frames = malloc((playbuf.num_frames + 1) *
+>> sizeof(void*));
+>> So at this point it try to calculate (0x8000000000000000 + 1) * 8 =
+>> 0x8 (INTEGER OVERFLOW).
+>> As a result malloc succeed but it only allocate 0x8 byte buffer, lead
+>> OOB write at following points.
+>>
+>> 283     if (current_frame <= playbuf->num_frames) /* we only allocate
+>> enough for our estimate. */
+>> 285         playbuf->frames[current_frame] =
+>> playbuf->frames[current_frame-1] + (header->bitrate / 8 / 1000)
+>> 286             * mad_timer_count(header->duration, MAD_UNITS_MILLISECONDS);
+>> 287         playbuf->times[current_frame] = current_time;
+>>
+>> The value of playbuf.num_frames may depend on platform because it's
+>> calculated from INF value. (undefined behavior)
+>> I only tried to Ubuntu package of mpg321 (may be compiled by gcc?). At
+>> least on ubuntu, OOB write always happen due to above reason.
+>>
+>> Ren Kimura
+>
+> Did you report this upstream?
 
-            Xen Security Advisory CVE-2017-17566 / XSA-248
-                              version 3
+Yes. I've reported it to Ubuntu security team.
+But there is no response yet.
 
-         x86 PV guests may gain access to internally used pages
-
-UPDATES IN VERSION 3
-====================
-
-CVE assigned.
-
-ISSUE DESCRIPTION
-=================
-
-Memory management for PV guests builds on page ownership and page
-attributes.  A domain can always map, at least r/o, pages of which it
-is the owner.  Certain fields in the control structure of a page are
-used for different purposes in the main PV memory management code and
-in code handling shadow paging.
-
-When a guest is running in shadow mode (which for PV guests is necessary
-e.g. for live migration), certain auxiliary pages used by Xen internally
-had their owner set to the guest itself.  When the PV guest maps such a
-page, shadow code and PV memory management code will disagree on the
-meaning of said multi-purpose fields, generally leading to a crash of
-the hypervisor.
-
-IMPACT
-======
-
-A malicious or buggy PV guest may cause a hypervisor crash, resulting in
-a Denial of Service (DoS) affecting the entire host, or cause hypervisor
-memory corruption.  We cannot rule out a guest being able to escalate
-its privilege.
-
-VULNERABLE SYSTEMS
-==================
-
-All versions of Xen are vulnerable.
-
-Only x86 systems are affected.  ARM systems are not vulnerable.
-
-x86 HVM guests cannot exploit this vulnerability.
-
-Only x86 PV guests can exploit this vulnerability, and only when being
-run in shadow mode.  PV guests are typically run in shadow mode for live
-migration, as well as for features like VM snapshot.
-
-Note that save / restore does *not* use shadow mode, and so does not
-expose this vulnerability.  Some downstreams also include a "non-live
-migration" feature, which also does not use shadow mode (and thus does
-not expose this vulnerability).
-
-MITIGATION
-==========
-
-Running only HVM guests avoids the vulnerability.
-
-Avoiding live migration of x86 PV guests also avoids the vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Jan Beulich of SUSE.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa248.patch           xen-unstable, Xen 4.9.x
-xsa248-4.8.patch       Xen 4.8.x, Xen 4.7.x, Xen 4.6.x
-xsa248-4.5.patch       Xen 4.5.x
-
-$ sha256sum xsa248*
-f0ac5c5ff956118f52821e111c6e27416f788cea6e98cc54cb051c42b793357e  xsa248.meta
-20bcfb1890d90bd74f52e45a1e8aa020a8991e3a0db37eecf53ce48b16e602bf  xsa248.patch
-ec4227633df18f76fbd8cb12e367879470b63fb5236f10b2a971dccef9f83172  xsa248-4.5.patch
-3bbd9fd92e5ffab1ddd7ff804bfbab09c1c654af3aa7f80f742f321da120b715  xsa248-4.8.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJaUPXWAAoJEIP+FMlX6CvZ5R8H/Rn0CZ9fEExfAjcqm5kjTZFt
-HgI+ZfUYwhEfMuYc4bv5rYYfzhFsCWe4afrcxBdh1qtMeJjZWfGtf8yOFNzox0PR
-XeMZ/p7qwspg9TyNO/7dM+wd6nHRp88pTcy4QQcmfczcZrcUbm0wGCmhaIJdWlMA
-CsgKsiekPapB9R+fqeVroc/gmMRx9iTFif/w96OpApGsMPO5SnuSzeFrL8RzMU9u
-rjwCfu0Yz9MPHT8E+KvI9GeB7srov3XEfMsmaJ9NUDgnrDl9Xhe5wC7FnL3mvTYC
-YZML85QbvghxFoQM6v2MyBwF8tLW3YEgZK/oR4ed1E6BrKfDQwyXIaT0GXtIFzk=
-=ytqY
------END PGP SIGNATURE-----
-
-Download attachment "xsa248.meta" of type "application/octet-stream" (1980 bytes)
-
-Download attachment "xsa248.patch" of type "application/octet-stream" (6683 bytes)
-
-Download attachment "xsa248-4.5.patch" of type "application/octet-stream" (6699 bytes)
-
-Download attachment "xsa248-4.8.patch" of type "application/octet-stream" (6692 bytes)
+Ren Kimura
