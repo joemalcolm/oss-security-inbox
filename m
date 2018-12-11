@@ -1,36 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/26/2
-Message-ID: <20180126171624.GA9007@openwall.com>
-Date: Fri, 26 Jan 2018 18:16:24 +0100
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: How to deal with reporters who don't want their bugs fixed?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/11/2
+Message-ID: <3f060bee-a765-4cd8-e752-e0cdfef5c6f2@oracle.com>
+Date: Tue, 11 Dec 2018 13:10:51 -0800
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: oss-security@...ts.openwall.com, Hacker Fantastic <hackerfantastic@...glemail.com>
+Subject: Re: Multiple telnet.c overflows
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jan 26, 2018 at 10:23:49AM -0500, Stiepan wrote:
-> I think that clear rules might be welcome:
+On 12/11/18 10:39 AM, Hacker Fantastic wrote:
+> When a telnet server requests environment options the sprintf on line 1002 will
+> not perform bounds checking and causes an overflow of stack buffer
+> temp[50] defined
+> at line 990. This issue can be trivially fixed using a patch to add
+> bounds checking
+> to sprintf such as with a call to snprintf();
 
-I agree (specifically, I had suggested explicit maximum embargo times),
-but such rules must not be one and only industry standard.  Anyone or
-any project may propose rules, and other projects are welcome to reuse
-those rules, but they must not have to - they could as well use
-different rules, or none.  At best, a relatively non-controversial
-and brief boilerplate could end up being reused by many projects.
+GNU inetutils telnet is a fork of the original BSD telnet code, but most of
+the BSD's seem to have already switched to snprintf a while ago:
 
-> We as a profession should have a clear code of ethics
+https://cvsweb.openbsd.org/cgi-bin/cvsweb/src/usr.bin/telnet/telnet.c.diff?r1=1.3&r2=1.4&f=h
+https://github.com/freebsd/freebsd/commit/d2f83e4ec488ec62281318b26dad107e65d96d0c#diff-3503402e6a2ad1eb960a4f475f19fb9f
 
-No.  Let's not use the word ethics.  That word, except when explicitly
-referring to a particular person's or group's ethics, implies that when
-we (dis)agree or are judging others, we claim to be necessarily right -
-but in reality we're necessarily subjective.
+with NetBSD as the outlier:
+http://cvsweb.netbsd.org/bsdweb.cgi/src/usr.bin/telnet/telnet.c?rev=1.36&content-type=text/x-cvsweb-markup&only_with_tag=MAIN
 
-This would be just as flawed a concept/term as "responsible disclosure".
-(I refrain from using that term as well, except when pointing out just
-how unnecessarily judgemental it is - implying that other kinds of
-disclosure would have been "irresponsible" - but we're subjective.)
+illumos also uses snprintf, in the code it inherited from OpenSolaris:
+https://github.com/illumos/illumos-gate/blob/master/usr/src/cmd/cmd-inet/usr.bin/telnet/telnet.c#L955
 
-> universal ethics' code
-
-That's an oxymoron.  No such thing can possibly exist.
-
-Alexander
+	-alan-
