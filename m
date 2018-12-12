@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4412" "Monday" "20" "January" "2020" "15:36:08" "+0100" "Matthias Gerstner" "mgerstner@suse.de" "<20200120143608.GE10486@f195.suse.de>" "121" "[oss-security] CVE-2020-5202: apt-cacher-ng: a local unprivileged user can impersonate the apt-cacher-ng daemon, possible credentials leak" nil nil nil "1" "2020012014:36:08" "[oss-security] CVE-2020-5202: apt-cacher-ng: a local unprivileged user can impersonate the apt-cacher-ng daemon, possible credentials leak" (number mark "U       mgerstner@su Jan 20  121/4412  " thread-indent "\"[oss-security] CVE-2020-5202: apt-cacher-ng: a local unprivileged user can impersonate the apt-cacher-ng daemon, possible credentials leak\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-5202: apt-cacher-ng: a local unprivileged user can impersonate the apt-cacher-ng daemon, possible credentials leak" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2759" "Wednesday" "12" "December" "2018" "11:02:52" "-0800" "Tavis Ormandy" "taviso@google.com" "<CAJ_zFkLKWJnC9t27kN74jNueh3nTqx2+2hB3dsv74CsfBY_qfg@mail.gmail.com>" "56" "Re: [oss-security] Multiple telnet.c overflows" "^Cc:" nil nil "12" "2018121219:02:52" "[oss-security] Multiple telnet.c overflows" (number mark "        taviso@googl Dec 12   56/2759  " thread-indent "\"Re: [oss-security] Multiple telnet.c overflows\"\n") "<CAG-OieODDwrDfoci2ehVUbHg13Ehz66VB50KERZ01qCdrgCLBw@mail.gmail.com>" ("<CAG-OieOVQkON9yTYJcKuKGfP5XK5zitz0nTr9+ci71mTZrz-+A@mail.gmail.com>" "<3f060bee-a765-4cd8-e752-e0cdfef5c6f2@oracle.com>" "<CAJ_zFkK-Wg5cvzQ_Om+=+pyddbyPvT8D07qL8wL8NYX6MNnnXg@mail.gmail.com>" "<CAG-OieODDwrDfoci2ehVUbHg13Ehz66VB50KERZ01qCdrgCLBw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 18219 invoked by uid 550); 20 Jan 2020 14:36:20 -0000
+Received: (qmail 13994 invoked by uid 550); 12 Dec 2018 19:03:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,139 +11,102 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18199 invoked from network); 20 Jan 2020 14:36:20 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Mon, 20 Jan 2020 15:36:08 +0100
-From: Matthias Gerstner <mgerstner@suse.de>
-To: oss-security@lists.openwall.com
-Message-ID: <20200120143608.GE10486@f195.suse.de>
+Received: (qmail 13974 invoked from network); 12 Dec 2018 19:03:17 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=8eEbCxIm3IouXprSZ1XOBU+yJ+CWMIsfsKzHRwVXobo=;
+        b=hPNKxhtmb724HUlvcIczQz/b3h6q71B+0HV7BLQqQsrqII+0s0duuRY9sO4MQKfRLo
+         ewoD5KYFK9IqR++vgKeUg26hhdSmvcD/VzW1ktRxCIcaV64mqPl4ffK0Bj0sRlY3dkRH
+         p4mi+ZwK2SvyH35ZkvU9kXIvGPr/TqsJ91Fs3oFpBxEuiPxgaYrvtUyAYbGv1KQvM9hn
+         j9rgngXRZuHWtw7S+lHQx0HbLE1fpIIjoOCMWyIB79MPd0ErJ4jGjp5nYyByAYkG6mae
+         3ew0x28cBVcIAuLNAPeKt4ZJLvO/NV9WkSQWVCq63XUwDqpPvZvXOaz9ez2POGYB4aIk
+         do+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=8eEbCxIm3IouXprSZ1XOBU+yJ+CWMIsfsKzHRwVXobo=;
+        b=iwGNtwuvBS1WHe8548JNELGyKGxEDbn59iyPOlKvxVFLw0nyhKVGIVWUBxsABJnGgO
+         uS4wdducnutNKWWr+GRN8THZrAnkQX5egL4wLVWogQvL5UNTBvB31FQ40vToCPqyZK4V
+         1sHU/gOMKOBHbWhDUrbeLy65et80LEn42OAvV/17mfAv8iGA7PGqiaHZZKc+cHLOqenf
+         mUOa8Sls/ceDT4v7E8ufaX/oDGdur6Fmb6Ly5l/3/G+2qOnuXVIdHr2Nkeww6nXkLPML
+         falsUsQBa/6tQem/2Ty0FjQU9JubfwiJAbJw+C4PPLgv4SXki1ZtXAO4H8fM3Dm4sUTE
+         mc3g==
+X-Gm-Message-State: AA+aEWaksSCR5or2iGWm9gvd7TvJOzc/SZk7MJVOy0q3U/nXxO0Dbuo4
+	85x0uUqHxGSix0AIcggOUwwNsBHDoJOS/mp3yM6Tng==
+X-Google-Smtp-Source: AFSGD/X619i4VR8j0WTkyxvvdVvZYQ8QAf2MqDznERomfyvfnKVCSxLx7KBg7FRK5KOFruZMOvS4XAYyNEeF0m43uGM=
+X-Received: by 2002:a37:50c4:: with SMTP id e187mr19131948qkb.276.1544641385100;
+ Wed, 12 Dec 2018 11:03:05 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="4eRLI4hEmsdu6Npr"
-Content-Disposition: inline
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Subject: [oss-security] CVE-2020-5202: apt-cacher-ng: a local unprivileged user can
- impersonate the apt-cacher-ng daemon, possible credentials leak
-
---4eRLI4hEmsdu6Npr
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+References: <CAG-OieOVQkON9yTYJcKuKGfP5XK5zitz0nTr9+ci71mTZrz-+A@mail.gmail.com>
+ <3f060bee-a765-4cd8-e752-e0cdfef5c6f2@oracle.com> <CAJ_zFkK-Wg5cvzQ_Om+=+pyddbyPvT8D07qL8wL8NYX6MNnnXg@mail.gmail.com>
+ <CAG-OieODDwrDfoci2ehVUbHg13Ehz66VB50KERZ01qCdrgCLBw@mail.gmail.com>
+In-Reply-To: <CAG-OieODDwrDfoci2ehVUbHg13Ehz66VB50KERZ01qCdrgCLBw@mail.gmail.com>
+Message-ID: <CAJ_zFkLKWJnC9t27kN74jNueh3nTqx2+2hB3dsv74CsfBY_qfg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
+Cc: oss-security@lists.openwall.com
+Date: Wed, 12 Dec 2018 11:02:52 -0800
+From: Tavis Ormandy <taviso@google.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Multiple telnet.c overflows
+To: hackerfantastic@googlemail.com
 
-Hi,
+On Wed, Dec 12, 2018 at 10:08 AM Hacker Fantastic
+<hackerfantastic@googlemail.com> wrote:
+>
+> Hi Tavis, thanks for the input - I referenced Mikrotik as a vendor using =
+a vulnerable implementation that can be used to escape restricted shells. T=
+his is just one example of a instance where a restricted shell could be esc=
+aped when using inetutils, or when the vulnerable code path reached unexpec=
+ted systems (like NetBSD).
 
-apt-cacher-ng is a caching proxy for downloading packages from
-Debian-style software repositories [1]. In the course of a code review
-of apt-cacher-ng I noticed a possible credentials leak when
-"AdminAuth" is enabled in /etc/apt-cacher-ng/security.conf.
+Yes, the bug exists on NetBSD, but in order for it to be a security
+issue, there has to be an example of this bug being used to cross a
+privilege boundary. I assume we agree that not every bug is a security
+bug, there has to be some sort of supported security boundary that the
+bug allows an attacker to violate. The question I'm asking is can you
+elaborate on which security boundary is being crossed? I don't dispute
+the bug exists and that NetBSD are shipping the code.
 
-The apt-cacher-ng daemon listens on TCP port 3142 on all network
-interfaces but also creates a UNIX domain socket in
-/run/apt-cacher-ng/socket. The cron job script
-/etc/cron.daily/apt-cacher-ng runs the following command:
+> As Mikrotik case is not an oss security issue I did not post the advisory=
+ here, but as I shared to you already on social media:
+>
+> https://hacker.house/releasez/expl0itz/mikrotik-jailbreak.txt
+>
+> (The overflows are present in those devices as well, several million of t=
+hem, in case this isn't clear in our advisory)
 
-/usr/lib/apt-cacher-ng/acngtool maint -c /etc/apt-cacher-ng SocketPath=3D/v=
-ar/run/apt-cacher-ng/socket
+That part is clear, but it's not clear to me that Mikrotik intend for
+this to be a security boundary. Do you get unintended privileges from
+exploiting this? Either way, RouterOS is not open source, so
+oss-security isn't the right place to discuss it.
 
-SocketPath is explicitly specified on the command line, trying to force
-a connection to the daemon via the socket path. However, `acngtool` does
-not act accordingly. Instead, when using the default configuration, it
-connects to localhost:3142. This stems from the source file
-source/acngtool.cc:503 (based on apt-cacher-ng 3.1 that I have looked
-into), where the following is found:
+>
+> The heap overflow occurs in ANY environment variables (an example instead=
+ of DISPLAY, use USER which maybe reachable via telnet://user@ip), yes the =
+stack sprintf might not be remotely reachable which is why the advisory sta=
+tes "multiple overflows". If instances of telnet being called with a userna=
+me via a URI handler the this would reach the heap overflow code path as de=
+scribed in the advisory. Thankfully, most modern browsers no longer impleme=
+nt telnet URI handlers anymore.
 
-```
-	auto nips =3D Tokenize(cfg::bindaddr, SPACECHARS, hostips, true);
-	if (!nips)
-		hostips.emplace_back("localhost");
-```
+You say "most", but do you have an example of anyone invoking GNU
+inetutils via untrusted telnet URIs? I think any example in a security
+supported open-source project would be enough to justify calling this
+a security issue.
 
-Since port 3142 is not a privileged network port, any local user may
-bind to this port. Should the actual apt-cacher-ng daemon not (yet) be
-running, a local unprivileged user can impersonate the daemon, and the
-cron.daily/apt-cacher-ng script will sooner or later pass the AdminAuth
-credentials to it. This is the proof of concept I tested on Debian 9:
+> You are welcome to dismiss client side environment handling vulnerabiliti=
+es as none-security issues or feel free to patch the referenced vulnerabili=
+ties as stated in the advisory. Thanks for your input I hope the comments a=
+bove with the referenced advisory are clear enough and that the issue can b=
+e addressed by projects still using inetutils.
+>
 
-```
-# make sure AdminAuth is enabled
-root # grep AdminAuth /etc/apt-cacher-ng/security.conf=20
-AdminAuth: mooma:moopa
+It's not that environment handling is a non-issue, I've reported
+dozens over the years, it's just that it requires a privilege
+boundary. For example, setuid binaries are the classic example.
 
-# simulate the apt-cacher-ng daemon not running
-root # systemctl stop apt-cacher-ng
-
-# in a second shell run netcat as a regular user on port 3142
-user $ nc -l -p 3142
-
-# simulate the cron job being executed
-root # /etc/cron.daily/apt-cacher-ng
-
-# now you should see the following output in the netcat shell=20
-GET /acng-report.html?doExpire=3DStart%2bExpiration&abortOnErrors=3DaOe HTT=
-P/1.1
-User-Agent: Debian Apt-Cacher-NG/2
-Host: localhost
-Authorization: Basic bW9vbWE6bW9vcGE=3D
-Cache-Control: no-store,no-cache,max-age=3D0
-Accept: application/octet-stream
-Accept-Encoding: identity
-Connection: close
-```
-
-# base64 decoding the auth data, the local unprivileged user obtained
-# the authentication data for apt-cacher-ng
-user $ echo 'bW9vbWE6bW9vcGE=3D' | base64 -d
-mooma:moopa
-```
-
-The issue is more severe in the openSUSE packaging where the
-apt-cacher-ng daemon is not started by default, but only by explicit
-Administrator configuration, which results in the attack surface being
-exposed by default. But also when apt-cacher-ng crashes or can be
-crashed by a local attacker, the information leak could be achieved.
-
-Debian Upstream has already published an update with a suitable bugfix
-for Debian sid [2]. I've informed the upstream author on 2019-11-26
-about this issue, the Debian security team was involved, patches
-reviewed and agreed upon.
-
-[1]: https://wiki.debian.org/AptCacherNg
-[2]: https://security-tracker.debian.org/tracker/CVE-2020-5202
-
-Cheers
-
-Matthias
-
---=20
-Matthias Gerstner <matthias.gerstner@suse.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Phone: +49 911 740 53 290
-GPG Key ID: 0x14C405C971923553
-
-SUSE Software Solutions Germany GmbH
-HRB 36809, AG N=FCrnberg
-Gesch=E4ftsf=FChrer: Felix Imend=F6rffer
-
---4eRLI4hEmsdu6Npr
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAl4lutgACgkQFMQFyXGS
-NVNoLg//bkifoIM+Yl3HDdgjYwoRUOp/jW5r4PWVn4U65HSI0R5EmvDoRZncJn97
-ztrujEGOvPqrg34fmFQJ1x20G9L2krgnC+358rAh51X8+F8cp/OXJYbNPcHortX1
-kG8maJy+mXMvFihBopbL3vhtG3lNF14AiyLAMCRo22McIqNMeeSsPFbA7NRbkUn+
-8lRkkIkXuVQ5Od9wt71eXDPY1tp4KDmKOG+dAxsEJli1E6zryMAx+jHyHw1Sax79
-DopMDiZrd+JaxHsnu7KC8qxFdlB0cL/TnEtpyCuJwnIbHzCL/pzHV/w53hAU+f9m
-6QSgj6YgvymfIrK35PR3VrePdtULh+ADyXcCX+OAEo2/x5FLwPRE6ikxwe/1tzCR
-sfhyBUm+6O/9vrToRGKZGtjuOBeFHXxE1VHF6EvTdulAslna3ftbEXVSzz9y+25m
-S8BWFl4uhTlJIPgzqge+jcAG5HuQfvYOT6c69mr7rHaDMeO3p2wOVA3YRAJBEpPT
-bZB0uIDD+ccA1uUUt0hfnXkgZLeeRM8YssTUW+DnG1Udgk4N8i0CyBLgHf0aUmey
-Oj2hjqKJnHHCPhTzmSAZh14NOjxqtT32rCWLZ/4VswOzansfZsRlptb/9hkcYoyb
-TiNRdGDc3MFUzHTAuSWRjDcmQHFfXQFcxdtyzZXlHCaiZz2xkMk=
-=GE0k
------END PGP SIGNATURE-----
-
---4eRLI4hEmsdu6Npr--
+Tavis.
