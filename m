@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2126" "Friday" "8" "November" "2019" "23:23:35" "+1030" "Alex Murray" "alex.murray@canonical.com" "<87zhh6a5rk.fsf@canonical.com>" "56" "[oss-security] CVE-2019-18397 - Stack buffer overflow in GNU FriBidi >= 1.0.0" nil nil nil "11" "2019110812:53:35" "[oss-security] CVE-2019-18397 - Stack buffer overflow in GNU FriBidi >= 1.0.0" (number mark "U       alex.murray@ Nov  8   56/2126  " thread-indent "\"[oss-security] CVE-2019-18397 - Stack buffer overflow in GNU FriBidi >= 1.0.0\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2019-18397 - Stack buffer overflow in GNU FriBidi >= 1.0.0" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["779" "Wednesday" "12" "December" "2018" "01:27:13" "+0100" "Jann Horn" "jannh@google.com" "<CAG48ez37UKxsRzpkxa8HbrWGAXWQ7H9OYjGzkaZgEmzY+QOF2Q@mail.gmail.com>" "16" "[oss-security] Linux kernel: userfaultfd bypasses tmpfs file permissions (CVE-2018-18397; since 4.11; fixed in 4.14.87 and 4.19.7)" "^Date:" nil nil "12" "2018121200:27:13" "[oss-security] Linux kernel: userfaultfd bypasses tmpfs file permissions (CVE-2018-18397; since 4.11; fixed in 4.14.87 and 4.19.7)" (number mark "        jannh@google Dec 12   16/779   " thread-indent "\"[oss-security] Linux kernel: userfaultfd bypasses tmpfs file permissions (CVE-2018-18397; since 4.11; fixed in 4.14.87 and 4.19.7)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 20322 invoked by uid 550); 8 Nov 2019 13:54:24 -0000
+Received: (qmail 4060 invoked by uid 550); 12 Dec 2018 08:26:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,70 +11,55 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32090 invoked from network); 8 Nov 2019 12:53:51 -0000
-User-agent: mu4e 1.2.0; emacs 26.3
-From: Alex Murray <alex.murray@canonical.com>
-To: oss-security@lists.openwall.com
-Date: Fri, 08 Nov 2019 23:23:35 +1030
-Message-ID: <87zhh6a5rk.fsf@canonical.com>
+Received: (qmail 24150 invoked from network); 12 Dec 2018 00:27:52 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=oVFA/79OEM9UNFOHJocgFbjpxND1oHqlP+NdU82ZSlg=;
+        b=WtunBB9Ya3c8WKcZgajz49q8QmtJhpE53pB9cTw7aFPC7Vbc9833JmAjBukMhdNHRG
+         8TqUcaEDdRu1cNOFdpMS99CRD21+tkPezm00MeWYljYUSvomW+vG3neZVw8op80IyO1k
+         kjGYaexcfAC3QviTIwI5o9diQe1jFcl2X9OtIJaI/HNgEmoBjla+RPDOt/2s3rftylh6
+         IB+j6+WyBAHrRSI6BjUK8BhumcTTNbtOnMDqxsbk1ne3JFTrYwXvL6YiKhfjsxppDrn2
+         +0MJMkz094Bl1dsL+8Qfjs8ktGskeonjmwu9hP01U1iiuZyfzRChQFb9yobv28/n0eVh
+         NBRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=oVFA/79OEM9UNFOHJocgFbjpxND1oHqlP+NdU82ZSlg=;
+        b=nfbVlaF5JrGSL8tcBlkCur/FoND+b88xJvzZ9SzoBJkADj954AWQjfbcHuKO9o5CDn
+         D8/dgO4lprwW3CXXaheFnDVwKYv9zITMaRTUGt1HrKSN1eXCMbn1abvTcacr5j5wIApY
+         /zx+/S1LfJlSBBc5+Khu2eFts3NYG3CNv5kEIf+IXUOkyY/V3dEa8wv9pjDWXdlBb4Ps
+         C34n8Cqyupi9Cg4AY3+yboFLyoFJr2RFmtxKId4k0pg0Gre5ovhWPKgbYUg2VPiiI1bY
+         m/pWaZe0RtQbrKzYDfCLcQJgg7DHe/bXIbRjLOcGKKeUYHmhCsc2QnoSP+P4hutr1PDy
+         h6nw==
+X-Gm-Message-State: AA+aEWbH1WmDOhb88q/Ql6ZA5wFNyVS+3cthXiWtTuBHbFUDScdfnG7n
+	VYH1ZzbiiL9NbJdP80McdaHQwbOefIJ0zUk6wXky+vo5p+YzUg==
+X-Google-Smtp-Source: AFSGD/WWe3ZzJJ3+YJeWp2sJhEaI2bWSFpm4I3VMOQI814Uu6SMt5F4okAtReVRygWv2P9zx//pDxEUILjpCPF9ECcM=
+X-Received: by 2002:a9d:aa9:: with SMTP id 38mr13703049otq.255.1544574459933;
+ Tue, 11 Dec 2018 16:27:39 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] CVE-2019-18397 - Stack buffer overflow in GNU FriBidi >= 1.0.0
+Message-ID: <CAG48ez37UKxsRzpkxa8HbrWGAXWQ7H9OYjGzkaZgEmzY+QOF2Q@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Date: Wed, 12 Dec 2018 01:27:13 +0100
+From: Jann Horn <jannh@google.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Linux kernel: userfaultfd bypasses tmpfs file permissions
+ (CVE-2018-18397; since 4.11; fixed in 4.14.87 and 4.19.7)
+To: oss-security@lists.openwall.com
 
-CVE-2019-18397 - GNU FriBidi stack buffer overflow >= 1.0.0
------------------------------------------------------------
+NOTE: I have requested a CVE identifier, and I'm sending this message,
+to make tracking of the fix easier; however, to avoid missing security
+fixes without CVE identifiers, you should *NOT* be cherry-picking a
+specific patch in response to a notification about a kernel security
+bug.
 
-Overview:
- A stack buffer overflow in the fribidi_get_par_embedding_levels_ex()
- function in lib/fribidi-bidi.c of GNU FriBidi 1.0.0 through 1.0.7
- allows an attacker to cause a denial of service or possibly execute
- arbitrary code by delivering crafted text content to a user, when this
- content is then rendered by an application that uses FriBidi for text
- layout calculations. Examples include any GNOME or GTK+ based
- application that uses Pango for text rendering, as this internally uses
- FriBidi for bidirectional text layout. For example, the attacker can
- construct a crafted text file to be opened in GEdit, a crafted IRC
- message to be viewed in HexChat or a crafted email to be viewed in
- Evolution.
+In Linux kernel versions since 4.11, userfaultfd can be used to write
+arbitrary data into holes in sparse tmpfs files to which an attacker
+has read-only access.
 
-Detailed analysis:
- The function fribidi_get_par_embedding_levels_ex()
- in lib/fribidi-bidi.c of GNU FriBidi 1.0.0 through 1.0.7 contains a
- fixed size buffer base_level_per_iso_level which is used to accumulate
- the current isolate level while calculating the bi-directional
- embedding levels of the requested text paragraph.
+This is CVE-2018-18397.
 
- ...
- FriBidiLevel base_level_per_iso_level[FRIBIDI_BIDI_MAX_EXPLICIT_LEVEL];
- ...
-
- When accumulating into this buffer, the index is incremented without
- any check for overflow of the buffer length, resulting in a stack
- buffer overflow when processing more then
- FRIBIDI_BIDI_MAX_EXPLICIT_LEVEL elements.
-
- ...
-          RL_ISOLATE_LEVEL (pp) = isolate_level++;
-          base_level_per_iso_level[isolate_level] = new_level;
- ...
-
- This is fixed by checking the current value of isolate_level against
- the size of base_level_per_iso_level
- (ie. FRIBIDI_BIDI_MAX_EXPLICIT_LEVEL) to ensure this is only
- incremented when it will not subsequently overflow the bounds of the
- array.
-
-Affected Versions:
- From 1.0.0 to 1.0.7 (no official upstream release has been made
- containing the fix)
-
-References:
- https://github.com/fribidi/fribidi/commit/034c6e9a1d296286305f4cfd1e0072b879f52568
-
-CRD:
- 2019-11-07 17:00 UTC
-
-Credit:
- Alex Murray of the Ubuntu Security Team
-
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=29ec90660d68bbdd69507c1c8b4e33aa299278b1
+https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.14.87
+https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.19.7
+https://bugs.chromium.org/p/project-zero/issues/detail?id=1700
