@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["925" "Thursday" "4" "May" "2017" "16:12:01" "+0200" "Guido Vranken" "guidovranken@gmail.com" "<CAO5O-EL6qGatYRnqwb_aBc3x-hOTeZvZar0OQU4OU2dk45jctQ@mail.gmail.com>" "23" "[oss-security] Re: rpcbomb: remote rpcbind denial-of-service" "^Date:" nil nil "5" "2017050414:12:01" "[oss-security] Re: rpcbomb: remote rpcbind denial-of-service" (number mark "        guidovranken May  4   23/925   " thread-indent "\"[oss-security] Re: rpcbomb: remote rpcbind denial-of-service\"\n") "<CAO5O-EKoyVe5oxT3nx6pOYsHwhvp9SxcezkV-m5pnpw4Q_4j8A@mail.gmail.com>" ("<CAO5O-EKoyVe5oxT3nx6pOYsHwhvp9SxcezkV-m5pnpw4Q_4j8A@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["718" "Wednesday" "12" "December" "2018" "13:10:24" "-0600" "Bob Friesenhahn" "bfriesen@simple.dallas.tx.us" "<alpine.GSO.2.20.1812121308451.10494@scrappy.simplesystems.org>" "17" "Re: [oss-security] Multiple telnet.c overflows" "^Date:" nil nil "12" "2018121219:10:24" "[oss-security] Multiple telnet.c overflows" (number mark "        bfriesen@sim Dec 12   17/718   " thread-indent "\"Re: [oss-security] Multiple telnet.c overflows\"\n") "<CAJ_zFkLKWJnC9t27kN74jNueh3nTqx2+2hB3dsv74CsfBY_qfg@mail.gmail.com>" ("<CAG-OieOVQkON9yTYJcKuKGfP5XK5zitz0nTr9+ci71mTZrz-+A@mail.gmail.com>" "<3f060bee-a765-4cd8-e752-e0cdfef5c6f2@oracle.com>" "<CAJ_zFkK-Wg5cvzQ_Om+=+pyddbyPvT8D07qL8wL8NYX6MNnnXg@mail.gmail.com>" "<CAG-OieODDwrDfoci2ehVUbHg13Ehz66VB50KERZ01qCdrgCLBw@mail.gmail.com>" "<CAJ_zFkLKWJnC9t27kN74jNueh3nTqx2+2hB3dsv74CsfBY_qfg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 21506 invoked by uid 550); 4 May 2017 14:45:31 -0000
+Received: (qmail 32025 invoked by uid 550); 12 Dec 2018 19:10:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,65 +11,36 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26310 invoked from network); 4 May 2017 14:12:14 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=T/kIQcowG0DAQfDZj2Qm3fHYo7XcrK3gFTHap2h0E8o=;
-        b=Vko/wY3aAf9d6V1g1WamHpzgbZg9ViHNcBiA8WLpJMboO9es5Vrtoebz/Cw8i+AKLb
-         Oxsp7bGDMwXZy4aNen1JfMAJNO7Ft1rj/+3SrY0lKD4zSMIREP/RAZiNQsKMtFMtF+TO
-         DZPpW56s73gaKQnDinPoEH9qOJsjZWNeXD5Z8q3z9koDdCMPfbo60JcYZl3iG4U4pW25
-         ivy8oREE2NhgCeP+LJbz7L4LS79RHGCLPbyU6kpjRpqdUJH0w0xDqVFSaFtrfSib6hru
-         LtPVEF+93Qus9plCO3twxCgHrPPFVmKIHGxJsYhJ5Cg+9Nn3rTrk+kwG2LhbCgZF/fZy
-         p9Dw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=T/kIQcowG0DAQfDZj2Qm3fHYo7XcrK3gFTHap2h0E8o=;
-        b=RQpCZe08BMopsIplLcuVWnY+BiOeS5jxUq5l5oCmhR9AZd3xAnkPgkpAL4VKRM1hdL
-         cF9+VY8qstS/9I8AtOHGXJIWQPAgqVsHyvfaCH9ikVSSIbB8Z0a4C2/vdbHrP50/5K3Y
-         9eaWCw70OKE2vuecxBfkDR9mfLCpPIEdUYJaZL02KVo5ulj/HmvIVqnloiAxvLwdNb2g
-         rq27A2RlC5yFTJHCh4df7ZO2WkFYPwJI4tgmj/SFw14MzEKnJkwsDDds0v+lhxhClOu8
-         1+JKspAKWbb4HC6DN8W7Jc6GMp/dAtfSrnVrjlSxRy2BxHkya537Q7t2oHoJwOKr913p
-         oPBA==
-X-Gm-Message-State: AN3rC/4fEaiOfxZ9Z1G+tgL6tJeoZsTY3luTkV0v/375vHnvWWpJkxWH
-	BKIygHcM3A7yk2HIUED4M0qRWQ96DYyIgIk=
-X-Received: by 10.31.155.4 with SMTP id d4mr11683551vke.3.1493907121795; Thu,
- 04 May 2017 07:12:01 -0700 (PDT)
+Received: (qmail 32003 invoked from network); 12 Dec 2018 19:10:37 -0000
+X-X-Sender: bfriesen@scrappy.simplesystems.org
+In-Reply-To: <CAJ_zFkLKWJnC9t27kN74jNueh3nTqx2+2hB3dsv74CsfBY_qfg@mail.gmail.com>
+Message-ID: <alpine.GSO.2.20.1812121308451.10494@scrappy.simplesystems.org>
+References: <CAG-OieOVQkON9yTYJcKuKGfP5XK5zitz0nTr9+ci71mTZrz-+A@mail.gmail.com> <3f060bee-a765-4cd8-e752-e0cdfef5c6f2@oracle.com> <CAJ_zFkK-Wg5cvzQ_Om+=+pyddbyPvT8D07qL8wL8NYX6MNnnXg@mail.gmail.com> <CAG-OieODDwrDfoci2ehVUbHg13Ehz66VB50KERZ01qCdrgCLBw@mail.gmail.com>
+ <CAJ_zFkLKWJnC9t27kN74jNueh3nTqx2+2hB3dsv74CsfBY_qfg@mail.gmail.com>
+User-Agent: Alpine 2.20 (GSO 67 2015-01-07)
 MIME-Version: 1.0
-In-Reply-To: <CAO5O-EKoyVe5oxT3nx6pOYsHwhvp9SxcezkV-m5pnpw4Q_4j8A@mail.gmail.com>
-References: <CAO5O-EKoyVe5oxT3nx6pOYsHwhvp9SxcezkV-m5pnpw4Q_4j8A@mail.gmail.com>
-Message-ID: <CAO5O-EL6qGatYRnqwb_aBc3x-hOTeZvZar0OQU4OU2dk45jctQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 4 May 2017 16:12:01 +0200
-From: Guido Vranken <guidovranken@gmail.com>
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (smtp.simplesystems.org [65.66.246.90]); Wed, 12 Dec 2018 13:10:25 -0600 (CST)
+Date: Wed, 12 Dec 2018 13:10:24 -0600 (CST)
+From: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: rpcbomb: remote rpcbind denial-of-service
+Subject: Re: [oss-security] Multiple telnet.c overflows
 To: oss-security@lists.openwall.com
 
-Salvatore Bonaccorso  of Debian was so kind to request a CVE. It is:
-CVE-2017-8779
+On Wed, 12 Dec 2018, Tavis Ormandy wrote:
 
-On Wed, May 3, 2017 at 8:55 PM, Guido Vranken <guidovranken@gmail.com> wrot=
-e:
-> This vulnerability allows an attacker to allocate any amount of bytes
-> (up to 4 gigabytes per attack) on a remote rpcbind host, and the
-> memory is never freed unless the process crashes or the administrator
-> halts or restarts the rpcbind service.
->
-> Attacking a system is trivial; a single attack consists of sending a
-> specially crafted payload of around 60 bytes through a UDP socket.
->
-> This can slow down the system=E2=80=99s operations significantly or preve=
-nt
-> other services (such as a web server) from spawning processes
-> entirely.
->
-> An extensive write-up can be found here:
-> https://guidovranken.wordpress.com/2017/05/03/rpcbomb-remote-rpcbind-deni=
-al-of-service-patches/
->
-> Exploit + patches: https://github.com/guidovranken/rpcbomb/
+> It's not that environment handling is a non-issue, I've reported
+> dozens over the years, it's just that it requires a privilege
+> boundary. For example, setuid binaries are the classic example.
+
+Is a network connection between two machines not a 'privilege 
+boundary'?  If the remote machine has the ability to subvert the 
+accessing machine (e.g. by transmitting something which causes harm to 
+the client) then that seems to qualify.
+
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
