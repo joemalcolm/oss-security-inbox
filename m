@@ -1,40 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/21/1
-Message-ID: <CAPNiXbEAF=Se=QxAumYgog+4ZCoVpoPCUsfONszrNDqkNmzYaw@mail.gmail.com>
-Date: Fri, 21 Sep 2018 12:50:31 +0200
-From: Alex R <alexr@...che.org>
-To: dev <dev@...os.apache.org>, user <user@...os.apache.org>,  Terry Chia <terrycwk1994@...il.com>, security <security@...che.org>,  oss-security@...ts.openwall.com, Alexander Rojas <alexander@...osphere.io>
-Subject: CVE-2018-8023: A remote attacker can exploit a vulnerability in the JWT implementation to gain unauthenticated access to Mesos Executor HTTP API.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/12/7
+Message-ID: <CAJ_zFkK-Wg5cvzQ_Om+=+pyddbyPvT8D07qL8wL8NYX6MNnnXg@mail.gmail.com>
+Date: Wed, 12 Dec 2018 09:06:19 -0800
+From: Tavis Ormandy <taviso@...gle.com>
+To: oss-security@...ts.openwall.com
+Cc: hackerfantastic@...glemail.com
+Subject: Re: Multiple telnet.c overflows
 Content-Type: text/plain; charset=utf-8
 
-Severity: Important
+On Tue, Dec 11, 2018 at 1:12 PM Alan Coopersmith <
+alan.coopersmith@...cle.com> wrote:
 
-Vendor:
-The Apache Software Foundation
+> On 12/11/18 10:39 AM, Hacker Fantastic wrote:
+> > When a telnet server requests environment options the sprintf on line
+> 1002 will
+> > not perform bounds checking and causes an overflow of stack buffer
+> > temp[50] defined
+> > at line 990. This issue can be trivially fixed using a patch to add
+> > bounds checking
+> > to sprintf such as with a call to snprintf();
+>
+> GNU inetutils telnet is a fork of the original BSD telnet code, but most of
+> the BSD's seem to have already switched to snprintf a while ago:
+>
+>
+To be clear, this is a bug in the (little used) GNU inetutils telnet
+*client*, not server. It's hard to imagine a real usage of this in a
+context that would be exploitable.
 
-Versions Affected:
-Apache Mesos 1.4.0 to 1.6.0
-The unsupported Apache Mesos pre-1.4.0 releases may be also affected.
+If you can set DISPLAY, then you can probably also set LD_PRELOAD, and if
+you can interact with the command then you can use shell escapes.
 
-Description:
-Apache Mesos can be configured to require authentication to call the
-Executor HTTP API using JSON Web Token (JWT). The comparison of the
-generated HMAC value against the provided signature in the JWT
-implementation used is vulnerable to a timing attack because instead
-of a constant-time string comparison routine a standard `==` operator
-has been used. A malicious actor can therefore abuse the timing
-difference of when the JWT validation function returns to reveal the
-correct HMAC value.
+I asked on twitter, and was told that maybe someone is using untrusted
+telnet:// URIs with GNU inetutils, but there are no known examples. I was
+also told that "plenty" of embedded devices GNU inetutils in restricted
+shells. I'm told Mikrotik RouterOS is an example, but it's not clear to me
+if it's using it in a context that would make this a security issue, and if
+they did how they locked down the command to prevent trivial escapes.
 
-Mitigation:
-pre-1.4.x users should upgrade to at least 1.4.2
-1.4.x users should upgrade to 1.4.2
-1.5.x users should upgrade to 1.5.2
-1.6.0 users should upgrade to 1.6.1
-1.7.0-dev users should obtain Mesos 1.7.0
-
-Credit:
-This issue was discovered by Terry Chia (Ayrx).
-
-Alex on behalf of Mesos PMC
+Tavis.
 
