@@ -1,35 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/21/2
-Message-ID: <20180621093754.GY53290@symphytum.spacehopper.org>
-Date: Thu, 21 Jun 2018 10:37:54 +0100
-From: Stuart Henderson <stu@...cehopper.org>
-To: oss-security@...ts.openwall.com
-Cc: secure@...el.com
-Subject: Re: Intel hyper-threading security issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/12/9
+Message-ID: <CAJ_zFkLKWJnC9t27kN74jNueh3nTqx2+2hB3dsv74CsfBY_qfg@mail.gmail.com>
+Date: Wed, 12 Dec 2018 11:02:52 -0800
+From: Tavis Ormandy <taviso@...gle.com>
+To: hackerfantastic@...glemail.com
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Multiple telnet.c overflows
 Content-Type: text/plain; charset=utf-8
 
-On 2018/06/21 07:56, Georgi Guninski wrote:
-> On Wed, Jun 20, 2018 at 12:48:55AM +0400, Loganaden Velvindron wrote:
-> > Hi all,
-> > 
-> > OpenBSD has gone ahead and disabled Intel Hyper threading with a
-> > fairly detailed comment about the reasons behind:
-> > 
-> > https://www.mail-archive.com/source-changes@openbsd.org/msg99141.html
-> >
-> 
-> Freebsd:
-> 
-> https://www.freebsd.org/security/advisories/FreeBSD-SA-05:09.htt.asc
-> Topic:          information disclosure when using HTT
-> Announced:      2005-05-13
-> When running on processors supporting Hyper-Threading Technology, it is
-> possible for a malicious thread to monitor the execution of another
-> thread.
-> V.   Solution
-> 
-> Disable Hyper-Threading Technology on processors that support it.
+On Wed, Dec 12, 2018 at 10:08 AM Hacker Fantastic
+<hackerfantastic@...glemail.com> wrote:
+>
+> Hi Tavis, thanks for the input - I referenced Mikrotik as a vendor using a vulnerable implementation that can be used to escape restricted shells. This is just one example of a instance where a restricted shell could be escaped when using inetutils, or when the vulnerable code path reached unexpected systems (like NetBSD).
 
-That isn't possible with some BIOS. For example, newer Lenovo machines
-removed the option apparently due to perceived lack of demand...
+Yes, the bug exists on NetBSD, but in order for it to be a security
+issue, there has to be an example of this bug being used to cross a
+privilege boundary. I assume we agree that not every bug is a security
+bug, there has to be some sort of supported security boundary that the
+bug allows an attacker to violate. The question I'm asking is can you
+elaborate on which security boundary is being crossed? I don't dispute
+the bug exists and that NetBSD are shipping the code.
 
+> As Mikrotik case is not an oss security issue I did not post the advisory here, but as I shared to you already on social media:
+>
+> https://hacker.house/releasez/expl0itz/mikrotik-jailbreak.txt
+>
+> (The overflows are present in those devices as well, several million of them, in case this isn't clear in our advisory)
+
+That part is clear, but it's not clear to me that Mikrotik intend for
+this to be a security boundary. Do you get unintended privileges from
+exploiting this? Either way, RouterOS is not open source, so
+oss-security isn't the right place to discuss it.
+
+>
+> The heap overflow occurs in ANY environment variables (an example instead of DISPLAY, use USER which maybe reachable via telnet://user@ip), yes the stack sprintf might not be remotely reachable which is why the advisory states "multiple overflows". If instances of telnet being called with a username via a URI handler the this would reach the heap overflow code path as described in the advisory. Thankfully, most modern browsers no longer implement telnet URI handlers anymore.
+
+You say "most", but do you have an example of anyone invoking GNU
+inetutils via untrusted telnet URIs? I think any example in a security
+supported open-source project would be enough to justify calling this
+a security issue.
+
+> You are welcome to dismiss client side environment handling vulnerabilities as none-security issues or feel free to patch the referenced vulnerabilities as stated in the advisory. Thanks for your input I hope the comments above with the referenced advisory are clear enough and that the issue can be addressed by projects still using inetutils.
+>
+
+It's not that environment handling is a non-issue, I've reported
+dozens over the years, it's just that it requires a privilege
+boundary. For example, setuid binaries are the classic example.
+
+Tavis.
