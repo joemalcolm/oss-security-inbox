@@ -1,156 +1,131 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/08/20/3
-Message-Id: <E1frgmk-0003h1-Hq@xenbits.xenproject.org>
-Date: Mon, 20 Aug 2018 09:47:42 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 272 v3 (CVE-2018-15470) - oxenstored does not apply quota-maxentity
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/12/11
+Message-ID: <CAG-OieOUdanQyhyksodXwP7WyQpnAh0t3gy_Z_Cq-PTf+22GYw@mail.gmail.com>
+Date: Wed, 12 Dec 2018 11:34:59 -0800
+From: Hacker Fantastic <hackerfantastic@...glemail.com>
+To: Tavis Ormandy <taviso@...gle.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Multiple telnet.c overflows
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi Tavis,
 
-            Xen Security Advisory CVE-2018-15470 / XSA-272
-                              version 3
+The "little used" package you mentioned is in some distributions a
+dependency of "xorg-xinit" (:: removing inetutils breaks dependency
+'inetutils' required by xorg-xinit in Arch Linux). The security boundary in
+the Mikrotik example is "escape of restricted shells" which is also in the
+TLDR; advisory. If you are unhappy with how I described the issue and wish
+to spend time and ultimately money researching remotely reachable code
+paths (aside from the URI handler example I already gave you) then it is
+worth looking into more detail the issues with the heap overflow and if it
+is reachable in the client via a server-side telnetd implementation for
+instance. The code there is a mess.
 
-               oxenstored does not apply quota-maxentity
+As I already stated, I am unable to account for every use of telnet
+client-side code or how it is called in every application, particularly all
+the projects out there used from open-source community or co-opted by
+vendors into commercial offerings (like the given example, Mikrotik).
+Splitting hairs over security boundaries of a single issue with many use
+cases is not something I have time for, the vulnerability is exactly as
+described with security relevant impacts in my original advisory. It would
+be nice to see the heap overflow reached via a telnetd service just to
+prove a point but ultimately it is beyond the scope of this discussion, why
+not put the energy you spent on these emails to use exploring if the heap
+is also corrupted in such instances? ;-)
 
-UPDATES IN VERSION 3
-====================
+It was considered a security issue for such straight-forward restricted
+shell escapes in 2004/2005 (when there were numerous reported instances of
+such occurring in telnet clients alongside other client-side overflows).
+One of the issues is addressed in the implementations of some BSD clients
+and not in others.
 
-CVE assigned.
+Just because you do not know how to exploit a bug does not mean it does not
+have security implications, it just means they have not been discovered yet
+or the researcher does not have the luxury of time that others have.
 
-ISSUE DESCRIPTION
-=================
+I hope this clarifies my points satisfactorily for you.
 
-The logic in oxenstored for handling writes depended on the order of
-evaluation of expressions making up a tuple.
-
-As indicated in section 7.7.3 "Operations on data structures" of the
-OCaml manual:
-
-  http://caml.inria.fr/pub/docs/manual-ocaml/expr.html
-
-the order of evaluation of subexpressions is not specified.  In
-practice, different implementations behave differently.
-
-IMPACT
-======
-
-oxenstored may not enforce the configured quota-maxentity.
-
-This allows a malicious or buggy guest to write as many xenstore entries
-as it wishes, causing unbounded memory usage in oxenstored.  This can
-lead to a system-wide DoS.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen 4.1 and later are potentially vulnerable.
-
-Only systems using the OCaml xenstored implementation are potentially
-vulnerable.  Systems using the C xenstored implementation are not
-vulnerable.
-
-Whether the compiled oxenstored binary is vulnerable depends on which
-compiler was used.  OCaml can be compiled either as bytecode (with
-ocamlc) or as a native binary (with ocamlopt).
-
-The following OCaml program demonstrates the issue, and identifies
-whether the resulting oxenstored binary will skip the quota enforcement.
-
-  $ cat order.ml
-  let check () =
-    let flag = ref false in
-    let update _ = flag := true; () in
-    List.iter update [1;2;3], !flag
-
-  let main () =
-    let _, flag = check () in
-    if flag then
-    print_endline "This code is not vulnerable!"
-    else
-    print_endline "This code is vulnerable!"
-
-  let () = main ()
-
-  $ ocamlc order.ml -o order.bytecode
-  $ ./order.bytecode
-  This code is vulnerable!
-  $ ocamlopt order.ml -o order.native
-  $ ./order.native
-  This code is not vulnerable!
-
-To confirm whether an OCaml binary is bytecode or native, use file.
-
-  $ file order.bytecode
-  order.bytecode: a /usr/bin/ocamlrun script executable (binary data)
-  $ file order.native
-  order.native: ELF 64-bit LSB executable, ...
-
-NOTE: These results are applicable to OCaml 4.01.0-5 as distributed in
-Debian Jessie.  These results are not representative of other versions
-of OCaml, or of other OS distributions.
-
-MITIGATION
-==========
-
-There are no mitigations available.
-
-CREDITS
-=======
-
-This issue was discovered by Christian Lindig of Citrix.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa272.patch           All versions of Xen
-
-$ sha256sum xsa272*
-0da953ca48d0cf0688ecff6a074304a9d2217871809a76ef26b9addeb66ecb3e  xsa272.meta
-6e0359d89bf65794f16d39198cc90f5c3137bce4eb850e54625ab00e2c568c2c  xsa272.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
+Kind Regards,
+Hacker Fantastic
 
 
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
 
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQEcBAEBCAAGBQJbeo4OAAoJEIP+FMlX6CvZCO8H/Rj7Z+rFSuQAVEUKXvvV3lvJ
-rytocZDTAIduyiBundcbdkcxfCuun6Tqw8ScPJXtml82P8YE+R/ix1hMLcQdYblt
-tj3qftb6KtjFibctoc0sSLsfjhl2oJC2VjQR3HdixfMlSxEzLkCC3I21fteYs9fp
-ahO7dByNHFTufbb9GpB+DANmIJ5hwMXxCinvts/L2MP/CCRfb4w5+aTARCQ3UHpX
-3/r2wJxLnf4sNpBhHNsArROy8wS+ad0i4XC2fef/Bdye+NRbeICJNqof9fcGjWwE
-fZRyeNVSk33DuuRz2HI4aoEKAQ/v3b3KLXnfVZY5F5z6Z8j9rie42RI8VDO8Mzc=
-=Y10L
------END PGP SIGNATURE-----
 
-Download attachment "xsa272.meta" of type "application/octet-stream" (2083 bytes)
 
-Download attachment "xsa272.patch" of type "application/octet-stream" (1271 bytes)
+
+
+
+
+
+
+
+On Wed, Dec 12, 2018 at 11:03 AM Tavis Ormandy <taviso@...gle.com> wrote:
+
+> On Wed, Dec 12, 2018 at 10:08 AM Hacker Fantastic
+> <hackerfantastic@...glemail.com> wrote:
+> >
+> > Hi Tavis, thanks for the input - I referenced Mikrotik as a vendor using
+> a vulnerable implementation that can be used to escape restricted shells.
+> This is just one example of a instance where a restricted shell could be
+> escaped when using inetutils, or when the vulnerable code path reached
+> unexpected systems (like NetBSD).
+>
+> Yes, the bug exists on NetBSD, but in order for it to be a security
+> issue, there has to be an example of this bug being used to cross a
+> privilege boundary. I assume we agree that not every bug is a security
+> bug, there has to be some sort of supported security boundary that the
+> bug allows an attacker to violate. The question I'm asking is can you
+> elaborate on which security boundary is being crossed? I don't dispute
+> the bug exists and that NetBSD are shipping the code.
+>
+> > As Mikrotik case is not an oss security issue I did not post the
+> advisory here, but as I shared to you already on social media:
+> >
+> > https://hacker.house/releasez/expl0itz/mikrotik-jailbreak.txt
+> >
+> > (The overflows are present in those devices as well, several million of
+> them, in case this isn't clear in our advisory)
+>
+> That part is clear, but it's not clear to me that Mikrotik intend for
+> this to be a security boundary. Do you get unintended privileges from
+> exploiting this? Either way, RouterOS is not open source, so
+> oss-security isn't the right place to discuss it.
+>
+> >
+> > The heap overflow occurs in ANY environment variables (an example
+> instead of DISPLAY, use USER which maybe reachable via telnet://user@ip),
+> yes the stack sprintf might not be remotely reachable which is why the
+> advisory states "multiple overflows". If instances of telnet being called
+> with a username via a URI handler the this would reach the heap overflow
+> code path as described in the advisory. Thankfully, most modern browsers no
+> longer implement telnet URI handlers anymore.
+>
+> You say "most", but do you have an example of anyone invoking GNU
+> inetutils via untrusted telnet URIs? I think any example in a security
+> supported open-source project would be enough to justify calling this
+> a security issue.
+>
+> > You are welcome to dismiss client side environment handling
+> vulnerabilities as none-security issues or feel free to patch the
+> referenced vulnerabilities as stated in the advisory. Thanks for your input
+> I hope the comments above with the referenced advisory are clear enough and
+> that the issue can be addressed by projects still using inetutils.
+> >
+>
+> It's not that environment handling is a non-issue, I've reported
+> dozens over the years, it's just that it requires a privilege
+> boundary. For example, setuid binaries are the classic example.
+>
+> Tavis.
+>
+
+
+-- 
+Matthew Hickey
+Tel: +44 7543 661237
+Web: http://blog.hackerfantastic.com
+
+Please visit my website for blog postings, status updates and project
+information.
+
