@@ -1,4 +1,9 @@
-Received: (qmail 8060 invoked by uid 550); 24 May 2023 19:03:28 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["643" "Wednesday" "12" "December" "2018" "17:36:40" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20181212163640.GA22617@eldamar.local>" "20" "[oss-security] Re: CVE Request: mini-httpd (<= v1.30) is affected by a response discrepancy information exposure (CWE-204)" "^Cc:" nil nil "12" "2018121216:36:40" "[oss-security] Re: CVE Request: mini-httpd (<= v1.30) is affected by a response discrepancy information exposure (CWE-204)" (number mark "        carnil@debia Dec 12   20/643   " thread-indent "\"[oss-security] Re: CVE Request: mini-httpd (<= v1.30) is affected by a response discrepancy information exposure (CWE-204)\"\n") "<CA+NXwpT9J40mJe_=h-R==qJBc=9PA+-80b8p4gdaJ=uy_JhMJg@mail.gmail.com>" ("<CA+NXwpT9J40mJe_=h-R==qJBc=9PA+-80b8p4gdaJ=uy_JhMJg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 18162 invoked by uid 550); 12 Dec 2018 16:36:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,48 +11,70 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11946 invoked from network); 24 May 2023 18:40:34 -0000
-Date: Wed, 24 May 2023 11:40:18 -0700 (PDT)
-From: Brian Behlendorf <brian@behlendorf.com>
-To: oss-security@lists.openwall.com
-In-Reply-To: <CA+aC4ksAirMkOW5R1p=YzQH6R3gOBJZsiB2YqjH+sB+by2--pw@mail.gmail.com>
-Message-ID: <0400b167-9673-ae6f-19d4-379b0f40f0d5@behlendorf.com>
-References: <17f7ebb7-22ee-e68f-02ac-8e2740e7f015@canonical.com> <20230511115704.GJ5725@suse.de> <ZG3Om+8ySRpIuHJu@pisco.westfalen.local> <20230524134130.GC6775@openwall.com> <CA+aC4ksAirMkOW5R1p=YzQH6R3gOBJZsiB2YqjH+sB+by2--pw@mail.gmail.com>
+Received: (qmail 18144 invoked from network); 12 Dec 2018 16:36:55 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=VGKK887CKcpLkglL/2fV5hczyLUkFAzHgtCBtx3s+Lw=;
+        b=iGP5qbAUkOyytghBcJAb86lKE2xlyD/ip1Tg/tJNqt96vcrbPO47qe6X5E+NrPnKJy
+         86rkNN4ZRNwmFUT583cEXzHj5Hq+4EazFsVzeIqOYVXA0NhTvejUSM7o5peMr3TQ0dJn
+         5zVoMxDiIihOspfGBG0uUFNInTaSW5ng2Mr4tdIUadLtFlB45Vr7TgB10JhcRIKqDzNp
+         Mmx5vFksEbDIZ8nnknFLtfp2KdG2Wk6JGm5dc0/Mn1/kqrU0QZ+OnbfhGseD6jr77/G0
+         jN+R/ukfAQINSxkZmeGeHlEEfqJ4kfNrvW1SDE6TM6uxad1m2PDDgwjFSM5ajIvW1Rjz
+         YXuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=VGKK887CKcpLkglL/2fV5hczyLUkFAzHgtCBtx3s+Lw=;
+        b=V8tVbC5SwTMbT0su29zG1ycUxCeoH2d87NxK4CaodAxl6ZiTcdvZb24NbpzIKHfxZv
+         VI+/ccs9EqFexSUWMuvnqQgVTzpxHKwLuQ2+hjJLk2MkPhcxNJQ4gO5wJQJe9oYGCCzK
+         BG0+tnQVwJ+Wxm0gU3+AsOl9KSEp3mlXOPhAIlofQoWMVfclwyL0acPg+kveZuKd0/Kr
+         YRW8RDFpBtiEFBkkIWvhxzBts1JhEb8u4Hmcp/nVrlQZ16w8v87eAxBtfTOc0NM1OYbe
+         WCVHJz4dd3I/xIoQ4Zkv8BvBXqe4eYrntXHRk3FmTyfQzYK/W32D/iqwX+ZDTsH4BXIl
+         Nx6Q==
+X-Gm-Message-State: AA+aEWYnYlNdjJpiKNroccQ+vfDvMGoZ4zX3R7jEEv/4vcxIvTrkiDZQ
+	5PQJVyR1chc0rGKG1CL/TII=
+X-Google-Smtp-Source: AFSGD/Xqj5GQSnucTzD/FelgSqR90oreMSW/WnV7qbGEVbf+WaZ8bSIWelFPh1vrM6YsxpQ1F5rggQ==
+X-Received: by 2002:a50:ec19:: with SMTP id g25mr19184536edr.38.1544632604029;
+        Wed, 12 Dec 2018 08:36:44 -0800 (PST)
+Message-ID: <20181212163640.GA22617@eldamar.local>
+References: <CA+NXwpT9J40mJe_=h-R==qJBc=9PA+-80b8p4gdaJ=uy_JhMJg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: Re: [oss-security] Clarification on embargoed testing in a partner
- cloud
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CA+NXwpT9J40mJe_=h-R==qJBc=9PA+-80b8p4gdaJ=uy_JhMJg@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Cc: oss-security@lists.openwall.com, security@debian.org
+Date: Wed, 12 Dec 2018 17:36:40 +0100
+From: Salvatore Bonaccorso <carnil@debian.org>
+Reply-To: oss-security@lists.openwall.com
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Subject: [oss-security] Re: CVE Request: mini-httpd (<= v1.30) is affected by a response
+ discrepancy information exposure (CWE-204)
+To: Salva =?iso-8859-1?Q?Peir=F3?= <speirofr@gmail.com>
 
-On Wed, 24 May 2023, Anthony Liguori wrote:
-> I think the right policy for list members is that they are responsible for
-> understanding the third-party infrastructure they use and if they aren't
-> confident that they can maintain the rules of the list, they shouldn't use
-> it.
+Hi,
 
-We've known since "On Trusting Trust" that every variable consumed during 
-the SDLC is a vector for compromise, even in very subtle and difficult 
-(impossible? halting problem?) ways to defeat. Inevitably we need to rely 
-on self-attestation, paired with certification processes when called for 
-(e.g. FedRamp). There is emerging regulatory action, at least in the US 
-(see the new White House Cybersecurity Policy) and the EU's CRA, calling 
-for the establishment of clear processes for demonstrating provenance and 
-attestation to at least the build environment and likely eventually the 
-full SDLC.
+On Wed, Dec 12, 2018 at 04:27:02PM +0100, Salva Peiró wrote:
+> Hi everyone,
+> 
+> The mini-httpd daemon (version <= v1.30) shipped in Debian/Ubuntu from [1]
+> is affected by a response discrepancy information exposure (CWE-204) that
+> enables an attacker to remotely enumerate valid htpasswd usernames (RFC
+> 7617).
+> 
+> A more detailed advisory can be found at:
+> https://speirofr.appspot.com/files/advisory/SPADV-2018-01.md
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=916190
+> 
+> Is there a CVE for this? If not, could one be assigned, please?
 
-A clear and more formal way of understanding the different levels of 
-attestation of one's build environment can be found in the SLSA 
-specification. Here's a story about how Google Cloud incorporates it into 
-build service:
+Can you request a CVE directly via https://cveform.mitre.org/ ?
 
-https://slsa.dev/blog/2022/12/gcb-slsa-verification
-
-Of course attestation is not proof, and even human certification can only 
-go so far. Reproducible builds offer a path there but that goal seems just 
-as far away as it was 20 years ago, when Java was going to solve that for 
-us.
-
-I have no recommendation on if or how to use SLSA or something like it in 
-this policy, just that it may be something to consider.
-
-Brian
+Regards,
+Salvatore
