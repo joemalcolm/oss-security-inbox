@@ -1,138 +1,164 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/07/2
-Message-ID: <000001d3fe4b$dbee82c0$93cb8840$@secunia.com>
-Date: Thu, 7 Jun 2018 12:39:48 +0200
-From: "Secunia Research" <vuln@...unia.com>
-To: <oss-security@...ts.openwall.com>
-Cc: <vuln@...unia.com>
-Subject: Secunia Research: Linux Kernel USB over IP Multiple Denial of Service Vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/12/2
+Message-ID: <20181212133639.GA8474@f195.suse.de>
+Date: Wed, 12 Dec 2018 14:36:39 +0100
+From: Matthias Gerstner <mgerstner@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Singularity: CVE-2018-19295: local root exploit - unprivileged users can join arbitrary mnt, net, pid and ipc namespaces
 Content-Type: text/plain; charset=utf-8
 
-======================================================================
+Hello,
 
-                     Secunia Research 2018/05/30
+following is a report about security issues found in Singularity [1].
 
-  Linux Kernel USB over IP Multiple Denial of Service Vulnerabilities
+Introduction
+============
 
-======================================================================
-Table of Contents
+Singularity is a Linux namespace based container solution often used
+in HPC (high performance computing) environments. In the course of a
+code review [4] conducted for inclusion of Singularity version 2.6.0 in
+SUSE enterprise products I found a couple of security issues.
 
-Affected Software....................................................1
-Severity.............................................................2
-Description of Vulnerabilities.......................................3
-Solution.............................................................4
-Time Table...........................................................5
-Credits..............................................................6
-References...........................................................7
-About Flexera .......................................................8
-Verification.........................................................9
+According to upstream this affects Singularity versions 2.4.0 through
+2.6.0. A security bugfix release 2.6.1 has been published to address the
+issues [2]. Please note that starting with major version 3.0.0
+Singularity consists of a complete rewrite in the Go programming
+language that is not affected by these issues.
 
-======================================================================
-1) Affected Software
+Issue Details
+=============
 
-* Linux Kernel versions 4.16.x, 4.14.x, 4.9.x, and 4.4.x.
-  Other versions may also by affected.
+Singularity ships a couple of setuid root enabled binaries for setting
+up the container environment for unprivileged users. These binaries are
+where the security issues are originating. Note that on SUSE
+distributions by default only members of the singularity group can
+access these setuid root binaries. Following is my initial report
+describing the security issues based on version 2.6.0.
 
-======================================================================
-2) Severity
+A) One issue is found in mount-setuid in `src/mount.c:75` where
+`singularity_runtime_ns(SR_NS_MNT)` is called. This function interprets
+an environment variable `SINGULARITY_DAEMON_JOIN`. If it is set then
+`_singularity_runtime_ns_mnt_join()` is called which in turn evaluates
+the environment variable `SINGULARITY_NS_FD`. This environment variable
+is supposed to specify the number of an inherited file descriptor that
+refers to some `/proc/<pid>/ns` directory. The function then calls with
+effective uid 0 `openat(ns_fd, "mnt", O_RDONLY);` to open the mount
+namespace file descriptor and later on joins it via `setns()`.
 
-Rating: Less critical
-Impact: Denial of Service
-Where: Local Area Network
+This logic causes the following security issues:
 
-======================================================================
-3) Description of Vulnerabilities
+1) A regular user can use it to join more or less arbitrary mount
+  namespaces in the system. The `/proc/<pid>/ns` directories have mode
+  0511 which allows any user to open a file descriptor for it when
+  specifying the `O_PATH` open flag. Joining other users' mount
+  namespaces is normally not possible for regular users as is stated in
+  the `man 2 setns` man page:
 
-Secunia Research has discovered multiple vulnerabilities in Linux
-Kernel, which can be exploited by malicious people to cause a DoS
-(Denial of Service).
+  ```Changing the mount namespace requires that the caller possess both
+  CAP_SYS_CHROOT and CAP_SYS_ADMIN capabilities in its own user
+  namespace and CAP_SYS_ADMIN in the target mount namespace.```
 
-Multiple race condition errors when handling probe, disconnect, and
-rebind operations can be exploited to trigger a use-after-free
-condition or a NULL pointer dereference by sending multiple USB over
-IP packets.
+  This can therefore also be used to cause the image mount in
+  /var/singularity/mnt/final to occur in the root mount namespace and
+  therefore make it visible to other processes in the root namespace of
+  the system. By using the directory container format arbitrary
+  user-reachable directories can be bind-mounted to
+  /var/singularity/mnt/final. (which, by itself, is probably not
+  security relevant).
+2) The logic can also be exploited to test for existence of arbitrary
+  paths, by passing an FD refering to a user controlled directory that
+  contains a symlink `mnt` to e.g. /root/.bash_history. The mount-setuid
+  logging will show either EINVAL or ENOENT depending on whether the file
+  exists.
+3) The same approach as in 2) can be used to cause an arbitrary file to
+  be opened by root, which could have side-effects depending on file
+  system or device files etc.
+4) When causing mount-suid to join the root mount namespace this way,
+  the mount of the image specified via the `SINGULARITY_IMAGE`
+  environment variable is persistent and not unmounted. When specifying a
+  system directory like /usr/bin in `SINGULARITY_IMAGE` then a bind
+  mount of /usr/bin will be performed in /var/singularity/mnt/final. A
+  following mount of an actual file based image will cause the image
+  contents to be bind-mounted on top of /var/singularity/mnt/final, and
+  therefore become visible in /usr/bin. This can be considered a local
+  root exploit, since user controlled files can be put in system path
+  locations.
 
-Successful exploitation requires USB over IP daemon (usbipd) to be
-running.
+Regarding 1) and 4) you can find a PoC program attached (attach_ns.cpp).
+Instructions on how to use it are found inside the source file comments.
 
-The vulnerabilities are confirmed in versions 4.17.0-rc1 and 4.15.0
-and reported in versions 4.16.x prior to 4.16.11, 4.14.x prior to
-4.14.43, 4.9.x prior to 4.9.102, and 4.4.x prior to 4.4.133. Other
-versions may also by affected.
+B) Another similar issue is found in the start-suid program in
+`src/start.c:97` where `singularity_runtime_ns(SR_NS_ALL)` is called.
+This allows a regular user to join more or less arbitrary mnt, net, pid
+and ipc namespaces. The same defects as listed in A) apply here.
 
-======================================================================
-4) Solution
+The attached PoC program (join_ns.py) demonstrates how to join selected
+namespaces by exploiting this issue.
 
-Update to version 4.16.11, 4.14.43, 4.9.102, or 4.4.133.
-https://git.kernel.org/linus/22076557b07c12086eeb16b8ce2b0b735f7a27e7
-https://git.kernel.org/linus/c171654caa875919be3c533d3518da8be5be966e
+C) The third setuid program, action-suid does apparently not directly
+suffer from the issue above, because before `singularity_runtime_ns()`
+is called, the function `singularity_daemon_init()` is called which in
+join mode opens a `DAEMON_NS_FD` on its own and overrides the user
+supplied one. However, the `daemon_init_join()` function which is
+responsible for doing so checks whether /proc/<pid>/ns of the target
+process is owned by the calling user. After that `open()` is called on
+/proc/<pid>/ns. This approach is still subject to a race condition,
+because the calling user could try to just in time replace this PID by a
+different process that runs in namespaces not normally accessible to
+him.
 
-======================================================================
-5) Time Table
+In the code it is a bit confusing that the following check and ERROR
+message is found in various places:
 
-2018/05/03 - Linux Kernel team contacted with vulnerabilities details.
-2018/05/04 - Linux Kernel team confirmed the vulnerabilities.
-2018/05/15 - Release of an official patch.
-2018/05/30 - Release of Secunia Advisory SA81540.
-2018/05/30 - Public disclosure of Secunia Research Advisory.
+```
+if ( singularity_registry_get("DAEMON_JOIN") ) {
+        singularity_message(ERROR, "Internal Error - This function should not be called when joining an instance\n");
+    }
+```
 
-======================================================================
-6) Credits
+The execution is not aborted, however.
 
-Jakub Jirasek, Secunia Research at Flexera.
+Timeline
+========
 
-======================================================================
-7) References
+2018-11-09: I privately reported the issues described above to the
+Singularity project lead.
 
-The Flexera CNA has assigned CVE-2018-5814 identifier for the
-vulnerabilities through the Common Vulnerabilities and Exposures (CVE)
-project.
+2018-11-12: Upstream opened an internal issue for it and confirmed the
+issue in the following days. They started handling the issue according
+to their own security protocol [3].
 
-======================================================================
-8) About Flexera
+2018-11-21: Upstream communicated CVE-2018-19295 to me for these issues.
 
-Flexera helps application producers and enterprises increase
-application usage and the value they derive from their software.
+2018-11-30: Upstream provided patches to their PRO customers.
 
-http://www.flexera.com
+2018-12-11: Upstream released security bugfix release 2.6.1.
 
-Flexera delivers market-leading Software Vulnerability Management
-solutions enabling enterprises to proactively identify and
-remediate software vulnerabilities, effectively reducing the risk of
-costly security breaches.
+References
+==========
 
-https://www.flexera.com/enterprise/products/
+[1]: https://www.sylabs.io/
+[2]: https://github.com/sylabs/singularity/releases/tag/2.6.1
+[3]: https://www.sylabs.io/2018/06/sylabs-security-vulnerability-protocol
+[4]: https://bugzilla.suse.com/show_bug.cgi?id=1111411
 
-Flexera supports and contributes to the community in several
-ways. We have always believed that reliable vulnerability
-intelligence and tools to aid identifying and fixing vulnerabilities
-should be freely available for consumers to ensure that users,
-who care about their online privacy and security, can stay secure.
-Only a few vendors address vulnerabilities in a proper way and help
-users get updated and stay secure. End-users (whether private
-individuals or businesses) are otherwise left largely alone, and
-that is why back in 2002, Secunia Research started investigating,
-coordinating disclosure and verifying software vulnerabilities.
-In 2016, Secunia Research became a part of Flexera and today
-our in-house software vulnerability research remains the core of
-the Software Vulnerability Management products at Flexera.
+Regards
 
-https://www.flexera.com/enterprise/company/about/secunia-research/
+Matthias
 
-The public Secunia Advisory database contains information for
-researchers, security enthusiasts, and consumers to lookup individual
-products and vulnerabilities and assess, whether they need to take
-any actions to secure their systems or whether a given vulnerability
-has already been discovered
+-- 
+Matthias Gerstner <matthias.gerstner@...e.de>
+Dipl.-Wirtsch.-Inf. (FH), Security Engineer
+https://www.suse.com/security
+Telefon: +49 911 740 53 290
+GPG Key ID: 0x14C405C971923553
 
-https://secuniaresearch.flexerasoftware.com/community/advisories/
+SUSE Linux GmbH
+GF: Felix Imendörffer, Jane Smithard, Graham Norton
+HRB 21284 (AG Nuernberg)
 
-======================================================================
-9) Verification
+View attachment "join_ns.py" of type "text/x-python" (5734 bytes)
 
-Please verify this advisory by visiting the Secunia Research website:
-https://secuniaresearch.flexerasoftware.com/secunia_research/2018-8
+View attachment "attach_ns.cpp" of type "text/x-c" (3096 bytes)
 
-======================================================================
-
-
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
