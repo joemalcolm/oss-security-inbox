@@ -1,40 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/11/3
-Message-Id: <20180711010252.526E84C8@webmail.sinamail.sina.com.cn>
-Date: Wed, 11 Jul 2018 09:02:52 +0800
-From: <zrlw@...a.com>
-To: "oss-security" <oss-security@...ts.openwall.com>
-Cc: "Solar Designer" <solar@...nwall.com>
-Subject: Re: mmap vulnerability in motion eye video4linux driver for Sony Vaio PictureBook
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/12/12
+Message-ID: <CAJ_zFk+7hJZWXHT3ufnR7FtJ0ybtts3VbUZmKhFHaMUPiX0JTw@mail.gmail.com>
+Date: Wed, 12 Dec 2018 11:59:12 -0800
+From: Tavis Ormandy <taviso@...gle.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Multiple telnet.c overflows
 Content-Type: text/plain; charset=utf-8
 
-yes, i found the pl and  sent to the maintainer mchehab@...nel.org and linux-media mail list  linux-media@...r.kernel.org last week, the last one  boudanced me with something like 'Your address is not liked source for email' blah...
-i don't have Sony Vaio PictureBook, so i just check the souces and docs again. 
+On Wed, Dec 12, 2018 at 11:15 AM Bob Friesenhahn
+<bfriesen@...ple.dallas.tx.us> wrote:
+>
+> On Wed, 12 Dec 2018, Tavis Ormandy wrote:
+>
+> > It's not that environment handling is a non-issue, I've reported
+> > dozens over the years, it's just that it requires a privilege
+> > boundary. For example, setuid binaries are the classic example.
+>
+> Is a network connection between two machines not a 'privilege
+> boundary'?  If the remote machine has the ability to subvert the
+> accessing machine (e.g. by transmitting something which causes harm to
+> the client) then that seems to qualify.
 
-/usr/src/packages/BUILD/kernel-default-4.4.21/linux-4.4/Documentation/video4linux/v4l2-framework.txt:
-'The v4l2_file_operations struct is a subset of file_operations. The main
-difference is that the inode argument is omitted since it is never used.'
-# ls /dev/video0crw-rw---- 1 root video 81, 0 Jul 11 08:14 /dev/video0
-commit be83bbf80682 file_mmap_size_max check conditions:1. S_ISREG(inode->i_mode) 2. S_ISBLK(inode->i_mode)3. file->f_mode & FMODE_UNSIGNED_OFFSET
-I doubt which one will be true.
+That would certainly qualify, but the attack your describing does not
+seem relevant to this bug, no?
 
------ Original Message -----
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com, zrlw@...a.com
-Cc: Solar Designer <solar@...nwall.com>
-Subject: Re: [oss-security] mmap vulnerability in motion eye video4linux driver for Sony Vaio PictureBook
-Date: 2018-07-10 21:41
-
-
-On Sat, Jul 07, 2018 at 12:09:37AM +0800, zrlw@...a.com wrote:
-> I  sent a email to the original authors which i found in the head of
-> meye.c, but i don't receive any response util now.
-Always use the scripts/get_maintainer.pl tool to find who to send stuff
-like this to.  It will include a public mailing list or two.
-> I don't think
-> commit be83bbf80682  will work on this case, this driver derived from
-> v4l2-core which not use inode,  maybe i'm wrong.  
-I think you are wrong, but it would be great if you could test to verify
-it or not.
-thanks,
-greg k-h
+Tavis.
