@@ -1,18 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/02/5
-Message-ID: <20180702140948.GF8324@f195.suse.de>
-Date: Mon, 2 Jul 2018 16:09:48 +0200
-From: Matthias Gerstner <mgerstner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/12/4
+Message-ID: <CA+NXwpT9J40mJe_=h-R==qJBc=9PA+-80b8p4gdaJ=uy_JhMJg@mail.gmail.com>
+Date: Wed, 12 Dec 2018 16:27:02 +0100
+From: Salva Peiró <speirofr@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: cinnamon: possible symlink attack in cinnamon-settings-users.py
+Cc: security@...ian.org
+Subject: CVE Request: mini-httpd (<= v1.30) is affected by a response discrepancy information exposure (CWE-204)
 Content-Type: text/plain; charset=utf-8
 
-> The script cinnamon-settings-users.py runs as root (via polkit's pkexec) 
-> and allows to configure e.g. other user's icon files. These icon files
-> are written to the respective user's $HOME/.face location. If an
-> unprivileged user prepares a symlink pointing to an arbitrary location
-> then this location will be overwritten with the icon content.
+Hi everyone,
 
-This was assigned CVE-2018-13054.
+The mini-httpd daemon (version <= v1.30) shipped in Debian/Ubuntu from [1]
+is affected by a response discrepancy information exposure (CWE-204) that
+enables an attacker to remotely enumerate valid htpasswd usernames (RFC
+7617).
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+A more detailed advisory can be found at:
+https://speirofr.appspot.com/files/advisory/SPADV-2018-01.md
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=916190
+
+Is there a CVE for this? If not, could one be assigned, please?
+
+[1] http://www.acme.com/software/mini_httpd/
+
+Best Regards,
+--
+Salva Peiró. Software Engineer
+https://speirofr.appspot.com
+
+##  Description
+
+Requesting an .htpasswd protected URL with a valid username part without
+providing the corresponding password eg, "user:" per (RFC 7617)
+causes the mini-httpd to unexpectedly terminate.
+
+~~~
+user@box $ curl http://user:@127.0.0.1:8000/auth/
+curl: (52) Empty reply from server
+~~~
+
+The problem is that the mini_httpd.c:2407 contains a NULL pointer
+dereference bug
+that allows a remote attacker to enumerate valid htpasswd usernames (RFC
+7617).
+
+## Proposed Fix
+
+~~~
+>From 62eff179b34cd1435017438ab99ed1906b6cc6c8 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Salva=20Peir=C3=B3?= <speirofr@...il.com>
+Date: Wed, 5 Dec 2018 18:46:46 +0100
+Subject: [PATCH] Fix NULL pointer dereference at mini_httpd.c:2407
+(SPADV-2018-01)
+
+---
+ mini_httpd.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/mini_httpd.c b/mini_httpd.c
+index 03d0cdd..77f030f 100644
+--- a/mini_httpd.c
++++ b/mini_httpd.c
+@@ -2404,7 +2404,8 @@ auth_check( char* dirname )
+         /* Yes. */
+         (void) fclose( fp );
+         /* So is the password right? */
+-        if ( strcmp( crypt( authpass, cryp ), cryp ) == 0 )
++        char *cryptpass = crypt( authpass, cryp );
++        if ((cryptpass != NULL) && (strcmp(cryptpass, cryp ) == 0) )
+         {
+         /* Ok! */
+         remoteuser = line;
+--
+2.11.0
+~~~
+
+## Versions affected
+
+All versions of mini-httpd below <= v1.30.
+    http://www.acme.com/software/mini_httpd/
+
+Debian: https://packages.debian.org/stretch/mini-httpd
+Ubuntu: https://launchpad.net/ubuntu/+source/mini-httpd
+
