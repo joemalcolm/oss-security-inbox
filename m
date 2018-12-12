@@ -1,37 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/23/2
-Message-ID: <8770596.Fmibit0Khg@overwatch>
-Date: Fri, 23 Nov 2018 09:34:51 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Crashes and memory safety bugs in dcraw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/12/13
+Message-ID: <CAJ_zFkKWP18xP6jUh=Gax3o_R4mFB905FC9yKWTd9-VEwEZEmA@mail.gmail.com>
+Date: Wed, 12 Dec 2018 12:09:53 -0800
+From: Tavis Ormandy <taviso@...gle.com>
+To: hackerfantastic@...glemail.com
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Multiple telnet.c overflows
 Content-Type: text/plain; charset=utf-8
 
-On venerdì 23 novembre 2018 09:22:17 CET Hanno Böck wrote:
-> Segfault / memory read on invalid address in crop_masked_pixels
-> ==6511==ERROR: AddressSanitizer: SEGV on unknown address 0x7fa0aa2ad79e (pc
-> 0x0000005992fe bp 0x7ffdd236bb50 sp 0x7ffdd236b9e0 T0) ==6511==The signal
-> is caused by a READ memory access.
->     #0 0x5992fd in crop_masked_pixels /mnt/ram/dcraw/dcraw.c:3775:20
->     #1 0x668a33 in main /mnt/ram/dcraw/dcraw.c:10406:7
->     #2 0x7fa05f3264ca in __libc_start_main (/lib64/libc.so.6+0x234ca)
->     #3 0x41c629 in _start (/mnt/ram/dcraw/a.out+0x41c629)
-> 
-> Invalid memory read in crop_masked_pixels
-> ==6893==ERROR: AddressSanitizer: SEGV on unknown address 0x7f5514dad79e (pc
-> 0x0000005992fe bp 0x7ffc83994ad0 sp 0x7ffc83994960 T0) ==6893==The signal
-> is caused by a READ memory access.
->     #0 0x5992fd in crop_masked_pixels /mnt/ram/dcraw/dcraw.c:3775:20
->     #1 0x668a33 in main /mnt/ram/dcraw/dcraw.c:10406:7
->     #2 0x7f54c9df64ca in __libc_start_main (/lib64/libc.so.6+0x234ca)
->     #3 0x41c629 in _start (/mnt/ram/dcraw/a.out+0x41c629)
+On Wed, Dec 12, 2018 at 11:35 AM Hacker Fantastic
+<hackerfantastic@...glemail.com> wrote:
+>
+> Hi Tavis,
+>
+> The "little used" package you mentioned is in some distributions a dependency of "xorg-xinit" (:: removing inetutils breaks dependency 'inetutils' required by xorg-xinit in Arch Linux). The security boundary in the Mikrotik example is "escape of restricted shells" which is also in the TLDR; advisory. If you are unhappy with how I described the issue and wish to spend time and ultimately money researching remotely reachable code paths (aside from the URI handler example I already gave you) then it is worth looking into more detail the issues with the heap overflow and if it is reachable in the client via a server-side telnetd implementation for instance. The code there is a mess.
+>
+> As I already stated, I am unable to account for every use of telnet client-side code or how it is called in every application, particularly all the projects out there used from open-source community or co-opted by vendors into commercial offerings (like the given example, Mikrotik). Splitting hairs over security boundaries of a single issue with many use cases is not something I have time for, the vulnerability is exactly as described with security relevant impacts in my original advisory. It would be nice to see the heap overflow reached via a telnetd service just to prove a point but ultimately it is beyond the scope of this discussion, why not put the energy you spent on these emails to use exploring if the heap is also corrupted in such instances? ;-)
+>
 
-Hi Hanno,
+The energy I spent asking if a security boundary being crossed was
+minimal. I think the answer is that you do not know of any cases of
+this being a security boundary, but you feel that all bugs are
+security bugs whether or not a security boundary is crossed, because
+you don't know how someone might be using the software.
 
-are the first and the third similar or I'm missing something?
-TIA
+> It was considered a security issue for such straight-forward restricted shell escapes in 2004/2005 (when there were numerous reported instances of such occurring in telnet clients alongside other client-side overflows). One of the issues is addressed in the implementations of some BSD clients and not in others.
+>
+> Just because you do not know how to exploit a bug does not mean it does not have security implications, it just means they have not been discovered yet or the researcher does not have the luxury of time that others have.
+>
+> I hope this clarifies my points satisfactorily for you.
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+It certainly does, thank you. I think we disagree on what qualifies as
+a vulnerability, but I'm still very grateful for you reporting this.
 
+Tavis.
