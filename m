@@ -1,41 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/01/4
-Message-ID: <1c871d1e-9ed7-3926-7e75-1bce238c79d6@yahoo.fr>
-Date: Fri, 1 Jun 2018 17:11:41 +0200
-From: Lionel Debroux <lionel_debroux@...oo.fr>
-To: Stefan Kanthak <stefan.kanthak@...go.de>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request: rufus
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/12/1
+Message-ID: <CAG48ez37UKxsRzpkxa8HbrWGAXWQ7H9OYjGzkaZgEmzY+QOF2Q@mail.gmail.com>
+Date: Wed, 12 Dec 2018 01:27:13 +0100
+From: Jann Horn <jannh@...gle.com>
+To: oss-security@...ts.openwall.com
+Subject: Linux kernel: userfaultfd bypasses tmpfs file permissions (CVE-2018-18397; since 4.11; fixed in 4.14.87 and 4.19.7)
 Content-Type: text/plain; charset=utf-8
 
-Hello Stefan,
+NOTE: I have requested a CVE identifier, and I'm sending this message,
+to make tracking of the fix easier; however, to avoid missing security
+fixes without CVE identifiers, you should *NOT* be cherry-picking a
+specific patch in response to a notification about a kernel security
+bug.
 
-Like Henri and certainly others, I've been appreciating the technical
-content from your advisories for years. The tone sometimes looked dry,
-even slightly abrasive, but it was tolerable.
+In Linux kernel versions since 4.11, userfaultfd can be used to write
+arbitrary data into holes in sparse tmpfs files to which an attacker
+has read-only access.
 
-This time, I think that you're going too far - well into the aggressive,
-arrogant, abusive territory. It's not the technical background, which
-remains sound as usual, it's the tone.
-Sure, Pete's first reply wasn't fully nice, but clearly, to begin with,
-you could have done *a lot* better (more constructive) than
-1) posting about "bloody beginners" and failing to post details about
-what's wrong with that installer. That's what he rightfully pointed.
-Pete is usually nice enough to nice people, you know.
-2) getting on your high horses in your reply to his reply.
+This is CVE-2018-18397.
 
-Do you understand how your posts can come across as negative,
-interfering with the otherwise interesting meaning of your posts ?
-Toning down on those aspects will reduce the likelihood of derailing
-issue reports, and damaging your reputation over the long term.
-
-
-Two cents from a bystander, anyway.
-
-
-Regards,
-Lionel.
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=29ec90660d68bbdd69507c1c8b4e33aa299278b1
+https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.14.87
+https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.19.7
+https://bugs.chromium.org/p/project-zero/issues/detail?id=1700
