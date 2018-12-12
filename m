@@ -1,27 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/23/3
-Message-ID: <79e2949f37a6495a19888772953b410e035e2f9c.camel@opteya.com>
-Date: Tue, 23 Oct 2018 11:41:13 +0200
-From: Yann Droneaud <ydroneaud@...eya.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/12/3
+Message-ID: <20181212142415.GA11037@openwall.com>
+Date: Wed, 12 Dec 2018 15:24:15 +0100
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: GCC Compiler Induced Vulnerability - affects programs compiled with GCC 7 and 8 containing nested functions
+Cc: Jann Horn <jannh@...gle.com>
+Subject: Re: Linux kernel: userfaultfd bypasses tmpfs file permissions (CVE-2018-18397; since 4.11; fixed in 4.14.87 and 4.19.7)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Wed, Dec 12, 2018 at 01:27:13AM +0100, Jann Horn wrote:
+> NOTE: I have requested a CVE identifier, and I'm sending this message,
+> to make tracking of the fix easier; however, to avoid missing security
+> fixes without CVE identifiers, you should *NOT* be cherry-picking a
+> specific patch in response to a notification about a kernel security
+> bug.
 
-Use -Werror=trampoline to prevent GCC from generating code that require
-executable stack:
+(I resisted the urge to comment on this piece in previous postings.)
 
+What should distros/users do, then?  Use latest mainline or upstream
+stable kernels?  That would expose them to the many recent bugs like
+this one, but which haven't yet been found (or not yet made public,
+which is worse).
 
-https://gcc.gnu.org/onlinedocs/gcc-8.2.0/gcc/Warning-Options.html#index-Wtrampolines
+As far as I can tell, by far most Linux kernel vulnerabilities (that are
+eventually found and made public) are in relatively recent (as of that
+time) kernel versions.  So a user or a distro would avoid most
+vulnerabilities (that are eventually found and made public) by staying
+sufficiently behind current versions, and relying on backports, even if
+at risk of missing untracked vulnerabilities.  Currently this can be
+achieved e.g. by using RHEL7'ish kernels forked by Red Hat off 3.10, but
+probably not anything newer than that yet.  (And when RHEL7 was just
+released, its kernels were not quite ready for such use.  It takes
+even RHEL kernels a few years and a few hundred revisions to mature and
+become a lower security risk.  Fortunately, there's a previous RHEL at a
+few years and a few hundred revisions old yet still maintained during
+that time.)
 
-It's a recommanded warning from OWASP:
+A question to ask may be: out of Linux kernel vulnerabilities being
+patched, are there more high and critical overall severity (e.g., as
+risk impact times risk probability) vulnerabilities found in "too
+recent" kernels than there are high and critical severity untracked
+vulnerabilities (also or instead) affecting "sufficiently old" kernels?
+My gut feeling is there are many more such vulnerabilities in "too
+recent" kernels than there are those untracked vulnerabilities in
+"sufficiently old" kernels.  (BTW, a vulnerability being untracked
+likely correlates with it being a lower risk probability at least for
+non-targeted attacks.)  Hence optimal strategy for a distro and their
+users is to stay with "sufficiently old" base versions and backport
+whatever is known to be worthy of a backport.
 
+There are no maintained upstream stable branches started long enough ago
+for them to be as mature as e.g. RHEL7 kernels are now.  Besides,
+upstream stable branches also suffer from lack of backports of fixes for
+untracked vulnerabilities.
 
-https://www.owasp.org/index.php/C-Based_Toolchain_Hardening#GCC.2FBinutils
+The recommendation to use latest mainline or upstream stable kernels is
+safe to give (and in a way even the most responsible one to give), but
+not necessarily the best to follow.
 
--- 
-Yann Droneaud
-OPTEYA
+I do not have a suggestion on what to do about that as it relates to
+recommendations/disclaimers on postings such as Jann's.  Ideally, we
+wouldn't have so many new security vulnerabilities being introduced to
+new Linux kernels all the time, but that seems unrealistic given the
+pace of Linux kernel development and growth.
 
+> In Linux kernel versions since 4.11, userfaultfd can be used to write
+> arbitrary data into holes in sparse tmpfs files to which an attacker
+> has read-only access.
+> 
+> This is CVE-2018-18397.
+> 
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=29ec90660d68bbdd69507c1c8b4e33aa299278b1
+> https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.14.87
+> https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.19.7
+> https://bugs.chromium.org/p/project-zero/issues/detail?id=1700
 
+Interesting.  How did you find this?
+
+Alexander
+
+P.S. I guess Jann's message did not reach subscribers who are on Gmail
+and such because of google.com's DMARC policy.  So I made sure to quote
+all of it above.
