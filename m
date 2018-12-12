@@ -1,91 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/26/4
-Message-ID: <CA+=eHdR-Ym0O0kpxbjSPpNYqMhp3nCKUBHQh8GtjV4AKbJavUg@mail.gmail.com>
-Date: Mon, 26 Feb 2018 10:47:49 +0530
-From: Sahil Dhar <sdhar@...urityinnovation.com>
-To: Maxim Solodovnik <solomax666@...il.com>
-Cc: security@...nmeetings.apache.org,  Openmeetings user-list <user@...nmeetings.apache.org>, dev <dev@...nmeetings.apache.org>,  user-russian@...nmeetings.apache.org, oss-security@...ts.openwall.com
-Subject: Re: [ANNOUNCE] CVE-2018-1286 - Apache OpenMeetings - Insufficient Access Controls
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/12/10
+Message-ID: <alpine.GSO.2.20.1812121308451.10494@scrappy.simplesystems.org>
+Date: Wed, 12 Dec 2018 13:10:24 -0600 (CST)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+To: oss-security@...ts.openwall.com
+Subject: Re: Multiple telnet.c overflows
 Content-Type: text/plain; charset=utf-8
 
-Hi Maxim,
+On Wed, 12 Dec 2018, Tavis Ormandy wrote:
 
-I got your point, however, the description seems to be stating that only
-version *3.0.0* is affected instead of *<=4.0.1*.
+> It's not that environment handling is a non-issue, I've reported
+> dozens over the years, it's just that it requires a privilege
+> boundary. For example, setuid binaries are the classic example.
 
+Is a network connection between two machines not a 'privilege 
+boundary'?  If the remote machine has the ability to subvert the 
+accessing machine (e.g. by transmitting something which causes harm to 
+the client) then that seems to qualify.
 
-CVE-2018-1286 - Apache OpenMeetings - Insufficient Access Controls
-Severity: Medium
-
-Vendor: The Apache Software Foundation
-
-*Versions Affected: Apache OpenMeetings 3.0.0*
-
-* Versions Affected: <= 4.0.1  (Corrected)*
-
-Description: CRUD operations on privileged users are not password protected
-allowing an authenticated attacker to deny service for privileged users.
-CVE-2018-1286
-
-The issue was fixed in 4.0.2
-All users are recommended to upgrade to Apache OpenMeetings 4.0.2
-
-
-Thanks,
-~ Sahil
-
-On Mon, Feb 26, 2018 at 10:43 AM, Maxim Solodovnik <solomax666@...il.com>
-wrote:
-
-> I have analyzed the code
-> Wysiwyg editor was introduced in 3.0.0
-> and it was vulnerable from the very beginning
-> So all versions are affected :(
->
-> On Mon, Feb 26, 2018 at 12:10 PM, Sahil Dhar
-> <sdhar@...urityinnovation.com> wrote:
-> > Hi Maxim,
-> >
-> >
-> > I just noticed that there is a typo in the CVE-2018-1286 description, as
-> it
-> > states that the affected version is 3.0.0. However, the vulnerability was
-> > reported for 4.0.1 release. Can you please update it?
-> >
-> > Thanks,
-> > ~ Sahil
-> >
-> >
-> >
-> >
-> >
-> >
-> > On Sun, Feb 25, 2018 at 5:20 PM, Maxim Solodovnik <solomax@...che.org>
-> > wrote:
-> >>
-> >> Severity: Medium
-> >>
-> >> Vendor: The Apache Software Foundation
-> >>
-> >> Versions Affected: Apache OpenMeetings 3.0.0
-> >>
-> >> Description: CRUD operations on privileged users are not password
-> >> protected allowing an authenticated attacker to deny service for
-> >> privileged users.
-> >>
-> >>
-> >> The issue was fixed in 4.0.2
-> >> All users are recommended to upgrade to Apache OpenMeetings 4.0.2
-> >>
-> >> Credit: This issue was identified by Sahil Dhar of Security Innovation
-> Inc
-> >
-> >
->
->
->
-> --
-> WBR
-> Maxim aka solomax
->
-
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
