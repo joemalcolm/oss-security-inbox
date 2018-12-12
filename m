@@ -1,57 +1,112 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/09/2
-Message-ID: <9dab0b73-3bc4-a942-bb9e-6c0b243784c2@canonical.com>
-Date: Fri, 9 Nov 2018 08:03:46 -0500
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2018-5407: new side-channel vulnerability on SMT/Hyper-Threading architectures
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/12/5
+Message-ID: <20181212163242.GA12693@openwall.com>
+Date: Wed, 12 Dec 2018 17:32:43 +0100
+From: Solar Designer <solar@...nwall.com>
+To: Salva Peir?? <speirofr@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: mini-httpd (<= v1.30) is affected by a response discrepancy information exposure (CWE-204)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-On 2018-11-07 2:42 a.m., Billy Brumley wrote:
->>> For the 1.1.0 branch, at
->>>
->>> https://github.com/openssl/openssl/commits/OpenSSL_1_1_0-stable/crypto/ec/ec_mult.c
->>>
->>> everything starting from aab7c770353b1dc4ba045938c8fb446dd1c4531e
+On Wed, Dec 12, 2018 at 04:27:02PM +0100, Salva Peir?? wrote:
+> The mini-httpd daemon (version <= v1.30) shipped in Debian/Ubuntu from [1]
+> is affected by a response discrepancy information exposure (CWE-204) that
+> enables an attacker to remotely enumerate valid htpasswd usernames (RFC
+> 7617).
 > 
-> This was not very responsible of me, since the changes are across
-> several files. I reckon the best source is checking the diff between
-> 1.1.0h and 1.1.0i releases.
-> 
-> If you are a package maintainer, and are putting together a patch set
-> for this, please reach out to me. My team can help test.
-> 
-<snip>
+> A more detailed advisory can be found at:
+> https://speirofr.appspot.com/files/advisory/SPADV-2018-01.md
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=916190
 
-Could you please confirm the following commits are sufficient to fix CVE-2018-5407?
+The advisory SPADV-2018-01.md is in fact significantly more detailed
+than what you posted, so I've attached it to this message for archival.
 
+> Is there a CVE for this? If not, could one be assigned, please?
 
-Elliptic curve scalar multiplication with timing attack defenses (CVE-2018-5407)
-https://git.openssl.org/?p=openssl.git;a=commit;h=aab7c770353b1dc4ba045938c8fb446dd1c4531e
+oss-security is no longer a place to request CVE IDs.  See:
 
-Address code style comments
-https://git.openssl.org/?p=openssl.git;a=commit;h=f06437c751d6f6ec7f4176518e2897f44dd58eb0
+https://oss-security.openwall.org/wiki/mailing-lists/oss-security#cve-requests
 
-ladder description: why it works
-https://git.openssl.org/?p=openssl.git;a=commit;h=33588c930d39d67d1128794dc7c85bae71af24ad
+"Previously, one could request CVE IDs for issues in Open Source
+software from oss-security.  This is no longer the case.  Instead,
+please start by posting about the (to be made) public issue to
+oss-security (without a CVE ID), request a CVE ID from MITRE directly,
+and finally "reply" to your own posting when you also have the CVE ID to
+add.  With the described approach you would only approach MITRE after
+the issue is already public, but if you choose to do things differently
+and contact MITRE about an issue that is not yet public, then please do
+not disclose to them more than the absolute minimum needed for them to
+assign a CVE ID."
 
-Pass through
-https://git.openssl.org/?p=openssl.git;a=commit;h=f916a735bcdce496cebc7653a8ad2e72b333405a
+You've already posted in here (great!) so all that's left is for you to
+request a CVE ID from MITRE and to post that CVE ID here as a "reply".
 
-Move up check for EC_R_INCOMPATIBLE_OBJECTS and for the point at infinity case
-https://git.openssl.org/?p=openssl.git;a=commit;h=b43ad53119c0ac2ecfa6e4356210ccda57e0d16b
+However, I question the vulnerability finding or at least its
+completeness, so you might want to hold off on requesting a CVE ID for
+it.  Please see below:
 
-Remove superfluous NULL checks. Add Andy's BN_FLG comment.
-https://git.openssl.org/?p=openssl.git;a=commit;h=2172133d0dc58256bf776da074c0d1944fef15cb
+> +++ b/mini_httpd.c
+> @@ -2404,7 +2404,8 @@ auth_check( char* dirname )
+>          /* Yes. */
+>          (void) fclose( fp );
+>          /* So is the password right? */
+> -        if ( strcmp( crypt( authpass, cryp ), cryp ) == 0 )
+> +        char *cryptpass = crypt( authpass, cryp );
+> +        if ((cryptpass != NULL) && (strcmp(cryptpass, cryp ) == 0) )
 
+While it's important to check the return from crypt(3) for non-NULL
+before using the string(*), if this were the issue triggering the
+vulnerability you describe that fix would be incomplete.
 
-Thanks!
+(*) A general issue that was discussed in here some years ago, with
+opinions varying on whether crypt(3) should follow current POSIX and
+return NULL or retain historical behavior of never returning NULL not to
+upset programs written before the POSIX change.  In the end, many libc's
+went with the NULL returns on error.  Programs need to be fixed to
+support NULL returns from crypt(3) anyhow.
 
-Marc.
+In the advisory, you wrote:
 
--- 
-Marc Deslauriers
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
+> When the basic authentication string "user:pass" is composed only of the user
+> part without the password part, ie. "user:", then the authpass at
+> mini_httpd.c:2372 becomes the empty string "".
+> When the empty string is passed to the crypt(3) this returns the NULL string.
+> The NULL string is later dereferenced by the strcmp(3) call at mini_httpd.c:2407
+> causing an invalid memory access that triggers the SIGSEGV, and kills the forked process.
+
+This isn't a complete explanation.  crypt(3) isn't supposed to return
+NULL when authpass is the empty string "".  Empty string is a valid
+password, and should result in a valid password hash string, as long as
+the salt or setting string provided in the second argument to crypt(3)
+is valid.
+
+I can see how you'd trigger a NULL return from crypt(3) by having an
+empty or otherwise invalid password hash string in the .htpasswd file.
+So you'd be able to distinguish usernames corresponding to those lines
+with invalid hashes from usernames corresponding to lines with valid
+hashes.  A crash on an invalid .htpasswd line is indeed a robustness
+bug, but I'm not sure it constitutes a vulnerability.
+
+This is different from being able to distinguish existing vs.
+non-existent usernames.  (Besides, when fixing an issue of the kind you
+thought this one was, we should also remember that timing leaks will
+remain either way.  I don't suggest to leave worse-than-timing leaks
+intact, but rather not to provide wrong expectations and a false sense
+of security once we do.  And a next step may be to reduce timing leaks
+by performing dummy password hashing for non-existent usernames, again
+being careful to point out that smaller timing leaks will remain.)
+
+If the behavior is in fact exactly as you observed it, then maybe your
+system's libc or libcrypt is vulnerable in that it's incapable of
+processing an empty password.  I almost wonder if someone thought it'd
+be OK to implement e.g. some security standardization compliance by
+having crypt(3) fail to process an empty password and return NULL.  If
+so, that would be an interesting case for us to discuss.
+
+Please investigate this further.
+
+Thanks,
+
+Alexander
+
+View attachment "SPADV-2018-01.md" of type "text/plain" (5328 bytes)
