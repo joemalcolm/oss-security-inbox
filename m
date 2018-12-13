@@ -1,35 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/24/5
-Message-ID: <0e5a12ae-69ca-0227-319c-f661c037e48d@apache.org>
-Date: Wed, 24 Jan 2018 19:59:23 +0900
-From: Akira Ajisaka <aajisaka@...che.org>
-To: general@...oop.apache.org, user@...oop.apache.org, security@...oop.apache.org, bugtraq@...urityfocus.com, oss-security@...ts.openwall.com
-Subject: CVE-2017-15718: Apache Hadoop YARN NodeManager vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/13/1
+Message-ID: <CAJ_zFk+Dhd0buWMW7p4sRDZ_0KEDnOiKp4nV35XUgCUnFc5q-w@mail.gmail.com>
+Date: Wed, 12 Dec 2018 22:13:11 -0800
+From: Tavis Ormandy <taviso@...gle.com>
+To: hackerfantastic@...glemail.com
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Multiple telnet.c overflows
 Content-Type: text/plain; charset=utf-8
 
-CVE-2017-15718: Apache Hadoop YARN NodeManager vulnerability
+On Wed, Dec 12, 2018 at 5:21 PM Hacker Fantastic
+<hackerfantastic@...glemail.com> wrote:
+>
+> Please see the below proof of concept in triggering the heap overflow using the IAC SB TELQUAL_IS environment option variable assignment. As per my original advisory, which did not fully indicate the details but gave the overview of how to trigger the condition.
 
-Severity: Important
+Cool, but I think this is a different bug (AFAICT, it's CVE-2005-0469,
+it was fixed in netkit, but far fewer distros use inetutils). I agree
+this was a real vulnerability, It's a pretty good sign inetutils
+should be deprecated imho.
 
-Vendor: The Apache Software Foundation
-
-Versions Affected:
-Hadoop 2.7.3, 2.7.4
-
-Description:
-In Apache Hadoop 2.7.3 and 2.7.4, the security fix for CVE-2016-3086 is incomplete.
-The YARN NodeManager can leak the password for credential store provider
-used by the NodeManager to YARN Applications.
-
-If you use the CredentialProvider feature to encrypt passwords used in
-NodeManager configs, it may be possible for any Container launched
-by that NodeManager to gain access to the encryption password.
-The other passwords themselves are not directly exposed.
-
-Mitigation:
-2.7.3 and 2.7.4 users should upgrade to 2.7.5.
-If you cannot upgrade to the latest version, set the permission of
-the jceks file appropriately to restrict access from unauthorized users.
-
-Credit:
-This issue was discovered by Vinayakumar B.
+Tavis.
