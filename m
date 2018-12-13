@@ -1,160 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/18/1
-Message-ID: <20180218180945.GA22931@openwall.com>
-Date: Sun, 18 Feb 2018 19:09:45 +0100
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: LibVNCServer rfbserver.c: rfbProcessClientNormalMessage() case rfbClientCutText doesn't sanitize msg.cct.length
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/13/11
+Message-ID: <nycvar.YSQ.7.76.1812132245100.12493@xnncv>
+Date: Thu, 13 Dec 2018 22:48:11 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: public@...smi.ch
+Subject: CVE-2018-16872 Qemu: usb-mtp: path traversal by host filesystem manipulation in Media Transfer Protocol (MTP)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+   Hello,
 
-I've just created the below GitHub issue, and I'm also posting its
-description in here.  This applies at least to LibVNCServer versions
-0.9.9 (RHEL7) to latest in the GitHub repo as of this writing (and thus
-probably including latest release, which is 0.9.11, but I didn't check
-the release specifically).
+A flaw was found in qemu Media Transfer Protocol (MTP). The code opening files 
+in usb_mtp_get_object and usb_mtp_get_partial_object and directories in 
+usb_mtp_object_readdir doesn't consider that the underlying filesystem may 
+have changed since the time lstat(2) was called in usb_mtp_object_alloc, a 
+classical TOCTTOU problem. An attacker with write access to the host 
+filesystem shared with a guest can use this property to navigate the host 
+filesystem in the context of the QEMU process and read any file the QEMU 
+process has access to. Access to the filesystem may be local or via a network 
+share protocol such as CIFS.
 
-https://github.com/LibVNC/libvncserver/issues/218
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2018-12/msg03135.html
 
-While I consider this a security-relevant issue, I feel there's no
-overall benefit from reporting it under an embargo, so here goes.
+This issue was reported by Michael Hanselmann.
 
-libvncserver/rfbserver.c: rfbProcessClientNormalMessage() contains the
-following code:
-
-    case rfbClientCutText:
-
-        if ((n = rfbReadExact(cl, ((char *)&msg) + 1,
-                           sz_rfbClientCutTextMsg - 1)) <= 0) {
-            if (n != 0)
-                rfbLogPerror("rfbProcessClientNormalMessage: read");
-            rfbCloseClient(cl);
-            return;
-        }
-
-        msg.cct.length = Swap32IfLE(msg.cct.length);
-
-        str = (char *)malloc(msg.cct.length);
-        if (str == NULL) {
-                rfbLogPerror("rfbProcessClientNormalMessage: not enough memory");
-                rfbCloseClient(cl);
-                return;
-        }
-
-        if ((n = rfbReadExact(cl, str, msg.cct.length)) <= 0) {
-            if (n != 0)
-                rfbLogPerror("rfbProcessClientNormalMessage: read");
-            free(str);
-            rfbCloseClient(cl);
-            return;
-        }
-        rfbStatRecordMessageRcvd(cl, msg.type, sz_rfbClientCutTextMsg+msg.cct.length, sz_rfbClientCutTextMsg+msg.cct.length);
-        if(!cl->viewOnly) {
-            cl->screen->setXCutText(str, msg.cct.length, cl);
-        }
-        free(str);
-
-        return;
-
-This passes the client-provided 32-bit message length field's value
-directly into malloc(), reads up to this many bytes from the client, and
-then passes the full value to the library-user-provided setXCutText()
-callback (where the value might be higher than the number of bytes
-actually read - with uninitialized and potentially sensitive data
-afterwards - and it might also be too high for the callback's
-implementation to handle safely).  There may also be integer overflow in
-the addition of sz_rfbClientCutTextMsg (which is 8) to the value in the
-call to rfbStatRecordMessageRcvd(); I did not look into what
-consequences this might have.
-
-I first found the issue during Openwall's security audit of the
-Virtuozzo 7 product, which uses a RHEL7-derived package of
-LibVNCServer-0.9.9 from its prl-vzvncserver component.  A corresponding
-Virtuozzo 7 fix is:
-
-https://src.openvz.org/projects/OVZ/repos/prl-vzvncserver/commits/1204a8872d90c78a2be404dd4b025124bb01b2c5
-
-which hardens prl-vzvncserver's setXCutText() callback - but the rest of
-the issue needs to be fixed in LibVNCServer itself, hence the (belated)
-report to them and in here.
-
-We would like to thank the Virtuozzo company for funding the effort.
-
-Included below is the relevant excerpt from our Virtuozzo 7 report:
-
---- cut ---
-01090, PSBM-58099: prl-vzvncserver and LibVNCServer integer overflows, unlimited memory allocations, and unchecked malloc()
-Severity: medium
-Thread: 20161226 "prl-vzvncserver"
-
-A particular combination of these 3 problems is demonstrated by sending the
-output of "echo -e "RFB 003.003\n\001\006\0\0\0\xff\xff\xff\xff"" to
-prl-vzvncserver's TCP port, when prl-vzvncserver is running without password.
-(When running with password, authentication would be needed before the specific
-vulnerable code can be reached, and the string to send would accordingly be
-longer.)  This first causes LibVNCServer to allocate 4 GiB of address space and
-then to hand out this uninitialized memory to the prl-vzvncserver/console.c:
-vcSetXCutTextProc() callback, which would attempt to make another similar
-allocation and make a copy of the data.  Unfortunately, this LibVNCServer API,
-as well as many others, is defined to use "int" rather than "size_t" for data
-sizes, and indeed prl-vzvncserver uses "int" too.  For this particular request,
-this results in a zero byte allocation with malloc(), which succeeds, and then
-in a memcpy() of (size_t)-1 bytes to it.  With a range of other similar
-requests, malloc() may instead be made to fail (for trying to allocate a
-ridiculous amount of address space, sign-extended to 64-bit), in which case the
-memcpy() more reliably fails on a NULL pointer dereference.  Either way, the
-service crashes.  Finally, it is possible to have the process actually write to
-(and thus allocate for real) almost 4 GiB of memory with one request, by making
-the length field just below 2 GiB.  If no data is sent, then 2 GiB would be
-written from the uninitialized memory (likely mostly read-as-zero) to the
-memory allocated by prl-vzvncserver's callback.  If the data is actually sent,
-then first it is written to memory by LibVNCServer and then is copied by the
-callback, for 4 GiB total.  Exploitability of this specific issue into
-something worse than these varying possibilities is highly doubtful (although
-exploitation of unlimited size memcpy() is not unheard of), but all 3 of these
-issues are prevalent in prl-vzvncserver and LibVNCServer code in general, so
-maybe the impact of another similar issue would more obviously be worse.
-
-We recommend that sanity checks be introduced into LibVNCServer so that it
-doesn't try to allocate unreasonable amounts of memory and pass unsafe sizes to
-callbacks.  We also recommend prl-vzvncserver to sanity-check its inputs
-(including received from LibVNCServer) and in this way avoid integer overflows
-and unreasonably large allocations.  Finally, it is good practice to check
-whether a malloc() succeeded before writing to the memory.  The function
-vcSetXCutTextProc() came from LibVNCServer-0.9.9/vncterm/VNConsole.c, so its
-shortcomings also need to be reported to LibVNCServer upstream.
-
-Fix: Some aspects of this issue, most importantly covering prl-vzvncserver's
-vcSetXCutTextProc() callback, have been addressed with commit
-1204a8872d90c78a2be404dd4b025124bb01b2c5 on 20170130.
-
-Related:
-https://googleprojectzero.blogspot.com/2015/03/taming-wild-copy-parallel-thread.html
-http://www.giac.org/paper/gcih/361/port-80-apache-http-daemon-exploit/103818
---- cut ---
-
-LibVNCServer-0.9.9/vncterm/VNConsole.c mentioned above is not currently
-part of the libvncserver repo, hence is not otherwise included in
-description of this issue.  However, vncterm exists as a separate repo,
-so I might report its issues in there: https://github.com/LibVNC/vncterm
-
-Timeline:
-
-201612xx - issue found while auditing prl-vzvncserver
-20161226 - report to Virtuozzo with a focus on prl-vzvncserver specifics
-20170130 - a relevant prl-vzvncserver fix committed in Virtuozzo
-20180218 - public report to LibVNCServer and oss-security
-
-The ridiculous delay in making this report to LibVNCServer and
-oss-security is unintentional.  I just didn't get around to doing this
-sooner, and I'm sorry about that.
-
-In case anyone cares and would have asked, no, I did not request CVE
-ID(s) for this, and I don't intend to do so.  I also don't know if this
-is CVE-worthy.  Please feel free to track the LibVNCServer issue(s)
-described here (rfbClientCutText's lack of sanity-checking of the length
-field, passing of the full specified rather than actual read byte count
-to other functions, and the +8 integer overflow) as OVE-20180218-0001.
-
-Alexander
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
