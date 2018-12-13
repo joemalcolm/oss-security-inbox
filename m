@@ -1,30 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/06/2
-Message-ID: <20180706132655.GA1466@kroah.com>
-Date: Fri, 6 Jul 2018 15:26:55 +0200
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: mmap vulnerability in motion eye video4linux driver for Sony Vaio PictureBook
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/13/13
+Message-Id: <1544738009.80391.0@mail.igalia.com>
+Date: Thu, 13 Dec 2018 15:53:29 -0600
+From: Michael Catanzaro <mcatanzaro@...lia.com>
+To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
+Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: WebKitGTK+ and WPE WebKit Security Advisory WSA-2018-0009
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jul 06, 2018 at 08:35:43PM +0800, zrlw@...a.com wrote:
-> Hi all,i found a vulnerability in motion eye video4linux driver for Sony Vaio PictureBook,it desn't validate user-controlled parameter 'vma->vm_pgoff', a malicious process might access all of kernel memory from user space by trying pass different arbitrary address.
-> /usr/src/linux-4.4.21-69/drivers/media/pci/meye/meye.c:
-> static int meye_mmap(struct file *file, struct vm_area_struct *vma)
-> ...        unsigned long offset = vma->vm_pgoff << PAGE_SHIFT;
-> ...        pos = (unsigned long)meye.grab_fbuffer + offset;
->         while (size > 0) {
->                 page = vmalloc_to_pfn((void *)pos);
->                 if (remap_pfn_range(vma, start, page, PAGE_SIZE, PAGE_SHARED)) {...
+------------------------------------------------------------------------
+WebKitGTK+ and WPE WebKit Security Advisory                WSA-2018-0009
+------------------------------------------------------------------------
 
-Commit:
-	be83bbf80682 ("mmap: introduce sane default mmap limits")
-which was backported to all stable kernels, should have resolved this
-problem, correct?
+Date reported           : December 13, 2018
+Advisory ID             : WSA-2018-0009
+WebKitGTK+ Advisory URL : 
+https://webkitgtk.org/security/WSA-2018-0009.html
+WPE WebKit Advisory URL : 
+https://wpewebkit.org/security/WSA-2018-0009.html
+CVE identifiers         : CVE-2018-4437, CVE-2018-4438, CVE-2018-4441,
+                          CVE-2018-4442, CVE-2018-4443, CVE-2018-4464.
 
-If not, please notify the media driver maintainers and they will be glad
-to fix the problem.
+Several vulnerabilities were discovered in WebKitGTK+ and WPE WebKit.
 
-thanks,
+CVE-2018-4437
+    Versions affected: WebKitGTK+ before 2.22.5 and WPE WebKit before
+    2.22.3.
+    Credit to HyungSeok Han, DongHyeon Oh, and Sang Kil Cha of KAIST
+    Softsec Lab, Korea.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. Multiple memory corruption issues were addressed
+    with improved memory handling.
 
-greg k-h
+CVE-2018-4438
+    Versions affected: WebKitGTK+ before 2.22.3 and WPE WebKit before
+    2.22.1.
+    Credit to lokihardt of Google Project Zero.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. A logic issue existed resulting in memory
+    corruption. This was addressed with improved state management.
+
+CVE-2018-4441
+    Versions affected: WebKitGTK+ before 2.22.3 and WPE WebKit before
+    2.22.1.
+    Credit to lokihardt of Google Project Zero.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. A memory corruption issue was addressed with
+    improved memory handling.
+
+CVE-2018-4442
+    Versions affected: WebKitGTK+ before 2.22.3 and WPE WebKit before
+    2.22.1.
+    Credit to lokihardt of Google Project Zero.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. A memory corruption issue was addressed with
+    improved memory handling.
+
+CVE-2018-4443
+    Versions affected: WebKitGTK+ before 2.22.3 and WPE WebKit before
+    2.22.1.
+    Credit to lokihardt of Google Project Zero.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. A memory corruption issue was addressed with
+    improved memory handling.
+
+CVE-2018-4464
+    Versions affected: WebKitGTK+ and WPE WebKit before 2.22.0.
+    Credit to HyungSeok Han, DongHyeon Oh, and Sang Kil Cha of KAIST
+    Softsec Lab, Korea.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. Multiple memory corruption issues were addressed
+    with improved memory handling.
+
+
+We recommend updating to the latest stable versions of WebKitGTK+ and
+WPE WebKit. It is the best way to ensure that you are running safe
+versions of WebKit. Please check our websites for information about the
+latest stable releases.
+
+Further information about WebKitGTK+ and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
+
+The WebKitGTK+ and WPE WebKit team,
+December 13, 2018
+
