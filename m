@@ -1,32 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/16/1
-Message-ID: <3a80a443-a4a0-a8e0-15a1-26a75e39acbe@ruhr-uni-bochum.de>
-Date: Sat, 16 Jun 2018 12:42:37 +0200
-From: Marcus Brinkmann <marcus.brinkmann@...r-uni-bochum.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2018-12356 Breaking signature verification in pass (Simple Password Store)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/13/4
+Message-ID: <nycvar.YSQ.7.76.1812131459590.12493@xnncv>
+Date: Thu, 13 Dec 2018 15:02:30 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liq3ea@....com>
+Subject: CVE-2018-20123 QEMU: pvrdma: memory leakage in device hotplug
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+   Hello,
 
-On 06/15/2018 07:28 PM, Jakub Wilk wrote:
-> Thanks for doing this. I didn't mean to imply that you were not diligent> enough.
+A memory leakage issue was found in the way QEMU initialised its VMWare's 
+paravirtual RDMA device. In pvrdma_realize() routine, if an error occurred, it 
+did not release memory resources allocated to various objects.
 
-I didn't take it that way!
+A guest user/process could use this flaw to leak host memory, resulting in DoS 
+for host.
 
->> You reporting these?
-> 
-> I was hoping somebody else would take care of this.
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2018-12/msg02817.html
 
-Hehe, everybody does. Luckily, we found some hackers in Mauritius taking
-care of it!
+This issue was reported by Li Qiang of 163.com.
 
-First results:
-
-bitcoin:
-https://github.com/bitcoin/bitcoin/commit/9e2e5626dabb7208dafedcc9904940b666be1c3b
-
-litecoin: https://github.com/litecoin-project/litecoin/pull/503
-
-Thx,
-Marcus
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
