@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2750" "Monday" "26" "June" "2017" "02:35:57" "+0200" "Solar Designer" "solar@openwall.com" "<20170626003556.GA8994@openwall.com>" "52" "Re: [oss-security] Qualys Security Advisory - The Stack Clash" "^Date:" nil nil "6" "2017062600:35:57" "[oss-security] Qualys Security Advisory - The Stack Clash" (number mark "        solar@openwa Jun 26   52/2750  " thread-indent "\"Re: [oss-security] Qualys Security Advisory - The Stack Clash\"\n") "<20170621212835.GA28151@localhost.localdomain>" ("<20170619152843.GC7769@localhost.localdomain>" "<2a53a138-8f6b-133d-72b2-6dfd5355241a@redhat.com>" "<20170619203933.GA910@openwall.com>" "<20170620132204.GA6240@openwall.com>" "<20170621212835.GA28151@localhost.localdomain>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4249" "Thursday" "13" "December" "2018" "13:53:55" "+0100" "=?UTF-8?B?U2FsdmEgUGVpcsOz?=" "speirofr@gmail.com" "<CA+NXwpQpUc+LuLWRXdg7wUqQar3TMqEvwNg=WfFQqTUcvakHdw@mail.gmail.com>" "109" "Re: [oss-security] CVE Request: mini-httpd (<= v1.30) is affected by a response discrepancy information exposure (CWE-204)" "^Cc:" nil nil "12" "2018121312:53:55" "[oss-security] CVE Request: mini-httpd (<= v1.30) is affected by a response discrepancy information exposure (CWE-204)" (number mark "U       speirofr@gma Dec 13  109/4249  " thread-indent "\"Re: [oss-security] CVE Request: mini-httpd (<= v1.30) is affected by a response discrepancy information exposure (CWE-204)\"\n") "<20181213102050.GB15043@openwall.com>" ("<CA+NXwpT9J40mJe_=h-R==qJBc=9PA+-80b8p4gdaJ=uy_JhMJg@mail.gmail.com>" "<20181212163242.GA12693@openwall.com>" "<CA+NXwpSmdPV4qO7VUiF+KpE-3=tq9+BzaR7LycyzdoS5YS6vhw@mail.gmail.com>" "<20181213102050.GB15043@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 14192 invoked by uid 550); 26 Jun 2017 00:36:41 -0000
+Received: (qmail 29873 invoked by uid 550); 13 Dec 2018 13:22:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,69 +11,155 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13896 invoked from network); 26 Jun 2017 00:36:06 -0000
-Message-ID: <20170626003556.GA8994@openwall.com>
-References: <20170619152843.GC7769@localhost.localdomain> <2a53a138-8f6b-133d-72b2-6dfd5355241a@redhat.com> <20170619203933.GA910@openwall.com> <20170620132204.GA6240@openwall.com> <20170621212835.GA28151@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170621212835.GA28151@localhost.localdomain>
-User-Agent: Mutt/1.4.2.3i
-Date: Mon, 26 Jun 2017 02:35:57 +0200
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 27683 invoked from network); 13 Dec 2018 12:54:20 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=OcmXlcxGNEeFmHJsUFeokueu+EyIYHFJ71eKbZAoVwI=;
+        b=oXZf0KdixErMty4Kl53pYKo9Z8H5CY7AYAx+IkfrSoC4uaTZrOUWxOMx/0qbbeiAZB
+         2pGYW4q+VBF90YL4ngRnY8KnBbJ8UrI7dzVnaAArhX4j2l8ITjsxPnw0td1MMnxWhP3P
+         uUVHD4htPChrmCYoV0dK+7xIUHTpFH1C4oq27501dAz2bl/CsQqlqRiGZzd7k+JgXmtr
+         /rlZpjHX5dQWzcS8JDM+J8OeQWFuLY5wYdHCDEvGKIY0ZuGRT5y/4aWNzc+HnE0KB4oD
+         DTtRZ2Fo5kLza0JMTz+H5THdxdG7MZY7KYRnvQ3bv/e2RrtXk+abULbC8mB6bNkLmWyG
+         HtqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=OcmXlcxGNEeFmHJsUFeokueu+EyIYHFJ71eKbZAoVwI=;
+        b=kPYkBrEWzg8azn/TcIYsY7K/ivbCK7AagK2ZhHVrEcNjlG8o9z3+6sv7jTIqzb6w3u
+         ZmvvsDCaXA9JmOxlExRENvw/wOSTM1OYb+m+Nv0sDio0RGO8YCEDR6DK1jNie1bpyYx6
+         9Dd3ydNf0QQCTJFFrhjoWh/Q9TWVZUfUVD3wVut6AtEa9JZJuHJqpTd/1FbDnYLc6Lc2
+         SH4vXBhhvqvOHWKUOLTzWt2gDiTtxlHdvMEJbgz7XDxrZVEvAvN3JmoSnxKP+SevmZcz
+         PUih3Qp+fFYV2YTw8621Md8WYpdwqwFoWClehpc75Gc3wMaVhr191pP0+8du4bt04ZgL
+         RPsQ==
+X-Gm-Message-State: AA+aEWZ9k6gBqoN91ENxRgbO9w/RoWPh08LreMgdTHc2FSauMxsS4MLj
+	R3wd9fnDmL/eVJZuvjzGqslXZx+XRhEqLLEokEAs7iZZ
+X-Google-Smtp-Source: AFSGD/X6Xl2vzqV1P8SldQRwb7hoagebYgT1mmgcA0Ogghuih/13A5BEaaRcNVs20BPR6HuQelPhLyOugnT2wz0soic=
+X-Received: by 2002:aed:2921:: with SMTP id s30mr23713862qtd.346.1544705648446;
+ Thu, 13 Dec 2018 04:54:08 -0800 (PST)
+MIME-Version: 1.0
+References: <CA+NXwpT9J40mJe_=h-R==qJBc=9PA+-80b8p4gdaJ=uy_JhMJg@mail.gmail.com>
+ <20181212163242.GA12693@openwall.com> <CA+NXwpSmdPV4qO7VUiF+KpE-3=tq9+BzaR7LycyzdoS5YS6vhw@mail.gmail.com>
+ <20181213102050.GB15043@openwall.com>
+In-Reply-To: <20181213102050.GB15043@openwall.com>
+Message-ID: <CA+NXwpQpUc+LuLWRXdg7wUqQar3TMqEvwNg=WfFQqTUcvakHdw@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="00000000000075504a057ce6cf94"
+Cc: oss-security@lists.openwall.com
+Date: Thu, 13 Dec 2018 13:53:55 +0100
+From: =?UTF-8?B?U2FsdmEgUGVpcsOz?= <speirofr@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Qualys Security Advisory - The Stack Clash
-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE Request: mini-httpd (<= v1.30) is affected by
+ a response discrepancy information exposure (CWE-204)
+To: solar@openwall.com
 
-On Wed, Jun 21, 2017 at 02:28:35PM -0700, Qualys Security Advisory wrote:
-> On Tue, Jun 20, 2017 at 03:22:04PM +0200, Solar Designer wrote:
-> > Qualys, I suggest that, like you did with the Sudo exploit, you publish
-> > your Stack Clash exploits in here as soon as third-party exploits of
-> > comparable functionality appear, or next Tuesday, whichever is earlier.
-> 
-> We have discussed this internally, and we will first publish the Stack
-> Clash exploits and proofs-of-concepts that we sent to the distros@ and
-> linux-distros@ lists, plus our Linux ld.so exploit for amd64, and our
-> Solaris rsh exploit.
-> 
-> We will do so next Tuesday, but we will publish our Linux exploits and
-> proofs-of-concept if and only if Fedora updates are ready by then, our
-> NetBSD proof-of-concept if and only if NetBSD patches are ready by then,
-> and our FreeBSD proofs-of-concept if and only if FreeBSD patches are
-> ready by then.
-> 
-> If someone happens to know of another major distribution that has not
-> published patches and updates yet, please let us all know by replying
-> here to oss-security. Thank you very much!
+--00000000000075504a057ce6cf94
+Content-Type: text/plain; charset="UTF-8"
 
-Thank you!
+I totally agree its a robustness bug, not a vulnerability,
+therefore, it is not worth assigning a CVE for this issue,
+I did not have enough evidences at the time I requested the CVE.
 
-We didn't have a specific policy on exploit publication, but for further
-occasions I've just added this clarification to:
+Thanks,
+--
+salva
 
-http://oss-security.openwall.org/wiki/mailing-lists/distros
+On Thu, Dec 13, 2018 at 11:21 AM Solar Designer <solar@openwall.com> wrote:
 
-"If you shared exploit(s) that are not an essential part of the issue
-description, then at your option you may slightly delay posting them to
-oss-security but you must post the exploits to oss-security within at
-most 7 days of making the mandatory posting above.  If you exercise this
-option, you have two mandatory postings to make: first with a
-sufficiently detailed issue description (as requested above) and with an
-announcement of your intent to post the exploits separately (please
-mention exactly when), and second with the exploits - or indeed you
-could have included the exploits right away, in your first and only
-mandatory posting."
+> Hi,
+>
+> Thank you for this additional detail.
+>
+> On Thu, Dec 13, 2018 at 08:46:56AM +0100, Salva Peir?? wrote:
+> > The htpasswd password for the "user" is generated by htpasswd from
+> > apache2-utils:amd64 (= 2.4.25-3+deb9u6) on Debian
+> >
+> > # Generate password "user" for "user"
+> > $ /usr/bin/htpasswd -c auth/.htpasswd user
+> > New password: <user>
+> > Re-type new password: <user>
+> > Adding password for user user
+> >
+> > $ cat  auth/.htpasswd
+> > user:$apr1$5.vGoLoA$OrxfML2lNUHvhMJrIC7lP.
+> >
+> > Then a request is made to mini-httpd:
+> >
+> > $ curl http://user@127.0.0.1:8000/auth/
+> >
+> > This causes the mini-httpd to invoke crypt(3) with the following
+> arguments
+> > cryptpass = crypt(key, salt), I've added printf's to mini_httpd.c to
+> report
+> > the actual
+> > arguments being passed and the value returned by crypt():
+> >
+> > $ mini_httpd -D -p 8000 -h 127.0.0.1 -l /dev/stderr
+> > key "" salt $apr1$Eh4Xgu3L$YIbNfgDcC1bRGBQWKMS.A1 cryptpass (null)
+> > errno 22 strerror Invalid argument
+>
+> This tells us that mini_httpd isn't compatible with Apache httpd's
+> htpasswd.  mini_httpd uses system-provided crypt(3), whereas Apache
+> httpd's htpasswd by default generates its own password hashes that are
+> generally not supported by system-provided crypt(3).
+>
+> > Then mini_httpd.c receives a SIGSEGV when performing strcmp() on the NULL
+> > cryptpass at mini_httpd.c:2407. The cause of the NULL return value is
+> that
+> > the salt given to crypt() is invalid as show by errno=EINVAL.  So
+> crypt(3)
+> > is setting
+> > errno=EINVAL to report that the htpasswd file generated by apache2-utils
+> is
+> > not
+> > valid for being used with mini_httpd.
+>
+> Exactly.  That's an interoperability issue and a robustness bug.  But to
+> call it a vulnerability is a stretch, in my opinion.
+>
+> It doesn't allow for the attack you had described ("remotely enumerate
+> valid htpasswd usernames").  It only allows to detect existence of
+> usernames that are listed with unsupported hash types (or with otherwise
+> incorrect hash encoding strings), which is server-side misconfiguration.
+>
+> Plenty of other projects had to add checks that crypt(3) return value is
+> non-NULL, and would crash on a NULL return before.  We didn't treat most
+> of these as vulnerabilities, and didn't assign CVE IDs.
+>
+> Two notable exceptions are Cyrus SASL CVE-2013-4122 and PostgreSQL
+> CVE-2014-0066.  I couldn't easily find any reasoning why they got CVE
+> IDs, but these cases might in fact be special: the password hash
+> encoding string might be provided by the remote system.  If so, this
+> opens up other issues as well, where maliciously high cost settings
+> encoded in there would allow for remote DoS, which is worse than the
+> local DoS possible via .htpasswd files.  But that's a separate topic,
+> being discussed e.g. in:
+>
+> Consider introducing limits on resource usage by maybe-rogue hash encodings
+> https://github.com/besser82/libxcrypt/issues/54
+>
+> There was a tiny bit of discussion of the Cyrus SASL issue here:
+>
+> https://www.openwall.com/lists/oss-security/2013/07/15/1
+>
+> in which Sebastian Krahmer suggested that the missing NULL return check
+> could potentially allow for an authentication bypass if a thread could
+> consume so much heap address space that a valid allocation at the NULL
+> address would exist.  I think that while an issue like this might exist
+> on some system, the possibility of such allocation succeeding should be
+> treated as the vulnerability.  Otherwise we'd have to treat every NULL
+> dereference bug anywhere as a vulnerability, which isn't practical and
+> distracts attention from making such allocations impossible.
+>
+> To summarize:
+>
+> I think your finding needs a fix, and the fix you propose is correct and
+> sufficient, but it isn't a vulnerability and doesn't need a CVE ID.
+>
+> Thanks again,
+>
+> Alexander
+>
 
-The decision to wait for fixes in major distros that almost certainly do
-intend to release fixes makes sense to me.  I haven't found a good way
-to specify it as part of policy yet.  For now, we may plan to be not as
-strict at enforcing the above addition to the policy as I intend to be
-at enforcing the main policy of max 14 days for issue detail (possibly
-excluding exploits).  Specifically, occasional well-reasoned exceptions
-where exploits may be posted later than in 7 days may be made - or maybe
-we simply need to relax the "at most 7 days" requirement, replacing it
-with a higher maximum and a 7 days guideline.  Regardless, since this
-will be for already-public issues, we'll be able to discuss any such
-exceptions or policy changes in public as well - here on oss-security.
-
-Alexander
+--00000000000075504a057ce6cf94--
