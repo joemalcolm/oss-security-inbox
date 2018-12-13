@@ -1,33 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/07/18/4
-Message-ID: <0f1139f3-ffca-d277-5208-2c2ed5dcc3cf@asokolov.org>
-Date: Wed, 18 Jul 2018 08:30:07 +0100
-From: Alexey Sokolov <alexey+znc@...kolov.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/13/14
+Message-ID: <54f8ab08-bb13-3b01-4f32-78d804ab95d7@uwalumni.com>
+Date: Thu, 13 Dec 2018 18:07:32 -0500
+From: Nicholas Luedtke <nicholas.luedtke@...lumni.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2018-14055: privilege escalation in ZNC
+Subject: Re: Linux kernel: userfaultfd bypasses tmpfs file
 Content-Type: text/plain; charset=utf-8
 
-Severity: high
 
-Versions affected:
-1.6.0 through 1.7.0
-Potentially, all earlier versions too, but there is no known way to
-trigger this before 1.6.0
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Mitigation:
-upgrade to 1.7.1
+We have also been compiling and presenting the CVEs on a per stream
+basis at https://www.linuxkernelcves.com because the question of which
+upstream stable branch to choose has been asked on a enterprise level
+many times. Of course, once you choose once you still have to track the
+changes (or lack there of).
 
-Description:
-ZNC before 1.7.1-rc1 does not properly validate untrusted lines coming
-from the network, allowing a non-admin user to escalate privilege,
-inject rogue values into znc.conf, and gain shell access.
+- -nsl
+-----BEGIN PGP SIGNATURE-----
 
-Upstream patches:
-https://github.com/znc/znc/commit/a7bfbd93812950b7444841431e8e297e62cb524e
-https://github.com/znc/znc/commit/d22fef8620cdd87490754f607e7153979731c69d
+iQIzBAEBCAAdFiEEuBmjxk1e65HSx2v8v5sO3DqymUgFAlwS5jQACgkQv5sO3Dqy
+mUgMCRAApsDHQLfTisj7B4IQZ7oIvZCu1eW48nwTYTN+fSKOe6ocnS/hBAyPDCUk
+cyCRY95qJqNYR3Vqi2kBzreXbv+m7i+Qfi6uJaBQdPVwBe2nAtgNxMBbduT6dQcR
+oLwpPmZQ3deSgZG5z5BVtiDXVI93PWgqeH41oCS8Ui8ZQq1QfyGn1dmXGZUw6uK/
+tZcgdUkohc57Di46U+/NIeqLQv7dp/siifq+MSI+7zikF/+cPlXd70qOAFNMxM+6
+slYflxu41+LQELDepiQpRZq9HFZNrj7+9Evn3la1w8zYiuOWsKYsdb5xkOT5rkCU
+c6Vo+mjOVwmdWvt3ZxbGVmbU55o76EFy/KhB0mWyzDeSV73+1kat2RR4R6BMHZdg
+dvF3og5xnL+4mVeOIEoxO8EFD22051ORuyvoPvgJIk70M1uhboaGyYAA2Qs6kcI8
+gPJYTg389+couSXNd9CAJ3Hv6qyHTyk93NzBG1S/RF7kKRMtfOqBFQub4EHWoGMp
+xxJVgUSQUwtmTUowB9s8/W53CUeAR535dx8+tKatY3e1qOx81JzLoI+HouQ7K9XS
+c6zwQ15+K+IYsCsbHG7z7saDOjxJQTRBcTSqTtyHlrDiydOkh8rj/x1V28QILqvx
+C3v8LlYALivFVZXzSVe5aWbsOcCxhsfgAZEPMu+SqKTwdO1/3CA=
+=MALv
+-----END PGP SIGNATURE-----
 
-Reported by: Jeriko One <jeriko.one@....us>
-
--- 
-Best regards,
-Alexey "DarthGandalf" Sokolov
