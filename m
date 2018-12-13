@@ -1,28 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/25/4
-Message-ID: <1876333558.159.1516872958654@appsuite-guard.open-xchange.com>
-Date: Thu, 25 Jan 2018 11:35:59 +0200 (EET)
-From: Aki Tuomi <aki.tuomi@...n-xchange.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/13/12
+Message-ID: <da9e29c39fae03caa21b6fa915009b4f7f2ec0cf.camel@debian.org>
+Date: Thu, 13 Dec 2018 21:02:12 +0100
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2017-15132: dovecot: auth client leaks memory if SASL authentication is aborted.
+Cc: Jann Horn <jannh@...gle.com>
+Subject: Re: Linux kernel: userfaultfd bypasses tmpfs file permissions (CVE-2018-18397; since 4.11; fixed in 4.14.87 and 4.19.7)
 Content-Type: text/plain; charset=utf-8
 
-Score: 5.3, AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L
-Affected versions: 2.0 up to 2.2.33 and 2.3.0
-Fixed versions: 2.2.34 (not released yet), 2.3.1 (not released yet)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-We have identified a memory leak in Dovecot auth client used by login
-processes. The leak has impact in high performance configuration where
-same login processes are reused and can cause the process to crash due to memory exhaustion.
+On Wed, 2018-12-12 at 15:24 +0100, Solar Designer wrote:
+> A question to ask may be: out of Linux kernel vulnerabilities being
+> patched, are there more high and critical overall severity (e.g., as
+> risk impact times risk probability) vulnerabilities found in "too
+> recent" kernels than there are high and critical severity untracked
+> vulnerabilities (also or instead) affecting "sufficiently old" kernels?
 
-Patch to apply this issue can be found from https://github.com/dovecot/core/commit/1a29ed2f96da1be22fa5a4d96c7583aa81b8b060.patch
-
-To our best knowledge, this patch should apply to all versions.
-
-This issue can be mitigated on vulnerably systems by limiting login process to single request per process, which is also the default value.
+Data collected by Kees and regularly updated might help here. See 
+https://events.linuxfoundation.org/wp-content/uploads/2017/12/Overview-and-Recent-Developments-Kernel-Self-Protection-Project_Kees-Cook.pdf#%5B%7B%22num%22%3A22%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C0%2C446.4%2C0%5D
+for the last edition (sorry for the weird anchor, in case it breaks it's on
+slide 5)
 
 Regards,
-Aki Tuomi
-Dovecot oy
+- -- 
+Yves-Alexis
+-----BEGIN PGP SIGNATURE-----
 
-Download attachment "signature.asc" of type "application/pgp-signature" (476 bytes)
+iQEzBAEBCAAdFiEE8vi34Qgfo83x35gF3rYcyPpXRFsFAlwSusQACgkQ3rYcyPpX
+RFvdUwf+J6G9ACV35269DdJSWO27c/LuAhuxxCHbSjEf3EeGamBcEksV6+OysAiv
+9oy/iwnk37ksv7ZlRDiJbhIRZQyKWv8vTHx+X0ntgi5MIs31Yby3Q3agL1irW+b+
+2DnUoeoZH+RIXk9Tm97XfJTDm9hJere7hwI8jQAUuNf/a2vu9oDlCYnvh5ZRz537
+4Q4w2lR03dsRCm8gvDFtbLjYzTu3xoscEkHafxoSbU/7RLkqYAmbU6FhqfZ4MQ9m
+Q/oNIDIw/Lh28kByTII98Af6P03td1pS1aPre8KYw62BuJrZ87+z22ehjP7j5srm
+l0Qx1W3g6fudzwY4RVTkqtQMyAZ5/w==
+=O/RN
+-----END PGP SIGNATURE-----
