@@ -1,38 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/10/3
-Message-ID: <20180910190717.GA29060@openwall.com>
-Date: Mon, 10 Sep 2018 21:07:17 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/14/2
+Message-ID: <20181214131542.GA24885@openwall.com>
+Date: Fri, 14 Dec 2018 14:15:42 +0100
 From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: The Apache Security Team <security@...che.org>
-Subject: Re: [ANNOUNCE] CVE-2018-11775: ActiveMQ Client - Missing TLS Hostname Verification
+Cc: Jann Horn <jannh@...gle.com>
+Subject: Re: Linux kernel: userfaultfd bypasses tmpfs file permissions (CVE-2018-18397; since 4.11; fixed in 4.14.87 and 4.19.7)
 Content-Type: text/plain; charset=utf-8
 
-Christopher,
+Important correction:
 
-On Mon, Sep 10, 2018 at 02:40:05PM -0400, Christopher Shannon wrote:
-> Please check the following document and see if you're affected by the issue.
-> 
-> http://activemq.apache.org/security-advisories.data/CVE-2018-11775-announcement.txt
+On Fri, Dec 14, 2018 at 02:07:55PM +0100, Solar Designer wrote:
+> > On Wed, 2018-12-12 at 15:24 +0100, Solar Designer wrote:
+> > > A question to ask may be: out of Linux kernel vulnerabilities being
+> > > patched, are there more high and critical overall severity (e.g., as
+> > > risk impact times risk probability) vulnerabilities found in "too
+> > > recent" kernels than there are high and critical severity untracked
+> > > vulnerabilities (also or instead) affecting "sufficiently old" kernels?
 
-Thank you for bringing this to oss-security.  However, please be aware
-that including essential information only by reference is against list
-content guidelines here:
+> [...] to answer my question above we need median and not average.
 
-https://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
+Actually, that wouldn't answer this exact question - it'd answer a
+similar question about tracked vulnerabilities, and the answer would
+tell us how frequently a vulnerability would need to be patched on a
+system (apparently, 1/8 of the time for RHEL7 vs. latest mainline now).
 
-which include:
-
-"At least the most essential part of your message (e.g., vulnerability
-detail and/or exploit) should be directly included in the message itself
-(and in plain text), rather than only included by reference to an
-external resource.  Posting links to relevant external resources as well
-is acceptable, but posting only links is not.  Your message should
-remain valuable even with all of the external resources gone."
-
-To correct this, I've attached the entire text file from the URL above,
-with the typo corrected as you mentioned in your follow-up message.
+We can't answer the question about untracked vulnerabilities from
+per-vulnerability data because untracked implies we lack such data.
 
 Alexander
-
-View attachment "CVE-2018-11775-announcement.txt" of type "text/plain" (560 bytes)
