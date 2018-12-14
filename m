@@ -1,27 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/13/1
-Message-ID: <820f3419-4347-8f37-adc1-498cea1fb17e@isc.org>
-Date: Tue, 12 Jun 2018 16:07:30 -0800
-From: ISC Security Officer <security-officer@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/14/5
+Message-ID: <20181214152125.GA25196@openwall.com>
+Date: Fri, 14 Dec 2018 16:21:25 +0100
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: ISC has announced CVE-2018-5738, a defect in some versions of BIND
+Cc: Jann Horn <jannh@...gle.com>
+Subject: Re: Linux kernel: userfaultfd bypasses tmpfs file permissions (CVE-2018-18397; since 4.11; fixed in 4.14.87 and 4.19.7)
 Content-Type: text/plain; charset=utf-8
 
-Please be advised that ISC has publicly announced a vulnerability in
-some versions of BIND.
+On Fri, Dec 14, 2018 at 08:27:24AM -0500, Brad Spengler wrote:
+> I really wish such statistics would stop being cited as evidence of anything,
+> since the ingrained bias of CVE allocation (which is generally not done by
+> upstream itself, and is instead mostly done by the distros for issues that
+> affect their older kernels) inherently changes the range of conclusions that
+> can be reached.  These statistics and the "5 year lifetime" of Linux kernel
+> bugs are simply myths.  The original "5 year lifetime" analysis was wrong
+> from the start and already pointed out back then
+> (https://lwn.net/Articles/410674/), but people continue to cite it.
+> 
+> Garbage in, garbage out -- can we please stop feeding this pseudo-science?
 
-CVE-2018-5738 is a medium severity vulnerability in which nameservers
-containing the previous change #4777 (from October 2017), if they
-are configured to permit recursive service to some clients, may because
-of this error improperly inherit the wrong default permission, causing
-the server to permit recursive service to ALL clients.  Several workarounds
-are documented in the official security advisory document, which can be
-found in ISC's knowledge base:
+I thought you'd say something like this.  Thanks.  What I did here is
+try and show that even using this biased data we see that sufficiently
+old kernels aren't affected by most vulnerabilities that are found and
+fixed in latest mainline kernels.
 
-   https://kb.isc.org/article/AA-01616/0/CVE-2018-5738
+As I understand, you think that overall the data is biased towards more
+CVEs for old and long-living bugs than for newer and short-living bugs.
+Correct?  If so, and if this assumption is in fact correct, then my use
+of the biased data is also correct.
 
+But then, I just realized that Kees put the 3 critical issues separately
+on that illustration, and we can't tell from it whether or not any of
+those would fall in the 67 to 82 time range that I used to focus on most
+recently found issues.  Also, I chose the start of this range at 67
+specifically based on visible reduction in issues affecting 3.10.  In
+practice, if one were to decide on using a certain base kernel version
+at a given moment, they wouldn't have the hindsight that we have now.
+So my 1/8 figure is probably an underestimate (of what would be inferred
+from this biased data in an unbiased manner, ouch), but even with these
+corrections it does appear even from this data that older kernels are
+affected only by a minority of issues that are assigned CVEs, and need
+less frequent security patches.
 
-Michael McNally
-ISC Security Officer
+Are we in agreement on this conclusion?
 
+> On Fri, Dec 14, 2018 at 02:07:55PM +0100, Solar Designer wrote:
+> > Slide 5 is in fact more relevant: it's an illustration showing
+> > "critical & high CVE lifetimes" against kernel versions.  Per this
+> > illustration, we can see that my example of 3.10 (as RHEL7's base
+> > kernel) is hit by many low-numbered issues, but is hit by only two in
+> > the 67 to 82 range, which is 1/8 or 12.5% of issues found that recently.
+> > This is consistent with what I said about it having needed to mature
+> > "for a few years and a few hundred revisions" after RHEL7 was first
+> > released.  I think it became mature enough just recently.  It didn't
+> > feel mature enough to me when I ran Trinity for a few days (with many
+> > restarts) on a RHEL7-derived system two years ago.  I hope those crashes
+> > have since been rediscovered with superior fuzzers allowing for easy
+> > reproduction, and patched.  We've seen major improvement in fuzzing.
 
+Alexander
