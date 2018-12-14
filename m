@@ -1,4 +1,9 @@
-Received: (qmail 17563 invoked by uid 550); 30 Apr 2026 15:56:20 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["17400" "Friday" "14" "December" "2018" "09:16:57" "-0800" "Hacker Fantastic" "hackerfantastic@googlemail.com" "<CAG-OieOxU7cH_JJkbAhPiVNpVgt3SJPLcAvd_yd53FA1ZLtCmw@mail.gmail.com>" "428" "Re: [oss-security] Multiple telnet.c overflows" "^Cc:" nil nil "12" "2018121417:16:57" "[oss-security] Multiple telnet.c overflows" (number mark "        hackerfantas Dec 14  428/17400 " thread-indent "\"Re: [oss-security] Multiple telnet.c overflows\"\n") "<CAG-OieOk+nyreyHs9xP5V+e=4KciHbcc0vh0poggCxYAa-CrEg@mail.gmail.com>" ("<CAG-OieOVQkON9yTYJcKuKGfP5XK5zitz0nTr9+ci71mTZrz-+A@mail.gmail.com>" "<3f060bee-a765-4cd8-e752-e0cdfef5c6f2@oracle.com>" "<CAJ_zFkK-Wg5cvzQ_Om+=+pyddbyPvT8D07qL8wL8NYX6MNnnXg@mail.gmail.com>" "<CAG-OieODDwrDfoci2ehVUbHg13Ehz66VB50KERZ01qCdrgCLBw@mail.gmail.com>" "<CAJ_zFkLKWJnC9t27kN74jNueh3nTqx2+2hB3dsv74CsfBY_qfg@mail.gmail.com>" "<CAG-OieOUdanQyhyksodXwP7WyQpnAh0t3gy_Z_Cq-PTf+22GYw@mail.gmail.com>" "<CAJ_zFkKWP18xP6jUh=Gax3o_R4mFB905FC9yKWTd9-VEwEZEmA@mail.gmail.com>" "<CAG-OieMJ=sJxrf37ndMZF8akPtTibc-RMAgi8+Dkxz5URabR+A@mail.gmail.com>" "<CAJ_zFk+Dhd0buWMW7p4sRDZ_0KEDnOiKp4nV35XUgCUnFc5q-w@mail.gmail.com>" "<CAG-OiePvtSA1Wu03T76iXfYhER0Qr7fCBZ6n+mSfVpbjJ-UnQQ@mail.gmail.com>" "<CAG-OieOk+nyreyHs9xP5V+e=4KciHbcc0vh0poggCxYAa-CrEg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 1334 invoked by uid 550); 14 Dec 2018 17:48:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,109 +11,479 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 15836 invoked from network); 30 Apr 2026 07:22:44 -0000
-From: Sam James <sam@gentoo.org>
-To: oss-security@lists.openwall.com
-Cc: Jan Schaumann <jschauma@netmeister.org>
-In-Reply-To: <2026043026-treat-devotion-23d7@gregkh>
-Organization: Gentoo
-References: <afJorKIje4O6dXbH@netmeister.org>
-	<d6111caa-db61-498a-92cb-ea7a0aa0a5e2@ehuk.net>
-	<87se8dgicq.fsf@gentoo.org> <afL-QhLfEKqHZqka@eldamar.lan>
-	<2026043026-treat-devotion-23d7@gregkh>
-User-Agent: mu4e 1.14.1; emacs 31.0.50
-Date: Thu, 30 Apr 2026 08:22:30 +0100
-Message-ID: <87bjf0hpzd.fsf@gentoo.org>
+Received: (qmail 23867 invoked from network); 14 Dec 2018 17:17:22 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=IMOLoW4Ex5g91w0wZyIfIynVrkC53zH67FzwJd/l1p0=;
+        b=ALoobgRL7tQNjt/pV63wa5YqGIE3yy5Y8anIht+StNKbJbdMk2Co1gu80bxiAfBmHk
+         aGpYkeO3OWvpW7EKxUET6e6tG3151ZPTaftBYHsXBwRSE6zK3VnCtnVeUXw5qbT6uAdS
+         thzXpUy7qySjGVymuJEEmGAvgEWL9K2vxsF9a/xPWy48G6AFXmfRT+ajAJXUIGkZ1+bk
+         JJD6bV1z1Aef+6eq0Y6BcY/GwpvQWy08v7qXUZOiFDUGO23H3iA4Hzxj44+GrDCAimZi
+         hioQ8ORMjliw3aHq9RJ3R0yX7ciAofieOl8EM6i1Fy1mMOsV+V1VYBIYzCyBJ81jEPP5
+         +QSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=IMOLoW4Ex5g91w0wZyIfIynVrkC53zH67FzwJd/l1p0=;
+        b=TJ0oK4PPjOTEGWkFbQJONbhaurvzz10eX/kwU0IvQui4G9vTqpcPdLjHcJsRi2y9WP
+         +0nRgxZ+flKPK15VGqhVJ4h/acToxq5FJ+OmcPDmMmGBx8smGR7IzSMYznbDhCEOIUJx
+         vDuxY/d5erBWNrbVYKe9orpKEwDtFPAH8v+lEMNJn/diXctPd+T7N+Lsg+s4HZAXoNZ5
+         r7FqLNWNfEvs/bPuueP0DLrMujPoGfzIoLSGy7wYvfuF/iLcMCSfysnbcFOcF0e6v0Qd
+         Pr9R58VBj9CCIrzZ+2yqD8Q3HxveFArbQRGQrxZRm6ws5djO255gaZfTd2ndGk85UNf6
+         SE7A==
+X-Gm-Message-State: AA+aEWaSi1A5WRsTWdPzxAKo/2woO7jsNGxu29Bgl77J9/2s4xstW5xA
+	t/VrRLdncskyKEz0JkSjRB0EEW1sUs65OYw7vrw=
+X-Google-Smtp-Source: AFSGD/UkkG0MmMNeDjYCYmGmFKhHzv5vc37E69VsOcmr5OaSkQJgxTjPKzbS69Dg1V5S14hDGubZ2wkgNkkGo36Y590=
+X-Received: by 2002:a19:6f0a:: with SMTP id k10mr2208505lfc.119.1544807830434;
+ Fri, 14 Dec 2018 09:17:10 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha512; protocol="application/pgp-signature"
-Subject: Re: [oss-security] CVE-2026-31431: CopyFail: linux local privilege
- scalation
+References: <CAG-OieOVQkON9yTYJcKuKGfP5XK5zitz0nTr9+ci71mTZrz-+A@mail.gmail.com>
+ <3f060bee-a765-4cd8-e752-e0cdfef5c6f2@oracle.com> <CAJ_zFkK-Wg5cvzQ_Om+=+pyddbyPvT8D07qL8wL8NYX6MNnnXg@mail.gmail.com>
+ <CAG-OieODDwrDfoci2ehVUbHg13Ehz66VB50KERZ01qCdrgCLBw@mail.gmail.com>
+ <CAJ_zFkLKWJnC9t27kN74jNueh3nTqx2+2hB3dsv74CsfBY_qfg@mail.gmail.com>
+ <CAG-OieOUdanQyhyksodXwP7WyQpnAh0t3gy_Z_Cq-PTf+22GYw@mail.gmail.com>
+ <CAJ_zFkKWP18xP6jUh=Gax3o_R4mFB905FC9yKWTd9-VEwEZEmA@mail.gmail.com>
+ <CAG-OieMJ=sJxrf37ndMZF8akPtTibc-RMAgi8+Dkxz5URabR+A@mail.gmail.com>
+ <CAJ_zFk+Dhd0buWMW7p4sRDZ_0KEDnOiKp4nV35XUgCUnFc5q-w@mail.gmail.com>
+ <CAG-OiePvtSA1Wu03T76iXfYhER0Qr7fCBZ6n+mSfVpbjJ-UnQQ@mail.gmail.com> <CAG-OieOk+nyreyHs9xP5V+e=4KciHbcc0vh0poggCxYAa-CrEg@mail.gmail.com>
+In-Reply-To: <CAG-OieOk+nyreyHs9xP5V+e=4KciHbcc0vh0poggCxYAa-CrEg@mail.gmail.com>
+Message-ID: <CAG-OieOxU7cH_JJkbAhPiVNpVgt3SJPLcAvd_yd53FA1ZLtCmw@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="000000000000fabbd1057cfe9973"
+Cc: oss-security@lists.openwall.com
+Date: Fri, 14 Dec 2018 09:16:57 -0800
+From: Hacker Fantastic <hackerfantastic@googlemail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Multiple telnet.c overflows
+To: Tavis Ormandy <taviso@google.com>
 
---=-=-=
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+--000000000000fabbd1057cfe9973
+Content-Type: text/plain; charset="UTF-8"
 
-Greg KH <greg@kroah.com> writes:
+I have revised the original advisory for this issue due to discovery of a
+wider range of impacted clients and the latest updated copy can be found
+here and also at the following URL's:
 
-> On Thu, Apr 30, 2026 at 09:01:22AM +0200, Salvatore Bonaccorso wrote:
->> Hi,
->>=20
->> On Thu, Apr 30, 2026 at 05:52:37AM +0100, Sam James wrote:
->> > Eddie Chapman <eddie@ehuk.net> writes:
->> >=20
->> > > On 29/04/2026 21:23, Jan Schaumann wrote:
->> > >> Affected and fixed versions
->> > >> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D
->> > >> Issue introduced in 4.14 with commit
->> > >> 72548b093ee38a6d4f2a19e6ef1948ae05c181f7 and fixed in
->> > >> 6.18.22 with commit
->> > >> fafe0fa2995a0f7073c1c358d7d3145bcc9aedd8
->> > >> Issue introduced in 4.14 with commit
->> > >> 72548b093ee38a6d4f2a19e6ef1948ae05c181f7 and fixed in
->> > >> 6.19.12 with commit
->> > >> ce42ee423e58dffa5ec03524054c9d8bfd4f6237
->> > >> Issue introduced in 4.14 with commit
->> > >> 72548b093ee38a6d4f2a19e6ef1948ae05c181f7 and fixed in
->> > >> 7.0 with commit
->> > >> a664bf3d603dc3bdcf9ae47cc21e0daec706d7a5
->> > >> https://git.kernel.org/stable/c/fafe0fa2995a0f7073c1c358d7d3145bcc9=
-aedd8
->> > >> https://git.kernel.org/stable/c/ce42ee423e58dffa5ec03524054c9d8bfd4=
-f6237
->> > >> https://git.kernel.org/stable/c/a664bf3d603dc3bdcf9ae47cc21e0daec70=
-6d7a5
->> > >
->> > > So this is one of the worst make-me-root vulnerabilities in the kern=
-el
->> > > in recent times. I see that on the 11th of April 6.19.12 & 6.18.22
->> > > were released with the fix backported.
->> > >
->> > > Longterm 6.12, 6.6, 6.1, 5.15, 5.10 have not received the fix and I
->> > > don't see anything in the upstream stable queues yet as I write. My
->> > > guess is backporting that far back is not as straightforward. As this
->> > > was introduced in 2017 all those older kernels are affected, right? =
-Or
->> > > am I missing something?
->> >=20
->> > It does not apply cleanly, no. Attached is the workaround we're going =
-to
->> > use. I'm not an expert on IPSec but I think this is the lesser evil.
->> >=20
->> > I attempted a backport but ran into a few API changes and wasn't
->> > confident enough to muck around with it, especially for something to
->> > deploy immediately.
->>=20
->> Backports have just been posted, for 6.12.y:
->> https://lore.kernel.org/stable/2026043038-unwilling-slogan-a20e@gregkh/T=
-/#t
->>=20
->> (but I do not see them yet for all versions, but guess following soon)
+https://hacker.house/releasez/expl0itz/inetutils-telnet.txt
+https://hacker.house/releasez/expl0itz/telnet_term_0day.py
+
+So far the list of impacted clients for these issues:
+* Apple Sierra telnet client
+* netkit-telnet 0.17
+* inetutils telnet
+* NetBSD telnet
+* Mikrotik telnet
+* bsd-telnet 1.2
+
+Not impacted:
+PuTTY
+
+If you wish to use a stress tester/fuzzer to test a specific "telnet"
+client, I have had success with afl-fuzz triggering these and variants of
+the described flaws. To capture test cases to use with afl-fuzz to test
+your client implementations, use "tcpdump -i lo0 -s 65535 -w telnet.pcap
+src port 23" to record all traffic from a telnet session to a local telnetd
+service, simply connect and disconnect with a few different
+clients to build up a collection of protocol response/requests. Then once
+you have connected with a few different telnet clients you can extract the
+tcp stream information into raw text files with a script similar to this:
+
+--- begin extract_pcap.sh ---
+#!/bin/sh
+# Extract tcp stream from pcap dump into text files for fuzzing cases
+infile=$1
+outfile=$2
+ext=txt
+rm -f ${outfile}_all.${ext}
+
+for stream in $(tshark -nlr $infile -Y tcp.flags.syn==1 -T fields -e
+tcp.stream | sort -n | uniq | sed 's/\r//')
+do
+    echo "Processing stream $stream: ${outfile}_${stream}.${ext}"
+    tshark -nlr $infile -qz "follow,tcp,raw,$stream" | tail -n +7 | sed
+'s/^\s\+//g' | xxd -r -p | tee ${outfile}_${stream}.${ext} >>
+${outfile}_all.${ext}
+done
+--- end extract_pcap.sh ---
+
+Compile your program using "afl-gcc" using "CC=path/to/afl-gcc ./configure"
+and then use "preeny" to desocket the connections and supply text files
+into the telnet client as mangled protocols via stdin.
+
+"LD_PRELOAD=/path/to/preeny/build/lib/libdesock.so ../afl-fuzz -i
+telnet/testcases -o telnet_fuzz -M telnet01 ./telnet-bsd-1.2/telnet/telnet
+127.0.0.1"
+
+You should begin to see remotely triggering crash cases in a few minutes
+through mangling the IAC protocol packets and breaking variable
+assignments. Preeny & AFL-fuzz can be found at the following
+URL's:
+
+* https://github.com/zardus/preeny
+* http://lcamtuf.coredump.cx/afl/
+
+The updated advisory is provided below:
+
+GNU inetutils <= 1.9.4 (& BSD based) telnet.c multiple overflows
+================================================================
+GNU inetutils contains a trivial stack overflow vulnerability in the
+client-side environment
+variable handling which can be exploited to escape restricted shells on
+embedded devices.
+A stack-based overflow is present in the handling of environment variables
+when connecting
+telnet.c to remote telnet servers through oversized DISPLAY arguments.
+
+heap-overflows are also present which can be triggered in different core
+code path due to
+supplying oversized environment variables during client connection code.
+Browsers or network
+clients that support telnet:// URI handlers may reach this vulnerable code
+when connecting
+to a malicious telnetd implementation or handling USER= environment
+variables supplied to
+telnet via "-l" parameter. As the issues occur in packet handling routines
+for the telnet
+protocol, the telnet client must be able to connect to a remote service for
+the issues to
+be triggered.
+
+The stack-based overflow can be seen in the following code snippet from the
+latest inetutils
+release dated 2015. This issue is limited to local exploitation from
+restricted shells.
+
+inetutils-telnet/inetutils-1.9.4/telnet/telnet.c
+
+983-    case TELOPT_XDISPLOC:
+984-      if (my_want_state_is_wont (TELOPT_XDISPLOC))
+985-    return;
+986-      if (SB_EOF ())
+987-    return;
+988-      if (SB_GET () == TELQUAL_SEND)
+989-    {
+990-      unsigned char temp[50], *dp;
+991-      int len;
+992-
+993-      if ((dp = env_getvalue ("DISPLAY")) == NULL)
+994-        {
+995-          /*
+996-           * Something happened, we no longer have a DISPLAY
+997-           * variable.  So, turn off the option.
+998-           */
+999-          send_wont (TELOPT_XDISPLOC, 1);
+1000-         break;
+1001-       }
+1002:     sprintf ((char *) temp, "%c%c%c%c%s%c%c", IAC, SB,
+TELOPT_XDISPLOC,
+1003-              TELQUAL_IS, dp, IAC, SE);
+1004-     len = strlen ((char *) temp + 4) + 4; /* temp[3] is 0 ... */
+1005-
+1006-     if (len < NETROOM ())
+
+When a telnet server requests environment options the sprintf on line 1002
+will
+not perform bounds checking and causes an overflow of stack buffer temp[50]
+defined
+at line 990. This issue can be trivially fixed using a patch to add bounds
+checking
+to sprintf such as with a call to snprintf();
+
+An example of the heap overflow can be seen when handling large environment
+variables within the telnet client, causing heap buffer memory corruption
+through long string supplied in environment variables passed to IAC packet
+handling
+routines for example USER, DISPLAY or TERM.
+
+An example of triggering this issue on inetutils in Arch Linux can be seen
+below:
+
+DISPLAY=`perl -e 'print Ax"50000"'` telnet -l`perl -e 'print "A"x5000'`
+192.168.69.1
+Trying 192.168.69.1...
+Connected to 192.168.69.1.
+Escape character is '^]'.
+realloc(): invalid next size
+Aborted (core dumped)
+
+These issues maybe present anywhere that a BSD based telnet client  is used
+as a base
+such as in common embedded home routers or networking equipment. These
+issues
+relate to shared BSD code and are present in variety of forms in clients.
+An attacker
+can potentially exploit these vulnerabilities to gain arbitrary code
+execution
+on platforms where telnet commands are available. An example crash caused
+by a
+heap overflow can be found below:
+
+(gdb) run -l`perl -e 'print "A"x5000'` 192.168.69.1
+Starting program: /usr/bin/telnet -l`perl -e 'print "A"x5000'` 192.168.69.1
+Trying 192.168.69.1...
+Connected to 192.168.69.1.
+Escape character is '^]'.
+realloc(): invalid next size
+
+Program received signal SIGABRT, Aborted.
+0x00007ffff7d87d7f in raise () from /usr/lib/libc.so.6
+(gdb)
+
+Due to the various devices embedding BSD based telnet, Linux distributions
+such as Arch Linux using inetutils telnet with xorg, it is unclear the full
+impact
+and all scenarios where this issue could be leveraged. An attacker may seek
+to exploit
+these vulnerabilities to escape restricted shells or potentially execute
+arbitrary
+code.
+
+heap corruption is remotely triggerable in clients by sending large IAC SB
+TELQUAL_IS
+environment variable assignments from a telnetd implementation repeatedly.
+A
+sample proof-of-concept has been provided alongside this advisory for
+triggering
+on impacted clients - telnet_term_0day.py - further investigation has
+identified
+that these issues (or varients of them) impact a wide range of different
+telnet
+clients. It is possible to trigger these condictions using the PoC or
+examples in:
+
+* Apple Sierra telnet client
+* netkit-telnet 0.17
+* inetutils telnet
+* NetBSD telnet
+* Mikrotik telnet
+* bsd-telnet 1.2
+
+Other clients maybe impacted and it is advised vendors check their telnet
+clients
+implementations for the described flaws.
+
+URI handlers used in client programs not just limited to web browsers maybe
+able
+to reach the vulnerable functions when connecting with telnet:// and a
+vulnerable
+client. The Safarai web browser supports "telnet://" URI handlers, however
+many
+modern browsers and OS's (Apple included) have depreceated telnet clients
+and for
+a system to be vulnerable, an attacker must have installed a telnet client
+manually.
+
+A common scenario for the use of telnet often relates to network engineers
+checking
+open service ports, such as mail services, through the use of telnet
+commands. It is
+advised that such behaviour and commands are removed and depreceated in
+favor of
+raw socket handling code such as ncat/netcat or nmap. As the telnet
+protocol brings
+additional overhead to the purpose of checking open-services and these
+vulnerabilities
+are shared across numerous BSD clients, telnet clients should not be used
+to connect to
+untrusted 3rd party systems. It is advised that where possible telnet is
+depreceated
+as a management protocol in favor of SSH particularly in embedded systems
+where its
+use is common.
+
+-- Hacker Fantastic (11/12/2018)
+-- Added telnet_term_0day.py proof-of-concept 12/12/2018
+-- Clarification that this is a BSD based common telnet issue 14/12/2018
+
+https://hacker.house
+
+
+On Thu, Dec 13, 2018 at 8:07 AM Hacker Fantastic <
+hackerfantastic@googlemail.com> wrote:
+
+> Morning coffee not fully consumed, I meant to write NetBSD (stack
+> overflow, others unsure as no time to test but assumed vulnerable) in the
+> list of clients. I hope the supplied PoC is useful to others in testing and
+> removing these flaws. In my past life of having free time I would write an
+> IAC environment handling stress tester to isolate all occurrences of these
+> issues. If you think about the growing risk of IoT equipment and the use of
+> telnet as a management protocol still being put to use then the core issues
+> at play here will ultimately be in systems that I cannot reasonably account
+> for all occurrences. Mikrotik are just the vendor whose equipment is
+> immediately accessible to me at present, other embedded device vendors
+> should check their telnet client implementations for the bugs using the 4
+> test cases I have outlined.
 >
-> Yes, they are following, I'll be doing some kernel releases in an hour
-> or so with these all applied.
-
-Thanks to both you and Eric, and thanks Salvatore for spotting.
-
+> 1. stack overflow by connecting with large DISPLAY= parameter
+> 2. heap corruption by supplying large USER= & or other supported
+> environment variables (DISPLAY, LOGNAME, TERM, etc.)
+> 3. heap ring.cc corruption through IAC handlers when setting environment
+> variables, telnet_term_0day.py can trigger and takes a few minutes due to
+> the nature of the heap
+> 4. review the use of URI handlers in applications that reference telnet://
+> to ensure environment variables cannot be supplied to vulnerable functions
+> via telnet://user@ip
 >
-> thanks,
+> These issues are only present when a connection occurs and so the telnet
+> client implementation needs to be connected to a server to trigger the flaw
+> as this happens within the handling of telnet protocol packets,
+> specifically those related to environment variable handling.
 >
-> greg k-h
+> Cheers,
+> Matthew
+>
+> On Thu, Dec 13, 2018 at 7:53 AM Hacker Fantastic <
+> hackerfantastic@googlemail.com> wrote:
+>
+>> Hi, I do not believe this is either CVE-2005-0469 or CVE-2005-0468. The
+>> issue is the same problem I described in handling environment variables
+>> originally, the TERM environment being a remotely reachable way of trigger
+>> the issue in inetutils and other clients. The issue appears to behave
+>> differently on netkit-telnet instances, and mirrors that of the Mikrotik
+>> client - causing a ring.cc assertion error to be printed, however the
+>> application still causes a SIGABRT when the connection is then terminated
+>> with the large buffers having caused a failure in ring.cc.
+>>
+>> Here is an example of the latest netkit-telnet behaviour with what I
+>> believe is heap corruption caused by the same PoC trigger -
+>> telnet_term_0day.py (the SIGABRT happens after the connection is killed to
+>> cause the ring.cc assertion):
+>>
+>> telnet: buffer overflow, losing data, sorry
+>> telnet: ring.cc:143: int ringbuf::flush(): Assertion `top-bot > 0 &&
+>> top-bot <= count' failed.
+>> Aborted (core dumped)
+>> Program received signal SIGABRT, Aborted.
+>> 0x00007ffff7a59d7f in raise () from /usr/lib/libc.so.6
+>> (gdb) bt
+>> #0  0x00007ffff7a59d7f in raise () from /usr/lib/libc.so.6
+>> #1  0x00007ffff7a44672 in abort () from /usr/lib/libc.so.6
+>> #2  0x00007ffff7a44548 in __assert_fail_base.cold.0 () from
+>> /usr/lib/libc.so.6
+>> #3  0x00007ffff7a52396 in __assert_fail () from /usr/lib/libc.so.6
+>> #4  0x000055555555f417 in ringbuf::flush() ()
+>> #5  0x000055555555f01f in netflush() ()
+>> #6  0x000055555555fcbe in process_rings(int, int, int, int, int, int) ()
+>> #7  0x00005555555639cf in Scheduler(int) ()
+>> #8  0x0000555555563acf in telnet(char const*) ()
+>> #9  0x000055555555ea9b in tn(int, char const**) ()
+>> #10 0x0000555555559acd in main ()
+>>
+>> I couldn't account for all clients in my original advisory as I stated,
+>> the telnet client code is quite messy and there are buffers that are
+>> referenced in loops using functions such as sprintf() / free() and
+>> realloc() - supplied environment arguments DISPLAY, USER, TERM and things
+>> like LOGNAME,LINEMODE which have a corresponding IAC handler all seem to be
+>> ways of reaching the root vulnerable code paths. It also appears that this
+>> issue maybe much deeper rooted in the BSD code base that is shared amongst
+>> many telnet clients - inetutils and Mikrotik included. I have provided a
+>> PoC for testing purposes of the issue through a supplied IAC handler to set
+>> the TERM protocol in a connecting client.
+>>
+>> I have also learned that Safari still supports "telnet://" URI handlers
+>> however telnet command is deprecated on OS-X, a user would need to have a
+>> vulnerable telnet client installed such as the one in "homebrew" - however
+>> the USER= overflow is not reached in that client due to some additional
+>> argument length checking code by Apple. For a remote telnet client to
+>> trigger this issue in a URI handler an attacker would need to supply the
+>> "USER=" environment variable through telnet://user@ip which is a correct
+>> way of supplying a username in a uniform resource identifier - thus giving
+>> these vulnerabilities a potential way of being called remotely when a user
+>> supports telnet URI handlers and is using a vulnerable telnet
+>> implementation. Alternatively if USER= cannot be reached or overflown (as
+>> in the Apple client) then the overflows could be caused by a connecting
+>> telnetd service such as the telnet_term_0day.py example proof-of-concept.
+>> That could be reached simply by accessing telnet:// - URI handlers are not
+>> just limited to web browsers and are a means to identify network resources,
+>> there could be other clients not just web browsers out there using them
+>> (rfc3986)
+>>
+>> Unfortunately it is really busy for me this time of year and I do not
+>> have the time to investigate further beyond what I have provided to the
+>> list. They are present in at least a dozen BSD based telnet clients so far,
+>> Apple's telnet client from Sierra, NetKIT BSD (stack overflow confirmed,
+>> heap unsure), inetutils-1.9.4 & also netkit-telnet. It is hard for me to
+>> determine exploitation risk of all such instances that are out there but I
+>> hope now this list can see that this is a widespread problem not just
+>> limited to a single telnet client and has security implications from a
+>> remote perspective and also locally - when a user is in a restricted shell
+>> and calls the "telnet" command they could breakout of the shell using one
+>> of these overflows. Hackers out there might now cry out "ah-hah but what
+>> about !sh" - in some restricted shells in embedded devices (Mikrotik) such
+>> functionality is often removed and thus this offers a way to overwrite /
+>> corrupt memory and potentially breakout of such shells. I will agree that
+>> the use of the stack-overflow and its restricted shell breakout is minimal
+>> but it should still not be dismissed as "not a vulnerability" because
+>> security implications aren't immediately apparent.
+>>
+>> With that my original advisory needs amending to take into account that
+>> the core problem being demonstrated here is more wide-spread than I
+>> initially realised. I would argue telnet should be deprecated entirely in
+>> systems where it has not yet been disabled in favour of more regularly
+>> audited & peer reviewed OpenSSH. I believe the reasons these flaws have
+>> persisted for some 20 years in various forms is that no-one takes telnet
+>> client security as an issue yet I have shown two ways it could be triggered
+>> remotely and also used in a local context.
+>>
+>> Happy Hacking to all and to all a Merry Haxmas!
+>>
+>> Kind Regards,
+>> Hacker Fantastic
+>>
+>>
+>> On Wed, Dec 12, 2018 at 10:13 PM Tavis Ormandy <taviso@google.com> wrote:
+>>
+>>> On Wed, Dec 12, 2018 at 5:21 PM Hacker Fantastic
+>>> <hackerfantastic@googlemail.com> wrote:
+>>> >
+>>> > Please see the below proof of concept in triggering the heap overflow
+>>> using the IAC SB TELQUAL_IS environment option variable assignment. As per
+>>> my original advisory, which did not fully indicate the details but gave the
+>>> overview of how to trigger the condition.
+>>>
+>>> Cool, but I think this is a different bug (AFAICT, it's CVE-2005-0469,
+>>> it was fixed in netkit, but far fewer distros use inetutils). I agree
+>>> this was a real vulnerability, It's a pretty good sign inetutils
+>>> should be deprecated imho.
+>>>
+>>> Tavis.
+>>>
+>>
+>>
+>> --
+>> Matthew Hickey
+>> Tel: +44 7543 661237
+>> Web: http://blog.hackerfantastic.com
+>>
+>> Please visit my website for blog postings, status updates and project
+>> information.
+>>
+>>
+>>
+>>
+>>
+>
+> --
+> Matthew Hickey
+> Tel: +44 7543 661237
+> Web: http://blog.hackerfantastic.com
+>
+> Please visit my website for blog postings, status updates and project
+> information.
+>
+>
+>
+>
+>
 
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
+-- 
+Matthew Hickey
+Tel: +44 7543 661237
+Web: http://blog.hackerfantastic.com
 
------BEGIN PGP SIGNATURE-----
+Please visit my website for blog postings, status updates and project
+information.
 
-iQEBBAEWCgCpFiEEJaa7iN2bdkxrVUHCc4QJ9SDfkZAFAmnzAzYbFIAAAAAABAAO
-bWFudTIsMi41KzEuMTIsMiwyXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25z
-Lm9wZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXQyNUE2QkI4OEREOUI3NjRDNkI1NTQx
-QzI3Mzg0MDlGNTIwREY5MTkwDxxzYW1AZ2VudG9vLm9yZwAKCRBzhAn1IN+RkDEO
-AP4pT6dUifu6hS42Lxk9SFTC7dMT1+s2lVOzFAH1OOPIcAEA4SPsssm+klGzJfSs
-TWSv2zKW/O53suU8pIUHBkDlGw8=
-=N2jM
------END PGP SIGNATURE-----
---=-=-=--
+--000000000000fabbd1057cfe9973--
