@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7842" "Friday" "14" "December" "2018" "18:45:09" "+0100" "Solar Designer" "solar@openwall.com" "<20181214174509.GA26842@openwall.com>" "172" "Re: [oss-security] Linux kernel: userfaultfd bypasses tmpfs file permissions (CVE-2018-18397; since 4.11; fixed in 4.14.87 and 4.19.7)" "^Cc:" nil nil "12" "2018121417:45:09" "[oss-security] Linux kernel: userfaultfd bypasses tmpfs file permissions (CVE-2018-18397; since 4.11; fixed in 4.14.87 and 4.19.7)" (number mark "        solar@openwa Dec 14  172/7842  " thread-indent "\"Re: [oss-security] Linux kernel: userfaultfd bypasses tmpfs file permissions (CVE-2018-18397; since 4.11; fixed in 4.14.87 and 4.19.7)\"\n") "<20181213135943.GA23987@kroah.com>" ("<CAG48ez37UKxsRzpkxa8HbrWGAXWQ7H9OYjGzkaZgEmzY+QOF2Q@mail.gmail.com>" "<20181212142415.GA11037@openwall.com>" "<20181213135943.GA23987@kroah.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3038" "Friday" "14" "December" "2018" "16:21:25" "+0100" "Solar Designer" "solar@openwall.com" "<20181214152125.GA25196@openwall.com>" "52" "Re: [oss-security] Linux kernel: userfaultfd bypasses tmpfs file permissions (CVE-2018-18397; since 4.11; fixed in 4.14.87 and 4.19.7)" "^Cc:" nil nil "12" "2018121415:21:25" "[oss-security] Linux kernel: userfaultfd bypasses tmpfs file permissions (CVE-2018-18397; since 4.11; fixed in 4.14.87 and 4.19.7)" (number mark "        solar@openwa Dec 14   52/3038  " thread-indent "\"Re: [oss-security] Linux kernel: userfaultfd bypasses tmpfs file permissions (CVE-2018-18397; since 4.11; fixed in 4.14.87 and 4.19.7)\"\n") "<20181214132723.GA27168@grsecurity.net>" ("<CAG48ez37UKxsRzpkxa8HbrWGAXWQ7H9OYjGzkaZgEmzY+QOF2Q@mail.gmail.com>" "<20181212142415.GA11037@openwall.com>" "<da9e29c39fae03caa21b6fa915009b4f7f2ec0cf.camel@debian.org>" "<20181214130755.GA24633@openwall.com>" "<20181214132723.GA27168@grsecurity.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 20282 invoked by uid 550); 14 Dec 2018 17:45:44 -0000
+Received: (qmail 7929 invoked by uid 550); 14 Dec 2018 15:22:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,190 +11,70 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19933 invoked from network); 14 Dec 2018 17:45:16 -0000
-Message-ID: <20181214174509.GA26842@openwall.com>
-References: <CAG48ez37UKxsRzpkxa8HbrWGAXWQ7H9OYjGzkaZgEmzY+QOF2Q@mail.gmail.com> <20181212142415.GA11037@openwall.com> <20181213135943.GA23987@kroah.com>
+Received: (qmail 7314 invoked from network); 14 Dec 2018 15:21:47 -0000
+Message-ID: <20181214152125.GA25196@openwall.com>
+References: <CAG48ez37UKxsRzpkxa8HbrWGAXWQ7H9OYjGzkaZgEmzY+QOF2Q@mail.gmail.com> <20181212142415.GA11037@openwall.com> <da9e29c39fae03caa21b6fa915009b4f7f2ec0cf.camel@debian.org> <20181214130755.GA24633@openwall.com> <20181214132723.GA27168@grsecurity.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20181213135943.GA23987@kroah.com>
+In-Reply-To: <20181214132723.GA27168@grsecurity.net>
 User-Agent: Mutt/1.4.2.3i
 Cc: Jann Horn <jannh@google.com>
-Date: Fri, 14 Dec 2018 18:45:09 +0100
+Date: Fri, 14 Dec 2018 16:21:25 +0100
 From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
 Subject: Re: [oss-security] Linux kernel: userfaultfd bypasses tmpfs file permissions (CVE-2018-18397; since 4.11; fixed in 4.14.87 and 4.19.7)
 To: oss-security@lists.openwall.com
 
-On Thu, Dec 13, 2018 at 02:59:43PM +0100, Greg KH wrote:
-> On Wed, Dec 12, 2018 at 03:24:15PM +0100, Solar Designer wrote:
-> > On Wed, Dec 12, 2018 at 01:27:13AM +0100, Jann Horn wrote:
-> > > NOTE: I have requested a CVE identifier, and I'm sending this message,
-> > > to make tracking of the fix easier; however, to avoid missing security
-> > > fixes without CVE identifiers, you should *NOT* be cherry-picking a
-> > > specific patch in response to a notification about a kernel security
-> > > bug.
-> > 
-> > (I resisted the urge to comment on this piece in previous postings.)
-> > 
-> > What should distros/users do, then?  Use latest mainline or upstream
-> > stable kernels?  That would expose them to the many recent bugs like
-> > this one, but which haven't yet been found (or not yet made public,
-> > which is worse).
+On Fri, Dec 14, 2018 at 08:27:24AM -0500, Brad Spengler wrote:
+> I really wish such statistics would stop being cited as evidence of anything,
+> since the ingrained bias of CVE allocation (which is generally not done by
+> upstream itself, and is instead mostly done by the distros for issues that
+> affect their older kernels) inherently changes the range of conclusions that
+> can be reached.  These statistics and the "5 year lifetime" of Linux kernel
+> bugs are simply myths.  The original "5 year lifetime" analysis was wrong
+> from the start and already pointed out back then
+> (https://lwn.net/Articles/410674/), but people continue to cite it.
 > 
-> Which is better, to be running a system with unkown or known bugs? :)
-> 
-> I'd pick unknown, as you are a _bit_ safer that way.
+> Garbage in, garbage out -- can we please stop feeding this pseudo-science?
 
-I agree, assuming it's likely also unknown to at least a subset of
-potential attackers, whereas the known would also be known to them.
+I thought you'd say something like this.  Thanks.  What I did here is
+try and show that even using this biased data we see that sufficiently
+old kernels aren't affected by most vulnerabilities that are found and
+fixed in latest mainline kernels.
 
-However, a major aspect is how often and how quickly you update in
-response to new bug findings.  What I'm saying is that if you run a "too
-recent" kernel, you have to update far more often than if you run a
-"sufficiently old" kernel.  If you're not sure to update often and
-quickly enough, then you're safer running a "sufficiently old" kernel
-and updating it in response to the less frequent relevant findings.
+As I understand, you think that overall the data is biased towards more
+CVEs for old and long-living bugs than for newer and short-living bugs.
+Correct?  If so, and if this assumption is in fact correct, then my use
+of the biased data is also correct.
 
-> > As far as I can tell, by far most Linux kernel vulnerabilities (that are
-> > eventually found and made public) are in relatively recent (as of that
-> > time) kernel versions.  So a user or a distro would avoid most
-> > vulnerabilities (that are eventually found and made public) by staying
-> > sufficiently behind current versions, and relying on backports, even if
-> > at risk of missing untracked vulnerabilities.
-> 
-> Who are you relying on for those backports?
+But then, I just realized that Kees put the 3 critical issues separately
+on that illustration, and we can't tell from it whether or not any of
+those would fall in the 67 to 82 time range that I used to focus on most
+recently found issues.  Also, I chose the start of this range at 67
+specifically based on visible reduction in issues affecting 3.10.  In
+practice, if one were to decide on using a certain base kernel version
+at a given moment, they wouldn't have the hindsight that we have now.
+So my 1/8 figure is probably an underestimate (of what would be inferred
+from this biased data in an unbiased manner, ouch), but even with these
+corrections it does appear even from this data that older kernels are
+affected only by a minority of issues that are assigned CVEs, and need
+less frequent security patches.
 
-Users rely on their distro.  Distro relies on their upstream distro (if
-any) and themselves.  Yes, it can take a while.  Usually the wait time
-negatively correlates with issue importance and publicity, as it should.
+Are we in agreement on this conclusion?
 
-> And what about all of the backports that do not get made?
-
-An acknowledged risk, and a drawback.
-
-> Just look a the spectre patches for loads of examples of that.
-
-Spectre isn't high+ severity at this time, in my opinion.  It's probably
-a higher severity for web browsers with JIT than it is for Linux kernel.
-
-We'd need to see exploitation of Spectre against Linux kernel in the
-wild for it to become higher overall severity.  It's great that Spectre
-is treated seriously upstream, so that we have mature approaches at
-dealing with it when and if it starts being actively exploited in the
-wild.  Meanwhile:
-
-Having some more Spectre fixes than are e.g. in a RHEL7 kernel isn't
-worth the risk of also having more high+ severity vulnerabilities and
-needing to update more often as they're discovered.
-
-> > Currently this can be
-> > achieved e.g. by using RHEL7'ish kernels forked by Red Hat off 3.10, but
-> > probably not anything newer than that yet.  (And when RHEL7 was just
-> > released, its kernels were not quite ready for such use.  It takes
-> > even RHEL kernels a few years and a few hundred revisions to mature and
-> > become a lower security risk.  Fortunately, there's a previous RHEL at a
-> > few years and a few hundred revisions old yet still maintained during
-> > that time.)
-> 
-> If you want to rely on RHEL, that's wonderful, but you are tying
-> yourself to some unknown developers doing some unknown work (figuring
-> out what they have, and have not applied, is non-trivial.)  Those
-> developers do great work, and I strongly recommend people use enterprise
-> distros if you can afford them,
-
-I agree there are drawbacks.
-
-> but it will cost you both time and money to do so.
-
-These kernels can actually save a downstream distro and a sysadmin time
-on not needing to update as often.
-
-As to monetary cost, there are free distros deriving from RHEL.  In this
-discussion, I primarily say RHEL just to give credit where it's due.
-
-> If you don't have the time or money, then I strongly recommend using the
-> latest stable updates, as they are faster and free :)
-
-... but not mature enough.  (I'll comment on "not wine" below.)
-
-> [...] you can look at the work that the syzbot people are doing for
-> concrete evidence that they are finding, and fixing bugs in newer
-> kernels that do not get fixed in older kernels, and are still present in
-> those older kernels.  I think they are averaging about 10k bugs found a
-> year so far.
-
-This is weird.  Brad brought this quote of yours to Twitter, and no one
-appears to know how to make proper sense of it.  Dmitry Vyukov tweeted:
-
-"I don't have numbers for old/new bug fix ratio. But there are 10000+
-bugs/year fixed. Kernel is 27 years old. This means that either we also
-introduce 10000+ bugs/year (25/day), or initial Linus kernel source
-contained 25 bugs per each and every line of code"
-
-> And don't think of software as "mature", this isn't wine.  Code gets
-> worse with age as the environment changes from when it was written.
-> Older code is worse as it is harder to maintain and takes more effort
-> over time.  Again, if you have the time and money to do so, wonderful,
-> but you might want to reconsider your use of that time and money, given
-> that many other large groups consider using the latest kernel a better
-> use of their time.
-> 
-> Also note that older kernels do not work well on newer hardware for the
-> obvious reason.  And newer kernels usually run _faster_ on older
-> hardware, we have the benchmarks to prove that.  So you can do more
-> work, with older hardware, just by updating your kernel, saving you
-> money and time :)
-
-That's why I don't run e.g. 2.0.40 kernels anymore. ;-)  They were so
-much smaller and in some ways safer (e.g., safe from Meltdown on x86) -
-but we need new hardware support, many of the new features, filesystems,
-protocols, and better scalability.
-
-So my preference for mature software is counter-balanced by needing
-newer functionality and needing to fit in the changing ecosystem.
-That's why I mentioned RHEL7 and not older - as the latest that is
-already (barely) mature enough.
-
-> > The recommendation to use latest mainline or upstream stable kernels is
-> > safe to give (and in a way even the most responsible one to give), but
-> > not necessarily the best to follow.
-> 
-> It all depends on your environment and situation.
-> 
-> As you say, it is the safest to give, but everyone is different and
-> needs to do things differently.  I wrote a whole long essay on this
-> thing a while ago if people are interested that tries to provide some
-> nuance depending on your situation:
-> 	http://kroah.com/log/blog/2018/08/24/what-stable-kernel-should-i-use/
-
-I agree with this part:
-
-"Hierarchy of what kernel to use, from best solution to worst:
-
- * Supported kernel from your favorite Linux distribution
- * Latest stable release
- * Latest LTS release
- * Older LTS release that is still being maintained
-
-What kernel to never use:
-
- * Unmaintained kernel release"
-
-However, I think this recommendation isn't great for servers:
-
-"Personally, I prefer the community based Linux distributions that
-constantly roll along with the latest updated kernel and it is supported
-by that developer community. Distributions in this category are Fedora,
-openSUSE, Arch, Gentoo, CoreOS, and others."
-
-Reboot-less live kernel updates from the distro might change this, but
-even then each update is effort for the distro and a risk, so reducing
-their frequency is preferable.
-
-> I would say we fix more old bugs than
-> newer ones by far, and the syzbot numbers back that up.
-
-I'd be interested to see this backed up with the syzbot numbers.
+> On Fri, Dec 14, 2018 at 02:07:55PM +0100, Solar Designer wrote:
+> > Slide 5 is in fact more relevant: it's an illustration showing
+> > "critical & high CVE lifetimes" against kernel versions.  Per this
+> > illustration, we can see that my example of 3.10 (as RHEL7's base
+> > kernel) is hit by many low-numbered issues, but is hit by only two in
+> > the 67 to 82 range, which is 1/8 or 12.5% of issues found that recently.
+> > This is consistent with what I said about it having needed to mature
+> > "for a few years and a few hundred revisions" after RHEL7 was first
+> > released.  I think it became mature enough just recently.  It didn't
+> > feel mature enough to me when I ran Trinity for a few days (with many
+> > restarts) on a RHEL7-derived system two years ago.  I hope those crashes
+> > have since been rediscovered with superior fuzzers allowing for easy
+> > reproduction, and patched.  We've seen major improvement in fuzzing.
 
 Alexander
