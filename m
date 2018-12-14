@@ -1,4 +1,9 @@
-Received: (qmail 15396 invoked by uid 550); 29 Mar 2024 23:57:39 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3182" "Friday" "14" "December" "2018" "13:06:44" "-0500" "Dmitri Shuralyov" "dmitshur@golang.org" "<CA+ON-PGqthRuygz5OOxoerrmAXfAH063cF34LGYZ2KhnEvmGhg@mail.gmail.com>" "71" "[oss-security] Go security releases 1.11.3 and 1.10.6" "^Cc:" nil nil "12" "2018121418:06:44" "[oss-security] Go security releases 1.11.3 and 1.10.6" (number mark "U       dmitshur@gol Dec 14   71/3182  " thread-indent "\"[oss-security] Go security releases 1.11.3 and 1.10.6\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 30157 invoked by uid 550); 14 Dec 2018 18:07:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,62 +11,113 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 28608 invoked from network); 14 Dec 2018 18:07:06 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=golang-org.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to:cc
+         :content-transfer-encoding;
+        bh=0qUp3lWzGw+2nQyChdtJKos/DoyKZERp4LNkfCzFrAw=;
+        b=C1n6hW5cLch0vMg4wZjGmzijn3zu/NMOl38KWZg2jk0+i4IkqQ2HMmwcWAo8u32sgE
+         6XnJPjxshNBCGlLWwqYpxYIdnjfHBnsR9G+DfF8B+MUuHF7jGdO8qDl3ysjmRemOVbPD
+         for16Z6n/etXHBFNjONvFm4ePT2vWTjCkm4xoGpJEbowypUNtOoMojcFqKYBWkVWjME+
+         1QLLGyKJwmCbJljywABi4k6oJHP3ReJJudRuEn6tAnlIZu1pw4Dv0RVHpWQZuEOKA9JT
+         Fr2D1FbGn5QF2Vkdw01Q478hMPtTaCOvOZTXy5G35x1/dhPVSuK8HuYFNCk6BL7WnGIG
+         JN/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
+         :content-transfer-encoding;
+        bh=0qUp3lWzGw+2nQyChdtJKos/DoyKZERp4LNkfCzFrAw=;
+        b=SNq9xRXY5mS8FHLDEsJB9OYx/qsmXKRVmW3cd0kmut+QuAJO03tOGxYYrE3bMTbbb4
+         4R47kB12wVJHCVsaJSsYFb7PT/Zi6Xw42m0nYZbBtFsQmQixyVvJnl+cS4/U570vdsS0
+         jbd6TxuU8bqjlvO6WRuF0JBHvilbAxB6vIQ9/n20cvhccFikhttUBKaoxWUepLp+cTl+
+         5qtzf99XpSlX/FujWhGZxEEqi+utHCL8NPu64bcvQ6wOyW/MU+c6IFwgHXLy+9xSzrXd
+         PdvEPbEG5M0L5AzN8v6kAErl1ZmYBIbS3rssIT1tefI9JBoPRUIwgVm9v1oFLM894dVW
+         6nHw==
+X-Gm-Message-State: AA+aEWZusdjmVnIARkPLY+fqEP7wScCskzoANO81R4tis5wRA4DLS0qg
+	DFOwljjjgU/s+Ovaiyrj29XWXxNYTKrH5BwFcXt+sK0TAFm0og==
+X-Google-Smtp-Source: AFSGD/VWyQe3u/JzK1B/5RsTYJQKs15whH0Mprm1BuLpeWA50+tj9bMCJTqJX+ZVbOt1jj5oNfXJOGnMPDFjsRRwjzA=
+X-Received: by 2002:a2e:5c86:: with SMTP id q128-v6mr2586318ljb.119.1544810814812;
+ Fri, 14 Dec 2018 10:06:54 -0800 (PST)
+MIME-Version: 1.0
+Message-ID: <CA+ON-PGqthRuygz5OOxoerrmAXfAH063cF34LGYZ2KhnEvmGhg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Cc: Security Officer <security@golang.org>, Filippo Valsorda <filippo@golang.org>
+Date: Fri, 14 Dec 2018 13:06:44 -0500
+From: Dmitri Shuralyov <dmitshur@golang.org>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16031 invoked from network); 29 Mar 2024 23:49:58 -0000
-X-Injected-Via-Gmane: http://gmane.org/
+Subject: [oss-security] Go security releases 1.11.3 and 1.10.6
 To: oss-security@lists.openwall.com
-From: Tavis Ormandy <taviso@gmail.com>
-Date: Fri, 29 Mar 2024 23:49:42 -0000 (UTC)
-Message-ID: <uu7k2m$61a$1@ciao.gmane.io>
-References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
- <uu76c4$u7g$1@ciao.gmane.io> <20240329211052.GA2470@openwall.com>
- <uu7da3$87n$1@ciao.gmane.io>
- <20240329221938.dqit6xuh4es2v6gc@awork3.anarazel.de>
- <uu7g5q$8hl$1@ciao.gmane.io> <01322afdcf6b4dd7b81452dc5afed6b1@amazon.com>
- <6038e843-fc3f-4c51-a48c-feb283242b41@canonical.com>
-User-Agent: slrn/1.0.3 (Linux)
-Subject: [oss-security] Re: backdoor in upstream xz/liblzma leading to ssh server compromise
 
-On 2024-03-29, Marc Deslauriers wrote:
->> I think we should have a policy that if issues are suspected to be actively exploited, that the issue goes public immediately.  If even there is no patch or mitigation, there's not a lot of benefit to keeping it private.
->
-> In this case, we had no reason to believe it was being actively exploited.
->
+Hello,
 
-Yeah... but you also have no reason to not believe that?
+We have released Go 1.11.3 and Go 1.10.6 to address three recently
+reported security issues. You can see an announcement at
+https://groups.google.com/d/msg/golang-announce/Kw31K8G7Fi0/z2olKn-QCAAJ.
 
-What do you propose they were doing with their backdoor?
+We are making this posting to oss-security list now that the security
+issues are public to follow the policy described at
+https://oss-security.openwall.org/wiki/mailing-lists/distros. We
+recommend subscribing to the golang-announce list at
+https://groups.google.com/d/forum/golang-announce to guarantee
+receiving notifications about future Go security releases.
 
-> If you make it public before a patch or mitigation is available, it has now gone 
-> from a single entity being able to exploit it to the whole world being able to 
-> exploit it.
->
-> That's a whole lot worse.
->
+There are three vulnerabilities being addressed by the security release:
 
-Okay, but do we agree that if there is a mitigation available, it's better
-for it to be public?
+=E2=80=A2 cmd/go: remote command execution during "go get -u"
 
-Isn't doing `dnf downgrade xxx` a mitigation, or `systemctl xxx stop`?
+The "go get" command is vulnerable to remote code execution when
+executed with the -u flag and the import path of a malicious Go
+package, or a package that imports it directly or indirectly.
+Specifically, it is only vulnerable in GOPATH mode, but not in module
+mode (the distinction is documented at
+https://golang.org/cmd/go/#hdr-Module_aware_go_get). Using custom
+domains, it=E2=80=99s possible to arrange things so that a Git repository is
+cloned to a folder named .git by using a vanity import path that ends
+with "/.git". If the Git repository root contains a HEAD file, a
+config file, an objects directory, a refs directory, with some work to
+ensure the proper ordering of operations, "go get -u" can be tricked
+into considering the parent directory as a repository root, and
+running Git commands on it. That will use the config file in the
+original Git repository root for its configuration, and if that config
+file contains malicious commands, they will execute on the system
+running "go get -u".
 
->> 
->> I think everyone was acting in good faith here and did great work, but there wasn't a clear policy for handling this type of issue.
->
->
-> I would argue against having a policy requiring something like this to be made 
-> public immediately. The important thing here is to do whatever it takes to make 
-> sure users are secure as fast as possible, not expose them to even bigger attack 
-> surface with no mitigation available.
->
-> Marc.
+The issue is CVE-2018-16873 and Go issue https://golang.org/issue/29230.
 
-We all want users to be secure as fast as possible. The discussion is
-whether keeping backdoors embargoed helps achieve that.
+Thanks to Etienne Stalmans from the Heroku platform security team for
+discovering and reporting this issue.
 
-Tavis.
+=E2=80=A2 cmd/go: directory traversal in "go get" via curly braces in impor=
+t paths
 
--- 
- _o)            $ lynx lock.cmpxchg8b.com
- /\\  _o)  _o)  $ finger taviso@sdf.org
-_\_V _( ) _( )  @taviso
+The "go get" command is vulnerable to directory traversal when
+executed with the import path of a malicious Go package which contains
+curly braces (both '{' and '}' characters). Specifically, it is only
+vulnerable in GOPATH mode, but not in module mode (the distinction is
+documented at https://golang.org/cmd/go/#hdr-Module_aware_go_get). The
+attacker can cause an arbitrary filesystem write, which can lead to
+code execution.
 
+The issue is CVE-2018-16874 and Go issue https://golang.org/issue/29231.
+
+Thanks to ztz of Tencent Security Platform for discovering and
+reporting this issue.
+
+=E2=80=A2 crypto/x509: CPU denial of service in chain validation
+
+The crypto/x509 package does not limit the amount of work performed
+for each chain verification, which might allow attackers to craft
+pathological inputs leading to a CPU denial of service. Go TLS servers
+accepting client certificates and TLS clients verifying certificates
+are affected.
+
+The issue is CVE-2018-16875 and Go issue https://golang.org/issue/29233.
+
+Thanks to Netflix for discovering and reporting this issue.
+
+All three vulnerabilities affect Go before 1.10.6, and 1.11.x before 1.11.3.
+
+Thank you,
+Dmitri on behalf of the Go team
