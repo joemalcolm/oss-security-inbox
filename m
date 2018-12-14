@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3197" "Sunday" "29" "May" "2016" "15:03:10" "-0500" "Bob Friesenhahn" "bfriesen@simple.dallas.tx.us" "<alpine.GSO.2.20.1605291453540.4552@freddy.simplesystems.org>" "79" "[oss-security] CVE Request: GraphicsMagick and ImageMagick popen() shell vulnerability via filename" "^Date:" nil nil "5" "2016052920:03:10" "[oss-security] CVE Request: GraphicsMagick and ImageMagick popen() shell vulnerability via filename" (number mark "        bfriesen@sim May 29   79/3197  " thread-indent "\"[oss-security] CVE Request: GraphicsMagick and ImageMagick popen() shell vulnerability via filename\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1014" "Friday" "14" "December" "2018" "14:15:42" "+0100" "Solar Designer" "solar@openwall.com" "<20181214131542.GA24885@openwall.com>" "21" "Re: [oss-security] Linux kernel: userfaultfd bypasses tmpfs file permissions (CVE-2018-18397; since 4.11; fixed in 4.14.87 and 4.19.7)" "^Cc:" nil nil "12" "2018121413:15:42" "[oss-security] Linux kernel: userfaultfd bypasses tmpfs file permissions (CVE-2018-18397; since 4.11; fixed in 4.14.87 and 4.19.7)" (number mark "        solar@openwa Dec 14   21/1014  " thread-indent "\"Re: [oss-security] Linux kernel: userfaultfd bypasses tmpfs file permissions (CVE-2018-18397; since 4.11; fixed in 4.14.87 and 4.19.7)\"\n") "<20181214130755.GA24633@openwall.com>" ("<CAG48ez37UKxsRzpkxa8HbrWGAXWQ7H9OYjGzkaZgEmzY+QOF2Q@mail.gmail.com>" "<20181212142415.GA11037@openwall.com>" "<da9e29c39fae03caa21b6fa915009b4f7f2ec0cf.camel@debian.org>" "<20181214130755.GA24633@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7818 invoked by uid 550); 29 May 2016 20:03:34 -0000
+Received: (qmail 29770 invoked by uid 550); 14 Dec 2018 13:15:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,96 +11,39 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7737 invoked from network); 29 May 2016 20:03:22 -0000
-X-X-Sender: bfriesen@freddy.simplesystems.org
-Message-ID: <alpine.GSO.2.20.1605291453540.4552@freddy.simplesystems.org>
-User-Agent: Alpine 2.20 (GSO 67 2015-01-07)
-MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="-559023410-1061514417-1464552190=:4552"
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (smtp.simplesystems.org [65.66.246.90]); Sun, 29 May 2016 15:03:10 -0500 (CDT)
-Date: Sun, 29 May 2016 15:03:10 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
+Received: (qmail 28630 invoked from network); 14 Dec 2018 13:15:45 -0000
+Message-ID: <20181214131542.GA24885@openwall.com>
+References: <CAG48ez37UKxsRzpkxa8HbrWGAXWQ7H9OYjGzkaZgEmzY+QOF2Q@mail.gmail.com> <20181212142415.GA11037@openwall.com> <da9e29c39fae03caa21b6fa915009b4f7f2ec0cf.camel@debian.org> <20181214130755.GA24633@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20181214130755.GA24633@openwall.com>
+User-Agent: Mutt/1.4.2.3i
+Cc: Jann Horn <jannh@google.com>
+Date: Fri, 14 Dec 2018 14:15:42 +0100
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Request: GraphicsMagick and ImageMagick popen() shell vulnerability
- via filename
-To: oss security list <oss-security@lists.openwall.com>
+Subject: Re: [oss-security] Linux kernel: userfaultfd bypasses tmpfs file permissions (CVE-2018-18397; since 4.11; fixed in 4.14.87 and 4.19.7)
+To: oss-security@lists.openwall.com
 
----559023410-1061514417-1464552190=:4552
-Content-Type: text/plain; format=flowed; charset=US-ASCII
+Important correction:
 
-All existing releases of GraphicsMagick and ImageMagick support a file
-open syntax where if the first character of the file specification is
-a '|', then the remainder of the filename is passed to the shell for
-execution using the POSIX popen(3C) function.  File opening is handled
-by an OpenBlob() function in the source file blob.c.  Unlike the
-vulnerability described by CVE-2016-3714, this functionality is
-supported by the core file opening function rather than a delegates
-subsystem usually used to execute external programs.
+On Fri, Dec 14, 2018 at 02:07:55PM +0100, Solar Designer wrote:
+> > On Wed, 2018-12-12 at 15:24 +0100, Solar Designer wrote:
+> > > A question to ask may be: out of Linux kernel vulnerabilities being
+> > > patched, are there more high and critical overall severity (e.g., as
+> > > risk impact times risk probability) vulnerabilities found in "too
+> > > recent" kernels than there are high and critical severity untracked
+> > > vulnerabilities (also or instead) affecting "sufficiently old" kernels?
 
-The funtionality can be demonstrated as follows:
+> [...] to answer my question above we need median and not average.
 
-   % rm -f hello.txt
-   % convert '|echo Hello > hello.txt;' null:
-   % ls hello.txt
-   hello.txt
+Actually, that wouldn't answer this exact question - it'd answer a
+similar question about tracked vulnerabilities, and the answer would
+tell us how frequently a vulnerability would need to be patched on a
+system (apparently, 1/8 of the time for RHEL7 vs. latest mainline now).
 
-The same weakness in the native SVG readers may be used to provoke
-this problem.  This example returns a valid image given a known file 
-(but an actual file is not necessary):
+We can't answer the question about untracked vulnerabilities from
+per-vulnerability data because untracked implies we lack such data.
 
-   <?xml version="1.0" standalone="no"?>
-   <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
-   "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-   <svg width="4in" height="3in" version="1.1"
-   xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-   <desc>Illustrates how a shell command may be embedded in a SVG.
-   </desc>
-   <image x="200" y="200" width="100px" height="100px"
-   xlink:href="|echo Hello > hello.txt; cat /usr/lib/firefox/browser/icons/mozicon128.png">
-   <title>My image</title>
-   </image>
-   </svg>
-
-Or in MVG:
-
-   push graphic-context
-   viewbox 0 0 640 480
-   image copy 200,200 100,100 "|echo Hello > hello.txt; cat /usr/lib/firefox/browser/icons/mozicon128.png"
-   pop graphic-context
-
-Previously supplied recommended patches for GraphicsMagick do 
-successfully block this attack vector in SVG and MVG.
-
-It is highly likely that there are many paths leading to a suitable 
-filename which may be executed outside of SVG and MVG since the 
-software is quite complex and powerful.  The examples above are not 
-meant to suggest that other avenues to the same weakness are not 
-available.
-
-The simple solution to the problem is to disable the popen support 
-(HAVE_POPEN) in GraphicsMagick's magick/blob.c as is done by the 
-attached patch.
-
-This issue was discovered by Bob Friesenhahn, of the GraphicsMagick
-project.
-
-Bob
--- 
-Bob Friesenhahn
-bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
----559023410-1061514417-1464552190=:4552
-Content-Type: text/plain; charset=US-ASCII; name=disable-popen-filename.patch
-Content-Transfer-Encoding: BASE64
-Content-ID: <alpine.GSO.2.20.1605291503100.4552@freddy.simplesystems.org>
-Content-Description: 
-Content-Disposition: attachment; filename=disable-popen-filename.patch
-
-ZGlmZiAtciAzMzIwMGZjNjQ1ZjYgbWFnaWNrL2Jsb2IuYw0KLS0tIGEvbWFn
-aWNrL2Jsb2IuYwlTYXQgTm92IDA3IDE0OjQ5OjE2IDIwMTUgLTA2MDANCisr
-KyBiL21hZ2ljay9ibG9iLmMJU3VuIE1heSAyOSAxNDoxMjo1NyAyMDE2IC0w
-NTAwDQpAQCAtNjgsNiArNjgsNyBAQA0KICovDQogI2RlZmluZSBEZWZhdWx0
-QmxvYlF1YW50dW0gIDY1NTQxDQogDQorI3VuZGVmIEhBVkVfUE9QRU4NCiAN
-CiAvKg0KICAgRW51bSBkZWNsYXJhdGlvbnMuDQo=
-
----559023410-1061514417-1464552190=:4552--
+Alexander
