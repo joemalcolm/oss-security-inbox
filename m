@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7106" "Wednesday" "3" "June" "2015" "20:04:25" "+1200" "Matthew Daley" "mattd@bugfuzz.com" "<CAD3CanenHhNaYu6koiNheG0w=n31ybLFw0hZt+bZar1nkkBgfA@mail.gmail.com>" "146" "[oss-security] CVE requests / Advisory: Codestyling Localization (Wordpress plugin) - multiple RCE via CSRF, multiple XSS" nil nil nil "6" "2015060308:04:25" "[oss-security] CVE requests / Advisory: Codestyling Localization (Wordpress plugin) - multiple RCE via CSRF, multiple XSS" (number mark "        mattd@bugfuz Jun  3  146/7106  " thread-indent "\"[oss-security] CVE requests / Advisory: Codestyling Localization (Wordpress plugin) - multiple RCE via CSRF, multiple XSS\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["11868" "Friday" "14" "December" "2018" "15:14:54" "+0100" "Jann Horn" "jannhorn@googlemail.com" "<CAG48ez0FUckA3EfwRM5ha3u7PiA_b2NbQw-sE5oq4iuORBgr8A@mail.gmail.com>" "263" "Re: [oss-security] Linux kernel: userfaultfd bypasses tmpfs file permissions (CVE-2018-18397; since 4.11; fixed in 4.14.87 and 4.19.7)" "^Cc:" nil nil "12" "2018121414:14:54" "[oss-security] Linux kernel: userfaultfd bypasses tmpfs file permissions (CVE-2018-18397; since 4.11; fixed in 4.14.87 and 4.19.7)" (number mark "        jannhorn@goo Dec 14  263/11868 " thread-indent "\"Re: [oss-security] Linux kernel: userfaultfd bypasses tmpfs file permissions (CVE-2018-18397; since 4.11; fixed in 4.14.87 and 4.19.7)\"\n") "<20181212142415.GA11037@openwall.com>" ("<CAG48ez37UKxsRzpkxa8HbrWGAXWQ7H9OYjGzkaZgEmzY+QOF2Q@mail.gmail.com>" "<20181212142415.GA11037@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 22006 invoked by uid 550); 3 Jun 2015 08:04:37 -0000
+Received: (qmail 26357 invoked by uid 550); 14 Dec 2018 14:36:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,174 +11,312 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 21988 invoked from network); 3 Jun 2015 08:04:36 -0000
+Received: (qmail 3356 invoked from network); 14 Dec 2018 14:15:35 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=l9AySUWKi3ijwM9sXbq414/NClCcHaJ0L3KbEY/P87w=;
+        b=S9+lICuDjVuWvshVRd9eNK9iducGDEcIZx2WAXjSQG3+G7oW+JI+lJkAQ+d74VFFmV
+         XLr50hICzpyyoMi7U+/eOWYfsUr0MRzAUtBqFm9upm9YS5Oh//8x1iDIWFDxOnvwaDP+
+         dWYL+LcxMJMUZLQDFZnUpqxxPOdjCQDt7r9fUK3stg+PZZuL9eAa2NojwFiKROvRoxW8
+         ALTur9QR5H/zF6QkPTkQUVH1w29jIap/uzfSONh7JfRMnqoEtbdVgrRTz/4qy6f7AVXh
+         IfGxSE/5/2nxder2ddyr8ky7IW3K7BnEBELwJKex3vNlbfzxexQrAG76BXuLt6Gla+Ak
+         nfhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=vhOq1rerz52oJrgHNlxPa9UF+7L/ISq7MKjVpCcBffg=;
-        b=EEErLd2mh3/U7j600Q4hTEe5HTfhqwKQovJGsxNH5r59ZVp27V0laOgY1vSapfS/Qb
-         WKgiNV7GsgtK1B7SgntlBOqSBa7r73EbTEJwVs/X+o72T1XbQ58+aSf0uUljfzokoi8q
-         2baIA3qR8muFDJQiel0O8PPdqQTJyX4n0NcNFg9WlVzLKkFJ5UgtBJsfiWX9sXZu1vcu
-         d3KCBTvg7q8ehgSs/+nXNKN32gB5R1J7miW0ziVNAvRAKVSwDcbOTg3MRDIo9oZwMZ8x
-         MoSkVc9ZMHzLe9dMF0IeolnS6wtWvUzow7vY+cYiUEOZXwKhcOWIl2OCS+5MopMjRzub
-         YFoQ==
-X-Gm-Message-State: ALoCoQmILOCX0u3j9sTTkH4O3ZO3IUmxkGN/yYKbzjNRRX0r0HNhE0ZAhjg9KfhKdmythF8G1KiT
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=l9AySUWKi3ijwM9sXbq414/NClCcHaJ0L3KbEY/P87w=;
+        b=CpcTmKkKyIGGfg8NuoiEL+v6uBg9JWRw8Np3XArjNSc9yfuBysobtB8T2THYTxWGn3
+         mgTaxA1h/r2SPe9SthKOX6s5aKJ7TzPzY2xViRqz/DdCvNheLxwj9Zb7IUGPqO/s+o0s
+         9ejifTHXrZcl9V4jaziuxRNs5SEV69MBrcN75iW3ye1iaojtS3K96TVbs5fcfQ6cp+qC
+         bDHXD7rj75/+hCvysCW7BUDhZrTMO4fV0/qlCna5/RAGB9ePuFsxEF7LFjxniioHXcqw
+         PvY9Ghq++USqQfCxePnV0UeJoNPZfRZKtaQlLT2um9nv3SAwn7Cc6vDrzKdg4SIi59um
+         2BTA==
+X-Gm-Message-State: AA+aEWaNL1dddqC+BJfc8bpU1U4sr8m4qvVLDOmiwRQiMKPYd4bBwJNZ
+	nY1AryvnzSM2dAYI4eTbRsK6dCDQ2Ik=
+X-Google-Smtp-Source: AFSGD/VoOrlpmkVncbYaAce33fUB4mWKDSeBXv1HEelt1GgoBxOaQ4bGjlKPkjDv1WpT7RFL8XX4dg==
+X-Received: by 2002:aca:4fc5:: with SMTP id d188mr1764491oib.138.1544796923070;
+        Fri, 14 Dec 2018 06:15:23 -0800 (PST)
+X-Received: by 2002:a9d:4e06:: with SMTP id p6mr2304948otf.73.1544796921648;
+ Fri, 14 Dec 2018 06:15:21 -0800 (PST)
 MIME-Version: 1.0
-X-Received: by 10.180.82.6 with SMTP id e6mr39525037wiy.84.1433318665137; Wed,
- 03 Jun 2015 01:04:25 -0700 (PDT)
-Message-ID: <CAD3CanenHhNaYu6koiNheG0w=n31ybLFw0hZt+bZar1nkkBgfA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 3 Jun 2015 20:04:25 +1200
-From: Matthew Daley <mattd@bugfuzz.com>
+References: <CAG48ez37UKxsRzpkxa8HbrWGAXWQ7H9OYjGzkaZgEmzY+QOF2Q@mail.gmail.com>
+ <20181212142415.GA11037@openwall.com>
+In-Reply-To: <20181212142415.GA11037@openwall.com>
+X-Gmail-Original-Message-ID: <CAG48ez0FUckA3EfwRM5ha3u7PiA_b2NbQw-sE5oq4iuORBgr8A@mail.gmail.com>
+Message-ID: <CAG48ez0FUckA3EfwRM5ha3u7PiA_b2NbQw-sE5oq4iuORBgr8A@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Cc: oss-security@lists.openwall.com, Greg KH <greg@kroah.com>, 
+	Yves-Alexis Perez <corsac@debian.org>, Brad Spengler <spender@grsecurity.net>, Jann Horn <jannh@google.com>
+Date: Fri, 14 Dec 2018 15:14:54 +0100
+From: Jann Horn <jannhorn@googlemail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE requests / Advisory: Codestyling Localization (Wordpress plugin)
- - multiple RCE via CSRF, multiple XSS
-To: oss-security@lists.openwall.com, cve-assign@mitre.org
+Subject: Re: [oss-security] Linux kernel: userfaultfd bypasses tmpfs file
+ permissions (CVE-2018-18397; since 4.11; fixed in 4.14.87 and 4.19.7)
+To: Solar Designer <solar@openwall.com>
 
-Affected software: Codestyling Localization (Wordpress plugin)
-Affected versions: ? -> 1.99.30
-Website: http://www.code-styling.de/english/development/wordpress-plugin-codestyling-localization-en
-Website: https://wordpress.org/plugins/codestyling-localization/ (now gone)
-Reported by: Matthew Daley
+On Wed, Dec 12, 2018 at 3:24 PM Solar Designer <solar@openwall.com> wrote:
+> On Wed, Dec 12, 2018 at 01:27:13AM +0100, Jann Horn wrote:
+> > NOTE: I have requested a CVE identifier, and I'm sending this message,
+> > to make tracking of the fix easier; however, to avoid missing security
+> > fixes without CVE identifiers, you should *NOT* be cherry-picking a
+> > specific patch in response to a notification about a kernel security
+> > bug.
+>
+> (I resisted the urge to comment on this piece in previous postings.)
+>
+> What should distros/users do, then?  Use latest mainline or upstream
+> stable kernels?  That would expose them to the many recent bugs like
+> this one, but which haven't yet been found (or not yet made public,
+> which is worse).
+>
+> As far as I can tell, by far most Linux kernel vulnerabilities (that are
+> eventually found and made public) are in relatively recent (as of that
+> time) kernel versions.  So a user or a distro would avoid most
+> vulnerabilities (that are eventually found and made public) by staying
+> sufficiently behind current versions, and relying on backports, even if
+> at risk of missing untracked vulnerabilities.  Currently this can be
+> achieved e.g. by using RHEL7'ish kernels forked by Red Hat off 3.10, but
+> probably not anything newer than that yet.  (And when RHEL7 was just
+> released, its kernels were not quite ready for such use.  It takes
+> even RHEL kernels a few years and a few hundred revisions to mature and
+> become a lower security risk.  Fortunately, there's a previous RHEL at a
+> few years and a few hundred revisions old yet still maintained during
+> that time.)
 
-I'd like to request CVE IDs for these issues. This is the first such
-request; this message serves as an advisory as well.
+I think one additional aspect here is the kernel config. From what
+I've seen, distros tend to turn on all the config options because they
+probably have some user, somewhere, who wants to use that feature; and
+if you use that strategy for your kernel config, then yes, new
+releases probably add new features and attack surface.
 
-I have received no response from the plugin author since 2015-04-03,
-hence there are no vendor fixes for the below issues.
+But since you're able to use a 3.10 kernel, evidently you don't need
+those features. So I think it makes sense to, instead of comparing a
+3.10 distro kernel and a 4.19 distro kernel, look at an old and a new
+kernel with the same feature set enabled.
 
-The plugin has since been removed from the Wordpress plugin directory,
-so I don't have the ability to easily link to source code. FWIW, line
-references in this advisory refer to what was the latest version of
-the plugin, 1.99.30.
-
-
-Description:
-
-The plugin contains multiple AJAX actions that, while having the
-necessary permission checks, do not have anti-CSRF protection (ie.
-nonces). Hence, attackers can, with the usual victim interaction
-that's required to trigger a CSRF attack, force logged-in victims with
-the "manage_options" capability (ie. Super Admins or Administrators)
-to perform a number of administrative actions.
-
-Furthermore, some of these administrative actions use user-provided
-input in an unsafe way and can be exploited in order to gain remote
-code execution on the victim's Wordpress installation or to perform
-reflected XSS attacks.
-
-
-* Issue #1: RCE via CSRF in AJAX action "csp_po_scan_source_file":
-
-This action is designed to add in translatable strings from one or
-more PHP files into an existing Portable Object (PO) file (just as
-`xgettext` would in 'join' mode).
-
-The issue with this action is that the user-specified PO and PHP file
-paths are not validated in any way. It is possible to abuse the action
-by executing it with the following user-specified parameters:
-
-- Set "pofile", the file to read and write as a PO-format file, to the
-location of a writable, web-accessible PHP file on the system. For
-example, "/var/www/wordpress/wp-includes/ID3/module.audio.dts.php".
-(This file is unlikely to be executed often by WordPress in normal
-functioning and so is a good choice for being overwritten entirely.)
-- Set "php", the list of files to extract translatable strings from,
-to include the location of a crafted file that contains a translatable
-string with embedded PHP code in it. For example, the contents of this
-file could be "<?php __('<?php echo `id` ?>') ?>", which would allow
-the remote execution of the `id` command. Assuming that the
-"allow_url_fopen" PHP configuration setting is enabled, this file can
-be retrieved over a FTP connection to an attacker-controlled server,
-which allows the file to contain whatever the attacker desires.
-- Set "num" to 0 and "cnt" to 1 (indicating that 0 PHP files have been
-processed so far and that there is a total of 1 to process)
-
-Executing the action with these parameters will cause the file
-specified in "pofile" (a writable, web-accessible PHP file) to be
-overwritten with the PO-format output. One of the translatable strings
-in this output will contain the PHP code, unescaped, from the file
-specified in "php". Hence, the attacker then only needs to access the
-overwritten "pofile" file remotely (by requesting it directly by URL)
-for the attacker's code to then be executed by the server.
-
-I have written a simple POC (not given here) to test this. It takes
-the form of a Python script that hosts dummy FTP and HTTP servers that
-serve the required payloads in order for this attack to function. The
-attacker would then induce the victim, who is logged into the
-Wordpress administration interface, to navigate to the script's HTTP
-server. The payloads served by the script's HTTP server will cause the
-victim to send a CSRF-forced request to the csp_po_scan_source_file
-action with the necessary parameters (as described above). The
-csp_po_scan_source_file action will connect back to the script's FTP
-server in order to retrieve the PHP file to scan for translatable
-strings, one of which contains the attacker-specified PHP code to be
-remotely executed. Finally, the script watches the content of the
-target file that is to be overwritten; when it sees that it has been,
-it shows the result of the attacker-specified code's execution.
-
-A sample run:
-
-$ ./csrf-rce-csp_po_ajax_handle_scan_source_file.py
-http://[redacted]/wordpress/ /var/www/wordpress id
-[redacted] - - [03/Apr/2015 11:02:52] "GET / HTTP/1.1" 200 -
-Pre-CSRF payload sent
-[redacted] - - [03/Apr/2015 11:02:53] "GET /csrf HTTP/1.1" 200 -
-CSRF payload sent
-Input payload sent
-uid=33(www-data) gid=33(www-data) groups=33(www-data)
-
-The final line in the above output shows the script's result, namely
-the output of running `id` on the victim's server.
+Looking at the public Linux kernel bugs I filed in our bugtracker
+(which, of course, are a very small number of bugs and probably not
+very representative):
 
 
-* Issue #2: RCE via CSRF in AJAX action "csp_po_save_catalog_entry":
+https://bugs.chromium.org/p/project-zero/issues/detail?id=807
+"Linux: perf_event_open() can race with execve()"
+probably exploitable since 3.7, since that's when
+PERF_SAMPLE_REGS_USER was added?
 
-This action is similar in functioning to the previous action, except
-that it takes its translated string inputs directly from
-user-specified parameters instead of extracting them from a
-user-specified file.
+https://bugs.chromium.org/p/project-zero/issues/detail?id=808
+"Linux: UAF via double-fdput() in bpf(BPF_PROG_LOAD) error path"
+exploitable since 4.4
+depends on CONFIG_BPF_SYSCALL, which only exists since 3.18
 
-The action can therefore be exploited in a similar fashion, with one
-caveat: the writable, web-accessible PHP file that is to be
-overwritten with PO-format output ("path" and "file" POST parameters)
-needs to appear to have at least one translatable string in it when it
-is treated as a PO-format file. One of the ways that this can occur is
-for a quotation-mark surrounded string literal to be alone on a single
-line in the file (ignoring whitespace). Lines like this are parsed by
-the PO-format parser as translatable strings. Hence, there will be at
-least one translatable string extracted from the file that can then be
-overwritten by the user-specified translatable string before it's
-written out again to the writable, web-accessible PHP file.
+https://bugs.chromium.org/p/project-zero/issues/detail?id=809
+"Linux: reference count overflow using BPF maps"
+exploitable since 4.4
+depends on CONFIG_BPF_SYSCALL, which only exists since 3.18
 
-I have written a simple POC (not given here) to test this. It takes
-the form of an HTML file which sends the required POST parameters for
-the vulnerability to be triggered. Once the victim has navigated to
-the POC and the CSRF has been performed, the attacker can request the
-target file remotely via URL and have their code executed, similarly
-to the previous vulnerability.
+https://bugs.chromium.org/p/project-zero/issues/detail?id=822
+"Linux: arbitrary memory read on arm/arm64 via perf_event_open()"
+My PoC was written against 3.10, so being on 3.10 doesn't help here.
 
-(The benefit of this vulnerability is that the "allow_url_fopen" PHP
-configuration setting does not need to be enabled in order for this
-attack to function. However, the possible choices for the target file
-are reduced; the file needs to appear to have a translatable string
-when treated as a PO-format file, which the previous vulnerability
-does not require.)
+https://bugs.chromium.org/p/project-zero/issues/detail?id=836
+"Linux: Stack overflow via ecryptfs and /proc/$pid/environ"
+I think this probably also worked on v3.10, haven't tested though.
+Newer kernels mitigate this bug class (kernel stack overflow) on
+x86-64 and ARM64, turning it into a clean kernel crash.
+
+https://bugs.chromium.org/p/project-zero/issues/detail?id=854
+"Linux: SELinux W+X protection bypass via AIO"
+I think this is an old bug?
+
+https://bugs.chromium.org/p/project-zero/issues/detail?id=1251
+"Linux: eBPF verifier log leaks lower half of map pointer"
+depends on CONFIG_BPF_SYSCALL, which only exists since 3.18
+
+https://bugs.chromium.org/p/project-zero/issues/detail?id=1431
+"Linux: mincore() discloses uninitialized kernel heap pages"
+introduced in 4.0
+(depends on CONFIG_HUGETLB_PAGE, but I guess probably almost everyone
+has that on)
+
+https://bugs.chromium.org/p/project-zero/issues/detail?id=1454
+"arbitrary read+write via incorrect range tracking in eBPF"
+introduced in 4.14
+depends on CONFIG_BPF_SYSCALL, which only exists since 3.18
+
+https://bugs.chromium.org/p/project-zero/issues/detail?id=1496
+"eBPF verifier bug backported to 4.9-stable"
+introduced in 4.12
+depends on CONFIG_BPF_SYSCALL, which only exists since 3.18
+
+https://bugs.chromium.org/p/project-zero/issues/detail?id=1559
+"Linux RNG flaws"
+introduced in 4.8
+
+https://bugs.chromium.org/p/project-zero/issues/detail?id=1574
+"Linux: 4-byte infoleak via uninitialized struct field in compat
+adjtimex syscall"
+introduced in 4.13
+depends on COMPAT
+
+https://bugs.chromium.org/p/project-zero/issues/detail?id=1580
+"Linux ext4: out-of-bounds memcpy via non-inline system.data xattr"
+introduced in 4.13
+
+https://bugs.chromium.org/p/project-zero/issues/detail?id=1611
+"Linux/Ubuntu: other users' coredumps can be read via setgid directory
+and killpriv bypass"
+I think this one's a really old bug.
+
+https://bugs.chromium.org/p/project-zero/issues/detail?id=1626
+"Linux: reiserfs: heap overflow in listxattr_filler()"
+introduced in 2.6.30
+depends on CONFIG_REISERFS_FS
+
+https://bugs.chromium.org/p/project-zero/issues/detail?id=1628
+"Linux: percpu refcounts on struct mount are racy"
+introduced in 3.13
+
+https://bugs.chromium.org/p/project-zero/issues/detail?id=1633
+"Linux: insufficient shootdown for paging-structure caches"
+introduced in 4.14
+
+https://bugs.chromium.org/p/project-zero/issues/detail?id=1650
+"Linux: arbitrary kernel read into dmesg via missing address check in
+segfault handler"
+introduced in 4.18
+
+https://bugs.chromium.org/p/project-zero/issues/detail?id=1655
+"Linux: kernel ptr leak via BPF: broken subtraction check"
+introduced in 4.15
+depends on CONFIG_BPF_SYSCALL, which only exists since 3.18
+
+https://bugs.chromium.org/p/project-zero/issues/detail?id=1657
+"Linux: semi-arbitrary task stack read on ARM64 (and x86) via /proc/$pid/stack"
+introduced in 2.6.29, I think
+(depends on CONFIG_STACKTRACE, but that's probably on)
+heightened impact on kernels before 4.4 if you don't have a backport
+of "fork: unconditionally clear stack on fork"
+
+https://bugs.chromium.org/p/project-zero/issues/detail?id=1664
+"Linux: VMA use-after-free via buggy vmacache_flush_all() fastpath"
+introduced in 3.15
+
+https://bugs.chromium.org/p/project-zero/issues/detail?id=1686
+"Linux: bpf verifier: 32-bit RSH verification doesn't truncate input
+before the ALU op"
+introduced in 4.15
+depends on CONFIG_BPF_SYSCALL, which only exists since 3.18
+
+https://bugs.chromium.org/p/project-zero/issues/detail?id=1695
+"Linux: mremap() TLB flush too late with concurrent ftruncate()"
+introduced in 3.2
+heightened impact on kernels before 4.9
+
+https://bugs.chromium.org/p/project-zero/issues/detail?id=1700
+"Linux: userfaultfd bypasses tmpfs file permissions"
+introduced in 4.16
+depends on CONFIG_USERFAULTFD, which only exists since 4.3
+
+https://bugs.chromium.org/p/project-zero/issues/detail?id=1712
+"Linux: broken uid/gid mapping for nested user namespaces with >5 ranges"
+introduced in 4.15
 
 
-* Other issues: Multiple XSS in various AJAX actions
+So by my count, that's roughly:
 
-These XSS are all due to reflected unescaped POST parameters in
-certain AJAX actions' responses. The actions and parameters are:
+A) 5 bugs that were already in 3.10 (reiserfs, coredump leak, W+X
+bypass, ARM64 perf_event_open(), perf_event_open()/execve() race)
+B) 3 additional bugs that were already in 3.10, and where the bug was
+worse in old kernels than in the affected one (UAF via late TLB flush;
+infoleak from the stack), or where modern kernels would mitigate the
+issue (stack overflow)
+C) 8 bugs that are gated behind config flags that you won't have set
+if you haven't enabled new features after 3.10 (BPF and userfaultfd)
+D) 9 bugs that are newer than 3.10 and that might be compiled in even
+if you haven't enabled new features since 3.10 (user namespaces, VMA
+UAF, kernel read into dmesg, TLB race, percpu refcounts, ext4, compat
+adjtimex, RNG issues, mincore heap leak)
 
-* Action "csp_self_protection_result": parameter "data[php][]"
-* Action "csp_po_dlg_delete": parameters "language", "name",
-"numlangs", "path", "row", "subpath"
-* Action "csp_po_dlg_rescan": parameter "language"
-* Action "csp_po_generate_mo_file": parameter "pofile"
-* Action "csp_po_save_catalog_entry": parameter "file"
-* Action "csp_po_scan_source_file": parameter "pofile"
+(But again, this isn't exactly a large sample set.)
 
+> A question to ask may be: out of Linux kernel vulnerabilities being
+> patched, are there more high and critical overall severity (e.g., as
+> risk impact times risk probability) vulnerabilities found in "too
+> recent" kernels than there are high and critical severity untracked
+> vulnerabilities (also or instead) affecting "sufficiently old" kernels?
+> My gut feeling is there are many more such vulnerabilities in "too
+> recent" kernels than there are those untracked vulnerabilities in
+> "sufficiently old" kernels.  (BTW, a vulnerability being untracked
+> likely correlates with it being a lower risk probability at least for
+> non-targeted attacks.)  Hence optimal strategy for a distro and their
+> users is to stay with "sufficiently old" base versions and backport
+> whatever is known to be worthy of a backport.
+>
+> There are no maintained upstream stable branches started long enough ago
+> for them to be as mature as e.g. RHEL7 kernels are now.  Besides,
+> upstream stable branches also suffer from lack of backports of fixes for
+> untracked vulnerabilities.
+>
+> The recommendation to use latest mainline or upstream stable kernels is
+> safe to give (and in a way even the most responsible one to give), but
+> not necessarily the best to follow.
+>
+> I do not have a suggestion on what to do about that as it relates to
+> recommendations/disclaimers on postings such as Jann's.  Ideally, we
+> wouldn't have so many new security vulnerabilities being introduced to
+> new Linux kernels all the time, but that seems unrealistic given the
+> pace of Linux kernel development and growth.
 
-- Matthew Daley
+I think it might be helpful to ensure that kernels used in
+environments where you care about security are not configured with the
+maximum amount of features possible, but instead adjusted to actual
+requirements via kernel config and sysctls. Examples:
+
+Regarding the specific bug that started this thread: userfaultfd is
+enabled by distro kernels, but the only current usecase I'm aware of
+is reduction of downtime for QEMU live migration. You probably don't
+need it.
+You might not need compat support.
+You probably don't need support for every single filesystem Linux knows about.
+eBPF is useful for some networking and performance tracing stuff, but
+you probably don't actually need it to be available for non-root, even
+if you do have a use for it.
+
+This should let you avoid many bugs that are introduced as part of new
+features; but of course, it doesn't do much against bugs introduced by
+performance optimizations and such.
+
+It sucks that distros shipping binary kernels kinda have to do the
+opposite of this in order to fulfill their users' needs, at least for
+config options where "build as a module" isn't an option. :( If
+distros want to use a single kernel image for everything, perhaps
+having more sysctls to lock down new features, in addition to the
+kernel config, would help...
+
+> > In Linux kernel versions since 4.11, userfaultfd can be used to write
+> > arbitrary data into holes in sparse tmpfs files to which an attacker
+> > has read-only access.
+> >
+> > This is CVE-2018-18397.
+> >
+> > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=29ec90660d68bbdd69507c1c8b4e33aa299278b1
+> > https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.14.87
+> > https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.19.7
+> > https://bugs.chromium.org/p/project-zero/issues/detail?id=1700
+>
+> Interesting.  How did you find this?
+
+I was specifically looking through the userfaultfd code for security
+bugs. I think this was the first time I looked at the userfaultfd code
+this way (instead of just looking for ).
+
+> Alexander
+>
+> P.S. I guess Jann's message did not reach subscribers who are on Gmail
+> and such because of google.com's DMARC policy.  So I made sure to quote
+> all of it above.
+
+Bleeh... I guess maybe I should use a @googlemail.com account for that...
