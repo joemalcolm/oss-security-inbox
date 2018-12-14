@@ -1,38 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/25/1
-Message-ID: <72b41311-ec4d-4336-eb84-931c88fae250@redhat.com>
-Date: Wed, 25 Apr 2018 11:11:14 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/14/9
+Message-ID: <CA+ON-PGqthRuygz5OOxoerrmAXfAH063cF34LGYZ2KhnEvmGhg@mail.gmail.com>
+Date: Fri, 14 Dec 2018 13:06:44 -0500
+From: Dmitri Shuralyov <dmitshur@...ang.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2018-0737 OpenSSL: RSA key generation follows several non constant time code paths
+Cc: Security Officer <security@...ang.org>, Filippo Valsorda <filippo@...ang.org>
+Subject: Go security releases 1.11.3 and 1.10.6
 Content-Type: text/plain; charset=utf-8
 
-On 04/24/2018 09:18 PM, Billy Brumley wrote:
->>> Look for our preprint on http://eprint.iacr.org/ soon -- working title
->>> is "One Shot, One Trace, One Key: Cache-Timing Attacks on RSA Key
->>> Generation". We'll update the list with the full URL once it's posted.
->>>
->>
->>
->> Can you post a link to the draft here please?
-> 
-> The preprint is now up: https://eprint.iacr.org/2018/367
-> 
->> The attack vector is not clear, does the attacker need to be on the same
->> physical machine or is this a cross-vm attack?
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2018-0737
-> 
-> Your statement is pretty accurate. (Although I fail to see the
-> difference between physical machine and cross-vm.)
-> 
-Physical machine implies, the attacker and victim is on the same host
-(real computer or a vm). Cross-vm implies attacker and the victim can be
-on two different virtual machines, running on the same hypervisor.
+Hello,
 
-> BBB
-> 
+We have released Go 1.11.3 and Go 1.10.6 to address three recently
+reported security issues. You can see an announcement at
+https://groups.google.com/d/msg/golang-announce/Kw31K8G7Fi0/z2olKn-QCAAJ.
 
+We are making this posting to oss-security list now that the security
+issues are public to follow the policy described at
+https://oss-security.openwall.org/wiki/mailing-lists/distros. We
+recommend subscribing to the golang-announce list at
+https://groups.google.com/d/forum/golang-announce to guarantee
+receiving notifications about future Go security releases.
 
--- 
-Huzaifa Sidhpurwala / Red Hat Product Security Team
+There are three vulnerabilities being addressed by the security release:
+
+• cmd/go: remote command execution during "go get -u"
+
+The "go get" command is vulnerable to remote code execution when
+executed with the -u flag and the import path of a malicious Go
+package, or a package that imports it directly or indirectly.
+Specifically, it is only vulnerable in GOPATH mode, but not in module
+mode (the distinction is documented at
+https://golang.org/cmd/go/#hdr-Module_aware_go_get). Using custom
+domains, it’s possible to arrange things so that a Git repository is
+cloned to a folder named .git by using a vanity import path that ends
+with "/.git". If the Git repository root contains a HEAD file, a
+config file, an objects directory, a refs directory, with some work to
+ensure the proper ordering of operations, "go get -u" can be tricked
+into considering the parent directory as a repository root, and
+running Git commands on it. That will use the config file in the
+original Git repository root for its configuration, and if that config
+file contains malicious commands, they will execute on the system
+running "go get -u".
+
+The issue is CVE-2018-16873 and Go issue https://golang.org/issue/29230.
+
+Thanks to Etienne Stalmans from the Heroku platform security team for
+discovering and reporting this issue.
+
+• cmd/go: directory traversal in "go get" via curly braces in import paths
+
+The "go get" command is vulnerable to directory traversal when
+executed with the import path of a malicious Go package which contains
+curly braces (both '{' and '}' characters). Specifically, it is only
+vulnerable in GOPATH mode, but not in module mode (the distinction is
+documented at https://golang.org/cmd/go/#hdr-Module_aware_go_get). The
+attacker can cause an arbitrary filesystem write, which can lead to
+code execution.
+
+The issue is CVE-2018-16874 and Go issue https://golang.org/issue/29231.
+
+Thanks to ztz of Tencent Security Platform for discovering and
+reporting this issue.
+
+• crypto/x509: CPU denial of service in chain validation
+
+The crypto/x509 package does not limit the amount of work performed
+for each chain verification, which might allow attackers to craft
+pathological inputs leading to a CPU denial of service. Go TLS servers
+accepting client certificates and TLS clients verifying certificates
+are affected.
+
+The issue is CVE-2018-16875 and Go issue https://golang.org/issue/29233.
+
+Thanks to Netflix for discovering and reporting this issue.
+
+All three vulnerabilities affect Go before 1.10.6, and 1.11.x before 1.11.3.
+
+Thank you,
+Dmitri on behalf of the Go team
