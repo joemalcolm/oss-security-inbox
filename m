@@ -1,20 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/27/2
-Message-ID: <20180627033113.GC14157@hunt>
-Date: Tue, 26 Jun 2018 20:31:13 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE for PyYAML RCE-factory API
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/17/1
+Message-Id: <8A4D6092-8350-438C-B09E-B569A2EB233A@apache.org>
+Date: Mon, 17 Dec 2018 11:43:55 +0100
+From: Jan Lehnardt <jan@...che.org>
+To: CouchDB Users <user@...chdb.apache.org>
+Cc: announce <announce@...chdb.apache.org>, CouchDB Developers <dev@...chdb.apache.org>, marketing <marketing@...chdb.apache.org>, Security CouchDB <security@...chdb.apache.org>, oss-security@...ts.openwall.com
+Subject: Apache CouchDB CVE-2018-17188: Remote Privilege Escalations (Affects all versions < 2.3.0)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jun 26, 2018 at 09:18:39PM -0400, Alex Gaynor wrote:
-> Because of the degree to which this API presented a footgun, I would like
-> to request a CVE for it.
 
-This makes sense to me. You can make CVE requests on:
+#Apache CouchDB CVE-2018-17188: Remote Privilege Escalations (Affects all versions < 2.3.0)
 
-https://cveform.mitre.org/
+Date:	17.12.2018
+Affected:	All Versions of Apache CouchDB
+Severity:	Medium
+Vendor:	The Apache Software Foundation
 
-Thanks
+## Description
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Prior to CouchDB version 2.3.0, CouchDB allowed for runtime-configuration of key components of the database. In some cases, this lead to vulnerabilities where CouchDB admin users could access the underlying operating system as the CouchDB user. Together with other vulnerabilities, it allowed full system entry for unauthenticated users.
+
+These vulnerabilities were fixed and disclosed in the following CVE reports:
+
+	• CVE-2018-11769: Apache CouchDB Remote Code Execution[1]
+	• CVE-2018-8007: Apache CouchDB Remote Code Execution[2]
+	• CVE-2017-12636: Apache CouchDB Remote Code Execution[3]
+	• CVE-2017-12635: Apache CouchDB Remote Privilege Escalation[4]
+
+Rather than waiting for new vulnerabilities to be discovered, and fixing them as they come up, the CouchDB development team decided to make changes to avoid this entire class of vulnerabilities.
+
+With CouchDB version 2.3.0, CouchDB no longer can configure key components at runtime. While some flexibility is needed for speciality configurations of CouchDB, the configuration was changed from being available at runtime to start-up time. And as such now requires shell access to the CouchDB server.
+
+This closes all future paths for vulnerabilities of this type.
+
+## Mitigation
+
+All users should upgrade to CouchDB 2.3.0.
+
+Upgrades from previous 2.x versions in the same series should be seamless.
+
+Users on earlier versions should consult with upgrade notes.
+
+## Credit
+
+This issue was discovered by the Apple Information Security team.
+
+—
+[1]: http://docs.couchdb.org/en/stable/cve/2017-12635.html <http://docs.couchdb.org/en/stable/cve/2017-12635.html>
+[2]: http://docs.couchdb.org/en/stable/cve/2017-12636.html <http://docs.couchdb.org/en/stable/cve/2017-12636.html>
+[3]: http://docs.couchdb.org/en/stable/cve/2018-11769.html <http://docs.couchdb.org/en/stable/cve/2018-11769.html>
+[3]: http://docs.couchdb.org/en/stable/cve/2018-8007.html <http://docs.couchdb.org/en/stable/cve/2018-8007.html>
+
+
