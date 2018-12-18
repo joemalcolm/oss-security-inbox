@@ -1,4 +1,9 @@
-Received: (qmail 12172 invoked by uid 550); 9 Oct 2024 12:53:44 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["639" "Tuesday" "18" "December" "2018" "12:14:00" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<3810169.hn6iprp2Ks@overwatch>" "26" "Re: [oss-security] Re: CVE-2018-20124 QEMU: rdma: OOB access when building scatter-gather array" nil nil nil "12" "2018121811:14:00" "[oss-security] Re: CVE-2018-20124 QEMU: rdma: OOB access when building scatter-gather array" (number mark "U       ago@gentoo.o Dec 18   26/639   " thread-indent "\"Re: [oss-security] Re: CVE-2018-20124 QEMU: rdma: OOB access when building scatter-gather array\"\n") "<CAF2z-PPRVy+4CQkJ=Abm6__D0f3vTjGXcPH6OG0OiF-iBn0HAg@mail.gmail.com>" ("<nycvar.YSQ.7.76.1812181420590.5773@xnncv>" "<CAF2z-PPRVy+4CQkJ=Abm6__D0f3vTjGXcPH6OG0OiF-iBn0HAg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 7270 invoked by uid 550); 18 Dec 2018 11:14:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,44 +12,42 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 9755 invoked from network); 9 Oct 2024 11:57:42 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Simon Steiner <ssteiner@apache.org>
+Received: (qmail 7252 invoked from network); 18 Dec 2018 11:14:17 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
 To: oss-security@lists.openwall.com
-Message-ID: <4c2b0232-fc34-75b8-5553-65aa00407e32@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 09 Oct 2024 11:57:32 +0000
+Cc: saar amar <saaramar5@gmail.com>, P J P <ppandit@redhat.com>
+Date: Tue, 18 Dec 2018 12:14:00 +0100
+Message-ID: <3810169.hn6iprp2Ks@overwatch>
+In-Reply-To: <CAF2z-PPRVy+4CQkJ=Abm6__D0f3vTjGXcPH6OG0OiF-iBn0HAg@mail.gmail.com>
+References: <nycvar.YSQ.7.76.1812181420590.5773@xnncv> <CAF2z-PPRVy+4CQkJ=Abm6__D0f3vTjGXcPH6OG0OiF-iBn0HAg@mail.gmail.com>
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2024-28168: Apache XML Graphics FOP: XML External Entity (XXE)
- Processing 
+Content-Type: multipart/alternative; boundary="nextPart1600637.lG3KUbQIHY"
+Content-Transfer-Encoding: 7Bit
+Subject: Re: [oss-security] Re: CVE-2018-20124 QEMU: rdma: OOB access when building scatter-gather array
 
-Severity: moderate
+--nextPart1600637.lG3KUbQIHY
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
 
-Affected versions:
+On marted=C3=AC 18 dicembre 2018 10:44:32 CET saar amar wrote:
+> Thanks all  I'm happy it fixed, thanks for the response guys!
+>=20
+> I'm wondering why it says "DOS" and not "execute arbitrary code on the
+> host, in the context of the QEMU process"? I have stack overflow, it pret=
+ty
+> clear I could gain more than simple DOS:)
+>=20
+> What do your day?
 
-- Apache XML Graphics FOP 2.9
+Maybe because of the -fstack-protector* flag used by default in the build p=
+rocess.
 
-Description:
 
-Improper Restriction of XML External Entity Reference ('XXE') vulnerability=
- in Apache XML Graphics FOP.
+--=20
+Agostino Sarubbo
+Gentoo Linux Developer
 
-This issue affects Apache XML Graphics FOP: 2.9.
+--nextPart1600637.lG3KUbQIHY--
 
-Users are recommended to upgrade to version 2.10, which fixes the issue.
 
-This issue is being tracked as FOP-3168=20
-
-Credit:
-
-c1gar of Shanxi Normal University (finder)
-
-References:
-
-https://xmlgraphics.apache.org/security.html
-https://xmlgraphics.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2024-28168
-https://issues.apache.org/jira/browse/FOP-3168
 
