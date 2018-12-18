@@ -1,4 +1,9 @@
-Received: (qmail 5318 invoked by uid 550); 29 Dec 2025 18:06:33 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1052" "Tuesday" "18" "December" "2018" "11:44:32" "+0200" "saar amar" "saaramar5@gmail.com" "<CAF2z-PPRVy+4CQkJ=Abm6__D0f3vTjGXcPH6OG0OiF-iBn0HAg@mail.gmail.com>" "37" "[oss-security] Re: CVE-2018-20124 QEMU: rdma: OOB access when building scatter-gather array" nil nil nil "12" "2018121809:44:32" "[oss-security] Re: CVE-2018-20124 QEMU: rdma: OOB access when building scatter-gather array" (number mark "U       saaramar5@gm Dec 18   37/1052  " thread-indent "\"[oss-security] Re: CVE-2018-20124 QEMU: rdma: OOB access when building scatter-gather array\"\n") "<nycvar.YSQ.7.76.1812181420590.5773@xnncv>" ("<nycvar.YSQ.7.76.1812181420590.5773@xnncv>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 26607 invoked by uid 550); 18 Dec 2018 10:38:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,124 +12,80 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 1366 invoked from network); 29 Dec 2025 17:53:33 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sdaoden.eu;
- s=citron; t=1767030803; x=1767697469; h=date:author:from:to:subject:
-  message-id:mail-followup-to:openpgp:blahblahblah:author:from:subject:date:
-  to:cc:resent-author:resent-date:resent-from:resent-sender:resent-to:
-  resent-cc:resent-reply-to:resent-message-id:in-reply-to:references:
-  mime-version:content-type:content-transfer-encoding:content-disposition:
-  content-id:content-description:message-id:mail-followup-to:openpgp:
-  blahblahblah; bh=do8Myubw5eJPflyiPIIFc/yzEs5pLB7yB06+tM3tw8c=;
- b=Bb1zpCQ+0XXtfKBwsUamk7QtqLdbZOOLZKpO64mYlukG+3B17nshDsxDegmykZwCiVCcpMcY
-  lILkFiacwwRVlTdxZyxk7aje9d8WNqdZ+yjOoRdEhW61ejOtb8xeLWjY6GdO/oE/PEdWCm8y/k
-  ksaMlXVU0R/KEvJqSaD2v847mVdtKg0N6luktRTRweSHAmVtVhw3u8LjXQpAyW2DREhHpXChv6
-  sWWopmXP/l/HSoyQzO6iMp1UUfxVtOo3+Pd7bWPgWs42hyqkTzBQyEE/8Dysa3AVhguVnJbw5K
-  u2gOu68JNKakMEFU3bNivngZ0er07CD1aEvAnBxM64tULwFw==
-Date: Mon, 29 Dec 2025 18:53:22 +0100
-Author: Steffen Nurpmeso <steffen@sdaoden.eu>
-From: Steffen Nurpmeso <steffen@sdaoden.eu>
-To: oss-security@lists.openwall.com
-Message-ID: <20251229175322.DTpHn3Fz@steffen%sdaoden.eu>
-Mail-Followup-To: oss-security@lists.openwall.com
-User-Agent: s-nail v14.9.25-743-g1489053f65-dirty
-OpenPGP: id=EE19E1C1F2F7054F8D3954D8308964B51883A0DD;
- url=https://ftp.sdaoden.eu/steffen.asc; preference=signencrypt
-BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
- the world can make no bugs.
-Subject: [oss-security] BSDiff (bspatch): remotely triggerable out-of-bound memory
- access
+Received: (qmail 21577 invoked from network); 18 Dec 2018 09:44:55 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=nx2CBSZETqsQiyj4ozrRcQQm+d+mj+Il/dgt7mKOlnU=;
+        b=i0NkyGFQYL2ZTBhwglpBrDXoSkt7W/SQuwwP8XS5K/nm4WcfOwzbAiQZYzhOaClmsO
+         TJK2zUuggSBf2nGcj2d1z2qw6bZ1mauXoWX1UO+ZAWdYN3/dH9ROuI7GUcKcrrzBLqEB
+         w4oZgGKdPcWbmONUoJDY5ltSEziObmUFR8D8XqNB8aFCjUTIyp/F/ckQ/sHq2SSOMaQM
+         7y8qrzZmrhNI+xo2u9m40bcuhnXjqmM5Q1VR4zjMOdzULQO5DmCUqYG4TX+/pi/lNS9/
+         3P1RevmsEPyEcsKfmZSFxjj9iFPNm5o8C+6Shy4MO1uq75p6X1Vio6WsfhrrXHBnVLp1
+         TCHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=nx2CBSZETqsQiyj4ozrRcQQm+d+mj+Il/dgt7mKOlnU=;
+        b=PlcYHuYWyRWh2tYWQZmKZv6uCczVZ7RJQKwXtriCP9WqFUgO7tzy8IZ+lhUGQF1xGn
+         QnjN/BpOHEjRs2qOb2rBgBmYbA1ug1Tje3bUQIOWTbIcT2zQi4im8KF3N+0CnqwkP+wh
+         Lllb7JjacSln9UJz5/nhYq7g3dguoknCM7dBO+uMSVQO0JB5BRAxbtqtWwSyyMsxeYeu
+         uE2zHcd9lC2uVaud3/H9cBUHwlaEQbhc9gvRxKtCkBvx/ARYOaCBy64mED5xNnk4JfV5
+         tmGpLaA9TVsZD629PyDFDlrwxroG5V2yS7+6ujke+9csU8I6oC79p4UUmh7h+ihQjVdH
+         a15g==
+X-Gm-Message-State: AA+aEWbxWucQiZPCUuQz+2HPjS916phOcy/We9RNivkn9BA37G46TLTL
+	W1CoDiFUi6sJZWa6chALU0fZApQgxh/hycAkdUc=
+X-Google-Smtp-Source: AFSGD/Uw/SzV/E6BjKNlKA0Ajf5PICJpD3UyXR2Ut194Qs6gKWcK8DBmu6bROMloXvGPVLMosFLPAKi+eSLUxiAXsZA=
+X-Received: by 2002:a50:afa3:: with SMTP id h32mr15837885edd.150.1545126284000;
+ Tue, 18 Dec 2018 01:44:44 -0800 (PST)
+MIME-Version: 1.0
+References: <nycvar.YSQ.7.76.1812181420590.5773@xnncv>
+In-Reply-To: <nycvar.YSQ.7.76.1812181420590.5773@xnncv>
+From: saar amar <saaramar5@gmail.com>
+Date: Tue, 18 Dec 2018 11:44:32 +0200
+Message-ID: <CAF2z-PPRVy+4CQkJ=Abm6__D0f3vTjGXcPH6OG0OiF-iBn0HAg@mail.gmail.com>
+To: P J P <ppandit@redhat.com>
+Cc: oss security list <oss-security@lists.openwall.com>
+Content-Type: multipart/alternative; boundary="0000000000004a8424057d48bfe5"
+Subject: [oss-security] Re: CVE-2018-20124 QEMU: rdma: OOB access when building
+ scatter-gather array
 
-Hello.
+--0000000000004a8424057d48bfe5
+Content-Type: text/plain; charset="UTF-8"
 
-The BSDiff (binary difference patch) algorithm is in use in
-original or modified form in several projects / products.
+Thanks all :) I'm happy it fixed, thanks for the response guys!
 
-The patch data stores control data as (tuples of three) signed
-integers (each).
+I'm wondering why it says "DOS" and not "execute arbitrary code on the
+host, in the context of the QEMU process"? I have stack overflow, it pretty
+clear I could gain more than simple DOS:)
 
-There were bug reports a.k.a. CVEs in the past that covered the
-first two entries of each tuple (length in octets/bytes to copy
-from the differential data / the extra data block, respectively),
-but not the third, which is a "relative seek [in data source]"
-location to apply after the copies have taken place.
+What do your day?
 
-When i forked Colin Percival's bsdiff he pointed me to the FreeBSD
-implementation as the "master copy" due to integrated bug fixes
-(his original tarball was not accessible by then even), so i point
-to that here via
+On Tue, 18 Dec 2018, 10:53 P J P <ppandit@redhat.com wrote:
 
-  https://github.com/freebsd/freebsd-src/blob/main/usr.bin/bsdiff/bspatch/bspatch.c
+>    Hello,
+>
+> An out-of-bound stack buffer r/w access issue was found in QEMU's generic
+> RDMA
+> back-end implementation. It could occur when a driver tries to build
+> scatter/gather element's array in build_host_sge_array() routine.
+>
+> A guest user/process could use this flaw to crash the QEMU process
+> resulting
+> in DoS.
+>
+> Upstream patch:
+> ---------------
+>    -> https://lists.gnu.org/archive/html/qemu-devel/2018-12/msg02822.html
+>
+> This issue was reported by Saar Amar.
+>
+> Thank you.
+> --
+> Prasad J Pandit / Red Hat Product Security Team
+> 47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+>
 
-We see "oldpos" being initialized to 0 before the loop starts at
-line #236, we then later see
-
-                /* Add old data to diff string */
-                for (i = 0; i < ctrl[0]; i++)
-                        if (add_off_t(oldpos, i) < oldsize)
-                                new[newpos + i] += old[oldpos + i];
-                ...
-                oldpos = add_off_t(oldpos, ctrl[0]);
-
-and
-
-                oldpos = add_off_t(oldpos, ctrl[2]);
-
-The add_off_t() was introduced to catch integer overflows etc, it
-effectively boils down to
-
-  #define ckd_add(R, A, B) __builtin_add_overflow((A), (B), (R))
-
-As can be seen, an attacker who controls the patch just has to
-"choose ctrl[2] in a way that causes oldpos to go negative enough"
-in order to cause a negative memory in "old[oldpos+i]" above.
-My bsdipa clone does
-
-                j = ctrl[2];
-                if(j != 0){
-                        if(!a_bspatch_check_add(aftpos, j))
-                                goto jleave;
-                        aftpos += j;
-                        if(aftpos < 0)
-                                goto jleave;
-                }
-
-ie it effectively adds an additional <0 check.
-
-This was reported to FreeBSD back on January 30th[1].
-I actually did not really know a.k.a. looked how many forks there
-are etc, but just recently i did and half-hearted opened an issue
-for [2] (the project seems pretty much dead).
-
-  [1] https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=284472
-  [2] https://github.com/mendsley/bsdiff
-
-While here, there is another "minor problem".  The original BSDiff
-algorithm can generate control tuples which do not produce any
-data, but only contain seek instructions.  The number of these is
-unlimited.  By collapsing such "seek-only" instructions to the
-former control chunk all control tuples (but the first, hm) must
-contain copy instructions, which allows for a control block bound
-a.k.a. size check only by reading the "file format header".
-To be remarked all data is bzip2 compressed, which allows for, say
-(BSDiff is always 64-bit)
-
-  perl -e '{$i=0;while($i<24*1000000){print "\x0";++$i;}}' |
-    bzip2 -vzc > .Y.bz2
-  (stdin): 480000.000:1,  0.000 bits/byte, 100.00% saved, 24000000 in, 50 out.
-
-which is possibly not a "DoS", but still a bit ugly.
-The mitigation for that is no earlier but in S-bsdipa v0.9.0.
-(Which uses a different patch format per se, etc etc.)
-
-Ciao and greetings from Germany,
-
-P.S.: (no "CVE doings" by me, i post to oss-security per email).
-
---steffen
-|
-|Der Kragenbaer,                The moon bear,
-|der holt sich munter           he cheerfully and one by one
-|einen nach dem anderen runter  wa.ks himself off
-|(By Robert Gernhardt)
+--0000000000004a8424057d48bfe5--
