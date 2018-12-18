@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3873" "Thursday" "19" "January" "2017" "12:34:48" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<5a73a86bba0443d0bf2ddfba52218ecb@imshyb01.MITRE.ORG>" "93" "[oss-security] Re: CVE request: python-pysaml2 XML external entity attack" nil nil nil "1" "2017011917:34:48" "[oss-security] Re: CVE request: python-pysaml2 XML external entity attack" (number mark "U       cve-assign@m Jan 19   93/3873  " thread-indent "\"[oss-security] Re: CVE request: python-pysaml2 XML external entity attack\"\n") "<20170119073444.GA14027@sin.redhat.com>" ("<20170119073444.GA14027@sin.redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["573" "Tuesday" "18" "December" "2018" "14:23:07" "+0530" "P J P" "ppandit@redhat.com" "<nycvar.YSQ.7.76.1812181420590.5773@xnncv>" "19" "[oss-security] CVE-2018-20124 QEMU: rdma: OOB access when building scatter-gather array" nil nil nil "12" "2018121808:53:07" "[oss-security] CVE-2018-20124 QEMU: rdma: OOB access when building scatter-gather array" (number mark "U       ppandit@redh Dec 18   19/573   " thread-indent "\"[oss-security] CVE-2018-20124 QEMU: rdma: OOB access when building scatter-gather array\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 22044 invoked by uid 550); 19 Jan 2017 17:35:01 -0000
+Received: (qmail 20110 invoked by uid 550); 18 Dec 2018 08:53:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,107 +12,36 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22015 invoked from network); 19 Jan 2017 17:35:01 -0000
-From: <cve-assign@mitre.org>
-To: <dmoppert@redhat.com>, <seb@debian.org>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <20170119073444.GA14027@sin.redhat.com>
-Message-ID: <5a73a86bba0443d0bf2ddfba52218ecb@imshyb01.MITRE.ORG>
-Date: Thu, 19 Jan 2017 12:34:48 -0500
+Received: (qmail 20092 invoked from network); 18 Dec 2018 08:53:24 -0000
+Date: Tue, 18 Dec 2018 14:23:07 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@kaapi
+To: oss security list <oss-security@lists.openwall.com>
+cc: saar amar <saaramar5@gmail.com>
+Message-ID: <nycvar.YSQ.7.76.1812181420590.5773@xnncv>
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: CVE request: python-pysaml2 XML external entity attack
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.26]); Tue, 18 Dec 2018 08:53:12 +0000 (UTC)
+Subject: [oss-security] CVE-2018-20124 QEMU: rdma: OOB access when building scatter-gather
+ array
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+   Hello,
 
->> Use CVE-2016-10127
-> I think this CVE needs some clarification.
+An out-of-bound stack buffer r/w access issue was found in QEMU's generic RDMA 
+back-end implementation. It could occur when a driver tries to build 
+scatter/gather element's array in build_host_sge_array() routine.
 
-We agree. Here is a rewrite of our entire earlier message that made this
-CVE ID assignment.
+A guest user/process could use this flaw to crash the QEMU process resulting 
+in DoS.
 
-REPLACE ALL OF THIS EARLIER TEXT:
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2018-12/msg02822.html
 
-   > python-pysaml2 does
-   > not sanitize SAML XML requests or responses:
-   >
-   >   https://github.com/rohe/pysaml2/issues/366
-   >   https://github.com/rohe/pysaml2/pull/379
-   >   https://bugs.debian.org/850716
-   >   https://github.com/rohe/pysaml2/commit/6e09a25d9b4b7aa7a506853210a9a14100b8bc9b
-   
-   Use CVE-2016-10127 for the vulnerability addressed by "Fix XXE in XML
-   parsing" in 6e09a25d9b4b7aa7a506853210a9a14100b8bc9b.
-   
-   The scope of this CVE does not include the various other issues that
-   may be found in the above references:
-   
-    - it does not include any aspect of
-      https://bugzilla.gnome.org/show_bug.cgi?id=772726
-   
-    - it does not include any vulnerabilities in the XML Security Library
-      (xmlsec), such as ones that are now, or previously were, listed at
-      https://github.com/lsh123/xmlsec/issues
-   
-    - it does not include any CWE-776 (Entity Expansion) issues that may
-      have been fixed as a side effect of
-      6e09a25d9b4b7aa7a506853210a9a14100b8bc9b (possibly there are new
-      test cases in 6e09a25d9b4b7aa7a506853210a9a14100b8bc9b for CWE-776)
+This issue was reported by Saar Amar.
 
-WITH THIS REWRITE:
-
-   > python-pysaml2 does
-   > not sanitize SAML XML requests or responses:
-   >
-   >   https://github.com/rohe/pysaml2/issues/366
-   >   https://github.com/rohe/pysaml2/pull/379
-   >   https://bugs.debian.org/850716
-   >   https://github.com/rohe/pysaml2/commit/6e09a25d9b4b7aa7a506853210a9a14100b8bc9b
-   
-   Use CVE-2016-10127 for any XXE vulnerability that exists within the
-   pysaml2 code (i.e., not in an underlying library). This vulnerability
-   is described in the "Oct 6, 2016" portion of the
-   https://github.com/rohe/pysaml2/issues/366 reference. There isn't yet
-   a complete rationale for why the pysaml2 code itself should be
-   considered responsible for XXE, or about what changes to the pysaml2
-   code itself would resolve XXE. However, it is still potentially useful
-   to track XXE at the pysaml2 level.
-   
-   The scope of this CVE does not include the various other issues that
-   may be found in the above references:
-   
-    - it does not include any aspect of
-      https://bugzilla.gnome.org/show_bug.cgi?id=772726 (CVE-2016-9318
-      is applicable to that XXE discussion)
-   
-    - it does not include any vulnerabilities in the XML Security Library
-      (xmlsec), such as ones that are now, or previously were, listed at
-      https://github.com/lsh123/xmlsec/issues
-   
-    - it does not include any CWE-776 (Entity Expansion) issue fixed
-      in 6e09a25d9b4b7aa7a506853210a9a14100b8bc9b. The ID for this
-      CWE-776 problem in pysaml2 is CVE-2016-10149.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYgPg3AAoJEHb/MwWLVhi2P5kP/i5lCVmVMrE8LyRe7thLApfH
-i+T4cuyt3ydZOXJCWgirp5/jEKXhjA5FLMZNpo1J1iinkIW9gJeP3XgJcmaVRr1K
-iY/lKkf98Pcd5G1xNKurb+CqlE/wPYLT58pLxaolSVHj9oFPuhFfC/3ECMv8FKdV
-ealV3n7pQ/0CJCORqL/mVA30jGJblCVRWv9uNFAEXRSAvGnAzJbu3sCsc2zmWmtp
-aeJsgr7giNgNQX/nufUysm1t8xSH/1LQlwbRrEisn8pIgek4pjRa1jJyXs0WPb//
-tbrzL7maBVQJPIxLGID4dHMY3d33rkaeAHyfFc/nddzAP1REbamxOTDHnZdqWwAl
-uHSNhMpM+WSfiOl2khP0YID6mPNywbFXjHyGas70E2Cob9biwc4qdl94qz4x5VeI
-O1Iae59q829zwOZlo1PtYqX8d7X3DSuB4opXaZR3CT58pIg68Q7HfgFhppEEUPF3
-c+vdGNOIP6bTrqXraibMGya5IAYTZqmqg6Bjc+Kul+DGNFbnDD41OfcTin6PWFSt
-o1a3xVy6qJ0lQMC2QUvPXWNO4Q2SpnAQdTJv3A8rV6fg4bJ4d4vAeYmIO4xyyym0
-mszWpmX1CcpHd+HyN4bQsG7VpqX3k5M3DZWP0nDnKFPlhDxjTt69PfhCTP8MXdFi
-p3Dt50ewDtHBNqBWConl
-=jh5c
------END PGP SIGNATURE-----
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
