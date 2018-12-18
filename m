@@ -1,28 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/04/30/3
-Message-ID: <d7e924ef-f121-92b2-dcbd-3c03c88d9831@linux.com>
-Date: Tue, 1 May 2018 01:17:36 +0300
-From: Alexander Popov <alex.popov@...ux.com>
-To: Kurt Seifried <kseifried@...hat.com>, oss-security <oss-security@...ts.openwall.com>
-Cc: Kees Cook <keescook@...omium.org>, "Serge E. Hallyn" <serge@...lyn.com>, Brad Spengler <spender@...ecurity.net>, PaX Team <pageexec@...email.hu>, James Morris <jmorris@...ei.org>, "Reshetova, Elena" <elena.reshetova@...el.com>
-Subject: Re: Re: Linux Kernel Defence Map
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/18/7
+Message-ID: <CAFRnB2W1ggmiuz=3x3mrDBbkp2rQKWkAQUcuObmLM=xwv1Q-fQ@mail.gmail.com>
+Date: Tue, 18 Dec 2018 14:24:08 -0500
+From: Alex Gaynor <alex.gaynor@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: Cfir Cohen <cfir@...gle.com>
+Subject: Re: CVE-2018-16882 Kernel: KVM: nVMX: use after free in posted interrupt processing
 Content-Type: text/plain; charset=utf-8
 
-On 05.04.2018 02:55, Kurt Seifried wrote:
-> Please use a CWE identifier if one exists (https://cwe.mitre.org/), if one
-> doesn't exist perhaps we should have one (email me and I'm happy to help get
-> that ball rolling). Having a CWE not only helps categorize things correctly but
-> gives us something to point developers at for resources around flaws and how
-> they can be avoided/dealt with/etc. 
+Can you say more about why this is only a DoS? The commit message sounds
+(to someone with little domain expertise in KVM) like a fairly traditional
+pattern for an exploitable for code exec uaf.
 
-Hello Kurt,
+Cheers,
+Alex
 
-I've just added the corresponding CWE IDs to the vulnerability classes showed on
-the map: https://github.com/a13xp0p0v/linux-kernel-defence-map
+On Tue, Dec 18, 2018, 2:16 PM P J P <ppandit@...hat.com wrote:
 
-It think there is only one vuln class that misses a CWE ID -- Stack Depth
-Overflow. We currently have CWE-674 (Uncontrolled Recursion), but it doesn't
-cover the Stack Clash case, which also refers to Stack Depth Overflow.
+>    Hello,
+>
+> A use after free issue was found in the way Linux kernel's KVM hypervisor
+> processed posted interrupts, when nested(=1) virtualization is enabled. In
+> nested_get_vmcs12_pages(), in case of an error while processing posted
+> interrupt address, it unmaps the 'pi_desc_page' without resetting
+> 'pi_desc'
+> descriptor address. Which is latter used in pi_test_and_clear_on().
+>
+> A guest user/process could use this flaw to crash the host kernel
+> resulting in
+> DoS.
+>
+> Upstream patch:
+> ---------------
+>    -> https://marc.info/?l=kvm&m=154514994222809&w=2
+>
+> This issue was reported by Cfir Cohen of google.com.
+>
+> Thank you.
+> --
+> Prasad J Pandit / Red Hat Product Security Team
+> 47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+>
 
-Best regards,
-Alexander
