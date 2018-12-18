@@ -1,30 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/09/19/5
-Message-ID: <CAC1dCwV2-kTJKjNO1rV65bQrekkur7OWAu1x+pPRToRRYk=GPA@mail.gmail.com>
-Date: Wed, 19 Sep 2018 08:47:28 -0400
-From: Tim Allison <tallison@...che.org>
-To: announce@...che.org, dev@...a.apache.org, user@...a.apache.org,  Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com
-Subject: [CVE-2018-11762] Zip Slip Vulnerability in Apache Tika's tika-app
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/18/3
+Message-ID: <CAF2z-PPRVy+4CQkJ=Abm6__D0f3vTjGXcPH6OG0OiF-iBn0HAg@mail.gmail.com>
+Date: Tue, 18 Dec 2018 11:44:32 +0200
+From: saar amar <saaramar5@...il.com>
+To: P J P <ppandit@...hat.com>
+Cc: oss security list <oss-security@...ts.openwall.com>
+Subject: Re: CVE-2018-20124 QEMU: rdma: OOB access when building scatter-gather array
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-11762: Zip Slip Vulnerability in Apache Tika's tika-app
+Thanks all :) I'm happy it fixed, thanks for the response guys!
 
-Severity: Low
+I'm wondering why it says "DOS" and not "execute arbitrary code on the
+host, in the context of the QEMU process"? I have stack overflow, it pretty
+clear I could gain more than simple DOS:)
 
-Vendor:
-The Apache Software Foundation
+What do your day?
 
-Versions Affected:
-Apache Tika 0.9 to 1.18
+On Tue, 18 Dec 2018, 10:53 P J P <ppandit@...hat.com wrote:
 
-Description:
-In a rare edge case where a user does not specify an extract directory on
-the commandline (--extract-dir=) and the input file has an embedded file
-with an absolute path, such as "C:/evil.bat", tika-app would overwrite
-that file.
+>    Hello,
+>
+> An out-of-bound stack buffer r/w access issue was found in QEMU's generic
+> RDMA
+> back-end implementation. It could occur when a driver tries to build
+> scatter/gather element's array in build_host_sge_array() routine.
+>
+> A guest user/process could use this flaw to crash the QEMU process
+> resulting
+> in DoS.
+>
+> Upstream patch:
+> ---------------
+>    -> https://lists.gnu.org/archive/html/qemu-devel/2018-12/msg02822.html
+>
+> This issue was reported by Saar Amar.
+>
+> Thank you.
+> --
+> Prasad J Pandit / Red Hat Product Security Team
+> 47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+>
 
-Mitigation:
-Apache Tika users should upgrade to 1.19 or later
-
-Credit:
-This issue was discovered by Tim Allison on the Apache Tika team.
