@@ -1,66 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/30/1
-Message-ID: <12f804f3dfed1ca1b07316041f99e37a3a0b235f.camel@doppel-helix.eu>
-Date: Sun, 30 Dec 2018 13:48:52 +0100
-From: Matthias Bläsing <mblaesing@...pel-helix.eu>
-To: dev@...beans.apache.org
-Cc: announce@...beans.apache.org, Moritz Bechler <mbechler@...terphace.org>, security@...che.org, oss-security@...ts.openwall.com
-Subject: [CVE-2018-17191] Apache NetBeans 9.0 Proxy Auto-Configuration (PAC) interpretation is vulnerable for remote command execution (RCE)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/18/4
+Message-ID: <3810169.hn6iprp2Ks@overwatch>
+Date: Tue, 18 Dec 2018 12:14:00 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Cc: saar amar <saaramar5@...il.com>, P J P <ppandit@...hat.com>
+Subject: Re: Re: CVE-2018-20124 QEMU: rdma: OOB access when building scatter-gather array
 Content-Type: text/plain; charset=utf-8
 
-CVE-ID
-------
-CVE-2018-17191
+On martedì 18 dicembre 2018 10:44:32 CET saar amar wrote:
+> Thanks all  I'm happy it fixed, thanks for the response guys!
+> 
+> I'm wondering why it says "DOS" and not "execute arbitrary code on the
+> host, in the context of the QEMU process"? I have stack overflow, it pretty
+> clear I could gain more than simple DOS:)
+> 
+> What do your day?
 
-Summary
--------
-NetBeans Proxy Auto-Configuration (PAC) interpretation
-is vulnerable for remote command execution (RCE)
-
-Versions Affected: 
-------------------
-- Apache NetBeans (incubating) 9.0
-- NetBeans releases before the Apache transition started may be
-  also affected
-
-Description:
-------------
-To be vulnerable to the issue, the system running NetBeans needs to be
-configured to use Proxy Auto-Configuration (PAC), NetBeans must be
-configured to use the system proxy settings and the attacker needs to
-be able to modify the PAC script.
-
-Proxy Auto-Configuration (PAC) allows a proxy provider to provide the
-client with an automatic configuration of the proxy configuration. The
-configuration is not a static description, but JavaScript code, that
-calculates the proxy information based on the URL requested.
-
-Depending on the Java Version NetBeans is executed, two vectors exists:
-
-If the Java Version supports the Nashorn JavaScript engine, execution
-was sandboxed by limiting the classes accessible to the script. It was
-found, that, due to the vulnerability in the JRE, the sandbox can be
-circumvented. This allows arbitrary code to be executed in the context 
-of the NetBeans application.
-
-If the Java Version does not support Nashorn, a generic JavaScript
-engine was used, which is not further restricted. This allows execution
-of arbitrary code in the context of the NetBeans application.
-
-Mitigation:
------------
-
-The issue can be mitigated utilizing one of the following options:
-
-- Upgrade to Apache NetBeans 10.0
-- Disable Proxy Auto-Configuration for the whole OS
-  (please refer to the system documentation how to do that)
-- Disable "Use System Proxy Settings" in the NetBeans Options and
-  configure the Proxy to use manually
+Maybe because of the -fstack-protector* flag used by default in the build process.
 
 
-Credit:
--------
-The issue was identified by Moritz Bechler.
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
