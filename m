@@ -1,22 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/01/1
-Message-ID: <1517473830.3552.3.camel@redhat.com>
-Date: Thu, 01 Feb 2018 09:30:30 +0100
-From: Adam Maris <amaris@...hat.com>
-To: XinleiHe <hxl1999@...h.net>
-Cc: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: report a vulnerability in sfcb software.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/18/1
+Message-ID: <nycvar.YSQ.7.76.1812181418260.5773@xnncv>
+Date: Tue, 18 Dec 2018 14:20:49 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liq3ea@....com>
+Subject: CVE-2018-20191 QEMU: pvrdma: uar_read leads to NULL dereference
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 2018-01-31 at 22:44 +0800, XinleiHe wrote:
-> 
-> I want to apply a cve id for this vulnerabilty.
-> 
+   Hello,
 
-You can request CVE via https://cveform.mitre.org/
+A Null pointer dereference issue was found in QEMU's implementation of 
+VMWare's paravirtual RDMA device. It could occur while performing UAR read 
+operation, as it did not define a routine to handle it.
 
-Best Regards,
+A guest user/process could use this flaw to crash QEMU process on host, 
+resulting in DoS.
 
--- 
-Adam Mariš, Red Hat Product Security
-1CCD 3446 0529 81E3 86AF  2D4C 4869 76E7 BEF0 6BC2 
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2018-12/msg03066.html
+
+This issue was reported by Li Qiang.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
