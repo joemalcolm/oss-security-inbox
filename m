@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["793" "Friday" "29" "January" "2021" "09:57:45" "-0800" "Jihoon Son" "jihoonson@apache.org" "<CACZfFK5qhiaNND7Tsf4AKG=Jh9Nk4pHKSLKKCmZS7Au6pEgVqA@mail.gmail.com>" "20" "[oss-security] CVE-2021-25646: Authenticated users can override system configurations in their requests which allows them to execute arbitrary code." nil nil nil "1" "2021012917:57:45" "[oss-security] CVE-2021-25646: Authenticated users can override system configurations in their requests which allows them to execute arbitrary code." (number mark "U       jihoonson@ap Jan 29   20/793   " thread-indent "\"[oss-security] CVE-2021-25646: Authenticated users can override system configurations in their requests which allows them to execute arbitrary code.\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-25646: Authenticated users can override system configurations in their requests which allows them to execute arbitrary code." nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["497" "Wednesday" "19" "December" "2018" "10:55:55" "+0530" "P J P" "ppandit@redhat.com" "<nycvar.YSQ.7.76.1812191033330.13086@xnncv>" "14" "Re: [oss-security] CVE-2018-16882 Kernel: KVM: nVMX: use after free in posted interrupt processing" nil nil nil "12" "2018121905:25:55" "[oss-security] CVE-2018-16882 Kernel: KVM: nVMX: use after free in posted interrupt processing" (number mark "U       ppandit@redh Dec 19   14/497   " thread-indent "\"Re: [oss-security] CVE-2018-16882 Kernel: KVM: nVMX: use after free in posted interrupt processing\"\n") "<CAFRnB2W1ggmiuz=3x3mrDBbkp2rQKWkAQUcuObmLM=xwv1Q-fQ@mail.gmail.com>" ("<nycvar.YSQ.7.76.1812190041530.7329@xnncv>" "<CAFRnB2W1ggmiuz=3x3mrDBbkp2rQKWkAQUcuObmLM=xwv1Q-fQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11946 invoked by uid 550); 29 Jan 2021 18:01:28 -0000
+Received: (qmail 17585 invoked by uid 550); 19 Dec 2018 05:26:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,39 +12,33 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11500 invoked from network); 29 Jan 2021 17:58:23 -0000
-X-Gm-Message-State: AOAM530/dcvZuqW4T+bPpFL7X0mIfD8fz61MI+z43k0TSU577v3trpO4
-	ftcbPYzypYXyqkiuWKrUXDbHNLgjN7G3owQfj3U=
-X-Google-Smtp-Source: ABdhPJxq8RRpcpGKhVCfbXAE/SZzlZSOHzRQvrxPqKEKGBEvPuewvVn2OM4iG+1NMck3HyyGmGmp0U28Ak+3K51UOO0=
-X-Received: by 2002:a05:622a:248:: with SMTP id c8mr5169785qtx.122.1611943076118;
- Fri, 29 Jan 2021 09:57:56 -0800 (PST)
+Received: (qmail 17553 invoked from network); 19 Dec 2018 05:26:11 -0000
+Date: Wed, 19 Dec 2018 10:55:55 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@kaapi
+To: oss security list <oss-security@lists.openwall.com>
+cc: Cfir Cohen <cfir@google.com>, Alex Gaynor <alex.gaynor@gmail.com>
+In-Reply-To: <CAFRnB2W1ggmiuz=3x3mrDBbkp2rQKWkAQUcuObmLM=xwv1Q-fQ@mail.gmail.com>
+Message-ID: <nycvar.YSQ.7.76.1812191033330.13086@xnncv>
+References: <nycvar.YSQ.7.76.1812190041530.7329@xnncv> <CAFRnB2W1ggmiuz=3x3mrDBbkp2rQKWkAQUcuObmLM=xwv1Q-fQ@mail.gmail.com>
 MIME-Version: 1.0
-From: Jihoon Son <jihoonson@apache.org>
-Date: Fri, 29 Jan 2021 09:57:45 -0800
-X-Gmail-Original-Message-ID: <CACZfFK5qhiaNND7Tsf4AKG=Jh9Nk4pHKSLKKCmZS7Au6pEgVqA@mail.gmail.com>
-Message-ID: <CACZfFK5qhiaNND7Tsf4AKG=Jh9Nk4pHKSLKKCmZS7Au6pEgVqA@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] CVE-2021-25646: Authenticated users can override system
- configurations in their requests which allows them to execute arbitrary code.
+Content-Type: text/plain; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.13
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.32]); Wed, 19 Dec 2018 05:25:59 +0000 (UTC)
+Subject: Re: [oss-security] CVE-2018-16882 Kernel: KVM: nVMX: use after free
+ in posted interrupt processing
 
-Description:
+  Hello Alex,
 
-Apache Druid includes the ability to execute user-provided JavaScript
-code embedded in various types of requests. This functionality is
-intended for use in high-trust environments, and is disabled by
-default. However, in Druid 0.20.0 and earlier, it is possible for an
-authenticated user to send a specially-crafted request that forces
-Druid to run user-provided JavaScript code for that request,
-regardless of server configuration. This can be leveraged to execute
-code on the target machine with the privileges of the Druid server
-process.
++-- On Tue, 18 Dec 2018, Alex Gaynor wrote --+
+| Can you say more about why this is only a DoS? The commit message sounds (to 
+| someone with little domain expertise in KVM) like a fairly traditional 
+| pattern for an exploitable for code exec uaf.
 
-Mitigation:
+That's right, it does have potential for more misuse, though it may not be as 
+easy. I missed to mention that earlier.
 
-Users should upgrade to Druid 0.20.1. Whenever possible, network
-access to cluster machines should be restricted to trusted hosts only.
-
-Credit:
-
-This issue was discovered by Litch1 from the Security Team of Alibaba Cloud.
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
