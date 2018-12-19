@@ -1,22 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/10/8
-Message-ID: <11222d94-037d-b88a-846a-24f08ee334ef@oracle.com>
-Date: Wed, 10 Oct 2018 08:46:05 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com, Hanno Böck <hanno@...eck.de>
-Subject: Re: ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/19/4
+Message-ID: <nycvar.YSQ.7.76.1812191328500.14650@xnncv>
+Date: Wed, 19 Dec 2018 13:31:27 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liq3ea@....com>
+Subject: CVE-2018-20126 QEMU: pvrdma: memory leakage when creating cq/qp
 Content-Type: text/plain; charset=utf-8
 
-On 10/10/18 05:53 AM, Hanno Böck wrote:
-> Nautilus is trying to solve this by sandboxing the thumbnailers.
-> However this depends on bubblewrap and is currently fail-open, i.e. if
-> bubblewrap is not available it will not disable the thumbnailing, it
-> will just not sandbox it. In practice this means it's often not
-> sandboxed. I doubt this will change any time soon.
+   Hello,
 
-And bubblewrap is very specific to running on a Linux kernel, so users
-of GNOME on top of other kernels are also left unprotected by it.
+A memory leakage issue was found in QEMU's implementation of VMWare's 
+paravirtual RDMA device. It could occur while creating CQ/QP ring objects in 
+create_cq/qp() routines, as it did not free ring objects' memory in case of an 
+error.
 
--- 
-	-Alan Coopersmith-               alan.coopersmith@...cle.com
-	 Oracle Solaris Engineering - https://blogs.oracle.com/alanc
+A guest user/process could use this flaw to leak host memory resulting in DoS.
+
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2018-12/msg02824.html
+
+This issue was reported by Li Qiang.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
