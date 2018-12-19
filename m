@@ -1,57 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/06/26/3
-Message-ID: <CAG_fn=UCp-bw7312gxmSP8d1ioYr1YBmOuSiSsJKCvJakzHS4A@mail.gmail.com>
-Date: Tue, 26 Jun 2018 15:45:57 +0200
-From: Alexander Potapenko <glider@...gle.com>
-To: Vladis Dronov <vdronov@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2018-1000204: Linux kernel 3.18 to 4.16 infoleak due to incorrect handling of SG_IO ioctl
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/19/6
+Message-ID: <def14c75-4133-0d9c-cef6-e2256a826bdd@isc.org>
+Date: Wed, 19 Dec 2018 11:14:18 -0500
+From: ISC Security Officer <security-officer@....org>
+To: oss-security@...ts.openwall.com
+Cc: "security-officer@....org" <security-officer@....org>
+Subject: Additional context information about RedHat's announcement of CVE-2018-5742
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jun 22, 2018 at 3:32 PM Vladis Dronov <vdronov@...hat.com> wrote:
->
-> Hello, Alexander,
-Hi Vladis,
-> Could you please, explain, why do you think CVE-2018-1000204 is a security
-> flaw?
->
-> > The problem has limited scope, as users don't usually have permissions
-> > to access SCSI devices. On the other hand, e.g. the Nero user manual
-> > suggests doing `chmod o+r+w /dev/sg*` to make the devices accessible.
->
-> There is a check in the kernel in sg_build_indirect() exactly for this
-> situation:
->
->         [drivers/scsi/sg.c]
->         if (!capable(CAP_SYS_ADMIN) || !capable(CAP_SYS_RAWIO))
->                 gfp_mask |= __GFP_ZERO;
-Yes, you're right. It appears unlikely that a user has both
-CAP_SYS_ADMIN and CAP_SYS_RAWIO.
+Hello --
 
-> This means non-root user will get zero-ed pages even if it has o+rw access
-> to /dev/sg*. Tests of your reproducer on systems available to me confirm
-> this, i.e. non-root user gets a zero-ed out buffer even if it is able to
-> access /dev/sg*.
->
-> I may not got smth correctly, but for now I do not see CVE-2018-1000204
-> as a security flaw and I believe a reject request to MITRE should be
-> issued.
-How do I proceed with this?
->
-> Best regards,
-> Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+Internet Systems Consortium would like to provide packagers and
+redistributors of our software some additional context concerning
+CVE-2018-5742, which was announced yesterday by RedHat, affecting
+some BIND packages in RedHat and CentOS.
 
-Thank you,
+Their disclosure of the issue can be found via this page:
 
+  https://access.redhat.com/security/cve/cve-2018-5742
 
--- 
-Alexander Potapenko
-Software Engineer
+and more information can be found in their respective bug trackers:
 
-Google Germany GmbH
-Erika-Mann-Straße, 33
-80636 München
+  https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2018-5742
+  https://bugs.centos.org/view.php?id=15528
 
-Geschäftsführer: Paul Manicle, Halimah DeLaine Prado
-Registergericht und -nummer: Hamburg, HRB 86891
-Sitz der Gesellschaft: Hamburg
+The RedHat announcement is understandably focused mostly on the
+impact to customers using their packages, but because some of the
+other subscribers to this list distribute their own packages that
+are based on BIND we thought it might be helpful to provide some
+additional information about this CVE.
+
+1)  The issue does not exist in any of the BIND source packages
+    provided directly by ISC.
+
+2)  We have worked with RedHat to determine the root cause of
+    CVE-2018-5742 and have concluded that it was introduced
+    accidentally while backporting the Negative Trust Anchor (NTA)
+    feature to a branch of BIND prior to when it was introduced
+    in the upstream (ISC) version.  We would therefore advise
+    any other packagers who have backported NTA to the BIND 9.9
+    or 9.10 codebase that they might want to investigate to see whether
+    they have similarly introduced a vulnerability in their code.
+    If you find that you have done so, please contact
+    security-officer@....org, as ISC are the CVE Numbering Authority
+    for BIND and we will need to be included in the discussion
+    as to whether any such vulnerabilities fall under CVE-2018-5742
+    or require a separate CVE ID assignment.
+
+If you are distributing BIND packages and have further questions
+we will do our best to answer them.
+
+Michael McNally
+(as ISC Security Officer)
