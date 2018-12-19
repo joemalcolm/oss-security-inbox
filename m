@@ -1,27 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/01/1
-Message-ID: <nycvar.YSQ.7.76.1811011151230.336@xnncv>
-Date: Thu, 1 Nov 2018 11:56:28 +0530 (IST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/19/3
+Message-ID: <nycvar.YSQ.7.76.1812191250250.14650@xnncv>
+Date: Wed, 19 Dec 2018 12:52:06 +0530 (IST)
 From: P J P <ppandit@...hat.com>
 To: oss security list <oss-security@...ts.openwall.com>
-cc: ameya.more@...cle.com
-Subject: CVE-2018-18849 Qemu: lsi53c895a: OOB msg buffer access leads to DoS
+cc: Li Qiang <liq3ea@....com>
+Subject: CVE-2018-20125 QEMU: pvrdma: null dereference or excessive memory allocation when creating QP/CQ
 Content-Type: text/plain; charset=utf-8
 
    Hello,
 
-An out of bounds memory access issue was found in the LSI53C895A SCSI Host Bus 
-Adapter emulation while writing a message in lsi_do_msgin. It could occur 
-during migration if the 'msg_len' field has an invalid value.  A user/process 
-could use this flaw to crash the Qemu process resulting in DoS.
+A Null pointer dereference issue was found in QEMU's implementation of 
+VMWare's paravirtual RDMA device. It could occur while creating CQ/QP ring 
+objects in pvrdma_ring_init() routine.
+
+A guest user/process could use this flaw to crash QEMU process or allocate 
+excessive memory on host resulting in DoS.
 
 Upstream patch:
 ---------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2018-10/msg06682.html
+   -> https://lists.gnu.org/archive/html/qemu-devel/2018-12/msg02823.html
 
-This issue was discovered by dejavusecurity.com and reported by Oracle.com.
-
-CVE assigned via -> https://cveform.mitre.org/
+This issue was reported by Li Qiang.
 
 Thank you.
 --
