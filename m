@@ -1,4 +1,9 @@
-Received: (qmail 11487 invoked by uid 550); 27 Feb 2026 00:40:01 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["569" "Wednesday" "19" "December" "2018" "19:46:03" "+0100" "=?UTF-8?B?R8OpemFwZXRpIENzZWg=?=" "gezapeti@apache.org" "<CAHydKRCdXAepr6pjqqXUSWhSnnRrrYKnNSQVjsX6V2JTvM1xNA@mail.gmail.com>" "23" "[oss-security] [CVE-2018-11799] Apache Oozie security vulnerability" nil nil nil "12" "2018121918:46:03" "[oss-security] [CVE-2018-11799] Apache Oozie security vulnerability" (number mark "U       gezapeti@apa Dec 19   23/569   " thread-indent "\"[oss-security] [CVE-2018-11799] Apache Oozie security vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 23909 invoked by uid 550); 19 Dec 2018 18:47:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,42 +12,43 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 31779 invoked from network); 26 Feb 2026 19:20:59 -0000
-From: "Lyndon Nerenberg (VE7TFX/VE6BBM)" <lyndon@orthanc.ca>
-To: oss-security@lists.openwall.com, Albert Veli <albert.veli@gmail.com>
-In-reply-to: <4459c96c-dabb-4bd8-882c-1f9495972a51@gmail.com>
-References: <CAB1hGqQwnSzEqtrefwqAxD+rWGu_EXVDmu-btMrNYqMzkzc9Kw@mail.gmail.com> <20260206172730.GA12303@unix-ag.uni-kl.de> <877bso8mhf.fsf@josefsson.org> <20260224011702.27987-1-justin.swartz@risingedge.co.za> <B72B4221-75D0-4C28-840F-9CF7B1A53E66.1@smtp-inbound1.duck.com> <27E138FE-A205-4EDD-9A9B-1F84BFAEC100.1@smtp-inbound1.duck.com> <20260224203337.GA17345@openwall.com> <a0bad9ebbf4507c4@orthanc.ca> <CAA748E8-86CC-4C46-AD03-319F6690252B.1@smtp-inbound1.duck.com> <4A24F620-6FA6-4F2B-A1F9-B4781E391989.1@smtp-inbound1.duck.com> <a0bae10a8982d3e5@orthanc.ca> <4459c96c-dabb-4bd8-882c-1f9495972a51@gmail.com>
-Comments: In-reply-to Albert Veli <albert.veli@gmail.com>
-   message dated "Thu, 26 Feb 2026 09:30:07 +0100."
+Received: (qmail 23598 invoked from network); 19 Dec 2018 18:46:44 -0000
+X-Gm-Message-State: AA+aEWbAwdd1fyrmi2OBugJ1KoG8V9pNBrQPNxsPx39MSlC1hzvLN6jG
+	rm2SlgOtzJvgiKAQCbxPdKnVYPHcypPoeColNDI=
+X-Google-Smtp-Source: AFSGD/VgUCwpAIEc25REzpO5xPCT3gPyYVNwl5wpJYokD44PDoEIcbs3famM4xYNzWYUe/a7YT2tuy8OztQerHjcnxc=
+X-Received: by 2002:ad4:41d0:: with SMTP id a16mr22685088qvq.55.1545245190484;
+ Wed, 19 Dec 2018 10:46:30 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-ID: <24171.1772133645.1@orthanc.ca>
-Date: Thu, 26 Feb 2026 11:20:45 -0800
-Message-ID: <a0bae914813cc517@orthanc.ca>
-Subject: Re: [oss-security] Telnetd Vulnerability Report
+From: =?UTF-8?Q?G=C3=A9zapeti_Cseh?= <gezapeti@apache.org>
+Date: Wed, 19 Dec 2018 19:46:03 +0100
+X-Gmail-Original-Message-ID: <CAHydKRCdXAepr6pjqqXUSWhSnnRrrYKnNSQVjsX6V2JTvM1xNA@mail.gmail.com>
+Message-ID: <CAHydKRCdXAepr6pjqqXUSWhSnnRrrYKnNSQVjsX6V2JTvM1xNA@mail.gmail.com>
+To: user@oozie.apache.org
+Cc: dev@oozie.apache.org, private@oozie.apache.org, 
+	oss-security@lists.openwall.com, satishsaley@apache.org
+Content-Type: multipart/alternative; boundary="000000000000ab77c3057d646ee8"
+Subject: [oss-security] [CVE-2018-11799] Apache Oozie security vulnerability
 
-Albert Veli writes:
+--000000000000ab77c3057d646ee8
+Content-Type: text/plain; charset="UTF-8"
 
-> I agree to this, but I can add that telnet remains widely used for login 
-> in OT (Operational Technology) environments, including sites running 
-> critical infrastructure. While operators often justify this by relying 
-> on network isolation, this reasoning breaks down the moment the air gap 
-> is bridged.
+CVE-2018-11799: Apache Oozie security vulnerability
 
-True, but I suspect that many of those implementations are running
-in firmware that has been long abandonded.  So if you are going to
-craft a CVE on this, how do you address those legacy systems?  Or
-should a CVE even be written for them, if there is no hope of ever
-updating the code?
+Severity:  8.7 (High) (CVSS:3.0/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:N)
 
-We have to accept that there are cases where the problem simply
-cannot be fixed.  At best we can identify them, and warn users of
-that gear that they have an unrepairable vulnerability that must
-be addresses independtly.  It boils down to "identify and warn."
+Vendor: The Apache Software Foundation
 
-It's important to not get caught up on unsolvable problems.  An
-awful lot of time gets burned up trying to solve things that can't
-be.
+Versions Affected: Oozie versions earlier than 5.1.0
 
---lyndon
+Description: A malicious user can construct an XML that results workflows
+running in other user's name.
+
+Mitigation: Upgrade to Apache Oozie 5.1.0
+
+Credit: This issue was discovered by
+
+*Satish Subhashrao Saley at Oath / Yahoo!*
+
+Gezapeti Cseh
+
+--000000000000ab77c3057d646ee8--
