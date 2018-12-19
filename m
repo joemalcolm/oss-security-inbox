@@ -1,44 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/02/2
-Message-ID: <20181002160713.GE23872@arm.com>
-Date: Tue, 2 Oct 2018 17:07:14 +0100
-From: Will Deacon <will.deacon@....com>
-To: oss-security@...ts.openwall.com
-Cc: marc.zyngier@....com
-Subject: arm64 Linux kernel: Privilege escalation by taking control of the KVM hypervisor
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/19/7
+Message-ID: <CAHydKRCdXAepr6pjqqXUSWhSnnRrrYKnNSQVjsX6V2JTvM1xNA@mail.gmail.com>
+Date: Wed, 19 Dec 2018 19:46:03 +0100
+From: Gézapeti Cseh <gezapeti@...che.org>
+To: user@...ie.apache.org
+Cc: dev@...ie.apache.org, private@...ie.apache.org,  oss-security@...ts.openwall.com, satishsaley@...che.org
+Subject: [CVE-2018-11799] Apache Oozie security vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+CVE-2018-11799: Apache Oozie security vulnerability
 
-Whilst reviewing some proposed arm64 KVM changes, it became apparent that
-the sanity checking for the KVM_SET_ON_REG ioctl() on arm64 does not
-correctly handle a number of cases:
+Severity:  8.7 (High) (CVSS:3.0/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:N)
 
-	- Unaligned register accesses and accesses that span multiple
-	  registers can bypass PSTATE sanity checking
+Vendor: The Apache Software Foundation
 
-	- The PSTATE sanity checking fails to take into account the
-	  capabilities of the physical CPU, or the configuration of
-	  the virtual CPU
+Versions Affected: Oozie versions earlier than 5.1.0
 
-This allows an attacker with permission to create KVM-based virtual machines
-to both panic the hypervisor by triggering an illegal exception return
-(resulting in a DoS) and to redirect execution elsewhere within the
-hypervisor with full register control, instead of causing a return to the
-guest.
+Description: A malicious user can construct an XML that results workflows
+running in other user's name.
 
-This has been fixed by upstream commits:
+Mitigation: Upgrade to Apache Oozie 5.1.0
 
-d26c25a9d19b ("arm64: KVM: Tighten guest core register access from userspace")
-2a3f93459d68 ("arm64: KVM: Sanitize PSTATE.M when being set from userspace")
+Credit: This issue was discovered by
 
-which are being backported and applied to all active -stable kernels.
+*Satish Subhashrao Saley at Oath / Yahoo!*
 
-32-bit Arm is unaffected by this issue.
+Gezapeti Cseh
 
-There has not yet been a CVE requested for this (mainly because I don't know
-how to do it).
-
-Thanks,
-
-Will
