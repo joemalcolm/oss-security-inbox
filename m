@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["339" "Monday" "10" "October" "2016" "14:55:16" "+0200" "Szabolcs Nagy" "nsz@port70.net" "<20161010125516.GL28065@port70.net>" "6" "Re: [oss-security] fd.o #98157: dbus format string vulnerability fixed in 1.10.12" nil nil nil "10" "2016101012:55:16" "[oss-security] fd.o #98157: dbus format string vulnerability fixed in 1.10.12" (number mark "U       nsz@port70.n Oct 10    6/339   " thread-indent "\"Re: [oss-security] fd.o #98157: dbus format string vulnerability fixed in 1.10.12\"\n") "<20161010121518.tnvomatyp65fwoyz@perpetual.pseudorandom.co.uk>" ("<20161010121518.tnvomatyp65fwoyz@perpetual.pseudorandom.co.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["540" "Wednesday" "19" "December" "2018" "12:49:47" "+0530" "P J P" "ppandit@redhat.com" "<nycvar.YSQ.7.76.1812191246500.14650@xnncv>" "19" "[oss-security] CVE-2018-20216 QEMU: pvrdma: infinite loop in pvrdma_qp_send/recv" nil nil nil "12" "2018121907:19:47" "[oss-security] CVE-2018-20216 QEMU: pvrdma: infinite loop in pvrdma_qp_send/recv" (number mark "U       ppandit@redh Dec 19   19/540   " thread-indent "\"[oss-security] CVE-2018-20216 QEMU: pvrdma: infinite loop in pvrdma_qp_send/recv\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15991 invoked by uid 550); 10 Oct 2016 13:31:50 -0000
+Received: (qmail 32171 invoked by uid 550); 19 Dec 2018 07:20:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,24 +12,35 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19512 invoked from network); 10 Oct 2016 12:55:28 -0000
-Date: Mon, 10 Oct 2016 14:55:16 +0200
-From: Szabolcs Nagy <nsz@port70.net>
-To: oss-security@lists.openwall.com
-Message-ID: <20161010125516.GL28065@port70.net>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <20161010121518.tnvomatyp65fwoyz@perpetual.pseudorandom.co.uk>
+Received: (qmail 32153 invoked from network); 19 Dec 2018 07:20:07 -0000
+Date: Wed, 19 Dec 2018 12:49:47 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@kaapi
+To: oss security list <oss-security@lists.openwall.com>
+cc: Li Qiang <liq3ea@163.com>
+Message-ID: <nycvar.YSQ.7.76.1812191246500.14650@xnncv>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20161010121518.tnvomatyp65fwoyz@perpetual.pseudorandom.co.uk>
-User-Agent: Mutt/1.6.0 (2016-04-01)
-Subject: Re: [oss-security] fd.o #98157: dbus format string vulnerability
- fixed in 1.10.12
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.31]); Wed, 19 Dec 2018 07:19:55 +0000 (UTC)
+Subject: [oss-security] CVE-2018-20216 QEMU: pvrdma: infinite loop in pvrdma_qp_send/recv
 
-* Simon McVittie <smcv@debian.org> [2016-10-10 13:15:18 +0100]:
-> Please reference fd.o #98157 or
-> <https://bugs.freedesktop.org/show_bug.cgi?id=98157> in any notices
-> that refer to this vulnerability.
+   Hello,
 
-"You are not authorized to access bug #98157. To see this bug, you must first log in to an account with the appropriate permissions."
+An infinite loop issue was found in QEMU's implementation of VMWare's 
+paravirtual RDMA device. It could occur while transferring QP ring objects' 
+data in pvrdma_qp_send/recv functions.
+
+A guest user/process could use this flaw to cause infinite loop resulting in 
+DoS.
+
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2018-12/msg03052.html
+
+This issue was reported by Li Qiang.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
