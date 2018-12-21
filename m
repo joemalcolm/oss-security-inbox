@@ -1,31 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/11/20/1
-Message-ID: <nycvar.YSQ.7.76.1811201647270.17923@xnncv>
-Date: Tue, 20 Nov 2018 16:51:28 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Greg Kurz <groug@...d.org>, zhibin hu <noirfate@...il.com>
-Subject: CVE-2018-19364 Qemu: 9pfs: Use-after-free due to race condition while updating fid path
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/21/1
+Message-ID: <20181221214706.GA21869@eldamar.local>
+Date: Fri, 21 Dec 2018 22:47:06 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: sqlite: CVE-2018-20346: integer overflow (resulting in buffer overflow) for FTS3 queries
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Hi
 
-A use-after-free flaw was found in the VirtFS, host directory sharing via Plan 
-9 File System(9pfs) support in QEMU. It could occur due to a race condition in 
-updating fid path in worker threads via v9fs_path_copy(), while accessing 
-files on a shared host directory.
+MITRE has assigned CVE-2018-20346 for the "Magellan" called vulnerabilities.
+The description in the CVE database reads as:
 
-A user inside guest could use this flaw to crash the QEMU process resulting in 
-DoS issue.
+> SQLite before 3.25.3, when the FTS3 extension is enabled, encounters
+> an integer overflow (and resultant buffer overflow) for FTS3 queries
+> that occur after crafted changes to FTS3 shadow tables, allowing
+> remote attackers to execute arbitrary code by leveraging the ability
+> to run arbitrary SQL statements (such as in certain WebSQL use cases),
+> aka Magellan.
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2018-11/msg01139.html
-   -> https://lists.gnu.org/archive/html/qemu-devel/2018-11/msg02795.html
+below some references for the issue:
 
-This issue was reported by Zhibin hu.
+https://bugzilla.redhat.com/show_bug.cgi?id=1659379
+https://bugzilla.redhat.com/show_bug.cgi?id=1659677
+https://www.mail-archive.com/sqlite-users@mailinglists.sqlite.org/msg113218.html
+https://blade.tencent.com/magellan/index_en.html
+https://chromereleases.googleblog.com/2018/12/stable-channel-update-for-desktop.html
+https://crbug.com/900910
+https://chromium.googlesource.com/chromium/src/+/c368e30ae55600a1c3c9cb1710a54f9c55de786e
+https://www.sqlite.org/releaselog/3_25_3.html
+https://access.redhat.com/articles/3758321
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Salvatore
