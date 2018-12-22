@@ -1,38 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/10/09/6
-Message-ID: <CAJ_zFkJZ1E-Wsrp92mvHL6TFmChPECbRsN+JGngqENKHCmALAA@mail.gmail.com>
-Date: Tue, 9 Oct 2018 10:11:34 -0700
-From: Tavis Ormandy <taviso@...gle.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/22/2
+Message-ID: <CAC1dCwWhYmbkxAvFKgGSFd_ffp5EeCimB2gBXTo+9-F7v6TSNQ@mail.gmail.com>
+Date: Sat, 22 Dec 2018 10:28:14 -0500
+From: Tim Allison <tallison@...che.org>
+To: announce@...che.org, dev@...a.apache.org, user@...a.apache.org,  Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com
+Subject: [CVE-2018-17197] Apache Tika Denial of Service -- Infinite Loop in Tika's SQLite3Parser
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 9, 2018 at 9:53 AM Leonid Isaev <leonid.isaev@...a.colorado.edu>
-wrote:
+[CVE-2018-17197] Apache Tika Denial of Service -- Infinite Loop in
+Tika's SQLite3Parser
 
-> On Tue, Oct 09, 2018 at 06:58:39AM -0700, Tavis Ormandy wrote:
-> > Full working exploit that works in the last few versions is attached,
-> > viewing it in evince, imagemagick, gimp, okular, etc should add a line to
-> > ~/.bashrc.
->
-> Add zathura to the above list :)
->
-> > p.s. plz can we deprecate untrusted postscript :(
->
-> Which means any postscript file downloaded from the internet... Then how
-> should
-> people read arXiv.org, for example?
+Severity: Medium
+
+Vendor: The Apache Software Foundation
+
+Versions Affected: Apache Tika 1.8 to 1.19.1
+
+Description:
+A carefully crafted or corrupt sqlite file can cause an infinite loop
+in Apache Tika's SQLite3Parser in versions 1.8-1.19.1 of Apache Tika.
 
 
-I think we should encourage switching to other document formats that we
-have a better handle on securing. If you do need untrusted ps, I think
-treating it the same as shell script file you downloaded from the internet.
+Mitigation:
+Apache Tika users should upgrade to 1.20 or later.
 
-I mean, technically there's a bash restricted mode and python rexec, but
-you probably wouldn't run it on random things you just downloaded.
 
-gs -dSAFER and bash -r are useful features, but I think ever invoking them
-automatically without prompts about trust, etc, is just asking for trouble.
-
-Tavis.
-
+Credit:
+This issue was discovered by Tim Allison on the Apache Tika Team.
