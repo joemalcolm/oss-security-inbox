@@ -1,87 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/19/1
-Message-ID: <CAFFEDumqMVU0RAi42pg-=25-dJOsngZvxyA4NHzisBzH_3vAEA@mail.gmail.com>
-Date: Sun, 18 Mar 2018 21:36:45 -0700
-From: Fernando Perez <Fernando.Perez@...keley.edu>
-To: Thomas Kluyver <takowl@...il.com>
-Cc: Salvatore Bonaccorso <carnil@...ian.org>, oss-security@...ts.openwall.com,  security <security@...thon.org>, MinRK <benjaminrk@...il.com>, jkamens@...ntopian.com,  Scott Sanderson <ssanderson@...ntopian.com>
-Subject: Re: CVE request: maliciously crafted notebook files in Jupyter
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/23/1
+Message-ID: <20181223085704.20c253af@computer>
+Date: Sun, 23 Dec 2018 08:57:04 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Use after free in syslog-ng / affile_dw_reap()
 Content-Type: text/plain; charset=utf-8
 
-A huge thanks to the Quantopian team, Thomas and everyone else who worked
-to bring this to a quick resolution.
+Hi,
 
-I was really impressed by the response and quick collaboration from all
-parties.
+The recently released syslog-ng 3.19.1 fixes a use after free bug.
 
-Best,
+ASAN error:
+==7538==ERROR: AddressSanitizer: heap-use-after-free on address 0x612000007770 at pc 0x7fc3a89069c8 bp 0x7ffd8099afd0 sp 0x7ffd8099afc0
+READ of size 8 at 0x612000007770 thread T0
+    #0 0x7fc3a89069c7 in affile_dw_reap modules/affile/affile-dest.c:140
+    #1 0x7fc3ac21f563 in iv_run_timers /var/tmp/portage/dev-libs/ivykis-0.42.3-r1/work/ivykis-0.42.3/src/iv_timer.c:119
+    #2 0x7fc3ac22703f in iv_main /var/tmp/portage/dev-libs/ivykis-0.42.3-r1/work/ivykis-0.42.3/src/iv_main_posix.c:98
+    #3 0x7fc3adf1e6d4 in main_loop_run lib/mainloop.c:580
+    #4 0x401ef7 in main syslog-ng/main.c:307
+    #5 0x7fc3ad45fb9d in __libc_start_main (/lib64/libc.so.6+0x21b9d)
+    #6 0x4021b9 in _start (/usr/sbin/syslog-ng+0x4021b9)
 
-f
 
-On Sun, Mar 18, 2018 at 12:59 AM, Thomas Kluyver <takowl@...il.com> wrote:
+I reported this a while ago [1] and learned that this was already known
+and fixed, but not released yet [2].
 
-> Thanks Salvatore. Devdatta Akhawe filled in the form on my behalf, and
-> we've now been assigned CVE-2018-8768.
->
-> I'm going to merge the fix now and start the release process for 5.4.1.
->
-> Thomas
->
->
-> On 17 March 2018 at 14:05, Salvatore Bonaccorso <carnil@...ian.org> wrote:
->
->> Hi,
->>
->> On Thu, Mar 15, 2018 at 01:55:59PM +0000, Thomas Kluyver wrote:
->> > Email address of requester: security@...thon.org, thomas@...yver.me.uk,
->> benjaminrk@...il.com, jkamens@...ntopian.com, ssanderson@...ntopian.com
->> >
->> > Software name: Jupyter Notebook (formerly IPython Notebook)
->> > Type of vulnerability: Maliciously forged file
->> > Attack outcome: Possible remote execution
->> >
->> > Vulnerability: A maliciously forged notebook file can bypass
->> sanitization to execute Javascript in the notebook context. Specifically,
->> invalid HTML is 'fixed' by jQuery after sanitization, making it dangerous.
->> >
->> > Affected versions:
->> >
->> > - notebook ≤ 5.4.0
->> >
->> > URI with issues:
->> >
->> > - GET /notebook/**
->> >
->> > Patches:  not yet finalised
->> >
->> > Mitigations:
->> >
->> > Upgrade to Jupyter notebook 5.4.1 or 5.5 once available.
->> > If using pip,
->> >
->> >     pip install --upgrade notebook
->> >
->> > For conda:
->> >
->> >     conda update conda
->> >     conda update notebook
->> >
->> > Vulnerability reported by vkgonka@...l.ru , via Jonathan Kamens at
->> Quantopian
->>
->> Thanks for the headsup.
->>
->> This reply is mainly for this other purpose: It looks you wanted to
->> have a CVE assigned trough this reply to the list. CVE's cannot
->> anymore be requested via the oss-security list. If you want to request
->> one please have a look at https://cveform.mitre.org/
->>
->> Once you have the CVE assigned, can you please loop back the
->> assignement in this thread?
->>
->> Regards,
->> Salvatore
->>
->
->
 
+[1] https://github.com/balabit/syslog-ng/issues/2454
+[2] https://github.com/balabit/syslog-ng/pull/2418
+
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
