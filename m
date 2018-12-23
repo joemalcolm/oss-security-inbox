@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["507" "Wednesday" "7" "December" "2016" "00:46:26" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1612070035380.7820@wniryva>" "17" "[oss-security] CVE request: Qemu: usb: ehci: memory leakage in ehci_init_transfer" nil nil nil "12" "2016120619:16:26" "[oss-security] CVE request: Qemu: usb: ehci: memory leakage in ehci_init_transfer" (number mark "U       ppandit@redh Dec  7   17/507   " thread-indent "\"[oss-security] CVE request: Qemu: usb: ehci: memory leakage in ehci_init_transfer\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1154" "Sunday" "23" "December" "2018" "08:57:04" "+0100" "Hanno =?iso-8859-1?Q?B=F6ck?=" "hanno@hboeck.de" "<20181223085704.20c253af@computer>" "32" "[oss-security] Use after free in syslog-ng / affile_dw_reap()" nil nil nil "12" "2018122307:57:04" "[oss-security] Use after free in syslog-ng / affile_dw_reap()" (number mark "U       hanno@hboeck Dec 23   32/1154  " thread-indent "\"[oss-security] Use after free in syslog-ng / affile_dw_reap()\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30337 invoked by uid 550); 6 Dec 2016 19:16:45 -0000
+Received: (qmail 3147 invoked by uid 550); 23 Dec 2018 07:57:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,33 +12,46 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30316 invoked from network); 6 Dec 2016 19:16:44 -0000
-Date: Wed, 7 Dec 2016 00:46:26 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@javelin
-To: oss security list <oss-security@lists.openwall.com>
-cc: Li Qiang <liq3ea@gmail.com>
-Message-ID: <alpine.LFD.2.20.1612070035380.7820@wniryva>
+Received: (qmail 3115 invoked from network); 23 Dec 2018 07:57:23 -0000
+Date: Sun, 23 Dec 2018 08:57:04 +0100
+From: Hanno =?iso-8859-1?q?B=F6ck?= <hanno@hboeck.de>
+To: oss-security@lists.openwall.com
+Message-ID: <20181223085704.20c253af@computer>
+X-Mailer: Claws Mail 3.17.2 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.32]); Tue, 06 Dec 2016 19:16:32 +0000 (UTC)
-Subject: [oss-security] CVE request: Qemu: usb: ehci: memory leakage in ehci_init_transfer
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] Use after free in syslog-ng / affile_dw_reap()
 
-   Hello,
+Hi,
 
-Quick Emulator(Qemu) built with the USB EHCI Emulation support is vulnerable 
-to a memory leakage issue. It could occur while processing packet data in 
-'ehci_init_transfer'.
+The recently released syslog-ng 3.19.1 fixes a use after free bug.
 
-A guest user/process could use this issue to leak host memory, resulting in 
-DoS for a host.
+ASAN error:
+=3D=3D7538=3D=3DERROR: AddressSanitizer: heap-use-after-free on address 0x6=
+12000007770 at pc 0x7fc3a89069c8 bp 0x7ffd8099afd0 sp 0x7ffd8099afc0
+READ of size 8 at 0x612000007770 thread T0
+    #0 0x7fc3a89069c7 in affile_dw_reap modules/affile/affile-dest.c:140
+    #1 0x7fc3ac21f563 in iv_run_timers /var/tmp/portage/dev-libs/ivykis-0.4=
+2.3-r1/work/ivykis-0.42.3/src/iv_timer.c:119
+    #2 0x7fc3ac22703f in iv_main /var/tmp/portage/dev-libs/ivykis-0.42.3-r1=
+/work/ivykis-0.42.3/src/iv_main_posix.c:98
+    #3 0x7fc3adf1e6d4 in main_loop_run lib/mainloop.c:580
+    #4 0x401ef7 in main syslog-ng/main.c:307
+    #5 0x7fc3ad45fb9d in __libc_start_main (/lib64/libc.so.6+0x21b9d)
+    #6 0x4021b9 in _start (/usr/sbin/syslog-ng+0x4021b9)
 
-Upstream patch:
----------------
-   -> http://git.qemu.org/?p=qemu.git;a=commitdiff;h=791f97758e223de3290592d169f
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+I reported this a while ago [1] and learned that this was already known
+and fixed, but not released yet [2].
+
+
+[1] https://github.com/balabit/syslog-ng/issues/2454
+[2] https://github.com/balabit/syslog-ng/pull/2418
+
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
+
+mail/jabber: hanno@hboeck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
