@@ -1,50 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/12/9
-Message-ID: <CAJ_zFkLKWJnC9t27kN74jNueh3nTqx2+2hB3dsv74CsfBY_qfg@mail.gmail.com>
-Date: Wed, 12 Dec 2018 11:02:52 -0800
-From: Tavis Ormandy <taviso@...gle.com>
-To: hackerfantastic@...glemail.com
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Multiple telnet.c overflows
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/30/1
+Message-ID: <12f804f3dfed1ca1b07316041f99e37a3a0b235f.camel@doppel-helix.eu>
+Date: Sun, 30 Dec 2018 13:48:52 +0100
+From: Matthias Bläsing <mblaesing@...pel-helix.eu>
+To: dev@...beans.apache.org
+Cc: announce@...beans.apache.org, Moritz Bechler <mbechler@...terphace.org>, security@...che.org, oss-security@...ts.openwall.com
+Subject: [CVE-2018-17191] Apache NetBeans 9.0 Proxy Auto-Configuration (PAC) interpretation is vulnerable for remote command execution (RCE)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Dec 12, 2018 at 10:08 AM Hacker Fantastic
-<hackerfantastic@...glemail.com> wrote:
->
-> Hi Tavis, thanks for the input - I referenced Mikrotik as a vendor using a vulnerable implementation that can be used to escape restricted shells. This is just one example of a instance where a restricted shell could be escaped when using inetutils, or when the vulnerable code path reached unexpected systems (like NetBSD).
+CVE-ID
+------
+CVE-2018-17191
 
-Yes, the bug exists on NetBSD, but in order for it to be a security
-issue, there has to be an example of this bug being used to cross a
-privilege boundary. I assume we agree that not every bug is a security
-bug, there has to be some sort of supported security boundary that the
-bug allows an attacker to violate. The question I'm asking is can you
-elaborate on which security boundary is being crossed? I don't dispute
-the bug exists and that NetBSD are shipping the code.
+Summary
+-------
+NetBeans Proxy Auto-Configuration (PAC) interpretation
+is vulnerable for remote command execution (RCE)
 
-> As Mikrotik case is not an oss security issue I did not post the advisory here, but as I shared to you already on social media:
->
-> https://hacker.house/releasez/expl0itz/mikrotik-jailbreak.txt
->
-> (The overflows are present in those devices as well, several million of them, in case this isn't clear in our advisory)
+Versions Affected: 
+------------------
+- Apache NetBeans (incubating) 9.0
+- NetBeans releases before the Apache transition started may be
+  also affected
 
-That part is clear, but it's not clear to me that Mikrotik intend for
-this to be a security boundary. Do you get unintended privileges from
-exploiting this? Either way, RouterOS is not open source, so
-oss-security isn't the right place to discuss it.
+Description:
+------------
+To be vulnerable to the issue, the system running NetBeans needs to be
+configured to use Proxy Auto-Configuration (PAC), NetBeans must be
+configured to use the system proxy settings and the attacker needs to
+be able to modify the PAC script.
 
->
-> The heap overflow occurs in ANY environment variables (an example instead of DISPLAY, use USER which maybe reachable via telnet://user@ip), yes the stack sprintf might not be remotely reachable which is why the advisory states "multiple overflows". If instances of telnet being called with a username via a URI handler the this would reach the heap overflow code path as described in the advisory. Thankfully, most modern browsers no longer implement telnet URI handlers anymore.
+Proxy Auto-Configuration (PAC) allows a proxy provider to provide the
+client with an automatic configuration of the proxy configuration. The
+configuration is not a static description, but JavaScript code, that
+calculates the proxy information based on the URL requested.
 
-You say "most", but do you have an example of anyone invoking GNU
-inetutils via untrusted telnet URIs? I think any example in a security
-supported open-source project would be enough to justify calling this
-a security issue.
+Depending on the Java Version NetBeans is executed, two vectors exists:
 
-> You are welcome to dismiss client side environment handling vulnerabilities as none-security issues or feel free to patch the referenced vulnerabilities as stated in the advisory. Thanks for your input I hope the comments above with the referenced advisory are clear enough and that the issue can be addressed by projects still using inetutils.
->
+If the Java Version supports the Nashorn JavaScript engine, execution
+was sandboxed by limiting the classes accessible to the script. It was
+found, that, due to the vulnerability in the JRE, the sandbox can be
+circumvented. This allows arbitrary code to be executed in the context 
+of the NetBeans application.
 
-It's not that environment handling is a non-issue, I've reported
-dozens over the years, it's just that it requires a privilege
-boundary. For example, setuid binaries are the classic example.
+If the Java Version does not support Nashorn, a generic JavaScript
+engine was used, which is not further restricted. This allows execution
+of arbitrary code in the context of the NetBeans application.
 
-Tavis.
+Mitigation:
+-----------
+
+The issue can be mitigated utilizing one of the following options:
+
+- Upgrade to Apache NetBeans 10.0
+- Disable Proxy Auto-Configuration for the whole OS
+  (please refer to the system documentation how to do that)
+- Disable "Use System Proxy Settings" in the NetBeans Options and
+  configure the Proxy to use manually
+
+
+Credit:
+-------
+The issue was identified by Moritz Bechler.
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
