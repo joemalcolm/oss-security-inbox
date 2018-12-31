@@ -1,28 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/03/26/2
-Message-ID: <4e9a34f8-3445-f9e2-0595-62ae863a9f89@apache.org>
-Date: Sun, 25 Mar 2018 23:27:08 +0200
-From: Yann Ylavic <ylavic@...che.org>
-To: oss-security@...ts.openwall.com
-Cc: Marius Bakke <mbakke@...tmail.com>, Daniel Ruggeri <druggeri@...che.org>, security@...pd.apache.org
-Subject: Re: CVE-2017-15710: Out of bound write in mod_authnz_ldap when using too small Accept-Language values
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/31/2
+Message-ID: <20181231191642.GB7238@zira.vinc17.org>
+Date: Mon, 31 Dec 2018 20:16:42 +0100
+From: Vincent Lefevre <vincent@...c17.net>
+To: Jeffrey Walton <noloader@...il.com>
+Cc: oss-security@...ts.openwall.com, gmp-bugs@...lib.org
+Subject: Re: Asserts considered harmful (or GMP spills its sensitive information)
 Content-Type: text/plain; charset=utf-8
 
-On 03/25/2018 03:11 PM, Yann Ylavic wrote:
-> On 03/25/2018 12:52 PM, Marius Bakke wrote:
->>
->> Perhaps I'm hitting an outdated mirror (195.154.151.36), but this
->> page lists "OptionsBleed" as the most recent CVE, and the download
->> page shows 2.4.29 as the latest release.
+On 2018-12-31 13:03:27 -0500, Jeffrey Walton wrote:
+> The GMP library uses asserts to crash a program at runtime when
+> presented with data it did not expect. The library also ignores user
+> requests to remove asserts using Posix's -DNDEBUG. Posix asserts are a
+> deugging aide intended for developement, and using them in production
+> software ranges from questionable to insecure.
+
+That's much better than letting the program run erratically, with
+possible memory corruption and/or sensitive information leakage
+to unauthorized users. You'd better fix bugs in your program.
+
+> Many programs can safely use assert to crash a program at runtime.
+> However, the prequisite is, the program cannot handle sensitive
+> information like user passwords, user keys or sensitive documents.
 > 
-> The httpd website is missing some synchronization still, we are
-> currently looking into it.
+> High integrity software, like GMP and Nettle, cannot safely use an
+> assert to crash a program. To understand why the data flow must be
+> examined. First, when an assert fires, a SIGABRT is eventually sent to
+> the program on Unix and Linux
+> (http://pubs.opengroup.org/onlinepubs/009695399/functions/assert.html).
+> 
+> Second, the SIGABRT terminates the process and can write a core file.
 
-Both security and download pages should be up to date now:
-- https://httpd.apache.org/security/vulnerabilities_24.html
-- https://httpd.apache.org/download.cgi
+That's the default behavior, but you can trap SIGABRT if you want.
+Of course, there is no guarantee because the memory may already be
+in an inconsistent state.
 
-Sorry for the inconvenience.
+> This is the first point of unwanted data egress. Sensitive information
+> like user passwords and keys can be written to the filesystem
+> unprotected.
 
-Regards,
-Yann.
+This can occur with any program, even not using asserts, e.g. due to
+a segmentation fault (which may happen as a consequence of not using
+asserts, with possibly worse consequences).
+
+If you don't want a core file, then you can instruct the kernel not
+to write a core file. See getrlimit.
+
+> Third, the dump is sometimes sent to an error reporting service like
+> Apple Crash Report, Android Crash Report, Ubuntu Apport, and Windows
+> Error Reporting. This is the second point of unwanted data egress.
+> Sensitive information can be sent to the error reporting service. The
+> platform provider like Apple, Google, Microsoft and Ubuntu gain access
+> to the sensitive information, in addition to the developer.
+
+If you don't like them, do not use these services. Not using asserts
+can also yield a crash, which will have the same consequences.
+
+-- 
+Vincent Lefèvre <vincent@...c17.net> - Web: <https://www.vinc17.net/>
+100% accessible validated (X)HTML - Blog: <https://www.vinc17.net/blog/>
+Work: CR INRIA - computer arithmetic / AriC project (LIP, ENS-Lyon)
