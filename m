@@ -1,29 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/01/22/6
-Message-ID: <20180122194156.gficsy3pnsvyrlaf@matica.foolinux.mooo.com>
-Date: Mon, 22 Jan 2018 11:41:56 -0800
-From: Ian Zimmerman <itz@...y.loosely.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/31/1
+Message-ID: <CAH8yC8m90KssanbHt+YmVt7iLOiwWHASDqRYW5TQGeNV2zWXDw@mail.gmail.com>
+Date: Mon, 31 Dec 2018 13:03:27 -0500
+From: Jeffrey Walton <noloader@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: How to deal with reporters who don't want their bugs fixed?
+Cc: gmp-bugs@...lib.org
+Subject: Asserts considered harmful (or GMP spills its sensitive information)
 Content-Type: text/plain; charset=utf-8
 
-On 2018-01-22 17:20, Mikhail Utin wrote:
+The GMP library uses asserts to crash a program at runtime when
+presented with data it did not expect. The library also ignores user
+requests to remove asserts using Posix's -DNDEBUG. Posix asserts are a
+deugging aide intended for developement, and using them in production
+software ranges from questionable to insecure.
 
->> Keeping it individual without public announced maximum embargo time
->> would also help prevent folks from jumping to 0daying everything per
->> default:)
+Many programs can safely use assert to crash a program at runtime.
+However, the prequisite is, the program cannot handle sensitive
+information like user passwords, user keys or sensitive documents.
 
-> However, to me it is pure "Security by Obscurity" in a bit different
-> wording. It never worked. Simply think that somebody else knows the
-> secret and with your help continues using that.
+High integrity software, like GMP and Nettle, cannot safely use an
+assert to crash a program. To understand why the data flow must be
+examined. First, when an assert fires, a SIGABRT is eventually sent to
+the program on Unix and Linux
+(http://pubs.opengroup.org/onlinepubs/009695399/functions/assert.html).
 
-I think you misunderstand the parent post.
+Second, the SIGABRT terminates the process and can write a core file.
+This is the first point of unwanted data egress. Sensitive information
+like user passwords and keys can be written to the filesystem
+unprotected.
 
-Nobody is proposing that the embargo period for any _particular_ issue
-be secret.  The proposal in the parent post was to not have a public
-general embargo policy for _all_ issues present & future.
+Third, the dump is sometimes sent to an error reporting service like
+Apple Crash Report, Android Crash Report, Ubuntu Apport, and Windows
+Error Reporting. This is the second point of unwanted data egress.
+Sensitive information can be sent to the error reporting service. The
+platform provider like Apple, Google, Microsoft and Ubuntu gain access
+to the sensitive information, in addition to the developer.
 
--- 
-Please don't Cc: me privately on mailing lists and Usenet,
-if you also post the followup to the list or newsgroup.
-To reply privately _only_ on Usenet, fetch the TXT record for the domain.
+In fact, when one popular security library used in Bitcoin wallets was
+apprised of the situation, they responded:
+
+    The standard abort() call also produces somewhat useful
+    error messages on Windows, so I can get an idea on what’s
+    going on when users report these.
+
+Another popular security library used for code signing remarked:
+
+    Please never ever define NDEBUG. This is a severe misfeature
+    of the assert macro.
+
+Wow, change your passwords and keys after an asert fires...
+
+Here's a small example of triggering an assert using the Nettle
+library. Nettle depends on GMP, and GMP is the root cause of the
+information leak. The result below can be reporduced on i686, x86_64,
+and Aarch64 using the attached script. ARM A-32 does not work at the
+moment due to GMP build errors.
+
+In the case below Nettle is using benign data and not maliciously
+crafted data. Notice GMP spilled the sensitive information during a
+sliding window modular exponentiation (also see
+https://gmplib.org/repo/gmp-6.1/file/tip/mpn/generic/sec_powm.c).
+
+# from Nettle 'make check'
+...
+PASS: rsa-keygen
+PASS: rsa-sec-decrypt
+sec_powm.c:293: GNU MP assertion failed: enb >= windowsize
+../run-tests: line 57: 24756 Aborted (core dumped) "$1" $testflags
+FAIL: rsa-compute-root
+PASS: dsa
+...
+
+View attachment "test-gmp.sh.txt" of type "text/plain" (971 bytes)
