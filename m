@@ -1,4 +1,9 @@
-Received: (qmail 20053 invoked by uid 550); 31 Jan 2024 13:02:25 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3692" "Monday" "31" "December" "2018" "14:38:17" "-0500" "Jeffrey Walton" "noloader@gmail.com" "<CAH8yC8=-Lt0_p2sTnqhJOWjapJ84LNR=8zJFF5oWs=-4xgxigg@mail.gmail.com>" "78" "[oss-security] Re: Asserts considered harmful (or GMP spills its sensitive information)" "^Date:" nil nil "12" "2018123119:38:17" "[oss-security] Re: Asserts considered harmful (or GMP spills its sensitive information)" (number mark "        noloader@gma Dec 31   78/3692  " thread-indent "\"[oss-security] Re: Asserts considered harmful (or GMP spills its sensitive information)\"\n") "<20181231191642.GB7238@zira.vinc17.org>" ("<CAH8yC8m90KssanbHt+YmVt7iLOiwWHASDqRYW5TQGeNV2zWXDw@mail.gmail.com>" "<20181231191642.GB7238@zira.vinc17.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 4059 invoked by uid 550); 31 Dec 2018 19:58:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,149 +11,122 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13863 invoked from network); 31 Jan 2024 00:54:21 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	invisiblethingslab.com; h=cc:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1706662593;
-	 x=1706748993; bh=7F6uROoCzeHsCh4lGBGRACbcqhLkvAlELsrCt5UoIgo=; b=
-	NoNvksGtwR7k5q9mJfI/sDMALGr8+tbjkuo2Q11isPtA1qC3zhD3fkrnIrvnMtnL
-	6/KyZTGwFwg2KF6/PY9+Ka8WXBur4mMLg3RTQ0tSIso78ewOjbNrVAjLv6pes/dH
-	c6fquSjjaM46bOdhaVOe1qPSEGldouOSJR0B0jxiKRtBIISniFpnyWoV7r2QQp8d
-	6OCnbNE1LECbdy+J9polvyTF/bP43P/wVd+S61x2f6NYVxl+Fo6+f6TyI6z2A0x5
-	77UDiz6L2nj1a/ZJH7Ma2s0g8YpB0a2MMkhau69rgin3xS5d0aDBbSHcf7Si9whU
-	hOTrLjzHwOt3rGHiCYS3UA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1706662593; x=1706748993; bh=7F6uROoCzeHsCh4lGBGRACbcqhLk
-	vAlELsrCt5UoIgo=; b=KaoIjjWziFtCyeFUwnWRpe9zDLvd8bdK+ubyB5R1ukdy
-	Frx29OUqrs3uUhZjSLDF7QicGxaZL67Cn9ukOwd8OamGlIA365NYA/Pt7WOgW1sX
-	4WDCCOAzWj7oVVJyqMKszcIA8RyQ4oZ/UxDzNOIXQe4mzaZ2/SzqIiSh40EjIFlV
-	H1+mzUSjzkyAS0Br9eYdytW9OhDx/Qkx5iwzU9wMgpIEdSaBdtKBS3Dw5ZVIJMy9
-	IrzUZogSMoGWeKlMZ+Po03Ow8l7HC9yNM2oAeGqyjFAevUc5UsJQtgZivV0YjSAU
-	cbVwg7iqviSBbG2HbgTU1ml6+SOggKnKEQV34BuCPg==
-X-ME-Sender: <xms:wJq5ZZqwfRbMrFBHQhA2UTLEX-PhXww2xuaWgFjp0lmP1jlvgOhfLw>
-    <xme:wJq5ZbqpHCJPzjwHb-yVV3V72F_NDIOJpZF5EI798KrgTTY5Z5XMv3MvAIVKjOpNg
-    k8Izz3D293u7ZY>
-X-ME-Received: <xmr:wJq5ZWO4iQHqTFRjulyJMeQjDF9WWyHSXqKf2bdUrKzy_UDX95OsKxeM8vwdTRlRgPWZAnK4X84hUnsNF4A-PsmbQ9jD-UQAIZeHOMmFk_rgQ_aG>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrfedtkedgvdejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
-    ertddtjeenucfhrhhomhepffgvmhhiucforghrihgvucfqsggvnhhouhhruceouggvmhhi
-    sehinhhvihhsihgslhgvthhhihhnghhslhgrsgdrtghomheqnecuggftrfgrthhtvghrnh
-    eptdettdeuiedvfeeiudfgjedtuedtleefvdeukeeltddugeejvdeiudekfefhueetnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepuggvmhhise
-    hinhhvihhsihgslhgvthhhihhnghhslhgrsgdrtghomh
-X-ME-Proxy: <xmx:wJq5ZU7gc33rGzycqNmaCJjBpGwzE-DUxeizJBHzXhpskKxio44UbQ>
-    <xmx:wJq5ZY5ZCC6nowb-4wZaaQlWzhY5Yz_HdXoRhs2QcB7bpNo3kMc1QQ>
-    <xmx:wJq5ZchR0k2mdrF05m1sVoLGSvWQiuO_mwYCUdyqpuEhwwI0X7EXfQ>
-    <xmx:wZq5ZdWZwrAKvwYemW8xHG_Fh0QlOIrfe74F21wtj765YfihqZkXyw>
-Feedback-ID: iac594737:Fastmail
-Date: Tue, 30 Jan 2024 19:56:15 -0500
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
-To: oss-security@lists.openwall.com
-Message-ID: <Zbmav6mcBVq0zGGy@itl-email>
-References: <CAKLnGtR3cgHVQz0kTmGVJAaT4nKvSejAZvbMGONTe=f_e9fSYA@mail.gmail.com>
- <20240130142524.GA21216@openwall.com>
- <2024013010-jockey-kindred-c6cd@gregkh>
- <20240130214500.GA24892@openwall.com>
- <2024013003-clubhouse-mauve-222b@gregkh>
+Received: (qmail 15530 invoked from network); 31 Dec 2018 19:39:01 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:reply-to:from:date:message-id
+         :subject:to;
+        bh=6mx55bD/STj0099xhMENeKD3tTgtubgBSanMe8KMTp4=;
+        b=M0WqQYMiZZvzu/G8CzvUNT/nj1qs3zGtf4/FhOdLlOd+J4Ixp5Yb1yIDuniuVhQIrH
+         5wCPsai8TR7pyCWhNsKuZzGOMoyHfL9UNsRz2j23In6A61T7N2rwRp6++OQQ3H1GfmQe
+         34tQMct79PjGgRncEGfVMEHsiXNg6NXt9GlLptIYQ3G8nVjfAZC0XpJVLY9EAhyJuh5C
+         JRErVleZNQfeSHY2SM1x05XCyOVCWL3rC6O7kL5RdCFSS5NahECN7+QsFcJC/jqyJnPP
+         C2jU7h3gxyk9ixcNRIjG79koZgScDQgNevrvL+oFXs2/t9HmpMmx02JkxLgm/1t7n9B+
+         yu/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
+         :from:date:message-id:subject:to;
+        bh=6mx55bD/STj0099xhMENeKD3tTgtubgBSanMe8KMTp4=;
+        b=uDLJukpRViakTnjbz6iwiayU6wCELUc4B2yeJ3iEg2y8qP6Pj4X+Cy4qNuW0dQSWt6
+         +/8Kwv6z2yRFqlWtDU2llqv9PJz3DTKTFnrpH7oFmmbyZtvBraTPuFPId56hW6qMIj/I
+         LtNCFehKZrWJ/RLaJF45hfGI2ev/oiI19Arh6+XhXY4VrDEMGkYu8qYrQm3aq49scK2n
+         9kQd/+29oTxBA1G0LQ8yTZ/KYDInR5lrswN77y9jcjS27lZXQhZZqUVZ/3XJOAJ0Vc4n
+         NE64d8XlwsrhOrHYSvsLt1665Dtoq3NVhCczdgH5yJK0sE/8LgrqmJ7jPACx+rE6JWvP
+         erIg==
+X-Gm-Message-State: AA+aEWae9NQGIFKwN7ZTvnRrTX3SJzIrP0cDIpOd3FmbMrNcjjQRJ3pm
+	hAPSimkD+T0A1om4DFpOxAj+kCX+Wp6dlAUZDMg=
+X-Google-Smtp-Source: AFSGD/Xot37qE+XwHU66vaDeIAMkAjMurPIdj5ONojdvXa4aspZsYmRXzteuZlvVQQSXuuBWpBfCxMo4rYreBVKwnxM=
+X-Received: by 2002:a02:410e:: with SMTP id x14mr23901800jaa.36.1546285128954;
+ Mon, 31 Dec 2018 11:38:48 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="/mjCDnjQjvWV6ct5"
-Content-Disposition: inline
-In-Reply-To: <2024013003-clubhouse-mauve-222b@gregkh>
-Subject: Re: [oss-security] FWD: Kernel vulnerabilities CVE-2021-33630 &
- CVE-2021-33631
+References: <CAH8yC8m90KssanbHt+YmVt7iLOiwWHASDqRYW5TQGeNV2zWXDw@mail.gmail.com>
+ <20181231191642.GB7238@zira.vinc17.org>
+In-Reply-To: <20181231191642.GB7238@zira.vinc17.org>
+Message-ID: <CAH8yC8=-Lt0_p2sTnqhJOWjapJ84LNR=8zJFF5oWs=-4xgxigg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Date: Mon, 31 Dec 2018 14:38:17 -0500
+From: Jeffrey Walton <noloader@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: Asserts considered harmful (or GMP spills its sensitive information)
+To: Jeffrey Walton <noloader@gmail.com>, oss-security@lists.openwall.com, 
+	gmp-bugs@gmplib.org
 
---/mjCDnjQjvWV6ct5
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 30 Jan 2024 19:56:15 -0500
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] FWD: Kernel vulnerabilities CVE-2021-33630 &
- CVE-2021-33631
+On Mon, Dec 31, 2018 at 2:16 PM Vincent Lefevre <vincent@vinc17.net> wrote:
+>
+> On 2018-12-31 13:03:27 -0500, Jeffrey Walton wrote:
+> > The GMP library uses asserts to crash a program at runtime when
+> > presented with data it did not expect. The library also ignores user
+> > requests to remove asserts using Posix's -DNDEBUG. Posix asserts are a
+> > deugging aide intended for developement, and using them in production
+> > software ranges from questionable to insecure.
+>
+> That's much better than letting the program run erratically, with
+> possible memory corruption and/or sensitive information leakage
+> to unauthorized users. You'd better fix bugs in your program.
 
-On Tue, Jan 30, 2024 at 03:01:24PM -0800, Greg KH wrote:
-> On Tue, Jan 30, 2024 at 10:45:00PM +0100, Solar Designer wrote:
-> > Thank you Greg for looking into these issues.  It's great that most
-> > longterm kernel trees appear already fixed.
->=20
-> I've taken the one remaining missing fix into the next round of kernel
-> releases, so all should be good now.
->=20
-> > For CVE-2021-33631 (the ext4 BUG), both the distro vendor's and NVD's
-> > CVSS input vectors specify AV:L/AC:L/PR:L/UI:N, which means the
-> > vulnerability can be triggered by a local system user at will and
-> > without additional privileges.  I'd say that deliberately getting the
-> > kernel to work on a corrupted filesystem requires at least one of:
-> > physical access (AV:P) or privileges on the system (PR:H) or user
-> > interaction (UI:R).  However, there's no way to encode this in one CVSS
-> > vector.  Also, in the physical access case, at least the availability
-> > impact typically does not apply (would be A:N).
->=20
-> The "interesting" thing here is that the project in question (the
-> kernel) does not consider "mounting a corrupted filesystem" as a real
-> attack vector at all.  There's been long discussions about it, the most
-> recent being last year on the kernel summit discuss mailing list, and at
-> the kernel summit itself.
+To play devil's advocate for this particular example, GMP could have
+validated the parameters and refused to process the data. That is, the
+function could have returned failure and avoided the potential
+information leak.
 
-The kernel itself does not, but there are downstreams of the kernel that
-do for at least a subset of filesystems.  These include Android and
-Chromium OS.
+> > Many programs can safely use assert to crash a program at runtime.
+> > However, the prequisite is, the program cannot handle sensitive
+> > information like user passwords, user keys or sensitive documents.
+> >
+> > High integrity software, like GMP and Nettle, cannot safely use an
+> > assert to crash a program. To understand why the data flow must be
+> > examined. First, when an assert fires, a SIGABRT is eventually sent to
+> > the program on Unix and Linux
+> > (http://pubs.opengroup.org/onlinepubs/009695399/functions/assert.html).
+> >
+> > Second, the SIGABRT terminates the process and can write a core file.
+>
+> That's the default behavior, but you can trap SIGABRT if you want.
+> Of course, there is no guarantee because the memory may already be
+> in an inconsistent state.
 
-> So while CVSS might consider this a real issue, the developers of the
-> project itself do not.  The disconnect is one that drives people who use
-> sysbot tools to create fancy corrupted filesystem images with the goal
-> of getting a CVE for their CV, crazy on a weekly basis when the issues
-> they report get constantly ignored.
+To play devil's advocate again, that strategy requires every developer
+to have the knowledge and implement the sigtrap. On the other hand,
+developers are usually pretty good about checking return values at a
+call site.
 
-If someone finds a vulnerability in F2FS or ext4 that can be used to
-compromise the kernel by crafting a malicious filesystem, they should
-report it to the Android or Chromium OS security teams, respectively.
-It=E2=80=99s a verified boot bypass and I expect that it would be in scope =
-for
-the respective bounty programs.  If Android mounts FAT and exFAT in the
-kernel, then vulnerabilities in these filesystems should be reported to
-the Android security team.
+> > This is the first point of unwanted data egress. Sensitive information
+> > like user passwords and keys can be written to the filesystem
+> > unprotected.
+>
+> This can occur with any program, even not using asserts, e.g. due to
+> a segmentation fault (which may happen as a consequence of not using
+> asserts, with possibly worse consequences).
+>
+> If you don't want a core file, then you can instruct the kernel not
+> to write a core file. See getrlimit.
 
-Google requires that F2FS and ext4 are secure against malicious
-filesystem images, so they should be the ones responsible for fixing any
-vulnerabilities that require a malicious filesystem image to trigger.
-Fortunately, they have the resources to do that, so this should not be a
-problem for them.
+To play devil's advocate again, that strategy requires every user to
+have the knowledge. If RTFM was going to worked, It should have
+happened in the last 50 years or so.
 
-Could this be documented somehow, so that people know to send reports
-against f2fs and ext4 to those who will actually fix them?
---=20
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+Refusing to process the data and failing the API call requires no
+knowledge on the user's part.
 
---/mjCDnjQjvWV6ct5
-Content-Type: application/pgp-signature; name="signature.asc"
+> > Third, the dump is sometimes sent to an error reporting service like
+> > Apple Crash Report, Android Crash Report, Ubuntu Apport, and Windows
+> > Error Reporting. This is the second point of unwanted data egress.
+> > Sensitive information can be sent to the error reporting service. The
+> > platform provider like Apple, Google, Microsoft and Ubuntu gain access
+> > to the sensitive information, in addition to the developer.
+>
+> If you don't like them, do not use these services. Not using asserts
+> can also yield a crash, which will have the same consequences.
 
------BEGIN PGP SIGNATURE-----
+I hope I don't sound too argumentative, but the summary seems to
+conflate what's happening. You seem to be arguing all crashes are
+outside the programs control. That holds sometimes but not always.
 
-iQIzBAEBCgAdFiEEdodNnxM2uiJZBxxxsoi1X/+cIsEFAmW5mr4ACgkQsoi1X/+c
-IsH3vhAAjcPycx6fs5uj/fxpnP+to3dLwPzWV9AZ4EW7B4H3LAeBxPYiZYKzwh7S
-w8Pr9FvcfD2979SyZfW35PaTnyPsUgY5BWpwqWfArmb7BhhoTb+8j3K1Wbhh/jKU
-qCW/m1z1LX1N7ZMpj/3s58kA7FOn02Wjsu++qVMYLaG6gy9DRW12E02tNqrh7Jae
-CNTum9/RfHQnXNkA2/lkOC4MGcVWY9E0nHYzR7XLjU5/CCVmgw3VJqeKnv6nYQel
-cQOpwKDPBkcr4YsbLKywce9XbdJ6Yu0Irxmd4UjsZWyBVLjdCwBD5lCfmoCaXRxN
-DqBXw6e6TubyOEmI3uDCbjX+tok+NF9BgkyOKRjylJweGR8CDpQv3Zdyki7RKZLc
-bdP3v+ow6N7hvPN/b9KbQyN9V1AzO6ExAITXqXpxAu2mppIkAiiOflJj177pxh2W
-z9PN9ocoCPYIePOPfpSaovYhN2fJEVjjtGdKxXdH7Balh0bpcch8xiIm6xYbPxKa
-ELQ0ON7CGWJGTAH1HtPMS3wZRPqJpePAyefJB3IZgPxo70wkQ1I4uhz3MDdGhsAa
-hTbBQ7MfxFERoqUYQY1MpVEyx+fOd3W9V6vrDxEZ9XGXn/tGGNGdt2vTOEzDXNW4
-h7ZO2sBmkLvntlRJkMRI2TSREU2BZ7J0+qoGnKOHC84O7Byv3d0=
-=Qh9q
------END PGP SIGNATURE-----
+In this instance the library did not validate parameters and return an
+error code. Instead it choose to crash. The library was not an
+innocent victim of a memory corruption. It was a willing participant
+in the data egress. Instigator may be a better term than participant
+in this case.
 
---/mjCDnjQjvWV6ct5--
+Jeff
