@@ -1,52 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/02/11/2
-Message-ID: <CAH9fUpYsFx1+rwz1A=mc7wAgbDHARyj1VrWNg41y9OySuL1mqw@mail.gmail.com>
-Date: Sun, 11 Feb 2018 09:59:35 +0100
-From: Philippe Mouawad <pmouawad@...che.org>
-To: JMeter Users List <user@...ter.apache.org>, dev@...ter.apache.org, announce@...che.org,  asf-security <security@...che.org>, oss-security@...ts.openwall.com,  Brenden Meeder <fishing.for.jormungandr@...il.com>
-Subject: CVE-2018-1287: Apache JMeter binds RMI server to wildcard in distributed mode (based on RMI)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2018/12/31/3
+Message-ID: <CAH8yC8=-Lt0_p2sTnqhJOWjapJ84LNR=8zJFF5oWs=-4xgxigg@mail.gmail.com>
+Date: Mon, 31 Dec 2018 14:38:17 -0500
+From: Jeffrey Walton <noloader@...il.com>
+To: Jeffrey Walton <noloader@...il.com>, oss-security@...ts.openwall.com,  gmp-bugs@...lib.org
+Subject: Re: Asserts considered harmful (or GMP spills its sensitive information)
 Content-Type: text/plain; charset=utf-8
 
-Severity: Important
+On Mon, Dec 31, 2018 at 2:16 PM Vincent Lefevre <vincent@...c17.net> wrote:
+>
+> On 2018-12-31 13:03:27 -0500, Jeffrey Walton wrote:
+> > The GMP library uses asserts to crash a program at runtime when
+> > presented with data it did not expect. The library also ignores user
+> > requests to remove asserts using Posix's -DNDEBUG. Posix asserts are a
+> > deugging aide intended for developement, and using them in production
+> > software ranges from questionable to insecure.
+>
+> That's much better than letting the program run erratically, with
+> possible memory corruption and/or sensitive information leakage
+> to unauthorized users. You'd better fix bugs in your program.
 
-Vendor: The Apache Software Foundation
+To play devil's advocate for this particular example, GMP could have
+validated the parameters and refused to process the data. That is, the
+function could have returned failure and avoided the potential
+information leak.
 
-Versions Affected: JMeter 2.X, 3.X
+> > Many programs can safely use assert to crash a program at runtime.
+> > However, the prequisite is, the program cannot handle sensitive
+> > information like user passwords, user keys or sensitive documents.
+> >
+> > High integrity software, like GMP and Nettle, cannot safely use an
+> > assert to crash a program. To understand why the data flow must be
+> > examined. First, when an assert fires, a SIGABRT is eventually sent to
+> > the program on Unix and Linux
+> > (http://pubs.opengroup.org/onlinepubs/009695399/functions/assert.html).
+> >
+> > Second, the SIGABRT terminates the process and can write a core file.
+>
+> That's the default behavior, but you can trap SIGABRT if you want.
+> Of course, there is no guarantee because the memory may already be
+> in an inconsistent state.
 
-Description:
+To play devil's advocate again, that strategy requires every developer
+to have the knowledge and implement the sigtrap. On the other hand,
+developers are usually pretty good about checking return values at a
+call site.
 
-When using Distributed Test only (RMI based), jmeter server binds RMI
-Registry to wildcard host.
-This could allow an attacker to get Access to JMeterEngine and send
-unauthorized code.
-This only affect tests running in Distributed mode.
+> > This is the first point of unwanted data egress. Sensitive information
+> > like user passwords and keys can be written to the filesystem
+> > unprotected.
+>
+> This can occur with any program, even not using asserts, e.g. due to
+> a segmentation fault (which may happen as a consequence of not using
+> asserts, with possibly worse consequences).
+>
+> If you don't want a core file, then you can instruct the kernel not
+> to write a core file. See getrlimit.
 
-Mitigation:
+To play devil's advocate again, that strategy requires every user to
+have the knowledge. If RTFM was going to worked, It should have
+happened in the last 50 years or so.
 
-  * Users must use last version of Java 8 or Java 9
-  * Users must upgrade to last JMeter 4.0 version
+Refusing to process the data and failing the API call requires no
+knowledge on the user's part.
 
-Besides, we remind users that in distributed mode, JMeter makes an
-Architectural assumption
-that it is operating on a 'safe' network. i.e. everyone with access to the
-network is considered trusted.
+> > Third, the dump is sometimes sent to an error reporting service like
+> > Apple Crash Report, Android Crash Report, Ubuntu Apport, and Windows
+> > Error Reporting. This is the second point of unwanted data egress.
+> > Sensitive information can be sent to the error reporting service. The
+> > platform provider like Apple, Google, Microsoft and Ubuntu gain access
+> > to the sensitive information, in addition to the developer.
+>
+> If you don't like them, do not use these services. Not using asserts
+> can also yield a crash, which will have the same consequences.
 
-This typically means a dedicated VPN or similar is being used.
+I hope I don't sound too argumentative, but the summary seems to
+conflate what's happening. You seem to be arguing all crashes are
+outside the programs control. That holds sometimes but not always.
 
+In this instance the library did not validate parameters and return an
+error code. Instead it choose to crash. The library was not an
+innocent victim of a memory corruption. It was a willing participant
+in the data egress. Instigator may be a better term than participant
+in this case.
 
-Example:
-
-  * Start JMeter server using either jmeter-server or jmeter -s
-  * If JMeter listens on *:1099, you are vulnerable
-
-
-Credit:
-This issue was reported responsibly to the Apache Tomcat Security Team
-by Brenden Meeder.
-
-- Philippe Mouawad
-
-on behalf of the Apache JMeter PMC
-
-[0] https://bz.apache.org/bugzilla/show_bug.cgi?id=62039
-
+Jeff
