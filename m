@@ -1,4 +1,9 @@
-Received: (qmail 12212 invoked by uid 550); 12 May 2022 05:28:40 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1834" "Monday" "31" "December" "2018" "18:38:36" "-0800" "Matthew Fernandez" "matthew.fernandez@gmail.com" "<3F256A9C-EBE9-420C-B8F6-32AD39A664C5@gmail.com>" "42" "Re: [oss-security] Asserts considered harmful (or GMP spills its sensitive information)" "^Cc:" nil nil "12" "2019010102:38:36" "[oss-security] Asserts considered harmful (or GMP spills its sensitive information)" (number mark "        matthew.fern Dec 31   42/1834  " thread-indent "\"Re: [oss-security] Asserts considered harmful (or GMP spills its sensitive information)\"\n") "<CAH8yC8=-Lt0_p2sTnqhJOWjapJ84LNR=8zJFF5oWs=-4xgxigg@mail.gmail.com>" ("<CAH8yC8m90KssanbHt+YmVt7iLOiwWHASDqRYW5TQGeNV2zWXDw@mail.gmail.com>" "<20181231191642.GB7238@zira.vinc17.org>" "<CAH8yC8=-Lt0_p2sTnqhJOWjapJ84LNR=8zJFF5oWs=-4xgxigg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 18090 invoked by uid 550); 1 Jan 2019 11:31:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,83 +11,91 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 20131 invoked from network); 1 Jan 2019 02:38:52 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:message-id:mime-version:subject:date:in-reply-to:cc:to
+         :references;
+        bh=y0dgg+Cggqx8w2zmCXtq+zxbNQ4fW780X/EiMzMeQe0=;
+        b=gsgkHw+JqIfJheEzWN+28BrfK9CYCOJxdgWjvIkCKHQVYLxvR7kPN7eblSEtQjkrdt
+         tBiiuyMRjY4ThEeEGvTudMDxxbtCNGwIgJhppViZsH0WzO+dtX9i7/G7cDhdMjWIn6lv
+         PEvfbI+RCNiIhQkq7ZqXW6/mP9x0+Ca6/9lydk/ekIG0bcEcfejclpbjyEgKUNeDI56q
+         pYyRFTXGGka9XMyPMA5XuuqnsJEY/eE/P2ZqyTrx64+VppdbXJ6E9sWBFcPJCP9tunD3
+         qyOfQbATOcuyQYDSxGrsaRx9tQ5xbKtJzKy3G7Ej8BKqX8rzkSMHqejYfgcu44la1ZeA
+         +AQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:message-id:mime-version:subject:date
+         :in-reply-to:cc:to:references;
+        bh=y0dgg+Cggqx8w2zmCXtq+zxbNQ4fW780X/EiMzMeQe0=;
+        b=ioOCTXizF4uT9qcH5ZFirPdW4lnuBALAPBbFNOvdTW5zOCW7zQ9gyQMRgXtI4NHTxf
+         gPndMxNmN91ow5/WGbww0CbyaxAJbB4hqFw4+xE5keJ/S4ruG7sRA98ZrheVx3gSW6Pz
+         SGGXuZSVrYiokRvmBlhQ/SDU/VSLGJdsHZ8MSGf1BpVonFmVPHB5WURIIN86rFeV2ppG
+         /wOk03U4b3HHnsweEge+ErrixKwH+JkYmaADmkFOlEoXWUSnXWF48knlN89PPf8jia3L
+         2HCUG27uQCaMfUzaK7ynQMR92BnjVIvnWzh3UNZ8E0F10A16QqXSCcjnnfHgXRxjfeMz
+         4J7A==
+X-Gm-Message-State: AJcUukclZ5s6kwqItG8igvuziSvkUMaZHEA9e1NLan+Em/j43zSRZWlb
+	PQ1mFODVhXhcoY11PTaP9wnSBK3o
+X-Google-Smtp-Source: ALg8bN5RgEF0Yj4qOAn8Ae1pVkZI/JZg3b72Fb0oQwD6H/dW+z+00SIasseQMf8167FLll2OfrQlQA==
+X-Received: by 2002:a63:e247:: with SMTP id y7mr8921812pgj.84.1546310319064;
+        Mon, 31 Dec 2018 18:38:39 -0800 (PST)
+Message-Id: <3F256A9C-EBE9-420C-B8F6-32AD39A664C5@gmail.com>
+Content-Type: multipart/alternative;
+	boundary="Apple-Mail=_6FDDAED8-9B83-43B7-B019-61E0B671F0D7"
+Mime-Version: 1.0 (Mac OS X Mail 11.5 \(3445.9.1\))
+In-Reply-To: <CAH8yC8=-Lt0_p2sTnqhJOWjapJ84LNR=8zJFF5oWs=-4xgxigg@mail.gmail.com>
+References: <CAH8yC8m90KssanbHt+YmVt7iLOiwWHASDqRYW5TQGeNV2zWXDw@mail.gmail.com>
+ <20181231191642.GB7238@zira.vinc17.org>
+ <CAH8yC8=-Lt0_p2sTnqhJOWjapJ84LNR=8zJFF5oWs=-4xgxigg@mail.gmail.com>
+X-Mailer: Apple Mail (2.3445.9.1)
+Cc: Jeffrey Walton <noloader@gmail.com>,
+ gmp-bugs@gmplib.org
+Date: Mon, 31 Dec 2018 18:38:36 -0800
+From: Matthew Fernandez <matthew.fernandez@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 12194 invoked from network); 12 May 2022 05:28:40 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1652333308; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=F1pyO3wlwKiEqq7I8F9YVRYXsizHaWy/zazXp5zN6MM=;
-	b=KS6BKaCQt6tAhU7uGIzWDdMHmz31YaIR++1sH5jcXzIq3l+trTvO19spyNGQa2S72fP/8K
-	+O8mRJgQ0d7fbJdRkQu8rCQDz1wBm9p0smwB294rByowH79pqtPPiVXgYeF70GPbnbapnx
-	rw+M3y69fSLl4/OZngA5d36deVNNHzA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1652333308;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=F1pyO3wlwKiEqq7I8F9YVRYXsizHaWy/zazXp5zN6MM=;
-	b=R6Y79JO0RKLLQHEzpy7849G48mBH/2lv1jdG9a3cEXMRREz91QncTiWr8fvpq5o9delCgD
-	YoddnUOsiLMx7IBg==
-Date: Thu, 12 May 2022 15:28:23 +1000
-From: Aleksa Sarai <asarai@suse.de>
-To: security-announce@opencontainers.org, oss-security@lists.openwall.com
-Message-ID: <20220512052823.advhiwrcdc6rokme@senku>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="k6l2ykz4ccigwy4c"
-Content-Disposition: inline
-Subject: [oss-security] CVE-2022-29162: runc < 1.1.2 incorrect handling of inheritable
- capabilities in default configuration
+Subject: Re: [oss-security] Asserts considered harmful (or GMP spills its
+ sensitive information)
+To: oss-security@lists.openwall.com
 
---k6l2ykz4ccigwy4c
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--Apple-Mail=_6FDDAED8-9B83-43B7-B019-61E0B671F0D7
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
 
-A security update for runc (v1.1.2) was released to mitigate
-CVE-2022-29162, which is a low severity vulnerability related to
-mishandling of inheritable capabilities which resulted in an atypical
-Linux environment inside containers.
 
-As the inheritable set was a subset of the permitted capabilities (which
-are limited) this bug does not affect the container security boundary,
-it simply ensures that programs running inside the container do not
-inherit capabilities they do not need accidentally. This issue is
-similar to CVE-2022-24769 which was found in Docker and containerd.
+> On Dec 31, 2018, at 11:38, Jeffrey Walton <noloader@gmail.com> wrote:
+>=20
+> On Mon, Dec 31, 2018 at 2:16 PM Vincent Lefevre <vincent@vinc17.net <mail=
+to:vincent@vinc17.net>> wrote:
+>>=20
+>> On 2018-12-31 13:03:27 -0500, Jeffrey Walton wrote:
+>=20
+>>> This is the first point of unwanted data egress. Sensitive information
+>>> like user passwords and keys can be written to the filesystem
+>>> unprotected.
+>>=20
+>> This can occur with any program, even not using asserts, e.g. due to
+>> a segmentation fault (which may happen as a consequence of not using
+>> asserts, with possibly worse consequences).
+>>=20
+>> If you don't want a core file, then you can instruct the kernel not
+>> to write a core file. See getrlimit.
+>=20
+> To play devil's advocate again, that strategy requires every user to
+> have the knowledge. If RTFM was going to worked, It should have
+> happened in the last 50 years or so.
+>=20
+> Refusing to process the data and failing the API call requires no
+> knowledge on the user's part.
 
-As this issue was deemed not exploitable, there is no embargo for this
-patch and release. Please update as soon as practical.
+I don=E2=80=99t have a dog in this fight, but you referenced high integrity=
+ software (though I guess what is meant is confidentiality rather than inte=
+grity in this case) and then say we cannot rely on people to RTFM. While I =
+don=E2=80=99t doubt there are users who will fail to understand the consequ=
+ences of having core dumps enabled, this is just one of many ways to leak i=
+nformation in a non-hardened system. E.g. you can attach to the victim proc=
+ess with gdb/ptrace and simply read its memory, if the sysadmin has not blo=
+cked this with Yama or similar. Could you elaborate on the threat model you=
+ have in mind?=
 
-You can find the new version of runc on our releases page[1] and the
-patch fixing the issue is [2].
-
-[1]: https://github.com/opencontainers/runc/releases/tag/v1.1.2
-[2]: https://github.com/opencontainers/runc/commit/98fe566c527479195ce3c816=
-7136d2a555fe6b65
-
---=20
-Aleksa Sarai
-Senior Software Engineer (Containers)
-SUSE Linux GmbH
-<https://www.cyphar.com/>
-
---k6l2ykz4ccigwy4c
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEXzbGxhtUYBJKdfWmnhiqJn3bjbQFAmJ8mvQACgkQnhiqJn3b
-jbTx2A//QiuOlMg+5cautgz1l3gAX41VWo+wa2hxVyhH+LCGDL8oW6LBpno2fCBJ
-ltNMAMYai+u0FiRuFoFXreEmqL8OV1R6oThYPuCbpqvGHflXH2SXarpC7KvqTjxV
-g95bWsIACEXtiRzPSZEHZdhqFQeV8h7/X4HeggbuNaLpqgJjn3tHCJkh0SHkoGLN
-EfpGTarwfbBatEHcRIWnv3lnxcLYu4RnBQJbUBzzCRkK35SVjEMK+L9/NeIVzbV8
-jXJ4hN/mszCnK/squXZzEcIq3J84QXrdtwRzjOpqdvqcJIA/+IfI/zu56AsGEAnU
-xsgwScM/P+f0rkDqTPcmAdvU5stPTVe1IQgG3WQfVHxobr1bu2Dh1G6NpX7x0+gy
-hgK7P5kxtafBRD1rhgZq8z877u4p+XZzfab1ZApUHSYv2RdF4+OmwhtdP52htory
-2toYy5dtcxoL/LA2Jo+Oz7CibIjfXzyzrwJWKC0E1OWwKGjojaC0tqW0dGrPWwy4
-ZWH/iGcp/4q6b15kEqh5Y+EbWbqonccZqoW604/KhcMQTw2hWv6k/HKp0AHpCovS
-ZyLVD0K5BJbUW5SrC3ZfyPU4lCq6xfxuAbRPrTuaGO7z0YMLWNlJkuuIl+VRKIzB
-jGuVSw3frWgOaCshZNo1xHHE1ko41YtdOQn8YI+gGA2A5RX/woc=
-=BZuq
------END PGP SIGNATURE-----
-
---k6l2ykz4ccigwy4c--
+--Apple-Mail=_6FDDAED8-9B83-43B7-B019-61E0B671F0D7--
