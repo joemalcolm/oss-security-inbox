@@ -1,59 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/22/1
-Message-ID: <CAGJbjKYzq0PbZYOedTha2xaOOUgTg-UJjp6CrWjwaaA8qwiTKg@mail.gmail.com>
-Date: Mon, 22 Apr 2019 13:12:21 -0400
-From: Mike Dalessio <mike.dalessio@...il.com>
-To: nokogiri-talk <nokogiri-talk@...glegroups.com>, ruby-talk <ruby-talk@...y-lang.org>,  ruby-security-ann@...glegroups.com, oss-security@...ts.openwall.com
-Subject: Nokogiri security update v1.10.3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/01/9
+Message-ID: <2308-1546350758.537839@jIRr.Wi7S.U1Lk>
+Date: Tue, 01 Jan 2019 13:52:38 +0000
+From: halfdog <me@...fdog.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: Asserts considered harmful (or GMP spills its sensitive information)
 Content-Type: text/plain; charset=utf-8
 
-Nokogiri v1.10.3 has been released.
+Simon McVittie writes:
+> On Tue, 01 Jan 2019 at 12:07:17 +0100, Niels M�ller wrote:
+> ...
+>
+> Some processes (including those that are setuid or setgid,
+> I think?) are automatically undumpable.
 
-This is a security release. It addresses a CVE in upstream libxslt rated as
-"Priority: medium" by Canonical, and "NVD Severity: high" by Debian. More
-details are available below.
-
-If you're using your distro's system libraries, rather than Nokogiri's
-vendored libraries, there's no security need to upgrade at this time,
-though you may want to check with your distro whether they've patched this
-(Canonical has patched Ubuntu packages). Note that this patch is not yet
-(as of 2019-04-22) in an upstream release of libxslt.
-
-Full details about the security update are available in Github Issue
-[#1892][].
-
-  [#1892]: https://github.com/sparklemotion/nokogiri/issues/1892
-
----
-
-## 1.10.3 / 2019-04-22
-
-### Security Notes
-
-[MRI] Pulled in upstream patch from libxslt that addresses CVE-2019-11068.
-Full details are available in [#1892](
-https://github.com/sparklemotion/nokogiri/issues/1892). Note that this
-patch is not yet (as of 2019-04-22) in an upstream release of libxslt.
+This is not true and depends on your "/proc/sys/fs/suid_dumpable"
+settings, see [0]. Especially "2" was intended to capture cores
+from SUIDs also, e.g. together with systemd-coredump.
 
 
----
+To test your SUID-coredump behaviour, you can use NullExec.c
+from below. It quite reliable segfaults many SUID binaries. The
+argv -> env trickery is useful as some binaries (e.g. crontab)
+overread the gap between argv/env on stack so start processing
+environment variables as argvs, thus circumventing any IDS/IPS
+depending on correct checking of execve()'s call arguments.
 
-CVE-2019-11068
+$ ./NullExec /bin/su
 
-Permalinks are:
-- Canonical:
-https://people.canonical.com/~ubuntu-security/cve/CVE-2019-11068
-- Debian: https://security-tracker.debian.org/tracker/CVE-2019-11068
+hd
 
-Description:
+[0] https://github.com/torvalds/linux/blob/master/Documentation/sysctl/fs.txt
 
-> libxslt through 1.1.33 allows bypass of a protection mechanism
-> because callers of xsltCheckRead and xsltCheckWrite permit access
-> even upon receiving a -1 error code. xsltCheckRead can return -1 for
-> a crafted URL that is not actually invalid and is subsequently
-> loaded.
+$ cat NullExec.c 
+#define _GNU_SOURCE
+#include <stdio.h>
+#include <unistd.h>
 
-Canonical rates this as "Priority: Medium".
+int main(int argc, char **argv) {
+  if(argc<2) {
+    fprintf(stderr, "Usage: %s [progname] [envvars...]\n");
+    return(1);
+  }
+  execve(argv[1], NULL, argv+2);
+  return(1);
+}
 
-Debian rates this as "NVD Severity: High (attack range: remote)".
 
