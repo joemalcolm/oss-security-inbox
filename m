@@ -1,195 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/07/1
-Message-Id: <C4D6F144-28A8-451F-AA5A-6AA0D97FEDEE@beckweb.net>
-Date: Wed, 7 Aug 2019 16:06:44 +0200
-From: Daniel Beck <ml@...kweb.net>
-To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins plugins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/01/5
+Message-ID: <nn1s5wpqic.fsf_-_@armitage.lysator.liu.se>
+Date: Tue, 01 Jan 2019 12:27:07 +0100
+From: nisse@...ator.liu.se (Niels Möller)
+To: Matthew Fernandez <matthew.fernandez@...il.com>
+Cc: oss-security@...ts.openwall.com,  Jeffrey Walton <noloader@...il.com>
+Subject: Disabling ptrace (was Re: Asserts considered harmful (or GMP spills its sensitive information))
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software. The following
-releases contain fixes for security vulnerabilities:
+Matthew Fernandez <matthew.fernandez@...il.com> writes:
 
-* Configuration as Code Plugin 1.27
-* JClouds Plugin 2.15
+> E.g. you can attach
+> to the victim process with gdb/ptrace and simply read its memory, if
+> the sysadmin has not blocked this with Yama or similar.
 
-Additionally, we announce unresolved security issues in the following
-plugins: 
+I think one can disable this in the process itself, using prctl with
+PR_SET_DUMPABLE. But documentation is a bit unclear and doesn't
+exlicitly mention effect on ptrace (and other debugging interfaces).
 
-* Avatar Plugin
-* Build Pipeline Plugin
-* Codefresh Integration Plugin
-* eggPlant Plugin
-* File System SCM Plugin
-* Gitlab Authentication Plugin
-* Google Cloud Messsaging Notification Plugin
-* Mask Passwords Plugin
-* PegDown Formatter Plugin
-* Relution Enterprise Appstore Publisher Plugin
-* Simple Travis Pipeline Runner Plugin
-* TestLink Plugin
-* VMware Lab Manager Slaves Plugin
-* Wall Display Master Project Plugin
-* XL TestView Plugin
+If there are any documented best practices, that would be very nice.
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2019-08-07/
+My main usecase is lshd (an ssh daemon), which spawns a helper process
+with uid of the logged in user, but with gid set to the utmp group, to
+provide restricted write access to the utmp database. This is spawned by
+a process running as root, so no setuid or setgid executables involved.
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+Attaching to that process with gdb may imply privilege escalation to
+compromise utmp. Last time I tried to investigate, including reading
+some linux kernel sources, PR_SET_DUMPABLE looked promising.
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
+(Note I'm not subscribed to the oss-security list, and I'm dropping the
+gmp-bugs list where this is off-topic. So please include my email in any
+replies).
 
----
+Regards,
+/Niels
 
-
-SECURITY-1497 / CVE-2019-10367
-Configuration as Code Plugin logs the changes it applies to the Jenkins 
-system log. Secrets such as passwords should be masked (i.e. replaced with 
-asterisks) in that log to prevent accidental disclosure. Configuration as 
-Code Plugin inspects the type and looks for a field, getter, or constructor 
-argument corresponding to the property, making the secret detection much 
-more robust for the purpose of log message masking. This was implemented in 
-the fix for SECURITY-1279 in the 2019-07-31 security advisory.
-
-That fix was incomplete and did not cover a log message written to the 
-logger io.jenkins.plugins.casc.impl.configurators.DataBoundConfigurator.
-
-
-SECURITY-1482 / CVE-2019-10368 (CSRF), CVE-2019-10369 (permission check)
-JClouds Plugin did not perform permission checks on a method implementing 
-form validation. This allowed users with Overall/Read access to Jenkins to 
-connect to an attacker-specified URL using attacker-specified credentials 
-IDs obtained through another method, capturing credentials stored in
-Jenkins.
-
-Additionally, this form validation method did not require POST requests, 
-resulting in a cross-site request forgery vulnerability.
-
-
-SECURITY-157 / CVE-2019-10370
-Mask Passwords Plugin allows specifying passwords to be provided to builds 
-in the global Jenkins configuration.
-
-While the passwords are stored encrypted on disk, they are transmitted in 
-plain text as part of the configuration form. This can result in exposure 
-of the password through browser extensions, cross-site scripting 
-vulnerabilities, and similar situations.
-
-
-SECURITY-795 / CVE-2019-10371
-Gitlab Authentication Plugin does not invalidate the previous session and 
-create a new one upon successful login. This allows attackers able to 
-control or obtain another user’s pre-login session ID to impersonate them.
-
-
-SECURITY-796 / CVE-2019-10372
-Gitlab Authentication Plugin records the HTTP Referer header when the 
-authentication process starts and redirects users to that URL when the user 
-has finished logging in.
-
-This implements an open redirect, allowing malicious sites to implement a 
-phishing attack, with users expecting they have just logged in to Jenkins.
-
-
-SECURITY-879 / CVE-2019-10373
-Build Pipeline Plugin does not properly escape variables in views, 
-resulting in a stored cross-site scripting vulnerability exploitable by 
-users with permission to configure build pipelines.
-
-This vulnerability is only exploitable on Jenkins releases older than 2.146 
-or 2.138.2 due to the security hardening implemented in those releases.
-
-
-SECURITY-142 / CVE-2019-10374
-PegDown Formatter Plugin uses the PegDown library to implement support for 
-rendering Markdown formatted descriptions in Jenkins. It advertises 
-disabling of HTML to prevent cross-site scripting (XSS) as a feature.
-
-PegDown Formatter Plugin does not prevent the use of javascript: scheme in 
-URLs for links. This results in an XSS vulnerability exploitable by users 
-able to configure entities with descriptions or similar properties that are 
-rendered by the configured markup formatter.
-
-
-SECURITY-569 / CVE-2019-10375
-File System SCM Plugin allows users able to configure jobs to read 
-arbitrary files from the Jenkins master, even if the job is running on an 
-agent.
-
-
-SECURITY-751 / CVE-2019-10376
-Wall Display Master Project Plugin does not properly escape the customTheme 
-query parameter, resulting in a reflected cross-site scripting vulnerability.
-
-
-SECURITY-1099 / CVE-2019-10377
-Avatar Plugin does not implement a permission check for the HTTP URL used 
-to replace user avatars. This allows any user with Overall/Read permission 
-to change any other user’s avatar, in addition to their own.
-
-
-SECURITY-1428 / CVE-2019-10378
-TestLink Plugin stores credentials unencrypted in its global configuration 
-file hudson.plugins.testlink.TestLinkBuilder.xml on the Jenkins master. 
-These credentials can be viewed by users with access to the master file 
-system.
-
-
-SECURITY-591 / CVE-2019-10379
-Google Cloud Messsaging Notification Plugin stores an API key unencrypted 
-in its global configuration file org.jenkinsci.plugins.gcm.im.GcmPublisher.
-xml on the Jenkins master. These credentials can be viewed by users with 
-access to the master file system.
-
-
-SECURITY-922 / CVE-2019-10380
-Simple Travis Pipeline Runner Plugin defines a custom whitelist for scripts 
-protected by the Script Security sandbox.
-
-This custom whitelist allows the use of methods that can be used to bypass 
-Script Security sandbox protection. This results in arbitrary code 
-execution on any Jenkins instance with this plugin installed.
-
-
-SECURITY-931 / CVE-2019-10381
-Codefresh Integration Plugin unconditionally disables SSL/TLS certificate 
-validation for the entire Jenkins master JVM.
-
-
-SECURITY-1376 / CVE-2019-10382
-VMware Lab Manager Slaves Plugin unconditionally disables SSL/TLS 
-certificate validation for the entire Jenkins master JVM.
-
-
-SECURITY-1430 / CVE-2019-10385
-eggPlant Plugin stores credentials unencrypted in job config.xml files on 
-the Jenkins master. These credentials can be viewed by users with Extended 
-Read permission, or access to the master file system.
-
-
-SECURITY-1008 / CVE-2019-10386 (CSRF), CVE-2019-10387 (permission check)
-XL TestView Plugin does not perform permission checks on a method 
-implementing form validation. This allows users with Overall/Read access to 
-Jenkins to connect to an attacker-specified URL using attacker-specified 
-credentials IDs obtained through another method, capturing credentials 
-stored in Jenkins.
-
-Additionally, this form validation method does not require POST requests, 
-resulting in a cross-site request forgery vulnerability.
-
-
-SECURITY-1053 / CVE-2019-10388 (CSRF), CVE-2019-10389 (permission check)
-A missing permission check in a form validation method in Relution 
-Enterprise Appstore Publisher Plugin allows users with Overall/Read 
-permission to initiate a connection test to an attacker-specified URL using 
-attacker-specified credentials and attacker-specified HTTP proxy 
-configuration.
-
-Additionally, the form validation method does not require POST requests, 
-resulting in a CSRF vulnerability.
-
+-- 
+Niels Möller. PGP-encrypted email is preferred. Keyid 368C6677.
+Internet email is subject to wholesale government surveillance.
