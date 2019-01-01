@@ -1,27 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/16/2
-Message-ID: <CALSkbjpG+QgQg4LRS5hMG-oZZ3uxTb4xeg8MCyc0dHED9jRLPg@mail.gmail.com>
-Date: Mon, 16 Dec 2019 14:15:35 +0000
-From: daniel gaspar <danielvazgaspar@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/01/1
+Message-ID: <20190101111540.20e73fbc@computer>
+Date: Tue, 1 Jan 2019 11:15:40 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2019-12414] Apache Incubator Superset medata data leak vulnerability
+Subject: wget / chromium: URL metadata and potential password leaks via extended filesystem attributes
 Content-Type: text/plain; charset=utf-8
 
-Severity: Low
+Hi,
 
-Vendor:
-The Apache Software Foundation
+Via some twitter discussions [1] I recently learned about a worrying
+behavior of wget and Chromium / Chrome.
 
-Product:
-Apache Incubator Superset
+The URL of downloads gets stored via filesystem attributes on systems
+that support Unix extended attributes.
 
-Versions Affected:
-Superset < 0.32
+You can see these attributes on Linux systems by running
+getfattr -d [filename]
+(The download URL is stored in a variable "user.xdg.origin.url")
 
-Description:
-A user can view database names that he has no access to on a dropdown list
-in SQLLab
+This is worrying for a number of reasons:
+* In combination with HTTP authentication a username and password can
+  be part of the URL (HTTP authentication can be accessed via an URL of
+  the form https://[username]:[password]@[hostname]/).
+* Sometimes URLs may contain secret tokens, e.g. private file shares on
+  a file hosting service.
+* In general storing metadata at unexpected places should be avoided.
 
-Mitigation:
-Superset users with version prior to 0.32 should upgrade to 0.32 or higher
+What's limiting this issue a bit is that tar does not by default store
+these extended attributes. I haven't tested other archiving tools.
 
+wget has released an update (1.20.1) and CVE-2018-20483 got assigned
+[2]. It changes the default behavior: extended attributes only get
+stored if a user explicitly enables it with a parameter. I believe this
+is a good solution.
+
+It's been reported to Chrome as well. (Currently private bug report,
+but given this was already discussed on Twitter I don't think this
+needs to be kept confidential.)
+
+It may be worthwhile checking if other tools share this behavior.
+
+[1] https://twitter.com/gynvael/status/1077671412847046657
+[2] https://lists.gnu.org/archive/html/bug-wget/2018-12/msg00034.html
+
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
