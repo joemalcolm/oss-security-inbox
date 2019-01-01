@@ -1,27 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/03/1
-Message-ID: <CAGUWgD97nkCGns=1JSAH+StSYtTaHPoF6bm5n8WXk=dKoFzN_A@mail.gmail.com>
-Date: Tue, 3 Dec 2019 07:54:54 +0200
-From: Georgi Guninski <gguninski@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: virtual consoles
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/01/4
+Message-ID: <20190101112042.GE7238@zira.vinc17.org>
+Date: Tue, 1 Jan 2019 12:20:42 +0100
+From: Vincent Lefevre <vincent@...c17.net>
+To: Jeffrey Walton <noloader@...il.com>
+Cc: oss-security@...ts.openwall.com, gmp-bugs@...lib.org
+Subject: Re: Asserts considered harmful (or GMP spills its sensitive information)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Dec 2, 2019 at 7:13 PM Tavis Ormandy <taviso@...il.com> wrote:
->
-> Hey List, we were discussing simple screen spoofing attacks today, and
-> whether we consider it a vulnerability or just social engineering. For
-> example, this paper on tricks Android malware can use to trick the user
-> into granting permissions to the wrong app.
->
+On 2018-12-31 14:38:17 -0500, Jeffrey Walton wrote:
+> On Mon, Dec 31, 2018 at 2:16 PM Vincent Lefevre <vincent@...c17.net> wrote:
+> >
+> > On 2018-12-31 13:03:27 -0500, Jeffrey Walton wrote:
+> > > The GMP library uses asserts to crash a program at runtime when
+> > > presented with data it did not expect. The library also ignores user
+> > > requests to remove asserts using Posix's -DNDEBUG. Posix asserts are a
+> > > deugging aide intended for developement, and using them in production
+> > > software ranges from questionable to insecure.
+> >
+> > That's much better than letting the program run erratically, with
+> > possible memory corruption and/or sensitive information leakage
+> > to unauthorized users. You'd better fix bugs in your program.
+> 
+> To play devil's advocate for this particular example, GMP could have
+> validated the parameters and refused to process the data. That is, the
+> function could have returned failure and avoided the potential
+> information leak.
 
-Precedence in mobile code:
+Unfortunately, this is not always possible, while keeping the original
+interface. Moreover, changing the interface can make the library
+slower, which could be an issue for GMP (the goal is to be as fast
+as possible, just like the C language was designed, where contrary
+to other languages, there's the notion of undefined behavior). If you
+don't like that, you can write a wrapper library that will sanitize
+all the inputs and implement error processing (e.g. where the return
+value contains an error code and the result, if any), and call this
+library instead of GMP.
 
-1. This exists in Android 9, I had hard time exiting fullscreen
-video player
-2. Mozilla fixed similar bug about 15 years ago.
-3. In 2001 internet exploder was remotely vulnerable and hitting
-control-alt-del was not easy:
+Said that, developers who forget to check whether they correctly
+follow the API conditions also forget to check failures. Thus this
+ends up with a similar issue (a crash).
 
-https://www.dslreports.com/forum/r1651258-Javascript-in-IE-may-spoof-the-whole-screen
-http://www.guninski.com/popspoof.html
+Moreover, some asserts may come from the detection of an inconsistent
+state. In this case, it is better to abort. Otherwise letting the
+program continue may have worse consequences.
+
+-- 
+Vincent Lefèvre <vincent@...c17.net> - Web: <https://www.vinc17.net/>
+100% accessible validated (X)HTML - Blog: <https://www.vinc17.net/blog/>
+Work: CR INRIA - computer arithmetic / AriC project (LIP, ENS-Lyon)
