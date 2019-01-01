@@ -1,4 +1,9 @@
-Received: (qmail 7406 invoked by uid 550); 22 Dec 2022 22:33:29 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2043" "Tuesday" "1" "January" "2019" "13:12:04" "+0000" "halfdog" "me@halfdog.net" "<2149-1546348324.866586@kBWv.VBuL.JgNP>" "45" "Re: [oss-security] Asserts considered harmful (or GMP spills its sensitive information)" "^Date:" nil nil "1" "2019010113:12:04" "[oss-security] Asserts considered harmful (or GMP spills its sensitive information)" (number mark "        me@halfdog.n Jan  1   45/2043  " thread-indent "\"Re: [oss-security] Asserts considered harmful (or GMP spills its sensitive information)\"\n") "<CAH8yC8m90KssanbHt+YmVt7iLOiwWHASDqRYW5TQGeNV2zWXDw@mail.gmail.com>" ("<CAH8yC8m90KssanbHt+YmVt7iLOiwWHASDqRYW5TQGeNV2zWXDw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 13466 invoked by uid 550); 1 Jan 2019 13:13:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,72 +11,62 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 13448 invoked from network); 1 Jan 2019 13:13:09 -0000
+In-reply-to: <CAH8yC8m90KssanbHt+YmVt7iLOiwWHASDqRYW5TQGeNV2zWXDw@mail.gmail.com>
+References: <CAH8yC8m90KssanbHt+YmVt7iLOiwWHASDqRYW5TQGeNV2zWXDw@mail.gmail.com>
+Comments: In-reply-to Jeffrey Walton <noloader@gmail.com>
+   message dated "Mon, 31 Dec 2018 13:03:27 -0500."
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Message-ID: <2149-1546348324.866586@kBWv.VBuL.JgNP>
+Date: Tue, 01 Jan 2019 13:12:04 +0000
+From: halfdog <me@halfdog.net>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32052 invoked from network); 22 Dec 2022 22:25:11 -0000
-Date: Thu, 22 Dec 2022 22:03:51 +0100
-Author: Steffen Nurpmeso <steffen@sdaoden.eu>
-From: Steffen Nurpmeso <steffen@sdaoden.eu>
+Subject: Re: [oss-security] Asserts considered harmful (or GMP spills its sensitive information)
 To: oss-security@lists.openwall.com
-Message-ID: <20221222210351.oQ5Sn%steffen@sdaoden.eu>
-In-Reply-To: <Y6SJDbKBk471KE4k@p183>
-References: <Y6SJDbKBk471KE4k@p183>
-Mail-Followup-To: oss-security@lists.openwall.com
-User-Agent: s-nail v14.9.24-377-g1137594da7
-OpenPGP: id=EE19E1C1F2F7054F8D3954D8308964B51883A0DD;
- url=https://ftp.sdaoden.eu/steffen.asc; preference=signencrypt
-BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
- the world can make no bugs.
-Subject: Re: [oss-security] [patch] proc.5: tell how to parse
- /proc/*/stat correctly
 
-..now sending this..
+Jeffrey Walton writes:
+> The GMP library uses asserts to crash a program at runtime
+> when presented with data it did not expect.  ...
 
-Shawn Webb wrote in
- <20221222150448.5wyrhot7ikhp75j7@mutt-hbsd>:
- |On Thu, Dec 22, 2022 at 03:44:45PM +0100, Jakub Wilk wrote:
- ...
- |We knew way back then the dangers of VFS-based wizardry. Did we lose
- |that knowledge somehow?
+For me, that seems to be the best way. In the end the discussion
+is mostly about if you value confidentiality and integrity over
+availability (and a little confidentiality as shown by you).
 
-I think often problems materialize due to insufficient knowledge
-of special cases and/or the complete picture.  And you need to dig
-around in kernel sources to find answers, and for Linux in
-particular "one thing (sysfs/procfs entry) has that name and uses
-these values ranges here, and those over there".  (From my
-superficial view doing backlight / volume / fan control.)
-Names are also not self-describing, and then i very much like
-FreeBSD's sysctl(8) -d flag, as every sysctl has a documentation
-string entry; one can even do "sysctl -a -d".  For example
+Usually for highly secure systems (those where availability
+is top priority are quite often safety-critical, not security),
+you can mitigate effects of such a DoS permanently (by fixing
+the program) but you cannot reverse the effects of leaked data,
+which happens more easily by corrupting/manipulating a target
+program state and get the data exfiltrated by the target itself
+than gaining access to the machine another way and read (unnoticed)
+core dumps created even via another mechanism.
 
-  kern.evdev.rcpt_mask: Who is receiving events: bit0 - sysmouse, bit1 - kbdmux, bit2 - mouse hardware, bit3 - keyboard hardware
+Also cleaning up corrupted data is often much more expensive
+than having some outage and then start again. This is what your
+24/7 devops team is for (with highly secure systems).
 
-Even manual references (punctuation issue)
 
-  vm.overcommit: Configure virtual memory overcommit behavior. See tuning(7) for details.
+So in my opinion your example, even when it demonstrates a small
+information leak on aborting, is even a better example, why
+aborting was the right thing to do: on the first highly secure
+system, where your software aborted, the malfunction was detected
+immediately and easily. Thus it was possible to fix it timely
+and you avoided having broken software running for years without
+getting noticed (by developers, operators or worse: attackers).
 
-But of course for one BSD is a more holistic approach, and then
-this does not prevent errors from happening.  But -- how often
-have i wished i would get just a little information at a glance!
+Note 1: The only exception for functions NOT aborting on corrupted
+data are secure "validate-data-functions" or "parse-functions"
+(if they provide secure data validation also).
 
-Some interfaces are very old, established and more or less stable,
-and origin in a time where many problems where not yet
-"completely" intellectually penetrated.  You need to move the
-entire infrastructure to make this better.  .. Appears strange in
-a so rapidly moving environment like Linux kernel, with >50 MB
-merges for a minor revision..  All those young dudes which eagerly
-carry the news to see their footsteps disappearing in the sand,
-heh!!  And then lots of software is done as a hobby, famous xkcd
-"dependency" thing[1].
+Note 2: Little off-topic, but in the same line more APIs should
+abort on insane requests. So for example I do not understand, why
+read(2) should EFAULT on bad addresses instead of SEGV. The only
+thing I use this feature for is to probe memory maps inside chroots
+(or where /proc/self/maps is inaccessible for other reasons).
+But maybe EFAULT is a very useful POSIX feature in use cases
+I did not think about yet.
 
-  [1] https://xkcd.com/2347/
+hd
 
-P.S.: shawn.webb@ possibly means introducing something like libXO
-for (some / all?) procfs entries?  (And _i_ long dream of
-a FILE.txt with the equivalent to sysctl(8)'s -d.)
 
---steffen
-|
-|Der Kragenbaer,                The moon bear,
-|der holt sich munter           he cheerfully and one by one
-|einen nach dem anderen runter  wa.ks himself off
-|(By Robert Gernhardt)
