@@ -1,129 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/26/2
-Message-ID: <20190626141358.GK7898@sasha-vm>
-Date: Wed, 26 Jun 2019 10:13:58 -0400
-From: Sasha Levin <sashal@...nel.org>
-To: oss-security@...ts.openwall.com
-Cc: gregkh@...uxfoundation.org
-Subject: linux-distros membership application - Microsoft
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/01/11
+Message-ID: <CAH8yC8mqdkjQ0pF2QadoMjnZS47SrrZS+H8HMOKv2GqLwcXh0A@mail.gmail.com>
+Date: Tue, 1 Jan 2019 11:45:39 -0500
+From: Jeffrey Walton <noloader@...il.com>
+To: Torbjörn Granlund <tg@...lib.org>
+Cc: Niels Möller <nisse@...ator.liu.se>,  oss-security@...ts.openwall.com, gmp-bugs@...lib.org
+Subject: Re: Asserts considered harmful (or GMP spills its sensitive information)
 Content-Type: text/plain; charset=utf-8
 
-> 1. Be an actively maintained Unix-like operating system distro with
-> substantial use of Open Source components
+On Tue, Jan 1, 2019 at 11:19 AM Torbjörn Granlund <tg@...lib.org> wrote:
+>
+>   The assert that Jeffrey has hit is in sec_powm.c,
+>
+>     ASSERT_ALWAYS (enb >= windowsize);
+>
+>   As far as I can see, "enb" is the input argument to the win_size function,
+>   and "windowsize" is the return value. I'm waiting for more information,
+>   since it works fine in my build. Possible explanations I see are
+>
+> A reasonable assumption is that this user has modified the sources to
+> cause this bug.  The motive would be to support his auxesis about how
+> insecure GMP is.
 
-Microsoft provides several distro-like builds which are not derivative
-of an existing distribution that are based on open source components:
+My bad, I did not mean to imply this was a problem with GMP only. GMP
+has a lot of company, like GnuPG and OpenSSL.
 
- - Azure Sphere
-   (https://azure.microsoft.com/en-us/services/azure-sphere/): This
-   Linux-based IoT device provides, among various things, security
-   updates to deployed IoT devices. As the project is about to step out
-   of public preview into the GA stage, we expect millions of these
-   devices to be publicly used.
+I believe the assumption  is incorrect. The sources were not modified,
+and a standard (?) 'configure; make; make check' was used. The
+reproducer script is available at
+https://www.openwall.com/lists/oss-security/2018/12/31/1; see
+test-gmp.sh.txt.
 
- - Windows Subsystem for Linux v2
-   (https://devblogs.microsoft.com/commandline/wsl-2-is-now-available-in-windows-insiders/):
-   A Linux based distro that runs as a virtual machine on top of Windows
-   hosts. WSL2 is currently available for public preview and scheduled
-   for GA early 2020.
+For completeness here's a quick audit of some security libraries.
+Botan, Crypto++ and OpenSSL use -DNDEBUG to remove asserts from
+production/release builds. They use asserts as a debugging/diagnostic
+aide. They don't depend on crashing the program and risk egressing
+sensitive information outside the app's security boundary.
 
- - Products such as Azure HDInsight
-   (https://azure.microsoft.com/en-us/free/hdinsight) and the Azure
-   Kubernetes Service
-   (https://azure.microsoft.com/en-us/services/kubernetes-service/)
-   provide public access to a Linux based distribution.
+gmp-6.1.2$ grep -iIR assert | wc -l
+4867
 
-> 2. Have a userbase not limited to your own organization
+openssl-1.0.2$ grep -iIR assert | wc -l
+436
 
-Microsoft customers have millions of cores running the various workloads
-described above.
+libgcrypt-1.8.4$ grep -iIR assert | wc -l
+245
 
-> 3. Have a publicly verifiable track record, dating back at least 1
-> year and continuing to present day, of fixing security issues
-> (including some that had been handled on (linux-)distros, meaning that
-> membership would have been relevant to you) and releasing the fixes
-> within 10 days (and preferably much less than that) of the issues
-> being made public (if it takes you ages to fix an issue, your users
-> wouldn't substantially benefit from the additional time, often around
-> 7 days and sometimes up to 14 days, that list membership could give
-> you).
+gnupg-2.2.12$ grep -iIR assert | wc -l
+1337
 
-Microsoft has decades long history of addressing security issues via
-MSRC (https://www.microsoft.com/en-us/msrc). While we are able to
-quickly (<1-2 hours) create a build to address disclosed security
-issues, we require extensive testing and validation before we make these
-builds public. Being members of this mailing list would provide us the
-additional time we need for extensive testing.
+cryptopp-8.0$ grep -iIR assert | wc -l
+1123
 
-> 4. Not be (only) downstream or a rebuild of another distro (or else we
-> need convincing additional justification of how the list membership
-> would enable you to release fixes sooner, presumably not relying on
-> the upstream distro having released their fixes first?)
+botan-2.8$ grep -iIR assert | wc -l
+746
 
-None of our builds are based on an existing distribution. For few of
-these workloads we have a very custom kernel and userspace (such as for
-Azure Sphere), while some share a more conventional kernel/userspace
-configuration.
-
-> 5. Be a participant and preferably an active contributor in relevant
-> public communities (most notably, if you're not watching for issues
-> being made public on oss-security, which are a superset of those that
-> had been handled on (linux-)distros, then there's no valid reason for
-> you to be on (linux-)distros)
-
-We follow closely public discussions with regards to security issues
-that would affect us. While there was only a minor contribution back to
-these lists mostly as we did not have any value to add back.
-
-During past years I've reported multiple security issues which were
-assigned CVEs.
-
-> 6. Accept the list policy (see above)
-
-We accept the list's policy.
-
-> 7. Be able and willing to contribute back (see above), preferably in
-> specific ways announced in advance (so that you're responsible for a
-> specific area and so that we know what to expect from which member),
-> and demonstrate actual contributions once you've been a member for a
-> while
-
-We understand this need and will be contributing back. Looking at the
-list of vacant positions I can suggest the following, but I suspect that
-existing list members will have better suggestions.
-
-Technical:
-
-3. Review and/or test the proposed patches and point out potential
-issues with them (such as incomplete fixes for the originally reported
-issues, additional issues you might notice, and newly introduced bugs),
-and inform the list of the work done even if no issues were encountered
-- primary: Amazon, backup: vacant
-
-Administrative:
-
-3. Evaluate if the issue (or one of the issues) is effectively already
-public (e.g., a fix is committed upstream with a descriptive message)
-or/and is low severity and thus the report (or its portion pertaining to
-the issue) should be made public right away for one or both of these
-reasons, get a few other list members to confirm this understanding, and
-if there are no objections then communicate this strong preference to
-the reporter - primary: CloudLinux, backup: vacant
-
-> 8. Be able and willing to handle PGP-encrypted e-mail
-
-I am able and willing to handle PGP-encrypted e-mail.
-
-> 9. Have someone already on the private list, or at least someone else
-> who has been active on oss-security for years but is not affiliated
-> with your distro nor your organization, vouch for at least one of the
-> people requesting membership on behalf of your distro (then that one
-> vouched-for person will be able to vouch for others on your team, in
-> case you'd like multiple people subscribed)
-
-Greg Kroah-Hartman <gregkh@...uxfoundation.org> would vouch for me
-(Sasha Levin <sashal@...nel.org>).
-
---
-Thanks,
-Sasha
+Cheers, Jeff
