@@ -1,32 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/20/5
-Message-ID: <CAMufup4AocOaLbmDttDrMdEfx9QscBwEKcK4tgAYtacvq90TkA@mail.gmail.com>
-Date: Fri, 20 Sep 2019 15:33:17 +0200
-From: Juan Pablo Santos Rodríguez <juanpablo@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/01/2
+Message-Id: <3F256A9C-EBE9-420C-B8F6-32AD39A664C5@gmail.com>
+Date: Mon, 31 Dec 2018 18:38:36 -0800
+From: Matthew Fernandez <matthew.fernandez@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2019-12404] Apache JSPWiki Cross-site scripting vulnerability on InfoContent.jsp
+Cc: Jeffrey Walton <noloader@...il.com>, gmp-bugs@...lib.org
+Subject: Re: Asserts considered harmful (or GMP spills its sensitive information)
 Content-Type: text/plain; charset=utf-8
 
- Severity
-Medium
 
-Vendor
-The Apache Software Foundation
+> On Dec 31, 2018, at 11:38, Jeffrey Walton <noloader@...il.com> wrote:
+> 
+> On Mon, Dec 31, 2018 at 2:16 PM Vincent Lefevre <vincent@...c17.net <mailto:vincent@...c17.net>> wrote:
+>> 
+>> On 2018-12-31 13:03:27 -0500, Jeffrey Walton wrote:
+> 
+>>> This is the first point of unwanted data egress. Sensitive information
+>>> like user passwords and keys can be written to the filesystem
+>>> unprotected.
+>> 
+>> This can occur with any program, even not using asserts, e.g. due to
+>> a segmentation fault (which may happen as a consequence of not using
+>> asserts, with possibly worse consequences).
+>> 
+>> If you don't want a core file, then you can instruct the kernel not
+>> to write a core file. See getrlimit.
+> 
+> To play devil's advocate again, that strategy requires every user to
+> have the knowledge. If RTFM was going to worked, It should have
+> happened in the last 50 years or so.
+> 
+> Refusing to process the data and failing the API call requires no
+> knowledge on the user's part.
 
-Versions Affected
-Apache JSPWiki up to 2.11.0.M4
-
-Description
-A carefully crafted plugin link invocation could trigger an XSS
-vulnerability on Apache JSPWiki, related to InfoContent.jsp, which could
-allow the attacker to execute javascript in the victim's browser and get
-some sensitive information about the victim.
-
-Mitigation
-Apache JSPWiki users should upgrade to 2.11.0.M5 or later.
-
-Credit
-This issue was discovered by ADLab of VenusTech.
-
-rel: https://jspwiki-wiki.apache.org/Wiki.jsp?page=CVE-2019-12404
-
+I don’t have a dog in this fight, but you referenced high integrity software (though I guess what is meant is confidentiality rather than integrity in this case) and then say we cannot rely on people to RTFM. While I don’t doubt there are users who will fail to understand the consequences of having core dumps enabled, this is just one of many ways to leak information in a non-hardened system. E.g. you can attach to the victim process with gdb/ptrace and simply read its memory, if the sysadmin has not blocked this with Yama or similar. Could you elaborate on the threat model you have in mind?
