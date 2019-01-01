@@ -1,48 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/10/4
-Message-ID: <20190510104242.GA19388@localhost.localdomain>
-Date: Fri, 10 May 2019 03:42:42 -0700
-From: Qualys Security Advisory <qsa@...lys.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: System Down: A systemd-journald exploit
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/01/3
+Message-ID: <nn5zv8prfe.fsf@armitage.lysator.liu.se>
+Date: Tue, 01 Jan 2019 12:07:17 +0100
+From: nisse@...ator.liu.se (Niels Möller)
+To: Jeffrey Walton <noloader@...il.com>
+Cc: oss-security@...ts.openwall.com,  gmp-bugs@...lib.org
+Subject: Re: Asserts considered harmful (or GMP spills its sensitive information)
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Jeffrey Walton <noloader@...il.com> writes:
 
-Our systemd-journald exploit for CVE-2018-16865 and CVE-2018-16866 is
-now available at:
+> The GMP library uses asserts to crash a program at runtime when
+> presented with data it did not expect. The library also ignores user
+> requests to remove asserts using Posix's -DNDEBUG. Posix asserts are a
+> deugging aide intended for developement, and using them in production
+> software ranges from questionable to insecure.
 
-https://www.qualys.com/2019/05/09/system-down/system-down.tar.gz
+Crashing in a controlled fashion may also be *more* secure that
+continuing execution with undefined results. Depending on circumstances,
+of course.
 
-It is also attached to this email. A few notes about this exploit:
+I read the general statement "asserts considered harmful" as your
+personal opionion, likely based on experience with very different
+development projects than I'm involved with. And gmp-bugs isn't really
+the right place for that debate (and neither is the nettle mailinglist).
 
-- It supports several targets by default (vulnerable versions of Debian,
-  Ubuntu, Fedora, CentOS), and it should be relatively easy to add more
-  targets.
+> Second, the SIGABRT terminates the process and can write a core file.
 
-- When adding a new amd64 target, use the "free_hook" method if possible
-  (if located at a multiple of 16 plus 8, as explained in our advisory);
-  for various reasons, the alternative "stderr_chain" method is not as
-  reliable as "free_hook" and may therefore take longer to succeed.
+A security sensitive application can easily disable generation of core
+files, using setrlimit (on the linux kernel, prctl may also be useful).
+That's all part of crashing in a *controlled* fashion on assertion
+failures. As far as I'm aware, disabling core dumps is a fairly common
+practice in security sensitive applications.
 
-- When adding and testing a new target, you may want to set
-  "StartLimitInterval=1s" and "StartLimitBurst=10" (for example) in
-  "systemd-journald.service": the exploit will detect this and
-  brute-force faster.
+(And besides, most systems have zero ulimit -c as the system default
+these days. Which makes sense to me (any application might handle data
+that is sensitive to the user), even though as a developer, it's
+annoying with extra hoops required to get proper core dumps, including
+disabling the core dump collection "services" you mention).
 
-- If the exploit dies because "No journal files were opened due to
-  insufficient permissions", the "wall" method can be used instead (via
-  the "-w" switch). Our exploit currently implements the wall method
-  "ssh 127.0.0.1", but alternative methods can be implemented
-  ("utempter" and "gnome-pty-helper", for example).
+And as Vincent says, there are many ways to crash due to bugs, without
+triggering any assertion failure. And you should avoid generating core
+dumps for those crashes too.
 
-- To test the default information-leak method even if "No journal files
-  were opened due to insufficient permissions", it is enough to create
-  /var/log/journal/ (as explained in "man systemd-journald").
-
-Thank you very much! With best regards,
+Regards,
+/Niels
 
 -- 
-the Qualys Security Advisory team
-
-Download attachment "system-down.tar.gz" of type "application/gzip" (45694 bytes)
+Niels Möller. PGP-encrypted email is preferred. Keyid 368C6677.
+Internet email is subject to wholesale government surveillance.
