@@ -1,32 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/24/3
-Message-ID: <20190424161241.GB13360@iolanthe>
-Date: Wed, 24 Apr 2019 11:12:42 -0500
-From: Jamie Strandboge <jamie@...onical.com>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Cc: security@...ntu.com, mheon@...hat.com, paul@...l-moore.com
-Subject: CVE Request: golang-seccomp incorrectly handles multiple syscall arguments
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/01/10
+Message-ID: <86o990wdu4.fsf@shell.gmplib.org>
+Date: Tue, 01 Jan 2019 17:18:59 +0100
+From: tg@...lib.org (Torbjörn Granlund)
+To: nisse@...ator.liu.se (Niels Möller)
+Cc: Jeffrey Walton <noloader@...il.com>,  oss-security@...ts.openwall.com,  gmp-bugs@...lib.org
+Subject: Re: Asserts considered harmful (or GMP spills its sensitive information)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+  The assert that Jeffrey has hit is in sec_powm.c, 
 
-https://github.com/seccomp/libseccomp-golang/issues/22 describes a bug where
-golang-seccomp incorrectly generates BPFs which OR multiple arguments rather
-than ANDing them. This bug was fixed here:
+    ASSERT_ALWAYS (enb >= windowsize);
 
-https://github.com/seccomp/libseccomp-golang/commit/06e7a29f36a34b8cf419aeb87b979ee508e58f9e
+  As far as I can see, "enb" is the input argument to the win_size function,
+  and "windowsize" is the return value. I'm waiting for more information,
+  since it works fine in my build. Possible explanations I see are
 
-which is currently only in master and not the most current 0.9.0 release. Since
-golang-seccomp is meant to be a golang package to facilitate reducing the
-syscall surface for applications and this bug produces incorrect BPF to achieve
-that when specifying more that 2 syscall arguments, this probably deserves a
-CVE assignment so distributions will see the issue and incorporate the fix into
-their stable releases. I've included upstream developers Matthew and Paul in CC
-for comment.
+A reasonable assumption is that this user has modified the sources to
+cause this bug.  The motive would be to support his auxesis about how
+insecure GMP is.
 
-Thanks
+Let's move on.  No bug to be found here.
 
 -- 
-Jamie Strandboge             | http://www.canonical.com
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Torbjörn
+Please encrypt, key id 0xC8601622
