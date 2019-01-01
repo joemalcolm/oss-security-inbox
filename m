@@ -1,24 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/03/3
-Message-ID: <878f6a682e3b533c003e3c06569784b1f442ad67.camel@gnome.org>
-Date: Mon, 03 Jun 2019 11:24:19 -0500
-From: Federico Mena Quintero <federico@...me.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/01/8
+Message-ID: <2149-1546348324.866586@kBWv.VBuL.JgNP>
+Date: Tue, 01 Jan 2019 13:12:04 +0000
+From: halfdog <me@...fdog.net>
 To: oss-security@...ts.openwall.com
-Cc: Albert Astals Cid <aacid@....org>
-Subject: Crash / fix in bzip2
+Subject: Re: Asserts considered harmful (or GMP spills its sensitive information)
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Jeffrey Walton writes:
+> The GMP library uses asserts to crash a program at runtime
+> when presented with data it did not expect.  ...
 
-oss-fuzz found a crasher in bzip2, and Albert Astals Cid has written a
-patch for it.  The full context of the bug is here:
+For me, that seems to be the best way. In the end the discussion
+is mostly about if you value confidentiality and integrity over
+availability (and a little confidentiality as shown by you).
 
-https://gitlab.com/federicomenaquintero/bzip2/merge_requests/1
+Usually for highly secure systems (those where availability
+is top priority are quite often safety-critical, not security),
+you can mitigate effects of such a DoS permanently (by fixing
+the program) but you cannot reverse the effects of leaked data,
+which happens more easily by corrupting/manipulating a target
+program state and get the data exfiltrated by the target itself
+than gaining access to the machine another way and read (unnoticed)
+core dumps created even via another mechanism.
 
-The patch itself is this:
+Also cleaning up corrupted data is often much more expensive
+than having some outage and then start again. This is what your
+24/7 devops team is for (with highly secure systems).
 
-https://gitlab.com/federicomenaquintero/bzip2/commit/15c918f1de00588321c857a10d0afdbaf96e4ce9
 
-  Federico
+So in my opinion your example, even when it demonstrates a small
+information leak on aborting, is even a better example, why
+aborting was the right thing to do: on the first highly secure
+system, where your software aborted, the malfunction was detected
+immediately and easily. Thus it was possible to fix it timely
+and you avoided having broken software running for years without
+getting noticed (by developers, operators or worse: attackers).
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Note 1: The only exception for functions NOT aborting on corrupted
+data are secure "validate-data-functions" or "parse-functions"
+(if they provide secure data validation also).
+
+Note 2: Little off-topic, but in the same line more APIs should
+abort on insane requests. So for example I do not understand, why
+read(2) should EFAULT on bad addresses instead of SEGV. The only
+thing I use this feature for is to probe memory maps inside chroots
+(or where /proc/self/maps is inaccessible for other reasons).
+But maybe EFAULT is a very useful POSIX feature in use cases
+I did not think about yet.
+
+hd
+
+
