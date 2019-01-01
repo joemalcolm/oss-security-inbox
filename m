@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1543" "Friday" "20" "November" "2015" "12:10:57" "-0500" "Daniel Micay" "danielmicay@gmail.com" "<564F5421.2070904@gmail.com>" "38" "Re: [oss-security] seccomp filters without PR_SET_NO_NEW_PRIVS" nil nil nil "11" "2015112017:10:57" "[oss-security] seccomp filters without PR_SET_NO_NEW_PRIVS" (number mark "U       danielmicay@ Nov 20   38/1543  " thread-indent "\"Re: [oss-security] seccomp filters without PR_SET_NO_NEW_PRIVS\"\n") "<564F51BB.7040801@redhat.com>" ("<564F51BB.7040801@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2123" "Tuesday" "1" "January" "2019" "12:20:42" "+0100" "Vincent Lefevre" "vincent@vinc17.net" "<20190101112042.GE7238@zira.vinc17.org>" "41" "[oss-security] Re: Asserts considered harmful (or GMP spills its sensitive information)" "^Cc:" nil nil "1" "2019010111:20:42" "[oss-security] Re: Asserts considered harmful (or GMP spills its sensitive information)" (number mark "        vincent@vinc Jan  1   41/2123  " thread-indent "\"[oss-security] Re: Asserts considered harmful (or GMP spills its sensitive information)\"\n") "<CAH8yC8=-Lt0_p2sTnqhJOWjapJ84LNR=8zJFF5oWs=-4xgxigg@mail.gmail.com>" ("<CAH8yC8m90KssanbHt+YmVt7iLOiwWHASDqRYW5TQGeNV2zWXDw@mail.gmail.com>" "<20181231191642.GB7238@zira.vinc17.org>" "<CAH8yC8=-Lt0_p2sTnqhJOWjapJ84LNR=8zJFF5oWs=-4xgxigg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 2037 invoked by uid 550); 20 Nov 2015 17:11:14 -0000
+Received: (qmail 23849 invoked by uid 550); 1 Jan 2019 11:32:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,71 +11,66 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 2016 invoked from network); 20 Nov 2015 17:11:14 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-type;
-        bh=faxqa0BjvS0q54K9SmpXh1o6WQr7Xl5wVDtIu8tiz/A=;
-        b=cOMcaI9nEWYo2UecNZNd9ZVYPX7IA19+5ZM7oNDucF5xcFsJFac7lVm+3H5o2KIj0+
-         iQQM3gZEBTMYOxyWZ4BuuwUz7rfkq7Mcn5iWfdqXFeX/YxWCDZfBmSJiF1MKa6kPWAFL
-         gxMBdsK4R/8c+wQd25INoEBb5CJsSz9u05cGEtRkMsdVp643UiKy7cSXbDTLIXnp9LCG
-         fJIlSTObORX8rVO8hJwlXVh1U2U9XaWW5NgJ7ywnRuBUzQFvJRkitLToTHmt+1si9rsv
-         NqbMcALON8xsOFav2sayOHtXQRK4oyzT8boqKsv3vn5EK3hzD6GkF4TAl9xpTcq9rA1a
-         Gfqg==
-X-Received: by 10.140.43.135 with SMTP id e7mr14057724qga.11.1448039462127;
-        Fri, 20 Nov 2015 09:11:02 -0800 (PST)
-To: oss-security@lists.openwall.com
-References: <564F51BB.7040801@redhat.com>
-From: Daniel Micay <danielmicay@gmail.com>
-X-Enigmail-Draft-Status: N1110
-Message-ID: <564F5421.2070904@gmail.com>
-Date: Fri, 20 Nov 2015 12:10:57 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
+Received: (qmail 10154 invoked from network); 1 Jan 2019 11:20:56 -0000
+Message-ID: <20190101112042.GE7238@zira.vinc17.org>
+Mail-Followup-To: Jeffrey Walton <noloader@gmail.com>,
+	oss-security@lists.openwall.com, gmp-bugs@gmplib.org
+References: <CAH8yC8m90KssanbHt+YmVt7iLOiwWHASDqRYW5TQGeNV2zWXDw@mail.gmail.com>
+ <20181231191642.GB7238@zira.vinc17.org>
+ <CAH8yC8=-Lt0_p2sTnqhJOWjapJ84LNR=8zJFF5oWs=-4xgxigg@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <564F51BB.7040801@redhat.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="Jp0f781L2m4kKjwFlQ4ikLLxb9avO5xP8"
-Subject: Re: [oss-security] seccomp filters without PR_SET_NO_NEW_PRIVS
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAH8yC8=-Lt0_p2sTnqhJOWjapJ84LNR=8zJFF5oWs=-4xgxigg@mail.gmail.com>
+X-Mailer-Info: https://www.vinc17.net/mutt/
+User-Agent: Mutt/1.11.1+82 (86db373c) vl-114418 (2018-12-29)
+Cc: oss-security@lists.openwall.com, gmp-bugs@gmplib.org
+Date: Tue, 1 Jan 2019 12:20:42 +0100
+From: Vincent Lefevre <vincent@vinc17.net>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: Asserts considered harmful (or GMP spills its sensitive
+ information)
+To: Jeffrey Walton <noloader@gmail.com>
 
---Jp0f781L2m4kKjwFlQ4ikLLxb9avO5xP8
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+On 2018-12-31 14:38:17 -0500, Jeffrey Walton wrote:
+> On Mon, Dec 31, 2018 at 2:16 PM Vincent Lefevre <vincent@vinc17.net> wrote:
+> >
+> > On 2018-12-31 13:03:27 -0500, Jeffrey Walton wrote:
+> > > The GMP library uses asserts to crash a program at runtime when
+> > > presented with data it did not expect. The library also ignores user
+> > > requests to remove asserts using Posix's -DNDEBUG. Posix asserts are a
+> > > deugging aide intended for developement, and using them in production
+> > > software ranges from questionable to insecure.
+> >
+> > That's much better than letting the program run erratically, with
+> > possible memory corruption and/or sensitive information leakage
+> > to unauthorized users. You'd better fix bugs in your program.
+> 
+> To play devil's advocate for this particular example, GMP could have
+> validated the parameters and refused to process the data. That is, the
+> function could have returned failure and avoided the potential
+> information leak.
 
-On 20/11/15 12:00 PM, Florian Weimer wrote:
-> Is there a way on current Linux kernels to install a seccomp filter
-> which is reset on execve and therefore does not require
-> PR_SET_NO_NEW_PRIVS for security reasons?  (The filter could restrict to
-> execve if necessary.)
+Unfortunately, this is not always possible, while keeping the original
+interface. Moreover, changing the interface can make the library
+slower, which could be an issue for GMP (the goal is to be as fast
+as possible, just like the C language was designed, where contrary
+to other languages, there's the notion of undefined behavior). If you
+don't like that, you can write a wrapper library that will sanitize
+all the inputs and implement error processing (e.g. where the return
+value contains an error code and the result, if any), and call this
+library instead of GMP.
 
-No, there's only the ability to do it with CAP_SYS_ADMIN without
-PR_SET_NO_NEW_PRIVS.
+Said that, developers who forget to check whether they correctly
+follow the API conditions also forget to check failures. Thus this
+ends up with a similar issue (a crash).
 
+Moreover, some asserts may come from the detection of an inconsistent
+state. In this case, it is better to abort. Otherwise letting the
+program continue may have worse consequences.
 
---Jp0f781L2m4kKjwFlQ4ikLLxb9avO5xP8
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAEBCAAGBQJWT1QkAAoJEPnnEuWa9fIqZx0P/jBj7tRxdF8RoCz9ksn0Uq1H
-KOxVX3YM57toEkpM3oYI6acvYhYwVyUR5Mh2DmlePCYqJy8EtzzCcGO130o7Xb2f
-ti//0WUpcEVKPBizNYtrDIO82AgE+QOdSrj6LLAbOCfh8XNquF0h+Dj29Z76M0db
-CdnuxHJUEd104l++nvK0lOjLV4tjI/lH3RM0VAVqNM12/Jw33gMv93Zu7nmFepD1
-FiXOeKfAHzhVOJPnKHsWO9sVBePjHTRyCCFtSuYm8sTIIWEt7SFDdHo33Fu7/u3U
-vWen5cyhZ5vFwrXkO4KO5INpLi/muZwVHeaKzhxIIGtqXGNFpJG5+ZnYCzutR8DC
-tNU3Mr+4yk4tv8VBym5iS2L6cQQt3zV+HP4PZYTI5POEbgS076R2Tis+P5NNAeUc
-xbmZRFXnXE1vfE0cdjYup1PCb9mCnJdDAryzXXLKM6GTgSqTN33pGKwIlKLskBw6
-ixVYqeG0FxbK0IOvwHnSU/2S5PziX8fVbJ6aoujwlCdWi62F2Y6prXoalD7jFmV2
-4bp4R0mmcYGz/E4jH7K7l8ASFuvAlXMApPIuFzoR1zgNXCAnPPtu6CRyM0oe+7sm
-vGQm80gK16ixFTCXvw2LSQxs2Hxn9ceGbZ/vAYnqR1VPxEPdyA8pK0o4hCci2O9M
-EWGLDYyw0+vk2e+TienN
-=Gudg
------END PGP SIGNATURE-----
-
---Jp0f781L2m4kKjwFlQ4ikLLxb9avO5xP8--
+-- 
+Vincent Lefèvre <vincent@vinc17.net> - Web: <https://www.vinc17.net/>
+100% accessible validated (X)HTML - Blog: <https://www.vinc17.net/blog/>
+Work: CR INRIA - computer arithmetic / AriC project (LIP, ENS-Lyon)
