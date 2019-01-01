@@ -1,55 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/20/1
-Message-ID: <20191120124425.GA25554@openwall.com>
-Date: Wed, 20 Nov 2019 13:44:25 +0100
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Mitigating malicious packages in gnu/linux
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/01/6
+Message-ID: <nnwonoob4v.fsf@armitage.lysator.liu.se>
+Date: Tue, 01 Jan 2019 12:44:32 +0100
+From: nisse@...ator.liu.se (Niels Möller)
+To: Jeffrey Walton <noloader@...il.com>
+Cc: oss-security@...ts.openwall.com,  gmp-bugs@...lib.org
+Subject: Re: Asserts considered harmful (or GMP spills its sensitive information)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Nov 19, 2019 at 01:33:48PM +0200, Georgi Guninski wrote:
-> As end user and contributor of gnu/linux, I am concerned about malicious
-> packages (either hostile developers or hacked developers or another reason)
-> and have two questions:
-> 
-> * What do linux vendors to avoid malicious packages?
+Vincent Lefevre <vincent@...c17.net> writes:
 
-Back when Openwall GNU/*/Linux was being actively developed, I used to
-review each contributor's changes before making them public.  I also
-(re-)verified authenticity of third-party source tarballs instead of
-blindly trusting whatever the contributor could have uploaded to us.
-(I'd do the same now, but without active development there's simply
-nothing to review lately.)
+> If you
+> don't like that, you can write a wrapper library that will sanitize
+> all the inputs and implement error processing (e.g. where the return
+> value contains an error code and the result, if any), and call this
+> library instead of GMP.
 
-Of course, this approach doesn't scale as-is (with just one person to
-review and publish everything) to larger distros, but some kind of peer
-review can and should be present.
+Regarding invalid inputs, in the GMP sources, validity checks on
+function inputs generally use the ASSERT macro, which is disabled by
+default. Non-assert validity checks with a return value are used only
+when the check is non-trivial, e.g., for the mpz_invert function which
+requires arguments to be co-prime. All easy validity checks (null
+pointers, divide by zero, and the like) are left as the responsibility
+of the application.
 
-> * As end user what can I do to mitigate malicious packages?
+In a few places, GMP sources use ASSERT_ALWAYS. This is for internal
+consistency checks, or when deveolopers believe a condition is
+arithmetically impossible, but really would like to get a bug report if
+that belief turns out to be wrong.
 
-Try to install only what's needed, or not a lot more than what's needed.
-(Can't be done perfectly with larger distros and their dependency hell.)
+The assert that Jeffrey has hit is in sec_powm.c, 
 
-Contrary to traditional best practices, update only what and when needs
-to be updated.  (Of course, you take responsibility to watch for any
-relevant security updates, or accept the risk if you neglect to do that.
-You also miss silent security fixes, but on the other hand you similarly
-miss newly introduced vulnerabilities.)
+  ASSERT_ALWAYS (enb >= windowsize);
 
-Use a long-term support distro, preferably starting half-way into its
-lifetime when updates are already infrequent.  (Similar risk of missing
-silent security fixes in new upstream versions, but also avoiding new
-vulnerabilities.)
+As far as I can see, "enb" is the input argument to the win_size function,
+and "windowsize" is the return value. I'm waiting for more information,
+since it works fine in my build. Possible explanations I see are
 
-Setup packet filters with blocking and logging of unexpected outbound
-packets, including to console so that you'd notice.
+1. Invalid configuration of POWM_SEC_TABLE (used by the win_size function).
 
-Setup custom anomaly detection and actually watch it - e.g., for new
-programs running that haven't ever run before, etc.
+2. Some general memory-overwrite problem, due to too small scratch
+   space or something like that.
 
-Use multiple pseudo-user accounts (doesn't protect against issues in
-packages' pre/post-install scripts, etc.), containers, VMs - but even
-then you have the risk of getting the same malicious package in multiple
-VMs, which e.g. on Qubes OS could happen through updating a template VM.
+I interpret this ASSERT_ALWAYS as a way to check that POWM_SEC_TABLE is
+sane.
 
-Alexander
+Regards,
+/Niels
+
+-- 
+Niels Möller. PGP-encrypted email is preferred. Keyid 368C6677.
+Internet email is subject to wholesale government surveillance.
