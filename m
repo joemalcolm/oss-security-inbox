@@ -1,22 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/24/2
-Message-ID: <20190624061443.kzsgc6rz7noznnnu@jwilk.net>
-Date: Mon, 24 Jun 2019 08:14:43 +0200
-From: Jakub Wilk <jwilk@...lk.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: curl: Windows OpenSSL engine code injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/01/12
+Message-ID: <CAH8yC8mDCmQV2SXMT-UQou+y=YzAQQ6HPbKinq1d0ERdCBEO=Q@mail.gmail.com>
+Date: Tue, 1 Jan 2019 11:49:02 -0500
+From: Jeffrey Walton <noloader@...il.com>
+To: Torbjörn Granlund <tg@...lib.org>
+Cc: Niels Möller <nisse@...ator.liu.se>,  oss-security@...ts.openwall.com, gmp-bugs@...lib.org
+Subject: Re: Asserts considered harmful (or GMP spills its sensitive information)
 Content-Type: text/plain; charset=utf-8
 
-* Daniel Stenberg <daniel@...x.se>, 2019-06-24, 07:46:
->A non-privileged user or program can put code and a config file in a 
->known non-privileged path (under `C:/usr/local/`) that will make curl 
->automatically run the code (as an openssl "engine") on invocation. If 
->that curl is invoked by a privileged user it can do anything it wants.
-[...]
->CWE-94: Code Injection
+On Tue, Jan 1, 2019 at 11:45 AM Jeffrey Walton <noloader@...il.com> wrote:
+>
+> On Tue, Jan 1, 2019 at 11:19 AM Torbjörn Granlund <tg@...lib.org> wrote:
+> >
+> >   The assert that Jeffrey has hit is in sec_powm.c,
+> >
+> >     ASSERT_ALWAYS (enb >= windowsize);
+> >
+> >   As far as I can see, "enb" is the input argument to the win_size function,
+> >   and "windowsize" is the return value. I'm waiting for more information,
+> >   since it works fine in my build. Possible explanations I see are
+> >
+> > A reasonable assumption is that this user has modified the sources to
+> > cause this bug.  The motive would be to support his auxesis about how
+> > insecure GMP is.
+>
+> My bad, I did not mean to imply this was a problem with GMP only. GMP
+> has a lot of company, like GnuPG and OpenSSL.
 
-I think CWE-426 (Untrusted Search Path) would be more appropriate for 
-this bug.
-
--- 
-Jakub Wilk
+    s/OpenSSL/libsodium/
