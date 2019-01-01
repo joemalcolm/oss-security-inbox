@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2674" "Thursday" "31" "March" "2016" "17:37:19" "+0200" "Hugues ANGUELKOV" "hugues.anguelkov@etu.univ-nantes.fr" "<2cc0c808c8ec740dc075b3b286598454.squirrel@webmail-etu.univ-nantes.fr>" "68" "[oss-security] Re: CVE Request - Linux kernel (multiple versions) ext2/ext3  filesystem DoS" nil nil nil "3" "2016033115:37:19" "[oss-security] Re: CVE Request - Linux kernel (multiple versions) ext2/ext3 filesystem DoS" (number mark "U       hugues.angue Mar 31   68/2674  " thread-indent "\"[oss-security] Re: CVE Request - Linux kernel (multiple versions) ext2/ext3  filesystem DoS\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1741" "Tuesday" "1" "January" "2019" "12:41:10" "+0000" "Simon McVittie" "smcv@debian.org" "<20190101124110.GA15804@espresso.pseudorandom.co.uk>" "38" "Re: [oss-security] Re: Asserts considered harmful (or GMP spills its sensitive information)" "^Cc:" nil nil "1" "2019010112:41:10" "[oss-security] Re: Asserts considered harmful (or GMP spills its sensitive information)" (number mark "        smcv@debian. Jan  1   38/1741  " thread-indent "\"Re: [oss-security] Re: Asserts considered harmful (or GMP spills its sensitive information)\"\n") "<nn5zv8prfe.fsf@armitage.lysator.liu.se>" ("<CAH8yC8m90KssanbHt+YmVt7iLOiwWHASDqRYW5TQGeNV2zWXDw@mail.gmail.com>" "<nn5zv8prfe.fsf@armitage.lysator.liu.se>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7430 invoked by uid 550); 31 Mar 2016 15:37:31 -0000
+Received: (qmail 1261 invoked by uid 550); 1 Jan 2019 12:41:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,90 +11,59 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7407 invoked from network); 31 Mar 2016 15:37:31 -0000
-X-Virus-Scanned: Debian amavisd-new at smtp2
-Message-ID: <2cc0c808c8ec740dc075b3b286598454.squirrel@webmail-etu.univ-nantes.fr>
-Date: Thu, 31 Mar 2016 17:37:19 +0200 (CEST)
-From: "Hugues ANGUELKOV" <hugues.anguelkov@etu.univ-nantes.fr>
-To: tytso@athena.mit.edu
-Cc: kseifried@redhat.com,
- sandeen@redhat.com,
- oss-security@lists.openwall.com
-User-Agent: SquirrelMail/1.4.17
+Received: (qmail 1243 invoked from network); 1 Jan 2019 12:41:35 -0000
+Message-ID: <20190101124110.GA15804@espresso.pseudorandom.co.uk>
+References: <CAH8yC8m90KssanbHt+YmVt7iLOiwWHASDqRYW5TQGeNV2zWXDw@mail.gmail.com>
+ <nn5zv8prfe.fsf@armitage.lysator.liu.se>
 MIME-Version: 1.0
-Content-Type: text/plain;charset=iso-8859-1
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Priority: 3 (Normal)
-Importance: Normal
-Subject: [oss-security] Re: CVE Request - Linux kernel (multiple versions) ext2/ext3 
-     filesystem DoS
+In-Reply-To: <nn5zv8prfe.fsf@armitage.lysator.liu.se>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Cc: Jeffrey Walton <noloader@gmail.com>, gmp-bugs@gmplib.org
+Date: Tue, 1 Jan 2019 12:41:10 +0000
+From: Simon McVittie <smcv@debian.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: Asserts considered harmful (or GMP spills its
+ sensitive information)
+To: oss-security@lists.openwall.com
 
-Date: Thu, 31 Mar 2016 08:53:17 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: Andreas Dilger <adilger@...ger.ca>, Yves-Alexis Perez
-<corsac@...ian.org>,
-	Theodore Tso <tytso@...gle.com>, linux-ext4@...r.kernel.org
-Subject: Re: CVE Request - Linux kernel (multiple versions)
- ext2/ext3 filesystem DoS
+On Tue, 01 Jan 2019 at 12:07:17 +0100, Niels Möller wrote:
+> A security sensitive application can easily disable generation of core
+> files, using setrlimit (on the linux kernel, prctl may also be useful).
 
-On Wed, Mar 30, 2016 at 2:43 PM, Theodore Ts'o <tytso@....edu> wrote:
->
->
-> You can mount the file system with "mount -o errors=continue" and this
-> will override the default behavior specified in the super block.
->
-> I would argue that a Desktop or server system that had automount
-> should either (a) mount with -o errors=continue, or (b) force an fsck
-> on the file system before mounting it.
->
+If you want to avoid core dumps being recorded on Linux in the presence of
+system configuration that writes them into a pipe to a command instead
+of to a core file (systemd-coredump, corekeeper, abrt, apport etc.,
+using a string starting with | in /proc/sys/kernel/core_pattern), then
+you need to use prctl PR_SET_DUMPABLE. Setting RLIMIT_CORE to 0 prevents
+the kernel from creating core dump files itself, but does not prevent
+it from writing them to pipes.
 
-The problem is that:
+It might be helpful to look at a recent version of dbus, which has a
+reasonably portable implementation of "don't write core dumps", in a unit
+test helper program that deliberately segfaults (so that the actual unit
+test can assert that a segfaulting child process is handled correctly).
+This was implemented to avoid core-collecting programs wasting time and
+I/O bandwidth during unit test runs, rather than to avoid information
+leaks, but the procedure is the same.
 
-a) means I'll be mounting filesystems with errors that I may want to know
-about (but not have my  system panic about)
+Some processes (including those that are setuid or setgid, I think?) are
+automatically undumpable.
 
-b) fsck takes a long time on large disks (the smallest size of disk I buy
-for USB drives is 1TB, if I fsck every time I plug one in I'll die of old
-age).
+> And besides, most systems have zero ulimit -c as the system default
+> these days
 
+As noted above, this does not prevent writing the cores to pipes
+(precisely to make crash-recording services like systemd-coredump more
+useful).
 
->
-> So I think this is a particularly meaningless CVE, which is why I have
-> zero respect for people who try to make any kind of conclusion based
-> on CVE counts.   I certainly don't plan to do anything about this.
->
+> to get proper core dumps, including
+> disabling the core dump collection "services" you mention
 
-As for your comments on CVE counting even the then head of CVE @mitre told
-people not to rely on CVE counting for vulnerability stats:
+Crash-recording services should be able to provide a way to extract
+the core from wherever they saved it, for example `coredumpctl -o... dump`
+with systemd-coredump.
 
-https://media.blackhat.com/us-13/US-13-Martin-Buying-Into-The-Bias-Why-Vulnerability-Statistics-Suck-Slides.pdf
-
-As for your comment on not fixing this: I think fundamentally I should be
-able to plug a file system in and try to mount it with default/reasonable
-options and NOT have my system panic. File system handling code, like any
-code that handles user supplied data should be able to handle garbage
-gracefully and securely. At worst it should try to mount and go "derp, it's
-messed up, maybe fsck it?"
-
-
-
->
->                                            - Ted
->
-
-
-First of all, I would like to say I'm not a MIT genius nor a security
-engineer, just a chemistry student who were fuzzing his box on his free
-time. I'm not interested about getting CVE nor collecting them and I
-apologize if my mail have sound like that.
-I was just concerned about getting a better system where I can mount any
-file system without any crash/panic.
-But again I'm not a pro/engineer, and I know that I've got no credibility
-and it's certainly not with these kind of things I will get somes. Anyway,
-thanks for reading and all your work, now I'm gonna use this fucking DoS
-trick called "shutdown -h now" and stop reporting thing what I was
-thinking it was strange behaviour.
-Hugues.
-
+    smcv
