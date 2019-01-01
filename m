@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1923" "Sunday" "1" "October" "2017" "17:27:05" "+0200" "chbi@chbi.eu" "chbi@chbi.eu" "<2e0fd7c2-ceff-266e-6185-6e42bd9188e1@chbi.eu>" "53" "Re: [oss-security] Stored XSS vulnerability in BlogoText <= 3.7.5" "^Date:" nil nil "10" "2017100115:27:05" "[oss-security] Stored XSS vulnerability in BlogoText <= 3.7.5" (number mark "        chbi@chbi.eu Oct  1   53/1923  " thread-indent "\"Re: [oss-security] Stored XSS vulnerability in BlogoText <= 3.7.5\"\n") "<fa5c4e07-a487-cba4-88da-4868ed2b383a@chbi.eu>" ("<fa5c4e07-a487-cba4-88da-4868ed2b383a@chbi.eu>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1545" "Tuesday" "1" "January" "2019" "11:45:39" "-0500" "Jeffrey Walton" "noloader@gmail.com" "<CAH8yC8mqdkjQ0pF2QadoMjnZS47SrrZS+H8HMOKv2GqLwcXh0A@mail.gmail.com>" "50" "[oss-security] Re: Asserts considered harmful (or GMP spills its sensitive information)" "^Cc:" nil nil "1" "2019010116:45:39" "[oss-security] Re: Asserts considered harmful (or GMP spills its sensitive information)" (number mark "        noloader@gma Jan  1   50/1545  " thread-indent "\"[oss-security] Re: Asserts considered harmful (or GMP spills its sensitive information)\"\n") "<86o990wdu4.fsf@shell.gmplib.org>" ("<CAH8yC8m90KssanbHt+YmVt7iLOiwWHASDqRYW5TQGeNV2zWXDw@mail.gmail.com>" "<20181231191642.GB7238@zira.vinc17.org>" "<CAH8yC8=-Lt0_p2sTnqhJOWjapJ84LNR=8zJFF5oWs=-4xgxigg@mail.gmail.com>" "<20190101112042.GE7238@zira.vinc17.org>" "<nnwonoob4v.fsf@armitage.lysator.liu.se>" "<86o990wdu4.fsf@shell.gmplib.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9639 invoked by uid 550); 1 Oct 2017 15:29:58 -0000
+Received: (qmail 7929 invoked by uid 550); 1 Jan 2019 17:02:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,72 +11,98 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5767 invoked from network); 1 Oct 2017 15:27:24 -0000
-References: <fa5c4e07-a487-cba4-88da-4868ed2b383a@chbi.eu>
-Message-ID: <2e0fd7c2-ceff-266e-6185-6e42bd9188e1@chbi.eu>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
+Received: (qmail 25988 invoked from network); 1 Jan 2019 16:46:24 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:reply-to:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=OSSZxFOdIuMf8S6Sx50xX09/RhpQoRJBaP89kC4GX7Q=;
+        b=u2xqLBtJDwCYFAAN8wv1/PToiAuEMu8U2oNSpzeW4aJ+er5MhDeNbQfUjr1MF+XgLh
+         fRHV6YShzJtOZ+YJ6tl8Y3RbaCyTslBpSrDprr2cWfx5rAK03zwxML5OsJUWuLiHFJiU
+         wlXetLmmVT4dxIrSrTXf5kNUkLfXoGPgu1J7sf7Ym7tO2qZpYYzu6mjKk2wxlDlbG3Aa
+         dLH2IOkzo/mIe/v5B0CETNpCFPByWYFSfKL6HBLN9ryqyLAyq9a1jDk4gwBmRKf5vAY6
+         xs8ekucdw9YBB5NabhH6q2AvqiNUxU845sKuebniYQUuoyvbtgg3TwpC9n3l48ZTC0wC
+         32Fg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
+         :from:date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=OSSZxFOdIuMf8S6Sx50xX09/RhpQoRJBaP89kC4GX7Q=;
+        b=lvhs3/z4/387FV1EX+Barr9XE8YS5SzO6vwuCni0RBOr8HkwgyCG0Y1+LSgascDjfT
+         Y1TFqqzkW1sGhoWoeYmKDKQGif9cKQz3K/tcx0Kcg+X5X+7cQxqHQOugBIJiPaQtpEAY
+         NgElZ1nnPrC6FedhUlu6/TeOp5GGka9uWtiiRpJWYEGjoD4XQxdOVHYWdVkxhtT64OkC
+         A9pRwCQjuqRXo/Bcp/vpPVvKxssQhH/GgNBk0VFprIYY37XsALm1hTeQshiHqHKPdboM
+         QCrxCT6uyP67hqk+vucgB/ky+PQkfolrij7GbzvDbvZhaGbpsf2U1VWRmwVWwgHJF2sc
+         tC7g==
+X-Gm-Message-State: AA+aEWboUqjjc2p4hU17TV8QJdPu7rEf882XwhB2Ek6O9SUfcRizCV9m
+	x5mwUoouthdhrhc1HML6aFgCjszrcEPM8MSCpTA=
+X-Google-Smtp-Source: AFSGD/WxBUA5Z7ut4G9VHt0bDTitjG3+TwwPDArueQr4pRdfD/wki4oxW/BkbIQiYGGn04Njwu4lipfbTBLLqEZoW+k=
+X-Received: by 2002:a24:e44:: with SMTP id 65mr23465353ite.154.1546361172568;
+ Tue, 01 Jan 2019 08:46:12 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <fa5c4e07-a487-cba4-88da-4868ed2b383a@chbi.eu>
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="x7P8XLjRfJXFOD5EfsUamxjDlc8cPIoAc"
-Date: Sun, 1 Oct 2017 17:27:05 +0200
-From: chbi@chbi.eu
-Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Stored XSS vulnerability in BlogoText <= 3.7.5
-To: oss-security@lists.openwall.com
-
---x7P8XLjRfJXFOD5EfsUamxjDlc8cPIoAc
-Content-Type: multipart/mixed; boundary="WqRcfAo3DuK05Dl6sNeOLVG3oDNpPlNSd";
- protected-headers="v1"
-From: chbi@chbi.eu
-To: oss-security@lists.openwall.com
-Message-ID: <2e0fd7c2-ceff-266e-6185-6e42bd9188e1@chbi.eu>
-Subject: Re: [oss-security] Stored XSS vulnerability in BlogoText <= 3.7.5
-References: <fa5c4e07-a487-cba4-88da-4868ed2b383a@chbi.eu>
-In-Reply-To: <fa5c4e07-a487-cba4-88da-4868ed2b383a@chbi.eu>
-
---WqRcfAo3DuK05Dl6sNeOLVG3oDNpPlNSd
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+References: <CAH8yC8m90KssanbHt+YmVt7iLOiwWHASDqRYW5TQGeNV2zWXDw@mail.gmail.com>
+ <20181231191642.GB7238@zira.vinc17.org> <CAH8yC8=-Lt0_p2sTnqhJOWjapJ84LNR=8zJFF5oWs=-4xgxigg@mail.gmail.com>
+ <20190101112042.GE7238@zira.vinc17.org> <nnwonoob4v.fsf@armitage.lysator.liu.se>
+ <86o990wdu4.fsf@shell.gmplib.org>
+In-Reply-To: <86o990wdu4.fsf@shell.gmplib.org>
+Message-ID: <CAH8yC8mqdkjQ0pF2QadoMjnZS47SrrZS+H8HMOKv2GqLwcXh0A@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
+Cc: =?UTF-8?Q?Niels_M=C3=B6ller?= <nisse@lysator.liu.se>, 
+	oss-security@lists.openwall.com, gmp-bugs@gmplib.org
+Date: Tue, 1 Jan 2019 11:45:39 -0500
+From: Jeffrey Walton <noloader@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: Asserts considered harmful (or GMP spills its sensitive information)
+To: =?UTF-8?Q?Torbj=C3=B6rn_Granlund?= <tg@gmplib.org>
 
-CVE-2017-14957 has been assigned.
+On Tue, Jan 1, 2019 at 11:19 AM Torbj=C3=B6rn Granlund <tg@gmplib.org> wrot=
+e:
+>
+>   The assert that Jeffrey has hit is in sec_powm.c,
+>
+>     ASSERT_ALWAYS (enb >=3D windowsize);
+>
+>   As far as I can see, "enb" is the input argument to the win_size functi=
+on,
+>   and "windowsize" is the return value. I'm waiting for more information,
+>   since it works fine in my build. Possible explanations I see are
+>
+> A reasonable assumption is that this user has modified the sources to
+> cause this bug.  The motive would be to support his auxesis about how
+> insecure GMP is.
 
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2017-14957
+My bad, I did not mean to imply this was a problem with GMP only. GMP
+has a lot of company, like GnuPG and OpenSSL.
 
+I believe the assumption  is incorrect. The sources were not modified,
+and a standard (?) 'configure; make; make check' was used. The
+reproducer script is available at
+https://www.openwall.com/lists/oss-security/2018/12/31/1; see
+test-gmp.sh.txt.
 
---=20
-chbi
-https://chbi.eu
+For completeness here's a quick audit of some security libraries.
+Botan, Crypto++ and OpenSSL use -DNDEBUG to remove asserts from
+production/release builds. They use asserts as a debugging/diagnostic
+aide. They don't depend on crashing the program and risk egressing
+sensitive information outside the app's security boundary.
 
-GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
-     https://chbi.eu/chbi.asc
+gmp-6.1.2$ grep -iIR assert | wc -l
+4867
 
+openssl-1.0.2$ grep -iIR assert | wc -l
+436
 
---WqRcfAo3DuK05Dl6sNeOLVG3oDNpPlNSd--
+libgcrypt-1.8.4$ grep -iIR assert | wc -l
+245
 
---x7P8XLjRfJXFOD5EfsUamxjDlc8cPIoAc
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+gnupg-2.2.12$ grep -iIR assert | wc -l
+1337
 
------BEGIN PGP SIGNATURE-----
+cryptopp-8.0$ grep -iIR assert | wc -l
+1123
 
-iQIzBAEBCgAdFiEEPemRh0vp6uY8qNwgunuT+ZA3rn4FAlnRCU8ACgkQunuT+ZA3
-rn51Rg/+IkiR8zV1T6qsOphacd7RY62O9+shUB8mlG33/lC4M1ZaoeYlrmrBvpXS
-bR0/nMy7lAxwJT2zbaTmhi0e4mfMWaFhvUowuFCCXimvSE9IbvFXw7AphjvJURXX
-QdZ8tmPx8uZml+U2IUlIY0hmUGU6C0aKTyPpYUcSUpwUgzM2aBgJu/D401Sz4+kU
-w2PgHCgoTYbXxhEGkWOg0smO8TZfWE0xSjskYPtdipQsAfPdUgtR/0bi1Na71Hko
-S3D7gfjC1mSgg2IfWRZrKOZQFoAVh4e3fL9LibtH8V0j/XA6mPZrjSBxoNNsxkyC
-qb9MRPuRl2ZJ80hinC7kktRuQ4branca+rARbvJ6ggzZzfjB7xlF9tXphrPpeXcw
-iYhSgTtgvjWRE3i/0JBxNOZ9qhmh38I5NTcfS5Z3MqoYTNJ0cEJmuTQ49URBq5Gm
-ox9HJNcgtjHc+Op4itJVr19QgD/CSXc1ah7WqXL5CKcCS34sli2DAzGCUrNMD+Ka
-x+tHkiQUWzgUSd73BK9dybF/AW2alIcDDmayhzvb0zW7+uCiMmxnhlNcKPvhDE2g
-r9NmNruRQH8IeD7PUggJI/vgRF/rBCjJ4eqdNF/4N5z4jr1HY5p3TwOEMGbFUGEm
-na0Xjf3/qVJXHwhxNHmF0C9pRCp9wdTI18jIzgp9YMg7/esXqk0=
-=WWJp
------END PGP SIGNATURE-----
+botan-2.8$ grep -iIR assert | wc -l
+746
 
---x7P8XLjRfJXFOD5EfsUamxjDlc8cPIoAc--
+Cheers, Jeff
