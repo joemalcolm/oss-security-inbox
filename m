@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1810" "Sunday" "30" "October" "2016" "15:38:59" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<7bcfced93a1e4f6f9a526e70be02d7d5@imshyb02.MITRE.ORG>" "44" "[oss-security] Re: CVE request Qemu: net: eepro100 memory leakage at device unplug" nil nil nil "10" "2016103019:38:59" "[oss-security] Re: CVE request Qemu: net: eepro100 memory leakage at device unplug" (number mark "U       cve-assign@m Oct 30   44/1810  " thread-indent "\"[oss-security] Re: CVE request Qemu: net: eepro100 memory leakage at device unplug\"\n") "<alpine.LFD.2.20.1610280151370.5357@wniryva>" ("<alpine.LFD.2.20.1610280151370.5357@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1914" "Wednesday" "2" "January" "2019" "16:53:16" "-0500" "Jeffrey Walton" "noloader@gmail.com" "<CAH8yC8kY-oSpFTTY2QEyM9HAWj6_h69xUAFSD=5PF7iLczqdAA@mail.gmail.com>" "59" "Re: [oss-security] Re: Asserts considered harmful (or GMP spills its sensitive information)" "^Cc:" nil nil "1" "2019010221:53:16" "[oss-security] Re: Asserts considered harmful (or GMP spills its sensitive information)" (number mark "        noloader@gma Jan  2   59/1914  " thread-indent "\"Re: [oss-security] Re: Asserts considered harmful (or GMP spills its sensitive information)\"\n") "<20190101124110.GA15804@espresso.pseudorandom.co.uk>" ("<CAH8yC8m90KssanbHt+YmVt7iLOiwWHASDqRYW5TQGeNV2zWXDw@mail.gmail.com>" "<nn5zv8prfe.fsf@armitage.lysator.liu.se>" "<20190101124110.GA15804@espresso.pseudorandom.co.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9306 invoked by uid 550); 30 Oct 2016 19:39:12 -0000
+Received: (qmail 24150 invoked by uid 550); 3 Jan 2019 00:18:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,60 +11,105 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9287 invoked from network); 30 Oct 2016 19:39:11 -0000
-From: <cve-assign@mitre.org>
-To: <ppandit@redhat.com>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>,
-	<liqiang6-s@360.cn>
-In-Reply-To: <alpine.LFD.2.20.1610280151370.5357@wniryva>
-Message-ID: <7bcfced93a1e4f6f9a526e70be02d7d5@imshyb02.MITRE.ORG>
-Date: Sun, 30 Oct 2016 15:38:59 -0400
+Received: (qmail 17952 invoked from network); 2 Jan 2019 21:54:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:reply-to:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=TkJhiYr1TS/PgM/jz9+XuhYduRGB1URhGkACCcrpYy0=;
+        b=tFdn9B3QPWGqh6QPY2rESQBl+TqoYZUOKLU1ITWwRd7PCEoYxkNNJeF1fJVbAuZWEx
+         c7+OCHrZ0ZbhiKeYCXe3nOkezVYwfeldwoYs24zKkUCE9VwLOuCQ/a1bEabdB/w6fbGw
+         vGEKlKwcnFWL9WlhiPZRmOG8FVm+rHQswemBnM9+L0SHRpXQ5lo/+zd5fQ3X8yW+yvAw
+         v6XRZtHrMW0zG1SXsjp5i29PZSYSrlniZJzszzc+m8FQfmeuaTvewnQngdtdG/6RU+tB
+         JmTBGoE0OwCNWSgLuH6uf928rGkKjvAzxZMCjcj7UfvitfTKNfLKf7WMnfLbVsEUCVax
+         Jxlg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
+         :from:date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=TkJhiYr1TS/PgM/jz9+XuhYduRGB1URhGkACCcrpYy0=;
+        b=XzXxczHTUlf/KS68b0y7pZ3vKdebxfs84vEwcuSDfOKF6mcU9KCp2byTP8W6iwwTAB
+         ITNr9JixLdAZ41QA5PpPOeoIkD7DIKgk2+6/ybt6iy2/3iggCpWB3oG9akCkkTRYqTz9
+         pMPZ8HYxDXAJv3mZ6DVSVuklWgLYW4ouzWTde+Z+vSpLxLT7XLXkblTjXiGu3Rk7rIZr
+         z7oP3CK/gM2+AY8rbbrA7SPWhT3+L6S4sHRAOfhoRl7v/hk/tcfgOQWB1Q+b2c7sEPIB
+         c4AWBzLWswP9zmNJc6gacoU2/gpddLLshFapp2OdYRUVy8L74rmBXTAbFVKOmAeXE7xB
+         9veA==
+X-Gm-Message-State: AJcUukfnutAge6eiCCa6j8u7ln/OSpVO1GmVATwtbBiR4XLOIcO67hdh
+	Ot63QTzZ9te1dOW83d4hYmrL7AFZ3JcKuJV14HMVI8Dg
+X-Google-Smtp-Source: ALg8bN6dnVBJS5uhwsLMuf/B1qykMhGWwm/SVaJbgRblt64ijL8O6EtGkL4iBxBdCeTlbb7LlseBHL+eQPduN/mH8Dk=
+X-Received: by 2002:a5d:94c7:: with SMTP id y7mr10450525ior.285.1546466033176;
+ Wed, 02 Jan 2019 13:53:53 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: CVE request Qemu: net: eepro100 memory leakage at device unplug
+References: <CAH8yC8m90KssanbHt+YmVt7iLOiwWHASDqRYW5TQGeNV2zWXDw@mail.gmail.com>
+ <nn5zv8prfe.fsf@armitage.lysator.liu.se> <20190101124110.GA15804@espresso.pseudorandom.co.uk>
+In-Reply-To: <20190101124110.GA15804@espresso.pseudorandom.co.uk>
+Message-ID: <CAH8yC8kY-oSpFTTY2QEyM9HAWj6_h69xUAFSD=5PF7iLczqdAA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Cc: gmp-bugs@gmplib.org
+Date: Wed, 2 Jan 2019 16:53:16 -0500
+From: Jeffrey Walton <noloader@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: Asserts considered harmful (or GMP spills its
+ sensitive information)
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Tue, Jan 1, 2019 at 7:42 AM Simon McVittie <smcv@debian.org> wrote:
+>
+> On Tue, 01 Jan 2019 at 12:07:17 +0100, Niels M=C3=B6ller wrote:
+> > A security sensitive application can easily disable generation of core
+> > files, using setrlimit (on the linux kernel, prctl may also be useful).
+>
+> If you want to avoid core dumps being recorded on Linux in the presence of
+> system configuration that writes them into a pipe to a command instead
+> of to a core file (systemd-coredump, corekeeper, abrt, apport etc.,
+> using a string starting with | in /proc/sys/kernel/core_pattern), then
+> you need to use prctl PR_SET_DUMPABLE. Setting RLIMIT_CORE to 0 prevents
+> the kernel from creating core dump files itself, but does not prevent
+> it from writing them to pipes.
 
-> Quick Emulator(Qemu) built with the i8255x (PRO100) NIC emulation support is
-> vulnerable to a memory leakage issue. It could occur while unplugging the
-> device, and doing so repeatedly would result in leaking host memory affecting,
-> other services on the host.
-> 
-> A privileged user inside guest could use this flaw to cause a DoS on the host
-> and/or potentially crash the Qemu process on the host.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg03024.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1389538
+This is kind of interesting. It looks like systems running systemd
+with coredumpctl store the dumps in journald. Systemd does not appear
+to offer a way to clear them, so a '/var/log/journal/*/*' is needed.
 
->> Fix memory leak and simplify code for VMStateDescription
+$ cat coredump.c
+#include <stdio.h>
+#include <assert.h>
 
-Use CVE-2016-9101.
+int main(int argc, char* argv[])
+{
+    char password[128];
+    printf("Please enter your password:\n");
+    if(fgets(password, sizeof(password), stdin) !=3D NULL) {
+        /* do some real work, detect an error condition, then... */
+        assert(0);
+    }
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/net/eepro100.c but
-that may be an expected place for a later update.
+    return 0;
+}
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYFktnAAoJEHb/MwWLVhi2lRUQAKvmWbVHDslM/pVcKhOXd48q
-4VW+EZjJHnlkF39M1UFWsflRqFrVreNrXRVgTX7bGkV1QkbpyuWjCw3fHn02PCf4
-9h19lPYSlxUt/P6kF8RVgQmC0FEv7fAB7nzftdmozHaL+G0MJCjdP0T+M9zBvEIg
-nEPXrD+G7CWH8CR3LaDDNFl6O673QMyte9/garR8wOohsJnsxI4FBGdmJqmbrYnm
-DbYw41H893s9F2t/ofW4ZyiwMDlJJG49DySb2yLHROFfd0y8n0qP0RviPl8p+EsL
-hwOODU5ttVwIX3BQUkPNdumwxizTuIGY/m6lyibjj4SoyGNKiI3a05BwXI3mQhaA
-cEbBu73o8rr7Yzp9J24n8WsbFdcGsTCWI2WYuG9g/qvEQuIlGFqMIdy/Z3GvpZuA
-+h/IUZ+eDs5bc6vkDiCE88H3ZIi5ReSVCV9g4Bv/wfqwJ13qmLDooYeaWHjARY8h
-Vse1XkGked1vz4uLYuB/X8N4uNytSnuDSUBTpvdXFaBZPSahqP12qQvOBnHxHT8l
-wSTjpjcaVTsvXf5CqDgDYG6h8TcA8cGvvrn3XGP+UpsgvtqJcaccPF4N3awygFQu
-fPcfl0dQU68NiuxPM7n0N+2qdPPkxu95ZqnobjeEMvaYRqQSJc6YJzkRMJXO2QCZ
-Dt1YlBbsK4nRlp+7XF/D
-=GdbU
------END PGP SIGNATURE-----
+$ gcc coredump.c -o coredump.exe
+$ ./coredump.exe
+Please enter your password:
+supersecretpassword
+coredump.exe: coredump.c:11: main: Assertion `0' failed.
+Aborted (core dumped)
+
+
+$ coredumpctl list
+TIME                            PID   UID   GID SIG COREFILE  EXE
+Wed 2019-01-02 16:23:15 EST   10827  1000  1000   6 present   /home/jwalton=
+/...
+
+
+$ coredumpctl -o coredump.exe.core dump 10827
+           PID: 10827 (coredump.exe)
+           UID: 1000 (jwalton)
+           GID: 1000 (jwalton)
+        Signal: 6 (ABRT)
+
+
+$ strings coredump.exe.core | grep supersecret
+supersecretpassword
+supersecretpassword
