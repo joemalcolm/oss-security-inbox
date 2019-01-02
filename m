@@ -1,26 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/13/2
-Message-ID: <20190912222921.ozyhvh4t6gqzczrn@wrycode>
-Date: Thu, 12 Sep 2019 18:29:22 -0400
-From: notspam@...st
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/03/1
+Message-ID: <CAH8yC8kY-oSpFTTY2QEyM9HAWj6_h69xUAFSD=5PF7iLczqdAA@mail.gmail.com>
+Date: Wed, 2 Jan 2019 16:53:16 -0500
+From: Jeffrey Walton <noloader@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Telegram privacy fails again.
+Cc: gmp-bugs@...lib.org
+Subject: Re: Re: Asserts considered harmful (or GMP spills its sensitive information)
 Content-Type: text/plain; charset=utf-8
 
->IMO, If Whatsapp/Telegram wanted to take this functionality more seriously,
->they'd need to be writing the images to disk in an encrypted form from the
->outset. It increases the overhead of display, and wouldn't necessarily stop
->forensic recovery etc, but it would mean that other apps couldn't simply
->watch the directory and upload anything which appears in it in a usable
->form. That's a whole other can of worms though as it's another set of keys
->to manage.
+On Tue, Jan 1, 2019 at 7:42 AM Simon McVittie <smcv@...ian.org> wrote:
+>
+> On Tue, 01 Jan 2019 at 12:07:17 +0100, Niels Möller wrote:
+> > A security sensitive application can easily disable generation of core
+> > files, using setrlimit (on the linux kernel, prctl may also be useful).
+>
+> If you want to avoid core dumps being recorded on Linux in the presence of
+> system configuration that writes them into a pipe to a command instead
+> of to a core file (systemd-coredump, corekeeper, abrt, apport etc.,
+> using a string starting with | in /proc/sys/kernel/core_pattern), then
+> you need to use prctl PR_SET_DUMPABLE. Setting RLIMIT_CORE to 0 prevents
+> the kernel from creating core dump files itself, but does not prevent
+> it from writing them to pipes.
 
-There's no way to take this functionality seriously - the feature is a
-joke. A privacy feature centered around trusting another user's
-node to delete a file you already sent them is silly. Unfortunately,
-it seems like nobody gets this; even Matrix clients are supposed to
-have message redaction soon.
+This is kind of interesting. It looks like systems running systemd
+with coredumpctl store the dumps in journald. Systemd does not appear
+to offer a way to clear them, so a '/var/log/journal/*/*' is needed.
 
-The original email didn't contain a security vulnerability (remember
-the name of this list?)  - it was blogspam. It didn't belong here for
-the same reason that you don't see Snapchat bugs on this list.
+$ cat coredump.c
+#include <stdio.h>
+#include <assert.h>
+
+int main(int argc, char* argv[])
+{
+    char password[128];
+    printf("Please enter your password:\n");
+    if(fgets(password, sizeof(password), stdin) != NULL) {
+        /* do some real work, detect an error condition, then... */
+        assert(0);
+    }
+
+    return 0;
+}
+
+
+$ gcc coredump.c -o coredump.exe
+$ ./coredump.exe
+Please enter your password:
+supersecretpassword
+coredump.exe: coredump.c:11: main: Assertion `0' failed.
+Aborted (core dumped)
+
+
+$ coredumpctl list
+TIME                            PID   UID   GID SIG COREFILE  EXE
+Wed 2019-01-02 16:23:15 EST   10827  1000  1000   6 present   /home/jwalton/...
+
+
+$ coredumpctl -o coredump.exe.core dump 10827
+           PID: 10827 (coredump.exe)
+           UID: 1000 (jwalton)
+           GID: 1000 (jwalton)
+        Signal: 6 (ABRT)
+
+
+$ strings coredump.exe.core | grep supersecret
+supersecretpassword
+supersecretpassword
