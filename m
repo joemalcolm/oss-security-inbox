@@ -1,28 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/03/4
-Message-ID: <d7f72dad06e6d0b63f8418529f265784@fc.up.pt>
-Date: Wed, 03 Apr 2019 16:15:21 +0100
-From: Federico Manuel Bento <up201407890@...up.pt>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/02/4
+Message-ID: <nn7efnnyvs.fsf@armitage.lysator.liu.se>
+Date: Wed, 02 Jan 2019 11:21:27 +0100
+From: nisse@...ator.liu.se (Niels Möller)
 To: oss-security@...ts.openwall.com
-Subject: Linux kernel < 4.8 local generic ASLR bypass for setuid binaries
+Subject: Re: Disabling ptrace
 Content-Type: text/plain; charset=utf-8
 
-Hi list,
+Jakub Wilk <jwilk@...lk.net> writes:
 
-As far as I know, commit 9f834ec18defc369d73ccf9e87a2790bfa05bf46 wasn't 
-backported to earlier kernels, which fixed a vulnerability (unknown at 
-the time?) that allows local attackers to derandomize the base address 
-of .text and stack generically for all setuid binaries. My guess is that 
-such change was done as a later response to one of Jann Horn's reports 
-(https://bugs.chromium.org/p/project-zero/issues/detail?id=807) that was 
-fixed in commit 79c9ce57eb2d5f1497546a3946b4ae21b6fdc438. In any case, 
-the vulnerable code is still present in other binary formats (if they're 
-still relevant), e.g., in fs/binfmt_aout.c (and others).
+> * Niels Möller <nisse@...ator.liu.se>, 2019-01-01, 12:27:
+>>Matthew Fernandez <matthew.fernandez@...il.com> writes:
+>>> E.g. you can attach to the victim process with gdb/ptrace and
+>>> simply read its memory, if the sysadmin has not blocked this with
+>>> Yama or similar.
+>>
+>> I think one can disable this in the process itself, using prctl with
+>> PR_SET_DUMPABLE. But documentation is a bit unclear and doesn't
+>> exlicitly mention effect on ptrace
+>
+> The prctl(2) man page reads: “Processes that are not dumpable can not
+> be attached via ptrace(2) PTRACE_ATTACH; see ptrace(2) for further
+> details.”
 
-If my assumptions are incorrect, please let me know :)
+Thanks, I somehow missed that. So prctl should be the right tool, then.
 
-I've also attached a PoC exploit code.
+>>(and other debugging interfaces).
+>
+> What other interfaces do you have in mind?
 
-Thanks,
-Federico.
-View attachment "aslrip.c" of type "text/x-c" (2694 bytes)
+I had the impression that ptrace was old-fashined, and that current gdb
+used other interfaces via /proc (with permissions also affected by
+prctl). But I may be mistaken; I've never looked into those details.
+
+Regards,
+/Niels
+
+-- 
+Niels Möller. PGP-encrypted email is preferred. Keyid 368C6677.
+Internet email is subject to wholesale government surveillance.
