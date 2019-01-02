@@ -1,19 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/12/1
-Message-ID: <CAO8bUynNGucV2xa-dXjKSS8iNKQ2tupzxSgCQseBa02moykPRA@mail.gmail.com>
-Date: Wed, 11 Sep 2019 23:13:33 +0200
-From: Frank Morgner <frankmorgner@...il.com>
-To: opensc-announce@...ts.sourceforge.net,  OpenSC Development <opensc-devel@...ts.sourceforge.net>, oss-security@...ts.openwall.com
-Subject: pam_p11 0.3.1 released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/02/1
+Message-ID: <fd484723-0f96-16e6-94e8-13e96b342cbb@treenet.co.nz>
+Date: Wed, 2 Jan 2019 20:49:08 +1300
+From: Amos Jeffries <squid3@...enet.co.nz>
+To: oss-security@...ts.openwall.com
+Subject: Re: wget / chromium: URL metadata and potential password leaks via extended filesystem attributes
 Content-Type: text/plain; charset=utf-8
 
-Hi all!
+On 1/01/19 11:15 pm, Hanno Böck wrote:
+> Hi,
+> 
+> Via some twitter discussions [1] I recently learned about a worrying
+> behavior of wget and Chromium / Chrome.
+> 
+> The URL of downloads gets stored via filesystem attributes on systems
+> that support Unix extended attributes.
+> 
+> You can see these attributes on Linux systems by running
+> getfattr -d [filename]
+> (The download URL is stored in a variable "user.xdg.origin.url")
+> 
+> This is worrying for a number of reasons:
+> * In combination with HTTP authentication a username and password can
+>   be part of the URL (HTTP authentication can be accessed via an URL of
+>   the form https://[username]:[password]@[hostname]/).
 
-I'm happy to announce the new pam_p11 release 0.3.1, which can be found
-here https://github.com/OpenSC/pam_p11/releases/tag/pam_p11-0.3.1.
-<https://github.com/OpenSC/pam_p11/releases/tag/pam_p11-0.3.1> This release
-fixes a buffer overflow when creating signatures longer than 256 bytes
-(CVE-2019-16058). This bug is present in pam_p11 version 0.2.0 and 0.3.0.
+FYI: Since RFC 2616 the userinfo@ portion of generic URI has been
+deprecated in http: and https: scheme URLs. The current standard RFC
+7230 added a requirement of UI tools to treat such URLs as errors
+instead of fetching.
+ Agents may still choose to accept/tolerate URLs with userinfo@, but are
+then required to erase and ignore the userinfo@ octets before any other
+processing of the URL.
 
-Regards, Frank.
+It has this status due to the well-known security problems with
+credentials existing in URL.
 
+So IMO this reason would be CVE-worthy if the userinfo@ was preserved in
+that stored form of the URLs. But if they were filtering it away this
+reason would not be relevant.
+
+
+> * Sometimes URLs may contain secret tokens, e.g. private file shares on
+>   a file hosting service.
+
+This is a bigger security problem IMHO. It is created by developers
+choice to place secrets in the URL and has no real solution other than
+stopping people doing that behaviour entirely.
+
+UI applications cannot be reasonably expected to know every possible
+combination of octets that are secrets.
+
+
+> * In general storing metadata at unexpected places should be avoided.
+> 
+
+That depends on ones expectations.
+
+In HTTP environment the URL is the objects canonical name. That thing
+humans call a "filename" is the metadata which may or may not exist.
+
+In FS terms the extended attributes *are* the expected place to store
+metadata of an object. That is the purpose of the extensions.
+
+
+
+I expect wget accepted the CVE and added option to control the behaviour
+since that tool can be used to store D/L object anywhere in the FS.
+
+
+Chrome on the other hand uses FS areas clearly dedicated to D/L object
+storage. So object in that area should be fully expected to possibly be
+associated with metadata *somewhere* containing secrets, the closer that
+somewhere is tied to the FS object the better its security properties.
+
+For example; the extended attributes are erased when an object in
+Downloads/ folder/directory is deleted manually by non-Chrome FS tools.
+This is better for security than some separate cache of metadata holding
+onto the URL + secrets for possibly years after the object is deleted by
+a user.
+
+
+AYJ
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
