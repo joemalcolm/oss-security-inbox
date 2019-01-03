@@ -1,36 +1,124 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/05/1
-Message-ID: <CALv8orF3HiuDe=GFm_wK_6Q-JVYo3BJZFOWu57hf7-yfkW5Gng@mail.gmail.com>
-Date: Sun, 5 May 2019 15:21:45 +0530
-From: Pramod Rana <varchashva@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/03/2
+Message-ID: <10950-1546501321.837517@7NMx.Y9CH.RDhT>
+Date: Thu, 03 Jan 2019 07:42:01 +0000
+From: halfdog <me@...fdog.net>
 To: oss-security@...ts.openwall.com
-Subject: Open source tool | Lets Map Your Network
+Subject: Re: Re: Asserts considered harmful (or GMP spills its sensitive information)
 Content-Type: text/plain; charset=utf-8
 
-Let’s Map Your Network (LMYN) aims to provide an easy to use interface
-to security engineer and network administrator to have their network
-in graphical form with zero manual error, where a node represents a
-system and relationship between nodes represent the connection.
+Jeffrey Walton writes:
+> On Tue, Jan 1, 2019 at 7:42 AM Simon McVittie <smcv@...ian.org>
+> wrote:
+>>
+>> On Tue, 01 Jan 2019 at 12:07:17 +0100, Niels Möller wrote:
+>> > A security sensitive application can easily disable generation
+>> of core > files, using setrlimit (on the linux kernel, prctl
+>> may also be useful).
+>>
+>> If you want to avoid core dumps being recorded on Linux in
+>> the presence of system configuration that writes them into
+>> a pipe to a command instead of to a core file (systemd-coredump,
+>> corekeeper, abrt, apport etc., using a string starting with
+>> | in /proc/sys/kernel/core_pattern), then you need to use
+>> prctl PR_SET_DUMPABLE. Setting RLIMIT_CORE to 0 prevents the
+>> kernel from creating core dump files itself, but does not
+>> prevent it from writing them to pipes.
+>
+> This is kind of interesting. It looks like systems running
+> systemd with coredumpctl store the dumps in journald. Systemd
+> does not appear to offer a way to clear them, so a
+> '/var/log/journal/*/*' is needed.
 
-It is utmost important for any security engineer to understand their
-network first before securing it and it becomes a daunting task to
-have a ‘true’ understanding of a widespread network. In a mid to large
-level organisation’s network having a network architecture diagram
-doesn’t provide the complete understanding and manual verification is
-a nightmare. Hence in order to secure entire network it is important
-to have a complete picture of all the systems which are connected to
-your network, irrespective of their type, function, technology etc.
+Such system stores them if the admin wanted that, see "man coredump.conf".
+So unless the "Storage=" setting is "none" but ignored, you
+should be able to retrieve the dumps. With "Storage=External"
+they end up on disk, where you should also have means to delete
+them.
 
-BOTTOM LINE - YOU CAN'T SECURE WHAT YOU ARE NOT AWARE OF.
+I prefer a setup, where cores are encrypted immediately during
+core dump piping and then (like all other forensically relevant
+data) synchronized timely to other machine(s), e.g. via pipeline
+procedures built around guerilla-backup toolbox (which I did
+not manage to find a Debian package sponsor yet).
 
-LMYN does it in two phases:
-1. Learning: In this phase LMYN 'learns' the network by performing the
-network commands and querying the APIs and then builds graph database
-leveraging the responses. User can perform any of the learning
-activities at any point of time and LMYN will incorporate the results
-in existing database.
-2. Monitoring: This is a continuous process, where LMYN monitors the
-'in-scope' network for any changes, compare it with existing
-information and update the graph database accordingly.
+> $ cat coredump.c #include <stdio.h> #include <assert.h>
+>
+> int main(int argc, char* argv[]) { char password[128];
+> printf("Please enter your password:\n"); if(fgets(password,
+> sizeof(password), stdin) != NULL) { /* do some real work, detect
+> an error condition, then... */ assert(0); }
+>
+> return 0; }
+>
+>
+> $ gcc coredump.c -o coredump.exe $ ./coredump.exe Please enter
+> your password: supersecretpassword coredump.exe: coredump.c:11:
+> main: Assertion `0' failed. Aborted (core dumped)
+>
+>
+> $ coredumpctl list TIME                            PID   UID
+>   GID SIG COREFILE  EXE Wed 2019-01-02 16:23:15 EST   10827
+>  1000  1000   6 present   /home/jwalton/...
+>
+>
+> $ coredumpctl -o coredump.exe.core dump 10827 PID: 10827
+> (coredump.exe) UID: 1000 (jwalton) GID: 1000 (jwalton) Signal:
+> 6 (ABRT)
+>
+>
+> $ strings coredump.exe.core | grep supersecret supersecretpassword
+> supersecretpassword
 
-GitHub: https://github.com/varchashva/LetsMapYourNetwork
+No matter which way your program was crashed (by your code or
+a library, by bug or API misuse, via SEGV, abort or whatsoever):
+a application processing sensitive data was not prepared to protect
+it. It could have happened also without even using any libraries
+at all.
+
+
+See e.g. "ssh-agent", which (beside other means I think) uses
+the SGID-approach approach to protect against this and other
+dumpable/ptrace-may-attach related security issues, thus also
+preventing normal dumps. The art of secure programming would
+somehow be knowing all typical risks on your target platform(s)
+and mitigate them appropriately.
+
+
+The use of systemd-coredump here is just another red herring (same
+as abort()): A program processing sensitive information wanted to
+be dumpable, so the information can be retrieved by normal users.
+That is just exactly the idea behind coredumps for debugging et
+al.
+
+I think if your application would have coredump/ptrace protection
+in place, systemd-coredump could still dump the file for the
+root-user, but that also would be just very useful behaviour
+(it allow forensics, IOC-generation also for SUID-crashes) and
+usually not a security risk at all: only root can read them
+(and root could usually ptrace your program, read all you
+supersensitive IO, manipulate the binary, ... anyway).
+
+
+In case your application is even that super-super-sensitive, that
+the benefit from core-dump-analysis would still be eliminated
+by possible data leackage via cores, then you should e.g. use
+the kernel to store your sensitive material for you (see keyrings)
+or when even that is too risky, use the appropriate TEMPEST-
+and tamper-resistent HSM (maybe even one that has to be unlocked
+by multiple actors using their HSMs at the same time, a similar
+procedure like firing nukes in movies - Thales explained such
+a design to me once). Of course such HSM schemes make only sense
+with the appropriate physical protection, either by prohibiting
+access or burning down your own place before your would let someone
+leave with your HSM.
+
+
+And finally, looking at the incomplete list of mitigations and
+knowing what they imply on usability, management and debugging
+of your software, decide if it is really worth taking them (damage
+costs lower than mitigation costs).
+
+hd
+
+
