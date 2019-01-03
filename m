@@ -1,22 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/22/8
-Message-ID: <20190822135753.10d124a4@jabberwock.cb.piermont.com>
-Date: Thu, 22 Aug 2019 13:57:53 -0400
-From: "Perry E. Metzger" <perry@...rmont.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: multiple vulnerabilities in the USB subsystem x2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/03/4
+Message-ID: <a09d0918aa33cc80afea69c8d5bdfda7.squirrel@student-web1.dm.unipi.it>
+Date: Thu, 3 Jan 2019 20:55:43 +0100
+From: "Marco Bodrato" <bodrato@...l.dm.unipi.it>
+To: noloader@...il.com
+Cc: oss-security@...ts.openwall.com, gmp-bugs@...lib.org
+Subject: Re: Asserts considered harmful (or GMP spills its sensitive information)
 Content-Type: text/plain; charset=utf-8
 
-> Are these even realistic?   If I'm going to leave malicious
-> USB devices in the parking lot for mischief am I going to rely
-> on the unknown victim running a Linux distro with the
-> requisite kernel modules or am I going to just drop a cheap
-> and near-universal USB killer?
+Ciao,
 
-Android phones run Linux. People routinely plug those phones in to USB
-charging stations in airports, on airplanes, at booths in public
-places, etc.
+Il Lun, 31 Dicembre 2018 7:03 pm, Jeffrey Walton ha scritto:
+[...skipping opinions...]
 
-Perry
+> Here's a small example of triggering an assert using the Nettle
+> library.
+
+This absolutely is NOT a "small example", it requires to build two entire
+libraries!
+Anyway we analysed it, see below.
+
+> ARM A-32 does not work at the moment due to GMP build errors.
+
+Can we suggest you to read the GMP manual on how to build the library?
+GMP works fine on many ARM configurations we test and there are lots of
+projects out there (eg. many GNU/Linux distributions) that builds GMP for
+different ARM processors.
+
+> In the case below Nettle is using benign data and not maliciously
+> crafted data.
+
+I'm sorry, but your analysis was incorrect.
+
+I agree, Nettle is not using "maliciously crafted data", but I do not
+agree when you say that it "is using benign data".
+
+With your build options, Nettle calls the GMP function mpn_sec_powm with
+an invalid parameter: ebn = 0.
+
+Because of an error in the Nettle library you built, GMP receives "non
+benign data". To avoid further memory corruptions, GMP aborts.
+
+Thanks to this behaviour of GMP, you was able to catch the incorrect built
+of the library using it. ;-)
+
+Using mpn_sec_powm with an exponent of zero bits is obviously a nonsense,
+and in general the documentation of GMP clearly says that arguments of
+size zero are not supported.
+
+On GMP side, we can only specify even more explicitly in the documentation
+of that function the need for non-zero sized arguments.
+
+Ĝis,
+m
+
 -- 
-Perry E. Metzger		perry@...rmont.com
+http://bodrato.it/papers/
+
