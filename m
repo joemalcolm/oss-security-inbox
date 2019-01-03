@@ -1,125 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/08/16
-Message-Id: <E1gguU1-000604-Gf@xenbits.xenproject.org>
-Date: Tue, 08 Jan 2019 16:44:05 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 276 v3 (CVE-2018-19963) - resource accounting issues in x86 IOREQ server handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/03/7
+Message-ID: <CAH8yC8=Tt2UDmkoQE0GwjZbvhGjePf=S38Ke=GLDfbt8JtMp=Q@mail.gmail.com>
+Date: Thu, 3 Jan 2019 17:44:17 -0500
+From: Jeffrey Walton <noloader@...il.com>
+To: Torbjörn Granlund <tg@...lib.org>
+Cc: oss-security@...ts.openwall.com, gmp-bugs@...lib.org
+Subject: Re: Asserts considered harmful (or GMP spills its sensitive information)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Thu, Jan 3, 2019 at 4:46 PM Torbjörn Granlund <tg@...lib.org> wrote:
+>
+> Jeffrey Walton <noloader@...il.com> writes:
+>
+>   Here's what I witness on a BananaPi and a couple of other boards. Can
+>   you provide info on the ARM boards you are using? I have about 8 of
+>   them for testing, and I may be able to duplicate your [successful]
+>   result.
+>
+> Marco and others have told you to read the GMP manual.  People have
+> explained what you do wrong and it is clear that you know very well why
+> your CFLAGS messing breaks things.  Yet, you insist on spreading the lie
+> that GMP "does not build".
 
-            Xen Security Advisory CVE-2018-19963 / XSA-276
-                              version 3
+You have the build script. It is called test-gmp.sh. There's nothing
+special about it. It's a straight configure; make; make install. It
+bears witness to the errors GMP's configuration produces.
 
-        resource accounting issues in x86 IOREQ server handling
+I'm not sure how that is spreading lies.
 
-UPDATES IN VERSION 3
-====================
+When I said, "ARM A-32 does not work at the moment due to GMP build
+errors", it was a statement of fact to explain why ARM A-32 was not
+tested. It may speak to a broken configuration script, but a broken
+configure script does not leak sensitive information. It is really not
+worth discussing here.
 
-CVE assigned.
+>   Returning a failure from mpn_sec_powm would be a most welcomed
+>   improvement.
+>
+> You have repeated this several times already.
 
-ISSUE DESCRIPTION
-=================
+Actually, that was the first time I suggested it.
 
-Allocation of pages used to communicate with external emulators did not
-follow certain principles that are required for proper life cycle
-management of guest exposed pages.
+> The GMP API is what it is.  If you don't like it, well, we're so sorry.
 
-IMPACT
-======
+Yes, it certainly is. It is the cause of the troubles for some software.
 
-A compromised DM stubdomain may cause Xen to crash, resulting in a DoS
-(Denial of Service) affecting the entire host.  Privilege escalation
-as well as information leaks cannot be ruled out.
+Some software probably does not care and can get along fine with
+crashing. For example, I don't really care much if Notepad or Paint
+crashes because it is not handling sensitive information.
 
-VULNERABLE SYSTEMS
-==================
+Vincent and Halfdog talked about complimentary security controls to
+remediate the information leak. However, their discussions apply to
+some enterprises and take a considerable amount of knowledge beyond
+"disable coredumps".
 
-Only Xen 4.11 is affected by this vulnerability.  Xen 4.10 and older are
-not affected by this vulnerability.
+What their discussion has not touched upon is:
 
-Only systems running HVM guests with their devicemodels in a
-stubdomain are considered vulnerable.  Note that attackers also need
-to exploit the devicemodel in order to have access to this
-vulnerability.
+1. not all enterprises have knowledgeable engineers
+2. not all applications are enterprise
+3. not all security controls are available
 
-Arm guests cannot leverage this vulnerability.
+Item (1) is self explanatory. Sometimes there are A players, and
+sometimes there are B and C team players.
 
-MITIGATION
-==========
+For item (2), there are other non-enterprise users, like folks using
+Android, iOS and Windows devices. iOS devices don't allow you to
+control crash dumps. They are written and retrievable. About all you
+can do is decline sending them. I also believe they are sync'd so a
+dump gets transferred to a Mac or MacBook. Yet more egress...
 
-Running only PV guests will avoid this vulnerability.
+For item (3), there are often missing complimentary security controls.
+For example, a TPM is available on low-end netbooks. A Windows machine
+could encrypt the filesystem so the crash dump is also encrypted.
+However, a user running Windows 10 Home does not have Bitlocker
+available. It is an upsell item.
 
-(The security of a Xen system using stub domains is still better than
-with a qemu-dm running as an unrestricted dom0 process.  Therefore
-users with these configurations should not switch to an unrestricted
-dom0 qemu-dm.)
+>    <other nonsense removed>
 
-CREDITS
-=======
+> We've had enough of your nagging and aggressiveness and your threats in
+> private email.  Your messages to the GMP lists will henceforth be
+> automatically discarded.
 
-This issue was discovered by Julien Grall of ARM.
+Hugh? As a courtesy gmp-bugs was CC'd on messages to the list. And as
+a courtesy I emailed you offlist letting you know I was going to
+discuss this in other forums.
 
-RESOLUTION
-==========
+Claiming a discussion of insecure use of assert is aggressive or
+nagging is a bit tenuous. So is claiming a courtesy email is
+threatening. But I understand GMP is your baby and criticism is
+probably not welcomed. My apologies for that.
 
-Applying the appropriate set of attached patches resolves this issue.
-
-xsa276/*.patch           xen-unstable
-xsa276-4.11/*.patch        Xen 4.11.x
-
-$ sha256sum xsa276* xsa276*/*
-efe9f031c5646b111cbfbe35141a7d99eb31ead07c1c6051145abbd9a3def5b9  xsa276.meta
-7f77225e3de780a2507714caab5870664634bf9f76215547bebd31a6399a86ef  xsa276-4.11/0001-x86-hvm-ioreq-fix-page-referencing.patch
-c93c66090009833cd11fabe72b523cbdb3467fa104cc97d1855d365881aa7f8e  xsa276-4.11/0002-x86-hvm-ioreq-use-ref-counted-target-assigned-shared.patch
-ef8b89375866821f4a612f600d10834bf65d811b1784a4ee0fde4a3a409501e0  xsa276/0001-x86-hvm-ioreq-fix-page-referencing.patch
-75398ec343b9aaebf0c7dc0c5ef5ed7a3f3be0959f1519db5c7f32c44e7a54d3  xsa276/0002-x86-hvm-ioreq-use-ref-counted-target-assigned-shared.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAlw00y0MHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZcpAH/3AuQ0b6D3duO1/p1wHhNGwGOLf4uCIH85h+J1Vx
-TRh77PtztIxosC4OtLObcOtLqf2qUH8SBXnKGiWeyDSjkS1ff8BCRbI8o6xdbvZz
-wvuMZMoRjIjGqHmVQtI4Jmm260RdmQKeiWZydq0XTKp80oI8hqsid84eY0xDXYKi
-GFjream7Vr93RuvhJelTRJGnZrVa630FlI8E8aI2BYrFKW2BaCXxBs6ZQY0UBhXM
-rjqfSj4Ws640B8Sk2Shi8UNGI2rm+kF83s3VlXodGNDjOapXD8bYRp7UcxjnZ+R2
-dLSFKdiwZ8598x82WhGn4J464l0tnmGQ6WaH08ZwM1xZD5U=
-=Df4x
------END PGP SIGNATURE-----
-
-Download attachment "xsa276.meta" of type "application/octet-stream" (587 bytes)
-
-Download attachment "xsa276-4.11/0001-x86-hvm-ioreq-fix-page-referencing.patch" of type "application/octet-stream" (3868 bytes)
-
-Download attachment "xsa276-4.11/0002-x86-hvm-ioreq-use-ref-counted-target-assigned-shared.patch" of type "application/octet-stream" (3333 bytes)
-
-Download attachment "xsa276/0001-x86-hvm-ioreq-fix-page-referencing.patch" of type "application/octet-stream" (3868 bytes)
-
-Download attachment "xsa276/0002-x86-hvm-ioreq-use-ref-counted-target-assigned-shared.patch" of type "application/octet-stream" (3339 bytes)
+Jeff
