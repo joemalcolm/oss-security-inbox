@@ -1,41 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/15/1
-Message-ID: <CAHC9VhSQRyh=4wRJTehjDYF8F0uRR3geqfFkAT+VTqrzoYSw4w@mail.gmail.com>
-Date: Thu, 14 Mar 2019 19:48:22 -0400
-From: Paul Moore <paul@...l-moore.com>
-To: oss-security@...ts.openwall.com
-Cc: Jann Horn <jannh@...gle.com>
-Subject: libseccomp: incorrect generation of syscall argument filters
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/03/6
+Message-ID: <868t01ct3p.fsf@shell.gmplib.org>
+Date: Thu, 03 Jan 2019 22:46:18 +0100
+From: tg@...lib.org (Torbjörn Granlund)
+To: Jeffrey Walton <noloader@...il.com>
+Cc: oss-security@...ts.openwall.com,  gmp-bugs@...lib.org
+Subject: Re: Asserts considered harmful (or GMP spills its sensitive information)
 Content-Type: text/plain; charset=utf-8
 
-Jann Horn (CC'd) identified a problem in current versions of
-libseccomp where the library did not correctly generate 64-bit syscall
-argument comparisons using the arithmetic operators (LT, GT, LE, GE).
-Jann has done a search using codesearch.debian.net and it would appear
-that only systemd and Tor are using libseccomp in such a way as to
-trigger the bad code.  In the case of systemd this appears to affect
-the socket address family and scheduling class filters.  In the case
-of Tor it appears that the bad filters could impact the memory
-addresses passed to mprotect(2).
+Jeffrey Walton <noloader@...il.com> writes:
 
-The libseccomp v2.4.0 release fixes this problem, and should be a
-direct drop-in replacement for previous v2.x releases.  Due the
-complexity, and associated risk, of backporting the fix to the v2.3.x
-release stream, I've made the difficult decision not to backport the
-fix.  Further, I'm not aware of any workarounds for this issue.
-Adminstrators and distros are strongly encouraged to upgrade to
-libseccomp v2.4.0 as soon as possible.
+  Here's what I witness on a BananaPi and a couple of other boards. Can
+  you provide info on the ARM boards you are using? I have about 8 of
+  them for testing, and I may be able to duplicate your [successful]
+  result.
 
-The related GitHub issue, complete with a brief discussion of the
-problem and a list of the assocated patches can be found at the link
-below:
+Marco and others have told you to read the GMP manual.  People have
+explained what you do wrong and it is clear that you know very well why
+your CFLAGS messing breaks things.  Yet, you insist on spreading the lie
+that GMP "does not build".
 
-* https://github.com/seccomp/libseccomp/issues/139
+  Returning a failure from mpn_sec_powm would be a most welcomed
+  improvement.
 
-The libseccomp v2.4.0 release can be found at the link below:
+You have repeated this several times already.
 
-* https://github.com/seccomp/libseccomp/releases/tag/v2.4.0
+The GMP API is what it is.  If you don't like it, well, we're so sorry.
+
+  It would be a welcomed improvement if GMP does it in
+  other places, too. Crashing is least welcomed behavior for many uses
+  cases, including those where availability and confidentiality is a
+  concern.
+
+You have repeated this several times, and people have patiently replied
+and explained how to handle this safely.
+
+  Gracefully handling failure serves several purposes. First, returning
+  failure is what developers expect to happen.
+
+Really?  Did you talk to them?
+
+  If a program uses a function incorrectly then it is expected to
+  fail. Developers are usually good about checking return values at call
+  sites.
+
+I have yet to find one program which checks all return values.
+
+  Second, when GMP crashes it is setting a policy for the application.
+
+Any API sets policies.
+
+We've had enough of your nagging and aggressiveness and your threats in
+private email.  Your messages to the GMP lists will henceforth be
+automatically discarded.
 
 -- 
-paul moore
-www.paul-moore.com
+Torbjörn
+Please encrypt, key id 0xC8601622
