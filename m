@@ -1,4 +1,9 @@
-Received: (qmail 30396 invoked by uid 550); 28 Jul 2025 19:55:36 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5363" "Thursday" "3" "January" "2019" "15:42:09" "-0500" "Jeffrey Walton" "noloader@gmail.com" "<CAH8yC8n8053uxvN94L=ZbeFvNGEmW5BrxwF=XPQVjukA54=kTg@mail.gmail.com>" "126" "[oss-security] Re: Asserts considered harmful (or GMP spills its sensitive information)" "^Cc:" nil nil "1" "2019010320:42:09" "[oss-security] Re: Asserts considered harmful (or GMP spills its sensitive information)" (number mark "        noloader@gma Jan  3  126/5363  " thread-indent "\"[oss-security] Re: Asserts considered harmful (or GMP spills its sensitive information)\"\n") "<a09d0918aa33cc80afea69c8d5bdfda7.squirrel@student-web1.dm.unipi.it>" ("<CAH8yC8m90KssanbHt+YmVt7iLOiwWHASDqRYW5TQGeNV2zWXDw@mail.gmail.com>" "<a09d0918aa33cc80afea69c8d5bdfda7.squirrel@student-web1.dm.unipi.it>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 24429 invoked by uid 550); 3 Jan 2019 20:55:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,227 +11,170 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 30350 invoked from network); 28 Jul 2025 19:55:35 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
-	content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=
-	corp-2025-04-25; bh=tUax1XLcm2CmdQrsFrW2Yc1Wp2IVhJS0YkwjRPvg/bM=; b=
-	ANWuNesdmtitP9lkz0L6vl0jfNgu+klQdtsyxlNK0M/2LBRMgta9ongwaAWkB90i
-	3hvJPM8Ky0QyiaXT0LFGX1IdRVsMC4Ghp/mMR5Dd88JsMu/hDUsdv79XKKYVwDEl
-	MmxsYzju0YeaCUL4uM2J/YdftHJ47ACMMhWwtt2G+wYh7yJ5V2Cjn/WR++8ot0sH
-	u0ZxkGvqbQ+9Xt4wnnUL02XqejQXg3RGg4CshLfcXuThKDBSEMWATFDglYbIaQ3q
-	HICRCxlMHBV7EzyfWjXcEixZui7DB1Sm2RG9V2jcgIoAucKoq5JhhPpZf8vGOjh2
-	X0a/D9ghQ3JcYGzJKLKvBg==
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=rv/pbIXb4GkwwblOreT7JjiUVGIsNJkiGg2eQm+Q64zcwAj94lAM9uvq8BwZUFu6myc3lsnOHd1Jf+gsBgvM4PR9CiNJ1FbkDvUwhDmNy1cKpn8OTszzdcfU7P8PCksYhIjvmTAg0ngPsz6YuV/OWXNQzcojwfZebjgSNTWvgv5nPn0Z4zMt0qLE3LfGtDgXHqVL3CrDAaY1AzPjLi5XhghHJvWCotIhbmVBsogpU/f1vXQbwjNaeXWMIpu/ukdqrhcBBfOeSm2YrrnY1mzxGP5VoR8wwIuMZSwJgSXmSCKhQlafw/d6EJ+9B8fOuw231K3sxYzGBwHSDubET341xQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=tUax1XLcm2CmdQrsFrW2Yc1Wp2IVhJS0YkwjRPvg/bM=;
- b=ptWKjh7ZwmyiCNZsKJEzSwhQYsR1qUT7ajJgiryk+Eddb5kNM8Poh9uNx8WJCY9FbAwYvgLjfH+Qf8Bn3pKtlR/sfF74LVWzCLJBoKv+LdZWo8giWR6Tsnc8GkFQpinhHq3KTe8PTpkWnCLwmxW+bMuSJtBnZ6ZqjvBoGR9G+RKBfaB9eZDncoCTjIa7T3WM13VRxOmzW2SViPc4GbngQrOSwmMRqPvrGZ2UGrKPIOoX3dMTO66Je0+nY14xUkt01JnldwBmn6SvzJoN6J3+Q8efvcRyPJ6d1K1ZWPx2odqagQz3HrR/YlesP8ZdHFBvH8gpjsNF8N/9oL5xciAsLA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
+Received: (qmail 11785 invoked from network); 3 Jan 2019 20:43:01 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=tUax1XLcm2CmdQrsFrW2Yc1Wp2IVhJS0YkwjRPvg/bM=;
- b=ag0EBK2Eia+WOI6asclTRTiamRJy6x6g+txvC29hWCEepi26dM0o78DPszpS6Z1MFHqc6/CvTX8euEGkFUP0aWSPp3cLiacc2Ap2vf11uyRZoHUTSmO2iTvQriemB/HUeEZCEdVq65tNB9E5eYXYpzqkUhVrziuj3Bh9ULZYoIo=
-Message-ID: <c1d8d50a-9e67-411e-8f1e-cb2de457a637@oracle.com>
-Date: Mon, 28 Jul 2025 12:55:19 -0700
-User-Agent: Mozilla Thunderbird
-References: <CAADqWPT33dBPg2cba1h39veP-_C4bpmsn-On8mEXio0Nz_gcEg@mail.gmail.com>
-From: Alan Coopersmith <alan.coopersmith@oracle.com>
-Content-Language: en-US
-To: oss-security@lists.openwall.com
-Autocrypt: addr=alan.coopersmith@oracle.com; keydata=
- xsDiBEab+moRBACDH5yKqS3wcc5bdxY7PBNuwKvF5TKMfagmSvuRDtZjjIIWaA/nZ1KboV9G
- q5g7kP7+Kfu+Qgd8u65eVsWwmPW10fXvj3aCU53glx2EdGdrHcgiyH2gEQfPiyBw+trIppWF
- RV0IDXSLMA1FNC92t2nSG/VFHaPTVwcgkIRSfcXDvwCglGdEa6f4uLqoNHP+m4yYnzapFuMD
- /R4+2AJDAvEWKDdYCGZzlawjAmmWyXrmT7/C/mx98qUR473l4buXjHgDkkXXlHqdzil1vK85
- PhrKzNJDCCmlHUJNz+QwiAMOLwpD+kwVPb57RG7y+a5JQ5+jtVw4RlUxZIk/wj2An9YBO3A5
- vR7PdjM32ZJCN2+aM4dYfNzQxQKTA/47icvBaBVTl9rztjg2pd2Aqpc1P/GsIYLGj7XjnnJv
- GAENBHSH1QjpZMJGCTS9oJ+B0/wrIr+pA+MdFgYAb6ojMQJOO6UChjWWSGjMFcs/CeXhxlLB
- ido3DtAETbNTwO6OEfAvdosvTdhJFnwvZlJ+zZGGy5CrF2Fd9PUe9tmASc0uQWxhbiBDb29w
- ZXJzbWl0aCA8YWxhbi5jb29wZXJzbWl0aEBvcmFjbGUuY29tPsKCBBMRCgBCAhsDBgsJCAcD
- AgYVCAIJCgsEFgIDAQIeAQIXgAIZARYhBEoZPAbTXnxnD6TvC6L7nggfLRMOBQJkQs2eBQkn
- DNS0AAoJEKL7nggfLRMO1esAnR4FVD60BpDY/bJp5RC1VXhOVlo4AKCJgsQeVeGLxDlMuhAm
- bcCkOjafqc7BTQRGm/pvEAgAmnlpSWGjmtSGlLqKTuymwBAU9G7Jw8ow27QngXS/86g/PTzm
- yhXzK0uPgeoIaTZlqaHWNKCWJnC6T2btXtaDHH6cElrClYNf94os5sSt8PBDh184W+NtctAy
- Y2dA1pQYhYs8/eXwa4E4cyrrQG75M+CHrbu9Se0vlERARCpNcjNYLpTXRCwNuUvAi905VJ0Y
- XnGX83WbJfNIq+uxnBa2gVzwb2/2FwKOG03Wyb1vs6NznWJle9x61y8/LlEDoBRbfIQTFp51
- R0ue8gX2yMVgh8lYVViHYCBq+cat7p8X41Xa/fN/HfBFPsf3/+bhggNgmaBmDJBxxd6BPB8Y
- EireiwADBgf/UWIxQwwRLkiXPacOoh34MJYQIBTrCC8gVFxetlbEPEH5mueZMJegAPTF52l8
- 6REenxdNVz/0xT7BD6VlHHY5DowlbRca4W8eb3gpkX/wfNYDYCHtTifT7ewumTrNZx5mrbNk
- 0XTJVOPAP3z7E0rVD2w/xo4p22DzIwfeGKwpHqt1b6Z9fmrRDwaiXaFmwUf+rIiGc/OFcOSe
- 46HwTmIyTOt6NVdQSf75jOPbdeM/n1I5svOdWTLEj6QEj2q9UQ98UEPJuMdaotyBFwKlcDOO
- LMSL793fWINrYSskdXhHjaht5wWqI+egO2JfciI/vP1+bEzhpY9llGq+r7WG3nCSf8JJBBgR
- AgAJBQJGm/pvAhsMAAoJEKL7nggfLRMOgugAoIdhGnD9d/IS6fDVgv+4xnOXvyohAJ0VVxc1
- uoPzepWFbgvLuHIMvyjRog==
-In-Reply-To: <CAADqWPT33dBPg2cba1h39veP-_C4bpmsn-On8mEXio0Nz_gcEg@mail.gmail.com>
-X-Forwarded-Message-Id: <CAADqWPT33dBPg2cba1h39veP-_C4bpmsn-On8mEXio0Nz_gcEg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: BN9PR03CA0044.namprd03.prod.outlook.com
- (2603:10b6:408:fb::19) To BL3PR10MB6140.namprd10.prod.outlook.com
- (2603:10b6:208:3bb::15)
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:reply-to:from:date:message-id
+         :subject:to:cc;
+        bh=kqfU2VbJ9awApataZPBLarBiIqp9pjv1iOVaC32LPVg=;
+        b=pGPLPjZjUNJ35MRvnuU2UI+QGhKbQDGXGPVdGZy6I7E4zuVXQuJ1GguPxZ3DeyZRGn
+         u1iEauBoi8OopFH2xhodBXpFOFefqVk/O8zKuK/TMket313IJECOPTXYdob//l0xLmBj
+         ZfiUPrhCh/QcIHbKU3S8j6GygT6WVUAg9IsBmpqJb8qhR7HWRfYcXD/Eq9gEgCI3Mbnk
+         S1BxEIT1eUg09uvoVBkN4QADEbRqL1kDT+/Vhv+yi3tzd2Nh6H2d8S3KBDNgvqjUtSdg
+         c5YxW17JRnCiSe1NdilcYSHHxprp5oUsW5kjapXLqchMcg856t/UeLFtyUi649kN4MFj
+         CCWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
+         :from:date:message-id:subject:to:cc;
+        bh=kqfU2VbJ9awApataZPBLarBiIqp9pjv1iOVaC32LPVg=;
+        b=cpA5t8hmDFtt6sWibGS5uuCdrtdtxTnXrhdQ05496lbHunvAMqUQtBNzMU+ax88pk1
+         EFrTqCNpMPYyqhC0is70DcuiY0Wes2LhAtHrNj5XcsfflCYSCOtGLs1w7wuNgWQUwutz
+         x/vSBDBDNO1PF2p20pzBVc3FF3G4qvhh9cnd5+YipsA/WT2GrhZBiQzlIDP7jyMGHg1Q
+         bDX7eD9yN4x1/e4oMgvUtfmuaZLZe1W0cVviBiv9BuUPsChkKF6M7pIT1KP1z5wK1Zge
+         9zt8vzAYVq0GK0QaYyX5rz1uiU3huLdv2fM3m9SeL0MJe/EMhbzj07adAh249lEIEBaA
+         ZKqg==
+X-Gm-Message-State: AJcUukcNytgbwiFj+ka9YZ9E6ADjrOjXX/XE3FFzVxZ8zJ50H7U92pQH
+	dHVcvsFawSk1QE5sgVD7jkqUKOYEtYLwTspclZ9aZ2LM
+X-Google-Smtp-Source: ALg8bN4IyUKkrmmBpzRyT5UTGztArtb09aSIXlk2Tc51qBfppyIPfr3D9leelDwyzY4gH1aRVnQy+X7Q5JCicBKVaUo=
+X-Received: by 2002:a02:48c6:: with SMTP id p189mr15724218jaa.89.1546548169630;
+ Thu, 03 Jan 2019 12:42:49 -0800 (PST)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL3PR10MB6140:EE_|SN7PR10MB6644:EE_
-X-MS-Office365-Filtering-Correlation-Id: 00fe0327-19be-45e0-e483-08ddce10af6c
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|1800799024;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?UURlWnRXSHd4L2RuM1JqaFhLM0V2a3BsbHU1MHZHdG91M2p2NTZ6eXhkbFVY?=
- =?utf-8?B?RDdmekxBQk93NTdFRzVncmxMbkpBUE1HNGszYkU2VE1tRTdVeEQ5RmdhZU5N?=
- =?utf-8?B?S0I3U2RicEo1V2VwZG9Ob0dwMEVENFErVGc3bTlVYTB6RGI2dTFzVGluOXFt?=
- =?utf-8?B?SVVSWVlKYnFXTXZoSlRWbmlwNE0zNGZvazMxcWo2N09Qcko0UjRpMk5PTERJ?=
- =?utf-8?B?c2hmWisyNGNiUHUwQmxTQlVCZlNHam5vajg0NmVjb0pDd290akJrZ09kcUhV?=
- =?utf-8?B?Z0V6KzFmcENMWFl6UG8wQU5NczBlSWFaR3FIV2x3aFBOZHJOVVAzYmUvc3lG?=
- =?utf-8?B?M3ozNEJpZlE1S0hmRXdpeGt2a1YxQzJtZWNsRE5nVXplOFRqb3hUeEZVdzhF?=
- =?utf-8?B?ZUhKZEdxaUFtc3MyTERsdXVlbTkzZi9JMm9VM2FveDFYQlZYanhINlBNYXpq?=
- =?utf-8?B?OG1pVW8xRDREV2ZheUlPeFVlK1FNWW9aT0ZNaERzYzlKeUdUcXJXc3RrWXZl?=
- =?utf-8?B?UVpZaE9ZOUMxU2JmTW82NlpJbGRCeG01ODBsVWw2WDY4MEZFd0FXbTQxTmFC?=
- =?utf-8?B?bVBiejR2RjdDRUEyYThjK1lFWTBFRyt2STZkVVAyTkFiRThCRTR1dUl5d3Rj?=
- =?utf-8?B?MFN0ZDduTUUwSkJrdXRHNTJSeDhSbDJoZFg0ak84Ui9GWnRUR2paNGZLMDZN?=
- =?utf-8?B?WU9GS0phNi9Eb2dCMFhrY2lUb09GNTk1SXcvNW9IOWJuNHFROWxiVmVPN2dB?=
- =?utf-8?B?V0Vob2FFNjhEZkFqVUp2ZkVrcS9jc3VuYTNUVHo4KzZqK1J5aktraFl3UXVD?=
- =?utf-8?B?bWRmWXVsaTExNFpqaGZKUVhhcUJpc2N4eXJHMjlsdG8wTUtOZkovSWh0UHNG?=
- =?utf-8?B?RDRvUGZncjZYb3ZqckYvL1lTOWpXR2VXTXY1VlNYZFJHaHgyMVZPdC90Tjlm?=
- =?utf-8?B?YnJOMmVZRm1rL0lBWEM5Y1lPZVpKdEpZMHpJeHJwcGt5dVRmdzBBQWppWmhI?=
- =?utf-8?B?OGlkKzcxaTh4ZmRTNlljMTAyTEs0aHZUcmlJWlkwNVFlYkVaQ3RGMnpPNGM0?=
- =?utf-8?B?c2hVZ2RLam04Q29ob2hSK0VnQXJ4eVZLYXNFQlM0M3ZRTHZGWGJoWDNQOFIy?=
- =?utf-8?B?RlRJNUNoVHU2Q0xhNk9XdWJGSzJNTUxYdEdaS0UwVkxlQVBHblo0dFNLekpG?=
- =?utf-8?B?SWdJaEJ0MHVaV3Y2aVZaYnZpbkpaRkJlQWo0WkpINXl5aHFzMHNlZlZ1S25B?=
- =?utf-8?B?bzV5dmpPdUhFbnFLSVluTGk5WXBZY1dJZnFueURXVlN2RlpQMmxMT0pYSUdU?=
- =?utf-8?B?cVBCNG5kbEtUcGlkSFpjT292blUvTTMvUjZVZ3kvMWFnNXRJUFZXbERKRWR1?=
- =?utf-8?B?cnVjSzZjNVdIQktnQzJPOFhlZkVaRDhPamFrT2w0Rm5lMVNaVW5iaGs2VmtG?=
- =?utf-8?B?ODBZQTRXTVFGcTZDbUFxbzF6ZVdzTjRxaDdYN21EeEk2VHZYQ3RqdVVTVE9m?=
- =?utf-8?B?M1pIMkljTzc0Vk02K0xKR1JuMUlaSFZlaWlvR1FFakpEYjhyb0E2YmI1Uk9Q?=
- =?utf-8?B?ZHdCQSthMEZlWXorUGUzSkhpWDZncGNtdkt6dE5LNzNuUUQ2K0c2OGVKMEdU?=
- =?utf-8?B?YkJWTENTbks3RDgrdUhzT2dVNjhoSWdnU0xiVjRNKzJTNHdVcWw0RkZPdGxK?=
- =?utf-8?B?NGxzUWM2bzhYdlZYU2UvT2R5MFdsSk1OeTdDNmgyRXlTR0NPZkM0OGlsZkUx?=
- =?utf-8?B?MUNBMndSTTdoNUFqNVNJaHBCa1Q2Ykp1MFVRUDE4WGZ4NlpUWmErVk5IQ1Er?=
- =?utf-8?B?blFzSjVxNW9Na2NSWkdzRmxSMUJhUWZPNzZwem1xSW90QjlnbzBGSlFWSlNi?=
- =?utf-8?Q?3BNsZ72fpT3AX?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL3PR10MB6140.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?MXZCVks4ZjI4Q2Q5cjVuNmg1c3NOdUliSnhpU2oxUlM2Z0I0Qklpd2JKd0hF?=
- =?utf-8?B?S3ZvUmVXQWNuUXhqa1lJWFBFcTI2OC9yQ1BPanN2ZndXVVJWR3JydUpORDNS?=
- =?utf-8?B?OENuM29tVDlXSDlNdUtpaDBvYTFOYWU2anNITXRYK3c5Q0IyQUFrcFp4QVBD?=
- =?utf-8?B?cmJJa3pWOVlneWVzQ2ZudUNEYU5sVjBaQ29CbzdPNG9hK2NZUU0rU0F6ZjAz?=
- =?utf-8?B?SDZYR2ZadWorMDAvc1FGTDdaUzk4YzVrZlUrU2tJNS90MTNqL1VMR3BJdUUr?=
- =?utf-8?B?ajQ1TW0vVytVYlhwSThhUTBYYkdTQVVLbFN1Vkh6OGdqS1g2WksvS1N2N0lP?=
- =?utf-8?B?OWM4YVJtUVBWYXoweEVvYzBhcStIbkc0MFlMQStIR2JZUi9RekpSdjRsYnVk?=
- =?utf-8?B?bHRrTk1oU0wvSlRKSEZGSGxMMVpIejkwbWZ4NWFiN1czbmZFMHRDMUJBYW5Q?=
- =?utf-8?B?elRMWkVoenZ2VXVSaUh5U0hyMlVOMnZmTEJVT1MyYmZhNEtrZWlFN2V2V25M?=
- =?utf-8?B?VFVRdnVUSkF2ZGJ6M2xVUHowVTlIVHB6UEhnTG5abkdrbkgza0gyZFkzWUJy?=
- =?utf-8?B?Ykg3YVladUkxWlpSNEJsYmh2UXZvM09veldWdkpHSUxlVEZHQXZldmZ4MU1L?=
- =?utf-8?B?ekg1eStsZ3AvMCs2RmZmOUxwV05iNmYydFJRZUhVNlRUTEh0WGZDT21qUUZV?=
- =?utf-8?B?LzJra0k5dE9nTHE1TEtjd2MxRVd3T3N4UlhUc2pLYk93S0g0Q2MyVmthTGE2?=
- =?utf-8?B?WVhGaEY2REYvTEt6Rk8yTFROT21MV05tM21EQkY5ZmxHM2wwMHlGZHJYdlhR?=
- =?utf-8?B?VHFKTkxYcjBsdFVoc2N5MTRWWHlqOWNGZThRc01UTDh5SkU1RVJ5dHlnRUNS?=
- =?utf-8?B?ZHBkUDRhQmdpbTNjNEQxTmZMZGFVMXErRjRHVEozdHhCMWJudElieTdXbnpn?=
- =?utf-8?B?Tkk5UnpHSnQ2RHBqQmxQTkFNdHBHTXVPZjI5TDFLTmNRZGdyZysyY3NjSTVU?=
- =?utf-8?B?VjNsVVJhblh1N2s0Q09nSEliWGRObk53cUgrdlFESjlIZ1NuYWcyMHVmdjBz?=
- =?utf-8?B?aUt4UmQvTEZJWGdtRzVqMmNIc1Q5VDdYODE0ZjFmRWt3SVdEUmFQTU1zOHpt?=
- =?utf-8?B?TzdodUVpaFJha2hkZG1QSmlKTGRVQWNCck1pK29WZXk5TVpXd2kyaVpiM3NB?=
- =?utf-8?B?djRScHFXaEdLK0ZId1pyTGQxdWVieG9sYzlibUtpMHl6WmxLeTRIeGU0TTdz?=
- =?utf-8?B?MGZ5Q0g0RU90YTR6aWxqMW4wcEtrZUhpeno0WmF5MEFGenBtV3R4WW5zL2pX?=
- =?utf-8?B?aTkxc0xKenJ6dURUM3puVU1yY2FzM3VpeHpOSGJkdWpIemZyb1hSUkJ6YURX?=
- =?utf-8?B?QzM5NkVUcUFjRzJJZTRCWWlxS21ZNXlOb1JlV2I5dGxCR2g5ZUN4N0ovS0FI?=
- =?utf-8?B?bmNpNmNaOE5HdTNMWi8wS21DVWpoZmRYMXlpRFlKZnZqT3JId01HRUZrTG0v?=
- =?utf-8?B?TXB5RWVDUVc1K1pmUk05QWZFOEcxVE15UUl2SHNUTmYyRkZiMTBDOUEyWGpI?=
- =?utf-8?B?MGwxTmJZd0Nja2xDR3R2QjNReFczdEszZjF2UEoyYlRYenFhdC9rSjBYS2ZC?=
- =?utf-8?B?NnNIbFBwK2c4cjF4ZUFnR2ZQUWlWR05CU3QxZm5uRC9ZMXB2cEovRTVhZkFz?=
- =?utf-8?B?UFdNeWw2Z2xxaDFGVnRTT3ZvY2tmRUJHWmhpSFpFVkRxekQ1OThZWHIrdVJH?=
- =?utf-8?B?UVF3M0ljVi9YQ3lyZVlzU2x1OEw2WlhpMDFxc1JsN2VRWXBZTnNra2pBbE16?=
- =?utf-8?B?SzNiZWFQKzZvL1RrMVp3cHNveUJXbDVJSmJVZzJxTUJwMWNtRWxiZDdJb1hJ?=
- =?utf-8?B?YmRLR0hRM3g2eFFJMUxEQWV3ZE1tME9YOVA2K1RYdGxIMVpGWFVia3hyak95?=
- =?utf-8?B?U2d2d1A2YzVuOWFSZXdxU0VCRXd3Z09KYWNLU1d0ZkwxNnlUOGhCVksvdmFt?=
- =?utf-8?B?UU1WR0NIbnlmRjNmbUt5Y0lUOFRWVS9ZUkhUclBkVHFsSkNMNjFNNWZrWDZp?=
- =?utf-8?B?WFFJenlnOUZhYXhwZ0hId0FnVjVmVzlxdW5nTm5manEzZWZBMGZLMXhNUElC?=
- =?utf-8?B?d25BUlVjQU00SlY0bzhPU3YzU21oK25na1krU0QvVmprWXZocFRHejJ2Q0JZ?=
- =?utf-8?B?UkE9PQ==?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
-	oH6X7BIvl5E3nC/0vsoNGVK19GJSdsgwNnY76pHBcTE7dHchZYKx5cieKnR+tcxbmhPYWYAjrkI8QNRlKjmW7tM6PUQLH8MS/R2BE80r5GuGn1aiMnaflXOaCqmZInXoR8S04UDPkZO3ACV2kB42pkFvSLXZUemvfYbzFxJ3155lqK5fprdeE0qI6EJ9/XQY35iQF4TtW3t/GzPnuju1q958SYF5Y9nJlw3pmIwZEyoYzS/AS8DvBvc2tzLOAzhLWDDnrnkFrXRmXJwK8X2AQC5GJFXM2I5Q0Oqpyz+uJjU1CI9aEKOeRdgxm0Kiq82GT8Cbr7BXri9sOIfEV8cFkyjdJf6jLDFx/54MHW3y7SdXhRQg9qISI26FWFM4WpBM8VrPlBXl7S7FoJqVJmqFbRKlKipLcSRThTgQ2oIAl8AwfDta5K6/CZ2+HFqCUtiS5buodIusQ2Soc9Vt3LcrefyPmG7T+VIgBWOsFS92YH8vF2FSYQY6F4zKZqCOLsyZ6y1BdASxBIczYbpCZsF137HjmUQ6/kgKbise+5uJtKLJBFJJyFqqEMr/vrmot50fAuSzHVSKsbkaoM6BZkE7tNaUqDU0iwV4O1Ohx2GjQNA=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 00fe0327-19be-45e0-e483-08ddce10af6c
-X-MS-Exchange-CrossTenant-AuthSource: BL3PR10MB6140.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Jul 2025 19:55:21.5867
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: KRfPPRuVZjTd7Ax2xY6IfnIpmr4oGMYcuHEsj/foNtRz67oJGvO173A73cQpYUWytk+PVylp9tmqSxlBzvwOGLQBDiO42boacgMQkU26i2M=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR10MB6644
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-28_03,2025-07-28_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0 mlxlogscore=999
- suspectscore=0 malwarescore=0 bulkscore=0 spamscore=0 mlxscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2505160000 definitions=main-2507280147
-X-Proofpoint-GUID: kEAXOnyYdKqpBBkJ_7EOCva7bVV9qhIS
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzI4MDE0NyBTYWx0ZWRfXxHHLaHK3fTxn
- gMDOOa68VbZ/YQfBK4ypCbrlWmZmsbplM5w3KSw5gzv1tPcJhvyiAkCVB9bfKqz/RvTkoPec2UC
- va8TMDQ/wSMuMkxXXVoiJKEc8Ft3xifutBOMSVh7GsOYMlGZwgj2rkNrXGbYVQ1gz4cTRV90XuA
- Zn6UPkQaapGm5UunLyQnuSpCjVMJmNj7S+VBI4et0WGPx4wXtWDVJrzn1pRyUfce444jPB15aRe
- nDiNdhlKcb+Yf8ETapbH8+/KvGx1lRJQ3QPj/EvJAa6++Pu9q/1SCRZA0mVxB/RSecbCDLghDUi
- Tv6hMCyE5DE5bV7c2cI82GbzYUrvhjP9Z0yA+x91KaO8PpQbj2ETnkpzby+xNSlhgPMqXKxTmEl
- MQRphRxbwXsMRm/tryyFYN6j+Hgx0+PZNDcJWLrSrnP49LP+lA666fFd3BNZtE6++KOfYecN
-X-Proofpoint-ORIG-GUID: kEAXOnyYdKqpBBkJ_7EOCva7bVV9qhIS
-X-Authority-Analysis: v=2.4 cv=A+5sP7WG c=1 sm=1 tr=0 ts=6887d5ae b=1 cx=c_pps
- a=e1sVV491RgrpLwSTMOnk8w==:117 a=e1sVV491RgrpLwSTMOnk8w==:17
- a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
- a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
- a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=Wb1JkmetP80A:10 a=GoEa3M9JfhUA:10 a=8r2qhXULAAAA:8 a=NEAV23lmAAAA:8
- a=8AHkEIZyAAAA:8 a=U1LGwlEhh41aH8X6VmoA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=8gvLZcY7Nlvl4CGD_6nf:22 cc=ntf awl=host:13604
-Subject: [oss-security] Fwd:[CVE-2025-8194] Cpython Tarfile infinite loop
- during parsing with negative member offset
+References: <CAH8yC8m90KssanbHt+YmVt7iLOiwWHASDqRYW5TQGeNV2zWXDw@mail.gmail.com>
+ <a09d0918aa33cc80afea69c8d5bdfda7.squirrel@student-web1.dm.unipi.it>
+In-Reply-To: <a09d0918aa33cc80afea69c8d5bdfda7.squirrel@student-web1.dm.unipi.it>
+Message-ID: <CAH8yC8n8053uxvN94L=ZbeFvNGEmW5BrxwF=XPQVjukA54=kTg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Cc: gmp-bugs@gmplib.org
+Date: Thu, 3 Jan 2019 15:42:09 -0500
+From: Jeffrey Walton <noloader@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: Asserts considered harmful (or GMP spills its sensitive information)
+To: oss-security@lists.openwall.com
 
+Thanks Marco. Comments inline.
 
+On Thu, Jan 3, 2019 at 2:55 PM Marco Bodrato <bodrato@mail.dm.unipi.it> wrote:
+>
+> Il Lun, 31 Dicembre 2018 7:03 pm, Jeffrey Walton ha scritto:
+> [...skipping opinions...]
+>
+> > Here's a small example of triggering an assert using the Nettle
+> > library.
+>
+> This absolutely is NOT a "small example", it requires to build two entire
+> libraries!
 
+Well, if you can let us know how to reduce it further then we would be
+delighted to hear it.
 
--------- Forwarded Message --------
-Subject: 	[Security-announce][CVE-2025-8194] Tarfile infinite loop during parsing with negative member offset
-Date: 	Mon, 28 Jul 2025 18:44:01 +0000
-From: 	Seth Larson <seth@python.org>
-Reply-To: 	security-sig@python.org
-To: 	security-announce@python.org
+I thought it did a good job because it did not muck with your system,
+and it used independent data provided by someone familiar with the
+library. That is, I did not craft a sneaky test case to make a point.
+And a 'rm -rf /tmp/gmp-test' is all that's needed to remove it.
 
+> > ARM A-32 does not work at the moment due to GMP build errors.
+>
+> Can we suggest you to read the GMP manual on how to build the library?
+> GMP works fine on many ARM configurations we test and there are lots of
+> projects out there (eg. many GNU/Linux distributions) that builds GMP for
+> different ARM processors.
 
+Here's what I witness on a BananaPi and a couple of other boards. Can
+you provide info on the ARM boards you are using? I have about 8 of
+them for testing, and I may be able to duplicate your [successful]
+result.
 
-There is a HIGH severity vulnerability affecting {project}.
+bananapi:~$ ./test-gmp.sh
+--2019-01-03 15:07:11--  https://ftp.gnu.org/gnu/gmp/gmp-6.1.2.tar.bz2
+...
 
-There is a defect in the CPython “tarfile” module affecting the “TarFile” extraction and entry enumeration APIs. The tar implementation would process tar archives with negative offsets without error, resulting in an infinite loop and deadlock during the parsing of maliciously crafted tar archives.
+gcc -std=gnu99 -c -DHAVE_CONFIG_H -I. -I.. -D__GMP_WITHIN_GMP -I..
+-DOPERATION_lshift -I/tmp/gmp-test/include -DNDEBUG -g2 -O2
+-march=native -fPIC -Wa,--noexecstack tmp-lshift.s -fPIC -DPIC -o
+.libs/lshift.o
+tmp-lshift.s: Assembler messages:
+tmp-lshift.s:106: Error: selected processor does not support ARM mode
+`vdup.32 d6,r3'
+tmp-lshift.s:108: Error: selected processor does not support ARM mode
+`vdup.32 d7,r3'
+tmp-lshift.s:114: Error: selected processor does not support ARM mode
+`vshl.u64 d18,d19,d7'
+tmp-lshift.s:120: Error: selected processor does not support ARM mode
+`vshl.u64 d4,d19,d6'
+...
 
-This vulnerability can be mitigated by including the following patch after importing the “tarfile” module:
+> > In the case below Nettle is using benign data and not maliciously
+> > crafted data.
+>
+> I'm sorry, but your analysis was incorrect.
+>
+> I agree, Nettle is not using "maliciously crafted data", but I do not
+> agree when you say that it "is using benign data".
+>
+> With your build options, Nettle calls the GMP function mpn_sec_powm with
+> an invalid parameter: ebn = 0.
+>
+> Because of an error in the Nettle library you built, GMP receives "non
+> benign data". To avoid further memory corruptions, GMP aborts.
+>
+> Thanks to this behaviour of GMP, you was able to catch the incorrect built
+> of the library using it. ;-)
+>
+> Using mpn_sec_powm with an exponent of zero bits is obviously a nonsense,
+> and in general the documentation of GMP clearly says that arguments of
+> size zero are not supported.
+>
+> On GMP side, we can only specify even more explicitly in the documentation
+> of that function the need for non-zero sized arguments.
 
-import tarfile
+Returning a failure from mpn_sec_powm would be a most welcomed
+improvement. It would be a welcomed improvement if GMP does it in
+other places, too. Crashing is least welcomed behavior for many uses
+cases, including those where availability and confidentiality is a
+concern.
 
-def _block_patched(self, count):
-      if count < 0: # pragma: no cover
-          raise tarfile.InvalidHeaderError("invalid offset")
-      return _block_patched._orig_block(self, count)
+Gracefully handling failure serves several purposes. First, returning
+failure is what developers expect to happen. If a program uses a
+function incorrectly then it is expected to fail. Developers are
+usually good about checking return values at call sites.
 
-_block_patched._orig_block = tarfile.TarInfo._block
-tarfile.TarInfo._block = _block_patched
+Second, when GMP crashes it is setting a policy for the application.
+This is ass-backwards - the application sets its own policies, not
+libraries. Only the application knows the requirements to  dictate
+runtime behaviors.
 
-Please see the linked CVE ID for the latest information on affected versions:
+Related, even GMP calling exit(-1) rather than abort() is GMP setting
+policies. GMP does not know what the policies and requirements are, so
+it is not in a position to dictate behavior.
 
-* https://www.cve.org/CVERecord?id=CVE-2025-8194
-* https://github.com/python/cpython/pull/137027
+Third, it improves Availability in CIA. A crashed service or app does
+not service requests, so there is no availability.
 
-_______________________________________________
-Security-announce mailing list -- security-announce@python.org
-https://mail.python.org/mailman3//lists/security-announce.python.org
+Fourth, it ensures Confidentiality in CIA. A core dump with sensitive
+information leaks information and violates security policies. Crashing
+results in sensitive information leave's the app's security boundary,
+is written to the file system and is sent to platform provider .
+
+Finally, both returning a failure, exiting, and crashing preserves
+Integrity in CIA. However, there are too many tangential problems with
+exiting or crashing.
+
+Earlier I said, "A core dump with sensitive information leaks
+information and violates security policies". I've worked in US DoD, US
+Financial and US gov on security architecture teams. I've read a lot
+of security policies and helped write a few. I can unequivocally say
+no organization would allow sensitive information to leave the
+security boundary without proper controls, including crash dumps
+(crash dumps are just another egress point or dataflow). That
+application or library would be rejected and sent into risk
+acceptance.
+
+And for completeness, I personally adore asserts. I use them liberally
+in my programs because they create self debugging programs. I spend
+next to no time under a debugger because asserts are such a
+tattletale. But come production/release time, the time for debugging
+is over. Asserts are not present in production code because I don't
+depend on crashes to help keep my safe and program secure.
+
+Jeff
