@@ -1,4 +1,9 @@
-Received: (qmail 22292 invoked by uid 550); 5 Nov 2025 15:40:00 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["908" "Friday" "4" "January" "2019" "09:22:56" "-0500" "Tim Graham" "timograham@gmail.com" "<CAD-rxRBEb3zdu_43VEHyy7ntz-Sy4tvUCQzVOGivycMyc+2JVg@mail.gmail.com>" "21" "[oss-security] Django security releases issued: 2.1.5, 2.0.10, and 1.11.18" "^Cc:" nil nil "1" "2019010414:22:56" "[oss-security] Django security releases issued: 2.1.5, 2.0.10, and 1.11.18" (number mark "        timograham@g Jan  4   21/908   " thread-indent "\"[oss-security] Django security releases issued: 2.1.5, 2.0.10, and 1.11.18\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 4018 invoked by uid 550); 4 Jan 2019 14:23:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,95 +11,61 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 22256 invoked from network); 5 Nov 2025 15:40:00 -0000
-Date: Wed, 5 Nov 2025 15:39:48 +0000
-From: Jeremy Stanley <fungi@yuggoth.org>
-To: oss-security@lists.openwall.com
-Message-ID: <aQtvxL3uUpHOd7q8@yuggoth.org>
-References: <aQoVOMxbrWQ7JzCV@yuggoth.org>
- <cb27a1fa-c1f5-41c2-8e12-b7a183ea2aba@gmail.com>
+Received: (qmail 3984 invoked from network); 4 Jan 2019 14:23:19 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=qvrJkmEqfl3sftIFMCKrrglTKm5p4hKJ2JeqAGF/US0=;
+        b=lnxXFXx3gb1FaFegKyqqopnbCoSybWomwr1U9gndW54MsJWr0p40ksgeGB61ZqEaTL
+         n+rudNGHj/3woMn64tQmyJECLj441bFNyROJputEuTK6mgYHNu2XA4mR4DKP4TxaFzBR
+         rnnxvUObuWtmHzhAIFeyhKVOaiUKnnPVZUaEijFBoA2xsJR5aE3rn/UFE+fk/wnAWGrY
+         bQF07FydzLfui7/3zPUaUi2L3CnLsfbwAp3BY0gOfiHPg3bnQObR/TpCIH85CSciI6Bh
+         2sCGKX7oNRhXkay7xN0ohZdB2uunTH62+ZnGuSeD580HDVonpSp0qxq798IUCbQsNcA/
+         YV2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=qvrJkmEqfl3sftIFMCKrrglTKm5p4hKJ2JeqAGF/US0=;
+        b=YqIIUidbFS5EcvyddItKiQV5wRqzzFwmVpla/h80e/rjbqO0WCvleIbvPiMVhrvC4H
+         pyZfqHE5BeHJNbUza5q2aOQ6p1KylGR4I3A7XDeQ8XT9RWmn9sHnC72NXQx15E0Z7qtd
+         fJdSRM8Evx4Rk3x3yqsXQj8UThOlDaHs2/TuyXxpKlOWpp1qFoWtlSzckAoOiaSUODxi
+         sjbQNABoTDUyZOb0rPSU2CUry8HQDL6qDbjJKPK0mGVZfHsZoYRuPUWsTaDGp9AC2953
+         Rv/KgwqeneJft+yXcfvF6qFDeRt7Je8CIzt79xgI7yqArCq+TKE5ZRvXbZC3oxzO0M9w
+         QW9Q==
+X-Gm-Message-State: AA+aEWZFP3N03YToVZanxjnzLWJTiXeQKCn/mZV+nF1y7K025GVjabqv
+	VweDEOQvucMWlecaMj/ag6S4xP4J+SfENHfUP44=
+X-Google-Smtp-Source: AFSGD/WZphoey1JWzGHIlowbJbfOAuH+GeNvUAFsuChySpa8vMqBhUkOXAgC/RSFWZkwU2J7Pcd7ZAIrYVMvCLdNVFQ=
+X-Received: by 2002:a02:8a1c:: with SMTP id j28mr35257396jak.49.1546611787404;
+ Fri, 04 Jan 2019 06:23:07 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="KLrkGjAAOXnJ8v6A"
-Content-Disposition: inline
-In-Reply-To: <cb27a1fa-c1f5-41c2-8e12-b7a183ea2aba@gmail.com>
-X-SA-Exim-Connect-IP: 66.70.103.60
-X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
-X-SA-Exim-Mail-From: fungi@yuggoth.org
-X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
-Subject: Re: [oss-security] [OSSA-2025-002] OpenStack Keystone:
- Unauthenticated access to EC2/S3 token endpoints can grant Keystone
- authorization (CVE PENDING)
+Message-ID: <CAD-rxRBEb3zdu_43VEHyy7ntz-Sy4tvUCQzVOGivycMyc+2JVg@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="000000000000319c0b057ea29e0a"
+Cc: django-users@googlegroups.com, django-developers@googlegroups.com, 
+	oss-security@lists.openwall.com
+Date: Fri, 4 Jan 2019 09:22:56 -0500
+From: Tim Graham <timograham@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Django security releases issued: 2.1.5, 2.0.10, and 1.11.18
+To: django-announce@googlegroups.com
 
---KLrkGjAAOXnJ8v6A
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+--000000000000319c0b057ea29e0a
+Content-Type: text/plain; charset="UTF-8"
 
-On 2025-11-04 18:15:23 -0500 (-0500), Demi Marie Obenour wrote:
->On 11/4/25 10:01, Jeremy Stanley wrote:
->> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->> OSSA-2025-002: Unauthenticated access to EC2/S3 token endpoints can grant
->>                 Keystone authorization
->> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->>
->> :Date: November 04, 2025
->> :CVE: PENDING
->>
->> Affects
->> ~~~~~~~
->> - Keystone: <26.0.1, =3D=3D27.0.0, =3D=3D28.0.0
->>
->> Description
->> ~~~~~~~~~~~
->> kay reported a vulnerability in Keystone=E2=80=99s ec2tokens and s3tokens
->> APIs. By sending those endpoints a valid AWS Signature (e.g., from a
->> presigned S3 URL), an unauthenticated attacker may obtain Keystone
->> authorization (ec2tokens can yield a fully scoped token; s3tokens
->> can reveal scope accepted by some services), resulting in
->> unauthorized access and privilege escalation. Deployments where
->> /v3/ec2tokens or /v3/s3tokens are reachable by unauthenticated
->> clients (e.g., exposed on a public API) are affected.
->
->Which account will the tokens belong to?  Is it the one that signed
->the URL?
+Today the Django team issued 2.1.5, 2.0.10, and 1.11.18 as part of our
+security process. These releases address a security issue, and we encourage
+all users to upgrade as soon as possible:
 
-Correct, if a user shares a signed URL, then that can be used to=20
-perform other (likely unintended) actions with the account that=20
-signed it as long as the relevant ec2tokens or s3tokens API methods=20
-are exposed to the attacker, i.e. not blocked with a WAF or similar.
+https://www.djangoproject.com/weblog/2019/jan/04/security-releases/
 
-I've made a note to clarify this in an upcoming errata revision.=20
-Thanks!
---=20
-Jeremy Stanley
+The issue was publicly reported through a GitHub pull request, therefore we
+fixed the issue as soon as possible without the usual prenotification
+process (
+https://docs.djangoproject.com/en/dev/internals/security/#how-django-discloses-security-issues
+).
 
---KLrkGjAAOXnJ8v6A
-Content-Type: application/pgp-signature; name="signature.asc"
+As a reminder, we ask that potential security issues be reported via private
+email to security@djangoproject.com and not via Django's Trac  instance,
+Django's GitHub repositories, or the django-developers list. Please see
+https://www.djangoproject.com/security for further information.
 
------BEGIN PGP SIGNATURE-----
-
-iQKTBAABCgB9FiEEl65Jb8At7J/DU7LnSPmWEUNJWCkFAmkLb75fFIAAAAAALgAo
-aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDk3
-QUU0OTZGQzAyREVDOUZDMzUzQjJFNzQ4Rjk5NjExNDM0OTU4MjkACgkQSPmWEUNJ
-WClVNRAAyQSKmpCv8OkdKFzXaLCK9hEiiMReEqgYcin/J8W7AMZqHMgA4OcIYsfq
-EINoPGCaBqXu5yBNyyV936OigoH93BTaxQAHdqzyfzigTJV3z+G3oDaWGp2mA1S1
-HHiUtxjkZwodzcI//aQlI0Q1YbClSIRNYnPpsYwfIryOHGyJETNlXw+K9lyPi90G
-zBtH1MwBcnv8rcH4IxQ7yXpr2J3QxFDND4V77wS9jXLwS6RAJRXmeboOiub9T5wx
-+BICxXBP/PRiH1JsaRR5+q+ciMqqU5SWAolmRc7vobsCHe8BzreZDiJA1lxOtjpW
-ekPN7Nr0IrsdMhioZK7xCNoZf8iRBDDp8o5AoK9EyvY1X4Me1OIQfRyiO39YL9bm
-qJ2L2lMT/tKe9kB/bq5VQC3S2QTsUMlBHrK2OiAAx8Cdb3pLj9HOjSTV0vZJekb9
-9kA45WcrHEbBrrisdK6wri+CjCNtYmrYJ2R66M5usTqLkAxVsiTOljhfvKnUcA+0
-0/KzwpvekJqV/od5froGKvlWnkttfXKElh+piT/l/0Mhg58xQVnsvJpnHBci+Szs
-vnz/5sl//RtD1yVBdaDkFB9zmcu0Urt+15nbDvidpESG1xXERWmvMcu5POwqUjW1
-iwIxAa0xfn4VPaG5y7b2fbeAcLiTRqAeBN5OvmhmJVqU7Ptl6OE=
-=iN68
------END PGP SIGNATURE-----
-
---KLrkGjAAOXnJ8v6A--
+--000000000000319c0b057ea29e0a--
