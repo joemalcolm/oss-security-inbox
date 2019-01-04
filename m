@@ -1,29 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/08/1
-Message-ID: <20190708050645.GA4714@dmoppert.redhat.com>
-Date: Mon, 8 Jul 2019 05:06:45 +0000
-From: Doran Moppert <dmoppert@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: [CVE-2019-0231] MINA SSLFilter security Issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/04/1
+Message-ID: <CAD-rxRBEb3zdu_43VEHyy7ntz-Sy4tvUCQzVOGivycMyc+2JVg@mail.gmail.com>
+Date: Fri, 4 Jan 2019 09:22:56 -0500
+From: Tim Graham <timograham@...il.com>
+To: django-announce@...glegroups.com
+Cc: django-users@...glegroups.com, django-developers@...glegroups.com,  oss-security@...ts.openwall.com
+Subject: Django security releases issued: 2.1.5, 2.0.10, and 1.11.18
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Apr 14, 2019 at 08:30:49AM +0200, Emmanuel Lecharny wrote:
->Description: Handling of the close_notify SSL/TLS message does not
->lead to a connection closure, leading the server to retain the socket
->opened and to have the client potentially receive clear-text messages
->which were supposed to be encrypted.
->
->This security issue is fixed by Apache MINA 2.0.21 or Apache MINA
->2.0.21. Please migrate to those new versions.
+Today the Django team issued 2.1.5, 2.0.10, and 1.11.18 as part of our
+security process. These releases address a security issue, and we encourage
+all users to upgrade as soon as possible:
 
-Hi Emmanuel,
+https://www.djangoproject.com/weblog/2019/jan/04/security-releases/
 
-I think the above should read "2.0.21 or Apache MINA 2.1.1".  Is the 
-commit fixing the issue 73e881ad9?  I am trying to figure out if our 
-products using 1.1 need to consider a back-port.
+The issue was publicly reported through a GitHub pull request, therefore we
+fixed the issue as soon as possible without the usual prenotification
+process (
+https://docs.djangoproject.com/en/dev/internals/security/#how-django-discloses-security-issues
+).
 
-Thanks,
+As a reminder, we ask that potential security issues be reported via private
+email to security@...ngoproject.com and not via Django's Trac  instance,
+Django's GitHub repositories, or the django-developers list. Please see
+https://www.djangoproject.com/security for further information.
 
--- 
-Doran Moppert
-Red Hat Product Security
