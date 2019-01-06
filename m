@@ -1,36 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/30/7
-Message-ID: <2048242.ks9QkeOCCd@golgafrichnam>
-Date: Tue, 30 Apr 2019 17:18:58 +0200
-From: Martin <martin_s@...che.org>
-To: users@...hiva.apache.org, users@...en.apache.org, announce@...che.org
-Cc: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: [SECURITY] CVE-2019-0213: Apache Archiva Stored XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/06/3
+Message-ID: <CAH8yC8=v1ivKBDtO13Qy9vA3xs2kQya1nvOvKfv=wTDHdZAhXw@mail.gmail.com>
+Date: Sun, 6 Jan 2019 10:39:50 -0500
+From: Jeffrey Walton <noloader@...il.com>
+To: Niels Möller <nisse@...ator.liu.se>
+Cc: oss-security@...ts.openwall.com, gmp-bugs@...lib.org
+Subject: Re: Asserts considered harmful (or GMP spills its sensitive information)
 Content-Type: text/plain; charset=utf-8
 
-CVE-2019-0213: Apache Archiva Stored XSS
+On Sun, Jan 6, 2019 at 5:31 AM Niels Möller <nisse@...ator.liu.se> wrote:
+>
+> tg@...lib.org (Torbjörn Granlund) writes:
+>
+> > Let's move on.  No bug to be found here.
+>
+> Just FYI: There was a bug in Nettle's test code, a line
+>
+>   assert (mpz_invert(key->d, pub->e, phi));
+>
+> Obviously not working with -DNDEBUG. Fix in commit
+> https://git.lysator.liu.se/nettle/nettle/commit/73d3c6d5586cc0fd81eab081078144d621de07b4
 
-Severity: Low
+A small suggestion to remove the sharp edge. If using -DNDEBUG is not
+supported, then fail configure when it is present. Something like the
+following in configure.ac should work well:
 
-Vendor:
-The Apache Software Foundation
+    BAD_OPT=`echo $CFLAGS | $EGREP -c '\-DNDEBUG`
+    if test "$BAD_OPT" != "0"; then
+        AC_MSG_ERROR (...)
+    fi
 
-Versions Affected:
-    Apache Archiva 2.0.0 - 2.2.3
-    The unsupported versions 1.x are also affected.  
+And as a safety net, maybe something in the source code like:
 
-It may be possible to store malicious XSS code into central configuration entries, i.e. the logo URL. 
-The vulnerability is considered as minor risk, as only users with admin role can change the configuration, or the communication 
-between the browser and the Archiva server must be compromised. 
+    #if defined(NDEBUG) || defined(_NDEBUG)
+    # error NDEBUG is not supported
+    #endif
 
-Mitigation:
-  All users are recommended to upgrade to Archiva 2.2.4 or higher, 
+There are two reasons for the suggestion. First, RTFM does not work.
+If it was going to work, then it should have happened in the last 50
+years or so. Gutmann provides the user psychology behind it in his
+Security Engineering book,
+https://www.cs.auckland.ac.nz/~pgut001/pubs/book.pdf .
 
-References:
-http://archiva.apache.org/security.html#CVE-2019-0213
+Second, folks who have a Windows programming background use -NDEBUG.
+It is a standard practice and not a one-off problem. The issue should
+surface again for two use cases. First, Windows programmers working on
+Unix and Linux. Second, Windows programmers who are porting projects
+to Windows.
 
-The newest Archiva version can be downloaded from:
-http://archiva.apache.org/download.cgi
-
-
-
+Jeff
