@@ -1,25 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/24/1
-Message-ID: <CAFcO6XOkEgLdYkrfaqYanKeZCoBxkLDGmLKOZ158OBS2ZHxE5g@mail.gmail.com>
-Date: Tue, 24 Dec 2019 10:49:49 +0800
-From: butt3rflyh4ck <butterflyhuangxx@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2019-19947: Linux kernel can: kvaser_usb: kvaser_usb_leaf: some info-leaks vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/06/1
+Message-ID: <1c9e7212-f8a7-04b2-a956-17f7bce8c3bb@nanthrax.net>
+Date: Sun, 6 Jan 2019 07:23:52 +0100
+From: Jean-Baptiste Onofré <jb@...thrax.net>
+To: user@...af.apache.org, Karaf Dev <dev@...af.apache.org>, Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com, Brian Wang <brianwangrewa@...il.com>
+Subject: [SECURITY] New security advisory for CVE-2018-11788 released for Apache Karaf
 Content-Type: text/plain; charset=utf-8
 
-Hi, there some info-leaks vulnerabilities in Linux kernel USB drivers that
-can be triggered by an external malicious USB device.
+A new security advisory has been released for Apache Karaf, that is
+fixed in recent 4.1.7 and 4.2.2 releases.
+
+CVS-2018-11788: XXE vulnerability found on Apache Karaf
+
+Severity: Moderate
+
+Vendor: The Apache Software Foundation
+
+Versions Affected: all versions of Apache Karaf prior to 4.1.7, 4.2.2.
 
 Description:
 
-In the Linux kernel through 5.4.6, there are some information leaks of
-uninitialized memory to a USB device in the
-drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c driver.
+Apache Karaf provides a features deployer, which allows users to "hot
+deploy"
+a features XML by dropping the file directly in the deploy folder.
 
-More details in
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19947 .
+The features XML is parsed by XMLInputFactory class.
 
-Credit:
+Apache Karaf XMLInputFactory class doesn't contain any mitigation codes
+against XXE.
+This is a potential security risk as an user can inject external XML
+entities.
 
-This issue was discovered by the ADLab of venustech.
+The mitigation is to prevent XXE by disabling external entities loading
+feature
+in XMLInputFactory and XmlUtils.
+
+This has been fixed in revision:
+
+https://gitbox.apache.org/repos/asf?p=karaf.git;h=cc3332e
+https://gitbox.apache.org/repos/asf?p=karaf.git;h=1ffa6d1
+
+Mitigation: Apache Karaf users should upgrade to 4.1.7, 4.2.2
+or later as soon as possible.
+
+JIRA Tickets: https://issues.apache.org/jira/browse/KARAF-5911
+
+Credit: This issue was reported by Brian Wang.
 
