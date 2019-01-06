@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["540" "Tuesday" "14" "November" "2017" "13:32:50" "+0000" "Colm O hEigeartaigh" "coheigea@apache.org" "<CAB8XdGBgipTU4-ajO0j8Khi67kziTcTqwCQbCcpRicGLd81dNA@mail.gmail.com>" "23" "[oss-security] New security advisory CVE-2017-12624 released for Apache CXF" "^Cc:" nil nil "11" "2017111413:32:50" "[oss-security] New security advisory CVE-2017-12624 released for Apache CXF" (number mark "U       coheigea@apa Nov 14   23/540   " thread-indent "\"[oss-security] New security advisory CVE-2017-12624 released for Apache CXF\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["493" "Sunday" "6" "January" "2019" "11:31:27" "+0100" "Niels =?utf-8?B?TcO2bGxlcg==?=" "nisse@lysator.liu.se" "<nn4lamm60w.fsf@armitage.lysator.liu.se>" "18" "[oss-security] Re: Asserts considered harmful (or GMP spills its sensitive information)" "^Cc:" nil nil "1" "2019010610:31:27" "[oss-security] Re: Asserts considered harmful (or GMP spills its sensitive information)" (number mark "        nisse@lysato Jan  6   18/493   " thread-indent "\"[oss-security] Re: Asserts considered harmful (or GMP spills its sensitive information)\"\n") "<86o990wdu4.fsf@shell.gmplib.org>" ("<CAH8yC8m90KssanbHt+YmVt7iLOiwWHASDqRYW5TQGeNV2zWXDw@mail.gmail.com>" "<20181231191642.GB7238@zira.vinc17.org>" "<CAH8yC8=-Lt0_p2sTnqhJOWjapJ84LNR=8zJFF5oWs=-4xgxigg@mail.gmail.com>" "<20190101112042.GE7238@zira.vinc17.org>" "<nnwonoob4v.fsf@armitage.lysator.liu.se>" "<86o990wdu4.fsf@shell.gmplib.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1484 invoked by uid 550); 14 Nov 2017 14:34:39 -0000
+Received: (qmail 9923 invoked by uid 550); 6 Jan 2019 10:56:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,44 +11,44 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 20415 invoked from network); 14 Nov 2017 13:33:06 -0000
-X-Gm-Message-State: AJaThX75b0EJhXVuJPpXeRzrjiqr3kLbTOr1Hn/iX9jcvL1mm5+8ouNM
-	2Eq6VPP0oP0i8xGU40YohmWgbNTx6hkV37XeM+E=
-X-Google-Smtp-Source: AGs4zMa9FX3HLHf+0HXP876r0nVHc98zZSHOgJNG7l26E48jCZQAIf08dilBkKEshLMkAyxZKQp91wQrOC48EeZXKtQ=
-X-Received: by 10.84.232.8 with SMTP id h8mr11843437plk.274.1510666370519;
- Tue, 14 Nov 2017 05:32:50 -0800 (PST)
+Received: (qmail 27800 invoked from network); 6 Jan 2019 10:31:39 -0000
+References: <CAH8yC8m90KssanbHt+YmVt7iLOiwWHASDqRYW5TQGeNV2zWXDw@mail.gmail.com>
+	<20181231191642.GB7238@zira.vinc17.org>
+	<CAH8yC8=-Lt0_p2sTnqhJOWjapJ84LNR=8zJFF5oWs=-4xgxigg@mail.gmail.com>
+	<20190101112042.GE7238@zira.vinc17.org>
+	<nnwonoob4v.fsf@armitage.lysator.liu.se>
+	<86o990wdu4.fsf@shell.gmplib.org>
+In-Reply-To: <86o990wdu4.fsf@shell.gmplib.org> (=?utf-8?Q?=22Torbj=C3=B6rn?=
+ Granlund"'s message
+	of "Tue, 01 Jan 2019 17:18:59 +0100")
+Message-ID: <nn4lamm60w.fsf@armitage.lysator.liu.se>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (berkeley-unix)
 MIME-Version: 1.0
-X-Gmail-Original-Message-ID: <CAB8XdGBgipTU4-ajO0j8Khi67kziTcTqwCQbCcpRicGLd81dNA@mail.gmail.com>
-Message-ID: <CAB8XdGBgipTU4-ajO0j8Khi67kziTcTqwCQbCcpRicGLd81dNA@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="94eb2c19f868639812055df16c54"
-Cc: "Wang, Kevin X. (NSB - CN/Hangzhou)" <kevin.x.wang@nokia-sbell.com>
-Date: Tue, 14 Nov 2017 13:32:50 +0000
-From: Colm O hEigeartaigh <coheigea@apache.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Virus-Scanned: ClamAV using ClamSMTP
+Cc: Jeffrey Walton <noloader@gmail.com>,  oss-security@lists.openwall.com,  gmp-bugs@gmplib.org
+Date: Sun, 06 Jan 2019 11:31:27 +0100
+From: nisse@lysator.liu.se (Niels =?utf-8?Q?M=C3=B6ller?=)
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] New security advisory CVE-2017-12624 released for Apache CXF
-To: "users@cxf.apache.org" <users@cxf.apache.org>, "dev@cxf.apache.org" <dev@cxf.apache.org>, 
-	Apache Security Response Team <security@apache.org>, announce@apache.org, oss-security@lists.openwall.com
+Subject: [oss-security] Re: Asserts considered harmful (or GMP spills its sensitive information)
+To: tg@gmplib.org (=?utf-8?Q?Torbj=C3=B6rn?= Granlund)
 
---94eb2c19f868639812055df16c54
-Content-Type: text/plain; charset="UTF-8"
+tg@gmplib.org (Torbj=C3=B6rn Granlund) writes:
 
-A new security advisory has been released for Apache CXF, that is fixed in
-the recent 3.2.1 and 3.1.14 releases:
+> Let's move on.  No bug to be found here.
 
-CVE-2017-12624: Apache CXF web services that process attachments are
-vulnerable to Denial of Service (DoS) attacks
+Just FYI: There was a bug in Nettle's test code, a line
 
-The full text of the advisory is available here:
+  assert (mpz_invert(key->d, pub->e, phi));
 
-http://cxf.apache.org/security-advisories.data/CVE-2017-12624.txt.asc
+Obviously not working with -DNDEBUG. Fix in commit
+https://git.lysator.liu.se/nettle/nettle/commit/73d3c6d5586cc0fd81eab081078=
+144d621de07b4
 
-Colm.
+Regards,
+/Niels
 
-
--- 
-Colm O hEigeartaigh
-
-Talend Community Coder
-http://coders.talend.com
-
---94eb2c19f868639812055df16c54--
+--=20
+Niels M=C3=B6ller. PGP-encrypted email is preferred. Keyid 368C6677.
+Internet email is subject to wholesale government surveillance.
