@@ -1,56 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/26/1
-Message-ID: <20190426214529.GA7525@eldamar.local>
-Date: Fri, 26 Apr 2019 23:45:29 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: wpa_supplicant/hostapd: EAP-pwd message reassembly issue with unexpected fragment
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/07/3
+Message-ID: <CAOWZHxfwV6WviB8XqrpxguMdu2N577Fpj3qWj0QzWoZF=WuVLQ@mail.gmail.com>
+Date: Mon, 7 Jan 2019 10:14:01 -0500
+From: "James E. King III" <jking@...che.org>
+To: oss-security@...ts.openwall.com, security <security@...che.org>,  dev@...ift.apache.org, user@...ift.apache.org
+Subject: [SECURITY] CVE-2018-1320 Announcement
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Reported By: Sudheesh Katkam
+Vendor: The Apache Software Foundation
+Product: Apache Thrift
+Problem Type: Improper Authentication
+Versions Affected: Apache Thrift versions 0.5.0 through 0.11.0
+Mitigation: Upgrading to the latest 0.12.0 release
 
-On Thu, Apr 18, 2019 at 06:59:26PM +0300, Jouni Malinen wrote:
-> Published: April 18, 2019
-> Latest version available from: https://w1.fi/security/2019-5/
-> 
-> Vulnerability
-> 
-> EAP-pwd implementation in hostapd (EAP server) and wpa_supplicant (EAP
-> peer) was discovered not to validate fragmentation reassembly state
-> properly for a case where an unexpected fragment could be received. This
-> could result in process termination due to NULL pointer dereference.
-> 
-> An attacker in radio range of a station device with wpa_supplicant
-> network profile enabling use of EAP-pwd could cause the wpa_supplicant
-> process to terminate by constructing unexpected sequence of EAP
-> messages. An attacker in radio range of an access point that points to
-> hostapd as an authentication server with EAP-pwd user enabled in runtime
-> configuration (or in non-WLAN uses of EAP authentication as long as the
-> attacker can send EAP-pwd messages to the server) could cause the
-> hostapd process to terminate by constructing unexpected sequence of EAP
-> messages.
-> 
-> 
-> Vulnerable versions/configurations
-> 
-> All hostapd and wpa_supplicant versions with EAP-pwd support
-> (CONFIG_EAP_PWD=y in the build configuration and EAP-pwd being enabled
-> in the runtime configuration) are vulnerable against the process
-> termination (denial of service) attack.
-> 
-> 
-> Possible mitigation steps
-> 
-> - Merge the following commits to wpa_supplicant/hostapd and rebuild:
-> 
->   EAP-pwd peer: Fix reassembly buffer handling
->   EAP-pwd server: Fix reassembly buffer handling
-> 
->   These patches are available from https://w1.fi/security/2019-5/
-> 
-> - Update to wpa_supplicant/hostapd v2.8 or newer, once available
+Description:
+Apache Thrift Java client library TSaslTransport can bypass SASL negotiation
+isComplete validation. An assert was previously used to determine if the
+SASL handshake had successfully completed, but in some cases this assertion
+could be disabled in production settings making the validation incomplete.
 
-MITRE (via cveform.mitre.org) assigned CVE-2019-11555 for this issue.
+Resolution:
+The assertion has been removed and an isComplete check has
+been moved within the handshake processing loop. The fix is contained
+in the 0.12.0 Apache Thrift release.
 
-Regards,
-Salvatore
+Jira issue:
+ - https://issues.apache.org/jira/browse/THRIFT-4506
+
+Mitre issue:
+  - https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-1320
+
+Committed resolution:
+ -
+https://github.com/apache/thrift/commit/d973409661f820d80d72c0034d06a12348c8705e
+
+On behalf of the Apache Thrift PMC,
+
+Thank you
+
