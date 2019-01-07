@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1608" "Tuesday" "15" "March" "2016" "10:23:31" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160315142331.8664E6C0B8D@smtpvmsrv1.mitre.org>" "41" "[oss-security] Re: CVE request - SPIP: 2 vulnerabilities" "^Cc:" nil nil "3" "2016031514:23:31" "[oss-security] Re: CVE request - SPIP: 2 vulnerabilities" (number mark "        cve-assign@m Mar 15   41/1608  " thread-indent "\"[oss-security] Re: CVE request - SPIP: 2 vulnerabilities\"\n") "<20160315125138.GT4944@frisco.mine.nu>" ("<20160315125138.GT4944@frisco.mine.nu>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1141" "Monday" "7" "January" "2019" "10:14:01" "-0500" "James E. King III" "jking@apache.org" "<CAOWZHxfwV6WviB8XqrpxguMdu2N577Fpj3qWj0QzWoZF=WuVLQ@mail.gmail.com>" "36" "[oss-security] [SECURITY] CVE-2018-1320 Announcement" nil nil nil "1" "2019010715:14:01" "[oss-security] [SECURITY] CVE-2018-1320 Announcement" (number mark "U       jking@apache Jan  7   36/1141  " thread-indent "\"[oss-security] [SECURITY] CVE-2018-1320 Announcement\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15849 invoked by uid 550); 15 Mar 2016 14:23:44 -0000
+Received: (qmail 10125 invoked by uid 550); 7 Jan 2019 17:27:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,54 +11,56 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15825 invoked from network); 15 Mar 2016 14:23:43 -0000
-In-Reply-To: <20160315125138.GT4944@frisco.mine.nu>
-Message-Id: <20160315142331.8664E6C0B8D@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Tue, 15 Mar 2016 10:23:31 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request - SPIP: 2 vulnerabilities
-To: seb@debian.org
+Received: (qmail 3499 invoked from network); 7 Jan 2019 15:14:29 -0000
+X-Gm-Message-State: AJcUukdOv/0jXevNt8ZjQ1XpHUi6CVahrJ+V7kyn4eryyfJbPjgebZtB
+	EN89fbOdVP4fzR5RKiPgFmsRtgL9fO6I9b4BTKw=
+X-Google-Smtp-Source: ALg8bN6U8zkUHMxRbtLwXydsgk6AmsergyAKV8oaan635p+T+eH8J+1Sj/4H2qhaU6awQ0M1OUJZ4HRRWjQXhGARpuA=
+X-Received: by 2002:a5d:4250:: with SMTP id s16mr53633795wrr.253.1546874054099;
+ Mon, 07 Jan 2019 07:14:14 -0800 (PST)
+MIME-Version: 1.0
+From: "James E. King III" <jking@apache.org>
+Date: Mon, 7 Jan 2019 10:14:01 -0500
+X-Gmail-Original-Message-ID: <CAOWZHxfwV6WviB8XqrpxguMdu2N577Fpj3qWj0QzWoZF=WuVLQ@mail.gmail.com>
+Message-ID: <CAOWZHxfwV6WviB8XqrpxguMdu2N577Fpj3qWj0QzWoZF=WuVLQ@mail.gmail.com>
+To: oss-security@lists.openwall.com, security <security@apache.org>, 
+	dev@thrift.apache.org, user@thrift.apache.org
+Content-Type: multipart/alternative; boundary="00000000000081cbd2057edfae86"
+Subject: [oss-security] [SECURITY] CVE-2018-1320 Announcement
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--00000000000081cbd2057edfae86
+Content-Type: text/plain; charset="UTF-8"
 
-> SPIP. Both are present in 3.x before 3.0.22 and 2.x before 2.1.19:
+Reported By: Sudheesh Katkam
+Vendor: The Apache Software Foundation
+Product: Apache Thrift
+Problem Type: Improper Authentication
+Versions Affected: Apache Thrift versions 0.5.0 through 0.11.0
+Mitigation: Upgrading to the latest 0.12.0 release
 
->   * PHP code injection when handling content. This is fixed in
->     https://core.spip.net/projects/spip/repository/revisions/22911
->     (defining the function itself is enoug, as the global mechanism for
->     filters in SPIP automatically tries to lookup and filtre_foo_dist if
->     it exists)
+Description:
+Apache Thrift Java client library TSaslTransport can bypass SASL negotiation
+isComplete validation. An assert was previously used to determine if the
+SASL handshake had successfully completed, but in some cases this assertion
+could be disabled in production settings making the validation incomplete.
 
-Use CVE-2016-3153.
+Resolution:
+The assertion has been removed and an isComplete check has
+been moved within the handshake processing loop. The fix is contained
+in the 0.12.0 Apache Thrift release.
 
+Jira issue:
+ - https://issues.apache.org/jira/browse/THRIFT-4506
 
->   * Objects injection when deserializing untrusted input. This is fixed
->     in https://core.spip.net/projects/spip/repository/revisions/22903
+Mitre issue:
+  - https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-1320
 
-Use CVE-2016-3154.
+Committed resolution:
+ -
+https://github.com/apache/thrift/commit/d973409661f820d80d72c0034d06a12348c8705e
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+On behalf of the Apache Thrift PMC,
 
-iQIcBAEBCAAGBQJW6BpiAAoJEL54rhJi8gl5khAP+wfeb29voowCOZSZYznOyuAm
-mZd1AEHj4y+TJYzyFyqrf0MfQj7WmnJ6OO0icPz2bUol1V2LAL0MItkO4iNhqBJ5
-X/vIOC1xjEG9VN+q+IFrT9+SkBC/NI8VhFUAO1NdgsGeIfu9EX2NanIEHWgR1aFE
-yKddPKTz7a8YCRrvLXBIawC8sOuQM4TTiyOx4FozZWO9YMP5uQ/8zXX9JlzOBylh
-rW2ZPNYNCh5H4B8w8WFfNPwcFhX9LF2vFh6PXbAuIxJNjyyDrn6tt0Ukznrdzn75
-tvA3MtdhIHdIIbwk8cEQvov1+8dndFhzCCDVX1SIP97XQ9G9A+9O/ukWslOij9HK
-zcxaTTegDO5tXBHhJnTbUrh042tSH1yhHR11PSNN/BGmZjQamDWOP0z7dHKPCIDa
-Qx6VbY/jXriAoZRBdz2L5+10wtBwFkH3AWTPn0jmZCZOO0dNBECTZD703bPfWxVG
-HnGaiOFknxV+nW5LfaxYYLmqdz/pqaaYGg+3k7QgsuUkD4Y73YXLoMgGq8TB+M88
-zFzxVzIpKbcoJaoyDthvu2EfwpgIQxWDTQ2nytA35E5O8hfL0naLXEySY88QFSZ7
-HGX0+E4vakm2UAW5CrpC1/d8AFgyOwiS5Pe3u5BaX4sV6rHlwD10tIlnG5tvY+LT
-/N0GgEWADL0Zf1kown/g
-=D4wB
------END PGP SIGNATURE-----
+Thank you
+
+--00000000000081cbd2057edfae86--
