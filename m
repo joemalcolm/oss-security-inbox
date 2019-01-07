@@ -1,51 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/01/4
-Message-ID: <20190101112042.GE7238@zira.vinc17.org>
-Date: Tue, 1 Jan 2019 12:20:42 +0100
-From: Vincent Lefevre <vincent@...c17.net>
-To: Jeffrey Walton <noloader@...il.com>
-Cc: oss-security@...ts.openwall.com, gmp-bugs@...lib.org
-Subject: Re: Asserts considered harmful (or GMP spills its sensitive information)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/07/2
+Message-ID: <20190107163608.24ovdibadervqvqe@suse.de>
+Date: Mon, 7 Jan 2019 17:36:08 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: Re: New pagecache based sidechannel attack published
 Content-Type: text/plain; charset=utf-8
 
-On 2018-12-31 14:38:17 -0500, Jeffrey Walton wrote:
-> On Mon, Dec 31, 2018 at 2:16 PM Vincent Lefevre <vincent@...c17.net> wrote:
-> >
-> > On 2018-12-31 13:03:27 -0500, Jeffrey Walton wrote:
-> > > The GMP library uses asserts to crash a program at runtime when
-> > > presented with data it did not expect. The library also ignores user
-> > > requests to remove asserts using Posix's -DNDEBUG. Posix asserts are a
-> > > deugging aide intended for developement, and using them in production
-> > > software ranges from questionable to insecure.
-> >
-> > That's much better than letting the program run erratically, with
-> > possible memory corruption and/or sensitive information leakage
-> > to unauthorized users. You'd better fix bugs in your program.
+On Mon, Jan 07, 2019 at 08:43:40AM +0100, Marcus Meissner wrote:
+> Hi,
 > 
-> To play devil's advocate for this particular example, GMP could have
-> validated the parameters and refused to process the data. That is, the
-> function could have returned failure and avoided the potential
-> information leak.
+> https://www.theregister.co.uk/2019/01/05/boffins_beat_page_cache/
+> https://arxiv.org/abs/1901.01161
+> 
+> Daniel Gruss, Erik Kraft, Trishita Tiwari, Michael Schwarz, Ari Trachtenberg, Jason Hennessey, Alex Ionescu, Anders Fogh
+> have published a paper describing side channels attacks using OS pagecache statistics, allowing looking at
+> things like keystroke timing and others.
+> 
+> This affects not just Linux, but also Windows and potentially other OS.
+> 
+> Linux mainline patch:
+>   https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=574823bfab82d9d8fa47f422778043fbb4b4f50e
+> 
+> I have requested a Linux specific CVE.
 
-Unfortunately, this is not always possible, while keeping the original
-interface. Moreover, changing the interface can make the library
-slower, which could be an issue for GMP (the goal is to be as fast
-as possible, just like the C language was designed, where contrary
-to other languages, there's the notion of undefined behavior). If you
-don't like that, you can write a wrapper library that will sanitize
-all the inputs and implement error processing (e.g. where the return
-value contains an error code and the result, if any), and call this
-library instead of GMP.
+CVE-2019-5489 was assigned.
 
-Said that, developers who forget to check whether they correctly
-follow the API conditions also forget to check failures. Thus this
-ends up with a similar issue (a crash).
-
-Moreover, some asserts may come from the detection of an inconsistent
-state. In this case, it is better to abort. Otherwise letting the
-program continue may have worse consequences.
-
--- 
-Vincent Lefèvre <vincent@...c17.net> - Web: <https://www.vinc17.net/>
-100% accessible validated (X)HTML - Blog: <https://www.vinc17.net/blog/>
-Work: CR INRIA - computer arithmetic / AriC project (LIP, ENS-Lyon)
+Ciao, Marcus
