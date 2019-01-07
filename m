@@ -1,4 +1,9 @@
-Received: (qmail 28032 invoked by uid 550); 9 Apr 2026 21:16:22 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["769" "Monday" "7" "January" "2019" "17:36:08" "+0100" "Marcus Meissner" "meissner@suse.de" "<20190107163608.24ovdibadervqvqe@suse.de>" "20" "Re: [oss-security] New pagecache based sidechannel attack published" nil nil nil "1" "2019010716:36:08" "[oss-security] New pagecache based sidechannel attack published" (number mark "U       meissner@sus Jan  7   20/769   " thread-indent "\"Re: [oss-security] New pagecache based sidechannel attack published\"\n") "<20190107074340.GA14850@suse.de>" ("<20190107074340.GA14850@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 19926 invoked by uid 550); 7 Jan 2019 16:36:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,54 +12,40 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 24413 invoked from network); 9 Apr 2026 19:49:53 -0000
-Authentication-Results: apache.org; auth=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
-	t=1775764184; bh=iiVvxIeGsSJGfEeTSCtwzcb+rtS4NBt5/Ltx1xsTncg=;
-	h=Date:To:From:Subject:From;
-	b=57TOsdbF3ttKwf6Br2atC4Oj6vZR2qdcE72uGVUyPFy4NMO6o8PknvwtY18JuxQEq
-	 nEzRX9gx7w83RShXOH2H5YR9rNiw4wgrgo8IftpjM0RfkxDABQw9MR95WjktBrWIN6
-	 rKWUzag6Nk3avPxtlC3nX9ZhbleLS4Sa32Tq8UkIsVCRTdT/EKPXirHRZYsKq3NlMy
-	 lk4MUmCyfX693nGBRTVU4locrkCSbVNwAZk7AwBahv8X+gVCTeRRqgzvVKDfWYao3/
-	 U0RoKsoWHzv8hNz7GkjEr11Q9eCmR1oshEqvzFeCXtQcc8JeZYdS4u4rU5PddiK6Nz
-	 tyl/xgxonrFmA==
-Message-ID: <a266e26f-3129-40dc-8b43-47f4994d7e95@apache.org>
-Date: Thu, 9 Apr 2026 20:49:44 +0100
+Received: (qmail 19903 invoked from network); 7 Jan 2019 16:36:20 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Date: Mon, 7 Jan 2019 17:36:08 +0100
+From: Marcus Meissner <meissner@suse.de>
+To: OSS Security List <oss-security@lists.openwall.com>
+Message-ID: <20190107163608.24ovdibadervqvqe@suse.de>
+References: <20190107074340.GA14850@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: oss-security@lists.openwall.com
-From: Mark Thomas <markt@apache.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE-2026-32990: Apache Tomcat: Fix for CVE-2025-66614 is incomplete
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190107074340.GA14850@suse.de>
+Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
+ =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
+ =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
+User-Agent: NeoMutt/20170421 (1.8.2)
+Subject: Re: [oss-security] New pagecache based sidechannel attack published
 
-Severity: moderate
+On Mon, Jan 07, 2019 at 08:43:40AM +0100, Marcus Meissner wrote:
+> Hi,
+> 
+> https://www.theregister.co.uk/2019/01/05/boffins_beat_page_cache/
+> https://arxiv.org/abs/1901.01161
+> 
+> Daniel Gruss, Erik Kraft, Trishita Tiwari, Michael Schwarz, Ari Trachtenberg, Jason Hennessey, Alex Ionescu, Anders Fogh
+> have published a paper describing side channels attacks using OS pagecache statistics, allowing looking at
+> things like keystroke timing and others.
+> 
+> This affects not just Linux, but also Windows and potentially other OS.
+> 
+> Linux mainline patch:
+>   https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=574823bfab82d9d8fa47f422778043fbb4b4f50e
+> 
+> I have requested a Linux specific CVE.
 
-Affected versions:
+CVE-2019-5489 was assigned.
 
-- Apache Tomcat 11.0.15 through 11.0.19
-- Apache Tomcat 10.1.50 through 10.1.52
-- Apache Tomcat 9.0.113 through 9.0.115
-
-Description:
-
-Improper Input Validation vulnerability in Apache Tomcat due to an 
-incomplete fix of CVE-2025-66614.
-
-This issue affects Apache Tomcat: from 11.0.15 through 11.0.19, from 
-10.1.50 through 10.1.52, from 9.0.113 through 9.0.115.
-
-Users are recommended to upgrade to version 11.0.20, 10.1.53 or 9.0.116, 
-which fix the issue.
-
-Credit:
-
-zhengg (finder)
-
-References:
-
-https://lists.apache.org/thread/1nl9zqft0ksqlhlkd3j4obyjz1ghoyn7
-https://tomcat.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-32990
+Ciao, Marcus
