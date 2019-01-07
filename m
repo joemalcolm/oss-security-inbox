@@ -1,17 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/19/5
-Message-ID: <CAMufup4rYxdnmD574J7h7EfmS2v+FrZeaCV-J4eJ0NXYuOUsZw@mail.gmail.com>
-Date: Sun, 19 May 2019 18:05:36 +0200
-From: Juan Pablo Santos Rodríguez <juanpablo@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: [CVE-2019-10077] Apache JSPWiki Cross-site scripting vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/07/4
+Message-ID: <CAOWZHxdVnpk-4-Q7VUfeDJ=VBDjxsYQr44xMkN8ZAkZVKXeaPA@mail.gmail.com>
+Date: Mon, 7 Jan 2019 10:30:30 -0500
+From: "James E. King III" <jking@...che.org>
+To: oss-security@...ts.openwall.com, security <security@...che.org>,  dev@...ift.apache.org, user@...ift.apache.org
+Subject: [SECURITY] CVE-2018-11798 Announcement
 Content-Type: text/plain; charset=utf-8
 
-[CVEID]:CVE-2019-10077
-[PRODUCT]:Apache JSPWiki
-[VERSION]:Apache JSPWiki 2.9.0 to 2.11.0.M3
-[PROBLEMTYPE]:Cross-site scripting vulnerability
-[REFERENCES]:https://jspwiki-wiki.apache.org/Wiki.jsp?page=CVE-2019-10077
-[DESCRIPTION]:A carefully crafted InterWiki link could trigger an XSS
-vulnerability on Apache JSPWiki, which could lead to session hijacking.
+Reported By: Asger Feldthaus
+Vendor: The Apache Software Foundation
+Product: Apache Thrift
+Problem Type: Improper Access Control
+Versions Affected: Apache Thrift versions 0.9.2 through 0.11.0
+Mitigation: Upgrading to the latest 0.12.0 release
+
+Description:
+The Apache Thrift Node.js static file server has been determined to have a
+security vulnerability in it which a remote user has the ability to access
+files outside the set webservers docroot path.
+
+Resolution:
+The code which sets the visible path for the static files to be served will
+now verify that the requested path is within the specified webservers
+docroot path and not allow a malicious user to escape out of the configured
+path.
+
+Jira issue:
+ - https://issues.apache.org/jira/browse/THRIFT-4647
+
+Mitre issue:
+  - https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-11798
+
+Committed resolution:
+ -
+*https://github.com/apache/thrift/commit/2a2b72f6c8aef200ecee4984f011e06052288ff2
+<https://github.com/apache/thrift/commit/2a2b72f6c8aef200ecee4984f011e06052288ff2>*
+
+On behalf of the Apache Thrift PMC,
+
+Thank you
 
