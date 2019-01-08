@@ -1,116 +1,125 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/21/1
-Message-ID: <20190121090535.227a1db9@computer>
-Date: Mon, 21 Jan 2019 09:05:35 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Apache web server use after free bugs (unfixed)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/08/16
+Message-Id: <E1gguU1-000604-Gf@xenbits.xenproject.org>
+Date: Tue, 08 Jan 2019 16:44:05 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 276 v3 (CVE-2018-19963) - resource accounting issues in x86 IOREQ server handling
 Content-Type: text/plain; charset=utf-8
 
-Apache use after free bugs
-==========================
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-While doing some fuzz testing on the apache httpd server
-with address sanitizer we regularly observed use after free
-bugs. We originally observed these issues in the http2
-module, but we were also able to reproduce them without
-http2 enabled, so either we're facing multiple bugs or
-there's an underlying bug in the core apache code.
+            Xen Security Advisory CVE-2018-19963 / XSA-276
+                              version 3
 
-Originally we used fuzzing payloads to trigger this bug,
-but we later observed that sending random garbage in
-parallel is enough to trigger the bug.
+        resource accounting issues in x86 IOREQ server handling
 
-We reported this behavior to the apache security team for the first
-time in June 2018. The apache developers did not seem to take the 
-issue as seriously as we had expected. 
+UPDATES IN VERSION 3
+====================
 
-It was pointed out to us that some fixes already in their code may
-fix the issue, however we are still able to reproduce these bugs in
-the latest version (2.4.37).
+CVE assigned.
 
-The apache developers indicated to us that they'd not consider
-these security issues unless we can show a practical exploit.
-Due to the complexity of the apache code base and our lack
-of specialization in binary memory exploitation we feel unable
-to do this. It is, however, our belief that use after free bugs 
-should generally be seen as potential security bugs.
-
-For this reason, we have chosen to share this information with the
-community and hope others will continue the analysis.
-
-apr pool allocator
-==================
-
-For memory allocations apache http uses the apr library's
-pool allocator that allows reserving a larger chunk of
-memory as a pool and do memory allocations within that pool.
-This can, and in our case does, hide memory safety issues.
-
-apr has an option --enable-pool-debug=yes that will cause
-a single malloc call for each memory allocation, allowing
-the use of memory safety checkers like ASAN.
-
-The apache developers suggested that our ASAN reports may stem
-from an incompatibility between the pool debugger and the http2
-module. However we were later able to reproduce these issues
-without the http2 module.
-
-We were also able to reproduce these issues with valgrind and
-without the pool allocator.
-
-
-threading related error
-=======================
-
-In addition to the ASAN use after free reports, httpd logs threading
-related errors:
-
-AH00052: child pid [pid] exit signal Aborted (6)
-apache2: tpp.c:84: __pthread_tpp_change_priority: Assertion `new_prio
-== -1 || (new_prio >= fifo_min_prio && new_prio <= fifo_max_prio)'
-failed.
-
-We found a ten year old bug in the Apache bug tracker
-mentioning such errors:
-https://bz.apache.org/bugzilla/show_bug.cgi?id=46185
-
-It was closed as "INVALID".
-
-
-asan stack traces
+ISSUE DESCRIPTION
 =================
 
-We share asan stack traces from these bugs at
-  https://github.com/hannob/apache-uaf/tree/master/asan
+Allocation of pages used to communicate with external emulators did not
+follow certain principles that are required for proper life cycle
+management of guest exposed pages.
 
+IMPACT
+======
 
-reproduction
-============
+A compromised DM stubdomain may cause Xen to crash, resulting in a DoS
+(Denial of Service) affecting the entire host.  Privilege escalation
+as well as information leaks cannot be ruled out.
 
-To reproduce the issue:
+VULNERABLE SYSTEMS
+==================
 
-1. Compile apr with the pool debugger and address sanitizer.
+Only Xen 4.11 is affected by this vulnerability.  Xen 4.10 and older are
+not affected by this vulnerability.
 
-2. Compile apache with address sanitizer.
+Only systems running HVM guests with their devicemodels in a
+stubdomain are considered vulnerable.  Note that attackers also need
+to exploit the devicemodel in order to have access to this
+vulnerability.
 
-3. Run a command like this to send random garbage to the server:
-for x in $(seq 1 50); do for i in $(seq 1 1000); do head -n
-10 /dev/urandom | nc 127.0.0.1 80 & done; sleep 5; done
+Arm guests cannot leverage this vulnerability.
 
-The bugs appear very irregularly, you may need to
-"attack" it for a while.
+MITIGATION
+==========
 
+Running only PV guests will avoid this vulnerability.
 
-Hanno Böck
-Craig Young (Tripwire VERT)
+(The security of a Xen system using stub domains is still better than
+with a qemu-dm running as an unrestricted dom0 process.  Therefore
+users with these configurations should not switch to an unrestricted
+dom0 qemu-dm.)
 
-Thanks to Markus Vervier and Luis Merino of X41 D-SEC GmbH for double
-checking.
+CREDITS
+=======
 
--- 
-Hanno Böck
-https://hboeck.de/
+This issue was discovered by Julien Grall of ARM.
 
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+RESOLUTION
+==========
+
+Applying the appropriate set of attached patches resolves this issue.
+
+xsa276/*.patch           xen-unstable
+xsa276-4.11/*.patch        Xen 4.11.x
+
+$ sha256sum xsa276* xsa276*/*
+efe9f031c5646b111cbfbe35141a7d99eb31ead07c1c6051145abbd9a3def5b9  xsa276.meta
+7f77225e3de780a2507714caab5870664634bf9f76215547bebd31a6399a86ef  xsa276-4.11/0001-x86-hvm-ioreq-fix-page-referencing.patch
+c93c66090009833cd11fabe72b523cbdb3467fa104cc97d1855d365881aa7f8e  xsa276-4.11/0002-x86-hvm-ioreq-use-ref-counted-target-assigned-shared.patch
+ef8b89375866821f4a612f600d10834bf65d811b1784a4ee0fde4a3a409501e0  xsa276/0001-x86-hvm-ioreq-fix-page-referencing.patch
+75398ec343b9aaebf0c7dc0c5ef5ed7a3f3be0959f1519db5c7f32c44e7a54d3  xsa276/0002-x86-hvm-ioreq-use-ref-counted-target-assigned-shared.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAlw00y0MHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZcpAH/3AuQ0b6D3duO1/p1wHhNGwGOLf4uCIH85h+J1Vx
+TRh77PtztIxosC4OtLObcOtLqf2qUH8SBXnKGiWeyDSjkS1ff8BCRbI8o6xdbvZz
+wvuMZMoRjIjGqHmVQtI4Jmm260RdmQKeiWZydq0XTKp80oI8hqsid84eY0xDXYKi
+GFjream7Vr93RuvhJelTRJGnZrVa630FlI8E8aI2BYrFKW2BaCXxBs6ZQY0UBhXM
+rjqfSj4Ws640B8Sk2Shi8UNGI2rm+kF83s3VlXodGNDjOapXD8bYRp7UcxjnZ+R2
+dLSFKdiwZ8598x82WhGn4J464l0tnmGQ6WaH08ZwM1xZD5U=
+=Df4x
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa276.meta" of type "application/octet-stream" (587 bytes)
+
+Download attachment "xsa276-4.11/0001-x86-hvm-ioreq-fix-page-referencing.patch" of type "application/octet-stream" (3868 bytes)
+
+Download attachment "xsa276-4.11/0002-x86-hvm-ioreq-use-ref-counted-target-assigned-shared.patch" of type "application/octet-stream" (3333 bytes)
+
+Download attachment "xsa276/0001-x86-hvm-ioreq-fix-page-referencing.patch" of type "application/octet-stream" (3868 bytes)
+
+Download attachment "xsa276/0002-x86-hvm-ioreq-use-ref-counted-target-assigned-shared.patch" of type "application/octet-stream" (3339 bytes)
