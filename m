@@ -1,49 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/13/3
-Message-ID: <20190213093151.znxnjuqtwbdlwnom@yavin>
-Date: Wed, 13 Feb 2019 20:31:51 +1100
-From: Aleksa Sarai <cyphar@...har.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2019-5736: runc container breakout exploit code
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/08/8
+Message-ID: <CANn89i+_vDVaGQ8_yWqA-DCPPZbu+2xBMk3XGraH4KEQXkPKjg@mail.gmail.com>
+Date: Tue, 8 Jan 2019 07:33:42 -0800
+From: Eric Dumazet <edumazet@...gle.com>
+To: 3ntr0py1337@...il.com
+Cc: Greg KH <greg@...ah.com>, security@...nel.org, oss-security@...ts.openwall.com
+Subject: Re: KASAN stack out of bound bug
 Content-Type: text/plain; charset=utf-8
 
-Someone outside of the embargo has posted a PoC of the exploit for
-CVE-2019-5736 (which is related though not using the same vector)[1].
-Since the original researchers have posted a blog post explaining the
-exploit in some detail[2], I've decided to post the exploit code early
--- since the cat is out of the bag anyway.
+Before doing this, make sure to use David Miller net tree, as it is
+possible this issue has been resolved already.
 
-CVE-2019-5736.tar.xz has the exploit code and an explanation of how to
-use it. Our exploit code uses shared libraries, but you can create a
-similar exploit by doing something like (thanks to Darren Shepherd from
-Rancher Labs for pointing this out):
-
-1. Run a script with a #!-line of "#!/proc/self/exe events" which will
-   run "runc events" (which blocks for long enough).
-2. A malicious process then opens /proc/$pid/exe (this is now allowed
-   because the non-dumpable bit was cleared on execve).
-3. Kill "runc events" and then re-open the exe fd read-write using the
-   "/proc/self/fd/..." trick.
-
-This is basically what [1] does -- but it does come with the downside
-that you can't craft a malicious image that does this, you need to have
-a separate program already running in the container and then attack
-"docker exec".
-
-As discussed in the previous mail, this exploit code also impacts LXC
-(and several other runtimes have contacted me to say that they are also
-vulnerable -- I would suggest that runtimes should ask to join
-<security-announce@...ncontainers.org>).
-
-[1]: https://github.com/feexd/pocs/blob/master/CVE-2019-5736/exploit.c
-[2]: https://blog.dragonsector.pl/2019/02/cve-2019-5736-escape-from-docker-and.html
-
--- 
-Aleksa Sarai
-Senior Software Engineer (Containers)
-SUSE Linux GmbH
-<https://www.cyphar.com/>
-
-Download attachment "CVE-2019-5736.tar.xz" of type "application/x-xz" (3548 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+On Tue, Jan 8, 2019 at 7:28 AM Entropy Moe <3ntr0py1337@...il.com> wrote:
+>
+> Sure, I will do that.
+>
+> On Tue, Jan 8, 2019 at 7:28 PM Greg KH <greg@...ah.com> wrote:
+>>
+>> On Tue, Jan 08, 2019 at 07:13:05PM +0400, Entropy Moe wrote:
+>> > Hello folks,
+>> > I am reporting another set of bugs related to out of bounds in multiple
+>> > source codes.
+>> >
+>> > please see the attached files report for more information.
+>> >
+>> > if I reporting it wrongly, please correct me.
+>>
+>> For networking issues, just send them to the netdev@...r.kernel.org
+>> mailing list as the developers there want to find out these types of
+>> things.
+>>
+>> And no need to post all syzbot issues to security@, that doesn't make
+>> sense, just send them to the correct mailing lists and developers so
+>> they can work to resolve them.  Like the other people who use this tool
+>> do.
+>>
+>> thanks,
+>>
+>> greg k-h
