@@ -1,33 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/12/1
-Message-ID: <31ac7d5a-c4fa-44f2-21d5-139851806bb0@lehmi.de>
-Date: Fri, 12 Apr 2019 06:44:41 +0200
-From: Andreas Lehmkuehler <andreas@...mi.de>
-To: oss-security@...ts.openwall.com
-Subject: [SECURITY] CVE-2019-0228 Apache PDFBox XML External Entity vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/08/21
+Message-ID: <ecc2a46a-c655-8648-23ba-bdaa7261c904@apache.org>
+Date: Tue, 8 Jan 2019 22:31:58 +0000
+From: Ash Berlin-Taylor <ash@...che.org>
+To: dev@...flow.apache.org, Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com
+Cc: Stijn van Drongelen <rhymoid@...il.com>
+Subject: CVE-2018-20245: Apache Airflow LDAP auth backend did not validate SSL certificate for <= 1.10.0
 Content-Type: text/plain; charset=utf-8
 
-CVE-2019-0228: Apache PDFBox XML External Entity vulnerability
+CVE-2018-20245: LDAP auth backend did not validate SSL certificate for 
+Apache Airflow <= 1.10.0
 
-Severity: Important
+Vendor: The Apache Software Foundation
 
-
-Vendor:
-The Apache Software Foundation
-
-Versions Affected:
-Apache PDFBox 2.0.14
-
+Versions Affected: <= 1.10.0
 
 Description:
-Apache PDFBox 2.0.14 does not properly initialize the XML parser, which allows 
-context-dependent attackers to conduct XML External Entity (XXE) attacks via a 
-crafted XFDF.
+The LDAP auth backend (airflow.contrib.auth.backends.ldap_auth) was 
+misconfigured and contained improper checking of exceptions which 
+disabled server certificate checking.
 
-Mitigation:
-Upgrade to Apache PDFBox 2.0.15
+Apache Airflow 1.10.1+ now only supports TLS connections and does not 
+support insecure connections to LDAP servers any more. (Self-signed 
+certificates are allowed if you pass in the expected server certificate 
+as the "cacert" option under the "[ldap]" section of the config.)
 
 Credit:
-This issue was discovered by Kurt Boberg from DocuSign
+This issue was discovered by Stijn van Drongelen
 
-[1] https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Processing
+Thanks,
+Ash Berlin-Taylor
