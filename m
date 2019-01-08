@@ -1,4 +1,9 @@
-Received: (qmail 3658 invoked by uid 550); 30 Apr 2026 18:21:41 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1005" "Tuesday" "8" "January" "2019" "07:33:42" "-0800" "Eric Dumazet" "edumazet@google.com" "<CANn89i+_vDVaGQ8_yWqA-DCPPZbu+2xBMk3XGraH4KEQXkPKjg@mail.gmail.com>" "30" "[oss-security] Re: KASAN stack out of bound bug" nil nil nil "1" "2019010815:33:42" "[oss-security] Re: KASAN stack out of bound bug" (number mark "U       edumazet@goo Jan  8   30/1005  " thread-indent "\"[oss-security] Re: KASAN stack out of bound bug\"\n") "<CALzBtjKp87pGwvPS2wRjuHhq3DjTJ9Np=mWPg35O17cLqzC0pg@mail.gmail.com>" ("<CALzBtj+Tg1MwiZ3PFeMsmhXSAPUMhrupC7Nc=dFOez7qs718KA@mail.gmail.com>" "<20190108152758.GB19359@kroah.com>" "<CALzBtjKp87pGwvPS2wRjuHhq3DjTJ9Np=mWPg35O17cLqzC0pg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 7650 invoked by uid 550); 8 Jan 2019 15:58:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,98 +12,73 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 3248 invoked from network); 30 Apr 2026 18:21:36 -0000
-Date: Thu, 30 Apr 2026 20:21:26 +0200
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Cc: Bernard Quatermass <bernardq@exim.org>, security@exim.org
-Message-ID: <20260430182126.GA28748@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.3i
-Subject: [oss-security] Exim 4.99.2 fixes 4 CVEs
+Received: (qmail 7440 invoked from network); 8 Jan 2019 15:34:06 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=3kAIQr9zKeH3T5vmalC323rRe7IH5w9jS4Ee1xvZpIY=;
+        b=MokuGVfAcxBLucZH0LIcLYX5HwWZk0v+AMX1utmdsE048VrdytoncxUeFtDkly2qpe
+         xMm+oV6LmQZVU3HWoYfjN/rsrW+xI56iyc+rdqliJosAHzWehls+u9js87gkll0MlTBt
+         GKp9dJVizzpbyANaiqW8Ryakq3i5ZgHDNYi7sL8IyeZpp3DdrOkDHUS33FMjbQChtejN
+         ztMF9EKYaqo8CEP6RIqbZ/DI1TmA6vEEltyxVTrl8jEzr5T4G68A+fbNBRRka/duGWPg
+         JfpluE9rZRtNU0w7fHioTFACdBfbMdlbn7Fl6/KToSg+fxVJgTbxxigXJ5VzG2xOgd+Y
+         oAbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=3kAIQr9zKeH3T5vmalC323rRe7IH5w9jS4Ee1xvZpIY=;
+        b=dkkEvA6IFkfHa8SyLNZJIIfu88SywhqeWqbIi0NUbDauI+Ht2hGeISmJBZpInwc+3g
+         LnSxmnpdmfFopR/daGREM3/K3H8rnvKrjmMgXJ/MMpsnN0VFZuro8tBoZr7+fkFGmbzC
+         hfbcf/Uf959W+iC4livi+2DDVINNnmdFc0OlrbprABj8inY0nG+ie/dGUHVtfQZUdLlY
+         RbFrjkqLb0Ft+vNQqJpJH7hDF0hqT8Q+4l5yF4qxhtgbeeOA04Cfs8ybemrOAxjdWb13
+         LQEjtnPgBsvscUhYg0GBoaAzLVwOyB3dWFVish0irRaIglQ487Dfru/0MH8yoYJlCQV0
+         2KvA==
+X-Gm-Message-State: AJcUukf0HMLf/cjbcvScM52RotHjdAQPwlb7iyp2FaZnw14L5J4Su6HY
+	Xr7O+CBJ7jtH7dgehZfP551yv3wqTa2jPOvQByHeKw==
+X-Google-Smtp-Source: ALg8bN6dzkym/CvfdSVvruO4ZkBPsJC+Y1UXrHkgSaBr3QvxcEdg6h0ti04cCmUp5rYThvF5qJHknQYXndKLGwRTcS8=
+X-Received: by 2002:a81:5744:: with SMTP id l65mr1963590ywb.91.1546961634381;
+ Tue, 08 Jan 2019 07:33:54 -0800 (PST)
+MIME-Version: 1.0
+References: <CALzBtj+Tg1MwiZ3PFeMsmhXSAPUMhrupC7Nc=dFOez7qs718KA@mail.gmail.com>
+ <20190108152758.GB19359@kroah.com> <CALzBtjKp87pGwvPS2wRjuHhq3DjTJ9Np=mWPg35O17cLqzC0pg@mail.gmail.com>
+In-Reply-To: <CALzBtjKp87pGwvPS2wRjuHhq3DjTJ9Np=mWPg35O17cLqzC0pg@mail.gmail.com>
+From: Eric Dumazet <edumazet@google.com>
+Date: Tue, 8 Jan 2019 07:33:42 -0800
+Message-ID: <CANn89i+_vDVaGQ8_yWqA-DCPPZbu+2xBMk3XGraH4KEQXkPKjg@mail.gmail.com>
+To: 3ntr0py1337@gmail.com
+Cc: Greg KH <greg@kroah.com>, security@kernel.org, oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] Re: KASAN stack out of bound bug
 
-Bernard helpfully notified distros of this upcoming security release on
-April 24 and then of the release itself on April 29, but unfortunately
-did not bring this to oss-security as expected - so I am doing it now,
-delayed by one day.
+Before doing this, make sure to use David Miller net tree, as it is
+possible this issue has been resolved already.
 
-This was also sent to the public exim-announce list yesterday:
-
-https://lists.exim.org/lurker/message/20260429.121733.f58d9686.en.html
-
-but it isn't prominently visible on the Exim website now.  I tried
-clicking the Security link in the navigation on top, but this merely
-opened a directory listing with some text files and subdirectories in
-there, with all file timestamps showing as 30-Apr-2026 10:29 and so
-nothing clearly standing out as new.  Looks like something to improve.
-
------ Forwarded message from Bernard Quatermass <bernardq@exim.org> -----
-
-From: Bernard Quatermass <bernardq@exim.org>
-To: "Distros @ oss-security openwall" <distros@vs.openwall.org>
-Subject: Re: [vs-plain] EXIM-Security-2026-04-24
-CC: "security@exim.org" <security@exim.org>
-Date: Wed, 29 Apr 2026 13:19:42 +0100
-
-we are pleased to announce the availability of release 4.99.2 of Exim.
-
-This is a security release.
-
-It fixes the following vulnerabilities.
-
-CVE-2026-40684     Possible crash with malicious DNS data when using musl libc
-
-   On systems using musl libc (not glibc) due to an oddity in octal printing
-   it is possible to crash the connection instance when malformed DNS data
-   is present in PTR records.
-
-CVE-2026-40685     Possible OOB read/write on corrupt JSON in header
-
-   configurations using json operators on invalid externally-provided input
-   could trigger heap corruption.
-
-CVE-2026-40686     Possible OOB read with large UTF8 trailing characters
-
-   configurations using utf8 operators on malformed utf8 in headers could
-   trigger OOB reads and might trigger some data leak if error
-   messages are required for subsequent emails in the current connection
-   and similar malformed headers are present.
-
-CVE-2026-40687     Possible OOB read/write with SPA authenticator
-
-   in configurations using the SPA authentication driver to a hostile/compromised
-   external SPA/NTLM connnection it is possible to trigger an OOB read/write
-   and crash the connection instance or possibly leak heap data to the instance.
-
-Older Exim versions may or may not be vulnerable but are not actively maintained.
-
-
-We would like to thank the thousands of unnamed and uncredited authors whose
-works were ingested into the slopbots to "assist" in the reports for these vulnerabilities.
-
-
-
-Exim 4.99.2 is available:
-
-  * as tarball
-    * https://ftp.exim.org/pub/exim/exim4/
-    * https://code.exim.org/exim/exim/releases
-
-  * directly from Git: https://code.exim.org/exim/exim
-    tag: exim-4.99.2
-
-
-The signatures on the release tarballs should be
-
-  *  key ID 0xBCE58C8CE41F32DF
-     Email: jgh@exim.org
-
-
-
--- 
-Bernard Quatermass
-
------ End forwarded message -----
+On Tue, Jan 8, 2019 at 7:28 AM Entropy Moe <3ntr0py1337@gmail.com> wrote:
+>
+> Sure, I will do that.
+>
+> On Tue, Jan 8, 2019 at 7:28 PM Greg KH <greg@kroah.com> wrote:
+>>
+>> On Tue, Jan 08, 2019 at 07:13:05PM +0400, Entropy Moe wrote:
+>> > Hello folks,
+>> > I am reporting another set of bugs related to out of bounds in multiple
+>> > source codes.
+>> >
+>> > please see the attached files report for more information.
+>> >
+>> > if I reporting it wrongly, please correct me.
+>>
+>> For networking issues, just send them to the netdev@vger.kernel.org
+>> mailing list as the developers there want to find out these types of
+>> things.
+>>
+>> And no need to post all syzbot issues to security@, that doesn't make
+>> sense, just send them to the correct mailing lists and developers so
+>> they can work to resolve them.  Like the other people who use this tool
+>> do.
+>>
+>> thanks,
+>>
+>> greg k-h
