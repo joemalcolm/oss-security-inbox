@@ -1,214 +1,122 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/16/6
-Message-Id: <98C55BF9-E4EB-4EAA-BE9C-2AE6A47E2F00@beckweb.net>
-Date: Wed, 16 Oct 2019 14:59:44 +0200
-From: Daniel Beck <ml@...kweb.net>
-To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins plugins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/08/15
+Message-Id: <E1gguUC-0006ow-VL@xenbits.xenproject.org>
+Date: Tue, 08 Jan 2019 16:44:16 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 279 v3 (CVE-2018-19965) - x86: DoS from attempting to use INVPCID with a non-canonical addresses
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software. The following
-releases contain fixes for security vulnerabilities:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-* Bumblebee HP ALM Plugin 4.1.4
-* Cadence vManager Plugin 2.7.1
-* CRX Content Package Deployer Plugin 1.9
-* Google Kubernetes Engine Plugin 0.7.1
-* Google OAuth Credentials Plugin 0.10
-* iceScrum Plugin 1.1.6
-* NeoLoad Plugin 2.2.6
+            Xen Security Advisory CVE-2018-19965 / XSA-279
+                              version 3
 
-Additionally, we announce unresolved security issues in the following
-plugins:
+ x86: DoS from attempting to use INVPCID with a non-canonical addresses
 
-* Delphix Plugin
-* ElasticBox CI Plugin
-* Extensive Testing Plugin
-* Fortify on Demand Plugin
-* Puppet Enterprise Pipeline Plugin
-* Oracle Cloud Infrastructure Compute Classic Plugin
-* Rundeck Plugin
-* SOASTA CloudTest Plugin
-* Sofy.AI Plugin
-* View26 Test-Reporting Plugin
+UPDATES IN VERSION 3
+====================
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2019-10-16/
+CVE assigned.
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+ISSUE DESCRIPTION
+=================
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
+The INVPCID instruction raises #GP[0] if an attempt is made to
+invalidate a non-canonical address.  Older flushing mechanisms such as
+INVLPG tolerate this without error, and perform no action.
 
----
+There is one guest accessible path in Xen where a non-canonical
+address was passed into the TLB flushing code.  This previously had no
+ill effect, but became vulnerable with the introduction of PCID to
+reduce the performance hit from the Meltdown mitigations.
 
+IMPACT
+======
 
-SECURITY-1583 / CVE-2019-10436
-Google OAuth Credentials Plugin allowed the creation of credentials based 
-on the content of files on the Jenkins master through a feature retaining 
-backwards compatibility with earlier plugin releases.
+A buggy or malicious PV guest can crash the host.
 
-This allowed users with the permission to configure jobs and credentials to 
-read arbitrary files on the Jenkins master by creating a credential 
-referencing an arbitrary file on the Jenkins master.
+VULNERABLE SYSTEMS
+==================
 
+Only hardware which supports the INVPCID instruction is vulnerable.  This is
+available on Intel Haswell processors and later.  AMD x86 processors are not
+known to support this instruction, and ARM processors are entirely unaffected.
 
-SECURITY-1006 (1) / CVE-2019-10437 (CSRF), CVE-2019-10438 (permission check)
-CRX Content Package Deployer Plugin did not perform permission checks on a 
-method implementing form validation. This allowed users with Overall/Read 
-access to Jenkins to connect to an attacker-specified URL using attacker-
-specified credentials IDs obtained through another method, capturing 
-credentials stored in Jenkins.
+Only versions of Xen with PCID support are vulnerable.  Support first appeared
+in Xen 4.11 but was backported to the stable trees as part of the Meltdown
+(XSA-254 / CVE-2017-5754) fixes.  Xen 4.10.2, 4.9.3, 4.8.4 as well as the
+stable-4.7 and 4.6 branches are vulnerable.
 
-Additionally, the form validation method did not require POST requests, 
-resulting in a CSRF vulnerability.
+The vulnerability is only exposed to 64-bit PV guests.  32-bit PV guests, as
+well as HVM/PVH guests cannot exploit the vulnerability.
 
+MITIGATION
+==========
 
-SECURITY-1006 (2) / CVE-2019-10439
-CRX Content Package Deployer Plugin provides a list of applicable 
-credential IDs to allow users configuring the plugin to select the one to 
-use.
+Booting Xen with `pcid=0` or `invpcid=0` on the command line will work around
+the issue.  Alternatively, running untrusted 64bit PV guests inside xen-shim
+will work around the issue.
 
-This functionality did not correctly check permissions, allowing any user 
-with Overall/Read permission to get a list of valid credentials IDs. Those 
-could be used as part of an attack to capture the credentials using another 
-vulnerability.
+CREDITS
+=======
 
+This issue was discovered by Matthew Daley.
 
-SECURITY-1427 / CVE-2019-10440
-NeoLoad Plugin stored credentials unencrypted in its global configuration 
-file org.jenkinsci.plugins.neoload.integration.NeoGlobalConfig.xml and in 
-job config.xml files on the Jenkins master. These credentials could be 
-viewed by users with Extended Read permission or access to the master file 
-system.
+RESOLUTION
+==========
 
+Applying the appropriate attached patch resolves this issue.
 
-SECURITY-1484 / CVE-2019-10441 (CSRF), CVE-2019-10442 (permission check)
-iceScrum Plugin did not perform permission checks on a method implementing 
-form validation. This allowed users with Overall/Read access to Jenkins to 
-initiate a connection test to an attacker-specified server with attacker-
-specified access token or username and password.
+xsa279.patch             xen-unstable, Xen 4.11.x, Xen 4.10.x
+xsa279-4.9.patch         Xen 4.9.x ... 4.7.x
 
-Additionally, the form validation method did not require POST requests, 
-resulting in a CSRF vulnerability.
+$ sha256sum xsa279*
+40319fcf33348176eb14d7fc7c68c255cc7291013242ea444de6d00602024a11  xsa279.meta
+0c1d50effe6645051a15dd83af57088dd4a055e26a23b1fa9e6c3722a7973f5d  xsa279.patch
+fd34f29bc7e53359585135408cbbd12e12a003f59b135e81cc44186c5cddd40d  xsa279-4.9.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
 
 
-SECURITY-1436 / CVE-2019-10443
-iceScrum Plugin stored credentials unencrypted in job config.xml files on 
-the Jenkins master. These credentials could be viewed by users with 
-Extended Read permission or access to the master file system.
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
 
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
 
-SECURITY-1481 / CVE-2019-10444
-Bumblebee HP ALM Plugin unconditionally disabled SSL/TLS certificate 
-validation for connections to the HP ALM service.
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAlw00zAMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZn0EH/0hSD6EUH7AyxFOCgPtaeOiRG0NPmGcnsVcHogU2
+ows3sG+6+VenzyMdf0FcEqSEnCfFbQgqGuMaKE4U4ngSWWg+hdUhJ/5T/rMQv7o1
+QJ84xhKRRHrAju1WZWdACZJpq7vAOiJmkS9HvkxjFw8J2ck+8KakyInLA1AlHC+K
+8cApZtqxEyCNvH9w1Ho3PNtcNGhI6ZNxYlSSSUIfLz+dI7EXGQer2FiPzwE/KdAi
+vp0+61HotZ3mz03AZOelzJK7tmP5a8/u+zZfwfEw9s6zEO1RadUCHM3FIiZrSJLk
+v4si1s8x+FdbYwaHBKQGQTl6IQD/URqiK2IdWYdbeTkVCKY=
+=COoK
+-----END PGP SIGNATURE-----
 
+Download attachment "xsa279.meta" of type "application/octet-stream" (1778 bytes)
 
-SECURITY-1607 / CVE-2019-10445
-Missing permission checks in Google Kubernetes Engine Plugin allowed users 
-with Overall/Read permission to obtain limited information about the scope 
-and access of a credential with an attacker-specified credential ID 
-obtained through another method.
+Download attachment "xsa279.patch" of type "application/octet-stream" (1286 bytes)
 
-
-SECURITY-1615 / CVE-2019-10446
-Cadence vManager Plugin unconditionally disabled SSL/TLS certificate 
-validation for the entire Jenkins master JVM.
-
-
-SECURITY-918 / CVE-2019-10458
-Puppet Enterprise Pipeline Plugin defines a custom whitelist for all 
-scripts protected by the Script Security sandbox.
-
-This custom whitelist allows the use of methods that can be used to bypass 
-Script Security sandbox protection. This results in arbitrary code 
-execution on any Jenkins instance with this plugin installed.
-
-As of publication of this advisory there is no fix.
-
-
-SECURITY-1431 / CVE-2019-10447
-Sofy.AI Plugin stores an API token unencrypted in job config.xml files on 
-the Jenkins master. This token can be viewed by users with Extended Read 
-permission or access to the master file system.
-
-As of publication of this advisory there is no fix.
-
-
-SECURITY-1432 / CVE-2019-10448
-Extensive Testing Plugin stores credentials unencrypted in job config.xml 
-files on the Jenkins master. These credentials can be viewed by users with 
-Extended Read permission or access to the master file system.
-
-As of publication of this advisory there is no fix.
-
-
-SECURITY-1433 / CVE-2019-10449
-Fortify on Demand Plugin stores credentials unencrypted in job config.xml 
-files on the Jenkins master. These credentials can be viewed by users with 
-Extended Read permission or access to the master file system.
-
-As of publication of this advisory there is no fix.
-
-
-SECURITY-1434 / CVE-2019-10450
-ElasticBox CI Plugin stores an access token unencrypted in the global config
-.xml configuration file on the Jenkins master. This token can be viewed by 
-users with Extended Read permission or access to the master file system.
-
-As of publication of this advisory there is no fix.
-
-
-SECURITY-1439 / CVE-2019-10451
-SOASTA CloudTest Plugin stores credentials unencrypted in its global 
-configuration file com.soasta.jenkins.CloudTestServer.xml on the Jenkins 
-master. These credentials could be viewed by users with access to the 
-master file system.
-
-As of publication of this advisory there is no fix.
-
-
-SECURITY-1440 / CVE-2019-10452
-View26 Test-Reporting Plugin stores an access token unencrypted in job 
-config.xml files on the Jenkins master. This token can be viewed by users 
-with Extended Read permission or access to the master file system.
-
-As of publication of this advisory there is no fix.
-
-
-SECURITY-1450 / CVE-2019-10453
-Delphix Plugin stores credentials unencrypted in its global configuration 
-file io.jenkins.plugins.delphix.GlobalConfiguration.xml on the Jenkins 
-master. These credentials could be viewed by users with access to the 
-master file system.
-
-As of publication of this advisory there is no fix.
-
-
-SECURITY-1460 / CVE-2019-10454 (CSRF), CVE-2019-10455 (permission check)
-Rundeck Plugin does not perform permission checks on a method implementing 
-form validation. This allows users with Overall/Read access to Jenkins to 
-initiate a connection test to an attacker-specified server with attacker-
-specified username and password.
-
-Additionally, the form validation method does not require POST requests, 
-resulting in a CSRF vulnerability.
-
-As of publication of this advisory there is no fix.
-
-
-SECURITY-1462 / CVE-2019-10456 (CSRF), CVE-2019-10457 (permission check)
-Oracle Cloud Infrastructure Compute Classic Plugin does not perform 
-permission checks on a method implementing form validation. This allows 
-users with Overall/Read access to Jenkins to initiate a connection test to 
-an attacker-specified server with attacker-specified username and password.
-
-Additionally, the form validation method does not require POST requests, 
-resulting in a CSRF vulnerability.
-
-As of publication of this advisory there is no fix.
-
+Download attachment "xsa279-4.9.patch" of type "application/octet-stream" (1203 bytes)
