@@ -1,56 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/25/3
-Message-ID: <87wojie6jy.fsf@dell.be.48ers.dk>
-Date: Thu, 25 Apr 2019 12:13:37 +0200
-From: Peter Korsgaard <peter@...sgaard.com>
-To: Michael McNally <mcnally@....org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Multiple BIND vulnerabilities disclosed (CVE-2018-5743, CVE-2019-6467, and CVE-2019-6468)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/08/2
+Message-ID: <CALzBtjJ7Vh8qatDWaf1oHf+=fGQUphm7WM2e0fZXe+8rQ=Sxxg@mail.gmail.com>
+Date: Tue, 8 Jan 2019 19:08:14 +0400
+From: Entropy Moe <3ntr0py1337@...il.com>
+To: security@...nel.org, oss-security@...ts.openwall.com
+Subject: Linux Kernel 4.20(21) deadlock vulnerability.
 Content-Type: text/plain; charset=utf-8
 
->>>>> "Michael" == Michael McNally <mcnally@....org> writes:
+Hello,
+I wanted to let you know that there seem to be a deadlock vulnerability on
+the linux kernel 4.20.
+I am attaching the result report from syzkaller which also got the c code
+for replication.
 
- > Today ISC disclosed two vulnerabilities affecting BIND as well
- > as a third vulnerability which affects *only* BIND Supported Preview
- > Edition (a special feature-preview version of BIND provided to
- > ISC support customers.)
+thank you,
 
- > Information about the vulnerabilities can be found in the ISC Knowledge
- > Base:
+Content of type "text/html" skipped
 
- >    CVE-2018-5743: Limiting simultaneous TCP clients is ineffective
- >    https://kb.isc.org/docs/cve-2018-5743
-
- >    CVE-2019-6467: An error in the nxdomain redirect feature can cause
- >    BIND to exit with an INSIST assertion failure in query.c
- >    https://kb.isc.org/docs/cve-2019-6467
-
- >    CVE-2019-6468: BIND Supported Preview Edition can exit with an
- >    assertion failure if nxdomain-redirect is used
- >    https://kb.isc.org/docs/cve-2019-6468
-
- > New releases of BIND have been issued to fix the vulnerabilities above.
- > They may be downloaded from the ISC website:  https://www.isc.org/downloads
-
- >    -  9.11.6-P1
- >    -  9.12.4-P1
- >    -  9.14.1
-
-It is a bit unfortunate that these security fixes now use
-isc_atomic_xadd() which are not available on all architectures:
-
-.libs/client.o: In function `mark_tcp_active':
-client.c:(.text+0xc7c): undefined reference to `isc_atomic_xadd'
-client.c:(.text+0xca0): undefined reference to `isc_atomic_xadd'
-.libs/client.o: In function `client_accept':
-client.c:(.text+0x2210): undefined reference to `isc_atomic_xadd'
-client.c:(.text+0x230c): undefined reference to `isc_atomic_xadd'
-.libs/client.o: In function `exit_check':
-client.c:(.text+0x2958): undefined reference to `isc_atomic_xadd'
-.libs/client.o:client.c:(.text+0x5cb4): more undefined references to `isc_atomic_xadd' follow
-collect2: error: ld returned 1 exit status
-
-:/
-
--- 
-Bye, Peter Korsgaard
+View attachment "console_unlock_bug.txt" of type "text/plain" (10686 bytes)
