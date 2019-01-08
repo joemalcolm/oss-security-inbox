@@ -1,22 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/25/2
-Message-Id: <93CB7010-1297-4AD4-80D6-ABCC920929AF@gmail.com>
-Date: Mon, 24 Jun 2019 16:44:03 -0700
-From: Matthew Fernandez <matthew.fernandez@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/08/6
+Message-ID: <20190108152758.GB19359@kroah.com>
+Date: Tue, 8 Jan 2019 16:27:58 +0100
+From: Greg KH <greg@...ah.com>
+To: Entropy Moe <3ntr0py1337@...il.com>
+Cc: security@...nel.org, oss-security@...ts.openwall.com
+Subject: Re: KASAN stack out of bound bug
 Content-Type: text/plain; charset=utf-8
 
-
-
-> On Jun 24, 2019, at 09:42, Bob Friesenhahn <bfriesen@...ple.dallas.tx.us> wrote:
+On Tue, Jan 08, 2019 at 07:13:05PM +0400, Entropy Moe wrote:
+> Hello folks,
+> I am reporting another set of bugs related to out of bounds in multiple
+> source codes.
 > 
-> On Mon, 24 Jun 2019, Stuart D. Gathman wrote:
->> 
->> Question: is fuzzing useful for languages like Java/python?  Obviously,
->> you eventually reach a native code module in both cases, but fuzzing the entire virtual machine is cumbersome.  Maybe native code libraries
->> for "safe" languages should include fuzzing as part of testing.
+> please see the attached files report for more information.
 > 
-> There is nothing about languages like Java and Python which necessarily makes them safe.  Access outside of memory bounds is just one issue which often afflicts C/C++.  Java and Python can easily do something wrong such as use all available resources or never finish. In the case of Python, Python can easily make arbitrary calls into C code under control of the script.
+> if I reporting it wrongly, please correct me.
 
-With something like ctypes? I took Stuart’s point to be about fuzzing the language VM (e.g. CPython), rather than fuzzing extensions written in C. Fuzzing the FFI into native code seems like a reasonable idea for extension maintainers, but this is much less cumbersome than the VM fuzzing that Stuart’s comment seemed to be getting at.
+For networking issues, just send them to the netdev@...r.kernel.org
+mailing list as the developers there want to find out these types of
+things.
+
+And no need to post all syzbot issues to security@, that doesn't make
+sense, just send them to the correct mailing lists and developers so
+they can work to resolve them.  Like the other people who use this tool
+do.
+
+thanks,
+
+greg k-h
