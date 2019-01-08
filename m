@@ -1,82 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/11/5
-Message-Id: <E1if0nx-0001b8-PT@xenbits.xenproject.org>
-Date: Wed, 11 Dec 2019 12:09:21 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/08/18
+Message-Id: <E1gguTu-0005Vo-MG@xenbits.xenproject.org>
+Date: Tue, 08 Jan 2019 16:43:58 +0000
 From: Xen.org security team <security@....org>
 To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
 CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 310 v3 (CVE-2019-19580) - Further issues with restartable PV type change operations
+Subject: Xen Security Advisory 275 v3 (CVE-2018-19961,CVE-2018-19962) - insufficient TLB flushing / improper large page mappings with AMD IOMMUs
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-            Xen Security Advisory CVE-2019-19580 / XSA-310
-                               version 3
+    Xen Security Advisory CVE-2018-19961,CVE-2018-19962 / XSA-275
+                              version 3
 
-      Further issues with restartable PV type change operations
+  insufficient TLB flushing / improper large page mappings with AMD IOMMUs
 
 UPDATES IN VERSION 3
 ====================
 
-Public release.
-
-Updated metadata to add 4.13, update StableRef's
+CVEs assigned.
 
 ISSUE DESCRIPTION
 =================
 
-XSA-299 addressed several critical issues in restartable PV type
-change operations.  Despite extensive testing and auditing, some
-corner cases were missed.
+In order to be certain that no undue access to memory is possible
+anymore after IOMMU mappings of this memory have been removed,
+Translation Lookaside Buffers (TLBs) need to be flushed after most
+changes to such mappings.  Xen bypassed certain IOMMU flushes on AMD
+x86 hardware.  (CVE-2018-19961)
+
+Furthermore logic exists Xen to re-combine small page mappings
+into larger ones.  Such re-combination could have occured in cases
+when it was not really safe/correct to do so.  (CVE-2018-19962)
 
 IMPACT
 ======
 
-A malicious PV guest administrator may be able to escalate their
-privilege to that of the host.
+A malicious or buggy guest may be able to escalate its privileges, may
+cause a Denial of Service (DoS) affecting the entire host, or may be
+able to access data it is not supposed to access (information leak).
 
 VULNERABLE SYSTEMS
 ==================
 
-All security-supported versions of Xen are vulnerable.
+Xen versions from at least 3.2 onwards are affected.  Note that the
+situation is worse in 4.1 and earlier, in that there's no flushing of
+the TLB at all.
 
-Only x86 systems are affected.  Arm systems are not affected.
+Only systems with AMD x86 hardware with enabled IOMMU are affected.
 
-Only x86 PV guests can leverage the vulnerability.  x86 HVM and PVH
-guests cannot leverage the vulnerability.
+ARM and Intel x86 systems, and AMD x86 systems without enabled IOMMU,
+are not affected.
 
-Note that these attacks require very precise timing, which may
-be difficult to exploit in practice.
+Only systems where physical PCI devices are assigned to untrusted guests
+are vulnerable.
 
 MITIGATION
 ==========
 
-Running only HVM or PVH guests will avoid this vulnerability.
-
-Running PV guests in "shim" mode will also avoid this vulnerability.
+There is no known mitigation for affected system/guest combinations.
 
 CREDITS
 =======
 
-This issue was discovered by Sarah Newman at prgmr.com.
+This issue was discovered by Paul Durrant of Citrix.
 
 RESOLUTION
 ==========
 
-Applying the appropriate attached patch resolves this issue.
+Applying the appropriate set of attached patches resolves this issue.
 
-xsa310/*.patch           xen-unstable, Xen 4.13 - 4.10
-xsa310-4.9/*.patch       Xen 4.9 - 4.8
+xsa275-?.patch           xen-unstable
+xsa275-4.11-?.patch      Xen 4.11.x ... Xen 4.8.x
+xsa275-4.7-?.patch       Xen 4.7.x
 
-$ sha256sum xsa310* xsa310*/*
-2208e40c71aa521ae487782bd751963ce696be451d10a179fcecdff7a0065369  xsa310.meta
-8e75f0fb5fe890a661c8d46ec622131bc650f1a95b170b99569b50dd2224616c  xsa310-4.9/0001-x86-mm-Set-old_guest_table-when-destroying-vcpu-page.patch
-3da404a0c088936ed92377ccef1fa6fdeb23900358ca9284e3488e8e1dcb5dd2  xsa310-4.9/0002-x86-mm-alloc-free_lN_table-Retain-partial_flags-on-E.patch
-cd1a77c2f767474dcfbd1e6282ad3219ce2abcac2021b040120d40b52fc76bc8  xsa310-4.9/0003-x86-mm-relinquish_memory-Grab-an-extra-type-ref-when.patch
-44c670a1b1b8164202766d52fb741e62c104118525eb7a3e56f4b232bcb8be3f  xsa310/0001-x86-mm-Set-old_guest_table-when-destroying-vcpu-page.patch
-173dc0ffb4c572c8493bd9d5f3309b113e51888bdc9e462c78933f5c85f69b7a  xsa310/0002-x86-mm-alloc-free_lN_table-Retain-partial_flags-on-E.patch
-1833fbfc2cdea9b37f161b09df947dffdd8db5e60a2f3512913de0e0c0d4b3ef  xsa310/0003-x86-mm-relinquish_memory-Grab-an-extra-type-ref-when.patch
+$ sha256sum xsa275*
+b5a02598cd2cffcc2cb59c724eeabb50220fa55f2cbe571726a5228909bf7bfe  xsa275.meta
+7a3360e61fbb088f7d9f2b92921c9dceb08a1e01563c42ba4cf4a9999fe42fc4  xsa275-1.patch
+4783a3abd2d87386ce9a7b790666ad398c5e027a6a146fce6424f0bcbfd8a7c6  xsa275-2.patch
+49844d06f24ea129f1a501b4b0d5cb6ec3b288f3a2b41377ce793cc6fc81a788  xsa275-4.7-1.patch
+7ea8bf2ff2c8c92cb064a70959a1148229c4577109015bd5aab72603ccb8f7e3  xsa275-4.7-2.patch
+15d1aa7528368ed92caf8ea9baf77a406e1de26d0697dafd8a85da0d66eb95dc  xsa275-4.11-1.patch
+0806e8c904ac9e8eb89404dffd227fcd56da84b7eb0150ee1e9b4bee54a05b4e  xsa275-4.11-2.patch
 $
 
 DEPLOYMENT DURING EMBARGO
@@ -94,7 +100,6 @@ Predisclosure list members who wish to deploy significantly different
 patches and/or mitigations, please contact the Xen Project Security
 Team.
 
-
 (Note: this during-embargo deployment notice is retained in
 post-embargo publicly released Xen Project advisories, even though it
 is then no longer applicable.  This is to enable the community to have
@@ -105,26 +110,26 @@ consult the Xen Project community's agreed Security Policy:
   http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl3w3F0MHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZ1noH/i6Sb3F6ZiaSl460OvdCRKd9lZm3ONunOH4IHuc6
-+Q/G0G4b48UYfK/8FSAAjldv8tPOA5+j3GAFr2JgVtTWjP7tZyzSs0tDvn37sZrZ
-D3l0AeOHxLCuSRxnoRDtpKiuJv71DrnYEfCDdc6R4DTZuciOWYpYq6PQTac5bLZX
-8G5nR+33SvzdIpncvONa0Xqm1+Cgy8yOOQQJHeQvN7GJfVvs6AHepU5zuP2Ez42W
-ReNA6o13xwiI8LGKvf8cV7s74JklIxR9gzkv4bBtMKInUY2loSIbKpI8E9GsVa3n
-VOJ2kwKgGgszewBoVyJdGYY1ZlXeIdPjOj7+575bsRnDlGo=
-=f2/B
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAlw00ygMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZrwAH/0mx4lHIIBWxfYYHVxrIrC598duLahYlIrscn+Fw
+WaiXnx5DaPyyLtgeOOfhjjhKwr+v1t17nzTefz/ToA3o4SW4vAKc+b/27JRZcHWg
+ktZkBfT/u/xEp4ar+bTnLTXuo0K69giZg1OFznBuKpOsl+a+pPaLsAMG5Q7WYky/
+QoqixsvMBAaXhS1lOgOgsyMZXjARvzTu2tLIJ2IpnxhFXsMNu2JagLix+fTx/Emh
+BEOvnXwcEwGdEdlCaj2wxpJS1+yDrZS8+DjR3ECtBb71Jt2ZxH/FfJA7xZB/3fjv
+RVkBS8yOiRfUgp7wJlB/atFkYoDkkROYMzoiRkMTgsjQf5o=
+=UTEA
 -----END PGP SIGNATURE-----
 
-Download attachment "xsa310.meta" of type "application/octet-stream" (2167 bytes)
+Download attachment "xsa275.meta" of type "application/octet-stream" (1572 bytes)
 
-Download attachment "xsa310-4.9/0001-x86-mm-Set-old_guest_table-when-destroying-vcpu-page.patch" of type "application/octet-stream" (5307 bytes)
+Download attachment "xsa275-1.patch" of type "application/octet-stream" (4463 bytes)
 
-Download attachment "xsa310-4.9/0002-x86-mm-alloc-free_lN_table-Retain-partial_flags-on-E.patch" of type "application/octet-stream" (4119 bytes)
+Download attachment "xsa275-2.patch" of type "application/octet-stream" (2441 bytes)
 
-Download attachment "xsa310-4.9/0003-x86-mm-relinquish_memory-Grab-an-extra-type-ref-when.patch" of type "application/octet-stream" (3216 bytes)
+Download attachment "xsa275-4.7-1.patch" of type "application/octet-stream" (4214 bytes)
 
-Download attachment "xsa310/0001-x86-mm-Set-old_guest_table-when-destroying-vcpu-page.patch" of type "application/octet-stream" (5311 bytes)
+Download attachment "xsa275-4.7-2.patch" of type "application/octet-stream" (3680 bytes)
 
-Download attachment "xsa310/0002-x86-mm-alloc-free_lN_table-Retain-partial_flags-on-E.patch" of type "application/octet-stream" (4119 bytes)
+Download attachment "xsa275-4.11-1.patch" of type "application/octet-stream" (4217 bytes)
 
-Download attachment "xsa310/0003-x86-mm-relinquish_memory-Grab-an-extra-type-ref-when.patch" of type "application/octet-stream" (3216 bytes)
+Download attachment "xsa275-4.11-2.patch" of type "application/octet-stream" (2420 bytes)
