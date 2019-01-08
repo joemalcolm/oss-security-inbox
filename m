@@ -1,30 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/22/1
-Message-ID: <nycvar.YSQ.7.76.1905221234330.22124@xnncv>
-Date: Wed, 22 May 2019 12:38:24 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Bugs SysSec <bugs-syssec@....de>
-Subject: CVE-2019-12155 QEMU: qxl: null pointer dereference while releasing spice resources
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/08/13
+Message-ID: <CALzBtjK0ccD1GTL4tG58-UgE8vxEvh23iatOP-dkLcA-FNk_8g@mail.gmail.com>
+Date: Tue, 8 Jan 2019 19:51:18 +0400
+From: Entropy Moe <3ntr0py1337@...il.com>
+To: Greg KH <gregkh@...uxfoundation.org>
+Cc: security@...nel.org, oss-security@...ts.openwall.com
+Subject: Re: Linux Kernel 4.20(21) deadlock vulnerability.
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Hi,
+Sorry that was an auto suggestion.
 
-A null pointer dereference issue was found the QXL VGA card emulator of QEMU. 
-It could occur while releasing resources allocated for a SPICE server thread 
-in interface_release_resources().
+I have just started the fuzzer on kernel 5 now and I will keep you posted.
 
-A guest user could use this flaw to crash the QEMU process resulting in DoS 
-scenario.
+On Tue, 8 Jan 2019, 19:38 Greg KH, <gregkh@...uxfoundation.org> wrote:
 
-Upstream patch:
----------------
-   -> https://git.qemu.org/?p=qemu.git;a=commit;h=d52680fc932efb8a2f334cc6993e705ed1e31e99
+> On Tue, Jan 08, 2019 at 07:34:24PM +0400, Entropy Moe wrote:
+> > Hello Greg,
+> > thank you for reply,
+> > I have have them tested on the new kernel 5
+>
+> What do you mean by this?  You have tested them and all is good?  Or
+> not?  Or something else?
+>
+> Please be specific.
+>
+> greg k-h
+>
 
-This issue was reported by Sergej Schumilo, Cornelius Aschermann and Simon 
-Wrner of Ruhr University Bochum.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
