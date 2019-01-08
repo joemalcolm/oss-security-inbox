@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3923" "Tuesday" "14" "July" "2020" "14:20:07" "-0400" "Vincent Batts" "vbatts@kinvolk.io" "<CAHp2X_Q=2=8qauHjTQRqUOdfUxW5s7pypwLYBwpNQ5yFyE4p+w@mail.gmail.com>" "107" "[oss-security] Flatcar membership on the linux-distros list" "^Date:" nil nil "7" "2020071418:20:07" "[oss-security] Flatcar membership on the linux-distros list" (number mark "        vbatts@kinvo Jul 14  107/3923  " thread-indent "\"[oss-security] Flatcar membership on the linux-distros list\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Flatcar membership on the linux-distros list" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1898" "Tuesday" "8" "January" "2019" "19:34:24" "+0400" "Entropy Moe" "3ntr0py1337@gmail.com" "<CALzBtjLafJkFNKBEw4iH8D3fc_eMKV5bqt1F4n_7Edf=Lj9NMw@mail.gmail.com>" "56" "[oss-security] Re: Linux Kernel 4.20(21) deadlock vulnerability." nil nil nil "1" "2019010815:34:24" "[oss-security] Re: Linux Kernel 4.20(21) deadlock vulnerability." (number mark "U       3ntr0py1337@ Jan  8   56/1898  " thread-indent "\"[oss-security] Re: Linux Kernel 4.20(21) deadlock vulnerability.\"\n") "<20190108152627.GA19359@kroah.com>" ("<CALzBtjJ7Vh8qatDWaf1oHf+=fGQUphm7WM2e0fZXe+8rQ=Sxxg@mail.gmail.com>" "<20190108152627.GA19359@kroah.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15758 invoked by uid 550); 14 Jul 2020 18:27:55 -0000
+Received: (qmail 18195 invoked by uid 550); 8 Jan 2019 16:00:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,142 +11,100 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13717 invoked from network); 14 Jul 2020 18:20:30 -0000
+Reply-To: oss-security@lists.openwall.com
+Received: (qmail 7734 invoked from network); 8 Jan 2019 15:34:46 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kinvolk.io; s=google;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=TLi1GCHTXJYo563k6SuQdv3aTF8teVN40gCYCu0+e5o=;
-        b=e+C/k42WknGSvhE5BwWidTZvNIeHHTGmTj/54K+qBzXxQ48R781Bwv9ADiQn3PKlfl
-         HR1Yjcdap8J9xM4Joxp3/RvbKtnvb/9HWV27GhBKe1xRuOL/AtMuoBGZ8/55J6ljffdX
-         m6q0dQPhqqdG39nLJw+w6CpToJy/GRTYIu5Ds=
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=rChbqzLd09+Bsq7zmHWekFGIvNzZVzYAPtU3h8gjkXI=;
+        b=N7JyPppV69YNs3jxqmxNQ7OTreNSRF6lRsYz21C1l7x9yvf9pQBMvUGWoxfuWu5gHI
+         qrvj0wB2h99d/qM4oeaZQw3Y8acHFXR5mfsTxGSact6eNVQuL7EZziI0uQPa+dQ6br12
+         6YOrVunhGK2KkRl2AX1Dfo3Jmre9l+Lie6V17ZL0/h5a293y86etQ4BAg8AL08PtTcc+
+         EWY0CDdNTnqhWfSbNwNpCp14lrzV0iRFM2QcECK5ggA9Sm4AZ/ng3Am/axXoCaa3tMva
+         bFdlCVG2OmjXPSeY86hZJ87IowJgypps/zfhfonSUsTqINaE+UxxZqlSbYLmA41rLqwG
+         VuYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=TLi1GCHTXJYo563k6SuQdv3aTF8teVN40gCYCu0+e5o=;
-        b=At6Vzg/lRxCKF52HvSGuqBkyQw+Pk8mvwmIvTdkyWG9NnEWcu2uPfFauIzTSRYvUlE
-         a8ihAqj6Uy5pSLknAMefyQtiEkRyhzKcAK07tPT4G9GWf2xF9mVNFSOpignTMwBFKQ+m
-         vM7I5fpCryKKSn0J9rF6EvUqv4bPY6Y84VJ/y93pxDyNcPl7kgxM+E+qdulAPzbGigT0
-         BBT7yhtQasnpGLnpsiyLREKTXdsVscl3KKRfawpw00BjSnZKAvSteFdIlbr3bXi31yt/
-         CGiH0fHr+gXmVGnOz2Jqd1mPq/USiiVkX5XsVijGM/0Y7DhQgBTWxLCD9vqc9XknzPQE
-         WVeg==
-X-Gm-Message-State: AOAM532FKDZqXU6tWu6Xuvp+Swo/pjOW2PSJ8tZ7Z3VsZy6vxLgulLK7
-	1zccIa4FEUH9dv4S+6MhW2My2cGWzasZ9CM8G0imWoaBx/8e8Q==
-X-Google-Smtp-Source: ABdhPJzHlwg6rTtcD6WMZIt4jFFIBcd2OJpbRgjNk8tb/73QOATmK61SOQPlHbCgaKafC12ITrlitMg9BqFD0KeMZ94=
-X-Received: by 2002:a05:6402:174e:: with SMTP id v14mr5841221edx.153.1594750818683;
- Tue, 14 Jul 2020 11:20:18 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=rChbqzLd09+Bsq7zmHWekFGIvNzZVzYAPtU3h8gjkXI=;
+        b=HIbSmI6P/6qaUaE0XAwlZfYmn+WLAd0Q8BBmsaFVC5HgLP1wwjBQFg4NrR8JL+Wt86
+         jfC5KHCbEIGWBbdYkgb/wf0KmShHv/JYS/uS+nqD/9/L6XXloNGtdw7hsuFzzJz9L8Mm
+         wP5qVuT6IbsOtfYA1BEzE2ODT88NWyRri/pAC0Y35+KooCl72nHtX1KhkApP6scPjtpH
+         cMRI6i9Sdfvyvql2Ip5JSmCeWRw6BQvXBIQWzdB5WjIE+cu7pH13ERDMPvWiuBcXLi8+
+         FbdxPh9OdRmBodA8jSIQV1aIieGC4rgza9JaGGVGxNDqU8KmyHgEJOhnGNNUsdPqhd/l
+         WZKA==
+X-Gm-Message-State: AJcUukepDcIDFQnN3EPuWN68S5iCjlBYvilQ+UhBtIltFvctSG1aVgrA
+	eyd2VPcuqB8d+g5Q/5YGCbhimx5ufJVh3Tu/+tuzcswip78=
+X-Google-Smtp-Source: ALg8bN44vPyrzLhTVEb4SfmHlTvRjYFdM5n1tI9jfAg4pwO08E1UiLzg5SNDMoSa/1M6iyEuJy9bJmSrqkW7eJlUsns=
+X-Received: by 2002:a1f:1a05:: with SMTP id a5mr815134vka.9.1546961674809;
+ Tue, 08 Jan 2019 07:34:34 -0800 (PST)
 MIME-Version: 1.0
-Message-ID: <CAHp2X_Q=2=8qauHjTQRqUOdfUxW5s7pypwLYBwpNQ5yFyE4p+w@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="0000000000000da16605aa6adc18"
-Date: Tue, 14 Jul 2020 14:20:07 -0400
-From: Vincent Batts <vbatts@kinvolk.io>
-Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Flatcar membership on the linux-distros list
-To: oss-security@lists.openwall.com, volkerdi@slackware.com
+References: <CALzBtjJ7Vh8qatDWaf1oHf+=fGQUphm7WM2e0fZXe+8rQ=Sxxg@mail.gmail.com>
+ <20190108152627.GA19359@kroah.com>
+In-Reply-To: <20190108152627.GA19359@kroah.com>
+From: Entropy Moe <3ntr0py1337@gmail.com>
+Date: Tue, 8 Jan 2019 19:34:24 +0400
+Message-ID: <CALzBtjLafJkFNKBEw4iH8D3fc_eMKV5bqt1F4n_7Edf=Lj9NMw@mail.gmail.com>
+To: Greg KH <gregkh@linuxfoundation.org>
+Cc: security@kernel.org, oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="0000000000001bb8d3057ef41581"
+Subject: [oss-security] Re: Linux Kernel 4.20(21) deadlock vulnerability.
 
---0000000000000da16605aa6adc18
+--0000000000001bb8d3057ef41581
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Hey there,
+Hello Greg,
+thank you for reply,
+I have have them tested on the new kernel 5
 
-Using the
-https://oss-security.openwall.org/wiki/mailing-lists/distros#membership-cri=
-teria
-I=E2=80=99m outlining why Flatcar Container Linux ought to be on the linux-=
-distros
-list.
+On Tue, Jan 8, 2019 at 7:26 PM Greg KH <gregkh@linuxfoundation.org> wrote:
 
-> Be an actively maintained Unix-like operating system distro with
-substantial use of Open Source components
+> On Tue, Jan 08, 2019 at 07:08:14PM +0400, Entropy Moe wrote:
+> > Hello,
+> > I wanted to let you know that there seem to be a deadlock vulnerability
+> on
+> > the linux kernel 4.20.
+> > I am attaching the result report from syzkaller which also got the c code
+> > for replication.
+> >
+> > thank you,
+>
+> > Syzkaller hit 'possible deadlock in console_unlock' bug.
+> >
+> > RBP: 00000000006cb018 R08: 0000000000000001 R09: 0000000000000031
+> > R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000004
+> > R13: ffffffffffffffff R14: 0000000000000000 R15: 0000000000000000
+> >
+> > ======================================================
+> > WARNING: possible circular locking dependency detected
+> > 4.20.0-rc7+ #8 Not tainted
+> > ------------------------------------------------------
+> > syz-executor579/2028 is trying to acquire lock:
+> > 00000000e478796d (console_owner){-.-.}, at: log_next
+> kernel/printk/printk.c:489 [inline]
+> > 00000000e478796d (console_owner){-.-.}, at: console_unlock+0x33d/0xd30
+> kernel/printk/printk.c:2401
+> >
+> > but task is already holding lock:
+> > 0000000030388923 (&(&port->lock)->rlock){-.-.}, at: pty_write+0xcd/0x1d0
+> drivers/tty/pty.c:120
+> >
+> > which lock already depends on the new lock.
+>
+>
+> Are you sure this is a real problem?  Can you deadlock this when
+> running?
+>
+> Also, try 5.0-rc1, a number of tty core changes went in there to try to
+> resolve these types of issues.  They have not been backported to 4.20.y
+> yet as they need to get more testing.  If you could run your same test
+> suite on that kernel, it would be great to find out your results.
+>
+> thanks,
+>
+> greg k-h
+>
 
-Flatcar has been building releases for 2+ years, when it was
-friendly-forked from CoreOS Container Linux (which is now EOL=E2=80=99d).
-
-> Have a userbase not limited to your own organization
-
-Those pulling updated builds from our servers are in the 10=E2=80=99s of th=
-ousands
-(much beyond our organization).
-
-> Have a publicly verifiable track record, dating back at least 1 year and
-continuing to present day, of fixing security issues (including some that
-had been handled on (linux-)distros, meaning that membership would have
-been relevant to you) and releasing the fixes within 10 days (and
-preferably much less than that) of the issues being made public (if it
-takes you ages to fix an issue, your users wouldn't substantially benefit
-from the additional time, often around 7 days and sometimes up to 14 days,
-that list membership could give you)
-
-https://www.flatcar-linux.org/releases/
-
-Lists releases and issues addressed. Including issues like CVE-2020-0543
-being addressed within days of other distros publicly exposing their patch
-for this embargoed issue.
-
-> Not be (only) downstream or a rebuild of another distro (or else we need
-convincing additional justification of how the list membership would enable
-you to release fixes sooner, presumably not relying on the upstream distro
-having released their fixes first?)
-
-Flatcar had been downstream of CoreOS Container Linux, but now is only
-downstream to aspects of Gentoo and ChromeOS, though manages its own
-components, build metadata, build infrastructure and update servers.
-
-> Be a participant and preferably an active contributor in relevant public
-communities (most notably, if you're not watching for issues being made
-public on oss-security, which are a superset of those that had been handled
-on (linux-)distros, then there's no valid reason for you to be on
-(linux-)distros)
-
-We have already been a participant on oss-security for some time and are
-active in a number of communities. Glad to participate.
-
-> Accept the list policy (see above)
-
-We accept.
-
-> Be able and willing to contribute back (see above), preferably in
-specific ways announced in advance (so that you're responsible for a
-specific area and so that we know what to expect from which member), and
-demonstrate actual contributions once you've been a member for a while
-
-There are a number of the items we will do through the course of normal
-process (review, test, validate, monitor for issues going public). As for
-owning or being a backup, I expect that would be a consideration after
-being a member for a period.
-
-> Be able and willing to handle PGP-encrypted e-mail
-
-Yes
-
-> Have someone already on the private list, or at least someone else who
-has been active on oss-security for years but is not affiliated with your
-distro nor your organization, vouch for at least one of the people
-requesting membership on behalf of your distro (then that one vouched-for
-person will be able to vouch for others on your team, in case you'd like
-multiple people subscribed)
-
-Pat Volkerding can vouch for me (CC=E2=80=99ed), and maybe others, but I as=
-ked
-volkerdi first :-)
-
-
-vb
-
-
---=20
-
-Vincent Batts
-
-CTO
-
-
----
-Kinvolk GmbH | Adalbertstr.6a, 10999 Berlin | tel: +491755589364
-Gesch=C3=A4ftsf=C3=BChrer/Directors: Alban Crequy, Chris K=C3=BChl, Iago L=
-=C3=B3pez Galeiras
-Registergericht/Court of registration: Amtsgericht Charlottenburg
-Registernummer/Registration number: HRB 171414 B
-Ust-ID-Nummer/VAT ID number: DE302207000
-
---0000000000000da16605aa6adc18--
+--0000000000001bb8d3057ef41581--
