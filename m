@@ -1,127 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/03/4
-Message-ID: <CA+fCnZfrU-AtNGCUGou4_8Xms3yDmytut+AqED7Jhygtvq17eQ@mail.gmail.com>
-Date: Tue, 3 Dec 2019 18:00:22 +0100
-From: Andrey Konovalov <andreyknvl@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Linux kernel: multiple vulnerabilities in the USB subsystem x3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/08/3
+Message-ID: <CALzBtj+Tg1MwiZ3PFeMsmhXSAPUMhrupC7Nc=dFOez7qs718KA@mail.gmail.com>
+Date: Tue, 8 Jan 2019 19:13:05 +0400
+From: Entropy Moe <3ntr0py1337@...il.com>
+To: security@...nel.org, oss-security@...ts.openwall.com
+Subject: KASAN stack out of bound bug
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+Hello folks,
+I am reporting another set of bugs related to out of bounds in multiple
+source codes.
 
-More CVEs for bugs in Linux kernel USB drivers that can be triggered
-by an external malicious USB device. Found with syzkaller [1]. This
-time no obvious DoSs (see the discussions here [2, 3]): mostly UAFs,
-some info-leaks. All of these bugs have been fixed upstream (but many
-other syzbot USB bugs are still not fixed [4]).
+please see the attached files report for more information.
 
-[1] https://github.com/google/syzkaller/blob/master/docs/linux/external_fuzzing_usb.md
+if I reporting it wrongly, please correct me.
 
-[2] https://www.openwall.com/lists/oss-security/2019/08/20/2
+Content of type "text/html" skipped
 
-[3] https://www.openwall.com/lists/oss-security/2019/10/25/15
-
-[4] https://syzkaller.appspot.com/upstream?manager=ci2-upstream-usb
-
-### CVEs
-
-* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19523
-
-In the Linux kernel before 5.3.7, there is a use-after-free bug that
-can be caused by a malicious USB device in the
-drivers/usb/misc/adutux.c driver, aka CID-44efc269db79.
-
-* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19524
-
-In the Linux kernel before 5.3.12, there is a use-after-free bug that
-can be caused by a malicious USB device in the
-drivers/input/ff-memless.c driver, aka CID-fa3a5a1880c9.
-
-* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19525
-
-In the Linux kernel before 5.3.6, there is a use-after-free bug that
-can be caused by a malicious USB device in the
-drivers/net/ieee802154/atusb.c driver, aka CID-7fd25e6fc035.
-
-* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19526
-
-In the Linux kernel before 5.3.9, there is a use-after-free bug that
-can be caused by a malicious USB device in the drivers/nfc/pn533/usb.c
-driver, aka CID-6af3aa57a098.
-
-* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19527
-
-In the Linux kernel before 5.2.10, there is a use-after-free bug that
-can be caused by a malicious USB device in the
-drivers/hid/usbhid/hiddev.c driver, aka CID-9c09b214f30e.
-
-* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19528
-
-In the Linux kernel before 5.3.7, there is a use-after-free bug that
-can be caused by a malicious USB device in the
-drivers/usb/misc/iowarrior.c driver, aka CID-edc4746f253d.
-
-* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19529
-
-In the Linux kernel before 5.3.11, there is a use-after-free bug that
-can be caused by a malicious USB device in the
-drivers/net/can/usb/mcba_usb.c driver, aka CID-4d6636498c41.
-
-* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19530
-
-In the Linux kernel before 5.2.10, there is a use-after-free bug that
-can be caused by a malicious USB device in the
-drivers/usb/class/cdc-acm.c driver, aka CID-c52873e5a1ef.
-
-* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19531
-
-In the Linux kernel before 5.2.9, there is a use-after-free bug that
-can be caused by a malicious USB device in the
-drivers/usb/misc/yurex.c driver, aka CID-fc05481b2fca.
-
-* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19532
-
-In the Linux kernel before 5.3.9, there are multiple out-of-bounds
-write bugs that can be caused by a malicious USB device in the Linux
-kernel HID drivers, aka CID-d9d4b1e46d95. This affects
-drivers/hid/hid-axff.c, drivers/hid/hid-dr.c, drivers/hid/hid-emsff.c,
-drivers/hid/hid-gaff.c, drivers/hid/hid-holtekff.c,
-drivers/hid/hid-lg2ff.c, drivers/hid/hid-lg3ff.c,
-drivers/hid/hid-lg4ff.c, drivers/hid/hid-lgff.c,
-drivers/hid/hid-logitech-hidpp.c, drivers/hid/hid-microsoft.c,
-drivers/hid/hid-sony.c, drivers/hid/hid-tmff.c, and
-drivers/hid/hid-zpff.c.
-
-* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19533
-
-In the Linux kernel before 5.3.4, there is an info-leak bug that can
-be caused by a malicious USB device in the
-drivers/media/usb/ttusb-dec/ttusb_dec.c driver, aka CID-a10feaf8c464.
-
-* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19534
-
-In the Linux kernel before 5.3.11, there is an info-leak bug that can
-be caused by a malicious USB device in the
-drivers/net/can/usb/peak_usb/pcan_usb_core.c driver, aka
-CID-f7a1337f0d29.
-
-* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19535
-
-In the Linux kernel before 5.2.9, there is an info-leak bug that can
-be caused by a malicious USB device in the
-drivers/net/can/usb/peak_usb/pcan_usb_fd.c driver, aka
-CID-30a8beeb3042.
-
-* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19536
-
-In the Linux kernel before 5.2.9, there is an info-leak bug that can
-be caused by a malicious USB device in the
-drivers/net/can/usb/peak_usb/pcan_usb_pro.c driver, aka
-CID-ead16e53c2f0.
-
-* https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-19537
-
-In the Linux kernel before 5.2.10, there is a race condition bug that
-can be caused by a malicious USB device in the USB character device
-driver layer, aka CID-303911cfc5b9. This affects
-drivers/usb/core/file.c.
+Download attachment "report0" of type "application/octet-stream" (3719 bytes)
