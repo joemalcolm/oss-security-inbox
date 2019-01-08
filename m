@@ -1,47 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/11/1
-Message-ID: <CAF1aazApsagijv4b-Fu=zvL9a6vu4nefc_RZF8cx0NdCP_OUjA@mail.gmail.com>
-Date: Thu, 10 Jan 2019 21:09:25 -0500
-From: Dave <snoopdave@...il.com>
-To: dev@...ler.apache.org, Roller User <user@...ler.apache.org>, security@...che.org,  Arseniy Sharoglazov <mohemiv@...il.com>, oss-security@...ts.openwall.com
-Subject: [CVE-2018-17198] Server-side Request Forgery (SSRF) and File Enumeration vulnerability in Apache Roller
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/08/7
+Message-ID: <CALzBtjKp87pGwvPS2wRjuHhq3DjTJ9Np=mWPg35O17cLqzC0pg@mail.gmail.com>
+Date: Tue, 8 Jan 2019 19:28:32 +0400
+From: Entropy Moe <3ntr0py1337@...il.com>
+To: Greg KH <greg@...ah.com>
+Cc: security@...nel.org, oss-security@...ts.openwall.com
+Subject: Re: KASAN stack out of bound bug
 Content-Type: text/plain; charset=utf-8
 
-Severity: Important
+Sure, I will do that.
 
-Vendor:
-   The Apache Software Foundation
+On Tue, Jan 8, 2019 at 7:28 PM Greg KH <greg@...ah.com> wrote:
 
-Versions Affected:
-   Roller 5.2.1
-   Roller 5.2
-   The unsupported pre-Roller 5.1 versions may also be affected.
-
-Description:
-
-Roller relies on Java SAX Parser to implement its XML-RPC interface and by
-default that parser supports external entities in XML DOCTYPE, which opens
-Roller up to SSRF / File Enumeration vulnerability. Note that this
-vulnerability exists even if Roller XML-RPC interface is disable via the
-Roller web admin UI.
-
-Mitigation:
-
-   There are a couple of ways you can fix this vulnerability:
-
-   1) Upgrade to the latest version of Roller, which is now 5.2.2
-
-   2) Or, edit the Roller web.xml file and comment out the XML-RPC Servlet
-mapping as shown below:
-
-<!--
-<servlet-mapping>
-    <servlet-name>XmlRpcServlet</servlet-name>
-    <url-pattern>/roller-services/xmlrpc</url-pattern>
-</servlet-mapping>
--->
-
-Credit:
-
-   This issue was discovered by Arseniy Sharoglazov.
+> On Tue, Jan 08, 2019 at 07:13:05PM +0400, Entropy Moe wrote:
+> > Hello folks,
+> > I am reporting another set of bugs related to out of bounds in multiple
+> > source codes.
+> >
+> > please see the attached files report for more information.
+> >
+> > if I reporting it wrongly, please correct me.
+>
+> For networking issues, just send them to the netdev@...r.kernel.org
+> mailing list as the developers there want to find out these types of
+> things.
+>
+> And no need to post all syzbot issues to security@, that doesn't make
+> sense, just send them to the correct mailing lists and developers so
+> they can work to resolve them.  Like the other people who use this tool
+> do.
+>
+> thanks,
+>
+> greg k-h
+>
 
