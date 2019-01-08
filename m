@@ -1,24 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/25/3
-Message-ID: <alpine.LRH.2.21.1911251159050.29263@fairfax.gathman.org>
-Date: Mon, 25 Nov 2019 12:00:26 -0500 (EST)
-From: "Stuart D. Gathman" <stuart@...hman.org>
-To: Andy Lutomirski <luto@...nel.org>
-cc: oss security list <oss-security@...ts.openwall.com>
-Subject: Re: Lots of bugs in 32-bit x86 Linux entry code
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/08/20
+Message-ID: <dacb0f1a-296e-b839-86ca-237d7f39935a@apache.org>
+Date: Tue, 8 Jan 2019 22:18:19 +0000
+From: Ash Berlin-Taylor <ash@...che.org>
+To: dev@...flow.apache.org, Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com
+Cc: Seth Long <seth.long@...ditkarma.com>
+Subject: RCE, CSRF and Information leak vulnerabilities against Airflow <= 1.8.2 (CVE-2017-15720, CVE-2017-17835, CVE-2017-17836)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 25 Nov 2019, Andy Lutomirski wrote:
+Hi Airflow community,
 
-> It turns out that there are essentially no upstream development
-> resources dedicated to x86_32 Linux. Perhaps unsurprisingly, it was
-> badly broken.
-> ...
+This post summaries some security vulnerabilities that were fixed in 
+Airflow 1.9.0 (which is quite a while ago now) but that we never 
+formally reported as such.
 
-This was delightfully well written.  I would send to the list, but
-praise for literary merits on a technical list might be OT.
+If you are still on 1.8.2 or earlier we strongly encourage you to 
+upgrade to the latest version, but at least to 1.9.0 to get fixes for 
+these CVEs.
 
--- 
- 	      Stuart D. Gathman <stuart@...hman.org>
-"Confutatis maledictis, flammis acribus addictis" - background song for
-a Microsoft sponsored "Where do you want to go from here?" commercial.
+CVE-2017-15720: An authenticated user can execute code remotely on the 
+Airflow webserver by creating a special object.
+
+CVE-2017-17835: CSRF Vulnerabilities - One of which allowed for a remote 
+command injection on a default install of Airflow
+
+CVE-2017-17836: An experimental Airflow feature displayed authenticated 
+cookies, as well as passwords to databases used by Airflow.  An attacker 
+who has limited access to airflow, weather it be via XSS or by leaving a 
+machine unlocked. An attacker can exfil all credentials from the system.
+
+These are quite old so I am have not managed to attribute these to any 
+specific reporter. If you reported one of these: sorry, and let me know 
+(off list) and I will correct this.
+
+Thanks,
+Ash
