@@ -1,42 +1,108 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/17/1
-Message-ID: <5c545c03-5ae3-8ad5-f3e1-b6b8c6f873e7@redhat.com>
-Date: Wed, 17 Apr 2019 15:10:23 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: 3 pacemaker security flaws
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/08/14
+Message-Id: <E1gguU8-0006Vj-Pi@xenbits.xenproject.org>
+Date: Tue, 08 Jan 2019 16:44:12 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 277 v3 (CVE-2018-19964) - x86: incorrect error handling for guest p2m page removals
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Jan PokornÃ½ from Red Hat has discovered 3 security issues with the
-pacemaker package. Details and proposed patches are available in this email.
+            Xen Security Advisory CVE-2018-19964 / XSA-277
+                              version 3
 
-Proposed unembargo date/time is: 10th April, 10:00 UTC
+       x86: incorrect error handling for guest p2m page removals
 
-1. CVE-2018-16877 pacemaker: Insufficient local IPC client-server
-authentication on the client's side can lead to local privesc:
-A flaw was found in the way pacemaker's client-server authentication was
-implemented. A local attacker could use this flaw, and combine it with
-other IPC weaknesses, to achieve local privilege escalation.
+UPDATES IN VERSION 3
+====================
 
-2. CVE-2018-16878 pacemaker: Insufficient verification inflicted
-preference of uncontrolled processes can lead to DoS:
-A flaw was found in pacemaker. An insufficient verification inflicted
-preference of uncontrolled processes can lead to DoS
+CVE assigned.
 
-3. CVE-2019-3885 pacemaker: Information disclosure through use-after-free:
-A use-after-free defect was discovered in pacemaker that can possibly
-lead to unsolicited information disclosure in the log outputs.
+ISSUE DESCRIPTION
+=================
 
+The internal function querying a domain's p2m table grabs the p2m lock
+by default, so that the answer to the query remains true until the
+caller can act on that information; it is up to the caller then to
+release the lock.  Unfortunately, certain failure paths don't release
+the lock.
 
-Enclosed are the final patches:
-(We would like to thank Suse folks who found issues in the initial set
-of patches we sent to distros)
+IMPACT
+======
 
+A malicious or buggy guest may cause a deadlock, resulting in a DoS
+(Denial of Service) affecting the entire host.
 
+VULNERABLE SYSTEMS
+==================
 
--- 
-Huzaifa Sidhpurwala / Red Hat Product Security Team
+Xen 4.11 and onward are vulnerable.
 
-View attachment "master.patch" of type "text/x-patch" (95468 bytes)
+Only x86 systems are vulnerable.  ARM systems are not vulnerable.
+
+Only systems running untrusted HVM or PVH guests are vulnerable.
+Systems running only PV guests are not vulnerable.
+
+MITIGATION
+==========
+
+Running only PV guests will avoid this vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Paul Durrant of Citrix.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa277.patch           xen-unstable, Xen 4.11.x
+
+$ sha256sum xsa277*
+576cdc05975e43698624b88f7290119dd702b3db8f30f3219754d992d7fef0c6  xsa277.meta
+c9025e1daaec4081a61f1ed7b96e69cfe8e35bdd5b4fcc0fadc98f71c2e243e2  xsa277.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAlw00y8MHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZN+YH/2HCZYKrgxQzQIfNMO+2magHgzrlY0YCzmmgSpJD
+StrtQ//XSg4KbBsdRJbMZLPcAhXFRBPWueW+p/Tv2ANyPc95hLh1mrhS8DshbJ4v
+C2istb+FLiGKCuhqKbdxmvR7f73Htu7lcZ10J1EDbtwYufXnsDMfkzLLeHaKDCnV
+Cw0igX3yL2Puj3DhNZg7HrD77wKvkaX2eDNUGsivq/PhnhYD4wuP0Jo6QVO749nI
+ugDBhvavnV3JODFhfS+4g6M8NMwjLMedsmbCv5pGsd4hBj/lb4hgkMXanKy+bRUv
+Te2YiJZ4gwpkVKgpyG0uzIb9xg14uTYfemFE+fVNhO+zUQE=
+=Anj0
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa277.meta" of type "application/octet-stream" (666 bytes)
+
+Download attachment "xsa277.patch" of type "application/octet-stream" (1835 bytes)
