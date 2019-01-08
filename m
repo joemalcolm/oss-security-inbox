@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["511" "Tuesday" "4" "July" "2017" "17:03:38" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20170704150338.7oj7i5iah3hciy6g@eldamar.local>" "20" "[oss-security] jabberd2: CVE-2017-10807: Allows to authenticate using SASL ANONYMOUS even if disabled" "^Date:" nil nil "7" "2017070415:03:38" "[oss-security] jabberd2: CVE-2017-10807: Allows to authenticate using SASL ANONYMOUS even if disabled" (number mark "        carnil@debia Jul  4   20/511   " thread-indent "\"[oss-security] jabberd2: CVE-2017-10807: Allows to authenticate using SASL ANONYMOUS even if disabled\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1074" "Tuesday" "8" "January" "2019" "22:18:19" "+0000" "Ash Berlin-Taylor" "ash@apache.org" "<dacb0f1a-296e-b839-86ca-237d7f39935a@apache.org>" "27" "[oss-security] RCE, CSRF and Information leak vulnerabilities against Airflow <= 1.8.2 (CVE-2017-15720, CVE-2017-17835, CVE-2017-17836)" nil nil nil "1" "2019010822:18:19" "[oss-security] RCE, CSRF and Information leak vulnerabilities against Airflow <= 1.8.2 (CVE-2017-15720, CVE-2017-17835, CVE-2017-17836)" (number mark "U       ash@apache.o Jan  8   27/1074  " thread-indent "\"[oss-security] RCE, CSRF and Information leak vulnerabilities against Airflow <= 1.8.2 (CVE-2017-15720, CVE-2017-17835, CVE-2017-17836)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11907 invoked by uid 550); 4 Jul 2017 15:04:15 -0000
+Received: (qmail 17609 invoked by uid 550); 8 Jan 2019 23:11:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,63 +11,47 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11678 invoked from network); 4 Jul 2017 15:03:50 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=7qPRI4/n9h5u2HwKbHZpNZkWNo7PojYF9qNm+T5Sdoc=;
-        b=YPiF3QKqdYQeeSPJUhFJJy1K+LFwWME5YXcFb6AwwVbeoudmKj47EetPVA4PIS+vJ0
-         XAMu2NSlrBvlcrZuhRrSZpOybPPM+1HV9O5FBJEmMMEykd9WMby0SZxg8EvjW/kf1h2K
-         OGDY60WFaeZEFfubaKaiPnlkUMcl7mMnj3ZwvaKazm3LjlUX6khU/T8vxjz11yFkcvzC
-         oKsYH4RvmpZCwt6G35AkP2hoYx3UiRT8nxd3tfLG9m+OZNrry9kQiGlKdXQGeYg861nu
-         ZA2/UsYzuHHdUrqk3S6bLXqh75ogVw7uXM6FzwNUZ4ESgDWNH+BfVGWJ1vAC5oaNZDgc
-         t2Ew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:subject:message-id
-         :mime-version:content-disposition:user-agent;
-        bh=7qPRI4/n9h5u2HwKbHZpNZkWNo7PojYF9qNm+T5Sdoc=;
-        b=ElcOwaRvrm+fxRVgjdNXGHrkROiG1q4L+pH3RQxjBmt1PlcrhdjLmSxlHwEPkUtDwH
-         lUqHgkLZItfic1cgS2j4/DGF4Udpj2rp2aOi1oZmfdoRFKWywOjvyAPIkmn6QT3HpkXV
-         6j10CiP6fJv3b3m8MNsebwPZQS4BMrB8tDvF5DOMtynqktr7YhF/3kVIsLoCeQnV1Yn2
-         3plQ6jvpo1t5dyoDtDl0o321y6RdEo/B7QMgGx5Y1t85AuQaZp9qkQo6C00HWpMmVTJZ
-         TuMNwbVZUzpHP97DtvvC5bFi3dBafS49TEXV6VLtNhjml0BE2gjCzEbMhPV8Dq4e7Fm1
-         Ja+A==
-X-Gm-Message-State: AKS2vOyW28+K6GZTmseXEaa7YuFfGvECE8uR74WHtbrk0YqC6kVntOqn
-	0X99/Www4SrashFu
-X-Received: by 10.223.130.162 with SMTP id 31mr33602475wrc.202.1499180619263;
-        Tue, 04 Jul 2017 08:03:39 -0700 (PDT)
-Message-ID: <20170704150338.7oj7i5iah3hciy6g@eldamar.local>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: NeoMutt/20170609 (1.8.3)
-Date: Tue, 4 Jul 2017 17:03:38 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Subject: [oss-security] jabberd2: CVE-2017-10807: Allows to authenticate using SASL
- ANONYMOUS even if disabled
-To: OSS Security Mailinglist <oss-security@lists.openwall.com>
+Received: (qmail 1660 invoked from network); 8 Jan 2019 22:18:36 -0000
+From: Ash Berlin-Taylor <ash@apache.org>
+Cc: Seth Long <seth.long@creditkarma.com>
+To: dev@airflow.apache.org, Apache Security Team <security@apache.org>,
+ oss-security@lists.openwall.com
+Message-ID: <dacb0f1a-296e-b839-86ca-237d7f39935a@apache.org>
+Date: Tue, 8 Jan 2019 22:18:19 +0000
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:52.0)
+ Gecko/20100101 PostboxApp/6.1.9
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
+Subject: [oss-security] RCE, CSRF and Information leak vulnerabilities against Airflow <=
+ 1.8.2 (CVE-2017-15720, CVE-2017-17835, CVE-2017-17836)
 
-Hi
+Hi Airflow community,
 
-The Jabberd, before 2.6.1 allowed anyone to authenticate SASL
-ANONYMOUS, even when sasl.anonymous c2s.xml option is not enabled.
-The bug allows nauthorized usage of jabberd server installations and
-could possibly lead to a DoS.
+This post summaries some security vulnerabilities that were fixed in 
+Airflow 1.9.0 (which is quite a while ago now) but that we never 
+formally reported as such.
 
-References:
+If you are still on 1.8.2 or earlier we strongly encourage you to 
+upgrade to the latest version, but at least to 1.9.0 to get fixes for 
+these CVEs.
 
-https://github.com/jabberd2/jabberd2/releases/tag/jabberd-2.6.1
+CVE-2017-15720: An authenticated user can execute code remotely on the 
+Airflow webserver by creating a special object.
 
-Upstream fix:
+CVE-2017-17835: CSRF Vulnerabilities - One of which allowed for a remote 
+command injection on a default install of Airflow
 
-https://github.com/jabberd2/jabberd2/commit/8416ae54ecefa670534f27a31db71d048b9c7f16
+CVE-2017-17836: An experimental Airflow feature displayed authenticated 
+cookies, as well as passwords to databases used by Airflow.  An attacker 
+who has limited access to airflow, weather it be via XSS or by leaving a 
+machine unlocked. An attacker can exfil all credentials from the system.
 
-As mentioned in the subject, MITRE has assigned CVE-2017-10807 for
-this issue.
+These are quite old so I am have not managed to attribute these to any 
+specific reporter. If you reported one of these: sorry, and let me know 
+(off list) and I will correct this.
 
-Regards,
-Salvatore
+Thanks,
+Ash
