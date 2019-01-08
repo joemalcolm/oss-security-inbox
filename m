@@ -1,24 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/14/1
-Message-ID: <CAG8=FRi8zBopbw1AkoGM5yGN8P9G8rTxxPR2JfEG7RaV4BU8tQ@mail.gmail.com>
-Date: Sun, 14 Apr 2019 08:30:49 +0200
-From: Emmanuel Lecharny <elecharny@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: [CVE-2019-0231] MINA SSLFilter security Issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/08/5
+Message-ID: <CANn89iLnNC16YVkNJ4y8Bet2C2Yy0F=wjyii1RRpqfCUL=Okxw@mail.gmail.com>
+Date: Tue, 8 Jan 2019 07:14:11 -0800
+From: Eric Dumazet <edumazet@...gle.com>
+To: 3ntr0py1337@...il.com
+Cc: security@...nel.org, oss-security@...ts.openwall.com
+Subject: Re: Linux Kernel 4.20(21) deadlock vulnerability.
 Content-Type: text/plain; charset=utf-8
 
-Description: Handling of the close_notify SSL/TLS message does not
-lead to a connection closure, leading the server to retain the socket
-opened and to have the client potentially receive clear-text messages
-which were supposed to be encrypted.
+Hello Entropy Moe
 
-This security issue is fixed by Apache MINA 2.0.21 or Apache MINA
-2.0.21. Please migrate to those new versions.
+syzbot reported dozens of similar issues involving printk
 
+https://syzkaller.appspot.com/
 
+Not sure why this would be a security concern ?
 
--- 
-Regards,
-Cordialement,
-Emmanuel Lécharny
-www.iktek.com
+Thanks.
+
+On Tue, Jan 8, 2019 at 7:08 AM Entropy Moe <3ntr0py1337@...il.com> wrote:
+>
+> Hello,
+> I wanted to let you know that there seem to be a deadlock vulnerability on the linux kernel 4.20.
+> I am attaching the result report from syzkaller which also got the c code for replication.
+>
+> thank you,
+>
