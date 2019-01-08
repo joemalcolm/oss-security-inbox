@@ -1,70 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/12/2
-Message-ID: <20190212143708.623v7zle3xt23hcd@mikami>
-Date: Wed, 13 Feb 2019 01:37:08 +1100
-From: Aleksa Sarai <asarai@...e.de>
-To: Florian Weimer <fweimer@...hat.com>
-Cc: Aleksa Sarai <cyphar@...har.com>, oss-security@...ts.openwall.com, dev@...ncontainers.org, Christian Brauner <christian.brauner@...ntu.com>
-Subject: Re: CVE-2019-5736: runc container breakout (all versions)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/08/4
+Message-ID: <CALzBtjKNnihJ0byES5JbJ_CuiMUnKBzCrz0Fw_7X3LQH2DT4Rw@mail.gmail.com>
+Date: Tue, 8 Jan 2019 19:14:04 +0400
+From: Entropy Moe <3ntr0py1337@...il.com>
+To: security@...nel.org, oss-security@...ts.openwall.com
+Subject: Re: KASAN stack out of bound bug
 Content-Type: text/plain; charset=utf-8
 
-On 2019-02-12, Florian Weimer <fweimer@...hat.com> wrote:
-> > +	memfd = memfd_create(MEMFD_COMMENT, MFD_CLOEXEC|MFD_ALLOW_SEALING);
-> > +	if (memfd < 0)
-> > +		goto err_binfd;
-> 
-> Is it really necessary to use a memfd_create here?  Do you really need
-> sealing?  It's a bit odd to add a new system call dependency in a
-> security update.  The ability fexecve a memfd descriptor is also rather
-> odd.  I wouldn't have expected execute permissions on memfd descriptors,
-> so this sounds like a kernel bug (which now can't be fixed).
+sorry, I forgot to include the source code for replication.
 
-The benefit of memfd_create is that you can make sure it's a memfd and
-that it's sealed -- which means that you don't end up in a situation
-where someone has configured their setup such that you think it's safe
-when it isn't.
 
-I don't agree that memfd execution is necessarily a kernel bug --
-fexec(2) only gives you ETXTBSY if the file is open for writing. But
-when a memfd is sealed it's no longer possible to open it for writing
-(with mapping_deny_writable). It's just like having any other tmpfs file
-and execing it.
 
-> I saw some other patch with a O_TMPFILE replacement.  Does this really
-> work?  It's possible to create a new name with linkat, so that's not a
-> real win security-wise.
+On Tue, Jan 8, 2019 at 7:13 PM Entropy Moe <3ntr0py1337@...il.com> wrote:
 
-I'm not sure what you mean by "not a real win security-wise". Yes,
-someone could linkat(2) the O_TMPFILE on the host and then execute it,
-but I don't see what the exploit vector is (you'd need to have a process
-on the host that decides to find the O_TMPFILE fd and linkat(2) it --
-and you'd have to linkat onto the same tmpfs filesystem anyway). It's
-also definitely a win from the perspective that the vulnerability is
-fixed.
+> Hello folks,
+> I am reporting another set of bugs related to out of bounds in multiple
+> source codes.
+>
+> please see the attached files report for more information.
+>
+> if I reporting it wrongly, please correct me.
+>
+>
+>
 
-I don't like O_TMPFILE because you can't differentiate between O_TMPFILE
-and an unlinked file -- but it's much better than nothing.
+Content of type "text/html" skipped
 
-> Could you just make a copy, under a different owner, and not care how
-> it is going to be modified?
-
-That won't work for rootless (read: unprivileged) containers, since you
-can't change the owner. We could add it for the privileged case, but now
-we will have 3 different fallbacks and I really am not a fan of that.
-
-And rootless containers with a mapping for the unprivileged user to root
-(where the binary is owned by the user) are vulnerable. memfd_create (or
-O_TMPFILE) protects against all of these worries, and doesn't require
-any cleanup of resources after-the-fact.
-
-I'm also not sure it'll make a difference since the container user has
-kuid=0 anyway, though I'm not sure if it has CAP_DAC_OVERRIDE. We could
-chown the O_TMPFILE...
-
--- 
-Aleksa Sarai
-Senior Software Engineer (Containers)
-SUSE Linux GmbH
-<https://www.cyphar.com/>
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Download attachment "repro.cprog" of type "application/octet-stream" (4148 bytes)
