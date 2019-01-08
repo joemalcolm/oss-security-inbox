@@ -1,58 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/18/14
-Message-ID: <CABXRUiRFD7o9UqERpn4JLZLf1caSkgCoNaGeh3d2vG2hevSzGg@mail.gmail.com>
-Date: Thu, 18 Apr 2019 21:33:42 +0800
-From: Fuqian Huang <huangfq.daxian@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Linux kernel < 4.14.111 drivers/net/ethernet/netronome/nfp/nfp_net_debugfs.c kernel address dumps to user space
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/08/10
+Message-ID: <20190108152627.GA19359@kroah.com>
+Date: Tue, 8 Jan 2019 16:26:27 +0100
+From: Greg KH <gregkh@...uxfoundation.org>
+To: Entropy Moe <3ntr0py1337@...il.com>
+Cc: security@...nel.org, oss-security@...ts.openwall.com
+Subject: Re: Linux Kernel 4.20(21) deadlock vulnerability.
 Content-Type: text/plain; charset=utf-8
 
-In drivers/net/ethernet/netronome/nfp/nfp_net_debugfs.c:65
-and drivers/net/ethernet/netronome/nfp/nfp_net_debugfs.c:77,
-nfp_net_debugfs_rx_q_read will dump the address of
-rx_rings->rxds and frag to debugfs, which allows local user
-to read the kernel address via debugfs.
+On Tue, Jan 08, 2019 at 07:08:14PM +0400, Entropy Moe wrote:
+> Hello,
+> I wanted to let you know that there seem to be a deadlock vulnerability on
+> the linux kernel 4.20.
+> I am attaching the result report from syzkaller which also got the c code
+> for replication.
+> 
+> thank you,
 
-static int nfp_net_debugfs_rx_q_read(struct seq_file *file, void *data)
-{
-    seq_printf(file, "RX[%02d,%02d]: cnt=%u dma=%pad host=%p   H_RD=%u
-H_WR=%u FL_RD=%u FL_WR=%u\n",
-           rx_ring->idx, rx_ring->fl_qcidx,
-           rx_ring->cnt, &rx_ring->dma, rx_ring->rxds,
-           rx_ring->rd_p, rx_ring->wr_p, fl_rd_p, fl_wr_p);
-    ...
-        if (frag)
-            seq_printf(file, " frag=%p", frag);
-    ...
-}
+> Syzkaller hit 'possible deadlock in console_unlock' bug.
+> 
+> RBP: 00000000006cb018 R08: 0000000000000001 R09: 0000000000000031
+> R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000004
+> R13: ffffffffffffffff R14: 0000000000000000 R15: 0000000000000000
+> 
+> ======================================================
+> WARNING: possible circular locking dependency detected
+> 4.20.0-rc7+ #8 Not tainted
+> ------------------------------------------------------
+> syz-executor579/2028 is trying to acquire lock:
+> 00000000e478796d (console_owner){-.-.}, at: log_next kernel/printk/printk.c:489 [inline]
+> 00000000e478796d (console_owner){-.-.}, at: console_unlock+0x33d/0xd30 kernel/printk/printk.c:2401
+> 
+> but task is already holding lock:
+> 0000000030388923 (&(&port->lock)->rlock){-.-.}, at: pty_write+0xcd/0x1d0 drivers/tty/pty.c:120
+> 
+> which lock already depends on the new lock.
 
-In drivers/net/ethernet/netronome/nfp/nfp_net_debugfs.c:148
-and drivers/net/ethernet/netronome/nfp/nfp_net_debugfs.c:164
-and drivers/net/ethernet/netronome/nfp/nfp_net_debugfs.c:167,
-nfp_net_debugfs_tx_q_read will dump the address of
-rx_rings->rxds and skb->head and frag to debugfs, which allows local user
-to read the kernel address via debugfs.
 
-static int nfp_net_debugfs_tx_q_read(struct seq_file *file, void *data)
-{
-    ...
-    seq_printf(file, "TX[%02d,%02d%s]: cnt=%u dma=%pad host=%p
-H_RD=%u H_WR=%u D_RD=%u D_WR=%u\n",
-           tx_ring->idx, tx_ring->qcidx,
-           tx_ring == r_vec->tx_ring ? "" : "xdp",
-           tx_ring->cnt, &tx_ring->dma, tx_ring->txds,
-           tx_ring->rd_p, tx_ring->wr_p, d_rd_p, d_wr_p);
+Are you sure this is a real problem?  Can you deadlock this when
+running?
 
-    ...
-        if (tx_ring == r_vec->tx_ring) {
-            struct sk_buff *skb = READ_ONCE(tx_ring->txbufs[i].skb);
+Also, try 5.0-rc1, a number of tty core changes went in there to try to
+resolve these types of issues.  They have not been backported to 4.20.y
+yet as they need to get more testing.  If you could run your same test
+suite on that kernel, it would be great to find out your results.
 
-            if (skb)
-                seq_printf(file, " skb->head=%p skb->data=%p",
-                       skb->head, skb->data);
-        } else {
-            seq_printf(file, " frag=%p",
-                   READ_ONCE(tx_ring->txbufs[i].frag));
-        }
-    ...
-}
+thanks,
+
+greg k-h
