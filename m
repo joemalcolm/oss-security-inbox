@@ -1,102 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/08/19
-Message-Id: <E1ggvBF-0002I6-VS@xenbits.xenproject.org>
-Date: Tue, 08 Jan 2019 17:28:45 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 282 v2 (CVE-2018-19967) - guest use of HLE constructs may lock up host
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/09/1
+Message-ID: <87zhsaskt2.fsf@concordia.ellerman.id.au>
+Date: Wed, 09 Jan 2019 12:04:41 +1100
+From: Michael Ellerman <mpe@...erman.id.au>
+To: Eric Dumazet <edumazet@...gle.com>, 3ntr0py1337@...il.com
+Cc: security@...nel.org, oss-security@...ts.openwall.com
+Subject: Re: Re: Linux Kernel 4.20(21) deadlock vulnerability.
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Eric Dumazet <edumazet@...gle.com> writes:
+> Hello Entropy Moe
+>
+> syzbot reported dozens of similar issues involving printk
+>
+> https://syzkaller.appspot.com/
+>
+> Not sure why this would be a security concern ?
 
-            Xen Security Advisory CVE-2018-19967 / XSA-282
-                              version 2
+It's a local DOS, so that's a security concern for some people.
 
-             guest use of HLE constructs may lock up host
+But AFAICT the lockup warning only happens because the injected SLAB
+failure tries to call printk(). If there'd been a real allocation
+failure it would have just returned an error and there'd be no issue.
 
-UPDATES IN VERSION 2
-====================
+If you modify the reproducer to also do:
 
-CVE assigned.
+	write_file("/sys/kernel/debug/failslab/verbose", "0");
 
-ISSUE DESCRIPTION
-=================
+Then it shouldn't do the printk() and hopefully there'll be no lockup
+warning.
 
-Various Intel CPU models have an erratum listed under the title
-"Processor May Hang When Executing Code In an HLE Transaction".  It
-describes a potential hang when using instructions with the XACQUIRE
-prefix on the host physical memory range covering the first 4 MiB
-starting at the 1GiB boundary.
+cheers
 
-IMPACT
-======
-
-A malicious or buggy guest may cause a CPU to hang, resulting in a DoS
-(Denial of Service) affecting the entire host.
-
-VULNERABLE SYSTEMS
-==================
-
-All Xen versions are affected.
-
-Only Intel based x86 systems are affected.  Please refer to Intel
-documentation as to which specific CPU models are affected.
-
-AMD x86 systems as well as Arm ones are not affected.
-
-MITIGATION
-==========
-
-There is no known mitigation.  A BIOS update may be available for some
-systems, working around the issue at the firmware level.
-
-RESOLUTION
-==========
-
-Applying the appropriate pair of attached patches works around this issue
-for the CPU models known to be affected at the time of writing.
-
-xsa282-?.patch                              xen-unstable
-xsa282-4.11-1.patch + xsa282-2.patch        Xen 4.11.x, Xen 4.10.x
-xsa282-4.9-1.patch + xsa282-2.patch         Xen 4.9.x
-xsa282-4.9-1.patch + xsa282-4.8-2.patch     Xen 4.8.x, Xen 4.7.x
-
-$ sha256sum xsa282*
-6ef64ca920a58ed9185e81fad3dfa9ca5f6316f1e72ddd4f411f3e79eaf79903  xsa282.meta
-ad7093e00b3d6650530c95427ef0e68880883f0cec7229b5f41c9e2dc497ffd5  xsa282-1.patch
-7ce7fa105026b189500a31bd3978ec0c6fd9d7c95f688463c25ecce76366be35  xsa282-2.patch
-fbff734d678700864563f8214361f391c0cbda9b67ed7256535ed3db388c8feb  xsa282-4.8-2.patch
-df833cbe9b8798104a65d44b737c46f97399b86b0ffd03c99fda4c8ecf5a353c  xsa282-4.9-1.patch
-68eab296a7124662cbe3c6df8835aff9b4a26160fdbe970e206a7a6ef8d27ec7  xsa282-4.11-1.patch
-$
-
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-The issue has been documented publicly in Specification Updates for at
-least some of the affected processors for quite some time.
------BEGIN PGP SIGNATURE-----
-
-iQE/BAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAlw00zIMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZZ4wH90ahPfLXQZmbuDKHT++ny7Xtb9Bf9HdeqWS19m3h
-DjNBovpLz/ECfkbK2I445yoXygXi8enoElK5Yq1Ln4VFtR22u/kAWQt7b+Hh3Z1k
-mc/l77bOPcn2glox9Wc/sv8CYfJ5QE6KmGOZ6GtbjAds+yEGm2VKVGiR3QJP3KHP
-7AT6c9rxe8Wv+Vzkl61FAWlm/Pt6zgdGmSwqMk/3LBuWuxZbXKg+WaILTcTmD3eQ
-RRAPE8v68gGohSxdRUwTgjpvxK2Og4mNUminEc9ovr5jSjuyYwrSP8GEKFYtPEDn
-orW3HvmvyQ7QawpKBkkJq+YgcDe402r6s/ESC5vuUtdi/A==
-=escz
------END PGP SIGNATURE-----
-
-Download attachment "xsa282.meta" of type "application/octet-stream" (1794 bytes)
-
-Download attachment "xsa282-1.patch" of type "application/octet-stream" (5054 bytes)
-
-Download attachment "xsa282-2.patch" of type "application/octet-stream" (1592 bytes)
-
-Download attachment "xsa282-4.8-2.patch" of type "application/octet-stream" (1613 bytes)
-
-Download attachment "xsa282-4.9-1.patch" of type "application/octet-stream" (2730 bytes)
-
-Download attachment "xsa282-4.11-1.patch" of type "application/octet-stream" (5050 bytes)
+> On Tue, Jan 8, 2019 at 7:08 AM Entropy Moe <3ntr0py1337@...il.com> wrote:
+>>
+>> Hello,
+>> I wanted to let you know that there seem to be a deadlock vulnerability on the linux kernel 4.20.
+>> I am attaching the result report from syzkaller which also got the c code for replication.
+>>
+>> thank you,
+>>
