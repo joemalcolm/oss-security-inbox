@@ -1,55 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/07/2
-Message-ID: <CAO5rKUP+mqC4fnOXHiNyo56EOPEBxDMPOoWmB_DH3yWh66e8WQ@mail.gmail.com>
-Date: Thu, 7 Feb 2019 13:17:25 -0600
-From: Timothy Michaud <tmm08a@....edu>
-To: Ben Hutchings <ben.hutchings@...ethink.co.uk>
-Cc: Yves-Alexis Perez <corsac@...ian.org>, oss-security@...ts.openwall.com
-Subject: Re: Linux Kernel: Missing access_ok() checks in IOCTL function (gpu/drm/i915 Driver)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/10/1
+Message-ID: <74cd4d55ba7b294a896febc153389d7c50d38fe0.camel@gmail.com>
+Date: Thu, 10 Jan 2019 00:21:04 +0100
+From: Ailin Nemui <ailin.nemui@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Irssi 1.1.2: CVE-2019-5882
 Content-Type: text/plain; charset=utf-8
 
-Hi Ben,
+IRSSI-SA-2019-01 Irssi Security Advisory [1]
+============================================
+CVE-2019-5882
 
-I believe you're correct. (grsecurity agrees with you for what it's worth).
-I've emailed mitre but have not heard back yet.
+Description
+-----------
 
-Cheers,
+(a) Use after free when hidden lines were expired from the scroll
+    buffer. (CWE-417, CWE-825)
 
-Tim M.
+    CVE-2019-5882 [2] was assigned to this issue.
 
-On Thu, Feb 7, 2019 at 12:13 PM Ben Hutchings <ben.hutchings@...ethink.co.uk>
-wrote:
 
-> On Thu, 2019-01-24 at 10:30 +0100, Yves-Alexis Perez wrote:
-> > On Wed, 2019-01-23 at 14:28 -0600, Timothy Michaud wrote:
-> > > NOTE: I have requested a CVE identifier, and I'm sending this message,
-> to
-> > > make tracking of the fix easier; however, to avoid missing security
-> fixes
-> > > without CVE identifiers, you should *NOT* be cherry-picking a specific
-> > > patch in response to a notification about a kernel security bug.
-> > >
-> > > Due to a lack of "access_ok()" checks in
-> i915_gem_execbuffer2_ioctl[1], it
-> > > is possible to escalate privileges similar to the waitid
-> vulnerability[2]
-> >
-> > Hi, thanks for the report.
-> >
-> > The patch doesn't seem CC: stable, could you give us a status on the
-> various
-> > stable releases?
->
-> Is there even a real security issue here?  So far as I can see,
-> i915_gem_execbuffer2_ioctl() writes to a subset of the user memory
-> range that it previously read using copy_from_user().  copy_from_user()
-> does include the range check.
->
-> Ben.
->
-> --
-> Ben Hutchings, Software Developer                         Codethink Ltd
-> https://www.codethink.co.uk/                 Dale House, 35 Dale Street
->                                      Manchester, M1 2HF, United Kingdom
->
+Impact
+------
+
+May affect the stability of Irssi.
+
+
+Affected versions
+-----------------
+
+(a) Irssi 1.1.0 and later
+
+
+Fixed in
+--------
+
+Irssi 1.1.2
+
+
+Recommended action
+------------------
+
+Upgrade to Irssi 1.1.2. Irssi 1.1.2 is a maintenance release in the 1.1
+series, without any new features.
+
+After installing the updated packages, one can issue the /upgrade
+command to load the new binary. TLS connections will require /reconnect.
+
+
+Mitigating facts
+----------------
+
+(a) If lines are never hidden (no usage of /window hidelevel), this bug
+    will not trigger.
+
+
+
+References
+----------
+
+[1] https://irssi.org/security/irssi_sa_2019_01.txt
+[2] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-5882
+
 
