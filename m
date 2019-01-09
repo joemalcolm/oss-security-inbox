@@ -1,16 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/22/6
-Message-ID: <20190722113631.GM1168@jumper.schlittermann.de>
-Date: Mon, 22 Jul 2019 13:36:31 +0200
-From: Heiko Schlittermann <hs@...littermann.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/09/2
+Message-ID: <1547026997083.50320@kpit.com>
+Date: Wed, 9 Jan 2019 09:43:17 +0000
+From: Purushottam Choudhary <Purushottam.Choudhary@...t.com>
+To: "oss-security-help@...ts.openwall.com" <oss-security-help@...ts.openwall.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "kidjan@...il.com" <kidjan@...il.com>
+Subject: Fastbin double free issue in MP4v2 2.0.0 
 Content-Type: text/plain; charset=utf-8
 
-Mikhail Klementev <root@...pstack.io> (Mo 22 Jul 2019 13:21:46 CEST):
-> Kindly notice that this is a public mail list.
-Yes, therefore no further details are included, except the CRD.
---
-Heiko
+Hi,
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+As per below link Fastbin double free in MP4v2 2.0.0 related issue was reported in opensource community :
+https://bugzilla.redhat.com/show_bug.cgi?id=1603294
+
+Issue description : libmp4v2: Double free in the MP4StringProperty class in mp4property.cpp
+CVE Number : CVE-2018-14054
+CVE status : Not Available
+
+Currently there is no patch is available in the upstream .
+Is there any plan for release of the patch or is there any other link in where I can find the patch?
+
+Please let me know.
+
+Thanks & Regards,
+Purushottam
+This message contains information that may be privileged or confidential and is the property of the KPIT Technologies Ltd. It is intended only for the person to whom it is addressed. If you are not the intended recipient, you are not authorized to read, print, retain copy, disseminate, distribute, or use this message or any part thereof. If you receive this message in error, please notify the sender immediately and delete all copies of this message. KPIT Technologies Ltd. does not accept any liability for virus infected mails.
