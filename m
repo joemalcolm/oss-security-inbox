@@ -1,56 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/07/1
-Message-ID: <20191107182804.GE6595@outflux.net>
-Date: Thu, 7 Nov 2019 10:28:04 -0800
-From: Kees Cook <kees@...ntu.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/11/5
+Message-ID: <CAG8b5tSb+8moLaULqekrO3PASigOwJp_0eXwDn-Edg5p+60Bhw@mail.gmail.com>
+Date: Fri, 11 Jan 2019 23:44:16 +0530
+From: Dhiraj Mishra <mishra.dhiraj95@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Security fixes from Android 10 release which are relevant outside the Android ecosystem?
+Subject: NULL pointer dereference in lib60870 protocol
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Oct 25, 2019 at 11:23:09PM +0200, Moritz Mühlenhoff wrote:
-> Android advisories used to contain commit references to AOSP change sets, but
-> that's not the case for https://source.android.com/security/bulletin/android-10.
-> 
-> Typically most of these issues are specific to Android, but there are a few which
-> per the CVE description are possibly affecting software packaged/used by Linux
-> distros as well, one example:
+Hi List,
 
-Normally the advisories should link back to actual details, but I guess
-this doesn't always happen.
+## Summary:
+An issue was discovered in lib60870 2.1.1. LinkLayer_setAddress in
+link_layer/link_layer.c has a NULL pointer dereference.
 
-> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-9325:
-> "In libvpx, there is a possible out of bounds read due to a missing bounds check.
-> This could lead to remote information disclosure with no additional execution
-> privileges needed. "
+Snip code from link_layer.c#L142:
+LinkLayer_setAddress(LinkLayer self, int address)
+{
+    self->address = address;
+}
+## BT:
 
-https://chromium-review.googlesource.com/c/webm/libvpx/+/1149604
+==5832==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc
+0x55eb02eed6a2 bp 0x7ffc3b237e30 sp 0x7ffc3b237e20 T0)
+==5832==The signal is caused by a READ memory access.
+==5832==Hint: address points to the zero page.
+    #0 0x55eb02eed6a1 in LinkLayer_setAddress
+/home/input0/Desktop/lib60870/lib60870-C/src/iec60870/link_layer/link_layer.c:142
+    #1 0x55eb02eeab30 in CS101_Master_setOwnAddress
+/home/input0/Desktop/lib60870/lib60870-C/src/iec60870/cs101/cs101_master.c:311
+    #2 0x55eb02ec4601 in main
+/home/input0/Desktop/lib60870/lib60870-C/examples/cs101_master_balanced/master_example.c:127
+    #3 0x7fb921c52b96 in __libc_start_main
+(/lib/x86_64-linux-gnu/libc.so.6+0x21b96)
+    #4 0x55eb02ec40f9 in _start
+(/home/input0/Desktop/lib60870/lib60870-C/build/examples/cs101_master_balanced/cs101_master_balanced+0x120f9)
 
-> Similar for CVE-2019-9232,
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV
+/home/input0/Desktop/lib60870/lib60870-C/src/iec60870/link_layer/link_layer.c:142
+in LinkLayer_setAddress
+==5832==ABORTING
 
-https://chromium-review.googlesource.com/c/webm/libvpx/+/1395793
+Later CVE-2019-6137 was assigned to this.
 
-> CVE-2019-9278,
 
-https://android.googlesource.com/platform/external/libexif/+/a5e8e5812a11ec9686294de8a5d68aaf2ab72475%5E%21/#F0
+Thank you
+@mishradhiraj_
 
-> CVE-2019-9371,
-
-https://chromium.googlesource.com/webm/libwebm/+/cb5a9477073cf7ae4a28356d6e3e5638aba78dc9%5E%21/#F0
-https://chromium.googlesource.com/webm/libwebm/+/027a472efe49ff3a24be619442d2150658dbaaa0%5E%21/#F0
-
-> CVE-2019-9433,
-
-https://chromium-review.googlesource.com/c/webm/libvpx/+/1070753
-
-> CVE-2019-9423 (also libexif and opencv)
-
-This one I can't find an external reference for. I've asked for more
-details internally.
-
-> Is there anyone from Android/Google on the list, who can comment on this? Can these
-> references be added again for the benefit of non-Android distros?
-
-Thank you Moritz for pinging me off-list! :)
-
--- 
-Kees Cook
