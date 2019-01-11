@@ -1,88 +1,475 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/02/1
-Message-Id: <6F59DA1C-360A-482F-911A-CF2587E12562@gmail.com>
-Date: Mon, 2 Dec 2019 10:14:18 +0100
-From: Carlton Gibson <carlton.gibson@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/11/2
+Message-ID: <20190111140645.GA18922@openwall.com>
+Date: Fri, 11 Jan 2019 15:06:45 +0100
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Django 2.2.8 and 2.1.15: CVE-2019-19118: Privilege escalation in the Django admin.
+Cc: Marcel Holtmann <marcel@...tmann.org>, Johan Hedberg <johan.hedberg@...il.com>
+Subject: Linux kernel: Bluetooth: two remote infoleaks (CVE-2019-3459, CVE-2019-3460)
 Content-Type: text/plain; charset=utf-8
 
-https://www.djangoproject.com/weblog/2019/dec/02/security-releases/ <https://www.djangoproject.com/weblog/2019/dec/02/security-releases/>
+Hi,
 
-In accordance with `our security release policy <https://docs.djangoproject.com/en/dev/internals/security/>`_, the Django team is issuing `Django 2.2.8 <https://docs.djangoproject.com/en/dev/releases/2.2.8/>`_ and `Django 2.1.15 <https://docs.djangoproject.com/en/dev/releases/2.1.15/>`_. These release addresses the security issue detailed below. We encourage all users of Django to upgrade as soon as possible.
+Ran Menscher (Bcc'ed on this message) reported two issues (crediting
+"Shlomi Oberman, Yuli Shapiro and Karamba Security Ltd. research team")
+in Linux's Bluetooth stack to linux-distros and security@k.o on
+January 1.  Unfortunately, but unsurprisingly to me, we collectively
+failed to handle these issues well.  We did some things right, but not
+all of those that ideally would have been done before embargo end.  From
+the start, Ran was unwilling to precisely follow the linux-distros list
+policy (set a tentative public disclosure date/time) and to stay on top
+of the issues, instead expecting linux-distros to act more like a CERT
+(coordinate with other parties), which it mostly is not.  I did point
+this out to Ran, and suggested contacting Android, but I think no one
+did that.  (See the third "forwarded message" below on this "not a CERT"
+aspect and what can be done about it.)  The Bluetooth subsystem
+maintainers didn't reply.  Distros appeared uninterested in doing
+anything about the issues under embargo.  There were also numerous
+occasions where I ended up substituting for other distros' roles they
+had volunteered for.  And now I am doing Ran's job of making the
+mandatory posting to oss-security (after a reminder yesterday).
 
-CVE-2019-19118: Privilege escalation in the Django admin.
-=========================================================
+On the bright side, I appreciate Greg KH's (security@k.o) handling of
+these issues.  Greg took care of notifying the Bluetooth maintainers and
+produced patches suitable for posting to the Linux lists (but still
+needing review and testing), and made such postings as soon as the
+embargo was over.  The thread with patches:
 
-Since Django 2.1, a Django model admin displaying a parent model with related
-model inlines, where the user has view-only permissions to a parent model but
-edit permissions to the inline model, would display a read-only view of the
-parent model but editable forms for the inline.
+https://lore.kernel.org/linux-bluetooth/20190110062833.GA15047@kroah.com/
 
-Submitting these forms would not allow direct edits to the parent model, but
-would trigger the parent model's ``save()`` method, and cause pre and post-save
-signal handlers to be invoked. This is a privilege escalation as a user who
-lacks permission to edit a model should not be able to trigger its save-related
-signals.
+I also appreciate Yves-Alexis Perez (Debian) assigning the CVE IDs:
 
-To resolve this issue, the permission handling code of the Django admin
-interface has been changed. Now, if a user has only the "view" permission for a
-parent model, the entire displayed form will not be editable, even if the user
-has permission to edit models included in inlines.
+> On Tue, 2019-01-01 at 09:27 +0000, Ran Menscher wrote:
+> > BUG 1 HEAP ADDRESS INFOLEAK IN USE OF L2CAP_GET_CONF_OPT
+>  
+> CVE-2019-3459
+> 
+> > BUG 2 HEAP DATA INFOLEAK IN MULTIPLE LOCATIONS INCLUDING FUNCTION
+> > L2CAP_PARSE_CONF_RSP
+>  
+> CVE-2019-3460
 
-This is a backwards-incompatible change, and the Django security team is aware
-that some users of Django were depending on the ability to allow editing of
-inlines in the admin form of an otherwise view-only parent model.
+Also very helpful was Ran's answer that "According to git blame, the
+issues had been introduced in Linux-2.6.12-rc2 (in 2005)", and in the
+first place the discovery of issues and the notification - thank you,
+Ran and the Karamba Security research team!
 
-Given the complexity of the Django admin, and in-particular the permissions
-related checks, it is the view of the Django security team that this change was
-necessary: that it is not currently feasible to maintain the existing behavior
-whilst escaping the potential privilege escalation in a way that would avoid a
-recurrence of similar issues in the future, and that would be compatible with
-Django's *safe by default* philosophy.
+Finally, I think it's good that we're pushing this out without further
+delay (which no one requested).  Hopefully, we'll see greater progress
+at handling of these issues now that the embargo is over.
 
-For the time being, developers whose applications are affected by this change
-should replace the use of inlines in read-only parents with custom forms and
-views that explicitly implement the desired functionality. In the longer term,
-adding a documented, supported, and properly-tested mechanism for
-partially-editable multi-model forms to the admin interface may occur in Django
-itself.
+I am sorry for the bitterness of my messages (including this one), which
+I write from my list admin perspective.  I certainly understand that it
+feels differently from a researcher perspective - for some, it'd be nice
+to have a send-and-forget list, where the rest of the community would
+take care of everything else.  It's just that such a list doesn't
+currently exist.  There was oCERT for ~10 years, which provided this
+service, but there was surprisingly little demand (vendor-sec and then
+(linux-)distros saw much more use) and embargo times were much longer.
 
-Thank you to Shen Ying for reporting this issue.
+Alexander
 
-Affected supported versions
-===========================
+----- Forwarded message from Ran Menscher <ran.menscher at karambasecurity.com> -----
 
-* Django master branch
-* Django 3.0 (which will be released in a separate blog post later today)
-* Django 2.2
-* Django 2.1
-
-Resolution
-==========
-
-Patches to resolve the issue have been applied to Django's master branch and
-the 3.0, 2.2, and 2.1 release branches. The patches may be obtained from the following changesets:
-
-* On the `master branch <https://github.com/django/django/commit/11c5e0609bcc0db93809de2a08e0dc3d70b393e4>`__
-* On the `3.0 release branch <https://github.com/django/django/commit/092cd66cf3c3e175acce698d6ca2012068d878fa>`__
-* On the `2.2 release branch <https://github.com/django/django/commit/36f580a17f0b3cb087deadf3b65eea024f479c21>`__
-* On the `2.1 release branch <https://github.com/django/django/commit/103ebe2b5ff1b2614b85a52c239f471904d26244>`__
-
-The following releases have been issued:
-
-* Django 2.2.8 (`download Django 2.2.8 <https://www.djangoproject.com/m/releases/2.2/Django-2.2.8.tar.gz>`_ | `2.2.8 checksums <https://www.djangoproject.com/m/pgp/Django-2.2.8.checksum.txt>`_)
-* Django 2.1.15 (`download Django 2.1.15 <https://www.djangoproject.com/m/releases/2.1/Django-2.1.15.tar.gz>`_ | `2.1.15 checksums <https://www.djangoproject.com/m/pgp/Django-2.1.15.checksum.txt>`_)
-
-The PGP key ID used for these releases is Carlton Gibson: E17DF5C82B4F9D00.
-
-General notes regarding security reporting
-==========================================
-
-As always, we ask that potential security issues be reported via
-private email to ``security@...ngoproject.com``, and not via Django's
-Trac instance or the django-developers list. Please see `our security
-policies <https://www.djangoproject.com/security/>`_ for further
-information.
+From: Ran Menscher <ran.menscher at karambasecurity.com>
+To: <linux-distros at vs.openwall.org>, <security at kernel.org>
+Subject: [vs-plain] two information leak vulnerabilities in kernel bluetooth stack
+CC: Guy Sagy <guy.sagy at karambasecurity.com>
+Date: Tue, 1 Jan 2019 09:27:59 +0000
 
 
+The Linux Kernel's Blutooth stack suffers from two remote information leak vulnerabilities in the code
+
+that handles incoming L2cap configuration packets.
+These were both discovered by Shlomi Oberman, Yuli Shapiro and  Karamba Security Ltd. research team.
+We wish to coordinate a disclosure with all relevant parties.
+
+BUG 1 ? HEAP ADDRESS INFOLEAK IN USE OF L2CAP_GET_CONF_OPT
+
+VULNERABILITY
+In the function l2cap_get_conf_opt (l2cap_core.c), which is used to parse configuration elements during
+an L2cap connection negotiation process.
+In this function, there is a ?dual use? for the output parameter ?val?. If the length of the data is 1,2 or 4, then
+the returned value Is a value copied from an input buffer (received over BT) and returned ?by value?. If the
+length is different, the value is returned as a pointer to the buffer ?by reference?. The buffer is from a kernel
+SKB. Since the length is taken from the same buffer and the buffer is received via BT, the attacker controls
+whether the val is returned as a pointer or as a value.
+The val is later used as a value or as a pointer depending on a different field called ?type?, which is attacker
+controlled and taken from the same buffer. The ?val? output parameter is assumed to match the ?type? and is
+either used by reference or by value accordingly. This assumption is where the bug is. An attacker can send a
+response where - for example ? the type is MTU (which uses 2 bytes from ?val? by-value), and the length is 3,
+and so the returned MTU will actually be comprised of the 2 lower bytes of the pointer to the buffer, which
+will be leaked to the attacker. It is a form of type confusion without having a sophisticated type system.
+
+EXPLOIT
+This flaw can be reached via multiple paths so there may be many ways to exploit it. One such example is using
+a response with a ?rejected? result like in the known exploit for CVE-2017-1000251 for Amazon Echo, with an mtu config option sized 0
+bytes. The returned mtu will then, usually, be the lower bytes of the pointer to the buffer.
+
+EXPLOIT EFFECT
+Leak bytes of heap address to attacker. Currently we only know and tested that it is possible a leak of the 2
+lower bytes or a few bits of other data. bug still exists in latest kernel.
+
+
+
+BUG 2 ? HEAP DATA INFOLEAK IN MULTIPLE LOCATIONS INCLUDING FUNCTION L2CAP_PARSE_CONF_RSP
+VULNERABILITY
+In the functions l2cap_parse_conf_rsp, l2cap_parse_conf_req (l2cap_core.c), and other locations, there is a while loop
+which is used to parse configuration elements during an L2cap connection negotiation process.
+In this function, the processing of data is performed in the while loop before the check if all the data processed
+is inside the buffer. In addition, if data outside of the buffer is processed, the function will not return an error.
+Therefore, data that is out of bands can be processed, and in some cases returned to the attacker.
+EXPLOIT
+This flaw can be reached via multiple paths so there may be many ways to exploit it. One such example is using
+a response with a ?pending? status as with with the known exploit for CVE-2017-1000251 for Samsung Gear S3 exploit,
+and make sure the request is aligned to the SKB buffer size and contains a configuration option at the end of the buffer which is of type ?EFS? and
+length 0x10 (followed by 2 0x00 bytes). This efs element is then returned to the attacker and contains 0xE
+bytes of out-of-bounds heap data. It is important to keep the total returned data size smaller then the return
+buff size.
+EXPLOIT EFFECT
+Leak several bytes of heap data to attacker. Currently we only know that it is possible process 1 configuration
+option per request, the length of which is at most the size of the largest configuration element. We have
+internally tested a leak using an efs configuration option, leaking approx. 12 bytes. bug still exists in latest kernel.
+
+PATCH (BOTH BUGS):
+
+
+diff --git a/l2cap_core.c b/l2cap_core.c
+index 2146e0f..8c38b32 100644
+--- a/l2cap_core.c
++++ b/l2cap_core.c
+@@ -2981,6 +2981,8 @@ static inline int l2cap_get_conf_opt(void **ptr, int *type, int *olen,
+
+  default:
+  *val = (unsigned long) opt->val;
++ if(opt->type != L2CAP_CONF_EFS && opt->type != L2CAP_CONF_RFC)
++ return -EPROTO;
+  break;
+  }
+
+@@ -3332,11 +3334,16 @@ static int l2cap_parse_conf_req(struct l2cap_chan *chan, void *data, size_t data
+  u16 mtu = L2CAP_DEFAULT_MTU;
+  u16 result = L2CAP_CONF_SUCCESS;
+  u16 size;
++ int res;
+
+  BT_DBG("chan %p", chan);
+
+  while (len >= L2CAP_CONF_OPT_SIZE) {
+- len -= l2cap_get_conf_opt(&req, &type, &olen, &val);
++ res = l2cap_get_conf_opt(&req, &type, &olen, &val);
++ if(res < 0)
++ return -EPROTO;
++
++ len -= res;
+
+  hint  = type & L2CAP_CONF_HINT;
+  type &= L2CAP_CONF_MASK;
+@@ -3354,7 +3361,7 @@ static int l2cap_parse_conf_req(struct l2cap_chan *chan, void *data, size_t data
+  break;
+
+  case L2CAP_CONF_RFC:
+- if (olen == sizeof(rfc))
++ if (olen == sizeof(rfc) && && endptr - ptr >= L2CAP_CONF_OPT_SIZE + sizeof(rfc))
+  memcpy(&rfc, (void *) val, olen);
+  break;
+
+@@ -3364,7 +3371,7 @@ static int l2cap_parse_conf_req(struct l2cap_chan *chan, void *data, size_t data
+  break;
+
+  case L2CAP_CONF_EFS:
+- if (olen == sizeof(efs)) {
++ if (olen == sizeof(efs) && endptr - ptr >= L2CAP_CONF_OPT_SIZE + sizeof(efs)) {
+  remote_efs = 1;
+  memcpy(&efs, (void *) val, olen);
+  }
+@@ -3543,11 +3550,16 @@ static int l2cap_parse_conf_rsp(struct l2cap_chan *chan, void *rsp, int len,
+  unsigned long val;
+  struct l2cap_conf_rfc rfc = { .mode = L2CAP_MODE_BASIC };
+  struct l2cap_conf_efs efs;
++ int res;
+
+  BT_DBG("chan %p, rsp %p, len %d, req %p", chan, rsp, len, data);
+
+  while (len >= L2CAP_CONF_OPT_SIZE) {
+- len -= l2cap_get_conf_opt(&rsp, &type, &olen, &val);
++ res = l2cap_get_conf_opt(&rsp, &type, &olen, &val);
++ if(res < 0)
++ return -EPROTO;
++
++ len -= res;
+
+  switch (type) {
+  case L2CAP_CONF_MTU:
+@@ -3566,7 +3578,7 @@ static int l2cap_parse_conf_rsp(struct l2cap_chan *chan, void *rsp, int len,
+  break;
+
+  case L2CAP_CONF_RFC:
+- if (olen == sizeof(rfc))
++ if (olen == sizeof(rfc) && endptr - ptr >= L2CAP_CONF_OPT_SIZE + sizeof(rfc))
+  memcpy(&rfc, (void *)val, olen);
+
+  if (test_bit(CONF_STATE2_DEVICE, &chan->conf_state) &&
+@@ -3586,7 +3598,7 @@ static int l2cap_parse_conf_rsp(struct l2cap_chan *chan, void *rsp, int len,
+  break;
+
+  case L2CAP_CONF_EFS:
+- if (olen == sizeof(efs)) {
++ if (olen == sizeof(efs) && endptr - ptr >= L2CAP_CONF_OPT_SIZE + sizeof(efs)) {
+  memcpy(&efs, (void *)val, olen);
+
+  if (chan->local_stype != L2CAP_SERV_NOTRAFIC &&
+@@ -3709,6 +3721,7 @@ static void l2cap_conf_rfc_get(struct l2cap_chan *chan, void *rsp, int len)
+ {
+  int type, olen;
+  unsigned long val;
++ int res;
+  /* Use sane default values in case a misbehaving remote device
+  * did not send an RFC or extended window size option.
+  */
+@@ -3727,7 +3740,11 @@ static void l2cap_conf_rfc_get(struct l2cap_chan *chan, void *rsp, int len)
+  return;
+
+  while (len >= L2CAP_CONF_OPT_SIZE) {
+- len -= l2cap_get_conf_opt(&rsp, &type, &olen, &val);
++ res = l2cap_get_conf_opt(&rsp, &type, &olen, &val);
++ if(res < 0)
++ return -EPROTO;
++
++ len -= res;
+
+  switch (type) {
+  case L2CAP_CONF_RFC:
+
+----- End forwarded message -----
+
+----- Forwarded message from Ran Menscher <ran.menscher at karambasecurity.com> -----
+
+From: Ran Menscher <ran.menscher at karambasecurity.com>
+To: Solar Designer <solar at openwall.com>
+CC: <linux-distros at vs.openwall.org>, <security at kernel.org>, Guy Sagy <guy.sagy at karambasecurity.com>
+Subject: Re: [vs-plain] two information leak vulnerabilities in kernel bluetooth stack
+Date: Thu, 3 Jan 2019 10:24:32 +0000
+
+Thank you Alexander.
+
+
+
+
+The main priority is to coordinate a responsible fix prior to any disclosure.
+
+
+This conflicts with the ultimatum system suggested which is more relevant to non-responsive vendors.
+
+
+For this reason the previous mail had no such demands, and will for now accept any internal deadline you will decide on.
+
+
+
+
+The same concern is with the bluetooth list, I hoped to reach the relevant parties via this secure list.
+
+
+please aid in reaching any party relevant to fixing the issue, as long as responsible disclosure is maintained.
+
+
+
+
+regarding the specific questions:
+
+
+  1.  According to git blame, the issues had been introduced in Linux-2.6.12-rc2 (in 2005)
+  2.  This issue is different than the reference brought in that it's remotely triggered.
+  3.  We would appreciate your help with assigning a CVE ID.
+  4.  proper diffs: as per my understanding, the difference should be merely the reference directory for git,
+
+
+       I would unfortunately request that you make use of the given patch, as it will take me far too long to make further adjustments.
+
+
+
+
+as I see the next steps:
+
+
+  1.  I await your fix until a deadline of your suggestion
+  2.  I only intervene again if no deadline has been decided on until January 14.
+  3.  I would request that a proper notification will be sent when I'm both allowed and required to inform oss-security
+
+
+
+
+Thanks,
+
+
+
+
+________________________________
+From: Solar Designer <solar at openwall.com>
+Sent: 02 January 2019 13:54:52
+To: Ran Menscher
+Cc: linux-distros at vs.openwall.org; security at kernel.org; Guy Sagy
+Subject: Re: [vs-plain] two information leak vulnerabilities in kernel bluetooth stack
+
+
+Hi,
+
+
+Replying for linux-distros:
+
+
+On Tue, Jan 01, 2019 at 09:27:59AM +0000, Ran Menscher wrote:
+> The Linux Kernel's Blutooth stack suffers from two remote information leak vulnerabilities in the code
+> that handles incoming L2cap configuration packets.
+> These were both discovered by Shlomi Oberman, Yuli Shapiro and  Karamba Security Ltd. research team.
+> We wish to coordinate a disclosure with all relevant parties.
+
+
+Per published linux-distros list policy, you were/are supposed to
+specify a tentative public disclosure date/time (within 14 days max, so
+January 14 at the latest and preferably sooner) in your very first
+message.  Please do that ASAP.
+
+
+Are these issues relevant to distros - in other words, when were they
+introduced, what's the earliest affected version of the kernel?
+
+
+Here's an example of Bluetooth issues reported a couple of months ago
+and apparently being of no interest to distros:
+
+
+https://www.openwall.com/lists/oss-security/2018/10/31/6
+
+
+Your report looks better (it even includes patches), yet this lack of
+interest in distros doing anything on kernel Bluetooth issues might
+apply here as well.
+
+
+Have you already requested CVE IDs for these?  If not, would you like
+linux-distros to assign CVE IDs?
+
+
+And then there's Greg's request for proper diffs and question about
+notifying the Bluetooth maintainers.  We'd like to have that answer,
+too.  Please note that the linux-bluetooth mailing list is public, so
+only send to there if/once you intend to make the issues public.
+
+
+BLUETOOTH SUBSYSTEM
+M:      Marcel Holtmann <marcel@...tmann.org>
+M:      Johan Hedberg <johan.hedberg@...il.com>
+L:      linux-bluetooth@...r.kernel.org
+W:      http://www.bluez.org/
+T:      git git://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth.git
+T:      git git://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git
+S:      Maintained
+F:      net/bluetooth/
+F:      include/net/bluetooth/
+
+
+Last but not least, please note that as soon as the issues are made
+public, per linux-distros list policy you must post about them to the
+public oss-security list.  Perhaps do this at the same time with making
+your postings to linux-bluetooth, linux-kernel, and netdev lists, but
+separately from the posting to those lists (don't use CC, but refer to
+the other posting - please see my example linked above).
+
+
+Thanks,
+
+
+Alexander
+
+----- End forwarded message -----
+
+----- Forwarded message from Solar Designer <solar at openwall.com> -----
+
+Date: Thu, 3 Jan 2019 23:53:43 +0100
+From: Solar Designer <solar at openwall.com>
+To: Ran Menscher <ran.menscher at karambasecurity.com>
+Cc: linux-distros at vs.openwall.org, security at kernel.org, Guy Sagy <guy.sagy at karambasecurity.com>
+Subject: Re: [vs-plain] two information leak vulnerabilities in kernel bluetooth stack
+
+On Thu, Jan 03, 2019 at 10:24:32AM +0000, Ran Menscher wrote:
+> The main priority is to coordinate a responsible fix prior to any disclosure.
+> 
+> This conflicts with the ultimatum system suggested which is more relevant to non-responsive vendors.
+
+In my experience, this system is relevant regardless of which side the
+delay would have been on.
+
+> For this reason the previous mail had no such demands, and will for now accept any internal deadline you will decide on.
+
+OK, if you don't, then I set these dates/times:
+
+January 9, 15:00 UTC - tentative public disclosure date/time (may be
+postponed if a good reason is given, but will be in effect otherwise).
+
+January 14, 15:00 UTC - the latest allowed public disclosure date/time.
+
+> The same concern is with the bluetooth list, I hoped to reach the relevant parties via this secure list.
+
+You did reach some Linux distros and upstream Linux kernel security
+team.  To also reach Bluetooth developers, please e-mail:
+
+BLUETOOTH SUBSYSTEM
+M:      Marcel Holtmann <marcel@...tmann.org>
+M:      Johan Hedberg <johan.hedberg@...il.com>
+
+or reply to Greg's offer to contact them for you (which I think is what
+he meant).
+
+> please aid in reaching any party relevant to fixing the issue, as long as responsible disclosure is maintained.
+
+My guess is you'll want to notify the two persons above, and possibly
+also notify Android security team.  (Android was on linux-distros
+before, but quit for lack of actionable information for them in almost
+all reports.  This one report might be an exception.)
+
+We're not a CERT, so can't promise to act as such - coordinating with
+other parties.  We do have this task/role listed:
+
+https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+
+"4. Evaluate relevance to other parties such as the upstream, other
+affected distros (not present on the (sub-)list), and other Open Source
+projects, see if the report mentions notifying any of these, communicate
+your findings and possible concerns to the reporter and the list, and
+stay on top of the resulting discussion until a decision is made on who
+else to possibly notify (or not) and any such notifications are in fact
+made (with the reporter's approval)"
+
+but so far no distro volunteered for this role (maybe distros present in
+here should use your request as a reminder, and consider volunteering).
+
+> regarding the specific questions:
+> 
+>   1.  According to git blame, the issues had been introduced in Linux-2.6.12-rc2 (in 2005)
+>   2.  This issue is different than the reference brought in that it's remotely triggered.
+
+OK, this is important.
+
+>   3.  We would appreciate your help with assigning a CVE ID.
+
+OK, I leave this to Red Hat or Debian to handle.
+
+>   4.  proper diffs: as per my understanding, the difference should be merely the reference directory for git,
+> 
+>        I would unfortunately request that you make use of the given patch, as it will take me far too long to make further adjustments.
+
+I don't see why.  But I'm not the one to make any use of your patches
+anyway, so I'll leave this to others.
+
+> as I see the next steps:
+> 
+>   1.  I await your fix until a deadline of your suggestion
+>   2.  I only intervene again if no deadline has been decided on until January 14.
+>   3.  I would request that a proper notification will be sent when I'm both allowed and required to inform oss-security
+
+This is slightly different from our standard procedure, but OK.
+
+Alexander
+
+----- End forwarded message -----
