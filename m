@@ -1,97 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/19/1
-Message-ID: <CAFB0D2QLM4Dp1_OGd92YwceyZBqfAhYiE07uTVs2V5Si2FRv7A@mail.gmail.com>
-Date: Sun, 18 Aug 2019 23:58:50 -0400
-From: Justin Bull <me@...tinbull.ca>
-To: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com,  fulldisclosure@...lists.org
-Subject: [CVE-2019-15150] CSRF in MediaWiki extension OAuth2 Client 0.3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/11/6
+Message-ID: <CAG8b5tTFV3cziyLRuwDpV=DrhwQtOp6D_n=BH4_mYvLc3cKC+g@mail.gmail.com>
+Date: Fri, 11 Jan 2019 23:44:28 +0530
+From: Dhiraj Mishra <mishra.dhiraj95@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: SEGV in libIEC61850 protocol
 Content-Type: text/plain; charset=utf-8
 
-[CVE-2019-15150] CSRF in MediaWiki extension OAuth2 Client 0.3
+Hi List,
 
-Happy Sunday everyone.
+## Summary:
+An issue has been found in libIEC61850 v1.3.1. Ethernet_setProtocolFilter
+in hal/ethernet/linux/ethernet_linux.c has a SEGV, as demonstrated by
+sv_subscriber_example.c and sv_subscriber.c.
 
-A security bulletin for you all.
+## Snip code from sv_subscriber.c#L186
+        Thread_start(thread);
+    }
+    else {
+        if (DEBUG_SV_SUBSCRIBER)
+            printf("SV_SUBSCRIBER: Starting SV receiver failed for
+interface %s\n", self->interfaceId);
+    }
+}
 
-Software:
---------
-MediaWiki OAuth2 Client (https://github.com/Schine/MW-OAuth2Client)
+## Memory leak:
 
-Description:
-----------
-MediaWiki implementation of the PHP League's OAuth2 Client, to allow MediaWiki
-to act as a client to any OAuth2 server.
+Using interface eth0
+Error creating raw socket!
+ASAN:DEADLYSIGNAL
+==1403==ERROR: AddressSanitizer: SEGV on unknown address 0x00000000000a (pc
+0x55b5675c1284 bp 0x7f92623fee30 sp 0x7f92623fee20 T1)
+==1403==The signal is caused by a WRITE memory access.
+==1403==Hint: address points to the zero page.
+    #0 0x55b5675c1283 in Ethernet_setProtocolFilter
+/home/input0/Desktop/libiec61850/hal/ethernet/linux/ethernet_linux.c:209
+    #1 0x55b5675ba75f in SVReceiver_startThreadless
+/home/input0/Desktop/libiec61850/src/sampled_values/sv_subscriber.c:232
+    #2 0x55b5675ba3b7 in svReceiverLoop
+/home/input0/Desktop/libiec61850/src/sampled_values/sv_subscriber.c:163
+    #3 0x55b5675c1720 in destroyAutomaticThread
+/home/input0/Desktop/libiec61850/hal/thread/linux/thread_linux.c:90
+    #4 0x7f9265c976da in start_thread
+(/lib/x86_64-linux-gnu/libpthread.so.0+0x76da)
+    #5 0x7f92659c088e in __clone (/lib/x86_64-linux-gnu/libc.so.6+0x12188e)
 
-Not Affeted:
-------------
-0.2 and earlier.
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV
+/home/input0/Desktop/libiec61850/hal/ethernet/linux/ethernet_linux.c:209 in
+Ethernet_setProtocolFilter
+Thread T1 created by T0 here:
+    #0 0x7f9265ee6d2f in __interceptor_pthread_create
+(/usr/lib/x86_64-linux-gnu/libasan.so.4+0x37d2f)
+    #1 0x55b5675c17ab in Thread_start
+/home/input0/Desktop/libiec61850/hal/thread/linux/thread_linux.c:101
+    #2 0x55b5675ba49a in SVReceiver_start
+/home/input0/Desktop/libiec61850/src/sampled_values/sv_subscriber.c:186
+    #3 0x55b5675b9eec in main
+/home/input0/Desktop/libiec61850/examples/sv_subscriber/sv_subscriber_example.c:76
+    #4 0x7f92658c0b96 in __libc_start_main
+(/lib/x86_64-linux-gnu/libc.so.6+0x21b96)
 
-Affected Versions:
----------------
-0.3
+==1403==ABORTING
 
-Fixed Versions:
--------------
-0.4
-
-Problem:
---------
-
-In the OAuth2 Client extension 0.3 for MediaWiki, a CSRF vulnerability
-exists due to the OAuth2 state parameter not being checked in the callback
-function.
-
-Per OAuth 2.0 spec, the authorization code grant flow is susceptible to CSRF
-and clickjacking attacks unless an appropriate "state" parameter is chosen and
-verified.[1][2][3]
-
-Although the software correctly generates an unguessable state value and sets
-it in the URL to the OAuth 2.0 server, it fails to actually check/validate the
-parameter in the callback against what it previously selected.
-
-The regression was introduced when switching underlying vendor code.[4]
-
-Impact:
--------
-
-As described in the OAuth 2.0 RFC spec, this opens the site relying on the
-software up to clickjacking and CSRF attacks.[1]
-
-A successful attack can lead to loss of integrity of the user/victim.
-
-Solution:
----------
-
-Update callback function to verify presence and correct `state` value as
-previously chosen prior to initiating the OAuth2 flow[5], as done in v0.4
-release.[6]
-
-Timeline:
----------
-
-2019-08-17: Bug discovered
-2019-08-17: CVE requested, assigned, privately disclosed to maintainer,
-            bugfix/patch authored
-2019-08-18: Maintainer acknowledged, patched version 0.4 is released
-
-Credit:
--------
-Discovery by me.
-
-Thanks to the maintainer Schine GmbH. for a quick acknowledgement and release.
-
-References:
------------
-
-[1]: https://tools.ietf.org/html/rfc6749#section-10.12
-[2]: https://auth0.com/docs/protocols/oauth2/mitigate-csrf-attacks
-[3]: https://auth0.com/docs/protocols/oauth2/oauth-state
-[4]: https://github.com/Schine/MW-OAuth2Client/commit/7188d6c8d359d41c6974c19b2c0907653bab8f6e
-[5]: https://github.com/Schine/MW-OAuth2Client/commit/6a4fe4500ddd72ad4e826d9d63b2d69512bd10d1
-[6]: https://github.com/Schine/MW-OAuth2Client/releases/tag/v0.4
+Later CVE-2019-6136 was assigned to this.
 
 
--- 
-Best Regards,
-Justin Bull
-PGP Fingerprint: E09D 38DE 8FB7 5745 2044 A0F4 1A2B DEAA 68FD B34C
+Thank you
+@mishradhiraj_
+
