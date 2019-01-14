@@ -1,116 +1,174 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/15/5
-Message-ID: <20190615173956.GA28900@openwall.com>
-Date: Sat, 15 Jun 2019 19:39:56 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/14/1
+Message-ID: <alpine.DEB.2.20.1901140949460.17855@o7.fi>
+Date: Mon, 14 Jan 2019 09:51:43 +0200 (EET)
+From: Harry Sintonen <security-advisories@...er.fi>
 To: oss-security@...ts.openwall.com
-Cc: security@...tpractical.com
-Subject: Re: Apache::Session's use of md5 and more
+Subject: SCP client multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+scp client multiple vulnerabilities
+===================================
+The latest version of this advisory is available at:
+https://sintonen.fi/advisories/scp-client-multiple-vulnerabilities.txt
 
-On Sat, Jun 15, 2019 at 05:09:53PM +0200, Raphael Geissert wrote:
-> I just stumbled upon Apache::Session's Generate::MD5 module, which
-> appears to be used to generate the session ids for cookies and the
-> like.
-> 
-> Not only does it use MD5,
 
-Which is perfectly fine for this use case, except that it distracts
-attention from real issues, so might need to be "fixed" to be e.g.
-SHA-256 for that reason.
+Overview
+--------
 
-Let's not confuse technical and psychological aspects.
+SCP clients from multiple vendors are susceptible to a malicious scp server performing
+unauthorized changes to target directory and/or client output manipulation.
 
-> but its source of entropy is weak
 
-That's the real issue.
+Description
+-----------
 
-> and does two rounds of hashing.
+Many scp clients fail to verify if the objects returned by the scp server match those
+it asked for. This issue dates back to 1983 and rcp, on which scp is based. A separate
+flaw in the client allows the target directory attributes to be changed arbitrarily.
+Finally, two vulnerabilities in clients may allow server to spoof the client output.
 
-This is fine, but can be optimized out along with the move to SHA-256.
 
-> From the source code[1]:
-> 
->     $session->{data}->{_session_id} =
->         substr(Digest::MD5::md5_hex(Digest::MD5::md5_hex(time(). {}.
-> rand(). $$)), 0, $length);
-> 
-> (where $length is 32 by default)
+Impact
+------
 
-This uses 3 or 4 pieces of data: time in seconds since Unix epoch, an
-address within the process, whatever seed rand() was initialized with
-(might also be time, or not), and PID.  This might be insufficient to
-prevent successfully inferring these inputs from the hash (by probing
-likely inputs), in which case this also leaks these inputs - kind of a
-remote ASLR leak, which matters if the process is persistent, etc. - on
-top of the more obvious impact of being able to predict session IDs.
+Malicious scp server can write arbitrary files to scp target directory, change the
+target directory permissions and to spoof the client output.
 
-Also, does this generate unique session IDs if called twice in a row
-from the same process?  It appears that due to the "{}" and the "rand()"
-call it usually does, but perhaps not reliably to an extent where we'd
-rely on that for security.
 
-> Am I missing something, or has this code actually been in use for ages
-> and gone unnoticed ? I couldn't find any CVE for this.
-> 
-> So far I found this reference, but only mentions the use of MD5 as a weakness:
-> https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues/695
+Details
+-------
 
-That thread focuses on MD5 to an extent where everyone in there seems to
-think that replacing MD5 with SHA-256 would magically fix whatever issue
-they're thinking there is.  They're wrong.
+The discovered vulnerabilities, described in more detail below, enables the attack
+described here in brief.
 
-This is especially surprising given that Nuel Guillaume who opened the
-issue writes in one of the comments (5 years ago):
+1. The attacker controlled server or Man-in-the-Middle(*) attack drops .bash_aliases
+    file to victim's home directory when the victim performs scp operation from the
+    server. The transfer of extra files is hidden by sending ANSI control sequences
+    via stderr. For example:
 
-| We can easily determine time()
-| 
-| {} A memory allocation for a hash (dict).
-| The output looks like "HASH (0x97b27ec)."
-| The last 3 characters: "7EC" are fixed to each machine.
-| 
-| Rand Perl function calls directly to the rand () function in libc.
-| rand() is not secure at all. Just find 30 values of rand() to determine the srand (the seed).
-| But it can be easier if we have Perl prior to 5.004. ( => srand(time() ).
-| If we have Perl 5.004 or upper, /dev/urandom is used for the default srand.
-| See:
-| http://turtle.ee.ncku.edu.tw/docs/perl/manual/pod/perlfunc/srand.html
-| http://stackoverflow.com/questions/12497045/what-are-the-weaknesses-of-perls-srand-default-seed-post-version-5-004
-| 
-| $$ Is the PID of the process and his value is between 1000 and 32768 (/proc/sys/kernel/pid_max = 32768)
+    user@...al:~$ scp user@...ote:readme.txt .
+    readme.txt                                         100%  494     1.6KB/s   00:00
+    user@...al:~$
 
-but then even with this understanding goes on to suggest merely "Replace
-md5 with SHA1 or SHA256 and keep your Perl version update."
+2. Once the victim launches a new shell, the malicious commands in .bash_aliases get
+    executed.
 
-I didn't review Perl's rand(), but apparently Nuel thought the
-initialization from /dev/urandom on newer Perl somehow made rand() safe
-from having its seed inferred?  I doubt this is the case, as I expect
-the seed and/or the internal state is tiny either way.  And I doubt it
-takes as many as "30 values of rand() to determine the srand (the
-seed)."  I'd expect 1 to be enough.  But we need to review the code
-before making any claims.
 
-...OK, I just took a look.  Perl's util.c: Perl_seed() reads just 32
-bits from /dev/urandom, with compile-time and runtime fallbacks to
-gettimeofday() and getpid() and some more ASLR leaks.  (Fun fact: the
-fallbacks will also occur when the 32-bit value read from /dev/urandom
-just happens to be 0.  As a result, the seed is almost never a 0.)
+*) Man-in-the-Middle attack does require the victim to accept the wrong host
+    fingerprint.
 
-> From a quick look at the reverse dependencies of the Debian package,
-> there are some users of Apache::Session:
-> * RequestTracker (RT) : from a quick look at the session id in the
-> cookie set by rt.cpan.org I'd say it does use Generate::MD5
-> * Torrus: no idea if the Generate::MD5 module is used
-> * LemonLdap::NG : they replaced Generate::MD5 by a similar code using
-> SHA256, but still using two rounds of hashing
-> 
-> CC'ing BestPractical. Will open an issue on LemonLdap::NG's gitlab.
 
-Please focus on lack of (explicit) use of a CSPRNG such as /dev/urandom,
-not on use of MD5 nor the double-hashing (which are non-issues).
+Vulnerabilities
+---------------
 
-> [1]https://metacpan.org/source/CHORNY/Apache-Session-1.93/lib/Apache/Session/Generate/MD5.pm
+1. CWE-20: scp client improper directory name validation [CVE-2018-20685]
 
-Alexander
+The scp client allows server to modify permissions of the target directory by using empty
+("D0777 0 \n") or dot ("D0777 0 .\n") directory name.
+
+
+2. CWE-20: scp client missing received object name validation [CVE-2019-6111]
+
+Due to the scp implementation being derived from 1983 rcp [1], the server chooses which
+files/directories are sent to the client. However, scp client only perform cursory
+validation of the object name returned (only directory traversal attacks are prevented).
+A malicious scp server can overwrite arbitrary files in the scp client target directory.
+If recursive operation (-r) is performed, the server can manipulate subdirectories
+as well (for example overwrite .ssh/authorized_keys).
+
+The same vulnerability in WinSCP is known as CVE-2018-20684.
+
+
+3. CWE-451: scp client spoofing via object name [CVE-2019-6109]
+
+Due to missing character encoding in the progress display, the object name can be used
+to manipulate the client output, for example to employ ANSI codes to hide additional
+files being transferred.
+
+
+4. CWE-451: scp client spoofing via stderr [CVE-2019-6110]
+
+Due to accepting and displaying arbitrary stderr output from the scp server, a
+malicious server can manipulate the client output, for example to employ ANSI codes
+to hide additional files being transferred.
+
+
+Proof-of-Concept
+----------------
+
+Proof of concept malicious scp server will be released at a later date.
+
+
+Vulnerable versions
+-------------------
+
+The following software packages have some or all vulnerabilities:
+
+                    ver      #1  #2  #3  #4
+OpenSSH scp        <=7.9    x   x   x   x
+PuTTY PSCP         ?        -   -   x   x
+WinSCP scp mode    <=5.13   -   x   -   -
+
+Tectia SSH scpg3 is not affected since it exclusively uses sftp protocol.
+
+
+Mitigation
+----------
+
+1. OpenSSH
+
+1.1 Switch to sftp if possible
+
+1.2 Alternatively apply the following patch to harden scp against most server-side
+     manipulation attempts: https://sintonen.fi/advisories/scp-name-validator.patch
+
+     NOTE: This patch may cause problems if the the remote and local shells don't
+     agree on the way glob() pattern matching works. YMMV.
+
+2. PuTTY
+
+2.1 No fix is available yet
+
+3. WinSCP
+
+3.1. Upgrade to WinSCP 5.14 or later
+
+
+
+Similar or prior work
+---------------------
+
+1. CVE-2000-0992 - scp overwrites arbitrary files
+
+
+References
+----------
+
+1. https://www.jeffgeerling.com/blog/brief-history-ssh-and-remote-access
+
+
+Credits
+-------
+
+The vulnerability was discovered by Harry Sintonen / F-Secure Corporation.
+
+
+Timeline
+--------
+
+2018.08.08  initial discovery of vulnerabilities #1 and #2
+2018.08.09  reported vulnerabilities #1 and #2 to OpenSSH
+2018.08.10  OpenSSH acknowledged the vulnerabilities
+2018.08.14  discovered & reported vulnerability #3 to OpenSSH
+2018.08.15  discovered & reported vulnerability #4 to OpenSSH
+2018.08.30  reported PSCP vulnerabilities (#3 and #4) to PuTTY developers
+2018.08.31  reported WinSCP vulnerability (#2) to WinSCP developers
+2018.09.04  WinSCP developers reported the vulnerability #2 fixed
+2018.11.12  requested a status update from OpenSSH
+2018.11.16  OpenSSH fixed vulnerability #1
+2019.01.07  requested a status update from OpenSSH
+2019.01.08  requested CVE assignments from MITRE
+2019.01.10  received CVE assignments from MITRE
+2019.01.11  public disclosure of the advisory
+2019.01.14  added a warning about the potential issues caused by the patch
