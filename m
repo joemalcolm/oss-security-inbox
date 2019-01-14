@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1042" "Monday" "1" "November" "2021" "16:10:02" "+0100" "Jakub Wilk" "jwilk@jwilk.net" nil "23" "Re: [oss-security] CVE-2021-42574: rustc 1.56.0 and bidirectional-override codepoints in source code" nil nil nil "11" nil nil (number mark "U       jwilk@jwilk. Nov  1   23/1042  " thread-indent "\"Re: [oss-security] CVE-2021-42574: rustc 1.56.0 and bidirectional-override codepoints in source code\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] CVE-2021-42574: rustc 1.56.0 and bidirectional-override codepoints in source code" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5190" "Monday" "14" "January" "2019" "09:51:43" "+0200" "Harry Sintonen" "security-advisories@kyber.fi" "<alpine.DEB.2.20.1901140949460.17855@o7.fi>" "165" "[oss-security] SCP client multiple vulnerabilities" "^Date:" nil nil "1" "2019011407:51:43" "[oss-security] SCP client multiple vulnerabilities" (number mark "        security-adv Jan 14  165/5190  " thread-indent "\"[oss-security] SCP client multiple vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3758 invoked by uid 550); 1 Nov 2021 15:10:17 -0000
+Received: (qmail 27888 invoked by uid 550); 14 Jan 2019 09:20:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,52 +11,180 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3737 invoked from network); 1 Nov 2021 15:10:16 -0000
-Authentication-Results: garm.ovh; auth=pass (GARM-103G0056e6e7ce3-fe6b-4aeb-abcc-4e32a65b2211,
-                    763B6099D94F4A007CEA2B234D1EB904B03D927D) smtp.auth=jwilk@jwilk.net
-X-OVh-ClientIp: 37.30.2.250
-Date: Mon, 1 Nov 2021 16:10:02 +0100
-From: Jakub Wilk <jwilk@jwilk.net>
-To: <oss-security@lists.openwall.com>
-Message-ID: <20211101151002.po6yfo7lgenrucet@jwilk.net>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <aa5e1a0e-daba-41f2-1f98-91d36584f119@pietroalbini.org>
+Received: (qmail 11646 invoked from network); 14 Jan 2019 07:52:02 -0000
+X-X-Sender: p@o7.fi
+Message-ID: <alpine.DEB.2.20.1901140949460.17855@o7.fi>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"; format=flowed
-Content-Disposition: inline
-In-Reply-To: <aa5e1a0e-daba-41f2-1f98-91d36584f119@pietroalbini.org>
-X-Originating-IP: [37.59.142.103]
-X-ClientProxiedBy: DAG4EX2.mxp6.local (172.16.2.32) To DAG4EX2.mxp6.local
- (172.16.2.32)
-X-Ovh-Tracer-GUID: 63eb9fce-6e86-456b-bdb7-d6237e09caad
-X-Ovh-Tracer-Id: 237846355782457111
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvtddrvdehvddgjeduucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucenucfjughrpeffhffvuffkfhggtggujghisehttdertddttddvnecuhfhrohhmpeflrghkuhgsucghihhlkhcuoehjfihilhhksehjfihilhhkrdhnvghtqeenucggtffrrghtthgvrhhnpeelffduueelheevhfdvjeejfeduvdfhuedvjedttdehgedugfetgefgudfgjeffudenucfkpheptddrtddrtddrtddpfeejrdehledrudegvddruddtfeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhhouggvpehsmhhtphhouhhtpdhhvghlohepmhigphhlrghniedrmhgrihhlrdhovhhhrdhnvghtpdhinhgvtheptddrtddrtddrtddpmhgrihhlfhhrohhmpehjfihilhhksehjfihilhhkrdhnvghtpdhrtghpthhtohepohhsshdqshgvtghurhhithihsehlihhsthhsrdhophgvnhifrghllhdrtghomh
-Subject: Re: [oss-security] CVE-2021-42574: rustc 1.56.0 and
- bidirectional-override codepoints in source code
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Date: Mon, 14 Jan 2019 09:51:43 +0200 (EET)
+From: Harry Sintonen <security-advisories@kyber.fi>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] SCP client multiple vulnerabilities
+To: oss-security@lists.openwall.com
 
->+    ('\u{202A}', ""), // The following unicode text flow control characters are inconsistently
->+    ('\u{202B}', ""), // supported accross CLIs and can cause confusion due to the bytes on disk
->+    ('\u{202D}', ""), // not corresponding to the visible source code, so we replace them always.
->+    ('\u{202E}', ""),
->+    ('\u{2066}', ""),
->+    ('\u{2067}', ""),
->+    ('\u{2068}', ""),
->+    ('\u{202C}', ""),
->+    ('\u{2069}', ""),
+scp client multiple vulnerabilities
+===================================
+The latest version of this advisory is available at:
+https://sintonen.fi/advisories/scp-client-multiple-vulnerabilities.txt
 
-Is it intentional that (here and elsewhere in the patch) they didn't 
-include all the characters with the Bidi_Control property?
 
-    $ grep -w Bidi_Control /usr/share/unicode/PropList.txt
-    061C          ; Bidi_Control # Cf       ARABIC LETTER MARK
-    200E..200F    ; Bidi_Control # Cf   [2] LEFT-TO-RIGHT MARK..RIGHT-TO-LEFT MARK
-    202A..202E    ; Bidi_Control # Cf   [5] LEFT-TO-RIGHT EMBEDDING..RIGHT-TO-LEFT OVERRIDE
-    2066..2069    ; Bidi_Control # Cf   [4] LEFT-TO-RIGHT ISOLATE..POP DIRECTIONAL ISOLATE
+Overview
+--------
 
-So U+061C, U+200E and U+200F appear to be missing from the patch.
+SCP clients from multiple vendors are susceptible to a malicious scp server performing
+unauthorized changes to target directory and/or client output manipulation.
 
--- 
-Jakub Wilk
+
+Description
+-----------
+
+Many scp clients fail to verify if the objects returned by the scp server match those
+it asked for. This issue dates back to 1983 and rcp, on which scp is based. A separate
+flaw in the client allows the target directory attributes to be changed arbitrarily.
+Finally, two vulnerabilities in clients may allow server to spoof the client output.
+
+
+Impact
+------
+
+Malicious scp server can write arbitrary files to scp target directory, change the
+target directory permissions and to spoof the client output.
+
+
+Details
+-------
+
+The discovered vulnerabilities, described in more detail below, enables the attack
+described here in brief.
+
+1. The attacker controlled server or Man-in-the-Middle(*) attack drops .bash_aliases
+    file to victim's home directory when the victim performs scp operation from the
+    server. The transfer of extra files is hidden by sending ANSI control sequences
+    via stderr. For example:
+
+    user@local:~$ scp user@remote:readme.txt .
+    readme.txt                                         100%  494     1.6KB/s   00:00
+    user@local:~$
+
+2. Once the victim launches a new shell, the malicious commands in .bash_aliases get
+    executed.
+
+
+*) Man-in-the-Middle attack does require the victim to accept the wrong host
+    fingerprint.
+
+
+Vulnerabilities
+---------------
+
+1. CWE-20: scp client improper directory name validation [CVE-2018-20685]
+
+The scp client allows server to modify permissions of the target directory by using empty
+("D0777 0 \n") or dot ("D0777 0 .\n") directory name.
+
+
+2. CWE-20: scp client missing received object name validation [CVE-2019-6111]
+
+Due to the scp implementation being derived from 1983 rcp [1], the server chooses which
+files/directories are sent to the client. However, scp client only perform cursory
+validation of the object name returned (only directory traversal attacks are prevented).
+A malicious scp server can overwrite arbitrary files in the scp client target directory.
+If recursive operation (-r) is performed, the server can manipulate subdirectories
+as well (for example overwrite .ssh/authorized_keys).
+
+The same vulnerability in WinSCP is known as CVE-2018-20684.
+
+
+3. CWE-451: scp client spoofing via object name [CVE-2019-6109]
+
+Due to missing character encoding in the progress display, the object name can be used
+to manipulate the client output, for example to employ ANSI codes to hide additional
+files being transferred.
+
+
+4. CWE-451: scp client spoofing via stderr [CVE-2019-6110]
+
+Due to accepting and displaying arbitrary stderr output from the scp server, a
+malicious server can manipulate the client output, for example to employ ANSI codes
+to hide additional files being transferred.
+
+
+Proof-of-Concept
+----------------
+
+Proof of concept malicious scp server will be released at a later date.
+
+
+Vulnerable versions
+-------------------
+
+The following software packages have some or all vulnerabilities:
+
+                    ver      #1  #2  #3  #4
+OpenSSH scp        <=7.9    x   x   x   x
+PuTTY PSCP         ?        -   -   x   x
+WinSCP scp mode    <=5.13   -   x   -   -
+
+Tectia SSH scpg3 is not affected since it exclusively uses sftp protocol.
+
+
+Mitigation
+----------
+
+1. OpenSSH
+
+1.1 Switch to sftp if possible
+
+1.2 Alternatively apply the following patch to harden scp against most server-side
+     manipulation attempts: https://sintonen.fi/advisories/scp-name-validator.patch
+
+     NOTE: This patch may cause problems if the the remote and local shells don't
+     agree on the way glob() pattern matching works. YMMV.
+
+2. PuTTY
+
+2.1 No fix is available yet
+
+3. WinSCP
+
+3.1. Upgrade to WinSCP 5.14 or later
+
+
+
+Similar or prior work
+---------------------
+
+1. CVE-2000-0992 - scp overwrites arbitrary files
+
+
+References
+----------
+
+1. https://www.jeffgeerling.com/blog/brief-history-ssh-and-remote-access
+
+
+Credits
+-------
+
+The vulnerability was discovered by Harry Sintonen / F-Secure Corporation.
+
+
+Timeline
+--------
+
+2018.08.08  initial discovery of vulnerabilities #1 and #2
+2018.08.09  reported vulnerabilities #1 and #2 to OpenSSH
+2018.08.10  OpenSSH acknowledged the vulnerabilities
+2018.08.14  discovered & reported vulnerability #3 to OpenSSH
+2018.08.15  discovered & reported vulnerability #4 to OpenSSH
+2018.08.30  reported PSCP vulnerabilities (#3 and #4) to PuTTY developers
+2018.08.31  reported WinSCP vulnerability (#2) to WinSCP developers
+2018.09.04  WinSCP developers reported the vulnerability #2 fixed
+2018.11.12  requested a status update from OpenSSH
+2018.11.16  OpenSSH fixed vulnerability #1
+2019.01.07  requested a status update from OpenSSH
+2019.01.08  requested CVE assignments from MITRE
+2019.01.10  received CVE assignments from MITRE
+2019.01.11  public disclosure of the advisory
+2019.01.14  added a warning about the potential issues caused by the patch
