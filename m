@@ -1,57 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/22/2
-Message-Id: <C1E053CF-5359-43A3-8572-BE6CDFDCC2B1@oracle.com>
-Date: Thu, 22 Aug 2019 10:04:42 +0100
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/14/3
+Message-ID: <CAEnKrMFsdZJvpeipoVYFKGfRtPpUSA6ccEVNTtbVYf35euN8MQ@mail.gmail.com>
+Date: Mon, 14 Jan 2019 14:43:58 +1100
+From: Paul Harvey <pharvey@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: multiple vulnerabilities in the USB subsystem x2
+Subject: CVE-2018-16886 etcd: Improper Authentication in auth/store.go:AuthInfoFromTLS() via gRPC-gateway
 Content-Type: text/plain; charset=utf-8
 
+Hello,
 
+etcd versions 3.2.0 through 3.3.10 are vulnerable to an improper
+authentication issue when role-based access control (RBAC) is used and
+client-cert-auth is enabled. If an etcd client server TLS certificate
+contains a Common Name (CN) which matches a valid RBAC username, a
+remote attacker may authenticate as that user with any valid (trusted)
+client certificate in a REST API request to the gRPC-gateway.
 
-> On 20 Aug 2019, at 19:20, Andrey Konovalov <andreyknvl@...il.com> wrote:
-> 
-> * https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15216
-> 
-> An issue was discovered in the Linux kernel before 5.0.14. There is a
-> NULL pointer dereference caused by a malicious USB device in the
-> drivers/usb/misc/yurex.c driver.
-> 
-> * https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15217
-> 
-> An issue was discovered in the Linux kernel before 5.2.3. There is a
-> NULL pointer dereference caused by a malicious USB device in the
-> drivers/media/usb/zr364xx/zr364xx.c driver.
-> 
-> * https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15218
-> 
-> An issue was discovered in the Linux kernel before 5.1.8. There is a
-> NULL pointer dereference caused by a malicious USB device in the
-> drivers/media/usb/siano/smsusb.c driver.
-> 
-> * https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15219
-> 
-> An issue was discovered in the Linux kernel before 5.1.8. There is a
-> NULL pointer dereference caused by a malicious USB device in the
-> drivers/usb/misc/sisusbvga/sisusb.c driver.
+Upstream issue:
+https://github.com/etcd-io/etcd/pull/10366
 
+Upstream changelog:
+https://github.com/etcd-io/etcd/blob/1eee465a43720d713bb69f7b7f5e120135fdb1ac/CHANGELOG-3.3.md#security-authentication
+https://github.com/etcd-io/etcd/blob/1eee465a43720d713bb69f7b7f5e120135fdb1ac/CHANGELOG-3.2.md#security-authentication
 
-Are these even realistic?   If I'm going to leave malicious USB devices in the parking lot for mischief am I going to rely on the unknown victim running a Linux distro with the requisite kernel modules or am I going to just drop a cheap and near-universal USB killer?
+This issue was reported by Matt Wheeler (Osirium)
 
-If I'm going to be connecting the USB device to unguarded laptops myself to crash them, as opposed to destroy them, why not just casually lean on the power button for a few seconds?[1]
-
-Actually, this is the CVSS3 score for a laptop's power button: 4.6 (CVSS:3.0/AV:P/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H (Medium).   There isn't a vector for a USB killer because there's no "A:P" (permanent loss).
-
-I'm not saying that these aren't bugs that should be fixed, far from it.  That's not the issue.  The issue is that, for example, PCI DSS requires fixes for anything with a score >= 4.0 so we have endless end-users demanding fixes for their servers which don't have even physical access or, indeed, physical presence.  It's not even demanding the fixes as they may already be fixed or simply not applicable because the affected driver isn't present; it's the hours or days wasted verifying that the fix available or not present.[2]
-
-
-
-Frustrated of Lancashire, jch
-
-
-[1] Some may remember the VAX 11/750 reset button.  In order to be able to use the serial console (usually a DECwriter) you had to have the key in which also enabled the reset button.   Before I put the VAX "Do Not Copy this Key" key (yes, it fits all 750s) I pressed accidentally pressed the reset button a couple of times just by propping myself up on the machine.  Spectacularly bad design by today's standards.
-
-
-[2] Full disclosure.  It's ultimately about me because it's me that eventually gets the "customer requires fix for CVE-2019-15216" :)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (269 bytes)
+-- 
+Paul Harvey / Red Hat Product Security
