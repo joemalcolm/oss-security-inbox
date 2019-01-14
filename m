@@ -1,30 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/23/3
-Message-Id: <76DD3118-C738-425E-B96F-85EFF8BB1D62@beckweb.net>
-Date: Wed, 23 Jan 2019 11:18:20 +0100
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/14/4
+Message-ID: <56087dbc-0455-ae8c-2a44-b526e0a83e5e@gentoo.org>
+Date: Mon, 14 Jan 2019 20:38:53 +0100
+From: Kristian Fiskerstrand <k_f@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Sandbox bypass in multiple Jenkins plugins
+Subject: Statistics for distros lists updated for 2018Q4
 Content-Type: text/plain; charset=utf-8
 
+Hi,
+
+Just a short notice that the statistics for the distros list have been
+updated for the 4th quarter of 2018 at
+http://oss-security.openwall.org/wiki/mailing-lists/distros/stats
+
+-- 
+Kristian Fiskerstrand
+OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
+fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
 
 
-> On 8. Jan 2019, at 13:46, Daniel Beck <ml@...kweb.net> wrote:
-> 
-> SECURITY-1266
-> Script Security sandbox protection could be circumvented during the 
-> compilation phase by applying AST transforming annotations such as @Grab
-> to source code elements.
-> 
-> Both the pipeline validation REST APIs and actual script/pipeline 
-> execution are affected.
-> 
-> This allowed users with Overall/Read permission, or able to control 
-> Jenkinsfile or sandboxed Pipeline shared library contents in SCM, to 
-> bypass the sandbox protection and execute arbitrary code on the Jenkins 
-> master.
 
-CVE-2019-1003000 (Script Security Plugin)
-CVE-2019-1003001 (Pipeline: Groovy Plugin)
-CVE-2019-1003002 (Pipeline: Declarative Plugin)
-
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
