@@ -1,140 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/25/2
-Message-Id: <E1iNxUH-0002hA-3u@xenbits.xenproject.org>
-Date: Fri, 25 Oct 2019 11:10:33 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 287 v3 (CVE-2019-17342) - x86: steal_page violates page_struct access discipline
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/16/2
+Message-ID: <f1f281ec-0342-23bf-43ba-47fc7e836372@Apache.org>
+Date: Tue, 15 Jan 2019 22:51:10 +0100
+From: Peter Kovacs <Petko@...che.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2018-11790: Apache OpenOffice: Arithmetic overflow and wrap around during string length calculation
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+CVE-2018-11790 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-11790>
 
-            Xen Security Advisory CVE-2019-17342 / XSA-287
-                              version 3
+Apache OpenOffice Advisory
+<https://www.openoffice.org/security/cves/CVE-2018-11790.html>
 
-         x86: steal_page violates page_struct access discipline
+*CVE-2018-11790 Arithmetic overflow and wrap around during sting length
+calculation *
 
-UPDATES IN VERSION 3
-====================
+*Fixed in Apache OpenOffice 4.1.6*
 
-CVE assigned.
+*Description*
 
-ISSUE DESCRIPTION
-=================
+When loading a document with smaller end line termination then the
+operating system uses, the defect occurs. In this case OpenOffice runs
+into an Arithmetic Overflow at a string length calculation.
 
-Xen's reference counting rules were designed to allow pages to change
-owner and state without requiring a global lock.  Each page has a page
-structure, and a very specific set of access disciplines must be
-observed to ensure that pages are freed properly, and that no writable
-mappings exist for PV pagetable pages.
+*Severity: Medium*
 
-Unfortunately, when the XENMEM_exchange hypercall was introduced,
-these access disciplines were violated, opening up several potential
-race conditions.
+There are no known exploits of this vulnerability.
+A proof-of-concept demonstration exists.
+ssd-disclosure <https://ssd-disclosure.com/index.php/archives/3758>
 
-IMPACT
-======
+Thanks to the reporter for discovering this issue.
 
-A single PV guest can leak arbitrary amounts of memory, leading to a
-denial of service.
+*Vendor: The Apache Software Foundation*
 
-A cooperating pair of PV and HVM/PVH guests can get a writable
-pagetable entry, leading to information disclosure or privilege
-escalation.
+*Versions Affected*
 
-Privilege escalation attacks using only a single PV guest or a pair of
-PV guests have not been ruled out.
+All Apache OpenOffice versions 4.1.5 and older are affected.
+OpenOffice.org versions are also affected.
 
-Note that both of these attacks require very precise timing, which may
-be difficult to exploit in practice.
+*Mitigation*
 
-VULNERABLE SYSTEMS
-==================
+Install Apache OpenOffice 4.1.6 for the latest maintenance and
+cumulative security fixes. Use the Apache OpenOffice download page
+<https://www.openoffice.org/download/>.
 
-Only x86 systems are vulnerable.
+*Further Information*
 
-Only systems which run PV guests are vulnerable.  Systems which run
-only HVM/PVH guests are not vulnerable.
+For additional information and assistance, consult the Apache OpenOffice
+Community Forums <https://forum.openoffice.org/> or make requests to the
+users@...noffice.apache.org <mailto:users@...noffice.apache.org> public
+mailing list.
 
-MITIGATION
-==========
+The latest information on Apache OpenOffice security bulletins can be
+found at the Bulletin Archive page
+<https://www.openoffice.org/security/bulletin.html>.
 
-Running only HVM or PVH guests will avoid these vulnerabilities.
+------------------------------------------------------------------------
 
-CREDITS
-=======
+Security Home <http://security.openoffice.org> -> Bulletin
+<http://www.openoffice.org/security/bulletin.html> -> CVE-2018-11790
+<https://www.openoffice.org/security/cves/CVE-2018-11790.html>
 
-This issue was discovered by Jan Beulich of SUSE.
 
-RESOLUTION
-==========
 
-Applying the appropriate attached patch resolves this issue.
-
-xsa287.patch           xen-unstable
-xsa287-4.11.patch      Xen 4.11.x
-xsa287-4.10.patch      Xen 4.10.x
-xsa287-4.9.patch       Xen 4.9.x
-xsa287-4.8.patch       Xen 4.8.x
-xsa287-4.7.patch       Xen 4.7.x
-
-$ sha256sum xsa287*
-ae2b9261e26df871693478629c63970ba30817ee1dcb2266b89d8b067833c1b3  xsa287.meta
-7de1b886d69dd7c497f88d41adf9a6f7cf9a305fd8ae9d714e1125e2a22208ab  xsa287.patch
-55f40f2f9bb41c85ac80dac775352e28b25fada80dae574e9d10300d5e2b91ce  xsa287-4.7.patch
-57312ff131eb6b51235723e862adf42ad3529ed13135375875c054fa0b55f80b  xsa287-4.8.patch
-34f4b835766a38bcf4066ccbab74676eda176e15ed2a6bd7884678a64507f89a  xsa287-4.9.patch
-c7eaf8a325011dda84b02ee097ddbc7b5f2f4d3399de545a3a7b14e2d23f4278  xsa287-4.10.patch
-6793315f714a249a4fad12b36559640b2f97f19f5b85f0d58694c6e78aa3d567  xsa287-4.11.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl2y18cMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZMbcIAKcMpCX29ANW9/W2cnGremzicicGAQW9KvmZVK5e
-weLBItv9pTqIGeVm71/X2dXt5KeRryh+Py53zYtUhy4pFQXQAezEzlRs+Y4TtX3l
-+XVsfDFqks+bfyduBKMerwJpqr2Hd3DOdvir8iSqH2jHLLd5JqTYho+m0L0HPD9J
-Smn43rwurMChSjSFR4H+TnrOcX/1iUWgj3BVUkswGn3CrUdBJFe5mp6QeoYlyiL1
-CN6rmx5+CWLvBTwMkEiA8/3GX322qv4f2P0woOnaFW+aNgj1VRcyB2l1V0ParYYw
-0Yfj32XNIhdzNfUanenRAUNnTYSzVFFdbTMgV2sgwZjXNgE=
-=7jA5
------END PGP SIGNATURE-----
-
-Download attachment "xsa287.meta" of type "application/octet-stream" (1822 bytes)
-
-Download attachment "xsa287.patch" of type "application/octet-stream" (11786 bytes)
-
-Download attachment "xsa287-4.7.patch" of type "application/octet-stream" (11891 bytes)
-
-Download attachment "xsa287-4.8.patch" of type "application/octet-stream" (11901 bytes)
-
-Download attachment "xsa287-4.9.patch" of type "application/octet-stream" (11962 bytes)
-
-Download attachment "xsa287-4.10.patch" of type "application/octet-stream" (11891 bytes)
-
-Download attachment "xsa287-4.11.patch" of type "application/octet-stream" (11880 bytes)
