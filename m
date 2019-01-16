@@ -1,127 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/18/3
-Message-ID: <a172617e-fd76-8f64-9af6-fca53c10a4f4@canonical.com>
-Date: Mon, 18 Feb 2019 17:41:56 +0100
-From: Chris Coulson <chris.coulson@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/16/3
+Message-ID: <CAG_fn=XwtjiiqtRveFpvbpg_gE9McZbNUOckS0ox4ZdDvu4tHA@mail.gmail.com>
+Date: Wed, 16 Jan 2019 16:00:49 +0100
+From: Alexander Potapenko <glider@...gle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2019-6454: systemd (PID1) crash with specially crafted D-Bus message
+Subject: Re: Heap based buffer overflow in wolfSSL
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Wed, Jan 16, 2019 at 12:44 PM Dhiraj Mishra
+<mishra.dhiraj95@...il.com> wrote:
+>
+> Hi List,
+Hello,
 
-I recently discovered a way for an unprivileged user to crash PID1 by sending it a specially crafted D-Bus message on the system bus and causing the stack pointer to jump the stack guard pages, leaving it pointing to an unmapped page.
+I cannot judge whether this is a real problem or not, but the report
+below is definitely missing critical information, like symbols,
+filenames and line numbers.
+Without those it's even impossible to tell a bug in wolfSSL code from
+a bug in the benchmark itself.
+You can refer to
+https://clang.llvm.org/docs/AddressSanitizer.html#symbolizing-the-reports
+for the instructions on how to get symbol information.
 
-Details of the issue follow:
-
-----
-bus_process_object() in src/libsystemd/sd-bus/bus-objects.c allocates a buffer on the stack large enough to temporarily store the object path specified in the incoming message:
-
-        assert(m->path);
-        assert(m->member);
-
-        pl = strlen(m->path);
-        do {
-=>              char prefix[pl+1];
-
-                bus->nodes_modified = false;
-
-                r = object_find_and_run(bus, m, m->path, false, &found_object);
-
-As the length of this is attacker controlled, it is possible for a malicious unprivileged local user to send a message which results in the stack pointer moving outside of the bounds of the currently mapped stack region, jumping over the stack guard pages.
-
-According to the dbus specification, the path "may be of any length" (with the length being represented on the wire by a uint32), but systemd seems to limit the size of incoming messages to 128MB (BUS_MESSAGE_SIZE_MAX). From testing on Ubuntu 18.10, it seems that the
-real limit is actually much less than this - dbus-daemon drops the connection when I try to send a message with an object path greater than about 32MB. The effect of this is that the stack pointer always lands in an unmapped page and it doesn't seem to be possible to make it land in another mapped page.
-
-Running a simple script that sends a message with a long enough path to org.freedesktop.systemd1 on Ubuntu 18.10 (systemd v239) and CentOS 7.6 (systemd v219) results in an easily reproducible crash (and subsequent kernel panic) on both x86 and x86-64, with a stack trace that looks like this:
-
-Program received signal SIGSEGV, Segmentation fault.                                               
-bus_process_object (bus=0x56085041a6a0, m=0x5608504d4d00) at ../src/libsystemd/sd-bus/bus-objects.c:1378 
-1378    ../src/libsystemd/sd-bus/bus-objects.c: No such file or directory.                               
-(gdb) bt
-#0  bus_process_object (bus=0x56085041a6a0, m=0x5608504d4d00) at ../src/libsystemd/sd-bus/bus-objects.c:1378
-#1  0x00007f4a4e373b37 in process_message (m=0x5608504d4d00, bus=0x56085041a6a0) at ../src/libsystemd/sd-bus/sd-bus.c:2663
-#2  process_running (ret=0x0, priority=0, hint_priority=false, bus=0x56085041a6a0) at ../src/libsystemd/sd-bus/sd-bus.c:2705
-#3  bus_process_internal (bus=bus@...ry=0x56085041a6a0, hint_priority=hint_priority@...ry=false, priority=priority@...ry=0,
-ret=ret@...ry=0x0) at ../src/libsystemd/sd-bus/sd-bus.c:2924
-#4  0x00007f4a4e373d9c in sd_bus_process (bus=bus@...ry=0x56085041a6a0, ret=ret@...ry=0x0) at ../src/libsystemd/sd-bus/sd-bus.c:2951
-#5  0x00007f4a4e373e68 in io_callback (s=<optimized out>, fd=<optimized out>, revents=<optimized out>, userdata=<optimized out>, s=<optimized out>, fd=<optimized out>, revents=<optimized out>, userdata=<optimized out>) at ../src/libsystemd/sd-bus/sd-bus.c:3304
-#6  0x00007f4a4e34fa10 in source_dispatch (s=s@...ry=0x560850433590) at ../src/libsystemd/sd-event/sd-event.c:3103
-#7  0x00007f4a4e34fcff in sd_event_dispatch (e=e@...ry=0x56085036a090) at ../src/libsystemd/sd-event/sd-event.c:3516
-#8  0x00007f4a4e34fec8 in sd_event_run (e=0x56085036a090, timeout=18446744073709551615) at ../src/libsystemd/sd-event/sd-event.c:3573
-#9  0x000056084e579453 in manager_loop (m=0x5608503675d0) at ../src/core/manager.c:2814
-#10 invoke_main_loop (m=0x5608503675d0, ret_reexecute=0x7fff92a0076a, ret_retval=0x7fff92a0076c, ret_shutdown_verb=<optimized out>,
-ret_fds=0x7fff92a00770, ret_switch_root_dir=0x7fff92a00798, ret_switch_root_init=0x7fff92a00790, ret_error_message=0x7fff92a00780) at ../src/core/main.c:1630
-#11 0x000056084e4da610 in main (argc=<optimized out>, argv=0x7fff92a00a48) at ../src/core/main.c:2415
-
-(gdb) p $_siginfo
-$1 = {si_signo = 11, si_errno = 0, si_code = 1, _sifields = {_pad = {-1867007032, 32767, 0 <repeats 26 times>}, _kill = {si_pid =
--1867007032, si_uid = 32767}, _timer = {si_tid = -1867007032, si_overrun = 32767, si_sigval = {sival_int = 0, sival_ptr = 0x0}}, _rt = {si_pid = -1867007032, si_uid = 32767, si_sigval = {sival_int = 0, sival_ptr = 0x0}}, _sigchld = {si_pid = -1867007032, si_uid = 32767, si_status = 0, si_utime = 0, si_stime = 0}, _sigfault = {si_addr = 0x7fff90b7bbc8, _addr_lsb = 0, _addr_bnd = {_lower = 0x0, _upper = 0x0}}, _sigpoll = {si_band = 140735621348296, si_fd = 0}}}
-
-(gdb) disassemble
-Dump of assembler code for function bus_process_object:
-......
-   0x00007f4a4e387aae <+238>:   mov    %r13,%rsi     
-   0x00007f4a4e387ab1 <+241>:   mov    %r12,%rdi                           
-   0x00007f4a4e387ab4 <+244>:   mov    %rsp,%rbx                            
-=> 0x00007f4a4e387ab7 <+247>:   callq  0x7f4a4e386280 <object_find_and_run>
-
-You can see that %rsp points to an unmapped page:
-
-(gdb) info
-registers                                                                                 
-
-rax            0x1e84810           32000016
-rbx            0x7fff90b7bbd0    140735621348304
-rcx            0x0                0
-rdx            0x7f4a48dbe028     139957026676776
-rsi            0x5608504d4d00     94593706970368
-rdi            0x56085041a6a0     94593706206880
-rbp            0x7fff92a00430     0x7fff92a00430                                                       
-rsp            0x7fff90b7bbd0      0x7fff90b7bbd0
-r8             0x7fff92a003f7      140735653348343
-r9             0x1                 1
-r10            0x1                 1
-r11            0x9690b4ffdb710482  -7597373560382749566
-r12            0x56085041a6a0      94593706206880
-r13            0x5608504d4d00      94593706970368
-r14            0x7fff92a003f7      140735653348343
-r15            0x7f4a4e465be0      139957117541344
-rip            0x7f4a4e387ab7      0x7f4a4e387ab7 <bus_process_object+247>
-eflags         0x10202             [ IF RF ]
-cs             0x33                51
-ss             0x2b                43
-ds             0x0                 0
-es             0x0                 0
-fs             0x0                 0
-gs             0x0                 0
-
-(gdb) info proc mappings
-process 1
-
-Mapped address spaces:
-
-          Start Addr           End Addr       Size     Offset objfile
-......
-      0x7f4a4e76f000     0x7f4a4e770000     0x1000    0x29000 /lib/x86_64-linux-gnu/ld-2.28.so
-      0x7f4a4e770000     0x7f4a4e771000     0x1000       0x0
-      0x7fff929e0000     0x7fff92a01000    0x21000        0x0 [stack]
-      0x7fff92ac8000     0x7fff92acb000     0x3000        0x0 [vvar]
-
-Given the constraint that it doesn't appear to be possible to make the stack pointer land in another mapped page, this bug is classified as denial-of-service.
-----
-
-There are 3 patches required to resolve this, provided by Red Hat Product Security and attached to this message. The first patch enforces a sensible size limit on D-Bus object paths, dropping messages when the path is too long. The second patch removes usage of variable-size stack allocations for object paths. The third patch stops the system bus connection from being terminated when an invalid message is received.
-
-I would like to thank Riccardo Schirone, Lennart Poettering and Red Hat Product Security for their help with this issue.
-
-Regards,
-- Chris
+HTH,
+Alex
+> ## Summary:
+> wolfSSL is an C-language-based SSL/TLS library targeted at IoT, embedded,
+> and RTOS environments a heap-based-buffer overflow was observed in
+> tls_bench.c which is a benchmark tool in wolfSSL.
+>
+> ## ASAN
+> ==4088==ERROR: AddressSanitizer: heap-buffer-overflow on address
+> 0x619000000480 at pc 0x00000050ff16 bp 0x7fef206fdbf0 sp 0x7fef206fdbe8
+> WRITE of size 1 at 0x619000000480 thread T2
+>     #0 0x50ff15  (/wolfssl/examples/benchmark/tls_bench+0x50ff15)
+>     #1 0x4dfa52  (/wolfssl/examples/benchmark/tls_bench+0x4dfa52)
+>     #2 0x7fef243ac6da  (/lib/x86_64-linux-gnu/libpthread.so.0+0x76da)
+>     #3 0x7fef23ab188e  (/lib/x86_64-linux-gnu/libc.so.6+0x12188e)
+>
+> 0x619000000480 is located 0 bytes to the right of 1024-byte region
+> [0x619000000080,0x619000000480)
+> allocated by thread T2 here:
+>     #0 0x4d1fa0  (/wolfssl/examples/benchmark/tls_bench+0x4d1fa0)
+>     #1 0x50f277  (/wolfssl/examples/benchmark/tls_bench+0x50f277)
+>     #2 0x4dfa52  (/wolfssl/examples/benchmark/tls_bench+0x4dfa52)
+>
+> Thread T2 created by T0 here:
+>     #0 0x435490  (/wolfssl/examples/benchmark/tls_bench+0x435490)
+>     #1 0x50cbf5  (/wolfssl/examples/benchmark/tls_bench+0x50cbf5)
+>     #2 0x5101d0  (/wolfssl/examples/benchmark/tls_bench+0x5101d0)
+>     #3 0x7fef239b1b96  (/lib/x86_64-linux-gnu/libc.so.6+0x21b96)
+>
+> SUMMARY: AddressSanitizer: heap-buffer-overflow
+> (/wolfssl/examples/benchmark/tls_bench+0x50ff15)
+> Shadow bytes around the buggy address:
+>   0x0c327fff8040: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+>   0x0c327fff8050: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+>   0x0c327fff8060: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+>   0x0c327fff8070: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+>   0x0c327fff8080: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+> =>0x0c327fff8090:[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+>   0x0c327fff80a0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+>   0x0c327fff80b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+>   0x0c327fff80c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+>   0x0c327fff80d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+>   0x0c327fff80e0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+> Shadow byte legend (one shadow byte represents 8 application bytes):
+>   Addressable:           00
+>   Partially addressable: 01 02 03 04 05 06 07
+>   Heap left redzone:       fa
+>   Freed heap region:       fd
+>   Stack left redzone:      f1
+>   Stack mid redzone:       f2
+>   Stack right redzone:     f3
+>   Stack after return:      f5
+>   Stack use after scope:   f8
+>   Global redzone:          f9
+>   Global init order:       f6
+>   Poisoned by user:        f7
+>   Container overflow:      fc
+>   Array cookie:            ac
+>   Intra object redzone:    bb
+>   ASan internal:           fe
+>   Left alloca redzone:     ca
+>   Right alloca redzone:    cb
+> ==4088==ABORTING
+>
+> References:
+> https://github.com/wolfSSL/wolfssl
+> https://github.com/wolfSSL/wolfssl/issues/2032
+> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-6439
+>
+>
+> Thank you
+> @mishradhiraj_
 
 
-View attachment "0001-Refuse-dbus-message-paths-longer-than-BUS_PATH_SIZE_.patch" of type "text/x-patch" (1848 bytes)
 
-View attachment "0002-Allocate-temporary-strings-to-hold-dbus-paths-on-the.patch" of type "text/x-patch" (6660 bytes)
+-- 
+Alexander Potapenko
+Software Engineer
 
-View attachment "0003-sd-bus-if-we-receive-an-invalid-dbus-message-ignore-.patch" of type "text/x-patch" (1991 bytes)
+Google Germany GmbH
+Erika-Mann-Straße, 33
+80636 München
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Geschäftsführer: Paul Manicle, Halimah DeLaine Prado
+Registergericht und -nummer: Hamburg, HRB 86891
+Sitz der Gesellschaft: Hamburg
