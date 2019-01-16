@@ -1,237 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/06/2
-Message-Id: <76BCA87C-B9AF-4C4A-9777-8DDAAC805CBD@beckweb.net>
-Date: Wed, 6 Mar 2019 15:41:34 +0100
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/16/1
+Message-ID: <CAG8b5tRb__-uRn5B7hqN1q+yt3s7MPeC-GBEzfK3Ua9NkBm1hw@mail.gmail.com>
+Date: Wed, 16 Jan 2019 09:26:24 +0400
+From: Dhiraj Mishra <mishra.dhiraj95@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins plugins
+Subject: Heap based buffer overflow in wolfSSL
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software. The following
-releases contain fixes for security vulnerabilities:
+Hi List,
 
-* AppDynamics Dashboard Plugin 1.0.15
-* Azure VM Agents Plugin 0.8.1
-* Bitbar Run-in-Cloud Plugin 2.70.0
-* Email Extension Plugin 2.65
-* Groovy Plugin 2.2
-* Job DSL Plugin 1.72
-* Matrix Project Plugin 1.14
-* OSF Builder Suite For Salesforce Commerce Cloud :: Deploy Plugin 1.0.11
-* Pipeline: Groovy Plugin 2.64
-* Rabbit-MQ Publisher Plugin 1.2.0
-* Repository Connector Plugin 1.2.5
-* Script Security Plugin 1.54
+## Summary:
+wolfSSL is an C-language-based SSL/TLS library targeted at IoT, embedded,
+and RTOS environments a heap-based-buffer overflow was observed in
+tls_bench.c which is a benchmark tool in wolfSSL.
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2019-03-06/
+## ASAN
+==4088==ERROR: AddressSanitizer: heap-buffer-overflow on address
+0x619000000480 at pc 0x00000050ff16 bp 0x7fef206fdbf0 sp 0x7fef206fdbe8
+WRITE of size 1 at 0x619000000480 thread T2
+    #0 0x50ff15  (/wolfssl/examples/benchmark/tls_bench+0x50ff15)
+    #1 0x4dfa52  (/wolfssl/examples/benchmark/tls_bench+0x4dfa52)
+    #2 0x7fef243ac6da  (/lib/x86_64-linux-gnu/libpthread.so.0+0x76da)
+    #3 0x7fef23ab188e  (/lib/x86_64-linux-gnu/libc.so.6+0x12188e)
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+0x619000000480 is located 0 bytes to the right of 1024-byte region
+[0x619000000080,0x619000000480)
+allocated by thread T2 here:
+    #0 0x4d1fa0  (/wolfssl/examples/benchmark/tls_bench+0x4d1fa0)
+    #1 0x50f277  (/wolfssl/examples/benchmark/tls_bench+0x50f277)
+    #2 0x4dfa52  (/wolfssl/examples/benchmark/tls_bench+0x4dfa52)
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
+Thread T2 created by T0 here:
+    #0 0x435490  (/wolfssl/examples/benchmark/tls_bench+0x435490)
+    #1 0x50cbf5  (/wolfssl/examples/benchmark/tls_bench+0x50cbf5)
+    #2 0x5101d0  (/wolfssl/examples/benchmark/tls_bench+0x5101d0)
+    #3 0x7fef239b1b96  (/lib/x86_64-linux-gnu/libc.so.6+0x21b96)
 
----
+SUMMARY: AddressSanitizer: heap-buffer-overflow
+(/wolfssl/examples/benchmark/tls_bench+0x50ff15)
+Shadow bytes around the buggy address:
+  0x0c327fff8040: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c327fff8050: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c327fff8060: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c327fff8070: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c327fff8080: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c327fff8090:[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c327fff80a0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c327fff80b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c327fff80c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c327fff80d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c327fff80e0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==4088==ABORTING
 
-SECURITY-1336 (1)
-Script Security sandbox protection could be circumvented during parsing, 
-compilation, and script instantiation by providing a crafted Groovy script.
-
-Script Security Plugin is now newly applying sandbox protection during 
-these phases.
-
-This affected both script execution (typically invoked from other plugins) 
-as well as an HTTP endpoint providing script validation and allowed users 
-with Overall/Read permission to bypass the sandbox protection and execute 
-arbitrary code on the Jenkins master.
-
-The API `GroovySandbox#run(Script, Whitelist)` has been deprecated and now 
-emits a warning to the system log about potential security problems. 
-`GroovySandbox#run(GroovyShell, String, Whitelist)` replaces it. 
-`GroovySandbox#checkScriptForCompilationErrors(String, GroovyClassLoader)` 
-has been added as a safer method to implement script validation.
-
-
-SECURITY-1336 (2)
-Pipeline: Groovy sandbox protection could be circumvented during parsing, 
-compilation, and script instantiation by providing a crafted Groovy script.
-
-This allowed users able to control the contents of a pipeline to bypass 
-the sandbox protection and execute arbitrary code on the Jenkins master.
-
-Pipeline: Groovy Plugin now uses Script Security APIs that apply sandbox 
-protection during these phases.
-
-
-SECURITY-1339
-Matrix Project Plugin supports a sandboxed Groovy expression to filter 
-matrix combinations. Its sandbox protection could be circumvented during 
-parsing, compilation, and script instantiation by providing a crafted 
-Groovy script.
-
-This allowed users able to configure a Matrix project to bypass the 
-sandbox protection and execute arbitrary code on the Jenkins master.
-
-Matrix Project Plugin now uses Script Security APIs that apply sandbox 
-protection during these phases.
+References:
+https://github.com/wolfSSL/wolfssl
+https://github.com/wolfSSL/wolfssl/issues/2032
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-6439
 
 
-SECURITY-1340
-Email Extension Plugin supports sandboxed Groovy expressions for multiple 
-features. Its sandbox protection could be circumvented during parsing, 
-compilation, and script instantiation by providing a crafted Groovy script.
-
-This allowed users able to control the plugin’s job-specific configuration 
-to bypass the sandbox protection and execute arbitrary code on the Jenkins 
-master.
-
-Email Extension Plugin now uses Script Security APIs that apply sandbox 
-protection during these phases.
-
-
-SECURITY-1338
-Groovy Plugin supports sandboxed Groovy expressions for its "System 
-Groovy" functionality. Its sandbox protection could be circumvented during 
-parsing, compilation, and script instantiation by providing a crafted 
-Groovy script.
-
-This affected both System Groovy script execution as well as an HTTP 
-endpoint providing script validation, and allowed users with Overall/Read 
-permission to bypass the sandbox protection and execute arbitrary code on 
-the Jenkins master.
-
-Groovy Plugin now uses Script Security APIs that apply sandbox protection 
-during these phases.
-
-
-SECURITY-1342
-Job DSL Plugin supports sandboxed Groovy expressions for Job DSL 
-definitions. Its sandbox protection could be circumvented during parsing, 
-compilation, and script instantiation by providing a crafted Groovy script.
-
-This allowed users able to control the Job DSL scripts to bypass the 
-sandbox protection and execute arbitrary code on the Jenkins master.
-
-Job DSL Plugin now uses Script Security APIs that apply sandbox protection 
-during these phases.
-
-
-SECURITY-1330
-A missing permission check in a form validation method in Azure VM Agents 
-Plugin allowed users with Overall/Read access to verify a submitted 
-configuration, obtaining limited information about the Azure account and 
-configuration.
-
-Additionally, this form validation method did not require POST requests, 
-resulting in a potential CSRF vulnerability.
-
-This form validation method now requires POST requests and 
-Overall/Administer permissions.
-
-
-SECURITY-1331
-A missing permission check in an HTTP endpoint allowed users with 
-Overall/Read access to attach a public IP address to an Azure VM in Azure 
-VM Agents Plugin, making a virtual machine publicly accessible.
-
-Additionally, this form validation method did not require POST requests, 
-resulting in a CSRF vulnerability with more limited impact, as the IP 
-address would not be known.
-
-This form validation method now requires POST requests and 
-Overall/Administer permissions.
-
-
-SECURITY-1332
-Azure VM Agents Plugin provides a list of applicable credential IDs to 
-allow administrators configuring the plugin to select the one to use.
-
-This functionality did not check permissions, allowing any user with 
-Overall/Read permission to get a list of valid credentials IDs. Those 
-could be used as part of an attack to capture the credentials using 
-another vulnerability.
-
-An enumeration of credentials IDs in this plugin now requires 
-Overall/Administer permission.
-
-
-SECURITY-958
-Repository Connector Plugin stored the username and password in its 
-configuration unencrypted in its global configuration file on the Jenkins 
-master. This password could be viewed by users with access to the master 
-file system.
-
-The plugin now stores the password encrypted in the configuration files on 
-disk and no longer transfers it to users viewing the configuration form in 
-plain text.
-
-
-SECURITY-1087
-AppDynamics Dashboard Plugin stored username and password in its 
-configuration unencrypted in jobs' config.xml files on the Jenkins master. 
-This password could be viewed by users with Extended Read permission, or 
-access to the master file system.
-
-While masked from view using a password form field, the password was 
-transferred in plain text to users when accessing the job configuration 
-form.
-
-AppDynamics Dashboard Plugin now stores the password encrypted in the 
-configuration files on disk and no longer transfers it to users viewing 
-the configuration form in plain text. Existing jobs need to have their 
-configuration saved for existing plain text passwords to be overwritten.
-
-
-SECURITY-848
-Rabbit-MQ Publisher Plugin stored the username and password in its 
-configuration unencrypted in its global configuration file on the Jenkins 
-master. This password could be viewed by users with access to the master 
-file system.
-
-The plugin now stores the password encrypted in the configuration files on 
-disk and no longer transfers it to users viewing the configuration form in 
-plain text.
-
-
-SECURITY-970
-A missing permission check in a form validation method of Rabbit-MQ 
-Publisher Plugin allowed users with Overall/Read access to have Jenkins 
-initiate a RabbitMQ connection to an attacker-specified host and port with 
-an attacker-specified username and password.
-
-Additionally, this form validation method did not require POST requests, 
-resulting in a CSRF vulnerability.
-
-This form validation method now requires POST requests and 
-Overall/Administer permissions.
-
-
-SECURITY-1038
-OSF Builder Suite For Salesforce Commerce Cloud : : Deploy Plugin stored 
-the HTTP proxy username and password in its configuration unencrypted in 
-its global configuration file on the Jenkins master. This password could 
-be viewed by users with access to the master file system.
-
-The plugin now integrates with Credentials Plugin to store the HTTP proxy 
-credentials.
-
-
-SECURITY-1088
-A missing permission check in a method performing both form validation and 
-saving new configuration in Bitbar Run-in-Cloud Plugin allowed users with 
-Overall/Read permission to have Jenkins master connect to an attacker-
-specified host with attacker-specified credentials, and, if successful, 
-save that as the new configuration for the plugin. This could then 
-potentially result in future builds submitting their data to an 
-unauthorized remote server.
-
-Additionally, this method did not require POST requests, resulting in a 
-CSRF vulnerability.
-
-This form validation method now requires POST requests and 
-Overall/Administer permissions.
+Thank you
+@mishradhiraj_
 
