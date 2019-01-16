@@ -1,29 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/08/1
-Message-Id: <09D4A543-35B4-4416-A0E3-CF88CFDFDE12@apache.org>
-Date: Thu, 8 Aug 2019 12:15:54 -0400
-From: Velmurugan Periasamy <vel@...che.org>
-To: security@...che.org, oss-security@...ts.openwall.com
-Cc: private@...ger.apache.org, dev@...ger.apache.org, user@...ger.apache.org
-Subject: CVE update - fixed in Apache Ranger 2.0.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/16/4
+Message-Id: <7201AC57-5316-478F-A241-C43FCC25B0F2@beckweb.net>
+Date: Wed, 16 Jan 2019 17:51:47 +0100
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Multiple vulnerabilities in Jenkins
 Content-Type: text/plain; charset=utf-8
 
-Hello:
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software. The following
+releases contain fixes for security vulnerabilities:
 
-Please find below details on CVE fixed in Ranger 2.0.0 release. Release details can be found at https://cwiki.apache.org/confluence/display/RANGER/2.0.0+Release+-+Apache+Ranger
+* Jenkins weekly 2.160
+* Jenkins LTS 2.150.2
 
-———————————————————————————————————————————————————
-CVE-2019-12397: Apache Ranger cross site scripting issue
-Severity: Normal
-Vendor: The Apache Software Foundation
-Versions Affected: 0.7.0 to 1.2.0 versions of Apache Ranger, prior to 2.0.0
-Users affected: All users of ranger policy admin tool
-Description: Apache Ranger was found to be vulnerable to a Cross-Site Scripting in policy import functionality. 
-Fix detail: Added logic to sanitize the user input.
-Mitigation: Users should upgrade to 2.0.0 or later version of Apache Ranger with the fix.
-Credit: Jan Kaszycki from STM Solutions
-———————————————————————————————————————————————————
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2019-01-16/
 
-Thank you,
-Velmurugan Periasamy
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-868
+Users with the Overall/RunScripts permission (typically administrators) 
+were able to use the Jenkins script console to craft a 'Remember me' 
+cookie that would never expire.
+
+This allowed attackers access to a Jenkins instance while the 
+corresponding user in the configured security realm exists, for example to 
+persist access after another successful attack. 
+
+
+SECURITY-901
+When using an external security realm such as LDAP or Active Directory, 
+deleting a user from the security realm does not result in the user losing 
+access to Jenkins.
+
+While deleting the user record from Jenkins did invalidate the 'Remember 
+me' cookie, there was no way to invalidate active sessions besides 
+restarting Jenkins or terminating sessions through other means, such as 
+Monitoring Plugin.
 
