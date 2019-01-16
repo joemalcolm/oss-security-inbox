@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["905" "Wednesday" "22" "July" "2015" "19:55:42" "+0200" "Michele Spagnuolo" "mikispag@gmail.com" "<CAJmfd-iN-y9g9cN9vLvR8B9YC6kNveh0L_aY5ZhNitQR=z=viw@mail.gmail.com>" "27" "[oss-security] Multiple memory corruption vulnerabilities in SoX 14.4.2" nil nil nil "7" "2015072217:55:42" "[oss-security] Multiple memory corruption vulnerabilities in SoX 14.4.2" (number mark "U       mikispag@gma Jul 22   27/905   " thread-indent "\"[oss-security] Multiple memory corruption vulnerabilities in SoX 14.4.2\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1484" "Wednesday" "16" "January" "2019" "17:51:47" "+0100" "Daniel Beck" "ml@beckweb.net" "<7201AC57-5316-478F-A241-C43FCC25B0F2@beckweb.net>" "40" "[oss-security] Multiple vulnerabilities in Jenkins" nil nil nil "1" "2019011616:51:47" "[oss-security] Multiple vulnerabilities in Jenkins" (number mark "U       ml@beckweb.n Jan 16   40/1484  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30003 invoked by uid 550); 22 Jul 2015 18:07:53 -0000
+Received: (qmail 32574 invoked by uid 550); 16 Jan 2019 16:52:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,52 +12,57 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17712 invoked from network); 22 Jul 2015 17:56:32 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:cc:content-type;
-        bh=xrmDYGfHpgh/7RZnHVaVT5eLzR+TtAQoIExLLn2s6kw=;
-        b=cP5tZJtyX3jCMEH4s2Sd9asM4OUUUekbb+TO+qL+XtJc6S2bW9nzC3t8mA8l2ET95b
-         O8kyIvY4orzPvftJZaIgIPkuib8a/UFWZUbgMe4BjdHI3T8pfSJOMMggPXzzpC7YYyav
-         fOogNjoz3t0iReBc4fBIlUGb6YIUuVElWj46J4AfQMYAA2AkYz8VYRL3ZaduzfNvhT2w
-         Gk4yXDdNU5sPTUjkOjhPjjL+b80Bw2IAoukc3Ufm2Ezgy0ed5vLSxeiaY6k8gLjz5jsp
-         d3G9yiVJbegiLrprF01U3ZzX97s6U3La6LJHjJocGEZ4/VNiD8xZQy1A2ddU819Et/41
-         Z1IQ==
-X-Received: by 10.112.219.200 with SMTP id pq8mr3527209lbc.110.1437587781455;
- Wed, 22 Jul 2015 10:56:21 -0700 (PDT)
-MIME-Version: 1.0
-From: Michele Spagnuolo <mikispag@gmail.com>
-Date: Wed, 22 Jul 2015 19:55:42 +0200
-Message-ID: <CAJmfd-iN-y9g9cN9vLvR8B9YC6kNveh0L_aY5ZhNitQR=z=viw@mail.gmail.com>
+Received: (qmail 32553 invoked from network); 16 Jan 2019 16:52:00 -0000
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 11.5 \(3445.9.1\))
+Message-Id: <7201AC57-5316-478F-A241-C43FCC25B0F2@beckweb.net>
+Date: Wed, 16 Jan 2019 17:51:47 +0100
 To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Content-Type: multipart/alternative; boundary=001a11c25ca60c17e8051b7a7da5
-Subject: [oss-security] Multiple memory corruption vulnerabilities in SoX 14.4.2
+X-Mailer: Apple Mail (2.3445.9.1)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1547657520;a00f5e4a;
+X-HE-SMSGID: 1gjoPs-0005rj-HU
+Subject: [oss-security] Multiple vulnerabilities in Jenkins
 
---001a11c25ca60c17e8051b7a7da5
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software. The following
+releases contain fixes for security vulnerabilities:
 
-=E2=80=8BHello,
+* Jenkins weekly 2.160
+* Jenkins LTS 2.150.2
 
-I would like to report publicly new memory corruption vulnerabilities in
-the latest SoX, 14.4.2 - these have been reported in April 2015 through
-oCERT, but they have notified me they still haven't received a response
-from upstream.
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2019-01-16/
 
-Please see this shared folder, visible to anybody with the link:
-https://drive.google.com/folderview?id=3D0B52EFul-UCEIflZhcjlrRGlqcWdER2xJZ=
-WR4dmVUQ1RaRGl6a09sbVdGYjg2MER6OHl3aUU&usp=3Dsharing
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-The write heap buffer overflows are related to ADPCM handling in WAV files,
-while the read heap buffer overflow is while opening a .VOC.
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
 
-For each crash, you have the input file and a .txt with the ASAN output.
+---
 
-Thanks,
-Michele Spagnuolo
-Google Security Team=E2=80=8B
+SECURITY-868
+Users with the Overall/RunScripts permission (typically administrators) 
+were able to use the Jenkins script console to craft a 'Remember me' 
+cookie that would never expire.
 
-CVE-ASSIGN: Please assign CVEs. Thanks.
+This allowed attackers access to a Jenkins instance while the 
+corresponding user in the configured security realm exists, for example to 
+persist access after another successful attack. 
 
---001a11c25ca60c17e8051b7a7da5--
+
+SECURITY-901
+When using an external security realm such as LDAP or Active Directory, 
+deleting a user from the security realm does not result in the user losing 
+access to Jenkins.
+
+While deleting the user record from Jenkins did invalidate the 'Remember 
+me' cookie, there was no way to invalidate active sessions besides 
+restarting Jenkins or terminating sessions through other means, such as 
+Monitoring Plugin.
+
