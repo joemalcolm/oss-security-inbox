@@ -1,33 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/02/4
-Message-ID: <CAC1dCwXDrvMA_Mt_Rqzpq2RAqxfUaYwP0gEebS+sNW59i-2Yzg@mail.gmail.com>
-Date: Fri, 2 Aug 2019 07:35:09 -0400
-From: Tim Allison <tallison@...che.org>
-To: dev@...a.apache.org, user@...a.apache.org,  Apache Security Team <security@...che.org>, announce@...che.org, oss-security@...ts.openwall.com
-Subject: [CVE-2019-10094] StackOverflow from Crafted Package/Compressed Files in Apache Tika's RecursiveParserWrapper
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/21/4
+Message-ID: <CAH0z3hNq8mSGrMcE2Zr_o5OOEcdA7gkZ4iZTC6d7+kav+70jYA@mail.gmail.com>
+Date: Sun, 20 Jan 2019 15:53:18 -0800
+From: Vlad Tsyrklevich <vlad@...rklevich.net>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Unfixed FreeBSD uninitialized memory disclosures
 Content-Type: text/plain; charset=utf-8
 
-Title: [CVE-2019-10094] StackOverflow from Crafted Package/Compressed
-Files in Apache Tika's RecursiveParserWrapper
+In January 2017 I reported results of a clang analyzer-based static
+analysis step [1] to find uninitialized kernel-to-userland memory
+disclosures against a number of kernels. I reported results in the FreeBSD
+kernel to their security team. Over the next 2 years some [2][3][4] of the
+bugs were fixed but it seems like only when they were re-reported.
 
-Severity: Medium
+I re-ran the analyzer against an updated FreeBSD kernel and reported
+updated results [5] last month--the crossed out reports are false positives
+as determined by manual inspection. Though the impact of these bugs is not
+critical, they are worth fixing. I've contacted the security team again but
+it did not sound like these reports were prioritized to be fixed
+immediately. I'm e-mailing oss-security to let other downstream FreeBSD
+users patch them on their own if they were so inclined. Most of them can be
+fixed by simply adding a memset() or an M_ZERO to malloc().
 
-Vendor: The Apache Software Foundation
+[1] https://tsyrklevich.net/2017/03/27/kernel-clang-analyzer/
+[2] https://www.freebsd.org/security/advisories/FreeBSD-SA-17:10.kldstat.asc
+[3] https://www.freebsd.org/security/advisories/FreeBSD-EN-18:05.mem.asc
+[4] https://www.freebsd.org/security/advisories/FreeBSD-EN-18:12.mem.asc
+[5] https://tsyrklevich.net/clang_analyzer/freebsd_122818/
 
-Versions Affected: Apache Tika  1.7 to 1.21
-
-Description:
-A carefully crafted package/compressed file that, when
-unzipped/uncompressed yields the same file (a quine), causes a
-StackOverflowError in Apache Tika's RecursiveParserWrapper in versions
-1.7-1.21 of Apache Tika.
-
-
-Mitigation:
-Apache Tika users should upgrade to 1.22 or later.
-
-
-Credit:
-This issue was discovered by Tim Allison on the Apache Tika team. Many
-thanks to Matthew Barber and Erling Ellingson for crafting examples
-and contributing these files to Tika's unit tests.
