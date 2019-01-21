@@ -1,27 +1,98 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/30/1
-Message-ID: <20191030072636.GA17423@tunkki.bugs.fi>
-Date: Wed, 30 Oct 2019 09:26:36 +0200
-From: Henri Salo <henri@...v.fi>
-To: Randy Barlow <randy@...ctronsweatshop.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Bodhi: Script injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/21/7
+Message-ID: <a9aeffb8-a81a-a732-5502-cab007814ef0@powerdns.com>
+Date: Mon, 21 Jan 2019 15:23:11 +0100
+From: Remi Gacogne <remi.gacogne@...erdns.com>
+To: oss-security@...ts.openwall.com
+Subject: PowerDNS Security Advisories 2011-01 and 2019-02
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 29, 2019 at 10:12:35AM -0400, Randy Barlow wrote:
-> A script injection vulnerability[0] was recently reported in Bodhi[1],
-> and a patch[2] has been merged in response. Users with packager
-> privileges were able to create or edit updates that included <script>
-> tags.
-> 
-> There is not yet a CVE for this issue.
-> 
-> 
-> [0] https://pagure.io/fedora-infrastructure/issue/8324
-> [1] https://github.com/fedora-infra/bodhi
-> [2] https://github.com/fedora-infra/bodhi/pull/3657
+Hi all,
 
-You can request CVE via https://cveform.mitre.org/
+We just released PowerDNS Recursor 4.1.9 fixing two security issues:
 
--- 
-Henri Salo
+- PowerDNS Security Advisory 2019-01 (CVE-2019-3806): Lua hooks are not
+called over TCP
+- PowerDNS Security Advisory 2019-02 (CVE-2019-3807): DNSSEC validation
+is not performed for AA=0 responses
+
+These issues respectively affect PowerDNS Recursor from 4.1.4 and 4.1.0,
+up to and including 4.1.8. PowerDNS Recursor 4.0.x and below are not
+affected.
+
+The full security advisories are provided below, and can also be
+found at:
+-
+https://docs.powerdns.com/recursor/security-advisories/powerdns-advisory-2019-01.html
+-
+https://docs.powerdns.com/recursor/security-advisories/powerdns-advisory-2019-02.html
+
+Minimal patches are available at [1] and [2].
+
+[1]: https://downloads.powerdns.com/patches/2019-01/
+[2]: https://downloads.powerdns.com/patches/2019-02/
+
+Best regards,
+
+Remi
+
+PowerDNS Security Advisory 2019-01: Lua hooks are not applied in certain
+configurations
+========================================================================
+
+-  CVE: CVE-2019-3806
+-  Date: 21st of January 2019
+-  Affects: PowerDNS Recursor from 4.1.4 up to and including 4.1.8
+-  Not affected: 4.0.x, 4.1.0 up to and including 4.1.3, 4.1.9
+-  Severity: Low
+-  Impact: Access restriction bypass
+-  Exploit: This problem can be triggered via TCP queries
+-  Risk of system compromise: No
+-  Solution: Upgrade to a non-affected version
+-  Workaround: Switch to pdns-distributes-queries=no
+
+An issue has been found in PowerDNS Recursor where Lua hooks are not
+properly applied to queries received over TCP in some specific
+combination of settings, possibly bypassing security policies enforced
+using Lua.
+
+When the recursor is configured to run with more than one thread
+(threads=X) and to do the distribution of incoming queries to the worker
+threads itself (pdns-distributes-queries=yes), the Lua script is not
+properly loaded in the thread handling incoming TCP queries, causing the
+Lua hooks to not be properly applied.
+
+This issue has been assigned CVE-2019-3806 by Red Hat.
+
+PowerDNS Recursor from 4.1.4 up to and including 4.1.8 is affected.
+
+
+PowerDNS Security Advisory 2019-02: Insufficient validation of DNSSEC
+signatures
+=====================================================================
+
+-  CVE: CVE-2019-3807
+-  Date: 21st of January 2019
+-  Affects: PowerDNS Recursor from 4.1.0 up to and including 4.1.8
+-  Not affected: 4.0.x, 4.1.9
+-  Severity: Medium
+-  Impact: Insufficient validation
+-  Exploit: This problem can be triggered via crafted responses
+-  Risk of system compromise: No
+-  Solution: Upgrade to a non-affected version
+
+An issue has been found in PowerDNS Recursor where records in the answer
+section of responses received from authoritative servers with the AA
+flag not set were not properly validated, allowing an attacker to bypass
+DNSSEC validation.
+
+This issue has been assigned CVE-2019-3807 by Red Hat.
+
+PowerDNS Recursor from 4.1.0 up to and including 4.1.8 is affected.
+
+We would like to thank Ralph Dolmans and George Thessalonikefs of
+NLNetLabs for finding and subsequently reporting this issue!
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
