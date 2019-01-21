@@ -1,52 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/08/2
-Message-ID: <CAGUWgD9si-9cayWBzt+AUi8iyb0hY=8fExf6-mLDr-C+mcqiyg@mail.gmail.com>
-Date: Fri, 8 Nov 2019 10:03:44 +0200
-From: Georgi Guninski <gguninski@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Controversy and exploitability of gcc issue 30475 |assert(int+100 > int)|
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/21/5
+Message-ID:  <MW2PR02MB378825576FA4EE8917BAE85CAA9F0@MW2PR02MB3788.namprd02.prod.outlook.com>
+Date: Mon, 21 Jan 2019 12:29:47 +0000
+From: Craig Young <cyoung@...pwire.com>
+To: Hanno Böck <hanno@...eck.de>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Apache web server use after free bugs (unfixed)
 Content-Type: text/plain; charset=utf-8
 
-Controversy and exploitability of gcc issue 30475 |assert(int+100 > int)|
 
-There is heated discussion on gcc's bugzilla starting from 2007:
-https://gcc.gnu.org/bugzilla/show_bug.cgi?id=30475
-and clang is also affected, depending on optimization flags.
+The tpp.c error and child abort are also logged when testing without pool debugging or ASAN.
 
-poc is the program at end.
+-Craig
+________________________________
+From: Florian Weimer <fweimer@...hat.com>
+Sent: Monday, January 21, 2019 3:23:22 AM
+To: Hanno Böck
+Cc: oss-security@...ts.openwall.com
+Subject: Re: [oss-security] Apache web server use after free bugs (unfixed)
 
-gcc with all optimization flags optimizes away |assert(a+100 > a)|
-even if there is no integer overflow, only signed overflow.
+* Hanno Böck:
 
-clang fires the assertion with -O0, but also optimizes it away
-with -O3
+> threading related error
+> =======================
+>
+> In addition to the ASAN use after free reports, httpd logs threading
+> related errors:
+>
+> AH00052: child pid [pid] exit signal Aborted (6)
+> apache2: tpp.c:84: __pthread_tpp_change_priority: Assertion `new_prio
+> == -1 || (new_prio >= fifo_min_prio && new_prio <= fifo_max_prio)'
+> failed.
 
-The formal verifier CBMC fires the assertion, which might of
-interest about formally verified programs.
+This can happen if the mutex data is corrupted, so it's possible this
+also caused by a use-after-free issue (if the memory is reallocated and
+overwritten before the mutex operation that causes the assertion
+failure).
 
-Signed integer arithmetic is commonly used even without integer
-overflows.
+Did you observe this with the pool debugger only?
 
-Could this compiler issue be security problem?
+Thanks,
+Florian
 
-Any workarounds?
-
-===poc===
-#include <assert.h>
-
-int foo(int a) {
-  assert(a+100 > a);
-  printf("%d %d\n",a+100,a);
-  return a;
-}
-
-int main() {
-  foo(100);
-  foo(0x7fffffff);
-}
-=========
-
-
-CV:    https://j.ludost.net/resumegg.pdf
-site:  http://www.guninski.com
-blog:  https://j.ludost.net/blog
