@@ -1,49 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/01/9
-Message-ID: <2308-1546350758.537839@jIRr.Wi7S.U1Lk>
-Date: Tue, 01 Jan 2019 13:52:38 +0000
-From: halfdog <me@...fdog.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: Asserts considered harmful (or GMP spills its sensitive information)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/21/2
+Message-ID: <87sgxmiflx.fsf@oldenburg2.str.redhat.com>
+Date: Mon, 21 Jan 2019 09:23:22 +0100
+From: Florian Weimer <fweimer@...hat.com>
+To: Hanno Böck <hanno@...eck.de>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Apache web server use after free bugs (unfixed)
 Content-Type: text/plain; charset=utf-8
 
-Simon McVittie writes:
-> On Tue, 01 Jan 2019 at 12:07:17 +0100, Niels M�ller wrote:
-> ...
+* Hanno Böck:
+
+> threading related error
+> =======================
 >
-> Some processes (including those that are setuid or setgid,
-> I think?) are automatically undumpable.
+> In addition to the ASAN use after free reports, httpd logs threading
+> related errors:
+>
+> AH00052: child pid [pid] exit signal Aborted (6)
+> apache2: tpp.c:84: __pthread_tpp_change_priority: Assertion `new_prio
+> == -1 || (new_prio >= fifo_min_prio && new_prio <= fifo_max_prio)'
+> failed.
 
-This is not true and depends on your "/proc/sys/fs/suid_dumpable"
-settings, see [0]. Especially "2" was intended to capture cores
-from SUIDs also, e.g. together with systemd-coredump.
+This can happen if the mutex data is corrupted, so it's possible this
+also caused by a use-after-free issue (if the memory is reallocated and
+overwritten before the mutex operation that causes the assertion
+failure).
 
+Did you observe this with the pool debugger only?
 
-To test your SUID-coredump behaviour, you can use NullExec.c
-from below. It quite reliable segfaults many SUID binaries. The
-argv -> env trickery is useful as some binaries (e.g. crontab)
-overread the gap between argv/env on stack so start processing
-environment variables as argvs, thus circumventing any IDS/IPS
-depending on correct checking of execve()'s call arguments.
-
-$ ./NullExec /bin/su
-
-hd
-
-[0] https://github.com/torvalds/linux/blob/master/Documentation/sysctl/fs.txt
-
-$ cat NullExec.c 
-#define _GNU_SOURCE
-#include <stdio.h>
-#include <unistd.h>
-
-int main(int argc, char **argv) {
-  if(argc<2) {
-    fprintf(stderr, "Usage: %s [progname] [envvars...]\n");
-    return(1);
-  }
-  execve(argv[1], NULL, argv+2);
-  return(1);
-}
-
-
+Thanks,
+Florian
