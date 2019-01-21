@@ -1,50 +1,116 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/20/3
-Message-ID: <20190620175621.GB2646@lindsey>
-Date: Thu, 20 Jun 2019 12:56:22 -0500
-From: Tyler Hicks <tyhicks@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/21/1
+Message-ID: <20190121090535.227a1db9@computer>
+Date: Mon, 21 Jan 2019 09:05:35 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: Security Report <security-report@...smail.netflix.com>, security-report@...flix.com, Arturo Borrero González <arturo@...filter.org>
-Subject: Re: Linux and FreeBSD Kernel: Multiple TCP-based remote denial of service issues
+Subject: Apache web server use after free bugs (unfixed)
 Content-Type: text/plain; charset=utf-8
 
-On 2019-06-17 10:33:38, Security Report wrote:
-> #1: CVE-2019-11477: SACK Panic (Linux >= 2.6.29)
-> 
-> Description: A sequence of SACKs may be crafted such that one can trigger 
-> an integer overflow, leading to a kernel panic.
-> 
-> Fix: Apply the attached patch (“PATCH_net_1_4.patch”). Additionally, 
-> versions of the Linux kernel up to, and including, 4.14 require a second 
-> patch (“PATCH_net_1a.patch”).
-> 
-> Workaround #1: Block connections with a low MSS using one of the attached 
-> filters. (The values in the filters are examples. You can apply a higher or 
-> lower limit, as appropriate for your environment.) Note that these filters 
-> may break legitimate connections which rely on a low MSS. Also, note that 
-> this mitigation is only effective if TCP probing is disabled (that is, the 
-> net.ipv4.tcp_mtu_probing sysctl is set to 0, which appears to be the 
-> default value for that sysctl).
+Apache use after free bugs
+==========================
 
-Netflix graciously provided this example iptables rule as a workaround:
+While doing some fuzz testing on the apache httpd server
+with address sanitizer we regularly observed use after free
+bugs. We originally observed these issues in the http2
+module, but we were also able to reproduce them without
+http2 enabled, so either we're facing multiple bugs or
+there's an underlying bug in the core apache code.
 
- # iptables -A INPUT -p tcp -m tcpmss --mss 1:500 -j DROP
+Originally we used fuzzing payloads to trigger this bug,
+but we later observed that sending random garbage in
+parallel is enough to trigger the bug.
 
-I have received a few questions about an equivalent nftables rule. I
-didn't have one but Arturo Borrero González has provided this equivalent
-rule:
+We reported this behavior to the apache security team for the first
+time in June 2018. The apache developers did not seem to take the 
+issue as seriously as we had expected. 
 
- # nft add rule inet filter input tcp flags syn tcp option maxseg size 1-500 drop
+It was pointed out to us that some fixes already in their code may
+fix the issue, however we are still able to reproduce these bugs in
+the latest version (2.4.37).
 
-I did a simple test of sending SYN packets with MSS values of 500 and
-lower to a server that had the nftables rule loaded. The packets were
-dropped by the server with no SYN-ACK response. Bumping the MSS value up
-to 501 resulted in the SYN packet not being dropped and a proper SYN-ACK
-response.
+The apache developers indicated to us that they'd not consider
+these security issues unless we can show a practical exploit.
+Due to the complexity of the apache code base and our lack
+of specialization in binary memory exploitation we feel unable
+to do this. It is, however, our belief that use after free bugs 
+should generally be seen as potential security bugs.
 
-Consider adding the nftables rule as an alternative in any written
-advisories on SACK Panic.
+For this reason, we have chosen to share this information with the
+community and hope others will continue the analysis.
 
-Thanks for the nftables rule, Arturo!
+apr pool allocator
+==================
 
-Tyler
+For memory allocations apache http uses the apr library's
+pool allocator that allows reserving a larger chunk of
+memory as a pool and do memory allocations within that pool.
+This can, and in our case does, hide memory safety issues.
+
+apr has an option --enable-pool-debug=yes that will cause
+a single malloc call for each memory allocation, allowing
+the use of memory safety checkers like ASAN.
+
+The apache developers suggested that our ASAN reports may stem
+from an incompatibility between the pool debugger and the http2
+module. However we were later able to reproduce these issues
+without the http2 module.
+
+We were also able to reproduce these issues with valgrind and
+without the pool allocator.
+
+
+threading related error
+=======================
+
+In addition to the ASAN use after free reports, httpd logs threading
+related errors:
+
+AH00052: child pid [pid] exit signal Aborted (6)
+apache2: tpp.c:84: __pthread_tpp_change_priority: Assertion `new_prio
+== -1 || (new_prio >= fifo_min_prio && new_prio <= fifo_max_prio)'
+failed.
+
+We found a ten year old bug in the Apache bug tracker
+mentioning such errors:
+https://bz.apache.org/bugzilla/show_bug.cgi?id=46185
+
+It was closed as "INVALID".
+
+
+asan stack traces
+=================
+
+We share asan stack traces from these bugs at
+  https://github.com/hannob/apache-uaf/tree/master/asan
+
+
+reproduction
+============
+
+To reproduce the issue:
+
+1. Compile apr with the pool debugger and address sanitizer.
+
+2. Compile apache with address sanitizer.
+
+3. Run a command like this to send random garbage to the server:
+for x in $(seq 1 50); do for i in $(seq 1 1000); do head -n
+10 /dev/urandom | nc 127.0.0.1 80 & done; sleep 5; done
+
+The bugs appear very irregularly, you may need to
+"attack" it for a while.
+
+
+Hanno Böck
+Craig Young (Tripwire VERT)
+
+Thanks to Markus Vervier and Luis Merino of X41 D-SEC GmbH for double
+checking.
+
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
