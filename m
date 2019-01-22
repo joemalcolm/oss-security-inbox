@@ -1,106 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/06/1
-Message-ID: <824640cc-1d9f-3be6-335b-72f4b105cd70@csail.mit.edu>
-Date: Wed, 6 Nov 2019 00:00:44 -0800
-From: "Srivatsa S. Bhat" <srivatsa@...il.mit.edu>
-To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
-Cc: Steven Rostedt <rostedt@...dmis.org>, sashal@...nel.org, Alexey Makhalov <amakhalov@...are.com>, Anish Swaminathan <anishs@...are.com>, Sharath George <sharathg@...are.com>, mijzerman@...are.com, Srivatsa Bhat <srivatsab@...are.com>
-Subject: Re: Membership application for linux-distros - VMware
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/22/1
+Message-ID: <20190122155216.4fx6xh3tlohmxe3n@storm.m.i2n>
+Date: Tue, 22 Jan 2019 16:52:16 +0100
+From: Thomas Jarosch <thomas.jarosch@...ra2net.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: ghostscript: 1Policy operator gives access to .forceput CVE-2018-18284
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-Hi Alexander,
+You wrote on Thu, Oct 18, 2018 at 01:25:29PM +0000:
+> ‐‐‐‐‐‐‐ Original Message ‐‐‐‐‐‐‐
+> On Thursday, October 18, 2018 2:32 PM, Tavis Ormandy <taviso@...gle.com> wrote:
+> 
+> > On Thu, Oct 18, 2018 at 3:51 AM Jordan Glover <Golden_Miller83@...tonmail.ch> wrote:
+> >
+> >> Do you know if upstream is going to make new release soon or distros should take the
+> >> pain and backport all of those themselves?
+> >
+> > AFAIK upstream only makes quarterly releases, so I think you need to backport.
+> >
+> > Tavis.
+> 
+> In normal, boring times yes but 9.25 was available just 10 days after 9.24 as urgent security
+> release and it seems it was still not enough.
 
-On 11/5/19 10:04 AM, Solar Designer wrote:
-> On Mon, Nov 04, 2019 at 03:03:42PM -0800, Srivatsa S. Bhat wrote:
->> I'd like to sign up as primary for Administrative 5: "Determine if the
->> reported issues are Linux-specific... ", and as backup for Technical 4.
->> "Check if related issues exist in the same piece of software...".
-> 
-> Great.  VMware Photon OS is now signed up for those.
-> 
+just a quick follow up: ghostscript 9.26 was released on 2018-11-20
+and fixes the issue demonstrated by the exploit posted in:
+https://bugs.chromium.org/p/project-zero/issues/detail?id=1696
 
-Thank you!
+*******************************************
+# gs executeonly-bypass.pdf 
+GPL Ghostscript 9.26 (2018-11-20)
+Copyright (C) 2018 Artifex Software, Inc.  All rights reserved.
+This software comes with NO WARRANTY: see the file PUBLIC for details.
+what do we want?
+        deprecate untrusted postscript!
+when do we want it?
+        now!
+Error: /undefined in .policyprocs
+Operand stack:
+   --dict:967/1684(ro)(G)--   SAFER   false   --dict:0/0(L)--   --dict:0/0(L)--  
+ --dict:967/1684(ro)(G)--   (ignored)   SAFER   false
+Execution stack:
+   %interp_exit   .runexec2   --nostringval--   --nostringval--   
+--nostringval--   2   %stopped_push   --nostringval--   --nostringval--   
+--nostringval--   false   1   %stopped_push   2029   1   3   %oparray_pop   2028 
+  1   3   %oparray_pop   2009   1   3   %oparray_pop   1868   1   3   
+%oparray_pop   --nostringval--   %errorexec_pop   .runexec2   --nostringval--   
+--nostringval--   --nostringval--   2   %stopped_push   --nostringval--   
+--nostringval--
+Dictionary stack:
+   --dict:967/1684(ro)(G)--   --dict:0/20(G)--   --dict:79/200(L)--
+Current allocation mode is local
+Current file position is 575
+GPL Ghostscript 9.26: Unrecoverable error, exit code 1
+*******************************************
 
-> SUSE is now backup (was primary) for Administrative 5: "Determine if the
-> reported issues are Linux-specific ..."
-> 
->> (I did consider the other task that you brought up, namely Technical
->> 6, but I think we'd need more experience on the list before we can
->> sign up for that task).
-> 
-> I thought so too, which is a reason why I also directed that request to
-> other distros reading our discussion.
-> 
->> Also, is there a write-up somewhere that defines exactly what primary
->> and backup means in this context?
-> 
-> No.
-> 
->> At the moment, I'm assuming that,
->> for a given task, the primary distro will take up that task for every
->> issue that gets posted onto linux-distros; and in case the primary is
->> unavailable (due to vacation/travel etc), then the backup will step up
->> for that task until the primary gets back. Is that how it works?
-> 
-> Yes, and besides that I also expect the backup to watch the list for
-> related aspects of issues that the primary might have missed or
-> misunderstood or mishandled, and chiming in as necessary to correct
-> that.  For example, let's take Administrative task 1:
-> 
-> "Promptly review new issue reports for meeting the list's requirements
-> and confirm receipt of the report and, when necessary, inform the
-> reporter of any issues with their report (e.g., obviously not actionable
-> by the distros) and request and/or propose any required yet missing
-> information (most notably, a tentative public disclosure date/time) -
-> primary: CoreOS, backup: Oracle"
-> 
-> Given this, I expect that if there's no response to the issue reporter
-> and the list by CoreOS within a day, Oracle would respond in their place
-> even if these distros had not negotiated/announced any vacation/travel
-> beforehand.  (We tell reporters that they should expect a response
-> within 48 hours, which leaves about one day for the primary to respond
-> and another day for the backup to respond in their place if the primary
-> did not.)  Similarly, I'd expect Oracle to send a follow-up message to
-> the reporter and the list if CoreOS' response is missing required
-> information or questions/requests - e.g., the report didn't have a
-> tentative public disclosure date/time yet CoreOS didn't request that.
-> I'd also expect Oracle to chime in if they find CoreOS' response wrong -
-> e.g., if it acknowledged the embargo, whereas Oracle finds the issue
-> "obviously not actionable by the distros".
-> 
+The release timeline of the vendor Artifex is also quite good:
 
-Thanks a lot for explaining the roles of primary and backup with such
-detail and clarity!
+9.24: 2018-09-03
+9.25: 2018-09-13
+9.26: 2018-11-20
 
->> If
->> so, will we get to know the contact details of other distros so that
->> we can coordinate our schedules?
-> 
-> Yes, but per the above that isn't enough, and it's also less important
-> than you might have expected.  For distros with more than one person
-> subscribed, my expectation is that they'll almost always be around to
-> handle whatever they volunteered for, and the backup's role is primarily
-> in making sure that the work is being done correctly all the time.
-> 
+Fedora 28 is f.e. still vulnerable though.
 
-That seems fair, thank you!
-
->> On a related note, would it be okay for me to request another member
->> of the Photon OS team (whom I can vouch for), to be added to the
->> linux-distros list, so that we can have at least one person from our
->> team always available to take action for our distro, in response to
->> the issues disclosed on the list?
-> 
-> Yes.
-> 
-Great! I'd like to request that Alexey Makhalov (amakhalov@...are.com)
-from the Photon OS team be added to the linux-distros list. I have
-worked with Alexey closely for several years and I'm happy to vouch
-for him.
-
-Thank you!
-
-Regards,
-Srivatsa
-VMware Photon OS
+Best regards,
+Thomas Jarosch
