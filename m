@@ -1,4 +1,10 @@
-Received: (qmail 11833 invoked by uid 550); 9 May 2022 11:52:03 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["809" "Tuesday" "22" "January" "2019" "17:43:37" "" "Daniel Ruggeri" "druggeri@apache.org" "<fake-VM-id.d49be5ccc997741d14fbde594db03e18@talos.iv>" "28" "[oss-security] CVE-2019-0190: mod_ssl 2.4.37 remote DoS when used with OpenSSL 1.1.1" nil nil nil "1" "2019012217:43:37" "[oss-security] CVE-2019-0190: mod_ssl 2.4.37 remote DoS when used with OpenSSL 1.1.1" (number mark "U       druggeri@apa Jan 22   28/809   " thread-indent "\"[oss-security] CVE-2019-0190: mod_ssl 2.4.37 remote DoS when used with OpenSSL 1.1.1\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Quarantine-ID: <vsBHyOuBBo1r>
+Received: (qmail 21760 invoked by uid 550); 22 Jan 2019 17:40:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,54 +13,37 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16297 invoked from network); 9 May 2022 10:37:19 -0000
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.80.82.1.1\))
-From: Jan Lehnardt <jan@apache.org>
-In-Reply-To: <76ef068a-c6d3-109d-6e70-84007151f487@activis.me>
-Date: Mon, 9 May 2022 12:36:58 +0200
-Cc: oss-security@lists.openwall.com,
- Security CouchDB <security@couchdb.apache.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <347664F1-79BA-433D-BF04-1D015A074C84@apache.org>
-References: <a388a13c-2f49-a36d-668a-633583013717@apache.org>
- <62df0f69-5768-80ea-9dbf-f3e1c6f1e69c@activis.me>
- <063FB760-CBFF-4669-9BDD-49B9D1CD56DD@apache.org>
- <76ef068a-c6d3-109d-6e70-84007151f487@activis.me>
-To: Archange <archange@activis.me>
-X-Mailer: Apple Mail (2.3696.80.82.1.1)
-Subject: Re: [oss-security] CVE-2022-24706: Apache CouchDB: Remote Code
- Execution Vulnerability in Packaging
+Received: (qmail 26369 invoked from network); 22 Jan 2019 17:13:09 -0000
+From: Daniel Ruggeri <druggeri@apache.org>
+To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE-2019-0190: mod_ssl 2.4.37 remote DoS when used with OpenSSL 1.1.1
+Message-ID: <20190122174015.5idwo6kb4kyV8zoZLiMudBjgAgSU5-q54-MygfVQ3v8@z>
 
 
-> On 9. May 2022, at 11:46, Archange <archange@activis.me> wrote:
->=20
-> Le 09/05/2022 =C3=A0 13:41, Jan Lehnardt a =C3=A9crit :
->> Hi Bruno,
->>=20
->> first of all, thanks for maintaining CouchDB for Arch. Secondly, for any=
- security related questions, please do not hesitate to contact security@cou=
-chdb.apache.org instead of any one of the team individually, as we can=E2=
-=80=99t know if any of is available at all times (vacations and whatnot :)
->=20
-> Sure, you should put this address in copy when posting to oss-security th=
-en, so you would be sure people reply to that one too.=E2=80=AF;)
+CVE-2019-0190: mod_ssl 2.4.37 remote DoS when used with OpenSSL 1.1.1
 
-This is automated by ASF infrastructure, I sadly have no say over this. But=
- maybe we can a footer with the address next time :)
+Severity: Important
 
->=20
->> As for your questions, see this PR to our packaging infrastructure for h=
-ow we handle this on Debian and Centos/Rocky: https://github.com/apache/cou=
-chdb-pkg/pull/92/files
->=20
-> Thanks, so you use a default env file to set the variable and allow peopl=
-e to easily change it in the case of a clustered setup. Will do so as well =
-then!
->=20
+Vendor: The Apache Software Foundation
 
-Perfect, thanks!
-Jan
-=E2=80=94
+Versions Affected:
+httpd 2.4.37
+
+Description:
+A bug exists in the way mod_ssl handled client renegotiations.
+A remote attacker could send a carefully crafted request that
+would cause mod_ssl to enter a loop leading to a denial of
+service.  This bug can be only triggered with Apache HTTP Server
+version 2.4.37 when using OpenSSL version 1.1.1 or later, due to
+an interaction in changes to handling of renegotiation attempts.
+
+Mitigation:
+All httpd users consuming mod_ssl combined with OpenSSL 1.1.1 or later
+should upgrade to 2.4.38 or later.
+
+Credit:
+The issue was identified through user bug reports.
+
+References:
+https://httpd.apache.org/security/vulnerabilities_24.html
 
