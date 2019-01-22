@@ -1,4 +1,10 @@
-Received: (qmail 24555 invoked by uid 550); 3 Oct 2022 16:06:31 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["660" "Tuesday" "22" "January" "2019" "17:42:12" "" "Daniel Ruggeri" "druggeri@apache.org" "<fake-VM-id.08a6d9cf7c4a0cf780a451d2289a5ff3@talos.iv>" "26" "[oss-security] CVE-2018-17199: mod_session_cookie does not respect expiry time" nil nil nil "1" "2019012217:42:12" "[oss-security] CVE-2018-17199: mod_session_cookie does not respect expiry time" (number mark "U       druggeri@apa Jan 22   26/660   " thread-indent "\"[oss-security] CVE-2018-17199: mod_session_cookie does not respect expiry time\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Quarantine-ID: <zJCOTbulmSIR>
+Received: (qmail 20476 invoked by uid 550); 22 Jan 2019 17:40:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,80 +13,35 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24522 invoked from network); 3 Oct 2022 16:06:30 -0000
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vulndisco.cc; s=mail; t=1664813177;
-	bh=6q1k4NlpfmaKX+8E2RANf7Lv5GUzczsAd3Ci/SacHUo=;
-	h=Subject:From:To:Date:Message-ID;
-	b=X3+Rc5yAFuYpdkXTdlA7vD/8E6VJQ1KXc/cwT3jfJemwjizHMZ48ogCixxT3FUH0I
-	 ZxDKyOO7y0UOYTY6XzqoJM9IKSfiklGMio3xWIlLHz3dS/7P54TtF8nnvPRcB8TLIZ
-	 sE2OZe6JCiy6IwwGz8Qi/cKaOUiGvk2ungqWhArw=
-Authentication-Results: vla1-ef285479e348.qloud-c.yandex.net; dkim=pass header.i=@vulndisco.cc
-Message-ID: <bb4f8cbe-d7d8-ba66-101c-f754f2e3d9cb@vulndisco.cc>
-Date: Mon, 3 Oct 2022 19:06:16 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Content-Language: en-US
+Received: (qmail 26305 invoked from network); 22 Jan 2019 17:13:02 -0000
+From: Daniel Ruggeri <druggeri@apache.org>
 To: oss-security@lists.openwall.com
-From: Evgeny Legerov <admin@vulndisco.cc>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] MySQL Cluster 8.0.30 overflow
-
-Hi,
-
-There is a heap overflow in ndbd.
-
-Bug details:
-void Dbdih::execSTART_MECONF(Signal* signal)
-{
-   jamEntry();
-   StartMeConf * const startMe = (StartMeConf *)&signal->theData[0];
-   Uint32 nodeId = startMe->startingNodeId;
-[1]  const Uint32 startWord = startMe->startWord;
-
-   CRASH_INSERTION(7130);
-   ndbrequire(nodeId == cownNodeId);
-   bool v2_format = true;
-   Uint32 cdata_size_in_words;
-[2]  if 
-(ndbd_send_node_bitmask_in_section(getNodeInfo(cmasterNodeId).m_version))
-   {
-     jam();
-     ndbrequire(signal->getNoOfSections() == 1);
-     SegmentedSectionPtr ptr;
-     SectionHandle handle(this, signal);
-     ndbrequire(handle.getSection(ptr, 0));
-     ndbrequire(ptr.sz <= (sizeof(cdata)/4));
-     copy(cdata, ptr);
-     cdata_size_in_words = ptr.sz;
-     releaseSections(handle);
-   }
-   else
-   {
-     jam();
-     v2_format = false;
-[3]    arrGuard(startWord + StartMeConf::DATA_SIZE, sizeof(cdata)/4);
-     for(Uint32 i = 0; i < StartMeConf::DATA_SIZE; i++)
-     {
-[4]      cdata[startWord+i] = startMe->data[i];
-     }
+Subject: [oss-security] CVE-2018-17199: mod_session_cookie does not respect expiry time
+Message-ID: <20190122174012.TvFI6F1yxmy4FZ1SEnHIC3QVF_0cJX0Mj1-TzJecF98@z>
 
 
-}
+CVE-2018-17199: mod_session_cookie does not respect expiry time
 
-We control the contents of signal->theData buffer.
-If master node is an old 7.6 version, which is still supported, check on 
-line #2 fails and we go to line #3.
-This check can be easily bypassed if startWord is negative.
-On line #4 we have nice heap overflow.
+Severity: low
 
-Instructions and code to reproduce - 
-https://github.com/ivd38/mysql_overflow1
+Vendor: The Apache Software Foundation
 
+Versions Affected:
+httpd 2.4.0 to 2.4.37
 
-regards,
+Description:
+In Apache HTTP Server 2.4 release 2.4.37 and prior, mod_session
+checks the session expiry time before decoding the session.
+This causes session expiry time to be ignored for
+mod_session_cookie sessions since the expiry time is loaded
+when the session is decoded.
 
--e
+Mitigation:
+All httpd users deploying mod_session should upgrade to 2.4.38 or later.
+
+Credit:
+The issue was discovered by Diego Angulo from ImExHS.
+
+References:
+https://httpd.apache.org/security/vulnerabilities_24.html
 
