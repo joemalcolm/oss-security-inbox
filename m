@@ -1,17 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/05/2
-Message-ID: <B64FBE57-16FA-41C7-8F02-8FDB96DD99B2@nodmarc.schlittermann.de>
-Date: Wed, 05 Jun 2019 14:41:19 +0000
-From: Heiko Schlittermann <hs@...marc.schlittermann.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/24/2
+Message-ID: <CALKeL-M8wreyyeUigfN=au1foco8K1fJXDEe-5EEEjXoYzsbiA@mail.gmail.com>
+Date: Wed, 23 Jan 2019 14:21:30 -0800
+From: Mike Jumper <mjumper@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2019-10149: Exim 4.87 to 4.91: possible remote exploit
+Subject: CVE-2018-1340: Apache Guacamole: Secure flag missing from session cookie
 Content-Type: text/plain; charset=utf-8
 
-We will publish the fix today 2019-06-05 15:15 UTC on the exim-4_91+fixes branch of our public Git repo git.exim.org.
+CVE-2018-1340: Secure flag missing from Apache Guacamole session cookie
 
-Distros can release their packages by that date.
+Versions affected:
+Apache Guacamole 0.9.4 through 0.9.14
 
-Sorry for the inconveniences.
--- 
-Heiko Schlittermann (unterwegs)
-Download attachment "signature.asc" of type "application/pgp-signature" (530 bytes)
+Description:
+Prior to 1.0.0, Apache Guacamole used a cookie for client-side storage
+of the user's session token. This cookie lacked the "secure" flag,
+which could allow an attacker eavesdropping on the network to
+intercept the user's session token if unencrypted HTTP requests are
+made to the same domain.
+
+Mitigation:
+Users of Apache Guacamole 0.9.14 or older should upgrade to 1.0.0.
+
+Credit:
+We would like to thank Ross Golder for reporting this issue.
