@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["764" "Friday" "31" "March" "2017" "19:20:20" "+0200" "Andrey Konovalov" "andreyknvl@google.com" "<CAAeHK+wL_b0h-gSq3E=8+0Pi7cmzr-FtUgszdeo3i_kJ9bJScg@mail.gmail.com>" "22" "[oss-security] Re: CVE-2017-7308: Linux kernel: integer overflow in packet_set_ring" "^Date:" nil nil "3" "2017033117:20:20" "[oss-security] Re: CVE-2017-7308: Linux kernel: integer overflow in packet_set_ring" (number mark "        andreyknvl@g Mar 31   22/764   " thread-indent "\"[oss-security] Re: CVE-2017-7308: Linux kernel: integer overflow in packet_set_ring\"\n") "<CAAeHK+x6PmHr1jWD1MUiZx_Oj1R1gai3oXj03xbcfDe86uSjNA@mail.gmail.com>" ("<CAAeHK+x6PmHr1jWD1MUiZx_Oj1R1gai3oXj03xbcfDe86uSjNA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["935" "Wednesday" "23" "January" "2019" "11:17:46" "+0100" "Daniel Beck" "ml@beckweb.net" "<33ACD1E8-76A6-46A3-8CA9-10E78E9F5FC5@beckweb.net>" "27" "Re: [oss-security] Multiple vulnerabilities in Jenkins" nil nil nil "1" "2019012310:17:46" "[oss-security] Multiple vulnerabilities in Jenkins" (number mark "U       ml@beckweb.n Jan 23   27/935   " thread-indent "\"Re: [oss-security] Multiple vulnerabilities in Jenkins\"\n") "<7201AC57-5316-478F-A241-C43FCC25B0F2@beckweb.net>" ("<7201AC57-5316-478F-A241-C43FCC25B0F2@beckweb.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30373 invoked by uid 550); 31 Mar 2017 17:20:33 -0000
+Received: (qmail 9390 invoked by uid 550); 23 Jan 2019 10:18:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,61 +11,47 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30355 invoked from network); 31 Mar 2017 17:20:32 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=UaT1yU/+AqzkulKzKbnQqsZnfRSTLfRJv8hk3sas5Rw=;
-        b=HV07PpqT/d/Kxi7Lxiz7yReCtXTGM9amvX6Td2CKcdRpcmK0GHw84uqn1hbvLh5m2u
-         xOV1Ew17q01PcJQ7++jasclt4nh7fIiVKTjxHP93boarAOUrHr6T68zHRj9nctnu8srv
-         L1jKiCrnHhVeAj35oQ6OR4Wo0jy7FpTASEb+6bUcOZTUD/Mq43FDudUC5p2nZD0LPnCO
-         DclJNeaAHPOCL+pwA4LtVK6vxvoIElJVKFUIeTpEnqFbiUc/HlJVzrRweuRdehhh4o77
-         fr0oWKZUsSQenzUYA2rWjAZnSOwl4a8dRSbDvPTo4/9ojrnJ2Xi9vhlRDIfLsPw/sLb/
-         zLnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=UaT1yU/+AqzkulKzKbnQqsZnfRSTLfRJv8hk3sas5Rw=;
-        b=OBIC5nX1up3qRgHKMX1DOMD5F4s9tSkVQqqWtiZy+T1mL/NmJoSsA4+B2VRCjlSyBL
-         xo9Apr2CA0Jy1sOz/KjpYlW2KJpQ+hAWjbGN+qv3KE9ILesM9nfKEZ45Sw0XSlW1riYE
-         Ryxov6yP2a/NfBelxpAt+p3jM3HjTsR+tOlsiRGRCVkyAMaURyxVGpzRFdgZgdcbDEVI
-         uIiju0jGG+do1MFgyailJcRsl2I3xK62mhb+G6fd75EG87jRRL4TMmrhqI7Pca80Cw2z
-         qgwiBdeds+tSEb4LlaLODBJQD/TpC+Ki/3ybcsJtl5XwkujbFvtFpHGgo2SjGbARC9I8
-         ma8w==
-X-Gm-Message-State: AFeK/H0F7sZyFzJG3FaZgTNKO55nWXF5M+LQeC3erYbcTrwQ4jcg8bnFPwmo4qEI7VTnuVlaRlkMaZ9aqPaaiRsX
-X-Received: by 10.98.160.212 with SMTP id p81mr3724416pfl.204.1490980820794;
- Fri, 31 Mar 2017 10:20:20 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <CAAeHK+x6PmHr1jWD1MUiZx_Oj1R1gai3oXj03xbcfDe86uSjNA@mail.gmail.com>
-References: <CAAeHK+x6PmHr1jWD1MUiZx_Oj1R1gai3oXj03xbcfDe86uSjNA@mail.gmail.com>
-Message-ID: <CAAeHK+wL_b0h-gSq3E=8+0Pi7cmzr-FtUgszdeo3i_kJ9bJScg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 31 Mar 2017 19:20:20 +0200
-From: Andrey Konovalov <andreyknvl@google.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE-2017-7308: Linux kernel: integer overflow in packet_set_ring
+Received: (qmail 9370 invoked from network); 23 Jan 2019 10:17:59 -0000
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 11.5 \(3445.9.1\))
+Date: Wed, 23 Jan 2019 11:17:46 +0100
+References: <7201AC57-5316-478F-A241-C43FCC25B0F2@beckweb.net>
 To: oss-security@lists.openwall.com
+In-Reply-To: <7201AC57-5316-478F-A241-C43FCC25B0F2@beckweb.net>
+Message-Id: <33ACD1E8-76A6-46A3-8CA9-10E78E9F5FC5@beckweb.net>
+X-Mailer: Apple Mail (2.3445.9.1)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1548238679;9d497ab8;
+X-HE-SMSGID: 1gmFbP-0006dO-Vp
+Subject: Re: [oss-security] Multiple vulnerabilities in Jenkins
 
-On Fri, Mar 31, 2017 at 2:03 PM, Andrey Konovalov <andreyknvl@google.com> wrote:
-> Hi,
->
-> CVE-2017-7308 [1] was assigned to the following issue:
->
-> The packet_set_ring function in net/packet/af_packet.c in the Linux
-> kernel through 4.10.6 does not properly validate certain block-size
-> data, which allows local users to cause a denial of service (overflow)
-> or possibly have unspecified other impact via crafted system calls.
->
-> The fix is sent upstream [2].
 
-Update: the fix actually consists of 3 patches:
 
-https://patchwork.ozlabs.org/patch/744811/
-https://patchwork.ozlabs.org/patch/744813/
-https://patchwork.ozlabs.org/patch/744812/
+> On 16. Jan 2019, at 17:51, Daniel Beck <ml@beckweb.net> wrote:
+> 
+> SECURITY-868
+> Users with the Overall/RunScripts permission (typically administrators) 
+> were able to use the Jenkins script console to craft a 'Remember me' 
+> cookie that would never expire.
+> 
+> This allowed attackers access to a Jenkins instance while the 
+> corresponding user in the configured security realm exists, for example to 
+> persist access after another successful attack. 
 
->
-> [1] http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2017-7308
->
-> [2] https://patchwork.ozlabs.org/patch/744811/
+CVE-2019-1003003
+
+> SECURITY-901
+> When using an external security realm such as LDAP or Active Directory, 
+> deleting a user from the security realm does not result in the user losing 
+> access to Jenkins.
+> 
+> While deleting the user record from Jenkins did invalidate the 'Remember 
+> me' cookie, there was no way to invalidate active sessions besides 
+> restarting Jenkins or terminating sessions through other means, such as 
+> Monitoring Plugin.
+
+CVE-2019-1003004
+
