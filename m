@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1024" "Friday" "6" "July" "2018" "15:26:55" "+0200" "Greg KH" "greg@kroah.com" "<20180706132655.GA1466@kroah.com>" "21" "Re: [oss-security] mmap vulnerability in motion eye video4linux driver for Sony Vaio PictureBook" "^Date:" nil nil "7" "2018070613:26:55" "[oss-security] mmap vulnerability in motion eye video4linux driver for Sony Vaio PictureBook" (number mark "        greg@kroah.c Jul  6   21/1024  " thread-indent "\"Re: [oss-security] mmap vulnerability in motion eye video4linux driver for Sony Vaio PictureBook\"\n") "<20180706123543.E8F634800B4@webmail.sinamail.sina.com.cn>" ("<20180706123543.E8F634800B4@webmail.sinamail.sina.com.cn>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2356" "Wednesday" "23" "January" "2019" "11:21:11" "+0100" "Daniel Beck" "ml@beckweb.net" "<B09750A0-4E8C-464B-951D-0267A6174CFE@beckweb.net>" "81" "Re: [oss-security] Multiple vulnerabilities in Jenkins" nil nil nil "1" "2019012310:21:11" "[oss-security] Multiple vulnerabilities in Jenkins" (number mark "U       ml@beckweb.n Jan 23   81/2356  " thread-indent "\"Re: [oss-security] Multiple vulnerabilities in Jenkins\"\n") "<D95FAFFB-57B5-4D5A-BFF2-3A4F8F67320C@beckweb.net>" ("<D95FAFFB-57B5-4D5A-BFF2-3A4F8F67320C@beckweb.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 4009 invoked by uid 550); 6 Jul 2018 14:17:27 -0000
+Received: (qmail 1665 invoked by uid 550); 23 Jan 2019 10:21:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,66 +11,101 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3991 invoked from network); 6 Jul 2018 14:17:27 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=
-	content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; bh=kra4m8VsWI2bXUISXaVPOobENjfwltxKkX3ML8kHvWE=; b=bsK0t1JI
-	O0kgDvaysMHfOLfO07/g72Dkqsgu7Zfiwk+8FWgDDT5mQqG1SgcA1DRxyjw76yXC
-	Cy87o3BWbwDgXhmRKPISJjiiKkYBArpDqBXxlSeQAJnwSZKz2DBTmuK6lavtpgws
-	bQJ9KKPzyhQsRV8WcbqNa4v0NSFMmjU1u5MrmRVgtvPZKYj60nCufVVtLYcpXe4V
-	Ol5gZEQgbbazjBdjPPBx9Xd/B3O2Ngwg3AMgZ89H0OWrR29VRk6ArQ68Q1PHWYS1
-	xiQ6ELGlsKkc6ngeSr9f1aZmH9cua12JyHDDha+TLHMvLh6mDYelRbHeJmLqlkJD
-	nahvyu/sQ8/PdA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm3; bh=kra4m8VsWI2bXUISXaVPOobENjfwl
-	txKkX3ML8kHvWE=; b=XVLKG/sF8fMlZ70eyETNO6X+sTeMVUQe6i8v+pWGQ6kfR
-	x+H1mD3gSDHtmAxFKeCpx8yxtaVNstKWZFVMOKimglYsyINCWWrro2OxLvUF9N7M
-	8TC6EODDKz5W4BS9BPN6nKTYZmiqbMZAN4hFOC0O69CH+Dh9afhdFyoIwfarXKnf
-	mivcKh/KAsxekP3Oa8cHuPVJtnfUd9dw8H5UGzL9yKwpC2WjOLvrtIUaieOMJMI3
-	g92kKGvPaBW+NauHjVcvq4o68bFu3HAkZ0NqFdjxcZcd3DygU2y/c+mikLCa6yzE
-	pPPjZ5xT38BU+HZwnYdQqsosh6WwFgpJAGYeOPZFg==
-X-ME-Proxy: <xmx:6nk_W-4qDLSvYLDQ3-0GM9kAeJc8G_YsvwlHvqY6-dI12fZkipOtrw>
-    <xmx:6nk_W-uASDNa1-7UCvVq-METpBpNVyNM3DeRBvYeDtRT6Zdag_d6TA>
-    <xmx:6nk_W2ac43kTYISaCBJYfPCS7SdXvndt5nN5vxubVlbHzPOSS-0QsQ>
-    <xmx:6nk_W98Gdx7tiMiQP1KL6dEX-JD22UHz0Qlk0dsBkSWdaIwL8sxS2g>
-    <xmx:6nk_W2bKHsDxAyJz2mOOYzkCvOrF8QlC4jjAI5_U1p4sEGjZ46qbOA>
-    <xmx:6nk_Wy50bQM5Jf_NCARJIe1huYn0VodYJcJAfeGhY1t2a7KrPwWmlg>
-X-ME-Sender: <xms:6nk_W9EFrva7L-XC63p8EmgM7XBcvLVB3Krv--1xk1rMgjIzf5r_Ng>
-Message-ID: <20180706132655.GA1466@kroah.com>
-References: <20180706123543.E8F634800B4@webmail.sinamail.sina.com.cn>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180706123543.E8F634800B4@webmail.sinamail.sina.com.cn>
-User-Agent: Mutt/1.10.0 (2018-05-17)
-Date: Fri, 6 Jul 2018 15:26:55 +0200
-From: Greg KH <greg@kroah.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] mmap vulnerability in motion eye video4linux
- driver for Sony Vaio PictureBook
+Received: (qmail 1640 invoked from network); 23 Jan 2019 10:21:25 -0000
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 11.5 \(3445.9.1\))
+Date: Wed, 23 Jan 2019 11:21:11 +0100
+References: <D95FAFFB-57B5-4D5A-BFF2-3A4F8F67320C@beckweb.net>
 To: oss-security@lists.openwall.com
+In-Reply-To: <D95FAFFB-57B5-4D5A-BFF2-3A4F8F67320C@beckweb.net>
+Message-Id: <B09750A0-4E8C-464B-951D-0267A6174CFE@beckweb.net>
+X-Mailer: Apple Mail (2.3445.9.1)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1548238885;3c8b3675;
+X-HE-SMSGID: 1gmFej-0000u0-UG
+Subject: Re: [oss-security] Multiple vulnerabilities in Jenkins
 
-On Fri, Jul 06, 2018 at 08:35:43PM +0800, zrlw@sina.com wrote:
-> Hi all,i found a vulnerability in motion eye video4linux driver for Sony Vaio PictureBook,it desn't validate user-controlled parameter 'vma->vm_pgoff', a malicious process might access all of kernel memory from user space by trying pass different arbitrary address.
-> /usr/src/linux-4.4.21-69/drivers/media/pci/meye/meye.c:
-> static int meye_mmap(struct file *file, struct vm_area_struct *vma)
-> ...        unsigned long offset = vma->vm_pgoff << PAGE_SHIFT;
-> ...        pos = (unsigned long)meye.grab_fbuffer + offset;
->         while (size > 0) {
->                 page = vmalloc_to_pfn((void *)pos);
->                 if (remap_pfn_range(vma, start, page, PAGE_SIZE, PAGE_SHARED)) {...
 
-Commit:
-	be83bbf80682 ("mmap: introduce sane default mmap limits")
-which was backported to all stable kernels, should have resolved this
-problem, correct?
 
-If not, please notify the media driver maintainers and they will be glad
-to fix the problem.
+> On 10. Oct 2018, at 17:11, Daniel Beck <ml@beckweb.net> wrote:
+>=20
+> SECURITY-867
+> A path traversal vulnerability in Stapler allowed viewing routable object=
+s=20
+> with views defined on any type. This could be used to access internal dat=
+a=20
+> of routable objects, e.g. by showing their string representation (#toStri=
+ng).
 
-thanks,
+CVE-2018-1000997
 
-greg k-h
+> SECURITY-1074
+> Users with Job/Configure permission could specify a relative path escapin=
+g=20
+> the base directory in the file name portion of a file parameter definitio=
+n.=20
+> This path would be used to archive the uploaded file on the Jenkins maste=
+r,=20
+> resulting in an arbitrary file write vulnerability.
+>=20
+> File parameters that escape the base directory are no longer accepted and=
+=20
+> the build will fail.
+
+CVE-2018-1000406
+
+> SECURITY-1129
+> The wrapper query parameter for the XML variant of the Jenkins remote API=
+=20
+> did not validate the specified tag name. This resulted in a reflected cro=
+ss-
+> site scripting vulnerability.
+>=20
+> Only legal XML tag names are now allowed for the wrapper query parameter.
+
+CVE-2018-1000407
+
+> SECURITY-1128
+> By accessing a specific crafted URL on Jenkins instances using Jenkins' o=
+wn=20
+> user database, users without Overall/Read access could create ephemeral=20
+> user records.
+>=20
+> This behavior could be abused to create a large number of ephemeral user=
+=20
+> records in memory.
+>=20
+> Accessing this URL now no longer results in a user record getting created.
+
+CVE-2018-1000408
+
+> SECURITY-1158
+> When signing up for a new user account on instances using Jenkins' own us=
+er=20
+> database, Jenkins did not invalidate the existing session and create a ne=
+w=20
+> one. This allowed session fixation.
+>=20
+> Jenkins now invalidates the existing session and creates a new one when=20
+> logging in after user signup.
+
+CVE-2018-1000409
+
+> SECURITY-765
+> When Jenkins fails to process form submissions due to an internal error,=
+=20
+> the error message shown to the user and written to the log typically=20
+> includes the serialized JSON form submission. Secrets, such as submitted=
+=20
+> passwords, might be included with the JSON object, and shown or written t=
+o=20
+> disk in plain text.
+>=20
+> Jenkins now masks values in these error messages from view if they were=20
+> shown on the UI as password form fields.
+
+CVE-2018-1000410
+
