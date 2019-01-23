@@ -1,25 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/22/7
-Message-ID: <20190522194121.GA29301@openwall.com>
-Date: Wed, 22 May 2019 21:41:21 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/23/1
+Message-ID: <a508ca98-5954-b19a-0e7f-7319a4c94480@apache.org>
+Date: Tue, 22 Jan 2019 22:57:15 -0500
+From: Troy Curtis <troycurtisjr@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel < 4.8 local generic ASLR - another CVE-ID
+Subject: [CVE-2018-11803] Apache Subversion Denial of Service Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Apr 18, 2019 at 09:40:54AM -0400, Vladis Dronov wrote:
-> Just in another case - this flaw in a.out binaries has got the CVE-2019-11191:
-> 
-> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-11191
+This is a security notification for Apache Subversion HTTP Servers:
 
-Dongguangdong of Huawei PSIRT discovered and reported to linux-distros
-on May 6 that this additionally affects flat binaries, binfmt_flat.c.
+CVE-2018-11803
+Severity: Medium
+Affected Versions: Apache Subversion 1.11.0, 1.10.0 to 1.10.3
 
-Since we're now past linux-distros' 14 days max embargo period and since
-Dongguangdong failed to bring this in here on time, I felt I had to take
-over and post the above now.
+Subversion's mod_dav_svn Apache HTTPD module versions 1.11.0 and 1.10.0 
+to 1.10.3 will crash after dereferencing an uninitialized pointer if the 
+client omits the root path in a recursive directory listing operation. 
+This issue can be triggered by any client on Subversion repositories 
+configured for anonymous read access. If read access requires 
+authentication, a denial of service attack can only be performed by an 
+authenticated user.
 
-Personally, I find this a very minor detail, but I like (linux-)distros
-policy to be adhered to without exceptions.
+The Subversion releases 1.10.4 and 1.11.1 contain the fixes for this 
+vulnerability and are available immediately at:
 
-Alexander
+https://dist.apache.org/repos/dist/release/subversion/?p=32084
+
+Additional details, including patches for 1.10.3 and 1.11.0 can be found at:
+
+https://subversion.apache.org/security/CVE-2018-11803-advisory.txt
+
+We encourage users of Subversion to upgrade to the latest appropriate 
+version as soon as reasonable.
+
+Thanks,
+- The Subversion Team
