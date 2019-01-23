@@ -1,195 +1,152 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/23/2
-Message-Id: <97B9396D-7627-4EC0-9D42-C84A908DED08@beckweb.net>
-Date: Wed, 23 Oct 2019 14:41:17 +0200
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/23/5
+Message-ID: <CAJ_zFkL2qMdEj6Y6BFy6tohxELAXA5Vap_GGAtNaQ3Ko68PM8A@mail.gmail.com>
+Date: Wed, 23 Jan 2019 06:38:09 -0800
+From: Tavis Ormandy <taviso@...gle.com>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins plugins
+Subject: ghostscript: subroutines within pseudo-operators must themselves be pseudo-operators
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software. The following
-releases contain fixes for security vulnerabilities:
+Hello, I noticed ghostscript 9.26 was released, so decided to take a look
+and noticed some problems. For background, this is how you define a
+subroutine in postscript:
 
-* Bitbucket OAuth Plugin 0.10
-* Dynatrace Application Monitoring Plugin 2.1.4
-* Mattermost Notification Plugin 2.7.1
-* Zulip Plugin 1.1.1
+/hello {
+    (hello\n) print
+} def
 
-Additionally, we announce unresolved security issues in the following
-plugins:
+That's simple enough, but because a subroutine is just an executable array
+of commands, you need to mark it as executeonly if you're using powerful
+system operators. That way, users can't peek inside and get references to
+operators they shouldn't be allowed to use.
 
-* 360 FireLine Plugin
-* build-metrics Plugin
-* Deploy WebLogic Plugin
-* Dynatrace Application Monitoring Plugin
-* ElasticBox Jenkins Kubernetes CI/CD Plugin
-* Global Post Script Plugin
-* Libvirt Slaves Plugin
-* Sonar Gerrit Plugin
+/hello {
+    (hello\n) print
+} executeonly def
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2019-10-23/
+That's still not enough though, because the routine might expose the
+contents to error handlers, so you also need to make it a pseudo-operator
+with odef. PostScript error handlers don't examine any deeper than the
+current operator (or pseudo-operator), so won't expose any of the contents
+if they stop.
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+/hello {
+    (hello\n) print
+} executeonly odef
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
+Looks good, but it gets weirder. If you don't bind the contents, then name
+resolution happens on execution, not when you define it. That means that
+someone can change the dictstack (which kind of works like variable scope
+in other languages) so that commands and operators do something different
+than when you defined the subroutine.
 
----
+Like this:
 
-SECURITY-1628 / CVE-2019-10459
-Mattermost allows the definition of incoming (from the perspective of the
-service) webhook URLs. These contain what is effectively a secret token as
-part of the URL.
+GS>/hello { (hello\n) print } executeonly odef
+GS><< /print { (goodbye)= pop } >> begin
+GS>hello
+goodbye
 
-Mattermost Notification Plugin stored these webhook URLs as part of its
-global configuration file jenkins.plugins.mattermost.MattermostNotifier.xml
-and job config.xml files on the Jenkins master. These URLs could be viewed
-by users with Extended Read permission (in the case of job config.xml files)
-or access to the master file system.
+This means you also need to bind the routine, and also be very aware when
+you're writing it of what is and what isn't an operator at define-time
+(nobody ever said writing postscript was easy, lol). So now we have this:
 
+/hello {
+    (hello\n) print
+} bind executeonly odef
 
-SECURITY-1546 / CVE-2019-10460
-Bitbucket OAuth Plugin stored a credential unencrypted in the global
-config.xml configuration file on the Jenkins master. This credential could
-be viewed by users with access to the master file system.
+I think that's good enough for simple routines, but what if it's more
+complicated? The way you branch in PostScript is to create an ephemeral
+subroutine and pass it to the `if` or `ifelse` operators, like this:
 
-Bitbucket OAuth Plugin now stores this credential encrypted.
+/hello {
+    time 1200 lt {
+        (good morning\n) print
+    } {
+        (good afternoon\n) print
+    } ifelse
+} bind executeonly odef
 
+Do those ephemeral routines also need to be protected? The answer is *yes*,
+they're pushed on the operand stack just like everything else, so can cause
+errors like /stackoverflow or /execstackoverflow and will then be exposed
+to error handlers. In my opinion, this is a language specification flaw in
+PostScript.
 
-SECURITY-1621 / CVE-2019-10476
-Zulip Plugin stored a credential unencrypted in its global configuration
-file jenkins.plugins.zulip.ZulipNotifier.xml, as well as in the legacy
-configuration file hudson.plugins.humbug.HumbugNotifier.xml on the Jenkins
-master. This credential could be viewed by users with access to the master
-file system.
+Regardless, ghostscript didn't protect a whole bunch of these ephemeral
+routines, here is one example, but there were dozens:
 
+http://git.ghostscript.com/?p=ghostpdl.git;a=blob;f=Resource/Init/pdf_draw.ps;h=79733df451c1ecc0a71b08d10e5412ac3e243a9e;hb=gs926#l1123
 
-SECURITY-1477 / CVE-2019-10461
-Dynatrace Application Monitoring Plugin stored a credential unencrypted in
-its global configuration file
-com.dynatrace.jenkins.dashboard.TAGlobalConfiguration.xml on the Jenkins
-master. This credential could be viewed by users with access to the master
-file system.
+1123       {
+1124         currentglobal pdfdict gcheck .setglobal
+1125         pdfdict /.Qqwarning_issued //true .forceput
+1126         .setglobal
+1127         pdfformaterror
+1128       } ifelse
 
+You can see the routine itself is bound, executeonly and odef, but the
+ephemeral routines inside it used for conditions and loops are not
+protected.
 
-SECURITY-1483 (1) / CVE-2019-10462
-Dynatrace Application Monitoring Plugin did not require POST requests on a
-method implementing form validation. This CSRF vulnerability allowed
-attackers to initiate a connection test to an attacker-specified server
-with attacker-specified username and password.
+These bugs are starting to get trickier to exploit, you have to make an
+operator fail very precisely, but I made a demo that works in 9.26. This
+uses the trick I described above of taking over names that couldn't be
+resolved at define time by pushing a new dict on the dictstack. This gives
+me a high degree of control over the routine.
 
+$ gs -dSAFER -f ghostscript-926-forceput.ps
+GPL Ghostscript 9.26 (2018-11-20)
+Copyright (C) 2018 Artifex Software, Inc.  All rights reserved.
+This software comes with NO WARRANTY: see the file PUBLIC for details.
+Stage 0: PDFfile
+Stage 1: q
+Stage 3: oget
+Stage 4: pdfemptycount
+Stage 5: gput
+Stage 6: resolvestream
+Stage 7: pdfopdict
+Stage 8: .pdfruncontext
+Stage 9: pdfdict
+Stage 10: /typecheck #1
+Stage 10: /typecheck #2
+Stage 11: Exploitation...
+Should now have complete control over ghostscript, attempting to read
+/etc/passwd...
+(root:x:0:0:root:/root:/bin/bash)
+Attempting to execute a shell command...
+uid=1000(taviso) gid=1000(primarygroup)
+groups=1000(primarygroup),4(adm),20(dialout),24(cdrom),25(floppy),44(video),46(plugdev),999(logindev)
 
-SECURITY-1483 (2) / CVE-2019-10463
-Dynatrace Application Monitoring Plugin does not perform permission checks
-on a method implementing form validation. This allows users with
-Overall/Read access to Jenkins to initiate a connection test to an
-attacker-specified server with attacker-specified username and password.
+This exploit should work via evince, ImageMagick, nautilus, less (just
+rename it exploit.pcd), gimp, gv, etc, etc. It might require some
+adjustment to work on older versions, but 9.26 and earlier are all
+affected. Do not count on AppArmor protecting you, the policy is *very*
+relaxed.
 
-As of publication of this advisory, there is no fix.
+The patch required to protect ghostscript from attacks like this was
+non-trivial, and took a significant amount of work, these patches are
+required:
 
+http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=13b0a36f8181db66a91bcc8cea139998b53a8996
+http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=2db98f9c66135601efb103d8db7d020a672308db
+http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=99f13091a3f309bdc95d275ea9fec10bb9f42d9a
+http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=59d8f4deef90c1598ff50616519d5576756b4495
+http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=2768d1a6dddb83f5c061207a7ed2813999c1b5c9
+http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=49c8092da88ef6bb0aa281fe294ae0925a44b5b9
 
-SECURITY-820 / CVE-2019-10464 (CSRF), CVE-2019-10465 (permission check)
-Deploy WebLogic Plugin does not perform permission checks on a method
-implementing form validation. This allows users with Overall/Read access to
-Jenkins to send an HTTP HEAD request to a user-specified URL, or confirm
-the existence of any file or directory on the Jenkins master.
+This was Project Zero issue 1729
+<https://bugs.chromium.org/p/project-zero/issues/detail?id=1729>,
+Ghostscript issue 700317
+<https://bugs.ghostscript.com/show_bug.cgi?id=700317>, and CVE-2019-6116.
 
-Additionally, the form validation method does not require POST requests,
-resulting in a CSRF vulnerability.
+Thanks, Tavis.
 
-As of publication of this advisory, there is no fix.
+p.s. I'm not regularly looking at ghostscript, this was just a random look
+at the new release.
 
+#DeprecateUntrustedPostscript
 
-SECURITY-822 / CVE-2019-10466
-360 FireLine Plugin accepts XML for part of its configuration. It does not
-configure the XML parser to prevent XML external entity (XXE) attacks.
+Content of type "text/html" skipped
 
-A form validation method that accepts XML does not perform permission
-checks. This allows users with Overall/Read permission to have Jenkins
-parse a crafted XML file that uses external entities for extraction of
-secrets from the Jenkins agent, server-side request forgery, or
-denial-of-service attacks.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1003 / CVE-2019-10467
-Sonar Gerrit Plugin stores a credential unencrypted in job config.xml files
-on the Jenkins master if the 'Override Credentials' option is used. This
-credential can be viewed by users with Extended Read permission or access
-to the master file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1005 (1) / CVE-2019-10468 (CSRF), CVE-2019-10469 (permission check)
-ElasticBox Jenkins Kubernetes CI/CD Plugin does not perform permission
-checks on a method implementing form validation. This allows users with
-Overall/Read access to Jenkins to connect to an attacker-specified URL
-using attacker-specified credentials IDs obtained through another method,
-capturing credentials stored in Jenkins.
-
-Additionally, the form validation method does not require POST requests,
-resulting in a CSRF vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1005 (2) / CVE-2019-10470
-ElasticBox Jenkins Kubernetes CI/CD Plugin provides a list of applicable
-credential IDs to allow users configuring the plugin to select the one to
-use.
-
-This functionality does not correctly check permissions, allowing any user
-with Overall/Read permission to get a list of valid credentials IDs. Those
-can be used as part of an attack to capture the credentials using another
-vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1014 (1) / CVE-2019-10471 (CSRF), CVE-2019-10472 (permission check)
-Libvirt Slaves Plugin does not perform permission checks on a method
-implementing form validation. This allows users with Overall/Read access to
-Jenkins to connect to an attacker-specified SSH server using
-attacker-specified credentials IDs obtained through another method,
-capturing credentials stored in Jenkins.
-
-Additionally, the form validation method does not require POST requests,
-resulting in a CSRF vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1014 (2) / CVE-2019-10473
-Libvirt Slaves Plugin provides a list of applicable credential IDs to allow
-users configuring the plugin to select the one to use.
-
-This functionality does not correctly check permissions, allowing any user
-with Overall/Read permission to get a list of valid credentials IDs. Those
-can be used as part of an attack to capture the credentials using another
-vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1073 / CVE-2019-10474
-Global Post Script Plugin does not perform permission checks on a method
-implementing form validation. This allows users with Overall/Read
-permission to list the files contained in $JENKINS_HOME/global-post-script
-that can be used by the plugin.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1490 / CVE-2019-10475
-build-metrics Plugin does not properly escape the label query parameter,
-resulting in a reflected cross-site scripting vulnerability.
-
-As of publication of this advisory, there is no fix.
-
+Download attachment "ghostscript-926-forceput-typecheck-example.ps" of type "application/postscript" (2468 bytes)
