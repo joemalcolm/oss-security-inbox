@@ -1,45 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/02/2
-Message-ID: <20191202165638.GA3235@thinkstation>
-Date: Mon, 2 Dec 2019 08:56:38 -0800
-From: Tavis Ormandy <taviso@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/23/3
+Message-Id: <76DD3118-C738-425E-B96F-85EFF8BB1D62@beckweb.net>
+Date: Wed, 23 Jan 2019 11:18:20 +0100
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: virtual consoles
+Subject: Re: Sandbox bypass in multiple Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-Hey List, we were discussing simple screen spoofing attacks today, and
-whether we consider it a vulnerability or just social engineering. For
-example, this paper on tricks Android malware can use to trick the user
-into granting permissions to the wrong app.
 
-https://www.usenix.org/system/files/conference/usenixsecurity15/sec15-paper-ren-chuangang.pdf
 
-Regardless of your position, this is certainly possible on desktop Linux
-too, unprivileged users can start a new X server and switch virtual
-console, even over ssh.
+> On 8. Jan 2019, at 13:46, Daniel Beck <ml@...kweb.net> wrote:
+> 
+> SECURITY-1266
+> Script Security sandbox protection could be circumvented during the 
+> compilation phase by applying AST transforming annotations such as @Grab
+> to source code elements.
+> 
+> Both the pipeline validation REST APIs and actual script/pipeline 
+> execution are affected.
+> 
+> This allowed users with Overall/Read permission, or able to control 
+> Jenkinsfile or sandboxed Pipeline shared library contents in SCM, to 
+> bypass the sandbox protection and execute arbitrary code on the Jenkins 
+> master.
 
-e.g.
+CVE-2019-1003000 (Script Security Plugin)
+CVE-2019-1003001 (Pipeline: Groovy Plugin)
+CVE-2019-1003002 (Pipeline: Declarative Plugin)
 
-$ dbus-send --system --print-reply --dest=org.freedesktop.login1 /org/freedesktop/login1/seat/seat0 org.freedesktop.login1.Seat.SwitchTo uint32:2
-
-(note: object paths may vary by distro, change the 2 to a different
-number if you're already on VT2, or seat0 if you're on a different seat)
-
-The obvious attack is to switch to a fake screensaver, then switch back
-after authentication, or make a fake gdm login.
-
-I'm sure this has been documented a million times, and most of us will
-be familiar with the "Secure Attention Key" idea, but this is slightly
-different from that attack as it's possible for an entirely remote user
-(active, physically local users usually have additional privileges, as
-it's assumed they can tamper with hardware anyway, etc).
-
-Should this have some policykit action requirement, or require physical
-presence? I don't know the answer.
-
-Tavis.
-
--- 
--------------------------------------
-taviso@....lonestar.org | finger me for my pgp key.
--------------------------------------------------------
