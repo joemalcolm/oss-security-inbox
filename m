@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2535" "Monday" "23" "March" "2015" "22:42:08" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<5510EB20.7020405@redhat.com>" "59" "[oss-security] CVE-2014-8166 cups: code execution via unescape ANSI escape sequences" nil nil nil "3" "2015032404:42:08" "[oss-security] CVE-2014-8166 cups: code execution via unescape ANSI escape sequences" (number mark "        kseifried@re Mar 23   59/2535  " thread-indent "\"[oss-security] CVE-2014-8166 cups: code execution via unescape ANSI escape sequences\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["750" "Wednesday" "23" "January" "2019" "14:28:51" "-0600" "Timothy Michaud" "tmm08a@acu.edu" "<CAO5rKUP1iPL87rTg5jUKE43uNxVEoAJb+aGOsAfi+vuwkbtNMg@mail.gmail.com>" "18" "[oss-security] Linux Kernel: Missing access_ok() checks in IOCTL function (gpu/drm/i915 Driver)" "^Date:" nil nil "1" "2019012320:28:51" "[oss-security] Linux Kernel: Missing access_ok() checks in IOCTL function (gpu/drm/i915 Driver)" (number mark "U       tmm08a@acu.e Jan 23   18/750   " thread-indent "\"[oss-security] Linux Kernel: Missing access_ok() checks in IOCTL function (gpu/drm/i915 Driver)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9939 invoked by uid 550); 24 Mar 2015 04:42:22 -0000
+Received: (qmail 32318 invoked by uid 550); 23 Jan 2019 21:12:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,77 +11,57 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9911 invoked from network); 24 Mar 2015 04:42:21 -0000
-Message-ID: <5510EB20.7020405@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
+Received: (qmail 23578 invoked from network); 23 Jan 2019 20:29:19 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=acu-edu.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=qNBzDJxDYMrSENI0xnZivexM6e5aqkMoBnRalTbnyP8=;
+        b=0IUBka7Sat/XJISqmmVtv754hxb/i9CnZUBCSZSkVyIvNni5iJxpI3Dv3b4Y1UGPZD
+         hzwdDCYtcC3O8pSYfaDczwJzZNT1eZnsDIjtFkhlTkKgadTOiT2CK8AP/q6KV8QONXeA
+         lpkDVaQmUYbuo/2IKAM4GYoVnchpOczN2QkUEEGT9Ax+fznAWzlgLMS8lmNy3mOq+uFM
+         9bdmipmDqZ8xTtMKvyoRLDUzXNc2VjHyrWdq58JzRqAee9SwEMHye3/drcY0MBWYrNZA
+         mxmc2w6CxqrvAm2Zp6kL6PFH3qOg2r1tORt9rydb0KJp2ekfFgOnF62CTymZQM5QLTHq
+         tbqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=qNBzDJxDYMrSENI0xnZivexM6e5aqkMoBnRalTbnyP8=;
+        b=rQCNE7E++KRXKtAmlly46Nl/mry81bCgtOVFtVse61kiN+rPk0NIbNPoU9xneYwPHz
+         /lDUiszMoR4tPbCFV5PzlFLn0Kr8+qBLwzsymqWENt0YpjSrSi05WjQkGWlXL/w9Cwft
+         Dpid9AmnhQ/eECC5DqlHNQo2/cqMj4n7C+Rpf9nNIY4acTTfHF41Agodn0kUx0Ya7SfS
+         9g0XD4OH1f2uE7pU4OUQ9zTOiBXfDxfo6jCIztlvFvslJejR3xa4WORuWpKLr7rGx0Sn
+         aKJjokL20aYUDrQvOe77hGaK3ZTJD+ceVOc4D6KpCCiksEUlnTgaQEwoUwTGN2RvLbri
+         VQRg==
+X-Gm-Message-State: AJcUukcFSm4spFwfs1iLSk4G8JBHQvAlkUfdzrSsSrt1jPa0Mt4y4iiH
+	g7+DqI5EQz3EecDmeVyIkjSX6HJcUSAHv2aMg1vw9bS4G6A=
+X-Google-Smtp-Source: ALg8bN4EZNLg741KsKw2koFTtdOv6RXR9Ji5Xskwi8JtkjDq7powdZH/aUzaZ0QzrZF/UftF0JM0du2rb4W/QNUCKQ0=
+X-Received: by 2002:adf:fc09:: with SMTP id i9mr4104646wrr.299.1548275347812;
+ Wed, 23 Jan 2019 12:29:07 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="3VgSlJLwKQrXfnaLtB85lsbbPgIbVdxEc"
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
-Date: Mon, 23 Mar 2015 22:42:08 -0600
-From: Kurt Seifried <kseifried@redhat.com>
+Message-ID: <CAO5rKUP1iPL87rTg5jUKE43uNxVEoAJb+aGOsAfi+vuwkbtNMg@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="0000000000001f14ea058025f232"
+Date: Wed, 23 Jan 2019 14:28:51 -0600
+From: Timothy Michaud <tmm08a@acu.edu>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2014-8166 cups: code execution via unescape ANSI escape sequences
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>,
-        security@apple.com
+Subject: [oss-security] Linux Kernel: Missing access_ok() checks in IOCTL function
+ (gpu/drm/i915 Driver)
+To: oss-security@lists.openwall.com
 
---3VgSlJLwKQrXfnaLtB85lsbbPgIbVdxEc
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+--0000000000001f14ea058025f232
+Content-Type: text/plain; charset="UTF-8"
 
-So this one is pretty hard to cause exploitation without heavy social
-engineering/etc.
+NOTE: I have requested a CVE identifier, and I'm sending this message, to
+make tracking of the fix easier; however, to avoid missing security fixes
+without CVE identifiers, you should *NOT* be cherry-picking a specific
+patch in response to a notification about a kernel security bug.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=3D1084577
+Due to a lack of "access_ok()" checks in i915_gem_execbuffer2_ioctl[1], it
+is possible to escalate privileges similar to the waitid vulnerability[2]
 
-It was reported that ANSI escape sequences could be added to printer
-names in CUPS.  Becaue CUPS has a browsing feature that, when enabled,
-allows remote hosts to announce shared printers, a malicious host or
-user could send a specially-crafted UDP packet to a CUPS server
-announcing an arbitrary printer name that includes ANSI escape
-sequences.  Since the CUPS daemon does not remove these characters, a
-user on the targeted system could query the printer list (using 'lpstat
--a', for example).  If this were done in a terminal that supported the
-ANSI escape sequences (like a terminal with support for color), then
-code execution could be possible as the terminal would interpret the
-ANSI escape sequences contained in the printer name.
+This is CVE-2018-20669
 
-A patch for this is available at
-https://bugzilla.redhat.com/attachment.cgi?id=3D916761
+[1] -
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=594cc251fdd0d231d342d88b2fdff4bc42fb0690
+[2] - https://salls.github.io/Linux-Kernel-CVE-2017-5123/
 
-My apologies, this issue has been sitting way to long and is certainly
-not worth a long embargo.
-
-I can't wait till I'm done cleaning house of all these embargoed issues
-that shouldn't be embargoed. I strongly urge other vendors to do the same.
-
---=20
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
---3VgSlJLwKQrXfnaLtB85lsbbPgIbVdxEc
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
-
-iQIcBAEBAgAGBQJVEOsgAAoJEBYNRVNeJnmTuz0P/AuiWMG5fCcxvq95oSA1l7XZ
-+1jvf6eMCGwmbrPdyQiR2n3AcX6D5ThAqf9pe7E0g+cX5UqzoV6Loluh7em2Zspf
-Ev7PUCcQ+SqeiEgwcd4+nya36E3/fBVdGi66rDQn60AjpBn6C5KFI/B9sQhN+zWr
-DP9/st9W9wXu77NUiGC+SCzoaMge21MBbWWldSIdXffh5MH4ZQHrG2xcNfH0mMau
-oStNsSAIEoQ4h38VWpHIzexDOCETYXNCXe4Lqv0uu62+xPPskr2pGYSHtrVZiVi/
-R8aAZ8FMUfe3PVYiUXjVZ4IcXwke7L41TGNe6Vi2RC4zcp5hSoXfs6dyRWhxUwd4
-Y1ElIfGBwuiR5DBAdD/I56t6m/KSZk/HavoYGr++mdxmRaN+HEmTgN0meGnlnUhU
-jw5wSLcMlPF6IpaNDo0ucrhIfCDzWrxquSPg1jmW2zvl6OBQSNdi+k4+oWhV0ixd
-E8NXPAdz+uCR4NHx0sd5+xEN+bMjYMhfIMtsnDXZfv7mgiPvJUVSgmumhooAejjp
-eu/++BNacYq79V/Bm7R99AXa9p2gAACt2UvERbXRtq6kidAU9jwIlKIJlCnShv7R
-394e8hxBbhPXswYCeYfesCZJCcDyZuVcfO3fbIPzR/0rDLUa4CA92fHa3QAEcSNS
-c7W2gMAOo3foyc4zspaO
-=XC3M
------END PGP SIGNATURE-----
-
---3VgSlJLwKQrXfnaLtB85lsbbPgIbVdxEc--
+--0000000000001f14ea058025f232--
