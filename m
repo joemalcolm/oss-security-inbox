@@ -1,32 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/24/10
-Message-ID: <alpine.GSO.2.20.1906241142430.23351@scrappy.simplesystems.org>
-Date: Mon, 24 Jun 2019 11:44:31 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
-To: oss-security@...ts.openwall.com
-Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/24/3
+Message-ID: <CAP+3qq7v782VBmeatJTNV5L_wDk1dHsoWFNChAUUvsN7z2Tu1Q@mail.gmail.com>
+Date: Thu, 24 Jan 2019 13:34:21 +0900
+From: Akira Ajisaka <aajisaka@...che.org>
+To: general@...oop.apache.org, user@...oop.apache.org,  "<security@...oop.apache.org>" <security@...oop.apache.org>, oss-security@...ts.openwall.com
+Subject: CVE-2018-1296: Apache Hadoop HDFS Permissive listXAttr Authorization
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 24 Jun 2019, Alexander Potapenko wrote:
->>
->> Most oss-fuzz issue detections are not CVE worthy.  For example, a
->> one-byte read "heap overflow" is not likely to cause any actual harm
->> but oss-fuzz would classify it as "heap overflow".
-> There's enough information in the report though to assign the severity
-> score depending on the access size, its type (read or write) the call
-> stack etc.
-> OSS-Fuzz deliberately doesn't do that now, but such scoring can be
-> done to prune the list of potential CVE candidates.
+CVE-2018-1296: Apache Hadoop HDFS Permissive listXAttr Authorization
 
-Oss-fuzz does not take into account the important criteria which is 
-the actual underlying size of the heap allocation.  It is true that 
-this is implementation specific, but if the underlying heap allocation 
-is larger than the requested allocation, the program might not be 
-vulnerable.
+Severity: Important
 
-Bob
--- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
-Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
+Vendor: The Apache Software Foundation
+
+Versions Affected:
+3.0.0-alpha1 to 3.0.0, 2.9.0, 2.8.0 to 2.8.3, 2.5.0 to 2.7.5
+
+Description:
+HDFS exposes extended attribute key/value pairs during listXAttrs,
+verifying only path-level search access to the directory rather than
+path-level read permission to the referent. This affects features that
+store sensitive data in extended attributes, such as HDFS encryption secrets.
+
+Mitigation:
+If a file contains sensitive data in extended attributes, users and admins
+need to change the permission to prevent others from listing the directory
+which contains the file.
+
+Credit:
+This issue was discovered by Rushabh Shah.
