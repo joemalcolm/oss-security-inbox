@@ -1,62 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/20/9
-Message-ID: <alpine.GSO.2.20.1911201436000.15536@scrappy.simplesystems.org>
-Date: Wed, 20 Nov 2019 15:08:58 -0600 (CST)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/24/4
+Message-ID: <e04349fc26ad12ba9a8d3b74848b42c88bba5dc3.camel@debian.org>
+Date: Thu, 24 Jan 2019 10:30:28 +0100
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Mitigating malicious packages in gnu/linux
+Subject: Re: Linux Kernel: Missing access_ok() checks in IOCTL function (gpu/drm/i915 Driver)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 20 Nov 2019, Jeremy Stanley wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> On 2019-11-20 13:28:04 -0600 (-0600), Bob Friesenhahn wrote:
-> [...]
->> Modern GNU/Linux systems have far too much executing code to
->> reasonably secure. Paring down the amount of executing code helps
->> quite a lot with improving security.
->
-> In your opinion, how does this compare with proprietary operating
-> systems? Do they have more or less code executed than modern
-> GNU/Linux systems (or can we even know)? How about the popular BSD
-> Unix derivatives? What is your benchmark for the correct amount of
-> code to be executed, or is this analysis based on comparison with an
-> abstract ideal operating system archetype?
+On Wed, 2019-01-23 at 14:28 -0600, Timothy Michaud wrote:
+> NOTE: I have requested a CVE identifier, and I'm sending this message, to
+> make tracking of the fix easier; however, to avoid missing security fixes
+> without CVE identifiers, you should *NOT* be cherry-picking a specific
+> patch in response to a notification about a kernel security bug.
+> 
+> Due to a lack of "access_ok()" checks in i915_gem_execbuffer2_ioctl[1], it
+> is possible to escalate privileges similar to the waitid vulnerability[2]
 
-These are all good questions.
+Hi, thanks for the report.
 
-I use OmniOSce (a free-software Sun Solaris/SVR4 server derivative), 
-and it claims (https://omniosce.org/setup/freshinstall) to require 
-8GiB of space but I recall an original install of less than 4GiB.  A 
-Ubuntu 18.04 KDE desktop system here (Kubuntu) used for software 
-development seems to be consuming about 20GiB of space.
+The patch doesn't seem CC: stable, could you give us a status on the various
+stable releases?
 
-I work on dedicated Linux-based systems where the root filesystem 
-takes just 16MiB (compressed) of space (19MiB including boot 
-firmware).  Linux-based systems are still able to boot and run from a 
-CD.
+Regards,
+- -- 
+Yves-Alexis
+-----BEGIN PGP SIGNATURE-----
 
-BSD systems which are used as firewalls or for dedicated functions can 
-be quite small.
-
-The amount of software installed and running on Linux systems 
-continues to grow rapidly, and tend to defeat the end user from 
-understanding the purpose or even being aware of the existence of the 
-applications.  With a great many libraries and applications brought in 
-as metapackage dependencies, the security exposure of typical Linux 
-desktop systems seems quite high.
-
-A secure system should do almost nothing by default with each service 
-enabled only starting absolutely required software to perform the 
-function.  Functionality should be incrementally enabled.  This is not 
-what modern Linux desktops are like.
-
-Regardless, the source for these systems is the original source code 
-and a defect or malign intent of the source code can bring down the 
-whole system.
-
-Bob
--- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
-Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
+iQEzBAEBCAAdFiEE8vi34Qgfo83x35gF3rYcyPpXRFsFAlxJhbQACgkQ3rYcyPpX
+RFsNSwf/WQH9UPK9YIFBdu47hZUKOr2tRkFosjnyEecG8HsBxI1191fXsZcGgeJk
+YVzL+oWvlvQcTajPnbBLPU6qey9ZFz8AdNkXGSKXnejaPpn9LvkJntT086s6lX1i
+dWSgDbhAX0PT2UO1I1k4GJ5KA8SxEIzPnqq2moB8WjcIIWuqFEFJIjYkL36Wovhp
+/rKIBZGMX25zxKHzCckGYcski/KKFpgqbqbyQ2jLydht3nHczlhGP/lTa/DVr8IN
+YH//6ayr0Kml/G9X8ZIV1ciu+UKQGFAVwrXNAmugNmy6tZwRVDezvP2+JfWZNAG/
+bjhyac/xqmS/VquQjKKgyTQPoPBUkg==
+=Xt1Y
+-----END PGP SIGNATURE-----
