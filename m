@@ -1,92 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/30/1
-Message-ID: <eaa908a8-929d-98d9-8a66-04a8ccc6da53@sysdream.com>
-Date: Wed, 30 Jan 2019 09:42:56 +0100
-From: Sysdream Labs <labs@...dream.com>
-To: fulldisclosure@...lists.org, oss-security@...ts.openwall.com
-Subject: [CVE-2018-14013] Reflected Cross-Site Scripting (XSS) vulnerabilities in Zimbra Collaboration
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/24/1
+Message-ID: <nycvar.YSQ.7.76.1901241241500.20220@xnncv>
+Date: Thu, 24 Jan 2019 12:43:37 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE-2019-6501 QEMU: scsi-generic: possible OOB access while handling inquiry request
 Content-Type: text/plain; charset=utf-8
 
-# [CVE-2018-14013] Reflected Cross-Site Scripting (XSS) vulnerabilities
-in Zimbra Collaboration
+  Hello,
 
-## Description
+An out of bounds r/w access issue was found in the way QEMU handled inquiry 
+request coming from a guest in scsi_handle_inquiry_reply(). A guest 
+user/process could use this flaw to corrupt byte of QEMU process memory.
 
-Two XSS vulnerabilities have been discovered in Zimbra Collaboration
-(initially in version 8.8.8).
-Zimbra Collaboration is an open source messaging and collaboration solution.
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2019-01/msg02324.html
 
-## Vulnerability records
+CVE-2019-6501 requested via -> https://cveform.mitre.org/
 
-**Access Vector**: Remote
-
-**Security Risk**: Medium
-
-**Vulnerability**: CWE-79
-
-**CVSS Base Score**: 6.1
-
-**CVSS String**: CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N
-
-## Details
-
-Two Reflected XSS vulnerabilities allow remote attackers to inject
-arbitrary JavaScript in web browsers.
-
-### Proof of Concept - XSS\#1
-
-To reproduce the first XSS, login to https://host.com/zimbra/ and click
-on the link below:
-
-```
-https://host.com/zimbra/h/search?si=1&so=0&sfi=4&st=message&csi=1&action=&cso=0&id=""><svg
-onload=alert(1)>
-```
-
-### Proof of Concept - XSS\#2
-
-1. First, login to `https://host.com/zimbra/`
-
-2. Click on "Preferences", then on "Import / Export".
-
-3. Finally, just import a file named `test.<svg onload=alert(2)>` to get
-the second XSS payload executed.
-
-
-## Affected versions
-
-Versions < 8.8.11.
-
-## Solution
-
-Update to version 8.8.11 which includes all fixes.
-
-## Timeline (dd/mm/yyyy)
-
-* 12/07/2018  : Initial discovery
-* 21/07/2018  : Vendor notification
-* 21/07/2018  : Vendor acknowledgment
-* 18/10/2018  : Vendor partial fixes in ZCS 8.8.10 patch 1 and 8.8.9
-patch 6 (XSS 1)
-* 18/12/2018  : Vendor full fixes in ZCS 8.8.11 (XSS 2)
-* 30/01/2019    : Public disclosure
-
-## Credits
-
-* Issam Rabhi <i.rabhi@...dream.com>
-
-Thanks to the Zimbra security team for the perfect report handling !
-
--- 
-SYSDREAM Labs <labs@...dream.com>
-
-GPG :
-47D1 E124 C43E F992 2A2E
-1551 8EB4 8CD9 D5B2 59A1
-
-* Website: https://sysdream.com/
-* Twitter: @sysdream
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
