@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1941" "Wednesday" "5" "February" "2020" "11:31:55" "-0500" "Larry W. Cashdollar" "larry0@me.com" nil "55" nil "^Date:" nil nil "2" nil nil (number mark "        larry0@me.co Feb  5   55/1941  " thread-indent "\"Re: [oss-security] CVE-2019-18901: mariadb: possible symlink attack for the mysql user in the SUSE specific mysql-systemd-helper script\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] CVE-2019-18901: mariadb: possible symlink attack for the mysql user in the SUSE specific mysql-systemd-helper script" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["7480" "Friday" "25" "January" "2019" "10:46:58" "-0500" "Vladis Dronov" "vdronov@redhat.com" "<852314624.66920466.1548431218750.JavaMail.zimbra@redhat.com>" "192" "[oss-security] CVE-2018-16880 Linux kernel: oob-write in drivers/vhost/net.c:get_rx_bufs()" nil nil nil "1" "2019012515:46:58" "[oss-security] CVE-2018-16880 Linux kernel: oob-write in drivers/vhost/net.c:get_rx_bufs()" (number mark "U       vdronov@redh Jan 25  192/7480  " thread-indent "\"[oss-security] CVE-2018-16880 Linux kernel: oob-write in drivers/vhost/net.c:get_rx_bufs()\"\n") "<946725261.66918677.1548430904028.JavaMail.zimbra@redhat.com>" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32294 invoked by uid 550); 5 Feb 2020 16:32:10 -0000
+Received: (qmail 9589 invoked by uid 550); 25 Jan 2019 15:47:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,91 +11,213 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32276 invoked from network); 5 Feb 2020 16:32:09 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=1a1hai;
-	t=1580920317; bh=ZIYiFJ43doY9lyy/9Q5SSnK5zyeiSPA+CGgE7sJPopk=;
-	h=Date:Subject:From:To:Message-ID:Content-type;
-	b=gZZOEu+vy3jRKnbVin3yD5jNjpCqqCQfiQqfezSaiTJrApQfqqQqWQXm+/6/b4JVb
-	 qXnvfyMAwBMCu1S9YXni7yp5khJpIfG974fZQ5UMrbmyAXZxeaq/ZlRcyHNKALRttM
-	 deamRck+lgz56DZqAR2tLxX9R3uDuy/cnswuL9J03LVadxXavnpkRLucAOqeM98F09
-	 x+4LihR/TS+5vQG1xdMjABORiO0fjaGp6IQ2/Gz2WbMB/Q/edLm0Xp/eq4/IgzhOXC
-	 zy+Qq5cVY+LJifh5qzVqHmZyOtd6uUawnwW3/HMLDlKdNN19bys//lrhWQymYNnPex
-	 f+p4Quz+zAZUw==
-User-Agent: Microsoft-MacOutlook/10.21.0.200113
-Message-ID: <24EFFFB0-DD97-49EF-8C01-E70EC2C93CF7@me.com>
-Thread-Topic: [oss-security] CVE-2019-18901: mariadb: possible symlink attack
- for the mysql user in the SUSE specific mysql-systemd-helper script
-References: <20200205124521.GA16369@f195.suse.de>
-In-Reply-To: <20200205124521.GA16369@f195.suse.de>
-Mime-version: 1.0
-Content-type: text/plain;
-	charset="UTF-8"
-Content-transfer-encoding: quoted-printable
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2020-02-05_04:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 malwarescore=0
- phishscore=0 bulkscore=0 spamscore=0 clxscore=1015 mlxscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1908290000 definitions=main-2002050124
-Date: Wed, 05 Feb 2020 11:31:55 -0500
-From: "Larry W. Cashdollar" <larry0@me.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2019-18901: mariadb: possible symlink attack
- for the mysql user in the SUSE specific mysql-systemd-helper script
-To: Open Security <oss-security@lists.openwall.com>
+Received: (qmail 9565 invoked from network); 25 Jan 2019 15:47:10 -0000
+Date: Fri, 25 Jan 2019 10:46:58 -0500 (EST)
+From: Vladis Dronov <vdronov@redhat.com>
+To: oss-security@lists.openwall.com
+Message-ID: <852314624.66920466.1548431218750.JavaMail.zimbra@redhat.com>
+In-Reply-To: <946725261.66918677.1548430904028.JavaMail.zimbra@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.40.5.180, 10.4.195.6]
+Thread-Topic: CVE-2018-16880 Linux kernel: oob-write in drivers/vhost/net.c:get_rx_bufs()
+Thread-Index: CUn7gfWa/8Z3RVldsI2Bq1cioTtmOA==
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.30]); Fri, 25 Jan 2019 15:46:58 +0000 (UTC)
+Subject: [oss-security] CVE-2018-16880 Linux kernel: oob-write in
+ drivers/vhost/net.c:get_rx_bufs()
 
-Hello Matthias,
+Hello,
 
-That chmod 640 might be interesting if applied to /etc/shadow.  It could al=
-low some users to read the password hashes.
+A flaw was found in the Linux kernel in the handle_rx() function in
+the [vhost_net] driver. A malicious virtual guest under specific conditions can
+trigger an out-of-bounds write in a kmalloc-8 slab on a virtual host which may
+lead to a kernel memory corruption and a system panic. Due to the nature of
+the flaw, privilege escalation cannot be fully ruled out, although we believe it
+is unlikely.
 
-=EF=BB=BFOn 2/5/20, 7:46 AM, "Matthias Gerstner" <mgerstner@suse.de> wrote:
+Reference: https://bugzilla.redhat.com/show_bug.cgi?id=1656472
 
-    Hello list,
-=20=20=20=20
-    in the course of a review of the mariadb packaging in the SUSE Linux
-    distribution I discovered that a SUSE specific helper script
-    "mysql-systemd-helper" unsafely operates with root privileges in
-    the /var/lib/mysql directory [1].
-=20=20=20=20
-    During initial package installation and during upgrade scenarios the
-    file /var/lib/mysql/mysql_upgrade_info is created/overwritten and
-    modified using the following shell commands:
-=20=20=20=20
-    ```
-    echo -n "$MYSQLVER" > "$datadir"/mysql_upgrade_info
-    chmod 640 "$datadir/mysql_upgrade_info"
-    ```
-=20=20=20=20
-    Since the unprivileged mysql user owns the parent directory it can
-    remove this file and replace it with a symlink to write/overwrite in
-    privileged file systems locations. This could mostly be used for
-    denial-of-service purposes, a full privilege escalation should not be
-    easily achieved by this vulnerability, since the file content cannot be
-    controlled by a potential attacker.
-=20=20=20=20
-    Future SUSE mariadb packages will keep this file in a safe location in
-    /var/lib/misc. Older, still supported packages will be fixed soon.
-=20=20=20=20
-    Cheers
-=20=20=20=20
-    Matthias
-=20=20=20=20
-    References
-    ----------
-=20=20=20=20
-    [1]: https://bugzilla.suse.com/show_bug.cgi?id=3D1160895
-=20=20=20=20
-    --=20
-    Matthias Gerstner <matthias.gerstner@suse.de>
-    Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-    https://www.suse.com/security
-    Phone: +49 911 740 53 290
-    GPG Key ID: 0x14C405C971923553
-=20=20=20=20
-    SUSE Software Solutions Germany GmbH
-    HRB 36809, AG N=C3=BCrnberg
-    Gesch=C3=A4ftsf=C3=BChrer: Felix Imend=C3=B6rffer
-=20=20=20=20
+An id CVE-2018-16880 was assigned to this flaw and we would like to ask to use
+it in the related public communications.
 
+This flaw was found and researched by Jason Wang, Red Hat Inc.
 
+The suggested patch is below. Please, note, this is preliminary internal patch
+which was not reviewed and accepted by the upstream community. The researcher
+is going to send the patch to the related kernel mailing lists.
+
+A reproducer can be provided via direct off-list request to me.
+
+Please, see some details extracted from discussion with a researcher:
+
+> is this guest triggerable (guest -> host) or host -> host?
+
+a vm guest can trigger an oob-write on a host but requires a large network packet
+to be received for this.
+
+> what is overwritten?
+
+kmalloc-8 slab on a vm host.
+
+> what's the minimum and maximum size of the out-of-bound write?
+
+from 8 bytes (sizeof vring_used_elem) to 504 bytes (63 * sizeof(vring_used_elem))
+
+> does the attacker control the data that are written and if yes, to which degree?
+
+attacker can not directly control the data.
+
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security | Senior Software Engineer
+
+===[ 0001-vhost-fix-OOB-in-get_rx_bufs.patch ]===
+From: Jason Wang <jasowang@redhat.com>
+Subject: [PATCH] vhost: fix OOB in get_rx_bufs()
+
+After batched used ring updating was introduced in commit e2b3b35eb989
+("vhost_net: batch used ring update in rx"). We tend to batch heads in
+vq->heads for more than one packet. But the quota passed to
+get_rx_bufs() was not correctly limited, which can result a OOB write
+in vq->heads.
+
+        headcount = get_rx_bufs(vq, vq->heads + nvq->done_idx,
+                    vhost_len, &in, vq_log, &log,
+                    likely(mergeable) ? UIO_MAXIOV : 1);
+
+UIO_MAXIOV was still used which is wrong since we could have batched
+used in vq->heads, this will cause OOB if the next buffer needs more
+than 960 (1024 (UIO_MAXIOV) - 64 (VHOST_NET_BATCH)) heads after we've
+batched 64 (VHOST_NET_BATCH) heads:
+
+=============================================================================
+BUG kmalloc-8k (Tainted: G    B            ): Redzone overwritten
+-----------------------------------------------------------------------------
+
+INFO: 0x00000000fd93b7a2-0x00000000f0713384. First byte 0xa9 instead of 0xcc
+INFO: Allocated in alloc_pd+0x22/0x60 age=3933677 cpu=2 pid=2674
+    kmem_cache_alloc_trace+0xbb/0x140
+    alloc_pd+0x22/0x60
+    gen8_ppgtt_create+0x11d/0x5f0
+    i915_ppgtt_create+0x16/0x80
+    i915_gem_create_context+0x248/0x390
+    i915_gem_context_create_ioctl+0x4b/0xe0
+    drm_ioctl_kernel+0xa5/0xf0
+    drm_ioctl+0x2ed/0x3a0
+    do_vfs_ioctl+0x9f/0x620
+    ksys_ioctl+0x6b/0x80
+    __x64_sys_ioctl+0x11/0x20
+    do_syscall_64+0x43/0xf0
+    entry_SYSCALL_64_after_hwframe+0x44/0xa9
+INFO: Slab 0x00000000d13e87af objects=3 used=3 fp=0x          (null) flags=0x200000000010201
+INFO: Object 0x0000000003278802 @offset=17064 fp=0x00000000e2e6652b
+
+Fixing this by allocating UIO_MAXIOV + VHOST_NET_BATCH iovs for
+vhost-net. This is done through set the limitation through
+vhost_dev_init(), then set_owner can allocate the number of iov in a
+per device manner.
+
+Fixes: e2b3b35eb989 ("vhost_net: batch used ring update in rx")
+Signed-off-by: Jason Wang <jasowang@redhat.com>
+---
+ drivers/vhost/net.c   | 3 ++-
+ drivers/vhost/scsi.c  | 2 +-
+ drivers/vhost/vhost.c | 7 ++++---
+ drivers/vhost/vhost.h | 4 +++-
+ drivers/vhost/vsock.c | 2 +-
+ 5 files changed, 11 insertions(+), 7 deletions(-)
+
+diff --git a/drivers/vhost/net.c b/drivers/vhost/net.c
+index 36f3d0f49e60..87af3b78d647 100644
+--- a/drivers/vhost/net.c
++++ b/drivers/vhost/net.c
+@@ -1336,7 +1336,8 @@ static int vhost_net_open(struct inode *inode, struct file *f)
+ 		n->vqs[i].rx_ring = NULL;
+ 		vhost_net_buf_init(&n->vqs[i].rxq);
+ 	}
+-	vhost_dev_init(dev, vqs, VHOST_NET_VQ_MAX);
++	vhost_dev_init(dev, vqs, VHOST_NET_VQ_MAX,
++		       UIO_MAXIOV + VHOST_NET_BATCH);
+ 
+ 	vhost_poll_init(n->poll + VHOST_NET_VQ_TX, handle_tx_net, EPOLLOUT, dev);
+ 	vhost_poll_init(n->poll + VHOST_NET_VQ_RX, handle_rx_net, EPOLLIN, dev);
+diff --git a/drivers/vhost/scsi.c b/drivers/vhost/scsi.c
+index 8e10ab436d1f..a08ce2cda9f7 100644
+--- a/drivers/vhost/scsi.c
++++ b/drivers/vhost/scsi.c
+@@ -1623,7 +1623,7 @@ static int vhost_scsi_open(struct inode *inode, struct file *f)
+ 		vqs[i] = &vs->vqs[i].vq;
+ 		vs->vqs[i].vq.handle_kick = vhost_scsi_handle_kick;
+ 	}
+-	vhost_dev_init(&vs->dev, vqs, VHOST_SCSI_MAX_VQ);
++	vhost_dev_init(&vs->dev, vqs, VHOST_SCSI_MAX_VQ, UIO_MAXIOV);
+ 
+ 	vhost_scsi_init_inflight(vs, NULL);
+ 
+diff --git a/drivers/vhost/vhost.c b/drivers/vhost/vhost.c
+index 9f7942cbcbb2..1e739313d58e 100644
+--- a/drivers/vhost/vhost.c
++++ b/drivers/vhost/vhost.c
+@@ -390,9 +390,9 @@ static long vhost_dev_alloc_iovecs(struct vhost_dev *dev)
+ 		vq->indirect = kmalloc_array(UIO_MAXIOV,
+ 					     sizeof(*vq->indirect),
+ 					     GFP_KERNEL);
+-		vq->log = kmalloc_array(UIO_MAXIOV, sizeof(*vq->log),
++		vq->log = kmalloc_array(dev->iov_limit, sizeof(*vq->log),
+ 					GFP_KERNEL);
+-		vq->heads = kmalloc_array(UIO_MAXIOV, sizeof(*vq->heads),
++		vq->heads = kmalloc_array(dev->iov_limit, sizeof(*vq->heads),
+ 					  GFP_KERNEL);
+ 		if (!vq->indirect || !vq->log || !vq->heads)
+ 			goto err_nomem;
+@@ -414,7 +414,7 @@ static void vhost_dev_free_iovecs(struct vhost_dev *dev)
+ }
+ 
+ void vhost_dev_init(struct vhost_dev *dev,
+-		    struct vhost_virtqueue **vqs, int nvqs)
++		    struct vhost_virtqueue **vqs, int nvqs, int iov_limit)
+ {
+ 	struct vhost_virtqueue *vq;
+ 	int i;
+@@ -427,6 +427,7 @@ void vhost_dev_init(struct vhost_dev *dev,
+ 	dev->iotlb = NULL;
+ 	dev->mm = NULL;
+ 	dev->worker = NULL;
++	dev->iov_limit = iov_limit;
+ 	init_llist_head(&dev->work_list);
+ 	init_waitqueue_head(&dev->wait);
+ 	INIT_LIST_HEAD(&dev->read_list);
+diff --git a/drivers/vhost/vhost.h b/drivers/vhost/vhost.h
+index 466ef7542291..2f76e3da9552 100644
+--- a/drivers/vhost/vhost.h
++++ b/drivers/vhost/vhost.h
+@@ -170,9 +170,11 @@ struct vhost_dev {
+ 	struct list_head read_list;
+ 	struct list_head pending_list;
+ 	wait_queue_head_t wait;
++	int iov_limit;
+ };
+ 
+-void vhost_dev_init(struct vhost_dev *, struct vhost_virtqueue **vqs, int nvqs);
++void vhost_dev_init(struct vhost_dev *, struct vhost_virtqueue **vqs,
++		    int nvqs, int iov_limit);
+ long vhost_dev_set_owner(struct vhost_dev *dev);
+ bool vhost_dev_has_owner(struct vhost_dev *dev);
+ long vhost_dev_check_owner(struct vhost_dev *);
+diff --git a/drivers/vhost/vsock.c b/drivers/vhost/vsock.c
+index bc42d38ae031..fca2d6589ea0 100644
+--- a/drivers/vhost/vsock.c
++++ b/drivers/vhost/vsock.c
+@@ -531,7 +531,7 @@ static int vhost_vsock_dev_open(struct inode *inode, struct file *file)
+ 	vsock->vqs[VSOCK_VQ_TX].handle_kick = vhost_vsock_handle_tx_kick;
+ 	vsock->vqs[VSOCK_VQ_RX].handle_kick = vhost_vsock_handle_rx_kick;
+ 
+-	vhost_dev_init(&vsock->dev, vqs, ARRAY_SIZE(vsock->vqs));
++	vhost_dev_init(&vsock->dev, vqs, ARRAY_SIZE(vsock->vqs), UIO_MAXIOV);
+ 
+ 	file->private_data = vsock;
+ 	spin_lock_init(&vsock->send_pkt_list_lock);
+-- 
+2.17.1
