@@ -1,65 +1,209 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/10/1
-Message-ID: <97042bbb-bf57-23e8-f1d9-75b95df5b9ff@amazon.com>
-Date: Tue, 10 Dec 2019 11:30:58 +1100
-From: <sandreim@...zon.com>
-To: <oss-security@...ts.openwall.com>
-CC: "Anthony Liguori (aliguori)" <aliguori@...zon.com>
-Subject: CVE-2019-18960: Firecracker v0.18.0 and v0.19.0 vsock buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/28/1
+Message-Id: <8EA8F86C-34A0-479D-B0E7-1AB8AF3E9FDF@beckweb.net>
+Date: Mon, 28 Jan 2019 15:28:48 +0100
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-We have identified an issue in the Firecracker v0.18.0 and v0.19.0 vsock
-implementation.
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software. The following
+releases contain fixes for security vulnerabilities:
 
-# Issue Description
+* Active Directory Plugin 2.11
+* Blue Ocean Plugin 1.10.2
+* Config File Provider Plugin 3.5
+* Git Plugin 3.9.2
+* GitHub Authentication Plugin 0.31
+* Groovy Plugin 2.1
+* Job Import Plugin 3.1
+* Kanboard Plugin 1.5.11
+* Monitoring Plugin 1.75.0
+* OpenId Connect Authentication Plugin 1.5
+* Script Security Plugin 1.51
+* Token Macro Plugin 2.6
+* Warnings Next Generation Plugin 2.1.2
+* Warnings Plugin 5.0.1
 
-A logical error in bounds checking performed on vsock virtio descriptors
-can be used by a malicious guest to read from and write to a segment of
-the host-side Firecracker process' heap address space, directly after
-the end of a guest memory region. For reads, the accessible segment's
-size is 64 KiB. For writes, the accessible segment is limited by the
-host Linux kernel to a size defined in /proc/sys/net/core/rmem_max. We
-expect the value of rmem_max to be on the order of a few hundred KiB to
-a few MiB.
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2019-01-28/
 
-# Impact
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-This will generally result in a segmentation fault, but remote code
-execution within the Firecracker host-side process context cannot be
-ruled out.
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
 
-# Vulnerable Systems
+---
 
-Only Firecracker v0.18.0 and v0.19.0 are affected. Only Firecracker
-microVMs with configured vsock devices are affected, and only if one or
-more vsock devices are in active use by both host and guest.
+SECURITY-1292
+Script Security sandbox protection could be circumvented during the script 
+compilation phase by applying AST transforming annotations such as `@...b` 
+to source code elements.
 
-# Mitigation
-
-Patched binaries for the affected versions have been released as
-Firecracker v0.18.1 [1] and Firecracker v0.19.1 [2].
-If you are using Firecracker v0.18.0 or v0.19.0 , we recommend you apply
-the provided fix. If you are using Firecracker v0.17.0 or below, you do
-not need to take any action.
-In a remote code execution scenario, users running Firecracker in line
-with the recommended Production Host Setup will see the impact limited
-as follows: a malicious microVM guest that would manage to compromise
-the Firecracker VMM process would be restricted to running on the host
-as an unprivileged user, in a chroot and mount namespace isolated from
-the host's filesystem, in a separate pid namespace, in a separate
-network namespace, with system calls limited to Firecracker's seccomp
-whitelist, on a single NUMA node, and on a cgroups-limited number of CPU
-cores.
-
-[1] https://github.com/firecracker-microvm/firecracker/releases/tag/v0.18.1
-[2] https://github.com/firecracker-microvm/firecracker/releases/tag/v0.19.1
-
-Best Regards,
-Andrei on behalf of the Firecracker maintainers team.
+This affected an HTTP endpoint used to validate a user-submitted Groovy 
+script that was not covered in the 2019-01-08 fix for SECURITY-1266 and 
+allowed users with Overall/Read permission to bypass the sandbox 
+protection and execute arbitrary code on the Jenkins master.
 
 
+SECURITY-1293
+Groovy Plugin has a form validation HTTP endpoint used to validate a user-
+submitted Groovy script through compilation, which was not subject to 
+sandbox protection. This allowed attackers with Overall/Read access to 
+execute arbitrary code on the Jenkins master by applying AST transforming 
+annotations such as `@...b` to source code elements.
 
 
-Amazon Development Center (Romania) S.R.L. registered office: 27A Sf. Lazar Street, UBC5, floor 2, Iasi, Iasi County, 700045, Romania. Registered in Romania. Registration number J22/2621/2005.
+SECURITY-1295 (1)
+Warnings Plugin has a form validation HTTP endpoint used to validate a 
+user-submitted Groovy script through compilation, which was not subject to 
+sandbox protection. The endpoint checked for the Overall/RunScripts 
+permission, but did not require POST requests, so it was vulnerable to 
+cross-site request forgery (CSRF). This allowed attackers to execute 
+arbitrary code on the Jenkins master by applying AST transforming 
+annotations such as `@...b` to source code elements.
 
-Download attachment "pEpkey.asc" of type "application/pgp-keys" (2465 bytes)
+
+SECURITY-1295 (2)
+Warnings Next Generation Plugin has a form validation HTTP endpoint used 
+to validate a Groovy script through compilation, which was not subject to 
+sandbox protection. The endpoint checked for the Overall/RunScripts 
+permission, but did not require POST requests, so it was vulnerable to 
+cross-site request forgery (CSRF). This allowed attackers to execute 
+arbitrary code on the Jenkins master by applying AST transforming 
+annotations such as `@...b` to source code elements.
+
+
+SECURITY-859
+Active Directory Plugin performs TLS upgrade (StartTLS) after connecting 
+to domain controllers through insecure LDAP. In this mode, certificates 
+were not properly validated, effectively trusting all certificates, 
+allowing man-in-the-middle attacks.
+
+This only affected TLS upgrades. The LDAPS mode, available by setting the 
+system property hudson.plugins.active_directory.
+ActiveDirectorySecurityRealm.forceLdaps to true, was unaffected.
+
+
+SECURITY-1095
+Git Plugin allows the creation of a tag in a job workspace’s Git 
+repository with accompanying metadata attached to a build record.
+
+The HTTP endpoint to create the tag did not require POST requests, 
+resulting in a CSRF vulnerability.
+
+
+SECURITY-1102
+Token Macro Plugin recursively applied token expansion.
+
+This could be used by users able to affect input to token expansion (such 
+as change log messages), to inject additional tokens into the input, which 
+would then be expanded, resulting in information disclosure (for example 
+values of environment variables), or denial of service.
+
+
+SECURITY-1201
+Blue Ocean did not require CSRF tokens ("crumbs") for POST requests with 
+the `Content-Type: application/json`, resulting in CSRF vulnerabilities.
+
+
+SECURITY-1204
+Blue Ocean did not properly escape HTML/JavaScript content set on the 
+current user’s description field, resulting in a cross-site scripting 
+vulnerability exploitable by administrators and other people accessing 
+Jenkins with the same user account.
+
+
+SECURITY-1253
+Config File Provider Plugin improperly handled script names in its 
+JavaScript-based UI, resulting in a stored cross-site scripting (XSS) 
+vulnerability.
+
+
+SECURITY-905 (1)
+Job Import Plugin allows to import jobs from other Jenkins instances. As a 
+first step in this process, Job Import Plugin sends a request to another 
+Jenkins instance, parsing XML REST API output to obtain a list of jobs 
+that could be imported.
+
+Job Import Plugin did not configure the XML parser in a way that would 
+prevent XML External Entity (XXE) processing. This allowed attackers able 
+to control either the server Jenkins will query, or the URL Jenkins 
+queries, to have it parse a maliciously crafted XML response that uses 
+external entities for extraction of secrets from the Jenkins master, 
+server-side request forgery, or denial-of-service attacks.
+
+
+SECURITY-905 (2)
+Job Import Plugin did not check user permissions on its API endpoint used 
+to access remote Jenkins instances. This allowed users with Overall/Read 
+access to Jenkins to connect to an attacker-specified URL using attacker-
+specified credentials IDs obtained through another method, capturing 
+credentials stored in Jenkins.
+
+
+SECURITY-1302
+Job Import Plugin did not require that POST requests are sent to its 
+/import URL, which processes requests to import jobs. This resulted in a 
+cross-site request forgery (CSRF) vulnerability that could be exploited to 
+create or replace jobs on the local instance if the remote Jenkins 
+instance has different ones with the same name, or to install additional 
+plugins, if jobs on the remote Jenkins instance reference them in their 
+configuration.
+
+
+SECURITY-602
+GitHub Authentication Plugin stores the client secret in the global 
+Jenkins configuration.
+
+While the client secret is stored encrypted on disk, it was transmitted in 
+plain text as part of the configuration form and displayed without masking.
+ This could result in exposure of the client secret through browser 
+extensions, cross-site scripting vulnerabilities, and similar situations.
+
+
+SECURITY-797
+GitHub Authentication Plugin did not invalidate the previous session and 
+create a new one upon successful login, allowing attackers able to control 
+or obtain another user’s pre-login session ID to impersonate them.
+
+
+SECURITY-818
+Kanboard Plugin did not perform permission checks on a method implementing 
+form validation. This allowed users with Overall/Read access to Jenkins to 
+submit a GET request to an attacker-specified URL.
+
+Additionally, this form validation method did not require POST requests, 
+resulting in a CSRF vulnerability.
+
+
+SECURITY-886
+OpenId Connect Authentication Plugin stores the client secret in the 
+global Jenkins configuration.
+
+While the client secret is stored encrypted on disk, it was transmitted in 
+plain text as part of the configuration form and displayed without masking.
+ This could result in exposure of the client secret through browser 
+extensions, cross-site scripting vulnerabilities, and similar situations.
+
+
+SECURITY-1153
+Monitoring Plugin provides a standalone JavaMelody servlet with an 
+independent CSRF protection configuration. Even if Jenkins had CSRF 
+protection enabled, Monitoring Plugin may not have it enabled.
+
+
+SECURITY-1154
+Monitoring Plugin did not set the X-Frame-Options header, allowing its 
+pages to be embedded. This could result in clickjacking attacks.
+
+
+SECURITY-1271
+Warnings Next Generation Plugin did not properly escape HTML content in 
+warnings displayed on the Jenkins UI, resulting in a cross-site scripting 
+vulnerability exploitable by users able to control warnings parser input.
+
