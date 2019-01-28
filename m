@@ -1,42 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/15/4
-Message-ID: <alpine.GSO.2.20.1906151108210.1813@freddy.simplesystems.org>
-Date: Sat, 15 Jun 2019 11:21:41 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/28/2
+Message-ID: <CA+2=X7vy=7GV+eq4Arc4Yh+305Y4wLeVcL+V0fJ3ErXMkJ28PQ@mail.gmail.com>
+Date: Mon, 28 Jan 2019 11:53:15 -0700
+From: Scott Gayou <sgayou@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
+Subject: CVE-2019-3813: spice: Off-by-one error in array access in spice/server/memslot.c
 Content-Type: text/plain; charset=utf-8
 
-On Sat, 15 Jun 2019, Alex Gaynor wrote:
->
-> Today I'd like to highlight what I see as a tremendous issue: very few of
-> these security bugs ever has a CVE issued for it. This is probably due to a
-> few factors, a) the relative difficulty of obtaining a CVE, b) the lack of
-> a human reporter who is interested in obtaining one for "credit" purposes,
-> c) the sheer number of bugs that we're talking about.
+Hello,
 
-Many oss-fuzz "security" issues are not CVE-worthy although they are 
-bugs worthy to spend time fixing.
+spice versions 0.5.2 through 0.14.1 are vulnerable to an out-of-bounds read
+due to an off-by-one error in memslot_get_virt. This may lead to a
+denial-of-service, or, in the worst case, code-execution by unauthenticated
+attackers.
 
-At least as pertains to the Debian project, I do feel that someone is 
-looking at each security issue I fix and creating CVEs for serious 
-issues.  A CVE summary page for GraphicsMagick is maintained at 
-https://security-tracker.debian.org/tracker/source-package/graphicsmagick.
+The attached patch fixes the issue in spice and is planned to be included
+in forthcoming release spice 0.14.2.
 
-> This is in addition to the >100 security bugs OSS-Fuzz found and publicly
-> disclosed due to hitting their disclosure deadline, and which still have
-> not been fixed [3].
+This issue was reported by Christophe Fergeau (Red Hat).
 
-Security bugs are often very hard to diagnose and fix.  The community 
-has become much better at producing bug reports than with helping to 
-solve the problems found.  Help with actually fixing issues is 
-appreciated.  I think that the objective should be open source 
-software which lacks bugs and still provides a useful purpose. 
-Finding bugs is just part of the effort.
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=1665371
 
-Bob
+Thank you.
+
 -- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
-Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
+Scott Gayou / Red Had Product Security
+
+Content of type "text/html" skipped
+
+View attachment "0001-memslot-Fix-off-by-one-error-in-group-slot-boundary-.patch" of type "text/x-patch" (3803 bytes)
