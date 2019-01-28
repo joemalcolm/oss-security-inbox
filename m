@@ -1,49 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/08/7
-Message-ID: <877e4ai9o5.fsf@hope.eyrie.org>
-Date: Fri, 08 Nov 2019 09:02:02 -0800
-From: Russ Allbery <eagle@...ie.org>
-To: Georgi Guninski <gguninski@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Controversy and exploitability of gcc issue 30475 |assert(int+100 > int)|
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/29/1
+Message-ID: <CAN_Cyt8SiMcy_JXH=VMGePOFZpu_-9bTWYjMUPSwGW3myy0xCQ@mail.gmail.com>
+Date: Mon, 28 Jan 2019 14:23:07 -0600
+From: Imran Rashid <irashid@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2018-11760: Apache Spark local privilege escalation vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Georgi Guninski <gguninski@...il.com> writes:
+Severity: Important
 
-> Any workarounds?
+Vendor: The Apache Software Foundation
 
-> ===poc===
-> #include <assert.h>
+Versions affected:
+All Spark 1.x, Spark 2.0.x, and Spark 2.1.x versions
+Spark 2.2.0 to 2.2.2
+Spark 2.3.0 to 2.3.1
 
-> int foo(int a) {
->   assert(a+100 > a);
->   printf("%d %d\n",a+100,a);
->   return a;
-> }
+Description:
+When using PySpark , it's possible for a different local user to connect to
+the Spark application and impersonate the user running the Spark
+application.  This affects versions 1.x, 2.0.x, 2.1.x, 2.2.0 to 2.2.2, and
+2.3.0 to 2.3.1.
 
-> int main() {
->   foo(100);
->   foo(0x7fffffff);
-> }
-> =========
+Mitigation:
+1.x, 2.0.x, 2.1.x, and 2.2.x users should upgrade to 2.2.3 or newer
+2.3.x users should upgrade to 2.3.2 or newer
+Otherwise, affected users should avoid using PySpark in multi-user
+environments.
 
-As pointed out in the bug, if you want defined behavior from signed
-integer overflow, you can ask for it with -fwrapv:
+Credit:
+This issue was reported by Luca Canali and Jose Carlos Luna Duran from CERN.
 
-$ gcc -O3 -fwrapv -o foo foo.c
-$ ./foo
-200 100
-foo: foo.c:5: foo: Assertion `a+100 > a' failed.
-Aborted (core dumped)
+References:
+https://spark.apache.org/security.html
 
-The C standard says this shouldn't be the default, but software that cares
-about avoiding undefined behavior should consider adding -fwrapv, or
-carefully writing the check to avoid overflow (something that, sadly, one
-needs to become expert in to use C relatively safely).
-
-Or, of course, use a different language that has more safety checks built
-into the language definition, although that's obviously a much broader
-(and probably off-topic) conversation.
-
--- 
-Russ Allbery (eagle@...ie.org)             <https://www.eyrie.org/~eagle/>
