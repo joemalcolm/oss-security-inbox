@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["570" "Thursday" "22" "April" "2021" "18:49:15" "+0100" "Mark Steward" "marksteward@gmail.com" nil "15" "Re: [oss-security] Malicious commits to Linux kernel as part of university study" nil nil nil "4" nil nil (number mark "U       marksteward@ Apr 22   15/570   " thread-indent "\"Re: [oss-security] Malicious commits to Linux kernel as part of university study\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Malicious commits to Linux kernel as part of university study" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2791" "Monday" "28" "January" "2019" "23:25:06" "+0100" "Peter Korsgaard" "peter@korsgaard.com" "<87munkbet9.fsf@dell.be.48ers.dk>" "71" "Re: [oss-security] CVE-2019-3813: spice: Off-by-one error in array access in spice/server/memslot.c" "^Cc:" nil nil "1" "2019012822:25:06" "[oss-security] CVE-2019-3813: spice: Off-by-one error in array access in spice/server/memslot.c" (number mark "        peter@korsga Jan 28   71/2791  " thread-indent "\"Re: [oss-security] CVE-2019-3813: spice: Off-by-one error in array access in spice/server/memslot.c\"\n") "<CA+2=X7vy=7GV+eq4Arc4Yh+305Y4wLeVcL+V0fJ3ErXMkJ28PQ@mail.gmail.com>" ("<CA+2=X7vy=7GV+eq4Arc4Yh+305Y4wLeVcL+V0fJ3ErXMkJ28PQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 13510 invoked by uid 550); 22 Apr 2021 17:54:46 -0000
+Received: (qmail 32029 invoked by uid 550); 28 Jan 2019 22:25:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,59 +11,117 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9774 invoked from network); 22 Apr 2021 17:49:38 -0000
+Received: (qmail 32011 invoked from network); 28 Jan 2019 22:25:20 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=AbvMFj0TAkl8zPXD+c8CasyvtJvtoyz9/9yjYxUhVi0=;
-        b=dqU6d3vCSJTMkhAPQU7DiV4qx5LFji8GlmZIrvuySHrd9kFnWEMDk4XUEdoRTUtLes
-         PUrEA3YSC4UMpTWryQCeOCNp3PfrA56OwhyDu30pNyvgUW65dcf+r3LcKxuLUu9pNxlK
-         aI++p5XvMHyLl2pQeJq1STdwQwelL9eJgkMTUGRmbvrrDUIvQT74ZNr+r983CKvo4ap7
-         ISDLF1Wix066IChhdtBLbet/pOSNKiQqJS8S5qkPCS2RgXnP7CeYMhnimTuEcUFhAFyj
-         nfj9CdxyjpYmYP1ZJ5F8iSDDfsz5LklDowPaVpMX5rpgPFKVydK1PFKvqgSiXbEsLAGg
-         Cr3w==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=1V40e6f7Axq+WK1AE0pdNmbsEE1/lBYYsMo6yyxUs8s=;
+        b=BGWkmCM66oHZlBKzV242Ao6iwfkVUOOiMTeP/IfYGhVilMC6MZAJYERAW5osqDR10X
+         gZe5HezWCv4Ge6UxXLGGoF6yMPB+foRKPcqmjpljqba4UIgc86BLRfrRAu694IBvIUMQ
+         pKZ2Yl+HupInebnYxn7kIGBocGwb9/gj93Vo/9AlqgxDqzxw7IC3oOLk0g4Q8Te2XRFD
+         Pu5d3/zTZ0ku6pOu5pXU3fmrHwHYAI8ejmwfW1Xjn+dUT3RZezpkDz57O0mzP2mZ/+Iv
+         +aZ1dGjv1YfDAK0EdbuoNz2oY8zmVEN0cZM1nw6tu1SbsTlEWuEK+2aNQCaEgFuuHtLE
+         rysw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=AbvMFj0TAkl8zPXD+c8CasyvtJvtoyz9/9yjYxUhVi0=;
-        b=kpy0penkti3F55DsbtxKHXsmlfOMhc+Mpmio5+xVgw1GiKpgksvpkiD5jkheQQf/fp
-         /Dd2BfT6Z9/FyK2ekaFw1LnJCVzNrpXrGplrld4FRtQmxAYS60EBdPT5g5YjyeGUdaC3
-         gYsKlOUK/5SBsW5K6BqV0QM2Y+ChIMuqBPPiEOTo+mx3lUOkWRate7lRKbODREDGFEnv
-         r8YmHIDztrnkrQ0BpwA4aJULDFdpnAJOCFvIHkZ+8yzEyIXfwGhXj4pBCSxD436AY5xG
-         UyU02QqtoxxTwHUpiY1FiZTMzMt7GU/NB2mLlY7/wA/qDLShWSpCBusjItfAbx3jjzwq
-         tKzA==
-X-Gm-Message-State: AOAM530PdS/35Ad0Lmu6Z7veHMqrv0ZQ7CqbH7fs5+14kXX9cekCbNHP
-	JlrdxT8K+eDHaJKowi2uXRRkqSQxD2yndsGRaeGyF5c4tEGrjA==
-X-Google-Smtp-Source: ABdhPJw/2KGoHYky4N5EQw/w+HE8BFNqrok3St0a9RFBURSUkcDDl9zWj2ezxNNcfKEyTqlbwwPKEWHIKgyuC21nOBQ=
-X-Received: by 2002:a1c:c3d4:: with SMTP id t203mr5118879wmf.32.1619113766842;
- Thu, 22 Apr 2021 10:49:26 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=1V40e6f7Axq+WK1AE0pdNmbsEE1/lBYYsMo6yyxUs8s=;
+        b=Iz6Wmofz6njJGY67vhNinmMEgcZeUlAKeE9dYIvV1Rt+AnRreapM2pArQIPptKJlrc
+         eVHmJiuf20epoFne48iP0YJXHnzcnzgrsPLpyAgybq083P5q58EpVAnn90IrF6/gwkp2
+         V42QDq0iZgmAGt49PePneUd0bMDlWjgNQ1ClFjRY4Jl7pTGxZvcyeYUGdkOS1j2RkLz4
+         HC0/erj8tyIdSuv2wwLFTa2VfXf0WsVHHqTvhjalnJbqfbjP/qOcV4nEbR4VBcLkY2P1
+         VaJGM3zrpO5ZnD3x5qu4uQRtdsc+S/qHRsbzkwvbLEqXTzF5l5+K0bswllvpFw6RyVsD
+         Qw/g==
+X-Gm-Message-State: AJcUukd5NZLnnHClJylBSPJuSCCCIFOGQniU4nhTsiYybBj+klz1d36Z
+	bn6alXElAvj5UQ4OINDSG8s=
+X-Google-Smtp-Source: ALg8bN6hHdctUTSdqr9HIXMzf3Dh29E6MoOpoNZbBhbxO9OVWGj4BxW813mk4cppGEm/coWtL/LDcQ==
+X-Received: by 2002:a17:906:195a:: with SMTP id b26mr11545289eje.101.1548714308575;
+        Mon, 28 Jan 2019 14:25:08 -0800 (PST)
+References: <CA+2=X7vy=7GV+eq4Arc4Yh+305Y4wLeVcL+V0fJ3ErXMkJ28PQ@mail.gmail.com>
+In-Reply-To: <CA+2=X7vy=7GV+eq4Arc4Yh+305Y4wLeVcL+V0fJ3ErXMkJ28PQ@mail.gmail.com>
+	(Scott Gayou's message of "Mon, 28 Jan 2019 11:53:15 -0700")
+Message-ID: <87munkbet9.fsf@dell.be.48ers.dk>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
 MIME-Version: 1.0
-References: <20210422065959.GI13079@scully.more-magic.net> <CAEo4CePqice09K5PPhmxwwF3jg=USrqRqM5FgVX_jCB8sZfDeA@mail.gmail.com>
- <20210422095945.GA2495@scully.more-magic.net> <4DCB6EF3-73EE-4038-8437-FEB339F20F90@dwheeler.com>
- <627170ea-4e1e-1a3d-8291-494eac38c9b@dereferenced.org>
-In-Reply-To: <627170ea-4e1e-1a3d-8291-494eac38c9b@dereferenced.org>
-From: Mark Steward <marksteward@gmail.com>
-Date: Thu, 22 Apr 2021 18:49:15 +0100
-Message-ID: <CAPyX2neD99tn_FY3FZ9WO5HaB2WXSgvSOejOiOE_9QHxqRjpdA@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: Re: [oss-security] Malicious commits to Linux kernel as part of
- university study
+Content-Type: text/plain
+Cc: oss-security@lists.openwall.com
+Date: Mon, 28 Jan 2019 23:25:06 +0100
+From: Peter Korsgaard <peter@korsgaard.com>
+Reply-To: oss-security@lists.openwall.com
+Sender: Peter Korsgaard <jacmet@gmail.com>
+Subject: Re: [oss-security] CVE-2019-3813: spice: Off-by-one error in array access in spice/server/memslot.c
+To: Scott Gayou <sgayou@redhat.com>
 
-On Thu, Apr 22, 2021 at 6:23 PM Ariadne Conill <ariadne@dereferenced.org> wrote:
-...
-> By mining the LKML archive, it may be possible to find the original set of
-> patch submissions by searching for similar keywords as the messages from
-> Aditya.  If somebody can do that, then we would be able to determine at
-> least some of the emails likely to have originated the patches.
->
+>>>>> "Scott" == Scott Gayou <sgayou@redhat.com> writes:
 
-This looks like a good guess to me, and if correct, means none of the
-submissions in the paper were successful:
+ > Hello,
+ > spice versions 0.5.2 through 0.14.1 are vulnerable to an out-of-bounds read
+ > due to an off-by-one error in memslot_get_virt. This may lead to a
+ > denial-of-service, or, in the worst case, code-execution by unauthenticated
+ > attackers.
 
-  https://lore.kernel.org/linux-nfs/YIEqt8iAPVq8sG+t@sol.localdomain/
+ > The attached patch fixes the issue in spice and is planned to be included
+ > in forthcoming release spice 0.14.2.
 
+ > This issue was reported by Christophe Fergeau (Red Hat).
 
-Mark
+ > References:
+ > https://bugzilla.redhat.com/show_bug.cgi?id=1665371
+
+ > Thank you.
+
+ > -- 
+ > Scott Gayou / Red Had Product Security
+
+ > From 6eff47e72cb2f23d168be58bab8bdd60df49afd0 Mon Sep 17 00:00:00 2001
+ > From: Christophe Fergeau <cfergeau@redhat.com>
+ > Date: Thu, 29 Nov 2018 14:18:39 +0100
+ > Subject: [spice-server] memslot: Fix off-by-one error in group/slot boundary
+ >  check
+
+ > RedMemSlotInfo keeps an array of groups, and each group contains an
+ > array of slots. Unfortunately, these checks are off by 1, they check
+ > that the index is greater or equal to the number of elements in the
+ > array, while these arrays are 0 based. The check should only check for
+ > strictly greater than the number of elements.
+
+ > For the group array, this is not a big issue, as these memslot groups
+ > are created by spice-server users (eg QEMU), and the group ids used to
+ > index that array are also generated by the spice-server user, so it
+ > should not be possible for the guest to set them to arbitrary values.
+
+ > The slot id is more problematic, as it's calculated from a QXLPHYSICAL
+ > address, and such addresses are usually set by the guest QXL driver, so
+ > the guest can set these to arbitrary values, including malicious values,
+ > which are probably easy to build from the guest PCI configuration.
+
+ > This patch fixes the arrays bound check, and adds a test case for this.
+
+ > Signed-off-by: Christophe Fergeau <cfergeau@redhat.com>
+ > ---
+ >  server/memslot.c                |  4 ++--
+ >  server/tests/test-qxl-parsing.c | 30 ++++++++++++++++++++++++++++++
+ >  2 files changed, 32 insertions(+), 2 deletions(-)
+
+ > diff --git a/server/memslot.c b/server/memslot.c
+ > index b27324efb..fb3d5cfd5 100644
+ > --- a/server/memslot.c
+ > +++ b/server/memslot.c
+ > @@ -97,13 +97,13 @@ void *memslot_get_virt(RedMemSlotInfo *info, QXLPHYSICAL addr, uint32_t add_size
+ 
+ >      MemSlot *slot;
+ 
+ > -    if (group_id > info->num_memslots_groups) {
+ > +    if (group_id >= info->num_memslots_groups) {
+ >          g_critical("group_id too big");
+
+What version is this patch against? I don't see memslot.c using
+g_critical() neither on the 0.14 branch (which doesn't have 0.14.1) or
+master?
+
+https://gitlab.freedesktop.org/spice/spice/blob/master/server/memslot.c#L97
+
+-- 
+Bye, Peter Korsgaard
