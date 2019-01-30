@@ -1,74 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/23/4
-Message-Id: <B09750A0-4E8C-464B-951D-0267A6174CFE@beckweb.net>
-Date: Wed, 23 Jan 2019 11:21:11 +0100
-From: Daniel Beck <ml@...kweb.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Multiple vulnerabilities in Jenkins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/30/1
+Message-ID: <eaa908a8-929d-98d9-8a66-04a8ccc6da53@sysdream.com>
+Date: Wed, 30 Jan 2019 09:42:56 +0100
+From: Sysdream Labs <labs@...dream.com>
+To: fulldisclosure@...lists.org, oss-security@...ts.openwall.com
+Subject: [CVE-2018-14013] Reflected Cross-Site Scripting (XSS) vulnerabilities in Zimbra Collaboration
 Content-Type: text/plain; charset=utf-8
 
+# [CVE-2018-14013] Reflected Cross-Site Scripting (XSS) vulnerabilities
+in Zimbra Collaboration
+
+## Description
+
+Two XSS vulnerabilities have been discovered in Zimbra Collaboration
+(initially in version 8.8.8).
+Zimbra Collaboration is an open source messaging and collaboration solution.
+
+## Vulnerability records
+
+**Access Vector**: Remote
+
+**Security Risk**: Medium
+
+**Vulnerability**: CWE-79
+
+**CVSS Base Score**: 6.1
+
+**CVSS String**: CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N
+
+## Details
+
+Two Reflected XSS vulnerabilities allow remote attackers to inject
+arbitrary JavaScript in web browsers.
+
+### Proof of Concept - XSS\#1
+
+To reproduce the first XSS, login to https://host.com/zimbra/ and click
+on the link below:
+
+```
+https://host.com/zimbra/h/search?si=1&so=0&sfi=4&st=message&csi=1&action=&cso=0&id=""><svg
+onload=alert(1)>
+```
+
+### Proof of Concept - XSS\#2
+
+1. First, login to `https://host.com/zimbra/`
+
+2. Click on "Preferences", then on "Import / Export".
+
+3. Finally, just import a file named `test.<svg onload=alert(2)>` to get
+the second XSS payload executed.
 
 
-> On 10. Oct 2018, at 17:11, Daniel Beck <ml@...kweb.net> wrote:
-> 
-> SECURITY-867
-> A path traversal vulnerability in Stapler allowed viewing routable objects 
-> with views defined on any type. This could be used to access internal data 
-> of routable objects, e.g. by showing their string representation (#toString).
+## Affected versions
 
-CVE-2018-1000997
+Versions < 8.8.11.
 
-> SECURITY-1074
-> Users with Job/Configure permission could specify a relative path escaping 
-> the base directory in the file name portion of a file parameter definition. 
-> This path would be used to archive the uploaded file on the Jenkins master, 
-> resulting in an arbitrary file write vulnerability.
-> 
-> File parameters that escape the base directory are no longer accepted and 
-> the build will fail.
+## Solution
 
-CVE-2018-1000406
+Update to version 8.8.11 which includes all fixes.
 
-> SECURITY-1129
-> The wrapper query parameter for the XML variant of the Jenkins remote API 
-> did not validate the specified tag name. This resulted in a reflected cross-
-> site scripting vulnerability.
-> 
-> Only legal XML tag names are now allowed for the wrapper query parameter.
+## Timeline (dd/mm/yyyy)
 
-CVE-2018-1000407
+* 12/07/2018  : Initial discovery
+* 21/07/2018  : Vendor notification
+* 21/07/2018  : Vendor acknowledgment
+* 18/10/2018  : Vendor partial fixes in ZCS 8.8.10 patch 1 and 8.8.9
+patch 6 (XSS 1)
+* 18/12/2018  : Vendor full fixes in ZCS 8.8.11 (XSS 2)
+* 30/01/2019    : Public disclosure
 
-> SECURITY-1128
-> By accessing a specific crafted URL on Jenkins instances using Jenkins' own 
-> user database, users without Overall/Read access could create ephemeral 
-> user records.
-> 
-> This behavior could be abused to create a large number of ephemeral user 
-> records in memory.
-> 
-> Accessing this URL now no longer results in a user record getting created.
+## Credits
 
-CVE-2018-1000408
+* Issam Rabhi <i.rabhi@...dream.com>
 
-> SECURITY-1158
-> When signing up for a new user account on instances using Jenkins' own user 
-> database, Jenkins did not invalidate the existing session and create a new 
-> one. This allowed session fixation.
-> 
-> Jenkins now invalidates the existing session and creates a new one when 
-> logging in after user signup.
+Thanks to the Zimbra security team for the perfect report handling !
 
-CVE-2018-1000409
+-- 
+SYSDREAM Labs <labs@...dream.com>
 
-> SECURITY-765
-> When Jenkins fails to process form submissions due to an internal error, 
-> the error message shown to the user and written to the log typically 
-> includes the serialized JSON form submission. Secrets, such as submitted 
-> passwords, might be included with the JSON object, and shown or written to 
-> disk in plain text.
-> 
-> Jenkins now masks values in these error messages from view if they were 
-> shown on the UI as password form fields.
+GPG :
+47D1 E124 C43E F992 2A2E
+1551 8EB4 8CD9 D5B2 59A1
 
-CVE-2018-1000410
+* Website: https://sysdream.com/
+* Twitter: @sysdream
 
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
