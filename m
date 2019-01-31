@@ -1,27 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/01/10
-Message-ID: <86o990wdu4.fsf@shell.gmplib.org>
-Date: Tue, 01 Jan 2019 17:18:59 +0100
-From: tg@...lib.org (Torbjörn Granlund)
-To: nisse@...ator.liu.se (Niels Möller)
-Cc: Jeffrey Walton <noloader@...il.com>,  oss-security@...ts.openwall.com,  gmp-bugs@...lib.org
-Subject: Re: Asserts considered harmful (or GMP spills its sensitive information)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/31/2
+Message-ID: <20190131083943.lnx3lwhhu3h5suxh@tunkki.bugs.fi>
+Date: Thu, 31 Jan 2019 10:39:43 +0200
+From: Henri Salo <henri@...v.fi>
+To: Juan Pablo Santos Rodríguez <juanpablo@...che.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: [CVE-2018-20242] Apache JSPWiki Cross-site scripting vulnerability on Apache JSPWiki
 Content-Type: text/plain; charset=utf-8
 
-  The assert that Jeffrey has hit is in sec_powm.c, 
+On Wed, Jan 30, 2019 at 09:01:43PM +0100, Juan Pablo Santos Rodríguez wrote:
+> Versions Affected: Apache JSPWiki up to 2.10.5
+> 
+> Description:
+> A carefully crafted URL could trigger an XSS vulnerability on Apache
+> JSPWiki, which could lead to session hijacking.
+> 
+> Mitigation:
+> Apache JSPWiki users should upgrade to 2.11.0.M1 or later.
+> 
+> Credit:
+> This issue was discovered by Jamie Parfet.
 
-    ASSERT_ALWAYS (enb >= windowsize);
-
-  As far as I can see, "enb" is the input argument to the win_size function,
-  and "windowsize" is the return value. I'm waiting for more information,
-  since it works fine in my build. Possible explanations I see are
-
-A reasonable assumption is that this user has modified the sources to
-cause this bug.  The motive would be to support his auxesis about how
-insecure GMP is.
-
-Let's move on.  No bug to be found here.
+Do you have any Apache reference URLs for this issue?
 
 -- 
-Torbjörn
-Please encrypt, key id 0xC8601622
+Henri Salo
