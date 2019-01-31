@@ -1,55 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/05/5
-Message-ID: <CAEftUaoQGR5-iZtSCJth9==+eN913R_hPoUTHNBJ9fmgABhO8w@mail.gmail.com>
-Date: Mon, 5 Aug 2019 12:01:22 -0400
-From: Joel Smith <joelsmith@...hat.com>
-To: oss-security@...ts.openwall.com,  kubernetes-security-announce@...glegroups.com,  kubernetes-security-discuss@...glegroups.com
-Subject: Kubernetes v1.13.9, v1.14.5, v1.15.2 released to address CVE-2019-11247, CVE-2019-11249
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/01/1
+Message-ID: <CAMufup4hyhhpgfsiEcmKY7u_vSueB=1WTK5NCShaep-wXP5pOQ@mail.gmail.com>
+Date: Thu, 31 Jan 2019 21:32:26 +0100
+From: Juan Pablo Santos Rodríguez <juanpablo.santos@...il.com>
+To: Henri Salo <henri@...v.fi>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: [CVE-2018-20242] Apache JSPWiki Cross-site scripting vulnerability on Apache JSPWiki
 Content-Type: text/plain; charset=utf-8
 
-Hello Kubernetes Community,
+Hi Henri,
 
-We have released Kubernetes 1.13.9
-<https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.13.md#v1139>,
-1.14.5
-<https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.14.md#v1145>,
-and 1.15.2
-<https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.15.md#v1152>
-to address two security issues in Kubernetes. We recommend all clusters and
-kubectl clients update to one of these releases immediately.
+the vulnerability announcement can be seen here
+https://lists.apache.org/thread.html/8ee4644432c0a433c5c514a57d940cf6dcb0a0094acd97b36290f0b4@%3Cuser.jspwiki.apache.org%3E
+We've also documented it at
+https://jspwiki-wiki.apache.org/Wiki.jsp?page=CVE-2018-20242
 
-CVE-2019-11247: API server allows access to custom resources via wrong scope
+Please do let me know if something else is needed.
 
-This vulnerability allows access to a cluster-scoped custom resource if the
-request is made as if the resource were namespaced. Authorizations for the
-resource accessed in this manner are enforced using roles and role bindings
-within the namespace, meaning that a user with access only to a resource in
-one namespace could create, view update or delete the cluster-scoped
-resource (according to their namespace role privileges).
 
-See Kubernetes issue #80983
-<https://github.com/kubernetes/kubernetes/issues/80983> for details. Thanks
-to Prabu Shyam of Verizon Media for reporting this problem.
+best regards,
+juan pablo
 
-CVE-2019-11249: Incomplete fixes for CVE-2019-1002101 and CVE-2019-11246,
-kubectl cp potential directory traversal
+On Thu, Jan 31, 2019 at 9:39 AM Henri Salo <henri@...v.fi> wrote:
 
-This vulnerability allows a malicious container to cause a file to be
-created or replaced on the client computer when the client uses the kubectl
-cp operation. The vulnerability is a client-side defect and requires user
-interaction to be exploited.
-
-See Kubernetes issue #80984
-<https://github.com/kubernetes/kubernetes/issues/80984> for details. Thanks
-to Yang Yang of Amazon for reporting this problem.
-
-As a reminder, if you find a security vulnerability in Kubernetes, please
-report it following the security disclosure process
-<https://kubernetes.io/security/>.
-
-Thanks,
-
-Joel Smith
-
-(on behalf of the Kubernetes Product Security Team)
+> On Wed, Jan 30, 2019 at 09:01:43PM +0100, Juan Pablo Santos Rodríguez
+> wrote:
+> > Versions Affected: Apache JSPWiki up to 2.10.5
+> >
+> > Description:
+> > A carefully crafted URL could trigger an XSS vulnerability on Apache
+> > JSPWiki, which could lead to session hijacking.
+> >
+> > Mitigation:
+> > Apache JSPWiki users should upgrade to 2.11.0.M1 or later.
+> >
+> > Credit:
+> > This issue was discovered by Jamie Parfet.
+>
+> Do you have any Apache reference URLs for this issue?
+>
+> --
+> Henri Salo
+>
 
