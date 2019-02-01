@@ -1,47 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/12/4
-Message-ID: <CABMkiz5Fh9tiBgJFD8g4nZWOAz5PLGYDVuXXEa6FGWds6QY7KA@mail.gmail.com>
-Date: Thu, 12 Sep 2019 17:17:26 +0100
-From: Ben Tasker <ben@...tasker.co.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/02/3
+Message-ID: <CAG48ez1N30mTGj575XvEHQqrhOT+gF1yEEGpKAqw2dBMHwMxTA@mail.gmail.com>
+Date: Fri, 1 Feb 2019 23:20:26 +0100
+From: Jann Horn <jannhorn@...glemail.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Telegram privacy fails again.
+Subject: Linux kernel: BPF spectre v1 mitigation bypass (CVE-2019-7308, fixed in 4.19.19 and 4.20.6)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 12, 2019 at 4:43 PM Solar Designer <solar@...nwall.com> wrote:
+I discovered a bypass for the spectre v1 hardening in the eBPF engine
+of the Linux kernel (which is exposed to unprivileged userspace since
+kernel 4.4).
 
-> Sender-imposed message deletion or expiry is necessarily unreliable: the
-> recipient might have taken a copy of the message prior to deletion e.g.
-> by taking a picture of the device's screen.  This should be clearly
-> communicated to users of such features.
->
-> However, it gets worse.  Sure, a reasonably informed sender knows they
-> effectively trust the recipient not to bypass the message deletion
-> or/and knowingly accepts the risk.  But do they also realize the deleted
-> message can possibly be extracted from the device(s) by a third-party
-> later?  This, too, should be clearly communicated.
->
-> And, speaking of intended behavior, a question is: to what extent should
-> the messenger app protect deleted messages from possible recovery?
-> Another question is: to what extent such protection is even possible?
->
->
-Just as a practical example - this happens automatically on my phone. I
-have the nextcloud app set up to watch various directories for new images -
-including the one that Whatsapp writes images into.
+This is CVE-2019-7308. The issue has been fixed in 4.19.19 and 4.20.6
+stable so far.
 
-So if you send me an image and immediately use the delete functionality,
-it's probably already too late. If it's reached my phone then Nextcloud
-already has a file handle open on it and will be busily sending a copy up
-to my server.
+The main fix is
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=979d63d50c0c0f7bc537bf821e056cc9fe5abd38
+, but it depends both on its parent commits and one ancestor that
+fixes a new issue introduced by it.
 
-So there needn't be a deliberate per-image/file action by the receiver
-either, nor need there necessarily be bad faith involved.
-
-IMO, If Whatsapp/Telegram wanted to take this functionality more seriously,
-they'd need to be writing the images to disk in an encrypted form from the
-outset. It increases the overhead of display, and wouldn't necessarily stop
-forensic recovery etc, but it would mean that other apps couldn't simply
-watch the directory and upload anything which appears in it in a usable
-form. That's a whole other can of worms though as it's another set of keys
-to manage.
-
+Full bug report is at
+<https://bugs.chromium.org/p/project-zero/issues/detail?id=1711>.
