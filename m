@@ -1,41 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/17/6
-Message-ID: <20190617182023.GA19768@kroah.com>
-Date: Mon, 17 Jun 2019 20:20:23 +0200
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/01/2
+Message-ID: <20190201122721.GA17576@eldamar.local>
+Date: Fri, 1 Feb 2019 13:27:21 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: Security Report <security-report@...smail.netflix.com>, security-report@...flix.com
-Subject: Re: Linux and FreeBSD Kernel: Multiple TCP-based remote denial of service issues
+Subject: Re: CVE-2018-1340: Apache Guacamole: Secure flag missing from session cookie
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jun 17, 2019 at 10:33:38AM -0700, Security Report wrote:
-> Netflix has identified several TCP networking vulnerabilities in FreeBSD 
-> and Linux kernels.
+Hi Mike,
+
+On Wed, Jan 23, 2019 at 02:21:30PM -0800, Mike Jumper wrote:
+> CVE-2018-1340: Secure flag missing from Apache Guacamole session cookie
 > 
-> The vulnerabilities specifically relate to the minimum segment size (MSS) 
-> and TCP Selective Acknowledgement (SACK) capabilities. The most serious, 
-> dubbed “SACK Panic,” allows a remotely-triggered kernel panic on recent 
-> Linux kernels.
+> Versions affected:
+> Apache Guacamole 0.9.4 through 0.9.14
 > 
-> There are patches that address most of these vulnerabilities. If patches 
-> can not be applied, certain mitigations will be effective. We recommend 
-> that affected parties enact one of those described below, based on their 
-> environment.
+> Description:
+> Prior to 1.0.0, Apache Guacamole used a cookie for client-side storage
+> of the user's session token. This cookie lacked the "secure" flag,
+> which could allow an attacker eavesdropping on the network to
+> intercept the user's session token if unencrypted HTTP requests are
+> made to the same domain.
+> 
+> Mitigation:
+> Users of Apache Guacamole 0.9.14 or older should upgrade to 1.0.0.
+> 
+> Credit:
+> We would like to thank Ross Golder for reporting this issue.
 
-To answer all of the paniced emails I have already started to get, all
-of these patches are now in the following Linux stable kernel releases
-that just went out a few minutes ago:
-	4.4.182
-	4.9.182
-	4.14.127
-	4.19.52
-	5.1.11
+Would it be possible to confirm, is this 
+https://issues.apache.org/jira/browse/GUACAMOLE-549
+https://github.com/apache/guacamole-client/commit/884a9c0ee987f9cb49a69
+?
 
-Other than the 3.16.y kernel branch, all other kernel branches are
-end-of-life, and will not be getting updates for these, or any other,
-bugfixes.  I do not know when/if Ben will be doing a release for 3.16.y
-with these fixes.
-
-thanks,
-
-greg k-h
+Regards,
+Salvatore
