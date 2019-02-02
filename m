@@ -1,24 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/09/1
-Message-ID: <CAHmME9qiC2+1T3zGtgt43ibCzzm-+=VGwUMAWPJcWjgOGDfN6w@mail.gmail.com>
-Date: Tue, 9 Apr 2019 02:26:07 +0200
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: DLL injection in Go < 1.12.2 [CVE-2019-9634]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/02/2
+Message-ID: <CALKeL-M=gtsf36gurDm3N4h9z+8n63Q4DDWkZn8ULW2fKTbcgw@mail.gmail.com>
+Date: Fri, 1 Feb 2019 19:24:48 -0800
+From: Mike Jumper <mjumper@...che.org>
+To: Salvatore Bonaccorso <carnil@...ian.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2018-1340: Apache Guacamole: Secure flag missing from session cookie
 Content-Type: text/plain; charset=utf-8
 
-Hey folks,
+On Fri, Feb 1, 2019, 04:27 Salvatore Bonaccorso <carnil@...ian.org wrote:
 
-Golang before 1.12.2 linked against various DLLs that were
-same-directory injectable and generally its library loading mechanism
-did not use LoadLibraryEx, allowing the classic DLL injection attacks,
-especially with regards to executables saved to the Downloads/ folder
-[1]. It was assigned CVE-2019-9634 and fixed in [2] and [3]. It wasn't
-mentioned in the 1.12.2 release notes, so I'm mentioning it here
-instead.
+> Hi Mike,
+>
+> On Wed, Jan 23, 2019 at 02:21:30PM -0800, Mike Jumper wrote:
+> > CVE-2018-1340: Secure flag missing from Apache Guacamole session cookie
+> >
+> > Versions affected:
+> > Apache Guacamole 0.9.4 through 0.9.14
+> >
+> > Description:
+> > Prior to 1.0.0, Apache Guacamole used a cookie for client-side storage
+> > of the user's session token. This cookie lacked the "secure" flag,
+> > which could allow an attacker eavesdropping on the network to
+> > intercept the user's session token if unencrypted HTTP requests are
+> > made to the same domain.
+> >
+> > Mitigation:
+> > Users of Apache Guacamole 0.9.14 or older should upgrade to 1.0.0.
+> >
+> > Credit:
+> > We would like to thank Ross Golder for reporting this issue.
+>
+> Would it be possible to confirm, is this
+> https://issues.apache.org/jira/browse/GUACAMOLE-549
+> https://github.com/apache/guacamole-client/commit/884a9c0ee987f9cb49a69
+> ?
+>
 
-Jason
+That is the correct JIRA issue, yes, however there are multiple relevant
+commits.
 
-[1] https://user-images.githubusercontent.com/10643/53921755-eb9e1a00-4071-11e9-83a7-058ceb008e55.gif
-[2] https://github.com/golang/go/commit/9b6e9f0c8c66355c0f0575d808b32f52c8c6d21c
-[3] https://github.com/golang/sys/commit/10058d7d4faa7dd5ef860cbd31af00903076e7b8
+With respect to the security aspect of the changes, the relevant pull
+request is:
+
+https://github.com/apache/guacamole-client/pull/273
+
+There are other relevant pull requests, though they deal mainly with
+eliminating cookies entirely:
+
+https://github.com/apache/guacamole-client/pulls?utf8=%E2%9C%93&q=is%3Apr+is%3Aclosed+GUACAMOLE-549
+
+- Mike
+
