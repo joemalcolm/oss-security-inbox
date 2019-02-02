@@ -1,51 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/24/8
-Message-ID: <CAG_fn=VaVOERocqqh3wUBK5BRUWvVirT-+=HdGGxib+Ad90kjg@mail.gmail.com>
-Date: Mon, 24 Jun 2019 18:27:30 +0200
-From: Alexander Potapenko <glider@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/02/1
+Message-ID: <20190202081226.GA25332@eldamar.local>
+Date: Sat, 2 Feb 2019 09:12:26 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
+Cc: Mike Jumper <mjumper@...che.org>
+Subject: Re: CVE-2018-1340: Apache Guacamole: Secure flag missing from session cookie
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jun 24, 2019 at 5:44 PM Bob Friesenhahn
-<bfriesen@...ple.dallas.tx.us> wrote:
->
-> On Mon, 24 Jun 2019, Dmitry Vyukov wrote:
+Hi Mike,
+
+On Fri, Feb 01, 2019 at 07:24:48PM -0800, Mike Jumper wrote:
+> On Fri, Feb 1, 2019, 04:27 Salvatore Bonaccorso <carnil@...ian.org wrote:
+> 
+> > Hi Mike,
 > >
-> > So what are community thoughts on automatic CVE assignment?
-> > That would definitely get some attention to these bugs by vendors
-> > (because that's open CVEs in their products then). And this should be
-> > implementable because both OSS-Fuzz and syzbot are automated enough
-> > already. However I afraid that these CVEs may be as automatically
-> > sorted into a trashcan then :)
->
-> An excess of CVEs would cause CVEs to be not very meaningful any more.
->
-> Most oss-fuzz issue detections are not CVE worthy.  For example, a
-> one-byte read "heap overflow" is not likely to cause any actual harm
-> but oss-fuzz would classify it as "heap overflow".
-There's enough information in the report though to assign the severity
-score depending on the access size, its type (read or write) the call
-stack etc.
-OSS-Fuzz deliberately doesn't do that now, but such scoring can be
-done to prune the list of potential CVE candidates.
-> Bob
-> --
-> Bob Friesenhahn
-> bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-> GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
-> Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
+> > On Wed, Jan 23, 2019 at 02:21:30PM -0800, Mike Jumper wrote:
+> > > CVE-2018-1340: Secure flag missing from Apache Guacamole session cookie
+> > >
+> > > Versions affected:
+> > > Apache Guacamole 0.9.4 through 0.9.14
+> > >
+> > > Description:
+> > > Prior to 1.0.0, Apache Guacamole used a cookie for client-side storage
+> > > of the user's session token. This cookie lacked the "secure" flag,
+> > > which could allow an attacker eavesdropping on the network to
+> > > intercept the user's session token if unencrypted HTTP requests are
+> > > made to the same domain.
+> > >
+> > > Mitigation:
+> > > Users of Apache Guacamole 0.9.14 or older should upgrade to 1.0.0.
+> > >
+> > > Credit:
+> > > We would like to thank Ross Golder for reporting this issue.
+> >
+> > Would it be possible to confirm, is this
+> > https://issues.apache.org/jira/browse/GUACAMOLE-549
+> > https://github.com/apache/guacamole-client/commit/884a9c0ee987f9cb49a69
+> > ?
+> >
+> 
+> That is the correct JIRA issue, yes, however there are multiple relevant
+> commits.
+> 
+> With respect to the security aspect of the changes, the relevant pull
+> request is:
+> 
+> https://github.com/apache/guacamole-client/pull/273
+> 
+> There are other relevant pull requests, though they deal mainly with
+> eliminating cookies entirely:
+> 
+> https://github.com/apache/guacamole-client/pulls?utf8=%E2%9C%93&q=is%3Apr+is%3Aclosed+GUACAMOLE-549
 
+Thanks a lot!
 
-
--- 
-Alexander Potapenko
-Software Engineer
-
-Google Germany GmbH
-Erika-Mann-Straße, 33
-80636 München
-
-Geschäftsführer: Paul Manicle, Halimah DeLaine Prado
-Registergericht und -nummer: Hamburg, HRB 86891
-Sitz der Gesellschaft: Hamburg
+Regards,
+Salvatore
