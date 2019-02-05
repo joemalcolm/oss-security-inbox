@@ -1,76 +1,103 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/25/5
-Message-ID: <20190425130218.GA10866@openwall.com>
-Date: Thu, 25 Apr 2019 15:02:19 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: no permission check during open() time of /proc/[pid]/maps in kernels < 3.18
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/05/1
+Message-ID: <723fe02d-b713-558d-9920-d334a325213b@open-xchange.com>
+Date: Tue, 5 Feb 2019 15:02:43 +0200
+From: Aki Tuomi <aki.tuomi@...n-xchange.com>
+To: oss-security@...ts.openwall.com, full-disclosure@...ts.openwall.com, dovecot <dovecot@...ecot.org>
+Subject: CVE-2019-3814: Suitable client certificate can be used to login as other user
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Apr 25, 2019 at 02:12:36PM +0200, Matthias Gerstner wrote:
-> I stumbled over a leak of memory mappings for arbitrary processes in
-> kernels older than version 3.18.
-> 
-> As it turns out the permissions check for the pseudo file in
-> /proc/[pid]/maps in affected kernels is performed not during open() time
-> but during read() time. This allows an unprivileged user to open a valid
-> file descriptor for these maps files and pass it to privileged programs
-> like setuid root binaries or D-Bus services running as root that support
-> file descriptor passing in their interface.
-> 
-> The privileged program needs behave in a way that the passed file
-> descriptor is read() with root premissions and the content is passed
-> back to the unprivileged user in some way.
+Dear subscribers,
 
-Looks like mostly a rediscovery of what was brought up in here by
-Jason A. Donenfeld and further discussed with Djalal Harouni in 2012:
+we're sharing our latest advisory with you and would like to thank
+everyone who contributed in finding and solving those vulnerabilities.
+Feel free to join our bug bounty programs (open-xchange, dovecot,
+powerdns) at HackerOne. Please find patches for v2.2.36 and v2.3.4 attached,
+or download new version from https://dovecot.org
 
-https://www.openwall.com/lists/oss-security/2012/02/08/2
+Yours sincerely,
+Aki Tuomi
+Open-Xchange Oy
 
-and had already been fixed in grsecurity, given that I fixed it with:
 
-* Sat Feb 25 2012 Solar Designer <solar-at-owl.openwall.com> 2.6.18-274.18.1.el5.028stab098.1.owl1
-[...]
-- Introduced protection against unintended self-read by a SUID/SGID program of
-/proc/<pid>/mem and /proc/<pid>/*maps files, based on approaches taken in
-recent grsecurity patches.
+Product: Dovecot
+Vendor: Open-Xchange Oy
+Internal reference: DOV-2890 (Bug ID)
+Vulnerability type: Improper Authentication - Generic (CWE287)
+Vulnerable versions: 1.1.0 - 2.2.36 and 2.3.0 - 2.3.4
+Vulnerable component: authentication
+Report confidence: Confirmed
+Solution status: Fixed by Vendor
+Fixed versions: 2.2.36.1, 2.3.4.1
+Vendor notification: 2019-01-16
+Solution date: 2019-01-20
+Public disclosure: 2019-02-05
+Researcher Credits: https://hackerone.com/halfdog
+CVE reference: CVE-2019-3814
+CVSS: 8.2 (AV:N/AC:H/PR:L/UI:N/S:C/C:H/I:H/A:N)
 
-+++ linux-2.6.18-431.el5.028stab123.1-owl/fs/proc/task_mmu.c	2018-05-20 16:37:29 +0000
-@@ -166,7 +166,7 @@ static int show_map_internal(struct seq_
- 	struct proc_maps_private *priv = m->private;
- 	struct task_struct *task = priv->task;
- #ifdef __i386__
--	struct mm_struct *tmm = get_task_mm(task);
-+	struct mm_struct *tmm;
- #endif
- 	struct vm_area_struct *vma = v;
- 	struct mm_struct *mm = vma->vm_mm;
-@@ -177,6 +177,13 @@ static int show_map_internal(struct seq_
- 	dev_t dev = 0;
- 	int len;
- 
-+	if (current->exec_id != m->exec_id)
-+		return 0;
-+
-+#ifdef __i386__
-+	tmm = get_task_mm(task);
-+#endif
-+
- 	if (file) {
- 		struct inode *inode = vma->vm_file->f_dentry->d_inode;
- 		dev = inode->i_sb->s_dev;
+Vulnerability Details:
+Normally Dovecot is configured to authenticate
+imap/pop3/managesieve/submission clients using regular username/password
+combination. Some installations have also required clients to present a
+trusted SSL certificate on top of that. It's also possible to configure
+Dovecot to take the username from the certificate instead of from the
+user provided authentication. It's also possible to avoid having a
+password at all, only trusting the SSL certificate.
 
-Was this not fixed upstream until the permissions check on open() was
-added in 2014?  I guess it also wasn't fixed in RHEL, since I carried
-the above patch hunk into 2018+ as you can see (or maybe it became
-redundant with RHEL's different fix for the issue - I don't recall).
+If the provided trusted SSL certificate is missing the username field,
+Dovecot should be failing the authentication. However, the earlier
+versions will take the username from the user provided authentication
+fields (e.g. LOGIN command). If there is no additional password
+verification, this allows the attacker to login as anyone else in the
+system.
 
-The idea of passing the fd to D-Bus services, etc. might be a new one,
-but the fix above should be sufficient against that as well due to the
-exec_id's being globally unique (except between fork-without-exec
-sibling processes):
+This affects only installations using:
 
- 		/* execve success */
-+		current->exec_id = atomic64_inc_return(&global_exec_counter);
+auth_ssl_require_client_cert = yes
+auth_ssl_username_from_cert = yes
 
-Alexander
+Attacker must also have access to a valid trusted certificate without
+the ssl_cert_username_field in it. The default is commonName, which
+almost certainly exists in all certificates. This could happen for
+example if ssl_cert_username_field is a field that normally doesn't
+exist, and attacker has access to a web server's certificate (and key),
+which is signed with the same CA.
+
+Attack can be migitated by having the certificates with proper Extended
+Key Usage, such as 'TLS Web Server' and 'TLS Web Server Client'.
+
+Also, ssl_cert_username_field setting was ignored with external SMTP
+AUTH, because none of the MTAs (Postfix, Exim) currently send the
+cert_username field. This may have allowed users with trusted
+certificate to specify any username in the authentication. This does not
+apply to Dovecot Submission service.
+
+Proof of concept
+
+Create a CA certificate for signing, and sign a certificate with missing
+commoName attribute.
+
+With following configuration
+
+passdb {
+    driver = static
+    arguments = nopassword
+}
+
+ssl_ca =</path/to/ca.pem
+auth_ssl_require_client_cert = yes
+auth_ssl_username_from_cert = yes
+
+You are able to log in as any user with this certificate using following
+commands:
+
+openssl s_client -connect server:port -cert /path/to/cert -key /path/to/key
+a LOGIN anyusername anypassword
+
+
+Download attachment "cve-2019-3814-dovecot-2.2.tgz" of type "application/x-compressed-tar" (1816 bytes)
+
+Download attachment "cve-2019-3814-dovecot-2.3.tgz" of type "application/x-compressed-tar" (1858 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
