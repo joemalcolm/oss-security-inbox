@@ -1,60 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/26/1
-Message-ID: <aa6TE4xteynh2_Ca6HNTpGBRXN0UKjaeO1QKfmh9JLPDcl0GZvbZgnMqCqUIjY7tqZ7EfR1cxFot8QGtkhtBlQrlcpMdnmnCH6qxIcETRas=@protonmail.ch>
-Date: Thu, 25 Jul 2019 21:35:45 +0000
-From: Stiepan <stie@...tonmail.ch>
-To: oss-security@...ts.openwall.com
-Subject: Re: Security release pre-announcement messages
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/06/4
+Message-ID: <20190206094102.11bb7daa@computer>
+Date: Wed, 6 Feb 2019 09:41:02 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: Alex Gaynor <alex.gaynor@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Notes on fuzzing ImageMagick and GraphicsMagick
 Content-Type: text/plain; charset=utf-8
 
-I would like to congratulate the teams that do that. If public disclosure is deemed too dangerous before a patch is available, this looks like The reasonable tradeoff. Wish it was the same with Linux...
+On Tue, 5 Feb 2019 17:28:03 -0500
+Alex Gaynor <alex.gaynor@...il.com> wrote:
 
-Rationale: people could switch meanwhile to a known safe kernel. That would provide peace of mind to the "rest of us" who don't have the keys to the linux-distros kingdom of the elected few, yet wish to have secure OSes, without a window of vulnerability open to whoever hacked into the elected few's machines (or are entitled another way to this secret information).
-It would also make Linux governance way more democratic, which seems to be a must for such a "too big to fail" core open-source software.
+> Both ImageMagick and GraphicsMagick had been widely fuzzed and audited
+> before
+> this. Hanno Böck [#]_ observed: "In the past it was pretty easy to
+> bugs in
+> imagemagick, but after some review by Google most of them have been
+> fixed and
+> these days there are at least no more trivial to find fuzzing issues."
 
-Cheers,
-Stiepan
+Even though you had a disclaimer I feel I want to give a short answer.
+That quote probably comes from a page that I removed a while ago and
+now says " I'm no longer maintaining this list, as it was extremely
+outdated."
 
-Envoyé depuis ProtonMail mobile
+It's at least 3 years old and back then we were in a state where you
+could pick a random command line tool, run afl+asan against it and
+crashes would fall out within seconds.
+My intent back then was to establish some baseline robustness, so take
+my words there as "it's not that easy any more to find bugs in IM/GM
+within very short timeframes and very simple methods". Which I guess is
+still true and not in contradiction that with more involved methods
+you'll find more.
 
--------- Message d'origine --------
-On 23 juil. 2019 à 23:55, Douglas Bagnall a écrit :
 
-> On 22/07/19 11:50 PM, Solar Designer wrote:
->> Exactly. It's just an unusual disclosure process that involves giving
->> the users a heads-up a few days before public disclosure of the actual
->> vulnerabilities and fixes. So far, this process is practiced by OpenSSL
->> and Exim (any others?)
->>
->
-> On the Samba team we use wording like this:
->
-> https://lists.samba.org/archive/samba/2019-June/223621.html
->
-> ----------------------------
-> Subject: Heads-up: Security Releases ahead!
->
-> Hi,
->
-> This is a heads-up that there will be Samba security updates on
-> Wednesday, June 19 2019. Please make sure that your Samba
-> servers will be updated soon after the release!
->
-> Impacted components:
-> - AD DC (CVSS 6.5, Medium)
-> -----------------------------
->
-> We now do this systematically, after a haphazard start.
->
-> To help ourselves stay on track, we are trying to formalise our
-> process into something approaching a checklist:
->
-> https://wiki.samba.org/index.php/Samba_Security_Process
->
-> and we are happy to hear suggestions for improvement.
->
-> cheers,
-> Douglas
-Content of type "text/html" skipped
+These days my remaining worries about fuzzing-related bugs are
+primarily targets that don't fit into the libfuzzer/oss-fuzz framework,
+e.g. networking-software that has no easy way to abstract their parser
+code into a function call.
 
-Download attachment "publickey - stie@...tonmail.ch - 0xADF18750.asc" of type "application/pgp-keys" (1761 bytes)
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
