@@ -1,49 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/19/1
-Message-ID: <20190319084454.GA29714@fedorawork>
-Date: Tue, 19 Mar 2019 09:44:54 +0100
-From: Riccardo Schirone <rschiron@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: libssh2 development <libssh2-devel@...l.haxx.se>
-Subject: Re: [SECURITY ADVISORIES] libssh2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/06/2
+Message-ID: <alpine.DEB.2.20.1902060809030.28483@tvnag.unkk.fr>
+Date: Wed, 6 Feb 2019 08:12:33 +0100 (CET)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: NTLMv2 type-3 header stack buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+NTLMv2 type-3 header stack buffer overflow
+==========================================
 
-On 03/18, Daniel Stenberg wrote:
-> Hello!
-> 
-> CVE-2019-3863
->  Integer overflow in user authenicate keyboard interactive allows
->  out-of-bounds writes
->  URL: https://www.libssh2.org/CVE-2019-3863.html
->  Patch: https://libssh2.org/1.8.0-CVE/CVE-2019-3863.txt
-> 
+Project curl Security Advisory, February 6th 2019 -
+[Permalink](https://curl.haxx.se/docs/CVE-2019-3822.html)
 
-From the security advisory:
-> A server could send a multiple keyboard interactive response messages whose
-> total length are greater than unsigned char max characters. This value is
-> used as an index to copy memory causing in an out of bounds memory write
-> error.
+VULNERABILITY
+-------------
 
-Is this really a security issue? It seems to me the server cannot change what
-the interactive keyboard message responses contain. They are, after all,
-"interactive keyboard messages", thus coming from the user sitting in front of
-the client system.
+libcurl contains a stack based buffer overflow vulnerability.
 
-I can see 3 different "response_callback" functions being used to construct
-the responses and in one of them it is probably possible to trigger the
-overflow, however it would be caused by the user himself. If we assume the
-interactive user should not be able to execute code, I'd say the flaw does not
-have a remote attack vector but only local.
+The function creating an outgoing NTLM type-3 header
+(`lib/vauth/ntlm.c:Curl_auth_create_ntlm_type3_message()`), generates the
+request HTTP header contents based on previously received data. The check that
+exists to prevent the local buffer from getting overflowed is implemented
+wrongly (using unsigned math) and as such it does not prevent the overflow
+from happening.
 
-Did I miss anything?
+This output data can grow larger than the local buffer if very large "nt
+response" data is extracted from a previous NTLMv2 header provided by the
+malicious or broken HTTP server.
 
-Thanks,
+Such a "large value" needs to be around 1000 bytes or more. The actual payload
+data copied to the target buffer comes from the NTLMv2 type-2 response header.
+
+We are not aware of any exploit of this flaw.
+
+INFO
+----
+
+This bug was introduced in [commit
+86724581b6c](https://github.com/curl/curl/commit/86724581b6c), January 2014.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2019-3822 to this issue.
+
+CWE-121: Stack-based Buffer Overflow
+
+Severity: 7.3 (High)
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: libcurl 7.36.0 to and including 7.63.0
+- Not affected versions: libcurl < 7.36.0 and >= 7.64.0
+
+libcurl is used by many applications, but not always advertised as such.
+
+THE SOLUTION
+------------
+
+A [patch for CVE-2019-3822](https://github.com/curl/curl/commit/50c9484278c63b958655a717844f0721263939cc)
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl to version 7.64.0
+
+  B - Apply the patch to your version and rebuild
+
+  C - Turn off NTLM authentication
+
+TIME LINE
+---------
+
+It was reported to the curl project on December 30, 2018. We contacted
+distros@...nwall on January 28.
+
+curl 7.64.0 was released on February 6 2019, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+Reported by Wenxiang Qian of Tencent Blade Team. Patch by Daniel Stenberg.
+
+Thanks a lot!
+
 -- 
-Riccardo Schirone
-Red Hat -- Product Security
-Email: rschiron@...hat.com
-PGP-Key ID: CF96E110
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+  / daniel.haxx.se
