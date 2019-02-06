@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1465" "Tuesday" "25" "January" "2022" "18:04:49" "+0000" "Sam James" "sam@gentoo.org" nil "48" "Re: [oss-security] pwnkit: Local Privilege Escalation in polkit's pkexec (CVE-2021-4034)" nil nil nil "1" nil nil (number mark "U       sam@gentoo.o Jan 25   48/1465  " thread-indent "\"Re: [oss-security] pwnkit: Local Privilege Escalation in polkit's pkexec (CVE-2021-4034)\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] pwnkit: Local Privilege Escalation in polkit's pkexec (CVE-2021-4034)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1904" "Wednesday" "6" "February" "2019" "08:12:37" "+0100" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1902060809320.28483@tvnag.unkk.fr>" "77" "[oss-security] [SECURITY ADVISORY] curl: SMTP end-of-response out-of-bounds read" "^Date:" nil nil "2" "2019020607:12:37" "[oss-security] [SECURITY ADVISORY] curl: SMTP end-of-response out-of-bounds read" (number mark "U       daniel@haxx. Feb  6   77/1904  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl: SMTP end-of-response out-of-bounds read\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 6101 invoked by uid 550); 25 Jan 2022 18:45:52 -0000
+Received: (qmail 20092 invoked by uid 550); 6 Feb 2019 07:12:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,68 +11,97 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 20020 invoked from network); 6 Feb 2019 07:12:50 -0000
+X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
+X-X-Sender: dast@giant.haxx.se
+Message-ID: <alpine.DEB.2.20.1902060809320.28483@tvnag.unkk.fr>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-fromdanielhimself: yes
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Date: Wed, 6 Feb 2019 08:12:37 +0100 (CET)
+From: Daniel Stenberg <daniel@haxx.se>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21581 invoked from network); 25 Jan 2022 18:05:09 -0000
-From: Sam James <sam@gentoo.org>
-Content-Type: multipart/signed;
-	boundary="Apple-Mail=_DEE1179F-276D-41C4-B06D-826FEDEC710D";
-	protocol="application/pgp-signature";
-	micalg=pgp-sha512
-Mime-Version: 1.0 (Mac OS X Mail 15.0 \(3693.40.0.1.81\))
-Date: Tue, 25 Jan 2022 18:04:49 +0000
-References: <20220125175655.GA14958@localhost.localdomain>
-To: oss-security@lists.openwall.com
-In-Reply-To: <20220125175655.GA14958@localhost.localdomain>
-Message-Id: <F9283FD4-A0FC-4944-8659-530684BB33F8@gentoo.org>
-X-Mailer: Apple Mail (2.3693.40.0.1.81)
-Subject: Re: [oss-security] pwnkit: Local Privilege Escalation in polkit's
- pkexec (CVE-2021-4034)
+Subject: [oss-security] [SECURITY ADVISORY] curl: SMTP end-of-response out-of-bounds read
+To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
+        curl-announce@cool.haxx.se,
+        libcurl hacking <curl-library@cool.haxx.se>,
+        oss-security@lists.openwall.com
 
---Apple-Mail=_DEE1179F-276D-41C4-B06D-826FEDEC710D
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=us-ascii
+SMTP end-of-response out-of-bounds read
+=======================================
 
+Project curl Security Advisory, February 6th 2019 -
+[Permalink](https://curl.haxx.se/docs/CVE-2019-3823.html)
 
+VULNERABILITY
+-------------
 
-> On 25 Jan 2022, at 17:57, Qualys Security Advisory <qsa@qualys.com> wrote:
->=20
->=20
-> Qualys Security Advisory
-> pwnkit: Local Privilege Escalation in polkit's pkexec (CVE-2021-4034)
-> [snip]
+libcurl contains a heap out-of-bounds read in the code handling the
+end-of-response for SMTP.
 
-Hi,
+If the buffer passed to `smtp_endofresp()` isn't NUL terminated and contains
+no character ending the parsed number, and `len` is set to 5, then the
+`strtol()` call reads beyond the allocated buffer. The read contents will not
+be returned to the caller.
 
-For the benefit of downstreams: patch is available in gitlab [0]
-but no release yet.
+We are not aware of any exploit of this flaw.
 
-[0] https://gitlab.freedesktop.org/polkit/polkit/-/commit/a2bf5c9c83b6ae46c=
-bd5c779d3055bff81ded683
+INFO
+----
 
-Best,
-sam
+This bug was introduced in October 2013 in
+[commit 2766262a68](https://github.com/curl/curl/commit/2766262a68).
 
---Apple-Mail=_DEE1179F-276D-41C4-B06D-826FEDEC710D
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename=signature.asc
-Content-Type: application/pgp-signature;
-	name=signature.asc
-Content-Description: Message signed with OpenPGP
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2019-3823 to this issue.
 
------BEGIN PGP SIGNATURE-----
+CWE-125: Out-of-bounds Read
 
-iQGTBAEBCgB9FiEEYOpPv/uDUzOcqtTy9JIoEO6gSDsFAmHwO8JfFIAAAAAALgAo
-aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDYw
-RUE0RkJGRkI4MzUzMzM5Q0FBRDRGMkY0OTIyODEwRUVBMDQ4M0IACgkQ9JIoEO6g
-SDs8ZQf8DlRc/zDZFlXOOB2SZZHg81cPLRZX5k+rycEhXei+S93jvjk4xwsc8BkD
-ymr7lo5+hnH0Pf6PtR0K+xezZLXj3HtpCom+lJp77ANcKaH3bM6VGLZaLcha6W+N
-ZXHMgLFzXbTaVU5+v0EEEHCjerQExFBZhbl1cMDRDej0YG8pYgmYKiT/3gwUwppc
-HEMm5GrScTwCT11kNl+AF3mAH8TVLTkep9ufuHzOZ8xiC/baGB3pIT/YsMkA53b2
-VEhYLanTRz81YfNNRsVItbiz3a9HMOHLuMoAGroe0MASmlJafYGSbX97yi2nGK7T
-BEYaediphhM4xBofpx3e9tFSgmC5hg==
-=LoCh
------END PGP SIGNATURE-----
+Severity: 3.7 (Low)
 
---Apple-Mail=_DEE1179F-276D-41C4-B06D-826FEDEC710D--
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: libcurl 7.34.0 to and including 7.63.0
+- Not affected versions: libcurl < 7.34.0
+
+libcurl is used by many applications, but not always advertised as such.
+
+THE SOLUTION
+------------
+
+A [patch for CVE-2019-3823](https://github.com/curl/curl/commit/39df4073e5413fcdbb5a38da0c1ce6f1c0ceb484) is available.
+
+RECOMMENDATIONS
+--------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl to version 7.64.0
+
+  B - Apply the patch to your version and rebuild
+
+  C - Turn off SMTP
+
+TIMELINE
+--------
+
+The issue was reported to the curl project on January 18, 2019. A patch was
+communicated to the reporter on January 19, 2019. We contacted distros@openwall
+on January 28.
+
+curl 7.64.0 was released on February 6 2019, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+Reported by Brian Carpenter, Geeknik Labs. Patch by Daniel Gustafsson
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
