@@ -1,32 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/05/1
-Message-ID: <20190405114501.1bb98c2a@computer>
-Date: Fri, 5 Apr 2019 11:45:01 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: XSS in roundup bug tracker 404 page
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/06/3
+Message-ID: <alpine.DEB.2.20.1902060809320.28483@tvnag.unkk.fr>
+Date: Wed, 6 Feb 2019 08:12:37 +0100 (CET)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: SMTP end-of-response out-of-bounds read
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+SMTP end-of-response out-of-bounds read
+=======================================
 
-I recently discovered that the python bug tracker had a trivial
-reflected Cross Site Scripting vulnerability on the 404 error page.
+Project curl Security Advisory, February 6th 2019 -
+[Permalink](https://curl.haxx.se/docs/CVE-2019-3823.html)
 
-It essentially just reflected the URL path, so anything like
-http://hostname/<img src=x onerror=alert(1)>
-(properly URL-encoded, but browsers do this automatically)
-would result in XSS.
+VULNERABILITY
+-------------
 
-The software python is using here is the Roundup issue tracker, it's
-been reported there as well [2] and fixed in their repo (but no release
-yet).
+libcurl contains a heap out-of-bounds read in the code handling the
+end-of-response for SMTP.
 
-[1] https://github.com/python/bugs.python.org/issues/34
-[2] https://issues.roundup-tracker.org/issue2551035
+If the buffer passed to `smtp_endofresp()` isn't NUL terminated and contains
+no character ending the parsed number, and `len` is set to 5, then the
+`strtol()` call reads beyond the allocated buffer. The read contents will not
+be returned to the caller.
+
+We are not aware of any exploit of this flaw.
+
+INFO
+----
+
+This bug was introduced in October 2013 in
+[commit 2766262a68](https://github.com/curl/curl/commit/2766262a68).
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2019-3823 to this issue.
+
+CWE-125: Out-of-bounds Read
+
+Severity: 3.7 (Low)
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: libcurl 7.34.0 to and including 7.63.0
+- Not affected versions: libcurl < 7.34.0
+
+libcurl is used by many applications, but not always advertised as such.
+
+THE SOLUTION
+------------
+
+A [patch for CVE-2019-3823](https://github.com/curl/curl/commit/39df4073e5413fcdbb5a38da0c1ce6f1c0ceb484) is available.
+
+RECOMMENDATIONS
+--------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl to version 7.64.0
+
+  B - Apply the patch to your version and rebuild
+
+  C - Turn off SMTP
+
+TIMELINE
+--------
+
+The issue was reported to the curl project on January 18, 2019. A patch was
+communicated to the reporter on January 19, 2019. We contacted distros@...nwall
+on January 28.
+
+curl 7.64.0 was released on February 6 2019, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+Reported by Brian Carpenter, Geeknik Labs. Patch by Daniel Gustafsson
+
+Thanks a lot!
 
 -- 
-Hanno Böck
-https://hboeck.de/
 
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+  / daniel.haxx.se
