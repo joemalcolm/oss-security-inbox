@@ -1,25 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/12/2
-Message-ID: <CAF1aazCqSfmaE00r_bkV2n3sbQzaUXFALBOkffKef79AcSuWxg@mail.gmail.com>
-Date: Thu, 11 Jul 2019 18:14:30 -0400
-From: Dave <snoopdave@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: [CVE-2019-0234] Reflected Cross-site Scripting (XSS) Vulnerabiulity in Apache Roller
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/07/1
+Message-ID: <1549563205.2925.242.camel@codethink.co.uk>
+Date: Thu, 07 Feb 2019 18:13:25 +0000
+From: Ben Hutchings <ben.hutchings@...ethink.co.uk>
+To: Yves-Alexis Perez <corsac@...ian.org>, Timothy Michaud <tmm08a@....edu>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Linux Kernel: Missing access_ok() checks in IOCTL function (gpu/drm/i915 Driver)
 Content-Type: text/plain; charset=utf-8
 
-Severity: Important
+On Thu, 2019-01-24 at 10:30 +0100, Yves-Alexis Perez wrote:
+> On Wed, 2019-01-23 at 14:28 -0600, Timothy Michaud wrote:
+> > NOTE: I have requested a CVE identifier, and I'm sending this message, to
+> > make tracking of the fix easier; however, to avoid missing security fixes
+> > without CVE identifiers, you should *NOT* be cherry-picking a specific
+> > patch in response to a notification about a kernel security bug.
+> > 
+> > Due to a lack of "access_ok()" checks in i915_gem_execbuffer2_ioctl[1], it
+> > is possible to escalate privileges similar to the waitid vulnerability[2]
+> 
+> Hi, thanks for the report.
+> 
+> The patch doesn't seem CC: stable, could you give us a status on the various
+> stable releases?
 
-Vendor: The Apache Software Foundation
+Is there even a real security issue here?  So far as I can see,
+i915_gem_execbuffer2_ioctl() writes to a subset of the user memory
+range that it previously read using copy_from_user().  copy_from_user()
+does include the range check.
 
-Versions affected: Roller 5.2, 5.2.1, 5.2.2. The unsupported pre-Roller 5.1
-versions may also be affected.
+Ben.
 
-Description: Roller's Math Comment Authenticator did not property sanitize
-user input and could be exploited to perform Reflected Cross Site Scripting
-(XSS).
-
-Mitigation: The mitigation for this vulnerability is to upgrade to the
-lastest version of Roller, which is now Roller 5.2.3.
-
-Credit: This issue was discovered and reported by Muthukumar Marikani
-
+-- 
+Ben Hutchings, Software Developer                         Codethink Ltd
+https://www.codethink.co.uk/                 Dale House, 35 Dale Street
+                                     Manchester, M1 2HF, United Kingdom
