@@ -1,30 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/10/2
-Message-ID: <20190710175538.266b7a89@jabberwock.cb.piermont.com>
-Date: Wed, 10 Jul 2019 17:55:38 -0400
-From: "Perry E. Metzger" <perry@...rmont.com>
-To: Malte Kraus <malte.kraus@...e.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Privileged File Access from Desktop Applications
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/08/1
+Message-ID: <c8a1fdf00760245ccdabc0ac0f4d0b981f478b34.camel@electronsweatshop.com>
+Date: Fri, 08 Feb 2019 09:08:22 -0500
+From: Randy Barlow <randy@...ctronsweatshop.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2019-7628: Pagure version 5.2 leaks API keys by e-mail
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 9 Jul 2019 11:30:36 -0400 "Perry E. Metzger"
-<perry@...rmont.com> wrote:
-> On Tue, 9 Jul 2019 13:58:37 +0000 Malte Kraus <malte.kraus@...e.com>
-> wrote:
-> > With Wayland, it's no longer supported to run graphical
-> > applications as root.  
-> 
-> Can you explain (or point to) a description of why this is a
-> problem? (It seems like preventing people from editing
-> administrative files as root and requiring that they use a dbus
-> based file i/o system is likely to be a source of bugs for years to
-> come...)
+It was discovered that Pagure[4] 5.2 e-mails full API tokens in e-mails 
+that are intended to remind users that the tokens are expiring soon[3].
+The vulnerability was introduced in 5.2[0]. There was a partial fix
+applied in [1], but that fix still leaked partial keys.
 
-FYI, I've googled around and been unable to easily find any mention
-of this problem or a description of why it might be an issue. A link
-to something talking about it would still be appreciated.
+At the time of this writing, a fix is proposed at [2].
 
-Perry
--- 
-Perry E. Metzger		perry@...rmont.com
+There is not yet a released version of Pagure with a fix, but Pagure
+administrators can work around this issue by disabling the cron job. It
+may be wise to delete all API tokens that may have been e-mailed after
+disabling the cron job as a precautionary measure.
+
+
+[0] https://pagure.io/pagure/c/57975ef30641907947038b608017a9b721eb33fe
+[1] https://pagure.io/pagure/c/9905fb1e64341822366b6ab1d414d2baa230af0a
+[2] https://pagure.io/pagure/pull-request/4254
+[3] https://nvd.nist.gov/vuln/detail/CVE-2019-7628
+[4] https://pagure.io/pagure
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
