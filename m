@@ -1,37 +1,115 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/15/5
-Message-ID: <1565815809.0ELYBFHH@httpd.apache.org>
-Date: Wed, 14 Aug 2019 15:50:09 -0500
-From: Daniel Ruggeri <druggeri@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2019-10097: mod_remoteip stack buffer overflow and NULL pointer dereference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/09/1
+Message-Id: <1549676854.13064.0@mail.igalia.com>
+Date: Fri, 08 Feb 2019 19:47:34 -0600
+From: Michael Catanzaro <mcatanzaro@...lia.com>
+To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
+Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: WebKitGTK+ and WPE WebKit Security Advisory WSA-2019-0001
 Content-Type: text/plain; charset=utf-8
 
+------------------------------------------------------------------------
+WebKitGTK+ and WPE WebKit Security Advisory WSA-2019-0001
+------------------------------------------------------------------------
 
-CVE-2019-10097: mod_remoteip stack buffer overflow and NULL pointer dereference
+Date reported : February 08, 2019
+Advisory ID : WSA-2019-0001
+WebKitGTK+ Advisory URL : 
+https://webkitgtk.org/security/WSA-2019-0001.html
+WPE WebKit Advisory URL : 
+https://wpewebkit.org/security/WSA-2019-0001.html
+CVE identifiers : CVE-2019-6212, CVE-2019-6215, CVE-2019-6216,
+                  CVE-2019-6217, CVE-2019-6226, CVE-2019-6227,
+                  CVE-2019-6229, CVE-2019-6233, CVE-2019-6234.
 
-Severity: Moderate
+Several vulnerabilities were discovered in WebKitGTK+ and WPE WebKit.
 
-Vendor: The Apache Software Foundation
+CVE-2019-6212
+    Versions affected: WebKitGTK+ before 2.22.6 and WPE WebKit before
+    2.22.4.
+    Credit to an anonymous researcher.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. Multiple memory corruption issues were addressed
+    with improved memory handling.
 
-Versions Affected:
-httpd 2.4.32 to 2.4.39
+CVE-2019-6215
+    Versions affected: WebKitGTK+ before 2.22.6 and WPE WebKit before
+    2.22.4.
+    Credit to Lokihardt of Google Project Zero.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. A type confusion issue was addressed with improved
+    memory handling.
 
-Description:
-When mod_remoteip was configured to use a trusted intermediary proxy
-server using the "PROXY" protocol, a specially crafted PROXY header
-could trigger a stack buffer overflow or NULL pointer deference.
-This vulnerability could only be triggered by a trusted proxy and not
-by untrusted HTTP clients.
+CVE-2019-6216
+    Versions affected: WebKitGTK+ before 2.22.5 and WPE WebKit before
+    2.22.3.
+    Credit to Fluoroacetate working with Trend Micro's Zero Day
+    Initiative.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. Multiple memory corruption issues were addressed
+    with improved memory handling.
 
-PROXY protocol support was added to mod_remoteip in release 2.4.33.
+CVE-2019-6217
+    Versions affected: WebKitGTK+ before 2.22.5 and WPE WebKit before
+    2.22.3.
+    Credit to Fluoroacetate working with Trend Micro's Zero Day
+    Initiative, Proteas, Shrek_wzw, and Zhuo Liang of Qihoo 360 Nirvan
+    Team.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. Multiple memory corruption issues were addressed
+    with improved memory handling.
 
-Mitigation:
-All httpd users should upgrade to 2.4.41 or later.
+CVE-2019-6226
+    Versions affected: WebKitGTK+ and WPE WebKit before 2.22.0.
+    Credit to Apple.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. Multiple memory corruption issues were addressed
+    with improved memory handling.
 
-Credit:
-The issue was discovered by Daniel McCarney <cpu@...sencrypt.org> Let's Encrypt / Internet Security Research Group (ISRG)
+CVE-2019-6227
+    Versions affected: WebKitGTK+ before 2.22.5 and WPE WebKit before
+    2.22.3.
+    Credit to Qixun Zhao of Qihoo 360 Vulcan Team.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. A memory corruption issue was addressed with
+    improved memory handling.
 
-References:
-https://httpd.apache.org/security/vulnerabilities_24.html
+CVE-2019-6229
+    Versions affected: WebKitGTK+ before 2.22.5 and WPE WebKit before
+    2.22.3.
+    Credit to Ryan Pickren.
+    Processing maliciously crafted web content may lead to universal
+    cross site scripting. A logic issue was addressed with improved
+    validation.
+
+CVE-2019-6233
+    Versions affected: WebKitGTK+ before 2.22.4 and WPE WebKit before
+    2.22.2.
+    Credit to G. Geshev from MWR Labs working with Trend Micro's Zero
+    Day Initiative.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. A memory corruption issue was addressed with
+    improved memory handling.
+
+CVE-2019-6234
+    Versions affected: WebKitGTK+ before 2.22.4 and WPE WebKit before
+    2.22.2.
+    Credit to G. Geshev from MWR Labs working with Trend Micro's Zero
+    Day Initiative.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. A memory corruption issue was addressed with
+    improved memory handling.
+
+
+We recommend updating to the latest stable versions of WebKitGTK+ and
+WPE WebKit. It is the best way to ensure that you are running safe
+versions of WebKit. Please check our websites for information about the
+latest stable releases.
+
+Further information about WebKitGTK+ and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
+
+The WebKitGTK+ and WPE WebKit team,
+February 08, 2019
 
