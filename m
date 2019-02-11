@@ -1,53 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/21/7
-Message-ID: <d49124e0c81f204be7733c397539cc077ccd2a44.camel@debian.org>
-Date: Fri, 21 Jun 2019 17:41:49 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/11/1
+Message-Id: <B20E8928-1375-490B-B6B9-97FBE4A19B51@gmail.com>
+Date: Mon, 11 Feb 2019 12:05:50 +0100
+From: Carlton Gibson <carlton.gibson@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
+Subject: CVE-2019-6975 -- Django fixed memory exhaustion in utils.numberformat.format().
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+In accordance with our security release policy, the Django team is issuing Django 1.11.19, Django 2.1.6, and Django 2.0.11. These releases addresses the security issue detailed below. We encourage all users of Django to upgrade as soon as possible.
 
-On Fri, 2019-06-21 at 11:53 +0200, Greg KH wrote:
-> So it's a matter of "do I live with all of the bugs that everyone else
-> knows about and how to exploit, or do I live with a potential
-> regression?"  That sounds like an easy choice given that the reason you
-> should be updating is to resolve all of those known bugs :)
+CVE-2019-6975: Memory exhaustion in django.utils.numberformat.format()
 
-I'm not really talking about potential regressions: I'm talking about real
-functional changes that the end-user doesn't expect (nor want) in a stable
-release. Backporting is often a pain, but full throttle to latest release also
-has a burden (for the end-user, for the distributor and so on). It really
-depends on the project (and I don't want to point fingers, it's not the
-point).
-> 
-> Regressions always happen, we are human, but there are ways to mitigate
-> them (testing, roll-back, preventing developers from not breaking things
-> on purpose, etc.)  And projects that do not do this type of work to
-> prevent regressions need to learn that they should change, or users will
-> go elsewhere.
+If django.utils.numberformat.format() -- used by contrib.admin as well as the the floatformat, filesizeformat, and intcomma templates filters -- received a Decimal with a large number of digits or a large exponent, it could lead to significant memory usage due to a call to '{:f}'.format().
 
-But then again the question is, who do the work (of backporting, regression
-testing, etc.) And again it's not always about bugs, it might very well be
-that there's a user interface change requiring a lot of documentation updates
-downwards, a dependency chain update or whatever.
+To avoid this, decimals with more than 200 digits are now formatted using scientific notation.
 
-There might be good reasons for stability, even besides not introducing new
-bugs, that was just my point.
+See Django blog for more details and download links: 
+https://www.djangoproject.com/weblog/2019/feb/11/security-releases/ <https://www.djangoproject.com/weblog/2019/feb/11/security-releases/>
 
-Regards,
-- -- 
-Yves-Alexis
------BEGIN PGP SIGNATURE-----
 
-iQEzBAEBCAAdFiEE8vi34Qgfo83x35gF3rYcyPpXRFsFAl0M+r0ACgkQ3rYcyPpX
-RFtnkAgAvxwmpnFT0hKbZViUO1j9BBkNo5KUhUMKs86OKSLGTQQNFfTMBs8EX5t5
-1oTXi/uzEMwEYbJcSOzwm3nDavhxJvibGQiRiYgQJaT7ckt0/Pvq1qH1514jWFhj
-CTGMu145VGLoYYx1BjAO8eHQFRbvBct+0C8aBYXzq+rTDZXf+7h/OkVu7OQDgNHM
-HAsiJ8SnUrXykHAE5sMnywI8atAdD9QAGp0aQ3MABxmKX1ZJ9qS/Qv+OfFEJH44U
-G3ZWM9JLwdbmyFOWOrVlhpmpHaFdKTUSC6gpihyR4g5F+KdR5NMnUv3W52S9jzAh
-7zFpM8sUtFsY4+Wta7HTaBTh1gATuQ==
-=zzq2
------END PGP SIGNATURE-----
