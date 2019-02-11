@@ -1,87 +1,122 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/22/5
-Message-ID: <CA+fCnZfpGc0qK9MRp-BQJkLPrZhf-Md-UYCOtPi0RhbwJqmAHQ@mail.gmail.com>
-Date: Thu, 22 Aug 2019 17:16:03 +0200
-From: Andrey Konovalov <andreyknvl@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/11/2
+Message-ID: <20190211130520.xwi6vpay3sc56pza@yavin>
+Date: Tue, 12 Feb 2019 00:05:20 +1100
+From: Aleksa Sarai <cyphar@...har.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: multiple vulnerabilities in the USB subsystem x2
+Cc: dev@...ncontainers.org, security-announce@...ncontainers.org
+Subject: CVE-2019-5736: runc container breakout (all versions)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Aug 22, 2019 at 1:00 PM John Haxby <john.haxby@...cle.com> wrote:
->
->
->
-> > On 22 Aug 2019, at 10:31, Marcus Meissner <meissner@...e.de> wrote:
-> >
-> > On Thu, Aug 22, 2019 at 10:04:42AM +0100, John Haxby wrote:
-> >>
-> >>
-> >>> On 20 Aug 2019, at 19:20, Andrey Konovalov <andreyknvl@...il.com> wrote:
-> >>>
-> >>> * https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15216
-> >>>
-> >>> An issue was discovered in the Linux kernel before 5.0.14. There is a
-> >>> NULL pointer dereference caused by a malicious USB device in the
-> >>> drivers/usb/misc/yurex.c driver.
-> >>>
-> >>> * https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15217
-> >>>
-> >>> An issue was discovered in the Linux kernel before 5.2.3. There is a
-> >>> NULL pointer dereference caused by a malicious USB device in the
-> >>> drivers/media/usb/zr364xx/zr364xx.c driver.
-> >>>
-> >>> * https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15218
-> >>>
-> >>> An issue was discovered in the Linux kernel before 5.1.8. There is a
-> >>> NULL pointer dereference caused by a malicious USB device in the
-> >>> drivers/media/usb/siano/smsusb.c driver.
-> >>>
-> >>> * https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15219
-> >>>
-> >>> An issue was discovered in the Linux kernel before 5.1.8. There is a
-> >>> NULL pointer dereference caused by a malicious USB device in the
-> >>> drivers/usb/misc/sisusbvga/sisusb.c driver.
-> >>
-> >>
-> >> Are these even realistic?   If I'm going to leave malicious USB devices in the parking lot for mischief am I going to rely on the unknown victim running a Linux distro with the requisite kernel modules or am I going to just drop a cheap and near-universal USB killer?
-> >>
-> >> If I'm going to be connecting the USB device to unguarded laptops myself to crash them, as opposed to destroy them, why not just casually lean on the power button for a few seconds?[1]
-> >>
-> >> Actually, this is the CVSS3 score for a laptop's power button: 4.6 (CVSS:3.0/AV:P/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H (Medium).   There isn't a vector for a USB killer because there's no "A:P" (permanent loss).
-> >>
-> >> I'm not saying that these aren't bugs that should be fixed, far from it.  That's not the issue.  The issue is that, for example, PCI DSS requires fixes for anything with a score >= 4.0 so we have endless end-users demanding fixes for their servers which don't have even physical access or, indeed, physical presence.  It's not even demanding the fixes as they may already be fixed or simply not applicable because the affected driver isn't present; it's the hours or days wasted verifying that the fix available or not present.[2]
-> >>
-> >>
-> >>
-> >> Frustrated of Lancashire, jch
-> >>
-> >>
-> >> [1] Some may remember the VAX 11/750 reset button.  In order to be able to use the serial console (usually a DECwriter) you had to have the key in which also enabled the reset button.   Before I put the VAX "Do Not Copy this Key" key (yes, it fits all 750s) I pressed accidentally pressed the reset button a couple of times just by propping myself up on the machine.  Spectacularly bad design by today's standards.
-> >>
-> >>
-> >> [2] Full disclosure.  It's ultimately about me because it's me that eventually gets the "customer requires fix for CVE-2019-15216" :)
-> >
-> > In the past we have considered Denial Of Service only USB vulnerabilites as non-issues, as physical access
-> > can cause the same.
->
-> <nod>
->
-> >
-> > USB Vulnerabilities where you can achieve code execution by a malicious USB device are something else though and in my opinion warrant a CVE.
-> >
->
-> I carefully didn't quote any of the UAF bugs -- those definitely do warrant a CVE.   Null pointer dereference is a DoS.
+[[        Patch CRD: 2019-02-11 15:00 CET ]]
+[[ Exploit Code CRD: 2019-02-18 15:00 CET ]]
 
-Yeah, I don't think those DoS USB bugs are in any way useful to an
-attacker. I've looked at existing USB CVEs before I've started
-reporting these, and MITRE does assign CVEs to such issues. I don't
-know whether they should warrant CVEs or not.
+Hello,
 
-On a side note, currently there's an issue with many Linux kernel bugs
-being fixed, but not backported to distro kernels. Those bugs might
-have security implications, but there's no way to know that, unless
-someone specifically spends time to assess them in that regard.
-Requesting CVEs for those bugs is a way to get the fixes into distro
-kernels (even though that doesn't always work promptly [1] :).
+I am one of the maintainers of runc (the underlying container runtime
+underneath Docker, cri-o, containerd, Kubernetes, and so on). We
+recently had a vulnerability reported which we have verified and have a
+patch for.
 
-[1] https://www.openwall.com/lists/oss-security/2018/10/30/2
+The researchers who found this vulnerability are:
+  * Adam Iwaniuk
+  * Borys Popławski
+
+In addition, Aleksa Sarai (me) discovered that LXC was also vulnerable
+to a more convoluted version of this flaw.
+
+== OVERVIEW ==
+
+The vulnerability allows a malicious container to (with minimal user
+interaction) overwrite the host runc binary and thus gain root-level
+code execution on the host. The level of user interaction is being able
+to run any command (it doesn't matter if the command is not
+attacker-controlled) as root within a container in either of these
+contexts:
+
+  * Creating a new container using an attacker-controlled image.
+  * Attaching (docker exec) into an existing container which the
+    attacker had previous write access to.
+
+This vulnerability is *not* blocked by the default AppArmor policy, nor
+by the default SELinux policy on Fedora[++] (because container processes
+appear to be running as container_runtime_t). However, it *is* blocked
+through correct use of user namespaces (where the host root is not
+mapped into the container's user namespace).
+
+Our CVSSv3 vector is (with a score of 7.2):
+
+  AV:L/AC:H/PR:L/UI:R/S:C/C:N/I:H/A:H
+
+The assigned CVE for this issue is CVE-2019-5736.
+
+[++]: This is only the case for the "moby-engine" package on Fedora. The
+	  "docker" package as well as podman are protected against this
+	  exploit because they run container processes as container_t.
+
+== PATCHES ==
+
+I have attached the relevant patch which fixes this issue. This patch is
+based on HEAD, but the code in libcontainer/nsenter/ changes so
+infrequently that it should apply cleanly to any old version of the runc
+codebase you are dealing with.
+
+Please note that the patch I have pushed to runc master[1] is a modified
+version of this patch -- even though it is functionally identical
+(though we would recommend using the upstream one if you haven't patched
+using the attached one already).
+
+== NON-ESSENTIAL EXPLOIT CODE ==
+
+Several vendors have asked for exploit code to ensure that the patches
+actually solve the issue. Due to the severity of the issue (especially
+for public cloud vendors), we decided to provide the attached exploit
+code. This exploit code was written by me, and is more generic than the
+original exploit code provided by the researchers and works against LXC
+(it could likely be used on other vulnerable runtimes with no
+significant modification). Details on how to use the exploit code are
+provided in the README.
+
+As per OpenWall rules, this exploit code will be published *publicly* 7
+days after the CRD (which is 2019-02-18). *If you have a container
+runtime, please verify that you are not vulnerable to this issue
+beforehand.*
+
+== IMPACT ON OTHER PROJECTS ==
+
+It should be noted that upon further investigation I've discovered that
+LXC has a similar vulnerability, and they have also pushed a similar
+patch[2] which we co-developed. LXC is a bit harder to exploit, but the
+same fundamental flaw exists.
+
+After some discussion with the systemd-nspawn folks, it appears that
+they aren't vulnerable (because their method of attaching to a container
+uses a different method to LXC and runc).
+
+I have been contacted by folks from Apache Mesos who said they were also
+vulnerable (I believe just using the exploit code that will be
+provided). It is quite likely that most container runtimes are
+vulnerable to this flaw, unless they took very strange mitigations
+before-hand.
+
+== OTHER NEWS ==
+
+We have set up an announcement list for future security vulnerabilities,
+and you can see the process for joining here[3] (it's based on the
+Kubernetes security-announce mailing list). Please join if you
+distribute any container runtimes that depend on runc (or other OCI
+projects).
+
+[1]: https://github.com/opencontainers/runc/commit/0a8e4117e7f715d5fbeef398405813ce8e88558b
+[2]: https://github.com/lxc/lxc/commit/6400238d08cdf1ca20d49bafb85f4e224348bf9d
+[3]: https://github.com/opencontainers/org/blob/master/security.md
+
+-- 
+Aleksa Sarai
+Senior Software Engineer (Containers)
+SUSE Linux GmbH
+<https://www.cyphar.com/>
+
+View attachment "0001-nsenter-clone-proc-self-exe-to-avoid-exposing-host-b.patch" of type "text/x-patch" (7643 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
