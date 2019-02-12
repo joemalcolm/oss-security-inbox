@@ -1,49 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/13/2
-Message-ID: <54a83e07-ad1e-5375-2bde-bc1c96e35e7a@dovecot.fi>
-Date: Fri, 13 Dec 2019 12:44:35 +0200
-From: Aki Tuomi <aki.tuomi@...ecot.fi>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE-2019-19722: Critical vulnerability in Dovecot
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/12/2
+Message-ID: <20190212143708.623v7zle3xt23hcd@mikami>
+Date: Wed, 13 Feb 2019 01:37:08 +1100
+From: Aleksa Sarai <asarai@...e.de>
+To: Florian Weimer <fweimer@...hat.com>
+Cc: Aleksa Sarai <cyphar@...har.com>, oss-security@...ts.openwall.com, dev@...ncontainers.org, Christian Brauner <christian.brauner@...ntu.com>
+Subject: Re: CVE-2019-5736: runc container breakout (all versions)
 Content-Type: text/plain; charset=utf-8
 
-Open-Xchange Security Advisory 2019-12-13
- 
-Product: Dovecot IMAP/POP3 Server
-Vendor: OX Software GmbH
- 
-Internal reference: DOV-3719
-Vulnerability type: NULL Pointer Dereference (CWE-476)
-Vulnerable version: 2.3.9
-Vulnerable component: push notification driver
-Report confidence: Confirmed
-Solution status: Fixed by Vendor
-Fixed version: 2.3.9.1
-Researcher credits: Frederik Schwan, Michael Stilkerich
-Vendor notification: 2019-12-10
-Solution date: 2019-12-12
-Public disclosure: 2019-12-13
-CVE reference: CVE-2019-19722
-CVSS: 5.3 (CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L/E:F/RL:O/RC:C)
- 
-Vulnerability Details:
-Mail with group address as sender will cause a signal 11 crash in push
-notification drivers. Group address as recipient can cause crash in some
-drivers.
- 
-Risk:
-Repeated delivery attempts are made for the problematic mail, causing
-queueing in MTA.
- 
-Steps to reproduce:
-1. Configure dovecot with push notifications enabled, such as OX push
-notification driver. This can also be observed with 3rd party plugin XAPS.
-2. Send mail a group address as sender
- 
-Solution:
-Operators should update to the latest Patch Release.
+On 2019-02-12, Florian Weimer <fweimer@...hat.com> wrote:
+> > +	memfd = memfd_create(MEMFD_COMMENT, MFD_CLOEXEC|MFD_ALLOW_SEALING);
+> > +	if (memfd < 0)
+> > +		goto err_binfd;
+> 
+> Is it really necessary to use a memfd_create here?  Do you really need
+> sealing?  It's a bit odd to add a new system call dependency in a
+> security update.  The ability fexecve a memfd descriptor is also rather
+> odd.  I wouldn't have expected execute permissions on memfd descriptors,
+> so this sounds like a kernel bug (which now can't be fixed).
 
+The benefit of memfd_create is that you can make sure it's a memfd and
+that it's sealed -- which means that you don't end up in a situation
+where someone has configured their setup such that you think it's safe
+when it isn't.
 
+I don't agree that memfd execution is necessarily a kernel bug --
+fexec(2) only gives you ETXTBSY if the file is open for writing. But
+when a memfd is sealed it's no longer possible to open it for writing
+(with mapping_deny_writable). It's just like having any other tmpfs file
+and execing it.
 
+> I saw some other patch with a O_TMPFILE replacement.  Does this really
+> work?  It's possible to create a new name with linkat, so that's not a
+> real win security-wise.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+I'm not sure what you mean by "not a real win security-wise". Yes,
+someone could linkat(2) the O_TMPFILE on the host and then execute it,
+but I don't see what the exploit vector is (you'd need to have a process
+on the host that decides to find the O_TMPFILE fd and linkat(2) it --
+and you'd have to linkat onto the same tmpfs filesystem anyway). It's
+also definitely a win from the perspective that the vulnerability is
+fixed.
+
+I don't like O_TMPFILE because you can't differentiate between O_TMPFILE
+and an unlinked file -- but it's much better than nothing.
+
+> Could you just make a copy, under a different owner, and not care how
+> it is going to be modified?
+
+That won't work for rootless (read: unprivileged) containers, since you
+can't change the owner. We could add it for the privileged case, but now
+we will have 3 different fallbacks and I really am not a fan of that.
+
+And rootless containers with a mapping for the unprivileged user to root
+(where the binary is owned by the user) are vulnerable. memfd_create (or
+O_TMPFILE) protects against all of these worries, and doesn't require
+any cleanup of resources after-the-fact.
+
+I'm also not sure it'll make a difference since the container user has
+kuid=0 anyway, though I'm not sure if it has CAP_DAC_OVERRIDE. We could
+chown the O_TMPFILE...
+
+-- 
+Aleksa Sarai
+Senior Software Engineer (Containers)
+SUSE Linux GmbH
+<https://www.cyphar.com/>
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
