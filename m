@@ -1,4 +1,9 @@
-Received: (qmail 27660 invoked by uid 550); 20 Jun 2025 13:51:02 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5844" "Tuesday" "12" "February" "2019" "17:36:06" "+0100" "Solar Designer" "solar@openwall.com" "<20190212163606.GA4443@openwall.com>" "169" "Re: [oss-security] CVE-2019-5736: runc container breakout (all versions)" "^Cc:" nil nil "2" "2019021216:36:06" "[oss-security] CVE-2019-5736: runc container breakout (all versions)" (number mark "        solar@openwa Feb 12  169/5844  " thread-indent "\"Re: [oss-security] CVE-2019-5736: runc container breakout (all versions)\"\n") "<20190211130520.xwi6vpay3sc56pza@yavin>" ("<20190211130520.xwi6vpay3sc56pza@yavin>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 7967 invoked by uid 550); 12 Feb 2019 16:37:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,66 +11,188 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 26607 invoked from network); 20 Jun 2025 13:51:02 -0000
-Authentication-Results:garm.ovh; auth=pass (GARM-113S0075638fc1d-b0e6-4532-af59-ff1a11d8905f,
-                    AA318F909AB52CDA134F90F032C2BF35D21C9541) smtp.auth=jwilk@jwilk.net
-X-OVh-ClientIp:31.0.177.249
-Date: Fri, 20 Jun 2025 15:50:51 +0200
-From: Jakub Wilk <jwilk@jwilk.net>
-To: oss-security@lists.openwall.com
-Message-ID: <20250620135051.xkt6yzanpy67jeqe@jwilk.net>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <CAN1eSkue9p8=qkJdEFrczVwc1nfUhG7w6Z2dMHhxHc47T+sv=A@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Received: (qmail 7485 invoked from network); 12 Feb 2019 16:36:27 -0000
+Message-ID: <20190212163606.GA4443@openwall.com>
+References: <20190211130520.xwi6vpay3sc56pza@yavin>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAN1eSkue9p8=qkJdEFrczVwc1nfUhG7w6Z2dMHhxHc47T+sv=A@mail.gmail.com>
-X-Ovh-Tracer-Id: 7438820685220818129
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgdekheejucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucenucfjughrpeffhffvuffkfhggtggujgesthdtredttddtvdenucfhrhhomheplfgrkhhusgcuhghilhhkuceojhifihhlkhesjhifihhlkhdrnhgvtheqnecuggftrfgrthhtvghrnhepfffgffegieevveejtdduhedvfffgtdfhgefhleehfeeujeffudfgveetheffuefgnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucfkphepuddvjedrtddrtddruddpfedurddtrddujeejrddvgeelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepuddvjedrtddrtddruddpmhgrihhlfhhrohhmpehjfihilhhksehjfihilhhkrdhnvghtpdhnsggprhgtphhtthhopedupdhrtghpthhtohepohhsshdqshgvtghurhhithihsehlihhsthhsrdhophgvnhifrghllhdrtghomhdpoffvtefjohhsthepmhhoheeffegmpdhmohguvgepshhmthhpohhuth
-DKIM-Signature: a=rsa-sha256; bh=hX0K/2DJsPw+d8toDQGLoGqd/cNrJ32Lh2Pfeb15rHs=;
- c=relaxed/relaxed; d=jwilk.net; h=From; s=ovhmo917968-selector1;
- t=1750427453; v=1;
- b=T6UPmYHZfE2ydmjf7mTb57E8H0W8rEwoYRYA0PkdlhAoiV431mD9U71TXA0Vf+r+ZXofqmVe
- 4QJ/KcTNgf6Us+7ieDuVdLURPmmcEaArDdLsZ12gcH80HHr2+rR+breGL8FQQufcg6ZZwGMht0t
- F+M7RVWcNZLbRvnnO3dVyEj2A4fYr9zNtQkHLPnmKj+RXINlsrdqLqpbNf7nbhZMd3SKcoi3SCG
- TmWBF7mif0Hx7oiurMuArhDOvzJ7/U8lUwcIgKLu1meKAksXxSJQFJnQ5nAukWyBVJYVhPgAVtK
- ePHKDP0E7GfF26Hu50K/0Lpv5XXaOWCYEtgFFXGWFVlFQ==
-Subject: Re: [oss-security] path traversal in tar extract in intel
- cve-bin-tool
+In-Reply-To: <20190211130520.xwi6vpay3sc56pza@yavin>
+User-Agent: Mutt/1.4.2.3i
+Cc: Aleksa Sarai <cyphar@cyphar.com>, dev@opencontainers.org,
+	Christian Brauner <christian.brauner@ubuntu.com>
+Date: Tue, 12 Feb 2019 17:36:06 +0100
+From: Solar Designer <solar@openwall.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE-2019-5736: runc container breakout (all versions)
+To: oss-security@lists.openwall.com
 
-This is the committed fix:
-https://github.com/intel/cve-bin-tool/commit/b4feb03f19acecc1
+On Tue, Feb 12, 2019 at 12:05:20AM +1100, Aleksa Sarai wrote:
+> The vulnerability allows a malicious container to (with minimal user
+> interaction) overwrite the host runc binary and thus gain root-level
+> code execution on the host. The level of user interaction is being able
+> to run any command (it doesn't matter if the command is not
+> attacker-controlled) as root within a container in either of these
+> contexts:
+> 
+>   * Creating a new container using an attacker-controlled image.
+>   * Attaching (docker exec) into an existing container which the
+>     attacker had previous write access to.
 
-The fix is twofold:
+[...]
 
-1) If tarfile extraction filters are available (initially added in 
-Python 3.12, but also backported to 3.11.4, 3.10.12, 3.9.17 and 3.8.17) 
-in the standard library, the code makes use of that.
+> == IMPACT ON OTHER PROJECTS ==
+> 
+> It should be noted that upon further investigation I've discovered that
+> LXC has a similar vulnerability, and they have also pushed a similar
+> patch[2] which we co-developed. LXC is a bit harder to exploit, but the
+> same fundamental flaw exists.
+> 
+> After some discussion with the systemd-nspawn folks, it appears that
+> they aren't vulnerable (because their method of attaching to a container
+> uses a different method to LXC and runc).
+> 
+> I have been contacted by folks from Apache Mesos who said they were also
+> vulnerable (I believe just using the exploit code that will be
+> provided). It is quite likely that most container runtimes are
+> vulnerable to this flaw, unless they took very strange mitigations
+> before-hand.
 
-2) Otherwise, it tries to sanitize tar files on its own, like this:
+While runc, LXC, and maybe other projects fix CVE-2019-5736 in userspace,
+Virtuozzo/OpenVZ 7 has just released a kernel fix instead - please see
+the forwarded message below.  Following links from there, I found the
+following description of the issue in context of Virtuozzo and OpenVZ:
 
-     for tarmember in members:
-         if tarmember.isfile() and str(
-             Path(extraction_path, tarmember.name).resolve()
-         ).startsWith(extraction_path):
-             yield tarmember
+---
+Security vulnerability: potential breakage of container isolation via symlinks to /proc/self/exe
 
-This cleverly sidesteps path traversal by not extracting anything at 
-all, because...
+Affected products:
+* Virtuozzo 7 Update 8 and older
+* OpenVZ 7
 
-     AttributeError: 'str' object has no attribute 'startsWith'. Did you mean: 'startswith'?
+Not affected:
+* Virtuozzo Infrastructure Platform 2.5
+* Virtuozzo 6 and earlier versions
+* OpenVZ 6
 
-But the custom filter wouldn't be sound even with the typo fixed, 
-because str.startswith() and Path.resolve() are wrong tools for the job.
+1. Overview
+It was discovered that a malicious user inside a Virtuozzo container could
+potentially overwrite "vzctl" binary on the host. The attacker could replace
+executables in that container with symlinks to /proc/self/exe. After that,
+"vzctl exec" called from the host to run one of such executables would try to
+run the host's "vzctl" there instead. If the attacker managed to intercept
+that, they would be able to change the contents of the host's "vzctl" binary.
 
+CVSS v3 score: 7.2 (AV:L/AC:H/PR:L/UI:R/S:C/C:N/I:H/A:H)
 
-Anyway, I suspect that cve-bin-tool's extractors for other file formats 
-are still vulnerable to path traversal, so I wouldn't recommend running 
-it against untrusted files.
+The issue is similar to CVE-2019-5736 , but affects "vzctl" rather than "runc".
+---
 
--- 
-Jakub Wilk
+I was curious about the kernel fix.  It doesn't appear to be in the
+public git repository yet, where the latest is
+3.10.0-862.20.2.vz7.73.25, whereas the fixed version is .27.  So I
+downloaded the .src.rpm and found what I think is the fix in there:
+
+---
+* Mon Feb 11 2019 Konstantin Khorenko <khorenko@virtuozzo.com> [3.10.0-862.20.2.vz7.73.27]
+- proc/self/exe link validation (Vasily Averin) [PSBM-91042]
+---
+
+---
+--- a/fs/proc/base.c
++++ b/fs/proc/base.c
+[...]
+@@ -1617,6 +1749,26 @@ static const struct file_operations
+proc_pid_set_comm_operations = {
+        .release        = single_release,
+ };
+ 
++#if CONFIG_VE
++#include "../mount.h"
++
++static inline int path_in_ve(struct path *path)
++{
++       struct ve_struct *ve = get_exec_env();
++
++       if (ve_is_super(ve) ||
++           (real_mount(path->mnt)->ve_owner == ve))
++               return 0;
++       else
++               return -EINVAL;
++}
++#else
++static inline int path_in_ve(struct path * path)
++{
++       return 0;
++}
++#endif
++
+ static int proc_exe_link(struct dentry *dentry, struct path *exe_path)
+ {
+        struct task_struct *task;
+@@ -1628,10 +1780,15 @@ static int proc_exe_link(struct dentry *dentry,
+struct path *exe_path)
+        exe_file = get_task_exe_file(task);
+        put_task_struct(task);
+        if (exe_file) {
+-               *exe_path = exe_file->f_path;
+-               path_get(&exe_file->f_path);
++               int result;
++
++               result = path_in_ve(&exe_file->f_path);
++               if (result == 0) {
++                       *exe_path = exe_file->f_path;
++                       path_get(&exe_file->f_path);
++               }
+                fput(exe_file);
+-               return 0;
++               return result;
+        } else
+                return -ENOENT;
+ }
+---
+
+This uses Virtuozzo/OpenVZ specific APIs, so won't be directly usable
+elsewhere, but maybe a similar approach could be used upstream?
+
+Alexander
+
+----- Forwarded message from Konstantin Khorenko <khorenko@virtuozzo.com> -----
+
+From: Konstantin Khorenko <khorenko@virtuozzo.com>
+To: OpenVZ users <users@openvz.org>
+Date: Tue, 12 Feb 2019 06:58:05 +0000
+Subject: [Users] [NEW KERNEL] vzkernel-3.10.0-862.20.2.vz7.73.27 (with fix
+ for CVE-2019-5736)
+
+Hi All,
+
+guess you are aware of recent security vulnerability CVE-2019-5736:
+potential breakage of container isolation via symlinks to /proc/self/exe.
+
+https://virtuozzosupport.force.com/s/article/000017636
+
+We've built full vzkernel for OpenVZ users:
+https://download.openvz.org/virtuozzo/factory/x86_64/os/Packages/v/vzkernel-3.10.0-862.20.2.vz7.73.27.x86_64.rpm
+
+The kernel is based on stable kernel released as a part of Virtuozzo Infrastructure Platform product:
+https://www.virtuozzo.com/products/virtuozzo-infrastructure-platform.html
+http://repo.virtuozzo.com/vz-platform/releases/2.5/x86_64/os/Packages/v/
+
++ includes fixes provided via ReadyKernel for this kernel up to now:
+https://readykernel.com/patch/Virtuozzo-7/readykernel-patch-73.24-72.0-1.vl7/
+
+The kernel is based on stable kernel and passed basic validation.
+
+--
+Best regards,
+
+Konstantin Khorenko,
+Virtuozzo Linux Kernel Team
+
+_______________________________________________
+Users mailing list
+Users@openvz.org
+https://lists.openvz.org/mailman/listinfo/users
+
+----- End forwarded message -----
