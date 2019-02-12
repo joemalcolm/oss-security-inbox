@@ -1,42 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/12/1
-Message-ID: <ee637360-aed6-6333-dbb2-0bd8c1748131@apache.org>
-Date: Thu, 12 Dec 2019 07:37:18 -0500
-From: "Kevin A. McGrail" <kmcgrail@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: Apache SpamAssassin v3.4.3 released with fix for CVE-2018-11805
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/12/4
+Message-ID: <20190212153112.xntebicjokknhqcy@yavin>
+Date: Wed, 13 Feb 2019 02:31:12 +1100
+From: Aleksa Sarai <cyphar@...har.com>
+To: Steve Grubb <sgrubb@...hat.com>
+Cc: oss-security@...ts.openwall.com, Florian Weimer <fweimer@...hat.com>, dev@...ncontainers.org, Christian Brauner <christian.brauner@...ntu.com>
+Subject: Re: CVE-2019-5736: runc container breakout (all versions)
 Content-Type: text/plain; charset=utf-8
 
-Apache SpamAssassin 3.4.3 was recently released [1], and fixes an issue
-of security note where nefarious CF files can be configured to run
-system commands without any output or errors.  With this, exploits can
-be injected in a number of scenarios.  In addition to upgrading to SA
-3.4.3, we recommend that users should only use update channels or 3rd
-party .cf files from trusted places.
+On 2019-02-12, Steve Grubb <sgrubb@...hat.com> wrote:
+> On Tuesday, February 12, 2019 8:55:18 AM EST Florian Weimer wrote:
+> > * Aleksa Sarai:
+> > > +	memfd = memfd_create(MEMFD_COMMENT, MFD_CLOEXEC|MFD_ALLOW_SEALING);
+> > > +	if (memfd < 0)
+> > > +		goto err_binfd;
+> > 
+> > Is it really necessary to use a memfd_create here?  Do you really need
+> > sealing?  It's a bit odd to add a new system call dependency in a
+> > security update.
+> 
+> That's along the lines of what I was thinking also. This looks like more of a 
+> workaround than a root cause fix. Without seeing the exploit or a full 
+> discussion of the theory of operation, we really can't pinpoint where the 
+> issue is. Was it because of CAP_DAC_OVERRIDE? Is there a missing permission 
+> check crossing a trust boundary? Was excessive permissions requested in a 
+> syscall? Given the patch, we can sort of see what the issue is but not the 
+> exact issue.
 
-This issue has been assigned CVE id CVE-2018-11805 [2]
+It's not because of CAP_DAC_OVERRIDE. It's just regular DAC. As for it
+not being a root cause fix, I disagree (it protects against a variety of
+concerning attacks that aren't related to this CVE). Obviously if
+everyone used correctly-configured user namespaces then this wouldn't be
+a problem -- but here were are.
 
-To contact the Apache SpamAssassin security team, please e-mail
-security at spamassassin.apache.org.  For more information about Apache
-SpamAssassin, visit the http://spamassassin.apache.org/ web site.
+But if you would like an even better fix there is the O_THISROOT
+patchset[1] which I'm going to re-send tomorrow and would help fix this
+and could help fix a wide variety of other container runtime issues that
+have been bothering me for a couple of years. :P
 
-Apache SpamAssassin Security Team
-
-[1]:
-https://svn.apache.org/repos/asf/spamassassin/branches/3.4/build/announcements/3.4.3.txt
-
-[2]: https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-11805
-
--- Kevin A. McGrail KMcGrail@...che.org Member, Apache Software
-Foundation Chair Emeritus Apache SpamAssassin Project
-https://www.linkedin.com/in/kmcgrail - 703.798.0171
+[1]: https://lwn.net/Articles/767547/
 
 -- 
-Kevin A. McGrail
-KMcGrail@...che.org
+Aleksa Sarai
+Senior Software Engineer (Containers)
+SUSE Linux GmbH
+<https://www.cyphar.com/>
 
-Member, Apache Software Foundation
-Chair Emeritus Apache SpamAssassin Project
-https://www.linkedin.com/in/kmcgrail - 703.798.0171
-
-
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
