@@ -1,64 +1,179 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/09/6
-Message-Id: <fb9538aa-b43d-4a35-bf5b-7d1f72caddde@www.fastmail.com>
-Date: Wed, 09 Oct 2019 11:33:52 -0400
-From: "Graham Christensen" <graham@...hamc.com>
-To: "Michael Orlitzky" <michael@...itzky.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2019-17365: Nix per-user profile directory hijack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/12/5
+Message-ID: <20190212163606.GA4443@openwall.com>
+Date: Tue, 12 Feb 2019 17:36:06 +0100
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: Aleksa Sarai <cyphar@...har.com>, dev@...ncontainers.org, Christian Brauner <christian.brauner@...ntu.com>
+Subject: Re: CVE-2019-5736: runc container breakout (all versions)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Tue, Feb 12, 2019 at 12:05:20AM +1100, Aleksa Sarai wrote:
+> The vulnerability allows a malicious container to (with minimal user
+> interaction) overwrite the host runc binary and thus gain root-level
+> code execution on the host. The level of user interaction is being able
+> to run any command (it doesn't matter if the command is not
+> attacker-controlled) as root within a container in either of these
+> contexts:
+> 
+>   * Creating a new container using an attacker-controlled image.
+>   * Attaching (docker exec) into an existing container which the
+>     attacker had previous write access to.
 
-Hello Michael and oss-security,
+[...]
 
-I'm from the NixOS Security Team[0]. We handle security reports for
-Nix, NixOS, and the Nix ecosystem.
+> == IMPACT ON OTHER PROJECTS ==
+> 
+> It should be noted that upon further investigation I've discovered that
+> LXC has a similar vulnerability, and they have also pushed a similar
+> patch[2] which we co-developed. LXC is a bit harder to exploit, but the
+> same fundamental flaw exists.
+> 
+> After some discussion with the systemd-nspawn folks, it appears that
+> they aren't vulnerable (because their method of attaching to a container
+> uses a different method to LXC and runc).
+> 
+> I have been contacted by folks from Apache Mesos who said they were also
+> vulnerable (I believe just using the exploit code that will be
+> provided). It is quite likely that most container runtimes are
+> vulnerable to this flaw, unless they took very strange mitigations
+> before-hand.
 
-> Bug report: Reported privately to the NixOS security team on 2019-08-19.
+While runc, LXC, and maybe other projects fix CVE-2019-5736 in userspace,
+Virtuozzo/OpenVZ 7 has just released a kernel fix instead - please see
+the forwarded message below.  Following links from there, I found the
+following description of the issue in context of Virtuozzo and OpenVZ:
 
-I can confirm we received, validated, and improperly handled this
-report.
+---
+Security vulnerability: potential breakage of container isolation via symlinks to /proc/self/exe
 
-I took lead on this issue and began authoring a patch to fix it. We
-had a partial fix, and I dropped the ball. I have opened up my partial
-patch to the greater NixOS security community[1] to get help in
-finishing this off.
+Affected products:
+* Virtuozzo 7 Update 8 and older
+* OpenVZ 7
 
-Unfortunately, the problem is in a challenging spot: the code must be
-authored very carefully to not fail. More unfortunately, the root of
-this issue has been known for some time[2].
+Not affected:
+* Virtuozzo Infrastructure Platform 2.5
+* Virtuozzo 6 and earlier versions
+* OpenVZ 6
 
-As soon as we are comfortable with a fix, we will release a new
-version of Nix.
+1. Overview
+It was discovered that a malicious user inside a Virtuozzo container could
+potentially overwrite "vzctl" binary on the host. The attacker could replace
+executables in that container with symlinks to /proc/self/exe. After that,
+"vzctl exec" called from the host to run one of such executables would try to
+run the host's "vzctl" there instead. If the attacker managed to intercept
+that, they would be able to change the contents of the host's "vzctl" binary.
 
-We will also examine how we handle security issues, and publish a
-post-mortem of how this happened and how our processes will be changed
-to prevent this from happening again.
+CVSS v3 score: 7.2 (AV:L/AC:H/PR:L/UI:R/S:C/C:N/I:H/A:H)
 
-Thank you, Michael for bringing this issue to the public eye.
+The issue is similar to CVE-2019-5736 , but affects "vzctl" rather than "runc".
+---
 
-[0] https://nixos.org/nixos/security.html
-[1] https://github.com/NixOS/nix/pull/3134
-[2] https://github.com/NixOS/nix/issues/509
+I was curious about the kernel fix.  It doesn't appear to be in the
+public git repository yet, where the latest is
+3.10.0-862.20.2.vz7.73.25, whereas the fixed version is .27.  So I
+downloaded the .src.rpm and found what I think is the fix in there:
 
+---
+* Mon Feb 11 2019 Konstantin Khorenko <khorenko@...tuozzo.com> [3.10.0-862.20.2.vz7.73.27]
+- proc/self/exe link validation (Vasily Averin) [PSBM-91042]
+---
 
-Graham Christensen
-NixOS Security Team
------BEGIN PGP SIGNATURE-----
+---
+--- a/fs/proc/base.c
++++ b/fs/proc/base.c
+[...]
+@@ -1617,6 +1749,26 @@ static const struct file_operations
+proc_pid_set_comm_operations = {
+        .release        = single_release,
+ };
+ 
++#if CONFIG_VE
++#include "../mount.h"
++
++static inline int path_in_ve(struct path *path)
++{
++       struct ve_struct *ve = get_exec_env();
++
++       if (ve_is_super(ve) ||
++           (real_mount(path->mnt)->ve_owner == ve))
++               return 0;
++       else
++               return -EINVAL;
++}
++#else
++static inline int path_in_ve(struct path * path)
++{
++       return 0;
++}
++#endif
++
+ static int proc_exe_link(struct dentry *dentry, struct path *exe_path)
+ {
+        struct task_struct *task;
+@@ -1628,10 +1780,15 @@ static int proc_exe_link(struct dentry *dentry,
+struct path *exe_path)
+        exe_file = get_task_exe_file(task);
+        put_task_struct(task);
+        if (exe_file) {
+-               *exe_path = exe_file->f_path;
+-               path_get(&exe_file->f_path);
++               int result;
++
++               result = path_in_ve(&exe_file->f_path);
++               if (result == 0) {
++                       *exe_path = exe_file->f_path;
++                       path_get(&exe_file->f_path);
++               }
+                fput(exe_file);
+-               return 0;
++               return result;
+        } else
+                return -ENOENT;
+ }
+---
 
-iQIzBAEBCAAdFiEEgej9zkMfmhiSsTqdrKHB0SDIPVwFAl2d/MUACgkQrKHB0SDI
-PVxPuA/5AfX/pu3fjXK7OQbxI6euYkbebjKy8wCk9cXc24CY1V/aqPchN6a79hVw
-gE9UkIxryVACKZdZVQvsvNi9D54cxJM6yRwf0nReZETqzlaT2B7sjbzGhg4QBhuj
-klqViy+cIp3vP7qH+baZSRGEoq5T/sV6Jk+Y9Dzr0CpgNav+tvYdtk47KkrocKxy
-Pg3pclWUiAqY45bQRn/zhbv3SneKjlKEe3cQYp7hUuH24peZrAm5LQrD8RImWDcq
-yeQqHr0OlH6UHxVXKjkMYW07ZHN5y7u11ACicM9Nb4hb/+pKeQ9k2hqJKYe6eIZJ
-yFiyLFLLuMR39g72Kzx1mpXlr1cx5LaY9woWJkUwinemWe5sO0Ql5kiFdc1hdF6e
-7Uy+0yH+8/WRhT3x13Ec4nDaCLz0bnYahD2OXDJRmtzXGG4/LYRHsY7IFYJrrEXn
-AUTG7NaX8KAatDY3XTKMeAY00yUvyDx0hol0uL+APQwKTzBGw5eu7vlpN4Z/B91/
-UNJNF2sDHDndkduPlYrvXiSkRvR4a3kBoLOZBjftIlZbk9kjIw3Cc0YTemlvckat
-rFNgaLe0DXDPQ4Bt/8uUizfyo1uYUp7HbBLs8CTsU1on8GxCdBlFcZ4dae/O0VTc
-rcPTto9TChK8U/cFkeFIrix6hbG5u+2EbhY6BkzDmTtxaifd0uM=
-=FG5p
------END PGP SIGNATURE-----
+This uses Virtuozzo/OpenVZ specific APIs, so won't be directly usable
+elsewhere, but maybe a similar approach could be used upstream?
+
+Alexander
+
+----- Forwarded message from Konstantin Khorenko <khorenko@...tuozzo.com> -----
+
+From: Konstantin Khorenko <khorenko@...tuozzo.com>
+To: OpenVZ users <users@...nvz.org>
+Date: Tue, 12 Feb 2019 06:58:05 +0000
+Subject: [Users] [NEW KERNEL] vzkernel-3.10.0-862.20.2.vz7.73.27 (with fix
+ for CVE-2019-5736)
+
+Hi All,
+
+guess you are aware of recent security vulnerability CVE-2019-5736:
+potential breakage of container isolation via symlinks to /proc/self/exe.
+
+https://virtuozzosupport.force.com/s/article/000017636
+
+We've built full vzkernel for OpenVZ users:
+https://download.openvz.org/virtuozzo/factory/x86_64/os/Packages/v/vzkernel-3.10.0-862.20.2.vz7.73.27.x86_64.rpm
+
+The kernel is based on stable kernel released as a part of Virtuozzo Infrastructure Platform product:
+https://www.virtuozzo.com/products/virtuozzo-infrastructure-platform.html
+http://repo.virtuozzo.com/vz-platform/releases/2.5/x86_64/os/Packages/v/
+
++ includes fixes provided via ReadyKernel for this kernel up to now:
+https://readykernel.com/patch/Virtuozzo-7/readykernel-patch-73.24-72.0-1.vl7/
+
+The kernel is based on stable kernel and passed basic validation.
+
+--
+Best regards,
+
+Konstantin Khorenko,
+Virtuozzo Linux Kernel Team
+
+_______________________________________________
+Users mailing list
+Users@...nvz.org
+https://lists.openvz.org/mailman/listinfo/users
+
+----- End forwarded message -----
