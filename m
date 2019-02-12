@@ -1,34 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/06/4
-Message-ID: <20190906104430.GA3837@jumper.schlittermann.de>
-Date: Fri, 6 Sep 2019 12:44:30 +0200
-From: Heiko Schlittermann <hs@...littermann.de>
-To: oss-security <oss-security@...ts.openwall.com>, Exim Users <exim-users@...m.org>, Exim Announce <exim-announce@...m.org>
-Subject: Re: CVE-2019-15846: Exim - local or remote attacker can execute programs with root privileges.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/12/3
+Message-ID: <2160454.BXy79Bclyo@x2>
+Date: Tue, 12 Feb 2019 10:03:38 -0500
+From: Steve Grubb <sgrubb@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Florian Weimer <fweimer@...hat.com>, Aleksa Sarai <cyphar@...har.com>, dev@...ncontainers.org, Christian Brauner <christian.brauner@...ntu.com>
+Subject: Re: CVE-2019-5736: runc container breakout (all versions)
 Content-Type: text/plain; charset=utf-8
 
-Heiko Schlittermann <hs@...rc.schlittermann.de> (Fr 06 Sep 2019 12:20:39 CEST):
-> Mitigation
-> ==========
->
-> Do not offer TLS for incomming connections (tls_advertise_hosts).
-> This mitigation is *not* recommended!
+On Tuesday, February 12, 2019 8:55:18 AM EST Florian Weimer wrote:
+> * Aleksa Sarai:
+> > +	memfd = memfd_create(MEMFD_COMMENT, MFD_CLOEXEC|MFD_ALLOW_SEALING);
+> > +	if (memfd < 0)
+> > +		goto err_binfd;
+> 
+> Is it really necessary to use a memfd_create here?  Do you really need
+> sealing?  It's a bit odd to add a new system call dependency in a
+> security update.
 
-This should block the most popular attack vector:
+That's along the lines of what I was thinking also. This looks like more of a 
+workaround than a root cause fix. Without seeing the exploit or a full 
+discussion of the theory of operation, we really can't pinpoint where the 
+issue is. Was it because of CAP_DAC_OVERRIDE? Is there a missing permission 
+check crossing a trust boundary? Was excessive permissions requested in a 
+syscall? Given the patch, we can sort of see what the issue is but not the 
+exact issue.
 
-In your MAIL ACL:
+> The ability fexecve a memfd descriptor is also rather
+> odd.  I wouldn't have expected execute permissions on memfd descriptors,
+> so this sounds like a kernel bug (which now can't be fixed).
 
-    deny    condition = ${if eq{\\}{${substr{-1}{1}{$tls_in_sni}}}}
-            message = sorry
+I was thinking the same thing last week but for a whole different reason. Bash 
+has tcp/ip. With it, you can create an in memory function, _wget. Using this, 
+you can pull a python script off of the internet and pipe it into stdin of 
+python. The python script can then pull an ELF shared object across the 
+internet and stuff it into memory using memfd_create and then execute the 
+shared object constructor using ctypes.CDLL() which points to the memfd. It's 
+really quite slick. Using this technique, you can do everything in memory 
+without ever touching disk.
+
+So, my thoughts were...why is this even permitted? Why should computer 
+languages execute anything piped to stdin? Should execution of memory only 
+objects be disallowed? Should the kernel have a 0111 umask for anything 
+created by memfd_create? Why doesn't ctypes.CDLL() do a permission check to 
+see if the execute bit is set before loading? Should descriptors that get 
+created by memfd_create go to the fanotify interface for inspection/
+permission? And now with this patch, how do you tell legitimate vs malicious 
+use of memfd's?
+
+-Steve
 
 
-    Best regards from Dresden/Germany
-    Viele Grüße aus Dresden
-    Heiko Schlittermann
---
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
- ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
+> I saw some other patch with a O_TMPFILE replacement.  Does this really
+> work?  It's possible to create a new name with linkat, so that's not a
+> real win security-wise.  Could you just make a copy, under a different
+> owner, and not care how it is going to be modified?
+> 
+> Thanks,
+> Florian
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+
+
+
