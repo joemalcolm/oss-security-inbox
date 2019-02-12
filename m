@@ -1,4 +1,9 @@
-Received: (qmail 23931 invoked by uid 550); 18 Jul 2024 15:55:42 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["756" "Tuesday" "12" "February" "2019" "14:55:18" "+0100" "Florian Weimer" "fweimer@redhat.com" "<87va1pdsc9.fsf@oldenburg2.str.redhat.com>" "19" "Re: [oss-security] CVE-2019-5736: runc container breakout (all versions)" "^Cc:" nil nil "2" "2019021213:55:18" "[oss-security] CVE-2019-5736: runc container breakout (all versions)" (number mark "        fweimer@redh Feb 12   19/756   " thread-indent "\"Re: [oss-security] CVE-2019-5736: runc container breakout (all versions)\"\n") "<20190211130520.xwi6vpay3sc56pza@yavin>" ("<20190211130520.xwi6vpay3sc56pza@yavin>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 9525 invoked by uid 550); 12 Feb 2019 13:55:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,46 +11,39 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3951 invoked from network); 18 Jul 2024 15:49:47 -0000
-Authentication-Results: apache.org; auth=none
-X-Gm-Message-State: AOJu0YxtSkWjBQl8zoiXV93PhcteIyxGf8+UvQq4RX20GkmrFOQk5f64
-	G+uCKOvKObc3BpHEizerlXSQ2kcbYAMjFRzkQlpCpjVNnxEHT777BsJGfJW8MX8523P/OaAqE2e
-	qGLLUg4hCUjsm/2qA8qZWZ5cFmjk=
-X-Google-Smtp-Source: AGHT+IHvxxxNGklIV631FApQb/BADhz3M7ZpCBdLcTAn3akFqoacCkROjfGcHlaLiWGNobl8wzK5INMSu9uC2e9/+Q8=
-X-Received: by 2002:a05:6122:d03:b0:4f2:f1df:89c3 with SMTP id
- 71dfb90a1353d-4f4df4d31d3mr7454957e0c.0.1721317777544; Thu, 18 Jul 2024
- 08:49:37 -0700 (PDT)
+Received: (qmail 9504 invoked from network); 12 Feb 2019 13:55:32 -0000
+References: <20190211130520.xwi6vpay3sc56pza@yavin>
+In-Reply-To: <20190211130520.xwi6vpay3sc56pza@yavin> (Aleksa Sarai's message
+	of "Tue, 12 Feb 2019 00:05:20 +1100")
+Message-ID: <87va1pdsc9.fsf@oldenburg2.str.redhat.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-From: Colm O hEigeartaigh <coheigea@apache.org>
-Date: Thu, 18 Jul 2024 16:49:25 +0100
-X-Gmail-Original-Message-ID: <CAB8XdGDhO0XWJCOZZH-5rkWNc9B06Y-HWgEfd9602ijDZJa=WA@mail.gmail.com>
-Message-ID: <CAB8XdGDhO0XWJCOZZH-5rkWNc9B06Y-HWgEfd9602ijDZJa=WA@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] CVE-2024-32007: Apache CXF Denial of Service vulnerability in JOSE
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.15
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.29]); Tue, 12 Feb 2019 13:55:21 +0000 (UTC)
+Cc: oss-security@lists.openwall.com,  dev@opencontainers.org, Christian Brauner <christian.brauner@ubuntu.com>
+Date: Tue, 12 Feb 2019 14:55:18 +0100
+From: Florian Weimer <fweimer@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE-2019-5736: runc container breakout (all versions)
+To: Aleksa Sarai <cyphar@cyphar.com>
 
-CVE-2024-32007: Apache CXF Denial of Service vulnerability in JOSE
+* Aleksa Sarai:
 
-Severity: moderate
+> +	memfd = memfd_create(MEMFD_COMMENT, MFD_CLOEXEC|MFD_ALLOW_SEALING);
+> +	if (memfd < 0)
+> +		goto err_binfd;
 
-Affected versions:
+Is it really necessary to use a memfd_create here?  Do you really need
+sealing?  It's a bit odd to add a new system call dependency in a
+security update.  The ability fexecve a memfd descriptor is also rather
+odd.  I wouldn't have expected execute permissions on memfd descriptors,
+so this sounds like a kernel bug (which now can't be fixed).
 
-- Apache CXF before 4.0.5, 3.6.4, 3.5.9
+I saw some other patch with a O_TMPFILE replacement.  Does this really
+work?  It's possible to create a new name with linkat, so that's not a
+real win security-wise.  Could you just make a copy, under a different
+owner, and not care how it is going to be modified?
 
-Description:
-
-An improper input validation of the p2c parameter in the Apache CXF
-JOSE code before 4.0.5, 3.6.4 and 3.5.9 allows an attacker to perform
-a denial of service attack by specifying a large value for this
-parameter in a token.
-
-Credit:
-
-Jingcheng Yang and Jianjun Chen from Sichuan University and
-Zhongguancun Lab. (finder)
-
-References:
-
-https://cxf.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2024-32007
+Thanks,
+Florian
