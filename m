@@ -1,89 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/25/2
-Message-ID: <CA+fCnZe-OJiGRGC7h9VDG5H4JyiJ6dO15VWoz0tvZ+2_inYbPg@mail.gmail.com>
-Date: Thu, 25 Jul 2019 14:46:19 +0200
-From: Andrey Konovalov <andreyknvl@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/13/6
+Message-Id: <D6664661-1212-4DB1-9238-2D50DF8D0332@apache.org>
+Date: Tue, 12 Feb 2019 15:42:35 -0800
+From: Bryan Call <bcall@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2019-10207: linux kernel: bluetooth: hci_uart: 0x0 address execution as nonprivileged user
+Subject: [CVE-2018-11783] Apache Traffic Server vulnerability with sslheader plugin
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jul 25, 2019 at 2:32 PM Vladis Dronov <vdronov@...hat.com> wrote:
->
-> Hello,
->
-> It was found (by the syzkaller initially) that a 0x0 address execution is
-> possible as nonprivileged user in the latest Linux kernel (considering
-> protection measures like SMEP, vm.mmap_min_addr, etc are disabled).
->
-> The Linux kernel must have any of following config options enabled:
->
-> CONFIG_BT_HCIUART_MRVL (easy to hit)
-> CONFIG_BT_HCIUART_QCA (hard to hit)
-> CONFIG_BT_HCIUART_BCM
-> CONFIG_BT_HCIUART_INTEL
-> CONFIG_BT_HCIUART_ATH3K
->
-> The suggested fix is posted at:
->
-> https://lore.kernel.org/linux-bluetooth/20190725120909.31235-1-vdronov@redhat.com/T/#u
->
-> The bug and the reproducer are public, as they were found by the syzcaller
-> several months ago:
->
-> https://syzkaller.appspot.com/bug?id=1b42faa2848963564a5b1b7f8c837ea7b55ffa50
->
-> CVE-2019-10207 was assigned to this bug.
->
-> $ id
-> uid=1000(vladis) gid=1000(vladis) groups=1000(vladis)
-> $ uname -r
-> 5.2.0
-> $ ./hci-proto-crash 11
-> proto = 11
-> ioctl(SET_HCI_UART_PROTO): Success
-> [   99.894572] BUG: kernel NULL pointer dereference, address: 0000000000000000
-> [   99.897287] #PF: supervisor instruction fetch in kernel mode
-> [   99.897863] #PF: error_code(0x0010) - not-present page
-> [   99.898389] PGD 0 P4D 0
-> [   99.899036] Oops: 0010 [#1] SMP
-> [   99.899795] CPU: 2 PID: 691 Comm: kworker/u17:0 Not tainted 5.2.0 #23
-> [   99.900836] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)
-> [   99.902912] Workqueue: hci0 hci_power_on
-> [   99.903673] RIP: 0010:0x0
-> [   99.904416] Code: Bad RIP value.
-> [   99.905137] RSP: 0018:ffff92d8822c7d98 EFLAGS: 00010246
-> [   99.906014] RAX: ffffffff97e7a3e0 RBX: ffff8af7b5dd9e00 RCX: 00000000000010b2
-> [   99.907075] RDX: 00000000ffffffff RSI: ffff92d8822c7d44 RDI: ffff8af7b46c0400
-> [   99.908127] RBP: ffff8af7b46c0400 R08: 0000000000000000 R09: 000000000001cb00
-> [   99.909232] R10: 000000000000001e R11: 000000000001b900 R12: ffff8af7b45d4000
-> [   99.910332] R13: ffff8af7b45d4a08 R14: 0000000000000000 R15: 0ffff8af7b167ad0
-> [   99.911452] FS:  0000000000000000(0000) GS:ffff8af7b7880000(0000) knlGS:0000000000000000
-> [   99.912709] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-> [   99.913682] CR2: ffffffffffffffd6 CR3: 000000007060a003 CR4: 00000000001606e0
-> [   99.914764] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-> [   99.915830] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-> [   99.916877] Call Trace:
-> [   99.917538]  hci_uart_set_flow_control+0x149/0x1b0
-> [   99.918441]  mrvl_setup+0xe/0x70
-> [   99.919209]  hci_dev_do_open+0x1eb/0x690
-> [   99.920013]  ? sched_clock+0x5/0x10
-> [   99.920784]  hci_power_on+0x45/0x250
-> [   99.921549]  ? __wake_up_common_lock+0x87/0xc0
-> [   99.922399]  process_one_work+0x1c4/0x3a0
-> [   99.923230]  worker_thread+0x45/0x3c0
-> [   99.924019]  kthread+0xf3/0x130
-> [   99.924735]  ? trace_event_raw_event_workqueue_execute_start+0xb0/0xb0
-> [   99.925755]  ? kthread_park+0x80/0x80
-> [   99.926546]  ret_from_fork+0x1f/0x30
-> [   99.927399] Modules linked in:
-> [   99.928152] CR2: 0000000000000000
-> [   99.928882] ---[ end trace 577d1af3066a9585 ]---
+CVE-2018-11783: Apache Traffic Server vulnerability with sslheader plugin
 
-Does this always happen in a worker thread? Does this therefore mean
-that this is not exploitable by a local user even if vm.mmap_min_addr
-and SMEP/SMAP are disabled, since the user can't mmap zero page in the
-worker thread context?
+Reported By:
+Nikhil Marathe
 
->
-> Best regards,
-> Vladis Dronov | Red Hat, Inc. | The Core Kernel | Senior Software Engineer
+Vendor:
+The Apache Software Foundation
+
+Version Affected:
+ATS 6.0.0 to 6.2.3
+ATS 7.0.0 to 7.1.5
+ATS 8.0.0 to 8.0.1
+
+Description:
+sslheaders plugin extracts information from the client certificate and sets headers in the request based on the configuration of the plugin.  The plugin doesn't strip the headers from the request in some scenarios.
+
+Mitigation:
+6.x users should upgrade to 7.1.6, 8.0.2, or later versions
+7.x users should upgrade to 7.1.6 or later versions
+8.x users should upgrade to 8.0.2 or later versions
+
+References:
+	Downloads:
+		https://trafficserver.apache.org/downloads <https://trafficserver.apache.org/downloads>
+	Github Pull Request:
+		https://github.com/apache/trafficserver/pull/4701 <https://github.com/apache/trafficserver/pull/4701>
+	CVE:
+		https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-11783 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-11783>
+
+-Bryan
