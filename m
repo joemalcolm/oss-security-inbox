@@ -1,44 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/24/2
-Message-ID: <CAHPRk5HKN=LmhXz4xoKE6LCp6GbcEQQob9JWA9pV8kqQfuJVkw@mail.gmail.com>
-Date: Wed, 24 Apr 2019 16:11:08 +0530
-From: Ishan Chattopadhyaya <ichattopadhyaya@...il.com>
-To: java-user@...ene.apache.org
-Cc: Lucene Dev <dev@...ene.apache.org>, Apache Security Team <security@...che.org>,  oss-security@...ts.openwall.com, solr-user@...ene.apache.org
-Subject: Re: CVE-2018-11802: Apache Solr authorization bug vulnerability disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/12/7
+Message-ID: <CAECwjAVRB1Nm6RRs4_L19OSs0576yp-d1hd=XTfxSxkaGKJfzw@mail.gmail.com>
+Date: Tue, 12 Feb 2019 11:48:27 -0800
+From: Tomas Fernandez Lobbe <tflobbe@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2017-3164: Apache Solr: SSRF issue
 Content-Type: text/plain; charset=utf-8
 
-This fix has also been backported to Solr 6.6.6 for users who are
-stuck with Solr 6.x.
+CVE-2017-3164 SSRF issue in Apache Solr
 
-(Sorry, I hadn't updated the issue and hence this was missed in the
-original mail.)
+Severity: High
 
-On Wed, Apr 24, 2019 at 12:35 PM Noble Paul <noble@...che.org> wrote:
->
-> CVE-2018-11802: Apache Solr authorization bug disclosure
-> Severity: Important
-> Vendor: The Apache Software Foundation
-> Versions Affected: Apache Solr 7.6 or less
->
-> Description:
-> jira  ticket : https://issues.apache.org/jira/browse/SOLR-12514
-> In apache Solr the cluster can be partitioned into multiple
-> collections and only a subset of nodes actually host any given
-> collection. However, if a node receives a request for a collection it
-> does not host, it proxies the request to a relevant node and serves
-> the request. Solr bypasses all authorization settings for such
-> requests. This affects all Solr versions that uses the default
-> authorization mechanism of Solr (RuleBasedAuthorizationPlugin)
->
-> Mitigation:
-> A fix is provided in Solr 7.7 version and upwards. If you use Solr's
-> authorization mechanism, please upgrade to a version newer than Solr
-> 7.7.
->
-> Credit: This issue was discovered by Mahesh Kumar Vasanthu Somashekar.
->
-> ---------------------------------------------------------------------
-> To unsubscribe, e-mail: java-user-unsubscribe@...ene.apache.org
-> For additional commands, e-mail: java-user-help@...ene.apache.org
->
+Vendor: The Apache Software Foundation
+
+Versions Affected:
+Apache Solr versions from 1.3 to 7.6.0
+
+Description:
+The "shards" parameter does not have a corresponding whitelist mechanism,
+so it can request any URL.
+
+Mitigation:
+Upgrade to Apache Solr 7.7.0 or later.
+Ensure your network settings are configured so that only trusted traffic is
+allowed to ingress/egress your hosts running Solr.
+
+Credit:
+dk from Chaitin Tech
+
+References:
+https://issues.apache.org/jira/browse/SOLR-12770
+https://wiki.apache.org/solr/SolrSecurity
+
