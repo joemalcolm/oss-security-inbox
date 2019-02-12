@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["11564" "Tuesday" "28" "February" "2017" "14:39:18" "+0100" "X41 D-Sec GmbH Advisories" "advisories@x41-dsec.de" "<02cb8961-7fc2-7f7f-4924-40c5c8f61829@x41-dsec.de>" "403" "[oss-security] Advisory X41-2017-001: Multiple Vulnerabilities in X.org" nil nil nil "2" "2017022813:39:18" "[oss-security] Advisory X41-2017-001: Multiple Vulnerabilities in X.org" (number mark "U       advisories@x Feb 28  403/11564 " thread-indent "\"[oss-security] Advisory X41-2017-001: Multiple Vulnerabilities in X.org\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2442" "Tuesday" "12" "February" "2019" "10:03:38" "-0500" "Steve Grubb" "sgrubb@redhat.com" "<2160454.BXy79Bclyo@x2>" "54" "Re: [oss-security] CVE-2019-5736: runc container breakout (all versions)" "^Cc:" nil nil "2" "2019021215:03:38" "[oss-security] CVE-2019-5736: runc container breakout (all versions)" (number mark "        sgrubb@redha Feb 12   54/2442  " thread-indent "\"Re: [oss-security] CVE-2019-5736: runc container breakout (all versions)\"\n") "<87va1pdsc9.fsf@oldenburg2.str.redhat.com>" ("<20190211130520.xwi6vpay3sc56pza@yavin>" "<87va1pdsc9.fsf@oldenburg2.str.redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3364 invoked by uid 550); 28 Feb 2017 14:42:51 -0000
+Received: (qmail 29838 invoked by uid 550); 12 Feb 2019 15:07:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,421 +11,74 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21787 invoked from network); 28 Feb 2017 13:40:26 -0000
-From: X41 D-Sec GmbH Advisories <advisories@x41-dsec.de>
-To: oss-security@lists.openwall.com
-Organization: X41 D-Sec GmbH
-Message-ID: <02cb8961-7fc2-7f7f-4924-40c5c8f61829@x41-dsec.de>
-Date: Tue, 28 Feb 2017 14:39:18 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.1
+Received: (qmail 16056 invoked from network); 12 Feb 2019 15:03:58 -0000
+Message-ID: <2160454.BXy79Bclyo@x2>
+Organization: Red Hat
+In-Reply-To: <87va1pdsc9.fsf@oldenburg2.str.redhat.com>
+References: <20190211130520.xwi6vpay3sc56pza@yavin> <87va1pdsc9.fsf@oldenburg2.str.redhat.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="P488IXKThARUQ7UXHFPxWoKQssl8Hnfa3"
-Subject: [oss-security] Advisory X41-2017-001: Multiple Vulnerabilities in X.org
-
---P488IXKThARUQ7UXHFPxWoKQssl8Hnfa3
-Content-Type: multipart/mixed; boundary="kKd3qf2pCPpG1pJgWjORI8kKiklTjp0mQ";
- protected-headers="v1"
-From: X41 D-Sec GmbH Advisories <advisories@x41-dsec.de>
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.29]); Tue, 12 Feb 2019 15:03:46 +0000 (UTC)
+Cc: Florian Weimer <fweimer@redhat.com>, Aleksa Sarai <cyphar@cyphar.com>, dev@opencontainers.org, Christian Brauner <christian.brauner@ubuntu.com>
+Date: Tue, 12 Feb 2019 10:03:38 -0500
+From: Steve Grubb <sgrubb@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE-2019-5736: runc container breakout (all versions)
 To: oss-security@lists.openwall.com
-Message-ID: <02cb8961-7fc2-7f7f-4924-40c5c8f61829@x41-dsec.de>
-Subject: Advisory X41-2017-001: Multiple Vulnerabilities in X.org
 
---kKd3qf2pCPpG1pJgWjORI8kKiklTjp0mQ
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+On Tuesday, February 12, 2019 8:55:18 AM EST Florian Weimer wrote:
+> * Aleksa Sarai:
+> > +	memfd = memfd_create(MEMFD_COMMENT, MFD_CLOEXEC|MFD_ALLOW_SEALING);
+> > +	if (memfd < 0)
+> > +		goto err_binfd;
+> 
+> Is it really necessary to use a memfd_create here?  Do you really need
+> sealing?  It's a bit odd to add a new system call dependency in a
+> security update.
+
+That's along the lines of what I was thinking also. This looks like more of a 
+workaround than a root cause fix. Without seeing the exploit or a full 
+discussion of the theory of operation, we really can't pinpoint where the 
+issue is. Was it because of CAP_DAC_OVERRIDE? Is there a missing permission 
+check crossing a trust boundary? Was excessive permissions requested in a 
+syscall? Given the patch, we can sort of see what the issue is but not the 
+exact issue.
+
+> The ability fexecve a memfd descriptor is also rather
+> odd.  I wouldn't have expected execute permissions on memfd descriptors,
+> so this sounds like a kernel bug (which now can't be fixed).
+
+I was thinking the same thing last week but for a whole different reason. Bash 
+has tcp/ip. With it, you can create an in memory function, _wget. Using this, 
+you can pull a python script off of the internet and pipe it into stdin of 
+python. The python script can then pull an ELF shared object across the 
+internet and stuff it into memory using memfd_create and then execute the 
+shared object constructor using ctypes.CDLL() which points to the memfd. It's 
+really quite slick. Using this technique, you can do everything in memory 
+without ever touching disk.
+
+So, my thoughts were...why is this even permitted? Why should computer 
+languages execute anything piped to stdin? Should execution of memory only 
+objects be disallowed? Should the kernel have a 0111 umask for anything 
+created by memfd_create? Why doesn't ctypes.CDLL() do a permission check to 
+see if the execute bit is set before loading? Should descriptors that get 
+created by memfd_create go to the fanotify interface for inspection/
+permission? And now with this patch, how do you tell legitimate vs malicious 
+use of memfd's?
+
+-Steve
+
+
+> I saw some other patch with a O_TMPFILE replacement.  Does this really
+> work?  It's possible to create a new name with linkat, so that's not a
+> real win security-wise.  Could you just make a copy, under a different
+> owner, and not care how it is going to be modified?
+> 
+> Thanks,
+> Florian
 
 
-X41 D-Sec GmbH Security Advisory: X41-2017-001
 
-Multiple Vulnerabilities in X.org
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D
 
-Overview
---------
-Vendor: X.org/Freedesktop.org
-Vendor URL: https://www.x.org/wiki/
-Credit: X41 D-Sec GmbH, Eric Sesterhenn
-Advisory-URL: https://www.x41-dsec.de/lab/advisories/x41-2017-001-xorg/
-Status: Public
-
-
-Timing attack against MIT Cookie
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D
-Vulnerability Type: Other
-Affected Products: Xorg Server
-Attack Type: Local
-Impact: Escalation of Privileges=09
-Severity Rating: low
-Confirmed Affected Version: 1.19.0 and lower
-Confirmed Patched Version: -
-Vector: local
-CVE: CVE-2017-2624
-CVSS Score: 5.9
-CVSS Vector: CVSS:3.0/AV:L/AC:H/PR:N/UI:N/S:C/C:H/I:N/A:N
-
-
-Summary and Impact
-------------------
-The xorg-server uses memcmp() to check the received MIT cookie against a
-series of valid cookies. If the cookie is correct, it is allowed to
-attach to the Xorg session:
-
-	XID
-	MitCheckCookie(unsigned short data_length,
-	               const char *data, ClientPtr client, const char **reason)
-	{
-	    struct auth *auth;
-=09
-	    for (auth =3D mit_auth; auth; auth =3D auth->next) {
-	        if (data_length =3D=3D auth->len &&
-	            memcmp(data, auth->data, (int) data_length) =3D=3D 0)
-	            return auth->id;
-	    }
-	    *reason =3D "Invalid MIT-MAGIC-COOKIE-1 key";
-	    return (XID) -1;
-	}
-
-Since most memcmp() implementations return after an invalid byte is
-seen, this causes a time difference between a valid and invalid byte,
-which in theory could allow an efficient brute force attack[1].
-
-Analysis
---------
-X41 was not able to measure a significant difference using the optimised
-memcmp() version of a standard Linux system, but for a naive
-implementation consisting of a loop comparing the bytes. Since timing
-attacks against memcmp() have been successful in the past [2] and fixed
-elsewhere [3][4] X41 would consider this an issue. If this would be
-exploited, it would allow a local attacker to run code in the Xorg
-session of another user.
-
-In order to prevent this, MIT-COOKIES should be removed or a memcmp()
-similar to timingsafe_memcmp()[5] used. Other projects (e.g. openssl)
-use timing safe memcmp() implementations to compare cookies retrieved
-via the network[6].
-
-Workaround
-----------
-
-None
-
-References
-----------
-
-[1]
-https://cryptocoding.net/index.php/Coding_rules#Compare_secret_strings_in_c=
-onstant_time
-[2]
-http://de.slideshare.net/cisoplatform7/defcon-22paulmcmillanattackingtheiot=
-usingtimingattac
-[3] http://seb.dbzteam.org/crypto/python-oauth-timing-hmac.pdf
-[4] https://bugs.ruby-lang.org/issues/10098
-[5]
-http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/lib/libc/string/timingsafe_mem=
-cmp.c
-[6] https://github.com/openssl/openssl/blob/master/ssl/t1_lib.c#L1249
-
-
-
-
-
-Potential Use after Free in Xorg Server
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Vulnerability Type: Other
-Affected Products: Xorg Server
-Attack Type: Local
-Impact: -=09
-Severity Rating: none
-Confirmed Affected Version: 1.19.0 and lower
-Confirmed Patched Version:
-Vector: local
-CVE: -
-CVSS Score: -
-CVSS Vector: -
-
-Summary and Impact
-------------------
-
-In XDM is a (currently non security) issue, regarding a potential use
-after free.
-
-The ToID() function in os/auth.c is not used anywhere, just defined in
-the struct and filled by the protocols, but there are no users.
-
-    AuthToIDFunc ToID;          /* convert cookie to ID */
-
-X41 noticed that, XdmToID() frees the cookie argument in case it can
-resolve the ID or on failure, but not if it can't allocate memory for plain:
-
-	XdmToID(unsigned short cookie_length, char *cookie)
-	{
-	    XdmAuthorizationPtr auth;
-	    XdmClientAuthPtr client;
-	    unsigned char *plain;
-=09
-	    plain =3D malloc(cookie_length);
-	    if (!plain)
-	        return (XID) -1;
-	    for (auth =3D xdmAuth; auth; auth =3D auth->next) {
-	        XdmcpUnwrap((unsigned char *) cookie, (unsigned char *) &auth->key,
-	                    plain, cookie_length);
-	        if ((client =3D
-	             XdmAuthorizationValidate(plain, cookie_length, &auth->rho,
-NULL,
-	                                      NULL)) !=3D NULL) {
-	            free(client);
-	            free(cookie);
-	            free(plain);
-	            return auth->id;
-	        }
-	    }
-	    free(cookie);
-	    free(plain);
-	    return (XID) -1;
-	}
-
-The same return value is given, whether no memory could be allocated or
-it just failed to lookup the ID, so the caller cannot distinguish
-whether this  memory is freed or not, which might lead to double-free or
-memory leaks. The other ToID functions do not free this parameter.
-
-
-Weak entropy usage for session keys in libxdm
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Vulnerability Type: Other
-Affected Products: libXdmcp
-Attack Type: Local
-Impact: Escalation of Privileges=09
-Severity Rating: medium
-Confirmed Affected Version: 1.1.2 and lower
-Confirmed Patched Version:
-Vector: local
-CVE: CVE-2017-2625
-CVSS Score: 7.1
-CVSS Vector: CVSS:3.0/AV:L/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N
-
-
-Summary and Impact
-------------------
-
-To further explore the auth mechanism libXdmcp-1.1.2 was checked as well.
-
-XDM uses weak entropy to generate the session keys on non BSD systems:
-
-	void
-	XdmcpGenerateKey (XdmAuthKeyPtr key)
-	{
-	#ifndef HAVE_ARC4RANDOM_BUF
-	    long    lowbits, highbits;
-=09
-	    srandom ((int)getpid() ^ time((Time_t *)0));
-	    lowbits =3D random ();
-	    highbits =3D random ();
-	    getbits (lowbits, key->data);
-	    getbits (highbits, key->data + 4);
-	#else
-	    arc4random_buf(key->data, 8);
-	#endif
-	}
-
-On multi user systems it might possible to check the PID of the process
-and how long it is running to get an estimate of these values, which
-could allow an attacker to attach to the session of a different user.
-Several checked Linux distributions (debian testing, archlinux and
-Ubuntu) did not link against libbsd at the time this was found.
-
-Workaround
-----------
-
-Compile against libbsd
-
-
-Weak Entropy Usage in Session Keys in libICE
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Vulnerability Type: Other
-Affected Products: libICE
-Attack Type: Local
-Impact: Escalation of Privileges=09
-Severity Rating: medium
-Confirmed Affected Version: 1.0.9 and lower
-Confirmed Patched Version:
-Vector: local
-CVE: CVE-2017-2626
-CVSS Score: 7.1
-CVSS Vector: CVSS:3.0/AV:L/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N
-
-Summary and Impact
-------------------
-
-libICE depends on arc4random() as well to generate the session cookies,
-thereby falling back to the same weak mechanism as libXdmcp:
-
-	IceGenerateMagicCookie (
-		int len
-	)
-	{
-	    char    *auth;
-	#ifndef HAVE_ARC4RANDOM_BUF
-	    long    ldata[2];
-	    int	    seed;
-	    int	    value;
-	    int	    i;
-	#endif
-=09
-	    if ((auth =3D malloc (len + 1)) =3D=3D NULL)
-		return (NULL);
-=09
-	#ifdef HAVE_ARC4RANDOM_BUF
-	    arc4random_buf(auth, len);
-	#else
-	#ifdef ITIMER_REAL
-	    {
-		struct timeval  now;
-		X_GETTIMEOFDAY (&now);
-		ldata[0] =3D now.tv_sec;
-		ldata[1] =3D now.tv_usec;
-	    }
-	#else
-	    {
-		long    time ();
-		ldata[0] =3D time ((long *) 0);
-		ldata[1] =3D getpid ();
-	    }
-	#endif
-	    seed =3D (ldata[0]) + (ldata[1] << 16);
-	    srand (seed);
-	    for (i =3D 0; i < len; i++)
-	    {
-		value =3D rand ();
-		auth[i] =3D value & 0xff;
-	    }
-	#endif
-	    auth[len] =3D '\0';
-	    return (auth);
-	}
-
-For this issue a PoC is available which takes 2-3 seconds to retrieve
-the key:
-
-https://www.x41-dsec.de/lab/sources/icetest.c
-
-Workaround
-----------
-
-Compile against libbsd
-
-
-Weak Entropy Usage in xorg server
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D
-Vulnerability Type: Other
-Affected Products: Xorg Server
-Attack Type: Local
-Impact: Unknown=09
-Severity Rating: unclear
-Confirmed Affected Version: 1.19.0 and lower
-Confirmed Patched Version:
-Vector: local
-CVE: -
-CVSS Score: -
-CVSS Vector: -
-
-Summary and Impact
-------------------
-
-When looking at other places that use entropy, X41 also noticed
-os/auth.c and hw/xwin/winauth.c providing GenerateRandomData()
-
-	void
-	GenerateRandomData(int len, char *buf)
-	{
-	    int fd;
-=09
-	    fd =3D open("/dev/urandom", O_RDONLY);
-	    read(fd, buf, len);
-	    close(fd);
-	}
-
-When the call to open or read fails, the contents of buf might be
-undefined. This should be handled more gracefully, it might fail in
-chrooted environments (unlikely) or when file descriptors are exhausted.
-Newer Linux Kernels provide getrandom() to protect against this and
-OpenBSD provides getentropy().
-
-This security impact of these functions has not been further inspected.
-
-
-
-About X41 D-Sec GmbH
---------------------
-X41 D-Sec GmbH is an expert provider for application security services.
-Having extensive industry experience and expertise in the area of
-information security, a strong core security team of world class
-security experts enables X41 to perform premium security services.
-
-Fields of expertise in the area of application security are security
-centric code reviews, binary reverse engineering and vulnerability
-discovery. Custom research and a IT security consulting and support
-services are core competencies of X41.
-
-
-
-Timeline
---------
-2017-01-17 to   Report to xorg-security@lists.x.org
-     01-23
-2017-02-10	CVE Request at secalert@redhat.com
-2017-02-13	CVE IDs assigned
-2017-02-16	Information of distros@vs.openwall.org
-2017-02-20	Patch for CVE-2017-2624 provided by Matthieu Herrb
-2017-02-28	Advisory release
-
---=20
-X41 D-SEC GmbH, Dennewartstr. 25-27, D-52068 Aachen
-T: +49 241 9809418-0, Fax: -9
-Unternehmenssitz: Aachen, Amtsgericht Aachen: HRB19989
-Gesch=C3=A4ftsf=C3=BChrer: Markus Vervier
-
-
-
-
-
-
-
-
-
-
---kKd3qf2pCPpG1pJgWjORI8kKiklTjp0mQ--
-
---P488IXKThARUQ7UXHFPxWoKQssl8Hnfa3
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEpwxVTgxAIcUvTugIo5Klpg50CxAFAli1fYYACgkQo5Klpg50
-CxDntA/+IUm8N0T3sPcvR7uZnLbweQv35IbBdC1ntPYHHx/zmuzDPzfUXhSvDSkT
-UYVcwHiSdo2t7h8jD7Ctqm3qSovG7wEZU7nfrE778jlPHSYos/godGnuXonF6SLN
-EDA80uVH4ePz2/OYkXDhehbKaA+LBcFBxTt6pv92MU2AvHEQaVruyKrXN2RdlQH5
-bVzIznJJQWsRJdoKYzyNayZ7TQMVMqcqpbnx5CchvmmY5TZYg7m3qbiVahPTrQz6
-EOwlgfPB/6rOaMODxCAAKipeidVPXuRKE/JWFyDdp/2X/74uT5Lt3JK5qBVJEGKM
-V+UBGi17vcr19wMrmU9JVQQXFCRfxKuMi7tclMuYAJqMWxpuup6xXLcbvsC0vt4n
-2fWOWuQd9+uSbr4QEtv4mdEx3KCmjorax1hnLZXGyEPEKiUHFWfeM9naEAPX18HD
-hQJa7m9/a3lM2mz4FGo3+WgspKQlEczJhevw3KCA3CYa4pdKGcf9gbb1QcS3LNea
-pe0/FwJ+JXoH5MZ9EerHjZ08bKFNFcDI5JJCtS+L3Z9xx84/kHg7zttbwEp3K386
-eMTkk7AOgE6i75y6D0P2TibnZtBTOduuDd8v4Ws/4zByeK6z/QD0AJA/RV1Cw0bn
-agoJCoaigfNZpigM/dGMZf/sF9Dt2U/qBWhXgVk583MeODjqpOg=
-=zMry
------END PGP SIGNATURE-----
-
---P488IXKThARUQ7UXHFPxWoKQssl8Hnfa3--
