@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1606" "Wednesday" "27" "July" "2016" "11:47:46" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160727154746.8942C6C1043@smtpvmsrv1.mitre.org>" "40" "[oss-security] Re: CVE Request: DBD-mysql: use-after-free in mysql_dr_error" nil nil nil "7" "2016072715:47:46" "[oss-security] Re: CVE Request: DBD-mysql: use-after-free in mysql_dr_error" (number mark "U       cve-assign@m Jul 27   40/1606  " thread-indent "\"[oss-security] Re: CVE Request: DBD-mysql: use-after-free in mysql_dr_error\"\n") "<20160727150525.GA9279@eldamar.local>" ("<20160727150525.GA9279@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2598" "Wednesday" "13" "February" "2019" "20:03:20" "+1100" "Aleksa Sarai" "asarai@suse.de" "<20190213090320.lce4bdign5rzqjzm@mikami>" "69" "Re: [oss-security] CVE-2019-5736: runc container breakout (all versions)" "^Cc:" nil nil "2" "2019021309:03:20" "[oss-security] CVE-2019-5736: runc container breakout (all versions)" (number mark "        asarai@suse. Feb 13   69/2598  " thread-indent "\"Re: [oss-security] CVE-2019-5736: runc container breakout (all versions)\"\n") "<20190212163606.GA4443@openwall.com>" ("<20190211130520.xwi6vpay3sc56pza@yavin>" "<20190212163606.GA4443@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9413 invoked by uid 550); 27 Jul 2016 15:47:59 -0000
+Received: (qmail 30019 invoked by uid 550); 13 Feb 2019 09:03:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,53 +11,93 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 29975 invoked from network); 13 Feb 2019 09:03:44 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Message-ID: <20190213090320.lce4bdign5rzqjzm@mikami>
+References: <20190211130520.xwi6vpay3sc56pza@yavin>
+ <20190212163606.GA4443@openwall.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="noc7267efu34jjnc"
+Content-Disposition: inline
+In-Reply-To: <20190212163606.GA4443@openwall.com>
+User-Agent: NeoMutt/20180716
+Cc: oss-security@lists.openwall.com, Aleksa Sarai <cyphar@cyphar.com>,
+	dev@opencontainers.org,
+	Christian Brauner <christian.brauner@ubuntu.com>
+Date: Wed, 13 Feb 2019 20:03:20 +1100
+From: Aleksa Sarai <asarai@suse.de>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9392 invoked from network); 27 Jul 2016 15:47:58 -0000
-From: cve-assign@mitre.org
-To: carnil@debian.org
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <20160727150525.GA9279@eldamar.local>
-Message-Id: <20160727154746.8942C6C1043@smtpvmsrv1.mitre.org>
-Date: Wed, 27 Jul 2016 11:47:46 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request: DBD-mysql: use-after-free in mysql_dr_error
+Subject: Re: [oss-security] CVE-2019-5736: runc container breakout (all
+ versions)
+To: Solar Designer <solar@openwall.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--noc7267efu34jjnc
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> https://github.com/perl5-dbi/DBD-mysql/pull/27
-> https://github.com/perl5-dbi/DBD-mysql/commit/a56ae87a4c1c1fead7d09c3653905841ccccf1cc
-> https://rt.cpan.org/Public/Bug/Display.html?id=97625
+On 2019-02-12, Solar Designer <solar@openwall.com> wrote:
+>  static int proc_exe_link(struct dentry *dentry, struct path *exe_path)
+>  {
+>         struct task_struct *task;
+> @@ -1628,10 +1780,15 @@ static int proc_exe_link(struct dentry *dentry,
+> struct path *exe_path)
+>         exe_file =3D get_task_exe_file(task);
+>         put_task_struct(task);
+>         if (exe_file) {
+> -               *exe_path =3D exe_file->f_path;
+> -               path_get(&exe_file->f_path);
+> +               int result;
+> +
+> +               result =3D path_in_ve(&exe_file->f_path);
+> +               if (result =3D=3D 0) {
+> +                       *exe_path =3D exe_file->f_path;
+> +                       path_get(&exe_file->f_path);
+> +               }
+>                 fput(exe_file);
+> -               return 0;
+> +               return result;
+>         } else
+>                 return -ENOENT;
+>  }
+> ---
+>=20
+> This uses Virtuozzo/OpenVZ specific APIs, so won't be directly usable
+> elsewhere, but maybe a similar approach could be used upstream?
 
->> https://rt.cpan.org/Public/Bug/Display.html?id=97625#txn-1393444
+I have just sent v5 of my AT_THIS_ROOT patchset to LKML[1] -- which
+allows userspace processes to block resolution of magic links. While
+blocking access through /proc/self/exe helps block this issues, being
+able to block (from userspace) resolution of all magic links would
+massively help avoid problems like this.
 
->> The big problem with lost connections is that business logic wants to
->> keep reporting errors to a file in case of lost server connections.
->> This is related to RT #85919, though the root cause is this use-after
->> free here.
+[1]: https://marc.info/?l=3Dlinux-api&m=3D155002737629350&w=3D2
 
->> AddressSanitizer: heap-use-after-free
+--=20
+Aleksa Sarai
+Senior Software Engineer (Containers)
+SUSE Linux GmbH
+<https://www.cyphar.com/>
 
-Use CVE-2014-9906.
+--noc7267efu34jjnc
+Content-Type: application/pgp-signature; name="signature.asc"
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXmNb9AAoJEHb/MwWLVhi2xlMQAK+b8lwVuQoS2/h2oq8BEQ2Y
-UQdhvmjnJimPcYAsRxW16QTRAMMDalk/JWy52Z9RrQawxtnBTstug/hjG9oFGBI9
-jnBVlkD/x02u6XKau7cbbuVJNj3bDB6vH5nd/nmNOVphANn5QfUqRsARmW3PH7KK
-0rtfvkQtv8DSvZlmAubbQNu3puGdZgxEyai9PWDxPMvih822s5qARfjKVz1N1D+n
-waFrLdPtt3msWsdVWpuezvIzLo219YQzjSJ8dOg0RDnFn3WVXOkV2SKC0JIrZG02
-/JDhfZnVk8MxIKPHYrCtqOEdWqyvt2UEhWuyA272aotuB1zXw4CYNL3AfS49lOos
-WM/at9hwoDI7KQvI2Px4vfP0oinZplcGwxmW7IATI3hoDi6jPq3KbU/MVU1ifCfV
-swJvgD5FHJJUW0y5C7C8Wak9EgQ6B2aQUXwalKBGgQgAwkmuc1gXenKMWv6OLYRe
-xdKYpIdDnU7fxQQjwyPPQs5TVy1MPGqBuGCIL1E9xeKDMR92PqUb6i8bRxMY5bkt
-lFEZiEMh3OJ9JLL6x6gzLZFs3XOtmYUBRGG8JxBOpPjX0tjZsFUogBS3/CAOpsuZ
-Gzptk7MXfukP3AqC2D5ruGeDp8pF5TPPUhFhwcl51eQBZiIIcOr6tB8ZC7xHwxeh
-5jAxK3akfvVbLAjehOMP
-=Daax
+iQIzBAABCAAdFiEEXzbGxhtUYBJKdfWmnhiqJn3bjbQFAlxj3VUACgkQnhiqJn3b
+jbQVXg//aapc1vLd2HFqZaU+XsczNzsto5mWCYC4PrVdha5FJY7uAr5FzTu+IFzJ
+t6WedjnraJ1v3BGBLnn/C0LYh/+yUsduJKUsoT4KAGlf2CJImxdQ3O8GEUaCQ6oH
+i5KRYgFFNQ7vCZ+7A4Jkx0YP+BFfTsVoq5lUOVh9pKrgFnIXtojOSuzzq7VXdW/l
+KX8gXJp8SC+7PDh+IYafEjHLDtd4gR+sJtZLS6xOGAhm8/RiJ7IEzQtVFo86FdNd
+KAexjiROF8+a1ijW0SffOW6Hqmj6VDmpTKODf76+REdY3HOfntdE/XIId8QXdB7r
+CLxoKeK/sxUlZqnFQsnp6UjIDLDCe1+wkxdrwEMg8xxbsm/M7p1JIua8rgbdwSr1
+uN63bLOHrNEXeLWrzRhGjFZ1JSQAVByuBQY4EyHF12ZCmlFbm/AooRQgDC5OwH9w
+mzNsTnpb4ysJavQhICCLVLTskwmJ93c9spmvg4QaVVJNvTT0q8QZFlDSy8QxAbX7
+VaRNTtxaNJXywiapeQ7LXlfz0FsEbXA7ZsiaMjOU19n7jNhj3e2BJOFY6psFw/S6
+DkrlMFAAiPGQbMZEmdQNuVDgh3znVB+apVhkr9RecQ5mlOlFy3c0eCcJMkS0E/HI
+uvpU5gJhuALAiwWUyGoG8pjnIjfR3JaWEUqYJ5pk25kwoDBY4ug=
+=aksO
 -----END PGP SIGNATURE-----
+
+--noc7267efu34jjnc--
