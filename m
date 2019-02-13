@@ -1,48 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/27/2
-Message-ID: <87d0l7tl9d.fsf@dell.be.48ers.dk>
-Date: Sat, 27 Apr 2019 19:23:42 +0200
-From: Peter Korsgaard <peter@...sgaard.com>
-To: andreas@...mhold.de
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/13/5
+Message-ID: <20190213095743.ek3x42ok7bengua5@yavin>
+Date: Wed, 13 Feb 2019 20:57:43 +1100
+From: Aleksa Sarai <cyphar@...har.com>
+To: EJ Campbell <ejc3@...izonmedia.com>
 Cc: oss-security@...ts.openwall.com
-Subject: Re: Multiple BIND vulnerabilities disclosed (CVE-2018-5743, CVE-2019-6467, and CVE-2019-6468)
+Subject: Re: CVE-2019-5736: runc container breakout exploit code
 Content-Type: text/plain; charset=utf-8
 
->>>>> "andreas" == andreas  <andreas@...mhold.de> writes:
+On 2019-02-13, Aleksa Sarai <cyphar@...har.com> wrote:
+> On 2019-02-13, EJ Campbell <ejc3@...izonmedia.com> wrote:
+> > While fixing docker / runc is clearly the right fix, would using chattr -i
+> > on runc be a quick mitigation for the issue? I believe that will prevent
+> > the file from being overwritten by the exploit and Etienne Stalmans
+> > verified that it helped:
+> >  https://twitter.com/_staaldraad/status/1095354945073754112
+> 
+> The privileged user in the container could just un-set the immutable
+> bit using "/proc/self/fd/..." and then open it for writing. A read-only
+> filesystem would work much better.
 
- > On 12:13 25.04.19, Peter Korsgaard wrote:
- >> It is a bit unfortunate that these security fixes now use
- >> isc_atomic_xadd() which are not available on all architectures:
- >> 
- >> .libs/client.o: In function `mark_tcp_active':
- >> client.c:(.text+0xc7c): undefined reference to `isc_atomic_xadd'
- >> client.c:(.text+0xca0): undefined reference to `isc_atomic_xadd'
- >> .libs/client.o: In function `client_accept':
- >> client.c:(.text+0x2210): undefined reference to `isc_atomic_xadd'
- >> client.c:(.text+0x230c): undefined reference to `isc_atomic_xadd'
- >> .libs/client.o: In function `exit_check':
- >> client.c:(.text+0x2958): undefined reference to `isc_atomic_xadd'
- >> .libs/client.o:client.c:(.text+0x5cb4): more undefined references to `isc_atomic_xadd' follow
- >> collect2: error: ld returned 1 exit status
-
- > There is a commit [1] on ISCs GitLab that removes the atomic operations
- > in favor of refcounting and thus fixes the aarch64 (and other archs?)
- > build error.
-
- > I applied that commit for NixOS. Looks good so far [2].
-
-Yes, that was pointed out to me privatelyl. I am using it as well in
-Buildroot:
-
-https://git.buildroot.org/buildroot/commit/?id=fc8ace0938a0bcf2e9fa628a88853252eabc991d
-
-Interesting enough, this fix is on the 9.11 branch:
-
-https://github.com/isc-projects/bind9/commits/v9_11
-
-But not part of the v9_11_6 tag:
-
-https://github.com/isc-projects/bind9/commits/v9_11_6
+Sorry, I forgot that CAP_LINUX_IMMUTABLE is dropped by default in
+Docker. Yes that mitigation would also work.
 
 -- 
-Bye, Peter Korsgaard
+Aleksa Sarai
+Senior Software Engineer (Containers)
+SUSE Linux GmbH
+<https://www.cyphar.com/>
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
