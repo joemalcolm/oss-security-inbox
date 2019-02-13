@@ -1,35 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/07/2
-Message-ID: <CANwEksUQ7BUBm4gfK3Dew-_Mm1-nO=Dh4u1wwvZ7CV8VwP=Zvg@mail.gmail.com>
-Date: Wed, 6 Mar 2019 14:22:45 -0800
-From: Neng Lu <freeneng@...il.com>
-To: windham.wong@...rmeye.io, Apache Security Team <security@...che.org>,  oss-security@...ts.openwall.com, general@...ubator.apache.org,  dev@...on.apache.org, private@...on.apache.org
-Subject: [CVE-2018-11789] Apache Incubator Heron file access vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/13/9
+Message-ID: <CAOp4FwQjDa6+c7HsF94At4Azj4aeyEouOO_AW8jk2iZ4hjwrOA@mail.gmail.com>
+Date: Wed, 13 Feb 2019 13:06:01 +0400
+From: Loganaden Velvindron <loganaden@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: Solar Designer <solar@...nwall.com>, Aleksa Sarai <cyphar@...har.com>, dev@...ncontainers.org,  Christian Brauner <christian.brauner@...ntu.com>
+Subject: Re: CVE-2019-5736: runc container breakout (all versions)
 Content-Type: text/plain; charset=utf-8
 
-Severity: Important
+I think that someone already posted a PoC on github, AFAIK.
 
-Vendor:
-The Apache Software Foundation
+On Wed, Feb 13, 2019 at 1:04 PM Aleksa Sarai <asarai@...e.de> wrote:
 
-Versions Affected:
-Heron 0.13.0 to 0.17.8
-
-Description:
-When accessing the heron-ui webpage, people can modify the file paths
-outside of the current container to access any file on the host.
-
-Mitigation:
-All Heron users should upgrade to 0.20.0-incubating
-
-Example:
-modify the parameter path= to go to the directory you would like to view.
-i.e. ..%2F..%2F..%2F..%2F..%2F..%2Fetc%2Fpasswd
-
-Credit:
-This issue was discovered by Windham Wong of stormeye.io
-
--- 
-Best Regards,
-Neng
+> On 2019-02-12, Solar Designer <solar@...nwall.com> wrote:
+> >  static int proc_exe_link(struct dentry *dentry, struct path *exe_path)
+> >  {
+> >         struct task_struct *task;
+> > @@ -1628,10 +1780,15 @@ static int proc_exe_link(struct dentry *dentry,
+> > struct path *exe_path)
+> >         exe_file = get_task_exe_file(task);
+> >         put_task_struct(task);
+> >         if (exe_file) {
+> > -               *exe_path = exe_file->f_path;
+> > -               path_get(&exe_file->f_path);
+> > +               int result;
+> > +
+> > +               result = path_in_ve(&exe_file->f_path);
+> > +               if (result == 0) {
+> > +                       *exe_path = exe_file->f_path;
+> > +                       path_get(&exe_file->f_path);
+> > +               }
+> >                 fput(exe_file);
+> > -               return 0;
+> > +               return result;
+> >         } else
+> >                 return -ENOENT;
+> >  }
+> > ---
+> >
+> > This uses Virtuozzo/OpenVZ specific APIs, so won't be directly usable
+> > elsewhere, but maybe a similar approach could be used upstream?
+>
+> I have just sent v5 of my AT_THIS_ROOT patchset to LKML[1] -- which
+> allows userspace processes to block resolution of magic links. While
+> blocking access through /proc/self/exe helps block this issues, being
+> able to block (from userspace) resolution of all magic links would
+> massively help avoid problems like this.
+>
+> [1]: https://marc.info/?l=linux-api&m=155002737629350&w=2
+>
+> --
+> Aleksa Sarai
+> Senior Software Engineer (Containers)
+> SUSE Linux GmbH
+> <https://www.cyphar.com/>
+>
 
