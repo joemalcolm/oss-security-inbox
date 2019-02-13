@@ -1,4 +1,9 @@
-Received: (qmail 28208 invoked by uid 550); 29 Mar 2024 21:49:52 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1127" "Wednesday" "13" "February" "2019" "02:41:48" "-0800" "EJ Campbell" "ejc3@verizonmedia.com" "<CABOq=i38wC9q1hvydmhuYK7bPCDYbUjpTHHPRxD7gGMFNXmEPQ@mail.gmail.com>" "34" "Re: [oss-security] CVE-2019-5736: runc container breakout exploit code" "^Cc:" nil nil "2" "2019021310:41:48" "[oss-security] CVE-2019-5736: runc container breakout exploit code" (number mark "        ejc3@verizon Feb 13   34/1127  " thread-indent "\"Re: [oss-security] CVE-2019-5736: runc container breakout exploit code\"\n") "<20190213095743.ek3x42ok7bengua5@yavin>" ("<20190213093151.znxnjuqtwbdlwnom@yavin>" "<CABOq=i3PAbRT5GpJZiAHb-BDpQkx0n0k=M8JeupjNKUK+Wi78A@mail.gmail.com>" "<20190213095648.ibfskgddfa4zgdlo@yavin>" "<20190213095743.ek3x42ok7bengua5@yavin>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 14122 invoked by uid 550); 13 Feb 2019 11:13:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,149 +11,78 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 3894 invoked from network); 13 Feb 2019 10:42:11 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=verizonmedia.com; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=RzdrmxVCCfqlKH12frnGnwhnh4Uerpoaf6ciE8A+C7E=;
+        b=DsM4QVp+n28ohfGBUja3gbKd4XpV+ze/AQjRpGaRQ+0NygccaiIKlv7d69lst4QoDR
+         XYvjrIQIz+BkDJRpBubh+JSJXJrGp7s2Il3abmXJDglhBUjbM7OeC80O1QJzzzkjnT3x
+         VcCuUAEtm45x4AR0xu+qCoxuUvYKSfqjXzPu0PgCwYtFWgs6UYr84+LG/902fZ9YJUWx
+         d/e5LXx5YvcJXDvMmQan3P4MUuOHoEUZblhI2nTJCzjjRksmjW5Ix1F187RiuE25rebG
+         ywYdurNphMYwy7X6GGlaEzSj+i/LiPxSIiKkV5P0BazUmQzfn9ds6VcGVRMNp9GXm3gd
+         xpkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=RzdrmxVCCfqlKH12frnGnwhnh4Uerpoaf6ciE8A+C7E=;
+        b=t/n3EhPRfxOpwlj6BT8sMpIN8+J1VhH4e8HDt57jX+U1naE2Bkvt9dkyQg0TF8LZsw
+         tt9mHkaXp4/EnkqoXZgFmkrm3r62i4fSizSFd+lBvEBO8Sd24wnFvIdfNyvVsR3YefrY
+         0TW9vV7jIa7w7SGbxy8cRr046oiovpNcRkHbS2oxUxm5ZBSdMggLPsrdL9/YgBBE9k4U
+         zCqCXm40HY2uBrjE2rgWN9rYSmQGbVk5xPUgEJRN7gKdw9+LaQMJAPbiMGUSP5znS+rj
+         seCWHIqKbt5HtYISsxwsy5ZRAskA12QkWlDwjBSPraJD+iGYjpRto5eBqHYIyY2iNH23
+         hmVQ==
+X-Gm-Message-State: AHQUAuYCBlMT4quUtI6eFk1YGEl3YCmz7J81eg7FJ28blAMXaH3IhY94
+	JZDTULeOA1+uAsN4FiZz5SEMrye7HBsY7fLkeyPEpA==
+X-Google-Smtp-Source: AHgI3IbJ8aTAerHpuxmwoKkzSTRrtZbVhREPH1yGrsewHMxJvQ3akP2UgPaaeYloyzHakfUB31p0G3KkA3WDcUWX6wk=
+X-Received: by 2002:aca:e5c9:: with SMTP id c192mr297455oih.118.1550054519688;
+ Wed, 13 Feb 2019 02:41:59 -0800 (PST)
+MIME-Version: 1.0
+References: <20190213093151.znxnjuqtwbdlwnom@yavin> <CABOq=i3PAbRT5GpJZiAHb-BDpQkx0n0k=M8JeupjNKUK+Wi78A@mail.gmail.com>
+ <20190213095648.ibfskgddfa4zgdlo@yavin> <20190213095743.ek3x42ok7bengua5@yavin>
+In-Reply-To: <20190213095743.ek3x42ok7bengua5@yavin>
+Message-ID: <CABOq=i38wC9q1hvydmhuYK7bPCDYbUjpTHHPRxD7gGMFNXmEPQ@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="000000000000077dec0581c4314c"
+Cc: oss-security@lists.openwall.com
+Date: Wed, 13 Feb 2019 02:41:48 -0800
+From: EJ Campbell <ejc3@verizonmedia.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3571 invoked from network); 29 Mar 2024 21:47:23 -0000
-Date: Fri, 29 Mar 2024 22:46:15 +0100
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20240329214615.GA2610@openwall.com>
-References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de> <ZgcL9VUx6CQ5Wx/W@weckbecker.name> <20240329191926.rvyvzgtdpfwc256c@awork3.anarazel.de>
-Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="PEIAKu/WMn1b1Hv9"
-Content-Disposition: inline
-In-Reply-To: <20240329191926.rvyvzgtdpfwc256c@awork3.anarazel.de>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] backdoor in upstream xz/liblzma leading to ssh server compromise
+Subject: Re: [oss-security] CVE-2019-5736: runc container breakout exploit code
+To: Aleksa Sarai <cyphar@cyphar.com>
 
---PEIAKu/WMn1b1Hv9
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--000000000000077dec0581c4314c
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, Mar 29, 2024 at 12:19:26PM -0700, Andres Freund wrote:
-> On 2024-03-29 19:44:05 +0100, Matthias Weckbecker wrote:
-> > I've attached a yara rule to detect the *.o droplet you attached in the
-> > email (liblzma_la-crc64-fast.o.gz).
-> 
-> Unfortunately xz 5.61 added further obfuscations, making it harder to
-> detect. Should have made it clearer that the attached .o was from 5.60. Among
-> others 5.61 removed the two symbols you're checking against here.  That's why
-> Vegard's script looks for a specific instructions sequence, but obviously is
-> also more obscure :/
+That should have been +i, sorry. Thank you for your quick response.
 
-Andres, maybe you (or Florian or someone else) can post the .o file from
-5.61 as well (gzipped just like the previous one, please)?
+EJ
 
-On Fri, Mar 29, 2024 at 08:51:26AM -0700, Andres Freund wrote:
-> openssh does not directly use liblzma. However debian and several other
-> distributions patch openssh to support systemd notification, and libsystemd
-> does depend on lzma.
+On Wed, Feb 13, 2019 at 1:58 AM Aleksa Sarai <cyphar@cyphar.com> wrote:
 
-It is indeed a security risk that sshd on major distros brings in so
-many libraries.  For example, on RHEL 9.x and its rebuilds, "ldd sshd"
-is 28 lines.  In the Rocky Linux SIG/Security override package, we've so
-far reduced this to 13 lines, which is still a lot:
+> On 2019-02-13, Aleksa Sarai <cyphar@cyphar.com> wrote:
+> > On 2019-02-13, EJ Campbell <ejc3@verizonmedia.com> wrote:
+> > > While fixing docker / runc is clearly the right fix, would using
+> chattr -i
+> > > on runc be a quick mitigation for the issue? I believe that will
+> prevent
+> > > the file from being overwritten by the exploit and Etienne Stalmans
+> > > verified that it helped:
+> > >  https://twitter.com/_staaldraad/status/1095354945073754112
+> >
+> > The privileged user in the container could just un-set the immutable
+> > bit using "/proc/self/fd/..." and then open it for writing. A read-only
+> > filesystem would work much better.
+>
+> Sorry, I forgot that CAP_LINUX_IMMUTABLE is dropped by default in
+> Docker. Yes that mitigation would also work.
+>
+> --
+> Aleksa Sarai
+> Senior Software Engineer (Containers)
+> SUSE Linux GmbH
+> <https://www.cyphar.com/>
+>
 
-https://sig-security.rocky.page/packages/openssh
-
-For systemd notification, I patched it (half a year ago, so not in
-response to these new findings) to dlopen() libsystemd into a new sshd
-child process that's briefly spawned on sshd service startup or restart,
-notifies systemd, and exits.  I could probably also drop privileges in
-that child process, but so far I didn't bother.  I just didn't want
-those libraries to stay in the process address space after startup.
-
-Luckily, RHEL is not affected by the xz backdoor anyway, but if it were
-I think these changes would just happen to have prevented the backdoor
-from working.  Indeed, it's still bad code that could run as root (and
-even if not in sshd, then in other services that use libsystemd), so it
-could have as well e.g. modified sshd on disk, but its current way of
-dynamically plugging into sshd authentication wouldn't work.
-
-I've attached the patch, which applies on top of Red Hat's patches.  If
-using it in a package, explicit dependency on libsystemd (or the package
-that provides it) should be added to the (sub)package with sshd, e.g.:
-
-Requires: systemd-libs
-
-That's because the package manager would no longer automatically detect
-the dependency, which is now a soft one.
-
-I took this approach back then in order not to drop functionality, but
-I'd re-think it now.  Perhaps systemd notification isn't worth even the
-reduced risk, and should be dropped completely.  For the latter, an edit
-to the systemd unit file is needed, changing "Type=notify" to
-"Type=simple", which should fit "sshd -D".
-
-Not only Red Hat'ish distros, but also Debian and Ubuntu are similar in
-this respect, and I think should want to make similar changes.
-
-Alexander
-
---PEIAKu/WMn1b1Hv9
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename="openssh-8.7p1-rocky-systemd.patch"
-
-diff -urpx '*.m4' -x '*.in' -x configure openssh-8.7p1-rh-systemd/configure.ac openssh-8.7p1/configure.ac
---- openssh-8.7p1-rh-systemd/configure.ac	2023-08-28 11:56:19.955892400 +0000
-+++ openssh-8.7p1/configure.ac	2023-08-28 12:29:38.678775780 +0000
-@@ -4758,21 +4758,9 @@ SYSTEMD_MSG="no"
- AC_ARG_WITH(systemd,
- 	[  --with-systemd          Enable systemd support],
- 	[ if test "x$withval" != "xno" ; then
--		AC_PATH_TOOL([PKGCONFIG], [pkg-config], [no])
--		if test "$PKGCONFIG" != "no"; then
--			AC_MSG_CHECKING([for libsystemd])
--			if $PKGCONFIG --exists libsystemd; then
--				SYSTEMD_CFLAGS=`$PKGCONFIG --cflags libsystemd`
--				SYSTEMD_LIBS=`$PKGCONFIG --libs libsystemd`
--				CPPFLAGS="$CPPFLAGS $SYSTEMD_CFLAGS"
--				SSHDLIBS="$SSHDLIBS $SYSTEMD_LIBS"
--				AC_MSG_RESULT([yes])
--				AC_DEFINE(HAVE_SYSTEMD, 1, [Define if you want systemd support.])
--				SYSTEMD_MSG="yes"
--			else
--				AC_MSG_RESULT([no])
--			fi
--		fi
-+		AC_MSG_RESULT([yes])
-+		AC_DEFINE(HAVE_SYSTEMD, 1, [Define if you want systemd support.])
-+		SYSTEMD_MSG="yes"
- 	fi ]
- )
- 
-diff -urpx '*.m4' -x '*.in' -x configure openssh-8.7p1-rh-systemd/sshd.c openssh-8.7p1/sshd.c
---- openssh-8.7p1-rh-systemd/sshd.c	2023-08-28 11:56:19.957892327 +0000
-+++ openssh-8.7p1/sshd.c	2023-08-28 12:53:52.070538125 +0000
-@@ -86,7 +86,7 @@
- #endif
- 
- #ifdef HAVE_SYSTEMD
--#include <systemd/sd-daemon.h>
-+#include <dlfcn.h>
- #endif
- 
- #include "xmalloc.h"
-@@ -2076,7 +2076,20 @@ main(int ac, char **av)
- 
- #ifdef HAVE_SYSTEMD
- 		/* Signal systemd that we are ready to accept connections */
--		sd_notify(0, "READY=1");
-+		if (!fork()) {
-+			void *handle = dlopen("libsystemd.so.0", RTLD_LAZY);
-+			if (handle) {
-+				int (*sd_pid_notify)(pid_t pid, int unset_environment, const char *state);
-+				*(void **)&sd_pid_notify = dlsym(handle, "sd_pid_notify");
-+				if (sd_pid_notify)
-+					sd_pid_notify(getppid(), 0, "READY=1");
-+#if 0
-+				/* Unnecessary due to fork/exit */
-+				dlclose(handle);
-+#endif
-+			}
-+			_exit(0);
-+		}
- #endif
- 
- 		/* Accept a connection and return in a forked child */
-
---PEIAKu/WMn1b1Hv9--
+--000000000000077dec0581c4314c--
