@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["415" "Tuesday" "30" "June" "2015" "15:11:49" "-0300" "Roney Gomes" "roney477@gmail.com" "<CAGZyHOWD6kMGg_X_jY9yxUk8Eghq5j+1pQ4FSW2Yw9A+M4w_ew@mail.gmail.com>" "12" "[oss-security] Re: [FD] Google Chrome Address Spoofing (Request For Comment)" nil nil nil "6" "2015063018:11:49" "[oss-security] Re: [FD] Google Chrome Address Spoofing (Request For Comment)" (number mark "        roney477@gma Jun 30   12/415   " thread-indent "\"[oss-security] Re: [FD] Google Chrome Address Spoofing (Request For Comment)\"\n") "<55923253.8020902@deusen.co.uk>" ("<55923253.8020902@deusen.co.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1719" "Wednesday" "13" "February" "2019" "20:56:48" "+1100" "Aleksa Sarai" "cyphar@cyphar.com" "<20190213095648.ibfskgddfa4zgdlo@yavin>" "43" "Re: [oss-security] CVE-2019-5736: runc container breakout exploit code" "^Cc:" nil nil "2" "2019021309:56:48" "[oss-security] CVE-2019-5736: runc container breakout exploit code" (number mark "        cyphar@cypha Feb 13   43/1719  " thread-indent "\"Re: [oss-security] CVE-2019-5736: runc container breakout exploit code\"\n") "<CABOq=i3PAbRT5GpJZiAHb-BDpQkx0n0k=M8JeupjNKUK+Wi78A@mail.gmail.com>" ("<20190213093151.znxnjuqtwbdlwnom@yavin>" "<CABOq=i3PAbRT5GpJZiAHb-BDpQkx0n0k=M8JeupjNKUK+Wi78A@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 11832 invoked by uid 550); 1 Jul 2015 07:52:40 -0000
+Received: (qmail 3986 invoked by uid 550); 13 Feb 2019 09:57:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,42 +11,64 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7609 invoked from network); 30 Jun 2015 18:12:40 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=YKKVXiVzOBHP8tj906a5DpQEt408jREGAaw/sSFQk6c=;
-        b=chhZPQiPwvHxZHbImJBbtT4tFh7P7dl8sO3/RNR9vlXILfgf3oJJWiEn4GHlhwEDQv
-         vVmfWgbbkt8JfXJRpVpVupDD7v5eR35nku8B8I+8wrpZze5WYPcuoVp31lm5zax+4muV
-         GMxTOX4ayk2gZymXdCe8+WiEIIkDyCzOYqlGLrQKhF2Ck9oHlUlWmmnc/PlZpOsv3Z21
-         TN5gFPuOVDfV8P5G66mt/7HA5SiTByCSJp/iRJUVXkuumrg/4mizpULGXOSdjHQEnoXY
-         ll49se86ErumKn+5u1BAztQsdN8OTUTpoZ/tXcMky7/tTDcwzdQH8u6dHBu0TSYyoJQr
-         8swA==
-X-Received: by 10.13.231.199 with SMTP id q190mr25219479ywe.164.1435687949109;
- Tue, 30 Jun 2015 11:12:29 -0700 (PDT)
+Received: (qmail 3960 invoked from network); 13 Feb 2019 09:57:12 -0000
+X-Virus-Scanned: amavisd-new at heinlein-support.de
+Message-ID: <20190213095648.ibfskgddfa4zgdlo@yavin>
+References: <20190213093151.znxnjuqtwbdlwnom@yavin>
+ <CABOq=i3PAbRT5GpJZiAHb-BDpQkx0n0k=M8JeupjNKUK+Wi78A@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <55923253.8020902@deusen.co.uk>
-References: <55923253.8020902@deusen.co.uk>
-Message-ID: <CAGZyHOWD6kMGg_X_jY9yxUk8Eghq5j+1pQ4FSW2Yw9A+M4w_ew@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Cc: bugtraq@securityfocus.com, fulldisclosure@seclists.org, 
-	oss-security@lists.openwall.com
-Date: Tue, 30 Jun 2015 15:11:49 -0300
-From: Roney Gomes <roney477@gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="v6kiu6eh3bxmnq7x"
+Content-Disposition: inline
+In-Reply-To: <CABOq=i3PAbRT5GpJZiAHb-BDpQkx0n0k=M8JeupjNKUK+Wi78A@mail.gmail.com>
+Cc: oss-security@lists.openwall.com
+Date: Wed, 13 Feb 2019 20:56:48 +1100
+From: Aleksa Sarai <cyphar@cyphar.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: [FD] Google Chrome Address Spoofing (Request For Comment)
-To: David Leo <david.leo@deusen.co.uk>
+Subject: Re: [oss-security] CVE-2019-5736: runc container breakout exploit
+ code
+To: EJ Campbell <ejc3@verizonmedia.com>
 
-2015-06-30 3:08 GMT-03:00 David Leo <david.leo@deusen.co.uk>:
-> Impact:
-> The "click to verify" thing is completely broken...
-> Anyone can be "BBB Accredited Business" etc.
-> You can make whitehouse.gov display "We love Islamic State" :-)
+--v6kiu6eh3bxmnq7x
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Did not work for me. I have been redirected to Oracle's actual website
-and then to a blank page later. Strangely though, it worked on the
-desktop version of Opera.
+On 2019-02-13, EJ Campbell <ejc3@verizonmedia.com> wrote:
+> While fixing docker / runc is clearly the right fix, would using chattr -i
+> on runc be a quick mitigation for the issue? I believe that will prevent
+> the file from being overwritten by the exploit and Etienne Stalmans
+> verified that it helped:
+>  https://twitter.com/_staaldraad/status/1095354945073754112
 
--- 
-Roney
+The privileged user in the container could just un-set the immutable
+bit using "/proc/self/fd/..." and then open it for writing. A read-only
+filesystem would work much better.
+
+--=20
+Aleksa Sarai
+Senior Software Engineer (Containers)
+SUSE Linux GmbH
+<https://www.cyphar.com/>
+
+--v6kiu6eh3bxmnq7x
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEb6Gz4/mhjNy+aiz1Snvnv3Dem58FAlxj6eAACgkQSnvnv3De
+m598zRAAv9x7us4vLmspiQZYrJ76HahuBjcxVcxJkAfgRxlpF/c3SOJbYcRoVp1j
+ypOZi96tKkKB4vxjQxygiLJ1g/+oV9R0OIWujjZE3grVgzqxbTeZxRqRyl3soxAw
+Ngyi6sXJpUKjNTsRt26fl/C3Qkq/+A+zDbwiqJ83nz3+S2QwIz0GCEflm+q/LWUp
+XPIlE9LUZAL7SYXsw+w13JFUF7VY7CbeCZQAlj17f66xgVj/md9ZvbBHjvEeNY+N
+/hjZmp/cpYJBZZI4aEh61CtGoffqcTloN7zhCklePcs4ceqjEhyiVk5bm8VqUTeM
+G/M1+KUcDN90cxSmXwpiXRLWLpr5O21p7sK2CtmH9/k2+uZM3sNqeWgNJ2hSVKyO
+SA/L49i4j5EowNRTiFqvdA/nuARi4CdobIOrC8qgwlcuSrwW8bp7/g1FTq7uGvKC
+xM5cLbNOxUUR40BlQrWNw7b9zN19oHvhQl7rpVBAL6PyaR72WnMUkiBjkMPXWE1A
+4BSF1RHqSAsdT/8j+OzDEjkafSgM8cyzRpM34ll56Wu3J+3MtQ1G1yOQV/NefI26
+giP7xw29Jmj6vHAFVGtBN9Xhe4V0Ca3YeGrK2AOqpoUCKnMFFw7hnkIyuDnicaeq
++iRhSf91bZXehS8+bxFXMllIytXltKmJnOmT1W3qYG7+JPdRhYI=
+=cL4j
+-----END PGP SIGNATURE-----
+
+--v6kiu6eh3bxmnq7x--
