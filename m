@@ -1,29 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/06/1
-Message-ID: <CAG48ez3JJ_+smFw9H8Fv2t2Rv0qNKrgBEp1hsfYL0BF16VWnNg@mail.gmail.com>
-Date: Tue, 5 Mar 2019 22:02:49 +0100
-From: Jann Horn <jannhorn@...glemail.com>
-To: oss-security@...ts.openwall.com
-Subject: Linux kernel: OOB R/W in SNMP NAT module (CVE-2019-9162); virtual address 0 mappable (CVE-2019-9213)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/13/7
+Message-ID: <CABOq=i3PAbRT5GpJZiAHb-BDpQkx0n0k=M8JeupjNKUK+Wi78A@mail.gmail.com>
+Date: Wed, 13 Feb 2019 01:53:10 -0800
+From: EJ Campbell <ejc3@...izonmedia.com>
+To: "cyphar@...har.com" <cyphar@...har.com>, oss-security@...ts.openwall.com
+Subject: Re: CVE-2019-5736: runc container breakout exploit code
 Content-Type: text/plain; charset=utf-8
 
-Two Linux kernel bugs:
+While fixing docker / runc is clearly the right fix, would using chattr -i
+on runc be a quick mitigation for the issue? I believe that will prevent
+the file from being overwritten by the exploit and Etienne Stalmans
+verified that it helped:
+ https://twitter.com/_staaldraad/status/1095354945073754112
 
-out-of-bounds read and write in SNMP NAT module
-introduced in commit cc2d58634e0f ("netfilter: nf_nat_snmp_basic: use
-asn1 decoder library",
-first in 4.16)
-https://bugs.chromium.org/p/project-zero/issues/detail?id=1776
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/net?id=c4c07b4d6fa1f11880eab8e076d3d060ef3f55fc
-https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.14.103
-https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.19.25
-[this one's been public for a while, I didn't get around to sending a
-mail to oss-security about it]
+(Note I tried top posting this to mailing list and it didn’t work).
 
-virtual address 0 is mappable via privileged write() to /proc/*/mem
-https://bugs.chromium.org/p/project-zero/issues/detail?id=1792
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=0a1d52994d440e21def1c2174932410b4f2a98a1
-https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.20.14
-https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.19.27
-https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.14.105
-https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.9.162
+EJ
+
+On Wed, Feb 13, 2019 at 1:32 AM Aleksa Sarai <cyphar@...har.com> wrote:
+
+> Someone outside of the embargo has posted a PoC of the exploit for
+> CVE-2019-5736 (which is related though not using the same vector)[1].
+> Since the original researchers have posted a blog post explaining the
+> exploit in some detail[2], I've decided to post the exploit code early
+> -- since the cat is out of the bag anyway.
+>
+> CVE-2019-5736.tar.xz has the exploit code and an explanation of how to
+> use it. Our exploit code uses shared libraries, but you can create a
+> similar exploit by doing something like (thanks to Darren Shepherd from
+> Rancher Labs for pointing this out):
+>
+> 1. Run a script with a #!-line of "#!/proc/self/exe events" which will
+>    run "runc events" (which blocks for long enough).
+> 2. A malicious process then opens /proc/$pid/exe (this is now allowed
+>    because the non-dumpable bit was cleared on execve).
+> 3. Kill "runc events" and then re-open the exe fd read-write using the
+>    "/proc/self/fd/..." trick.
+>
+> This is basically what [1] does -- but it does come with the downside
+> that you can't craft a malicious image that does this, you need to have
+> a separate program already running in the container and then attack
+> "docker exec".
+>
+> As discussed in the previous mail, this exploit code also impacts LXC
+> (and several other runtimes have contacted me to say that they are also
+> vulnerable -- I would suggest that runtimes should ask to join
+> <security-announce@...ncontainers.org>).
+>
+> [1]: https://github.com/feexd/pocs/blob/master/CVE-2019-5736/exploit.c
+> [2]:
+> https://blog.dragonsector.pl/2019/02/cve-2019-5736-escape-from-docker-and.html
+>
+> --
+> Aleksa Sarai
+> Senior Software Engineer (Containers)
+> SUSE Linux GmbH
+> <https://www.cyphar.com/>
+>
+
