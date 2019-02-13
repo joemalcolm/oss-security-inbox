@@ -1,102 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/22/2
-Message-ID: <20190721200904.GR15868@phenom.ffwll.local>
-Date: Sun, 21 Jul 2019 22:09:04 +0200
-From: Daniel Vetter <daniel@...ll.ch>
-To: Linus Torvalds <torvalds@...ux-foundation.org>
-Cc: Tavis Ormandy <taviso@...il.com>, Bartlomiej Zolnierkiewicz <b.zolnierkie@...sung.com>, Daniel Vetter <daniel.vetter@...ll.ch>, oss-security@...ts.openwall.com
-Subject: Re: stack buffer overflow in fbdev
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/13/1
+Message-ID: <20190213090320.lce4bdign5rzqjzm@mikami>
+Date: Wed, 13 Feb 2019 20:03:20 +1100
+From: Aleksa Sarai <asarai@...e.de>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com, Aleksa Sarai <cyphar@...har.com>, dev@...ncontainers.org, Christian Brauner <christian.brauner@...ntu.com>
+Subject: Re: CVE-2019-5736: runc container breakout (all versions)
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Jul 21, 2019 at 11:03:01AM -0700, Linus Torvalds wrote:
-> Completely untested patch attached. There are probably better ways to do this.
-> 
-> Adding the proper people to the cc, and quoting Tavis' email in its entirety.
-> 
-> Daniel - you got added despite not being explicitly listed as
-> maintainer because you've touched fbdev/core/ more than most lately,
-> plus you know edid anyway. As such: "tag, you're it, sucker".
-
-Yeah I also realized with regrets that get_maintainers thinks I'm
-responsible for fbdev core :-/
-
-Wrt the bug: I had a multi-paragraph explanation here about how fbmon.c
-edid parser is only used by old crap drivers, and not when you have a
-drm-kms driver providing the fbdev emulation (like pretty much every
-modern system). Also that the version in fbmon.c seriously lacks compared
-to the drm_edid.c one.
-
-And then I ran grep and noticed it's dead code. The last user disappeared
-in 34280340b1dc ("fbdev: Remove unused SH-Mobile HDMI driver") from 2015.
-I'll type a patch for 5.4 to remove this outright.
-
-Cheers, Daniel
-
-PS: git log -G disappoints by not using all the cores I have here ..
-
-> 
->                 Linus
-> 
-> On Sat, Jul 20, 2019 at 5:35 PM Tavis Ormandy <taviso@...il.com> wrote:
-> >
-> > Hello, during a conversation on twitter we noticed a stack buffer
-> > overflow in fbdev with malicious edid data:
-> >
-> > https://github.com/torvalds/linux/blob/22051d9c4a57d3b4a8b5a7407efc80c71c7bfb16/drivers/video/fbdev/core/fbmon.c#L1033
-> >
-> > There is enough space to have 52 1-byte length values, which makes svd_n
-> > 52, then make the final value length 0x1f (the maximum), which makes
-> > svd_n 83 and overflows the 64 byte stack buffer svd[] with controlled
-> > data.
-> >
-> > This requires a malicious monitor / projector / etc, so pretty low impact.
-> >
-> > I pulled out the code to make a demo (I removed the checksum, but it
-> > doesnt prevent the bug):
-> >
-> > https://gist.github.com/taviso/923776e633cb8fb1ab847cce761a0f10
-> >
-> > This was discovered by Nico Waisman of Semmle.
-> >
-> > Tavis.
-> >
-> > --
-> > -------------------------------------
-> > taviso@....lonestar.org | finger me for my pgp key.
-> > -------------------------------------------------------
-
->  drivers/video/fbdev/core/fbmon.c | 8 +++++++-
->  1 file changed, 7 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/video/fbdev/core/fbmon.c b/drivers/video/fbdev/core/fbmon.c
-> index 3558a70a6664..2ab1fd6e33b7 100644
-> --- a/drivers/video/fbdev/core/fbmon.c
-> +++ b/drivers/video/fbdev/core/fbmon.c
-> @@ -1030,7 +1030,9 @@ void fb_edid_add_monspecs(unsigned char *edid, struct fb_monspecs *specs)
->  		if (type == 2) {
->  			for (i = pos; i < pos + len; i++) {
->  				u8 idx = edid[pos + i] & 0x7f;
-> -				svd[svd_n++] = idx;
-> +				if (svd_n < sizeof(svd))
-> +					svd[svd_n] = idx;
-> +				svd_n++;
->  				pr_debug("N%sative mode #%d\n",
->  					 edid[pos + i] & 0x80 ? "" : "on-n", idx);
->  			}
-> @@ -1044,6 +1046,10 @@ void fb_edid_add_monspecs(unsigned char *edid, struct fb_monspecs *specs)
->  		pos += len + 1;
->  	}
->  
-> +	/* Evil monitor? */
-> +	if (WARN_ON_ONCE(svd_n > sizeof(svd)))
-> +		return;
+On 2019-02-12, Solar Designer <solar@...nwall.com> wrote:
+>  static int proc_exe_link(struct dentry *dentry, struct path *exe_path)
+>  {
+>         struct task_struct *task;
+> @@ -1628,10 +1780,15 @@ static int proc_exe_link(struct dentry *dentry,
+> struct path *exe_path)
+>         exe_file = get_task_exe_file(task);
+>         put_task_struct(task);
+>         if (exe_file) {
+> -               *exe_path = exe_file->f_path;
+> -               path_get(&exe_file->f_path);
+> +               int result;
 > +
->  	block = edid + edid[2];
->  
->  	DPRINTK("  Extended Detailed Timings\n");
+> +               result = path_in_ve(&exe_file->f_path);
+> +               if (result == 0) {
+> +                       *exe_path = exe_file->f_path;
+> +                       path_get(&exe_file->f_path);
+> +               }
+>                 fput(exe_file);
+> -               return 0;
+> +               return result;
+>         } else
+>                 return -ENOENT;
+>  }
+> ---
+> 
+> This uses Virtuozzo/OpenVZ specific APIs, so won't be directly usable
+> elsewhere, but maybe a similar approach could be used upstream?
 
+I have just sent v5 of my AT_THIS_ROOT patchset to LKML[1] -- which
+allows userspace processes to block resolution of magic links. While
+blocking access through /proc/self/exe helps block this issues, being
+able to block (from userspace) resolution of all magic links would
+massively help avoid problems like this.
+
+[1]: https://marc.info/?l=linux-api&m=155002737629350&w=2
 
 -- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+Aleksa Sarai
+Senior Software Engineer (Containers)
+SUSE Linux GmbH
+<https://www.cyphar.com/>
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
