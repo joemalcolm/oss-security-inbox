@@ -1,39 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/12/1
-Message-ID: <20190711203714.7f3019ad@jabberwock.cb.piermont.com>
-Date: Thu, 11 Jul 2019 20:37:14 -0400
-From: "Perry E. Metzger" <perry@...rmont.com>
-To: Simon McVittie <smcv@...ian.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Privileged File Access from Desktop Applications
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/13/2
+Message-ID: <20190213090934.mnnitmk4onepvenu@mikami>
+Date: Wed, 13 Feb 2019 20:09:34 +1100
+From: Aleksa Sarai <asarai@...e.de>
+To: Loganaden Velvindron <loganaden@...il.com>
+Cc: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>, Aleksa Sarai <cyphar@...har.com>, dev@...ncontainers.org, Christian Brauner <christian.brauner@...ntu.com>
+Subject: Re: CVE-2019-5736: runc container breakout (all versions)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 11 Jul 2019 21:20:15 +0100 Simon McVittie <smcv@...ian.org>
-wrote:
-> On Thu, 11 Jul 2019 at 11:47:10 -0400, Perry E. Metzger wrote:
-> > having to add file i/o subsystems inside of dbus(!) probably does
-> > add lots of threats  
-> 
-> I think you might be misunderstanding the scope of D-Bus.
+On 2019-02-13, Loganaden Velvindron <loganaden@...il.com> wrote:
+> I think that someone already posted a PoC on github, AFAIK.
 
-Not really. The whole point is that instead of having the operating
-system alone as part of your file security implementation you now
-have a brand new service, an IPC mechanism, and loads of other stuff,
-instead of having your app just do open(2) and write(2) etc.
+Yes, there is a PoC that someone outside of the embargo posted on
+GitHub (it is quite different to the one we have but it is using a
+related issue which our patch also fixed). At this point I might as well
+post the actual exploit code (given that the original vulnerability
+authors have published a blog post that basically outlines the
+exploit[1]).
 
-It seems architecturally bad from a security perspective. The number
-the number of trusted entities, the number of moving parts, the number
-of mechanisms, and thus the number of ways things can go wrong keeps
-going up. This is a mistake. And btw, this is a major piece of
-mechanism being added just to handle the problem of someone wanting to
-pop open an editor inside a GUI to edit a system config file, which is
-not a major attack vector. But, now I have to worry about this new
-file access service providing an attack surface that didn't exist
-before.
+[1]: https://blog.dragonsector.pl/2019/02/cve-2019-5736-escape-from-docker-and.html
 
-What's the right way to handle this stuff? Capabilities,
-probably. It's what they're designed for.
-
-Perry
 -- 
-Perry E. Metzger		perry@...rmont.com
+Aleksa Sarai
+Senior Software Engineer (Containers)
+SUSE Linux GmbH
+<https://www.cyphar.com/>
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
