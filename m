@@ -1,33 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/25/4
-Message-ID: <20191125175839.GB197885@espresso.pseudorandom.co.uk>
-Date: Mon, 25 Nov 2019 17:58:39 +0000
-From: Simon McVittie <smcv@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Lots of bugs in 32-bit x86 Linux entry code
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/13/10
+Message-Id: <E1gu2sM-0003jW-NU@rmmprod07.runbox>
+Date: Wed, 13 Feb 2019 17:19:30 -0500 (EST)
+From: "David A. Wheeler" <dwheeler@...eeler.com>
+To: "oss-security" <oss-security@...ts.openwall.com>
+Subject: Railroader: static analysis tool for Ruby on Rails (OSS fork of Brakeman)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 25 Nov 2019 at 08:05:12 -0800, Andy Lutomirski wrote:
-> It turns out that there are essentially no upstream development
-> resources dedicated to x86_32 Linux. Perhaps unsurprisingly, it was
-> badly broken.
+All:
 
-To clarify, which of these do you mean?
+If you are developing or analyzing anything that uses the
+Ruby on Rails framework, the odds are good that
+you've been using the "Brakeman" static analyzer
+<https://brakemanscanner.org/>.
+However, the latest version of Brakeman (4.4.0)
+has switched to a license that is not open source software (OSS):
+<https://brakemanscanner.org/blog/2019/01/17/brakeman-4-dot-4-dot-0-released>
 
-A. IA-32 (uname -m: i?86) Linux kernels are buggy/vulnerable when running
-   IA-32 (i?86-linux-*) user-space processes (which are the only user-space
-   that these kernels support)
+If you are interested in using a static analyzer that is OSS,
+I've created a fork called "Railroader".  More info here:
+https://railroader.org/
+https://github.com/david-a-wheeler/railroader
 
-B. x86_64 (aka AMD64, uname -m: x86_64) Linux kernels are buggy/vulnerable
-   when running IA-32 (i?86-linux-*) user-space processes, but not when
-   running x86_64 (x86_64-linux-*) user-space processes
+Contributions welcome, under the MIT (code) or CC-BY (website) licenses.
 
-C. x86_64 (AMD64) Linux kernels are buggy/vulnerable when running x32
-   (x86_64-linux-gnux32) processes
+Thanks for your attention.
 
-D. something else?
-
-If I'm understanding correctly, you are reporting A, and only A?
-
-Thanks,
-    smcv
+--- David A. Wheeler
