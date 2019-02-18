@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["451" "Tuesday" "1" "August" "2017" "22:54:14" "+0200" "Solar Designer" "solar@openwall.com" "<20170801205414.GA17225@openwall.com>" "13" "Re: [oss-security] CoreOS membership to linux-distros (updated)" nil nil nil "8" "2017080120:54:14" "[oss-security] CoreOS membership to linux-distros (updated)" (number mark "U       solar@openwa Aug  1   13/451   " thread-indent "\"Re: [oss-security] CoreOS membership to linux-distros (updated)\"\n") "<a8482eb5-f245-9a3a-0fe2-5ba206358205@mvista.com>" ("<9479d640-2002-2462-9d81-2379d60d8f54@coreos.com>" "<20170721132647.GA4223@openwall.com>" "<20170731205316.GA12811@openwall.com>" "<a8482eb5-f245-9a3a-0fe2-5ba206358205@mvista.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["981" "Monday" "18" "February" "2019" "13:21:59" "+1000" "Wade Mealing" "wmealing@redhat.com" "<CALJHwhSVO9HQDkChaAy0ULqfHgMCODtaaLX9sPgz6OyFueUm9A@mail.gmail.com>" "35" "[oss-security] CVE-2019-3812 - qemu - Out-of-bounds read in hw/i2c/i2c-ddc.c allows for memory disclosure" "^Date:" nil nil "2" "2019021803:21:59" "[oss-security] CVE-2019-3812 - qemu - Out-of-bounds read in hw/i2c/i2c-ddc.c allows for memory disclosure" (number mark "        wmealing@red Feb 18   35/981   " thread-indent "\"[oss-security] CVE-2019-3812 - qemu - Out-of-bounds read in hw/i2c/i2c-ddc.c allows for memory disclosure\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 22033 invoked by uid 550); 1 Aug 2017 20:54:45 -0000
+Received: (qmail 5753 invoked by uid 550); 18 Feb 2019 03:22:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,31 +11,64 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 5732 invoked from network); 18 Feb 2019 03:22:23 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=EDOdsBRt/SUHIahZOsOO00Lvjql66b5jXoBzcDGYUe0=;
+        b=dMWskHatELubkfit6S4QhoBAxTabD8J/To4Z0rsDu77RSnqqXjBVZqWixI3EOER/YD
+         1/yVuvXL1VSahTCnx2xZBLlHm8T7in672YjRTrOEEdR6eQQ0Ij6GroQu5mlGILreAYoS
+         MlUa0jqjED1NSZ/kXnOHCEPzuJjq0aJbHRtPVZ2MIIHapwHzd3wZ7cpDKn6JSZrt8Cmw
+         +/RaMG+6bMkpuJ9srx+OFXRDe5vXL3QfSImQJOGkMnZ2LIF6flb3xSp/q9foLA+KYPzR
+         XAsZbiCKJUSpB9PbukdqFxt9PHar6WXTco2eW7MlDsE8Jv+sz98vb2Flc4bfi5sv5gs/
+         FXng==
+X-Gm-Message-State: AHQUAub4itpxkIU/b5alsCmOdAsMDLpcd+fS+b9IozhgZCQ1s86Zq3e/
+	dpCIMkeCQwPlZlNjRtdiGTrRvTJQkhMxfu3lAQs5sXfJVEc=
+X-Google-Smtp-Source: AHgI3Iacm5f4T5XszQbHmSFWEhX5veBJ4yP0qqqb3HqTZqR6SDWEVR5Te2Na0hx5aRwnWRueGRjcjpi8YlUPexHkuP4=
+X-Received: by 2002:a6b:8ed6:: with SMTP id q205mr14548842iod.161.1550460131172;
+ Sun, 17 Feb 2019 19:22:11 -0800 (PST)
+MIME-Version: 1.0
+Message-ID: <CALJHwhSVO9HQDkChaAy0ULqfHgMCODtaaLX9sPgz6OyFueUm9A@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Date: Mon, 18 Feb 2019 13:21:59 +1000
+From: Wade Mealing <wmealing@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21831 invoked from network); 1 Aug 2017 20:54:19 -0000
-Date: Tue, 1 Aug 2017 22:54:14 +0200
-From: Solar Designer <solar@openwall.com>
+Subject: [oss-security] CVE-2019-3812 - qemu - Out-of-bounds read in hw/i2c/i2c-ddc.c allows
+ for memory disclosure
 To: oss-security@lists.openwall.com
-Cc: akuster <akuster@mvista.com>
-Message-ID: <20170801205414.GA17225@openwall.com>
-References: <9479d640-2002-2462-9d81-2379d60d8f54@coreos.com> <20170721132647.GA4223@openwall.com> <20170731205316.GA12811@openwall.com> <a8482eb5-f245-9a3a-0fe2-5ba206358205@mvista.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a8482eb5-f245-9a3a-0fe2-5ba206358205@mvista.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] CoreOS membership to linux-distros (updated)
 
-On Tue, Aug 01, 2017 at 01:36:07PM -0700, akuster wrote:
-> On 07/31/2017 01:53 PM, Solar Designer wrote:
-> >However, many distros still haven't picked up a task, and many tasks are
-> >not picked up by any distro.  That should change.
-> 
-> Is there a consolidated summary on where we stand on what has been 
-> spoken for?
+QEMU through version 2.10 through to 3.1.0 is vulnerable to an
+out-of-bounds read of up to 128 bytes in the hw/i2c/i2c-ddc.c in the
+function i2c_ddc() function. A local attacker with permission to
+execute i2c commands could exploit this to read stack memory of the
+qemu process on the host.
 
-Yes.  I keep the wiki page up to date:
+This was fixed upstream in commit 5b267840515730dbf6753495d5b7bd8b04ad1c
 
-http://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+Systems without a monitor connected are affected, as are virtual
+monitor is presented to virtual guests.  Systems with no graphics
+cards attached to the virtual host are not affected.
 
-Alexander
+This seems to be an information leak of stack contents which can be
+used to defeat some kernel level protections and simplify further
+attacks.
+
+Red Hat Bugzilla:
+https://bugzilla.redhat.com/show_bug.cgi?id=1665792
+
+Github patch on qemu:
+https://github.com/qemu/qemu/commit/b05b267840515730dbf6753495d5b7bd8b04ad1c
+
+Thanks,
+
+
+-- 
+Wade Mealing
+
+Product Security - Kernel, RHCE
+
+Red Hat
+
+wmealing@redhat.com
+
+TRIED. TESTED. TRUSTED.
