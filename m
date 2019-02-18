@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1933" "Tuesday" "22" "November" "2016" "07:31:29" "-0500" "Alex Gaynor" "alex.gaynor@gmail.com" "<CAFRnB2XkOnZGGXwJTcNb2t2LbGFS4-vzKZ3COzBot2G32PEZ9Q@mail.gmail.com>" "59" "Re: [oss-security] CVE Request: gstreamer plugins" nil nil nil "11" "2016112212:31:29" "[oss-security] CVE Request: gstreamer plugins" (number mark "U       alex.gaynor@ Nov 22   59/1933  " thread-indent "\"Re: [oss-security] CVE Request: gstreamer plugins\"\n") "<20161119115932.1854beff@pc1>" ("<20161118163119.GQ11402@suse.de>" "<20161119115932.1854beff@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1364" "Monday" "18" "February" "2019" "16:53:06" "+0100" "Jann Horn" "jannhorn@googlemail.com" "<CAG48ez2exshg9QipMkiuHK7rgiaJCO4KO8XMa_C-DiddfmK78A@mail.gmail.com>" "26" "[oss-security] Linux kernel: three KVM bugs (CVE-2019-6974, CVE-2019-7221, CVE-2019-7222)" "^Cc:" nil nil "2" "2019021815:53:06" "[oss-security] Linux kernel: three KVM bugs (CVE-2019-6974, CVE-2019-7221, CVE-2019-7222)" (number mark "        jannhorn@goo Feb 18   26/1364  " thread-indent "\"[oss-security] Linux kernel: three KVM bugs (CVE-2019-6974, CVE-2019-7221, CVE-2019-7222)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 18252 invoked by uid 550); 22 Nov 2016 12:31:42 -0000
+Received: (qmail 9585 invoked by uid 550); 18 Feb 2019 16:24:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,98 +11,69 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18231 invoked from network); 22 Nov 2016 12:31:41 -0000
+Received: (qmail 3632 invoked from network); 18 Feb 2019 15:53:46 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=IfKLU/tAsSxrRK4BozBQ5sjJ1NmxU7yJnEviDKZD+0k=;
-        b=eSxqG/4nWLa6H8fM26aqA4av1WgwjQvCQnY8HDv6I4ZSWbXUMbtk/K4t7yGGODxT5a
-         iFMqvqrQF2vG6uglgm9tUcCzVsGhnG6/e+EW63k07f/EDNLQMuoFe0hGGVTex5GOPVr5
-         xEXys0SNhV8nc6CYee58jOoEGaIiOLryoWWWs/ULO39bfN8wi2ZoygCnaSgRkkzFmVnc
-         9uTjUwRSgrMFxQ8LUwzw+Nl/0+5gza98o1GTf9ZzMhOLlebq1uDh8hLFR3M6SNiX0vY7
-         8dqy60/mw2j345Y0+0xaWmcxYrr0/u3Ox3J0tQBlP3rbKLg5pq6avvVrvxfC2p35gEXh
-         KUHQ==
+        d=googlemail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to:cc;
+        bh=S17+jIj3DzvdMkWk1UIK0wi8e0Ja8mzevOLbZhFbTMM=;
+        b=ZbUbFZadkuYhdrXAZA5Mdnprn++gzb0goVZ/jH4xcY0Rh5f/HeKEGJoSKKzLqFCKQ2
+         zTDYUPF0S6oMzsrI4LImWocbOIcxuZTN0KCNVHQneXXKk4fNHcqJhxs5Xif7zaRv1Wgb
+         /D1EHVEZa2DuSHTUzy4+SQ40D8/51htbLIthP4o22BFFyh8p1gmQvM292btITZnDevcp
+         4oNdQnEtHwW7xWkCbTuHIF0RoPmX71dltYdNyfEYdV9UxtAUbxrXDIQEDapj9aLxYcEB
+         x4IWed/xbhk5J/GlTjOpdBPNLkWISJOMSptGmGaa1Fzh47wVrkbxoNjNnaAyqHwpTXOp
+         s64g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=IfKLU/tAsSxrRK4BozBQ5sjJ1NmxU7yJnEviDKZD+0k=;
-        b=lsrKHHRG2J67cquBRhPuorL2qkOCEprszUUwwuKxADI71QkFV2kIYTIP7Piuyo668A
-         mJrva/zT25T+F8eu31gaEyCtYzdcjBX4eycXuD1xZFhbjjxYN7HsvwcTOwdcRs38FVgd
-         JC1QFrIh0liYe5CU6JadOaBsbLOmmDJ6Mzyjtee86eNKiGPkVPkt89Z46w/Nd1IDX7KQ
-         jLB/09pS9RMZQm4DsON542Y9zRS2fxsGxsZGlKnwqzesVW0JWE1vD7z5Xo4Hf3VyJRSU
-         34kT7nqAb8xSWgnAV3GMWCa6RHPWW0zEkzkeaEIjWtWForu+X7TJKdYCnZlM212EkAqW
-         P9Gw==
-X-Gm-Message-State: AKaTC02qHQvhQbeMMBcOjYSo6BjUF7xWFPu1RrlwA1RmXH9s57IVARQ/kiPCPsIvO4LQFsGudAjHTZh8EU5roQ==
-X-Received: by 10.194.101.97 with SMTP id ff1mr16215873wjb.67.1479817889637;
- Tue, 22 Nov 2016 04:31:29 -0800 (PST)
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to:cc;
+        bh=S17+jIj3DzvdMkWk1UIK0wi8e0Ja8mzevOLbZhFbTMM=;
+        b=dJocsdDleXmH2z6UG0MUYT/ZQPpG2aDD/1QJYE4rWlCZ2z3kgInZfc1Ae6ZZUwcPSn
+         hSEtxIVapqn/3bbdkWsKL7tc5kpk4BaldUHM9EpN7XdiMFRHIX+407fSaR7N0RdtSLmh
+         JcAqNbvTNXWyV2Yyxxy1EepiEGspehZ4i5FHRQFqZxzvHFiMn6QW+vb4QdXIfZ6Z1exx
+         EwKEWOcx5oLQM0nHxrXQRsPbdkljAmzONYPL/wBXbmH11ZPy+Hua9XCOu8ZFfyFcIGdS
+         kjAO+Knnt25i75B8H25AAQ3/3idLn/xaFes2b3zThoruUvJeGmzIO3e3/F17S28O3DdL
+         TKDg==
+X-Gm-Message-State: AHQUAuatp1axOEgUDRk0T+9U4y/ljL3+/Fsm2LF0968SsjogIU3C/R1L
+	LxAxlxwP1dqDbASiYdwQjI7OCHCi
+X-Google-Smtp-Source: AHgI3IYMxs4uH/kXd6eCKGz4XjXiVc0jvlQVEHdhNA5pBIPGt7Qs5MmvLBoTuAoCB/ewgToAANrCMg==
+X-Received: by 2002:a9d:66c8:: with SMTP id t8mr11153212otm.368.1550505214254;
+        Mon, 18 Feb 2019 07:53:34 -0800 (PST)
+X-Received: by 2002:aca:3806:: with SMTP id f6mr13592786oia.47.1550505212797;
+ Mon, 18 Feb 2019 07:53:32 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20161119115932.1854beff@pc1>
-References: <20161118163119.GQ11402@suse.de> <20161119115932.1854beff@pc1>
-From: Alex Gaynor <alex.gaynor@gmail.com>
-Date: Tue, 22 Nov 2016 07:31:29 -0500
-Message-ID: <CAFRnB2XkOnZGGXwJTcNb2t2LbGFS4-vzKZ3COzBot2G32PEZ9Q@mail.gmail.com>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Content-Type: multipart/alternative; boundary=e89a8f83a761a5109b0541e2f3be
-Subject: Re: [oss-security] CVE Request: gstreamer plugins
+X-Gmail-Original-Message-ID: <CAG48ez2exshg9QipMkiuHK7rgiaJCO4KO8XMa_C-DiddfmK78A@mail.gmail.com>
+Message-ID: <CAG48ez2exshg9QipMkiuHK7rgiaJCO4KO8XMa_C-DiddfmK78A@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Cc: Felix Wilhelm <fwilhelm@google.com>
+Date: Mon, 18 Feb 2019 16:53:06 +0100
+From: Jann Horn <jannhorn@googlemail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Linux kernel: three KVM bugs (CVE-2019-6974, CVE-2019-7221, CVE-2019-7222)
+To: oss-security@lists.openwall.com
 
---e89a8f83a761a5109b0541e2f3be
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Three vulnerabilities were recently fixed in KVM-related code; two
+found by Felix Wilhelm, one by me:
 
-Another exploit chain here:
-https://scarybeastsecurity.blogspot.de/2016/11/0day-exploit-advancing-explo=
-itation.html
+CVE-2019-7222
+https://bugs.chromium.org/p/project-zero/issues/detail?id=1759
+KVM: uninitialized memory leak in kvm_inject_page_fault
+Fix: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=353c0956a618a07ba4bbe7ad00ff29fe70e8412a
+guest-reachable, requires nested virtualization support
 
-Alex
+CVE-2019-7221
+https://bugs.chromium.org/p/project-zero/issues/detail?id=1760
+KVM: use-after-free using emulated vmx preemption timer
+Fix: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ecec76885bcfe3294685dc363fd1273df0d5d65f
+guest-reachable, requires nested virtualization support
 
-On Sat, Nov 19, 2016 at 5:59 AM, Hanno B=C3=B6ck <hanno@hboeck.de> wrote:
+CVE-2019-6974
+https://bugs.chromium.org/p/project-zero/issues/detail?id=1765
+Linux: kvm_ioctl_create_device() installs fd before taking reference
+Fix: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=cfa39381173d5f969daf43582c95ad679189cbc9
+reachable only by host userspace with access to /dev/kvm
 
-> Hi,
->
->
-> On Fri, 18 Nov 2016 17:31:19 +0100
-> Marcus Meissner <meissner@suse.de> wrote:
->
-> > 1. Bufferoverflow in VMNC decoder in gstreamer plugins:
-> >       https://scarybeastsecurity.blogspot.de/2016/11/0day-poc-
-> risky-design-decisions-in.html
->
-> I wanted to point out that while it's good the buffer overflow gets
-> fixed, that's by far not the major issue here.
->
-> This is a very problematic design decision with the functionality of
-> tracker/GNOME that exposes all files on a system to who knows how many
-> decoders of probably overall very low quality.
-> Almost certainly there are countless other vulnerabilities of similar
-> kind in all kinds of gstreamer codecs. (and I haven't checked, but I
-> assume tracker also exposes other files to other equally problematic
-> decoders)
->
-> I think this is kinda a symptom of two goals clashing: We have projects
-> like gstreamer that attempt to parse every file format ever seen in
-> their are - which of course has some value, especially in terms of
-> preserving digital culture. But on the other hand exposing this code to
-> untrusted inputs is a security disaster.
->
-> I'm wondering if there is any statement or reaction from either gnome
-> or fedora on this.
->
-> --
-> Hanno B=C3=B6ck
-> https://hboeck.de/
->
-> mail/jabber: hanno@hboeck.de
-> GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
->
-
-
-
---=20
-"I disapprove of what you say, but I will defend to the death your right to
-say it." -- Evelyn Beatrice Hall (summarizing Voltaire)
-"The people's good is the highest law." -- Cicero
-GPG Key fingerprint: D1B3 ADC0 E023 8CA6
-
---e89a8f83a761a5109b0541e2f3be--
+These are all fixed in the following stable releases:
+https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.20.8
+https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.19.21
+https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.14.99
+https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.9.156
