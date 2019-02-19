@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1818" "Tuesday" "7" "November" "2017" "14:20:26" "+0000" "John Haxby" "john.haxby@oracle.com" "<bf387118-b094-17b1-a023-39af87742479@oracle.com>" "40" "Re: [oss-security] Race condition between UDP bind(2) and connect(2) delivers wrong datagrams" nil nil nil "11" "2017110714:20:26" "[oss-security] Race condition between UDP bind(2) and connect(2) delivers wrong datagrams" (number mark "U       john.haxby@o Nov  7   40/1818  " thread-indent "\"Re: [oss-security] Race condition between UDP bind(2) and connect(2) delivers wrong datagrams\"\n") "<848ccf01-0a05-76ea-470d-aa59579d447b@redhat.com>" ("<4e069c7c-85a2-f3ce-6ce2-8a9b4bf86a41@maxsi.org>" "<848ccf01-0a05-76ea-470d-aa59579d447b@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1622" "Tuesday" "19" "February" "2019" "16:48:58" "+0000" "Simon McVittie" "smcv@debian.org" "<20190219164858.GC19026@espresso.pseudorandom.co.uk>" "32" "Re: [oss-security] CVE-2019-6454: systemd (PID1) crash with specially crafted D-Bus message" "^Date:" nil nil "2" "2019021916:48:58" "[oss-security] CVE-2019-6454: systemd (PID1) crash with specially crafted D-Bus message" (number mark "        smcv@debian. Feb 19   32/1622  " thread-indent "\"Re: [oss-security] CVE-2019-6454: systemd (PID1) crash with specially crafted D-Bus message\"\n") "<a172617e-fd76-8f64-9af6-fca53c10a4f4@canonical.com>" ("<a172617e-fd76-8f64-9af6-fca53c10a4f4@canonical.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7454 invoked by uid 550); 7 Nov 2017 14:20:42 -0000
+Received: (qmail 5712 invoked by uid 550); 19 Feb 2019 16:49:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,62 +11,50 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7431 invoked from network); 7 Nov 2017 14:20:41 -0000
-To: oss-security@lists.openwall.com
-References: <4e069c7c-85a2-f3ce-6ce2-8a9b4bf86a41@maxsi.org>
- <848ccf01-0a05-76ea-470d-aa59579d447b@redhat.com>
-From: John Haxby <john.haxby@oracle.com>
-Message-ID: <bf387118-b094-17b1-a023-39af87742479@oracle.com>
-Date: Tue, 7 Nov 2017 14:20:26 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
+Received: (qmail 5694 invoked from network); 19 Feb 2019 16:49:14 -0000
+Message-ID: <20190219164858.GC19026@espresso.pseudorandom.co.uk>
+References: <a172617e-fd76-8f64-9af6-fca53c10a4f4@canonical.com>
 MIME-Version: 1.0
-In-Reply-To: <848ccf01-0a05-76ea-470d-aa59579d447b@redhat.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
-X-Source-IP: aserv0021.oracle.com [141.146.126.233]
-Subject: Re: [oss-security] Race condition between UDP bind(2) and connect(2)
- delivers wrong datagrams
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a172617e-fd76-8f64-9af6-fca53c10a4f4@canonical.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Date: Tue, 19 Feb 2019 16:48:58 +0000
+From: Simon McVittie <smcv@debian.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE-2019-6454: systemd (PID1) crash with
+ specially crafted D-Bus message
+To: oss-security@lists.openwall.com
 
-On 06/11/17 18:42, Florian Weimer wrote:
->> Even though it can be difficult to exploit this bug, it is a
->> validation bug
->> in the kernels. POSIX 2008 (2016 edition) says[1]:
->>
->>   "For SOCK_DGRAM sockets, the peer address identifies where all datagrams
->>    are sent on subsequent send() functions, and limits the remote sender
->>    for subsequent recv() functions."
-> 
-> Whatever the exact wording used is, the intent of POSIX is to describe
-> the BSD sockets API behavior.  If the API does something else, that's a
-> POSIX bug.
+On Mon, 18 Feb 2019 at 17:41:56 +0100, Chris Coulson wrote:
+> According to the dbus specification, the path "may be of any
+> length" (with the length being represented on the wire by a uint32),
+> but systemd seems to limit the size of incoming messages to 128MB
+> (BUS_MESSAGE_SIZE_MAX).
 
-It does say "subsequent" and says nothing about datagrams that might be
-received by the kernel before the connect(2).
+D-Bus is a protocol and dbus is the reference implementation of the
+D-Bus protocol, so it's really the D-Bus specification.
 
-The Linux man page also has this to say:
+The 128M limit also comes from the D-Bus Specification, which isn't
+always as good as it might be about taking a rule from one part of the
+spec and noting its consequences in another part (patches welcome). The
+intention is that wherever rules rule1 and rule2 overlap, messages must
+obey (rule1 && rule2) - so for instance when a string or path can be
+any 32-bit length, a string or path is part of a message, and a message
+is up to 128M, the practical result is that the longest possible string
+or path is a bit less than 128M.
 
->   Generally, connection-based protocol sockets may successfully connect()
->   only once; connectionless protocol sockets may use  connect()  multiple
->   times to change their association.  Connectionless sockets may dissolve
->   the association by connecting to an address with the  sa_family  member
->   of sockaddr set to AF_UNSPEC (supported on Linux since kernel 2.2).
+> From testing on Ubuntu 18.10, it seems that the
+> real limit is actually much less than this - dbus-daemon drops the
+> connection when I try to send a message with an object path greater than
+> about 32MB.
 
-I know that that's not Posix, but it underlines the interesting question
-of what happens to packets that have already been received that have the
-"wrong" source address?
+This lower limit is `dbus-daemon --system` policy/configuration to
+mitigate/limit denial-of-service attacks by resource exhaustion (and
+accidentally also mitigation for attacks like this one, although I don't
+think that was ever intentional) - part of dbus, the reference
+implementation of D-Bus, rather than part of the D-Bus spec. It can differ
+in other implementations like dbus-broker and gdbus-daemon, and it can
+also be changed by distros or sysadmins.
 
-You might hope that the kernel will just flush any datagrams that the
-application has picked up.  What happens, though, if the program is
-working its way through datagrams that it has received or is receiving
-from the kernel?   That's a rhetorical question -- it should, of course,
-discard packets it is (no longer) interested in.
-
-While there's plenty of scope for programs to get this wrong, I don't
-think the kernel is under any obligation to attempt to flush anything
-either from a standards point of view or from a real-world
-implementation point of view.
-
-jch
+    smcv
