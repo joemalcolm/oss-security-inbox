@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2403" "Thursday" "7" "September" "2017" "12:29:50" "-0400" "Daniel Kahn Gillmor" "dkg@fifthhorseman.net" "<877exa8oap.fsf@fifthhorseman.net>" "61" "Re: [oss-security] CVE-2017-12847: nagios-core privilege escalation via PID file manipulation" "^Date:" nil nil "9" "2017090716:29:50" "[oss-security] CVE-2017-12847: nagios-core privilege escalation via PID file manipulation" (number mark "        dkg@fifthhor Sep  7   61/2403  " thread-indent "\"Re: [oss-security] CVE-2017-12847: nagios-core privilege escalation via PID file manipulation\"\n") "<20170907151829.lff5etqqtwceqvq4@perpetual.pseudorandom.co.uk>" ("<f28badcd-c805-3fa5-5a1f-cd65c4899885@orlitzky.com>" "<87wp63jgxn.fsf@fifthhorseman.net>" "<2199434f-d7b6-0d01-9fbc-ed2d013a09d3@orlitzky.com>" "<87ingva5rf.fsf@fifthhorseman.net>" "<fb6b7e2d-977d-7eae-346e-a638f806bf34@orlitzky.com>" "<20170907151829.lff5etqqtwceqvq4@perpetual.pseudorandom.co.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4658" "Tuesday" "19" "February" "2019" "19:33:19" "+0100" "Daniel Beck" "ml@beckweb.net" "<4418E151-21FE-42EE-ACC8-B75A99AC469E@beckweb.net>" "120" "[oss-security] Multiple vulnerabilities in Jenkins plugins" "^Date:" nil nil "2" "2019021918:33:19" "[oss-security] Multiple vulnerabilities in Jenkins plugins" (number mark "U       ml@beckweb.n Feb 19  120/4658  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 14118 invoked by uid 550); 7 Sep 2017 16:30:09 -0000
+Received: (qmail 11613 invoked by uid 550); 19 Feb 2019 18:33:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,77 +11,138 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 14073 invoked from network); 7 Sep 2017 16:30:08 -0000
-In-Reply-To: <20170907151829.lff5etqqtwceqvq4@perpetual.pseudorandom.co.uk>
-References: <f28badcd-c805-3fa5-5a1f-cd65c4899885@orlitzky.com> <87wp63jgxn.fsf@fifthhorseman.net> <2199434f-d7b6-0d01-9fbc-ed2d013a09d3@orlitzky.com> <87ingva5rf.fsf@fifthhorseman.net> <fb6b7e2d-977d-7eae-346e-a638f806bf34@orlitzky.com> <20170907151829.lff5etqqtwceqvq4@perpetual.pseudorandom.co.uk>
-Message-ID: <877exa8oap.fsf@fifthhorseman.net>
-MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Thu, 07 Sep 2017 12:29:50 -0400
-From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+Received: (qmail 11595 invoked from network); 19 Feb 2019 18:33:31 -0000
+Content-Type: text/plain;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 11.5 \(3445.9.1\))
+Message-Id: <4418E151-21FE-42EE-ACC8-B75A99AC469E@beckweb.net>
+X-Mailer: Apple Mail (2.3445.9.1)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1550601211;5eaf413d;
+X-HE-SMSGID: 1gwACm-0002Ef-CK
+Date: Tue, 19 Feb 2019 19:33:19 +0100
+From: Daniel Beck <ml@beckweb.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2017-12847: nagios-core privilege escalation via PID file manipulation
-To: Simon McVittie <smcv@debian.org>, oss-security@lists.openwall.com
+Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
+To: oss-security@lists.openwall.com
 
---=-=-=
-Content-Type: text/plain
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software. The following
+releases contain fixes for security vulnerabilities:
 
-On Thu 2017-09-07 16:27:25 +0100, Simon McVittie wrote:
-> Ideally, the sequence of events would be something that ensures that
-> the pid file already exists by the time readiness has been announced,
-> like this pseudocode:
->
->     have the necessary privileges to write a pid file
->     fork
->     if (parent) {
->         write child pid to pid file
->         exit    /* tells supervisor we are ready */
->     }
->     else /* child */ {
->         drop privileges
->         while (1) { process request }
->     }
+* Acunetix Plugin 1.1.0
+* Arxan MAM Publisher Plugin 2.0
+* Cloud Foundry Plugin 2.3.2
+* ElectricFlow Plugin 1.1.5
+* JMS Messaging Plugin 1.1.2
+* Mattermost Notification Plugin 2.6.3
+* OctopusDeploy Plugin 1.9.0
+* Script Security Plugin 1.53
 
-Is there a potential race condition here?  for example, if dropping
-privileges takes some amount of time, or if there is additional setup
-that ought to be done as non-root (building tables, pre-processing a
-dataset from the filesystem, initializing a PRNG), then this pattern is
-actually pretty hard to get right as a notification.
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2019-02-19/
 
-the options seem to be:
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
- 0) if dropping privs is known to be fast, then move any lengthy
-    initialization/setup into the root/pre-fork side.  this is a
-    violation of the principle of least privilege.
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
 
- 1) establish a communication channel between the child and the parent,
-    and have the child explicitly signal to the parent that it is ready
-    so that the parent can exit() appropriately.
+---
 
-but (1) is at least as much work as any of the other forms of explicit
-notification to the service manager directly, so it's not clear that
-forking is a great way to provide such notification.
+SECURITY-1320
+The previously implemented Script Security Plugin sandbox protections
+prohibiting the use of unsafe AST transforming annotations such as @Grab=20
+could be circumvented through use of various Groovy language features:
 
-        --dkg
+* Using Groovy=E2=80=99s AnnotationCollector
+* Import aliasing
+* Referencing annotation types using their full class name
 
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
+This allowed users with Overall/Read permission, or the ability to control
+Jenkinsfile or sandboxed Pipeline shared library contents in SCM, to=20
+bypass the sandbox protection and execute arbitrary code on the Jenkins=20
+master.
 
------BEGIN PGP SIGNATURE-----
+Using AnnotationCollector is now newly prohibited in sandboxed scripts=20
+such as Pipelines. Importing any of the annotations considered unsafe will
+now result in an error. During the compilation phase, both simple and=20
+full class names of prohibited annotations are rejected for element=20
+annotations.
 
-iQIzBAEBCgAdFiEEOCdgUepHf6PklTkyFJitxsGSMjcFAlmxc/4ACgkQFJitxsGS
-MjfugxAAvTlVZFfT+r9t1KmgsqcbUrBtJm2wnq1QhHQ3eZ/sM8Nxpc+6W00h1zNk
-Xe0gtXPA+49S3oHZomrqXgU6vwvQQ/+pI9VI2cPcQ80UykB43+A4tTvMAOeU7W+b
-Rohvv3V7DUmyMTdOBf70CtGfc9Sp+ZwWr0VGs8qqODQ8l6xw/+/Z8MThSqYnR9rz
-pAzmVC96d+fBe3QWqTooIKJPl/LDmeiUhnylY9/IVhFjprCc5IM/gcn72f63zel8
-OW2om9DVD+NBAgqs22RJq7zcZir3jjhM4TURvr14jOk5j077E0oOxdzM4G7tuDpG
-iu/od0fG07GjXMRTF/DEbqSacZskIEDChs3HaZ3Q80xs3jIR5vE8X/92cngAom7l
-ljS5QCrgrGiGoBevqwcbT99HJ5bpkvjL6HdyDov3bJKlwFqF6w0bYn7L4l7nFr+m
-AuwlLylSkw8ra8B/ebUagNUwygY9uyIhpLwSnder6Eh6/KTgvoERVsDyHBgxk1bF
-GwIPKINNCAbqxrhRIUYEx6lKvIFSYcP4/gVOoYNt3dkIs1LPYLXjuvpsRrKWujuZ
-Nh6/MnYn1kak2BXYcR9DtUdM8XeLdVGKcVRKvQf4jYsvGQHseDdPnkYTPDvwjC0f
-dti0DWibFg4fFx8a3OSgv6vb+XuzRC+BSH/2QQoaRa/gA1ErWAQ=
-=MfAa
------END PGP SIGNATURE-----
---=-=-=--
+
+SECURITY-876
+Cloud Foundry Plugin did not perform permission checks on a method=20
+implementing form validation. This allowed users with Overall/Read access=20
+to Jenkins to connect to an attacker-specified URL using attacker-
+specified credentials IDs obtained through another method, capturing=20
+credentials stored in Jenkins.
+
+Additionally, this form validation method did not require POST requests,=20
+resulting in a cross-site request forgery vulnerability.
+
+
+SECURITY-985
+A missing permission check in a form validation method in Mattermost=20
+Notification Plugin allowed users with Overall/Read permission to=20
+initiate a connection test, connecting to an attacker-specified=20
+Mattermost server and room and posting a message.
+
+Additionally, this form validation method did not require POST requests,=20
+resulting in a CSRF vulnerability.
+
+
+SECURITY-817
+A missing permission check in a form validation method in OctopusDeploy=20
+Plugin allowed users with Overall/Read permission to initiate a=20
+connection test, sending an HTTP HEAD request to an attacker-specified=20
+URL, returning HTTP response code if successful, or exception error=20
+message otherwise.
+
+Additionally, this form validation method did not require POST requests,=20
+resulting in a CSRF vulnerability.
+
+
+SECURITY-1033
+A missing permission check in a form validation method in JMS Messaging=20
+Plugin allowed users with Overall/Read permission to initiate a=20
+connection test, sending an HTTP request to an attacker-specified URL.
+
+Additionally, this form validation method did not require POST requests,=20
+resulting in a CSRF vulnerability.
+
+
+SECURITY-937
+ElectricFlow Plugin unconditionally disabled SSL/TLS certificate=20
+validation for the entire Jenkins master JVM.
+
+
+SECURITY-951
+Acunetix Plugin stored the API Key in its configuration unencrypted in=20
+its global configuration file on the Jenkins master. This key could be=20
+viewed by users with access to the master file system.
+
+
+SECURITY-980
+A missing permission check in a form validation method in Acunetix Plugin=20
+allowed users with Overall/Read permission to initiate a connection test,=20
+sending an HTTP GET request to an attacker-specified URL, adding a /me=20
+suffix, returning whether the connection could be established and whether=20
+the HTTP response code is 200.
+
+Additionally, this form validation method did not require POST requests,=20
+resulting in a CSRF vulnerability.
+
+
+SECURITY-1070
+Arxan MAM Publisher Plugin stored the username and password connection=20
+credentials in its configuration unencrypted in jobs' config.xml files on=20
+the Jenkins master. This key could be viewed by users with Extended Read=20
+permission, or access to the master file system.
+
+While masked from view using a password form field, the password was=20
+transferred in plain text to users when accessing the job configuration=20
+form.
+
