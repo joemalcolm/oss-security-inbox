@@ -1,41 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/08/5
-Message-Id: <E1hkWIu-0004Qz-Vq@rmmprod07.runbox>
-Date: Mon, 08 Jul 2019 12:15:48 -0400 (EDT)
-From: "David A. Wheeler" <dwheeler@...eeler.com>
-To: "oss-security" <oss-security@...ts.openwall.com>
-CC: "oss-security" <oss-security@...ts.openwall.com>
-Subject: Re: linux-distros membership application - Microsoft
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/21/2
+Message-ID: <20190221125750.GC869@suse.de>
+Date: Thu, 21 Feb 2019 13:57:50 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: Kernel local root in SCTP / CVE-2019-8956
 Content-Type: text/plain; charset=utf-8
 
-On Sun, 7 Jul 2019 15:42:58 +0200, Solar Designer <solar@...nwall.com> wrote:
-> I don't view it as a present, but as us being reasonable.  The rules
-> don't require the 1 year track record to be for Linux specifically...
-> So I suggest we subscribe "Microsoft Linux Systems Group" on August 8.
+Hi,
 
-I think that's entirely reasonable.  Indeed, I think it'd be reasonable to add
-them now.  That said, ensuring that the "right sub-group" is added is appropriate,
-since we want to ensure that people contact the correct group.
+CVE-2019-8956 
 
+Secunia just announced this a local root in SCTP:
 
-Georgi Guninski:
-> ... The Halloween Documents are from 1998, which makes 21 years.
+	https://secuniaresearch.flexerasoftware.com/secunia_research/2019-5/
 
-That is a long time ago.  People and companies change, and
-in this case there's good evidence that change has occurred.
-Forgiveness is a good idea, for both people and companies.
-Yes, companies have a profit motive, but that's not at all disqualifying.
+There was a SCTP local root in the kernel due to a association list
+corruption.
 
-Besides, the beneficiaries of linux-distros work aren't just
-the distros; they also include the *users* of those distros.  As noted in
-http://oss-security.openwall.org/wiki/mailing-lists/distros ,
-the list is only "to report and discuss security issues that are not yet public
-(but that are to be made public very soon...)...
-It is intended that these lists be used primarily to provide actionable information
-to multiple distribution vendors at once."
-This enables everyone to coordinate so that users get *fixes*
-when the issue becomes public, not just a problem the users can't deal with.
+https://lore.kernel.org/netdev/20190201141522.GA20785@kroah.com/
 
-In short, I support allowing the Microsoft Linux Systems Group to join linux-distros.
+In sctp_sendmesg(), when walking the list of endpoint associations, the
+association can be dropped from the list, making the list corrupt.
+Properly handle this by using list_for_each_entry_safe()
 
---- David A. Wheeler
+Fixes: 4910280503f3 ("sctp: add support for snd flag SCTP_SENDALL process in sendmsg")
+
+This issue is in 4.17 up to 5.0rc6.
+
+Ciao, Marcus
