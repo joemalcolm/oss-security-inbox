@@ -1,39 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/09/6
-Message-ID: <20191209164635.GB35251@orca>
-Date: Mon, 9 Dec 2019 16:46:35 +0000
-From: Leonid Isaev <leonid.isaev@...x.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Shell wildcards considered dangerous?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/21/1
+Message-ID: <nycvar.YSQ.7.76.1902211335290.504@xnncv>
+Date: Thu, 21 Feb 2019 13:36:45 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE-2019-8934 QEMU: ppc64: sPAPR emulator leaks the host hardware identity
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Dec 09, 2019 at 04:28:35PM +0100, Noel Kuntze wrote:
-> The message was about the attack vector on applications that put together
-> argument vectors based on user input, not specifically about human use of the
-> shell.
+   Hello,
 
-Then, why in "tar xf *.tar" the "*" is expected to mean anything other than
-a literal * (0x2a)? It is because of the shell globbing: "tar xf ./*.tar" will
-work without any "--". For example:
------8<-----
-$ echo -E "xxx" > "-b xxx.qwetr"
-$ file *.qwetr
-file: invalid option -- ' '
-file: invalid option -- 'x'
-file: invalid option -- 'x'
-file: invalid option -- 'x'
-file: invalid option -- '.'
-file: invalid option -- 'q'
-file: invalid option -- 'w'
-Usage: file [-bcCdEhikLlNnprsvzZ0] [--apple] [--extension] [--mime-encoding]
-            [--mime-type] [-e <testname>] [-F <separator>]  [-f <namefile>]
-            [-m <magicfiles>] [-P <parameter=value>] <file> ...
-       file -C [-m <magicfiles>]
-       file [--help]
-$
-$ file ./*.qwetr
-./-b xxx.qwetr: ASCII text
------>8-----
+It was found that the KVM PPC64 emulator for the sPAPR machine leaks the host 
+hardware identity to all running guests. The sPAPAR(hw/ppc/spapr.c) emulator 
+populates the device tree for the guest with two fields "host-serial" and 
+"host-model". The values for these fields are taken via hypervisor from the 
+host device tree data exposed in "/proc/device-tree/system-id" and 
+"/proc/device-tree/model" file respectively.
 
-Sincerely,
-L.
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2019-02/msg04821.html
+
+CVE-2019-8934 assigned via https://cveform.mitre.org/
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
