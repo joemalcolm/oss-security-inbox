@@ -1,45 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/17/2
-Message-ID: <20190917165453.GA17293@eldamar.local>
-Date: Tue, 17 Sep 2019 18:54:53 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/21/3
+Message-ID: <20190221143806.GA12473@foreshadow.home.puiterwijk.org>
+Date: Thu, 21 Feb 2019 15:38:06 +0100
+From: Patrick Uiterwijk <puiterwijk@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenDMARC signature bypass with multiple From addresses
+Subject: CVE-2018-1002161 - Koji - SQL injection in multiple remote calls
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-On Wed, Sep 11, 2019 at 12:43:19PM +0200, Hanno Böck wrote:
-> Hi,
-> 
-> Protonmail reported about a phishing incident in July:
-> https://protonmail.com/blog/bellingcat-cyberattack-phishing/
-> 
-> This had this somewhat mysterious chapter:
-> "Furthermore, the attackers attempted to exploit an unpatched
-> vulnerability in an open source software that is widely used by email
-> providers in an effort to bypass spam and abuse filters. We were
-> previously aware of this vulnerability and have already been watching
-> it for some time, but we will not disclose it here because the software
-> in question is not developed by ProtonMail, and it has not yet been
-> patched by the software maintainers. This vulnerability, however, is
-> not widely known and indicates a higher level of sophistication on the
-> part of the attackers."
-> 
-> After asking protonmail multiple times for a statement they answered
-> and I learned that it's about this issue in OpenDMARC:
-> https://github.com/trusteddomainproject/OpenDMARC/pull/48
-> 
-> It's an issue where by specifying multiple From addresses only one of
-> them gets DMARC-checked.
-> 
-> There's no reaction from the OpenDMARC developers and it's unclear
-> whether it's still actively developed. Given this is already actively
-> exploited I think people should be aware of it and distros should
-> probably apply the patch from the PR.
+Description
+===========
 
-MITRE has assigned CVE-2019-16378 for this issue (requested via the
-https://cveform.mitre.org/).
+SQL injection vulnerabilities have been found in multiple call handlers in Koji’s hub code. An anonymous attacker can use these vulnerabilities to issue arbitrary database commands. 
 
-Regards,
-Salvatore
+
+Affected versions
+=================
+
+All versions of Koji are vulnerable.
+
+
+Patched versions
+================
+
+Koji versions 1.11.1, 1.12.2, 1.13.2, 1.14.2, 1.15.2, and 1.16.2 are available on the website, and
+all include patches to solve this problem.
+
+
+Credits
+=======
+
+This issue was discovered by Mike McLean and Patrick Uiterwijk of Red Hat.
+
+
+References
+==========
+
+https://docs.pagure.org/koji/CVE-2018-1002161/
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIcBAEBCgAGBQJcbrfOAAoJEIZXmA2atR5Qe4QP/1iLTjcM1H6i9WUFmhHKxGNY
+UJKCX+LDwhkVX+mHQuogQg8iouoyMnUb0jzpwRFg5N1Y8Qo18GJltdcqrPTg5Lu9
+oy8ShQENJCKwFz+LgWoggteFtcduKj1yJMUtlpW4iOeGK7sf6MXDMzX9egyJbWiZ
+4xiJaeYlU585TEMQROPL+LmypRBIfYalalVO6RofufwkJ/hS/cTLJ4Fsvt+6uoq2
+xUoiPGQfkMuBZfzxCDDAXb2AA614CjjOArwBzE6AUE6JMwR+6XgG6gP5LgLsLSnp
+Ce7y7JV7D01z3YvbJ3sa+880LMQtPw5lesIJc1Aj6kEehSKj01/QdH+H3hNmr+3z
+5zHzx1koMq5+E/SHvAxQxA7azS9KF9j35cgyIygrS0P1PnjymjN59gxol2xOZqxU
+eiVc4X/vDpRf+3oNGDn/+XdHDWMR0k2w08SMBnAX7dOq0oaZ8oll2jmV1QPeXttv
+s4H8HiKtqmZse5QS2Yt6+1QoKcwD3qLVcRlsBNYoIzA4nTCVc78QDxsUVqoFe6Al
+8EXd1rac7kIJjM5kauVy+DBbUrgFYH3O77VwnVB/qwYjStWRV60vfkecBpJVYN/A
+9JgGpXR3zR5LBLRQIsHxQEJfgtOKccBJrrJGq7nLCV/G7hYql2iTyiqPEF+Lr0bF
+4HxEdKZcQJ6KHgePsL9q
+=rS+E
+-----END PGP SIGNATURE-----
