@@ -1,83 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/09/3
-Message-ID: <200975c0f23706ce513744052225ea7dc9842206.camel@suse.com>
-Date: Tue, 9 Jul 2019 13:58:37 +0000
-From: Malte Kraus <malte.kraus@...e.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Privileged File Access from Desktop Applications
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/22/2
+Message-Id: <E1gxEqa-0004hp-RY@xenbits.xenproject.org>
+Date: Fri, 22 Feb 2019 17:42:52 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 283 v2 - Withdrawn Xen Security Advisory number
 Content-Type: text/plain; charset=utf-8
 
-With Wayland, it's no longer supported to run graphical applications as
-root. The big desktop environments want to allow users to edit and
-manage files through graphical applications (mostly text editors and
-file managers). They have therefore implemented D-Bus services to
-perform file I/O as root, authenticated through polkit.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-We have reviewed various of these:
-     a) a specialized D-Bus service for ktexteditor, the framework
-        component powering the Kate editor
-     b) gvfs-admin, which allows all gtk-enabled applications to access
-        files as root
-     c) the kauth helper for ioslave, which allows KDE applications to
-        access files as root
+                 Xen Security Advisory XSA-283
+                           version 2
 
-As privileged file I/O is notoriously hard to get right, we found some
-concrete security issues in them [1] [2], which the projects were glad
-to fix. However, we believe there also some deeper design design
-choices that also merit further discussion.
+              Withdrawn Xen Security Advisory number
 
-None of the solutions actually provided the user with the accessed path
-or file operation in the polkit auth prompt. Users are confronted with
-an unspecific request for privileges that they can only allow or deny
-without knowing what exactly they are allowing. (This is unfortunately
-a common theme, e.g. on KDE the framework is still missing support for
-parameterizing polkit prompts.)
+SUMMARY
+=======
 
-There's also a conceptual risk with the generic backends for file I/O:
-unwitting applications that were written expecting to be run from an
-unprivileged context can end up performing privileged file I/O
-operations when supplied with such a URI/path. As a result, even when
-the framework correctly implements all API guarantees for these
-backends, applications are likely to be too careless with their
-framework calls, resulting in situations where e.g. symlink attacks can
-be performed. Of course due to the authentication requirements, user
-interaction is involved in any such situation.
+The advisory XSA-283 has been withdrawn.
 
-Another matter with gvfs-admin for example is what the desired
-behaviour is when files are copied or moved between the 'normal' file
-system and the virtual privileged file system - these operations are no
-longer symmetric like they are traditionally: A rename(2) call is
-either performed as root or not. But with a move of a file from file://
-(unprivileged) to admin:// (privileged), there are two different
-privilege levels involved. Since there is no equivalent to this
-situation in the UNIX file system semantics, it is unclear who should
-own the resulting file and what permissions it should have. Should file
-ownership be preserved? Should the file be owned by root? If an
-existing file is replaced, maybe the ownership and permissions of that
-file should be preserved? How does a setgid bit on a directory affect
-all this? What about higher-level flags in the framework like
-G_FILE_COPY_ALL_METADATA and G_FILE_COPY_TARGET_DEFAULT_PERMS?
+This is because, on further analysis, we have determined that the
+advisory was issued in error: there is no security issue.
 
-It's all quite underspecified, and we have the impression these
-questions weren't fully thought through before the feature shipped.
-Similar questions arise with the two KDE solutions, and some of the
-bugs probably arose exactly because these questions are not answered
-yet.
+UPDATES IN VERSION 2
+====================
 
+Advisory withdrawn.
 
-Best regards
-Malte Kraus, Matthias Gerstner
+DESCRIPTION
+===========
 
+XSA-283 stated:
 
-[1] CVE-2018-10361 https://seclists.org/oss-sec/2018/q2/65
-[2] CVE-2019-12447, CVE-2019-12448, CVE-2019-12449
+        VT-d: Incorrect accesses into the Interrupt Remapping table
 
+   A VT-d IOMMU has several tables in main RAM, which are configured by the
+   driver when it starts.  The tables are required to be aligned on a 4k
+   boundary, and the control registers in the IOMMU which point to them use
+   the bottom 12 bits for additional metadata.
 
--- 
-Malte Kraus <malte.kraus@...e.com>
-Security Engineer
-PGP Key: 8AFC 3C58 6880 2DDD 4792  C3C2 FDBD 2984 D4C3 C2F0
-SUSE Linux GmbH, GF: Felix Imendörffer, Mary Higgins, Sri Rasiah, HRB
-21284 (AG Nürnberg)
+   Unfortunately, Xen's VT-d driver includes this metadata in its base
+   pointer to the table, resulting in incorrect calculations when indexing
+   into the table.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Upon closer inspection, due to the particular way the calculations are
+implemented, the "metadata" components end up being eliminated without
+affecting the final result.
+
+IMPLICATIONS
+============
+
+XSA-283 does not describe any security or functional issue.
+
+The previously declared embargo for XSA-283 is vacated.
+Anyone who has information relating to XSA-283 may publish it.
+
+NB: there are other advisories are with the same embargo date.
+Those advisories stand, and their embargoes REMAIN IN FORCE.
+
+STATUS OF THE PATCHES
+=====================
+
+The patch previously published under embargo in XSA-283 is not
+necessary.  However, it is harmless; indeed it improves code clarity
+and is likely to be included in future Xen releases in some form.
+
+In the interests of transparency, the patch is attached:
+
+$ sha256sum xsa283*
+97069456b91064450b6da1e9834f0ab91270f3b93962ca66f2eb9315cf133055  xsa283.patch-withdrawn
+$
+
+There is no need to apply this patch.
+If you have already applied it, there is no need to revert it.
+
+CREDITS
+=======
+
+Thanks to Pawel Wieczorkiewicz and Uwe Dannowski, both of Amazon, for
+pointing out that there was no actual security issue.
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAlxwNH8MHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZ9TkH/iGiPQgUhfvBOQamhBAbeCJ4877+lM+HSln3UiUy
+hBvsA6mQCOsNKS2qUXQ8txE2w459V6DYbsmqFPRXLAaF7B+QMK6zPfICxwbCkyii
+24qoITatBKvPpEhqzoM6VvkjpuUOi9+n41d/JVcyE53yAuA4R+bR9c36cz1j+j8J
+Sd1Betvb5C51V6VQXjL/2zVb/v/fz5tuutIDC+jc7J1eHi7rN31TqizvuF19DQUu
+YvSyUjfX2tSlzSp2oJ/uG1wZrAd0Ah+scViSZd6FUsCZyCiHsU02kG0zKfhXCsQ2
++3UkI+WylK2n664uUJAtvvYBkpnGejg224jqasrzGhjZASI=
+=+3TC
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa283.patch-withdrawn" of type "application/octet-stream" (4752 bytes)
