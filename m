@@ -1,32 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/13/5
-Message-ID: <20190213095743.ek3x42ok7bengua5@yavin>
-Date: Wed, 13 Feb 2019 20:57:43 +1100
-From: Aleksa Sarai <cyphar@...har.com>
-To: EJ Campbell <ejc3@...izonmedia.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2019-5736: runc container breakout exploit code
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/22/1
+Message-ID: <531c6c3e-6c18-eb00-0b90-487db8650a2c@isc.org>
+Date: Thu, 21 Feb 2019 17:59:11 -0900
+From: Michael McNally <mcnally@....org>
+To: oss-security@...ts.openwall.com
+Cc: "security-officer@....org" <security-officer@....org>
+Subject: Multiple BIND CVEs disclosed (CVE-2018-5744, CVE-2018-5745, CVE-2019-6465)
 Content-Type: text/plain; charset=utf-8
 
-On 2019-02-13, Aleksa Sarai <cyphar@...har.com> wrote:
-> On 2019-02-13, EJ Campbell <ejc3@...izonmedia.com> wrote:
-> > While fixing docker / runc is clearly the right fix, would using chattr -i
-> > on runc be a quick mitigation for the issue? I believe that will prevent
-> > the file from being overwritten by the exploit and Etienne Stalmans
-> > verified that it helped:
-> >  https://twitter.com/_staaldraad/status/1095354945073754112
-> 
-> The privileged user in the container could just un-set the immutable
-> bit using "/proc/self/fd/..." and then open it for writing. A read-only
-> filesystem would work much better.
+Today ISC disclosed three vulnerabilities affecting multiple versions of
+BIND.  Full details on versions affected and more information about the
+vulnerabilities are available via these articles in the ISC Knowledge Base:
 
-Sorry, I forgot that CAP_LINUX_IMMUTABLE is dropped by default in
-Docker. Yes that mitigation would also work.
+CVE-2018-5744:
+   A specially crafted packet can cause named to leak memory
+   https://kb.isc.org/docs/cve-2018-5744
 
--- 
-Aleksa Sarai
-Senior Software Engineer (Containers)
-SUSE Linux GmbH
-<https://www.cyphar.com/>
+CVE-2018-5745:
+   An assertion failure can occur if a trust anchor rolls over to
+   an unsupported key algorithm when a server is using managed-keys
+   https://kb.isc.org/docs/cve-2018-5745
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+CVE-2019-6465:
+   Controls for zone transfers may not be properly applied to
+   Dynamically Loadable Zones (DLZs) if the zones are writable.
+   https://kb.isc.org/docs/cve-2019-6465
+
+New software versions are available from the ISC downloads page:
+https://www.isc.org/downloads
+
+With the public disclosure of these vulnerabilities, parties which
+had been given advance notice concerning them are released from
+non-disclosure and packagers and redistributors are encouraged to
+publish updated packages containing fixes.
+
+If you have additional questions, please direct them to
+security-officer@....org
+
+Thank you,
+
+Michael McNally
+ISC Security Officer
+
