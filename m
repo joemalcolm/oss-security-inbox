@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2717" "Thursday" "23" "June" "2016" "15:58:47" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20160623155847.2236edb8@pc1>" "71" "[oss-security] Out of bounds read and signed integer overflow in libarchive" nil nil nil "6" "2016062313:58:47" "[oss-security] Out of bounds read and signed integer overflow in libarchive" (number mark "U       hanno@hboeck Jun 23   71/2717  " thread-indent "\"[oss-security] Out of bounds read and signed integer overflow in libarchive\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1183" "Thursday" "21" "February" "2019" "17:59:11" "-0900" "Michael McNally" "mcnally@isc.org" "<531c6c3e-6c18-eb00-0b90-487db8650a2c@isc.org>" "34" "[oss-security] Multiple BIND CVEs disclosed (CVE-2018-5744, CVE-2018-5745, CVE-2019-6465)" "^Cc:" nil nil "2" "2019022202:59:11" "[oss-security] Multiple BIND CVEs disclosed (CVE-2018-5744, CVE-2018-5745, CVE-2019-6465)" (number mark "        mcnally@isc. Feb 21   34/1183  " thread-indent "\"[oss-security] Multiple BIND CVEs disclosed (CVE-2018-5744, CVE-2018-5745, CVE-2019-6465)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 30700 invoked by uid 550); 23 Jun 2016 13:59:07 -0000
+Received: (qmail 31799 invoked by uid 550); 22 Feb 2019 02:59:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,86 +11,83 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30682 invoked from network); 23 Jun 2016 13:59:07 -0000
-Date: Thu, 23 Jun 2016 15:58:47 +0200
-From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
-To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Message-ID: <20160623155847.2236edb8@pc1>
-X-Mailer: Claws Mail 3.13.2 (GTK+ 2.24.30; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-5539-1466690337-0001-2"
-Subject: [oss-security] Out of bounds read and signed integer overflow in libarchive
-
---=_zucker.schokokeks.org-5539-1466690337-0001-2
-Content-Type: text/plain; charset=UTF-8
+Received: (qmail 31781 invoked from network); 22 Feb 2019 02:59:25 -0000
+Openpgp: preference=signencrypt
+Autocrypt: addr=mcnally@isc.org; prefer-encrypt=mutual; keydata=
+ mQENBE4I0bcBCACzmGY5YZuAL8eArSrHAIn2Y6Io7ZddCw5AKYLzCA+Ydcy4DEmBuQGVB8HY
+ ZW8WQxkh9AYiCevuLtT9TOswtIrWquuTNkgG/ZfnD15feH4XDAK+l6FwqHP0MNBQHgxIFYNz
+ Kheg3Y+X89e8DdEzkTGWKy9wEGH2/9p620ZD+7fT4Nh5m7MKEvP3glJdLMm/pU6X3LucJqnC
+ ZdCkTnzZwhgPnUg8zw8ZhFruWcyCPA/+OJWZtAVJNKWyWIOselm3bG/mqSV9Py2ku3JlelBQ
+ 9tGbzeW+li8gidp7lZdNvR3L/HvEwkxMw1/FdouXfvBNqKo84HlSQ5dR4NvGXPlMuMqTABEB
+ AAG0IU1pY2hhZWwgTWNOYWxseSA8bWNuYWxseUBpc2Mub3JnPokBOAQTAQIAIgUCTgjRtwIb
+ LwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQlumWUDlMmawMMAf/YWPFtyqpgUtrPlkT
+ tA/j9DxI/0iD9zU5Xw7JwsO4A9Y3N1Es4+MGLkJdEcO/zq9fELmp+WFtR3GJ0xmg3Wd2vMRl
+ Qz8nJnZpue0kK7CuSk3HaIuiTBqpp2SO/02fwQNfaIZb6TNzjGSYPdFx7Ws+Wo6acV6cvrtG
+ jLBbcW/kRwwUB+Jx+E/swPNljBMGv3CSnLMxdqfOhrSAuZZZtylZcT33cTI+pCy3a4HPweXL
+ C8p2vxI9lpU7ceDt6xJsv4dOC27jl5ZbC9CrhfkNl6UA7mZLtODy6t53VteOoUYPugUrOLr7
+ MmCnOCQ87Djr0xLCON956d1lin2XwhAfQLmhtbkBDQROCNG3AQgAx2Yb/WoYxmtBoTp77U1L
+ QbcGIJFIVDG59wWgR4pFhVQO/4bhR64VV05w6m4OpmkFBGxcjAy3mKy7b2J4OEyrwGImzX+C
+ 9iXpuXBckW03Afp+F7N7gYjPzEENMeS/6bGU4OofUl2KbJZ0y5g0EDPN+ScTDisLqn1UWE3e
+ dKW5Ua3i6LBVS0FrbjZmv1rrn4lX2bsbVGnO376akxYmmujPxJauiP3pVc6UZ4zKH/pt/kUs
+ mh+y3aSmRSQCVNVh3PXWIoGyCowUEQPeufbtm6YG1DkI9foHlEsUEo+vS1XPSNovmahVU+4B
+ ZmlLdk3PDLuvkJa2dvRCpdicdEKbOUYDsQARAQABiQI+BBgBAgAJBQJOCNG3AhsuASkJEJbp
+ llA5TJmswF0gBBkBAgAGBQJOCNG3AAoJEDsbHdIEoEIy3WoH/RyMNtHL5jrCHMXY85YtaPH4
+ DtA9bzuIRStPaoxxPtn7ar85pI/qvQ6gsPHfG3XifFoB1nhFC4b575+KMvFe+0HTdv8GoVNd
+ y6y/tM8xV2zDas6f47uwq62EQE+VuOMx/0FqKHf1QiVv7qeIUxrouftho//iYSAYoiom44NB
+ 8eNzzN3FUDYeEDZ/5it31TUFCAiYZV8qlB16fLetZ/w2Q5WM1GT8L5NRHHO89RTExNmn+7su
+ S2aUJa/VcXbzZclyuvMv3jI/oYT1FL4ahYvV0P+QJn3vV5HjgptLoV0G5Q+JdtfsrmkI8Azz
+ u3z1TeZ2Ud7bS5tDmEE5dwt/urRIYCKaeQgAoE0jUs6y5yXbITifkMAIApw/Su7Ez+vfS/al
+ +58SmuR36zgpxBYRd0v3jXBqtofH/hwPkognm5suSUCjnBRxGS4mAx739eB1M+vQKWXvnKo/
+ 3LU51Sybvz8VTMDuF50Vg7XhSQ0CBR652zn7A60owGgYQ0vy42veK4zyimg1WT034HNloxvq
+ 886NBz0PpBbiaMMZquoOKbEt6w3iilFEbwDo6BeBit6zrox04tuKKHnCVnH0xJ2LPN34H+z0
+ 2RZJUh91/QiwAeuc3Z+Dvk/FYgSzcCTZuMP7irBtH+mNEfsnDW48jCIfqzIlnh6lTPLqMdAW
+ ORJz9bl+BiRdRg2YZg==
+Message-ID: <531c6c3e-6c18-eb00-0b90-487db8650a2c@isc.org>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:60.0)
+ Gecko/20100101 Thunderbird/60.5.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
+Cc: "security-officer@isc.org" <security-officer@isc.org>
+Date: Thu, 21 Feb 2019 17:59:11 -0900
+From: Michael McNally <mcnally@isc.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Multiple BIND CVEs disclosed (CVE-2018-5744, CVE-2018-5745,
+ CVE-2019-6465)
+To: oss-security@lists.openwall.com
 
-https://blog.fuzzing-project.org/48-Out-of-bounds-read-and-signed-integer-o=
-verflow-in-libarchive.html
+Today ISC disclosed three vulnerabilities affecting multiple versions of
+BIND.  Full details on versions affected and more information about the
+vulnerabilities are available via these articles in the ISC Knowledge Base:
 
-https://groups.google.com/forum/#!topic/libarchive-discuss/sui01WaM3ic
-I recently wrote about a large number of bugs and potential security
-issues in libarchive. The release 3.2.0 missed one fix for an out of
-bounds read in the rar parser. Also I discovered one additional signed
-integer overflow issue with ubsan. Both issues are now fixed in
-libarchive 3.2.1. All issues were discovered with the help of american
-fuzzy lop.
+CVE-2018-5744:
+   A specially crafted packet can cause named to leak memory
+   https://kb.isc.org/docs/cve-2018-5744
 
-https://github.com/libarchive/libarchive/issues/521
-Out of bounds heap read in RAR parser
-http://libarchive.github.io/google-code/issue-413/comment-0/bsdtar-invalid-=
-read.rar
-Sample rar file
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2015-8934
-CVE-2015-8934
+CVE-2018-5745:
+   An assertion failure can occur if a trust anchor rolls over to
+   an unsupported key algorithm when a server is using managed-keys
+   https://kb.isc.org/docs/cve-2018-5745
 
-https://github.com/libarchive/libarchive/issues/717#event-697151157
-Signed integer overflow in ISO parser
-https://github.com/libarchive/libarchive/files/321672/libarchive-signed-int=
--overflow.zip
-Sample ISO file
+CVE-2019-6465:
+   Controls for zone transfers may not be properly applied to
+   Dynamically Loadable Zones (DLZs) if the zones are writable.
+   https://kb.isc.org/docs/cve-2019-6465
 
-http://blog.talosintel.com/2016/06/the-poisoned-archives.html
-Also a couple of other security issues in libarchive were found by
-Cisco.
+New software versions are available from the ISC downloads page:
+https://www.isc.org/downloads
 
-With the release of version 3.2.1 I consider libarchive to be
-reasonably robust against fuzzing. I've tested all supported file
-formats and fuzzed each one with afl/asan for at least one day. Of
-course that doesn't mean that no security issues are left - but the
-easy to find ones should be wiped out.
+With the public disclosure of these vulnerabilities, parties which
+had been given advance notice concerning them are released from
+non-disclosure and packagers and redistributors are encouraged to
+publish updated packages containing fixes.
 
+If you have additional questions, please direct them to
+security-officer@isc.org
 
---=20
-Hanno B=C3=B6ck
-https://hboeck.de/
+Thank you,
 
-mail/jabber: hanno@hboeck.de
-GPG: BBB51E42
+Michael McNally
+ISC Security Officer
 
---=_zucker.schokokeks.org-5539-1466690337-0001-2
-Content-Type: application/pgp-signature
-Content-Transfer-Encoding: 7bit
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAEBCgAGBQJXa+sXAAoJEKWIAHK7tR5CWcwP/1D6oNePtl7e1BxOXUJQAnOF
-vum8/2zRenWmsjKWwVol/tvU/1Q3mqCD9YDEBIiRFVkyzF6blJggMMBful8IpBB0
-Btk+FFil+XVobW2cXxo74EVAdrdwt2Q9msCwYCIlyA4py4j396XFDeCIKQDrmrCD
-8INSJz5gQnJt2arD7Oj6ONqOik+QbXtnY/kVxfsLYtM5lGj7It64Il/KPXpjIdiF
-7ZD6AlxkNy1Xdx0OMX4VChv51D/5g2j9YU8hlVJGDdhlc+CPxVjd3oDZK0PjEuoE
-229I+IgvezQ1ZT4i/QzR1M6D8qydlEWVxi1kNg5UViVbGXGJj6yEKaqK5WsouUne
-3ibB4dcjB+Y+vys8cOjg5h/xdtmoBm/iX5A7X+zznT2ch+wtDFbmmL1KEBT+tP62
-1jgYpVG/gx9IwBfQAQTmCxbjVnsG6FRFIc/ZFA0ohn8+MKeVKWASC2A8W9gvaX9j
-c2MfEf7SoXHKyMS9ev3TimddUGor8SIdYF1w2aR3qg6pt9jKjeHE1zqx9k4/OrBd
-ePebR9zg4ACR3/KQmtsgc1Ra9mvefiHVsRpZUirlmRehzNAy7pDPUvXu/wq+bEBh
-KEtvLwO+JZPd/4YKxC5x3TSeTAssF4Wh82x7mRPVag16n1VA1nL6cg0tQxQtO5bj
-U2c0P/a9YO90njYJ5HDn
-=ekhG
------END PGP SIGNATURE-----
-
---=_zucker.schokokeks.org-5539-1466690337-0001-2--
