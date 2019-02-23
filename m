@@ -1,23 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/09/4
-Message-ID: <20190709113036.0f12d057@jabberwock.cb.piermont.com>
-Date: Tue, 9 Jul 2019 11:30:36 -0400
-From: "Perry E. Metzger" <perry@...rmont.com>
-To: Malte Kraus <malte.kraus@...e.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Privileged File Access from Desktop Applications
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/23/1
+Message-Id: <305B88DB-999B-46B2-8842-7101CA1D91F4@beckweb.net>
+Date: Sat, 23 Feb 2019 11:59:26 +0100
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 9 Jul 2019 13:58:37 +0000 Malte Kraus <malte.kraus@...e.com>
-wrote:
-> With Wayland, it's no longer supported to run graphical
-> applications as root.
 
-Can you explain (or point to) a description of why this is a problem?
-(It seems like preventing people from editing administrative files as
-root and requiring that they use a dbus based file i/o system is
-likely to be a source of bugs for years to come...)
 
-Perry
--- 
-Perry E. Metzger		perry@...rmont.com
+> On 19. Feb 2019, at 19:33, Daniel Beck <ml@...kweb.net> wrote:
+> 
+> SECURITY-1320
+> The previously implemented Script Security Plugin sandbox protections
+> prohibiting the use of unsafe AST transforming annotations such as @Grab 
+> could be circumvented through use of various Groovy language features:
+> 
+> * Using Groovy’s AnnotationCollector
+> * Import aliasing
+> * Referencing annotation types using their full class name
+> 
+> This allowed users with Overall/Read permission, or the ability to control
+> Jenkinsfile or sandboxed Pipeline shared library contents in SCM, to 
+> bypass the sandbox protection and execute arbitrary code on the Jenkins 
+> master.
+> 
+> Using AnnotationCollector is now newly prohibited in sandboxed scripts 
+> such as Pipelines. Importing any of the annotations considered unsafe will
+> now result in an error. During the compilation phase, both simple and 
+> full class names of prohibited annotations are rejected for element 
+> annotations.
+
+CVE-2019-1003024
+
+> SECURITY-876
+> Cloud Foundry Plugin did not perform permission checks on a method 
+> implementing form validation. This allowed users with Overall/Read access 
+> to Jenkins to connect to an attacker-specified URL using attacker-
+> specified credentials IDs obtained through another method, capturing 
+> credentials stored in Jenkins.
+> 
+> Additionally, this form validation method did not require POST requests, 
+> resulting in a cross-site request forgery vulnerability.
+
+CVE-2019-1003025
+
+> SECURITY-985
+> A missing permission check in a form validation method in Mattermost 
+> Notification Plugin allowed users with Overall/Read permission to 
+> initiate a connection test, connecting to an attacker-specified 
+> Mattermost server and room and posting a message.
+> 
+> Additionally, this form validation method did not require POST requests, 
+> resulting in a CSRF vulnerability.
+
+CVE-2019-1003026
+
+> SECURITY-817
+> A missing permission check in a form validation method in OctopusDeploy 
+> Plugin allowed users with Overall/Read permission to initiate a 
+> connection test, sending an HTTP HEAD request to an attacker-specified 
+> URL, returning HTTP response code if successful, or exception error 
+> message otherwise.
+> 
+> Additionally, this form validation method did not require POST requests, 
+> resulting in a CSRF vulnerability.
+
+CVE-2019-1003027
+
+> SECURITY-1033
+> A missing permission check in a form validation method in JMS Messaging 
+> Plugin allowed users with Overall/Read permission to initiate a 
+> connection test, sending an HTTP request to an attacker-specified URL.
+> 
+> Additionally, this form validation method did not require POST requests, 
+> resulting in a CSRF vulnerability.
+
+CVE-2019-1003028
+
