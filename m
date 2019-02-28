@@ -1,96 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/22/2
-Message-Id: <E1gxEqa-0004hp-RY@xenbits.xenproject.org>
-Date: Fri, 22 Feb 2019 17:42:52 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 283 v2 - Withdrawn Xen Security Advisory number
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/28/1
+Message-ID: <20190228180800.GA16103@espresso.pseudorandom.co.uk>
+Date: Thu, 28 Feb 2019 18:08:00 +0000
+From: Simon McVittie <smcv@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: ikiwiki: CVE-2019-9187: Server-side request forgery
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Reference: https://ikiwiki.info/security/#cve-2019-9187
+Affected versions: >= 1.13
+Fixed versions: >= 3.20190228
+Fixed versions (3.20170111.x branch): >= 3.20170111.1
 
-                 Xen Security Advisory XSA-283
-                           version 2
+ikiwiki is a static site generator with some dynamic features,
+used for wikis, blogs and other websites.
 
-              Withdrawn Xen Security Advisory number
+The ikiwiki maintainers discovered that the aggregate plugin (a blog
+aggregator) did not try to use the LWPx::ParanoidAgent Perl module, unlike
+other parts of ikiwiki that request URIs. On sites where the aggregate
+plugin is enabled, authorized wiki editors could tell ikiwiki to fetch
+potentially undesired URIs even if LWPx::ParanoidAgent was installed:
 
-SUMMARY
-=======
+* local files via file: URIs
+* other URI schemes that might be misused by attackers, such as gopher:
+* hosts that resolve to loopback IP addresses (127.x.x.x)
+* hosts that resolve to RFC 1918 IP addresses (192.168.x.x etc.)
 
-The advisory XSA-283 has been withdrawn.
+This could be used by an attacker to publish information that should not have
+been accessible, cause denial of service by requesting "tarpit" URIs that are
+slow to respond, or cause undesired side-effects if local web servers implement
+"unsafe" GET requests (https://tools.ietf.org/html/rfc7231#section-4.2.1).
+(CVE-2019-9187)
 
-This is because, on further analysis, we have determined that the
-advisory was issued in error: there is no security issue.
+Additionally, if the LWPx::ParanoidAgent module was not installed, the
+blogspam, openid and pinger plugins would fall back to the ordinary LWP
+module, which is susceptible to similar attacks. This is unlikely to be
+a practical problem for the blogspam plugin because the URL it requests
+is under the control of the wiki administrator, but the openid plugin
+can request URLs controlled by unauthenticated remote users, and the
+pinger plugin can request URLs controlled by authorized wiki editors.
 
-UPDATES IN VERSION 2
-====================
+This is addressed in ikiwiki 3.20190228 as follows, with the same fixes
+backported to Debian 9 in version 3.20170111.1:
 
-Advisory withdrawn.
+* URI schemes other than http: and https: are not accepted, preventing
+  access to file:, gopher:, etc.
 
-DESCRIPTION
-===========
+* If a proxy is configured in the ikiwiki setup file, it is used for all
+  outgoing http: and https: requests. In this case the proxy is
+  responsible for blocking any requests that are undesired, including
+  loopback or RFC 1918 addresses.
 
-XSA-283 stated:
+* If a proxy is not configured, and LWPx::ParanoidAgent is installed,
+  it will be used. This prevents loopback and RFC 1918 IP addresses, and
+  sets a timeout to avoid denial of service via "tarpit" URIs.
 
-        VT-d: Incorrect accesses into the Interrupt Remapping table
+* Otherwise, the ordinary LWP user-agent will be used. This allows requests
+  to loopback and RFC 1918 IP addresses, and has less robust timeout
+  behaviour. We are not treating this as a vulnerability: if this
+  behaviour is not acceptable for your site, please make sure to install
+  LWPx::ParanoidAgent or disable the affected plugins.
 
-   A VT-d IOMMU has several tables in main RAM, which are configured by the
-   driver when it starts.  The tables are required to be aligned on a 4k
-   boundary, and the control registers in the IOMMU which point to them use
-   the bottom 12 bits for additional metadata.
+If your distribution includes an older version of ikiwiki, please either
+update to a current version or backport the following commits:
 
-   Unfortunately, Xen's VT-d driver includes this metadata in its base
-   pointer to the table, resulting in incorrect calculations when indexing
-   into the table.
+* e7b0d4a "useragent: Raise an exception if the LWP module can't be loaded"
+* 67543ce "useragent: Don't allow non-HTTP protocols to be used"
+* d283e4c "useragent: Automatically choose whether to use LWPx::ParanoidAgent"
+* 9a275b2 "doc: Document security issues involving LWP::UserAgent" (optional)
 
-Upon closer inspection, due to the particular way the calculations are
-implemented, the "metadata" components end up being eliminated without
-affecting the final result.
-
-IMPLICATIONS
-============
-
-XSA-283 does not describe any security or functional issue.
-
-The previously declared embargo for XSA-283 is vacated.
-Anyone who has information relating to XSA-283 may publish it.
-
-NB: there are other advisories are with the same embargo date.
-Those advisories stand, and their embargoes REMAIN IN FORCE.
-
-STATUS OF THE PATCHES
-=====================
-
-The patch previously published under embargo in XSA-283 is not
-necessary.  However, it is harmless; indeed it improves code clarity
-and is likely to be included in future Xen releases in some form.
-
-In the interests of transparency, the patch is attached:
-
-$ sha256sum xsa283*
-97069456b91064450b6da1e9834f0ab91270f3b93962ca66f2eb9315cf133055  xsa283.patch-withdrawn
-$
-
-There is no need to apply this patch.
-If you have already applied it, there is no need to revert it.
-
-CREDITS
-=======
-
-Thanks to Pawel Wieczorkiewicz and Uwe Dannowski, both of Amazon, for
-pointing out that there was no actual security issue.
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAlxwNH8MHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZ9TkH/iGiPQgUhfvBOQamhBAbeCJ4877+lM+HSln3UiUy
-hBvsA6mQCOsNKS2qUXQ8txE2w459V6DYbsmqFPRXLAaF7B+QMK6zPfICxwbCkyii
-24qoITatBKvPpEhqzoM6VvkjpuUOi9+n41d/JVcyE53yAuA4R+bR9c36cz1j+j8J
-Sd1Betvb5C51V6VQXjL/2zVb/v/fz5tuutIDC+jc7J1eHi7rN31TqizvuF19DQUu
-YvSyUjfX2tSlzSp2oJ/uG1wZrAd0Ah+scViSZd6FUsCZyCiHsU02kG0zKfhXCsQ2
-+3UkI+WylK2n664uUJAtvvYBkpnGejg224jqasrzGhjZASI=
-=+3TC
------END PGP SIGNATURE-----
-
-Download attachment "xsa283.patch-withdrawn" of type "application/octet-stream" (4752 bytes)
+Regards,
+    smcv
