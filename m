@@ -1,4 +1,9 @@
-Received: (qmail 7513 invoked by uid 550); 13 Apr 2023 12:52:33 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3150" "Thursday" "28" "February" "2019" "18:08:00" "+0000" "Simon McVittie" "smcv@debian.org" "<20190228180800.GA16103@espresso.pseudorandom.co.uk>" "64" "[oss-security] ikiwiki: CVE-2019-9187: Server-side request forgery" "^Date:" nil nil "2" "2019022818:08:00" "[oss-security] ikiwiki: CVE-2019-9187: Server-side request forgery" (number mark "U       smcv@debian. Feb 28   64/3150  " thread-indent "\"[oss-security] ikiwiki: CVE-2019-9187: Server-side request forgery\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 3407 invoked by uid 550); 28 Feb 2019 18:08:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,69 +11,79 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3726 invoked from network); 13 Apr 2023 09:15:50 -0000
+Received: (qmail 3383 invoked from network); 28 Feb 2019 18:08:15 -0000
+Message-ID: <20190228180800.GA16103@espresso.pseudorandom.co.uk>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ayaya.dev; s=key1;
-	t=1681377338;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ylQUD5RMPRkwnUW1JDRg4gS6VqLEnxdD4ifam6BrlBU=;
-	b=VmE/6E2dZIdiAricSF+nXxhqT9tp2+XQHgNkn+jjhhz8hB43lms1Q9EVtcJIpRTZTVNsqD
-	7wh5jNh3MuYEDcmbW0/GqbCy46/oGojzSL7nCNsnH6jgS7989PODYLafnHviDpGVsH1qep
-	I0YQ7Qr0Xe6hiEfwkJxKAmAbmu+hWuY=
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 13 Apr 2023 11:15:38 +0200
-Message-Id: <CRVIITTTDAQ4.1S0X86S5D7TZD@sumire>
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: "alice" <alice@ayaya.dev>
-To: <oss-security@lists.openwall.com>
-References: <SN6PR00MB044717AE269F0AABB8456C86A89BA@SN6PR00MB0447.namprd00.prod.outlook.com>
-In-Reply-To: <
- <SN6PR00MB044717AE269F0AABB8456C86A89BA@SN6PR00MB0447.namprd00.prod.outlook.com>
-X-Migadu-Flow: FLOW_OUT
-Subject: Re: [oss-security] ncurses fixes upstream
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Date: Thu, 28 Feb 2019 18:08:00 +0000
+From: Simon McVittie <smcv@debian.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] ikiwiki: CVE-2019-9187: Server-side request forgery
+To: oss-security@lists.openwall.com
 
-On Wed Apr 12, 2023 at 10:40 PM CEST, Jonathan Bar Or (JBO) wrote:
-> Hello oss-security,
->
-> Our team has worked with the maintainer of the ncurses library (used by s=
-everal software packages in Linux) to fix several memory corruption vulnera=
-bilities.
-> They are now fixed at commit 20230408 - see details here (https://invisib=
-le-island.net/ncurses/NEWS.html#index-t20230408)
-> A CVE was assigned (CVE-2023-29491) - it's still under a "reserved" statu=
-s.
->
-> How can we ensure those fixes get deployed upstream, in major Linux distr=
-ibutions?
+Reference: https://ikiwiki.info/security/#cve-2019-9187
+Affected versions: >= 1.13
+Fixed versions: >= 3.20190228
+Fixed versions (3.20170111.x branch): >= 3.20170111.1
 
-having a patch that is possible to apply to ncurses would make this possibl=
-e,
-since otherwise it's not possible to patch anything without just updating t=
-o the
-latest ncurses snapshot.
+ikiwiki is a static site generator with some dynamic features,
+used for wikis, blogs and other websites.
 
-that said,
+The ikiwiki maintainers discovered that the aggregate plugin (a blog
+aggregator) did not try to use the LWPx::ParanoidAgent Perl module, unlike
+other parts of ikiwiki that request URIs. On sites where the aggregate
+plugin is enabled, authorized wiki editors could tell ikiwiki to fetch
+potentially undesired URIs even if LWPx::ParanoidAgent was installed:
 
-- ncurses doesn't keep any git (or whatever) history anywhere (to my knowle=
-dge),
-  so i don't know where this would even come from
+* local files via file: URIs
+* other URI schemes that might be misused by attackers, such as gopher:
+* hosts that resolve to loopback IP addresses (127.x.x.x)
+* hosts that resolve to RFC 1918 IP addresses (192.168.x.x etc.)
 
-- as someone that uses the latest snapshots, 20230401 works, but 20230408 b=
-reaks
-  some applications like tmux (when clicking with the mouse, it just exits)=
-. i
-  assume this breakage is caused by these fixes in question, but i didn't d=
-ebug
-  it further.
+This could be used by an attacker to publish information that should not have
+been accessible, cause denial of service by requesting "tarpit" URIs that are
+slow to respond, or cause undesired side-effects if local web servers implement
+"unsafe" GET requests (https://tools.ietf.org/html/rfc7231#section-4.2.1).
+(CVE-2019-9187)
 
-> We've reached out to Arch, RedHat, Canonical and other popular distros in=
-dependently.
->
-> Thanks!
->                              JBO
+Additionally, if the LWPx::ParanoidAgent module was not installed, the
+blogspam, openid and pinger plugins would fall back to the ordinary LWP
+module, which is susceptible to similar attacks. This is unlikely to be
+a practical problem for the blogspam plugin because the URL it requests
+is under the control of the wiki administrator, but the openid plugin
+can request URLs controlled by unauthenticated remote users, and the
+pinger plugin can request URLs controlled by authorized wiki editors.
 
+This is addressed in ikiwiki 3.20190228 as follows, with the same fixes
+backported to Debian 9 in version 3.20170111.1:
+
+* URI schemes other than http: and https: are not accepted, preventing
+  access to file:, gopher:, etc.
+
+* If a proxy is configured in the ikiwiki setup file, it is used for all
+  outgoing http: and https: requests. In this case the proxy is
+  responsible for blocking any requests that are undesired, including
+  loopback or RFC 1918 addresses.
+
+* If a proxy is not configured, and LWPx::ParanoidAgent is installed,
+  it will be used. This prevents loopback and RFC 1918 IP addresses, and
+  sets a timeout to avoid denial of service via "tarpit" URIs.
+
+* Otherwise, the ordinary LWP user-agent will be used. This allows requests
+  to loopback and RFC 1918 IP addresses, and has less robust timeout
+  behaviour. We are not treating this as a vulnerability: if this
+  behaviour is not acceptable for your site, please make sure to install
+  LWPx::ParanoidAgent or disable the affected plugins.
+
+If your distribution includes an older version of ikiwiki, please either
+update to a current version or backport the following commits:
+
+* e7b0d4a "useragent: Raise an exception if the LWP module can't be loaded"
+* 67543ce "useragent: Don't allow non-HTTP protocols to be used"
+* d283e4c "useragent: Automatically choose whether to use LWPx::ParanoidAgent"
+* 9a275b2 "doc: Document security issues involving LWP::UserAgent" (optional)
+
+Regards,
+    smcv
