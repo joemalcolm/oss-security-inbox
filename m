@@ -1,27 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/22/4
-Message-ID: <nycvar.YSQ.7.76.1905221648340.6754@xnncv>
-Date: Wed, 22 May 2019 16:50:25 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE-2019-12247 QEMU: qemu-guest-agent: integer overflow while running guest-exec command
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/01/3
+Message-ID: <CAP3WMuR-CCdbACWo7QVPTJ04+twGLGzg4SVBakUDD+NkNTKoog@mail.gmail.com>
+Date: Fri, 1 Mar 2019 17:22:14 +0000
+From: Alex Rudyy <orudyy@...che.org>
+To: "dev@...d.apache.org" <dev@...d.apache.org>, "users@...d.apache.org" <users@...d.apache.org>, announce@...che.org,  "security@...che.org" <security@...che.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
+Subject: [SECURITY] CVE-2019-0200: Apache Qpid Broker-J Denial of Service due to malformed AMQP 0-8 to 0-10 commands
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+CVE-2019-0200: Apache Qpid Broker-J Denial of Service due to malformed AMQP
+0-8 to 0-10 commands
 
-An integer overflow issue was found in the QEMU Guest Agent in QEMU, while 
-reading argument list passed to the 'guest-exec' qmp command. An attacker 
-could exploit this by sending a crafted QMP command to the agent via a 
-listening socket to trigger the overflow. It may crash the QEMU guest agent, 
-resulting in DoS.
+Severity: Critical
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2019-05/msg04596.html
+Vendor: The Apache Software Foundation
 
-This issue was reported by Guoxiang Niu of huawei.com.
+Versions Affected: 6.0.0-7.0.6 (inclusive), 7.1.0
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Description:
+
+A Denial of Service vulnerability [1] was found in Apache Qpid Broker-J
+versions 6.0.0-7.0.6 (inclusive) and 7.1.0 which allows an unauthenticated
+attacker to crash the broker instance by sending specially crafted
+commands using AMQP protocol versions below 1.0 (AMQP 0-8, 0-9, 0-91 and
+0-10).
+
+Resolution:
+
+Users of Apache Qpid Broker-J versions 6.0.0-7.0.6 (inclusive) and 7.1.0
+utilizing AMQP protocols 0-8, 0-9, 0-91, 0-10 must upgrade to Qpid
+
+Broker-J versions 7.0.7 or 7.1.1 or later.
+
+Mitigation:
+
+If upgrade of the broker is not possible, the support for AMQP protocols
+0-8...0-10 can be disabled on AMQP ports. The change can be made either
+directly in the broker configuration file or by using management interfaces.
+
+An example of REST API call restricting AMQP port to support only AMQP 1.0
+using curl utility is provided below:
+
+curl --user <user-name> -X POST -d '{"protocols":["AMQP_1_0"]}' \
+https://<broker host>:<broker port>/api/latest/port/<port name>
+
+References:
+[1] https://issues.apache.org/jira/browse/QPID-8273
+
+---------------------------------------------------------------------
+To unsubscribe, e-mail: dev-unsubscribe@...d.apache.org
+For additional commands, e-mail: dev-help@...d.apache.org
+
