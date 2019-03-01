@@ -1,21 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/06/2
-Message-ID: <20190806071609.nsp67arh7gganbvy@inutil.org>
-Date: Tue, 6 Aug 2019 09:16:09 +0200
-From: Moritz Muehlenhoff <jmm@...til.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/01/1
+Message-ID: <20190301110340.0b3fa581@computer>
+Date: Fri, 1 Mar 2019 11:03:40 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: musl@...ts.openwall.com
-Subject: Re: CVE request: musl libc 1.1.23 and earlier x87 float stack imbalance
+Subject: Squirrelmail XSS Fixes
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Aug 05, 2019 at 07:27:37PM -0400, Rich Felker wrote:
-> I've discovered a flaw in musl libc's arch-specific math assembly code
-> for i386, whereby at least the log1p function and possibly others
-> return with more than one item on the x87 stack.
+Hi,
 
-Given that the Subject: mentions a CVE request; these are no longer
-handled via the oss-security mailing list. Please use
-https://cveform.mitre.org/ instead.
+A while ago I saw that there were some very old XSS reports in the
+squirrelmail bugtracker and reported it to this list:
+https://www.openwall.com/lists/oss-security/2018/06/27/5
 
-Cheers,
-        Moritz
+If anyone's interested, squirrelmail upstream has now fixed those (in
+SVN, they don't do releases):
+https://sourceforge.net/p/squirrelmail/bugs/2831/
+
+I had proposed a different (and imho simpler) patch, I never got any
+feedback from the developer why he didn't like it. I also sent multiple
+fixes for warnings and issues with newer PHP versions that mostly
+haven't been applied, in case you are interested, see
+
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
