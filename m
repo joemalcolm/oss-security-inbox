@@ -1,32 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/01/4
-Message-ID: <20190701130837.GA18993@notk.org>
-Date: Mon, 1 Jul 2019 15:08:37 +0200
-From: Adrien Nader <adrien@...k.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/01/2
+Message-ID: <20190301110704.4ff5b4ef@computer>
+Date: Fri, 1 Mar 2019 11:07:04 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
+Subject: Re: Squirrelmail XSS Fixes
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Sorry... I was struck by "hit the send button while still writing the
+mail"... Let's retry:
 
-On Mon, Jun 24, 2019, Stuart D. Gathman wrote:
-> Question: is fuzzing useful for languages like Java/python?  Obviously,
-> you eventually reach a native code module in both cases, but fuzzing
-> the entire virtual machine is cumbersome.  Maybe native code
-> libraries
-> for "safe" languages should include fuzzing as part of testing.
 
-AFL is used in the OCaml world despite it being clearly a "safe"
-language. There's a git repo with a couple examples and there are more
-in the wild: https://github.com/NathanReb/ocaml-afl-examples .
+Hi,
 
-OCaml guarantees that you don't have undefined behaviour but there's
-nothing that prevents you from doing a typo in a string value, using
-multiplication instead of addition, not catching an exception you wanted
-to catch or as others have said, use more memory than expected. These
-are basically logic errors and very few languages guarantee that you'll
-avoid them (static typing helps in more than 90% of cases but less than
-99.999% of them).
+A while ago I saw that there were some very old XSS reports in the
+squirrelmail bugtracker and reported it to this list:
+https://www.openwall.com/lists/oss-security/2018/06/27/5
+
+If anyone's interested, squirrelmail upstream has now fixed those (in
+SVN, they don't do releases):
+https://sourceforge.net/p/squirrelmail/bugs/2831/
+
+I had proposed a different (and imho simpler) patch, I never got any
+feedback from the developer why he didn't like it. I also sent multiple
+fixes for warnings and issues with newer PHP versions that mostly
+haven't been applied, in case you are interested, see
+https://github.com/hannob/squirrelpatches
+
+I tried a few XSS vectors and it seems they're all closed, though I'd
+appreciate more eyes on it. Overall the whole filtering isn't ideal,
+it's a blacklisting approach and thus obviously error-prone.
+
+If any XSS ninjas want to play with it and don't have a squirrelmail
+installation you can mail me directly and I can give you a temporary
+test account.
 
 -- 
-Adrien
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
