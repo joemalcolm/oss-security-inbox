@@ -1,4 +1,9 @@
-Received: (qmail 19897 invoked by uid 550); 7 Apr 2026 14:40:27 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1554" "Friday" "1" "March" "2019" "17:22:14" "+0000" "Alex Rudyy" "orudyy@apache.org" "<CAP3WMuR-CCdbACWo7QVPTJ04+twGLGzg4SVBakUDD+NkNTKoog@mail.gmail.com>" "47" "[oss-security] [SECURITY] CVE-2019-0200: Apache Qpid Broker-J Denial of Service due to malformed AMQP 0-8 to 0-10 commands" "^Date:" nil nil "3" "2019030117:22:14" "[oss-security] [SECURITY] CVE-2019-0200: Apache Qpid Broker-J Denial of Service due to malformed AMQP 0-8 to 0-10 commands" (number mark "U       orudyy@apach Mar  1   47/1554  " thread-indent "\"[oss-security] [SECURITY] CVE-2019-0200: Apache Qpid Broker-J Denial of Service due to malformed AMQP 0-8 to 0-10 commands\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 13338 invoked by uid 550); 1 Mar 2019 18:02:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,89 +11,69 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 30389 invoked from network); 7 Apr 2026 11:49:01 -0000
-Authentication-Results: apache.org; auth=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
-	t=1775562530; bh=K2emg5TympipQQa57v8EbrDS7GhgOj6erlVufj2kAX8=;
-	h=Reply-To:From:Date:Subject:To:From;
-	b=LKDkGxf4mIhY6VNEc/Vosm7WwlhCUXgM4VBEZeO+Fgu+dzyZzwTzLdyapM/m01VEy
-	 lOU7Ga0lBq6wrQS48aVtc31aPcXjHxhZDQ2ODArHx5BqacGcv4gSZ1P9ZWdKLybhK8
-	 MNdCGWhr12eTksnV2h4z2JiOSS7tGxeq31OzVSYhLuLHu6eK47AWjqBzXcB5awkKjQ
-	 CWxP21+7gf/xuIVNl9DxL222hSME3THSI5xWDtzt96MQvLX1L7yLzC682cGkSA0QRS
-	 jPtKYw37aoEOgDdouCWythUs9+VepG0XHyjKG0QxABqQ6VajwIBmuBha79Os5ao2el
-	 tA0zsxAf1RhrA==
-X-Gm-Message-State: AOJu0YxJAok8Trh5FnO4ZPNObIJwhEt87LOLJcktuycb5Wds+RcC8Aiy
-	NBXce4tqy9y2qTbVefbQrW+ENhcJZZjviFn+u6sE/67d2NCXC/Q0jX+kHj/p5Dedeg6cQVw+PYf
-	avyNaxi24LnAds1tDbf45K0B0Qbp470g=
-X-Received: by 2002:a05:6512:1381:b0:5a2:b0ba:7169 with SMTP id
- 2adb3069b0e04-5a33758f26emr5904064e87.38.1775562530438; Tue, 07 Apr 2026
- 04:48:50 -0700 (PDT)
+Received: (qmail 10043 invoked from network); 1 Mar 2019 17:22:45 -0000
+X-Gm-Message-State: APjAAAUwsvoRak4RdEAwhP3TRrKWdmjf/kz/IHuC++uBi6P1p4WBFBtF
+	vMPLnDMqVo4cMlcQvxJYZVHiVyg91gtxkcn5/Q0=
+X-Google-Smtp-Source: APXvYqxas0N/nu/q1wO64iEtbukNdNIBsPN0oEkx2GkEGtJk52UpOgdGzkPw/VToH/HLCzscUzHpU7MGkltecwP341U=
+X-Received: by 2002:a2e:9105:: with SMTP id m5mr3495700ljg.100.1551460945373;
+ Fri, 01 Mar 2019 09:22:25 -0800 (PST)
 MIME-Version: 1.0
-From: Manikumar <manikumar@apache.org>
-Date: Tue, 7 Apr 2026 17:18:36 +0530
-X-Gmail-Original-Message-ID: <CAMVt_AyXVuh4RV5jQ0vs3vNKR5zDxWLvDjQRnmqhX+CcVkjTdA@mail.gmail.com>
-X-Gm-Features: AQROBzA17MCXLRKzSgnZ4Yyl-1EWE70N1LIXSFwhbba5nZ61cHkBrJYGWRjbERc
-Message-ID: <CAMVt_AyXVuh4RV5jQ0vs3vNKR5zDxWLvDjQRnmqhX+CcVkjTdA@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000e7438f064edd5d5b"
-Subject: [oss-security] CVE-2026-35554: Apache Kafka Clients: Kafka Producer Message
- Corruption and Misrouting via Buffer Pool Race Condition
+X-Gmail-Original-Message-ID: <CAP3WMuR-CCdbACWo7QVPTJ04+twGLGzg4SVBakUDD+NkNTKoog@mail.gmail.com>
+Message-ID: <CAP3WMuR-CCdbACWo7QVPTJ04+twGLGzg4SVBakUDD+NkNTKoog@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="000000000000882eeb05830ba63f"
+Date: Fri, 1 Mar 2019 17:22:14 +0000
+From: Alex Rudyy <orudyy@apache.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] [SECURITY] CVE-2019-0200: Apache Qpid Broker-J Denial of Service due
+ to malformed AMQP 0-8 to 0-10 commands
+To: "dev@qpid.apache.org" <dev@qpid.apache.org>, "users@qpid.apache.org" <users@qpid.apache.org>, announce@apache.org, 
+	"security@apache.org" <security@apache.org>, oss-security@lists.openwall.com, 
+	bugtraq@securityfocus.com
 
---000000000000e7438f064edd5d5b
+--000000000000882eeb05830ba63f
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Severity: moderate
+CVE-2019-0200: Apache Qpid Broker-J Denial of Service due to malformed AMQP
+0-8 to 0-10 commands
 
-Affected versions:
+Severity: Critical
 
-- Apache Kafka Clients (org.apache.kafka:kafka-clients) 2.8.0 through 3.9.1
-- Apache Kafka Clients (org.apache.kafka:kafka-clients) 4.0.0 through 4.0.1
-- Apache Kafka Clients (org.apache.kafka:kafka-clients) 4.1.0 through 4.1.1
+Vendor: The Apache Software Foundation
+
+Versions Affected: 6.0.0-7.0.6 (inclusive), 7.1.0
 
 Description:
 
-A race condition in the Apache Kafka Java producer client=E2=80=99s buffer
-pool management can cause messages to be silently delivered to
-incorrect topics.
+A Denial of Service vulnerability [1] was found in Apache Qpid Broker-J
+versions 6.0.0-7.0.6 (inclusive) and 7.1.0 which allows an unauthenticated
+attacker to crash the broker instance by sending specially crafted
+commands using AMQP protocol versions below 1.0 (AMQP 0-8, 0-9, 0-91 and
+0-10).
 
-When a produce batch expires due to delivery.timeout.ms while a
-network request containing that batch is still in flight, the batch=E2=80=
-=99s
-ByteBuffer is prematurely deallocated and returned to the buffer pool.
-If a subsequent producer batch=E2=80=94potentially destined for a different
-topic=E2=80=94reuses this freed buffer before the original network request
-completes, the buffer contents may become corrupted. This can result
-in messages being delivered to unintended topics without any error
-being reported to the producer.
+Resolution:
 
+Users of Apache Qpid Broker-J versions 6.0.0-7.0.6 (inclusive) and 7.1.0
+utilizing AMQP protocols 0-8, 0-9, 0-91, 0-10 must upgrade to Qpid
 
-Data Confidentiality:
-Messages intended for one topic may be delivered to a different topic,
-potentially exposing sensitive data to consumers who have access to
-the destination topic but not the intended source topic.
+Broker-J versions 7.0.7 or 7.1.1 or later.
 
-Data Integrity:
-Consumers on the receiving topic may encounter unexpected or
-incompatible messages, leading to deserialization failures, processing
-errors, and corrupted downstream data.
+Mitigation:
 
-This issue affects Apache Kafka versions =E2=89=A4 3.9.1, =E2=89=A4 4.0.1, =
-and  =E2=89=A4 4.1.1.
+If upgrade of the broker is not possible, the support for AMQP protocols
+0-8...0-10 can be disabled on AMQP ports. The change can be made either
+directly in the broker configuration file or by using management interfaces.
 
-Kafka users are advised to upgrade to 3.9.2, 4.0.2, 4.1.2, 4.2.0, or
-later to address this vulnerability.
+An example of REST API call restricting AMQP port to support only AMQP 1.0
+using curl utility is provided below:
 
-Credit:
-
-Bharath Vissapragada <bharathv@apache.org> (reporter)
-Donny Nadolny <donny.nadolny@hotmail.com> (finder)
-Donny Nadolny <donny.nadolny@hotmail.com> (remediation developer)
+curl --user <user-name> -X POST -d '{"protocols":["AMQP_1_0"]}' \
+https://<broker host>:<broker port>/api/latest/port/<port name>
 
 References:
-https://issues.apache.org/jira/browse/KAFKA-19012https://kafka.apache.org/c=
-ommunity/cve-listhttps://www.cve.org/CVERecord?id=3DCVE-2026-35554
+[1] https://issues.apache.org/jira/browse/QPID-8273
 
---000000000000e7438f064edd5d5b--
+---------------------------------------------------------------------
+To unsubscribe, e-mail: dev-unsubscribe@qpid.apache.org
+For additional commands, e-mail: dev-help@qpid.apache.org
+
+--000000000000882eeb05830ba63f--
