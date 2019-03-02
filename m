@@ -1,83 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/20/5
-Message-ID: <f514d433-55bf-3f09-5d52-d4baef37b178@kernel.crashing.org>
-Date: Wed, 20 Nov 2019 12:11:31 -0600
-From: Mark Hatle <mark.hatle@...nel.crashing.org>
-To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
-Subject: Re: Mitigating malicious packages in gnu/linux
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/02/1
+Message-ID: <CAH9fUpaUQaFbgY1Zh4OvKSL4wdvGAmVt+n4fegibDoAxK5XARw@mail.gmail.com>
+Date: Sat, 2 Mar 2019 18:18:44 +0100
+From: Philippe Mouawad <pmouawad@...che.org>
+To: ApacheJMeter dev list <dev@...ter.apache.org>, JMeter Users List <user@...ter.apache.org>, announce@...che.org,  asf-security <security@...che.org>, oss-security@...ts.openwall.com
+Subject: [SECURITY] CVE-2019-0187: Apache JMeter Missing client auth for RMI connection when distributed test is used
 Content-Type: text/plain; charset=utf-8
 
+This is a security notification for Apache JMeter:
 
+CVE-2019-0187
+Severity: Important
+Vendor: The Apache Software Foundation
+Affected Versions : JMeter 4.0, 5.0
 
-On 11/20/19 11:49 AM, Solar Designer wrote:
-> On Wed, Nov 20, 2019 at 09:06:57AM -0800, Russ Allbery wrote:
->> Solar Designer <solar@...nwall.com> writes:
->>
->>> Contrary to traditional best practices, update only what and when needs
->>> to be updated.  (Of course, you take responsibility to watch for any
->>> relevant security updates, or accept the risk if you neglect to do that.
->>> You also miss silent security fixes, but on the other hand you similarly
->>> miss newly introduced vulnerabilities.)
->>
->> I'm very reluctant to give this advice, not because it's wrong, but
->> because the failure mode is misaligned for most people.
->>
->> The average user of a distribution (personal or professional) is at much
->> greater risk of a compromise due to an unpatched security vulnerability
->> than due to malicious code introduced in the distribution package update
->> stream.  Both are *possible*, but one of them is far more common (I would
->> even say by orders of magnitude).  Determining which updates are security
->> updates is tedious and requires a lot of discipline; it's something that
->> humans are generally bad at, and the failure mode is usually to not apply
->> the update.  Many security updates are not explicitly flagged as such (see
->> all the recent discussions on this list about CVEs).
->>
->> The average user is therefore best served by applying all distribution
->> updates.  Choosing not to update to reduce your risk of a supply chain
->> attack is a very advanced technique, and I would tell people to think very
->> hard about whether they want to sign up for the necessary cognitive load
->> and disciplined decision-making required to identify relevant security
->> updates that they need to apply.
-> 
-> I fully agree.
-> 
-> Yet I think it's an option that people with a background and concerns
-> like Georgi's would want to at least consider.  Not typical end-users.
+Description [0]:
 
-Agreed.  Security starts with the people doing the initial integration and
-review.  Then every step on the chain builds on this.  So if any place in this
-chain is compromised (before the end user downloads their magic package), then
-they will be affected.
+Unauthenticated RCE is possible when JMeter is used in distributed mode (-r
+or -R command line options).
+Attacker can establish a RMI connection to a jmeter-server using
+RemoteJMeterEngine and proceed with an attack using untrusted data
+deserialization.
+This only affect tests running in Distributed mode.
+Note that versions before 4.0 are not able to encrypt traffic between the
+nodes, nor authenticate the participating nodes so even for those versions,
+upgrade to JMeter 5.1 is
+also advised.
 
-In the past I had been involved with trying to evaluate the security quality of
-packages.  This involved security process information, code contribution review,
-release process, etc.  There is no "one" way to do this that I'm aware of, but I
-think a good analogy from someone in manufacturing.  You either need to treat
-your input as 'raw material' and do your own (quality, including security)
-review or you need to trust your supplier.  Even when you trust your supplier,
-you still need to do (quality) spot checks.
+Mitigation:
+  * Users must use last minor version of Java 8 to Java 11
+  * Users must upgrade to last JMeter 5.1 version and use the default /
+enabled authenticated SSL RMI connection.
 
-I don't see anything different when working on the provenance of the components
-being used.  Either you trust the upstream enough that all that is needed are
-spot checks, or you don't trust them at all and all new changes must be reviewed.
+Besides, we remind users that in distributed mode, JMeter makes an
+Architectural assumption
+that it is operating on a 'safe' network. i.e. everyone with access to the
+network is considered trusted.
 
-Then the next step of the chain is your user either has to trust you, or perform
-the same actions.
+This typically means a dedicated VPN or similar is being used.
 
-There are block chain processes for tracing bill of materials which could be
-used for this.  Every step of the acceptance/delivery could be added to a
-registry and tracked.  At the worst of times this could be used to identify
-where the process failure or system compromise was introduced to help avoid it
--- at best it shows the people down the line what has been done so they can make
-an informed decision if they trust their supplier or not.
+Example:
+  * Start JMeter server using either jmeter-server or jmeter -s
+  * Using another keystore file, if you're able to connect to first server
+instance and you don't get "SSLHandshakeException: Received fatal alert:
+bad_certificate", you are vulnerable
 
-(I'm involved with the Yocto Project/OpenEmbedded components.  We treat the
-incoming code as raw materials and attempt to do our own reviews of not only the
-upstream code and the submitted community work.  Not, this is not specific to
-'security', and trusted maintainers get less review then the new guy who hasn't
-contributed before.)
+Credit:
+This issue was reported responsibly to the Apache Security Team by Brenden
+Meeder.
 
---Mark
+- The Apache JMeter Team
 
-> Alexander
-> 
+[0] https://bz.apache.org/bugzilla/show_bug.cgi?id=62743
+
