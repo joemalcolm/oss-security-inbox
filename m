@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1996" "Tuesday" "14" "June" "2016" "10:04:18" "+0200" "Daniel Borkmann" "daniel@iogearbox.net" "<575FBA82.9000209@iogearbox.net>" "50" "Re: [oss-security] Re: Linux Kernel bpf related UAF" nil nil nil "6" "2016061408:04:18" "[oss-security] Re: Linux Kernel bpf related UAF" (number mark "U       daniel@iogea Jun 14   50/1996  " thread-indent "\"Re: [oss-security] Re: Linux Kernel bpf related UAF\"\n") "<20160512152749.88F6A6C0689@smtpvmsrv1.mitre.org>" ("<20160512152749.88F6A6C0689@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1667" "Saturday" "2" "March" "2019" "18:18:44" "+0100" "Philippe Mouawad" "pmouawad@apache.org" "<CAH9fUpaUQaFbgY1Zh4OvKSL4wdvGAmVt+n4fegibDoAxK5XARw@mail.gmail.com>" "50" "[oss-security] [SECURITY] CVE-2019-0187: Apache JMeter Missing client auth for RMI connection when distributed test is used" nil nil nil "3" "2019030217:18:44" "[oss-security] [SECURITY] CVE-2019-0187: Apache JMeter Missing client auth for RMI connection when distributed test is used" (number mark "U       pmouawad@apa Mar  2   50/1667  " thread-indent "\"[oss-security] [SECURITY] CVE-2019-0187: Apache JMeter Missing client auth for RMI connection when distributed test is used\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7528 invoked by uid 550); 14 Jun 2016 09:11:05 -0000
+Received: (qmail 7776 invoked by uid 550); 2 Mar 2019 22:44:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,69 +12,70 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21652 invoked from network); 14 Jun 2016 08:04:30 -0000
-Message-ID: <575FBA82.9000209@iogearbox.net>
-Date: Tue, 14 Jun 2016 10:04:18 +0200
-From: Daniel Borkmann <daniel@iogearbox.net>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+Received: (qmail 20000 invoked from network); 2 Mar 2019 17:19:11 -0000
+X-Gm-Message-State: APjAAAUw5MKY6Dwx4AJbuv4g6dKkkKI03tjOWHhPhcxb1EUn7yGUJmPT
+	d6b0xEOgOPPqfjH5j/yuB318CjNyxVLq8w9jvOs=
+X-Google-Smtp-Source: APXvYqz04xIcBSbxDHvILQJh1/k92Ac6kwjbIaf8GcvQ7lLXgkPpabHJ2APEIlCoFvATpI9RaHaMtrxbYRcEnrCh+/8=
+X-Received: by 2002:a17:906:35d8:: with SMTP id p24mr7238937ejb.112.1551547136180;
+ Sat, 02 Mar 2019 09:18:56 -0800 (PST)
 MIME-Version: 1.0
-To: oss-security@lists.openwall.com
-CC: marco.gra@gmail.com, cve-assign@mitre.org
-References: <20160512152749.88F6A6C0689@smtpvmsrv1.mitre.org>
-In-Reply-To: <20160512152749.88F6A6C0689@smtpvmsrv1.mitre.org>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Authenticated-Sender: daniel@iogearbox.net
-X-Virus-Scanned: Clear (ClamAV 0.99.2/21727/Tue Jun 14 07:53:26 2016)
-Subject: Re: [oss-security] Re: Linux Kernel bpf related UAF
+From: Philippe Mouawad <pmouawad@apache.org>
+Date: Sat, 2 Mar 2019 18:18:44 +0100
+X-Gmail-Original-Message-ID: <CAH9fUpaUQaFbgY1Zh4OvKSL4wdvGAmVt+n4fegibDoAxK5XARw@mail.gmail.com>
+Message-ID: <CAH9fUpaUQaFbgY1Zh4OvKSL4wdvGAmVt+n4fegibDoAxK5XARw@mail.gmail.com>
+To: ApacheJMeter dev list <dev@jmeter.apache.org>, JMeter Users List <user@jmeter.apache.org>, announce@apache.org, 
+	asf-security <security@apache.org>, oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000e7875305831fb747"
+Subject: [oss-security] [SECURITY] CVE-2019-0187: Apache JMeter Missing client auth for RMI
+ connection when distributed test is used
 
-On 05/12/2016 05:27 PM, cve-assign@mitre.org wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
->
->> the following reproducer will cause a UAF of a previously allocated memory
->> in bpf.
->>
->> You can reproduce with linux kernel master, or 4.6-rc6 4.6-rc7 and maybe
->> other kernel versions.
->
->> int main(int argc, char **argv)
->> ...
->> r[0] = syscall(SYS_mmap, ...
->> ...
->> r[5] = syscall(SYS_bpf, ...
->
-> Use CVE-2016-4794. (We did not run any tests, or look for other
-> information, to investigate whether the same reproducer or a similar
-> reproducer affects any kernel version that's considered stable or
-> longterm.)
+--000000000000e7875305831fb747
+Content-Type: text/plain; charset="UTF-8"
 
-Just fyi, the issues have been fixed in the kernel's percpu allocator:
+This is a security notification for Apache JMeter:
 
-   - https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=4f996e234dad488e5d9ba0858bc1bae12eff82c3
-   - https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=6710e594f71ccaad8101bc64321152af7cd9ea28
+CVE-2019-0187
+Severity: Important
+Vendor: The Apache Software Foundation
+Affected Versions : JMeter 4.0, 5.0
 
-> - --
-> CVE Assignment Team
-> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-> [ A PGP key is available for encrypted communications at
->    http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1
->
-> iQIcBAEBCAAGBQJXNKCMAAoJEHb/MwWLVhi2g8QP/3vBTsa8xuk8NWYWsv3jwNGu
-> Ugpl+hUdkQHW4aFzxx96nePBPZpfVeNCGRMdtlCcKVb9wFNUSbRwDPBHFXrfKz9R
-> KVf9VHi4CMcBlvPS0MvGZg52SQPAAO7O7cCWpEAdhyxW2gPPxKYo98x4xNuNVlWx
-> POD/dVK9ll261g6W+CUSYPtwJgIrPSddnnNCUvbB+XIvV87MGSLp+nE6h8I3L2Yp
-> ZisKaT6z6aHqqC0bcySk6V04UlbkfL83eahAz5bWvZeywUEjYvN+kOUlgR8TOxLC
-> 8bIQ28Q043XM3VC853rhPQqe5enV6KDRrLgDu1paeFdKYcaHjGkHvkwjRfxjJZIC
-> EsNdEl2vGjB1iGTUnFiUep9BteZBRrwfmaTE1yAseaUjEAx/3UK85PpTEqmNkON6
-> 1HCInP0LOeZMcggVzBKgRKCXKJZiInxEtSBXhxnPGgxagkOD7enw86gWflSqz3ca
-> wdRm/oADgCrQk6CsSGgusCouSyndC/T6ZRCa2/7vCecm2BBi8gxRuT4TZem3A6Ij
-> x+zfK7QaMDtELPGL+/rVOSgVCTaihz7oGeBKzqJeuyAv7zN0LxYoNlBsmsoBSTYJ
-> Uftvf0T7JTR3AQd1+tB2kOnyGOW4jSCNu66xNifR29j1C7jvKB0+uh891s/3mkzo
-> Wttcn/XLKpzXFWtN+mjb
-> =DWFZ
-> -----END PGP SIGNATURE-----
->
+Description [0]:
 
+Unauthenticated RCE is possible when JMeter is used in distributed mode (-r
+or -R command line options).
+Attacker can establish a RMI connection to a jmeter-server using
+RemoteJMeterEngine and proceed with an attack using untrusted data
+deserialization.
+This only affect tests running in Distributed mode.
+Note that versions before 4.0 are not able to encrypt traffic between the
+nodes, nor authenticate the participating nodes so even for those versions,
+upgrade to JMeter 5.1 is
+also advised.
+
+Mitigation:
+  * Users must use last minor version of Java 8 to Java 11
+  * Users must upgrade to last JMeter 5.1 version and use the default /
+enabled authenticated SSL RMI connection.
+
+Besides, we remind users that in distributed mode, JMeter makes an
+Architectural assumption
+that it is operating on a 'safe' network. i.e. everyone with access to the
+network is considered trusted.
+
+This typically means a dedicated VPN or similar is being used.
+
+Example:
+  * Start JMeter server using either jmeter-server or jmeter -s
+  * Using another keystore file, if you're able to connect to first server
+instance and you don't get "SSLHandshakeException: Received fatal alert:
+bad_certificate", you are vulnerable
+
+Credit:
+This issue was reported responsibly to the Apache Security Team by Brenden
+Meeder.
+
+- The Apache JMeter Team
+
+[0] https://bz.apache.org/bugzilla/show_bug.cgi?id=62743
+
+--000000000000e7875305831fb747--
