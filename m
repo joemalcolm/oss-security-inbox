@@ -1,29 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/02/1
-Message-ID: <CA+fCnZeEm1PAjBzVbMuKzoZuE5rKffqdRPBvNO7C5yNO+JnbXQ@mail.gmail.com>
-Date: Thu, 2 May 2019 19:14:30 +0200
-From: Andrey Konovalov <andreyknvl@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/03/1
+Message-ID: <20190303173117.58da9e69@computer>
+Date: Sun, 3 Mar 2019 17:31:17 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2019-11683: "GRO packet of death" issue in the Linux kernel
+Subject: Open Redirect in Tiny Tiny RSS (tt-rss)
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-syzbot has reported a remotely triggerable memory corruption in the
-Linux kernel. It's been introduced quite recently in e20cf8d3f1f7
-("udp: implement GRO for plain UDP sockets.") and only affects the 5.0
-(stable) release (so the name is a bit overhyped :).
+Via my personal Bug Bounty program on hackerone I got a report about an
+open redirect in a publicly accessible instance of Tiny Tiny RSS I have
+running on a subdomain.
 
-CVE-2019-11683 description:
+I'm aware that whether open redirects are vulnerabilities is debatable
+(which is also reflected in the discussion with tt-rss, but they fixed
+it nevertheless).
 
-udp_gro_receive_segment in net/ipv4/udp_offload.c in the Linux kernel
-5.x through 5.0.11 allows remote attackers to cause a denial of
-service (slab-out-of-bounds memory corruption) or possibly have
-unspecified other impact via UDP packets with a 0 payload, because of
-mishandling of padded packets, aka the "GRO packet of death" issue.
+PoC:
+https://[hostname]/public.php?return=http%3a%2f%2fevil.com%2f&op=login&login=password=&profile=0
 
-Fix (not yet upstream):
+Report to tt-rss developers:
+https://discourse.tt-rss.org/t/open-redirect-via-public-php/2077
+Fix:
+https://git.tt-rss.org/fox/tt-rss/commit/c68ac04020d85a296c784de18f8def3f365f9f6a
 
-https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=4dd2b82d5adfbe0b1587ccad7a8f76d826120f37
+This was reported by Mariia Aleksandrova (zophi), I just forwarded the
+report to the tt-rss developers.
 
-Thanks!
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
