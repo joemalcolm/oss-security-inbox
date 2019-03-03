@@ -1,21 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/08/12
-Message-ID: <20190108153835.GA20418@kroah.com>
-Date: Tue, 8 Jan 2019 16:38:35 +0100
-From: Greg KH <gregkh@...uxfoundation.org>
-To: Entropy Moe <3ntr0py1337@...il.com>
-Cc: security@...nel.org, oss-security@...ts.openwall.com
-Subject: Re: Linux Kernel 4.20(21) deadlock vulnerability.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/03/2
+Message-ID: <CAPyX2nfQGVziUEt2V-KF-zht5xoa0bPHFQ3nRFSj_-gs=07xCQ@mail.gmail.com>
+Date: Sun, 3 Mar 2019 16:58:48 +0000
+From: Mark Steward <marksteward@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Open Redirect in Tiny Tiny RSS (tt-rss)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jan 08, 2019 at 07:34:24PM +0400, Entropy Moe wrote:
-> Hello Greg,
-> thank you for reply,
-> I have have them tested on the new kernel 5
+This fix isn't sufficient - there are URLs that browsers process that
+don't have a host when passed through parse_url.
 
-What do you mean by this?  You have tested them and all is good?  Or
-not?  Or something else?
 
-Please be specific.
+Mark
 
-greg k-h
+On Sun, Mar 3, 2019 at 4:32 PM Hanno Böck <hanno@...eck.de> wrote:
+>
+> Hi,
+>
+> Via my personal Bug Bounty program on hackerone I got a report about an
+> open redirect in a publicly accessible instance of Tiny Tiny RSS I have
+> running on a subdomain.
+>
+> I'm aware that whether open redirects are vulnerabilities is debatable
+> (which is also reflected in the discussion with tt-rss, but they fixed
+> it nevertheless).
+>
+> PoC:
+> https://[hostname]/public.php?return=http%3a%2f%2fevil.com%2f&op=login&login=password=&profile=0
+>
+> Report to tt-rss developers:
+> https://discourse.tt-rss.org/t/open-redirect-via-public-php/2077
+> Fix:
+> https://git.tt-rss.org/fox/tt-rss/commit/c68ac04020d85a296c784de18f8def3f365f9f6a
+>
+> This was reported by Mariia Aleksandrova (zophi), I just forwarded the
+> report to the tt-rss developers.
+>
+> --
+> Hanno Böck
+> https://hboeck.de/
+>
+> mail/jabber: hanno@...eck.de
+> GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
