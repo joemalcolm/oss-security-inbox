@@ -1,43 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/30/1
-Message-ID: <67db82ab73dbb630c45003795f7597274f30983e.camel@neuling.org>
-Date: Tue, 30 Jul 2019 15:01:52 +1000
-From: Michael Neuling <mikey@...ling.org>
-To: oss-security@...ts.openwall.com
-Cc: linuxppc-dev@...ts.ozlabs.org, linux-kernel@...r.kernel.org, Linuxppc-users <linuxppc-users@...ts.ozlabs.org>, Michael Ellerman <michael@...erman.id.au>
-Subject: CVE-2019-13648: Linux kernel: powerpc: kernel crash in TM handling triggerable by any local user
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/04/1
+Message-ID: <CAPNiXbF1ZYsMjNeoHLqd5wS2Rr9F-5xmAeMYq0wMYrY2=QdkeA@mail.gmail.com>
+Date: Mon, 4 Mar 2019 14:34:34 +0100
+From: Alex R <alexr@...che.org>
+To: dev <dev@...os.apache.org>, user <user@...os.apache.org>,  security <security@...che.org>, oss-security@...ts.openwall.com,  Terry Chia <terrycwk1994@...il.com>
+Subject: CVE-2018-11793: Mesos components might crash when parsing deeply nested JSON structures.
 Content-Type: text/plain; charset=utf-8
 
-The Linux kernel for powerpc since v3.9 has a bug in the TM handling  where any
-unprivileged local user may crash the operating system.
+Severity: Moderate
 
-This bug affects machines using 64-bit CPUs where Transactional Memory (TM) is
-not present or has been disabled (see below for more details on affected CPUs).
+Vendor:
+The Apache Software Foundation
 
-To trigger the bug a process constructs a signal context which still has the MSR
-TS bits set. That process then passes this signal context to the sigreturn()
-system call. When returning back to userspace, the kernel then crashes with a
-bad TM transition (TM Bad Thing) or by executing TM code on a non-TM system.
+Versions Affected:
+Apache Mesos 1.4.0 to 1.7.0
+The unsupported Apache Mesos pre-1.4.0 releases may be also affected.
 
-All 64bit machines where TM is not present are affected. This includes PowerPC
-970 (G5), PA6T, POWER5/6/7 VMs under KVM or LPARs under PowerVM and POWER9 bare
-metal. 
+Description:
+When parsing a JSON payload with deeply nested JSON structures, the
+parser might overflow the stack due to unbounded recursion. A
+malicious actor can therefore cause a denial of service of Mesos
+masters rendering the Mesos-controlled cluster inoperable.
 
-Additionally systems with TM hardware but where TM is disabled in software (via
-ppc_tm=off kernel cmdline) are also affected. This includes POWER8/9 VMs under
-KVM or LPARs under PowerVM and POWER8 bare metal.
+Mitigation:
+pre-1.4.x users should upgrade to at least 1.4.3
+1.4.x users should upgrade to 1.4.3
+1.5.x users should upgrade to 1.5.2
+1.6.x users should upgrade to 1.6.2
+1.7.0 users should upgrade to 1.7.1
+1.8-dev users should obtain Mesos 1.8.0 or later
 
-The bug was introduced in commit:
-  2b0a576d15e0 ("powerpc: Add new transactional memory state to the signal context")
+Credit:
+This issue was discovered by Terry Chia (Ayrx).
 
-Which was originally merged in v3.9. 
-
-The upstream fix is here:
-  https://git.kernel.org/torvalds/c/f16d80b75a096c52354c6e0a574993f3b0dfbdfe
-
-The fix can be verified by running `sigfuz -m` from the kernel selftests:
- https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/tools/testing/selftests/powerpc/signal/sigfuz.c?h=v5.2
-
-cheers
-Mikey
+Alex on behalf of Mesos PMC
 
