@@ -1,124 +1,127 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/03/2
-Message-ID: <10950-1546501321.837517@7NMx.Y9CH.RDhT>
-Date: Thu, 03 Jan 2019 07:42:01 +0000
-From: halfdog <me@...fdog.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: Asserts considered harmful (or GMP spills its sensitive information)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/05/3
+Message-Id: <E1h194f-0001Hh-2I@xenbits.xenproject.org>
+Date: Tue, 05 Mar 2019 12:21:33 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 291 v2 - x86/PV: page type reference counting issue with failed IOMMU update
 Content-Type: text/plain; charset=utf-8
 
-Jeffrey Walton writes:
-> On Tue, Jan 1, 2019 at 7:42 AM Simon McVittie <smcv@...ian.org>
-> wrote:
->>
->> On Tue, 01 Jan 2019 at 12:07:17 +0100, Niels Möller wrote:
->> > A security sensitive application can easily disable generation
->> of core > files, using setrlimit (on the linux kernel, prctl
->> may also be useful).
->>
->> If you want to avoid core dumps being recorded on Linux in
->> the presence of system configuration that writes them into
->> a pipe to a command instead of to a core file (systemd-coredump,
->> corekeeper, abrt, apport etc., using a string starting with
->> | in /proc/sys/kernel/core_pattern), then you need to use
->> prctl PR_SET_DUMPABLE. Setting RLIMIT_CORE to 0 prevents the
->> kernel from creating core dump files itself, but does not
->> prevent it from writing them to pipes.
->
-> This is kind of interesting. It looks like systems running
-> systemd with coredumpctl store the dumps in journald. Systemd
-> does not appear to offer a way to clear them, so a
-> '/var/log/journal/*/*' is needed.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Such system stores them if the admin wanted that, see "man coredump.conf".
-So unless the "Storage=" setting is "none" but ignored, you
-should be able to retrieve the dumps. With "Storage=External"
-they end up on disk, where you should also have means to delete
-them.
+                    Xen Security Advisory XSA-291
+                              version 2
 
-I prefer a setup, where cores are encrypted immediately during
-core dump piping and then (like all other forensically relevant
-data) synchronized timely to other machine(s), e.g. via pipeline
-procedures built around guerilla-backup toolbox (which I did
-not manage to find a Debian package sponsor yet).
+  x86/PV: page type reference counting issue with failed IOMMU update
 
-> $ cat coredump.c #include <stdio.h> #include <assert.h>
->
-> int main(int argc, char* argv[]) { char password[128];
-> printf("Please enter your password:\n"); if(fgets(password,
-> sizeof(password), stdin) != NULL) { /* do some real work, detect
-> an error condition, then... */ assert(0); }
->
-> return 0; }
->
->
-> $ gcc coredump.c -o coredump.exe $ ./coredump.exe Please enter
-> your password: supersecretpassword coredump.exe: coredump.c:11:
-> main: Assertion `0' failed. Aborted (core dumped)
->
->
-> $ coredumpctl list TIME                            PID   UID
->   GID SIG COREFILE  EXE Wed 2019-01-02 16:23:15 EST   10827
->  1000  1000   6 present   /home/jwalton/...
->
->
-> $ coredumpctl -o coredump.exe.core dump 10827 PID: 10827
-> (coredump.exe) UID: 1000 (jwalton) GID: 1000 (jwalton) Signal:
-> 6 (ABRT)
->
->
-> $ strings coredump.exe.core | grep supersecret supersecretpassword
-> supersecretpassword
+UPDATES IN VERSION 2
+====================
 
-No matter which way your program was crashed (by your code or
-a library, by bug or API misuse, via SEGV, abort or whatsoever):
-a application processing sensitive data was not prepared to protect
-it. It could have happened also without even using any libraries
-at all.
+Metadata updated to remove dependency on XSA-283.
 
+Public release.
 
-See e.g. "ssh-agent", which (beside other means I think) uses
-the SGID-approach approach to protect against this and other
-dumpable/ptrace-may-attach related security issues, thus also
-preventing normal dumps. The art of secure programming would
-somehow be knowing all typical risks on your target platform(s)
-and mitigate them appropriately.
+ISSUE DESCRIPTION
+=================
 
+When an x86 PV domain has a passed-through PCI device assigned, IOMMU
+mappings may need to be updated when the type of a particular page
+changes.  Such an IOMMU operation may fail.  In the event of failure,
+while at present the affected guest would be forcibly crashed, the
+already recorded additional type reference was not dropped again.  This
+causes a bug check to trigger while cleaning up after the crashed
+guest.
 
-The use of systemd-coredump here is just another red herring (same
-as abort()): A program processing sensitive information wanted to
-be dumpable, so the information can be retrieved by normal users.
-That is just exactly the idea behind coredumps for debugging et
-al.
+IMPACT
+======
 
-I think if your application would have coredump/ptrace protection
-in place, systemd-coredump could still dump the file for the
-root-user, but that also would be just very useful behaviour
-(it allow forensics, IOC-generation also for SUID-crashes) and
-usually not a security risk at all: only root can read them
-(and root could usually ptrace your program, read all you
-supersensitive IO, manipulate the binary, ... anyway).
+Malicious or buggy x86 PV guest kernels can mount a Denial of Service
+(DoS) attack affecting the whole system.
 
+VULNERABLE SYSTEMS
+==================
 
-In case your application is even that super-super-sensitive, that
-the benefit from core-dump-analysis would still be eliminated
-by possible data leackage via cores, then you should e.g. use
-the kernel to store your sensitive material for you (see keyrings)
-or when even that is too risky, use the appropriate TEMPEST-
-and tamper-resistent HSM (maybe even one that has to be unlocked
-by multiple actors using their HSMs at the same time, a similar
-procedure like firing nukes in movies - Thales explained such
-a design to me once). Of course such HSM schemes make only sense
-with the appropriate physical protection, either by prohibiting
-access or burning down your own place before your would let someone
-leave with your HSM.
+Xen versions from 4.8 onwards are vulnerable.
 
+Only x86 systems are vulnerable.  ARM systems are not vulnerable.
 
-And finally, looking at the incomplete list of mitigations and
-knowing what they imply on usability, management and debugging
-of your software, decide if it is really worth taking them (damage
-costs lower than mitigation costs).
+Only x86 PV guests can exploit the vulnerability.  x86 HVM and PVH
+guests cannot exploit the vulnerability.
 
-hd
+Only guests which are assigned a physical device can exploit this
+vulnerability.  Guests which are not assigned physical devices cannot
+exploit this vulnerability.
 
+MITIGATION
+==========
 
+Running only HVM or PVH guests avoids the vulnerability.
+
+Not passing through PCI devices to PV guests also avoids the
+vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Igor Druzhinin and Andrew Cooper of Citrix.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa291.patch           xen-unstable
+xsa291-4.11.patch      Xen 4.11.x, Xen 4.10.x
+xsa291-4.9.patch       Xen 4.9.x, Xen 4.8.x
+
+$ sha256sum xsa291*
+01883c11ae45a5771644270445e463538a61d98c66adbba852de74ccd272eae9  xsa291.meta
+fb5f2a75ba113f21e9cb2dfbc22520495c69a4fef631c030a4834c680045e587  xsa291.patch
+299bb4913e7ddb46ce90f415f91ee5e5480050631281c87e1a764b66fb116d89  xsa291-4.9.patch
+16087ba5c59b9644f4f61c0c7fa124d9e04e88089b235aaae91daa04cdf1b8a1  xsa291-4.11.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAlx+aa4MHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZ7uEH+gKbe8qOoIa8/xDC1rOH5H+BNvjCSfuov4EUPsJ1
+3DUPNSa3jCHTlX89+BwI+uOis3vHuQYBw/k9QYfx6nG617bu3/dUYiWlnE/DpPzm
+zur3McHNigWCXOYsrNlgnOncXixJIRcIlMJNudejzaFwnW9PDA8ZZ5r3UiTLY0fT
+wySjAL0cpMztmU7PfYAPib97JAM/+GHGiwjjumaaIvF3WnIADJ26HpmtiKELMwOh
+7o53kTUPFutLq4McsbcrxLRhwSOsBfhPN1mb4Y0QFUP7yStFpNOmzppu8mLuewhE
++PqJ0OQqqCx8hz/3TEDO59JUlH7Iwo4B3Eykhb5BqoSQHrY=
+=iq8p
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa291.meta" of type "application/octet-stream" (1790 bytes)
+
+Download attachment "xsa291.patch" of type "application/octet-stream" (1829 bytes)
+
+Download attachment "xsa291-4.9.patch" of type "application/octet-stream" (1863 bytes)
+
+Download attachment "xsa291-4.11.patch" of type "application/octet-stream" (1847 bytes)
