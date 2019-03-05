@@ -1,146 +1,179 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/16/4
-Message-ID: <f8607122-da64-3413-34b6-71048711a53f@sba-research.org>
-Date: Wed, 16 Oct 2019 14:13:55 +0200
-From: SBA Research Advisory <advisory@...-research.org>
-To: <oss-security@...ts.openwall.com>
-Subject: [SBA-ADV-20190913-03] CVE-2019-16523: WordPress Plugin - Events Manager <= 5.9.5 - Stored XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/05/7
+Message-Id: <E1h197Q-00049g-17@xenbits.xenproject.org>
+Date: Tue, 05 Mar 2019 12:24:24 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 290 v2 - missing preemption in x86 PV page table unvalidation
 Content-Type: text/plain; charset=utf-8
 
-# WordPress Plugin - Events Manager - Stored XSS #
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Link: https://github.com/sbaresearch/advisories/tree/public/2019/SBA-ADV-20190913-03_WordPress_Plugin_Events_Manager
+                    Xen Security Advisory XSA-290
+                              version 2
 
-## Vulnerability Overview ##
+         missing preemption in x86 PV page table unvalidation
 
-The events-manager plugin through 5.9.5 for WordPress (aka Events Manager)
-is susceptible to Stored XSS due to improper encoding and insertion of
-data provided to the attribute map_style of shortcodes (locations_map
-and events_map) provided by the plugin.
+UPDATES IN VERSION 2
+====================
 
-* **Identifier**            : SBA-ADV-20190913-03
-* **Type of Vulnerability** : Cross-site Scripting
-* **Software/Product Name** : [Events Manager](https://wordpress.org/plugins/events-manager/)
-* **Vendor**                : [Marcus Sykes](https://wp-events-plugin.com)
-* **Affected Versions**     : <= 5.9.5
-* **Fixed in Version**      : 5.9.6
-* **CVE ID**                : CVE-2019-16523
-* **CVSSv3 Vector**         : AV:N/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:N
-* **CVSSv3 Base Score**     : 7.3 (High)
+Metadata updated to remove dependency on XSA-283.
 
-## Vendor Description ##
+Public release.
 
-> Events Manager is a full-featured event registration plugin for WordPress based on the principles of flexibility, reliability and powerful features!
->
-> Version 5 now makes events and locations WordPress Custom Post Types, allowing for more possibilities than ever before!
+ISSUE DESCRIPTION
+=================
 
-Active Installations: 100,000+
+XSA-273 changes required, among other things, making any PTE updates
+restartable.  The changes making PTE updates restartable assumed that L2
+pagetables would always be promoted preemptibly; but this turns out not
+to be the case when using the 'linear pagetable' feature; the result was
+that interrupted operations are not handled properly in certain cases.
 
-Source: <https://wordpress.org/plugins/events-manager/>
+Furthermore, previous security work making pagetable update preemptible
+failed to account for 'linear pagetables' at L3 and L4 levels, making it
+possible for operations to run for longer than acceptable times.
 
-## Impact ##
+IMPACT
+======
 
-By exploiting the documented vulnerability, an authenticated attacker with the
-ability to create posts can execute JavaScript code in a victim's browser.
-This can be misused, e.g for phishing attacks by displaying a fake
-login form and sending the victim's credentials to the attacker.
-Furthermore malicious actions can be performed in the context of an authenticated
-user. The impact depends on the level of access of the attacked user.
-In case of an admin this can lead to the execution of PHP code and the compromise
-of the server.
+Malicious or buggy x86 PV guest kernels can mount a Denial of Service
+(DoS) attack affecting the whole system.
 
-## Vulnerability Description ##
+VULNERABLE SYSTEMS
+==================
 
-The plugin provides [*shortcodes*][1] to create a map widget e.g. for displaying the
-location of an event. Those maps can be visually adjusted by providing
-a custom style via the attribute `map_style` in the shortcode. The usage of HTML inside
-shortcode attributes is [limited][2] in order to prevent XSS.
-However in this case it is possible to inject arbitrary HTML and JavaScript because the
-`map_style` attribute expects a base64-encoded JSON-object. This allows bypassing sanitization.
-The shortcodes `locations_map` and `events_map` are affected by this problem:
+All Xen versions are vulnerable.
 
-In `em-shortcode.php` (line 43-56) we can see that the attribute is base64-decoded and then
-parsed with json_decode. If the JSON syntax is valid, whitespace is removed and the object
-passed to the template as `map_json_style` variable. See the code snippet below:
+Only x86 systems are affected.  ARM systems are not affected.
 
-```php
-//add JSON style to map
-$style = '';
-if( !empty($args['map_style']) ){
-    $style= base64_decode($args['map_style']);
-    $style_json= json_decode($style);
-    if( is_array($style_json) || is_object($style_json) ){
-        $style = preg_replace('/[\r\n\t\s]/', '', $style);
-    }else{
-        $style = '';
-    }
-    unset($args['map_style']);
-}
-ob_start();
-em_locate_template('templates/map-global.php',true, array('args'=>$args, 'map_json_style' => $style));
-```
+Only Xen versions which permit linear page table use by PV guests are
+vulnerable.
 
-In `templates/templates/map-global.php` (line 16-21) the variable is inserted inside a script tag
-without further encoding:
+Only x86 PV guests can leverage this vulnerability.  x86 HVM guests
+cannot leverage this vulnerability.
 
-```php
-<script type="text/javascript">
-    if( typeof EM == 'object'){
-        if( typeof EM.google_map_id_styles != 'object' ) EM.google_map_id_styles = [];
-        EM.google_map_id_styles['<?php echo $args['random_id']; ?>'] = <?php echo $map_json_style; ?>;
-    }
-</script>
-```
+MITIGATION
+==========
 
-This allows the injection of a XSS payload.
+Not permitting linear page table use by PV guests avoids the
+vulnerability.  This can be done both at build time, by turning off the
+PV_LINEAR_PT configure option, or at runtime, by passing specifying
+"pv-linear-pt=0" on the hypervisor command line.  Doing so would,
+however, render PV guests using the functionality, like NetBSD,
+unusable.
 
-[1]: https://codex.wordpress.org/Shortcode_API
-[2]: https://codex.wordpress.org/Shortcode_API#HTML
+On systems where the guest kernel is controlled by the host rather than
+guest administrator, running only kernels which only issue sane
+hypercalls will prevent untrusted guest users from exploiting this
+issue.  However untrusted guest administrators can still trigger it
+unless further steps are taken to prevent them from loading code into
+the kernel (e.g by disabling loadable modules etc) or from using other
+mechanisms which allow them to run code at kernel privilege.
 
-## Proof of Concept ##
+Running only HVM guests will avoid this vulnerability.
 
-To exploit this vulnerability an attacker needs to create or edit a post
-and insert one of the shortcodes mentioned above.
-In this example we use the `locations_map` shortcode and set the attribute
-`map_style` to the base64 encoded value of `{"a":"test\"</script><script>alert(1)</script>"}`.
-This will result in the following shortcode:
+CREDITS
+=======
 
-```text
-[locations_map test="" map_style="eyJhIjoidGVzdFwiPC9zY3JpcHQ+PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0PiJ9Cg=="]
-```
+This issue was discovered by Manuel Bouyer.
 
-This shortcode can then be inserted in the post and published by a malicious user.
-Anyone visiting the post will be affected by the payload and therefore a victim of the XSS attack.
+RESOLUTION
+==========
 
-## Recommended Countermeasures ##
+Applying the appropriate pair of attached patches resolves this issue.
 
-We recommend to properly escape the output by using the encoding functions provided by WordPress,
-like the `esc_*`- or `wp_kses_*`-[functions][3].
+xsa290/unstable-?.patch         xen-unstable
+xsa290/4.11-?.patch             Xen 4.11.x
+xsa290/4.10-?.patch             Xen 4.10.x
+xsa290/4.9-?.patch              Xen 4.9.x
+xsa290/4.8-?.patch              Xen 4.8.x
+xsa290/4.7-?.patch              Xen 4.7.x
 
-[3]: https://developer.wordpress.org/themes/theme-security/data-sanitization-escaping/#escaping-securing-output
+$ sha256sum xsa290* xsa290*/*
+e74014bf97f223f35dc6142fbfadd8a3df6c7ecf1818d5d04ebb717a1d600959  xsa290.meta
+87ffaf9712bfd2283e845d168811e572b9ebc8a580e750128586a48e65ae4c67  xsa290/4.7-1.patch
+4137eb15d963a77ff302cb65f9f04e402ea23f69042f89ece4baaf4b7a58d638  xsa290/4.7-2.patch
+0f5ce8c13c99431cae69736e117c7420c3202e3a680b42a66027646ae0aa141c  xsa290/4.8-1.patch
+bb4102dd6f3daf60859a88b6a2f0828bc8aeb224d3d3b6fd2d2cc96b3f131a24  xsa290/4.8-2.patch
+a7e4902968529289c63149608d48e1eeac2feffa644e1337b1b5b9a624dc746d  xsa290/4.9-1.patch
+7798b063a8db95fc18bca1ea25d84937fbe9c6e0add15056841fd97d5aec2885  xsa290/4.9-2.patch
+3a0bf44875bb5a8525b4418d6efd49bd6ed6cfaffe669cbdcfde61a65fe9cdea  xsa290/4.10-1.patch
+1e7dfe1b0c57e245daef1351db855a9312a4c225c05a6720460ea4aa1148ee22  xsa290/4.10-2.patch
+3dd47f3bc1a004260d05cba548a80e475f85ffe60b663879de386e32a8e9ffbc  xsa290/4.11-1.patch
+b3b17546fc553bf60572cf56023d8177f96973fcd072a8adfc622b4030e58d00  xsa290/4.11-2.patch
+4ff1d857f46a781fd7483a30297ebf51bf079ccd1d598df799e5779ddc893674  xsa290/unstable-1.patch
+3a85ecc426d482052aaf2a84bfde9840eb7a566638dbab042dac84b0019ca473  xsa290/unstable-2.patch
+$
 
-## Timeline ##
+DEPLOYMENT DURING EMBARGO
+=========================
 
-* `2019-09-09` Identified the vulnerability
-* `2019-09-10` Contacted vendor
-* `2019-09-10` Response by vendor about disclosure contact
-* `2019-09-10` Vulnerability disclosed to vendor
-* `2019-09-10` Vulnerability verified by vendor, public disclosure coordinated
-* `2019-09-20` CVE assigned
-* `2019-09-23` Suggested fix verified
-* `2019-09-27` Plugin update containing fix was released
-* `2019-10-16` Public disclosure
+Deployment of the patches and/or the HVM-only as well as host controlled
+kernel mitigations described above (or others which are substantially
+similar) is permitted during the embargo, even on public-facing systems
+with untrusted guest users and administrators.
 
-## References ##
+HOWEVER deployment of the "pv-linear-pt=0" mitigation described above is
+NOT permitted (except where all the affected systems and VMs are
+administered and used only by organisations which are members of the Xen
+Project Security Issues Predisclosure List).  Specifically, deployment
+on public cloud systems is NOT permitted.
 
-* <https://wordpress.org/plugins/events-manager/>
-* <https://wordpress.org/plugins/events-manager/#developers>
-* <https://wp-events-plugin.com/blog/2019/09/27/events-manager-5-9-6/>
+This is because in that case the configuration change is visible to the
+guest, which could lead to the rediscovery of the vulnerability.
 
-## Credits ##
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
 
-* Tobias Fink ([SBA Research](https://www.sba-research.org/))
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
 
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
 
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAlx+amwMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZaP0IALeZ9zd5UEHwM2Xq2VTZdJqTW9blhttrJbmfTiSe
+7/wtwsMpRIrxycdouWzAZwo3ZFt3Y6qmk+6awkT23ck0OC1zNnMw9ANYdB2XqW+Q
+NGzz/ExDj+40EeaMcx2ZyNUZGya0yJVorzRSPM68bQAW2XXy1oBevTKqMkr3iSJf
+I06/J7vtap89F+JjfiBrVXubcjmUvX/MtsD4yz0lckC5Ti07Lcmv0pUGHprxXBgw
+QlMhgV3qKG3JBa7h0b11UnrpIPdCbwJIWJd/+Pzd4yD9R3ZXRiGyjOd+/zyXVcY7
+vCrh2lCP4WpXvrLDUPt8IgJak8cjxZ2JGAxk3yN/QI6Uro0=
+=/yIK
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa290.meta" of type "application/octet-stream" (2065 bytes)
+
+Download attachment "xsa290/4.7-1.patch" of type "application/octet-stream" (7000 bytes)
+
+Download attachment "xsa290/4.7-2.patch" of type "application/octet-stream" (2309 bytes)
+
+Download attachment "xsa290/4.8-1.patch" of type "application/octet-stream" (7473 bytes)
+
+Download attachment "xsa290/4.8-2.patch" of type "application/octet-stream" (2309 bytes)
+
+Download attachment "xsa290/4.9-1.patch" of type "application/octet-stream" (7492 bytes)
+
+Download attachment "xsa290/4.9-2.patch" of type "application/octet-stream" (2309 bytes)
+
+Download attachment "xsa290/4.10-1.patch" of type "application/octet-stream" (7538 bytes)
+
+Download attachment "xsa290/4.10-2.patch" of type "application/octet-stream" (2235 bytes)
+
+Download attachment "xsa290/4.11-1.patch" of type "application/octet-stream" (7479 bytes)
+
+Download attachment "xsa290/4.11-2.patch" of type "application/octet-stream" (2235 bytes)
+
+Download attachment "xsa290/unstable-1.patch" of type "application/octet-stream" (7491 bytes)
+
+Download attachment "xsa290/unstable-2.patch" of type "application/octet-stream" (2244 bytes)
