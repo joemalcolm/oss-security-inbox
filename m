@@ -1,23 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/25/1
-Message-ID: <20191125141615.GA10910@openwall.com>
-Date: Mon, 25 Nov 2019 15:16:15 +0100
-From: Solar Designer <solar@...nwall.com>
-To: qize wang <wangqize888888888@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: heap overflow in the marvell wifi driver
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/06/1
+Message-ID: <CAG48ez3JJ_+smFw9H8Fv2t2Rv0qNKrgBEp1hsfYL0BF16VWnNg@mail.gmail.com>
+Date: Tue, 5 Mar 2019 22:02:49 +0100
+From: Jann Horn <jannhorn@...glemail.com>
+To: oss-security@...ts.openwall.com
+Subject: Linux kernel: OOB R/W in SNMP NAT module (CVE-2019-9162); virtual address 0 mappable (CVE-2019-9213)
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Nov 22, 2019 at 08:51:31PM +0800, qize wang wrote:
-> some flaws were found in the Linux kernel's Marvell wifi chip driver. 
-> multi heap overflow in mwifiex_process_tdls_action_frame function in 
-> marvell/mwifiex/tdls.c which allows remote attackers to cause a denial 
-> of service(system crash) or execute arbitrary code.
-> 
-> the station receive a tdls setup request or respone frame which IE 's 
-> length is larger than the heap buffer assigned (for example : the 
-> EID_SUPP_RATES IE's length > 255) will cause heap overflow??
+Two Linux kernel bugs:
 
-Red Hat has assigned CVE-2019-14901 to this issue.
+out-of-bounds read and write in SNMP NAT module
+introduced in commit cc2d58634e0f ("netfilter: nf_nat_snmp_basic: use
+asn1 decoder library",
+first in 4.16)
+https://bugs.chromium.org/p/project-zero/issues/detail?id=1776
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/net?id=c4c07b4d6fa1f11880eab8e076d3d060ef3f55fc
+https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.14.103
+https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.19.25
+[this one's been public for a while, I didn't get around to sending a
+mail to oss-security about it]
 
-Alexander
+virtual address 0 is mappable via privileged write() to /proc/*/mem
+https://bugs.chromium.org/p/project-zero/issues/detail?id=1792
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=0a1d52994d440e21def1c2174932410b4f2a98a1
+https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.20.14
+https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.19.27
+https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.14.105
+https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.9.162
