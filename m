@@ -1,29 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/27/1
-Message-ID: <nycvar.YSQ.7.76.1903271534170.27869@xnncv>
-Date: Wed, 27 Mar 2019 15:35:59 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE-2018-20815 QEMU: device_tree: heap buffer overflow while loading device tree blob
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/06/3
+Message-ID: <377cba1a-3a0a-214d-7dcc-3c7058ff9fbb@nebelwelt.net>
+Date: Wed, 6 Mar 2019 21:35:17 +0100
+From: Mathias Payer <mathias.payer@...elwelt.net>
+To: oss-security@...ts.openwall.com
+Subject: Transient execution attacks leveraging port contention
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Hi there,
 
-A heap buffer overflow issue was found in the load_device_tree() function of 
-QEMU, which is invoked to load device tree blob at boot time. It occurs due to 
-device tree size manipulation before buffer allocation, which could overflow a 
-signed int type.
+# Intro
 
-A user/process could use this flaw to potentially execute arbitrary code on a 
-host system with privileges of the QEMU process.
+We (a team of researchers from EPFL and IBM Research) are releasing details
+about a new transient execution attack that leaks secrets from an uncooperating
+process through a combination of speculative execution (we use branch target
+injection) and port contention (for SMT threads).
 
-Upstream patch:
----------------
-   -> https://git.qemu.org/?p=qemu.git;a=commitdiff;h=da885fe1ee8b4589047484bd7fa05a4905b52b17
 
-'CVE-2018-20815' assigned via -> https://cveform.mitre.org/
+# SMoTherSpecre
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+We introduce SMoTher, a port-based side channel that leaks information on what
+instruction sequences were executed by the victim due to port contention. We
+precisely characterize and measure this side channel.
+
+Second, we combine SMoTher with a speculative execution attack to leak register
+values or memory values (that are likely in caches). We call the combined side
+channel SMoTherSpectre.
+
+Our attack requires two gadgets: a BTI gadget that speculatively redirects
+execution to a SMoTher gadgets that, through port contention, leaks which branch
+was taken. By competing for execution ports, the attacker measures if the JCC in
+the SMoTher gadget was either taken or not taken (based on the execution
+profiles of either branch).
+
+We first analyze the capabilities of this transient execution attack and find
+that we can guess one bit with 60% probability (on one try) and 98% probability
+(on 9 tries). Second, we target OpenSSL where we leverage an indirect call that
+selects the cipher to encrypt/decrypt as BTI target to compare individual bytes
+of the plaintext to zero (through a SMoTher gadget).
+
+See the blog post for more details:
+  http://nebelwelt.net/blog/20190306-SMoTherSpectre.html
+The paper draft is at: https://arxiv.org/abs/1903.01843
+The PoC is at: https://github.com/HexHive/SMoTherSpectre
+In our PoC we target Intel Skylake 6700 CPUs.
+
+
+# Disclosure
+
+We discovered SMoTher in June 2018 and SMoTherSpectre in November 2018. We
+disclosed the details and PoC to Intel early December 2018. Our IBM research
+collaborators finished the internal disclosure process on February 28.
+
+
+# Credit
+
+Atri Bhattacharyya, Alexandra Sandulescu, Matthias Neugschwandtner, Alessandro
+Sorniotti, Babak Falsafi, Mathias Payer, and Anil Kurmus
+
+As always, feedback, comments, and discussions are welcome.
+
+Best,
+Mathias (and all collaborators)
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
