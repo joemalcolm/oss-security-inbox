@@ -1,36 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/01/2
-Message-Id: <3F256A9C-EBE9-420C-B8F6-32AD39A664C5@gmail.com>
-Date: Mon, 31 Dec 2018 18:38:36 -0800
-From: Matthew Fernandez <matthew.fernandez@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: Jeffrey Walton <noloader@...il.com>, gmp-bugs@...lib.org
-Subject: Re: Asserts considered harmful (or GMP spills its sensitive information)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/07/2
+Message-ID: <CANwEksUQ7BUBm4gfK3Dew-_Mm1-nO=Dh4u1wwvZ7CV8VwP=Zvg@mail.gmail.com>
+Date: Wed, 6 Mar 2019 14:22:45 -0800
+From: Neng Lu <freeneng@...il.com>
+To: windham.wong@...rmeye.io, Apache Security Team <security@...che.org>,  oss-security@...ts.openwall.com, general@...ubator.apache.org,  dev@...on.apache.org, private@...on.apache.org
+Subject: [CVE-2018-11789] Apache Incubator Heron file access vulnerability
 Content-Type: text/plain; charset=utf-8
 
+Severity: Important
 
-> On Dec 31, 2018, at 11:38, Jeffrey Walton <noloader@...il.com> wrote:
-> 
-> On Mon, Dec 31, 2018 at 2:16 PM Vincent Lefevre <vincent@...c17.net <mailto:vincent@...c17.net>> wrote:
->> 
->> On 2018-12-31 13:03:27 -0500, Jeffrey Walton wrote:
-> 
->>> This is the first point of unwanted data egress. Sensitive information
->>> like user passwords and keys can be written to the filesystem
->>> unprotected.
->> 
->> This can occur with any program, even not using asserts, e.g. due to
->> a segmentation fault (which may happen as a consequence of not using
->> asserts, with possibly worse consequences).
->> 
->> If you don't want a core file, then you can instruct the kernel not
->> to write a core file. See getrlimit.
-> 
-> To play devil's advocate again, that strategy requires every user to
-> have the knowledge. If RTFM was going to worked, It should have
-> happened in the last 50 years or so.
-> 
-> Refusing to process the data and failing the API call requires no
-> knowledge on the user's part.
+Vendor:
+The Apache Software Foundation
 
-I don’t have a dog in this fight, but you referenced high integrity software (though I guess what is meant is confidentiality rather than integrity in this case) and then say we cannot rely on people to RTFM. While I don’t doubt there are users who will fail to understand the consequences of having core dumps enabled, this is just one of many ways to leak information in a non-hardened system. E.g. you can attach to the victim process with gdb/ptrace and simply read its memory, if the sysadmin has not blocked this with Yama or similar. Could you elaborate on the threat model you have in mind?
+Versions Affected:
+Heron 0.13.0 to 0.17.8
+
+Description:
+When accessing the heron-ui webpage, people can modify the file paths
+outside of the current container to access any file on the host.
+
+Mitigation:
+All Heron users should upgrade to 0.20.0-incubating
+
+Example:
+modify the parameter path= to go to the directory you would like to view.
+i.e. ..%2F..%2F..%2F..%2F..%2F..%2Fetc%2Fpasswd
+
+Credit:
+This issue was discovered by Windham Wong of stormeye.io
+
+-- 
+Best Regards,
+Neng
+
