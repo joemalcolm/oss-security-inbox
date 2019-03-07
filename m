@@ -1,144 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/25/10
-Message-Id: <E1iNxUx-0003zV-7X@xenbits.xenproject.org>
-Date: Fri, 25 Oct 2019 11:11:15 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 288 v3 (CVE-2019-17343) - x86: Inconsistent PV IOMMU discipline
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/07/3
+Message-ID: <c7f712c2-8505-31a3-87f4-2ecf3e89d65e@nanthrax.net>
+Date: Thu, 7 Mar 2019 13:53:59 +0100
+From: Jean-Baptiste Onofré <jb@...thrax.net>
+To: user@...af.apache.org, Karaf Dev <dev@...af.apache.org>, Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com, Colm O hEigeartaigh <coheigea@...che.org>
+Subject: [SECURITY] New security advisory for CVE-2019-0191 released for Apache Karaf
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+A new security advisory has been released for Apache Karaf, that is
+fixed in recent 4.2.3 release.
 
-            Xen Security Advisory CVE-2019-17343 / XSA-288
-                              version 3
+CVE-2019-0191: Zip-slip vulnerability in KAR deployer
 
-                 x86: Inconsistent PV IOMMU discipline
+Severity: Low
 
-UPDATES IN VERSION 3
-====================
+Vendor: The Apache Software Foundation
 
-CVE assigned.
+Versions Affected: all versions of Apache Karaf prior to 4.2.3
 
-ISSUE DESCRIPTION
-=================
+Description:
 
-In order for a PV domain to set up DMA from a passed-through device to
-one of its pages, the page must be mapped in the IOMMU.  On the other
-hand, before a PV page may be used as a "special" page type (such as a
-pagetable or descriptor table), it _must not_ be writable in the IOMMU
-(otherwise a malicious guest could DMA arbitrary page tables into the
-memory, bypassing Xen's safety checks); and Xen's current rule is to
-have such pages not in the IOMMU at all.
+Apache Karaf kar deployer reads .kar archives and extracts the paths from
+the "repository/" and "resources/" entries in the zip file.
 
-Until now, in order to accomplish this, the code has borrowed HVM
-domain's "physmap" concept: When a page is assigned to a guest,
-guess_physmap_add_entry() is called, which for PV guests, will create
-a writable IOMMU mapping; and when a page is removed,
-guest_physmap_remove_entry() is called, which will remove the mapping.
+It then writes out the content of these paths to the Karaf repo and
+resources
+directories. However, it doesn't do any validation on the paths in the zip
+file. This means that a malicious user could craft a .kar file with ".."
+directory names and break out of the directories to write arbitrary content
+to the filesystem. This is the "Zip-slip" vulnerability -
+https://snyk.io/research/zip-slip-vulnerability
 
-Additionally, when a page gains the PGT_writable page type, the page
-will be added into the IOMMU; and when the page changes away from a
-PGT_writable type, the page will be removed from the IOMMU.
+This vulnerability is low if the Karaf process user has limited permission
+on the filesystem.
 
-Unfortunately, borrowing the "physmap" concept from HVM domains is
-problematic.  HVM domains have a lock on their p2m tables, ensuring
-synchronization between modifications to the p2m; and all hypercall
-parameters must first be translated through the p2m before being used.
-Trying to mix this locked-and-gated approach with PV's lock-free
-approach leads to several races and inconsistencies.
+The mitigation is to prevent "Zip-slip" by checking the path used in kar
+zip
+entries and prevent use of ".." path.
 
-IMPACT
-======
+This has been fixed in revision:
 
-An untrusted PV domain with access to a physical device can DMA into
-its own pagetables, leading to privilege escalation.
+https://gitbox.apache.org/repos/asf?p=karaf.git;h=fef9a61
+https://gitbox.apache.org/repos/asf?p=karaf.git;h=e36a7a6
 
-VULNERABLE SYSTEMS
-==================
+Mitigation: Apache Karaf users should upgrade to 4.2.3
+or later as soon as possible, or limit filesystem permission for the Karaf
+process user.
 
-Only x86 systems are vulnerable.  ARM systems are not vulnerable.
+JIRA Tickets: https://issues.apache.org/jira/browse/KARAF-6090
 
-Only systems where PV guests are given direct access to physical
-devices (PCI pass-through) are vulnerable.  Systems with only HVM
-guests, or systems which do not use PCI pass-through, are not
-vulnerable.
-
-MITIGATION
-==========
-
-Only assigning devices to HVM guests will avoid these vulnerabilities.
-
-CREDITS
-=======
-
-This issue was discovered by Paul Durrant of Citrix.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa288.patch           xen-unstable
-xsa288-4.11.patch      Xen 4.11.x, Xen 4.10.x
-xsa288-4.9.patch       Xen 4.9.x
-xsa288-4.8.patch       Xen 4.8.x
-xsa288-4.7.patch       Xen 4.7.x
-
-$ sha256sum xsa288*
-7254f0ce791b5543aec68643ec47e2bcf7823650949c7eb32db5122591f12e8c  xsa288.meta
-e1159cb5c1c5a01b28753739b6a78b555ebe4b920cae766db47e0f2a1a21c188  xsa288.patch
-e9986ceda84e7391c27d80fd541a0e5edf1eadef302a560b4e445ca9bad4c56e  xsa288-4.7.patch
-14856543ccaa5b3db2a209d25637ed025f2eb940294d0cd07e03f56630a9e5af  xsa288-4.8.patch
-df5e4a367f58491d54c778e2997142792c881d4f7b5a2a1d3339d2a3f1abafe5  xsa288-4.9.patch
-58ba46b4814695dc34beaa5fb644931253bd0b0c6a8dc843c735beec152ae722  xsa288-4.11.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
+Credit: This issue was reported by Colm O hEigeartaigh
 
 
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl2y19AMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZmCoH/3PTKQLGVnhe5iGtXVgfbb1h+vz/8t/BATDFgreL
-LXSvxxK42FZ+inbr/qz/NUPS21yISOUu9agqWFzTq5qYpU1E4+FybwdjvIHBE6tG
-16gFjHYfawvA3QAPndaZR8vdWVqOEu/YdhOSa7m9vRiUnxh2B44nX0oT/bXuGdKv
-pyKrQk91hpeWPXxWzJ2k1hy1+/I+eEDxLvauvVaIulO/0bQyMTWcCDRCYdzShJEp
-njdVj3+4ZvvNbtc4zrWmVtfyZfMLWFdYwCTcTQ7Gy0b9wVmGhD1UhZsgXd4i8H2Z
-62HfUOesi7yO2OtI1T08GaRFoo9ArcUbyEKvxTGW5Iyh6NE=
-=EvlR
------END PGP SIGNATURE-----
-
-Download attachment "xsa288.meta" of type "application/octet-stream" (1924 bytes)
-
-Download attachment "xsa288.patch" of type "application/octet-stream" (11688 bytes)
-
-Download attachment "xsa288-4.7.patch" of type "application/octet-stream" (11857 bytes)
-
-Download attachment "xsa288-4.8.patch" of type "application/octet-stream" (12251 bytes)
-
-Download attachment "xsa288-4.9.patch" of type "application/octet-stream" (12226 bytes)
-
-Download attachment "xsa288-4.11.patch" of type "application/octet-stream" (12244 bytes)
