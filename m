@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2081" "Sunday" "29" "March" "2020" "22:52:38" "+0200" "Matthias =?ISO-8859-1?Q?Bl=E4sing?=" "mblaesing@doppel-helix.eu" "<24afb6093cb0de9e0f652ed5252e6aa97f34fd30.camel@doppel-helix.eu>" "62" "[oss-security] [CVE-2019-17560] \"Apache NetBeans\" autoupdate cert validation" nil nil nil "3" "2020032920:52:38" "[oss-security] [CVE-2019-17560] \"Apache NetBeans\" autoupdate cert validation" (number mark "U       mblaesing@do Mar 29   62/2081  " thread-indent "\"[oss-security] [CVE-2019-17560] \"Apache NetBeans\" autoupdate cert validation\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2019-17560] \"Apache NetBeans\" autoupdate cert validation" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1460" "Thursday" "7" "March" "2019" "13:53:59" "+0100" "=?UTF-8?B?SmVhbi1CYXB0aXN0ZSBPbm9mcsOp?=" "jb@nanthrax.net" "<c7f712c2-8505-31a3-87f4-2ecf3e89d65e@nanthrax.net>" "45" "[oss-security] [SECURITY] New security advisory for CVE-2019-0191 released for Apache Karaf" "^Date:" nil nil "3" "2019030712:53:59" "[oss-security] [SECURITY] New security advisory for CVE-2019-0191 released for Apache Karaf" (number mark "U       jb@nanthrax. Mar  7   45/1460  " thread-indent "\"[oss-security] [SECURITY] New security advisory for CVE-2019-0191 released for Apache Karaf\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [SECURITY] New security advisory for CVE-2019-0191 released for Apache Karaf" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28022 invoked by uid 550); 30 Mar 2020 10:46:02 -0000
+Received: (qmail 24535 invoked by uid 550); 7 Mar 2019 13:34:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,88 +11,65 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21839 invoked from network); 29 Mar 2020 20:52:53 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=doppel-helix.eu;
-	s=201912; t=1585515160;
-	bh=IqtlxiT268uDtwiPFs6ZQtaHJs/dPWdGJvDbxAzIPrw=;
-	h=Subject:From:Reply-To:To:Date:From;
-	b=UVJMarE+XAHFy9KRGzRJnguUiTDj7ip/ijM5kGjnH0V+vx26fo5iAK5ESHLqQaOFq
-	 6+Q75AU5UGqyI6xRZ8n/mgurcrDES1xkYFr/fFCGSvhSXIbcgJ6rw4tYhTNWcZZffg
-	 xTOJQomnK8v2Ph2/hYDhi5Mw3ut6zseIaOEyp46s8LuxDjNXTwHVTRyRtRQRMarwyD
-	 +oHZ0VyzbjLQfbIZicxoh/buiw7znSCSeMJK7ynXFae2oSRw8Zrz2ua3JHpc1xZ/wg
-	 NL/mY1AijRelWBDQ7FJ+wXES67vtX4FZZ6DwPgm03k9Q+f7qBG+pgauW0aNhkJC9ct
-	 LbjgT8I//BBAA==
-Message-ID: <24afb6093cb0de9e0f652ed5252e6aa97f34fd30.camel@doppel-helix.eu>
-From: Matthias =?ISO-8859-1?Q?Bl=E4sing?= <mblaesing@doppel-helix.eu>
-To: dev@netbeans.apache.org, announce@netbeans.apache.org,
- security@apache.org,  oss-security@lists.openwall.com
-Date: Sun, 29 Mar 2020 22:52:38 +0200
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-3Y8ILJBhqREs4Yg8MYxm"
-User-Agent: Evolution 3.34.1-2 
+Received: (qmail 22125 invoked from network); 7 Mar 2019 12:54:13 -0000
+Message-ID: <c7f712c2-8505-31a3-87f4-2ecf3e89d65e@nanthrax.net>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.5.1
 MIME-Version: 1.0
-Subject: [oss-security] [CVE-2019-17560] "Apache NetBeans" autoupdate cert validation
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+Date: Thu, 7 Mar 2019 13:53:59 +0100
+From: =?UTF-8?Q?Jean-Baptiste_Onofr=c3=a9?= <jb@nanthrax.net>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] [SECURITY] New security advisory for CVE-2019-0191 released for
+ Apache Karaf
+To: user@karaf.apache.org, Karaf Dev <dev@karaf.apache.org>,
+ Apache Security Team <security@apache.org>, oss-security@lists.openwall.com,
+ Colm O hEigeartaigh <coheigea@apache.org>
 
---=-3Y8ILJBhqREs4Yg8MYxm
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+A new security advisory has been released for Apache Karaf, that is
+fixed in recent 4.2.3 release.
 
-CVE-ID
-------
-CVE-2019-17560
+CVE-2019-0191: Zip-slip vulnerability in KAR deployer
 
-Summary
--------
-The "Apache NetBeans" autoupdate system does not validate SSL=20
-certificates and hostnames for https based downloads.
+Severity: Low
 
-Versions Affected:=20
-------------------
-- All Apache NetBeans versions up to and including 11.2
-- NetBeans releases before the Apache transition started may be
-  also affected
+Vendor: The Apache Software Foundation
+
+Versions Affected: all versions of Apache Karaf prior to 4.2.3
 
 Description:
-------------
-The "Apache NetBeans" autoupdate system does not validate SSL=20
-certificates and hostnames for https based downloads. This allows
-an attacker to intercept downloads of autoupdates and modify the
-download, potentially injecting malicious code.
 
-Mitigation:
------------
-- Disable autoupdates
-- Manually download plugins to installed with a web browser
-- Update to NetBeans 11.3 by downloading the release, verifying the
-  signature and manually installing it
+Apache Karaf kar deployer reads .kar archives and extracts the paths from
+the "repository/" and "resources/" entries in the zip file.
 
-Credit:
--------
-The investigation was triggered by a proof-of-concept submitted by
-Emilian Bold
+It then writes out the content of these paths to the Karaf repo and
+resources
+directories. However, it doesn't do any validation on the paths in the zip
+file. This means that a malicious user could craft a .kar file with ".."
+directory names and break out of the directories to write arbitrary content
+to the filesystem. This is the "Zip-slip" vulnerability -
+https://snyk.io/research/zip-slip-vulnerability
 
---=-3Y8ILJBhqREs4Yg8MYxm
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
+This vulnerability is low if the Karaf process user has limited permission
+on the filesystem.
 
------BEGIN PGP SIGNATURE-----
+The mitigation is to prevent "Zip-slip" by checking the path used in kar
+zip
+entries and prevent use of ".." path.
 
-iQIzBAABCgAdFiEE+nkp+DrUTEWQ9sxoFcccCk4Ljt0FAl6BCpYACgkQFcccCk4L
-jt2Q9hAAjvoPiS4Nc+7rGv7gz8eMM3YxLmgnZerq4gZra+WxSzQEbUKS1Cpzpd+g
-F8zC61fkDs31kMdtvPUfKOM2egvlSbN484CPDqbWkUfQM+UfFrpk8wXj5w2eTqLt
-pvPaiDP43dqrkYhOe3A3GS77lV5pm7vFC6u138L4kCuEHLVY9hCepsKPu24163+y
-6AMtAngPge3w/ajMmxQ/PAsIgYDoLb12Nr3Dohw+eM2PU7YQTKcBsVw2TJ5Aj+AZ
-ErOYwT4QHDMnNEhuoQ5TiA3F7VNntrKLTPTJZ7esfIezxmXd6kv8Ikp4yQiUm/16
-2S/pnddaXAmcq9oiV2Heab0F1HHsDozEAuevUtDn9fz/GdK6/7m5Elw2iLRFc3Rb
-yy958W6lkcgmm/z44WaJhOMm8XUw9MEnoiGCE0cnPDGn3zAFE1I6Z9axhWx+3ULT
-3JZfqXHz4wMLT748L2ptmvQd94zR/jOg4IukjE4wYg/SBjozLEyPfLexMj8tqA82
-19UMq6TORBdP96CUTc7OfPMo3l54WrStHOM7ZMelNfE9Iv0QthRBWQfp/47xEfND
-mRqkhqZQ8qnmoJbgwBJuiYGLjp+PZxR0lehzDoIH4vgBKeu4VIKly8uw8LHay6bK
-jaSF78pyMHFRKyI+q/0pZTk0HtSQl0hyoV6sLxspsBnKIXyIrQw=
-=josp
------END PGP SIGNATURE-----
+This has been fixed in revision:
 
---=-3Y8ILJBhqREs4Yg8MYxm--
+https://gitbox.apache.org/repos/asf?p=karaf.git;h=fef9a61
+https://gitbox.apache.org/repos/asf?p=karaf.git;h=e36a7a6
+
+Mitigation: Apache Karaf users should upgrade to 4.2.3
+or later as soon as possible, or limit filesystem permission for the Karaf
+process user.
+
+JIRA Tickets: https://issues.apache.org/jira/browse/KARAF-6090
+
+Credit: This issue was reported by Colm O hEigeartaigh
+
 
