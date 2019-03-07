@@ -1,52 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/01/1
-Message-ID: <20190101111540.20e73fbc@computer>
-Date: Tue, 1 Jan 2019 11:15:40 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/07/1
+Message-ID: <CAECwjAWWcYFtuxjHYXRkJ_w9Gz6__ObzTGOP+BGb6KiHFdgaBQ@mail.gmail.com>
+Date: Wed, 6 Mar 2019 22:41:37 -0800
+From: Tomas Fernandez Lobbe <tflobbe@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: wget / chromium: URL metadata and potential password leaks via extended filesystem attributes
+Subject: CVE-2019-0192 Deserialization of untrusted data via jmx.serviceUrl in Apache Solr
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Severity: High
 
-Via some twitter discussions [1] I recently learned about a worrying
-behavior of wget and Chromium / Chrome.
+Vendor: The Apache Software Foundation
 
-The URL of downloads gets stored via filesystem attributes on systems
-that support Unix extended attributes.
+Versions Affected:
+5.0.0 to 5.5.5
+6.0.0 to 6.6.5
 
-You can see these attributes on Linux systems by running
-getfattr -d [filename]
-(The download URL is stored in a variable "user.xdg.origin.url")
+Description:
+ConfigAPI allows to configure Solr's JMX server via an HTTP POST request.
+By pointing it to a malicious RMI server, an attacker could take advantage
+of Solr's unsafe deserialization to trigger remote code execution on the
+Solr side.
 
-This is worrying for a number of reasons:
-* In combination with HTTP authentication a username and password can
-  be part of the URL (HTTP authentication can be accessed via an URL of
-  the form https://[username]:[password]@[hostname]/).
-* Sometimes URLs may contain secret tokens, e.g. private file shares on
-  a file hosting service.
-* In general storing metadata at unexpected places should be avoided.
+Mitigation:
+Any of the following are enough to prevent this vulnerability:
+* Upgrade to Apache Solr 7.0 or later.
+* Disable the ConfigAPI if not in use, by running Solr with the system
+property “disable.configEdit=true”
+* If upgrading or disabling the Config API are not viable options, apply
+patch in [1] and re-compile Solr.
+* Ensure your network settings are configured so that only trusted traffic
+is allowed to ingress/egress your hosts running Solr.
 
-What's limiting this issue a bit is that tar does not by default store
-these extended attributes. I haven't tested other archiving tools.
+Credit:
+Michael Stepankin
 
-wget has released an update (1.20.1) and CVE-2018-20483 got assigned
-[2]. It changes the default behavior: extended attributes only get
-stored if a user explicitly enables it with a parameter. I believe this
-is a good solution.
+References:
+[1] https://issues.apache.org/jira/browse/SOLR-13301
+[2] https://wiki.apache.org/solr/SolrSecurity
 
-It's been reported to Chrome as well. (Currently private bug report,
-but given this was already discussed on Twitter I don't think this
-needs to be kept confidential.)
-
-It may be worthwhile checking if other tools share this behavior.
-
-[1] https://twitter.com/gynvael/status/1077671412847046657
-[2] https://lists.gnu.org/archive/html/bug-wget/2018-12/msg00034.html
-
--- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
