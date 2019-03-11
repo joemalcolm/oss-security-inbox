@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2153" "Wednesday" "21" "July" "2021" "09:14:51" "+0200" "Daniel Stenberg" "daniel@haxx.se" nil "81" "[oss-security] [SECURITY ADVISORY] curl: Bad connection reuse due to flawed path name checks" nil nil nil "7" nil nil (number mark "U       daniel@haxx. Jul 21   81/2153  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl: Bad connection reuse due to flawed path name checks\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [SECURITY ADVISORY] curl: Bad connection reuse due to flawed path name checks" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["593" "Monday" "11" "March" "2019" "15:49:26" "+0900" "Akira Ajisaka" "aajisaka@apache.org" "<CAP+3qq7SubiwXMZFGwetLJ11CH4VuQAuX0x7YSZ+1zaU36oMmA@mail.gmail.com>" "19" "[oss-security] CVE-2018-11767: Apache Hadoop KMS ACL regression" "^Date:" nil nil "3" "2019031106:49:26" "[oss-security] CVE-2018-11767: Apache Hadoop KMS ACL regression" (number mark "U       aajisaka@apa Mar 11   19/593   " thread-indent "\"[oss-security] CVE-2018-11767: Apache Hadoop KMS ACL regression\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2018-11767: Apache Hadoop KMS ACL regression" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15959 invoked by uid 550); 21 Jul 2021 07:15:03 -0000
+Received: (qmail 8113 invoked by uid 550); 11 Mar 2019 10:44:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,100 +11,40 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15896 invoked from network); 21 Jul 2021 07:15:02 -0000
-Date: Wed, 21 Jul 2021 09:14:51 +0200 (CEST)
-From: Daniel Stenberg <daniel@haxx.se>
-X-X-Sender: dast@silly
-To: curl security announcements -- curl users <curl-users@cool.haxx.se>, 
-    curl-announce@cool.haxx.se, libcurl hacking <curl-library@cool.haxx.se>, 
-    oss-security@lists.openwall.com
-Message-ID: <nycvar.QRO.7.76.2107210914210.25537@fvyyl>
-User-Agent: Alpine 2.21 (DEB 202 2017-01-01)
-X-fromdanielhimself: yes
+Received: (qmail 25659 invoked from network); 11 Mar 2019 06:49:52 -0000
+X-Gm-Message-State: APjAAAXGbiZQJorUGS+eKAe2Jq1huqW11+0hQQZxjl199gju+K/8+mVp
+	cl9Vq58kDLtKZxJar62YSHr6GC5rnDDdgqpR6zU=
+X-Google-Smtp-Source: APXvYqyeTssLJjaREK91oEtuzPUWOl+pkkhh0QVJWmgEw4UpjYg/kMeV82Ipp21vXQgCcCHleOyOVXUwV4OhXeZrq1Y=
+X-Received: by 2002:a2e:20cf:: with SMTP id g76mr15416979lji.36.1552286977174;
+ Sun, 10 Mar 2019 23:49:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] [SECURITY ADVISORY] curl: Bad connection reuse due to flawed path
- name checks
+X-Gmail-Original-Message-ID: <CAP+3qq7SubiwXMZFGwetLJ11CH4VuQAuX0x7YSZ+1zaU36oMmA@mail.gmail.com>
+Message-ID: <CAP+3qq7SubiwXMZFGwetLJ11CH4VuQAuX0x7YSZ+1zaU36oMmA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Date: Mon, 11 Mar 2019 15:49:26 +0900
+From: Akira Ajisaka <aajisaka@apache.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE-2018-11767: Apache Hadoop KMS ACL regression
+To: general@hadoop.apache.org, user@hadoop.apache.org, 
+	oss-security@lists.openwall.com, 
+	"<security@hadoop.apache.org>" <security@hadoop.apache.org>, Wei-Chiu Chuang <weichiu@cloudera.com>
 
-Bad connection reuse due to flawed path name checks
-===================================================
+CVE-2018-11767: Apache Hadoop KMS ACL regression
 
-Project curl Security Advisory, July 21st 2021 -
-[Permalink](https://curl.se/docs/CVE-2021-22924.html)
+Severity: Severe
 
-VULNERABILITY
--------------
+Vendor: The Apache Hadoop Software Foundation
 
-libcurl keeps previously used connections in a connection pool for subsequent
-transfers to reuse, if one of them matches the setup.
+Versions affected: 2.9.0 to 2.9.1, 2.8.3 to 2.8.4, 2.7.5 to 2.7.6.
 
-Due to errors in the logic, the config matching function did not take 'issuer
-cert' into account and it compared the involved paths *case insensitively*,
-which could lead to libcurl reusing wrong connections.
+Description:
+After the security fix for CVE-2017-15713, KMS has an access control regression,
+blocking users or granting access to users incorrectly, if the system
+uses non-default groups mapping mechanisms such as LdapGroupsMapping,
+CompositeGroupsMapping, or NullGroupsMapping.
 
-File paths are, or can be, case sensitive on many systems but not all, and can
-even vary depending on used file systems.
+Mitigation:
+Users should upgrade to Apache Hadoop 2.7.7, 2.8.5, or 2.9.2.
 
-The comparison also didn't include the 'issuer cert' which a transfer can set
-to qualify how to verify the server certificate.
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-This flaw has existed in curl since commit
-[89721ff04af70f](https://github.com/curl/curl/commit/89721ff04af70f) in
-libcurl 7.10.4, released on April 2, 2003.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2021-22924 to this issue.
-
-CWE-295: Improper Certificate Validation
-
-Severity: Medium
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.10.4 to and including 7.77.0
-- Not affected versions: curl < 7.10.4 and curl >= 7.78.0
-
-Also note that libcurl is used by many applications, and not always advertised
-as such.
-
-THE SOLUTION
-------------
-
-The SSL configs are compared appropriately.
-
-A [fix for CVE-2021-22924](https://github.com/curl/curl/commit/5ea3145850ebff1dc2b13d17440300a01ca38161)
-
-RECOMMENDATIONS
---------------
-
-  A - Upgrade curl to version 7.78.0
-
-  B - Apply the patch to your local version
-
-TIMELINE
---------
-
-This issue was reported to the curl project on June 11, 2021.
-
-This advisory was posted on July 21, 2021.
-
-CREDITS
--------
-
-This issue was reported by Harry Sintonen. Patched by Daniel Stenberg.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://www.wolfssl.com/contact/
+Credit:
+This issue was discovered by Wei-Chiu Chuang.
