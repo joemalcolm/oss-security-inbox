@@ -1,55 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/09/7
-Message-ID: <9966eab6-4dba-5d17-3a59-5beb5200e745@thermi.consulting>
-Date: Mon, 9 Dec 2019 18:30:22 +0100
-From: Noel Kuntze <noel.kuntze+oss-security@...rmi.consulting>
-To: oss-security@...ts.openwall.com
-Subject: Re: Shell wildcards considered dangerous?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/13/3
+Message-ID: <20190313171454.GA90773@TC-275.local>
+Date: Wed, 13 Mar 2019 10:14:54 -0700
+From: Aaron Patterson <tenderlove@...y-lang.org>
+To: security@...e.de, rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
+Subject: [CVE-2019-5420] Possible Remote Code Execution Exploit in Rails Development Mode
 Content-Type: text/plain; charset=utf-8
 
-Hello Leonid,
+There is a possible a possible remote code executing exploit in Rails when in
+development mode. This vulnerability has been assigned the CVE identifier
+CVE-2019-5420.
 
-I was referring to my own message, not the original one by Georgi.
+Versions Affected:  6.0.0.X, 5.2.X.
+Not affected:       None.
+Fixed Versions:     6.0.0.beta3, 5.2.2.1
 
-Kind regards
+Impact
+------
+With some knowledge of a target application it is possible for an attacker to
+guess the automatically generated development mode secret token.  This secret
+token can be used in combination with other Rails internals to escalate to a
+remote code execution exploit.
 
-Noel
+All users running an affected release should either upgrade or use one of the
+workarounds immediately.
 
-Am 09.12.19 um 17:46 schrieb Leonid Isaev:
-> On Mon, Dec 09, 2019 at 04:28:35PM +0100, Noel Kuntze wrote:
->> The message was about the attack vector on applications that put together
->> argument vectors based on user input, not specifically about human use of the
->> shell.
-> Then, why in "tar xf *.tar" the "*" is expected to mean anything other than
-> a literal * (0x2a)? It is because of the shell globbing: "tar xf ./*.tar" will
-> work without any "--". For example:
-> -----8<-----
-> $ echo -E "xxx" > "-b xxx.qwetr"
-> $ file *.qwetr
-> file: invalid option -- ' '
-> file: invalid option -- 'x'
-> file: invalid option -- 'x'
-> file: invalid option -- 'x'
-> file: invalid option -- '.'
-> file: invalid option -- 'q'
-> file: invalid option -- 'w'
-> Usage: file [-bcCdEhikLlNnprsvzZ0] [--apple] [--extension] [--mime-encoding]
->             [--mime-type] [-e <testname>] [-F <separator>]  [-f <namefile>]
->             [-m <magicfiles>] [-P <parameter=value>] <file> ...
->        file -C [-m <magicfiles>]
->        file [--help]
-> $
-> $ file ./*.qwetr
-> ./-b xxx.qwetr: ASCII text
-> ----->8-----
->
-> Sincerely,
-> L.
+Releases
+--------
+The 6.0.0.beta3 and 5.2.2.1 releases are available at the normal locations.
+
+Workarounds
+-----------
+This issue can be mitigated by specifying a secret key in development mode.
+In "config/environments/development.rb" add this:
+
+  config.secret_key_base = SecureRandom.hex(64)
+
+
+Patches
+-------
+To aid users who aren't able to upgrade immediately we have provided patches for
+the two supported release series. They are in git-am format and consist of a
+single changeset.
+
+* 6-0-railties-dev-mode-token.patch - Patch for 6.0 series
+* 5-2-railties-dev-mode-token.patch - Patch for 5.2 series
+
+Please note that only the 5.2.x, 5.1.x, 5.0.x, and 4.2.x series are supported
+at present. Users of earlier unsupported releases are advised to upgrade as
+soon as possible as we cannot guarantee the continued availability of security
+fixes for unsupported releases.
+
+Credits
+-------
+Thanks to ooooooo_q
 
 -- 
-Noel Kuntze
-IT security consultant
+Aaron Patterson
+http://tenderlovemaking.com/
 
-GPG Key ID: 0x0739AD6C
-Fingerprint: 3524 93BE B5F7 8E63 1372 AF2D F54E E40B 0739 AD6C
+View attachment "5-2-railties-dev-mode-token.patch" of type "text/plain" (5512 bytes)
 
+View attachment "6-0-railties-dev-mode-token.patch" of type "text/plain" (5566 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
