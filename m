@@ -1,35 +1,125 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/15/2
-Message-ID: <1565815809.LRMZEYGX@httpd.apache.org>
-Date: Wed, 14 Aug 2019 15:50:09 -0500
-From: Daniel Ruggeri <druggeri@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2019-10081: mod_http2, memory corruption on early pushes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/13/5
+Message-ID: <20190313171842.GC90773@TC-275.local>
+Date: Wed, 13 Mar 2019 10:18:42 -0700
+From: Aaron Patterson <tenderlove@...y-lang.org>
+To: security@...e.de, rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
+Subject: [CVE-2019-5418] File Content Disclosure in Action View
 Content-Type: text/plain; charset=utf-8
 
+There is a possible file content disclosure vulnerability in Action View. This
+vulnerability has been assigned the CVE identifier CVE-2019-5418.
 
-CVE-2019-10081: mod_http2, memory corruption on early pushes
+Versions Affected:  All.
+Not affected:       None.
+Fixed Versions:     6.0.0.beta3, 5.2.2.1, 5.1.6.2, 5.0.7.2, 4.2.11.1
 
-Severity: Moderate
+Impact
+------
+There is a possible file content disclosure vulnerability in Action View.
+Specially crafted accept headers in combination with calls to `render file:`
+can cause arbitrary files on the target server to be rendered, disclosing the
+file contents.
 
-Vendor: The Apache Software Foundation
+The impact is limited to calls to `render` which render file contents without
+a specified accept format.  Impacted code in a controller looks something like
+this:
 
-Versions Affected:
-httpd 2.4.20 to 2.4.39
+```
+class UserController < ApplicationController
+  def index
+    render file: "#{Rails.root}/some/file"
+  end
+end
+```
 
-Description:
-HTTP/2 very early pushes, for example configured with "H2PushResource",
-could lead to an overwrite of memory in the pushing request's pool,
-leading to crashes. The memory copied is that of the configured push
-link header values, not data supplied by the client.
- 
-Mitigation:
-All httpd users deploying mod_http2 should upgrade to 2.4.40 or later.
-Unpatched servers can disable HTTP/2 push with the "H2Push off" directive.
+Rendering templates as opposed to files is not impacted by this vulnerability.
 
-Credit:
-The issue was discovered by Craig Young of Tripwire VERT, <vuln-report@...ur3.us>.
+All users running an affected release should either upgrade or use one of the
+workarounds immediately.
 
-References:
-https://httpd.apache.org/security/vulnerabilities_24.html
+Releases
+--------
+The 6.0.0.beta3, 5.2.2.1, 5.1.6.2, 5.0.7.2, and 4.2.11.1 releases are
+available at the normal locations.
 
+Workarounds
+-----------
+This vulnerability can be mitigated by specifying a format for file rendering,
+like this:
+
+```
+class UserController < ApplicationController
+  def index
+    render file: "#{Rails.root}/some/file", formats: [:html]
+  end
+end
+```
+
+In summary, impacted calls to `render` look like this:
+
+```
+render file: "#{Rails.root}/some/file"
+```
+
+The vulnerability can be mitigated by changing to this:
+
+```
+render file: "#{Rails.root}/some/file", formats: [:html]
+```
+
+Other calls to `render` are not impacted.
+
+Alternatively, the following monkey patch can be applied in an initializer:
+
+```
+$ cat config/initializers/formats_filter.rb
+# frozen_string_literal: true
+
+ActionDispatch::Request.prepend(Module.new do
+  def formats
+    super().select do |format|
+      format.symbol || format.ref == "*/*"
+    end
+  end
+end)
+```
+
+Patches
+-------
+To aid users who aren't able to upgrade immediately we have provided patches for
+the two supported release series. They are in git-am format and consist of a
+single changeset.
+
+* 6-0-action-view-file-disclosure.patch - Patch for 6.0 series
+* 5-2-action-view-file-disclosure.patch - Patch for 5.2 series
+* 5-1-action-view-file-disclosure.patch - Patch for 5.1 series
+* 5-0-action-view-file-disclosure.patch - Patch for 5.0 series
+* 4-2-action-view-file-disclosure.patch - Patch for 4.2 series
+
+Please note that only the 5.2.x, 5.1.x, 5.0.x, and 4.2.x series are supported
+at present. Users of earlier unsupported releases are advised to upgrade as
+soon as possible as we cannot guarantee the continued availability of security
+fixes for unsupported releases.
+
+Also note that the patches for this vulnerability are the same as CVE-2019-5419.
+
+Credits
+-------
+Thanks to John Hawthorn <john@...thorn.email> of GitHub
+
+-- 
+Aaron Patterson
+http://tenderlovemaking.com/
+
+View attachment "4-2-action-view-file-disclosure.patch" of type "text/plain" (4299 bytes)
+
+View attachment "5-0-action-view-file-disclosure.patch" of type "text/plain" (3713 bytes)
+
+View attachment "5-1-action-view-file-disclosure.patch" of type "text/plain" (3713 bytes)
+
+View attachment "5-2-action-view-file-disclosure.patch" of type "text/plain" (3713 bytes)
+
+View attachment "6-0-action-view-file-disclosure.patch" of type "text/plain" (3732 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
