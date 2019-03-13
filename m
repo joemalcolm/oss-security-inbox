@@ -1,37 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/17/3
-Message-ID: <87d0evjd41.fsf@gnu.org>
-Date: Thu, 17 Oct 2019 23:06:38 +0200
-From: Ludovic Courtès <ludo@....org>
-To: oss-security@...ts.openwall.com
-Cc: Michael Orlitzky <michael@...itzky.com>
-Subject: CVE-2019-18192: Insecure permissions on Guix profile directory
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/13/2
+Message-ID: <CAOWZHxeF3EK+5gHgvqF9Srw2-ksXrafOA6-Rjh1Gu77=O+Xy=g@mail.gmail.com>
+Date: Wed, 13 Mar 2019 08:47:13 -0400
+From: "James E. King III" <jking@...che.org>
+To: "James E. King III" <jking@...che.org>
+Cc: oss-security@...ts.openwall.com, security <security@...che.org>,  dev@...ift.apache.org, user@...ift.apache.org
+Subject: Re: [SECURITY] CVE-2018-1320 Apache Thrift SASL negotiation vulnerability (update)
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+This is an update to a previously announced CVE.  The specific change
+in the update is that a new version of Apache Thrift 0.9.3.1 was
+released per community request.  The following fields changed from the
+previous announcement:
 
-GNU Guix is a transactional package manager and associated GNU/Linux
-distribution.
+Versions Affected
+Mitigation
+Resolution
 
-Similar to what Michael Orlitzky reported for Nix (CVE-2019-17365),
-the profile directory in GNU Guix would be world-writable, allowing a
-malicious user to populate the profile of a user that has never logged
-in on the machine.
+The new content of the CVE announcement is as follows:
 
-This issue has been assigned CVE-2019-18192 and affects all versions of
-Guix up to 1.0.1 included.  The fix is similar to that written for Nix
-by Eelco Dolstra (the build daemon of Guix derives from that of Nix).
-It can be deployed via ‘guix pull’ as specified in the announcement below.
 
-Announcement:
-https://guix.gnu.org/blog/2019/insecure-permissions-on-profile-directory-cve-2019-18192/
+Reported By: Sudheesh Katkam
+Vendor: The Apache Software Foundation
+Product: Apache Thrift
+Problem Type: Improper Authentication
+Versions Affected: Apache Thrift versions 0.5.0 through 0.11.0, except 0.9.3.1
+Mitigation: Upgrading to 0.9.3.1 or to the latest 0.12.0 release
 
-Issue:
-https://issues.guix.gnu.org/issue/37744
+Description:
+Apache Thrift Java client library TSaslTransport can bypass SASL negotiation
+isComplete validation. An assert was previously used to determine if the
+SASL handshake had successfully completed, but in some cases this assertion
+could be disabled in production settings making the validation incomplete.
 
-Commit:
-https://git.savannah.gnu.org/cgit/guix.git/commit/?id=81c580c8664bfeeb767e2c47ea343004e88223c7
+Resolution:
+The assertion has been removed and an isComplete check has
+been moved within the handshake processing loop. The fix is contained
+in the 0.12.0 Apache Thrift release as has also been backported to the
+0.9.3.1 release, also available on maven central.  0.12.0 was released
+on January 4, 2019 and 0.9.3.1 was released on March 13, 2019.
 
-Ludo’.
+Jira issue:
+ - https://issues.apache.org/jira/browse/THRIFT-4506
 
-Download attachment "signature.asc" of type "application/pgp-signature" (833 bytes)
+Mitre issue:
+  - https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-1320
+
+Committed resolution:
+ - https://github.com/apache/thrift/commit/d973409661f820d80d72c0034d06a12348c8705e
+
+On behalf of the Apache Thrift PMC,
+
+Thank you
