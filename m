@@ -1,122 +1,130 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/08/15
-Message-Id: <E1gguUC-0006ow-VL@xenbits.xenproject.org>
-Date: Tue, 08 Jan 2019 16:44:16 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 279 v3 (CVE-2018-19965) - x86: DoS from attempting to use INVPCID with a non-canonical addresses
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/13/4
+Message-ID: <20190313171640.GB90773@TC-275.local>
+Date: Wed, 13 Mar 2019 10:16:40 -0700
+From: Aaron Patterson <tenderlove@...y-lang.org>
+To: security@...e.de, rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
+Subject: [CVE-2019-5419] Denial of Service Vulnerability in Action View
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+There is a potential denial of service vulnerability in MODULE / COMPONENT.
+This vulnerability has been assigned the CVE identifier CVE-2019-5419.
 
-            Xen Security Advisory CVE-2018-19965 / XSA-279
-                              version 3
+Versions Affected:  All.
+Not affected:       None.
+Fixed Versions:     6.0.0.beta3, 5.2.2.1, 5.1.6.2, 5.0.7.2, 4.2.11.1
 
- x86: DoS from attempting to use INVPCID with a non-canonical addresses
+Impact
+------
+Specially crafted accept headers can cause the Action View template location
+code to consume 100% CPU, causing the server unable to process requests.  This
+impacts all Rails applications that render views.
 
-UPDATES IN VERSION 3
-====================
+All users running an affected release should either upgrade or use one of the
+workarounds immediately.
 
-CVE assigned.
+Releases
+--------
+The 6.0.0.beta3, 5.2.2.1, 5.1.6.2, 5.0.7.2, and 4.2.11.1 releases are
+available at the normal locations.
 
-ISSUE DESCRIPTION
-=================
+Workarounds
+-----------
+This vulnerability can be mitigated by wrapping `render` calls with
+`respond_to` blocks.  For example, the following example is vulnerable:
 
-The INVPCID instruction raises #GP[0] if an attempt is made to
-invalidate a non-canonical address.  Older flushing mechanisms such as
-INVLPG tolerate this without error, and perform no action.
+```
+class UserController < ApplicationController
+  def index
+    render "index"
+  end
+end
+```
 
-There is one guest accessible path in Xen where a non-canonical
-address was passed into the TLB flushing code.  This previously had no
-ill effect, but became vulnerable with the introduction of PCID to
-reduce the performance hit from the Meltdown mitigations.
+But the following code is not vulnerable:
 
-IMPACT
-======
+```
+class UserController < ApplicationController
+  def index
+    respond_to |format|
+      format.html { render "index" }
+    end
+  end
+end
+```
 
-A buggy or malicious PV guest can crash the host.
+Implicit rendering is impacted, so this code is vulnerable:
 
-VULNERABLE SYSTEMS
-==================
+```
+class UserController < ApplicationController
+  def index
+  end
+end
+```
 
-Only hardware which supports the INVPCID instruction is vulnerable.  This is
-available on Intel Haswell processors and later.  AMD x86 processors are not
-known to support this instruction, and ARM processors are entirely unaffected.
+But can be changed this this:
 
-Only versions of Xen with PCID support are vulnerable.  Support first appeared
-in Xen 4.11 but was backported to the stable trees as part of the Meltdown
-(XSA-254 / CVE-2017-5754) fixes.  Xen 4.10.2, 4.9.3, 4.8.4 as well as the
-stable-4.7 and 4.6 branches are vulnerable.
+```
+class UserController < ApplicationController
+  def index
+    respond_to |format|
+      format.html { render "index" }
+    end
+  end
+end
+```
 
-The vulnerability is only exposed to 64-bit PV guests.  32-bit PV guests, as
-well as HVM/PVH guests cannot exploit the vulnerability.
+Alternatively to specifying the format, the following monkey patch can be
+applied in an initializer:
 
-MITIGATION
-==========
+```
+$ cat config/initializers/formats_filter.rb
+# frozen_string_literal: true
 
-Booting Xen with `pcid=0` or `invpcid=0` on the command line will work around
-the issue.  Alternatively, running untrusted 64bit PV guests inside xen-shim
-will work around the issue.
+ActionDispatch::Request.prepend(Module.new do
+  def formats
+    super().select do |format|
+      format.symbol || format.ref == "*/*"
+    end
+  end
+end)
+```
 
-CREDITS
-=======
+Patches
+-------
+To aid users who aren't able to upgrade immediately we have provided patches for
+the two supported release series. They are in git-am format and consist of a
+single changeset.
 
-This issue was discovered by Matthew Daley.
+* 6-0-action-view-dos.patch - Patch for 6.0 series
+* 5-2-action-view-dos.patch - Patch for 5.2 series
+* 5-1-action-view-dos.patch - Patch for 5.1 series
+* 5-0-action-view-dos.patch - Patch for 5.0 series
+* 4-2-action-view-dos.patch - Patch for 4.2 series
 
-RESOLUTION
-==========
+Please note that only the 5.2.x, 5.1.x, 5.0.x, and 4.2.x series are supported
+at present. Users of earlier unsupported releases are advised to upgrade as
+soon as possible as we cannot guarantee the continued availability of security
+fixes for unsupported releases.
 
-Applying the appropriate attached patch resolves this issue.
+Also note that the patches for this vulnerability are the same as CVE-2019-5418.
 
-xsa279.patch             xen-unstable, Xen 4.11.x, Xen 4.10.x
-xsa279-4.9.patch         Xen 4.9.x ... 4.7.x
+Credits
+-------
+Thanks to John Hawthorn <john@...thorn.email> of GitHub
 
-$ sha256sum xsa279*
-40319fcf33348176eb14d7fc7c68c255cc7291013242ea444de6d00602024a11  xsa279.meta
-0c1d50effe6645051a15dd83af57088dd4a055e26a23b1fa9e6c3722a7973f5d  xsa279.patch
-fd34f29bc7e53359585135408cbbd12e12a003f59b135e81cc44186c5cddd40d  xsa279-4.9.patch
-$
+-- 
+Aaron Patterson
+http://tenderlovemaking.com/
 
-DEPLOYMENT DURING EMBARGO
-=========================
+View attachment "4-2-action-view-dos.patch" of type "text/plain" (4299 bytes)
 
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
+View attachment "5-0-action-view-dos.patch" of type "text/plain" (3713 bytes)
 
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
+View attachment "5-1-action-view-dos.patch" of type "text/plain" (3713 bytes)
 
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
+View attachment "5-2-action-view-dos.patch" of type "text/plain" (3713 bytes)
 
+View attachment "6-0-action-view-dos.patch" of type "text/plain" (3732 bytes)
 
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAlw00zAMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZn0EH/0hSD6EUH7AyxFOCgPtaeOiRG0NPmGcnsVcHogU2
-ows3sG+6+VenzyMdf0FcEqSEnCfFbQgqGuMaKE4U4ngSWWg+hdUhJ/5T/rMQv7o1
-QJ84xhKRRHrAju1WZWdACZJpq7vAOiJmkS9HvkxjFw8J2ck+8KakyInLA1AlHC+K
-8cApZtqxEyCNvH9w1Ho3PNtcNGhI6ZNxYlSSSUIfLz+dI7EXGQer2FiPzwE/KdAi
-vp0+61HotZ3mz03AZOelzJK7tmP5a8/u+zZfwfEw9s6zEO1RadUCHM3FIiZrSJLk
-v4si1s8x+FdbYwaHBKQGQTl6IQD/URqiK2IdWYdbeTkVCKY=
-=COoK
------END PGP SIGNATURE-----
-
-Download attachment "xsa279.meta" of type "application/octet-stream" (1778 bytes)
-
-Download attachment "xsa279.patch" of type "application/octet-stream" (1286 bytes)
-
-Download attachment "xsa279-4.9.patch" of type "application/octet-stream" (1203 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
