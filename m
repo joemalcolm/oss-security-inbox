@@ -1,27 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/27/3
-Message-ID: <20190627164206.GA9692@kroah.com>
-Date: Fri, 28 Jun 2019 00:42:06 +0800
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/13/1
+Message-ID: <CABVtb7NwbqV8QXFNNR5z3G4_AKEtC7bj+CKSdBUcBq8EisU=Yg@mail.gmail.com>
+Date: Tue, 12 Mar 2019 20:30:06 -0500
+From: Ali Saidi <asaidi@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership application - Microsoft
+Cc: alisaidi@...zon.com, "Liguori, Anthony" <aliguori@...zon.com>, dwmw@...zon.co.uk,  pzb@...zon.com
+Subject: Stack/Heap Clashing on Linux >=4.13 when loader directly invoked
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jun 27, 2019 at 04:03:21PM +0200, Solar Designer wrote:
-> Hi Sasha,
-> 
-> Thank you for posting this application.
-> 
-> Are you also on security@...?  If so, then on one hand also being on
-> linux-distros would probably be of less use to you since I suspect most
-> of the issues relevant to Microsoft are in the Linux kernel, but on the
-> other hand you could serve as a liaison to that group.
+Resending due to the original being dropped...
 
-Sasha is not on security@k.o, someone else there is _supposed_ to be the
-liason to the linux-distros list, but I don't know how well that is
-working at the moment as I am not on -distros (nor do I want to be at
-this point in time.)
 
-thanks,
+Out of an abundance of caution this kernel issue was pre-disclosed with a
+suggested patch to linux-distros@ and a patch has now been sent to lkml (
+https://patchwork.kernel.org/project/linux-arm-kernel/list/?series=90691).
 
-greg k-h
+
+
+In Linux 4.13 a change was committed that special cased the kernel ELF
+loader when the loader is invoked directly
+(eab09532d40090698b05a07c1c87f39fdbc5fab5; binfmt_elf: use ELF_ET_DYN_BASE
+only for PIE). Generally, the loader isn’t invoked directly and this issue
+is limited to cases where it is, (e.g to set a non-inheritable
+LD_LIBRARY_PATH, testing new versions of the loader). While this issue is
+found on an arm64 system, the issue exists for other architectures as well,
+with less frequency, and was observed occurring for both arm64 and x86_64.
+
+
+
+When ELF binary is loaded directly, the kernel loader places it at
+ELF_ET_DYN_BASE so there is a large separation between the stack and the
+heap. However, when the loader is run directly, the kernel portion of the
+loader sets load_bias = 0 which implies that mmap picks the address to load
+it at. It does this by picking an address no higher than mm->mmap_base.
+This address is calculated by starting at STACK_TOP and subtracting the
+stack size, the stack randomization, and mmap_rnd_bits on arm64.
+
+
+
+----> STACK_TOP
+
+----> STACK_RND (-1GB)
+
+----> stack_guard_gap (-256KB)
+
+----> mmap_base (-[0-1GB])
+
+
+
+If heap randomization is enabled (randomize_va_space = 2) the kernel loader
+will call arch_randomize_brk() to also randomize the offset of the brk from
+the heap. On arm64 this adds up to 1GB of randomization as the default
+setting for mmap_rnd_bits is 1GB. Depending on the random offsets generated
+for the heap and stack we can end up with a situation where the stack
+randomization places the stack relatively far down in its region, the mmap
+randomization is relatively small, and the brk randomization is large
+leading to the stack and heap being arbitrarily close.
+
+
+
+----> STACK_TOP (0x1000000000000)
+
+----> bottom of stack (0xffffc067c4f0)
+
+----> top of heap (0xffffc067c000)
+
+----> STACK_RND (0xffffc0000000)
+
+----> mmap_base (-0GB])
+
+
+
+arm64 and x86 appear to do roughly the same thing here. Invoking a program
+via ld-linux.so directly on arm64 surfaces the issue after a few thousand
+invocations. On x86 arch_randomize_brk() is smaller (32MB) and the default
+setting for mmap_rnd_bits defaults to a 1TB which makes the situation much
+less likely to occur, but it’s still possible. The same should hold for
+other architectures but I haven’t confirmed it.
+
+
+
+Ali
+
