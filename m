@@ -1,71 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/11/6
-Message-ID: <CAG8b5tTFV3cziyLRuwDpV=DrhwQtOp6D_n=BH4_mYvLc3cKC+g@mail.gmail.com>
-Date: Fri, 11 Jan 2019 23:44:28 +0530
-From: Dhiraj Mishra <mishra.dhiraj95@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/15/1
+Message-ID: <CAHC9VhSQRyh=4wRJTehjDYF8F0uRR3geqfFkAT+VTqrzoYSw4w@mail.gmail.com>
+Date: Thu, 14 Mar 2019 19:48:22 -0400
+From: Paul Moore <paul@...l-moore.com>
 To: oss-security@...ts.openwall.com
-Subject: SEGV in libIEC61850 protocol
+Cc: Jann Horn <jannh@...gle.com>
+Subject: libseccomp: incorrect generation of syscall argument filters
 Content-Type: text/plain; charset=utf-8
 
-Hi List,
+Jann Horn (CC'd) identified a problem in current versions of
+libseccomp where the library did not correctly generate 64-bit syscall
+argument comparisons using the arithmetic operators (LT, GT, LE, GE).
+Jann has done a search using codesearch.debian.net and it would appear
+that only systemd and Tor are using libseccomp in such a way as to
+trigger the bad code.  In the case of systemd this appears to affect
+the socket address family and scheduling class filters.  In the case
+of Tor it appears that the bad filters could impact the memory
+addresses passed to mprotect(2).
 
-## Summary:
-An issue has been found in libIEC61850 v1.3.1. Ethernet_setProtocolFilter
-in hal/ethernet/linux/ethernet_linux.c has a SEGV, as demonstrated by
-sv_subscriber_example.c and sv_subscriber.c.
+The libseccomp v2.4.0 release fixes this problem, and should be a
+direct drop-in replacement for previous v2.x releases.  Due the
+complexity, and associated risk, of backporting the fix to the v2.3.x
+release stream, I've made the difficult decision not to backport the
+fix.  Further, I'm not aware of any workarounds for this issue.
+Adminstrators and distros are strongly encouraged to upgrade to
+libseccomp v2.4.0 as soon as possible.
 
-## Snip code from sv_subscriber.c#L186
-        Thread_start(thread);
-    }
-    else {
-        if (DEBUG_SV_SUBSCRIBER)
-            printf("SV_SUBSCRIBER: Starting SV receiver failed for
-interface %s\n", self->interfaceId);
-    }
-}
+The related GitHub issue, complete with a brief discussion of the
+problem and a list of the assocated patches can be found at the link
+below:
 
-## Memory leak:
+* https://github.com/seccomp/libseccomp/issues/139
 
-Using interface eth0
-Error creating raw socket!
-ASAN:DEADLYSIGNAL
-==1403==ERROR: AddressSanitizer: SEGV on unknown address 0x00000000000a (pc
-0x55b5675c1284 bp 0x7f92623fee30 sp 0x7f92623fee20 T1)
-==1403==The signal is caused by a WRITE memory access.
-==1403==Hint: address points to the zero page.
-    #0 0x55b5675c1283 in Ethernet_setProtocolFilter
-/home/input0/Desktop/libiec61850/hal/ethernet/linux/ethernet_linux.c:209
-    #1 0x55b5675ba75f in SVReceiver_startThreadless
-/home/input0/Desktop/libiec61850/src/sampled_values/sv_subscriber.c:232
-    #2 0x55b5675ba3b7 in svReceiverLoop
-/home/input0/Desktop/libiec61850/src/sampled_values/sv_subscriber.c:163
-    #3 0x55b5675c1720 in destroyAutomaticThread
-/home/input0/Desktop/libiec61850/hal/thread/linux/thread_linux.c:90
-    #4 0x7f9265c976da in start_thread
-(/lib/x86_64-linux-gnu/libpthread.so.0+0x76da)
-    #5 0x7f92659c088e in __clone (/lib/x86_64-linux-gnu/libc.so.6+0x12188e)
+The libseccomp v2.4.0 release can be found at the link below:
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV
-/home/input0/Desktop/libiec61850/hal/ethernet/linux/ethernet_linux.c:209 in
-Ethernet_setProtocolFilter
-Thread T1 created by T0 here:
-    #0 0x7f9265ee6d2f in __interceptor_pthread_create
-(/usr/lib/x86_64-linux-gnu/libasan.so.4+0x37d2f)
-    #1 0x55b5675c17ab in Thread_start
-/home/input0/Desktop/libiec61850/hal/thread/linux/thread_linux.c:101
-    #2 0x55b5675ba49a in SVReceiver_start
-/home/input0/Desktop/libiec61850/src/sampled_values/sv_subscriber.c:186
-    #3 0x55b5675b9eec in main
-/home/input0/Desktop/libiec61850/examples/sv_subscriber/sv_subscriber_example.c:76
-    #4 0x7f92658c0b96 in __libc_start_main
-(/lib/x86_64-linux-gnu/libc.so.6+0x21b96)
+* https://github.com/seccomp/libseccomp/releases/tag/v2.4.0
 
-==1403==ABORTING
-
-Later CVE-2019-6136 was assigned to this.
-
-
-Thank you
-@mishradhiraj_
-
+-- 
+paul moore
+www.paul-moore.com
