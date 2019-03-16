@@ -1,37 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/30/2
-Message-ID: <2130778079.2289889.1556620714475@mail.yahoo.com>
-Date: Tue, 30 Apr 2019 10:38:34 +0000 (UTC)
-From: Andrea Cosentino <ancosen1985@...oo.com>
-To: Dev <dev@...el.apache.org>, Users <users@...el.apache.org>,  Apache Security Team <security@...che.org>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>,  "Colm O. HEigeartaigh" <coheigea@...che.org>
-Subject: [SECURITY] New security advisory CVE-2019-0194 released for Apache Camel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/16/1
+Message-ID: <fdd8218f-e06f-9ebe-5554-99e2b898dfa9@oracle.com>
+Date: Sat, 16 Mar 2019 09:54:39 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: oss-security@...ts.openwall.com
+Subject: Fwd: [ANNOUNCE] libXdmcp 1.1.3 [fix for CVE-2017-2625]
 Content-Type: text/plain; charset=utf-8
 
-A new security advisory has been released for Apache Camel, that is fixed in
-the recent 2.21.5, 2.22.3 and 2.23.1 releases:
+This issue was already disclosed at:
+   https://www.x41-dsec.de/lab/advisories/x41-2017-001-xorg/
+   https://www.openwall.com/lists/oss-security/2017/02/28/3
 
-CVE-2019-0194: Apache Camel's File is vulnerable to directory traversal
+This just upgrades the fix from a git commit/patch to a released tarball.
 
-Severity: MEDIUM
+	-Alan Coopersmith-              alan.coopersmith@...cle.com
+	  X.Org Security Response Team - xorg-security@...ts.x.org
 
-Vendor: The Apache Software Foundation
 
-Versions Affected: Camel 2.21.0 to 2.21.3, Camel 2.22.0 to 2.22.2 and Camel 2.23.0 The unsupported Camel 2.x (2.19 and earlier) versions may be also affected.
+-------- Forwarded Message --------
+Subject: [ANNOUNCE] libXdmcp 1.1.3
+Date: Sat, 16 Mar 2019 09:31:57 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: xorg-announce@...ts.x.org
+CC: xorg@...ts.x.org
 
-Description: Apache Camel's File is vulnerable to directory traversal
+libXdmcp is the X Display Manager Control Protocol library, used by both
+X servers and display managers to handle both ends of the XDMCP connection.
 
-Mitigation: 2.21.x users should upgrade to 2.21.5, 2.22.x users should upgrade to 2.22.3 and Camel 2.23.x users should upgrade to 2.23.1 The JIRA tickets: https://issues.apache.org/jira/browse/CAMEL-13042 refers to the various commits that resovoled the issue, and have more details.
+This release provides a fix for CVE-2017-2625 for platforms which don't have
+arc4random_buf() in their default libraries but do have getentropy(), such
+as Linux platforms with a kernel version of 3.17 or newer and a glibc version
+of 2.25 or newer.   (libXdmcp 1.1.2 already ensured that arc4random_buf()
+is used on platforms that have it to provide sufficient entropy in XDMCP
+key generation, but left other platforms with the weaker methods.  Linux
+platforms could also have linked against libbsd to use arc4random_buf()
+with libXdmcp 1.1.2 for stronger keys.)
 
-Credit: This issue was discovered by Colm O. HEigeartaigh <coheigea at apache dot org> from Apache Software Foundation
+Alan Coopersmith (2):
+       Update README for gitlab migration
+       libXdmcp 1.1.3
 
-On behalf of the Apache Camel PMC
+Benjamin Tissoires (2):
+       Use getentropy() if arc4random_buf() is not available
+       Fix compilation error when arc4random_buf is not available
 
---
-Andrea Cosentino 
-----------------------------------
-Apache Camel PMC Chair
-Apache Karaf Committer
-Apache Servicemix PMC Member
-Email: ancosen1985@...oo.com
-Twitter: @oscerd2
-Github: oscerd
+Emil Velikov (1):
+       autogen.sh: use quoted string variables
+
+Helmut Grohne (1):
+       do not use &fullrelvers; in xdmcp.xml (Debian bug 761628)
+
+Jon TURNEY (1):
+       Link with winsock library for socket functions on MinGW
+
+Mihail Konev (1):
+       autogen: add default patch prefix
+
+Peter Hutterer (1):
+       autogen.sh: use exec instead of waiting for configure to finish
+
+git tag: libXdmcp-1.1.3
+
+https://xorg.freedesktop.org/archive/individual/lib/libXdmcp-1.1.3.tar.bz2
+MD5:  115c5c12ecce0e749cd91d999a5fd160  libXdmcp-1.1.3.tar.bz2
+SHA1: 0a8f8a274f829331efb1e8e2027c38631b204dd0  libXdmcp-1.1.3.tar.bz2
+SHA256: 20523b44aaa513e17c009e873ad7bbc301507a3224c232610ce2e099011c6529 
+libXdmcp-1.1.3.tar.bz2
+SHA512: 
+cb1d4650f97d66e73acd2465ec7d757b9b797cce2f85e301860a44997a461837eea845ec9bd5b639ec5ca34c804f8bdd870697a5ce3f4e270b687c9ef74f25ec 
+  libXdmcp-1.1.3.tar.bz2
+PGP:  https://xorg.freedesktop.org/archive/individual/lib/libXdmcp-1.1.3.tar.bz2.sig
+
+https://xorg.freedesktop.org/archive/individual/lib/libXdmcp-1.1.3.tar.gz
+MD5:  4855eb078703d3f9a6692fa67a3eb28a  libXdmcp-1.1.3.tar.gz
+SHA1: a94cd4ce575b2a9b2620b1630a7bc4f0e59cab56  libXdmcp-1.1.3.tar.gz
+SHA256: 2ef9653d32e09d1bf1b837d0e0311024979653fe755ad3aaada8db1aa6ea180c 
+libXdmcp-1.1.3.tar.gz
+SHA512: 
+edd05654ad9ea893e9e08269e25ea050d10eaf9f997a08494e24127d1ba0c896cd5338b4595b155c8cbf576e1d910b76e6ad7820fee62d74644f1f276551e2f2 
+  libXdmcp-1.1.3.tar.gz
+PGP:  https://xorg.freedesktop.org/archive/individual/lib/libXdmcp-1.1.3.tar.gz.sig
+
+
+-- 
+	-Alan Coopersmith-               alan.coopersmith@...cle.com
+	 Oracle Solaris Engineering - https://blogs.oracle.com/alanc
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+
+View attachment "Attached Message Part" of type "text/plain" (224 bytes)
