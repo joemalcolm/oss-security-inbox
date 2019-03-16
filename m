@@ -1,4 +1,9 @@
-Received: (qmail 3397 invoked by uid 550); 3 Jul 2024 15:20:48 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5166" "Saturday" "16" "March" "2019" "09:54:39" "-0700" "Alan Coopersmith" "alan.coopersmith@oracle.com" "<fdd8218f-e06f-9ebe-5554-99e2b898dfa9@oracle.com>" "125" "[oss-security] Fwd: [ANNOUNCE] libXdmcp 1.1.3 [fix for CVE-2017-2625]" "^Date:" nil nil "3" "2019031616:54:39" "[oss-security] Fwd: [ANNOUNCE] libXdmcp 1.1.3 [fix for CVE-2017-2625]" (number mark "U       alan.coopers Mar 16  125/5166  " thread-indent "\"[oss-security] Fwd: [ANNOUNCE] libXdmcp 1.1.3 [fix for CVE-2017-2625]\"\n") "<20190316163157.GA23880@also.us.oracle.com>" ("<20190316163157.GA23880@also.us.oracle.com>") nil nil nil nil nil nil nil "[oss-security] Fwd: [ANNOUNCE] libXdmcp 1.1.3 [fix for CVE-2017-2625]" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 3516 invoked by uid 550); 16 Mar 2019 16:54:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,296 +11,160 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25728 invoked from network); 3 Jul 2024 14:07:50 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=codean.io; s=google; t=1720015661; x=1720620461; darn=lists.openwall.com;
-        h=content-transfer-encoding:subject:to:in-reply-to:autocrypt
-         :content-language:from:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=aIK7/KLh+LshQyqlcVEdb8vLJwiDt/L9yi/30zWLoic=;
-        b=APgp1A7JfGoJQ4WJgeDNTOotWQCV1cJWknbwVRWcfBUnd/CogVKCJLut29+Zt+yaXh
-         +QgJ8aOPb1TRsWwRXfPnTcpUfy0idBAvAGeiMAQPLUfm8D8mTytd/P32HV96+drpcoZV
-         pWrTY9SFzFoN4SWaGqIBv6l3l1ITE6umzwboR+POzxYFuvjWVyGmvzles+/R9/a76hbg
-         rheKda8rFGDjILVo/ncO2ues4ejMpn+dtsbf+I8FQBaUduvTADUup13vHNOm3wUzHW04
-         XYxHw7ByMqTXE+lGKBy7ptAoC2Df6+HSRr8VKLqWD3Y5/Ooxa6nNWoVAAsObITytWCen
-         /3Hg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720015661; x=1720620461;
-        h=content-transfer-encoding:subject:to:in-reply-to:autocrypt
-         :content-language:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=aIK7/KLh+LshQyqlcVEdb8vLJwiDt/L9yi/30zWLoic=;
-        b=BfUggYkKmSO8atGGDwLlONOcmNhwqacjr/1UMhuAUsR3IoZ+YrxKJUrWTgchUG9Muu
-         ywsqU4Y0a9hv6rka1rvxvkzrW51KmS9kWqpzaOvz4Q3fqntGjZVzrTt4vCaVcoLJG/Hr
-         Bp9w6RgMIu9zMSD/BIwBSCh/iw9LXMXWif17SF6QGbarb4Fyb4LCb8LvwwACdXo66e7R
-         jCH1l43M5fDA5yF1yh1d4PE/6dWumuGcqUeid81s0baJDHBSHQFFzIcs9lRtZPMbdTFz
-         8J5XIjUmzLhITfZHN+FclHvzC+Foq97TmMJv25wjzUqGWBekDYXkk/HQrBb3JhJQGswx
-         6XWQ==
-X-Gm-Message-State: AOJu0YyZtpRxoQzDbf2pmwfv4M01Ac8adbWO8fwMclEQ6OwbKOE+ml8s
-	ydRoMcv110vL7rsztQ/ikYKVKyfTx0dVssEN+3jdpgOWggQITCwEi/Rw9TvLC5/zKKHlvwp0sTU
-	U
-X-Google-Smtp-Source: AGHT+IFWoYrzZ02ptkDNHnBQsQYXGp5qNuHRETKF56+0NPCb4zAXiUVLzENFQDCoJQKpAQh5eMkXVA==
-X-Received: by 2002:a05:6402:d05:b0:57a:858d:20ca with SMTP id 4fb4d7f45d1cf-587a0a0e925mr7376349a12.28.1720015659971;
-        Wed, 03 Jul 2024 07:07:39 -0700 (PDT)
-Message-ID: <57c462dd-f23a-4f55-a870-55c6886767a0@codean.io>
-Date: Wed, 3 Jul 2024 16:07:37 +0200
+Received: (qmail 3495 invoked from network); 16 Mar 2019 16:54:58 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=subject : references
+ : to : from : message-id : date : mime-version : in-reply-to :
+ content-type; s=corp-2018-07-02;
+ bh=OOYbNtzL1s7KSMGx98PPxZ8DjhP8/sD4xB8bfhOAaug=;
+ b=GLYR4+tYxMdn4OTEUOqOeS6+XdSyMXRdoBNR5hURcB/elRG3jqZ/ieX8opNr7SIRjU3e
+ 8wQ7nTDbUKSzXiY2vj7GlA8Zm/ZMc9x0+8hMYFMd886OjdFWKvdt8MU7BpQoCtUJ8UEr
+ d7ELATo+UDCbk+Qjusx6eWSJ+xdXfN8JlFIomKNcnH8dyEAQW/xU+ytGIzwJVSZ8Ozw+
+ Jn5HvgT9SdRbXRuYP5vvQlgTBsHCPc9Yv3vavhjsZEDIlFP5sUjh1SWuD9tOCCvrVbxV
+ SJgCv7ItWdh96Uf4LIC0gN2ZZas1cVNONrwpA0MRptW9pxwCzvpvwqZRlhCkt9W2L7le oA== 
+References: <20190316163157.GA23880@also.us.oracle.com>
+X-Forwarded-Message-Id: <20190316163157.GA23880@also.us.oracle.com>
+Message-ID: <fdd8218f-e06f-9ebe-5554-99e2b898dfa9@oracle.com>
+User-Agent: Mozilla/5.0 (X11; SunOS i86pc; rv:60.0) Gecko/20100101
+ Thunderbird/60.5.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Thomas Rinsma <thomas@codean.io>
+In-Reply-To: <20190316163157.GA23880@also.us.oracle.com>
+Content-Type: multipart/mixed;
+ boundary="------------50420CB64E5BA7AB044D13CB"
 Content-Language: en-US
-Autocrypt: addr=thomas@codean.io; keydata=
- xjMEZSAfBhYJKwYBBAHaRw8BAQdAfdgd2yxL+pYN91ENyp/VZVdWXLjYDONG47jM4dDZDMHN
- IFRob21hcyBSaW5zbWEgPHRob21hc0Bjb2RlYW4uaW8+wo8EExYIADcWIQRdLNBtuUxCInwZ
- pg3UW7aGXlRyygUCZSAfBgUJBaOagAIbAwQLCQgHBRUICQoLBRYCAwEAAAoJENRbtoZeVHLK
- pvIBANiaDeLPyaQyHkuzB8T6ZqvfJi4dXNlsqT2FdlUUip4ZAQDSAljghQC9jAQu8I8yMrQJ
- d4SXD1EMH+NLNNYCDEZCC844BGUgHwYSCisGAQQBl1UBBQEBB0DOFmUm2nMIda8PzTquulLL
- y/bFwDtSqAiK1EBqEdvbaAMBCAfCfgQYFggAJhYhBF0s0G25TEIifBmmDdRbtoZeVHLKBQJl
- IB8GBQkFo5qAAhsMAAoJENRbtoZeVHLKCE8BAJEXE6za1G6pFpaZWKBRMlCbBDSE4rc7iEn5
- MpC56WtQAQCnVhRNYBjQ7Bo/VX1rx2+6wx84EXOFmoW80F96QmN0Bw==
-In-Reply-To: <20240628033444.GA521@openwall.com>
+X-Proofpoint-Virus-Version: vendor=nai engine=5900 definitions=9197 signatures=668685
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 priorityscore=1501 malwarescore=0
+ suspectscore=0 phishscore=0 bulkscore=0 spamscore=0 clxscore=1034
+ lowpriorityscore=0 mlxscore=0 impostorscore=0 mlxlogscore=999 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.0.1-1810050000
+ definitions=main-1903160128
+Date: Sat, 16 Mar 2019 09:54:39 -0700
+From: Alan Coopersmith <alan.coopersmith@oracle.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Fwd: [ANNOUNCE] libXdmcp 1.1.3 [fix for CVE-2017-2625]
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] Re: Ghostscript 10.03.1 (2024-05-02) fixed 5 CVEs including
- CVE-2024-33871 arbitrary code execution
 
-Hi,
+--------------50420CB64E5BA7AB044D13CB
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Per Solar's request, here is some information on recent Ghostscript 
-bugs. They have all been fixed upstream already for either ~1 month 
-(10.03.1) or ~4 months (10.03.0). It looks like patches have also landed 
-in most distros, but there is not a super clear changelog or version 
-history so this might help clarify things.
+This issue was already disclosed at:
+   https://www.x41-dsec.de/lab/advisories/x41-2017-001-xorg/
+   https://www.openwall.com/lists/oss-security/2017/02/28/3
 
-Note that this is just a subset of all vulnerabilities fixed in 10.03.0 
-and 10.03.1: these are just the bugs I myself found and reported.
+This just upgrades the fix from a git commit/patch to a released tarball.
 
-# CVE-2024-29509 - heap buffer overflow via the PDFPassword parameter
-
-The `runpdf` command (and friends) allows the new C-based PDF 
-interpreter to be invoked from within PS. With this, we can pass various 
-flags and arguments (see `pdf_impl_set_param`) that are normally passed 
-via the command-line when the PDF interpreter is invoked directly.
-
-It turns out that validation of several of these parameters is flawed, 
-maybe because they were considered somewhat "trusted", being 
-command-line arguments originally.
-
-The fields `ctx->encryption.Password` and `ctx->encryption.PasswordLen` 
-are set based on the value of `PDFPassword`. During the decryption 
-process, in `check_password_R5`  in `pdf_sec.c`, a buffer is allocated 
-based on the string-length of this field:
-
-```
-code = pdfi_object_alloc(ctx, PDF_STRING, 
-strlen(ctx->encryption.Password), (pdf_obj **)&P);
-```
-
-However, a `memcpy` later copies the full length of the PS-supplied 
-object into this buffer:
-
-```
-memcpy(P->data, Password, PasswordLen);
-```
-
-Because PS-strings are not null-terminated, this will result in a heap 
-buffer overflow when a value of `PDFPassword` is supplied with a null 
-byte in the middle. For example, the following will result in a `memcpy` 
-of 7 bytes into a buffer of size 3:
-
-```
-/PDFPassword (foo\000bar) def
-```
-
-This bug was fixed in 10.03.0 (2024-03-06), and is bug (1) in this 
-report: https://bugs.ghostscript.com/show_bug.cgi?id=707510
+	-Alan Coopersmith-              alan.coopersmith@oracle.com
+	  X.Org Security Response Team - xorg-security@lists.x.org
 
 
-# CVE-2024-29506 - stack buffer overflow in pdfi_apply_filter()
+-------- Forwarded Message --------
+Subject: [ANNOUNCE] libXdmcp 1.1.3
+Date: Sat, 16 Mar 2019 09:31:57 -0700
+From: Alan Coopersmith <alan.coopersmith@oracle.com>
+To: xorg-announce@lists.x.org
+CC: xorg@lists.x.org
 
-The `PDFDEBUG` flag controls the value of `ctx->args.debug`. In 
-`pdfi_apply_filter` this enables execution of a `memcpy` into a stack 
-buffer, without bounds checks. The input (`n->data`, the PDF filter 
-name) is an attacker controlled buffer of arbitrary size. A filter name 
-larger than 100 will overflow the `str` buffer.
+libXdmcp is the X Display Manager Control Protocol library, used by both
+X servers and display managers to handle both ends of the XDMCP connection.
 
-```
-if (ctx->args.pdfdebug)
-     {
-         char str[100];
-         memcpy(str, (const char *)n->data, n->length);
-         str[n->length] = '\0';
-         dmprintf1(ctx->memory, "FILTER NAME:%s\n", str);
-     }
-```
+This release provides a fix for CVE-2017-2625 for platforms which don't have
+arc4random_buf() in their default libraries but do have getentropy(), such
+as Linux platforms with a kernel version of 3.17 or newer and a glibc version
+of 2.25 or newer.   (libXdmcp 1.1.2 already ensured that arc4random_buf()
+is used on platforms that have it to provide sufficient entropy in XDMCP
+key generation, but left other platforms with the weaker methods.  Linux
+platforms could also have linked against libbsd to use arc4random_buf()
+with libXdmcp 1.1.2 for stronger keys.)
 
-This bug was also fixed in 10.03.0 (2024-03-06), and is bug (2) in this 
-report: https://bugs.ghostscript.com/show_bug.cgi?id=707510
+Alan Coopersmith (2):
+       Update README for gitlab migration
+       libXdmcp 1.1.3
 
+Benjamin Tissoires (2):
+       Use getentropy() if arc4random_buf() is not available
+       Fix compilation error when arc4random_buf is not available
 
-# CVE-2024-29507 - stack buffer overflow via CIDFSubstPath/Font params
+Emil Velikov (1):
+       autogen.sh: use quoted string variables
 
-Under specific conditions, the `cidfsubstpath` and `cidfsubstfont` 
-parameters (set by corresponding Postscript objects) are used to load 
-substitute fonts (this is in `pdfi_open_CIDFont_substitute_file`). The 
-values are `memcpy`d into the `fontfname` buffer without bounds checks. 
-Hence, an attacker can pass values larger than the buffer size to 
-trigger a stack buffer overflow.
+Helmut Grohne (1):
+       do not use &fullrelvers; in xdmcp.xml (Debian bug 761628)
 
-```
-char fontfname[gp_file_name_sizeof]; // 4096
+Jon TURNEY (1):
+       Link with winsock library for socket functions on MinGW
 
-// .. <snip> ...
+Mihail Konev (1):
+       autogen: add default patch prefix
 
-if (ctx->args.cidfsubstpath.data == NULL) {
-     memcpy(fontfname, fsprefix, fsprefixlen);
-}
-else {
-     memcpy(fontfname, ctx->args.cidfsubstpath.data, 
-ctx->args.cidfsubstpath.size);
-     fsprefixlen = ctx->args.cidfsubstpath.size;
-}
+Peter Hutterer (1):
+       autogen.sh: use exec instead of waiting for configure to finish
 
-if (ctx->args.cidfsubstfont.data == NULL) {
-     // ... <snip> ...
-}
-else {
-     memcpy(fontfname, ctx->args.cidfsubstfont.data, 
-ctx->args.cidfsubstfont.size);
-     defcidfallacklen = ctx->args.cidfsubstfont.size;
-}
-```
+git tag: libXdmcp-1.1.3
 
-This bug was also fixed in 10.03.0 (2024-03-06), and is bug (3) in this 
-report: https://bugs.ghostscript.com/show_bug.cgi?id=707510
+https://xorg.freedesktop.org/archive/individual/lib/libXdmcp-1.1.3.tar.bz2
+MD5:  115c5c12ecce0e749cd91d999a5fd160  libXdmcp-1.1.3.tar.bz2
+SHA1: 0a8f8a274f829331efb1e8e2027c38631b204dd0  libXdmcp-1.1.3.tar.bz2
+SHA256: 20523b44aaa513e17c009e873ad7bbc301507a3224c232610ce2e099011c6529 
+libXdmcp-1.1.3.tar.bz2
+SHA512: 
+cb1d4650f97d66e73acd2465ec7d757b9b797cce2f85e301860a44997a461837eea845ec9bd5b639ec5ca34c804f8bdd870697a5ce3f4e270b687c9ef74f25ec 
+  libXdmcp-1.1.3.tar.bz2
+PGP:  https://xorg.freedesktop.org/archive/individual/lib/libXdmcp-1.1.3.tar.bz2.sig
 
-
-# CVE-2024-29508 - heap pointer leak in pdf_base_font_alloc()
-
-The function `pdf_base_font_alloc` used by the `pdfwrite` device will 
-use a hexadecimal pointer representation (`".F" PRI_INTPTR`) for the 
-constructed BaseFont name if the input name is empty:
-
-```
-if (pfname->size > 0) {
-     font_name.data = pfname->chars;
-     font_name.size = pfname->size;
-     while (pdf_has_subset_prefix(font_name.data, font_name.size)) {
-         /* Strip off an existing subset prefix. */
-         font_name.data += SUBSET_PREFIX_SIZE;
-         font_name.size -= SUBSET_PREFIX_SIZE;
-     }
-} else {
-     gs_snprintf(fnbuf, sizeof(fnbuf), ".F" PRI_INTPTR, (intptr_t)copied);
-     font_name.data = (byte *)fnbuf;
-     font_name.size = strlen(fnbuf);
-}
-```
-
-Resulting in, for example:
-
-```
-<</BaseFont/YZKFTQ+.F0x5618b147e378/FontDescriptor 8 0 R/ToUnicode 11 0 
-R/Type/Font ...
-```
-
-An attacker can obtain this pointer value by reading back the output 
-file (after writing to a temporary writable and readable location).
+https://xorg.freedesktop.org/archive/individual/lib/libXdmcp-1.1.3.tar.gz
+MD5:  4855eb078703d3f9a6692fa67a3eb28a  libXdmcp-1.1.3.tar.gz
+SHA1: a94cd4ce575b2a9b2620b1630a7bc4f0e59cab56  libXdmcp-1.1.3.tar.gz
+SHA256: 2ef9653d32e09d1bf1b837d0e0311024979653fe755ad3aaada8db1aa6ea180c 
+libXdmcp-1.1.3.tar.gz
+SHA512: 
+edd05654ad9ea893e9e08269e25ea050d10eaf9f997a08494e24127d1ba0c896cd5338b4595b155c8cbf576e1d910b76e6ad7820fee62d74644f1f276551e2f2 
+  libXdmcp-1.1.3.tar.gz
+PGP:  https://xorg.freedesktop.org/archive/individual/lib/libXdmcp-1.1.3.tar.gz.sig
 
 
-This bug (and various other pointer leaks) were fixed in 10.03.0 
-(2024-03-06), and is bug (4) in this report: 
-https://bugs.ghostscript.com/show_bug.cgi?id=707510
+-- 
+	-Alan Coopersmith-               alan.coopersmith@oracle.com
+	 Oracle Solaris Engineering - https://blogs.oracle.com/alanc
 
 
-# CVE-2024-29511 - arbitrary file read/write through Tesseract config
+--------------50420CB64E5BA7AB044D13CB
+Content-Type: application/pgp-signature;
+ name="signature.asc"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+ filename="signature.asc"
 
-The `ocr` family of devices invoke Tesseract to perform OCR operations. 
-The device parameter `OCRLanguage` is used by Tesseract to load a data 
-file for that specific language. Specifically, such a file is loaded 
-from `./<OCRLanguage>.traineddata`. By using a path traversal to 
-`/tmp/`, we can force Tesseract to load our own data file:
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KVmVyc2lvbjogR251UEcg
+djIKCmlRSWNCQUVCQ2dBR0JRSmNqU1Q4QUFvSkVNL2ZGSWdveGtLbmVQNFAv
+UkRZNWFUZENwdGRDRndYSTRyV21qb0kKWVl0eDFzNVFKY0x3b3c0dy9tSHNV
+cTFWYXpMdUVYNmo4eHpPLzlSaURSM0pOWUVVUlFCcWxwNEhzVDkxbDRXVQpE
+SWFJOXZMVWtJcitQaTNIdGNDUnFnZHBDeXNqNUZkSjdqck90Q2hOYVpDdVZU
+MGpNU29Na3VWTlF4MDRQRVFqCkJvQmcwNEU3THUrSm84UUNHSkNzSnNGVis3
+Wk1DQmFUSEdwKytkY0Y4RFJvK1Q3MGc4NWRhVkVJYXA2aWd1Q0MKcVh1aVBI
+THdUY2ZhKzVZS3RxSldhQkxrNm50c3VVS2FMbVlqWm5HN3lvMUhidVBsS2hQ
+Qi9WcnNPRVZtQXdRdApEQW5iTGhNM1ZUNUloU2RnUGN3REJsWCszS3hCTVNK
+eE5wWm94UmNmYmtHK0NibnRYOWV6L2o4UysyYXJ6L0pTCk9vOG9hYVdOVE56
+OGQxS1doVDNrRk0zdDk0R2ZESXVZc3JGVC84V3ZSVC9iV2s3YTFkOHNENGJV
+dXJkSld0ZkUKNDQrRk03SDl2Q2wzelN2aTR0S2NONjlxeFZ6azNsdFBBVkZV
+V1Q3Nis4aFFrUHhqaHliQUQ5M1VtUngwNTZpRwpqV29MRGpBeVJBK2RUYUxy
+YUUvWG9Yc2ZHdFRIREhpV0VKRWRiWVoyeTMxcENoRTRlKzdtT1I0ZXFjS2JL
+ODAxCndra1VZWW5mQW1YakZuRUNkN21pYVhjdkg2YnNXTzg0Rks2TE5vaFM2
+ZlFsZWFab3Z4cndKU0lETGpDMzNqMHAKQWlxbCs0US9pUjNCaVFGREV3T1BT
+Unlocmkzd0JueWJ6NUxKMnFqaEExZlFpd0FmKzVhclZqcTE5SER2UWdacApZ
+UzlRUExkQU5aa2d0Q2FFNXdoeAo9VW4zawotLS0tLUVORCBQR1AgU0lHTkFU
+VVJFLS0tLS0KCg==
 
-```
-mark
-/OutputFile (/tmp/notused)
-/OCRLanguage (../../../../../tmp/test) % loads /tmp/test.traineddata
-/OutputDevice /ocr
-.dicttomark
-setpagedevice
-```
+--------------50420CB64E5BA7AB044D13CB
+Content-Type: text/plain; charset=UTF-8;
+ name="Attached Message Part"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+ filename="Attached Message Part"
 
-As it turns out, Tesseract `traineddata` files can include various 
-configuration values, including `user_patterns_file` which will try to 
-load patterns from the given path, and `debug_file` which will write 
-debug information to the given path. The debug information is quite 
-verbose, and will print full input lines if they don’t start with a 
-valid character in the trained language. By constructing our "language" 
-such that no character is valid, all lines in the pattern file are 
-printed. For example, the configuration settings:
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X18KeG9yZ0BsaXN0cy54Lm9yZzogWC5Pcmcgc3VwcG9ydApBcmNoaXZlczog
+aHR0cDovL2xpc3RzLmZyZWVkZXNrdG9wLm9yZy9hcmNoaXZlcy94b3JnCklu
+Zm86IGh0dHBzOi8vbGlzdHMueC5vcmcvbWFpbG1hbi9saXN0aW5mby94b3Jn
+CllvdXIgc3Vic2NyaXB0aW9uIGFkZHJlc3M6ICUodXNlcl9hZGRyZXNzKXM=
 
-```
-debug_file /tmp/out
-user_patterns_file /etc/passwd
-```
-
-will result in a file `/tmp/out` containing:
-
-```
-Error: failed to insert pattern 'root:x:0:0:root:/root:/bin/bash'
-Error: failed to insert pattern 
-'daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin'
-Error: failed to insert pattern 'bin:x:2:2:bin:/bin:/usr/sbin/nologin'
-Error: failed to insert pattern 'sys:x:3:3:sys:/dev:/usr/sbin/nologin'
-Error: failed to insert pattern 'sync:x:4:65534:sync:/bin:/bin/sync'
-<etc>
-```
-
-In Postscript we can:
-
-1. Construct the traineddata file under `/tmp/`
-2. Use path traversal in `OCRLanguage` to load it when initializing the 
-`ocr` device
-3. Read the resulting output data in `/tmp/out`
-
-This allows us to read arbitrary files outside of the SAFER sandbox, and 
-write to arbitrary file paths, although during writing, every line will 
-start with `Error: failed to insert pattern '` and end with `'`.
-
-Note that this is the Tesseract/OCR-related bug that was referred to by 
-the Ghostscript changelog (and quoted earlier in this thread). Contrary 
-to what is stated in the changelog it does not lead to RCE by itself, 
-just file read/write. It also requires Ghostscript to be compiled with 
-Tesseract support.
-
-
-# CVE-2024-29510 - format string injection in uniprint device
-
-The `uniprint` device allows the user to provide various string 
-fragments as device options, which are later appended to the output 
-file. Two of these parameters, `upWriteComponentCommands` and 
-`upYMoveCommand`, are actually treated as format strings, specifically 
-for `gp_fprintf` and `gs_snprintf`. For these, the intention is for the 
-user to include just one format specifier in the string, but there is no 
-logic preventing arbitrary format strings (with multiple specifiers) 
-from being used.
-
-With full control over the format string (by setting a page device with 
-the respective options), and read access to the device output (by 
-setting it to a temporary file path), an attacker can abuse this to leak 
-data from the stack and perform memory corruption. This is specifically 
-impactful in the cases of `gs_snprintf` (as opposed to `gp_fprintf`), as 
-its format-string parsing logic is not hardened by compiler measures 
-like `D_FORTIFY_SOURCE`, while it still supports the `%n` modifier.
-
-Bug report and public blog post with more details and PoC leading to a 
-SAFER sandbox bypass:
-
-https://bugs.ghostscript.com/show_bug.cgi?id=707662
-https://codeanlabs.com/blog/research/cve-2024-29510-ghostscript-format-string-exploitation/
-
----
-
-Cheers,
-Thomas
+--------------50420CB64E5BA7AB044D13CB--
