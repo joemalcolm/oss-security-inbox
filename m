@@ -1,36 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/29/1
-Message-ID: <CAN_Cyt8SiMcy_JXH=VMGePOFZpu_-9bTWYjMUPSwGW3myy0xCQ@mail.gmail.com>
-Date: Mon, 28 Jan 2019 14:23:07 -0600
-From: Imran Rashid <irashid@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/17/1
+Message-ID: <20190317151442.g5po7ljl64gnzuoq@tunkki.bugs.fi>
+Date: Sun, 17 Mar 2019 17:14:42 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2018-11760: Apache Spark local privilege escalation vulnerability
+Subject: CVE-2019-9573 / CVE-2019-9574: WordPress plugin hrm missing server side authorization checks
 Content-Type: text/plain; charset=utf-8
 
-Severity: Important
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Vendor: The Apache Software Foundation
+I found several vulnerabilities from WordPress plugin hrm (WP Human Resource
+Management) where server side authorization checks are missing. Plugin URL
+https://wordpress.org/plugins/hrm/. Affected 2.2.5 and possibly below. Fixed in
+2.2.6 according to developer who didn't respond to me, but communicated with
+WordPress.
 
-Versions affected:
-All Spark 1.x, Spark 2.0.x, and Spark 2.1.x versions
-Spark 2.2.0 to 2.2.2
-Spark 2.3.0 to 2.3.1
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-9574
 
-Description:
-When using PySpark , it's possible for a different local user to connect to
-the Spark application and impersonate the user running the Spark
-application.  This affects versions 1.x, 2.0.x, 2.1.x, 2.2.0 to 2.2.2, and
-2.3.0 to 2.3.1.
+When creating new leave as admin user there is user picker visible in the UI.
+Using same queries as picker functionality any logged in user (e.g.
+Subscriber) can use search_emp_leave_records action to print all WordPress
+users credentials from database.
 
-Mitigation:
-1.x, 2.0.x, 2.1.x, and 2.2.x users should upgrade to 2.2.3 or newer
-2.3.x users should upgrade to 2.3.2 or newer
-Otherwise, affected users should avoid using PySpark in multi-user
-environments.
+{"success":true,"data":[{"ID":"1","user_login":"henri","user_pass":"$P$Bho3..
 
-Credit:
-This issue was reported by Luca Canali and Jose Carlos Luna Duran from CERN.
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-9573
 
-References:
-https://spark.apache.org/security.html
+Any user can create new leave and can change status of leave (approving,
+canceling etc).
 
+Recommendation for developers:
+
+Authorize users using a whitelist of roles allowed to call specific actions.
+Define roles for all actions with secure default e.g. admin only. Ensure that
+password hashes are not printed to any user. Function
+https://codex.wordpress.org/Function_Reference/get_users could be used to list
+the users.
+
+Timeline:
+
+2019-01-22: Report to developer and WordPress plugins team
+2019-02-23: Fix released
+2019-03-05: CVEs assigned by MITRE
+
+- -- 
+Henri Salo
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEE/aVSDznAZReWTkxKJ633pE6qdXQFAlyOZGIACgkQJ633pE6q
+dXTogxAAoUAq4SSPBl3ayd4f2FZfQQjxALKIx7m8wa+4ygC1G3YBLB4PvArH+JyD
+52AmyRNt1Px14XBsE7tJutWPV8RazUuo88oyJxMeoU6LRXLjGmYQYoawtEayLcp1
+YKu9DWFViIUQZJn936LOOUeEtm2Sb0QiewBJGBbaI0MwCpZmRgt8KmZReAtWyjDp
+Jll3A290g6QpDay/14AJ5kMHdm5MwihkXbhTKJ20pOR0ds5VN/gVDFleXUhRBPeT
+sPaZznCpi4ZF/d3IlVK8j5VkSEEfHqq3XMjbbO6RKJV++WjPaF/DBcRea4yDGUDu
+K4OiL/m6/8Cs3wGB/Nedgx/D//xAWqV4/qVjVoTV1gy6zLlVbv9S8L11I2O5QzpL
+TfnxWEDl9zrDN7C/Ha//SinrbDsvcdklh2Uw8cFJDi0NdwSfmo4VF3kimgw+mj5+
+S6PWX/5/JZ+tgRrR8X2vUwVun9uvEbI217iRrStsuz5w6OsXrHkBT4tUAkQV6sLA
+Iegx8GlhReATbVIYuL3Xy7u9nrlokcHo5U1l6nxmpgomZ0UeD3HCFgmiXzwWj7fS
+y/pYpWzZLUzDf4TqD/MeRepLYQfqCcs2t2ApkS3XaTs8aFbviLgoEpQ+vJznNt4i
+4traM4dIqD/o5IyN/8uWj/d2Jp/vLjaMZNPNftxzC2BaHSQsmFs=
+=Rnac
+-----END PGP SIGNATURE-----
