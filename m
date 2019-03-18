@@ -1,63 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/22/3
-Message-ID: <20190822093122.GQ6086@suse.de>
-Date: Thu, 22 Aug 2019 11:31:22 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: multiple vulnerabilities in the USB subsystem x2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/18/1
+Message-ID: <nycvar.YSQ.7.76.1903181240570.16639@xnncv>
+Date: Mon, 18 Mar 2019 12:44:20 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: William Bowling <will@...wling.info>
+Subject: CVE-2019-9824 QEMU: Slirp: information leakage in tcp_emu() due to uninitialized stack variables
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Aug 22, 2019 at 10:04:42AM +0100, John Haxby wrote:
-> 
-> 
-> > On 20 Aug 2019, at 19:20, Andrey Konovalov <andreyknvl@...il.com> wrote:
-> > 
-> > * https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15216
-> > 
-> > An issue was discovered in the Linux kernel before 5.0.14. There is a
-> > NULL pointer dereference caused by a malicious USB device in the
-> > drivers/usb/misc/yurex.c driver.
-> > 
-> > * https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15217
-> > 
-> > An issue was discovered in the Linux kernel before 5.2.3. There is a
-> > NULL pointer dereference caused by a malicious USB device in the
-> > drivers/media/usb/zr364xx/zr364xx.c driver.
-> > 
-> > * https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15218
-> > 
-> > An issue was discovered in the Linux kernel before 5.1.8. There is a
-> > NULL pointer dereference caused by a malicious USB device in the
-> > drivers/media/usb/siano/smsusb.c driver.
-> > 
-> > * https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-15219
-> > 
-> > An issue was discovered in the Linux kernel before 5.1.8. There is a
-> > NULL pointer dereference caused by a malicious USB device in the
-> > drivers/usb/misc/sisusbvga/sisusb.c driver.
-> 
-> 
-> Are these even realistic?   If I'm going to leave malicious USB devices in the parking lot for mischief am I going to rely on the unknown victim running a Linux distro with the requisite kernel modules or am I going to just drop a cheap and near-universal USB killer?
-> 
-> If I'm going to be connecting the USB device to unguarded laptops myself to crash them, as opposed to destroy them, why not just casually lean on the power button for a few seconds?[1]
-> 
-> Actually, this is the CVSS3 score for a laptop's power button: 4.6 (CVSS:3.0/AV:P/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H (Medium).   There isn't a vector for a USB killer because there's no "A:P" (permanent loss).
-> 
-> I'm not saying that these aren't bugs that should be fixed, far from it.  That's not the issue.  The issue is that, for example, PCI DSS requires fixes for anything with a score >= 4.0 so we have endless end-users demanding fixes for their servers which don't have even physical access or, indeed, physical presence.  It's not even demanding the fixes as they may already be fixed or simply not applicable because the affected driver isn't present; it's the hours or days wasted verifying that the fix available or not present.[2]
-> 
-> 
-> 
-> Frustrated of Lancashire, jch
-> 
-> 
-> [1] Some may remember the VAX 11/750 reset button.  In order to be able to use the serial console (usually a DECwriter) you had to have the key in which also enabled the reset button.   Before I put the VAX "Do Not Copy this Key" key (yes, it fits all 750s) I pressed accidentally pressed the reset button a couple of times just by propping myself up on the machine.  Spectacularly bad design by today's standards.
-> 
-> 
-> [2] Full disclosure.  It's ultimately about me because it's me that eventually gets the "customer requires fix for CVE-2019-15216" :)
+     Hello,
 
-In the past we have considered Denial Of Service only USB vulnerabilites as non-issues, as physical access
-can cause the same.
+An information leakage issue was found in the SLiRP networking implementation 
+of the QEMU emulator. It occurs in tcp_emu() routine while emulating 
+Identification protocol, when crafted messages are sent to make it return 
+uninitialized variables.
 
-USB Vulnerabilities where you can achieve code execution by a malicious USB device are something else though and in my opinion warrant a CVE.
+A user/process could use this flaw to read uninitialised stack memory contents 
+from the QEMU process resulting in information leakage.
 
-Ciao, Marcus
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2019-03/msg01871.html
+
+This issue was reported by William Bowling. CVE requested via https://cveform.mitre.org/
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
