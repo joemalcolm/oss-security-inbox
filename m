@@ -1,32 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/02/2
-Message-ID: <nycvar.YSQ.7.76.1907030056560.11695@xnncv>
-Date: Wed, 3 Jul 2019 01:01:36 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Riccardo Schirone <rschiron@...hat.com>
-Subject: CVE-2019-13164 Qemu: qemu-bridge-helper ACL bypassed with long interface names
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/18/4
+Message-ID: <543049085.1124.1552945509406@appsuite-guard.open-xchange.com>
+Date: Mon, 18 Mar 2019 22:45:09 +0100 (CET)
+From: Erik Winkels <erik.winkels@...n-xchange.com>
+To: oss-security@...ts.openwall.com
+Subject: PowerDNS Security Advisory 2019-03
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Hi all,
 
-It was discovered that the Access Control List (ACL) implemented by 
-qemu-bridge-helper program could be bypassed in particular case when the 
-bridge interface names are as long as IFNAMSIZ-1, ie 15 characters. If the ACL 
-specified in the /etc/qemu/bridge.conf file denies access to a bridge 
-interface with name IFNAMSIZ-1 bytes long, but it allows all other interfaces. 
-It is possible for a local attacker to use qemu-bridge-helper to create a tap 
-device and attach it to a denied bridge interface, thus bypassing the ACL. 
-This could be used by the attacker to get access to confidential data 
-transmitted on the bridge.
+Today we released PowerDNS Authoritative Server 4.1.7 and 4.0.7, fixing an important security issue in the HTTP remote backend that has recently been reported to us [1].
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2019-07/msg00245.html
+The issue is that PowerDNS Authoritative Server, when the HTTP remote backend is used in RESTful mode (without post=1 set), can be tricked by a remote user into connecting to an attacker-specified HTTP server instead of the configured one, via a crafted DNS query.
 
-This issue was discovered by Riccardo Schirone of Red Hat Inc.
+This can be used to cause a denial of service by preventing the remote backend from getting a response, content spoofing if the attacker can time its own query so that subsequent queries will use an attacker-controlled HTTP server instead of the configured one, and possibly information disclosure if the Authoritative Server has access to internal servers.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+This issue has been assigned CVE-2019-3871.
+
+PowerDNS Authoritative up to and including 4.1.6 is affected.
+Please note that at the time of writing, PowerDNS Authoritative 3.4 and below are no longer supported, as described in [2].
+
+The full security advisory is provided below, and can also be found at [3].
+
+We would like to thank Adam Dobrawy, Frederico Silva and GregoryBrzeski from HyperOne.com for finding and subsequently reporting this issue!
+
+Minimal patches are available at [4].
+
+[1]: https://github.com/PowerDNS/pdns/issues/7573
+[2]: https://doc.powerdns.com/authoritative/appendices/EOL.html
+[3]: https://docs.powerdns.com/authoritative/security-advisories/powerdns-advisory-2019-03.html
+[4]: https://downloads.powerdns.com/patches/2019-03/
+
+Best regards,
+Erik Winkels
+
+PowerDNS Security Advisory 2019-03: Insufficient validation in the HTTP remote backend
+======================================================================================
+-  CVE: CVE-2019-3871
+-  Date: March 18th 2019
+-  Affects: PowerDNS Authoritative up to and including 4.1.6
+-  Not affected: 4.1.7, 4.0.7
+-  Severity: High
+-  Impact: Denial of Service, Information Disclosure, Content spoofing
+-  Exploit: This problem can be triggered via crafted queries
+-  Risk of system compromise: No
+-  Solution: Upgrade to a non-affected version
+
+An issue has been found in PowerDNS Authoritative Server when the HTTP remote backend is used in RESTful mode (without post=1 set), allowing a remote user to cause the HTTP backend to connect to an attacker-specified host instead of the configured one, via a crafted DNS query.
+This can be used to cause a denial of service by preventing the remote backend from getting a response, content spoofing if the attacker can time its own query so that subsequent queries will use an attacker-controlled HTTP server instead of the configured one, and possibly information disclosure if the Authoritative Server has access to internal servers.
+
+This issue has been assigned CVE-2019-3871.
+
+PowerDNS Authoritative up to and including 4.1.6 is affected.
+Please note that at the time of writing, PowerDNS Authoritative 3.4 and below are no longer supported, as described in https://doc.powerdns.com/authoritative/appendices/EOL.html .
+
+We would like to thank Adam Dobrawy, Frederico Silva and Gregory Brzeski from HyperOne.com for finding and subsequently reporting this issue!
+
+Download attachment "signature.asc" of type "application/pgp-signature" (476 bytes)
