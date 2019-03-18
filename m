@@ -1,46 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/27/1
-Message-ID: <NdwFuQOPjKC52xswSya1RvTkfft8C51AgZmmfCHmCTam-k3vqW8IlM0Gqm-Q2jCXB_uH4YWL4MAOjSiGOCaaHVR4jmlNu7r1so9j4Yi40bU=@protonmail.ch>
-Date: Sat, 26 Oct 2019 22:44:16 +0000
-From: Stiepan <stie@...tonmail.ch>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Security fixes from Android 10 release which are relevant outside the Android ecosystem?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/18/3
+Message-ID: <alpine.DEB.2.20.1903182209050.22468@tvnag.unkk.fr>
+Date: Mon, 18 Mar 2019 22:42:19 +0100 (CET)
+From: Daniel Stenberg <daniel@...x.se>
+To: libssh2 development <libssh2-devel@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORIES] libssh2
 Content-Type: text/plain; charset=utf-8
 
-As someone who used Android & did my studies on how to secure it and what was missing for that, I can say that Androids still dream of electric blowfishes - or rather threefish-512 ;) - and will do so for a while, especially now that the only part that was open seems is no more. By that virtue, it lost the biggest  advantage it had versus the better polished iOS. And doing that helps red-scarfed black-hats, who can hack into most of the open-source Android variants, which would not be the case if the latter had access to up to date, well-vetted security infos (unlike that late 2018 fix that made it even more vulnerable), and that extends to linux-distros by the by. Embargoes are bad.
-Sure, that made me buy an iPhone, which is good commercially for Apple and I salute their privacy makeup*, but being forced to do so as the collateral victim of a trade war is less cool.
-*as in definition 6 of the wordreference entry for that word, "A special examination for a student who has been absent ...".
+Hello!
 
-‐‐‐‐‐‐‐ Original Message ‐‐‐‐‐‐‐
-On Friday, October 25, 2019 11:23 PM, Moritz Mühlenhoff <jmm@...til.org> wrote:
+I'm writing you to announce the release of nine separate security advisories 
+concerning libssh2.
 
-> Android advisories used to contain commit references to AOSP change sets, but
-> that's not the case for https://source.android.com/security/bulletin/android-10.
-> 
+All these fixes are also included in the brand new libssh2 1.8.1 release, just 
+shipped and available on https://www.libssh2.org/
 
-> Typically most of these issues are specific to Android, but there are a few which
-> per the CVE description are possibly affecting software packaged/used by Linux
-> distros as well, one example:
-> 
+CVE-2019-3855
+  Possible integer overflow in transport read allows out-of-bounds write
+  URL: https://www.libssh2.org/CVE-2019-3855.html
+  Patch: https://libssh2.org/1.8.0-CVE/CVE-2019-3855.patch
 
-> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-9325:
-> "In libvpx, there is a possible out of bounds read due to a missing bounds check.
-> This could lead to remote information disclosure with no additional execution
-> privileges needed. "
-> 
+CVE-2019-3856
+  Possible integer overflow in keyboard interactive handling allows
+  out-of-bounds write
+  URL: https://www.libssh2.org/CVE-2019-3856.html
+  Patch: https://libssh2.org/1.8.0-CVE/CVE-2019-3856.patch
 
-> Similar for CVE-2019-9232, CVE-2019-9278, CVE-2019-9325, CVE-2019-9371, CVE-2019-9433,
-> CVE-2019-9423 (also libexif and opencv)
-> 
+CVE-2019-3857
+  Possible integer overflow leading to zero-byte allocation and out-of-bounds
+  write
+  URL: https://www.libssh2.org/CVE-2019-3857.html
+  Patch: https://libssh2.org/1.8.0-CVE/CVE-2019-3857.patch
 
-> Is there anyone from Android/Google on the list, who can comment on this? Can these
-> references be added again for the benefit of non-Android distros?
-> 
+CVE-2019-3858
+  Possible zero-byte allocation leading to an out-of-bounds read
+  URL: https://www.libssh2.org/CVE-2019-3858.html
+  Patch: https://libssh2.org/1.8.0-CVE/CVE-2019-3858.patch
 
-> Cheers,
-> Moritz
+CVE-2019-3859
+  Out-of-bounds reads with specially crafted payloads due to unchecked use of
+  `_libssh2_packet_require` and `_libssh2_packet_requirev`
+  URL: https://www.libssh2.org/CVE-2019-3859.html
+  Patch: https://libssh2.org/1.8.0-CVE/CVE-2019-3859.patch
 
+CVE-2019-3860
+  Out-of-bounds reads with specially crafted SFTP packets
+  URL: https://www.libssh2.org/CVE-2019-3860.html
+  Patch: https://libssh2.org/1.8.0-CVE/CVE-2019-3860.patch
 
-Download attachment "publickey - stie@...tonmail.ch - 0xADF18750.asc" of type "application/pgp-keys" (1809 bytes)
+CVE-2019-3861
+  Out-of-bounds reads with specially crafted SSH packets
+  URL: https://www.libssh2.org/CVE-2019-3861.html
+  Patch: https://libssh2.org/1.8.0-CVE/CVE-2019-3861.patch
 
-Download attachment "signature.asc" of type "application/pgp-signature" (478 bytes)
+CVE-2019-3862
+  Out-of-bounds memory comparison
+  URL: https://www.libssh2.org/CVE-2019-3862.html
+  Patch: https://libssh2.org/1.8.0-CVE/CVE-2019-3862.patch
+
+CVE-2019-3863
+  Integer overflow in user authenicate keyboard interactive allows
+  out-of-bounds writes
+  URL: https://www.libssh2.org/CVE-2019-3863.html
+  Patch: https://libssh2.org/1.8.0-CVE/CVE-2019-3863.txt
+
+-- 
+
+  / daniel.haxx.se
