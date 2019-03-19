@@ -1,38 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/09/3
-Message-ID: <20191209145802.GI2151@jumper.schlittermann.de>
-Date: Mon, 9 Dec 2019 15:58:02 +0100
-From: Heiko Schlittermann <hs@...littermann.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/19/1
+Message-ID: <20190319084454.GA29714@fedorawork>
+Date: Tue, 19 Mar 2019 09:44:54 +0100
+From: Riccardo Schirone <rschiron@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Shell wildcards considered dangerous?
+Cc: libssh2 development <libssh2-devel@...l.haxx.se>
+Subject: Re: [SECURITY ADVISORIES] libssh2
 Content-Type: text/plain; charset=utf-8
 
-Georgi Guninski <gguninski@...il.com> (Mo 09 Dez 2019 14:23:16 CET):
-> ====
-> $rm -rf /tmp/1 ;mkdir /tmp/1 ; cd /tmp/1 ; tar cf a.tar /etc/issue
-> $ : >  --to-command="yes .tar"
->
-> #end creating, starts PoC
-> tar xf *.tar
+Hello,
 
-That's not a technical fault. It's a fault on the human side.
+On 03/18, Daniel Stenberg wrote:
+> Hello!
+> 
+> CVE-2019-3863
+>  Integer overflow in user authenicate keyboard interactive allows
+>  out-of-bounds writes
+>  URL: https://www.libssh2.org/CVE-2019-3863.html
+>  Patch: https://libssh2.org/1.8.0-CVE/CVE-2019-3863.txt
+> 
 
-If you call the above command in a typical Bourne shell, you should be
-prepared to handle the trouble. Smart admins don't do that.
+From the security advisory:
+> A server could send a multiple keyboard interactive response messages whose
+> total length are greater than unsigned char max characters. This value is
+> used as an index to copy memory causing in an out of bounds memory write
+> error.
 
-If an application calls the above command via system(), you should
-file a bug against that application. Smart programmers know how to
-avoid the shell for such invocations (or avoid such invocations in the
-first place.)
+Is this really a security issue? It seems to me the server cannot change what
+the interactive keyboard message responses contain. They are, after all,
+"interactive keyboard messages", thus coming from the user sitting in front of
+the client system.
 
+I can see 3 different "response_callback" functions being used to construct
+the responses and in one of them it is probably possible to trigger the
+overflow, however it would be caused by the user himself. If we assume the
+interactive user should not be able to execute code, I'd say the flaw does not
+have a remote attack vector but only local.
 
-    Best regards from Dresden/Germany
-    Viele Grüße aus Dresden
-    Heiko Schlittermann
---
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
- ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
+Did I miss anything?
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Thanks,
+-- 
+Riccardo Schirone
+Red Hat -- Product Security
+Email: rschiron@...hat.com
+PGP-Key ID: CF96E110
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
