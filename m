@@ -1,4 +1,9 @@
-Received: (qmail 1534 invoked by uid 550); 2 Nov 2022 02:54:22 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2355" "Tuesday" "19" "March" "2019" "09:44:54" "+0100" "Riccardo Schirone" "rschiron@redhat.com" nil "68" nil "^Cc:" nil nil "3" nil nil (number mark "        rschiron@red Mar 19   68/2355  " thread-indent "\"Re: [oss-security] [SECURITY ADVISORIES] libssh2\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] [SECURITY ADVISORIES] libssh2" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 20303 invoked by uid 550); 19 Mar 2019 10:08:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,68 +11,104 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1510 invoked from network); 2 Nov 2022 02:54:22 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=wrDymvYJDC7hUH6/osyEooGI/VHyaEEkVioQ8+cHUd8=;
-        b=GplYDpBc1A3xsUBD2Jp3x/+pl/KY9dImloqFWGt9rC6qmUL77jYMg/SKGdJPbKZuY5
-         AWI4AA8Hvta5ERzMGf7zV6C2u4N2/NFCKXlCzEM3FjLydigR9w00svO17Y1n+bD3vyzY
-         MjoUookicPIz8lznIHyqx8As18MplgT4akFEPR8e6Lw5R70k1WwmH/A12fvtJuFxXrHz
-         UVgjsiXtNNb0afEQO6QLx9JcszE7iI8PTWTtgTtU4waeRvjSnF3l0LTliXmbDHUSA82/
-         CoLDkwifj8KbTvOIw01H9zSTPiyFMX43V3pDz3MJZv6FX8OBsNaoY+ReetB9Ffg+MXJQ
-         NAwQ==
+Received: (qmail 7169 invoked from network); 19 Mar 2019 08:45:12 -0000
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wrDymvYJDC7hUH6/osyEooGI/VHyaEEkVioQ8+cHUd8=;
-        b=GeV3q5Ki6j41AMDdvkW6OIpRSvAkohjTROCfGNRSyRZk39F8XwoeW6pwq1gsgDZTG4
-         1R2eCNY9NlnZn0f4aQblGUVl5l62sCrMngKhwyE8uBOczaKkLp0iekbWoYnDOrCadsdP
-         ILWJZfqDT9pkxFoj6bksyd9FukddyKj7lPCC57NRfHLsBlZimADMTn6fIVX2ViTjBZVk
-         MSGSrjRxIfhkF8TOKc56GmaaagSlq7zEuZWwHGbUw+Rc3vW5oamPv/zPSFy6mY8wgRTB
-         ALb4MA+XyyH7m7UFpysjOMoPgJNEiCMG4HuFNTm906aVaPM5pQGXVrh30XElNkEkrtpe
-         KH+w==
-X-Gm-Message-State: ACrzQf2QsbrfnEt2a1sGMcQGw/+1z4C5O9uZoxnfmRxmmoPy5/wdgqoH
-	x7xRX40paKqkqTd6G00OPlrMt2ZFHZkBfYh6RGj8Y5xW
-X-Google-Smtp-Source: AMsMyM6y78HoEp/x6U8qCu5KQBbpgQM7OVOskQsRbvrc7hvAD/aVbeI+274KkNv2FzSIH14p19OUGQYX2TXxj0oSv4k=
-X-Received: by 2002:a2e:3c03:0:b0:277:1d64:f4fd with SMTP id
- j3-20020a2e3c03000000b002771d64f4fdmr8329882lja.32.1667357650488; Tue, 01 Nov
- 2022 19:54:10 -0700 (PDT)
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=zn6yO0fC3ZNYtRrDsebbWbHu4cljbl9LhPU8321VvBI=;
+        b=QotI5fEf0WujCPLLdclTr7ZcEmocnheQwucgXJKVeDxkKfPeoVeQ4IrrdIuTbC39wX
+         IJtUTMk0hATCdSYISNcmWxIp9iWDZGByDtr4917ILqz3afz8CDNeqqW2oQ4KFsu8djn5
+         60BX/CdgHHy0Zzie6IEFgA5/qMTGLJv5kReu+I40XmhR1tRANaOR9xy94yLKXlfie/Vv
+         vd1bmXt/a74CFURZPIkusaknN7e87YfQCiUGDXidq3/Mvit1EgPiUlyBBwLpcoUgToz9
+         WjVQ2+2wyVEajRmnhbpAa7Yi7QCKI9ZbQOz0MVl1hN3IdVRM/tksEFm6Q6hjXtH52To/
+         QsIg==
+X-Gm-Message-State: APjAAAW+qP4Uq27twhPpkRDwxBV2+i1Gi5ZIHa9yWlNU/VcBOMqhzHcK
+	oAX0PzPhS6Iuhke4L3EgYoS6WSremaU=
+X-Google-Smtp-Source: APXvYqxfjQOVkJ38WtqMyrLUvLPMuCTuBMlqEM4SCqCYtaWVvmwHvFJ4B0dQn2aN1ruMrAnXsRhzHA==
+X-Received: by 2002:adf:ce87:: with SMTP id r7mr12396210wrn.324.1552985100912;
+        Tue, 19 Mar 2019 01:45:00 -0700 (PDT)
+Message-ID: <20190319084454.GA29714@fedorawork>
+References: <alpine.DEB.2.20.1903182209050.22468@tvnag.unkk.fr>
 MIME-Version: 1.0
-References: <20221101170833.GA10470@openwall.com> <Y2FhxvA/2e7xFUiF@itl-email>
- <alpine.BSF.2.21.9999.2211020631160.34372@aneurin.horsfall.org>
- <Y2F6C/dZo5njPUfd@itl-email> <1e5efc36-0cd4-45e2-b838-1493f9db6518@app.fastmail.com>
- <Y2HbGYMVSAm7/sUn@itl-email>
-In-Reply-To: <Y2HbGYMVSAm7/sUn@itl-email>
-From: Alex Gaynor <alex.gaynor@gmail.com>
-Date: Tue, 1 Nov 2022 22:53:58 -0400
-Message-ID: <CAFRnB2U7V8PA997x+d_si+SN-_WOnaoC9M6impMENR5jfHiGwA@mail.gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="jRHKVT23PllUwdXP"
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.2.20.1903182209050.22468@tvnag.unkk.fr>
+X-PGP-Key: http://keyserv.sr32.net/pks/lookup?op=get&search=0x1E8AB789CF96E110
+User-Agent: Mutt/1.11.3 (2019-02-01)
+Cc: libssh2 development <libssh2-devel@cool.haxx.se>
+Date: Tue, 19 Mar 2019 09:44:54 +0100
+From: Riccardo Schirone <rschiron@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] [SECURITY ADVISORIES] libssh2
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: Re: [oss-security] OpenSSL X.509 Email Address 4-byte Buffer Overflow
- (CVE-2022-3602), X.509 Email Address Variable Length Buffer Overflow (CVE-2022-3786)
 
-Alpine Linux switched to LibreSSL for a while, but then switched back
-to OpenSSL. (LibreSSL is still packaged separately)
+--jRHKVT23PllUwdXP
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Alex
+Hello,
 
-On Tue, Nov 1, 2022 at 10:53 PM Demi Marie Obenour
-<demi@invisiblethingslab.com> wrote:
->
-> On Tue, Nov 01, 2022 at 09:52:59PM +0100, Erin Shepherd wrote:
-> > LibreTLS does not track the OpenSSL API, so increasingly software does not build with it (it's not possible to support both LibreSSL and a supported version of OpenSSL without #ifdef hell)
->
-> Has software not from OpenBSD considered switching to LibreSSL outright?
-> --
-> Sincerely,
-> Demi Marie Obenour (she/her/hers)
-> Invisible Things Lab
+On 03/18, Daniel Stenberg wrote:
+> Hello!
+>=20
+> CVE-2019-3863
+>  Integer overflow in user authenicate keyboard interactive allows
+>  out-of-bounds writes
+>  URL: https://www.libssh2.org/CVE-2019-3863.html
+>  Patch: https://libssh2.org/1.8.0-CVE/CVE-2019-3863.txt
+>=20
 
+=46rom the security advisory:
+> A server could send a multiple keyboard interactive response messages who=
+se
+> total length are greater than unsigned char max characters. This value is
+> used as an index to copy memory causing in an out of bounds memory write
+> error.
 
+Is this really a security issue? It seems to me the server cannot change wh=
+at
+the interactive keyboard message responses contain. They are, after all,
+"interactive keyboard messages", thus coming from the user sitting in front=
+ of
+the client system.
 
--- 
-All that is necessary for evil to succeed is for good people to do nothing.
+I can see 3 different "response_callback" functions being used to construct
+the responses and in one of them it is probably possible to trigger the
+overflow, however it would be caused by the user himself. If we assume the
+interactive user should not be able to execute code, I'd say the flaw does =
+not
+have a remote attack vector but only local.
+
+Did I miss anything?
+
+Thanks,
+--=20
+Riccardo Schirone
+Red Hat -- Product Security
+Email: rschiron@redhat.com
+PGP-Key ID: CF96E110
+
+--jRHKVT23PllUwdXP
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEE3bt3kyIFawQJu6PaHoq3ic+W4RAFAlyQrAAACgkQHoq3ic+W
+4RAhRA/+Mu2yTdgen2fP0oWG0utgqeATEMMF4Heb3o9Lc5g6wAmNqQDR0ygcnWYG
+m9NcsLLxSPaHCdF/7Kgn1wlLAN9+RrSZMZZPVMGsmR3oCEaMXTXydpFzgYhB4njU
+75t9cHQMvZiAYwsaE+B7SgVrieb8C2DBpL5g5k8LlbFE222xDMRZfGZT2DRiIT+L
+fMnh36bT6fnybZfbqP5aXMrT5nYEa3tbYyZ2gK5Mg1+JqbpqWFx3UtJNb5t8sqF2
+xe/TixSg4fYabe3zCO+bDOXcGyVaMYNqe5gRLErr+I5VAbOke3HqnDR1zjpFq4UL
+4twnqkUtUEbdB7PpDG0+eTSXfP50v2v5cJVu22WczhXNi/Sl1vyqRqRKNxxIJDN3
+7MQeur7uOOEy6GlTwKjhb2nROGIdMUAJ6yNK5cIGZ5+zDf6+SQZHSzUp5Rvq+gIL
+GTLZe+MYBOxMIJv0itopXdRiXfrJesYO2RD/AJdLsEe+tcQwEEpOIpOaXPpqDcv5
+0h8rv4+hMdUvQGlElmhVhWBvLZBj7N3K+Gp24PEMQMu2pdWS8Mbg2y3cVF6BBxK2
+8Gh21l1UtcVykDUtCIx7nSKvGAkLluwLoasAzel4rZBjvOmGLvt6H0TK4/oLHYnl
+mF/SPGmWEtWqa2de/ouWfqjIbqOFPUTbNgyKg2ph1GrSRcFBIwI=
+=CAwb
+-----END PGP SIGNATURE-----
+
+--jRHKVT23PllUwdXP--
