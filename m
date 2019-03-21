@@ -1,4 +1,9 @@
-Received: (qmail 17538 invoked by uid 550); 22 Sep 2022 13:04:08 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2908" "Thursday" "21" "March" "2019" "16:31:01" "+0100" "Cedric Buissart" "cbuissar@redhat.com" nil "69" nil "^Date:" nil nil "3" nil nil (number mark "        cbuissar@red Mar 21   69/2908  " thread-indent "\"[oss-security] ghostscript: 2 -dSAFER bypass: CVE-2019-3835 & CVE-2019-3838\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] ghostscript: 2 -dSAFER bypass: CVE-2019-3835 & CVE-2019-3838" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 26297 invoked by uid 550); 21 Mar 2019 15:31:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,80 +11,87 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28023 invoked from network); 22 Sep 2022 12:53:22 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-language:thread-index:content-transfer-encoding
-         :mime-version:message-id:date:subject:to:from:from:to:cc:subject
-         :date;
-        bh=iGdj8UNQt4ttV/Q7+8qfdPWLI5yyHCz66HD3PLD4a88=;
-        b=W6F1wRZC62OXClp7g5xKuDX4ltns6G4SFE3ocZRQqDoWMeZTAk5HXwvysYtGTd8P9o
-         Kxw8c6nU3+6cjoRWJCRmvco5GuNgjlqTEhNCL9F9JPYkxqTLsj6A45eNR59mWW67tTzr
-         zj0l0erYuKzxTrXYZQOxrYKcf92YlILJqVdpwsq6uJ2KpGAhP8KHB+T6VnMBHa9aDl6d
-         KA0FRBQexqenyKmLfp5nJ7lzMYzs46ufJVgMP0s465Q20wvhioi7pQzoEwxA7QxiWP5I
-         X5rtpzaYgQtljd/G/nZsnrVKbt9IAlv1Evjk5/PSyPsHC2lUgXrUjX0b83kplmz+mojW
-         4v4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-language:thread-index:content-transfer-encoding
-         :mime-version:message-id:date:subject:to:from:x-gm-message-state
-         :from:to:cc:subject:date;
-        bh=iGdj8UNQt4ttV/Q7+8qfdPWLI5yyHCz66HD3PLD4a88=;
-        b=2pHSSetfEZOOXarwCc+mejNsObLvRSBQw/L4llvt8T6P5Lmry2n6u8HKxKuyXgQ8h4
-         17amz7cyh4ssobdbECajTY/dD1vQEiri1FxLFKpGVx6pmOmbgjTG4oyOQEurPktx6Mwx
-         8pI7bgrelK2TIbCpDdjX2h2CWdssXGEk7O4Y1z1/wEks/oBf1AJ0UgwCH9i+g8l4q1ds
-         df9m/+QvjvXaKW6bV+lp8yeQegDaHb7JvZqYJKBR5CclmNxzOCLKbo9kYZ5vdztfwdej
-         5ZfjAOo2g4GrziVDvx3doyxDTEBnD9RepAKszeP5YDRJlCj2cBmPVSrPE63xNlC0XB+m
-         NeAQ==
-X-Gm-Message-State: ACrzQf2UlOrNIRDFup+Lb1pHW1juRTWTv1kiIcL/Ub3mgjkC9QaUH7Pl
-	t+YbrxfQXTVOd6a5vXZy+Ak=
-X-Google-Smtp-Source: AMsMyM7AV1z4Yh/e7aUQwskPYQMRwO7tMlsw1m0re9Jz7u/xgXUX3HhlZGOUe0bVoFQvQ4p+pU8zbw==
-X-Received: by 2002:a05:6000:1683:b0:22a:fb88:2f35 with SMTP id y3-20020a056000168300b0022afb882f35mr1952848wrd.656.1663851190853;
-        Thu, 22 Sep 2022 05:53:10 -0700 (PDT)
-From: "Simon Steiner" <simonsteiner1984@gmail.com>
-To: <general@xmlgraphics.apache.org>,
-	<batik-dev@xmlgraphics.apache.org>,
-	<batik-users@xmlgraphics.apache.org>,
-	"'Apache Security Team'" <security@apache.org>,
-	<oss-security@lists.openwall.com>
-Date: Thu, 22 Sep 2022 13:53:09 +0100
-Message-ID: <001401d8ce82$44e04b50$cea0e1f0$@gmail.com>
+Received: (qmail 26279 invoked from network); 21 Mar 2019 15:31:17 -0000
+Message-ID: <20190321153101.GA23870@cbuissar-ltop.localdomain>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AdjOgkRfOJy48O3/Tle4SUVqaa6pZA==
-Content-Language: en-gb
-Subject: [oss-security] [CVE-2022-40146] Apache Batik information disclosure vulnerability
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="MGYHOYXEY6WxJCY8"
+Content-Disposition: inline
+User-Agent: Mutt/1.11.3 (2019-02-01)
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.46]); Thu, 21 Mar 2019 15:31:05 +0000 (UTC)
+Date: Thu, 21 Mar 2019 16:31:01 +0100
+From: Cedric Buissart <cbuissar@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] ghostscript: 2 -dSAFER bypass: CVE-2019-3835 & CVE-2019-3838
+To: oss-security@lists.openwall.com
 
-CVE-2022-40146:
-        Apache Batik information disclosure vulnerability
+--MGYHOYXEY6WxJCY8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Severity:
-        Medium
+Hi,
 
-Vendor:
-        The Apache Software Foundation
-
-Versions Affected:
-        Batik 1.0 - 1.14
-
-Description:
-        Jar url should be blocked by DefaultScriptSecurity
-
-Mitigation:
-        Users should upgrade to Batik 1.15+
-
-Credit:
-        This issue was independently reported by Piotr Bazydlo (@chudypb) of
-Trend Micro Zero Day Initiative
-
-References:
-        http://xmlgraphics.apache.org/security.html
-        https://issues.apache.org/jira/browse/BATIK-1335
-
-The Apache XML Graphics team.
+This is to disclose 2 vulnerabilities in ghostscript (https://ghostscript.com/).
 
 
+1- CVE-2019-3835 ghostscript: superexec operator is available
+
+It was found that the superexec operator was available in the internal dictionary.  A specially crafted PostScript file could use this flaw in order to, for example, have access to the file system outside of the constrains imposed by -dSAFER.
+
+This one is considered particularly Important because it can be easily triggered inside popular Linux PostScript viewers, or embedded in a PDF when read by the `gs` command, and could be used to modify the content of bashrc.
+
+Upstream fixes:
+ * Fix bug 700585: Restrict superexec and remove it from internals and gs_cet.ps
+http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=2055917
+ * Bug 700585: Obliterate "superexec". We don't need it, nor do any known apps.
+http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=d683d1e6
+
+Upstream bug report (currently restricted) : https://bugs.ghostscript.com/show_bug.cgi?id=700585
+
+Note: The only important fix is the second one, d683d1e6, the other one is only a dependency.
+
+To test if you are affected (on recent ghostscript, starting from gs-9.22 [starting from commit 8556b698892]):
+
+$ gs -dSAFER -dNODISPLAY
+GS> 1183615869 internaldict /superexec known { (VULNERABLE\n) } { (SAFE\n) } ifelse print
+
+On versions older than 9.22, this would be sufficient :
+
+GS> /superexec where { (VULNERABLE\n) } { (SAFE\n) } ifelse print
+
+
+
+2- CVE-2019-3838 ghostscript: forceput in DefineResource is still accessible
+
+It was found that the forceput operator could be extracted from the DefineResource method using methods similar to the ones described in CVE-2019-6116. A specially crafted PostScript file could use this flaw in order to, for example, have access to the file system outside of the constrains imposed by -dSAFER.
+
+Upstream bug report (currently restricted) : https://bugs.ghostscript.com/show_bug.cgi?id=700576
+
+Upstream fixes:
+* https://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=ed9fcd95bb01
+* https://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=a82601e8f95a
+
+Don't hesitate to let me know if further information is required
+
+Best regards,
+
+--
+Cedric Buissart
+Red Hat Product Security
+
+--MGYHOYXEY6WxJCY8
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEcBAEBCgAGBQJck641AAoJECISsYvaK7kIcs0H/jN/7wCkI3p6iMiZtQlnUhm6
+eQzmyT1BEDLt3n53isqjlPRTyBCwRfKu4axoo235cjde8hlkUvGVEvcCQeyNEp2t
+/R9GkJw3OgwrY/MdrsnP2eZRuQScihxDjLSwj7ZJ4Z4MB7N16PT65D8nJ4wM/+Ef
+/no4r81tKzirMT0Bo7PrVC5yxkrSHP8r3z1WclJWNANiyg4bxAkQ+DatEOdWV5GE
+87TOAtzMmD0vbS4k2s4Du7iu2d3gjC+WvUe601qr5NbfkGvld0zEM6bERMP4u4vG
+Ff9AOphUT5ePpi7diinniTK3IrwZL14IrdOyqEWmAx9EbbwnRclkFwmWVsQ0DB4=
+=7/Yh
+-----END PGP SIGNATURE-----
+
+--MGYHOYXEY6WxJCY8--
