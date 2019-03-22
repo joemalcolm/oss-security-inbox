@@ -1,111 +1,135 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/11/7
-Message-Id: <E1if0o9-0001dU-9U@xenbits.xenproject.org>
-Date: Wed, 11 Dec 2019 12:09:33 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 308 v3 (CVE-2019-19583) - VMX: VMentry failure with debug exceptions and blocked states
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/22/1
+Message-ID: <20190322182843.GA69604@TC-275.local>
+Date: Fri, 22 Mar 2019 11:28:43 -0700
+From: Aaron Patterson <tenderlove@...y-lang.org>
+To: security@...e.de, rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
+Subject: [CVE-2019-5418] Amendment: Possible Remote Code Execution Exploit in Action View
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+# [CVE-2019-5418] Amendment: Possible Remote Code Execution Exploit in Action View
 
-            Xen Security Advisory CVE-2019-19583 / XSA-308
-                               version 3
+This is an amendment to the previously announced CVE-2019-5418.  There
+is a possible file content disclosure vulnerability in Action View.
+This vulnerability can possibly be used to read the Rails secrets file
+and those secrets can be used to escalate to a remote code execution
+exploit. This vulnerability has been assigned the CVE identifier
+CVE-2019-5418.
 
-     VMX: VMentry failure with debug exceptions and blocked states
+Versions Affected:  All.
+Not affected:       None.
+Fixed Versions:     6.0.0.beta3, 5.2.2.1, 5.1.6.2, 5.0.7.2, 4.2.11.1
 
-UPDATES IN VERSION 3
-====================
+Impact
+------
+There is a possible file content disclosure vulnerability in Action View.
+Specially crafted accept headers in combination with calls to `render file:`
+can cause arbitrary files on the target server to be rendered, disclosing the
+file contents.
 
-Public release.
+This vulnerability can possibly be used to read the Rails secrets file and
+used in combination with other known issues to escalate to a remote code
+execution exploit.
 
-Updated metadata to add 4.13, update StableRef's
+The impact is limited to calls to `render` which render file contents without
+a specified accept format.  Impacted code in a controller looks something like
+this:
 
-ISSUE DESCRIPTION
-=================
+```
+class UserController < ApplicationController
+  def index
+    render file: "#{Rails.root}/some/file"
+  end
+end
+```
 
-Please see XSA-260 for background on the MovSS shadow:
-  http://xenbits.xen.org/xsa/advisory-260.html
+Rendering templates as opposed to files is not impacted by this vulnerability.
 
-Please see XSA-156 for background on the need for #DB interception:
-  http://xenbits.xen.org/xsa/advisory-156.html
+All users running an affected release should either upgrade or use one of the
+workarounds immediately.
 
-The VMX VMEntry checks does not like the exact combination of state
-which occurs when #DB in intercepted, Single Stepping is active, and
-blocked by STI/MovSS is active, despite this being a legitimate state to
-be in.  The resulting VMEntry failure is fatal to the guest.
+Releases
+--------
+The 6.0.0.beta3, 5.2.2.1, 5.1.6.2, 5.0.7.2, and 4.2.11.1 releases are
+available at the normal locations.
 
-IMPACT
-======
+Workarounds
+-----------
+This vulnerability can be mitigated by specifying a format for file rendering,
+like this:
 
-HVM/PVH guest userspace code may be able to crash the guest, resulting
-in a guest Denial of Service.
+```
+class UserController < ApplicationController
+  def index
+    render file: "#{Rails.root}/some/file", formats: [:html]
+  end
+end
+```
 
-VULNERABLE SYSTEMS
-==================
+In summary, impacted calls to `render` look like this:
 
-All versions of Xen are affected.
+```
+render file: "#{Rails.root}/some/file"
+```
 
-Only systems supporting VMX hardware virtual extensions (Intel, Cyrix or
-Zhaoxin CPUs) are affected. Arm and AMD systems are unaffected.
+The vulnerability can be mitigated by changing to this:
 
-Only HVM/PVH guests are affected.  PV guests cannot leverage the
-vulnerability.
+```
+render file: "#{Rails.root}/some/file", formats: [:html]
+```
 
-MITIGATION
-==========
+Other calls to `render` are not impacted.
 
-Running only PV guests will avoid this vulnerability.
+Alternatively, the following monkey patch can be applied in an initializer:
 
-Running HVM guests on only AMD hardware will also avoid this
-vulnerability.
+```
+$ cat config/initializers/formats_filter.rb
+# frozen_string_literal: true
 
-CREDITS
-=======
+ActionDispatch::Request.prepend(Module.new do
+  def formats
+    super().select do |format|
+      format.symbol || format.ref == "*/*"
+    end
+  end
+end)
+```
 
-This issue was discovered by Håkon Alstadheim and diagnosed as a
-security issue by Andrew Cooper of Citrix.
+Patches
+-------
+To aid users who aren't able to upgrade immediately we have provided patches for
+the two supported release series. They are in git-am format and consist of a
+single changeset.
 
-RESOLUTION
-==========
+* 6-0-action-view-file-disclosure.patch - Patch for 6.0 series
+* 5-2-action-view-file-disclosure.patch - Patch for 5.2 series
+* 5-1-action-view-file-disclosure.patch - Patch for 5.1 series
+* 5-0-action-view-file-disclosure.patch - Patch for 5.0 series
+* 4-2-action-view-file-disclosure.patch - Patch for 4.2 series
 
-Applying the attached patch resolves this issue.
+Please note that only the 5.2.x, 5.1.x, 5.0.x, and 4.2.x series are supported
+at present. Users of earlier unsupported releases are advised to upgrade as
+soon as possible as we cannot guarantee the continued availability of security
+fixes for unsupported releases.
 
-xsa308.patch           xen-unstable, Xen 4.13.x .. Xen 4.8.x
+Also note that the patches for this vulnerability are the same as CVE-2019-5419.
 
-$ sha256sum xsa308*
-4aa06d21478d9debb12388ff14d8abc31982e18895db40d0cec78fcc9fe68ef2  xsa308.meta
-7e782b09b16f7534c8db52042f7bb3bd730d108571c8b10af184ae0b02fdae9d  xsa308.patch
-$
+Credits
+-------
+Thanks to John Hawthorn <john@...thorn.email> of GitHub
 
-DEPLOYMENT DURING EMBARGO
-=========================
+-- 
+Aaron Patterson
+http://tenderlovemaking.com/
 
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
+View attachment "4-2-action-view-file-disclosure.patch" of type "text/plain" (4299 bytes)
 
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
+View attachment "5-0-action-view-file-disclosure.patch" of type "text/plain" (3713 bytes)
 
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
------BEGIN PGP SIGNATURE-----
+View attachment "5-1-action-view-file-disclosure.patch" of type "text/plain" (3713 bytes)
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl3w3FsMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZWHwIAIfuiZE/IyxMwTAkZL3EugBnlxxHodoBuj6imn+n
-c9DvMk3TCi3vSgvZQtVpP0eNuuLN5285hVyI95lRE0LTmtRLc7jATktStRTgGkua
-znW8U1sqkVRWJcVuN4uAM2zIY60pMZnFjZxdJW12+wpcA13LInE1cDWnlRv+cdD9
-7DtVkGUWXjfbcm3KXGZw8YpKvTgVp983VpywR/1lzXZ+MexWzKuEco8fZFayw0ne
-3nT/23Y1ofjCflNFjc7HoeJZl+zy493J/rqHS8yYI3d4vTdIfjue3rZ/X6305el9
-zjCG5zXygrWVAoKGWVnPZweX1jw8rd6BlsPTqQb53UH94zc=
-=yTxW
------END PGP SIGNATURE-----
+View attachment "5-2-action-view-file-disclosure.patch" of type "text/plain" (3713 bytes)
 
-Download attachment "xsa308.meta" of type "application/octet-stream" (1941 bytes)
+View attachment "6-0-action-view-file-disclosure.patch" of type "text/plain" (3732 bytes)
 
-Download attachment "xsa308.patch" of type "application/octet-stream" (3245 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
