@@ -1,58 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/13/9
-Message-ID: <CAOp4FwQjDa6+c7HsF94At4Azj4aeyEouOO_AW8jk2iZ4hjwrOA@mail.gmail.com>
-Date: Wed, 13 Feb 2019 13:06:01 +0400
-From: Loganaden Velvindron <loganaden@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/23/1
+Message-ID: <CAPNiXbEebqXnrqodz2P6h0=_jFZGHTUXRR2Ps7umzaE=Y6nmFA@mail.gmail.com>
+Date: Sat, 23 Mar 2019 14:58:41 +0100
+From: Alex R <alexr@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>, Aleksa Sarai <cyphar@...har.com>, dev@...ncontainers.org,  Christian Brauner <christian.brauner@...ntu.com>
-Subject: Re: CVE-2019-5736: runc container breakout (all versions)
+Subject: CVE-2019-0204: Some Mesos components can be overwritten making arbitrary code execution possible.
 Content-Type: text/plain; charset=utf-8
 
-I think that someone already posted a PoC on github, AFAIK.
+Severity: Important
 
-On Wed, Feb 13, 2019 at 1:04 PM Aleksa Sarai <asarai@...e.de> wrote:
+Vendor:
+The Apache Software Foundation
 
-> On 2019-02-12, Solar Designer <solar@...nwall.com> wrote:
-> >  static int proc_exe_link(struct dentry *dentry, struct path *exe_path)
-> >  {
-> >         struct task_struct *task;
-> > @@ -1628,10 +1780,15 @@ static int proc_exe_link(struct dentry *dentry,
-> > struct path *exe_path)
-> >         exe_file = get_task_exe_file(task);
-> >         put_task_struct(task);
-> >         if (exe_file) {
-> > -               *exe_path = exe_file->f_path;
-> > -               path_get(&exe_file->f_path);
-> > +               int result;
-> > +
-> > +               result = path_in_ve(&exe_file->f_path);
-> > +               if (result == 0) {
-> > +                       *exe_path = exe_file->f_path;
-> > +                       path_get(&exe_file->f_path);
-> > +               }
-> >                 fput(exe_file);
-> > -               return 0;
-> > +               return result;
-> >         } else
-> >                 return -ENOENT;
-> >  }
-> > ---
-> >
-> > This uses Virtuozzo/OpenVZ specific APIs, so won't be directly usable
-> > elsewhere, but maybe a similar approach could be used upstream?
->
-> I have just sent v5 of my AT_THIS_ROOT patchset to LKML[1] -- which
-> allows userspace processes to block resolution of magic links. While
-> blocking access through /proc/self/exe helps block this issues, being
-> able to block (from userspace) resolution of all magic links would
-> massively help avoid problems like this.
->
-> [1]: https://marc.info/?l=linux-api&m=155002737629350&w=2
->
-> --
-> Aleksa Sarai
-> Senior Software Engineer (Containers)
-> SUSE Linux GmbH
-> <https://www.cyphar.com/>
->
+Versions Affected:
+Apache Mesos 1.4.0 to 1.7.0
+The unsupported Apache Mesos pre-1.4.0 releases may be also affected.
+
+Description:
+A specifically crafted Docker image running under the root user can
+overwrite the init helper binary of the Mesos container runtime and/or
+the Mesos command executor. A malicious actor can therefore gain
+root-level code execution on the host.
+
+Mitigation:
+1.4.x users should upgrade to 1.4.3
+1.5.x users should upgrade to 1.5.3
+1.6.x users should upgrade to 1.6.2
+1.7.x users should upgrade to 1.7.2
+1.8-dev users should obtain Mesos 1.8.0 or latest snapshot of 1.8-dev
+
+Credit:
+This issue was discovered by Gilbert Song and Jie Yu based on similar RunC
+vulnerability report, CVE-2019-5736.
+
+Alex on behalf of Mesos PMC
 
