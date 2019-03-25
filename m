@@ -1,47 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/06/4
-Message-ID: <20190206094102.11bb7daa@computer>
-Date: Wed, 6 Feb 2019 09:41:02 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: Alex Gaynor <alex.gaynor@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Notes on fuzzing ImageMagick and GraphicsMagick
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/25/2
+Message-Id: <52014961-3705-48F7-9EAB-0E3E612BC655@beckweb.net>
+Date: Mon, 25 Mar 2019 17:17:44 +0100
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 5 Feb 2019 17:28:03 -0500
-Alex Gaynor <alex.gaynor@...il.com> wrote:
-
-> Both ImageMagick and GraphicsMagick had been widely fuzzed and audited
-> before
-> this. Hanno Böck [#]_ observed: "In the past it was pretty easy to
-> bugs in
-> imagemagick, but after some review by Google most of them have been
-> fixed and
-> these days there are at least no more trivial to find fuzzing issues."
-
-Even though you had a disclaimer I feel I want to give a short answer.
-That quote probably comes from a page that I removed a while ago and
-now says " I'm no longer maintaining this list, as it was extremely
-outdated."
-
-It's at least 3 years old and back then we were in a state where you
-could pick a random command line tool, run afl+asan against it and
-crashes would fall out within seconds.
-My intent back then was to establish some baseline robustness, so take
-my words there as "it's not that easy any more to find bugs in IM/GM
-within very short timeframes and very simple methods". Which I guess is
-still true and not in contradiction that with more involved methods
-you'll find more.
 
 
-These days my remaining worries about fuzzing-related bugs are
-primarily targets that don't fit into the libfuzzer/oss-fuzz framework,
-e.g. networking-software that has no easy way to abstract their parser
-code into a function call.
+> On 25. Mar 2019, at 16:09, Daniel Beck <ml@...kweb.net> wrote:
+> 
+> SECURITY-976
+> Notification Plugin Plugin did not perform permission checks on a method 
+> implementing form validation. This allowed users with Overall/Read access 
+> to Jenkins to connect to an attacker-specified URL using attacker-specified 
+> credentials IDs obtained through another method, capturing credentials 
+> stored in Jenkins.
+> 
+> Additionally, this form validation method did not require POST requests, 
+> resulting in a cross-site request forgery vulnerability.
 
--- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+Correction: This is about Slack Notification Plugin.
