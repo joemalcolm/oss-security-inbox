@@ -1,42 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/22/16
-Message-ID: <76ba070a-286d-c15d-d01d-4c30d183402d@nebelwelt.net>
-Date: Thu, 22 Aug 2019 16:00:15 -0400
-From: Mathias Payer <mathias.payer@...elwelt.net>
-To: oss-security@...ts.openwall.com, Eddie Chapman <eddie@...k.net>
-Subject: Re: Linux kernel: multiple vulnerabilities in the USB subsystem x2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/26/2
+Message-ID: <CAMufup6J2t4fA1ffPKTqBJvSmqbJbdUxPtbcUS1faVU_NthnvQ@mail.gmail.com>
+Date: Tue, 26 Mar 2019 22:43:09 +0100
+From: Juan Pablo Santos Rodríguez <juanpablo@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: [CVE-2019-0225] Apache JSPWiki Local File Inclusion (limited ROOT folder) vulnerability leads to user information disclosure
 Content-Type: text/plain; charset=utf-8
 
+[CVEID]:CVE-2019-0225
+[PRODUCT]:Apache JSPWiki
+[VERSION]:Apache JSPWiki 2.9.0 to 2.11.0.M2
+[PROBLEMTYPE]:Local File Inclusion (limited ROOT folder) vulnerability
+leads to user information disclosure
+[REFERENCES]:https://jspwiki-wiki.apache.org/Wiki.jsp?page=CVE-2019-0225
+[DESCRIPTION]: A specially crafted url could be used to access files under
+the ROOT directory of the application on Apache JSPWiki, which could be
+used by an attacker to obtain registered users' details.
 
-
-On 8/22/19 3:33 PM, Eddie Chapman wrote:
-> On 22/08/2019 20:00, Perry E. Metzger wrote:
->> You can argue anything you like. Power charging points have popped up
->> around the world, and you're not in a position to stop
->> them. Furthermore, I'll note that over the air exploitable bugs in
->> things like WiFi stacks and Bluetooth stacks have also appeared over
->> time; perhaps it's foolish to have your phone on at all, and yet
->> people will continue to turn their phones on, and even to use them.
->>
->> Perry
-> 
-> Well, I certainly am not deluded enough to think I have the power to stop power
-> charging points popping up everywhere :-) Or to stop people making mistakes.
-> Just because something is possible and everyone else does it doesn't make
-> something less stupid.
-
-I would also like to point out the availability of USB-over-Ethernet and
-USB-over-IP [1] that exposes such endpoints to the network. Especially in data
-centers where KVMs are virtualized, such systems seem to be commonly used.
-
-Considering that USB can be routed over networks (with extensions/additional
-hardware), these bugs should also be evaluated under a different angle.
-
-Cheers,
-Mathias
-
-[1] https://www.newegg.com/p/pl?d=usb+over+ip
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
