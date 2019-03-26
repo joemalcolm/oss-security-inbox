@@ -1,36 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/31/7
-Message-ID: <65fba71e1eb02e277f02de7549614237f977c11c.camel@powerdns.com>
-Date: Thu, 31 Oct 2019 09:13:31 +0100
-From: Peter van Dijk <peter.van.dijk@...erdns.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/26/1
+Message-ID: <CAMufup7EbK05JeNsHsCv-XJY-33bXLZO_3bLGQNvK3mT_QOJyg@mail.gmail.com>
+Date: Tue, 26 Mar 2019 22:41:29 +0100
+From: Juan Pablo Santos Rodríguez <juanpablo.santos@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Python-3.5.8.tar.xz does NOT contain the fix for bpo-38243
+Subject: [CVE-2019-0224] Apache JSPWiki Cross-site scripting vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Python 3.5.8 is supposed to contain a fix for bpo-38243, as mentioned
-> at 
-> https://docs.python.org/3.5/whatsnew/changelog.html#python-3-5-8-final
-> 
-> It turns out python.org has accidentally shipped 3.5.8 without that
-> fix, if you pick tar.xz instead of .tgz. Please find attached the email
-> I have sent them.
-> 
-> I'm reporting this to oss-security so that no downstream distributors
-> accidentally ship the wrong 3.5.8. I have also reported it directly to
-> FreeBSD at https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=241586 as
-> they are the only distribution I could think of that still actually
-> ship vanilla Python 3.5.
-
-Reply from the Python project:
-
-Thanks for the heads-up.  During the 3.5.8 release process, I actually generated the tarball multiple times, and although I never officially released these previous versions, somehow the CDN latched onto this one .xz file from one of these test versions.  As you note, the MD5 sum and file size on the release page were correct for the final version; also, the v3.5.8 tag in the Git repo and the GPG checksum file also match this final (correct) version.
-
-Still, it's a messy situation.  Fedora has already updated to 3.5.8, and they got the tarball without the fix for bpo-38243.
-
-As you suggest, the best way to ameliorate this debacle is to just release a 3.5.9.  I'll do that in the next day or so.  In the meantime I'll send a quick note to the clp newsgroups.
-
-Kind regards,
--- 
-Peter van Dijk
-PowerDNS.COM BV - https://www.powerdns.com/
+[CVEID]:CVE-2019-0224
+[PRODUCT]:Apache JSPWiki
+[VERSION]:Apache JSPWiki 2.9.0 to 2.11.0.M2
+[PROBLEMTYPE]:Cross-site scripting vulnerability
+[REFERENCES]:https://jspwiki-wiki.apache.org/Wiki.jsp?page=CVE-2019-0224
+[DESCRIPTION]: A carefully crafted URL could execute javascript on another
+user's session. No information could be saved on the server or jspwiki
+database, nor would an attacker be able to execute js on someone else's
+browser; only on it's own browser.
 
