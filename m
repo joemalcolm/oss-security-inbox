@@ -1,4 +1,9 @@
-Received: (qmail 20398 invoked by uid 550); 14 Nov 2022 15:36:36 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["901" "Wednesday" "27" "March" "2019" "13:05:04" "-0400" "Josh Elser" "elserj@apache.org" nil "20" nil nil nil nil "3" nil nil (number mark "U       elserj@apach Mar 27   20/901   " thread-indent "\"[oss-security] [CVE-2019-0212] Apache HBase REST Server incorrect user authorization\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2019-0212] Apache HBase REST Server incorrect user authorization" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 26454 invoked by uid 550); 27 Mar 2019 17:09:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,44 +12,36 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7601 invoked from network); 14 Nov 2022 15:26:59 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Rob Vesse <rvesse@apache.org>
+Received: (qmail 22198 invoked from network); 27 Mar 2019 17:05:20 -0000
 To: oss-security@lists.openwall.com
-Message-ID: <f504671e-250d-f954-4f7b-39439e2cd429@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 14 Nov 2022 15:26:45 +0000
+From: Josh Elser <elserj@apache.org>
+Message-ID: <8f894e4f-533f-07e1-085e-06f41106ac0d@apache.org>
+Date: Wed, 27 Mar 2019 13:05:04 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:66.0)
+ Gecko/20100101 Thunderbird/66.0
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2022-45136: JDBC Deserialisation in Apache Jena SDB 
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] [CVE-2019-0212] Apache HBase REST Server incorrect user authorization
 
-Severity: low
+CVE-2019-0212: HBase REST Server incorrect user authorization
 
-Description:
+Description: In all previously released Apache HBase 2.x versions, 
+authorization was incorrectly applied to users of the HBase REST server. 
+Requests sent to the HBase REST server were executed with the 
+permissions of the REST server itself, not with the permissions of the 
+end-user. This issue is only relevant when HBase is configured with 
+Kerberos authentication, HBase authorization is enabled, and the REST 
+server is configured with SPNEGO authentication. This issue does not 
+extend beyond the HBase REST server.
 
-** UNSUPPORTED WHEN ASSIGNED ** Apache Jena SDB 3.17.0 and earlier is vulne=
-rable to a JDBC Deserialisation attack if the attacker is able to control t=
-he JDBC URL used or cause the underlying database server to return maliciou=
-s data.  The mySQL JDBC driver in particular is known to be vulnerable to t=
-his class of attack.  As a result an application using Apache Jena SDB can =
-be subject to RCE when connected to a malicious database server.
+Versions affected: 2.0.0-2.0.4, 2.1.0-2.1.3
 
-Apache Jena SDB has been EOL since December 2020 and users should migrate t=
-o alternative options e.g. Apache Jena TDB 2.
+Mitigation: Stop the HBase REST server until your installation is 
+upgraded to HBase 2.0.5, 2.1.4, or any other later release. Upon 
+upgrading to a newer version, no other action is required.
 
-Mitigation:
+Credit: This issue was discovered by Gaurav Kanade
 
-Apache Jena SDB has been EOL since December 2020, users should migrate to a=
-lternative options from the Apache Jena project e.g. Apache Jena TDB 2 or f=
-rom 3rd party vendors.
-
-
-Users utilising Apache Jena SDB with mySQL should ensure they explicitly se=
-t autoDeserialize=3Dfalse on their JDBC connection strings.  It is also rec=
-ommended that users ensure that any ability to set the JDBC connection stri=
-ng is limited to appropriate users.
-
-Credit:
-
-Apache Jena would like to thank Crilwa & LaNyer640 for reporting this issue
-
+- The Apache HBase PMC
