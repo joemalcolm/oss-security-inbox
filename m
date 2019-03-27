@@ -1,34 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/03/3
-Message-ID: <20191203151205.GA5296@thinkstation>
-Date: Tue, 3 Dec 2019 07:12:05 -0800
-From: Tavis Ormandy <taviso@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/27/3
+Message-ID: <8f894e4f-533f-07e1-085e-06f41106ac0d@apache.org>
+Date: Wed, 27 Mar 2019 13:05:04 -0400
+From: Josh Elser <elserj@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: virtual consoles
+Subject: [CVE-2019-0212] Apache HBase REST Server incorrect user authorization
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Dec 03, 2019 at 12:34:14PM +0000, Simon McVittie wrote:
-> On Mon, 02 Dec 2019 at 08:56:38 -0800, Tavis Ormandy wrote:
-> > unprivileged users can start a new X server and switch virtual
-> > console, even over ssh.
-> > 
-> > e.g.
-> > 
-> > $ dbus-send --system --print-reply --dest=org.freedesktop.login1 /org/freedesktop/login1/seat/seat0 org.freedesktop.login1.Seat.SwitchTo uint32:2
-> 
-> If a uid who is not already the owner of the current VT on the seat can
-> do this, then that's probably a bug? If you think so, please report it
-> to the maintainers of logind (which is the component that would have to
-> change to address this).
-> 
+CVE-2019-0212: HBase REST Server incorrect user authorization
 
-I sent a mail to the systemd-security list, maybe they'll agree and just
-change it.
+Description: In all previously released Apache HBase 2.x versions, 
+authorization was incorrectly applied to users of the HBase REST server. 
+Requests sent to the HBase REST server were executed with the 
+permissions of the REST server itself, not with the permissions of the 
+end-user. This issue is only relevant when HBase is configured with 
+Kerberos authentication, HBase authorization is enabled, and the REST 
+server is configured with SPNEGO authentication. This issue does not 
+extend beyond the HBase REST server.
 
-Tavis.
+Versions affected: 2.0.0-2.0.4, 2.1.0-2.1.3
 
+Mitigation: Stop the HBase REST server until your installation is 
+upgraded to HBase 2.0.5, 2.1.4, or any other later release. Upon 
+upgrading to a newer version, no other action is required.
 
--- 
--------------------------------------
-taviso@....lonestar.org | finger me for my pgp key.
--------------------------------------------------------
+Credit: This issue was discovered by Gaurav Kanade
+
+- The Apache HBase PMC
