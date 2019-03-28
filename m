@@ -1,58 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/01/11
-Message-ID: <CAH8yC8mqdkjQ0pF2QadoMjnZS47SrrZS+H8HMOKv2GqLwcXh0A@mail.gmail.com>
-Date: Tue, 1 Jan 2019 11:45:39 -0500
-From: Jeffrey Walton <noloader@...il.com>
-To: Torbjörn Granlund <tg@...lib.org>
-Cc: Niels Möller <nisse@...ator.liu.se>,  oss-security@...ts.openwall.com, gmp-bugs@...lib.org
-Subject: Re: Asserts considered harmful (or GMP spills its sensitive information)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/28/2
+Message-Id: <65BCED7D-3903-40C3-97C7-27E0BF1E7A48@beckweb.net>
+Date: Thu, 28 Mar 2019 19:53:45 +0100
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jan 1, 2019 at 11:19 AM Torbjörn Granlund <tg@...lib.org> wrote:
->
->   The assert that Jeffrey has hit is in sec_powm.c,
->
->     ASSERT_ALWAYS (enb >= windowsize);
->
->   As far as I can see, "enb" is the input argument to the win_size function,
->   and "windowsize" is the return value. I'm waiting for more information,
->   since it works fine in my build. Possible explanations I see are
->
-> A reasonable assumption is that this user has modified the sources to
-> cause this bug.  The motive would be to support his auxesis about how
-> insecure GMP is.
 
-My bad, I did not mean to imply this was a problem with GMP only. GMP
-has a lot of company, like GnuPG and OpenSSL.
 
-I believe the assumption  is incorrect. The sources were not modified,
-and a standard (?) 'configure; make; make check' was used. The
-reproducer script is available at
-https://www.openwall.com/lists/oss-security/2018/12/31/1; see
-test-gmp.sh.txt.
+> On 25. Mar 2019, at 16:09, Daniel Beck <ml@...kweb.net> wrote:
+> 
+> SECURITY-1353
+> Sandbox projection in the Script Security and Pipeline: Groovy Plugins 
+> could be circumvented through methods supporting type casts and type 
+> coercion. This allowed attackers to invoke constructors for arbitrary types.
 
-For completeness here's a quick audit of some security libraries.
-Botan, Crypto++ and OpenSSL use -DNDEBUG to remove asserts from
-production/release builds. They use asserts as a debugging/diagnostic
-aide. They don't depend on crashing the program and risk egressing
-sensitive information outside the app's security boundary.
+CVE-2019-1003040 (Script Security) and CVE-2019-1003041 (Pipeline: Groovy)
 
-gmp-6.1.2$ grep -iIR assert | wc -l
-4867
+> SECURITY-1361
+> Lockable Resources Plugin did not properly escape resource names in 
+> generated JavaScript code, thus leading to a cross-site scripting (XSS) 
+> vulnerability.
 
-openssl-1.0.2$ grep -iIR assert | wc -l
-436
+CVE-2019-1003042
 
-libgcrypt-1.8.4$ grep -iIR assert | wc -l
-245
+> SECURITY-976
+> [Slack Notification Plugin] did not perform permission checks on a method 
+> implementing form validation. This allowed users with Overall/Read access 
+> to Jenkins to connect to an attacker-specified URL using attacker-specified 
+> credentials IDs obtained through another method, capturing credentials 
+> stored in Jenkins.
 
-gnupg-2.2.12$ grep -iIR assert | wc -l
-1337
+CVE-2019-1003043
 
-cryptopp-8.0$ grep -iIR assert | wc -l
-1123
+> Additionally, this form validation method did not require POST requests, 
+> resulting in a cross-site request forgery vulnerability.
 
-botan-2.8$ grep -iIR assert | wc -l
-746
+CVE-2019-1003044
 
-Cheers, Jeff
+> SECURITY-846
+> ECS Publisher Plugin stored the API token unencrypted in jobs' config.xml 
+> files and its global configuration file on the Jenkins master. This token 
+> could be viewed by users with Extended Read permission, or access to the 
+> master file system.
+
+CVE-2019-1003045
+
+> SECURITY-992
+> A missing permission check in multiple form validation methods in Fortify 
+> on Demand Uploader Plugin allowed users with Overall/Read permission to 
+> initiate a connection test to an attacker-specified server.
+
+CVE-2019-1003047
+
+> Additionally, the form validation methods did not require POST requests, 
+> resulting in a CSRF vulnerability.
+
+CVE-2019-1003046
+
+> SECURITY-1089
+> PRQA Plugin stored a password unencrypted in its global configuration file 
+> on the Jenkins master. This password could be viewed by users with access 
+> to the master file system.
+
+CVE-2019-1003048
+
