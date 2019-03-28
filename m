@@ -1,120 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/21/1
-Message-Id: <7B09DDF8-2678-443F-B772-BC381D47D093@beckweb.net>
-Date: Thu, 21 Nov 2019 15:06:02 +0100
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/28/1
+Message-ID: <4a7ddc8e-8dd0-8762-2b6e-db45f04ec6e2@open-xchange.com>
+Date: Thu, 28 Mar 2019 13:42:13 +0200
+From: Aki Tuomi <aki.tuomi@...ecot.fi>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins plugins
+Subject: CVE-2019-7524: Buffer overflow when reading extension header from dovecot index files
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software. The following
-releases contain fixes for security vulnerabilities:
+Dear subscribers,
 
-* Anchore Container Image Scanner Plugin 1.0.20
-* Google Compute Engine Plugin 4.2.0
-* JIRA Plugin 3.0.11
-* QMetry for JIRA - Test Management Plugin 1.13
-* Script Security Plugin 1.68
-* Spira Importer Plugin 3.2.3
-* Support Core Plugin 2.64
+we're sharing our latest advisory with you and would like to thank
+everyone who contributed in finding and solving those vulnerabilities.
+Feel free to join our bug bounty programs (open-xchange, dovecot,
+powerdns) at HackerOne. Please find patches for v2.2.36 and v2.3.5 attached,
+or download new version.
 
-Additionally, we announce unresolved security issues in the following
-plugins:
+Yours sincerely,
+Aki Tuomi
+Open-Xchange Oy
 
-* QMetry for JIRA - Test Management Plugin
+Product: Dovecot
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2019-11-21/
+Vendor: OX Software GmbH
+ 
+Internal reference: DOV-2964 (Bug ID)
+Vulnerability type: CWE-120
+Vulnerable version: 2.0.14 - 2.3.5
+Vulnerable component: fts, pop3-uidl-plugin
+Report confidence: Confirmed
+Researcher credits: Found in internal testing
+Solution status: Fixed by Vendor
+Fixed version: 2.3.5.1, 2.2.36.3
+Vendor notification: 2019-02-05
+Solution date: 2019-03-21
+Public disclosure: 2019-03-28
+CVE reference: CVE-2019-7524
+CVSS: 3.0/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H/E:P/RL:O/RC:C (8.8)
+ 
+Vulnerability Details:
+When reading FTS or POP3-UIDL header from dovecot index, the input
+buffer size is not bound, and data is copied to target structure causing
+stack overflow.
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+Risk:
+This can be used for local root privilege escalation or executing
+arbitrary code in dovecot process context. This requires ability to
+directly modify dovecot indexes.
+Steps to reproduce:
+Produce dovecot.index.log entry that creates an FTS header which has
+more than 12 bytes of data.
+Trigger dovecot indexer-worker or run doveadm index.
+Dovecot will crash.
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
+Mitigations:
+Since 2.3.0 dovecot has been compiled with stack smash protection, ASLR,
+read-only GOT tables and other techniques that make exploiting this bug
+much harder.
 
----
+Solution:
+Operators should update to the latest Patch Release. The only workaround
+is to disable FTS and pop3-uidl plugin.
 
-SECURITY-1658 / CVE-2019-16538
-Sandbox protection in Script Security Plugin could be circumvented through 
-closure default parameter expressions.
+Please find attached patches for 2.2.36 and 2.3.5.
 
-This allowed attackers able to specify and run sandboxed scripts to 
-execute arbitrary code in the context of the Jenkins master JVM.
+Download attachment "dovecot-2.3.5-cve-2019-7524.tgz" of type "application/x-compressed-tar" (988 bytes)
 
+Download attachment "dovecot-2.2.36-cve-2019-7524.tgz" of type "application/x-compressed-tar" (989 bytes)
 
-SECURITY-1634 / CVE-2019-16539 (permission check), CVE-2019-16540 (path traversal)
-Support Core Plugin did not validate the paths submitted for the "Delete 
-Support Bundles" feature. This allowed users to delete arbitrary files on 
-the Jenkins master file system accessible to the OS user account running 
-Jenkins.
-
-Additionally, this endpoint did not perform a permission check, allowing 
-users with Overall/Read permission to delete support bundles, and any 
-arbitrary other file, with a known name/path.
-
-
-SECURITY-1106 / CVE-2019-16541
-JIRA Plugin allows the definition of per-folder Jira sites.
-
-The credentials lookup for this feature did not set the appropriate 
-context, allowing the use of System-scoped credentials otherwise reserved 
-for use in the global configuration. This allowed users with Item/Configure
-permission on the folder to access credentials they’re not entitled to, 
-and potentially capture them.
-
-
-SECURITY-1539 / CVE-2019-16542
-Anchore Container Image Scanner Plugin stored an Anchore.io service 
-password unencrypted in job config.xml files as part of its configuration. 
-This credential could be viewed by users with Extended Read permission or 
-access to the master file system.
-
-
-SECURITY-1554 / CVE-2019-16543
-Spira Importer Plugin stored a credential unencrypted in its global 
-configuration file com.inflectra.spiratest.plugins.SpiraBuilder.xml on the 
-Jenkins master. This credential could be viewed by users with access to 
-the master file system.
-
-
-SECURITY-1584 / CVE-2019-16546
-Google Compute Engine Plugin did not use SSH host key verification when 
-connecting to VMs launched by the plugin. This lack of verification could 
-be abused by a MitM attacker to intercept these connections to 
-attacker-specified build agents without warning.
-
-
-SECURITY-1585 / CVE-2019-16547
-Google Compute Engine Plugin did not verify permissions on multiple 
-auto-complete API endpoints. This allowed users with Overall/Read 
-permissions to view various metadata about the running cloud environment.
-
-
-SECURITY-1586 / CVE-2019-16548
-Google Compute Engine Plugin did not require POST requests on an API 
-endpoint. This CSRF vulnerability allowed attackers to provision new 
-agents.
-
-
-SECURITY-727 (1) / CVE-2019-16544
-QMetry for JIRA - Test Management Plugin stored credentials unencrypted in 
-job config.xml files on the Jenkins master as part of its post-build step 
-configuration. This credential could be viewed by users with Extended Read 
-permission or access to the master file system.
-
-
-SECURITY-727 (2) / CVE-2019-16545
-QMetry for JIRA - Test Management Plugin stores a credential as part of 
-its post-build step configuration.
-
-While the password is stored encrypted on disk since QMetry for JIRA - 
-Test Management Plugin 1.13, it is transmitted in plain text as part of 
-the configuration form. This can result in exposure of the password 
-through browser extensions, cross-site scripting vulnerabilities, and 
-similar situations.
-
-As of publication of this advisory, there is no fix.
-
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
