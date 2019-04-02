@@ -1,30 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/03/2
-Message-ID: <668237346.17178030.1554294590342.JavaMail.zimbra@redhat.com>
-Date: Wed, 3 Apr 2019 08:29:50 -0400 (EDT)
-From: Vladis Dronov <vdronov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/02/4
+Message-ID: <1554168687.VKNZOQAY@httpd.apache.org>
+Date: Mon, 01 Apr 2019 20:31:27 -0500
+From: Daniel Ruggeri <druggeri@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2019-3837: RHEL6: memory leak in tcp_recvmsg() with NET_DMA
+Subject: CVE-2019-0215: mod_ssl access control bypass
 Content-Type: text/plain; charset=utf-8
 
-Heololo,
 
-It was found that the net_dma code in tcp_recvmsg() in the RHEL6 kernel is
-thread-unsafe. So an unprivileged multi-threaded userspace application
-calling recvmsg() for the same network socket in parallel executed on
-ioatdma-enabled hardware with net_dma enabled can leak the memory,
-crash the host leading to a denial-of-service, or cause a random memory
-corruption.
+CVE-2019-0215: mod_ssl access control bypass
 
-This flaw was assigned an id of CVE-2019-3837.
+Severity: Important
 
-net_dma was disabled in the upstream Linux kernel since v3.13-rc5 by
-the 77873803363c "net_dma: mark broken" and then completely removed
-by the 7bced397510a "net_dma: simple removal".
+Vendor: The Apache Software Foundation
 
-So this flaw affects RHEL-6 only and any (LTS) Linux kernel (of any
-distribution) which has not backported the net_dma disabling commits
-mentioned above.
+Versions Affected:
+httpd 2.4.27 to 2.4.38
 
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security | Senior Software Engineer
+Description:
+In Apache HTTP Server 2.4 releases 2.4.37 and 2.4.38, a
+bug in mod_ssl when using per-location client certificate
+verification with TLSv1.3 allowed a client to bypass
+configured access control restrictions.
+               
+Mitigation:
+This issue can be mitigated by disabling the TLSv1.3 protocol for a
+VirtualHost which requires per-location or per-directory client
+certificate authentication.
+
+Credit:
+The issue was discovered by Michael Kaufmann.
+
+References:
+https://httpd.apache.org/security/vulnerabilities_24.html
+
