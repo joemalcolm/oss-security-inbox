@@ -1,50 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/08/10
-Message-ID: <20190108152627.GA19359@kroah.com>
-Date: Tue, 8 Jan 2019 16:26:27 +0100
-From: Greg KH <gregkh@...uxfoundation.org>
-To: Entropy Moe <3ntr0py1337@...il.com>
-Cc: security@...nel.org, oss-security@...ts.openwall.com
-Subject: Re: Linux Kernel 4.20(21) deadlock vulnerability.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/02/2
+Message-ID: <1554168684.JAZHRVAC@httpd.apache.org>
+Date: Mon, 01 Apr 2019 20:31:24 -0500
+From: Daniel Ruggeri <druggeri@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2019-0197: mod_http2, possible crash on late upgrade
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jan 08, 2019 at 07:08:14PM +0400, Entropy Moe wrote:
-> Hello,
-> I wanted to let you know that there seem to be a deadlock vulnerability on
-> the linux kernel 4.20.
-> I am attaching the result report from syzkaller which also got the c code
-> for replication.
-> 
-> thank you,
 
-> Syzkaller hit 'possible deadlock in console_unlock' bug.
-> 
-> RBP: 00000000006cb018 R08: 0000000000000001 R09: 0000000000000031
-> R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000004
-> R13: ffffffffffffffff R14: 0000000000000000 R15: 0000000000000000
-> 
-> ======================================================
-> WARNING: possible circular locking dependency detected
-> 4.20.0-rc7+ #8 Not tainted
-> ------------------------------------------------------
-> syz-executor579/2028 is trying to acquire lock:
-> 00000000e478796d (console_owner){-.-.}, at: log_next kernel/printk/printk.c:489 [inline]
-> 00000000e478796d (console_owner){-.-.}, at: console_unlock+0x33d/0xd30 kernel/printk/printk.c:2401
-> 
-> but task is already holding lock:
-> 0000000030388923 (&(&port->lock)->rlock){-.-.}, at: pty_write+0xcd/0x1d0 drivers/tty/pty.c:120
-> 
-> which lock already depends on the new lock.
+CVE-2019-0197: mod_http2, possible crash on late upgrade
 
+Severity: Low
 
-Are you sure this is a real problem?  Can you deadlock this when
-running?
+Vendor: The Apache Software Foundation
 
-Also, try 5.0-rc1, a number of tty core changes went in there to try to
-resolve these types of issues.  They have not been backported to 4.20.y
-yet as they need to get more testing.  If you could run your same test
-suite on that kernel, it would be great to find out your results.
+Versions Affected:
+httpd 2.4.34 to 2.4.38
 
-thanks,
+Description:
+When HTTP/2 was enabled for a http: host or H2Upgrade was enabled for h2
+on a https: host, an Upgrade request from http/1.1 to http/2 that was
+not the first request on a connection could lead to a misconfiguration
+and crash. Servers that never enabled the h2 protocol or only enabled it
+for https: and did not set"H2Upgrade on" are unaffected by this issue.
 
-greg k-h
+Mitigation:
+All httpd users deploying mod_http2 should upgrade to 2.4.39 or later.
+
+Credit:
+The issue was discovered by Stefan Eissing, greenbytes.de.
+
+References:
+https://httpd.apache.org/security/vulnerabilities_24.html
+
