@@ -1,49 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/11/5
-Message-ID: <CAG8b5tSb+8moLaULqekrO3PASigOwJp_0eXwDn-Edg5p+60Bhw@mail.gmail.com>
-Date: Fri, 11 Jan 2019 23:44:16 +0530
-From: Dhiraj Mishra <mishra.dhiraj95@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/02/3
+Message-ID: <1554168684.QNYAOFIX@httpd.apache.org>
+Date: Mon, 01 Apr 2019 20:31:24 -0500
+From: Daniel Ruggeri <druggeri@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: NULL pointer dereference in lib60870 protocol
+Subject: CVE-2019-0211: Apache HTTP Server privilege escalation from modules' scripts
 Content-Type: text/plain; charset=utf-8
 
-Hi List,
 
-## Summary:
-An issue was discovered in lib60870 2.1.1. LinkLayer_setAddress in
-link_layer/link_layer.c has a NULL pointer dereference.
+CVE-2019-0211: Apache HTTP Server privilege escalation from modules' scripts
 
-Snip code from link_layer.c#L142:
-LinkLayer_setAddress(LinkLayer self, int address)
-{
-    self->address = address;
-}
-## BT:
+Severity: important
 
-==5832==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc
-0x55eb02eed6a2 bp 0x7ffc3b237e30 sp 0x7ffc3b237e20 T0)
-==5832==The signal is caused by a READ memory access.
-==5832==Hint: address points to the zero page.
-    #0 0x55eb02eed6a1 in LinkLayer_setAddress
-/home/input0/Desktop/lib60870/lib60870-C/src/iec60870/link_layer/link_layer.c:142
-    #1 0x55eb02eeab30 in CS101_Master_setOwnAddress
-/home/input0/Desktop/lib60870/lib60870-C/src/iec60870/cs101/cs101_master.c:311
-    #2 0x55eb02ec4601 in main
-/home/input0/Desktop/lib60870/lib60870-C/examples/cs101_master_balanced/master_example.c:127
-    #3 0x7fb921c52b96 in __libc_start_main
-(/lib/x86_64-linux-gnu/libc.so.6+0x21b96)
-    #4 0x55eb02ec40f9 in _start
-(/home/input0/Desktop/lib60870/lib60870-C/build/examples/cs101_master_balanced/cs101_master_balanced+0x120f9)
+Vendor: The Apache Software Foundation
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV
-/home/input0/Desktop/lib60870/lib60870-C/src/iec60870/link_layer/link_layer.c:142
-in LinkLayer_setAddress
-==5832==ABORTING
+Versions Affected:
+httpd 2.4.17 to 2.4.38
 
-Later CVE-2019-6137 was assigned to this.
+Description:
+In Apache HTTP Server 2.4 releases 2.4.17 to 2.4.38, with MPM event,
+worker or prefork, code executing in less-privileged child processes
+or threads (including scripts executed by an in-process scripting
+interpreter) could execute arbitrary code with the privileges of the
+parent process (usually root) by manipulating the scoreboard. Non-Unix
+systems are not affected.
 
+Mitigation:
+All httpd users running MPM event, worker or prefork should upgrade to
+2.4.39 or later.
 
-Thank you
-@mishradhiraj_
+Credit:
+The issue was discovered by Charles Fol.
+
+References:
+https://httpd.apache.org/security/vulnerabilities_24.html
 
