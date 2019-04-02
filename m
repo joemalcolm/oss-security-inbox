@@ -1,44 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/12/4
-Message-ID: <20190812132515.GA4647@cbuissar-ltop.localdomain>
-Date: Mon, 12 Aug 2019 15:25:15 +0200
-From: Cedric Buissart <cbuissar@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/02/1
+Message-ID: <1554168684.QIKEPNSN@httpd.apache.org>
+Date: Mon, 01 Apr 2019 20:31:24 -0500
+From: Daniel Ruggeri <druggeri@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: ghostscript CVE-2019-10216: -dSAFER escape via .buildfont1
+Subject: CVE-2019-0196: mod_http2, read-after-free on a string compare
 Content-Type: text/plain; charset=utf-8
 
-Hello,
 
-This is to disclose a new vulnerability in ghostscript, rated as Important.
+CVE-2019-0196: mod_http2, read-after-free on a string compare
 
-Ghostscript is a suite of software providing an interpreter for Adobe Systems' PostScript (PS) and Portable Document Format (PDF) page description languages.  Its primary purpose includes displaying (rasterization & rendering) and printing of document pages, as well as conversions between different document formats.
-URL : www.ghostscript.com
+Severity: Low
 
-The flaw is a usual "getting a reference to a privileged function" (the script must successfully be able to overload the error handling code to take advantage of that flaw), allowing arbitrary file access.
+Vendor: The Apache Software Foundation
 
+Versions Affected:
+httpd 2.4.17 to 2.4.38
 
-* CVE-2019-10216 ghostscript: -dSAFER escape via .buildfont1 (701394):
-It was found that the .buildfont1 procedure did not properly secure its privileged calls, enabling scripts to bypass `-dSAFER` restrictions. A specially crafted PostScript file could use this flaw to escalate its privileges and, for example, access files outside of restricted areas.
+Description:
+Using fuzzed network input, the http/2 request
+handling could be made to access freed memory in string
+comparision when determining the method of a request and
+thus process the request incorrectly.
+    
+Mitigation:
+All httpd users deploying mod_http2 should upgrade to 2.4.39 or later.
 
-All released versions of ghostscript are believed to be impacted, up to, and including, 9.27 (however, master should not be affected: see below for builds post commit 7ecbfda92).
+Credit:
+The issue was discovered by Craig Young, <vuln-report@...ur3.us>.
 
-Upstream bug report (currently restricted) : https://bugs.ghostscript.com/show_bug.cgi?id=701394
-Upstream fix : http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=5b85ddd19 
+References:
+https://httpd.apache.org/security/vulnerabilities_24.html
 
-Acknowledgements:
-* Red Hat would like to thank Artifex for alerting us.
-* The vulnerability was originally discovered by Netanel from Cloudinary.
-
-
-Noteworthy : 
-A recent modification, started in upstream commit 7ecbfda92b4c8dbf6f6c2bf8fc82020a29219eff, changed the access to file permissions. After this commit, the ability to modify the /PermitFile* entries from systemdict's /userparams entry should have no effect.
-That is to say: getting a reference to highly privileged function (such as .forceput), can still be used to remove SAFER, and modify the /PermitFile* lists. However, the interpreter will still refuse to access files outside of a list provided from a set of command line options. This should mitigate the class of ghostscript vulnerabilities similar to the one described above.
-
-Best regards,
-
---
-Cedric Buissart
-Product Security
-Red Hat
-
-Download attachment "signature.asc" of type "application/pgp-signature" (456 bytes)
