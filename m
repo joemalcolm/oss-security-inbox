@@ -1,55 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/07/3
-Message-ID: <20190707134258.GA24975@openwall.com>
-Date: Sun, 7 Jul 2019 15:42:58 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/02/5
+Message-ID: <1554168684.FQZJUOYK@httpd.apache.org>
+Date: Mon, 01 Apr 2019 20:31:24 -0500
+From: Daniel Ruggeri <druggeri@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership application - Microsoft
+Subject: CVE-2019-0217: mod_auth_digest access control bypass
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Jul 07, 2019 at 12:04:07PM +0300, Georgi Guninski wrote:
-> On Sat, Jul 6, 2019 at 10:40 PM Solar Designer <solar@...nwall.com> wrote:
-> > I suppose we could either give Microsoft this 1 month
-> > off as you suggest based on Microsoft's track record of promptly dealing
-> > with security issues in non-Linux products, or subscribe Microsoft to
-> > linux-distros in August 2019 (or later).
-> 
-> Are you suggesting breaking the rules and giving microsoft
-> a present of one month?
 
-I don't view it as a present, but as us being reasonable.  The rules
-don't require the 1 year track record to be for Linux specifically:
+CVE-2019-0217: mod_auth_digest access control bypass
 
-"Have a publicly verifiable track record, dating back at least 1 year
-and continuing to present day, of fixing security issues (including some
-that had been handled on (linux-)distros, meaning that membership would
-have been relevant to you) and releasing the fixes within 10 days (and
-preferably much less than that) of the issues being made public (if it
-takes you ages to fix an issue, your users wouldn't substantially
-benefit from the additional time, often around 7 days and sometimes up
-to 14 days, that list membership could give you)"
+Severity: important
 
-I think both the wording and the goal of us having this requirement have
-been met by Microsoft.  Sure we can wait 1 more month, but what for?
+Vendor: The Apache Software Foundation
 
-As I understand, your reason would be to hurt Microsoft a tiny bit out
-of spite for their past actions.  That's not a valid reason.
+Versions Affected:
+httpd 2.4.0 to 2.4.38
 
-A reason I consider valid has to do with what entity is to join the
-linux-distros list.  If it's not Microsoft at large, but "Microsoft
-Linux Systems Group" as it has just been suggested, then the wording
-above would apply to that group, and we probably do need to wait 1 more
-month in order not to set a precedent where some other company's distro
-could also join with less than 1 year of track record of fixes for the
-distro.  While I have no doubt the goal of the requirement has already
-been met by Microsoft, we could be in a less obvious situation with some
-other company.
+Description:
+In Apache HTTP Server 2.4 release 2.4.38 and prior, a race condition
+in mod_auth_digest when running in a threaded server could allow a
+user with valid credentials to authenticate using another username,
+bypassing configured access control restrictions.
 
-So I suggest we subscribe "Microsoft Linux Systems Group" on August 8.
+Mitigation:
+All httpd users deploying mod_auth_digest should upgrade to 2.4.39 or later.
 
-> What mailing list is best to discuss microsoft's involvement in
-> GPL? (last time I checked LKLM was extremely high traffic)
+Credit:
+The issue was discovered by Simon Kappel.
 
-I don't know.  Certainly not a list we host.
+References:
+https://httpd.apache.org/security/vulnerabilities_24.html
 
-Alexander
