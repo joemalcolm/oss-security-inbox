@@ -1,87 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/04/2
-Message-ID: <373864a3-0558-3b34-b012-9d4cd8ccce23@csail.mit.edu>
-Date: Mon, 4 Nov 2019 15:03:42 -0800
-From: "Srivatsa S. Bhat" <srivatsa@...il.mit.edu>
-To: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
-Cc: Steven Rostedt <rostedt@...dmis.org>, sashal@...nel.org, amakhalov@...are.com, anishs@...are.com, Sharath George <sharathg@...are.com>, mijzerman@...are.com, Srivatsa Bhat <srivatsab@...are.com>
-Subject: Re: Membership application for linux-distros - VMware
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/03/1
+Message-ID: <1805750602.17169248.1554292012603.JavaMail.zimbra@redhat.com>
+Date: Wed, 3 Apr 2019 07:46:52 -0400 (EDT)
+From: Vladis Dronov <vdronov@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2019-3882: Linux kernel: DoS through vfio/type1 DMA mappings
 Content-Type: text/plain; charset=utf-8
 
+Heololo,
 
-Hi Alexander,
+A flaw was found in the Linux kernel's vfio interface implementation that permits
+violation of the user's locked memory limit. If a device is bound to a vfio driver,
+such as vfio-pci, and the local attacker is administratively granted ownership of
+the device, it may cause a system memory exhaustion and thus a denial of service (DoS).
 
-On 10/30/19 9:24 AM, Solar Designer wrote:
-> Hello Srivatsa,
-> 
-> I've reviewed your request and the external resources you referenced,
-> and more, and I find the request very reasonable and satisfying our
-> stated requirements.  I also gave others on oss-security time to comment
-> if they wanted to, and we've only seen comments in favor.
-> 
-> Please send me your PGP key off-list and I'll add you to linux-distros.
-> 
+CVE-2019-3882 was allocated for this flaw.
 
-Thank you very much for adding VMware Photon OS to linux-distros!
+References:
 
-> Please see below on contributing back:
-> 
-> On Wed, Oct 23, 2019 at 12:08:48PM -0700, Srivatsa S. Bhat wrote:
->> We would like to volunteer for the following tasks (but we would love
->> your suggestions on taking up other tasks instead, depending on the
->> current needs of the list).
->>
->> Technical:
->>
->> 4. Check if related issues exist in the same piece of software (e.g.,
->> same bug class common across the software, or other kinds of bugs
->> exist in its problematic component), and inform the list either way -
->> primary: Ubuntu, backup: vacant
->>
->> Administrative:
->>
->> 5. Determine if the reported issues are Linux-specific, and if so help
->> ensure that (further) private discussion goes on the linux-distros
->> sub-list only (thus, not spamming and unnecessarily disclosing to the
->> non-Linux distros) - primary: SUSE, backup: vacant
-> 
-> This is a good choice, thanks!
-> 
-> I'd like you to pick a primary role for some task.  As an option, we can
-> make you primary for "5. Determine if the reported issues are
-> Linux-specific ...", moving SUSE to backup.
-> 
+https://lore.kernel.org/lkml/155414977872.12780.13728555131525362206.stgit@gimli.home/T/#u
 
-That sounds good to me!
+https://bugzilla.redhat.com/show_bug.cgi?id=1689426
 
-> Please let me know of your final choice, as well as where you'd like to
-> be primary and where to join as a backup.
-> 
-
-I'd like to sign up as primary for Administrative 5: "Determine if the
-reported issues are Linux-specific... ", and as backup for Technical 4.
-"Check if related issues exist in the same piece of software...".
-(I did consider the other task that you brought up, namely Technical
-6, but I think we'd need more experience on the list before we can
-sign up for that task).
-
-Also, is there a write-up somewhere that defines exactly what primary
-and backup means in this context? At the moment, I'm assuming that,
-for a given task, the primary distro will take up that task for every
-issue that gets posted onto linux-distros; and in case the primary is
-unavailable (due to vacation/travel etc), then the backup will step up
-for that task until the primary gets back. Is that how it works?  If
-so, will we get to know the contact details of other distros so that
-we can coordinate our schedules?
-
-On a related note, would it be okay for me to request another member
-of the Photon OS team (whom I can vouch for), to be added to the
-linux-distros list, so that we can have at least one person from our
-team always available to take action for our distro, in response to
-the issues disclosed on the list?
-
-Thank you very much!
-
-Regards,
-Srivatsa
-VMware Photon OS
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security | Senior Software Engineer
