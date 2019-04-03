@@ -1,37 +1,511 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/11/4
-Message-ID: <CAEvdU_1YsVy-7xZNn-uHDjzsbsUHvQNL-8ue5Dzb2q1kaF1UdA@mail.gmail.com>
-Date: Tue, 10 Sep 2019 15:29:27 -0700
-From: Jacopo Cappellato <jacopoc@...che.org>
-To: "user@...iz.apache.org ML" <user@...iz.apache.org>, Dev list <dev@...iz.apache.org>, announce@...che.org,  security@...iz.apache.org, oss-security@...ts.openwall.com,  heinenn@...gle.com
-Subject: [CVE-2019-10074] Apache OFBiz RCE (template injection)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/03/3
+Message-Id: <CBE30AF0-0AAB-4A11-A16D-7DB230ED0257@beckweb.net>
+Date: Wed, 3 Apr 2019 15:55:08 +0200
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-Severity:
-Important
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software. The following
+releases contain fixes for security vulnerabilities:
 
-Vendor:
-The Apache Software Foundation
+* Netsparker Cloud Scan Plugin 1.1.6
+* Youtrack Plugin 0.7.2
 
-Versions Affected:
-OFBiz 16.11.01 to 16.11.05
+Additionally, these plugin have security vulnerabilities that have been made
+public, but have no releases containing a fix yet:
 
-An RCE is possible by entering Freemarker markup in an OFBiz Form Widget
-textarea field when encoding has been disabled on such a field.  This was
-the case for the Customer Request "story" input in the Order Manager
-application.  Encoding should not be disabled without good reason and never
-within a field that accepts user input.
+* Amazon SNS Build Notifier Plugin
+* Aqua Security Scanner Plugin
+* Assembla Auth Plugin
+* Audit to Database Plugin
+* AWS CloudWatch Logs Publisher Plugin
+* AWS Elastic Beanstalk Publisher Plugin
+* aws-device-farm Plugin
+* Bitbucket Approve Plugin
+* Bugzilla Plugin
+* Chef Sinatra Plugin
+* CloudCoreo DeployTime Plugin
+* CloudShare Docker-Machine Plugin
+* crittercism-dsym Plugin
+* Crowd Integration Plugin
+* DeployHub Plugin
+* Diawi Upload Plugin
+* Fabric Beta Publisher Plugin
+* FTP publisher Plugin
+* Gearman Plugin
+* HockeyApp Plugin
+* Hyper.sh Commons Plugin
+* IRC Plugin
+* Jabber Server Plugin
+* jenkins-cloudformation-plugin Plugin
+* jenkins-reviewbot Plugin
+* Jira Issue Updater Plugin
+* Klaros-Testmanagement Plugin
+* Kmap Plugin
+* Koji Plugin
+* mabl Plugin
+* Minio Storage Plugin
+* Nomad Plugin
+* OctopusDeploy Plugin
+* Official OWASP ZAP Plugin
+* Open STF Plugin
+* openid Plugin
+* OpenShift Deployer Plugin
+* Perfecto Mobile Plugin
+* Relution Enterprise Appstore Publisher Plugin
+* Sametime Plugin
+* Serena SRA Deploy Plugin
+* SOASTA CloudTest Plugin
+* StarTeam Plugin
+* TestFairy Plugin
+* Trac Publisher Plugin
+* Upload to pgyer Plugin
+* veracode-scanner Plugin
+* VMware Lab Manager Slaves Plugin
+* VMware vRealize Automation Plugin
+* VS Team Services Continuous Deployment Plugin
+* WebSphere Deployer Plugin
+* WildFly Deployer Plugin
+* Zephyr Enterprise Test Management Plugin
+
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2019-04-03/
+
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-829
+IRC Plugin stores credentials unencrypted in its global configuration file 
+hudson.plugins.ircbot.IrcPublisher.xml on the Jenkins master. These 
+credentials can be viewed by users with access to the master file system.
 
 
-Mitigation:
-Upgrade to 16.11.06
-or manually apply the following commit on branch 16.11:
-r1858533
-----
+SECURITY-831
+AWS Elastic Beanstalk Publisher Plugin stores credentials unencrypted in its 
+global configuration file org.jenkinsci.plugins.awsbeanstalkpublisher.
+AWSEBPublisher.xml
+on the Jenkins master. These credentials can be viewed by users with access 
+to the master file system.
 
-Credit:
-Niels Heinen of the Google security team <heinenn@...gle.com>
 
-References:
-http://ofbiz.apache.org/download.html#vulnerabilities
+SECURITY-837
+Jira Issue Updater Plugin stores credentials unencrypted in job config.xml 
+files on the Jenkins master. These credentials can be viewed by users with 
+Extended Read permission, or access to the master file system.
+
+
+SECURITY-839
+HockeyApp Plugin stores credentials unencrypted in job config.xml files on 
+the Jenkins master. These credentials can be viewed by users with Extended 
+Read permission, or access to the master file system.
+
+
+SECURITY-954
+FTP publisher Plugin stores credentials unencrypted in its global 
+configuration file com.zanox.hudson.plugins.FTPPublisher.xml on the Jenkins 
+master. These credentials can be viewed by users with access to the master 
+file system.
+
+
+SECURITY-956
+WebSphere Deployer Plugin stores credentials unencrypted in job config.xml 
+files on the Jenkins master. These credentials can be viewed by users with 
+Extended Read permission, or access to the master file system.
+
+
+SECURITY-965
+Bitbucket Approve Plugin stores credentials unencrypted in its global 
+configuration file org.jenkinsci.plugins.bitbucket_approve.BitbucketApprover.
+xml
+on the Jenkins master. These credentials can be viewed by users with access 
+to the master file system.
+
+
+SECURITY-974
+A missing permission check in a form validation method in FTP publisher 
+Plugin allows users with Overall/Read permission to initiate a connection 
+test to an attacker-specified FTP server with attacker-specified credentials.
+
+Additionally, the form validation method does not require POST requests, 
+resulting in a CSRF vulnerability.
+
+
+SECURITY-1041
+Official OWASP ZAP Plugin stores Jira credentials unencrypted in its global 
+configuration file org.jenkinsci.plugins.zap.ZAPBuilder.xml on the Jenkins 
+master. These credentials can be viewed by users with access to the master 
+file system.
+
+
+SECURITY-1042
+jenkins-cloudformation-plugin Plugin stores credentials unencrypted in job 
+config.xml files on the Jenkins master. These credentials can be viewed by 
+users with Extended Read permission, or access to the master file system.
+
+
+SECURITY-830
+AWS CloudWatch Logs Publisher Plugin stores credentials unencrypted in its 
+global configuration file jenkins.plugins.awslogspublisher.AWSLogsConfig.xml 
+on the Jenkins master. These credentials can be viewed by users with access 
+to the master file system.
+
+
+SECURITY-832
+Amazon SNS Build Notifier Plugin stores credentials unencrypted in its 
+global configuration file org.jenkinsci.plugins.snsnotify.AmazonSNSNotifier.
+xml
+on the Jenkins master. These credentials can be viewed by users with access 
+to the master file system.
+
+
+SECURITY-835
+aws-device-farm Plugin stores credentials unencrypted in its global 
+configuration file org.jenkinsci.plugins.awsdevicefarm.AWSDeviceFarmRecorder.
+xml
+on the Jenkins master. These credentials can be viewed by users with access 
+to the master file system.
+
+
+SECURITY-838
+CloudShare Docker-Machine Plugin stores credentials unencrypted in its 
+global configuration file com.cloudshare.jenkins.CloudShareConfiguration.xml 
+on the Jenkins master. These credentials can be viewed by users with access 
+to the master file system.
+
+
+SECURITY-841
+Bugzilla Plugin stores credentials unencrypted in its global configuration 
+file hudson.plugins.bugzilla.BugzillaProjectProperty.xml on the Jenkins 
+master. These credentials can be viewed by users with access to the master 
+file system.
+
+
+SECURITY-842
+Trac Publisher Plugin stores credentials unencrypted in job config.xml files 
+on the Jenkins master. These credentials can be viewed by users with 
+Extended Read permission, or access to the master file system.
+
+
+SECURITY-945
+VMware vRealize Automation Plugin stores credentials unencrypted in job 
+config.xml files on the Jenkins master. These credentials can be viewed by 
+users with Extended Read permission, or access to the master file system.
+
+
+SECURITY-949
+Aqua Security Scanner Plugin stores credentials unencrypted in its global 
+configuration file org.jenkinsci.plugins.aquadockerscannerbuildstep.
+AquaDockerScannerBuilder.xml
+on the Jenkins master. These credentials can be viewed by users with access 
+to the master file system.
+
+
+SECURITY-952
+veracode-scanner Plugin stores credentials unencrypted in its global 
+configuration file org.jenkinsci.plugins.veracodescanner.VeracodeNotifier.xml
+on the Jenkins master. These credentials can be viewed by users with access 
+to the master file system.
+
+
+SECURITY-957
+OctopusDeploy Plugin stores credentials unencrypted in its global 
+configuration file hudson.plugins.octopusdeploy.OctopusDeployPlugin.xml on 
+the Jenkins master. These credentials can be viewed by users with access to 
+the master file system.
+
+
+SECURITY-961
+WildFly Deployer Plugin stores deployment credentials unencrypted in job 
+config.xml files on the Jenkins master. These credentials can be viewed by 
+users with Extended Read permission, or access to the master file system.
+
+
+SECURITY-962
+VS Team Services Continuous Deployment Plugin stores credentials unencrypted 
+in job config.xml files on the Jenkins master. These credentials can be 
+viewed by users with Extended Read permission, or access to the master file 
+system.
+
+
+SECURITY-964
+Hyper.sh Commons Plugin stores credentials unencrypted in its global 
+configuration file sh.hyper.plugins.hypercommons.Tools.xml on the Jenkins 
+master. These credentials can be viewed by users with access to the master 
+file system.
+
+
+SECURITY-966
+Audit to Database Plugin stores database credentials unencrypted in its 
+global configuration file audit2db.xml on the Jenkins master. These 
+credentials can be viewed by users with access to the master file system.
+
+
+SECURITY-977
+A missing permission check in a form validation method in Audit to Database 
+Plugin allows users with Overall/Read permission to initiate a JDBC database 
+connection test to an attacker-specified server with attacker-specified 
+credentials.
+
+Additionally, the form validation method does not require POST requests, 
+resulting in a CSRF vulnerability.
+
+
+SECURITY-979
+A missing permission check in a form validation method in VMware Lab Manager 
+Slaves Plugin allows users with Overall/Read permission to initiate a Lab 
+Manager connection test to an attacker-specified server with attacker-
+specified credentials and settings.
+
+Additionally, the form validation method does not require POST requests, 
+resulting in a CSRF vulnerability.
+
+
+SECURITY-981
+A missing permission check in a form validation method in OpenShift Deployer 
+Plugin allows users with Overall/Read permission to initiate a connection 
+test to an attacker-specified server with attacker-specified credentials.
+
+Additionally, the form validation method does not require POST requests, 
+resulting in a CSRF vulnerability.
+
+
+SECURITY-991
+A missing permission check in a form validation method in Gearman Plugin 
+allows users with Overall/Read permission to initiate a connection test to 
+an attacker-specified server.
+
+Additionally, the form validation method does not require POST requests, 
+resulting in a CSRF vulnerability.
+
+
+SECURITY-993
+A missing permission check in a form validation method in Zephyr Enterprise 
+Test Management Plugin allows users with Overall/Read permission to initiate 
+a connection test to an attacker-specified server with attacker-specified 
+credentials.
+
+Additionally, the form validation method does not require POST requests, 
+resulting in a CSRF vulnerability.
+
+
+SECURITY-1037
+A missing permission check in a form validation method in Chef Sinatra 
+Plugin allows users with Overall/Read permission to initiate a connection 
+test to an attacker-specified server.
+
+Additionally, the form validation method does not require POST requests, 
+resulting in a CSRF vulnerability.
+
+
+SECURITY-1043
+Fabric Beta Publisher Plugin stores credentials unencrypted in job 
+config.xml files on the Jenkins master. These credentials can be viewed by 
+users with Extended Read permission, or access to the master file system.
+
+
+SECURITY-1044
+Upload to pgyer Plugin stores credentials unencrypted in job config.xml 
+files on the Jenkins master. These credentials can be viewed by users with 
+Extended Read permission, or access to the master file system.
+
+
+SECURITY-1054
+A missing permission check in a form validation method in SOASTA CloudTest 
+Plugin allows users with Overall/Read permission to initiate a connection 
+test to an attacker-specified URL with attacker-specified credentials and 
+SSH key store options.
+
+Additionally, the form validation method does not require POST requests, 
+resulting in a CSRF vulnerability.
+
+
+SECURITY-1058
+A missing permission check in a form validation method in Nomad Plugin 
+allows users with Overall/Read permission to initiate a connection test to 
+an attacker-specified URL.
+
+Additionally, the form validation method does not require POST requests, 
+resulting in a CSRF vulnerability.
+
+
+SECURITY-1059
+Open STF Plugin stores credentials unencrypted in its global configuration 
+file hudson.plugins.openstf.STFBuildWrapper.xml on the Jenkins master. These 
+credentials can be viewed by users with access to the master file system.
+
+
+SECURITY-1061
+Perfecto Mobile Plugin stores credentials unencrypted in its global 
+configuration file com.perfectomobile.jenkins.ScriptExecutionBuilder.xml on 
+the Jenkins master. These credentials can be viewed by users with access to 
+the master file system.
+
+
+SECURITY-1062
+TestFairy Plugin stores credentials unencrypted in job config.xml files on 
+the Jenkins master. These credentials can be viewed by users with Extended 
+Read permission, or access to the master file system.
+
+
+SECURITY-1069
+Crowd Integration Plugin stores credentials unencrypted in the global 
+configuration file config.xml on the Jenkins master. These credentials can 
+be viewed by users with access to the master file system.
+
+
+SECURITY-1084
+A missing permission check in a form validation method in openid Plugin 
+allows users with Overall/Read permission to initiate a connection test to 
+an attacker-specified URL.
+
+Additionally, the form validation method does not require POST requests, 
+resulting in a CSRF vulnerability.
+
+
+SECURITY-1085
+StarTeam Plugin stores credentials unencrypted in job config.xml files on 
+the Jenkins master. These credentials can be viewed by users with Extended 
+Read permission, or access to the master file system.
+
+
+SECURITY-1091
+A missing permission check in a form validation method in jenkins-reviewbot 
+Plugin allows users with Overall/Read permission to initiate a connection 
+test to an attacker-specified URL with attacker-specified credentials.
+
+Additionally, the form validation method does not require POST requests, 
+resulting in a CSRF vulnerability.
+
+
+SECURITY-1093
+Assembla Auth Plugin stores credentials unencrypted in the global 
+configuration file config.xml on the Jenkins master. These credentials can 
+be viewed by users with access to the master file system.
+
+
+SECURITY-828
+Relution Enterprise Appstore Publisher Plugin stores credentials unencrypted 
+in its global configuration file org.jenkinsci.plugins.relution_publisher.configuration.global.StoreConfiguration.xml
+on the Jenkins master. These credentials can be viewed by users with access 
+to the master file system.
+
+
+SECURITY-843
+Klaros-Testmanagement Plugin stores credentials unencrypted in job
+config.xml files on the Jenkins master. These credentials can be viewed by 
+users with Extended Read permission, or access to the master file system.
+
+
+SECURITY-946
+mabl Plugin stores credentials unencrypted in job config.xml files on the 
+Jenkins master. These credentials can be viewed by users with Extended Read 
+permission, or access to the master file system.
+
+
+SECURITY-947
+Diawi Upload Plugin stores credentials unencrypted in job config.xml files 
+on the Jenkins master. These credentials can be viewed by users with 
+Extended Read permission, or access to the master file system.
+
+
+SECURITY-955
+Minio Storage Plugin stores credentials unencrypted in its global 
+configuration file org.jenkinsci.plugins.minio.MinioUploader.xml on the 
+Jenkins master. These credentials can be viewed by users with access to the 
+master file system.
+
+
+SECURITY-959
+DeployHub Plugin stores credentials unencrypted in job config.xml files on 
+the Jenkins master. These credentials can be viewed by users with Extended 
+Read permission, or access to the master file system.
+
+
+SECURITY-963
+youtrack-plugin Plugin stored credentials unencrypted in its global 
+configuration file org.jenkinsci.plugins.youtrack.YouTrackProjectProperty.xml
+on the Jenkins master. These credentials could be viewed by users with 
+access to the master file system.
+
+
+SECURITY-1031
+Jabber Server Plugin stores credentials unencrypted in its global 
+configuration file de.e_nexus.jabber.JabberBuilder.xml on the Jenkins master.
+These credentials can be viewed by users with access to the master file 
+system.
+
+
+SECURITY-1032
+A missing permission check in a form validation method in Netsparker Cloud 
+Scan Plugin allowed users with Overall/Read permission to initiate a 
+connection test to an attacker-specified server with attacker-specified API 
+token.
+
+Additionally, the form validation method did not require POST requests, 
+resulting in a CSRF vulnerability.
+
+
+SECURITY-1040
+Netsparker Cloud Scan Plugin stored credentials unencrypted in its global 
+configuration file com.netsparker.cloud.plugin.NCScanBuilder.xml on the 
+Jenkins master. These credentials could be viewed by users with access to 
+the master file system.
+
+
+SECURITY-1055
+A missing permission check in a form validation method in Kmap Plugin allows 
+users with Overall/Read permission to initiate a connection test to an 
+attacker-specified server with attacker-specified credentials.
+
+Additionally, the form validation method does not require POST requests, 
+resulting in a CSRF vulnerability.
+
+
+SECURITY-1056
+Kmap Plugin stores credentials unencrypted in job config.xml files on the 
+Jenkins master. These credentials can be viewed by users with Extended Read 
+permission, or access to the master file system.
+
+
+SECURITY-1063
+crittercism-dsym Plugin stores credentials unencrypted in job config.xml 
+files on the Jenkins master. These credentials can be viewed by users with 
+Extended Read permission, or access to the master file system.
+
+
+SECURITY-1066
+Serena SRA Deploy Plugin stores credentials unencrypted in its global 
+configuration file com.urbancode.ds.jenkins.plugins.serenarapublisher.UrbanDeployPublisher.xml
+on the Jenkins master. These credentials can be viewed by users with access 
+to the master file system.
+
+
+SECURITY-1090
+Sametime Plugin stores credentials unencrypted in its global configuration 
+file hudson.plugins.sametime.im.transport.SametimePublisher.xml on the 
+Jenkins master. These credentials can be viewed by users with access to the 
+master file system.
+
+
+SECURITY-1092
+Koji Plugin stores credentials unencrypted in its global configuration file 
+org.jenkinsci.plugins.koji.KojiBuilder.xml on the Jenkins master. These 
+credentials can be viewed by users with access to the master file system.
+
+
+SECURITY-960
+CloudCoreo DeployTime Plugin stores credentials unencrypted in its global 
+configuration file com.cloudcoreo.plugins.jenkins.CloudCoreoBuildWrapper.xml 
+on the Jenkins master. These credentials can be viewed by users with access 
+to the master file system.
 
