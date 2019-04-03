@@ -1,98 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/21/7
-Message-ID: <a9aeffb8-a81a-a732-5502-cab007814ef0@powerdns.com>
-Date: Mon, 21 Jan 2019 15:23:11 +0100
-From: Remi Gacogne <remi.gacogne@...erdns.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/03/2
+Message-ID: <668237346.17178030.1554294590342.JavaMail.zimbra@redhat.com>
+Date: Wed, 3 Apr 2019 08:29:50 -0400 (EDT)
+From: Vladis Dronov <vdronov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: PowerDNS Security Advisories 2011-01 and 2019-02
+Subject: CVE-2019-3837: RHEL6: memory leak in tcp_recvmsg() with NET_DMA
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Heololo,
 
-We just released PowerDNS Recursor 4.1.9 fixing two security issues:
+It was found that the net_dma code in tcp_recvmsg() in the RHEL6 kernel is
+thread-unsafe. So an unprivileged multi-threaded userspace application
+calling recvmsg() for the same network socket in parallel executed on
+ioatdma-enabled hardware with net_dma enabled can leak the memory,
+crash the host leading to a denial-of-service, or cause a random memory
+corruption.
 
-- PowerDNS Security Advisory 2019-01 (CVE-2019-3806): Lua hooks are not
-called over TCP
-- PowerDNS Security Advisory 2019-02 (CVE-2019-3807): DNSSEC validation
-is not performed for AA=0 responses
+This flaw was assigned an id of CVE-2019-3837.
 
-These issues respectively affect PowerDNS Recursor from 4.1.4 and 4.1.0,
-up to and including 4.1.8. PowerDNS Recursor 4.0.x and below are not
-affected.
+net_dma was disabled in the upstream Linux kernel since v3.13-rc5 by
+the 77873803363c "net_dma: mark broken" and then completely removed
+by the 7bced397510a "net_dma: simple removal".
 
-The full security advisories are provided below, and can also be
-found at:
--
-https://docs.powerdns.com/recursor/security-advisories/powerdns-advisory-2019-01.html
--
-https://docs.powerdns.com/recursor/security-advisories/powerdns-advisory-2019-02.html
-
-Minimal patches are available at [1] and [2].
-
-[1]: https://downloads.powerdns.com/patches/2019-01/
-[2]: https://downloads.powerdns.com/patches/2019-02/
+So this flaw affects RHEL-6 only and any (LTS) Linux kernel (of any
+distribution) which has not backported the net_dma disabling commits
+mentioned above.
 
 Best regards,
-
-Remi
-
-PowerDNS Security Advisory 2019-01: Lua hooks are not applied in certain
-configurations
-========================================================================
-
--  CVE: CVE-2019-3806
--  Date: 21st of January 2019
--  Affects: PowerDNS Recursor from 4.1.4 up to and including 4.1.8
--  Not affected: 4.0.x, 4.1.0 up to and including 4.1.3, 4.1.9
--  Severity: Low
--  Impact: Access restriction bypass
--  Exploit: This problem can be triggered via TCP queries
--  Risk of system compromise: No
--  Solution: Upgrade to a non-affected version
--  Workaround: Switch to pdns-distributes-queries=no
-
-An issue has been found in PowerDNS Recursor where Lua hooks are not
-properly applied to queries received over TCP in some specific
-combination of settings, possibly bypassing security policies enforced
-using Lua.
-
-When the recursor is configured to run with more than one thread
-(threads=X) and to do the distribution of incoming queries to the worker
-threads itself (pdns-distributes-queries=yes), the Lua script is not
-properly loaded in the thread handling incoming TCP queries, causing the
-Lua hooks to not be properly applied.
-
-This issue has been assigned CVE-2019-3806 by Red Hat.
-
-PowerDNS Recursor from 4.1.4 up to and including 4.1.8 is affected.
-
-
-PowerDNS Security Advisory 2019-02: Insufficient validation of DNSSEC
-signatures
-=====================================================================
-
--  CVE: CVE-2019-3807
--  Date: 21st of January 2019
--  Affects: PowerDNS Recursor from 4.1.0 up to and including 4.1.8
--  Not affected: 4.0.x, 4.1.9
--  Severity: Medium
--  Impact: Insufficient validation
--  Exploit: This problem can be triggered via crafted responses
--  Risk of system compromise: No
--  Solution: Upgrade to a non-affected version
-
-An issue has been found in PowerDNS Recursor where records in the answer
-section of responses received from authoritative servers with the AA
-flag not set were not properly validated, allowing an attacker to bypass
-DNSSEC validation.
-
-This issue has been assigned CVE-2019-3807 by Red Hat.
-
-PowerDNS Recursor from 4.1.0 up to and including 4.1.8 is affected.
-
-We would like to thank Ralph Dolmans and George Thessalonikefs of
-NLNetLabs for finding and subsequently reporting this issue!
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Vladis Dronov | Red Hat, Inc. | Product Security | Senior Software Engineer
