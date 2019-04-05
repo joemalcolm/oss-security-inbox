@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6154" "Wednesday" "15" "March" "2017" "06:56:19" "-0400" "Stiepan" "stie@itk.swiss" "<yEw48KeZXecR-EKWWbAiNN-28xRPMYmv5qRYVlLwbDs4oH3fwjTstCNrpqptLwzG1mqIHxjMk-hiWRreJGC1WJmbY-daelcKJWMJdrb77z0=@itk.swiss>" "106" "Re: [oss-security] LXC: CVE-2017-5985: lxc-user-nic didn't verify network namespace ownership" nil nil nil "3" "2017031510:56:19" "[oss-security] LXC: CVE-2017-5985: lxc-user-nic didn't verify network namespace ownership" (number mark "U       stie@itk.swi Mar 15  106/6154  " thread-indent "\"Re: [oss-security] LXC: CVE-2017-5985: lxc-user-nic didn't verify network namespace ownership\"\n") "<9C8Q126sS901vkG8mMxgQPigkx5gBFpDrXBZJqzB9mfVVKvASCmxDOcSAiq9IjkGPjKbAm7r44vrPcqypgDoadrQ2Wuo4wYXFHdQ8amAvwk=@itk.swiss>" ("<8919f274-0c56-2c12-649f-2561d6cd59d8@canonical.com>" "<Ya92X4yQVrEDADDRD-xy-FeIBfDkxTwkyuxI1ATPJl5YbwqpJDwGpa-5HQzKiS09u8o1yNNyHK9G-fzxNDU5NqURXqe49zTp4--EQYjHh8g=@itk.swiss>" "<831d5907-bf61-70c2-9501-f57923e5ae07@canonical.com>" "<9C8Q126sS901vkG8mMxgQPigkx5gBFpDrXBZJqzB9mfVVKvASCmxDOcSAiq9IjkGPjKbAm7r44vrPcqypgDoadrQ2Wuo4wYXFHdQ8amAvwk=@itk.swiss>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["703" "Friday" "5" "April" "2019" "11:45:01" "+0200" "Hanno =?iso-8859-1?Q?B=F6ck?=" "hanno@hboeck.de" nil "23" nil "^Date:" nil nil "4" nil nil (number mark "        hanno@hboeck Apr  5   23/703   " thread-indent "\"[oss-security] XSS in roundup bug tracker 404 page\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] XSS in roundup bug tracker 404 page" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 4018 invoked by uid 550); 15 Mar 2017 11:55:07 -0000
+Received: (qmail 29932 invoked by uid 550); 5 Apr 2019 09:45:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,128 +11,38 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 31931 invoked from network); 15 Mar 2017 10:56:33 -0000
-Date: Wed, 15 Mar 2017 06:56:19 -0400
-Authentication-Results: mail1.protonmail.ch; dkim=none
-To: oss-security@lists.openwall.com
-From: Stiepan <stie@itk.swiss>
-Cc: "857295@bugs.debian.org" <857295@bugs.debian.org>, =?UTF-8?Q?St=C3=A9phane_Graber?= <stgraber@ubuntu.com>, serge.hallyn@ubuntu.com
-Message-ID: <yEw48KeZXecR-EKWWbAiNN-28xRPMYmv5qRYVlLwbDs4oH3fwjTstCNrpqptLwzG1mqIHxjMk-hiWRreJGC1WJmbY-daelcKJWMJdrb77z0=@itk.swiss>
-In-Reply-To: <9C8Q126sS901vkG8mMxgQPigkx5gBFpDrXBZJqzB9mfVVKvASCmxDOcSAiq9IjkGPjKbAm7r44vrPcqypgDoadrQ2Wuo4wYXFHdQ8amAvwk=@itk.swiss>
-References: <8919f274-0c56-2c12-649f-2561d6cd59d8@canonical.com>
- <Ya92X4yQVrEDADDRD-xy-FeIBfDkxTwkyuxI1ATPJl5YbwqpJDwGpa-5HQzKiS09u8o1yNNyHK9G-fzxNDU5NqURXqe49zTp4--EQYjHh8g=@itk.swiss>
- <831d5907-bf61-70c2-9501-f57923e5ae07@canonical.com>
- <9C8Q126sS901vkG8mMxgQPigkx5gBFpDrXBZJqzB9mfVVKvASCmxDOcSAiq9IjkGPjKbAm7r44vrPcqypgDoadrQ2Wuo4wYXFHdQ8amAvwk=@itk.swiss>
-Feedback-ID: wnsnnc8Us3MVqt1IALGduDJl-d16B_hEkg50pF7qo11mpeysEHmUOGy-yvw8MEApAPX3TXcPDHQwu7hti-kzSw==:Ext:ProtonMail
+Received: (qmail 29892 invoked from network); 5 Apr 2019 09:45:14 -0000
+Message-ID: <20190405114501.1bb98c2a@computer>
+X-Mailer: Claws Mail 3.17.3 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
-	boundary="b1_a5fcbcea53ed4c05d9e48c708f5463dc"
-Subject: Re: [oss-security] LXC: CVE-2017-5985: lxc-user-nic didn't verify network namespace ownership
-
---b1_a5fcbcea53ed4c05d9e48c708f5463dc
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 5 Apr 2019 11:45:01 +0200
+From: Hanno =?iso-8859-1?q?B=F6ck?= <hanno@hboeck.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] XSS in roundup bug tracker 404 page
+To: oss-security@lists.openwall.com
 
-SSBoYXZlIGZvdW5kIGEgd29ya2Fyb3VuZCB0byBzdGFydCB0aGUgY29udGFp
-bmVyIGluIHVzZXIgbW9kZSBhZ2FpbiBvbiBEZWJpYW4gODoKdXNlIGEgInRy
-dWUiIGJyMCBicmlkZ2UgaW5zdGVhZCBvZiBseGMtYnIwIGFuZCBkaXNhYmxl
-LCBvciBzdG9wIHRoZSBseGMtbmV0IHNlcnZpY2UuCgpVbmRlciB0aGVzZSBj
-b25kaXRpb25zLCB1c2luZyBseGMgMi4wLjcoLTEpIGZyb20gamVzc2llLWJh
-Y2twb3J0cywgSSBhbSBub3QgYWJsZSB0byByZXByb2R1Y2UgdGhlIHJvdXRp
-bmcgaXNzdWUgSSBzYXcgcnVubmluZyBseGMgMi4wLjYgaW4gdXNlciBtb2Rl
-IHVzaW5nIGx4Yy1uZXQuIFNvIGEgc2FmZSBmYWxsYmFjayAoZm9yIERlYmlh
-biA4KSwgZm9yIHRoZSB0aW1lIGJlaW5nLCBzZWVtcyB0byBiZSB0byBhdm9p
-ZCB1c2luZyB1c2VyIG1vZGUgbHhjIG5ldHdvcmtpbmcgYW5kIHVzZSBhIHBs
-YWluIG9sZCBicjAgaW5zdGVhZC4gVGhpcyBzaG91bGQgd29yayBvbiBhbGwg
-Q1BVIGFyY2hpdGVjdHVyZXMgKGV2ZW4gb24gcG93ZXJwYywga25vd24gdG8g
-YmUgcmVjYWxjaXRyYW50IHRvIGx4YyBvbiBEZWJpYW4gOCkuCgpTdGllcGFu
-CgotLS0tLS0tLSBPcmlnaW5hbCBNZXNzYWdlIC0tLS0tLS0tClN1YmplY3Q6
-IFJlOiBbb3NzLXNlY3VyaXR5XSBMWEM6IENWRS0yMDE3LTU5ODU6IGx4Yy11
-c2VyLW5pYyBkaWRuJ3QgdmVyaWZ5IG5ldHdvcmsgbmFtZXNwYWNlIG93bmVy
-c2hpcApMb2NhbCBUaW1lOiAxNCBNYXJjaCAyMDE3IDU6MTcgUE0KVVRDIFRp
-bWU6IDE0IE1hcmNoIDIwMTcgMTY6MTcKRnJvbTogc3RpZUBpdGsuc3dpc3MK
-VG86IG9zcy1zZWN1cml0eUBsaXN0cy5vcGVud2FsbC5jb20gPG9zcy1zZWN1
-cml0eUBsaXN0cy5vcGVud2FsbC5jb20+LCA4NTcyOTVAYnVncy5kZWJpYW4u
-b3JnIDw4NTcyOTVAYnVncy5kZWJpYW4ub3JnPgpTdMOpcGhhbmUgR3JhYmVy
-IDxzdGdyYWJlckB1YnVudHUuY29tPiwgc2VyZ2UuaGFsbHluQHVidW50dS5j
-b20KCllvdSBhcmUgd2VsY29tZS4gQXMgc3RhdGVkIGluIG15IHJlcGx5IHRv
-IFNlcmdlIEguIEhhbGx5bidzIG9mZi1saXN0IG1lc3NhZ2UsIGluIHRoZSBt
-ZWFudGltZSBJIGhhdmUgaW5zdGFsbGVkIHZlcnNpb24gMi4wLjcgZnJvbSBq
-ZXNzaWUtYmFja3BvcnRzIGFuZCBhbSB1bmFibGUgdG8gcmVwcm9kdWNlIHRo
-ZSBpc3N1ZSwgYXMgSSBjYW5ub3Qgc3RhcnQgdW5wcml2aWxlZ2VkIGNvbnRh
-aW5lcnMgYW55bW9yZSAoZHVlIHRvIGEgbmV0d29yayBlcnJvcikuIEFjY29y
-ZGluZyB0byBEZWJpYW4ncyB0cmFja2VyIHBhZ2UgZm9yIGx4YywgdGhlIHZl
-cnNpb24gdGhhdCBJIGhhdmUgaW5zdGFsbGVkIGZyb20gYmFja3BvcnRzIGlz
-IDIuMC43LTEsIHdoaWNoIGRvZXMgbm90IGluY2x1ZGUgbGF0ZXN0IHVwc3Ry
-ZWFtIGZpeGVzLiBJIGd1ZXNzIHRoYXQgSSBoYXZlIHRvIHdhaXQgZm9yIHRo
-ZSAyLjAuNy0yIHBhY2thZ2UgLSB3aGljaCBpbmNsdWRlcyBsYXRlc3QgdXBz
-dHJlYW0gZml4ZXMgLSB0byBsYW5kIGluIGplc3NpZS1iYWNrcG9ydHMgZm9y
-IHRoZXNlIGlzc3VlcyAoYm90aCBzZWN1cml0eSBhbmQgZnVuY3Rpb25hbCkg
-dG8gYmUgZml4ZWQuCgpDQy1pbmcgdGhlIERlYmlhbiBhZGRyZXNzIGZvciB0
-aGlzIGJ1ZywgYXMgdGhleSBleHBsaWNpdGx5IGFza2VkIHRvIGRvIHRoaXMg
-aW4gY2FzZSB0aGVyZSBpcyBhIG5lZWQgdG8gcmVvcGVuIHRoZSBEZWJpYW4g
-YnVnLCB3aGljaCBzZWVtcyB0byBiZSB0aGUgY2FzZSBoZXJlIChhdCBsZWFz
-dCwgZm9yIEplc3NpZSwgc2luY2UgdGhlIGludGVybWVkaWFyeSAyLjAuNy0x
-IC5kZWIgYXBwYXJlbnRseSBicmVha3MgdW5wcml2aWxlZ2VkIG5ldHdvcmtp
-bmcsIGJlc2lkZXMgbm90IGZpeGluZyB0aGUgc2VjdXJpdHkgaXNzdWUpLgpU
-byB0aGUgRGViaWFuIHRlYW0gaW4gY2hhcmdlIG9mIHRoaXMgYnVnOgpBcyB1
-bnByaXZpbGVnZWQgbW9kZSBpcyBub3QgYWN0aXZhdGVkIGJ5IGRlZmF1bHQg
-b24gRGViaWFuLCBJIHVuZGVyc3RhbmQgdGhhdCB0aGlzIGlzIG5vdCBhIHBy
-aW9yaXR5LCBidXQgaXQgd291bGQgc3RpbGwgYmUgbmljZSB0byBoYXZlIHRo
-aXMgZml4ZWQgcXVpY2tseS4KQnkgdGhlIHdheSwgbm90IGRpcmVjdGx5IHJl
-bGF0ZWQgdG8gdGhpcyBzcGVjaWZpYyBidWcsIGJ1dCBJIGhvcGUgdGhhdCBz
-bmFwZCArIExYRCBzb21laG93IGZpbmRzIGl0cyB3YXkgaW50byBqZXNzaWUt
-YmFja3BvcnRzOiB0aGF0IHdvdWxkIGJlIGdyZWF0IQoKU3RpZXBhbgoKLS0t
-LS0tLS0gT3JpZ2luYWwgTWVzc2FnZSAtLS0tLS0tLQpTdWJqZWN0OiBSZTog
-W29zcy1zZWN1cml0eV0gTFhDOiBDVkUtMjAxNy01OTg1OiBseGMtdXNlci1u
-aWMgZGlkbid0IHZlcmlmeSBuZXR3b3JrIG5hbWVzcGFjZSBvd25lcnNoaXAK
-TG9jYWwgVGltZTogMTQgTWFyY2ggMjAxNyAyOjA2IEFNClVUQyBUaW1lOiAx
-NCBNYXJjaCAyMDE3IDAxOjA3CkZyb206IHR5aGlja3NAY2Fub25pY2FsLmNv
-bQpUbzogb3NzLXNlY3VyaXR5QGxpc3RzLm9wZW53YWxsLmNvbQpTdMOpcGhh
-bmUgR3JhYmVyIDxzdGdyYWJlckB1YnVudHUuY29tPiwgc2VyZ2UuaGFsbHlu
-QHVidW50dS5jb20KCk9uIDAzLzEwLzIwMTcgMDY6MDMgQU0sIFN0aWVwYW4g
-d3JvdGU6Cj4gSSBkb24ndCBrbm93IHdoZXRoZXIgdGhhdCBpcyB0aGUgc2Ft
-ZSBidWcsIG9yIGEgcmVsYXRlZCBvbmUsIGJ1dCBvbiBEZWJpYW44IHVzaW5n
-IExYQyBmcm9tIGplc3NpZS1iYWNrcG9ydHMsIHNldHRpbmcgdGhlIGRlZmF1
-bHQgcm91dGUgaW4gYSBjb250YWluZXIgYWZmZWN0cyB0aGUgaG9zdCAtIG5h
-bWVseSwgZnJvbSBhbiB1bnByaXYuIGNvbnRhaW5lciwgc2V0dGluZyB0aGUg
-cm91dGUgc2V0cyB0aGUgaG9zdCdzIHJvdXRlIGFzIHdlbGwuCj4gbHhjLWlu
-Zm8gLS12ZXJzaW9uIG91dHB1dHMgMi4wLjYgYW5kIG5vIHVwZGF0ZSBpcyBj
-dXJyZW50bHkgYXZhaWxhYmxlIChvbiBEZWJpYW4pLgoKVGhhbmtzIGZvciB0
-aGUgcmVwb3J0LiBJIGp1c3QgdHJpZWQgdG8gcmVwcm9kdWNlIHRoZSBpc3N1
-ZSBvbiBVYnVudHUKMTYuMDQgd2l0aCAyLjAuNy0wdWJ1bnR1MX4xNi4wNC4y
-LCB3aGljaCBpcyB0aGUgcGFja2FnZSBwYXRjaGVkIGZvciB0aGUKaXNzdWUg
-dGhhdCBJIGFubm91bmNlZCBpbiB0aGlzIHRocmVhZC4gSSBjb3VsZG4ndCBy
-ZXByb2R1Y2UgaXQuCgpJIHRoZW4gaW5zdGFsbGVkIGFuIG9sZCAyLjAuNiBi
-YXNlZCBkZWIgKDIuMC42LTB1YnVudHUxfnVidW50dTE2LjA0LjEpCmFuZCBz
-dGlsbCBjb3VsZG4ndCByZXByb2R1Y2UgaXQuCgpJJ2Qgc3VnZ2VzdCBvcGVu
-aW5nIGFuIHVwc3RyZWFtIGJ1ZyBoZXJlOgoKaHR0cHM6Ly9naXRodWIuY29t
-L2x4Yy9seGMvaXNzdWVzL25ldwoKKE5vcm1hbGx5LCB0aGV5IHByZWZlciBw
-cml2YXRlIHNlY3VyaXR5IGJ1Z3Mgb24gTGF1bmNocGFkIGJ1dCB5b3VyCnJl
-cG9ydCB0byB0aGlzIGxpc3QgaXMgYWxyZWFkeSBwdWJsaWMgc28gSSBkb24n
-dCBzZWUgYSBuZWVkLikKClR5bGVyCgo+IFN0aWVwYW4KPgo+Cj4KPiAtLS0t
-LS0tLSBPcmlnaW5hbCBNZXNzYWdlIC0tLS0tLS0tCj4gU3ViamVjdDogW29z
-cy1zZWN1cml0eV0gTFhDOiBDVkUtMjAxNy01OTg1OiBseGMtdXNlci1uaWMg
-ZGlkbid0IHZlcmlmeSBuZXR3b3JrIG5hbWVzcGFjZSBvd25lcnNoaXAKPiBM
-b2NhbCBUaW1lOiA5IE1hcmNoIDIwMTcgNTo1NCBQTQo+IFVUQyBUaW1lOiA5
-IE1hcmNoIDIwMTcgMTY6NTUKPiBGcm9tOiB0eWhpY2tzQGNhbm9uaWNhbC5j
-b20KPiBUbzogb3NzLXNlY3VyaXR5QGxpc3RzLm9wZW53YWxsLmNvbQo+IFN0
-w6lwaGFuZSBHcmFiZXIgPHN0Z3JhYmVyQHVidW50dS5jb20+Cj4KPiBKYW5u
-IEhvcm4gZGlzY292ZXJlZCB0aGF0IHRoZSBseGMtdXNlci1uaWMgcHJvZ3Jh
-bSBjb3VsZCBiZSB0cmlja2VkIGludG8KPiBvcGVyYXRpbmcgb24gYSBuZXR3
-b3JrIG5hbWVzcGFjZSBvdmVyIHdoaWNoIHRoZSBjYWxsZXIgZGlkIG5vdCBo
-b2xkCj4gcHJpdmlsZWdlLgo+Cj4gVGhlIGJlaGF2aW9yIGRpZG4ndCBmb2xs
-b3cgd2hhdCB3YXMgZG9jdW1lbnRlZCBpbiB0aGUgbHhjLXVzZXItbmljKDEp
-Cj4gbWFuIHBhZ2U6Cj4KPiBJdCBlbnN1cmVzIHRoYXQgdGhlIGNhbGxpbmcg
-dXNlciBpcyBwcml2aWxlZ2VkIG92ZXIgdGhlIG5ldHdvcmsKPiBuYW1lc3Bh
-Y2UgdG8gd2hpY2ggdGhlIGludGVyZmFjZSB3aWxsIGJlIGF0dGFjaGVkLgo+
-Cj4gVGhpcyBpc3N1ZSBpcyBDVkUtMjAxNy01OTg1Lgo+Cj4gaHR0cHM6Ly9s
-aXN0cy5saW51eGNvbnRhaW5lcnMub3JnL3BpcGVybWFpbC9seGMtdXNlcnMv
-MjAxNy1NYXJjaC8wMTI5MjUuaHRtbAo+IGh0dHBzOi8vbGF1bmNocGFkLm5l
-dC9idWdzLzE2NTQ2NzYKPiBodHRwczovL2dpdGh1Yi5jb20vbHhjL2x4Yy9j
-b21taXQvMTZhZjIzODAzNmE1NDY0YWU4ZjI0MjBlZDNhZjIxNGYwZGU4NzVm
-OQo+Cj4gVHlsZXIKPg==
+Hi,
 
---b1_a5fcbcea53ed4c05d9e48c708f5463dc--
+I recently discovered that the python bug tracker had a trivial
+reflected Cross Site Scripting vulnerability on the 404 error page.
 
+It essentially just reflected the URL path, so anything like
+http://hostname/<img src=3Dx onerror=3Dalert(1)>
+(properly URL-encoded, but browsers do this automatically)
+would result in XSS.
+
+The software python is using here is the Roundup issue tracker, it's
+been reported there as well [2] and fixed in their repo (but no release
+yet).
+
+[1] https://github.com/python/bugs.python.org/issues/34
+[2] https://issues.roundup-tracker.org/issue2551035
+
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
+
+mail/jabber: hanno@hboeck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
