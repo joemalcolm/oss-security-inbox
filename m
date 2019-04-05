@@ -1,68 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/06/3
-Message-ID: <377cba1a-3a0a-214d-7dcc-3c7058ff9fbb@nebelwelt.net>
-Date: Wed, 6 Mar 2019 21:35:17 +0100
-From: Mathias Payer <mathias.payer@...elwelt.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/05/1
+Message-ID: <20190405114501.1bb98c2a@computer>
+Date: Fri, 5 Apr 2019 11:45:01 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Transient execution attacks leveraging port contention
+Subject: XSS in roundup bug tracker 404 page
 Content-Type: text/plain; charset=utf-8
 
-Hi there,
+Hi,
 
-# Intro
+I recently discovered that the python bug tracker had a trivial
+reflected Cross Site Scripting vulnerability on the 404 error page.
 
-We (a team of researchers from EPFL and IBM Research) are releasing details
-about a new transient execution attack that leaks secrets from an uncooperating
-process through a combination of speculative execution (we use branch target
-injection) and port contention (for SMT threads).
+It essentially just reflected the URL path, so anything like
+http://hostname/<img src=x onerror=alert(1)>
+(properly URL-encoded, but browsers do this automatically)
+would result in XSS.
 
+The software python is using here is the Roundup issue tracker, it's
+been reported there as well [2] and fixed in their repo (but no release
+yet).
 
-# SMoTherSpecre
+[1] https://github.com/python/bugs.python.org/issues/34
+[2] https://issues.roundup-tracker.org/issue2551035
 
-We introduce SMoTher, a port-based side channel that leaks information on what
-instruction sequences were executed by the victim due to port contention. We
-precisely characterize and measure this side channel.
+-- 
+Hanno Böck
+https://hboeck.de/
 
-Second, we combine SMoTher with a speculative execution attack to leak register
-values or memory values (that are likely in caches). We call the combined side
-channel SMoTherSpectre.
-
-Our attack requires two gadgets: a BTI gadget that speculatively redirects
-execution to a SMoTher gadgets that, through port contention, leaks which branch
-was taken. By competing for execution ports, the attacker measures if the JCC in
-the SMoTher gadget was either taken or not taken (based on the execution
-profiles of either branch).
-
-We first analyze the capabilities of this transient execution attack and find
-that we can guess one bit with 60% probability (on one try) and 98% probability
-(on 9 tries). Second, we target OpenSSL where we leverage an indirect call that
-selects the cipher to encrypt/decrypt as BTI target to compare individual bytes
-of the plaintext to zero (through a SMoTher gadget).
-
-See the blog post for more details:
-  http://nebelwelt.net/blog/20190306-SMoTherSpectre.html
-The paper draft is at: https://arxiv.org/abs/1903.01843
-The PoC is at: https://github.com/HexHive/SMoTherSpectre
-In our PoC we target Intel Skylake 6700 CPUs.
-
-
-# Disclosure
-
-We discovered SMoTher in June 2018 and SMoTherSpectre in November 2018. We
-disclosed the details and PoC to Intel early December 2018. Our IBM research
-collaborators finished the internal disclosure process on February 28.
-
-
-# Credit
-
-Atri Bhattacharyya, Alexandra Sandulescu, Matthias Neugschwandtner, Alessandro
-Sorniotti, Babak Falsafi, Mathias Payer, and Anil Kurmus
-
-As always, feedback, comments, and discussions are welcome.
-
-Best,
-Mathias (and all collaborators)
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
