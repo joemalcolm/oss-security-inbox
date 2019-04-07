@@ -1,127 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/05/3
-Message-Id: <E1h194f-0001Hh-2I@xenbits.xenproject.org>
-Date: Tue, 05 Mar 2019 12:21:33 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 291 v2 - x86/PV: page type reference counting issue with failed IOMMU update
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/07/1
+Message-ID: <20190407093032.syufxuqogu7oul54@tunkki.bugs.fi>
+Date: Sun, 7 Apr 2019 12:30:32 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: Re: XSS in roundup bug tracker 404 page
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-                    Xen Security Advisory XSA-291
-                              version 2
+On Fri, Apr 05, 2019 at 11:45:01AM +0200, Hanno Böck wrote:
+> I recently discovered that the python bug tracker had a trivial
+> reflected Cross Site Scripting vulnerability on the 404 error page.
+> 
+> It essentially just reflected the URL path, so anything like
+> http://hostname/<img src=x onerror=alert(1)>
+> (properly URL-encoded, but browsers do this automatically)
+> would result in XSS.
+> 
+> The software python is using here is the Roundup issue tracker, it's
+> been reported there as well [2] and fixed in their repo (but no release
+> yet).
+> 
+> [1] https://github.com/python/bugs.python.org/issues/34
+> [2] https://issues.roundup-tracker.org/issue2551035
 
-  x86/PV: page type reference counting issue with failed IOMMU update
+MITRE assigned CVE-2019-10904 for this vulnerability.
 
-UPDATES IN VERSION 2
-====================
-
-Metadata updated to remove dependency on XSA-283.
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-When an x86 PV domain has a passed-through PCI device assigned, IOMMU
-mappings may need to be updated when the type of a particular page
-changes.  Such an IOMMU operation may fail.  In the event of failure,
-while at present the affected guest would be forcibly crashed, the
-already recorded additional type reference was not dropped again.  This
-causes a bug check to trigger while cleaning up after the crashed
-guest.
-
-IMPACT
-======
-
-Malicious or buggy x86 PV guest kernels can mount a Denial of Service
-(DoS) attack affecting the whole system.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen versions from 4.8 onwards are vulnerable.
-
-Only x86 systems are vulnerable.  ARM systems are not vulnerable.
-
-Only x86 PV guests can exploit the vulnerability.  x86 HVM and PVH
-guests cannot exploit the vulnerability.
-
-Only guests which are assigned a physical device can exploit this
-vulnerability.  Guests which are not assigned physical devices cannot
-exploit this vulnerability.
-
-MITIGATION
-==========
-
-Running only HVM or PVH guests avoids the vulnerability.
-
-Not passing through PCI devices to PV guests also avoids the
-vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Igor Druzhinin and Andrew Cooper of Citrix.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa291.patch           xen-unstable
-xsa291-4.11.patch      Xen 4.11.x, Xen 4.10.x
-xsa291-4.9.patch       Xen 4.9.x, Xen 4.8.x
-
-$ sha256sum xsa291*
-01883c11ae45a5771644270445e463538a61d98c66adbba852de74ccd272eae9  xsa291.meta
-fb5f2a75ba113f21e9cb2dfbc22520495c69a4fef631c030a4834c680045e587  xsa291.patch
-299bb4913e7ddb46ce90f415f91ee5e5480050631281c87e1a764b66fb116d89  xsa291-4.9.patch
-16087ba5c59b9644f4f61c0c7fa124d9e04e88089b235aaae91daa04cdf1b8a1  xsa291-4.11.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
+- -- 
+Henri Salo
 -----BEGIN PGP SIGNATURE-----
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAlx+aa4MHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZ7uEH+gKbe8qOoIa8/xDC1rOH5H+BNvjCSfuov4EUPsJ1
-3DUPNSa3jCHTlX89+BwI+uOis3vHuQYBw/k9QYfx6nG617bu3/dUYiWlnE/DpPzm
-zur3McHNigWCXOYsrNlgnOncXixJIRcIlMJNudejzaFwnW9PDA8ZZ5r3UiTLY0fT
-wySjAL0cpMztmU7PfYAPib97JAM/+GHGiwjjumaaIvF3WnIADJ26HpmtiKELMwOh
-7o53kTUPFutLq4McsbcrxLRhwSOsBfhPN1mb4Y0QFUP7yStFpNOmzppu8mLuewhE
-+PqJ0OQqqCx8hz/3TEDO59JUlH7Iwo4B3Eykhb5BqoSQHrY=
-=iq8p
+iQIzBAEBCAAdFiEE/aVSDznAZReWTkxKJ633pE6qdXQFAlypwzcACgkQJ633pE6q
+dXTd0hAAp4/CcLcf1EAEkk3OjPwYTmCWb35N/NeWV3YsK/c+iqAu9U+4zqhuFqqC
+hzCjW5/4wGrZPsjQhNGlRiXo+dNmh3mDdO7wGXMe5rDCR60MDS+95WjBu53nf8pO
+L1DSZOohH216w6dzlGjyzXuqhYN5j3lOBPi5Eib4zAzYxBq0uEOkj7LKgZxWY8H2
+zR63LlDgSlzntB2vITRxQ0H84YFO3MWq5j8wokbozdLS8CwGmgb9gr0BrHfE2QqU
+x11h38sfErrbEe9fVLeHvPqeOr3kw/S3mKNtuu48uaiEczMpTKca6d7oeSJiPkw7
+4z12A80sdQHp95hXWZAGe3gmLAJDMx5k00uuCbTMvuU6fZT8DGIxf93IoqF4fzjM
++HT/7CWdY+Itf9c5JcibE7eAMCmXRI5AFtrS3ClpPU+vAf3ZXwJsnJuIsBZr3xl/
+xfKCKW3bkK6O8ZF4YEP8dy/SQDnJV59YIR3MAsrV6DiJEh+6WVV+ca8c4AF99zt1
+Q6xrZbxkphQuUdgNNGjLbu4kPoc1e/E711QyqYW+5uzCQsl5kqcB1Xe8ZzlH1mo1
+298a8TW6HyL3+W22pu+Wz6vp7/KWf7AL5mPJMt460jvNsvIcpcj9+tV2OZMF9ufK
+8yHVUEHMND3DAew6Hc4ZYcIr1nfanDL3aO79sPi8lPSeyE0WApo=
+=9EYa
 -----END PGP SIGNATURE-----
-
-Download attachment "xsa291.meta" of type "application/octet-stream" (1790 bytes)
-
-Download attachment "xsa291.patch" of type "application/octet-stream" (1829 bytes)
-
-Download attachment "xsa291-4.9.patch" of type "application/octet-stream" (1863 bytes)
-
-Download attachment "xsa291-4.11.patch" of type "application/octet-stream" (1847 bytes)
