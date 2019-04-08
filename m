@@ -1,31 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/02/3
-Message-ID: <20190902142521.GI28748@suse.com>
-Date: Mon, 2 Sep 2019 16:25:21 +0200
-From: Johannes Segitz <jsegitz@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: MITRE response time
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/08/1
+Message-ID: <nycvar.YSQ.7.76.1904081004200.6584@xnncv>
+Date: Mon, 8 Apr 2019 10:07:52 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Marc Orr <marcorr@...gle.com>
+Subject: CVE-2019-3887 Kernel: KVM: nVMX: guest accesses L0 MSR causes potential DoS
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Sep 02, 2019 at 04:15:02PM +0200, Heiko Schlittermann wrote:
-> what is your experience with MITRE's response time to an CVE request?
+   Hello,
 
-Usually one or two days
+A flaw was found in the way KVM hypervisor handled x2APIC Machine Specific 
+Rregister(MSR) access with nested(=1) virtualization enabled. In that, L1 
+guest could access L0's APIC register values via L2 guest, when 'virtualize 
+x2APIC mode' is enabled.
 
-> Last thursday I requested a CVE on behalf of a project I'm involved in
-> (and which is not covered by any of the CNAs listed on
-> https://cve.mitre.org/cve/request_id.html.
-> 
-> Where do you request CVEs for projects not listed there?
+A guest could use this flaw to potentially crash the host kernel resulting in 
+DoS issue.
 
-Directly from MITRE: https://cveform.mitre.org/
+Upstream patches:
+-----------------
+   -> https://git.kernel.org/pub/scm/virt/kvm/kvm.git/commit/?id=acff78477b9b4f26ecdf65733a4ed77fe837e9dc
+   -> https://git.kernel.org/pub/scm/virt/kvm/kvm.git/commit/?id=c73f4c998e1fd4249b9edfa39e23f4fda2b9b041
 
-Johannes
--- 
-GPG Key E7C81FA0       EE16 6BCE AD56 E034 BFB3  3ADD 7BF7 29D5 E7C8 1FA0
-Subkey fingerprint:    250F 43F5 F7CE 6F1E 9C59  4F95 BC27 DD9D 2CC4 FD66
-SUSE Software Solutions Germany GmbH, Maxfeldstr. 5, 90409 Nuernberg
-Geschäftsführer: Felix Imendörffer (HRB 247165, AG München)
+This issue was discovered by Marc Orr of Google Inc.
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
