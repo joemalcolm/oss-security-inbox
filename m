@@ -1,57 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/08/1
-Message-ID: <4d3798e1-7fb4-7524-7a53-8465caaf71b3@beuc.net>
-Date: Sun, 8 Sep 2019 01:18:02 +0200
-From: Sylvain Beucler <beuc@...c.net>
-To: oss-security@...ts.openwall.com, akuster <akuster@...sta.com>
-Subject: Re: Re: CVE-2019-15846: Exim - local or remote attacker can execute programs with root privileges.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/09/1
+Message-ID: <CAHmME9qiC2+1T3zGtgt43ibCzzm-+=VGwUMAWPJcWjgOGDfN6w@mail.gmail.com>
+Date: Tue, 9 Apr 2019 02:26:07 +0200
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: DLL injection in Go < 1.12.2 [CVE-2019-9634]
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hey folks,
 
-Check this thread:
-https://www.openwall.com/lists/oss-security/2019/07/22/3
-https://www.openwall.com/lists/oss-security/2019/07/22/8
+Golang before 1.12.2 linked against various DLLs that were
+same-directory injectable and generally its library loading mechanism
+did not use LoadLibraryEx, allowing the classic DLL injection attacks,
+especially with regards to executables saved to the Downloads/ folder
+[1]. It was assigned CVE-2019-9634 and fixed in [2] and [3]. It wasn't
+mentioned in the 1.12.2 release notes, so I'm mentioning it here
+instead.
 
-Cheers!
+Jason
 
-On 07/09/2019 01:33, akuster wrote:
->
-> On 9/5/19 11:00 PM, Heiko Schlittermann wrote:
->> [ This is a re-post w/o dmarc protection of the sender (me). ]
->>
->> *** Note: EMBARGO is still in effect!       ***
-> If this is true, why is this on the public list?
->
->> *** Distros must not publish any detail yet ***
->
->
-> - armin
->> In case you are entitled to access the security repo:
->> *and* use the 4.92.2+fixes branch:
->>
->> The branch got two new commits, fixing a small tool. This tool is not
->> designed to process untrusted data, so there is no security issue, but
->> it was buggy. It is unlikely to be critical.
->>
->> You may consider including the fix in the packages to be
->> released at CRD (today, 10.00 UTC) or schedule it for a later
->> maintainance release of the Exim packages.
->>
->> commit cdc7f9a9667ecf31d803fc8d1a31b466284360bd
->> Author: Heiko Schlittermann (HS12-RIPE) <hs@...littermann.de>
->> Date:   Fri Sep 6 06:57:11 2019 +0200
->>
->> commit 66935633816a88460f5222f40dc29d1a4e877978
->> Author: Heiko Schlittermann (HS12-RIPE) <hs@...littermann.de>
->> Date:   Thu Sep 5 14:56:22 2019 +0200
->>
->>     Best regards from Dresden/Germany
->>     Viele Grüße aus Dresden
->>     Heiko Schlittermann
->> --
->>  SCHLITTERMANN.de ---------------------------- internet & unix support -
->>  Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
->>  gnupg encrypted messages are welcome --------------- key ID: F69376CE -
->>  ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
->
+[1] https://user-images.githubusercontent.com/10643/53921755-eb9e1a00-4071-11e9-83a7-058ceb008e55.gif
+[2] https://github.com/golang/go/commit/9b6e9f0c8c66355c0f0575d808b32f52c8c6d21c
+[3] https://github.com/golang/sys/commit/10058d7d4faa7dd5ef860cbd31af00903076e7b8
