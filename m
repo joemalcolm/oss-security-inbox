@@ -1,40 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/15/1
-Message-ID: <fe819c2d-81fa-bd20-f700-bad3e05753b7@gentoo.org>
-Date: Tue, 15 Oct 2019 10:49:13 +0200
-From: Kristian Fiskerstrand <k_f@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/10/3
+Message-ID: <20190410151445.GB5686@w1.fi>
+Date: Wed, 10 Apr 2019 18:14:45 +0300
+From: Jouni Malinen <j@...fi>
 To: oss-security@...ts.openwall.com
-Cc: Gentoo Security <security@...too.org>
-Subject: Re: Statistics for distros lists updated for 2019Q3
+Subject: wpa_supplicant/hostapd: EAP-pwd side-channel attack
 Content-Type: text/plain; charset=utf-8
 
-On 13.10.2019 13:13, Kristian Fiskerstrand wrote:
-> Hi,
-> 
-> The statistics for the distros list have been updated for the 3rd
-> quarter of 2019 at
-> http://oss-security.openwall.org/wiki/mailing-lists/distros/stats
-> 
-> Data rows not included in calculation due to negative embargos are now
-> marked in data with "ND" in the calculated columns.
-> 
-> Adding the median is not done at this point to make sure the updated
-> figures are available. It turns out to not be quite as easy as I first
-> projected given LibreOffice doesn't have a median counterpart to
-> [AVERAGEIFS] so I likely need to use some array formula instead, so I'll
-> do that as a separate update when I get around to it.
-> 
-> References:
-> [AVERAGEIFS]
-> https://help.libreoffice.org/Calc/AVERAGEIFS_function
+Published: April 10, 2019
+Identifiers:
+- CVE-2019-9495 (cache attack against EAP-pwd)
+Latest version available from: https://w1.fi/security/2019-2/
 
-Medians are now added.
+Vulnerability
+
+Number of potential side channel attacks were recently discovered in the
+SAE implementations used by both hostapd and wpa_supplicant (see
+security advisory 2019-1 and VU#871675). EAP-pwd uses a similar design
+for deriving PWE from the password and while a specific attack against
+EAP-pwd is not yet known to be tested, there is no reason to believe
+that the EAP-pwd implementation would be immune against the type of
+cache attack that was identified for the SAE implementation. Since the
+EAP-pwd implementation in hostapd (EAP server) and wpa_supplicant (EAP
+peer) does not support MODP groups, the timing attack described against
+SAE is not applicable for the EAP-pwd implementation.
+
+A novel cache-based attack against SAE handshake would likely be
+applicable against the EAP-pwd implementation. Even though the
+wpa_supplicant/hostapd PWE derivation iteration for EAP-pwd has
+protections against timing attacks, this new cache-based attack might
+enable an attacker to determine which code branch is taken in the
+iteration if the attacker is able to run unprivileged code on the victim
+machine (e.g., an app installed on a smart phone or potentially a
+JavaScript code on a web site loaded by a web browser). This depends on
+the used CPU not providing sufficient protection to prevent unprivileged
+applications from observing memory access patterns through the shared
+cache (which is the most likely case with today's designs).
+
+The attacker could use information about the selected branch to learn
+information about the password and combine this information from number
+of handshake instances with an offline dictionary attack. With
+sufficient number of handshakes and sufficiently weak password, this
+might result in full recovery of the used password if that password is
+not strong enough to protect against dictionary attacks.
+
+This attack requires the attacker to be able to run a program on the
+target device. This is not commonly the case on an authentication server
+(EAP server), so the most likely target for this would be a client
+device using EAP-pwd.
+
+The commits listed in the end of this advisory change the EAP-pwd
+implementation shared by hostapd and wpa_supplicant to perform the PWE
+derivation loop using operations that use constant time and memory
+access pattern to minimize the externally observable differences from
+operations that depend on the password even for the case where the
+attacker might be able to run unprivileged code on the same device.
+
+
+Vulnerable versions/configurations
+
+All wpa_supplicant and hostapd versions with EAP-pwd support
+(CONFIG_EAP_PWD=y in the build configuration and EAP-pwd being enabled
+in the runtime configuration).
+
+It should also be noted that older versions of wpa_supplicant/hostapd
+prior to v2.7 did not include additional protection against certain
+timing differences. The definition of the EAP-pwd (RFC 5931) does not
+describe such protection, but the same issue that was addressed in SAE
+earlier can be applicable against EAP-pwd as well and as such, that
+implementation specific extra protection (commit 22ac3dfebf7b, "EAP-pwd:
+Mask timing of PWE derivation") is needed to avoid showing externally
+visible timing differences that could leak information about the
+password. Any uses of older wpa_supplicant/hostapd versions with EAP-pwd
+are recommended to update to v2.7 or newer in addition to the mitigation
+steps listed below for the more recently discovered issue.
+
+
+Possible mitigation steps
+
+- Merge the following commits to wpa_supplicant/hostapd and rebuild:
+
+  OpenSSL: Use constant time operations for private bignums
+  Add helper functions for constant time operations
+  OpenSSL: Use constant time selection for crypto_bignum_legendre()
+  EAP-pwd: Use constant time and memory access for finding the PWE
+
+  These patches are available from https://w1.fi/security/2019-2/
+
+- Update to wpa_supplicant/hostapd v2.8 or newer, once available
+
+- Use strong passwords to prevent dictionary attacks
 
 -- 
-Kristian Fiskerstrand
-OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
-fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Jouni Malinen                                            PGP id EFC895FA
