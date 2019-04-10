@@ -1,4 +1,9 @@
-Received: (qmail 15931 invoked by uid 550); 19 Apr 2023 15:20:51 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1505" "Wednesday" "10" "April" "2019" "18:15:34" "+0300" "Jouni Malinen" "j@w1.fi" nil "42" nil nil nil nil "4" nil nil (number mark "U       j@w1.fi      Apr 10   42/1505  " thread-indent "\"[oss-security] hostapd: SAE confirm missing state validation\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] hostapd: SAE confirm missing state validation" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 12077 invoked by uid 550); 10 Apr 2019 15:15:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,69 +12,56 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 8016 invoked from network); 19 Apr 2023 15:11:40 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1681917089; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=2EW2z4TLb50h4gIMB7npPYwPj0PfN76MzpU/fmRRrVw=;
-	b=qD7e0i4zT3i2BYFpM0h8I7a46+Iwq4mdHLllOTmdr24TedmBbD/b4OR68u73CxW24oYk8M
-	DiFgDBu2CmOsjco+Xy4NuVm9NdyH1hpGRZQTXzoqOnXVKFGPPXh4ftK4uO5mBtm7VMWzVp
-	tdZIVJY1RfTbU1VoRaXeO2mJi3EeW4o=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1681917089;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=2EW2z4TLb50h4gIMB7npPYwPj0PfN76MzpU/fmRRrVw=;
-	b=u+Id+OJJRTppeh+IYRwWqD1qFSoK6R7S/SCpJ809zd2vkN+RnVCPQ/1Eb3PelOPPad1eOG
-	cgkba4BRcs/gsCDg==
-Message-ID: <eff48e8f-cb22-bda0-772b-d9c9c5f16fbc@suse.de>
-Date: Wed, 19 Apr 2023 17:11:28 +0200
+Received: (qmail 12015 invoked from network); 10 Apr 2019 15:15:48 -0000
+X-Virus-Scanned: Debian amavisd-new at w1.fi
+Date: Wed, 10 Apr 2019 18:15:34 +0300
+From: Jouni Malinen <j@w1.fi>
+To: oss-security@lists.openwall.com
+Message-ID: <20190410151534.GC5686@w1.fi>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Content-Language: en-US
-To: "Jonathan Bar Or (JBO)" <jobaror@microsoft.com>
-References: <SN6PR00MB044717AE269F0AABB8456C86A89BA@SN6PR00MB0447.namprd00.prod.outlook.com>
-Cc: oss-security@lists.openwall.com
-From: =?UTF-8?Q?Carlos_L=c3=b3pez?= <clopez@suse.de>
-In-Reply-To: <SN6PR00MB044717AE269F0AABB8456C86A89BA@SN6PR00MB0447.namprd00.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Subject: Re: [oss-security] ncurses fixes upstream
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Subject: [oss-security] hostapd: SAE confirm missing state validation
 
-Hi,
+Published: April 10, 2019
+Identifiers:
+- CVE-2019-9496 (SAE confirm missing state validation in hostapd/AP)
+Latest version available from: https://w1.fi/security/2019-3/
 
-On 12/4/23 22:40, Jonathan Bar Or (JBO) wrote:
-> Hello oss-security,
-> 
-> Our team has worked with the maintainer of the ncurses library (used by several software packages in Linux) to fix several memory corruption vulnerabilities.
-> They are now fixed at commit 20230408 - see details here (https://invisible-island.net/ncurses/NEWS.html#index-t20230408)
-> A CVE was assigned (CVE-2023-29491) - it's still under a "reserved" status.
+Vulnerability
 
-Are there any plans to disclose any proofs of concept to test these
-issues? From the distro side these are not only useful to check which
-ncurses snapshots we need to fix, but also for our QA teams to test the
-update and detect regressions.
+When hostapd is used to operate an access point with SAE (Simultaneous
+Authentication of Equals; also known as WPA3-Personal), an invalid
+authentication sequence could result in the hostapd process terminating
+due to a NULL pointer dereference when processing SAE confirm
+message. This was caused by missing state validation steps when
+processing the SAE confirm message in hostapd/AP mode.
 
-For example, we are not sure if the build option
-`--disable-root-environ` does anything to mitigate the issues.
+Similar cases against the wpa_supplicant SAE station implementation had
+already been tested by the hwsim test cases, but those sequences did not
+trigger this specific code path in AP mode which is why the issue was
+not discovered earlier.
 
-> How can we ensure those fixes get deployed upstream, in major Linux distributions?
-> We've reached out to Arch, RedHat, Canonical and other popular distros independently.
-> 
-> Thanks!
->                               JBO
+An attacker in radio range of an access point using hostapd in SAE
+configuration could use this issue to perform a denial of service attack
+by forcing the hostapd process to terminate.
 
-For what is worth, we have not been contacted, as far as I can tell.
 
-Best,
-Carlos
+Vulnerable versions/configurations
+
+All hostapd versions with SAE support (CONFIG_SAE=y in the build
+configuration and SAE being enabled in the runtime configuration).
+
+
+Possible mitigation steps
+
+- Merge the following commit to hostapd and rebuild:
+
+  SAE: Fix confirm message validation in error cases
+
+  These patches are available from https://w1.fi/security/2019-3/
+
+- Update to hostapd v2.8 or newer, once available
 
 -- 
-Carlos López
-Security Engineer
-SUSE Software Solutions
+Jouni Malinen                                            PGP id EFC895FA
