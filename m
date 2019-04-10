@@ -1,4 +1,9 @@
-Received: (qmail 11452 invoked by uid 550); 22 Dec 2023 12:11:06 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4210" "Wednesday" "10" "April" "2019" "18:14:45" "+0300" "Jouni Malinen" "j@w1.fi" nil "86" nil nil nil nil "4" nil nil (number mark "U       j@w1.fi      Apr 10   86/4210  " thread-indent "\"[oss-security] wpa_supplicant/hostapd: EAP-pwd side-channel attack\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] wpa_supplicant/hostapd: EAP-pwd side-channel attack" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 5577 invoked by uid 550); 10 Apr 2019 15:15:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,85 +12,100 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11428 invoked from network); 22 Dec 2023 12:11:06 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1703247100; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=+Nt0WO4IkIVwcAFHDQlR8PeW3BZyxVaHzhhhp9bLIH8=;
-	b=TsUGMne/J17V/yo7EyDJjPhrXQ2lGgRoTg8iBLBidvx65etKwa3WbP225wG4KUUhEXWp4G
-	q9GfRQ6zbv9cqoHoUyAg1Ytugabs/FINZSLvRHGq1ZXCrPVo37Fse0j9DHoXjSlecTOGu6
-	ekzVrMfxFlzLYJG37UEBGWxQG2jbCsQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1703247100;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=+Nt0WO4IkIVwcAFHDQlR8PeW3BZyxVaHzhhhp9bLIH8=;
-	b=CzGwnEV9K4E5YNPRJiikvjups0iSCz0AHTE8HQHn+q/soATX2Y5n3sdGXID6yxBNNF3Cvh
-	kF3cHdFA/qgm7mCw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1703247098; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=+Nt0WO4IkIVwcAFHDQlR8PeW3BZyxVaHzhhhp9bLIH8=;
-	b=Su9HIdU7ZJhezJlHzQGvVfQJeeDDz/TtHcXzyPk9+I/B8IFLwLPMWXEYTaEa4ugkq527fC
-	AxsMM7EB5pMCdMJ9m4oaQnnuJYhwQwE/yfVX/970ZT4yl/gTh6cc4e/6FNChxw6oBcsDvc
-	vOaSvJ0AXztUXGv6xqa+usLg2vcrwHg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1703247098;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=+Nt0WO4IkIVwcAFHDQlR8PeW3BZyxVaHzhhhp9bLIH8=;
-	b=MICfCbPlItR/n54aaDkMjr3c7T/xISwstxrwaPlblP2z0Ro1f44XLBdRDweN+Sy9KYcwU4
-	UWOSpTC3qwofVKAQ==
-Date: Fri, 22 Dec 2023 13:11:37 +0100
-From: Marcus Meissner <meissner@suse.de>
+Received: (qmail 5506 invoked from network); 10 Apr 2019 15:15:00 -0000
+X-Virus-Scanned: Debian amavisd-new at w1.fi
+Date: Wed, 10 Apr 2019 18:14:45 +0300
+From: Jouni Malinen <j@w1.fi>
 To: oss-security@lists.openwall.com
-Message-ID: <20231222121134.GI14101@suse.de>
-References: <20231221143630.GD14101@suse.de>
- <20231221144656.GA40693@veps.esmtp.org>
- <20231222104647.GH14101@suse.de>
- <ZYVufT0sq16Z-M43@symphytum.spacehopper.org>
+Message-ID: <20190410151445.GB5686@w1.fi>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZYVufT0sq16Z-M43@symphytum.spacehopper.org>
-Organization: SUSE Software Solutions =?iso-8859-1?Q?Ger?=
- =?iso-8859-1?Q?many_GmbH=2C_Frankenstra=DFe_146=2C_90461_Nuernberg=2C_Ger?=
- =?iso-8859-1?Q?many=2C_GF=3A_Ivo_Totev=2C_Andrew_Myers=2C_Andrew_McDonald?=
- =?iso-8859-1?Q?=2C_Martje_Boudien_Moerman=2C_HRB_36809=2C_AG_N=FCrnberg?=
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Authentication-Results: smtp-out1.suse.de;
-	none
-Subject: Re: [oss-security] Re: New SMTP smuggling attack
+Subject: [oss-security] wpa_supplicant/hostapd: EAP-pwd side-channel attack
 
-On Fri, Dec 22, 2023 at 11:09:49AM +0000, Stuart Henderson wrote:
-> On 2023/12/22 11:46, Marcus Meissner wrote:
-> > Hi,
-> > 
-> > FWIW as no CVEs were to be found yet, I filed a CVE request for Postfix now.
-> > 
-> > Not sure if we need it for others like sendmail too, as that is also
-> > referenced by the security researchers.
-> 
-> I'm a little confused by sec-consult's process here. They identify a
-> problem affecting various pieces of software including some very widely
-> deployed open source software, go to the trouble of doing a coordinated
-> disclosure, but only do that with...looking at their timeline... gmx,
-> microsoft and cisco?
+Published: April 10, 2019
+Identifiers:
+- CVE-2019-9495 (cache attack against EAP-pwd)
+Latest version available from: https://w1.fi/security/2019-2/
 
-Yes its weird.
+Vulnerability
 
-I was also confused and actually only spotted the OSS software being
-affected on third read over their page.
+Number of potential side channel attacks were recently discovered in the
+SAE implementations used by both hostapd and wpa_supplicant (see
+security advisory 2019-1 and VU#871675). EAP-pwd uses a similar design
+for deriving PWE from the password and while a specific attack against
+EAP-pwd is not yet known to be tested, there is no reason to believe
+that the EAP-pwd implementation would be immune against the type of
+cache attack that was identified for the SAE implementation. Since the
+EAP-pwd implementation in hostapd (EAP server) and wpa_supplicant (EAP
+peer) does not support MODP groups, the timing attack described against
+SAE is not applicable for the EAP-pwd implementation.
 
-They also reference CERT and VINCE, but at least SUSE was not pulled
-into the VINCE issue if there was any. (as CERT has not published
-anything I am not sure there was any besides the Cisco disclosure).
+A novel cache-based attack against SAE handshake would likely be
+applicable against the EAP-pwd implementation. Even though the
+wpa_supplicant/hostapd PWE derivation iteration for EAP-pwd has
+protections against timing attacks, this new cache-based attack might
+enable an attacker to determine which code branch is taken in the
+iteration if the attacker is able to run unprivileged code on the victim
+machine (e.g., an app installed on a smart phone or potentially a
+JavaScript code on a web site loaded by a web browser). This depends on
+the used CPU not providing sufficient protection to prevent unprivileged
+applications from observing memory access patterns through the shared
+cache (which is the most likely case with today's designs).
 
-Also postfix timeline starts 4 days ago only.
-https://www.mail-archive.com/postfix-announce@postfix.org/msg00090.html
+The attacker could use information about the selected branch to learn
+information about the password and combine this information from number
+of handshake instances with an offline dictionary attack. With
+sufficient number of handshakes and sufficiently weak password, this
+might result in full recovery of the used password if that password is
+not strong enough to protect against dictionary attacks.
 
-Ciao, Marcus
+This attack requires the attacker to be able to run a program on the
+target device. This is not commonly the case on an authentication server
+(EAP server), so the most likely target for this would be a client
+device using EAP-pwd.
+
+The commits listed in the end of this advisory change the EAP-pwd
+implementation shared by hostapd and wpa_supplicant to perform the PWE
+derivation loop using operations that use constant time and memory
+access pattern to minimize the externally observable differences from
+operations that depend on the password even for the case where the
+attacker might be able to run unprivileged code on the same device.
+
+
+Vulnerable versions/configurations
+
+All wpa_supplicant and hostapd versions with EAP-pwd support
+(CONFIG_EAP_PWD=y in the build configuration and EAP-pwd being enabled
+in the runtime configuration).
+
+It should also be noted that older versions of wpa_supplicant/hostapd
+prior to v2.7 did not include additional protection against certain
+timing differences. The definition of the EAP-pwd (RFC 5931) does not
+describe such protection, but the same issue that was addressed in SAE
+earlier can be applicable against EAP-pwd as well and as such, that
+implementation specific extra protection (commit 22ac3dfebf7b, "EAP-pwd:
+Mask timing of PWE derivation") is needed to avoid showing externally
+visible timing differences that could leak information about the
+password. Any uses of older wpa_supplicant/hostapd versions with EAP-pwd
+are recommended to update to v2.7 or newer in addition to the mitigation
+steps listed below for the more recently discovered issue.
+
+
+Possible mitigation steps
+
+- Merge the following commits to wpa_supplicant/hostapd and rebuild:
+
+  OpenSSL: Use constant time operations for private bignums
+  Add helper functions for constant time operations
+  OpenSSL: Use constant time selection for crypto_bignum_legendre()
+  EAP-pwd: Use constant time and memory access for finding the PWE
+
+  These patches are available from https://w1.fi/security/2019-2/
+
+- Update to wpa_supplicant/hostapd v2.8 or newer, once available
+
+- Use strong passwords to prevent dictionary attacks
+
+-- 
+Jouni Malinen                                            PGP id EFC895FA
