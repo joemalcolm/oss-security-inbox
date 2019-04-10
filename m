@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["722" "Monday" "6" "March" "2017" "23:51:41" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1703062349510.6862@wniryva>" "25" "[oss-security] CVE-2017-6505 Qemu: usb: an infinite loop issue in ohci_service_ed_list" nil nil nil "3" "2017030618:21:41" "[oss-security] CVE-2017-6505 Qemu: usb: an infinite loop issue in ohci_service_ed_list" (number mark "U       ppandit@redh Mar  6   25/722   " thread-indent "\"[oss-security] CVE-2017-6505 Qemu: usb: an infinite loop issue in ohci_service_ed_list\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1354" "Wednesday" "10" "April" "2019" "17:05:37" "+0200" "Daniel Beck" "ml@beckweb.net" nil "36" nil nil nil nil "4" nil nil (number mark "U       ml@beckweb.n Apr 10   36/1354  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Jenkins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7757 invoked by uid 550); 6 Mar 2017 18:21:58 -0000
+Received: (qmail 7568 invoked by uid 550); 10 Apr 2019 15:05:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,42 +12,53 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7736 invoked from network); 6 Mar 2017 18:21:57 -0000
-Date: Mon, 6 Mar 2017 23:51:41 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@javelin
-To: oss security list <oss-security@lists.openwall.com>
-cc: Li Qiang <liqiang6-s@360.cn>
-Message-ID: <alpine.LFD.2.20.1703062349510.6862@wniryva>
-MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.28]); Mon, 06 Mar 2017 18:21:47 +0000 (UTC)
-Subject: [oss-security] CVE-2017-6505 Qemu: usb: an infinite loop issue in
- ohci_service_ed_list
+Received: (qmail 7550 invoked from network); 10 Apr 2019 15:05:51 -0000
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 11.5 \(3445.9.1\))
+Message-Id: <EC0A18B5-C79C-4A80-9A64-A9F143E90E75@beckweb.net>
+Date: Wed, 10 Apr 2019 17:05:37 +0200
+To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3445.9.1)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1554908751;4a2659fe;
+X-HE-SMSGID: 1hEEnD-0005nt-KA
+Subject: [oss-security] Multiple vulnerabilities in Jenkins
 
-   Hello,
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software. The following
+releases contain fixes for security vulnerabilities:
 
-Quick Emulator built with the USB OHCI Emulation support is vulnerable to an 
-infinite loop issue. It could occur while processing an endpoint list 
-descriptor in ohci_service_ed_list().
+* Jenkins weekly 2.172
+* Jenkins LTS 2.164.2
 
-A guest user/process could use this flaw to crash Qemu process resulting in 
-DoS.
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2019-04-10/
 
-Upstream patch:
----------------
-   -> http://git.qemu-project.org/?p=qemu.git;a=commitdiff;h=95ed56939eb2eaa4e2f349fe6dcd13ca4edfd8fb
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1429432
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
 
-This issue was reported by Li Qiang of 360.cn Inc.
+---
 
-'CVE-2017-6505' allocated via -> http://cveform.mitre.org/
+SECURITY-1289 / CVE-2019-1003049
+The fix for SECURITY-901 in Jenkins 2.150.2 and 2.160 did not reject 
+existing remoting-based CLI authentication caches.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+This means that users who cached their CLI authentication before Jenkins was 
+updated to 2.150.2 and newer, or 2.160 and newer, would remain authenticated.
+
+Support for the remoting-based CLI was dropped in Jenkins 2.165, so newer 
+weekly releases are not affected.
+
+
+SECURITY-1327 / CVE-2019-1003050
+The f:validateButton form control for the Jenkins UI did not properly escape 
+job URLs. This resulted in a cross-site scripting (XSS) vulnerability 
+exploitable by users with the ability to control job names.
+
