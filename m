@@ -1,45 +1,111 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/27/2
-Message-ID: <170f95aa-dd99-6dea-fc1d-113324b8f535@gentoo.org>
-Date: Sat, 27 Jul 2019 20:40:10 +0200
-From: Kristian Fiskerstrand <k_f@...too.org>
-To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
-Subject: Re: Statistics for distros lists updated for 2019Q2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/10/5
+Message-ID: <20190410151630.GD5686@w1.fi>
+Date: Wed, 10 Apr 2019 18:16:30 +0300
+From: Jouni Malinen <j@...fi>
+To: oss-security@...ts.openwall.com
+Subject: wpa_supplicant/hostapd: EAP-pwd missing commit validation
 Content-Type: text/plain; charset=utf-8
 
-On 26.07.2019 13:07, Solar Designer wrote:
-> On Fri, Jul 26, 2019 at 12:25:47PM +0200, Kristian Fiskerstrand wrote:
->> On 26.07.2019 10:16, Solar Designer wrote:
+Published: April 10, 2019
+Identifiers:
+- CVE-2019-9497 (EAP-pwd server not checking for reflection attack)
+- CVE-2019-9498 (EAP-pwd server missing commit validation for
+  scalar/element)
+- CVE-2019-9499 (EAP-pwd peer missing commit validation for
+  scalar/element)
+Latest version available from: https://w1.fi/security/2019-4/
 
-> Even if we set it to zero, it'd continue to skew the
-> averages.  So we should probably consistently exclude non-positive
-> embargo periods from the calculation of averages.  Will you, please?
-> 
+Vulnerability
 
-Sure
+EAP-pwd implementation in hostapd (EAP server) and wpa_supplicant (EAP
+peer) was discovered not to validate the received scalar and element
+values in EAP-pwd-Commit messages properly. This could result in attacks
+that would be able to complete EAP-pwd authentication exchange without
+the attacker having to know the used password.
 
-> This brings up and leaves open the question of what to do with very
-> short embargo periods like a few hours.  My suggestion is that we
-> continue to include them in the averages, but also add calculation and
-> reporting of median embargo times (also excluding just the non-positive
-> embargo periods from the calculation of the medians).  Can you do it,
-> please?
+A reflection attack is possible against the EAP-pwd server since the
+hostapd EAP server did not verify that the EAP-pwd-Commit contains
+scalar/element values that differ from the ones the server sent out
+itself. This allows the attacker to complete EAP-pwd authentication
+without knowing the password, but this does not result in the attacker
+being able to derive the session key (MSK), i.e., the attacker would not
+be able to complete the following key exchange (e.g., 4-way handshake in
+RSN/WPA).
 
-Adding medians is no problem
+An attack using invalid scalar/element values is possible against both
+the EAP-pwd server and peer since hostapd and wpa_supplicant did not
+validate these values in the received EAP-pwd-Commit messages. If the
+used crypto library does not implement additional checks for the element
+(EC point), this could result in attacks where the attacker could use a
+specially crafted commit message values to manipulate the exchange to
+result in deriving a session key value from a very small set of possible
+values. This could further be used to attack the EAP-pwd server in a
+practical manner. An attack against the EAP-pwd peer is slightly more
+complex, but still consider practical. These invalid scalar/element
+attacks could result in the attacker being able to complete
+authentication and learn the session key and MSK to allow the key
+exchange to be completed as well, i.e., the attacker gaining access to
+the network in case of the attack against the EAP server or the attacker
+being able to operate a rogue AP in case of the attack against the EAP
+peer.
 
-> 
-> The non-positive embargo periods should probably continue to be listed
-> in the detail table, but a (foot)note should be added explaining that
-> they're excluded from the calculations.
+While similar attacks might be applicable against SAE, it should be
+noted that the SAE implementation in hostapd and wpa_supplicant does
+have the validation steps that were missing from the EAP-pwd
+implementation and as such, these attacks do not apply to the current
+SAE implementation. Old versions of wpa_supplicant/hostapd did not
+include the reflection attack check in the SAE implementation, though,
+since that was added in June 2015 for v2.5 (commit 6a58444d27fd 'SAE:
+Verify that own/peer commit-scalar and COMMIT-ELEMENT are different').
 
-That's also no issue, that said; likely won't spend too much time in
-front of computer the next week.
+
+Vulnerable versions/configurations
+
+All hostapd versions with EAP-pwd support (CONFIG_EAP_PWD=y in the build
+configuration and EAP-pwd being enabled in the runtime configuration)
+are vulnerable against the reflection attack.
+
+All wpa_supplicant and hostapd versions with EAP-pwd support
+(CONFIG_EAP_PWD=y in the build configuration and EAP-pwd being enabled
+in the runtime configuration) are vulnerable against the invalid
+scalar/element attack when built against a crypto library that does not
+have an explicit validation step on imported EC points. The following
+list indicates which cases are vulnerable/not vulnerable:
+- OpenSSL v1.0.2 or older: vulnerable
+- OpenSSL v1.1.0 or newer: not vulnerable
+- BoringSSL with commit 38feb990a183 ('Require that EC points are on the
+  curve.') from September 2015: not vulnerable
+- BoringSSL without commit 38feb990a183: vulnerable
+- LibreSSL: vulnerable
+- wolfssl: vulnerable
+
+
+Acknowledgments
+
+Thanks to Mathy Vanhoef (New York University Abu Dhabi) for discovering
+and reporting the issues and for proposing changes to address them in
+the implementation.
+
+
+Possible mitigation steps
+
+- Merge the following commits to wpa_supplicant/hostapd and rebuild:
+
+  CVE-2019-9497:
+  EAP-pwd server: Detect reflection attacks
+  
+  CVE-2019-9498:
+  EAP-pwd server: Verify received scalar and element
+  EAP-pwd: Check element x,y coordinates explicitly
+
+  CVE-2019-9499:
+  EAP-pwd client: Verify received scalar and element
+  EAP-pwd: Check element x,y coordinates explicitly
+
+  These patches are available from https://w1.fi/security/2019-4/
+
+- Update to wpa_supplicant/hostapd v2.8 or newer, once available
 
 -- 
-Kristian Fiskerstrand
-OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
-fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Jouni Malinen                                            PGP id EFC895FA
