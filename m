@@ -1,151 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/17/5
-Message-Id: <84db7fe5-446a-4445-96db-8445fd43395c@saasmail.netflix.com>
-Date: Mon, 17 Jun 2019 10:33:38 -0700 (PDT)
-From: Security Report <security-report@...smail.netflix.com>
-To: Security Report <security-report@...smail.netflix.com>
-Cc: security-report@...flix.com, oss-security@...ts.openwall.com
-Subject: Linux and FreeBSD Kernel: Multiple TCP-based remote denial of service issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/10/4
+Message-ID: <20190410151534.GC5686@w1.fi>
+Date: Wed, 10 Apr 2019 18:15:34 +0300
+From: Jouni Malinen <j@...fi>
+To: oss-security@...ts.openwall.com
+Subject: hostapd: SAE confirm missing state validation
 Content-Type: text/plain; charset=utf-8
 
-Netflix has identified several TCP networking vulnerabilities in FreeBSD 
-and Linux kernels.
+Published: April 10, 2019
+Identifiers:
+- CVE-2019-9496 (SAE confirm missing state validation in hostapd/AP)
+Latest version available from: https://w1.fi/security/2019-3/
 
-The vulnerabilities specifically relate to the minimum segment size (MSS) 
-and TCP Selective Acknowledgement (SACK) capabilities. The most serious, 
-dubbed “SACK Panic,” allows a remotely-triggered kernel panic on recent 
-Linux kernels.
+Vulnerability
 
-There are patches that address most of these vulnerabilities. If patches 
-can not be applied, certain mitigations will be effective. We recommend 
-that affected parties enact one of those described below, based on their 
-environment.
+When hostapd is used to operate an access point with SAE (Simultaneous
+Authentication of Equals; also known as WPA3-Personal), an invalid
+authentication sequence could result in the hostapd process terminating
+due to a NULL pointer dereference when processing SAE confirm
+message. This was caused by missing state validation steps when
+processing the SAE confirm message in hostapd/AP mode.
 
-#1: CVE-2019-11477: SACK Panic (Linux >= 2.6.29)
+Similar cases against the wpa_supplicant SAE station implementation had
+already been tested by the hwsim test cases, but those sequences did not
+trigger this specific code path in AP mode which is why the issue was
+not discovered earlier.
 
-Description: A sequence of SACKs may be crafted such that one can trigger 
-an integer overflow, leading to a kernel panic.
-
-Fix: Apply the attached patch (“PATCH_net_1_4.patch”). Additionally, 
-versions of the Linux kernel up to, and including, 4.14 require a second 
-patch (“PATCH_net_1a.patch”).
-
-Workaround #1: Block connections with a low MSS using one of the attached 
-filters. (The values in the filters are examples. You can apply a higher or 
-lower limit, as appropriate for your environment.) Note that these filters 
-may break legitimate connections which rely on a low MSS. Also, note that 
-this mitigation is only effective if TCP probing is disabled (that is, the 
-net.ipv4.tcp_mtu_probing sysctl is set to 0, which appears to be the 
-default value for that sysctl).
-
-Workaround #2: Disable SACK processing (/proc/sys/net/ipv4/tcp_sack set to 
-0).
-
-(Note that either workaround should be sufficient on its own. It is not 
-necessary to apply both workarounds.)
+An attacker in radio range of an access point using hostapd in SAE
+configuration could use this issue to perform a denial of service attack
+by forcing the hostapd process to terminate.
 
 
-#2: CVE-2019-11478: SACK Slowness (Linux < 4.15) or Excess Resource Usage 
-(all Linux versions)
+Vulnerable versions/configurations
 
-Description: It is possible to send a crafted sequence of SACKs which will 
-fragment the TCP retransmission queue. On Linux kernels prior to 4.15, an 
-attacker may be able to further exploit the fragmented queue to cause an 
-expensive linked-list walk for subsequent SACKs received for that same TCP 
-connection.
-
-Fix: Apply the attached patch (“PATCH_net_2_4.patch”)
-
-Workaround #1: Block connections with a low MSS using one of the attached 
-filters. (The values in the filters are examples. You can apply a higher or 
-lower limit, as appropriate for your environment.) Note that these filters 
-may break legitimate connections which rely on a low MSS. Also, note that 
-this mitigation is only effective if TCP probing is disabled (that is, the 
-net.ipv4.tcp_mtu_probing sysctl is set to 0, which appears to be the 
-default value for that sysctl).
-
-Workaround #2: Disable SACK processing (/proc/sys/net/ipv4/tcp_sack set to 
-0).
-
-(Note that either workaround should be sufficient on its own. It is not 
-necessary to apply both workarounds.)
+All hostapd versions with SAE support (CONFIG_SAE=y in the build
+configuration and SAE being enabled in the runtime configuration).
 
 
-#3: CVE-2019-5599: SACK Slowness (FreeBSD 12 using the RACK TCP Stack)
+Possible mitigation steps
 
-Description: It is possible to send a crafted sequence of SACKs which will 
-fragment the RACK send map. An attacker may be able to further exploit the 
-fragmented send map to cause an expensive linked-list walk for subsequent 
-SACKs received for that same TCP connection.
+- Merge the following commit to hostapd and rebuild:
 
-Workaround #1: Apply the attached patch (“split_limit.patch”) and set the 
-net.inet.tcp.rack.split_limit sysctl to a reasonable value to limit the 
-size of the SACK table.
+  SAE: Fix confirm message validation in error cases
 
-Workaround #2: Temporarily disable the RACK TCP stack.
+  These patches are available from https://w1.fi/security/2019-3/
 
-(Note that either workaround should be sufficient on its own. It is not 
-necessary to apply both workarounds.)
+- Update to hostapd v2.8 or newer, once available
 
-
-#4: CVE-2019-11479: Excess Resource Consumption Due to Low MSS Values (all 
-Linux versions)
-
-Description: An attacker can force the Linux kernel to segment its 
-responses into multiple TCP segments, each of which contains only 8 bytes 
-of data. This drastically increases the bandwidth required to deliver the 
-same amount of data. Further, it consumes additional resources (CPU and NIC 
-processing power). This attack requires continued effort from the attacker 
-and the impacts will end shortly after the attacker stops sending traffic.
-
-Fix: Two attached patches (“PATCH_net_3_4.patch” and “PATCH_net_4_4.patch”) 
-add a sysctl which enforces a minimum MSS, set by the 
-net.ipv4.tcp_min_snd_mss sysctl. This lets an administrator enforce a 
-minimum MSS appropriate for their applications.
-
-Workaround: Block connections with a low MSS using one of the attached 
-filters. (The values in the filters are examples. You can apply a higher or 
-lower limit, as appropriate for your environment.) Note that these filters 
-may break legitimate connections which rely on a low MSS. Also, note that 
-this mitigation is only effective if TCP probing is disabled (that is, the 
-net.ipv4.tcp_mtu_probing sysctl is set to 0, which appears to be the 
-default value for that sysctl).
-
-
-Note: Good system and application coding and configuration practices 
-(limiting write buffers to the necessary level, monitoring connection 
-memory consumption via SO_MEMINFO, and aggressively closing misbehaving 
-connections) can help to limit the impact of attacks against these kinds of 
-vulnerabilities.
-
-An advisory has been published 
-at https://github.com/Netflix/security-bulletins/blob/master/advisories/third-party/2019-001.md
-
-Acknowledgments:
-Originally reported by Jonathan Looney.
-We thank Eric Dumazet for providing Linux fixes and support.
-We thank Bruce Curtis for providing the Linux filters.
-We thank Jonathan Lemon and Alexey Kodanev for helping to improve the Linux 
-patches.
-We gratefully acknowledge the assistance of Tyler Hicks in testing fixes, 
-refining the information about vulnerable versions, and providing 
-assistance during the disclosure process.
-
-Regards,
-Netflix Information Security
-
-Content of type "text/html" skipped
-
-View attachment "PATCH_net_1_4.patch" of type "text/x-diff" (5885 bytes)
-
-View attachment "PATCH_net_1a.patch" of type "text/x-diff" (2192 bytes)
-
-Download attachment "block-low-mss.tgz" of type "application/x-gtar" (1682 bytes)
-
-View attachment "PATCH_net_2_4.patch" of type "text/x-diff" (2739 bytes)
-
-View attachment "split_limit.patch" of type "text/x-diff" (6530 bytes)
-
-View attachment "PATCH_net_3_4.patch" of type "text/x-diff" (5118 bytes)
-
-View attachment "PATCH_net_4_4.patch" of type "text/x-diff" (1374 bytes)
+-- 
+Jouni Malinen                                            PGP id EFC895FA
