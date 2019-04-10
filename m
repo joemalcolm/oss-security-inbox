@@ -1,93 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/22/3
-Message-ID: <20190722100013.GJ1168@jumper.schlittermann.de>
-Date: Mon, 22 Jul 2019 12:00:13 +0200
-From: Heiko Schlittermann <hs@...marc.schlittermann.de>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/10/1
+Message-Id: <EC0A18B5-C79C-4A80-9A64-A9F143E90E75@beckweb.net>
+Date: Wed, 10 Apr 2019 17:05:37 +0200
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Multiple vulnerabilities in Jenkins
 Content-Type: text/plain; charset=utf-8
 
-*** Note: EMBARGO is still in effect until July 25th, 10:00 UTC. ***
-*** Distros must not publish any detail nor release updates yet. ***
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software. The following
+releases contain fixes for security vulnerabilities:
 
-CVE ID:     CVE-2019-13917
-OVE ID:     OVE-20190718-0006
-Date:       2019-07-18
-Credits:    Jeremy Harris
-Version(s): 4.85 up to and including 4.92
-Issue:      A local or remote attacker can execute programs with root
-            privileges - if you've an unusual configuration. For details
-            see below.
+* Jenkins weekly 2.172
+* Jenkins LTS 2.164.2
 
-Coordinated Release Date (CRD) for Exim 4.92.1:
-            Thu Jul 25 10:00:00 UTC 2019
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2019-04-10/
 
-Contact:    security@...m.org
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-This is a *heads-up* notice about the upcoming release.
-You may plan your availability and schedule an update of the Exim
-packages supplied by your distribution or build the new release from the
-source, once the release goes public on CRD.
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
 
-Details
-=======
+---
 
-We discovered a vulnerability. We consider the risk of an exploit as
-low, you need to have a fairly unusual runtime configuration. Neither
-our default runtime configuration nor the runtime configuration shipped
-by the Debian distribution is vulnerable.
+SECURITY-1289 / CVE-2019-1003049
+The fix for SECURITY-901 in Jenkins 2.150.2 and 2.160 did not reject 
+existing remoting-based CLI authentication caches.
 
-The vulnerability is exploitable either remotely or locally and could
-be used to execute other programs with root privilege.
+This means that users who cached their CLI authentication before Jenkins was 
+updated to 2.150.2 and newer, or 2.160 and newer, would remain authenticated.
 
-More details and fixes are not yet public, but will be made public on
-CRD, July 25th.
+Support for the remoting-based CLI was dropped in Jenkins 2.165, so newer 
+weekly releases are not affected.
 
-Timeline
-========
 
-t0: Thu Jul 18 2019
-    - this notice to distros@...openwall.org and exim-maintainers@...m.org
-    - open limited access to our security Git repo. See below.
+SECURITY-1327 / CVE-2019-1003050
+The f:validateButton form control for the Jenkins UI did not properly escape 
+job URLs. This resulted in a cross-site scripting (XSS) vulnerability 
+exploitable by users with the ability to control job names.
 
-t0+~4d: Mon Jul 22 10:00:00 UTC 2019 [NOW]
-    - heads-up notice to oss-security@...ts.openwall.com,
-      exim-users@...m.org, and exim-announce@...m.org
-
-t0+~7d: Thu Jul 25 10:00:00 UTC 2019
-    - Coordinated relase date
-    - publish the patches in our official and public Git repositories
-      and the packages on our FTP server.
-
-Downloads available starting at CRD
-====================================
-
-For release tarballs (exim-4.92.1):
-
-    http://ftp.exim.org/pub/exim/exim4/
-
-The package files are signed with my GPG key.
-
-For the full Git repo:
-
-    https://git.exim.org/exim.git
-    https://github.com/Exim/exim    [mirror of the above]
-    - tag    exim-4.92.1
-    - branch exim-4.92.1+fixes
-
-The tagged commit is the officially released version. The tag is signed
-with my GPG key.  The +fixes branch isn't officially maintained, but
-contains useful patches *and* the security fix. The relevant commit is
-signed with my GPG key. The old exim-4.92+fixes branch is being functionally
-replaced by the new exim-4.92.1+fixes branch.
-
-    Best regards from Dresden/Germany
-    Viele Grüße aus Dresden
-    Heiko Schlittermann
---
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
- ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
