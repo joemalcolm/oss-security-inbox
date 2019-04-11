@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1488" "Tuesday" "17" "November" "2020" "11:35:21" "+0100" "Morten Linderud" "foxboron@archlinux.org" "<20201117103521.3m5bpqtcbpeuirpg@anathema>" "35" "Re: [oss-security] Buffer Overflow in raptor widely unfixed in Linux distros" nil nil nil "11" "2020111710:35:21" "[oss-security] Buffer Overflow in raptor widely unfixed in Linux distros" (number mark "U       foxboron@arc Nov 17   35/1488  " thread-indent "\"Re: [oss-security] Buffer Overflow in raptor widely unfixed in Linux distros\"\n") "<87eekt9l5k.fsf@gnu.org>" ("<20201113133331.48185f9f@computer>" "<20201114115850.GB5193@suse.de>" "<E25813A6-081D-4B42-AD7E-8D38F5320D7E@dwheeler.com>" "<87eekt9l5k.fsf@gnu.org>") nil nil nil nil nil nil nil "Re: [oss-security] Buffer Overflow in raptor widely unfixed in Linux distros" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6798" "Wednesday" "10" "April" "2019" "21:51:02" "-0500" "Michael Catanzaro" "mcatanzaro@igalia.com" nil "167" nil nil nil nil "4" nil nil (number mark "U       mcatanzaro@i Apr 10  167/6798  " thread-indent "\"[oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2019-0002\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2019-0002" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 25872 invoked by uid 550); 17 Nov 2020 11:03:51 -0000
+Received: (qmail 11495 invoked by uid 550); 11 Apr 2019 10:52:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,56 +12,186 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15526 invoked from network); 17 Nov 2020 10:35:36 -0000
-Authentication-Results: linderud.pw; dkim=none; dkim-atps=neutral
-Date: Tue, 17 Nov 2020 11:35:21 +0100
-From: Morten Linderud <foxboron@archlinux.org>
-To: oss-security@lists.openwall.com
-Cc: "David A. Wheeler" <dwheeler@dwheeler.com>
-Message-ID: <20201117103521.3m5bpqtcbpeuirpg@anathema>
-References: <20201113133331.48185f9f@computer>
- <20201114115850.GB5193@suse.de>
- <E25813A6-081D-4B42-AD7E-8D38F5320D7E@dwheeler.com>
- <87eekt9l5k.fsf@gnu.org>
+Received: (qmail 15449 invoked from network); 11 Apr 2019 02:51:35 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com; s=20170329;
+	h=Content-Transfer-Encoding:Content-Type:MIME-Version:Message-Id:Cc:To:Subject:From:Date; bh=3HrwUN0PqBEKOu4MB3PmWydQvXyVzpqqJzvPMQn8//U=;
+	b=JvGU4GSWnoFdII1o72C2OuoC51ZCEJyxb87S/AeHLc63jGrvFHpjEmBvD7KiFe+WTkgofbI/yif4L/2eUVF/pA/NYDtjLpCI2TIZXkUtjXx4HilsnqXsyfdTR9f1guCzPRK1SY5Ruh8EEkR6iO6oc786mEzeko0vz9So8YYfKpAfj1dBqAMwh00XwHlZz27IFpzuxDT0qLiFId7FOoTsE2fOmrBKDSrMA13rmrngo8qdxSJeZLGQRVAG/AOVmY9cJwlC2cJtI8Kl7nhcqCPRjjspDb6bB7U8dNwGvwEH8rdJ0iRADUuEQAfvSAPmgJV1JBqdMboPv+sW3zmZAWb/tQ==;
+Date: Wed, 10 Apr 2019 21:51:02 -0500
+From: Michael Catanzaro <mcatanzaro@igalia.com>
+To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
+Cc: security@webkit.org, distributor-list@gnome.org,
+	oss-security@lists.openwall.com, bugtraq@securityfocus.com
+Message-Id: <1554951062.13418.0@igalia.com>
+X-Mailer: geary/3.32.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87eekt9l5k.fsf@gnu.org>
-Subject: Re: [oss-security] Buffer Overflow in raptor widely unfixed in Linux
- distros
+Content-Type: text/plain; charset=iso-8859-1; format=flowed
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2019-0002
 
-On Mon, Nov 16, 2020 at 08:06:15PM +0100, Marius Bakke wrote:
-> I tried following the CVE assignment RSS feed initially, but it was not
-> suitable for human consumption.
-> 
-> How do other distros keep up with new CVE assignments?
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory WSA-2019-0002
+------------------------------------------------------------------------
 
-Depends. Commercial distributions like Ubuntu, SUSE or RedHat keeps up mostly(?)
-fine by throwing money on the problem. The story is very different on volunteer
-distributions.
+Date reported : April 10, 2019
+Advisory ID : WSA-2019-0002
+WebKitGTK Advisory URL :=20
+https://webkitgtk.org/security/WSA-2019-0002.html
+WPE WebKit Advisory URL :=20
+https://wpewebkit.org/security/WSA-2019-0002.html
+CVE identifiers : CVE-2019-6201, CVE-2019-6251, CVE-2019-7285,
+                          CVE-2019-7292, CVE-2019-8503, CVE-2019-8506,
+                          CVE-2019-8515, CVE-2019-8518, CVE-2019-8523,
+                          CVE-2019-8524, CVE-2019-8535, CVE-2019-8536,
+                          CVE-2019-8544, CVE-2019-8551, CVE-2019-8558,
+                          CVE-2019-8559, CVE-2019-8563, CVE-2019-11070.
 
-Arch Linux is unable to keep up.
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
 
-Consuming the CVE feeds in any structured way takes quite a bit of effort, and
-then you need the manpower to wade through the assignments. Even if you did
-manage to do all this, there might not be a clear reference of the fix in
-question. For all you know the assigned CVE is only for the vulnerability and
-there is no fix written yet. You simply do not know.
+CVE-2019-6201
+    Versions affected: WebKitGTK before 2.22.6 and WPE WebKit before
+    2.22.4.
+    Credit to dwfault working with ADLab of Venustech.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. Multiple memory corruption issues were addressed
+    with improved memory handling.
 
-For Arch Linux it's a manpower problem handling the CVEs and writing advisories
-for the published packages, along with things sometimes not being very easy to
-fix for package maintainers. It is very much a best effort basis.
+CVE-2019-6251
+    Versions affected: WebKitGTK and WPE WebKit before 2.24.1.
+    Credit to Dhiraj.
+    Processing maliciously crafted web content may lead to spoofing.
+    WebKitGTK and WPE WebKit were vulnerable to a URI spoofing attack
+    similar to the CVE-2018-8383 issue in Microsoft Edge.
 
-Severe issues gets handled in a timely fashion, but it always depends on the
-time available of the volunteers.
+CVE-2019-7285
+    Versions affected: WebKitGTK before 2.22.6 and WPE WebKit before
+    2.22.4.
+    Credit to dwfault working at ADLab of Venustech.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. A use after free issue was addressed with improved
+    memory management.
 
-I think a lot can be solved with information sharing and better tooling. There
-was an attempt to have an shared IRC channel for distribution security teams,
-and I think initiatives like the OpenSSF vulnerability disclosure WG are
-important for this.
+CVE-2019-7292
+    Versions affected: WebKitGTK before 2.22.6 and WPE WebKit before
+    2.22.4.
+    Credit to Zhunki and Zhiyi Zhang of 360 ESG Codesafe Team.
+    Processing maliciously crafted web content may result in the
+    disclosure of process memory. A validation issue was addressed with
+    improved logic.
 
-https://github.com/ossf/wg-vulnerability-disclosures
+CVE-2019-8503
+    Versions affected: WebKitGTK before 2.22.6 and WPE WebKit before
+    2.22.4.
+    Credit to Linus S=E4rud of Detectify.
+    A malicious website may be able to execute scripts in the context of
+    another website. A logic issue was addressed with improved
+    validation.
 
--- 
-Morten Linderud
-PGP: 9C02FF419FECBE16
+CVE-2019-8506
+    Versions affected: WebKitGTK and WPE WebKit before 2.24.0.
+    Credit to Samuel Gro=DF of Google Project Zero.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. A type confusion issue was addressed with improved
+    memory handling.
+
+CVE-2019-8515
+    Versions affected: WebKitGTK before 2.22.6 and WPE WebKit before
+    2.22.4.
+    Credit to James Lee, @Windowsrcer.
+    Processing maliciously crafted web content may disclose sensitive
+    user information. A cross-origin issue existed with the fetch API.
+    This was addressed with improved input validation.
+
+CVE-2019-8518
+    Versions affected: WebKitGTK before 2.22.7 and WPE WebKit before
+    2.22.5.
+    Credit to Samuel Gro=DF of Google Project Zero.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. Multiple memory corruption issues were addressed
+    with improved memory handling.
+
+CVE-2019-8523
+    Versions affected: WebKitGTK before 2.22.7 and WPE WebKit before
+    2.22.5.
+    Credit to Apple.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. Multiple memory corruption issues were addressed
+    with improved memory handling.
+
+CVE-2019-8524
+    Versions affected: WebKitGTK and WPE WebKit before 2.24.0.
+    Credit to G. Geshev working with Trend Micro Zero Day Initiative.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. Multiple memory corruption issues were addressed
+    with improved memory handling.
+
+CVE-2019-8535
+    Versions affected: WebKitGTK and WPE WebKit before 2.24.0.
+    Credit to Zhiyang Zeng, @Wester, of Tencent Blade Team.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. A memory corruption issue was addressed with
+    improved state management.
+
+CVE-2019-8536
+    Versions affected: WebKitGTK and WPE WebKit before 2.24.0.
+    Credit to Apple.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. A memory corruption issue was addressed with
+    improved memory handling.
+
+CVE-2019-8544
+    Versions affected: WebKitGTK and WPE WebKit before 2.24.0.
+    Credit to an anonymous researcher.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. A memory corruption issue was addressed with
+    improved memory handling.
+
+CVE-2019-8551
+    Versions affected: WebKitGTK and WPE WebKit before 2.24.0.
+    Credit to Ryan Pickren, ryanpickren.com.
+    Processing maliciously crafted web content may lead to universal
+    cross site scripting. A logic issue was addressed with improved
+    validation.
+
+CVE-2019-8558
+    Versions affected: WebKitGTK and WPE WebKit before 2.24.0.
+    Credit to Samuel Gro=DF of Google Project Zero.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. Multiple memory corruption issues were addressed
+    with improved memory handling.
+
+CVE-2019-8559
+    Versions affected: WebKitGTK and WPE WebKit before 2.24.0.
+    Credit to Apple.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. Multiple memory corruption issues were addressed
+    with improved memory handling.
+
+CVE-2019-8563
+    Versions affected: WebKitGTK and WPE WebKit before 2.24.0.
+    Credit to Apple.
+    Processing maliciously crafted web content may lead to arbitrary
+    code execution. Multiple memory corruption issues were addressed
+    with improved memory handling.
+
+CVE-2019-11070
+    Versions affected: WebKitGTK and WPE WebKit before 2.24.1.
+    Credit to Igalia.
+    WebKitGTK and WPE WebKit failed to properly apply configured HTTP
+    proxy settings when downloading livestream video (HLS, DASH, or
+    Smooth Streaming), an error resulting in deanonymization. This issue
+    was corrected by changing the way livestreams are downloaded.
+
+
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
+
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
+
+The WebKitGTK and WPE WebKit team,
+April 10, 2019
+
+
