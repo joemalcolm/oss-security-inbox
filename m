@@ -1,71 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/09/2
-Message-ID: <CAE4Awf_8r72i26qrxxiK_DUuysdM35n0Pwf15nicTSXNE71Cug@mail.gmail.com>
-Date: Tue, 9 Apr 2019 10:51:04 -0500
-From: Gage Hugo <gagehugo@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/12/1
+Message-ID: <31ac7d5a-c4fa-44f2-21d5-139851806bb0@lehmi.de>
+Date: Fri, 12 Apr 2019 06:44:41 +0200
+From: Andreas Lehmkuehler <andreas@...mi.de>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA-2019-002] neutron-openvswitch-agent: Unable to install new flows on compute nodes when having broken security group rules (CVE-2019-10876)
+Subject: [SECURITY] CVE-2019-0228 Apache PDFBox XML External Entity vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+CVE-2019-0228: Apache PDFBox XML External Entity vulnerability
 
-===========================================================================================
-OSSA-2019-002: Overlapping security group rules prevents compute node
-network configuration
-===========================================================================================
-
-:Date: April 08, 2019
-:CVE: CVE-2019-10876
+Severity: Important
 
 
-Affects
-~~~~~~~
-- - Neutron: >=11.0.0 <11.0.7, >=12.0.0 <12.0.6, >=13.0.0 <13.0.3
+Vendor:
+The Apache Software Foundation
+
+Versions Affected:
+Apache PDFBox 2.0.14
 
 
-Description
-~~~~~~~~~~~
-Diko Parvanov (Canonical) reported a vulnerability in neutron-
-openvswitch-agent security group rules. By creating two security
-groups with separate/overlapping port ranges, an authenticated user
-may prevent neutron from being able to configure networks on any
-compute nodes where those security groups are present. All neutron
-deployments utilizing neutron-openvswitch-agent are affected.
+Description:
+Apache PDFBox 2.0.14 does not properly initialize the XML parser, which allows 
+context-dependent attackers to conduct XML External Entity (XXE) attacks via a 
+crafted XFDF.
 
+Mitigation:
+Upgrade to Apache PDFBox 2.0.15
 
-Patches
-~~~~~~~
-- - https://review.openstack.org/648102 (Pike)
-- - https://review.openstack.org/648004 (Queens)
-- - https://review.openstack.org/648003 (Rocky)
-- - https://review.openstack.org/648002 (Stein)
-- - https://review.openstack.org/640252 (Train)
+Credit:
+This issue was discovered by Kurt Boberg from DocuSign
 
-
-Credits
-~~~~~~~
-- - Diko Parvanov from Canonical (CVE-2019-10876)
-
-
-References
-~~~~~~~~~~
-- - https://launchpad.net/bugs/1813007
-- - http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-10876
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEWa125cLHIuv6ekof56j9K3b+vREFAlysvccACgkQ56j9K3b+
-vREj3BAAvVBLfJT/cOyk2VjXjvlNKBWs1uokNE5PwzT0M2kvEW42zG78JpJj9EyJ
-ONQMCiuclWJ6XcBLBhDG2MHzl31Rqnfhi1UxQoUPwZYtgTcokLa4NaGCQUMrRwpq
-vigC8zWA9SiIQBHp4b/HE1ZA0GCKgK5CS2OuqmQH25/AzIDqwZZ7ljstRMh28VDd
-PnorJwifeKq1uUL1AGRWmDUvfYaqzTbMxNlUcrXt2Iy50VLxdokmD+PtZMLvb7lq
-UcpJ7R/er6HipNDE42hNzQAgEoPBNJ3hwEiLU64ZPCxSCMeKos5d2yAPNwLUYwdm
-lVYJQtW1GkNDLvY37pHOFzFCK2XhjKQB29iZjz5ipC9EKs1HLnxCfJfvIS+bK3Bt
-c3R0frUOOiDPeP+so1edl1f0eZJlhzV3SlFsLfLfFa1BYTxj6uuQdSaPaOTCGaLN
-4TLAtysGl+USvXirOH+F/vuz9P0LOlL4f86/gwNY9Asb27MmKZFtUhQLux/k34Xg
-gwSFtWTKqLJWrZjlGL/9irh6PiS6myrPCxsYh8XXOpVHSw5D353NrZ3hapvUthA6
-BoArm9XxRlwzgu8JwXpEAc9FXRg3jUcwMrSYc5yZF4mw95+sfdHKVhoI6LuxBkYd
-dA0aqbB/QkuFSanDZ+Z634LCkfbk/2Eo3HgjsrPUdvg2z2zLwfk=
-=53iD
------END PGP SIGNATURE-----
-
+[1] https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Processing
