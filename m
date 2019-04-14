@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1080" "Tuesday" "24" "March" "2015" "15:10:38" "+1100" "Garth Mollett" "gmollett@redhat.com" "<5510E3BE.8030204@redhat.com>" "35" "[oss-security] CVE request for OpenStack Compute (nova)" nil nil nil "3" "2015032404:10:38" "[oss-security] CVE request for OpenStack Compute (nova)" (number mark "        gmollett@red Mar 24   35/1080  " thread-indent "\"[oss-security] CVE request for OpenStack Compute (nova)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["426" "Sunday" "14" "April" "2019" "08:30:49" "+0200" "Emmanuel Lecharny" "elecharny@apache.org" nil "15" nil nil nil nil "4" nil nil (number mark "U       elecharny@ap Apr 14   15/426   " thread-indent "\"[oss-security] [CVE-2019-0231] MINA SSLFilter security Issue\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2019-0231] MINA SSLFilter security Issue" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30047 invoked by uid 550); 24 Mar 2015 04:11:24 -0000
+Received: (qmail 28654 invoked by uid 550); 14 Apr 2019 11:59:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,52 +11,35 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30018 invoked from network); 24 Mar 2015 04:11:23 -0000
-Message-ID: <5510E3BE.8030204@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="wUGW8rXGhWd2Mwu9exRV2sK3I7LXshKcm"
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
-Date: Tue, 24 Mar 2015 15:10:38 +1100
-From: Garth Mollett <gmollett@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request for OpenStack Compute (nova)
+Received: (qmail 1444 invoked from network); 14 Apr 2019 06:31:17 -0000
+X-Gm-Message-State: APjAAAWtADeNrernASEMm+WijxoR1xPdqepMGI979x/M3d1UysuqQR1a
+	v/N5gIg5ndGX8xVJkkdhD2tK3KeQqrpstRwxIN4=
+X-Google-Smtp-Source: APXvYqzDU2Z9WTmPQD5EaalnaMHfEuADzFB+izRq+6ewuysq9zuRcOKPAgIInIWoBQmifd/dg8rXMQVCS9Q7lFC2vmM=
+X-Received: by 2002:a5d:46c9:: with SMTP id g9mr39818212wrs.211.1555223460294;
+ Sat, 13 Apr 2019 23:31:00 -0700 (PDT)
+MIME-Version: 1.0
+From: Emmanuel Lecharny <elecharny@apache.org>
+Date: Sun, 14 Apr 2019 08:30:49 +0200
+X-Gmail-Original-Message-ID: <CAG8=FRi8zBopbw1AkoGM5yGN8P9G8rTxxPR2JfEG7RaV4BU8tQ@mail.gmail.com>
+Message-ID: <CAG8=FRi8zBopbw1AkoGM5yGN8P9G8rTxxPR2JfEG7RaV4BU8tQ@mail.gmail.com>
 To: oss-security@lists.openwall.com
-
---wUGW8rXGhWd2Mwu9exRV2sK3I7LXshKcm
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] [CVE-2019-0231] MINA SSLFilter security Issue
 
-I think the bug described here:
+Description: Handling of the close_notify SSL/TLS message does not
+lead to a connection closure, leading the server to retain the socket
+opened and to have the client potentially receive clear-text messages
+which were supposed to be encrypted.
 
-https://bugs.launchpad.net/nova/+bug/1419577
+This security issue is fixed by Apache MINA 2.0.21 or Apache MINA
+2.0.21. Please migrate to those new versions.
 
-May need a CVE assignment. At least for the Havana release of OpenStack
-where live-migrate failures are common.
 
 
 --=20
-Garth Mollett / Red Hat Product Security
-
-
-
---wUGW8rXGhWd2Mwu9exRV2sK3I7LXshKcm
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBAgAGBQJVEOO/AAoJEPjpLwZKQ8GpTlIIAMDij6e3fthDVvUJtbWYdIO1
-PuX8F9IMGPruKH8+RMyC0k9thon51zDbpxh2JZiq5KMz99syzX1o1vAQzykmQo7v
-ii7ShF57fOpLBLQGRJg5Pu6+3+yvDhmXQe8ZALNlGUri1JjwNS1pFKMY0yS9rz95
-juj38Z6Avz7hzXTaWd2xLk82fDU4FXhqztGze0gycVC2tHc9fl31jPYsZbzT9I9x
-/rWCpyIGJ8+5XBpYa8sDntvvG7JOwhppkvkfkRxSx62rmKZ8+x3H6NMC1vkMZ8XD
-mdfwngpH8OF21NLn+kiN4GFNFy7i+C0EU05QRYJY4tUsZtX7xSO/ImqSmKD/fDA=
-=ZV3O
------END PGP SIGNATURE-----
-
---wUGW8rXGhWd2Mwu9exRV2sK3I7LXshKcm--
+Regards,
+Cordialement,
+Emmanuel L=C3=A9charny
+www.iktek.com
