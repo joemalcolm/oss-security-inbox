@@ -1,4 +1,9 @@
-Received: (qmail 5922 invoked by uid 550); 31 Oct 2024 00:47:13 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["594" "Sunday" "14" "April" "2019" "15:49:58" "+0300" "Tomer Brisker" "tbrisker@redhat.com" nil "18" nil "^Date:" nil nil "4" nil nil (number mark "U       tbrisker@red Apr 14   18/594   " thread-indent "\"[oss-security] CVE-2019-3893: Foreman: Compute resource credentials exposed during deletion on API\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2019-3893: Foreman: Compute resource credentials exposed during deletion on API" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 9725 invoked by uid 550); 14 Apr 2019 12:50:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,82 +11,47 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 3569 invoked from network); 31 Oct 2024 00:27:10 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Type:MIME-Version:References:Subject:Cc:To:From:
-	Message-ID:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:In-Reply-To:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=c6SU8a4CpxhV8oZ8iDiY5w/ek7/hnlvTYfQ5tWj3KEw=; b=euLEPvg1UqBKyw7/SdfSA+19DL
-	JvUAMAUSAIbS3LVFEIiwnqHLOea4+4Us7fzn0/J5r7+zGnNZ7ji3ziLCz4125G5uro0T4VY4V8Vrk
-	WObHrHrknLOw7v1GquiSyUNH2bTDJobOtfO2Zjxf6LAQfJNHe21Vfxi2JYNBnyQD3slfQAZfWhqiP
-	eDOGvE98LqAEMNc+HuNKFk0pfWEdnVSyUBvwV4tiC/JORA9iSM74hT/zusADWpfSLpziF/FEqVwsp
-	GPR9IujqKGQL/TBnW1/zywqRIjlUDPNu6lOtOp9LMRdYDFzhofWx7l7nVzZmn2+QH56JyGiE/8A2X
-	0coqsqIg==;
-Date: Thu, 31 Oct 2024 02:26:54 +0200
-Message-ID: <20241031022654.GF444320@igalia.com>
-From: Adrian Perez de Castro <aperez@igalia.com>
-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
-Cc: security@webkit.org, oss-security@lists.openwall.com
-References:
+Received: (qmail 9700 invoked from network); 14 Apr 2019 12:50:46 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=9+5aP9a4P6upvQDPSp9Kgyd6nfDjLceSWKFriWWN9cU=;
+        b=X/YLV+tn6ClWNH6PryGWK//ouU/Toya4EFCepuk8Q6CG7EJU7y60cb9iylWdT04YIR
+         LaTYT1IVwaPA1fcrEB8K/qbC/4aGi3xKIJQpTfFCEbaNWsGbgJOLYtZluKR2U3avsFne
+         1cvxNHV/nY6zZmGJOXc7uOarZk/JDqpucqmfJ9WNu0kkT/bgx4TGDtktWEOaDmEvHnd+
+         M+gvYOH4EIcyAnxnj/ht526GK2iNgl8Add/WUN+ZUNOpLd83Ajs0pmhBbF1tSuPQDzum
+         Hp4Rct8+bzvjgLUEzjbgMRBAFPc2wshtWjNG097PHUwUoVxJvkXTijZQiENDaNiPm2RA
+         MCQQ==
+X-Gm-Message-State: APjAAAV0Jm85nKotWwmuNRmDJmTbXdqPTZZzhFE7omFMM14+X0ceLC4L
+	L4GhwZxJ9JvEx3xka8dg4XS3A2byQ3jlqp1RzrEGt4jrQ4g=
+X-Google-Smtp-Source: APXvYqxua5PaJEWxdIbYrUI/slf/temZgGjLsy+VQTgKIw+X/d5qIvuESCuhTHwWReRna2qqVJwwFLxws3ei+iRBopU=
+X-Received: by 2002:a25:6c45:: with SMTP id h66mr57403328ybc.371.1555246234026;
+ Sun, 14 Apr 2019 05:50:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="B8LRIYwWEx+bVKrd"; micalg="pgp-ripemd160"; protocol="application/pgp-signature"
-Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2024-0006
+Message-ID: <CAE=eJseTPHETZ75m9DZ-sbt7THgZSyk8S+KvqCVp27rZjvbE_w@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Date: Sun, 14 Apr 2019 15:49:58 +0300
+From: Tomer Brisker <tbrisker@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE-2019-3893: Foreman: Compute resource credentials exposed during
+ deletion on API
+To: oss-security@lists.openwall.com
 
---B8LRIYwWEx+bVKrd
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: base64
+Hello,
 
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tCldlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBTZWN1cml0eSBBZHZpc29y
-eSAgICAgICAgICAgICAgICAgV1NBLTIwMjQtMDAwNgotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KCkRhdGUgcmVw
-b3J0ZWQgICAgICAgICAgIDogT2N0b2JlciAzMSwgMjAyNApBZHZpc29yeSBJRCAgICAgICAgICAg
-ICA6IFdTQS0yMDI0LTAwMDYKV2ViS2l0R1RLIEFkdmlzb3J5IFVSTCAgOiBodHRwczovL3dlYmtp
-dGd0ay5vcmcvc2VjdXJpdHkvV1NBLTIwMjQtMDAwNi5odG1sCldQRSBXZWJLaXQgQWR2aXNvcnkg
-VVJMIDogaHR0cHM6Ly93cGV3ZWJraXQub3JnL3NlY3VyaXR5L1dTQS0yMDI0LTAwMDYuaHRtbApD
-VkUgaWRlbnRpZmllcnMgICAgICAgICA6IENWRS0yMDI0LTQ0MTg1LCBDVkUtMjAyNC00NDI0NCwK
-ICAgICAgICAgICAgICAgICAgICAgICAgICBDVkUtMjAyNC00NDI5Ni4KClNldmVyYWwgdnVsbmVy
-YWJpbGl0aWVzIHdlcmUgZGlzY292ZXJlZCBpbiBXZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQuCgpD
-VkUtMjAyNC00NDE4NQogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdlYktpdEdUSyBhbmQgV1BFIFdl
-YktpdCBiZWZvcmUgMi40Ni4wLgogICAgQ3JlZGl0IHRvIEdhcnkgS3dvbmcuCiAgICBJbXBhY3Q6
-IFByb2Nlc3NpbmcgbWFsaWNpb3VzbHkgY3JhZnRlZCB3ZWIgY29udGVudCBtYXkgbGVhZCB0byBh
-bgogICAgdW5leHBlY3RlZCBwcm9jZXNzIGNyYXNoIERlc2NyaXB0aW9uOiBUaGUgaXNzdWUgd2Fz
-IGFkZHJlc3NlZCB3aXRoCiAgICBpbXByb3ZlZCBjaGVja3MuCiAgICBXZWJLaXQgQnVnemlsbGE6
-IDI3NjA5NwoKQ1ZFLTIwMjQtNDQyNDQKICAgIFZlcnNpb25zIGFmZmVjdGVkOiBXZWJLaXRHVEsg
-YW5kIFdQRSBXZWJLaXQgYmVmb3JlIDIuNDYuMy4KICAgIENyZWRpdCB0byBhbiBhbm9ueW1vdXMg
-cmVzZWFyY2hlciwgUTFJUSAoQHExaXFGKSBhbmQgUDF1bWVyIChAcDF1bWVyKS4KICAgIEltcGFj
-dDogUHJvY2Vzc2luZyBtYWxpY2lvdXNseSBjcmFmdGVkIHdlYiBjb250ZW50IG1heSBsZWFkIHRv
-IGFuCiAgICB1bmV4cGVjdGVkIHByb2Nlc3MgY3Jhc2ggRGVzY3JpcHRpb246IEEgbWVtb3J5IGNv
-cnJ1cHRpb24gaXNzdWUgd2FzCiAgICBhZGRyZXNzZWQgd2l0aCBpbXByb3ZlZCBpbnB1dCB2YWxp
-ZGF0aW9uLgogICAgV2ViS2l0IEJ1Z3ppbGxhOiAyNzk3ODAKCkNWRS0yMDI0LTQ0Mjk2CiAgICBW
-ZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0IGJlZm9yZSAyLjQ2LjMu
-CiAgICBDcmVkaXQgdG8gTmFyZW5kcmEgQmhhdGksIE1hbmFnZXIgb2YgQ3liZXIgU2VjdXJpdHkg
-YXQgU3VtYSBTb2Z0IFB2dC4gTHRkLAogICAgUHVuZSAoSW5kaWEpLgogICAgSW1wYWN0OiBQcm9j
-ZXNzaW5nIG1hbGljaW91c2x5IGNyYWZ0ZWQgd2ViIGNvbnRlbnQgbWF5IHByZXZlbnQKICAgIENv
-bnRlbnQgU2VjdXJpdHkgUG9saWN5IGZyb20gYmVpbmcgZW5mb3JjZWQgRGVzY3JpcHRpb246IFRo
-ZSBpc3N1ZQogICAgd2FzIGFkZHJlc3NlZCB3aXRoIGltcHJvdmVkIGNoZWNrcy4KICAgIFdlYktp
-dCBCdWd6aWxsYTogMjc4NzY1CgpXZSByZWNvbW1lbmQgdXBkYXRpbmcgdG8gdGhlIGxhdGVzdCBz
-dGFibGUgdmVyc2lvbnMgb2YgV2ViS2l0R1RLIGFuZCBXUEUKV2ViS2l0LiBJdCBpcyB0aGUgYmVz
-dCB3YXkgdG8gZW5zdXJlIHRoYXQgeW91IGFyZSBydW5uaW5nIHNhZmUgdmVyc2lvbnMKb2YgV2Vi
-S2l0LiBQbGVhc2UgY2hlY2sgb3VyIHdlYnNpdGVzIGZvciBpbmZvcm1hdGlvbiBhYm91dCB0aGUg
-bGF0ZXN0CnN0YWJsZSByZWxlYXNlcy4KCkZ1cnRoZXIgaW5mb3JtYXRpb24gYWJvdXQgV2ViS2l0
-R1RLIGFuZCBXUEUgV2ViS2l0IHNlY3VyaXR5IGFkdmlzb3JpZXMKY2FuIGJlIGZvdW5kIGF0OiBo
-dHRwczovL3dlYmtpdGd0ay5vcmcvc2VjdXJpdHkuaHRtbCBvcgpodHRwczovL3dwZXdlYmtpdC5v
-cmcvc2VjdXJpdHkuCgpUaGUgV2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0IHRlYW0sCg==
+An information disclosure vulnerability has been discovered in the Foreman API.
 
---B8LRIYwWEx+bVKrd
-Content-Type: application/pgp-signature; name="signature.asc"
+When deleting a compute resource via the API, the API responded with
+details of the compute resource, including credentials in clear text.
 
------BEGIN PGP SIGNATURE-----
+Users not able to upgrade should ensure the `delete_compute_resource`
+permission is not granted to users not trusted with the credentials.
 
-iF0EABEDAB0WIQRao7wzT9fjNp58d7KRxVnb5MkSOwUCZyLOzgAKCRCRxVnb5MkS
-O1ZiAJ48lfKHaQL5C1jUrYO3fUgb3InwhQCfbm/QCPiBNk13Brzf2ld/8SzqqGE=
-=Otwi
------END PGP SIGNATURE-----
+This issue affects Foreman 1.1 and higher. The fix has been released
+with Foreman 1.21.1.
+Further details are available at https://projects.theforeman.org/issues/26450.
 
---B8LRIYwWEx+bVKrd--
+-- 
+Have a nice day,
+Tomer Brisker
+Red Hat Engineering
