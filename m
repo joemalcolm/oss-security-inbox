@@ -1,49 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/11/7
-Message-ID: <20190711114710.09ab5ad9@jabberwock.cb.piermont.com>
-Date: Thu, 11 Jul 2019 11:47:10 -0400
-From: "Perry E. Metzger" <perry@...rmont.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/14/1
+Message-ID: <CAG8=FRi8zBopbw1AkoGM5yGN8P9G8rTxxPR2JfEG7RaV4BU8tQ@mail.gmail.com>
+Date: Sun, 14 Apr 2019 08:30:49 +0200
+From: Emmanuel Lecharny <elecharny@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: Malte Kraus <malte.kraus@...e.com>
-Subject: Re: Privileged File Access from Desktop Applications
+Subject: [CVE-2019-0231] MINA SSLFilter security Issue
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 11 Jul 2019 13:57:19 +0000 Malte Kraus <malte.kraus@...e.com>
-wrote:
-> On Thu, 2019-07-11 at 09:33 -0400,  Perry E. Metzger wrote:
-> > So these links seem to say that things have been structured so you
-> > *can't* run GUI apps as root, not that there is a special or
-> > unusual security problem in Wayland if you run an application as
-> > root  
-> I didn't (intend to) say there is an (additional) security problem.
-> I just tried to succinctly explain why the desktop environments are
-> coming up with these D-Bus interfaces now.
+Description: Handling of the close_notify SSL/TLS message does not
+lead to a connection closure, leading the server to retain the socket
+opened and to have the client potentially receive clear-text messages
+which were supposed to be encrypted.
 
-It seems like a bad idea.
-
-If one wants to have mechanisms by which the operating system can
-allow unprivileged programs to temporarily assume privileges (which
-is a frequent idea in security), then they should be carefully
-designed and part of the OS, rather than creating an ad hoc facility
-via a subsystem that isn't intended for it. There are good ways to do
-that, like capabilities.
-
-The ad hoc solution creates a situation where quite ordinary programs
-like editors suddenly need two distinct sets of file i/o primitives
-with very distinct security properties to do ordinary things like
-editing files, and where (as I said) subsystems not intended to
-handle file security suddenly are in charge of it.
-
-Honestly, for day to day editing of administration files, I'd
-far rather be able to pop open an editor on my machine as root for a
-moment than have a complicated facility. "Protecting" me from this
-probably has no significant benefit in terms of real-world threats,
-but having to add file i/o subsystems inside of dbus(!) probably does
-add lots of threats. Failing that, though, I'd rather people finally
-add a real solution (like a capability subsystem, see Capsicum for
-example) instead of fooling around with fragile, ad hoc designs.
+This security issue is fixed by Apache MINA 2.0.21 or Apache MINA
+2.0.21. Please migrate to those new versions.
 
 
-Perry
+
 -- 
-Perry E. Metzger		perry@...rmont.com
+Regards,
+Cordialement,
+Emmanuel Lécharny
+www.iktek.com
