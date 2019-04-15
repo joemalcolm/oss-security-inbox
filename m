@@ -1,125 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/25/1
-Message-Id: <E1iNxTx-0002eb-OQ@xenbits.xenproject.org>
-Date: Fri, 25 Oct 2019 11:10:13 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 284 v3 (CVE-2019-17340) - grant table transfer issues on large hosts
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/15/1
+Message-ID: <1293109484.21742695.1555334270413.JavaMail.zimbra@redhat.com>
+Date: Mon, 15 Apr 2019 09:17:50 -0400 (EDT)
+From: Vladis Dronov <vdronov@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel < 4.8 local generic ASLR - CVE-ID
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Just in case - this is CVE-2019-11190:
 
-            Xen Security Advisory CVE-2019-17340 / XSA-284
-                              version 3
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-11190
 
-              grant table transfer issues on large hosts
-
-UPDATES IN VERSION 3
-====================
-
-CVE assigned.
-
-ISSUE DESCRIPTION
-=================
-
-When the code processing grant table transfer requests finds a page with
-an address too large to be represented in the interface with the guest,
-it allocates a replacement page and copies page contents.  However, the
-code doing so fails to set the newly allocated page's accounting
-properties correctly, resulting in the page becoming not only unusable
-by the target domain, but also unfreeable upon domain cleanup.  The page
-as well as certain other remnants of an affected guest will be leaked.
-
-Furthermore internal state of the processing code was also not updated
-correctly, resulting in the insertion of an IOMMU mapping to the page
-being replaced (and subsequently freed), allowing the domain access to
-memory it does not own.
-
-IMPACT
-======
-
-The primary impact is a memory leak.  Malicious or buggy guests with
-passed through PCI devices may also be able to escalate their
-privileges, crash the host, or access data belonging to other guests.
-
-VULNERABLE SYSTEMS
-==================
-
-All Xen versions from at least 3.2 onwards are vulnerable.
-
-64-bit x86 PV guests can leverage the vulnerability on hosts with
-physical memory extending past the 16 TiB boundary.  This is only
-possible for hypervisors built with CONFIG_BIGMEM enabled.
-
-32-bit x86 PV guests can leverage the vulnerability on hosts with
-physical memory extending past the 168 GiB boundary.
-
-x86 HVM and PVH guests cannot leverage the vulnerability on libxl
-based systems.  On xend based systems x86 HVM guests can leverage
-the vulnerability if their guest config file has a
-'machine_address_size' setting.
-
-ARM systems are not vulnerable.
-
-MITIGATION
-==========
-
-Running only x86 HVM/PVH guests will avoid this vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Jan Beulich of SUSE.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa284.patch           xen-unstable, Xen 4.11.x ... 4.7.x
-
-$ sha256sum xsa284*
-5359796890fc59dd2bbf8d23398c229153c8b9b716c01842dfb9f95d063a3ad4  xsa284.meta
-3a95ae9faef3886fd3a4ed5b22d944939bb2f819bb5a2a8061b2311cf3c05776  xsa284.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl2y17gMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZkqwH/3M5SYKUH8RiLQierb63SJuwkRsxtQeFERCTZMh2
-Q5jgE9RX3/QqubExkVV5gSJRDu0QtOGoo0cG1HwEgJ9fMRg1jtap1AGzGLyvSLMZ
-KQBRVuiaLhsQlrfQ3hRIbvUt/XcF58PWlX923bx7o7HJIUUpmF3+vr5V5QQ2SPz9
-5/7extQJKeDG1lixlQfGGr3dLX1d7J20Rh5/vgdfpPYcjX9+Cl+EF1BlW6BQrQz3
-S6MiHkxU4GUtPhJjZvqPupJcB5qDw2BTlEtcjzqhe1e60jzniPJW61D5xSFVcPmW
-uRAV3oDHzG2N2kOk61dTVhI53XdL81IwiGcMeVYg9drzPAo=
-=Nq7N
------END PGP SIGNATURE-----
-
-Download attachment "xsa284.meta" of type "application/octet-stream" (1602 bytes)
-
-Download attachment "xsa284.patch" of type "application/octet-stream" (1225 bytes)
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security | Senior Software Engineer
