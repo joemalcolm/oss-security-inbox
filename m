@@ -1,53 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/01/6
-Message-ID: <nnwonoob4v.fsf@armitage.lysator.liu.se>
-Date: Tue, 01 Jan 2019 12:44:32 +0100
-From: nisse@...ator.liu.se (Niels Möller)
-To: Jeffrey Walton <noloader@...il.com>
-Cc: oss-security@...ts.openwall.com,  gmp-bugs@...lib.org
-Subject: Re: Asserts considered harmful (or GMP spills its sensitive information)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/16/1
+Message-ID: <CABXRUiQpWVeHYZeN_=P+n8ghVA=VWDPAeddpsZj38P0sZADeNA@mail.gmail.com>
+Date: Tue, 16 Apr 2019 10:08:10 +0800
+From: Fuqian Huang <huangfq.daxian@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: kernel address leak in drivers/media/dvb-frontends/ascot2e.c - linux 4.14.111 LTS
 Content-Type: text/plain; charset=utf-8
 
-Vincent Lefevre <vincent@...c17.net> writes:
-
-> If you
-> don't like that, you can write a wrapper library that will sanitize
-> all the inputs and implement error processing (e.g. where the return
-> value contains an error code and the result, if any), and call this
-> library instead of GMP.
-
-Regarding invalid inputs, in the GMP sources, validity checks on
-function inputs generally use the ASSERT macro, which is disabled by
-default. Non-assert validity checks with a return value are used only
-when the check is non-trivial, e.g., for the mpz_invert function which
-requires arguments to be co-prime. All easy validity checks (null
-pointers, divide by zero, and the like) are left as the responsibility
-of the application.
-
-In a few places, GMP sources use ASSERT_ALWAYS. This is for internal
-consistency checks, or when deveolopers believe a condition is
-arithmetically impossible, but really would like to get a bug report if
-that belief turns out to be wrong.
-
-The assert that Jeffrey has hit is in sec_powm.c, 
-
-  ASSERT_ALWAYS (enb >= windowsize);
-
-As far as I can see, "enb" is the input argument to the win_size function,
-and "windowsize" is the return value. I'm waiting for more information,
-since it works fine in my build. Possible explanations I see are
-
-1. Invalid configuration of POWM_SEC_TABLE (used by the win_size function).
-
-2. Some general memory-overwrite problem, due to too small scratch
-   space or something like that.
-
-I interpret this ASSERT_ALWAYS as a way to check that POWM_SEC_TABLE is
-sane.
-
-Regards,
-/Niels
-
--- 
-Niels Möller. PGP-encrypted email is preferred. Keyid 368C6677.
-Internet email is subject to wholesale government surveillance.
+In ascot2e_attach, dev_info will print the address of adapter to
+dmesg, sensitive kernel information will be leaked to user space.
+struct dvb_frontend *ascot2e_attach(struct dvb_frontend *fe,
+  const struct ascot2e_config *config,
+  struct i2c_adapter *i2c)
+{
+  ...
+  dev_info(&priv->i2c->dev,
+  "Sony ASCOT2E attached on addr=%x at I2C adapter %p\n",
+  priv->i2c_address, priv->i2c);
+  ...
+}
