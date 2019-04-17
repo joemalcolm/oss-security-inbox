@@ -1,27 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/16/1
-Message-ID: <nycvar.YSQ.7.76.1912161126040.314293@xnncv>
-Date: Mon, 16 Dec 2019 11:33:02 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE-2019-19332 Kernel: kvm: OOB memory write via kvm_dev_ioctl_get_cpuid
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/17/2
+Message-Id: <473F72F1-A06B-436D-952A-A04DFE1BA918@beckweb.net>
+Date: Wed, 17 Apr 2019 16:40:14 +0200
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software. The following
+releases contain fixes for security vulnerabilities:
 
-An out-of-bounds memory write issue was found in the way Linux kernel's KVM 
-hypervisor handled 'KVM_GET_EMULATED_CPUID' ioctl(2) request to get cpuid 
-features emulated by the KVM hypervisor. A user/process able to access 
-'/dev/kvm' device could use this flaw to crash the system resulting in DoS 
-issue.
+* Azure PublisherSettings Credentials Plugin 1.5
+* GitLab Plugin 1.5.12
+* jira-ext Plugin 0.9
+* ontrack Jenkins Plugin 3.4.1
 
-It was found by Syzkaller
-   -> https://lore.kernel.org/kvm/000000000000ea5ec20598d90e50@google.com/
+Additionally, these plugin have security vulnerabilities that have been made
+public, but have no releases containing a fix yet:
 
-'CVE-2019-19332' was assigned by Red Hat Inc.
+* XebiaLabs XL Deploy Plugin
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2019-04-17/
+
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-1357 / CVE-2019-10300 (CSRF) and CVE-2019-10301 (permission check)
+GitLab Plugin did not perform permission checks on a method implementing 
+form validation. This allowed users with Overall/Read access to Jenkins to 
+connect to an attacker-specified URL using attacker-specified credentials 
+IDs obtained through another method, capturing credentials stored in Jenkins.
+
+Additionally, this form validation method did not require POST requests, 
+resulting in a cross-site request forgery vulnerability.
+
+
+SECURITY-836 / CVE-2019-10302
+jira-ext Plugin stored credentials unencrypted in its global configuration 
+file hudson.plugins.jira.JiraProjectProperty.xml on the Jenkins master. 
+These credentials could be viewed by users with access to the master file 
+system.
+
+
+SECURITY-844 / CVE-2019-10303
+Azure PublisherSettings Credentials Plugin stored the service management 
+certificate unencrypted in credentials.xml on the Jenkins master. These 
+credentials could be viewed by users with access to the master file system.
+
+
+SECURITY-983 / CVE-2019-10304 (CSRF) and CVE-2019-10305 (permission check)
+A missing permission check in a form validation method in XebiaLabs XL 
+Deploy Plugin allows users with Overall/Read permission to initiate a 
+connection test to an attacker-specified server with attacker-specified 
+credentials.
+
+Additionally, the form validation method does not require POST requests, 
+resulting in a CSRF vulnerability.
+
+
+SECURITY-1341 / CVE-2019-10306
+ontrack Jenkins Plugin supports sandboxed Groovy expressions. Its sandbox 
+protection could be circumvented during parsing, compilation, and script 
+instantiation by providing a crafted Groovy script.
+
+This allowed users able to control the plugin’s job-specific configuration 
+to bypass the sandbox protection and execute arbitrary code on the Jenkins 
+master.
 
