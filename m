@@ -1,44 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/26/3
-Message-ID: <20190726081640.GA4778@kroah.com>
-Date: Fri, 26 Jul 2019 10:16:40 +0200
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/17/1
+Message-ID: <5c545c03-5ae3-8ad5-f3e1-b6b8c6f873e7@redhat.com>
+Date: Wed, 17 Apr 2019 15:10:23 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Security release pre-announcement messages
+Subject: 3 pacemaker security flaws
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jul 26, 2019 at 10:14:08AM +0200, Greg KH wrote:
-> On Thu, Jul 25, 2019 at 09:35:45PM +0000, Stiepan wrote:
-> > I would like to congratulate the teams that do that. If public
-> > disclosure is deemed too dangerous before a patch is available, this
-> > looks like The reasonable tradeoff. Wish it was the same with Linux...
-> 
-> I too want a pony :)
-> 
-> > Rationale: people could switch meanwhile to a known safe kernel. That
-> > would provide peace of mind to the "rest of us" who don't have the
-> > keys to the linux-distros kingdom of the elected few, yet wish to have
-> > secure OSes, without a window of vulnerability open to whoever hacked
-> > into the elected few's machines (or are entitled another way to this
-> > secret information).
-> > It would also make Linux governance way more democratic, which seems
-> > to be a must for such a "too big to fail" core open-source software.
-> 
-> The "best known safe kernel" is the latest one we release from the
-> stable kernel series.  It has all of the fixes that that the kernel
-> developers possibly know about at that point in time.
-> 
-> There's no need to worry about being on linux-distros or anything else,
-> just keep updating your kernel, test in in your infrastructure to ensure
-> it all works properly, and then push it out to all of your other systems
-> and all is good.
+Hello all,
 
-And before all of the usual objections take place, please read this long
-write up:
-	http://kroah.com/log/blog/2018/02/05/linux-kernel-release-model/
-specifically the "Security" section for details as to why the kernel
-does not do "pre-release" announcements.
+Jan PokornÃ½ from Red Hat has discovered 3 security issues with the
+pacemaker package. Details and proposed patches are available in this email.
 
-thanks,
+Proposed unembargo date/time is: 10th April, 10:00 UTC
 
-greg k-h
+1. CVE-2018-16877 pacemaker: Insufficient local IPC client-server
+authentication on the client's side can lead to local privesc:
+A flaw was found in the way pacemaker's client-server authentication was
+implemented. A local attacker could use this flaw, and combine it with
+other IPC weaknesses, to achieve local privilege escalation.
+
+2. CVE-2018-16878 pacemaker: Insufficient verification inflicted
+preference of uncontrolled processes can lead to DoS:
+A flaw was found in pacemaker. An insufficient verification inflicted
+preference of uncontrolled processes can lead to DoS
+
+3. CVE-2019-3885 pacemaker: Information disclosure through use-after-free:
+A use-after-free defect was discovered in pacemaker that can possibly
+lead to unsolicited information disclosure in the log outputs.
+
+
+Enclosed are the final patches:
+(We would like to thank Suse folks who found issues in the initial set
+of patches we sent to distros)
+
+
+
+-- 
+Huzaifa Sidhpurwala / Red Hat Product Security Team
+
+View attachment "master.patch" of type "text/x-patch" (95468 bytes)
