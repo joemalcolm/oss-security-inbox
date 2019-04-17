@@ -1,26 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/18/9
-Message-ID: <CABXRUiTOrkprr-vyV8enQaJFrDc7ho96JDHBzjYmK+wMY5KM6w@mail.gmail.com>
-Date: Thu, 18 Apr 2019 21:31:52 +0800
-From: Fuqian Huang <huangfq.daxian@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/17/3
+Message-ID: <CAC7nai00CbzPWbcd2pF-E6hi8pKBrUF5+oanEd++ME1FtsJaoQ@mail.gmail.com>
+Date: Wed, 17 Apr 2019 14:21:35 -0400
+From: Havoc Pennington <hp@...elift.com>
 To: oss-security@...ts.openwall.com
-Subject: Linux kernel < 4.14.111 drivers/media/dvb-frontends/horus3a.c kernel address dumps to user space
+Subject: urllib3: adds system certificates to ssl_context
 Content-Type: text/plain; charset=utf-8
 
-In drivers/media/dvb-frontends/horus3a.c:1005,
-function horus3a_attach will print the address of
-adapter to dmesg, the kernel address is dumpped to
-user space.
+A vulnerability has been discovered in the urllib3 Python library.
 
-struct dvb_frontend *horus3a_attach(struct dvb_frontend *fe,
-                    const struct horus3a_config *config,
-                    struct i2c_adapter *i2c)
-{
-    ...
-    priv->i2c = i2c;
-    ...
-    dev_info(&priv->i2c->dev,
-        "Sony HORUS3A attached on addr=%x at I2C adapter %p\n",
-        priv->i2c_address, priv->i2c);
-    return fe;
-}
+When verifying HTTPS connections when an SSLContext is passed to
+urllib3, system CA certificates will be loaded into the SSLContext
+by default in addition to any manually-specified CA certificates.
+This causes TLS handshakes that should fail given only the
+manually specified certs to succeed based on system CA certs.
+
+This affects urllib3 1.24.1 and below. The fix has been released
+in version 1.24.2.
+
+The vulnerability was reported by Christian Heimes.
+
+A CVE ID has been requested, will follow up with it when we have it.
+
+Best
+Havoc / on behalf of Tidelift security team & urllib3 team
