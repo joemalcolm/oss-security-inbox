@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6227" "Wednesday" "24" "February" "2016" "05:27:38" "+0000" "halfdog" "me@halfdog.net" "<685fc01b-1728-6c0c-5193-a7fd0a73cfe3@halfdog.net>" "152" "Re: [oss-security] Access to /dev/pts devices via pt_chown and user namespaces" nil nil nil "2" "2016022405:27:38" "[oss-security] Access to /dev/pts devices via pt_chown and user namespaces" (number mark "U       me@halfdog.n Feb 24  152/6227  " thread-indent "\"Re: [oss-security] Access to /dev/pts devices via pt_chown and user namespaces\"\n") "<20160223161754.GA23263@openwall.com>" ("<8fc639ad-daef-1a6f-facf-140eb61aeee5@halfdog.net>" "<20160223161754.GA23263@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1561" "Thursday" "18" "April" "2019" "19:23:49" "+0200" "Greg KH" "greg@kroah.com" "<20190418172349.GA24716@kroah.com>" "34" "Re: [oss-security] Linux kernel address leaks" "^Date:" nil nil "4" "2019041817:23:49" "[oss-security] Linux kernel address leaks" (number mark "        greg@kroah.c Apr 18   34/1561  " thread-indent "\"Re: [oss-security] Linux kernel address leaks\"\n") "<20190418170058.GA22985@openwall.com>" ("<CABXRUiQpWVeHYZeN_=P+n8ghVA=VWDPAeddpsZj38P0sZADeNA@mail.gmail.com>" "<20190418170058.GA22985@openwall.com>") nil nil nil nil nil nil nil "Re: [oss-security] Linux kernel address leaks" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 30415 invoked by uid 550); 24 Feb 2016 05:51:27 -0000
+Received: (qmail 5849 invoked by uid 550); 18 Apr 2019 17:47:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,171 +11,83 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30394 invoked from network); 24 Feb 2016 05:51:26 -0000
-To: oss-security@lists.openwall.com
-References: <8fc639ad-daef-1a6f-facf-140eb61aeee5@halfdog.net>
- <20160223161754.GA23263@openwall.com>
-From: halfdog <me@halfdog.net>
-Message-ID: <685fc01b-1728-6c0c-5193-a7fd0a73cfe3@halfdog.net>
-Date: Wed, 24 Feb 2016 05:27:38 +0000
-User-Agent: Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0
+Received: (qmail 13688 invoked from network); 18 Apr 2019 17:24:08 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=
+	date:from:to:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=fm3; bh=ykoL+IR3gBUUB19WbeNDbTOUPih
+	rxg1UrK/RwvPGWuQ=; b=JVkAlFwgTaLTtXKgs+8OEvkTugR4ApHd4+qiFKFXbuM
+	b+Y1NDvL1uWtjSbAjbf+6gsb5K4S0PivAIOKepzKWt1vWQG7d5aPznG26ihpwe1s
+	fZoPwSNFjJb+IBmERjlssX4oQqiv2d99KyP8l7O2rbUp/6tuXTigQHUpm9w1aR+1
+	ly4kgq1krfoXr80iTI3FRRPYiChvAx9u+8ilE7hyWKF7DrcVQ5xwCN0FzTlBup7y
+	g2kzabywF/stSYFzbuxLCaNBKNIxVAeiPlli49jHA+DYWT3Bz5zheQQleFBlV00R
+	gvzgwq/nLlZDUbwhUeGtvwvuWSWAWM4I2lizzT8UFLA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=ykoL+I
+	R3gBUUB19WbeNDbTOUPihrxg1UrK/RwvPGWuQ=; b=bkfdI32yMuf9GDSUTVumsT
+	zWYF6DPBzMyButUAGNHJtmIBSDQOU4yTJqYNcYA3dl22+w2p66SBoKFG6SDll7aJ
+	xYSIthcEf5h68+7s2A52Bc4Ra0tgp4C++wvF6pYC74DAeTKXh2SPU5Ve7gnD+rnT
+	S9IC5W6mixzdgj5wog+Cqm6RRJR4V3KP6HyqRKuo0w/lAn00KEZAznLUA4GJaAwE
+	6tUVKTIRg45SoWtYRMlYPHi2R+Oov46DwJFXRGHAW91HdrUGOZ/npqeTMXttDRwI
+	ZrZxEQm0AggCIav9Rw6CkQ7gkFy/Y80OfVLO64xB45yltqeR5ICmG5FUGZzjl/nQ
+	==
+X-ME-Sender: <xms:qLK4XIO-4NfCi4oZyeP67t8Da95r4AlMs3WuUmq6uYmLV8BIQTrb7w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduuddrfeehgdehtdcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjfgesthdtre
+    dttdervdenucfhrhhomhepifhrvghgucfmjfcuoehgrhgvgheskhhrohgrhhdrtghomheq
+    necukfhppeekfedrkeeirdekledruddtjeenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hrvghgsehkrhhorghhrdgtohhmnecuvehluhhsthgvrhfuihiivgeptd
+X-ME-Proxy: <xmx:qbK4XHYqYllELcVVNPlbcih7K08h9FBVRj3jLNSg-_LebiksD1SpWQ>
+    <xmx:qbK4XPuHp52bl3-rNZXGuxZHbd6AM5IL-2QK7AFiro8zrPm1XQr2xw>
+    <xmx:qbK4XBM3WhDkXGSVWnoHIsUORiQ1vSM9F_qzlfg43n7ogkC93p5NaQ>
+    <xmx:qbK4XHHq_OjuJY1rSAvoO_1Z4LRSfFgAbKQe_eK1piNB2EFuQQn-Yg>
+Message-ID: <20190418172349.GA24716@kroah.com>
+References: <CABXRUiQpWVeHYZeN_=P+n8ghVA=VWDPAeddpsZj38P0sZADeNA@mail.gmail.com>
+ <20190418170058.GA22985@openwall.com>
 MIME-Version: 1.0
-In-Reply-To: <20160223161754.GA23263@openwall.com>
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] Access to /dev/pts devices via pt_chown and user
- namespaces
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190418170058.GA22985@openwall.com>
+User-Agent: Mutt/1.11.4 (2019-03-13)
+Date: Thu, 18 Apr 2019 19:23:49 +0200
+From: Greg KH <greg@kroah.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Linux kernel address leaks
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-Solar Designer wrote:
->> With Ubuntu Wily and earlier, /usr/lib/pt_chown was used to
->> change ownership of slave pts devices in /dev/pts to the same uid
->> holding the master file descriptor for the slave.
+On Thu, Apr 18, 2019 at 07:00:58PM +0200, Solar Designer wrote:
+> Hi,
 > 
-> I think pt_chown is only needed for legacy BSD pty's, and no
-> longer needed for Unix 98 pty's that Linux systems use these days.
-> Perhaps it should be dropped from upstream glibc by now.  e.g. on
-> Owl we haven't been installing it SUID ever (as it was already
-> legacy 15 years ago), and we haven't been packaging it at all since
-> 2005.
+> Fuqian just sent us all 13 of these in 2 days, and I guess there might
+> be many more to come.  Do we really want to see them in here?  And in
+> that many individual messages?  I doubt it - but not enough to have used
+> my moderator powers to outright reject the messages without discussion.
 
-That is nice, that this was done already for OWL. Is there a checklist
-or perhaps even a tool, that can be run, to detect, which weak
-programs, compile time settings or runtime settings might be applied
-to a given Linux setup?
+If you look at the original commit that added the pointer masking logic
+to the kernel in the 4.15 release:
+	ad67b74d2469 ("printk: hash addresses printed with %p")
 
-Vulnerability scanners do that, is there some kind of consensus, which
-scanner implementation might already suit our needs best and hence
-could be filled with test scripts?
+it points out that there are currently about 14000 different uses of
+this in the kernel at the time, so the proper way to "fix" this is to
+just make it so %p does not print out the pointer address.
 
-With such procedure in place, I would find it a little bit
-non-cooperative, if just one distribution fixes a weakness, but does
-not tell others. This should put soft pressure on all of us to have
-this list up to date. In my opinion, this procedure should also
-include, that each distribution just with the slightest aim to provide
-secure Linux installation should run this tool and give single line
-risk argument for each of the points found (e.g. pt_chown needed for
-legacy XXX-server - then community would know reason and perhaps where
-to start fixing). If distros do not want to do run the analysis and
-annotate it, those reports should be collected to build some kind of
-distro-ranking where community will anotate.
+Today, I responded to one patch that the author sent to the stable
+mailing list with the following message:
+	I suggest, if you really care about this issue in your
+	4.14-based kernel tree, that you just backport these pointer
+	printk patches and be done with it.  That's too big of a change
+	to accept into the 4.14.y LTS kernel, but as the lifespan for
+	4.14.y running on a "general purpose" system is probably only a
+	few more months at most, I would recomment just using 4.19.y
+	instead as this isn't an issue at all there.
 
-So
-a) should we put such a framework (tool) and procedure in place?
-b) is there already both in place?
-c) if not, which framework would suite best?
-d) already a procedure in place?
+So in short, use 4.15 or newer if you care about this issue.  If you
+rely on an older kernel, please backport the above patch, and a few
+others, to your kernel and be done with the issue.  That's what Android
+has done, so all of those devices do not have this issue anymore either.
 
->> In my opinion, this security bug should be fixed two-fold: At
->> first, kernel should prevent the TIOCGPTN ioctl when invoked
->> called by a process within one namespace but acting on a
->> filedescriptor from a devpts instance mounted in a different
->> namespace. Additionally pt_chown should check via readlink and
->> stat, that the passed file descriptor really was from the
->> /dev/ptmx or /dev/pts/ptmx device present in the same namespace
->> as the /dev/pts/[num] device is residing. This of course is only
->> relevant if pt_chown is going to survive on recent namespace
->> aware systems.
-> 
-> I think the primary fixes should be different: disable unprivileged
-> user namespaces by default, and drop pt_chown.
+thanks,
 
-I did not know, that pt_chown is completely obsolete by itself. So
-pt_chown should be dead. About unprivileged userns: That is also why I
-proposed deactivation on distro-list. I just do not get it, why there
-is so much resistance to make it configurable.
-
->> Timeline: =========
->> 
->> 20151220: Discovery 20151227: Report at Ubuntu Launchpad1529486 
->> 20160104: Report to distros list 20160122: Patch to disable
->> unprivileged userns due to this and other issues LKML 20160222:
->> CRD and publication
-> 
-> Ouch.  As you're aware, everything you report to distros must be
-> made public in at most 2 weeks.  Unfortunately, I didn't keep track
-> of this, and I don't recall if your report to distros included the
-> detail you're disclosing just today.  I thought you had already
-> disclosed whatever was on distros here:
-> 
-> http://www.openwall.com/lists/oss-security/2016/01/19/17
-> 
-> Now I see you were asking for advice on further handling of these
-> issues in there, and got no replies. :-(
-> 
-> I think going forward, you shouldn't make any use of the distros
-> list, and should post to oss-security right away.
-
-OK, I will do that, of course leaving out the exploit code for 2
-weeks, so that this disclosure procedure has similar timing for
-exploit availability compared to sharing via distro-list.
-
->> References: ===========
->> 
->> [0] 
->> http://www.halfdog.net/Security/2015/PtChownArbitraryPtsAccessViaUserNamespace/
->>
->> 
-[1]
->> http://www.halfdog.net/Security/2016/OverlayfsOverFusePrivilegeEscalation/
->
->> 
-> In [0], "LKML" points to:
-> 
-> https://lkml.org/lkml/2016/1/22/7
-> 
-> Unfortunately, that archive of LKML is currently broken (doesn't
-> display the actual message to me), so I don't know what exactly
-> this was.
-
-Strange, did not notice, that they are not serving.
-
-> I did, however, watch the discussion CC'ed to kernel-hardening,
-> where Kees Cook proposed "sysctl: allow CLONE_NEWUSER to be
-> disabled":
-
-[This is exactly the same discussion.]
-
-> http://www.openwall.com/lists/kernel-hardening/2016/01/22/19 
-> http://www.openwall.com/lists/kernel-hardening/2016/01/22/20 
-> http://www.openwall.com/lists/kernel-hardening/2016/01/22/21
-> 
-> Unfortunately, this was NAK'ed by the maintainer, Eric W.
-> Biederman:
-> 
-> http://www.openwall.com/lists/kernel-hardening/2016/01/23/4 
-> http://www.openwall.com/lists/kernel-hardening/2016/01/25/11 
-> http://www.openwall.com/lists/kernel-hardening/2016/01/26/7
-> 
-> Eric suggested "a per user limit on the number of user namespaces
-> users may create".  There was some further discussion after that
-> point, but no clear outcome.  Last message posted on January 28.
-
-Yes, I read that. But why? Does Linux kernel team fear to annoy some
-developers, that put their own blood into getting unprivileged USERNS
-working, by now again disabling part of their work by default?
-
-It just seems to me, that the discussion is not on the technical
-matter, how to introduce an effective switch quickly. Otherwise some
-primitive scheme with forward compatibility should be chosen right
-immediately. (e.g. "off" for complete disable "on" for complete enable
-and all other variants, e.g. userlist, maxlevels, ... later on). Slow
-action might be seen by some folks as irresponsible regarding
-security, hence harming the idea of Linux as free and secure operating
-system.
-
-hd
-
-- -- 
-http://www.halfdog.net/
-PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iEYEARECAAYFAlbNPz4ACgkQxFmThv7tq+63AQCfTpcIQC6eNCQprZ+BJrTVnV28
-+PMAnRtc87eyPU8pHy58lF2TJIiQJH/2
-=0+3d
------END PGP SIGNATURE-----
+greg k-h
