@@ -1,104 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/10/3
-Message-ID: <CAPZbWnfSknrMDTR+5wjGO6Bgcym8uLa60etn7NXab987tE7quQ@mail.gmail.com>
-Date: Fri, 10 May 2019 19:31:34 +0900
-From: Seong-Joong Kim <sungjungk@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/18/3
+Message-ID: <87768504-5291-4627-6638-8b3073c31501@dovecot.fi>
+Date: Thu, 18 Apr 2019 12:05:51 +0300
+From: Aki Tuomi <aki.tuomi@...ecot.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: fprintd: found storing user fingerprints without encryption
+Subject: CVE-2019-10691: JSON encoder in Dovecot 2.3 incorrecty assert-crashes when encountering invalid UTF-8 characters.
 Content-Type: text/plain; charset=utf-8
 
-I think my initial suggestion is not really good enough.
+Dear subscribers,
 
-Currently, there is no way to defend this issue except for supporting
-hardware, such as TPM or USB token, rather than encryption by software in
-Linux environment.
+we're sharing our latest advisory with you and would like to thank
+everyone who contributed in finding and solving those vulnerabilities.
+Feel free to join our bug bounty programs (open-xchange, dovecot,
+powerdns) at HackerOne. Please find patch for v2.3.5 attached,
+or download new version.
 
-If necessary, how about implementing interfaces to talk with hardware
-security module, such as TPM or PKCS#11 compatible devices.
+Yours sincerely,
+Aki Tuomi
+Open-Xchange Oy
 
-Otherwise, users should avoid using fingerprint
-authentication/identification.
+Open-Xchange Security Advisory 2019-04-18
+Product: Dovecot
+Vendor: OX Software GmbH
 
-Any idea?
+Internal reference: DOV-3173 (Bug ID)
+Vulnerability type: CWE-176
+Vulnerable version: 2.3.0 - 2.3.5.1
+Vulnerable component: json encoder
+Report confidence: Confirmed
+Researcher credits: cPanel L.L.C.
+Solution status: Fixed by Vendor
+Fixed version: 2.3.5.2
+Vendor notification: 2019-04-02
+Solution date: 2019-04-11
+Public disclosure: 2019-04-18
+CVE reference: CVE-2019-10691
+CVSS: 7.5 (CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)
+ 
+Vulnerability Details:
+JSON encoder in Dovecot 2.3 incorrecty assert-crashes when encountering
+invalid UTF-8 characters. This can be used to crash dovecot in two ways.
+Attacker can repeatedly crash Dovecot authentication process by logging
+in using invalid UTF-8 sequence in username. This requires that auth
+policy is enabled.
+Crash can also occur if OX push notification driver is enabled and an
+email is delivered with invalid UTF-8 sequence in From or Subject header.
+In 2.2, malformed UTF-8 sequences are forwarded "as-is", and thus do not
+cause problems in Dovecot itself. Target systems should be checked for
+possible problems in dealing with such sequences.
+See https://wiki.dovecot.org/Authentication/Policy for details on auth
+policy support.
 
-Sincerely,
+Risk:
+Determined attacker can prevent authentication process from staying up
+by keeping on attempting to log in with username containing invalid
+UTF-8 sequence.
+Steps to reproduce:
+Configure dovecot with auth_policy_server_url and auth_policy_hash_nonce
+set.
+Attempt to log in with username containing an invalid UTF-8 sequence
+Observe assert-crash in dovecot logs.
 
-2019년 5월 10일 (금) 오후 6:22, halfdog <me@...fdog.net>님이 작성:
+Solution:
+Operators should update to the latest Patch Release or disable auth
+policy support.
 
-> Roman Drahtmueller writes:
-> > [...]
-> >
-> > > I am not insisting that encryption key should be on the disk or is
-> > > encrypted with a static key that is embedded in the binary.
-> > > Instead, we can make fprintd to use a TPM, if available.
-> >
-> >
-> > The problem persists: The encryption key must be available for the FP
-> > data to be accessible, and so it is for an attacker. It doesn't matter
-> > where you store the key.
-> >
-> > A TPM (and, transitively, products that encrypt with TPM-sealed or
-> > TPM-bound key material) is good for the situation where the system is
-> > physically stolen while powered down (or the drive fails). But that's
-> not
-> > our problem here.
->
-> Therefore dedicated tamper-proof IC-designs+embedded software
-> exist, that perform the biometry template storage and matching
-> on the chip (MoC). There are some vendors out there providing
-> such hardware + MoC-algorithms, but mainly fingerprint and some
-> iris biometry variants seem certified so far. These are intended
-> for access cards or USB-tokens in two or more-factor authentication
-> schemes in a 1-to-1 match fashion, not as centralized 1-to-many
-> matching schemes also deployed rarely (e.g. in Japan where they
-> really like biometrics as long as you do not have to touch the
-> biometry reader ...).
->
-> > [...]
-> >
-> > > Otherwise, but even though it is not perfect, it would be better to
-> apply
-> > > the fingerprint data protection, such as keyring or access control,
-> rather
-> > > than raw fingerprint template.
-> > > FYI, Windows Hello might use Next Generation Cryptography (called CNG)
-> to
-> > > protect and store user private data and encryption keys.
-> >
-> > There are not many options left to solve the stored credential problem,
-> > and it should be clear that saving a file, encrypted or not, is not the
-> > solution.
-> >
-> > One possible solution is to use a hash algorithm, potentially
-> cost-based,
-> > to derive a bit string (that is suitable for comparison with the
-> > persisted authoritative string) from the output of a fingerprint reader.
->
-> At the momenent I do not know of any algorithms providing sufficient
-> entropy binary hash data from fingerprints in a reliable way.
-> Changing extraction to deliver more entropy results in higher
-> FNR during authentication step later on, I think.
->
-> > [...]
->
-> When working on a project to provide highest security MoC solutions
-> with Linux (for other type of biometry, not fingerprints), Nitrokey
-> was offering an open-source USB-token hardware (even the PCBs are
-> open source, if I remember correctly). That platform seemed closest
-> to be a good starting point for developing such an open source MoC
-> biometry solution as they sell also one part with a certified tamper
-> proof trusted element that seemed to allow performing biometry
-> template storage and comparison on chip if programmed correctly.
->
-> Time in the project was too limited to explore, if that hardware
-> would REALLY allow to upgrade it to a powerful, highly secure but
-> still affordable open source biometry system for use by journalists,
-> human rights activists, NGOs ... and nerds, e.g. for password+biometry
-> secured full disk encryption schemes.
->
-> > [...]
->
-> hd
->
->
 
+View attachment "0001-lib-json-Escape-invalid-UTF-8-as-unicode-bytes.patch" of type "text/x-patch" (2509 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
