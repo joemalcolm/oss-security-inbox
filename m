@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1511" "Monday" "14" "November" "2016" "13:40:34" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<7871016480124167bb36dc8681d1e8bd@imshyb02.MITRE.ORG>" "37" "[oss-security] Re: Imagemagick heap overflow" nil nil nil "11" "2016111418:40:34" "[oss-security] Re: Imagemagick heap overflow" (number mark "U       cve-assign@m Nov 14   37/1511  " thread-indent "\"[oss-security] Re: Imagemagick heap overflow\"\n") "<CAE2SPAbE_XOSFwrt=r=zvLf003rXL78f+-pBpXU4Ggc+q6gGtA@mail.gmail.com>" ("<CAE2SPAbE_XOSFwrt=r=zvLf003rXL78f+-pBpXU4Ggc+q6gGtA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1503" "Thursday" "18" "April" "2019" "21:34:15" "+0800" "Fuqian Huang" "huangfq.daxian@gmail.com" "<CABXRUiTuu3diVge+pC=fdG3W+m444FmkeswHOoOS93twyqbbUg@mail.gmail.com>" "57" "[oss-security] Linux kernel < 4.14.111 drivers/nfc/nfcmrvl/usb.c kernel address dumps to user space" nil nil nil "4" "2019041813:34:15" "[oss-security] Linux kernel < 4.14.111 drivers/nfc/nfcmrvl/usb.c kernel address dumps to user space" (number mark "U       huangfq.daxi Apr 18   57/1503  " thread-indent "\"[oss-security] Linux kernel < 4.14.111 drivers/nfc/nfcmrvl/usb.c kernel address dumps to user space\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Linux kernel < 4.14.111 drivers/nfc/nfcmrvl/usb.c kernel address dumps to user space" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11582 invoked by uid 550); 14 Nov 2016 18:40:46 -0000
+Received: (qmail 13757 invoked by uid 550); 18 Apr 2019 16:37:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,52 +12,95 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11561 invoked from network); 14 Nov 2016 18:40:45 -0000
-From: <cve-assign@mitre.org>
-To: <roucaries.bastien@gmail.com>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>,
-	<team@security.debian.org>
-In-Reply-To: <CAE2SPAbE_XOSFwrt=r=zvLf003rXL78f+-pBpXU4Ggc+q6gGtA@mail.gmail.com>
-Message-ID: <7871016480124167bb36dc8681d1e8bd@imshyb02.MITRE.ORG>
-Date: Mon, 14 Nov 2016 13:40:34 -0500
+Received: (qmail 24224 invoked from network); 18 Apr 2019 13:34:37 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=kvTt9UiqNln5CKep4RU5k1sAKICOGghb1RvLhfCxotw=;
+        b=slWaWvSZ59r79po7tYgQjX6+XfZQ4ufMgB3XNHlPcLTLGeXrFKWmX20f0BIpHd9XNL
+         QsbPeop5y8oNG0wfbPwuraR+nql76PskTK7Tt2lslFT5cOIM3qc9rEqD+Rso76M93R+i
+         rUupuIShI1lMvOqur4aFVxi/sMIgdg8O2IX/pWKyoh1jsuBcsnrsombK3ltOnthzs2sl
+         y2/X893GjH/yE6KIX8PHQ0ivs9s78oyXmkHFwgaqUi05BwZ37d7V3qqiQLMLs8f4+WhO
+         Hm+JmkOYK+6x0wAbroZROP4tvi1EGU1VPhPbMJ2B0Ws+fHlUSXELVf5bdq0k+7G9bSqm
+         eFpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=kvTt9UiqNln5CKep4RU5k1sAKICOGghb1RvLhfCxotw=;
+        b=IkziQktUY66kBK9FNK4xax69Q8VMbH6f1fGHqg7+hjfqP7xGNyLtRvU+BNCdj1ET7w
+         mh7L4iZlpw175VSNmu1croRArVyb28q/Wwglafl9+yGCieUwS88TOPjjkOkYau//dSLH
+         c6ULcm5QKlrZ2ZUUbq0ZoDC6K9sRf4N/YIKlXpbhNPdXQC/vs3frLL0xoRrOHC9rt9XH
+         zZvYRMawPx/uBG2IvLhMM32OYZPEfjnSwqus4uHPZddC7UeIipA0GKQrmMhjYKygaJLK
+         E6+TSaSMiwf+XBcD8OvVBFUXjxRZwegDWgunZE10lGqjQmr+L0oZUJy8twa/FwyaKcTH
+         b24g==
+X-Gm-Message-State: APjAAAVRer4iOpzkMJzRFqx33/rTCzgYhLMxgc0CfjyIC0bVrEDFBrh0
+	mv+R6NJ9EbCBtrr6dzIQtAKULXlcu0IMUiQYI/hPzTlyTng=
+X-Google-Smtp-Source: APXvYqzulQbYFwddyEEryTGfWBcXRLIT/2ddfpo8D6gjgZFBFBsiaeBZax/8LCwBB3bCmGlgEBSQ51csTat4VBonp8o=
+X-Received: by 2002:a25:d15:: with SMTP id 21mr71194307ybn.262.1555594465782;
+ Thu, 18 Apr 2019 06:34:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: Imagemagick heap overflow
+From: Fuqian Huang <huangfq.daxian@gmail.com>
+Date: Thu, 18 Apr 2019 21:34:15 +0800
+Message-ID: <CABXRUiTuu3diVge+pC=fdG3W+m444FmkeswHOoOS93twyqbbUg@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] Linux kernel < 4.14.111 drivers/nfc/nfcmrvl/usb.c kernel address
+ dumps to user space
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+In drivers/nfc/nfcmrvl/usb.c:164,
+nfcmrvl_tx_complete will dump the address of urb to dmesg,
+which allows local user to read kernel address via dmesg.
 
-> https://github.com/ImageMagick/ImageMagick/issues/296
-> 
-> Imagemagick before 3cbfb163cff9e5b8cdeace8312e9bfee810ed02b
-> suffer from a heap overflow in WaveletDenoiseImage()
-> 
-> https://github.com/ImageMagick/ImageMagick/commit/3cbfb163cff9e5b8cdeace8312e9bfee810ed02b
-> 
-> -  kernel=(float *) AcquireQuantumMemory(MagickMax(image->rows,image->columns),
-> +  kernel=(float *) AcquireQuantumMemory(MagickMax(image->rows,image->columns)+1,
+static void nfcmrvl_tx_complete(struct urb *urb)
+{
+    ...
+    nfc_info(priv->dev, "urb %p status %d count %d\n",
+         urb, urb->status, urb->actual_length);
+    ...
+}
 
-Use CVE-2016-9298.
+In drivers/nfc/nfcmrvl/usb.c:308,
+nfcmrvl_probe will dump the address of inf to dmesg,
+which allows local user to read kernel address via dmesg.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+static int nfcmrvl_probe(struct usb_interface *intf,
+             const struct usb_device_id *id)
+{
+    ...
+    nfc_info(&udev->dev, "intf %p id %p\n", intf, id);
+    ...
+}
 
-iQIcBAEBCAAGBQJYKgM4AAoJEHb/MwWLVhi2MewP+QFOJsQiiDfwNhdN+UKAPde4
-6Lr26VhijhZvwDFrYM+YGcAdajnTmOXe1JnRHKuFwThVwHfnmKq36INM3urKH+pS
-Vr6+xaG1ITbFsA9xNojUSFeK98LOYs+1EEipTW+PsPpkvL7LAwjTEdBIvbc5rKhF
-gCcV9IScnAGPMyQvi6rnlKU7BbBMkEh7H7b/1B/ytaNVPy9adG18h9M7dY7+bXEN
-FsBO7stN/Mvz0UtnMyCsFeP14RwUSRmwDhsfxv9K8YCiogI70B1rjWMHvG0ZoBhP
-omZENbWh+ZJyKCOnyEN1o331NINkbYS0NWVvjrOU5Opre+Jo6yPHoG9lp+kScLQ3
-1u509BUE3415Ny8xPqITP/duAzQoNNoSR6y3ZCuDEtSn+jH0rufkie2N6wI0FK49
-c4nxspUMBm5UlMVjGfKBZXa1OX7GthFXu22sEm/uc8Zmf/ALVR48vHHKs3Bz3t5S
-fIw7R9mAhp5CM/ieu3X0g0WlrVQbqbQqfDSOokHWDOhi79n7hEGkNjAMWh1oBWah
-SY52vuWRTDla9k6mJuXENej2Cj01B9J5PbqY6lNUXSh+gExCLx7ZC0RVoXRiJ/AS
-WIstWjng16SMIVrT88koD9JD3nHQ/QpBIEONBqBfVosEzvqVkO3/ijPuNQ4eAjAb
-6AmnkYtJ1wfbZgjiYqCe
-=gHC9
------END PGP SIGNATURE-----
+In drivers/nfc/nfcmrvl/usb.c:368,
+nfcmrvl_disconnect will dump the address of inf to dmesg,
+which allows local user to read kernel address via dmesg.
+
+static void nfcmrvl_disconnect(struct usb_interface *intf)
+{
+    ...
+    nfc_info(&drv_data->udev->dev, "intf %p\n", intf);
+    ...
+}
+
+In drivers/nfc/nfcmrvl/usb.c:375,
+nfcmrvl_suspendwill dump the address of inf to dmesg,
+which allows local user to read kernel address via dmesg.
+
+static int nfcmrvl_suspend(struct usb_interface *intf, pm_message_t message)
+{
+    ...
+    nfc_info(&drv_data->udev->dev, "intf %p\n", intf);
+    ...
+}
+
+
+In drivers/nfc/nfcmrvl/usb.c:416,
+nfcmrvl_resume dump the address of inf to dmesg,
+which allows local user to read kernel address via dmesg.
+
+static int nfcmrvl_resume(struct usb_interface *intf)
+{
+    ...
+    nfc_info(&drv_data->udev->dev, "intf %p\n", intf);
+    ...
+}
