@@ -1,133 +1,272 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/03/1
-Message-ID: <CAA8FXenV6WpB3TPD8W=fi+TDsCLrqgDDFhGnfj0Q+PBUHvjdUw@mail.gmail.com>
-Date: Thu, 3 Oct 2019 11:09:59 -0500
-From: Tina Li <tli@...italocean.com>
-To: oss-security@...ts.openwall.com, peterpi@...cent.com
-Cc: Vineeth Remanan Pillai <vpillai@...italocean.com>
-Subject: Re: CVE-2019-14835: QEMU-KVM Guest to Host Kernel Escape Vulnerability: vhost/vhost_net kernel buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/18/1
+Message-ID: <ab32519c2f65ea87@openbsd.org>
+Date: Wed, 17 Apr 2019 18:32:01 -0600 (MDT)
+From: Damien Miller <djm@...nbsd.org>
+To: oss-security@...ts.openwall.com
+Subject: Announce: OpenSSH 8.0 released
 Content-Type: text/plain; charset=utf-8
 
-Hi Peter,
+OpenSSH 8.0 has just been released. It will be available from the
+mirrors listed at http://www.openssh.com/ shortly.
 
-We are trying to follow your steps to reproduce the attack.
+OpenSSH is a 100% complete SSH protocol 2.0 implementation and
+includes sftp client and server support.
 
-Our host is Ubuntu 18.04.2 LTS.
+Once again, we would like to thank the OpenSSH community for their
+continued support of the project, especially those who contributed
+code or patches, reported bugs, tested snapshots or donated to the
+project. More information on donations may be found at:
+http://www.openssh.com/donations.html
 
-Guest is installed with Ubuntu 16.04.3 LTS, and we have built the
-kernel with attached patches and install the built kernel.
+Security
+========
 
-Initially, we were using QEMU 4.1. After running  the echo command to
-trigger the bug, the guest kernel crashes every time.
+This release contains mitigation for a weakness in the scp(1) tool
+and protocol (CVE-2019-6111): when copying files from a remote system
+to a local directory, scp(1) did not verify that the filenames that
+the server sent matched those requested by the client. This could
+allow a hostile server to create or clobber unexpected local files
+with attacker-controlled content.
 
-Here is the crash stack trace:
+This release adds client-side checking that the filenames sent from
+the server match the command-line request,
 
-[  322.977160] kernel BUG at drivers/virtio/virtio_ring.c:685!
+The scp protocol is outdated, inflexible and not readily fixed. We
+recommend the use of more modern protocols like sftp and rsync for
+file transfer instead.
 
-[  322.978252] invalid opcode: 0000 [#1] SMP PTI
+Potentially-incompatible changes
+================================
 
-[  322.979077] Modules linked in: kvm_intel kvm irqbypass input_leds
-joydev serio_raw ib_iser mac_hid i2c_piix4 rdma_cm iw_cm ib_cm ib_core
-configfs iscsi_tcp libiscsi_tcp libiscsi scsi_transport_iscsi autofs4
-btrfs zstd_decompress zstd_compress xxhash raid10 raid456
-async_raid6_recov async_memcpy async_pq async_xor async_tx xor
-raid6_pq libcrc32c raid1 raid0 multipath linear qxl ttm drm_kms_helper
-crct10dif_pclmul crc32_pclmul ghash_clmulni_intel pcbc syscopyarea
-sysfillrect sysimgblt fb_sys_fops drm aesni_intel pata_acpi aes_x86_64
-crypto_simd glue_helper psmouse cryptd virtio_net virtio_scsi floppy
+This release includes a number of changes that may affect existing
+configurations:
 
-[  322.988821] CPU: 1 PID: 16 Comm: ksoftirqd/1 Not tainted 4.15.18+ #1
+ * scp(1): Relating to the above changes to scp(1); the scp protocol
+   relies on the remote shell for wildcard expansion, so there is no
+   infallible way for the client's wildcard matching to perfectly
+   reflect the server's. If there is a difference between client and
+   server wildcard expansion, the client may refuse files from the
+   server. For this reason, we have provided a new "-T" flag to scp
+   that disables these client-side checks at the risk of
+   reintroducing the attack described above.
 
-[  322.990012] Hardware name:
+ * sshd(8): Remove support for obsolete "host/port" syntax. Slash-
+   separated host/port was added in 2001 as an alternative to
+   host:port syntax for the benefit of IPv6 users. These days there
+   are establised standards for this like [::1]:22 and the slash
+   syntax is easily mistaken for CIDR notation, which OpenSSH
+   supports for some things. Remove the slash notation from
+   ListenAddress and PermitOpen; bz#2335
 
-[  322.991303] RIP: 0010:detach_buf+0x104/0x110
+Changes since OpenSSH 7.9
+=========================
 
-[  322.992116] RSP: 0018:ffffaacd40ce7d50 EFLAGS: 00010246
+This release is focused on new features and internal refactoring.
 
-[  322.993093] RAX: ffff8cda0e668000 RBX: ffff8cda0e4ec000 RCX: 0000000000000081
+New Features
+------------
 
-[  322.994411] RDX: 0000000000000000 RSI: ffff8cda0e668810 RDI: ffff8cda0ef9d400
+ * ssh(1), ssh-agent(1), ssh-add(1): Add support for ECDSA keys in
+   PKCS#11 tokens.
 
-[  322.995743] RBP: 0000000000000810 R08: 0000000000000000 R09: 0000000000000100
+ * ssh(1), sshd(8): Add experimental quantum-computing resistant
+   key exchange method, based on a combination of Streamlined NTRU
+   Prime 4591^761 and X25519.
 
-[  322.997068] R10: ffffaacd40ce7bf8 R11: 0000000000000000 R12: 0000000000000600
+ * ssh-keygen(1): Increase the default RSA key size to 3072 bits,
+   following NIST Special Publication 800-57's guidance for a
+   128-bit equivalent symmetric security level.
 
-[  322.998391] R13: ffff8cda0e668810 R14: 0000000000000081 R15: ffff8cda0e4ec810
+ * ssh(1): Allow "PKCS11Provider=none" to override later instances of
+   the PKCS11Provider directive in ssh_config; bz#2974
 
-[  322.999712] FS:  0000000000000000(0000) GS:ffff8cda5fc80000(0000)
-knlGS:0000000000000000
+ * sshd(8): Add a log message for situations where a connection is
+   dropped for attempting to run a command but a sshd_config
+   ForceCommand=internal-sftp restriction is in effect; bz#2960
 
-[  323.001225] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ * ssh(1): When prompting whether to record a new host key, accept
+   the key fingerprint as a synonym for "yes". This allows the user
+   to paste a fingerprint obtained out of band at the prompt and
+   have the client do the comparison for you.
 
-[  323.002285] CR2: 0000000001f74208 CR3: 000000012120a004 CR4: 00000000007606e0
+ * ssh-keygen(1): When signing multiple certificates on a single
+   command-line invocation, allow automatically incrementing the
+   certificate serial number.
 
-[  323.003598] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+ * scp(1), sftp(1): Accept -J option as an alias to ProxyJump on
+   the scp and sftp command-lines.
 
-[  323.004917] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+ * ssh-agent(1), ssh-pkcs11-helper(8), ssh-add(1): Accept "-v"
+   command-line flags to increase the verbosity of output; pass
+   verbose flags though to subprocesses, such as ssh-pkcs11-helper
+   started from ssh-agent.
 
-[  323.006236] PKRU: 55555554
+ * ssh-add(1): Add a "-T" option to allowing testing whether keys in
+   an agent are usable by performing a signature and a verification.
 
-[  323.006759] Call Trace:
+ * sftp-server(8): Add a "lsetstat@...nssh.com" protocol extension
+   that replicates the functionality of the existing SSH2_FXP_SETSTAT
+   operation but does not follow symlinks. bz#2067
 
-[  323.007241]  virtqueue_get_buf_ctx+0x76/0x120
+ * sftp(1): Add "-h" flag to chown/chgrp/chmod commands to request
+   they do not follow symlinks.
 
-[  323.008058]  virtnet_poll+0x14a/0x300 [virtio_net]
+ * sshd(8): Expose $SSH_CONNECTION in the PAM environment. This makes
+   the connection 4-tuple available to PAM modules that wish to use
+   it in decision-making. bz#2741
 
-[  323.008955]  ? tcp_delack_timer+0x6e/0xb0
+ * sshd(8): Add a ssh_config "Match final" predicate Matches in same
+   pass as "Match canonical" but doesn't require hostname
+   canonicalisation be enabled. bz#2906
 
-[  323.009717]  net_rx_action+0x27e/0x3d0
+ * sftp(1): Support a prefix of '@' to suppress echo of sftp batch
+   commands; bz#2926
 
-[  323.010427]  __do_softirq+0xf8/0x29e
+ * ssh-keygen(1): When printing certificate contents using
+   "ssh-keygen -Lf /path/certificate", include the algorithm that
+   the CA used to sign the cert.
 
-[  323.011125]  run_ksoftirqd+0x1e/0x40
+Bugfixes
+--------
 
-[  323.011809]  smpboot_thread_fn+0x10e/0x160
+ * sshd(8): Fix authentication failures when sshd_config contains
+   "AuthenticationMethods any" inside a Match block that overrides
+   a more restrictive default.
 
-[  323.012583]  kthread+0xf8/0x130
+ * sshd(8): Avoid sending duplicate keepalives when ClientAliveCount
+   is enabled.
 
-[  323.013181]  ? sort_range+0x20/0x20
+ * sshd(8): Fix two race conditions related to SIGHUP daemon restart.
+   Remnant file descriptors in recently-forked child processes could
+   block the parent sshd's attempt to listen(2) to the configured
+   addresses. Also, the restarting parent sshd could exit before any
+   child processes that were awaiting their re-execution state had
+   completed reading it, leaving them in a fallback path.
 
-[  323.013835]  ? kthread_destroy_worker+0x40/0x40
+ * ssh(1): Fix stdout potentially being redirected to /dev/null when
+   ProxyCommand=- was in use.
 
-[  323.014681]  ret_from_fork+0x35/0x40
+ * sshd(8): Avoid sending SIGPIPE to child processes if they attempt
+   to write to stderr after their parent processes have exited;
+   bz#2071
 
-[  323.015364] Code: ff 49 c7 87 98 00 00 00 00 00 00 00 eb 10 4d 85
-e4 74 0b 49 8b 87 98 00 00 00 49 89 04 24 5b 5d 41 5c 41 5d 41 5e 41
-5f c3 0f 0b <0f> 0b 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 8b 47
-38 55
+ * ssh(1): Fix bad interaction between the ssh_config ConnectTimeout
+   and ConnectionAttempts directives - connection attempts after the
+   first were ignoring the requested timeout; bz#2918
 
-[  323.018823] RIP: detach_buf+0x104/0x110 RSP: ffffaacd40ce7d50
+ * ssh-keyscan(1): Return a non-zero exit status if no keys were
+   found; bz#2903
 
-[  323.019914] ---[ end trace 1f72aecb3b1ea4dc ]---
+ * scp(1): Sanitize scp filenames to allow UTF-8 characters without
+   terminal control sequences;  bz#2434
 
-[  323.020819] Kernel panic - not syncing: Fatal exception in interrupt
+ * sshd(8): Fix confusion between ClientAliveInterval and time-based
+   RekeyLimit that could cause connections to be incorrectly closed.
+   bz#2757
 
-[  323.022684] Kernel Offset: 0x3b000000 from 0xffffffff81000000
-(relocation range: 0xffffffff80000000-0xffffffffbfffffff)
+ * ssh(1), ssh-add(1): Correct some bugs in PKCS#11 token PIN
+   handling at initial token login. The attempt to read the PIN
+   could be skipped in some cases, particularly on devices with
+   integrated PIN readers. This would lead to an inability to
+   retrieve keys from these tokens. bz#2652
 
-[  323.024639] ---[ end Kernel panic - not syncing: Fatal exception in interrupt
+ * ssh(1), ssh-add(1): Support keys on PKCS#11 tokens that set the
+   CKA_ALWAYS_AUTHENTICATE flag by requring a fresh login after the
+   C_SignInit operation. bz#2638
 
-Setting _vq->indirect when *ctx is non-NULL might be leading to
-BUG_ON() at a later point
+ * ssh(1): Improve documentation for ProxyJump/-J, clarifying that
+   local configuration does not apply to jump hosts.
 
-=>
+ * ssh-keygen(1): Clarify manual - ssh-keygen -e only writes
+   public keys, not private.
 
- 684                 BUG_ON(!(vq->vring.desc[head].flags &
+ * ssh(1), sshd(8): be more strict in processing protocol banners,
+   allowing \r characters only immediately before \n.
 
- 685                          cpu_to_virtio16(vq->vq.vdev,
-VRING_DESC_F_INDIRECT)));
+ * Various: fix a number of memory leaks, including bz#2942 and
+   bz#2938
 
-Then we revert QEMU to 2.11.2, and re-do the test. In this scenario,
-the guest kernel does not crash always, but we are unable to reproduce
-the host crash during live migrate.
+ * scp(1), sftp(1): fix calculation of initial bandwidth limits.
+   Account for bytes written before the timer starts and adjust the
+   schedule on which recalculations are performed. Avoids an initial
+   burst of traffic and yields more accurate bandwidth limits;
+   bz#2927
 
-Please let us know if there is something missing in our test that is
-causing the crash? Also, would be great if you could share more of
-your environment details like Host OS/kernel, qemu version etc. Thanks
-a lot!
+ * sshd(8): Only consider the ext-info-c extension during the initial
+   key eschange. It shouldn't be sent in subsequent ones, but if it
+   is present we should ignore it. This prevents sshd from sending a
+   SSH_MSG_EXT_INFO for REKEX for buggy these clients. bz#2929
 
+ * ssh-keygen(1): Clarify manual that ssh-keygen -F (find host in 
+   authorized_keys) and -R (remove host from authorized_keys) options
+   may accept either a bare hostname or a [hostname]:port combo.
+   bz#2935
 
-Best regards,
+ * ssh(1): Don't attempt to connect to empty SSH_AUTH_SOCK; bz#2936
 
-Tianlin
+ * sshd(8): Silence error messages when sshd fails to load some of
+   the default host keys. Failure to load an explicitly-configured
+   hostkey is still an error, and failure to load any host key is
+   still fatal. pr/103
 
+ * ssh(1): Redirect stderr of ProxyCommands to /dev/null when ssh is
+   started with ControlPersist; prevents random ProxyCommand output
+   from interfering with session output.
+
+ * ssh(1): The ssh client was keeping a redundant ssh-agent socket
+   (leftover from authentication) around for the life of the
+   connection; bz#2912
+
+ * sshd(8): Fix bug in HostbasedAcceptedKeyTypes and
+   PubkeyAcceptedKeyTypes options. If only RSA-SHA2 siganture types
+   were specified, then authentication would always fail for RSA keys
+   as the monitor checks only the base key (not the signature
+   algorithm) type against *AcceptedKeyTypes. bz#2746
+
+ * ssh(1): Request correct signature types from ssh-agent when
+   certificate keys and RSA-SHA2 signatures are in use.
+
+Portability
+-----------
+
+ * sshd(8): On Cygwin, run as SYSTEM where possible, using S4U for
+   token creation if it supports MsV1_0 S4U Logon.
+
+ * sshd(8): On Cygwin, use custom user/group matching code that
+   respects the OS' behaviour of case-insensitive matching.
+
+ * sshd(8): Don't set $MAIL if UsePAM=yes as PAM typically specifies
+   the user environment if it's enabled; bz#2937
+
+ * sshd(8) Cygwin: Change service name to cygsshd to avoid collision
+   with Microsoft's OpenSSH port.
+
+ * Allow building against OpenSSL -dev (3.x)
+
+ * Fix a number of build problems against version configurations and
+   versions of OpenSSL. Including bz#2931 and bz#2921
+
+ * Improve warnings in cygwin service setup. bz#2922
+
+ * Remove hardcoded service name in cygwin setup. bz#2922
+
+Checksums:
+==========
+
+ - SHA1 (openssh-8.0.tar.gz) = 8aaa99091fc7e5a92a4a320e1e5521046b3f95f0
+ - SHA256 (openssh-8.0.tar.gz) = 1xvSJk1KYSnOLPYEUzyCVwTEQ7MHOaCO65DzeNuuLdo=
+
+ - SHA1 (openssh-8.0p1.tar.gz) = 756dbb99193f9541c9206a667eaa27b0fa184a4f
+ - SHA256 (openssh-8.0p1.tar.gz) = vZQ4eeaUmOgDHra39E0IzcN9WaeraJqgtDcyDDSB/Wg=
+
+Please note that the SHA256 signatures are base64 encoded and not
+hexadecimal (which is the default for most checksum tools). The PGP
+key used to sign the releases is available as RELEASE_KEY.asc from
+the mirror sites.
+
+Reporting Bugs:
+===============
+
+- Please read http://www.openssh.com/report.html
+  Security bugs should be reported directly to openssh@...nssh.com
