@@ -1,34 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/09/1
-Message-ID: <20190909185052.GA20873@spodhuis.org>
-Date: Mon, 9 Sep 2019 14:50:52 -0400
-From: Phil Pennock <pdp@...m.org>
-To: exim-users@...m.org, oss-security@...ts.openwall.com
-Subject: Re: Sv: [exim] CVE-2019-15846: Exim - local or remote attacker can execute programs with root privileges
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/18/15
+Message-ID: <CABXRUiRB0POW+i-Q5NAjbkBjStUZ9YVehk=dOsM-p7symuUgdQ@mail.gmail.com>
+Date: Thu, 18 Apr 2019 21:33:59 +0800
+From: Fuqian Huang <huangfq.daxian@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Linux kernel < 4.14.111 drivers/net/wan/lmc/lmc_main.c kernel address dumps to user space
 Content-Type: text/plain; charset=utf-8
 
-On 2019-09-07 at 08:23 +0200, Heiko Schlittermann wrote:
-> Phil Pennock <pdp@...m.org> (Sa 07 Sep 2019 02:52:56 CEST):
-> > The connect ACL won't protect you against STARTTLS usage, which is far
-> > more common for email than TLS-on-connect.
-> >
-> > I myself use the HELO ACL.
-> 
-> This doesn't seem to be sufficient, you can start "submitting" a message to
-> a remote Exim with the following sequence
+In drivers/net/wan/lmc/lmc_main.c:510,
+lmc_ioctl will dump the address of data to dmesg when xc.command is
+lmc_xilinx_load, which allows local user to read the kernel address.
 
-Yeah sorry folks, that was a little embarrassing: my setup, and various
-common configurations (including apparently RedHat's) enforce
-EHLO-after-STARTTLS.  But that's Exim configuration, not hard-enforced
-in the code.
-
-"Be lenient in what you accept" ... bah humbug.
-
-Exim's default configuration has included this check, at RCPT time
-(which still works for our purposes) since commit 731c6a9043 in 2016,
-included in releases 4.87 onwards.
-
-So I use the HELO ACL and it's safe in "many" configurations, but we
-have to be more cautious in recommending mitigating workarounds.
-
--Phil
+int lmc_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd) /*fold00*/
+{
+    ...
+    case lmc_xilinx_load: /*fold02*/
+        ...
+            printk("%s: Starting load of data Len: %d at 0x%p ==
+0x%p\n", dev->name, xc.len, xc.data, data);
+}
