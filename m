@@ -1,40 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/22/7
-Message-ID: <20190722113826.7m3yxgncujznwnbc@local>
-Date: Mon, 22 Jul 2019 11:38:26 +0000
-From: Mikhail Klementev <root@...pstack.io>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/18/8
+Message-ID: <CABXRUiSC+XHg4dSS_ribzENwceRHNS6jaTnq_Xs6F9byhhCukQ@mail.gmail.com>
+Date: Thu, 18 Apr 2019 21:31:36 +0800
+From: Fuqian Huang <huangfq.daxian@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead
+Subject: Linux kernel < 4.14.111 drivers/media/dvb-frontends/helene.c kernel address dumps to user space
 Content-Type: text/plain; charset=utf-8
 
-Ah, ok. Just misread, sorry.
+In drivers/media/dvb-frontends/helene.c:1005,
+function helene_attach_s will print the address of
+adapter to dmesg, the kernel address is dumpped to
+user space.
+struct dvb_frontend *helene_attach_s(struct dvb_frontend *fe,
+        const struct helene_config *config,
+        struct i2c_adapter *i2c)
+{
+    ...
+    priv->i2c = i2c;
+    ...
+    dev_info(&priv->i2c->dev,
+            "Sony HELENE Sat attached on addr=%x at I2C adapter %p\n",
+            priv->i2c_address, priv->i2c);
+    return fe;
+}
 
-On Mon, Jul 22, 2019 at 12:29:53PM +0100, Stuart Henderson wrote:
-> On 2019/07/22 11:21, Mikhail Klementev wrote:
-> > Kindly notice that this is a public mail list.
-> 
-> The sender is clearly aware of this, see the timeline.
-> 
-> > On Mon, Jul 22, 2019 at 12:00:13PM +0200, Heiko Schlittermann wrote:
-> > > More details and fixes are not yet public, but will be made public on
-> > > CRD, July 25th.
-> > > 
-> > > Timeline
-> > > ========
-> > > 
-> > > t0: Thu Jul 18 2019
-> > >     - this notice to distros@...openwall.org and exim-maintainers@...m.org
-> > >     - open limited access to our security Git repo. See below.
-> > > 
-> > > t0+~4d: Mon Jul 22 10:00:00 UTC 2019 [NOW]
-> > >     - heads-up notice to oss-security@...ts.openwall.com,
-> > >       exim-users@...m.org, and exim-announce@...m.org
-> > > 
-> > > t0+~7d: Thu Jul 25 10:00:00 UTC 2019
-> > >     - Coordinated relase date
-> > >     - publish the patches in our official and public Git repositories
-> > >       and the packages on our FTP server.
+In drivers/media/dvb-frontends/helene.c:1041,
+function helene_attach will print the address of
+adapter to dmesg, the kernel address is dumpped to
+user space.
 
--- 
-Mikhail Klementev,
-https://dumpstack.io
+struct dvb_frontend *helene_attach(struct dvb_frontend *fe,
+        const struct helene_config *config,
+        struct i2c_adapter *i2c)
+{
+    ...
+    priv->i2c = i2c;
+    ...
+    dev_info(&priv->i2c->dev,
+            "Sony HELENE Ter attached on addr=%x at I2C adapter %p\n",
+            priv->i2c_address, priv->i2c);
+    return fe;
+}
