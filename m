@@ -1,4 +1,9 @@
-Received: (qmail 7678 invoked by uid 550); 26 Sep 2023 15:35:13 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["513" "Thursday" "18" "April" "2019" "21:31:52" "+0800" "Fuqian Huang" "huangfq.daxian@gmail.com" "<CABXRUiTOrkprr-vyV8enQaJFrDc7ho96JDHBzjYmK+wMY5KM6w@mail.gmail.com>" "17" "[oss-security] Linux kernel < 4.14.111 drivers/media/dvb-frontends/horus3a.c kernel address dumps to user space" nil nil nil "4" "2019041813:31:52" "[oss-security] Linux kernel < 4.14.111 drivers/media/dvb-frontends/horus3a.c kernel address dumps to user space" (number mark "U       huangfq.daxi Apr 18   17/513   " thread-indent "\"[oss-security] Linux kernel < 4.14.111 drivers/media/dvb-frontends/horus3a.c kernel address dumps to user space\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Linux kernel < 4.14.111 drivers/media/dvb-frontends/horus3a.c kernel address dumps to user space" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 9793 invoked by uid 550); 18 Apr 2019 16:36:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,94 +12,55 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7521 invoked from network); 26 Sep 2023 15:35:00 -0000
-Date: Tue, 26 Sep 2023 17:34:54 +0200
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 21591 invoked from network); 18 Apr 2019 13:32:14 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=kYSKTEMxb2fS8rgGZCRuOWn6WIfvoGeDLtY/LFgYNvM=;
+        b=TaboQnalZ8oMZWentXt62n6g3TcIoSjpjh8acJEdgAxJ13PPXECS9aS4noAYxwOdoy
+         FQVAgWiSlERS00BASORarFGAUdUpjS7NhL3NahAEI7AcXmCbePX8zbd2dbLJp7gyUmiC
+         Svizwtws89U/F0nAGq5I63cMNPhyllGDB22fiLnr/wIRi6wWYO/vmAvDgqihJGnKJ6Da
+         w42EPfQteH1m1de5du/TfaF+42psD+bJdQaTWL1+hcYsg/3eF00Mxq5HyxbRFM3gjYUs
+         2d+gRbtVLOcsq54I53/VF4W0gMiOtLhP/2Tkx55t/W2CoLcKeqK7EeW6oSYLYk8MxFT2
+         lrcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=kYSKTEMxb2fS8rgGZCRuOWn6WIfvoGeDLtY/LFgYNvM=;
+        b=JtWGtqsSVJL6dvntWXTMr14JWpb8guC2MSR4FLwpjamt+vFrK3OynPccQ9bIeWvWb9
+         yhYXAp/GAlcG/f5BsdO+OkQKoxeIpECtXJclZlywCyX9TVzkMy1WS8voWaxn//ky5DIH
+         WqwYqNGcuNN2ERXRgv3Gf+VWTzo021fNA5MfwzjzbwCzlNZBRQ+tOpgZRRj/Gusu4sGm
+         JoyzyWhD1IqHY3j5n6uC2n0uJB/pUt+bF82LhDYBQX+fV/yorzReoZCiAXHrTbaTq3pz
+         3X+xyueY7zrbJsvhu/EP1b6EuLxyS3M1sFqTtfMyZT17uI2rmadUVXgDCP6rv5GVGVZi
+         Jt/w==
+X-Gm-Message-State: APjAAAUbijV0p3vtnOuruMsP/6RZXUZyAl8X2QvW3Uj53fQ7ixEZi6rE
+	goWNK1RjmkBdKzRc2Aqx+q7EkXvwqHgWLk5rhXEPv+/MMh4=
+X-Google-Smtp-Source: APXvYqyQ+QmEXcRAdmJpgi72UgN2nc3G8nTlwjMbO7ho9HpMsNMrEPLGChYo3kGzVv1sWOO1ZCQNAibWZcM6AWhB7ME=
+X-Received: by 2002:a25:d15:: with SMTP id 21mr71181469ybn.262.1555594322780;
+ Thu, 18 Apr 2019 06:32:02 -0700 (PDT)
+MIME-Version: 1.0
+From: Fuqian Huang <huangfq.daxian@gmail.com>
+Date: Thu, 18 Apr 2019 21:31:52 +0800
+Message-ID: <CABXRUiTOrkprr-vyV8enQaJFrDc7ho96JDHBzjYmK+wMY5KM6w@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Message-ID: <20230926153454.GA12511@openwall.com>
-References: <20230921205250.GA13106@openwall.com> <ZRKn0bQVe4MBMYiC@eldamar.lan>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZRKn0bQVe4MBMYiC@eldamar.lan>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] CVE-2023-4863: libwebp: Heap buffer overflow in WebP Codec
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] Linux kernel < 4.14.111 drivers/media/dvb-frontends/horus3a.c kernel
+ address dumps to user space
 
-Hi,
+In drivers/media/dvb-frontends/horus3a.c:1005,
+function horus3a_attach will print the address of
+adapter to dmesg, the kernel address is dumpped to
+user space.
 
-It was great to hear from Vincent that the newer libwebp changes are
-just "Clean-ups, no security issues there."  Yet I think it would also
-be great if someone in here double-checks that.
-
-Regarding the assert failure detected by oss-fuzz, "A release build
-would not be negatively affected."  libwebp does specify -DNDEBUG by
-default in:
-
-$ fgrep -rl DNDEBUG .
-./Makefile.vc
-./xcframeworkbuild.sh
-./iosbuild.sh
-./configure.ac
-./makefile.unix
-
-and there's also cmake support, but apparently cmake sets -DNDEBUG for
-release builds by default.  So at least this statement does appear to be
-true for libwebp itself as built via the above means.
-
-However, there's also Gradle support, and the gradle* files do not
-mention NDEBUG.
-
-Also, I wonder if there are other projects building code from libwebp
-via different build environments.
-
-So there might be (a small minority of) uses of libwebp where the assert
-exists in a release build of some project.
-
-On Tue, Sep 26, 2023 at 11:43:45AM +0200, Salvatore Bonaccorso wrote:
-> Maybe related to this question in todays CVEs updates there appeared 
-> 
-> https://www.cve.org/CVERecord?id=CVE-2023-5129
-> 
-> vs.
-> 
-> https://www.cve.org/CVERecord?id=CVE-2023-4863
-> 
-> FWIW, I contacted the assigning CNAs so this can be clarified (e.g. if
-> one of those needs to be rejected).
-
-CVE-2023-5129 description looks like what the original's should have been:
-
-> Assigner: Google LLC
-> Published: 2023-09-25Updated: 2023-09-25
-> 
-> With a specially crafted WebP lossless file, libwebp may write data out
-> of bounds to the heap. The ReadHuffmanCodes() function allocates the
-> HuffmanCode buffer with a size that comes from an array of precomputed
-> sizes: kTableSize. The color_cache_bits value defines which size to use.
-> The kTableSize array only takes into account sizes for 8-bit first-level
-> table lookups but not second-level table lookups. libwebp allows codes
-> that are up to 15-bit (MAX_ALLOWED_CODE_LENGTH). When
-> BuildHuffmanTable() attempts to fill the second-level tables it may
-> write data out-of-bounds. The OOB write to the undersized array happens
-> in ReplicateValue.
-> 
-> Vendor
-> libwebp
-> 
-> Product
-> libwebp
-> 
-> Versions
-> affected from 0.5.0 before 1.3.2
-> 
-> Credits
-> 
->     Apple Security Engineering and Architecture (SEAR) finder
->     The Citizen Lab at The University of Toronto's Munk School finder
-> 
-> References
-> 
->     https://chromium.googlesource.com/webm/libwebp/+/902bc9190331343b2017211debcec8d2ab87e17a
->     https://chromium.googlesource.com/webm/libwebp/+/2af26267cdfcb63a88e5c74a85927a12d6ca1d76
-
-Alexander
+struct dvb_frontend *horus3a_attach(struct dvb_frontend *fe,
+                    const struct horus3a_config *config,
+                    struct i2c_adapter *i2c)
+{
+    ...
+    priv->i2c = i2c;
+    ...
+    dev_info(&priv->i2c->dev,
+        "Sony HORUS3A attached on addr=%x at I2C adapter %p\n",
+        priv->i2c_address, priv->i2c);
+    return fe;
+}
