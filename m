@@ -1,39 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/06/6
-Message-ID: <005d01d564e3$cbf48090$63dd81b0$@sebbe.eu>
-Date: Fri, 06 Sep 2019 20:50:37 +0200
-From: "Sebastian Nielsen" <sebastian@...be.eu>
-To: "'Heiko Schlittermann'" <hs@...marc.schlittermann.de>, "'oss-security'" <oss-security@...ts.openwall.com>, <exim-users@...m.org>
-Subject: Sv: [exim] CVE-2019-15846: Exim - local or remote attacker can execute programs with root privileges
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/18/9
+Message-ID: <CABXRUiTOrkprr-vyV8enQaJFrDc7ho96JDHBzjYmK+wMY5KM6w@mail.gmail.com>
+Date: Thu, 18 Apr 2019 21:31:52 +0800
+From: Fuqian Huang <huangfq.daxian@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Linux kernel < 4.14.111 drivers/media/dvb-frontends/horus3a.c kernel address dumps to user space
 Content-Type: text/plain; charset=utf-8
 
-Shouldn't this be in connect ACL?
-How would the deny in MAIL FROM prevent the exploit? What I have understand is that there is exploit in the SNI of the TLS negotiation, thus the whole connect attempt must be rejected right?
+In drivers/media/dvb-frontends/horus3a.c:1005,
+function horus3a_attach will print the address of
+adapter to dmesg, the kernel address is dumpped to
+user space.
 
------Ursprungligt meddelande-----
-Från: Exim-users <exim-users-bounces+sebastian=sebbe.eu@...m.org> För Heiko Schlittermann via Exim-users
-Skickat: den 6 september 2019 13:22
-Till: oss-security <oss-security@...ts.openwall.com>; Exim Users <exim-users@...m.org>
-Ämne: Re: [exim] CVE-2019-15846: Exim - local or remote attacker can execute programs with root privileges
-
-An Update to the mitigation for the current CVE:
-
-Add - as part of the mail ACL (the ACL referenced by the main config
-option "acl_smtp_mail"):
-
-     deny    condition = ${if eq{\\}{${substr{-1}{1}{$tls_in_sni}}}}
-     deny    condition = ${if eq{\\}{${substr{-1}{1}{$tls_in_peerdn}}}}
-
-This should prevent the currently known attack vector.
-
-    Best regards from Dresden/Germany
-    Viele Grüße aus Dresden
-    Heiko Schlittermann
---
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
- ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
-
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (5261 bytes)
+struct dvb_frontend *horus3a_attach(struct dvb_frontend *fe,
+                    const struct horus3a_config *config,
+                    struct i2c_adapter *i2c)
+{
+    ...
+    priv->i2c = i2c;
+    ...
+    dev_info(&priv->i2c->dev,
+        "Sony HORUS3A attached on addr=%x at I2C adapter %p\n",
+        priv->i2c_address, priv->i2c);
+    return fe;
+}
