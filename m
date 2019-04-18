@@ -1,31 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/04/3
-Message-ID: <380cf271-ee86-3743-8303-03d6a1df4d37@csail.mit.edu>
-Date: Mon, 4 Nov 2019 15:08:24 -0800
-From: "Srivatsa S. Bhat" <srivatsa@...il.mit.edu>
-To: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
-Cc: Steven Rostedt <rostedt@...dmis.org>, sashal@...nel.org, amakhalov@...are.com, anishs@...are.com, Sharath George <sharathg@...are.com>, mijzerman@...are.com, Srivatsa Bhat <srivatsab@...are.com>
-Subject: Re: Membership application for linux-distros - VMware
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/18/20
+Message-ID: <20190418172349.GA24716@kroah.com>
+Date: Thu, 18 Apr 2019 19:23:49 +0200
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel address leaks
 Content-Type: text/plain; charset=utf-8
 
-On 10/30/19 11:46 AM, Solar Designer wrote:
-> On Wed, Oct 30, 2019 at 05:24:23PM +0100, Solar Designer wrote:
->> Please send me your PGP key off-list and I'll add you to linux-distros.
+On Thu, Apr 18, 2019 at 07:00:58PM +0200, Solar Designer wrote:
+> Hi,
 > 
-> This has been taken care of - VMware Photon OS is now on linux-distros.
->
+> Fuqian just sent us all 13 of these in 2 days, and I guess there might
+> be many more to come.  Do we really want to see them in here?  And in
+> that many individual messages?  I doubt it - but not enough to have used
+> my moderator powers to outright reject the messages without discussion.
 
-Thank you!
- 
-> Srivatsa, please note that your subscription is only for Photon OS.
-> You're expected not to share the information within VMware beyond the
-> need-to-know for Photon OS fixes.  If an issue comes up that you think
-> is relevant to other VMware products and you'd like to pass the
-> information on, you need the reporter's explicit permission to do so.
-> 
+If you look at the original commit that added the pointer masking logic
+to the kernel in the 4.15 release:
+	ad67b74d2469 ("printk: hash addresses printed with %p")
 
-Understood, thank you!
+it points out that there are currently about 14000 different uses of
+this in the kernel at the time, so the proper way to "fix" this is to
+just make it so %p does not print out the pointer address.
 
-Regards,
-Srivatsa
-VMware Photon OS
+Today, I responded to one patch that the author sent to the stable
+mailing list with the following message:
+	I suggest, if you really care about this issue in your
+	4.14-based kernel tree, that you just backport these pointer
+	printk patches and be done with it.  That's too big of a change
+	to accept into the 4.14.y LTS kernel, but as the lifespan for
+	4.14.y running on a "general purpose" system is probably only a
+	few more months at most, I would recomment just using 4.19.y
+	instead as this isn't an issue at all there.
+
+So in short, use 4.15 or newer if you care about this issue.  If you
+rely on an older kernel, please backport the above patch, and a few
+others, to your kernel and be done with the issue.  That's what Android
+has done, so all of those devices do not have this issue anymore either.
+
+thanks,
+
+greg k-h
