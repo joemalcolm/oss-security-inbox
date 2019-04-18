@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1745" "Wednesday" "16" "March" "2016" "16:42:30" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160316204230.64F63B2E03F@smtpvbsrv1.mitre.org>" "48" "[oss-security] Re: CVE Request: PHP last release security issues" "^Cc:" nil nil "3" "2016031620:42:30" "[oss-security] Re: CVE Request: PHP last release security issues" (number mark "        cve-assign@m Mar 16   48/1745  " thread-indent "\"[oss-security] Re: CVE Request: PHP last release security issues\"\n") "<20160310094228.GD4470@suse.de>" ("<20160310094228.GD4470@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["424" "Thursday" "18" "April" "2019" "21:33:59" "+0800" "Fuqian Huang" "huangfq.daxian@gmail.com" "<CABXRUiRB0POW+i-Q5NAjbkBjStUZ9YVehk=dOsM-p7symuUgdQ@mail.gmail.com>" "12" "[oss-security] Linux kernel < 4.14.111 drivers/net/wan/lmc/lmc_main.c kernel address dumps to user space" nil nil nil "4" "2019041813:33:59" "[oss-security] Linux kernel < 4.14.111 drivers/net/wan/lmc/lmc_main.c kernel address dumps to user space" (number mark "U       huangfq.daxi Apr 18   12/424   " thread-indent "\"[oss-security] Linux kernel < 4.14.111 drivers/net/wan/lmc/lmc_main.c kernel address dumps to user space\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Linux kernel < 4.14.111 drivers/net/wan/lmc/lmc_main.c kernel address dumps to user space" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3861 invoked by uid 550); 16 Mar 2016 20:42:59 -0000
+Received: (qmail 13680 invoked by uid 550); 18 Apr 2019 16:37:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,61 +11,51 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3829 invoked from network); 16 Mar 2016 20:42:57 -0000
-In-Reply-To: <20160310094228.GD4470@suse.de>
-Message-Id: <20160316204230.64F63B2E03F@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, security@php.net
-Date: Wed, 16 Mar 2016 16:42:30 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: PHP last release security issues
-To: meissner@suse.de
+Received: (qmail 24049 invoked from network); 18 Apr 2019 13:34:22 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=g+mzOOTw4SlT7Ujz/LkjV3MDKO+felxHAWQpxHht3AE=;
+        b=K6DtR7mqJFs2DYd9ybIZb92u1WPCIJk6HRdTy5hiqmo3J8s8th+gOG9OjyWh56MXMJ
+         aAcbqYtpI/r0kqNQ4Ji9cqG0Ld+73sOfgOH5wmQ4EH6SLVa9YGHrySIl6CIf15mVqdev
+         YinXhmaOAgXNbCIXfo0QzXMTtaT5KCA/jXZU0ndByB/iOBbK8whUlY7g8Ytoy80wrxOm
+         DE2ndrtl8XSkY73m/fOnAVUx4hJaofTf6iKiRv1ndMrMDfFuNZcV1YyzLWDN1w9eqhPg
+         zHpOw87RwIPN/DTVIhBnJQaYRcXJR0Yl/HQlVCSm7g3kVY+sGtXqSInW5Nh0lcO3QYZ3
+         av7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=g+mzOOTw4SlT7Ujz/LkjV3MDKO+felxHAWQpxHht3AE=;
+        b=TAp7Iw5Ok6FlYjPKjp1uMdXvS+VCvA7OJR3SUxbVo9vCa542x4yJYvPmCo1c2twFv+
+         AMW0KjLFPBgxOoGQOgZdsu64WrIQ+CaPC0yOaG+1Rh9ohjMPBjyVRK2sc1aDpPMzXo1E
+         C6Or4CYFYobT1MXUDE9YRCiL9uv4GOow6bTs70b1sZGys3Wu3gZuX4K/xlDe3EFxbhtR
+         4IhzEKq7lO32CWg1WfB1SLPczcZEH+dgNl8o9V7+xFWvJhIN89hX2hQ5N+k7nqq1qatK
+         TpT2XHKR7+yT4EYSkwccP957XScILSD1UT81rt+JolfTXUIWl06pAgYuxgWqNAugyzf0
+         E7JA==
+X-Gm-Message-State: APjAAAUlt8b9SeICCEF/WCBrn0ycITqlqMFtKIiunMGGoV055xvRbuf8
+	10Pm/Rtp4/qj/AhfR8ExS+QvelrmqLhF2qQC8IaG11QUctI=
+X-Google-Smtp-Source: APXvYqyXhOQvrHYi+DAHbjtgQaFVM7lAg62uGKU4H/lxIkKQ3DGCQoFQ21KH5bz8kNhURvdqqubrIvO6EtORk2nmk5E=
+X-Received: by 2002:a0d:ec96:: with SMTP id v144mr934343ywe.28.1555594450291;
+ Thu, 18 Apr 2019 06:34:10 -0700 (PDT)
+MIME-Version: 1.0
+From: Fuqian Huang <huangfq.daxian@gmail.com>
+Date: Thu, 18 Apr 2019 21:33:59 +0800
+Message-ID: <CABXRUiRB0POW+i-Q5NAjbkBjStUZ9YVehk=dOsM-p7symuUgdQ@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] Linux kernel < 4.14.111 drivers/net/wan/lmc/lmc_main.c kernel address
+ dumps to user space
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+In drivers/net/wan/lmc/lmc_main.c:510,
+lmc_ioctl will dump the address of data to dmesg when xc.command is
+lmc_xilinx_load, which allows local user to read the kernel address.
 
-> https://bugs.php.net/bug.php?id=71610
-
->> Type Confusion Vulnerability - SOAP / make_http_soap_request()
-
->> Due to an insufficient validation of the cookies field when making SOAP http request
-
->> https://github.com/php/php-src/blob/master/ext/soap/php_http.c
-
->> There is lack of validation of 2nd/3rd elements in cookies array.
->>
->> and a type confusion occurs when they are no longer string.
-
->> [2016-02-22 07:48 UTC] stas@php.net
->> Fix added to security repo as eaf4e77190d402ea014207e9a7d5da1a4f3727ba
-
-> https://git.php.net/?p=php-src.git;a=commit;h=eaf4e77190d402ea014207e9a7d5da1a4f3727ba
-
->> + Z_TYPE_P(tmp) != IS_STRING ||
-
->> + Z_TYPE_P(tmp) != IS_STRING ||
-
-Use CVE-2016-3185.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJW6cSpAAoJEL54rhJi8gl52JoP/iUez71uL5TXvf0ai43DamFe
-SeZ1FX93kZDkAtfgwrxif3IAXEuX0HlSJeLyuJx2pYDU4GzNEJlT7a+vUm5RK5Nt
-EoJRHI30Wpn6JB7UsV4SkYt0ZyRUjGS3849BuepBAAENyNkKhu0dyrbDXVvmfiVJ
-ELrFg+mNgAhRd5zsBhM63BaExC6a80gpahv/AN75Rz6qU5d8DDx4Q2c7dchme1sT
-mXz9cThT5Zs4kLo9T88QBd3jmsOwVZFqEsBkLCQBBrjNEZoCJlg+G8WAvaKPzPoh
-kV4Ni5qLI+ioW9eEVQQaSMZOYlOcPinqkDIKHk/1ileoTFrd97hKeEjHKwfjT2HT
-2vH3MAiE/yfGEpwqu+RPGPkvcKwo3js+djKOmA6d/jMwSf0ksw+MtJye0CcoEYNn
-iqgIJJgLGokzZ3qalJNXtGSDfxKwyYFpPTYGjLF8YERMFWfOWoNxetgJeT0Zc3pG
-4fz7Gz6MBUnl3eyFICw5bUtz2/kf9RddfzX5YZh2LytSCij+vvkBM4k2xAVFT8+T
-HJY6Ed3X+CGpwGTtd4aWdDRQk3R88xJ0kd1WO8bfFmAW+1zo2iRavYT7loZN1ErV
-KmLpeig/zoog/1yaQQwva43mNVaybTG7NYXbIxQCeohSbm8j5Rd7HbMfpN3WCPfm
-7CpwiKmNIpRcXm7hh1+n
-=bWUM
------END PGP SIGNATURE-----
+int lmc_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd) /*fold00*/
+{
+    ...
+    case lmc_xilinx_load: /*fold02*/
+        ...
+            printk("%s: Starting load of data Len: %d at 0x%p ==
+0x%p\n", dev->name, xc.len, xc.data, data);
+}
