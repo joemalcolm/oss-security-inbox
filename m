@@ -1,4 +1,9 @@
-Received: (qmail 30468 invoked by uid 550); 19 Mar 2024 03:27:01 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1890" "Thursday" "18" "April" "2019" "19:00:58" "+0200" "Solar Designer" "solar@openwall.com" "<20190418170058.GA22985@openwall.com>" "46" "[oss-security] Linux kernel address leaks" "^Date:" nil nil "4" "2019041817:00:58" "[oss-security] Linux kernel address leaks" (number mark "        solar@openwa Apr 18   46/1890  " thread-indent "\"[oss-security] Linux kernel address leaks\"\n") "<CABXRUiQpWVeHYZeN_=P+n8ghVA=VWDPAeddpsZj38P0sZADeNA@mail.gmail.com>" ("<CABXRUiQpWVeHYZeN_=P+n8ghVA=VWDPAeddpsZj38P0sZADeNA@mail.gmail.com>") nil nil nil nil nil nil nil "[oss-security] Linux kernel address leaks" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 11636 invoked by uid 550); 18 Apr 2019 17:01:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,61 +11,63 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 11278 invoked from network); 18 Apr 2019 17:01:04 -0000
+Message-ID: <20190418170058.GA22985@openwall.com>
+References: <CABXRUiQpWVeHYZeN_=P+n8ghVA=VWDPAeddpsZj38P0sZADeNA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CABXRUiQpWVeHYZeN_=P+n8ghVA=VWDPAeddpsZj38P0sZADeNA@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Date: Thu, 18 Apr 2019 19:00:58 +0200
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30447 invoked from network); 19 Mar 2024 03:27:01 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1710819076; x=1711423876; darn=lists.openwall.com;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gYWmUORLfrGq6ymupfDQ1TOCA4OFPSqjq4mLpgas/GU=;
-        b=C2fgZC1KbMD/f5Z2H6UpSfqQHuD+yILxHdg3Nsrk0a2Qs5KHqFDaDIlPzSwL69Cw/N
-         9XRRbMrO9UkoF953UZYhTOpU1nfgMmfhyOwkT6fvJCusAqPlnaJzMQ8roLPN4DretX42
-         C2MZb47om38qfid/EbqrPIW8Yq5VIQgdcsNt2yG/OpToKvh7EWgFfF7tmf6b4+lWwGkc
-         z6t2BUGA111Emqbsa0x8/bodyqPAVB/DsOhIrHkjvyODYXIjf0iD5ShfKtZ5J6hkwyY0
-         91TlJWQGgqS1qu+d3AetylUD0MB1FueONFiCATePdwJQLZqwSefr1IO1K6yApi4JK3yZ
-         qtlw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710819076; x=1711423876;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=gYWmUORLfrGq6ymupfDQ1TOCA4OFPSqjq4mLpgas/GU=;
-        b=iiKWZNkkzO7e3pGDAlUEhnXxEFPOFpkoTGm9p2JlUwO91JN/YSjH1VqvBL9dmuLOwJ
-         5HsH/J7YnI8BDmLXeDNtUBBDoVAvwK5OVWBDKTM9aoYgr7USl17g8blM8WLB+vSnQJWu
-         9NEgIWBYVfd1bfiLfF2IOGJ2HlQ+9+EyV8uFxK8Sdj+a80NBlp320SV6d3yYvSte4yJV
-         4vUBlW4vsqYJMD7phOC2sldqMP1C6mIx12KvGwGDgPtXVlMsDUlspZhxviuJyh+cS5QU
-         +tygAvW8BpueR1O7XMeM9IPkBMGEkyd4Y3pH8xfdQCZ8zC6dY/NQUbaayqZosb01c7yx
-         tycg==
-X-Gm-Message-State: AOJu0YzgjF+NxmnZnYV36/rDeGfV30EgoxxQcV0TCSCxeLcllSsTfjqP
-	Y/Wgc3P9YH4upzXWJuRfOzrMyC+XrOT7mwaZdipCT5heZQ0g9bBXUNW8T91RF6QDaevwg4XXOsZ
-	IMSYQc4qi6i2BmxPiMdROkq4nJl8E7eRg
-X-Google-Smtp-Source: AGHT+IFBOFA4yRH79vF89X39EZc08rfRxNSVHyATGX7yAbOS3ubAosKSbJBdGV4CqTGdVD8RFsWlb1U7vi+ZCCTJ8Zg=
-X-Received: by 2002:a0c:9c8c:0:b0:696:306f:7a54 with SMTP id
- i12-20020a0c9c8c000000b00696306f7a54mr1067255qvf.48.1710819076299; Mon, 18
- Mar 2024 20:31:16 -0700 (PDT)
-MIME-Version: 1.0
-References: <425c87ae-3998-49f0-8403-fe953f7d08a5@x17.eu>
-In-Reply-To: <425c87ae-3998-49f0-8403-fe953f7d08a5@x17.eu>
-From: "Alexander E. Patrakov" <patrakov@gmail.com>
-Date: Tue, 19 Mar 2024 11:30:50 +0800
-Message-ID: <CAN_LGv1HwD5t9PSDfy779voo6oOiUoBu+UmD+nJg0QhE1oAi+w@mail.gmail.com>
+Subject: [oss-security] Linux kernel address leaks
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] 5 Linux kernel ksmbd vulnerabilities
 
-On Tue, Mar 19, 2024 at 6:11=E2=80=AFAM daniel <sd@x17.eu> wrote:
->
-> Recently two batches of Linux kernel ksmbd vulnerabilities became public.
->
-> Please find here an overview, the attached ZDI information and the
-> corresponding links to the Linux kernel cve announce messages with
-> further information.
+Hi,
 
-I am personally worried about the situation with OpenWrt which would
-need a new stable release to address this. However, they use a manual
-backport of this to the 5.15.x kernel.
+Fuqian just sent us all 13 of these in 2 days, and I guess there might
+be many more to come.  Do we really want to see them in here?  And in
+that many individual messages?  I doubt it - but not enough to have used
+my moderator powers to outright reject the messages without discussion.
 
---=20
-Alexander E. Patrakov
+This in part depends on upstream Linux kernel's policy as to kernel
+address leaks.  Are those treated as vulnerabilities or as not yet fully
+completed kernel hardening effort?  I think it's the latter, in which
+case such reports are better sent to the kernel-hardening mailing list.
+
+Also, what's the current approach at dealing with them?  I haven't been
+keeping track of that.  Is the kptr_restrict sysctl possibly supposed to
+be sufficient, and %p format specifiers can stay intact?  If so, are
+those many individual findings by Fuqian actually non-issues?
+
+A proposed patch is generally better than a mere problem report, so if
+the issues do need individual fixes, then:
+
+I think these issues should be grouped by subsystem (one message per
+subsystem) and sent in the form of proposed patches (fixing the issues
+how exactly? need to discuss that first) to LKML and to proper
+per-subsystem lists and addresses (per the MAINTAINERS file), CC'ing
+kernel-hardening.
+
+I'd appreciate it if someone currently involved in dealing with similar
+issues comments on this in a reply-to-all to this message.
+
+Thanks,
+
+Alexander
+
+On Tue, Apr 16, 2019 at 10:08:10AM +0800, Fuqian Huang wrote:
+> In ascot2e_attach, dev_info will print the address of adapter to
+> dmesg, sensitive kernel information will be leaked to user space.
+> struct dvb_frontend *ascot2e_attach(struct dvb_frontend *fe,
+>   const struct ascot2e_config *config,
+>   struct i2c_adapter *i2c)
+> {
+>   ...
+>   dev_info(&priv->i2c->dev,
+>   "Sony ASCOT2E attached on addr=%x at I2C adapter %p\n",
+>   priv->i2c_address, priv->i2c);
+>   ...
+> }
