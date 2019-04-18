@@ -1,45 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/06/4
-Message-ID: <20190806153615.GW9017@oevtugenva.nrevsny.pk>
-Date: Tue, 6 Aug 2019 11:36:15 -0400
-From: Rich Felker <dalias@...c.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/18/18
+Message-ID: <CABXRUiT_PGoMJTkeEUeUguZWC0sZQoBPe+URKY9p7KuRsT2sXA@mail.gmail.com>
+Date: Thu, 18 Apr 2019 21:35:40 +0800
+From: Fuqian Huang <huangfq.daxian@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: musl@...ts.openwall.com
-Subject: Re: [musl] CVE request: musl libc 1.1.23 and earlier x87 float stack imbalance
+Subject: Linux kernel < 4.14.111 drivers/scsi/cxgbi/cxgb4i/cxgb4i.c kernel address dumps to user space
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Aug 05, 2019 at 08:05:39PM -0400, Rich Felker wrote:
-> On Mon, Aug 05, 2019 at 07:27:37PM -0400, Rich Felker wrote:
-> > I've discovered a flaw in musl libc's arch-specific math assembly code
-> > for i386, whereby at least the log1p function and possibly others
-> > return with more than one item on the x87 stack. This can lead to x87
-> > stack overflow in the execution of subsequent math code, causing it to
-> > incorrectly produce a NAN in place of the actual result. If floating
-> > point results are used in flow control, this can lead to runaway wrong
-> > code execution. For example, in Python (version 3.6.8 tested), at
-> > least one code path of the dtoa function becomes an infinite loop
-> > performing what's effectively an unbounded-length memset when entered
-> > under such a condition.
-> > 
-> > This bug is potentially exploitable in software which calls affected
-> > math functions with inputs under user control. Impact depends on how
-> > the application handles the ABI-violating x87 state; in Python it
-> > seems to be limited to producing a crash.
-> > 
-> > The bug is present in all versions after 0.9.12, up through the
-> > current (1.1.23) release. Only 32-bit x86 systems (aka IA32, musl's
-> > "i386" arch) are affected. Users of other archs, including x86_64, can
-> > safely ignore this issue.
-> > 
-> > Affected users are advised to apply the following patch:
-> > 
-> > https://git.musl-libc.org/cgit/musl/patch/?id=f3ed8bfe8a82af1870ddc8696ed4cc1d5aa6b441
-> 
-> The patch contains an error that was missed for unknown reasons,
-> probably failure to rebuild a file. I'm attaching an aggregate patch
-> that works. Alternaatively, these two commits can be applied:
-> 
-> https://git.musl-libc.org/cgit/musl/patch/?id=f3ed8bfe8a82af1870ddc8696ed4cc1d5aa6b441
-> https://git.musl-libc.org/cgit/musl/patch/?id=6818c31c9bc4bbad5357f1de14bedf781e5b349e
+In drivers/scsi/cxgbi/cxgb4i/cxgb4i.c:299,
+send_act_open_req will dump the address of csk to dmesg
+which allows local user to read kernel address via dmesg.
 
-CVE-2019-14697 has been assigned for this issue.
+static void send_act_open_req(struct cxgbi_sock *csk, struct sk_buff *skb,
+                struct l2t_entry *e)
+{
+    ...
+    pr_info_ipaddr("t%d csk 0x%p,%u,0x%lx,%u, rss_qid %u.\n",
+               (&csk->saddr), (&csk->daddr),
+               CHELSIO_CHIP_VERSION(lldi->adapter_type), csk,
+               csk->state, csk->flags, csk->atid, csk->rss_qid);
+    ...
+}
+
+
+In drivers/scsi/cxgbi/cxgb4i/cxgb4i.c:1792,
+cxgb4i_ofld_init will dump the address of cdev to dmesg
+which allows local user to read kernel address via dmesg.
+
+static int cxgb4i_ofld_init(struct cxgbi_device *cdev)
+{
+    ...
+    pr_info("cdev 0x%p, offload up, added.\n", cdev);
+    ...
+}
+
+In drivers/scsi/cxgbi/cxgb4i/cxgb4i.c:2047,
+t4_uld_add will dump the address of cdev to dmesg
+which allows local user to read kernel address via dmesg.
+
+static void *t4_uld_add(const struct cxgb4_lld_info *lldi)
+{
+    ...
+    pr_info("cdev 0x%p,%s, pfvf %u.\n",
+        cdev, lldi->ports[0]->name, cdev->pfvf);
+    ...
+}
+
+In drivers/scsi/cxgbi/cxgb4i/cxgb4i.c:2129
+and drivers/scsi/cxgbi/cxgb4i/cxgb4i.c:2132
+and drivers/scsi/cxgbi/cxgb4i/cxgb4i.c:2136
+and drivers/scsi/cxgbi/cxgb4i/cxgb4i.c:2139
+and drivers/scsi/cxgbi/cxgb4i/cxgb4i.c:2143,
+t4_uld_state_change will dump the address of cdev to dmesg
+which allows local user to read kernel address via dmesg.
+
+static int t4_uld_state_change(void *handle, enum cxgb4_state state)
+{
+    struct cxgbi_device *cdev = handle;
+
+    switch (state) {
+    case CXGB4_STATE_UP:
+        pr_info("cdev 0x%p, UP.\n", cdev);
+        break;
+    case CXGB4_STATE_START_RECOVERY:
+        pr_info("cdev 0x%p, RECOVERY.\n", cdev);
+        /* close all connections */
+        break;
+    case CXGB4_STATE_DOWN:
+        pr_info("cdev 0x%p, DOWN.\n", cdev);
+        break;
+    case CXGB4_STATE_DETACH:
+        pr_info("cdev 0x%p, DETACH.\n", cdev);
+        cxgbi_device_unregister(cdev);
+        break;
+    default:
+        pr_info("cdev 0x%p, unknown state %d.\n", cdev, state);
+        break;
+    }
+    return 0;
+}
