@@ -1,4 +1,9 @@
-Received: (qmail 28145 invoked by uid 550); 24 Mar 2026 14:41:46 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1557" "Thursday" "18" "April" "2019" "21:32:54" "+0800" "Fuqian Huang" "huangfq.daxian@gmail.com" "<CABXRUiQuyKO0DcAkODv6k-e5LLDu-D_8g6KOw4Xr1ZpuDSh2mw@mail.gmail.com>" "53" "[oss-security] Linux kernel < 4.14.111 drivers/message/fusion/mptscsih.c kernel address dumps to user space" nil nil nil "4" "2019041813:32:54" "[oss-security] Linux kernel < 4.14.111 drivers/message/fusion/mptscsih.c kernel address dumps to user space" (number mark "U       huangfq.daxi Apr 18   53/1557  " thread-indent "\"[oss-security] Linux kernel < 4.14.111 drivers/message/fusion/mptscsih.c kernel address dumps to user space\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Linux kernel < 4.14.111 drivers/message/fusion/mptscsih.c kernel address dumps to user space" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 13548 invoked by uid 550); 18 Apr 2019 16:36:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,135 +12,91 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 32333 invoked from network); 24 Mar 2026 12:17:50 -0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=SEFF6EiVhC1DVQyCkq3R+UcyMlepVpjRI0H4bBXUdBsQBnJaXaAFylhwpTQeWIQnvjsPlRVHNH5QoSXPnmV4E/gKovrGC7PacXi4IPIyDER63MU5QUS0WCJ+14J+w+5n3ayfQ8VjZm86VRr+9TtbSo2z1jd6lBcWU4N5FKHSdZ8arufnIRfdWAV/9vHnWTKPmlntyT7Y5kgxyIJYoIE3NC08kKJ+yEEbknrpN9i/YPQpv8v7GF5oUZnmdll9ggGFwIrjzVLhGKQ+yfoMJqWsIiSEObp3HSPHPOUdVj6nWOwZbZKq6AigaFUyQLTiUNEpcB0ExwPX+fdOT7vWItVB+Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=k7fFmcOHa9xrVsy3zFKKwj0AreCu1/WA3CgGLbcb7C4=;
- b=nzGfVhC1ikQmRvnIZRlOFNijZeMc05n0S7iBb4x+LY5ehsOGJXPMHCgzEhAcN4fMuETBuYbCHqw+BHbNQrEtDqBxQhXuAVhhFgy7p3hYRuobClvUlvEN0FkwQfOvcatFUAIeNf4wAZsd+fmOjxpIcmvy/7eEZJDV2ZQ+Kg69ZucWbA1DWcT1Y4R9MFbc9+HlLuMjUaUn/KUWxgtxAk4vaUoq+rOnJltaq9XZ+JX/HJcZEZlRIfgfa+aHxOcX6NPa42Zh5bUkkXnfRIo65cr56g3PWmq3J8Lq+ZqGOsY+FDAQA/qeW3mkiThdmAjpa9huqa1lmtUypQSOmb0S+/8UOA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=citrix.com; dmarc=pass action=none header.from=citrix.com;
- dkim=pass header.d=citrix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=citrix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=k7fFmcOHa9xrVsy3zFKKwj0AreCu1/WA3CgGLbcb7C4=;
- b=iDhZNazq18VSRZSA6ymeXuMzhl0c6qeK8ed8WImCmNTvR6uiU9Q5A8yBVGEyPV7XpphNa6ZiXsTCdimJbVbzWzKafquzfcUgDGobdfnNkOtbAdOm+nxiijr5cDuIfuuQrWk9xBYEwhRV1LQ5DwYvuwUc4wxvoRu3T36QKShxt10=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=citrix.com;
-Message-ID: <e07ab218-c15c-4844-9594-dd456860f83d@citrix.com>
-Date: Tue, 24 Mar 2026 12:17:34 +0000
-User-Agent: Mozilla Thunderbird
-Cc: Andrew Cooper <andrew.cooper3@citrix.com>, xen-announce@lists.xen.org,
- xen-devel@lists.xen.org, xen-users@lists.xen.org,
- "Xen.org security team" <security-team-members@xen.org>
-To: Greg KH <greg@kroah.com>, oss-security@lists.openwall.com
-References: <E1w50W0-00Bwo0-1i@xenbits.xenproject.org>
- <2026032453-departed-thrash-f153@gregkh>
-Content-Language: en-GB
-From: Andrew Cooper <andrew.cooper3@citrix.com>
-In-Reply-To: <2026032453-departed-thrash-f153@gregkh>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: LO0P123CA0013.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:600:354::6) To CH8PR03MB8275.namprd03.prod.outlook.com
- (2603:10b6:610:2b9::7)
+Received: (qmail 22197 invoked from network); 18 Apr 2019 13:33:16 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=ByRUQ9Aa8yaRPgJr81XT8URKiwaCeI+zx1SZLfXfEls=;
+        b=BK9t5nUmR7bCuhlR7+8DsAt2LlaNtxc1yZ4SfpLKkHw6MT3Z2vawBQZamQfLXyGasB
+         x+o6JtQwzE9WBEvbU5I2SUlE10bAywLQUYFd0q9abs+xf0LlMBQkXEAgekuAa3vgEwO9
+         IoJDoUo6UEeFbCJyR59yCzKRMQGi4yBuB9mUn/ygC22N/wSZAo9comYfp61Hs1QT8e35
+         MK9ffWIJz8c55slHfFeRxqyJR7QU83f8B9weT78oFzOy1/GR13Mkyy45aD4AxCAD/a7T
+         xXYF4lVSMw7vbT5hFTaFStTdlTNdsKjd78Uhic8XWQqpH9zTtYMRucsJrq4TVHh7EuyG
+         uLAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=ByRUQ9Aa8yaRPgJr81XT8URKiwaCeI+zx1SZLfXfEls=;
+        b=dxMCr0+MtVIpdKQQTSY/ZV230gPuyjvtjDuvHdB9Fh7sd2uUYsR16vxlKBtBXzYWnp
+         DAYj/x+7ktaRw/Ukiy6aXSmks9ySXvAAnhen8Ru4iZn77hTx8je5WnUerkNMIG25R/ek
+         4IGYeGv02BdtFSFPwIhLwPmzvEL+90HtzYf3gmB/slAHied3vY+0vnmclGQ+2/gA4MJ9
+         E9wouPq1FPQSmAbxhnjudGJJC0fhTZS99n7pRNP3nlF2d9szkxqP4AK71WDTlQ7vI5JX
+         MaCWqcEdc4TkPwLu4SVFITKSINqEdrdAlSkqKAtseeX62nZ3PpKHqPCvNefjsdM1ma0A
+         4UZQ==
+X-Gm-Message-State: APjAAAV8XtAMUFH81QRvM7rzQX+A61OeshOL5sZbPrWdajiTHw0xa8ZN
+	YHu6trOmEPtQlcaNhTpt0Tv5VVIEkbdJglKQkYv22pHbFVg=
+X-Google-Smtp-Source: APXvYqzZ/bp8LZxGJYy/ZBAjHkkdA+3IygSWlOvgFbAUIjqHeVv9aPvoYiZ+ripvSEmbqIxCfQXVbLxXfvO6VxtT1Is=
+X-Received: by 2002:a81:9914:: with SMTP id q20mr76142775ywg.35.1555594384713;
+ Thu, 18 Apr 2019 06:33:04 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH8PR03MB8275:EE_|BY1PR03MB7876:EE_
-X-MS-Office365-Filtering-Correlation-Id: add4df25-f564-4f2e-8303-08de899f50cc
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|376014|366016|18002099003|22082099003|56012099003;
-X-Microsoft-Antispam-Message-Info:
-	2yodM/wHZPp5oJZ9kIXMYuK5wMbRopQkSntfz7ImwLBSskgT61h+3nbPzkhDjN0fxJtlDT1lYrjtTurAfI0HGKJpKYlXoLEXTXiSME6hYdl/hOlpUA+1xjErINzly5nxlTyHV2d+RkTbx24txe7emgpOiILkPbNOeRqO22M9WScV855/9MhE4CCDqjdaHZ9MaMgub7GwGGvjjDU99cfVUAY2Cu51VB1zt9O8zADLxAuuc2eZWQS1QRViwDnY0wKDH77mv0F9qxmK3rHtj6lNzDwIhtkS9NI83KESxdiyyXja7+h0K7fYwqo9wNw05Akur/IWn7eEVF6Aq8Kr/qv47lat1Cjeg2eyxncmPvryTbr77vr+k4BSvw4tOKFchfkCIctPMrEgsNkSojmOX05TGqZVrluF/s8HSRMxMqBRabLAeDJhlDA709cZ2bsgWjM+E5j2XUyMlkb0Zb4i66C5wxedvEF4Mh7LUnKQXvdEDJyutPucNHuZ+p7zNt0J6xqtgGFkuuOMSfAIX+MTONMAseZ1BobrBhQ1k4ozr+j+qyc5AO9yXjavE0fX9d07lPVAN7ox+Qb6sEtKlyOhBYndOoU5FStuhGJQQy9z1NgPej8Tuhm7bPZZfE4mSUPv8r1FRMlxx4eeQkDrWgo9COIjl8eYvBl+EGO+rYGnEFD2XGdDFKvpeoei5ceEDkQvmR4O3CSeSGnvboLB+pSEMdM3vNwW+krbG2uocZnGiZqKtmw=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH8PR03MB8275.namprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(18002099003)(22082099003)(56012099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?NDl5Rkl5Mkw1a0V1bENZWDNjcUtuMDJZZVptemtWSWVIUlB2VTF1OEdkaHNx?=
- =?utf-8?B?UHRyQVR5TXpGdTBrQkZmMjBOVW42eml4NGJQekJNUFhkcTBuUjRtblUxbmNT?=
- =?utf-8?B?N2NoRXBlaTdnN2RHR20zT2dIZzFTRm80TlJUUTdjUU45ZzR2L0Z3RWN6Wlky?=
- =?utf-8?B?MlpjTVYwREFzeTJaYWVCbVJSZm1GVzdlNXM0S3MxWmhzWkJ5YXo2OE92MGVQ?=
- =?utf-8?B?VHl2SUxVeWxFd2VvMUM2eDMvTkR0Y3BpMlB0VVgreEU5K2xrRDdCd0FBTlZm?=
- =?utf-8?B?ZUMvTVYwcGFMSmUzamZIaW5VK1BPeDhpN0xPZmpwRVRGRmtGeDNnSStMbXJN?=
- =?utf-8?B?TlZqWThqRzUyMEFHM3A4eDRmMVVQMDJpbGFvd2NwN05BeDJOVmxneGJ3QVBK?=
- =?utf-8?B?dUZoWTJwdWNDRGdKM003Uy9TeGxPejZZRWNMeGkwNy9jc3BVL1N0eHpOWnJV?=
- =?utf-8?B?WDlOaW5CYlArb0R0SXNUOVFPV3FJbWpkY0MyTGZtWXdJcG9qMXYzOHdESFZz?=
- =?utf-8?B?WUQvNWRxalBrd1owL085UkVaS2taTjQvRC81SGRleFIrZytOVDdqNlRpalJx?=
- =?utf-8?B?UURvdjIvdCtId2MvdHMxakVPWE10ZUhKVjVYeXpCbE05VEhmdmE2MWdkR1Rq?=
- =?utf-8?B?RExrZExuYXpqTjBqcDkrNTRtZ21WQms2L3N3cTB0UVJYcUhBWGs5Qlhod2NZ?=
- =?utf-8?B?T2RDY2xVdGY1OWpDSDI5S21rSTdwaHdFVWVMUGlodVVUeWNUcVdtcTVFRUQ0?=
- =?utf-8?B?ZS9vdmZlTVNWOVEvbmZBU1RDYjhCdFF4b1pOVFUvNFdTcDd4R1NPdE1kendL?=
- =?utf-8?B?OEFIYjBKdDZteHZQS3FHNGZHY09YWTJaNVc4MmF5UWZWMUJjMkU5cDJ6cXBl?=
- =?utf-8?B?eUp3VFlyb3h1WTBxOVZrS2ZoZUltaUFWa0JtNmoyY2VkMVVUTkJKYXk2cGlO?=
- =?utf-8?B?TXBDUjJiblFiUXhGcFpvVXVHN09WU2NmaHo0azJvbmJIVjF2cW9aeGFaS3c5?=
- =?utf-8?B?UXRwVXR3bXJ6MFE2aHZqRHdaeG16eXYvNVEvZzgvSDBKcFIzb3gza0tOMWJQ?=
- =?utf-8?B?REUzZC9CRHpyNkpFZ0Q0YURudjltMGhLMWsrTlR5bWVTZXBYQ3hCam5MQlFl?=
- =?utf-8?B?cldIcTVYa2JWQXdPRnZvVS9SYkZuMnBCeHYyWExDb2ZvSkw5b0kwR29EK3NB?=
- =?utf-8?B?U2RJYmFDN21NVXh5eGlxRURGaUNyajdjWDlTSzBiQ25kRFM5dGhOcWJUOHEx?=
- =?utf-8?B?UnFBK0NscmZOYzBod05yR21EY2prS01OWVdVNENnQjNvcHJuRmR6WkhuazFv?=
- =?utf-8?B?OGxUSUZHRFErUkY3WmVHVHB5R2VTcDZ6WWdySUcvcG9YcTdQa0lNYnhqNEpZ?=
- =?utf-8?B?bnAxNVQ4QmxnRUtMNVVmZCsyZEpVZUExN0lFQk5NRERCLzgySjMxUGJzUHpW?=
- =?utf-8?B?Rk5mN1JDY3RYdTBkM1lsWnYwZWE0bnZsa1MreXZsT3k0bWpNWmdxRHp3T0hR?=
- =?utf-8?B?WXlNNnBMRTh5Y3NvVHgvZzFsaVFaa0N3SEJiMUpjWEZDSGwwU0tGeWxCeWtH?=
- =?utf-8?B?aDdkeSt4T2tRUjNzT0ZqWW1WbXpzVW0rU0pPb00xc1hJVkRHT0NrbUhseHBw?=
- =?utf-8?B?WjRPWndrZm00VjhQdVZXaGxjSU9TeC9EY1NoWkFETXpqUVJJd0Q4V2NrckEy?=
- =?utf-8?B?V1ZkUUhNd2xtbkowc2NUMlVEMHRQNjk1dVZjMm9IUzB3WmExOFB2ajE5MXdT?=
- =?utf-8?B?SURtL0ErMGloS2xpTnprdUtpK28wVk9PYjdDZkt1YndUVnVDUDQ1L25OUDV5?=
- =?utf-8?B?dnFCUG8wd1hKcmpaVG9VaXRWcWMyeDhpb0p4aTVaZlJIOVNpRnJReURPWG9X?=
- =?utf-8?B?VmRwSlR1S1dWZjVHS0xmMnNOZ1R2emV1aFF6a2RBRFNVeGQzUXo5bUlURVlZ?=
- =?utf-8?B?T3NYSngwcmpmeER0MWs3Y0ozSzdrNEN1WE9rWk4xWEpCckd6YmNpazZONkFS?=
- =?utf-8?B?RzQvTnBNLzJXY1BPVGtwTzFVUTdESXljejlJdk5vRk1UZC9ITzRnYVFyODE4?=
- =?utf-8?B?SURES1VhaWdmMGorb3hmR1BML1ZIWlVuWFZlc1k0aXJlR0JnN3ZyanhEYm1j?=
- =?utf-8?B?THRFbTYwOTE2NENtOEd2Zjdld0pDVDl5a1ZMU0Vpa3d3UXlPejQxcnhyUlNH?=
- =?utf-8?B?eUV2MjU0U05qSlZJaUpBUGQydGZaUFY4dFZlTjd4K0pUUHNXTjRGUWVIRXVh?=
- =?utf-8?B?N2JsdkZBamtyZFdQL1k5RTNYTy9TVjEzYitSbFM3eFYxYm5EVldrcDhNUXFF?=
- =?utf-8?B?ZjdrbVUybUlLS01EbzlWbERFTkhsUDhjMmp3OWk3UENvdnJvQUF4blJlLzdu?=
- =?utf-8?Q?WC1h69qyau7QsbHU=3D?=
-X-OriginatorOrg: citrix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: add4df25-f564-4f2e-8303-08de899f50cc
-X-MS-Exchange-CrossTenant-AuthSource: CH8PR03MB8275.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Mar 2026 12:17:28.2983
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 335836de-42ef-43a2-b145-348c2ee9ca5b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: SXubtVYsvU7CI6DzzV8RSsHRFeyHAyQvt8AGGVXifLgQchY3GPU6cpxipK3Jy1fP8g8/Eird+lo9tU4941MacBg0zqBk9ha6HuQ7utm71zo=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY1PR03MB7876
-Subject: Re: [oss-security] Xen Security Advisory 482 v2 - Linux privcmd
- driver can circumvent kernel lockdown
+From: Fuqian Huang <huangfq.daxian@gmail.com>
+Date: Thu, 18 Apr 2019 21:32:54 +0800
+Message-ID: <CABXRUiQuyKO0DcAkODv6k-e5LLDu-D_8g6KOw4Xr1ZpuDSh2mw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] Linux kernel < 4.14.111 drivers/message/fusion/mptscsih.c kernel
+ address dumps to user space
 
-On 24/03/2026 12:16 pm, Greg KH wrote:
-> On Tue, Mar 24, 2026 at 12:05:44PM +0000, Xen.org security team wrote:
->> -----BEGIN PGP SIGNED MESSAGE-----
->> Hash: SHA256
->>
->>                     Xen Security Advisory XSA-482
->>                               version 2
->>
->>           Linux privcmd driver can circumvent kernel lockdown
->>
->> UPDATES IN VERSION 2
->> ====================
->>
->> Public release.
->>
->> ISSUE DESCRIPTION
->> =================
->>
->> The Linux kernel's privcmd driver can be abused to circumvent kernel
->> lockdown (secure boot), e.g. by modifying page tables to enable user
->> mode to modify kernel memory.
->>
->> The CNA covering Linux has refused to assign a CVE at this juncture.
-> This is now assigned to CVE-2026-31788
+In drivers/message/fusion/mptscsih.c:1701
+and drivers/message/fusion/mptscsih.c:1786,
+mptscsih_abort will dump the address of SCpnt into dmesg,
+which allows local user to read the kernel address via dmesg.
 
-Thankyou.  I'll send out an update.
+int
+mptscsih_abort(struct scsi_cmnd * SCpnt)
+{
+    ...
+    printk(MYIOC_s_INFO_FMT "attempting task abort! (sc=%p)\n",
+           ioc->name, SCpnt);
+    ...
+ out:
+    printk(MYIOC_s_INFO_FMT "task abort: %s (rv=%04x) (sc=%p)\n",
+        ioc->name, ((retval == SUCCESS) ? "SUCCESS" : "FAILED"), retval,
+        SCpnt);
+    ...
+}
 
-~Andrew
+In drivers/message/fusion/mptscsih.c:1819
+and drivers/message/fusion/mptscsih.c:1843,
+mptscsih_dev_reset will dump the address of SCpnt into dmesg,
+which allows local user to read the kernel address via dmesg.
+
+int
+mptscsih_dev_reset(struct scsi_cmnd *SCpnt)
+{
+    ...
+    printk(MYIOC_s_INFO_FMT "attempting target reset! (sc=%p)\n",
+           ioc->name, SCpnt);
+    ...
+ out:
+    printk (MYIOC_s_INFO_FMT "target reset: %s (sc=%p)\n",
+        ioc->name, ((retval == 0) ? "SUCCESS" : "FAILED" ), SCpnt);
+    ...
+}
+
+In drivers/message/fusion/mptscsih.c:1931
+and drivers/message/fusion/mptscsih.c:1943,
+mptscsih_host_reset will dump the address of SCpnt into dmesg,
+which allows local user to read the kernel address via dmesg.
+
+int
+mptscsih_host_reset(struct scsi_cmnd *SCpnt)
+{
+    ...
+    printk(MYIOC_s_INFO_FMT "attempting host reset! (sc=%p)\n",
+        ioc->name, SCpnt);
+    ...
+    printk(MYIOC_s_INFO_FMT "host reset: %s (sc=%p)\n",
+        ioc->name, ((retval == 0) ? "SUCCESS" : "FAILED" ), SCpnt);
+    ...
+}
