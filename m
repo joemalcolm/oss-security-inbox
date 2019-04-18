@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1327" "Friday" "13" "November" "2015" "15:07:11" "-0600" "Mark Felder" "feld@feld.me" "<1447448831.18663.439272417.5B47DBB1@webmail.messagingengine.com>" "40" "Re: [oss-security] CVE-Request: Assign CVE for common-collections remote code execution on deserialisation flaw" "^Date:" nil nil "11" "2015111321:07:11" "[oss-security] CVE-Request: Assign CVE for common-collections remote code execution on deserialisation flaw" (number mark "        feld@feld.me Nov 13   40/1327  " thread-indent "\"Re: [oss-security] CVE-Request: Assign CVE for common-collections remote code execution on deserialisation flaw\"\n") "<1447425465.3344943.438911641.39FADD79@webmail.messagingengine.com>" ("<1904852023.6462846.1447029380024.JavaMail.zimbra@redhat.com>" "<5640442C.1050501@redhat.com>" "<20151109215303.GN1213@sentinelchicken.org>" "<5641360D.8070102@eenterphace.org>" "<20151111002307.GP1213@sentinelchicken.org>" "<56431D4F.7090006@eenterphace.org>" "<20151111160641.GQ1213@sentinelchicken.org>" "<56445609.9050301@gmail.com>" "<1447365167.1146869.438300073.116F736D@webmail.messagingengine.com>" "<5645980D.9010105@gmail.com>" "<1447425465.3344943.438911641.39FADD79@webmail.messagingengine.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1633" "Thursday" "18" "April" "2019" "18:59:26" "+0300" "Jouni Malinen" "j@w1.fi" "<20190418155926.GB5455@w1.fi>" "42" "[oss-security] wpa_supplicant/hostapd: EAP-pwd message reassembly issue with unexpected fragment" nil nil nil "4" "2019041815:59:26" "[oss-security] wpa_supplicant/hostapd: EAP-pwd message reassembly issue with unexpected fragment" (number mark "U       j@w1.fi      Apr 18   42/1633  " thread-indent "\"[oss-security] wpa_supplicant/hostapd: EAP-pwd message reassembly issue with unexpected fragment\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] wpa_supplicant/hostapd: EAP-pwd message reassembly issue with unexpected fragment" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1435 invoked by uid 550); 13 Nov 2015 21:07:24 -0000
+Received: (qmail 5273 invoked by uid 550); 18 Apr 2019 15:59:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,82 +11,58 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1404 invoked from network); 13 Nov 2015 21:07:23 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=feld.me; h=
-	content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=mesmtp; bh=bFXffZxBKRVtdFStYdBAyO6XbHU=; b=AWHk1/
-	x08qTvfKr6ZuAc6M8ctzaEZLRjk0RVN1Pm8DiOJtUuzTaPy4HcB1SkobxHXidcJw
-	orLHCUHFSJ5ysXhzw1xvtV0ZPWBJq9bFIkdLy6jWbKocoUBpl06o5Q+5zaWK7QDH
-	wO8f8OMAMD2eEibEHxqNpD8Cf8G7L+nTwXHm8=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-transfer-encoding:content-type
-	:date:from:in-reply-to:message-id:mime-version:references
-	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=bFXffZxBKRVtdFS
-	tYdBAyO6XbHU=; b=L8bYAJedseC5wyWE06um+yXnBDn/9HqOf5Q/Z8d7FOwITki
-	Xrx7TMMwdIqMzfnGCrpz+zjnNkupdsrg/0SsLc06DDLwDJ900baw2xYnahy/urNh
-	dQ4TJsVbrk2K7S4Zt8FI4d+NpZ4c3IMTlSHp9izWnsCfMjmNVLlNHGUid4Ww=
-Message-Id: <1447448831.18663.439272417.5B47DBB1@webmail.messagingengine.com>
-X-Sasl-Enc: yqcGlj5dQbXgm+LNuVGYf3byqD7lxsD4S2a2VOYi61Td 1447448831
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain
-X-Mailer: MessagingEngine.com Webmail Interface - ajax-37ba1837
-In-Reply-To: <1447425465.3344943.438911641.39FADD79@webmail.messagingengine.com>
-References: <1904852023.6462846.1447029380024.JavaMail.zimbra@redhat.com>
- <5640442C.1050501@redhat.com>
- <20151109215303.GN1213@sentinelchicken.org>
- <5641360D.8070102@eenterphace.org>
- <20151111002307.GP1213@sentinelchicken.org>
- <56431D4F.7090006@eenterphace.org>
- <20151111160641.GQ1213@sentinelchicken.org> <56445609.9050301@gmail.com>
- <1447365167.1146869.438300073.116F736D@webmail.messagingengine.com>
- <5645980D.9010105@gmail.com>
- <1447425465.3344943.438911641.39FADD79@webmail.messagingengine.com>
-Date: Fri, 13 Nov 2015 15:07:11 -0600
-From: Mark Felder <feld@feld.me>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-Request: Assign CVE for common-collections remote
- code execution on deserialisation flaw
+Received: (qmail 5227 invoked from network); 18 Apr 2019 15:59:41 -0000
+X-Virus-Scanned: Debian amavisd-new at w1.fi
+Date: Thu, 18 Apr 2019 18:59:26 +0300
+From: Jouni Malinen <j@w1.fi>
 To: oss-security@lists.openwall.com
+Message-ID: <20190418155926.GB5455@w1.fi>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Subject: [oss-security] wpa_supplicant/hostapd: EAP-pwd message reassembly issue with
+ unexpected fragment
+
+Published: April 18, 2019
+Latest version available from: https://w1.fi/security/2019-5/
+
+Vulnerability
+
+EAP-pwd implementation in hostapd (EAP server) and wpa_supplicant (EAP
+peer) was discovered not to validate fragmentation reassembly state
+properly for a case where an unexpected fragment could be received. This
+could result in process termination due to NULL pointer dereference.
+
+An attacker in radio range of a station device with wpa_supplicant
+network profile enabling use of EAP-pwd could cause the wpa_supplicant
+process to terminate by constructing unexpected sequence of EAP
+messages. An attacker in radio range of an access point that points to
+hostapd as an authentication server with EAP-pwd user enabled in runtime
+configuration (or in non-WLAN uses of EAP authentication as long as the
+attacker can send EAP-pwd messages to the server) could cause the
+hostapd process to terminate by constructing unexpected sequence of EAP
+messages.
 
 
+Vulnerable versions/configurations
 
-On Fri, Nov 13, 2015, at 08:37, Mark Felder wrote:
-> 
-> 
-> On Fri, Nov 13, 2015, at 01:58, Gsunde Orangen wrote:
-> >
-> > I share Tim's view [2] and a dozen of (own) applications we checked
-> > won't break. A property that re-enables deserialization of course would
-> > help additionally: allow applications that really *need* this to get it
-> > working; but that requires an explicit step - so latest by that time:
-> > those, whose applications break after including a "fixed" version of
-> > Commons-Collections would (hopefully) start to think about their design.
-> > 
-> > Gsunde
-> > 
-> > [1] http://seclists.org/oss-sec/2015/q4/238
-> > [2] http://seclists.org/oss-sec/2015/q4/263
-> 
-> This statement is how we have been operating our mitigation strategy:
-> 
-> "Applications which use Apache Commons Collections and do not use
-> deserialization are not vulnerable."
-> 
+All hostapd and wpa_supplicant versions with EAP-pwd support
+(CONFIG_EAP_PWD=y in the build configuration and EAP-pwd being enabled
+in the runtime configuration) are vulnerable against the process
+termination (denial of service) attack.
 
 
-CERT has released a statement[1] indicating that you are vulnerable
-simply by having this in your classpath. It does not matter if you are
-doing deserialization or not. The patch[2] to disable serialization
-functionality by default seems to me like the only option to mitigate
-the CVE now.
+Possible mitigation steps
 
+- Merge the following commits to wpa_supplicant/hostapd and rebuild:
 
-[1] https://www.kb.cert.org/vuls/id/576313
-[2]
-https://issues.apache.org/jira/secure/attachment/12771520/COLLECTIONS-580.patch
+  EAP-pwd peer: Fix reassembly buffer handling
+  EAP-pwd server: Fix reassembly buffer handling
+
+  These patches are available from https://w1.fi/security/2019-5/
+
+- Update to wpa_supplicant/hostapd v2.8 or newer, once available
 
 -- 
-  Mark Felder
-  feld@feld.me
+Jouni Malinen                                            PGP id EFC895FA
