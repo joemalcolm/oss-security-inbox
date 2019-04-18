@@ -1,43 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/25/2
-Message-ID: <CALCETrW1z0gCLFJz-1Jwj_wcT3+axXkP_wOCxY8JkbSLzV80GA@mail.gmail.com>
-Date: Mon, 25 Nov 2019 08:05:12 -0800
-From: Andy Lutomirski <luto@...nel.org>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: Lots of bugs in 32-bit x86 Linux entry code
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/18/5
+Message-ID: <881804474.22515745.1555594854508.JavaMail.zimbra@redhat.com>
+Date: Thu, 18 Apr 2019 09:40:54 -0400 (EDT)
+From: Vladis Dronov <vdronov@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel < 4.8 local generic ASLR - another CVE-ID
 Content-Type: text/plain; charset=utf-8
 
-It turns out that there are essentially no upstream development
-resources dedicated to x86_32 Linux. Perhaps unsurprisingly, it was
-badly broken.
+Just in another case - this flaw in a.out binaries has got the CVE-2019-11191:
 
-I’m not even going to try to enumerate individual bugs here. I’m
-guessing that at least all x86_32 kernels that support PTI are
-vulnerable to privilege escalation via a series of ESPFIX bugs, but
-the missing segment override issue could go back years.  Getting a
-nice printout on a double fault instead of a reboot, hang or memory
-corruption is dubious with PTI, and it’s also busted if you have this
-newfangled thing called “SMP” enabled.
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-11191
 
-The relevant tests to run are tools/testing/selftests/x86/sigreturn_32
-(from an updated kernel) and the same test with perf record -e cycles
--F 10000.
-
-The bugs are hopefully mostly fixed in a pull request here:
-
-https://git.kernel.org/pub/scm/linux/kernel/git/tip/tip.git/commit/?h=x86-urgent-for-linus&id=4a13b0e3e10996b9aa0b45a764ecfe49f6fcd360
-
-I strongly suspect that there is at least one bug left.
-
-You can mitigate these issues by upgrading to an x86_64 kernel. You
-can probably get a decent degree of mitigation by setting
-CONFIG_VM86=n and CONFIG_X86_16BIT=n.  (CONFIG_X86_16BIT should be
-fine on a 64-bit kernel. Long live Wine.)
-
-To those of you who actually support x86_32: please either consider
-stopping supporting it or finding and paying someone to give it
-serious upstream attention.  We need real CI resources and we need
-developers to test things for real, fix what’s broken, and generally
-keep it up to date. And the developers in question should have an
-appropriate degree of nostalgic adoration of segments, gates, and
-other delights from the i386 era.
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security | Senior Software Engineer
