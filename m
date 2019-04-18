@@ -1,22 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/23/2
-Message-ID: <874l6pgkpg.fsf@oldenburg2.str.redhat.com>
-Date: Tue, 23 Apr 2019 11:00:27 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: Mike Dalessio <mike.dalessio@...il.com>
-Cc: nokogiri-talk <nokogiri-talk@...glegroups.com>,  ruby-talk <ruby-talk@...y-lang.org>,  ruby-security-ann@...glegroups.com,  oss-security@...ts.openwall.com
-Subject: Re: Nokogiri security update v1.10.3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/18/13
+Message-ID: <CABXRUiQuyKO0DcAkODv6k-e5LLDu-D_8g6KOw4Xr1ZpuDSh2mw@mail.gmail.com>
+Date: Thu, 18 Apr 2019 21:32:54 +0800
+From: Fuqian Huang <huangfq.daxian@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Linux kernel < 4.14.111 drivers/message/fusion/mptscsih.c kernel address dumps to user space
 Content-Type: text/plain; charset=utf-8
 
-* Mike Dalessio:
+In drivers/message/fusion/mptscsih.c:1701
+and drivers/message/fusion/mptscsih.c:1786,
+mptscsih_abort will dump the address of SCpnt into dmesg,
+which allows local user to read the kernel address via dmesg.
 
-> This is a security release. It addresses a CVE in upstream libxslt rated as
-> "Priority: medium" by Canonical, and "NVD Severity: high" by Debian. More
-> details are available below.
+int
+mptscsih_abort(struct scsi_cmnd * SCpnt)
+{
+    ...
+    printk(MYIOC_s_INFO_FMT "attempting task abort! (sc=%p)\n",
+           ioc->name, SCpnt);
+    ...
+ out:
+    printk(MYIOC_s_INFO_FMT "task abort: %s (rv=%04x) (sc=%p)\n",
+        ioc->name, ((retval == SUCCESS) ? "SUCCESS" : "FAILED"), retval,
+        SCpnt);
+    ...
+}
 
-Note that the Debian security tracker only relays what NVD provides in
-this field.  It is not updated if a separate review yields different
-results.
+In drivers/message/fusion/mptscsih.c:1819
+and drivers/message/fusion/mptscsih.c:1843,
+mptscsih_dev_reset will dump the address of SCpnt into dmesg,
+which allows local user to read the kernel address via dmesg.
 
-Thanks,
-Florian
+int
+mptscsih_dev_reset(struct scsi_cmnd *SCpnt)
+{
+    ...
+    printk(MYIOC_s_INFO_FMT "attempting target reset! (sc=%p)\n",
+           ioc->name, SCpnt);
+    ...
+ out:
+    printk (MYIOC_s_INFO_FMT "target reset: %s (sc=%p)\n",
+        ioc->name, ((retval == 0) ? "SUCCESS" : "FAILED" ), SCpnt);
+    ...
+}
+
+In drivers/message/fusion/mptscsih.c:1931
+and drivers/message/fusion/mptscsih.c:1943,
+mptscsih_host_reset will dump the address of SCpnt into dmesg,
+which allows local user to read the kernel address via dmesg.
+
+int
+mptscsih_host_reset(struct scsi_cmnd *SCpnt)
+{
+    ...
+    printk(MYIOC_s_INFO_FMT "attempting host reset! (sc=%p)\n",
+        ioc->name, SCpnt);
+    ...
+    printk(MYIOC_s_INFO_FMT "host reset: %s (sc=%p)\n",
+        ioc->name, ((retval == 0) ? "SUCCESS" : "FAILED" ), SCpnt);
+    ...
+}
