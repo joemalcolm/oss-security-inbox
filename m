@@ -1,54 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/02/2
-Message-ID: <CALKeL-M=gtsf36gurDm3N4h9z+8n63Q4DDWkZn8ULW2fKTbcgw@mail.gmail.com>
-Date: Fri, 1 Feb 2019 19:24:48 -0800
-From: Mike Jumper <mjumper@...che.org>
-To: Salvatore Bonaccorso <carnil@...ian.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2018-1340: Apache Guacamole: Secure flag missing from session cookie
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/18/12
+Message-ID: <CABXRUiTEQs=qocLyQuGSXaAkk_tkA+=dQO=6EyhqfGeU3Pm_dg@mail.gmail.com>
+Date: Thu, 18 Apr 2019 21:33:19 +0800
+From: Fuqian Huang <huangfq.daxian@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Linux kernel < 4.14.111 drivers/net/ethernet/chelsio/libcxgb/libcxgb_ppm.c kernel address dumps to user space
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Feb 1, 2019, 04:27 Salvatore Bonaccorso <carnil@...ian.org wrote:
+In drivers/net/ethernet/chelsio/libcxgb/libcxgb_ppm.c:320
+ppm_destory will dump the address of ppm into dmesg,
+which allows local user to read the kernel address via dmesg.
+static void ppm_destroy(struct kref *kref)
+{
+    ...
+    pr_info("ippm: kref 0, destroy %s ppm 0x%p.\n",
+        ppm->ndev->name, ppm);
+    ...
+}
 
-> Hi Mike,
->
-> On Wed, Jan 23, 2019 at 02:21:30PM -0800, Mike Jumper wrote:
-> > CVE-2018-1340: Secure flag missing from Apache Guacamole session cookie
-> >
-> > Versions affected:
-> > Apache Guacamole 0.9.4 through 0.9.14
-> >
-> > Description:
-> > Prior to 1.0.0, Apache Guacamole used a cookie for client-side storage
-> > of the user's session token. This cookie lacked the "secure" flag,
-> > which could allow an attacker eavesdropping on the network to
-> > intercept the user's session token if unencrypted HTTP requests are
-> > made to the same domain.
-> >
-> > Mitigation:
-> > Users of Apache Guacamole 0.9.14 or older should upgrade to 1.0.0.
-> >
-> > Credit:
-> > We would like to thank Ross Golder for reporting this issue.
->
-> Would it be possible to confirm, is this
-> https://issues.apache.org/jira/browse/GUACAMOLE-549
-> https://github.com/apache/guacamole-client/commit/884a9c0ee987f9cb49a69
-> ?
->
+In drivers/net/ethernet/chelsio/libcxgb/libcxgb_ppm.c:396
+and drivers/net/ethernet/chelsio/libcxgb/libcxgb_ppm.c:458
+and drivers/net/ethernet/chelsio/libcxgb/libcxgb_ppm.c:468,
+cxgbi_ppm_init will dump the address of ppm into dmesg,
+which allows local user to read the kernel address via dmesg.
+int cxgbi_ppm_init(void **ppm_pp, struct net_device *ndev,
+           struct pci_dev *pdev, void *lldev,
+           struct cxgbi_tag_format *tformat,
+           unsigned int ppmax,
+           unsigned int llimit,
+           unsigned int start,
+           unsigned int reserve_factor)
+{
+    ...
+    if (ppm) {
+        pr_info("ippm: %s, ppm 0x%p,0x%p already initialized, %u/%u.\n",
+            ndev->name, ppm_pp, ppm, ppm->ppmax, ppmax);
+        kref_get(&ppm->refcnt);
+        return 1;
+    }
+    ...
+    if (*ppm_pp) {
+        ...
+        pr_info("ippm: %s, ppm 0x%p,0x%p already initialized, %u/%u.\n",
+            ndev->name, ppm_pp, *ppm_pp, ppm->ppmax, ppmax);
 
-That is the correct JIRA issue, yes, however there are multiple relevant
-commits.
-
-With respect to the security aspect of the changes, the relevant pull
-request is:
-
-https://github.com/apache/guacamole-client/pull/273
-
-There are other relevant pull requests, though they deal mainly with
-eliminating cookies entirely:
-
-https://github.com/apache/guacamole-client/pulls?utf8=%E2%9C%93&q=is%3Apr+is%3Aclosed+GUACAMOLE-549
-
-- Mike
-
+        kref_get(&ppm->refcnt);
+        return 1;
+    }
+    ...
+    pr_info("ippm %s: ppm 0x%p, 0x%p, base %u/%u, pg %lu,%u, rsvd %u,%u.\n",
+        ndev->name, ppm_pp, ppm, ppm->base_idx, ppm->ppmax, PAGE_SIZE,
+        ppm->tformat.pgsz_idx_dflt, ppm->pool_rsvd,
+        ppm->pool_index_max);
+    ...
+}
