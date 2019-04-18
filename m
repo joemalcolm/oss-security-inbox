@@ -1,45 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/21/3
-Message-ID: <20190621095616.GA5186@espresso.pseudorandom.co.uk>
-Date: Fri, 21 Jun 2019 10:57:45 +0100
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/18/14
+Message-ID: <CABXRUiRFD7o9UqERpn4JLZLf1caSkgCoNaGeh3d2vG2hevSzGg@mail.gmail.com>
+Date: Thu, 18 Apr 2019 21:33:42 +0800
+From: Fuqian Huang <huangfq.daxian@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
+Subject: Linux kernel < 4.14.111 drivers/net/ethernet/netronome/nfp/nfp_net_debugfs.c kernel address dumps to user space
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 21 Jun 2019 at 11:32:05 +0200, Yves-Alexis Perez wrote:
-> I sympathize with this view, and I think we need to get better at updating,
-> but I really think not all projects can be “safely” just updated to the latest
-> version.
+In drivers/net/ethernet/netronome/nfp/nfp_net_debugfs.c:65
+and drivers/net/ethernet/netronome/nfp/nfp_net_debugfs.c:77,
+nfp_net_debugfs_rx_q_read will dump the address of
+rx_rings->rxds and frag to debugfs, which allows local user
+to read the kernel address via debugfs.
 
-If upstream projects have a stable branch that is genuinely stable
-and bugfix-only to minimize the risk of regressions, and encourage
-downstream distributions to align on the latest stable branch during
-their development phase, then I think that goes a long way towards this.
-If I understand correctly, PostgreSQL is one of the canonical examples of
-a project that does this, and gets its upstream point releases included
-in stability-focused projects like Debian as-is.
+static int nfp_net_debugfs_rx_q_read(struct seq_file *file, void *data)
+{
+    seq_printf(file, "RX[%02d,%02d]: cnt=%u dma=%pad host=%p   H_RD=%u
+H_WR=%u FL_RD=%u FL_WR=%u\n",
+           rx_ring->idx, rx_ring->fl_qcidx,
+           rx_ring->cnt, &rx_ring->dma, rx_ring->rxds,
+           rx_ring->rd_p, rx_ring->wr_p, fl_rd_p, fl_wr_p);
+    ...
+        if (frag)
+            seq_printf(file, " frag=%p", frag);
+    ...
+}
 
-I have tried to manage dbus like this, with all new APIs and new features
-appearing only in the development branch, and the result is that the
-Debian release and security teams have generally been willing to take
-upstream stable releases within the same branch branch.
+In drivers/net/ethernet/netronome/nfp/nfp_net_debugfs.c:148
+and drivers/net/ethernet/netronome/nfp/nfp_net_debugfs.c:164
+and drivers/net/ethernet/netronome/nfp/nfp_net_debugfs.c:167,
+nfp_net_debugfs_tx_q_read will dump the address of
+rx_rings->rxds and skb->head and frag to debugfs, which allows local user
+to read the kernel address via debugfs.
 
-Of course, for this to work, the upstream project needs to build a
-reputation for not introducing regressions or unnecessary changes in
-stable branches, so that downstream distributors can trust them (which
-will take a while if the upstream has a previous history of regressions,
-unnecessary changes or poorly-labelled changes).
+static int nfp_net_debugfs_tx_q_read(struct seq_file *file, void *data)
+{
+    ...
+    seq_printf(file, "TX[%02d,%02d%s]: cnt=%u dma=%pad host=%p
+H_RD=%u H_WR=%u D_RD=%u D_WR=%u\n",
+           tx_ring->idx, tx_ring->qcidx,
+           tx_ring == r_vec->tx_ring ? "" : "xdp",
+           tx_ring->cnt, &tx_ring->dma, tx_ring->txds,
+           tx_ring->rd_p, tx_ring->wr_p, d_rd_p, d_wr_p);
 
-> And before reaching the end-user, some project latest versions might depend on
-> a lot of “latest version” of other projects.
+    ...
+        if (tx_ring == r_vec->tx_ring) {
+            struct sk_buff *skb = READ_ONCE(tx_ring->txbufs[i].skb);
 
-Yes, that's certainly a potential problem, and new non-optional
-dependencies on a stable branch should usually be treated as a regression.
-It's probably fine for a stable branch to have a new *optional*
-dependency, like dbus >= 1.10.24 checking for Expat >= 2.1.0 and using
-XML_SetHashSalt() if available - although even that can become a problem
-if a binary distribution doesn't have symbol-level dependency tracking
-like Debian does.
-
-    smcv
+            if (skb)
+                seq_printf(file, " skb->head=%p skb->data=%p",
+                       skb->head, skb->data);
+        } else {
+            seq_printf(file, " frag=%p",
+                   READ_ONCE(tx_ring->txbufs[i].frag));
+        }
+    ...
+}
