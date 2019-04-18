@@ -1,127 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/05/1
-Message-Id: <E1h194Z-0001Ds-Qt@xenbits.xenproject.org>
-Date: Tue, 05 Mar 2019 12:21:27 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 284 v2 - grant table transfer issues on large hosts
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/18/11
+Message-ID: <CABXRUiTydpUuYpR7F8D0-CivT3afc2p0-Dd1j7TC2doOP_qNCA@mail.gmail.com>
+Date: Thu, 18 Apr 2019 21:32:29 +0800
+From: Fuqian Huang <huangfq.daxian@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Linux kernel < 4.14.111 drivers/message/fusion/mptbase.c kernel address dumps to user space
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+In drivers/message/fusion/mptbase.c:2150,
+mpt_suspend will dump the address of dev into dmesg,
+the address of pdev is printed to user space.
+int
+mpt_suspend(struct pci_dev *pdev, pm_message_t state)
+{
+    ...
+    printk(MYIOC_s_INFO_FMT "pci-suspend: pdev=0x%p, slot=%s, Entering "
+        "operating state [D%d]\n", ioc->name, pdev, pci_name(pdev),
+        device_state);
+    ...
+}
 
-                    Xen Security Advisory XSA-284
-                              version 2
+In drivers/message/fusion/mptbase.c:2191,
+mpt_resume will dump the address of dev into dmesg,
+the address of pdev is printed to user space.
+int
+mpt_resume(struct pci_dev *pdev)
+{
+    ...
+    printk(MYIOC_s_INFO_FMT "pci-resume: pdev=0x%p, slot=%s, Previous "
+        "operating state [D%d]\n", ioc->name, pdev, pci_name(pdev),
+        device_state);
+    ...
+}
 
-              grant table transfer issues on large hosts
+In drivers/message/fusion/mptbase.c:6749
+and drivers/message/fusion/mptbase.c:6762,
+mpt_iocinfo_proc_show will dump the address of req_frames/alloc into procfs,
+which allows local user to read the kernel address via /proc/mpt/info
 
-UPDATES IN VERSION 2
-====================
-
-Metadata updated to remove dependency on XSA-283.
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-When the code processing grant table transfer requests finds a page with
-an address too large to be represented in the interface with the guest,
-it allocates a replacement page and copies page contents.  However, the
-code doing so fails to set the newly allocated page's accounting
-properties correctly, resulting in the page becoming not only unusable
-by the target domain, but also unfreeable upon domain cleanup.  The page
-as well as certain other remnants of an affected guest will be leaked.
-
-Furthermore internal state of the processing code was also not updated
-correctly, resulting in the insertion of an IOMMU mapping to the page
-being replaced (and subsequently freed), allowing the domain access to
-memory it does not own.
-
-IMPACT
-======
-
-The primary impact is a memory leak.  Malicious or buggy guests with
-passed through PCI devices may also be able to escalate their
-privileges, crash the host, or access data belonging to other guests.
-
-VULNERABLE SYSTEMS
-==================
-
-All Xen versions from at least 3.2 onwards are vulnerable.
-
-64-bit x86 PV guests can leverage the vulnerability on hosts with
-physical memory extending past the 16 TiB boundary.  This is only
-possible for hypervisors built with CONFIG_BIGMEM enabled.
-
-32-bit x86 PV guests can leverage the vulnerability on hosts with
-physical memory extending past the 168 GiB boundary.
-
-x86 HVM and PVH guests cannot leverage the vulnerability on libxl
-based systems.  On xend based systems x86 HVM guests can leverage
-the vulnerability if their guest config file has a
-'machine_address_size' setting.
-
-ARM systems are not vulnerable.
-
-MITIGATION
-==========
-
-Running only x86 HVM/PVH guests will avoid this vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Jan Beulich of SUSE.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa284.patch           xen-unstable, Xen 4.11.x ... 4.7.x
-
-$ sha256sum xsa284*
-5359796890fc59dd2bbf8d23398c229153c8b9b716c01842dfb9f95d063a3ad4  xsa284.meta
-3a95ae9faef3886fd3a4ed5b22d944939bb2f819bb5a2a8061b2311cf3c05776  xsa284.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAlx+aa0MHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZwsYH/1yPmIG8vO86sWbX4bvwOsiRQMyy+U/HGKnh3kRi
-lkDap3srzCRNveh/pqIJQF0okH/gD5VfHZrr3D73cHK7JKmlhoI0bPhpb6oE7/10
-SmnaL/cW6/75FuDGdWzmKqx56Y/Ho/wxqGBj69rBbleOnGv+RHUQuGGTZ9g4rmzb
-Nn4DbVRLz2cqvQhHmwjQBl/unid1BAnHVATHnNdjlF/SgucR7oRweioYjTeoFbZv
-AdAWXX1GJRoXokGd1uE0eo/Mice/zmlHp//5JADCzo/oPevBFixMw/KWCaCMmUJt
-FyDNwlu8xtm/bopBWN9dGc2tSKj/0UnTA7FF61OG39BdJHo=
-=EzAi
------END PGP SIGNATURE-----
-
-Download attachment "xsa284.meta" of type "application/octet-stream" (1602 bytes)
-
-Download attachment "xsa284.patch" of type "application/octet-stream" (1225 bytes)
+static int mpt_iocinfo_proc_show(struct seq_file *m, void *v)
+{
+    ...
+    seq_printf(m, "  RequestFrames @ 0x%p (Dma @ 0x%p)\n",
+                    (void *)ioc->req_frames, (void
+*)(ulong)ioc->req_frames_dma);
+    ...
+    seq_printf(m, "  Frames   @ 0x%p (Dma @ 0x%p)\n",
+                    (void *)ioc->alloc, (void *)(ulong)ioc->alloc_dma);
+    ...
+}
