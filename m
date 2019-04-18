@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3037" "Friday" "19" "March" "2021" "10:43:11" "-0400" "Brad Spengler" "spender@grsecurity.net" nil "74" "Re: [oss-security] Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS" nil nil nil "3" nil nil (number mark "U       spender@grse Mar 19   74/3037  " thread-indent "\"Re: [oss-security] Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["309" "Thursday" "18" "April" "2019" "21:32:10" "+0800" "Fuqian Huang" "huangfq.daxian@gmail.com" "<CABXRUiSOsXJCh_hbgzD+=EVys-N=HK_h0kZ2GU=p+G2Y1daTSQ@mail.gmail.com>" "10" "[oss-security] Linux kernel < 4.14.111 drivers/media/pci/saa7164/saa7164-core.c kernel address dumps to user space" nil nil nil "4" "2019041813:32:10" "[oss-security] Linux kernel < 4.14.111 drivers/media/pci/saa7164/saa7164-core.c kernel address dumps to user space" (number mark "U       huangfq.daxi Apr 18   10/309   " thread-indent "\"[oss-security] Linux kernel < 4.14.111 drivers/media/pci/saa7164/saa7164-core.c kernel address dumps to user space\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Linux kernel < 4.14.111 drivers/media/pci/saa7164/saa7164-core.c kernel address dumps to user space" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 27883 invoked by uid 550); 19 Mar 2021 17:35:17 -0000
+Received: (qmail 10137 invoked by uid 550); 18 Apr 2019 16:36:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,104 +12,48 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5269 invoked from network); 19 Mar 2021 14:43:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=grsecurity.net;
-	s=mail; t=1616164991;
-	bh=nL2LQuizxqIAIUgJkVdBROF/0O+EeTJAMkj7AyCuRyc=;
-	h=Date:From:To:Subject:References:In-Reply-To:From;
-	b=ued9cDbLwVoThao/sYf6LPla6YBsrrAZOlvdeqrHUDx1OcvWW+d8/BUzlPVa+Gyx/
-	 m4rvkHlKpFJnifI2tCabCdGDrbZ2qLkIE7D6Vm0oGilWfy2V7wraIvUh7rRAwYvZh/
-	 7JjhzL4nZLUrXRydjj8CLzrv1mlxeBhuAablucyY=
-Date: Fri, 19 Mar 2021 10:43:11 -0400
-From: Brad Spengler <spender@grsecurity.net>
-To: oss-security@lists.openwall.com
-Message-ID: <20210319144311.GA22152@grsecurity.net>
-References: <CAKx+4-pR3JScgA-PJFSwkAw6B8xiXYWFtVD6rEYp2wnJjyCogw@mail.gmail.com>
- <YFNCtWmsYrtYQeEJ@kroah.com>
- <YFOLo/QrlgIrFotJ@wopr>
- <YFOc8bhUAKOgjfVS@sashalap>
- <20210318192136.GA6178@openwall.com>
- <YFSyTOoNtyrQvrH3@sashalap>
+Received: (qmail 21740 invoked from network); 18 Apr 2019 13:32:32 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=YgQafOQ93IbRU8e2Iwv93PUSSni04J5eC6zUrfQUM9I=;
+        b=LgRU6rCcTH5ezKbkZGx0AVZqbthcC42fvZDQmk5Mi+34j1AjpwCpIV+Q2XZ8K3wOok
+         nojTuJgbLYO2XLj21a92rbkTwHvi5FI43orGxm9SHOOnFWHwpiRBTnAJRK8BiAhNutuT
+         X9GfeCz4wTL/kEK/P5er59X3sTzWddX4yO8s/zANb9SGaNxzFXXQVO+R/zqsaWGlAaIt
+         zz+YpQx59goNMr5Tz6H1lCJmbn/h+zaaozrQPcTcKaFJgIjvh5qyR8NHK49wasu9nkiR
+         NXngVhLotCuSQiQteGLjmEVE9Ro8FbHRauasGhmt+USWt2yr5+dDG5WWYgSVyR8Hq/Q6
+         Dw8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=YgQafOQ93IbRU8e2Iwv93PUSSni04J5eC6zUrfQUM9I=;
+        b=AC/IsNh2fHlt5DxrEC2P6nnKqD5N0+JeaT1tZixy/0Ch+Af4I9GEgRJWF/6rhJWnQZ
+         WwEcxtXWeGGSPCvtHAFGOQQvGieGrVwMz39nP32kpGooArmc+djxN5TGBnCHiUjuuLMn
+         YyBvAr+kOdDaXZi0Ki5tIjQuc8+kH4EFQwc0+Y8N4TNrwGlYwgcMXbU5yAaCN+IuvdGR
+         Acu8S8dgs4DKmejLvvMSE2LaOs7EWv0dlZcmsFnXHz2XYpcD6+V05DeynnUIg13a+EG9
+         8DruGSIA1xRgJKMlE4BEXBnRblXsjXanEorwQ5LhS5BxfUXLoN7fZqu/tVXU0PdbbLol
+         ojUg==
+X-Gm-Message-State: APjAAAX1bU5eQzd/47cGvrBe09gHhciBxO4vvZwWHWiqqD/x+LoYaJcw
+	4fbzyUEpp7rYYTru2QBUCLWMVaKNdQ4ouMYOOGVnoKd1cVg=
+X-Google-Smtp-Source: APXvYqz4CQTjZC7lia8/SnSB/a/53Wfn5pzsyrnl2Ye4smAE8drImw6bGoyjwC9Witqveh8Q7qsGrDl3bM9Q+2qVzMQ=
+X-Received: by 2002:a0d:e3c7:: with SMTP id m190mr74537197ywe.324.1555594340880;
+ Thu, 18 Apr 2019 06:32:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="bp/iNruPH9dso1Pn"
-Content-Disposition: inline
-In-Reply-To: <YFSyTOoNtyrQvrH3@sashalap>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Subject: Re: [oss-security] Re: CVE-2021-20219 Linux kernel: improper
- synchronization in flush_to_ldisc() can lead to DoS
+From: Fuqian Huang <huangfq.daxian@gmail.com>
+Date: Thu, 18 Apr 2019 21:32:10 +0800
+Message-ID: <CABXRUiSOsXJCh_hbgzD+=EVys-N=HK_h0kZ2GU=p+G2Y1daTSQ@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] Linux kernel < 4.14.111 drivers/media/pci/saa7164/saa7164-core.c
+ kernel address dumps to user space
 
---bp/iNruPH9dso1Pn
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In drivers/media/pci/saa7164/saa7164-core.c:1059,
+saa7164_proc_show will dump the address of dev into procfs,
+local user could read kernel address information via /proc/saa7164.
 
-Hi Sasha,
-
-I'm sorry, but I can't let this email demonstrating a complete lack of
-self-awareness go without comment.
-
-> I suppose we can't *require* them, but it's a matter of curtesy, right?
-> They already have that information, and instead of making a bunch of
-> other people do the same job they could just share the information to
-> begin with.
-
-I'm seriously baffled that you could type those words out with a straight
-face.  As we know happens often, including with the recent iSCSI
-vulnerabilities, upstream has intentionally omitted CVE information
-from kernel commit messages -- in other words:
-"they already have the information, and instead of making a bunch of
-other people do the same job they could just share the information to
-begin with."
-
-Do none of you understand at all that the problems that exist are entirely
-of your own creation?  Neither you nor Greg ever come to this list with
-announcements of your own.  That you have to endure a tiny fraction of what
-the rest of the world is inflicted with from your intentional actions --
-sorry, you are not the victims here, and it's completely ridiculous to
-paint yourselves as one.
-
-Greg started his tirade yesterday with a false assumption that the stable
-kernels had already fixed the one issue August of last year.  That was not
-true (stable kernels < 5.7 were all missing the fix).  Then he claimed SuSE
-didn't bother to backport the fix.  That was not true:
-https://github.com/SUSE/kernel/commit/b93bddd7ae24aa8ebe48d13dcff4011a34861=
-482
-
-If you guys want to complain about bad information, leaving it out of usele=
-ss
-snarky replies would be a good start.
-
-> Exactly, they already must have this information, which is where some of
-> the frustration around these notifications comes from: it reads as
-> nothing more than a lip service.
-
-You're assuming too much -- it's quite clearly someone new at RH doing these
-recent advisories.
-
-Thanks,
--Brad
-
---bp/iNruPH9dso1Pn
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBCgAGBQJgVLh4AAoJEETRwPglJf5JZusP/2LvkgfE0+heUCEgxwSn1TGy
-acU1sxlMXBDBvLgjsPcNA4X/CNkiFXn1MZCzL3Inde3v51XKRjk3zt/BAQFDgRdY
-KFMQbs5aNiUTx78knrs44TxWdmnrBRwWX5s8H30hLICSwxqoXhrem0DYQhiA4v2F
-JAxDXsC0oyKrUO4RnZKmnwwsse/mu/qRS6qWr9ASHQIIBQ/5G69SNDOashymADc9
-kNQoCaKkvIoM9lGCn18eC93/EAU4HgRstpE/CNpvF7lIaCcl61+IxDjv6mUdduk3
-NhVh5sCOuRO4Z4IQrYhrEu2lCYGMk7pWaXCo3SSuVirY5tupADj1cf4kud+UjdSJ
-VRIWzID+pOg+FbdRLLLcH532o51Ny6+TuELt3AX44tcedOL6uqmpg/r2NzcNDLxt
-WWJb0yEwBXZmSEhgCJe+8JtBNksb6Vge1k2lZe4nnvcQg/QoMhpCoEjfy6w+6627
-VLXFAYf5s2ZMSj2j0dsX1YbLgFmGQfmZ0g9BwJSt0Kev+Qb8vs+6aRlFmeaYfsWK
-ZqUJsarHT9I33I8dWPyl8pIH5Hj7JvteJt2bXC/phlnjGwxLY3fbVxuzJxH0I2Ft
-rUuLk8jHnwVp/ej7aUDBPhf4e5LazA0uvru3WxPxeu1QO/XMs+1DiT9ZdIxJk/kg
-vyLwfakj1PdBxED7xiOP
-=h7Qa
------END PGP SIGNATURE-----
-
---bp/iNruPH9dso1Pn--
+static int saa7164_proc_show(struct seq_file *m, void *v)
+{
+    ...
+        seq_printf(m, "%s = %p\n", dev->name, dev);
+    ...
+}
