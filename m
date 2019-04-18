@@ -1,78 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/04/1
-Message-ID: <20190904092248.GQ3837@jumper.schlittermann.de>
-Date: Wed, 4 Sep 2019 11:22:48 +0200
-From: Heiko Schlittermann <hs@...marc.schlittermann.de>
-To: oss-security <oss-security@...ts.openwall.com>, Exim Users <exim-users@...m.org>, Exim Announce <exim-announce@...m.org>
-Subject: CVE-2019-15846: Exim - local or remote attacker can execute programs with root privileges.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/18/6
+Message-ID: <20190418155926.GB5455@w1.fi>
+Date: Thu, 18 Apr 2019 18:59:26 +0300
+From: Jouni Malinen <j@...fi>
+To: oss-security@...ts.openwall.com
+Subject: wpa_supplicant/hostapd: EAP-pwd message reassembly issue with unexpected fragment
 Content-Type: text/plain; charset=utf-8
 
-*** Note: EMBARGO is still in effect!       ***
-*** Distros must not publish any detail yet ***
+Published: April 18, 2019
+Latest version available from: https://w1.fi/security/2019-5/
 
-Head up! Security release ahead!
+Vulnerability
 
-CVE ID:     CVE-2019-15846
-Version(s): up to and including 4.92.1
-Issue:      A local or remote attacker can execute programs with root
-            privileges.
-Details:    Will be made public at CRD. Currently there is no known
-            exploit, but a rudimentary POC exists.
+EAP-pwd implementation in hostapd (EAP server) and wpa_supplicant (EAP
+peer) was discovered not to validate fragmentation reassembly state
+properly for a case where an unexpected fragment could be received. This
+could result in process termination due to NULL pointer dereference.
 
-Coordinated Release Date (CRD) for Exim 4.92.2:
-            2019-09-06 10:00 UTC
+An attacker in radio range of a station device with wpa_supplicant
+network profile enabling use of EAP-pwd could cause the wpa_supplicant
+process to terminate by constructing unexpected sequence of EAP
+messages. An attacker in radio range of an access point that points to
+hostapd as an authentication server with EAP-pwd user enabled in runtime
+configuration (or in non-WLAN uses of EAP authentication as long as the
+attacker can send EAP-pwd messages to the server) could cause the
+hostapd process to terminate by constructing unexpected sequence of EAP
+messages.
 
-Contact:    security@...m.org
 
-Proposed Timeline
-=================
+Vulnerable versions/configurations
 
-2019-09-03:
-    - initial notification to distros@...nwall.org and
-      exim-maintainers@...m.org
+All hostapd and wpa_supplicant versions with EAP-pwd support
+(CONFIG_EAP_PWD=y in the build configuration and EAP-pwd being enabled
+in the runtime configuration) are vulnerable against the process
+termination (denial of service) attack.
 
-2019-09-04: <-- NOW
-    - This Heads-up notice to oss-security@...ts.openwall.com,
-      exim-users@...m.org, and exim-announce@...m.org
 
-2019-09-06 10:00 UTC:
-    - Coordinated relase date
-    - Notice to oss-security, exim-users, and exim-announce
-    - Publish the patches in our official and public Git repositories
-      and the packages on our FTP server.
+Possible mitigation steps
 
-Downloads available starting at CRD (not yet)
-=============================================
+- Merge the following commits to wpa_supplicant/hostapd and rebuild:
 
-The downloads are not yet available. They will be made available
-at the above mentioned CRD.
+  EAP-pwd peer: Fix reassembly buffer handling
+  EAP-pwd server: Fix reassembly buffer handling
 
-Release tarballs (exim-4.92.2):
+  These patches are available from https://w1.fi/security/2019-5/
 
-    https://ftp.exim.org/pub/exim/exim4/
+- Update to wpa_supplicant/hostapd v2.8 or newer, once available
 
-The package files are signed with my GPG key.
-
-The full Git repo:
-
-    https://git.exim.org/exim.git
-    https://github.com/Exim/exim    [mirror of the above]
-    - tag    exim-4.92.2
-    - branch exim-4.92.2+fixes
-
-The tagged commit is the officially released version. The tag is signed
-with my GPG key.  The +fixes branch isn't officially maintained, but
-contains useful patches *and* the security fix. The relevant commit is
-signed with my GPG key. The old exim-4.92.1+fixes branch is being functionally
-replaced by the new exim-4.92.2+fixes branch.
-
-    Best regards from Dresden/Germany
-    Viele Grüße aus Dresden
-    Heiko Schlittermann
---
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
- ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+-- 
+Jouni Malinen                                            PGP id EFC895FA
