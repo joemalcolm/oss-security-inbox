@@ -1,21 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/16/1
-Message-ID: <CABXRUiQpWVeHYZeN_=P+n8ghVA=VWDPAeddpsZj38P0sZADeNA@mail.gmail.com>
-Date: Tue, 16 Apr 2019 10:08:10 +0800
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/18/7
+Message-ID: <CABXRUiQ5c+3288-o3jku5knc5Udy1UA-w8Tf9H7cL0LKEfVfBA@mail.gmail.com>
+Date: Thu, 18 Apr 2019 21:31:01 +0800
 From: Fuqian Huang <huangfq.daxian@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: kernel address leak in drivers/media/dvb-frontends/ascot2e.c - linux 4.14.111 LTS
+Subject: Linux kernel < 4.14.111 drivers/media/dvb-frontends/cxd2841er.c kernel address dumps to user space
 Content-Type: text/plain; charset=utf-8
 
-In ascot2e_attach, dev_info will print the address of adapter to
-dmesg, sensitive kernel information will be leaked to user space.
-struct dvb_frontend *ascot2e_attach(struct dvb_frontend *fe,
-  const struct ascot2e_config *config,
-  struct i2c_adapter *i2c)
+In drivers/media/dvb-frontends/cxd2841er.c:3856,
+function cxd2841er_attach will print the address of
+adapter to dmesg, the kernel address is dumpped to
+user space.
+
+static struct dvb_frontend *cxd2841er_attach(struct cxd2841er_config *cfg,
+                         struct i2c_adapter *i2c,
+                         u8 system)
 {
-  ...
-  dev_info(&priv->i2c->dev,
-  "Sony ASCOT2E attached on addr=%x at I2C adapter %p\n",
-  priv->i2c_address, priv->i2c);
-  ...
+    ...
+    priv->i2c = i2c;
+    dev_info(&priv->i2c->dev,
+        "%s(): I2C adapter %p SLVX addr %x SLVT addr %x\n",
+        __func__, priv->i2c,
+        priv->i2c_addr_slvx, priv->i2c_addr_slvt);
+    ...
 }
