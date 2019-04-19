@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["8195" "Sunday" "23" "April" "2017" "12:42:04" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<2144211.BpqYkg82hc@arcadia>" "149" "[oss-security] libcroco: heap overflow and undefined behavior" nil nil nil "4" "2017042310:42:04" "[oss-security] libcroco: heap overflow and undefined behavior" (number mark "U       ago@gentoo.o Apr 23  149/8195  " thread-indent "\"[oss-security] libcroco: heap overflow and undefined behavior\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["894" "Thursday" "18" "April" "2019" "20:40:56" "-0400" "Havoc Pennington" "hp@tidelift.com" "<CAC7nai19LLaw_ZGOQK9XvLOMcMCpxF0ZKRoniRGvU3URTaALWw@mail.gmail.com>" "27" "[oss-security] Re: urllib3: adds system certificates to ssl_context" nil nil nil "4" "2019041900:40:56" "[oss-security] Re: urllib3: adds system certificates to ssl_context" (number mark "U       hp@tidelift. Apr 18   27/894   " thread-indent "\"[oss-security] Re: urllib3: adds system certificates to ssl_context\"\n") "<CAC7nai00CbzPWbcd2pF-E6hi8pKBrUF5+oanEd++ME1FtsJaoQ@mail.gmail.com>" ("<CAC7nai00CbzPWbcd2pF-E6hi8pKBrUF5+oanEd++ME1FtsJaoQ@mail.gmail.com>") nil nil nil nil nil nil nil "[oss-security] Re: urllib3: adds system certificates to ssl_context" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32735 invoked by uid 550); 23 Apr 2017 10:42:19 -0000
+Received: (qmail 30174 invoked by uid 550); 19 Apr 2019 10:26:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,163 +12,67 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32711 invoked from network); 23 Apr 2017 10:42:18 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
-To: oss-security@lists.openwall.com
-Date: Sun, 23 Apr 2017 12:42:04 +0200
-Message-ID: <2144211.BpqYkg82hc@arcadia>
-User-Agent: KMail/4.14.10 (Linux/4.4.39-gentoo; KDE/4.14.29; x86_64; ; )
+Received: (qmail 28222 invoked from network); 19 Apr 2019 00:41:19 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=tidelift-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=foGSphjSeh+8hct2AxAmrFRmxi1KEU3WkgDxboGV7+w=;
+        b=dQE2rvRx9h1ZpIln1n3hFNgXshmdr8T3OLXF1A+rMOJdQzxsl1waFnCYeFt5E8nzKp
+         KTRqJasKTmzgW45la3TjSH9k17aDkaVSjaBN1IDLxj3RXiI4WTGWMnHpQ2K5NN2aNjKR
+         y3DVQVFW7ZPw4+0yn008y5/CrZbObdvbrm/kjTNyV3V6aPDaU40eIzufD68m/RfYJdge
+         nasSurBvBVt+GcEkhN3OkWLCBExE7QqMFKCqtztKhLV7WnMFk+CQHghEhrg6gqXTYCGa
+         azroRQvTEabRaK7iAq2zfkGZZFDiFt6m8O2S/HN884/KybRKS1xEDgP1xijaQn5eegIY
+         nE0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=foGSphjSeh+8hct2AxAmrFRmxi1KEU3WkgDxboGV7+w=;
+        b=YCxIO3dxHg/Ehgm3+eM7Sr5okHH+ZWsrpQUQYz1LDJDAHEn3z6ReSnu1CxelXAOwjc
+         vA+wsoHIslMmKYdBo7xsI99CitvApzlaZldoBovg6SsTAKptkuomdJSxlq0OOzNlPlfh
+         4VrOxNuwI9HH+ImnziI2aC8hym1GjVznCzHlS73eQqgxq6iKVDYXQO2Vnuj3wuhlHGc1
+         Q01LfP13eqWo6X4G+IGYf4Af1+gWRfTCSa+oXOFD61X8Nx3iJORaX6dgh8ZQA0cl4GQ7
+         eYSocc5vHOpk8T7kVv91rZcRW48dpV1OHecVJFcEUJoRD4+FuYlBUsGgxgfoCu0oOmJQ
+         E1og==
+X-Gm-Message-State: APjAAAVGMMXqBhRs+Umhoxdf84t0lRGMR2rOUst1MnvzYR9tRqbUKRE2
+	a1Ajg8s+XdudHWopyRRH0wppVEzwWshAmBhIuoGM/0ex5mHAbg==
+X-Google-Smtp-Source: APXvYqybo6YY+AMtAHbCzN8/b7Uy8IGGvS2qBiNv+zGx+3OagabALeXJCsYgqy7C8w+w5PEg6F4W+YxidnaUhrmIwII=
+X-Received: by 2002:ac8:1aec:: with SMTP id h41mr950111qtk.345.1555634467010;
+ Thu, 18 Apr 2019 17:41:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Subject: [oss-security] libcroco: heap overflow and undefined behavior
+References: <CAC7nai00CbzPWbcd2pF-E6hi8pKBrUF5+oanEd++ME1FtsJaoQ@mail.gmail.com>
+In-Reply-To: <CAC7nai00CbzPWbcd2pF-E6hi8pKBrUF5+oanEd++ME1FtsJaoQ@mail.gmail.com>
+From: Havoc Pennington <hp@tidelift.com>
+Date: Thu, 18 Apr 2019 20:40:56 -0400
+Message-ID: <CAC7nai19LLaw_ZGOQK9XvLOMcMCpxF0ZKRoniRGvU3URTaALWw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] Re: urllib3: adds system certificates to ssl_context
 
-Description:
-libcroco is a Generic Cascading Style Sheet (CSS) parsing and manipulation 
-toolkit.
+Hello,
 
-A fuzz on it discovered and heap overflow and an undefined behavior.
+This vulnerability "urllib3: adds system certificates to ssl_context"
+has been assigned CVE-2019-11324
 
-The complete ASan output:
+Thank you
+Havoc
 
-# csslint-0.6 $FILE
-==9246==ERROR: AddressSanitizer: heap-buffer-overflow on address 
-0x60400000007a at pc 0x7f3771a05074 bp 0x7fff426076a0 sp 0x7fff42607698                                                                          
-READ of size 1 at 0x60400000007a thread T0                                                                                                                                                                        
-    #0 0x7f3771a05073 in cr_input_read_byte /tmp/portage/dev-
-libs/libcroco-0.6.12/work/libcroco-0.6.12/src/cr-input.c:416:19                                                                                      
-    #1 0x7f3771a3c0ba in cr_tknzr_parse_rgb /tmp/portage/dev-
-libs/libcroco-0.6.12/work/libcroco-0.6.12/src/cr-tknzr.c:1295:17                                                                                     
-    #2 0x7f3771a3c0ba in cr_tknzr_get_next_token /tmp/portage/dev-
-libs/libcroco-0.6.12/work/libcroco-0.6.12/src/cr-tknzr.c:2127                                                                                   
-    #3 0x7f3771ab6688 in cr_parser_parse_any_core /tmp/portage/dev-
-libs/libcroco-0.6.12/work/libcroco-0.6.12/src/cr-parser.c:1179:18                                                                              
-    #4 0x7f3771ab6c1e in cr_parser_parse_any_core /tmp/portage/dev-
-libs/libcroco-0.6.12/work/libcroco-0.6.12/src/cr-parser.c:1215:34                                                                              
-    #5 0x7f3771ab6c1e in cr_parser_parse_any_core /tmp/portage/dev-
-libs/libcroco-0.6.12/work/libcroco-0.6.12/src/cr-parser.c:1215:34                                                                              
-    #6 0x7f3771ab6c1e in cr_parser_parse_any_core /tmp/portage/dev-
-libs/libcroco-0.6.12/work/libcroco-0.6.12/src/cr-parser.c:1215:34                                                                              
-    #7 0x7f3771ab9579 in cr_parser_parse_block_core /tmp/portage/dev-
-libs/libcroco-0.6.12/work/libcroco-0.6.12/src/cr-parser.c:1005:26                                                                            
-    #8 0x7f3771a8882a in cr_parser_parse_atrule_core /tmp/portage/dev-
-libs/libcroco-0.6.12/work/libcroco-0.6.12/src/cr-parser.c:798:26                                                                            
-    #9 0x7f3771ab0644 in cr_parser_parse_stylesheet /tmp/portage/dev-
-libs/libcroco-0.6.12/work/libcroco-0.6.12/src/cr-parser.c                                                                                    
-    #10 0x7f3771a8131e in cr_parser_parse /tmp/portage/dev-
-libs/libcroco-0.6.12/work/libcroco-0.6.12/src/cr-parser.c:4381:26                                                                                      
-    #11 0x7f3771a804f1 in cr_parser_parse_file /tmp/portage/dev-
-libs/libcroco-0.6.12/work/libcroco-0.6.12/src/cr-parser.c:2993:18                                                                                 
-    #12 0x7f3771b04869 in cr_om_parser_parse_file /tmp/portage/dev-
-libs/libcroco-0.6.12/work/libcroco-0.6.12/src/cr-om-parser.c:956:18                                                                            
-    #13 0x51506f in cssom_parse /tmp/portage/dev-
-libs/libcroco-0.6.12/work/libcroco-0.6.12/csslint/csslint.c:252:18                                                                                               
-    #14 0x51506f in main /tmp/portage/dev-
-libs/libcroco-0.6.12/work/libcroco-0.6.12/csslint/csslint.c:997                                                                                                         
-    #15 0x7f377041b78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-
-r3/work/glibc-2.23/csu/../csu/libc-start.c:289                                                                                       
-    #16 0x41a9b8 in _init (/usr/bin/csslint-0.6+0x41a9b8)
-
-0x60400000007a is located 0 bytes to the right of 42-byte region 
-[0x604000000050,0x60400000007a)
-allocated by thread T0 here:
-    #0 0x4da285 in calloc /tmp/portage/sys-libs/compiler-rt-
-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_malloc_linux.cc:74
-    #1 0x7f377168a1a0 in g_malloc0 /tmp/portage/dev-
-libs/glib-2.48.2/work/glib-2.48.2/glib/gmem.c:124
-    #2 0x7f3771a00c4d in cr_input_new_from_buf /tmp/portage/dev-
-libs/libcroco-0.6.12/work/libcroco-0.6.12/src/cr-input.c:151:26
-    #3 0x7f3771a027d6 in cr_input_new_from_uri /tmp/portage/dev-
-libs/libcroco-0.6.12/work/libcroco-0.6.12/src/cr-input.c:251:26
-    #4 0x7f3771a22797 in cr_tknzr_new_from_uri /tmp/portage/dev-
-libs/libcroco-0.6.12/work/libcroco-0.6.12/src/cr-tknzr.c:1642:17
-    #5 0x7f3771a8047c in cr_parser_parse_file /tmp/portage/dev-
-libs/libcroco-0.6.12/work/libcroco-0.6.12/src/cr-parser.c:2986:17
-    #6 0x7f3771b04869 in cr_om_parser_parse_file /tmp/portage/dev-
-libs/libcroco-0.6.12/work/libcroco-0.6.12/src/cr-om-parser.c:956:18
-    #7 0x51506f in cssom_parse /tmp/portage/dev-
-libs/libcroco-0.6.12/work/libcroco-0.6.12/csslint/csslint.c:252:18
-    #8 0x51506f in main /tmp/portage/dev-
-libs/libcroco-0.6.12/work/libcroco-0.6.12/csslint/csslint.c:997
-    #9 0x7f377041b78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-
-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-
-SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/dev-
-libs/libcroco-0.6.12/work/libcroco-0.6.12/src/cr-input.c:416:19 in 
-cr_input_read_byte
-Shadow bytes around the buggy address:
-  0x0c087fff7fb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c087fff7fc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c087fff7fd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c087fff7fe0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c087fff7ff0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0c087fff8000: fa fa 00 00 00 00 00 fa fa fa 00 00 00 00 00[02]
-  0x0c087fff8010: fa fa 00 00 00 00 00 00 fa fa fa fa fa fa fa fa
-  0x0c087fff8020: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c087fff8030: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c087fff8040: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c087fff8050: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==9246==ABORTING
-Commit fix:
-https://git.gnome.org/browse/libcroco/commit/?id=898e3a8c8c0314d2e6b106809a8e3e93cf9d4394
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00267-libcroco-heapoverflow-cr_input_read_byte
-CVE:
-CVE-2017-7960
-
-#####################################
-
-# csslint-0.6 $FILE
-/tmp/portage/dev-libs/libcroco-0.6.12/work/libcroco-0.6.12/src/cr-
-tknzr.c:1283:15: runtime error: value 9.11111e+19 is outside the range of 
-representable values of type 'long'
-Commit fix:
-https://git.gnome.org/browse/libcroco/commit/?id=9ad72875e9f08e4c519ef63d44cdbd94aa9504f7
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00268-libcroco-outside-long
-CVE:
-CVE-2017-7961
-
-Affected version:
-0.6.11 and 0.6.12
-
-Fixed version:
-0.6.13 (not released atm)
-
-Credit:
-These bugs were discovered by Agostino Sarubbo of Gentoo.
-
-Timeline:
-2017-04-12: bugs discovered and reported to upstream
-2017-04-16: upstream released a patch
-2017-04-17: blog post about the issues
-2017-04-19: CVE assigned
-
-Note:
-These bugs were found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/04/17/libcroco-heap-overflow-and-undefined-behavior/
-
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+On Wed, Apr 17, 2019 at 2:21 PM Havoc Pennington <hp@tidelift.com> wrote:
+>
+> A vulnerability has been discovered in the urllib3 Python library.
+>
+> When verifying HTTPS connections when an SSLContext is passed to
+> urllib3, system CA certificates will be loaded into the SSLContext
+> by default in addition to any manually-specified CA certificates.
+> This causes TLS handshakes that should fail given only the
+> manually specified certs to succeed based on system CA certs.
+>
+> This affects urllib3 1.24.1 and below. The fix has been released
+> in version 1.24.2.
+>
+> The vulnerability was reported by Christian Heimes.
+>
+> A CVE ID has been requested, will follow up with it when we have it.
+>
+> Best
+> Havoc / on behalf of Tidelift security team & urllib3 team
