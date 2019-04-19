@@ -1,37 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/08/7
-Message-ID: <CALzBtjKp87pGwvPS2wRjuHhq3DjTJ9Np=mWPg35O17cLqzC0pg@mail.gmail.com>
-Date: Tue, 8 Jan 2019 19:28:32 +0400
-From: Entropy Moe <3ntr0py1337@...il.com>
-To: Greg KH <greg@...ah.com>
-Cc: security@...nel.org, oss-security@...ts.openwall.com
-Subject: Re: KASAN stack out of bound bug
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/19/1
+Message-ID: <CAC7nai19LLaw_ZGOQK9XvLOMcMCpxF0ZKRoniRGvU3URTaALWw@mail.gmail.com>
+Date: Thu, 18 Apr 2019 20:40:56 -0400
+From: Havoc Pennington <hp@...elift.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: urllib3: adds system certificates to ssl_context
 Content-Type: text/plain; charset=utf-8
 
-Sure, I will do that.
+Hello,
 
-On Tue, Jan 8, 2019 at 7:28 PM Greg KH <greg@...ah.com> wrote:
+This vulnerability "urllib3: adds system certificates to ssl_context"
+has been assigned CVE-2019-11324
 
-> On Tue, Jan 08, 2019 at 07:13:05PM +0400, Entropy Moe wrote:
-> > Hello folks,
-> > I am reporting another set of bugs related to out of bounds in multiple
-> > source codes.
-> >
-> > please see the attached files report for more information.
-> >
-> > if I reporting it wrongly, please correct me.
->
-> For networking issues, just send them to the netdev@...r.kernel.org
-> mailing list as the developers there want to find out these types of
-> things.
->
-> And no need to post all syzbot issues to security@, that doesn't make
-> sense, just send them to the correct mailing lists and developers so
-> they can work to resolve them.  Like the other people who use this tool
-> do.
->
-> thanks,
->
-> greg k-h
->
+Thank you
+Havoc
 
+On Wed, Apr 17, 2019 at 2:21 PM Havoc Pennington <hp@...elift.com> wrote:
+>
+> A vulnerability has been discovered in the urllib3 Python library.
+>
+> When verifying HTTPS connections when an SSLContext is passed to
+> urllib3, system CA certificates will be loaded into the SSLContext
+> by default in addition to any manually-specified CA certificates.
+> This causes TLS handshakes that should fail given only the
+> manually specified certs to succeed based on system CA certs.
+>
+> This affects urllib3 1.24.1 and below. The fix has been released
+> in version 1.24.2.
+>
+> The vulnerability was reported by Christian Heimes.
+>
+> A CVE ID has been requested, will follow up with it when we have it.
+>
+> Best
+> Havoc / on behalf of Tidelift security team & urllib3 team
