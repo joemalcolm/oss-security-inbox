@@ -1,35 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/11/3
-Message-ID: <CAEvdU_2eGL_EiXRRUCHgaE=HMGtfn1uDH1-ckaWAuJ=CTvNfdg@mail.gmail.com>
-Date: Tue, 10 Sep 2019 15:29:24 -0700
-From: Jacopo Cappellato <jacopoc@...che.org>
-To: "user@...iz.apache.org ML" <user@...iz.apache.org>, Dev list <dev@...iz.apache.org>, announce@...che.org,  security@...iz.apache.org, oss-security@...ts.openwall.com,  Vikash Patnaik <vikash.patnaik@...look.com>, kiitkp03@...il.com
-Subject: [CVE-2019-10073] Apache OFBiz XSS vulnerability in the "ecommerce" component
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/22/1
+Message-ID: <CAGJbjKYzq0PbZYOedTha2xaOOUgTg-UJjp6CrWjwaaA8qwiTKg@mail.gmail.com>
+Date: Mon, 22 Apr 2019 13:12:21 -0400
+From: Mike Dalessio <mike.dalessio@...il.com>
+To: nokogiri-talk <nokogiri-talk@...glegroups.com>, ruby-talk <ruby-talk@...y-lang.org>,  ruby-security-ann@...glegroups.com, oss-security@...ts.openwall.com
+Subject: Nokogiri security update v1.10.3
 Content-Type: text/plain; charset=utf-8
 
-Severity:
-Important
+Nokogiri v1.10.3 has been released.
 
-Vendor:
-The Apache Software Foundation
+This is a security release. It addresses a CVE in upstream libxslt rated as
+"Priority: medium" by Canonical, and "NVD Severity: high" by Debian. More
+details are available below.
 
-Versions Affected:
-OFBiz 16.11.01 to 16.11.05
+If you're using your distro's system libraries, rather than Nokogiri's
+vendored libraries, there's no security need to upgrade at this time,
+though you may want to check with your distro whether they've patched this
+(Canonical has patched Ubuntu packages). Note that this patch is not yet
+(as of 2019-04-22) in an upstream release of libxslt.
+
+Full details about the security update are available in Github Issue
+[#1892][].
+
+  [#1892]: https://github.com/sparklemotion/nokogiri/issues/1892
+
+---
+
+## 1.10.3 / 2019-04-22
+
+### Security Notes
+
+[MRI] Pulled in upstream patch from libxslt that addresses CVE-2019-11068.
+Full details are available in [#1892](
+https://github.com/sparklemotion/nokogiri/issues/1892). Note that this
+patch is not yet (as of 2019-04-22) in an upstream release of libxslt.
+
+
+---
+
+CVE-2019-11068
+
+Permalinks are:
+- Canonical:
+https://people.canonical.com/~ubuntu-security/cve/CVE-2019-11068
+- Debian: https://security-tracker.debian.org/tracker/CVE-2019-11068
 
 Description:
-The "Blog", "Forum", "Contact Us" screens of the template "ecommerce"
-application bundled in Apache OFBiz are weak to Stored XSS attacks.
 
-Mitigation:
-Upgrade to 16.11.06
-or manually apply the following commits on branch 16.11:
-1858438, 1858543, 1860595 and 1860616
-----
+> libxslt through 1.1.33 allows bypass of a protection mechanism
+> because callers of xsltCheckRead and xsltCheckWrite permit access
+> even upon receiving a -1 error code. xsltCheckRead can return -1 for
+> a crafted URL that is not actually invalid and is subsequently
+> loaded.
 
-Credit:
-Vikash Patnaik <vikash.patnaik@...look.com>
-Dinesh Kumar Mohanty <kiitkp03@...il.com>
+Canonical rates this as "Priority: Medium".
 
-References:
-http://ofbiz.apache.org/download.html#vulnerabilities
+Debian rates this as "NVD Severity: High (attack range: remote)".
 
