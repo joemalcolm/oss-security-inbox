@@ -1,138 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/29/2
-Message-ID: <71e5f6d0-8085-4947-d4ce-46cfe70873ef@igalia.com>
-Date: Tue, 29 Oct 2019 17:16:22 +0100
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org, bugtraq@...urityfocus.com
-Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com
-Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2019-0005
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/23/1
+Message-ID: <CAFBzuDOyYgqTHj5vq-w2jjrk9Gh-q4kB56cdxZ_KG3Pd80bEPQ@mail.gmail.com>
+Date: Tue, 23 Apr 2019 08:29:28 +0100
+From: Apache Security Team <security@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: Issues fixed in previous releases of Apache Zeppelin 0.7.3 and 0.8.0 (CVE-2017-12619 CVE-2018-1317 CVE-2018-1328)
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory                 WSA-2019-0005
-------------------------------------------------------------------------
+The following three issues were fixed in previous releases of Apache
+Zeppelin but had not been disclosed.  This email is being sent by the
+ASF Security Team on behalf of Apache Zeppelin.
 
-Date reported           : October 29, 2019
-Advisory ID             : WSA-2019-0005
-WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2019-0005.html
-WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2019-0005.html
-CVE identifiers         : CVE-2019-8625, CVE-2019-8674, CVE-2019-8707,
-                          CVE-2019-8719, CVE-2019-8720, CVE-2019-8726,
-                          CVE-2019-8733, CVE-2019-8735, CVE-2019-8763,
-                          CVE-2019-8768, CVE-2019-8769, CVE-2019-8771.
+[CVEID]:CVE-2017-12619
+[PRODUCT]:Apache Zeppelin
+[VERSION]:Apache Zeppelin prior to 0.7.3 (released September 2017)
+[PROBLEMTYPE]:Session Fixation
+[REFERENCES]:https://zeppelin.apache.org/releases/zeppelin-release-0.7.3.html
+[DESCRIPTION]: Apache Zeppelin prior to 0.7.3 was vulnerable to
+session fixation which allowed an attacker to hijack a valid user
+session.  Issue was reported by "stone lone".
 
-Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
+[CVEID]:CVE-2018-1317
+[PRODUCT]:Apache Zeppelin
+[VERSION]:Apache Zeppelin prior to 0.8.0 (released July 2018)
+[PROBLEMTYPE]:Improper Authentication
+[REFERENCES]:https://zeppelin.apache.org/releases/zeppelin-release-0.8.0.html
+[DESCRIPTION]: In Apache Zeppelin prior to 0.8.0 the cron scheduler
+was enabled by default and could allow users to run paragraphs as
+other users without authentication.
 
-CVE-2019-8625
-    Versions affected: WebKitGTK before 2.26.0 and WPE WebKit before
-    2.26.0.
-    Credit to Sergei Glazunov of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    universal cross site scripting. Description: A logic issue was
-    addressed with improved state management.
-
-CVE-2019-8674
-    Versions affected: WebKitGTK before 2.24.4 and WPE WebKit before
-    2.24.3.
-    Credit to Sergei Glazunov of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    universal cross site scripting. Description: A logic issue was
-    addressed with improved state management.
-
-CVE-2019-8707
-    Versions affected: WebKitGTK before 2.24.4 and WPE WebKit before
-    2.24.3.
-    Credit to an anonymous researcher working with Trend Micro's Zero
-    Day Initiative, cc working with Trend Micro Zero Day Initiative.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2019-8719
-    Versions affected: WebKitGTK before 2.24.4 and WPE WebKit before
-    2.24.3.
-    Credit to Sergei Glazunov of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    universal cross site scripting. Description: A logic issue was
-    addressed with improved state management.
-
-CVE-2019-8720
-    Versions affected: WebKitGTK before 2.26.0 and WPE WebKit before
-    2.26.0.
-    Credit to Wen Xu of SSLab at Georgia Tech.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2019-8726
-    Versions affected: WebKitGTK before 2.24.3 and WPE WebKit before
-    2.24.3.
-    Credit to Jihui Lu of Tencent KeenLab.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2019-8733
-    Versions affected: WebKitGTK before 2.24.4 and WPE WebKit before
-    2.24.3.
-    Credit to Sergei Glazunov of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2019-8735
-    Versions affected: WebKitGTK before 2.24.2 and WPE WebKit before
-    2.24.2.
-    Credit to G. Geshev working with Trend Micro Zero Day Initiative.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2019-8763
-    Versions affected: WebKitGTK before 2.24.4 and WPE WebKit before
-    2.24.3.
-    Credit to Sergei Glazunov of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2019-8768
-    Versions affected: WebKitGTK before 2.24.0 and WPE WebKit before
-    2.24.0.
-    Credit to Hugo S. Diaz (coldpointblue).
-    Impact: A user may be unable to delete browsing history items.
-    Description: "Clear History and Website Data" did not clear the
-    history. The issue was addressed with improved data deletion.
-
-CVE-2019-8769
-    Versions affected: WebKitGTK before 2.26.0 and WPE WebKit before
-    2.26.0.
-    Credit to Piérre Reimertz (@reimertz).
-    Impact: Visiting a maliciously crafted website may reveal browsing
-    history. Description: An issue existed in the drawing of web page
-    elements. The issue was addressed with improved logic.
-
-CVE-2019-8771
-    Versions affected: WebKitGTK before 2.26.0 and WPE WebKit before
-    2.26.0.
-    Credit to Eliya Stein of Confiant.
-    Impact: Maliciously crafted web content may violate iframe
-    sandboxing policy. Description: This issue was addressed with
-    improved iframe sandbox enforcement.
-
-
-We recommend updating to the latest stable versions of WebKitGTK and WPE
-WebKit. It is the best way to ensure that you are running safe versions
-of WebKit. Please check our websites for information about the latest
-stable releases.
-
-Further information about WebKitGTK and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
-
-The WebKitGTK and WPE WebKit team,
-October 29, 2019
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (898 bytes)
+[CVEID]:CVE-2018-1328
+[PRODUCT]:Apache Zeppelin
+[VERSION]:Apache Zeppelin prior to 0.8.0 (released July 2018)
+[PROBLEMTYPE]:Stored XSS
+[REFERENCES]:https://zeppelin.apache.org/releases/zeppelin-release-0.8.0.html
+[DESCRIPTION]: Apache Zeppelin prior to 0.8.0 had a stored XSS issue
+via Note permissions.  Issue reported by "Josna Joseph"
