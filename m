@@ -1,23 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/14/4
-Message-ID: <56087dbc-0455-ae8c-2a44-b526e0a83e5e@gentoo.org>
-Date: Mon, 14 Jan 2019 20:38:53 +0100
-From: Kristian Fiskerstrand <k_f@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: Statistics for distros lists updated for 2018Q4
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/23/2
+Message-ID: <874l6pgkpg.fsf@oldenburg2.str.redhat.com>
+Date: Tue, 23 Apr 2019 11:00:27 +0200
+From: Florian Weimer <fweimer@...hat.com>
+To: Mike Dalessio <mike.dalessio@...il.com>
+Cc: nokogiri-talk <nokogiri-talk@...glegroups.com>,  ruby-talk <ruby-talk@...y-lang.org>,  ruby-security-ann@...glegroups.com,  oss-security@...ts.openwall.com
+Subject: Re: Nokogiri security update v1.10.3
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+* Mike Dalessio:
 
-Just a short notice that the statistics for the distros list have been
-updated for the 4th quarter of 2018 at
-http://oss-security.openwall.org/wiki/mailing-lists/distros/stats
+> This is a security release. It addresses a CVE in upstream libxslt rated as
+> "Priority: medium" by Canonical, and "NVD Severity: high" by Debian. More
+> details are available below.
 
--- 
-Kristian Fiskerstrand
-OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
-fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
+Note that the Debian security tracker only relays what NVD provides in
+this field.  It is not updated if a separate review yields different
+results.
 
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Thanks,
+Florian
