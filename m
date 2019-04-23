@@ -1,27 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/04/1
-Message-ID: <CAD-rxRBEb3zdu_43VEHyy7ntz-Sy4tvUCQzVOGivycMyc+2JVg@mail.gmail.com>
-Date: Fri, 4 Jan 2019 09:22:56 -0500
-From: Tim Graham <timograham@...il.com>
-To: django-announce@...glegroups.com
-Cc: django-users@...glegroups.com, django-developers@...glegroups.com,  oss-security@...ts.openwall.com
-Subject: Django security releases issued: 2.1.5, 2.0.10, and 1.11.18
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/23/5
+Message-ID: <CAGJbjKad9c-kqKS9B3rqYfOsRwwvYRW7CftF1f5uyCxUs3vVpA@mail.gmail.com>
+Date: Tue, 23 Apr 2019 10:05:50 -0400
+From: Mike Dalessio <mike.dalessio@...il.com>
+To: Florian Weimer <fweimer@...hat.com>
+Cc: nokogiri-talk <nokogiri-talk@...glegroups.com>, ruby-talk <ruby-talk@...y-lang.org>,  ruby-security-ann@...glegroups.com, oss-security@...ts.openwall.com
+Subject: Re: Nokogiri security update v1.10.3
 Content-Type: text/plain; charset=utf-8
 
-Today the Django team issued 2.1.5, 2.0.10, and 1.11.18 as part of our
-security process. These releases address a security issue, and we encourage
-all users to upgrade as soon as possible:
+Florian, thanks for the clarification.
 
-https://www.djangoproject.com/weblog/2019/jan/04/security-releases/
+NVD indicates that this is a CVSS v3.0 severity "9.8: Critical".
 
-The issue was publicly reported through a GitHub pull request, therefore we
-fixed the issue as soon as possible without the usual prenotification
-process (
-https://docs.djangoproject.com/en/dev/internals/security/#how-django-discloses-security-issues
-).
+Here are permalinks:
 
-As a reminder, we ask that potential security issues be reported via private
-email to security@...ngoproject.com and not via Django's Trac  instance,
-Django's GitHub repositories, or the django-developers list. Please see
-https://www.djangoproject.com/security for further information.
+   - NVD entry:
+   https://nvd.nist.gov/vuln/detail/CVE-2019-11068#vulnCurrentDescriptionTitle
+   - expanded CVSS 3.0 score:
+   https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator?name=CVE-2019-11068&vector=AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H
+
+-m
+
+
+
+
+
+On Tue, Apr 23, 2019 at 5:00 AM Florian Weimer <fweimer@...hat.com> wrote:
+
+> * Mike Dalessio:
+>
+> > This is a security release. It addresses a CVE in upstream libxslt rated
+> as
+> > "Priority: medium" by Canonical, and "NVD Severity: high" by Debian. More
+> > details are available below.
+>
+> Note that the Debian security tracker only relays what NVD provides in
+> this field.  It is not updated if a separate review yields different
+> results.
+>
+> Thanks,
+> Florian
+>
 
