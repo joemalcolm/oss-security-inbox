@@ -1,28 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/28/8
-Message-ID: <e0e5e7fef704d1a192c9aa5f8417396e@FreeBSD.org>
-Date: Wed, 28 Aug 2019 11:19:53 -0500
-From: Larry Rosenman <ler@...eBSD.org>
-To: oss-security@...ts.openwall.com
-Cc: Aki Tuomi <aki.tuomi@...ecot.fi>
-Subject: Re: Critical Dovecot and Pigeonhole vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/24/2
+Message-ID: <CAHPRk5HKN=LmhXz4xoKE6LCp6GbcEQQob9JWA9pV8kqQfuJVkw@mail.gmail.com>
+Date: Wed, 24 Apr 2019 16:11:08 +0530
+From: Ishan Chattopadhyaya <ichattopadhyaya@...il.com>
+To: java-user@...ene.apache.org
+Cc: Lucene Dev <dev@...ene.apache.org>, Apache Security Team <security@...che.org>,  oss-security@...ts.openwall.com, solr-user@...ene.apache.org
+Subject: Re: CVE-2018-11802: Apache Solr authorization bug vulnerability disclosure
 Content-Type: text/plain; charset=utf-8
 
-On 08/28/2019 11:17 am, Hanno Böck wrote:
-> On Wed, 28 Aug 2019 15:06:23 +0300
-> Aki Tuomi <aki.tuomi@...ecot.fi> wrote:
-> 
->> Please find patches attached for dovecot 2.3.7 and pigeonhole 0.5.7
-> 
-> It seems Pigeonhole doesn't have a new release yet as far as I can see:
-> https://pigeonhole.dovecot.org/download.html
-> 
-> So this needs to be manually patched for now? Any ETA for a new release
-> here?
-pigeonhole 0.5.7.2 has the fix.
+This fix has also been backported to Solr 6.6.6 for users who are
+stuck with Solr 6.x.
 
+(Sorry, I hadn't updated the issue and hence this was missed in the
+original mail.)
 
--- 
-Larry Rosenman                     http://people.freebsd.org/~ler
-Phone: +1 214-642-9640                 E-Mail: ler@...eBSD.org
-US Mail: 5708 Sabbia Dr, Round Rock, TX 78665-2106
+On Wed, Apr 24, 2019 at 12:35 PM Noble Paul <noble@...che.org> wrote:
+>
+> CVE-2018-11802: Apache Solr authorization bug disclosure
+> Severity: Important
+> Vendor: The Apache Software Foundation
+> Versions Affected: Apache Solr 7.6 or less
+>
+> Description:
+> jira  ticket : https://issues.apache.org/jira/browse/SOLR-12514
+> In apache Solr the cluster can be partitioned into multiple
+> collections and only a subset of nodes actually host any given
+> collection. However, if a node receives a request for a collection it
+> does not host, it proxies the request to a relevant node and serves
+> the request. Solr bypasses all authorization settings for such
+> requests. This affects all Solr versions that uses the default
+> authorization mechanism of Solr (RuleBasedAuthorizationPlugin)
+>
+> Mitigation:
+> A fix is provided in Solr 7.7 version and upwards. If you use Solr's
+> authorization mechanism, please upgrade to a version newer than Solr
+> 7.7.
+>
+> Credit: This issue was discovered by Mahesh Kumar Vasanthu Somashekar.
+>
+> ---------------------------------------------------------------------
+> To unsubscribe, e-mail: java-user-unsubscribe@...ene.apache.org
+> For additional commands, e-mail: java-user-help@...ene.apache.org
+>
