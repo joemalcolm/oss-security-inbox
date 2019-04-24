@@ -1,30 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/21/4
-Message-ID: <CAH0z3hNq8mSGrMcE2Zr_o5OOEcdA7gkZ4iZTC6d7+kav+70jYA@mail.gmail.com>
-Date: Sun, 20 Jan 2019 15:53:18 -0800
-From: Vlad Tsyrklevich <vlad@...rklevich.net>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Unfixed FreeBSD uninitialized memory disclosures
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/24/3
+Message-ID: <20190424161241.GB13360@iolanthe>
+Date: Wed, 24 Apr 2019 11:12:42 -0500
+From: Jamie Strandboge <jamie@...onical.com>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Cc: security@...ntu.com, mheon@...hat.com, paul@...l-moore.com
+Subject: CVE Request: golang-seccomp incorrectly handles multiple syscall arguments
 Content-Type: text/plain; charset=utf-8
 
-In January 2017 I reported results of a clang analyzer-based static
-analysis step [1] to find uninitialized kernel-to-userland memory
-disclosures against a number of kernels. I reported results in the FreeBSD
-kernel to their security team. Over the next 2 years some [2][3][4] of the
-bugs were fixed but it seems like only when they were re-reported.
+Hi,
 
-I re-ran the analyzer against an updated FreeBSD kernel and reported
-updated results [5] last month--the crossed out reports are false positives
-as determined by manual inspection. Though the impact of these bugs is not
-critical, they are worth fixing. I've contacted the security team again but
-it did not sound like these reports were prioritized to be fixed
-immediately. I'm e-mailing oss-security to let other downstream FreeBSD
-users patch them on their own if they were so inclined. Most of them can be
-fixed by simply adding a memset() or an M_ZERO to malloc().
+https://github.com/seccomp/libseccomp-golang/issues/22 describes a bug where
+golang-seccomp incorrectly generates BPFs which OR multiple arguments rather
+than ANDing them. This bug was fixed here:
 
-[1] https://tsyrklevich.net/2017/03/27/kernel-clang-analyzer/
-[2] https://www.freebsd.org/security/advisories/FreeBSD-SA-17:10.kldstat.asc
-[3] https://www.freebsd.org/security/advisories/FreeBSD-EN-18:05.mem.asc
-[4] https://www.freebsd.org/security/advisories/FreeBSD-EN-18:12.mem.asc
-[5] https://tsyrklevich.net/clang_analyzer/freebsd_122818/
+https://github.com/seccomp/libseccomp-golang/commit/06e7a29f36a34b8cf419aeb87b979ee508e58f9e
 
+which is currently only in master and not the most current 0.9.0 release. Since
+golang-seccomp is meant to be a golang package to facilitate reducing the
+syscall surface for applications and this bug produces incorrect BPF to achieve
+that when specifying more that 2 syscall arguments, this probably deserves a
+CVE assignment so distributions will see the issue and incorporate the fix into
+their stable releases. I've included upstream developers Matthew and Paul in CC
+for comment.
+
+Thanks
+
+-- 
+Jamie Strandboge             | http://www.canonical.com
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
