@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2960" "Saturday" "6" "June" "2015" "21:32:07" "+0300" "Solar Designer" "solar@openwall.com" "<20150606183207.GA2107@openwall.com>" "51" "Re: [oss-security] CVE-2015-1805 Linux kernel: pipe: iovec overrun leading to memory corruption" nil nil nil "6" "2015060618:32:07" "[oss-security] CVE-2015-1805 Linux kernel: pipe: iovec overrun leading to memory corruption" (number mark "        solar@openwa Jun  6   51/2960  " thread-indent "\"Re: [oss-security] CVE-2015-1805 Linux kernel: pipe: iovec overrun leading to memory corruption\"\n") "<20150606113057.GA23470@openwall.com>" ("<20150606113057.GA23470@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1935" "Wednesday" "24" "April" "2019" "11:12:42" "-0500" "Jamie Strandboge" "jamie@canonical.com" "<20190424161241.GB13360@iolanthe>" "52" "[oss-security] CVE Request: golang-seccomp incorrectly handles multiple syscall arguments" nil nil nil "4" "2019042416:12:42" "[oss-security] CVE Request: golang-seccomp incorrectly handles multiple syscall arguments" (number mark "U       jamie@canoni Apr 24   52/1935  " thread-indent "\"[oss-security] CVE Request: golang-seccomp incorrectly handles multiple syscall arguments\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE Request: golang-seccomp incorrectly handles multiple syscall arguments" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 18054 invoked by uid 550); 6 Jun 2015 18:32:14 -0000
+Received: (qmail 11858 invoked by uid 550); 24 Apr 2019 17:46:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,68 +11,70 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 18028 invoked from network); 6 Jun 2015 18:32:13 -0000
-Message-ID: <20150606183207.GA2107@openwall.com>
-References: <20150606113057.GA23470@openwall.com>
-Mime-Version: 1.0
+Reply-To: oss-security@lists.openwall.com
+Received: (qmail 10116 invoked from network); 24 Apr 2019 16:12:56 -0000
+Date: Wed, 24 Apr 2019 11:12:42 -0500
+From: Jamie Strandboge <jamie@canonical.com>
+To: OSS Security List <oss-security@lists.openwall.com>
+Cc: security@ubuntu.com, mheon@redhat.com, paul@paul-moore.com
+Message-ID: <20190424161241.GB13360@iolanthe>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="bCsyhTFzCvuiizWE"
+Content-Disposition: inline
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Subject: [oss-security] CVE Request: golang-seccomp incorrectly handles multiple syscall
+ arguments
+
+--bCsyhTFzCvuiizWE
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20150606113057.GA23470@openwall.com>
-User-Agent: Mutt/1.4.2.3i
-Date: Sat, 6 Jun 2015 21:32:07 +0300
-From: Solar Designer <solar@openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2015-1805 Linux kernel: pipe: iovec overrun leading to memory corruption
-To: oss-security@lists.openwall.com
+Content-Transfer-Encoding: quoted-printable
 
-On Sat, Jun 06, 2015 at 02:30:57PM +0300, Solar Designer wrote:
-> However, it's trickier than that, since iov traverses over the multiple
-> struct iovec's and may eventually be what wasn't actually a struct iovec
-> in the caller.  This requires that iov->iov_len become exactly zero at
-> least one extra time.  If iov->iov_len becomes zero on
-> "iov->iov_len -= copy;" then pipe_iov_copy_to_user() either returns
-> success or proceeds to the next iteration of the loop.  In the former
-> case, there's no fault at this time.  In the latter case, there might be
-> a fault on the next iteration, in which case the caller will retry
-> pipe_iov_copy_to_user() with the original iov pointer.  The function
-> will then hit an extra !iov->iov_len (that's been zeroed by its previous
-> invocation) and perform iov++ an extra time.
+Hi,
 
-Actually, there may be multiple zero iov->iov_len's left by the previous
-invocation, as part of its normal processing.  (Moreover, the fix that
-went into RHEL5 appears to rely on this.)  So achieving this condition
-is not tricky at all.
+https://github.com/seccomp/libseccomp-golang/issues/22 describes a bug where
+golang-seccomp incorrectly generates BPFs which OR multiple arguments rather
+than ANDing them. This bug was fixed here:
 
-The trickier part is getting the second invocation to proceed beyond
-where the first one failed, perhaps via mapping the page from another
-thread to avoid the fault.  And there's no overrun until the second
-invocation proceeds beyond that point, because all of the iov->iov_len's
-up to that point are zero.  So there doesn't appear to be a way to
-trigger any overrun without winning a race first.
+https://github.com/seccomp/libseccomp-golang/commit/06e7a29f36a34b8cf419aeb=
+87b979ee508e58f9e
 
-> The possibility of "struct iovec *iov" going out of range and the
-> subsequent out of bounds metadata accesses feel much more severe than
-> the out of bounds accesses to actual data in the userspace.
-> "iov->iov_base += copy;" and "iov->iov_len -= copy;" might then be
-> corrupting kernel memory.  It feels relatively unimportant what the
-> resulting values of iov_base and iov_len will be for their intended
-> purpose, since we use copy_from_user() / copy_to_user() on them anyway.
-> It feels more important that these "+=" and "-=" operators directly
-> modify individual words in kernel memory, albeit only slightly(?) out of
-> bounds of the original iov array.  So maybe it's this risk that needs
-> to be evaluated further.
+which is currently only in master and not the most current 0.9.0 release. S=
+ince
+golang-seccomp is meant to be a golang package to facilitate reducing the
+syscall surface for applications and this bug produces incorrect BPF to ach=
+ieve
+that when specifying more that 2 syscall arguments, this probably deserves a
+CVE assignment so distributions will see the issue and incorporate the fix =
+into
+their stable releases. I've included upstream developers Matthew and Paul i=
+n CC
+for comment.
 
-"struct iovec iovstack[UIO_FASTIOV];" on the stack of do_readv_writev()
-looks like an attractive target.  To attack it, writev() may be invoked
-with iovcnt = UIO_FASTIOV (or less, but that's suboptimal), which is 8.
+Thanks
 
-However, whether or not the attack will proceed more than one element
-beyond iovstack[] appears to depend on previous content of the stack
-beyond that array.  That old stack data needs to be successfully
-interpreted as iov_base and iov_len pairs, with copy_from_user() not
-failing, for the loop to proceed further.  None of this feels
-impossible, and maybe off-by-one is enough to achieve arbitrary code
-execution.  These are just some extra hurdles, and at this time it is
-not reliably known (to me) to which extent the issue is exploitable.
+--=20
+Jamie Strandboge             | http://www.canonical.com
 
-Alexander
+--bCsyhTFzCvuiizWE
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEETCDAa12L3miIVNKKUdvcWMxVlXMFAlzAivQACgkQUdvcWMxV
+lXPYzQ//f5RLPWZSo/fSHDg6iY7p7kCc88eB7l8dYwNS4mU5k7TesKkf5LsabHqj
+CiLAZY71dhEclSiVyxmxswc0Sb28eGOv8cZWBA6lnA9mfIPBlTdDmzklVYgIb4Xo
+H+Yjw6bqc9GV5nsW2edzYkSAnkXTY7Gvt3LaL+OaMbEjv+RXA6sS5a4W+64Lfm9+
+gJYK4cfruA0oidNbhedZNxU/cTG/Ze2WpvunLH/OIxNNTcvxcuefiU2y4tGoRQdr
+OPaUvpgWuLKzGS2s01U/aePE/rPoyye8Rs7SzXfk4dCtlzB6kshw+hsDse+yKkc9
+jFu4DNgaS9qn3bbw9Oj0fu3r3klGbNlf+HKy4eHICQWJjtQiH77UA15OmYcpk45H
+7Prp5DKKswP1TNXmr/w6vD6/lElqVSRwgZT0muTlGapQV4+NOkrQ+inQyFjxg8hu
+60Z6eSGviaAkYx6s18yVHDbJhW/zYCk3to++tsU9mVHy/HKnMR5u89MsB0jR6LQ1
+ipRIek9GU3chcIIe24dy3dQQshAMvIsY7VlNrLzPoxlG+BZ9xi62OnFBeLZWTzbJ
+SA9XPvfeb9o+z9Lt7/bGZgjR/Q6oRRXZkjnu6tNffOAo2mZTijxdNcU9ypfHaBs/
+VeQCwcChPYDmhG1nuKrjH5+1w4yttxNh3OitE1hbgomDDmKkkps=
+=jqgL
+-----END PGP SIGNATURE-----
+
+--bCsyhTFzCvuiizWE--
