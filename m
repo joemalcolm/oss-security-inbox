@@ -1,28 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/12/3
-Message-ID: <20190712130128.GE10104@sasha-vm>
-Date: Fri, 12 Jul 2019 09:01:28 -0400
-From: Sasha Levin <sashal@...nel.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership application - Microsoft
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/24/4
+Message-ID: <20190424162848.GC13360@iolanthe>
+Date: Wed, 24 Apr 2019 11:28:48 -0500
+From: Jamie Strandboge <jamie@...onical.com>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Cc: security@...ntu.com, mheon@...hat.com, paul@...l-moore.com
+Subject: Re: CVE Request: golang-seccomp incorrectly handles multiple syscall arguments
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Jul 07, 2019 at 12:10:52PM +0200, Moritz Muehlenhoff wrote:
->On Sat, Jul 06, 2019 at 06:29:36PM -0400, Sasha Levin wrote:
->> On Sat, Jul 06, 2019 at 09:37:37PM +0200, Solar Designer wrote:
->> > Hi all,
->> >
->> > Per our current policy and precedents, I see no valid reasons not to
->> > subscribe Microsoft (or part(s) of it, see below) to linux-distros.  So
->> > I intend to figure out some detail and proceed with the subscription.
->
->Sasha, could you please also add the respective links/information for
->"Windows Subsystem for Linux v2" and "Azure Sphere" to
->https://oss-security.openwall.org/wiki/distro-patches and add an entry
->for Microsoft to https://oss-security.openwall.org/wiki/vendors ?
+On Wed, 24 Apr 2019, Jamie Strandboge wrote:
 
-Now added, thanks for the pointer.
+> Hi,
+> 
+> https://github.com/seccomp/libseccomp-golang/issues/22 describes a bug where
+> golang-seccomp incorrectly generates BPFs which OR multiple arguments rather
+> than ANDing them. This bug was fixed here:
+> 
+> https://github.com/seccomp/libseccomp-golang/commit/06e7a29f36a34b8cf419aeb87b979ee508e58f9e
+> 
+> which is currently only in master and not the most current 0.9.0 release. Since
+> golang-seccomp is meant to be a golang package to facilitate reducing the
+> syscall surface for applications and this bug produces incorrect BPF to achieve
+> that when specifying more that 2 syscall arguments, this probably deserves a
+> CVE assignment so distributions will see the issue and incorporate the fix into
+> their stable releases. I've included upstream developers Matthew and Paul in CC
+> for comment.
+> 
+Sorry, I was reminded that CVE requests go to https://cveform.mitre.org/. I did
+that just now. I can shuffle back and forth information between here and there
+as needed and will report back the CVE if/when it is assigned.
 
---
-Thanks,
-Sasha
+-- 
+Jamie Strandboge             | http://www.canonical.com
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
