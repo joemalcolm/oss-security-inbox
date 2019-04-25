@@ -1,37 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/04/1
-Message-ID: <CAPNiXbF1ZYsMjNeoHLqd5wS2Rr9F-5xmAeMYq0wMYrY2=QdkeA@mail.gmail.com>
-Date: Mon, 4 Mar 2019 14:34:34 +0100
-From: Alex R <alexr@...che.org>
-To: dev <dev@...os.apache.org>, user <user@...os.apache.org>,  security <security@...che.org>, oss-security@...ts.openwall.com,  Terry Chia <terrycwk1994@...il.com>
-Subject: CVE-2018-11793: Mesos components might crash when parsing deeply nested JSON structures.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/25/6
+Message-ID: <20190425132314.GD13360@iolanthe>
+Date: Thu, 25 Apr 2019 08:23:14 -0500
+From: Jamie Strandboge <jamie@...onical.com>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Cc: security@...ntu.com, mheon@...hat.com, paul@...l-moore.com
+Subject: Re: CVE Request: golang-seccomp incorrectly handles multiple syscall arguments
 Content-Type: text/plain; charset=utf-8
 
-Severity: Moderate
+On Wed, 24 Apr 2019, Jamie Strandboge wrote:
 
-Vendor:
-The Apache Software Foundation
+> On Wed, 24 Apr 2019, Jamie Strandboge wrote:
+> 
+> > Hi,
+> > 
+> > https://github.com/seccomp/libseccomp-golang/issues/22 describes a bug where
+> > golang-seccomp incorrectly generates BPFs which OR multiple arguments rather
+> > than ANDing them. This bug was fixed here:
+> > 
+> > https://github.com/seccomp/libseccomp-golang/commit/06e7a29f36a34b8cf419aeb87b979ee508e58f9e
+> > 
+> > which is currently only in master and not the most current 0.9.0 release. Since
+> > golang-seccomp is meant to be a golang package to facilitate reducing the
+> > syscall surface for applications and this bug produces incorrect BPF to achieve
+> > that when specifying more that 2 syscall arguments, this probably deserves a
+> > CVE assignment so distributions will see the issue and incorporate the fix into
+> > their stable releases. I've included upstream developers Matthew and Paul in CC
+> > for comment.
+> > 
+> Sorry, I was reminded that CVE requests go to https://cveform.mitre.org/. I did
+> that just now. I can shuffle back and forth information between here and there
+> as needed and will report back the CVE if/when it is assigned.
 
-Versions Affected:
-Apache Mesos 1.4.0 to 1.7.0
-The unsupported Apache Mesos pre-1.4.0 releases may be also affected.
+This is CVE-2017-18367
 
-Description:
-When parsing a JSON payload with deeply nested JSON structures, the
-parser might overflow the stack due to unbounded recursion. A
-malicious actor can therefore cause a denial of service of Mesos
-masters rendering the Mesos-controlled cluster inoperable.
+-- 
+Jamie Strandboge             | http://www.canonical.com
 
-Mitigation:
-pre-1.4.x users should upgrade to at least 1.4.3
-1.4.x users should upgrade to 1.4.3
-1.5.x users should upgrade to 1.5.2
-1.6.x users should upgrade to 1.6.2
-1.7.0 users should upgrade to 1.7.1
-1.8-dev users should obtain Mesos 1.8.0 or later
-
-Credit:
-This issue was discovered by Terry Chia (Ayrx).
-
-Alex on behalf of Mesos PMC
-
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
