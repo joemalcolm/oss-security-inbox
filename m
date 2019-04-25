@@ -1,55 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/06/8
-Message-ID: <65720388-e6ae-13fc-aa87-847e0eba5c99@mvista.com>
-Date: Fri, 6 Sep 2019 16:33:30 -0700
-From: akuster <akuster@...sta.com>
-To: oss-security@...ts.openwall.com, Heiko Schlittermann <hs@...marc.schlittermann.de>
-Subject: Re: Re: CVE-2019-15846: Exim - local or remote attacker can execute programs with root privileges.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/25/2
+Message-ID: <nycvar.YSQ.7.76.1904251435470.3256@xnncv>
+Date: Thu, 25 Apr 2019 14:39:18 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Jason Wang <jasowang@...hat.com>
+Subject: CVE-2019-3900 Kernel: vhost_net: infinite loop while receiving packets leads to DoS
 Content-Type: text/plain; charset=utf-8
 
+   Hello,
 
+An infinite loop issue was found in the vhost_net kernel module, while 
+handling incoming packets in handle_rx(). It could occur if one end sends 
+packets faster than the other end can process them.
 
-On 9/5/19 11:00 PM, Heiko Schlittermann wrote:
-> [ This is a re-post w/o dmarc protection of the sender (me). ]
->
-> *** Note: EMBARGO is still in effect!       ***
-If this is true, why is this on the public list?
+A guest user, maybe remote one, could use this flaw to stall the vhost_net 
+kernel thread, resulting in a DoS scenario.
 
-> *** Distros must not publish any detail yet ***
+Upstream patch:
+---------------
+   -> https://www.spinics.net/lists/kernel/msg3111012.html
 
+This issue was discovered by Jason Wang(CC'd) of Red Hat Inc.
+'CVE-2019-3900' assigned by Red Hat Inc.
 
-
-- armin
->
-> In case you are entitled to access the security repo:
-> *and* use the 4.92.2+fixes branch:
->
-> The branch got two new commits, fixing a small tool. This tool is not
-> designed to process untrusted data, so there is no security issue, but
-> it was buggy. It is unlikely to be critical.
->
-> You may consider including the fix in the packages to be
-> released at CRD (today, 10.00 UTC) or schedule it for a later
-> maintainance release of the Exim packages.
->
-> commit cdc7f9a9667ecf31d803fc8d1a31b466284360bd
-> Author: Heiko Schlittermann (HS12-RIPE) <hs@...littermann.de>
-> Date:   Fri Sep 6 06:57:11 2019 +0200
->
-> commit 66935633816a88460f5222f40dc29d1a4e877978
-> Author: Heiko Schlittermann (HS12-RIPE) <hs@...littermann.de>
-> Date:   Thu Sep 5 14:56:22 2019 +0200
->
->     Best regards from Dresden/Germany
->     Viele Grüße aus Dresden
->     Heiko Schlittermann
-> --
->  SCHLITTERMANN.de ---------------------------- internet & unix support -
->  Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
->  gnupg encrypted messages are welcome --------------- key ID: F69376CE -
->  ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
