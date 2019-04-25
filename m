@@ -1,29 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/20/2
-Message-ID: <75b02ec0499444db96581c54a4a178a9@kaspersky.com>
-Date: Fri, 20 Dec 2019 17:11:29 +0000
-From: Pavel Cheremushkin <Pavel.Cheremushkin@...persky.com>
-To: "'oss-security@...ts.openwall.com'" <oss-security@...ts.openwall.com>
-Subject: VNC vulnerabilities. TigerVNC security update
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/25/1
+Message-ID: <68fd216c-b9d7-ded4-ecb5-a5da62fc01b0@isc.org>
+Date: Wed, 24 Apr 2019 22:55:00 -0800
+From: Michael McNally <mcnally@....org>
+To: oss-security@...ts.openwall.com
+Subject: Multiple BIND vulnerabilities disclosed (CVE-2018-5743, CVE-2019-6467, and CVE-2019-6468)
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Today ISC disclosed two vulnerabilities affecting BIND as well
+as a third vulnerability which affects *only* BIND Supported Preview
+Edition (a special feature-preview version of BIND provided to
+ISC support customers.)
 
-This is a final report about reviewing open source VNC implementations. This research has been motivated by the fact that some VNC systems are heavily used in ICS.
+Information about the vulnerabilities can be found in the ISC Knowledge
+Base:
 
-About a year ago I have already sent an email to this mailing list about TightVNC and LibVNC vulnerabilities: https://www.openwall.com/lists/oss-security/2018/12/10/5
-Later this year I had some time to review more open source implementations of VNC systems (mostly UltraVNC), which are described in this article: https://ics-cert.kaspersky.com/reports/2019/11/22/vnc-vulnerability-research/
+   CVE-2018-5743: Limiting simultaneous TCP clients is ineffective
+   https://kb.isc.org/docs/cve-2018-5743
 
-Finally, today TigerVNC team managed to fix all issues found within their codebase and published fixes in new release 1.10.1
-https://github.com/TigerVNC/tigervnc/releases/tag/v1.10.1
-https://github.com/TigerVNC/tigervnc/commit/d461f7fdb8b01f655260ea2f495ece700f3c9898
+   CVE-2019-6467: An error in the nxdomain redirect feature can cause
+   BIND to exit with an INSIST assertion failure in query.c
+   https://kb.isc.org/docs/cve-2019-6467
 
-Fix contains patches for several vulnerabilities that have been fixed in master branch only, and 5 vulnerabilities (CVE-2019-15691 -- CVE-2019-15695) that actually got into the previous release. CVE-ids will published shortly. Please update.
+   CVE-2019-6468: BIND Supported Preview Edition can exit with an
+   assertion failure if nxdomain-redirect is used
+   https://kb.isc.org/docs/cve-2019-6468
 
-Also, I accidently found another heap buffer overflow in LibVNC (CVE-2019-15690), when I was playing with CodeQL queries. It was missed during previous analysis by me. It later turned out that my fuzzer didn't find it either, because it required at least 256MB to be sent over the network to trigger it :)
+New releases of BIND have been issued to fix the vulnerabilities above.
+They may be downloaded from the ISC website:  https://www.isc.org/downloads
 
-Best Regards,
-Pavel Cheremushkin
-Security Researcher| ICS CERT Vulnerability Research Group | Kaspersky Lab
-39A bld.2 Leningradskoye Highway, Moscow 125212, Russia | www.kaspersky.com,www.securelist.com
+   -  9.11.6-P1
+   -  9.12.4-P1
+   -  9.14.1
 
+With the public disclosure of these vulnerabilities, parties which
+had been given advance notice concerning them are released from
+non-disclosure and packagers and redistributors are encouraged to
+publish updated packages containing fixes.
+
+If you have additional questions, please direct them to
+security-officer@....org
+
+Thank you,
+
+Michael McNally
+ISC Security Officer
