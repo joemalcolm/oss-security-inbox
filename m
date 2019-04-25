@@ -1,36 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/07/1
-Message-ID: <1549563205.2925.242.camel@codethink.co.uk>
-Date: Thu, 07 Feb 2019 18:13:25 +0000
-From: Ben Hutchings <ben.hutchings@...ethink.co.uk>
-To: Yves-Alexis Perez <corsac@...ian.org>, Timothy Michaud <tmm08a@....edu>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Linux Kernel: Missing access_ok() checks in IOCTL function (gpu/drm/i915 Driver)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/25/8
+Message-ID: <CAAqbB_dcE=AL4O8OcqDkfTazWrcz2wpU==J6Qh7ouWV+mGi1nw@mail.gmail.com>
+Date: Thu, 25 Apr 2019 14:24:44 -0400
+From: Neil Griffin <asfgriff@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: [CVE-2019-0186] The input fields of the Chat Room demo are vulnerable to Cross-Site Scripting (XSS) attacks
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 2019-01-24 at 10:30 +0100, Yves-Alexis Perez wrote:
-> On Wed, 2019-01-23 at 14:28 -0600, Timothy Michaud wrote:
-> > NOTE: I have requested a CVE identifier, and I'm sending this message, to
-> > make tracking of the fix easier; however, to avoid missing security fixes
-> > without CVE identifiers, you should *NOT* be cherry-picking a specific
-> > patch in response to a notification about a kernel security bug.
-> > 
-> > Due to a lack of "access_ok()" checks in i915_gem_execbuffer2_ioctl[1], it
-> > is possible to escalate privileges similar to the waitid vulnerability[2]
-> 
-> Hi, thanks for the report.
-> 
-> The patch doesn't seem CC: stable, could you give us a status on the various
-> stable releases?
+The input fields of the Apache Pluto "Chat Room" demo portlet are
+vulnerable to Cross-Site Scripting (XSS) attacks.
 
-Is there even a real security issue here?  So far as I can see,
-i915_gem_execbuffer2_ioctl() writes to a subset of the user memory
-range that it previously read using copy_from_user().  copy_from_user()
-does include the range check.
+Versions Affected:
+3.0.0, 3.0.1
 
-Ben.
+Mitigation:
+* Uninstall the ChatRoomDemo war file
+- or -
+* migrate to version 3.1.0 of the chat-room-demo war file
 
--- 
-Ben Hutchings, Software Developer                         Codethink Ltd
-https://www.codethink.co.uk/                 Dale House, 35 Dale Street
-                                     Manchester, M1 2HF, United Kingdom
+For more information about Apache Pluto security updates, visit:
+https://portals.apache.org/pluto/security.html
+
