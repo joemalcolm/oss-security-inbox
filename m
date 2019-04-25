@@ -1,4 +1,9 @@
-Received: (qmail 16151 invoked by uid 550); 10 Nov 2024 14:07:55 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2890" "Thursday" "25" "April" "2019" "08:30:24" "-0500" "Jamie Strandboge" "jamie@canonical.com" "<20190425133024.GE13360@iolanthe>" "71" "Re: [oss-security] Security issues in snapcraft snap-confine set*id binary" nil nil nil "4" "2019042513:30:24" "[oss-security] Security issues in snapcraft snap-confine set*id binary" (number mark "U       jamie@canoni Apr 25   71/2890  " thread-indent "\"Re: [oss-security] Security issues in snapcraft snap-confine set*id binary\"\n") "<20190418104355.GD9248@f195.suse.de>" ("<20190418104355.GD9248@f195.suse.de>") nil nil nil nil nil nil nil "Re: [oss-security] Security issues in snapcraft snap-confine set*id binary" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 27800 invoked by uid 550); 25 Apr 2019 13:43:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,108 +12,91 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 32359 invoked from network); 9 Nov 2024 23:59:13 -0000
-Message-ID: <21a818cc-d665-43a7-8ff0-c23769f6da04@gentoo.org>
-Date: Sat, 9 Nov 2024 18:59:01 -0500
+Received: (qmail 17409 invoked from network); 25 Apr 2019 13:30:38 -0000
+Date: Thu, 25 Apr 2019 08:30:24 -0500
+From: Jamie Strandboge <jamie@canonical.com>
+To: oss-security@lists.openwall.com
+Cc: Matthias Gerstner <matthias.gerstner@suse.de>,
+	Zygmunt Krynicki <zygmunt.krynicki@canonical.com>
+Message-ID: <20190425133024.GE13360@iolanthe>
+References: <20190418104355.GD9248@f195.suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: oss-security@lists.openwall.com
-References: <20241106041215.GA4432@openwall.com>
- <CAGUWgD_T4vUhBfkmjm+8ELcuiOD9dx1vSC4HnKG88Py7ip+zPw@mail.gmail.com>
- <CABEVAa0+EE0M3Q2wwpOSX0-VCw95xSjZV-1S4u7hSYY9K=YK7w@mail.gmail.com>
-Content-Language: en-US
-From: Eli Schwartz <eschwartz@gentoo.org>
-Autocrypt: addr=eschwartz@gentoo.org; keydata=
- xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
- I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
- CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
- CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
- mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
- 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
- Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
- TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
-In-Reply-To: <CABEVAa0+EE0M3Q2wwpOSX0-VCw95xSjZV-1S4u7hSYY9K=YK7w@mail.gmail.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------lH08e5ZHtRrpnQT7YmIlfmIJ"
-Subject: Re: [oss-security] shell wildcard expansion (un)safety
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="BQPnanjtCNWHyqYD"
+Content-Disposition: inline
+In-Reply-To: <20190418104355.GD9248@f195.suse.de>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Subject: Re: [oss-security] Security issues in snapcraft snap-confine set*id
+ binary
 
---------------lH08e5ZHtRrpnQT7YmIlfmIJ
-Content-Type: multipart/mixed; boundary="------------0pSGw0Hj0eHz024Puw9Aq36a";
- protected-headers="v1"
-From: Eli Schwartz <eschwartz@gentoo.org>
-To: oss-security@lists.openwall.com
-Message-ID: <21a818cc-d665-43a7-8ff0-c23769f6da04@gentoo.org>
-Subject: Re: [oss-security] shell wildcard expansion (un)safety
-References: <20241106041215.GA4432@openwall.com>
- <CAGUWgD_T4vUhBfkmjm+8ELcuiOD9dx1vSC4HnKG88Py7ip+zPw@mail.gmail.com>
- <CABEVAa0+EE0M3Q2wwpOSX0-VCw95xSjZV-1S4u7hSYY9K=YK7w@mail.gmail.com>
-In-Reply-To: <CABEVAa0+EE0M3Q2wwpOSX0-VCw95xSjZV-1S4u7hSYY9K=YK7w@mail.gmail.com>
-
---------------0pSGw0Hj0eHz024Puw9Aq36a
-Content-Type: text/plain; charset=UTF-8
+--BQPnanjtCNWHyqYD
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On 11/8/24 5:02 PM, Dominik Czarnota wrote:
-> This is known since even earlier by the article/disclosure =E2=80=9Eunix =
-wildcards
-> gone wild=E2=80=9D:
-> https://seclists.org/fulldisclosure/2014/Jun/136
+On Thu, 18 Apr 2019, Matthias Gerstner wrote:
+
+> 1) Up and including to version 2.37.4 the /tmp directory within a snap
+>   container was owned by the first user that entered the container. Since
+>   snap containers can be used by multiple users at the same time or a
+>   privileged program or daemon may run in a container, the security of
+>   files and directories in /tmp is compromised.  An attacker can remove
+>   or replace files and directories belonging to other users within the
+>   container's /tmp to achieve an unspecified impact.
 >=20
-> The original article link seems to not work but it can be seen e.g. here:
-> https://github.com/Gandosha/gandosha.github.io/blob/master/DefenseCode_Un=
-ix_WildCards_Gone_Wild.txt
+>   This issue was recently fixed by upstream via commit [3].
+
+This is CVE-2019-11502
+
+> 2) The `sc_join_preserved_ns()` function along with a number of other
+>   function remembers the current working directory (CWD) of the calling
+>   user outside of the container and attempts to restore this CWD again
+>   within the container. The `chdir()` operation to restore the CWD is
+>   performed with root privileges within the container and is prone to
+>   symlink attacks. Therefore an unprivileged user can enter arbitrary
+>   directories within the container. Example PoC:
+
+This is CVE-2019-11503
+
+> 3) In function `sc_parse_mountinfo_entry()` the pseudo file
+...
+>   I don't see any viable attack vector here at the moment. To actually
+>   control the behaviour of snap-confine we'd need to control the field
+>   (4) of the mountinfo file. This field is only available to
+>   unprivileged users if they can perform a bind mount.
+
+I agree, this is a legitimate bug that the snapd team will fix but because =
+an
+unprivileged user can't gain privileges or other wise cross privilege
+boundaries, I did not request a CVE. We can revisit as necessary.
+
+> Best Regards
 >=20
-> It shows that in some cases this can lead to code execution, e.g. with =
-=E2=80=9Etar
-> *=E2=80=9D
+> Matthias
 
-
-The earliest version of the Bash Pitfalls guide that includes a warning
-about the topic, per the Wayback Machine:
-
-https://web.archive.org/web/20090426020027/https://mywiki.wooledge.org/Bash=
-Pitfalls#Filenames_with_leading_dashes
-
-
-Overall, wildcards are just a classic "here is a programming language
-footgun, we cannot fix it because the language is backwards compatible
-to the 90s and earlier" which amounts to:
-
-people love bash because it's "simple" and "easy" and "anyone can write
-a bash script without knowing what they are doing".
-
-Of course, the problem is that people who don't know what they are doing
-can then write software (sometimes running as root, other times simply
-as any permission context with access to sensitive info), which is quite
-dangerous -- people who don't know what they are doing often write
-security vulnerabilities in many languages, but it's particularly easy
-to do so in a language that by definition lacks rigorous parsing, makes
-it challenging to have error conditions be fatal, and is for the most
-part designed to take any erroneous code you throw at it and do its best
-to execute as much of that code as it can, even if lots of it doesn't
-really parse correctly.
-
-... wait a minute, are we talking about PHP after all?
-
+Thank you for the review!
 
 --=20
-Eli Schwartz
+Jamie Strandboge             | http://www.canonical.com
 
---------------0pSGw0Hj0eHz024Puw9Aq36a--
-
---------------lH08e5ZHtRrpnQT7YmIlfmIJ
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+--BQPnanjtCNWHyqYD
+Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCZy/3RQUDAAAAAAAKCRCEp9ErcA0vV9PS
-AP0bN5oVo7aQjWOrcsBiKIUI/1gubCgD5ryxTCrrMDis/AEAqAx8gLLDqRvqXhDi9kdgfyWGJSAx
-CsbNW7TvdvvE7As=
-=wmKF
+iQIzBAABCgAdFiEETCDAa12L3miIVNKKUdvcWMxVlXMFAlzBtnAACgkQUdvcWMxV
+lXPX/w//e2o0McwgLQqcfJ9q6gWEUK8E9RQmQ63mKbjLCWzJ/NT7+z61G9pZjY8I
+szqxIJKFa9gy6/knO0UnSRUZz1cJAuP8voQ2rXTLgfcpzoZS6qscRtPkE3SDuxye
+Wt5woy9ylrowIAkliW5giz0FrvOTvSybScWxv0u9yL0LgeHB3V26VHT1+VB68MjD
+fLOmOFRMH6WedCc5fc08RZcZem6Su4L2RYyKy4YdVuWt61zynAgywhULTZ/1QViM
+QQfnDD9nSwtMEsWwrgMlFuO6YTnU4we/9ELfi+GjXZGe9EQSY6oClat2bG610riX
+09FOv4+F440FPySStvvKCv9HDQ2f/CoFEVu/riXvuHmUIq+Y1ZIISTNnW2+ATAVk
+bdZMdwxVXNf6ZmO8TEJytAQuBbVnJh101+Y7W81g4EX91R4YdOgQTYAYUa2ReJr7
+4FM8VsWDMKBFhiG3TJBYIFPjS6zm0DfGLciowVf69vyA2waJ/e5v5Nc66gNs/rcR
+3hMcuzJSWWWEHlnnE3e3scicXeRlNfoXlJ6EIdRUVSXZtmlAiSbKSZYYFdPDwgx8
+olFvibAbDwdqE6QSoEn6KziOuFfpKI0W+bUyVkmKk+6HQHkPkzG2gHpV7HaoKHzk
+PDh/GmOdCBKb9ofIKzov2EkiXRvBVONdow6FnlC92kiy5ut7E+E=
+=61dm
 -----END PGP SIGNATURE-----
 
---------------lH08e5ZHtRrpnQT7YmIlfmIJ--
+--BQPnanjtCNWHyqYD--
