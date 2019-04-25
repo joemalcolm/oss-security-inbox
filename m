@@ -1,33 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/17/1
-Message-ID:  <VI1PR0101MB2142E0EA19F582429C3AEBCBB1920@VI1PR0101MB2142.eurprd01.prod.exchangelabs.com>
-Date: Wed, 16 Oct 2019 22:46:15 +0000
-From: Jens Geyer <jensgeyer@...mail.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "security@...che.org" <security@...che.org>, Thrift-Dev <dev@...ift.apache.org>, "user@...ift.apache.org" <user@...ift.apache.org>
-Subject: CVE-2019-0205: Apache Thrift: potential DoS when processing untrusted Thrift payload
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/25/5
+Message-ID: <20190425130218.GA10866@openwall.com>
+Date: Thu, 25 Apr 2019 15:02:19 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel: no permission check during open() time of /proc/[pid]/maps in kernels < 3.18
 Content-Type: text/plain; charset=utf-8
 
-CVE-2019-0205: potential DoS when processing untrusted Thrift payloads
+On Thu, Apr 25, 2019 at 02:12:36PM +0200, Matthias Gerstner wrote:
+> I stumbled over a leak of memory mappings for arbitrary processes in
+> kernels older than version 3.18.
+> 
+> As it turns out the permissions check for the pseudo file in
+> /proc/[pid]/maps in affected kernels is performed not during open() time
+> but during read() time. This allows an unprivileged user to open a valid
+> file descriptor for these maps files and pass it to privileged programs
+> like setuid root binaries or D-Bus services running as root that support
+> file descriptor passing in their interface.
+> 
+> The privileged program needs behave in a way that the passed file
+> descriptor is read() with root premissions and the content is passed
+> back to the unprivileged user in some way.
 
-Severity: Important
+Looks like mostly a rediscovery of what was brought up in here by
+Jason A. Donenfeld and further discussed with Djalal Harouni in 2012:
 
-Vendor:
-The Apache Software Foundation
+https://www.openwall.com/lists/oss-security/2012/02/08/2
 
-Versions Affected:
-Apache Thrift up to and including 0.12.0
+and had already been fixed in grsecurity, given that I fixed it with:
 
-Description:
-A server or client may run into an endless loop when feed with specific input data.
+* Sat Feb 25 2012 Solar Designer <solar-at-owl.openwall.com> 2.6.18-274.18.1.el5.028stab098.1.owl1
+[...]
+- Introduced protection against unintended self-read by a SUID/SGID program of
+/proc/<pid>/mem and /proc/<pid>/*maps files, based on approaches taken in
+recent grsecurity patches.
 
-Because the issue had already been partially fixed by THRIFT-4024 in version 0.11.0, depending on the installed version it affects only certain language bindings.
++++ linux-2.6.18-431.el5.028stab123.1-owl/fs/proc/task_mmu.c	2018-05-20 16:37:29 +0000
+@@ -166,7 +166,7 @@ static int show_map_internal(struct seq_
+ 	struct proc_maps_private *priv = m->private;
+ 	struct task_struct *task = priv->task;
+ #ifdef __i386__
+-	struct mm_struct *tmm = get_task_mm(task);
++	struct mm_struct *tmm;
+ #endif
+ 	struct vm_area_struct *vma = v;
+ 	struct mm_struct *mm = vma->vm_mm;
+@@ -177,6 +177,13 @@ static int show_map_internal(struct seq_
+ 	dev_t dev = 0;
+ 	int len;
+ 
++	if (current->exec_id != m->exec_id)
++		return 0;
++
++#ifdef __i386__
++	tmm = get_task_mm(task);
++#endif
++
+ 	if (file) {
+ 		struct inode *inode = vma->vm_file->f_dentry->d_inode;
+ 		dev = inode->i_sb->s_dev;
 
-Mitigation:
-Upgrade to version 0.13.0
+Was this not fixed upstream until the permissions check on open() was
+added in 2014?  I guess it also wasn't fixed in RHEL, since I carried
+the above patch hunk into 2018+ as you can see (or maybe it became
+redundant with RHEL's different fix for the issue - I don't recall).
 
-Credit:
-This issue was discovered by Hasnain Lakhani of Facebook.
+The idea of passing the fd to D-Bus services, etc. might be a new one,
+but the fix above should be sufficient against that as well due to the
+exec_id's being globally unique (except between fork-without-exec
+sibling processes):
 
-On behalf of the Apache Thrift PMC,
-Jens Geyer
+ 		/* execve success */
++		current->exec_id = atomic64_inc_return(&global_exec_counter);
 
+Alexander
