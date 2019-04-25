@@ -1,26 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/05/6
-Message-ID: <20191105224311.GA26059@millbarge>
-Date: Tue, 5 Nov 2019 22:43:11 +0000
-From: Seth Arnold <seth.arnold@...onical.com>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com, Joe McManus <joe.mcmanus@...onical.com>
-Subject: Re: Contributing Back
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/25/4
+Message-ID: <20190425121236.GB9152@f195.suse.de>
+Date: Thu, 25 Apr 2019 14:12:36 +0200
+From: Matthias Gerstner <mgerstner@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Linux kernel: no permission check during open() time of /proc/[pid]/maps in kernels < 3.18
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Nov 05, 2019 at 07:42:28PM +0100, Solar Designer wrote:
-> I am not seeing this "inform the list either way" stuff actually
-> happening.  Without it, no other distro has a way to know the work is
+Hello,
 
-I'm sorry. I will endeavour to do better on this in the future.
+I stumbled over a leak of memory mappings for arbitrary processes in
+kernels older than version 3.18.
 
-I'm uneasy reporting "I saw no further instances of this" or "I saw no
-issues with this patch" because I am keenly aware that I cannot be
-confident in my assessments. I'm very accustomed to pointing out problems
-when I see them, so that comes easily.
+As it turns out the permissions check for the pseudo file in
+/proc/[pid]/maps in affected kernels is performed not during open() time
+but during read() time. This allows an unprivileged user to open a valid
+file descriptor for these maps files and pass it to privileged programs
+like setuid root binaries or D-Bus services running as root that support
+file descriptor passing in their interface.
 
-In any event I will do better.
+The privileged program needs behave in a way that the passed file
+descriptor is read() with root premissions and the content is passed
+back to the unprivileged user in some way.
 
-Thanks
+For example the opiesu program from OPIE [1], if installed setuid root,
+provides the necessary features to read arbitrary /proc/[pid]/maps files
+as an unprivileged user. It reads only one line from the user's stdin
+and outputs it again on stdout. By repeatedly performing this operation
+the complete maps file content can be obtained. This is a quick PoC bash
+script to exploit this to obtain the maps contents of PID 1:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+```
+exec 3</proc/1/maps
+while true; do
+    OUT=`/usr/bin/opiesu <&3 2>/dev/null | grep response | cut -d ' ' -f 3-`
+    echo "$OUT"
+    [ -z "$OUT" ] && break
+done
+```
+
+The issue was fixed in the kernel via commit [2]. I don't think this
+ever got a CVE or a security note. As a result on systems running an
+affected kernel hardenings like ASLR aren't effective against local
+users.
+
+[1]: https://en.wikipedia.org/wiki/OPIE_Authentication_System
+[2]: https://github.com/torvalds/linux/commit/29a40ace841cba9b661711f042d1821cdc4ad47c
+
+Best regards
+
+Matthias
+
+-- 
+Matthias Gerstner <matthias.gerstner@...e.de>
+Dipl.-Wirtsch.-Inf. (FH), Security Engineer
+https://www.suse.com/security
+Phone: +49 911 740 53 290
+GPG Key ID: 0x14C405C971923553
+
+SUSE Linux GmbH
+GF: Felix Imendörffer, Mary Higgins, Sri Rasiah
+HRB 21284 (AG Nuernberg)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
