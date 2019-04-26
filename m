@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1739" "Saturday" "5" "June" "2021" "04:03:42" "+0200" "Marek =?utf-8?B?TWFyY3p5a293c2tpLUfDs3JlY2tp?=" "marmarek@invisiblethingslab.com" nil "46" "[oss-security] Re: XScreenSaver 5.45: Disconnecting a video output can cause XScreenSaver to crash and unlock" nil nil nil "6" nil nil (number mark "U       marmarek@inv Jun  5   46/1739  " thread-indent "\"[oss-security] Re: XScreenSaver 5.45: Disconnecting a video output can cause XScreenSaver to crash and unlock\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Re: XScreenSaver 5.45: Disconnecting a video output can cause XScreenSaver to crash and unlock" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1792" "Friday" "26" "April" "2019" "23:45:29" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20190426214529.GA7525@eldamar.local>" "47" "Re: [oss-security] wpa_supplicant/hostapd: EAP-pwd message reassembly issue with unexpected fragment" nil nil nil "4" "2019042621:45:29" "[oss-security] wpa_supplicant/hostapd: EAP-pwd message reassembly issue with unexpected fragment" (number mark "U       carnil@debia Apr 26   47/1792  " thread-indent "\"Re: [oss-security] wpa_supplicant/hostapd: EAP-pwd message reassembly issue with unexpected fragment\"\n") "<20190418155926.GB5455@w1.fi>" ("<20190418155926.GB5455@w1.fi>") nil nil nil nil nil nil nil "Re: [oss-security] wpa_supplicant/hostapd: EAP-pwd message reassembly issue with unexpected fragment" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32738 invoked by uid 550); 5 Jun 2021 08:13:24 -0000
+Received: (qmail 7404 invoked by uid 550); 26 Apr 2019 21:45:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,91 +12,92 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21868 invoked from network); 5 Jun 2021 02:03:59 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=GEmnJq
-	uiF4qwQOG6LiMfGb/AieCPWRC6Kdao1kYFYdM=; b=OSmfztJ6XVJbkwMkP2qokz
-	qJ+GuXnGuNFkP8eLxj2hBWC2LxIPDM4V7RBLIR2SpZCe8S0363trp4lYVTMk5EGg
-	RtxqLs9/h8wiNMHpEMi5/8clR3//pPRrX9fbf2/aFw2YGUH9Lu6dnn5N/S7ZdULG
-	4e2krwEjHeZM+G3jCucQNZHQxnKThZQLUz1WXpdQfDLMCBNbc6HGRudwGeVC/FTS
-	GaQJkbyAqCyv7y2BDEOemk8PJQAqPt8E7g5BwaibeQfmjz22t+mlDFj1gmqYnUq8
-	SllXgnX2eFkk7Wwih5pNTRPxZrDFmPQY4fWfUqt9pNMCupT3RFWHy7zES6G6nGDA
-	==
-X-ME-Sender: <xms:g9u6YLdzQ2O_-YNSmSOr6FH4uBuI11EDv6KJjIFBMuAqNdPj-BMgwQ>
-    <xme:g9u6YBPLWIRqxFEvq00M0P9GnlcAFJbLCwPUbgqJbmMLFT8C6mKJhmgcrfr14GLm7
-    5XBfAc-WcoSVQ>
-X-ME-Received: <xmr:g9u6YEjhJcdhZAy0X35TKrwjy7eRKmzb7xMK1EXF4iW1kXEc2yS8MqT8SQAsehMXTsA3uWP2L7YiTLSK5w-Ys_82v1voi0fM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrfedtvddgheefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
-    ertddtjeenucfhrhhomhepofgrrhgvkhcuofgrrhgtiiihkhhofihskhhiqdfikphrvggt
-    khhiuceomhgrrhhmrghrvghksehinhhvihhsihgslhgvthhhihhnghhslhgrsgdrtghomh
-    eqnecuggftrfgrthhtvghrnhepkeegtdfgvdeihefhhedtvdelieeiueetveehteffjeej
-    jedvieejvefhueeffeegnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhush
-    htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehmrghrmhgrrhgvkhes
-    ihhnvhhishhisghlvghthhhinhhgshhlrggsrdgtohhm
-X-ME-Proxy: <xmx:g9u6YM8HyzbVjnNdKth5H5srgc0pB6t4JopvXIJTNGqTxrWW32MwOw>
-    <xmx:g9u6YHsRjq4Y2LO8iigIFIg6lMVJeSP3_iCrYEv1v4fx1IzC1MeHmQ>
-    <xmx:g9u6YLGPfD79mwkOeCv1P4dmqwdD9DNIi8sqI7U31EG-P9znRBfkhQ>
-    <xmx:g9u6YF7-U587_509czRl5dDojiRyigDPyjwiRM_eUaqRo7mDd_QJeg>
-Date: Sat, 5 Jun 2021 04:03:42 +0200
-From: Marek =?utf-8?Q?Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>
+Received: (qmail 7384 invoked from network); 26 Apr 2019 21:45:43 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=dKe8ogiYCPL/myG88noclz964znH5SXQGE8mr2K1+yg=;
+        b=oTvAnLiLc+zFLZlqIyKTqJ5+bW8b53xamTR5NFgJnmBFNW8jMe0VTC7J7UXHE7sY+e
+         I7x0Jen42RmCRDllK2fumc2zk4u19b30eMuYMuylbErm9TDcdwx7NVMUGc/JYJ4Q25fv
+         Nn2xXn9Dt2SfR0wSSv8MthOe39ZCn5vyGGuzREIP6BhyzBflviZBUgG1CuSi83GLGpPV
+         6xyluo1NNhsM3joUB3D55IOJvScT4PVeoyVpJcBWBgvdPTUIcpLeyxWw2D17Scvb5Mco
+         tmOyQ1YloDDaMOYCsp0C9zGaDjowupsaJDGFBdRTVsaDvvEP6bShwd1oYHvzIWSTPYNl
+         SSWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=dKe8ogiYCPL/myG88noclz964znH5SXQGE8mr2K1+yg=;
+        b=ay1xCF2j31TduJGMWLtylT0PZ6eXV+e/pDngJ5uwlHxQx0Nj17J1Po2j3a5sA9vtmK
+         rOxojZ83zymP5BqJ1aCAWwrHn1WzoI4kNTcKEBD7msG3gbeq8cjBn3LlXsmrgM9FiUez
+         Ws3lEH/3c3W2HlREj+7hz3s9O0Hn+orj11LPBKAWhlEXRAjgL5jYmyFQcMu0YJGKS/Oc
+         DMRUGkPeDaBQx9bCgv+SH5evTE5qXyUpfaHSXIxNhW6RkJcuOi99ZDdJSIWEtvjnN3g5
+         6nPEKpqYrnS9csEEaz3pvk3i0chfTcw5u2eNVcearYjXmszAL60jqBAbybZNoVv50Lco
+         Zgvg==
+X-Gm-Message-State: APjAAAVkBI5865aarTCKiOxBTHgWFTrOn4V8BOojQ3WurXbFngTBY9kR
+	5S9CjQVXp5F5dUGHjZFJzsE3zcvuWGw=
+X-Google-Smtp-Source: APXvYqx5da/POEzGDtbNxO7WrUQ6avkWCqRaouVCr+l7gEYTEeHMSTl4d4GX65BTKfQHb7bV65zEwg==
+X-Received: by 2002:a17:906:1249:: with SMTP id u9mr19682074eja.58.1556315131368;
+        Fri, 26 Apr 2019 14:45:31 -0700 (PDT)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Fri, 26 Apr 2019 23:45:29 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
 To: oss-security@lists.openwall.com
-Message-ID: <YLrbf2Yirc4LuA16@mail-itl>
-References: <YLrLbpUuAbLO3RR8@mail-itl>
+Message-ID: <20190426214529.GA7525@eldamar.local>
+References: <20190418155926.GB5455@w1.fi>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="tnAx3KglD0ivam5j"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <YLrLbpUuAbLO3RR8@mail-itl>
-Subject: [oss-security] Re: XScreenSaver 5.45: Disconnecting a video output can cause
- XScreenSaver to crash and unlock
+In-Reply-To: <20190418155926.GB5455@w1.fi>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Subject: Re: [oss-security] wpa_supplicant/hostapd: EAP-pwd message
+ reassembly issue with unexpected fragment
 
---tnAx3KglD0ivam5j
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Date: Sat, 5 Jun 2021 04:03:42 +0200
-From: Marek =?utf-8?Q?Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>
-To: oss-security@lists.openwall.com
-Subject: Re: XScreenSaver 5.45: Disconnecting a video output can cause
- XScreenSaver to crash and unlock
+Hi,
 
-On Sat, Jun 05, 2021 at 02:55:10AM +0200, Marek Marczykowski-G=C3=B3recki w=
-rote:
-> The issue affects only XScreenSaver version 5.45. Versions 5.44 and
-> older, as well as 6.00, are not affected. The XScreenSaver author was
-> notified about this issue and decided not to publish an advisory, as the
-> issue does not affect the most recent version.
->=20
-> The Qubes Security Team has decided to address this issue in Qubes OS by
-> patching this specific bug rather than immediately upgrading to the 6.00
-> version.
+On Thu, Apr 18, 2019 at 06:59:26PM +0300, Jouni Malinen wrote:
+> Published: April 18, 2019
+> Latest version available from: https://w1.fi/security/2019-5/
+> 
+> Vulnerability
+> 
+> EAP-pwd implementation in hostapd (EAP server) and wpa_supplicant (EAP
+> peer) was discovered not to validate fragmentation reassembly state
+> properly for a case where an unexpected fragment could be received. This
+> could result in process termination due to NULL pointer dereference.
+> 
+> An attacker in radio range of a station device with wpa_supplicant
+> network profile enabling use of EAP-pwd could cause the wpa_supplicant
+> process to terminate by constructing unexpected sequence of EAP
+> messages. An attacker in radio range of an access point that points to
+> hostapd as an authentication server with EAP-pwd user enabled in runtime
+> configuration (or in non-WLAN uses of EAP authentication as long as the
+> attacker can send EAP-pwd messages to the server) could cause the
+> hostapd process to terminate by constructing unexpected sequence of EAP
+> messages.
+> 
+> 
+> Vulnerable versions/configurations
+> 
+> All hostapd and wpa_supplicant versions with EAP-pwd support
+> (CONFIG_EAP_PWD=y in the build configuration and EAP-pwd being enabled
+> in the runtime configuration) are vulnerable against the process
+> termination (denial of service) attack.
+> 
+> 
+> Possible mitigation steps
+> 
+> - Merge the following commits to wpa_supplicant/hostapd and rebuild:
+> 
+>   EAP-pwd peer: Fix reassembly buffer handling
+>   EAP-pwd server: Fix reassembly buffer handling
+> 
+>   These patches are available from https://w1.fi/security/2019-5/
+> 
+> - Update to wpa_supplicant/hostapd v2.8 or newer, once available
 
-And here is the patch applied in Qubes OS:
-https://github.com/QubesOS/qubes-xscreensaver/blob/master/0001-Fix-updating=
--outputs-info.patch
+MITRE (via cveform.mitre.org) assigned CVE-2019-11555 for this issue.
 
---=20
-Best Regards,
-Marek Marczykowski-G=C3=B3recki
-Invisible Things Lab
-
---tnAx3KglD0ivam5j
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhrpukzGPukRmQqkK24/THMrX1ywFAmC6234ACgkQ24/THMrX
-1yxLwggAiykEoTW/RxJ8JzrskXFuO+SzUkM8tgZv6F5qMoKgOv5s3RVVF+Faykw9
-T7Wkz/NenznQSQuUiyQ5/mki180JrR7UkmLd4tfBDqorZC0wmsxgmZKKSWf+naIe
-Z20LD/KzEfSCh9TtOKn7FQu3Cpx3x2ix6sGRqtpXeNvfTfPAQF81D8nER8GLHU0Q
-t6ioNbURwB4Ofykf4eEWgR1DCVnPXTNmH5q644exuH0JWwnZfyfw91NHiCZ/GDxn
-gdewcRZW6D5uYASS0X5Q07sKTR3Zn4Rn/OiJyS823DoEqzVHLdr7hBhgpFCnGdac
-lSTavZkj45Nxn//RtqZFYqq9buN1Ig==
-=pAZ6
------END PGP SIGNATURE-----
-
---tnAx3KglD0ivam5j--
+Regards,
+Salvatore
