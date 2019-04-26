@@ -1,28 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/08/3
-Message-ID: <cbfc13d8-ea1d-9523-7d17-c83e1535bb04@pietroalbini.org>
-Date: Tue, 8 Oct 2019 18:11:31 +0200
-From: Pietro Albini <pietro@...troalbini.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/26/1
+Message-ID: <20190426214529.GA7525@eldamar.local>
+Date: Fri, 26 Apr 2019 23:45:29 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2019-16760: Cargo prior to Rust 1.26.0 may download the wrong dependency
+Subject: Re: wpa_supplicant/hostapd: EAP-pwd message reassembly issue with unexpected fragment
 Content-Type: text/plain; charset=utf-8
 
-On 2019-09-30 the Rust Security team disclosed a vulnerability affecting 
-all Rust releases prior to 1.26.0, causing Cargo to download and compile 
-the wrong dependency under the right circumstances.
+Hi,
 
-The vulnerability has been assigned CVE-2019-16760.
+On Thu, Apr 18, 2019 at 06:59:26PM +0300, Jouni Malinen wrote:
+> Published: April 18, 2019
+> Latest version available from: https://w1.fi/security/2019-5/
+> 
+> Vulnerability
+> 
+> EAP-pwd implementation in hostapd (EAP server) and wpa_supplicant (EAP
+> peer) was discovered not to validate fragmentation reassembly state
+> properly for a case where an unexpected fragment could be received. This
+> could result in process termination due to NULL pointer dereference.
+> 
+> An attacker in radio range of a station device with wpa_supplicant
+> network profile enabling use of EAP-pwd could cause the wpa_supplicant
+> process to terminate by constructing unexpected sequence of EAP
+> messages. An attacker in radio range of an access point that points to
+> hostapd as an authentication server with EAP-pwd user enabled in runtime
+> configuration (or in non-WLAN uses of EAP authentication as long as the
+> attacker can send EAP-pwd messages to the server) could cause the
+> hostapd process to terminate by constructing unexpected sequence of EAP
+> messages.
+> 
+> 
+> Vulnerable versions/configurations
+> 
+> All hostapd and wpa_supplicant versions with EAP-pwd support
+> (CONFIG_EAP_PWD=y in the build configuration and EAP-pwd being enabled
+> in the runtime configuration) are vulnerable against the process
+> termination (denial of service) attack.
+> 
+> 
+> Possible mitigation steps
+> 
+> - Merge the following commits to wpa_supplicant/hostapd and rebuild:
+> 
+>   EAP-pwd peer: Fix reassembly buffer handling
+>   EAP-pwd server: Fix reassembly buffer handling
+> 
+>   These patches are available from https://w1.fi/security/2019-5/
+> 
+> - Update to wpa_supplicant/hostapd v2.8 or newer, once available
 
-As the affected versions are not supported anymore upstream we won't be 
-issuing patch releases addressing this vulnerability. Official patches 
-(signed with the security team's GPG key) for Rust 1.19.0 to Rust 1.25.0 
-are available here:
+MITRE (via cveform.mitre.org) assigned CVE-2019-11555 for this issue.
 
-https://gist.github.com/pietroalbini/0d293b24a44babbeb6187e06eebd4992
-
-More information on the vulnerability can be found in the advisory:
-
-https://groups.google.com/forum/#!topic/rustlang-security-announcements/rVQ5e3TDnpQ
-
-Pietro.
-Rust Security team
+Regards,
+Salvatore
