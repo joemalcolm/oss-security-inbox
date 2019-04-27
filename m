@@ -1,41 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/06/7
-Message-ID: <CA+5ZNX8MVdu=TstQr+xz9ZX0FuOBPY-dSeM-Qzd=PTq-vKYRmw@mail.gmail.com>
-Date: Fri, 6 Sep 2019 13:54:47 -0600
-From: Rawlin Peters <rawlin@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/27/1
+Message-ID: <20190427163828.rnp75yis33ysgvzp@ranzbook>
+Date: Sat, 27 Apr 2019 18:38:28 +0200
+From: andreas@...mhold.de
 To: oss-security@...ts.openwall.com
-Subject: CVE-2019-12405: Apache Traffic Control LDAP-based authentication vulnerability
+Subject: Re: Multiple BIND vulnerabilities disclosed (CVE-2018-5743, CVE-2019-6467, and CVE-2019-6468)
 Content-Type: text/plain; charset=utf-8
 
-CVE-2019-12405: Apache Traffic Control LDAP-based authentication vulnerability
+On 12:13 25.04.19, Peter Korsgaard wrote:
+> It is a bit unfortunate that these security fixes now use
+> isc_atomic_xadd() which are not available on all architectures:
+> 
+> .libs/client.o: In function `mark_tcp_active':
+> client.c:(.text+0xc7c): undefined reference to `isc_atomic_xadd'
+> client.c:(.text+0xca0): undefined reference to `isc_atomic_xadd'
+> .libs/client.o: In function `client_accept':
+> client.c:(.text+0x2210): undefined reference to `isc_atomic_xadd'
+> client.c:(.text+0x230c): undefined reference to `isc_atomic_xadd'
+> .libs/client.o: In function `exit_check':
+> client.c:(.text+0x2958): undefined reference to `isc_atomic_xadd'
+> .libs/client.o:client.c:(.text+0x5cb4): more undefined references to `isc_atomic_xadd' follow
+> collect2: error: ld returned 1 exit status
 
-Severity: Critical
+There is a commit [1] on ISCs GitLab that removes the atomic operations
+in favor of refcounting and thus fixes the aarch64 (and other archs?)
+build error.
 
-Vendor: The Apache Software Foundation
+I applied that commit for NixOS. Looks good so far [2].
 
-Versions affected:
-Traffic Control 3.0.0
-Traffic Control 3.0.1
 
-Description:
-The Traffic Ops API component of the Apache Traffic Control project is
-vulnerable to improper authentication when LDAP is enabled. Given a username
-for a user that can be authenticated via LDAP, it is possible to improperly
-authenticate as that user without that user's correct password.
+cheers, andi-
 
-Mitigation:
-3.x users should upgrade to 3.0.2.
-If the upgrade cannot be done immediately, LDAP authentication can be disabled
-by removing the Traffic Ops LDAP configuration file -- ldap.conf -- in order to
-mitigate the vulnerability until an upgrade to 3.0.2 can be performed.
+[1] https://gitlab.isc.org/isc-projects/bind9/commit/d72f436b7d7c697b262968c48c2d7643069ab17f
+[2] https://github.com/NixOS/nixpkgs/pull/60330/checks
 
-References:
-    Downloads:
-        http://trafficcontrol.apache.org/releases/
-    CVE:
-        https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-12405
-    Project security:
-        http://trafficcontrol.apache.org/security/
---
-Thanks,
-Rawlin
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
