@@ -1,64 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/04/1
-Message-ID: <20190704125914.GD9530@f195.suse.de>
-Date: Thu, 4 Jul 2019 14:59:14 +0200
-From: Matthias Gerstner <mgerstner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: deepin-clone: various symlink attacks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/27/2
+Message-ID: <87d0l7tl9d.fsf@dell.be.48ers.dk>
+Date: Sat, 27 Apr 2019 19:23:42 +0200
+From: Peter Korsgaard <peter@...sgaard.com>
+To: andreas@...mhold.de
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Multiple BIND vulnerabilities disclosed (CVE-2018-5743, CVE-2019-6467, and CVE-2019-6468)
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+>>>>> "andreas" == andreas  <andreas@...mhold.de> writes:
 
-deepin-clone [1] is a command line and graphical disk backup utility
-that is part of the deepin desktop environment (a desktop environment
-focused on Chinese users).
+ > On 12:13 25.04.19, Peter Korsgaard wrote:
+ >> It is a bit unfortunate that these security fixes now use
+ >> isc_atomic_xadd() which are not available on all architectures:
+ >> 
+ >> .libs/client.o: In function `mark_tcp_active':
+ >> client.c:(.text+0xc7c): undefined reference to `isc_atomic_xadd'
+ >> client.c:(.text+0xca0): undefined reference to `isc_atomic_xadd'
+ >> .libs/client.o: In function `client_accept':
+ >> client.c:(.text+0x2210): undefined reference to `isc_atomic_xadd'
+ >> client.c:(.text+0x230c): undefined reference to `isc_atomic_xadd'
+ >> .libs/client.o: In function `exit_check':
+ >> client.c:(.text+0x2958): undefined reference to `isc_atomic_xadd'
+ >> .libs/client.o:client.c:(.text+0x5cb4): more undefined references to `isc_atomic_xadd' follow
+ >> collect2: error: ld returned 1 exit status
 
-In the course of a review [2] of polkit privileges used by the
-application the following major security issues have been found:
+ > There is a commit [1] on ISCs GitLab that removes the atomic operations
+ > in favor of refcounting and thus fixes the aarch64 (and other archs?)
+ > build error.
 
-CVE-2019-13227) in GUI mode deepin-clone creates
-  `/tmp/.deepin-clone.log` as root and follows symlinks there.
-  
-CVE-2019-13226) `Helper::temporaryMountDevice()` uses a predictable path
-  `/tmp/.deepin-clone/mount/<block-dev-basename>` to temporarily mount a
-  file system there. These paths can be prepared by an attacker and
-  symlinks will be followed during mounting. If the attacker wins a race
-  condition by quickly entering the mount point then it can also prevent
-  the following unmount. This logic can e.g. be triggered by running
-  `deepin-clone -i /dev/sdX`.
+ > I applied that commit for NixOS. Looks good so far [2].
 
-  An attacker can thus cause the file system to be permanently mounted
-  at an arbitrary location in the file system.
+Yes, that was pointed out to me privatelyl. I am using it as well in
+Buildroot:
 
-CVE-2019-13229) `Helper::getPartitionSizeInfo()` uses /tmp/partclone.log
-  as a fixed path during execution of partclone. The same issues about
-  symlink attacks etc.  like in 1) apply here.
+https://git.buildroot.org/buildroot/commit/?id=fc8ace0938a0bcf2e9fa628a88853252eabc991d
 
-CVE-2019-13228) similarly in `BootDoctor::fix()` the fixed path
-  `/tmp/repo.iso` is created and the fixed directory /tmp/.deepin-clone
-  is used. The same concerns as in 1) and 3) apply. By winning a race
-  condition to replace the `/tmp/repo.iso` symlink by an attacker
-  controlled iso file further privilege escalation may be possible.
+Interesting enough, this fix is on the 9.11 branch:
 
-The issues have been fixed via the upstream commit [3].
+https://github.com/isc-projects/bind9/commits/v9_11
 
-Best Regards
+But not part of the v9_11_6 tag:
 
-Matthias
-
-[1]: https://github.com/linuxdeepin/deepin-clone
-[2]: https://bugzilla.suse.com/show_bug.cgi?id=1130388
-[3]: https://github.com/linuxdeepin/deepin-clone/commit/e079f3e2712b4f8c28e3e63e71ba1a1f90fce1ab
+https://github.com/isc-projects/bind9/commits/v9_11_6
 
 -- 
-Matthias Gerstner <matthias.gerstner@...e.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Phone: +49 911 740 53 290
-GPG Key ID: 0x14C405C971923553
-
-SUSE Linux GmbH
-GF: Felix Imendörffer, Mary Higgins, Sri Rasiah
-HRB 21284 (AG Nuernberg)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Bye, Peter Korsgaard
