@@ -1,4 +1,9 @@
-Received: (qmail 11894 invoked by uid 550); 12 May 2026 20:24:23 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2245" "Saturday" "27" "April" "2019" "18:38:28" "+0200" "andreas@rammhold.de" "andreas@rammhold.de" "<20190427163828.rnp75yis33ysgvzp@ranzbook>" "55" "Re: [oss-security] Multiple BIND vulnerabilities disclosed (CVE-2018-5743, CVE-2019-6467, and CVE-2019-6468)" "^Date:" nil nil "4" "2019042716:38:28" "[oss-security] Multiple BIND vulnerabilities disclosed (CVE-2018-5743, CVE-2019-6467, and CVE-2019-6468)" (number mark "        andreas@ramm Apr 27   55/2245  " thread-indent "\"Re: [oss-security] Multiple BIND vulnerabilities disclosed (CVE-2018-5743, CVE-2019-6467, and CVE-2019-6468)\"\n") "<87wojie6jy.fsf@dell.be.48ers.dk>" ("<68fd216c-b9d7-ded4-ecb5-a5da62fc01b0@isc.org>" "<87wojie6jy.fsf@dell.be.48ers.dk>") nil nil nil nil nil nil nil "Re: [oss-security] Multiple BIND vulnerabilities disclosed (CVE-2018-5743, CVE-2019-6467, and CVE-2019-6468)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 5779 invoked by uid 550); 27 Apr 2019 17:12:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,115 +11,103 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 1845 invoked from network); 12 May 2026 18:38:20 -0000
-ARC-Seal: i=1; a=rsa-sha256; t=1778611091; cv=none;
-        d=google.com; s=arc-20240605;
-        b=gKGa3DU/WyuLn7ltJeOxpnNkBLLiVz9r4oUDHoaWq51JtgydzqiZQvRXTTPJ/Eim/8
-         lRs6hegxKs1hK1u9YhcNwsMQzZX1YwhDSfORYMnmJ2xJp6VFE318iRBPECeOWyRUiL3e
-         i9ppZLZQmvrPTBHpRVWCdeNB/0/A6g8xgxUer/co+a7E5q7JCe+pXm9nZRqew3zGxxHy
-         UrKcthMTWlgynsvjtwTjKvz5HH3bRmwCk3pkprNqGViYlgJdDqm3hDRn5RUyXB90LAxS
-         9XgRaAUzMy5Oj5GEPdLdydEVWGRMER/7HW5wXqApIIpy5vPCcj+pVmXcmvC8UmGP1Pxg
-         P0vQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=zjb0GTBTaas5BLVRv1gPaD49U150ROxag4S9lKEpcqM=;
-        fh=rxgFuEFYYhL06fHm1vQdhE2eGin8+oowWiWcxZ33+4s=;
-        b=IbGy62srL4QEhTixvb1fI9sWHyFokP5e4dWuOyzj+qrgxAw7GakVz+jY8IO6nXh1rW
-         6YUzmfVnMWqzgk5wh7wvUfJb4qHd6f97NZEr2opcv4NhqJ7Srk9idzKp33yxGAvMrmzG
-         8c8h54k8BgW888DUhjB5im5udWBcRyKuih/K+Ib3aeGDCBkQ1PtNCcXStav1GMx88dJg
-         WO94qb7+aum3HCrDjEeviaegG7y2mJZ2BP+5iMtYhj7ADPXFGLsJDTyTjRe9HYgaXURO
-         BeKvm8coFoKT2PYaTZuKAcpGYgmA4gI/6PHMu63xbt1juLiDzjPHNHJCSCeh53FV9U1/
-         Fv6A==;
-        darn=lists.openwall.com
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+Received: (qmail 3765 invoked from network); 27 Apr 2019 16:38:42 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ilia.ws; s=google; t=1778611091; x=1779215891; darn=lists.openwall.com;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=zjb0GTBTaas5BLVRv1gPaD49U150ROxag4S9lKEpcqM=;
-        b=IlGM5Lw+82pAtHY2n8TvOYYVi0JVQbOBK9a81/CkoJhaqKP38kWuPJV/83/N2jk2/U
-         Ilmydhvp6BdNgiKEbrsEjQsk66yjTtJHx1i+SzlIstWgmXuWTVg0py5+vg/5TI1zCKrh
-         tcK8klp4s9q3xV/dE8PYavsg1+AyVWZdwruHRxPYGFVW4WJcvKlSgNqG3+wTYKNIXUn4
-         H0uxO+9Py0asxijYsE5jZIL6jb6cIXKAmTugvT35srS0qu7h1P8IbFrrdxci5lddWE75
-         nPkVSIDV5+R0SQNuckKU1W93ZOvZXF8TJXrbv35nreRhKJK1rvp9EPMLMajI0bjOcGgV
-         eEOw==
+        d=rammhold-de.20150623.gappssmtp.com; s=20150623;
+        h=from:date:to:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=qIITmxfGaOyRrEOKWGKn8Vj9f0f+M01v2EH54ZhObc4=;
+        b=z6Qhew6a01pO1HpDefW+VMGeRoAzvsNpCrM3bLlD/CYX+0JIPZoX+tAk+YewVr2yfB
+         Ec9gIW4W6k1UPwQDkS7jpoyxQsuZgt2y2Iln8iglEttVcYaft6SZTzE7u5nEzzbUTn90
+         zoE7LPHtLq9qvX9ezVPJ08w4QOSqzG+bk15eLwMCqMOJwXVkHunDS25hot/PLcF3yhJS
+         qGlsKg/ogQLS4YXya7kYepkLg+u+RMU4UErtzEvCZQS6Zu6i76U3ZYk/TAFKChYbstDi
+         yesaTQN7XFqGjqAk6gMEfYBhbwdikD/ifbLPfMnjwiq+BH15DUmmR0feL5lEpU9d77X3
+         EHfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778611091; x=1779215891;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zjb0GTBTaas5BLVRv1gPaD49U150ROxag4S9lKEpcqM=;
-        b=kPpO/dqHWdhRvmglE48hUtxKka6fq7tAagRFzqwZ2KtRsW0HldpY0eBss99yKAGfuf
-         7+AfZakKNAAUGERlY5hMVatQT05BLs6ygWpeJSKsTbmmYYCdQmu5m6FX+sWvRrU1A/qH
-         V+IVeiy8MxzuixXjKEZcce1ssaTkpYqZFwZvONdqvImiZgXgV6mUCEC2IkNdao0q6eox
-         6qm6uHO+yZXcvV6YPAoonZJhif/1e5AO2QIknzQfLZdB4HK1loPo+1fhtCzPgnbuRup5
-         lEB6MnpNHGl0ZGkU/qKrQLdedjwHooF/O8IesMSwU4/03CxzaQZn7Dw/raoLLQP8llS2
-         xZDA==
-X-Gm-Message-State: AOJu0YxpGa7Cw7iWn8LNrH2+7Gz39GvByS6avamFfeOEBq03rOqD15m1
-	nB+f+5uc33iPFxe39Y7M5VDpk0cB8Pjb6epDQlrTYR5qu5Le7iHE6cvLmBpiag5zNL9UUEWMsES
-	cFLPLtCzfjQkwR9cwkT9Ujc7mAYfI3ZVQhuL44MlTpU2i2+ChiVQaYA==
-X-Gm-Gg: Acq92OHV7Mdh5WMuOqiceMoh815OR07C3cierVuU4JEUhQyU1nlfRhVmoUEeiyx0AdL
-	HDW3n1X4U5ywQ66/VN8SZTAz1Y8JH7S81gldLq6TX428GQCTDuKMTI7ED2rPs3EDYbq5iRO8Wp8
-	EyYio7mOSrziQa6RHg7yNPQwHEytlQFPuDPTgiyk7mLDi/TOTuePJ64H/y9WMssFhH3/S2DtZ3+
-	5cUFioAoRU6dLh1Rg61EmkybWAbqJlSO06KdckVCvfAi5eBp1cf0HGj/YPdXR9+fktamLzV8h4k
-	7kOMzdDbD5jG43ArkFBs9N8F6tEd56q85VDymFD/CBOCCH9fCQE8FbhtpoIHL0XKZnzP
-X-Received: by 2002:a05:600c:c170:b0:48e:526e:1040 with SMTP id
- 5b1f17b1804b1-48fc9a46ecamr1016415e9.23.1778611090985; Tue, 12 May 2026
- 11:38:10 -0700 (PDT)
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:date:to:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=qIITmxfGaOyRrEOKWGKn8Vj9f0f+M01v2EH54ZhObc4=;
+        b=a1rXrbkgk+vXfurIufZ1/OxigKEV8LMu8YCfL5suE2eKXe0kwIc67GmXqTHAZPGKh8
+         eXN/vk0uEtrxo4zyLKNDROoJy0zQU4/2B/CJlBHIEhqLziuRABk/gMCgYns3gSKH2AZQ
+         TMySY/jQ+T/fq9cE5yvTbwdmhZBa0Kx6JKMOFWrdhCdXXjE1cOWRJAoE4VrQL+A+tAJQ
+         xtI3tGBhUKYk7fsT+E48R9ORSsZZNrg6iYgPrr5rAHhwfcVjSE8Gkzp4+L8lJ/4aJGsp
+         RlO3DElyUCuQVoWyRfe99ayWNne4AxDLGs6sSmoKeLvSI9T1E8sR+y4GV0tHKyOwcUOz
+         kHJQ==
+X-Gm-Message-State: APjAAAWDyNOQ1ULTsKQrYr6rG4/2wFlXULO5stBoHZKt1sqmKTxvGZRY
+	qmvH0s8vC+/iVr7EJB2o5hJgKCHGEQTaXQ==
+X-Google-Smtp-Source: APXvYqyd4Zxign6MX7PMg53bm0PqKUivzdv3lvRxZB235Srqr/4u3lW+I+J2k/cewumXqBIDw/AN7Q==
+X-Received: by 2002:a5d:4eca:: with SMTP id s10mr18182580wrv.319.1556383110941;
+        Sat, 27 Apr 2019 09:38:30 -0700 (PDT)
+X-Google-Original-From: andreas+oss-sec@rammhold.de
+Message-ID: <20190427163828.rnp75yis33ysgvzp@ranzbook>
+References: <68fd216c-b9d7-ded4-ecb5-a5da62fc01b0@isc.org>
+ <87wojie6jy.fsf@dell.be.48ers.dk>
 MIME-Version: 1.0
-References: <958c7edc-400f-44e9-aac4-78161e999db4@pipping.org>
- <20260510074756.GA17210@openwall.com> <c67530db-c586-4921-bc3f-67a12e389eb1@pipping.org>
- <CALkpNnQHhjgua8=6iH+L+5hB1AgcLeJTV9Js_9uQ4OJA5Sd+qQ@mail.gmail.com> <9079a54f-f83b-486f-b66b-79ed0ba69838@pipping.org>
-In-Reply-To: <9079a54f-f83b-486f-b66b-79ed0ba69838@pipping.org>
-From: Ilia <ilia@ilia.ws>
-Date: Tue, 12 May 2026 14:37:59 -0400
-X-Gm-Features: AVHnY4JLg8feWvyIbDfTZhj7ceWyc3MHduYBnG59IG8BEA8b8OfUnEXgFllU3RI
-Message-ID: <CALkpNnSMzsMLVbo2NtLWjDg0EeN5F+Wr=Enc2sG+5ZtKUixUhw@mail.gmail.com>
-To: Sebastian Pipping <sebastian@pipping.org>
-Cc: oss-security@lists.openwall.com, solar@openwall.com
-Content-Type: multipart/alternative; boundary="00000000000045ac1b0651a32ae0"
-Subject: Re: [oss-security] uriparser 1.0.2 fixes CVE-2026-44927 and CVE-2026-44928
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="ikbvgs6f7h5rrr4j"
+Content-Disposition: inline
+In-Reply-To: <87wojie6jy.fsf@dell.be.48ers.dk>
+User-Agent: NeoMutt/20180716
+Date: Sat, 27 Apr 2019 18:38:28 +0200
+From: andreas@rammhold.de
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Multiple BIND vulnerabilities disclosed
+ (CVE-2018-5743, CVE-2019-6467, and CVE-2019-6468)
+To: oss-security@lists.openwall.com
 
---00000000000045ac1b0651a32ae0
-Content-Type: text/plain; charset="UTF-8"
+--ikbvgs6f7h5rrr4j
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, May 12, 2026 at 2:13=E2=80=AFPM Sebastian Pipping <sebastian@pippin=
-g.org>
-wrote:
+On 12:13 25.04.19, Peter Korsgaard wrote:
+> It is a bit unfortunate that these security fixes now use
+> isc_atomic_xadd() which are not available on all architectures:
+>=20
+> .libs/client.o: In function `mark_tcp_active':
+> client.c:(.text+0xc7c): undefined reference to `isc_atomic_xadd'
+> client.c:(.text+0xca0): undefined reference to `isc_atomic_xadd'
+> .libs/client.o: In function `client_accept':
+> client.c:(.text+0x2210): undefined reference to `isc_atomic_xadd'
+> client.c:(.text+0x230c): undefined reference to `isc_atomic_xadd'
+> .libs/client.o: In function `exit_check':
+> client.c:(.text+0x2958): undefined reference to `isc_atomic_xadd'
+> .libs/client.o:client.c:(.text+0x5cb4): more undefined references to `isc=
+_atomic_xadd' follow
+> collect2: error: ld returned 1 exit status
 
-> >  From my perspective CVE-2026-44927 is a low-severity security issue
-> > that would be hard to exploit in reality since it requires an actual
-> > 2gb+ input to even trigger. For example, in the context of PHP (which
-> > uses the lib) you'd hit the memory limit long before this even triggers.
-> > Therefore, this is "Low" severity from my perspective. Given the input
-> > size, it definitely doesn't have a remote vector.
->
-> I have no problem with this being considering "low severity" based
-> on the payload size needed, but this /does/ have a remote vector that is
-> independent of size constraints, as far as I am concerned. I just
-> checked the definition of a remote attack vector a la CVSS [3][4] and
-> it's not "adjacent", not "local", and not "physical": I see nothing
-> stopping applications from parsing URI strings read "from the wire",
-> directly or indirectly, the same way that XMPP parses XML from the wire.
-> Am I missing something here?
->
+There is a commit [1] on ISCs GitLab that removes the atomic operations
+in favor of refcounting and thus fixes the aarch64 (and other archs?)
+build error.
 
-That's a fair point, I'd still lean toward "low", perhaps low-medium in
-light of your comment.
+I applied that commit for NixOS. Looks good so far [2].
 
-Parsing streaming URI strings from a wire without any cap is a bit unusual,
-but stranger things have happened. As you pointed out from cvvs guide, it
-doesn't care about that.
 
---=20
-Ilia Alshanetsky
-Technologist, CTO, Entrepreneur
-E: ilia@ilia.ws
-T: @iliaa
-B: http://ilia.ws
+cheers, andi-
 
---00000000000045ac1b0651a32ae0--
+[1] https://gitlab.isc.org/isc-projects/bind9/commit/d72f436b7d7c697b262968=
+c48c2d7643069ab17f
+[2] https://github.com/NixOS/nixpkgs/pull/60330/checks
+
+--ikbvgs6f7h5rrr4j
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEE0IG39SavZobwL+lX5DLkELXkjIYFAlzEhYMACgkQ5DLkELXk
+jIaN0g/8CFq/2aPdFXAlbHW9emr4PIgYcamQ7iq/FbmEgH3g4TmD86QgnuCxey+t
+gzHXYgOUffTJZy64ip8un+P8rUVCYF1Y5cKVYwS7ECvjZj8XWtCobM6i1HHg8YwG
+19Ew5MfvVdAwnx/mUyROIJ2TGTOuVRGckIH1yzy3oxkZg0FxDTHqzRLpbWPLZLOp
+ZMsB4JtxB01K4tdYeQji0qTAONAo7lwpQejHaqcy5UeGo+rN2kphlt81zHqENYOi
+M90c44C8T/2m5srMRbkPSRkkt0V425NQcxO9IVD3MWg+v3zh2ETnu0dHJAfqVlIR
+4inWpyBlPekZ2jYzBgib6moIxxhJmBk2pSF4AS7DfuCzPfzwH8x3LoDo8kCoyzSb
+Wctx1kWuUSptmLdNVWCrMCxROFgknMGYbZB+6IHQ5+AY7OsWGJpSRE0TOaenia3g
+tfZvjWiwAvi0gAkjJ7VKLVqdV8lnJpY4mziGD/5xMcmOhEK1yT0iJpgb9XS7RpNK
+/nJCE0GysGUMaUN9VwRHB3T5KyuqiwqkaB3McEt0XXA6d/9zaS8KQXuY838qbrGj
+yRbaf3tYH3U3qDUACA1FL4VEsNpLfrpRaoPHT1Y+u5kX++bRtMVk1oTVzD6vdR2/
+MZHGk92MTjc3h682P5PlWxz22oYuMVEz00eGKW5aOqFpBMPy4vQ=
+=JvGa
+-----END PGP SIGNATURE-----
+
+--ikbvgs6f7h5rrr4j--
