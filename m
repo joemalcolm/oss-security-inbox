@@ -1,145 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/17/1
-Message-ID: <fd63e16ea8e74eeca5852706930d8076@tencent.com>
-Date: Tue, 17 Sep 2019 08:19:33 +0000
-From: cradminzhang(张博) <cradminzhang@...cent.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2019-14835: QEMU-KVM Guest to Host Kernel Escape Vulnerability: vhost/vhost_net kernel buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/29/3
+Message-ID: <d10b3b3b-0c8b-bcc6-906d-2d2ca266d024@zetafleet.com>
+Date: Mon, 29 Apr 2019 15:21:48 -0500
+From: Colin Snover <mx1xcb@...afleet.com>
+To: oss-security@...ts.openwall.com
+Subject: [CVE-2019-9826] phpBB Native Fulltext Search denial of service
 Content-Type: text/plain; charset=utf-8
 
-Severity: Important
-Vendor:
-Versions affected: 
-It looks like this vulnerability was introduced in this commit https://github.com/torvalds/linux/commit/3a4d5c94e959359ece6d6b55045c3f046677f55c,
-from kernel version 2.6.34 and fixed in latest stable kernel 5.3.
+Vulnerability information
+=========================
 
-Tencent Blade Team discovered a QEMU-KVM Guest to Host Kernel Escape Vulnerability which is in vhost/vhost_net kernel module.
+Title: phpBB Native Fulltext Search denial of service
+CVE ID: CVE-2019-9826
+CVSSv3 score: 8.6 (AV:N/AC:L/PR:N/UI:N/S:C/C:N/I:N/A:H)
 
-Description:
+Vulnerability description
+=========================
 
-The vulnerability is in vhost/vhost_net kernel module, vhost/vhost_net is a virtio network backend.
+Improper input validation in the Native Fulltext Search component of 
+phpBB 3.2.5 and earlier allows an unauthenticated remote user to trigger 
+a denial of service attack via the keywords URL parameter of search.php.
 
-The bug happens in the live migrate flow, when migrating, QEMU needs to know the dirty pages, vhost/vhost_net uses a kernel buffer to record the dirty log, but it doesn't check the bounds of the log buffer.
-So we can forge the desc table in guest, wait for migrate or doing something (like increase host machine workload or combine a mem leak bug, depends on vendor’s migrate schedule policy) to trigger cloud vendor to migrate this guest. 
-When the guest migrating, it will make the host kernel log buffer overflow.
+Successful exploitation generates a slow SQL query which causes the 
+database engine used by phpBB to consume all available CPU resources. 
+Depending upon the database engine, users will also be completely unable 
+to create or modify posts due to locks on the search index tables. The 
+slowness of the query depends on the size of the search_wordlist and 
+search_wordmatch tables.
 
-The vulnerable call path is :  handle_rx(drivers/vhost/net.c) -> get_rx_bufs -> vhost_get_vq_desc -> get_indirect(drivers/vhost/vhost.c)
+Because the denial of service is caused by a long-running database 
+query, for a typical phpBB installation running on MySQL/Linux, only <# 
+CPUs> requests need to be made by an attacker in order to consume all 
+CPU resources available to the database engine. The slow query will 
+continue to run after the attacker disconnects because PHP does not 
+detect connection aborts until it tries to send data back to the client.
 
-In VM guest, attack can make a indirect desc table in VM driver to let vhost to enter above call path when live migrates the VM, finally to enter into function get_indirect.
+Vulnerable packages
+===================
 
-In get_indirect, there is the log buffer overflow bug can be triggered as comments below:
+phpBB 3.2.5 and earlier when configured to use the Native Fulltext 
+search component. (This is the default configuration.)
 
-static int get_indirect(struct vhost_virtqueue *vq,
-			struct iovec iov[], unsigned int iov_size,
-			unsigned int *out_num, unsigned int *in_num,
-			struct vhost_log *log, unsigned int *log_num,
-			struct vring_desc *indirect)
-{
-	struct vring_desc desc;
-	unsigned int i = 0, count, found = 0;
-	u32 len = vhost32_to_cpu(vq, indirect->len);  <---------------- len can be controlled from VM guest
-	struct iov_iter from;
-	int ret, access;
+Solutions and workarounds
+=========================
 
-	/* Sanity check */
-	if (unlikely(len % sizeof desc)) {
-		vq_err(vq, "Invalid length in indirect descriptor: "
-		       "len 0x%llx not multiple of 0x%zx\n",
-		       (unsigned long long)len,
-		       sizeof desc);
-		return -EINVAL;
-	}
+The vendor has released phpBB 3.2.6, which improves input validation in 
+the Native Fulltext Search component.
 
-	ret = translate_desc(vq, vhost64_to_cpu(vq, indirect->addr), len, vq->indirect,
-			     UIO_MAXIOV, VHOST_ACCESS_RO);
-	if (unlikely(ret < 0)) {
-		if (ret != -EAGAIN)
-			vq_err(vq, "Translation failure %d in indirect.\n", ret);
-		return ret;
-	}
-	iov_iter_init(&from, READ, vq->indirect, ret, len);
+Mitigations are available for earlier versions of phpBB:
 
-	/* We will use the result as an address to read from, so most
-	 * architectures only need a compiler barrier here. */
-	read_barrier_depends();
+1. Set “Search backend” to an engine other than “phpBB Native Fulltext”
+2. Set the “Can search board” group permission to “No” for all untrusted 
+user groups
+3. Set “Enable search facilities” to “No”
 
-	count = len / sizeof desc;             <--------- so, count can be controlled from VM guest
-	/* Buffers are chained via a 16 bit next field, so
-	 * we can have at most 2^16 of these. */
-	if (unlikely(count > USHRT_MAX + 1)) {           <---------- the max value of count can be USHRT_MAX + 1
-		vq_err(vq, "Indirect buffer length too big: %d\n",
-		       indirect->len);
-		return -E2BIG;
-	}
+Proof of concept
+================
 
-	do {
-		unsigned iov_count = *in_num + *out_num;
-		if (unlikely(++found > count)) {         <---------- so, this while loop can run USHRT_MAX+1 times
-			vq_err(vq, "Loop detected: last one at %u "
-			       "indirect size %u\n",
-			       i, count);
-			return -EINVAL;
-		}
-		if (unlikely(!copy_from_iter_full(&desc, sizeof(desc), &from))) {  <------- iter desc from the indirect table, each desc can be controlled
-			vq_err(vq, "Failed indirect descriptor: idx %d, %zx\n",
-			       i, (size_t)vhost64_to_cpu(vq, indirect->addr) + i * sizeof desc);
-			return -EINVAL;
-		}
-		if (unlikely(desc.flags & cpu_to_vhost16(vq, VRING_DESC_F_INDIRECT))) {
-			vq_err(vq, "Nested indirect descriptor: idx %d, %zx\n",
-			       i, (size_t)vhost64_to_cpu(vq, indirect->addr) + i * sizeof desc);
-			return -EINVAL;
-		}
+Due to the triviality of the attack, proof of concept code is withheld 
+for the moment in order to allow users some time to test and install the 
+vendor patch.
 
-		if (desc.flags & cpu_to_vhost16(vq, VRING_DESC_F_WRITE))
-			access = VHOST_ACCESS_WO;
-		else
-			access = VHOST_ACCESS_RO;
+Report timeline
+===============
 
-		ret = translate_desc(vq, vhost64_to_cpu(vq, desc.addr),
-				     vhost32_to_cpu(vq, desc.len), iov + iov_count,      <---------- set desc.len to 0, translate_desc will return without error and ret == 0
-				     iov_size - iov_count, access);
-		if (unlikely(ret < 0)) {
-			if (ret != -EAGAIN)
-				vq_err(vq, "Translation failure %d indirect idx %d\n",
-					ret, i);
-			return ret;
-		}
-		/* If this is an input descriptor, increment that count. */
-		if (access == VHOST_ACCESS_WO) {
-			*in_num += ret;         <------------ because ret == 0, so the value of in_num not changed. (if in_num bigger than iov_size, will cause translate_desc return error)
-			if (unlikely(log)) {      <------------- when live migrate, the log buffer will not be NULL
-				log[*log_num].addr = vhost64_to_cpu(vq, desc.addr);   <-------- log buffer overflow, because log_num can be USHRT_MAX, but log buffer size is far below than USHRT_MAX
-				log[*log_num].len = vhost32_to_cpu(vq, desc.len);
-				++*log_num;
-			}
-		} else {
-			/* If it's an output descriptor, they're all supposed
-			 * to come before any input descriptors. */
-			if (unlikely(*in_num)) {
-				vq_err(vq, "Indirect descriptor "
-				       "has out after in: idx %d\n", i);
-				return -EINVAL;
-			}
-			*out_num += ret;
-		}
-	} while ((i = next_desc(vq, &desc)) != -1);
-	return 0;
-}
+The vendor was given a initial disclosure deadline of 2019-04-22. A one 
+week grace period was granted so that a fixed release could be available 
+at the time of disclosure.
 
-Function vhost_get_vq_desc also has above while loop which may cause log buffer overflow.
+2019-02-18: Initial disclosure to vendor with PoC and candidate patch
+2019-02-19: Vendor acknowledges receipt of report
+2019-03-12: Update requested
+2019-03-13: Vendor verifies vulnerability
+2019-03-15: Vendor assigns CVE ID
+2019-03-19: Follow-up, no response
+2019-04-15: Second follow-up
+2019-04-18: Vendor requests extension to disclosure date
+2019-04-22: One week extension granted
+2019-04-29: Vendor patch released
+2019-04-29: Public disclosure
 
-Mitigation:
-update to latest stable kernel 5.3 or apply the upstream patch.
-upstream patch: 
-https://github.com/torvalds/linux/commit/060423bfdee3f8bc6e2c1bac97de24d5415e2bc4
-https://git.kernel.org/pub/scm/linux/kernel/git/mst/vhost.git/commit/?h=for_linus&id=060423bfdee3f8bc6e2c1bac97de24d5415e2bc4
-
-About the Poof of concept:
-We(Tencent Blade Team) plan to publish simple reproduce steps of this vulnerability about a week later.
-
-Credit:
-The vulnerability was discovered by Peter Pi of Tencent Blade Team
-
----
-Cradmin of Tencent Blade Team
