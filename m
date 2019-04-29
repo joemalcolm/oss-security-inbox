@@ -1,32 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/21/2
-Message-ID: <87sgxmiflx.fsf@oldenburg2.str.redhat.com>
-Date: Mon, 21 Jan 2019 09:23:22 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: Hanno Böck <hanno@...eck.de>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Apache web server use after free bugs (unfixed)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/29/2
+Message-ID: <20190429191528.GA10231@eldamar.local>
+Date: Mon, 29 Apr 2019 21:15:28 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel: multiple issues
 Content-Type: text/plain; charset=utf-8
 
-* Hanno Böck:
+Hi Jann,
 
-> threading related error
-> =======================
->
-> In addition to the ASAN use after free reports, httpd logs threading
-> related errors:
->
-> AH00052: child pid [pid] exit signal Aborted (6)
-> apache2: tpp.c:84: __pthread_tpp_change_priority: Assertion `new_prio
-> == -1 || (new_prio >= fifo_min_prio && new_prio <= fifo_max_prio)'
-> failed.
+On Mon, Apr 29, 2019 at 02:56:06PM -0400, Jann Horn wrote:
+> == missing locking between ELF coredump code and userfaultfd VMA modification ==
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=04f5866e41fb70690e28397487d8bd8eea7d712a
+> https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.14.114
+> https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.19.37
+> https://cdn.kernel.org/pub/linux/kernel/v5.x/ChangeLog-5.0.10
+> https://bugs.chromium.org/p/project-zero/issues/detail?id=1790
+> CVE-2019-11599
 
-This can happen if the mutex data is corrupted, so it's possible this
-also caused by a use-after-free issue (if the memory is reallocated and
-overwritten before the mutex operation that causes the assertion
-failure).
+If I'm not mistaken, this was assigned already CVE-2019-3892,
+information from https://bugzilla.redhat.com/show_bug.cgi?id=1696015
 
-Did you observe this with the pool debugger only?
-
-Thanks,
-Florian
+Regards,
+Salvatore
