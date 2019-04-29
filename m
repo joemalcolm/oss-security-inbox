@@ -1,4 +1,9 @@
-Received: (qmail 19939 invoked by uid 550); 18 Dec 2024 15:10:01 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1711" "Monday" "29" "April" "2019" "14:56:06" "-0400" "Jann Horn" "jannhorn@googlemail.com" nil "29" nil "^Date:" nil nil "4" nil nil (number mark "U       jannhorn@goo Apr 29   29/1711  " thread-indent "\"[oss-security] Linux kernel: multiple issues\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Linux kernel: multiple issues" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 8062 invoked by uid 550); 29 Apr 2019 19:03:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,100 +11,71 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 7953 invoked from network); 18 Dec 2024 13:23:10 -0000
-Authentication-Results: apache.org; auth=none
-X-Gm-Message-State: AOJu0YzJtD+9VsfV59Kn5QD9zBRKRIDursG9A7YyG39PV+n4yyLohEE6
-	wSnGMhYOploEW64G8MEIJda7IUBch2ONzxt3Z2E/UI8yCIVSmkOZc4M7v9X9Dt91zNbab1v6KfW
-	mneNGtOS5M7H3yVUY1x6OCe2YHLI=
-X-Google-Smtp-Source: AGHT+IGY2QPgA/IgxaDNEMhE1eRJSfOhc9K8+au2h8hjzNuvy+/OpuIX6O65jo/bD5gDbv97UJk7C3GbgBoDjHJYpMg=
-X-Received: by 2002:a05:6512:15a8:b0:540:2f1e:90e9 with SMTP id
- 2adb3069b0e04-541f46cc1eamr951131e87.54.1734528178124; Wed, 18 Dec 2024
- 05:22:58 -0800 (PST)
+Received: (qmail 32174 invoked from network); 29 Apr 2019 18:56:47 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=KzRGvE87am4FAsJPpwNFZq6fx2c5o12TgEJiwywA4Pk=;
+        b=Ab/4h/+NjqbM9+dGOOdoDavuSAn7vuGi96vsuSAQ+Vxz2K0/U7CrXSBthh8xsRdRvE
+         PgIJ/d4OsHkxo82ZOmWU4t2W3GJQ7Kk75FIhEOegxKrvNDh+BYYlg5AhldC2wRideyPL
+         WGRA9FPYQcy88bvHRCk6LVKssFtsXj7lmThPbbTiTdXsdUEhdKSoyuAz4xMa9Al2Wzjn
+         67BNtU2iCXWp1R+STBqIalB0UJE8AHdYWF7Jsc5UO5v/2fh76a0YDaENUsCJ0GvrSd40
+         KSTBs1P5gaQA6F4k0sNTS5nSAu0iyNKfa1ZpFhq4Japu6uCs6pE4d895ml3O9B9pFcgm
+         ldjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=KzRGvE87am4FAsJPpwNFZq6fx2c5o12TgEJiwywA4Pk=;
+        b=gyE3lNReoyedCx0CE9qozhOJSssd1tuxKmp1Z/3g2cq5rBNMnL7lB9jxJWsOQHfMLC
+         nDa3dMF3ua02WGBqd2QiJCqoQ3LrlahsMpfBLgkOyuGkiAibAG+OrSidV4mMVLQMAOn3
+         VlOjfmj1jzB8ANBN02Hb703rMVitLdlPKE++A4KtL8b+xaICReMpmzWdIK/1bRKOPWRL
+         b9KZDbESvWgWDn1ybi2LC+4Yjw1DoCAhR+VQjb92LoHld3dEXPpoFD83n3Kk5KcxHc8E
+         ZiT5tUMq107uKOMYkxd28SSrlEyVPKxPFuBedAOjpGLJfhUfeZWXRR2AZRehcBUeeJ5P
+         vcJA==
+X-Gm-Message-State: APjAAAVYM/FbYjldQiWNo6K8w0fYtKr7W0Sm14V6gPuVnmzTNyOV1Ly4
+	cL9x1vgdrkzrkX5t7cgHXAZxpmo85RY=
+X-Google-Smtp-Source: APXvYqy/oeUj3VQrk/Q3r2BUt5K6shLio+y+KWVnqZPbkP6LhOUVQt5xEZwbe6y6A3mdnwItkD6FQg==
+X-Received: by 2002:aca:ab12:: with SMTP id u18mr370835oie.48.1556564194616;
+        Mon, 29 Apr 2019 11:56:34 -0700 (PDT)
+X-Received: by 2002:aca:c5d7:: with SMTP id v206mr253887oif.157.1556564193065;
+ Mon, 29 Apr 2019 11:56:33 -0700 (PDT)
 MIME-Version: 1.0
-From: Manikumar <manikumar@apache.org>
-Date: Wed, 18 Dec 2024 18:52:45 +0530
-X-Gmail-Original-Message-ID: <CAMVt_AwsEegeGHs7S8kEUxyyik1udHOyto+7-R6THm3X8=yfog@mail.gmail.com>
-Message-ID: <CAMVt_AwsEegeGHs7S8kEUxyyik1udHOyto+7-R6THm3X8=yfog@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000e906c506298b4fbc"
-Subject: [oss-security] CVE-2024-56128: Apache Kafka: SCRAM authentication vulnerable to
- replay attacks when used without encryption
-
---000000000000e906c506298b4fbc
+X-Gmail-Original-Message-ID: <CAG48ez04TXacCC8-PSw_gHofAux6tfxXBU6EMGpoqL=KzevKuw@mail.gmail.com>
+Message-ID: <CAG48ez04TXacCC8-PSw_gHofAux6tfxXBU6EMGpoqL=KzevKuw@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Date: Mon, 29 Apr 2019 14:56:06 -0400
+From: Jann Horn <jannhorn@googlemail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Linux kernel: multiple issues
+To: oss-security@lists.openwall.com
 
-Severity: low
+Here are several issues that became public somewhat recently:
 
-Affected versions:
+== page->_refcount overflow via FUSE with ~140GiB RAM usage ==
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=6b3a707736301c2128ca85ce85fb13f60b5e350a
+https://bugs.chromium.org/p/project-zero/issues/detail?id=1752
+CVE-2019-11487
+NOTE: not relevant (AFAIK) on machines with normal amounts of physical memory
 
-- Apache Kafka 0.10.2.0 before 3.7.2
-- Apache Kafka 3.8.0
+== missing locking in Siemens R3964 line discipline ==
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c7084edc3f6d67750f50d4183134c4fb5712a5c8
+https://cdn.kernel.org/pub/linux/kernel/v5.x/ChangeLog-5.0.8
+https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.19.35
+https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.14.112
+https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.9.169
+https://bugs.chromium.org/p/project-zero/issues/detail?id=1752
+CVE-2019-11486
+NOTE: Rather than fixing the various issues in the driver, the commit
+marks the driver as BROKEN to keep people from building it. If you
+actually use the Siemens R3964 line discipline for talking to
+Programmable Logic Controllers, or something like that, you may want
+to reach out to gregkh and help test things - see the commit message.
 
-Description:
-
-Incorrect Implementation of Authentication Algorithm in Apache Kafka's
-SCRAM implementation.
-
-Issue Summary:
-Apache Kafka's implementation of the Salted Challenge Response
-Authentication Mechanism (SCRAM) did not fully adhere to the
-requirements of RFC 5802 [1].
-Specifically, as per RFC 5802, the server must verify that the nonce
-sent by the client in the second message matches the nonce sent by the
-server in its first message.
-However, Kafka's SCRAM implementation did not perform this validation.
-
-Impact:
-This vulnerability is exploitable only when an attacker has plaintext
-access to the SCRAM authentication exchange. However, the usage of
-SCRAM over plaintext is strongly
-discouraged as it is considered an insecure practice [2]. Apache Kafka
-recommends deploying SCRAM exclusively with TLS encryption to protect
-SCRAM exchanges from interception [3].
-Deployments using SCRAM with TLS are not affected by this issue.
-
-How to Detect If You Are Impacted:
-If your deployment uses SCRAM authentication over plaintext
-communication channels (without TLS encryption), you are likely
-impacted.
-To check if TLS is enabled, review your server.properties
-configuration file for listeners property. If you have SASL_PLAINTEXT
-in the listeners, then you are likely impacted.
-
-Fix Details:
-The issue has been addressed by introducing nonce verification in the
-final message of the SCRAM authentication exchange to ensure
-compliance with RFC 5802.
-
-Affected Versions:
-Apache Kafka versions 0.10.2.0 through 3.9.0, excluding the fixed
-versions below.
-
-Fixed Versions:
-3.9.0
-3.8.1
-3.7.2
-
-Users are advised to upgrade to 3.7.2 or later to mitigate this issue.
-
-Recommendations for Mitigation:
-Users unable to upgrade to the fixed versions can mitigate the issue by:
-- Using TLS with SCRAM Authentication:
-Always deploy SCRAM over TLS to encrypt authentication exchanges and
-protect against interception.
-- Considering Alternative Authentication Mechanisms:
-Evaluate alternative authentication mechanisms, such as PLAIN,
-Kerberos or OAuth with TLS, which provide additional layers of
-security.
-
-Credit:
-
-Tim Fox (timvolpe@gmail.com) (finder)
-Vikas Singh <vikas@confluent.io> (remediation developer)
-
-References:
-https://datatracker.ietf.org/doc/html/rfc5802https://datatracker.ietf.org/doc/html/rfc5802#section-9https://kafka.apache.org/documentation/#security_sasl_scram_securityhttps://kafka.apache.org/https://www.cve.org/CVERecord?id=CVE-2024-56128
-
---000000000000e906c506298b4fbc--
+== missing locking between ELF coredump code and userfaultfd VMA modification ==
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=04f5866e41fb70690e28397487d8bd8eea7d712a
+https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.14.114
+https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.19.37
+https://cdn.kernel.org/pub/linux/kernel/v5.x/ChangeLog-5.0.10
+https://bugs.chromium.org/p/project-zero/issues/detail?id=1790
+CVE-2019-11599
