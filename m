@@ -1,23 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/17/4
-Message-ID: <87ftkuaioq.fsf@alyssa.is>
-Date: Tue, 17 Sep 2019 18:20:21 +0000
-From: Alyssa Ross <hi@...ssa.is>
-To: Hanno Böck <hanno@...eck.de>, oss-security@...ts.openwall.com
-Subject: Re: OpenDMARC buffer overflows
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/30/2
+Message-ID: <2130778079.2289889.1556620714475@mail.yahoo.com>
+Date: Tue, 30 Apr 2019 10:38:34 +0000 (UTC)
+From: Andrea Cosentino <ancosen1985@...oo.com>
+To: Dev <dev@...el.apache.org>, Users <users@...el.apache.org>,  Apache Security Team <security@...che.org>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>,  "Colm O. HEigeartaigh" <coheigea@...che.org>
+Subject: [SECURITY] New security advisory CVE-2019-0194 released for Apache Camel
 Content-Type: text/plain; charset=utf-8
 
-Hanno Böck <hanno@...eck.de> writes:
+A new security advisory has been released for Apache Camel, that is fixed in
+the recent 2.21.5, 2.22.3 and 2.23.1 releases:
 
-> In light of the recent OpenDMARC issue I had a look at their Github PR
-> tracker. This one
-> https://github.com/trusteddomainproject/OpenDMARC/pull/45
-> caught my attention.
+CVE-2019-0194: Apache Camel's File is vulnerable to directory traversal
 
-So a signature bypass, a buffer overflow, and no activity in years
-despite vulnerabilities having been reported months ago?
+Severity: MEDIUM
 
-Certainly doesn't look like software that people should be relying on
-for security...
+Vendor: The Apache Software Foundation
 
-Download attachment "signature.asc" of type "application/pgp-signature" (833 bytes)
+Versions Affected: Camel 2.21.0 to 2.21.3, Camel 2.22.0 to 2.22.2 and Camel 2.23.0 The unsupported Camel 2.x (2.19 and earlier) versions may be also affected.
+
+Description: Apache Camel's File is vulnerable to directory traversal
+
+Mitigation: 2.21.x users should upgrade to 2.21.5, 2.22.x users should upgrade to 2.22.3 and Camel 2.23.x users should upgrade to 2.23.1 The JIRA tickets: https://issues.apache.org/jira/browse/CAMEL-13042 refers to the various commits that resovoled the issue, and have more details.
+
+Credit: This issue was discovered by Colm O. HEigeartaigh <coheigea at apache dot org> from Apache Software Foundation
+
+On behalf of the Apache Camel PMC
+
+--
+Andrea Cosentino 
+----------------------------------
+Apache Camel PMC Chair
+Apache Karaf Committer
+Apache Servicemix PMC Member
+Email: ancosen1985@...oo.com
+Twitter: @oscerd2
+Github: oscerd
