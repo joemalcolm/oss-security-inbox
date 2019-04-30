@@ -1,59 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/18/4
-Message-ID: <543049085.1124.1552945509406@appsuite-guard.open-xchange.com>
-Date: Mon, 18 Mar 2019 22:45:09 +0100 (CET)
-From: Erik Winkels <erik.winkels@...n-xchange.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/30/1
+Message-ID: <20190430084031.uj3462xm5drpdqmk@lorien.valinor.li>
+Date: Tue, 30 Apr 2019 10:40:31 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: PowerDNS Security Advisory 2019-03
+Subject: Re: Linux kernel: multiple issues
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Hi,
 
-Today we released PowerDNS Authoritative Server 4.1.7 and 4.0.7, fixing an important security issue in the HTTP remote backend that has recently been reported to us [1].
+On Mon, Apr 29, 2019 at 09:15:28PM +0200, Salvatore Bonaccorso wrote:
+> Hi Jann,
+> 
+> On Mon, Apr 29, 2019 at 02:56:06PM -0400, Jann Horn wrote:
+> > == missing locking between ELF coredump code and userfaultfd VMA modification ==
+> > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=04f5866e41fb70690e28397487d8bd8eea7d712a
+> > https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.14.114
+> > https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.19.37
+> > https://cdn.kernel.org/pub/linux/kernel/v5.x/ChangeLog-5.0.10
+> > https://bugs.chromium.org/p/project-zero/issues/detail?id=1790
+> > CVE-2019-11599
+> 
+> If I'm not mistaken, this was assigned already CVE-2019-3892,
+> information from https://bugzilla.redhat.com/show_bug.cgi?id=1696015
 
-The issue is that PowerDNS Authoritative Server, when the HTTP remote backend is used in RESTful mode (without post=1 set), can be tricked by a remote user into connecting to an attacker-specified HTTP server instead of the configured one, via a crafted DNS query.
+FTR, CVE-2019-11599 was kept and CVE-2019-3892 REJECTed as reservation
+duplicate of CVE-2019-11599.
 
-This can be used to cause a denial of service by preventing the remote backend from getting a response, content spoofing if the attacker can time its own query so that subsequent queries will use an attacker-controlled HTTP server instead of the configured one, and possibly information disclosure if the Authoritative Server has access to internal servers.
-
-This issue has been assigned CVE-2019-3871.
-
-PowerDNS Authoritative up to and including 4.1.6 is affected.
-Please note that at the time of writing, PowerDNS Authoritative 3.4 and below are no longer supported, as described in [2].
-
-The full security advisory is provided below, and can also be found at [3].
-
-We would like to thank Adam Dobrawy, Frederico Silva and GregoryBrzeski from HyperOne.com for finding and subsequently reporting this issue!
-
-Minimal patches are available at [4].
-
-[1]: https://github.com/PowerDNS/pdns/issues/7573
-[2]: https://doc.powerdns.com/authoritative/appendices/EOL.html
-[3]: https://docs.powerdns.com/authoritative/security-advisories/powerdns-advisory-2019-03.html
-[4]: https://downloads.powerdns.com/patches/2019-03/
-
-Best regards,
-Erik Winkels
-
-PowerDNS Security Advisory 2019-03: Insufficient validation in the HTTP remote backend
-======================================================================================
--  CVE: CVE-2019-3871
--  Date: March 18th 2019
--  Affects: PowerDNS Authoritative up to and including 4.1.6
--  Not affected: 4.1.7, 4.0.7
--  Severity: High
--  Impact: Denial of Service, Information Disclosure, Content spoofing
--  Exploit: This problem can be triggered via crafted queries
--  Risk of system compromise: No
--  Solution: Upgrade to a non-affected version
-
-An issue has been found in PowerDNS Authoritative Server when the HTTP remote backend is used in RESTful mode (without post=1 set), allowing a remote user to cause the HTTP backend to connect to an attacker-specified host instead of the configured one, via a crafted DNS query.
-This can be used to cause a denial of service by preventing the remote backend from getting a response, content spoofing if the attacker can time its own query so that subsequent queries will use an attacker-controlled HTTP server instead of the configured one, and possibly information disclosure if the Authoritative Server has access to internal servers.
-
-This issue has been assigned CVE-2019-3871.
-
-PowerDNS Authoritative up to and including 4.1.6 is affected.
-Please note that at the time of writing, PowerDNS Authoritative 3.4 and below are no longer supported, as described in https://doc.powerdns.com/authoritative/appendices/EOL.html .
-
-We would like to thank Adam Dobrawy, Frederico Silva and Gregory Brzeski from HyperOne.com for finding and subsequently reporting this issue!
-
-Download attachment "signature.asc" of type "application/pgp-signature" (476 bytes)
+Regards,
+Salvatore
