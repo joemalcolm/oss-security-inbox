@@ -1,15 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/02/1
-Message-ID: <1514907576.6426295.1564738554354.JavaMail.zimbra@redhat.com>
-Date: Fri, 2 Aug 2019 05:35:54 -0400 (EDT)
-From: Vladis Dronov <vdronov@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2019-10207: linux kernel: bluetooth: hci_uart: 0x0 address execution as nonprivileged user
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/30/8
+Message-ID: <2614535.bqnvQ5soFs@golgafrichnam>
+Date: Tue, 30 Apr 2019 17:23:22 +0200
+From: Martin <martin_s@...che.org>
+To: users@...hiva.apache.org, users@...en.apache.org, announce@...che.org
+Cc: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: [SECURITY] CVE-2019-0214: Apache Archiva arbitrary file write and delete on the server
 Content-Type: text/plain; charset=utf-8
 
-The fix was accepted upstream as:
+CVE-2019-0214: Apache Archiva arbitrary file write and delete on the server
 
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=b36a1552d7319bbfd5cf7f08726c23c5c66d4f73
+Severity: Medium
 
-Best regards,
-Vladis Dronov | Red Hat, Inc. | The Core Kernel | Senior Software Engineer
+Vendor:
+The Apache Software Foundation
+
+Versions Affected:
+    Apache Archiva 2.0.0 - 2.2.3
+    The unsupported versions 1.x are also affected.  
+
+It is possible to write files to the archiva server at arbitrary locations by using the artifact upload mechanism. 
+Existing files can be overwritten, if the archiva run user has appropriate permission on the filesystem for the target file.
+
+Mitigation:
+  It is highly recommended to upgrade to Archiva 2.2.4 or higher, where additional validations are implemented to prevent such malicious parameter values.
+  As intermediate action you may reduce the number of users that are allowed to upload to archiva and make sure, that the archiva run user may have only 
+  write permission to the directories needed.
+
+References:
+http://archiva.apache.org/security.html#CVE-2019-0214
+
+The newest Archiva version can be downloaded from:
+http://archiva.apache.org/download.cgi
+
+
+
