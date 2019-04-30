@@ -1,93 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/03/7
-Message-ID: <CAH8yC8=Tt2UDmkoQE0GwjZbvhGjePf=S38Ke=GLDfbt8JtMp=Q@mail.gmail.com>
-Date: Thu, 3 Jan 2019 17:44:17 -0500
-From: Jeffrey Walton <noloader@...il.com>
-To: Torbjörn Granlund <tg@...lib.org>
-Cc: oss-security@...ts.openwall.com, gmp-bugs@...lib.org
-Subject: Re: Asserts considered harmful (or GMP spills its sensitive information)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/30/7
+Message-ID: <2048242.ks9QkeOCCd@golgafrichnam>
+Date: Tue, 30 Apr 2019 17:18:58 +0200
+From: Martin <martin_s@...che.org>
+To: users@...hiva.apache.org, users@...en.apache.org, announce@...che.org
+Cc: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: [SECURITY] CVE-2019-0213: Apache Archiva Stored XSS
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jan 3, 2019 at 4:46 PM Torbjörn Granlund <tg@...lib.org> wrote:
->
-> Jeffrey Walton <noloader@...il.com> writes:
->
->   Here's what I witness on a BananaPi and a couple of other boards. Can
->   you provide info on the ARM boards you are using? I have about 8 of
->   them for testing, and I may be able to duplicate your [successful]
->   result.
->
-> Marco and others have told you to read the GMP manual.  People have
-> explained what you do wrong and it is clear that you know very well why
-> your CFLAGS messing breaks things.  Yet, you insist on spreading the lie
-> that GMP "does not build".
+CVE-2019-0213: Apache Archiva Stored XSS
 
-You have the build script. It is called test-gmp.sh. There's nothing
-special about it. It's a straight configure; make; make install. It
-bears witness to the errors GMP's configuration produces.
+Severity: Low
 
-I'm not sure how that is spreading lies.
+Vendor:
+The Apache Software Foundation
 
-When I said, "ARM A-32 does not work at the moment due to GMP build
-errors", it was a statement of fact to explain why ARM A-32 was not
-tested. It may speak to a broken configuration script, but a broken
-configure script does not leak sensitive information. It is really not
-worth discussing here.
+Versions Affected:
+    Apache Archiva 2.0.0 - 2.2.3
+    The unsupported versions 1.x are also affected.  
 
->   Returning a failure from mpn_sec_powm would be a most welcomed
->   improvement.
->
-> You have repeated this several times already.
+It may be possible to store malicious XSS code into central configuration entries, i.e. the logo URL. 
+The vulnerability is considered as minor risk, as only users with admin role can change the configuration, or the communication 
+between the browser and the Archiva server must be compromised. 
 
-Actually, that was the first time I suggested it.
+Mitigation:
+  All users are recommended to upgrade to Archiva 2.2.4 or higher, 
 
-> The GMP API is what it is.  If you don't like it, well, we're so sorry.
+References:
+http://archiva.apache.org/security.html#CVE-2019-0213
 
-Yes, it certainly is. It is the cause of the troubles for some software.
+The newest Archiva version can be downloaded from:
+http://archiva.apache.org/download.cgi
 
-Some software probably does not care and can get along fine with
-crashing. For example, I don't really care much if Notepad or Paint
-crashes because it is not handling sensitive information.
 
-Vincent and Halfdog talked about complimentary security controls to
-remediate the information leak. However, their discussions apply to
-some enterprises and take a considerable amount of knowledge beyond
-"disable coredumps".
 
-What their discussion has not touched upon is:
-
-1. not all enterprises have knowledgeable engineers
-2. not all applications are enterprise
-3. not all security controls are available
-
-Item (1) is self explanatory. Sometimes there are A players, and
-sometimes there are B and C team players.
-
-For item (2), there are other non-enterprise users, like folks using
-Android, iOS and Windows devices. iOS devices don't allow you to
-control crash dumps. They are written and retrievable. About all you
-can do is decline sending them. I also believe they are sync'd so a
-dump gets transferred to a Mac or MacBook. Yet more egress...
-
-For item (3), there are often missing complimentary security controls.
-For example, a TPM is available on low-end netbooks. A Windows machine
-could encrypt the filesystem so the crash dump is also encrypted.
-However, a user running Windows 10 Home does not have Bitlocker
-available. It is an upsell item.
-
->    <other nonsense removed>
-
-> We've had enough of your nagging and aggressiveness and your threats in
-> private email.  Your messages to the GMP lists will henceforth be
-> automatically discarded.
-
-Hugh? As a courtesy gmp-bugs was CC'd on messages to the list. And as
-a courtesy I emailed you offlist letting you know I was going to
-discuss this in other forums.
-
-Claiming a discussion of insecure use of assert is aggressive or
-nagging is a bit tenuous. So is claiming a courtesy email is
-threatening. But I understand GMP is your baby and criticism is
-probably not welcomed. My apologies for that.
-
-Jeff
