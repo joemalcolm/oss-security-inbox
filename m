@@ -1,43 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/07/25/7
-Message-ID: <d576c29f-32ca-bd1f-a0e8-5558774e52c6@gentoo.org>
-Date: Thu, 25 Jul 2019 23:01:08 +0200
-From: Kristian Fiskerstrand <k_f@...too.org>
-To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
-Subject: Re: Statistics for distros lists updated for 2019Q2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/30/4
+Message-ID: <be36326e-6705-28e1-a1c3-6e8e9203af04@ruhr-uni-bochum.de>
+Date: Tue, 30 Apr 2019 14:03:26 +0200
+From: Marcus Brinkmann <marcus.brinkmann@...r-uni-bochum.de>
+To: oss-security@...ts.openwall.com
+Subject: Spoofing OpenPGP and S/MIME Signatures in Emails (multiple clients)
 Content-Type: text/plain; charset=utf-8
 
-On 25.07.2019 21:23, Solar Designer wrote:
-> Hi,
-> 
-> On Thu, Jul 25, 2019 at 08:54:55PM +0200, Kristian Fiskerstrand wrote:
->> Apologies for the delay, and a short notice that the statistics for the
->> distros list have been updated for the 2nd quarter of 2019 at
->> http://oss-security.openwall.org/wiki/mailing-lists/distros/stats
-> 
-> You have two entries for Exim CVE-2019-10149, which is wrong.  Also,
-> some of the dates are wrong (e.g., the date of Exim's pre-announcement
-> to oss-security is irrelevant).  Please combine this into one entry and
-> update the dates.  I guess the range of dates should be from 2019-05-28
-> (initial notification to distros) to 2019-06-05 (full publication).
-> 
+We demonstrate how an attacker can spoof email signatures in 70% of the
+tested clients, including Thunderbird, Outlook with GpgOL, KMail,
+Evolution, Trojitá, Apple Mail with GPGTools, Airmail, K-9 Mail,
+Roundcube and Mailpile.
 
-Thanks for the feedback, I was a bit unsure how to handle this given two
-different reporters.
+Title: "Johnny, you are fired! – Spoofing OpenPGP and S/MIME Signatures
+in Emails"
 
-> Correcting this will probably affect the averages.
+To appear at USENIX Security '19. Joint work with Jens Müller, Marcus
+Brinkmann, Damian Poddebniak, Hanno Böck, Sebastian Schinzel, Juraj
+Somorovsky, Jörg Schwenk.
 
-Indeed, moving this one into one entry and including full disclosure as
-end of timeline changes the avg from 6.31 to 6.69 for may
+PDF:
+https://github.com/RUB-NDS/Johnny-You-Are-Fired/raw/master/paper/johnny-fired.pdf
 
-Stats updated.
+Artifacts: https://github.com/RUB-NDS/Johnny-You-Are-Fired
 
+Tracking numbers: CVE-2018-18509, CVE-2018-12019, CVE-2018-12020,
+CVE-2017-17848, CVE-2018-15586, CVE-2018-15587, CVE-2018-15588,
+CVE-2019-8338, CVE-2018-12356, CVE-2018-12556, CVE-2019-728
+
+Thanks!
+Marcus
 
 -- 
-Kristian Fiskerstrand
-OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
-fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
+Dipl.-Math. Marcus Brinkmann
 
+Lehrstuhl für Netz- und Datensicherheit
+Ruhr Universität Bochum
+Universitätsstr. 150, Geb. ID 2/461
+D-44780 Bochum
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Telefon: +49 (0) 234 / 32-25030
+http://www.nds.rub.de/chair/people/mbrinkmann
