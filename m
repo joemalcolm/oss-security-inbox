@@ -1,68 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/03/28/2
-Message-Id: <65BCED7D-3903-40C3-97C7-27E0BF1E7A48@beckweb.net>
-Date: Thu, 28 Mar 2019 19:53:45 +0100
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/30/3
+Message-ID: <CALv8orF=CQRBqzOj_P06KV6Hasg60WLZ3jOg=WDJUXSzwNu7SQ@mail.gmail.com>
+Date: Tue, 30 Apr 2019 16:11:25 +0530
+From: Pramod Rana <varchashva@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Multiple vulnerabilities in Jenkins plugins
+Subject: Cross Site Scripting | Alkacon OpenCMS v10.5.4 and before
 Content-Type: text/plain; charset=utf-8
 
+Description
+ - OpenCMS v10.5.4 and before is vulnerable to cross site scripting in New
+User module for parameter First Name and Last Name
+ - Impacted URL is http://
+[your_webserver_ip]/opencms/system/workplace/admin/accounts/user_new.jsp
+ - Payload used is "TestXSS<img+src=x+onmouseover=alert(document.domain)"
 
+Further details
+ - https://github.com/alkacon/opencms-core/issues/635
 
-> On 25. Mar 2019, at 16:09, Daniel Beck <ml@...kweb.net> wrote:
-> 
-> SECURITY-1353
-> Sandbox projection in the Script Security and Pipeline: Groovy Plugins 
-> could be circumvented through methods supporting type casts and type 
-> coercion. This allowed attackers to invoke constructors for arbitrary types.
-
-CVE-2019-1003040 (Script Security) and CVE-2019-1003041 (Pipeline: Groovy)
-
-> SECURITY-1361
-> Lockable Resources Plugin did not properly escape resource names in 
-> generated JavaScript code, thus leading to a cross-site scripting (XSS) 
-> vulnerability.
-
-CVE-2019-1003042
-
-> SECURITY-976
-> [Slack Notification Plugin] did not perform permission checks on a method 
-> implementing form validation. This allowed users with Overall/Read access 
-> to Jenkins to connect to an attacker-specified URL using attacker-specified 
-> credentials IDs obtained through another method, capturing credentials 
-> stored in Jenkins.
-
-CVE-2019-1003043
-
-> Additionally, this form validation method did not require POST requests, 
-> resulting in a cross-site request forgery vulnerability.
-
-CVE-2019-1003044
-
-> SECURITY-846
-> ECS Publisher Plugin stored the API token unencrypted in jobs' config.xml 
-> files and its global configuration file on the Jenkins master. This token 
-> could be viewed by users with Extended Read permission, or access to the 
-> master file system.
-
-CVE-2019-1003045
-
-> SECURITY-992
-> A missing permission check in multiple form validation methods in Fortify 
-> on Demand Uploader Plugin allowed users with Overall/Read permission to 
-> initiate a connection test to an attacker-specified server.
-
-CVE-2019-1003047
-
-> Additionally, the form validation methods did not require POST requests, 
-> resulting in a CSRF vulnerability.
-
-CVE-2019-1003046
-
-> SECURITY-1089
-> PRQA Plugin stored a password unencrypted in its global configuration file 
-> on the Jenkins master. This password could be viewed by users with access 
-> to the master file system.
-
-CVE-2019-1003048
+Already requested for CVE, yet to receive it.
 
