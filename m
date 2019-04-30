@@ -1,103 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/05/1
-Message-ID: <723fe02d-b713-558d-9920-d334a325213b@open-xchange.com>
-Date: Tue, 5 Feb 2019 15:02:43 +0200
-From: Aki Tuomi <aki.tuomi@...n-xchange.com>
-To: oss-security@...ts.openwall.com, full-disclosure@...ts.openwall.com, dovecot <dovecot@...ecot.org>
-Subject: CVE-2019-3814: Suitable client certificate can be used to login as other user
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/30/6
+Message-ID: <1076442947.215.1556631305811@appsuite-dev-guard.open-xchange.com>
+Date: Tue, 30 Apr 2019 16:35:05 +0300 (EEST)
+From: Aki Tuomi <aki.tuomi@...ecot.fi>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "fulldisclosure@...lists.org" <fulldisclosure@...lists.org>
+Subject: Multiple vulnerabilities in Dovecot 2.3
 Content-Type: text/plain; charset=utf-8
 
-Dear subscribers,
+Dear subscribers, we have been made aware of two critical vulnerabilities in Dovecot 2.3. Please find patches attached for 2.3.5.2.
 
-we're sharing our latest advisory with you and would like to thank
-everyone who contributed in finding and solving those vulnerabilities.
-Feel free to join our bug bounty programs (open-xchange, dovecot,
-powerdns) at HackerOne. Please find patches for v2.2.36 and v2.3.4 attached,
-or download new version from https://dovecot.org
-
-Yours sincerely,
+---
 Aki Tuomi
-Open-Xchange Oy
+Open-Xchange oy
 
+------
+
+Open-Xchange Security Advisory 2019-04-30
 
 Product: Dovecot
-Vendor: Open-Xchange Oy
-Internal reference: DOV-2890 (Bug ID)
-Vulnerability type: Improper Authentication - Generic (CWE287)
-Vulnerable versions: 1.1.0 - 2.2.36 and 2.3.0 - 2.3.4
-Vulnerable component: authentication
+Vendor: OX Software GmbH
+
+Internal reference: DOV-3212 (Bug ID)
+Vulnerability type: CWE-476
+Vulnerable version: 2.3.0 - 2.3.5.2
+Vulnerable component: submission-login
 Report confidence: Confirmed
+Researcher credits: Marcelo Coelho
 Solution status: Fixed by Vendor
-Fixed versions: 2.2.36.1, 2.3.4.1
-Vendor notification: 2019-01-16
-Solution date: 2019-01-20
-Public disclosure: 2019-02-05
-Researcher Credits: https://hackerone.com/halfdog
-CVE reference: CVE-2019-3814
-CVSS: 8.2 (AV:N/AC:H/PR:L/UI:N/S:C/C:H/I:H/A:N)
+Fixed version: 2.3.6
+Vendor notificatio: 2019-03-11
+Solution date: 2019-04-23
+Public disclosure: 2019-04-30Q
+CVE reference: CVE-2019-11494
+CVSS: 7.5 (CVSS3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)
 
 Vulnerability Details:
-Normally Dovecot is configured to authenticate
-imap/pop3/managesieve/submission clients using regular username/password
-combination. Some installations have also required clients to present a
-trusted SSL certificate on top of that. It's also possible to configure
-Dovecot to take the username from the certificate instead of from the
-user provided authentication. It's also possible to avoid having a
-password at all, only trusting the SSL certificate.
+Submission-login crashes with signal 11 due to null pointer access when authentication is aborted by disconnecting. This can lead to denial-of-service attack by persistent attacker(s).
 
-If the provided trusted SSL certificate is missing the username field,
-Dovecot should be failing the authentication. However, the earlier
-versions will take the username from the user provided authentication
-fields (e.g. LOGIN command). If there is no additional password
-verification, this allows the attacker to login as anyone else in the
-system.
+Workaround:
+There is no available workaround for this issue.
 
-This affects only installations using:
+Solution:
+Operators should upgrade to a fixed version.
 
-auth_ssl_require_client_cert = yes
-auth_ssl_username_from_cert = yes
+----
 
-Attacker must also have access to a valid trusted certificate without
-the ssl_cert_username_field in it. The default is commonName, which
-almost certainly exists in all certificates. This could happen for
-example if ssl_cert_username_field is a field that normally doesn't
-exist, and attacker has access to a web server's certificate (and key),
-which is signed with the same CA.
+Open-Xchange Security Advisory 2019-04-30
+Product: Dovecot
+Vendor: OX Software GmbH
 
-Attack can be migitated by having the certificates with proper Extended
-Key Usage, such as 'TLS Web Server' and 'TLS Web Server Client'.
+Internal reference: DOV-3223 (Bug ID)
+Vulnerability type: CWE-617
+Vulnerable version: 2.3.0 - 2.3.5.2
+Vulnerable component: submission-login
+Report confidence: Confirmed
+Solution status: Fixed by Vendor
+Fixed version: 2.3.6
+Vendor notification: 2019-03-11
+Solution date: 2019-04-23
+Public disclosure: 2019-04-30
+CVE reference: CVE-2019-11499
+CVSS: 7.5 (CVSS3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)
 
-Also, ssl_cert_username_field setting was ignored with external SMTP
-AUTH, because none of the MTAs (Postfix, Exim) currently send the
-cert_username field. This may have allowed users with trusted
-certificate to specify any username in the authentication. This does not
-apply to Dovecot Submission service.
+Vulnerability Details:
+Submission-login crashes when authentication is started over TLS secured channel and invalid authentication message is sent. This can lead to denial-of-service attack by persistent attacker(s).
 
-Proof of concept
+Workaround:
+Authentication crash can be avoided if authentication is done without TLS.
 
-Create a CA certificate for signing, and sign a certificate with missing
-commoName attribute.
+Solution:
+Operators should upgrade to a fixed version.
+View attachment "0001-submission-login-Remove-unused-client-pending_startt.patch" of type "text/x-patch" (843 bytes)
 
-With following configuration
+View attachment "0002-submission-login-client-authenticate-Fix-crash-occur.patch" of type "text/x-patch" (1391 bytes)
 
-passdb {
-    driver = static
-    arguments = nopassword
-}
+View attachment "0003-lib-smtp-smtp-server-cmd-auth-Fix-AUTH-response-erro.patch" of type "text/x-patch" (1466 bytes)
 
-ssl_ca =</path/to/ca.pem
-auth_ssl_require_client_cert = yes
-auth_ssl_username_from_cert = yes
-
-You are able to log in as any user with this certificate using following
-commands:
-
-openssl s_client -connect server:port -cert /path/to/cert -key /path/to/key
-a LOGIN anyusername anypassword
-
-
-Download attachment "cve-2019-3814-dovecot-2.2.tgz" of type "application/x-compressed-tar" (1816 bytes)
-
-Download attachment "cve-2019-3814-dovecot-2.3.tgz" of type "application/x-compressed-tar" (1858 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (476 bytes)
