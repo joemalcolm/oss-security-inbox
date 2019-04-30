@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2603" "Wednesday" "21" "April" "2021" "16:13:32" "+0200" "Daniel Beck" "ml@beckweb.net" nil "76" "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil "4" nil nil (number mark "U       ml@beckweb.n Apr 21   76/2603  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["538" "Tuesday" "30" "April" "2019" "16:11:25" "+0530" "Pramod Rana" "varchashva@gmail.com" nil "16" nil nil nil nil "4" nil nil (number mark "U       varchashva@g Apr 30   16/538   " thread-indent "\"[oss-security] Cross Site Scripting | Alkacon OpenCMS v10.5.4 and before\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Cross Site Scripting | Alkacon OpenCMS v10.5.4 and before" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 27685 invoked by uid 550); 21 Apr 2021 14:13:44 -0000
+Received: (qmail 22069 invoked by uid 550); 30 Apr 2019 11:26:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,93 +12,53 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27652 invoked from network); 21 Apr 2021 14:13:43 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.15\))
-Message-Id: <5949CABA-13A8-410A-BEED-7178D7423094@beckweb.net>
-Date: Wed, 21 Apr 2021 16:13:32 +0200
+Received: (qmail 11817 invoked from network); 30 Apr 2019 10:41:48 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=mU3cfc2zaVZCntxEY7oMuLs9AnG8hUk2xDuwrwAKNu0=;
+        b=QF39mP3hjzrjEcjS6CDnKrS3btm8RF0cM1fcW5hsju5F2R+EwETd1pCLRhOfPkyOuK
+         6iJqiy374zpo+YuTIbx1l/k2m6bn7o5QFpf+jUrlv0t+Xusq+fcZDVAMQOhiS06qqfIQ
+         ZybCs7+av3ZlkfIjE42UbRCmK/BikLAoriZ12lbZ51sx6OR3jq5yPl/6h2Y5GHNmUY9V
+         CHW9h1OPLRyV7LZXCGCO1v0CzfFou2DQzKkm3KfAr5HX1/Ft6UV9vb7zJ9XJFDrHJnEF
+         Rzj6ZqNhjvehWUecFw4lRijn1MCosTymADWYBw6sRHmPO3ADeEfcZP8cs49ZktIzd+yU
+         nieg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=mU3cfc2zaVZCntxEY7oMuLs9AnG8hUk2xDuwrwAKNu0=;
+        b=bRUMUvGrL2lT7MeKPSmTUdqtjbkcwQ1S9I7vjeGW54lqJbwCXw6h49L4/9ZMWmgE2l
+         K+wu3hH4Ed5P1g4Hz5RUb+ZVj8PEoT+KAcv9CJKDMi3gRuX85REx22SgQOQDWIBmxyQb
+         cBb2NCCmJQWOag9qX6RSu3Cx4WJzfqmm4LJblnZiUBlzxjcrVK7dZmqRm3iQMuFt9VBE
+         6RGxJtgAkGUxvkscKbbgml3eLnYVBo7ltuXZ/9TbOsUGvcVdRzQTUpr4phKQS66ozn4u
+         Gry6u8sSCQ5j+dMT36CBdY58VFaQG/qEpa6eQNSxYeXT6W9wU2CGW/B4s3HaKja0nz/t
+         lPRg==
+X-Gm-Message-State: APjAAAVlEXpcsrwFc2ms/YiVP+E/OBbHJZCqkB2/RFTs22bR8iWDgDkI
+	M7p7mSfgYbmArW40muhWE/0QuRt5fyqdBLq7UtWifBI=
+X-Google-Smtp-Source: APXvYqyKAgfVKKFNvHEz2kfSYEIwsce4Nmoe5f43+sKjeYdMIhqKeFt7MmbHiBgvpBPHYUv7bSQPYv/iUnndhxOGIQ4=
+X-Received: by 2002:a0c:f990:: with SMTP id t16mr28868119qvn.54.1556620896262;
+ Tue, 30 Apr 2019 03:41:36 -0700 (PDT)
+MIME-Version: 1.0
+From: Pramod Rana <varchashva@gmail.com>
+Date: Tue, 30 Apr 2019 16:11:25 +0530
+Message-ID: <CALv8orF=CQRBqzOj_P06KV6Hasg60WLZ3jOg=WDJUXSzwNu7SQ@mail.gmail.com>
 To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3445.104.15)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1619014423;fdd0c7c1;
-X-HE-SMSGID: 1lZDbg-0005lw-FL
-Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
+Content-Type: multipart/alternative; boundary="00000000000092604c0587bd0b89"
+Subject: [oss-security] Cross Site Scripting | Alkacon OpenCMS v10.5.4 and before
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+--00000000000092604c0587bd0b89
+Content-Type: text/plain; charset="UTF-8"
 
-The following releases contain fixes for security vulnerabilities:
+Description
+ - OpenCMS v10.5.4 and before is vulnerable to cross site scripting in New
+User module for parameter First Name and Last Name
+ - Impacted URL is http://
+[your_webserver_ip]/opencms/system/workplace/admin/accounts/user_new.jsp
+ - Payload used is "TestXSS<img+src=x+onmouseover=alert(document.domain)"
 
-* CloudBees CD Plugin 1.1.22
-* Config File Provider Plugin 3.7.1
-* Templating Engine Plugin 2.2
+Further details
+ - https://github.com/alkacon/opencms-core/issues/635
 
+Already requested for CVE, yet to receive it.
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2021-04-21/
-
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-2204 / CVE-2021-21642
-Config File Provider Plugin 3.7.0 and earlier does not configure its XML
-parser to prevent XML external entity (XXE) attacks.
-
-This allows attackers with the ability to define Maven configuration files
-to have Jenkins parse a crafted configuration file that uses external
-entities for extraction of secrets from the Jenkins controller or
-server-side request forgery.
-
-
-SECURITY-2254 / CVE-2021-21643
-Config File Provider Plugin 3.7.0 and earlier does not correctly perform
-permission checks in several HTTP endpoints.
-
-This allows attackers with global Job/Configure permission to enumerate
-system-scoped credentials IDs of credentials stored in Jenkins. Those can
-be used as part of an attack to capture the credentials using another
-vulnerability.
-
-
-SECURITY-2202 / CVE-2021-21644
-Config File Provider Plugin 3.7.0 and earlier does not require POST
-requests for an HTTP endpoint, resulting in a cross-site request forgery
-(CSRF) vulnerability.
-
-This vulnerability allows attackers to delete configuration files
-corresponding to an attacker-specified ID.
-
-
-SECURITY-2203 / CVE-2021-21645
-Config File Provider Plugin 3.7.0 and earlier does not perform permission
-checks in several HTTP endpoints.
-
-This allows attackers with Overall/Read permission to enumerate
-configuration file IDs.
-
-
-SECURITY-2311 / CVE-2021-21646
-Templating Engine Plugin 2.1 and earlier does not protect its pipeline
-configurations using Script Security Plugin.
-
-This vulnerability allows attackers with Job/Configure permission to
-execute arbitrary code in the context of the Jenkins controller JVM.
-
-
-SECURITY-2309 / CVE-2021-21647
-CloudBees CD Plugin 1.1.21 and earlier does not perform a permission check
-in an HTTP endpoint.
-
-This allows attackers with Item/Read permission to schedule builds of
-projects without having Item/Build permission.
-
-
+--00000000000092604c0587bd0b89--
