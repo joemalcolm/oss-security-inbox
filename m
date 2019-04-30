@@ -1,4 +1,9 @@
-Received: (qmail 14074 invoked by uid 550); 13 Feb 2025 21:03:28 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1012" "Tuesday" "30" "April" "2019" "17:23:22" "+0200" "Martin" "martin_s@apache.org" nil "27" nil nil nil nil "4" nil nil (number mark "U       martin_s@apa Apr 30   27/1012  " thread-indent "\"[oss-security] [SECURITY] CVE-2019-0214: Apache Archiva arbitrary file write and delete on the server\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [SECURITY] CVE-2019-0214: Apache Archiva arbitrary file write and delete on the server" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 32094 invoked by uid 550); 30 Apr 2019 16:19:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,89 +12,41 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 14008 invoked from network); 13 Feb 2025 21:03:27 -0000
-Date: Thu, 13 Feb 2025 16:03:19 -0500
-From: Rich Felker <dalias@libc.org>
-To: musl@lists.openwall.com
-Cc: oss-security@lists.openwall.com
-Message-ID: <20250213210318.GE10433@brightrain.aerifal.cx>
-References: <20250213171546.GA3976@brightrain.aerifal.cx>
+Received: (qmail 23558 invoked from network); 30 Apr 2019 15:23:42 -0000
+From: Martin <martin_s@apache.org>
+To: users@archiva.apache.org, users@maven.apache.org, announce@apache.org
+Cc: oss-security@lists.openwall.com, bugtraq@securityfocus.com
+Date: Tue, 30 Apr 2019 17:23:22 +0200
+Message-ID: <2614535.bqnvQ5soFs@golgafrichnam>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="p/1JFEOz/hVXxMAZ"
-Content-Disposition: inline
-In-Reply-To: <20250213171546.GA3976@brightrain.aerifal.cx>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Subject: [oss-security] Re: [musl] CVE-2025-26519: musl libc: input-controlled out-of-bounds
- write primitive in iconv()
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+Subject: [oss-security] [SECURITY] CVE-2019-0214: Apache Archiva arbitrary file write and delete on the server
 
---p/1JFEOz/hVXxMAZ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+CVE-2019-0214: Apache Archiva arbitrary file write and delete on the server
 
-On Thu, Feb 13, 2025 at 12:15:54PM -0500, Rich Felker wrote:
-> Vulnerability description:
-> 
-> A vulnerability has been identified in musl libc's implementation of
-> iconv that can result in out-of-bounds memory writes in applications
-> which process untrusted input using iconv and where the input charset
-> for the conversion is input-controlled.
-> 
-> In order for the vulnerability to be exposed, an application must call
-> iconv_open with an output encoding of UTF-8 and and input encoding of
-> EUC-KR, and must subsequently process untrusted input using the
-> resulting conversion descriptor. The most common scenario in which
-> this occurs is using the declared MIME charset of untrusted input (for
-> example, in XML, HTML, or MIME-encoded email) as input to iconv_open
-> for converting arbitrary-encoding input to UTF-8.
-> 
-> This issue was discovered and reported by Nick Wellnhofer. It arose as
-> a combination of incorrect input byte validation in the EUC-KR
-> decoder, and the fact that the UTF-8 output encoder assumed an
-> invariant that the input decoder never produces character codes which
-> are not valid Unicode Scalar Values.
+Severity: Medium
 
-Addendum: I also have a test program that will check if your iconv is
-affected, attached. It runs over all 65536 byte pairs and looks for
-bogus changes to the output buffer pointer/remaining.
+Vendor:
+The Apache Software Foundation
 
---p/1JFEOz/hVXxMAZ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename="euckr_bug.c"
+Versions Affected:
+    Apache Archiva 2.0.0 - 2.2.3
+    The unsupported versions 1.x are also affected.  
 
-#include <iconv.h>
-#include <stdio.h>
-#include <errno.h>
-#include <string.h>
+It is possible to write files to the archiva server at arbitrary locations by using the artifact upload mechanism. 
+Existing files can be overwritten, if the archiva run user has appropriate permission on the filesystem for the target file.
 
-#define T(x) ((x) || (e+=fail(r, errno, i, j, out1, pout, outb, #x)))
+Mitigation:
+  It is highly recommended to upgrade to Archiva 2.2.4 or higher, where additional validations are implemented to prevent such malicious parameter values.
+  As intermediate action you may reduce the number of users that are allowed to upload to archiva and make sure, that the archiva run user may have only 
+  write permission to the directories needed.
 
-int fail(int r, int err, int i, int j, char *start, char *end, size_t rem, char *pred)
-{
-	printf("%.2x %.2x: returned %d (%s), start %p end %p rem %zu: failed assertion: %s\n",
-		i, j, r, r<0?strerror(err):"", start, end, rem, pred);
-	return 1;
-}
+References:
+http://archiva.apache.org/security.html#CVE-2019-0214
+
+The newest Archiva version can be downloaded from:
+http://archiva.apache.org/download.cgi
 
 
-int main()
-{
-	iconv_t cd = iconv_open("UTF-8", "EUC-KR");
-	int e = 0;
-	for (int i=0; i<256; i++)
-		for (int j=0; j<256; j++) {
-			char in[3] = { i, j, 'x' };
-			char out[12] = "", *out1=out+4;
-			char *pin = in, *pout = out1;
-			size_t inb = sizeof in;
-			size_t outb = sizeof out - (out1-out);
-			errno = 0;
-			size_t r = iconv(cd, &pin, &inb, &pout, &outb);
-			T(pout>=out1 && pout<out+sizeof out);
-			T(outb <= sizeof out - (out1-out));
-			T(out1[-1]=='\0');
-		}
-	return !!e;
-}
 
---p/1JFEOz/hVXxMAZ--
