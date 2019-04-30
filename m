@@ -1,174 +1,146 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/14/1
-Message-ID: <alpine.DEB.2.20.1901140949460.17855@o7.fi>
-Date: Mon, 14 Jan 2019 09:51:43 +0200 (EET)
-From: Harry Sintonen <security-advisories@...er.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/04/30/5
+Message-Id: <B9DB968B-E225-4245-85BE-6BB6CCD8791F@beckweb.net>
+Date: Tue, 30 Apr 2019 14:17:30 +0200
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: SCP client multiple vulnerabilities
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-scp client multiple vulnerabilities
-===================================
-The latest version of this advisory is available at:
-https://sintonen.fi/advisories/scp-client-multiple-vulnerabilities.txt
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software. The following
+releases contain fixes for security vulnerabilities:
+
+* Ansible Tower Plugin 0.9.2
+* Aqua MicroScanner Plugin 1.0.6
+* Azure AD Plugin 0.3.4
+* GitHub Authentication Plugin 0.32
+* SiteMonitor Plugin 0.6
+* Static Analysis Utilities Plugin 1.96
+
+Additionally, these plugin have security vulnerabilities that have been made
+public, but have no releases containing a fix yet:
+
+* Koji Plugin
+* Self-Organizing Swarm Plug-in Modules Plugin
+* Twitter Plugin
+
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2019-04-30/
+
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-1100 / CVE-2019-10307 (CSRF) and CVE-2019-10308 (permission check)
+Static Analysis Utilities Plugin has the capability to allow other plugins to 
+display trend graphs for their static analysis results. Static Analysis 
+Utilities Plugin provides the configuration form for the default settings of 
+each graph.
+
+The configuration form and form submission handler did not perform a 
+permission check, allowing attackers with Job/Read access to change the 
+per-job graph configuration defaults for all users.
+
+Additionally, the form submission handler did not require POST requests, 
+resulting in a cross-site request forgery vulnerability.
+
+Static Analysis Utilities Plugin now requires Job/Configure permission and 
+POST requests to configure the per-job graph defaults for all users.
 
 
-Overview
---------
+SECURITY-930 / CVE-2019-10317
+SiteMonitor Plugin unconditionally disables SSL/TLS certificate validation for 
+the entire Jenkins master JVM.
 
-SCP clients from multiple vendors are susceptible to a malicious scp server performing
-unauthorized changes to target directory and/or client output manipulation.
-
-
-Description
------------
-
-Many scp clients fail to verify if the objects returned by the scp server match those
-it asked for. This issue dates back to 1983 and rcp, on which scp is based. A separate
-flaw in the client allows the target directory attributes to be changed arbitrarily.
-Finally, two vulnerabilities in clients may allow server to spoof the client output.
+SiteMonitor Plugin no longer does that. Instead, it now has an opt-in option 
+to ignore SSL/TLS errors for each site check individually.
 
 
-Impact
-------
+SECURITY-1252 / CVE-2019-10309
+Self-Organizing Swarm Plug-in Modules Plugin allows clients to auto-discover 
+Jenkins instances on the same network through a UDP discovery request. 
+Responses to this request are XML documents.
 
-Malicious scp server can write arbitrary files to scp target directory, change the
-target directory permissions and to spoof the client output.
+Self-Organizing Swarm Plug-in Modules Plugin does not configure the XML parser 
+in a way that would prevent XML External Entity (XXE) processing. This allows 
+unauthenticated attackers on the same network to have Swarm clients parse a 
+maliciously crafted XML response that uses external entities to read arbitrary 
+files from the Swarm client or denial-of-service attacks.
 
-
-Details
--------
-
-The discovered vulnerabilities, described in more detail below, enables the attack
-described here in brief.
-
-1. The attacker controlled server or Man-in-the-Middle(*) attack drops .bash_aliases
-    file to victim's home directory when the victim performs scp operation from the
-    server. The transfer of extra files is hidden by sending ANSI control sequences
-    via stderr. For example:
-
-    user@...al:~$ scp user@...ote:readme.txt .
-    readme.txt                                         100%  494     1.6KB/s   00:00
-    user@...al:~$
-
-2. Once the victim launches a new shell, the malicious commands in .bash_aliases get
-    executed.
+As of publication of this advisory, there is no fix.
 
 
-*) Man-in-the-Middle attack does require the victim to accept the wrong host
-    fingerprint.
+SECURITY-1355 (1) / CVE-2019-10310 (CSRF) and CVE-2019-10311 (permission check)
+Ansible Tower Plugin did not perform permission checks on a method 
+implementing form validation. This allowed users with Overall/Read access to 
+Jenkins to connect to an attacker-specified URL using attacker-specified 
+credentials IDs obtained through another method, capturing credentials stored 
+in Jenkins.
+
+Additionally, this form validation method did not require POST requests, 
+resulting in a cross-site request forgery vulnerability.
+
+This form validation method now requires POST requests and Overall/Administer 
+permissions.
 
 
-Vulnerabilities
----------------
+SECURITY-1355 (2) / CVE-2019-10312
+Ansible Tower Plugin provides a list of applicable credential IDs to allow 
+users configuring the plugin to select the one to use.
 
-1. CWE-20: scp client improper directory name validation [CVE-2018-20685]
+This functionality did not check permissions, allowing any user with 
+Overall/Read permission to get a list of valid credentials IDs. Those could be 
+used as part of an attack to capture the credentials using another 
+vulnerability.
 
-The scp client allows server to modify permissions of the target directory by using empty
-("D0777 0 \n") or dot ("D0777 0 .\n") directory name.
-
-
-2. CWE-20: scp client missing received object name validation [CVE-2019-6111]
-
-Due to the scp implementation being derived from 1983 rcp [1], the server chooses which
-files/directories are sent to the client. However, scp client only perform cursory
-validation of the object name returned (only directory traversal attacks are prevented).
-A malicious scp server can overwrite arbitrary files in the scp client target directory.
-If recursive operation (-r) is performed, the server can manipulate subdirectories
-as well (for example overwrite .ssh/authorized_keys).
-
-The same vulnerability in WinSCP is known as CVE-2018-20684.
+An enumeration of credentials IDs in this plugin now requires 
+Overall/Administer permission.
 
 
-3. CWE-451: scp client spoofing via object name [CVE-2019-6109]
+SECURITY-1390 / CVE-2019-10318
+Azure AD Plugin stored the client secret unencrypted in the global config.xml 
+configuration file on the Jenkins master. These credentials could be viewed by 
+users with access to the master file system.
 
-Due to missing character encoding in the progress display, the object name can be used
-to manipulate the client output, for example to employ ANSI codes to hide additional
-files being transferred.
-
-
-4. CWE-451: scp client spoofing via stderr [CVE-2019-6110]
-
-Due to accepting and displaying arbitrary stderr output from the scp server, a
-malicious server can manipulate the client output, for example to employ ANSI codes
-to hide additional files being transferred.
+Azure AD Plugin now stores the client secret encrypted.
 
 
-Proof-of-Concept
-----------------
+SECURITY-1143 / CVE-2019-10313
+Twitter Plugin stores credentials unencrypted in its global configuration file 
+on the Jenkins master. These credentials could be viewed by users with access 
+to the master file system.
 
-Proof of concept malicious scp server will be released at a later date.
-
-
-Vulnerable versions
--------------------
-
-The following software packages have some or all vulnerabilities:
-
-                    ver      #1  #2  #3  #4
-OpenSSH scp        <=7.9    x   x   x   x
-PuTTY PSCP         ?        -   -   x   x
-WinSCP scp mode    <=5.13   -   x   -   -
-
-Tectia SSH scpg3 is not affected since it exclusively uses sftp protocol.
+As of publication of this advisory, there is no fix.
 
 
-Mitigation
-----------
+SECURITY-936 / CVE-2019-10314
+Koji Plugin unconditionally disables SSL/TLS certificate validation for the 
+entire Jenkins master JVM.
 
-1. OpenSSH
-
-1.1 Switch to sftp if possible
-
-1.2 Alternatively apply the following patch to harden scp against most server-side
-     manipulation attempts: https://sintonen.fi/advisories/scp-name-validator.patch
-
-     NOTE: This patch may cause problems if the the remote and local shells don't
-     agree on the way glob() pattern matching works. YMMV.
-
-2. PuTTY
-
-2.1 No fix is available yet
-
-3. WinSCP
-
-3.1. Upgrade to WinSCP 5.14 or later
+As of publication of this advisory, there is no fix.
 
 
+SECURITY-443 / CVE-2019-10315
+GitHub Authentication Plugin did not manage the state parameter of OAuth to 
+prevent CSRF. This allowed an attacker to catch the redirect URL provided 
+during the authentication process using OAuth and send it to the victim. If 
+the victim was already connected to Jenkins, their Jenkins account would be 
+attached to the attacker’s GitHub account.
 
-Similar or prior work
----------------------
-
-1. CVE-2000-0992 - scp overwrites arbitrary files
-
-
-References
-----------
-
-1. https://www.jeffgeerling.com/blog/brief-history-ssh-and-remote-access
+The state parameter is now correctly managed.
 
 
-Credits
--------
+SECURITY-1380 / CVE-2019-10316
+Aqua MicroScanner Plugin stored credentials unencrypted in its global 
+configuration file on the Jenkins master. These credentials could be viewed by 
+users with access to the master file system.
 
-The vulnerability was discovered by Harry Sintonen / F-Secure Corporation.
+Aqua MicroScanner Plugin now stores credentials encrypted.
 
-
-Timeline
---------
-
-2018.08.08  initial discovery of vulnerabilities #1 and #2
-2018.08.09  reported vulnerabilities #1 and #2 to OpenSSH
-2018.08.10  OpenSSH acknowledged the vulnerabilities
-2018.08.14  discovered & reported vulnerability #3 to OpenSSH
-2018.08.15  discovered & reported vulnerability #4 to OpenSSH
-2018.08.30  reported PSCP vulnerabilities (#3 and #4) to PuTTY developers
-2018.08.31  reported WinSCP vulnerability (#2) to WinSCP developers
-2018.09.04  WinSCP developers reported the vulnerability #2 fixed
-2018.11.12  requested a status update from OpenSSH
-2018.11.16  OpenSSH fixed vulnerability #1
-2019.01.07  requested a status update from OpenSSH
-2019.01.08  requested CVE assignments from MITRE
-2019.01.10  received CVE assignments from MITRE
-2019.01.11  public disclosure of the advisory
-2019.01.14  added a warning about the potential issues caused by the patch
