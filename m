@@ -1,37 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/10/1
-Message-ID: <20190510083754.ts7ll2fi2532sjox@tunkki.bugs.fi>
-Date: Fri, 10 May 2019 11:37:54 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/01/1
+Message-ID: <CA+W_RZia02oGCMn7wGk_WFSrwv72BfRiiC2UEZnytL=P0mVNQw@mail.gmail.com>
+Date: Wed, 1 May 2019 14:02:58 -0400
+From: Lou DeGenaro <lou.degenaro@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Hanno Böck <hanno@...eck.de>
-Subject: Re: XSS via EXIF tag in Serendipity blog
+Cc: uima-dev@...che.org
+Subject: [ANNOUNCE] CVE-2018-8035: Apache UIMA DUCC webserver cross-site scripting (XSS) vulnerability fix
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+CVE-2018-8035: Apache UIMA DUCC webserver cross-site scripting (XSS)
+vulnerability due to unintended execution of user supplied javascript code.
 
-On Fri, May 03, 2019 at 05:42:18PM +0200, Hanno Böck wrote:
-> https://github.com/s9y/Serendipity/issues/598
-> https://blog.s9y.org/archives/282-Serendipity-2.1.5-released.html
+Severity: Important
 
-MITRE assigned CVE-2019-11870 for this issue.
+Vendor:
+The Apache Software Foundation
 
-- -- 
-Henri Salo
------BEGIN PGP SIGNATURE-----
+Versions Affected:
+   - Apache UIMA DUCC releases including and prior to 2.2.2
 
-iQIzBAEBCAAdFiEE/aVSDznAZReWTkxKJ633pE6qdXQFAlzVOGIACgkQJ633pE6q
-dXT6lhAArWXR0Lp36yH57N6sgGLLF+gQavAOK+DfGjpOIkGsr9stlFzdfSD5HvSM
-EASX//8sMenVEXNblPiwbhhJK8cQRnjk/cbIyEACSXngGxU9L4oTAOFCM5PM35On
-Yy7rHqUxLeRhNHviAmSPq0D/n4Kwavc8GQBir4O4nYkwzkhoGTS9FCOyQvzFWGir
-0cv1hpYxvsLigw02g9qnCspnCrKty7FJoawUJ9G5RhYSJkwzEZYNhAAIKWl+Epb/
-xnJXQ5qBuU2KtWpF/Hp5O49GSF1Qd+/Ufdu43jSjbUPKXdD+SbnNRZJXgytj5Nvy
-w4BnHprzBRBHor+jlM8gDBUHfJsN6qdU8b1EyfTYHV/WzDZzXAEOViwuheTp5+b7
-8kb60uvklRfnwhnoQgz7AowcG9+qIruvDPFvXFRRMsSJh/xGHRkNLvLhngEDdzX5
-fVbLkVWmMCuQT6HXQOxCjC4gU59tIa2m1Y75sIT2ZbGcI2XKf/K2mTEcZAIBhV+a
-46Qh7/zakZId4w1q+tjkK8dETIBiVLmjsvg1AZWWnTKt2gL28u1ZXyWLJZzmBEHT
-3szdmlwbh4p/nvR4qqcY7tn6jy+FAs+gDmacaI/iMVaAb0+/vjOu0EdfORY+h/MJ
-9roi5AgpVCrsxxF6DhFPUp9n0ZVO5E5lJlGJv/6HPRowNO+FIq4=
-=q1XV
------END PGP SIGNATURE-----
+Description.
+The details of this vulnerability were reported to the Apache UIMA
+Private mailing list.
+
+This  vulnerability relates to the user's browser processing of DUCC web
+page input data.
+
+The javascript comprising Apache UIMA DUCC which runs in the user's
+browser does not sufficiently filter user supplied inputs, which may
+result in unintended execution of user supplied javascript code.
+
+Mitigation:
+Users are advised to upgrade these UIMA components to the following levels:
+   - Apache UIMA DUCC: upgrade to 3.0.0 or later
+
+Credit: Marshall Schor
+
+Lou DeGenaro, on behalf of the Apache UIMA Team
+
