@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2177" "Tuesday" "21" "March" "2017" "02:19:41" "+0100" "Daniel Beck" "ml@beckweb.net" "<60EF1721-9E02-481D-9A2D-204F87D75282@beckweb.net>" "63" "[oss-security] Jenkins plugins -- multiple vulnerabilities" "^Date:" nil nil "3" "2017032101:19:41" "[oss-security] Jenkins plugins -- multiple vulnerabilities" (number mark "        ml@beckweb.n Mar 21   63/2177  " thread-indent "\"[oss-security] Jenkins plugins -- multiple vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["778" "Thursday" "2" "May" "2019" "19:14:30" "+0200" "Andrey Konovalov" "andreyknvl@gmail.com" nil "20" nil nil nil nil "5" nil nil (number mark "U       andreyknvl@g May  2   20/778   " thread-indent "\"[oss-security] CVE-2019-11683: \"GRO packet of death\" issue in the Linux kernel\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2019-11683: \"GRO packet of death\" issue in the Linux kernel" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 16227 invoked by uid 550); 21 Mar 2017 01:19:53 -0000
+Received: (qmail 20162 invoked by uid 550); 2 May 2019 17:14:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,80 +11,58 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 16209 invoked from network); 21 Mar 2017 01:19:53 -0000
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <60EF1721-9E02-481D-9A2D-204F87D75282@beckweb.net>
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-X-Mailer: Apple Mail (2.3124)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1490059193;27f2f331;
-X-HE-SMSGID: 1cq8Sb-0000cl-Pz
-Date: Tue, 21 Mar 2017 02:19:41 +0100
-From: Daniel Beck <ml@beckweb.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Jenkins plugins -- multiple vulnerabilities
+Received: (qmail 20141 invoked from network); 2 May 2019 17:14:52 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=sLhIDZUhFo1OAU3zMPb1ol5/2V+pMSDki0M2Vl7xpqs=;
+        b=Zf54NgFC/WpDnJy0P0D7Cvp0lQuDox5Qm0woZARk+D1IgyAiYQAW2dXxxpfl1Kgwnq
+         5wW7hCL6CwJOoFLOjRHmbOBnmTOu5ByXgnacYUuARnJ7Wyuh1HXninm5fLxXM8LJN/HJ
+         sCWZQZqC7WGMR3gLV9gcmUwDR+yFqJYiFJyjo6Eioy5EgBD7TM5ELPKAAi1gwf65VKWK
+         fgaknwvMUq9jwMFgHsNrlPMkEyr8MGab4r/CGxkdRRiUSH/BNaNRV4WD5BXtaD2guUh5
+         ZBjEHWZqu0WBZfFbb6POurvgmlppm4vKxhV0ENn3I/YPv797u6+Sl2KLhSMrFDmfhG6q
+         CWQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=sLhIDZUhFo1OAU3zMPb1ol5/2V+pMSDki0M2Vl7xpqs=;
+        b=VJm0vf7mf2b4MhlKIEvyDlNgxeX/nr/A7DzqQ2rDJgIqMHKu3FxhtjtKRTaT7GIA8Y
+         TJlOh0it61N8YFeJH++vGZWYazYhf9JgQoQF8SIfAcDblF8LP50cQONnguDi4sLl7lZ6
+         g7Pn5F3HdMz6EJDfZtqNbPlyo7gwVSYS3lw/Mtu4fLuZg2MtFmubo92Qtd4yMRvIhbRf
+         Rz04cIqvefy7+mDC0vKxk7mhpcOabgG9NeIK9frtiNp5bDAxnRhyUkyORldPFVQEhsn2
+         Kf+eVB0G9pGdv/Nf1ioM8p6yZnNN9MH0adh3JUzLsOMa2os5haWD9gzmX5PCzAYB48aM
+         4e/w==
+X-Gm-Message-State: APjAAAWgmvBAxzFUuoR2ZspuOzRZHkDSRy68g5SKPnVZfrnBCrnYzzz0
+	rkN74UL/iRT5YcLFDWFUkmOXLrRreKc8Tmzed5SfI2Bl
+X-Google-Smtp-Source: APXvYqxhQp/bebnGjZD/dMD2BFvyjHJV0E+VTFYbdDMnWX+ZtqOKzJnQ+6XssRvIqXDHWUM6Xast8hzpqJFuqNOsLss=
+X-Received: by 2002:a19:40d8:: with SMTP id n207mr2447948lfa.70.1556817281013;
+ Thu, 02 May 2019 10:14:41 -0700 (PDT)
+MIME-Version: 1.0
+From: Andrey Konovalov <andreyknvl@gmail.com>
+Date: Thu, 2 May 2019 19:14:30 +0200
+Message-ID: <CA+fCnZeEm1PAjBzVbMuKzoZuE5rKffqdRPBvNO7C5yNO+JnbXQ@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CVE-2019-11683: "GRO packet of death" issue in the Linux kernel
 
-Jenkins is an open source automation server which enables developers around=
-=20
-the world to reliably build, test, and deploy their software. The following=
-=20
-plugin releases published today contain fixes for security vulnerabilities:
+Hi,
 
-- Active Directory 2.3
-- DistFork Plugin 1.6.0
-- Email Extension (email-ext) 2.57.1
-- Mailer Plugin 1.20
-- SSH Slaves 1.15
+syzbot has reported a remotely triggerable memory corruption in the
+Linux kernel. It's been introduced quite recently in e20cf8d3f1f7
+("udp: implement GRO for plain UDP sockets.") and only affects the 5.0
+(stable) release (so the name is a bit overhyped :).
 
-Users of these plugins should upgrade them to the indicated versions.
+CVE-2019-11683 description:
 
-Additionally, one plugin was removed from distribution as there are no plan=
-s=20
-to fix its vulnerability, and there are adequate alternatives:
+udp_gro_receive_segment in net/ipv4/udp_offload.c in the Linux kernel
+5.x through 5.0.11 allows remote attackers to cause a denial of
+service (slab-out-of-bounds memory corruption) or possibly have
+unspecified other impact via UDP packets with a 0 payload, because of
+mishandling of padded packets, aka the "GRO packet of death" issue.
 
-- Pipeline: Classpath Step
+Fix (not yet upstream):
 
-Summary and description of the vulnerabilities are below. Some more details=
-,=20
-severity, and attribution can be found here:
-https://jenkins.io/security/advisory/2017-03-20/
+https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=4dd2b82d5adfbe0b1587ccad7a8f76d826120f37
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you find security vulnerabilities in Jenkins, please report them as=20
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-161 / CVE-2017-2648
-SSH Slaves Plugin did not verify host keys of hosts it connected to.
-
-SECURITY-251 / CVE-2017-2649
-Active Directory Plugin did not verify TLS certificate of AD server.
-
-SECURITY-336 / CVE-2017-2650
-Pipeline: Classpath Step plugin allows Script Security sandbox bypass for=20
-users with SCM commit access, as well as users with e.g. Job/Configure=20
-permission in Jenkins.
-
-SECURITY-372 / CVE-2017-2651 (Mailer)
-SECURITY-372 / CVE-2017-2654 (Email Extension)
-Emails could be sent to addresses not associated with actual users of Jenki=
-ns=20
-by Mailer Plugin and Email Extension Plugin if they were configured to send=
-=20
-notifications to a dynamically created list of users based on SCM changes. =
-In=20
-rare cases this even resulted in emails sent to people who were not involve=
-d=20
-in whatever project was being built.
-
-SECURITY-386 / CVE-2017-2652
-There were no permission checks performed in the Distributed Fork plugin=20
-beyond the basic check for Overall/Read permission, allowing anyone with th=
-at=20
-permission to run arbitrary shell commands on all connected nodes.
-
+Thanks!
