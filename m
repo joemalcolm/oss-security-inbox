@@ -1,150 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/05/4
-Message-ID: <20190805135159.GD9991@f195.suse.de>
-Date: Mon, 5 Aug 2019 15:51:59 +0200
-From: Matthias Gerstner <mgerstner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/02/1
+Message-ID: <CA+fCnZeEm1PAjBzVbMuKzoZuE5rKffqdRPBvNO7C5yNO+JnbXQ@mail.gmail.com>
+Date: Thu, 2 May 2019 19:14:30 +0200
+From: Andrey Konovalov <andreyknvl@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Security issues in various deepin D-Bus services and tools
+Subject: CVE-2019-11683: "GRO packet of death" issue in the Linux kernel
 Content-Type: text/plain; charset=utf-8
 
-We've been reviewing a number of D-Bus services and applications that
-are part of the deepin desktop environment (a desktop environment
-focused on Chinese users). There are a larger number of security related
-findings in these components. Since there has been little progress in
-the communication with upstream to fully fix these issues for some time
-I'm hereby making them available more publicly. It seems to us that
-upstream is lacking a designated security contact and a security policy.
+Hi,
 
-deepin-api
-==========
+syzbot has reported a remotely triggerable memory corruption in the
+Linux kernel. It's been introduced quite recently in e20cf8d3f1f7
+("udp: implement GRO for plain UDP sockets.") and only affects the 5.0
+(stable) release (so the name is a bit overhyped :).
 
-This package provides some common system services for the deepin desktop
-environment. It employs polkit for permissions management. Full details
-can be found in [1]. The following issues have been found:
+CVE-2019-11683 description:
 
-1) com.deepin.api.Device.conf: The service allows anybody to run
-  /usr/sbin/rfkill with arbitrary arguments. Polkit protection is not
-  implemented, only a TODO in the source code hints at it.
+udp_gro_receive_segment in net/ipv4/udp_offload.c in the Linux kernel
+5.x through 5.0.11 allows remote attackers to cause a denial of
+service (slab-out-of-bounds memory corruption) or possibly have
+unspecified other impact via UDP packets with a 0 payload, because of
+mishandling of padded packets, aka the "GRO packet of death" issue.
 
-2) com.deepin.api.SoundThemePlayer.conf: The service allows any user to
-  pass arbitrary files to it and it will try to read it in as an audio
-  file and play it as `root`.
-  While the service supposedly only looks into a couple of system
-  directories for the files like in /usr/share/sounds/..., it can be
-  tricked by passing relative path components like so:
+Fix (not yet upstream):
 
-  ```
-  dbus-send --system --print-reply --dest=com.deepin.api.SoundThemePlayer \
-     /com/deepin/api/SoundThemePlayer com.deepin.api.SoundThemePlayer.Play \
-     string:goodtheme string:../../../../../home/mgerstner/test string:alsa
-  ```
+https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=4dd2b82d5adfbe0b1587ccad7a8f76d826120f37
 
-  This allows to specify files within user control like e.g. a very big
-  file, a specially constructed file that triggers a buffer overflow or
-  even a special device file like a FIFO which will DoS the system
-  service.
-
-3) com.deepin.api.LocaleHelper: This service employs polkit
-  authentication but is using the deprecated unix process subject to do
-  so.
-
-  Furthermore in locale-helper/main.go: in doGenLocaleWithParam() it
-  calls ("/bin/sh", "-c", cmd) where `cmd` is a user supplied parameter.
-  This allows injection of special shell characters that can lead to
-  code execution or other unexpected results.
-
-Most of these issues have by now been adressed by upstream in some way.
-
-[1]: https://bugzilla.suse.com/show_bug.cgi?id=1070943
-
-deepin-file-manager
-===================
-
-This package provides a file manager for the deepin desktop environment.
-Full details about the findings can be found in [2].
-
-com.deepin.pkexec.usb-device-formatter.policy: This allows any locally
-logged in regular user to run /usr/bin/usb-device-formatter without any
-authentication.
-
-The usb-device-formatter has the following issues:
-
-- it crashes when called without parameters
-- It can be used to determine the existence of arbitrary files, since
-  all paths can be passed and the error message differentiates between
-  not existing and not a block device.
-- When operating on a symlinked block device the application allows to
-  unmount arbitrary block devices as far as they're not busy.
-- The same symlink attack can be used to format arbitrary file systems
-  as long as they're not busy.
-- it reads from users `~/.pam_environment` w/o any protection. It looks
-  like other PAM applications do that as well. Linking /dev/zero there
-  causes fun things. This should only be done after dropping privilege
-  to the calling user and by not following symlinks.
-
-So this program is certainly not fit to be run without root
-authentication.
-
-A couple of the issues have in some way been adressed by upstream, but
-some are still incomplete.
-
-The com.deepin.filemanager.daemon.conf D-Bus configuration allows any
-user to own the D-Bus service on the system bus, thereby any user can
-spoof clients of this service.
-
-None of the exported D-Bus functions is protected by polkit which would
-be necessary, as is shown by the following findings:
-
-Findings in the UserShareManager interface:
-
-- setUserSharePassword: allows to set arbitrary users' smb password.
-  Changes the database in /var/lib/samba/private. If at all then this
-  must only be allowed for the caller's username.
-- addGroup: calls `groupadd` so regular users can create arbitrary
-  groups.
-- addUserToGroup: allows arbitrary users to add arbitrary other users to
-  arbitrary other groups. Luckily doesn't work on SUSE, because
-  `/usr/sbin/adduser` is called but we have `useradd`.
-- restartSambaService calls `smbd restart`
-
-Findings in UsbFormatter:
-
-- mkfs: create jfs, ext2/3/4, btrfs, swap, hfs, dosfs, xfs, reiserfs on
-  arbitrary paths. This can overwrite arbitrary regular files, too, if
-  they are large enough.
-
-Findings in DeviceInfoManager:
-
-- The methods in this interface are somehwat okay but they still allow
-  to call lsblk and various low level file system information tools on
-  arbitrary block devices or other paths.
-
-[2]: https://bugzilla.suse.com/show_bug.cgi?id=1134131
-
-deepin-anything
-===============
-
-This is a file search tool. Full details about the findings can be found
-in [3]. The D-Bus configuration com.deepin.anything.conf allows anybody
-to own the service com.deepin.anything on the system bus, thereby any
-user can spoof clients of this service. We did not look further into its
-code base.
-
-[3]: https://bugzilla.suse.com/show_bug.cgi?id=1136026
-
-Regards
-
-Matthias
-
--- 
-Matthias Gerstner <matthias.gerstner@...e.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Phone: +49 911 740 53 290
-GPG Key ID: 0x14C405C971923553
-
-SUSE Linux GmbH
-GF: Felix Imendörffer, Mary Higgins, Sri Rasiah
-HRB 21284 (AG Nuernberg)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Thanks!
