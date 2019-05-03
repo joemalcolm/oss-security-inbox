@@ -1,36 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/25/1
-Message-ID: <20190625005341.GA26741@hunt>
-Date: Mon, 24 Jun 2019 17:53:41 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/03/2
+Message-ID: <1599629190.3791268.1556876196651@mail.yahoo.com>
+Date: Fri, 3 May 2019 09:36:36 +0000 (UTC)
+From: "Bruno P. Kinoshita" <kinow@...che.org>
+To: "announce@...che.org" <announce@...che.org>,  "dev@...mons.apache.org" <dev@...mons.apache.org>,  "guidovranken@...il.com" <guidovranken@...il.com>,  "security@...mons.apache.org" <security@...mons.apache.org>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: [CVE-2018-17202]: Apache Commons Imaging information disclosure vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jun 24, 2019 at 07:15:20PM -0400, Alex Gaynor wrote:
-> sounds very hard to me, at least without requiring more user involvement
-> than ASAN requires right now. This seems like a very cool area for academic
-> research though!
+Severity: Medium
 
-Have you tried the gdb exploitable plugin yet?
+Vendor:
+The Apache Software Foundation
 
-https://github.com/jfoote/exploitable
+Versions Affected:
+Apache Sanselan 0.97-incubator
 
-Some of the tools written around AFL have included support for running
-exploitable directly on the fuzzer results and helping to prioritize,
-roughly, in what order the specimens should be worked on:
+Description:
+Certain input files could make the code to enter into an infinite loop when Apache Sanselan  0.97-incubator was used to parse them, which could be used in a DoS attack. Note that Apache Sanselan (incubating) was renamed to Apache Commons Imaging.
 
-https://gitlab.com/rc0r/afl-utils
+Mitigation:
+0.97-incubator users should upgrade to commons-imaging-1.0-alpha1
 
-with a direct link to a pretty screenshot:
+Credit:
+This issue was discovered by ﻿Guido Vranken.
 
-https://gitlab.com/rc0r/afl-utils/raw/master/.scrots/afl_collect_sample.png
+References:
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-17202
+https://lists.apache.org/thread.html/48a64566999f44290e4fb3b0d2e9a0e1c996902db51258e7aff00dda@%3Cdev.commons.apache.org%3E
 
-I assume like most such tools, this is another case of being a good start
-but not nearly as reliable as a knowledgeable human. It's also probably
-completely useless for issues that aren't memory-safety issues. But it's
-something that exists today and may be helpful.
-
-Thanks
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
