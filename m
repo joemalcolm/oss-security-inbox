@@ -1,37 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/04/9
-Message-ID: <20190604143721.GA18436@openwall.com>
-Date: Tue, 4 Jun 2019 16:37:21 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/03/3
+Message-ID: <20190503174218.79d22fbc@computer>
+Date: Fri, 3 May 2019 17:42:18 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: huangwen <huangwen@...usgroup.com.cn>
-Subject: Re: Marvell Wifi Driver mwifiex_uap_parse_tail_ies Heap Overflow
+Subject: XSS via EXIF tag in Serendipity blog
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jun 01, 2019 at 06:07:57PM +0800, huangwen wrote:
-> There is heap-based buffer overflow in marvell wifi chip driver in Linux
-> kernel,allows local users to cause a denial of service(system crash) or
-> possibly execute arbitrary code.
+Hi,
 
-> The problem is inside mwifiex_uap_parse_tail_ies function in
-> drivers/net/wireless/marvell/mwifiex/ie.c. 
-> 
-> There are two memcpy in this function.The memcpy in while loop will be
-> called when element_id is not equal to WLAN_EID_SSID,WLAN_EID_SUPP_RATES
-> etc.
-> 
-> The copy dst buffer gen_ie->ie_buffer is a array with size
-> IEEE_MAX_IE_SIZE(256), the src buffer is element in cfg80211_beacon_data
-> from user space. 
-> 
-> There is not len check for two memcpy in this function.
-> 
-> If special elements are constructed (E.g.
-> WLAN_EID_SUPPORTED_OPERATING_CLASSES) to make memcpy called repeatedly, will
-> finally trigger the overflow.
+I reported some XSS issues via EXIF tags in the Serendipity blog
+software:
+https://github.com/s9y/Serendipity/issues/598
 
-This is now CVE-2019-10126.
+These have now been fixed:
+https://blog.s9y.org/archives/282-Serendipity-2.1.5-released.html
 
-> https://lore.kernel.org/linux-wireless/20190531131841.7552-1-tiwai@suse.de
+This is backend XSS and only relevant if you have multiple authors or
+upload potentially untrusted image files.
 
-Alexander
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
