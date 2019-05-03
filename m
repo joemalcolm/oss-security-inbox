@@ -1,66 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/19/1
-Message-ID: <5ad90ca1-b7e7-8fd3-3f52-b93d87cab627@nlnetlabs.nl>
-Date: Tue, 19 Nov 2019 18:44:29 +0800
-From: Ralph Dolmans <ralph@...etlabs.nl>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2019-18934 Unbound: Vulnerability in IPSEC module
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/03/1
+Message-ID: <891206008.3759791.1556876093022@mail.yahoo.com>
+Date: Fri, 3 May 2019 09:34:53 +0000 (UTC)
+From: "Bruno P. Kinoshita" <kinow@...che.org>
+To: "announce@...che.org" <announce@...che.org>,  "dev@...mons.apache.org" <dev@...mons.apache.org>,  "guidovranken@...il.com" <guidovranken@...il.com>,  "security@...mons.apache.org" <security@...mons.apache.org>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: [CVE-2018-17201]: Apache Commons Imaging information disclosure vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Severity: Medium
 
-Below is a copy of Unbound's CVE description that can be found at
-https://nlnetlabs.nl/downloads/unbound/CVE-2019-18934.txt
+Vendor:
+The Apache Software Foundation
 
-Regards,
-Ralph
+Versions Affected:
+Apache Sanselan 0.97-incubator
 
-==
+Description:
+Certain input files could make the code hang when Apache Sanselan 0.97-incubator was used to parse them, which could be used in a DoS attack. Note that Apache Sanselan (incubating) was renamed to Apache Commons Imaging.
 
-The CVE number for this vulnerability is CVE-2019-18934
+Mitigation:
+0.97-incubator users should upgrade to commons-imaging-1.0-alpha1
 
-== Summary
-Recent versions of Unbound contain a vulnerability that can cause shell
-code execution after receiving a specially crafted answer. This issue
-can only be triggered if unbound was compiled with `--enable-ipsecmod`
-support, and ipsecmod is enabled and used in the configuration.
+Credit:
+This issue was discovered by ﻿Guido Vranken.
 
-== Affected products
-Unbound 1.6.4 up to and including 1.9.4.
-
-== Description
-Due to unsanitized characters passed to the ipsecmod-hook shell command,
-it is possible for Unbound to allow shell code execution from a
-specially crafted IPSECKEY answer.
-
-This issue can only be triggered when *all* of the below conditions are met:
-* unbound was compiled with `--enable-ipsecmod` support, and
-* ipsecmod is enabled and used in the configuration (either in the
-  configuration file or using `unbound-control`), and
-* a domain is part of the ipsecmod-whitelist (if ipsecmod-whitelist is
-  used), and
-* unbound receives an A/AAAA query for a domain that has an A/AAAA
-  record(s) *and* an IPSECKEY record(s) available.
-
-The shell code execution can then happen if either the qname or the
-gateway field of the IPSECKEY (when gateway type == 3) contain a
-specially crafted domain name.
-
-== Solution
-Download patched version of Unbound, or apply the patch manually.
-
-+ Downloading patched version
-Unbound 1.9.5 is released with the patch
-https://nlnetlabs.nl/downloads/unbound/unbound-1.9.5.tar.gz
-
-+ Applying the Patch manually
-For Unbound 1.6.4 up to and including 1.9.4 the patch is:
-https://nlnetlabs.nl/downloads/unbound/patch_cve_2019-18934.diff
-
-Apply the patch on the Unbound source directory with:
-'patch -p1 < patch_cve_2019-18934.diff'
-then run 'make install' to install Unbound.
-
-== Acknowledgments
-We would like to thank X41 D-Sec for notifying us about this
-vulnerability and OSTIF for sponsoring the Unbound security audit.
+References:
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-17201
+https://lists.apache.org/thread.html/48a64566999f44290e4fb3b0d2e9a0e1c996902db51258e7aff00dda@%3Cdev.commons.apache.org%3E
