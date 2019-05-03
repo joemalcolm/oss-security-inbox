@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3425" "Monday" "14" "October" "2019" "09:00:31" "-0600" "Todd C. Miller" "Todd.Miller@sudo.ws" "<818cb36f5cb471ae@sudo.ws>" "96" "[oss-security] Sudo: CVE-2019-14287" "^Date:" nil nil "10" "2019101415:00:31" "[oss-security] Sudo: CVE-2019-14287" (number mark "        Todd.Miller@ Oct 14   96/3425  " thread-indent "\"[oss-security] Sudo: CVE-2019-14287\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Sudo: CVE-2019-14287" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["689" "Friday" "3" "May" "2019" "09:34:53" "+0000" "Bruno P. Kinoshita" "kinow@apache.org" nil "23" nil nil nil nil "5" nil nil (number mark "U       kinow@apache May  3   23/689   " thread-indent "\"[oss-security] [CVE-2018-17201]: Apache Commons Imaging information disclosure vulnerability\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2018-17201]: Apache Commons Imaging information disclosure vulnerability" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 22498 invoked by uid 550); 14 Oct 2019 15:21:19 -0000
+Received: (qmail 9704 invoked by uid 550); 3 May 2019 10:28:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,121 +11,62 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 14158 invoked from network); 14 Oct 2019 15:00:43 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=sudo.ws; h=from:to
-	:subject:mime-version:content-type:content-id:date:message-id;
-	 s=selector1; bh=Ml3vd1z1qHeh96KTPAzhn435hkbSWr5je/3X32vbi8g=; b=
-	TJ1mfBkEASNiqojABqA8eS6fINpu3l1W/I0aSLKa8tyJhQoy9J075eMHz+WaPyWw
-	Y6QQU9kRS3e9mv/9a2zqH90YW7jbAzmJ91h8VsR2BLVJ0KeNcok8ZJu8HVHe7ot8
-	CkVZalME7p1ZPK4KfSCLI3s8gzsHEPL0+SmuURvSoas=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=sudo.ws; h=from:to:subject
-	:mime-version:content-type:content-id:date:message-id; q=dns; s=
-	selector1; b=i+16XoFTgz/3UgW+awh0ZLUfpdE8v+a14LaqqBPBvWQYnvUXseP
-	LV58Ng+76joH5e5whnuu69MyikYNAIks8jiNis/JKmyBn2qISkRDv0WN0ow+JaWv
-	FcF8mMX+0teTqH+mj2R/shepqq9j7QIfIz0rstMt//L1wizxLw+gMsO0=
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-ID: <37954.1571065231.1@xerxes.sudo.ws>
-Message-ID: <818cb36f5cb471ae@sudo.ws>
-Date: Mon, 14 Oct 2019 09:00:31 -0600
-From: "Todd C. Miller" <Todd.Miller@sudo.ws>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Sudo: CVE-2019-14287
-To: oss-security@lists.openwall.com
+Received: (qmail 30546 invoked from network); 3 May 2019 09:35:10 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1556876098; bh=7QYHi3gPQN/vTH6jlh6LPnM/BdjM6rqNhsjnZyJE9co=; h=Date:From:Reply-To:To:Subject:References:From:Subject; b=QWE2zT23nIjceEEZEOQwCbf9iLHW/Ry+KMIFO4DNuwFobw4Q9M7Zpv1giGWSlGT8lYn9Gsmrieeh5cC6ZX3s+/xl9lkUcE0hKiW8+lJx0ViZ8QO7mnaCOvI11Ofv4c1/NRfElQlVWfPf2v9eK3AoqIjWXi3SH0ZTzCjSAPLx+T2DZNAlwPpjEUe+wlYzOpLF/mVcbwjYHrFbD9G87WmEsLVUhyt6S7KKJLqpQoei8w8le6LUHHULjXNYovWUMAETHGsEswTbbyHtg2ER9sB2mrcF3/VY1zzNc+MiyFVd/mTywu2rrjCPM9yiFG0i5mF2p4+1J/RlhnBVGZZLxt7kPw==
+X-YMail-OSG: ox9DmsoVM1lsnl4n3l1htQnUDzOb4Te590aL_T8xvBbmJJiw8eHIPk5sVW3LUcI
+ 8VzBDU4fiUZ7V0BWacAPqfql9SwL76IOnLZje49Gix.DArShCzqTfn4MuiDnwit5hSjxLjMsAet3
+ ymfgN_eqD3howtUEFcT0Uo83JdfEMVPdwd_xjDXzdeHdmp0oypBrC8NMEt_uhhSZfC7Xknqqjs3A
+ ZTlPCGu3L_jRZxAy4TN9uXtXaFLtb88.s7O47vIpGCaYFd5AocZdbUN1xLHdRFbNti4WUMF9CrIV
+ yl2V3uaaNcCJ5eQRFmNf7wueQKrwJ3bEGMFihcvDEpEJC_3VTdot7YW61c6U5Od3FfHLZT6Mk.b1
+ GixWD_mIKMMivQfZQzewmcHsVNw25bXRuRvhKzlX6DatQyXu9Fp9lOuUMU4PtKW4H45eGfzMsVOz
+ y2xVqC3czwKkPw7fokhS2VvjFnd6m3_CuyOy4iMOLB9vGhfuQicFp_DN56exToUfyA67_QhPaWFy
+ pzX7wN1HKondG341mAbUNpfEdg0cqQFHIg4wktY6t3h3XUBAHauwNSPMlZ.zOqrqF82Zzb6Ge.tJ
+ ZxTZgd_meaS7Sn_iEejo9vh6ZjoSX4E.mQG9zlT0AiQ9OBm2RE.nsfx2K2jINp_ZuuRyF0jGecQJ
+ 9MK8pcHmybmhpndnMD6bFSrda9ZLZA0vrjfKEoSw82j_xZ1OrjfywM1_ipEI5qI3KSqs3rAdL8T6
+ T_GXbygX6MnRz1ggqOvM9r5VzUygFglB8Z7HRnE0RUPEpHsm4If0wOifAH4KIUGEM1AE1qra8gkr
+ Dis6qiyvvtf.mwT24EHfIEsCRvUIlhljdv.6H3KYOaiDSLFfKLzw82ENPyJAQoYmxRblTsRkMSoY
+ oD2G7G3JAxVloKdLbCGYrh0wzCfql1NWdVa3Hwe4aOYRRVrisxZxDgsFqXu9LJa4pZk.AHCgAz_a
+ EdOLVQ.E.5KypSapytnRJCpGxNr3WpqMLODpGKoaKg0OBYxDN5KbmqRuPYSXKQ12CpZwR3qeO9Y.
+ WzvGBIRRkvUVkDMuswVakotXpxgFxUvGW1CGGzww9ZzmPJFjfdO4plunIEnoIIhAXOFYyfIk5GcF
+ 0cH_DUVW1rLlJr_L0_1ILvVkn1dPnWu1lKH9YZDPbiZRqdpxmhSVoebwPAkLhxBDm1Di2Ki2wu0i
+ CvBpLuaLjIgJcFhMz7mcPnG42
+Date: Fri, 3 May 2019 09:34:53 +0000 (UTC)
+From: "Bruno P. Kinoshita" <kinow@apache.org>
+To: "announce@apache.org" <announce@apache.org>, 
+	"dev@commons.apache.org" <dev@commons.apache.org>, 
+	"guidovranken@gmail.com" <guidovranken@gmail.com>, 
+	"security@commons.apache.org" <security@commons.apache.org>, 
+	"oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Message-ID: <891206008.3759791.1556876093022@mail.yahoo.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+References: <891206008.3759791.1556876093022.ref@mail.yahoo.com>
+X-Mailer: WebService/1.1.13554 YMailNorrin Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:66.0) Gecko/20100101 Firefox/66.0
+Subject: [oss-security] [CVE-2018-17201]: Apache Commons Imaging information disclosure
+ vulnerability
 
-Sudo 1.8.28 has been today, October 14th, 2019 which includes a fix
-for the following security-related issue which has been assigned
-CVE-2019-14287.  The information below is also available at
-https://www.sudo.ws/alerts/minus_1_uid.html
+Severity: Medium
 
-Potential bypass of Runas user restrictions
+Vendor:
+The Apache Software Foundation
 
-Summary:
-When sudo is configured to allow a user to run commands as an arbitrary
-user via the ALL keyword in a Runas specification, it is possible
-to run commands as root by specifying the user ID -1 or 4294967295.
+Versions Affected:
+Apache Sanselan 0.97-incubator
 
-This can be used by a user with sufficient sudo privileges to run
-commands as root even if the Runas specification explicitly disallows
-root access as long as the ALL keyword is listed first in
-the Runas specification.
+Description:
+Certain input files could make the code hang when Apache Sanselan 0.97-incu=
+bator was used to parse them, which could be used in a DoS attack. Note tha=
+t Apache Sanselan (incubating) was renamed to Apache Commons Imaging.
 
-Log entries for commands run this way will list the target user as
-4294967295 instead of root.  In addition, PAM session modules will
-not be run for the command.
-
-Sudo versions affected:
-Sudo versions prior to 1.8.28 are affected.
-
-CVE ID:
-This vulnerability has been assigned CVE-2019-14287 in the Common
-Vulnerabilities and Exposures database.
-
-Details:
-Exploiting the bug requires that the user have sudo privileges that
-allow them to run commands with an arbitrary user ID.  Typically,
-this means that the user's sudoers entry has the special value ALL
-in the Runas specifier.
-
-Sudo supports running a command with a user-specified user name or
-user ID, if permitted by the sudoers policy.  For example, the
-following sudoers entry allow the id command to be run as any user
-because it includes the ALL keyword in the Runas specifier.
-
-    myhost alice = (ALL) /usr/bin/id
-
-Not only is user "alice" is able to run the id command as any valid
-user, she is also able to run it as an arbitrary user ID by using
-the "#uid" syntax, for example:
-
-    sudo -u#1234 id -u
-
-would return 1234.
-
-However, the setresuid(2) and setreuid(2) system calls, which sudo
-uses to change the user ID before running the command, treat user
-ID -1 (or its unsigned equivalent 4294967295), specially and do not
-change the user ID for this value.  As a result,
-
-    sudo -u#-1 id -u
-
-or
-    sudo -u#4294967295 id -u
-
-will actually return 0.  This is because the sudo command itself
-is already running as user ID 0 so when sudo tries to change to
-user ID -1, no change occurs.
-
-This results in sudo log entries that report the command as being
-run by user ID 4294967295 and not root (or user ID 0).  Additionally,
-because the user ID specified via the -u option does not exist in
-the password database, no PAM session modules will be run.
-
-If a sudoers entry is written to allow the user to run a command
-as any user except root, the bug can be used to avoid this restriction.
-For example, given the following sudoers entry:
-
-    myhost bob = (ALL, !root) /usr/bin/vi
-
-User bob is allowed to run vi as any user but root.  However, due
-to the bug, bob is actually able to run vi as root by running "sudo
--u#-1 vi", violating the security policy.
-
-Only sudoers entries where the ALL keyword is present in the Runas
-specifier are affected.  For example, the following sudoers entry
-is unaffected:
-
-    myhost alice = /usr/bin/id
-
-In this example, alice is only allowed to run the id command as root.
-Any attempt to run the command as a different user will be denied.
-
-Fix:
-The bug is fixed in sudo 1.8.28.
+Mitigation:
+0.97-incubator users should upgrade to commons-imaging-1.0-alpha1
 
 Credit:
-Joe Vennix from Apple Information Security found and analyzed the
-bug.
+This issue was discovered by =EF=BB=BFGuido Vranken.
 
-Patches:
-See attached patch for sudo 1.8.27.
+References:
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2018-17201
+https://lists.apache.org/thread.html/48a64566999f44290e4fb3b0d2e9a0e1c99690=
+2db51258e7aff00dda@%3Cdev.commons.apache.org%3E
