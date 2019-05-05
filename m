@@ -1,45 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/09/5
-Message-ID: <a12cddb8-7753-5e5f-de0f-8c575c2632d2@thermi.consulting>
-Date: Mon, 9 Dec 2019 16:28:35 +0100
-From: Noel Kuntze <noel.kuntze+oss-security@...rmi.consulting>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/05/1
+Message-ID: <CALv8orF3HiuDe=GFm_wK_6Q-JVYo3BJZFOWu57hf7-yfkW5Gng@mail.gmail.com>
+Date: Sun, 5 May 2019 15:21:45 +0530
+From: Pramod Rana <varchashva@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Shell wildcards considered dangerous?
+Subject: Open source tool | Lets Map Your Network
 Content-Type: text/plain; charset=utf-8
 
-Hello Leonid,
+Let’s Map Your Network (LMYN) aims to provide an easy to use interface
+to security engineer and network administrator to have their network
+in graphical form with zero manual error, where a node represents a
+system and relationship between nodes represent the connection.
 
-The message was about the attack vector on applications that put together argument vectors
-based on user input, not specifically about human use of the shell.
+It is utmost important for any security engineer to understand their
+network first before securing it and it becomes a daunting task to
+have a ‘true’ understanding of a widespread network. In a mid to large
+level organisation’s network having a network architecture diagram
+doesn’t provide the complete understanding and manual verification is
+a nightmare. Hence in order to secure entire network it is important
+to have a complete picture of all the systems which are connected to
+your network, irrespective of their type, function, technology etc.
 
-The same problem applies to that though. Users need to use -- to terminate the option list.
+BOTTOM LINE - YOU CAN'T SECURE WHAT YOU ARE NOT AWARE OF.
 
-Kind regards
+LMYN does it in two phases:
+1. Learning: In this phase LMYN 'learns' the network by performing the
+network commands and querying the APIs and then builds graph database
+leveraging the responses. User can perform any of the learning
+activities at any point of time and LMYN will incorporate the results
+in existing database.
+2. Monitoring: This is a continuous process, where LMYN monitors the
+'in-scope' network for any changes, compare it with existing
+information and update the graph database accordingly.
 
-Noel
-
-Am 09.12.19 um 16:18 schrieb Leonid Isaev:
-> On Mon, Dec 09, 2019 at 03:42:47PM +0100, Noel Kuntze wrote:
->> That is only a problem if the developer(s) foolishly didn't use "--" to
->> terminate the command line options or they did, but the argument parser of
->> the called program does not understand that "--" is a command line option
->> terminator.
-> I'm sorry, but this has nothing to do with developers of PROGRAM to use or not
-> user "--", but rather with the user not properly sanitizing the input to the
-> PROGRAM and not understanding how shell works. Specifically, doing
-> PROGRAM *.tar is just asking for trouble for many reasons, not mentioned in the
-> original email. See [1] (and in general BashPitfalls) for a proper discussion...
->
-> HTH,
-> L.
->
-> [1] https://mywiki.wooledge.org/BashPitfalls#for_f_in_.24.28ls_.2A.mp3.29
->
-
--- 
-Noel Kuntze
-IT security consultant
-
-GPG Key ID: 0x0739AD6C
-Fingerprint: 3524 93BE B5F7 8E63 1372 AF2D F54E E40B 0739 AD6C
-
+GitHub: https://github.com/varchashva/LetsMapYourNetwork
