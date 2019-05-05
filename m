@@ -1,34 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/13/1
-Message-ID: <CAKG8Do7Eqdq8HpAqyBSBrAHUCrXnwWrhb3e8seQJZDYjNKeszw@mail.gmail.com>
-Date: Tue, 13 Aug 2019 09:49:19 +0200
-From: Cedric Buissart <cbuissar@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/05/4
+Message-ID: <20190505131823.GE25640@kroah.com>
+Date: Sun, 5 May 2019 15:18:23 +0200
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: ghostscript CVE-2019-10216: -dSAFER escape via .buildfont1
+Subject: Re: CVE-2019-11683: "GRO packet of death" issue in the Linux kernel
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Aug 12, 2019 at 4:48 PM Bob Friesenhahn
-<bfriesen@...ple.dallas.tx.us> wrote:
->
-> Is it known if this issue also impacts the PDF reader?  I see that the
-> involved code is Resource/Init/gs_type1.ps which is presumably related
-> to Postscript Type 1 fonts, which might be included in a PDF file.
+On Thu, May 02, 2019 at 07:14:30PM +0200, Andrey Konovalov wrote:
+> Hi,
+> 
+> syzbot has reported a remotely triggerable memory corruption in the
+> Linux kernel. It's been introduced quite recently in e20cf8d3f1f7
+> ("udp: implement GRO for plain UDP sockets.") and only affects the 5.0
+> (stable) release (so the name is a bit overhyped :).
+> 
+> CVE-2019-11683 description:
+> 
+> udp_gro_receive_segment in net/ipv4/udp_offload.c in the Linux kernel
+> 5.x through 5.0.11 allows remote attackers to cause a denial of
+> service (slab-out-of-bounds memory corruption) or possibly have
+> unspecified other impact via UDP packets with a 0 payload, because of
+> mishandling of padded packets, aka the "GRO packet of death" issue.
+> 
+> Fix (not yet upstream):
+> 
+> https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=4dd2b82d5adfbe0b1587ccad7a8f76d826120f37
 
-My personal experience so far is that vulnerabilities requiring to
-modify error handlers do not work when embedded in a PDF.
-That being said, maybe I do it wrong and there might be other ways.
-I didn't have an attempt with that one so far.
+Now fixed in the 5.0.13 kernel release.
 
->
-> Bob
-> --
-> Bob Friesenhahn
-> bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-> GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
-> Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
+thanks,
 
-
-
---
-Cedric Buissart,
-Product Security
+greg k-h
