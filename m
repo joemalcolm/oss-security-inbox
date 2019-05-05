@@ -1,4 +1,9 @@
-Received: (qmail 7273 invoked by uid 550); 19 Mar 2026 17:03:30 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1496" "Sunday" "5" "May" "2019" "15:21:45" "+0530" "Pramod Rana" "varchashva@gmail.com" nil "30" nil nil nil nil "5" nil nil (number mark "U       varchashva@g May  5   30/1496  " thread-indent "\"[oss-security] Open source tool | Lets Map Your Network\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Open source tool | Lets Map Your Network" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 30185 invoked by uid 550); 5 May 2019 10:33:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,79 +12,70 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 7229 invoked from network); 19 Mar 2026 17:03:29 -0000
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=spacehopper.org;
-	s=s3e; t=1773939795; h=from:from:subject:subject:date:date:message-id:message-id:
-	 in-reply-to:in-reply-to:references:references;
-	bh=MqCGp+wWgSpERAJxX7GKUb4UQdRtU0z6we5dwUZpRhU=;
-	b=adKQDN4XhV6qNF2DO98kGNKwRJjvn1p6mvQYAd5A9g+qKhmocVNZF8OBbWxj/JJs2UDFF/
-	OAxCIq34LeJUL/Aw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=spacehopper.org;
-	s=s3; t=1773939795; h=from:from:subject:subject:date:date:message-id:message-id:
-	 in-reply-to:in-reply-to:references:references;
-	bh=MqCGp+wWgSpERAJxX7GKUb4UQdRtU0z6we5dwUZpRhU=;
-	b=KW1OSW6uoMeMPx14vxTtlZcPL/daGrJjdV6pUk8mQbuP0KRHrvwH1FYCC1KUNMpZjOo4QQ
-	tZOreFqa9/uoPwQN9MMKF7rXFUH1X5CWJV/6l/9bHoZgbQjb9bx5ascEfmD1MQu1Xx0BaB
-	njPpMMZbfiAYjz4NHyZSsWA0P/h6mi4iP6mE9MzY9ZVkmp2ozfPoPyQIMeaeMATSkt/Pyu
-	sHTwhV1gUmtrq0rlOl3q2xw47smxGhLlyvN/tQE5OmJ3qiv7uzG70ceJYvmtTA1sVblUWw
-	FOo06TPwCk7Xe/xNmCKxa88/bZ7X4108JKmJ86EUMWui7xOovq1kMGt3Q1z0Nw==
-Date: Thu, 19 Mar 2026 17:03:15 +0000
-From: Stuart Henderson <stu@spacehopper.org>
-To: oss-security@lists.openwall.com
-Message-ID: <abwsU8O48wEKqJb2@symphytum.spacehopper.org>
-References: <CALrEReYUaSySTPo_N1qYv3ah_4MGf-sCTZbEEm6dkuVcHGtNVA@mail.gmail.com>
+Received: (qmail 23613 invoked from network); 5 May 2019 09:52:08 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=fNzrw0DChC7tLvBIadlL7ErfukjexeDesoQZ5UjDdB0=;
+        b=aDdzQ5wO3nlvzI4tlA2aS6af0fm/ZERuqGqeZZFrg4FDawWTVHFQVpZYDqVzri36Ew
+         4DiqnPxLtUWsnF26GcPAI02//XrpPyv3+zMQD47RnU9ADfqWxXXSgq6jlloAl5Hum0wq
+         im0rnkI7fnOegNuUTMrnagy64MiDgpTzH0sAZ2aJU1pBNxE6JbsGTOQGneYUwvPX6bBb
+         NpFHQRUubUgILZp77rtFpSPDFVl1XX42zIbHn1mKZLKibIYQamOiXuRj9D6SUWlcQiBz
+         ROwUfJn1P0lXIm4XKnQAMHkOg+SBxF53+qm/+oNl0/b+2Uy9OaQXun1to+YDwXwS6DlL
+         J8mA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=fNzrw0DChC7tLvBIadlL7ErfukjexeDesoQZ5UjDdB0=;
+        b=o+5CANMcOoPXoqGZ9X0R+wbeE2tCOY4pk5IkS3YIPIq2ZCmxMSZutI1ex/qtfSaoa0
+         ptNHfCeIO8TDhLNiHtmRmvUcHVmwJePPdCLOpmSu6k1R4CTOxre2G90iZu76mcL1QjaO
+         KIcVEaxQG3aVv1k9i+kYiFcZCkDoiNzIzz7MaMOwFwJ5TqJX6o+1XB4wtHU8HjphqL1E
+         29aUZ+Bkn3yQJu15YD7ZIhz7jaYUmTd0/H9pZ4A7JWCvVN1bI3Qv9ZCqBUlYqg3aNh06
+         dX7XGkl0BWUwSJgXW7p9kXTvjuu8d2Kull54PmT6dL4FaiYqOUe2T2ODKKLVjMFd2alm
+         mYVA==
+X-Gm-Message-State: APjAAAVc4BO1Za2IKBguj+vu8kg0du7BjtDsoLUkHiLf8pLn101Hw1sE
+	/jhpMjOy3WVsN7LMWLwLiOY9+u4yoSYf8txhHLg0fV4=
+X-Google-Smtp-Source: APXvYqw2IbMT9mf8q6ekIG0M8L+6QFSDhCaMB6SCsYJR8fIbu0T8JIOseLJIROnQuAYKqMhj+6Oe0T9uTN7MMDBElh8=
+X-Received: by 2002:ae9:df03:: with SMTP id t3mr15297769qkf.346.1557049916573;
+ Sun, 05 May 2019 02:51:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CALrEReYUaSySTPo_N1qYv3ah_4MGf-sCTZbEEm6dkuVcHGtNVA@mail.gmail.com>
-Subject: Re: [oss-security] Off-by-one heap buffer overflow in libuv
+From: Pramod Rana <varchashva@gmail.com>
+Date: Sun, 5 May 2019 15:21:45 +0530
+Message-ID: <CALv8orF3HiuDe=GFm_wK_6Q-JVYo3BJZFOWu57hf7-yfkW5Gng@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] Open source tool | Lets Map Your Network
 
-On 2026/03/19 21:45, Ali Raza wrote:
-> Last few days ago I found an off-by-one heap buffer overflow in libuv.
-> Off-by-one NUL write past a heap buffer in `uv_utf16_to_wtf8()` when called
-> from the Windows TTY line-read path. When a user types or pastes CJK
-> characters into a Windows console application backed by libuv, a 1-byte
-> out-of-bounds NUL write occurs if the read buffer size is divisible by 3.
-> 
-> I found this while reading through the TTY code. `uv_utf16_to_wtf8()` in
-> src/idna.c unconditionally writes a NUL terminator at:
-> ```c
-> *target++ = '\0';   // idna.c:550 -- writes at target[target_len] when
-> buffer is full
-> ```
-> 
-> The function's own comment says `*target_len_ptr` should be the length
-> _excluding_ space for NUL. Two callers in util.c handle this correctly:
-> ```c
-> utf8_len = *size_ptr - 1; /* Reserve space for NUL */    // util.c:126
-> *size -= 1; /* Reserve space for NUL. */                   // util.c:1121
-> ```
-> 
-> But the TTY line-read path passes the full buffer size without the
-> subtraction:
-> ```c
-> read_bytes = bytes;    // tty.c:558 — should be bytes - 1
-> uv_utf16_to_wtf8(utf16, read_chars,
->                  &handle->tty.rd.read_line_buffer.base,
->                  &read_bytes);
-> ```
-> 
-> The overflow happens when all the input characters encode to exactly 3
-> UTF-8 bytes each (BMP characters in U+0800–U+FFFF range, like CJK
-> ideographs). The TTY code computes `chars = bytes / 3` (tty.c:540), so when
-> `bytes % 3 == 0`, the worst-case output `chars * 3` equals `bytes` exactly,
-> and the NUL terminator writes one byte past the buffer.
-> 
-> The buffer size comes from the application's `alloc_cb`. libuv suggests
-> 8192 (not divisible by 3), but any application returning a size that's
-> divisible by 3 hits this.
-> 
-> Introduced in v1.47.0 (commit f3889085, PR #4021), still present on v1.x
-> HEAD.
+Let=E2=80=99s Map Your Network (LMYN) aims to provide an easy to use interf=
+ace
+to security engineer and network administrator to have their network
+in graphical form with zero manual error, where a node represents a
+system and relationship between nodes represent the connection.
 
-Seems the fix for this was merged last week?
+It is utmost important for any security engineer to understand their
+network first before securing it and it becomes a daunting task to
+have a =E2=80=98true=E2=80=99 understanding of a widespread network. In a m=
+id to large
+level organisation=E2=80=99s network having a network architecture diagram
+doesn=E2=80=99t provide the complete understanding and manual verification =
+is
+a nightmare. Hence in order to secure entire network it is important
+to have a complete picture of all the systems which are connected to
+your network, irrespective of their type, function, technology etc.
 
-https://github.com/libuv/libuv/commit/ec0ab5d77d32d836a60b024fa43d54ed3ce3ce87
+BOTTOM LINE - YOU CAN'T SECURE WHAT YOU ARE NOT AWARE OF.
 
+LMYN does it in two phases:
+1. Learning: In this phase LMYN 'learns' the network by performing the
+network commands and querying the APIs and then builds graph database
+leveraging the responses. User can perform any of the learning
+activities at any point of time and LMYN will incorporate the results
+in existing database.
+2. Monitoring: This is a continuous process, where LMYN monitors the
+'in-scope' network for any changes, compare it with existing
+information and update the graph database accordingly.
+
+GitHub: https://github.com/varchashva/LetsMapYourNetwork
