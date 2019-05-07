@@ -1,44 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/06/21/5
-Message-ID: <1438003945.458.1561115969008@appsuite-dev-guard.open-xchange.com>
-Date: Fri, 21 Jun 2019 13:19:28 +0200 (CEST)
-From: Erik Winkels <erik.winkels@...n-xchange.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: PowerDNS Security Advisories 2019-04 and 2019-05
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/07/1
+Message-ID: <CAPZbWne7ggvhAc3q22e1kYgmiQi7L+OTTmzXh8YBybZrcDHvjg@mail.gmail.com>
+Date: Wed, 8 May 2019 00:44:42 +0900
+From: Seong-Joong Kim <sungjungk@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: fprintd: found storing user fingerprints without encryption
 Content-Type: text/plain; charset=utf-8
 
-Good day,
+Please check the following links.
 
-(via: https://blog.powerdns.com/2019/06/21/powerdns-authoritative-server-4-0-8-and-4-1-10-released/  )
+- @Upstream: https://gitlab.freedesktop.org/libfprint/fprintd/issues/16
 
-We just released PowerDNS Authoritative Server 4.0.8 and 4.1.10.
+- @Ubuntu: https://bugs.launchpad.net/ubuntu/+source/fprintd/+bug/1822590
 
-The 4.0.8 and 4.1.10 (together with 4.1.9) releases fix the following security advisories:
+- @Fedora: https://bugzilla.redhat.com/show_bug.cgi?id=1693357
 
-- PowerDNS Security Advisory 2019-04[1] (CVE-2019-10162)
-    - thanks to Gert van Dijk for finding and subsequently reporting this issue
+- @Debian: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=926749
 
-- PowerDNS Security Advisory 2019-05[2] (CVE-2019-10163)
-    - thanks to George Asenov for finding and subsequently reporting this issue
+- @openSUSE: https://build.opensuse.org/request/show/701312
 
-Please also see the 4.0.8[3] and 4.1.10[4] changelogs for more details.
 
-The 4.0.8 tarball[5] (sig[6]) and 4.1.10 tarball[7] (sig[8]) are available at downloads.powerdns.com and packages for CentOS 6 and 7, Debian Jessie and Stretch, Ubuntu Trusty, Xenial and Bionic are available from repo.powerdns.com.
+2019년 4월 23일 (화) 오전 9:41, Seong-Joong Kim <sungjungk@...il.com>님이 작성:
 
-Please send us all feedback and issues you might have via the mailing list[9], or in case of a bug, via GitHub[10].
+> Dear all,
+>
+> I would like to report a vulnerability of 'fprintd'.
+>
+> 'fprintd' does not encrypt sensitive information before storage.
+> *CWE-311: Missing Encryption of Sensitive Data*
+>
+> *Description:*
+> ‘fprintd’ saves fingerprint template and without any encryption, to a file
+> on the host.
+> This could allow a process to access the stored fingerprint and then
+> create natural-looking original fingerprint image.
+> The stolen template can be replayed to the fingerprint authentication to
+> gain unauthorized access.
+> FYI, most commercial software products for fingerprint authentication
+> provide fingerprint data (template) encryption.
+>
+> *Additional information:*
+> It was found that 'fprintd' saves fingerprint template and without any
+> encryption, to a file on the host.
+> This could allow a process to access the stored fingerprint.
+> In 'fprintd', MINDTCT feature extractor from the NIST Biometric Image
+> Software (NBIS) extracts fingerprint minutiae that are compliant to ANSI
+> INCITS 378-2004 and ISO/IEC 197942-2.
+> The generated template file can be easily converted to ISO/IEC 19794-2
+> format since it is a minor modification of the earlier ANSI-INCITS 378-2004.
+> Currently, it is well known threat model that the standard fingerprint
+> template can be reverted to original fingerprint image.
+> [1-5] are presented to create sophisticated and natural-looking
+> fingerprints only from the numerical template data format as defined in
+> standard format.
+> They also successfully evaluated these approaches against a number of
+> undisclosed state-of-the-art algorithms and the NBIS.
+>
+> *Resolve the vulnerability:*
+> As per upstream, the only way to safeguard the fingerprint data is to run
+> with SELinux, AppArmor or another LSM enabled one.
+> (link:
+> https://gitlab.freedesktop.org/libfprint/fprintd/issues/16#note_141207)
+> Currently, Fedora and Red Hat Enterprise Linux have a safeguard the
+> fingerprint data since they uses SELinux by default while Ubuntu and Debian
+> did not.
+>
+> *Final remark:*
+> Once fingerprint has been leaked, victims are leaked for the rest of life
+> since it lasts for a life.
+> It is necessary to prepare for the problem.
+>
+> [1] R. Cappelli et al., “Fingerprint Image Reconstruction from Standard
+> Templates”, IEEE Trans. on Pattern Analysis and Machine Intelligence,
+> vol.29, no.9, pp.1489-1503, 2007.
+> [2] A. Ross et al., “From template to image: Reconstructing fingerprints
+> from minutiae points”, IEEE Trans on Pattern Analysis and Machine
+> Intelligence, vol.29, no.4, pp.544-560, 2007.
+> [3] R. Cappelli et al., “Can Fingerprints be reconstructed from ISO
+> Templates?”, IEEE ICARCV 2006.
+> [4] J. Feng et al., “Fingerprint Reconstruction: From Minutiae to Phase”,
+> IEEE Trans on Pattern Analysis and Machine Intelligence, vol.33, no.2,
+> pp.209-223, 2011.
+> [5] A. Rozsa et al., "Genetic Algorithm Attack on Minutiae-Based
+> Fingerprint Authentication and Protected Template Fingerprint Systems",
+> CVPR 2015.
+>
+> Sincerely,
+> Seong-Joong Kim
+>
+>
 
-[ 1] https://doc.powerdns.com/authoritative/security-advisories/powerdns-advisory-2019-04.html
-[ 2] https://doc.powerdns.com/authoritative/security-advisories/powerdns-advisory-2019-05.html
-[ 3] https://doc.powerdns.com/authoritative/changelog/4.0.html#powerdns-authoritative-server-4-0-8
-[ 4] https://doc.powerdns.com/authoritative/changelog/4.1.html#change-4.1.10
-[ 5] https://downloads.powerdns.com/releases/pdns-4.0.8.tar.bz2
-[ 6] https://downloads.powerdns.com/releases/pdns-4.0.8.tar.bz2.sig
-[ 7] https://downloads.powerdns.com/releases/pdns-4.1.10.tar.bz2
-[ 8] https://downloads.powerdns.com/releases/pdns-4.1.10.tar.bz2.sig
-[ 9] https://mailman.powerdns.com/mailman/listinfo/pdns-users
-[10] https://github.com/PowerDNS/pdns/issues/new
---
-Erik Winkels
-PowerDNS.COM BV -- https://www.powerdns.com
-
-Download attachment "signature.asc" of type "application/pgp-signature" (476 bytes)
