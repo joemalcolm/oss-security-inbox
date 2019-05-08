@@ -1,125 +1,119 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/16/5
-Message-ID: <933cbc09-958c-d74d-a183-738e7a3059ff@sba-research.org>
-Date: Wed, 16 Oct 2019 14:17:15 +0200
-From: SBA Research Advisory <advisory@...-research.org>
-To: <oss-security@...ts.openwall.com>
-Subject: [SBA-ADV-20190913-04] CVE-2019-16520: WordPress Plugin - All in One SEO Pack <= 3.2.6 - Stored XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/08/7
+Message-ID: <CAPZbWneYGdx28ts8NFhqA2S52jhJm1A56cpEkOjpyWpUSnqNGg@mail.gmail.com>
+Date: Wed, 8 May 2019 23:52:45 +0900
+From: Seong-Joong Kim <sungjungk@...il.com>
+To: Roman Drahtmueller <draht@...altsekun.de>
+Cc: oss-security@...ts.openwall.com,  Noel Kuntze <noel.kuntze+oss-security@...rmi.consulting>
+Subject: Re: Re: fprintd: found storing user fingerprints without encryption
 Content-Type: text/plain; charset=utf-8
 
-# WordPress Plugin - All in One SEO Pack - Stored XSS #
+I think that maintainer of fprintd should participate in this conversation.
+As I mentioned before, I've just reported this vulnerability to the
+upstream and shared the contents of maintainer's decision.
 
-Link: https://github.com/sbaresearch/advisories/tree/public/2019/SBA-ADV-20190913-04_WordPress_Plugin_All_in_One_SEO_Pack
+BTW, we first need a consensus about the necessary for protection of
+fingerprints.
+If not, there is no need to talk about it no longer.
+But, I think it is worth protecting fingerprints as others have tried, that
+I've mentioned before.
 
-## Vulnerability Overview ##
+If you agree with this, it seems that we need more discussion about solving
+the problem.
+Also, I wonder if your solutions are already proven way to solve this issue.
 
-The all-in-one-seo-pack plugin before 3.2.7 for WordPress (aka All in One SEO Pack)
-is susceptible to Stored XSS due to improper encoding of the SEO-specific description
-for posts provided by the plugin via unsafe placeholder replacement.
+Sincerely,
+Seong-Joong Kim.
 
-* **Identifier**            : SBA-ADV-20190913-04
-* **Type of Vulnerability** : Cross-site Scripting
-* **Software/Product Name** : [All in One SEO Pack](https://wordpress.org/plugins/all-in-one-seo-pack/)
-* **Vendor**                : [Semper Plugins](https://semperplugins.com/)
-* **Affected Versions**     : <= 3.2.6
-* **Fixed in Version**      : 3.2.7
-* **CVE ID**                : CVE-2019-16520
-* **CVSSv3 Vector**         : AV:N/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:N
-* **CVSSv3 Base Score**     : 7.3 (High)
+2019년 5월 8일 (수) 오후 10:13, Roman Drahtmueller <draht@...altsekun.de>님이 작성:
 
-## Vendor Description ##
+> [...]
+>
+> > I am not insisting that encryption key should be on the disk or is
+> > encrypted with a static key that is embedded in the binary.
+> > Instead, we can make fprintd to use a TPM, if available.
+>
+>
+> The problem persists: The encryption key must be available for the FP
+> data to be accessible, and so it is for an attacker. It doesn't matter
+> where you store the key.
+>
+> A TPM (and, transitively, products that encrypt with TPM-sealed or
+> TPM-bound key material) is good for the situation where the system is
+> physically stolen while powered down (or the drive fails). But that's not
+> our problem here.
+>
+>
+> > Otherwise, but even though it is not perfect, it would be better to apply
+> > the fingerprint data protection, such as keyring or access control,
+> rather
+> > than raw fingerprint template.
+> > FYI, Windows Hello might use Next Generation Cryptography (called CNG) to
+> > protect and store user private data and encryption keys.
+>
+>
+> There are not many options left to solve the stored credential problem,
+> and it should be clear that saving a file, encrypted or not, is not the
+> solution.
+>
+> One possible solution is to use a hash algorithm, potentially cost-based,
+> to derive a bit string (that is suitable for comparison with the
+> persisted authoritative string) from the output of a fingerprint reader.
+>
+> Another one is to use the fingerprint reader output as input to a KDF,
+> which unwraps the private key of an asymmetric key pair, against which a
+> challenge can be requested or which unwraps further wrapping material to
+> bootstrap a key hierarchy (that can be discarded and rebuilt at any
+> useful time). (*)
+>
+> >> I think that this is similar approach with Lenovo Fingerprint Manager,
+> > Microsoft Windows Hello and other products.
+>
+> I can only recommend to NOT TRUST in any security value that is not
+> satisfyingly documented and/or open-sourced, but instead to expect the
+> worst.
+>
+> The worst btw is introducing a false sense for a security value by
+> wipe-the-eye type of design (security by obscurity).
+>
+>
+> (*) Note that the overall system design for a multi-purpose key hierarchy
+> must be able to cope with the requirement that "master key data", which
+> might encompass biometric data, must never be accessible even to
+> operating system components. A small portion of memory that is accessible
+> only for a very small, associated portion of code, doing only minimal
+> things, but never let go the secret. This is non-trivial to build and
+> typically mandates a root of trust beyond the O/S builder.
+>
+> > Have you read the following papers about fingerprint image reconstruction
+> > technology from standard templates?
+>
+> [...]
+>
+> Those are all good papers, and all of them potentially lead to the
+> conclusion that
+> a) your fingerprint is a username, yet not public, but not secret either
+> b) your username is subject to being copied, regardless of how it is
+>     manifested.
+> c) biometric authentication is flawed unless combined with
+>     other authentication factor types
+>
+>
+> > Lastly, as you mentioned,  it is a stupid idea to use it for various
+> > authentication.
+> > But, it is still working on various authentication/identification system.
+>
+>
+> Make informed desisions about the sufficiency and adequacy of your
+> protection measures based on:
+>
+> * the value of your assets
+> * the threats against your assets
+> * the risks that threats against your assets create damages
+>
+> In movies, the fingerprint-reader-protected-only "max security" lab
+> isn't.
+>
+> R.
+>
 
-> THE ORIGINAL WORDPRESS SEO PLUGIN, DOWNLOADED OVER 50,000,000 TIMES SINCE 2007.
-> Use All in One SEO Pack to optimize your WordPress site for SEO. It’s easy and works out of the box for beginners, and has advanced features and an API for developers.
-
-Active Installations: 2+ million
-
-Source: <https://wordpress.org/plugins/all-in-one-seo-pack/>
-
-## Impact ##
-
-By exploiting the documented vulnerability, an authenticated attacker with the
-ability to create posts can execute JavaScript code in a victim's browser.
-This can be misused, e.g for phishing attacks by displaying a fake
-login form and sending the victim's credentials to the attacker.
-Furthermore malicious actions can be performed in the context of an authenticated
-user. The impact depends on the level of access of the attacked user.
-In case of an admin this can lead to the execution of PHP code and the compromise
-of the server.
-
-## Vulnerability Description ##
-
-The plugin adds several fields to the page where a post can be created or edited.
-This allows setting a custom title and description for each post.
-The information provided there, will be inserted in corresponding `meta`-tags on the page
-of the post. The values of the fields are escaped before they are inserted into the
-HTML of the page.
-
-However, in the description field, there is the possibility to insert placeholders that
-get replaced with certain values before output. A placeholders can be also
-set for the previously mentioned title field. The relevant code can be found in
-`aioseop_class.php` lines 4546-4548:
-
-```php
-if ( false !== strpos( $description, '%post_title%', 0 ) ) {
-    $description = str_replace( '%post_title%', $this->get_aioseop_title( $post, false ), $description );
-}
-```
-
-When an attacker sets a payload in the title field and provides a placeholder for the
-value of the title field in the description field, the raw value of the title field will get inserted
-in the description. The description is not sanitized or encoded afterwards.
-This allows the attacker to break out of the `meta`-tag attribute and insert arbitrary
-HTML and JavaScript.
-
-## Proof of Concept ##
-
-When a post is created or edited the following values can be set to show the vulnerability:
-
-* Title: `test_aiosp_title&<>"';><script src='data:text/javascript,alert(1)'></script>a`
-* Description: `test_aiosp_desc&<>"'; pt:%post_title% wp_title:%wp_title% bd:%blog_description% sd:%site_description% bt: %blog_title% st: %site_title% desc:%description%`
-
-When the post is saved and accessed later the JavaScript alert-popup will be shown.
-The resulting HTML page will contain the following code (shortened for readability):
-
-```html
-[...]
-<title>test_aiosp_title&amp;&lt;&gt;&quot;&#039;;&lt;script src=&#039;data:text/javascript,alert(1)&#039;&gt;&lt;/script&gt; | XXXXXXX</title>
-
-<!-- All in One SEO Pack 3.2.5 by Michael Torbert of Semper Fi Web Design[197,235] -->
-<meta name="description"  content="test_aiosp_desc&amp;&quot;&#039;; pt:test_aiosp_title&<>"';<script src='data:text/javascript,alert(1)'></script> wp_title:test_aiosp bd: sd: bt: XXXXXXX st: XXXXXXX desc:%description%" />
-[...]
-```
-
-## Recommended Countermeasures ##
-
-We recommend to properly escape the output by applying the encoding functions provided by WordPress,
-like the `esc_*`- or `wp_kses_*`-[functions][1] after all placeholders were substituted.
-
-[1]: https://developer.wordpress.org/themes/theme-security/data-sanitization-escaping/#escaping-securing-output
-
-## Timeline ##
-
-* `2019-09-09` Identified the vulnerability
-* `2019-09-10` Contacted vendor
-* `2019-09-10` Response by vendor about disclosure contact
-* `2019-09-10` Vulnerability disclosed to vendor
-* `2019-09-10` Vulnerability verified by vendor
-* `2019-09-10` Vulnerability fixed by vendor, public disclosure coordinated
-* `2019-09-20` CVE assigned
-* `2019-10-16` Public disclosure
-
-## References ##
-
-* <https://wordpress.org/plugins/broken-link-checker/>
-* <https://wordpress.org/plugins/broken-link-checker/#developers>
-* <https://semperplugins.com/all-in-one-seo-pack-changelog/>
-* <https://github.com/semperfiwebdesign/all-in-one-seo-pack/issues/2888>
-
-## Credits ##
-
-* Tobias Fink ([SBA Research](https://www.sba-research.org/))
-
-Download attachment "0xFBB8862F58F775B2.asc" of type "application/pgp-keys" (3542 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
