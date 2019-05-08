@@ -1,4 +1,9 @@
-Received: (qmail 20168 invoked by uid 550); 1 Nov 2022 21:09:18 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3420" "Wednesday" "8" "May" "2019" "15:13:58" "+0200" "Roman Drahtmueller" "draht@schaltsekun.de" nil "87" nil nil nil nil "5" nil nil (number mark "U       draht@schalt May  8   87/3420  " thread-indent "\"Re: [oss-security] Re: fprintd: found storing user fingerprints without encryption\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Re: fprintd: found storing user fingerprints without encryption" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 9260 invoked by uid 550); 8 May 2019 13:14:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,84 +12,106 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11545 invoked from network); 1 Nov 2022 20:57:50 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:reply-to:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=7atvybqSLyCjmpKaEI1+BIPTJAfe0sib3kSwTPaZkHU=;
-        b=S6C9NPV3/XDrxXnm4r6+TALTiyJCiWYg1/5Fdh7kER9tsd1K24/h6tVgPcI1O+eWeV
-         8eb3RNzHA1inZsRais4sBCKHDRIqpILcbTtY914rdIRuBf6w5z6XBhcA/s/6ILdCea17
-         NYmGe4T20+CHMtv9t9YhZ4kAXsQWnwPxTPzS7udiZWAGvjPwsTM3YsszrWYgGTjrTPZu
-         /uzdPPIOIygbwUOkA5dZ9GBJi5KsWS3eR67VYDAbmnO7yCPKSO4/OsCGZBhuivkV0SM5
-         KgIsuC7tZXKZyXoXPjwyHKocGig86gaC1Gv/SE21m0luk0ncWblBAtLAbSA/2EYPqv8/
-         4Gfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:reply-to:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=7atvybqSLyCjmpKaEI1+BIPTJAfe0sib3kSwTPaZkHU=;
-        b=vjgVU0/kheVY+2gtMOShK7n4R3kbC3Zb7KLdgH/LXFGZWBk6wfGBxUv4ujhyk0rQwS
-         sRF2tWaTuZ9UgRF/uFhr4wDkJ7v7vMaZ2eRs58Si8pNjR7IGjkaNzmJQ1yJhrJkyKOf9
-         BRXr3pwpc+uxcNNEhUaA3qJ14ZdpWDqbf/IW5uH53luF+geYRzCFEfGj5c1JqEVynWyC
-         69AGQ/agIyeld0KAyYz8DaVTgT+okPF1OUpNHngYAs0lP7lzF4lwoB2wPYKuIOvv3YSK
-         HJHtMbdC5k26v6bh3s7ppPrAzltLCy5WZCYgJDjBa9o9oCWmCrlTGI9ajuVZgtFEgAXu
-         jb8A==
-X-Gm-Message-State: ACrzQf0qyr2czVwGj8Z488PwewyszEdIx/2Dympcywu7UheEWagBvO9W
-	neaJXxsVjdf4xVU2SRKTiA6O0k7stTh5iPrAPCmFkGe0WZU=
-X-Google-Smtp-Source: AMsMyM6/DEU6ZxExz6Ku365KDnTM5O04jHpb304oxDmD2dk4hZKosJrzQbeED5vyTNkX+j9qibD8NRDAaQq/WZkX6WY=
-X-Received: by 2002:a17:90a:1946:b0:212:f926:5382 with SMTP id
- 6-20020a17090a194600b00212f9265382mr21661304pjh.218.1667336257559; Tue, 01
- Nov 2022 13:57:37 -0700 (PDT)
+Received: (qmail 9240 invoked from network); 8 May 2019 13:14:09 -0000
+Date: Wed, 8 May 2019 15:13:58 +0200 (CEST)
+From: Roman Drahtmueller <draht@schaltsekun.de>
+To: Seong-Joong Kim <sungjungk@gmail.com>
+cc: oss-security@lists.openwall.com, 
+    Noel Kuntze <noel.kuntze+oss-security@thermi.consulting>
+In-Reply-To: <CAPZbWncGi8L7OkotuHnajwKutYEmPnY8oYc6gwG8yeMY0wPTNA@mail.gmail.com>
+Message-ID: <alpine.LNX.2.02.1905081352280.25606@i8.fpunygfrxha.qr>
+References: <CAPZbWnf64OLnNjuJuzmmsVNSi8tOPX+Kaiy0Evd47dw+NQP3NQ@mail.gmail.com> <CAPZbWne7ggvhAc3q22e1kYgmiQi7L+OTTmzXh8YBybZrcDHvjg@mail.gmail.com> <alpine.LNX.2.02.1905081051030.29468@i8.fpunygfrxha.qr> <6fe9f0a9-01d6-369c-5146-23c7a6d9555c@thermi.consulting>
+ <CAPZbWnfDh0dZ8wpnLN7OsXAkKrBPyfnt52Cnz=74t4XCVXG3BQ@mail.gmail.com> <dc36d64e-ac76-29f7-5d54-225b54c2d707@thermi.consulting> <CAPZbWnfVUF-YR21kg=1c7Yh8wW=QBhOd0hW+2pvMjf+eyA=KUg@mail.gmail.com>
+ <CAPZbWncGi8L7OkotuHnajwKutYEmPnY8oYc6gwG8yeMY0wPTNA@mail.gmail.com>
 MIME-Version: 1.0
-References: <20221101170833.GA10470@openwall.com> <Y2FhxvA/2e7xFUiF@itl-email>
- <alpine.BSF.2.21.9999.2211020631160.34372@aneurin.horsfall.org> <CAPWQ=1TzQ_e2yHZMXx6Tm4UJG3owZypShvm+VDoxEMcDSDxX+A@mail.gmail.com>
-In-Reply-To: <CAPWQ=1TzQ_e2yHZMXx6Tm4UJG3owZypShvm+VDoxEMcDSDxX+A@mail.gmail.com>
-From: Jeffrey Walton <noloader@gmail.com>
-Date: Tue, 1 Nov 2022 16:57:25 -0400
-Message-ID: <CAH8yC8mzcw-C257znYHH+qSyXoFVJWaAD=3dbvH3ZxymUtZU0A@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: Re: [oss-security] OpenSSL X.509 Email Address 4-byte Buffer Overflow
- (CVE-2022-3602), X.509 Email Address Variable Length Buffer Overflow (CVE-2022-3786)
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+Subject: Re: [oss-security] Re: fprintd: found storing user fingerprints
+ without encryption
 
-On Tue, Nov 1, 2022 at 3:55 PM Pavan Maddamsetti
-<pavan.maddamsetti@gmail.com> wrote:
->
-> https://github.com/RustCrypto
+[...]
 
-I hope this does not start a war.. The problem with Rust is, it's only
-guaranteed to work on i686 and x86_64.
+> I am not insisting that encryption key should be on the disk or is
+> encrypted with a static key that is embedded in the binary.
+> Instead, we can make fprintd to use a TPM, if available.
 
-Trying to compile Rust programs on armel, armhf, aarch64 and PowerPC
-has been excruciatingly painful. The tool cannot compile its own
-cargo's on those platforms. I gave up trying to use Rust on anything
-but x86_64.
 
-(Don't believe the marketing literature at
-https://doc.rust-lang.org/beta/rustc/platform-support.html).
+The problem persists: The encryption key must be available for the FP 
+data to be accessible, and so it is for an attacker. It doesn't matter 
+where you store the key.
 
-Jeff
+A TPM (and, transitively, products that encrypt with TPM-sealed or 
+TPM-bound key material) is good for the situation where the system is 
+physically stolen while powered down (or the drive fails). But that's not 
+our problem here.
 
-> On Tue, Nov 1, 2022, 3:42 PM Dave Horsfall <dave@horsfall.org> wrote:
->
-> > On Tue, 1 Nov 2022, Demi Marie Obenour wrote:
-> >
-> > [ Massive trim ]
-> >
-> > > 3. When will OpenSSL be replaced by something written in a safe
-> > >    language, or at least with a better-maintained fork?  I know that
-> > >    distributions often cannot use LibreSSL (because FIPS, ugh) or
-> > >    BoringSSL (because of no stable API or ABI), but I wonder if e.g.
-> > >    libcurl should be linked to BoringSSL instead.
-> >
-> > We see this over at https://boringssl.googlesource.com/boringssl/ :
-> >
-> >   ``Although BoringSSL is an open source project, it is not intended
-> >     for general use, as OpenSSL is. We don't recommend that third parties
-> >     depend upon it. Doing so is likely to be frustrating because there
-> >     are no guarantees of API or ABI stability.''
-> >
-> > If even the manufacturer says that you shouldn't use it...
-> >
+
+> Otherwise, but even though it is not perfect, it would be better to apply
+> the fingerprint data protection, such as keyring or access control, rather
+> than raw fingerprint template.
+> FYI, Windows Hello might use Next Generation Cryptography (called CNG) to
+> protect and store user private data and encryption keys.
+
+
+There are not many options left to solve the stored credential problem, 
+and it should be clear that saving a file, encrypted or not, is not the 
+solution.
+
+One possible solution is to use a hash algorithm, potentially cost-based, 
+to derive a bit string (that is suitable for comparison with the 
+persisted authoritative string) from the output of a fingerprint reader.
+
+Another one is to use the fingerprint reader output as input to a KDF, 
+which unwraps the private key of an asymmetric key pair, against which a 
+challenge can be requested or which unwraps further wrapping material to 
+bootstrap a key hierarchy (that can be discarded and rebuilt at any 
+useful time). (*)
+
+>> I think that this is similar approach with Lenovo Fingerprint Manager,
+> Microsoft Windows Hello and other products.
+
+I can only recommend to NOT TRUST in any security value that is not 
+satisfyingly documented and/or open-sourced, but instead to expect the 
+worst.
+
+The worst btw is introducing a false sense for a security value by 
+wipe-the-eye type of design (security by obscurity).
+
+
+(*) Note that the overall system design for a multi-purpose key hierarchy 
+must be able to cope with the requirement that "master key data", which 
+might encompass biometric data, must never be accessible even to 
+operating system components. A small portion of memory that is accessible 
+only for a very small, associated portion of code, doing only minimal 
+things, but never let go the secret. This is non-trivial to build and 
+typically mandates a root of trust beyond the O/S builder.
+
+> Have you read the following papers about fingerprint image reconstruction
+> technology from standard templates?
+
+[...]
+
+Those are all good papers, and all of them potentially lead to the 
+conclusion that
+a) your fingerprint is a username, yet not public, but not secret either
+b) your username is subject to being copied, regardless of how it is
+    manifested.
+c) biometric authentication is flawed unless combined with
+    other authentication factor types
+
+
+> Lastly, as you mentioned,  it is a stupid idea to use it for various
+> authentication.
+> But, it is still working on various authentication/identification system.
+
+
+Make informed desisions about the sufficiency and adequacy of your 
+protection measures based on:
+
+* the value of your assets
+* the threats against your assets
+* the risks that threats against your assets create damages
+
+In movies, the fingerprint-reader-protected-only "max security" lab 
+isn't.
+
+R.
