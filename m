@@ -1,82 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/05/4
-Message-ID: <20191105180406.GA26719@openwall.com>
-Date: Tue, 5 Nov 2019 19:04:06 +0100
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Membership application for linux-distros - VMware
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/08/2
+Message-ID: <6fe9f0a9-01d6-369c-5146-23c7a6d9555c@thermi.consulting>
+Date: Wed, 8 May 2019 11:29:39 +0200
+From: Noel Kuntze <noel.kuntze+oss-security@...rmi.consulting>
+To: oss-security@...ts.openwall.com, Roman Drahtmueller <draht@...altsekun.de>, Seong-Joong Kim <sungjungk@...il.com>
+Subject: Re: Re: fprintd: found storing user fingerprints without encryption
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Nov 04, 2019 at 03:03:42PM -0800, Srivatsa S. Bhat wrote:
-> I'd like to sign up as primary for Administrative 5: "Determine if the
-> reported issues are Linux-specific... ", and as backup for Technical 4.
-> "Check if related issues exist in the same piece of software...".
+Hello List,
 
-Great.  VMware Photon OS is now signed up for those.
+Am 08.05.19 um 11:19 schrieb Roman Drahtmueller:
+>>> Dear all,
+>>>
+>>> I would like to report a vulnerability of 'fprintd'.
+>>>
+>>> 'fprintd' does not encrypt sensitive information before storage.
+>>> *CWE-311: Missing Encryption of Sensitive Data*
+>
+> [...]
+>
+> This misses the point.
+>
+> * Encryption shifts the problem to protecting the symmetric key, which
+>   is the very same problem. => Encryption solves other problems, but not
+>   this one.
+> * If you have sufficient privileges to access the fingerprint data,
+>   then you no longer need the data.
+> * You can't "safeguard" the fingerprint data by applying additional O/S
+>   controls such as SELinux, AppArmor, etc, you can only add more useful
+>   privilege transitions and protect against attacks that exploit
+>   implementation errors. Google "store fingerprint data ios android",
+>   there are suitable solutions.
+>
+> Mostly: Your fingerprint is not a secret like a password, it is a username.
+>
+> Since you can't change the fingerprint (biometrics problem), it is not very useful as a single authentication factor. Either you live with this, or you combine the fingerprint with a different authentication factor type.
+>
+> Roman.
 
-SUSE is now backup (was primary) for Administrative 5: "Determine if the
-reported issues are Linux-specific ..."
+Another argument: You leave your fingerprint on everything you touch. The glass you drank from at the bar on Saturday evening? That has your fingerprints. Your front door? It has those, too.
+Fingerprints aren't sensitive information. The only entities attributing any sensitivity to them are the following: Court systems where fingerprints are allowed as evidence (although it's stupid because you can easily duplicate fingerprints) and companies/persons using fingerprints for authentication (which for the same reason as previously mentioned is not a good idea).
+And as Roman mentioned already, you can't change your fingerprints easily (Sand paper and acids are your friends, but that's not comfortable at all and compromises your ability to hold things in your hands. So don't to that.).
 
-> (I did consider the other task that you brought up, namely Technical
-> 6, but I think we'd need more experience on the list before we can
-> sign up for that task).
+If, for some reason, you still want to "securely" (at least with a higher level of security than plain text) store your fingerprint, you need to use a hardware backed kernel keyring that stores the encryption keys or use a hardware based security solution for storing the fingerprints in the first case. You likely won't find any such solution though that isn't broken already in some regard.
 
-I thought so too, which is a reason why I also directed that request to
-other distros reading our discussion.
+Kind regards
 
-> Also, is there a write-up somewhere that defines exactly what primary
-> and backup means in this context?
+Noel
 
-No.
+-- 
+Noel Kuntze
+IT security consultant
 
-> At the moment, I'm assuming that,
-> for a given task, the primary distro will take up that task for every
-> issue that gets posted onto linux-distros; and in case the primary is
-> unavailable (due to vacation/travel etc), then the backup will step up
-> for that task until the primary gets back. Is that how it works?
+GPG Key ID: 0x0739AD6C
+Fingerprint: 3524 93BE B5F7 8E63 1372 AF2D F54E E40B 0739 AD6C
 
-Yes, and besides that I also expect the backup to watch the list for
-related aspects of issues that the primary might have missed or
-misunderstood or mishandled, and chiming in as necessary to correct
-that.  For example, let's take Administrative task 1:
 
-"Promptly review new issue reports for meeting the list's requirements
-and confirm receipt of the report and, when necessary, inform the
-reporter of any issues with their report (e.g., obviously not actionable
-by the distros) and request and/or propose any required yet missing
-information (most notably, a tentative public disclosure date/time) -
-primary: CoreOS, backup: Oracle"
-
-Given this, I expect that if there's no response to the issue reporter
-and the list by CoreOS within a day, Oracle would respond in their place
-even if these distros had not negotiated/announced any vacation/travel
-beforehand.  (We tell reporters that they should expect a response
-within 48 hours, which leaves about one day for the primary to respond
-and another day for the backup to respond in their place if the primary
-did not.)  Similarly, I'd expect Oracle to send a follow-up message to
-the reporter and the list if CoreOS' response is missing required
-information or questions/requests - e.g., the report didn't have a
-tentative public disclosure date/time yet CoreOS didn't request that.
-I'd also expect Oracle to chime in if they find CoreOS' response wrong -
-e.g., if it acknowledged the embargo, whereas Oracle finds the issue
-"obviously not actionable by the distros".
-
-> If
-> so, will we get to know the contact details of other distros so that
-> we can coordinate our schedules?
-
-Yes, but per the above that isn't enough, and it's also less important
-than you might have expected.  For distros with more than one person
-subscribed, my expectation is that they'll almost always be around to
-handle whatever they volunteered for, and the backup's role is primarily
-in making sure that the work is being done correctly all the time.
-
-> On a related note, would it be okay for me to request another member
-> of the Photon OS team (whom I can vouch for), to be added to the
-> linux-distros list, so that we can have at least one person from our
-> team always available to take action for our distro, in response to
-> the issues disclosed on the list?
-
-Yes.
-
-Alexander
