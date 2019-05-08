@@ -1,179 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/12/3
-Message-Id: <E1iUaTW-0001wf-3B@xenbits.xenproject.org>
-Date: Tue, 12 Nov 2019 18:01:10 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 304 v1 (CVE-2018-12207) - x86: Machine Check Error on Page Size Change DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/08/6
+Message-ID: <alpine.LNX.2.02.1905081352280.25606@v8.schaltsekun.de>
+Date: Wed, 8 May 2019 15:13:58 +0200 (CEST)
+From: Roman Drahtmueller <draht@...altsekun.de>
+To: Seong-Joong Kim <sungjungk@...il.com>
+cc: oss-security@...ts.openwall.com,  Noel Kuntze <noel.kuntze+oss-security@...rmi.consulting>
+Subject: Re: Re: fprintd: found storing user fingerprints without encryption
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+[...]
 
-            Xen Security Advisory CVE-2018-12207 / XSA-304
+> I am not insisting that encryption key should be on the disk or is
+> encrypted with a static key that is embedded in the binary.
+> Instead, we can make fprintd to use a TPM, if available.
 
-            x86: Machine Check Error on Page Size Change DoS
 
-ISSUE DESCRIPTION
-=================
+The problem persists: The encryption key must be available for the FP 
+data to be accessible, and so it is for an attacker. It doesn't matter 
+where you store the key.
 
-An erratum exists across some CPUs whereby an instruction fetch may
-cause a machine check error if the pagetables have been updated in a
-specific manner without invalidating the TLB.
+A TPM (and, transitively, products that encrypt with TPM-sealed or 
+TPM-bound key material) is good for the situation where the system is 
+physically stolen while powered down (or the drive fails). But that's not 
+our problem here.
 
-The x86 architecture explicitly permits modification of the pagetables
-without TLB invalidation, but in this corner case, the impacted core
-ceases operating and an unexpected machine check or system reset occurs.
 
-This corner case can be triggered by guest kernels.
+> Otherwise, but even though it is not perfect, it would be better to apply
+> the fingerprint data protection, such as keyring or access control, rather
+> than raw fingerprint template.
+> FYI, Windows Hello might use Next Generation Cryptography (called CNG) to
+> protect and store user private data and encryption keys.
 
-For more details, see:
-  https://software.intel.com/security-software-guidance/insights/deep-dive-machine-check-error-avoidance-page-size-change
 
-IMPACT
-======
+There are not many options left to solve the stored credential problem, 
+and it should be clear that saving a file, encrypted or not, is not the 
+solution.
 
-A malicious guest kernel can crash the host, resulting in a Denial of
-Service (DoS).  (This CPU bug may also be triggered accidentally.)
+One possible solution is to use a hash algorithm, potentially cost-based, 
+to derive a bit string (that is suitable for comparison with the 
+persisted authoritative string) from the output of a fingerprint reader.
 
-VULNERABLE SYSTEMS
-==================
+Another one is to use the fingerprint reader output as input to a KDF, 
+which unwraps the private key of an asymmetric key pair, against which a 
+challenge can be requested or which unwraps further wrapping material to 
+bootstrap a key hierarchy (that can be discarded and rebuilt at any 
+useful time). (*)
 
-Systems running all versions of Xen are affected.
+>> I think that this is similar approach with Lenovo Fingerprint Manager,
+> Microsoft Windows Hello and other products.
 
-Only x86 processors are vulnerable.  ARM processors are not believed to
-be vulnerable.
+I can only recommend to NOT TRUST in any security value that is not 
+satisfyingly documented and/or open-sourced, but instead to expect the 
+worst.
 
-Only Intel Core based processors (from Nehalem onwards) are affected.
-Other processors designs (Intel Atom/Knights range), and other
-manufacturers (AMD) are not known to be affected.
+The worst btw is introducing a false sense for a security value by 
+wipe-the-eye type of design (security by obscurity).
 
-Only x86 HVM/PVH guests can exploit the vulnerability.  x86 PV guests
-cannot exploit the vulnerability.
 
-Please consult the Intel Security Advisory for details on the affected
-processors.
+(*) Note that the overall system design for a multi-purpose key hierarchy 
+must be able to cope with the requirement that "master key data", which 
+might encompass biometric data, must never be accessible even to 
+operating system components. A small portion of memory that is accessible 
+only for a very small, associated portion of code, doing only minimal 
+things, but never let go the secret. This is non-trivial to build and 
+typically mandates a root of trust beyond the O/S builder.
 
-MITIGATION
-==========
+> Have you read the following papers about fingerprint image reconstruction
+> technology from standard templates?
 
-Running only PV guests avoids the vulnerability.
+[...]
 
-Booting Xen with `hap_2mb=0 hap_1gb=0` on the command line, to disable
-the use of HAP superpages, works around the vulnerability.
+Those are all good papers, and all of them potentially lead to the 
+conclusion that
+a) your fingerprint is a username, yet not public, but not secret either
+b) your username is subject to being copied, regardless of how it is
+    manifested.
+c) biometric authentication is flawed unless combined with
+    other authentication factor types
 
-Booting Xen with `hap=0` to disable HAP entirely, or configuring HVM/PVH
-guests to use shadow paging (hap=0 in xl.cfg) works around the
-vulnerability, but the performance impact of shadow paging in
-combination with in-guest Meltdown mitigations (KPTI, KVAS, etc) will
-most likely make this option prohibitive to use.
 
-RESOLUTION
-==========
+> Lastly, as you mentioned,  it is a stupid idea to use it for various
+> authentication.
+> But, it is still working on various authentication/identification system.
 
-Applying the appropriate attached patches resolves this issue.
 
-By default, Xen will disable executable superpages on
-believed-vulnerable hardware, and report so at boot:
+Make informed desisions about the sufficiency and adequacy of your 
+protection measures based on:
 
-  (XEN) VMX: Disabling executable EPT superpages due to CVE-2018-12207
+* the value of your assets
+* the threats against your assets
+* the risks that threats against your assets create damages
 
-See the performance and safety consideration section below.
+In movies, the fingerprint-reader-protected-only "max security" lab 
+isn't.
 
-xsa304/xsa304-*.patch           xen-unstable
-xsa304/xsa304-4.12-*.patch      Xen 4.12.x
-xsa304/xsa304-4.11-*.patch      Xen 4.11.x
-xsa304/xsa304-4.10-*.patch      Xen 4.10.x
-xsa304/xsa304-4.9-*.patch       Xen 4.9.x
-xsa304/xsa304-4.8-*.patch       Xen 4.8.x
-
-The patches are comprised of:
- *-1.patch: Fix on SandyBridge hardware discovered during testing
- *-2.patch: Main security fix
- *-3.patch: (4.10 and later) Runtime control of fast vs secure
-
-$ sha256sum xsa304*/*
-3365e0351b3ccb39e3be53bcbfd8219d8282f6f3d97d6c4519a3e860b27f6844  xsa304/xsa304-1.patch
-1a85753717312f2b20f291c9e79271c63be2a9542fbec651d0a8fc4d8aca0408  xsa304/xsa304-2.patch
-0c770aa15f2aef2bb3253194243968181a4bb1710d09d6f785ed7f5dae03b93b  xsa304/xsa304-3.patch
-2d2eb25b842578bd45480c8ff6f2266617dd0db5e6e552d5ae481eb764c8aea0  xsa304/xsa304-4.8-1.patch
-72d91f67af06f89d01f7dc1e6ff87f50cad28bbb0475eb5cfbb986ee51775bc2  xsa304/xsa304-4.8-2.patch
-d8d18e7dd9b59f01454352a46d38699b21c5f1f7ff6bd2aa8e63fbd7a98cfca4  xsa304/xsa304-4.9-1.patch
-244df964d70eab300c77210456439dfb1c46f2ddd9f1b851e1110be7573948ba  xsa304/xsa304-4.9-2.patch
-2d80f2603412abb4e644b8e868f4218e90db3f59b25f833ff7342d347af6c5a8  xsa304/xsa304-4.10-1.patch
-94a87371ddeccf5705ed71a961135393fa9046e4235cc90402f9292dcfffa43c  xsa304/xsa304-4.10-2.patch
-9862e46c2bcbbeaba32d06d7af33b8b97fd8be5a4a35bcd70264e9913031f512  xsa304/xsa304-4.10-3.patch
-b927c5b7a5dbf6260fd37ec2a594d5a0ff40b2fa78c9caaaaa59fa184c87d8d1  xsa304/xsa304-4.11-1.patch
-478d7b7b27bb0a4ed874a4d6fe73282d785feed8c35f3278a07a1228d5dfad77  xsa304/xsa304-4.11-2.patch
-d0e079a0af7045711a21ac52674e5821e69c370f7ef64c9ebdfc0990950f7a54  xsa304/xsa304-4.11-3.patch
-4025732fd83a94c09b023f079e9b3c8399649f31e406f5f0c736a522f75fdd53  xsa304/xsa304-4.12-1.patch
-2653c57fc79b98ca5cc30ceb2299d11c2ba96f4becdfb93a1cc14ca943e18420  xsa304/xsa304-4.12-2.patch
-ec670ca4e3782043824e1f475ba187d89a53836d4e2ad8399daf0a91fcc747dc  xsa304/xsa304-4.12-3.patch
-$
-
-PERFORMANCE AND SAFETY CONSIDERATIONS
-=====================================
-
-Disabling executable EPT superpages does come with a performance impact,
-caused by increased iTLB pressure.  The overhead will be workload and
-CPU dependant.
-
-In configurations where guest kernels are trusted not to mount a DoS
-attempt, the mitigation can be turned off by booting with `ept=exec-sp`.
-
-In configurations where the guest kernels are not trusted, users are
-recommended to measure the impact to their workloads as part of deciding
-between fast and secure.
-
-On Xen 4.10 and later, a runtime decision can be made between fast and
-secure by using `xl set-parameters ept=[no-]exec-sp`.
-
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-Despite an attempt to organise predisclosure, the discoverers ultimately
-did not authorise a predisclosure.
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl3K8agMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZd3sH/jRb9M9+OyI6dsFkqCwgnbL3poPgVwC6umC0he6k
-nomcLvY5Tc1ClhvyXTLDOzdo20zMQo6mtLs5RFGC78CjWKM7P3aSFGay+yRHXt4q
-QzoTgTPaSR+MtkahgmS+GEY5IuYSXFWZLRNmx8YXmG2GVDFU9CkfbCCo9hGknY4r
-t5cMS+I7cjAuGhvf9uBxFcSr6FiARcqzk7B7qSEPOJbfEAq1XXYh4Q81Zx2iHClW
-xzyGsWk5UeP+NjRFGpJZpsz9a8yx/zaYWFsjxzG3xYutjkypSoRmNCG2sMPq54Nk
-yuEYHV6/r4ymgexIe+INdHfmkJRpoYadmLdV0vRfXp0vlO8=
-=LdOL
------END PGP SIGNATURE-----
-
-Download attachment "xsa304/xsa304-1.patch" of type "application/octet-stream" (2952 bytes)
-
-Download attachment "xsa304/xsa304-2.patch" of type "application/octet-stream" (9556 bytes)
-
-Download attachment "xsa304/xsa304-3.patch" of type "application/octet-stream" (3847 bytes)
-
-Download attachment "xsa304/xsa304-4.8-1.patch" of type "application/octet-stream" (2938 bytes)
-
-Download attachment "xsa304/xsa304-4.8-2.patch" of type "application/octet-stream" (9286 bytes)
-
-Download attachment "xsa304/xsa304-4.9-1.patch" of type "application/octet-stream" (2938 bytes)
-
-Download attachment "xsa304/xsa304-4.9-2.patch" of type "application/octet-stream" (9348 bytes)
-
-Download attachment "xsa304/xsa304-4.10-1.patch" of type "application/octet-stream" (2938 bytes)
-
-Download attachment "xsa304/xsa304-4.10-2.patch" of type "application/octet-stream" (9411 bytes)
-
-Download attachment "xsa304/xsa304-4.10-3.patch" of type "application/octet-stream" (2628 bytes)
-
-Download attachment "xsa304/xsa304-4.11-1.patch" of type "application/octet-stream" (2938 bytes)
-
-Download attachment "xsa304/xsa304-4.11-2.patch" of type "application/octet-stream" (10488 bytes)
-
-Download attachment "xsa304/xsa304-4.11-3.patch" of type "application/octet-stream" (3821 bytes)
-
-Download attachment "xsa304/xsa304-4.12-1.patch" of type "application/octet-stream" (2938 bytes)
-
-Download attachment "xsa304/xsa304-4.12-2.patch" of type "application/octet-stream" (9568 bytes)
-
-Download attachment "xsa304/xsa304-4.12-3.patch" of type "application/octet-stream" (3847 bytes)
+R.
