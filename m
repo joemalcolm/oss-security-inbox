@@ -1,40 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/13/1
-Message-ID: <20190913071802.GE4936@fedorawork>
-Date: Fri, 13 Sep 2019 09:18:08 +0200
-From: Riccardo Schirone <rschiron@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/09/1
+Message-ID: <CALiX4iavwQ6UVboSJCkO2S_e5vkH61BCKtAsq1G058npDKp0bA@mail.gmail.com>
+Date: Thu, 9 May 2019 21:42:58 +0200
+From: Michael Vorburger <vorburger@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2019-14822 ibus: missing authorization flaw
+Subject: [CVE-2018-11800] and [CVE-2018-11801] Apache Fineract SQL Injection Vulnerabilities fixed in v1.3.0
 Content-Type: text/plain; charset=utf-8
 
-A security flaw in ibus was reported by Simon McVittie (Collabora Ltd.). It was
-discovered that any unprivileged user could monitor and send method calls to the
-ibus bus of another user, due to a misconfiguration during the setup of the DBus
-server. CVE-2019-14822 has been assigned to this flaw.
+Hello oss-security@...ts.openwall.com,
 
-When ibus is in use, a local attacker, who discovers the UNIX socket used by
-another user connected on a graphical environment, could use this flaw to
-intercept all keystrokes of the victim user or modify input related
-configurations through DBus method calls.
+As suggested on https://apache.org/security/committers.html, forwarding you
+the below:
 
-ibus uses a GDBusServer with G_DBUS_SERVER_FLAGS_AUTHENTICATION_ALLOW_ANONYMOUS,
-and doesn't set a GDBusAuthObserver, which allows anyone who can connect to its
-AF_UNIX socket to authenticate and be authorized to send method calls.
+---------- Forwarded message ---------
+From: Michael Vorburger <vorburger@...che.org>
+Date: Thu, May 9, 2019 at 9:35 PM
+Subject: [CVE-2018-11800] and [CVE-2018-11801] Apache Fineract SQL
+Injection Vulnerabilities fixed in v1.3.0
+To: <dev@...eract.apache.org>
+Cc: Apache Security Team <security@...che.org>
 
-ibus can be manually selected by setting GTK_IM_MODLUE=ibus or it could be
-automatically selected by graphical environments like Gnome, when input method
-sources (e.g. Korean, Chinese input method sources) are in use. In these
-cases, all the key strokes of the victim user are sent to the ibus interface
-and they could be intercepted by an attacker.
 
-Upstream fix:
-https://github.com/ibus/ibus/commit/3d442dbf936d197aa11ca0a71663c2bc61696151
+Hello,
 
-Thanks,
--- 
-Riccardo Schirone
-Red Hat -- Product Security
-Email: rschiron@...hat.com
-PGP-Key ID: CF96E110
+The Apache Fineract project would like to hereby disclose that our 1.3.0
+release includes fixes for the CVE-2018-11800 and CVE-2018-11801 SQL
+Injection vulnerabilities (the first one in a query on the
+GroupSummaryCounts table, the second on the m_center data table).
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+We would like to thank Niels Heinen from Google for reporting this issue
+and the Apache Security team for their assistance.
+
+See also
+https://cwiki.apache.org/confluence/display/FINERACT/Apache+Fineract+Security+Report
+.
+
+Best,
+M.
+
