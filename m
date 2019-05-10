@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1509" "Wednesday" "30" "December" "2015" "02:28:26" "+0000" "limingxing" "limingxing@360.cn" "<3626D6E697A150459C44C0E5D8D8D00E0DBD28AA@EX02.corp.qihoo.net>" "50" "[oss-security] CVE request rtmpdump:  the 6 vulnerabilities have been fixed" "^Date:" nil nil "12" "2015123002:28:26" "[oss-security] CVE request rtmpdump: the 6 vulnerabilities have been fixed" (number mark "        limingxing@3 Dec 30   50/1509  " thread-indent "\"[oss-security] CVE request rtmpdump:  the 6 vulnerabilities have been fixed\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3973" "Friday" "10" "May" "2019" "19:31:34" "+0900" "Seong-Joong Kim" "sungjungk@gmail.com" nil "101" nil nil nil nil "5" nil nil (number mark "U       sungjungk@gm May 10  101/3973  " thread-indent "\"Re: [oss-security] Re: fprintd: found storing user fingerprints without encryption\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Re: fprintd: found storing user fingerprints without encryption" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15990 invoked by uid 550); 30 Dec 2015 04:46:27 -0000
+Received: (qmail 12095 invoked by uid 550); 10 May 2019 10:36:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,71 +11,149 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30310 invoked from network); 30 Dec 2015 02:28:44 -0000
-Thread-Topic: CVE request rtmpdump:  the 6 vulnerabilities have been fixed
-Thread-Index: AdFCqHLtoRIYtcfITw6o6Mf07q5h/g==
-Message-ID: <3626D6E697A150459C44C0E5D8D8D00E0DBD28AA@EX02.corp.qihoo.net>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [10.68.0.200]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-MIME-Version: 1.0
-Date: Wed, 30 Dec 2015 02:28:26 +0000
-From: limingxing <limingxing@360.cn>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request rtmpdump:  the 6 vulnerabilities have been fixed
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Received: (qmail 7660 invoked from network); 10 May 2019 10:31:57 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=yKSqxwLcUT/MneTAvQNDapfsHZQvL83Uelk8qpc7jZo=;
+        b=FxxZ6qO/s7uiE68E/v06NmrXBDM8pIUpIqT1z22gVhNLmKHmAwlIH5uw2KSJ7ln2yw
+         1xOGFuAyjuOTg62VG1SOeQ2oZm5EqOmX23mXieTFhVNwFV9zn7EmkuHYbR3BDtT4gk8q
+         h1tJzXNgmI6Va/ay5O2NygQn54bOpgq5KkAsGUjg9jLxZSLGO3M5oz0+cJgGRFFetZyQ
+         IzQWzITon9/k7xuT/PgKSbj7TYj7XY46qvUSYYijg9FC/9sVjRUHvGY0zGyzYbFcasX9
+         /NBN+EuWsPEpxJOoOkdbc/FcVN6xiYMQuvbxuMuih7O9glsVM+mofYYw0ADf3zr9I6vg
+         tq/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=yKSqxwLcUT/MneTAvQNDapfsHZQvL83Uelk8qpc7jZo=;
+        b=m8njz097pqdMwZEE56YYr26TUqAcDj6D6PwHwiPQM3GWygvt492jIJkaDGct1gamuv
+         bRfxpZW4SlFF5PChHnI5iDmzYVnkHcdDjO4utUITowcA64tljzQev1R3uId8QaFf/F2u
+         MIVgg5knQS7L/XY+Ue567RZSYkXRY5C7dpx0x0eswNgUXxCzB2N8qcqisjj6lACRgevK
+         mWN+PWObygkROaFpmf9D/o386GuadR7HU+zU7bDfpILSgTERshDqJ4UO+3nTx6qkTSfy
+         hmPl7OmtomPrCbxmu/CZpfbbTNlULEzTJrtsoPbgbFGTGZS0n+jfMSenbegDVH+SdR5T
+         XvdA==
+X-Gm-Message-State: APjAAAVMPjufa18P5DrB/alLBDKpVuPwnt/qJ2NAXAqaKmL8f4if0q6R
+	0G718ToA0FpRqiW3Ko9aZv8Ul2suY6k5iDWg7nTk+NOBIaQ=
+X-Google-Smtp-Source: APXvYqyaO/nfzznRZv6LnNi4M5Rx30tOOpzirzQhLKX7vBe/qspQ5JkLIR3ZAHrvfIRTZXkCAbk2fy3PAfOD26zorOM=
+X-Received: by 2002:a50:a51c:: with SMTP id y28mr3324712edb.280.1557484305341;
+ Fri, 10 May 2019 03:31:45 -0700 (PDT)
+MIME-Version: 1.0
+References: <CAPZbWnf64OLnNjuJuzmmsVNSi8tOPX+Kaiy0Evd47dw+NQP3NQ@mail.gmail.com>
+ <CAPZbWne7ggvhAc3q22e1kYgmiQi7L+OTTmzXh8YBybZrcDHvjg@mail.gmail.com>
+ <alpine.LNX.2.02.1905081051030.29468@i8.fpunygfrxha.qr> <6fe9f0a9-01d6-369c-5146-23c7a6d9555c@thermi.consulting>
+ <CAPZbWnfDh0dZ8wpnLN7OsXAkKrBPyfnt52Cnz=74t4XCVXG3BQ@mail.gmail.com>
+ <dc36d64e-ac76-29f7-5d54-225b54c2d707@thermi.consulting> <CAPZbWnfVUF-YR21kg=1c7Yh8wW=QBhOd0hW+2pvMjf+eyA=KUg@mail.gmail.com>
+ <CAPZbWncGi8L7OkotuHnajwKutYEmPnY8oYc6gwG8yeMY0wPTNA@mail.gmail.com>
+ <alpine.LNX.2.02.1905081352280.25606@i8.fpunygfrxha.qr> <872-1557480054.563908@mmCb.bu1W.zlxn>
+In-Reply-To: <872-1557480054.563908@mmCb.bu1W.zlxn>
+From: Seong-Joong Kim <sungjungk@gmail.com>
+Date: Fri, 10 May 2019 19:31:34 +0900
+Message-ID: <CAPZbWnfSknrMDTR+5wjGO6Bgcym8uLa60etn7NXab987tE7quQ@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000c360190588861227"
+Subject: Re: [oss-security] Re: fprintd: found storing user fingerprints
+ without encryption
 
-Hello,
-CVE request rtmpdump:  the 6 vulnerabilities have been fixed by Howard Chu =
-a few days ago!
-These vulnerabilities affect latest version of ubuntu kylin by the smplayer!
+--000000000000c360190588861227
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Thank you !
+I think my initial suggestion is not really good enough.
 
+Currently, there is no way to defend this issue except for supporting
+hardware, such as TPM or USB token, rather than encryption by software in
+Linux environment.
 
-The git(git://git.ffmpeg.org/rtmpdump)log is:
+If necessary, how about implementing interfaces to talk with hardware
+security module, such as TPM or PKCS#11 compatible devices.
 
-commit fa8646daeb19dfd12c181f7d19de708d623704c0
-Author: Howard Chu <hyc@highlandsun.com>
-Date:   Wed Dec 23 18:58:50 2015 +0000
+Otherwise, users should avoid using fingerprint
+authentication/identification.
 
-    Fix issue 6-7/7 from LMX of Qihoo 360 Codesafe Team
-=20=20=20=20
-    Additional decode input size checks
+Any idea?
 
-commit 07c10ae612bf5c2dbea594dcbd4da85c54dba1e4
-Author: Howard Chu <hyc@highlandsun.com>
-Date:   Wed Dec 23 18:28:13 2015 +0000
+Sincerely,
 
-    Fix issue 5/7 from LMX of Qihoo 360 Codesafe Team
-=20=20=20=20
-    Ignore zero-length packets
+2019=EB=85=84 5=EC=9B=94 10=EC=9D=BC (=EA=B8=88) =EC=98=A4=ED=9B=84 6:22, h=
+alfdog <me@halfdog.net>=EB=8B=98=EC=9D=B4 =EC=9E=91=EC=84=B1:
 
-commit 7c68ad18f4296911114470bb4caaa673d55c8447
-Author: Howard Chu <hyc@highlandsun.com>
-Date:   Wed Dec 23 18:10:15 2015 +0000
+> Roman Drahtmueller writes:
+> > [...]
+> >
+> > > I am not insisting that encryption key should be on the disk or is
+> > > encrypted with a static key that is embedded in the binary.
+> > > Instead, we can make fprintd to use a TPM, if available.
+> >
+> >
+> > The problem persists: The encryption key must be available for the FP
+> > data to be accessible, and so it is for an attacker. It doesn't matter
+> > where you store the key.
+> >
+> > A TPM (and, transitively, products that encrypt with TPM-sealed or
+> > TPM-bound key material) is good for the situation where the system is
+> > physically stolen while powered down (or the drive fails). But that's
+> not
+> > our problem here.
+>
+> Therefore dedicated tamper-proof IC-designs+embedded software
+> exist, that perform the biometry template storage and matching
+> on the chip (MoC). There are some vendors out there providing
+> such hardware + MoC-algorithms, but mainly fingerprint and some
+> iris biometry variants seem certified so far. These are intended
+> for access cards or USB-tokens in two or more-factor authentication
+> schemes in a 1-to-1 match fashion, not as centralized 1-to-many
+> matching schemes also deployed rarely (e.g. in Japan where they
+> really like biometrics as long as you do not have to touch the
+> biometry reader ...).
+>
+> > [...]
+> >
+> > > Otherwise, but even though it is not perfect, it would be better to
+> apply
+> > > the fingerprint data protection, such as keyring or access control,
+> rather
+> > > than raw fingerprint template.
+> > > FYI, Windows Hello might use Next Generation Cryptography (called CNG)
+> to
+> > > protect and store user private data and encryption keys.
+> >
+> > There are not many options left to solve the stored credential problem,
+> > and it should be clear that saving a file, encrypted or not, is not the
+> > solution.
+> >
+> > One possible solution is to use a hash algorithm, potentially
+> cost-based,
+> > to derive a bit string (that is suitable for comparison with the
+> > persisted authoritative string) from the output of a fingerprint reader.
+>
+> At the momenent I do not know of any algorithms providing sufficient
+> entropy binary hash data from fingerprints in a reliable way.
+> Changing extraction to deliver more entropy results in higher
+> FNR during authentication step later on, I think.
+>
+> > [...]
+>
+> When working on a project to provide highest security MoC solutions
+> with Linux (for other type of biometry, not fingerprints), Nitrokey
+> was offering an open-source USB-token hardware (even the PCBs are
+> open source, if I remember correctly). That platform seemed closest
+> to be a good starting point for developing such an open source MoC
+> biometry solution as they sell also one part with a certified tamper
+> proof trusted element that seemed to allow performing biometry
+> template storage and comparison on chip if programmed correctly.
+>
+> Time in the project was too limited to explore, if that hardware
+> would REALLY allow to upgrade it to a powerful, highly secure but
+> still affordable open source biometry system for use by journalists,
+> human rights activists, NGOs ... and nerds, e.g. for password+biometry
+> secured full disk encryption schemes.
+>
+> > [...]
+>
+> hd
+>
+>
 
-    Fix issue 4/7 from LMX of Qihoo 360 Codesafe Team
-=20=20=20=20
-    Potential integer overflow in RTMPPacket_Alloc().
-=20=20=20=20
-
-commit f3042b5bb7dcb42eda32ad9dd88029b24a2c282b
-Author: Howard Chu <hyc@highlandsun.com>
-Date:   Wed Dec 23 17:53:34 2015 +0000
-
-    Fix issue 2/7 from LMX of Qihoo 360 Codesafe Team
-=20=20=20=20
-    Obsolete RTMPPacket_Free() call left over from original C++ to C rewrite
-
-commit 71fe4f2435beaccca046dad3905840615b76b085
-Author: Howard Chu <hyc@highlandsun.com>
-Date:   Wed Dec 23 17:51:39 2015 +0000
-
-    Fix issue 1/7 from LMX of Qihoo 360 Codesafe Team
-=20=20=20=20
-    AMFProp_GetObject must make sure the prop is actually an object=
+--000000000000c360190588861227--
