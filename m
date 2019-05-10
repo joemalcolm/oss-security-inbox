@@ -1,88 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/19/1
-Message-ID: <CADh9TwLptrnPz_4vjkvJWmH8wOWhqD0brLPQmvizzQ1QvFP56A@mail.gmail.com>
-Date: Thu, 19 Dec 2019 11:26:09 +0800
-From: GalyCannon <galycannon@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/10/1
+Message-ID: <20190510083754.ts7ll2fi2532sjox@tunkki.bugs.fi>
+Date: Fri, 10 May 2019 11:37:54 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: CVE requests: three vulnerabilities in ImageMagick
+Cc: Hanno Böck <hanno@...eck.de>
+Subject: Re: XSS via EXIF tag in Serendipity blog
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-   I have found three vulnerabilities in ImageMagick and all this have
-patched by ImageMagick developer team. However, I requested cve ids for
-these vulveribilities and get no any response. How should I  request CVE
-ids for vulnerilities I found in ImageMagick now? Which CNA should I
-contact with to assign CVE ids for open source software such as imagemagick?
-   The three vulnerabilities details as below.
-    1. heap-buffer-overflow in WritePNGImage of png.c
-[Suggested description]
-In ImageMagick  7.0.8-43  and ImageMagick6  6.9.10-43, there is a
-heap-buffer-overflow overflow in the function WritePNGImage of png.c ,
-which allows remote attackers to cause  arbitrary code execution, denial of
-service or possibly have unspecified other impact via a crafted image file
-.
-[Vendor of Product]
-https://imagemagick.org
-[Affected Component]
-function WritePNGImage of png.c
-[Attack Type]
-Remote
-[Attack Vectors]
-magick convert $poc ./test.png
-[Reference]
-https://github.com/ImageMagick/ImageMagick/issues/1561
-https://github.com/ImageMagick/ImageMagick6/commit/34adc98afd5c7e7fb774d2ebdaea39e831c24dce
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-https://github.com/ImageMagick/ImageMagick/commit/d17c047f7bff7c0edbf304470cd2ab9d02fbf617
+On Fri, May 03, 2019 at 05:42:18PM +0200, Hanno Böck wrote:
+> https://github.com/s9y/Serendipity/issues/598
+> https://blog.s9y.org/archives/282-Serendipity-2.1.5-released.html
 
-[Discoverer]
-galycannon of JDCloud Security Team
+MITRE assigned CVE-2019-11870 for this issue.
 
-   2. heap-buffer-overflow in WriteSGIImage of coders/sgi.c
-[Suggested description]
-In ImageMagick  7.0.8-43  and ImageMagick6  6.9.10-43, there is a
-heap-buffer-overflow overflow in the function WriteSGIImage of coders/sgi.c
-, which allows remote attackers to cause  arbitrary code execution, denial
-of service or possibly have unspecified other impact via a crafted image
-file  .
-[Vendor of Product]
-https://imagemagick.org
-[Affected Component]
-function WriteSGIImage of coders/sgi.c
-[Attack Type]
-Remote
-[Attack Vectors]
-magick convert $poc ./test.sgi
-[Reference]
-https://github.com/ImageMagick/ImageMagick/issues/1562
-https://github.com/ImageMagick/ImageMagick/commit/6ae32a9038e360b3491969d5d03d490884f02b4c
+- -- 
+Henri Salo
+-----BEGIN PGP SIGNATURE-----
 
-https://github.com/ImageMagick/ImageMagick6/commit/9e7db22f8c374301db3f968757f0d08070fd4e54
-
-[Discoverer]
-galycannon of JDCloud Security Team
-
- 3. heap-use-after-free in MngInfoDiscardObject of coders/png.c
-[Suggested description]
-In ImageMagick   7.0.9-7, there is a heap-use-after-free in function
-MngInfoDiscardObject of coders/png.c , which allows remote attackers to
-cause  arbitrary code execution, denial of service or possibly have
-unspecified other impact via a crafted image file  .
-[Vendor of Product]
-https://imagemagick.org
-[Affected Component]
-function MngInfoDiscardObject of coders/png.c
-[Attack Type]
-Remote
-[Attack Vectors]
-magick convert $poc /dev/null
-[Reference]
-https://github.com/ImageMagick/ImageMagick/issues/1791
-https://github.com/ImageMagick/ImageMagick/commit/916d7bbd2c66a286d379dbd94bc6035c8fab937c
-
-[Discoverer]
-galycannon of JDCloud Security Team
-
-Regards,
-galycannon
-
+iQIzBAEBCAAdFiEE/aVSDznAZReWTkxKJ633pE6qdXQFAlzVOGIACgkQJ633pE6q
+dXT6lhAArWXR0Lp36yH57N6sgGLLF+gQavAOK+DfGjpOIkGsr9stlFzdfSD5HvSM
+EASX//8sMenVEXNblPiwbhhJK8cQRnjk/cbIyEACSXngGxU9L4oTAOFCM5PM35On
+Yy7rHqUxLeRhNHviAmSPq0D/n4Kwavc8GQBir4O4nYkwzkhoGTS9FCOyQvzFWGir
+0cv1hpYxvsLigw02g9qnCspnCrKty7FJoawUJ9G5RhYSJkwzEZYNhAAIKWl+Epb/
+xnJXQ5qBuU2KtWpF/Hp5O49GSF1Qd+/Ufdu43jSjbUPKXdD+SbnNRZJXgytj5Nvy
+w4BnHprzBRBHor+jlM8gDBUHfJsN6qdU8b1EyfTYHV/WzDZzXAEOViwuheTp5+b7
+8kb60uvklRfnwhnoQgz7AowcG9+qIruvDPFvXFRRMsSJh/xGHRkNLvLhngEDdzX5
+fVbLkVWmMCuQT6HXQOxCjC4gU59tIa2m1Y75sIT2ZbGcI2XKf/K2mTEcZAIBhV+a
+46Qh7/zakZId4w1q+tjkK8dETIBiVLmjsvg1AZWWnTKt2gL28u1ZXyWLJZzmBEHT
+3szdmlwbh4p/nvR4qqcY7tn6jy+FAs+gDmacaI/iMVaAb0+/vjOu0EdfORY+h/MJ
+9roi5AgpVCrsxxF6DhFPUp9n0ZVO5E5lJlGJv/6HPRowNO+FIq4=
+=q1XV
+-----END PGP SIGNATURE-----
