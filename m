@@ -1,54 +1,104 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/12/13/3
-Message-ID: <517261797.6194.1576246671192@appsuite-dev-gw2.open-xchange.com>
-Date: Fri, 13 Dec 2019 16:17:51 +0200 (EET)
-From: Aki Tuomi <aki.tuomi@...n-xchange.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: CVE-2019-19722: Critical vulnerability in Dovecot
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/10/3
+Message-ID: <CAPZbWnfSknrMDTR+5wjGO6Bgcym8uLa60etn7NXab987tE7quQ@mail.gmail.com>
+Date: Fri, 10 May 2019 19:31:34 +0900
+From: Seong-Joong Kim <sungjungk@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: fprintd: found storing user fingerprints without encryption
 Content-Type: text/plain; charset=utf-8
 
+I think my initial suggestion is not really good enough.
 
-> On 13/12/2019 12:44 Aki Tuomi <aki.tuomi@...ecot.fi> wrote:
-> 
->  
-> Open-Xchange Security Advisory 2019-12-13
->  
-> Product: Dovecot IMAP/POP3 Server
-> Vendor: OX Software GmbH
->  
-> Internal reference: DOV-3719
-> Vulnerability type: NULL Pointer Dereference (CWE-476)
-> Vulnerable version: 2.3.9
-> Vulnerable component: push notification driver
-> Report confidence: Confirmed
-> Solution status: Fixed by Vendor
-> Fixed version: 2.3.9.1
-> Researcher credits: Frederik Schwan, Michael Stilkerich
-> Vendor notification: 2019-12-10
-> Solution date: 2019-12-12
-> Public disclosure: 2019-12-13
-> CVE reference: CVE-2019-19722
-> CVSS: 5.3 (CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L/E:F/RL:O/RC:C)
->  
-> Vulnerability Details:
-> Mail with group address as sender will cause a signal 11 crash in push
-> notification drivers. Group address as recipient can cause crash in some
-> drivers.
->  
-> Risk:
-> Repeated delivery attempts are made for the problematic mail, causing
-> queueing in MTA.
->  
-> Steps to reproduce:
-> 1. Configure dovecot with push notifications enabled, such as OX push
-> notification driver. This can also be observed with 3rd party plugin XAPS.
-> 2. Send mail a group address as sender
->  
-> Solution:
-> Operators should update to the latest Patch Release.
+Currently, there is no way to defend this issue except for supporting
+hardware, such as TPM or USB token, rather than encryption by software in
+Linux environment.
 
-Due to bug in the fix, we had to release 2.3.9.2 which completes the fix for this CVE.
+If necessary, how about implementing interfaces to talk with hardware
+security module, such as TPM or PKCS#11 compatible devices.
 
----
-Aki Tuomi
-Open-Xchange oy
+Otherwise, users should avoid using fingerprint
+authentication/identification.
+
+Any idea?
+
+Sincerely,
+
+2019년 5월 10일 (금) 오후 6:22, halfdog <me@...fdog.net>님이 작성:
+
+> Roman Drahtmueller writes:
+> > [...]
+> >
+> > > I am not insisting that encryption key should be on the disk or is
+> > > encrypted with a static key that is embedded in the binary.
+> > > Instead, we can make fprintd to use a TPM, if available.
+> >
+> >
+> > The problem persists: The encryption key must be available for the FP
+> > data to be accessible, and so it is for an attacker. It doesn't matter
+> > where you store the key.
+> >
+> > A TPM (and, transitively, products that encrypt with TPM-sealed or
+> > TPM-bound key material) is good for the situation where the system is
+> > physically stolen while powered down (or the drive fails). But that's
+> not
+> > our problem here.
+>
+> Therefore dedicated tamper-proof IC-designs+embedded software
+> exist, that perform the biometry template storage and matching
+> on the chip (MoC). There are some vendors out there providing
+> such hardware + MoC-algorithms, but mainly fingerprint and some
+> iris biometry variants seem certified so far. These are intended
+> for access cards or USB-tokens in two or more-factor authentication
+> schemes in a 1-to-1 match fashion, not as centralized 1-to-many
+> matching schemes also deployed rarely (e.g. in Japan where they
+> really like biometrics as long as you do not have to touch the
+> biometry reader ...).
+>
+> > [...]
+> >
+> > > Otherwise, but even though it is not perfect, it would be better to
+> apply
+> > > the fingerprint data protection, such as keyring or access control,
+> rather
+> > > than raw fingerprint template.
+> > > FYI, Windows Hello might use Next Generation Cryptography (called CNG)
+> to
+> > > protect and store user private data and encryption keys.
+> >
+> > There are not many options left to solve the stored credential problem,
+> > and it should be clear that saving a file, encrypted or not, is not the
+> > solution.
+> >
+> > One possible solution is to use a hash algorithm, potentially
+> cost-based,
+> > to derive a bit string (that is suitable for comparison with the
+> > persisted authoritative string) from the output of a fingerprint reader.
+>
+> At the momenent I do not know of any algorithms providing sufficient
+> entropy binary hash data from fingerprints in a reliable way.
+> Changing extraction to deliver more entropy results in higher
+> FNR during authentication step later on, I think.
+>
+> > [...]
+>
+> When working on a project to provide highest security MoC solutions
+> with Linux (for other type of biometry, not fingerprints), Nitrokey
+> was offering an open-source USB-token hardware (even the PCBs are
+> open source, if I remember correctly). That platform seemed closest
+> to be a good starting point for developing such an open source MoC
+> biometry solution as they sell also one part with a certified tamper
+> proof trusted element that seemed to allow performing biometry
+> template storage and comparison on chip if programmed correctly.
+>
+> Time in the project was too limited to explore, if that hardware
+> would REALLY allow to upgrade it to a powerful, highly secure but
+> still affordable open source biometry system for use by journalists,
+> human rights activists, NGOs ... and nerds, e.g. for password+biometry
+> secured full disk encryption schemes.
+>
+> > [...]
+>
+> hd
+>
+>
+
