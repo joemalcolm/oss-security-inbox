@@ -1,51 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/11/04/1
-Message-ID: <CAEoRBew=EvETjHzcQVbUGKmqxJ5BnghbJ-C=vejjaa0XB4Sn1g@mail.gmail.com>
-Date: Mon, 4 Nov 2019 09:26:50 -0800
-From: Tim Armstrong <tarmstrong@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/10/2
+Message-ID: <872-1557480054.563908@mmCb.bu1W.zlxn>
+Date: Fri, 10 May 2019 09:20:54 +0000
+From: halfdog <me@...fdog.net>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2019-10084] privilege escalation by authenticated Apache Impala users
+Subject: Re: Re: fprintd: found storing user fingerprints without encryption
 Content-Type: text/plain; charset=utf-8
 
-CVE-2019-10084: privilege escalation by authenticated Apache Impala users
+Roman Drahtmueller writes:
+> [...]
+>
+> > I am not insisting that encryption key should be on the disk or is
+> > encrypted with a static key that is embedded in the binary.
+> > Instead, we can make fprintd to use a TPM, if available.
+>
+>
+> The problem persists: The encryption key must be available for the FP 
+> data to be accessible, and so it is for an attacker. It doesn't matter 
+> where you store the key.
+>
+> A TPM (and, transitively, products that encrypt with TPM-sealed or 
+> TPM-bound key material) is good for the situation where the system is 
+> physically stolen while powered down (or the drive fails). But that's not 
+> our problem here.
 
-Severity: High
+Therefore dedicated tamper-proof IC-designs+embedded software
+exist, that perform the biometry template storage and matching
+on the chip (MoC). There are some vendors out there providing
+such hardware + MoC-algorithms, but mainly fingerprint and some
+iris biometry variants seem certified so far. These are intended
+for access cards or USB-tokens in two or more-factor authentication
+schemes in a 1-to-1 match fashion, not as centralized 1-to-many
+matching schemes also deployed rarely (e.g. in Japan where they
+really like biometrics as long as you do not have to touch the
+biometry reader ...).
 
-Vendor: The Apache Software Foundation
+> [...]
+>
+> > Otherwise, but even though it is not perfect, it would be better to apply
+> > the fingerprint data protection, such as keyring or access control, rather
+> > than raw fingerprint template.
+> > FYI, Windows Hello might use Next Generation Cryptography (called CNG) to
+> > protect and store user private data and encryption keys.
+>
+> There are not many options left to solve the stored credential problem, 
+> and it should be clear that saving a file, encrypted or not, is not the 
+> solution.
+>
+> One possible solution is to use a hash algorithm, potentially cost-based, 
+> to derive a bit string (that is suitable for comparison with the 
+> persisted authoritative string) from the output of a fingerprint reader.
 
-Versions Affected: Impala 2.7.0 to Impala 3.2.0
+At the momenent I do not know of any algorithms providing sufficient
+entropy binary hash data from fingerprints in a reliable way.
+Changing extraction to deliver more entropy results in higher
+FNR during authentication step later on, I think.
 
-Description: An authenticated user with access to the IDs of active Impala
-queries or sessions can interact with those sessions or queries via a
-specially-constructed request and thereby potentially bypass authorization
-and audit mechanisms.
+> [...]
 
-Session and query IDs are unique and random, but have not been documented
-or consistently treated as sensitive secrets. Therefore they may be exposed
-in logs or interfaces. They were also not generated with a
-cryptographically secure random number generator, so are vulnerable to
-random number generator attacks that predict future IDs based on past IDs.
+When working on a project to provide highest security MoC solutions
+with Linux (for other type of biometry, not fingerprints), Nitrokey
+was offering an open-source USB-token hardware (even the PCBs are
+open source, if I remember correctly). That platform seemed closest
+to be a good starting point for developing such an open source MoC
+biometry solution as they sell also one part with a certified tamper
+proof trusted element that seemed to allow performing biometry
+template storage and comparison on chip if programmed correctly.
 
-Impala deployments with Apache Sentry or Apache Ranger authorization
-enabled may be vulnerable to privilege escalation if an authenticated
-attacker is able to hijack a session or query from another authenticated
-user with privileges not assigned to the attacker.
+Time in the project was too limited to explore, if that hardware
+would REALLY allow to upgrade it to a powerful, highly secure but
+still affordable open source biometry system for use by journalists,
+human rights activists, NGOs ... and nerds, e.g. for password+biometry
+secured full disk encryption schemes.
 
-Impala deployments with audit logging enabled may be vulnerable to
-incorrect audit logging as a user could undertake actions that were logged
-under the name of a different authenticated user.
+> [...]
 
-Constructing an attack requires a high degree of technical sophistication
-and access to the Impala system as an authenticated user.
-
-Mitigation: If an Impala deployment uses Apache Sentry, Apache Ranger or
-audit logging, then users should upgrade to a version of Impala with the
-fix for IMPALA-8605. The Impala 3.3.0 release includes this fix. This
-implements session secrets that eliminate the risk of any attack using this
-mechanism.
-
-In lieu of an upgrade, restricting access to debug pages, administrative
-interfaces and logs that expose session and query IDs will reduce but not
-eliminate the risk of an attack. Restricting access to the Impala
-deployment to trusted users will also reduce the risk of an attack
+hd
 
