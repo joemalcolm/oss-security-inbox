@@ -1,33 +1,121 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/04/2
-Message-ID: <20190904104649.GR3837@jumper.schlittermann.de>
-Date: Wed, 4 Sep 2019 12:46:49 +0200
-From: Heiko Schlittermann <hs@...littermann.de>
-To: oss-security@...ts.openwall.com, Exim Users <exim-users@...m.org>, Exim Announce <exim-announce@...m.org>
-Subject: Re: CVE-2019-15846: Exim - local or remote attacker can execute programs with root privileges.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/11/1
+Message-ID: <CAPZbWncFa4YvkvGUEYW5L=50-brSWt_aBKthkCzC+5zd4Vk+WQ@mail.gmail.com>
+Date: Sat, 11 May 2019 09:20:12 +0900
+From: Seong-Joong Kim <sungjungk@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: fprintd: found storing user fingerprints without encryption
 Content-Type: text/plain; charset=utf-8
 
-Heiko Schlittermann <hs@...marc.schlittermann.de> (Mi 04 Sep 2019 11:22:48 CEST):
-> *** Note: EMBARGO is still in effect!       ***
-> *** Distros must not publish any detail yet ***
+Additionally,  I think that fingerprint reader is widely used on laptop,
+rather than standalone product for PC.
+It is hard to find standalone product in supporting device officially,
+except for Digital Persona U.are.U and Eikon Touch series.
+(see https://fprint.freedesktop.org/supported-devices.html)
+Most of them are forms of fingerprint module or no longer sell the
+standalone product.
 
-As I saw blocked accesses to our security repo:
+Currently, most of major vendors' laptops, including Dell, HP and Lenovo,
+have been equipped with both embedded fingerprint module and TPM.
+Thus, I suggested implementing interfaces to talk with hardware security
+module.
 
-If you're entitled to access our non-public security repository, please
-update your "remote". The git URL is now:
+Sincerely,
 
-    ssh://git@....exim.org/exim-security
-    ssh://git@....exim.org/exim-packages-security
+2019년 5월 10일 (금) 오후 7:31, Seong-Joong Kim <sungjungk@...il.com>님이 작성:
 
-(We addedd the -security suffix.)
+> I think my initial suggestion is not really good enough.
+>
+> Currently, there is no way to defend this issue except for supporting
+> hardware, such as TPM or USB token, rather than encryption by software in
+> Linux environment.
+>
+> If necessary, how about implementing interfaces to talk with hardware
+> security module, such as TPM or PKCS#11 compatible devices.
+>
+> Otherwise, users should avoid using fingerprint
+> authentication/identification.
+>
+> Any idea?
+>
+> Sincerely,
+>
+> 2019년 5월 10일 (금) 오후 6:22, halfdog <me@...fdog.net>님이 작성:
+>
+>> Roman Drahtmueller writes:
+>> > [...]
+>> >
+>> > > I am not insisting that encryption key should be on the disk or is
+>> > > encrypted with a static key that is embedded in the binary.
+>> > > Instead, we can make fprintd to use a TPM, if available.
+>> >
+>> >
+>> > The problem persists: The encryption key must be available for the FP
+>> > data to be accessible, and so it is for an attacker. It doesn't matter
+>> > where you store the key.
+>> >
+>> > A TPM (and, transitively, products that encrypt with TPM-sealed or
+>> > TPM-bound key material) is good for the situation where the system is
+>> > physically stolen while powered down (or the drive fails). But that's
+>> not
+>> > our problem here.
+>>
+>> Therefore dedicated tamper-proof IC-designs+embedded software
+>> exist, that perform the biometry template storage and matching
+>> on the chip (MoC). There are some vendors out there providing
+>> such hardware + MoC-algorithms, but mainly fingerprint and some
+>> iris biometry variants seem certified so far. These are intended
+>> for access cards or USB-tokens in two or more-factor authentication
+>> schemes in a 1-to-1 match fashion, not as centralized 1-to-many
+>> matching schemes also deployed rarely (e.g. in Japan where they
+>> really like biometrics as long as you do not have to touch the
+>> biometry reader ...).
+>>
+>> > [...]
+>> >
+>> > > Otherwise, but even though it is not perfect, it would be better to
+>> apply
+>> > > the fingerprint data protection, such as keyring or access control,
+>> rather
+>> > > than raw fingerprint template.
+>> > > FYI, Windows Hello might use Next Generation Cryptography (called
+>> CNG) to
+>> > > protect and store user private data and encryption keys.
+>> >
+>> > There are not many options left to solve the stored credential problem,
+>> > and it should be clear that saving a file, encrypted or not, is not the
+>> > solution.
+>> >
+>> > One possible solution is to use a hash algorithm, potentially
+>> cost-based,
+>> > to derive a bit string (that is suitable for comparison with the
+>> > persisted authoritative string) from the output of a fingerprint reader.
+>>
+>> At the momenent I do not know of any algorithms providing sufficient
+>> entropy binary hash data from fingerprints in a reliable way.
+>> Changing extraction to deliver more entropy results in higher
+>> FNR during authentication step later on, I think.
+>>
+>> > [...]
+>>
+>> When working on a project to provide highest security MoC solutions
+>> with Linux (for other type of biometry, not fingerprints), Nitrokey
+>> was offering an open-source USB-token hardware (even the PCBs are
+>> open source, if I remember correctly). That platform seemed closest
+>> to be a good starting point for developing such an open source MoC
+>> biometry solution as they sell also one part with a certified tamper
+>> proof trusted element that seemed to allow performing biometry
+>> template storage and comparison on chip if programmed correctly.
+>>
+>> Time in the project was too limited to explore, if that hardware
+>> would REALLY allow to upgrade it to a powerful, highly secure but
+>> still affordable open source biometry system for use by journalists,
+>> human rights activists, NGOs ... and nerds, e.g. for password+biometry
+>> secured full disk encryption schemes.
+>>
+>> > [...]
+>>
+>> hd
+>>
+>>
 
-    Best regards from Dresden/Germany
-    Viele Grüße aus Dresden
-    Heiko Schlittermann
---
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
- ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
