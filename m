@@ -1,153 +1,335 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/25/7
-Message-Id: <E1iNxUP-0002nr-RQ@xenbits.xenproject.org>
-Date: Fri, 25 Oct 2019 11:10:41 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/14/3
+Message-Id: <E1hQame-0002W2-UX@xenbits.xenproject.org>
+Date: Tue, 14 May 2019 17:00:08 +0000
 From: Xen.org security team <security@....org>
 To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
 CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 294 v3 (CVE-2019-17348) - x86 shadow: Insufficient TLB flushing when using PCID
+Subject: Xen Security Advisory 297 v1 (CVE-2018-12126,CVE-2018-12127,CVE-2018-12130,CVE-2019-11091) - Microarchitectural Data Sampling speculative side channel
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-            Xen Security Advisory CVE-2019-17348 / XSA-294
-                              version 3
+ Xen Security Advisory CVE-2018-12126,CVE-2018-12127,CVE-2018-12130,CVE-2019-11091 / XSA-297
 
-         x86 shadow: Insufficient TLB flushing when using PCID
-
-UPDATES IN VERSION 3
-====================
-
-CVE assigned.
+       Microarchitectural Data Sampling speculative side channel
 
 ISSUE DESCRIPTION
 =================
 
-Use of Process Context Identifiers (PCID) was introduced into Xen in
-order to improve performance after XSA-254 (and in particular its
-Meltdown sub-issue).  This enablement implied changes to the TLB
-flushing logic.  One aspect which was overlooked is the safety of
-switching between shadow pagetables, which previously relied on the
-unconditional flushing of a write to CR3.
+Microarchitectural Data Sampling refers to a group of speculative
+sidechannels vulnerabilities.  They consist of:
 
-With PCID enabled, a switch of shadow pagetable for a 64bit PV guest
-fails to invalidate the linear mappings of the previous shadow
-pagetable.  As a result, subsequent accesses to the shadow pagetables
-may be deemed to be safe by the shadow logic (based on the old shadow
-pagetable) but fault when made in practice.
+ * CVE-2018-12126 - MSBDS - Microarchitectural Store Buffer Data Sampling
+ * CVE-2018-12127 - MLPDS - Microarchitectural Load Port Data Sampling
+ * CVE-2018-12130 - MFBDS - Microarchitectural Fill Buffer Data Sampling
+ * CVE-2019-11091 - MDSUM - Microarchitectural Data Sampling Uncacheable Memory
+
+These issues pertain to the Load Ports, Store Buffers and Fill Buffers
+in the pipeline.  The Load Ports are used to service all memory reads.
+The Store Buffers service all in-flight speculative writes (including IO
+Port writes), while the Fill Buffers service all memory writes which are
+post-retirement, and no longer speculative.
+
+Under certain circumstances, a later load which takes a fault or assist
+(an internal condition to processor e.g. setting a pagetable Access or
+Dirty bit) may be forwarded stale data from these buffers during
+speculative execution, which may then be leaked via a sidechannel.
+
+MDSUM (Uncacheable Memory) is a special case of the other three.
+Previously, the use of uncacheable memory was believed to be safe
+against speculative sidechannels.
+
+For more details, see:
+  https://www.intel.com/content/www/us/en/security-center/advisory/intel-sa-00233.html
 
 IMPACT
 ======
 
-Malicious 64bit PV guests may be able to cause a host crash (Denial of
-Service).
+An attacker, which could include a malicious untrusted user process on a
+trusted guest, or an untrusted guest, can sample the content of
+recently-used memory operands and IO Port writes.
 
-Additionally, vulnerable configurations are unstable even in the absence
-of an attack.
+This can include data from:
+
+ * A previously executing context (process, or guest, or
+   hypervisor/toolstack) at the same privilege level.
+ * A higher privilege context (kernel, hypervisor, SMM) which
+   interrupted the attacker's execution.
+
+Vulnerable data is that on the same physical core as the attacker.  This
+includes, when hyper-threading is enabled, adjacent threads.
+
+An attacker cannot use this vulnerability to target specific data.  An
+attack would likely require sampling over a period of time and the
+application of statistical methods to reconstruct interesting data.
 
 VULNERABLE SYSTEMS
 ==================
 
-Only x86 systems are vulnerable.  ARM systems are not vulnerable.
+Systems running all versions of Xen are affected.
 
-Only systems running 64-bit x86 PV guests are vulnerable.  Systems running
-only x86 HVM or PVH or 32bit PV guests are not vulnerable.
+Only x86 processors are vulnerable.
+ARM processors are not believed to be vulnerable.
 
-Only systems with at least one PCID-enabled PV guest are vulnerable.
+Only Intel based processors are potentially affected.  Processors from
+other manufacturers (eg, AMD) are not believed to be vulnerable.
 
-Systems where PCID or INVPCID are unavailable or entirely disabled are
-not vulnerable.
-
-Note that PCID is enabled by default for both 64-bit dom0 and 64-bit
-domU when hardware supports it.  PCID acceleration has been backported
-to the following versions:
- - Xen 4.11.x,
- - Xen 4.10.2 and onwards,
- - Xen 4.9.3 and onwards,
- - Xen 4.8.4 and onwards,
- - Xen 4.7.6.
+Please consult the Intel Security Advisory for details on the affected
+processors, and which are getting microcode updates.
 
 MITIGATION
 ==========
 
-Running only HVM or PVH guests will avoid this vulnerability.
+This issue can be mitigated with a combination of software, firmware and
+configuration changes.
 
-Disabling use of PCID entirely, by passing "pcid=0" or "invpcid=0" as a
-command line option to the hypervisor, will also avoid this
-vulnerability (albeit re-introducing the XPTI performance regression
-use of PCID was intended to reduce).
-
-CREDITS
-=======
-
-This issue was discovered by Jan Beulich of SUSE.
+Note that some affected processors are not expected to receive microcode
+updates.  For these processors, there is no mitigation available.  Users
+with workloads of concern on these processors should see about moving
+the workload elsewhere.
 
 RESOLUTION
 ==========
 
-Applying the appropriate attached patch resolves this issue.
+New microcode, and possibly a new firmware image is required to prevent
+SMM data from being leaked with this vulnerability.  Consult your
+hardware vendor.  The microcode update alone may be packaged for
+boot-time loading.  Consult your dom0 OS vendor.
 
-xsa294/unstable.patch           xen-unstable
-xsa294/4.11.patch               Xen 4.11.x
-xsa294/4.10.patch               Xen 4.10.x
-xsa294/4.9.patch                Xen 4.9.x
-xsa294/4.8.patch                Xen 4.8.x
-xsa294/4.7.patch                Xen 4.7.x
+Software updates to Xen (details below) are required to prevent data
+leakage from Xen into lower privileged contexts.
 
-$ sha256sum xsa294*/*
-c10b7b79a2067cc6d95e40bc78ee8fddaf31f8614bb183fdd5f00e4272e08a0e  xsa294/4.7.patch
-3ac1c3caf01feaf341e977fcbae691f2e4425aa9691f2dfa66795acfe823d76e  xsa294/4.8.patch
-a8dfc8b2d2f0d0865b70fb0051f9d5a80a6c7456d004957a0155d989ec875611  xsa294/4.9.patch
-c6fe1e0173b665a88cbab423737dcb060eed1f634f9bca880d9ddfa2ac855d03  xsa294/4.10.patch
-61a341510f45c0cf63a7438645f5c2b3ab1cd72bc2476e5fad331e322f834f4a  xsa294/4.11.patch
-1fb22eab53f9b1e93fc25f5a08d37121a9278854174f1fbd495b3fe6e8babf3a  xsa294/unstable.patch
+Leakage of data from Xen or other guests can only prevented entirely by
+disabling hyper-threading (if available and active in the BIOS), and by
+applying the patches to Xen.
+
+The Xen patches use the MD_CLEAR feature (available in the new
+microcode) on every exit to guest.  On affected hardware, MD_CLEAR is
+used by default (controlled by `spec-ctrl=[no-]md-clear`), subject to
+microcode availability.
+
+Note: For compatibility with development versions of this fix,
+`spec-ctrl=[no-]mds` is also accepted on Xen 4.12 and earlier as an
+alias.  Consult vendor documentation in preference to here.
+
+The availability of the MD_CLEAR functionality in microcode is reported
+by Xen on boot.  e.g:
+
+  [root@...alhost ~]# xl dmesg | grep MD_CLEAR
+  (XEN)   Hardware features: IBRS/IBPB STIBP L1D_FLUSH SSBD MD_CLEAR
+  (XEN)   Support for HVM VMs: MSR_SPEC_CTRL RSB EAGER_FPU MD_CLEAR
+  (XEN)   Support for PV VMs: MSR_SPEC_CTRL RSB EAGER_FPU MD_CLEAR
+
+SMT/Hyper-Threading is not disabled by default because doing so is
+expected to be too disruptive to existing configurations.  See the
+discussion concerning SMT/Hyper-Threading below.
+
+Guest software updates will be required to prevent data leakage within
+the guest, by making use of the new MD_CLEAR functionality at suitable
+points.  Consult the vendors of all software used in the guest.
+
+xsa297/xsa297-unstable-*.patch      xen-unstable
+xsa297/xsa297-4.12-*.patch          Xen 4.12.x
+xsa297/xsa297-4.11-*.patch          Xen 4.11.x
+xsa297/xsa297-4.10-*.patch          Xen 4.10.x
+xsa297/xsa297-4.9-*.patch           Xen 4.9.x
+xsa297/xsa297-4.8-*.patch           Xen 4.8.x
+xsa297/xsa297-4.7-*.patch           Xen 4.7.x
+
+$ sha256sum xsa297* xsa297*/*
+242a4c9b24aeeac14b5f3e5069cd964c061072c52e63c3050a20986868a87a11  xsa297.meta
+f45354f35ba1726aa274443394e4e1669a518df3c8b62ec2ca24d4bfcf2f4b8e  xsa297/xsa297-unstable-1.patch
+e5a0cbcbd07e5fb20d7dcdd14011281d19baa9c0d958520deede59f11aec3e46  xsa297/xsa297-unstable-2.patch
+c055646eabeb03f6c6d62e95e37fe705d7716a47936dbd65671bedaddad895f7  xsa297/xsa297-unstable-3.patch
+9c2d4aa8122d3f8c109b32d707dae5d236f8df14e25db5db97743c29432bab75  xsa297/xsa297-unstable-4.patch
+af7758b080579e130a9f1bcc5dc6b4a67699a09a5d89280cc2f6c45e26d23ed7  xsa297/xsa297-4.7-1.patch
+15d214c38db3f240687a06a07725d31929c942201a07b988b20ba9766d325321  xsa297/xsa297-4.7-2.patch
+ab16d609822712b6110867cd0179ade0f05ccb36e975cb8f7e711497b47813f5  xsa297/xsa297-4.7-3.patch
+b292aff757800ad8fa37b4db0035a2cf9a580ff8c99816059e0aba9e925f573d  xsa297/xsa297-4.7-4.patch
+15556852f8f62c4cb6019dd7731df31983b16076de6730a7a66defd3d0594927  xsa297/xsa297-4.7-5.patch
+5308bbcc58b4811ff05fce60899e071e4fe3c9cade792fcc5c1c1b6d51001132  xsa297/xsa297-4.7-6.patch
+e9752a539d103c465342a1f87c92dcc8a099f34fc668413f7f134174f2bffc68  xsa297/xsa297-4.7-7.patch
+9f22cbc56de9fb439c97aa48952ee0a0ebf92b78c135934270c40840961ddf89  xsa297/xsa297-4.7-8.patch
+b56828a7fb74529cc1cac152e2ee69df8de53c09676c14ca24823daf990b193a  xsa297/xsa297-4.8-1.patch
+34b04ff0a463c211b30c41048f4a448bd8d83123b426b4de695034b46c7b0952  xsa297/xsa297-4.8-2.patch
+4db2dc7aa3dc3fd1ed30160bd686c9a4890351688feafd7e6e3317438bccd561  xsa297/xsa297-4.8-3.patch
+febf5797b67133f089baa39d710366eefff04d25438dbda051d33cdb78f59004  xsa297/xsa297-4.8-4.patch
+eb75795273cca3c29a883bdb499e8e33237ad016c41080e5eb6f9755334e35c9  xsa297/xsa297-4.8-5.patch
+601cd6c6c805bf9200702806e6e807db04406f15487191d1d95c4521c5f3f860  xsa297/xsa297-4.8-6.patch
+dc3ef28a7b92788eb06a88d44ea8a1f1b72ef859ff46f6ff7c30376ae0ec17df  xsa297/xsa297-4.8-7.patch
+a5dbc30dcc4bed0bf7ea77b73d9dab0c82e5efdc0a93569617b8e7e5221b3ca5  xsa297/xsa297-4.8-8.patch
+10c9ec26d23360de805bc4439aee5766c22f12f6229b8ee5ea045d44cec79267  xsa297/xsa297-4.9-1.patch
+34b04ff0a463c211b30c41048f4a448bd8d83123b426b4de695034b46c7b0952  xsa297/xsa297-4.9-2.patch
+da0d8c5f171379698f9a0cb030c2dda8f37153016da929457f318e4f8a0ee2bb  xsa297/xsa297-4.9-3.patch
+151822d5d60bfebc5df61de9a8593f504f6c25cf973a28dcb85e85c0416a0aed  xsa297/xsa297-4.9-4.patch
+eb75795273cca3c29a883bdb499e8e33237ad016c41080e5eb6f9755334e35c9  xsa297/xsa297-4.9-5.patch
+6636a0c92be892090522317c2b2145d2764168b50d4c1d964d2d52b3f33f54cf  xsa297/xsa297-4.9-6.patch
+226de265e8ebb535711f94fb9cc78802f97d092348fb6fb707c15d557659bae9  xsa297/xsa297-4.9-7.patch
+44b05fe2fe7d340a6ebfdd61d3d59fb5255410269051b9bcf5bbf400e6712189  xsa297/xsa297-4.9-8.patch
+d05db34a8ee61f6762bb94b7c5c976364a3869fa7b70782a22dfb3c563c9d6c5  xsa297/xsa297-4.10-1.patch
+6075a134a941cc83a9a7b2e428d7111857ab9bc5f3f75935a2f5d4cb7c7aca0d  xsa297/xsa297-4.10-2.patch
+cc35f2c5d5c39120cbea0808b0772e9a3568fb45324023eb3192e9d4bea5dee0  xsa297/xsa297-4.10-3.patch
+eb75795273cca3c29a883bdb499e8e33237ad016c41080e5eb6f9755334e35c9  xsa297/xsa297-4.10-4.patch
+5f2d3ac26e4fbde707cc7c5d398a3550f05ca4814d60b5ce9d5b6d95e7243a68  xsa297/xsa297-4.10-5.patch
+9942f973f341a0d7e439f679fcdbcecc9828f6ca50e8b48ba914b5b40688039b  xsa297/xsa297-4.10-6.patch
+c2e33bd9cdd696a71eae276b20eea8dc7e13e6013380ab20635a9931dd2bf1d4  xsa297/xsa297-4.10-7.patch
+87e79a9c2a8fd385b3536b2935293dc3efcaca31523b8f2780be5d62cce4248f  xsa297/xsa297-4.11-1.patch
+57a63c120053a6bf76c1005735186ad477ea736354a2f60d5517b205f553f600  xsa297/xsa297-4.11-2.patch
+bb98de0ccdc74b6db6045cf4869da3788c83eaec12e4a9292293c409f94cd473  xsa297/xsa297-4.11-3.patch
+eb75795273cca3c29a883bdb499e8e33237ad016c41080e5eb6f9755334e35c9  xsa297/xsa297-4.11-4.patch
+d8aa296014cb15107668e351fd383e1dfd9af56a3d109725f7b5e1d9a2a7cf81  xsa297/xsa297-4.11-5.patch
+a28fb9f1cc84b8f91e2b53e629c7729bab60b41675720eb169d8172d9edf58f0  xsa297/xsa297-4.11-6.patch
+8310358fb547c306b35762bf8b389700560e277f8d58f780f7215b3f78dfa4cc  xsa297/xsa297-4.11-7.patch
+fd3a8d83645799e832767a43647b1255e2e0240ba9c40c6f661d27a08e880770  xsa297/xsa297-4.12-1.patch
+6cf827a557c1993db9f7f1c08a8efc3e2ccb955fe2d59c0cadb1b3294d9bfed8  xsa297/xsa297-4.12-2.patch
+14d47c1b448c3e81f773e7f762e6af682285d61ce8fade8902f52340cb77efab  xsa297/xsa297-4.12-3.patch
+891c181ce03b765795534e20004679bb102150d98c8db2b879a2cabe60689089  xsa297/xsa297-4.12-4.patch
+1d17219413ca150e4815469481d19f044b1abcf3dc7f6824caccbc85b3a99702  xsa297/xsa297-4.12-5.patch
+3fb437b18d9cba432c424331a083da52b3ad1ebf81fed3413315ee1d8117ca40  xsa297/xsa297-4.12-6.patch
+71a8bfd370269bcd3520e8969a9c4fbedb75035e3eb4b12347ac08d67ccf91e0  xsa297/xsa297-4.12-7.patch
 $
 
-DEPLOYMENT DURING EMBARGO
-=========================
+DISCUSSION CONCERNING SMT/HYPER-THREADING
+=========================================
 
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
+An attacker can perform an MDS-based attack from userspace, with
+unprivileged instructions.  As the leakage occurs from stale data
+latched in buffers in the pipeline, the only defence is to flush the
+buffers before moving to a less privileged context.
 
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
+On affected processors when hyper-threading is enabled, the in-flight
+memory content from other threads can be observed, from whatever context
+is executing.  This could be a different piece of userspace, or the
+guest kernel, or Xen.  It could also be from a vcpu belonging to a
+different guest.
 
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
+Work is ongoing on xen-devel to develop core-aware scheduling, which
+will mitigate the cross-domain leak by ensuring that vcpus from
+different domains are never concurrently scheduled on sibling threads.
+However, this alone will not prevent cross-privilege level leakage from
+within the same domain, including leakage from Xen.
 
+If you have any untrusted code running in VMs, and need to prevent the
+risk of data leakage, the only available option at the moment is to
+disable hyper-threading.  This is preferably done in the BIOS, but can
+also be done by Xen at boot time by specifying `smt=no` on the command
+line.
 
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
+NOTE REGARDING LACK OF EMBARGO
+==============================
 
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
+Despite an attempt to organise predisclosure, the discoverers ultimately
+did not authorise a predisclosure.
 -----BEGIN PGP SIGNATURE-----
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl2y1/cMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZH54H/iShmv1F1GDALKhJJdm+BOEtyVy+ZCFU5Atn97dV
-3Bm+3BtX1Nfcd1pnLdzQs0ocasw+FSp0Swq93nrpM8hPK9ze4aAKwo/Srhf/WV2/
-V9N5lKwxCUub6p2QbAcqj//zLxv0llkhduVGzV9/NXOzeLn5Rp2Af/rgSchQ4QHp
-oEdHXNV93Pm1pi4NpCu8uXQAW4Mp7rRiWJPuBkuJDhgVftXItSNMc6jLunJS581X
-z+3SmLpfF3IDVpa5GqjtFJ3Exk9DJe4oYHZPmb2qwJTsfV20emIc/7mARGErgdwT
-jpRjss41gJX1l41zRF9mwKPc1qPW6Rc9xgh6q1jrjY1CCvk=
-=TV/a
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAlza5AgMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZYnYH/RMXGBcI79B0qD3lG19j8b//j8iDLskTHSkRg6HU
+3UXMu1aAEqtgP3yoDl00vDKBMqfNygduQt5mf+nPgM3QDJi0tU9bkUjq+K+u5GQN
+wHj6HXneAtv7pQNo+VCO7JIXg0/XFVC/qLA44Edw9V3rZIq++LzWNQAtXmHs6xlx
+0D2gq7B3hsz0ZkM7og9uPCFmkvwXbjq63f2SUmBw6u95lUThu3BDSkG87/HcqBDb
+n9MhvcIsy8cfvVt4A47UIPXm48MVQfH5a2Q8yTRK+Ix59vJ2QzAXn8N4WtksI0u6
+YDgDihr7yU5xuQAU593Gbs5hOm9eDyTSY2jy0bwPlZb/Nf0=
+=XbSi
 -----END PGP SIGNATURE-----
 
-Download attachment "xsa294/4.7.patch" of type "application/octet-stream" (3155 bytes)
+Download attachment "xsa297.meta" of type "application/octet-stream" (3631 bytes)
 
-Download attachment "xsa294/4.8.patch" of type "application/octet-stream" (3161 bytes)
+Download attachment "xsa297/xsa297-unstable-1.patch" of type "application/octet-stream" (2149 bytes)
 
-Download attachment "xsa294/4.9.patch" of type "application/octet-stream" (3161 bytes)
+Download attachment "xsa297/xsa297-unstable-2.patch" of type "application/octet-stream" (7444 bytes)
 
-Download attachment "xsa294/4.10.patch" of type "application/octet-stream" (2956 bytes)
+Download attachment "xsa297/xsa297-unstable-3.patch" of type "application/octet-stream" (6217 bytes)
 
-Download attachment "xsa294/4.11.patch" of type "application/octet-stream" (2900 bytes)
+Download attachment "xsa297/xsa297-unstable-4.patch" of type "application/octet-stream" (12740 bytes)
 
-Download attachment "xsa294/unstable.patch" of type "application/octet-stream" (2850 bytes)
+Download attachment "xsa297/xsa297-4.7-1.patch" of type "application/octet-stream" (8272 bytes)
+
+Download attachment "xsa297/xsa297-4.7-2.patch" of type "application/octet-stream" (4162 bytes)
+
+Download attachment "xsa297/xsa297-4.7-3.patch" of type "application/octet-stream" (2193 bytes)
+
+Download attachment "xsa297/xsa297-4.7-4.patch" of type "application/octet-stream" (4388 bytes)
+
+Download attachment "xsa297/xsa297-4.7-5.patch" of type "application/octet-stream" (2359 bytes)
+
+Download attachment "xsa297/xsa297-4.7-6.patch" of type "application/octet-stream" (7320 bytes)
+
+Download attachment "xsa297/xsa297-4.7-7.patch" of type "application/octet-stream" (6474 bytes)
+
+Download attachment "xsa297/xsa297-4.7-8.patch" of type "application/octet-stream" (13927 bytes)
+
+Download attachment "xsa297/xsa297-4.8-1.patch" of type "application/octet-stream" (8285 bytes)
+
+Download attachment "xsa297/xsa297-4.8-2.patch" of type "application/octet-stream" (4253 bytes)
+
+Download attachment "xsa297/xsa297-4.8-3.patch" of type "application/octet-stream" (2207 bytes)
+
+Download attachment "xsa297/xsa297-4.8-4.patch" of type "application/octet-stream" (4400 bytes)
+
+Download attachment "xsa297/xsa297-4.8-5.patch" of type "application/octet-stream" (2181 bytes)
+
+Download attachment "xsa297/xsa297-4.8-6.patch" of type "application/octet-stream" (7310 bytes)
+
+Download attachment "xsa297/xsa297-4.8-7.patch" of type "application/octet-stream" (6512 bytes)
+
+Download attachment "xsa297/xsa297-4.8-8.patch" of type "application/octet-stream" (12919 bytes)
+
+Download attachment "xsa297/xsa297-4.9-1.patch" of type "application/octet-stream" (8249 bytes)
+
+Download attachment "xsa297/xsa297-4.9-2.patch" of type "application/octet-stream" (4253 bytes)
+
+Download attachment "xsa297/xsa297-4.9-3.patch" of type "application/octet-stream" (2207 bytes)
+
+Download attachment "xsa297/xsa297-4.9-4.patch" of type "application/octet-stream" (4400 bytes)
+
+Download attachment "xsa297/xsa297-4.9-5.patch" of type "application/octet-stream" (2181 bytes)
+
+Download attachment "xsa297/xsa297-4.9-6.patch" of type "application/octet-stream" (7428 bytes)
+
+Download attachment "xsa297/xsa297-4.9-7.patch" of type "application/octet-stream" (6443 bytes)
+
+Download attachment "xsa297/xsa297-4.9-8.patch" of type "application/octet-stream" (12919 bytes)
+
+Download attachment "xsa297/xsa297-4.10-1.patch" of type "application/octet-stream" (4283 bytes)
+
+Download attachment "xsa297/xsa297-4.10-2.patch" of type "application/octet-stream" (2077 bytes)
+
+Download attachment "xsa297/xsa297-4.10-3.patch" of type "application/octet-stream" (4424 bytes)
+
+Download attachment "xsa297/xsa297-4.10-4.patch" of type "application/octet-stream" (2181 bytes)
+
+Download attachment "xsa297/xsa297-4.10-5.patch" of type "application/octet-stream" (7364 bytes)
+
+Download attachment "xsa297/xsa297-4.10-6.patch" of type "application/octet-stream" (6443 bytes)
+
+Download attachment "xsa297/xsa297-4.10-7.patch" of type "application/octet-stream" (12937 bytes)
+
+Download attachment "xsa297/xsa297-4.11-1.patch" of type "application/octet-stream" (4283 bytes)
+
+Download attachment "xsa297/xsa297-4.11-2.patch" of type "application/octet-stream" (2077 bytes)
+
+Download attachment "xsa297/xsa297-4.11-3.patch" of type "application/octet-stream" (4424 bytes)
+
+Download attachment "xsa297/xsa297-4.11-4.patch" of type "application/octet-stream" (2181 bytes)
+
+Download attachment "xsa297/xsa297-4.11-5.patch" of type "application/octet-stream" (7314 bytes)
+
+Download attachment "xsa297/xsa297-4.11-6.patch" of type "application/octet-stream" (6287 bytes)
+
+Download attachment "xsa297/xsa297-4.11-7.patch" of type "application/octet-stream" (12937 bytes)
+
+Download attachment "xsa297/xsa297-4.12-1.patch" of type "application/octet-stream" (4283 bytes)
+
+Download attachment "xsa297/xsa297-4.12-2.patch" of type "application/octet-stream" (2078 bytes)
+
+Download attachment "xsa297/xsa297-4.12-3.patch" of type "application/octet-stream" (4374 bytes)
+
+Download attachment "xsa297/xsa297-4.12-4.patch" of type "application/octet-stream" (2149 bytes)
+
+Download attachment "xsa297/xsa297-4.12-5.patch" of type "application/octet-stream" (7443 bytes)
+
+Download attachment "xsa297/xsa297-4.12-6.patch" of type "application/octet-stream" (6217 bytes)
+
+Download attachment "xsa297/xsa297-4.12-7.patch" of type "application/octet-stream" (12914 bytes)
