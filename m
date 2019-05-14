@@ -1,43 +1,130 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/09/11/8
-Message-ID: <20190911124319.23022e80@computer>
-Date: Wed, 11 Sep 2019 12:43:19 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/14/1
+Message-ID: <2938-1557822922.903457@q0_S.WXHA.Kw1l>
+Date: Tue, 14 May 2019 08:35:22 +0000
+From: halfdog <me@...fdog.net>
 To: oss-security@...ts.openwall.com
-Subject: OpenDMARC signature bypass with multiple From addresses
+Subject: Re: fprintd: found storing user fingerprints without encryption
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Seong-Joong Kim writes:
+> I think my initial suggestion is not really good enough.
+>
+> Currently, there is no way to defend this issue except for
+> supporting hardware, such as TPM or USB token, rather than
+> encryption by software in Linux environment.
+>
+> If necessary, how about implementing interfaces to talk with
+> hardware security module, such as TPM or PKCS#11 compatible
+> devices.
 
-Protonmail reported about a phishing incident in July:
-https://protonmail.com/blog/bellingcat-cyberattack-phishing/
+>From those solutions I looked at (but not for fingerprint but
+other type of biometry), those using standard interfaces already
+seemed to be those allowing easiest and most stable integration
+with open source software. They do not require any specific libraries,
+components hardware drivers to be present on the target system,
+no proprietary protocols involved.
 
-This had this somewhat mysterious chapter:
-"Furthermore, the attackers attempted to exploit an unpatched
-vulnerability in an open source software that is widely used by email
-providers in an effort to bypass spam and abuse filters. We were
-previously aware of this vulnerability and have already been watching
-it for some time, but we will not disclose it here because the software
-in question is not developed by ProtonMail, and it has not yet been
-patched by the software maintainers. This vulnerability, however, is
-not widely known and indicates a higher level of sophistication on the
-part of the attackers."
+Those solutions usually behave like a crypto-smart-card to be
+unlocked only by an external pin-pad mounted on the card reader,
+except that you do not enter a pin but use your biometrics data.
 
-After asking protonmail multiple times for a statement they answered
-and I learned that it's about this issue in OpenDMARC:
-https://github.com/trusteddomainproject/OpenDMARC/pull/48
+I did not look on the PC-to-reader protocol in detail but I assume
+that requesting e.g. decryption/signing from the card, the PC
+will ask the card (via the reader) to perform the crypto operation,
+the card replies with something like "pin required", the PC displays
+a message to the user, the user enters pin (or biometry), the
+reader replies with "card now usable" or "card locked/card destroyed"
+when exceeding the maximum number of attempts.
 
-It's an issue where by specifying multiple From addresses only one of
-them gets DMARC-checked.
+> Otherwise, users should avoid using fingerprint
+> authentication/identification.
 
-There's no reaction from the OpenDMARC developers and it's unclear
-whether it's still actively developed. Given this is already actively
-exploited I think people should be aware of it and distros should
-probably apply the patch from the PR.
+I would not say that in general. That really depends on the security
+requirements of user. While a standard door lock might be appropriate
+to secure a house (even if the key material can be reconstructed
+by stealing the lock, the door or the complete house - last case
+is similar to a standard notebook theft), the same lock will
+be deemed inappropriate to secure nuclear facilities. Also the
+usecases for locking/unlocking should be considered: do you perform
+50 lock/unlocks per day for a device, that would be otherwise
+quite unprotected (no password, because password entry is too
+inconvenient - or using a weak password) or do you protect data
+at rest only accessed once per week (final storage location of
+a disk to disk to disk backup cascade)?
 
--- 
-Hanno Böck
-https://hboeck.de/
+So fingerprint might be the sweetest spot depending on the asset
+value, but also the value of the (non-renewable) biodata and
+the usecases of the locking scheme.
 
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+hd
+
+> 2019년 5월 10일 (금) 오후 6:22, halfdog <me@...fdog.net>님이
+> 작성:
+>
+>> Roman Drahtmueller writes: > [...] > > > I am not insisting
+>> that encryption key should be on the disk or is > > encrypted
+>> with a static key that is embedded in the binary. > > Instead,
+>> we can make fprintd to use a TPM, if available. > > > The
+>> problem persists: The encryption key must be available for
+>> the FP > data to be accessible, and so it is for an attacker.
+>> It doesn't matter > where you store the key. > > A TPM (and,
+>> transitively, products that encrypt with TPM-sealed or > TPM-bound
+>> key material) is good for the situation where the system is
+>> > physically stolen while powered down (or the drive fails).
+>> But that's not > our problem here.
+>>
+>> Therefore dedicated tamper-proof IC-designs+embedded software
+>> exist, that perform the biometry template storage and matching
+>> on the chip (MoC). There are some vendors out there providing
+>> such hardware + MoC-algorithms, but mainly fingerprint and
+>> some iris biometry variants seem certified so far. These are
+>> intended for access cards or USB-tokens in two or more-factor
+>> authentication schemes in a 1-to-1 match fashion, not as
+>> centralized 1-to-many matching schemes also deployed rarely
+>> (e.g. in Japan where they really like biometrics as long as
+>> you do not have to touch the biometry reader ...).
+>>
+>> > [...] > > > Otherwise, but even though it is not perfect,
+>> it would be better to apply > > the fingerprint data protection,
+>> such as keyring or access control, rather > > than raw fingerprint
+>> template. > > FYI, Windows Hello might use Next Generation
+>> Cryptography (called CNG) to > > protect and store user private
+>> data and encryption keys. > > There are not many options left
+>> to solve the stored credential problem, > and it should be
+>> clear that saving a file, encrypted or not, is not the > solution.
+>> > > One possible solution is to use a hash algorithm, potentially
+>> cost-based, > to derive a bit string (that is suitable for
+>> comparison with the > persisted authoritative string) from
+>> the output of a fingerprint reader.
+>>
+>> At the momenent I do not know of any algorithms providing
+>> sufficient entropy binary hash data from fingerprints in a
+>> reliable way. Changing extraction to deliver more entropy
+>> results in higher FNR during authentication step later on,
+>> I think.
+>>
+>> > [...]
+>>
+>> When working on a project to provide highest security MoC
+>> solutions with Linux (for other type of biometry, not
+>> fingerprints), Nitrokey was offering an open-source USB-token
+>> hardware (even the PCBs are open source, if I remember correctly).
+>> That platform seemed closest to be a good starting point for
+>> developing such an open source MoC biometry solution as they
+>> sell also one part with a certified tamper proof trusted element
+>> that seemed to allow performing biometry template storage
+>> and comparison on chip if programmed correctly.
+>>
+>> Time in the project was too limited to explore, if that hardware
+>> would REALLY allow to upgrade it to a powerful, highly secure
+>> but still affordable open source biometry system for use by
+>> journalists, human rights activists, NGOs ... and nerds, e.g.
+>> for password+biometry secured full disk encryption schemes.
+>>
+>> > [...]
+>>
+>> hd
+>>
+>>
+
