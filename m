@@ -1,75 +1,235 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/14/2
-Message-ID: <87sgxwdsma.fsf@concordia.ellerman.id.au>
-Date: Mon, 14 Jan 2019 10:50:53 +1100
-From: Michael Ellerman <mpe@...erman.id.au>
-To: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
-Cc: Marcel Holtmann <marcel@...tmann.org>, Johan Hedberg <johan.hedberg@...il.com>
-Subject: Re: Linux kernel: Bluetooth: two remote infoleaks (CVE-2019-3459, CVE-2019-3460)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/19/3
+Message-ID: <CAHmME9qo2ncBdK9-JNsWVb1J6S=Xij-=4kr0vATL3gzOrLiT5w@mail.gmail.com>
+Date: Sun, 19 May 2019 18:23:59 +0200
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: oss-security <oss-security@...ts.openwall.com>, wsnark@...a.io
+Subject: Re: Potential DoS vulnerability in CGit
 Content-Type: text/plain; charset=utf-8
 
-Solar Designer <solar@...nwall.com> writes:
-> Hi,
+Hey Wire,
+
+I'm glad you emailed oss-sec, as all four of your messages went right into
+the gmail spam filter. Your message here caused a bunch of people to let me
+know on irc and sms. Really sorry about the snafoo. I'll have a close look
+at this and ship a patch need be during the next 24 hours.
+
+Regards,
+Jason
+
+--
+Sent from my telephone.
+
+Jason A. Donenfeld
+
+On Sun, May 19, 2019, 14:51 Wire Snark <wsnark@...a.io> wrote:
+
+> Hello, oss-security list
 >
-> Ran Menscher (Bcc'ed on this message) reported two issues (crediting
-> "Shlomi Oberman, Yuli Shapiro and Karamba Security Ltd. research team")
-> in Linux's Bluetooth stack to linux-distros and security@k.o on
-> January 1.  Unfortunately, but unsurprisingly to me, we collectively
-> failed to handle these issues well.  We did some things right, but not
-> all of those that ideally would have been done before embargo end.  From
-> the start, Ran was unwilling to precisely follow the linux-distros list
-> policy (set a tentative public disclosure date/time) and to stay on top
-> of the issues, instead expecting linux-distros to act more like a CERT
-> (coordinate with other parties), which it mostly is not.  I did point
-> this out to Ran, and suggested contacting Android, but I think no one
-> did that.  (See the third "forwarded message" below on this "not a CERT"
-> aspect and what can be done about it.)  The Bluetooth subsystem
-> maintainers didn't reply.  Distros appeared uninterested in doing
-> anything about the issues under embargo.  There were also numerous
-> occasions where I ended up substituting for other distros' roles they
-> had volunteered for.  And now I am doing Ran's job of making the
-> mandatory posting to oss-security (after a reminder yesterday).
+> I need your advice on the following bug in CGit disclosured by me recently
+> in the cgit 'at' lists.zx2c4.com [1].
+> CGit is a hyperfast web frontend for git repositories written in C [2].
 >
-> On the bright side, I appreciate Greg KH's (security@k.o) handling of
-> these issues.  Greg took care of notifying the Bluetooth maintainers and
-> produced patches suitable for posting to the Linux lists (but still
-> needing review and testing), and made such postings as soon as the
-> embargo was over.  The thread with patches:
+> There is no formal security contact at [3], contacting CGit author and
+> maintainer Jason Donenfeld directly didn't work either (probably my mail
+> ends up in spam or whatever). My posting to CGit mailing list hasn't
+> received a reply yet (since May 15) so I'm not sure whether someone has
+> even read it so far.
 >
-> https://lore.kernel.org/linux-bluetooth/20190110062833.GA15047@kroah.com/
+> My question: is this a valid security issue (DoS) that's worth applying
+> for CVE? This is my first bug in public software actually, so your advice
+> on this will be very helpful. Should I do more thorough performance
+> measures, or this qualitative analysis below is enough?
 >
-> I also appreciate Yves-Alexis Perez (Debian) assigning the CVE IDs:
+> [1] https://lists.zx2c4.com/pipermail/cgit/2019-May/004364.html <
+> https://lists.zx2c4.com/pipermail/cgit/2019-May/004364.html>
+> [2] https://git.zx2c4.com/cgit/ <https://git.zx2c4.com/cgit/>
+> [3] https://git.zx2c4.com/cgit/about/ <https://git.zx2c4.com/cgit/about/>
 >
->> On Tue, 2019-01-01 at 09:27 +0000, Ran Menscher wrote:
->> > BUG 1 HEAP ADDRESS INFOLEAK IN USE OF L2CAP_GET_CONF_OPT
->>  
->> CVE-2019-3459
->> 
->> > BUG 2 HEAP DATA INFOLEAK IN MULTIPLE LOCATIONS INCLUDING FUNCTION
->> > L2CAP_PARSE_CONF_RSP
->>  
->> CVE-2019-3460
+> ### Bug description
 >
-> Also very helpful was Ran's answer that "According to git blame, the
-> issues had been introduced in Linux-2.6.12-rc2 (in 2005)"
+> A specially crafted URL in the request is processed by cgit with a sort of
+> non-linear(quadratic) function, excessively using CPU and network
+> resources. That is, given input with len(input) = n, output produced by
+> cgit becomes len(output) ~ C * n^2.
+>
+> Severity: Low (?)
+>
+> ### Reproducers
+>
+> Hand-crafted reproducers I have come with so far look like:
+> curl http://localhost:8080/mycgit/tree/0/0/ <
+> http://localhost:8080/mycgit/tree/0/0/><...>/0/0/0
+>
+> Where "localhost:8080" is where my web server is, "mycgit" is a valid
+> repository name, and the number of /0/ blocks that can be filled is
+> determined by the maximum URL length configured at the particular web
+> server.
+>
+> Reproducer for my local server setup: local_repr.txt (attached)
+> Input len = 8056, Output is ~15.5Mb.
+>
+> For kernel.org, that is using cgit: kernel.org_repr.txt (attached)
+> There are 2 reproducers:
+> - URL with len=1305 bytes. Output is html with len=424 kbytes.
+> - URL with len=1875 (maximum that is accepted at kernel.org at the
+> moment). Output is html with len=863 kbytes.
+>
+> The dependency seems to be quadratic with C ~ 0.25.
+>
+> Original hang reproducer generated by AFL: afl_repr.bin (attached)
+> Input: 34kb, Output: ~600Mb
+>
+> Note: afl_repr.bin file format is tab-separated values for all used env
+> variables by cgit; the reproducer is different and contains some
+> non-printable chars (in my fuzzing setup cgit reads env variables from
+> stdin, allowing arbitrary input)
+>
+> ### Analysis
+>
+> Backtrace from interrupting cgit during processing of this input (with
+> output in terminal, i.e. slow):
+> Program received signal SIGINT, Interrupt.
+> 0x00007ffff7d741c5 in write () from /usr/lib/libpthread.so.0
+> (gdb) bt
+> #0  0x00007ffff7d741c5 in write () from /usr/lib/libpthread.so.0
+> #1  0x00005555555647d4 in html_raw (data=<optimized out>, size=6948) at
+> ../html.c:83
+> #2  0x0000555555564ec1 in html (txt=<optimized out>) at ../html.c:211
+> #3  html_url_path (txt=<optimized out>, txt@...ry=0x55555574ff30 "Oe",
+> '/' <repeats 198 times>...)
+>     at ../html.c:211
+> #4  0x000055555556e70d in repolink (title=title@...ry=0x0,
+> class=class@...ry=0x0,
+>     page=page@...ry=0x5555556b175b "tree", head=head@...ry=0x555555759450
+> "fuzzing",
+>     path=path@...ry=0x55555574ff30 "Oe", '/' <repeats 198 times>...) at
+> ../ui-shared.c:288
+> #5  0x000055555556e853 in reporevlink (page=page@...ry=0x5555556b175b
+> "tree",
+>     name=name@...ry=0x555555751a54 "", title=title@...ry=0x0,
+> class=class@...ry=0x0,
+>     head=head@...ry=0x555555759450 "fuzzing", rev=0x0,
+>     path=0x55555574ff30 "Oe", '/' <repeats 198 times>...) at
+> ../ui-shared.c:319
+> #6  0x000055555556fbc9 in cgit_tree_link (path=0x55555574ff30 "Oe", '/'
+> <repeats 198 times>...,
+>     rev=<optimized out>, head=<optimized out>, class=0x0, title=0x0,
+> name=0x555555751a54 "")
+>     at ../ui-shared.c:345
+> #7  cgit_self_link (name=name@...ry=0x555555751a54 "", class=0x0,
+> title=0x0) at ../ui-shared.c:527
+> #8  0x0000555555571347 in cgit_print_path_crumbs (path=<optimized out>) at
+> ../ui-shared.c:957
+> #9  cgit_print_pageheader () at ../ui-shared.c:1103
+> #10 0x00005555555718cf in cgit_print_layout_start () at ../ui-shared.c:863
+> #11 cgit_print_error_page (code=code@...ry=404, msg=msg@...ry=0x55555568d951
+> "Not found",
+>     fmt=fmt@...ry=0x555555690f7c "Path not found") at ../ui-shared.c:852
+> #12 0x0000555555575d5b in cgit_print_tree (rev=0x555555759450 "fuzzing",
+>     path=0x55555574ff30 "Oe", '/' <repeats 198 times>...) at
+> ../ui-tree.c:382
+> #13 0x0000555555561993 in process_request () at ../cgit.c:800
+> #14 0x0000555555563579 in cache_process (size=<optimized out>,
+> path=<optimized out>,
+>     key=<optimized out>, ttl=<optimized out>, fn=fn@...ry=0x555555561890
+> <process_request>)
+>     at ../cache.c:370
+> #15 0x000055555556236f in cmd_main (argc=<optimized out>, argv=<optimized
+> out>) at ../cgit.c:1161
+> #16 0x000055555555ed4f in main (argc=2, argv=0x7fffffffe7e8) at
+> common-main.c:45
+>
+> As I understand, the issue is in ui-shared.c, cgit_print_path_crumbs():
+>
+> ctx.qry.path = p = path;
+> while (p < end) {
+>   if (!(q = strchr(p, '/')))
+>     q = end;
+>   *q = '\0';
+>   html_txt("/");
+>   cgit_self_link(p, NULL, NULL);
+>   if (q < end)
+>     *q = '/';
+>   p = q + 1;
+> }
+>
+> It attempts to print a cgit_self_link() on each subpath in the URL,
+> resulting in O(n^2) for n as number of subpaths in the url.
+>
+> ### How to fix
+>
+> I don't really know cgit internals, so I can propose only very simple fix
+> - limit the depth of path crumbs handling, e.g.
+>
+> diff --git a/ui-shared.c b/ui-shared.c
+> index d27a5fd..279862f 100644
+> --- a/ui-shared.c
+> +++ b/ui-shared.c
+> @@ -949,7 +949,9 @@ static void cgit_print_path_crumbs(char *path)
+>         ctx.qry.path = NULL;
+>         cgit_self_link("root", NULL, NULL);
+>         ctx.qry.path = p = path;
+> -       while (p < end) {
+> +       int maxdepth = 10;
+> +       while (p < end && maxdepth > 0) {
+> +               maxdepth--;
+>                 if (!(q = strchr(p, '/')))
+>                         q = end;
+>                 *q = '\0';
+>
+> Probably this magic 10 should be defined somewhere (do not think it should
+> be configurable though). Also I don't know what is valid path depth
+> expected here.
+> With this fix I confirm the output size is reduced to normal (8056-len URL
+> gives 50K, 34K AFL-generated one gives 204K html output).
+>
+> ### Security implications
+>
+> I think this issue can be leveraged to cause Denial of Service condition
+> on the cgit server. I have tried following experiment: at the localhost
+> start 100 curl instances with reproducer (8056 one) and "--limit-rate 10K
+> -sS >/dev/null" options so they do not consume output html too fast. This
+> results in a few seconds of high CPU usage at the target server (I used 4
+> vCPU VM from some old Core i7 mobile CPU). 100 curls cause load ~1, adding
+> more can push to 2 and so on; curls do not seem to consume much CPU
+> themselves. I use nginx, fcgiwrap and cgit.cgi, so nginx worker process and
+> fcgiwrap were using the most of CPU, probably until all cgit output has
+> been saved in nginx buffer (not really sure here, but seems like nginx
+> memory usage grows). After initial CPU usage burst cgit finishes rendering
+> and terminates, so CPU usage goes down. Some clients may receive one of the
+> two errors:
+>   curl: (18) transfer closed with outstanding read data remaining
+>   curl: (56) Recv failure: Connection reset by peer
+>
+> Most of the clients continued to work. Sometimes (especially if increasing
+> a number of clients) there are fcgiwrap failures like:
+>
+> [crit] 21295#21295: *1182 pwritev()
+> "/var/lib/nginx/fastcgi/2/57/0000000572" has written only 936 of 8184 while
+> reading upstream, client: 127.0.0.1, server: localhost, request: "GET
+> /mycgit/tree/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/<...cut...>/0/
+>
+> After applying the fix, none of the issues have been observed with 100-400
+> curl readers at the same setup (even if throttled to 1K instead of 10K as
+> before, to keep connections open). CPU bursts only for a very short amount
+> of time (mostly when 100s of curls are forked/exec'd, though slight
+> fcgiwrap CPU usage has been observed in htop too).
+>
+> ### About the author
+>
+> My name is Fyodor [Wire Snark], I'm an amateur security researcher at
+> DC7831 (http://defcon-nn.ru <http://defcon-nn.ru>), our local DEF CON
+> group in Nizhniy Novgorod, Russia.
+>
+> This report has been prepared as a result of my self-studying fuzzing with
+> AFL and LibFuzzer from LLVM and applying them to cgit. I haven't seen any
+> such fuzzing reported for cgit, so if you know any previous work on this,
+> I'd be glad to know (I plan to publish a blog post about my fuzzing setup
+> and these results; no crashes have been observed so far).
+>
+>
+> Best regards,
+> Wire Snark
+>
 
-I'm not sure that's correct. That happens to be the start of the
-mainline git history, so all code older than that appears to have been
-added by that commit.
-
-Looking at the full history tree, I think I see the bug being introduced
-in l2cap_get_conf_opt() here in May 2002 during the 2.5.x series:
-
-  https://github.com/mpe/linux-fullhistory/commit/c38fab942f7ce71b30bfa71b3c75846ed6dc4846#diff-4d1b9a05ae99bd80285a75f4ded05abbL1519
-
-
-Looking at l2cap_parse_conf_req(), the lack of error handling dates back
-to the original submission, in v2.4.5.2 in May 2001:
-
-  https://github.com/mpe/linux-fullhistory/commit/5857cb7a6e8112e1f3125ca2fe7f815e379ae2f3#diff-dd9f85cee1be8eba9aef4a6ee3ab099dR1436
-
-
-There's instructions for using the fullhistory tree here:
-  https://github.com/mpe/linux-fullhistory/wiki
-
-cheers
