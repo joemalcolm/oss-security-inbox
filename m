@@ -1,51 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/01/01/3
-Message-ID: <nn5zv8prfe.fsf@armitage.lysator.liu.se>
-Date: Tue, 01 Jan 2019 12:07:17 +0100
-From: nisse@...ator.liu.se (Niels Möller)
-To: Jeffrey Walton <noloader@...il.com>
-Cc: oss-security@...ts.openwall.com,  gmp-bugs@...lib.org
-Subject: Re: Asserts considered harmful (or GMP spills its sensitive information)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/19/4
+Message-ID: <CAMufup5AeePBWrRNStPgmXVFwcQ-TVR6g9tOKtaOODp+OS-BBw@mail.gmail.com>
+Date: Sun, 19 May 2019 18:04:47 +0200
+From: Juan Pablo Santos Rodríguez <juanpablo@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: [CVE-2019-10076] Apache JSPWiki Cross-site scripting vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Jeffrey Walton <noloader@...il.com> writes:
+[CVEID]:CVE-2019-10076
+[PRODUCT]:Apache JSPWiki
+[VERSION]:Apache JSPWiki 2.9.0 to 2.11.0.M3
+[PROBLEMTYPE]:Cross-site scripting vulnerability
+[REFERENCES]:https://jspwiki-wiki.apache.org/Wiki.jsp?page=CVE-2019-10076
+[DESCRIPTION]: A carefully crafted malicious attachment could trigger an
+XSS vulnerability on Apache JSPWiki, which could lead to session hijacking.
 
-> The GMP library uses asserts to crash a program at runtime when
-> presented with data it did not expect. The library also ignores user
-> requests to remove asserts using Posix's -DNDEBUG. Posix asserts are a
-> deugging aide intended for developement, and using them in production
-> software ranges from questionable to insecure.
-
-Crashing in a controlled fashion may also be *more* secure that
-continuing execution with undefined results. Depending on circumstances,
-of course.
-
-I read the general statement "asserts considered harmful" as your
-personal opionion, likely based on experience with very different
-development projects than I'm involved with. And gmp-bugs isn't really
-the right place for that debate (and neither is the nettle mailinglist).
-
-> Second, the SIGABRT terminates the process and can write a core file.
-
-A security sensitive application can easily disable generation of core
-files, using setrlimit (on the linux kernel, prctl may also be useful).
-That's all part of crashing in a *controlled* fashion on assertion
-failures. As far as I'm aware, disabling core dumps is a fairly common
-practice in security sensitive applications.
-
-(And besides, most systems have zero ulimit -c as the system default
-these days. Which makes sense to me (any application might handle data
-that is sensitive to the user), even though as a developer, it's
-annoying with extra hoops required to get proper core dumps, including
-disabling the core dump collection "services" you mention).
-
-And as Vincent says, there are many ways to crash due to bugs, without
-triggering any assertion failure. And you should avoid generating core
-dumps for those crashes too.
-
-Regards,
-/Niels
-
--- 
-Niels Möller. PGP-encrypted email is preferred. Keyid 368C6677.
-Internet email is subject to wholesale government surveillance.
