@@ -1,39 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/13/6
-Message-Id: <D6664661-1212-4DB1-9238-2D50DF8D0332@apache.org>
-Date: Tue, 12 Feb 2019 15:42:35 -0800
-From: Bryan Call <bcall@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/19/5
+Message-ID: <CAMufup4rYxdnmD574J7h7EfmS2v+FrZeaCV-J4eJ0NXYuOUsZw@mail.gmail.com>
+Date: Sun, 19 May 2019 18:05:36 +0200
+From: Juan Pablo Santos Rodríguez <juanpablo@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2018-11783] Apache Traffic Server vulnerability with sslheader plugin
+Subject: [CVE-2019-10077] Apache JSPWiki Cross-site scripting vulnerability
 Content-Type: text/plain; charset=utf-8
 
-CVE-2018-11783: Apache Traffic Server vulnerability with sslheader plugin
+[CVEID]:CVE-2019-10077
+[PRODUCT]:Apache JSPWiki
+[VERSION]:Apache JSPWiki 2.9.0 to 2.11.0.M3
+[PROBLEMTYPE]:Cross-site scripting vulnerability
+[REFERENCES]:https://jspwiki-wiki.apache.org/Wiki.jsp?page=CVE-2019-10077
+[DESCRIPTION]:A carefully crafted InterWiki link could trigger an XSS
+vulnerability on Apache JSPWiki, which could lead to session hijacking.
 
-Reported By:
-Nikhil Marathe
-
-Vendor:
-The Apache Software Foundation
-
-Version Affected:
-ATS 6.0.0 to 6.2.3
-ATS 7.0.0 to 7.1.5
-ATS 8.0.0 to 8.0.1
-
-Description:
-sslheaders plugin extracts information from the client certificate and sets headers in the request based on the configuration of the plugin.  The plugin doesn't strip the headers from the request in some scenarios.
-
-Mitigation:
-6.x users should upgrade to 7.1.6, 8.0.2, or later versions
-7.x users should upgrade to 7.1.6 or later versions
-8.x users should upgrade to 8.0.2 or later versions
-
-References:
-	Downloads:
-		https://trafficserver.apache.org/downloads <https://trafficserver.apache.org/downloads>
-	Github Pull Request:
-		https://github.com/apache/trafficserver/pull/4701 <https://github.com/apache/trafficserver/pull/4701>
-	CVE:
-		https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-11783 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-11783>
-
--Bryan
