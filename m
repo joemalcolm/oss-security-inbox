@@ -1,37 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/08/01/1
-Message-ID: <CABEwPvFHSuV=-exfjiCedkJrEvo6Kvc0S72nsze7x1+kJ-nLhA@mail.gmail.com>
-Date: Thu, 1 Aug 2019 00:25:42 +0200
-From: David Smiley <dsmiley@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/19/6
+Message-ID: <CAMufup48w0bHkdw05t80d+xP7Z7vHKnEkAJ6uS+8UQbn8=ODew@mail.gmail.com>
+Date: Sun, 19 May 2019 18:06:34 +0200
+From: Juan Pablo Santos Rodríguez <juanpablo.santos@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2019-0193] Apache Solr, Remote Code Execution via DataImportHandler
+Subject: [CVE-2019-10078] Apache JSPWiki Cross-site scripting vulnerability
 Content-Type: text/plain; charset=utf-8
 
-The DataImportHandler, an optional but popular module to pull in data from
-databases and other sources, has a feature in which the whole DIH
-configuration can come from a request's "dataConfig" parameter. The debug
-mode of the DIH admin screen uses this to allow convenient debugging /
-development of a DIH config. Since a DIH config can contain scripts, this
-parameter is a security risk. Starting with version 8.2.0 of Solr, use of
-this parameter requires setting the Java System property
-"enable.dih.dataConfigParam" to true.
-
-Mitigations:
-* Upgrade to 8.2.0 or later, which is secure by default.
-* or, edit solrconfig.xml to configure all DataImportHandler usages with an
-"invariants" section listing the "dataConfig" parameter set to am empty
-string.
-* Ensure your network settings are configured so that only trusted traffic
-communicates with Solr, especially to the DIH request handler.  This is a
-best practice to all of Solr.
-
-Credits:
-* Michael Stepankin (JPMorgan Chase)
-
-References:
-* https://issues.apache.org/jira/browse/SOLR-13669
-* https://cwiki.apache.org/confluence/display/solr/SolrSecurity
-
-Please direct any replies as either comments in the JIRA issue above or to
-solr-user@...ene.apache.org
+[CVEID]:CVE-2019-10078
+[PRODUCT]:Apache JSPWiki
+[VERSION]:Apache JSPWiki 2.9.0 to 2.11.0.M3
+[PROBLEMTYPE]:Cross-site scripting vulnerability
+[REFERENCES]:https://jspwiki-wiki.apache.org/Wiki.jsp?page=CVE-2019-10078
+[DESCRIPTION]:A carefully crafted plugin link invocation could trigger an
+XSS vulnerability  on Apache JSPWiki, which could lead to session
+hijacking. Initial reporting indicated ReferredPagesPlugin, but further
+analysis showed that multiple plugins were vulnerable.
 
