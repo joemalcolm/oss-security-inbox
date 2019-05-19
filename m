@@ -1,80 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2020/05/19/5
-Message-ID: <2f51168a-edbb-0418-abe5-7a016859ee24@nlnetlabs.nl>
-Date: Tue, 19 May 2020 13:00:56 +0200
-From: Ralph Dolmans <ralph@...etlabs.nl>
-To: oss-security@...ts.openwall.com
-Subject: Unbound - CVE-2020-12662, CVE-2020-12663
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/19/2
+Message-ID: <LfF89C4--3-1@tuta.io>
+Date: Sun, 19 May 2019 14:50:24 +0200 (CEST)
+From: Wire Snark <wsnark@...a.io>
+To: Oss Security <oss-security@...ts.openwall.com>
+Subject: Re: Potential DoS vulnerability in CGit
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Forgot to attach the reproducers.
 
-Below is a copy of Unbound's CVE description that can be found at
-https://nlnetlabs.nl/downloads/unbound/CVE-2020-12662_2020-12663.txt
+Download attachment "afl_repr.bin" of type "application/octet-stream" (34327 bytes)
 
-Regards,
-Ralph
+View attachment "kernel.org_repr.txt" of type "text/plain" (3231 bytes)
 
-==
-
-Two vulnerabilities have been discovered in Unbound: CVE-2020-12662 and
-CVE-2020-12663.
-
-== Summary
-= CVE-2020-12662
-Unbound can be tricked into amplifying an incoming query into a large
-number of queries directed to a target.
-
-= CVE-2020-12663
-Malformed answers from upstream name servers can be used to make Unbound
-unresponsive.
-
-== Affected products
-All version of Unbound up to and including 1.10.0
-
-== Description
-= CVE-2020-12662
-Researchers from Tel Aviv University discovered an issue in Unbound and
-other DNS resolvers that makes it possible to have a single incoming
-query result in a large number of outgoing queries. This amplification
-makes it possible for Unbound to be used in a denial of service
-attack. The researchers discovering this called this attack the NXNSattack.
-
-This attack makes use of cache bypassing using random subdomains in the
-NSDNAME in NS records. When these delegation records are received during
-iteration, and the answer does not contain glue records, a resolver has
-to send out a query to the get the IP address for one of the names. When
-this query fails (for example because the random name does not exist) a
-resolver will try the next one. A large set of NS records with random
-names can result in a large number of outgoing queries going to the same
-target. More details about this attack are available in the research
-paper, available at http://www.nxnsattack.com/.
-
-= CVE-2020-12663
-Fuzzing of the Unbound code made us aware of issues in the parser of
-received answers. Malformed answers received from upstream servers can
-result in Unbound entering an infinite loop and thereby becoming
-unresponsive. When compiled with --enable-debug it is also possible to
-trigger an assertion, resulting in Unbound to crash.
-
-== Solution
-Download patched version of Unbound, or apply the patch manually.
-
-+ Downloading patched version
-Unbound 1.10.1 is released with the patch
-https://nlnetlabs.nl/downloads/unbound/unbound-1.10.1.tar.gz
-
-+ Applying the Patch manually
-For Unbound 1.10.0 the patch is:
-https://nlnetlabs.nl/downloads/unbound/patch_cve_2020-12662_2020-12663.diff
-
-Apply the patch containing fixes for both issues, using:
-'patch -p1 < patch_cve_2020-12662_2020-12663.diff'
-then run 'make install' to install Unbound.
-
-== Acknowledgments
-We would like to thank Lior Shafir, Yehuda Afek, and Anat Bremler-Barr
-from Tel Aviv University for their work on the NXNSattack.
-
-We would like to thank the OSS-Fuzz project for the discoveries
-resulting in CVE-2020-12663.
+View attachment "local_repr.txt" of type "text/plain" (8065 bytes)
