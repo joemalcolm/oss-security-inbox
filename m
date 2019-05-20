@@ -1,53 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/10/09/7
-Message-ID: <CAA8FXenGavrNCBU08REE1PANa9_jCGA9Xqx2CuK7zFhHWTygGg@mail.gmail.com>
-Date: Wed, 9 Oct 2019 13:04:30 -0500
-From: Tina Li <tli@...italocean.com>
-To: bo Zhang <zhangbo5891001@...il.com>
-Cc: Vineeth Remanan Pillai <vpillai@...italocean.com>, tiangangpi@...il.com,  oss-security@...ts.openwall.com
-Subject: Re: CVE-2019-14835: QEMU-KVM Guest to Host Kernel Escape Vulnerability: vhost/vhost_net kernel buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/20/1
+Message-Id: <52C7AFA8-8CAB-4613-95E9-3EED492B9693@apache.org>
+Date: Mon, 20 May 2019 19:15:24 +0200
+From: Andor Molnar <andor@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: [CVE-2019-0201] Information disclosure vulnerability in Apache ZooKeeper 
 Content-Type: text/plain; charset=utf-8
 
-Hi Bo,
-Thanks for your reply.
+CVE-2019-0201: Information disclosure vulnerability in Apache ZooKeeper
 
-> This vulnerability is a kernel vul and different verison of Qemu should
-> not affect the reproduce. Try the following steps:
->
-> 1. The guest kernel patch is for this version:
-> Ubuntu-hwe-4.15.0-50.54_16.04.1(
-> https://kernel.ubuntu.com/git/ubuntu/ubuntu-xenial.git/tree/drivers/virtio/virtio_ring.c?h=Ubuntu-hwe-4.15.0-50.54_16.04.1),
-> if you use different kernel version, the patch may need to be modified
-> slightly.
-> The patch makes the guest kernel create a invalid descriptor table and the
-> echo command is just to trigger the bug through a kernel variable.
->
+Severity: Critical
 
-Our host kernel is 4.15 and it is unpatched. In the guest, we use the
-reproducer patch that you provided for Ubuntu-hwe-4.15.0-50.54_16.04.1. But
-it doesn't work for us, and it is either crashing the guest or not able to
-crash the host during the migration.
-1. If we ssh to the guest, and run the echo command to trigger the bug.
-Then the guest kernel crashes, even before the modprobe command is executed.
-2. If we use the console to access the guest, then we can run echo/modprobe
--r /modprobe commands successfully. But later the live migration is always
-successful, and the host is not crashed.
+Vendor: The Apache Software Foundation
 
-So, as described above, we are not able to reproduce the host crash with
-the provided patch because either the guest crashes with the patch or live
-migration succeeds when the guest is not crashing.
-Would it be possible for you to have another look at the patches that you
-used to reproduce and probably post if the patches that you have differs
-from the posted one?
-Thanks a lot!
+Versions Affected: ZooKeeper prior to 3.4.14, ZooKeeper 3.5.0-alpha through 3.5.4-beta. The unsupported ZooKeeper 1.x through 3.3.x versions may be also affected.
 
-Best regards,
-Tina
+Description: ZooKeeper’s getACL() command doesn’t check any permission when retrieves the ACLs of the requested node and returns all information contained in the ACL Id field as plaintext string. DigestAuthenticationProvider overloads the Id field with the hash value that is used for user authentication. As a consequence, if Digest Authentication is in use, the unsalted hash value will be disclosed by getACL() request for unauthenticated or unprivileged users.
 
-> 2. Ubuntu had released the patched kernel, the host kernel you used should
-> not be patched(< 5.2.x) for reproducing the vulnerability.
->
-> Thanks!
-> cradmin of Tencent Blade Team
->
+Mitigation: Use an authentication method other than Digest (e.g. Kerberos) or upgrade to 3.4.14 or later (3.5.5 or later if on the 3.5 branch).
+
+Credit: This issue was identified by Harrison Neal <harrison@...chadvisor.com> PatchAdvisor, Inc.
+
+References: https://issues.apache.org/jira/browse/ZOOKEEPER-1392
 
