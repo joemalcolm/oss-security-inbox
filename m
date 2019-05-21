@@ -1,73 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/02/28/1
-Message-ID: <20190228180800.GA16103@espresso.pseudorandom.co.uk>
-Date: Thu, 28 Feb 2019 18:08:00 +0000
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2019/05/21/1
+Message-Id: <19147D1A-1B6D-4C97-AA6D-3FAD135FD080@beckweb.net>
+Date: Tue, 21 May 2019 14:57:46 +0200
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: ikiwiki: CVE-2019-9187: Server-side request forgery
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-Reference: https://ikiwiki.info/security/#cve-2019-9187
-Affected versions: >= 1.13
-Fixed versions: >= 3.20190228
-Fixed versions (3.20170111.x branch): >= 3.20170111.1
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software. The following
+releases contain fixes for security vulnerabilities:
 
-ikiwiki is a static site generator with some dynamic features,
-used for wikis, blogs and other websites.
+* Credentials 2.1.19
+* PAM Authentication 1.5.1
 
-The ikiwiki maintainers discovered that the aggregate plugin (a blog
-aggregator) did not try to use the LWPx::ParanoidAgent Perl module, unlike
-other parts of ikiwiki that request URIs. On sites where the aggregate
-plugin is enabled, authorized wiki editors could tell ikiwiki to fetch
-potentially undesired URIs even if LWPx::ParanoidAgent was installed:
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2019-05-21/
 
-* local files via file: URIs
-* other URI schemes that might be misused by attackers, such as gopher:
-* hosts that resolve to loopback IP addresses (127.x.x.x)
-* hosts that resolve to RFC 1918 IP addresses (192.168.x.x etc.)
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-This could be used by an attacker to publish information that should not have
-been accessible, cause denial of service by requesting "tarpit" URIs that are
-slow to respond, or cause undesired side-effects if local web servers implement
-"unsafe" GET requests (https://tools.ietf.org/html/rfc7231#section-4.2.1).
-(CVE-2019-9187)
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
 
-Additionally, if the LWPx::ParanoidAgent module was not installed, the
-blogspam, openid and pinger plugins would fall back to the ordinary LWP
-module, which is susceptible to similar attacks. This is unlikely to be
-a practical problem for the blogspam plugin because the URL it requests
-is under the control of the wiki administrator, but the openid plugin
-can request URLs controlled by unauthenticated remote users, and the
-pinger plugin can request URLs controlled by authorized wiki editors.
+---
 
-This is addressed in ikiwiki 3.20190228 as follows, with the same fixes
-backported to Debian 9 in version 3.20170111.1:
+SECURITY-1316 / CVE-2019-10319
+A missing permission check in PAM Authentication Plugin allowed users with 
+Overall/Read permission to invoke a form validation method to obtain 
+limited information about the file /etc/shadow on systems with that file 
+present, as well as the system user the Jenkins process is running as.
 
-* URI schemes other than http: and https: are not accepted, preventing
-  access to file:, gopher:, etc.
 
-* If a proxy is configured in the ikiwiki setup file, it is used for all
-  outgoing http: and https: requests. In this case the proxy is
-  responsible for blocking any requests that are undesired, including
-  loopback or RFC 1918 addresses.
+SECURITY-1322 / CVE-2019-10320
+Credentials Plugin allowed the creation of Certificate credentials from a 
+PKCS#12 file on the Jenkins master. Users with permission to create or 
+update credentials could use the associated form validation to confirm the 
+existence of files with an attacker-specified path.
 
-* If a proxy is not configured, and LWPx::ParanoidAgent is installed,
-  it will be used. This prevents loopback and RFC 1918 IP addresses, and
-  sets a timeout to avoid denial of service via "tarpit" URIs.
+Additionally, they could create credentials from any valid PKCS#12 file on 
+the Jenkins master. With the ability to configure jobs to access these 
+credentials, they could obtain the certificate content.
 
-* Otherwise, the ordinary LWP user-agent will be used. This allows requests
-  to loopback and RFC 1918 IP addresses, and has less robust timeout
-  behaviour. We are not treating this as a vulnerability: if this
-  behaviour is not acceptable for your site, please make sure to install
-  LWPx::ParanoidAgent or disable the affected plugins.
-
-If your distribution includes an older version of ikiwiki, please either
-update to a current version or backport the following commits:
-
-* e7b0d4a "useragent: Raise an exception if the LWP module can't be loaded"
-* 67543ce "useragent: Don't allow non-HTTP protocols to be used"
-* d283e4c "useragent: Automatically choose whether to use LWPx::ParanoidAgent"
-* 9a275b2 "doc: Document security issues involving LWP::UserAgent" (optional)
-
-Regards,
-    smcv
